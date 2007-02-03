@@ -249,10 +249,22 @@ ACTION EXECUTION
 
 /**
  * @brief Searches all menus for the specified one
+ * @param[in] name If name is NULL this function will return the current menu
+ * on the stack - otherwise it will search the hole stack for a menu with the
+ * id name
+ * @return NULL if not found or no menu on the stack
  */
-menu_t *MN_GetMenu(char *name)
+menu_t *MN_GetMenu (char *name)
 {
 	int i;
+
+	/* get the current menu */
+	if (name == NULL) {
+		if (menuStackPos >= 1)
+			return menuStack[menuStackPos-1];
+		else
+			return NULL;
+	}
 
 	for (i = 0; i < numMenus; i++)
 		if (!Q_strncmp(menus[i].name, name, MAX_VAR))
@@ -266,7 +278,7 @@ menu_t *MN_GetMenu(char *name)
  * @brief Searches all nodes in the given menu for a given nodename
  * @sa MN_GetNodeFromCurrentMenu
  */
-menuNode_t *MN_GetNode(const menu_t* const menu, char *name)
+menuNode_t *MN_GetNode (const menu_t* const menu, char *name)
 {
 	menuNode_t *node = NULL;
 
@@ -281,7 +293,7 @@ menuNode_t *MN_GetNode(const menu_t* const menu, char *name)
  * @brief Searches a given node in the current menu
  * @sa MN_GetNode
  */
-menuNode_t* MN_GetNodeFromCurrentMenu(char*name)
+menuNode_t* MN_GetNodeFromCurrentMenu (char*name)
 {
 	return MN_GetNode(menuStack[menuStackPos-1], name);
 }
@@ -374,7 +386,7 @@ static char *MN_GetReferenceString (const menu_t* const menu, char *ref)
 /**
  * @brief
  */
-static float MN_GetReferenceFloat(const menu_t* const menu, void *ref)
+static float MN_GetReferenceFloat (const menu_t* const menu, void *ref)
 {
 	if (!ref)
 		return 0.0;
@@ -482,7 +494,7 @@ static void Com_MergeShapes (int* const shape, int itemshape, int x, int y)
  * @param[in] y
  * @note Make sure, that y is not bigger than 15
  */
-static qboolean Com_CheckShape(int shape[16], int x, int y)
+static qboolean Com_CheckShape (int shape[16], int x, int y)
 {
 	int row = shape[y];
 	int position = pow(2, x);
@@ -593,7 +605,7 @@ void MN_Popup (const char *title, const char *text)
 /**
  * @brief
  */
-static void MN_ExecuteActions (const menu_t* const menu, menuAction_t* const first)
+extern void MN_ExecuteActions (const menu_t* const menu, menuAction_t* const first)
 {
 	menuAction_t *action;
 	byte *data;
@@ -1134,7 +1146,7 @@ void MN_Click (int x, int y)
  * @param[in] offset Number of lines to scroll. Positive values scroll down, negative up.
  * @return Returns qtrue if scrolling was possible otherwise qfalse.
  */
-static qboolean MN_TextScroll(menuNode_t *node, int offset)
+static qboolean MN_TextScroll (menuNode_t *node, int offset)
 {
 	int textScroll_new;
 
@@ -1173,7 +1185,7 @@ static qboolean MN_TextScroll(menuNode_t *node, int offset)
 /**
  * @brief Scriptfunction that gets the wanted text node and scrolls the text.
  */
-static void MN_TextScroll_f(void)
+static void MN_TextScroll_f (void)
 {
 	int offset = 0;
 	menuNode_t *node = NULL;
@@ -1206,7 +1218,7 @@ static void MN_TextScroll_f(void)
 /**
  * @brief Scroll to the bottom
  */
-void MN_TextScrollBottom(char* nodeName)
+void MN_TextScrollBottom (char* nodeName)
 {
 	menuNode_t *node = NULL;
 
@@ -1232,7 +1244,7 @@ void MN_TextScrollBottom(char* nodeName)
  * @sa MN_MiddleClick
  * @sa MN_MouseWheel
  */
-void MN_RightClick(int x, int y)
+void MN_RightClick (int x, int y)
 {
 	menuNode_t *node;
 	menu_t *menu;
@@ -1289,7 +1301,7 @@ void MN_RightClick(int x, int y)
  * @sa MN_RightClick
  * @sa MN_MouseWheel
  */
-void MN_MiddleClick(int x, int y)
+void MN_MiddleClick (int x, int y)
 {
 	menuNode_t *node;
 	menu_t *menu;
@@ -1341,7 +1353,7 @@ void MN_MiddleClick(int x, int y)
  * @sa CL_ZoomInQuant
  * @sa CL_ZoomOutQuant
  */
-void MN_MouseWheel(qboolean down, int x, int y)
+void MN_MouseWheel (qboolean down, int x, int y)
 {
 	menuNode_t *node;
 	menu_t *menu;
@@ -1404,7 +1416,7 @@ void MN_MouseWheel(qboolean down, int x, int y)
  * @brief Determine the position and size of render
  * @param[in] menu : use its position and size properties
  */
-void MN_SetViewRect(const menu_t* menu)
+void MN_SetViewRect (const menu_t* menu)
 {
 	menuNode_t* menuNode = menu ? (menu->renderNode ? menu->renderNode : (menu->popupNode ? menu->popupNode : NULL)): NULL;
 
@@ -1447,7 +1459,7 @@ MENU DRAWING
  * Used to draw an item to the equipment containers. First look whether the objDef_t
  * includes an image - if there is none then draw the model
  */
-void MN_DrawItem(vec3_t org, item_t item, int sx, int sy, int x, int y, vec3_t scale, vec4_t color)
+void MN_DrawItem (vec3_t org, item_t item, int sx, int sy, int x, int y, vec3_t scale, vec4_t color)
 {
 	modelInfo_t mi;
 	objDef_t *od;
@@ -1510,7 +1522,7 @@ void MN_DrawItem(vec3_t org, item_t item, int sx, int sy, int x, int y, vec3_t s
 /**
  * @brief Generic tooltip function
  */
-static int MN_DrawTooltip(char *font, char *string, int x, int y, int maxWidth)
+static int MN_DrawTooltip (char *font, char *string, int x, int y, int maxWidth)
 {
 	int height = 0, width = 0;
 
@@ -1536,7 +1548,7 @@ static int MN_DrawTooltip(char *font, char *string, int x, int y, int maxWidth)
 /**
  * @brief Wrapper for menu tooltips
  */
-static void MN_Tooltip(menuNode_t * node, int x, int y)
+static void MN_Tooltip (menuNode_t * node, int x, int y)
 {
 	char *tooltip;
 	int width = 0;
@@ -1563,7 +1575,7 @@ static void MN_Tooltip(menuNode_t * node, int x, int y)
 /**
  * @brief
  */
-void MN_PrecacheMenus(void)
+void MN_PrecacheMenus (void)
 {
 	int i;
 	menu_t *menu;
@@ -1604,7 +1616,7 @@ void MN_PrecacheMenus(void)
  * @param[in] menuModel menu model id from script files
  * @return menuModel_t pointer
  */
-static menuModel_t *MN_GetMenuModel(char *menuModel)
+static menuModel_t *MN_GetMenuModel (char *menuModel)
 {
 	int i;
 	menuModel_t *m;
@@ -1623,7 +1635,7 @@ static menuModel_t *MN_GetMenuModel(char *menuModel)
  * @param[in] n The node to get the font for - if NULL f_small is returned
  * @return char pointer with font name (default is f_small)
  */
-char *MN_GetFont(const menu_t *m, const menuNode_t *const n)
+char *MN_GetFont (const menu_t *m, const menuNode_t *const n)
 {
 	if (!n || n->data[1]) {
 		if (!m) {
@@ -1638,7 +1650,7 @@ char *MN_GetFont(const menu_t *m, const menuNode_t *const n)
  * @brief Draws the menu stack
  * @sa SCR_UpdateScreen
  */
-void MN_DrawMenus(void)
+void MN_DrawMenus (void)
 {
 	modelInfo_t mi;
 	modelInfo_t pmi;
@@ -2266,7 +2278,7 @@ GENERIC MENU FUNCTIONS
 /**
  * @brief
  */
-static void MN_DeleteMenu(menu_t * menu)
+static void MN_DeleteMenu (menu_t * menu)
 {
 	int i;
 
@@ -2282,7 +2294,7 @@ static void MN_DeleteMenu(menu_t * menu)
  * @brief Get the current active menu
  * @return menu_t pointer from menu stack
  */
-menu_t* MN_ActiveMenu(void)
+menu_t* MN_ActiveMenu (void)
 {
 	if (menuStackPos >= 0)
 		return menuStack[menuStackPos-1];
@@ -2335,7 +2347,7 @@ menu_t* MN_PushMenuDelete (char *name, qboolean delete)
  * @param[in] name Name of the menu to push onto menu stack
  * @return pointer to menu_t
  */
-menu_t* MN_PushMenu(char *name)
+menu_t* MN_PushMenu (char *name)
 {
 	return MN_PushMenuDelete(name, qtrue);
 }
@@ -2344,7 +2356,7 @@ menu_t* MN_PushMenu(char *name)
  * @brief Console function to push a menu onto the menu stack
  * @sa MN_PushMenu
  */
-static void MN_PushMenu_f(void)
+static void MN_PushMenu_f (void)
 {
 	if (Cmd_Argc() > 1)
 		MN_PushMenu(Cmd_Argv(1));
@@ -2357,7 +2369,7 @@ static void MN_PushMenu_f(void)
  * Note: relies on a "nohud" menu existing
  * @sa MN_PushMenu
  */
-static void MN_PushNoHud_f(void)
+static void MN_PushNoHud_f (void)
 {
 	/* can't hide hud if we are not in battlescape */
 	if (!CL_OnBattlescape())
@@ -2370,7 +2382,7 @@ static void MN_PushNoHud_f(void)
  * @brief Console function to push a menu, without deleting its copies
  * @sa MN_PushMenu
  */
-static void MN_PushCopyMenu_f(void)
+static void MN_PushCopyMenu_f (void)
 {
 	if (Cmd_Argc() > 1) {
 		Cvar_SetValue("mn_escpop", mn_escpop->value + 1);
@@ -2386,7 +2398,7 @@ static void MN_PushCopyMenu_f(void)
  * @param[in] all If true pop all menus from stack
  * @sa MN_PopMenu_f
  */
-void MN_PopMenu(qboolean all)
+void MN_PopMenu (qboolean all)
 {
 	if (all)
 		while (menuStackPos > 0) {
@@ -2424,7 +2436,7 @@ void MN_PopMenu(qboolean all)
  * @note The cvar mn_escpop defined how often the MN_PopMenu function is called.
  * This is useful for e.g. nodes that doesn't have a render node (for example: video options)
  */
-static void MN_PopMenu_f(void)
+static void MN_PopMenu_f (void)
 {
 	if (Cmd_Argc() < 2 || Q_strncmp(Cmd_Argv(1), "esc", 3)) {
 		MN_PopMenu(qfalse);
@@ -2442,7 +2454,7 @@ static void MN_PopMenu_f(void)
 /**
  * @brief
  */
-static void MN_Modify_f(void)
+static void MN_Modify_f (void)
 {
 	float value;
 
@@ -2463,7 +2475,7 @@ static void MN_Modify_f(void)
 /**
  * @brief
  */
-static void MN_ModifyWrap_f(void)
+static void MN_ModifyWrap_f (void)
 {
 	float value;
 
@@ -2484,7 +2496,7 @@ static void MN_ModifyWrap_f(void)
 /**
  * @brief
  */
-static void MN_ModifyString_f(void)
+static void MN_ModifyString_f (void)
 {
 	qboolean next;
 	char *current, *list, *tp;
@@ -2587,7 +2599,7 @@ static char tutorialList[MAX_TUTORIALLIST];
 /**
  * @brief
  */
-static void MN_GetTutorials_f(void)
+static void MN_GetTutorials_f (void)
 {
 	int i;
 	tutorial_t *t;
@@ -2887,7 +2899,7 @@ void MN_ResetMenus (void)
 /**
  * @brief
  */
-void MN_Shutdown(void)
+void MN_Shutdown (void)
 {
 	/* free the memory */
 	if (adataize)
@@ -3770,7 +3782,7 @@ static const value_t fontValues[] = {
 /**
  * @brief
  */
-void CL_GetFontData(const char *name, int *size, char *path)
+void CL_GetFontData (const char *name, int *size, char *path)
 {
 	int i;
 
@@ -3787,7 +3799,7 @@ void CL_GetFontData(const char *name, int *size, char *path)
 /**
  * @brief
  */
-void CL_ParseFont(char *name, char **text)
+void CL_ParseFont (char *name, char **text)
 {
 	font_t *font;
 	char *errhead = "CL_ParseFont: unexpected end of file (font";
@@ -3863,7 +3875,7 @@ void CL_ParseFont(char *name, char **text)
 /**
  * @brief after a vid restart we have to reinit the fonts
  */
-void CL_InitFonts(void)
+void CL_InitFonts (void)
 {
 	int i;
 

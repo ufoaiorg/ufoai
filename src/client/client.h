@@ -954,7 +954,7 @@ typedef enum {
 	MAX_MENUTEXTS
 } texts_t;
 
-void CL_SpawnSoldiers (void);
+void CL_SpawnSoldiers(void);
 qboolean MN_CursorOnMenu(int x, int y);
 void MN_Click(int x, int y);
 void MN_RightClick(int x, int y);
@@ -964,14 +964,15 @@ void MN_SetViewRect(const menu_t* menu);
 void MN_DrawMenus(void);
 void MN_DrawItem(vec3_t org, item_t item, int sx, int sy, int x, int y, vec3_t scale, vec4_t color);
 void MN_ShutdownMessageSystem(void);
-void MN_UnHideNode ( menuNode_t* node );
-void MN_HideNode ( menuNode_t* node );
+void MN_UnHideNode(menuNode_t* node);
+void MN_HideNode(menuNode_t* node);
 menuNode_t* MN_GetNodeFromCurrentMenu(char*name);
-void MN_SetNewNodePos (menuNode_t* node, int x, int y);
+void MN_SetNewNodePos(menuNode_t* node, int x, int y);
 menuNode_t *MN_GetNode(const menu_t* const menu, char *name);
 menu_t *MN_GetMenu(char *name);
 char *MN_GetFont(const menu_t *m, const menuNode_t *const n);
 void MN_TextScrollBottom(char* nodeName);
+void MN_ExecuteActions(const menu_t* const menu, menuAction_t* const first);
 
 void MN_ResetMenus(void);
 void MN_Shutdown(void);

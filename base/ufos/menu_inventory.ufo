@@ -159,6 +159,10 @@ menu hudinv extends inventory
 		size	"36 75"
 		click	{ cmd mn_pop }
 	}
+	func leave
+	{
+		cmd "mn_pop;"
+	}
 }
 
 // ==================
@@ -174,6 +178,10 @@ menu ahudinv extends inventory
 		size    "130 265"
 		click   { cmd mn_pop }
 		rclick  { cmd mn_pop }
+	}
+	func leave
+	{
+		cmd "mn_pop;"
 	}
 }
 

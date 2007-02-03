@@ -400,7 +400,7 @@ cvar_t *cl_anglespeedkey;
 /**
  * @brief Switch one worldlevel up
  */
-void CL_LevelUp(void)
+void CL_LevelUp (void)
 {
 	if (!CL_OnBattlescape())
 		return;
@@ -411,7 +411,7 @@ void CL_LevelUp(void)
 /**
  * @brief Switch on worldlevel down
  */
-void CL_LevelDown(void)
+void CL_LevelDown (void)
 {
 	if (!CL_OnBattlescape())
 		return;
@@ -423,7 +423,7 @@ void CL_LevelDown(void)
 /**
  * @brief
  */
-void CL_ZoomInQuant(void)
+void CL_ZoomInQuant (void)
 {
 	float quant;
 
@@ -454,7 +454,7 @@ void CL_ZoomInQuant(void)
 /**
  * @brief
  */
-void CL_ZoomOutQuant(void)
+void CL_ZoomOutQuant (void)
 {
 	float quant;
 
@@ -485,7 +485,7 @@ void CL_ZoomOutQuant(void)
 /**
  * @brief returns the weapon the actor's left hand is touching
  */
-invList_t* CL_GetLeftHandWeapon(le_t *actor)
+invList_t* CL_GetLeftHandWeapon (le_t *actor)
 {
 	invList_t *weapon = LEFT(selActor);
 
@@ -501,7 +501,7 @@ invList_t* CL_GetLeftHandWeapon(le_t *actor)
 /**
  * @brief Shoot right weapon in primary fire mode.
  */
-void CL_FireRightPrimary(void)
+void CL_FireRightPrimary (void)
 {
 	if (!selActor || !CL_CheckMenuAction(selActor->TU, RIGHT(selActor), FD_PRIMARY))
 		return;
@@ -514,7 +514,7 @@ void CL_FireRightPrimary(void)
 /**
  * @brief Shoot right weapon in secondary fire mode.
  */
-void CL_FireRightSecondary(void)
+void CL_FireRightSecondary (void)
 {
 	if (!selActor || !CL_CheckMenuAction(selActor->TU, RIGHT(selActor), FD_SECONDARY))
 		return;
@@ -527,7 +527,7 @@ void CL_FireRightSecondary(void)
 /**
  * @brief Shoot left weapon in primary fire mode.
  */
-void CL_FireLeftPrimary(void)
+void CL_FireLeftPrimary (void)
 {
 	if (!selActor || !CL_CheckMenuAction(selActor->TU, CL_GetLeftHandWeapon(selActor), FD_PRIMARY))
 		return;
@@ -540,7 +540,7 @@ void CL_FireLeftPrimary(void)
 /**
  * @brief Shoot left weapon in secondary fire mode.
  */
-void CL_FireLeftSecondary(void)
+void CL_FireLeftSecondary (void)
 {
 	if (!selActor || !CL_CheckMenuAction(selActor->TU, CL_GetLeftHandWeapon(selActor), FD_SECONDARY))
 		return;
@@ -553,7 +553,7 @@ void CL_FireLeftSecondary(void)
 /**
  * @brief
  */
-void CL_ConfirmAction(void)
+void CL_ConfirmAction (void)
 {
 	extern pos3_t mousePos;
 
@@ -571,7 +571,7 @@ void CL_ConfirmAction(void)
 /**
  * @brief Reload left weapon.
  */
-void CL_ReloadLeft(void)
+void CL_ReloadLeft (void)
 {
 	if (!selActor || !CL_CheckMenuAction(selActor->TU, CL_GetLeftHandWeapon(selActor), EV_INV_RELOAD))
 		return;
@@ -581,7 +581,7 @@ void CL_ReloadLeft(void)
 /**
  * @brief Reload right weapon.
  */
-void CL_ReloadRight(void)
+void CL_ReloadRight (void)
 {
 	if (!selActor || !CL_CheckMenuAction(selActor->TU, RIGHT(selActor), EV_INV_RELOAD))
 		 return;
@@ -590,20 +590,38 @@ void CL_ReloadRight(void)
 
 
 /**
- * @brief
+ * @brief Left mouse click
  */
-void CL_SelectDown(void)
+void CL_SelectDown (void)
 {
-	if (mouseSpace == MS_WORLD)
+	menu_t* menu;
+	switch (mouseSpace) {
+	case MS_WORLD:
 		CL_ActorSelectMouse();
-	else if (mouseSpace == MS_MENU)
+		/* get the current menu */
+		menu = MN_GetMenu(NULL);
+		if (menu && menu->leaveNode)
+			MN_ExecuteActions(menu, menu->leaveNode->click);
+		break;
+	case MS_MENU:
 		MN_Click(mx, my);
+		break;
+	default:
+		/* we clicked outside the world but not onto a menu */
+		if (cls.state == ca_active) {
+			/* get the current menu */
+			menu = MN_GetMenu(NULL);
+			if (menu && menu->leaveNode)
+				MN_ExecuteActions(menu, menu->leaveNode->click);
+		}
+		break;
+	}
 }
 
 /**
  * @brief
  */
-void CL_SelectUp(void)
+void CL_SelectUp (void)
 {
 	if (mouseSpace == MS_DRAG)
 		MN_Click(mx, my);
@@ -613,7 +631,7 @@ void CL_SelectUp(void)
 /**
  * @brief Mouse click
  */
-void CL_ActionDown(void)
+void CL_ActionDown (void)
 {
 	switch (mouseSpace) {
 	case MS_WORLD:
@@ -628,7 +646,7 @@ void CL_ActionDown(void)
 /**
  * @brief
  */
-void CL_ActionUp(void)
+void CL_ActionUp (void)
 {
 	mouseSpace = MS_NULL;
 }
@@ -636,7 +654,7 @@ void CL_ActionUp(void)
 /**
  * @brief Turn button is hit - middle mouse button
  */
-void CL_TurnDown(void)
+void CL_TurnDown (void)
 {
 	if (mouseSpace == MS_WORLD)
 		CL_ActorTurnMouse();
@@ -647,7 +665,7 @@ void CL_TurnDown(void)
 /**
  * @brief
  */
-void CL_TurnUp(void)
+void CL_TurnUp (void)
 {
 	mouseSpace = MS_NULL;
 }
@@ -658,7 +676,7 @@ void CL_TurnUp(void)
  */
 static int lastAlien = 0;
 
-void CL_NextAlien(void)
+void CL_NextAlien (void)
 {
 	le_t *le;
 	int i;

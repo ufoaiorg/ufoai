@@ -162,6 +162,10 @@ menu hudphysdat extends physdata
 		size	"36 75"
 		click	{ cmd mn_pop }
 	}
+	func leave
+	{
+		cmd "mn_pop;"
+	}
 }
 
 // ==================
@@ -177,5 +181,9 @@ menu ahudphysdat extends physdata
 		size    "130 265"
 		click   { cmd "mn_pop" }
 		rclick  { cmd "mn_pop" }
+	}
+	func leave
+	{
+		cmd "mn_pop;"
 	}
 }
