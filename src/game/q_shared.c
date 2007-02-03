@@ -63,7 +63,7 @@ char *pa_format[] =
 	"b",				/* PA_TURN */
 	"g",				/* PA_MOVE */
 	"s",				/* PA_STATE */
-	"gb",				/* PA_SHOOT */
+	"gbb",				/* PA_SHOOT */
 	"bbbbbb"			/* PA_INVMOVE */
 };
 
