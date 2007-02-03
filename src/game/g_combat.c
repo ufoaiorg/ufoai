@@ -912,8 +912,8 @@ qboolean G_ClientShoot(player_t * player, int num, pos3_t at, int type, byte fir
 			gi.cprintf(player, PRINT_HIGH, _("Can't perform action - object not activable!\n"));
 		return qfalse;
 	}
-	gi.dprintf("G_ClientShoot: %i DEBUG\n", firemode);
-	gi.dprintf("G_ClientShoot: %i %i %i DEBUG\n", fd->obj_idx, fd->weap_idx, fd->fd_idx);
+	gi.dprintf("G_ClientShoot: %i DEBUG weapon: '%s'\n", firemode, gi.csi->ods[weapon->t].name);
+	gi.dprintf("G_ClientShoot: ('%s') %i %i %i DEBUG\n", fd->name, fd->obj_idx, fd->weap_idx, fd->fd_idx);
 
 	ammo = weapon->a;
 	reaction_leftover = IS_SHOT_REACTION(type) ? sv_reaction_leftover->value : 0;
@@ -1195,7 +1195,7 @@ static qboolean G_CanReactionFire(edict_t *ent, edict_t *target, char *reason)
 int G_GetFiringTUs(edict_t *ent, edict_t *target, int *hand, byte *firemode)
 {
 	byte fmode1 = 0;
-	
+
 	byte weapon_fd_idx;
 	/* Fire the first weapon in hands if everything is ok. */
 	if ( RIGHT(ent)
@@ -1204,7 +1204,7 @@ int G_GetFiringTUs(edict_t *ent, edict_t *target, int *hand, byte *firemode)
 		&& (!gi.csi->ods[RIGHT(ent)->item.t].reload
 			|| RIGHT(ent)->item.a > 0) ) {
 		weapon_fd_idx = INV_FiredefsIDXForWeapon(&gi.csi->ods[RIGHT(ent)->item.m], RIGHT(ent)->item.t);
-					
+
 		if ( gi.csi->ods[RIGHT(ent)->item.m].fd[weapon_fd_idx][fmode1].time + sv_reaction_leftover->integer <= ent->TU
 		  && gi.csi->ods[RIGHT(ent)->item.m].fd[weapon_fd_idx][fmode1].range > VectorDist(ent->origin, target->origin) ) {
 
@@ -1221,8 +1221,8 @@ int G_GetFiringTUs(edict_t *ent, edict_t *target, int *hand, byte *firemode)
 		&& (!gi.csi->ods[LEFT(ent)->item.t].reload
 			|| LEFT(ent)->item.a > 0) ) {
 		weapon_fd_idx = INV_FiredefsIDXForWeapon(&gi.csi->ods[LEFT(ent)->item.m], LEFT(ent)->item.t);
-		if ( gi.csi->ods[LEFT(ent)->item.m].fd[weapon_fd_idx][fmode1].time + sv_reaction_leftover->integer <= ent->TU 
-		  && gi.csi->ods[LEFT(ent)->item.m].fd[weapon_fd_idx][fmode1].range > VectorDist(ent->origin, target->origin) ) { 
+		if ( gi.csi->ods[LEFT(ent)->item.m].fd[weapon_fd_idx][fmode1].time + sv_reaction_leftover->integer <= ent->TU
+		  && gi.csi->ods[LEFT(ent)->item.m].fd[weapon_fd_idx][fmode1].range > VectorDist(ent->origin, target->origin) ) {
 
 			if (hand) {
 				*hand = ST_LEFT_REACTION;

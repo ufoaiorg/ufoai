@@ -339,7 +339,7 @@ extern void CL_AircraftReturnToBase (aircraft_t *aircraft)
  *
  * Sends the current aircraft back to homebase and updates
  * the cvars
- * @sa CL_GameAutoGo
+ * @sa CL_GameAutoGo_f
  * @sa CL_GameResults_f
  */
 void CL_AircraftReturnToBase_f(void)

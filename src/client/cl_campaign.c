@@ -2423,7 +2423,7 @@ static void CP_MissionTriggerFunctions(qboolean add)
  * Can execute console commands (triggers) on win and lose
  * This can be used for story dependent missions
  */
-static void CP_ExecuteMissionTrigger(mission_t * m, int won, base_t* base)
+static void CP_ExecuteMissionTrigger (mission_t * m, int won, base_t* base)
 {
 	/* we add them only here - and remove them afterwards to prevent cheating */
 	CP_MissionTriggerFunctions(qtrue);
@@ -2446,9 +2446,9 @@ static void CP_ExecuteMissionTrigger(mission_t * m, int won, base_t* base)
  * You can mark a mission as story related.
  * If a mission is story related the cvar game_autogo is set to 0
  * If this cvar is 1 - the mission dialog will have a auto mission button
- * @sa CL_GameAutoGo
+ * @sa CL_GameAutoGo_f
  */
-static void CL_GameAutoCheck(void)
+static void CL_GameAutoCheck_f (void)
 {
 	if (!curCampaign || !selMis || gd.interceptAircraft < 0) {
 		Com_DPrintf("No update after automission\n");
@@ -2470,10 +2470,10 @@ static void CL_GameAutoCheck(void)
 /**
  * @brief
  *
- * @sa CL_GameAutoCheck
+ * @sa CL_GameAutoCheck_f
  * @sa CL_GameGo
  */
-void CL_GameAutoGo(void)
+static void CL_GameAutoGo_f (void)
 {
 	mission_t *mis;
 	int won;
@@ -2540,7 +2540,7 @@ void CL_GameAutoGo(void)
 /**
  * @brief
  */
-void CL_GameAbort(void)
+static void CL_GameAbort_f (void)
 {
 	/* aborting means letting the aliens win */
 	Cbuf_AddText(va("sv win %i\n", TEAM_ALIEN));
@@ -2548,8 +2548,8 @@ void CL_GameAbort(void)
 
 /* =========================================================== */
 
-equipDef_t eTempMarket; /* a terrible hack so that "abort;try again" works */
-int eTempCredits;
+static equipDef_t eTempMarket; /* a terrible hack so that "abort;try again" works */
+static int eTempCredits;
 
 /**
  * @brief Do the real collection of the items
@@ -2561,7 +2561,7 @@ int eTempCredits;
  * Called from CL_CollectItems.
  * Put every item to the market inventory list
  */
-void CL_CollectItemAmmo(invList_t * weapon, int left_hand, qboolean market)
+static void CL_CollectItemAmmo (invList_t * weapon, int left_hand, qboolean market)
 {
 	technology_t *tech = NULL;
 
@@ -2614,7 +2614,7 @@ void CL_CollectItemAmmo(invList_t * weapon, int left_hand, qboolean market)
  * and put them back to inventory. Calls CL_CollectItemAmmo which
  * does the real collecting
  */
-void CL_CollectItems(int won, int *item_counter, int *credits_gained)
+extern void CL_CollectItems (int won, int *item_counter, int *credits_gained)
 {
 	int i;
 	le_t *le;
@@ -2673,7 +2673,7 @@ void CL_CollectItems(int won, int *item_counter, int *credits_gained)
  *
  * FIXME: See TODO and FIXME included
  */
-void CL_UpdateCharacterStats(int won)
+static void CL_UpdateCharacterStats (int won)
 {
 	character_t *chr = NULL;
 	rank_t *rank = NULL;
@@ -2725,7 +2725,7 @@ void CL_UpdateCharacterStats(int won)
 /**
  * @brief Debug function to set the credits to max
  */
-void CL_DebugFullCredits (void)
+static void CL_DebugFullCredits_f (void)
 {
 	CL_UpdateCredits(MAX_CREDITS);
 }
@@ -2733,7 +2733,7 @@ void CL_DebugFullCredits (void)
 /**
  * @brief Debug function to increase the kills and test the ranks
  */
-static void CL_DebugChangeCharacterStats_f(void)
+static void CL_DebugChangeCharacterStats_f (void)
 {
 	int i, j;
 	character_t *chr;
@@ -2753,7 +2753,7 @@ static void CL_DebugChangeCharacterStats_f(void)
  * @brief
  * @sa CL_ParseResults
  * @sa CL_ParseCharacterData
- * @sa CL_GameAbort
+ * @sa CL_GameAbort_f
  */
 static void CL_GameResults_f (void)
 {
@@ -2869,7 +2869,7 @@ static void CL_GameResults_f (void)
 /* =========================================================== */
 
 
-static value_t mission_vals[] = {
+static const value_t mission_vals[] = {
 	{"location", V_TRANSLATION_STRING, offsetof(mission_t, location)}
 	,
 	{"type", V_TRANSLATION_STRING, offsetof(mission_t, type)}
@@ -2924,7 +2924,7 @@ static char *mtp = missionTexts;
  * @param[in] name valid mission name
  * @return ms is the mission_t pointer of the mission to add
  */
-mission_t *CL_AddMission(char *name)
+extern mission_t *CL_AddMission (char *name)
 {
 	int i;
 	mission_t *ms;
@@ -2952,11 +2952,11 @@ mission_t *CL_AddMission(char *name)
 /**
  * @brief
  */
-void CL_ParseMission(char *name, char **text)
+extern void CL_ParseMission (char *name, char **text)
 {
 	char *errhead = "CL_ParseMission: unexptected end of file (mission ";
 	mission_t *ms;
-	value_t *vp;
+	const value_t *vp;
 	char *token;
 	int i;
 
@@ -3042,7 +3042,7 @@ void CL_ParseMission(char *name, char **text)
  * @brief This function parses a list of items that should be set to researched = true after campaign start
  * @TODO: Implement the use of this function
  */
-void CL_ParseResearchedCampaignItems(char *name, char **text)
+extern void CL_ParseResearchedCampaignItems (char *name, char **text)
 {
 	char *errhead = "CL_ParseResearchedCampaignItems: unexptected end of file (equipment ";
 	char *token;
@@ -3089,7 +3089,7 @@ void CL_ParseResearchedCampaignItems(char *name, char **text)
  * @brief This function parses a list of items that should be set to researched = true after campaign start
  * @param researchable Mark them researchable or not researchable
  */
-void CL_ParseResearchableCampaignStates(char *name, char **text, qboolean researchable)
+extern void CL_ParseResearchableCampaignStates (char *name, char **text, qboolean researchable)
 {
 	char *errhead = "CL_ParseResearchableCampaignStates: unexptected end of file (equipment ";
 	char *token;
@@ -3139,7 +3139,7 @@ void CL_ParseResearchableCampaignStates(char *name, char **text, qboolean resear
 
 /* =========================================================== */
 
-static value_t stageset_vals[] = {
+static const value_t stageset_vals[] = {
 	{"needed", V_STRING, offsetof(stageSet_t, needed)}
 	,
 	{"delay", V_DATE, offsetof(stageSet_t, delay)}
@@ -3171,7 +3171,7 @@ static void CL_ParseStageSet(char *name, char **text)
 {
 	char *errhead = "CL_ParseStageSet: unexptected end of file (stageset ";
 	stageSet_t *sp;
-	value_t *vp;
+	const value_t *vp;
 	char missionstr[256];
 	char *token, *misp;
 	int j;
@@ -3258,7 +3258,7 @@ static void CL_ParseStageSet(char *name, char **text)
  * @brief
  * @sa CL_ParseStageSet
  */
-void CL_ParseStage(char *name, char **text)
+extern void CL_ParseStage (char *name, char **text)
 {
 	char *errhead = "CL_ParseStage: unexptected end of file (stage ";
 	stage_t *sp;
@@ -3314,7 +3314,7 @@ void CL_ParseStage(char *name, char **text)
 
 salary_t salaries[MAX_CAMPAIGNS];
 
-static value_t salary_vals[] = {
+static const value_t salary_vals[] = {
 	{"soldier_base", V_INT, offsetof(salary_t, soldier_base)}
 	,
 	{"soldier_rankbonus", V_INT, offsetof(salary_t, soldier_rankbonus)}
@@ -3368,11 +3368,11 @@ static value_t salary_vals[] = {
  *  soldier_base 3000
  * }</code>
  */
-void CL_ParseSalary(char *name, char **text, int campaignID)
+extern void CL_ParseSalary (char *name, char **text, int campaignID)
 {
 	char *errhead = "CL_ParseSalary: unexptected end of file ";
 	salary_t *s;
-	value_t *vp;
+	const value_t *vp;
 	char *token;
 
 	/* initialize the campaign */
@@ -3424,7 +3424,7 @@ void CL_ParseSalary(char *name, char **text, int campaignID)
  *  TEAM_ALIEN ability 15 95
  * }</code>
  */
-void CL_ParseCharacterValues(char *name, char **text, int campaignID)
+extern void CL_ParseCharacterValues (char *name, char **text, int campaignID)
 {
 	char *errhead = "CL_ParseCharacterValues: unexptected end of file (aircraft ";
 	char *token;
@@ -3477,7 +3477,7 @@ void CL_ParseCharacterValues(char *name, char **text, int campaignID)
 
 /* =========================================================== */
 
-static value_t campaign_vals[] = {
+static const value_t campaign_vals[] = {
 	{"team", V_STRING, offsetof(campaign_t, team)}
 	,
 	{"soldiers", V_INT, offsetof(campaign_t, soldiers)}
@@ -3519,11 +3519,11 @@ static value_t campaign_vals[] = {
 /**
  * @brief
  */
-void CL_ParseCampaign(char *id, char **text)
+extern void CL_ParseCampaign (char *id, char **text)
 {
 	char *errhead = "CL_ParseCampaign: unexptected end of file (campaign ";
 	campaign_t *cp;
-	value_t *vp;
+	const value_t *vp;
 	char *token;
 	int i;
 	salary_t *s;
@@ -3621,7 +3621,7 @@ void CL_ParseCampaign(char *id, char **text)
 
 /* =========================================================== */
 
-static value_t nation_vals[] = {
+static const value_t nation_vals[] = {
 	{"name", V_TRANSLATION_STRING, offsetof(nation_t, name)}
 	,
 	{"pos", V_POS, offsetof(nation_t, pos)}
@@ -3650,11 +3650,11 @@ static value_t nation_vals[] = {
  * @param[in] text The text of the nation node
  * @sa nation_vals
  */
-void CL_ParseNations(char *name, char **text)
+extern void CL_ParseNations(char *name, char **text)
 {
 	char *errhead = "CL_ParseNations: unexptected end of file (aircraft ";
 	nation_t *nation;
-	value_t *vp;
+	const value_t *vp;
 	char *token;
 
 	if (gd.numNations >= MAX_NATIONS) {
@@ -3711,7 +3711,7 @@ void CL_ParseNations(char *name, char **text)
  * @return true when we are not in battlefield
  * TODO: Check cvar mn_main for value
  */
-qboolean CL_OnBattlescape(void)
+extern qboolean CL_OnBattlescape (void)
 {
 	/* sv.state is set to zero on every battlefield shutdown */
 	if (Com_ServerState() > 0)
@@ -3730,7 +3730,7 @@ qboolean CL_OnBattlescape(void)
  * @sa CL_SetMissionCvars
  * @sa CL_GameGo
  */
-void CL_StartMission_f (void)
+static void CL_StartMission_f (void)
 {
 	int i;
 	char *missionID;
@@ -3743,13 +3743,13 @@ void CL_StartMission_f (void)
 
 	missionID = Cmd_Argv(1);
 
-	for (i=0; i<numMissions; i++) {
+	for (i = 0; i < numMissions; i++) {
 		mission = &missions[i];
 		if (!Q_strncmp(missions[i].name, missionID, sizeof(missions[i].name))) {
 			break;
 		}
 	}
-	if (i==numMissions) {
+	if (i == numMissions) {
 		Com_Printf("Mission with id '%s' was not found\n", missionID);
 		return;
 	}
@@ -3761,10 +3761,10 @@ void CL_StartMission_f (void)
 /**
  * @brief Scriptfunction to list all parsed nations with their current values
  */
-void CL_NationList (void)
+static void CL_NationList_f (void)
 {
 	int i;
-	for (i=0; i<gd.numNations;i++) {
+	for (i = 0; i < gd.numNations; i++) {
 		Com_Printf("Nation ID: %s\n", gd.nations[i].id);
 		Com_Printf("...funding %i c\n", gd.nations[i].funding);
 		Com_Printf("...alienFriendly %0.2f\n", gd.nations[i].alienFriendly);
@@ -3806,11 +3806,11 @@ static const cmdList_t game_commands[] = {
 	,
 	{"game_go", CL_GameGo, NULL}
 	,
-	{"game_auto_check", CL_GameAutoCheck, NULL}
+	{"game_auto_check", CL_GameAutoCheck_f, NULL}
 	,
-	{"game_auto_go", CL_GameAutoGo, NULL}
+	{"game_auto_go", CL_GameAutoGo_f, NULL}
 	,
-	{"game_abort", CL_GameAbort, NULL}
+	{"game_abort", CL_GameAbort_f, NULL}
 	,
 	{"game_results", CL_GameResults_f, "Parses and shows the game results"}
 	,
@@ -3826,12 +3826,12 @@ static const cmdList_t game_commands[] = {
 	,
 	{"mn_mapaction_reset", MAP_ResetAction, NULL}
 	,
-	{"nationlist", CL_NationList, NULL}
+	{"nationlist", CL_NationList_f, "List all nations on the game console"}
 	,
 	{"mission", CL_StartMission_f, NULL}
 	,
 #ifdef DEBUG
-	{"debug_fullcredits", CL_DebugFullCredits, NULL}
+	{"debug_fullcredits", CL_DebugFullCredits_f, "Debug function to give the player full credits"}
 	,
 #endif
 	{NULL, NULL, NULL}
