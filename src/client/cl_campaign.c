@@ -2755,7 +2755,7 @@ static void CL_DebugChangeCharacterStats_f(void)
  * @sa CL_ParseCharacterData
  * @sa CL_GameAbort
  */
-static void CL_GameResultsCmd(void)
+static void CL_GameResults_f (void)
 {
 	int won;
 	int civilians_killed;
@@ -2766,7 +2766,7 @@ static void CL_GameResultsCmd(void)
 	base_t *attackedbase = NULL;
 	character_t *chr = NULL;
 
-	Com_DPrintf("CL_GameResultsCmd\n");
+	Com_DPrintf("CL_GameResults_f\n");
 
 	/* multiplayer? */
 	if (!curCampaign || !selMis || !baseCurrent)
@@ -2807,18 +2807,18 @@ static void CL_GameResultsCmd(void)
 	/* Backward loop because gd.numEmployees[EMPL_SOLDIER] is decremented by E_DeleteEmployee */
 	for (i = gd.numEmployees[EMPL_SOLDIER]-1; i >= 0 ; i-- ) {
 		/* if employee is marked as dead */
-		if (CL_SoldierInAircraft(i, gd.interceptAircraft) )	/* DEBUG? */
+		if (CL_SoldierInAircraft(i, gd.interceptAircraft))	/* DEBUG? */
 			numberofsoldiers++;
 
-		Com_DPrintf("CL_GameResultsCmd - try to get player %i \n", i);
+		Com_DPrintf("CL_GameResults_f - try to get player %i \n", i);
 		employee = E_GetHiredEmployee(baseCurrent, EMPL_SOLDIER, i);
 
 		if (employee != NULL) {
 			chr = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, i);
 			assert(chr);
-			Com_DPrintf("CL_GameResultsCmd - idx %d hp %d\n",chr->ucn, chr->HP);
+			Com_DPrintf("CL_GameResults_f - idx %d hp %d\n",chr->ucn, chr->HP);
 			if (chr->HP <= 0) { /* TODO: <= -50, etc. */
-				Com_DPrintf("CL_GameResultsCmd - remove player %i - dead\n", i);
+				Com_DPrintf("CL_GameResults_f - remove player %i - dead\n", i);
 
 				/* Delete the employee. */
 				/* sideeffect: gd.numEmployees[EMPL_SOLDIER] and teamNum[] are decremented by one here. */
@@ -2827,9 +2827,9 @@ static void CL_GameResultsCmd(void)
 			} /* if dead */
 		} /* if employee != NULL */
 	} /* for */
-	Com_DPrintf("CL_GameResultsCmd - num %i\n", numberofsoldiers); /* DEBUG */
+	Com_DPrintf("CL_GameResults_f - num %i\n", numberofsoldiers); /* DEBUG */
 
-	Com_DPrintf("CL_GameResultsCmd - done removing dead players\n");
+	Com_DPrintf("CL_GameResults_f - done removing dead players\n");
 
 	/* onwin and onlose triggers */
 	CP_ExecuteMissionTrigger(selMis->def, won, baseCurrent);
@@ -3812,7 +3812,7 @@ static const cmdList_t game_commands[] = {
 	,
 	{"game_abort", CL_GameAbort, NULL}
 	,
-	{"game_results", CL_GameResultsCmd, NULL}
+	{"game_results", CL_GameResults_f, "Parses and shows the game results"}
 	,
 	{"game_timestop", CL_GameTimeStop, NULL}
 	,

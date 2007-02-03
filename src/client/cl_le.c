@@ -676,7 +676,7 @@ void LE_AddToScene(void)
 /**
  * @brief Cleanup unused LE inventories that the server sent to the client
  */
-void LE_Cleanup(void)
+void LE_Cleanup (void)
 {
 	int i;
 	le_t *le;

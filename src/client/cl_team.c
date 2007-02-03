@@ -562,7 +562,7 @@ static void CL_GenerateEquipment_f (void)
 
 	/* Popup if no soldiers are assigned to the current aircraft. */
 	/* if ( !baseCurrent->numHired) { */
-	if ( !baseCurrent->teamNum[baseCurrent->aircraftCurrent] ) {
+	if (!baseCurrent->teamNum[baseCurrent->aircraftCurrent]) {
 		MN_PopMenu(qfalse);
 		return;
 	}
@@ -571,8 +571,8 @@ static void CL_GenerateEquipment_f (void)
 
 	/* Store hired names. */
 	Cvar_ForceSet("cl_selected", "0");
-	for (i = 0, p = 0; i < cl_numnames->integer; i++)
-		if ( CL_SoldierInAircraft(i, aircraft->idx) ) {
+	for (i = 0, p = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++)
+		if (CL_SoldierInAircraft(i, aircraft->idx)) {
 			/* maybe we already have soldiers in this aircraft */
 			baseCurrent->curTeam[p] = E_GetCharacter(baseCurrent, EMPL_SOLDIER, i);
 			if (!baseCurrent->curTeam[p])
@@ -580,9 +580,11 @@ static void CL_GenerateEquipment_f (void)
 			Com_DPrintf("add %s to curTeam (pos: %i)\n", baseCurrent->curTeam[p]->name, p);
 			Cvar_ForceSet(va("mn_name%i", p), baseCurrent->curTeam[p]->name);
 			p++;
+			if (p >= cl_numnames->integer)
+				break;
 		}
 
-	if ( p != baseCurrent->teamNum[baseCurrent->aircraftCurrent])
+	if (p != baseCurrent->teamNum[baseCurrent->aircraftCurrent])
 		Sys_Error("CL_GenerateEquipment_f: numEmployees: %i, teamNum[%i]: %i, p: %i\n",
 			gd.numEmployees[EMPL_SOLDIER],
 			baseCurrent->aircraftCurrent,
@@ -953,7 +955,8 @@ void CL_RemoveSoldierFromAircraft (int employee_idx, int aircraft_idx)
 				break;
 			}
 		}
-		return;
+		if (aircraft_idx < 0)
+			return;
 	}
 
 	aircraft = &baseCurrent->aircraft[aircraft_idx];
@@ -973,13 +976,13 @@ void CL_RemoveSoldiersFromAircraft (int aircraft_idx, int base_idx)
 	int i = 0;
 	base_t *base = NULL;
 
-	if ( aircraft_idx < 0 || base_idx < 0)
+	if (aircraft_idx < 0 || base_idx < 0)
 		return;
 
 	base = &gd.bases[base_idx];
 
 	/* Counting backwards because teamNum[aircraft->idx] is changed in CL_RemoveSoldierFromAircraft */
-	for ( i = base->teamNum[aircraft_idx]-1; i >= 0; i-- ) {
+	for (i = base->teamNum[aircraft_idx]-1; i >= 0; i--) {
 		CL_RemoveSoldierFromAircraft(i, aircraft_idx);
 	}
 }
@@ -1518,24 +1521,21 @@ typedef struct updateCharacter_s {
  * @sa G_EndGame
  * @note you also have to update the pascal string size in G_EndGame if you change the buffer here
  */
-void CL_ParseCharacterData(sizebuf_t *buf, qboolean updateCharacter)
+void CL_ParseCharacterData (sizebuf_t *buf, qboolean updateCharacter)
 {
 	static updateCharacter_t updateCharacterArray[MAX_WHOLETEAM];
 	static int num = 0;
 	int i, j;
 	character_t* chr = NULL;
+	employee_t* employee = NULL;
 
 	if (updateCharacter) {
-		for (i=0; i<num; i++) {
+		for (i = 0; i < num; i++) {
 			chr = NULL;
-			/* MAX_EMPLOYEES and not numWholeTeam - maybe some other soldier died */
-			for (j=0; j<MAX_EMPLOYEES; j++) {
-				chr = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, j);
-				if (chr && chr->ucn == updateCharacterArray[i].ucn)
-					break;
-				chr = NULL;
-			}
-			if (!chr) {
+			employee = E_GetEmployeeFromChrUCN(updateCharacterArray[i].ucn);
+			if (employee) {
+				chr = &employee->chr;
+			} else {
 				Com_Printf("Warning: Could not get character with ucn: %i.\n", updateCharacterArray[i].ucn);
 				continue;
 			}
@@ -1544,13 +1544,13 @@ void CL_ParseCharacterData(sizebuf_t *buf, qboolean updateCharacter)
 			chr->AP = updateCharacterArray[i].AP;
 			chr->morale = updateCharacterArray[i].morale;
 
-			for (j=0; j<KILLED_NUM_TYPES; j++)
+			for (j = 0; j < KILLED_NUM_TYPES; j++)
 				chr->kills[j] = updateCharacterArray[i].kills[j];
 		}
 		num = 0;
 	} else {
 		/* invalidate ucn in the array first */
-		for (i=0; i<MAX_WHOLETEAM; i++) {
+		for (i = 0; i < MAX_WHOLETEAM; i++) {
 			updateCharacterArray[i].ucn = -1;
 		}
 		/**
@@ -1566,14 +1566,14 @@ void CL_ParseCharacterData(sizebuf_t *buf, qboolean updateCharacter)
 			Sys_Error("CL_ParseCharacterData: num exceeded MAX_WHOLETEAM\n");
 		else if (num < 0)
 			Sys_Error("CL_ParseCharacterData: MSG_ReadShort error (%i)\n", num);
-		for (i=0; i<num; i++) {
+		for (i = 0; i < num; i++) {
 			updateCharacterArray[i].ucn = MSG_ReadShort(buf);
 			updateCharacterArray[i].HP = MSG_ReadShort(buf);
 			updateCharacterArray[i].STUN = MSG_ReadByte(buf);
 			updateCharacterArray[i].AP = MSG_ReadByte(buf);
 			updateCharacterArray[i].morale = MSG_ReadByte(buf);
 
-			for (j=0; j<KILLED_NUM_TYPES; j++)
+			for (j = 0; j < KILLED_NUM_TYPES; j++)
 				updateCharacterArray[i].kills[j] = MSG_ReadShort(buf);
 		}
 	}
@@ -1584,7 +1584,7 @@ void CL_ParseCharacterData(sizebuf_t *buf, qboolean updateCharacter)
  * @brief Reads mission result data from server
  * See EV_RESULTS
  * @sa G_EndGame
- * @sa CL_GameResultsCmd
+ * @sa CL_GameResults_f
  */
 void CL_ParseResults(sizebuf_t * buf)
 {
@@ -1664,8 +1664,8 @@ void CL_ParseResults(sizebuf_t * buf)
 				thier_stunned += num_stuns[i][j]++;
 			}
 	}
-	/* if we won, our stunned are alive*/
-	if (winner==we) {
+	/* if we won, our stunned are alive */
+	if (winner == we) {
 		our_surviviurs += our_stunned;
 		our_stunned = 0;
 	} else
@@ -1673,10 +1673,10 @@ void CL_ParseResults(sizebuf_t * buf)
 		thier_stunned = 0;
 
 	/* we won,and we'r not the dirty aliens*/
-	if ((winner==we)&&(curCampaign))
-		civilian_surviviurs+=civilian_stunned;
+	if ((winner == we) && (curCampaign))
+		civilian_surviviurs += civilian_stunned;
 	else
-		civilian_killed+=civilian_stunned;
+		civilian_killed += civilian_stunned;
 
 	if (!curCampaign || !selMis) {
 		/* the mission was started via console (TODO: or is multiplayer) */
@@ -1782,7 +1782,7 @@ void CL_ParseResults(sizebuf_t * buf)
 
 	/* we can safely wipe all mission data now */
 	/* TODO: I don't understand how this works
-	   and why, when I move this to CL_GameResultsCmd,
+	   and why, when I move this to CL_GameResults_f,
 	   the "won" menu get's garbled at "killteam 7" */
 	/* FIXME: For multiplayer there should be a map reload now */
 	Cbuf_AddText("disconnect\n");

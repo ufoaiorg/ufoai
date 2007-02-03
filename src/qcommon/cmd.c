@@ -846,7 +846,7 @@ int Cmd_CompleteCommand(const char *partial, char **match)
  * @brief A complete command line has been parsed, so try to execute it
  * FIXME: lookupnoadd the token to speed search?
  */
-void Cmd_ExecuteString(char *text)
+void Cmd_ExecuteString (char *text)
 {
 	cmd_function_t *cmd;
 	cmd_alias_t *a;

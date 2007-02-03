@@ -919,7 +919,8 @@ extern employee_t* E_GetEmployeeFromChrUCN (int ucn)
 {
 	int i;
 
-	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++)
+	/* MAX_EMPLOYEES and not numWholeTeam - maybe some other soldier died */
+	for (i = 0; i < MAX_EMPLOYEES; i++)
 		if (gd.employees[EMPL_SOLDIER][i].chr.ucn == ucn)
 			return &(gd.employees[EMPL_SOLDIER][i]);
 

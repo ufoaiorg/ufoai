@@ -340,7 +340,7 @@ extern void CL_AircraftReturnToBase (aircraft_t *aircraft)
  * Sends the current aircraft back to homebase and updates
  * the cvars
  * @sa CL_GameAutoGo
- * @sa CL_GameResultsCmd
+ * @sa CL_GameResults_f
  */
 void CL_AircraftReturnToBase_f(void)
 {
@@ -358,7 +358,7 @@ void CL_AircraftReturnToBase_f(void)
  *
  * uses cvar mn_aircraft_id to determine which aircraft to select
  */
-void CL_AircraftSelect(void)
+void CL_AircraftSelect (void)
 {
 	aircraft_t *aircraft;
 	menuNode_t *node;
@@ -1321,7 +1321,7 @@ void CL_RemoveFromAircraftTeam (aircraft_t *aircraft, int idx)
  * @param[in] aircraft
  * @param[in] idx
  */
-void CL_DecreaseAircraftTeamIdxGreaterThan (aircraft_t *aircraft,int idx)
+void CL_DecreaseAircraftTeamIdxGreaterThan (aircraft_t *aircraft, int idx)
 {
 	int i;
 
