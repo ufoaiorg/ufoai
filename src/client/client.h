@@ -914,7 +914,8 @@ typedef struct menuNode_s {
 typedef struct menu_s {
 	char name[MAX_VAR];
 	int eventTime;
-	menuNode_t *firstNode, *initNode, *closeNode, *renderNode, *popupNode, *hoverNode, *eventNode;
+	menuNode_t *firstNode, *initNode, *closeNode, *renderNode;
+	menuNode_t *popupNode, *hoverNode, *eventNode, *leaveNode;
 } menu_t;
 
 /** @brief linked into menuText - defined in menu scripts via num */

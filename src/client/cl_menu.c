@@ -709,7 +709,7 @@ static void MN_FindContainer(menuNode_t* const node)
  * @brief
  * @sa MN_Click
  */
-static qboolean MN_CheckNodeZone(menuNode_t* const node, int x, int y)
+static qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 {
 	int sx, sy, tx, ty;
 
@@ -785,7 +785,7 @@ static qboolean MN_CheckNodeZone(menuNode_t* const node, int x, int y)
 
 	tx = x - node->pos[0];
 	ty = y - node->pos[1];
-	if ( node->align > 0 && node->align < ALIGN_LAST ) {
+	if (node->align > 0 && node->align < ALIGN_LAST) {
 		switch ( node->align % 3 ) {
 		/* center */
 		case 1: tx = x - node->pos[0] + sx / 2; break;
@@ -812,7 +812,7 @@ static qboolean MN_CheckNodeZone(menuNode_t* const node, int x, int y)
 /**
  * @brief
  */
-qboolean MN_CursorOnMenu(int x, int y)
+qboolean MN_CursorOnMenu (int x, int y)
 {
 	menuNode_t *node;
 	menu_t *menu;
@@ -929,7 +929,7 @@ static void MN_Drag(const menuNode_t* const node, int x, int y)
 /**
  * @brief
  */
-static void MN_BarClick(menu_t * menu, menuNode_t * node, int x)
+static void MN_BarClick (menu_t * menu, menuNode_t * node, int x)
 {
 	char var[MAX_VAR];
 	float frac, min;
@@ -949,7 +949,7 @@ static void MN_BarClick(menu_t * menu, menuNode_t * node, int x)
 /**
  * @brief Left click on the basemap
  */
-static void MN_BaseMapClick(menuNode_t * node, int x, int y)
+static void MN_BaseMapClick (menuNode_t * node, int x, int y)
 {
 	int row, col;
 	building_t	*entry;
@@ -1000,7 +1000,7 @@ static void MN_BaseMapClick(menuNode_t * node, int x, int y)
 /**
  * @brief Right click on the basemap
  */
-static void MN_BaseMapRightClick(menuNode_t * node, int x, int y)
+static void MN_BaseMapRightClick (menuNode_t * node, int x, int y)
 {
 	int row, col;
 	building_t	*entry;
@@ -1025,7 +1025,7 @@ static void MN_BaseMapRightClick(menuNode_t * node, int x, int y)
  * @note set the mouse space to MS_ROTATE
  * @sa rotateAngles
  */
-static void MN_ModelClick(menuNode_t * node)
+static void MN_ModelClick (menuNode_t * node)
 {
 	mouseSpace = MS_ROTATE;
 	rotateAngles = node->angles;
@@ -1037,7 +1037,7 @@ static void MN_ModelClick(menuNode_t * node)
  * @note The node must have the click parameter
  * @sa MN_TextRightClick
  */
-static void MN_TextClick(menuNode_t * node, int mouseOver)
+static void MN_TextClick (menuNode_t * node, int mouseOver)
 {
 	Cbuf_AddText(va("%s_click %i\n", node->name, mouseOver - 1));
 }
@@ -1047,7 +1047,7 @@ static void MN_TextClick(menuNode_t * node, int mouseOver)
  * @note The node must have the rclick parameter
  * @sa MN_TextClick
  */
-static void MN_TextRightClick(menuNode_t * node, int mouseOver)
+static void MN_TextRightClick (menuNode_t * node, int mouseOver)
 {
 	Cbuf_AddText(va("%s_rclick %i\n", node->name, mouseOver - 1));
 }
@@ -1065,11 +1065,12 @@ static void MN_TextRightClick(menuNode_t * node, int mouseOver)
  * @sa MN_ExecuteActions
  * @sa MN_RightClick
  */
-void MN_Click(int x, int y)
+void MN_Click (int x, int y)
 {
 	menuNode_t *node;
 	menu_t *menu;
 	int sp, mouseOver;
+	qboolean clickedInside = qfalse;
 
 	sp = menuStackPos;
 
@@ -1084,6 +1085,9 @@ void MN_Click(int x, int y)
 
 			if (!mouseOver)
 				continue;
+
+			/* check whether we clicked at least on one menu node */
+			clickedInside = qtrue;
 
 			/* found a node -> do actions */
 			switch (node->type) {
@@ -1113,6 +1117,10 @@ void MN_Click(int x, int y)
 				break;
 			}
 		}
+
+		/* TODO: maybe we should also check sp == menuStackPos here */
+		if (!clickedInside && menu->leaveNode)
+			MN_ExecuteActions(menu, menu->leaveNode->click);
 
 		/* don't care about non-rendered windows */
 		if (menu->renderNode || menu->popupNode)
@@ -2287,7 +2295,7 @@ menu_t* MN_ActiveMenu(void)
  * @param[in] name Name of the menu to push onto menu stack
  * @return pointer to menu_t
  */
-menu_t* MN_PushMenuDelete(char *name, qboolean delete)
+menu_t* MN_PushMenuDelete (char *name, qboolean delete)
 {
 	int i;
 	menuNode_t *node;
@@ -3308,6 +3316,11 @@ qboolean MN_ParseMenuBody (menu_t * menu, char **text)
 								menu->eventNode->timeOut = 2000; /* default value */
 							} else
 								Com_Printf("MN_ParseMenuBody: second event function ignored (menu \"%s\")\n", menu->name);
+						} else if (!Q_strncmp(node->name, "leave", 5)) {
+							if (!menu->leaveNode) {
+								menu->leaveNode = node;
+							} else
+								Com_Printf("MN_ParseMenuBody: second leave function ignored (menu \"%s\")\n", menu->name);
 						}
 						break;
 					case MN_ZONE:
