@@ -437,7 +437,7 @@ tech rs_weapon_grenl_fle_ammo
 		tech rs_weapon_grenl
 	}
 	provides	grenl_fle_ammo
-	time	1000
+	time	0
 	producetime	1
 }
 
@@ -454,7 +454,7 @@ tech rs_weapon_grenl_incendiary_ammo
 		tech rs_weapon_grenl
 	}
 	provides	grenl_incendiary_ammo
-	time	1000
+	time	0
 	producetime	1
 }
 
@@ -914,7 +914,7 @@ tech rs_weapon_rpg_incendiary_ammo
 	}
 
 	provides	rpg_incendiary_ammo
-	time	1000
+	time	0
 	producetime	1
 }
 
