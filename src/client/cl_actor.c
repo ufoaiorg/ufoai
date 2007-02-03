@@ -35,6 +35,10 @@ pos3_t mousePos;
 int actorMoveLength;
 invList_t invList[MAX_INVLIST];
 
+
+qboolean visible_firemode_list_left = qfalse;
+qboolean visible_firemode_list_right = qfalse;
+
 static le_t *mouseActor;
 static pos3_t mouseLastPos;
 static pos3_t mousePendPos; /* for double-click movement ... */
@@ -384,10 +388,12 @@ static void SetWeaponButton(int button, int state)
  */
 static void HideFiremodes(void)
 {
+	visible_firemode_list_left = qfalse;
 	Cbuf_AddText("set_left_inv0\n");
 	Cbuf_AddText("set_left_inv1\n");
 	Cbuf_AddText("set_left_inv2\n");
 	Cbuf_AddText("set_left_inv3\n");
+	visible_firemode_list_right = qfalse;
 	Cbuf_AddText("set_right_inv0\n");
 	Cbuf_AddText("set_right_inv1\n");
 	Cbuf_AddText("set_right_inv2\n");
@@ -495,12 +501,36 @@ void CL_DisplayFiremodes(void)
 	}
 
 	GetWeaponAndAmmo(hand[0], &weapon, &ammo, &weap_fd_idx);
-	Com_Printf("CL_DisplayFiremodes: %s %s %i\n", weapon->name, ammo->name, weap_fd_idx);
+
+	Com_DPrintf("CL_DisplayFiremodes: %s %s %i\n", weapon->name, ammo->name, weap_fd_idx);
 	
 	if (!weapon || !ammo)
 		return;	
 	
-	Com_Printf("CL_DisplayFiremodes: displaying %s firemodes.\n", hand);
+	Com_DPrintf("CL_DisplayFiremodes: displaying %s firemodes.\n", hand);
+
+	/* Toggle firemode lists if needed. Mind you that HideFiremodes modifies visible_firemode_list_xxx to qfalse */
+	
+	if (hand[0] == 'r') {
+		if (visible_firemode_list_right == qtrue) {
+			HideFiremodes();
+			return;
+		} else {
+			HideFiremodes();
+			visible_firemode_list_left = qfalse;
+			visible_firemode_list_right = qtrue;
+		}
+	} else  { /* 'l' */
+		if (visible_firemode_list_left == qtrue) {
+			HideFiremodes();
+			return;
+		} else {
+			HideFiremodes();
+			visible_firemode_list_left = qtrue;
+			visible_firemode_list_right = qfalse;
+		}
+	}
+	 /* Modifies visible_firemode_list_xxxx */
 
 	for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
 		if ( i < ammo->numFiredefs[weap_fd_idx] ) { /* We have a defined fd */
