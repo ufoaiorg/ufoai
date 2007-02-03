@@ -588,13 +588,11 @@ void CL_FireWeapon(void)
 	
 	if ( ammo->fd[weap_fd_idx][firemode].time <= selActor->TU ) {
 		/* Actually start aiming */
-		/* TODO: The M_FIRE_ stuff below is just a workaround until this primary/secondary stuff is changed. */
 		if (hand[0] == 'r')
 			cl.cmode = M_FIRE_R;
 		else
 			cl.cmode = M_FIRE_L;
-		cl.cfiremode = firemode;
-		/* TODO: store firemode */
+		cl.cfiremode = firemode;	/* Store firemode. */
 		HideFiremodes();
 	} else {
 		Com_Printf("CL_FireWeapon: Firemode not available (%s, %s).\n", hand, ammo->fd[weap_fd_idx][firemode].name);
