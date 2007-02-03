@@ -408,10 +408,10 @@ static void DisplayFiremodeEntry(fireDef_t *fd, char hand, byte status)
 {
 	if (!fd)
 		return;
-	
+
 	if (hand == 'r') {
 		Cbuf_AddText(va("set_right_vis%i\n", fd->fd_idx)); /* Make this entry visible (in case it wasn't). */
-	
+
 		if (status) {
 			Cbuf_AddText(va("set_right_a%i\n", fd->fd_idx));
 		} else {
@@ -422,13 +422,13 @@ static void DisplayFiremodeEntry(fireDef_t *fd, char hand, byte status)
 		Cvar_Set(va("mn_r_fm_tu%i", fd->fd_idx), va(_("TU: %i"), fd->time));
 	} else if (hand == 'l') {
 		Cbuf_AddText(va("set_left_vis%i\n", fd->fd_idx)); /* Make this entry visible (in case it wasn't). */
-	
+
 		if (status) {
 			Cbuf_AddText(va("set_left_a%i\n", fd->fd_idx));
 		} else {
 			Cbuf_AddText(va("set_left_ina%i\n", fd->fd_idx));
 		}
-		
+
 		Cvar_Set(va("mn_l_fm_name%i", fd->fd_idx), va("%s", fd->name));
 		Cvar_Set(va("mn_l_fm_tu%i", fd->fd_idx), va(_("TU: %i"), fd->time));
 	} else {
@@ -447,7 +447,7 @@ static void DisplayFiremodeEntry(fireDef_t *fd, char hand, byte status)
 static void GetWeaponAndAmmo(char hand, objDef_t **weapon, objDef_t **ammo, byte *weap_fd_idx)
 {
 	invList_t *invlist_weapon = NULL;
-	
+
 	if (!selActor)
 		return;
 
@@ -458,19 +458,19 @@ static void GetWeaponAndAmmo(char hand, objDef_t **weapon, objDef_t **ammo, byte
 
 	if (!invlist_weapon || invlist_weapon->item.t < 0 || invlist_weapon->item.m < 0)
 		return;
-	
+
 	*weapon = &csi.ods[invlist_weapon->item.t];
-	
+
 	if (!weapon)
 		return;
-	
+
 	if ((*weapon)->numWeapons)
 		*ammo = *weapon; /* This weapon doesn't need ammo it already has firedefs */
 	else
 		*ammo = &csi.ods[invlist_weapon->item.m];
-	
+
 	*weap_fd_idx = INV_FiredefsIDXForWeapon (*ammo, invlist_weapon->item.t);
-	
+
 	Com_Printf("GetWeaponAndAmmo: weapon %i ammo %i -- %s %s %i\n", invlist_weapon->item.t, invlist_weapon->item.m, (*weapon)->name, (*ammo)->name, *weap_fd_idx);
 }
 
@@ -484,9 +484,9 @@ void CL_DisplayFiremodes(void)
 	byte weap_fd_idx;
 	byte i;
 	char *hand;
-	
+
 	/* HideFiremodes();  Hides all firemode lists ... TODO only needed for development, but can't hurt. */
-	
+
 	if (Cmd_Argc() < 2) { /* no argument given */
 		hand = "r";
 	} else {
@@ -501,14 +501,14 @@ void CL_DisplayFiremodes(void)
 	GetWeaponAndAmmo(hand[0], &weapon, &ammo, &weap_fd_idx);
 
 	Com_DPrintf("CL_DisplayFiremodes: %s %s %i\n", weapon->name, ammo->name, weap_fd_idx);
-	
+
 	if (!weapon || !ammo)
-		return;	
-	
+		return;
+
 	Com_DPrintf("CL_DisplayFiremodes: displaying %s firemodes.\n", hand);
 
 	/* Toggle firemode lists if needed. Mind you that HideFiremodes modifies visible_firemode_list_xxx to qfalse */
-	
+
 	if (hand[0] == 'r') {
 		if (visible_firemode_list_right == qtrue) {
 			HideFiremodes();
@@ -559,33 +559,33 @@ void CL_FireWeapon(void)
 	objDef_t *weapon = NULL;
 	objDef_t *ammo = NULL;
 	byte weap_fd_idx;
-	
+
 	if (Cmd_Argc() < 3) { /* no argument given */
 		Com_Printf("Usage: fireweap [l|r] <num>   num=firemode number\n");
 		return;
 	}
-	
+
 	hand = Cmd_Argv(1);
 
 	if (hand[0] != 'r' && hand[0] != 'l') {
 		Com_Printf("Usage: fireweap [l|r] <num>   num=firemode number\n");
 		return;
 	}
-	
+
 	if (!selActor)
 		return;
-	
+
 	firemode = atoi(Cmd_Argv(2));
-	
+
 	if (firemode >= MAX_FIREDEFS_PER_WEAPON) {
 		Com_Printf("CL_FireWeapon: Firemode index to big (%i). Highest possible number is %i.\n", firemode, MAX_FIREDEFS_PER_WEAPON-1);
 		return;
 	}
-	
+
 	GetWeaponAndAmmo(hand[0], &weapon, &ammo, &weap_fd_idx);
 	Com_Printf("CL_FireWeapon: %s %s %i\n", weapon->name, ammo->name, weap_fd_idx);
 
-	
+
 	if ( ammo->fd[weap_fd_idx][firemode].time <= selActor->TU ) {
 		/* Actually start aiming */
 		if (hand[0] == 'r')
@@ -597,7 +597,7 @@ void CL_FireWeapon(void)
 	} else {
 		Com_Printf("CL_FireWeapon: Firemode not available (%s, %s).\n", hand, ammo->fd[weap_fd_idx][firemode].name);
 		return;
-	}	
+	}
 }
 
 /**
@@ -665,7 +665,7 @@ static void CL_RefreshWeaponButtons(int time)
 	weapon_fd_idx  = -1;
 	if (weaponr && weaponr->item.m != NONE && weaponr->item.m != NONE)
 		weapon_fd_idx = INV_FiredefsIDXForWeapon(&csi.ods[weaponr->item.m],weaponr->item.t);
-	if ( !weaponr || weaponr->item.m == NONE 
+	if ( !weaponr || weaponr->item.m == NONE
 		 || (csi.ods[weaponr->item.t].reload && weaponr->item.a <= 0)
 		 || time < csi.ods[weaponr->item.m].fd[weapon_fd_idx][FD_PRIMARY].time
 		 || (csi.ods[weaponr->item.t].firetwohanded && LEFT(selActor)) )
@@ -986,7 +986,7 @@ void CL_ActorUpdateCVars(void)
 				HighlightWeaponButton(BT_LEFT_PRIMARY);
 			else
 				HighlightWeaponButton(BT_LEFT_SECONDARY);
-			
+
 			break;
 		case M_FIRE_R:
 		case M_PEND_FIRE_R:
@@ -1378,7 +1378,6 @@ void CL_ActorStartMove(le_t * le, pos3_t to)
  */
 void CL_ActorShoot (le_t * le, pos3_t at)
 {
-
 	if (!CL_CheckAction())
 		return;
 
@@ -1640,7 +1639,7 @@ void CL_ActorDoShoot (sizebuf_t * sb)
 	Com_Printf( "CL_ActorDoShoot: %i %i %i DEBUG\n",obj_idx,weap_idx,fd_idx );
 	fd = GET_FIREDEF(obj_idx,weap_idx,fd_idx);
 	Com_Printf( "CL_ActorDoShoot: %i %i %i DEBUG\n",fd->obj_idx,fd->weap_idx,fd->fd_idx );
-	
+
 	/* add effect le */
 	LE_AddProjectile(fd, flags, muzzle, impact, normal);
 

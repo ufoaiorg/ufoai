@@ -67,7 +67,7 @@ static const char *svc_strings[256] =
 /* g	| gpos		| 3 */
 /* d	| dir		| 1 */
 /* a	| angle		| 1 */
-/* !	| do not read	| 1 */
+/* !	| do not read the next id | 1 */
 /* *	| pascal string type - SIZE+DATA, SIZE can be read from va_arg
                         | 2 + sizeof(DATA) */
 const char *ev_format[] =
@@ -84,21 +84,16 @@ const char *ev_format[] =
 	"s",				/* EV_ENT_PERISH */
 	"ssgpp",			/* EV_ENT_BREAKABLE */
 
-	"!sbbbgbbbssbsbbbs",		/* EV_ACTOR_APPEAR; beware of the '!' */
+	"!sbbbgbbbssbsbbbs",	/* EV_ACTOR_APPEAR; beware of the '!' */
 	"s",				/* EV_ACTOR_START_MOVE */
 	"sb",				/* EV_ACTOR_TURN */
 	"!s*",				/* EV_ACTOR_MOVE; beware of the '!' */
-	/*
-	"sbgg",			    * EV_ACTOR_START_SHOOT *
-	"sbbppb",			* EV_ACTOR_SHOOT; the last 'b' cannot be 'd' *
-	"bb",				* EV_ACTOR_SHOOT_HIDDEN *
-	"sbbpp",			* EV_ACTOR_THROW *
-	*/
+
 	"ssbbgg",			/* EV_ACTOR_START_SHOOT */
-	"ssbbbppb",		/* EV_ACTOR_SHOOT; the last 'b' cannot be 'd' */
-	"bsbb",			/* EV_ACTOR_SHOOT_HIDDEN */
+	"ssbbbppb",			/* EV_ACTOR_SHOOT; the last 'b' cannot be 'd' */
+	"bsbb",				/* EV_ACTOR_SHOOT_HIDDEN */
 	"ssbbbpp",			/* EV_ACTOR_THROW */
-	
+
 	"ss",				/* EV_ACTOR_DIE */
 	"!sbsbbb",		    /* EV_ACTOR_STATS; beware of the '!' */
 	"ss",				/* EV_ACTOR_STATECHANGE */

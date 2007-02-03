@@ -478,7 +478,7 @@ void MSG_WriteDir(sizebuf_t * sb, vec3_t dir)
 /**
  * @brief Writes to buffer according to format; version without syntactic sugar for variable arguments, to call it from other functions with variable arguments
  */
-void MSG_V_WriteFormat(sizebuf_t * sb, char *format, va_list ap)
+void MSG_V_WriteFormat(sizebuf_t * sb, const char *format, va_list ap)
 {
 	char typeID;
 
@@ -552,7 +552,7 @@ void MSG_V_WriteFormat(sizebuf_t * sb, char *format, va_list ap)
 /**
  * @brief The user-friendly version of MSG_WriteFormat that writes variable arguments to buffer according to format
  */
-void MSG_WriteFormat(sizebuf_t * sb, char *format, ...)
+void MSG_WriteFormat(sizebuf_t * sb, const char *format, ...)
 {
 	va_list ap;
 	va_start(ap, format);

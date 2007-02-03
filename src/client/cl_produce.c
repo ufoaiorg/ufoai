@@ -452,7 +452,7 @@ static void PR_ProductionListClick_f (void)
 }
 
 /** @brief update the list of queued and available items */
-static void PR_UpdateProductionList(void)
+static void PR_UpdateProductionList (void)
 {
 	int i;
 	static char productionList[1024];
@@ -514,7 +514,7 @@ static void PR_ProductionSelect_f (void)
 		return;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: prod_init <category>\n");
+		Com_Printf("Usage: prod_select <category>\n");
 		return;
 	}
 	produceCategory = atoi(Cmd_Argv(1));
@@ -543,7 +543,7 @@ static void PR_ProductionList_f (void)
 /**
  * @brief Returns true if the current base is able to produce items
  */
-qboolean PR_ProductionAllowed(void)
+qboolean PR_ProductionAllowed (void)
 {
 	if (baseCurrent->baseStatus != BASE_UNDER_ATTACK &&
 		B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, B_WORKSHOP) > 0 &&
@@ -568,7 +568,7 @@ static void PR_ProductionListScroll_f (void)
 /**
  * @brief Sets the production array to 0
  */
-void PR_ProductionInit(void)
+void PR_ProductionInit (void)
 {
 	Com_DPrintf("Reset all productions\n");
 	memset(gd.productions, 0, sizeof(production_queue_t)*MAX_BASES);
@@ -597,7 +597,7 @@ extern void PR_Init (void)
 /**
  * @brief Increase the production amount by given parameter
  */
-void PR_ProductionIncrease(void)
+void PR_ProductionIncrease (void)
 {
 	int amount = 1;
 	int produceable_amount;
@@ -672,7 +672,7 @@ void PR_ProductionIncrease(void)
 /**
  * @brief Stops the current running production
  */
-void PR_ProductionStop(void)
+void PR_ProductionStop (void)
 {
 	production_queue_t *queue;
 
@@ -696,7 +696,7 @@ void PR_ProductionStop(void)
 /**
  * @brief Decrease the production amount by given parameter
  */
-void PR_ProductionDecrease(void)
+void PR_ProductionDecrease (void)
 {
 	int amount = 1;
 	production_queue_t *queue;
@@ -724,7 +724,7 @@ void PR_ProductionDecrease(void)
 /**
  * @brief shift the current production up the list
  */
-static void PR_ProductionUp(void)
+static void PR_ProductionUp (void)
 {
 	production_queue_t *queue;
 
@@ -744,7 +744,7 @@ static void PR_ProductionUp(void)
 /**
  * @brief shift the current production down the list
  */
-static void PR_ProductionDown(void)
+static void PR_ProductionDown (void)
 {
 	production_queue_t *queue;
 
@@ -767,7 +767,7 @@ static void PR_ProductionDown(void)
  * Bind some of the functions in this file to console-commands that you can call ingame.
  * Called from MN_ResetMenus resp. CL_InitLocal
  */
-void PR_ResetProduction(void)
+void PR_ResetProduction (void)
 {
 	/* add commands */
 	Cmd_AddCommand("prod_init", PR_ProductionList_f, NULL);
