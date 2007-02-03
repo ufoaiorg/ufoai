@@ -762,7 +762,7 @@ void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
  * @sa V_UpdateRefDef
  * @sa R_DrawPtls
  */
-ptl_t *CL_ParticleSpawn (char *name, int levelFlags, vec3_t s, vec3_t v, vec3_t a)
+ptl_t *CL_ParticleSpawn (char *name, int levelFlags, const vec3_t s, const vec3_t v, const vec3_t a)
 {
 	ptlDef_t *pd;
 	ptl_t *p;

@@ -327,10 +327,10 @@ void VectorInverse(vec3_t v);
 void VectorScale(vec3_t in, vec_t scale, vec3_t out);
 int Q_log2(int val);
 
-void VecToAngles(vec3_t vec, vec3_t angles);
+void VecToAngles(const vec3_t vec, vec3_t angles);
 
-void Print2Vector (const vec2_t v);
-void Print3Vector (const vec2_t v);
+void Print2Vector(const vec2_t v);
+void Print3Vector(const vec2_t v);
 
 void VecToPolar(const vec3_t v, vec2_t a);
 void PolarToVec(const vec2_t a, vec3_t v);

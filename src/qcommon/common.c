@@ -298,7 +298,7 @@ Handles byte ordering and avoids alignment errors
 ==============================================================================
 */
 
-vec3_t bytedirs[NUMVERTEXNORMALS] = {
+const vec3_t bytedirs[NUMVERTEXNORMALS] = {
 #include "../client/anorms.h"
 };
 
@@ -396,7 +396,7 @@ void MSG_WriteFloat(sizebuf_t * sb, float f)
 /**
  * @brief
  */
-void MSG_WriteString(sizebuf_t * sb, char *s)
+void MSG_WriteString(sizebuf_t * sb, const char *s)
 {
 	if (!s)
 		SZ_Write(sb, "", 1);

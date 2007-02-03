@@ -134,7 +134,7 @@ typedef struct {
 	/* they connect, and changes are sent to all connected clients. */
 	void (*configstring) (int num, char *string);
 
-	void (*error) (char *fmt, ...) __attribute__((noreturn, format(printf, 1, 2)));
+	void (*error) (const char *fmt, ...) __attribute__((noreturn, format(printf, 1, 2)));
 
 	/* the *index functions create configstrings and some internal server state */
 	int (*modelindex) (char *name);
@@ -155,7 +155,7 @@ typedef struct {
 	 * plane - surface normal at hitpoisee
 	 * ent - entity hit by trace
 	 */
-	trace_t(*trace) (vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, edict_t * passent, int contentmask);
+	trace_t (*trace) (vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, edict_t * passent, int contentmask);
 	/* links entity into the world - so that it is sent to the client and used for
 	 * collision detection, etc. Must be relinked if its size, position or solidarity changes */
 	void (*linkentity) (edict_t * ent);
@@ -192,12 +192,12 @@ typedef struct {
 
 	void (*WriteLong) (int c);
 	void (*WriteFloat) (float f);
-	void (*WriteString) (char *s);
+	void (*WriteString) (const char *s);
 	void (*WritePos) (vec3_t pos);	/* some fractional bits */
 	void (*WriteGPos) (pos3_t pos);
 	void (*WriteDir) (vec3_t pos);	/* single byte encoded, very coarse */
 	void (*WriteAngle) (float f);
-	void (*WriteFormat) (char *format, ...);
+	void (*WriteFormat) (const char *format, ...);
 
 	void (*WriteNewSave) (int c);
 	void (*WriteToSave) (int c);
@@ -221,7 +221,7 @@ typedef struct {
 	void (*ReadDir) (vec3_t vector);
 	float (*ReadAngle) (void);
 	void (*ReadData) (void *buffer, int size);
-	void (*ReadFormat) (char *format, ...);
+	void (*ReadFormat) (const char *format, ...);
 
 	/* misc functions */
 	int (*GetModelAndName) (char *team, character_t *chr);

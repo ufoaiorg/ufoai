@@ -141,11 +141,11 @@ static void PF_centerprintf(player_t * player, char *fmt, ...)
 }
 
 
-static void PF_error(char *fmt, ...) __attribute__((noreturn));
+static void PF_error(const char *fmt, ...) __attribute__((noreturn));
 /**
  * @brief Abort the server with a game error
  */
-static void PF_error(char *fmt, ...)
+static void PF_error (const char *fmt, ...)
 {
 	char msg[1024];
 	va_list argptr;
@@ -169,7 +169,7 @@ static void PF_error(char *fmt, ...)
  * @note Also sets mins and maxs for inline bmodels
  * @sa CM_InlineModel
  */
-static void PF_SetModel(edict_t * ent, char *name)
+static void PF_SetModel (edict_t * ent, char *name)
 {
 	cmodel_t *mod;
 
@@ -192,7 +192,7 @@ static void PF_SetModel(edict_t * ent, char *name)
  * @brief
  * @sa CL_ParseConfigString
  */
-static void PF_Configstring(int index, char *val)
+static void PF_Configstring (int index, char *val)
 {
 	if (index < 0 || index >= MAX_CONFIGSTRINGS)
 		Com_Error(ERR_DROP, "configstring: bad index %i\n", index);
@@ -226,7 +226,7 @@ static void PF_Configstring(int index, char *val)
 /**
  * @brief
  */
-static void PF_WriteChar(int c)
+static void PF_WriteChar (int c)
 {
 	MSG_WriteChar(&sv.multicast, c);
 }
@@ -235,12 +235,12 @@ static void PF_WriteChar(int c)
  * @brief
  */
 #ifdef DEBUG
-static void PF_WriteByte(int c, char* file, int line)
+static void PF_WriteByte (int c, char* file, int line)
 {
 	MSG_WriteByteDebug(&sv.multicast, c, file, line);
 }
 #else
-static void PF_WriteByte(int c)
+static void PF_WriteByte (int c)
 {
 	MSG_WriteByte(&sv.multicast, c);
 }
@@ -250,12 +250,12 @@ static void PF_WriteByte(int c)
  * @brief
  */
 #ifdef DEBUG
-static void PF_WriteShort(int c, char* file, int line)
+static void PF_WriteShort (int c, char* file, int line)
 {
 	MSG_WriteShortDebug(&sv.multicast, c, file, line);
 }
 #else
-static void PF_WriteShort(int c)
+static void PF_WriteShort (int c)
 {
 	MSG_WriteShort(&sv.multicast, c);
 }
@@ -264,7 +264,7 @@ static void PF_WriteShort(int c)
 /**
  * @brief
  */
-static void PF_WriteLong(int c)
+static void PF_WriteLong (int c)
 {
 	MSG_WriteLong(&sv.multicast, c);
 }
@@ -272,7 +272,7 @@ static void PF_WriteLong(int c)
 /**
  * @brief
  */
-static void PF_WriteFloat(float f)
+static void PF_WriteFloat (float f)
 {
 	MSG_WriteFloat(&sv.multicast, f);
 }
@@ -280,7 +280,7 @@ static void PF_WriteFloat(float f)
 /**
  * @brief
  */
-static void PF_WriteString(char *s)
+static void PF_WriteString (const char *s)
 {
 	MSG_WriteString(&sv.multicast, s);
 }
@@ -288,7 +288,7 @@ static void PF_WriteString(char *s)
 /**
  * @brief
  */
-static void PF_WritePos(vec3_t pos)
+static void PF_WritePos (vec3_t pos)
 {
 	MSG_WritePos(&sv.multicast, pos);
 }
@@ -296,7 +296,7 @@ static void PF_WritePos(vec3_t pos)
 /**
  * @brief
  */
-static void PF_WriteGPos(pos3_t pos)
+static void PF_WriteGPos (pos3_t pos)
 {
 	MSG_WriteGPos(&sv.multicast, pos);
 }
@@ -304,7 +304,7 @@ static void PF_WriteGPos(pos3_t pos)
 /**
  * @brief
  */
-static void PF_WriteDir(vec3_t dir)
+static void PF_WriteDir (vec3_t dir)
 {
 	MSG_WriteDir(&sv.multicast, dir);
 }
@@ -312,12 +312,12 @@ static void PF_WriteDir(vec3_t dir)
 /**
  * @brief
  */
-static void PF_WriteAngle(float f)
+static void PF_WriteAngle (float f)
 {
 	MSG_WriteAngle(&sv.multicast, f);
 }
 
-static void PF_WriteFormat(char *format, ...)
+static void PF_WriteFormat (const char *format, ...)
 {
 	va_list ap;
 	va_start(ap, format);
@@ -329,7 +329,7 @@ static byte *pf_save;
 /**
  * @brief
  */
-static void PF_WriteNewSave(int c)
+static void PF_WriteNewSave (int c)
 {
 #ifdef PARANOID
 	if (c < SHRT_MIN || c > USHRT_MAX)
@@ -344,7 +344,7 @@ static void PF_WriteNewSave(int c)
 /**
  * @brief
  */
-static void PF_WriteToSave(int c)
+static void PF_WriteToSave (int c)
 {
 #ifdef PARANOID
 	if (c < SHRT_MIN || c > USHRT_MAX)
@@ -358,7 +358,7 @@ static void PF_WriteToSave(int c)
 /**
  * @brief
  */
-static int PF_ReadChar(void)
+static int PF_ReadChar (void)
 {
 	return MSG_ReadChar(&net_message);
 }
@@ -366,7 +366,7 @@ static int PF_ReadChar(void)
 /**
  * @brief
  */
-static int PF_ReadByte(void)
+static int PF_ReadByte (void)
 {
 	return MSG_ReadByte(&net_message);
 }
@@ -374,7 +374,7 @@ static int PF_ReadByte(void)
 /**
  * @brief
  */
-static int PF_ReadShort(void)
+static int PF_ReadShort (void)
 {
 	return MSG_ReadShort(&net_message);
 }
@@ -382,7 +382,7 @@ static int PF_ReadShort(void)
 /**
  * @brief
  */
-static int PF_ReadLong(void)
+static int PF_ReadLong (void)
 {
 	return MSG_ReadLong(&net_message);
 }
@@ -390,7 +390,7 @@ static int PF_ReadLong(void)
 /**
  * @brief
  */
-static float PF_ReadFloat(void)
+static float PF_ReadFloat (void)
 {
 	return MSG_ReadFloat(&net_message);
 }
@@ -398,7 +398,7 @@ static float PF_ReadFloat(void)
 /**
  * @brief
  */
-static char *PF_ReadString(void)
+static char *PF_ReadString (void)
 {
 	return MSG_ReadString(&net_message);
 }
@@ -406,7 +406,7 @@ static char *PF_ReadString(void)
 /**
  * @brief
  */
-static void PF_ReadPos(vec3_t pos)
+static void PF_ReadPos (vec3_t pos)
 {
 	MSG_ReadPos(&net_message, pos);
 }
@@ -414,7 +414,7 @@ static void PF_ReadPos(vec3_t pos)
 /**
  * @brief
  */
-static void PF_ReadGPos(pos3_t pos)
+static void PF_ReadGPos (pos3_t pos)
 {
 	MSG_ReadGPos(&net_message, pos);
 }
@@ -422,7 +422,7 @@ static void PF_ReadGPos(pos3_t pos)
 /**
  * @brief
  */
-static void PF_ReadDir(vec3_t vector)
+static void PF_ReadDir (vec3_t vector)
 {
 	MSG_ReadDir(&net_message, vector);
 }
@@ -430,7 +430,7 @@ static void PF_ReadDir(vec3_t vector)
 /**
  * @brief
  */
-static float PF_ReadAngle(void)
+static float PF_ReadAngle (void)
 {
 	return MSG_ReadAngle(&net_message);
 }
@@ -438,12 +438,12 @@ static float PF_ReadAngle(void)
 /**
  * @brief
  */
-static void PF_ReadData(void *buffer, int size)
+static void PF_ReadData (void *buffer, int size)
 {
 	MSG_ReadData(&net_message, buffer, size);
 }
 
-static void PF_ReadFormat(char *format, ...)
+static void PF_ReadFormat (const char *format, ...)
 {
 	va_list ap;
 	va_start(ap, format);
@@ -457,7 +457,7 @@ static int pfe_mask = 0;
 /**
  * @brief
  */
-static void PF_EndEvents(void)
+static void PF_EndEvents (void)
 {
 	if (!pfe_pending)
 		return;

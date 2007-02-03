@@ -1000,7 +1000,7 @@ void CL_ResetParticles(void);
 void CL_ParticleRun(void);
 void CL_RunMapParticles(void);
 int CL_ParseParticle(char *name, char **text);
-ptl_t *CL_ParticleSpawn(char *name, int levelFlags, vec3_t s, vec3_t v, vec3_t a);
+ptl_t *CL_ParticleSpawn(char *name, int levelFlags, const vec3_t s, const vec3_t v, const vec3_t a);
 void PE_RenderParticles(void);
 
 extern ptlArt_t ptlArt[MAX_PTL_ART];

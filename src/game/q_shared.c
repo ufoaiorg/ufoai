@@ -338,7 +338,7 @@ void Print2Vector (const vec2_t v)
  * @brief Converts longitude and latitude to vector coordinates
  * @sa VecToPolar
  */
-void PolarToVec(const vec2_t a, vec3_t v)
+void PolarToVec (const vec2_t a, vec3_t v)
 {
 	float p, t;
 
@@ -352,7 +352,7 @@ void PolarToVec(const vec2_t a, vec3_t v)
  * @brief Converts vector coordinates into polar coordinates
  * @sa PolarToVec
  */
-void VecToPolar(const vec3_t v, vec2_t a)
+void VecToPolar (const vec3_t v, vec2_t a)
 {
 	a[0] = todeg * atan2(v[1], v[0]);	/* long */
 	a[1] = 90 - todeg * acos(v[2]);	/* lat */
@@ -364,7 +364,7 @@ void VecToPolar(const vec3_t v, vec2_t a)
  * @param[in] angles Target vector for pitch, yaw, roll
  * @sa anglemod
  */
-void VecToAngles(vec3_t value1, vec3_t angles)
+void VecToAngles (const vec3_t value1, vec3_t angles)
 {
 	float forward;
 	float yaw, pitch;

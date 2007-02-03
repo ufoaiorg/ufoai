@@ -1352,17 +1352,17 @@ extern void CL_Events (void)
 	evTimes_t	*last;
 	byte		eType;
 
-	if ( cls.state < ca_connected )
+	if (cls.state < ca_connected)
 		return;
 
-	while ( !blockEvents && etCurrent && cl.eventTime >= etCurrent->start ) {
+	while (!blockEvents && etCurrent && cl.eventTime >= etCurrent->start) {
 		/* get event type */
 		evStorage.readcount = etCurrent->pos;
 		eType = MSG_ReadByte( &evStorage );
 
 #if 0
 		/* check if eType is valid */
-		if ( eType >= EV_NUM_EVENTS )
+		if (eType >= EV_NUM_EVENTS)
 			Com_Error( ERR_DROP, "CL_Events: invalid event %i\n", eType );
 #endif
 
@@ -1374,8 +1374,8 @@ extern void CL_Events (void)
 /*		Com_Printf("last: etUnused = %p\n", etUnused);*/
 
 		/* call function */
-		CL_LogEvent( eType );
-		ev_func[eType]( &evStorage );
+		CL_LogEvent(eType);
+		ev_func[eType](&evStorage);
 	}
 }
 
