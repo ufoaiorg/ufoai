@@ -741,7 +741,7 @@ typedef enum {
 
 #define V_UNTYPED   0x7FFF
 
-extern char *vt_names[V_NUM_TYPES];
+extern const char *vt_names[V_NUM_TYPES];
 
 /** possible alien values */
 typedef enum {
@@ -794,10 +794,10 @@ typedef struct date_s {
 	int day, sec;
 } date_t;
 
-extern char *align_names[ALIGN_LAST];
-extern char *blend_names[BLEND_LAST];
-extern char *style_names[STYLE_LAST];
-extern char *fade_names[FADE_LAST];
+extern const char *align_names[ALIGN_LAST];
+extern const char *blend_names[BLEND_LAST];
+extern const char *style_names[STYLE_LAST];
+extern const char *fade_names[FADE_LAST];
 
 /** used e.g. in our parsers */
 typedef struct value_s {

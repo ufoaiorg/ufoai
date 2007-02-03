@@ -3338,7 +3338,7 @@ SCRIPT VALUE PARSING
 ==============================================================================
 */
 
-char *vt_names[V_NUM_TYPES] = {
+const char *vt_names[V_NUM_TYPES] = {
 	"",
 	"bool",
 	"char",
@@ -3361,23 +3361,23 @@ char *vt_names[V_NUM_TYPES] = {
 	"date"
 };
 
-char *align_names[ALIGN_LAST] = {
+const char *align_names[ALIGN_LAST] = {
 	"ul", "uc", "ur", "cl", "cc", "cr", "ll", "lc", "lr"
 };
 
-char *blend_names[BLEND_LAST] = {
+const char *blend_names[BLEND_LAST] = {
 	"replace", "blend", "add", "filter", "invfilter"
 };
 
-char *style_names[STYLE_LAST] = {
+const char *style_names[STYLE_LAST] = {
 	"facing", "rotated", "beam", "line", "axis"
 };
 
-char *fade_names[FADE_LAST] = {
+const char *fade_names[FADE_LAST] = {
 	"none", "in", "out", "sin", "saw", "blend"
 };
 
-static char *if_strings[IF_SIZE] = {
+const static char *if_strings[IF_SIZE] = {
 	""
 	"==",
 	"<=",
@@ -3394,10 +3394,10 @@ static char *if_strings[IF_SIZE] = {
  * @return enum value for condition string
  * @note Produces a Sys_Error if conditionString was not found in if_strings array
  */
-int Com_ParseConditionType(const char* conditionString, const char *token)
+int Com_ParseConditionType (const char* conditionString, const char *token)
 {
 	int i = IF_SIZE;
-	for (;i--;) {
+	for (; i--;) {
 		if (!Q_strncmp(if_strings[i], (char*)conditionString, 2)) {
 			return i;
 		}
@@ -3415,7 +3415,7 @@ int Com_ParseConditionType(const char* conditionString, const char *token)
  * }
  * @endcode
  */
-int Com_ParseValue(void *base, char *token, int type, int ofs)
+int Com_ParseValue (void *base, char *token, int type, int ofs)
 {
 	byte *b;
 	char string[MAX_VAR];
@@ -3620,7 +3620,7 @@ int Com_ParseValue(void *base, char *token, int type, int ofs)
  * @sa Com_ValueToStr
  * @note The offset is most likely given by the offsetof macro
  */
-int Com_SetValue(void *base, void *set, int type, int ofs)
+int Com_SetValue (void *base, void *set, int type, int ofs)
 {
 	byte *b;
 	int len;
@@ -3724,7 +3724,7 @@ int Com_SetValue(void *base, void *set, int type, int ofs)
  * @sa Com_SetValue
  * @return char pointer with translated data type value
  */
-char *Com_ValueToStr(void *base, int type, int ofs)
+char *Com_ValueToStr (void *base, int type, int ofs)
 {
 	static char valuestr[MAX_VAR];
 	byte *b;
@@ -3777,19 +3777,23 @@ char *Com_ValueToStr(void *base, int type, int ofs)
 
 	case V_ALIGN:
 		assert(*(int *)b < ALIGN_LAST);
-		return align_names[*(align_t *)b];
+		Q_strncpyz(valuestr, align_names[*(align_t *)b], sizeof(valuestr));
+		return valuestr;
 
 	case V_BLEND:
 		assert(*(blend_t *)b < BLEND_LAST);
-		return blend_names[*(blend_t *)b];
+		Q_strncpyz(valuestr, blend_names[*(blend_t *)b], sizeof(valuestr));
+		return valuestr;
 
 	case V_STYLE:
 		assert(*(style_t *)b < STYLE_LAST);
-		return style_names[*(style_t *)b];
+		Q_strncpyz(valuestr, style_names[*(style_t *)b], sizeof(valuestr));
+		return valuestr;
 
 	case V_FADE:
 		assert(*(fade_t *)b < FADE_LAST);
-		return fade_names[*(fade_t *)b];
+		Q_strncpyz(valuestr, fade_names[*(fade_t *)b], sizeof(valuestr));
+		return valuestr;
 
 	case V_SHAPE_SMALL:
 	case V_SHAPE_BIG:
@@ -3828,7 +3832,7 @@ char *Com_ValueToStr(void *base, int type, int ofs)
  * @brief Prints a description of an object
  * @param[in] index of object in CSI
  */
-void Com_PrintItemDescription(int i)
+void Com_PrintItemDescription (int i)
 {
 	objDef_t *ods_temp;
 
@@ -3854,7 +3858,7 @@ void Com_PrintItemDescription(int i)
 /**
  * @brief Lists all object definitions
  */
-void Com_InventoryList_f(void)
+void Com_InventoryList_f (void)
 {
 	int i;
 
