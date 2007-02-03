@@ -912,6 +912,8 @@ qboolean G_ClientShoot(player_t * player, int num, pos3_t at, int type, byte fir
 			gi.cprintf(player, PRINT_HIGH, _("Can't perform action - object not activable!\n"));
 		return qfalse;
 	}
+	gi.dprintf("G_ClientShoot: %i DEBUG\n", firemode);
+	gi.dprintf("G_ClientShoot: %i %i %i DEBUG\n", fd->obj_idx, fd->weap_idx, fd->fd_idx);
 
 	ammo = weapon->a;
 	reaction_leftover = IS_SHOT_REACTION(type) ? sv_reaction_leftover->value : 0;

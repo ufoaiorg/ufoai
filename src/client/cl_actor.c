@@ -1382,6 +1382,7 @@ void CL_ActorShoot (le_t * le, pos3_t at)
 	if (!CL_CheckAction())
 		return;
 
+	Com_Printf("CL_ActorShoot: cl.firemode %i.\n",  cl.cfiremode);
 	MSG_Write_PA(PA_SHOOT, le->entnum, at, cl.cfiremode);
 }
 
