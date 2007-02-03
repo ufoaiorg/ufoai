@@ -498,6 +498,7 @@ invList_t* CL_GetLeftHandWeapon(le_t *actor)
 	return weapon;
 }
 
+#if 0 /* Replaced with CL_FireWeapon */
 /**
  * @brief Shoot right weapon in primary fire mode.
  */
@@ -549,6 +550,7 @@ void CL_FireLeftSecondary(void)
 	else
 		cl.cmode = M_FIRE_SL;
 }
+#endif
 
 /**
  * @brief
@@ -770,11 +772,13 @@ void CL_InitInput(void)
 	Cmd_AddCommand("togglereaction", CL_ActorToggleReaction, _("Toggle reaction fire"));
 	Cmd_AddCommand("nextalien", CL_NextAlien, _("Toogle to next alien"));
 
+#if 0
 	Cmd_AddCommand("firerp", CL_FireRightPrimary, NULL);
 	Cmd_AddCommand("firers", CL_FireRightSecondary, NULL);
 	Cmd_AddCommand("firelp", CL_FireLeftPrimary, NULL);
 	Cmd_AddCommand("firels", CL_FireLeftSecondary, NULL);
 	/* TODO: Replace the above with the following */
+#endif
 	Cmd_AddCommand("list_firemodes", CL_DisplayFiremodes, "Display a list of firemodes for a weapon+ammo.");
 	Cmd_AddCommand("fireweap", CL_FireWeapon, "Start aiming the weapon.");
 	

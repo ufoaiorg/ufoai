@@ -521,6 +521,7 @@ void CL_DisplayFiremodes(void)
 
 /**
  * @brief Starts aiming/target mode for selected left/right firemode.
+ * @note Previously know as a combination of CL_FireRightPrimary, CL_FireRightSecondary, CL_FireLeftPrimary and CL_FireLeftSecondary
  */
 void CL_FireWeapon(void)
 {
@@ -560,17 +561,12 @@ void CL_FireWeapon(void)
 	if ( ammo->fd[weap_fd_idx][firemode].time <= selActor->TU ) {
 		/* Actually start aiming */
 		/* TODO: The M_FIRE_ stuff below is just a workaround until this primary/secondary stuff is changed. */
-		if (firemode == 0) {
-			if (hand[0] == 'r')
-				cl.cmode = M_FIRE_PR;
-			else
-				cl.cmode = M_FIRE_PL;
-		} else if  (firemode == 1) {
-			if (hand[0] == 'r')
-				cl.cmode = M_FIRE_SR;
-			else
-				cl.cmode = M_FIRE_SL;
-		}
+		if (hand[0] == 'r')
+			cl.cmode = M_FIRE_R;
+		else
+			cl.cmode = M_FIRE_L;
+		cl.cfiremode = firemode;
+		/* TODO: store firemode */
 		HideFiremodes();
 	} else {
 		Com_Printf("CL_FireWeapon: Firemode not available (%s, %s).\n", hand, ammo->fd[weap_fd_idx][firemode].name);
@@ -787,7 +783,9 @@ void CL_ActorUpdateCVars(void)
 			if (selWeapon->item.m == NONE) {
 				selFD = NULL;
 			} else {
-				selFD = &csi.ods[selWeapon->item.m].fd[INV_FiredefsIDXForWeapon(&csi.ods[selWeapon->item.m],selWeapon->item.t)][MODE_FD_PRIO(cl.cmode)];
+				selFD = GET_FIREDEF(selWeapon->item.m,
+						INV_FiredefsIDXForWeapon(&csi.ods[selWeapon->item.m],
+						selWeapon->item.t), cl.cfiremode);
 			}
 		} else {
 			selFD = NULL;
@@ -947,26 +945,29 @@ void CL_ActorUpdateCVars(void)
 	/* mode */
 	if (cl.oldcmode != cl.cmode || refresh) {
 		switch (cl.cmode) {
-		case M_FIRE_PL:
-		case M_PEND_FIRE_PL:
-			HighlightWeaponButton(BT_LEFT_PRIMARY);
+		/* TODO: Better highlight for active firemode (from the list, not the buttons) needed ... */
+		case M_FIRE_L:
+		case M_PEND_FIRE_L:
+			/* TODO: remove  PRIMARY/SECONDARY stuff... */
+			if (cl.cfiremode ==0)
+				HighlightWeaponButton(BT_LEFT_PRIMARY);
+			else
+				HighlightWeaponButton(BT_LEFT_SECONDARY);
+			
 			break;
-		case M_FIRE_SL:
-		case M_PEND_FIRE_SL:
-			HighlightWeaponButton(BT_LEFT_SECONDARY);
-			break;
-		case M_FIRE_PR:
-		case M_PEND_FIRE_PR:
-			HighlightWeaponButton(BT_RIGHT_PRIMARY);
-			break;
-		case M_FIRE_SR:
-		case M_PEND_FIRE_SR:
-			HighlightWeaponButton(BT_RIGHT_SECONDARY);
+		case M_FIRE_R:
+		case M_PEND_FIRE_R:
+			/* TODO: remove  PRIMARY/SECONDARY stuff... */
+			if (cl.cfiremode ==0)
+				HighlightWeaponButton(BT_RIGHT_PRIMARY);
+			else
+				HighlightWeaponButton(BT_RIGHT_SECONDARY);
 			break;
 		default:
 			ClearHighlights();
 		}
 		cl.oldcmode = cl.cmode;
+		cl.oldcfiremode = cl.cfiremode;
 		if (selActor)
 			CL_RefreshWeaponButtons(selActor->TU);
 	}
@@ -1349,20 +1350,11 @@ void CL_ActorStartMove(le_t * le, pos3_t to)
  */
 void CL_ActorShoot (le_t * le, pos3_t at)
 {
-	int shot_type;
 
 	if (!CL_CheckAction())
 		return;
 
-	if (IS_MODE_FIRE_LEFT(cl.cmode) && LEFT(le)) {
-		shot_type = IS_MODE_FIRE_PRIMARY(cl.cmode)
-			? ST_LEFT_PRIMARY : ST_LEFT_SECONDARY;
-	} else {
-		shot_type = IS_MODE_FIRE_PRIMARY(cl.cmode)
-			? ST_RIGHT_PRIMARY : ST_RIGHT_SECONDARY;
-	}
-
-	MSG_Write_PA(PA_SHOOT, le->entnum, at, shot_type);
+	MSG_Write_PA(PA_SHOOT, le->entnum, at, cl.cfiremode);
 }
 
 
@@ -1885,6 +1877,7 @@ void CL_ActorMoveMouse (void)
 
 /**
  * @brief Selects an actor using the mouse.
+ * @todo Comment on the cl.cmode stuff.
  */
 void CL_ActorSelectMouse (void)
 {
@@ -1900,9 +1893,11 @@ void CL_ActorSelectMouse (void)
 			CL_ActorMoveMouse();
 		}
 	} else if (cl.cmode > M_PEND_MOVE) {
-		cl.cmode -= M_PEND_FIRE_PR - M_FIRE_PR;
+		/* TODO: Comments on what this _does_ would be nice. */
+		cl.cmode -= M_PEND_FIRE_R - M_FIRE_R;
 	} else if (confirm_actions->value) {
-		cl.cmode += M_PEND_FIRE_PR - M_FIRE_PR;
+		/* TODO: Comments on what this _does_ would be nice. */
+		cl.cmode += M_PEND_FIRE_R - M_FIRE_R;
 	} else {
 		CL_ActorShoot(selActor, mousePos);
 	}

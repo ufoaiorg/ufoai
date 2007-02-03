@@ -125,27 +125,15 @@ camera_mode_t camera_mode;
 /** @brief don't mess with the order!!! */
 typedef enum {
 	M_MOVE,
-	M_FIRE_PR,
-	M_FIRE_SR,
-	M_FIRE_PL,
-	M_FIRE_SL,
+	M_FIRE_R,
+	M_FIRE_L,
 	M_PEND_MOVE,
-	M_PEND_FIRE_PR,
-	M_PEND_FIRE_SR,
-	M_PEND_FIRE_PL,
-	M_PEND_FIRE_SL
+	M_PEND_FIRE_R,
+	M_PEND_FIRE_L,
 } cmodes_t;
 
-#define IS_MODE_FIRE_RIGHT(x)	((x) == M_FIRE_PR || (x) == M_FIRE_SR \
-				|| (x) == M_PEND_FIRE_PR || (x) == M_PEND_FIRE_SR)
-#define IS_MODE_FIRE_LEFT(x)	((x) == M_FIRE_PL || (x) == M_FIRE_SL \
-				|| (x) == M_PEND_FIRE_PL || (x) == M_PEND_FIRE_SL)
-#define IS_MODE_FIRE_PRIMARY(x)	((x) == M_FIRE_PR || (x) == M_FIRE_PL \
-				|| (x) == M_PEND_FIRE_PR || (x) == M_PEND_FIRE_PL)
-#define IS_MODE_FIRE_SECONDARY(x) \
-				((x) == M_FIRE_SR || (x) == M_FIRE_SL \
-				|| (x) == M_PEND_FIRE_SR || (x) == M_PEND_FIRE_SL)
-#define MODE_FD_PRIO(x)		(IS_MODE_FIRE_PRIMARY(x) ? FD_PRIMARY : FD_SECONDARY)
+#define IS_MODE_FIRE_RIGHT(x)	((x) == M_FIRE_R || (x) == M_PEND_FIRE_R)
+#define IS_MODE_FIRE_LEFT(x)		((x) == M_FIRE_L || (x) == M_PEND_FIRE_L)
 
 /**
  * @brief the client_state_t structure is wiped completely at every server map change
@@ -175,7 +163,9 @@ typedef struct {
 	refdef_t refdef;
 
 	int cmode;
+	byte cfiremode;
 	int oldcmode;
+	byte oldcfiremode; /* TODO: checkif this is needed anywhere .. i was just including along with cfiremode it to be sure. */
 	int oldstate;
 
 	int msgTime;
@@ -645,11 +635,6 @@ extern invList_t invList[MAX_INVLIST];
 
 extern byte *fb_list[MAX_EDICTS];
 extern int fb_length;
-
-#define IS_MODE_FIRE_RIGHT(x)	((x) == M_FIRE_PR || (x) == M_FIRE_SR \
-				|| (x) == M_PEND_FIRE_PR || (x) == M_PEND_FIRE_SR)
-#define IS_MODE_FIRE_LEFT(x)	((x) == M_FIRE_PL || (x) == M_FIRE_SL \
-				|| (x) == M_PEND_FIRE_PL || (x) == M_PEND_FIRE_SL)
 
 void MSG_Write_PA(player_action_t player_action, int num, ...);
 

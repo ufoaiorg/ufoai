@@ -438,7 +438,7 @@ menu hud
 		pos		"174 708"
 		texl	"77 76"
 		texh	"152 128"
-		click	{ cmd firers }
+		click	{ cmd "list_firemodes r;" }
 	}
 
 	pic bt_sfire_left
@@ -448,7 +448,7 @@ menu hud
 		pos		"776 708"
 		texl	"77 76"
 		texh	"152 128"
-		click	{ cmd firels }
+		click	{ cmd "list_firemodes l;" }
 	}
 
 	pic bt_reload_left
