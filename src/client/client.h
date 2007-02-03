@@ -165,7 +165,6 @@ typedef struct {
 	int cmode;
 	byte cfiremode;
 	int oldcmode;
-	byte oldcfiremode; /* TODO: checkif this is needed anywhere .. i was just including along with cfiremode it to be sure. */
 	int oldstate;
 
 	int msgTime;

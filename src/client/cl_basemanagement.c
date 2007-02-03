@@ -1515,12 +1515,16 @@ void B_SelectBase(void)
 #define MIN(a,b) ((a)<(b)?(a):(b))
 /**
  * @brief Swaps skills of the initial team of soldiers so that they match inventories
+ * @todo This currently always uses exactly the first two firemodes (see fmode1+fmode2) for calculation. This needs to be adapted to support less (1) or more 3+ firemodes. I think the function will even  break on only one firemode .. never tested it.
+ * @todo i think currently also the different ammo/firedef types for each weapon (different weaponr_fd_idx and weaponr_fd_idx values) are ignored.
  */
 static void CL_SwapSkills(character_t *team[], int num)
 {
 	int j, i1, i2, skill, no1, no2, tmp1, tmp2;
 	character_t *cp1, *cp2;
 	byte weaponr_fd_idx, weaponh_fd_idx;
+	const byte fmode1 = 0;
+	const byte fmode2 = 1;
 
 	j = num;
 	while (j--) {
@@ -1531,18 +1535,19 @@ static void CL_SwapSkills(character_t *team[], int num)
 			for (i1 = 0; i1 < num - 1; i1++) {
 				cp1 = team[i1];
 				weaponr_fd_idx = -1;
-				weaponh_fd_idx = -1;
+				weaponr_fd_idx = -1;
 				if (RIGHT(cp1) && RIGHT(cp1)->item.m != NONE && RIGHT(cp1)->item.t != NONE)
 					weaponr_fd_idx = INV_FiredefsIDXForWeapon(&csi.ods[RIGHT(cp1)->item.m], RIGHT(cp1)->item.t);
 				if (HOLSTER(cp1) && HOLSTER(cp1)->item.m != NONE && HOLSTER(cp1)->item.t != NONE)
 					weaponh_fd_idx = INV_FiredefsIDXForWeapon(&csi.ods[HOLSTER(cp1)->item.m], HOLSTER(cp1)->item.t);
 				/* disregard left hand, or dual-wielding guys are too good */
-				no1 = 2 * (RIGHT(cp1) && skill == csi.ods[RIGHT(cp1)->item.m].fd[weaponr_fd_idx][FD_PRIMARY].weaponSkill)
-					+ 2 * (RIGHT(cp1) && skill == csi.ods[RIGHT(cp1)->item.m].fd[weaponr_fd_idx][FD_SECONDARY].weaponSkill)
+				
+				no1 = 2 * (RIGHT(cp1) && skill == csi.ods[RIGHT(cp1)->item.m].fd[weaponr_fd_idx][fmode1].weaponSkill)
+					+ 2 * (RIGHT(cp1) && skill == csi.ods[RIGHT(cp1)->item.m].fd[weaponr_fd_idx][fmode2].weaponSkill)
 					+ (HOLSTER(cp1) && csi.ods[HOLSTER(cp1)->item.t].reload
-					   && skill == csi.ods[HOLSTER(cp1)->item.m].fd[weaponh_fd_idx][FD_PRIMARY].weaponSkill)
+					   && skill == csi.ods[HOLSTER(cp1)->item.m].fd[weaponh_fd_idx][fmode1].weaponSkill)
 					+ (HOLSTER(cp1) && csi.ods[HOLSTER(cp1)->item.t].reload
-					   && skill == csi.ods[HOLSTER(cp1)->item.m].fd[weaponh_fd_idx][FD_SECONDARY].weaponSkill);
+					   && skill == csi.ods[HOLSTER(cp1)->item.m].fd[weaponh_fd_idx][fmode2].weaponSkill);
 
 				for (i2 = i1 + 1 ; i2 < num; i2++) {
 					cp2 = team[i2];
@@ -1552,12 +1557,12 @@ static void CL_SwapSkills(character_t *team[], int num)
 						weaponr_fd_idx = INV_FiredefsIDXForWeapon(&csi.ods[RIGHT(cp2)->item.m], RIGHT(cp2)->item.t);
 					if (HOLSTER(cp2) && HOLSTER(cp2)->item.m != NONE && HOLSTER(cp2)->item.t != NONE)
 						weaponh_fd_idx = INV_FiredefsIDXForWeapon(&csi.ods[HOLSTER(cp2)->item.m], HOLSTER(cp2)->item.t);
-					no2 = 2 * (RIGHT(cp2) && skill == csi.ods[RIGHT(cp2)->item.m].fd[weaponr_fd_idx][FD_PRIMARY].weaponSkill) /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
-						+ 2 * (RIGHT(cp2) && skill == csi.ods[RIGHT(cp2)->item.m].fd[weaponr_fd_idx][FD_SECONDARY].weaponSkill) /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
+					no2 = 2 * (RIGHT(cp2) && skill == csi.ods[RIGHT(cp2)->item.m].fd[weaponr_fd_idx][fmode1].weaponSkill) 
+						+ 2 * (RIGHT(cp2) && skill == csi.ods[RIGHT(cp2)->item.m].fd[weaponr_fd_idx][fmode2].weaponSkill)
 						+ (HOLSTER(cp2) && csi.ods[HOLSTER(cp2)->item.t].reload
-						   && skill == csi.ods[HOLSTER(cp2)->item.m].fd[weaponh_fd_idx][FD_PRIMARY].weaponSkill) /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
+						   && skill == csi.ods[HOLSTER(cp2)->item.m].fd[weaponh_fd_idx][fmode1].weaponSkill)
 						+ (HOLSTER(cp2) && csi.ods[HOLSTER(cp2)->item.t].reload
-						   && skill == csi.ods[HOLSTER(cp2)->item.m].fd[weaponh_fd_idx][FD_SECONDARY].weaponSkill); /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
+						   && skill == csi.ods[HOLSTER(cp2)->item.m].fd[weaponh_fd_idx][fmode2].weaponSkill);
 
 					if ( no1 > no2 /* more use of this skill */
 						 || (no1 && no1 == no2) ) { /* or earlier on list */

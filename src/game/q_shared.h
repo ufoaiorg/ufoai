@@ -1225,41 +1225,7 @@ void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS],  char 
 
 /* =========================================================== */
 
-#define FD_PRIMARY      0
-#define FD_SECONDARY        1
-
 /** @brief Available shoot types */
-typedef enum {
-	ST_RIGHT_PRIMARY,
-	ST_RIGHT_PRIMARY_REACTION,
-	ST_RIGHT_SECONDARY,
-	ST_RIGHT_SECONDARY_REACTION,    /* unused */
-	ST_LEFT_PRIMARY,
-	ST_LEFT_PRIMARY_REACTION,
-	ST_LEFT_SECONDARY,
-	ST_LEFT_SECONDARY_REACTION, /* unused */
-
-	ST_NUM_SHOOT_TYPES,
-
-	/* 20060905 LordHavoc: added reload types */
-	ST_RIGHT_RELOAD,
-	ST_LEFT_RELOAD
-} shoot_types_t;
-
-#define IS_SHOT_REACTION(x) ((x) == ST_RIGHT_PRIMARY_REACTION || (x) == ST_RIGHT_SECONDARY_REACTION \
-                || (x) == ST_LEFT_PRIMARY_REACTION || (x) == ST_LEFT_SECONDARY_REACTION)
-#define IS_SHOT_RIGHT(x)    ((x) == ST_RIGHT_PRIMARY || (x) == ST_RIGHT_PRIMARY_REACTION \
-                || (x) == ST_RIGHT_SECONDARY || (x) == ST_RIGHT_SECONDARY_REACTION)
-#define IS_SHOT_LEFT(x)     ((x) == ST_LEFT_PRIMARY || (x) == ST_LEFT_PRIMARY_REACTION \
-                || (x) == ST_LEFT_SECONDARY || (x) == ST_LEFT_SECONDARY_REACTION)
-#define IS_SHOT_PRIMARY(x)  ((x) == ST_RIGHT_PRIMARY || (x) == ST_RIGHT_PRIMARY_REACTION \
-                || (x) == ST_LEFT_PRIMARY || (x) == ST_LEFT_PRIMARY_REACTION)
-#define IS_SHOT_SECONDARY(x)    ((x) == ST_RIGHT_SECONDARY || (x) == ST_RIGHT_SECONDARY_REACTION \
-                || (x) == ST_LEFT_SECONDARY || (x) == ST_LEFT_SECONDARY_REACTION)
-#define SHOT_FD_PRIO(x)     (IS_SHOT_PRIMARY(x) ? FD_PRIMARY : FD_SECONDARY)
-
-/* alternative defines for multi-firemdode changes.
-** @brief Available shoot types 
 typedef enum {
 	ST_RIGHT,
 	ST_RIGHT_REACTION,
@@ -1268,19 +1234,15 @@ typedef enum {
 
 	ST_NUM_SHOOT_TYPES,
 
-	* 20060905 LordHavoc: added reload types *
+	/* 20060905 LordHavoc: added reload types */
 	ST_RIGHT_RELOAD,
 	ST_LEFT_RELOAD
 } shoot_types_t;
 
-#define IS_SHOT_REACTION(x) ((x) == ST_RIGHT_REACTION || (x) == ST_RIGHT_REACTION)
+#define IS_SHOT_REACTION(x) ((x) == ST_RIGHT_REACTION || (x) == ST_LEFT_REACTION)
 #define IS_SHOT(x)          ((x) == ST_RIGHT || (x) == ST_LEFT)
 #define IS_SHOT_LEFT(x)     ((x) == ST_LEFT || (x) == ST_LEFT_REACTION)
 #define IS_SHOT_RIGHT(x)    ((x) == ST_RIGHT || (x) == ST_RIGHT_REACTION)
-
-* Needed? *
-#define SHOT_FD_DEFAULT(x)     ((x) == 0 ? 1 : 0)
-*/
 
 /* shoot flags */
 #define SF_IMPACT           1

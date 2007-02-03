@@ -582,7 +582,6 @@ void CL_FireWeapon(void)
 static void CL_RefreshWeaponButtons(int time)
 {
 	invList_t *weaponr, *weaponl = NULL;
-	byte weapon_fd_idx;
 
 	if (!selActor)
 		return;
@@ -632,6 +631,9 @@ static void CL_RefreshWeaponButtons(int time)
 		SetWeaponButton(BT_LEFT_RELOAD, qtrue);
 
 	/* Weapon firing buttons */
+	/* TODO: Anything needed as a replacement? */
+#if 0
+	byte weapon_fd_idx;
 	weapon_fd_idx  = -1;
 	if (weaponr && weaponr->item.m != NONE && weaponr->item.m != NONE)
 		weapon_fd_idx = INV_FiredefsIDXForWeapon(&csi.ods[weaponr->item.m],weaponr->item.t);
@@ -667,6 +669,7 @@ static void CL_RefreshWeaponButtons(int time)
 		SetWeaponButton(BT_LEFT_SECONDARY, qfalse);
 	else
 		SetWeaponButton(BT_LEFT_SECONDARY, qtrue);
+#endif
 
 }
 
@@ -682,6 +685,7 @@ qboolean CL_CheckMenuAction(int time, invList_t *weapon, int mode)
 	}
 
 	switch (mode) {
+#if 0
 	case FD_PRIMARY:
 	case FD_SECONDARY:
 		if ( weapon->item.a <= 0 && csi.ods[weapon->item.t].reload) {
@@ -697,6 +701,7 @@ qboolean CL_CheckMenuAction(int time, invList_t *weapon, int mode)
 			return qfalse;
 		}
 		break;
+#endif
 	case EV_INV_RELOAD:
 		if ( !csi.ods[weapon->item.t].reload ) {
 			Com_Printf("This weapon can not be reloaded!\n");
@@ -967,7 +972,6 @@ void CL_ActorUpdateCVars(void)
 			ClearHighlights();
 		}
 		cl.oldcmode = cl.cmode;
-		cl.oldcfiremode = cl.cfiremode;
 		if (selActor)
 			CL_RefreshWeaponButtons(selActor->TU);
 	}
