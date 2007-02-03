@@ -893,4 +893,8 @@ menu popup
 		pos	"650 450"
 		align	uc
 	}
+	func leave
+	{
+		cmd "mn_pop;"
+	}
 }
