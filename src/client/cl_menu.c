@@ -3652,7 +3652,7 @@ message_t *MN_AddNewMessage (const char *title, const char *text, qboolean popup
 
 	/* they need to be translated already */
 	if (popup)
-		MN_Popup(title, text);
+		MN_Popup(mess->title, mess->text);
 
 	switch (type) {
 	case MSG_DEBUG:

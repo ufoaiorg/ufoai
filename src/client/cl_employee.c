@@ -478,7 +478,7 @@ extern qboolean E_HireEmployee (const base_t* const base, employeeType_t type, i
 	diff = spaceTotal - employeesTotal;
 	if (diff < 0) {
 		MN_AddNewMessage(_("Not enough quarters"),
-			va(_("You don't have enough quarterspace.\nYou have to unhire %i until end of month or build some new quarters."),
+			va(_("You don't have enough living quarters to house all of your personnel. You need to fire %i personnel until more living space becomes available."),
 			employeesTotal - spaceTotal), qtrue, MSG_INFO, NULL);
 		return qfalse;
 	} else if (diff == 0) {
