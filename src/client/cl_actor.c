@@ -1378,11 +1378,19 @@ extern void CL_ActorStartMove (le_t * le, pos3_t to)
  */
 void CL_ActorShoot (le_t * le, pos3_t at)
 {
+	byte type;
 	if (!CL_CheckAction())
 		return;
 
 	Com_Printf("CL_ActorShoot: cl.firemode %i.\n",  cl.cfiremode);
-	MSG_Write_PA(PA_SHOOT, at, le->entnum, cl.cfiremode);
+	
+	/* TODO: Is there a better way to do this?
+	 * This type value will travel until it is checked in at least g_combat.c:G_GetShotFromType
+	 */
+	type = IS_MODE_FIRE_RIGHT(cl.cmode)
+			? ST_RIGHT
+			: ST_LEFT;
+	MSG_Write_PA(PA_SHOOT, le->entnum, at, type, cl.cfiremode);
 }
 
 
