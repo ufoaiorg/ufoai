@@ -650,7 +650,6 @@ void CL_ActorDoTurn(sizebuf_t * sb);
 void CL_ActorStandCrouch(void);
 void CL_ActorStun(void);
 void CL_ActorToggleReaction(void);
-void CL_BuildForbiddenList(void);
 void CL_ActorStartMove(le_t * le, pos3_t to);
 void CL_ActorShoot(le_t * le, pos3_t at);
 void CL_ActorDoMove(sizebuf_t * sb);

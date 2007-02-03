@@ -64,12 +64,12 @@ static const char *shoot_type_strings[BT_NUM_TYPES] = {
 	"crouch\n"
 };
 
-int weaponButtonState[BT_NUM_TYPES];
+static int weaponButtonState[BT_NUM_TYPES];
 
 /**
  * @brief Writes player action with its data
  */
-void MSG_Write_PA(player_action_t player_action, int num, ...)
+void MSG_Write_PA (player_action_t player_action, int num, ...)
 {
 	va_list ap;
 	va_start(ap, num);
@@ -135,7 +135,7 @@ static char *CL_GetSkillString(const int skill)
  * @sa CL_UGVCvars
  * @sa CL_ActorSelect
  */
-void CL_CharacterCvars(character_t *chr)
+extern void CL_CharacterCvars (character_t *chr)
 {
 	assert(chr);
 
@@ -192,7 +192,7 @@ void CL_CharacterCvars(character_t *chr)
  * @sa CL_CharacterCvars
  * @sa CL_ActorSelect
  */
-void CL_UGVCvars(character_t *chr)
+extern void CL_UGVCvars (character_t *chr)
 {
 	assert(chr);
 
@@ -234,7 +234,7 @@ void CL_UGVCvars(character_t *chr)
 /**
  * @brief Updates the global character cvars.
  */
-void CL_ActorGlobalCVars(void)
+static void CL_ActorGlobalCVars (void)
 {
 	le_t *le;
 	char str[MAX_VAR];
@@ -279,7 +279,8 @@ void CL_ActorGlobalCVars(void)
 /**
  * @brief get state of the reaction-fire button
  */
-int CL_GetReactionState(le_t *le) {
+static int CL_GetReactionState (le_t *le)
+{
 	if (le->state & STATE_REACTION_MANY)
 		return R_FIRE_MANY;
 	else if (le->state & STATE_REACTION_ONCE)
@@ -294,7 +295,7 @@ int CL_GetReactionState(le_t *le) {
  * NB: this routine assumes the time to reload a weapon in
  * in the right hand is the same as the left hand.
  */
-static int CL_CalcReloadTime(int weapon_id)
+static int CL_CalcReloadTime (int weapon_id)
 {
 	invList_t *ic;
 	int container;
@@ -322,7 +323,7 @@ static int CL_CalcReloadTime(int weapon_id)
 /**
  * @brief
  */
-static void ClearHighlights()
+static void ClearHighlights (void)
 {
 	int i;
 
@@ -336,7 +337,7 @@ static void ClearHighlights()
 /**
  * @brief
  */
-static void HighlightWeaponButton(int button)
+static void HighlightWeaponButton (int button)
 {
 	char cbufText[MAX_VAR];
 
@@ -352,7 +353,7 @@ static void HighlightWeaponButton(int button)
 /**
  * @brief
  */
-void CL_ResetWeaponButtons(void)
+void CL_ResetWeaponButtons (void)
 {
 	memset(weaponButtonState, -1, sizeof(weaponButtonState));
 }
@@ -360,7 +361,7 @@ void CL_ResetWeaponButtons(void)
 /**
  * @brief Sets the display for a single weapon/reload HUD button
  */
-static void SetWeaponButton(int button, int state)
+static void SetWeaponButton (int button, int state)
 {
 	char cbufText[MAX_VAR];
 	int currentState = weaponButtonState[button];
@@ -384,7 +385,7 @@ static void SetWeaponButton(int button, int state)
 /**
  * @brief Makes all entries of the firemode lists invisible.
  */
-static void HideFiremodes(void)
+static void HideFiremodes (void)
 {
 	visible_firemode_list_left = qfalse;
 	Cbuf_AddText("set_left_inv0\n");
@@ -404,7 +405,7 @@ static void HideFiremodes(void)
  * @param[in] hand Which list to display. 'l' for left hand list, 'r' for right hand list.
  * @param[in] status Display the firemode clickable/active (1) or inactive (0).
  */
-static void DisplayFiremodeEntry(fireDef_t *fd, char hand, byte status)
+static void DisplayFiremodeEntry (fireDef_t *fd, char hand, byte status)
 {
 	if (!fd)
 		return;
@@ -444,7 +445,7 @@ static void DisplayFiremodeEntry(fireDef_t *fd, char hand, byte status)
  * @param[out] ammo The ammo used in the weapon (is the same as weapon for grenades and similar).
  * @param[out] weap_fd_idx weapon_mod index in the ammo for the weapon.
  */
-static void GetWeaponAndAmmo(char hand, objDef_t **weapon, objDef_t **ammo, byte *weap_fd_idx)
+static void GetWeaponAndAmmo (char hand, objDef_t **weapon, objDef_t **ammo, byte *weap_fd_idx)
 {
 	invList_t *invlist_weapon = NULL;
 
@@ -469,7 +470,7 @@ static void GetWeaponAndAmmo(char hand, objDef_t **weapon, objDef_t **ammo, byte
 	else
 		*ammo = &csi.ods[invlist_weapon->item.m];
 
-	*weap_fd_idx = INV_FiredefsIDXForWeapon (*ammo, invlist_weapon->item.t);
+	*weap_fd_idx = INV_FiredefsIDXForWeapon(*ammo, invlist_weapon->item.t);
 
 	Com_Printf("GetWeaponAndAmmo: weapon %i ammo %i -- %s %s %i\n", invlist_weapon->item.t, invlist_weapon->item.m, (*weapon)->name, (*ammo)->name, *weap_fd_idx);
 }
@@ -477,7 +478,7 @@ static void GetWeaponAndAmmo(char hand, objDef_t **weapon, objDef_t **ammo, byte
 /**
  * @brief Displays the firemodes for the left hand.
  */
-void CL_DisplayFiremodes(void)
+void CL_DisplayFiremodes (void)
 {
 	objDef_t *weapon = NULL;
 	objDef_t *ammo = NULL;
@@ -551,7 +552,7 @@ void CL_DisplayFiremodes(void)
  * @brief Starts aiming/target mode for selected left/right firemode.
  * @note Previously know as a combination of CL_FireRightPrimary, CL_FireRightSecondary, CL_FireLeftPrimary and CL_FireLeftSecondary
  */
-void CL_FireWeapon(void)
+void CL_FireWeapon (void)
 {
 	char *hand;
 	byte firemode;
@@ -585,8 +586,7 @@ void CL_FireWeapon(void)
 	GetWeaponAndAmmo(hand[0], &weapon, &ammo, &weap_fd_idx);
 	Com_Printf("CL_FireWeapon: %s %s %i\n", weapon->name, ammo->name, weap_fd_idx);
 
-
-	if ( ammo->fd[weap_fd_idx][firemode].time <= selActor->TU ) {
+	if (ammo->fd[weap_fd_idx][firemode].time <= selActor->TU) {
 		/* Actually start aiming */
 		if (hand[0] == 'r')
 			cl.cmode = M_FIRE_R;
@@ -605,7 +605,7 @@ void CL_FireWeapon(void)
  *
  * @sa CL_ActorUpdateCVars
  */
-static void CL_RefreshWeaponButtons(int time)
+static void CL_RefreshWeaponButtons (int time)
 {
 	invList_t *weaponr, *weaponl = NULL;
 
@@ -704,7 +704,7 @@ static void CL_RefreshWeaponButtons(int time)
 /**
  * @brief Checks whether an action on hud menu is valid.
  */
-qboolean CL_CheckMenuAction(int time, invList_t *weapon, int mode)
+qboolean CL_CheckMenuAction (int time, invList_t *weapon, int mode)
 {
 	/* no weapon */
 	if ( !weapon || weapon->item.m == NONE ) {
@@ -758,7 +758,7 @@ qboolean CL_CheckMenuAction(int time, invList_t *weapon, int mode)
  * @sa CL_CharacterCvars
  * @sa CL_UGVCvars
  */
-void CL_ActorUpdateCVars(void)
+void CL_ActorUpdateCVars (void)
 {
 	static char infoText[MAX_MENUTEXTLEN];
 	static char mousetext[MAX_MENUTEXTLEN];
@@ -1033,7 +1033,7 @@ ACTOR SELECTION AND TEAM LIST
  * @sa CL_RemoveActorFromTeamList
  * @param le Pointer to local entity struct
  */
-void CL_AddActorToTeamList(le_t * le)
+void CL_AddActorToTeamList (le_t * le)
 {
 	int i;
 
@@ -1069,7 +1069,7 @@ void CL_AddActorToTeamList(le_t * le)
  * @sa CL_AddActorToTeamList
  * @param le Pointer to local entity struct
  */
-void CL_RemoveActorFromTeamList(le_t * le)
+void CL_RemoveActorFromTeamList (le_t * le)
 {
 	int i;
 
@@ -1110,7 +1110,7 @@ void CL_RemoveActorFromTeamList(le_t * le)
  * @sa CL_UGVCvars
  * @sa CL_CharacterCvars
  */
-qboolean CL_ActorSelect(le_t * le)
+extern qboolean CL_ActorSelect (le_t * le)
 {
 	int i;
 
@@ -1166,7 +1166,7 @@ qboolean CL_ActorSelect(le_t * le)
  * @sa CL_ActorSelect
  * @return qtrue if selection was possible otherwise qfalse
  */
-qboolean CL_ActorSelectList(int num)
+extern qboolean CL_ActorSelectList (int num)
 {
 	le_t *le;
 
@@ -1191,7 +1191,7 @@ qboolean CL_ActorSelectList(int num)
 /**
  * @brief selects the next actor
  */
-qboolean CL_ActorSelectNext()
+extern qboolean CL_ActorSelectNext (void)
 {
 	le_t* le;
 	int selIndex = -1;
@@ -1233,7 +1233,7 @@ ACTOR MOVEMENT AND SHOOTING
 /**
  * @brief A list of locations that cannot be moved to.
  *
- * @see CL_BuildForbiddenList(void)
+ * @see CL_BuildForbiddenList
  */
 byte *fb_list[MAX_EDICTS];
 /**
@@ -1250,7 +1250,7 @@ int fb_length;
  * This is used for pathfinding.
  * It is a list of where the selected unit can not move to because others are standing there already.
  */
-void CL_BuildForbiddenList(void)
+static void CL_BuildForbiddenList (void)
 {
 	le_t *le;
 	int i;
@@ -1272,7 +1272,7 @@ void CL_BuildForbiddenList(void)
  * @brief Recalculate forbidden list, available moves and actor's move length
  * if given le is the selected Actor.
  */
-void CL_ConditionalMoveCalc(struct routing_s *map, le_t *le, int distance)
+extern void CL_ConditionalMoveCalc (struct routing_s *map, le_t *le, int distance)
 {
 	if (selActor && selActor == le) {
 		CL_BuildForbiddenList();
@@ -1284,7 +1284,7 @@ void CL_ConditionalMoveCalc(struct routing_s *map, le_t *le, int distance)
 /**
  * @brief Checks that an action is valid.
  */
-int CL_CheckAction(void)
+static int CL_CheckAction (void)
 {
 	static char infoText[MAX_MENUTEXTLEN];
 
@@ -1312,7 +1312,7 @@ int CL_CheckAction(void)
  * @brief Draws the way to walk when confirm actions is activated.
  * @param[in] to
  */
-int CL_TraceMove(pos3_t to)
+static int CL_TraceMove (pos3_t to)
 {
 	int length;
 	vec3_t vec, oldVec;
@@ -1349,7 +1349,7 @@ int CL_TraceMove(pos3_t to)
  * @sa CL_ActorActionMouse
  * @sa CL_ActorSelectMouse
  */
-void CL_ActorStartMove(le_t * le, pos3_t to)
+extern void CL_ActorStartMove (le_t * le, pos3_t to)
 {
 	int length;
 

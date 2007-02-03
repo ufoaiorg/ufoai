@@ -861,7 +861,7 @@ static void G_GetShotOrigin(edict_t *shooter, fireDef_t *fd, vec3_t dir, vec3_t 
  * @brief
  * @sa G_ClientShoot
  */
-qboolean G_GetShotFromType(edict_t *ent, int type, byte firemode, item_t **weapon, int *container, fireDef_t **fd)
+static qboolean G_GetShotFromType (edict_t *ent, int type, byte firemode, item_t **weapon, int *container, fireDef_t **fd)
 {
 	byte weapon_fd_idx;
 
@@ -886,6 +886,7 @@ qboolean G_GetShotFromType(edict_t *ent, int type, byte firemode, item_t **weapo
 	}
 	weapon_fd_idx = INV_FiredefsIDXForWeapon(&gi.csi->ods[(*weapon)->m], (*weapon)->t);
 	/* fd = od[weapon_fd_idx][firemodeidx] */
+	gi.dprintf("weapon_fd_idx: %i (%s), firemode: %i\n", weapon_fd_idx, gi.csi->ods[(*weapon)->t].name, firemode);
 	*fd = &gi.csi->ods[(*weapon)->m].fd[weapon_fd_idx][firemode];
 
 	return qtrue;
@@ -894,18 +895,18 @@ qboolean G_GetShotFromType(edict_t *ent, int type, byte firemode, item_t **weapo
 /**
  * @brief Setup for shooting, either real or mock
  */
-qboolean G_ClientShoot(player_t * player, int num, pos3_t at, int type, byte firemode, shot_mock_t *mock, qboolean allowReaction)
+qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type, byte firemode, shot_mock_t *mock, qboolean allowReaction)
 {
-	fireDef_t *fd;
+	fireDef_t *fd = NULL;
 	edict_t *ent;
-	item_t *weapon;
+	item_t *weapon = NULL;
 	vec3_t dir, center, target, shotOrigin;
 	int i, ammo, prev_dir = 0, reaction_leftover, shots;
-	int container, mask;
+	int container = 0, mask;
 	qboolean quiet;
 
 	ent = g_edicts + num;
-	quiet = mock != NULL;
+	quiet = (mock != NULL);
 
 	if (!G_GetShotFromType(ent, type, firemode, &weapon, &container, &fd)) {
 		if (!weapon && !quiet)
