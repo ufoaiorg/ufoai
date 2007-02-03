@@ -209,21 +209,21 @@ item sniper_ammo
 		}
 		firedef
 		{
-			name	"_Aimed Shot"
+			name	"_Snap Shot"
 			skill	sniper
 			projtl	bullet
 			impact	bulletImpact
 			hitbody blood
 			firesnd	weapons/sniper.wav
 			speed	0
-			spread	"0.1 0.1"
+			spread	"0.3 0.3"
 			modif	1.7
 			crouch	0.7
 			range	250
 			shots	1
 			ammo	1
-			time	18
-			damage	"105 0"
+			time	15
+			damage	"95 0"
 			dmgtype normal
 		}
 	}
