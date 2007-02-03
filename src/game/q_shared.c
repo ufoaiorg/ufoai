@@ -2877,11 +2877,11 @@ void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], char *
 						if (ammo < CSI->numODs) {
 							primary =
 								/* to avoid two tachyon weapons */
-								!(CSI->ods[ammo].fd[0].dmgtype
+								!(CSI->ods[ammo].fd[0][0].dmgtype
 								== CSI->damTachyon)
 								/* to avoid SMG + Assault Rifle */
-								&& !(CSI->ods[ammo].fd[0].dmgtype
-									== CSI->damNormal);
+								&& !(CSI->ods[ammo].fd[0][0].dmgtype
+									== CSI->damNormal); /* fd[0][0] Seems to be ok here since we just check the damage type and they are the same for all fds i've found. */
 						}
 						max_price = 0; /* one primary weapon is enough */
 						missed_primary = 0;
@@ -3843,10 +3843,9 @@ void Com_PrintItemDescription(int i)
 	Com_Printf("... twohanded     -> %i\n", ods_temp->holdtwohanded);
 	Com_Printf("... thrown        -> %i\n", ods_temp->thrown);
 	Com_Printf("... usable for weapon (if type is ammo):\n");
-	for (i = 0; i < MAX_TECHLINKS; i++) {
-		if (ods_temp->forWeapon[i] < 0)
-			break;
-		Com_Printf("    ... %s\n", CSI->ods[ods_temp->forWeapon[i]].name);
+	for (i = 0; i < ods_temp->numWeapons; i++) {
+		if (ods_temp->weap_idx[i] >= 0)
+			Com_Printf("    ... %s\n", CSI->ods[ods_temp->weap_idx[i]].name);
 	}
 	Com_Printf("\n");
 }
@@ -3876,16 +3875,45 @@ qboolean INV_LoadableInWeapon (objDef_t *od, int weapon_idx)
 	int i;
 	qboolean usable = qfalse;
 
-	for (i = 0; i < MAX_TECHLINKS; i++) {
-		if (od->forWeapon[i] < 0)
+	for (i = 0; i < od->numWeapons; i++) {
+#ifdef DEBUG
+		if (od->weap_idx[i] < 0) {
+			Com_DPrintf("INV_LoadableInWeapon: negative weap_idx entry (%s) found in item '%s'.\n", od->weap_id[i], od->id );
 			break;
-		if (weapon_idx == od->forWeapon[i]) {
+		}
+#endif
+		if (weapon_idx == od->weap_idx[i]) {
 			usable = qtrue;
 			break;
 		}
 	}
 #if 0
-	Com_DPrintf("INV_LoadableInWeapon: item '%s' usable (%i) in weapon '%s'.\n", od->id, usable, CSI->ods[weapon_idx].id );
+	Com_DPrintf("INV_LoadableInWeapon: item '%s' usable/unusable (%i) in weapon '%s'.\n", od->id, usable, CSI->ods[weapon_idx].id );
 #endif
 	return usable;
+}
+
+/**
+ * @brief Returns the index of the array that has the firedefinitions for a given weapon (-index)
+ * @param[in] od The object definition of the item.
+ * @param[in] weapon_idx The index of the weapon (in the inventory) to check the item with.
+ * @return int Returns the index in the fd array. -1 if the weapon-idx was not found. 0 (equals the default firemode) if an invalid or unknown weapon idx was given.
+ */
+byte INV_FiredefsIDXForWeapon (objDef_t *od, int weapon_idx)
+{
+	int i;
+
+	if (!od)
+		return -1;
+
+	if (weapon_idx == -1) {
+		Com_DPrintf("INV_FiredefsIDXForWeapon: bad weapon_idx (%i) in item '%s' - using default weapon/firemodes.\n", weapon_idx, od->id);
+		return 0;
+	}
+
+	for (i = 0; i < od->numWeapons; i++) {
+		if (weapon_idx == od->weap_idx[i])
+			return i;
+	}
+	return -1;
 }

@@ -482,7 +482,7 @@ void G_SplashDamage(edict_t * ent, fireDef_t * fd, vec3_t impact, shot_mock_t *m
 /**
  * @brief
  */
-static void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, int type, vec3_t from, pos3_t at, int mask, item_t * weapon, shot_mock_t *mock)
+static void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at, int mask, item_t * weapon, shot_mock_t *mock)
 {
 	vec3_t last, target, temp;
 	vec3_t startV, curV, oldPos, newPos;
@@ -565,7 +565,9 @@ static void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, int
 					/* explode */
 					gi.AddEvent(G_VisToPM(mask), EV_ACTOR_THROW);
 					gi.WriteShort(dt * 1000);
-					gi.WriteByte(type);
+					gi.WriteShort(fd->obj_idx);
+					gi.WriteByte(fd->weap_idx);
+					gi.WriteByte(fd->fd_idx);
 					if (tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_UGV))
 						gi.WriteByte(flags | SF_BODY);
 					else
@@ -620,7 +622,9 @@ static void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, int
 				/* send */
 				gi.AddEvent(G_VisToPM(mask), EV_ACTOR_THROW);
 				gi.WriteShort(dt * 1000);
-				gi.WriteByte(type);
+				gi.WriteShort(fd->obj_idx);
+				gi.WriteByte(fd->weap_idx);
+				gi.WriteByte(fd->fd_idx);
 				gi.WriteByte(flags);
 				gi.WritePos(last);
 				gi.WritePos(startV);
@@ -650,12 +654,11 @@ static void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, int
  * @brief Fires straight shots.
  * @param[in] ent The attacker.
  * @param[in] fd The fire definition that is used for the shot.
- * @param[in] wi ?? TODO
  * @param[in] from Location of the gun muzzle.
  * @param[in] at Grid coordinate of the target.
  * @param[in] mask ?? TODO Visibility bit-mask of the others?
  */
-static void G_ShootSingle(edict_t * ent, fireDef_t * fd, int wi, vec3_t from, pos3_t at, int mask, item_t * weapon, shot_mock_t *mock)
+static void G_ShootSingle(edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at, int mask, item_t * weapon, shot_mock_t *mock)
 {
 	vec3_t dir;	/* Direction from the location of the gun muzzle ("from") to the target ("at") */
 	vec3_t angles;	/* ?? TODO The random dir-modifier ?? */
@@ -745,9 +748,12 @@ static void G_ShootSingle(edict_t * ent, fireDef_t * fd, int wi, vec3_t from, po
 
 		if (!mock) {
 			/* send shot */
+			gi.dprintf("G_ShootSingle: %i %i %i DEBUG\n", fd->obj_idx, fd->weap_idx, fd->fd_idx);
 			gi.AddEvent(G_VisToPM(mask), EV_ACTOR_SHOOT);
 			gi.WriteShort(ent->number);
-			gi.WriteByte(wi);
+			gi.WriteShort(fd->obj_idx);
+			gi.WriteByte(fd->weap_idx);
+			gi.WriteByte(fd->fd_idx);
 			gi.WriteByte(flags);
 			gi.WritePos(cur_loc);
 			gi.WritePos(impact);
@@ -756,7 +762,9 @@ static void G_ShootSingle(edict_t * ent, fireDef_t * fd, int wi, vec3_t from, po
 			/* send shot sound to the others */
 			gi.AddEvent(~G_VisToPM(mask), EV_ACTOR_SHOOT_HIDDEN);
 			gi.WriteByte(qfalse);
-			gi.WriteByte(wi);
+			gi.WriteShort(fd->obj_idx);
+			gi.WriteByte(fd->weap_idx);
+			gi.WriteByte(fd->fd_idx);
 		}
 
 		/* do splash damage */
@@ -853,8 +861,10 @@ static void G_GetShotOrigin(edict_t *shooter, fireDef_t *fd, vec3_t dir, vec3_t 
  * @brief
  * @sa G_ClientShoot
  */
-qboolean G_GetShotFromType(edict_t *ent, int type, item_t **weapon, int *container, fireDef_t **fd)
+qboolean G_GetShotFromType(edict_t *ent, int type, byte firemode, item_t **weapon, int *container, fireDef_t **fd)
 {
+	byte weapon_fd_idx;
+
 	if (type >= ST_NUM_SHOOT_TYPES)
 		gi.error("G_GetShotFromType: unknown shoot type %i.\n", type);
 
@@ -874,8 +884,9 @@ qboolean G_GetShotFromType(edict_t *ent, int type, item_t **weapon, int *contain
 		*weapon = NULL;
 		return qfalse;
 	}
-
-	*fd = &gi.csi->ods[(*weapon)->m].fd[SHOT_FD_PRIO(type)];
+	weapon_fd_idx = INV_FiredefsIDXForWeapon(&gi.csi->ods[(*weapon)->m], (*weapon)->t);
+	/* fd = od[weapon_fd_idx][firemodeidx] */
+	*fd = &gi.csi->ods[(*weapon)->m].fd[weapon_fd_idx][firemode];
 
 	return qtrue;
 }
@@ -883,26 +894,25 @@ qboolean G_GetShotFromType(edict_t *ent, int type, item_t **weapon, int *contain
 /**
  * @brief Setup for shooting, either real or mock
  */
-qboolean G_ClientShoot(player_t * player, int num, pos3_t at, int type, shot_mock_t *mock, qboolean allowReaction)
+qboolean G_ClientShoot(player_t * player, int num, pos3_t at, int type, byte firemode, shot_mock_t *mock, qboolean allowReaction)
 {
 	fireDef_t *fd;
 	edict_t *ent;
 	item_t *weapon;
 	vec3_t dir, center, target, shotOrigin;
-	int i, ammo, wi, prev_dir = 0, reaction_leftover, shots;
+	int i, ammo, prev_dir = 0, reaction_leftover, shots;
 	int container, mask;
 	qboolean quiet;
 
 	ent = g_edicts + num;
 	quiet = mock != NULL;
 
-	if (!G_GetShotFromType(ent, type, &weapon, &container, &fd)) {
+	if (!G_GetShotFromType(ent, type, firemode, &weapon, &container, &fd)) {
 		if (!weapon && !quiet)
 			gi.cprintf(player, PRINT_HIGH, _("Can't perform action - object not activable!\n"));
 		return qfalse;
 	}
 
-	wi = weapon->m | (SHOT_FD_PRIO(type) << 7/*move to byte end*/);
 	ammo = weapon->a;
 	reaction_leftover = IS_SHOT_REACTION(type) ? sv_reaction_leftover->value : 0;
 
@@ -975,14 +985,18 @@ qboolean G_ClientShoot(player_t * player, int num, pos3_t at, int type, shot_moc
 		/* start shoot */
 		gi.AddEvent(G_VisToPM(mask), EV_ACTOR_START_SHOOT);
 		gi.WriteShort(ent->number);
-		gi.WriteByte(wi);
+		gi.WriteShort(fd->obj_idx);
+		gi.WriteByte(fd->weap_idx);
+		gi.WriteByte(fd->fd_idx);
 		gi.WriteGPos(ent->pos);
 		gi.WriteGPos(at);
 
 		/* send shot sound to the others */
 		gi.AddEvent(~G_VisToPM(mask), EV_ACTOR_SHOOT_HIDDEN);
 		gi.WriteByte(qtrue);
-		gi.WriteByte(wi);
+		gi.WriteShort(fd->obj_idx);
+		gi.WriteByte(fd->weap_idx);
+		gi.WriteByte(fd->fd_idx);
 
 		/* ammo... */
 		if (fd->ammo) {
@@ -1015,9 +1029,9 @@ qboolean G_ClientShoot(player_t * player, int num, pos3_t at, int type, shot_moc
 	/* fire all shots */
 	for (i = 0; i < shots; i++)
 		if (fd->gravity)
-			G_ShootGrenade(player, ent, fd, wi, shotOrigin, at, mask, weapon, mock);
+			G_ShootGrenade(player, ent, fd, shotOrigin, at, mask, weapon, mock);
 		else
-			G_ShootSingle(ent, fd, wi, shotOrigin, at, mask, weapon, mock);
+			G_ShootSingle(ent, fd, shotOrigin, at, mask, weapon, mock);
 
 	if (!mock) {
 		/* send TUs if ent still alive */
@@ -1050,7 +1064,7 @@ qboolean G_ClientShoot(player_t * player, int num, pos3_t at, int type, shot_moc
  * @sa G_ReactionFire
  * @sa G_ClientShoot
  */
-static qboolean G_FireWithJudgementCall(player_t * player, int num, pos3_t at, int type)
+static qboolean G_FireWithJudgementCall(player_t * player, int num, pos3_t at, int type, byte firemode)
 {
 	shot_mock_t mock;
 	edict_t *shooter;
@@ -1072,14 +1086,14 @@ static qboolean G_FireWithJudgementCall(player_t * player, int num, pos3_t at, i
 
 	memset(&mock, 0, sizeof(mock));
 	for (i = 0; i < 100; i++)
-		G_ClientShoot(player, num, at, type, &mock, qfalse);
+		G_ClientShoot(player, num, at, type, firemode, &mock, qfalse);
 
 	Com_DPrintf("G_FireWithJudgementCall: Hit: %d/%d FF+Civ: %d+%d=%d/%d Self: %d.\n",
 		mock.enemy, minhit, mock.friend, mock.civilian, mock.friend + mock.civilian, maxff, mock.self);
 
 	ff = mock.friend + (shooter->team == TEAM_ALIEN ? 0 : mock.civilian);
 	if (ff <= maxff && mock.enemy >= minhit)
-		return G_ClientShoot(player, num, at, type, NULL, qfalse);
+		return G_ClientShoot(player, num, at, type, firemode, NULL, qfalse);
 	else
 		return qfalse;
 }
@@ -1176,32 +1190,44 @@ static qboolean G_CanReactionFire(edict_t *ent, edict_t *target, char *reason)
  * @param[out] hand If not NULL then this stores the hand that the shooter will fire with
  * @returns The number of TUs required to fire or -1 if firing is not possible
  */
-int G_GetFiringTUs(edict_t *ent, edict_t *target, int *hand)
+int G_GetFiringTUs(edict_t *ent, edict_t *target, int *hand, byte *firemode)
 {
+	byte fmode1 = 0;
+	
+	byte weapon_fd_idx;
 	/* Fire the first weapon in hands if everything is ok. */
 	if ( RIGHT(ent)
-			&& (RIGHT(ent)->item.m != NONE)
-			&& gi.csi->ods[RIGHT(ent)->item.t].weapon
-			&& (!gi.csi->ods[RIGHT(ent)->item.t].reload
-				|| RIGHT(ent)->item.a > 0)
-			&& gi.csi->ods[RIGHT(ent)->item.m].fd[FD_PRIMARY].time + sv_reaction_leftover->integer <= ent->TU
-			&& gi.csi->ods[RIGHT(ent)->item.m].fd[FD_PRIMARY].range > VectorDist(ent->origin, target->origin) ) {
+		&& (RIGHT(ent)->item.m != NONE)
+		&& gi.csi->ods[RIGHT(ent)->item.t].weapon
+		&& (!gi.csi->ods[RIGHT(ent)->item.t].reload
+			|| RIGHT(ent)->item.a > 0) ) {
+		weapon_fd_idx = INV_FiredefsIDXForWeapon(&gi.csi->ods[RIGHT(ent)->item.m], RIGHT(ent)->item.t);
+					
+		if ( gi.csi->ods[RIGHT(ent)->item.m].fd[weapon_fd_idx][fmode1].time + sv_reaction_leftover->integer <= ent->TU
+		  && gi.csi->ods[RIGHT(ent)->item.m].fd[weapon_fd_idx][fmode1].range > VectorDist(ent->origin, target->origin) ) {
 
-		if (hand)
-			*hand = ST_RIGHT_PRIMARY_REACTION;
-		return gi.csi->ods[RIGHT(ent)->item.m].fd[FD_PRIMARY].time + sv_reaction_leftover->integer;
+			if (hand) {
+				*hand = ST_RIGHT_REACTION;
+				*firemode = fmode1;
+			}
+			return gi.csi->ods[RIGHT(ent)->item.m].fd[weapon_fd_idx][fmode1].time + sv_reaction_leftover->integer; /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
+		}
 	}
 	if (LEFT(ent)
 		&& (LEFT(ent)->item.m != NONE)
 		&& gi.csi->ods[LEFT(ent)->item.t].weapon
 		&& (!gi.csi->ods[LEFT(ent)->item.t].reload
-			|| LEFT(ent)->item.a > 0)
-		&& gi.csi->ods[LEFT(ent)->item.m].fd[FD_PRIMARY].time + sv_reaction_leftover->integer <= ent->TU
-		&& gi.csi->ods[LEFT(ent)->item.m].fd[FD_PRIMARY].range > VectorDist(ent->origin, target->origin) ) {
+			|| LEFT(ent)->item.a > 0) ) {
+		weapon_fd_idx = INV_FiredefsIDXForWeapon(&gi.csi->ods[LEFT(ent)->item.m], LEFT(ent)->item.t);
+		if ( gi.csi->ods[LEFT(ent)->item.m].fd[weapon_fd_idx][fmode1].time + sv_reaction_leftover->integer <= ent->TU 
+		  && gi.csi->ods[LEFT(ent)->item.m].fd[weapon_fd_idx][fmode1].range > VectorDist(ent->origin, target->origin) ) { 
 
-		if (hand)
-			*hand = ST_LEFT_PRIMARY_REACTION;
-		return gi.csi->ods[LEFT(ent)->item.m].fd[FD_PRIMARY].time + sv_reaction_leftover->integer;
+			if (hand) {
+				*hand = ST_LEFT_REACTION;
+				*firemode = fmode1;
+			}
+			return gi.csi->ods[LEFT(ent)->item.m].fd[weapon_fd_idx][fmode1].time + sv_reaction_leftover->integer; /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
+		}
 	}
 	return -1;
 }
@@ -1228,7 +1254,7 @@ qboolean G_CheckRFTrigger(edict_t *target)
 			continue;
 
 		/* see how quickly ent can fire (if it can fire at all) */
-		tus = G_GetFiringTUs(ent, target, NULL);
+		tus = G_GetFiringTUs(ent, target, NULL, NULL);
 		if (tus < 0)
 			continue;
 
@@ -1257,6 +1283,7 @@ qboolean G_ResolveRF(edict_t *ent, qboolean mock)
 {
 	player_t *player;
 	int tus, hand, team;
+	byte firemode;
 	qboolean tookShot;
 	char reason[64];
 
@@ -1290,7 +1317,7 @@ qboolean G_ResolveRF(edict_t *ent, qboolean mock)
 	}
 
 	/* check ent can fire (necessary? covered by G_CanReactionFire?) */
-	tus = G_GetFiringTUs(ent, ent->reactionTarget, &hand);
+	tus = G_GetFiringTUs(ent, ent->reactionTarget, &hand, &firemode);
 	if (tus < 0) {
 #ifdef DEBUG_REACTION
 		if (!mock)
@@ -1319,7 +1346,7 @@ qboolean G_ResolveRF(edict_t *ent, qboolean mock)
 	level.activeTeam = ent->team;
 
 	/* take the shot */
-	tookShot = G_FireWithJudgementCall(player, ent->number, ent->reactionTarget->pos, hand);
+	tookShot = G_FireWithJudgementCall(player, ent->number, ent->reactionTarget->pos, hand, firemode);
 
 	/* Revert active team. */
 	level.activeTeam = team;
@@ -1425,8 +1452,8 @@ void G_ReactToPreFire(edict_t *target)
 			continue;
 
 		/* draw!! */
-		entTUs = G_GetFiringTUs(ent, target, NULL);
-		targTUs = G_GetFiringTUs(target, ent, NULL);
+		entTUs = G_GetFiringTUs(ent, target, NULL, NULL);
+		targTUs = G_GetFiringTUs(target, ent, NULL, NULL);
 		if (entTUs < 0) {
 			/* can't reaction fire if no TUs to fire */
 			ent->reactionTarget = NULL;

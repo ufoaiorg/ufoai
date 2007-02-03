@@ -413,7 +413,7 @@ item_t CL_AddWeaponAmmo(equipDef_t * ed, item_t item)
 	assert (ed->num[type] > 0);
 	ed->num[type]--;
 
-	if (csi.ods[type].forWeapon[0] >= 0) { /* ammo */
+	if (csi.ods[type].weap_idx[0] >= 0) { /* ammo */
 		return item;
 	} else if (!csi.ods[type].reload) {
 		item.m = item.t; /* no ammo needed, so fire definitions are in t */

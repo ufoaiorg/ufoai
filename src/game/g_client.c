@@ -1632,6 +1632,7 @@ void G_ClientAction(player_t * player)
 	int num;
 	pos3_t pos;
 	int i;
+	byte firemode;
 	int from, fx, fy, to, tx, ty;
 
 	/* read the header */
@@ -1658,8 +1659,8 @@ void G_ClientAction(player_t * player)
 		break;
 
 	case PA_SHOOT:
-		gi.ReadFormat(pa_format[PA_SHOOT], &pos, &i);
-		(void)G_ClientShoot(player, num, pos, i, NULL, qtrue);
+		gi.ReadFormat(pa_format[PA_SHOOT], &pos, &i, &firemode);
+		(void)G_ClientShoot(player, num, pos, i, firemode, NULL, qtrue);
 		break;
 
 	case PA_INVMOVE:

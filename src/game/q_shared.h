@@ -904,13 +904,22 @@ extern char *pa_format[128];
 
 /* this is the absolute max for now */
 #define MAX_OBJDEFS     128
+#define MAX_WEAPONS_PER_OBJDEF 4
+#define MAX_FIREDEFS_PER_WEAPON 4
 #define MAX_DAMAGETYPES 32
-#define MAX_TECHLINKS	16 /* Needs to be synced with MAX_TECHLINKS in cl_research.h */
 
-#define GET_FIREDEF(type)   (&csi.ods[type & 0x7F].fd[!!(type & 0x80)])
+/* #define GET_FIREDEF(type)   (&csi.ods[type & 0x7F].fd[0][!!(type & 0x80)]) TODO remove me */
+/* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
+
+#define GET_FIREDEF(obj_idx,weap_idx,fd_idx)   (&csi.ods[obj_idx].fd[weap_idx][fd_idx])
 
 /** this is a fire definition for our weapons/ammo */
 typedef struct fireDef_s {
+	/* These values are created in Com_ParseItem and Com_AddObjectLinks. They are used for self-referencing the firedef. */
+	int obj_idx;		/**< The weapon/ammo (csi.ods[obj_idx]) this fd is located in. */
+	byte weap_idx;		/**< The weapon_mod entry (objDef_t->fd[weap_idx]) this fd is located in. */
+	byte fd_idx;		/**< Self link of the fd in the objDef_t->fd[][fd_idx] array. */
+
 	char name[MAX_VAR];			/**< script id */
 	char projectile[MAX_VAR];	/**< particle */
 	char impact[MAX_VAR];
@@ -969,16 +978,17 @@ typedef struct objDef_s {
 	byte extension;		/**< Boolean: Is an extension. */
 	byte headgear;		/**< Boolean: Is a headgear. */
 	byte thrown;		/**< This item is thrown. */
-	int price;			/**< the price for this item */
+	int price;		/**< the price for this item */
 	int buytype;		/**< In which category of the buy menu is this item listed. */
-
-	int forWeapon[MAX_TECHLINKS];	/**< Ammo-only: A list of weapons this ammo can be used in.
-						 * The information is taken from the "weapon" requirements in the technology. */
 
 	/* Weapon specific */
 	int ammo;			/**< how much can we load into this weapon at once */
 	int reload;			/**< time units for reloading the weapon */
-	fireDef_t fd[2];	/**< primary and secondard fire definition */
+	fireDef_t fd[MAX_WEAPONS_PER_OBJDEF][MAX_FIREDEFS_PER_WEAPON];	/**< List of firemodes per weapon. */
+	byte numFiredefs[MAX_WEAPONS_PER_OBJDEF];	/**< Numnber of firemodes per weapon. */
+	char weap_id[MAX_WEAPONS_PER_OBJDEF][MAX_VAR];	/**< List of weapon ids */
+	int weap_idx[MAX_WEAPONS_PER_OBJDEF];		/**< List of weapon indices (bascially replaces forWeapon if done correctly) */
+	byte numWeapons;				/**< Number of weapons. */
 
 	/* Technology link */
 	void *tech;		/**< Technology link to item to use this extension for (if this is an extension) */
@@ -1220,19 +1230,12 @@ void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS],  char 
 
 /* =========================================================== */
 
-#define FD_PRIMARY      0
-#define FD_SECONDARY        1
-
 /** @brief Available shoot types */
 typedef enum {
-	ST_RIGHT_PRIMARY,
-	ST_RIGHT_PRIMARY_REACTION,
-	ST_RIGHT_SECONDARY,
-	ST_RIGHT_SECONDARY_REACTION,    /* unused */
-	ST_LEFT_PRIMARY,
-	ST_LEFT_PRIMARY_REACTION,
-	ST_LEFT_SECONDARY,
-	ST_LEFT_SECONDARY_REACTION, /* unused */
+	ST_RIGHT,
+	ST_RIGHT_REACTION,
+	ST_LEFT,
+	ST_LEFT_REACTION,
 
 	ST_NUM_SHOOT_TYPES,
 
@@ -1241,17 +1244,10 @@ typedef enum {
 	ST_LEFT_RELOAD
 } shoot_types_t;
 
-#define IS_SHOT_REACTION(x) ((x) == ST_RIGHT_PRIMARY_REACTION || (x) == ST_RIGHT_SECONDARY_REACTION \
-                || (x) == ST_LEFT_PRIMARY_REACTION || (x) == ST_LEFT_SECONDARY_REACTION)
-#define IS_SHOT_RIGHT(x)    ((x) == ST_RIGHT_PRIMARY || (x) == ST_RIGHT_PRIMARY_REACTION \
-                || (x) == ST_RIGHT_SECONDARY || (x) == ST_RIGHT_SECONDARY_REACTION)
-#define IS_SHOT_LEFT(x)     ((x) == ST_LEFT_PRIMARY || (x) == ST_LEFT_PRIMARY_REACTION \
-                || (x) == ST_LEFT_SECONDARY || (x) == ST_LEFT_SECONDARY_REACTION)
-#define IS_SHOT_PRIMARY(x)  ((x) == ST_RIGHT_PRIMARY || (x) == ST_RIGHT_PRIMARY_REACTION \
-                || (x) == ST_LEFT_PRIMARY || (x) == ST_LEFT_PRIMARY_REACTION)
-#define IS_SHOT_SECONDARY(x)    ((x) == ST_RIGHT_SECONDARY || (x) == ST_RIGHT_SECONDARY_REACTION \
-                || (x) == ST_LEFT_SECONDARY || (x) == ST_LEFT_SECONDARY_REACTION)
-#define SHOT_FD_PRIO(x)     (IS_SHOT_PRIMARY(x) ? FD_PRIMARY : FD_SECONDARY)
+#define IS_SHOT_REACTION(x) ((x) == ST_RIGHT_REACTION || (x) == ST_LEFT_REACTION)
+#define IS_SHOT(x)          ((x) == ST_RIGHT || (x) == ST_LEFT)
+#define IS_SHOT_LEFT(x)     ((x) == ST_LEFT || (x) == ST_LEFT_REACTION)
+#define IS_SHOT_RIGHT(x)    ((x) == ST_RIGHT || (x) == ST_RIGHT_REACTION)
 
 /* shoot flags */
 #define SF_IMPACT           1
@@ -1325,7 +1321,7 @@ typedef enum {
 void Com_PrintItemDescription(int i);
 void Com_InventoryList_f(void);
 qboolean INV_LoadableInWeapon (objDef_t *od, int weapon_idx);
-
+byte INV_FiredefsIDXForWeapon (objDef_t *od, int weapon_idx);
 
 /* g_spawn.c */
 

@@ -201,23 +201,25 @@ void CL_ItemDescription(int item)
 		} else {
 			/* just an item */
 			/* only primary definition */
+			/* TODO: We use the default firemodes here. We might need some change the "fd[0]" below to INV_FiredefsIDXForWeapon(od,weapon_idx) on future changes. */
 			Com_sprintf(itemText, MAX_MENUTEXTLEN, _("%s auxiliary equipment with\n"), (od->firetwohanded ? _("Two-handed") : _("One-handed")));
-			Q_strcat(itemText, va(_("Action:\t%s\n"), od->fd[0].name), sizeof(itemText));
-			Q_strcat(itemText, va(_("Time units:\t%i\n"), od->fd[0].time), sizeof(itemText));
-			Q_strcat(itemText, va(_("Range:\t%g\n"), od->fd[0].range / 32.0), sizeof(itemText));
+			Q_strcat(itemText, va(_("Action:\t%s\n"), od->fd[0][0].name), sizeof(itemText)); 
+			Q_strcat(itemText, va(_("Time units:\t%i\n"), od->fd[0][0].time), sizeof(itemText));
+			Q_strcat(itemText, va(_("Range:\t%g\n"), od->fd[0][0].range / 32.0), sizeof(itemText));
 		}
 
 		if ( !Q_strncmp(od->type, "ammo", 4)
 			 || (od->weapon && !od->reload) ) {
-			Q_strcat(itemText, va(_("Primary:\t%s\t(%s)\n"), od->fd[0].name, CL_WeaponSkillToName(od->fd[0].weaponSkill)), sizeof(itemText));
-			Q_strcat(itemText, va(_("Secondary:\t%s\t(%s)\n"), od->fd[1].name, CL_WeaponSkillToName(od->fd[1].weaponSkill)), sizeof(itemText));
+			/* TODO: We use the default firemodes here. We might need some change the "fd[0]" below to INV_FiredefsIDXForWeapon(od,weapon_idx) on future changes. */
+			Q_strcat(itemText, va(_("Primary:\t%s\t(%s)\n"), od->fd[0][0].name, CL_WeaponSkillToName(od->fd[0][0].weaponSkill)), sizeof(itemText));
+			Q_strcat(itemText, va(_("Secondary:\t%s\t(%s)\n"), od->fd[0][1].name, CL_WeaponSkillToName(od->fd[0][1].weaponSkill)), sizeof(itemText));
 			Q_strcat(itemText,
-					va(_("Damage:\t%i / %i\n"), (int) ((od->fd[0].damage[0] + od->fd[0].spldmg[0]) * od->fd[0].shots),
-						(int) ((od->fd[1].damage[0] + od->fd[1].spldmg[0]) * od->fd[1].shots)), sizeof(itemText));
-			Q_strcat(itemText, va(_("Time units:\t%i / %i\n"), od->fd[0].time, od->fd[1].time), sizeof(itemText));
-			Q_strcat(itemText, va(_("Range:\t%g / %g\n"), od->fd[0].range / 32.0, od->fd[1].range / 32.0), sizeof(itemText));
+					va(_("Damage:\t%i / %i\n"), (int) ((od->fd[0][0].damage[0] + od->fd[0][0].spldmg[0]) * od->fd[0][0].shots),
+						(int) ((od->fd[0][1].damage[0] + od->fd[0][1].spldmg[0]) * od->fd[0][1].shots)), sizeof(itemText));
+			Q_strcat(itemText, va(_("Time units:\t%i / %i\n"), od->fd[0][0].time, od->fd[0][1].time), sizeof(itemText));
+			Q_strcat(itemText, va(_("Range:\t%g / %g\n"), od->fd[0][0].range / 32.0, od->fd[0][1].range / 32.0), sizeof(itemText));
 			Q_strcat(itemText,
-					va(_("Spreads:\t%g / %g\n"), (od->fd[0].spread[0] + od->fd[0].spread[1]) / 2, (od->fd[1].spread[0] + od->fd[1].spread[1]) / 2), sizeof(itemText));
+					va(_("Spreads:\t%g / %g\n"), (od->fd[0][0].spread[0] + od->fd[0][0].spread[1]) / 2, (od->fd[0][1].spread[0] + od->fd[0][1].spread[1]) / 2), sizeof(itemText));
 		}
 
 		menuText[TEXT_STANDARD] = itemText;

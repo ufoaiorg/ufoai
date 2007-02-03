@@ -88,10 +88,17 @@ const char *ev_format[] =
 	"s",				/* EV_ACTOR_START_MOVE */
 	"sb",				/* EV_ACTOR_TURN */
 	"!s*",				/* EV_ACTOR_MOVE; beware of the '!' */
-	"sbgg",			    /* EV_ACTOR_START_SHOOT */
-	"sbbppb",			/* EV_ACTOR_SHOOT; the last 'b' cannot be 'd' */
-	"bb",				/* EV_ACTOR_SHOOT_HIDDEN */
-	"sbbpp",			/* EV_ACTOR_THROW */
+	/*
+	"sbgg",			    * EV_ACTOR_START_SHOOT *
+	"sbbppb",			* EV_ACTOR_SHOOT; the last 'b' cannot be 'd' *
+	"bb",				* EV_ACTOR_SHOOT_HIDDEN *
+	"sbbpp",			* EV_ACTOR_THROW *
+	*/
+	"ssbbgg",			/* EV_ACTOR_START_SHOOT */
+	"ssbbbppb",		/* EV_ACTOR_SHOOT; the last 'b' cannot be 'd' */
+	"bsbb",			/* EV_ACTOR_SHOOT_HIDDEN */
+	"ssbbbpp",			/* EV_ACTOR_THROW */
+	
 	"ss",				/* EV_ACTOR_DIE */
 	"!sbsbbb",		    /* EV_ACTOR_STATS; beware of the '!' */
 	"ss",				/* EV_ACTOR_STATECHANGE */
@@ -224,7 +231,7 @@ static qboolean parsedDeath = qfalse;
  */
 extern void CL_RegisterSounds (void)
 {
-	int		i, j;
+	int i, j, k;
 
 	S_BeginRegistration ();
 
@@ -236,16 +243,20 @@ extern void CL_RegisterSounds (void)
 		/* pump message loop */
 		Sys_SendKeyEvents ();
 	}
+
 	/* load weapon sounds */
-	for (i = 0; i < csi.numODs; i++)
-		for (j = 0; j < 2; j++) {
-			if (csi.ods[i].fd[j].fireSound[0])
-				S_RegisterSound( csi.ods[i].fd[j].fireSound );
-			if (csi.ods[i].fd[j].impactSound[0])
-				S_RegisterSound( csi.ods[i].fd[j].impactSound );
-			/* pump message loop */
-			Sys_SendKeyEvents ();
+	for ( i = 0; i < csi.numODs; i++ ) { /* i = obj */
+		for (j = 0; j < csi.ods[i].numWeapons; j++ ) {	/* j = weapon-entry per obj */
+			for ( k = 0; k < csi.ods[i].numFiredefs[j]; j++ ) { /* k = firedef per wepaon */
+				if ( csi.ods[i].fd[j][k].fireSound[0] )
+					S_RegisterSound( csi.ods[i].fd[j][k].fireSound );
+				if ( csi.ods[i].fd[j][k].impactSound[0] )
+					S_RegisterSound( csi.ods[i].fd[j][k].impactSound );
+				/* pump message loop */
+				Sys_SendKeyEvents ();
+			}
 		}
+	}
 
 	S_EndRegistration ();
 }
@@ -1212,15 +1223,16 @@ static void CL_ParseEvent (void)
 				{
 					fireDef_t *fd;
 					qboolean first;
-					int type;
+					int obj_idx;
+					byte weap_idx, fd_idx;
 
-					MSG_ReadFormat(&net_message, ev_format[EV_ACTOR_SHOOT_HIDDEN], &first, &type);
+					MSG_ReadFormat(&net_message, ev_format[EV_ACTOR_SHOOT_HIDDEN], &first, &obj_idx, &weap_idx, &fd_idx);
 
 					if (first) {
 						nextTime += 500;
 						impactTime = shootTime = nextTime;
 					} else {
-						fd = GET_FIREDEF(type);
+						fd = GET_FIREDEF(obj_idx,weap_idx,fd_idx);
 /*
 						TODO: not needed? and SF_BOUNCED?
 						if ( fd->speed )
@@ -1238,13 +1250,18 @@ static void CL_ParseEvent (void)
 			case EV_ACTOR_SHOOT:
 				{
 					fireDef_t	*fd;
-					int		type, flags, dummy;
+					int		flags, dummy;
+					int obj_idx;
+					byte weap_idx, fd_idx;
 					vec3_t	muzzle, impact;
 
 					/* read data */
-					MSG_ReadFormat(&net_message, ev_format[EV_ACTOR_SHOOT], &dummy, &type, &flags, &muzzle, &impact, &dummy);
+					MSG_ReadFormat(&net_message, ev_format[EV_ACTOR_SHOOT], &dummy, &obj_idx, &weap_idx, &fd_idx, &flags, &muzzle, &impact, &dummy);
 
-					fd = GET_FIREDEF( type );
+					Com_Printf( "CL_ParseEvent: %i %i %i DEBUG\n",obj_idx,weap_idx,fd_idx );
+					fd = GET_FIREDEF(obj_idx,weap_idx,fd_idx);
+					Com_Printf( "CL_ParseEvent: %i %i %i DEBUG\n",fd->obj_idx,fd->weap_idx,fd->fd_idx );
+
 					if ( !(flags & SF_BOUNCED) ) {
 						/* shooting */
 						if ( fd->speed )

@@ -34,6 +34,8 @@ pos3_t mousePos;
 
 int actorMoveLength;
 invList_t invList[MAX_INVLIST];
+qboolean visible_firemode_list_left = qfalse;
+qboolean visible_firemode_list_right = qfalse;
 
 static le_t *mouseActor;
 static pos3_t mouseLastPos;
@@ -380,6 +382,227 @@ static void SetWeaponButton(int button, int state)
 }
 
 /**
+ * @brief Makes all entries of the firemode lists invisible.
+ */
+static void HideFiremodes(void)
+{
+	visible_firemode_list_left = qfalse;
+	Cbuf_AddText("set_left_inv0\n");
+	Cbuf_AddText("set_left_inv1\n");
+	Cbuf_AddText("set_left_inv2\n");
+	Cbuf_AddText("set_left_inv3\n");
+	visible_firemode_list_right = qfalse;
+	Cbuf_AddText("set_right_inv0\n");
+	Cbuf_AddText("set_right_inv1\n");
+	Cbuf_AddText("set_right_inv2\n");
+	Cbuf_AddText("set_right_inv3\n");
+}
+
+/**
+ * @brief Sets the display for a single weapon/reload HUD button
+ * @param[in] fd The firedefinition/firemode to be displayed.
+ * @param[in] hand Which list to display. 'l' for left hand list, 'r' for right hand list.
+ * @param[in] status Display the firemode clickable/active (1) or inactive (0).
+ */
+static void DisplayFiremodeEntry(fireDef_t *fd, char hand, byte status)
+{
+	if (!fd)
+		return;
+	
+	if (hand == 'r') {
+		Cbuf_AddText(va("set_right_vis%i\n", fd->fd_idx)); /* Make this entry visible (in case it wasn't). */
+	
+		if (status) {
+			Cbuf_AddText(va("set_right_a%i\n", fd->fd_idx));
+		} else {
+			Cbuf_AddText(va("set_right_ina%i\n", fd->fd_idx));
+		}
+
+		Cvar_Set(va("mn_r_fm_name%i", fd->fd_idx),  va("%s", fd->name));
+		Cvar_Set(va("mn_r_fm_tu%i", fd->fd_idx), va(_("TU: %i"), fd->time));
+	} else if (hand == 'l') {
+		Cbuf_AddText(va("set_left_vis%i\n", fd->fd_idx)); /* Make this entry visible (in case it wasn't). */
+	
+		if (status) {
+			Cbuf_AddText(va("set_left_a%i\n", fd->fd_idx));
+		} else {
+			Cbuf_AddText(va("set_left_ina%i\n", fd->fd_idx));
+		}
+		
+		Cvar_Set(va("mn_l_fm_name%i", fd->fd_idx), va("%s", fd->name));
+		Cvar_Set(va("mn_l_fm_tu%i", fd->fd_idx), va(_("TU: %i"), fd->time));
+	} else {
+		/* TODO: Add good error note. */
+		return;
+	}
+}
+
+/**
+ * @brief Start targetting/aiming with the correct weapon&firemode.
+ * @param[in] hand Which weapon(-hand) to use.
+ * @param[out] weapon The weapon in the hand.
+ * @param[out] ammo The ammo used in the weapon (is the same as weapon for grenades and similar).
+ * @param[out] weap_fd_idx weapon_mod index in the ammo for the weapon.
+ */
+static void GetWeaponAndAmmo(char hand, objDef_t **weapon, objDef_t **ammo, byte *weap_fd_idx)
+{
+	invList_t *invlist_weapon = NULL;
+	
+	if (!selActor)
+		return;
+
+	if (hand == 'r')
+		invlist_weapon = RIGHT(selActor);
+	else
+		invlist_weapon = LEFT(selActor);
+
+	if (!invlist_weapon || invlist_weapon->item.t < 0 || invlist_weapon->item.m < 0)
+		return;
+	
+	*weapon = &csi.ods[invlist_weapon->item.t];
+	
+	if (!weapon)
+		return;
+	
+	if ((*weapon)->numWeapons)
+		*ammo = *weapon; /* This weapon doesn't need ammo it already has firedefs */
+	else
+		*ammo = &csi.ods[invlist_weapon->item.m];
+	
+	*weap_fd_idx = INV_FiredefsIDXForWeapon (*ammo, invlist_weapon->item.t);
+	
+	Com_Printf("GetWeaponAndAmmo: weapon %i ammo %i -- %s %s %i\n", invlist_weapon->item.t, invlist_weapon->item.m, (*weapon)->name, (*ammo)->name, *weap_fd_idx);
+}
+
+/**
+ * @brief Displays the firemodes for the left hand.
+ */
+void CL_DisplayFiremodes(void)
+{
+	objDef_t *weapon = NULL;
+	objDef_t *ammo = NULL;
+	byte weap_fd_idx;
+	byte i;
+	char *hand;
+	
+	/* HideFiremodes();  Hides all firemode lists ... TODO only needed for development, but can't hurt. */
+	
+	if (Cmd_Argc() < 2) { /* no argument given */
+		hand = "r";
+	} else {
+		hand = Cmd_Argv(1);
+	}
+
+	if (hand[0] != 'r' && hand[0] != 'l') {
+		Com_Printf("Usage: list_firemodes [l|r]\n");
+		return;
+	}
+
+	GetWeaponAndAmmo(hand[0], &weapon, &ammo, &weap_fd_idx);
+
+	Com_DPrintf("CL_DisplayFiremodes: %s %s %i\n", weapon->name, ammo->name, weap_fd_idx);
+	
+	if (!weapon || !ammo)
+		return;	
+	
+	Com_DPrintf("CL_DisplayFiremodes: displaying %s firemodes.\n", hand);
+
+	/* Toggle firemode lists if needed. Mind you that HideFiremodes modifies visible_firemode_list_xxx to qfalse */
+	
+	if (hand[0] == 'r') {
+		if (visible_firemode_list_right == qtrue) {
+			HideFiremodes();
+			return;
+		} else {
+			HideFiremodes();
+			visible_firemode_list_left = qfalse;
+			visible_firemode_list_right = qtrue;
+		}
+	} else  { /* 'l' */
+		if (visible_firemode_list_left == qtrue) {
+			HideFiremodes();
+			return;
+		} else {
+			HideFiremodes();
+			visible_firemode_list_left = qtrue;
+			visible_firemode_list_right = qfalse;
+		}
+	}
+	 /* Modifies visible_firemode_list_xxxx */
+
+	for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
+		if ( i < ammo->numFiredefs[weap_fd_idx] ) { /* We have a defined fd */
+			if ( ammo->fd[weap_fd_idx][i].time <= selActor->TU ) {  /* Enough timeunits for this firemode?*/
+				DisplayFiremodeEntry(&ammo->fd[weap_fd_idx][i], hand[0], 1);
+			} else{
+				DisplayFiremodeEntry(&ammo->fd[weap_fd_idx][i], hand[0], 0);
+			}
+		} else { /* No more fd left in the list */
+			if (hand[0] == 'r')
+				Cbuf_AddText(va("set_right_inv%i\n", i)); /* Hide this entry */
+			else
+				Cbuf_AddText(va("set_left_inv%i\n", i)); /* Hide this entry */
+		}
+	}
+}
+
+
+/**
+ * @brief Starts aiming/target mode for selected left/right firemode.
+ * @note Previously know as a combination of CL_FireRightPrimary, CL_FireRightSecondary, CL_FireLeftPrimary and CL_FireLeftSecondary
+ */
+void CL_FireWeapon(void)
+{
+	char *hand;
+	byte firemode;
+
+	objDef_t *weapon = NULL;
+	objDef_t *ammo = NULL;
+	byte weap_fd_idx;
+	
+	if (Cmd_Argc() < 3) { /* no argument given */
+		Com_Printf("Usage: fireweap [l|r] <num>   num=firemode number\n");
+		return;
+	}
+	
+	hand = Cmd_Argv(1);
+
+	if (hand[0] != 'r' && hand[0] != 'l') {
+		Com_Printf("Usage: fireweap [l|r] <num>   num=firemode number\n");
+		return;
+	}
+	
+	if (!selActor)
+		return;
+	
+	firemode = atoi(Cmd_Argv(2));
+	
+	if (firemode >= MAX_FIREDEFS_PER_WEAPON) {
+		Com_Printf("CL_FireWeapon: Firemode index to big (%i). Highest possible number is %i.\n", firemode, MAX_FIREDEFS_PER_WEAPON-1);
+		return;
+	}
+	
+	GetWeaponAndAmmo(hand[0], &weapon, &ammo, &weap_fd_idx);
+	Com_Printf("CL_FireWeapon: %s %s %i\n", weapon->name, ammo->name, weap_fd_idx);
+
+	
+	if ( ammo->fd[weap_fd_idx][firemode].time <= selActor->TU ) {
+		/* Actually start aiming */
+		/* TODO: The M_FIRE_ stuff below is just a workaround until this primary/secondary stuff is changed. */
+		if (hand[0] == 'r')
+			cl.cmode = M_FIRE_R;
+		else
+			cl.cmode = M_FIRE_L;
+		cl.cfiremode = firemode;
+		/* TODO: store firemode */
+		HideFiremodes();
+	} else {
+		Com_Printf("CL_FireWeapon: Firemode not available (%s, %s).\n", hand, ammo->fd[weap_fd_idx][firemode].name);
+		return;
+	}	
+}
+
+/**
  * @brief Refreshes the weapon/reload buttons on the HUD
  *
  * @sa CL_ActorUpdateCVars
@@ -435,10 +658,18 @@ static void CL_RefreshWeaponButtons(int time)
 	else
 		SetWeaponButton(BT_LEFT_RELOAD, qtrue);
 
-	/* weapon firing buttons */
-	if ( !weaponr || weaponr->item.m == NONE
+	/* Weapon firing buttons */
+	/* TODO: Anything needed as a replacement? */
+	SetWeaponButton(BT_RIGHT_PRIMARY, qtrue);
+	SetWeaponButton(BT_LEFT_PRIMARY, qtrue);
+#if 0
+	byte weapon_fd_idx;
+	weapon_fd_idx  = -1;
+	if (weaponr && weaponr->item.m != NONE && weaponr->item.m != NONE)
+		weapon_fd_idx = INV_FiredefsIDXForWeapon(&csi.ods[weaponr->item.m],weaponr->item.t);
+	if ( !weaponr || weaponr->item.m == NONE 
 		 || (csi.ods[weaponr->item.t].reload && weaponr->item.a <= 0)
-		 || time < csi.ods[weaponr->item.m].fd[FD_PRIMARY].time
+		 || time < csi.ods[weaponr->item.m].fd[weapon_fd_idx][FD_PRIMARY].time
 		 || (csi.ods[weaponr->item.t].firetwohanded && LEFT(selActor)) )
 		SetWeaponButton(BT_RIGHT_PRIMARY, qfalse);
 	else
@@ -446,25 +677,29 @@ static void CL_RefreshWeaponButtons(int time)
 
 	if ( !weaponr || weaponr->item.m == NONE
 		 || (csi.ods[weaponr->item.t].reload && weaponr->item.a <= 0)
-		 || time < csi.ods[weaponr->item.m].fd[FD_SECONDARY].time
+		 || time < csi.ods[weaponr->item.m].fd[weapon_fd_idx][FD_SECONDARY].time
 		 || (csi.ods[weaponr->item.t].firetwohanded && LEFT(selActor)) )
 		SetWeaponButton(BT_RIGHT_SECONDARY, qfalse);
 	else
 		SetWeaponButton(BT_RIGHT_SECONDARY, qtrue);
 
+	weapon_fd_idx  = -1;
+	if (weaponl && weaponl->item.m != NONE && weaponl->item.m != NONE)
+		weapon_fd_idx = INV_FiredefsIDXForWeapon(&csi.ods[weaponl->item.m],weaponl->item.t);
 	if ( !weaponl || weaponl->item.m == NONE
 		 || (csi.ods[weaponl->item.t].reload && weaponl->item.a <= 0)
-		 || time < csi.ods[weaponl->item.m].fd[FD_PRIMARY].time )
+		 || time < csi.ods[weaponl->item.m].fd[weapon_fd_idx][FD_PRIMARY].time )
 		SetWeaponButton(BT_LEFT_PRIMARY, qfalse);
 	else
 		SetWeaponButton(BT_LEFT_PRIMARY, qtrue);
 
 	if ( !weaponl || weaponl->item.m == NONE
 		 || (csi.ods[weaponl->item.t].reload && weaponl->item.a <= 0)
-		 || time < csi.ods[weaponl->item.m].fd[FD_SECONDARY].time )
+		 || time < csi.ods[weaponl->item.m].fd[weapon_fd_idx][FD_SECONDARY].time )
 		SetWeaponButton(BT_LEFT_SECONDARY, qfalse);
 	else
 		SetWeaponButton(BT_LEFT_SECONDARY, qtrue);
+#endif
 
 }
 
@@ -480,6 +715,7 @@ qboolean CL_CheckMenuAction(int time, invList_t *weapon, int mode)
 	}
 
 	switch (mode) {
+#if 0
 	case FD_PRIMARY:
 	case FD_SECONDARY:
 		if ( weapon->item.a <= 0 && csi.ods[weapon->item.t].reload) {
@@ -490,11 +726,12 @@ qboolean CL_CheckMenuAction(int time, invList_t *weapon, int mode)
 			Com_Printf("Weapon cannot be fired one handed!\n");
 			return qfalse;
 		}
-		if ( time < csi.ods[weapon->item.m].fd[(mode)].time ) {
+		if ( time < csi.ods[weapon->item.m].fd[INV_FiredefsIDXForWeapon(&csi.ods[weapon->item.m],weapon->item.t)][(mode)].time ) {
 			Com_Printf("Can't perform action: not enough TUs.\n");
 			return qfalse;
 		}
 		break;
+#endif
 	case EV_INV_RELOAD:
 		if ( !csi.ods[weapon->item.t].reload ) {
 			Com_Printf("This weapon can not be reloaded!\n");
@@ -581,7 +818,9 @@ void CL_ActorUpdateCVars(void)
 			if (selWeapon->item.m == NONE) {
 				selFD = NULL;
 			} else {
-				selFD = &csi.ods[selWeapon->item.m].fd[MODE_FD_PRIO(cl.cmode)];
+				selFD = GET_FIREDEF(selWeapon->item.m,
+						INV_FiredefsIDXForWeapon(&csi.ods[selWeapon->item.m],
+						selWeapon->item.t), cl.cfiremode);
 			}
 		} else {
 			selFD = NULL;
@@ -741,21 +980,23 @@ void CL_ActorUpdateCVars(void)
 	/* mode */
 	if (cl.oldcmode != cl.cmode || refresh) {
 		switch (cl.cmode) {
-		case M_FIRE_PL:
-		case M_PEND_FIRE_PL:
-			HighlightWeaponButton(BT_LEFT_PRIMARY);
+		/* TODO: Better highlight for active firemode (from the list, not the buttons) needed ... */
+		case M_FIRE_L:
+		case M_PEND_FIRE_L:
+			/* TODO: remove  PRIMARY/SECONDARY stuff... */
+			if (cl.cfiremode ==0)
+				HighlightWeaponButton(BT_LEFT_PRIMARY);
+			else
+				HighlightWeaponButton(BT_LEFT_SECONDARY);
+			
 			break;
-		case M_FIRE_SL:
-		case M_PEND_FIRE_SL:
-			HighlightWeaponButton(BT_LEFT_SECONDARY);
-			break;
-		case M_FIRE_PR:
-		case M_PEND_FIRE_PR:
-			HighlightWeaponButton(BT_RIGHT_PRIMARY);
-			break;
-		case M_FIRE_SR:
-		case M_PEND_FIRE_SR:
-			HighlightWeaponButton(BT_RIGHT_SECONDARY);
+		case M_FIRE_R:
+		case M_PEND_FIRE_R:
+			/* TODO: remove  PRIMARY/SECONDARY stuff... */
+			if (cl.cfiremode ==0)
+				HighlightWeaponButton(BT_RIGHT_PRIMARY);
+			else
+				HighlightWeaponButton(BT_RIGHT_SECONDARY);
 			break;
 		default:
 			ClearHighlights();
@@ -890,6 +1131,7 @@ qboolean CL_ActorSelect(le_t * le)
 
 	for (i = 0; i < cl.numTeamList; i++) {
 		if (cl.teamList[i] == le) {
+			HideFiremodes();
 			/* console commands, update cvars */
 			Cvar_ForceSet("cl_selected", va("%i", i));
 			if ( le->fieldSize == ACTOR_SIZE_NORMAL ) {
@@ -1138,20 +1380,11 @@ void CL_ActorStartMove(le_t * le, pos3_t to)
  */
 void CL_ActorShoot (le_t * le, pos3_t at)
 {
-	int shot_type;
 
 	if (!CL_CheckAction())
 		return;
 
-	if (IS_MODE_FIRE_LEFT(cl.cmode) && LEFT(le)) {
-		shot_type = IS_MODE_FIRE_PRIMARY(cl.cmode)
-			? ST_LEFT_PRIMARY : ST_LEFT_SECONDARY;
-	} else {
-		shot_type = IS_MODE_FIRE_PRIMARY(cl.cmode)
-			? ST_RIGHT_PRIMARY : ST_RIGHT_SECONDARY;
-	}
-
-	MSG_Write_PA(PA_SHOOT, le->entnum, at, shot_type);
+	MSG_Write_PA(PA_SHOOT, le->entnum, at, cl.cfiremode);
 }
 
 
@@ -1393,19 +1626,22 @@ void CL_ActorDoShoot (sizebuf_t * sb)
 {
 	fireDef_t *fd;
 	le_t *le;
-	int type;
 	vec3_t muzzle, impact;
 	int flags, normal, number;
+	int obj_idx;
+	byte weap_idx, fd_idx;
 
 	/* read data */
-	MSG_ReadFormat(sb, ev_format[EV_ACTOR_SHOOT], &number, &type, &flags, &muzzle, &impact, &normal);
+	MSG_ReadFormat(sb, ev_format[EV_ACTOR_SHOOT], &number, &obj_idx, &weap_idx, &fd_idx, &flags, &muzzle, &impact, &normal);
 
 	/* get le */
 	le = LE_Get(number);
 
 	/* get the fire def */
-	fd = GET_FIREDEF(type);
-
+	Com_Printf( "CL_ActorDoShoot: %i %i %i DEBUG\n",obj_idx,weap_idx,fd_idx );
+	fd = GET_FIREDEF(obj_idx,weap_idx,fd_idx);
+	Com_Printf( "CL_ActorDoShoot: %i %i %i DEBUG\n",fd->obj_idx,fd->weap_idx,fd->fd_idx );
+	
 	/* add effect le */
 	LE_AddProjectile(fd, flags, muzzle, impact, normal);
 
@@ -1454,12 +1690,13 @@ void CL_ActorShootHidden (sizebuf_t *sb)
 {
 	fireDef_t	*fd;
 	qboolean	first;
-	int		type;
+	int obj_idx;
+	byte weap_idx,fd_idx;
 
-	MSG_ReadFormat(sb, ev_format[EV_ACTOR_SHOOT_HIDDEN], &first, &type);
+	MSG_ReadFormat(sb, ev_format[EV_ACTOR_SHOOT_HIDDEN], &first, &obj_idx, &weap_idx, &fd_idx);
 
 	/* get the fire def */
-	fd = GET_FIREDEF( type );
+	fd = GET_FIREDEF(obj_idx,weap_idx,fd_idx);
 
 	/* start the sound; TODO: is check for SF_BOUNCED needed? */
 	if ( ((first && fd->soundOnce) || (!first && !fd->soundOnce)) && fd->fireSound[0] )
@@ -1477,16 +1714,17 @@ void CL_ActorShootHidden (sizebuf_t *sb)
 void CL_ActorDoThrow (sizebuf_t * sb)
 {
 	fireDef_t *fd;
-	int type;
 	vec3_t muzzle, v0;
 	int flags;
 	int dtime;
+	int obj_idx;
+	byte weap_idx,fd_idx;
 
 	/* read data */
-	MSG_ReadFormat(sb, ev_format[EV_ACTOR_THROW], &dtime, &type, &flags, &muzzle, &v0);
+	MSG_ReadFormat(sb, ev_format[EV_ACTOR_THROW], &dtime, &obj_idx, &weap_idx, &fd_idx, &flags, &muzzle, &v0);
 
 	/* get the fire def */
-	fd = GET_FIREDEF(type);
+	fd = GET_FIREDEF(obj_idx,weap_idx,fd_idx);
 
 	/* add effect le (local entity) */
 	LE_AddGrenade(fd, flags, muzzle, v0, dtime);
@@ -1511,11 +1749,14 @@ void CL_ActorStartShoot (sizebuf_t * sb)
 	fireDef_t *fd;
 	le_t *le;
 	pos3_t from, target;
-	int number, type;
+	int number;
+	int obj_idx;
+	byte weap_idx,fd_idx;
 
-	MSG_ReadFormat(sb, ev_format[EV_ACTOR_START_SHOOT], &number, &type, &from, &target);
+	MSG_ReadFormat(sb, ev_format[EV_ACTOR_START_SHOOT], &number, &obj_idx, &weap_idx, &fd_idx, &from, &target);
 
-	fd = GET_FIREDEF(type);
+	fd = GET_FIREDEF(obj_idx,weap_idx,fd_idx);
+
 	le = LE_Get(number);
 
 	/* center view (if wanted) */
@@ -1668,6 +1909,7 @@ void CL_ActorMoveMouse (void)
 
 /**
  * @brief Selects an actor using the mouse.
+ * @todo Comment on the cl.cmode stuff.
  */
 void CL_ActorSelectMouse (void)
 {
@@ -1683,9 +1925,11 @@ void CL_ActorSelectMouse (void)
 			CL_ActorMoveMouse();
 		}
 	} else if (cl.cmode > M_PEND_MOVE) {
-		cl.cmode -= M_PEND_FIRE_PR - M_FIRE_PR;
+		/* TODO: Comments on what this _does_ would be nice. */
+		cl.cmode -= M_PEND_FIRE_R - M_FIRE_R;
 	} else if (confirm_actions->value) {
-		cl.cmode += M_PEND_FIRE_PR - M_FIRE_PR;
+		/* TODO: Comments on what this _does_ would be nice. */
+		cl.cmode += M_PEND_FIRE_R - M_FIRE_R;
 	} else {
 		CL_ActorShoot(selActor, mousePos);
 	}

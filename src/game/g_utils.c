@@ -65,16 +65,22 @@ void G_FreeEdict(edict_t * ed)
  */
 static const objDef_t* G_GetObjectForFiredef (fireDef_t* fd)
 {
-	int i;
+	int i, j, k;
 	fireDef_t *csiFD;
+	objDef_t *od;
 
-	for (i = 0; i < gi.csi->numODs; i++) {
-		csiFD = &gi.csi->ods[i].fd[0];
-		if (csiFD == fd)
-			return &gi.csi->ods[i];
-		csiFD = &gi.csi->ods[i].fd[1];
-		if (csiFD == fd)
-			return &gi.csi->ods[i];
+	/* For each object ... */
+	for (i = 0; i < gi.csi->numODs; i++) { 
+		od = &gi.csi->ods[i];
+		/* For each weapon-entry in the object ... */
+		for (j = 0; j < od->numWeapons; j++) {
+       		/* For each fire-definition in the weapon entry  ... */
+       		for (k = 0; k < od->numFiredefs[j]; k++) {
+               	csiFD = &od->fd[j][k];
+        		if (csiFD == fd)
+        			return od;
+			}
+		}
 	}
 
 	Com_DPrintf("Could nor find a objDef_t for fireDef_t '%s'\n", fd->name);

@@ -39,15 +39,13 @@ static char *skillNames[SKILL_NUM_TYPES - ABILITY_NUM_TYPES] = {
 };
 
 typedef enum objdefs {
-	OD_PRIMARY,
-	OD_SECONDARY,
+	OD_WEAPON,
 	OD_PROTECTION,
 	OD_HARDNESS
 } objdef_t;
 
 static value_t od_vals[] = {
-	{"primary", V_NULL, 0},
-	{"secondary", V_NULL, 0},
+	{"weapon_mod", V_NULL, 0},
 	{"protection", V_NULL, 0},
 	{"hardness", V_NULL, 0},
 
@@ -227,6 +225,7 @@ static void Com_ParseItem(char *name, char **text)
 	objDef_t *od;
 	char *token;
 	int i;
+	byte weap_idx, fd_idx;
 
 	/* search for menus with same name */
 	for (i = 0; i < csi.numODs; i++)
@@ -243,7 +242,7 @@ static void Com_ParseItem(char *name, char **text)
 	memset(od, 0, sizeof(objDef_t));
 
 	/* default value is no ammo */
-	memset(od->forWeapon, -1, sizeof(od->forWeapon));
+	memset(od->weap_idx, -1, sizeof(od->weap_idx));
 
 	Q_strncpyz(od->id, name, MAX_VAR);
 
@@ -275,14 +274,64 @@ static void Com_ParseItem(char *name, char **text)
 					Com_ParseValue(od, token, val->type, val->ofs);
 				} else {
 					/* parse fire definitions */
-					if (i == OD_PRIMARY)
-						Com_ParseFire(name, text, &od->fd[FD_PRIMARY]);
-					else if (i == OD_SECONDARY)
-						Com_ParseFire(name, text, &od->fd[FD_SECONDARY]);
-					else if (i == OD_PROTECTION)
+					switch (i) {
+					case OD_WEAPON:
+						/* Save the weapon id. */
+						token = COM_Parse(text);
+						Q_strncpyz(od->weap_id[od->numWeapons], token, MAX_VAR);
+
+						/* get it's body */
+						token = COM_Parse(text);
+
+						if (!*text || *token != '{') {
+							Com_Printf("Com_ParseItem: weapon_mod \"%s\" without body ignored\n", name);
+							break;
+						}
+						
+						if (od->numWeapons < MAX_WEAPONS_PER_OBJDEF) {
+							weap_idx = od->numWeapons;
+							/* For parse each firedef entry for this weapon.  */
+							do {
+								token = COM_EParse(text, errhead, name);
+								if (!*text)
+									return;
+								if (*token == '}')
+									break;
+
+								if (!Q_strncmp(token, "firedef", MAX_VAR)) {
+									if (od->numFiredefs[weap_idx] < MAX_FIREDEFS_PER_WEAPON) {
+										fd_idx = od->numFiredefs[weap_idx] ;
+										/* Parse firemode into fd[IDXweapon][IDXfiremode] */
+										Com_ParseFire(name, text, &od->fd[weap_idx][fd_idx]);
+										/* Self-link fd */
+										od->fd[weap_idx][fd_idx].fd_idx = fd_idx;
+										/* Self-link weapn_mod */
+										od->fd[weap_idx][fd_idx].weap_idx = weap_idx;
+										od->numFiredefs[od->numWeapons]++;
+									} else {
+										Com_Printf("Com_ParseItem: Too many firedefs at \"%s\". Max is %i\n", name, MAX_FIREDEFS_PER_WEAPON);
+									}
+								}
+								/*
+								else {
+									Bad syntax.
+								}
+								*/
+							} while (*text);
+							od->numWeapons++;
+						} else {
+							Com_Printf("Com_ParseItem: Too many weapon_mod definitions at \"%s\". Max is %i\n", name, MAX_WEAPONS_PER_OBJDEF);
+						}
+						break;
+					case OD_PROTECTION:
 						Com_ParseArmor(name, text, od->protection);
-					else if (i == OD_HARDNESS)
+						break;
+					case OD_HARDNESS:
 						Com_ParseArmor(name, text, od->hardness);
+						break;
+					default:
+						break;
+					}
 				}
 				break;
 			}
@@ -1169,34 +1218,45 @@ void Com_AddObjectLinks(void)
 {
 #ifndef DEDICATED_ONLY
 	objDef_t *od = NULL;
-	technology_t *tech = NULL;
-	technology_t *tech_weapon = NULL;
-	int i, j, k;
+	int i;
+	byte j, k;
 
 	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
-		/* Add links to technologies. */
-		tech = RS_GetTechByProvided(od->id);
-		od->tech = tech;
-		if (!od->tech) {
-			Com_Printf("Com_AddObjectLinks: Could not find a valid tech for item %s\n", od->id);
-			continue;
-		}
+		/* Add links to weapons. */
 
-		if (!Q_strncmp(od->type, "ammo", 4)) {
-			/* Add weapon-links to ammo items. */
-			k = 0;
-			for (j = 0; j < tech->require_AND.numLinks; j++) {
-				if (tech->require_AND.type[j] == RS_LINK_WEAPON) {
-					/* "tech->require_AND.idx[j]" is the technology-index of the weapon */
-					tech_weapon = RS_GetTechByIDX(tech->require_AND.idx[j]);
-					if (!tech_weapon)
-						Sys_Error("Could not get the tech with idx: %i\n", tech->require_AND.idx[j]);
-					od->forWeapon[k] = RS_GetItem(tech_weapon->provides);
-					k++;
+		for (j = 0; j < od->numWeapons; j++ ) {
+			od->weap_idx[j] = RS_GetItem(od->weap_id[j]);
+			/* Back-link the obj-idx inside the fds */
+			for (k = 0; k < od->numFiredefs[j]; k++ ) {
+				od->fd[j][k].obj_idx = i;
+			}
+		}
+	}
+#endif
+
+#if 0
+/* TODO: can we use this for all compile-flags? */
+	objDef_t *od = NULL;
+	int i;
+	byte j, k;
+	int i2;
+	objDef_t *od2 = NULL;
+
+	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
+		/* Add links to weapons. */
+
+		for (j = 0; j < od->numWeapons; j++ ) {
+			for (i2 = 0, od2 = csi.ods; i2 < csi.numODs; i2++, od2++) {
+				if (!Q_strncmp(od->weap_id[j], od2->id, MAX_VAR)) {
+					od->weap_idx[j] = i2;
+					break;
 				}
 			}
-			if (k == 0)
-				Com_Printf("Com_AddObjectLinks: Ammo '%s' is not useable in any weapon\n", od->id);
+
+			/* Back-link the obj-idx inside the fds */
+			for (k = 0; k < od->numFiredefs[j]; k++ ) {
+				od->fd[j][k].obj_idx = i;
+			}
 		}
 	}
 #endif

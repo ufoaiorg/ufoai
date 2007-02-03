@@ -86,6 +86,7 @@ qboolean AI_CheckFF(edict_t * ent, vec3_t target, float spread)
 /**
  * @brief
  * @sa AI_ActorThink
+ * @todo fix firedef stuff
  */
 static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 {
@@ -96,6 +97,9 @@ static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 	float guete, dmg, maxDmg, best_time = -1, vis;
 	objDef_t *ad;
 	int still_searching = 1;
+	
+	byte weap_fds_idx; /* Weapon-Firedefs index in fd[x] */
+	byte fd_idx;	/* firedef index fd[][x]*/
 
 	guete = 0.0;
 	memset(aia, 0, sizeof(ai_action_t));
@@ -139,25 +143,29 @@ static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 	/* shooting */
 	maxDmg = 0.0;
 	for (fm = 0; fm < ST_NUM_SHOOT_TYPES; fm++) {
-		objDef_t *od = NULL;
+		objDef_t *od = NULL;	/* Ammo pointer */
+		int weap_idx;		/* Weapon index */
 		fireDef_t *fd;
 
 		/* optimization: reaction fire is automatic */;
 		if (IS_SHOT_REACTION(fm))
 			continue;
 
-		if (IS_SHOT_RIGHT(fm) && RIGHT(ent)
+		if (IS_SHOT_RIGHT(fm) && RIGHT(ent) 
 			&& RIGHT(ent)->item.m != NONE
 			&& gi.csi->ods[RIGHT(ent)->item.t].weapon
 			&& (!gi.csi->ods[RIGHT(ent)->item.t].reload
 				|| RIGHT(ent)->item.a > 0)) {
 			od = &gi.csi->ods[RIGHT(ent)->item.m];
+			weap_idx = RIGHT(ent)->item.t;
+			
 		} else if (IS_SHOT_LEFT(fm) && LEFT(ent)
 			&& (LEFT(ent)->item.m != NONE)
 			&& gi.csi->ods[LEFT(ent)->item.t].weapon
 			&& (!gi.csi->ods[LEFT(ent)->item.t].reload
 				|| LEFT(ent)->item.a > 0)) {
 			od = &gi.csi->ods[LEFT(ent)->item.m];
+			weap_idx = LEFT(ent)->item.t;
 		} else {
 			/* TODO: grenade/knife toss from inventory using empty hand */
 			/* TODO: evaluate possible items to retrieve and pick one, then evaluate an action against the nearby enemies or allies */
@@ -166,85 +174,89 @@ static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 		if (!od)
 			continue;
 
-		fd = &od->fd[SHOT_FD_PRIO(fm)];
+		weap_fds_idx = INV_FiredefsIDXForWeapon(od, weap_idx);
+		for (fd_idx = 0; fd_idx < od->numFiredefs[weap_fds_idx]; fd_idx++) { /* TODO: is this how it should work? i just added this addfitional loop but don't know anything about hte function */
+		
+			fd = &od->fd[weap_fds_idx][fd_idx];
 
-		nspread = SPREAD_NORM((fd->spread[0]+fd->spread[1])*0.5 + GET_ACC(ent->chr.skills[ABILITY_ACCURACY]*(1+fd->modif),
-								 fd->weaponSkill));
-		shots = tu / fd->time;
-		if (shots) {
-			/* search best target */
-			for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++)
-				if (check->inuse && check->type == ET_ACTOR && ent != check
-					&& (check->team != ent->team || ent->state & STATE_INSANE)
-					&& !(check->state & STATE_DEAD)) {
+			nspread = SPREAD_NORM((fd->spread[0]+fd->spread[1])*0.5 + GET_ACC(ent->chr.skills[ABILITY_ACCURACY]*(1+fd->modif),
+									 fd->weaponSkill));
+			shots = tu / fd->time;
+			if (shots) {
+				/* search best target */
+				for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++)
+					if (check->inuse && check->type == ET_ACTOR && ent != check
+						&& (check->team != ent->team || ent->state & STATE_INSANE)
+						&& !(check->state & STATE_DEAD)) {
 
-					/* don't shoot civilians in mp */
-					if (check->team == TEAM_CIVILIAN && sv_maxclients->integer > 1 && !(ent->state & STATE_INSANE))
-						continue;
+						/* don't shoot civilians in mp */
+						if (check->team == TEAM_CIVILIAN && sv_maxclients->integer > 1 && !(ent->state & STATE_INSANE))
+							continue;
 
-					/* check range */
-					dist = VectorDist(ent->origin, check->origin);
-					if (dist > fd->range)
-						continue;
-					/* TODO: Check whether radius and power of fd are to to big for dist */
-					/* TODO: Check whether the alien will die when shooting */
-					/* don't shoot - we are to close */
-					if (dist < fd->splrad)
-						continue;
+						/* check range */
+						dist = VectorDist(ent->origin, check->origin);
+						if (dist > fd->range)
+							continue;
+						/* TODO: Check whether radius and power of fd are to to big for dist */
+						/* TODO: Check whether the alien will die when shooting */
+						/* don't shoot - we are to close */
+						if (dist < fd->splrad)
+							continue;
 
-					/* check FF */
-					if (AI_CheckFF(ent, check->origin, fd->spread[0]) && !(ent->state & STATE_INSANE))
-						continue;
+						/* check FF */
+						if (AI_CheckFF(ent, check->origin, fd->spread[0]) && !(ent->state & STATE_INSANE))
+							continue;
 
-					/* calculate expected damage */
-					vis = G_ActorVis(ent->origin, check, qtrue);
-					if (vis == 0.0)
-						continue;
-					dmg = vis * (fd->damage[0] + fd->spldmg[0]) * fd->shots * shots;
-					if (nspread && dist > nspread)
-						dmg *= nspread / dist;
+						/* calculate expected damage */
+						vis = G_ActorVis(ent->origin, check, qtrue);
+						if (vis == 0.0)
+							continue;
+						dmg = vis * (fd->damage[0] + fd->spldmg[0]) * fd->shots * shots;
+						if (nspread && dist > nspread)
+							dmg *= nspread / dist;
 
-					/* take into account armor */
-					if (check->i.c[gi.csi->idArmor]) {
-						ad = &gi.csi->ods[check->i.c[gi.csi->idArmor]->item.t];
-						if (ad->protection[fd->dmgtype] > 0)
-							dmg *= 1.0 - ad->protection[fd->dmgtype] * check->AP * 0.0001;
-						else
-							dmg *= 1.0 - ad->protection[fd->dmgtype] * 0.01;
+						/* take into account armor */
+						if (check->i.c[gi.csi->idArmor]) {
+							ad = &gi.csi->ods[check->i.c[gi.csi->idArmor]->item.t];
+							if (ad->protection[fd->dmgtype] > 0)
+								dmg *= 1.0 - ad->protection[fd->dmgtype] * check->AP * 0.0001;
+							else
+								dmg *= 1.0 - ad->protection[fd->dmgtype] * 0.01;
+						}
+
+						if ( dmg > check->HP
+							&& check->state & STATE_REACTION )
+							/* reaction shooters eradication bonus */
+							dmg = check->HP + GUETE_KILL
+								+ GUETE_REACTION_ERADICATION;
+						else if (dmg > check->HP)
+						/* standard kill bonus */
+							dmg = check->HP + GUETE_KILL;
+
+						/* ammo is limited and shooting gives away your position */
+						if ((dmg < 25.0 && vis < 0.2) /* too hard to hit */
+							|| (dmg < 10.0 && vis < 0.6) /* uber-armor */
+							|| dmg < 0.1) /* at point blank hit even with a stick*/
+							continue;
+
+						/* civilian malus */
+						if (check->team == TEAM_CIVILIAN && !(ent->state & STATE_INSANE))
+							dmg *= GUETE_CIV_FACTOR;
+
+						/* add random effects */
+						dmg += GUETE_RANDOM * frand();
+
+						/* check if most damage can be done here */
+						if (dmg > maxDmg) {
+							maxDmg = dmg;
+							best_time = fd->time * shots;
+							aia->mode = fm;
+							aia->shots = shots;
+							aia->target = check;
+						}
 					}
-
-					if ( dmg > check->HP
-						&& check->state & STATE_REACTION )
-						/* reaction shooters eradication bonus */
-						dmg = check->HP + GUETE_KILL
-							+ GUETE_REACTION_ERADICATION;
-					else if (dmg > check->HP)
-					/* standard kill bonus */
-						dmg = check->HP + GUETE_KILL;
-
-					/* ammo is limited and shooting gives away your position */
-					if ((dmg < 25.0 && vis < 0.2) /* too hard to hit */
-						|| (dmg < 10.0 && vis < 0.6) /* uber-armor */
-						|| dmg < 0.1) /* at point blank hit even with a stick*/
-						continue;
-
-					/* civilian malus */
-					if (check->team == TEAM_CIVILIAN && !(ent->state & STATE_INSANE))
-						dmg *= GUETE_CIV_FACTOR;
-
-					/* add random effects */
-					dmg += GUETE_RANDOM * frand();
-
-					/* check if most damage can be done here */
-					if (dmg > maxDmg) {
-						maxDmg = dmg;
-						best_time = fd->time * shots;
-						aia->mode = fm;
-						aia->shots = shots;
-						aia->target = check;
-					}
-				}
-		}
+			}
+		} /* firedefs */
 	}
 	/* add damage to guete */
 	if (aia->target) {
@@ -538,7 +550,7 @@ void AI_ActorThink(player_t * player, edict_t * ent)
 		/* TODO: check whether shoot is needed or enemy died already;
 		   use the remaining TUs for reaction fire */
 		while (bestAia.shots) {
-			(void)G_ClientShoot(player, ent->number, bestAia.target->pos, bestAia.mode, NULL, qtrue);
+			(void)G_ClientShoot(player, ent->number, bestAia.target->pos, bestAia.mode, 0, NULL, qtrue); /* 0 = first firemode */
 			bestAia.shots--;
 			if (bestAia.target->state & STATE_DEAD) {
 				bestAia = prepBestAction(player, ent);

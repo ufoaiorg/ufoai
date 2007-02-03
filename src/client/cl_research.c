@@ -117,9 +117,6 @@ static qboolean RS_RequirementsMet (requirements_t *required_AND, requirements_t
 					met_AND = qfalse;
 				}
 				break;
-			case RS_LINK_WEAPON:
-				/* This is no real requirement, so no checks here. */
-				break;
 			case RS_LINK_EVENT:
 				break;
 			case RS_LINK_ALIEN_DEAD:
@@ -150,9 +147,6 @@ static qboolean RS_RequirementsMet (requirements_t *required_AND, requirements_t
 				/* TODO: required_OR->collected[i] should be used instead of B_ItemInBase, see equivalent TODO above */
 				if (B_ItemInBase(required_OR->idx[i], baseCurrent) >= required_OR->amount[i])
 					met_OR = qtrue;
-				break;
-			case RS_LINK_WEAPON:
-				/* This is no real requirement, so no checks here. */
 				break;
 			case RS_LINK_EVENT:
 				break;
@@ -322,7 +316,6 @@ void RS_AssignTechIdxs (requirements_t *req)
 	for (i = 0; i < req->numLinks; i++) {
 		switch (req->type[i]) {
 		case RS_LINK_TECH:
-		case RS_LINK_WEAPON:
 			/* Get the index in the techtree. */
 			req->idx[i] = RS_GetTechIdxByName(req->id[i]);
 			break;
@@ -1447,27 +1440,16 @@ extern void RS_ParseTechnologies (char *id, char **text)
 					if (*token == '}')
 						break;
 
-					if ( (!Q_strncmp(token, "tech", MAX_VAR)) ||  (!Q_strncmp(token, "weapon", MAX_VAR)) ) {
+					if (!Q_strncmp(token, "tech", MAX_VAR)) {
 						if (required_temp->numLinks < MAX_TECHLINKS) {
 							/* Set requirement-type. */
-							if (!Q_strncmp(token, "tech", MAX_VAR)) {
-								required_temp->type[required_temp->numLinks] = RS_LINK_TECH;
+							required_temp->type[required_temp->numLinks] = RS_LINK_TECH;
 
-								/* Set requirement-name (id). */
-								token = COM_Parse(text);
-								Q_strncpyz(required_temp->id[required_temp->numLinks], token, MAX_VAR);
+							/* Set requirement-name (id). */
+							token = COM_Parse(text);
+							Q_strncpyz(required_temp->id[required_temp->numLinks], token, MAX_VAR);
 
-								Com_DPrintf("RS_ParseTechnologies: require-tech - %s\n", required_temp->id[required_temp->numLinks]);
-							} else {	/* weapon */
-								/* Ammo only: Defines what weapon can use this ammo. */
-								required_temp->type[required_temp->numLinks] = RS_LINK_WEAPON;
-
-								/* Set requirement-name (id). */
-								token = COM_Parse(text);
-								Q_strncpyz(required_temp->id[required_temp->numLinks], token, MAX_VAR);
-
-								Com_DPrintf("RS_ParseTechnologies: require-weapon - %s\n", required_temp->id[required_temp->numLinks]);
-							}
+							Com_DPrintf("RS_ParseTechnologies: require-tech - %s\n", required_temp->id[required_temp->numLinks]);
 
 							required_temp->numLinks++;
 						} else {
