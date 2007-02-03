@@ -632,6 +632,8 @@ static void CL_RefreshWeaponButtons(int time)
 
 	/* Weapon firing buttons */
 	/* TODO: Anything needed as a replacement? */
+	SetWeaponButton(BT_RIGHT_PRIMARY, qtrue);
+	SetWeaponButton(BT_LEFT_PRIMARY, qtrue);
 #if 0
 	byte weapon_fd_idx;
 	weapon_fd_idx  = -1;
