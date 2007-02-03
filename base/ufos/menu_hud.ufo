@@ -816,7 +816,8 @@ menu hud
 	pic bt_left_fm0
 	{
 		image	hud/firemode
-		pos		"800 592"
+		blend blend
+		pos		"750 592"
 		texl	"0 0"
 		texh	"255  63"
 		mousefx	false
@@ -827,7 +828,8 @@ menu hud
 	pic bt_left_fm1
 	{
 		image	hud/firemode
-		pos		"800 528"
+		blend blend
+		pos		"750 528"
 		texl	"0 0"
 		texh	"255 63"
 		mousefx	false
@@ -838,7 +840,8 @@ menu hud
 	pic bt_left_fm2
 	{
 		image	hud/firemode
-		pos		"800 464"
+		blend blend
+		pos		"750 464"
 		texl	"0 0"
 		texh	"255 63"
 		mousefx	false
@@ -849,7 +852,8 @@ menu hud
 	pic bt_left_fm3
 	{
 		image	hud/firemode
-		pos		"800 400"
+		blend blend
+		pos		"750 400"
 		texl	"0 0"
 		texh	"255 63"
 		mousefx	false
@@ -861,6 +865,7 @@ menu hud
 	pic bt_right_fm0
 	{
 		image	hud/firemode
+		blend blend
 		pos		"100 592"
 		texl	"0 0"
 		texh	"255 63"
@@ -872,6 +877,7 @@ menu hud
 	pic bt_right_fm1
 	{
 		image	hud/firemode
+		blend blend
 		pos		"100 528"
 		texl	"0 0"
 		texh	"255 63"
@@ -883,6 +889,7 @@ menu hud
 	pic bt_right_fm2
 	{
 		image	hud/firemode
+		blend blend
 		pos		"100 464"
 		texl	"0 0"
 		texh	"255 63"
@@ -894,6 +901,7 @@ menu hud
 	pic bt_right_fm3
 	{
 		image	hud/firemode
+		blend blend
 		pos		"100 400"
 		texl	"0 0"
 		texh	"255 63"
@@ -902,18 +910,18 @@ menu hud
 		click	{ cmd "fireweap r 3;" }
 	}
 
-	string left_fm_name0 { string "*cvar mn_l_fm_name0"	pos "832 596"	invis true }
-	string left_fm_name1 { string "*cvar mn_l_fm_name1"	pos "832 532"	invis true }
-	string left_fm_name2 { string "*cvar mn_l_fm_name2"	pos "832 468"	invis true }
-	string left_fm_name3 { string "*cvar mn_l_fm_name3"	pos "832 404"	invis true }
+	string left_fm_name0 { string "*cvar mn_l_fm_name0"	pos "782 596"	invis true }
+	string left_fm_name1 { string "*cvar mn_l_fm_name1"	pos "782 532"	invis true }
+	string left_fm_name2 { string "*cvar mn_l_fm_name2"	pos "782 468"	invis true }
+	string left_fm_name3 { string "*cvar mn_l_fm_name3"	pos "782 404"	invis true }
 	string right_fm_name0 { string "*cvar mn_r_fm_name0"	pos "132 596"	invis true }
 	string right_fm_name1 { string "*cvar mn_r_fm_name1"	pos "132 532"	invis true }
 	string right_fm_name2 { string "*cvar mn_r_fm_name2"	pos "132 468"	invis true }
 	string right_fm_name3 { string "*cvar mn_r_fm_name3"	pos "132 404"	invis true }
-	string left_fm_tu0 { string "*cvar mn_l_fm_tu0"	pos "832 628"	invis true }
-	string left_fm_tu1 { string "*cvar mn_l_fm_tu1"	pos "832 564"	invis true }
-	string left_fm_tu2 { string "*cvar mn_l_fm_tu2"	pos "832 501"	invis true }
-	string left_fm_tu3 { string "*cvar mn_l_fm_tu3"	pos "832 436"	invis true }
+	string left_fm_tu0 { string "*cvar mn_l_fm_tu0"	pos "782 628"	invis true }
+	string left_fm_tu1 { string "*cvar mn_l_fm_tu1"	pos "782 564"	invis true }
+	string left_fm_tu2 { string "*cvar mn_l_fm_tu2"	pos "782 501"	invis true }
+	string left_fm_tu3 { string "*cvar mn_l_fm_tu3"	pos "782 436"	invis true }
 	string right_fm_tu0 { string "*cvar mn_r_fm_tu0"	pos "132 628"	invis true }
 	string right_fm_tu1 { string "*cvar mn_r_fm_tu1"	pos "132 564"	invis true }
 	string right_fm_tu2 { string "*cvar mn_r_fm_tu2"	pos "132 501"	invis true }
