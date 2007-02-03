@@ -226,6 +226,25 @@ item sniper_ammo
 			damage	"95 0"
 			dmgtype normal
 		}
+		firedef
+		{
+			name	"_Precise Aimed Shot"
+			skill	sniper
+			projtl	bullet
+			impact	bulletImpact
+			hitbody blood
+			firesnd	weapons/sniper.wav
+			speed	0
+			spread	"0.05 0.05"
+			modif	1.7
+			crouch	0.7
+			range	280
+			shots	1
+			ammo	1
+			time	28
+			damage	"95 0"
+			dmgtype normal
+		}
 	}
 }
 
