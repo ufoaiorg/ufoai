@@ -224,10 +224,22 @@ static menu_t *menuStack[MAX_MENUSTACK];
 static int menuStackPos = -1;
 
 inventory_t *menuInventory = NULL;
-char *menuText[MAX_MENUTEXTS];
+const char *menuText[MAX_MENUTEXTS];
 
 static cvar_t *mn_escpop;
 static cvar_t *mn_debugmenu;
+
+typedef struct tutorial_s {
+	char name[MAX_VAR];
+	char sequence[MAX_VAR];
+} tutorial_t;
+
+#define MAX_TUTORIALS 16
+static tutorial_t tutorials[MAX_TUTORIALS];
+
+static void MN_GetMaps_f(void);
+static void MN_NextMap_f(void);
+static void MN_PrevMap_f(void);
 
 /*
 ==============================================================
@@ -418,7 +430,7 @@ static float MN_GetReferenceFloat(const menu_t* const menu, void *ref)
  * @brief Starts a server and checks if the server loads a team unless he is a dedicated
  * server admin
  */
-static void MN_StartServer(void)
+static void MN_StartServer_f (void)
 {
 	if (Cmd_Argc() <= 1) {
 		Com_Printf("Usage: mn_startserver <name>\n");
@@ -429,7 +441,7 @@ static void MN_StartServer(void)
 		Com_DPrintf("Dedicated server needs no team\n");
 	/* FIXME: Spectator */
 	else if (!B_GetNumOnTeam()) {
-		Com_Printf("MN_StartServer: Multiplayer team not loaded, please choose your team now.\n");
+		Com_Printf("MN_StartServer_f: Multiplayer team not loaded, please choose your team now.\n");
 		Cbuf_ExecuteText(EXEC_NOW, "assign_initial 1\n");
 		return;
 	} else
@@ -455,7 +467,7 @@ static void MN_StartServer(void)
  * @param[in] x
  * @param[in] y
  */
-static void Com_MergeShapes(int* const shape, int itemshape, int x, int y)
+static void Com_MergeShapes (int* const shape, int itemshape, int x, int y)
 {
 	int i;
 
@@ -484,7 +496,7 @@ static qboolean Com_CheckShape(int shape[16], int x, int y)
 /**
  * @brief Draws the rectangle in a 'free' style on position posx/posy (pixel) in the size sizex/sizey (pixel)
  */
-static void MN_DrawDisabled(menuNode_t* node)
+static void MN_DrawDisabled (menuNode_t* node)
 {
 	static vec4_t color = { 0.3f, 0.3f, 0.3f, 0.7f };
 	re.DrawFill(node->pos[0], node->pos[1], node->size[0], node->size[1], ALIGN_UL, color);
@@ -494,7 +506,7 @@ static void MN_DrawDisabled(menuNode_t* node)
 /**
  * @brief Draws the rectangle in a 'free' style on position posx/posy (pixel) in the size sizex/sizey (pixel)
  */
-static void MN_DrawFree(int container, menuNode_t * node, int posx, int posy, int sizex, int sizey, qboolean showTUs)
+static void MN_DrawFree (int container, menuNode_t * node, int posx, int posy, int sizex, int sizey, qboolean showTUs)
 {
 	static vec4_t color = { 0.0f, 1.0f, 0.0f, 0.7f };
 
@@ -514,7 +526,7 @@ static void MN_DrawFree(int container, menuNode_t * node, int posx, int posy, in
 /**
  * @brief Draws the free and useable inventory positions when dragging an item.
  */
-static void MN_InvDrawFree(inventory_t * inv, menuNode_t * node)
+static void MN_InvDrawFree (inventory_t * inv, menuNode_t * node)
 {
 	/* get the 'type' of the dragged item */
 	int item = dragItem.t;
@@ -569,10 +581,10 @@ static void MN_InvDrawFree(inventory_t * inv, menuNode_t * node)
 /**
  * @brief Popup in geoscape
  */
-void MN_Popup(const char *title, const char *text)
+void MN_Popup (const char *title, const char *text)
 {
-	menuText[TEXT_POPUP] = (char *) title;
-	menuText[TEXT_POPUP_INFO] = (char *) text;
+	menuText[TEXT_POPUP] = title;
+	menuText[TEXT_POPUP_INFO] = text;
 	if (ccs.singleplayer)
 		Cbuf_ExecuteText(EXEC_NOW, "game_timestop");
 	MN_PushMenu("popup");
@@ -581,7 +593,7 @@ void MN_Popup(const char *title, const char *text)
 /**
  * @brief
  */
-static void MN_ExecuteActions(const menu_t* const menu, menuAction_t* const first)
+static void MN_ExecuteActions (const menu_t* const menu, menuAction_t* const first)
 {
 	menuAction_t *action;
 	byte *data;
@@ -2526,7 +2538,7 @@ static void MN_ModifyString_f(void)
  * Shows the corresponding strings in menu
  * Example: Optionsmenu - fullscreen: yes
  */
-static void MN_Translate_f(void)
+static void MN_Translate_f (void)
 {
 	qboolean next;
 	char *current, *list, *orig, *trans;
@@ -2583,7 +2595,7 @@ static void MN_GetTutorials_f(void)
 /**
  * @brief
  */
-static void MN_ListTutorials_f(void)
+static void MN_ListTutorials_f (void)
 {
 	int i;
 
@@ -2597,7 +2609,7 @@ static void MN_ListTutorials_f(void)
 /**
  * @brief click function for text tutoriallist in menu_tutorials.ufo
  */
-static void MN_TutorialListClick_f(void)
+static void MN_TutorialListClick_f (void)
 {
 	int num;
 
@@ -2616,7 +2628,7 @@ static void MN_TutorialListClick_f(void)
 /**
  * @brief
  */
-static void MN_ListMenuModels_f(void)
+static void MN_ListMenuModels_f (void)
 {
 	int i;
 
@@ -2791,7 +2803,7 @@ static void MN_PrintMenu_f (void)
 /**
  * @brief
  */
-void MN_ResetMenus(void)
+void MN_ResetMenus (void)
 {
 	int i;
 
@@ -2823,9 +2835,9 @@ void MN_ResetMenus(void)
 	Cmd_AddCommand("tutoriallist_click", MN_TutorialListClick_f, NULL);
 
 	Cmd_AddCommand("getmaps", MN_GetMaps_f, NULL);
-	Cmd_AddCommand("mn_startserver", MN_StartServer, NULL);
-	Cmd_AddCommand("mn_nextmap", MN_NextMap, NULL);
-	Cmd_AddCommand("mn_prevmap", MN_PrevMap, NULL);
+	Cmd_AddCommand("mn_startserver", MN_StartServer_f, NULL);
+	Cmd_AddCommand("mn_nextmap", MN_NextMap_f, NULL);
+	Cmd_AddCommand("mn_prevmap", MN_PrevMap_f, NULL);
 	Cmd_AddCommand("mn_push", MN_PushMenu_f, NULL);
 	Cmd_AddCommand("mn_push_copy", MN_PushCopyMenu_f, NULL);
 	Cmd_AddCommand("mn_pop", MN_PopMenu_f, NULL);
@@ -2883,7 +2895,7 @@ MENU PARSING
 /**
  * @brief
  */
-qboolean MN_ParseAction(menuNode_t * menuNode, menuAction_t * action, char **text, char **token)
+qboolean MN_ParseAction (menuNode_t * menuNode, menuAction_t * action, char **text, char **token)
 {
 	char *errhead = "MN_ParseAction: unexpected end of file (in event)";
 	menuAction_t *lastAction;
@@ -3057,7 +3069,7 @@ qboolean MN_ParseAction(menuNode_t * menuNode, menuAction_t * action, char **tex
 /**
  * @brief
  */
-qboolean MN_ParseNodeBody(menuNode_t * node, char **text, char **token)
+qboolean MN_ParseNodeBody (menuNode_t * node, char **text, char **token)
 {
 	char *errhead = "MN_ParseNodeBody: unexpected end of file (node";
 	qboolean found;
@@ -3178,7 +3190,7 @@ qboolean MN_ParseNodeBody(menuNode_t * node, char **text, char **token)
  * @brief Hides a given menu node
  * @note Sanity check whether node is null included
  */
-void MN_HideNode ( menuNode_t* node )
+void MN_HideNode (menuNode_t* node)
 {
 	if ( node && node->invis == qtrue )
 		node->invis = qfalse;
@@ -3188,7 +3200,7 @@ void MN_HideNode ( menuNode_t* node )
  * @brief Unhides a given menu node
  * @note Sanity check whether node is null included
  */
-void MN_UnHideNode ( menuNode_t* node )
+void MN_UnHideNode (menuNode_t* node)
 {
 	if ( node && node->invis == qfalse )
 		node->invis = qtrue;
@@ -3197,7 +3209,7 @@ void MN_UnHideNode ( menuNode_t* node )
 /**
  * @brief
  */
-qboolean MN_ParseMenuBody(menu_t * menu, char **text)
+qboolean MN_ParseMenuBody (menu_t * menu, char **text)
 {
 	char *errhead = "MN_ParseMenuBody: unexpected end of file (menu";
 	char *token;
@@ -3363,7 +3375,7 @@ qboolean MN_ParseMenuBody(menu_t * menu, char **text)
 /**
  * @brief parses the models.ufo and all files where menu_models are defined
  */
-void MN_ParseMenuModel(char *name, char **text)
+void MN_ParseMenuModel (char *name, char **text)
 {
 	menuModel_t *menuModel;
 	char *token;
@@ -3438,7 +3450,7 @@ void MN_ParseMenuModel(char *name, char **text)
 /**
  * @brief
  */
-void MN_ParseMenu(char *name, char **text)
+void MN_ParseMenu (char *name, char **text)
 {
 	menu_t *menu;
 	menuNode_t *node;
@@ -3498,21 +3510,7 @@ void MN_ParseMenu(char *name, char **text)
 /**
  * @brief
  */
-void CL_ListMaps_f(void)
-{
-	int i;
-
-	FS_GetMaps(qtrue);
-
-	for (i=0; i<=anzInstalledMaps; i++)
-		Com_Printf("%s\n", maps[i]);
-	Com_Printf("-----\n %i installed maps\n", anzInstalledMaps+1);
-}
-
-/**
- * @brief
- */
-void MN_MapInfo(void)
+static void MN_MapInfo (void)
 {
 	char normalizedName[MAX_VAR];
 	int length = 0;
@@ -3575,7 +3573,7 @@ void MN_MapInfo(void)
 /**
  * @brief
  */
-void MN_GetMaps_f(void)
+static void MN_GetMaps_f (void)
 {
 	FS_GetMaps(qfalse);
 
@@ -3585,7 +3583,7 @@ void MN_GetMaps_f(void)
 /**
  * @brief
  */
-void MN_NextMap(void)
+static void MN_NextMap_f (void)
 {
 	if (mapInstalledIndex < anzInstalledMaps)
 		mapInstalledIndex++;
@@ -3597,7 +3595,7 @@ void MN_NextMap(void)
 /**
  * @brief
  */
-void MN_PrevMap(void)
+static void MN_PrevMap_f (void)
 {
 	if (mapInstalledIndex > 0)
 		mapInstalledIndex--;
@@ -3609,7 +3607,7 @@ void MN_PrevMap(void)
 /**
  * @brief Script command to show all messages on the stack
  */
-void CL_ShowMessagesOnStack(void)
+void CL_ShowMessagesOnStack (void)
 {
 	message_t *m = messageStack;
 
@@ -3629,7 +3627,7 @@ void CL_ShowMessagesOnStack(void)
  * @param[in] pedia
  * @return message_t pointer
  */
-message_t *MN_AddNewMessage(const char *title, const char *text, qboolean popup, messagetype_t type, technology_t * pedia)
+message_t *MN_AddNewMessage (const char *title, const char *text, qboolean popup, messagetype_t type, technology_t * pedia)
 {
 	message_t *mess;
 
@@ -3684,7 +3682,7 @@ message_t *MN_AddNewMessage(const char *title, const char *text, qboolean popup,
  * @param[in] text Buffer to hold the final result
  * @param[in] message The message to convert into text
  */
-void MN_TimestampedText(char *text, message_t *message)
+void MN_TimestampedText (char *text, message_t *message)
 {
 	Q_strncpyz(text, va(TIMESTAMP_FORMAT, message->d, CL_DateGetMonthName(message->m), message->y, message->h, message->min), TIMESTAMP_TEXT);
 }
@@ -3693,7 +3691,7 @@ void MN_TimestampedText(char *text, message_t *message)
  * @brief
  * FIXME: This needs to be called at shutdown
  */
-void MN_ShutdownMessageSystem(void)
+void MN_ShutdownMessageSystem (void)
 {
 	message_t *m = messageStack;
 	message_t *d;
@@ -3708,7 +3706,7 @@ void MN_ShutdownMessageSystem(void)
 /**
  * @brief
  */
-void MN_RemoveMessage(char *title)
+void MN_RemoveMessage (char *title)
 {
 	message_t *m = messageStack;
 	message_t *prev = NULL;
@@ -3729,7 +3727,7 @@ void MN_RemoveMessage(char *title)
 /**
  * @brief Inits the message system with no messages
  */
-void CL_InitMessageSystem(void)
+void CL_InitMessageSystem (void)
 {
 	/* no messages on stack */
 	messageStack = NULL;
@@ -3748,7 +3746,7 @@ font_t fonts[MAX_FONTS];
 font_t *fontBig;
 font_t *fontSmall;
 
-static value_t fontValues[] = {
+static const value_t fontValues[] = {
 	{"font", V_TRANSLATION2_STRING, offsetof(font_t, path)},
 	{"size", V_INT, offsetof(font_t, size)},
 	{"style", V_STRING, offsetof(font_t, style)},
@@ -3782,7 +3780,7 @@ void CL_ParseFont(char *name, char **text)
 	char *errhead = "CL_ParseFont: unexpected end of file (font";
 	char *token;
 	int i;
-	value_t *v = NULL;
+	const value_t *v = NULL;
 
 	/* search for font with same name */
 	for (i = 0; i < numFonts; i++)
@@ -3863,7 +3861,7 @@ void CL_InitFonts(void)
 
 /* ===================== USE_SDL_TTF stuff end ====================== */
 
-static value_t tutValues[] = {
+static const value_t tutValues[] = {
 	{"name", V_TRANSLATION_STRING, offsetof(tutorial_t, name)}
 	,
 	{"sequence", V_STRING, offsetof(tutorial_t, sequence)}
@@ -3871,17 +3869,15 @@ static value_t tutValues[] = {
 	{NULL, 0, 0}
 };
 
-tutorial_t tutorials[MAX_TUTORIALS];
-
 /**
  * @brief
  */
-void MN_ParseTutorials(char *title, char **text)
+extern void MN_ParseTutorials (char *title, char **text)
 {
 	tutorial_t *t = NULL;
 	char *errhead = "MN_ParseTutorials: unexptected end of file (tutorial ";
 	char *token;
-	value_t *v;
+	const value_t *v;
 
 	/* get name list body body */
 	token = COM_Parse(text);

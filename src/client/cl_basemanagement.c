@@ -37,6 +37,39 @@ static int BuildingConstructionList[MAX_BUILDINGS];
 static int numBuildingConstructionList;
 
 /**
+ * @brief Count all employees (hired) in the given base
+ */
+extern int B_GetEmployeeCount (const base_t* const base)
+{
+	int cnt = 0;
+	employeeType_t type;
+
+	for (type = EMPL_SOLDIER; type < MAX_EMPL; type++)
+		cnt += E_CountHired(base, type);
+	Com_DPrintf("B_GetEmployeeCount: %i\n", cnt);
+
+	return cnt;
+}
+
+/**
+ * @brief Sums up max_employees quarter values
+ */
+extern int B_GetAvailableQuarterSpace (const base_t* const base)
+{
+	int cnt = 0, i;
+
+	if (base->hasQuarters)
+		for (i = 0; i < gd.numBuildings[base->idx]; i++) {
+			if (gd.buildings[base->idx][i].buildingType == B_QUARTERS
+			&& gd.buildings[base->idx][i].buildingStatus != B_STATUS_NOT_SET)
+				cnt += gd.buildings[base->idx][i].maxEmployees;
+		}
+	Com_DPrintf("B_GetAvailableQuarterSpace: %i\n", cnt);
+
+	return cnt;
+}
+
+/**
  * @brief
  */
 static void B_ResetBuildingCurrent (void)
@@ -669,23 +702,22 @@ static void B_DrawBuilding(void)
 	if (!baseCurrent || !baseCurrent->buildingCurrent)
 		return;
 
-	menuText[TEXT_BUILDING_INFO] = buildingText;
-	*menuText[TEXT_BUILDING_INFO] = '\0';
+	*buildingText = '\0';
 
 	building = baseCurrent->buildingCurrent;
 
 	B_BuildingStatus();
 
-	Com_sprintf(menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, va("%s\n", building->name));
+	Com_sprintf(buildingText, MAX_LIST_CHAR, va("%s\n", building->name));
 
 	if (building->buildingStatus < B_STATUS_UNDER_CONSTRUCTION && building->fixCosts)
-		Com_sprintf(menuText[TEXT_BUILDING_INFO], MAX_LIST_CHAR, _("Costs:\t%1.0f c\n"), building->fixCosts);
+		Com_sprintf(buildingText, MAX_LIST_CHAR, _("Costs:\t%1.0f c\n"), building->fixCosts);
 
 	if (building->buildingStatus == B_STATUS_UNDER_CONSTRUCTION)
-		Q_strcat(menuText[TEXT_BUILDING_INFO], va(ngettext("%i Day to build\n", "%i Days to build\n", building->buildTime), building->buildTime), MAX_LIST_CHAR );
+		Q_strcat(buildingText, va(ngettext("%i Day to build\n", "%i Days to build\n", building->buildTime), building->buildTime), MAX_LIST_CHAR );
 
 	if (building->varCosts)
-		Q_strcat(menuText[TEXT_BUILDING_INFO], va(_("Running Costs:\t%1.0f c\n"), building->varCosts), MAX_LIST_CHAR);
+		Q_strcat(buildingText, va(_("Running Costs:\t%1.0f c\n"), building->varCosts), MAX_LIST_CHAR);
 
 /*	if (employees_in_building->numEmployees)
 		Q_strcat(menuText[TEXT_BUILDING_INFO], va(_("Employees:\t%i\n"), employees_in_building->numEmployees), MAX_LIST_CHAR);*/
@@ -696,6 +728,9 @@ static void B_DrawBuilding(void)
 
 	if (building->name)
 		Cvar_Set("mn_building_title", building->name);
+
+	/* link into menu text array */
+	menuText[TEXT_BUILDING_INFO] = buildingText;
 }
 
 /**
@@ -711,7 +746,7 @@ void B_BuildingAddToList(building_t * building)
 {
 	assert(baseCurrent);
 
-	Q_strcat(menuText[TEXT_BUILDINGS], va("%s\n", _(building->name)), MAX_LIST_CHAR);
+	Q_strcat(baseCurrent->allBuildingsList, va("%s\n", _(building->name)), MAX_LIST_CHAR);
 	BuildingConstructionList[numBuildingConstructionList] = building->type_idx;
 	numBuildingConstructionList++;
 }
@@ -798,7 +833,7 @@ buildingStatus_t B_GetMaximumBuildingStatus(int base_idx, buildingType_t buildin
 /**
  * @brief Update the building-list.
  */
-void B_BuildingInit(void)
+void B_BuildingInit (void)
 {
 	int i;
 	int numSameBuildings;

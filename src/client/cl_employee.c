@@ -469,6 +469,23 @@ extern employee_t* E_GetUnassignedEmployee (const base_t* const base, employeeTy
 extern qboolean E_HireEmployee (const base_t* const base, employeeType_t type, int idx)
 {
 	employee_t* employee = NULL;
+	int spaceTotal = 0;
+	int employeesTotal = 0;
+	int diff;
+
+	spaceTotal = B_GetAvailableQuarterSpace(base);
+	employeesTotal = B_GetEmployeeCount(base);
+	diff = spaceTotal - employeesTotal;
+	if (diff < 0) {
+		MN_AddNewMessage(_("Not enough quarters"),
+			va(_("You don't have enough quarterspace.\nYou have to unhire %i until end of month or build some new quarters."),
+			employeesTotal - spaceTotal), qtrue, MSG_INFO, NULL);
+		return qfalse;
+	} else if (diff == 0) {
+		MN_Popup(_("Not enough quarters"), _("You don't have enough quarters for your employees."));
+		return qfalse;
+	}
+
 	employee = E_GetUnhiredEmployee(type, idx);
 	if (employee) {
 		/* Now uses quarter space. */
@@ -865,13 +882,13 @@ static void E_EmployeeHire_f (void)
 	if (gd.employees[employeeCategory][num + plus].hired) {
 		if (!E_UnhireEmployee(&gd.bases[gd.employees[employeeCategory][num + plus].baseIDHired], employeeCategory, num + plus)) {
 			/* TODO: message - Couldn't fire employee. */
-		}
-		Cbuf_AddText(va("employeedel%i\n", num - minus));
+		} else
+			Cbuf_AddText(va("employeedel%i\n", num - minus));
 	} else {
 		if (!E_HireEmployee(baseCurrent, employeeCategory, num + plus)) {
 			/* TODO: message - Couldn't hire employee. */
-		}
-		Cbuf_AddText(va("employeeadd%i\n", num - minus));
+		} else
+			Cbuf_AddText(va("employeeadd%i\n", num - minus));
 	}
 	Cbuf_AddText(va("employee_select %i\n", num + plus));
 }

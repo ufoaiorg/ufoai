@@ -71,7 +71,7 @@ static char cursor_pic[MAX_QPATH];
 
 static void SCR_TimeRefresh_f(void);
 static void SCR_Loading_f(void);
-static void SCR_DrawString(int x, int y, char *string, qboolean bitmapFont);
+static void SCR_DrawString(int x, int y, const char *string, qboolean bitmapFont);
 
 qboolean loadingMessage;
 char loadingMessages[96];
@@ -399,7 +399,7 @@ static void SCR_DrawLoading(void)
 /**
  * @brief Draws the 3D-cursor in battlemode and the icons/info next to it.
  */
-static void SCR_DrawCursor(void)
+static void SCR_DrawCursor (void)
 {
 	int icon_offset_x = 16;	/* Offset of the first icon on the x-axis. */
 	int icon_offset_y = 16;	/* Offset of the first icon on the y-axis. */
@@ -438,7 +438,7 @@ static void SCR_DrawCursor(void)
 			icon_offset_y += icon_spacing;
 
 			/* Display weaponmode (text) here. */
-			if ( menuText[TEXT_MOUSECURSOR_RIGHT] && cl_show_cursor_tooltips->value )
+			if (menuText[TEXT_MOUSECURSOR_RIGHT] && cl_show_cursor_tooltips->value)
 				SCR_DrawString(mx + icon_offset_x,my - 16, menuText[TEXT_MOUSECURSOR_RIGHT], qfalse);
 		}
 	} else {
@@ -637,7 +637,7 @@ void SCR_TouchPics(void)
  * @brief
  * @sa Font_DrawString
  */
-static void SCR_DrawString(int x, int y, char *string, qboolean bitmapFont)
+static void SCR_DrawString(int x, int y, const char *string, qboolean bitmapFont)
 {
 	if (bitmapFont) {
 		while (*string) {

@@ -58,16 +58,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #endif
 
 /*============================================================================= */
-typedef struct tutorial_s {
-	char name[MAX_VAR];
-	char sequence[MAX_VAR];
-} tutorial_t;
-
-#define MAX_TUTORIALS 16
-
-extern tutorial_t tutorials[MAX_TUTORIALS];
-
-/*============================================================================= */
 
 #define MAX_TEAMLIST	8
 
@@ -787,11 +777,6 @@ char* CL_GetTeamSkinName(int id);
 
 void MN_BuildNewBase(vec2_t pos);
 
-void MN_GetMaps_f(void);
-void CL_ListMaps_f(void);
-void MN_NextMap(void);
-void MN_PrevMap(void);
-
 /* END MISC */
 
 /* stats */
@@ -1000,7 +985,7 @@ void MN_ParseTutorials(char *title, char **text);
 void B_DrawBase(menuNode_t * node);
 
 extern inventory_t *menuInventory;
-extern char *menuText[MAX_MENUTEXTS];
+extern const char *menuText[MAX_MENUTEXTS];
 
 /* this is the function where all the sdl_ttf fonts are parsed */
 void CL_ParseFont(char *name, char **text);

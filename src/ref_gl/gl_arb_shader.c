@@ -64,7 +64,7 @@ void GL_ShaderInit(void)
  * @param[in] image Image name
  * @return shader_t pointer if image name and shader title match otherwise NULL
  */
-shader_t* GL_GetShaderForImage(char* image)
+shader_t* GL_GetShaderForImage (char* image)
 {
 	int i = 0;
 	shader_t *s;
