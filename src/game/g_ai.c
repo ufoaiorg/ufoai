@@ -88,7 +88,7 @@ qboolean AI_CheckFF(edict_t * ent, vec3_t target, float spread)
  * @sa AI_ActorThink
  * @todo fix firedef stuff
  */
-static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
+static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, ai_action_t * aia)
 {
 	edict_t *check;
 	int move, delta = 0, tu;
@@ -97,7 +97,7 @@ static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 	float guete, dmg, maxDmg, best_time = -1, vis;
 	objDef_t *ad;
 	int still_searching = 1;
-	
+
 	byte weap_fds_idx; /* Weapon-Firedefs index in fd[x] */
 	byte fd_idx;	/* firedef index fd[][x]*/
 
@@ -151,14 +151,14 @@ static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 		if (IS_SHOT_REACTION(fm))
 			continue;
 
-		if (IS_SHOT_RIGHT(fm) && RIGHT(ent) 
+		if (IS_SHOT_RIGHT(fm) && RIGHT(ent)
 			&& RIGHT(ent)->item.m != NONE
 			&& gi.csi->ods[RIGHT(ent)->item.t].weapon
 			&& (!gi.csi->ods[RIGHT(ent)->item.t].reload
 				|| RIGHT(ent)->item.a > 0)) {
 			od = &gi.csi->ods[RIGHT(ent)->item.m];
 			weap_idx = RIGHT(ent)->item.t;
-			
+
 		} else if (IS_SHOT_LEFT(fm) && LEFT(ent)
 			&& (LEFT(ent)->item.m != NONE)
 			&& gi.csi->ods[LEFT(ent)->item.t].weapon
@@ -175,12 +175,12 @@ static float AI_FighterCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 			continue;
 
 		weap_fds_idx = INV_FiredefsIDXForWeapon(od, weap_idx);
-		for (fd_idx = 0; fd_idx < od->numFiredefs[weap_fds_idx]; fd_idx++) { /* TODO: is this how it should work? i just added this addfitional loop but don't know anything about hte function */
-		
+		/* TODO: is this how it should work? i just added this additional loop but don't know anything about the function */
+		for (fd_idx = 0; fd_idx < od->numFiredefs[weap_fds_idx]; fd_idx++) {
 			fd = &od->fd[weap_fds_idx][fd_idx];
 
-			nspread = SPREAD_NORM((fd->spread[0]+fd->spread[1])*0.5 + GET_ACC(ent->chr.skills[ABILITY_ACCURACY]*(1+fd->modif),
-									 fd->weaponSkill));
+			nspread = SPREAD_NORM((fd->spread[0] + fd->spread[1]) * 0.5 +
+				GET_ACC(ent->chr.skills[ABILITY_ACCURACY] * (1 + fd->modif), fd->weaponSkill));
 			shots = tu / fd->time;
 			if (shots) {
 				/* search best target */
@@ -389,14 +389,14 @@ static float AI_CivilianCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
 	return guete;
 }
 
+#define AI_MAX_DIST	30
 /**
  * @brief Attempts to find the best action for an alien. Moves the alien
  * into the starting position for that action and returns the action.
  * @param[in] player
  * @param[in] ent
  */
-#define AI_MAX_DIST	30
-ai_action_t prepBestAction(player_t * player, edict_t * ent)
+static ai_action_t AI_PrepBestAction (player_t * player, edict_t * ent)
 {
 	ai_action_t aia, bestAia;
 	pos3_t oldPos, to;
@@ -543,7 +543,7 @@ void AI_ActorThink(player_t * player, edict_t * ent)
 			Com_DPrintf("AI_ActorThink: Got weapon from inventory\n");
 	}
 
-	bestAia = prepBestAction(player, ent);
+	bestAia = AI_PrepBestAction(player, ent);
 
 	/* shoot('n'hide) */
 	if (bestAia.target) {
@@ -553,7 +553,7 @@ void AI_ActorThink(player_t * player, edict_t * ent)
 			(void)G_ClientShoot(player, ent->number, bestAia.target->pos, bestAia.mode, 0, NULL, qtrue); /* 0 = first firemode */
 			bestAia.shots--;
 			if (bestAia.target->state & STATE_DEAD) {
-				bestAia = prepBestAction(player, ent);
+				bestAia = AI_PrepBestAction(player, ent);
 				if (!bestAia.target)
 					return;
 			}
