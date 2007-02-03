@@ -1103,6 +1103,7 @@ qboolean CL_ActorSelect(le_t * le)
 
 	for (i = 0; i < cl.numTeamList; i++) {
 		if (cl.teamList[i] == le) {
+			HideFiremodes();
 			/* console commands, update cvars */
 			Cvar_ForceSet("cl_selected", va("%i", i));
 			if ( le->fieldSize == ACTOR_SIZE_NORMAL ) {
