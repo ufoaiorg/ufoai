@@ -392,6 +392,21 @@ static void SetWeaponButton (int button, int state)
 }
 
 /**
+ * @brief Returns the number of the actor in the teamlist.
+ * @param[in] le The actor to search.
+ * @return The number of the actor in the teamlist.
+ */
+static int CL_GetActorNumber( le_t * le )
+{
+	int actor_idx;
+	for (actor_idx = 0; actor_idx < cl.numTeamList; actor_idx++) {
+		if (cl.teamList[actor_idx] == selActor)
+			return actor_idx;
+	}
+	return -1;
+}
+
+/**
  * @brief Makes all entries of the firemode lists invisible.
  */
 static void HideFiremodes (void)
@@ -504,6 +519,7 @@ static void CL_GetWeaponAndAmmo (char hand, objDef_t **weapon, objDef_t **ammo, 
  */
 void CL_DisplayFiremodes (void)
 {
+	int actor_idx;
 	objDef_t *weapon = NULL;
 	objDef_t *ammo = NULL;
 	int weap_fd_idx;
@@ -534,7 +550,6 @@ void CL_DisplayFiremodes (void)
 	Com_DPrintf("CL_DisplayFiremodes: displaying %s firemodes.\n", hand);
 
 	/* Toggle firemode lists if needed. Mind you that HideFiremodes modifies visible_firemode_list_xxx to qfalse */
-
 	if (hand[0] == 'r') {
 		if (visible_firemode_list_right == qtrue) {
 			HideFiremodes(); /* Modifies visible_firemode_list_xxxx */
@@ -557,14 +572,25 @@ void CL_DisplayFiremodes (void)
 
 	/* TODO: Check if REACTION_FIREMODE is up to date with the weapon other wise set it to default for the current one. Just in case. */
 	
+	actor_idx = CL_GetActorNumber(selActor);
+	
 	for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
-		/* TODO: display REACTION_FIREMODE stuff here as well.*/
 		if ( i < ammo->numFiredefs[weap_fd_idx] ) { /* We have a defined fd */
 			if ( ammo->fd[weap_fd_idx][i].time <= selActor->TU ) {  /* Enough timeunits for this firemode?*/
 				DisplayFiremodeEntry(&ammo->fd[weap_fd_idx][i], hand[0], 1);
 			} else{
 				DisplayFiremodeEntry(&ammo->fd[weap_fd_idx][i], hand[0], 0);
 			}
+			
+			/* TODO: pack this (including the checks&loops into a seperate function
+			if (ammo->fd[weap_fd_idx][i].reaction) {
+				if (REACTION_FIREMODE[(hand[0] == 'r')?0:1][0][0])
+					* Display firemode selected *
+				else
+					* Display firemode un-selected *
+			}
+			*/
+
 		} else { /* No more fd left in the list */
 			if (hand[0] == 'r')
 				Cbuf_AddText(va("set_right_inv%i\n", i)); /* Hide this entry */
@@ -641,10 +667,7 @@ void CL_SelectReactionFiremode (void)
 	if (!selActor)
 		return;
 	
-	for (actor_idx = 0; actor_idx < cl.numTeamList; actor_idx++) {
-		if (cl.teamList[actor_idx] == selActor)
-			break;
-	}
+	actor_idx = CL_GetActorNumber(selActor);
 	
 	firemode = atoi(Cmd_Argv(2));
 	
@@ -1104,11 +1127,7 @@ void CL_AddActorToTeamList (le_t * le)
 		return;
 
 	/* check list for that actor */
-	/* TODO: This should probably be a while loop */
-	for (i = 0; i < cl.numTeamList; i++) {
-		if (cl.teamList[i] == le)
-			break;
-	}
+	i = CL_GetActorNumber(le);
 
 	/* add it */
 	if (i == cl.numTeamList) {
@@ -1907,11 +1926,9 @@ void CL_ActorDie (sizebuf_t * sb)
 
 	/* print some info about the death */
 	if (le->team == cls.team && baseCurrent) {
-		for (i = 0; i < cl.numTeamList; i++)
-			if (cl.teamList[i] == le) {
-				Com_Printf(_("%s has been killed!\n"), baseCurrent->curTeam[i]->name);
-				break;
-			}
+		i = CL_GetActorNumber(le);
+		if (i >= 0)
+			Com_Printf(_("%s has been killed!\n"), baseCurrent->curTeam[i]->name);
 	} else {
 		switch (le->team) {
 		case (TEAM_CIVILIAN):
