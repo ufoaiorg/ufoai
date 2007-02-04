@@ -57,7 +57,7 @@ static int upDisplay = UFOPEDIA_CHAPTERS;
 /**
  * @brief Modify the global display var
  */
-void UP_ChangeDisplay (int newDisplay)
+static void UP_ChangeDisplay (int newDisplay)
 {
 	if (newDisplay < UFOPEDIA_DISPLAYEND && newDisplay >= 0)
 		upDisplay = newDisplay;
@@ -98,7 +98,7 @@ void UP_ChangeDisplay (int newDisplay)
  * The weaponSkills were defined in q_shared.h at abilityskills_t
  * @sa abilityskills_t
  */
-static char* CL_WeaponSkillToName(int weaponSkill)
+static char* CL_WeaponSkillToName (int weaponSkill)
 {
 	switch (weaponSkill) {
 	case SKILL_CLOSE:
@@ -126,7 +126,7 @@ static char* CL_WeaponSkillToName(int weaponSkill)
  * @brief Diplays the tech tree dependencies in the ufopedia
  * @sa UP_DrawEntry
  */
-void UP_DisplayTechTree (technology_t* t)
+static void UP_DisplayTechTree (technology_t* t)
 {
 	int i = 0;
 	static char up_techtree[1024];
@@ -165,7 +165,7 @@ void UP_DisplayTechTree (technology_t* t)
  * Not only called from Ufopedia but also from other places to display
  * weapon and ammo stats
  */
-void CL_ItemDescription(int item)
+extern void CL_ItemDescription (int item)
 {
 	static char itemText[MAX_MENUTEXTLEN];
 	objDef_t *od;
@@ -234,7 +234,7 @@ void CL_ItemDescription(int item)
  * @brief Prints the ufopedia description for armors
  * @sa UP_DrawEntry
  */
-void UP_ArmorDescription (technology_t* t)
+static void UP_ArmorDescription (technology_t* t)
 {
 	objDef_t	*od = NULL;
 	int	i;
@@ -270,7 +270,7 @@ void UP_ArmorDescription (technology_t* t)
  * @brief Prints the ufopedia description for technologies
  * @sa UP_DrawEntry
  */
-void UP_TechDescription (technology_t* t)
+static void UP_TechDescription (technology_t* t)
 {
 	UP_DisplayTechTree(t);
 }
@@ -279,7 +279,7 @@ void UP_TechDescription (technology_t* t)
  * @brief Prints the ufopedia description for buildings
  * @sa UP_DrawEntry
  */
-void UP_BuildingDescription (technology_t* t)
+static void UP_BuildingDescription (technology_t* t)
 {
 	building_t* b = B_GetBuildingType ( t->provides );
 
@@ -299,7 +299,7 @@ void UP_BuildingDescription (technology_t* t)
  * @brief Prints the ufopedia description for aircraft
  * @sa UP_DrawEntry
  */
-void UP_AircraftDescription (technology_t* t)
+static void UP_AircraftDescription (technology_t* t)
 {
 	aircraft_t* aircraft = CL_GetAircraft ( t->provides );
 	if ( !aircraft ) {
@@ -395,7 +395,7 @@ extern void UP_Article (technology_t* tech)
  * @sa UP_ArmorDescription
  * @sa CL_ItemDescription
  */
-void UP_DrawEntry (technology_t* tech)
+static void UP_DrawEntry (technology_t* tech)
 {
 	if (!tech)
 		return;
@@ -428,7 +428,7 @@ void UP_DrawEntry (technology_t* tech)
  * @param name Ufopedia entry id
  * @sa UP_FindEntry_f
  */
-void UP_OpenWith (char *name)
+extern void UP_OpenWith (char *name)
 {
 	Cbuf_AddText("mn_push ufopedia\n");
 	Cbuf_Execute();
@@ -440,7 +440,7 @@ void UP_OpenWith (char *name)
  * @param name Ufopedia entry id
  * @sa UP_FindEntry_f
  */
-void UP_OpenCopyWith (char *name)
+extern void UP_OpenCopyWith (char *name)
 {
 	Cbuf_AddText("mn_push_copy ufopedia\n");
 	Cbuf_Execute();
@@ -454,7 +454,7 @@ void UP_OpenCopyWith (char *name)
  * Usage: ufopedia <id>
  * opens the ufopedia with entry id
  */
-void UP_FindEntry_f (void)
+static void UP_FindEntry_f (void)
 {
 	char *id = NULL;
 	technology_t *tech = NULL;
@@ -492,7 +492,7 @@ void UP_FindEntry_f (void)
  * @sa UP_Next_f
  * @sa UP_Prev_f
  */
-void UP_Content_f( void )
+static void UP_Content_f (void)
 {
 	char *cp = NULL;
 	int i;
@@ -542,7 +542,7 @@ void UP_Content_f( void )
  * @sa UP_Index_f
  * @sa UP_DrawEntry
  */
-void UP_Back_f (void)
+static void UP_Back_f (void)
 {
 	switch (upDisplay) {
 	case UFOPEDIA_ARTICLE:
@@ -560,7 +560,7 @@ void UP_Back_f (void)
  * @brief Displays the index of the current chapter
  * @sa UP_Content_f
  */
-void UP_Index_f (void)
+static void UP_Index_f (void)
 {
 	technology_t* t;
 	char *upIndex = NULL;
@@ -609,7 +609,7 @@ void UP_Index_f (void)
  * @brief Displays the previous entry in the ufopedia
  * @sa UP_Next_f
  */
-void UP_Prev_f( void )
+static void UP_Prev_f (void)
 {
 	technology_t *t = NULL;
 
@@ -643,7 +643,7 @@ void UP_Prev_f( void )
  * @brief Displays the next entry in the ufopedia
  * @sa UP_Prev_f
  */
-void UP_Next_f( void )
+static void UP_Next_f (void)
 {
 	technology_t *t = NULL;
 
@@ -678,7 +678,7 @@ void UP_Next_f( void )
  * @brief
  * @sa UP_Click_f
  */
-void UP_RightClick_f (void)
+static void UP_RightClick_f (void)
 {
 	switch (upDisplay) {
 	case UFOPEDIA_INDEX:
@@ -693,7 +693,7 @@ void UP_RightClick_f (void)
  * @brief
  * @sa UP_RightClick_f
  */
-void UP_Click_f (void)
+static void UP_Click_f (void)
 {
 	int num;
 	technology_t *t = NULL;
@@ -753,7 +753,7 @@ void UP_Click_f (void)
  * @sa
  * @todo The "num" value and the link-index will most probably not match.
  */
-void UP_TechTreeClick_f (void)
+static void UP_TechTreeClick_f (void)
 {
 	int num;
 	requirements_t *required_AND = NULL;
@@ -789,7 +789,7 @@ void UP_TechTreeClick_f (void)
 /**
  * @brief
  */
-void UP_SwitchDescriptions_f (void)
+static void UP_SwitchDescriptions_f (void)
 {
 	if (!Q_strncmp(Cvar_VariableString("mn_up_desc"), "pre", 3))
 		Cvar_Set("mn_up_desc", "normal");
@@ -800,7 +800,7 @@ void UP_SwitchDescriptions_f (void)
 /**
  * @brief Redraw the ufopedia article
  */
-void UP_Update_f (void)
+static void UP_Update_f (void)
 {
 	if (upCurrent)
 		UP_DrawEntry(upCurrent);
@@ -810,7 +810,7 @@ void UP_Update_f (void)
  * @brief Shows available ufopedia entries
  * TODO: Implement me
  */
-void UP_List_f ( void )
+static void UP_List_f (void)
 {
 }
 
@@ -818,7 +818,7 @@ void UP_List_f ( void )
  * @brief
  * @sa CL_ResetMenus
  */
-void UP_ResetUfopedia( void )
+extern void UP_ResetUfopedia (void)
 {
 	/* reset menu structures */
 	gd.numChapters = 0;
@@ -847,7 +847,7 @@ void UP_ResetUfopedia( void )
  * @param text Text for chapter ID
  * @sa CL_ParseFirstScript
  */
-void UP_ParseUpChapters( char *id, char **text )
+extern void UP_ParseUpChapters (char *id, char **text)
 {
 	char	*errhead = "UP_ParseUpChapters: unexptected end of file (names ";
 	char	*token;

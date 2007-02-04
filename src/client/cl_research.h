@@ -169,7 +169,6 @@ int RS_GetTechIdxByName(const char *name);
 int RS_GetItem(const char *id);
 
 /* ufopedia function - but needs technology_t */
-void UP_DrawEntry(technology_t* tech);
 void UP_Article(technology_t* tech);
 
 #endif /* CLIENT_CL_RESEARCH_H */
