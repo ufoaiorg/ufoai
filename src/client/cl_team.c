@@ -422,26 +422,30 @@ extern void CL_AddCarriedToEq (equipDef_t * ed)
  */
 static item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
 {
-	int i = -1, type = item.t; /* 'type' equals idx in "&csi.ods[idx]" */
+	int i = -1, type = item.t;	/* 'type' equals idx in "&csi.ods[idx]" */
 
 	assert (ed->num[type] > 0);
 	ed->num[type]--;
 
-	if (csi.ods[type].weap_idx[0] >= 0) { /* ammo */
+	if (csi.ods[type].weap_idx[0] >= 0) {
+		/* The given item is ammo or self-contained weapon (i.e. It has firedefinitions. */
 		return item;
-	} else if (!csi.ods[type].reload) {
-		item.m = item.t; /* no ammo needed, so fire definitions are in t */
+	} else if (!csi.ods[type].reload) 
+		/* The given item is a weapon but no ammo is needed,
+		 * so fire definitions are in t (the weapon). Setting equal. */
+		item.m = item.t;	
 		return item;
 	} else if (item.a) {
-		assert (item.m != NONE); /* was reloaded one time */
+		assert (item.m != NONE);
+		/* The item is a weapon and it was reloaded one time. */
 		if (item.a == csi.ods[type].ammo) {
-			/* fully loaded, no need to reload, but mark the ammo as used. */
-			assert (item.m != NONE);
+			/* Fully loaded, no need to reload, but mark the ammo as used. */
+			assert (item.m != NONE);	/* TODO: Isn't this redundant here? */
 			if (ed->num[item.m] > 0) {
 				ed->num[item.m]--;
 				return item;
 			} else {
-				/* your clip has been sold; give it back */
+				/* Your clip has been sold; give it back. */
 				item.a = 0;
 				return item;
 			}
