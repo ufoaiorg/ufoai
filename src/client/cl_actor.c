@@ -409,7 +409,11 @@ static void HideFiremodes (void)
  */
 static void DisplayFiremodeEntry (fireDef_t *fd, char hand, byte status)
 {
+	/* char cbufText[MAX_VAR]; */
 	if (!fd)
+		return;
+
+	if (!selActor)
 		return;
 
 	if (hand == 'r') {
@@ -420,9 +424,17 @@ static void DisplayFiremodeEntry (fireDef_t *fd, char hand, byte status)
 		} else {
 			Cbuf_AddText(va("set_right_ina%i\n", fd->fd_idx));
 		}
-
+		
+		/* TODO: implement tooltips for strings. 
+		if ( selActor->TU > fd->time)
+			Cvar_Set(va("mn_r_fm_tt_tu%i", fd->fd_idx),va(_("Remaining TUs: %i"),selActor->TU - fd->time));
+		else
+			Cvar_Set(va("mn_r_fm_tt_tu%i", fd->fd_idx),_("No remaining TUs left after shot."));
+		*/
 		Cvar_Set(va("mn_r_fm_name%i", fd->fd_idx),  va("%s", fd->name));
-		Cvar_Set(va("mn_r_fm_tu%i", fd->fd_idx), va(_("TU: %i"), fd->time));
+		Cvar_Set(va("mn_r_fm_tu%i", fd->fd_idx),va(_("TU: %i"),  fd->time));
+		Cvar_Set(va("mn_r_fm_shot%i", fd->fd_idx), va(_("Shots:%i"), fd->ammo));
+		
 	} else if (hand == 'l') {
 		Cbuf_AddText(va("set_left_vis%i\n", fd->fd_idx)); /* Make this entry visible (in case it wasn't). */
 
@@ -432,10 +444,17 @@ static void DisplayFiremodeEntry (fireDef_t *fd, char hand, byte status)
 			Cbuf_AddText(va("set_left_ina%i\n", fd->fd_idx));
 		}
 
-		Cvar_Set(va("mn_l_fm_name%i", fd->fd_idx), va("%s", fd->name));
-		Cvar_Set(va("mn_l_fm_tu%i", fd->fd_idx), va(_("TU: %i"), fd->time));
+		/* TODO: implement tooltips for strings. 
+		if ( selActor->TU > fd->time)
+			Cvar_Set(va("mn_l_fm_tt_tu%i", fd->fd_idx),va(_("Remaining TUs: %i"),selActor->TU - fd->time));
+		else
+			Cvar_Set(va("mn_l_fm_tt_tu%i", fd->fd_idx),_("No remaining TUs left after shot."));
+		*/
+		Cvar_Set(va("mn_l_fm_name%i", fd->fd_idx),  va("%s", fd->name));
+		Cvar_Set(va("mn_l_fm_tu%i", fd->fd_idx),va(_("TU: %i"),  fd->time));
+		Cvar_Set(va("mn_l_fm_shot%i", fd->fd_idx), va(_("Shots:%i"), fd->ammo));
 	} else {
-		/* TODO: Add good error note. */
+		Com_Printf("DisplayFiremodeEntry: Bad hand [l|r] defined: '%s'\n", hand);
 		return;
 	}
 }
@@ -486,7 +505,8 @@ void CL_DisplayFiremodes (void)
 	int i;
 	char *hand;
 
-	/* HideFiremodes();  Hides all firemode lists ... TODO only needed for development, but can't hurt. */
+	if (!selActor)
+		return;
 
 	if (Cmd_Argc() < 2) { /* no argument given */
 		hand = "r";

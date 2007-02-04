@@ -793,30 +793,30 @@ menu hud
 	confunc set_right_a2 { *bt_right_fm2	texl "0 0"	*bt_right_fm2 texh "255 63" }
 	confunc set_right_a3 { *bt_right_fm3	texl "0 0"	*bt_right_fm3 texh "255 63" }
 
-	confunc set_left_inv0 { *bt_left_fm0    invis true *left_fm_name0 invis true *left_fm_tu0 invis true }
-	confunc set_left_inv1 { *bt_left_fm1    invis true *left_fm_name1 invis true *left_fm_tu1 invis true }
-	confunc set_left_inv2 { *bt_left_fm2    invis true *left_fm_name2 invis true *left_fm_tu2 invis true }
-	confunc set_left_inv3 { *bt_left_fm3    invis true *left_fm_name3 invis true *left_fm_tu3 invis true }
-	confunc set_right_inv0 { *bt_right_fm0    invis true *right_fm_name0 invis true *right_fm_tu0 invis true }
-	confunc set_right_inv1 { *bt_right_fm1    invis true *right_fm_name1 invis true *right_fm_tu1 invis true }
-	confunc set_right_inv2 { *bt_right_fm2    invis true *right_fm_name2 invis true *right_fm_tu2 invis true }
-	confunc set_right_inv3 { *bt_right_fm3    invis true *right_fm_name3 invis true *right_fm_tu3 invis true }
+	confunc set_left_inv0 { *bt_left_fm0 invis true	*left_fm_name0 invis true	*left_fm_tu0 invis true	*left_fm_shot0 invis true }
+	confunc set_left_inv1 { *bt_left_fm1 invis true	*left_fm_name1 invis true	*left_fm_tu1 invis true	*left_fm_shot1 invis true }
+	confunc set_left_inv2 { *bt_left_fm2 invis true	*left_fm_name2 invis true	*left_fm_tu2 invis true	*left_fm_shot2 invis true }
+	confunc set_left_inv3 { *bt_left_fm3 invis true	*left_fm_name3 invis true	*left_fm_tu3 invis true	*left_fm_shot3 invis true }
+	confunc set_right_inv0 { *bt_right_fm0 invis true	*right_fm_name0 invis true	*right_fm_tu0 invis true	*right_fm_shot0 invis true }
+	confunc set_right_inv1 { *bt_right_fm1 invis true	*right_fm_name1 invis true	*right_fm_tu1 invis true	*right_fm_shot1 invis true }
+	confunc set_right_inv2 { *bt_right_fm2 invis true	*right_fm_name2 invis true	*right_fm_tu2 invis true	*right_fm_shot2 invis true }
+	confunc set_right_inv3 { *bt_right_fm3 invis true	*right_fm_name3 invis true	*right_fm_tu3 invis true	*right_fm_shot3 invis true }
 	
-	confunc set_left_vis0 { *bt_left_fm0    invis false *left_fm_name0 invis false *left_fm_tu0 invis false }
-	confunc set_left_vis1 { *bt_left_fm1    invis false *left_fm_name1 invis false *left_fm_tu1 invis false }
-	confunc set_left_vis2 { *bt_left_fm2    invis false *left_fm_name2 invis false *left_fm_tu2 invis false }
-	confunc set_left_vis3 { *bt_left_fm3    invis false *left_fm_name3 invis false *left_fm_tu3 invis false }
-	confunc set_right_vis0 { *bt_right_fm0    invis false *right_fm_name0 invis false *right_fm_tu0 invis false }
-	confunc set_right_vis1 { *bt_right_fm1    invis false *right_fm_name1 invis false *right_fm_tu1 invis false }
-	confunc set_right_vis2 { *bt_right_fm2    invis false *right_fm_name2 invis false *right_fm_tu2 invis false }
-	confunc set_right_vis3 { *bt_right_fm3    invis false *right_fm_name3 invis false *right_fm_tu3 invis false }
+	confunc set_left_vis0 { *bt_left_fm0 invis false	*left_fm_name0 invis false	*left_fm_tu0 invis false 	*left_fm_shot0 invis false }
+	confunc set_left_vis1 { *bt_left_fm1 invis false	*left_fm_name1 invis false	*left_fm_tu1 invis false 	*left_fm_shot1 invis false }
+	confunc set_left_vis2 { *bt_left_fm2 invis false	*left_fm_name2 invis false	*left_fm_tu2 invis false 	*left_fm_shot2 invis false }
+	confunc set_left_vis3 { *bt_left_fm3 invis false	*left_fm_name3 invis false	*left_fm_tu3 invis false 	*left_fm_shot3 invis false }
+	confunc set_right_vis0 { *bt_right_fm0 invis false	*right_fm_name0 invis false *right_fm_tu0 invis false	*right_fm_shot0 invis false }
+	confunc set_right_vis1 { *bt_right_fm1 invis false	*right_fm_name1 invis false *right_fm_tu1 invis false	*right_fm_shot1 invis false }
+	confunc set_right_vis2 { *bt_right_fm2 invis false	*right_fm_name2 invis false *right_fm_tu2 invis false	*right_fm_shot2 invis false }
+	confunc set_right_vis3 { *bt_right_fm3 invis false	*right_fm_name3 invis false *right_fm_tu3 invis false	*right_fm_shot3 invis false }
 
 
 
 	pic bt_left_fm0
 	{
 		image	hud/firemode
-		pos		"750 592"
+		pos		"622 576"
 		texl	"0 0"
 		texh	"255  63"
 		mousefx	false
@@ -827,7 +827,7 @@ menu hud
 	pic bt_left_fm1
 	{
 		image	hud/firemode
-		pos		"750 528"
+		pos		"622 512"
 		texl	"0 0"
 		texh	"255 63"
 		mousefx	false
@@ -838,7 +838,7 @@ menu hud
 	pic bt_left_fm2
 	{
 		image	hud/firemode
-		pos		"750 464"
+		pos		"622 448"
 		texl	"0 0"
 		texh	"255 63"
 		mousefx	false
@@ -849,7 +849,7 @@ menu hud
 	pic bt_left_fm3
 	{
 		image	hud/firemode
-		pos		"750 400"
+		pos		"622 384"
 		texl	"0 0"
 		texh	"255 63"
 		mousefx	false
@@ -861,7 +861,7 @@ menu hud
 	pic bt_right_fm0
 	{
 		image	hud/firemode
-		pos		"100 592"
+		pos		"164 576"
 		texl	"0 0"
 		texh	"255 63"
 		mousefx	false
@@ -872,7 +872,7 @@ menu hud
 	pic bt_right_fm1
 	{
 		image	hud/firemode
-		pos		"100 528"
+		pos		"164 512"
 		texl	"0 0"
 		texh	"255 63"
 		mousefx	false
@@ -883,7 +883,7 @@ menu hud
 	pic bt_right_fm2
 	{
 		image	hud/firemode
-		pos		"100 464"
+		pos		"164 448"
 		texl	"0 0"
 		texh	"255 63"
 		mousefx	false
@@ -894,7 +894,7 @@ menu hud
 	pic bt_right_fm3
 	{
 		image	hud/firemode
-		pos		"100 400"
+		pos		"164 384"
 		texl	"0 0"
 		texh	"255 63"
 		mousefx	false
@@ -902,20 +902,31 @@ menu hud
 		click	{ cmd "fireweap r 3;" }
 	}
 
-	string left_fm_name0 { string "*cvar mn_l_fm_name0"	pos "782 596"	invis true }
-	string left_fm_name1 { string "*cvar mn_l_fm_name1"	pos "782 532"	invis true }
-	string left_fm_name2 { string "*cvar mn_l_fm_name2"	pos "782 468"	invis true }
-	string left_fm_name3 { string "*cvar mn_l_fm_name3"	pos "782 404"	invis true }
-	string right_fm_name0 { string "*cvar mn_r_fm_name0"	pos "132 596"	invis true }
-	string right_fm_name1 { string "*cvar mn_r_fm_name1"	pos "132 532"	invis true }
-	string right_fm_name2 { string "*cvar mn_r_fm_name2"	pos "132 468"	invis true }
-	string right_fm_name3 { string "*cvar mn_r_fm_name3"	pos "132 404"	invis true }
-	string left_fm_tu0 { string "*cvar mn_l_fm_tu0"	pos "782 628"	invis true }
-	string left_fm_tu1 { string "*cvar mn_l_fm_tu1"	pos "782 564"	invis true }
-	string left_fm_tu2 { string "*cvar mn_l_fm_tu2"	pos "782 501"	invis true }
-	string left_fm_tu3 { string "*cvar mn_l_fm_tu3"	pos "782 436"	invis true }
-	string right_fm_tu0 { string "*cvar mn_r_fm_tu0"	pos "132 628"	invis true }
-	string right_fm_tu1 { string "*cvar mn_r_fm_tu1"	pos "132 564"	invis true }
-	string right_fm_tu2 { string "*cvar mn_r_fm_tu2"	pos "132 501"	invis true }
-	string right_fm_tu3 { string "*cvar mn_r_fm_tu3"	pos "132 436"	invis true }
+	string left_fm_name0 { string "*cvar mn_l_fm_name0"	pos "654 582"	invis true }
+	string left_fm_name1 { string "*cvar mn_l_fm_name1"	pos "654 518"	invis true }
+	string left_fm_name2 { string "*cvar mn_l_fm_name2"	pos "654 454"	invis true }
+	string left_fm_name3 { string "*cvar mn_l_fm_name3"	pos "654 390"	invis true }
+	string right_fm_name0 { string "*cvar mn_r_fm_name0"	pos "196 582"	invis true }
+	string right_fm_name1 { string "*cvar mn_r_fm_name1"	pos "196 518"	invis true }
+	string right_fm_name2 { string "*cvar mn_r_fm_name2"	pos "196 454"	invis true }
+	string right_fm_name3 { string "*cvar mn_r_fm_name3"	pos "196 390"	invis true }
+
+	// TODO: implement tooltips for strings.
+	string left_fm_tu0 { string "*cvar mn_l_fm_tu0"	pos "654 614"	invis true }	//tooltip "*cvar mn_l_fm_tt_tu0"
+	string left_fm_tu1 { string "*cvar mn_l_fm_tu1"	pos "654 550"	invis true }	//tooltip "*cvar mn_l_fm_tt_tu1"
+	string left_fm_tu2 { string "*cvar mn_l_fm_tu2"	pos "654 486"	invis true }	//tooltip "*cvar mn_l_fm_tt_tu2"
+	string left_fm_tu3 { string "*cvar mn_l_fm_tu3"	pos "654 422"	invis true }	//tooltip "*cvar mn_l_fm_tt_tu3"
+	string right_fm_tu0 { string "*cvar mn_r_fm_tu0"	pos "196 614"	invis true }	//tooltip "*cvar mn_r_fm_tt_tu0"
+	string right_fm_tu1 { string "*cvar mn_r_fm_tu1"	pos "196 550"	invis true }	//tooltip "*cvar mn_r_fm_tt_tu1"
+	string right_fm_tu2 { string "*cvar mn_r_fm_tu2"	pos "196 486"	invis true }	//tooltip "*cvar mn_r_fm_tt_tu2"
+	string right_fm_tu3 { string "*cvar mn_r_fm_tu3"	pos "196 422"	invis true }	//tooltip "*cvar mn_r_fm_tt_tu3"
+
+	string left_fm_shot0 { string "*cvar mn_l_fm_shot0"	pos "728 614"	invis true }
+	string left_fm_shot1 { string "*cvar mn_l_fm_shot1"	pos "728 550"	invis true }
+	string left_fm_shot2 { string "*cvar mn_l_fm_shot2"	pos "728 486"	invis true }
+	string left_fm_shot3 { string "*cvar mn_l_fm_shot3"	pos "728 422"	invis true }
+	string right_fm_shot0 { string "*cvar mn_r_fm_shot0"	pos "270 614"	invis true }
+	string right_fm_shot1 { string "*cvar mn_r_fm_shot1"	pos "270 550"	invis true }
+	string right_fm_shot2 { string "*cvar mn_r_fm_shot2"	pos "270 486"	invis true }
+	string right_fm_shot3 { string "*cvar mn_r_fm_shot3"	pos "270 422"	invis true }
 }
