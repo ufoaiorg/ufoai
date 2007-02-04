@@ -498,60 +498,6 @@ invList_t* CL_GetLeftHandWeapon (le_t *actor)
 	return weapon;
 }
 
-#if 0 /* Replaced with CL_FireWeapon */
-/**
- * @brief Shoot right weapon in primary fire mode.
- */
-void CL_FireRightPrimary (void)
-{
-	if (!selActor || !CL_CheckMenuAction(selActor->TU, RIGHT(selActor), FD_PRIMARY))
-		return;
-	if (cl.cmode == M_FIRE_PR)
-		cl.cmode = M_MOVE;
-	else
-		cl.cmode = M_FIRE_PR;
-}
-
-/**
- * @brief Shoot right weapon in secondary fire mode.
- */
-void CL_FireRightSecondary (void)
-{
-	if (!selActor || !CL_CheckMenuAction(selActor->TU, RIGHT(selActor), FD_SECONDARY))
-		return;
-	if (cl.cmode == M_FIRE_SR)
-		cl.cmode = M_MOVE;
-	else
-		cl.cmode = M_FIRE_SR;
-}
-
-/**
- * @brief Shoot left weapon in primary fire mode.
- */
-void CL_FireLeftPrimary (void)
-{
-	if (!selActor || !CL_CheckMenuAction(selActor->TU, CL_GetLeftHandWeapon(selActor), FD_PRIMARY))
-		return;
-	if (cl.cmode == M_FIRE_PL)
-		cl.cmode = M_MOVE;
-	else
-		cl.cmode = M_FIRE_PL;
-}
-
-/**
- * @brief Shoot left weapon in secondary fire mode.
- */
-void CL_FireLeftSecondary (void)
-{
-	if (!selActor || !CL_CheckMenuAction(selActor->TU, CL_GetLeftHandWeapon(selActor), FD_SECONDARY))
-		return;
-	if (cl.cmode == M_FIRE_SL)
-		cl.cmode = M_MOVE;
-	else
-		cl.cmode = M_FIRE_SL;
-}
-#endif
-
 /**
  * @brief
  */
@@ -795,10 +741,11 @@ void CL_InitInput(void)
 	Cmd_AddCommand("firers", CL_FireRightSecondary, NULL);
 	Cmd_AddCommand("firelp", CL_FireLeftPrimary, NULL);
 	Cmd_AddCommand("firels", CL_FireLeftSecondary, NULL);
-	/* TODO: Replace the above with the following */
+	/* TODO: The fireweap entry below replaces these 4. Please leave this in until all hud files (esp. althud) are converted to the new firemode lists. */
 #endif
 	Cmd_AddCommand("list_firemodes", CL_DisplayFiremodes, "Display a list of firemodes for a weapon+ammo.");
 	Cmd_AddCommand("fireweap", CL_FireWeapon, "Start aiming the weapon.");
+	Cmd_AddCommand("sel_reactmode", CL_SelectReactionFiremode, "Change/Select firemode used for reaction fire.");
 
 	Cmd_AddCommand("reloadleft", CL_ReloadLeft, NULL);
 	Cmd_AddCommand("reloadright", CL_ReloadRight, NULL);

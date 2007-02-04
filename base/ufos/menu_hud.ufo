@@ -770,7 +770,7 @@ menu hud
 	//  FIREMODES (seperate lists for each weaponhand)
 	// ==================
 
-	/* Firemode console functions */
+	/* Firemode console functions ===================================*/
 	// confunc set_all_inv { cmd "set_left_inv0;set_left_inv1;set_left_inv2;set_left_inv3;set_right_inv0;set_right_inv1;set_right_inv2;set_right_inv3;"}
 	
 	confunc set_left_ina0 { *bt_left_fm0	texl "0 64"	*bt_left_fm0 texh "255 128" }
@@ -810,7 +810,7 @@ menu hud
 	confunc set_right_vis3 { *bt_right_fm3 invis false	*right_fm_name3 invis false *right_fm_tu3 invis false	*right_fm_shot3 invis false }
 
 
-	/* Firemode images */
+	/* Firemode images ===================================*/
 	/*
 		Some helpful info:
 		hud/firemode (active)	->	texl "0 0"	texh "255 63"
@@ -905,7 +905,111 @@ menu hud
 		click	{ cmd "fireweap r 3;" }
 	}
 
-	/* Firemode text
+	/* Firemode checkbox images ===================================*/
+	/*
+		Some helpful info:
+		hud/fm_checkbox (active)	->	texl "0 0"	texh "255 63" //TODO
+		hud/fm_checkbox (inactive)	->	texl "0 64"	texh "255 128" //TODO
+	*/
+	/*
+	pic bt_left_cb0
+	{
+		image	hud/fm_checkbox
+		tooltip	"_Check to use this firemode for reaction fire."
+		pos		"622 576"
+		texl	"0 0"
+		texh	"255  63"
+		mousefx	false
+		invis true
+		click	{ cmd "sel_reactmode l 0;" }
+	}
+
+	pic bt_left_cb1
+	{
+		image	hud/fm_checkbox
+		tooltip	"_Check to use this firemode for reaction fire."
+		pos		"622 512"
+		texl	"0 0"
+		texh	"255 63"
+		mousefx	false
+		invis true
+		click	{ cmd "sel_reactmode l 1;" }
+	}
+
+	pic bt_left_cb2
+	{
+		image	hud/fm_checkbox
+		tooltip	"_Check to use this firemode for reaction fire."
+		pos		"622 448"
+		texl	"0 0"
+		texh	"255 63"
+		mousefx	false
+		invis true
+		click	{ cmd "sel_reactmode l 2;" }
+	}
+
+	pic bt_left_cb3
+	{
+		image	hud/fm_checkbox
+		tooltip	"_Check to use this firemode for reaction fire."
+		pos		"622 384"
+		texl	"0 0"
+		texh	"255 63"
+		mousefx	false
+		invis true
+		click	{ cmd "sel_reactmode l 3;" }
+	}
+
+
+	pic bt_right_cb0
+	{
+		image	hud/fm_checkbox
+		tooltip	"_Check to use this firemode for reaction fire."
+		pos		"164 576"
+		texl	"0 0"
+		texh	"255 63"
+		mousefx	false
+		invis true
+		click	{ cmd "sel_reactmode r 0;" }
+	}
+
+	pic bt_right_cb1
+	{
+		image	hud/fm_checkbox
+		tooltip	"_Check to use this firemode for reaction fire."
+		pos		"164 512"
+		texl	"0 0"
+		texh	"255 63"
+		mousefx	false
+		invis true
+		click	{ cmd "sel_reactmode r 1;" }
+	}
+
+	pic bt_right_cb2
+	{
+		image	hud/fm_checkbox
+		tooltip	"_Check to use this firemode for reaction fire."
+		pos		"164 448"
+		texl	"0 0"
+		texh	"255 63"
+		mousefx	false
+		invis true
+		click	{ cmd "sel_reactmode r 2;" }
+	}
+
+	pic bt_right_cb3
+	{
+		image	hud/fm_checkbox
+		tooltip	"_Check to use this firemode for reaction fire."
+		pos		"164 384"
+		texl	"0 0"
+		texh	"255 63"
+		mousefx	false
+		invis true
+		click	{ cmd "sel_reactmode r 3;" }
+	}
+	*/
+	/* Firemode text ===================================
 		fm	... firemode
 		left/right/l/r  ... The hand/side of the firemode list 
 		name ... The name of the firemode.

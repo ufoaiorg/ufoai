@@ -87,6 +87,7 @@ static const value_t fdps[] = {
 	{"gravity", V_BOOL, offsetof(fireDef_t, gravity)},
 	{"launched", V_BOOL, offsetof(fireDef_t, launched)},
 	{"rolled", V_BOOL, offsetof(fireDef_t, rolled)},
+	{"reaction", V_BOOL, offsetof(fireDef_t, reaction)},
 	{"delay", V_INT, offsetof(fireDef_t, delay)},
 	{"bounce", V_INT, offsetof(fireDef_t, bounce)},
 	{"bncfac", V_FLOAT, offsetof(fireDef_t, bounceFac)},

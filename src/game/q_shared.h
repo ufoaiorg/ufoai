@@ -935,16 +935,17 @@ typedef struct fireDef_s {
 	int fd_idx;		/**< Self link of the fd in the objDef_t->fd[][fd_idx] array. */
 
 	byte soundOnce;
-	byte gravity;			/**< does gravity has any influence on this */
+	byte gravity;			/**< Does gravity has any influence on this item? */
 	byte launched;
-	byte rolled;			/**< can it be rolled - e.g. grenades */
+	byte rolled;			/**< Can it be rolled - e.g. grenades */
+	byte reaction;			/**< This firemode can be used/selected for reaction fire.*/
 	byte dmgtype;
 	float speed;
 	vec2_t shotOrg;
 	vec2_t spread;
 	float modif;
 	int delay;
-	int bounce;				/**< is this bouncing? e.g. grenades */
+	int bounce;				/**< Is this item bouncing? e.g. grenades */
 	float bounceFac;
 	float crouch;
 	float range;
@@ -954,8 +955,8 @@ typedef struct fireDef_s {
 	int time;
 	vec2_t damage, spldmg;
 	float splrad;
-	int weaponSkill;		/**< what weapon skill is needed to fire this weapon */
-	int irgoggles;			/**< is this an irgoogles */
+	int weaponSkill;		/**< What weapon skill is needed to fire this weapon. */
+	int irgoggles;			/**< Is this an irgoogle? */
 } fireDef_t;
 
 /**

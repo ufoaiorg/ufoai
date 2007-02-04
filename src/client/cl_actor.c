@@ -37,6 +37,13 @@ invList_t invList[MAX_INVLIST];
 qboolean visible_firemode_list_left = qfalse;
 qboolean visible_firemode_list_right = qfalse;
 
+int REACTION_FIREMODE[MAX_EDICTS][2][2];	/* Per actor: Stores the firemode to be used for reaction fire (if the fireDef allows that)
+									 * 1. sub-array	0 right hand
+									 *			1 left hand
+									 * 2. sub-array	0 stores the firemode
+									 *			1 stores the weapon idx in ods.
+									 * Max. number is MAX_FIREDEFS_PER_WEAPON */
+
 static le_t *mouseActor;
 static pos3_t mouseLastPos;
 static pos3_t mousePendPos; /* for double-click movement ... */
@@ -530,7 +537,7 @@ void CL_DisplayFiremodes (void)
 
 	if (hand[0] == 'r') {
 		if (visible_firemode_list_right == qtrue) {
-			HideFiremodes();
+			HideFiremodes(); /* Modifies visible_firemode_list_xxxx */
 			return;
 		} else {
 			HideFiremodes();
@@ -539,17 +546,19 @@ void CL_DisplayFiremodes (void)
 		}
 	} else  { /* 'l' */
 		if (visible_firemode_list_left == qtrue) {
-			HideFiremodes();
+			HideFiremodes(); /* Modifies visible_firemode_list_xxxx */
 			return;
 		} else {
-			HideFiremodes();
+			HideFiremodes(); /* Modifies visible_firemode_list_xxxx */
 			visible_firemode_list_left = qtrue;
 			visible_firemode_list_right = qfalse;
 		}
 	}
-	 /* Modifies visible_firemode_list_xxxx */
 
+	/* TODO: Check if REACTION_FIREMODE is up to date with the weapon other wise set it to default for the current one. Just in case. */
+	
 	for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
+		/* TODO: display REACTION_FIREMODE stuff here as well.*/
 		if ( i < ammo->numFiredefs[weap_fd_idx] ) { /* We have a defined fd */
 			if ( ammo->fd[weap_fd_idx][i].time <= selActor->TU ) {  /* Enough timeunits for this firemode?*/
 				DisplayFiremodeEntry(&ammo->fd[weap_fd_idx][i], hand[0], 1);
@@ -563,6 +572,86 @@ void CL_DisplayFiremodes (void)
 				Cbuf_AddText(va("set_left_inv%i\n", i)); /* Hide this entry */
 		}
 	}
+}
+
+/**
+ * @brief Updates the information in REACTION_FIREMODE for the selected actor with the given data from the parameters.
+ * @param[in] hand Which weapon(-hand) to use (l|r).
+ * @param[in] active Set this to the firemode index you want to activate or set it to -1 if the default one (currently the first one found) should be used.
+ */
+static void CL_UpdateReactionFiremodes (char hand, int actor_idx, int active)
+{
+	objDef_t *weapon = NULL;
+	objDef_t *ammo = NULL;
+	int weap_fd_idx;
+	int i;
+
+	int handidx = (hand=='r') ? 0 : 1;
+
+	if (!selActor)
+		return;
+	
+	CL_GetWeaponAndAmmo(hand, &weapon, &ammo, &weap_fd_idx);
+	
+	if ( REACTION_FIREMODE[actor_idx][handidx][1] == ammo->weap_idx[weap_fd_idx] ) {
+		if  ( ammo->fd[weap_fd_idx][active].reaction ) {
+			if ( REACTION_FIREMODE[actor_idx][handidx][0] == active )
+				/* Weapon is the same, firemode is already selected and reaction-usable. Nothing to do. */
+				return;
+		} else {
+			/* Weapon is the same and firemode is not reaction-usable*/
+			return;
+		}
+	}
+	
+	REACTION_FIREMODE[actor_idx][handidx][0] = -1;
+	REACTION_FIREMODE[actor_idx][handidx][1] = -1;
+	for (i = 0; i < ammo->numFiredefs[weap_fd_idx]; i++) {
+		if (ammo->fd[weap_fd_idx][i].reaction) {
+			if (active<0 || (i == active) ) {
+				REACTION_FIREMODE[actor_idx][handidx][0] = i;
+				REACTION_FIREMODE[actor_idx][handidx][1] = ammo->weap_idx[weap_fd_idx];
+				break;
+			}
+		}
+	}
+}
+
+/**
+ * @brief Checks if the selected firemode checkbox is ok as a reaction firemode and updates data+display.
+ */
+void CL_SelectReactionFiremode (void)
+{
+	char *hand;
+	int firemode;
+	int actor_idx = -1;
+
+	if (Cmd_Argc() < 3) { /* no argument given */
+		Com_Printf("Usage: sel_reactmode [l|r] <num>   num=firemode number\n");
+		return;
+	}
+
+	hand = Cmd_Argv(1);
+
+	if (hand[0] != 'r' && hand[0] != 'l') {
+		Com_Printf("Usage: sel_reactmode [l|r] <num>   num=firemode number\n");
+		return;
+	}
+
+	if (!selActor)
+		return;
+	
+	for (actor_idx = 0; actor_idx < cl.numTeamList; actor_idx++) {
+		if (cl.teamList[actor_idx] == selActor)
+			break;
+	}
+	
+	firemode = atoi(Cmd_Argv(2));
+	
+	CL_UpdateReactionFiremodes(hand[0], actor_idx, firemode);
+	
+	/* TODO: Update display of firemode cvheckbuttons. */
+	
 }
 
 
