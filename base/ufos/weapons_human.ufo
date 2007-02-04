@@ -729,7 +729,7 @@ item shotgun_micro_ammo
 	price		35
 	buytype		1
 
-	weapon_mod shotgun_micro
+	weapon_mod shotgun_micro	// weap_fds_idx=0
 	{
 		firedef 
 		{
@@ -774,7 +774,7 @@ item shotgun_micro_ammo
 		}
 	}
 
-	weapon_mod shotgun2
+	weapon_mod shotgun2 // weap_fds_idx=1
 	{
 		firedef 
 		{

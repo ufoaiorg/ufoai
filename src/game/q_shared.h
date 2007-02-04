@@ -911,7 +911,7 @@ extern const char *pa_format[128];
 /* #define GET_FIREDEF(type)   (&csi.ods[type & 0x7F].fd[0][!!(type & 0x80)]) TODO remove me */
 /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
 
-#define GET_FIREDEF(obj_idx,weap_idx,fd_idx)   (&csi.ods[obj_idx].fd[weap_idx][fd_idx])
+#define GET_FIREDEF(obj_idx,weap_fds_idx,fd_idx)   (&csi.ods[obj_idx].fd[weap_fds_idx][fd_idx])
 
 /** this is a fire definition for our weapons/ammo */
 typedef struct fireDef_s {
@@ -923,12 +923,17 @@ typedef struct fireDef_s {
 	char impactSound[MAX_VAR];	/**< the sound that is played on impact */
 	char hitBodySound[MAX_VAR];
 	char bounceSound[MAX_VAR];	/**< bouncing sound */
-
-	/* These values are created in Com_ParseItem and Com_AddObjectLinks. They are used for self-referencing the firedef. */
-	int obj_idx;			/**< The weapon/ammo (csi.ods[obj_idx]) this fd is located in. */
-	byte weap_idx;			/**< The weapon_mod entry (objDef_t->fd[weap_idx]) this fd is located in. */
-	byte fd_idx;			/**< Self link of the fd in the objDef_t->fd[][fd_idx] array. */
-
+	
+	/* These values are created in Com_ParseItem and Com_AddObjectLinks.
+	 * They are used for self-referencing the firedef. */
+	int obj_idx;		/**< The weapon/ammo (csi.ods[obj_idx]) this fd is located in.
+					 ** So you can get the containing object by acceessing e.g. csi.ods[obj_idx]. */
+	byte weap_fds_idx;	/**< The index of the "weapon_mod" entry (objDef_t->fd[weap_fds_idx]) this fd is located in.
+					 ** Depending on this value you can find out via objDef_t->weap_idx[weap_fds_idx] what weapon this firemode is used for.
+					 ** This does _NOT_ equal the index of the weapon object in ods.
+					 */
+	byte fd_idx;		/**< Self link of the fd in the objDef_t->fd[][fd_idx] array. */
+	
 	byte soundOnce;
 	byte gravity;			/**< does gravity has any influence on this */
 	byte launched;
@@ -985,10 +990,15 @@ typedef struct objDef_s {
 	/* Weapon specific */
 	int ammo;			/**< how much can we load into this weapon at once */
 	int reload;			/**< time units for reloading the weapon */
-	fireDef_t fd[MAX_WEAPONS_PER_OBJDEF][MAX_FIREDEFS_PER_WEAPON];	/**< List of firemodes per weapon. */
-	byte numFiredefs[MAX_WEAPONS_PER_OBJDEF];	/**< Numnber of firemodes per weapon. */
-	char weap_id[MAX_WEAPONS_PER_OBJDEF][MAX_VAR];	/**< List of weapon ids */
-	int weap_idx[MAX_WEAPONS_PER_OBJDEF];		/**< List of weapon indices (bascially replaces forWeapon if done correctly) */
+	
+	/* Firemodes (per weapon) */
+	char weap_id[MAX_WEAPONS_PER_OBJDEF][MAX_VAR];	/**< List of weapon ids as parsed from the ufo file "weapon_mod <id>" */
+	int weap_idx[MAX_WEAPONS_PER_OBJDEF];			/**< List of weapon-object indices. The index of the weapon in csi.ods[xxx].
+												 ** You can get the correct index for this array from e.g. fireDef_t.weap_fds_idx. or with INV_FiredefsIDXForWeapon. */
+	fireDef_t fd[MAX_WEAPONS_PER_OBJDEF][MAX_FIREDEFS_PER_WEAPON];	/**< List of firemodes per weapon (the ammo can be used in). */
+	byte numFiredefs[MAX_WEAPONS_PER_OBJDEF];	/**< Number of firemodes per weapon. (How many of hte firemodes-per-weapons list is used.) */
+	
+	
 	byte numWeapons;				/**< Number of weapons. */
 
 	/* Technology link */

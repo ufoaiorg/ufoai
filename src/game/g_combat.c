@@ -566,7 +566,7 @@ static void G_ShootGrenade (player_t * player, edict_t * ent, fireDef_t * fd, ve
 					gi.AddEvent(G_VisToPM(mask), EV_ACTOR_THROW);
 					gi.WriteShort(dt * 1000);
 					gi.WriteShort(fd->obj_idx);
-					gi.WriteByte(fd->weap_idx);
+					gi.WriteByte(fd->weap_fds_idx);
 					gi.WriteByte(fd->fd_idx);
 					if (tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_UGV))
 						gi.WriteByte(flags | SF_BODY);
@@ -623,7 +623,7 @@ static void G_ShootGrenade (player_t * player, edict_t * ent, fireDef_t * fd, ve
 				gi.AddEvent(G_VisToPM(mask), EV_ACTOR_THROW);
 				gi.WriteShort(dt * 1000);
 				gi.WriteShort(fd->obj_idx);
-				gi.WriteByte(fd->weap_idx);
+				gi.WriteByte(fd->weap_fds_idx);
 				gi.WriteByte(fd->fd_idx);
 				gi.WriteByte(flags);
 				gi.WritePos(last);
@@ -748,23 +748,25 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 
 		if (!mock) {
 			/* send shot */
-			gi.dprintf("G_ShootSingle: %i %i %i DEBUG\n", fd->obj_idx, fd->weap_idx, fd->fd_idx);
+			gi.dprintf("G_ShootSingle: %i %i %i DEBUG\n", fd->obj_idx, fd->weap_fds_idx, fd->fd_idx);
 			gi.AddEvent(G_VisToPM(mask), EV_ACTOR_SHOOT);
 			gi.WriteShort(ent->number);
 			gi.WriteShort(fd->obj_idx);
-			gi.WriteByte(fd->weap_idx);
+			gi.WriteByte(fd->weap_fds_idx);
 			gi.WriteByte(fd->fd_idx);
 			gi.WriteByte(flags);
 			gi.WritePos(cur_loc);
 			gi.WritePos(impact);
 			gi.WriteDir(tr.plane.normal);
+			gi.EndEvents();
 
 			/* send shot sound to the others */
 			gi.AddEvent(~G_VisToPM(mask), EV_ACTOR_SHOOT_HIDDEN);
 			gi.WriteByte(qfalse);
 			gi.WriteShort(fd->obj_idx);
-			gi.WriteByte(fd->weap_idx);
+			gi.WriteByte(fd->weap_fds_idx);
 			gi.WriteByte(fd->fd_idx);
+			gi.EndEvents();
 		}
 
 		/* do splash damage */
@@ -914,7 +916,7 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type, byte fi
 		return qfalse;
 	}
 	gi.dprintf("G_ClientShoot: %i DEBUG weapon: '%s'\n", firemode, gi.csi->ods[weapon->t].name);
-	gi.dprintf("G_ClientShoot: ('%s') %i %i %i DEBUG\n", fd->name, fd->obj_idx, fd->weap_idx, fd->fd_idx);
+	gi.dprintf("G_ClientShoot: ('%s') %i %i %i DEBUG\n", fd->name, fd->obj_idx, fd->weap_fds_idx, fd->fd_idx);
 
 	ammo = weapon->a;
 	reaction_leftover = IS_SHOT_REACTION(type) ? sv_reaction_leftover->value : 0;
@@ -989,7 +991,7 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type, byte fi
 		gi.AddEvent(G_VisToPM(mask), EV_ACTOR_START_SHOOT);
 		gi.WriteShort(ent->number);
 		gi.WriteShort(fd->obj_idx);
-		gi.WriteByte(fd->weap_idx);
+		gi.WriteByte(fd->weap_fds_idx);
 		gi.WriteByte(fd->fd_idx);
 		gi.WriteGPos(ent->pos);
 		gi.WriteGPos(at);
@@ -998,7 +1000,7 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type, byte fi
 		gi.AddEvent(~G_VisToPM(mask), EV_ACTOR_SHOOT_HIDDEN);
 		gi.WriteByte(qtrue);
 		gi.WriteShort(fd->obj_idx);
-		gi.WriteByte(fd->weap_idx);
+		gi.WriteByte(fd->weap_fds_idx);
 		gi.WriteByte(fd->fd_idx);
 
 		/* ammo... */

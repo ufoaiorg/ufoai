@@ -1333,7 +1333,6 @@ extern void CL_ActorStartMove (le_t * le, pos3_t to)
 void CL_ActorShoot (le_t * le, pos3_t at)
 {
 	byte type;
-
 	if (!CL_CheckAction())
 		return;
 
@@ -1590,18 +1589,18 @@ void CL_ActorDoShoot (sizebuf_t * sb)
 	vec3_t muzzle, impact;
 	int flags, normal, number;
 	int obj_idx;
-	byte weap_idx, fd_idx;
+	byte weap_fds_idx, fd_idx;
 
 	/* read data */
-	MSG_ReadFormat(sb, ev_format[EV_ACTOR_SHOOT], &number, &obj_idx, &weap_idx, &fd_idx, &flags, &muzzle, &impact, &normal);
+	MSG_ReadFormat(sb, ev_format[EV_ACTOR_SHOOT], &number, &obj_idx, &weap_fds_idx, &fd_idx, &flags, &muzzle, &impact, &normal);
 
 	/* get le */
 	le = LE_Get(number);
 
 	/* get the fire def */
-	Com_Printf( "CL_ActorDoShoot: %i %i %i DEBUG\n",obj_idx,weap_idx,fd_idx );
-	fd = GET_FIREDEF(obj_idx,weap_idx,fd_idx);
-	Com_Printf( "CL_ActorDoShoot: %i %i %i DEBUG\n",fd->obj_idx,fd->weap_idx,fd->fd_idx );
+	Com_Printf( "CL_ActorDoShoot: %i %i %i DEBUG\n",obj_idx,weap_fds_idx,fd_idx );
+	fd = GET_FIREDEF(obj_idx, weap_fds_idx, fd_idx);
+	Com_Printf( "CL_ActorDoShoot: %i %i %i DEBUG\n",fd->obj_idx,fd->weap_fds_idx,fd->fd_idx );
 
 	/* add effect le */
 	LE_AddProjectile(fd, flags, muzzle, impact, normal);
@@ -1652,12 +1651,12 @@ void CL_ActorShootHidden (sizebuf_t *sb)
 	fireDef_t	*fd;
 	qboolean	first;
 	int obj_idx;
-	byte weap_idx,fd_idx;
+	byte weap_fds_idx, fd_idx;
 
-	MSG_ReadFormat(sb, ev_format[EV_ACTOR_SHOOT_HIDDEN], &first, &obj_idx, &weap_idx, &fd_idx);
+	MSG_ReadFormat(sb, ev_format[EV_ACTOR_SHOOT_HIDDEN], &first, &obj_idx, &weap_fds_idx, &fd_idx);
 
 	/* get the fire def */
-	fd = GET_FIREDEF(obj_idx,weap_idx,fd_idx);
+	fd = GET_FIREDEF(obj_idx, weap_fds_idx, fd_idx);
 
 	/* start the sound; TODO: is check for SF_BOUNCED needed? */
 	if ( ((first && fd->soundOnce) || (!first && !fd->soundOnce)) && fd->fireSound[0] )
@@ -1679,14 +1678,13 @@ void CL_ActorDoThrow (sizebuf_t * sb)
 	int flags;
 	int dtime;
 	int obj_idx;
-	byte weap_idx,fd_idx;
+	byte weap_fds_idx, fd_idx;
 
 	/* read data */
-	MSG_ReadFormat(sb, ev_format[EV_ACTOR_THROW], &dtime, &obj_idx, &weap_idx, &fd_idx, &flags, &muzzle, &v0);
+	MSG_ReadFormat(sb, ev_format[EV_ACTOR_THROW], &dtime, &obj_idx, &weap_fds_idx, &fd_idx, &flags, &muzzle, &v0);
 
 	/* get the fire def */
-	fd = GET_FIREDEF(obj_idx,weap_idx,fd_idx);
-	Com_Printf("firedef: '%s'\n", fd->name);
+	fd = GET_FIREDEF(obj_idx, weap_fds_idx, fd_idx);
 
 	/* add effect le (local entity) */
 	LE_AddGrenade(fd, flags, muzzle, v0, dtime);
@@ -1713,11 +1711,11 @@ void CL_ActorStartShoot (sizebuf_t * sb)
 	pos3_t from, target;
 	int number;
 	int obj_idx;
-	byte weap_idx,fd_idx;
+	byte weap_fds_idx,fd_idx;
 
-	MSG_ReadFormat(sb, ev_format[EV_ACTOR_START_SHOOT], &number, &obj_idx, &weap_idx, &fd_idx, &from, &target);
+	MSG_ReadFormat(sb, ev_format[EV_ACTOR_START_SHOOT], &number, &obj_idx, &weap_fds_idx, &fd_idx, &from, &target);
 
-	fd = GET_FIREDEF(obj_idx,weap_idx,fd_idx);
+	fd = GET_FIREDEF(obj_idx, weap_fds_idx, fd_idx);
 
 	le = LE_Get(number);
 

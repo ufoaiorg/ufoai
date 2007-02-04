@@ -225,7 +225,7 @@ static void Com_ParseItem (char *name, char **text)
 	objDef_t *od;
 	char *token;
 	int i;
-	byte weap_idx, fd_idx;
+	byte weap_fds_idx, fd_idx;
 
 	/* search for menus with same name */
 	for (i = 0; i < csi.numODs; i++)
@@ -289,7 +289,7 @@ static void Com_ParseItem (char *name, char **text)
 						}
 
 						if (od->numWeapons < MAX_WEAPONS_PER_OBJDEF) {
-							weap_idx = od->numWeapons;
+							weap_fds_idx = od->numWeapons;
 							/* For parse each firedef entry for this weapon.  */
 							do {
 								token = COM_EParse(text, errhead, name);
@@ -299,14 +299,14 @@ static void Com_ParseItem (char *name, char **text)
 									break;
 
 								if (!Q_strncmp(token, "firedef", MAX_VAR)) {
-									if (od->numFiredefs[weap_idx] < MAX_FIREDEFS_PER_WEAPON) {
-										fd_idx = od->numFiredefs[weap_idx] ;
+									if (od->numFiredefs[weap_fds_idx] < MAX_FIREDEFS_PER_WEAPON) {
+										fd_idx = od->numFiredefs[weap_fds_idx] ;
 										/* Parse firemode into fd[IDXweapon][IDXfiremode] */
-										Com_ParseFire(name, text, &od->fd[weap_idx][fd_idx]);
+										Com_ParseFire(name, text, &od->fd[weap_fds_idx][fd_idx]);
 										/* Self-link fd */
-										od->fd[weap_idx][fd_idx].fd_idx = fd_idx;
+										od->fd[weap_fds_idx][fd_idx].fd_idx = fd_idx;
 										/* Self-link weapn_mod */
-										od->fd[weap_idx][fd_idx].weap_idx = weap_idx;
+										od->fd[weap_fds_idx][fd_idx].weap_fds_idx = weap_fds_idx;
 										od->numFiredefs[od->numWeapons]++;
 									} else {
 										Com_Printf("Com_ParseItem: Too many firedefs at \"%s\". Max is %i\n", name, MAX_FIREDEFS_PER_WEAPON);
