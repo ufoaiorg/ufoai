@@ -2066,8 +2066,8 @@ tech rs_craft_ufo_harvester
 //========================
 
 // BLOODSPIDER
-
-tech rs_alien_bloodspider_live // THIS IS NEEDED?
+/* Is this needed?
+tech rs_alien_bloodspider_live 
 {
 	type	alien
 	name	"_Live Specimen - Bloodspider"
@@ -2080,6 +2080,7 @@ tech rs_alien_bloodspider_live // THIS IS NEEDED?
 
 	mdl_top	"aliens/bloodspider/bloodspider"
 }
+*/
 
 tech rs_alien_bloodspider_autopsy
 {
@@ -2091,8 +2092,7 @@ tech rs_alien_bloodspider_autopsy
 
 	require_AND
 	{
-		//TODO
-//		alien_dead Bloodspider 1
+		alien_dead Bloodspider 1
 	}
 	time	1500
 
