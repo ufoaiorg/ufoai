@@ -2092,7 +2092,8 @@ tech rs_alien_bloodspider_autopsy
 
 	require_AND
 	{
-		alien_dead Bloodspider 1
+		//TODO
+//		alien_dead Bloodspider 1
 	}
 	time	1500
 
