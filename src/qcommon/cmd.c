@@ -102,7 +102,7 @@ static char defer_text_buf[8192];
  * @brief
  * @note The initial buffer will grow as needed.
  */
-void Cbuf_Init(void)
+void Cbuf_Init (void)
 {
 	SZ_Init(&cmd_text, cmd_text_buf, sizeof(cmd_text_buf));
 }
@@ -111,7 +111,7 @@ void Cbuf_Init(void)
  * @brief Adds command text at the end of the buffer
  * @note Normally when a command is generate from the console or keybinings, it will be added to the end of the command buffer.
  */
-void Cbuf_AddText(const char *text)
+void Cbuf_AddText (const char *text)
 {
 	int l;
 	char *cmdopen;
@@ -138,7 +138,7 @@ void Cbuf_AddText(const char *text)
  * @note Adds a \n to the text
  * FIXME: actually change the command buffer to do less copying
  */
-void Cbuf_InsertText(const char *text)
+void Cbuf_InsertText (const char *text)
 {
 	char *temp;
 	int templen;
@@ -169,7 +169,7 @@ void Cbuf_InsertText(const char *text)
  * Used when loading a map, for example.
  * Copies then clears the command buffer to a temporary area.
  */
-void Cbuf_CopyToDefer(void)
+void Cbuf_CopyToDefer (void)
 {
 	memcpy(defer_text_buf, cmd_text_buf, cmd_text.cursize);
 	defer_text_buf[cmd_text.cursize] = 0;
@@ -179,7 +179,7 @@ void Cbuf_CopyToDefer(void)
 /**
  * @brief Copies back any deferred commands.
  */
-void Cbuf_InsertFromDefer(void)
+void Cbuf_InsertFromDefer (void)
 {
 	Cbuf_InsertText(defer_text_buf);
 	defer_text_buf[0] = 0;
@@ -194,7 +194,7 @@ void Cbuf_InsertFromDefer(void)
  * @sa EXEC_INSERT
  * @sa EXEC_APPEND
  */
-void Cbuf_ExecuteText(int exec_when, char *text)
+void Cbuf_ExecuteText (int exec_when, char *text)
 {
 	switch (exec_when) {
 	case EXEC_NOW:
@@ -218,7 +218,7 @@ void Cbuf_ExecuteText(int exec_when, char *text)
  * Normally called once per frame, but may be explicitly invoked.
  * @note Do not call inside a command function!
  */
-void Cbuf_Execute(void)
+void Cbuf_Execute (void)
 {
 	unsigned int i;
 	char *text;
@@ -282,7 +282,7 @@ void Cbuf_Execute(void)
  * the client and server initialize for the first time.
  * Other commands are added late, after all initialization is complete.
  */
-void Cbuf_AddEarlyCommands(qboolean clear)
+void Cbuf_AddEarlyCommands (qboolean clear)
 {
 	int i;
 	char *s;
@@ -306,7 +306,7 @@ void Cbuf_AddEarlyCommands(qboolean clear)
  * @note Commands lead with a + and continue until another + or -
  * @return true if any late commands were added, which will keep the demoloop from immediately starting
  */
-qboolean Cbuf_AddLateCommands(void)
+qboolean Cbuf_AddLateCommands (void)
 {
 	int i, j;
 	int s;
@@ -371,7 +371,7 @@ SCRIPT COMMANDS
 /**
  * @brief
  */
-void Cmd_Exec_f(void)
+static void Cmd_Exec_f (void)
 {
 	char *f, *f2;
 	int len;
@@ -403,7 +403,7 @@ void Cmd_Exec_f(void)
 /**
  * @brief Just prints the rest of the line to the console
  */
-void Cmd_Echo_f(void)
+static void Cmd_Echo_f (void)
 {
 	int i;
 
@@ -415,7 +415,7 @@ void Cmd_Echo_f(void)
 /**
  * @brief Creates a new command that executes a command string (possibly ; seperated)
  */
-void Cmd_Alias_f(void)
+static void Cmd_Alias_f (void)
 {
 	cmd_alias_t *a;
 	char cmd[MAX_STRING_CHARS];
@@ -497,7 +497,7 @@ static cmd_function_t *cmd_functions_hash[CMD_HASH_SIZE];
  * @return the number of arguments
  * @sa Cmd_Argv
  */
-int Cmd_Argc(void)
+extern int Cmd_Argc (void)
 {
 	return cmd_argc;
 }
@@ -508,7 +508,7 @@ int Cmd_Argc(void)
  * @return the argument from cmd_argv
  * @sa Cmd_Argc
  */
-char *Cmd_Argv(int arg)
+extern char *Cmd_Argv (int arg)
 {
 	if (arg >= cmd_argc)
 		return cmd_null_string;
@@ -518,7 +518,7 @@ char *Cmd_Argv(int arg)
 /**
  * @brief Returns a single string containing argv(1) to argv(argc()-1)
  */
-char *Cmd_Args(void)
+extern char *Cmd_Args (void)
 {
 	return cmd_args;
 }
@@ -528,7 +528,7 @@ char *Cmd_Args(void)
  * @brief
  * @sa Cmd_TokenizeString
  */
-char *Cmd_MacroExpandString(char *text)
+static char *Cmd_MacroExpandString (char *text)
 {
 	int i, j, count, len;
 	qboolean inquote;
@@ -592,7 +592,7 @@ char *Cmd_MacroExpandString(char *text)
  * @brief Clears the argv vector and set argc to zero
  * @sa Cmd_TokenizeString
  */
-void Cmd_BufClear (void)
+extern void Cmd_BufClear (void)
 {
 	int i;
 
@@ -609,7 +609,7 @@ void Cmd_BufClear (void)
  * @note $Cvars will be expanded unless they are in a quoted token
  * @sa Cmd_MacroExpandString
  */
-void Cmd_TokenizeString(char *text, qboolean macroExpand)
+extern void Cmd_TokenizeString (char *text, qboolean macroExpand)
 {
 	char *com_token;
 
@@ -675,7 +675,7 @@ void Cmd_TokenizeString(char *text, qboolean macroExpand)
  * @note never returns a NULL pointer
  * @todo - search alias, too
  */
-char* Cmd_GetCommandDesc(const char* cmd_name)
+extern char* Cmd_GetCommandDesc (const char* cmd_name)
 {
 	cmd_function_t *cmd;
 	char *sep = NULL;
@@ -708,7 +708,7 @@ char* Cmd_GetCommandDesc(const char* cmd_name)
  * @param[in] function The function pointer
  * @sa Cmd_RemoveCommand
  */
-void Cmd_AddCommand(char *cmd_name, xcommand_t function, char *desc)
+extern void Cmd_AddCommand (char *cmd_name, xcommand_t function, char *desc)
 {
 	cmd_function_t *cmd;
 	unsigned int hash;
@@ -746,7 +746,7 @@ void Cmd_AddCommand(char *cmd_name, xcommand_t function, char *desc)
  * @param[in] cmd_name The script interface function name to remove
  * @sa Cmd_AddCommand
  */
-void Cmd_RemoveCommand(const char *cmd_name)
+extern void Cmd_RemoveCommand (const char *cmd_name)
 {
 	cmd_function_t *cmd, **back;
 	unsigned int hash;
@@ -786,7 +786,7 @@ void Cmd_RemoveCommand(const char *cmd_name)
  * @brief Checks whether a function exists already
  * @param[in] cmd_name The script interface function name to search for
  */
-qboolean Cmd_Exists(const char *cmd_name)
+extern qboolean Cmd_Exists (const char *cmd_name)
 {
 	cmd_function_t *cmd;
 	unsigned int hash;
@@ -806,7 +806,7 @@ qboolean Cmd_Exists(const char *cmd_name)
   * @sa Cvar_CompleteVariable
   * @sa Key_CompleteCommand
   */
-int Cmd_CompleteCommand(const char *partial, char **match)
+extern int Cmd_CompleteCommand (const char *partial, char **match)
 {
 	cmd_function_t *cmd;
 	cmd_alias_t *a;
@@ -846,7 +846,7 @@ int Cmd_CompleteCommand(const char *partial, char **match)
  * @brief A complete command line has been parsed, so try to execute it
  * FIXME: lookupnoadd the token to speed search?
  */
-void Cmd_ExecuteString (char *text)
+extern void Cmd_ExecuteString (char *text)
 {
 	cmd_function_t *cmd;
 	cmd_alias_t *a;
@@ -902,7 +902,7 @@ void Cmd_ExecuteString (char *text)
 /**
  * @brief List all available script interface functions
  */
-void Cmd_List_f(void)
+static void Cmd_List_f (void)
 {
 	cmd_function_t *cmd;
 	cmd_alias_t *alias;
@@ -940,7 +940,7 @@ void Cmd_List_f(void)
 /**
  * @brief
  */
-void Cmd_Init(void)
+extern void Cmd_Init (void)
 {
 	/* register our commands */
 	Cmd_AddCommand("cmdlist", Cmd_List_f, NULL);
