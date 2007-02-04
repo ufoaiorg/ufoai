@@ -454,7 +454,7 @@ static void DisplayFiremodeEntry (fireDef_t *fd, char hand, byte status)
 		Cvar_Set(va("mn_l_fm_tu%i", fd->fd_idx),va(_("TU: %i"),  fd->time));
 		Cvar_Set(va("mn_l_fm_shot%i", fd->fd_idx), va(_("Shots:%i"), fd->ammo));
 	} else {
-		Com_Printf("DisplayFiremodeEntry: Bad hand [l|r] defined: '%s'\n", hand);
+		Com_Printf("DisplayFiremodeEntry: Bad hand [l|r] defined: '%c'\n", hand);
 		return;
 	}
 }
