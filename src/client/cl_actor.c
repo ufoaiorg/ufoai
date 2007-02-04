@@ -90,7 +90,7 @@ ACTOR MENU UPDATING
  * @return skill string
  * @param[in] skill a skill value between 0 and MAX_SKILL (TODO: 0? never reached?)
  */
-static char *CL_GetSkillString(const int skill)
+static char *CL_GetSkillString (const int skill)
 {
 #ifdef DEBUG
 	if (skill > MAX_SKILL) {
@@ -334,6 +334,7 @@ static void ClearHighlights (void)
 		}
 }
 
+#if 0
 /**
  * @brief
  */
@@ -349,6 +350,7 @@ static void HighlightWeaponButton (int button)
 	Cbuf_AddText(cbufText);
 	weaponButtonState[button] = 2;
 }
+#endif
 
 /**
  * @brief
@@ -1335,7 +1337,7 @@ void CL_ActorShoot (le_t * le, pos3_t at)
 		return;
 
 	Com_Printf("CL_ActorShoot: cl.firemode %i.\n",  cl.cfiremode);
-	
+
 	/* TODO: Is there a better way to do this?
 	 * This type value will travel until it is checked in at least g_combat.c:G_GetShotFromType.
 	 */

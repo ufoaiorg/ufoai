@@ -1576,7 +1576,7 @@ static void CL_SwapSkills(character_t *team[], int num)
 				if (HOLSTER(cp1) && HOLSTER(cp1)->item.m != NONE && HOLSTER(cp1)->item.t != NONE)
 					weaponh_fd_idx = INV_FiredefsIDXForWeapon(&csi.ods[HOLSTER(cp1)->item.m], HOLSTER(cp1)->item.t);
 				/* disregard left hand, or dual-wielding guys are too good */
-				
+
 				no1 = 2 * (RIGHT(cp1) && skill == csi.ods[RIGHT(cp1)->item.m].fd[weaponr_fd_idx][fmode1].weaponSkill)
 					+ 2 * (RIGHT(cp1) && skill == csi.ods[RIGHT(cp1)->item.m].fd[weaponr_fd_idx][fmode2].weaponSkill)
 					+ (HOLSTER(cp1) && csi.ods[HOLSTER(cp1)->item.t].reload
@@ -1592,7 +1592,7 @@ static void CL_SwapSkills(character_t *team[], int num)
 						weaponr_fd_idx = INV_FiredefsIDXForWeapon(&csi.ods[RIGHT(cp2)->item.m], RIGHT(cp2)->item.t);
 					if (HOLSTER(cp2) && HOLSTER(cp2)->item.m != NONE && HOLSTER(cp2)->item.t != NONE)
 						weaponh_fd_idx = INV_FiredefsIDXForWeapon(&csi.ods[HOLSTER(cp2)->item.m], HOLSTER(cp2)->item.t);
-					no2 = 2 * (RIGHT(cp2) && skill == csi.ods[RIGHT(cp2)->item.m].fd[weaponr_fd_idx][fmode1].weaponSkill) 
+					no2 = 2 * (RIGHT(cp2) && skill == csi.ods[RIGHT(cp2)->item.m].fd[weaponr_fd_idx][fmode1].weaponSkill)
 						+ 2 * (RIGHT(cp2) && skill == csi.ods[RIGHT(cp2)->item.m].fd[weaponr_fd_idx][fmode2].weaponSkill)
 						+ (HOLSTER(cp2) && csi.ods[HOLSTER(cp2)->item.t].reload
 						   && skill == csi.ods[HOLSTER(cp2)->item.m].fd[weaponh_fd_idx][fmode1].weaponSkill)
@@ -1685,7 +1685,7 @@ static void CL_SwapSkills(character_t *team[], int num)
  * @note If assign_initial is called with one parameter (e.g. a 1), this is for
  * multiplayer - assign_initial with no parameters is for singleplayer
  */
-static void B_AssignInitial_f(void)
+static void B_AssignInitial_f (void)
 {
 	int i;
 
@@ -1716,7 +1716,7 @@ static void B_AssignInitial_f(void)
 /**
  * @brief Assigns initial soldier equipment for the first base
  */
-static void B_PackInitialEquipment_f(void)
+static void B_PackInitialEquipment_f (void)
 {
 	int i, price = 0;
 	equipDef_t *ed;
@@ -1763,7 +1763,7 @@ static void B_PackInitialEquipment_f(void)
  * @brief Constructs a new base.
  * @sa CL_NewBase
  */
-void B_BuildBase(void)
+void B_BuildBase (void)
 {
 	assert(baseCurrent);
 
