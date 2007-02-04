@@ -473,8 +473,6 @@ static void CL_GetWeaponAndAmmo (char hand, objDef_t **weapon, objDef_t **ammo, 
 		*ammo = &csi.ods[invlist_weapon->item.m];
 
 	*weap_fd_idx = INV_FiredefsIDXForWeapon(*ammo, invlist_weapon->item.t);
-
-	Com_Printf("CL_GetWeaponAndAmmo: weapon %i ammo %i -- %s %s %i\n", invlist_weapon->item.t, invlist_weapon->item.m, (*weapon)->name, (*ammo)->name, *weap_fd_idx);
 }
 
 /**
@@ -586,7 +584,6 @@ void CL_FireWeapon (void)
 	}
 
 	CL_GetWeaponAndAmmo(hand[0], &weapon, &ammo, &weap_fd_idx);
-	Com_Printf("CL_FireWeapon: %s %s %i\n", weapon->name, ammo->name, weap_fd_idx);
 
 	if (ammo->fd[weap_fd_idx][firemode].time <= selActor->TU) {
 		/* Actually start aiming */
@@ -1598,9 +1595,7 @@ void CL_ActorDoShoot (sizebuf_t * sb)
 	le = LE_Get(number);
 
 	/* get the fire def */
-	Com_Printf( "CL_ActorDoShoot: %i %i %i DEBUG\n",obj_idx,weap_fds_idx,fd_idx );
 	fd = GET_FIREDEF(obj_idx, weap_fds_idx, fd_idx);
-	Com_Printf( "CL_ActorDoShoot: %i %i %i DEBUG\n",fd->obj_idx,fd->weap_fds_idx,fd->fd_idx );
 
 	/* add effect le */
 	LE_AddProjectile(fd, flags, muzzle, impact, normal);

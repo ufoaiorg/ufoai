@@ -1253,9 +1253,7 @@ static void CL_ParseEvent (void)
 					/* read data */
 					MSG_ReadFormat(&net_message, ev_format[EV_ACTOR_SHOOT], &dummy, &obj_idx, &weap_fds_idx, &fd_idx, &flags, &muzzle, &impact, &dummy);
 
-					Com_Printf("CL_ParseEvent: %i %i %i DEBUG\n",obj_idx, weap_fds_idx,fd_idx);
 					fd = GET_FIREDEF(obj_idx, weap_fds_idx, fd_idx);
-					Com_Printf("CL_ParseEvent: %i %i %i DEBUG\n",fd->obj_idx,fd->weap_fds_idx,fd->fd_idx);
 
 					if (!(flags & SF_BOUNCED)) {
 						/* shooting */

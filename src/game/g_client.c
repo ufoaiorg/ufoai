@@ -1661,7 +1661,6 @@ void G_ClientAction (player_t * player)
 
 	case PA_SHOOT:
 		gi.ReadFormat(pa_format[PA_SHOOT], &pos, &i, &firemode);
-		Com_Printf("G_ClientAction: %i DEBUG\n", firemode);
 		(void)G_ClientShoot(player, num, pos, i, firemode, NULL, qtrue);
 		break;
 

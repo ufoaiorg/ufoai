@@ -748,7 +748,6 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 
 		if (!mock) {
 			/* send shot */
-			gi.dprintf("G_ShootSingle: %i %i %i DEBUG\n", fd->obj_idx, fd->weap_fds_idx, fd->fd_idx);
 			gi.AddEvent(G_VisToPM(mask), EV_ACTOR_SHOOT);
 			gi.WriteShort(ent->number);
 			gi.WriteShort(fd->obj_idx);
@@ -913,8 +912,6 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type, byte fi
 			gi.cprintf(player, PRINT_HIGH, _("Can't perform action - object not activable!\n"));
 		return qfalse;
 	}
-	gi.dprintf("G_ClientShoot: %i DEBUG weapon: '%s'\n", firemode, gi.csi->ods[weapon->t].name);
-	gi.dprintf("G_ClientShoot: ('%s') %i %i %i DEBUG\n", fd->name, fd->obj_idx, fd->weap_fds_idx, fd->fd_idx);
 
 	ammo = weapon->a;
 	reaction_leftover = IS_SHOT_REACTION(type) ? sv_reaction_leftover->value : 0;
