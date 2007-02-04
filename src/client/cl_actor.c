@@ -660,44 +660,6 @@ static void CL_RefreshWeaponButtons (int time)
 	/* TODO: Anything needed as a replacement? */
 	SetWeaponButton(BT_RIGHT_PRIMARY, qtrue);
 	SetWeaponButton(BT_LEFT_PRIMARY, qtrue);
-#if 0
-	byte weapon_fd_idx;
-	weapon_fd_idx  = -1;
-	if (weaponr && weaponr->item.m != NONE && weaponr->item.m != NONE)
-		weapon_fd_idx = INV_FiredefsIDXForWeapon(&csi.ods[weaponr->item.m],weaponr->item.t);
-	if ( !weaponr || weaponr->item.m == NONE
-		 || (csi.ods[weaponr->item.t].reload && weaponr->item.a <= 0)
-		 || time < csi.ods[weaponr->item.m].fd[weapon_fd_idx][FD_PRIMARY].time
-		 || (csi.ods[weaponr->item.t].firetwohanded && LEFT(selActor)) )
-		SetWeaponButton(BT_RIGHT_PRIMARY, qfalse);
-	else
-		SetWeaponButton(BT_RIGHT_PRIMARY, qtrue);
-
-	if ( !weaponr || weaponr->item.m == NONE
-		 || (csi.ods[weaponr->item.t].reload && weaponr->item.a <= 0)
-		 || time < csi.ods[weaponr->item.m].fd[weapon_fd_idx][FD_SECONDARY].time
-		 || (csi.ods[weaponr->item.t].firetwohanded && LEFT(selActor)) )
-		SetWeaponButton(BT_RIGHT_SECONDARY, qfalse);
-	else
-		SetWeaponButton(BT_RIGHT_SECONDARY, qtrue);
-
-	weapon_fd_idx  = -1;
-	if (weaponl && weaponl->item.m != NONE && weaponl->item.m != NONE)
-		weapon_fd_idx = INV_FiredefsIDXForWeapon(&csi.ods[weaponl->item.m],weaponl->item.t);
-	if ( !weaponl || weaponl->item.m == NONE
-		 || (csi.ods[weaponl->item.t].reload && weaponl->item.a <= 0)
-		 || time < csi.ods[weaponl->item.m].fd[weapon_fd_idx][FD_PRIMARY].time )
-		SetWeaponButton(BT_LEFT_PRIMARY, qfalse);
-	else
-		SetWeaponButton(BT_LEFT_PRIMARY, qtrue);
-
-	if ( !weaponl || weaponl->item.m == NONE
-		 || (csi.ods[weaponl->item.t].reload && weaponl->item.a <= 0)
-		 || time < csi.ods[weaponl->item.m].fd[weapon_fd_idx][FD_SECONDARY].time )
-		SetWeaponButton(BT_LEFT_SECONDARY, qfalse);
-	else
-		SetWeaponButton(BT_LEFT_SECONDARY, qtrue);
-#endif
 
 }
 
@@ -981,21 +943,11 @@ void CL_ActorUpdateCVars (void)
 		/* TODO: Better highlight for active firemode (from the list, not the buttons) needed ... */
 		case M_FIRE_L:
 		case M_PEND_FIRE_L:
-			/* TODO: remove  PRIMARY/SECONDARY stuff... */
-			if (cl.cfiremode ==0)
-				HighlightWeaponButton(BT_LEFT_PRIMARY);
-			else
-				HighlightWeaponButton(BT_LEFT_SECONDARY);
-
+			/* TODO: Display current firemode better*/
 			break;
 		case M_FIRE_R:
 		case M_PEND_FIRE_R:
-			/* TODO: remove  PRIMARY/SECONDARY stuff... */
-			if (cl.cfiremode ==0)
-				HighlightWeaponButton(BT_RIGHT_PRIMARY);
-			else
-				HighlightWeaponButton(BT_RIGHT_SECONDARY);
-			break;
+			/* TODO: Display current firemode better*/
 		default:
 			ClearHighlights();
 		}
@@ -1385,7 +1337,7 @@ void CL_ActorShoot (le_t * le, pos3_t at)
 	Com_Printf("CL_ActorShoot: cl.firemode %i.\n",  cl.cfiremode);
 	
 	/* TODO: Is there a better way to do this?
-	 * This type value will travel until it is checked in at least g_combat.c:G_GetShotFromType
+	 * This type value will travel until it is checked in at least g_combat.c:G_GetShotFromType.
 	 */
 	type = IS_MODE_FIRE_RIGHT(cl.cmode)
 			? ST_RIGHT
