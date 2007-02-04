@@ -1402,7 +1402,7 @@ void CL_UpdateCredits(int credits)
 /**
  * @brief Shows the current stats from stats_t stats
  */
-void CL_Stats_Update(void)
+void CL_Stats_Update (void)
 {
 	char *pos;
 	static char statsBuffer[MAX_STATS_BUFFER];
@@ -1500,7 +1500,7 @@ void CL_Stats_Update(void)
  * @sa CL_GameSave
  * @sa MN_AddNewMessage
  */
-void CL_MessageSave(sizebuf_t * sb, message_t * message)
+void CL_MessageSave (sizebuf_t * sb, message_t * message)
 {
 	int idx = -1;
 
@@ -1806,7 +1806,7 @@ void CL_UpdatePointersInGlobalData(void)
  * @sa CL_ReadSinglePlayerData
  * @sa CL_UpdatePointersInGlobalData
  */
-int CL_GameLoad(char *filename)
+int CL_GameLoad (char *filename)
 {
 	actMis_t *mis;
 	stageState_t *state;
@@ -2678,7 +2678,7 @@ static void CL_UpdateCharacterStats (int won)
 	character_t *chr = NULL;
 	rank_t *rank = NULL;
 	aircraft_t *aircraft;
-	int i, j, idx = 0;
+	int i, j;
 
 	Com_DPrintf("CL_UpdateCharacterStats: numTeamList: %i\n", cl.numTeamList);
 
@@ -2688,10 +2688,8 @@ static void CL_UpdateCharacterStats (int won)
 
 	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++)
 		if (CL_SoldierInAircraft(i, gd.interceptAircraft) ) {
-			/* negative value see E_GetHiredEmployee */
-			idx--;
-			Com_DPrintf("CL_UpdateCharacterStats: searching for soldier: idx: %i, i: %i\n", idx, i);
-			chr = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, idx);
+			Com_DPrintf("CL_UpdateCharacterStats: searching for soldier: %i\n", i);
+			chr = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, -(i+1));
 			assert(chr);
 			chr->assigned_missions++;
 
