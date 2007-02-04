@@ -758,7 +758,6 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 			gi.WritePos(cur_loc);
 			gi.WritePos(impact);
 			gi.WriteDir(tr.plane.normal);
-			gi.EndEvents();
 
 			/* send shot sound to the others */
 			gi.AddEvent(~G_VisToPM(mask), EV_ACTOR_SHOOT_HIDDEN);
@@ -766,7 +765,6 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 			gi.WriteShort(fd->obj_idx);
 			gi.WriteByte(fd->weap_fds_idx);
 			gi.WriteByte(fd->fd_idx);
-			gi.EndEvents();
 		}
 
 		/* do splash damage */
