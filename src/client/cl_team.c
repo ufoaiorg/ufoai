@@ -418,7 +418,7 @@ void CL_AddCarriedToEq(equipDef_t * ed)
  */
 item_t CL_AddWeaponAmmo(equipDef_t * ed, item_t item)
 {
-	int i = -1, type = item.t; /* 'type' equals 'idx' */
+	int i = -1, type = item.t; /* 'type' equals 'weapon-od idx' */
 
 	assert (ed->num[type] > 0);
 	ed->num[type]--;
