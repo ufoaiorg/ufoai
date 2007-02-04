@@ -1226,7 +1226,6 @@ extern void Com_AddObjectLinks (void)
 
 		for (j = 0; j < od->numWeapons; j++ ) {
 			od->weap_idx[j] = RS_GetItem(od->weap_id[j]);
-			Com_Printf("od->weap_idx[j(%i)] = %i (obj_idx = %i) (mun: %s) (weap: %s)\n", j, od->weap_idx[j], i, od->name, csi.ods[od->weap_idx[j]].name);
 			/* Back-link the obj-idx inside the fds */
 			/* FIXME: use memset here- would be ways faster */
 			for (k = 0; k < od->numFiredefs[j]; k++ ) {

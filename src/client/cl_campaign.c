@@ -83,23 +83,32 @@ enum {
 
 static char varName[MAX_VAR];
 
-static qboolean(*varFunc) (char *var);
+static qboolean(*varFunc)(char *var);
 static qboolean CheckAND(char **s);
 
-static void SkipWhiteSpaces(char **s)
+/**
+ * @brief
+ */
+static void SkipWhiteSpaces (char **s)
 {
 	while (**s == ' ')
 		(*s)++;
 }
 
-static void NextChar(char **s)
+/**
+ * @brief
+ */
+static void NextChar (char **s)
 {
 	(*s)++;
 	/* skip white-spaces too */
 	SkipWhiteSpaces(s);
 }
 
-static char *GetSwitchName(char **s)
+/**
+ * @brief
+ */
+static char *GetSwitchName (char **s)
 {
 	int pos = 0;
 
@@ -112,7 +121,10 @@ static char *GetSwitchName(char **s)
 	return varName;
 }
 
-static qboolean CheckOR(char **s)
+/**
+ * @brief
+ */
+static qboolean CheckOR (char **s)
 {
 	qboolean result = qfalse;
 	int goon = 0;
@@ -138,7 +150,10 @@ static qboolean CheckOR(char **s)
 	return result;
 }
 
-static qboolean CheckAND(char **s)
+/**
+ * @brief
+ */
+static qboolean CheckAND (char **s)
 {
 	qboolean result = qtrue;
 	qboolean negate = qfalse;
@@ -187,7 +202,7 @@ static qboolean CheckAND(char **s)
  * @sa CheckOR
  * @sa CheckAND
  */
-static qboolean CheckBEP(char *expr, qboolean(*varFuncParam) (char *var))
+static qboolean CheckBEP (char *expr, qboolean(*varFuncParam) (char *var))
 {
 	qboolean result;
 	char *str;
@@ -227,7 +242,7 @@ static qboolean CheckBEP(char *expr, qboolean(*varFuncParam) (char *var))
 /**
  * @brief
  */
-extern float CP_GetDistance(const vec2_t pos1, const vec2_t pos2)
+extern float CP_GetDistance (const vec2_t pos1, const vec2_t pos2)
 {
 	float a, b, c;
 
@@ -241,7 +256,7 @@ extern float CP_GetDistance(const vec2_t pos1, const vec2_t pos2)
 /**
  * @brief
  */
-extern qboolean CL_MapIsNight(vec2_t pos)
+extern qboolean CL_MapIsNight (vec2_t pos)
 {
 	float p, q, a, root, x;
 
@@ -258,7 +273,7 @@ extern qboolean CL_MapIsNight(vec2_t pos)
 /**
  * @brief
  */
-static qboolean Date_LaterThan(date_t now, date_t compare)
+static qboolean Date_LaterThan (date_t now, date_t compare)
 {
 	if (now.day > compare.day)
 		return qtrue;
@@ -273,7 +288,7 @@ static qboolean Date_LaterThan(date_t now, date_t compare)
 /**
  * @brief
  */
-static date_t Date_Add(date_t a, date_t b)
+static date_t Date_Add (date_t a, date_t b)
 {
 	a.sec += b.sec;
 	a.day += (a.sec / (3600 * 24)) + b.day;
@@ -285,7 +300,7 @@ static date_t Date_Add(date_t a, date_t b)
 /**
  * @brief
  */
-static date_t Date_Random(date_t frame)
+static date_t Date_Random (date_t frame)
 {
 	frame.sec = (frame.day * 3600 * 24 + frame.sec) * frand();
 	frame.day = frame.sec / (3600 * 24);
@@ -297,7 +312,7 @@ static date_t Date_Random(date_t frame)
 /**
  * @brief
  */
-static date_t Date_Random_Begin(date_t frame)
+static date_t Date_Random_Begin (date_t frame)
 {
 	int sec = frame.day * 3600 * 24 + frame.sec;
 
@@ -312,7 +327,7 @@ static date_t Date_Random_Begin(date_t frame)
 /**
  * @brief
  */
-static date_t Date_Random_Middle(date_t frame)
+static date_t Date_Random_Middle (date_t frame)
 {
 	int sec = frame.day * 3600 * 24 + frame.sec;
 
@@ -330,7 +345,7 @@ static date_t Date_Random_Middle(date_t frame)
 /**
  * @brief
  */
-static qboolean CL_MapMaskFind(byte * color, vec2_t polar)
+static qboolean CL_MapMaskFind (byte * color, vec2_t polar)
 {
 	byte *c;
 	int res, i, num;
@@ -405,7 +420,7 @@ extern byte *CL_GetMapColor (const vec2_t pos, mapType_t type)
  * @brief
  * @sa B_BuildBase
  */
-extern qboolean CL_NewBase(vec2_t pos)
+extern qboolean CL_NewBase (vec2_t pos)
 {
 	byte *color;
 
@@ -458,7 +473,7 @@ static stage_t *testStage;
  * @param[in] name Stage set name from script file
  * @return qboolean
  */
-static qboolean CL_StageSetDone(char *name)
+static qboolean CL_StageSetDone (char *name)
 {
 	setState_t *set;
 	int i;
@@ -478,7 +493,7 @@ static qboolean CL_StageSetDone(char *name)
  * @brief
  * @sa CL_CampaignExecute
  */
-static void CL_CampaignActivateStageSets(stage_t *stage)
+static void CL_CampaignActivateStageSets (stage_t *stage)
 {
 	setState_t *set;
 	int i;
@@ -597,7 +612,7 @@ static void CL_CampaignExecute (setState_t * set)
 /**
  * @brief Console command to list all available missions
  */
-void CP_MissionList_f (void)
+static void CP_MissionList_f (void)
 {
 	int i;
 	qboolean details = qfalse;
@@ -829,7 +844,7 @@ static void CL_BuildingAircraftList_f (void)
  * surrounding nations will be less affected.
  * TODO: nations react way too much; independently, an asymptotic reaction near 0.0 and 1.0 would be nice; high alienFriendly factor seems to increase happiness, instead of decreasing it.
  */
-static void CL_HandleNationData(qboolean lost, int civiliansSurvived, int civiliansKilled, int aliensSurvived, int aliensKilled, actMis_t * mis)
+static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civiliansKilled, int aliensSurvived, int aliensKilled, actMis_t * mis)
 {
 	int i, is_on_Earth = 0;
 	int civilianSum = civiliansKilled + civiliansSurvived;
@@ -884,7 +899,7 @@ static void CL_HandleNationData(qboolean lost, int civiliansSurvived, int civili
  * Called when invading forces overrun a base after a base-attack mission
  * @param[in] *base base_t base to be ransacked
  */
-void CL_BaseRansacked(base_t *base)
+void CL_BaseRansacked (base_t *base)
 {
 	int item, ac;
 
@@ -895,13 +910,13 @@ void CL_BaseRansacked(base_t *base)
 	E_DeleteAllEmployees(base);
 
 	/* Destroy all items in storage */
-	for ( item = 0; item < csi.numODs; item++ ) {
+	for (item = 0; item < csi.numODs; item++) {
 		base->storage.num[item] = 0;
 		base->storage.num_loose[item] = 0;
 	}
 
 	/* Remove all aircrafts from the base. */
-	for ( ac = base->numAircraftInBase-1; ac >= 0; ac-- )
+	for (ac = base->numAircraftInBase-1; ac >= 0; ac--)
 		CL_DeleteAircraft(&base->aircraft[ac]);
 
 	/* TODO: Maybe reset research in progress. ... needs playbalance
@@ -923,7 +938,7 @@ void CL_BaseRansacked(base_t *base)
  * @sa CL_CampaignRemoveMission
  * @sa CL_HandleNationData
  */
-void CL_CampaignCheckEvents(void)
+static void CL_CampaignCheckEvents (void)
 {
 	stageState_t *stage = NULL;
 	setState_t *set = NULL;
@@ -979,7 +994,7 @@ void CL_CampaignCheckEvents(void)
 		}
 }
 
-static int monthLength[MONTHS_PER_YEAR] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+static const int monthLength[MONTHS_PER_YEAR] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
 /**
  * @brief Converts a number of days into the number of the current month and the current day in this month.
@@ -989,7 +1004,7 @@ static int monthLength[MONTHS_PER_YEAR] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 
  * @param[out] month The month.
  * @param[out] day The day in the month above.
  */
-void CL_DateConvert(date_t * date, int *day, int *month)
+extern void CL_DateConvert (date_t * date, int *day, int *month)
 {
 	int i, d;
 
@@ -1010,35 +1025,35 @@ void CL_DateConvert(date_t * date, int *day, int *month)
  * @param[in] month The month index - starts at 0 - ends at 11
  * @return month name as char*
  */
-char *CL_DateGetMonthName(int month)
+extern char *CL_DateGetMonthName (int month)
 {
 	switch (month) {
-		case 0:
-			return _("Jan");
-		case 1:
-			return _("Feb");
-		case 2:
-			return _("Mar");
-		case 3:
-			return _("Apr");
-		case 4:
-			return _("May");
-		case 5:
-			return _("Jun");
-		case 6:
-			return _("Jul");
-		case 7:
-			return _("Aug");
-		case 8:
-			return _("Sep");
-		case 9:
-			return _("Oct");
-		case 10:
-			return _("Nov");
-		case 11:
-			return _("Dec");
-		default:
-			return "Error";
+	case 0:
+		return _("Jan");
+	case 1:
+		return _("Feb");
+	case 2:
+		return _("Mar");
+	case 3:
+		return _("Apr");
+	case 4:
+		return _("May");
+	case 5:
+		return _("Jun");
+	case 6:
+		return _("Jul");
+	case 7:
+		return _("Aug");
+	case 8:
+		return _("Sep");
+	case 9:
+		return _("Oct");
+	case 10:
+		return _("Nov");
+	case 11:
+		return _("Dec");
+	default:
+		return "Error";
 	}
 }
 
@@ -1047,7 +1062,7 @@ char *CL_DateGetMonthName(int month)
  * @param[in] nation
  * @return Translated happiness string
  */
-char* CL_GetNationHappinessString(nation_t* nation)
+static char* CL_GetNationHappinessString (nation_t* nation)
 {
 	if (nation->happiness < 0.015)
 		return _("Giving up");
@@ -1083,7 +1098,7 @@ char* CL_GetNationHappinessString(nation_t* nation)
  * @sa CL_CampaignRun
  * @sa B_CreateEmployee
  */
-static void CL_HandleBudget(void)
+static void CL_HandleBudget (void)
 {
 	int i, j;
 	char message[1024];
@@ -1256,7 +1271,7 @@ static void CL_CampaignRunMarket (void)
  * @sa CL_CampaignRunAircraft
  * @sa CL_CampaignCheckEvents
  */
-void CL_CampaignRun (void)
+extern void CL_CampaignRun (void)
 {
 	/* advance time */
 	ccs.timer += cls.frametime * gd.gameTimeScale;
@@ -1329,7 +1344,7 @@ static int gameLapse;
 /**
  * @brief Stop game time speed
  */
-void CL_GameTimeStop(void)
+extern void CL_GameTimeStop (void)
 {
 	/* don't allow time scale in tactical mode */
 	if (!CL_OnBattlescape()) {
@@ -1345,7 +1360,7 @@ void CL_GameTimeStop(void)
  *
  * Decrease game time speed - only works when there is already a base available
  */
-void CL_GameTimeSlow(void)
+extern void CL_GameTimeSlow (void)
 {
 	/* don't allow time scale in tactical mode */
 	if (!CL_OnBattlescape()) {
@@ -1366,7 +1381,7 @@ void CL_GameTimeSlow(void)
  *
  * Increase game time speed - only works when there is already a base available
  */
-void CL_GameTimeFast(void)
+extern void CL_GameTimeFast (void)
 {
 	/* don't allow time scale in tactical mode */
 	if (!CL_OnBattlescape()) {
@@ -1388,7 +1403,7 @@ void CL_GameTimeFast(void)
  * Checks whether credits are bigger than MAX_CREDITS
  */
 #define MAX_CREDITS 10000000
-void CL_UpdateCredits(int credits)
+void CL_UpdateCredits (int credits)
 {
 	/* credits */
 	if (credits > MAX_CREDITS)
@@ -1533,7 +1548,7 @@ void CL_MessageSave (sizebuf_t * sb, message_t * message)
  * @brief
  * @sa CL_GameLoad
  */
-qboolean CL_GameSave(char *filename, char *comment)
+qboolean CL_GameSave (char *filename, char *comment)
 {
 	stageState_t *state;
 	actMis_t *mis;
@@ -1698,7 +1713,7 @@ qboolean CL_GameSave(char *filename, char *comment)
 /**
  * @brief
  */
-static void CL_GameSave_f(void)
+static void CL_GameSave_f (void)
 {
 	char comment[MAX_COMMENTLENGTH];
 	char *arg;
@@ -1742,7 +1757,7 @@ static void CL_GameSave_f(void)
 /**
  * @brief Will fix the pointers in gd after loading
  */
-void CL_UpdatePointersInGlobalData(void)
+void CL_UpdatePointersInGlobalData (void)
 {
 	int i, j, p, type;
 	base_t *base;
@@ -2122,7 +2137,7 @@ int CL_GameLoad (char *filename)
  *
  * @sa CL_GameLoad
  */
-static void CL_GameLoad_f(void)
+static void CL_GameLoad_f (void)
 {
 	/* get argument */
 	if (Cmd_Argc() < 2) {
@@ -2146,7 +2161,7 @@ static void CL_GameLoad_f(void)
  * @sa CL_GameLoad_f
  * @sa CL_GameLoad
  */
-static void CL_GameComments_f(void)
+static void CL_GameComments_f (void)
 {
 	char comment[MAX_VAR];
 	FILE *f;
@@ -2187,7 +2202,7 @@ static void CL_GameComments_f(void)
  * @note At saving the archive cvar mn_lastsave was set to the latest savegame
  * @sa CL_GameLoad
  */
-static void CL_GameContinue(void)
+static void CL_GameContinue_f (void)
 {
 	if (cls.state == ca_active) {
 		MN_PopMenu(qfalse);
@@ -2210,7 +2225,7 @@ static void CL_GameContinue(void)
  * @sa CL_StartMission_f
  * @sa CL_GameGo
  */
-void CL_SetMissionCvars(mission_t* mission)
+void CL_SetMissionCvars (mission_t* mission)
 {
 	/* start the map */
 	Cvar_SetValue("ai_numaliens", (float) mission->aliens);
@@ -2236,7 +2251,7 @@ void CL_SetMissionCvars(mission_t* mission)
  * @sa CL_GameGo
  * @sa CL_StartMission_f
  */
-void CL_StartMissionMap(mission_t* mission)
+void CL_StartMissionMap (mission_t* mission)
 {
 	char expanded[MAX_QPATH];
 	char timeChar;
@@ -2289,7 +2304,7 @@ void CL_StartMissionMap(mission_t* mission)
  * @sa CL_SetMissionCvars
  * @sa CL_StartMission_f
  */
-static void CL_GameGo(void)
+static void CL_GameGo (void)
 {
 	mission_t *mis;
 	aircraft_t *aircraft;
@@ -2404,7 +2419,7 @@ static const cmdList_t cp_commands[] = {
  * @note These function can be defined via onwin/onlose parameters in missions.ufo
  * @param[in] add If true, add the trigger functions, otherwise delete them
  */
-static void CP_MissionTriggerFunctions(qboolean add)
+static void CP_MissionTriggerFunctions (qboolean add)
 {
 	const cmdList_t *commands;
 
@@ -3165,7 +3180,7 @@ static const value_t stageset_vals[] = {
 /**
  * @brief
  */
-static void CL_ParseStageSet(char *name, char **text)
+static void CL_ParseStageSet (char *name, char **text)
 {
 	char *errhead = "CL_ParseStageSet: unexptected end of file (stageset ";
 	stageSet_t *sp;
@@ -3648,7 +3663,7 @@ static const value_t nation_vals[] = {
  * @param[in] text The text of the nation node
  * @sa nation_vals
  */
-extern void CL_ParseNations(char *name, char **text)
+extern void CL_ParseNations (char *name, char **text)
 {
 	char *errhead = "CL_ParseNations: unexptected end of file (aircraft ";
 	nation_t *nation;
@@ -3840,7 +3855,7 @@ static const cmdList_t game_commands[] = {
  * @sa CL_GameNew
  * @sa CL_GameLoad
  */
-static void CL_GameExit(void)
+static void CL_GameExit (void)
 {
 	const cmdList_t *commands;
 
@@ -3865,7 +3880,7 @@ static void CL_GameExit(void)
  * @sa CL_GameLoad
  * @sa CL_GameNew
  */
-void CL_GameInit(void)
+void CL_GameInit (void)
 {
 	const cmdList_t *commands;
 
@@ -3897,7 +3912,7 @@ void CL_GameInit(void)
  * @param name Name of the campaign
  * @return campaign_t pointer to campaign with name or NULL if not found
  */
-campaign_t* CL_GetCampaign(char* name)
+campaign_t* CL_GetCampaign (char* name)
 {
 	campaign_t* campaign;
 	int i;
@@ -3920,7 +3935,7 @@ static void CL_CampaignRunMarket(void);
  * @brief Starts a new single-player game
  * @sa CL_GameInit
  */
-static void CL_GameNew(void)
+static void CL_GameNew (void)
 {
 	int i;
 	char val[32];
@@ -4007,13 +4022,13 @@ static void CL_GameNew(void)
 	CL_GameInit();
 }
 
-/**
- * @brief fill a list with available campaigns
- */
 #define MAXCAMPAIGNTEXT 4096
 static char campaignText[MAXCAMPAIGNTEXT];
 static char campaignDesc[MAXCAMPAIGNTEXT];
-static void CP_GetCampaigns_f(void)
+/**
+ * @brief fill a list with available campaigns
+ */
+static void CP_GetCampaigns_f (void)
 {
 	int i;
 
@@ -4037,7 +4052,7 @@ static void CP_GetCampaigns_f(void)
 /**
  * @brief Script function to select a campaign from campaign list
  */
-static void CP_CampaignsClick_f(void)
+static void CP_CampaignsClick_f (void)
 {
 	int num;
 	char *racetype;
@@ -4078,7 +4093,7 @@ static void CP_CampaignsClick_f(void)
  * @brief Will clear most of the parsed singleplayer data
  * @sa Com_InitInventory
  */
-void CL_ResetSinglePlayerData(void)
+void CL_ResetSinglePlayerData (void)
 {
 	numStageSets = numStages = numMissions = 0;
 	memset(missions, 0, sizeof(mission_t) * MAX_MISSIONS);
@@ -4094,7 +4109,7 @@ void CL_ResetSinglePlayerData(void)
  *
  * call this function via campaign_stats
  */
-static void CP_CampaignStats(void)
+static void CP_CampaignStats (void)
 {
 	setState_t *set;
 	int i;
@@ -4143,7 +4158,7 @@ static void CP_CampaignStats(void)
 /**
  * @brief
  */
-void CL_ResetCampaign(void)
+extern void CL_ResetCampaign (void)
 {
 	/* reset some vars */
 	curCampaign = NULL;
@@ -4156,7 +4171,7 @@ void CL_ResetCampaign(void)
 	Cmd_AddCommand("getcampaigns", CP_GetCampaigns_f, NULL);
 	Cmd_AddCommand("missionlist", CP_MissionList_f, "Shows all missions from the script files");
 	Cmd_AddCommand("game_new", CL_GameNew, NULL);
-	Cmd_AddCommand("game_continue", CL_GameContinue, NULL);
+	Cmd_AddCommand("game_continue", CL_GameContinue_f, NULL);
 	Cmd_AddCommand("game_exit", CL_GameExit, NULL);
 	Cmd_AddCommand("game_save", CL_GameSave_f, NULL);
 	Cmd_AddCommand("game_load", CL_GameLoad_f, NULL);

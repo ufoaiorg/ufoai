@@ -1548,7 +1548,7 @@ static int MN_DrawTooltip (char *font, char *string, int x, int y, int maxWidth)
 /**
  * @brief Wrapper for menu tooltips
  */
-static void MN_Tooltip (menuNode_t * node, int x, int y)
+static void MN_Tooltip (menu_t *menu, menuNode_t *node, int x, int y)
 {
 	char *tooltip;
 	int width = 0;
@@ -1562,12 +1562,13 @@ static void MN_Tooltip (menuNode_t * node, int x, int y)
 		tooltip = (char *) node->data[5];
 		if (*tooltip == '_')
 			tooltip++;
-		width = MN_DrawTooltip("f_small", _(tooltip), x, y, width);
+
+		width = MN_DrawTooltip("f_small", _(MN_GetReferenceString(menu, node->data[5])), x, y, width);
 		y += 20;
 	}
 	if (node->key[0]) {
 		if (node->key[0] == '*')
-			Com_sprintf(node->key, sizeof(node->key), _("Key: %s"), MN_GetReferenceString(menuStack[menuStackPos-1], node->key));
+			Com_sprintf(node->key, sizeof(node->key), _("Key: %s"), MN_GetReferenceString(menu, node->key));
 		MN_DrawTooltip("f_verysmall", node->key, x, y, width);
 	}
 }
@@ -2261,7 +2262,7 @@ void MN_DrawMenus (void)
 
 		}	/* for */
 		if (sp == menuStackPos && menu->hoverNode && cl_show_tooltips->value) {
-			MN_Tooltip(menu->hoverNode, mx, my);
+			MN_Tooltip(menu, menu->hoverNode, mx, my);
 			menu->hoverNode = NULL;
 		}
 	}
