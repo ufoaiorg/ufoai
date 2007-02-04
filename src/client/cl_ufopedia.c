@@ -55,6 +55,16 @@ enum {
 static int upDisplay = UFOPEDIA_CHAPTERS;
 
 /**
+ * @brief Checks If a technology/up-entry will be displayed in the ufopedia.
+ * @note This doesn not check for different display modes (only pre-research text, what stats, etc...).
+ * @return qtrue if the tech gets displayed at all, otherwise qfalse.
+ */
+static qboolean UP_TechGetsDisplayed (technology_t *tech)
+{
+		return RS_IsResearched_ptr(tech) || RS_Collected_(tech);
+}
+
+/**
  * @brief Modify the global display var
  */
 static void UP_ChangeDisplay (int newDisplay)
@@ -223,12 +233,11 @@ extern void CL_ItemDescription (int item)
 		}
 
 		menuText[TEXT_STANDARD] = itemText;
-	} else {
+	} else { /* includes if (RS_Collected_(tech)) AFAIK*/
 		Com_sprintf(itemText, MAX_MENUTEXTLEN, _("Unknown - need to research this"));
 		menuText[TEXT_STANDARD] = itemText;
 	}
 }
-
 
 /**
  * @brief Prints the ufopedia description for armors
@@ -503,18 +512,18 @@ static void UP_Content_f (void)
 {
 	char *cp = NULL;
 	int i;
-	char researched_entries;
+	qboolean researched_entries = qfalse;	/* Are there any researched or collected items in this chapter? */
 	numChapters_displaylist = 0;
 
 	cp = upText;
 	*cp = '\0';
 
 	for (i = 0; i < gd.numChapters; i++) {
-		/* Check if there are any researched items in this chapter ... */
+		/* Check if there are any researched or collected items in this chapter ... */
 		researched_entries = qfalse;
 		upCurrent = &gd.technologies[gd.upChapters[i].first];
 		do {
-			if ( RS_IsResearched_ptr(upCurrent) ) {
+			if ( UP_TechGetsDisplayed(upCurrent) ) {
 				researched_entries = qtrue;
 				break;
 			}
@@ -600,7 +609,7 @@ static void UP_Index_f (void)
 
 	/* get next entry */
 	while (t) {
-		if (RS_IsResearched_ptr(t)) {
+		if ( UP_TechGetsDisplayed(t) ) {
 			/* add this tech to the index - it is researched already */
 			Q_strcat(upText, va("%s\n", _(t->name)), sizeof(upText));
 		}
@@ -633,9 +642,9 @@ static void UP_Prev_f (void)
 			assert (t);
 			if (t->idx == t->prev)
 				Sys_Error("UP_Prev_f: The 'prev':%d entry equals to 'idx' entry for '%s'.\n", t->prev, t->id);
-		} while (t->prev >= 0 && !RS_IsResearched_ptr(t));
+		} while (t->prev >= 0 && !UP_TechGetsDisplayed(t));
 
-		if (RS_IsResearched_ptr(t)) {
+		if (UP_TechGetsDisplayed(t)) {
 			upCurrent = t;
 			UP_DrawEntry(t);
 			return;
@@ -667,9 +676,9 @@ static void UP_Next_f (void)
 			assert (upCurrent);
 			if (t->idx == t->next)
 				Sys_Error("UP_Next_f: The 'next':%d entry equals to 'idx' entry for '%s'.\n", t->next, t->id);
-		} while (t->next >= 0 && !RS_IsResearched_ptr(t));
+		} while (t->next >= 0 && !UP_TechGetsDisplayed(t));
 
-		if (RS_IsResearched_ptr(t)) {
+		if (UP_TechGetsDisplayed(t)) {
 			upCurrent = t;
 			UP_DrawEntry(t);
 			return;
@@ -714,7 +723,7 @@ static void UP_Click_f (void)
 		if ( num < numChapters_displaylist && upChapters_displaylist[num]->first ) {
 			upCurrent = &gd.technologies[upChapters_displaylist[num]->first];
 			do {
-				if (RS_IsResearched_ptr(upCurrent)) {
+				if ( UP_TechGetsDisplayed(upCurrent) ) {
 					Cbuf_AddText(va("mn_upindex %i;", upCurrent->up_chapter));
 					return;
 				}
@@ -728,7 +737,7 @@ static void UP_Click_f (void)
 
 		/* get next entry */
 		while (t) {
-			if (RS_IsResearched_ptr(t)) {
+			if ( UP_TechGetsDisplayed(t) ) {
 				/* add this tech to the index - it is researched already */
 				if (num > 0)
 					num--;
