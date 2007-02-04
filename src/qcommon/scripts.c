@@ -30,7 +30,7 @@ OBJECT DEFINITION INTERPRETER
 ==============================================================================
 */
 
-static char *skillNames[SKILL_NUM_TYPES - ABILITY_NUM_TYPES] = {
+static const char *skillNames[SKILL_NUM_TYPES - ABILITY_NUM_TYPES] = {
 	"close",
 	"heavy",
 	"assault",
@@ -44,7 +44,7 @@ typedef enum objdefs {
 	OD_HARDNESS
 } objdef_t;
 
-static value_t od_vals[] = {
+static const value_t od_vals[] = {
 	{"weapon_mod", V_NULL, 0},
 	{"protection", V_NULL, 0},
 	{"hardness", V_NULL, 0},
@@ -73,7 +73,7 @@ static value_t od_vals[] = {
 
 /* =========================================================== */
 
-static value_t fdps[] = {
+static const value_t fdps[] = {
 	{"name", V_TRANSLATION_STRING, offsetof(fireDef_t, name)},
 	{"shotorg", V_POS, offsetof(fireDef_t, shotOrg)},
 	{"projtl", V_STRING, offsetof(fireDef_t, projectile)},
@@ -111,9 +111,9 @@ static value_t fdps[] = {
 /**
  * @brief
  */
-static void Com_ParseFire(char *name, char **text, fireDef_t * fd)
+static void Com_ParseFire (char *name, char **text, fireDef_t * fd)
 {
-	value_t *fdp;
+	const value_t *fdp;
 	char *errhead = "Com_ParseFire: unexptected end of file";
 	char *token;
 
@@ -178,7 +178,7 @@ static void Com_ParseFire(char *name, char **text, fireDef_t * fd)
 /**
  * @brief
  */
-static void Com_ParseArmor(char *name, char **text, short *ad)
+static void Com_ParseArmor (char *name, char **text, short *ad)
 {
 	char *errhead = "Com_ParseFire: unexptected end of file";
 	char *token;
@@ -218,10 +218,10 @@ static void Com_ParseArmor(char *name, char **text, short *ad)
 /**
  * @brief
  */
-static void Com_ParseItem(char *name, char **text)
+static void Com_ParseItem (char *name, char **text)
 {
 	char *errhead = "Com_ParseItem: unexptected end of file (weapon ";
-	value_t *val;
+	const value_t *val;
 	objDef_t *od;
 	char *token;
 	int i;
@@ -287,7 +287,7 @@ static void Com_ParseItem(char *name, char **text)
 							Com_Printf("Com_ParseItem: weapon_mod \"%s\" without body ignored\n", name);
 							break;
 						}
-						
+
 						if (od->numWeapons < MAX_WEAPONS_PER_OBJDEF) {
 							weap_idx = od->numWeapons;
 							/* For parse each firedef entry for this weapon.  */
@@ -359,7 +359,7 @@ INVENTORY DEFINITION INTERPRETER
 ==============================================================================
 */
 
-static value_t idps[] = {
+static const value_t idps[] = {
 	{"shape", V_SHAPE_BIG, offsetof(invDef_t, shape)}
 	,
 	/* only a single item */
@@ -392,11 +392,11 @@ static value_t idps[] = {
 /**
  * @brief
  */
-static void Com_ParseInventory(char *name, char **text)
+static void Com_ParseInventory (char *name, char **text)
 {
 	char *errhead = "Com_ParseInventory: unexptected end of file (inventory ";
 	invDef_t *id;
-	value_t *idp;
+	const value_t *idp;
 	char *token;
 	int i;
 
@@ -533,7 +533,7 @@ const char *name_strings[NAME_NUM_TYPES] = {
 /**
  * @brief
  */
-static void Com_ParseEquipment(char *name, char **text)
+static void Com_ParseEquipment (char *name, char **text)
 {
 	char *errhead = "Com_ParseEquipment: unexptected end of file (equipment ";
 	equipDef_t *ed;
@@ -602,7 +602,7 @@ NAME AND TEAM DEFINITION INTERPRETER
  * @param[in] category country strings like: spanish_italian, german, russian and so on
  * @sa Com_GetModelAndName
  */
-char *Com_GiveName(int gender, char *category)
+char *Com_GiveName (int gender, char *category)
 {
 	static char returnName[MAX_VAR];
 	nameCategory_t *nc;
@@ -648,7 +648,7 @@ char *Com_GiveName(int gender, char *category)
  * @param[in] category country strings like: spanish_italian, german, russian and so on
  * @sa Com_GetModelAndName
  */
-char *Com_GiveModel(int type, int gender, char *category)
+char *Com_GiveModel (int type, int gender, char *category)
 {
 	nameCategory_t *nc;
 	char *str;
@@ -688,7 +688,7 @@ char *Com_GiveModel(int type, int gender, char *category)
  * @sa Com_GiveName
  * @sa Com_GiveModel
  */
-int Com_GetModelAndName(char *team, character_t * chr)
+int Com_GetModelAndName (char *team, character_t * chr)
 {
 	teamDef_t *td;
 	char *str;
@@ -783,7 +783,7 @@ int Com_GetModelAndName(char *team, character_t * chr)
 /**
  * @brief
  */
-static void Com_ParseNames(char *title, char **text)
+static void Com_ParseNames (char *title, char **text)
 {
 	nameCategory_t *nc;
 	char *errhead = "Com_ParseNames: unexptected end of file (names ";
@@ -875,7 +875,7 @@ static void Com_ParseNames(char *title, char **text)
 /**
  * @brief
  */
-static void Com_ParseActors(char *title, char **text)
+static void Com_ParseActors (char *title, char **text)
 {
 	nameCategory_t *nc;
 	char *errhead = "Com_ParseActors: unexptected end of file (actors ";
@@ -962,7 +962,7 @@ static void Com_ParseActors(char *title, char **text)
 }
 
 /** @brief possible teamdesc values (ufo-scriptfiles) */
-static value_t teamDescValues[] = {
+static const value_t teamDescValues[] = {
 	{"tech", V_STRING, offsetof(teamDesc_t, tech)} /**< tech id from research.ufo */
 	,
 	{"name", V_TRANSLATION2_STRING, offsetof(teamDesc_t, name)} /**< internal team name */
@@ -976,13 +976,13 @@ static value_t teamDescValues[] = {
 /**
  * @brief Parse the team descriptions (teamdesc) in the teams*.ufo files.
  */
-static void Com_ParseTeamDesc(char *title, char **text)
+static void Com_ParseTeamDesc (char *title, char **text)
 {
 	teamDesc_t *td;
 	char *errhead = "Com_ParseTeamDesc: unexptected end of file (teamdesc ";
 	char *token;
 	int i;
-	value_t *v;
+	const value_t *v;
 
 	/* check whether team description already exists */
 	for (i = 0, td = teamDesc; i < numTeamDesc; i++, td++)
@@ -1038,7 +1038,7 @@ static void Com_ParseTeamDesc(char *title, char **text)
 	} while (*text);
 }
 
-static value_t teamValues[] = {
+static const value_t teamValues[] = {
 	{"armor", V_BOOL, offsetof(teamDef_t, armor)} /**< are these team members able to wear armor? */
 	,
 	{"weapons", V_BOOL, offsetof(teamDef_t, weapons)} /**< are these team members able to use weapons? */
@@ -1049,14 +1049,14 @@ static value_t teamValues[] = {
 /**
  * @brief
  */
-static void Com_ParseTeam(char *title, char **text)
+static void Com_ParseTeam (char *title, char **text)
 {
 	nameCategory_t *nc;
 	teamDef_t *td;
 	char *errhead = "Com_ParseTeam: unexptected end of file (team ";
 	char *token;
 	int i;
-	value_t *v;
+	const value_t *v;
 
 	/* check for additions to existing name categories */
 	for (i = 0, td = teamDef; i < numTeamDefs; i++, td++)
@@ -1144,7 +1144,7 @@ DAMAGE TYPES INTERPRETER
 /**
  * @brief
  */
-static void Com_ParseDamageTypes(char *name, char **text)
+static void Com_ParseDamageTypes (char *name, char **text)
 {
 	char *errhead = "Com_ParseTypes: unexptected end of file (weapon ";
 	char *token;
@@ -1214,7 +1214,7 @@ MAIN SCRIPT PARSING FUNCTION
 /**
  * @brief Creates links to the technology entries in the pedia and to other items (i.e. ammo<->weapons)
  */
-void Com_AddObjectLinks(void)
+extern void Com_AddObjectLinks (void)
 {
 #ifndef DEDICATED_ONLY
 	objDef_t *od = NULL;
@@ -1226,7 +1226,9 @@ void Com_AddObjectLinks(void)
 
 		for (j = 0; j < od->numWeapons; j++ ) {
 			od->weap_idx[j] = RS_GetItem(od->weap_id[j]);
+/*			Com_Printf("od->weap_idx[j(%i)] = %i (obj_idx = %i)\n", j, od->weap_idx[j], i);*/
 			/* Back-link the obj-idx inside the fds */
+			/* FIXME: use memset here- would be ways faster */
 			for (k = 0; k < od->numFiredefs[j]; k++ ) {
 				od->fd[j][k].obj_idx = i;
 			}
@@ -1269,7 +1271,7 @@ void Com_AddObjectLinks(void)
  * @sa CL_ParseScriptSecond
  * @sa Qcommon_Init
  */
-void Com_ParseScripts(void)
+extern void Com_ParseScripts (void)
 {
 	char *type, *name, *text;
 
