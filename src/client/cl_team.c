@@ -415,8 +415,9 @@ void CL_AddCarriedToEq(equipDef_t * ed)
 
 /**
  * @brief
+ * @sa CL_ReloadAndRemoveCarried
  */
-item_t CL_AddWeaponAmmo(equipDef_t * ed, item_t item)
+static item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
 {
 	int i = -1, type = item.t; /* 'type' equals 'weapon-od idx' */
 
@@ -503,8 +504,9 @@ item_t CL_AddWeaponAmmo(equipDef_t * ed, item_t item)
 
 /**
  * @brief
+ * @sa CL_AddWeaponAmmo
  */
-void CL_ReloadAndRemoveCarried(equipDef_t * ed)
+void CL_ReloadAndRemoveCarried (equipDef_t * ed)
 {
 	character_t *cp;
 	invList_t *ic, *next;
