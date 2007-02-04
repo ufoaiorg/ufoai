@@ -2592,9 +2592,15 @@ static void CL_CollectItemAmmo (invList_t * weapon, int left_hand, qboolean mark
 		ccs.eMission.num[weapon->item.t]++;
 	}
 
-	tech = csi.ods[weapon->item.t].tech;
+	/* TODO: The "tech" link is set nowhere or am i wrong?
+	At least there are a lot of errors on a mission-end because tech is NULL.
+	RS_GetTechByProvided is slow, but it seems to work.
+	This nees to be fixed ... I propose to use a tech_idx in the objDef for faster access and avoiding pointers (savegame troubles) at the same time.
+	tech = csi.ods[weapon->item.t].tech; 
+	*/
+	tech = RS_GetTechByProvided(csi.ods[weapon->item.t].id);
 	if (!tech)
-		Sys_Error("No tech for %s\n", csi.ods[weapon->item.t].name);
+		Sys_Error("CL_CollectItemAmmo: No tech for %s / %s\n", csi.ods[weapon->item.t].id, csi.ods[weapon->item.t].name);
 	tech->statusCollected++;
 
 	if (!csi.ods[weapon->item.t].reload || weapon->item.a == 0)
