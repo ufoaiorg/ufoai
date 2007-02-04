@@ -863,7 +863,7 @@ static void G_GetShotOrigin(edict_t *shooter, fireDef_t *fd, vec3_t dir, vec3_t 
  */
 static qboolean G_GetShotFromType (edict_t *ent, int type, byte firemode, item_t **weapon, int *container, fireDef_t **fd)
 {
-	byte weapon_fd_idx;
+	int weapon_fd_idx;
 
 	if (type >= ST_NUM_SHOOT_TYPES)
 		gi.error("G_GetShotFromType: unknown shoot type %i.\n", type);
@@ -1193,11 +1193,11 @@ static qboolean G_CanReactionFire(edict_t *ent, edict_t *target, char *reason)
  * @param[out] hand If not NULL then this stores the hand that the shooter will fire with
  * @returns The number of TUs required to fire or -1 if firing is not possible
  */
-int G_GetFiringTUs(edict_t *ent, edict_t *target, int *hand, byte *firemode)
+static int G_GetFiringTUs (edict_t *ent, edict_t *target, int *hand, int *firemode)
 {
-	byte fmode1 = 0;
+	int fmode1 = 0;
+	int weapon_fd_idx;
 
-	byte weapon_fd_idx;
 	/* Fire the first weapon in hands if everything is ok. */
 	if ( RIGHT(ent)
 		&& (RIGHT(ent)->item.m != NONE)
@@ -1240,7 +1240,7 @@ int G_GetFiringTUs(edict_t *ent, edict_t *target, int *hand, byte *firemode)
  * @param[in] target The entity triggering fire
  * @returns qtrue if some entity initiated firing
  */
-qboolean G_CheckRFTrigger(edict_t *target)
+qboolean G_CheckRFTrigger (edict_t *target)
 {
 	edict_t *ent;
 	int i, tus;
@@ -1282,7 +1282,7 @@ qboolean G_CheckRFTrigger(edict_t *target)
  * @param[in] mock If true then don't actually fire
  * @return true if the entity fired (or would have fired if mock), false otherwise
  */
-qboolean G_ResolveRF(edict_t *ent, qboolean mock)
+qboolean G_ResolveRF (edict_t *ent, qboolean mock)
 {
 	player_t *player;
 	int tus, hand, team;
@@ -1374,7 +1374,7 @@ qboolean G_ResolveRF(edict_t *ent, qboolean mock)
  * @sa G_ReactToMove
  * @sa G_ReactToPostFire
  */
-qboolean G_CheckRFResolution(edict_t *target, qboolean mock)
+qboolean G_CheckRFResolution (edict_t *target, qboolean mock)
 {
 	edict_t *ent;
 	int i;

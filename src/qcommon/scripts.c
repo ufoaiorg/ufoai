@@ -225,7 +225,7 @@ static void Com_ParseItem (char *name, char **text)
 	objDef_t *od;
 	char *token;
 	int i;
-	byte weap_fds_idx, fd_idx;
+	int weap_fds_idx, fd_idx;
 
 	/* search for menus with same name */
 	for (i = 0; i < csi.numODs; i++)

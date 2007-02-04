@@ -1553,11 +1553,11 @@ void B_SelectBase(void)
  * @todo This currently always uses exactly the first two firemodes (see fmode1+fmode2) for calculation. This needs to be adapted to support less (1) or more 3+ firemodes. I think the function will even  break on only one firemode .. never tested it.
  * @todo i think currently also the different ammo/firedef types for each weapon (different weaponr_fd_idx and weaponr_fd_idx values) are ignored.
  */
-static void CL_SwapSkills(character_t *team[], int num)
+static void CL_SwapSkills (character_t *team[], int num)
 {
 	int j, i1, i2, skill, no1, no2, tmp1, tmp2;
 	character_t *cp1, *cp2;
-	byte weaponr_fd_idx, weaponh_fd_idx;
+	int weaponr_fd_idx, weaponh_fd_idx;
 	const byte fmode1 = 0;
 	const byte fmode2 = 1;
 

@@ -736,7 +736,7 @@ void MSG_ReadPos(sizebuf_t * msg_read, vec3_t pos)
 /**
  * @brief
  */
-void MSG_ReadGPos(sizebuf_t * msg_read, pos3_t pos)
+void MSG_ReadGPos (sizebuf_t * msg_read, pos3_t pos)
 {
 	pos[0] = MSG_ReadByte(msg_read);
 	pos[1] = MSG_ReadByte(msg_read);
@@ -746,7 +746,7 @@ void MSG_ReadGPos(sizebuf_t * msg_read, pos3_t pos)
 /**
  * @brief
  */
-float MSG_ReadAngle(sizebuf_t * msg_read)
+float MSG_ReadAngle (sizebuf_t * msg_read)
 {
 	return (float) MSG_ReadChar(msg_read) * (360.0 / 256);
 }
@@ -754,7 +754,7 @@ float MSG_ReadAngle(sizebuf_t * msg_read)
 /**
  * @brief
  */
-float MSG_ReadAngle16(sizebuf_t * msg_read)
+float MSG_ReadAngle16 (sizebuf_t * msg_read)
 {
 	short s;
 
@@ -765,7 +765,7 @@ float MSG_ReadAngle16(sizebuf_t * msg_read)
 /**
  * @brief
  */
-void MSG_ReadData(sizebuf_t * msg_read, void *data, int len)
+void MSG_ReadData (sizebuf_t * msg_read, void *data, int len)
 {
 	int i;
 
@@ -776,7 +776,7 @@ void MSG_ReadData(sizebuf_t * msg_read, void *data, int len)
 /**
  * @brief
  */
-void MSG_ReadDir(sizebuf_t * sb, vec3_t dir)
+void MSG_ReadDir (sizebuf_t * sb, vec3_t dir)
 {
 	int b;
 
@@ -790,7 +790,7 @@ void MSG_ReadDir(sizebuf_t * sb, vec3_t dir)
 /**
  * @brief Reads from a buffer according to format; version without syntactic sugar for variable arguments, to call it from other functions with variable arguments
  */
-void MSG_V_ReadFormat(sizebuf_t * msg_read, const char *format, va_list ap)
+void MSG_V_ReadFormat (sizebuf_t * msg_read, const char *format, va_list ap)
 {
 	char typeID;
 

@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @param[in] id The id of the skin
  * @return Translated skin name
  */
-char* CL_GetTeamSkinName(int id)
+char* CL_GetTeamSkinName (int id)
 {
 	switch(id) {
 	case 0:
@@ -56,19 +56,24 @@ char* CL_GetTeamSkinName(int id)
 
 /**
  * @brief
+ * @sa CL_ReceiveItem
+ * @sa G_WriteItem
+ * @sa G_ReadItem
  */
-void CL_SendItem(sizebuf_t * buf, item_t item, int container, int x, int y)
+void CL_SendItem (sizebuf_t *buf, item_t item, int container, int x, int y)
 {
 	assert (item.t != NONE);
 /*	Com_Printf("Add item %s to container %i (t=%i:a=%i:m=%i) (x=%i:y=%i)\n", csi.ods[item.t].id, container, item.t, item.a, item.m, x, y);*/
-	MSG_WriteFormat(buf, "bbbbbb",
-					item.t, item.a, item.m, container, x, y);
+	MSG_WriteFormat(buf, "bbbbbb", item.t, item.a, item.m, container, x, y);
 }
 
 /**
  * @brief
+ * @sa CL_SendItem
+ * @sa CL_ReceiveInventory
+ * @sa G_SendInventory
  */
-void CL_SendInventory(sizebuf_t * buf, inventory_t * i)
+void CL_SendInventory (sizebuf_t *buf, inventory_t *i)
 {
 	int j, nr = 0;
 	invList_t *ic;
@@ -85,24 +90,29 @@ void CL_SendInventory(sizebuf_t * buf, inventory_t * i)
 
 /**
  * @brief
+ * @sa CL_SendItem
+ * @sa G_WriteItem
+ * @sa G_ReadItem
  */
-void CL_ReceiveItem(sizebuf_t * buf, item_t * item, int * container, int * x, int * y)
+void CL_ReceiveItem (sizebuf_t *buf, item_t *item, int *container, int *x, int *y)
 {
-	MSG_ReadFormat(buf, "bbbbbb",
-				   &item->t, &item->a, &item->m, container, x, y);
+	MSG_ReadFormat(buf, "bbbbbb", &item->t, &item->a, &item->m, container, x, y);
 }
 
 /**
  * @brief
+ * @sa CL_SendInventory
+ * @sa CL_ReceiveItem
+ * @sa Com_AddToInventory
+ * @sa G_SendInventory
  */
-void CL_ReceiveInventory(sizebuf_t * buf, inventory_t * i)
+void CL_ReceiveInventory (sizebuf_t *buf, inventory_t *i)
 {
 	item_t item;
 	int container, x, y;
 	int nr = MSG_ReadShort(buf) / 6;
 
 	for (; nr-- > 0;) {
-
 		CL_ReceiveItem(buf, &item, &container, &x, &y);
 
 		Com_AddToInventory(i, item, container, x, y);

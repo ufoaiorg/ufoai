@@ -1142,49 +1142,49 @@ static void CL_ParseEvent (void)
 	int eType;
 	int time;
 
-	while ( ( eType = MSG_ReadByte( &net_message ) ) != 0 ) {
+	while ((eType = MSG_ReadByte(&net_message)) != 0) {
 		if (net_message.readcount > net_message.cursize) {
-			Com_Error (ERR_DROP,"CL_ParseEvent: Bad event message");
+			Com_Error(ERR_DROP,"CL_ParseEvent: Bad event message");
 			break;
 		}
 
 		/* check instantly flag */
-		if ( eType & INSTANTLY ) {
+		if (eType & INSTANTLY) {
 			now = qtrue;
 			eType &= ~INSTANTLY;
 		} else
 			now = qfalse;
 
 		/* check if eType is valid */
-		if ( eType < 0 || eType >= EV_NUM_EVENTS )
-			Com_Error( ERR_DROP, "CL_ParseEvent: invalid event %s\n", ev_names[eType] );
+		if (eType < 0 || eType >= EV_NUM_EVENTS)
+			Com_Error(ERR_DROP, "CL_ParseEvent: invalid event %s\n", ev_names[eType]);
 
-		if ( !ev_func[eType] )
-			Com_Error( ERR_DROP, "CL_ParseEvent: no handling function for event %i\n", eType );
+		if (!ev_func[eType])
+			Com_Error(ERR_DROP, "CL_ParseEvent: no handling function for event %i\n", eType);
 
 		oldCount = net_message.readcount;
 		length = MSG_LengthFormat( &net_message, ev_format[eType] );
 
-		if ( now ) {
+		if (now) {
 			/* log and call function */
-			CL_LogEvent( eType );
-			ev_func[eType]( &net_message );
+			CL_LogEvent(eType);
+			ev_func[eType](&net_message);
 		} else {
-			if ( evWp-evBuf + length+2 >= EV_STORAGE_SIZE )
+			if (evWp-evBuf + length+2 >= EV_STORAGE_SIZE)
 				evWp = evBuf;
 
 			/* get event time */
-			if ( nextTime < cl.eventTime )
+			if (nextTime < cl.eventTime)
 				nextTime = cl.eventTime;
-			if ( impactTime < cl.eventTime )
+			if (impactTime < cl.eventTime)
 				impactTime = cl.eventTime;
 
 			if (eType == EV_ACTOR_DIE)
 				parsedDeath = qtrue;
 
-			if ( eType == EV_ACTOR_DIE || eType == EV_MODEL_EXPLODE )
+			if (eType == EV_ACTOR_DIE || eType == EV_MODEL_EXPLODE)
 				time = impactTime;
-			else if ( eType == EV_ACTOR_SHOOT || eType == EV_ACTOR_SHOOT_HIDDEN )
+			else if (eType == EV_ACTOR_SHOOT || eType == EV_ACTOR_SHOOT_HIDDEN)
 				time = shootTime;
 			else
 				time = nextTime;
@@ -1201,9 +1201,9 @@ static void CL_ParseEvent (void)
 			}
 
 			/* calculate time interval before the next event */
-			switch ( eType ) {
+			switch (eType) {
 			case EV_ACTOR_APPEAR:
-				if ( cls.state == ca_active && cl.actTeam != cls.team )
+				if (cls.state == ca_active && cl.actTeam != cls.team)
 					nextTime += 600;
 				break;
 			case EV_INV_RELOAD:
@@ -1219,7 +1219,7 @@ static void CL_ParseEvent (void)
 					fireDef_t *fd;
 					qboolean first;
 					int obj_idx;
-					byte weap_fds_idx, fd_idx;
+					int weap_fds_idx, fd_idx;
 
 					MSG_ReadFormat(&net_message, ev_format[EV_ACTOR_SHOOT_HIDDEN], &first, &obj_idx, &weap_fds_idx, &fd_idx);
 
@@ -1236,7 +1236,7 @@ static void CL_ParseEvent (void)
 */
 							impactTime = shootTime;
 						nextTime = shootTime + 1400;
-						if ( fd->rof )
+						if (fd->rof)
 							shootTime += 1000 / fd->rof;
 					}
 					parsedDeath = qfalse;
@@ -1247,32 +1247,32 @@ static void CL_ParseEvent (void)
 					fireDef_t	*fd;
 					int		flags, dummy;
 					int obj_idx;
-					byte weap_fds_idx, fd_idx;
+					int weap_fds_idx, fd_idx;
 					vec3_t	muzzle, impact;
 
 					/* read data */
 					MSG_ReadFormat(&net_message, ev_format[EV_ACTOR_SHOOT], &dummy, &obj_idx, &weap_fds_idx, &fd_idx, &flags, &muzzle, &impact, &dummy);
 
-					Com_Printf( "CL_ParseEvent: %i %i %i DEBUG\n",obj_idx, weap_fds_idx,fd_idx );
+					Com_Printf("CL_ParseEvent: %i %i %i DEBUG\n",obj_idx, weap_fds_idx,fd_idx);
 					fd = GET_FIREDEF(obj_idx, weap_fds_idx, fd_idx);
-					Com_Printf( "CL_ParseEvent: %i %i %i DEBUG\n",fd->obj_idx,fd->weap_fds_idx,fd->fd_idx );
+					Com_Printf("CL_ParseEvent: %i %i %i DEBUG\n",fd->obj_idx,fd->weap_fds_idx,fd->fd_idx);
 
-					if ( !(flags & SF_BOUNCED) ) {
+					if (!(flags & SF_BOUNCED)) {
 						/* shooting */
-						if ( fd->speed )
+						if (fd->speed)
 							impactTime = shootTime + 1000 * VectorDist( muzzle, impact ) / fd->speed;
 						else
 							impactTime = shootTime;
-						if ( cl.actTeam != cls.team )
+						if (cl.actTeam != cls.team)
 							nextTime = shootTime + 1400;
 						else
 							nextTime = shootTime + 400;
-						if ( fd->rof )
+						if (fd->rof)
 							shootTime += 1000 / fd->rof;
 					} else {
 						/* only a bounced shot */
 						time = impactTime;
-						if ( fd->speed ) {
+						if (fd->speed) {
 							impactTime += 1000 * VectorDist( muzzle, impact ) / fd->speed;
 							nextTime = impactTime;
 						}
@@ -1281,7 +1281,7 @@ static void CL_ParseEvent (void)
 				}
 				break;
 			case EV_ACTOR_THROW:
-				nextTime += MSG_ReadShort( &net_message );
+				nextTime += MSG_ReadShort(&net_message);
 				impactTime = shootTime = nextTime;
 				parsedDeath = qfalse;
 				break;
@@ -1322,7 +1322,7 @@ static void CL_ParseEvent (void)
 			if (now) {
 				correct = 0;
 			} else {
-				switch ( eType ) {
+				switch (eType) {
 				case EV_ACTOR_SHOOT_HIDDEN:
 				case EV_ACTOR_SHOOT:
 					correct = 0;
@@ -1362,7 +1362,7 @@ extern void CL_Events (void)
 
 		/* check if eType is valid */
 		if (eType < 0 || eType >= EV_NUM_EVENTS)
-			Com_Error( ERR_DROP, "CL_Events: invalid event %i\n", eType );
+			Com_Error(ERR_DROP, "CL_Events: invalid event %i\n", eType);
 
 		/* free timetable entry */
 		last = etCurrent;

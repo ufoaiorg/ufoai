@@ -484,8 +484,8 @@ void CL_DisplayFiremodes (void)
 {
 	objDef_t *weapon = NULL;
 	objDef_t *ammo = NULL;
-	byte weap_fd_idx;
-	byte i;
+	int weap_fd_idx;
+	int i;
 	char *hand;
 
 	/* HideFiremodes();  Hides all firemode lists ... TODO only needed for development, but can't hurt. */
@@ -561,7 +561,7 @@ void CL_FireWeapon (void)
 
 	objDef_t *weapon = NULL;
 	objDef_t *ammo = NULL;
-	byte weap_fd_idx;
+	int weap_fd_idx;
 
 	if (Cmd_Argc() < 3) { /* no argument given */
 		Com_Printf("Usage: fireweap [l|r] <num>   num=firemode number\n");
@@ -1589,7 +1589,7 @@ void CL_ActorDoShoot (sizebuf_t * sb)
 	vec3_t muzzle, impact;
 	int flags, normal, number;
 	int obj_idx;
-	byte weap_fds_idx, fd_idx;
+	int weap_fds_idx, fd_idx;
 
 	/* read data */
 	MSG_ReadFormat(sb, ev_format[EV_ACTOR_SHOOT], &number, &obj_idx, &weap_fds_idx, &fd_idx, &flags, &muzzle, &impact, &normal);
@@ -1651,7 +1651,7 @@ void CL_ActorShootHidden (sizebuf_t *sb)
 	fireDef_t	*fd;
 	qboolean	first;
 	int obj_idx;
-	byte weap_fds_idx, fd_idx;
+	int weap_fds_idx, fd_idx;
 
 	MSG_ReadFormat(sb, ev_format[EV_ACTOR_SHOOT_HIDDEN], &first, &obj_idx, &weap_fds_idx, &fd_idx);
 
@@ -1678,7 +1678,7 @@ void CL_ActorDoThrow (sizebuf_t * sb)
 	int flags;
 	int dtime;
 	int obj_idx;
-	byte weap_fds_idx, fd_idx;
+	int weap_fds_idx, fd_idx;
 
 	/* read data */
 	MSG_ReadFormat(sb, ev_format[EV_ACTOR_THROW], &dtime, &obj_idx, &weap_fds_idx, &fd_idx, &flags, &muzzle, &v0);
@@ -1711,7 +1711,7 @@ void CL_ActorStartShoot (sizebuf_t * sb)
 	pos3_t from, target;
 	int number;
 	int obj_idx;
-	byte weap_fds_idx,fd_idx;
+	int weap_fds_idx,fd_idx;
 
 	MSG_ReadFormat(sb, ev_format[EV_ACTOR_START_SHOOT], &number, &obj_idx, &weap_fds_idx, &fd_idx, &from, &target);
 

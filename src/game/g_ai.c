@@ -98,8 +98,8 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, ai_action_t * aia)
 	objDef_t *ad;
 	int still_searching = 1;
 
-	byte weap_fds_idx; /* Weapon-Firedefs index in fd[x] */
-	byte fd_idx;	/* firedef index fd[][x]*/
+	int weap_fds_idx; /* Weapon-Firedefs index in fd[x] */
+	int fd_idx;	/* firedef index fd[][x]*/
 
 	guete = 0.0;
 	memset(aia, 0, sizeof(ai_action_t));

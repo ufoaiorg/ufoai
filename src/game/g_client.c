@@ -93,22 +93,23 @@ void G_SendStats(edict_t * ent)
 
 /**
  * @brief Write an item to the network buffer
+ * @sa CL_ReceiveItem
+ * @sa CL_SendItem
  */
-void G_WriteItem(item_t item, int container, int x, int y)
+void G_WriteItem (item_t item, int container, int x, int y)
 {
 	assert (item.t != NONE);
-
-	gi.WriteFormat("bbbbbb",
-				   item.t, item.a, item.m, container, x, y);
+	gi.WriteFormat("bbbbbb", item.t, item.a, item.m, container, x, y);
 }
 
 /**
  * @brief Read item from the network buffer
+ * @sa CL_ReceiveItem
+ * @sa CL_SendItem
  */
-void G_ReadItem(item_t * item, int * container, int * x, int * y)
+void G_ReadItem (item_t * item, int * container, int * x, int * y)
 {
-	gi.ReadFormat("bbbbbb",
-				   &item->t, &item->a, &item->m, container, x, y);
+	gi.ReadFormat("bbbbbb", &item->t, &item->a, &item->m, container, x, y);
 }
 
 
@@ -116,7 +117,7 @@ void G_ReadItem(item_t * item, int * container, int * x, int * y)
  * @brief Write player stats to network buffer
  * @sa G_SendStats
  */
-void G_SendPlayerStats(player_t * player)
+void G_SendPlayerStats (player_t * player)
 {
 	edict_t *ent;
 	int i;
@@ -131,7 +132,7 @@ void G_SendPlayerStats(player_t * player)
  * @brief Network function to update the time units
  * @sa G_SendStats
  */
-void G_GiveTimeUnits(int team)
+void G_GiveTimeUnits (int team)
 {
 	edict_t *ent;
 	int i;
@@ -148,7 +149,7 @@ void G_GiveTimeUnits(int team)
 /**
  * @brief
  */
-void G_SendState(int player_mask, edict_t * ent)
+void G_SendState (int player_mask, edict_t * ent)
 {
 	gi.AddEvent(player_mask & G_TeamToPM(ent->team), EV_ACTOR_STATECHANGE);
 	gi.WriteShort(ent->number);
@@ -163,7 +164,7 @@ void G_SendState(int player_mask, edict_t * ent)
 /**
  * @brief
  */
-void G_SendInventory(int player_mask, edict_t * ent)
+void G_SendInventory (int player_mask, edict_t * ent)
 {
 	invList_t *ic;
 	unsigned short nr = 0;
@@ -187,7 +188,7 @@ void G_SendInventory(int player_mask, edict_t * ent)
 	gi.WriteShort(ent->number);
 
 	/* size of inventory */
-	gi.WriteShort(nr*6);
+	gi.WriteShort(nr * 6);
 	for (j = 0; j < gi.csi->numIDs; j++)
 		for (ic = ent->i.c[j]; ic; ic = ic->next) {
 			/* send a single item */
