@@ -243,6 +243,13 @@ teamdesc shevaar
 	alien	true
 }
 
+teamdesc bloodspider
+{
+	name "_Bloodspider"
+	tech "rs_alien_bloodspider_autopsy"
+	alien true
+}
+
 // I am commenting this since this team seems to have three
 // different names everywhere: HOVERNET, FLYER and STINGER
 // and nothing about it is ready anyway; the same for
@@ -379,6 +386,13 @@ team ortnok
 {
 	{
 	ortnok
+	}
+}
+
+team bloodspider
+{
+	{
+	bloodspider
 	}
 }
 
