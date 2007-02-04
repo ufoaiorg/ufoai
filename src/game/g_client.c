@@ -1626,7 +1626,7 @@ void G_KillTeam(void)
 /**
  * @brief
  */
-void G_ClientAction(player_t * player)
+void G_ClientAction (player_t * player)
 {
 	int action;
 	int num;

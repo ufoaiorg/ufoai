@@ -799,7 +799,7 @@ void CL_InitInput(void)
 #endif
 	Cmd_AddCommand("list_firemodes", CL_DisplayFiremodes, "Display a list of firemodes for a weapon+ammo.");
 	Cmd_AddCommand("fireweap", CL_FireWeapon, "Start aiming the weapon.");
-	
+
 	Cmd_AddCommand("reloadleft", CL_ReloadLeft, NULL);
 	Cmd_AddCommand("reloadright", CL_ReloadRight, NULL);
 	Cmd_AddCommand("nextround", CL_NextRound, _("Ends current round"));
@@ -948,7 +948,7 @@ void CL_ClampCamToMap(float border)
 /**
  * @brief
  */
-void CL_CameraMoveRemote(void)
+void CL_CameraMoveRemote (void)
 {
 	float angle, frac;
 	static float sy, cy;
@@ -1111,7 +1111,7 @@ void CL_CameraMove(void)
 /**
  * @brief
  */
-void CL_CameraRoute(pos3_t from, pos3_t target)
+void CL_CameraRoute (pos3_t from, pos3_t target)
 {
 	/* initialize the camera route variables */
 	PosToVec(from, routeFrom);

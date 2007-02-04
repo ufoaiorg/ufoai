@@ -1350,7 +1350,7 @@ static void CL_ParseEvent (void)
 extern void CL_Events (void)
 {
 	evTimes_t	*last;
-	byte		eType;
+	int		eType;
 
 	if (cls.state < ca_connected)
 		return;
@@ -1360,11 +1360,9 @@ extern void CL_Events (void)
 		evStorage.readcount = etCurrent->pos;
 		eType = MSG_ReadByte( &evStorage );
 
-#if 0
 		/* check if eType is valid */
-		if (eType >= EV_NUM_EVENTS)
+		if (eType < 0 || eType >= EV_NUM_EVENTS)
 			Com_Error( ERR_DROP, "CL_Events: invalid event %i\n", eType );
-#endif
 
 		/* free timetable entry */
 		last = etCurrent;

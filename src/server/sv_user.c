@@ -374,7 +374,7 @@ static void SV_ExecuteUserCommand(char *s)
 /**
  * @brief The current net_message is parsed for the given client
  */
-void SV_ExecuteClientMessage(client_t * cl)
+void SV_ExecuteClientMessage (client_t * cl)
 {
 	int c;
 	char *s;

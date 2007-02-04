@@ -43,7 +43,7 @@ static char *lmList[MAX_LOCALMODELS + 1];
 /**
  * @brief
  */
-static void LM_GenerateList(void)
+static void LM_GenerateList (void)
 {
 	lm_t *lm;
 	int i, l;
@@ -59,7 +59,7 @@ static void LM_GenerateList(void)
 /**
  * @brief
  */
-void LM_AddToScene(void)
+void LM_AddToScene (void)
 {
 	lm_t *lm;
 	entity_t ent;
@@ -103,7 +103,7 @@ void LM_AddToScene(void)
 /**
  * @brief
  */
-static lm_t *LM_Find(int num)
+static lm_t *LM_Find (int num)
 {
 	int i;
 
@@ -119,7 +119,7 @@ static lm_t *LM_Find(int num)
 /**
  * @brief
  */
-static void LM_Delete(lm_t * lm)
+static void LM_Delete (lm_t * lm)
 {
 	lm_t backup;
 
@@ -137,7 +137,7 @@ static void LM_Delete(lm_t * lm)
 /**
  * @brief
  */
-void LM_Perish(sizebuf_t * sb)
+void LM_Perish (sizebuf_t * sb)
 {
 	lm_t *lm;
 
@@ -152,7 +152,7 @@ void LM_Perish(sizebuf_t * sb)
 /**
  * @brief
  */
-void LM_Explode(sizebuf_t * sb)
+void LM_Explode (sizebuf_t * sb)
 {
 	lm_t *lm;
 
@@ -178,7 +178,7 @@ void LM_Explode(sizebuf_t * sb)
 /**
  * @brief
  */
-void CL_RegisterLocalModels(void)
+void CL_RegisterLocalModels (void)
 {
 	lm_t *lm;
 	vec3_t sunDir, sunOrigin;
@@ -206,7 +206,7 @@ void CL_RegisterLocalModels(void)
  * @brief
  * @sa CL_ParseEntitystring
  */
-lm_t *CL_AddLocalModel(char *model, char *particle, vec3_t origin, vec3_t angles, int num, int levelflags)
+lm_t *CL_AddLocalModel (char *model, char *particle, vec3_t origin, vec3_t angles, int num, int levelflags)
 {
 	lm_t *lm;
 
@@ -242,7 +242,7 @@ LE thinking
  * @sa LET_StartPathMove
  * @sa LET_Projectile
  */
-void LE_Think(void)
+void LE_Think (void)
 {
 	le_t *le;
 	int i;
@@ -263,7 +263,7 @@ static char retAnim[MAX_VAR];
 /**
  * @brief
  */
-char *LE_GetAnim(char *anim, int right, int left, int state)
+char *LE_GetAnim (char *anim, int right, int left, int state)
 {
 	char *mod;
 	qboolean akimbo;
@@ -319,7 +319,7 @@ char *LE_GetAnim(char *anim, int right, int left, int state)
  * @brief
  * @note Think function
  */
-void LET_StartIdle(le_t * le)
+void LET_StartIdle (le_t * le)
 {
 	if (le->state & STATE_DEAD)
 		re.AnimChange(&le->as, le->model1, va("dead%i", le->state & STATE_DEAD));
@@ -336,7 +336,7 @@ void LET_StartIdle(le_t * le)
  * @brief
  * @note Think function
  */
-static void LET_PathMove(le_t * le)
+static void LET_PathMove (le_t * le)
 {
 	byte dv;
 	float frac;
@@ -400,7 +400,7 @@ static void LET_PathMove(le_t * le)
  * @brief
  * @note Think function
  */
-void LET_StartPathMove(le_t * le)
+void LET_StartPathMove (le_t * le)
 {
 	re.AnimChange(&le->as, le->model1, LE_GetAnim("walk", le->right, le->left, le->state));
 
@@ -413,7 +413,7 @@ void LET_StartPathMove(le_t * le)
  * @brief
  * @note Think function
  */
-static void LET_Projectile(le_t * le)
+static void LET_Projectile (le_t * le)
 {
 	if (cl.time >= le->endTime) {
 		CL_ParticleFree(le->ptl);
@@ -437,7 +437,7 @@ static void LET_Projectile(le_t * le)
 /**
  * @brief
  */
-void LE_AddProjectile(fireDef_t * fd, int flags, vec3_t muzzle, vec3_t impact, int normal)
+void LE_AddProjectile (fireDef_t * fd, int flags, vec3_t muzzle, vec3_t impact, int normal)
 {
 	le_t *le;
 	vec3_t delta;
@@ -511,7 +511,7 @@ void LE_AddProjectile(fireDef_t * fd, int flags, vec3_t muzzle, vec3_t impact, i
 /**
  * @brief
  */
-void LE_AddGrenade(fireDef_t * fd, int flags, vec3_t muzzle, vec3_t v0, int dt)
+void LE_AddGrenade (fireDef_t * fd, int flags, vec3_t muzzle, vec3_t v0, int dt)
 {
 	le_t *le;
 	vec3_t accel;
@@ -591,7 +591,7 @@ le_t *LE_Add (int entnum)
 /**
  * @brief
  */
-le_t *LE_Get(int entnum)
+le_t *LE_Get (int entnum)
 {
 	int i;
 	le_t *le;
@@ -609,7 +609,7 @@ le_t *LE_Get(int entnum)
 /**
  * @brief
  */
-le_t *LE_Find(int type, pos3_t pos)
+le_t *LE_Find (int type, pos3_t pos)
 {
 	int i;
 	le_t *le;
@@ -627,7 +627,7 @@ le_t *LE_Find(int type, pos3_t pos)
 /**
  * @brief
  */
-void LE_AddToScene(void)
+void LE_AddToScene (void)
 {
 	le_t *le;
 	entity_t ent;
@@ -778,7 +778,7 @@ static void CL_ClipMoveToLEs (moveclip_t * clip)
  * @brief
  * @sa CL_Trace
  */
-static void CL_TraceBounds(vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, vec3_t boxmins, vec3_t boxmaxs)
+static void CL_TraceBounds (vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, vec3_t boxmins, vec3_t boxmaxs)
 {
 	int i;
 

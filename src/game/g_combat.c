@@ -46,7 +46,7 @@ typedef enum {
 /**
  * @brief test if point is "visible" from team
  */
-qboolean G_TeamPointVis(int team, vec3_t point)
+qboolean G_TeamPointVis (int team, vec3_t point)
 {
 	edict_t *from;
 	vec3_t eye;
@@ -75,7 +75,7 @@ qboolean G_TeamPointVis(int team, vec3_t point)
  * @brief Applies morale changes to actors around a wounded or killed actor
  * @note only called when mor_panic is not zero
  */
-static void G_Morale(int type, edict_t * victim, edict_t * attacker, int param)
+static void G_Morale (int type, edict_t * victim, edict_t * attacker, int param)
 {
 	edict_t *ent;
 	int i, newMorale;
@@ -147,7 +147,7 @@ static void G_Morale(int type, edict_t * victim, edict_t * attacker, int param)
  * @sa G_ClientStateChange
  * @param[in] team Index of team to loop through.
  */
-void G_ResetReactionFire(int team)
+void G_ResetReactionFire (int team)
 {
 	edict_t *ent;
 	int i;
@@ -186,7 +186,7 @@ void G_ResetReactionFire(int team)
  * @param[in] damage
  * @sa G_Damage
  */
-static void G_UpdateShotMock(shot_mock_t *mock, edict_t *shooter, edict_t *struck, int damage)
+static void G_UpdateShotMock (shot_mock_t *mock, edict_t *shooter, edict_t *struck, int damage)
 {
 	assert(struck->number != shooter->number || mock->allow_self);
 
@@ -374,7 +374,7 @@ static void G_Damage (edict_t * ent, fireDef_t *fd, int damage, edict_t * attack
 /**
  * @brief Stun all members of a giben team.
  */
-void G_StunTeam(void)
+void G_StunTeam (void)
 {
 	/* default is to kill all teams */
 	int teamToKill = -1, i;
@@ -411,7 +411,7 @@ void G_StunTeam(void)
  * @param[in] impact TODO ???
  * @param[in] mock TODO ???
  */
-void G_SplashDamage(edict_t * ent, fireDef_t * fd, vec3_t impact, shot_mock_t *mock)
+void G_SplashDamage (edict_t * ent, fireDef_t * fd, vec3_t impact, shot_mock_t *mock)
 {
 	edict_t *check;
 	vec3_t center;
@@ -482,7 +482,7 @@ void G_SplashDamage(edict_t * ent, fireDef_t * fd, vec3_t impact, shot_mock_t *m
 /**
  * @brief
  */
-static void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at, int mask, item_t * weapon, shot_mock_t *mock)
+static void G_ShootGrenade (player_t * player, edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at, int mask, item_t * weapon, shot_mock_t *mock)
 {
 	vec3_t last, target, temp;
 	vec3_t startV, curV, oldPos, newPos;
@@ -658,7 +658,7 @@ static void G_ShootGrenade(player_t * player, edict_t * ent, fireDef_t * fd, vec
  * @param[in] at Grid coordinate of the target.
  * @param[in] mask ?? TODO Visibility bit-mask of the others?
  */
-static void G_ShootSingle(edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at, int mask, item_t * weapon, shot_mock_t *mock)
+static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at, int mask, item_t * weapon, shot_mock_t *mock)
 {
 	vec3_t dir;	/* Direction from the location of the gun muzzle ("from") to the target ("at") */
 	vec3_t angles;	/* ?? TODO The random dir-modifier ?? */

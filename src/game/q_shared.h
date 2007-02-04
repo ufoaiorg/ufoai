@@ -915,11 +915,6 @@ extern const char *pa_format[128];
 
 /** this is a fire definition for our weapons/ammo */
 typedef struct fireDef_s {
-	/* These values are created in Com_ParseItem and Com_AddObjectLinks. They are used for self-referencing the firedef. */
-	int obj_idx;		/**< The weapon/ammo (csi.ods[obj_idx]) this fd is located in. */
-	byte weap_idx;		/**< The weapon_mod entry (objDef_t->fd[weap_idx]) this fd is located in. */
-	byte fd_idx;		/**< Self link of the fd in the objDef_t->fd[][fd_idx] array. */
-
 	char name[MAX_VAR];			/**< script id */
 	char projectile[MAX_VAR];	/**< particle */
 	char impact[MAX_VAR];
@@ -928,6 +923,12 @@ typedef struct fireDef_s {
 	char impactSound[MAX_VAR];	/**< the sound that is played on impact */
 	char hitBodySound[MAX_VAR];
 	char bounceSound[MAX_VAR];	/**< bouncing sound */
+
+	/* These values are created in Com_ParseItem and Com_AddObjectLinks. They are used for self-referencing the firedef. */
+	int obj_idx;			/**< The weapon/ammo (csi.ods[obj_idx]) this fd is located in. */
+	byte weap_idx;			/**< The weapon_mod entry (objDef_t->fd[weap_idx]) this fd is located in. */
+	byte fd_idx;			/**< Self link of the fd in the objDef_t->fd[][fd_idx] array. */
+
 	byte soundOnce;
 	byte gravity;			/**< does gravity has any influence on this */
 	byte launched;

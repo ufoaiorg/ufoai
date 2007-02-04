@@ -1333,6 +1333,7 @@ extern void CL_ActorStartMove (le_t * le, pos3_t to)
 void CL_ActorShoot (le_t * le, pos3_t at)
 {
 	byte type;
+
 	if (!CL_CheckAction())
 		return;
 
@@ -1685,6 +1686,7 @@ void CL_ActorDoThrow (sizebuf_t * sb)
 
 	/* get the fire def */
 	fd = GET_FIREDEF(obj_idx,weap_idx,fd_idx);
+	Com_Printf("firedef: '%s'\n", fd->name);
 
 	/* add effect le (local entity) */
 	LE_AddGrenade(fd, flags, muzzle, v0, dtime);
