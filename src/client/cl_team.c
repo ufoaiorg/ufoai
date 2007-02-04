@@ -430,7 +430,7 @@ static item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
 	if (csi.ods[type].weap_idx[0] >= 0) {
 		/* The given item is ammo or self-contained weapon (i.e. It has firedefinitions. */
 		return item;
-	} else if (!csi.ods[type].reload) 
+	} else if (!csi.ods[type].reload) {
 		/* The given item is a weapon but no ammo is needed,
 		 * so fire definitions are in t (the weapon). Setting equal. */
 		item.m = item.t;	
