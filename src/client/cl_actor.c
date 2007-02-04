@@ -447,7 +447,7 @@ static void DisplayFiremodeEntry (fireDef_t *fd, char hand, byte status)
  * @param[out] ammo The ammo used in the weapon (is the same as weapon for grenades and similar).
  * @param[out] weap_fd_idx weapon_mod index in the ammo for the weapon.
  */
-static void GetWeaponAndAmmo (char hand, objDef_t **weapon, objDef_t **ammo, byte *weap_fd_idx)
+static void CL_GetWeaponAndAmmo (char hand, objDef_t **weapon, objDef_t **ammo, int *weap_fd_idx)
 {
 	invList_t *invlist_weapon = NULL;
 
@@ -474,7 +474,7 @@ static void GetWeaponAndAmmo (char hand, objDef_t **weapon, objDef_t **ammo, byt
 
 	*weap_fd_idx = INV_FiredefsIDXForWeapon(*ammo, invlist_weapon->item.t);
 
-	Com_Printf("GetWeaponAndAmmo: weapon %i ammo %i -- %s %s %i\n", invlist_weapon->item.t, invlist_weapon->item.m, (*weapon)->name, (*ammo)->name, *weap_fd_idx);
+	Com_Printf("CL_GetWeaponAndAmmo: weapon %i ammo %i -- %s %s %i\n", invlist_weapon->item.t, invlist_weapon->item.m, (*weapon)->name, (*ammo)->name, *weap_fd_idx);
 }
 
 /**
@@ -501,7 +501,7 @@ void CL_DisplayFiremodes (void)
 		return;
 	}
 
-	GetWeaponAndAmmo(hand[0], &weapon, &ammo, &weap_fd_idx);
+	CL_GetWeaponAndAmmo(hand[0], &weapon, &ammo, &weap_fd_idx);
 
 	Com_DPrintf("CL_DisplayFiremodes: %s %s %i\n", weapon->name, ammo->name, weap_fd_idx);
 
@@ -557,7 +557,7 @@ void CL_DisplayFiremodes (void)
 void CL_FireWeapon (void)
 {
 	char *hand;
-	byte firemode;
+	int firemode;
 
 	objDef_t *weapon = NULL;
 	objDef_t *ammo = NULL;
@@ -585,7 +585,7 @@ void CL_FireWeapon (void)
 		return;
 	}
 
-	GetWeaponAndAmmo(hand[0], &weapon, &ammo, &weap_fd_idx);
+	CL_GetWeaponAndAmmo(hand[0], &weapon, &ammo, &weap_fd_idx);
 	Com_Printf("CL_FireWeapon: %s %s %i\n", weapon->name, ammo->name, weap_fd_idx);
 
 	if (ammo->fd[weap_fd_idx][firemode].time <= selActor->TU) {
