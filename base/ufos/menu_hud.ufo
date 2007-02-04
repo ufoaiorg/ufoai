@@ -922,15 +922,14 @@ menu hud
 	string right_fm_name2 { string "*cvar mn_r_fm_name2"	pos "196 454"	invis true }
 	string right_fm_name3 { string "*cvar mn_r_fm_name3"	pos "196 390"	invis true }
 
-	// TODO: implement tooltips for strings.
-	string left_fm_tu0 { string "*cvar mn_l_fm_tu0"	pos "654 614"	invis true } // 	tooltip "*cvar mn_l_fm_tt_tu0" size "50 16" click }
-	string left_fm_tu1 { string "*cvar mn_l_fm_tu1"	pos "654 550"	invis true } //	tooltip "*cvar mn_l_fm_tt_tu1" size "50 16" click }
-	string left_fm_tu2 { string "*cvar mn_l_fm_tu2"	pos "654 486"	invis true } //	tooltip "*cvar mn_l_fm_tt_tu2" size "50 16" click }
-	string left_fm_tu3 { string "*cvar mn_l_fm_tu3"	pos "654 422"	invis true } //	tooltip "*cvar mn_l_fm_tt_tu3" size "50 16" click }
-	string right_fm_tu0 { string "*cvar mn_r_fm_tu0"	pos "196 614"	invis true } //	tooltip "*cvar mn_r_fm_tt_tu0" size "50 16" click }
-	string right_fm_tu1 { string "*cvar mn_r_fm_tu1"	pos "196 550"	invis true } //	tooltip "*cvar mn_r_fm_tt_tu1" size "50 16" click }
-	string right_fm_tu2 { string "*cvar mn_r_fm_tu2"	pos "196 486"	invis true } //	tooltip "*cvar mn_r_fm_tt_tu2" size "50 16" click }
-	string right_fm_tu3 { string "*cvar mn_r_fm_tu3"	pos "196 422"	invis true } //	tooltip "*cvar mn_r_fm_tt_tu3" size "50 16" click }
+	string left_fm_tu0 { string "*cvar mn_l_fm_tu0"	pos "654 614"	invis true	tooltip "*cvar mn_l_fm_tt_tu0" size "50 16" click }
+	string left_fm_tu1 { string "*cvar mn_l_fm_tu1"	pos "654 550"	invis true	tooltip "*cvar mn_l_fm_tt_tu1" size "50 16" click }
+	string left_fm_tu2 { string "*cvar mn_l_fm_tu2"	pos "654 486"	invis true	tooltip "*cvar mn_l_fm_tt_tu2" size "50 16" click }
+	string left_fm_tu3 { string "*cvar mn_l_fm_tu3"	pos "654 422"	invis true	tooltip "*cvar mn_l_fm_tt_tu3" size "50 16" click }
+	string right_fm_tu0 { string "*cvar mn_r_fm_tu0"	pos "196 614"	invis true	tooltip "*cvar mn_r_fm_tt_tu0" size "50 16" click }
+	string right_fm_tu1 { string "*cvar mn_r_fm_tu1"	pos "196 550"	invis true	tooltip "*cvar mn_r_fm_tt_tu1" size "50 16" click }
+	string right_fm_tu2 { string "*cvar mn_r_fm_tu2"	pos "196 486"	invis true	tooltip "*cvar mn_r_fm_tt_tu2" size "50 16" click }
+	string right_fm_tu3 { string "*cvar mn_r_fm_tu3"	pos "196 422"	invis true	tooltip "*cvar mn_r_fm_tt_tu3" size "50 16" click }
 
 	string left_fm_shot0 { string "*cvar mn_l_fm_shot0"	pos "728 614"	invis true }
 	string left_fm_shot1 { string "*cvar mn_l_fm_shot1"	pos "728 550"	invis true }

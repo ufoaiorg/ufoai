@@ -425,12 +425,11 @@ static void DisplayFiremodeEntry (fireDef_t *fd, char hand, byte status)
 			Cbuf_AddText(va("set_right_ina%i\n", fd->fd_idx));
 		}
 		
-		/* TODO: implement tooltips for strings. 
 		if ( selActor->TU > fd->time)
 			Cvar_Set(va("mn_r_fm_tt_tu%i", fd->fd_idx),va(_("Remaining TUs: %i"),selActor->TU - fd->time));
 		else
 			Cvar_Set(va("mn_r_fm_tt_tu%i", fd->fd_idx),_("No remaining TUs left after shot."));
-		*/
+
 		Cvar_Set(va("mn_r_fm_name%i", fd->fd_idx),  va("%s", fd->name));
 		Cvar_Set(va("mn_r_fm_tu%i", fd->fd_idx),va(_("TU: %i"),  fd->time));
 		Cvar_Set(va("mn_r_fm_shot%i", fd->fd_idx), va(_("Shots:%i"), fd->ammo));
@@ -444,12 +443,11 @@ static void DisplayFiremodeEntry (fireDef_t *fd, char hand, byte status)
 			Cbuf_AddText(va("set_left_ina%i\n", fd->fd_idx));
 		}
 
-		/* TODO: implement tooltips for strings. 
 		if ( selActor->TU > fd->time)
 			Cvar_Set(va("mn_l_fm_tt_tu%i", fd->fd_idx),va(_("Remaining TUs: %i"),selActor->TU - fd->time));
 		else
 			Cvar_Set(va("mn_l_fm_tt_tu%i", fd->fd_idx),_("No remaining TUs left after shot."));
-		*/
+
 		Cvar_Set(va("mn_l_fm_name%i", fd->fd_idx),  va("%s", fd->name));
 		Cvar_Set(va("mn_l_fm_tu%i", fd->fd_idx),va(_("TU: %i"),  fd->time));
 		Cvar_Set(va("mn_l_fm_shot%i", fd->fd_idx), va(_("Shots:%i"), fd->ammo));
