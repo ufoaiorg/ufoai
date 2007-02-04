@@ -94,6 +94,28 @@ item laserrifle
 	buytype		0
 }
 
+
+// =======================
+// HEAVY LASER
+// =======================
+item heavylaser
+{
+	name		"_Heavy Laser"
+	model		weapons/laserheavy/laserheavy
+	weapon		true
+	type		biggun
+	category	3
+	holdtwohanded	false
+	firetwohanded	true
+	shape		"0 0 5 2"
+	center		"8.5 0 1.5"
+	scale		1.15
+	ammo		6
+	reload		16
+	price		22540
+	buytype		0
+}
+
 item laserrifle_ammo
 {
 	name		"_D-F Cartridge"
@@ -230,27 +252,6 @@ item laserrifle_ammo
 	}
 }
 
-
-// =======================
-// HEAVY LASER
-// =======================
-item heavylaser
-{
-	name		"_Heavy Laser"
-	model		weapons/laserheavy/laserheavy
-	weapon		true
-	type		biggun
-	category	3
-	holdtwohanded	false
-	firetwohanded	true
-	shape		"0 0 5 2"
-	center		"8.5 0 1.5"
-	scale		1.15
-	ammo		6
-	reload		16
-	price		22540
-	buytype		0
-}
 
 // Commented out since all laser wepaons will use the common D-F Cartridge from now on.
 // TODO: We still need to correct the different stats for each weapon though.

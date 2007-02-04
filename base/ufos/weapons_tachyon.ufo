@@ -185,7 +185,7 @@ item tachyonsniper_ammo
 	price		3500
 	buytype		0
 
-	weapon_mod tachyonrifle
+	weapon_mod tachyonsniper
 	{
 		firedef 
 		{
