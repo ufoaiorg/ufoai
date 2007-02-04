@@ -387,7 +387,6 @@ void CL_PingServers_f(void);
 void CL_Snd_Restart_f(void);
 void S_ModifySndRef_f (void);
 void CL_ParseMedalsAndRanks( char *title, char **text, byte parserank );
-int CL_GetRank(char* rankID);
 void CL_ParseUGVs(char *title, char **text);
 char* CL_ToDifficultyName(int difficulty);
 void CL_SpawnSoldiers_f(void);
@@ -685,7 +684,6 @@ void CL_ReceiveItem(sizebuf_t * buf, item_t * item, int * container, int * x, in
 void CL_ReceiveInventory(sizebuf_t * buf, inventory_t * i);
 void CL_ResetTeams(void);
 void CL_ParseResults(sizebuf_t * buf);
-void CL_SendTeamInfo(sizebuf_t * buf, int baseID, int num);
 void CL_SendCurTeamInfo(sizebuf_t * buf, character_t ** team, int num);
 void CL_ReloadAndRemoveCarried(equipDef_t * equip);
 void CL_CleanTempInventory(void);

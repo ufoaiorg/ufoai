@@ -26,12 +26,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 
+static int CL_GetRank(char* rankID);
+static void CL_SendTeamInfo(sizebuf_t * buf, int baseID, int num);
+
 /**
  * @brief Translate the skin id to skin name
  * @param[in] id The id of the skin
  * @return Translated skin name
  */
-char* CL_GetTeamSkinName (int id)
+extern char* CL_GetTeamSkinName (int id)
 {
 	switch(id) {
 	case 0:
@@ -60,7 +63,7 @@ char* CL_GetTeamSkinName (int id)
  * @sa G_WriteItem
  * @sa G_ReadItem
  */
-void CL_SendItem (sizebuf_t *buf, item_t item, int container, int x, int y)
+extern void CL_SendItem (sizebuf_t *buf, item_t item, int container, int x, int y)
 {
 	assert (item.t != NONE);
 /*	Com_Printf("Add item %s to container %i (t=%i:a=%i:m=%i) (x=%i:y=%i)\n", csi.ods[item.t].id, container, item.t, item.a, item.m, x, y);*/
@@ -73,7 +76,7 @@ void CL_SendItem (sizebuf_t *buf, item_t item, int container, int x, int y)
  * @sa CL_ReceiveInventory
  * @sa G_SendInventory
  */
-void CL_SendInventory (sizebuf_t *buf, inventory_t *i)
+extern void CL_SendInventory (sizebuf_t *buf, inventory_t *i)
 {
 	int j, nr = 0;
 	invList_t *ic;
@@ -94,7 +97,7 @@ void CL_SendInventory (sizebuf_t *buf, inventory_t *i)
  * @sa G_WriteItem
  * @sa G_ReadItem
  */
-void CL_ReceiveItem (sizebuf_t *buf, item_t *item, int *container, int *x, int *y)
+extern void CL_ReceiveItem (sizebuf_t *buf, item_t *item, int *container, int *x, int *y)
 {
 	MSG_ReadFormat(buf, "bbbbbb", &item->t, &item->a, &item->m, container, x, y);
 }
@@ -106,7 +109,7 @@ void CL_ReceiveItem (sizebuf_t *buf, item_t *item, int *container, int *x, int *
  * @sa Com_AddToInventory
  * @sa G_SendInventory
  */
-void CL_ReceiveInventory (sizebuf_t *buf, inventory_t *i)
+extern void CL_ReceiveInventory (sizebuf_t *buf, inventory_t *i)
 {
 	item_t item;
 	int container, x, y;
@@ -188,7 +191,7 @@ static void CL_GiveName_f (void)
  * @todo fix the assignment of ucn??
  * @todo fix the WholeTeam stuff
  */
-void CL_GenerateCharacter(employee_t *employee, char *team, employeeType_t employeeType)
+extern void CL_GenerateCharacter (employee_t *employee, char *team, employeeType_t employeeType)
 {
 	character_t *chr = NULL;
 	char teamDefName[MAX_VAR];
@@ -281,7 +284,7 @@ void CL_GenerateCharacter(employee_t *employee, char *team, employeeType_t emplo
  * @brief
  * @sa CL_GenerateCharacter
  */
-void CL_ResetCharacters(base_t* const base)
+extern void CL_ResetCharacters (base_t* const base)
 {
 	int i;
 	character_t *chr;
@@ -382,7 +385,7 @@ static void CL_TeamComments_f (void)
 /**
  * @brief
  */
-void CL_AddCarriedToEq(equipDef_t * ed)
+extern void CL_AddCarriedToEq (equipDef_t * ed)
 {
 	invList_t *ic, *next;
 	int p, container;
@@ -506,7 +509,7 @@ static item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
  * @brief
  * @sa CL_AddWeaponAmmo
  */
-void CL_ReloadAndRemoveCarried (equipDef_t * ed)
+extern void CL_ReloadAndRemoveCarried (equipDef_t * ed)
 {
 	character_t *cp;
 	invList_t *ic, *next;
@@ -540,9 +543,9 @@ void CL_ReloadAndRemoveCarried (equipDef_t * ed)
 }
 
 /**
- * @brief
+ * @brief Clears all containers that are temp containers (see script definition)
  */
-void CL_CleanTempInventory(void)
+extern void CL_CleanTempInventory (void)
 {
 	int i, k;
 
@@ -924,7 +927,7 @@ static void CL_MarkTeam_f (void)
  * @return qboolean qtrue if the soldier was found in the aircraft(s) else: qfalse.
  * @pre Needs baseCurrent set to the base the aircraft is located in.
  */
-qboolean CL_SoldierInAircraft (int employee_idx, int aircraft_idx)
+extern qboolean CL_SoldierInAircraft (int employee_idx, int aircraft_idx)
 {
 	int i;
 
@@ -951,7 +954,7 @@ qboolean CL_SoldierInAircraft (int employee_idx, int aircraft_idx)
  * @param[in] aircraft_idx The index of aircraft in the base. Use -1 to remove the soldier from any aircraft.
  * @pre Needs baseCurrent set to the base the aircraft is located in.
  */
-void CL_RemoveSoldierFromAircraft (int employee_idx, int aircraft_idx)
+extern void CL_RemoveSoldierFromAircraft (int employee_idx, int aircraft_idx)
 {
 	aircraft_t *aircraft;
 	int i;
@@ -983,7 +986,7 @@ void CL_RemoveSoldierFromAircraft (int employee_idx, int aircraft_idx)
  * @param[in] aircraft_idx The index of aircraft in the base.
  * @param[in] base_idx The index of the base the aircraft is located in.
  */
-void CL_RemoveSoldiersFromAircraft (int aircraft_idx, int base_idx)
+extern void CL_RemoveSoldiersFromAircraft (int aircraft_idx, int base_idx)
 {
 	int i = 0;
 	base_t *base = NULL;
@@ -1038,6 +1041,9 @@ static qboolean CL_AssignSoldierToAircraft (int employee_idx, int aircraft_idx)
 
 
 #ifdef DEBUG
+/**
+ * @brief
+ */
 static void CL_TeamListDebug_f (void)
 {
 	int i, cnt;
@@ -1164,7 +1170,7 @@ static void CL_MessageMenu_f (void)
 /**
  * @brief Saves a team
  */
-qboolean CL_SaveTeam (char *filename)
+static qboolean CL_SaveTeam (char *filename)
 {
 	sizebuf_t sb;
 	byte buf[MAX_TEAMDATASIZE];
@@ -1235,7 +1241,7 @@ static void CL_SaveTeamSlot_f (void)
  * @brief Load a team member for multiplayer
  * @sa CL_LoadTeam
  */
-void CL_LoadTeamMember (sizebuf_t * sb, character_t * chr)
+static void CL_LoadTeamMember (sizebuf_t * sb, character_t * chr)
 {
 	int i;
 
@@ -1276,7 +1282,7 @@ void CL_LoadTeamMember (sizebuf_t * sb, character_t * chr)
  * @sa CL_LoadTeam
  * @sa CL_SaveTeam
  */
-void CL_LoadTeamMultiplayer (char *filename)
+static void CL_LoadTeamMultiplayer (char *filename)
 {
 	sizebuf_t sb;
 	byte buf[MAX_TEAMDATASIZE];
@@ -1373,7 +1379,7 @@ static void CL_LoadTeamSlot_f (void)
 /**
  * @brief Call all the needed functions to generate a new initial team (e.g. for multiplayer)
  */
-void CL_GenerateNewTeam_f (void)
+static void CL_GenerateNewTeam_f (void)
 {
 	CL_ResetTeamInBase();
 	Cvar_Set("mn_teamname", _("NewTeam"));
@@ -1384,7 +1390,7 @@ void CL_GenerateNewTeam_f (void)
 /**
  * @brief
  */
-void CL_ResetTeams (void)
+extern void CL_ResetTeams (void)
 {
 	Cmd_AddCommand("new_team", CL_GenerateNewTeam_f, NULL);
 	Cmd_AddCommand("givename", CL_GiveName_f, NULL);
@@ -1415,7 +1421,7 @@ void CL_ResetTeams (void)
  *
  * Called by CL_SaveTeam to store the team info
  */
-void CL_SendTeamInfo (sizebuf_t * buf, int baseID, int num)
+static void CL_SendTeamInfo (sizebuf_t * buf, int baseID, int num)
 {
 	character_t *chr;
 	int i, j;
@@ -1470,7 +1476,7 @@ void CL_SendTeamInfo (sizebuf_t * buf, int baseID, int num)
  *
  * @note Called in cl_main.c CL_Precache_f to send the team info to server
  */
-void CL_SendCurTeamInfo (sizebuf_t * buf, character_t ** team, int num)
+extern void CL_SendCurTeamInfo (sizebuf_t * buf, character_t ** team, int num)
 {
 	character_t *chr;
 	int i, j;
@@ -1533,7 +1539,7 @@ typedef struct updateCharacter_s {
  * @sa G_EndGame
  * @note you also have to update the pascal string size in G_EndGame if you change the buffer here
  */
-void CL_ParseCharacterData (sizebuf_t *buf, qboolean updateCharacter)
+extern void CL_ParseCharacterData (sizebuf_t *buf, qboolean updateCharacter)
 {
 	static updateCharacter_t updateCharacterArray[MAX_WHOLETEAM];
 	static int num = 0;
@@ -1598,7 +1604,7 @@ void CL_ParseCharacterData (sizebuf_t *buf, qboolean updateCharacter)
  * @sa G_EndGame
  * @sa CL_GameResults_f
  */
-void CL_ParseResults(sizebuf_t * buf)
+extern void CL_ParseResults (sizebuf_t * buf)
 {
 	static char resultText[MAX_MENUTEXTLEN];
 	byte num_spawned[MAX_TEAMS];
@@ -1806,7 +1812,7 @@ void CL_ParseResults(sizebuf_t * buf)
 /**
  * @brief Get the index number of the given rankID
  */
-int CL_GetRank(char* rankID)
+static int CL_GetRank (char* rankID)
 {
 	int i;
 
@@ -1822,7 +1828,7 @@ int CL_GetRank(char* rankID)
 	return -1;
 }
 
-static value_t rankValues[] =
+static const value_t rankValues[] =
 {
 	{ "name",	V_TRANSLATION_STRING,	offsetof( rank_t, name ) },
 	{ "image",	V_STRING,				offsetof( rank_t, image ) },
@@ -1835,12 +1841,12 @@ static value_t rankValues[] =
 /**
  * @brief Parse medals and ranks defined in the medals.ufo file.
  */
-void CL_ParseMedalsAndRanks( char *title, char **text, byte parserank )
+extern void CL_ParseMedalsAndRanks (char *title, char **text, byte parserank)
 {
 	rank_t		*rank = NULL;
 	char	*errhead = "Com_ParseMedalsAndRanks: unexptected end of file (medal/rank ";
 	char	*token;
-	value_t	*v;
+	const value_t	*v;
 
 	/* get name list body body */
 	token = COM_Parse( text );
@@ -1893,7 +1899,7 @@ void CL_ParseMedalsAndRanks( char *title, char **text, byte parserank )
 	}
 }
 
-static value_t ugvValues[] =
+static const value_t ugvValues[] =
 {
 	{ "tu",	V_INT,			offsetof( ugv_t, tu ) },
 	{ "weapon",	V_STRING,	offsetof( ugv_t, weapon ) },
@@ -1906,11 +1912,11 @@ static value_t ugvValues[] =
 /**
  * @brief Parse UGVs
  */
-void CL_ParseUGVs(char *title, char **text)
+extern void CL_ParseUGVs (char *title, char **text)
 {
 	char	*errhead = "Com_ParseUGVs: unexptected end of file (ugv ";
 	char	*token;
-	value_t	*v;
+	const value_t	*v;
 	ugv_t*	ugv;
 
 	/* get name list body body */
