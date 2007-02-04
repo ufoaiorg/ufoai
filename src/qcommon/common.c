@@ -324,9 +324,9 @@ void MSG_WriteChar(sizebuf_t * sb, int c)
  * @brief
  */
 #ifdef DEBUG
-void MSG_WriteByteDebug(sizebuf_t * sb, int c, char *file, int line)
+void MSG_WriteByteDebug (sizebuf_t * sb, int c, char *file, int line)
 #else
-void MSG_WriteByte(sizebuf_t * sb, int c)
+void MSG_WriteByte (sizebuf_t * sb, int c)
 #endif
 {
 	byte *buf;
@@ -345,9 +345,9 @@ void MSG_WriteByte(sizebuf_t * sb, int c)
  * @brief
  */
 #ifdef DEBUG
-void MSG_WriteShortDebug(sizebuf_t * sb, int c, char* file, int line)
+void MSG_WriteShortDebug (sizebuf_t * sb, int c, char* file, int line)
 #else
-void MSG_WriteShort(sizebuf_t * sb, int c)
+void MSG_WriteShort (sizebuf_t * sb, int c)
 #endif
 {
 	byte *buf;
@@ -576,7 +576,7 @@ void MSG_BeginReading(sizebuf_t * msg)
  *
  * returns -1 if no more characters are available
  */
-int MSG_ReadChar(sizebuf_t * msg_read)
+int MSG_ReadChar (sizebuf_t * msg_read)
 {
 	int c;
 
@@ -590,9 +590,11 @@ int MSG_ReadChar(sizebuf_t * msg_read)
 }
 
 /**
- * @brief
+ * @brief Reads a byte from the netchannel
+ * @note Beware that you don't put this into a byte or short - this will overflow
+ * use an int value to store the return value!!!
  */
-int MSG_ReadByte(sizebuf_t * msg_read)
+int MSG_ReadByte (sizebuf_t * msg_read)
 {
 	int c;
 
@@ -608,7 +610,7 @@ int MSG_ReadByte(sizebuf_t * msg_read)
 /**
  * @brief
  */
-int MSG_ReadShort(sizebuf_t * msg_read)
+int MSG_ReadShort (sizebuf_t * msg_read)
 {
 	int c;
 
@@ -626,7 +628,7 @@ int MSG_ReadShort(sizebuf_t * msg_read)
 /**
  * @brief
  */
-int MSG_ReadLong(sizebuf_t * msg_read)
+int MSG_ReadLong (sizebuf_t * msg_read)
 {
 	int c;
 

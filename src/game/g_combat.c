@@ -1286,7 +1286,7 @@ qboolean G_ResolveRF (edict_t *ent, qboolean mock)
 {
 	player_t *player;
 	int tus, hand, team;
-	byte firemode;
+	int firemode;
 	qboolean tookShot;
 	char reason[64];
 
