@@ -816,7 +816,6 @@ menu hud
 	pic bt_left_fm0
 	{
 		image	hud/firemode
-		blend blend
 		pos		"750 592"
 		texl	"0 0"
 		texh	"255  63"
@@ -828,7 +827,6 @@ menu hud
 	pic bt_left_fm1
 	{
 		image	hud/firemode
-		blend blend
 		pos		"750 528"
 		texl	"0 0"
 		texh	"255 63"
@@ -840,7 +838,6 @@ menu hud
 	pic bt_left_fm2
 	{
 		image	hud/firemode
-		blend blend
 		pos		"750 464"
 		texl	"0 0"
 		texh	"255 63"
@@ -852,7 +849,6 @@ menu hud
 	pic bt_left_fm3
 	{
 		image	hud/firemode
-		blend blend
 		pos		"750 400"
 		texl	"0 0"
 		texh	"255 63"
@@ -865,7 +861,6 @@ menu hud
 	pic bt_right_fm0
 	{
 		image	hud/firemode
-		blend blend
 		pos		"100 592"
 		texl	"0 0"
 		texh	"255 63"
@@ -877,7 +872,6 @@ menu hud
 	pic bt_right_fm1
 	{
 		image	hud/firemode
-		blend blend
 		pos		"100 528"
 		texl	"0 0"
 		texh	"255 63"
@@ -889,7 +883,6 @@ menu hud
 	pic bt_right_fm2
 	{
 		image	hud/firemode
-		blend blend
 		pos		"100 464"
 		texl	"0 0"
 		texh	"255 63"
@@ -901,7 +894,6 @@ menu hud
 	pic bt_right_fm3
 	{
 		image	hud/firemode
-		blend blend
 		pos		"100 400"
 		texl	"0 0"
 		texh	"255 63"
