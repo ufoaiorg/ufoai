@@ -1194,11 +1194,12 @@ static qboolean G_CanReactionFire(edict_t *ent, edict_t *target, char *reason)
 }
 
 /**
- * @brief Get the number of TUs that ent needs to fire at target, also optionally return the firing hand
- * @param[in] ent The shooter entity
- * @param[in] target The target entity
- * @param[out] hand If not NULL then this stores the hand that the shooter will fire with
+ * @brief Get the number of TUs that ent needs to fire at target, also optionally return the firing hand. Used for reaction fire.
+ * @param[in] ent The shooter entity.
+ * @param[in] target The target entity.
+ * @param[out] hand If not NULL then this stores the hand (combind with the 'reaction' info) that the shooter will fire with.
  * @returns The number of TUs required to fire or -1 if firing is not possible
+ * @todo Add check for REACTION_FIREMODE info (including more than 2 firemodes) here so the correct firemode is choosen for the reaction fire.
  */
 static int G_GetFiringTUs (edict_t *ent, edict_t *target, int *hand, int *firemode)
 {
