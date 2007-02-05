@@ -633,9 +633,9 @@ qboolean CL_CheckMenuAction(int time, invList_t *weapon, int mode);
 
 void CL_DisplayHudMessage(char *text, int time);
 void CL_ResetWeaponButtons(void);
-void CL_DisplayFiremodes(void);
+void CL_DisplayFiremodes_f(void);
 void CL_FireWeapon(void);
-void CL_SelectReactionFiremode (void);
+void CL_SelectReactionFiremode_f(void);
 
 void CL_ConditionalMoveCalc(struct routing_s *map, le_t *le, int distance);
 qboolean CL_ActorSelect(le_t * le);

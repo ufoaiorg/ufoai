@@ -743,9 +743,9 @@ void CL_InitInput(void)
 	Cmd_AddCommand("firels", CL_FireLeftSecondary, NULL);
 	/* TODO: The fireweap entry below replaces these 4. Please leave this in until all hud files (esp. althud) are converted to the new firemode lists. */
 #endif
-	Cmd_AddCommand("list_firemodes", CL_DisplayFiremodes, "Display a list of firemodes for a weapon+ammo.");
+	Cmd_AddCommand("list_firemodes", CL_DisplayFiremodes_f, "Display a list of firemodes for a weapon+ammo.");
 	Cmd_AddCommand("fireweap", CL_FireWeapon, "Start aiming the weapon.");
-	Cmd_AddCommand("sel_reactmode", CL_SelectReactionFiremode, "Change/Select firemode used for reaction fire.");
+	Cmd_AddCommand("sel_reactmode", CL_SelectReactionFiremode_f, "Change/Select firemode used for reaction fire.");
 
 	Cmd_AddCommand("reloadleft", CL_ReloadLeft, NULL);
 	Cmd_AddCommand("reloadright", CL_ReloadRight, NULL);
