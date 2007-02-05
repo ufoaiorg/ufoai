@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define VIS_APPEAR	1
 #define VIS_PERISH	2
 
-/* Stores level.activeTeam while G_ReactionFire() is abusing it. */
+/* Stores level.activeTeam while G_CanReactionFire() is abusing it. */
 int turnTeam;
 
 static qboolean sentAppearPerishEvent;
