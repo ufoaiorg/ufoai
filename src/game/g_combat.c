@@ -1199,11 +1199,9 @@ static qboolean G_CanReactionFire(edict_t *ent, edict_t *target, char *reason)
  * @param[in] target The target entity.
  * @param[out] hand If not NULL then this stores the hand (combind with the 'reaction' info) that the shooter will fire with.
  * @returns The number of TUs required to fire or -1 if firing is not possible
- * @todo Add check for REACTION_FIREMODE info (including more than 2 firemodes) here so the correct firemode is choosen for the reaction fire.
  */
 static int G_GetFiringTUs (edict_t *ent, edict_t *target, int *hand, int *firemode)
 {
-	int fmode1 = 0;
 	int weapon_fd_idx;
 
 	/* Fire the first weapon in hands if everything is ok. */
@@ -1214,14 +1212,15 @@ static int G_GetFiringTUs (edict_t *ent, edict_t *target, int *hand, int *firemo
 			|| RIGHT(ent)->item.a > 0) ) {
 		weapon_fd_idx = INV_FiredefsIDXForWeapon(&gi.csi->ods[RIGHT(ent)->item.m], RIGHT(ent)->item.t);
 
-		if ( gi.csi->ods[RIGHT(ent)->item.m].fd[weapon_fd_idx][fmode1].time + sv_reaction_leftover->integer <= ent->TU
-		  && gi.csi->ods[RIGHT(ent)->item.m].fd[weapon_fd_idx][fmode1].range > VectorDist(ent->origin, target->origin) ) {
+		*firemode = REACTION_FIREMODE[ent->team][ent->number][0]; /* Get selected (or default) firemode for the weapon in the right hand. */
+				
+		if ( gi.csi->ods[RIGHT(ent)->item.m].fd[weapon_fd_idx][*firemode].time + sv_reaction_leftover->integer <= ent->TU
+		  && gi.csi->ods[RIGHT(ent)->item.m].fd[weapon_fd_idx][*firemode].range > VectorDist(ent->origin, target->origin) ) {
 
 			if (hand) {
 				*hand = ST_RIGHT_REACTION;
-				*firemode = fmode1;
 			}
-			return gi.csi->ods[RIGHT(ent)->item.m].fd[weapon_fd_idx][fmode1].time + sv_reaction_leftover->integer; /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
+			return gi.csi->ods[RIGHT(ent)->item.m].fd[weapon_fd_idx][*firemode].time + sv_reaction_leftover->integer; /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
 		}
 	}
 	if (LEFT(ent)
@@ -1229,15 +1228,18 @@ static int G_GetFiringTUs (edict_t *ent, edict_t *target, int *hand, int *firemo
 		&& gi.csi->ods[LEFT(ent)->item.t].weapon
 		&& (!gi.csi->ods[LEFT(ent)->item.t].reload
 			|| LEFT(ent)->item.a > 0) ) {
+
 		weapon_fd_idx = INV_FiredefsIDXForWeapon(&gi.csi->ods[LEFT(ent)->item.m], LEFT(ent)->item.t);
-		if ( gi.csi->ods[LEFT(ent)->item.m].fd[weapon_fd_idx][fmode1].time + sv_reaction_leftover->integer <= ent->TU
-		  && gi.csi->ods[LEFT(ent)->item.m].fd[weapon_fd_idx][fmode1].range > VectorDist(ent->origin, target->origin) ) {
+		
+		*firemode = REACTION_FIREMODE[ent->team][ent->number][1]; /* Get selected (or default) firemode for the weapon in the left hand. */
+
+		if ( gi.csi->ods[LEFT(ent)->item.m].fd[weapon_fd_idx][*firemode].time + sv_reaction_leftover->integer <= ent->TU
+		  && gi.csi->ods[LEFT(ent)->item.m].fd[weapon_fd_idx][*firemode].range > VectorDist(ent->origin, target->origin) ) {
 
 			if (hand) {
 				*hand = ST_LEFT_REACTION;
-				*firemode = fmode1;
 			}
-			return gi.csi->ods[LEFT(ent)->item.m].fd[weapon_fd_idx][fmode1].time + sv_reaction_leftover->integer; /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
+			return gi.csi->ods[LEFT(ent)->item.m].fd[weapon_fd_idx][*firemode].time + sv_reaction_leftover->integer; /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
 		}
 	}
 	return -1;
