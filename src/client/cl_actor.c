@@ -401,7 +401,7 @@ static int CL_GetActorNumber (le_t * le)
 {
 	int actor_idx;
 	for (actor_idx = 0; actor_idx < cl.numTeamList; actor_idx++) {
-		if (cl.teamList[actor_idx] == selActor)
+		if (cl.teamList[actor_idx] == le)
 			return actor_idx;
 	}
 	return -1;
