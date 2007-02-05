@@ -893,6 +893,14 @@ static qboolean G_GetShotFromType (edict_t *ent, int type, byte firemode, item_t
 
 /**
  * @brief Setup for shooting, either real or mock
+ * @param[in] player TODO: The player this action belongs to (i.e. either the ai or the player)
+ * @param[in] num TODO: The index number of the 'inventory' that is used for the shot (i.e. left or right hand)
+ * @param[in] at Position to fire on.
+ * @param[in] type What type of shot this is (left, right reaction-left etc...).
+ * @param[in] firemode The firemode index of the ammo for the used weapon (objDef.fd[][x])  .
+ * @param[in] mock TODO: ?
+ * @param[in] allowReaction Set to qtrue to check whether this has forced any reaction fire, otherwise qfalse.
+ * @return qtrue if everthing went ok (i.e. the shot(s) where fired ok), otherwise qfalse.
  */
 qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type, byte firemode, shot_mock_t *mock, qboolean allowReaction)
 {
