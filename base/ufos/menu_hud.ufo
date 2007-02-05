@@ -768,10 +768,22 @@ menu hud
 	
 	// ==================
 	//  FIREMODES (seperate lists for each weaponhand)
+	/*
+		fm	... firemode
+		left/right/l/r  ... The hand/side of the firemode list 
+		name ... The name of the firemode.
+		tu ... timeunits
+		shots ... The number of shots one firemode will use.
+		tt ... tooltip
+		cb ... checkboxes
+		a ... active
+		ina ... inactive
+		vis ... visible
+		inv ... invisible
+	*/
 	// ==================
 
 	/* Firemode console functions ===================================*/
-	// confunc set_all_inv { cmd "set_left_inv0;set_left_inv1;set_left_inv2;set_left_inv3;set_right_inv0;set_right_inv1;set_right_inv2;set_right_inv3;"}
 	
 	confunc set_left_ina0 { *bt_left_fm0	texl "0 64"	*bt_left_fm0 texh "255 128" }
 	confunc set_left_ina1 { *bt_left_fm1	texl "0 64"	*bt_left_fm1 texh "255 128" }
@@ -791,14 +803,14 @@ menu hud
 	confunc set_right_a2 { *bt_right_fm2	texl "0 0"	*bt_right_fm2 texh "255 63" }
 	confunc set_right_a3 { *bt_right_fm3	texl "0 0"	*bt_right_fm3 texh "255 63" }
 
-	confunc set_left_inv0 { *bt_left_fm0 invis true	*left_fm_name0 invis true	*left_fm_tu0 invis true	*left_fm_shot0 invis true }
-	confunc set_left_inv1 { *bt_left_fm1 invis true	*left_fm_name1 invis true	*left_fm_tu1 invis true	*left_fm_shot1 invis true }
-	confunc set_left_inv2 { *bt_left_fm2 invis true	*left_fm_name2 invis true	*left_fm_tu2 invis true	*left_fm_shot2 invis true }
-	confunc set_left_inv3 { *bt_left_fm3 invis true	*left_fm_name3 invis true	*left_fm_tu3 invis true	*left_fm_shot3 invis true }
-	confunc set_right_inv0 { *bt_right_fm0 invis true	*right_fm_name0 invis true	*right_fm_tu0 invis true	*right_fm_shot0 invis true }
-	confunc set_right_inv1 { *bt_right_fm1 invis true	*right_fm_name1 invis true	*right_fm_tu1 invis true	*right_fm_shot1 invis true }
-	confunc set_right_inv2 { *bt_right_fm2 invis true	*right_fm_name2 invis true	*right_fm_tu2 invis true	*right_fm_shot2 invis true }
-	confunc set_right_inv3 { *bt_right_fm3 invis true	*right_fm_name3 invis true	*right_fm_tu3 invis true	*right_fm_shot3 invis true }
+	confunc set_left_inv0 { *bt_left_fm0 invis true	*left_fm_name0 invis true	*left_fm_tu0 invis true	*left_fm_shot0 invis true	*bt_left_cb0 invis true }
+	confunc set_left_inv1 { *bt_left_fm1 invis true	*left_fm_name1 invis true	*left_fm_tu1 invis true	*left_fm_shot1 invis true	*bt_left_cb1 invis true }
+	confunc set_left_inv2 { *bt_left_fm2 invis true	*left_fm_name2 invis true	*left_fm_tu2 invis true	*left_fm_shot2 invis true	*bt_left_cb2 invis true }
+	confunc set_left_inv3 { *bt_left_fm3 invis true	*left_fm_name3 invis true	*left_fm_tu3 invis true	*left_fm_shot3 invis true	*bt_left_cb3 invis true }
+	confunc set_right_inv0 { *bt_right_fm0 invis true	*right_fm_name0 invis true	*right_fm_tu0 invis true	*right_fm_shot0 invis true	*bt_right_cb0 invis true }
+	confunc set_right_inv1 { *bt_right_fm1 invis true	*right_fm_name1 invis true	*right_fm_tu1 invis true	*right_fm_shot1 invis true	*bt_right_cb1 invis true }
+	confunc set_right_inv2 { *bt_right_fm2 invis true	*right_fm_name2 invis true	*right_fm_tu2 invis true	*right_fm_shot2 invis true	*bt_right_cb2 invis true }
+	confunc set_right_inv3 { *bt_right_fm3 invis true	*right_fm_name3 invis true	*right_fm_tu3 invis true	*right_fm_shot3 invis true	*bt_right_cb3 invis true }
 	
 	confunc set_left_vis0 { *bt_left_fm0 invis false	*left_fm_name0 invis false	*left_fm_tu0 invis false 	*left_fm_shot0 invis false }
 	confunc set_left_vis1 { *bt_left_fm1 invis false	*left_fm_name1 invis false	*left_fm_tu1 invis false 	*left_fm_shot1 invis false }
@@ -905,20 +917,39 @@ menu hud
 		click	{ cmd "fireweap r 3;" }
 	}
 
+	/* Firemode checkbox console functions (see also the hdie function above) ===================================*/
+	confunc set_left_cb_ina0 { *bt_left_cb0 texl "0 32"	*bt_left_cb0 texh "31 63" }
+	confunc set_left_cb_ina1 { *bt_left_cb1 texl "0 32"	*bt_left_cb1 texh "31 63" }
+	confunc set_left_cb_ina2 { *bt_left_cb2 texl "0 32"	*bt_left_cb2 texh "31 63" }
+	confunc set_left_cb_ina3 { *bt_left_cb3 texl "0 32"	*bt_left_cb3 texh "31 63" }
+	confunc set_right_cb_ina0 { *bt_right_cb0 texl "0 32"	*bt_right_cb0 texh "31 63" }
+	confunc set_right_cb_ina1 { *bt_right_cb1 texl "0 32"	*bt_right_cb1 texh "31 63" }
+	confunc set_right_cb_ina2 { *bt_right_cb2 texl "0 32"	*bt_right_cb2 texh "31 63" }
+	confunc set_right_cb_ina3 { *bt_right_cb3 texl "0 32"	*bt_right_cb3 texh "31 63" }
+
+	confunc set_left_cb_a0 { *bt_left_cb0 texl "0 0"	*bt_left_cb0 texh "31 63" }
+	confunc set_left_cb_a1 { *bt_left_cb1 texl "0 0"	*bt_left_cb1 texh "31 63" }
+	confunc set_left_cb_a2 { *bt_left_cb2 texl "0 0"	*bt_left_cb2 texh "31 63" }
+	confunc set_left_cb_a3 { *bt_left_cb3 texl "0 0"	*bt_left_cb3 texh "31 63" }
+	confunc set_right_cb_a0 { *bt_right_cb0	texl "0 0"	*bt_right_cb0 texh "31 63" }
+	confunc set_right_cb_a1 { *bt_right_cb1	texl "0 0"	*bt_right_cb1 texh "31 63" }
+	confunc set_right_cb_a2 { *bt_right_cb2	texl "0 0"	*bt_right_cb2 texh "31 63" }
+	confunc set_right_cb_a3 { *bt_right_cb3	texl "0 0"	*bt_right_cb3 texh "31 63" }
+
 	/* Firemode checkbox images ===================================*/
 	/*
 		Some helpful info:
-		hud/fm_checkbox (active)	->	texl "0 0"	texh "255 63" //TODO
-		hud/fm_checkbox (inactive)	->	texl "0 64"	texh "255 128" //TODO
+		hud/checkbox (inactive)	->	texl "0 0"	texh "31 31" 
+		hud/checkbox (active)	->	texl "0 32"	texh "31 63" 
 	*/
-	/*
+
 	pic bt_left_cb0
 	{
-		image	hud/fm_checkbox
+		image	hud/checkbox
 		tooltip	"_Check to use this firemode for reaction fire."
 		pos		"622 576"
 		texl	"0 0"
-		texh	"255  63"
+		texh	"31 31"
 		mousefx	false
 		invis true
 		click	{ cmd "sel_reactmode l 0;" }
@@ -926,11 +957,11 @@ menu hud
 
 	pic bt_left_cb1
 	{
-		image	hud/fm_checkbox
+		image	hud/checkbox
 		tooltip	"_Check to use this firemode for reaction fire."
 		pos		"622 512"
 		texl	"0 0"
-		texh	"255 63"
+		texh	"31 31"
 		mousefx	false
 		invis true
 		click	{ cmd "sel_reactmode l 1;" }
@@ -938,11 +969,11 @@ menu hud
 
 	pic bt_left_cb2
 	{
-		image	hud/fm_checkbox
+		image	hud/checkbox
 		tooltip	"_Check to use this firemode for reaction fire."
 		pos		"622 448"
 		texl	"0 0"
-		texh	"255 63"
+		texh	"31 31"
 		mousefx	false
 		invis true
 		click	{ cmd "sel_reactmode l 2;" }
@@ -950,11 +981,11 @@ menu hud
 
 	pic bt_left_cb3
 	{
-		image	hud/fm_checkbox
+		image	hud/checkbox
 		tooltip	"_Check to use this firemode for reaction fire."
 		pos		"622 384"
 		texl	"0 0"
-		texh	"255 63"
+		texh	"31 31"
 		mousefx	false
 		invis true
 		click	{ cmd "sel_reactmode l 3;" }
@@ -963,11 +994,11 @@ menu hud
 
 	pic bt_right_cb0
 	{
-		image	hud/fm_checkbox
+		image	hud/checkbox
 		tooltip	"_Check to use this firemode for reaction fire."
 		pos		"164 576"
 		texl	"0 0"
-		texh	"255 63"
+		texh	"31 31"
 		mousefx	false
 		invis true
 		click	{ cmd "sel_reactmode r 0;" }
@@ -975,11 +1006,11 @@ menu hud
 
 	pic bt_right_cb1
 	{
-		image	hud/fm_checkbox
+		image	hud/checkbox
 		tooltip	"_Check to use this firemode for reaction fire."
 		pos		"164 512"
 		texl	"0 0"
-		texh	"255 63"
+		texh	"31 31"
 		mousefx	false
 		invis true
 		click	{ cmd "sel_reactmode r 1;" }
@@ -987,11 +1018,11 @@ menu hud
 
 	pic bt_right_cb2
 	{
-		image	hud/fm_checkbox
+		image	hud/checkbox
 		tooltip	"_Check to use this firemode for reaction fire."
 		pos		"164 448"
 		texl	"0 0"
-		texh	"255 63"
+		texh	"31 31"
 		mousefx	false
 		invis true
 		click	{ cmd "sel_reactmode r 2;" }
@@ -999,24 +1030,17 @@ menu hud
 
 	pic bt_right_cb3
 	{
-		image	hud/fm_checkbox
+		image	hud/checkbox
 		tooltip	"_Check to use this firemode for reaction fire."
 		pos		"164 384"
 		texl	"0 0"
-		texh	"255 63"
+		texh	"31 31"
 		mousefx	false
 		invis true
 		click	{ cmd "sel_reactmode r 3;" }
 	}
-	*/
-	/* Firemode text ===================================
-		fm	... firemode
-		left/right/l/r  ... The hand/side of the firemode list 
-		name ... The name of the firemode.
-		tu ... timeunits
-		shots ... The number of shots one firemode will use.
-		tt ... tooltip
-	*/	
+
+	/* Firemode text ===================================*/	
 	string left_fm_name0 { string "*cvar mn_l_fm_name0"	pos "654 582"	invis true }
 	string left_fm_name1 { string "*cvar mn_l_fm_name1"	pos "654 518"	invis true }
 	string left_fm_name2 { string "*cvar mn_l_fm_name2"	pos "654 454"	invis true }

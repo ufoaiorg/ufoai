@@ -580,32 +580,35 @@ void CL_DisplayFiremodes (void)
 
 	for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
 		if ( i < ammo->numFiredefs[weap_fd_idx] ) { /* We have a defined fd */
+			/* Display the firemode information (image + text). */
 			if ( ammo->fd[weap_fd_idx][i].time <= selActor->TU ) {  /* Enough timeunits for this firemode?*/
 				DisplayFiremodeEntry(&ammo->fd[weap_fd_idx][i], hand[0], 1);
 			} else{
 				DisplayFiremodeEntry(&ammo->fd[weap_fd_idx][i], hand[0], 0);
 			}
 
-			/* Display checkbox for reaction firemode (this needs a sane REACTION_FIREMODE array)
-			TODO:
+			/* Display checkbox for reaction firemode (this needs a sane REACTION_FIREMODE array) */
 			if (ammo->fd[weap_fd_idx][i].reaction) {
-				if (REACTION_FIREMODE[(hand[0] == 'r')?0:1][0]) {
-					* Set this checkbox visible+active. *
-					Cbuf_AddText(va("set_right_cb_a%i\n", fd->fd_idx)); * Set this checkbox visible+active. TODO: Needs console function(s) *
-				} else {
-					* Set this checkbox visible+active. *
-					Cbuf_AddText(va("set_left_cb_a%i\n", fd->fd_idx)); * TODO: Needs console function(s) *
-					
+				if (hand[0] == 'r') {
+					if (REACTION_FIREMODE[actor_idx][0][0] == i ) {
+						/* Set this checkbox visible+active. */
+						Cbuf_AddText(va("set_right_cb_a%i\n", i));
+					} else {
+						/* Set this checkbox visible+inactive. */
+						Cbuf_AddText(va("set_right_cb_ina%i\n", i));
+						
+					}
+				} else { /* hand[0] == 'l' */
+					if (REACTION_FIREMODE[actor_idx][1][0] == i) {
+						/* Set this checkbox visible+active. */
+						Cbuf_AddText(va("set_left_cb_a%i\n", i));
+					} else {
+						/* Set this checkbox visible+active. */
+						Cbuf_AddText(va("set_left_cb_ina%i\n", i));
+						
+					}
 				}
-			} else {
-				if (hand[0] == 'r')
-					* Hide reaction checkbox* 
-					Cbuf_AddText(va("set_right_cb_ina%i\n", fd->fd_idx)); * TODO: Needs console function(s) *
-				else
-					* Hide reaction checkbox* 
-					Cbuf_AddText(va("set_left_cb_ina%i\n", fd->fd_idx)); * TODO: Needs console function(s) *
 			}
-			*/
 
 		} else { /* No more fd left in the list */
 			if (hand[0] == 'r')
