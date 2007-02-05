@@ -147,6 +147,7 @@ item laserrifle_ammo
 			time	5
 			damage	"32 6"
 			dmgtype laser
+			reaction	true
 		}
 		firedef
 		{
@@ -188,6 +189,7 @@ item laserrifle_ammo
 			time	10
 			damage	"42 6"
 			dmgtype laser
+			reaction	true
 		}
 		firedef
 		{
@@ -207,6 +209,7 @@ item laserrifle_ammo
 			time	14
 			damage	"34 6"
 			dmgtype laser
+			reaction	true
 		}
 	}
 
@@ -230,6 +233,7 @@ item laserrifle_ammo
 			time	10
 			damage	"72 6"
 			dmgtype laser
+			reaction	true
 		}
 		firedef
 		{

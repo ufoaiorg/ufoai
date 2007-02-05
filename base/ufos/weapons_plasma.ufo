@@ -51,6 +51,7 @@ item plaspistol_ammo
 			time	7
 			damage	"11 5"
 			dmgtype plasma
+			reaction	true
 		}
 		firedef 
 		{
@@ -129,6 +130,7 @@ item plasrifle_ammo
 			time	9
 			damage	"14 5"
 			dmgtype plasma
+			reaction	true
 		}
 		firedef
 		{
@@ -149,6 +151,7 @@ item plasrifle_ammo
 			time	14
 			damage	"12 2"
 			dmgtype plasma
+			reaction	true
 		}
 	}
 }
@@ -231,6 +234,7 @@ item plasblaster_ammo
 			time	12
 			damage	"21 6"
 			dmgtype plasma
+			reaction	true
 		}
 	}
 }

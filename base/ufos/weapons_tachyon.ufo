@@ -50,6 +50,7 @@ item tachyonpistol_ammo
 			time	4
 			damage	"45 5"
 			dmgtype tachyon
+			reaction	true
 		}
 		firedef 
 		{
@@ -128,6 +129,7 @@ item tachyonrifle_ammo
 			spldmg	"100 20"
 			splrad	3
 			dmgtype tachyon
+			reaction	true
 		}
 		firedef
 		{
@@ -147,6 +149,7 @@ item tachyonrifle_ammo
 			time	9
 			damage	"38 5"
 			dmgtype tachyon
+			reaction	true
 		}
 	}
 }
@@ -204,6 +207,7 @@ item tachyonsniper_ammo
 			time	12
 			damage	"95 10"
 			dmgtype tachyon
+			reaction	true
 		}
 		firedef
 		{
@@ -223,6 +227,7 @@ item tachyonsniper_ammo
 			time	12
 			damage	"40 4"
 			dmgtype tachyon
+			reaction true
 		}
 	}
 }

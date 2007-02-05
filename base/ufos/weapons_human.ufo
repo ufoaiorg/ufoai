@@ -52,6 +52,7 @@ item assault_ammo
 			time	15
 			damage	"37 0"
 			dmgtype normal
+			reaction	true
 		}
 		firedef
 		{
@@ -72,6 +73,7 @@ item assault_ammo
 			time	18
 			damage	"37 0"
 			dmgtype normal
+			reaction 	true
 		}
 	}
 }
@@ -225,6 +227,7 @@ item sniper_ammo
 			time	15
 			damage	"95 0"
 			dmgtype normal
+			reaction	true
 		}
 		firedef
 		{
@@ -301,6 +304,7 @@ item pistol_ammo
 			time	6
 			damage	"37 0"
 			dmgtype normal
+			reaction	true
 		}
 		firedef
 		{
@@ -396,6 +400,7 @@ item pistol2_ammo
 			time	7
 			damage	"20 5"
 			dmgtype normal
+			reaction true
 		}
 	}
 }
@@ -454,6 +459,7 @@ item smg_ammo
 			time	9
 			damage	"25 0"
 			dmgtype normal
+			reaction	true
 		}
 		firedef
 		{
@@ -590,6 +596,7 @@ item shotgun2_slug_ammo
 			time	12
 			damage	"11 0"
 			dmgtype blast
+			reaction true
 		}
 
 		firedef
@@ -670,6 +677,7 @@ item shotgun_ammo
 			time	12
 			damage	"11 0"
 			dmgtype blast
+			reaction true
 		}
 
 		firedef
@@ -750,6 +758,7 @@ item shotgun_micro_ammo
 			time	4
 			damage	"6 2"
 			dmgtype blast
+			reaction	true
 		}
 
 		firedef
@@ -795,6 +804,7 @@ item shotgun_micro_ammo
 			time	12
 			damage	"11 0"
 			dmgtype blast
+			reaction	true
 		}
 
 		firedef
@@ -874,6 +884,7 @@ item flamer_ammo
 			time	8
 			damage	"6 2"
 			dmgtype fire
+			reaction	true
 		}
 		firedef
 		{
@@ -1451,6 +1462,7 @@ item bolterrifle_ammo
 			time    8
 			damage  "80 5"
 			dmgtype normal
+			reaction	true
 		}
 
 		firedef
