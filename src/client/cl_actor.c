@@ -695,7 +695,7 @@ void CL_SelectReactionFiremode_f (void)
 	firemode = atoi(Cmd_Argv(2));
 
 	if (firemode >= MAX_FIREDEFS_PER_WEAPON) {
-		Com_Printf("CL_SelectReactionFiremode: Firemode index to big (%i). Highest possible number is %i.\n", firemode, MAX_FIREDEFS_PER_WEAPON-1);
+		Com_Printf("CL_SelectReactionFiremode_f: Firemode index to big (%i). Highest possible number is %i.\n", firemode, MAX_FIREDEFS_PER_WEAPON-1);
 		return;
 	}
 	
@@ -1166,9 +1166,11 @@ void CL_AddActorToTeamList (le_t * le)
 		Cbuf_AddText(va("huddeselect%i\n", i));
 		if (cl.numTeamList == 1)
 			CL_ActorSelectList(0);
-
-		CL_UpdateReactionFiremodes('r', i, -1);	/* Init reaction list for right hand to default firemode. */
-		CL_UpdateReactionFiremodes('l', i, -1);	/* Init reaction list for left hand to default firemode. */
+		/* TODO: do this in a better way
+		Com_Printf("CL_AddActorToTeamList: executing CL_UpdateReactionFiremodes\n");
+		CL_UpdateReactionFiremodes('r', i, -1);	* Init reaction list for right hand to default firemode. *
+		CL_UpdateReactionFiremodes('l', i, -1);	* Init reaction list for left hand to default firemode. *
+		*/
 	}
 }
 
