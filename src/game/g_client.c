@@ -28,8 +28,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define VIS_APPEAR	1
 #define VIS_PERISH	2
 
-/* Stores level.activeTeam while G_CanReactionFire() is abusing it. */
-int turnTeam;
+int turnTeam;	/* Defined in g_local.h Stores level.activeTeam while G_CanReactionFire() is abusing it. */
+
+int REACTION_FIREMODE[MAX_TEAMS][MAX_EDICTS][2]; /* Defined in g_local.h Used in g_combat.c for choosing correct reaction fire. It is filled from data from cl_actor.c */
 
 static qboolean sentAppearPerishEvent;
 
@@ -1635,6 +1636,7 @@ void G_ClientAction (player_t * player)
 	int i;
 	byte firemode;
 	int from, fx, fy, to, tx, ty;
+	int actor, hand, fd_idx;
 
 	/* read the header */
 	action = gi.ReadByte();
@@ -1667,6 +1669,11 @@ void G_ClientAction (player_t * player)
 	case PA_INVMOVE:
 		gi.ReadFormat(pa_format[PA_INVMOVE], &from, &fx, &fy, &to, &tx, &ty);
 		G_ClientInvMove(player, num, from, fx, fy, to, tx, ty, qtrue, NOISY);
+		break;
+
+	case PA_REACT_SELECT:
+		gi.ReadFormat(pa_format[PA_REACT_SELECT], &actor, &hand, &fd_idx);
+		REACTION_FIREMODE[player->pers.team][actor][hand] = fd_idx;
 		break;
 
 	default:

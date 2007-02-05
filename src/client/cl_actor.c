@@ -655,11 +655,13 @@ static void CL_UpdateReactionFiremodes (char hand, int actor_idx, int active_fir
 	}
 
 	REACTION_FIREMODE[actor_idx][handidx][0] = -1;
+	MSG_Write_PA(PA_REACT_SELECT, actor_idx, handidx, -1);
 	REACTION_FIREMODE[actor_idx][handidx][1] = -1;
 	for (i = 0; i < ammo->numFiredefs[weap_fd_idx]; i++) {
 		if (ammo->fd[weap_fd_idx][i].reaction) {
 			if ( (active_firemode < 0) || (i == active_firemode) ) {
 				REACTION_FIREMODE[actor_idx][handidx][0] = i;
+				MSG_Write_PA(PA_REACT_SELECT, actor_idx, handidx, i);
 				REACTION_FIREMODE[actor_idx][handidx][1] = ammo->weap_idx[weap_fd_idx];
 				break;
 			}
