@@ -396,7 +396,7 @@ static void SetWeaponButton (int button, int state)
  * @param[in] le The actor to search.
  * @return The number of the actor in the teamlist.
  */
-static int CL_GetActorNumber( le_t * le )
+static int CL_GetActorNumber (le_t * le)
 {
 	int actor_idx;
 	for (actor_idx = 0; actor_idx < cl.numTeamList; actor_idx++) {
@@ -446,8 +446,8 @@ static void DisplayFiremodeEntry (fireDef_t *fd, char hand, byte status)
 		} else {
 			Cbuf_AddText(va("set_right_ina%i\n", fd->fd_idx));
 		}
-		
-		if ( selActor->TU > fd->time)
+
+		if (selActor->TU > fd->time)
 			Cvar_Set(va("mn_r_fm_tt_tu%i", fd->fd_idx),va(_("Remaining TUs: %i"),selActor->TU - fd->time));
 		else
 			Cvar_Set(va("mn_r_fm_tt_tu%i", fd->fd_idx),_("No remaining TUs left after shot."));
@@ -455,7 +455,7 @@ static void DisplayFiremodeEntry (fireDef_t *fd, char hand, byte status)
 		Cvar_Set(va("mn_r_fm_name%i", fd->fd_idx),  va("%s", fd->name));
 		Cvar_Set(va("mn_r_fm_tu%i", fd->fd_idx),va(_("TU: %i"),  fd->time));
 		Cvar_Set(va("mn_r_fm_shot%i", fd->fd_idx), va(_("Shots:%i"), fd->ammo));
-		
+
 	} else if (hand == 'l') {
 		Cbuf_AddText(va("set_left_vis%i\n", fd->fd_idx)); /* Make this entry visible (in case it wasn't). */
 
@@ -465,7 +465,7 @@ static void DisplayFiremodeEntry (fireDef_t *fd, char hand, byte status)
 			Cbuf_AddText(va("set_left_ina%i\n", fd->fd_idx));
 		}
 
-		if ( selActor->TU > fd->time)
+		if (selActor->TU > fd->time)
 			Cvar_Set(va("mn_l_fm_tt_tu%i", fd->fd_idx),va(_("Remaining TUs: %i"),selActor->TU - fd->time));
 		else
 			Cvar_Set(va("mn_l_fm_tt_tu%i", fd->fd_idx),_("No remaining TUs left after shot."));
@@ -571,9 +571,9 @@ void CL_DisplayFiremodes (void)
 	}
 
 	/* TODO: Check if REACTION_FIREMODE is up to date with the weapon other wise set it to default for the current one. Just in case. */
-	
+
 	actor_idx = CL_GetActorNumber(selActor);
-	
+
 	for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
 		if ( i < ammo->numFiredefs[weap_fd_idx] ) { /* We have a defined fd */
 			if ( ammo->fd[weap_fd_idx][i].time <= selActor->TU ) {  /* Enough timeunits for this firemode?*/
@@ -581,7 +581,7 @@ void CL_DisplayFiremodes (void)
 			} else{
 				DisplayFiremodeEntry(&ammo->fd[weap_fd_idx][i], hand[0], 0);
 			}
-			
+
 			/* TODO: pack this (including the checks&loops into a seperate function
 			if (ammo->fd[weap_fd_idx][i].reaction) {
 				if (REACTION_FIREMODE[(hand[0] == 'r')?0:1][0][0])
@@ -616,9 +616,9 @@ static void CL_UpdateReactionFiremodes (char hand, int actor_idx, int active)
 
 	if (!selActor)
 		return;
-	
+
 	CL_GetWeaponAndAmmo(hand, &weapon, &ammo, &weap_fd_idx);
-	
+
 	if ( REACTION_FIREMODE[actor_idx][handidx][1] == ammo->weap_idx[weap_fd_idx] ) {
 		if  ( ammo->fd[weap_fd_idx][active].reaction ) {
 			if ( REACTION_FIREMODE[actor_idx][handidx][0] == active )
@@ -629,7 +629,7 @@ static void CL_UpdateReactionFiremodes (char hand, int actor_idx, int active)
 			return;
 		}
 	}
-	
+
 	REACTION_FIREMODE[actor_idx][handidx][0] = -1;
 	REACTION_FIREMODE[actor_idx][handidx][1] = -1;
 	for (i = 0; i < ammo->numFiredefs[weap_fd_idx]; i++) {
@@ -666,15 +666,15 @@ void CL_SelectReactionFiremode (void)
 
 	if (!selActor)
 		return;
-	
+
 	actor_idx = CL_GetActorNumber(selActor);
-	
+
 	firemode = atoi(Cmd_Argv(2));
-	
+
 	CL_UpdateReactionFiremodes(hand[0], actor_idx, firemode);
-	
+
 	/* TODO: Update display of firemode cvheckbuttons. */
-	
+
 }
 
 
