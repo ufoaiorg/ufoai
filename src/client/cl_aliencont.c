@@ -35,7 +35,7 @@ static int numAliensOnList = 0;
 static aliensCont_t* aliencontCurrent;
 
 /**
- *Collecting aliens functions
+ * Collecting aliens functions
  */
 
 /**
@@ -86,8 +86,6 @@ void AL_FillInContainment(void)
  * @brief Type of alien to its name.
  * @param[in] type
  * @return name
- * @note Those names do not need to be translateable - used only
- * for string compares.
  */
 char *AL_AlienTypeToName(int teamDescIdx)
 {
@@ -279,6 +277,7 @@ void AL_AddAliens(void)
  * @param[in] type of action
  * @note Call it with alientype AL_UNKNOWN when it does not
  * matter what type.
+ * @TODO integrate this with research system
  */
 void AL_RemoveAliens(alienType_t alientype, int amount, alienCalcType_t action)
 {
@@ -356,9 +355,9 @@ int AL_GetAlienIdx(char *id)
 }
 
 /**
- * @brief Get amount of live aliens of alien bodies stored in Containment.
+ * @brief Get amount of live aliens or alien bodies stored in Containment.
  * @param[in] index of alien
- * @param[in] requirement type (RS_LINK_ALIEN/RS_LINK_ALIEN_DEAD
+ * @param[in] requirement type (RS_LINK_ALIEN/RS_LINK_ALIEN_DEAD)
  * @return amount of desired alien/body
  * @sa RS_RequirementsMet
  * @sa RS_CheckCollected

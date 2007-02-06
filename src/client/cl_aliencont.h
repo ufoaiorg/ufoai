@@ -38,6 +38,7 @@ typedef enum {
 } alienType_t;
 
 /** specializations of aliens */
+/*TODO: this is not used anywhere yet */
 typedef enum {
 	AS_PILOT,
 	AS_GUNNER,
@@ -51,7 +52,7 @@ typedef enum {
 	AL_KILL
 } alienCalcType_t;
 
-/** todo - document me */
+/** structure of Alien Containment being a member of base_t */
 typedef struct aliensCont_s {
 	int idx;			/**< self link */
 	char alientype[MAX_VAR];	/**< type of alien */ /* FIXME: alienType_t here */
@@ -60,7 +61,7 @@ typedef struct aliensCont_s {
 	int techIdx;			/**< Idx of related tech. */
 } aliensCont_t;
 
-/** todo - document me */
+/** alien cargo in aircraft_t, carrying aliens and bodies from a mission to base */
 typedef struct aliensTmp_s {
 	char alientype[MAX_VAR];	/**< type of alien */
 	int amount_alive;		/**< Amount of live captured aliens. */
