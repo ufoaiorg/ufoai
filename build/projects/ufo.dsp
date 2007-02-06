@@ -754,7 +754,7 @@ SOURCE=..\..\src\qcommon\ioapi.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\client\keys.c
+SOURCE=..\..\src\client\cl_keys.c
 
 !IF  "$(CFG)" == "ufo - Win32 Release"
 
@@ -1168,11 +1168,11 @@ SOURCE=..\..\src\client\console.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\client\input.h
+SOURCE=..\..\src\client\cl_input.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\client\keys.h
+SOURCE=..\..\src\client\cl_keys.h
 # End Source File
 # Begin Source File
 

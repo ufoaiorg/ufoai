@@ -652,7 +652,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\client\keys.c"
+				RelativePath="..\..\src\client\cl_keys.c"
 				>
 			</File>
 			<File
@@ -789,11 +789,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\client\input.h"
+				RelativePath="..\..\src\client\cl_input.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\client\keys.h"
+				RelativePath="..\..\src\client\cl_keys.h"
 				>
 			</File>
 			<File

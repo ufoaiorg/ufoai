@@ -433,7 +433,7 @@
 				RelativePath="ports\win32\in_win.c">
 			</File>
 			<File
-				RelativePath="client\keys.c">
+				RelativePath="client\cl_keys.c">
 			</File>
 			<File
 				RelativePath="qcommon\md4.c">
@@ -527,10 +527,10 @@
 				RelativePath="game\game.h">
 			</File>
 			<File
-				RelativePath="client\input.h">
+				RelativePath="client\cl_input.h">
 			</File>
 			<File
-				RelativePath="client\keys.h">
+				RelativePath="client\cl_keys.h">
 			</File>
 			<File
 				RelativePath="game\q_shared.h">

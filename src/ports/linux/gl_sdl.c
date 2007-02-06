@@ -38,7 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /*#include <SDL_opengl.h>*/
 
-#include "../../client/keys.h"
+#include "../../client/cl_keys.h"
 #include "rw_linux.h"
 #include "glw_linux.h"
 

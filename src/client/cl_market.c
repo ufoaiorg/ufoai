@@ -70,7 +70,7 @@ static void CL_MarketAircraftDescription (int aircraftID)
 /**
  * @brief
  */
-static void CL_BuySelectCmd(void)
+static void CL_BuySelect_f (void)
 {
 	int num;
 
@@ -103,7 +103,7 @@ static void CL_BuySelectCmd(void)
  * for (i = 0, j = 0, air_samp = aircraft_samples; i < numAircraft_samples; i++, air_samp++)
  *   AIR_GetStorageSupplyCount(air_samp->id, &storage, &supply);
  * @endcode
- * @sa CL_BuyType
+ * @sa CL_BuyType_f
  */
 static void AIR_GetStorageSupplyCount(char *airCharId, int *const storage, int *const supply)
 {
@@ -129,7 +129,7 @@ static void AIR_GetStorageSupplyCount(char *airCharId, int *const storage, int *
 /**
  * @brief
  */
-static void CL_BuyType(void)
+static void CL_BuyType_f (void)
 {
 	objDef_t *od;
 	aircraft_t *air_samp;
@@ -240,7 +240,7 @@ static void CL_BuyType(void)
  * @brief
  * @sa CL_SellItem
  */
-static void CL_BuyItem(void)
+static void CL_BuyItem_f (void)
 {
 	int num, item;
 
@@ -281,7 +281,7 @@ static void CL_BuyItem(void)
  * @brief
  * @sa CL_BuyItem
  */
-static void CL_SellItem(void)
+static void CL_SellItem_f (void)
 {
 	int num, item;
 
@@ -314,9 +314,9 @@ static void CL_SellItem(void)
 
 /**
  * @brief
- * @sa CL_SellAircraft
+ * @sa CL_SellAircraft_f
  */
-static void CL_BuyAircraft(void)
+static void CL_BuyAircraft_f (void)
 {
 	int num, aircraftID;
 
@@ -348,9 +348,9 @@ static void CL_BuyAircraft(void)
  * or the other functions need to check whether the aircraft
  * at current arraypos is valid
  * FIXME: Remove all soldiers and put equipment back to base
- * @sa CL_BuyAircraft
+ * @sa CL_BuyAircraft_f
  */
-static void CL_SellAircraft(void)
+static void CL_SellAircraft_f (void)
 {
 	int num, aircraftID, i, j;
 	base_t *base;
@@ -384,7 +384,7 @@ static void CL_SellAircraft(void)
 		/* ok, we've found an empty aircraft (no team) in a base
 		   so now we can sell it */
 		if (found) {
-			Com_DPrintf("CL_SellAircraft: Selling aircraft with IDX %i\n", aircraft->idx);
+			Com_DPrintf("CL_SellAircraft_f: Selling aircraft with IDX %i\n", aircraft->idx);
 			CL_DeleteAircraft(aircraft);
 
 			Cbuf_AddText(va("buyselect%i\n;", num));
@@ -400,13 +400,13 @@ static void CL_SellAircraft(void)
 /**
  * @brief
  */
-void CL_ResetMarket(void)
+extern void CL_ResetMarket (void)
 {
-	Cmd_AddCommand("buy_type", CL_BuyType, NULL);
-	Cmd_AddCommand("buy_select", CL_BuySelectCmd, NULL);
-	Cmd_AddCommand("mn_buy", CL_BuyItem, NULL);
-	Cmd_AddCommand("mn_sell", CL_SellItem, NULL);
-	Cmd_AddCommand("mn_buy_aircraft", CL_BuyAircraft, NULL);
-	Cmd_AddCommand("mn_sell_aircraft", CL_SellAircraft, NULL);
+	Cmd_AddCommand("buy_type", CL_BuyType_f, NULL);
+	Cmd_AddCommand("buy_select", CL_BuySelect_f, NULL);
+	Cmd_AddCommand("mn_buy", CL_BuyItem_f, NULL);
+	Cmd_AddCommand("mn_sell", CL_SellItem_f, NULL);
+	Cmd_AddCommand("mn_buy_aircraft", CL_BuyAircraft_f, NULL);
+	Cmd_AddCommand("mn_sell_aircraft", CL_SellAircraft_f, NULL);
 	buyListLength = -1;
 }

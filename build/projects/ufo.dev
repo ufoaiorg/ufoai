@@ -290,7 +290,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit27]
-FileName=..\..\src\client\keys.c
+FileName=..\..\src\client\cl_keys.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
@@ -570,7 +570,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit55]
-FileName=..\..\src\client\input.h
+FileName=..\..\src\client\cl_input.h
 Folder=Header Files
 Compile=1
 CompileCpp=1
@@ -580,7 +580,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit56]
-FileName=..\..\src\client\keys.h
+FileName=..\..\src\client\cl_keys.h
 Folder=Header Files
 Compile=1
 CompileCpp=1

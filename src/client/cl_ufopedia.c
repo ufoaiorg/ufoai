@@ -167,8 +167,8 @@ static void UP_DisplayTechTree (technology_t* t)
  * @brief Prints the (ufopedia and other) description for items (weapons, armor, ...)
  * @param item Index in object definition array ods for the item
  * @sa UP_DrawEntry
- * @sa CL_BuySelectCmd
- * @sa CL_BuyType
+ * @sa CL_BuySelect_f
+ * @sa CL_BuyType_f
  * @sa CL_BuyItem
  * @sa CL_SellItem
  * @sa MN_Drag

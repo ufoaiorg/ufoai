@@ -1,5 +1,5 @@
 /**
- * @file input.h
+ * @file cl_input.h
  * @brief External (non-keyboard) input devices.
  */
 

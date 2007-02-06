@@ -43,7 +43,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <GL/glx.h>
 
 #include "../../ref_gl/gl_local.h"
-#include "../../client/keys.h"
+#include "../../client/cl_keys.h"
 #include "../linux/rw_linux.h"
 
 GLXContext				gl_cx;
