@@ -768,6 +768,7 @@ menu hud
 	
 	// ==================
 	//  FIREMODES (seperate lists for each weaponhand)
+	// ==================
 	/*
 		fm	... firemode
 		left/right/l/r  ... The hand/side of the firemode list 
@@ -917,30 +918,30 @@ menu hud
 		click	{ cmd "fireweap r 3;" }
 	}
 
-	/* Firemode checkbox console functions (see also the hdie function above) ===================================*/
-	confunc set_left_cb_ina0 { *bt_left_cb0 texl "0 32"	*bt_left_cb0 texh "31 63" }
-	confunc set_left_cb_ina1 { *bt_left_cb1 texl "0 32"	*bt_left_cb1 texh "31 63" }
-	confunc set_left_cb_ina2 { *bt_left_cb2 texl "0 32"	*bt_left_cb2 texh "31 63" }
-	confunc set_left_cb_ina3 { *bt_left_cb3 texl "0 32"	*bt_left_cb3 texh "31 63" }
-	confunc set_right_cb_ina0 { *bt_right_cb0 texl "0 32"	*bt_right_cb0 texh "31 63" }
-	confunc set_right_cb_ina1 { *bt_right_cb1 texl "0 32"	*bt_right_cb1 texh "31 63" }
-	confunc set_right_cb_ina2 { *bt_right_cb2 texl "0 32"	*bt_right_cb2 texh "31 63" }
-	confunc set_right_cb_ina3 { *bt_right_cb3 texl "0 32"	*bt_right_cb3 texh "31 63" }
+	/* Firemode checkbox console functions (see also the "xxx_inv" functions above) ===================================*/
+	confunc set_left_cb_ina0 { *bt_left_cb0 texl "0 0"	*bt_left_cb0 texh "31 31"	*bt_left_cb0 invis false }
+	confunc set_left_cb_ina1 { *bt_left_cb1 texl "0 0"	*bt_left_cb1 texh "31 31"	*bt_left_cb1 invis false }
+	confunc set_left_cb_ina2 { *bt_left_cb2 texl "0 0"	*bt_left_cb2 texh "31 31"	*bt_left_cb2 invis false }
+	confunc set_left_cb_ina3 { *bt_left_cb3 texl "0 0"	*bt_left_cb3 texh "31 31"	*bt_left_cb3 invis false }
+	confunc set_right_cb_ina0 { *bt_right_cb0 texl "0 32"	*bt_right_cb0 texh "31 31"	*bt_right_cb0 invis false }
+	confunc set_right_cb_ina1 { *bt_right_cb1 texl "0 32"	*bt_right_cb1 texh "31 31"	*bt_right_cb1 invis false }
+	confunc set_right_cb_ina2 { *bt_right_cb2 texl "0 32"	*bt_right_cb2 texh "31 31"	*bt_right_cb2 invis false }
+	confunc set_right_cb_ina3 { *bt_right_cb3 texl "0 32"	*bt_right_cb3 texh "31 31"	*bt_right_cb3 invis false }
 
-	confunc set_left_cb_a0 { *bt_left_cb0 texl "0 0"	*bt_left_cb0 texh "31 63" }
-	confunc set_left_cb_a1 { *bt_left_cb1 texl "0 0"	*bt_left_cb1 texh "31 63" }
-	confunc set_left_cb_a2 { *bt_left_cb2 texl "0 0"	*bt_left_cb2 texh "31 63" }
-	confunc set_left_cb_a3 { *bt_left_cb3 texl "0 0"	*bt_left_cb3 texh "31 63" }
-	confunc set_right_cb_a0 { *bt_right_cb0	texl "0 0"	*bt_right_cb0 texh "31 63" }
-	confunc set_right_cb_a1 { *bt_right_cb1	texl "0 0"	*bt_right_cb1 texh "31 63" }
-	confunc set_right_cb_a2 { *bt_right_cb2	texl "0 0"	*bt_right_cb2 texh "31 63" }
-	confunc set_right_cb_a3 { *bt_right_cb3	texl "0 0"	*bt_right_cb3 texh "31 63" }
+	confunc set_left_cb_a0 { *bt_left_cb0 texl "0 31"	*bt_left_cb0 texh "31 63"	*bt_left_cb0 invis false }
+	confunc set_left_cb_a1 { *bt_left_cb1 texl "0 31"	*bt_left_cb1 texh "31 63"	*bt_left_cb1 invis false }
+	confunc set_left_cb_a2 { *bt_left_cb2 texl "0 31"	*bt_left_cb2 texh "31 63"	*bt_left_cb2 invis false }
+	confunc set_left_cb_a3 { *bt_left_cb3 texl "0 31"	*bt_left_cb3 texh "31 63"	*bt_left_cb3 invis false }
+	confunc set_right_cb_a0 { *bt_right_cb0	texl "0 31"	*bt_right_cb0 texh "31 63"	*bt_right_cb0 invis false }
+	confunc set_right_cb_a1 { *bt_right_cb1	texl "0 31"	*bt_right_cb1 texh "31 63"	*bt_right_cb1 invis false }
+	confunc set_right_cb_a2 { *bt_right_cb2	texl "0 31"	*bt_right_cb2 texh "31 63"	*bt_right_cb2 invis false }
+	confunc set_right_cb_a3 { *bt_right_cb3	texl "0 31"	*bt_right_cb3 texh "31 63"	*bt_right_cb3 invis false }
 
 	/* Firemode checkbox images ===================================*/
 	/*
 		Some helpful info:
 		hud/checkbox (inactive)	->	texl "0 0"	texh "31 31" 
-		hud/checkbox (active)	->	texl "0 32"	texh "31 63" 
+		hud/checkbox (active)	->	texl "0 31"	texh "31 63" 
 	*/
 
 	pic bt_left_cb0

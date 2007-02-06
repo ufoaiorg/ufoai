@@ -60,8 +60,9 @@ sequence view
 
 	model bloodspider
 	{
-		model	models/aliens/bloodspider/bloodspider.md2
-		anim	walk0
+		//model	models/aliens/bloodspider/bloodspider.md2
+		//anim	walk0
+		model	models/weapons/bolterrifle/bolterrifle_clip.md2
 		origin	"0 0 0"
 		omega "0 -30 0"
 	}
