@@ -1166,11 +1166,14 @@ void CL_AddActorToTeamList (le_t * le)
 		Cbuf_AddText(va("huddeselect%i\n", i));
 		if (cl.numTeamList == 1)
 			CL_ActorSelectList(0);
-		/* TODO: do this in a better way
-		Com_Printf("CL_AddActorToTeamList: executing CL_UpdateReactionFiremodes\n");
-		CL_UpdateReactionFiremodes('r', i, -1);	* Init reaction list for right hand to default firemode. *
-		CL_UpdateReactionFiremodes('l', i, -1);	* Init reaction list for left hand to default firemode. *
-		*/
+
+		/* Initialize reactionmode list (with unknown) ... this will be checked for in CL_DoEndRound. */
+		REACTION_FIREMODE[i][0][0] = -1;	/* Init reactionmode for right hand. */
+		REACTION_FIREMODE[i][0][1] = -1;	/* Init weapon link  for right hand. */
+		REACTION_FIREMODE[i][1][0] = -1;	/* Init reactionmode for left hand. */
+		REACTION_FIREMODE[i][1][1] = -1;	/* Init weapon link  for left hand. */
+		MSG_Write_PA(PA_REACT_SELECT, i, 0, -1);	/* Send initialized reactionmode for right hand. */
+		MSG_Write_PA(PA_REACT_SELECT, i, 1, -1);	/* Send initialized reactionmode for left hand. */
 	}
 }
 
@@ -2111,6 +2114,8 @@ void CL_DisplayHudMessage (char *text, int time)
  */
 void CL_DoEndRound (sizebuf_t * sb)
 {
+     int actor_idx;
+
 	/* hud changes */
 	if (cls.team == cl.actTeam)
 		Cbuf_AddText("endround\n");
@@ -2128,6 +2133,17 @@ void CL_DoEndRound (sizebuf_t * sb)
 		CL_DisplayHudMessage(_("Your round started!\n"), 2000);
 		S_StartLocalSound("misc/roundstart.wav");
 		CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE);
+	}
+
+	for (actor_idx = 0; actor_idx < cl.numTeamList; actor_idx++) {
+		if (cl.teamList[actor_idx]) {
+			/* Check if firemode for the right hand is undefined and set it to default firemode. */
+			if (REACTION_FIREMODE[actor_idx][0][0] == -1)
+				CL_UpdateReactionFiremodes('r', actor_idx, -1);
+			/* Check if firemode for the left hand is undefined and set it to default firemode. */
+			if (REACTION_FIREMODE[actor_idx][1][0] == -1)
+				CL_UpdateReactionFiremodes('l', actor_idx, -1);
+		}
 	}
 }
 
