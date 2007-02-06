@@ -160,6 +160,19 @@ static const keyname_t keynames[] = {
 
 	{"SEMICOLON", ';'},			/* because a raw semicolon seperates commands */
 
+	{"WINDOWS", K_SUPER},
+	{"COMPOSE", K_COMPOSE},
+	{"MODE", K_MODE},
+	{"HELP", K_HELP},
+	{"PRINT", K_PRINT},
+	{"SYSREQ", K_SYSREQ},
+	{"SCROLLOCK", K_SCROLLOCK},
+	{"BREAK", K_BREAK},
+	{"MENU", K_MENU},
+	{"POWER", K_POWER},
+	{"EURO", K_EURO},
+	{"UNDO", K_UNDO},
+
 	{NULL, 0}
 };
 
@@ -175,7 +188,7 @@ LINE TYPING INTO THE CONSOLE
  * @sa Cmd_CompleteCommand
  * @sa Cvar_CompleteVariable
  */
-static void Key_CompleteCommand(void)
+static void Key_CompleteCommand (void)
 {
 	char *cmd = NULL, *cvar = NULL, *use = NULL, *s;
 	int cntCmd = 0, cntCvar = 0;
@@ -211,7 +224,7 @@ static void Key_CompleteCommand(void)
  * @brief Interactive line editing and console scrollback
  * @param[in] key
  */
-static void Key_Console(int key)
+static void Key_Console (int key)
 {
 	int i;
 
@@ -444,7 +457,7 @@ static void Key_Console(int key)
 		if (key_insert) {  /* can't do strcpy to move string to right */
 			i = strlen(key_lines[edit_line]) - 1;
 
-			if (i == 254)
+			if (i == MAXCMDLINE - 2)
 				i--;
 			for (; i >= key_linepos; i--)
 				key_lines[edit_line][i + 1] = key_lines[edit_line][i];
@@ -462,7 +475,7 @@ static void Key_Console(int key)
  * @note Used for chatting and cvar editing via menu
  * @sa Key_Event
  */
-static void Key_Message(int key)
+static void Key_Message (int key)
 {
 	if (key == K_ENTER || key == K_KP_ENTER) {
 		qboolean send = qtrue;
@@ -535,7 +548,7 @@ static void Key_Message(int key)
  * the given string.  Single ascii characters return themselves, while
  * the K_* names are matched up.
  */
-static int Key_StringToKeynum(char *str)
+static int Key_StringToKeynum (char *str)
 {
 	const keyname_t *kn;
 
@@ -557,7 +570,7 @@ static int Key_StringToKeynum(char *str)
  * @return a string (either a single ascii char, or a K_* name) for the given keynum.
  * FIXME: handle quote special (general escape sequence?)
  */
-char *Key_KeynumToString(int keynum)
+char *Key_KeynumToString (int keynum)
 {
 	const keyname_t *kn;
 	static char tinystr[2];
@@ -583,7 +596,7 @@ char *Key_KeynumToString(int keynum)
  * @sa Key_SetBinding
  * @return the binded key or empty string if not found
  */
-char* Key_GetBinding(char *binding, keyBindSpace_t space)
+char* Key_GetBinding (char *binding, keyBindSpace_t space)
 {
 	int i;
 	char **keySpace = NULL;
@@ -615,7 +628,7 @@ char* Key_GetBinding(char *binding, keyBindSpace_t space)
  * @sa Key_Bind_f
  * @sa Key_StringToKeynum
  */
-static void Key_SetBinding(int keynum, char *binding, keyBindSpace_t space)
+static void Key_SetBinding (int keynum, char *binding, keyBindSpace_t space)
 {
 	char *new;
 	char **keySpace = NULL;
@@ -656,7 +669,7 @@ static void Key_SetBinding(int keynum, char *binding, keyBindSpace_t space)
  * @brief Unbind a given key binding
  * @sa Key_SetBinding
  */
-static void Key_Unbind_f(void)
+static void Key_Unbind_f (void)
 {
 	int b;
 
@@ -681,7 +694,7 @@ static void Key_Unbind_f(void)
 /**
  * @brief Translate the key space string to enum value of keyBindSpace_t
  */
-static int Key_SpaceStringToEnumValue(char* keySpace)
+static int Key_SpaceStringToEnumValue (char* keySpace)
 {
 	if (Q_strncmp(keySpace, "KEYSPACE_MENU", MAX_VAR))
 		return KEYSPACE_MENU;
@@ -696,7 +709,7 @@ static int Key_SpaceStringToEnumValue(char* keySpace)
  * @brief Unbind all key bindings
  * @sa Key_SetBinding
  */
-static void Key_Unbindall_f(void)
+static void Key_Unbindall_f (void)
 {
 	int i;
 
@@ -714,7 +727,7 @@ static void Key_Unbindall_f(void)
  * @brief Binds a key to a given script command
  * @sa Key_SetBinding
  */
-static void Key_Bind_f(void)
+static void Key_Bind_f (void)
 {
 	int i, c, b;
 	char cmd[1024];
@@ -758,7 +771,7 @@ static void Key_Bind_f(void)
  * @brief Writes lines containing "bind key value"
  * @param[in] path path to print the keybinding too
  */
-void Key_WriteBindings(char* path)
+void Key_WriteBindings (char* path)
 {
 	int i;
 	FILE *f;
@@ -783,7 +796,7 @@ void Key_WriteBindings(char* path)
 /**
  * @brief List all binded keys with its function
  */
-static void Key_Bindlist_f(void)
+static void Key_Bindlist_f (void)
 {
 	int i;
 
@@ -802,11 +815,11 @@ static void Key_Bindlist_f(void)
  * @brief
  * @todo Fix this crappy shift key assignment for win32 and sdl (no _)
  */
-void Key_Init(void)
+void Key_Init (void)
 {
 	int i;
 
-	for (i = 0; i < 32; i++) {
+	for (i = 0; i < MAXKEYLINES; i++) {
 		key_lines[i][0] = ']';
 		key_lines[i][1] = 0;
 	}
@@ -893,7 +906,7 @@ void Key_Init(void)
  * @note Should NOT be called during an interrupt!
  * @sa Key_Message
  */
-void Key_Event(int key, qboolean down, unsigned time)
+void Key_Event (int key, qboolean down, unsigned time)
 {
 	char *kb = NULL;
 	char cmd[MAX_STRING_CHARS];
@@ -922,7 +935,7 @@ void Key_Event(int key, qboolean down, unsigned time)
 		shift_down = down;
 
 	/* console key is hardcoded, so the user can never unbind it */
-	if (key == '`' || key == '~') {
+	if (key == '`' || key == '~' || (key == K_ESCAPE && shift_down)) {
 		if (!down)
 			return;
 		Con_ToggleConsole_f();
@@ -1030,7 +1043,7 @@ void Key_Event(int key, qboolean down, unsigned time)
 /**
  * @brief
  */
-void Key_ClearStates(void)
+void Key_ClearStates (void)
 {
 	int i;
 
@@ -1048,7 +1061,7 @@ void Key_ClearStates(void)
 /**
  * @brief
  */
-int Key_GetKey(void)
+int Key_GetKey (void)
 {
 	key_waiting = -1;
 

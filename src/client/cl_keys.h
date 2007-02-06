@@ -145,6 +145,17 @@ typedef enum {
 	K_AUX32,
 
 	K_NUMLOCK,
+	K_SUPER,
+	K_COMPOSE,
+	K_MODE,
+	K_HELP,
+	K_PRINT,
+	K_SYSREQ,
+	K_SCROLLOCK,
+	K_BREAK,
+	K_MENU,
+	K_EURO,
+	K_UNDO,
 
 	K_LAST_KEY
 } keyNum_t;

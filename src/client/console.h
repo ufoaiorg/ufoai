@@ -72,7 +72,7 @@ void Con_DrawNotify(void);
 void Con_ClearNotify(void);
 void Con_ToggleConsole_f(void);
 
-void Con_SaveConsoleHistory(char* path);
-void Con_LoadConsoleHistory(char* path);
+void Con_SaveConsoleHistory(const char* path);
+void Con_LoadConsoleHistory(const char* path);
 
 #endif /* CLIENT_CONSOLE_H */

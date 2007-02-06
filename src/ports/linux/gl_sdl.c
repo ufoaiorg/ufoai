@@ -203,6 +203,15 @@ static int SDLateKey(SDL_keysym *keysym, int *key)
 	case SDLK_F12:
 		*key = K_F12;
 		break;
+	case SDLK_F13:
+		*key = K_F13;
+		break;
+	case SDLK_F14:
+		*key = K_F14;
+		break;
+	case SDLK_F15:
+		*key = K_F15;
+		break;
 	case SDLK_BACKSPACE:
 		*key = K_BACKSPACE;
 		break;
@@ -229,6 +238,10 @@ static int SDLateKey(SDL_keysym *keysym, int *key)
 	case SDLK_RALT:
 		*key = K_ALT;
 		break;
+	case SDLK_LSUPER:
+	case SDLK_RSUPER:
+		*key = K_SUPER;
+		break;
 	case SDLK_KP5:
 		*key = K_KP_5;
 		break;
@@ -253,6 +266,45 @@ static int SDLateKey(SDL_keysym *keysym, int *key)
 	/* suggestions on how to handle this better would be appreciated */
 	case SDLK_WORLD_7:
 		*key = '`';
+		break;
+	case SDLK_MODE:
+		*key = K_MODE;
+		break;
+	case SDLK_COMPOSE:
+		*key = K_COMPOSE;
+		break;
+	case SDLK_HELP:
+		*key = K_HELP;
+		break;
+	case SDLK_PRINT:
+		*key = K_PRINT;
+		break;
+	case SDLK_SYSREQ:
+		*key = K_SYSREQ;
+		break;
+	case SDLK_BREAK:
+		*key = K_BREAK;
+		break;
+	case SDLK_MENU:
+		*key = K_MENU;
+		break;
+	case SDLK_POWER:
+		*key = K_POWER;
+		break;
+	case SDLK_EURO:
+		*key = K_EURO;
+		break;
+	case SDLK_UNDO:
+		*key = K_UNDO;
+		break;
+	case SDLK_SCROLLOCK:
+		*key = K_SCROLLOCK;
+		break;
+	case SDLK_NUMLOCK:
+		*key = K_KP_NUMLOCK;
+		break;
+	case SDLK_CAPSLOCK:
+		*key = K_CAPSLOCK;
 		break;
 	default:
 		if (!keysym->unicode && (keysym->sym >= ' ') && (keysym->sym <= '~'))
