@@ -242,6 +242,7 @@ extern cvar_t *gl_ext_swapinterval;
 extern cvar_t *gl_ext_multitexture;
 extern cvar_t *gl_ext_combine;
 extern cvar_t *gl_ext_pointparameters;
+extern cvar_t *gl_ext_lockarrays;
 extern cvar_t *gl_ext_compiled_vertex_array;
 extern cvar_t *gl_ext_texture_compression;
 extern cvar_t *gl_ext_s3tc_compression;

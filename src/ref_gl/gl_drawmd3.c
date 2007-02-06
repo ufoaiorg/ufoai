@@ -57,24 +57,24 @@ static void GL_DrawAliasMD3FrameLerp (maliasmodel_t *paliashdr, maliasmesh_t mes
 		alpha = 1.0;
 
 	/* if ( currententity->flags & ( RF_SHELL_RED | RF_SHELL_GREEN | RF_SHELL_BLUE | RF_SHELL_DOUBLE | RF_SHELL_HALF_DAM) ) */
-	if ( currententity->flags & ( RF_SHELL_RED | RF_SHELL_GREEN | RF_SHELL_BLUE ) )
+	if (currententity->flags & (RF_SHELL_RED | RF_SHELL_GREEN | RF_SHELL_BLUE))
 		qglDisable( GL_TEXTURE_2D );
 
 	frame = paliashdr->frames + currententity->frame;
 	oldframe = paliashdr->frames + currententity->oldframe;
 
-	VectorSubtract ( currententity->oldorigin, currententity->origin, delta );
+	VectorSubtract(currententity->oldorigin, currententity->origin, delta);
 	VectorCopy(currententity->angles, tempangle);
 	tempangle[YAW] = tempangle[YAW] - 90;
-	AngleVectors (tempangle, vectors[0], vectors[1], vectors[2]);
+	AngleVectors(tempangle, vectors[0], vectors[1], vectors[2]);
 
-	move[0] = DotProduct (delta, vectors[0]);	/* forward */
-	move[1] = -DotProduct (delta, vectors[1]);	/* left */
-	move[2] = DotProduct (delta, vectors[2]);	/* up */
+	move[0] = DotProduct(delta, vectors[0]);	/* forward */
+	move[1] = -DotProduct(delta, vectors[1]);	/* left */
+	move[2] = DotProduct(delta, vectors[2]);	/* up */
 
 	VectorAdd (move, oldframe->translate, move);
 
-	for (i=0 ; i<3 ; i++) {
+	for (i = 0; i < 3; i++) {
 		move[i] = backlerp*move[i] + frontlerp*frame->translate[i];
 	}
 
@@ -92,7 +92,7 @@ static void GL_DrawAliasMD3FrameLerp (maliasmodel_t *paliashdr, maliasmesh_t mes
 	}
 	qglBegin (GL_TRIANGLES);
 
-	for(j=0; j < mesh.num_tris; j++) {
+	for(j = 0; j < mesh.num_tris; j++) {
 		qglTexCoord2f (mesh.stcoords[mesh.indexes[3*j+0]].st[0], mesh.stcoords[mesh.indexes[3*j+0]].st[1]);
 		qglVertex3fv(tempVertexArray[mesh.indexes[3*j+0]]);
 

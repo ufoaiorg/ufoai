@@ -345,7 +345,7 @@ void R_EnableLights(qboolean fixed, float *matrix, float *lightparam, float *lig
 /**
  * @brief
  */
-void R_DrawAliasModel(entity_t * e)
+void R_DrawAliasModel (entity_t * e)
 {
 	qboolean lightfixed;
 	vec4_t bbox[8];

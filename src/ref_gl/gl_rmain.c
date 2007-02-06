@@ -105,6 +105,7 @@ cvar_t *gl_ext_palettedtexture;
 cvar_t *gl_ext_multitexture;
 cvar_t *gl_ext_combine;
 cvar_t *gl_ext_pointparameters;
+cvar_t *gl_ext_lockarrays;
 cvar_t *gl_ext_compiled_vertex_array;
 cvar_t *gl_ext_texture_compression;
 cvar_t *gl_ext_s3tc_compression;
@@ -1077,6 +1078,7 @@ static void R_Register(void)
 	gl_ext_palettedtexture = ri.Cvar_Get("gl_ext_palettedtexture", "1", CVAR_ARCHIVE, NULL);
 	gl_ext_multitexture = ri.Cvar_Get("gl_ext_multitexture", "1", CVAR_ARCHIVE, NULL);
 	gl_ext_combine = ri.Cvar_Get("gl_ext_combine", "1", CVAR_ARCHIVE, NULL);
+	gl_ext_lockarrays = ri.Cvar_Get("gl_ext_lockarrays", "1", CVAR_ARCHIVE, NULL);
 	gl_ext_pointparameters = ri.Cvar_Get("gl_ext_pointparameters", "1", CVAR_ARCHIVE, NULL);
 	gl_ext_compiled_vertex_array = ri.Cvar_Get("gl_ext_compiled_vertex_array", "1", CVAR_ARCHIVE, NULL);
 	gl_ext_texture_compression = ri.Cvar_Get("gl_ext_texture_compression", "0", CVAR_ARCHIVE, NULL);
@@ -1251,9 +1253,12 @@ static qboolean R_Init( HINSTANCE hinstance, WNDPROC wndproc )
 
 	/* grab extensions */
 	if (strstr(gl_config.extensions_string, "GL_EXT_compiled_vertex_array") || strstr(gl_config.extensions_string, "GL_SGI_compiled_vertex_array")) {
-		ri.Con_Printf(PRINT_ALL, "...enabling GL_EXT_compiled_vertex_array\n");
-		qglLockArraysEXT = (void (APIENTRY *) (int, int)) qwglGetProcAddress("glLockArraysEXT");
-		qglUnlockArraysEXT = (void (APIENTRY *) (void)) qwglGetProcAddress("glUnlockArraysEXT");
+		if (gl_ext_lockarrays->value) {
+			ri.Con_Printf(PRINT_ALL, "...enabling GL_EXT_LockArrays\n");
+			qglLockArraysEXT = (void (APIENTRY *) (int, int)) qwglGetProcAddress("glLockArraysEXT");
+			qglUnlockArraysEXT = (void (APIENTRY *) (void)) qwglGetProcAddress("glUnlockArraysEXT");
+		} else
+			ri.Con_Printf(PRINT_ALL, "...ignoring GL_EXT_LockArrays\n");
 	} else
 		ri.Con_Printf(PRINT_ALL, "...GL_EXT_compiled_vertex_array not found\n");
 
