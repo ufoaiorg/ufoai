@@ -1167,7 +1167,7 @@ void CL_AddActorToTeamList (le_t * le)
 		if (cl.numTeamList == 1)
 			CL_ActorSelectList(0);
 
-		/* Initialize reactionmode list (with unknown) ... this will be checked for in CL_DoEndRound. */
+		/* Initialize reactionmode list (with undefined firemode) ... this will be checked for in CL_DoEndRound. */
 		REACTION_FIREMODE[i][0][0] = -1;	/* Init reactionmode for right hand. */
 		REACTION_FIREMODE[i][0][1] = -1;	/* Init weapon link  for right hand. */
 		REACTION_FIREMODE[i][1][0] = -1;	/* Init reactionmode for left hand. */
@@ -2114,7 +2114,7 @@ void CL_DisplayHudMessage (char *text, int time)
  */
 void CL_DoEndRound (sizebuf_t * sb)
 {
-     int actor_idx;
+	int actor_idx;
 
 	/* hud changes */
 	if (cls.team == cl.actTeam)

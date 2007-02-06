@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 int turnTeam;	/* Defined in g_local.h Stores level.activeTeam while G_CanReactionFire() is abusing it. */
 
 int REACTION_FIREMODE[MAX_TEAMS][MAX_EDICTS][2]; /* Defined in g_local.h Used in g_combat.c for choosing correct reaction fire. It is filled from data from cl_actor.c */
+/* TODO: Needs an initialization with -1 ... so we can get sure it is set to it inthe beginning and we do not need to transfer this data from cl_actor.c on actor-init*/
 
 static qboolean sentAppearPerishEvent;
 
