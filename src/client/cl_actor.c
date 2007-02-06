@@ -599,7 +599,13 @@ void CL_DisplayFiremodes_f (void)
 	actor_idx = CL_GetActorNumber(selActor);
 	Com_DPrintf("CL_DisplayFiremodes_f: actor index: %i\n", actor_idx);
 
-	/* TODO: Check if REACTION_FIREMODE is up to date with the weapon other wise set it to default for the current one. Especially needed for first round. */
+	/* Check if REACTION_FIREMODE is up to date with the weapon other wise set it to default for the current one. Especially needed for first round. */
+	if ( REACTION_FIREMODE[actor_idx][0][0]  < 0 ) {
+		if (hand[0] == 'r')
+			CL_SetReactionFiremode(actor_idx, 0, ammo->weap_idx[weap_fd_idx], Com_GetDefaultReactionFire(ammo, weap_fd_idx) );
+		else
+			CL_SetReactionFiremode(actor_idx, 1, ammo->weap_idx[weap_fd_idx], Com_GetDefaultReactionFire(ammo, weap_fd_idx) );
+	}
 
 	for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
 		if ( i < ammo->numFiredefs[weap_fd_idx] ) { /* We have a defined fd */
@@ -667,16 +673,15 @@ static void CL_UpdateReactionFiremodes (char hand, int actor_idx, int active_fir
 		return;
 	}
 
-	/* TODO: Ok, is there a way to do this?
 	if (active_firemode < 0) {
-		* Set default reaction firemode. *
-		i = G_GetDefaultReactionFire(ammo, weap_fd_idx);
+		/* Set default reaction firemode. */
+		i = Com_GetDefaultReactionFire(ammo, weap_fd_idx);
 		REACTION_FIREMODE[actor_idx][handidx][0] = i;
 		MSG_Write_PA(PA_REACT_SELECT, actor_idx, handidx, i);
 		REACTION_FIREMODE[actor_idx][handidx][1] = ammo->weap_idx[weap_fd_idx];
 		return;
 	}
-	*/
+
 	if (actor_idx < 0)
 		return;
 
@@ -696,7 +701,7 @@ static void CL_UpdateReactionFiremodes (char hand, int actor_idx, int active_fir
 	CL_SetReactionFiremode( actor_idx, handidx, -1, -1 );
 	for (i = 0; i < ammo->numFiredefs[weap_fd_idx]; i++) {
 		if (ammo->fd[weap_fd_idx][i].reaction) {
-			if ((active_firemode < 0) || (i == active_firemode)) {
+			if (i == active_firemode) {
 				CL_SetReactionFiremode( actor_idx, handidx, ammo->weap_idx[weap_fd_idx], i );
 				return;
 			}

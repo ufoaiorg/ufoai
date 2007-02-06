@@ -1335,6 +1335,7 @@ void Com_PrintItemDescription(int i);
 void Com_InventoryList_f(void);
 qboolean INV_LoadableInWeapon(objDef_t *od, int weapon_idx);
 int INV_FiredefsIDXForWeapon(objDef_t *od, int weapon_idx);
+int Com_GetDefaultReactionFire(objDef_t *ammo, int weapon_fds_idx);
 
 /* g_spawn.c */
 
