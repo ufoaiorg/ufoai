@@ -998,7 +998,7 @@ typedef struct objDef_s {
 	int weap_idx[MAX_WEAPONS_PER_OBJDEF];			/**< List of weapon-object indices. The index of the weapon in csi.ods[xxx].
 												 ** You can get the correct index for this array from e.g. fireDef_t.weap_fds_idx. or with INV_FiredefsIDXForWeapon. */
 	fireDef_t fd[MAX_WEAPONS_PER_OBJDEF][MAX_FIREDEFS_PER_WEAPON];	/**< List of firemodes per weapon (the ammo can be used in). */
-	int numFiredefs[MAX_WEAPONS_PER_OBJDEF];	/**< Number of firemodes per weapon. (How many of the firemodes-per-weapons list is used.) 
+	int numFiredefs[MAX_WEAPONS_PER_OBJDEF];	/**< Number of firemodes per weapon. (How many of the firemodes-per-weapons list is used.)
 											 ** Maximum value for fireDef_t.fd_idx and it't <= MAX_FIREDEFS_PER_WEAPON */
 	int numWeapons;							/**< Number of weapons this ammo can be used in.
 											 ** Maximum value for fireDef_t.weap_fds_idx and it's <= MAX_WEAPONS_PER_OBJDEF) */
@@ -1335,7 +1335,6 @@ void Com_PrintItemDescription(int i);
 void Com_InventoryList_f(void);
 qboolean INV_LoadableInWeapon(objDef_t *od, int weapon_idx);
 int INV_FiredefsIDXForWeapon(objDef_t *od, int weapon_idx);
-int CL_GetDefaultReactionFire(objDef_t *ammo, int weapon_fds_idx);
 
 /* g_spawn.c */
 

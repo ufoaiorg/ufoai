@@ -50,7 +50,7 @@ BOOL (WINAPI * qwglSetDeviceGammaRampEXT) (const unsigned char *pRed, const unsi
  * @brief Unloads the specified DLL then nulls out all the proc pointers.
  * @sa QGL_UnLink
  */
-void QGL_Shutdown( void )
+void QGL_Shutdown (void)
 {
 	if ( glw_state.hinstOpenGL ) {
 		FreeLibrary( glw_state.hinstOpenGL );
@@ -89,7 +89,7 @@ void QGL_Shutdown( void )
  * @brief This is responsible for binding our qgl function pointers to the appropriate GL stuff.
  * @sa QGL_Init
  */
-qboolean QGL_Init( const char *dllname )
+qboolean QGL_Init (const char *dllname)
 {
 	if ( ( glw_state.hinstOpenGL = LoadLibrary( dllname ) ) == 0 ) {
 		char *buf = NULL;

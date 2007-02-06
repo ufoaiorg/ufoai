@@ -154,7 +154,7 @@ static int findhandle;
 /**
  * @brief
  */
-static qboolean CompareAttributes( unsigned found, unsigned musthave, unsigned canthave )
+static qboolean CompareAttributes (unsigned found, unsigned musthave, unsigned canthave)
 {
 	if ( ( found & _A_RDONLY ) && ( canthave & SFF_RDONLY ) )
 		return qfalse;

@@ -195,13 +195,13 @@ LRESULT WINAPI MainWndProc (HWND hWnd, UINT uMsg, WPARAM  wParam, LPARAM lParam)
 {
 	LRESULT lRet = 0;
 
-	if ( uMsg == MSH_MOUSEWHEEL ) {
-		if ( ( ( int ) wParam ) > 0 ) {
-			Key_Event( K_MWHEELUP, qtrue, sys_msg_time );
-			Key_Event( K_MWHEELUP, qfalse, sys_msg_time );
+	if (uMsg == MSH_MOUSEWHEEL) {
+		if (((int)wParam) > 0) {
+			Key_Event(K_MWHEELUP, qtrue, sys_msg_time);
+			Key_Event(K_MWHEELUP, qfalse, sys_msg_time);
 		} else {
-			Key_Event( K_MWHEELDOWN, qtrue, sys_msg_time );
-			Key_Event( K_MWHEELDOWN, qfalse, sys_msg_time );
+			Key_Event(K_MWHEELDOWN, qtrue, sys_msg_time);
+			Key_Event(K_MWHEELDOWN, qfalse, sys_msg_time);
 		}
 		return DefWindowProc (hWnd, uMsg, wParam, lParam);
 	}
@@ -212,12 +212,12 @@ LRESULT WINAPI MainWndProc (HWND hWnd, UINT uMsg, WPARAM  wParam, LPARAM lParam)
 		** this chunk of code theoretically only works under NT4 and Win98
 		** since this message doesn't exist under Win95
 		*/
-		if ( ( short ) HIWORD( wParam ) > 0 ) {
-			Key_Event( K_MWHEELUP, qtrue, sys_msg_time );
-			Key_Event( K_MWHEELUP, qfalse, sys_msg_time );
+		if ((short)HIWORD(wParam) > 0) {
+			Key_Event(K_MWHEELUP, qtrue, sys_msg_time);
+			Key_Event(K_MWHEELUP, qfalse, sys_msg_time);
 		} else {
-			Key_Event( K_MWHEELDOWN, qtrue, sys_msg_time );
-			Key_Event( K_MWHEELDOWN, qfalse, sys_msg_time );
+			Key_Event(K_MWHEELDOWN, qtrue, sys_msg_time);
+			Key_Event(K_MWHEELDOWN, qfalse, sys_msg_time);
 		}
 		break;
 
@@ -228,16 +228,16 @@ LRESULT WINAPI MainWndProc (HWND hWnd, UINT uMsg, WPARAM  wParam, LPARAM lParam)
 		cl_hwnd = hWnd;
 
 		MSH_MOUSEWHEEL = RegisterWindowMessage("MSWHEEL_ROLLMSG");
-		return DefWindowProc (hWnd, uMsg, wParam, lParam);
+		return DefWindowProc(hWnd, uMsg, wParam, lParam);
 
 	case WM_PAINT:
-		SCR_DirtyScreen ();	/* force entire screen to update next frame */
-		return DefWindowProc (hWnd, uMsg, wParam, lParam);
+		SCR_DirtyScreen();	/* force entire screen to update next frame */
+		return DefWindowProc(hWnd, uMsg, wParam, lParam);
 
 	case WM_DESTROY:
 		/* let sound and input know about this? */
 		cl_hwnd = NULL;
-		return DefWindowProc (hWnd, uMsg, wParam, lParam);
+		return DefWindowProc(hWnd, uMsg, wParam, lParam);
 
 	case WM_ACTIVATE:
 		{

@@ -425,37 +425,6 @@ static void HideFiremodes (void)
 }
 
 /**
- * @brief Returns the default reaction firemode for a given ammo in a given weapon.
- * @param[in] ammo The ammo(or weapon-)object that contains the firedefs
- * @param[in] weapon_fds_idx The index in objDef[x]
- * @return Default reaction-firemode index in objDef->fd[][x]. -1 if an error occurs or no firedefs exist.
- */
-int CL_GetDefaultReactionFire (objDef_t *ammo, int weapon_fds_idx)
-{
-	int fd_idx; 
-	if (weapon_fds_idx >= MAX_WEAPONS_PER_OBJDEF) {
-		Com_Printf("CL_GetDefaultReactionfire: bad weapon_fds_idx (%i) Maximum is %i.\n", weapon_fds_idx, MAX_WEAPONS_PER_OBJDEF-1);
-		return -1;
-	}
-	if (weapon_fds_idx < 0) {
-		Com_Printf("CL_GetDefaultReactionfire: Negative weapon_fds_idx given.\n");
-		return -1;
-	}
-
-	if (ammo->numFiredefs[weapon_fds_idx] == 0) {
-		Com_Printf("CL_GetDefaultReactionfire: Probably not an ammo-object: %s\n", ammo->id);
-		return -1;
-	}
-
-	for (fd_idx = 0; fd_idx < ammo->numFiredefs[weapon_fds_idx]; fd_idx++) {
-		if ( ammo->fd[weapon_fds_idx][fd_idx].reaction)
-			return fd_idx;
-	}
-
-	return 0; /* 0 = The first firemode. Default for objects without a reaction-firemode */
-}
-
-/**
  * @brief Sets the display for a single weapon/reload HUD button
  * @param[in] fd The firedefinition/firemode to be displayed.
  * @param[in] hand Which list to display. 'l' for left hand list, 'r' for right hand list.

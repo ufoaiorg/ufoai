@@ -67,7 +67,7 @@ static unsigned short s_oldHardwareGamma[3][256];
 /**
  * @brief Determines if the underlying hardware supports the Win32 gamma correction API.
  */
-void WG_CheckHardwareGamma( void )
+void WG_CheckHardwareGamma (void)
 {
 	HDC hDC;
 
@@ -107,7 +107,7 @@ void WG_CheckHardwareGamma( void )
 /**
  * @brief
  */
-qboolean VID_CreateWindow( int width, int height, qboolean fullscreen )
+qboolean VID_CreateWindow (int width, int height, qboolean fullscreen)
 {
 	WNDCLASS		wc;
 	HWND			desktop;
@@ -129,7 +129,7 @@ qboolean VID_CreateWindow( int width, int height, qboolean fullscreen )
 	wc.lpszMenuName  = 0;
 	wc.lpszClassName = GAME_TITLE;
 
-	if (!RegisterClass (&wc) )
+	if (!RegisterClass(&wc))
 		ri.Sys_Error (ERR_FATAL, "Couldn't register window class");
 
 	if (fullscreen) {
@@ -145,7 +145,7 @@ qboolean VID_CreateWindow( int width, int height, qboolean fullscreen )
 	r.right  = width;
 	r.bottom = height;
 
-	AdjustWindowRect (&r, stylebits, FALSE);
+	AdjustWindowRect(&r, stylebits, FALSE);
 
 	w = r.right - r.left;
 	h = r.bottom - r.top;
@@ -182,18 +182,18 @@ qboolean VID_CreateWindow( int width, int height, qboolean fullscreen )
 		return qfalse;
 	}
 
-	SetForegroundWindow( glw_state.hWnd );
-	SetFocus( glw_state.hWnd );
+	SetForegroundWindow(glw_state.hWnd);
+	SetFocus(glw_state.hWnd);
 
 	desktop = GetDesktopWindow();
 	GetWindowRect(desktop, &desktopRect);
 
-	ri.Con_Printf( PRINT_ALL, "Desktop resolution: %i:%i\n",
+	ri.Con_Printf(PRINT_ALL, "Desktop resolution: %i:%i\n",
 		(int)(desktopRect.right - desktopRect.left),
 		(int)(desktopRect.bottom - desktopRect.top));
 
 	/* let the sound and input subsystems know about the new window */
-	ri.Vid_NewWindow (width, height);
+	ri.Vid_NewWindow(width, height);
 
 	return qtrue;
 }
@@ -202,7 +202,7 @@ qboolean VID_CreateWindow( int width, int height, qboolean fullscreen )
 /**
  * @brief
  */
-rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean fullscreen )
+rserr_t GLimp_SetMode (unsigned *pwidth, unsigned *pheight, int mode, qboolean fullscreen)
 {
 	int width, height;
 	const char *win_fs[] = { "W", "FS" };
@@ -335,7 +335,7 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
  * HGLRC, deleting the rendering context, and releasing the DC acquired
  * for the window.  The state structure is also nulled out.
  */
-void GLimp_Shutdown( void )
+void GLimp_Shutdown (void)
 {
 	if (!qwglMakeCurrent)
 		return;
@@ -378,7 +378,7 @@ void GLimp_Shutdown( void )
  * @brief This routine is responsible for initializing the OS specific portions of OpenGL.
  * @note Under Win32 this means dealing with the pixelformats and doing the wgl interface stuff.
  */
-qboolean GLimp_Init( HINSTANCE hinstance, WNDPROC wndproc )
+qboolean GLimp_Init (HINSTANCE hinstance, WNDPROC wndproc)
 {
 #define OSR2_BUILD_NUMBER 1111
 
@@ -545,7 +545,7 @@ fail:
 /**
  * @brief
  */
-void GLimp_BeginFrame( float camera_separation )
+void GLimp_BeginFrame (float camera_separation)
 {
 	if (gl_bitdepth->modified) {
 		if (gl_bitdepth->value != 0 && !glw_state.allowdisplaydepthchange) {
@@ -590,7 +590,7 @@ void GLimp_EndFrame (void)
 /**
  * @brief
  */
-void GLimp_AppActivate( qboolean active )
+void GLimp_AppActivate (qboolean active)
 {
 	if ( active ) {
 		SetForegroundWindow( glw_state.hWnd );
@@ -604,7 +604,7 @@ void GLimp_AppActivate( qboolean active )
 /**
  * @brief This routine should only be called if gl_state.hwgamma is TRUE
  */
-void GLimp_SetGamma(void)
+void GLimp_SetGamma (void)
 {
 	int o, i, ret;
 	WORD gamma_ramp[3][256];
@@ -635,7 +635,7 @@ void GLimp_SetGamma(void)
 /**
  * @brief
  */
-void WG_RestoreGamma( void )
+void WG_RestoreGamma (void)
 {
 	HDC hDC;
 	if ( gl_state.hwgamma ) {

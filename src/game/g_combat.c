@@ -1194,6 +1194,37 @@ static qboolean G_CanReactionFire(edict_t *ent, edict_t *target, char *reason)
 }
 
 /**
+ * @brief Returns the default reaction firemode for a given ammo in a given weapon.
+ * @param[in] ammo The ammo(or weapon-)object that contains the firedefs
+ * @param[in] weapon_fds_idx The index in objDef[x]
+ * @return Default reaction-firemode index in objDef->fd[][x]. -1 if an error occurs or no firedefs exist.
+ */
+static int G_GetDefaultReactionFire (objDef_t *ammo, int weapon_fds_idx)
+{
+	int fd_idx;
+	if (weapon_fds_idx >= MAX_WEAPONS_PER_OBJDEF) {
+		Com_Printf("G_GetDefaultReactionfire: bad weapon_fds_idx (%i) Maximum is %i.\n", weapon_fds_idx, MAX_WEAPONS_PER_OBJDEF-1);
+		return -1;
+	}
+	if (weapon_fds_idx < 0) {
+		Com_Printf("G_GetDefaultReactionfire: Negative weapon_fds_idx given.\n");
+		return -1;
+	}
+
+	if (ammo->numFiredefs[weapon_fds_idx] == 0) {
+		Com_Printf("G_GetDefaultReactionfire: Probably not an ammo-object: %s\n", ammo->id);
+		return -1;
+	}
+
+	for (fd_idx = 0; fd_idx < ammo->numFiredefs[weapon_fds_idx]; fd_idx++) {
+		if (ammo->fd[weapon_fds_idx][fd_idx].reaction)
+			return fd_idx;
+	}
+
+	return 0; /* 0 = The first firemode. Default for objects without a reaction-firemode */
+}
+
+/**
  * @brief Get the number of TUs that ent needs to fire at target, also optionally return the firing hand. Used for reaction fire.
  * @param[in] ent The shooter entity.
  * @param[in] target The target entity.
@@ -1214,8 +1245,8 @@ static int G_GetFiringTUs (edict_t *ent, edict_t *target, int *hand, int *firemo
 
 		*firemode = REACTION_FIREMODE[ent->team][ent->number][0]; /* Get selected (or default) firemode for the weapon in the right hand. */
 		if (*firemode < 0)
-			*firemode = CL_GetDefaultReactionFire(&gi.csi->ods[RIGHT(ent)->item.m], weapon_fd_idx);	/* Set the default reaction-firemode. */
-				
+			*firemode = G_GetDefaultReactionFire(&gi.csi->ods[RIGHT(ent)->item.m], weapon_fd_idx);	/* Set the default reaction-firemode. */
+
 		if ( gi.csi->ods[RIGHT(ent)->item.m].fd[weapon_fd_idx][*firemode].time + sv_reaction_leftover->integer <= ent->TU
 		  && gi.csi->ods[RIGHT(ent)->item.m].fd[weapon_fd_idx][*firemode].range > VectorDist(ent->origin, target->origin) ) {
 
@@ -1232,10 +1263,10 @@ static int G_GetFiringTUs (edict_t *ent, edict_t *target, int *hand, int *firemo
 			|| LEFT(ent)->item.a > 0) ) {
 
 		weapon_fd_idx = INV_FiredefsIDXForWeapon(&gi.csi->ods[LEFT(ent)->item.m], LEFT(ent)->item.t);
-		
+
 		*firemode = REACTION_FIREMODE[ent->team][ent->number][1]; /* Get selected (or default) firemode for the weapon in the left hand. */
 		if (*firemode < 0)
-			*firemode = CL_GetDefaultReactionFire(&gi.csi->ods[LEFT(ent)->item.m], weapon_fd_idx);	/* Set the default reaction-firemode. */
+			*firemode = G_GetDefaultReactionFire(&gi.csi->ods[LEFT(ent)->item.m], weapon_fd_idx);	/* Set the default reaction-firemode. */
 
 		if ( gi.csi->ods[LEFT(ent)->item.m].fd[weapon_fd_idx][*firemode].time + sv_reaction_leftover->integer <= ent->TU
 		  && gi.csi->ods[LEFT(ent)->item.m].fd[weapon_fd_idx][*firemode].range > VectorDist(ent->origin, target->origin) ) {
