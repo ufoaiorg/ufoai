@@ -146,7 +146,7 @@ image_t *draw_chars;
 /**
  * @brief
  */
-void Draw_InitLocal(void)
+void Draw_InitLocal (void)
 {
 	shadow = GL_FindImage("pics/sfx/shadow.tga", it_pic);
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -166,7 +166,7 @@ void Draw_InitLocal(void)
  * It can be clipped to the top of the screen to allow the console to be
  * smoothly scrolled off.
  */
-void Draw_Char(int x, int y, int num)
+void Draw_Char (int x, int y, int num)
 {
 	int row, col;
 	float frow, fcol, size;
@@ -206,7 +206,7 @@ void Draw_Char(int x, int y, int num)
  * @note To reset the color let rgba be NULL
  * @note Enables openGL blend if alpha value is lower than 1.0
  */
-void Draw_Color(const float *rgba)
+void Draw_Color (const float *rgba)
 {
 	if (rgba) {
 		if (rgba[3] < 1.0f)
@@ -226,7 +226,7 @@ void Draw_Color(const float *rgba)
  * @return NULL on error or image_t pointer on success
  * @sa GL_FindImage
  */
-image_t *Draw_FindPic(const char *name)
+image_t *Draw_FindPic (const char *name)
 {
 	image_t *gl;
 	char fullname[MAX_QPATH];
@@ -248,7 +248,7 @@ image_t *Draw_FindPic(const char *name)
  * @param[in] pic The name of the pic to get the values for
  * @sa Draw_FindPic
  */
-void Draw_GetPicSize(int *w, int *h, char *pic)
+void Draw_GetPicSize (int *w, int *h, char *pic)
 {
 	image_t *gl;
 
@@ -264,7 +264,7 @@ void Draw_GetPicSize(int *w, int *h, char *pic)
 /**
  * @brief
  */
-void Draw_StretchPic(int x, int y, int w, int h, char *pic)
+void Draw_StretchPic (int x, int y, int w, int h, char *pic)
 {
 	image_t *gl;
 
@@ -304,7 +304,7 @@ void Draw_StretchPic(int x, int y, int w, int h, char *pic)
 /**
  * @brief
  */
-void Draw_NormPic(float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, qboolean blend, char *name)
+void Draw_NormPic (float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, qboolean blend, char *name)
 {
 	float nx, ny, nw = 0.0, nh = 0.0;
 	image_t *gl;
@@ -400,7 +400,7 @@ void Draw_NormPic(float x, float y, float w, float h, float sh, float th, float 
 /**
  * @brief
  */
-void Draw_Pic(int x, int y, char *pic)
+void Draw_Pic (int x, int y, char *pic)
 {
 	image_t *gl;
 
@@ -437,7 +437,7 @@ void Draw_Pic(int x, int y, char *pic)
 /**
  * @brief This repeats a 64*64 tile graphic to fill the screen around a sized down refresh window.
  */
-void Draw_TileClear(int x, int y, int w, int h, char *name)
+void Draw_TileClear (int x, int y, int w, int h, char *name)
 {
 	image_t *image;
 
@@ -472,7 +472,7 @@ void Draw_TileClear(int x, int y, int w, int h, char *name)
 /**
  * @brief Fills a box of pixels with a single color
  */
-void Draw_Fill(int x, int y, int w, int h, int style, const vec4_t color)
+void Draw_Fill (int x, int y, int w, int h, int style, const vec4_t color)
 {
 	float nx, ny, nw, nh;
 
@@ -521,7 +521,7 @@ void Draw_Fill(int x, int y, int w, int h, int style, const vec4_t color)
 /**
  * @brief
  */
-void Draw_FadeScreen(void)
+void Draw_FadeScreen (void)
 {
 	qglEnable(GL_BLEND);
 	qglDisable(GL_TEXTURE_2D);
@@ -544,7 +544,7 @@ static float lastQ;
  * @brief Draw the day and night images of a flat geoscape - multitexture feature is used to blend the images
  * @note If no multitexture is available only the day map is drawn
  */
-void Draw_DayAndNight(int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, char *map)
+void Draw_DayAndNight (int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, char *map)
 {
 	image_t *gl;
 	float nx, ny, nw, nh;
@@ -647,7 +647,7 @@ void Draw_DayAndNight(int x, int y, int w, int h, float p, float q, float cx, fl
 /**
  * @brief Draw the clouds for flat geoscape
  */
-void Draw_Clouds(int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, char *map)
+void Draw_Clouds (int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, char *map)
 {
 	image_t *gl;
 	float nx, ny, nw, nh;
@@ -738,7 +738,7 @@ void Draw_Circle (vec3_t mid, float radius, const vec4_t color)
 /**
  * @brief
  */
-void Draw_LineStrip(int points, int *verts)
+void Draw_LineStrip (int points, int *verts)
 {
 	static int vs[MAX_LINEVERTS * 2];
 	int i;
@@ -770,7 +770,7 @@ void Draw_LineStrip(int points, int *verts)
 /**
  * @brief
  */
-void Draw_3DMapMarkers(vec3_t angles, float zoom, float latitude, float longitude, char *image)
+void Draw_3DMapMarkers (vec3_t angles, float zoom, float latitude, float longitude, char *image)
 {
 	float factor;
 	vec3_t v;
@@ -810,14 +810,14 @@ void Draw_3DMapMarkers(vec3_t angles, float zoom, float latitude, float longitud
  * "to" and "from" in the comments in the code refers to the two
  * points given as arguments.
  */
-void Draw_3DMapLine(vec3_t angles, float zoom, int n, float dist, vec2_t * path)
+void Draw_3DMapLine (vec3_t angles, float zoom, int n, float dist, vec2_t * path)
 {
 }
 
 /**
  * @brief responsible for drawing the 3d globe on geoscape
  */
-void Draw_3DGlobe(int x, int y, int w, int h, float p, float q, vec3_t rotate, float zoom, char *map)
+void Draw_3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate, float zoom, char *map)
 {
 	/* globe scaling */
 	float fullscale = zoom / 4.0f;

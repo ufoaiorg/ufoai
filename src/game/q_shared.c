@@ -2829,7 +2829,7 @@ int Com_PackAmmoAndWeapon (inventory_t* const inv, const int weapon, const int e
  * Beware: if two weapons in the same category have the same price,
  * only one will be considered for inventory.
  */
-void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], char *name, character_t* chr)
+void Com_EquipActor (inventory_t* const inv, const int equip[MAX_OBJDEFS], char *name, character_t* chr)
 {
 	int weapon = -1; /* this variable is never used before being set */
 	int i, max_price, prev_price;
@@ -3035,7 +3035,7 @@ void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], char *
  * @sa TEAM_ALIEN, TEAM_CIVILIAN, TEAM_PHALANX
  * @param[in] teamString
  */
-int Com_StringToTeamNum(char* teamString)
+int Com_StringToTeamNum (char* teamString)
 {
 	if (!Q_strncmp(teamString, "TEAM_PHALANX", MAX_VAR))
 		return TEAM_PHALANX;
@@ -3179,7 +3179,7 @@ void Com_SetGlobalCampaignID (int campaignID)
  * @sa Com_GetSkill
  */
 #define MAX_GENCHARRETRIES	20
-void Com_CharGenAbilitySkills(character_t * chr, int team)
+void Com_CharGenAbilitySkills (character_t * chr, int team)
 {
 	float randomArray[SKILL_NUM_TYPES];
 	int i, retry;
@@ -3259,7 +3259,7 @@ static char returnModel[MAX_VAR];
  * @param chr Pointer to character struct
  * @sa Com_CharGetBody
  */
-char *Com_CharGetBody(character_t * const chr)
+char *Com_CharGetBody (character_t * const chr)
 {
 	char id[MAX_VAR];
 	char *underline;
@@ -3298,7 +3298,7 @@ char *Com_CharGetBody(character_t * const chr)
  * @param chr Pointer to character struct
  * @sa Com_CharGetBody
  */
-char *Com_CharGetHead(character_t * const chr)
+char *Com_CharGetHead (character_t * const chr)
 {
 	char id[MAX_VAR];
 	char *underline;
@@ -3858,6 +3858,7 @@ void Com_PrintItemDescription (int i)
 
 /**
  * @brief Lists all object definitions
+ * @todo Why is this here - and not in a client only function
  */
 void Com_InventoryList_f (void)
 {
