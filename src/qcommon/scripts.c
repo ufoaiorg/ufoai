@@ -1221,14 +1221,22 @@ extern void Com_AddObjectLinks (void)
 	objDef_t *od = NULL;
 	int i;
 	byte j, k;
+	technology_t *tech = NULL;
 
 	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
-		/* Add links to weapons. */
+		/* Add links to technologies. */
+		tech = RS_GetTechByProvided(od->id);
+		od->tech = tech;
+		if (!od->tech) {
+			Com_Printf("Com_AddObjectLinks: Could not find a valid tech for item %s\n", od->id);
+		}
 
+		/* Add links to weapons. */
 		for (j = 0; j < od->numWeapons; j++ ) {
 			od->weap_idx[j] = RS_GetItem(od->weap_id[j]);
 			/* Back-link the obj-idx inside the fds */
-			/* FIXME: use memset here- would be ways faster */
+			/* FIXME: use memset here- would be ways faster.
+			 * And how does one do that wouthout overwriting the rest of the fireDef struct in od->fd[j][k]?*/
 			for (k = 0; k < od->numFiredefs[j]; k++ ) {
 				od->fd[j][k].obj_idx = i;
 			}
