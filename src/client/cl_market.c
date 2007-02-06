@@ -44,7 +44,7 @@ static const int MARKET_SELL_DIVISOR = 1;
  */
 static void CL_MarketAircraftDescription (int aircraftID)
 {
-	static char itemText[MAX_MENUTEXTLEN];
+	static char itemText[MAX_SMALLMENUTEXTLEN];
 	technology_t *tech;
 	aircraft_t *aircraft;
 
@@ -59,10 +59,10 @@ static void CL_MarketAircraftDescription (int aircraftID)
 		Cvar_Set("mn_name", aircraft->name);
 
 		/* set description text */
-		Com_sprintf(itemText, MAX_MENUTEXTLEN, _("TODO\n"));
+		Com_sprintf(itemText, sizeof(itemText), _("TODO\n"));
 		Q_strcat(itemText, _("TODO\n"), sizeof(itemText));
 	} else {
-		Com_sprintf(itemText, MAX_MENUTEXTLEN, _("Unknown - need to research this"));
+		Com_sprintf(itemText, sizeof(itemText), _("Unknown - need to research this"));
 	}
 	menuText[TEXT_STANDARD] = itemText;
 }

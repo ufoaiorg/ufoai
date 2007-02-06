@@ -294,10 +294,10 @@ char *NET_BaseAdrToString (netadr_t a)
 	switch (a.type) {
 	case NA_IP:
 	case NA_LOOPBACK:
-		Com_sprintf (s, sizeof(s), "%i.%i.%i.%i", a.ip[0], a.ip[1], a.ip[2], a.ip[3]);
+		Com_sprintf(s, sizeof(s), "%i.%i.%i.%i", a.ip[0], a.ip[1], a.ip[2], a.ip[3]);
 		break;
 	case NA_BROADCAST:
-		Com_sprintf (s, sizeof(s), "255.255.255.255");
+		Com_sprintf(s, sizeof(s), "255.255.255.255");
 		break;
 	case NA_IP6:
 	case NA_MULTICAST6:
@@ -333,7 +333,7 @@ char *NET_BaseAdrToString (netadr_t a)
 		if (getnameinfo ((struct sockaddr *) &ss, sizeof(ss), s, sizeof (s),
 				NULL, 0, NI_NUMERICHOST))
 #endif
-			Com_sprintf (s, sizeof(s), "<invalid>");
+			Com_sprintf(s, sizeof(s), "<invalid>");
                 else {
 			if (a.type == NA_MULTICAST6 ||
 			IN6_IS_ADDR_LINKLOCAL(&((struct sockaddr_in6 *)&ss)->sin6_addr)) {
@@ -346,14 +346,14 @@ char *NET_BaseAdrToString (netadr_t a)
 				/* A better way to handle this is to always use
 				* sockaddr_storage to represent an IP (v4, v6)
 				* address */
-				Com_sprintf (tmp, sizeof(tmp), "%s%%%d", s, s6->sin6_scope_id);
+				Com_sprintf(tmp, sizeof(tmp), "%s%%%d", s, s6->sin6_scope_id);
 				memcpy(s, tmp, sizeof(s));
 			}
 		}
 		break;
 
 	default:
-		Com_sprintf (s, sizeof(s), "invalid IP address family type");
+		Com_sprintf(s, sizeof(s), "invalid IP address family type");
 		break;
 	}
 
@@ -370,7 +370,7 @@ char *NET_AdrToString (netadr_t a)
 	const char *base;
 
 	base = NET_BaseAdrToString (a);
-	Com_sprintf (s, sizeof(s), "[%s]:%d", base, ntohs(a.port));
+	Com_sprintf(s, sizeof(s), "[%s]:%d", base, ntohs(a.port));
 
 	return s;
 }
@@ -663,8 +663,8 @@ void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 					return;
 				}
 
-				Com_sprintf (mcast_addr, sizeof(mcast_addr), "%s%%%s", tmp, multicast_interface);
-				Com_sprintf (mcast_port, sizeof(mcast_port), "%d", ntohs(s6->sin6_port));
+				Com_sprintf(mcast_addr, sizeof(mcast_addr), "%s%%%s", tmp, multicast_interface);
+				Com_sprintf(mcast_port, sizeof(mcast_port), "%d", ntohs(s6->sin6_port));
 				memset(&hints, 0, sizeof(hints));
 				hints.ai_family = AF_INET6;
 				hints.ai_socktype = SOCK_DGRAM;

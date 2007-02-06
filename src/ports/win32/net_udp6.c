@@ -258,10 +258,10 @@ char *NET_BaseAdrToString (netadr_t a)
 	switch (a.type) {
 	case NA_IP:
 	case NA_LOOPBACK:
-		Com_sprintf (s, sizeof(s), "%i.%i.%i.%i", a.ip[0], a.ip[1], a.ip[2], a.ip[3]);
+		Com_sprintf(s, sizeof(s), "%i.%i.%i.%i", a.ip[0], a.ip[1], a.ip[2], a.ip[3]);
 		break;
 	case NA_BROADCAST:
-		Com_sprintf (s, sizeof(s), "255.255.255.255");
+		Com_sprintf(s, sizeof(s), "255.255.255.255");
 		break;
 	case NA_IPV6:
 	case NA_MULTICAST6:
@@ -273,7 +273,7 @@ char *NET_BaseAdrToString (netadr_t a)
 			ss.ss_len = sizeof (struct sockaddr_in);
 #endif
 			ss.ss_family = AF_INET;
-			memcpy (&((struct sockaddr_in *) &ss)->sin_addr,
+			memcpy(&((struct sockaddr_in *) &ss)->sin_addr,
 					&((struct in6_addr *) a.ip)->s6_addr[12],
 					sizeof (struct in_addr));
 		} else {
@@ -285,19 +285,19 @@ char *NET_BaseAdrToString (netadr_t a)
 			 * way to handle this */
 			s6->sin6_scope_id = a.scope_id;
 			s6->sin6_family = AF_INET6;
-			memcpy (&s6->sin6_addr, a.ip, sizeof (struct in6_addr));
+			memcpy(&s6->sin6_addr, a.ip, sizeof (struct in6_addr));
 		}
 
 		flags = NI_NUMERICHOST;
 
 #ifdef HAVE_SIN6_LEN
-		if (getnameinfo ((struct sockaddr *) &ss, ss.ss_len, s, sizeof (s),
+		if (getnameinfo((struct sockaddr *) &ss, ss.ss_len, s, sizeof (s),
 				NULL, 0, NI_NUMERICHOST))
 #else
-		if (getnameinfo ((struct sockaddr *) &ss, sizeof(struct sockaddr_in6),
+		if (getnameinfo((struct sockaddr *) &ss, sizeof(struct sockaddr_in6),
 				s, sizeof (s), NULL, 0, NI_NUMERICHOST))
 #endif
-			Com_sprintf (s, sizeof(s), "<invalid>");
+			Com_sprintf(s, sizeof(s), "<invalid>");
 		else {
 			if (a.type == NA_MULTICAST6 ||
 				IN6_IS_ADDR_LINKLOCAL(&((struct sockaddr_in6 *)&ss)->sin6_addr)) {
@@ -316,7 +316,7 @@ char *NET_BaseAdrToString (netadr_t a)
 				 * IPv6 address
 				 */
 				if (strchr(s, '%') == NULL) {
-					Com_sprintf (tmp, sizeof(tmp), "%s%%%d", s, s6->sin6_scope_id);
+					Com_sprintf(tmp, sizeof(tmp), "%s%%%d", s, s6->sin6_scope_id);
 					memcpy(s, tmp, sizeof(s));
 				}
 			}
@@ -325,13 +325,13 @@ char *NET_BaseAdrToString (netadr_t a)
 		break;
 	case NA_IPX:
 	case NA_BROADCAST_IPX:
-		Com_sprintf (s, sizeof(s), "%02x%02x%02x%02x:%02x%02x%02x%02x%02x%02x:%i",
+		Com_sprintf(s, sizeof(s), "%02x%02x%02x%02x:%02x%02x%02x%02x%02x%02x:%i",
 			a.ipx[0], a.ipx[1], a.ipx[2], a.ipx[3], a.ipx[4],
 			a.ipx[5], a.ipx[6], a.ipx[7], a.ipx[8], a.ipx[9], ntohs(a.port));
 		break;
 
 	default:
-		Com_sprintf (s, sizeof(s), "invalid IP address family type");
+		Com_sprintf(s, sizeof(s), "invalid IP address family type");
 		break;
 	}
 
@@ -347,8 +347,8 @@ char *NET_AdrToString (netadr_t a)
 	static char s[64];
 	const char *base;
 
-	base = NET_BaseAdrToString (a);
-	Com_sprintf (s, sizeof(s), "[%s]:%d", base, ntohs(a.port));
+	base = NET_BaseAdrToString(a);
+	Com_sprintf(s, sizeof(s), "[%s]:%d", base, ntohs(a.port));
 
 	return s;
 }
@@ -389,7 +389,7 @@ qboolean NET_StringToSockaddr (char *s, struct sockaddr_storage *sadr)
 		addrs++;
 		for (; *space && *space != ']'; space++);
 		if (!*space) {
-				Com_Printf ("NET_StringToSockaddr: invalid IPv6 address %s\n", s);
+				Com_Printf("NET_StringToSockaddr: invalid IPv6 address %s\n", s);
 				return qfalse;
 		}
 		*space++ = '\0';
@@ -402,22 +402,22 @@ qboolean NET_StringToSockaddr (char *s, struct sockaddr_storage *sadr)
 		}
 	}
 
-	if ((err = getaddrinfo (addrs, ports, &hints, &resultp))) {
+	if ((err = getaddrinfo(addrs, ports, &hints, &resultp))) {
 		/* Error */
-		Com_Printf ("NET_StringToSockaddr: string %s:\n%s\n", s, gai_strerror(err));
+		Com_Printf("NET_StringToSockaddr: string %s:\n%s\n", s, gai_strerror(err));
 		return qfalse;
 	}
 
 	switch (resultp->ai_family) {
 	case AF_INET:
 		/* convert to ipv4 addr */
-		memset (sadr, 0, sizeof (struct sockaddr_storage));
-		memcpy (sadr, resultp->ai_addr, resultp->ai_addrlen);
+		memset(sadr, 0, sizeof (struct sockaddr_storage));
+		memcpy(sadr, resultp->ai_addr, resultp->ai_addrlen);
 		break;
 	case AF_INET6:
 		/* convert to ipv6 addr */
-		memset (sadr, 0, sizeof (struct sockaddr_storage));
-		memcpy (sadr, resultp->ai_addr, resultp->ai_addrlen);
+		memset(sadr, 0, sizeof (struct sockaddr_storage));
+		memcpy(sadr, resultp->ai_addr, resultp->ai_addrlen);
 		break;
 	default:
 		Com_Printf("NET_StringToSockaddr: string %s:\nprotocol family %d not supported\n",
@@ -441,7 +441,7 @@ qboolean NET_StringToSockaddr (char *s, struct sockaddr_storage *sadr)
 		DO(15, sa_nodenum[3]);
 		DO(17, sa_nodenum[4]);
 		DO(19, sa_nodenum[5]);
-		sscanf (&s[22], "%u", &val);
+		sscanf(&s[22], "%u", &val);
 		((struct sockaddr_ipx *)sadr)->sa_socket = htons((unsigned short)val);
 	}
 #endif
@@ -461,16 +461,16 @@ qboolean NET_StringToAdr (char *s, netadr_t *a)
 {
 	struct sockaddr_storage sadr;
 
-	if (!strcmp (s, "localhost")) {
-		memset (a, 0, sizeof(*a));
+	if (!strcmp(s, "localhost")) {
+		memset(a, 0, sizeof(*a));
 		a->type = NA_LOOPBACK;
 		return qtrue;
 	}
 
-	if (!NET_StringToSockaddr (s, &sadr))
+	if (!NET_StringToSockaddr(s, &sadr))
 		return qfalse;
 
-	SockadrToNetadr (&sadr, a);
+	SockadrToNetadr(&sadr, a);
 
 	return qtrue;
 }
@@ -524,9 +524,9 @@ qboolean NET_GetLoopPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_me
 	i = loop->get & (MAX_LOOPBACK-1);
 	loop->get++;
 
-	memcpy (net_message->data, loop->msgs[i].data, loop->msgs[i].datalen);
+	memcpy(net_message->data, loop->msgs[i].data, loop->msgs[i].datalen);
 	net_message->cursize = loop->msgs[i].datalen;
-	memset (net_from, 0, sizeof(*net_from));
+	memset(net_from, 0, sizeof(*net_from));
 	net_from->type = NA_LOOPBACK;
 	return qtrue;
 }
@@ -545,7 +545,7 @@ void NET_SendLoopPacket (netsrc_t sock, int length, void *data, netadr_t to)
 	i = loop->send & (MAX_LOOPBACK-1);
 	loop->send++;
 
-	memcpy (loop->msgs[i].data, data, length);
+	memcpy(loop->msgs[i].data, data, length);
 	loop->msgs[i].datalen = length;
 }
 
@@ -576,13 +576,13 @@ qboolean NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_messag
 			continue;
 
 		fromlen = sizeof(from);
-		ret = recvfrom (net_socket, net_message->data, net_message->maxsize,
+		ret = recvfrom(net_socket, net_message->data, net_message->maxsize,
 			0, (struct sockaddr *)&from, &fromlen);
 
 		net_packets_in++;
 		net_total_in += ret;
 
-		SockadrToNetadr (&from, net_from);
+		SockadrToNetadr(&from, net_from);
 
 		if (ret == -1) {
 			err = WSAGetLastError();
@@ -595,17 +595,17 @@ qboolean NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_messag
 			}
 
 			if (dedicated->value)	/* let dedicated servers continue after errors */
-				Com_Printf ("NET_GetPacket: %s from %s\n", NET_ErrorString(),
+				Com_Printf("NET_GetPacket: %s from %s\n", NET_ErrorString(),
 					NET_AdrToString(*net_from));
 			else
-				Com_Printf ("NET_GetPacket: %s from %s",
+				Com_Printf("NET_GetPacket: %s from %s",
 					NET_ErrorString(), NET_AdrToString(*net_from));
 
 			continue;
 		}
 
 		if (ret == net_message->maxsize) {
-			Com_Printf ("Oversize packet from %s\n", NET_AdrToString (*net_from));
+			Com_Printf("Oversize packet from %s\n", NET_AdrToString (*net_from));
 			continue;
 		}
 
@@ -646,7 +646,7 @@ void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 		net_socket = ipx_sockets[sock];
 		break;
 	default:
-		Com_Error (ERR_FATAL, "NET_SendPacket: bad address type");
+		Com_Error(ERR_FATAL, "NET_SendPacket: bad address type");
 		return;
 	}
 
@@ -687,10 +687,10 @@ void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 			 * ff0x::xxx%multicast_interface
 			 */
 #ifdef HAVE_SIN6_LEN
-			error = getnameinfo ((struct sockaddr *) s6, s6->sin6_len, tmp, sizeof (tmp),
+			error = getnameinfo((struct sockaddr *) s6, s6->sin6_len, tmp, sizeof (tmp),
 					NULL, 0, NI_NUMERICHOST);
 #else
-			error = getnameinfo ((struct sockaddr *) s6, sizeof(struct sockaddr_in6), tmp, sizeof (tmp),
+			error = getnameinfo((struct sockaddr *) s6, sizeof(struct sockaddr_in6), tmp, sizeof (tmp),
 					NULL, 0, NI_NUMERICHOST);
 #endif
 			if (error) {
@@ -707,14 +707,14 @@ void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 
 					On Win32, we don't. More tests required.
 				*/
-				Com_sprintf (mcast_addr, sizeof(mcast_addr), "%s", tmp);
-				Com_sprintf (mcast_port, sizeof(mcast_port), "%d", ntohs(s6->sin6_port));
+				Com_sprintf(mcast_addr, sizeof(mcast_addr), "%s", tmp);
+				Com_sprintf(mcast_port, sizeof(mcast_port), "%d", ntohs(s6->sin6_port));
 				memset(&hints, 0, sizeof(hints));
 				hints.ai_family = AF_INET6;
 				hints.ai_socktype = SOCK_DGRAM;
 				hints.ai_flags =  AI_NUMERICHOST;
 
-				error = getaddrinfo (mcast_addr, mcast_port, &hints, &res);
+				error = getaddrinfo(mcast_addr, mcast_port, &hints, &res);
 				if (error) {
 					Com_Printf("NET_SendPacket: getaddrinfo: %s", gai_strerror(error));
 					return;
@@ -745,14 +745,14 @@ void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 
 		if (dedicated->value) {
 			/* let dedicated servers continue after errors */
-			Com_Printf ("NET_SendPacket Warning: %s to %s\n", NET_ErrorString(),
+			Com_Printf("NET_SendPacket Warning: %s to %s\n", NET_ErrorString(),
 				NET_AdrToString (to));
 		} else {
 			if (err == WSAEADDRNOTAVAIL) {
-				Com_DPrintf ("NET_SendPacket Warning: %s : %s\n",
+				Com_DPrintf("NET_SendPacket Warning: %s : %s\n",
 					NET_ErrorString(), NET_AdrToString (to));
 			} else {
-				Com_Printf ("NET_SendPacket ERROR: %s to %s\n",
+				Com_Printf("NET_SendPacket ERROR: %s to %s\n",
 					NET_ErrorString(), NET_AdrToString (to));
 			}
 		}
@@ -787,15 +787,15 @@ int NET_IPSocket (char *net_interface, int port, netsrc_t type, int family)
 	hints.ai_flags = AI_PASSIVE;
 
 	if (!net_interface || !net_interface[0] || !stricmp(net_interface, "localhost"))
-			Host = (family == AF_INET6) ? "::" : "0.0.0.0";
+		Host = (family == AF_INET6) ? "::" : "0.0.0.0";
 	else
-			Host = net_interface;
+		Host = net_interface;
 
 	if (port == PORT_ANY)
-			Service = NULL;
+		Service = NULL;
 	else {
-			sprintf (Buf, "%5d", port);
-			Service = Buf;
+		sprintf(Buf, "%5d", port);
+		Service = Buf;
 	}
 
 	if ((Error = getaddrinfo (Host, Service, &hints, &res))) {
@@ -855,7 +855,7 @@ int NET_IPSocket (char *net_interface, int port, netsrc_t type, int family)
 		 * Multicast outgoing interface is specified for
 		 * client and server (+set multicast <ifname>)
 		 */
-		mcast = Cvar_Get ("multicast", "NULL", CVAR_NOSET, NULL);
+		mcast = Cvar_Get("multicast", "NULL", CVAR_NOSET, NULL);
 		multicast_interface = (strcmp(mcast->string, "NULL") ? mcast->string : NULL);
 
 		if (multicast_interface != NULL) {
@@ -918,9 +918,9 @@ void NET_OpenIP (void)
 	int		port;
 	int		dedicated;
 
-	ip = Cvar_Get ("ip", "localhost", CVAR_NOSET, NULL);
+	ip = Cvar_Get("ip", "localhost", CVAR_NOSET, NULL);
 
-	dedicated = Cvar_VariableInteger ("dedicated");
+	dedicated = Cvar_VariableInteger("dedicated");
 
 	if (!ip_sockets[NS_SERVER]) {
 		port = Cvar_Get("ip_hostport", "0", CVAR_NOSET, NULL)->integer;
@@ -933,7 +933,7 @@ void NET_OpenIP (void)
 		ip6_sockets[NS_SERVER] = NET_IPSocket (ip->string, port, NS_SERVER, AF_INET6);
 		ip_sockets[NS_SERVER] = NET_IPSocket (ip->string, port, NS_SERVER, AF_INET);
 		if (!ip_sockets[NS_SERVER] && !ip6_sockets[NS_SERVER] && dedicated)
-			Com_Error (ERR_FATAL, "Couldn't allocate server IP port (%i)  - use cvar ip_hostport", port);
+			Com_Error(ERR_FATAL, "Couldn't allocate server IP port (%i)  - use cvar ip_hostport", port);
 	}
 
 	/* dedicated servers don't need client ports */
@@ -973,19 +973,19 @@ int NET_IPXSocket (int port)
 	if ((newsocket = socket (PF_IPX, SOCK_DGRAM, NSPROTO_IPX)) == -1) {
 		err = WSAGetLastError();
 		if (err != WSAEAFNOSUPPORT)
-			Com_Printf ("WARNING: IPX_Socket: socket: %s\n", NET_ErrorString());
+			Com_Printf("WARNING: IPX_Socket: socket: %s\n", NET_ErrorString());
 		return 0;
 	}
 
 	/* make it non-blocking */
-	if (ioctlsocket (newsocket, FIONBIO, &_true) == -1) {
-		Com_Printf ("WARNING: IPX_Socket: ioctl FIONBIO: %s\n", NET_ErrorString());
+	if (ioctlsocket(newsocket, FIONBIO, &_true) == -1) {
+		Com_Printf("WARNING: IPX_Socket: ioctl FIONBIO: %s\n", NET_ErrorString());
 		return 0;
 	}
 
 	/* make it broadcast capable */
 	if (setsockopt(newsocket, SOL_SOCKET, SO_BROADCAST, (char *)&_true, sizeof(_true)) == -1) {
-		Com_Printf ("WARNING: IPX_Socket: setsockopt SO_BROADCAST: %s\n", NET_ErrorString());
+		Com_Printf("WARNING: IPX_Socket: setsockopt SO_BROADCAST: %s\n", NET_ErrorString());
 		return 0;
 	}
 
@@ -997,8 +997,8 @@ int NET_IPXSocket (int port)
 	else
 		address.sa_socket = htons((short)port);
 
-	if (bind (newsocket, (void *)&address, sizeof(address)) == -1) {
-		Com_Printf ("WARNING: IPX_Socket: bind: %s\n", NET_ErrorString());
+	if (bind(newsocket, (void *)&address, sizeof(address)) == -1) {
+		Com_Printf("WARNING: IPX_Socket: bind: %s\n", NET_ErrorString());
 		closesocket (newsocket);
 		return 0;
 	}
@@ -1064,27 +1064,27 @@ void NET_Config (qboolean multiplayer)
 
 	if (!multiplayer) {
 		/* shut down any existing sockets */
-		for (i=0 ; i<2 ; i++) {
+		for (i = 0; i < 2; i++) {
 			if (ip_sockets[i]) {
-				closesocket (ip_sockets[i]);
+				closesocket(ip_sockets[i]);
 				ip_sockets[i] = 0;
 			}
 			if (ip6_sockets[i]) {
-				closesocket (ip6_sockets[i]);
+				closesocket(ip6_sockets[i]);
 				ip6_sockets[i] = 0;
 			}
 
 			if (ipx_sockets[i]) {
-				closesocket (ipx_sockets[i]);
+				closesocket(ipx_sockets[i]);
 				ipx_sockets[i] = 0;
 			}
 		}
 	} else {
 		/* open sockets */
 		if (! noudp->value)
-			NET_OpenIP ();
+			NET_OpenIP();
 		if (! noipx->value)
-			NET_OpenIPX ();
+			NET_OpenIPX();
 	}
 }
 
@@ -1138,17 +1138,17 @@ void NET_Init (void)
 
 	wVersionRequested = MAKEWORD(1, 1);
 
-	r = WSAStartup (MAKEWORD(1, 1), &winsockdata);
+	r = WSAStartup(MAKEWORD(1, 1), &winsockdata);
 
 	if (r)
-		Com_Error (ERR_FATAL,"Winsock initialization failed.");
+		Com_Error(ERR_FATAL,"Winsock initialization failed.");
 
 	Com_Printf("Winsock Initialized\n");
 
-	noudp = Cvar_Get ("noudp", "0", CVAR_NOSET, NULL);
-	noipx = Cvar_Get ("noipx", "0", CVAR_NOSET, NULL);
+	noudp = Cvar_Get("noudp", "0", CVAR_NOSET, NULL);
+	noipx = Cvar_Get("noipx", "0", CVAR_NOSET, NULL);
 
-	net_shownet = Cvar_Get ("net_shownet", "0", 0, NULL);
+	net_shownet = Cvar_Get("net_shownet", "0", 0, NULL);
 }
 
 

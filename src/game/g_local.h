@@ -224,16 +224,7 @@ extern cvar_t *g_nodamage;
 
 extern cvar_t *difficulty;
 
-#define world	(&g_edicts[0])
-
-/* item spawnflags */
-#define ITEM_TRIGGER_SPAWN		0x00000001
-#define ITEM_NO_TOUCH			0x00000002
-/* 6 bits reserved for editor flags */
-/* 8 bits used as power cube id bits for coop games */
-#define DROPPED_ITEM			0x00010000
-#define	DROPPED_PLAYER_ITEM		0x00020000
-#define ITEM_TARGETS_USED		0x00040000
+/*#define world	(&g_edicts[0])*/
 
 /* fields are needed for spawning from the entity string */
 /* and saving / loading games */
@@ -328,7 +319,7 @@ extern int REACTION_FIREMODE[MAX_TEAMS][MAX_EDICTS][2]; /*[2]; */
 	 * 1. sub-array	The player
 	 * 2. sub-array	0 right hand
 	 *		1 left hand
-	 
+
 	 * NOT USED -> 3. sub-array	0 stores the firemode
 	 *		1 stores the weapon idx in ods.
 	 * Max. number is MAX_FIREDEFS_PER_WEAPON */

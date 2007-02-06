@@ -177,7 +177,7 @@ static void UP_DisplayTechTree (technology_t* t)
  */
 extern void CL_ItemDescription (int item)
 {
-	static char itemText[MAX_MENUTEXTLEN];
+	static char itemText[MAX_SMALLMENUTEXTLEN];
 	objDef_t *od;
 
 	/* select item */
@@ -190,7 +190,7 @@ extern void CL_ItemDescription (int item)
 
 #ifdef DEBUG
 	if (!od->tech && ccs.singleplayer) {
-		Com_sprintf(itemText, MAX_MENUTEXTLEN, "Error - no tech assigned\n");
+		Com_sprintf(itemText, sizeof(itemText), "Error - no tech assigned\n");
 		menuText[TEXT_STANDARD] = itemText;
 	} else
 #endif
@@ -198,22 +198,22 @@ extern void CL_ItemDescription (int item)
 	if (RS_IsResearched_ptr(od->tech)) {
 		if (!Q_strncmp(od->type, "armor", 5)) {
 			/* TODO: Print protection */
-			Com_sprintf(itemText, MAX_MENUTEXTLEN, _("Armor\n") );
+			Com_sprintf(itemText, sizeof(itemText), _("Armor\n") );
 		} else if (!Q_strncmp(od->type, "ammo", 4)) {
 			*itemText = '\0';
 			/* more will be written below */
 		} else if (od->weapon && (od->reload || od->thrown)) {
-			Com_sprintf(itemText, MAX_MENUTEXTLEN, _("%s weapon with\n"), (od->firetwohanded ? _("Two-handed") : _("One-handed")));
+			Com_sprintf(itemText, sizeof(itemText), _("%s weapon with\n"), (od->firetwohanded ? _("Two-handed") : _("One-handed")));
 			Q_strcat(itemText, va(_("Max ammo:\t%i\n"), (int) (od->ammo)), sizeof(itemText));
 		} else if (od->weapon) {
-			Com_sprintf(itemText, MAX_MENUTEXTLEN, _("%s ammo-less weapon with\n"), (od->firetwohanded ? _("Two-handed") : _("One-handed")));
+			Com_sprintf(itemText, sizeof(itemText), _("%s ammo-less weapon with\n"), (od->firetwohanded ? _("Two-handed") : _("One-handed")));
 			/* more will be written below */
 		} else {
 			/* just an item */
 			/* only primary definition */
 			/* TODO: We use the default firemodes here. We might need some change the "fd[0]" below to INV_FiredefsIDXForWeapon(od,weapon_idx) on future changes. */
-			Com_sprintf(itemText, MAX_MENUTEXTLEN, _("%s auxiliary equipment with\n"), (od->firetwohanded ? _("Two-handed") : _("One-handed")));
-			Q_strcat(itemText, va(_("Action:\t%s\n"), od->fd[0][0].name), sizeof(itemText)); 
+			Com_sprintf(itemText, sizeof(itemText), _("%s auxiliary equipment with\n"), (od->firetwohanded ? _("Two-handed") : _("One-handed")));
+			Q_strcat(itemText, va(_("Action:\t%s\n"), od->fd[0][0].name), sizeof(itemText));
 			Q_strcat(itemText, va(_("Time units:\t%i\n"), od->fd[0][0].time), sizeof(itemText));
 			Q_strcat(itemText, va(_("Range:\t%g\n"), od->fd[0][0].range / 32.0), sizeof(itemText));
 		}
@@ -234,7 +234,7 @@ extern void CL_ItemDescription (int item)
 
 		menuText[TEXT_STANDARD] = itemText;
 	} else { /* includes if (RS_Collected_(tech)) AFAIK*/
-		Com_sprintf(itemText, MAX_MENUTEXTLEN, _("Unknown - need to research this"));
+		Com_sprintf(itemText, sizeof(itemText), _("Unknown - need to research this"));
 		menuText[TEXT_STANDARD] = itemText;
 	}
 }
@@ -347,13 +347,13 @@ extern void UP_Article (technology_t* tech)
 				menuText[TEXT_UFOPEDIA] = _(tech->pre_description);
 			Cvar_SetValue("mn_uppreavailable", 1);
 			Cvar_SetValue("mn_updisplay", 1);
-			
+
 		} else {
 			/* Do not display the buttons if no pre-research text is avaialble (no need to even bother clicking there). */
 			Cvar_SetValue("mn_uppreavailable", 0);
 			Cvar_SetValue("mn_updisplay", 0);
 		}
-			
+
 		if (upCurrent) {
 			switch (tech->type) {
 			case RS_ARMOR:

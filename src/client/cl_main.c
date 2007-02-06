@@ -1225,13 +1225,13 @@ void CL_PingServers_f (void)
 	}
 
 	for (i = 0; i < 16; i++) {
-		Com_sprintf (name, sizeof(name), "adr%i", i);
+		Com_sprintf(name, sizeof(name), "adr%i", i);
 		adrstring = Cvar_VariableString (name);
 		if (!adrstring || !adrstring[0])
 			continue;
 
 		if (!NET_StringToAdr (adrstring, &adr)) {
-			Com_Printf ("Bad address: %s\n", adrstring);
+			Com_Printf("Bad address: %s\n", adrstring);
 			continue;
 		}
 

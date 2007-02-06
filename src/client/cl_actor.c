@@ -596,7 +596,7 @@ void CL_DisplayFiremodes_f (void)
 					} else {
 						/* Set this checkbox visible+inactive. */
 						Cbuf_AddText(va("set_right_cb_ina%i\n", i));
-						
+
 					}
 				} else { /* hand[0] == 'l' */
 					if (REACTION_FIREMODE[actor_idx][1][0] == i) {
@@ -605,7 +605,7 @@ void CL_DisplayFiremodes_f (void)
 					} else {
 						/* Set this checkbox visible+active. */
 						Cbuf_AddText(va("set_left_cb_ina%i\n", i));
-						
+
 					}
 				}
 			}
@@ -698,7 +698,7 @@ void CL_SelectReactionFiremode_f (void)
 		Com_Printf("CL_SelectReactionFiremode_f: Firemode index to big (%i). Highest possible number is %i.\n", firemode, MAX_FIREDEFS_PER_WEAPON-1);
 		return;
 	}
-	
+
 	CL_UpdateReactionFiremodes(hand[0], actor_idx, firemode);
 
 	/* Update display of firemode checkbuttons. */
@@ -880,8 +880,8 @@ qboolean CL_CheckMenuAction (int time, invList_t *weapon, int mode)
  */
 void CL_ActorUpdateCVars (void)
 {
-	static char infoText[MAX_MENUTEXTLEN];
-	static char mousetext[MAX_MENUTEXTLEN];
+	static char infoText[MAX_SMALLMENUTEXTLEN];
+	static char mouseText[MAX_SMALLMENUTEXTLEN];
 	qboolean refresh;
 	char *name;
 	int time;
@@ -949,7 +949,7 @@ void CL_ActorUpdateCVars (void)
 
 		/* display special message */
 		if (cl.time < cl.msgTime)
-			Com_sprintf(infoText, MAX_MENUTEXTLEN, cl.msgText);
+			Com_sprintf(infoText, sizeof(infoText), cl.msgText);
 
 		/* update HUD stats etc in more or shoot modes */
 		if (cl.cmode == M_MOVE || cl.cmode == M_PEND_MOVE) {
@@ -957,25 +957,25 @@ void CL_ActorUpdateCVars (void)
 			/* or the movelength is 255 - not reachable e.g. */
 			if ((mouseSpace != MS_WORLD && cl.cmode < M_PEND_MOVE) || actorMoveLength == 0xFF) {
 				actorMoveLength = 0xFF;
-				Com_sprintf(infoText, MAX_MENUTEXTLEN, _("Armor  %i\tMorale  %i\n"), selActor->AP, selActor->morale);
+				Com_sprintf(infoText, sizeof(infoText), _("Armor  %i\tMorale  %i\n"), selActor->AP, selActor->morale);
 				menuText[TEXT_MOUSECURSOR_RIGHT] = NULL;
 			}
 			if ( cl.cmode != cl.oldcmode || refresh || lastHUDActor != selActor
 						|| lastMoveLength != actorMoveLength || lastTU != selActor->TU ) {
 				if (actorMoveLength != 0xFF) {
 					CL_RefreshWeaponButtons(selActor->TU - actorMoveLength);
-					Com_sprintf(infoText, MAX_MENUTEXTLEN, _("Armor  %i\tMorale  %i\nMove %i (%i TU left)\n"), selActor->AP, selActor->morale, actorMoveLength, selActor->TU - actorMoveLength);
+					Com_sprintf(infoText, sizeof(infoText), _("Armor  %i\tMorale  %i\nMove %i (%i TU left)\n"), selActor->AP, selActor->morale, actorMoveLength, selActor->TU - actorMoveLength);
 					if ( actorMoveLength <= selActor->TU )
-						Com_sprintf(mousetext, MAX_MENUTEXTLEN, "%i (%i)\n", actorMoveLength, selActor->TU);
+						Com_sprintf(mouseText, sizeof(mouseText), "%i (%i)\n", actorMoveLength, selActor->TU);
 					else
-						Com_sprintf(mousetext, MAX_MENUTEXTLEN, "- (-)\n" );
+						Com_sprintf(mouseText, sizeof(mouseText), "- (-)\n" );
 				} else {
 					CL_RefreshWeaponButtons(selActor->TU);
 				}
 				lastHUDActor = selActor;
 				lastMoveLength = actorMoveLength;
 				lastTU = selActor->TU;
-				menuText[TEXT_MOUSECURSOR_RIGHT] = mousetext;
+				menuText[TEXT_MOUSECURSOR_RIGHT] = mouseText;
 			}
 			time = actorMoveLength;
 		} else {
@@ -986,12 +986,12 @@ void CL_ActorUpdateCVars (void)
 				CL_DisplayHudMessage(_("You cannot use this unknown item.\nYou need to research it first.\n"), 2000);
 				cl.cmode = M_MOVE;
 			} else if (selWeapon && selFD) {
-				Com_sprintf(infoText, MAX_MENUTEXTLEN,
+				Com_sprintf(infoText, sizeof(infoText),
 							"%s\n%s (%i) [%i%%] %i\n", csi.ods[selWeapon->item.t].name, selFD->name, selFD->ammo, selToHit, selFD->time);
-				Com_sprintf(mousetext, MAX_MENUTEXTLEN,
+				Com_sprintf(mouseText, sizeof(mouseText),
 							"%s: %s (%i) [%i%%] %i\n", csi.ods[selWeapon->item.t].name, selFD->name, selFD->ammo, selToHit, selFD->time);
 
-				menuText[TEXT_MOUSECURSOR_RIGHT] = mousetext;	/* Save the text for later display next to the cursor. */
+				menuText[TEXT_MOUSECURSOR_RIGHT] = mouseText;	/* Save the text for later display next to the cursor. */
 
 				time = selFD->time;
 				/* if no TUs left for this firing action of if the weapon is reloadable and out of ammo, then change to move mode */
@@ -1000,7 +1000,7 @@ void CL_ActorUpdateCVars (void)
 					CL_RefreshWeaponButtons(selActor->TU - actorMoveLength);
 				}
 			} else if (selWeapon) {
-				Com_sprintf(infoText, MAX_MENUTEXTLEN, _("%s\n(empty)\n"), csi.ods[selWeapon->item.t].name);
+				Com_sprintf(infoText, sizeof(infoText), _("%s\n(empty)\n"), csi.ods[selWeapon->item.t].name);
 			} else {
 				cl.cmode = M_MOVE;
 				CL_RefreshWeaponButtons(selActor->TU - actorMoveLength);
@@ -1009,7 +1009,7 @@ void CL_ActorUpdateCVars (void)
 
 		/* handle actor in a panic */
 		if (selActor->state & STATE_PANIC) {
-			Com_sprintf(infoText, MAX_MENUTEXTLEN, _("Currently panics!\n"));
+			Com_sprintf(infoText, sizeof(infoText), _("Currently panics!\n"));
 			menuText[TEXT_MOUSECURSOR_RIGHT] = NULL;
 		}
 
@@ -1079,7 +1079,7 @@ void CL_ActorUpdateCVars (void)
 			/* this allows us to display messages even with no actor selected */
 			if (cl.time < cl.msgTime) {
 				/* special message */
-				Com_sprintf(infoText, MAX_MENUTEXTLEN, cl.msgText);
+				Com_sprintf(infoText, sizeof(infoText), cl.msgText);
 			}
 		}
 		menuText[TEXT_STANDARD] = infoText;
@@ -1398,22 +1398,22 @@ extern void CL_ConditionalMoveCalc (struct routing_s *map, le_t *le, int distanc
  */
 static int CL_CheckAction (void)
 {
-	static char infoText[MAX_MENUTEXTLEN];
+	static char infoText[MAX_SMALLMENUTEXTLEN];
 
 	if (!selActor) {
 		Com_Printf("Nobody selected.\n");
-		Com_sprintf(infoText, MAX_MENUTEXTLEN, _("Nobody selected\n"));
+		Com_sprintf(infoText, sizeof(infoText), _("Nobody selected\n"));
 		return qfalse;
 	}
 
-/*	if ( blockEvents ) {
-		Com_Printf( "Can't do that right now.\n" );
+/*	if (blockEvents) {
+		Com_Printf("Can't do that right now.\n");
 		return qfalse;
 	}
 */
 	if (cls.team != cl.actTeam) {
 		Com_Printf("This isn't your round.\n");
-		Com_sprintf(infoText, MAX_MENUTEXTLEN, _("This isn't your round\n"));
+		Com_sprintf(infoText, sizeof(infoText), _("This isn't your round\n"));
 		return qfalse;
 	}
 

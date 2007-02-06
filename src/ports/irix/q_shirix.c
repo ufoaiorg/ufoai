@@ -117,11 +117,17 @@ int Sys_Milliseconds (void)
 	return curtime;
 }
 
+/**
+ * @brief
+ */
 void Sys_Mkdir (const char *path)
 {
 	mkdir (path, 0777);
 }
 
+/**
+ * @brief
+ */
 char *strlwr (char *s)
 {
 	char *origs = s;
@@ -139,7 +145,10 @@ static	char	findpath[MAX_OSPATH];
 static	char	findpattern[MAX_OSPATH];
 static	DIR		*fdir;
 
-static qboolean CompareAttributes(const char *path, char *name,
+/**
+ * @brief
+ */
+static qboolean CompareAttributes (const char *path, char *name,
 	unsigned musthave, unsigned canthave )
 {
 	struct stat st;
@@ -162,6 +171,9 @@ static qboolean CompareAttributes(const char *path, char *name,
 	return qtrue;
 }
 
+/**
+ * @brief
+ */
 char *Sys_FindFirst (const char *path, unsigned musthave, unsigned canhave)
 {
 	struct dirent *d;
@@ -189,7 +201,7 @@ char *Sys_FindFirst (const char *path, unsigned musthave, unsigned canhave)
 /*			if (*findpattern) */
 /*				printf("%s matched %s\n", findpattern, d->d_name); */
 			if (CompareAttributes(findbase, d->d_name, musthave, canhave)) {
-				Com_sprintf (findpath, "%s/%s", findbase, d->d_name);
+				Com_sprintf(findpath, "%s/%s", findbase, d->d_name);
 				return findpath;
 			}
 		}
@@ -197,6 +209,9 @@ char *Sys_FindFirst (const char *path, unsigned musthave, unsigned canhave)
 	return NULL;
 }
 
+/**
+ * @brief
+ */
 char *Sys_FindNext (unsigned musthave, unsigned canhave)
 {
 	struct dirent *d;
@@ -208,7 +223,7 @@ char *Sys_FindNext (unsigned musthave, unsigned canhave)
 /*			if (*findpattern) */
 /*				printf("%s matched %s\n", findpattern, d->d_name); */
 			if (CompareAttributes(findbase, d->d_name, musthave, canhave)) {
-				Com_sprintf (findpath, MAX_OSPATH, "%s/%s", findbase, d->d_name);
+				Com_sprintf(findpath, MAX_OSPATH, "%s/%s", findbase, d->d_name);
 				return findpath;
 			}
 		}
@@ -216,13 +231,12 @@ char *Sys_FindNext (unsigned musthave, unsigned canhave)
 	return NULL;
 }
 
+/**
+ * @brief
+ */
 void Sys_FindClose (void)
 {
 	if (fdir != NULL)
 		closedir(fdir);
 	fdir = NULL;
 }
-
-
-/*============================================ */
-

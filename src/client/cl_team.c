@@ -433,7 +433,7 @@ static item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
 	} else if (!csi.ods[type].reload) {
 		/* The given item is a weapon but no ammo is needed,
 		 * so fire definitions are in t (the weapon). Setting equal. */
-		item.m = item.t;	
+		item.m = item.t;
 		return item;
 	} else if (item.a) {
 		assert (item.m != NONE);
@@ -1610,7 +1610,7 @@ extern void CL_ParseCharacterData (sizebuf_t *buf, qboolean updateCharacter)
  */
 extern void CL_ParseResults (sizebuf_t * buf)
 {
-	static char resultText[MAX_MENUTEXTLEN];
+	static char resultText[MAX_SMALLMENUTEXTLEN];
 	byte num_spawned[MAX_TEAMS];
 	byte num_alive[MAX_TEAMS];
 	byte num_kills[MAX_TEAMS][MAX_TEAMS];
@@ -1704,10 +1704,10 @@ extern void CL_ParseResults (sizebuf_t * buf)
 		/* the mission was started via console (TODO: or is multiplayer) */
 		/* needs to be cleared and then append to it */
 		if (curCampaign) {
-			Com_sprintf(resultText, MAX_MENUTEXTLEN, _("Aliens killed\t%i\n"), thier_killed);
+			Com_sprintf(resultText, sizeof(resultText), _("Aliens killed\t%i\n"), thier_killed);
 			ccs.aliensKilled += thier_killed;
 		} else {
-			Com_sprintf(resultText, MAX_MENUTEXTLEN, _("Enemies killed\t%i\n"), thier_killed + civilian_killed);
+			Com_sprintf(resultText, sizeof(resultText), _("Enemies killed\t%i\n"), thier_killed + civilian_killed);
 			ccs.aliensKilled += thier_killed + civilian_killed;
 		}
 
@@ -1752,7 +1752,7 @@ extern void CL_ParseResults (sizebuf_t * buf)
 		LE_Cleanup();
 
 		/* needs to be cleared and then append to it */
-		Com_sprintf(resultText, MAX_MENUTEXTLEN, _("Aliens killed\t%i\n"), thier_killed);
+		Com_sprintf(resultText, sizeof(resultText), _("Aliens killed\t%i\n"), thier_killed);
 		ccs.aliensKilled += thier_killed;
 
 		Q_strcat(resultText, va(_("Aliens captured\t%i\n"), thier_stunned), sizeof(resultText));
@@ -1785,19 +1785,19 @@ extern void CL_ParseResults (sizebuf_t * buf)
 		else
 			MN_PushMenu("lost");
 	} else {
-		static char popupText[MAX_MENUTEXTLEN];
+		static char popupText[MAX_SMALLMENUTEXTLEN];
 
-		Com_sprintf(resultText, MAX_MENUTEXTLEN, _("\n\nEnemies killed:  %i\nTeam survivors:  %i"), thier_killed + thier_stunned, our_surviviurs);
+		Com_sprintf(resultText, sizeof(resultText), _("\n\nEnemies killed:  %i\nTeam survivors:  %i"), thier_killed + thier_stunned, our_surviviurs);
 		if (winner == we) {
 			Q_strncpyz(popupText, _("You won the game!"), MAX_VAR);
-			Q_strcat(popupText, resultText, MAX_MENUTEXTLEN);
+			Q_strcat(popupText, resultText, sizeof(popupText));
 			MN_Popup(_("Congratulations"), popupText);
 		} else if (winner == 0) {
 			Q_strncpyz(popupText, _("The game was a draw!\n\nNo survivors left on any side."), MAX_VAR);
 			MN_Popup(_("Game Drawn!"), popupText);
 		} else {
 			Q_strncpyz(popupText, _("You lost the game"), MAX_VAR);
-			Q_strcat(popupText, resultText, MAX_MENUTEXTLEN);
+			Q_strcat(popupText, resultText, sizeof(popupText));
 			MN_Popup(_("Better luck next time"), popupText);
 		}
 	}

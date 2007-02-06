@@ -835,14 +835,13 @@ void AC_Reset (void);
 #define MAX_MENUSTACK		16
 #define MAX_MENUMODELS		128
 
-#define MAX_MENU_COMMAND	32
-#define MAX_MENU_PICLINK	64
-
 /* one unit in the containers is 25x25 */
 #define C_UNIT				25
 #define C_UNDEFINED			0xFE
 
 #define MAX_MENUTEXTLEN		32768
+/* used to speed up buffer safe string copies */
+#define MAX_SMALLMENUTEXTLEN	1024
 
 /** @brief Model that have more than one part (head, body) but may only use one menu node */
 typedef struct menuModel_s {

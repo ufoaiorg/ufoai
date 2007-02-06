@@ -403,7 +403,7 @@ void CL_PrepRefresh(void)
 		return;					/* no map loaded */
 
 	loadingMessage = qtrue;
-	Com_sprintf (loadingMessages, sizeof(loadingMessages), _("loading %s"), _(cl.configstrings[CS_MAPTITLE]));
+	Com_sprintf(loadingMessages, sizeof(loadingMessages), _("loading %s"), _(cl.configstrings[CS_MAPTITLE]));
 	loadingPercent = 0;
 
 	CL_ResetWeaponButtons();
@@ -418,7 +418,7 @@ void CL_PrepRefresh(void)
 	CL_ParseEntitystring(map_entitystring);
 	Com_Printf("                                     \r");
 
-	Com_sprintf (loadingMessages, sizeof(loadingMessages), _("loading models..."));
+	Com_sprintf(loadingMessages, sizeof(loadingMessages), _("loading models..."));
 	loadingPercent += 10.0f;
 	/* precache status bar pics */
 	Com_Printf("pics\n");
@@ -438,7 +438,7 @@ void CL_PrepRefresh(void)
 		Q_strncpyz(name, cl.configstrings[CS_MODELS + i], sizeof(name));
 		if (name[0] != '*') {
 			Com_Printf("%s\r", name);
-			Com_sprintf (loadingMessages, sizeof(loadingMessages),
+			Com_sprintf(loadingMessages, sizeof(loadingMessages),
 				_("loading %s"), (strlen(name) > 40)? &name[strlen(name)-40]: name);
 		}
 		SCR_UpdateScreen();
@@ -468,7 +468,7 @@ void CL_PrepRefresh(void)
 		str = csi.ods[i].model;
 		SCR_UpdateScreen();
 		cl.model_weapons[i] = re.RegisterModel(str);
-		Com_sprintf (loadingMessages, sizeof(loadingMessages),
+		Com_sprintf(loadingMessages, sizeof(loadingMessages),
 			_("loading %s"), (strlen(str) > 40)? &str[strlen(str)-40]: str);
 		loadingPercent += 80.0f/(float)max;
 	}
@@ -480,7 +480,7 @@ void CL_PrepRefresh(void)
 
 	for (i = 1; i < MAX_IMAGES && cl.configstrings[CS_IMAGES + i][0]; i++) {
 		str = cl.configstrings[CS_IMAGES + i];
-		Com_sprintf (loadingMessages, sizeof(loadingMessages),
+		Com_sprintf(loadingMessages, sizeof(loadingMessages),
 			_("loading %s"), (strlen(str) > 40)? &str[strlen(str)-40]: str);
 		SCR_UpdateScreen();
 		cl.image_precache[i] = re.RegisterPic(str);

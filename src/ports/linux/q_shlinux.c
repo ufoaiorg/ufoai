@@ -246,8 +246,8 @@ char *Sys_FindFirst (const char *path, unsigned musthave, unsigned canhave)
 		if (!*findpattern || glob_match(findpattern, d->d_name)) {
 /*			if (*findpattern) */
 /*				printf("%s matched %s\n", findpattern, d->d_name); */
-			if ( CompareAttributes(findbase, d->d_name, musthave, canhave) ) {
-				Com_sprintf (findpath, MAX_OSPATH, "%s/%s", findbase, d->d_name);
+			if (CompareAttributes(findbase, d->d_name, musthave, canhave)) {
+				Com_sprintf(findpath, MAX_OSPATH, "%s/%s", findbase, d->d_name);
 				return findpath;
 			}
 		}
@@ -272,7 +272,7 @@ char *Sys_FindNext (unsigned musthave, unsigned canhave)
 /*			if (*findpattern) */
 /*				printf("%s matched %s\n", findpattern, d->d_name); */
 			if (CompareAttributes(findbase, d->d_name, musthave, canhave)) {
-				Com_sprintf (findpath, MAX_OSPATH, "%s/%s", findbase, d->d_name);
+				Com_sprintf(findpath, MAX_OSPATH, "%s/%s", findbase, d->d_name);
 				return findpath;
 			}
 		}

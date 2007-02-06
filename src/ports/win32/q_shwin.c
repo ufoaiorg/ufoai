@@ -201,7 +201,7 @@ char *Sys_FindFirst (const char *path, unsigned musthave, unsigned canthave )
 			return NULL;
 		/* found one that matched */
 		if (CompareAttributes(findinfo.attrib, musthave, canthave)) {
-			Com_sprintf (findpath, sizeof(findpath), "%s/%s", findbase, findinfo.name);
+			Com_sprintf(findpath, sizeof(findpath), "%s/%s", findbase, findinfo.name);
 			return findpath;
 		/* doesn't match - try the next one */
 		} else if (_findnext(findhandle, &findinfo) == -1) {
@@ -220,7 +220,7 @@ char *Sys_FindFirst (const char *path, unsigned musthave, unsigned canthave )
  * @sa Sys_FindFirst
  * @sa Sys_FindClose
  */
-char *Sys_FindNext ( unsigned musthave, unsigned canthave )
+char *Sys_FindNext (unsigned musthave, unsigned canthave)
 {
 	struct _finddata_t findinfo;
 
@@ -230,7 +230,7 @@ char *Sys_FindNext ( unsigned musthave, unsigned canthave )
 	/* until we found the next entry */
 	while (_findnext (findhandle, &findinfo) != -1) {
 		if (CompareAttributes(findinfo.attrib, musthave, canthave)) {
-			Com_sprintf (findpath, sizeof(findpath), "%s/%s", findbase, findinfo.name);
+			Com_sprintf(findpath, sizeof(findpath), "%s/%s", findbase, findinfo.name);
 			return findpath;
 		}
 	}

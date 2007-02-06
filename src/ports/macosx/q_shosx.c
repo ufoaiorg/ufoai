@@ -201,7 +201,7 @@ char* Sys_FindFirst (const char *thePath, unsigned theMustHave, unsigned theCant
 	while ((myDirEnt = readdir (gSysFindDir)) != NULL)
 		if (!*gSysFindPattern || glob_match(gSysFindPattern, myDirEnt->d_name))
 			if (Sys_CompareAttributes (gSysFindBase, myDirEnt->d_name, theMustHave, theCantHave)) {
-				Com_sprintf (gSysFindPath, MAX_OSPATH, "%s/%s", gSysFindBase, myDirEnt->d_name);
+				Com_sprintf(gSysFindPath, MAX_OSPATH, "%s/%s", gSysFindBase, myDirEnt->d_name);
 				return (gSysFindPath);
 			}
 
@@ -223,7 +223,7 @@ char* Sys_FindNext (unsigned theMustHave, unsigned theCantHave)
 	while ((myDirEnt = readdir (gSysFindDir)) != NULL)
 		if (!*gSysFindPattern || glob_match (gSysFindPattern, myDirEnt->d_name))
 			if (Sys_CompareAttributes (gSysFindBase, myDirEnt->d_name, theMustHave, theCantHave)) {
-				Com_sprintf (gSysFindPath, MAX_OSPATH, "%s/%s", gSysFindBase, myDirEnt->d_name);
+				Com_sprintf(gSysFindPath, MAX_OSPATH, "%s/%s", gSysFindBase, myDirEnt->d_name);
 				return (gSysFindPath);
 			}
 

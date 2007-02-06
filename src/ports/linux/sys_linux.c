@@ -543,13 +543,13 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 		path = FS_NextPath (path);
 		if (!path)
 			return NULL;		/* couldn't find one anywhere */
-		Com_sprintf (name, MAX_OSPATH, "%s/%s/game.so", curpath, path);
+		Com_sprintf(name, MAX_OSPATH, "%s/%s/game.so", curpath, path);
 		game_library = dlopen (name, RTLD_LAZY );
 		if (game_library) {
-			Com_Printf ("LoadLibrary (%s)\n", name);
+			Com_Printf("LoadLibrary (%s)\n", name);
 			break;
 		} else {
-			Com_Printf ("LoadLibrary failed (%s)\n", name);
+			Com_Printf("LoadLibrary failed (%s)\n", name);
 			Com_Printf("%s\n", dlerror());
 		}
 	}

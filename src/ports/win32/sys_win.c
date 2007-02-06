@@ -114,7 +114,7 @@ void Sys_EnableTray (void)
 
 	procShell_NotifyIcon (NIM_ADD, &pNdata);
 
-	Com_Printf ("Minimize to tray enabled.\n");
+	Com_Printf("Minimize to tray enabled.\n");
 }
 
 /**
@@ -135,7 +135,7 @@ void Sys_DisableTray (void)
 
 	procShell_NotifyIcon = NULL;
 
-	Com_Printf ("Minimize to tray disabled.\n");
+	Com_Printf("Minimize to tray disabled.\n");
 }
 
 /**
@@ -447,7 +447,7 @@ void Sys_Init (void)
         0,            /* owner       */
         "qwcl"); /* Semaphore name      */
 	if (!qwclsemaphore)
-		Sys_Error ("QWCL is already running on this system");
+		Sys_Error("QWCL is already running on this system");
 	CloseHandle (qwclsemaphore);
 
     qwclsemaphore = CreateSemaphore(
@@ -462,12 +462,12 @@ void Sys_Init (void)
 	vinfo.dwOSVersionInfoSize = sizeof(vinfo);
 
 	if (!GetVersionEx (&vinfo))
-		Sys_Error ("Couldn't get OS info");
+		Sys_Error("Couldn't get OS info");
 
 	if (vinfo.dwMajorVersion < 4) /* at least win nt 4 */
-		Sys_Error ("UFO: AI requires windows version 4 or greater");
+		Sys_Error("UFO: AI requires windows version 4 or greater");
 	if (vinfo.dwPlatformId == VER_PLATFORM_WIN32s) /* win3.x with win32 extensions */
-		Sys_Error ("UFO: AI doesn't run on Win32s");
+		Sys_Error("UFO: AI doesn't run on Win32s");
 	else if ( vinfo.dwPlatformId == VER_PLATFORM_WIN32_WINDOWS ) /* win95, 98, me */
 		s_win95 = qtrue;
 
@@ -478,7 +478,7 @@ void Sys_Init (void)
 		if (oldconsole) {
 			if (!AllocConsole ()) {
 				WinError();
-				Sys_Error ("Couldn't create dedicated server console");
+				Sys_Error("Couldn't create dedicated server console");
 			}
 			hinput = GetStdHandle (STD_INPUT_HANDLE);
 			houtput = GetStdHandle (STD_OUTPUT_HANDLE);
@@ -491,7 +491,7 @@ void Sys_Init (void)
 
 			if (!hwnd_Server) {
 				WinError();
-				Sys_Error ("Couldn't create dedicated server window. GetLastError() = %d", (int)GetLastError());
+				Sys_Error("Couldn't create dedicated server window. GetLastError() = %d", (int)GetLastError());
 			}
 
 			SendDlgItemMessage (hwnd_Server, IDC_CONSOLE, EM_SETREADONLY, TRUE, 0);
@@ -534,16 +534,16 @@ char *Sys_ConsoleInput (void)
 
 	for ( ;; ) {
 		if (!GetNumberOfConsoleInputEvents (hinput, &numevents))
-			Sys_Error ("Error getting # of console events");
+			Sys_Error("Error getting # of console events");
 
 		if (numevents <= 0)
 			break;
 
 		if (!ReadConsoleInput(hinput, recs, 1, &numread))
-			Sys_Error ("Error reading console input");
+			Sys_Error("Error reading console input");
 
 		if (numread != 1)
-			Sys_Error ("Couldn't read console input");
+			Sys_Error("Couldn't read console input");
 
 		if (recs[0].EventType == KEY_EVENT) {
 			if (!recs[0].Event.KeyEvent.bKeyDown) {
@@ -814,33 +814,33 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 		path = FS_NextPath (path);
 		if (!path)
 			break;		/* couldn't find one anywhere */
-		Com_sprintf (name, sizeof(name), "%s/game.dll", path);
+		Com_sprintf(name, sizeof(name), "%s/game.dll", path);
 		game_library = LoadLibrary (name);
 		if (game_library) {
-			Com_DPrintf ("LoadLibrary (%s)\n",name);
+			Com_DPrintf("LoadLibrary (%s)\n",name);
 			break;
 		} else {
-			Com_DPrintf ("LoadLibrary (%s) failed\n",name);
+			Com_DPrintf("LoadLibrary (%s) failed\n",name);
 		}
 	}
 
 	/* check the current debug directory for development purposes */
 	if (!game_library) {
 		_getcwd (cwd, sizeof(cwd));
-		Com_sprintf (name, sizeof(name), "%s/%s/%s", cwd, debugdir, gamename);
+		Com_sprintf(name, sizeof(name), "%s/%s/%s", cwd, debugdir, gamename);
 		game_library = LoadLibrary ( name );
 		if (game_library)
-			Com_DPrintf ("LoadLibrary (%s)\n", name);
+			Com_DPrintf("LoadLibrary (%s)\n", name);
 #ifdef DEBUG
 		else {
-			Com_DPrintf ("LoadLibrary (%s) failed\n",name);
+			Com_DPrintf("LoadLibrary (%s) failed\n",name);
 			/* check the current directory for other development purposes */
-			Com_sprintf (name, sizeof(name), "%s/%s", cwd, gamename);
+			Com_sprintf(name, sizeof(name), "%s/%s", cwd, gamename);
 			game_library = LoadLibrary ( name );
 			if (game_library)
-				Com_DPrintf ("LoadLibrary (%s)\n", name);
+				Com_DPrintf("LoadLibrary (%s)\n", name);
 			else
-				Com_DPrintf ("LoadLibrary (%s) failed\n",name);
+				Com_DPrintf("LoadLibrary (%s) failed\n",name);
 		}
 #endif
 	}
@@ -905,7 +905,7 @@ static void FixWorkingDirectory (void)
 	p[0] = 0;
 
 	if (strlen(curDir) > (MAX_OSPATH - MAX_QPATH))
-		Sys_Error ("Current path is too long. Please move your UFO:AI installation to a shorter path.");
+		Sys_Error("Current path is too long. Please move your UFO:AI installation to a shorter path.");
 
 	SetCurrentDirectory (curDir);
 }
@@ -1217,23 +1217,23 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 			if (Minimized)
 				Sys_Sleep(1);
 
-			while (PeekMessage (&msg, NULL, 0, 0, PM_NOREMOVE)) {
+			while (PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE)) {
 				if (!GetMessage (&msg, NULL, 0, 0))
-					Com_Quit ();
+					Com_Quit();
 				sys_msg_time = msg.time;
 				TranslateMessage (&msg);
 				DispatchMessage (&msg);
 			}
 
 			do {
-				newtime = Sys_Milliseconds ();
+				newtime = Sys_Milliseconds();
 				time = timescale * (newtime - oldtime);
 			} while (time < 1);
 
 #ifndef __MINGW32__
-			_controlfp( _PC_24, _MCW_PC );
+			_controlfp(_PC_24, _MCW_PC);
 #endif
-			timescale = Qcommon_Frame (time);
+			timescale = Qcommon_Frame(time);
 			oldtime = newtime;
 		}
 #if 0
@@ -1250,7 +1250,7 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 /**
  * @brief Calls the win32 sleep function
  */
-void Sys_Sleep(int milliseconds)
+void Sys_Sleep (int milliseconds)
 {
 	if (milliseconds < 1)
 		milliseconds = 1;

@@ -74,7 +74,7 @@ const char *pa_format[] =
  * @brief Sorts some strings
  * @note sort function pointer for qsort
  */
-int Q_StringSort(const void *string1, const void *string2)
+int Q_StringSort (const void *string1, const void *string2)
 {
  	char *s1, *s2;
  	s1 = (char*)string1;
@@ -100,7 +100,7 @@ int Q_StringSort(const void *string1, const void *string2)
 /**
  * @brief
  */
-int AngleToDV(int angle)
+int AngleToDV (int angle)
 {
 	int i, mini;
 	int div, minDiv;
@@ -134,7 +134,7 @@ int AngleToDV(int angle)
 /**
  * @brief
  */
-void RotatePointAroundVector(vec3_t dst, const vec3_t dir, const vec3_t point, float degrees)
+void RotatePointAroundVector (vec3_t dst, const vec3_t dir, const vec3_t point, float degrees)
 {
 	float m[3][3];
 	float im[3][3];
@@ -195,7 +195,7 @@ void RotatePointAroundVector(vec3_t dst, const vec3_t dir, const vec3_t point, f
 /**
  * @brief
  */
-void AngleVectors(vec3_t angles, vec3_t forward, vec3_t right, vec3_t up)
+void AngleVectors (vec3_t angles, vec3_t forward, vec3_t right, vec3_t up)
 {
 	float angle;
 	static float sr, sp, sy, cr, cp, cy;
@@ -232,7 +232,7 @@ void AngleVectors(vec3_t angles, vec3_t forward, vec3_t right, vec3_t up)
 /**
  * @brief
  */
-void ProjectPointOnPlane(vec3_t dst, const vec3_t p, const vec3_t normal)
+void ProjectPointOnPlane (vec3_t dst, const vec3_t p, const vec3_t normal)
 {
 	float d;
 	vec3_t n;
@@ -255,7 +255,7 @@ void ProjectPointOnPlane(vec3_t dst, const vec3_t p, const vec3_t normal)
  * @brief
  * @note assumes "src" is normalized
  */
-void PerpendicularVector(vec3_t dst, const vec3_t src)
+void PerpendicularVector (vec3_t dst, const vec3_t src)
 {
 	int pos;
 	int i;
@@ -284,7 +284,7 @@ void PerpendicularVector(vec3_t dst, const vec3_t src)
  * @brief
  * @param
  */
-void R_ConcatRotations(float in1[3][3], float in2[3][3], float out[3][3])
+void R_ConcatRotations (float in1[3][3], float in2[3][3], float out[3][3])
 {
 	out[0][0] = in1[0][0] * in2[0][0] + in1[0][1] * in2[1][0] + in1[0][2] * in2[2][0];
 	out[0][1] = in1[0][0] * in2[0][1] + in1[0][1] * in2[1][1] + in1[0][2] * in2[2][1];
@@ -303,7 +303,7 @@ void R_ConcatRotations(float in1[3][3], float in2[3][3], float out[3][3])
  * @param
  * @sa
  */
-void R_ConcatTransforms(float in1[3][4], float in2[3][4], float out[3][4])
+void R_ConcatTransforms (float in1[3][4], float in2[3][4], float out[3][4])
 {
 	out[0][0] = in1[0][0] * in2[0][0] + in1[0][1] * in2[1][0] + in1[0][2] * in2[2][0];
 	out[0][1] = in1[0][0] * in2[0][1] + in1[0][1] * in2[1][1] + in1[0][2] * in2[2][1];
@@ -408,7 +408,7 @@ void VecToAngles (const vec3_t value1, vec3_t angles)
  * @brief If the number is < 0, return -1 * number - otherwise return the number
  * @param[in] f
  */
-float Q_fabs(float f)
+float Q_fabs (float f)
 {
 #if 0
 	if (f >= 0)
@@ -425,7 +425,7 @@ float Q_fabs(float f)
 #if defined _M_IX86 && !defined C_ONLY
 #pragma warning (disable:4035)
 __declspec(naked)
-long Q_ftol(float f)
+long Q_ftol (float f)
 {
 	static int tmp;
 	__asm fld dword ptr[esp + 4]
@@ -442,7 +442,7 @@ long Q_ftol(float f)
  * @param
  * @sa
  */
-float LerpAngle(float a2, float a1, float frac)
+float LerpAngle (float a2, float a1, float frac)
 {
 	if (a1 - a2 > 180)
 		a1 -= 360;
@@ -457,7 +457,7 @@ float LerpAngle(float a2, float a1, float frac)
  * @param[in] a Angle
  * @sa VecToAngles
  */
-float anglemod(float a)
+float anglemod (float a)
 {
 #if 0
 	if (a >= 0)
@@ -476,7 +476,7 @@ float anglemod(float a)
  * @return 1, 2, or 1 + 2
  */
 /* this is the slow, general version */
-int BoxOnPlaneSide2(vec3_t emins, vec3_t emaxs, struct cplane_s *p)
+int BoxOnPlaneSide2 (vec3_t emins, vec3_t emaxs, struct cplane_s *p)
 {
 	int i;
 	float dist1, dist2;
@@ -504,7 +504,7 @@ int BoxOnPlaneSide2(vec3_t emins, vec3_t emaxs, struct cplane_s *p)
 }
 
 #if !id386 || defined __linux__ || __MINGW32__ || defined __FreeBSD__ || defined __NetBSD__|| defined __sun || defined __sgi
-int BoxOnPlaneSide(vec3_t emins, vec3_t emaxs, struct cplane_s *p)
+int BoxOnPlaneSide (vec3_t emins, vec3_t emaxs, struct cplane_s *p)
 {
 	float dist1, dist2;
 	int sides;
@@ -572,7 +572,7 @@ int BoxOnPlaneSide(vec3_t emins, vec3_t emaxs, struct cplane_s *p)
 #pragma warning( disable: 4035 )
 
 __declspec(naked)
-int BoxOnPlaneSide(vec3_t emins, vec3_t emaxs, struct cplane_s *p)
+int BoxOnPlaneSide (vec3_t emins, vec3_t emaxs, struct cplane_s *p)
 {
 	static int bops_initialized;
 	static int Ljmptab[8];
@@ -805,7 +805,7 @@ Lerror:
  * @param[in] mins
  * @param[in] maxs
  */
-void ClearBounds(vec3_t mins, vec3_t maxs)
+void ClearBounds (vec3_t mins, vec3_t maxs)
 {
 	mins[0] = mins[1] = mins[2] = 99999;
 	maxs[0] = maxs[1] = maxs[2] = -99999;
@@ -817,7 +817,7 @@ void ClearBounds(vec3_t mins, vec3_t maxs)
  * @param[in] mins
  * @param[in] maxs
  */
-void AddPointToBounds(vec3_t v, vec3_t mins, vec3_t maxs)
+void AddPointToBounds (vec3_t v, vec3_t mins, vec3_t maxs)
 {
 	int i;
 	vec_t val;
@@ -838,7 +838,7 @@ void AddPointToBounds(vec3_t v, vec3_t mins, vec3_t maxs)
  * @param[in] comp
  * @return qboolean
  */
-qboolean VectorNearer(vec3_t v1, vec3_t v2, vec3_t comp)
+qboolean VectorNearer (vec3_t v1, vec3_t v2, vec3_t comp)
 {
 	int i;
 
@@ -856,7 +856,7 @@ qboolean VectorNearer(vec3_t v1, vec3_t v2, vec3_t comp)
  * @sa VectorNormalize2
  * @return vector length as vec_t
  */
-vec_t VectorNormalize(vec3_t v)
+vec_t VectorNormalize (vec3_t v)
 {
 	float length, ilength;
 
@@ -881,7 +881,7 @@ vec_t VectorNormalize(vec3_t v)
  * @sa VectorNormalize
  * @return vector length as vec_t
  */
-vec_t VectorNormalize2(vec3_t v, vec3_t out)
+vec_t VectorNormalize2 (vec3_t v, vec3_t out)
 {
 	float length, ilength;
 
@@ -904,7 +904,7 @@ vec_t VectorNormalize2(vec3_t v, vec3_t out)
  * @param
  * @sa
  */
-void VectorMA(vec3_t veca, float scale, vec3_t vecb, vec3_t vecc)
+void VectorMA (vec3_t veca, float scale, vec3_t vecb, vec3_t vecc)
 {
 	vecc[0] = veca[0] + scale * vecb[0];
 	vecc[1] = veca[1] + scale * vecb[1];
@@ -916,7 +916,7 @@ void VectorMA(vec3_t veca, float scale, vec3_t vecb, vec3_t vecc)
  * @param
  * @sa
  */
-void VectorClampMA(vec3_t veca, float scale, vec3_t vecb, vec3_t vecc)
+void VectorClampMA (vec3_t veca, float scale, vec3_t vecb, vec3_t vecc)
 {
 	float test, newScale;
 	int i;
@@ -976,7 +976,7 @@ void MakeNormalVectors (vec3_t forward, vec3_t right, vec3_t up)
  * @param
  * @sa GLMatrixMultiply
  */
-void MatrixMultiply(vec3_t a[3], vec3_t b[3], vec3_t c[3])
+void MatrixMultiply (vec3_t a[3], vec3_t b[3], vec3_t c[3])
 {
 	c[0][0] = a[0][0] * b[0][0] + a[1][0] * b[0][1] + a[2][0] * b[0][2];
 	c[0][1] = a[0][1] * b[0][0] + a[1][1] * b[0][1] + a[2][1] * b[0][2];
@@ -997,7 +997,7 @@ void MatrixMultiply(vec3_t a[3], vec3_t b[3], vec3_t c[3])
  * @param
  * @sa MatrixMultiply
  */
-void GLMatrixMultiply(float a[16], float b[16], float c[16])
+void GLMatrixMultiply (float a[16], float b[16], float c[16])
 {
 	int i, j, k;
 
@@ -1014,7 +1014,7 @@ void GLMatrixMultiply(float a[16], float b[16], float c[16])
  * @param
  * @sa
  */
-void GLVectorTransform(float m[16], vec4_t in, vec4_t out)
+void GLVectorTransform (float m[16], vec4_t in, vec4_t out)
 {
 	int i;
 
@@ -1028,7 +1028,7 @@ void GLVectorTransform(float m[16], vec4_t in, vec4_t out)
  * @param
  * @sa
  */
-void VectorRotate(vec3_t m[3], vec3_t va, vec3_t vb)
+void VectorRotate (vec3_t m[3], vec3_t va, vec3_t vb)
 {
 	vb[0] = m[0][0] * va[0] + m[1][0] * va[1] + m[2][0] * va[2];
 	vb[1] = m[0][1] * va[0] + m[1][1] * va[1] + m[2][1] * va[2];
@@ -1041,7 +1041,7 @@ void VectorRotate(vec3_t m[3], vec3_t va, vec3_t vb)
  * @param
  * @sa
  */
-vec_t _DotProduct(vec3_t v1, vec3_t v2)
+vec_t _DotProduct (vec3_t v1, vec3_t v2)
 {
 	return v1[0] * v2[0] + v1[1] * v2[1] + v1[2] * v2[2];
 }
@@ -1051,7 +1051,7 @@ vec_t _DotProduct(vec3_t v1, vec3_t v2)
  * @param
  * @sa _VectorAdd
  */
-void _VectorSubtract(vec3_t veca, vec3_t vecb, vec3_t out)
+void _VectorSubtract (vec3_t veca, vec3_t vecb, vec3_t out)
 {
 #ifdef Q2_MMX_ENABLED
 	/* raynorpat: msvc sse optimization */
@@ -1083,7 +1083,7 @@ void _VectorSubtract(vec3_t veca, vec3_t vecb, vec3_t out)
  * @param
  * @sa _VectorSubtract
  */
-void _VectorAdd(vec3_t veca, vec3_t vecb, vec3_t out)
+void _VectorAdd (vec3_t veca, vec3_t vecb, vec3_t out)
 {
 #ifdef Q2_MMX_ENABLED
 	/* raynorpat: msvc sse optimization */
@@ -1115,7 +1115,7 @@ void _VectorAdd(vec3_t veca, vec3_t vecb, vec3_t out)
  * @param
  * @sa
  */
-void _VectorCopy(vec3_t in, vec3_t out)
+void _VectorCopy (vec3_t in, vec3_t out)
 {
 #ifdef Q2_MMX_ENABLED
 	/* raynorpat: msvc sse optimization */
@@ -1141,14 +1141,14 @@ void _VectorCopy(vec3_t in, vec3_t out)
  * @param
  * @sa
  */
-void CrossProduct(vec3_t v1, vec3_t v2, vec3_t cross)
+void CrossProduct (vec3_t v1, vec3_t v2, vec3_t cross)
 {
 	cross[0] = v1[1] * v2[2] - v1[2] * v2[1];
 	cross[1] = v1[2] * v2[0] - v1[0] * v2[2];
 	cross[2] = v1[0] * v2[1] - v1[1] * v2[0];
 }
 
-double sqrt(double x);
+double sqrt (double x);
 
 /**
  * @brief
@@ -1156,7 +1156,7 @@ double sqrt(double x);
  * @sa VectorNormalize
  * @return Vector length as vec_t
  */
-vec_t VectorLength(vec3_t v)
+vec_t VectorLength (vec3_t v)
 {
 	int i;
 	float length;
@@ -1174,7 +1174,7 @@ vec_t VectorLength(vec3_t v)
  * @param
  * @sa
  */
-void VectorInverse(vec3_t v)
+void VectorInverse (vec3_t v)
 {
 	v[0] = -v[0];
 	v[1] = -v[1];
@@ -1186,7 +1186,7 @@ void VectorInverse(vec3_t v)
  * @param
  * @sa
  */
-void VectorScale(vec3_t in, vec_t scale, vec3_t out)
+void VectorScale (vec3_t in, vec_t scale, vec3_t out)
 {
 #ifdef Q2_MMX_ENABLED
 	/* raynorpat: msvc sse optimization */
@@ -1219,7 +1219,7 @@ void VectorScale(vec3_t in, vec_t scale, vec3_t out)
  * @param
  * @sa
  */
-int Q_log2(int val)
+int Q_log2 (int val)
 {
 	int answer = 0;
 
@@ -1231,7 +1231,7 @@ int Q_log2(int val)
 /**
   * @brief Return random values between 0 and 1
   */
-float frand(void)
+float frand (void)
 {
 	return (rand() & 32767) * (1.0 / 32767);
 }
@@ -1240,7 +1240,7 @@ float frand(void)
 /**
   * @brief Return random values between -1 and 1
   */
-float crand(void)
+float crand (void)
 {
 	return (rand() & 32767) * (2.0 / 32767) - 1;
 }
@@ -1249,7 +1249,7 @@ float crand(void)
  * @brief generate two gaussian distributed random numbers with median at 0 and stdev of 1
  * @param pointers to two floats that need to be set. both have to be provided.
  */
-void gaussrand(float *gauss1, float *gauss2)
+void gaussrand (float *gauss1, float *gauss2)
 {
 	float x1,x2,w,tmp;
 
@@ -1270,7 +1270,7 @@ void gaussrand(float *gauss1, float *gauss2)
  * @param
  * @sa Com_SkipTokens
  */
-static qboolean Com_CharIsOneOfCharset(char c, char *set)
+static qboolean Com_CharIsOneOfCharset (char c, char *set)
 {
 	unsigned int i;
 
@@ -1287,7 +1287,7 @@ static qboolean Com_CharIsOneOfCharset(char c, char *set)
  * @param
  * @sa Com_CharIsOneOfCharset
  */
-char *Com_SkipCharset(char *s, char *sep)
+char *Com_SkipCharset (char *s, char *sep)
 {
 	char *p = s;
 
@@ -1306,7 +1306,7 @@ char *Com_SkipCharset(char *s, char *sep)
  * @param
  * @sa Com_CharIsOneOfCharset
  */
-char *Com_SkipTokens(char *s, int numTokens, char *sep)
+char *Com_SkipTokens (char *s, int numTokens, char *sep)
 {
 	int sepCount = 0;
 	char *p = s;
@@ -1331,7 +1331,7 @@ char *Com_SkipTokens(char *s, int numTokens, char *sep)
  * @param
  * @sa COM_StripExtension
  */
-char *COM_SkipPath(char *pathname)
+char *COM_SkipPath (char *pathname)
 {
 	char *last;
 
@@ -1349,7 +1349,7 @@ char *COM_SkipPath(char *pathname)
  * @param
  * @sa COM_SkipPath
  */
-void COM_StripExtension(const char *in, char *out)
+void COM_StripExtension (const char *in, char *out)
 {
 	while (*in && *in != '.')
 		*out++ = *in++;
@@ -1361,7 +1361,7 @@ void COM_StripExtension(const char *in, char *out)
  * @param
  * @sa
  */
-char *COM_FileExtension(const char *in)
+char *COM_FileExtension (const char *in)
 {
 	static char exten[8];
 	int i;
@@ -1382,7 +1382,7 @@ char *COM_FileExtension(const char *in)
  * @param
  * @sa
  */
-void COM_FileBase(const char *in, char *out)
+void COM_FileBase (const char *in, char *out)
 {
 	const char *s, *s2;
 
@@ -1405,7 +1405,7 @@ void COM_FileBase(const char *in, char *out)
 /**
   * @brief Returns the path up to, but not including the last /
   */
-void COM_FilePath(const char *in, char *out)
+void COM_FilePath (const char *in, char *out)
 {
 	const char *s;
 
@@ -1429,34 +1429,34 @@ static qboolean bigendien;
 
 /* can't just use function pointers, or dll linkage can */
 /* mess up when qcommon is included in multiple places */
-short (*_BigShort) (short l);
-short (*_LittleShort) (short l);
-int (*_BigLong) (int l);
-int (*_LittleLong) (int l);
-float (*_BigFloat) (float l);
-float (*_LittleFloat) (float l);
+short (*_BigShort)(short l);
+short (*_LittleShort)(short l);
+int (*_BigLong)(int l);
+int (*_LittleLong)(int l);
+float (*_BigFloat)(float l);
+float (*_LittleFloat)(float l);
 
-short BigShort(short l)
+short BigShort (short l)
 {
 	return _BigShort(l);
 }
-short LittleShort(short l)
+short LittleShort (short l)
 {
 	return _LittleShort(l);
 }
-int BigLong(int l)
+int BigLong (int l)
 {
 	return _BigLong(l);
 }
-int LittleLong(int l)
+int LittleLong (int l)
 {
 	return _LittleLong(l);
 }
-float BigFloat(float l)
+float BigFloat (float l)
 {
 	return _BigFloat(l);
 }
-float LittleFloat(float l)
+float LittleFloat (float l)
 {
 	return _LittleFloat(l);
 }
@@ -1466,7 +1466,7 @@ float LittleFloat(float l)
  * @param[in] l
  * @sa ShortNoSwap
  */
-short ShortSwap(short l)
+short ShortSwap (short l)
 {
 	byte b1, b2;
 
@@ -1481,7 +1481,7 @@ short ShortSwap(short l)
  * @param[in] l
  * @sa ShortSwap
  */
-short ShortNoSwap(short l)
+short ShortNoSwap (short l)
 {
 	return l;
 }
@@ -1491,7 +1491,7 @@ short ShortNoSwap(short l)
  * @param[in] l
  * @sa LongNoSwap
  */
-int LongSwap(int l)
+int LongSwap (int l)
 {
 	byte b1, b2, b3, b4;
 
@@ -1508,7 +1508,7 @@ int LongSwap(int l)
  * @param[in] l
  * @sa LongSwap
  */
-int LongNoSwap(int l)
+int LongNoSwap (int l)
 {
 	return l;
 }
@@ -1518,7 +1518,7 @@ int LongNoSwap(int l)
  * @param[in] l
  * @sa FloatNoSwap
  */
-float FloatSwap(float f)
+float FloatSwap (float f)
 {
 	union float_u {
 		float f;
@@ -1539,7 +1539,7 @@ float FloatSwap(float f)
  * @param[in] l
  * @sa FloatSwap
  */
-float FloatNoSwap(float f)
+float FloatNoSwap (float f)
 {
 	return f;
 }
@@ -1549,7 +1549,7 @@ float FloatNoSwap(float f)
  * @param
  * @sa
  */
-void Swap_Init(void)
+void Swap_Init (void)
 {
 	byte swaptest[2] = { 1, 0 };
 
@@ -1579,7 +1579,7 @@ void Swap_Init(void)
  * @brief does a varargs printf into a temp buffer, so I don't need to have
  * varargs versions of all text functions.
  */
-char *va(char *format, ...)
+char *va (char *format, ...)
 {
 	va_list argptr;
 	/* in case va is called by nested functions */
@@ -1605,7 +1605,7 @@ char *va(char *format, ...)
  * @param
  * @sa COM_EParse
  */
-char *COM_Parse(char **data_p)
+char *COM_Parse (char **data_p)
 {
 	static char com_token[4096];
 	int c;
@@ -1695,7 +1695,7 @@ skipwhite:
  * @param
  * @sa Com_Parse
  */
-char *COM_EParse(char **text, char *errhead, char *errinfo)
+char *COM_EParse (char **text, char *errhead, char *errinfo)
 {
 	char *token;
 
@@ -1719,7 +1719,7 @@ static int paged_total;
  * @param
  * @sa
  */
-void Com_PageInMemory(byte * buffer, int size)
+void Com_PageInMemory (byte * buffer, int size)
 {
 	int i;
 
@@ -1739,7 +1739,7 @@ LIBRARY REPLACEMENT FUNCTIONS
  * @param
  * @sa
  */
-char *Q_strlwr(char *str)
+char *Q_strlwr (char *str)
 {
 #ifdef _MSC_VER
 	return _strlwr(str);
@@ -1762,7 +1762,7 @@ char *Q_strlwr(char *str)
  * @param[in] str String to duplicate
  * @note Don't forget to free it afterwards
  */
-char *Q_strdup(const char *str)
+char *Q_strdup (const char *str)
 {
 	if (!str)
 		return NULL;
@@ -1778,7 +1778,7 @@ char *Q_strdup(const char *str)
  * @param
  * @sa
  */
-int Q_putenv(const char *var, const char *value)
+int Q_putenv (const char *var, const char *value)
 {
 #ifdef __APPLE__
 	return setenv(var, value, 1) == -1)
@@ -1799,7 +1799,7 @@ int Q_putenv(const char *var, const char *value)
  * @param
  * @sa
  */
-char *Q_getcwd(char *dest, size_t size)
+char *Q_getcwd (char *dest, size_t size)
 {
 #ifdef _MSC_VER
 	return _getcwd(dest, (int)size);
@@ -1813,7 +1813,7 @@ char *Q_getcwd(char *dest, size_t size)
  * @param
  * @sa Q_strncmp
  */
-int Q_strcmp(const char *s1, const char *s2)
+int Q_strcmp (const char *s1, const char *s2)
 {
 	return strncmp(s1, s2, 99999);
 }
@@ -1823,7 +1823,7 @@ int Q_strcmp(const char *s1, const char *s2)
  * @param
  * @sa Q_strcmp
  */
-int Q_strncmp(const char *s1, const char *s2, size_t n)
+int Q_strncmp (const char *s1, const char *s2, size_t n)
 {
 	return strncmp(s1, s2, n);
 }
@@ -1839,14 +1839,14 @@ int Q_strncmp(const char *s1, const char *s2, size_t n)
  * @param
  * @sa
  */
-int Q_stricmp(const char *s1, const char *s2)
+int Q_stricmp (const char *s1, const char *s2)
 {
 	return strcasecmp(s1, s2);
 }
 
 #else							/* sun */
 /* FIXME: replace all Q_stricmp with Q_strcasecmp */
-int Q_stricmp(const char *s1, const char *s2)
+int Q_stricmp (const char *s1, const char *s2)
 {
 #ifdef _WIN32
 	return _stricmp(s1, s2);
@@ -1860,7 +1860,7 @@ int Q_stricmp(const char *s1, const char *s2)
  * @param
  * @sa
  */
-int Q_strncasecmp(const char *s1, const char *s2, size_t n)
+int Q_strncasecmp (const char *s1, const char *s2, size_t n)
 {
 	int c1, c2;
 
@@ -1892,9 +1892,9 @@ int Q_strncasecmp(const char *s1, const char *s2, size_t n)
  * @param destsize Size of destination buffer (this should be a sizeof size due to portability)
  */
 #ifdef DEBUG
-void Q_strncpyzDebug(char *dest, const char *src, size_t destsize, char *file, int line)
+void Q_strncpyzDebug (char *dest, const char *src, size_t destsize, char *file, int line)
 #else
-void Q_strncpyz(char *dest, const char *src, size_t destsize)
+void Q_strncpyz (char *dest, const char *src, size_t destsize)
 #endif
 {
 #ifdef DEBUG
@@ -1915,7 +1915,7 @@ void Q_strncpyz(char *dest, const char *src, size_t destsize)
 	dest[destsize - 1] = 0;
 #else
 	/* space for \0 terminating */
-	while ( *src && destsize-1 ) {
+	while (*src && destsize - 1) {
 		*dest++ = *src++;
 		destsize--;
 	}
@@ -1923,7 +1923,7 @@ void Q_strncpyz(char *dest, const char *src, size_t destsize)
 #if 1
 	memset(dest, 0, destsize);
 #else
-	while ( destsize-- )
+	while (destsize--)
 		*dest++ = 0;
 #endif
 #endif
@@ -1937,7 +1937,7 @@ void Q_strncpyz(char *dest, const char *src, size_t destsize)
  * @return pointer destination string.
  * never goes past bounds or leaves without a terminating 0
  */
-void Q_strcat(char *dest, const char *src, size_t destsize)
+void Q_strcat (char *dest, const char *src, size_t destsize)
 {
 	size_t dest_length;
 	dest_length = strlen(dest);
@@ -1951,7 +1951,7 @@ void Q_strcat(char *dest, const char *src, size_t destsize)
  * @param
  * @sa
  */
-int Q_strcasecmp(const char *s1, const char *s2)
+int Q_strcasecmp (const char *s1, const char *s2)
 {
 	return Q_strncasecmp(s1, s2, 99999);
 }
@@ -1962,7 +1962,7 @@ int Q_strcasecmp(const char *s1, const char *s2)
  * @return false if overflowed - true otherwise
  * @sa
  */
-qboolean Com_sprintf(char *dest, size_t size, char *fmt, ...)
+qboolean Com_sprintf (char *dest, size_t size, char *fmt, ...)
 {
 	size_t len;
 	va_list argptr;
