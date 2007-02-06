@@ -1078,7 +1078,7 @@ static void R_Register(void)
 	gl_ext_palettedtexture = ri.Cvar_Get("gl_ext_palettedtexture", "1", CVAR_ARCHIVE, NULL);
 	gl_ext_multitexture = ri.Cvar_Get("gl_ext_multitexture", "1", CVAR_ARCHIVE, NULL);
 	gl_ext_combine = ri.Cvar_Get("gl_ext_combine", "1", CVAR_ARCHIVE, NULL);
-	gl_ext_lockarrays = ri.Cvar_Get("gl_ext_lockarrays", "1", CVAR_ARCHIVE, NULL);
+	gl_ext_lockarrays = ri.Cvar_Get("gl_ext_lockarrays", "0", CVAR_ARCHIVE, NULL);
 	gl_ext_pointparameters = ri.Cvar_Get("gl_ext_pointparameters", "1", CVAR_ARCHIVE, NULL);
 	gl_ext_compiled_vertex_array = ri.Cvar_Get("gl_ext_compiled_vertex_array", "1", CVAR_ARCHIVE, NULL);
 	gl_ext_texture_compression = ri.Cvar_Get("gl_ext_texture_compression", "0", CVAR_ARCHIVE, NULL);
