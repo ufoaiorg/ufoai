@@ -2408,16 +2408,23 @@ qboolean Com_RemoveFromInventory(inventory_t* const i, int container, int x, int
 }
 
 /**
- * @brief
- * @param[in] i
- * @param[in] from
- * @param[in] fx
- * @param[in] fy
- * @param[in] to
- * @param[in] tx
- * @param[in] ty
- * @param[in] TU
+ * @brief Conditions for moving items between containers.
+ * @param[in] i an item
+ * @param[in] from source container
+ * @param[in] fx x for source container
+ * @param[in] fy y for source container
+ * @param[in] to destination container
+ * @param[in] tx x for destination container
+ * @param[in] ty y for destination container
+ * @param[in] TU amount of TU needed to move an item
  * @param[in] icp
+ * @return IA_NOTIME when not enough TU
+ * @return IA_NONE if no action possible
+ * @return IA_NORELOAD if you cannot reload a weapon
+ * @return IA_RELOAD_SWAP in case of exchange of ammo in a weapon
+ * @return IA_RELOAD when reloading
+ * @return IA_ARMOR when placing an armour on the actor
+ * @return IA_MOVE when just moving an item
  * @sa
  */
 int Com_MoveInInventory(inventory_t* const i, int from, int fx, int fy, int to, int tx, int ty, int *TU, invList_t ** icp)
