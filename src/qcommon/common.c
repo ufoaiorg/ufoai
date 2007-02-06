@@ -34,10 +34,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	MAXPRINTMSG	4096
 #define MAX_NUM_ARGVS	50
 
-#ifdef HAVE_SVNVERSION_H
-#	include "../../svnversion.h"
-#endif
-
 csi_t csi;
 
 int com_argc;
@@ -86,7 +82,7 @@ static void (*rd_flush) (int target, char *buffer);
  *
  * This is used to redirect printf outputs for rcon commands
  */
-void Com_BeginRedirect(int target, char *buffer, int buffersize, void (*flush) (int, char *))
+void Com_BeginRedirect (int target, char *buffer, int buffersize, void (*flush) (int, char *))
 {
 	if (!target || !buffer || !buffersize || !flush)
 		return;
@@ -102,7 +98,7 @@ void Com_BeginRedirect(int target, char *buffer, int buffersize, void (*flush) (
  * @brief End the redirection of pakets/output
  * @sa Com_BeginRedirect
  */
-void Com_EndRedirect(void)
+void Com_EndRedirect (void)
 {
 	rd_flush(rd_target, rd_buffer);
 
@@ -118,7 +114,7 @@ void Com_EndRedirect(void)
  * Both client and server can use this, and it will output
  * to the apropriate place.
  */
-void Com_Printf(char *fmt, ...)
+void Com_Printf (char *fmt, ...)
 {
 	va_list argptr;
 	char msg[MAXPRINTMSG];
@@ -167,7 +163,7 @@ void Com_Printf(char *fmt, ...)
  *
  * A Com_Printf that only shows up if the "developer" cvar is set
  */
-void Com_DPrintf(char *fmt, ...)
+void Com_DPrintf (char *fmt, ...)
 {
 	va_list argptr;
 	char msg[MAXPRINTMSG];
@@ -192,7 +188,7 @@ void Com_DPrintf(char *fmt, ...)
  * Both client and server can use this, and it will
  * do the apropriate things.
  */
-void Com_Error(int code, char *fmt, ...)
+void Com_Error (int code, char *fmt, ...)
 {
 	va_list argptr;
 	static char msg[MAXPRINTMSG];
@@ -239,7 +235,7 @@ void Com_Error(int code, char *fmt, ...)
 /**
  * @brief
  */
-void Com_Drop(void)
+void Com_Drop (void)
 {
 	SV_Shutdown("Server disconnected\n", qfalse);
 	CL_Drop();
@@ -253,7 +249,7 @@ void Com_Drop(void)
  * Both client and server can use this, and it will
  * do the apropriate things.
  */
-void Com_Quit(void)
+void Com_Quit (void)
 {
 	SV_Shutdown("Server quit\n", qfalse);
 #ifndef DEDICATED_ONLY
@@ -274,7 +270,7 @@ void Com_Quit(void)
  * @brief Check whether we are the server or have a singleplayer tactical mission
  * @sa Com_SetServerState
  */
-int Com_ServerState(void)
+int Com_ServerState (void)
 {
 	return server_state;
 }
@@ -284,7 +280,7 @@ int Com_ServerState(void)
  * @sa SV_SpawnServer
  * @sa Com_ServerState
  */
-void Com_SetServerState(int state)
+void Com_SetServerState (int state)
 {
 	server_state = state;
 }
@@ -307,7 +303,7 @@ const vec3_t bytedirs[NUMVERTEXNORMALS] = {
 /**
  * @brief
  */
-void MSG_WriteChar(sizebuf_t * sb, int c)
+void MSG_WriteChar (sizebuf_t * sb, int c)
 {
 	byte *buf;
 
@@ -365,7 +361,7 @@ void MSG_WriteShort (sizebuf_t * sb, int c)
 /**
  * @brief
  */
-void MSG_WriteLong(sizebuf_t * sb, int c)
+void MSG_WriteLong (sizebuf_t * sb, int c)
 {
 	byte *buf;
 
@@ -379,7 +375,7 @@ void MSG_WriteLong(sizebuf_t * sb, int c)
 /**
  * @brief
  */
-void MSG_WriteFloat(sizebuf_t * sb, float f)
+void MSG_WriteFloat (sizebuf_t * sb, float f)
 {
 	union {
 		float f;
@@ -396,7 +392,7 @@ void MSG_WriteFloat(sizebuf_t * sb, float f)
 /**
  * @brief
  */
-void MSG_WriteString(sizebuf_t * sb, const char *s)
+void MSG_WriteString (sizebuf_t * sb, const char *s)
 {
 	if (!s)
 		SZ_Write(sb, "", 1);
@@ -407,7 +403,7 @@ void MSG_WriteString(sizebuf_t * sb, const char *s)
 /**
  * @brief
  */
-void MSG_WriteCoord(sizebuf_t * sb, float f)
+void MSG_WriteCoord (sizebuf_t * sb, float f)
 {
 	MSG_WriteLong(sb, (int) (f * 32));
 }
@@ -415,7 +411,7 @@ void MSG_WriteCoord(sizebuf_t * sb, float f)
 /**
  * @brief
  */
-void MSG_WritePos(sizebuf_t * sb, vec3_t pos)
+void MSG_WritePos (sizebuf_t * sb, vec3_t pos)
 {
 	MSG_WriteLong(sb, (long) (pos[0] * 32.));
 	MSG_WriteLong(sb, (long) (pos[1] * 32.));
@@ -425,7 +421,7 @@ void MSG_WritePos(sizebuf_t * sb, vec3_t pos)
 /**
   * @brief
   */
-void MSG_WriteGPos(sizebuf_t * sb, pos3_t pos)
+void MSG_WriteGPos (sizebuf_t * sb, pos3_t pos)
 {
 	MSG_WriteByte(sb, pos[0]);
 	MSG_WriteByte(sb, pos[1]);
@@ -435,7 +431,7 @@ void MSG_WriteGPos(sizebuf_t * sb, pos3_t pos)
 /**
  * @brief
  */
-void MSG_WriteAngle(sizebuf_t * sb, float f)
+void MSG_WriteAngle (sizebuf_t * sb, float f)
 {
 	MSG_WriteByte(sb, (int) (f * 256 / 360) & 255);
 }
@@ -443,7 +439,7 @@ void MSG_WriteAngle(sizebuf_t * sb, float f)
 /**
  * @brief
  */
-void MSG_WriteAngle16(sizebuf_t * sb, float f)
+void MSG_WriteAngle16 (sizebuf_t * sb, float f)
 {
 	MSG_WriteShort(sb, ANGLE2SHORT(f));
 }
@@ -452,7 +448,7 @@ void MSG_WriteAngle16(sizebuf_t * sb, float f)
 /**
  * @brief
  */
-void MSG_WriteDir(sizebuf_t * sb, vec3_t dir)
+void MSG_WriteDir (sizebuf_t * sb, vec3_t dir)
 {
 	int i, best;
 	float d, bestd;
@@ -478,7 +474,7 @@ void MSG_WriteDir(sizebuf_t * sb, vec3_t dir)
 /**
  * @brief Writes to buffer according to format; version without syntactic sugar for variable arguments, to call it from other functions with variable arguments
  */
-void MSG_V_WriteFormat(sizebuf_t * sb, const char *format, va_list ap)
+void MSG_V_WriteFormat (sizebuf_t * sb, const char *format, va_list ap)
 {
 	char typeID;
 
@@ -552,7 +548,7 @@ void MSG_V_WriteFormat(sizebuf_t * sb, const char *format, va_list ap)
 /**
  * @brief The user-friendly version of MSG_WriteFormat that writes variable arguments to buffer according to format
  */
-void MSG_WriteFormat(sizebuf_t * sb, const char *format, ...)
+void MSG_WriteFormat (sizebuf_t * sb, const char *format, ...)
 {
 	va_list ap;
 	va_start(ap, format);
@@ -566,7 +562,7 @@ void MSG_WriteFormat(sizebuf_t * sb, const char *format, ...)
 /**
  * @brief
  */
-void MSG_BeginReading(sizebuf_t * msg)
+void MSG_BeginReading (sizebuf_t * msg)
 {
 	msg->readcount = 0;
 }
@@ -648,7 +644,7 @@ int MSG_ReadLong (sizebuf_t * msg_read)
 /**
  * @brief
  */
-float MSG_ReadFloat(sizebuf_t * msg_read)
+float MSG_ReadFloat (sizebuf_t * msg_read)
 {
 	union {
 		byte b[4];
@@ -674,7 +670,7 @@ float MSG_ReadFloat(sizebuf_t * msg_read)
 /**
  * @brief
  */
-char *MSG_ReadString(sizebuf_t * msg_read)
+char *MSG_ReadString (sizebuf_t * msg_read)
 {
 	static char string[2048];
 	unsigned int l;
@@ -697,7 +693,7 @@ char *MSG_ReadString(sizebuf_t * msg_read)
 /**
  * @brief
  */
-char *MSG_ReadStringLine(sizebuf_t * msg_read)
+char *MSG_ReadStringLine (sizebuf_t * msg_read)
 {
 	static char string[2048];
 	unsigned int l;
@@ -720,7 +716,7 @@ char *MSG_ReadStringLine(sizebuf_t * msg_read)
 /**
  * @brief
  */
-float MSG_ReadCoord(sizebuf_t * msg_read)
+float MSG_ReadCoord (sizebuf_t * msg_read)
 {
 	return (float) MSG_ReadLong(msg_read) * (1.0 / 32);
 }
@@ -728,7 +724,7 @@ float MSG_ReadCoord(sizebuf_t * msg_read)
 /**
  * @brief
  */
-void MSG_ReadPos(sizebuf_t * msg_read, vec3_t pos)
+void MSG_ReadPos (sizebuf_t * msg_read, vec3_t pos)
 {
 	pos[0] = MSG_ReadLong(msg_read) / 32.;
 	pos[1] = MSG_ReadLong(msg_read) / 32.;
@@ -861,7 +857,7 @@ void MSG_V_ReadFormat (sizebuf_t * msg_read, const char *format, va_list ap)
 /**
  * @brief The user-friendly version of MSG_ReadFormat that reads variable arguments from a buffer according to format
  */
-void MSG_ReadFormat(sizebuf_t * msg_read, const char *format, ...)
+void MSG_ReadFormat (sizebuf_t * msg_read, const char *format, ...)
 {
 	va_list ap;
 	va_start(ap, format);
@@ -876,7 +872,7 @@ void MSG_ReadFormat(sizebuf_t * msg_read, const char *format, ...)
  * calculated the length of a sizebuf_t by summing up
  * the size of each format char
  */
-int MSG_LengthFormat(sizebuf_t * sb, const char *format)
+int MSG_LengthFormat (sizebuf_t * sb, const char *format)
 {
 	char typeID;
 	int length, delta = 0;
@@ -942,7 +938,7 @@ int MSG_LengthFormat(sizebuf_t * sb, const char *format)
 /**
  * @brief
  */
-void SZ_Init(sizebuf_t * buf, byte * data, int length)
+void SZ_Init (sizebuf_t * buf, byte * data, int length)
 {
 	memset(buf, 0, sizeof(*buf));
 	buf->data = data;
@@ -952,7 +948,7 @@ void SZ_Init(sizebuf_t * buf, byte * data, int length)
 /**
  * @brief
  */
-void SZ_Clear(sizebuf_t * buf)
+void SZ_Clear (sizebuf_t * buf)
 {
 	buf->cursize = 0;
 	buf->overflowed = qfalse;
@@ -961,7 +957,7 @@ void SZ_Clear(sizebuf_t * buf)
 /**
  * @brief
  */
-void *SZ_GetSpace(sizebuf_t * buf, int length)
+void *SZ_GetSpace (sizebuf_t * buf, int length)
 {
 	void *data;
 
@@ -986,7 +982,7 @@ void *SZ_GetSpace(sizebuf_t * buf, int length)
 /**
  * @brief
  */
-void SZ_Write(sizebuf_t * buf, const void *data, int length)
+void SZ_Write (sizebuf_t * buf, const void *data, int length)
 {
 	memcpy(SZ_GetSpace(buf, length), data, length);
 }
@@ -994,7 +990,7 @@ void SZ_Write(sizebuf_t * buf, const void *data, int length)
 /**
  * @brief
  */
-void SZ_Print(sizebuf_t * buf, const char *data)
+void SZ_Print (sizebuf_t * buf, const char *data)
 {
 	int len;
 
@@ -1037,7 +1033,7 @@ unsigned int Com_HashKey (const char *name, int hashsize)
  * where the given parameter apears, or 0 if not present
  * @sa COM_InitArgv
  */
-int COM_CheckParm(char *parm)
+int COM_CheckParm (char *parm)
 {
 	int i;
 
@@ -1054,7 +1050,7 @@ int COM_CheckParm(char *parm)
 /**
  * @brief Returns the script commandline argument count
  */
-int COM_Argc(void)
+int COM_Argc (void)
 {
 	return com_argc;
 }
@@ -1062,7 +1058,7 @@ int COM_Argc(void)
 /**
  * @brief Returns an argument of script commandline
  */
-char *COM_Argv(int arg)
+char *COM_Argv (int arg)
 {
 	if (arg < 0 || arg >= com_argc || !com_argv[arg])
 		return "";
@@ -1076,7 +1072,7 @@ char *COM_Argv(int arg)
  * @sa COM_CheckParm
  * @sa COM_AddParm
  */
-void COM_ClearArgv(int arg)
+void COM_ClearArgv (int arg)
 {
 	if (arg < 0 || arg >= com_argc || !com_argv[arg])
 		return;
@@ -1088,7 +1084,7 @@ void COM_ClearArgv(int arg)
  * @brief
  * @sa COM_CheckParm
  */
-void COM_InitArgv(int argc, char **argv)
+void COM_InitArgv (int argc, char **argv)
 {
 	int i;
 
@@ -1107,7 +1103,7 @@ void COM_InitArgv(int argc, char **argv)
  * @brief Adds the given string at the end of the current argument list
  * @sa COM_InitArgv
  */
-void COM_AddParm(char *parm)
+void COM_AddParm (char *parm)
 {
 	if (com_argc == MAX_NUM_ARGVS)
 		Com_Error(ERR_FATAL, "COM_AddParm: MAX_NUM)ARGS");
@@ -1118,7 +1114,7 @@ void COM_AddParm(char *parm)
  * @brief
  * @note just for debugging
  */
-int memsearch(byte * start, int count, int search)
+int memsearch (byte * start, int count, int search)
 {
 	int i;
 
@@ -1132,7 +1128,7 @@ int memsearch(byte * start, int count, int search)
 /**
  * @brief
  */
-char *CopyString(const char *in)
+char *CopyString (const char *in)
 {
 	char *out;
 	int l = strlen(in);
@@ -1146,7 +1142,7 @@ char *CopyString(const char *in)
 /**
  * @brief
  */
-void Info_Print(char *s)
+void Info_Print (char *s)
 {
 	char key[512];
 	char value[512];
@@ -1209,7 +1205,7 @@ int z_count, z_bytes;
 /**
  * @brief Frees a Mem_Alloc'ed pointer
  */
-void Mem_Free(void *ptr)
+extern void Mem_Free (void *ptr)
 {
 	zhead_t *z;
 
@@ -1233,7 +1229,7 @@ void Mem_Free(void *ptr)
 /**
  * @brief Stats about the allocated bytes via Mem_Alloc
  */
-void Mem_Stats_f(void)
+static void Mem_Stats_f (void)
 {
 	Com_Printf("%i bytes in %i blocks\n", z_bytes, z_count);
 }
@@ -1241,7 +1237,7 @@ void Mem_Stats_f(void)
 /**
  * @brief Frees a memory block with a given tag
  */
-void Mem_FreeTags(int tag)
+extern void Mem_FreeTags (int tag)
 {
 	zhead_t *z, *next;
 
@@ -1257,7 +1253,7 @@ void Mem_FreeTags(int tag)
  *
  * and fills with 0
  */
-void *Mem_TagMalloc(size_t size, int tag)
+extern void *Mem_TagMalloc (size_t size, int tag)
 {
 	zhead_t *z;
 
@@ -1285,7 +1281,7 @@ void *Mem_TagMalloc(size_t size, int tag)
  *
  * and fills with 0
  */
-void *Mem_Alloc(size_t size)
+extern void *Mem_Alloc (size_t size)
 {
 	return Mem_TagMalloc(size, 0);
 }
@@ -1301,7 +1297,7 @@ void SCR_EndLoadingPlaque(void);
  * Just throw a fatal error to
  * test error shutdown procedures
  */
-void Com_Error_f(void)
+static void Com_Error_f (void)
 {
 	Com_Error(ERR_FATAL, "%s", Cmd_Argv(1));
 }
@@ -1322,7 +1318,7 @@ void Com_Error_f(void)
  *
  * @sa Qcommon_LocaleInit
  */
-void Qcommon_LocaleInit(void)
+extern void Qcommon_LocaleInit (void)
 {
 	char *locale;
 
@@ -1375,7 +1371,7 @@ void Qcommon_LocaleInit(void)
  * To compile language support into UFO:AI you need to activate the preprocessor variable
  * HAVE_GETTEXT (for linux have a look at the makefile)
  */
-void Qcommon_Init(int argc, char **argv)
+extern void Qcommon_Init (int argc, char **argv)
 {
 	char *s;
 
@@ -1517,7 +1513,7 @@ void Qcommon_Init(int argc, char **argv)
  * @sa CL_Frame
  * @param[in] msec Passed milliseconds since last frame
  */
-float Qcommon_Frame(int msec)
+float Qcommon_Frame (int msec)
 {
 	char *s;
 	int wait;
@@ -1653,7 +1649,7 @@ float Qcommon_Frame(int msec)
 /**
  * @brief
  */
-void Qcommon_Shutdown(void)
+void Qcommon_Shutdown (void)
 {
 }
 
@@ -1662,7 +1658,7 @@ void Qcommon_Shutdown(void)
  * @note This is here to let the client know (without sv or server.h) about the server active bool
  * @sa SV_SpawnServer
  */
-qboolean Qcommon_ServerActive(void)
+qboolean Qcommon_ServerActive (void)
 {
 	return sv.active;
 }

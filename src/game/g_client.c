@@ -38,7 +38,7 @@ static qboolean sentAppearPerishEvent;
 /**
  * @brief Generates the player mask
  */
-int G_TeamToPM(int team)
+int G_TeamToPM (int team)
 {
 	player_t *player;
 	int player_mask, i;
@@ -56,7 +56,7 @@ int G_TeamToPM(int team)
 /**
  * @brief Converts vis mask to player mask
  */
-int G_VisToPM(int vis_mask)
+int G_VisToPM (int vis_mask)
 {
 	player_t *player;
 	int player_mask, i;
@@ -74,7 +74,7 @@ int G_VisToPM(int vis_mask)
 /**
  * @brief Send stats to network buffer
  */
-void G_SendStats(edict_t * ent)
+void G_SendStats (edict_t * ent)
 {
 	/* extra sanity checks */
 	ent->TU = max(ent->TU, 0);
@@ -437,7 +437,7 @@ float G_Vis (int team, edict_t * from, edict_t * check, int flags)
 /**
  * @brief test if check is visible by team (or if visibility changed?)
  */
-int G_TestVis(int team, edict_t * check, int flags)
+int G_TestVis (int team, edict_t * check, int flags)
 {
 	int i, old;
 	edict_t *from;
@@ -461,7 +461,7 @@ int G_TestVis(int team, edict_t * check, int flags)
 /**
  * @brief
  */
-int G_CheckVisTeam(int team, edict_t * check, qboolean perish)
+int G_CheckVisTeam (int team, edict_t * check, qboolean perish)
 {
 	int vis, i, end;
 	int status;
@@ -502,7 +502,7 @@ int G_CheckVisTeam(int team, edict_t * check, qboolean perish)
 /**
  * @brief
  */
-int G_CheckVis(edict_t * check, qboolean perish)
+int G_CheckVis (edict_t * check, qboolean perish)
 {
 	int team;
 	int status;
@@ -519,7 +519,7 @@ int G_CheckVis(edict_t * check, qboolean perish)
 /**
  * @brief
  */
-void G_ClearVisFlags(int team)
+void G_ClearVisFlags (int team)
 {
 	edict_t *ent;
 	int i, mask;
@@ -534,7 +534,7 @@ void G_ClearVisFlags(int team)
 /**
  * @brief
  */
-int G_DoTurn(edict_t * ent, byte toDV)
+int G_DoTurn (edict_t * ent, byte toDV)
 {
 	float angleDiv;
 	const byte *rot;
@@ -584,10 +584,14 @@ int G_DoTurn(edict_t * ent, byte toDV)
 
 
 /**
- * @brief
+ * @brief Checks whether the the requested action is possible
+ * @param[in] quiet Don't print the console message if quiet is true
+ * @param[in] player Which player (human player) is trying to do the action
+ * @param[in] ent And which of his soldiers (or entities) he is trying to do
+ * the action with
  * @todo: Integrate into hud - don´t use cprintf
  */
-qboolean G_ActionCheck(player_t * player, edict_t * ent, int TU, qboolean quiet)
+qboolean G_ActionCheck (player_t * player, edict_t * ent, int TU, qboolean quiet)
 {
 	int msglevel;
 
@@ -640,9 +644,10 @@ qboolean G_ActionCheck(player_t * player, edict_t * ent, int TU, qboolean quiet)
 
 
 /**
- * @brief
+ * @brief Spawns a new entity at the floor
+ * @note This is e.g. used to place dropped weapons/items at the floor
  */
-edict_t *G_SpawnFloor(pos3_t pos)
+edict_t *G_SpawnFloor (pos3_t pos)
 {
 	edict_t *floor;
 
@@ -659,7 +664,7 @@ edict_t *G_SpawnFloor(pos3_t pos)
 /**
  * @brief
  */
-edict_t *G_GetFloorItems(edict_t * ent)
+edict_t *G_GetFloorItems (edict_t * ent)
 {
 	edict_t *floor;
 
@@ -685,7 +690,7 @@ edict_t *G_GetFloorItems(edict_t * ent)
  * @sa event PA_INVMOVE
  * @sa AI_ActorThink
  */
-void G_ClientInvMove(player_t * player, int num, int from, int fx, int fy, int to, int tx, int ty, qboolean checkaction, qboolean quiet)
+void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int to, int tx, int ty, qboolean checkaction, qboolean quiet)
 {
 	edict_t *ent, *floor;
 	invList_t *ic;
@@ -853,7 +858,7 @@ void G_ClientInvMove(player_t * player, int num, int from, int fx, int fy, int t
 /**
  * @brief Move the whole given inventory to the floor and destroy the items that do not fit there.
  */
-void G_InventoryToFloor(edict_t * ent)
+void G_InventoryToFloor (edict_t * ent)
 {
 	invList_t *ic, *next;
 	edict_t *floor;
@@ -928,7 +933,10 @@ byte *fb_list[MAX_EDICTS];
 int fb_length;
 
 /**
- * @brief
+ * @brief Build the forbidden list for the pathfinding
+ * @note The forbidden list is a list of entity positions that are
+ * occupied by an entity. This list is checked everytime an actor wants to
+ * walk there
  */
 void G_BuildForbiddenList (int team)
 {
@@ -1138,9 +1146,9 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 
 
 /**
- * @brief
+ * @brief Sends the actual actor turn event over the netchannel
  */
-static void G_ClientTurn(player_t * player, int num, int dv)
+static void G_ClientTurn (player_t * player, int num, int dv)
 {
 	edict_t *ent;
 
@@ -1181,7 +1189,7 @@ static void G_ClientTurn(player_t * player, int num, int dv)
  * @param[in] num TODO Writeme
  * @param[in] reqState The bit-map of the requested state change
  */
-static void G_ClientStateChange(player_t * player, int num, int reqState)
+static void G_ClientStateChange (player_t * player, int num, int reqState)
 {
 	edict_t *ent;
 
@@ -1280,7 +1288,7 @@ static void G_ClientStateChange(player_t * player, int num, int reqState)
 /**
  * @brief
  */
-static void G_MoralePanic(edict_t * ent, qboolean sanity, qboolean quiet)
+static void G_MoralePanic (edict_t * ent, qboolean sanity, qboolean quiet)
 {
 	gi.cprintf(game.players + ent->pnum, PRINT_HIGH, _("%s panics!\n"), ent->chr.name);
 
@@ -1315,7 +1323,7 @@ static void G_MoralePanic(edict_t * ent, qboolean sanity, qboolean quiet)
  * @brief Stops the panic state of an actor
  * @note This is only called when cvar mor_panic is not zero
  */
-static void G_MoraleStopPanic(edict_t * ent, qboolean quiet)
+static void G_MoraleStopPanic (edict_t * ent, qboolean quiet)
 {
 	if (((ent->morale) / mor_panic->value) > (m_panic_stop->value * frand()))
 		ent->state &= ~STATE_PANIC;
@@ -1326,7 +1334,7 @@ static void G_MoraleStopPanic(edict_t * ent, qboolean quiet)
 /**
  * @brief
  */
-static void G_MoraleRage(edict_t * ent, qboolean sanity)
+static void G_MoraleRage (edict_t * ent, qboolean sanity)
 {
 	if (sanity)
 		ent->state |= STATE_RAGE;
@@ -1345,7 +1353,7 @@ static void G_MoraleRage(edict_t * ent, qboolean sanity)
  * @brief Stops the rage state of an actor
  * @note This is only called when cvar mor_panic is not zero
  */
-static void G_MoraleStopRage(edict_t * ent, qboolean quiet)
+static void G_MoraleStopRage (edict_t * ent, qboolean quiet)
 {
 	if (((ent->morale) / mor_panic->value) > (m_rage_stop->value * frand())) {
 		ent->state &= ~STATE_INSANE;
@@ -1358,7 +1366,7 @@ static void G_MoraleStopRage(edict_t * ent, qboolean quiet)
  * @brief Applies morale behaviour on actors
  * @note only called when mor_panic is not zero
  */
-static void G_MoraleBehaviour(int team, qboolean quiet)
+static void G_MoraleBehaviour (int team, qboolean quiet)
 {
 	edict_t *ent;
 	int i, newMorale;
@@ -1423,7 +1431,7 @@ static void G_MoraleBehaviour(int team, qboolean quiet)
  * @param[in] hand
  * @sa AI_ActorThink
  */
-void G_ClientReload(player_t *player, int entnum, shoot_types_t st, qboolean quiet)
+void G_ClientReload (player_t *player, int entnum, shoot_types_t st, qboolean quiet)
 {
 	edict_t *ent;
 	invList_t *ic;
@@ -1480,7 +1488,7 @@ void G_ClientReload(player_t *player, int entnum, shoot_types_t st, qboolean qui
  * @param[in] hand
  * @sa AI_ActorThink
  */
-qboolean G_ClientCanReload(player_t *player, int entnum, shoot_types_t st)
+qboolean G_ClientCanReload (player_t *player, int entnum, shoot_types_t st)
 {
 	edict_t *ent;
 	invList_t *ic;
@@ -1513,7 +1521,7 @@ qboolean G_ClientCanReload(player_t *player, int entnum, shoot_types_t st)
  * @brief Retrieve weapon from backpack for actor
  * @sa AI_ActorThink
  */
-void G_ClientGetWeaponFromInventory(player_t *player, int entnum, qboolean quiet)
+void G_ClientGetWeaponFromInventory (player_t *player, int entnum, qboolean quiet)
 {
 	edict_t *ent;
 	invList_t *ic;
@@ -1555,7 +1563,7 @@ void G_ClientGetWeaponFromInventory(player_t *player, int entnum, qboolean quiet
 /**
  * @brief Report and handle death of an actor
  */
-void G_ActorDie(edict_t * ent, int state)
+void G_ActorDie (edict_t * ent, int state)
 {
 	assert(ent);
 #ifdef DEBUG
@@ -1599,7 +1607,7 @@ void G_ActorDie(edict_t * ent, int state)
  * The same counts for morale states - they are not affected.
  * @note: This is a debug function to let a hole team die
  */
-void G_KillTeam(void)
+void G_KillTeam (void)
 {
 	/* default is to kill all teams */
 	int teamToKill = -1, i;
@@ -1689,7 +1697,7 @@ void G_ClientAction (player_t * player)
  * @param[in] player Pointer to connected player
  * @TODO: Check whether there are enough free spawnpoints in all cases
  */
-void G_GetTeam(player_t * player)
+void G_GetTeam (player_t * player)
 {
 	player_t *p;
 	int i, j;
@@ -1805,7 +1813,7 @@ int G_ClientGetTeamNumPref (player_t * player)
  * @brief Tests if all teams are connected for a multiplayer match and if so,
  * randomly assigns the first turn to a team.
  */
-void G_ClientTeamAssign(player_t * player)
+void G_ClientTeamAssign (player_t * player)
 {
 	int i, j, teamCount = 1;
 	int playerCount = 0;
@@ -2222,7 +2230,7 @@ qboolean G_ClientSpawn (player_t * player)
  * @brief called whenever the player updates a userinfo variable.
  * @note The game can override any of the settings in place (forcing skins or names, etc) before copying it off.
  */
-void G_ClientUserinfoChanged(player_t * player, char *userinfo)
+void G_ClientUserinfoChanged (player_t * player, char *userinfo)
 {
 	char *s;
 
@@ -2248,7 +2256,7 @@ void G_ClientUserinfoChanged(player_t * player, char *userinfo)
 /**
  * @brief
  */
-qboolean G_ClientConnect(player_t * player, char *userinfo)
+qboolean G_ClientConnect (player_t * player, char *userinfo)
 {
 	char *value;
 
@@ -2276,7 +2284,7 @@ qboolean G_ClientConnect(player_t * player, char *userinfo)
 /**
  * @brief
  */
-void G_ClientDisconnect(player_t * player)
+void G_ClientDisconnect (player_t * player)
 {
 	level.numplayers--;
 
