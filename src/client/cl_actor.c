@@ -640,6 +640,17 @@ static void CL_UpdateReactionFiremodes (char hand, int actor_idx, int active_fir
 		return;
 	}
 
+	/* TODO: Ok, is there a way to do this?
+	if (active_firemode < 0) {
+		* Set default reaction firemode. *
+		i = G_GetDefaultReactionFire(ammo, weap_fd_idx);
+		REACTION_FIREMODE[actor_idx][handidx][0] = i;
+		MSG_Write_PA(PA_REACT_SELECT, actor_idx, handidx, i);
+		REACTION_FIREMODE[actor_idx][handidx][1] = ammo->weap_idx[weap_fd_idx];
+		return;
+	}
+	*/
+	
 	if (REACTION_FIREMODE[actor_idx][handidx][1] == ammo->weap_idx[weap_fd_idx]) {
 		if (ammo->fd[weap_fd_idx][active_firemode].reaction) {
 			if (REACTION_FIREMODE[actor_idx][handidx][0] == active_firemode)
@@ -651,6 +662,7 @@ static void CL_UpdateReactionFiremodes (char hand, int actor_idx, int active_fir
 		}
 	}
 
+	/* Search for a (reaction) firemode with the given index and store/send it. */
 	REACTION_FIREMODE[actor_idx][handidx][0] = -1;
 	MSG_Write_PA(PA_REACT_SELECT, actor_idx, handidx, -1);
 	REACTION_FIREMODE[actor_idx][handidx][1] = -1;
@@ -660,7 +672,7 @@ static void CL_UpdateReactionFiremodes (char hand, int actor_idx, int active_fir
 				REACTION_FIREMODE[actor_idx][handidx][0] = i;
 				MSG_Write_PA(PA_REACT_SELECT, actor_idx, handidx, i);
 				REACTION_FIREMODE[actor_idx][handidx][1] = ammo->weap_idx[weap_fd_idx];
-				break;
+				return;
 			}
 		}
 	}
