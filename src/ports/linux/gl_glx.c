@@ -125,7 +125,7 @@ qboolean have_stencil = qfalse;
 /**
  * @brief
  */
-static Cursor CreateNullCursor(Display *display, Window root)
+static Cursor CreateNullCursor (Display *display, Window root)
 {
 	Pixmap cursormask;
 	XGCValues xgc;
@@ -151,7 +151,7 @@ static Cursor CreateNullCursor(Display *display, Window root)
  * @brief
  * @sa uninstall_grabs
  */
-static void install_grabs(void)
+static void install_grabs (void)
 {
 	/* inviso cursor */
 	XDefineCursor(dpy, win, CreateNullCursor(dpy, win));
@@ -159,7 +159,7 @@ static void install_grabs(void)
 	if (vid_grabmouse->value && ! vid_fullscreen->value)
 		XGrabPointer(dpy, win, True, 0, GrabModeAsync, GrabModeAsync, win, None, CurrentTime);
 
-	if (! in_dgamouse->value && ( !vid_grabmouse->value || vid_fullscreen->value ) ) {
+	if (!in_dgamouse->value && (!vid_grabmouse->value || vid_fullscreen->value)) {
 		XWarpPointer(dpy, None, win, 0, 0, 0, 0, vid.width / 2, vid.height / 2);
 		sensitivity->value = 1;
 	} else if (in_dgamouse->value) {
@@ -196,7 +196,7 @@ static void install_grabs(void)
  * @brief
  * @sa install_grabs
  */
-static void uninstall_grabs(void)
+static void uninstall_grabs (void)
 {
 	if (!dpy || !win)
 		return;
@@ -221,19 +221,19 @@ static void uninstall_grabs(void)
  * @brief
  * @sa RW_IN_Shutdown
  */
-void RW_IN_Init(in_state_t *in_state_p)
+void RW_IN_Init (in_state_t *in_state_p)
 {
 	in_state = in_state_p;
 
 	/* mouse variables */
-	m_filter = ri.Cvar_Get ("m_filter", "0", 0, NULL);
-	in_mouse = ri.Cvar_Get ("in_mouse", "1", CVAR_ARCHIVE, NULL);
+	m_filter = ri.Cvar_Get("m_filter", "0", 0, NULL);
+	in_mouse = ri.Cvar_Get("in_mouse", "1", CVAR_ARCHIVE, NULL);
 #ifdef HAVE_XF86_DGA
-	in_dgamouse = ri.Cvar_Get ("in_dgamouse", "1", CVAR_ARCHIVE, NULL);
+	in_dgamouse = ri.Cvar_Get("in_dgamouse", "1", CVAR_ARCHIVE, NULL);
 #else
-	in_dgamouse = ri.Cvar_Get ("in_dgamouse", "0", CVAR_ARCHIVE, NULL);
+	in_dgamouse = ri.Cvar_Get("in_dgamouse", "0", CVAR_ARCHIVE, NULL);
 #endif
-	sensitivity = ri.Cvar_Get ("sensitivity", "2", 0, NULL);
+	sensitivity = ri.Cvar_Get("sensitivity", "2", 0, NULL);
 
 	mx = my = 0.0;
 	mouse_avail = qtrue;
@@ -243,9 +243,9 @@ void RW_IN_Init(in_state_t *in_state_p)
  * @brief
  * @sa RW_IN_Init
  */
-void RW_IN_Shutdown(void)
+void RW_IN_Shutdown (void)
 {
-	RW_IN_Activate (qfalse);
+	RW_IN_Activate(qfalse);
 
 	if (mouse_avail)
 		mouse_avail = qfalse;
@@ -263,13 +263,13 @@ void RW_IN_Commands (void)
  */
 void RW_IN_GetMousePos (int *x, int *y)
 {
-	if ( mx < 1 )
+	if (mx < 1)
 		mx = 1;
-	if ( my < 1 )
+	if (my < 1)
 		my = 1;
-	if ( mx >= vid.width )
+	if (mx >= vid.width)
 		mx = vid.width - 1;
-	if ( my >= vid.height )
+	if (my >= vid.height)
 		my = vid.height - 1;
 	*x = mx / vid.rx;
 	*y = my / vid.ry;
@@ -278,7 +278,7 @@ void RW_IN_GetMousePos (int *x, int *y)
 /**
  * @brief
  */
-static void IN_DeactivateMouse( void )
+static void IN_DeactivateMouse (void)
 {
 	if (!mouse_avail || !dpy || !win)
 		return;
@@ -292,7 +292,7 @@ static void IN_DeactivateMouse( void )
 /**
  * @brief
  */
-static void IN_ActivateMouse( void )
+static void IN_ActivateMouse (void)
 {
 	if (!mouse_avail || !dpy || !win)
 		return;
@@ -315,12 +315,12 @@ void RW_IN_Frame (void)
 /**
  * @brief
  */
-void RW_IN_Activate(qboolean active)
+void RW_IN_Activate (qboolean active)
 {
 	if (active || vidmode_active)
 		IN_ActivateMouse();
 	else
-		IN_DeactivateMouse ();
+		IN_DeactivateMouse();
 }
 
 /*****************************************************************************/
@@ -330,7 +330,7 @@ void RW_IN_Activate(qboolean active)
 /**
  * @brief Translates the glx key events to ufo key events
  */
-static int XLateKey(XKeyEvent *ev)
+static int XLateKey (XKeyEvent *ev)
 {
 	int key = 0;
 	char buf[64];
@@ -501,7 +501,7 @@ static int XLateKey(XKeyEvent *ev)
 /**
  * @brief
  */
-static void HandleEvents(void)
+static void HandleEvents (void)
 {
 	XEvent event;
 	int b, middlex, middley;
@@ -520,7 +520,7 @@ static void HandleEvents(void)
 		case KeyPress:
 		case KeyRelease:
 			if (in_state && in_state->Key_Event_fp)
-				in_state->Key_Event_fp (XLateKey(&event.xkey), event.type == KeyPress);
+				in_state->Key_Event_fp(XLateKey(&event.xkey), event.type == KeyPress);
 			break;
 
 		case MotionNotify:
@@ -557,26 +557,33 @@ static void HandleEvents(void)
 			else if (event.xbutton.button == 3)
 				b = 1;
 			else if (event.xbutton.button == 4)
-				in_state->Key_Event_fp (K_MWHEELUP, qtrue);
+				in_state->Key_Event_fp(K_MWHEELUP, qtrue);
 			else if (event.xbutton.button == 5)
-				in_state->Key_Event_fp (K_MWHEELDOWN, qtrue);
-			if (b>=0 && in_state && in_state->Key_Event_fp)
-				in_state->Key_Event_fp (K_MOUSE1 + b, qtrue);
+				in_state->Key_Event_fp(K_MWHEELDOWN, qtrue);
+			if (b >= 0 && in_state && in_state->Key_Event_fp)
+				in_state->Key_Event_fp(K_MOUSE1 + b, qtrue);
 			break;
 
 		case ButtonRelease:
 			b=-1;
-			if (event.xbutton.button == 1)
+			switch (event.xbutton.button) {
+			case 1:
 				b = 0;
-			else if (event.xbutton.button == 2)
+				break;
+			case 2:
 				b = 2;
-			else if (event.xbutton.button == 3)
+				break;
+			case 3:
 				b = 1;
-			else if (event.xbutton.button == 4)
+				break;
+			case 4:
 				in_state->Key_Event_fp (K_MWHEELUP, qfalse);
-			else if (event.xbutton.button == 5)
+				break;
+			case 5:
 				in_state->Key_Event_fp (K_MWHEELDOWN, qfalse);
-			if (b>=0 && in_state && in_state->Key_Event_fp)
+				break;
+			}
+			if (b >= 0 && in_state && in_state->Key_Event_fp)
 				in_state->Key_Event_fp (K_MOUSE1 + b, qfalse);
 			break;
 
@@ -617,10 +624,10 @@ static void HandleEvents(void)
 		vid_grabmouse->modified = qfalse;
 		if (!vid_grabmouse->value) {
 			XUngrabPointer(dpy, CurrentTime);
-			ri.Con_Printf( PRINT_ALL, "Ungrab mouse\n" );
+			ri.Con_Printf(PRINT_ALL, "Ungrab mouse\n");
 		} else {
 			XGrabPointer(dpy, win, True, 0, GrabModeAsync, GrabModeAsync, win, None, CurrentTime);
-			ri.Con_Printf( PRINT_ALL, "Grab mouse\n" );
+			ri.Con_Printf(PRINT_ALL, "Grab mouse\n");
 		}
 	}
 
@@ -634,7 +641,7 @@ Key_Event_fp_t Key_Event_fp;
 /**
  * @brief
  */
-void KBD_Init(Key_Event_fp_t fp)
+void KBD_Init (Key_Event_fp_t fp)
 {
 	Key_Event_fp = fp;
 }
@@ -642,7 +649,7 @@ void KBD_Init(Key_Event_fp_t fp)
 /**
  * @brief
  */
-void KBD_Update(void)
+void KBD_Update (void)
 {
 	/* get events from x server */
 	HandleEvents();
@@ -651,7 +658,7 @@ void KBD_Update(void)
 /**
  * @brief
  */
-void KBD_Close(void)
+void KBD_Close (void)
 {
 }
 
@@ -661,7 +668,7 @@ qboolean GLimp_InitGL (void);
 /**
  * @brief
  */
-rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean fullscreen )
+rserr_t GLimp_SetMode (unsigned *pwidth, unsigned *pheight, int mode, qboolean fullscreen)
 {
 	int width, height;
 	int attrib[] = {
@@ -697,22 +704,22 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 
 	srandom(getpid());
 
-	ri.Con_Printf( PRINT_ALL, "Initializing OpenGL display\n");
+	ri.Con_Printf(PRINT_ALL, "Initializing OpenGL display\n");
 
 	if (fullscreen)
-		ri.Con_Printf (PRINT_ALL, "...setting fullscreen mode %d:", mode );
+		ri.Con_Printf(PRINT_ALL, "...setting fullscreen mode %d:", mode);
 	else
-		ri.Con_Printf (PRINT_ALL, "...setting mode %d:", mode );
+		ri.Con_Printf(PRINT_ALL, "...setting mode %d:", mode);
 
 	if (!ri.Vid_GetModeInfo(&width, &height, mode)) {
 		ri.Con_Printf( PRINT_ALL, " invalid mode\n" );
 		return rserr_invalid_mode;
 	}
 
-	ri.Con_Printf( PRINT_ALL, " %d %d\n", width, height );
+	ri.Con_Printf(PRINT_ALL, " %d %d\n", width, height);
 
 	/* destroy the existing window */
-	GLimp_Shutdown ();
+	GLimp_Shutdown();
 
 	/* Mesa VooDoo hacks */
 	if (fullscreen)
@@ -834,7 +841,7 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 		|| height > DisplayHeight(dpy, scrnum)) {
 		width = DisplayWidth(dpy, scrnum);
 		height = DisplayHeight(dpy, scrnum);
-		ri.Con_Printf( PRINT_ALL, "...downscaling resolution to %d %d\n", width, height);
+		ri.Con_Printf(PRINT_ALL, "...downscaling resolution to %d %d\n", width, height);
 	}
 
 	/* window attributes */
@@ -923,7 +930,7 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 	*pheight = height;
 
 	/* let the sound and input subsystems know about the new window */
-	ri.Vid_NewWindow (width, height);
+	ri.Vid_NewWindow(width, height);
 
 /*	XSync(dpy, False);*/
 
@@ -936,7 +943,7 @@ rserr_t GLimp_SetMode( unsigned *pwidth, unsigned *pheight, int mode, qboolean f
  * HGLRC, deleting the rendering context, and releasing the DC acquired
  * for the window.  The state structure is also nulled out.
  */
-void GLimp_Shutdown( void )
+void GLimp_Shutdown (void)
 {
 	uninstall_grabs();
 	mouse_active = qfalse;
@@ -970,14 +977,14 @@ void GLimp_Shutdown( void )
  * but those don't seem to be fatal .. so the default would be to just ignore them
  * our implementation mimics the default handler behaviour (not completely cause I'm lazy)
  */
-int qXErrorHandler(Display *dpy, XErrorEvent *ev)
+int qXErrorHandler (Display *dpy, XErrorEvent *ev)
 {
 	static char buf[1024];
 	XGetErrorText(dpy, ev->error_code, buf, 1024);
-	ri.Con_Printf( PRINT_ALL, "X Error of failed request: %s\n", buf);
-	ri.Con_Printf( PRINT_ALL, "  Major opcode of failed request: %uli\n", ev->request_code);
-	ri.Con_Printf( PRINT_ALL, "  Minor opcode of failed request: %d\n", ev->minor_code);
-	ri.Con_Printf( PRINT_ALL, "  Serial number of failed request: %lui\n", ev->serial);
+	ri.Con_Printf(PRINT_ALL, "X Error of failed request: %s\n", buf);
+	ri.Con_Printf(PRINT_ALL, "  Major opcode of failed request: %uli\n", ev->request_code);
+	ri.Con_Printf(PRINT_ALL, "  Minor opcode of failed request: %d\n", ev->minor_code);
+	ri.Con_Printf(PRINT_ALL, "  Serial number of failed request: %lui\n", ev->serial);
 	return 0;
 }
 
@@ -985,7 +992,7 @@ int qXErrorHandler(Display *dpy, XErrorEvent *ev)
  * @brief
  * @sa InitSig
  */
-static void signal_handler(int sig)
+static void signal_handler (int sig)
 {
 	printf("Received signal %d, exiting...\n", sig);
 	GLimp_Shutdown();
@@ -995,7 +1002,7 @@ static void signal_handler(int sig)
 /**
  * @brief
  */
-void InitSig(void)
+void InitSig (void)
 {
 	signal(SIGHUP, signal_handler);
 	signal(SIGINT, signal_handler);
@@ -1015,7 +1022,7 @@ void InitSig(void)
 /**
  * @brief This routine is responsible for initializing the OS specific portions of OpenGL.
  */
-qboolean GLimp_Init( void *hinstance, void *wndproc )
+qboolean GLimp_Init (void *hinstance, void *wndproc)
 {
 	InitSig();
 
@@ -1028,7 +1035,7 @@ qboolean GLimp_Init( void *hinstance, void *wndproc )
 /**
  * @brief
  */
-void GLimp_BeginFrame( float camera_seperation )
+void GLimp_BeginFrame (float camera_seperation)
 {
 }
 
@@ -1045,7 +1052,7 @@ void GLimp_EndFrame (void)
 /**
  * @brief
  */
-void GLimp_SetGamma(void)
+void GLimp_SetGamma (void)
 {
 #ifdef HAVE_XF86_VIDMODE
 	float g = vid_gamma->value;
@@ -1063,6 +1070,6 @@ void GLimp_SetGamma(void)
 /**
  * @brief
  */
-void GLimp_AppActivate( qboolean active )
+void GLimp_AppActivate (qboolean active)
 {
 }

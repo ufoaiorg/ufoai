@@ -65,8 +65,9 @@ struct
 	unsigned char key;
 	int down;
 } keyq[64];
-static int keyq_head=0;
-static int keyq_tail=0;
+
+static int keyq_head = 0;
+static int keyq_tail = 0;
 
 /* Console variables that we need to access from this module */
 
@@ -84,14 +85,14 @@ int mx, my, mouse_buttonstate;
 /**
  * @brief
  */
-void RW_IN_PlatformInit( void )
+void RW_IN_PlatformInit (void)
 {
 }
 
 /**
  * @brief
  */
-void RW_IN_Activate(qboolean active)
+void RW_IN_Activate (qboolean active)
 {
 	mouse_active = qtrue;
 }
@@ -101,7 +102,7 @@ void RW_IN_Activate(qboolean active)
 /**
   * @brief Translate the keys to ufo keys
   */
-static int SDLateKey(SDL_keysym *keysym, int *key)
+static int SDLateKey (SDL_keysym *keysym, int *key)
 {
 	int buf = 0;
 	*key = 0;
@@ -325,7 +326,7 @@ static int SDLateKey(SDL_keysym *keysym, int *key)
 /**
  * @brief Debug function to print sdl key events
  */
-static void printkey(const SDL_Event* event)
+static void printkey (const SDL_Event* event)
 {
 	if (sdl_debug->value) {
 		printf("key name: %s", SDL_GetKeyName(event->key.keysym.sym));
@@ -341,7 +342,7 @@ static void printkey(const SDL_Event* event)
 /**
  * @brief
  */
-void GetEvent(SDL_Event *event)
+void GetEvent (SDL_Event *event)
 {
 	int key;
 	int p = 0;
@@ -350,30 +351,30 @@ void GetEvent(SDL_Event *event)
 	case SDL_MOUSEBUTTONDOWN:
 	case SDL_MOUSEBUTTONUP:
 		switch (event->button.button) {
-			case 1:
-				mouse_buttonstate = K_MOUSE1;
-				break;
-			case 2:
-				mouse_buttonstate = K_MOUSE3;
-				break;
-			case 3:
-				mouse_buttonstate = K_MOUSE2;
-				break;
-			case 4:
-				mouse_buttonstate = K_MWHEELUP;
-				break;
-			case 5:
-				mouse_buttonstate = K_MWHEELDOWN;
-				break;
-			case 6:
-				mouse_buttonstate = K_MOUSE4;
-				break;
-			case 7:
-				mouse_buttonstate = K_MOUSE5;
-				break;
-			default:
-				mouse_buttonstate = K_AUX1 + (event->button.button - 8) % 16;
-				break;
+		case 1:
+			mouse_buttonstate = K_MOUSE1;
+			break;
+		case 2:
+			mouse_buttonstate = K_MOUSE3;
+			break;
+		case 3:
+			mouse_buttonstate = K_MOUSE2;
+			break;
+		case 4:
+			mouse_buttonstate = K_MWHEELUP;
+			break;
+		case 5:
+			mouse_buttonstate = K_MWHEELDOWN;
+			break;
+		case 6:
+			mouse_buttonstate = K_MOUSE4;
+			break;
+		case 7:
+			mouse_buttonstate = K_MOUSE5;
+			break;
+		default:
+			mouse_buttonstate = K_AUX1 + (event->button.button - 8) % 16;
+			break;
 		}
 		keyq[keyq_head].down = event->type == SDL_MOUSEBUTTONDOWN ? qtrue : qfalse;
 		keyq[keyq_head].key = mouse_buttonstate;
@@ -391,9 +392,9 @@ void GetEvent(SDL_Event *event)
 			SDL_WM_ToggleFullScreen(surface);
 
 			if (surface->flags & SDL_FULLSCREEN) {
-				ri.Cvar_SetValue( "vid_fullscreen", 1 );
+				ri.Cvar_SetValue("vid_fullscreen", 1);
 			} else {
-				ri.Cvar_SetValue( "vid_fullscreen", 0 );
+				ri.Cvar_SetValue("vid_fullscreen", 0);
 			}
 			vid_fullscreen->modified = qfalse; /* we just changed it with SDL. */
 			break; /* ignore this key */
@@ -401,7 +402,7 @@ void GetEvent(SDL_Event *event)
 
 		if (event->key.keysym.mod & KMOD_CTRL && event->key.keysym.sym == SDLK_g) {
 			SDL_GrabMode gm = SDL_WM_GrabInput(SDL_GRAB_QUERY);
-			ri.Cvar_SetValue( "vid_grabmouse", (gm == SDL_GRAB_ON) ? 0 : 1 );
+			ri.Cvar_SetValue("vid_grabmouse", (gm == SDL_GRAB_ON) ? 0 : 1);
 			break; /* ignore this key */
 		}
 
@@ -443,7 +444,7 @@ void GetEvent(SDL_Event *event)
 /**
  * @brief
  */
-void *GLimp_GetProcAddress(const char *func)
+void *GLimp_GetProcAddress (const char *func)
 {
 	return SDL_GL_GetProcAddress(func);
 }
@@ -452,7 +453,7 @@ void *GLimp_GetProcAddress(const char *func)
 /**
  * @brief
  */
-static void signal_handler(int sig)
+static void signal_handler (int sig)
 {
 	printf("Received signal %d, exiting...\n", sig);
 	GLimp_Shutdown();
@@ -462,7 +463,7 @@ static void signal_handler(int sig)
 /**
  * @brief
  */
-void InitSig(void)
+void InitSig (void)
 {
 	signal(SIGHUP, signal_handler);
 	signal(SIGINT, signal_handler);
@@ -482,7 +483,7 @@ void InitSig(void)
 /**
  * @brief
  */
-qboolean GLimp_Init( void *hInstance, void *wndProc )
+qboolean GLimp_Init (void *hInstance, void *wndProc)
 {
 	if (SDL_WasInit(SDL_INIT_AUDIO|SDL_INIT_CDROM|SDL_INIT_VIDEO) == 0) {
 		if (SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -507,7 +508,7 @@ qboolean GLimp_Init( void *hInstance, void *wndProc )
 /**
  * @brief
  */
-static void SetSDLIcon( void )
+static void SetSDLIcon (void)
 {
 #include "ufoicon.xbm"
 	SDL_Surface *icon;
@@ -542,7 +543,7 @@ static void SetSDLIcon( void )
  * @brief Init the SDL window
  * @param fullscreen Start in fullscreen or not (bool value)
  */
-static qboolean GLimp_InitGraphics( qboolean fullscreen )
+static qboolean GLimp_InitGraphics (qboolean fullscreen)
 {
 	int flags;
 	int stencil_bits;
@@ -607,7 +608,7 @@ static qboolean GLimp_InitGraphics( qboolean fullscreen )
 
 	SDL_WM_SetCaption(GAME_TITLE, GAME_TITLE_LONG);
 
-	SDL_ShowCursor( SDL_DISABLE );
+	SDL_ShowCursor(SDL_DISABLE);
 
 	if (!SDL_GL_GetAttribute(SDL_GL_STENCIL_SIZE, &stencil_bits)) {
 		ri.Con_Printf(PRINT_ALL, "I: got %d bits of stencil\n", stencil_bits);
@@ -624,7 +625,7 @@ static qboolean GLimp_InitGraphics( qboolean fullscreen )
 /**
  * @brief
  */
-void GLimp_BeginFrame( float camera_seperation )
+void GLimp_BeginFrame (float camera_seperation)
 {
 }
 
@@ -639,18 +640,18 @@ void GLimp_EndFrame (void)
 /**
  * @brief
  */
-rserr_t GLimp_SetMode( unsigned int *pwidth, unsigned int *pheight, int mode, qboolean fullscreen )
+rserr_t GLimp_SetMode (unsigned int *pwidth, unsigned int *pheight, int mode, qboolean fullscreen)
 {
 	ri.Con_Printf (PRINT_ALL, "setting mode %d:", mode );
 
-	if ( !ri.Vid_GetModeInfo( (int*)pwidth, (int*)pheight, mode ) ) {
-		ri.Con_Printf( PRINT_ALL, " invalid mode\n" );
+	if (!ri.Vid_GetModeInfo((int*)pwidth, (int*)pheight, mode)) {
+		ri.Con_Printf(PRINT_ALL, " invalid mode\n");
 		return rserr_invalid_mode;
 	}
 
-	ri.Con_Printf( PRINT_ALL, " %d %d\n", *pwidth, *pheight);
+	ri.Con_Printf(PRINT_ALL, " %d %d\n", *pwidth, *pheight);
 
-	if ( !GLimp_InitGraphics( fullscreen ) ) {
+	if (!GLimp_InitGraphics(fullscreen)) {
 		/* failed to set a valid mode in windowed mode */
 		return rserr_invalid_mode;
 	}
@@ -661,7 +662,7 @@ rserr_t GLimp_SetMode( unsigned int *pwidth, unsigned int *pheight, int mode, qb
 /**
  * @brief
  */
-void GLimp_SetGamma(void)
+void GLimp_SetGamma (void)
 {
 	float g;
 
@@ -672,7 +673,7 @@ void GLimp_SetGamma(void)
 /**
  * @brief
  */
-void GLimp_Shutdown( void )
+void GLimp_Shutdown (void)
 {
 	if (surface)
 		SDL_FreeSurface(surface);
@@ -691,7 +692,7 @@ void GLimp_Shutdown( void )
 /**
  * @brief
  */
-void GLimp_AppActivate( qboolean active )
+void GLimp_AppActivate (qboolean active)
 {
 }
 
@@ -705,7 +706,7 @@ Key_Event_fp_t Key_Event_fp;
  * @brief
  * @sa KBD_Close
  */
-void KBD_Init(Key_Event_fp_t fp)
+void KBD_Init (Key_Event_fp_t fp)
 {
 	Key_Event_fp = fp;
 	RW_IN_PlatformInit();
@@ -714,7 +715,7 @@ void KBD_Init(Key_Event_fp_t fp)
 /**
  * @brief
  */
-void KBD_Update(void)
+void KBD_Update (void)
 {
 	SDL_Event event;
 	static int KBD_Update_Flag = 0;
@@ -748,7 +749,7 @@ void KBD_Update(void)
 			keyq_tail = (keyq_tail + 1) & 63;
 		}
 	} else
-		ri.Con_Printf( PRINT_ALL, "SDL not active right now\n" );
+		ri.Con_Printf(PRINT_ALL, "SDL not active right now\n");
 	KBD_Update_Flag = 0;
 }
 
@@ -756,7 +757,7 @@ void KBD_Update(void)
  * @brief
  * @sa KBD_Close
  */
-void KBD_Close(void)
+void KBD_Close (void)
 {
 	keyq_head = 0;
 	keyq_tail = 0;
@@ -768,17 +769,17 @@ void KBD_Close(void)
  * @brief
  * @sa RW_IN_Shutdown
  */
-void RW_IN_Init(in_state_t *in_state_p)
+void RW_IN_Init (in_state_t *in_state_p)
 {
 	in_state = in_state_p;
 
 	/* mouse variables */
-	m_filter = ri.Cvar_Get ("m_filter", "0", 0, NULL);
-	in_mouse = ri.Cvar_Get ("in_mouse", "1", CVAR_ARCHIVE, NULL);
-	sensitivity = ri.Cvar_Get ("sensitivity", "2", CVAR_ARCHIVE, NULL);
+	m_filter = ri.Cvar_Get("m_filter", "0", 0, NULL);
+	in_mouse = ri.Cvar_Get("in_mouse", "1", CVAR_ARCHIVE, NULL);
+	sensitivity = ri.Cvar_Get("sensitivity", "2", CVAR_ARCHIVE, NULL);
 
 	/* other cvars */
-	sdl_debug = ri.Cvar_Get ("sdl_debug", "0", 0, NULL);
+	sdl_debug = ri.Cvar_Get("sdl_debug", "0", 0, NULL);
 
 	mx = my = 0.0;
 	mouse_avail = qtrue;
