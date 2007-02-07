@@ -556,6 +556,7 @@ static void R_DrawEntitiesOnList(void)
 				R_DrawAliasMD3Model (currententity);
 				break;
 			case mod_brush:
+				/* draw things like func_breakable */
 				R_DrawBrushModel(currententity);
 				break;
 			case mod_sprite:

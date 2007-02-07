@@ -668,9 +668,10 @@ static void R_DrawInlineBModel(void)
 }
 
 /**
- * @brief
+ * @brief Draws a brush model
+ * @note E.g. a func_breakable or func_door
  */
-void R_DrawBrushModel(entity_t * e)
+void R_DrawBrushModel (entity_t * e)
 {
 	vec3_t mins, maxs;
 	int i;

@@ -1013,7 +1013,7 @@ static void CL_InvDel (sizebuf_t *sb)
 		return;
 	}
 
-	Com_RemoveFromInventory( &le->i, container, x, y );
+	Com_RemoveFromInventory(&le->i, container, x, y);
 	if (container == csi.idRight)
 		le->right = NONE;
 	else if (container == csi.idLeft)
