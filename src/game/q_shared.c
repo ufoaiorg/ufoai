@@ -2466,8 +2466,10 @@ int Com_MoveInInventory (inventory_t* const i, int from, int fx, int fy, int to,
 
 	/* if weapon is twohanded and is moved from hand to hand do nothing. */
 	/* twohanded weapon are only in CSI->idRight */
-	if (CSI->ods[cacheItem.t].firetwohanded && to == CSI->idLeft && from == CSI->idRight)
+	if (CSI->ods[cacheItem.t].firetwohanded && to == CSI->idLeft && from == CSI->idRight) {
+		Com_AddToInventory(i, cacheItem, from, fx, fy);
 		return IA_NONE;
+	}
 
 	/* if non-armor moved to an armor slot then */
 	/* move item back to source location and break */
@@ -2478,7 +2480,7 @@ int Com_MoveInInventory (inventory_t* const i, int from, int fx, int fy, int to,
 		return IA_NONE;
 	}
 
-	/*check if the target is a blocked inv-armor and source!=dest */
+	/* check if the target is a blocked inv-armor and source!=dest */
 	if (CSI->ids[to].armor && from != to && !Com_CheckToInventory(i, cacheItem.t, to, tx, ty)) {
 		item_t cacheItem2;
 
