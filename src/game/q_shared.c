@@ -2363,7 +2363,7 @@ invList_t *Com_AddToInventory(inventory_t * const i, item_t item, int container,
  * @param[in] y
  * @sa
  */
-qboolean Com_RemoveFromInventory(inventory_t* const i, int container, int x, int y)
+qboolean Com_RemoveFromInventory (inventory_t* const i, int container, int x, int y)
 {
 	invList_t *ic, *old;
 
@@ -2372,6 +2372,8 @@ qboolean Com_RemoveFromInventory(inventory_t* const i, int container, int x, int
 	if (!i)
 		return qfalse;	/* never reached. need for code analyst. */
 #endif
+
+	assert(container < MAX_CONTAINERS);
 
 	ic = i->c[container];
 	if (!ic) {
@@ -2427,11 +2429,12 @@ qboolean Com_RemoveFromInventory(inventory_t* const i, int container, int x, int
  * @return IA_MOVE when just moving an item
  * @sa
  */
-int Com_MoveInInventory(inventory_t* const i, int from, int fx, int fy, int to, int tx, int ty, int *TU, invList_t ** icp)
+int Com_MoveInInventory (inventory_t* const i, int from, int fx, int fy, int to, int tx, int ty, int *TU, invList_t ** icp)
 {
 	invList_t *ic;
 	int time;
 
+	assert(to >= 0 && to < CSI->numIDs);
 	assert(from >= 0 && from < CSI->numIDs);
 #ifdef DEBUG
 	if (from < 0 || from >= CSI->numIDs)
@@ -2452,13 +2455,18 @@ int Com_MoveInInventory(inventory_t* const i, int from, int fx, int fy, int to, 
 
 	assert(i);
 
+	/* break if source item is not removeable */
+	if (!Com_RemoveFromInventory(i, from, fx, fy))
+		return IA_NONE;
+
+	if (cacheItem.t == NONE)
+		return IA_NONE;
+
+	assert(cacheItem.t < MAX_OBJDEFS);
+
 	/* if weapon is twohanded and is moved from hand to hand do nothing. */
 	/* twohanded weapon are only in CSI->idRight */
 	if (CSI->ods[cacheItem.t].firetwohanded && to == CSI->idLeft && from == CSI->idRight)
-		return IA_NONE;
-
-	/* break if source item is not removeable */
-	if (!Com_RemoveFromInventory(i, from, fx, fy))
 		return IA_NONE;
 
 	/* if non-armor moved to an armor slot then */
