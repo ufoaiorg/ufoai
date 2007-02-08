@@ -39,7 +39,7 @@
 //     that don't have primary weapons, yet,
 //     and some malus to those that already have,
 //     with decent probability of akimbo, too;
-//     moreover alien with tachyon primary weapon
+//     moreover alien with particle beam primary weapon
 //     will start picking sidarm with plaspistol, not pbeampistol;
 //     keep the total <= 40, likewise
 // 3. get the following number of ammo for each weapon separately:

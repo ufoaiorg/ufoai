@@ -1073,8 +1073,8 @@ item rpg_tachyon_ammo
 			name	"_Aimed Shot"
 			skill	explosive
 			projtl	rocket_tachyon
-			impact	tachyonBigImpact
-			hitbody	tachyonBigImpact
+			impact	pbeamBigImpact
+			hitbody	pbeamBigImpact
 			firesnd	weapons/rpg.wav
 			impsnd	weapons/tachyon_beam_rocket.wav
 			bodysnd	weapons/tachyon_beam_rocket.wav
@@ -1088,15 +1088,15 @@ item rpg_tachyon_ammo
 			damage	"60 60"
 			spldmg	"420 30"
 			splrad	3
-			dmgtype	tachyon
+			dmgtype	particlebeam
 		}
 		firedef
 		{
 			name	"_Aimed Shot"
 			skill	explosive
 			projtl	rocket_tachyon
-			impact	tachyonBigImpact
-			hitbody	tachyonBigImpact
+			impact	pbeamBigImpact
+			hitbody	pbeamBigImpact
 			firesnd	weapons/rpg.wav
 			impsnd	weapons/tachyon_beam_rocket.wav
 			bodysnd	weapons/tachyon_beam_rocket.wav
@@ -1110,7 +1110,7 @@ item rpg_tachyon_ammo
 			damage	"60 60"
 			spldmg	"420 30"
 			splrad	3
-			dmgtype	tachyon
+			dmgtype	particlebeam
 		}
 	}
 }

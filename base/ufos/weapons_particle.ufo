@@ -37,9 +37,9 @@ item pbeampistol_ammo
 		{
 			name	"_Snap Shot"
 			skill	close
-			projtl	tachyonBeam
-			impact	tachyonImpact
-			hitbody	tachyonImpact
+			projtl	pbeamBeam
+			impact	pbeamImpact
+			hitbody	pbeamImpact
 			firesnd	weapons/tachyonpistol.wav
 			speed	0
 			spread	"0 1"
@@ -49,16 +49,16 @@ item pbeampistol_ammo
 			ammo	1
 			time	4
 			damage	"45 5"
-			dmgtype tachyon
+			dmgtype particlebeam
 			reaction	true
 		}
 		firedef 
 		{
 			name	"_Rapid Shots"
 			skill	close
-			projtl	tachyonMiniBeam
-			impact	tachyonImpact
-			hitbody	tachyonImpact
+			projtl	pbeamMiniBeam
+			impact	pbeamImpact
+			hitbody	pbeamImpact
 			firesnd	weapons/tachyonpistol.wav
 			speed	0
 			spread	"1 2"
@@ -69,7 +69,7 @@ item pbeampistol_ammo
 			rof		5
 			time	7
 			damage	"28 3"
-			dmgtype tachyon
+			dmgtype particlebeam
 		}
 	}
 }
@@ -114,9 +114,9 @@ item pbeamcannon_ammo
 		{
 			name	"_Charged Blast"
 			skill	explosive
-			projtl	tachyonBigBeam
-			impact	tachyonBigImpact
-			hitbody tachyonBigImpact
+			projtl	pbeamBigBeam
+			impact	pbeamBigImpact
+			hitbody pbeamBigImpact
 			firesnd	weapons/tachyon_rifle_explosive.wav
 			speed	0
 			spread	"0 1"
@@ -128,16 +128,16 @@ item pbeamcannon_ammo
 			damage	"100 20"
 			spldmg	"100 20"
 			splrad	3
-			dmgtype tachyon
+			dmgtype particlebeam
 			reaction	true
 		}
 		firedef
 		{
 			name	"_Rapid Shots"
 			skill	heavy
-			projtl	tachyonMiniBeam
-			impact	tachyonImpact
-			hitbody tachyonImpact
+			projtl	pbeamMiniBeam
+			impact	pbeamImpact
+			hitbody pbeamImpact
 			firesnd	weapons/tachyonbig.wav
 			speed	0
 			spread	"1 2"
@@ -148,7 +148,7 @@ item pbeamcannon_ammo
 			rof		5
 			time	9
 			damage	"38 5"
-			dmgtype tachyon
+			dmgtype particlebeam
 			reaction	true
 		}
 	}
@@ -194,9 +194,9 @@ item pbeamrifle_ammo
 		{
 			name	"_Snap Shot"
 			skill	sniper
-			projtl	tachyonBeam
-			impact	tachyonImpact
-			hitbody tachyonImpact
+			projtl	pbeamBeam
+			impact	pbeamImpact
+			hitbody pbeamImpact
 			firesnd	weapons/tachyonsniper.wav
 			speed	0
 			spread	"0 0.2"
@@ -206,16 +206,16 @@ item pbeamrifle_ammo
 			ammo	2
 			time	12
 			damage	"95 10"
-			dmgtype tachyon
+			dmgtype particlebeam
 			reaction	true
 		}
 		firedef
 		{
 			name	"_Rapid Shots"
 			skill	sniper
-			projtl	tachyonMiniBeam
-			impact	tachyonImpact
-			hitbody tachyonImpact
+			projtl	pbeamMiniBeam
+			impact	pbeamImpact
+			hitbody pbeamImpact
 			firesnd	weapons/tachyonsniper.wav
 			speed	0
 			spread	"1 2"
@@ -226,7 +226,7 @@ item pbeamrifle_ammo
 			rof		5
 			time	12
 			damage	"40 4"
-			dmgtype tachyon
+			dmgtype particlebeam
 			reaction true
 		}
 	}

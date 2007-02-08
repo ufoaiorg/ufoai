@@ -105,7 +105,6 @@ researchable rslist_human
 
 researched rslist_aliens
 {
-//	rs_tachyon
 	rs_weapon_pbeampistol
 	rs_weapon_pbeampistol_ammo
 	rs_weapon_plasatomizer
@@ -138,7 +137,6 @@ researched rslist_aliens
 // mark these as researchable
 researchable rslist_alien
 {
-	rs_tachyon
 	rs_weapon_pbeampistol
 	rs_weapon_pbeampistol_ammo
 	rs_weapon_plasatomizer

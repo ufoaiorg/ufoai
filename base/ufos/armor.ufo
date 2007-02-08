@@ -6,7 +6,7 @@ damagetypes standard
 	"_shock"
 	"_laser"
 	"_plasma"
-	"_tachyon"
+	"_particlebeam"
 	"_stun"
 }
 
@@ -32,7 +32,7 @@ item light
 		shock	5
 		laser	5
 		plasma	30
-		tachyon	1
+		particlebeam	1
 		stun	20
 	}
 	hardness
@@ -43,7 +43,7 @@ item light
 		shock	8
 		laser	8
 		plasma	2
-		tachyon	100
+		particlebeam	100
 		stun	100
 	}
 }
@@ -70,7 +70,7 @@ item medium
 		shock	20
 		laser	35
 		plasma	50
-		tachyon	3
+		particlebeam	3
 		stun	35
 	}
 	hardness
@@ -81,7 +81,7 @@ item medium
 		shock	10
 		laser	16
 		plasma	2
-		tachyon	100
+		particlebeam	100
 		stun	100
 	}
 }
@@ -107,7 +107,7 @@ item medium
 //		shock	35
 //		laser	50
 //		plasma	70
-//		tachyon	28
+//		particlebeam	28
 //		stun	97
 //	}
 //	hardness
@@ -118,7 +118,7 @@ item medium
 //		shock	30
 //		laser	48
 //		plasma	6
-//		tachyon	100
+//		particlebeam	100
 //		stun	100
 //	}
 //}
@@ -145,7 +145,7 @@ item light_alien
 		shock	15
 		laser	22
 		plasma	45
-		tachyon	23
+		particlebeam	23
 		stun	27
 	}
 	hardness
@@ -156,7 +156,7 @@ item light_alien
 		shock	9
 		laser	15
 		plasma	4
-		tachyon	100
+		particlebeam	100
 		stun	100
 	}
 }
@@ -183,7 +183,7 @@ item medium_alien
 		shock	30
 		laser	37
 		plasma	62
-		tachyon	27
+		particlebeam	27
 		stun	42
 	}
 	hardness
@@ -194,7 +194,7 @@ item medium_alien
 		shock	20
 		laser	20
 		plasma	8
-		tachyon	100
+		particlebeam	100
 		stun	100
 	}
 }

@@ -928,7 +928,7 @@ tech rs_weapon_rpg_incendiary_ammo
 // 	require_AND
 // 	{
 //		weapon rs_weapon_rpg
-// 		tech rs_damage_tachyon
+// 		tech rs_damage_particlebeam
 // 		tech rs_weapon_rpg
 // 	}
 //
@@ -1255,15 +1255,15 @@ tech rs_weapon_pbeampistol
 
 tech rs_weapon_pbeampistol_ammo
 {
-	type	weapon
+	type		weapon
 	up_chapter	artifacts
-	description	"_pbeampistol_mag_txt"
-	pre_description	"_pbeampistol_mag_pre_txt"
+	description	"_pbeamammo_txt"
+	pre_description	"_pbeamammo_pre_txt"
 
 	require_AND
 	{
-		tech rs_damage_tachyon
-		tech rs_weapon_pbeampistol
+		tech rs_damage_pbeam
+		tech rs_weapon_pbeam_ammo
 	}
 
 	provides	pbeampistol_ammo
@@ -1281,7 +1281,7 @@ tech rs_weapon_pbeamcannon
 	require_AND
 	{
 		tech rs_skill_explosive
-		tech rs_skill_assault
+		tech rs_skill_heavy
 		item pbeamcannon 7
 	}
 
@@ -1294,16 +1294,16 @@ tech rs_weapon_pbeamcannon_ammo
 {
 	type		weapon
 	up_chapter	artifacts
-	description	"_pbeamcannon_mag_txt"
-	pre_description	"_pbeamcannon_mag_pre_txt"
+	description	"_pbeamammo_txt"
+	pre_description	"_pbeamammo_pre_txt"
 
 	require_AND
 	{
-		tech rs_damage_tachyon
-		tech rs_weapon_pbeamcannon
+		tech rs_damage_pbeam
+		tech rs_weapon_pbeam_ammo
 	}
 
-	provides	tachyonrifle_ammo
+	provides	pbeamrifle_ammo
 	time	0
 	producetime	-1
 }
@@ -1317,7 +1317,7 @@ tech rs_weapon_pbeamrifle
 
 	require_AND
 	{
-		tech rs_skill_sniper
+		tech rs_skill_assault
 		item pbeamrifle 1
 	}
 
@@ -1330,17 +1330,35 @@ tech rs_weapon_pbeamrifle_ammo
 {
 	type		weapon
 	up_chapter	artifacts
-	description	"_pbeamrifle_mag_txt"
-	pre_description	"_pbeamrifle_mag_pre_txt"
+	description	"_pbeamammo_txt"
+	pre_description	"_pbeamammo_pre_txt"
 
 	require_AND
 	{
-		tech rs_damage_tachyon
-		tech rs_weapon_pbeamrifle
+		tech rs_damage_pbeam
+		tech rs_weapon_pbeam_ammo
 	}
 
 	provides	pbeamrifle_ammo
 	time	0
+	producetime	-1
+}
+
+tech rs_weapon_pbeam_ammo
+{
+	type		weapon
+	up_chapter	artifacts
+	description	"_pbeam_ammo_txt"
+	pre_description	"_pbeam_ammo_pre_txt"
+
+	require_AND
+	{
+		tech rs_weapon_pbeampistol
+		tech rs_weapon_pbeamcannon
+		tech rs_weapon_pbeamrifle
+	}
+
+	time		8000
 	producetime	-1
 }
 
@@ -1539,14 +1557,14 @@ tech rs_damage_stun
 //	image_top	techs/stun_damage
 }
 
-tech rs_damage_tachyon
+tech rs_damage_particlebeam
 {
-	type	tech
-	name "_Tachyon Damage Type"
+	type		tech
+	name 		"_Particle Beam Damage Type"
 	up_chapter	damage
 	description	"none"
 
-	require_AND { tech nothing }
+	require_AND 	{ tech nothing }
 
 	time	0
 //	image_top	techs/tachyon_damage

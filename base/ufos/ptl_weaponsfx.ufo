@@ -675,7 +675,7 @@ particle plasmaParticleRandom
 // TACHYON EFFECTS
 // ==================
 
-particle tachyonMiniBeam
+particle pbeamMiniBeam
 {
 	init
 	{
@@ -693,7 +693,7 @@ particle tachyonMiniBeam
 	think { kill }
 }
 
-particle tachyonBeam
+particle pbeamBeam
 {
 	init
 	{
@@ -715,7 +715,7 @@ particle tachyonBeam
 	think { kill }
 }
 
-particle tachyonBigBeam
+particle pbeamBigBeam
 {
 	init
 	{
@@ -737,12 +737,12 @@ particle tachyonBigBeam
 	think { kill }
 }
 
-particle tachyonImpact
+particle pbeamImpact
 {
 	init
 	{
 		push   int 22
-		nspawn tachyonSplash
+		nspawn pbeamSplash
 		image  sfx/tachyonball
 		blend  add
 		style  rotated
@@ -762,7 +762,7 @@ particle tachyonImpact
 	think { kill }
 }
 
-particle tachyonSplash
+particle pbeamSplash
 {
 	init
 	{
@@ -786,7 +786,7 @@ particle tachyonSplash
 	think { kill }
 }
 
-particle tachyonExplosion_1
+particle pbeamExplosion_1
 {
 	init
 	{
@@ -803,7 +803,7 @@ particle tachyonExplosion_1
 	think { kill }
 }
 
-particle tachyonExplosion_2
+particle pbeamExplosion_2
 {
 	init
 	{
@@ -820,19 +820,19 @@ particle tachyonExplosion_2
 	think { kill }
 }
 
-particle tachyonBigImpact
+particle pbeamBigImpact
 {
 	init
 	{
-		spawn  tachyonExplosion_1
-		spawn  tachyonExplosion_2
+		spawn  pbeamExplosion_1
+		spawn  pbeamExplosion_2
 		push   int 30
-		nspawn tachyonBigSplash
+		nspawn pbeamBigSplash
 		kill
 	}
 }
 
-particle tachyonBigSplash
+particle pbeamBigSplash
 {
 	init
 	{
