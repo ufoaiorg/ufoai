@@ -918,25 +918,6 @@ tech rs_weapon_rpg_incendiary_ammo
 	producetime	1
 }
 
-// tech rs_weapon_rpg_tachyon_ammo
-// {
-// 	type	weapon
-// 	up_chapter	equipment
-// 	description	"_rpg_tachyon_ammo_txt"
-// 	pre_description	"_rpg_tachyon_ammo_pre_txt"
-//
-// 	require_AND
-// 	{
-//		weapon rs_weapon_rpg
-// 		tech rs_damage_particlebeam
-// 		tech rs_weapon_rpg
-// 	}
-//
-// 	provides	rpg_tachyon_ammo
-// 	time	3000
-// 	producetime	1
-// }
-
 tech rs_weapon_chaingun
 {
 	// Note: Multiplayer only
@@ -1303,7 +1284,7 @@ tech rs_weapon_pbeamcannon_ammo
 		tech rs_weapon_pbeam_ammo
 	}
 
-	provides	pbeamrifle_ammo
+	provides	pbeamcannon_ammo
 	time	0
 	producetime	-1
 }
@@ -1557,7 +1538,7 @@ tech rs_damage_stun
 //	image_top	techs/stun_damage
 }
 
-tech rs_damage_particlebeam
+tech rs_damage_pbeam
 {
 	type		tech
 	name 		"_Particle Beam Damage Type"
@@ -1567,7 +1548,7 @@ tech rs_damage_particlebeam
 	require_AND 	{ tech nothing }
 
 	time	0
-//	image_top	techs/tachyon_damage
+//	image_top	techs/pbeam_damage
 }
 
 //========================
@@ -2085,7 +2066,7 @@ tech rs_craft_ufo_harvester
 
 // BLOODSPIDER
 /* Is this needed?
-tech rs_alien_bloodspider_live 
+tech rs_alien_bloodspider_live
 {
 	type	alien
 	name	"_Live Specimen - Bloodspider"
@@ -2333,7 +2314,7 @@ tech rs_craft_ammo_shiva_1
 
 //	provides	craft_ammo_shiva_API
 	require_AND
-	{ 
+	{
 		tech rs_craft_weapon_shiva
 	}
 	time		0
@@ -2475,7 +2456,7 @@ tech rs_craft_el_targeting
 	require_AND	{ tech nothing }
 	time		0
 	producetime	571
-	
+
 	image_top	"techs/craft_electronics_targeting"
 }
 
@@ -2505,7 +2486,7 @@ tech rs_alienmaterials
 	up_chapter	equipment
 	name		"_Alien Materials"
 	description	"_alienmaterials_txt"
-	pre_description	"_alienmaterials_pre_txt
+	pre_description	"_alienmaterials_pre_txt"
 
 	require_AND
 	{
@@ -2515,7 +2496,6 @@ tech rs_alienmaterials
 //	provides	alien_materials
 	time		6000
 //	producetime	50
-
 //	image_top	"techs/alien_materials"
 }
 

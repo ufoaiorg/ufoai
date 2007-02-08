@@ -1072,7 +1072,7 @@ typedef struct csi_s {
 	/** damage type ids */
 	int damNormal, damBlast, damFire, damShock;
 	/** damage type ids */
-	int damLaser, damPlasma, damTachyon, damStun;
+	int damLaser, damPlasma, damParticle, damStun;
 
 	/** equipment definitions */
 	equipDef_t eds[MAX_EQUIPDEFS];

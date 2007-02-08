@@ -1195,8 +1195,8 @@ static void Com_ParseDamageTypes (char *name, char **text)
 				csi.damLaser = csi.numDTs;
 			else if (!Q_strncmp(token, "plasma", 6))
 				csi.damPlasma = csi.numDTs;
-			else if (!Q_strncmp(token, "tachyon", 7))
-				csi.damTachyon = csi.numDTs;
+			else if (!Q_strncmp(token, "particle", 7))
+				csi.damParticle = csi.numDTs;
 			else if (!Q_strncmp(token, "stun", 4))
 				csi.damStun = csi.numDTs;
 
@@ -1286,7 +1286,7 @@ extern void Com_ParseScripts (void)
 	/* reset csi basic info */
 	Com_InitCSI(&csi);
 	csi.idRight = csi.idLeft = csi.idExtension = csi.idBackpack = csi.idBelt = csi.idHolster = csi.idArmor = csi.idFloor = csi.idEquip = csi.idHeadgear = NONE;
-	csi.damNormal = csi.damBlast = csi.damFire = csi.damShock = csi.damLaser = csi.damPlasma = csi.damTachyon = csi.damStun = NONE;
+	csi.damNormal = csi.damBlast = csi.damFire = csi.damShock = csi.damLaser = csi.damPlasma = csi.damParticle = csi.damStun = NONE;
 
 	/* I guess this is needed, too, if not please remove */
 	csi.numODs = 0;

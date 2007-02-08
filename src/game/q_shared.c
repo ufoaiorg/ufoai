@@ -2851,7 +2851,7 @@ void Com_EquipActor (inventory_t* const inv, const int equip[MAX_OBJDEFS], char 
 	int weapon = -1; /* this variable is never used before being set */
 	int i, max_price, prev_price;
 	int has_weapon = 0, has_armor = 0, repeat = 0, missed_primary = 0;
-	int primary = 2; /* 0 tachyon or normal, 1 other, 2 no primary weapon */
+	int primary = 2; /* 0 particle or normal, 1 other, 2 no primary weapon */
 	objDef_t obj;
 
 	if (chr->weapons) {
@@ -2894,9 +2894,9 @@ void Com_EquipActor (inventory_t* const inv, const int equip[MAX_OBJDEFS], char 
 								break;
 						if (ammo < CSI->numODs) {
 							primary =
-								/* to avoid two tachyon weapons */
+								/* to avoid two particle weapons */
 								!(CSI->ods[ammo].fd[0][0].dmgtype
-								== CSI->damTachyon)
+								== CSI->damParticle)
 								/* to avoid SMG + Assault Rifle */
 								&& !(CSI->ods[ammo].fd[0][0].dmgtype
 									== CSI->damNormal); /* fd[0][0] Seems to be ok here since we just check the damage type and they are the same for all fds i've found. */
@@ -2919,7 +2919,7 @@ void Com_EquipActor (inventory_t* const inv, const int equip[MAX_OBJDEFS], char 
 			max_price = primary ? INT_MAX : 0;
 			do {
 				prev_price = max_price;
-				/* if primary is a tachyon or normal damage weapon,
+				/* if primary is a particle or normal damage weapon,
 				we pick cheapest sidearms first */
 				max_price = primary ? 0 : INT_MAX;
 				for (i = 0; i < CSI->numODs; i++) {

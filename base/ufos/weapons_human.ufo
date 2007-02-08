@@ -33,7 +33,7 @@ item assault_ammo
 
 	weapon_mod assault
 	{
-		firedef 
+		firedef
 		{
 			name	"_Snap Burst"
 			skill	assault
@@ -114,7 +114,7 @@ item chaingun_ammo
 
 	weapon_mod chaingun
 	{
-		firedef 
+		firedef
 		{
 			name	"_Burst"
 			skill	heavy
@@ -190,7 +190,7 @@ item sniper_ammo
 
 	weapon_mod sniper
 	{
-		firedef 
+		firedef
 		{
 			name	"_Aimed Shot"
 			skill	sniper
@@ -287,7 +287,7 @@ item pistol_ammo
 
 	weapon_mod pistol
 	{
-		firedef 
+		firedef
 		{
 			name	"_Snap Shot"
 			skill	close
@@ -364,7 +364,7 @@ item pistol2_ammo
 
 	weapon_mod pistol2
 	{
-		firedef 
+		firedef
 		{
 			name	"_Single Shot"
 			skill	close
@@ -441,7 +441,7 @@ item smg_ammo
 
 	weapon_mod smg
 	{
-		firedef 
+		firedef
 		{
 			name	"_Snap Burst"
 			skill	assault
@@ -577,7 +577,7 @@ item shotgun2_slug_ammo
 
 	weapon_mod shotgun2
 	{
-		firedef 
+		firedef
 		{
 			name	"_Single Shot"
 			skill	heavy
@@ -658,7 +658,7 @@ item shotgun_ammo
 
 	weapon_mod shotgun
 	{
-		firedef 
+		firedef
 		{
 			name	"_Single Shot"
 			skill	heavy
@@ -739,7 +739,7 @@ item shotgun_micro_ammo
 
 	weapon_mod shotgun_micro	// weap_fds_idx=0
 	{
-		firedef 
+		firedef
 		{
 			name	"_Single Shot"
 			skill	heavy
@@ -785,7 +785,7 @@ item shotgun_micro_ammo
 
 	weapon_mod shotgun2 // weap_fds_idx=1
 	{
-		firedef 
+		firedef
 		{
 			name	"_Single Shot"
 			skill	heavy
@@ -865,7 +865,7 @@ item flamer_ammo
 
 	weapon_mod flamer
 	{
-		firedef 
+		firedef
 		{
 			name	"_Candlelight"
 			skill	heavy
@@ -945,7 +945,7 @@ item rpg_ammo
 
 	weapon_mod rpg
 	{
-		firedef 
+		firedef
 		{
 			name	"_Aimed Shot"
 			skill	explosive
@@ -1006,7 +1006,7 @@ item rpg_incendiary_ammo
 
 	weapon_mod rpg
 	{
-		firedef 
+		firedef
 		{
 			name	"_Aimed Shot"
 			skill	explosive
@@ -1054,10 +1054,10 @@ item rpg_incendiary_ammo
 }
 
 /*
-item rpg_tachyon_ammo
+item rpg_particle_ammo
 {
-	name	"_Tachyon-Beam Rocket"
-	model	weapons/rpg/rpg_tachyon_ammo
+	name	"_Particle-Beam Rocket"
+	model	weapons/rpg/rpg_particle_ammo
 	type	ammo
 	category	0
 	shape	"0 0 1 2"
@@ -1068,16 +1068,16 @@ item rpg_tachyon_ammo
 
 	weapon_mod rpg
 	{
-		firedef 
+		firedef
 		{
 			name	"_Aimed Shot"
 			skill	explosive
-			projtl	rocket_tachyon
+			projtl	rocket_particle
 			impact	pbeamBigImpact
 			hitbody	pbeamBigImpact
 			firesnd	weapons/rpg.wav
-			impsnd	weapons/tachyon_beam_rocket.wav
-			bodysnd	weapons/tachyon_beam_rocket.wav
+			impsnd	weapons/pbeam_rocket.wav
+			bodysnd	weapons/pbeam_rocket.wav
 			speed	250
 			spread	"0.2 0.6"
 			crouch	0.6
@@ -1094,12 +1094,12 @@ item rpg_tachyon_ammo
 		{
 			name	"_Aimed Shot"
 			skill	explosive
-			projtl	rocket_tachyon
+			projtl	rocket_particle
 			impact	pbeamBigImpact
 			hitbody	pbeamBigImpact
 			firesnd	weapons/rpg.wav
-			impsnd	weapons/tachyon_beam_rocket.wav
-			bodysnd	weapons/tachyon_beam_rocket.wav
+			impsnd	weapons/pbeam_rocket.wav
+			bodysnd	weapons/pbeam_rocket.wav
 			speed	250
 			spread	"0.2 0.6"
 			crouch	0.6
@@ -1151,7 +1151,7 @@ item grenl_incendiary_ammo
 
 	weapon_mod grenl
 	{
-		firedef 
+		firedef
 		{
 			name	"_Airburst Grenade"
 			skill	explosive
@@ -1219,7 +1219,7 @@ item grenl_fle_ammo
 
 	weapon_mod grenl
 	{
-		firedef 
+		firedef
 		{
 			name	"_Airburst Grenade"
 			skill	explosive
@@ -1287,7 +1287,7 @@ item grenl_ammo
 
 	weapon_mod grenl
 	{
-		firedef 
+		firedef
 		{
 			name	"_Airburst Grenade"
 			skill	explosive
@@ -1355,7 +1355,7 @@ item grenl_plasma_ammo
 
 	weapon_mod grenl
 	{
-		firedef 
+		firedef
 		{
 			name	"_Airburst Grenade"
 			skill	explosive
@@ -1445,7 +1445,7 @@ item bolterrifle_ammo
 
 	weapon_mod bolterrifle
 	{
-		firedef 
+		firedef
 		{
 			name    "_Single Shot"
 			skill   heavy

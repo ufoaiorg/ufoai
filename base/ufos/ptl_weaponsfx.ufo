@@ -221,12 +221,12 @@ particle rocket_inc
 	}
 }
 
-particle rocket_tachyon
+// "particle beam weapon" particle
+particle rocket_particle
 {
 	init
 	{
 		model  weapons/rpg/rocket
-//		model  weapons/rpg/rocket_tachyon
 		color  ".5 .5 .5 1"
 		tps    40.0
 	}
@@ -671,9 +671,9 @@ particle plasmaParticleRandom
 }
 
 
-// ==================
-// TACHYON EFFECTS
-// ==================
+// =====================
+// PARTICLE-BEAM EFFECTS
+// =====================
 
 particle pbeamMiniBeam
 {
@@ -743,7 +743,7 @@ particle pbeamImpact
 	{
 		push   int 22
 		nspawn pbeamSplash
-		image  sfx/tachyonball
+		image  sfx/particleball
 		blend  add
 		style  rotated
 		tfade  out

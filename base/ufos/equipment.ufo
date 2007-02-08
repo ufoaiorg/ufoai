@@ -56,7 +56,7 @@ equipment campaign_market
 	rpg						3
 	rpg_ammo				50
 	rpg_incendiary_ammo		20
-//	rpg_tachyon_ammo		10
+//	rpg_particle_ammo		10
 	grenl					2
 	grenl_ammo				20
 	grenl_plasma_ammo		10
@@ -126,7 +126,7 @@ equipment campaign_market_aliens
 	rpg						3
 	rpg_ammo				40
 	rpg_incendiary_ammo		20
-//	rpg_tachyon_ammo		10
+//	rpg_particle_ammo		10
 	grenl					2
 	grenl_ammo				20
 	grenl_plasma_ammo		10
@@ -177,7 +177,7 @@ equipment multiplayer
 	rpg					1
 	rpg_ammo			3
 	rpg_incendiary_ammo	3
-//	rpg_tachyon_ammo	3
+//	rpg_particle_ammo	3
 	grenl				1
 	grenl_ammo			5
 	grenl_plasma_ammo	3
@@ -244,7 +244,7 @@ equipment testing_and_tweaking
 	rpg					2
 	rpg_ammo			4
 	rpg_incendiary_ammo	4
-//	rpg_tachyon_ammo	4
+//	rpg_particle_ammo	4
 	grenl				2
 	grenl_ammo			4
 	grenl_plasma_ammo	4
