@@ -2496,6 +2496,30 @@ tech rs_craft_el_fuelpod
 }
 
 //========================
+// Alien Technologies retrieved from crafts
+//========================
+
+tech rs_alienmaterials
+{
+	type		tech
+	up_chapter	equipment
+	name		"_Alien Materials"
+	description	"_alienmaterials_txt"
+	pre_description	"_alienmaterials_pre_txt
+
+	require_AND
+	{
+		tech rs_craft_ufo_scout
+	}
+
+//	provides	alien_materials
+	time		6000
+//	producetime	50
+
+//	image_top	"techs/alien_materials"
+}
+
+//========================
 // News
 //========================
 
