@@ -57,7 +57,7 @@ static menuNode_t *node1, *node2, *prodlist;
  * @param[in] req The production requirements of the item that is to be produced.
  * @return 0: If nothing can be produced. 1+: If anything can be produced. 'amount': Maximum.
  */
-static int PR_RequirementsMet(int amount, requirements_t *req)
+static int PR_RequirementsMet (int amount, requirements_t *req)
 {
 	int a,i;
 	int produceable_amount;
@@ -88,7 +88,7 @@ static int PR_RequirementsMet(int amount, requirements_t *req)
  * @param[in] req The production requirements of the item that is to be produced. Thes included numbers are multiplied with 'amount')
  * @todo This doesn't check yet if there are more items removed than are in the base-storage (might be fixed if we used a storage-fuction with checks, otherwise we can make it a 'contition' in order to run this function.
  */
-static void PR_UpdateRequiredItemsInBasestorage(int amount, requirements_t *req)
+static void PR_UpdateRequiredItemsInBasestorage (int amount, requirements_t *req)
 {
 	int i;
 	equipDef_t *ed = NULL;
@@ -119,7 +119,7 @@ static void PR_UpdateRequiredItemsInBasestorage(int amount, requirements_t *req)
 /**
  * @brief add a new item to the bottom of the production queue
  */
-static production_t *PR_QueueNew(production_queue_t *queue, signed int objID, signed int amount)
+static production_t *PR_QueueNew (production_queue_t *queue, signed int objID, signed int amount)
 {
 	int numWorkshops = 0;
 	technology_t *t = NULL;
@@ -152,7 +152,7 @@ static production_t *PR_QueueNew(production_queue_t *queue, signed int objID, si
 /**
  * @brief Delete the selected entry from the queue.
  */
-static void PR_QueueDelete(production_queue_t *queue, int index)
+static void PR_QueueDelete (production_queue_t *queue, int index)
 {
 	int i;
 	objDef_t *od = NULL;
@@ -187,7 +187,7 @@ static void PR_QueueDelete(production_queue_t *queue, int index)
 /**
  * @brief move the given queue item in the given direction
  */
-static void PR_QueueMove(production_queue_t *queue, int index, int dir)
+static void PR_QueueMove (production_queue_t *queue, int index, int dir)
 {
 	int newIndex = index + dir;
 	int i;
@@ -216,7 +216,7 @@ static void PR_QueueMove(production_queue_t *queue, int index, int dir)
  * @brief queue the next production in the queue
  * @param base the index of the base
  */
-static void PR_QueueNext(int base)
+static void PR_QueueNext (int base)
 {
 	char messageBuffer[256];
 	production_queue_t *queue = &gd.productions[base];
@@ -238,7 +238,7 @@ static void PR_QueueNext(int base)
  * @brief Checks whether an item is finished
  * @sa CL_CampaignRun
  */
-void PR_ProductionRun(void)
+void PR_ProductionRun (void)
 {
 	int i;
 	objDef_t *od;
@@ -429,7 +429,7 @@ static void PR_ProductionListClick_f (void)
 				&& *od->name				/* Item has a name defined. TODO: produce error if this is not true? */
 				&& t->produceTime >= 0		/* Item is produceable */
 			) {
-				if (j==idx) {
+				if (j == idx) {
 #if 0
 					/* FIXME: don't start production yet .. */
 					gd.productions[baseCurrent->idx].objID = i;
@@ -767,7 +767,7 @@ static void PR_ProductionDown (void)
  * Bind some of the functions in this file to console-commands that you can call ingame.
  * Called from MN_ResetMenus resp. CL_InitLocal
  */
-void PR_ResetProduction (void)
+extern void PR_ResetProduction (void)
 {
 	/* add commands */
 	Cmd_AddCommand("prod_init", PR_ProductionList_f, NULL);
