@@ -1327,7 +1327,7 @@ tech rs_weapon_pbeamrifle_ammo
 
 tech rs_weapon_pbeam_ammo
 {
-	type		weapon
+	type		tech
 	up_chapter	artifacts
 	description	"_pbeam_ammo_txt"
 	pre_description	"_pbeam_ammo_pre_txt"
