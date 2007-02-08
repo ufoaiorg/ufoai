@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-02-03 20:08+0100\n"
+"POT-Creation-Date: 2007-02-08 13:11+0100\n"
 "PO-Revision-Date: 2006-12-23 20:30+0200\n"
 "Last-Translator: Игорь <zsx@ua.fm>\n"
 "Language-Team: \n"
@@ -90,11 +90,11 @@ msgstr "Перехватчик класса \"Сарацин\""
 msgid "Saracen I"
 msgstr ""
 
-#: ../base/ufos/aircraftmanagement.ufo:95 ../base/ufos/research.ufo:1984
+#: ../base/ufos/aircraftmanagement.ufo:95 ../base/ufos/research.ufo:2002
 msgid "UFO - Scout"
 msgstr "НЛО - Разведчик"
 
-#: ../base/ufos/aircraftmanagement.ufo:113 ../base/ufos/research.ufo:2017
+#: ../base/ufos/aircraftmanagement.ufo:113 ../base/ufos/research.ufo:2035
 msgid "UFO - Fighter"
 msgstr "НЛО - Истребитель"
 
@@ -123,8 +123,9 @@ msgid "plasma"
 msgstr "плазма"
 
 #: ../base/ufos/armor.ufo:9
-msgid "tachyon"
-msgstr "тахион"
+#, fuzzy
+msgid "particlebeam"
+msgstr "Лучевое оружие"
 
 #: ../base/ufos/armor.ufo:10
 msgid "stun"
@@ -1230,6 +1231,13 @@ msgstr "Физические характеристики бойца"
 msgid "Inventory"
 msgstr "Инвентарь"
 
+#: ../base/ufos/menu_hud.ufo:950 ../base/ufos/menu_hud.ufo:962
+#: ../base/ufos/menu_hud.ufo:974 ../base/ufos/menu_hud.ufo:986
+#: ../base/ufos/menu_hud.ufo:999 ../base/ufos/menu_hud.ufo:1011
+#: ../base/ufos/menu_hud.ufo:1023 ../base/ufos/menu_hud.ufo:1035
+msgid "Check to use this firemode for reaction fire."
+msgstr ""
+
 #: ../base/ufos/menu_inventory.ufo:21 ../base/ufos/menu_team.ufo:983
 #, fuzzy
 msgid "Backpack"
@@ -1363,7 +1371,7 @@ msgstr "Новый"
 msgid "Generate a team automatically"
 msgstr "Автогенерация нового отряда"
 
-#: ../base/ufos/menu_multiplayer.ufo:349 ../base/ufos/weapons_human.ufo:136
+#: ../base/ufos/menu_multiplayer.ufo:349 ../base/ufos/weapons_human.ufo:138
 msgid "Auto"
 msgstr "Авто"
 
@@ -2352,7 +2360,7 @@ msgstr "Большое вторжение пришельцев"
 msgid "Stop them"
 msgstr "Остановите их"
 
-#: ../base/ufos/missions.ufo:859 client/cl_campaign.c:725
+#: ../base/ufos/missions.ufo:859 client/cl_campaign.c:740
 #, fuzzy
 msgid "Base Attack"
 msgstr "Атака базы"
@@ -3115,38 +3123,36 @@ msgstr ""
 "складское помещение предоставляет место для пятидесяти мест снаряжения."
 
 #: ../base/ufos/research.ufo:1242
-msgid "tachyonpistol_txt"
+#, fuzzy
+msgid "pbeampistol_txt"
 msgstr ""
+"Эта постройка используется для хранения снаряжения и запасных частей. Каждое "
+"складское помещение предоставляет место для пятидесяти мест снаряжения."
 
 #: ../base/ufos/research.ufo:1243
 #, fuzzy
-msgid "tachyonpistol_pre_txt"
+msgid "pbeampistol_pre_txt"
 msgstr ""
-"Хотя наши учёные не полностью поняли все принципы управления тахионами на "
-"субатомном уровне, они смогли воспроизвести технологию тахионного ускорения. "
-"Очевидно, тахионам задаётся определённое вращение внутри акселератора и "
-"таким образом они могут взаимодействовать с любой материей. Проникая легко "
-"через любой вид существующей брони, частицы начинают терять энергию на "
-"глубине приблизительно в 10 сантиметров. Поэтому солдат поражённый тахионным "
-"зарядом получает лишь незначительное поверхностное повреждение и "
-"одновременно тяжёлое повреждение внутренних органов."
+"Эта постройка используется для хранения снаряжения и запасных частей. Каждое "
+"складское помещение предоставляет место для пятидесяти мест снаряжения."
 
-#: ../base/ufos/research.ufo:1260
+#: ../base/ufos/research.ufo:1260 ../base/ufos/research.ufo:1297
+#: ../base/ufos/research.ufo:1333
 #, fuzzy
-msgid "tachyonpistol_mag_txt"
+msgid "pbeamammo_txt"
 msgstr ""
-"Хотя наши учёные не полностью поняли все принципы управления тахионами на "
-"субатомном уровне, они смогли воспроизвести технологию тахионного ускорения. "
-"Очевидно, тахионам задаётся определённое вращение внутри акселератора и "
-"таким образом они могут взаимодействовать с любой материей. Проникая легко "
-"через любой вид существующей брони, частицы начинают терять энергию на "
-"глубине приблизительно в 10 сантиметров. Поэтому солдат поражённый тахионным "
-"зарядом получает лишь незначительное поверхностное повреждение и "
-"одновременно тяжёлое повреждение внутренних органов."
+"Антареане усовершенствовали технологию, используя фундаментальные концепции "
+"лежащие в основе понятия плазмы (ионизированного газа) для её использования "
+"в военных целях. Теперь они используют плазму не только при разработке "
+"вооружения, но и даже в производстве более мощных так называемых ионных "
+"двигателей, которые человечество даже не считало возможным создать. Наши "
+"учёные способны воспроизвести фундаментальные концепции усовершенствований "
+"пришельцев и, возможно, даже смогут произвести подобное снаряжение в будущем."
 
-#: ../base/ufos/research.ufo:1261
+#: ../base/ufos/research.ufo:1261 ../base/ufos/research.ufo:1298
+#: ../base/ufos/research.ufo:1334
 #, fuzzy
-msgid "tachyonpistol_mag_pre_txt"
+msgid "pbeamammo_pre_txt"
 msgstr ""
 "Хотя наши учёные не полностью поняли все принципы управления тахионами на "
 "субатомном уровне, они смогли воспроизвести технологию тахионного ускорения. "
@@ -3158,81 +3164,72 @@ msgstr ""
 "одновременно тяжёлое повреждение внутренних органов."
 
 #: ../base/ufos/research.ufo:1278
-msgid "tachyonrifle_txt"
+#, fuzzy
+msgid "pbeamcannon_txt"
 msgstr ""
+"Антареане усовершенствовали технологию, используя фундаментальные концепции "
+"лежащие в основе понятия плазмы (ионизированного газа) для её использования "
+"в военных целях. Теперь они используют плазму не только при разработке "
+"вооружения, но и даже в производстве более мощных так называемых ионных "
+"двигателей, которые человечество даже не считало возможным создать. Наши "
+"учёные способны воспроизвести фундаментальные концепции усовершенствований "
+"пришельцев и, возможно, даже смогут произвести подобное снаряжение в будущем."
 
 #: ../base/ufos/research.ufo:1279
 #, fuzzy
-msgid "tachyonrifle_pre_txt"
+msgid "pbeamcannon_pre_txt"
 msgstr ""
-"Хотя наши учёные не полностью поняли все принципы управления тахионами на "
-"субатомном уровне, они смогли воспроизвести технологию тахионного ускорения. "
-"Очевидно, тахионам задаётся определённое вращение внутри акселератора и "
-"таким образом они могут взаимодействовать с любой материей. Проникая легко "
-"через любой вид существующей брони, частицы начинают терять энергию на "
-"глубине приблизительно в 10 сантиметров. Поэтому солдат поражённый тахионным "
-"зарядом получает лишь незначительное поверхностное повреждение и "
-"одновременно тяжёлое повреждение внутренних органов."
-
-#: ../base/ufos/research.ufo:1297
-#, fuzzy
-msgid "tachyonrifle_mag_txt"
-msgstr ""
-"Хотя наши учёные не полностью поняли все принципы управления тахионами на "
-"субатомном уровне, они смогли воспроизвести технологию тахионного ускорения. "
-"Очевидно, тахионам задаётся определённое вращение внутри акселератора и "
-"таким образом они могут взаимодействовать с любой материей. Проникая легко "
-"через любой вид существующей брони, частицы начинают терять энергию на "
-"глубине приблизительно в 10 сантиметров. Поэтому солдат поражённый тахионным "
-"зарядом получает лишь незначительное поверхностное повреждение и "
-"одновременно тяжёлое повреждение внутренних органов."
-
-#: ../base/ufos/research.ufo:1298
-#, fuzzy
-msgid "tachyonrifle_mag_pre_txt"
-msgstr ""
-"Хотя наши учёные не полностью поняли все принципы управления тахионами на "
-"субатомном уровне, они смогли воспроизвести технологию тахионного ускорения. "
-"Очевидно, тахионам задаётся определённое вращение внутри акселератора и "
-"таким образом они могут взаимодействовать с любой материей. Проникая легко "
-"через любой вид существующей брони, частицы начинают терять энергию на "
-"глубине приблизительно в 10 сантиметров. Поэтому солдат поражённый тахионным "
-"зарядом получает лишь незначительное поверхностное повреждение и "
-"одновременно тяжёлое повреждение внутренних органов."
+"Антареане усовершенствовали технологию, используя фундаментальные концепции "
+"лежащие в основе понятия плазмы (ионизированного газа) для её использования "
+"в военных целях. Теперь они используют плазму не только при разработке "
+"вооружения, но и даже в производстве более мощных так называемых ионных "
+"двигателей, которые человечество даже не считало возможным создать. Наши "
+"учёные способны воспроизвести фундаментальные концепции усовершенствований "
+"пришельцев и, возможно, даже смогут произвести подобное снаряжение в будущем."
 
 #: ../base/ufos/research.ufo:1315
-msgid "tachyonsniper_txt"
+#, fuzzy
+msgid "pbeamrifle_txt"
 msgstr ""
+"Антареане усовершенствовали технологию, используя фундаментальные концепции "
+"лежащие в основе понятия плазмы (ионизированного газа) для её использования "
+"в военных целях. Теперь они используют плазму не только при разработке "
+"вооружения, но и даже в производстве более мощных так называемых ионных "
+"двигателей, которые человечество даже не считало возможным создать. Наши "
+"учёные способны воспроизвести фундаментальные концепции усовершенствований "
+"пришельцев и, возможно, даже смогут произвести подобное снаряжение в будущем."
 
 #: ../base/ufos/research.ufo:1316
 #, fuzzy
-msgid "tachyonsniper_pre_txt"
+msgid "pbeamrifle_pre_txt"
 msgstr ""
-"Хотя наши учёные не полностью поняли все принципы управления тахионами на "
-"субатомном уровне, они смогли воспроизвести технологию тахионного ускорения. "
-"Очевидно, тахионам задаётся определённое вращение внутри акселератора и "
-"таким образом они могут взаимодействовать с любой материей. Проникая легко "
-"через любой вид существующей брони, частицы начинают терять энергию на "
-"глубине приблизительно в 10 сантиметров. Поэтому солдат поражённый тахионным "
-"зарядом получает лишь незначительное поверхностное повреждение и "
-"одновременно тяжёлое повреждение внутренних органов."
+"Антареане усовершенствовали технологию, используя фундаментальные концепции "
+"лежащие в основе понятия плазмы (ионизированного газа) для её использования "
+"в военных целях. Теперь они используют плазму не только при разработке "
+"вооружения, но и даже в производстве более мощных так называемых ионных "
+"двигателей, которые человечество даже не считало возможным создать. Наши "
+"учёные способны воспроизвести фундаментальные концепции усовершенствований "
+"пришельцев и, возможно, даже смогут произвести подобное снаряжение в будущем."
 
-#: ../base/ufos/research.ufo:1333
+#: ../base/ufos/research.ufo:1351
 #, fuzzy
-msgid "tachyonsniper_mag_txt"
+msgid "pbeam_ammo_txt"
 msgstr ""
-"Хотя наши учёные не полностью поняли все принципы управления тахионами на "
-"субатомном уровне, они смогли воспроизвести технологию тахионного ускорения. "
-"Очевидно, тахионам задаётся определённое вращение внутри акселератора и "
-"таким образом они могут взаимодействовать с любой материей. Проникая легко "
-"через любой вид существующей брони, частицы начинают терять энергию на "
-"глубине приблизительно в 10 сантиметров. Поэтому солдат поражённый тахионным "
-"зарядом получает лишь незначительное поверхностное повреждение и "
-"одновременно тяжёлое повреждение внутренних органов."
+"Лазер (в оригинале Laser расшифровывается как Light Amplification by "
+"Stimulated Emission of Radiation - Легкое Усиление Стимулируемой Эмиссией "
+"Радиации) технология долго известная человечеству, но технология называемая "
+"THEL (\"Mobile Tactical High-Energy Laser\" - \"Тактический "
+"Высокоэнергетический Лазер\") начала исследоваться лишь недавно. Хотя уже и "
+"существовали мобильные аналоги - MTHEL, эти системы оружия являлись слишком "
+"большими и неэффективными, чтобы иметь реальные преимущества перед обычным "
+"вооружением. Основная конструкция этого оружия, как правило, использует "
+"химический лазер (лазер фторида дейтерия), как сделать который в 5 раз более "
+"эффективным и компактным наши ученые недавно узнали. Это позволит "
+"разработать более лёгкое MTHEL оружие в ближайшем будущем."
 
-#: ../base/ufos/research.ufo:1334
+#: ../base/ufos/research.ufo:1352
 #, fuzzy
-msgid "tachyonsniper_mag_pre_txt"
+msgid "pbeam_ammo_pre_txt"
 msgstr ""
 "Хотя наши учёные не полностью поняли все принципы управления тахионами на "
 "субатомном уровне, они смогли воспроизвести технологию тахионного ускорения. "
@@ -3243,7 +3240,7 @@ msgstr ""
 "зарядом получает лишь незначительное поверхностное повреждение и "
 "одновременно тяжёлое повреждение внутренних органов."
 
-#: ../base/ufos/research.ufo:1355
+#: ../base/ufos/research.ufo:1373
 #, fuzzy
 msgid "combat_armor_txt"
 msgstr ""
@@ -3255,7 +3252,7 @@ msgstr ""
 "контакта и распределяются по всей поверхности брони, а после постепенно "
 "отражается во внешнюю среду."
 
-#: ../base/ufos/research.ufo:1371
+#: ../base/ufos/research.ufo:1389
 #, fuzzy
 msgid "nano_armor_txt"
 msgstr ""
@@ -3267,7 +3264,7 @@ msgstr ""
 "и после во внешнюю среду самому эффективному доступному пути - через землю "
 "или воздух."
 
-#: ../base/ufos/research.ufo:1372
+#: ../base/ufos/research.ufo:1390
 #, fuzzy
 msgid "nano_armor_pre_txt"
 msgstr ""
@@ -3282,7 +3279,7 @@ msgstr ""
 "материал. Также ожидается, что эти материалы будут гораздо легче "
 "используемых в настоящее время."
 
-#: ../base/ufos/research.ufo:1388
+#: ../base/ufos/research.ufo:1406
 #, fuzzy
 msgid "alien_body_armour_txt"
 msgstr ""
@@ -3294,7 +3291,7 @@ msgstr ""
 "контакта и распределяются по всей поверхности брони, а после постепенно "
 "отражается во внешнюю среду."
 
-#: ../base/ufos/research.ufo:1389
+#: ../base/ufos/research.ufo:1407
 #, fuzzy
 msgid "alien_body_armour_pre_txt"
 msgstr ""
@@ -3306,83 +3303,84 @@ msgstr ""
 "контакта и распределяются по всей поверхности брони, а после постепенно "
 "отражается во внешнюю среду."
 
-#: ../base/ufos/research.ufo:1438
+#: ../base/ufos/research.ufo:1456
 msgid "Blast Damage Type"
 msgstr "Урон от бластерного оружия"
 
-#: ../base/ufos/research.ufo:1450
+#: ../base/ufos/research.ufo:1468
 msgid "Fire Damage Type"
 msgstr "Урон от огня"
 
-#: ../base/ufos/research.ufo:1462
+#: ../base/ufos/research.ufo:1480
 msgid "Laser Damage Type"
 msgstr "Урон от лазерного оружия"
 
-#: ../base/ufos/research.ufo:1478
+#: ../base/ufos/research.ufo:1496
 #, fuzzy
 msgid "Impact Damage Type"
 msgstr "Плазмолезвие"
 
-#: ../base/ufos/research.ufo:1490 ../base/ufos/research.ufo:1521
+#: ../base/ufos/research.ufo:1508 ../base/ufos/research.ufo:1539
 msgid "Shock Damage Type"
 msgstr "Урон от шока"
 
-#: ../base/ufos/research.ufo:1502
+#: ../base/ufos/research.ufo:1520
 #, fuzzy
 msgid "Plasma Damage Type"
 msgstr "Плазмолезвие"
 
-#: ../base/ufos/research.ufo:1533
+#: ../base/ufos/research.ufo:1551
 msgid "Stun Damage Type"
 msgstr "Урон от парализующего оружия"
 
-#: ../base/ufos/research.ufo:1545
-msgid "Tachyon Damage Type"
-msgstr "Урон от тахионного оружия"
+#: ../base/ufos/research.ufo:1563
+#, fuzzy
+msgid "Particle Beam Damage Type"
+msgstr "Плазмолезвие"
 
-#: ../base/ufos/research.ufo:1562
+#: ../base/ufos/research.ufo:1580
 msgid "Accuracy Attribute"
 msgstr "Точность"
 
-#: ../base/ufos/research.ufo:1574
+#: ../base/ufos/research.ufo:1592
 #, fuzzy
 msgid "Assault Guns Proficiency"
 msgstr "Навык штурмового оружия"
 
-#: ../base/ufos/research.ufo:1586
+#: ../base/ufos/research.ufo:1604
 #, fuzzy
 msgid "Close Combat Proficiency"
 msgstr "Навык ближнего боя"
 
-#: ../base/ufos/research.ufo:1598
+#: ../base/ufos/research.ufo:1616
 #, fuzzy
 msgid "High-Explosives Proficiency"
 msgstr "Навык взрывчатых веществ"
 
-#: ../base/ufos/research.ufo:1610
+#: ../base/ufos/research.ufo:1628
 #, fuzzy
 msgid "Heavy Weapons Proficiency"
 msgstr "Навык тяжелого вооружения"
 
-#: ../base/ufos/research.ufo:1622
+#: ../base/ufos/research.ufo:1640
 msgid "Mind Attribute"
 msgstr "Интеллект"
 
-#: ../base/ufos/research.ufo:1634
+#: ../base/ufos/research.ufo:1652
 msgid "Power Attribute"
 msgstr "Сила"
 
-#: ../base/ufos/research.ufo:1646
+#: ../base/ufos/research.ufo:1664
 #, fuzzy
 msgid "Sniper Rifles Proficiency"
 msgstr "Снайперские навыки"
 
-#: ../base/ufos/research.ufo:1658
+#: ../base/ufos/research.ufo:1676
 #, fuzzy
 msgid "Speed Attribute"
 msgstr "Скорость"
 
-#: ../base/ufos/research.ufo:1674
+#: ../base/ufos/research.ufo:1692
 #, fuzzy
 msgid "b_aliencontainment_txt"
 msgstr ""
@@ -3396,7 +3394,7 @@ msgstr ""
 "поверхностью, вход является слабым местом в защите баз. Во время угрозы "
 "атаки, пришельцы, скорее всего, начнут её отсюда."
 
-#: ../base/ufos/research.ufo:1690
+#: ../base/ufos/research.ufo:1708
 #, fuzzy
 msgid "b_command_txt"
 msgstr ""
@@ -3406,7 +3404,7 @@ msgstr ""
 "центра ни одна база не сможет функционировать, именно по этой причине он "
 "должен быть построен в первую очередь."
 
-#: ../base/ufos/research.ufo:1706
+#: ../base/ufos/research.ufo:1724
 msgid "b_entrance_txt"
 msgstr ""
 "Это вход для персонала баз ФАЛАНКС. По существу это лифт, передвигающийся от "
@@ -3419,7 +3417,7 @@ msgstr ""
 "поверхностью, вход является слабым местом в защите баз. Во время угрозы "
 "атаки, пришельцы, скорее всего, начнут её отсюда."
 
-#: ../base/ufos/research.ufo:1718
+#: ../base/ufos/research.ufo:1736
 #, fuzzy
 msgid "b_large_hangar_txt"
 msgstr ""
@@ -3434,14 +3432,14 @@ msgstr ""
 "местом в защите баз. Во время угрозы атаки, пришельцы, скорее всего, начнут "
 "её отсюда."
 
-#: ../base/ufos/research.ufo:1734
+#: ../base/ufos/research.ufo:1752
 #, fuzzy
 msgid "b_hospital_txt"
 msgstr ""
 "Эта постройка используется для хранения снаряжения и запасных частей. Каждое "
 "складское помещение предоставляет место для пятидесяти мест снаряжения."
 
-#: ../base/ufos/research.ufo:1750
+#: ../base/ufos/research.ufo:1768
 #, fuzzy
 msgid "b_small_hangar_txt"
 msgstr ""
@@ -3456,7 +3454,7 @@ msgstr ""
 "местом в защите баз. Во время угрозы атаки, пришельцы, скорее всего, начнут "
 "её отсюда."
 
-#: ../base/ufos/research.ufo:1766
+#: ../base/ufos/research.ufo:1784
 msgid "b_lab_txt"
 msgstr ""
 "Лаборатория предоставляет место для проведения экспериментов, обсуждения "
@@ -3465,7 +3463,7 @@ msgstr ""
 "лаборатории, исследования могут проводиться только в ней. Каждая лаборатория "
 "предоставляет рабочую площадь для десяти учёных."
 
-#: ../base/ufos/research.ufo:1782
+#: ../base/ufos/research.ufo:1800
 msgid "b_powerplant_txt"
 msgstr ""
 "Электростанция снабжает базу энергией. Без энергии большинство построек базы "
@@ -3473,7 +3471,7 @@ msgstr ""
 "самых жизненно важных построек на базе и в случае атаки, скорее всего, будет "
 "одной из основных целей пришельцев."
 
-#: ../base/ufos/research.ufo:1798
+#: ../base/ufos/research.ufo:1816
 msgid "b_quarters_txt"
 msgstr ""
 "Постройка казарм обеспечивает жилой площадью весь персонал, проживающий на "
@@ -3484,7 +3482,7 @@ msgstr ""
 "расслабиться и пообщаться. Каждая казарма предоставляет жилую площадь для "
 "двадцати человек."
 
-#: ../base/ufos/research.ufo:1814
+#: ../base/ufos/research.ufo:1832
 msgid "b_radar_txt"
 msgstr ""
 "Строение радара является управляющим центром радарной установки сооружённой "
@@ -3493,17 +3491,17 @@ msgstr ""
 "эффективную воздушную защиту и заранее предупреждает командный центр о "
 "возможных атаках НЛО непосредственно баз сил ФАЛАНКС."
 
-#: ../base/ufos/research.ufo:1830
+#: ../base/ufos/research.ufo:1848
 msgid "b_storage_txt"
 msgstr ""
 "Эта постройка используется для хранения снаряжения и запасных частей. Каждое "
 "складское помещение предоставляет место для пятидесяти мест снаряжения."
 
-#: ../base/ufos/research.ufo:1846
+#: ../base/ufos/research.ufo:1864
 msgid "b_teamroom_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1862
+#: ../base/ufos/research.ufo:1880
 #, fuzzy
 msgid "b_small_ufo_hangar_txt"
 msgstr ""
@@ -3515,7 +3513,7 @@ msgstr ""
 "компетенции командующего сил ФАЛАНКС. Ангар НЛО может вместить любой корабль "
 "пришельцев размерами не больше Транспорта."
 
-#: ../base/ufos/research.ufo:1878
+#: ../base/ufos/research.ufo:1896
 #, fuzzy
 msgid "b_large_ufo_hangar_txt"
 msgstr ""
@@ -3530,7 +3528,7 @@ msgstr ""
 "местом в защите баз. Во время угрозы атаки, пришельцы, скорее всего, начнут "
 "её отсюда."
 
-#: ../base/ufos/research.ufo:1894
+#: ../base/ufos/research.ufo:1912
 #, fuzzy
 msgid "b_workshop_txt"
 msgstr ""
@@ -3544,7 +3542,7 @@ msgstr ""
 "качеств, поэтому необходимо всегда иметь несколько перехватчиков для "
 "воздушного прикрытия H-92 в случае обнаружения НЛО."
 
-#: ../base/ufos/research.ufo:1913
+#: ../base/ufos/research.ufo:1931
 msgid "dropship_txt"
 msgstr ""
 "Транспорт H-92 является главным транспортировочным судном для сил быстрого "
@@ -3557,7 +3555,7 @@ msgstr ""
 "качеств, поэтому необходимо всегда иметь несколько перехватчиков для "
 "воздушного прикрытия H-92 в случае обнаружения НЛО."
 
-#: ../base/ufos/research.ufo:1928
+#: ../base/ufos/research.ufo:1946
 msgid "interceptor_txt"
 msgstr ""
 "Истребитель F-48 является главной опорой воздушных сил ФАЛАНКС. Эта "
@@ -3570,7 +3568,7 @@ msgstr ""
 "ангары. Этот технология взлёта-посадки позволяет сделать базу практически "
 "полностью необнаружаемой."
 
-#: ../base/ufos/research.ufo:1943
+#: ../base/ufos/research.ufo:1961
 #, fuzzy
 msgid "saracen_interceptor_txt"
 msgstr ""
@@ -3584,7 +3582,7 @@ msgstr ""
 "ангары. Этот технология взлёта-посадки позволяет сделать базу практически "
 "полностью необнаружаемой."
 
-#: ../base/ufos/research.ufo:1985
+#: ../base/ufos/research.ufo:2003
 #, fuzzy
 msgid "ufo_scout_txt"
 msgstr ""
@@ -3595,7 +3593,7 @@ msgstr ""
 "заключается в искривлении пространства и последующем полёте на созданной "
 "четырехмерной волне."
 
-#: ../base/ufos/research.ufo:1986
+#: ../base/ufos/research.ufo:2004
 #, fuzzy
 msgid "ufo_scout_pre_txt"
 msgstr ""
@@ -3606,7 +3604,7 @@ msgstr ""
 "заключается в искривлении пространства и последующем полёте на созданной "
 "четырехмерной волне."
 
-#: ../base/ufos/research.ufo:2018
+#: ../base/ufos/research.ufo:2036
 #, fuzzy
 msgid "ufo_fighter_txt"
 msgstr ""
@@ -3615,7 +3613,7 @@ msgstr ""
 "Транспорты. Эти суда несут большую опасность даже в одиночку, поэтому "
 "подлежат уничтожению с большой осторожностью."
 
-#: ../base/ufos/research.ufo:2019
+#: ../base/ufos/research.ufo:2037
 #, fuzzy
 msgid "ufo_fighter_pre_txt"
 msgstr ""
@@ -3624,12 +3622,12 @@ msgstr ""
 "Транспорты. Эти суда несут большую опасность даже в одиночку, поэтому "
 "подлежат уничтожению с большой осторожностью."
 
-#: ../base/ufos/research.ufo:2045
+#: ../base/ufos/research.ufo:2063
 #, fuzzy
 msgid "UFO - Harvester"
 msgstr "НЛО - Класса эсминец"
 
-#: ../base/ufos/research.ufo:2046
+#: ../base/ufos/research.ufo:2064
 #, fuzzy
 msgid "ufo_harvester_txt"
 msgstr ""
@@ -3638,7 +3636,7 @@ msgstr ""
 "Транспорты. Эти суда несут большую опасность даже в одиночку, поэтому "
 "подлежат уничтожению с большой осторожностью."
 
-#: ../base/ufos/research.ufo:2047
+#: ../base/ufos/research.ufo:2065
 #, fuzzy
 msgid "ufo_harvester_pre_txt"
 msgstr ""
@@ -3647,105 +3645,105 @@ msgstr ""
 "Транспорты. Эти суда несут большую опасность даже в одиночку, поэтому "
 "подлежат уничтожению с большой осторожностью."
 
-#: ../base/ufos/research.ufo:2073
+#: ../base/ufos/research.ufo:2091
 msgid "Live Specimen - Bloodspider"
 msgstr "Живой образец - Bloodspider"
 
-#: ../base/ufos/research.ufo:2074
+#: ../base/ufos/research.ufo:2092
 msgid "bloodspider_notes_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2075
+#: ../base/ufos/research.ufo:2093
 msgid "bloodspider_notes_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2087
+#: ../base/ufos/research.ufo:2109
 msgid "Alien Autopsy - Bloodspider"
 msgstr "Вскрытие пришельца - Bloodspider"
 
-#: ../base/ufos/research.ufo:2088
+#: ../base/ufos/research.ufo:2110
 msgid "bloodspider_autopsy_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2089
+#: ../base/ufos/research.ufo:2111
 #, fuzzy
 msgid "bloodspider_autopsy_pre_txt"
 msgstr "Шеваар - Вскрытие"
 
-#: ../base/ufos/research.ufo:2109
+#: ../base/ufos/research.ufo:2130
 msgid "Alien Autopsy - Ortnok"
 msgstr "Вскрытие пришельца - Ortnok"
 
-#: ../base/ufos/research.ufo:2110
+#: ../base/ufos/research.ufo:2131
 msgid "ortnok_autopsy_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2111
+#: ../base/ufos/research.ufo:2132
 msgid "ortnok_autopsy_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2131
+#: ../base/ufos/research.ufo:2152
 #, fuzzy
 msgid "Alien Autopsy - Taman"
 msgstr "Вскрытие пришельца - Antarean"
 
-#: ../base/ufos/research.ufo:2132
+#: ../base/ufos/research.ufo:2153
 msgid "taman_autopsy_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2133
+#: ../base/ufos/research.ufo:2154
 #, fuzzy
 msgid "taman_autopsy_pre_txt"
 msgstr "Антареан - Вскрытие"
 
-#: ../base/ufos/research.ufo:2151
+#: ../base/ufos/research.ufo:2172
 msgid "Alien Autopsy - Shevaar"
 msgstr "Вскрытие пришельца - Shevaar"
 
-#: ../base/ufos/research.ufo:2152
+#: ../base/ufos/research.ufo:2173
 msgid "shevaar_autopsy_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2153
+#: ../base/ufos/research.ufo:2174
 #, fuzzy
 msgid "shevaar_autopsy_pre_txt"
 msgstr "Шеваар - Вскрытие"
 
-#: ../base/ufos/research.ufo:2225
+#: ../base/ufos/research.ufo:2246
 #, fuzzy
 msgid "Phoenix UGV"
 msgstr "АБМ Феникс"
 
-#: ../base/ufos/research.ufo:2226
+#: ../base/ufos/research.ufo:2247
 msgid "ugv_phoenix_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2227
+#: ../base/ufos/research.ufo:2248
 msgid "ugv_phoenix_pre_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2241
+#: ../base/ufos/research.ufo:2262
 #, fuzzy
 msgid "Triax UGV"
 msgstr "АБВ Триакс"
 
-#: ../base/ufos/research.ufo:2242
+#: ../base/ufos/research.ufo:2263
 msgid "ugv_triax_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2243
+#: ../base/ufos/research.ufo:2264
 #, fuzzy
 msgid "ugv_triax_pre_txt"
 msgstr ""
 "Эта постройка используется для хранения снаряжения и запасных частей. Каждое "
 "складское помещение предоставляет место для пятидесяти мест снаряжения."
 
-#: ../base/ufos/research.ufo:2261
+#: ../base/ufos/research.ufo:2282
 #, fuzzy
 msgid "'Raven' ECM Unit"
 msgstr "Модуль ECM \"Ворон\""
 
-#: ../base/ufos/research.ufo:2263
+#: ../base/ufos/research.ufo:2284
 #, fuzzy
 msgid "craft_electronics_raven_txt"
 msgstr ""
@@ -3757,19 +3755,19 @@ msgstr ""
 "контакта и распределяются по всей поверхности брони, а после постепенно "
 "отражается во внешнюю среду."
 
-#: ../base/ufos/research.ufo:2277
+#: ../base/ufos/research.ufo:2298
 msgid "Polymer Aircraft Armour"
 msgstr "Полимерная броня самолетов"
 
-#: ../base/ufos/research.ufo:2279
+#: ../base/ufos/research.ufo:2300
 msgid "craft_shield_light_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2293
+#: ../base/ufos/research.ufo:2314
 msgid "SHIVA Rotary Cannon"
 msgstr "Вращающаяся пушка \"SHIVA\""
 
-#: ../base/ufos/research.ufo:2295
+#: ../base/ufos/research.ufo:2316
 #, fuzzy
 msgid "craft_weapon_shiva_txt"
 msgstr ""
@@ -3781,11 +3779,11 @@ msgstr ""
 "контакта и распределяются по всей поверхности брони, а после постепенно "
 "отражается во внешнюю среду."
 
-#: ../base/ufos/research.ufo:2309
+#: ../base/ufos/research.ufo:2330
 msgid "SHIVA 20mm API Rounds"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2311
+#: ../base/ufos/research.ufo:2332
 #, fuzzy
 msgid "craft_ammo_shiva_1_txt"
 msgstr ""
@@ -3797,11 +3795,11 @@ msgstr ""
 "контакта и распределяются по всей поверхности брони, а после постепенно "
 "отражается во внешнюю среду."
 
-#: ../base/ufos/research.ufo:2328
+#: ../base/ufos/research.ufo:2349
 msgid "SHIVA 20mm HEI Rounds"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2330
+#: ../base/ufos/research.ufo:2351
 #, fuzzy
 msgid "craft_ammo_shiva_2_txt"
 msgstr ""
@@ -3813,21 +3811,21 @@ msgstr ""
 "контакта и распределяются по всей поверхности брони, а после постепенно "
 "отражается во внешнюю среду."
 
-#: ../base/ufos/research.ufo:2347
+#: ../base/ufos/research.ufo:2368
 #, fuzzy
 msgid "'Sparrowhawk' AA Missile Rack"
 msgstr "Подвес ракет \"Sparrowhawk\""
 
-#: ../base/ufos/research.ufo:2349
+#: ../base/ufos/research.ufo:2370
 msgid "craft_weapon_sparrowhawk_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2363
+#: ../base/ufos/research.ufo:2384
 #, fuzzy
 msgid "'Sparrowhawk' Missile"
 msgstr "Подвес ракет \"Sparrowhawk\""
 
-#: ../base/ufos/research.ufo:2365
+#: ../base/ufos/research.ufo:2386
 #, fuzzy
 msgid "craft_ammo_sparrowhawk_txt"
 msgstr ""
@@ -3839,20 +3837,20 @@ msgstr ""
 "контакта и распределяются по всей поверхности брони, а после постепенно "
 "отражается во внешнюю среду."
 
-#: ../base/ufos/research.ufo:2382
+#: ../base/ufos/research.ufo:2403
 msgid "TR-20 Rocket Pod"
 msgstr "Ракетная установка \"TR-20\""
 
-#: ../base/ufos/research.ufo:2384
+#: ../base/ufos/research.ufo:2405
 msgid "craft_weapon_tr20_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2398
+#: ../base/ufos/research.ufo:2419
 #, fuzzy
 msgid "TR-20 Rocket"
 msgstr "Ракетная установка \"TR-20\""
 
-#: ../base/ufos/research.ufo:2400
+#: ../base/ufos/research.ufo:2421
 #, fuzzy
 msgid "craft_ammo_tr20_txt"
 msgstr ""
@@ -3864,11 +3862,11 @@ msgstr ""
 "контакта и распределяются по всей поверхности брони, а после постепенно "
 "отражается во внешнюю среду."
 
-#: ../base/ufos/research.ufo:2425
+#: ../base/ufos/research.ufo:2446
 msgid "Particle Beam Weapon"
 msgstr "Лучевое оружие"
 
-#: ../base/ufos/research.ufo:2426
+#: ../base/ufos/research.ufo:2447
 #, fuzzy
 msgid "craft_weapon_particle_beam_pre_txt"
 msgstr ""
@@ -3881,15 +3879,15 @@ msgstr ""
 "зарядом получает лишь незначительное поверхностное повреждение и "
 "одновременно тяжёлое повреждение внутренних органов."
 
-#: ../base/ufos/research.ufo:2427
+#: ../base/ufos/research.ufo:2448
 msgid "craft_weapon_particle_beam_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2449
+#: ../base/ufos/research.ufo:2470
 msgid "Targeting Computer"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2451
+#: ../base/ufos/research.ufo:2472
 #, fuzzy
 msgid "craft_electronics_targeting_txt"
 msgstr ""
@@ -3901,35 +3899,52 @@ msgstr ""
 "контакта и распределяются по всей поверхности брони, а после постепенно "
 "отражается во внешнюю среду."
 
-#: ../base/ufos/research.ufo:2465
+#: ../base/ufos/research.ufo:2486
 msgid "Fuel Pod"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2467
+#: ../base/ufos/research.ufo:2488
 msgid "craft_electronics_fuelpod_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2484
+#: ../base/ufos/research.ufo:2506
+#, fuzzy
+msgid "Alien Materials"
+msgstr "Артефакты пришельцев"
+
+#: ../base/ufos/research.ufo:2507
+#, fuzzy
+msgid "alienmaterials_txt"
+msgstr ""
+"Антареане усовершенствовали технологию, используя фундаментальные концепции "
+"лежащие в основе понятия плазмы (ионизированного газа) для её использования "
+"в военных целях. Теперь они используют плазму не только при разработке "
+"вооружения, но и даже в производстве более мощных так называемых ионных "
+"двигателей, которые человечество даже не считало возможным создать. Наши "
+"учёные способны воспроизвести фундаментальные концепции усовершенствований "
+"пришельцев и, возможно, даже смогут произвести подобное снаряжение в будущем."
+
+#: ../base/ufos/research.ufo:2529
 msgid "Political Situation Before The Invasion"
 msgstr "Политическая обстановка перед вторжением"
 
-#: ../base/ufos/research.ufo:2485
+#: ../base/ufos/research.ufo:2530
 msgid "news_initial_political_situation_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2495
+#: ../base/ufos/research.ufo:2540
 msgid "After The War"
 msgstr "После войны"
 
-#: ../base/ufos/research.ufo:2496
+#: ../base/ufos/research.ufo:2541
 msgid "news_after_the_war_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2506
+#: ../base/ufos/research.ufo:2551
 msgid "PHALANX And The Mumbai Aftermath"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2507
+#: ../base/ufos/research.ufo:2552
 msgid "news_phalanx_and_mumbai_aftermath_txt"
 msgstr ""
 
@@ -4377,6 +4392,11 @@ msgstr "Отряд"
 msgid "Shevaar"
 msgstr "Шеваар"
 
+#: ../base/ufos/team_aliens.ufo:248
+#, fuzzy
+msgid "Bloodspider"
+msgstr "Шеваар - Вскрытие"
+
 #: ../base/ufos/team_humans.ufo:1529
 #, fuzzy
 msgid "Phoenix"
@@ -4453,198 +4473,202 @@ msgstr "Штурмовая Винтовка"
 msgid "Assault Rifle Magazine"
 msgstr "Обойма штурмовой винтовки"
 
-#: ../base/ufos/weapons_human.ufo:38 ../base/ufos/weapons_human.ufo:422
+#: ../base/ufos/weapons_human.ufo:38 ../base/ufos/weapons_human.ufo:446
 #, fuzzy
 msgid "Snap Burst"
 msgstr "Короткая Очередь"
 
-#: ../base/ufos/weapons_human.ufo:58 ../base/ufos/weapons_human.ufo:441
+#: ../base/ufos/weapons_human.ufo:59 ../base/ufos/weapons_human.ufo:466
 #, fuzzy
 msgid "Aimed Burst"
 msgstr "Прицельный Выстрел"
 
-#: ../base/ufos/weapons_human.ufo:85
+#: ../base/ufos/weapons_human.ufo:87
 msgid "Chaingun"
 msgstr "Ручной пулемет"
 
-#: ../base/ufos/weapons_human.ufo:103
+#: ../base/ufos/weapons_human.ufo:105
 msgid "Chaingun Magazine"
 msgstr "Летна ручного пулемета"
 
-#: ../base/ufos/weapons_human.ufo:117
+#: ../base/ufos/weapons_human.ufo:119
 msgid "Burst"
 msgstr "Короткая очередь"
 
-#: ../base/ufos/weapons_human.ufo:161
+#: ../base/ufos/weapons_human.ufo:163
 msgid "Sniper Rifle"
 msgstr "Снайперская винтовка"
 
-#: ../base/ufos/weapons_human.ufo:179
+#: ../base/ufos/weapons_human.ufo:181
 #, fuzzy
 msgid "Sniper Rifle Magazine"
 msgstr "Обойма снайперской винтовки"
 
-#: ../base/ufos/weapons_human.ufo:193 ../base/ufos/weapons_human.ufo:212
-#: ../base/ufos/weapons_human.ufo:288 ../base/ufos/weapons_human.ufo:920
-#: ../base/ufos/weapons_human.ufo:942 ../base/ufos/weapons_human.ufo:981
-#: ../base/ufos/weapons_human.ufo:1003 ../base/ufos/weapons_human.ufo:1043
-#: ../base/ufos/weapons_human.ufo:1065
+#: ../base/ufos/weapons_human.ufo:195 ../base/ufos/weapons_human.ufo:311
+#: ../base/ufos/weapons_human.ufo:950 ../base/ufos/weapons_human.ufo:972
+#: ../base/ufos/weapons_human.ufo:1011 ../base/ufos/weapons_human.ufo:1033
+#: ../base/ufos/weapons_human.ufo:1073 ../base/ufos/weapons_human.ufo:1095
 msgid "Aimed Shot"
 msgstr "Прицельный Выстрел"
 
-#: ../base/ufos/weapons_human.ufo:238
+#: ../base/ufos/weapons_human.ufo:214 ../base/ufos/weapons_human.ufo:292
+#: ../base/ufos/weapons_particle.ufo:38 ../base/ufos/weapons_particle.ufo:195
+msgid "Snap Shot"
+msgstr "Выстрел на вскидку"
+
+#: ../base/ufos/weapons_human.ufo:234
+#, fuzzy
+msgid "Precise Aimed Shot"
+msgstr "Прицельный Выстрел"
+
+#: ../base/ufos/weapons_human.ufo:260
 #, fuzzy
 msgid "7.62mm Pistol"
 msgstr "Пистолет калибра 7.62"
 
-#: ../base/ufos/weapons_human.ufo:256
+#: ../base/ufos/weapons_human.ufo:278
 #, fuzzy
 msgid "7.62mm Pistol Magazine"
 msgstr "Обойма 4.2 мм. пистолета"
 
-#: ../base/ufos/weapons_human.ufo:270 ../base/ufos/weapons_tachyon.ufo:38
-#: ../base/ufos/weapons_tachyon.ufo:192
-msgid "Snap Shot"
-msgstr "Выстрел на вскидку"
-
-#: ../base/ufos/weapons_human.ufo:314
+#: ../base/ufos/weapons_human.ufo:337
 #, fuzzy
 msgid "Machine Pistol"
 msgstr "Пистолет"
 
-#: ../base/ufos/weapons_human.ufo:332
+#: ../base/ufos/weapons_human.ufo:355
 msgid "4.2mm MP Magazine"
 msgstr "Обойма 4.2 мм. пистолета"
 
-#: ../base/ufos/weapons_human.ufo:346 ../base/ufos/weapons_human.ufo:557
-#: ../base/ufos/weapons_human.ufo:637 ../base/ufos/weapons_human.ufo:717
-#: ../base/ufos/weapons_human.ufo:762 ../base/ufos/weapons_human.ufo:1420
+#: ../base/ufos/weapons_human.ufo:369 ../base/ufos/weapons_human.ufo:582
+#: ../base/ufos/weapons_human.ufo:663 ../base/ufos/weapons_human.ufo:744
+#: ../base/ufos/weapons_human.ufo:790 ../base/ufos/weapons_human.ufo:1450
 msgid "Single Shot"
 msgstr "Одиночный Выстрел"
 
-#: ../base/ufos/weapons_human.ufo:364
+#: ../base/ufos/weapons_human.ufo:387
 msgid "Rapid Fire"
 msgstr "Беглый огонь"
 
-#: ../base/ufos/weapons_human.ufo:390
+#: ../base/ufos/weapons_human.ufo:414
 msgid "Submachine Gun"
 msgstr "Пистолет-пулемет"
 
-#: ../base/ufos/weapons_human.ufo:408
+#: ../base/ufos/weapons_human.ufo:432
 msgid "SMG Magazine"
 msgstr "Обойма пистолета-пулемета"
 
-#: ../base/ufos/weapons_human.ufo:467
+#: ../base/ufos/weapons_human.ufo:492
 #, fuzzy
 msgid "Riot Shotgun"
 msgstr "Двустволка"
 
-#: ../base/ufos/weapons_human.ufo:543
+#: ../base/ufos/weapons_human.ufo:568
 msgid "Saboted Slugs"
 msgstr ""
 
-#: ../base/ufos/weapons_human.ufo:578 ../base/ufos/weapons_human.ufo:658
-#: ../base/ufos/weapons_human.ufo:738 ../base/ufos/weapons_human.ufo:783
+#: ../base/ufos/weapons_human.ufo:604 ../base/ufos/weapons_human.ufo:685
+#: ../base/ufos/weapons_human.ufo:766 ../base/ufos/weapons_human.ufo:812
 msgid "Double Shot"
 msgstr "Двойной Выстрел"
 
-#: ../base/ufos/weapons_human.ufo:605
+#: ../base/ufos/weapons_human.ufo:631
 #, fuzzy
 msgid "Shotgun"
 msgstr "Дробовик"
 
-#: ../base/ufos/weapons_human.ufo:623 ../base/ufos/weapons_human.ufo:703
+#: ../base/ufos/weapons_human.ufo:649 ../base/ufos/weapons_human.ufo:730
 #, fuzzy
 msgid "Flechette Shells"
 msgstr "Кинетические снаряды"
 
-#: ../base/ufos/weapons_human.ufo:685
+#: ../base/ufos/weapons_human.ufo:712
 #, fuzzy
 msgid "Micro Shotgun"
 msgstr "Двустволка"
 
-#: ../base/ufos/weapons_human.ufo:809
+#: ../base/ufos/weapons_human.ufo:838
 msgid "Flamethrower"
 msgstr "Огнемёт"
 
-#: ../base/ufos/weapons_human.ufo:827
+#: ../base/ufos/weapons_human.ufo:856
 msgid "C90 Canister"
 msgstr "Капсула C90"
 
-#: ../base/ufos/weapons_human.ufo:841
+#: ../base/ufos/weapons_human.ufo:870
 msgid "Candlelight"
 msgstr "Зажигалка"
 
-#: ../base/ufos/weapons_human.ufo:861
+#: ../base/ufos/weapons_human.ufo:891
 msgid "Inferno"
 msgstr "Инферно"
 
-#: ../base/ufos/weapons_human.ufo:888
+#: ../base/ufos/weapons_human.ufo:918
 msgid "Rocket Launcher"
 msgstr "Ракетница"
 
-#: ../base/ufos/weapons_human.ufo:906
+#: ../base/ufos/weapons_human.ufo:936
 #, fuzzy
 msgid "HE Rocket"
 msgstr "Взрывчатая ракета"
 
-#: ../base/ufos/weapons_human.ufo:967
+#: ../base/ufos/weapons_human.ufo:997
 #, fuzzy
 msgid "IC Rocket"
 msgstr "Зажигательная ракета"
 
-#: ../base/ufos/weapons_human.ufo:1029
+#: ../base/ufos/weapons_human.ufo:1059
 #, fuzzy
 msgid "Tachyon-Beam Rocket"
 msgstr "Тахионная ракета"
 
-#: ../base/ufos/weapons_human.ufo:1094
+#: ../base/ufos/weapons_human.ufo:1124
 #, fuzzy
 msgid "Grenade Launcher"
 msgstr "Гранатомёт"
 
-#: ../base/ufos/weapons_human.ufo:1112
+#: ../base/ufos/weapons_human.ufo:1142
 #, fuzzy
 msgid "25mm IC Grenades"
 msgstr "25 мм. гранаты"
 
-#: ../base/ufos/weapons_human.ufo:1126 ../base/ufos/weapons_human.ufo:1194
-#: ../base/ufos/weapons_human.ufo:1262 ../base/ufos/weapons_human.ufo:1330
+#: ../base/ufos/weapons_human.ufo:1156 ../base/ufos/weapons_human.ufo:1224
+#: ../base/ufos/weapons_human.ufo:1292 ../base/ufos/weapons_human.ufo:1360
 #, fuzzy
 msgid "Airburst Grenade"
 msgstr "Фугасная граната"
 
-#: ../base/ufos/weapons_human.ufo:1151 ../base/ufos/weapons_human.ufo:1219
-#: ../base/ufos/weapons_human.ufo:1287 ../base/ufos/weapons_human.ufo:1355
+#: ../base/ufos/weapons_human.ufo:1181 ../base/ufos/weapons_human.ufo:1249
+#: ../base/ufos/weapons_human.ufo:1317 ../base/ufos/weapons_human.ufo:1385
 #, fuzzy
 msgid "Timed Grenade"
 msgstr "Граната с таймером"
 
-#: ../base/ufos/weapons_human.ufo:1180
+#: ../base/ufos/weapons_human.ufo:1210
 #, fuzzy
 msgid "25mm Flechette Grenades"
 msgstr "25 мм. кинетические гранаты"
 
-#: ../base/ufos/weapons_human.ufo:1248
+#: ../base/ufos/weapons_human.ufo:1278
 #, fuzzy
 msgid "25mm HIT Grenades"
 msgstr "25 мм. снаряды HIT"
 
-#: ../base/ufos/weapons_human.ufo:1316
+#: ../base/ufos/weapons_human.ufo:1346
 #, fuzzy
 msgid "25mm PB Grenades"
 msgstr "25 мм. гранаты"
 
-#: ../base/ufos/weapons_human.ufo:1388
+#: ../base/ufos/weapons_human.ufo:1418
 msgid "Bolter Rifle"
 msgstr "Болтовая Винтовка"
 
-#: ../base/ufos/weapons_human.ufo:1406
+#: ../base/ufos/weapons_human.ufo:1436
 #, fuzzy
 msgid "Bolter Rifle Magazine"
 msgstr "Обойма снайперской винтовки"
 
-#: ../base/ufos/weapons_human.ufo:1439
+#: ../base/ufos/weapons_human.ufo:1470
 msgid "Cannonade"
 msgstr ""
 
@@ -4656,32 +4680,32 @@ msgstr "Лазерный пистолет"
 msgid "Laser Rifle"
 msgstr "Лазерная винтовка"
 
-#: ../base/ufos/weapons_laser.ufo:99
+#: ../base/ufos/weapons_laser.ufo:103
+#, fuzzy
+msgid "Heavy Laser"
+msgstr "Тяжёлый лазер"
+
+#: ../base/ufos/weapons_laser.ufo:121
 msgid "D-F Cartridge"
 msgstr ""
 
-#: ../base/ufos/weapons_laser.ufo:113 ../base/ufos/weapons_laser.ufo:154
+#: ../base/ufos/weapons_laser.ufo:135 ../base/ufos/weapons_laser.ufo:177
 msgid "Single Pulse"
 msgstr "Одиночный импульс"
 
-#: ../base/ufos/weapons_laser.ufo:131 ../base/ufos/weapons_laser.ufo:172
+#: ../base/ufos/weapons_laser.ufo:154 ../base/ufos/weapons_laser.ufo:196
 msgid "Multiple Pulses"
 msgstr "Очередь импульсов"
 
-#: ../base/ufos/weapons_laser.ufo:195
+#: ../base/ufos/weapons_laser.ufo:220
 #, fuzzy
 msgid "Rapid Pulses"
 msgstr "Беглые импульсы"
 
-#: ../base/ufos/weapons_laser.ufo:214
+#: ../base/ufos/weapons_laser.ufo:240
 #, fuzzy
 msgid "Overload"
 msgstr "Перегрузка"
-
-#: ../base/ufos/weapons_laser.ufo:239
-#, fuzzy
-msgid "Heavy Laser"
-msgstr "Тяжёлый лазер"
 
 #: ../base/ufos/weapons_melee.ufo:6
 msgid "Combat Knife"
@@ -4718,6 +4742,42 @@ msgstr ""
 msgid "Plasma Blade"
 msgstr "Плазмолезвие"
 
+#: ../base/ufos/weapons_particle.ufo:6
+#, fuzzy
+msgid "Particle Beam Pistol"
+msgstr "Лучевое оружие"
+
+#: ../base/ufos/weapons_particle.ufo:24
+msgid "Pistol Particle Accelerator"
+msgstr ""
+
+#: ../base/ufos/weapons_particle.ufo:57 ../base/ufos/weapons_particle.ufo:136
+#: ../base/ufos/weapons_particle.ufo:214
+msgid "Rapid Shots"
+msgstr "Очередь"
+
+#: ../base/ufos/weapons_particle.ufo:83
+#, fuzzy
+msgid "Particle Beam Cannon"
+msgstr "Лучевое оружие"
+
+#: ../base/ufos/weapons_particle.ufo:101
+msgid "Cannon Particle Accelerator"
+msgstr ""
+
+#: ../base/ufos/weapons_particle.ufo:115
+msgid "Charged Blast"
+msgstr "Мощный поток"
+
+#: ../base/ufos/weapons_particle.ufo:163
+#, fuzzy
+msgid "Particle Beam Rifle"
+msgstr "Лучевое оружие"
+
+#: ../base/ufos/weapons_particle.ufo:181
+msgid "Rifle Particle Accelerator"
+msgstr ""
+
 #: ../base/ufos/weapons_plasma.ufo:6
 msgid "Plasma Pistol"
 msgstr "Плазменный Пистолет"
@@ -4727,135 +4787,114 @@ msgstr "Плазменный Пистолет"
 msgid "Plasma Pistol Charger"
 msgstr "Заряды Плазменного Пистолета"
 
-#: ../base/ufos/weapons_plasma.ufo:38 ../base/ufos/weapons_plasma.ufo:116
+#: ../base/ufos/weapons_plasma.ufo:38 ../base/ufos/weapons_plasma.ufo:117
 msgid "Charged Pulse"
 msgstr "Мощный импульс"
 
-#: ../base/ufos/weapons_plasma.ufo:57 ../base/ufos/weapons_plasma.ufo:135
+#: ../base/ufos/weapons_plasma.ufo:58 ../base/ufos/weapons_plasma.ufo:137
 #, fuzzy
 msgid "Continuous Stream"
 msgstr "Непрерывный поток"
 
-#: ../base/ufos/weapons_plasma.ufo:84
+#: ../base/ufos/weapons_plasma.ufo:85
 msgid "Plasma Rifle"
 msgstr "Плазменная винтовка"
 
-#: ../base/ufos/weapons_plasma.ufo:102
+#: ../base/ufos/weapons_plasma.ufo:103
 #, fuzzy
 msgid "Plasma Rifle Charger"
 msgstr "Заряды плазменной винтовки"
 
-#: ../base/ufos/weapons_plasma.ufo:162
+#: ../base/ufos/weapons_plasma.ufo:165
 #, fuzzy
 msgid "Plasma Blaster"
 msgstr "Плазменный бластер"
 
-#: ../base/ufos/weapons_plasma.ufo:180
+#: ../base/ufos/weapons_plasma.ufo:183
 #, fuzzy
 msgid "Plasma Blaster Charge"
 msgstr "Заряд плазменного бластера"
 
-#: ../base/ufos/weapons_plasma.ufo:194
+#: ../base/ufos/weapons_plasma.ufo:197
 #, fuzzy
 msgid "Charged Ball"
 msgstr "Мощный поток"
 
-#: ../base/ufos/weapons_plasma.ufo:217
+#: ../base/ufos/weapons_plasma.ufo:220
 msgid "Continuous Beam"
 msgstr "Непрерывный луч"
 
-#: ../base/ufos/weapons_tachyon.ufo:6
-#, fuzzy
-msgid "Tachyon Pistol"
-msgstr "Тахионный пистолет"
-
-#: ../base/ufos/weapons_tachyon.ufo:24
-#, fuzzy
-msgid "Tachyon Pistol Clip"
-msgstr "Заряд тахионного пистолета"
-
-#: ../base/ufos/weapons_tachyon.ufo:56 ../base/ufos/weapons_tachyon.ufo:134
-#: ../base/ufos/weapons_tachyon.ufo:210
-msgid "Rapid Shots"
-msgstr "Очередь"
-
-#: ../base/ufos/weapons_tachyon.ufo:82
-msgid "Tachyon Rifle"
-msgstr "Тахионная винтовка"
-
-#: ../base/ufos/weapons_tachyon.ufo:100
-msgid "Tachyon Rifle Charge"
-msgstr "Заряд тахионной сн. винтовки"
-
-#: ../base/ufos/weapons_tachyon.ufo:114
-msgid "Charged Blast"
-msgstr "Мощный поток"
-
-#: ../base/ufos/weapons_tachyon.ufo:160
-msgid "Tachyon Sniper Rifle"
-msgstr "Тахионная снайперская винтовка"
-
-#: ../base/ufos/weapons_tachyon.ufo:178
-msgid "Tachyon Sniper Charge"
-msgstr "Заряд тахионной винтовки"
-
-#: client/cl_actor.c:102
+#: client/cl_actor.c:110
 msgid "Pathetic"
 msgstr "Жалкий"
 
-#: client/cl_actor.c:104
+#: client/cl_actor.c:112
 msgid "Very Poor"
 msgstr "Очень плохо"
 
-#: client/cl_actor.c:106
+#: client/cl_actor.c:114
 #, fuzzy
 msgid "Poor"
 msgstr "Плохо"
 
-#: client/cl_actor.c:108
+#: client/cl_actor.c:116
 msgid "Mediocre"
 msgstr "Нормально"
 
-#: client/cl_actor.c:110
+#: client/cl_actor.c:118
 msgid "Good"
 msgstr "Хорошо"
 
-#: client/cl_actor.c:112
+#: client/cl_actor.c:120
 msgid "Very Good"
 msgstr "Очень хорошо"
 
-#: client/cl_actor.c:114
+#: client/cl_actor.c:122
 msgid "Excellent"
 msgstr "Превосходно"
 
-#: client/cl_actor.c:116
+#: client/cl_actor.c:124
 msgid "Amazing"
 msgstr "Восхитительно"
 
-#: client/cl_actor.c:118
+#: client/cl_actor.c:126
 msgid "Superhuman"
 msgstr "Суперчеловек"
 
-#: client/cl_actor.c:121
+#: client/cl_actor.c:129
 msgid "Godlike"
 msgstr "Божественно"
 
-#: client/cl_actor.c:155
+#: client/cl_actor.c:163
 #, c-format
 msgid "Rank: %s"
 msgstr "Звание: %s"
 
-#: client/cl_actor.c:422 client/cl_actor.c:433
+#: client/cl_actor.c:472 client/cl_actor.c:490
+#, c-format
+msgid "Remaining TUs: %i"
+msgstr ""
+
+#: client/cl_actor.c:474 client/cl_actor.c:492
+msgid "No remaining TUs left after shot."
+msgstr ""
+
+#: client/cl_actor.c:477 client/cl_actor.c:495
 #, c-format
 msgid "TU: %i"
 msgstr ""
 
-#: client/cl_actor.c:842
+#: client/cl_actor.c:478 client/cl_actor.c:496
+#, c-format
+msgid "Shots:%i"
+msgstr ""
+
+#: client/cl_actor.c:1003
 #, c-format
 msgid "Armor  %i\tMorale  %i\n"
 msgstr "Броня  %i\tМораль  %i\n"
 
-#: client/cl_actor.c:849
+#: client/cl_actor.c:1010
 #, c-format
 msgid ""
 "Armor  %i\tMorale  %i\n"
@@ -4864,7 +4903,7 @@ msgstr ""
 "Броня  %i\tМораль  %i\n"
 "Движ. %i (%i ОД было)\n"
 
-#: client/cl_actor.c:868
+#: client/cl_actor.c:1029
 msgid ""
 "You cannot use this unknown item.\n"
 "You need to research it first.\n"
@@ -4872,7 +4911,7 @@ msgstr ""
 "Невозможно использовать предмет.\n"
 "Необходимо сначала исследовать.\n"
 
-#: client/cl_actor.c:885
+#: client/cl_actor.c:1046
 #, c-format
 msgid ""
 "%s\n"
@@ -4881,19 +4920,19 @@ msgstr ""
 "%s\n"
 "(пусто)\n"
 
-#: client/cl_actor.c:894
+#: client/cl_actor.c:1055
 msgid "Currently panics!\n"
 msgstr "В панике!\n"
 
-#: client/cl_actor.c:1295
+#: client/cl_actor.c:1447
 msgid "Nobody selected\n"
 msgstr "Никто не выбран\n"
 
-#: client/cl_actor.c:1306
+#: client/cl_actor.c:1458
 msgid "This isn't your round\n"
 msgstr "Сейчас не Ваш ход\n"
 
-#: client/cl_actor.c:1431
+#: client/cl_actor.c:1591
 #, fuzzy
 msgid ""
 "You cannot reload this unknown item.\n"
@@ -4902,31 +4941,31 @@ msgstr ""
 "Невозможно перезарядить предмет.\n"
 "Необходимо сначала исследовать.\n"
 
-#: client/cl_actor.c:1850
+#: client/cl_actor.c:2008
 #, fuzzy, c-format
 msgid "%s has been killed!\n"
 msgstr "%s был убит!\n"
 
-#: client/cl_actor.c:1856
+#: client/cl_actor.c:2012
 msgid "A civilian was killed!\n"
 msgstr "Мирный житель убит!\n"
 
-#: client/cl_actor.c:1859
+#: client/cl_actor.c:2015
 #, fuzzy
 msgid "An alien was killed!\n"
 msgstr "Пришельцец убит!\n"
 
-#: client/cl_actor.c:1862
+#: client/cl_actor.c:2018
 #, fuzzy
 msgid "A solider was killed\n"
 msgstr "Боец убит\n"
 
-#: client/cl_actor.c:1865
+#: client/cl_actor.c:2021
 #, c-format
 msgid "A member of team %i was killed!\n"
 msgstr "Член команды %i убит!\n"
 
-#: client/cl_actor.c:2014
+#: client/cl_actor.c:2172
 msgid "Your round started!\n"
 msgstr "Ваш ход начался!\n"
 
@@ -4936,15 +4975,15 @@ msgstr "Самолет запущен"
 
 #: client/cl_aircraft.c:124 client/cl_aircraft.c:469 client/cl_aircraft.c:628
 #: client/cl_aircraft.c:926 client/cl_basemanagement.c:577
-#: client/cl_basemanagement.c:2101 client/cl_campaign.c:432
-#: client/cl_campaign.c:913 client/cl_campaign.c:969 client/cl_campaign.c:1134
-#: client/cl_campaign.c:1145 client/cl_campaign.c:1155
-#: client/cl_campaign.c:1165 client/cl_campaign.c:1175
-#: client/cl_campaign.c:1186 client/cl_campaign.c:1199
-#: client/cl_campaign.c:1209 client/cl_campaign.c:1216
-#: client/cl_campaign.c:1224 client/cl_campaign.c:2495
-#: client/cl_campaign.c:2532 client/cl_campaign.c:2534
-#: client/cl_campaign.c:2860 client/cl_map.c:270 client/cl_research.c:663
+#: client/cl_basemanagement.c:2101 client/cl_campaign.c:447
+#: client/cl_campaign.c:928 client/cl_campaign.c:984 client/cl_campaign.c:1149
+#: client/cl_campaign.c:1160 client/cl_campaign.c:1170
+#: client/cl_campaign.c:1180 client/cl_campaign.c:1190
+#: client/cl_campaign.c:1201 client/cl_campaign.c:1214
+#: client/cl_campaign.c:1224 client/cl_campaign.c:1231
+#: client/cl_campaign.c:1239 client/cl_campaign.c:2510
+#: client/cl_campaign.c:2547 client/cl_campaign.c:2549
+#: client/cl_campaign.c:2874 client/cl_map.c:270 client/cl_research.c:663
 #: client/cl_research.c:785 client/cl_research.c:788 client/cl_research.c:792
 #: client/cl_research.c:805 client/cl_research.c:834 client/cl_research.c:980
 #: client/cl_ufo.c:195 client/cl_ufo.c:200
@@ -5001,7 +5040,7 @@ msgstr "Перевозит груз"
 msgid "Back to base"
 msgstr "Обратно к обзору базы"
 
-#: client/cl_aircraft.c:409 client/cl_map.c:815 client/cl_ufopedia.c:308
+#: client/cl_aircraft.c:409 client/cl_map.c:815 client/cl_ufopedia.c:317
 #, c-format
 msgid "Speed:\t%.0f\n"
 msgstr "Скорость:\t%.0f\n"
@@ -5012,16 +5051,16 @@ msgid "Fuel:\t%i/%i\n"
 msgstr "Топливо:\t%i/%i\n"
 
 #: client/cl_aircraft.c:411 client/cl_aircraft.c:412 client/cl_aircraft.c:413
-#: client/cl_ufopedia.c:289 client/cl_ufopedia.c:310 client/cl_ufopedia.c:311
+#: client/cl_ufopedia.c:298 client/cl_ufopedia.c:319 client/cl_ufopedia.c:320
 msgid "None"
 msgstr "Нет"
 
-#: client/cl_aircraft.c:411 client/cl_ufopedia.c:310
+#: client/cl_aircraft.c:411 client/cl_ufopedia.c:319
 #, c-format
 msgid "Weapon:\t%s\n"
 msgstr "Оружие:\t%s\n"
 
-#: client/cl_aircraft.c:412 client/cl_ufopedia.c:311
+#: client/cl_aircraft.c:412 client/cl_ufopedia.c:320
 #, c-format
 msgid "Shield:\t%s\n"
 msgstr "Защита:\t%s\n"
@@ -5045,11 +5084,11 @@ msgstr "У транспорта заканчивается топливо, и о
 msgid "Interception"
 msgstr "Перехват"
 
-#: client/cl_aircraft.c:667 client/cl_campaign.c:2532
+#: client/cl_aircraft.c:667 client/cl_campaign.c:2547
 msgid "You've won the battle"
 msgstr "Вы победили в бою"
 
-#: client/cl_aircraft.c:674 client/cl_campaign.c:2534
+#: client/cl_aircraft.c:674 client/cl_campaign.c:2549
 msgid "You've lost the battle"
 msgstr "Вы проиграли бой"
 
@@ -5126,7 +5165,7 @@ msgstr[0] "%i дней осталось"
 msgstr[1] "%i день осталcя"
 msgstr[2] "%i дня осталось"
 
-#: client/cl_basemanagement.c:1401 client/cl_campaign.c:1397
+#: client/cl_basemanagement.c:1401 client/cl_campaign.c:1412
 #, c-format
 msgid "%i c"
 msgstr "%i кр."
@@ -5136,7 +5175,7 @@ msgstr "%i кр."
 msgid "Base is under attack"
 msgstr "База атакована"
 
-#: client/cl_basemanagement.c:1703 client/cl_team.c:1174 client/cl_team.c:1367
+#: client/cl_basemanagement.c:1703 client/cl_team.c:1196 client/cl_team.c:1389
 msgid "NewTeam"
 msgstr "НовыйОтряд"
 
@@ -5227,25 +5266,25 @@ msgstr "Завершено строительство %s на базе %s."
 msgid "Building finished"
 msgstr "Завершено строительство"
 
-#: client/cl_campaign.c:432 client/cl_map.c:270
+#: client/cl_campaign.c:447 client/cl_map.c:270
 msgid "Could not set up your base at this location"
 msgstr "В этом месте невозможно построить базу."
 
-#: client/cl_campaign.c:724
+#: client/cl_campaign.c:739
 #, c-format
 msgid "Your base %s is under attack."
 msgstr "Ваша база %s атакуется."
 
-#: client/cl_campaign.c:749
+#: client/cl_campaign.c:764
 #, fuzzy, c-format
 msgid "Alien activity has been reported: '%s'"
 msgstr "Обнаружена активность пришельцев: '%s'"
 
-#: client/cl_campaign.c:750
+#: client/cl_campaign.c:765
 msgid "Alien activity"
 msgstr "Активность пришельцев"
 
-#: client/cl_campaign.c:912
+#: client/cl_campaign.c:927
 #, c-format
 msgid ""
 "Your base: %s has been ransacked! All employees killed and all equipment "
@@ -5253,7 +5292,7 @@ msgid ""
 msgstr ""
 "Ваша база %s разграблена! Все служащие убиты и оборудование уничтожено."
 
-#: client/cl_campaign.c:968
+#: client/cl_campaign.c:983
 #, c-format
 msgid "The mission expired and %i civilian died."
 msgid_plural "The mission expired and %i civilians died."
@@ -5261,112 +5300,112 @@ msgstr[0] "Миссия не была вовремя выполнена и %i м
 msgstr[1] "Миссия не была вовремя выполнена и %i мирный житель погиб."
 msgstr[2] "Миссия не была вовремя выполнена и %i мирных жителя погибло."
 
-#: client/cl_campaign.c:1017
+#: client/cl_campaign.c:1032
 msgid "Jan"
 msgstr "Янв"
 
-#: client/cl_campaign.c:1019
+#: client/cl_campaign.c:1034
 msgid "Feb"
 msgstr "Фев"
 
-#: client/cl_campaign.c:1021
+#: client/cl_campaign.c:1036
 #, fuzzy
 msgid "Mar"
 msgstr "Мар"
 
-#: client/cl_campaign.c:1023
+#: client/cl_campaign.c:1038
 msgid "Apr"
 msgstr "Апр"
 
-#: client/cl_campaign.c:1025
+#: client/cl_campaign.c:1040
 #, fuzzy
 msgid "May"
 msgstr "Май"
 
-#: client/cl_campaign.c:1027
+#: client/cl_campaign.c:1042
 msgid "Jun"
 msgstr "Июн"
 
-#: client/cl_campaign.c:1029
+#: client/cl_campaign.c:1044
 msgid "Jul"
 msgstr "Июл"
 
-#: client/cl_campaign.c:1031
+#: client/cl_campaign.c:1046
 msgid "Aug"
 msgstr "Авг"
 
-#: client/cl_campaign.c:1033
+#: client/cl_campaign.c:1048
 msgid "Sep"
 msgstr "Сен"
 
-#: client/cl_campaign.c:1035
+#: client/cl_campaign.c:1050
 msgid "Oct"
 msgstr "Окт"
 
-#: client/cl_campaign.c:1037
+#: client/cl_campaign.c:1052
 #, fuzzy
 msgid "Nov"
 msgstr "Ноя"
 
-#: client/cl_campaign.c:1039
+#: client/cl_campaign.c:1054
 msgid "Dec"
 msgstr "Дек"
 
-#: client/cl_campaign.c:1053
+#: client/cl_campaign.c:1068
 msgid "Giving up"
 msgstr "Разорвано"
 
-#: client/cl_campaign.c:1055
+#: client/cl_campaign.c:1070
 msgid "Furious"
 msgstr "Яростное"
 
-#: client/cl_campaign.c:1057
+#: client/cl_campaign.c:1072
 msgid "Angry"
 msgstr "Разгневанное"
 
-#: client/cl_campaign.c:1059
+#: client/cl_campaign.c:1074
 msgid "Mad"
 msgstr "Обеспокоенное"
 
-#: client/cl_campaign.c:1061
+#: client/cl_campaign.c:1076
 msgid "Upset"
 msgstr "Огорченное"
 
-#: client/cl_campaign.c:1063
+#: client/cl_campaign.c:1078
 #, fuzzy
 msgid "Tolerant"
 msgstr "Спокойное"
 
-#: client/cl_campaign.c:1065
+#: client/cl_campaign.c:1080
 #, fuzzy
 msgid "Neutral"
 msgstr "Нейтральное"
 
-#: client/cl_campaign.c:1067
+#: client/cl_campaign.c:1082
 #, fuzzy
 msgid "Content"
 msgstr "Удолетворительное"
 
-#: client/cl_campaign.c:1069
+#: client/cl_campaign.c:1084
 #, fuzzy
 msgid "Pleased"
 msgstr "Доброжелательное"
 
-#: client/cl_campaign.c:1071
+#: client/cl_campaign.c:1086
 #, fuzzy
 msgid "Happy"
 msgstr "Довольное"
 
-#: client/cl_campaign.c:1073
+#: client/cl_campaign.c:1088
 msgid "Exuberant"
 msgstr "Отличное"
 
-#: client/cl_campaign.c:1127
+#: client/cl_campaign.c:1142
 #, fuzzy, c-format
 msgid "Gained %i %s, %i %s, %i %s, %i %s, and %i %s from nation %s (%s)"
 msgstr "Получено %i %s, %i %s, %i %s, %i %s, и %i %s от нации %s (%s)"
 
-#: client/cl_campaign.c:1128
+#: client/cl_campaign.c:1143
 #, fuzzy
 msgid "credit"
 msgid_plural "credits"
@@ -5374,7 +5413,7 @@ msgstr[0] "кредит"
 msgstr[1] "кредит"
 msgstr[2] "кредита"
 
-#: client/cl_campaign.c:1129 client/cl_campaign.c:4072
+#: client/cl_campaign.c:1144 client/cl_campaign.c:4086
 #, fuzzy
 msgid "scientist"
 msgid_plural "scientists"
@@ -5382,7 +5421,7 @@ msgstr[0] "ученых"
 msgstr[1] "ученый"
 msgstr[2] "ученых"
 
-#: client/cl_campaign.c:1130 client/cl_campaign.c:4074
+#: client/cl_campaign.c:1145 client/cl_campaign.c:4088
 #, fuzzy
 msgid "medic"
 msgid_plural "medics"
@@ -5390,7 +5429,7 @@ msgstr[0] "врач"
 msgstr[1] "врач"
 msgstr[2] "врача"
 
-#: client/cl_campaign.c:1131 client/cl_campaign.c:4071
+#: client/cl_campaign.c:1146 client/cl_campaign.c:4085
 #, fuzzy
 msgid "soldier"
 msgid_plural "soldiers"
@@ -5398,7 +5437,7 @@ msgstr[0] "боецов"
 msgstr[1] "боец"
 msgstr[2] "боеца"
 
-#: client/cl_campaign.c:1132 client/cl_campaign.c:4073
+#: client/cl_campaign.c:1147 client/cl_campaign.c:4087
 #, fuzzy
 msgid "worker"
 msgid_plural "workers"
@@ -5406,57 +5445,57 @@ msgstr[0] "рабочих"
 msgstr[1] "рабочий"
 msgstr[2] "рабочих"
 
-#: client/cl_campaign.c:1143
+#: client/cl_campaign.c:1158
 #, fuzzy, c-format
 msgid "Paid %i credits to soldiers"
 msgstr "Заплачено %i кредитов бойцам"
 
-#: client/cl_campaign.c:1153
+#: client/cl_campaign.c:1168
 #, fuzzy, c-format
 msgid "Paid %i credits to workers"
 msgstr "Заплачено %i кредитов рабочим"
 
-#: client/cl_campaign.c:1163
+#: client/cl_campaign.c:1178
 #, fuzzy, c-format
 msgid "Paid %i credits to scientists"
 msgstr "Заплачено %i кредитов ученым"
 
-#: client/cl_campaign.c:1173
+#: client/cl_campaign.c:1188
 #, fuzzy, c-format
 msgid "Paid %i credits to medics"
 msgstr "Заплачено %i кредитов врачам"
 
-#: client/cl_campaign.c:1184
+#: client/cl_campaign.c:1199
 #, fuzzy, c-format
 msgid "Paid %i credits for robots"
 msgstr "Заплачено %i кредитов за роботов"
 
-#: client/cl_campaign.c:1197
+#: client/cl_campaign.c:1212
 #, fuzzy, c-format
 msgid "Paid %i credits for aircraft"
 msgstr "Заплачено %i кредитов за самолеты"
 
-#: client/cl_campaign.c:1208
+#: client/cl_campaign.c:1223
 #, fuzzy, c-format
 msgid "Paid %i credits for upkeep of base %s"
 msgstr "Заплачено %i кредитов за содержание базы %s"
 
-#: client/cl_campaign.c:1214
+#: client/cl_campaign.c:1229
 #, fuzzy, c-format
 msgid "Paid %i credits for administrative overhead."
 msgstr "Заплачено %i административных издержек. "
 
-#: client/cl_campaign.c:1222
+#: client/cl_campaign.c:1237
 #, c-format
 msgid "Paid %i credits in interest on your debt."
 msgstr "Заплачено %i кредитов по долговым процентам."
 
-#: client/cl_campaign.c:1303
+#: client/cl_campaign.c:1318
 #, c-format
 msgid "%02i:%02i"
 msgstr ""
 
-#: client/cl_campaign.c:1418
+#: client/cl_campaign.c:1433
 #, c-format
 msgid ""
 "Won:\t%i\n"
@@ -5467,7 +5506,7 @@ msgstr ""
 "Проиграно:\t%i\n"
 "\n"
 
-#: client/cl_campaign.c:1423
+#: client/cl_campaign.c:1438
 #, c-format
 msgid ""
 "Build:\t%i\n"
@@ -5478,42 +5517,42 @@ msgstr ""
 "Активно:\t%i\n"
 "Атаковано:\t%i\n"
 
-#: client/cl_campaign.c:1430
+#: client/cl_campaign.c:1445
 #, fuzzy, c-format
 msgid "%s\t%s\n"
 msgstr "Карта:\t%s\n"
 
-#: client/cl_campaign.c:1437
+#: client/cl_campaign.c:1452
 #, c-format
 msgid "%s\t%i\n"
 msgstr ""
 
-#: client/cl_campaign.c:1463
+#: client/cl_campaign.c:1478
 #, c-format
 msgid "Employees:\t%i c\n"
 msgstr "Служащие:\t%i кр.\n"
 
-#: client/cl_campaign.c:1472
+#: client/cl_campaign.c:1487
 #, fuzzy, c-format
 msgid "Aircrafts:\t%i c\n"
 msgstr "Самолеты:\t%i кр.\n"
 
-#: client/cl_campaign.c:1480
+#: client/cl_campaign.c:1495
 #, c-format
 msgid "Base (%s):\t%i c\n"
 msgstr "База (%s):\t%i кр.\n"
 
-#: client/cl_campaign.c:1485
+#: client/cl_campaign.c:1500
 #, fuzzy, c-format
 msgid "Administrative costs:\t%i c\n"
 msgstr "Административные издержки:\t%i кр\n"
 
-#: client/cl_campaign.c:1492
+#: client/cl_campaign.c:1507
 #, fuzzy, c-format
 msgid "Debt:\t%i c\n"
 msgstr "Долг:\t%i кр\n"
 
-#: client/cl_campaign.c:1495
+#: client/cl_campaign.c:1510
 #, c-format
 msgid ""
 "\n"
@@ -5524,29 +5563,29 @@ msgstr ""
 "\t--------\n"
 "Всего:\t%i кр.\n"
 
-#: client/cl_campaign.c:1738
+#: client/cl_campaign.c:1753
 msgid "Error saving game. Check free disk space!"
 msgstr "Ошибка сохранения игры. Проверьте свободное место."
 
-#: client/cl_campaign.c:1738 client/cl_campaign.c:2326 client/cl_team.c:1219
+#: client/cl_campaign.c:1753 client/cl_campaign.c:2341 client/cl_team.c:1241
 msgid "Note"
 msgstr "Замечание"
 
-#: client/cl_campaign.c:2326
+#: client/cl_campaign.c:2341
 msgid "Assemble or load a team"
 msgstr "Создайте или загрузите отряд"
 
-#: client/cl_campaign.c:2495
+#: client/cl_campaign.c:2510
 #, fuzzy
 msgid "Your dropship is not near the landing zone"
 msgstr "Ваш транспорт далеко от зоны приземления"
 
-#: client/cl_campaign.c:2712
+#: client/cl_campaign.c:2726
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s был повышел до звания %s.\n"
 
-#: client/cl_campaign.c:2714
+#: client/cl_campaign.c:2728
 #, c-format
 msgid ""
 "%s has been awarded the posthumous rank of %s\\for inspirational gallantry "
@@ -5555,26 +5594,26 @@ msgstr ""
 "%s был награжден посмертно званием %s\\за отважную борьбу с превосходящими "
 "силами противника.\n"
 
-#: client/cl_campaign.c:2715
+#: client/cl_campaign.c:2729
 msgid "Soldier promoted"
 msgstr "Солдат повышен"
 
-#: client/cl_campaign.c:2859
+#: client/cl_campaign.c:2873
 #, c-format
 msgid "Defense of base: %s successful!"
 msgstr "Защита базы: %s успешно!"
 
-#: client/cl_campaign.c:4067
+#: client/cl_campaign.c:4081
 #, fuzzy
 msgid "Aliens"
 msgstr "Пришелец"
 
-#: client/cl_campaign.c:4067
+#: client/cl_campaign.c:4081
 #, fuzzy
 msgid "Human"
 msgstr "Короткая Очередь"
 
-#: client/cl_campaign.c:4069
+#: client/cl_campaign.c:4083
 #, c-format
 msgid ""
 "Race: %s\n"
@@ -5618,90 +5657,90 @@ msgstr "Лечение закончено"
 msgid "%s\t%s\t(%i/%i)\n"
 msgstr "Урон:\t%i / %i\n"
 
-#: client/cl_input.c:760
+#: client/cl_input.c:706
 msgid "Rotate battlescape camera anti-clockwise"
 msgstr "Вращать камеру поля боя против часовой стрелки"
 
-#: client/cl_input.c:762
+#: client/cl_input.c:708
 msgid "Rotate battlescape camera clockwise"
 msgstr "Вращать камеру поля боя по часовой стрелке"
 
-#: client/cl_input.c:764
+#: client/cl_input.c:710
 msgid "Tilt battlescape camera up"
 msgstr "Наклонить камеру поля боя вверх"
 
-#: client/cl_input.c:766
+#: client/cl_input.c:712
 msgid "Tilt battlescape camera down"
 msgstr "Наклонить камеру поля боя вниз"
 
-#: client/cl_input.c:768
+#: client/cl_input.c:714
 msgid "Move battlescape camera left"
 msgstr "Переместить камеру поля боя влево"
 
-#: client/cl_input.c:770
+#: client/cl_input.c:716
 msgid "Move battlescape camera right"
 msgstr "Переместить камеру поля боя вправо"
 
-#: client/cl_input.c:772
+#: client/cl_input.c:718
 msgid "Move battlescape camera forward"
 msgstr "Переместить камеру поля боя вперед"
 
-#: client/cl_input.c:774
+#: client/cl_input.c:720
 msgid "Move battlescape camera backward"
 msgstr "Переместить камеру поля боя назад"
 
-#: client/cl_input.c:776 client/cl_input.c:808
+#: client/cl_input.c:722 client/cl_input.c:755
 msgid "Zoom in"
 msgstr "Увеличить масштаб"
 
-#: client/cl_input.c:778 client/cl_input.c:809
+#: client/cl_input.c:724 client/cl_input.c:756
 msgid "Zoom out"
 msgstr "Уменьшить масштаб"
 
-#: client/cl_input.c:783
+#: client/cl_input.c:729
 msgid "Select objects/Walk to a square/In fire mode, fire etc"
 msgstr "Выбрать объекты/Идти в квадрат/В режиме огня, огонь и.т.д."
 
-#: client/cl_input.c:785
+#: client/cl_input.c:731
 msgid "Walk to a square/In fire mode, cancel action"
 msgstr "Идти в квадрат/В режиме огня, отменить действие"
 
-#: client/cl_input.c:787
+#: client/cl_input.c:733
 msgid "Turn soldier toward mouse pointer"
 msgstr "Повернуть солдата к указателю мыши"
 
-#: client/cl_input.c:789
+#: client/cl_input.c:735
 msgid "Toggle stand/crounch"
 msgstr "Присесть/встать"
 
-#: client/cl_input.c:790
+#: client/cl_input.c:736
 #, fuzzy
 msgid "Toggle reaction fire"
 msgstr "Активация ответного огня"
 
-#: client/cl_input.c:791
+#: client/cl_input.c:737
 msgid "Toogle to next alien"
 msgstr "Переключится на следующего пришельца"
 
-#: client/cl_input.c:805
+#: client/cl_input.c:752
 #, fuzzy
 msgid "Ends current round"
 msgstr "Закончить ход"
 
-#: client/cl_input.c:806
+#: client/cl_input.c:753
 msgid "Slice through terrain at a higher level"
 msgstr ""
 
-#: client/cl_input.c:807
+#: client/cl_input.c:754
 msgid "Slice through terrain at a lower level"
 msgstr ""
 
-#: client/cl_input.c:810
+#: client/cl_input.c:757
 #, fuzzy
 msgid "Confirm the current action"
 msgstr "Подтвердить текущее действие"
 
-#: client/cl_input.c:818
+#: client/cl_input.c:765
 msgid "Toggle first-person/third-person camera mode"
 msgstr "Переключится с вида отпервого лица к виду от третьего лица"
 
@@ -5909,7 +5948,7 @@ msgstr "Статус:\t%s\n"
 msgid "TODO\n"
 msgstr "Нужно сделать\n"
 
-#: client/cl_market.c:65 client/cl_ufopedia.c:227
+#: client/cl_market.c:65 client/cl_ufopedia.c:237
 msgid "Unknown - need to research this"
 msgstr "Неизвестно - необходимо исследовать"
 
@@ -5926,12 +5965,12 @@ msgstr "Установки не имеют смысла"
 msgid "In: %i Out: %i"
 msgstr ""
 
-#: client/cl_menu.c:1570
+#: client/cl_menu.c:1571
 #, c-format
 msgid "Key: %s"
 msgstr "Клавиша: %s"
 
-#: client/cl_menu.c:2871
+#: client/cl_menu.c:2872
 msgid "Hide the HUD (press ESC to reactivate HUD)"
 msgstr "Скрыть HUD (нажмите ESC чтобы отобразить HUD)"
 
@@ -6123,51 +6162,51 @@ msgstr "Описание не доступно."
 msgid "Loading Map [%s]"
 msgstr "Загрузка карты [%s]"
 
-#: client/cl_team.c:38
+#: client/cl_team.c:41
 msgid "Urban"
 msgstr "Город"
 
-#: client/cl_team.c:41
+#: client/cl_team.c:44
 msgid "Jungle"
 msgstr "Джунгли"
 
-#: client/cl_team.c:44
+#: client/cl_team.c:47
 msgid "Desert"
 msgstr "Пустыня"
 
-#: client/cl_team.c:47
+#: client/cl_team.c:50
 #, fuzzy
 msgid "Arctic"
 msgstr "Арктика"
 
-#: client/cl_team.c:765
+#: client/cl_team.c:784
 #, c-format
 msgid "%i of %i"
 msgstr "%i из %i"
 
-#: client/cl_team.c:1219
+#: client/cl_team.c:1241
 msgid "Error saving team. Check free disk space!"
 msgstr "Ошибка при записи на диск. Проверьте свободное место!"
 
-#: client/cl_team.c:1390
+#: client/cl_team.c:1412
 msgid "Select a soldier from list"
 msgstr "Выбрать бойца из списка"
 
-#: client/cl_team.c:1391
+#: client/cl_team.c:1413
 msgid "Toggle to next soldier"
 msgstr "Переключится к следующему солдату"
 
-#: client/cl_team.c:1685 client/cl_team.c:1733
+#: client/cl_team.c:1707 client/cl_team.c:1755
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "Пришельцев убито\t%i\n"
 
-#: client/cl_team.c:1688
+#: client/cl_team.c:1710
 #, c-format
 msgid "Enemies killed\t%i\n"
 msgstr "Противников убито\t%i\n"
 
-#: client/cl_team.c:1693
+#: client/cl_team.c:1715
 #, fuzzy, c-format
 msgid ""
 "Aliens captured\t%i\n"
@@ -6176,7 +6215,7 @@ msgstr ""
 "Пришельцев захвачено\t%i\n"
 "\n"
 
-#: client/cl_team.c:1694 client/cl_team.c:1737
+#: client/cl_team.c:1716 client/cl_team.c:1759
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -6185,14 +6224,14 @@ msgstr ""
 "Пришельцев уцелело\t%i\n"
 "\n"
 
-#: client/cl_team.c:1696
+#: client/cl_team.c:1718
 #, fuzzy, c-format
 msgid ""
 "Enemies captured\t%i\n"
 "\n"
 msgstr "Противников захвачено\t%i\n"
 
-#: client/cl_team.c:1697
+#: client/cl_team.c:1719
 #, fuzzy, c-format
 msgid ""
 "Enemy survivors\t%i\n"
@@ -6201,22 +6240,22 @@ msgstr ""
 "Противников уцелело\t%i\n"
 "\n"
 
-#: client/cl_team.c:1701
+#: client/cl_team.c:1723
 #, c-format
 msgid "Team losses\t%i\n"
 msgstr "Отряд потерял\t%i\n"
 
-#: client/cl_team.c:1702
+#: client/cl_team.c:1724
 #, c-format
 msgid "Team missing in action\t%i\n"
 msgstr "Отряд потерял на задании\t%i\n"
 
-#: client/cl_team.c:1703
+#: client/cl_team.c:1725
 #, c-format
 msgid "Friendly fire losses\t%i\n"
 msgstr "Убито в отряде своими\t%i\n"
 
-#: client/cl_team.c:1704
+#: client/cl_team.c:1726
 #, c-format
 msgid ""
 "Team survivors\t%i\n"
@@ -6225,22 +6264,22 @@ msgstr ""
 "Уцелело в отряде\t%i\n"
 "\n"
 
-#: client/cl_team.c:1707
+#: client/cl_team.c:1729
 #, c-format
 msgid "Civilians killed by the Aliens\t%i\n"
 msgstr "Мирных жителей убито пришельцами\t%i\n"
 
-#: client/cl_team.c:1709
+#: client/cl_team.c:1731
 #, c-format
 msgid "Civilians killed by the Enemies\t%i\n"
 msgstr "Мирных жителей убито противниками\t%i\n"
 
-#: client/cl_team.c:1711
+#: client/cl_team.c:1733
 #, c-format
 msgid "Civilians killed by your Team\t%i\n"
 msgstr "Мирных жителей убито отрядом\t%i\n"
 
-#: client/cl_team.c:1712
+#: client/cl_team.c:1734
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -6251,27 +6290,27 @@ msgstr ""
 "\n"
 "\n"
 
-#: client/cl_team.c:1736
+#: client/cl_team.c:1758
 #, fuzzy, c-format
 msgid "Aliens captured\t%i\n"
 msgstr "Пришельцев захвачено\t%i\n"
 
-#: client/cl_team.c:1740
+#: client/cl_team.c:1762
 #, fuzzy, c-format
 msgid "Phalanx soldiers killed by Aliens\t%i\n"
 msgstr "Бойцов ФАЛАНКС убито пришельцами\t%i\n"
 
-#: client/cl_team.c:1741
+#: client/cl_team.c:1763
 #, fuzzy, c-format
 msgid "Phalanx soldiers missing in action\t%i\n"
 msgstr "Бойцов ФАЛАНКС потерено в задании\t%i\n"
 
-#: client/cl_team.c:1742
+#: client/cl_team.c:1764
 #, fuzzy, c-format
 msgid "Phalanx friendly fire losses\t%i\n"
 msgstr "Убито в отряде своими\t%i\n"
 
-#: client/cl_team.c:1743
+#: client/cl_team.c:1765
 #, fuzzy, c-format
 msgid ""
 "Phalanx survivors\t%i\n"
@@ -6280,17 +6319,17 @@ msgstr ""
 "Уцелело в ФАЛАНКС\t%i\n"
 "\n"
 
-#: client/cl_team.c:1745
+#: client/cl_team.c:1767
 #, c-format
 msgid "Civilians killed by Aliens\t%i\n"
 msgstr "Мирных жителей убито пришельцами\t%i\n"
 
-#: client/cl_team.c:1746
+#: client/cl_team.c:1768
 #, c-format
 msgid "Civilians killed by friendly fire\t%i\n"
 msgstr "Мирных жителей убито своими\t%i\n"
 
-#: client/cl_team.c:1747
+#: client/cl_team.c:1769
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -6300,12 +6339,12 @@ msgstr ""
 "\n"
 "\n"
 
-#: client/cl_team.c:1751
+#: client/cl_team.c:1773
 #, c-format
 msgid "Items salvaged and sold\t%i\n"
 msgstr "Захвачено и продано трофеев\t%i\n"
 
-#: client/cl_team.c:1752
+#: client/cl_team.c:1774
 #, c-format
 msgid ""
 "Total item sale value\t%i\n"
@@ -6314,7 +6353,7 @@ msgstr ""
 "Всего выручено\t%i\n"
 "\n"
 
-#: client/cl_team.c:1768
+#: client/cl_team.c:1790
 #, c-format
 msgid ""
 "\n"
@@ -6327,16 +6366,16 @@ msgstr ""
 "Врагов убито:  %i\n"
 "Выжило в команде:  %i"
 
-#: client/cl_team.c:1770
+#: client/cl_team.c:1792
 #, fuzzy
 msgid "You won the game!"
 msgstr "Вы победили в бою"
 
-#: client/cl_team.c:1772
+#: client/cl_team.c:1794
 msgid "Congratulations"
 msgstr "Поздравления"
 
-#: client/cl_team.c:1774
+#: client/cl_team.c:1796
 msgid ""
 "The game was a draw!\n"
 "\n"
@@ -6346,16 +6385,16 @@ msgstr ""
 "\n"
 "Нет выживших ни на одной стороне."
 
-#: client/cl_team.c:1775
+#: client/cl_team.c:1797
 msgid "Game Drawn!"
 msgstr "Ничья!"
 
-#: client/cl_team.c:1777
+#: client/cl_team.c:1799
 #, fuzzy
 msgid "You lost the game"
 msgstr "Вы проиграли бой"
 
-#: client/cl_team.c:1779
+#: client/cl_team.c:1801
 msgid "Better luck next time"
 msgstr "Удачи в следующий раз"
 
@@ -6367,143 +6406,143 @@ msgstr "НЛО появилось на радаре"
 msgid "UFO disappears on our radar"
 msgstr "НЛО исчезло с радара"
 
-#: client/cl_ufopedia.c:105
+#: client/cl_ufopedia.c:115
 #, fuzzy
 msgid "Close"
 msgstr "Закрыть"
 
-#: client/cl_ufopedia.c:108
+#: client/cl_ufopedia.c:118
 #, fuzzy
 msgid "Heavy"
 msgstr "Тяжелый"
 
-#: client/cl_ufopedia.c:111
+#: client/cl_ufopedia.c:121
 #, fuzzy
 msgid "Assault"
 msgstr "Штурмовое"
 
-#: client/cl_ufopedia.c:114
+#: client/cl_ufopedia.c:124
 #, fuzzy
 msgid "Sniper"
 msgstr "Снайперское"
 
-#: client/cl_ufopedia.c:117
+#: client/cl_ufopedia.c:127
 #, fuzzy
 msgid "Explosive"
 msgstr "Взрывчатое"
 
-#: client/cl_ufopedia.c:120
+#: client/cl_ufopedia.c:130
 msgid "Unknown weapon skill"
 msgstr "Неизвестно"
 
-#: client/cl_ufopedia.c:141
+#: client/cl_ufopedia.c:151
 #, fuzzy
 msgid "No requirements"
 msgstr "Нет требований"
 
-#: client/cl_ufopedia.c:191
+#: client/cl_ufopedia.c:201
 #, fuzzy
 msgid "Armor\n"
 msgstr "Броня\n"
 
-#: client/cl_ufopedia.c:196
+#: client/cl_ufopedia.c:206
 #, c-format
 msgid "%s weapon with\n"
 msgstr "%s оружие с\n"
 
-#: client/cl_ufopedia.c:196 client/cl_ufopedia.c:199 client/cl_ufopedia.c:205
+#: client/cl_ufopedia.c:206 client/cl_ufopedia.c:209 client/cl_ufopedia.c:215
 msgid "One-handed"
 msgstr "Одноручное"
 
-#: client/cl_ufopedia.c:196 client/cl_ufopedia.c:199 client/cl_ufopedia.c:205
+#: client/cl_ufopedia.c:206 client/cl_ufopedia.c:209 client/cl_ufopedia.c:215
 #, fuzzy
 msgid "Two-handed"
 msgstr "Двуручное"
 
-#: client/cl_ufopedia.c:197
+#: client/cl_ufopedia.c:207
 #, fuzzy, c-format
 msgid "Max ammo:\t%i\n"
 msgstr "Макс. зарядов:\t%i\n"
 
-#: client/cl_ufopedia.c:199
+#: client/cl_ufopedia.c:209
 #, c-format
 msgid "%s ammo-less weapon with\n"
 msgstr "%s оружие, не требующее зарядов с\n"
 
-#: client/cl_ufopedia.c:205
+#: client/cl_ufopedia.c:215
 #, c-format
 msgid "%s auxiliary equipment with\n"
 msgstr ""
 
-#: client/cl_ufopedia.c:206
+#: client/cl_ufopedia.c:216
 #, c-format
 msgid "Action:\t%s\n"
 msgstr "Действие:\t%s\n"
 
-#: client/cl_ufopedia.c:207
+#: client/cl_ufopedia.c:217
 #, c-format
 msgid "Time units:\t%i\n"
 msgstr "Времени:\t%i\n"
 
-#: client/cl_ufopedia.c:208
+#: client/cl_ufopedia.c:218
 #, fuzzy, c-format
 msgid "Range:\t%g\n"
 msgstr "Дальность:\t%1.1f\n"
 
-#: client/cl_ufopedia.c:214
+#: client/cl_ufopedia.c:224
 #, fuzzy, c-format
 msgid "Primary:\t%s\t(%s)\n"
 msgstr "Основной:\t%s\t(%s)\n"
 
-#: client/cl_ufopedia.c:215
+#: client/cl_ufopedia.c:225
 #, fuzzy, c-format
 msgid "Secondary:\t%s\t(%s)\n"
 msgstr "Вторичный:\t%s\t(%s)\n"
 
-#: client/cl_ufopedia.c:217
+#: client/cl_ufopedia.c:227
 #, c-format
 msgid "Damage:\t%i / %i\n"
 msgstr "Урон:\t%i / %i\n"
 
-#: client/cl_ufopedia.c:219
+#: client/cl_ufopedia.c:229
 #, c-format
 msgid "Time units:\t%i / %i\n"
 msgstr "Времени:\t%i / %i\n"
 
-#: client/cl_ufopedia.c:220
+#: client/cl_ufopedia.c:230
 #, fuzzy, c-format
 msgid "Range:\t%g / %g\n"
 msgstr "Дальность:\t%g / %g\n"
 
-#: client/cl_ufopedia.c:222
+#: client/cl_ufopedia.c:232
 #, fuzzy, c-format
 msgid "Spreads:\t%g / %g\n"
 msgstr "Кучность:\t%g / %g\n"
 
-#: client/cl_ufopedia.c:251
+#: client/cl_ufopedia.c:260
 msgid "Could not find armor definition"
 msgstr "Не могу найти определение брони"
 
-#: client/cl_ufopedia.c:253
+#: client/cl_ufopedia.c:262
 #, c-format
 msgid "Item %s is no armor but %s"
 msgstr "Предмет %s не является броней, но %s"
 
-#: client/cl_ufopedia.c:263
+#: client/cl_ufopedia.c:272
 #, c-format
 msgid "%s:\tProtection: %i\tHardness: %i\n"
 msgstr "%s:\tЗащита: %i\tПрочность: %i\n"
 
-#: client/cl_ufopedia.c:287
+#: client/cl_ufopedia.c:296
 msgid "Error - could not find building"
 msgstr "Оштбка - здание не найдено"
 
-#: client/cl_ufopedia.c:289
+#: client/cl_ufopedia.c:298
 #, c-format
 msgid "Depends:\t%s\n"
 msgstr "Зависит:\t%s\n"
 
-#: client/cl_ufopedia.c:290
+#: client/cl_ufopedia.c:299
 #, fuzzy, c-format
 msgid "Buildtime:\t%i day\n"
 msgid_plural "Buildtime:\t%i days\n"
@@ -6511,34 +6550,34 @@ msgstr[0] "Постройка:\t%i дней\n"
 msgstr[1] "Постройка:\t%i день\n"
 msgstr[2] "Постройка:\t%i дня\n"
 
-#: client/cl_ufopedia.c:291
+#: client/cl_ufopedia.c:300
 #, c-format
 msgid "Fixcosts:\t%i c\n"
 msgstr "Цена:\t%i кр.\n"
 
-#: client/cl_ufopedia.c:292
+#: client/cl_ufopedia.c:301
 #, c-format
 msgid "Running costs:\t%i c\n"
 msgstr "Содержание:\t%i кр.\n"
 
-#: client/cl_ufopedia.c:306
+#: client/cl_ufopedia.c:315
 msgid "Error - could not find aircraft"
 msgstr "Ошибка - самолет не найден"
 
-#: client/cl_ufopedia.c:309
+#: client/cl_ufopedia.c:318
 #, c-format
 msgid "Fuel:\t%i\n"
 msgstr "Топливо:\t%i\n"
 
-#: client/cl_ufopedia.c:377
+#: client/cl_ufopedia.c:393
 msgid "No pre-research description available."
 msgstr "Предварительное описание не доступно."
 
-#: client/cl_ufopedia.c:535
+#: client/cl_ufopedia.c:551
 msgid "Ufopedia Content"
 msgstr "Содержание НЛОпедии"
 
-#: client/cl_ufopedia.c:590
+#: client/cl_ufopedia.c:606
 #, c-format
 msgid "Ufopedia Index: %s"
 msgstr "Указатель НЛОпедии: %s"
@@ -6553,84 +6592,84 @@ msgstr "загрузка %s"
 msgid "loading models..."
 msgstr "загрузка модели..."
 
-#: client/console.c:361
+#: client/console.c:372
 msgid "Bring up the in-game console"
 msgstr "Показать игровую консоль"
 
-#: client/console.c:363
+#: client/console.c:374
 msgid "Send a message to all players"
 msgstr "Послать сообщение всем игрокам"
 
-#: client/console.c:364
+#: client/console.c:375
 msgid "Send a message to allied team members"
 msgstr "Послать сообщение союзникам по команде"
 
-#: game/g_client.c:593
+#: game/g_client.c:600
 msgid "Can't perform action - this isn't your round!\n"
 msgstr "Невозможно выполнить действие - сейчас не Ваш ход!\n"
 
-#: game/g_client.c:600
+#: game/g_client.c:607
 msgid "Can't perform action - object not present!\n"
 msgstr "Невозможно выполнить действие - объект не существует!\n"
 
-#: game/g_client.c:605
+#: game/g_client.c:612
 msgid "Can't perform action - not an actor!\n"
 msgstr "Невозможно выполнить действие - это не персонаж!\n"
 
-#: game/g_client.c:610
+#: game/g_client.c:617
 msgid "Can't perform action - actor is stunned!\n"
 msgstr "Невозможно выполнить действие - персонаж оглушён!\n"
 
-#: game/g_client.c:615
+#: game/g_client.c:622
 msgid "Can't perform action - actor is dead!\n"
 msgstr "Невозможно выполнить действие - персонаж мертв!\n"
 
-#: game/g_client.c:620
+#: game/g_client.c:627
 msgid "Can't perform action - not on same team!\n"
 msgstr "Невозможно выполнить действие - в другой команде!\n"
 
-#: game/g_client.c:625
+#: game/g_client.c:632
 msgid "Can't perform action - no control over allied actors!\n"
 msgstr ""
 "Невозможно выполнить действие - нет контроля над дружественными "
 "персонажами!\n"
 
-#: game/g_client.c:630 game/g_client.c:731
+#: game/g_client.c:637 game/g_client.c:739
 msgid "Can't perform action - not enough TUs!\n"
 msgstr "Невозможно выполнить действие - не хватает очков действий!\n"
 
-#: game/g_client.c:734
+#: game/g_client.c:742
 #, fuzzy
 msgid ""
 "Can't perform action - weapon already fully loaded with the same "
 "ammunition!\n"
 msgstr "Невозможно выполнить действие - оружие полностью заряжено!\n"
 
-#: game/g_client.c:1211
+#: game/g_client.c:1222
 msgid "Currently shaken, won't let it's guard down.\n"
 msgstr "Испуган, отказывается исполнять приказ.\n"
 
-#: game/g_client.c:1282
+#: game/g_client.c:1293
 #, c-format
 msgid "%s panics!\n"
 msgstr "%s паникует!\n"
 
-#: game/g_client.c:1335
+#: game/g_client.c:1346
 #, c-format
 msgid "%s is on a rampage.\n"
 msgstr "%s буйствует.\n"
 
-#: game/g_client.c:1337
+#: game/g_client.c:1348
 #, c-format
 msgid "%s is in mad rage!\n"
 msgstr "%s разъярён!\n"
 
-#: game/g_client.c:1390
+#: game/g_client.c:1401
 #, c-format
 msgid "%s is currently shaken.\n"
 msgstr "%s испуган.\n"
 
-#: game/g_client.c:1837
+#: game/g_client.c:1854
 #, c-format
 msgid "Team %i ( %s) will get the first turn.\n"
 msgstr ""
@@ -6666,6 +6705,149 @@ msgstr ""
 #: po/OTHER_STRINGS:9
 msgid "5 days"
 msgstr ""
+
+#~ msgid "tachyon"
+#~ msgstr "тахион"
+
+#, fuzzy
+#~ msgid "tachyonpistol_pre_txt"
+#~ msgstr ""
+#~ "Хотя наши учёные не полностью поняли все принципы управления тахионами на "
+#~ "субатомном уровне, они смогли воспроизвести технологию тахионного "
+#~ "ускорения. Очевидно, тахионам задаётся определённое вращение внутри "
+#~ "акселератора и таким образом они могут взаимодействовать с любой "
+#~ "материей. Проникая легко через любой вид существующей брони, частицы "
+#~ "начинают терять энергию на глубине приблизительно в 10 сантиметров. "
+#~ "Поэтому солдат поражённый тахионным зарядом получает лишь незначительное "
+#~ "поверхностное повреждение и одновременно тяжёлое повреждение внутренних "
+#~ "органов."
+
+#, fuzzy
+#~ msgid "tachyonpistol_mag_txt"
+#~ msgstr ""
+#~ "Хотя наши учёные не полностью поняли все принципы управления тахионами на "
+#~ "субатомном уровне, они смогли воспроизвести технологию тахионного "
+#~ "ускорения. Очевидно, тахионам задаётся определённое вращение внутри "
+#~ "акселератора и таким образом они могут взаимодействовать с любой "
+#~ "материей. Проникая легко через любой вид существующей брони, частицы "
+#~ "начинают терять энергию на глубине приблизительно в 10 сантиметров. "
+#~ "Поэтому солдат поражённый тахионным зарядом получает лишь незначительное "
+#~ "поверхностное повреждение и одновременно тяжёлое повреждение внутренних "
+#~ "органов."
+
+#, fuzzy
+#~ msgid "tachyonpistol_mag_pre_txt"
+#~ msgstr ""
+#~ "Хотя наши учёные не полностью поняли все принципы управления тахионами на "
+#~ "субатомном уровне, они смогли воспроизвести технологию тахионного "
+#~ "ускорения. Очевидно, тахионам задаётся определённое вращение внутри "
+#~ "акселератора и таким образом они могут взаимодействовать с любой "
+#~ "материей. Проникая легко через любой вид существующей брони, частицы "
+#~ "начинают терять энергию на глубине приблизительно в 10 сантиметров. "
+#~ "Поэтому солдат поражённый тахионным зарядом получает лишь незначительное "
+#~ "поверхностное повреждение и одновременно тяжёлое повреждение внутренних "
+#~ "органов."
+
+#, fuzzy
+#~ msgid "tachyonrifle_pre_txt"
+#~ msgstr ""
+#~ "Хотя наши учёные не полностью поняли все принципы управления тахионами на "
+#~ "субатомном уровне, они смогли воспроизвести технологию тахионного "
+#~ "ускорения. Очевидно, тахионам задаётся определённое вращение внутри "
+#~ "акселератора и таким образом они могут взаимодействовать с любой "
+#~ "материей. Проникая легко через любой вид существующей брони, частицы "
+#~ "начинают терять энергию на глубине приблизительно в 10 сантиметров. "
+#~ "Поэтому солдат поражённый тахионным зарядом получает лишь незначительное "
+#~ "поверхностное повреждение и одновременно тяжёлое повреждение внутренних "
+#~ "органов."
+
+#, fuzzy
+#~ msgid "tachyonrifle_mag_txt"
+#~ msgstr ""
+#~ "Хотя наши учёные не полностью поняли все принципы управления тахионами на "
+#~ "субатомном уровне, они смогли воспроизвести технологию тахионного "
+#~ "ускорения. Очевидно, тахионам задаётся определённое вращение внутри "
+#~ "акселератора и таким образом они могут взаимодействовать с любой "
+#~ "материей. Проникая легко через любой вид существующей брони, частицы "
+#~ "начинают терять энергию на глубине приблизительно в 10 сантиметров. "
+#~ "Поэтому солдат поражённый тахионным зарядом получает лишь незначительное "
+#~ "поверхностное повреждение и одновременно тяжёлое повреждение внутренних "
+#~ "органов."
+
+#, fuzzy
+#~ msgid "tachyonrifle_mag_pre_txt"
+#~ msgstr ""
+#~ "Хотя наши учёные не полностью поняли все принципы управления тахионами на "
+#~ "субатомном уровне, они смогли воспроизвести технологию тахионного "
+#~ "ускорения. Очевидно, тахионам задаётся определённое вращение внутри "
+#~ "акселератора и таким образом они могут взаимодействовать с любой "
+#~ "материей. Проникая легко через любой вид существующей брони, частицы "
+#~ "начинают терять энергию на глубине приблизительно в 10 сантиметров. "
+#~ "Поэтому солдат поражённый тахионным зарядом получает лишь незначительное "
+#~ "поверхностное повреждение и одновременно тяжёлое повреждение внутренних "
+#~ "органов."
+
+#, fuzzy
+#~ msgid "tachyonsniper_pre_txt"
+#~ msgstr ""
+#~ "Хотя наши учёные не полностью поняли все принципы управления тахионами на "
+#~ "субатомном уровне, они смогли воспроизвести технологию тахионного "
+#~ "ускорения. Очевидно, тахионам задаётся определённое вращение внутри "
+#~ "акселератора и таким образом они могут взаимодействовать с любой "
+#~ "материей. Проникая легко через любой вид существующей брони, частицы "
+#~ "начинают терять энергию на глубине приблизительно в 10 сантиметров. "
+#~ "Поэтому солдат поражённый тахионным зарядом получает лишь незначительное "
+#~ "поверхностное повреждение и одновременно тяжёлое повреждение внутренних "
+#~ "органов."
+
+#, fuzzy
+#~ msgid "tachyonsniper_mag_txt"
+#~ msgstr ""
+#~ "Хотя наши учёные не полностью поняли все принципы управления тахионами на "
+#~ "субатомном уровне, они смогли воспроизвести технологию тахионного "
+#~ "ускорения. Очевидно, тахионам задаётся определённое вращение внутри "
+#~ "акселератора и таким образом они могут взаимодействовать с любой "
+#~ "материей. Проникая легко через любой вид существующей брони, частицы "
+#~ "начинают терять энергию на глубине приблизительно в 10 сантиметров. "
+#~ "Поэтому солдат поражённый тахионным зарядом получает лишь незначительное "
+#~ "поверхностное повреждение и одновременно тяжёлое повреждение внутренних "
+#~ "органов."
+
+#, fuzzy
+#~ msgid "tachyonsniper_mag_pre_txt"
+#~ msgstr ""
+#~ "Хотя наши учёные не полностью поняли все принципы управления тахионами на "
+#~ "субатомном уровне, они смогли воспроизвести технологию тахионного "
+#~ "ускорения. Очевидно, тахионам задаётся определённое вращение внутри "
+#~ "акселератора и таким образом они могут взаимодействовать с любой "
+#~ "материей. Проникая легко через любой вид существующей брони, частицы "
+#~ "начинают терять энергию на глубине приблизительно в 10 сантиметров. "
+#~ "Поэтому солдат поражённый тахионным зарядом получает лишь незначительное "
+#~ "поверхностное повреждение и одновременно тяжёлое повреждение внутренних "
+#~ "органов."
+
+#~ msgid "Tachyon Damage Type"
+#~ msgstr "Урон от тахионного оружия"
+
+#, fuzzy
+#~ msgid "Tachyon Pistol"
+#~ msgstr "Тахионный пистолет"
+
+#, fuzzy
+#~ msgid "Tachyon Pistol Clip"
+#~ msgstr "Заряд тахионного пистолета"
+
+#~ msgid "Tachyon Rifle"
+#~ msgstr "Тахионная винтовка"
+
+#~ msgid "Tachyon Rifle Charge"
+#~ msgstr "Заряд тахионной сн. винтовки"
+
+#~ msgid "Tachyon Sniper Rifle"
+#~ msgstr "Тахионная снайперская винтовка"
+
+#~ msgid "Tachyon Sniper Charge"
+#~ msgstr "Заряд тахионной винтовки"
 
 #, fuzzy
 #~ msgid "laserpistol_mag_txt"
@@ -6868,29 +7050,6 @@ msgstr ""
 #~ msgid "Advanced Plasma Control"
 #~ msgstr "Улучшенный Контроль Плазмы"
 
-#~ msgid "plasma_txt"
-#~ msgstr ""
-#~ "Антареане усовершенствовали технологию, используя фундаментальные "
-#~ "концепции лежащие в основе понятия плазмы (ионизированного газа) для её "
-#~ "использования в военных целях. Теперь они используют плазму не только при "
-#~ "разработке вооружения, но и даже в производстве более мощных так "
-#~ "называемых ионных двигателей, которые человечество даже не считало "
-#~ "возможным создать. Наши учёные способны воспроизвести фундаментальные "
-#~ "концепции усовершенствований пришельцев и, возможно, даже смогут "
-#~ "произвести подобное снаряжение в будущем."
-
-#, fuzzy
-#~ msgid "plasma_pre_txt"
-#~ msgstr ""
-#~ "Антареане усовершенствовали технологию, используя фундаментальные "
-#~ "концепции лежащие в основе понятия плазмы (ионизированного газа) для её "
-#~ "использования в военных целях. Теперь они используют плазму не только при "
-#~ "разработке вооружения, но и даже в производстве более мощных так "
-#~ "называемых ионных двигателей, которые человечество даже не считало "
-#~ "возможным создать. Наши учёные способны воспроизвести фундаментальные "
-#~ "концепции усовершенствований пришельцев и, возможно, даже смогут "
-#~ "произвести подобное снаряжение в будущем."
-
 #~ msgid "Tachyon Control"
 #~ msgstr "Контроль Тахионов"
 
@@ -7064,13 +7223,6 @@ msgstr ""
 #~ "произвести подобное снаряжение в будущем."
 
 #, fuzzy
-#~ msgid "pistol_pre_txt"
-#~ msgstr ""
-#~ "Эта постройка используется для хранения снаряжения и запасных частей. "
-#~ "Каждое складское помещение предоставляет место для пятидесяти мест "
-#~ "снаряжения."
-
-#, fuzzy
 #~ msgid "pistol_mag_pre_txt"
 #~ msgstr ""
 #~ "Эта постройка используется для хранения снаряжения и запасных частей. "
@@ -7182,19 +7334,6 @@ msgstr ""
 #~ "возможным создать. Наши учёные способны воспроизвести фундаментальные "
 #~ "концепции усовершенствований пришельцев и, возможно, даже смогут "
 #~ "произвести подобное снаряжение в будущем."
-
-#, fuzzy
-#~ msgid "rpg_ammo_pre_txt"
-#~ msgstr ""
-#~ "Хотя наши учёные не полностью поняли все принципы управления тахионами на "
-#~ "субатомном уровне, они смогли воспроизвести технологию тахионного "
-#~ "ускорения. Очевидно, тахионам задаётся определённое вращение внутри "
-#~ "акселератора и таким образом они могут взаимодействовать с любой "
-#~ "материей. Проникая легко через любой вид существующей брони, частицы "
-#~ "начинают терять энергию на глубине приблизительно в 10 сантиметров. "
-#~ "Поэтому солдат поражённый тахионным зарядом получает лишь незначительное "
-#~ "поверхностное повреждение и одновременно тяжёлое повреждение внутренних "
-#~ "органов."
 
 #, fuzzy
 #~ msgid "rpg_incendiary_ammo_pre_txt"
@@ -7565,10 +7704,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Bloodspider - Combat notes"
 #~ msgstr "Ховернет - Боевые заметки"
-
-#, fuzzy
-#~ msgid "Bloodspider - Autopsy"
-#~ msgstr "Шеваар - Вскрытие"
 
 #~ msgid "Ortnok - Combat notes"
 #~ msgstr "Ортнок - Боевые заметки"
