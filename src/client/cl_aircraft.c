@@ -296,7 +296,7 @@ extern void MN_NextAircraft_f (void)
 
 	if (Cvar_VariableInteger("mn_aircraft_id") < baseCurrent->numAircraftInBase - 1) {
 		Cvar_SetValue("mn_aircraft_id", Cvar_VariableInteger("mn_aircraft_id") + 1);
-		CL_AircraftSelect();
+		CL_AircraftSelect(NULL);
 	} else
 		Com_DPrintf("mn_aircraft_id: %i - numAircraftInBase: %i\n", Cvar_VariableInteger("mn_aircraft_id"), baseCurrent->numAircraftInBase);
 }
@@ -309,7 +309,7 @@ extern void MN_PrevAircraft_f (void)
 {
 	if (Cvar_VariableInteger("mn_aircraft_id") > 0) {
 		Cvar_SetValue("mn_aircraft_id", Cvar_VariableInteger("mn_aircraft_id") - 1);
-		CL_AircraftSelect();
+		CL_AircraftSelect(NULL);
 	}
 }
 
@@ -349,7 +349,7 @@ extern void CL_AircraftReturnToBase_f (void)
 	if (baseCurrent && baseCurrent->aircraftCurrent >= 0) {
 		aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
 		CL_AircraftReturnToBase(aircraft);
-		CL_AircraftSelect();
+		CL_AircraftSelect(aircraft);
 	}
 }
 
@@ -358,9 +358,8 @@ extern void CL_AircraftReturnToBase_f (void)
  *
  * uses cvar mn_aircraft_id to determine which aircraft to select
  */
-extern void CL_AircraftSelect (void)
+extern void CL_AircraftSelect (aircraft_t* aircraft)
 {
-	aircraft_t *aircraft;
 	menuNode_t *node;
 	int aircraftID = Cvar_VariableInteger("mn_aircraft_id");
 	static char aircraftInfo[256];
@@ -371,23 +370,23 @@ extern void CL_AircraftSelect (void)
 
 	node = MN_GetNodeFromCurrentMenu("aircraft");
 
-	/* we are not in the aircraft menu */
-	if (!node) {
-		Com_DPrintf("CL_AircraftSelect: Error - node aircraft not found\n");
-		return;
+	if (!aircraft) {
+		/* selecting the first aircraft in base (every base has at least one aircraft at this point) */
+		if (aircraftID >= baseCurrent->numAircraftInBase || aircraftID < 0)
+			aircraftID = 0;
+		aircraft = &baseCurrent->aircraft[aircraftID];
+	} else {
+		aircraftID = aircraft->idx;
 	}
 
-	/* selecting the first aircraft in base (every base has at least one aircraft) */
-	if (aircraftID >= baseCurrent->numAircraftInBase || aircraftID < 0)
-		aircraftID = 0;
-
-	aircraft = &baseCurrent->aircraft[aircraftID];
-
-	/* copy the menu align values */
-	VectorCopy(aircraft->scale, node->scale);
-	VectorCopy(aircraft->center, node->center);
-	VectorCopy(aircraft->angles, node->angles);
-	rotateAngles = aircraft->angles;
+	/* we are not in the aircraft menu */
+	if (node) {
+		/* copy the menu align values */
+		VectorCopy(aircraft->scale, node->scale);
+		VectorCopy(aircraft->center, node->center);
+		VectorCopy(aircraft->angles, node->angles);
+		rotateAngles = aircraft->angles;
+	}
 
 	baseCurrent->aircraftCurrent = aircraftID;
 
@@ -412,6 +411,14 @@ extern void CL_AircraftSelect (void)
 	Q_strcat(aircraftInfo, va(_("Shield:\t%s\n"), aircraft->shield ? _(aircraft->shield->name) : _("None")), sizeof(aircraftInfo));
 	Q_strcat(aircraftInfo, va(_("Equipment:\t%s"), aircraft->item ? _(aircraft->item->name) : _("None")), sizeof(aircraftInfo));
 	menuText[TEXT_AIRCRAFT_INFO] = aircraftInfo;
+}
+
+/**
+ * @brief Console command binding
+ */
+extern void CL_AircraftSelect_f (void)
+{
+	CL_AircraftSelect(NULL);
 }
 
 /**
@@ -685,8 +692,8 @@ void CL_CampaignRunAircraft (int dt)
 /**
  * @brief Returns a list of craftitem technologies for the given type.
  * @note this list is terminated by a NULL pointer
- * param[in] type Type of the craft-items to return.
- * param[in] usetypedef Defines if the type param shoudl be handled as a aircraftItemType_t (qtrue) or not (qfalse - See the code).
+ * @param[in] type Type of the craft-items to return.
+ * @param[in] usetypedef Defines if the type param should be handled as a aircraftItemType_t (qtrue) or not (qfalse - See the code).
  */
 static technology_t **AC_GetCraftitemTechsByType (int type, qboolean usetypedef)
 {
@@ -694,7 +701,7 @@ static technology_t **AC_GetCraftitemTechsByType (int type, qboolean usetypedef)
 	aircraftItem_t *aircraftitem = NULL;
 	int i, j = 0;
 
-	for (i = 0; i<MAX_AIRCRAFTITEMS; i++) {
+	for (i = 0; i < numAircraftItems; i++) {
 		aircraftitem = &aircraftItems[i];
 		if (usetypedef) {
 			if (aircraftitem->type == type) {
@@ -704,19 +711,19 @@ static technology_t **AC_GetCraftitemTechsByType (int type, qboolean usetypedef)
 		} else {
 			switch (type) {
 			case 1: /* armour */
-				if (aircraftitem->type == AC_ITEM_ARMOUR ) {
+				if (aircraftitem->type == AC_ITEM_ARMOUR) {
 					techList[j] = &gd.technologies[aircraftitem->tech_idx];
 					j++;
 				}
 				break;
 			case 2:	/* items */
-				if ( aircraftitem->type == AC_ITEM_ELECTRONICS )	{
+				if (aircraftitem->type == AC_ITEM_ELECTRONICS)	{
 					techList[j] = &gd.technologies[aircraftitem->tech_idx];
 					j++;
 				}
 				break;
 			default:
-				if ( aircraftitem->type == AC_ITEM_WEAPON ) {
+				if (aircraftitem->type == AC_ITEM_WEAPON) {
 					techList[j] = &gd.technologies[aircraftitem->tech_idx];
 					j++;
 				}
@@ -729,8 +736,8 @@ static technology_t **AC_GetCraftitemTechsByType (int type, qboolean usetypedef)
 			break;
 		}
 	}
+	/* terminate the list */
 	techList[j] = NULL;
-	Com_DPrintf("Techlist with %i entries.\n", j);
 	return techList;
 }
 
@@ -747,10 +754,9 @@ void CL_AircraftEquipmenuMenuInit_f (void)
 	menuNode_t *node;
 	aircraft_t *aircraft;
 
-
 	if (Cmd_Argc() != 2 || noparams) {
 		if (airequipID == -1) {
-			Com_Printf("Usage airequip_init <num>\n");
+			Com_Printf("Usage: airequip_init <num>\n");
 			return;
 		} else {
 			switch (airequipID) {
@@ -858,8 +864,9 @@ void CL_AircraftEquipmenuMenuClick_f (void)
 			aircraft->shield = NULL;
 			break;
 		}
-		CL_AircraftSelect();
+		CL_AircraftSelect(aircraft);
 	} else {
+		/* build the list of all aircraft items of type airequipID - null terminated */
 		list = AC_GetCraftitemTechsByType(airequipID, qtrue);
 		/* to prevent overflows we go through the list instead of address it directly */
 		while (*list) {
@@ -868,28 +875,30 @@ void CL_AircraftEquipmenuMenuClick_f (void)
 			/* found it */
 			if (num <= 0) {
 				switch (airequipID) {
+				/* store the item string ids to be able to restore them after
+				 * loading a savegame */
 				case AC_ITEM_WEAPON:
 					aircraft->weapon = *list;
 					Q_strncpyz(aircraft->weapon_string, (*list)->id, MAX_VAR);
-					aircraft->weapon = NULL;
 					break;
 				case AC_ITEM_ELECTRONICS:
 					aircraft->item = *list;
 					Q_strncpyz(aircraft->item_string, (*list)->id, MAX_VAR);
-					aircraft->item = NULL;
 					break;
 				case AC_ITEM_ARMOUR:
 					aircraft->shield = *list;
 					Q_strncpyz(aircraft->shield_string, (*list)->id, MAX_VAR);
-					aircraft->shield = NULL;
 					break;
+				default:
+					Com_Printf("CL_AircraftEquipmenuMenuClick_f: Unknown airequipID: %i\n", airequipID);
 				}
-				Com_sprintf(desc, sizeof(desc), (*list)->name);
-				CL_AircraftSelect();
-				noparams=qtrue; /* used for CL_AircraftEquipmenuMenuInit_f */
+				Com_sprintf(desc, sizeof(desc), _((*list)->name));
+				CL_AircraftSelect(aircraft);
+				noparams = qtrue; /* used for CL_AircraftEquipmenuMenuInit_f */
 				CL_AircraftEquipmenuMenuInit_f();
 				break;
 			}
+			/* next item in the tech pointer list */
 			list++;
 		}
 	}

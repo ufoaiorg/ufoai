@@ -427,7 +427,7 @@ static void CL_PopupInterceptRClick_f(void)
 	/* Display aircraft menu */
 	baseCurrent = gd.bases + aircraft->idxBase;
 	baseCurrent->aircraftCurrent = aircraft->idxInBase;
-	CL_AircraftSelect();
+	CL_AircraftSelect(aircraft);
 	MAP_ResetAction();
 	Cbuf_ExecuteText(EXEC_NOW, va("mn_select_base %i\n", baseCurrent->idx));
 	MN_PushMenu("aircraft");

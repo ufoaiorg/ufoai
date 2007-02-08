@@ -2592,7 +2592,7 @@ static void CL_CollectItemAmmo (invList_t * weapon, int left_hand, qboolean mark
 		ccs.eMission.num[weapon->item.t]++;
 	}
 
-	tech = csi.ods[weapon->item.t].tech; 
+	tech = csi.ods[weapon->item.t].tech;
 
 	if (!tech)
 		Sys_Error("CL_CollectItemAmmo: No tech for %s / %s\n", csi.ods[weapon->item.t].id, csi.ods[weapon->item.t].name);
@@ -3798,7 +3798,7 @@ static const cmdList_t game_commands[] = {
 	,
 	{"aircraftlist", CL_ListAircraft_f, NULL}
 	,
-	{"aircraft_select", CL_AircraftSelect, NULL}
+	{"aircraft_select", CL_AircraftSelect_f, NULL}
 	,
 	{"aircraft_init", CL_AircraftInit, NULL}
 	,

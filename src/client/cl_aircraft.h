@@ -150,10 +150,11 @@ void MN_PrevAircraft_f(void);
 void CL_AircraftReturnToBase_f(void);
 void CL_AircraftEquipmenuMenuInit_f(void);
 void CL_AircraftEquipmenuMenuClick_f(void);
-char *CL_AircraftStatusToName(aircraft_t * aircraft);
-qboolean CL_IsAircraftInBase(aircraft_t * aircraft);
+char *CL_AircraftStatusToName(aircraft_t *aircraft);
+qboolean CL_IsAircraftInBase(aircraft_t *aircraft);
 void CL_AircraftInit(void);
-void CL_AircraftSelect(void);
+void CL_AircraftSelect(aircraft_t *aircraft);
+void CL_AircraftSelect_f(void);
 void CL_NewAircraft_f(void);
 void CL_DeleteAircraft(aircraft_t *aircraft);
 
