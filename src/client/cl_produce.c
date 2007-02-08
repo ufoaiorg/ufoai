@@ -597,7 +597,7 @@ extern void PR_Init (void)
 /**
  * @brief Increase the production amount by given parameter
  */
-void PR_ProductionIncrease (void)
+static void PR_ProductionIncrease_f (void)
 {
 	int amount = 1;
 	int produceable_amount;
@@ -672,7 +672,7 @@ void PR_ProductionIncrease (void)
 /**
  * @brief Stops the current running production
  */
-void PR_ProductionStop (void)
+static void PR_ProductionStop_f (void)
 {
 	production_queue_t *queue;
 
@@ -696,7 +696,7 @@ void PR_ProductionStop (void)
 /**
  * @brief Decrease the production amount by given parameter
  */
-void PR_ProductionDecrease (void)
+static void PR_ProductionDecrease_f (void)
 {
 	int amount = 1;
 	production_queue_t *queue;
@@ -714,7 +714,7 @@ void PR_ProductionDecrease (void)
 	prod->amount -= amount;
 
 	if (prod->amount <= 0) {
-		PR_ProductionStop();
+		PR_ProductionStop_f();
 	} else {
 		PR_ProductionInfo();
 		PR_UpdateProductionList();
@@ -724,7 +724,7 @@ void PR_ProductionDecrease (void)
 /**
  * @brief shift the current production up the list
  */
-static void PR_ProductionUp (void)
+static void PR_ProductionUp_f (void)
 {
 	production_queue_t *queue;
 
@@ -744,7 +744,7 @@ static void PR_ProductionUp (void)
 /**
  * @brief shift the current production down the list
  */
-static void PR_ProductionDown (void)
+static void PR_ProductionDown_f (void)
 {
 	production_queue_t *queue;
 
@@ -775,9 +775,9 @@ extern void PR_ResetProduction (void)
 	Cmd_AddCommand("prod_select", PR_ProductionSelect_f, NULL);
 	Cmd_AddCommand("prodlist_rclick", PR_ProductionListRightClick_f, NULL);
 	Cmd_AddCommand("prodlist_click", PR_ProductionListClick_f, NULL);
-	Cmd_AddCommand("prod_inc", PR_ProductionIncrease, NULL);
-	Cmd_AddCommand("prod_dec", PR_ProductionDecrease, NULL);
-	Cmd_AddCommand("prod_stop", PR_ProductionStop, NULL);
-	Cmd_AddCommand("prod_up", PR_ProductionUp, NULL);
-	Cmd_AddCommand("prod_down", PR_ProductionDown, NULL);
+	Cmd_AddCommand("prod_inc", PR_ProductionIncrease_f, NULL);
+	Cmd_AddCommand("prod_dec", PR_ProductionDecrease_f, NULL);
+	Cmd_AddCommand("prod_stop", PR_ProductionStop_f, NULL);
+	Cmd_AddCommand("prod_up", PR_ProductionUp_f, NULL);
+	Cmd_AddCommand("prod_down", PR_ProductionDown_f, NULL);
 }
