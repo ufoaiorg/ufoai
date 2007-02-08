@@ -1203,9 +1203,14 @@ static qboolean G_CanReactionFire(edict_t *ent, edict_t *target, char *reason)
 static int G_GetFiringTUs (edict_t *ent, edict_t *target, int *hand, int *firemode)
 {
 	int weapon_fd_idx;
+	int tmp;
+
+	/* the caller don't use this */
+	if (!firemode)
+		firemode = &tmp;
 
 	/* Fire the first weapon in hands if everything is ok. */
-	if ( RIGHT(ent)
+	if (RIGHT(ent)
 		&& (RIGHT(ent)->item.m != NONE)
 		&& gi.csi->ods[RIGHT(ent)->item.t].weapon
 		&& (!gi.csi->ods[RIGHT(ent)->item.t].reload
@@ -1216,7 +1221,7 @@ static int G_GetFiringTUs (edict_t *ent, edict_t *target, int *hand, int *firemo
 		if (*firemode < 0)
 			*firemode = Com_GetDefaultReactionFire(&gi.csi->ods[RIGHT(ent)->item.m], weapon_fd_idx);	/* Set the default reaction-firemode. */
 
-		if ( gi.csi->ods[RIGHT(ent)->item.m].fd[weapon_fd_idx][*firemode].time + sv_reaction_leftover->integer <= ent->TU
+		if (gi.csi->ods[RIGHT(ent)->item.m].fd[weapon_fd_idx][*firemode].time + sv_reaction_leftover->integer <= ent->TU
 		  && gi.csi->ods[RIGHT(ent)->item.m].fd[weapon_fd_idx][*firemode].range > VectorDist(ent->origin, target->origin) ) {
 
 			if (hand) {
