@@ -5,12 +5,12 @@
 //	plasrifle_ammo
 //	plasblaster
 //	plasblaster_ammo
-//	tachyonpistol
-//	tachyonpistol_ammo
-//	tachyonrifle
-//	tachyonrifle_ammo
-//	tachyonsniper
-//	tachyonsniper_ammo
+//	pbeampistol
+//	pbeampistol_ammo
+//	pbeamcannon
+//	pbeamcannon_ammo
+//	pbeamrifle
+//	pbeamrifle_ammo
 //	kerrblade
 //	plasblade
 //	plasmagrenade
@@ -32,7 +32,7 @@
 // be much higher than the actual loot
 // 2. similary, sidearms (secondary weapons with reload) based on price,
 //    so in case of current weapons this is:
-//    tachyonpistol with probability #tachyonpistol/40
+//    pbeampistol with probability #pbeampistol/40
 // 2a. if still no sidearm,
 //     plaspistol with probability #plaspistol/40;
 //     add some bonus to probability for those aliens
@@ -40,7 +40,7 @@
 //     and some malus to those that already have,
 //     with decent probability of akimbo, too;
 //     moreover alien with tachyon primary weapon
-//     will start picking sidarm with plaspistol, not tachyonpistol;
+//     will start picking sidarm with plaspistol, not pbeampistol;
 //     keep the total <= 40, likewise
 // 3. get the following number of ammo for each weapon separately:
 //      (#ammo/#weapon) slightly randomly increased
@@ -70,8 +70,8 @@
 // Each individual type of misc items and blades is assigned separately,
 // so, e.g., 40 alienincgrenade and 40 plasmagrenade
 // gives two grenades per alien, on average,
-// while 40 plaspistol and 40 tachyonpistol gives only 1 sidearm
-// (so 20 plaspistol and 20 tachyonpistol is a better idea in practice).
+// while 40 plaspistol and 40 pbeampistol gives only 1 sidearm
+// (so 20 plaspistol and 20 pbeampistol is a better idea in practice).
 
 equipment stage1_workers
 {
@@ -126,10 +126,10 @@ equipment stage2_soldiers_melee
 	plaspistol_ammo		1
 	plasrifle			1
 	plasrifle_ammo		1
-	tachyonpistol		1
-	tachyonpistol_ammo	1
-	tachyonsniper		1
-	tachyonsniper_ammo	1
+	pbeampistol		1
+	pbeampistol_ammo	1
+	pbeamrifle		1
+	pbeamrifle_ammo	1
 	kerrblade			15
 	plasblade			150
 	plasmagrenade		1
@@ -146,8 +146,8 @@ equipment stage2_soldiers
 	plasrifle_ammo		45
 	plasblaster			10
 	plasblaster_ammo	15
-	tachyonpistol		1
-	tachyonpistol_ammo	1
+	pbeampistol		1
+	pbeampistol_ammo	1
 	kerrblade			35
 	plasblade			10
 	plasmagrenade		1
@@ -161,8 +161,8 @@ equipment stage3_workers
 	plaspistol_ammo		3
 	plasrifle			2
 	plasrifle_ammo		2
-	tachyonpistol		20
-	tachyonpistol_ammo	25
+	pbeampistol		20
+	pbeampistol_ammo	25
 	kerrblade			3
 	plasblade			20
 	plasmagrenade		20
@@ -177,10 +177,10 @@ equipment stage3_workers_explosive
 	plaspistol_ammo		1
 	plasblaster			3
 	plasblaster_ammo	4
-	tachyonpistol		2
-	tachyonpistol_ammo	3
-	tachyonrifle		3
-	tachyonrifle_ammo	4
+	pbeampistol		2
+	pbeampistol_ammo	3
+	pbeamcannon		3
+	pbeamcannon_ammo	4
 	kerrblade			10
 	plasblade			1
 	plasmagrenade		150
@@ -196,10 +196,10 @@ equipment stage3_soldiers
 	plasrifle_ammo		25
 	plasblaster			15
 	plasblaster_ammo	35
-	tachyonpistol		20
-	tachyonpistol_ammo	45
-	tachyonsniper		2
-	tachyonsniper_ammo	3
+	pbeampistol		20
+	pbeampistol_ammo	45
+	pbeamrifle		2
+	pbeamrifle_ammo	3
 	kerrblade			10
 	plasblade			50
 	plasmagrenade		35
@@ -216,10 +216,10 @@ equipment stage4_workers
 	plasrifle_ammo		1
 	plasblaster			3
 	plasblaster_ammo	6
-	tachyonpistol		35
-	tachyonpistol_ammo	75
-	tachyonrifle		10
-	tachyonrifle_ammo	15
+	pbeampistol		35
+	pbeampistol_ammo	75
+	pbeamcannon		10
+	pbeamcannon_ammo	15
 	kerrblade			2
 	plasblade			25
 	plasmagrenade		35
@@ -252,12 +252,12 @@ equipment stage4_soldiers
 	plasrifle_ammo		3
 	plasblaster			2
 	plasblaster_ammo	5
-	tachyonpistol		25
-	tachyonpistol_ammo	65
-	tachyonrifle		15
-	tachyonrifle_ammo	40
-	tachyonsniper		15
-	tachyonsniper_ammo	40
+	pbeampistol		25
+	pbeampistol_ammo	65
+	pbeamcannon		15
+	pbeamcannon_ammo	40
+	pbeamrifle		15
+	pbeamrifle_ammo	40
 	kerrblade			10 // bulky, will rarely get into the backpack
 	plasblade			70
 	plasmagrenade		70
@@ -412,12 +412,12 @@ equipment multiplayer_initial
 	plasrifle_ammo		13
 	plasblaster			5
 	plasblaster_ammo	13
-	tachyonpistol		8
-	tachyonpistol_ammo	25
-	tachyonrifle		5
-	tachyonrifle_ammo	13
-	tachyonsniper		5
-	tachyonsniper_ammo	13
+	pbeampistol		8
+	pbeampistol_ammo	25
+	pbeamcannon		5
+	pbeamcannon_ammo	13
+	pbeamrifle		5
+	pbeamrifle_ammo	13
 	fraggrenade			50
 	knife				5
 	knifemono			5

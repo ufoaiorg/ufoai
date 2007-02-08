@@ -1235,113 +1235,113 @@ tech rs_weapon_stunrod
 	producetime	10
 }
 
-tech rs_weapon_tachyonpistol
+tech rs_weapon_pbeampistol
 {
 	type	weapon
 	up_chapter	artifacts
-	description	"_tachyonpistol_txt"
-	pre_description	"_tachyonpistol_pre_txt"
+	description	"_pbeampistol_txt"
+	pre_description	"_pbeampistol_pre_txt"
 
 	require_AND
 	{
 		tech rs_skill_close
-		item tachyonpistol 4
+		item pbeampistol 1
 	}
 
-	provides	tachyonpistol
+	provides	pbeampistol
 	time	3750
 	producetime	60
 }
 
-tech rs_weapon_tachyonpistol_ammo
+tech rs_weapon_pbeampistol_ammo
 {
 	type	weapon
 	up_chapter	artifacts
-	description	"_tachyonpistol_mag_txt"
-	pre_description	"_tachyonpistol_mag_pre_txt"
+	description	"_pbeampistol_mag_txt"
+	pre_description	"_pbeampistol_mag_pre_txt"
 
 	require_AND
 	{
 		tech rs_damage_tachyon
-		tech rs_weapon_tachyonpistol
+		tech rs_weapon_pbeampistol
 	}
 
-	provides	tachyonpistol_ammo
-	time	0
-	producetime	4
+	provides	pbeampistol_ammo
+	time		0
+	producetime	-1
 }
 
-tech rs_weapon_tachyonrifle
+tech rs_weapon_pbeamcannon
 {
-	type	weapon
+	type		weapon
 	up_chapter	artifacts
-	description	"_tachyonrifle_txt"
-	pre_description	"_tachyonrifle_pre_txt"
+	description	"_pbeamcannon_txt"
+	pre_description	"_pbeamcannon_pre_txt"
 
 	require_AND
 	{
 		tech rs_skill_explosive
 		tech rs_skill_assault
-		item tachyonrifle 7
+		item pbeamcannon 7
 	}
 
-	provides	tachyonrifle
+	provides	pbeamcannon
 	time	6000
 	producetime	80
 }
 
-tech rs_weapon_tachyonrifle_ammo
+tech rs_weapon_pbeamcannon_ammo
 {
-	type	weapon
+	type		weapon
 	up_chapter	artifacts
-	description	"_tachyonrifle_mag_txt"
-	pre_description	"_tachyonrifle_mag_pre_txt"
+	description	"_pbeamcannon_mag_txt"
+	pre_description	"_pbeamcannon_mag_pre_txt"
 
 	require_AND
 	{
 		tech rs_damage_tachyon
-		tech rs_weapon_tachyonrifle
+		tech rs_weapon_pbeamcannon
 	}
 
 	provides	tachyonrifle_ammo
 	time	0
-	producetime	5
+	producetime	-1
 }
 
-tech rs_weapon_tachyonsniper
+tech rs_weapon_pbeamrifle
 {
-	type	weapon
+	type		weapon
 	up_chapter	artifacts
-	description	"_tachyonsniper_txt"
-	pre_description	"_tachyonsniper_pre_txt"
+	description	"_pbeamrifle_txt"
+	pre_description	"_pbeamrifle_pre_txt"
 
 	require_AND
 	{
 		tech rs_skill_sniper
-		item tachyonsniper 7
+		item pbeamrifle 1
 	}
 
-	provides	tachyonsniper
+	provides	pbeamrifle
 	time	7750
 	producetime	90
 }
 
-tech rs_weapon_tachyonsniper_ammo
+tech rs_weapon_pbeamrifle_ammo
 {
-	type	weapon
+	type		weapon
 	up_chapter	artifacts
-	description	"_tachyonsniper_mag_txt"
-	pre_description	"_tachyonsniper_mag_pre_txt"
+	description	"_pbeamrifle_mag_txt"
+	pre_description	"_pbeamrifle_mag_pre_txt"
 
 	require_AND
 	{
 		tech rs_damage_tachyon
-		tech rs_weapon_tachyonsniper
+		tech rs_weapon_pbeamrifle
 	}
 
-	provides	tachyonsniper_ammo
+	provides	pbeamrifle_ammo
 	time	0
-	producetime	4
+	producetime	-1
 }
 
 //========================

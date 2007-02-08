@@ -94,8 +94,8 @@ equipment campaign_player_aliens
 	assault_ammo			1
 	sniper					1
 	sniper_ammo				1
-	tachyonpistol			4
-	tachyonpistol_ammo		40
+	pbeampistol			4
+	pbeampistol_ammo		40
 	smg						1
 	smg_ammo				1
 	shotgun					1
@@ -115,8 +115,8 @@ equipment campaign_market_aliens
 	assault_ammo			40
 	sniper					3
 	sniper_ammo				40
-	tachyonpistol			4
-	tachyonpistol_ammo		40
+	pbeampistol			4
+	pbeampistol_ammo		40
 	smg						3
 	smg_ammo				40
 	shotgun					3
@@ -195,12 +195,12 @@ equipment multiplayer
 	plasrifle_ammo		3
 	plasblaster			1
 	plasblaster_ammo	3
-	tachyonpistol		2
-	tachyonpistol_ammo	5
-	tachyonrifle		1
-	tachyonrifle_ammo	3
-	tachyonsniper		1
-	tachyonsniper_ammo	3
+	pbeampistol		2
+	pbeampistol_ammo	5
+	pbeamcannon		1
+	pbeamcannon_ammo	3
+	pbeamrifle		1
+	pbeamrifle_ammo	3
 	fraggrenade			6
 	smokegrenade		2
 	knife				1
@@ -262,12 +262,12 @@ equipment testing_and_tweaking
 	plasrifle_ammo		4
 	plasblaster			2
 	plasblaster_ammo	4
-	tachyonpistol		2
-	tachyonpistol_ammo	4
-	tachyonrifle		2
-	tachyonrifle_ammo	4
-	tachyonsniper		2
-	tachyonsniper_ammo	4
+	pbeampistol		2
+	pbeampistol_ammo	4
+	pbeamcannon		2
+	pbeamcannon_ammo	4
+	pbeamrifle		2
+	pbeamrifle_ammo	4
 	fraggrenade			6
 	knife				6
 	irgoggles			6

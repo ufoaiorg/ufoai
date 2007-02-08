@@ -1,9 +1,9 @@
 // =======================
-// TACHYON PISTOL
+//  PARTICLE BEAM PISTOL
 // =======================
-item tachyonpistol
+item pbeampistol
 {
-	name		"_Tachyon Pistol"
+	name		"_Particle Beam Pistol"
 	model		weapons/tachyonpistol/tachyonpistol
 	weapon		true
 	type		pistol
@@ -19,9 +19,9 @@ item tachyonpistol
 	buytype		1
 }
 
-item tachyonpistol_ammo
+item pbeampistol_ammo
 {
-	name		"_Tachyon Pistol Clip"
+	name		"_Pistol Particle Accelerator"
 	model		weapons/tachyonpistol/tachyonpistol_clip
 	type		ammo
 	category	0
@@ -31,7 +31,7 @@ item tachyonpistol_ammo
 	price		2500
 	buytype		1
 
-	weapon_mod tachyonpistol
+	weapon_mod pbeampistol
 	{
 		firedef 
 		{
@@ -76,11 +76,11 @@ item tachyonpistol_ammo
 
 
 // =======================
-// TACHYON RIFLE
+// PARTICLE BEAM CANNON
 // =======================
-item tachyonrifle
+item pbeamcannon
 {
-	name		"_Tachyon Rifle"
+	name		"_Particle Beam Cannon"
 	model		weapons/tachyonrifle/tachyonrifle
 	weapon		true
 	type		rifle
@@ -96,9 +96,9 @@ item tachyonrifle
 	buytype		0
 }
 
-item tachyonrifle_ammo
+item pbeamcannon_ammo
 {
-	name		"_Tachyon Rifle Charge"
+	name		"_Cannon Particle Accelerator"
 	model		weapons/tachyonrifle/tachyonrifle_clip
 	type		ammo
 	category	0
@@ -108,7 +108,7 @@ item tachyonrifle_ammo
 	price		3000
 	buytype		0
 
-	weapon_mod tachyonrifle
+	weapon_mod pbeamcannon
 	{
 		firedef 
 		{
@@ -156,11 +156,11 @@ item tachyonrifle_ammo
 
 
 // =======================
-// TACHYON SNIPER
+// PARTICLE BEAM RIFLE
 // =======================
-item tachyonsniper
+item pbeamrifle
 {
-	name		"_Tachyon Sniper Rifle"
+	name		"_Particle Beam Rifle"
 	model		weapons/tachyonsniper/tachyonsniper
 	weapon		true
 	type		rifle
@@ -176,9 +176,9 @@ item tachyonsniper
 	buytype		0
 }
 
-item tachyonsniper_ammo
+item pbeamrifle_ammo
 {
-	name		"_Tachyon Sniper Charge"
+	name		"_Rifle Particle Accelerator"
 	model		weapons/tachyonsniper/tachyonsniper_clip
 	type		ammo
 	category	0
@@ -188,7 +188,7 @@ item tachyonsniper_ammo
 	price		3500
 	buytype		0
 
-	weapon_mod tachyonsniper
+	weapon_mod pbeamrifle
 	{
 		firedef 
 		{
