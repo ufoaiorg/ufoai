@@ -4,7 +4,7 @@
 item pbeampistol
 {
 	name		"_Particle Beam Pistol"
-	model		weapons/tachyonpistol/tachyonpistol
+	model		weapons/pbeampistol/pbeampistol
 	weapon		true
 	type		pistol
 	category	2
@@ -22,7 +22,7 @@ item pbeampistol
 item pbeampistol_ammo
 {
 	name		"_Pistol Particle Accelerator"
-	model		weapons/tachyonpistol/tachyonpistol_clip
+	model		weapons/pbeampistol/pbeampistol_clip
 	type		ammo
 	category	0
 	shape		"0 0 1 1"
