@@ -81,7 +81,7 @@ item pbeampistol_ammo
 item pbeamcannon
 {
 	name		"_Particle Beam Cannon"
-	model		weapons/tachyonrifle/tachyonrifle
+	model		weapons/pbeamcannon/pbeamcannon
 	weapon		true
 	type		rifle
 	category	1
@@ -99,7 +99,7 @@ item pbeamcannon
 item pbeamcannon_ammo
 {
 	name		"_Cannon Particle Accelerator"
-	model		weapons/tachyonrifle/tachyonrifle_clip
+	model		weapons/pbeamcannon/pbeamcannon_clip
 	type		ammo
 	category	0
 	shape		"0 0 2 1"
@@ -161,7 +161,7 @@ item pbeamcannon_ammo
 item pbeamrifle
 {
 	name		"_Particle Beam Rifle"
-	model		weapons/tachyonsniper/tachyonsniper
+	model		weapons/pbeamrifle/pbeamrifle
 	weapon		true
 	type		rifle
 	category	1
@@ -179,7 +179,7 @@ item pbeamrifle
 item pbeamrifle_ammo
 {
 	name		"_Rifle Particle Accelerator"
-	model		weapons/tachyonsniper/tachyonsniper_clip
+	model		weapons/pbeamrifle/pbeamrifle_clip
 	type		ammo
 	category	0
 	shape		"0 0 1 1"
