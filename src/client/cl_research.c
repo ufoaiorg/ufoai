@@ -608,7 +608,7 @@ static void CL_ResearchSelect_f (void)
 	}
 
 	num = atoi(Cmd_Argv(1));
-	if (num >= researchListLength) {
+	if (num < 0 || num >= researchListLength) {
 		menuText[TEXT_STANDARD] = NULL;
 		return;
 	}
@@ -689,7 +689,7 @@ static void RS_AssignScientist_f (void)
 	}
 
 	num = atoi(Cmd_Argv(1));
-	if (num < 0 || num > researchListLength)
+	if (num < 0 || num >= researchListLength)
 		return;
 
 	Com_DPrintf("RS_AssignScientist_f: num %i\n", num);
@@ -737,7 +737,7 @@ static void RS_RemoveScientist_f (void)
 	}
 
 	num = atoi(Cmd_Argv(1));
-	if (num < 0 || num > researchListLength)
+	if (num < 0 || num >= researchListLength)
 		return;
 
 	RS_RemoveScientist(researchList[num]);
@@ -759,11 +759,12 @@ static void RS_ResearchStart (void)
 	if (!baseCurrent)
 		return;
 
-#if 0
+	if (researchListPos < 0 || researchListPos >= researchListLength)
+		return;
+
 	/* Check if laboratory is available. */
 	if (!baseCurrent->hasLab)
 		return;
-#endif
 
 	/* get the currently selected research-item */
 	tech = researchList[researchListPos];
@@ -818,6 +819,13 @@ static void RS_ResearchStop (void)
 
 	/* we are not in base view */
 	if (!baseCurrent)
+		return;
+
+	if (researchListPos < 0 || researchListPos >= researchListLength)
+		return;
+
+	/* Check if laboratory is available. */
+	if (!baseCurrent->hasLab)
 		return;
 
 	/* get the currently selected research-item */
@@ -1068,7 +1076,7 @@ void CL_CheckResearchStatus (void)
 
 					RS_MarkResearched(tech->id);
 					researchListLength = 0;
-					researchListPos = 0;
+					researchListPos = -1;
 					newResearch++;
 					tech->time = 0;
 				}
