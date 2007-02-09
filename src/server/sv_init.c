@@ -153,7 +153,7 @@ static int mapX, mapY, mapW, mapH;
 /**
  * @brief
  */
-static void RandomList(int n, short *list)
+static void RandomList (int n, short *list)
 {
 	short i, r, t;
 
@@ -195,7 +195,7 @@ static void RandomList(int n, short *list)
  * @note If you marked a tile with + the mTile_t->spec at that position will be SOLID
  * @note valid tile characters are 0-9 and a-z
  */
-static byte tileChar(const char chr)
+static byte tileChar (const char chr)
 {
 	if (chr == '+')
 		return SOLID;
@@ -217,7 +217,7 @@ static byte tileChar(const char chr)
  * @sa SV_ParseAssembly
  * @sa SV_AssembleMap
  */
-static void SV_ParseMapTile(char *filename, char **text)
+static void SV_ParseMapTile (char *filename, char **text)
 {
 	char *errhead = "SV_ParseMapTile: Unexpected end of file (";
 	char *token, *chr;
@@ -296,7 +296,7 @@ static void SV_ParseMapTile(char *filename, char **text)
  * @note: format of fix: "fix [tilename] x y"
  * @note: format of tile: "[tilename] min max"
  */
-static void SV_ParseAssembly(char *filename, char **text)
+static void SV_ParseAssembly (char *filename, char **text)
 {
 	char *errhead = "SV_ParseAssembly: Unexpected end of file (";
 	char *token;
@@ -390,7 +390,7 @@ static void SV_ParseAssembly(char *filename, char **text)
  * @brief
  * @sa SV_AssembleMap
  */
-static void SV_AddTile(byte map[32][32][MAX_TILEALTS], mTile_t * tile, int x, int y, int *toFill)
+static void SV_AddTile (byte map[32][32][MAX_TILEALTS], mTile_t * tile, int x, int y, int *toFill)
 {
 	qboolean bad;
 	int tx, ty;
@@ -442,7 +442,7 @@ static void SV_AddTile(byte map[32][32][MAX_TILEALTS], mTile_t * tile, int x, in
  * @sa SV_AddMandatoryParts
  * @sa SV_AddRegion
  */
-static qboolean SV_FitTile(byte map[32][32][MAX_TILEALTS], mTile_t * tile, int x, int y, qboolean force)
+static qboolean SV_FitTile (byte map[32][32][MAX_TILEALTS], mTile_t * tile, int x, int y, qboolean force)
 {
 	qboolean touch;
 	int tx, ty;
@@ -500,7 +500,7 @@ static qboolean SV_FitTile(byte map[32][32][MAX_TILEALTS], mTile_t * tile, int x
  * @brief
  * @sa SV_FitTile
  */
-static qboolean SV_AddRegion(byte map[32][32][MAX_TILEALTS], byte * num)
+static qboolean SV_AddRegion (byte map[32][32][MAX_TILEALTS], byte * num)
 {
 	mTile_t *tile;
 	int i, j, x, y;
@@ -573,7 +573,7 @@ static qboolean SV_AddRegion(byte map[32][32][MAX_TILEALTS], byte * num)
  * @sa SV_FitTile
  * @sa SV_AddTile
  */
-static qboolean SV_AddMandatoryParts(byte map[32][32][MAX_TILEALTS], byte * num)
+static qboolean SV_AddMandatoryParts (byte map[32][32][MAX_TILEALTS], byte * num)
 {
 	mTile_t *tile;
 	int i, j, n, x, y;
@@ -612,7 +612,7 @@ static qboolean SV_AddMandatoryParts(byte map[32][32][MAX_TILEALTS], byte * num)
  * @sa SV_ParseAssembly
  * @sa SV_ParseMapTile
  */
-void SV_AssembleMap(char *name, char *assembly, char **map, char **pos)
+static void SV_AssembleMap (char *name, char *assembly, char **map, char **pos)
 {
 	mPlaced_t *pl;
 	byte curMap[32][32][MAX_TILEALTS];
@@ -797,7 +797,7 @@ static const char* SV_GetMapTitle (const char* const mapname)
  * @sa CM_LoadMap
  * @sa Com_SetServerState
  */
-void SV_SpawnServer(char *server, char *param, server_state_t serverstate, qboolean attractloop)
+static void SV_SpawnServer (char *server, char *param, server_state_t serverstate, qboolean attractloop)
 {
 	int i;
 	unsigned checksum = 0;
@@ -907,7 +907,7 @@ void SV_SpawnServer(char *server, char *param, server_state_t serverstate, qbool
 /**
  * @brief A brand new game has been started
  */
-void SV_InitGame(void)
+static void SV_InitGame (void)
 {
 /*	edict_t	*ent; */
 	char masterserver[32];
@@ -964,7 +964,7 @@ void SV_InitGame(void)
  * @sa SV_Map_f
  * @sa SV_Demo_f
  */
-void SV_Map(qboolean attractloop, char *levelstring, char *assembly)
+extern void SV_Map (qboolean attractloop, char *levelstring, char *assembly)
 {
 	char level[MAX_QPATH];
 	char *ch;

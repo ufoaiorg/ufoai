@@ -49,12 +49,12 @@ extern void SV_SetMaster_f (void)
 
 	/* do the first slot for all servers */
 	if (!NET_StringToAdr (masterserver_ip->string, &master_adr)) {
-		Com_Printf ("SV_SetMaster_f: Bad Master IP");
+		Com_Printf("SV_SetMaster_f: Bad Master IP");
 	}
 	if (master_adr.port == 0)
 		master_adr.port = BigShort(masterserver_port->integer);
 
-	Com_Printf ("Master server at %s - sending a ping\n", NET_AdrToString (master_adr));
+	Com_Printf("Master server at %s - sending a ping\n", NET_AdrToString (master_adr));
 
 	Netchan_OutOfBandPrint (NS_SERVER, master_adr, "ping");
 	if (!dedicated->value)
@@ -443,7 +443,7 @@ static void SV_ListMaps_f (void)
 
 	FS_GetMaps(qtrue);
 
-	for (i=0; i<=anzInstalledMaps; i++)
+	for (i = 0; i <= anzInstalledMaps; i++)
 		Com_Printf("%s\n", maps[i]);
 	Com_Printf("-----\n %i installed maps\n", anzInstalledMaps+1);
 }

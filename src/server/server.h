@@ -221,13 +221,10 @@ void SV_InitOperatorCommands(void);
 void SV_SendServerinfo(client_t * client);
 void SV_UserinfoChanged(client_t * cl);
 
-void SV_SpawnServer(char *server, char *param, server_state_t serverstate, qboolean attractloop);
-
 void Master_Heartbeat(void);
 void Master_Packet(void);
 
 /* sv_init.c */
-void SV_InitGame(void);
 void SV_Map(qboolean attractloop, char *levelstring, char *assembly);
 
 /* sv_send.c */
