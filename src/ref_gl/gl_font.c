@@ -45,7 +45,7 @@ fontRenderStyle_t fontStyle[] = {
  * @brief frees the SDL_ttf fonts
  * @sa Font_CleanCache
  */
-void Font_Shutdown(void)
+void Font_Shutdown (void)
 {
 	int i;
 
@@ -66,7 +66,7 @@ void Font_Shutdown(void)
  * @brief
  * @TODO: Check whether font is already loaded
  */
-font_t *Font_Analyze(const char *name, const char *path, int renderStyle, int size)
+font_t *Font_Analyze (const char *name, const char *path, int renderStyle, int size)
 {
 	font_t *f = NULL;
 	int ttfSize;
@@ -110,7 +110,7 @@ font_t *Font_Analyze(const char *name, const char *path, int renderStyle, int si
  * @brief Searches the array of available fonts (see fonts.ufo)
  * @return font_t pointer or NULL
  */
-static font_t *Font_GetFont(const char *name)
+static font_t *Font_GetFont (const char *name)
 {
 	int i;
 
@@ -125,7 +125,7 @@ static font_t *Font_GetFont(const char *name)
  * @brief
  * @sa Font_GetFont
  */
-void Font_Length(const char *font, char *c, int *width, int *height)
+void Font_Length (const char *font, char *c, int *width, int *height)
 {
 	font_t *f = NULL;
 
@@ -145,7 +145,7 @@ void Font_Length(const char *font, char *c, int *width, int *height)
 /**
  * @brief Clears font cache and frees memory associated with the cache
  */
-void Font_CleanCache(void)
+void Font_CleanCache (void)
 {
 	int i = 0;
 
@@ -163,7 +163,7 @@ void Font_CleanCache(void)
 /**
  * @brief Console command binding to show the font cache
  */
-void Font_ListCache_f(void)
+void Font_ListCache_f (void)
 {
 	int i = 0;
 	int collCount = 0, collSum = 0;
@@ -196,7 +196,7 @@ void Font_ListCache_f(void)
  * @param[in] maxlen Max length that should be used to calculate the hash value
  * @return hash value for given string
  */
-static int Font_Hash(const char *string, int maxlen)
+static int Font_Hash (const char *string, int maxlen)
 {
 	register int hashValue, i;
 
@@ -213,7 +213,7 @@ static int Font_Hash(const char *string, int maxlen)
  * @return NULL if not found
  * @sa Font_Hash
  */
-static fontCache_t *Font_GetFromCache(const char *s)
+static fontCache_t *Font_GetFromCache (const char *s)
 {
 	fontCache_t *font = NULL;
 	int hashValue;
@@ -248,7 +248,7 @@ static void Font_CacheGLSurface (fontCache_t *cache, SDL_Surface *pixel)
  * @sa Font_Hash
  * @sa Font_CacheGLSurface
  */
-static fontCache_t* Font_AddToCache(const char *s, SDL_Surface *pixel, int w, int h)
+static fontCache_t* Font_AddToCache (const char *s, SDL_Surface *pixel, int w, int h)
 {
 	int hashValue;
 	fontCache_t *font = NULL;
@@ -289,7 +289,7 @@ static fontCache_t* Font_AddToCache(const char *s, SDL_Surface *pixel, int w, in
  * @sa SDL_LowerBlit
  * @sa SDL_FreeSurface
  */
-static fontCache_t *Font_GenerateCache(const char *s, const char *fontString, font_t * f)
+static fontCache_t *Font_GenerateCache (const char *s, const char *fontString, font_t * f, int maxWidth)
 {
 	int w, h;
 	SDL_Surface *textSurface = NULL;
@@ -313,6 +313,8 @@ static fontCache_t *Font_GenerateCache(const char *s, const char *fontString, fo
 
 	rect.x = rect.y = 0;
 	rect.w = textSurface->w;
+	if (maxWidth > 0 && textSurface->w > maxWidth)
+		rect.w = maxWidth;
 	rect.h = textSurface->h;
 
 	SDL_SetAlpha(textSurface, 0, 0);
@@ -602,12 +604,12 @@ int Font_DrawString(const char *fontID, int align, int x, int y, int absX, int a
 
 			cache = Font_GetFromCache(searchString);
 			if (!cache)
-				cache = Font_GenerateCache(buffer, searchString, f);
+				cache = Font_GenerateCache(buffer, searchString, f, maxWidth);
 
 			if (!cache) {
 				/* maybe we are running out of mem */
 				Font_CleanCache();
-				cache = Font_GenerateCache(buffer, searchString, f);
+				cache = Font_GenerateCache(buffer, searchString, f, maxWidth);
 			}
 			if (!cache)
 				ri.Sys_Error(ERR_FATAL, "...could not generate font surface '%s'\n", buffer);
