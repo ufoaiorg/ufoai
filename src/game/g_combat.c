@@ -890,6 +890,7 @@ static qboolean G_GetShotFromType (edict_t *ent, int type, byte firemode, item_t
 		} else {
 			*weapon = NULL;
 			return qfalse;
+		}
 	} else {
 		/* Get firedef from the ammo entry. */
 		weapon_fd_idx = INV_FiredefsIDXForWeapon(&gi.csi->ods[(*weapon)->m], (*weapon)->t);
