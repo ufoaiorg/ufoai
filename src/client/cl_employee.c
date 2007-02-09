@@ -503,7 +503,7 @@ extern qboolean E_HireEmployee (const base_t* const base, employeeType_t type, i
  * @param[in] idx Which employee id (in global employee array) See E_GetHiredEmployee for usage.
  * @sa E_HireEmployee
  */
-static qboolean E_UnhireEmployee (const base_t* const base, employeeType_t type, int idx)
+extern qboolean E_UnhireEmployee (const base_t* const base, employeeType_t type, int idx)
 {
 	employee_t* employee = NULL;
 	employee = E_GetHiredEmployee(base, type, idx);

@@ -2290,12 +2290,14 @@ extern void B_TransferAircraftMenu (aircraft_t* aircraft)
 extern void B_TransferEnd (aircraft_t* aircraft)
 {
 	base_t* b;
+	base_t* homebase;
 	int i;
 
 	if (aircraft->status != AIR_TRANSPORT)
 		return;
 
 	b = (base_t*)aircraft->transferBase;
+	homebase = (base_t*)aircraft->homebase;
 
 	/* drop all equipment */
 	if (b->hasStorage) {
@@ -2321,6 +2323,13 @@ extern void B_TransferEnd (aircraft_t* aircraft)
 	}
 
 	if (b->hasQuarters) {
+		/**
+		 * first unhire this employee (this will also unlink the inventory from current base
+		 * and remove him from any buildings he is currently assigned to) and then hire him
+		 * again in the new base
+		 */
+		/*E_UnhireEmployee(homebase, ...)*/
+		/*E_HireEmployee(b, ...)*/
 		/* TODO unload the employees here */
 	} else {
 		/* TODO check whether we have employees on board */
