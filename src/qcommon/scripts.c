@@ -1235,8 +1235,6 @@ extern void Com_AddObjectLinks (void)
 		for (j = 0; j < od->numWeapons; j++ ) {
 			od->weap_idx[j] = RS_GetItem(od->weap_id[j]);
 			/* Back-link the obj-idx inside the fds */
-			/* FIXME: use memset here- would be ways faster.
-			 * And how does one do that wouthout overwriting the rest of the fireDef struct in od->fd[j][k]?*/
 			for (k = 0; k < od->numFiredefs[j]; k++ ) {
 				od->fd[j][k].obj_idx = i;
 			}
