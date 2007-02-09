@@ -105,14 +105,14 @@ void Sys_EnableTray (void)
 #endif
 	pNdata.uID = 0;
 	pNdata.uCallbackMessage = WM_USER + 4;
-	GetWindowText (pNdata.hWnd, pNdata.szTip, sizeof(pNdata.szTip)-1);
-	pNdata.hIcon = LoadIcon (global_hInstance, MAKEINTRESOURCE(IDI_ICON2));
+	GetWindowText(pNdata.hWnd, pNdata.szTip, sizeof(pNdata.szTip)-1);
+	pNdata.hIcon = LoadIcon(global_hInstance, MAKEINTRESOURCE(IDI_ICON2));
 	pNdata.uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP;
 
 	hSh32 = LoadLibrary ("shell32.dll");
-	procShell_NotifyIcon = GetProcAddress (hSh32, "Shell_NotifyIcon");
+	procShell_NotifyIcon = GetProcAddress(hSh32, "Shell_NotifyIcon");
 
-	procShell_NotifyIcon (NIM_ADD, &pNdata);
+	procShell_NotifyIcon(NIM_ADD, &pNdata);
 
 	Com_Printf("Minimize to tray enabled.\n");
 }
@@ -124,11 +124,11 @@ void Sys_EnableTray (void)
 void Sys_DisableTray (void)
 {
 #ifdef DEDICATED_ONLY
-	ShowWindow (hwnd_Server, SW_RESTORE);
+	ShowWindow(hwnd_Server, SW_RESTORE);
 #else
-	ShowWindow (cl_hwnd, SW_RESTORE);
+	ShowWindow(cl_hwnd, SW_RESTORE);
 #endif
-	procShell_NotifyIcon (NIM_DELETE, &pNdata);
+	procShell_NotifyIcon(NIM_DELETE, &pNdata);
 
 	if (hSh32)
 		FreeLibrary (hSh32);
@@ -144,9 +144,9 @@ void Sys_DisableTray (void)
 void Sys_Minimize (void)
 {
 #ifdef DEDICATED_ONLY
-	SendMessage (hwnd_Server, WM_ACTIVATE, MAKELONG(WA_INACTIVE,1), 0);
+	SendMessage(hwnd_Server, WM_ACTIVATE, MAKELONG(WA_INACTIVE,1), 0);
 #else
-	SendMessage (cl_hwnd, WM_ACTIVATE, MAKELONG(WA_INACTIVE,1), 0);
+	SendMessage(cl_hwnd, WM_ACTIVATE, MAKELONG(WA_INACTIVE,1), 0);
 #endif
 }
 
@@ -179,7 +179,7 @@ void Sys_Error (char *error, ...)
 	/* shut down QHOST hooks if necessary */
 	DeinitConProc();
 
-	exit (1);
+	exit(1);
 }
 
 /**

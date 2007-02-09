@@ -33,11 +33,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 
-
 /**
  * @brief
  */
-static void Cmd_Players_f(player_t * player)
+static void Cmd_Players_f (player_t * player)
 {
 	int i;
 	int count = 0;
@@ -68,7 +67,7 @@ static void Cmd_Players_f(player_t * player)
 /**
  * @brief
  */
-static void Cmd_Say_f(player_t * player, qboolean arg0, qboolean team)
+static void Cmd_Say_f (player_t * player, qboolean arg0, qboolean team)
 {
 	int j;
 	char *p;
@@ -117,7 +116,7 @@ static void Cmd_Say_f(player_t * player, qboolean arg0, qboolean team)
 /**
  * @brief
  */
-static void Cmd_PlayerList_f(player_t * player)
+static void Cmd_PlayerList_f (player_t * player)
 {
 	int i;
 	char st[80];
@@ -149,7 +148,7 @@ void G_StunTeam(void);
 /**
  * @brief
  */
-void G_ClientCommand(player_t * player)
+void G_ClientCommand (player_t * player)
 {
 	char *cmd;
 
