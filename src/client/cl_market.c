@@ -38,33 +38,26 @@ static const int MARKET_BUY_DIVISOR = 1;
 static const int MARKET_SELL_FACTOR = 1;
 static const int MARKET_SELL_DIVISOR = 1;
 
+void UP_AircraftDescription(technology_t* t);
+
 /**
  * @brief Prints general information about aircraft for buy/sell menu
  * TODO
  */
 static void CL_MarketAircraftDescription (int aircraftID)
 {
-	static char itemText[MAX_SMALLMENUTEXTLEN];
 	technology_t *tech;
 	aircraft_t *aircraft;
 
 	if (aircraftID >= numAircraft_samples)
 		return;
 
-	*itemText = '\0';
 	aircraft = &aircraft_samples[aircraftID];
 	tech = RS_GetTechByProvided(aircraft->id);
 	assert(tech);
-	if (RS_Collected_(tech) || RS_IsResearched_ptr(tech)) {
-		Cvar_Set("mn_name", aircraft->name);
-
-		/* set description text */
-		Com_sprintf(itemText, sizeof(itemText), _("TODO\n"));
-		Q_strcat(itemText, _("TODO\n"), sizeof(itemText));
-	} else {
-		Com_sprintf(itemText, sizeof(itemText), _("Unknown - need to research this"));
-	}
-	menuText[TEXT_STANDARD] = itemText;
+	UP_AircraftDescription(tech);
+	Cvar_Set("mn_aircraftname", aircraft->name);
+	Cvar_Set("mn_aircraft_model", aircraft->model);
 }
 
 /**
@@ -190,7 +183,7 @@ static void CL_BuyType_f (void)
 		for (i = 0, j = 0, air_samp = aircraft_samples; i < numAircraft_samples; i++, air_samp++) {
 			tech = RS_GetTechByProvided(air_samp->id);
 			assert(tech);
-			if (!tech || RS_Collected_(tech) || RS_IsResearched_ptr(tech)) {
+			if (RS_Collected_(tech) || RS_IsResearched_ptr(tech)) {
 				storage = supply = 0;
 				AIR_GetStorageSupplyCount(air_samp->id, &storage, &supply);
 				Q_strncpyz(str, va("mn_item%i", j), MAX_VAR);
@@ -356,6 +349,7 @@ static void CL_SellAircraft_f (void)
 	base_t *base;
 	aircraft_t *aircraft;
 	qboolean found = qfalse;
+	qboolean teamNote = qfalse;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: mn_sell_aircraft <num>\n");
@@ -375,8 +369,10 @@ static void CL_SellAircraft_f (void)
 			continue;
 		for (j = 0, aircraft = base->aircraft; j < base->numAircraftInBase; j++, aircraft++) {
 			if (!Q_strncmp(aircraft->id, aircraft_samples[aircraftID].id, MAX_VAR)) {
-				if (*aircraft->teamSize)
+				if (*aircraft->teamSize) {
+					teamNote = qtrue;
 					continue;
+				}
 				found = qtrue;
 				break;
 			}
@@ -393,8 +389,12 @@ static void CL_SellAircraft_f (void)
 			return;
 		}
 	}
-	if (!found)
-		Com_Printf("...there are no aircraft available (with no team assigned) for selling\n");
+	if (!found) {
+		if (teamNote)
+			MN_Popup(_("Note"), _("You can't sell an aircraft if it still has a team assigned"));
+		else
+			Com_DPrintf("CL_SellAircraft_f: There are no aircraft available (with no team assigned) for selling\n");
+	}
 }
 
 /**

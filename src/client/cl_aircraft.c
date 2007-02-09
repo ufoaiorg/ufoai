@@ -396,7 +396,7 @@ extern void CL_AircraftSelect (aircraft_t* aircraft)
 	Cvar_SetValue("mn_scientists_in_base", E_CountHired(baseCurrent, EMPL_SCIENTIST));
 	Cvar_Set("mn_aircraftstatus", CL_AircraftStatusToName(aircraft));
 	Cvar_Set("mn_aircraftinbase", CL_IsAircraftInBase(aircraft) ? "1" : "0");
-	Cvar_Set("mn_aircraftname", aircraft->name);
+	Cvar_Set("mn_aircraftname", va("%s (%i/%i)", aircraft->name, (aircraftID + 1), baseCurrent->numAircraftInBase));
 	Cvar_Set("mn_aircraft_model", aircraft->model);
 	Cvar_Set("mn_aircraft_weapon", aircraft->weapon ? aircraft->weapon->name : "");
 	Cvar_Set("mn_aircraft_shield", aircraft->shield ? aircraft->shield->name : "");
