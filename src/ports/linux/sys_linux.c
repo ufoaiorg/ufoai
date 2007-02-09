@@ -356,7 +356,7 @@ void Sys_Quit (void)
 /**
  * @brief
  */
-void Sys_Init(void)
+void Sys_Init (void)
 {
 	Cvar_Get("sys_os", "linux", CVAR_SERVERINFO, NULL);
 #if id386
@@ -367,19 +367,19 @@ void Sys_Init(void)
 	struct sigaction sa;
 
 	if (sizeof(uint32_t) != 4)
-		Sys_Error ("uint32 != 32 bits");
+		Sys_Error("uint32 != 32 bits");
 	else if (sizeof(uint64_t) != 8)
-		Sys_Error ("uint64 != 64 bits");
+		Sys_Error("uint64 != 64 bits");
 	else if (sizeof(uint16_t) != 2)
-		Sys_Error ("uint16 != 16 bits");
+		Sys_Error("uint16 != 16 bits");
 
 	sa.sa_handler = (void *)Sys_Backtrace;
-	sigemptyset (&sa.sa_mask);
+	sigemptyset(&sa.sa_mask);
 	sa.sa_flags = SA_RESTART | SA_SIGINFO;
 
 	sigaction(SIGSEGV, &sa, NULL);
 # else
-	signal (SIGSEGV, Sys_Backtrace);
+	signal(SIGSEGV, Sys_Backtrace);
 # endif
 #endif /* __linux__ */
 }
@@ -416,35 +416,21 @@ void Sys_Error (char *error, ...)
 	char        string[1024];
 
 	/* change stdin to non blocking */
-	fcntl (0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
+	fcntl(0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
 
 #ifndef DEDICATED_ONLY
 	CL_Shutdown ();
 #endif
 	Qcommon_Shutdown ();
 
-	va_start (argptr,error);
-	Q_vsnprintf (string, sizeof(string), error, argptr);
-	va_end (argptr);
+	va_start(argptr,error);
+	Q_vsnprintf(string, sizeof(string), error, argptr);
+	va_end(argptr);
 
 	string[sizeof(string)-1] = 0;
 
 	fprintf(stderr, "Error: %s\n", string);
-	exit (1);
-}
-
-/**
- * @brief
- */
-void Sys_Warn (char *warning, ...)
-{
-	va_list     argptr;
-	char        string[1024];
-
-	va_start (argptr,warning);
-	Q_vsnprintf (string, sizeof(string), warning, argptr);
-	va_end (argptr);
-	fprintf(stderr, "Warning: %s", string);
+	exit(1);
 }
 
 /**
@@ -464,16 +450,15 @@ int Sys_FileTime (char *path)
 /**
  * @brief
  */
-void floating_point_exception_handler(int whatever)
+void floating_point_exception_handler (int whatever)
 {
-/*	Sys_Warn("floating point exception\n"); */
 	signal(SIGFPE, floating_point_exception_handler);
 }
 
 /**
  * @brief
  */
-char *Sys_ConsoleInput(void)
+char *Sys_ConsoleInput (void)
 {
 	static char text[256];
 	int     len;
@@ -587,7 +572,7 @@ void Sys_SendKeyEvents (void)
 /**
  * @brief
  */
-char *Sys_GetClipboardData(void)
+char *Sys_GetClipboardData (void)
 {
 #if 0 /* this should be in the renderer lib */
 	Window sowner;

@@ -92,14 +92,20 @@ void Sys_Printf (char *fmt, ...)
 	}
 }
 
+/**
+ * @brief
+ */
 void Sys_Quit (void)
 {
-	CL_Shutdown ();
-	Qcommon_Shutdown ();
-	fcntl (0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
+	CL_Shutdown();
+	Qcommon_Shutdown();
+	fcntl(0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
 	exit(0);
 }
 
+/**
+ * @brief
+ */
 void Sys_Init(void)
 {
 	Cvar_Get("sys_os", "solaris", CVAR_SERVERINFO, NULL);
@@ -108,6 +114,9 @@ void Sys_Init(void)
 #endif
 }
 
+/**
+ * @brief
+ */
 void Sys_Error (char *error, ...)
 {
 	va_list argptr;
@@ -116,7 +125,7 @@ void Sys_Error (char *error, ...)
 	/* change stdin to non blocking */
 	fcntl (0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
 
-	va_start (argptr,error);
+	va_start(argptr,error);
 	Q_vsnprintf(string, sizeof(string), error, argptr);
 	va_end(argptr);
 
@@ -128,44 +137,28 @@ void Sys_Error (char *error, ...)
 	exit (0);
 }
 
-void Sys_Warn (char *warning, ...)
-{
-	va_list     argptr;
-	char        string[1024];
 
-	va_start (argptr,warning);
-	Q_vsnprintf(string, sizeof(string), warning, argptr);
-	va_end(argptr);
-
-	string[sizeof(string)-1] = 0;
-
-	fprintf(stderr, "Warning: %s", string);
-}
-
-/*
-============
-Sys_FileTime
-
-returns -1 if not present
-============
-*/
+/**
+ * @brief
+ * @returns -1 if not present
+ */
 int	Sys_FileTime (char *path)
 {
 	struct	stat	buf;
 
-	if (stat (path,&buf) == -1)
+	if (stat(path,&buf) == -1)
 		return -1;
 
 	return buf.st_mtime;
 }
 
-void floating_point_exception_handler(int whatever)
+void floating_point_exception_handler (int whatever)
 {
 /*	Sys_Warn("floating point exception\n"); */
 	signal(SIGFPE, floating_point_exception_handler);
 }
 
-char *Sys_ConsoleInput(void)
+char *Sys_ConsoleInput (void)
 {
 	static char text[256];
 	int     len;
@@ -182,10 +175,10 @@ char *Sys_ConsoleInput(void)
 	FD_SET(0, &fdset); /* stdin */
 	timeout.tv_sec = 0;
 	timeout.tv_usec = 0;
-	if (select (1, &fdset, NULL, NULL, &timeout) == -1 || !FD_ISSET(0, &fdset))
+	if (select(1, &fdset, NULL, NULL, &timeout) == -1 || !FD_ISSET(0, &fdset))
 		return NULL;
 
-	len = read (0, text, sizeof(text));
+	len = read(0, text, sizeof(text));
 	if (len == 0) { /* eof! */
 		stdin_active = qfalse;
 		return NULL;
@@ -201,25 +194,19 @@ char *Sys_ConsoleInput(void)
 
 static void *game_library;
 
-/*
-=================
-Sys_UnloadGame
-=================
-*/
+/**
+ * @brief
+ */
 void Sys_UnloadGame (void)
 {
 	if (game_library)
-		dlclose (game_library);
+		dlclose(game_library);
 	game_library = NULL;
 }
 
-/*
-=================
-Sys_GetGameAPI
-
-Loads the game dll
-=================
-*/
+/**
+ * @brief Loads the game dll
+ */
 game_export_t *Sys_GetGameAPI (game_import_t *parms)
 {
 	void	*(*GetGameAPI) (void *);
@@ -230,7 +217,7 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 	const char *gamename = "game.so";
 
 	if (game_library)
-		Com_Error (ERR_FATAL, "Sys_GetGameAPI without Sys_UnloadingGame");
+		Com_Error(ERR_FATAL, "Sys_GetGameAPI without Sys_UnloadingGame");
 
 	getcwd(curpath, sizeof(curpath));
 
@@ -242,10 +229,10 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 		path = FS_NextPath (path);
 		if (!path)
 			return NULL;		/* couldn't find one anywhere */
-		sprintf (name, "%s/%s/%s", curpath, path, gamename);
-		game_library = dlopen (name, RTLD_NOW );
+		sprintf(name, "%s/%s/%s", curpath, path, gamename);
+		game_library = dlopen(name, RTLD_NOW );
 		if (game_library) {
-			Com_DPrintf ("LoadLibrary (%s)\n",name);
+			Com_DPrintf("LoadLibrary (%s)\n",name);
 			break;
 		} else
 			Com_Printf("error: %s\n", dlerror());
@@ -253,34 +240,46 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 
 	GetGameAPI = (void *)dlsym (game_library, "GetGameAPI");
 	if (!GetGameAPI) {
-		Sys_UnloadGame ();
+		Sys_UnloadGame();
 		return NULL;
 	}
 
-	return GetGameAPI (parms);
+	return GetGameAPI(parms);
 }
 
+/**
+ * @brief
+ */
 void Sys_AppActivate (void)
 {
 }
 
+/**
+ * @brief
+ */
 void Sys_SendKeyEvents (void)
 {
 	/* grab frame time */
 	sys_frame_time = Sys_Milliseconds();
 }
 
-char *Sys_GetCurrentUser( void )
+/**
+ * @brief
+ */
+char *Sys_GetCurrentUser (void)
 {
 	struct passwd *p;
 
-	if ( (p = getpwuid( getuid() )) == NULL ) {
+	if ((p = getpwuid(getuid())) == NULL) {
 		return "player";
 	}
 	return p->pw_name;
 }
 
-char *Sys_Cwd( void )
+/**
+ * @brief
+ */
+char *Sys_Cwd (void)
 {
 	static char cwd[MAX_OSPATH];
 
@@ -291,15 +290,24 @@ char *Sys_Cwd( void )
 	return cwd;
 }
 
-void Sys_NormPath(char* path)
+/**
+ * @brief
+ */
+void Sys_NormPath (char* path)
 {
 }
 
-char *Sys_GetClipboardData(void)
+/**
+ * @brief
+ */
+char *Sys_GetClipboardData (void)
 {
 	return NULL;
 }
 
+/**
+ * @brief
+ */
 int main (int argc, char **argv)
 {
 	int 	time, oldtime, newtime;
@@ -318,12 +326,11 @@ int main (int argc, char **argv)
 	while (1) {
 		/* find time spent rendering last frame */
 		do {
-			newtime = Sys_Milliseconds ();
+			newtime = Sys_Milliseconds();
 			time = newtime - oldtime;
 		} while (time < 1);
-		Qcommon_Frame (time);
+		Qcommon_Frame(time);
 		oldtime = newtime;
     }
-
 }
 

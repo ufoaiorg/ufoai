@@ -126,27 +126,10 @@ void Sys_Error (char *error, ...)
 	exit (1);
 }
 
-void Sys_Warn (char *warning, ...)
-{
-	va_list     argptr;
-	char        string[1024];
-
-	va_start (argptr,warning);
-	Q_vsnprintf(string, sizeof(string), warning, argptr);
-	va_end(argptr);
-
-	string[sizeof(string)-1] = 0;
-
-	fprintf(stderr, "Warning: %s", string);
-}
-
-/*
-============
-Sys_FileTime
-
-returns -1 if not present
-============
-*/
+/**
+ * @brief
+ * @returns -1 if not present
+ */
 int	Sys_FileTime (char *path)
 {
 	struct	stat	buf;
@@ -157,13 +140,18 @@ int	Sys_FileTime (char *path)
 	return buf.st_mtime;
 }
 
-void floating_point_exception_handler(int whatever)
+/**
+ * @brief
+ */
+void floating_point_exception_handler (int whatever)
 {
-/*	Sys_Warn("floating point exception\n"); */
 	signal(SIGFPE, floating_point_exception_handler);
 }
 
-char *Sys_ConsoleInput(void)
+/**
+ * @brief
+ */
+char *Sys_ConsoleInput (void)
 {
 	static char text[256];
 	int     len;
@@ -180,10 +168,10 @@ char *Sys_ConsoleInput(void)
 	FD_SET(0, &fdset); /* stdin */
 	timeout.tv_sec = 0;
 	timeout.tv_usec = 0;
-	if (select (1, &fdset, NULL, NULL, &timeout) == -1 || !FD_ISSET(0, &fdset))
+	if (select(1, &fdset, NULL, NULL, &timeout) == -1 || !FD_ISSET(0, &fdset))
 		return NULL;
 
-	len = read (0, text, sizeof(text));
+	len = read(0, text, sizeof(text));
 	if (len == 0) { /* eof! */
 		stdin_active = qfalse;
 		return NULL;
@@ -200,11 +188,9 @@ char *Sys_ConsoleInput(void)
 
 static void *game_library;
 
-/*
-=================
-Sys_UnloadGame
-=================
-*/
+/**
+ * @brief
+ */
 void Sys_UnloadGame (void)
 {
 	if (game_library)
@@ -212,13 +198,9 @@ void Sys_UnloadGame (void)
 	game_library = NULL;
 }
 
-/*
-=================
-Sys_GetGameAPI
-
-Loads the game dll
-=================
-*/
+/**
+ * @brief Loads the game dll
+ */
 game_export_t *Sys_GetGameAPI (game_import_t *parms)
 {
 #ifndef REF_HARD_LINKED
@@ -248,16 +230,14 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 		sprintf (name, "%s/%s/%s", curpath, path, gamename);
 		Com_Printf ("Trying to load library (%s)\n",name);
 		game_library = dlopen (name, RTLD_NOW );
-		if (game_library)
-		{
+		if (game_library) {
 			Com_DPrintf ("LoadLibrary (%s)\n",name);
 			break;
 		}
 	}
 
 	GetGameAPI = (void *)dlsym (game_library, "GetGameAPI");
-	if (!GetGameAPI)
-	{
+	if (!GetGameAPI) {
 		Sys_UnloadGame ();
 		return NULL;
 	}
@@ -268,10 +248,16 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 #endif
 }
 
+/**
+ * @brief
+ */
 void Sys_AppActivate (void)
 {
 }
 
+/**
+ * @brief
+ */
 void Sys_SendKeyEvents (void)
 {
 	if (KBD_Update_fp)
@@ -281,17 +267,23 @@ void Sys_SendKeyEvents (void)
 	sys_frame_time = Sys_Milliseconds();
 }
 
-char *Sys_GetCurrentUser( void )
+/**
+ * @brief
+ */
+char *Sys_GetCurrentUser (void)
 {
 	struct passwd *p;
 
-	if ( (p = getpwuid( getuid() )) == NULL ) {
+	if ((p = getpwuid(getuid())) == NULL) {
 		return "player";
 	}
 	return p->pw_name;
 }
 
-char *Sys_Cwd( void )
+/**
+ * @brief
+ */
+char *Sys_Cwd (void)
 {
 	static char cwd[MAX_OSPATH];
 
@@ -302,15 +294,24 @@ char *Sys_Cwd( void )
 	return cwd;
 }
 
-void Sys_NormPath(char* path)
+/**
+ * @brief
+ */
+void Sys_NormPath (char* path)
 {
 }
 
-char *Sys_GetClipboardData(void)
+/**
+ * @brief
+ */
+char *Sys_GetClipboardData (void)
 {
 	return NULL;
 }
 
+/**
+ * @brief
+ */
 int main (int argc, char **argv)
 {
 	int 	time, oldtime, newtime;
