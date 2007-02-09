@@ -860,7 +860,7 @@ static void G_GetShotOrigin(edict_t *shooter, fireDef_t *fd, vec3_t dir, vec3_t 
  * @brief
  * @sa G_ClientShoot
  */
-static qboolean G_GetShotFromType (edict_t *ent, int type, byte firemode, item_t **weapon, int *container, fireDef_t **fd)
+static qboolean G_GetShotFromType (edict_t *ent, int type, int firemode, item_t **weapon, int *container, fireDef_t **fd)
 {
 	int weapon_fd_idx;
 
@@ -912,7 +912,7 @@ static qboolean G_GetShotFromType (edict_t *ent, int type, byte firemode, item_t
  * @param[in] allowReaction Set to qtrue to check whether this has forced any reaction fire, otherwise qfalse.
  * @return qtrue if everthing went ok (i.e. the shot(s) where fired ok), otherwise qfalse.
  */
-qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type, byte firemode, shot_mock_t *mock, qboolean allowReaction)
+qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type, int firemode, shot_mock_t *mock, qboolean allowReaction)
 {
 	fireDef_t *fd = NULL;
 	edict_t *ent;
@@ -1084,7 +1084,7 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type, byte fi
  * @sa G_ReactionFire (Not there anymore?)
  * @sa G_ClientShoot
  */
-static qboolean G_FireWithJudgementCall(player_t * player, int num, pos3_t at, int type, byte firemode)
+static qboolean G_FireWithJudgementCall(player_t * player, int num, pos3_t at, int type, int firemode)
 {
 	shot_mock_t mock;
 	edict_t *shooter;
