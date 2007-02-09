@@ -880,13 +880,22 @@ static qboolean G_GetShotFromType (edict_t *ent, int type, byte firemode, item_t
 	}
 
 	if ((*weapon)->m == NONE) {
-		*weapon = NULL;
-		return qfalse;
+		/* This weapon does not use ammo, check for existing firedefs in the weapon. */
+		if (&gi.csi->ods[(*weapon)->t].numFiredefs > 0) {
+			/* Get firedef from the weapon entry instead */
+			weapon_fd_idx = INV_FiredefsIDXForWeapon(&gi.csi->ods[(*weapon)->t], (*weapon)->t);
+			gi.dprintf("weapon_fd_idx: %i (%s), firemode: %i\n", weapon_fd_idx, gi.csi->ods[(*weapon)->t].name, firemode);
+			/* fd = od[weapon_fd_idx][firemodeidx] */
+			*fd = &gi.csi->ods[(*weapon)->t].fd[weapon_fd_idx][firemode];
+		} else {
+			*weapon = NULL;
+			return qfalse;
+	} else {
+		/* Get firedef from the ammo entry. */
+		weapon_fd_idx = INV_FiredefsIDXForWeapon(&gi.csi->ods[(*weapon)->m], (*weapon)->t);
+		/* fd = od[weapon_fd_idx][firemodeidx] */
+		*fd = &gi.csi->ods[(*weapon)->m].fd[weapon_fd_idx][firemode];
 	}
-	weapon_fd_idx = INV_FiredefsIDXForWeapon(&gi.csi->ods[(*weapon)->m], (*weapon)->t);
-	/* fd = od[weapon_fd_idx][firemodeidx] */
-	gi.dprintf("weapon_fd_idx: %i (%s), firemode: %i\n", weapon_fd_idx, gi.csi->ods[(*weapon)->t].name, firemode);
-	*fd = &gi.csi->ods[(*weapon)->m].fd[weapon_fd_idx][firemode];
 
 	return qtrue;
 }
