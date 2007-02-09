@@ -2201,7 +2201,10 @@ static void B_TransferSelect_f (void)
 		if (transferBase->hasStorage) {
 			for (i = 0; i < csi.numODs; i++)
 				if (baseCurrent->storage.num[i]) {
-					Com_sprintf(str, sizeof(str), "%s\n", csi.ods[i].name);
+					if (transferAircraft && transferAircraft->num[i])
+						Com_sprintf(str, sizeof(str), "%s (%i on board, %i left)\n", csi.ods[i].name, transferAircraft->num[i], baseCurrent->storage.num[i]);
+					else
+						Com_sprintf(str, sizeof(str), "%s (%i available)\n", csi.ods[i].name, baseCurrent->storage.num[i]);
 					Q_strcat(transferList, str, sizeof(transferList));
 					cnt++;
 				}
@@ -2225,12 +2228,39 @@ static void B_TransferSelect_f (void)
 			Q_strcat(transferList, _("Transfer is not possible - the base doesn't have a lab"), sizeof(transferList));
 		break;
 	default:
-		Com_Printf("B_TransferStart_f: Unknown type id\n");
+		Com_Printf("B_TransferSelect_f: Unknown type id\n");
 		return;
 	}
 
 	transferType = type;
 	menuText[TEXT_TRANSFER_LIST] = transferList;
+}
+
+/**
+ * @brief Unload everything from aircraft storage back to base storage
+ */
+static void B_TransferEmptyAircraftStorage_f (void)
+{
+	if (!transferAircraft)
+		return;
+
+	/* we can't unload if we are not in our homebase */
+	if (transferAircraft->status != AIR_HOME) {
+		MN_Popup(_("Notice"), _("Can't unload while we are not in the homebase"));
+		return;
+	}
+
+	/* this is a transfer mission to the homebase (though we are still in the homebase) */
+	transferAircraft->transferBase = (void*)transferAircraft->homebase;
+	/* to pass the sanity check in B_TransferEnd */
+	transferAircraft->status != AIR_TRANSPORT;
+	B_TransferEnd(transferAircraft);
+
+	/* clear the command buffer
+	 * needed to erase all B_TransferListSelect_f
+	 * paramaters */
+	Cmd_BufClear();
+	B_TransferSelect_f();
 }
 
 /**
@@ -2254,6 +2284,45 @@ extern void B_TransferAircraftMenu (aircraft_t* aircraft)
 }
 
 /**
+ * @brief Ends the transfer and let the aircraft return to homebase
+ */
+extern void B_TransferEnd (aircraft_t* aircraft)
+{
+	base_t* b;
+	int i;
+
+	if (aircraft->status != AIR_TRANSPORT)
+		return;
+
+	b = (base_t*)aircraft->transferBase;
+
+	/* drop all equipment */
+	if (b->hasStorage) {
+		for (i = 0; i < csi.numODs; i++)
+			if (transferAircraft->num[i]) {
+				b->storage.num[i] += transferAircraft->num[i];
+				transferAircraft->num[i] = 0;
+			}
+	} else {
+		for (i = 0; i < csi.numODs; i++)
+			if (transferAircraft->num[i]) {
+				MN_Popup(_("Notice"), _("The base doesn't have a storage"));
+				break;
+			}
+	}
+
+	if (b->hasLab) {
+		/* TODO */
+	}
+
+	if (b->hasQuarters) {
+		/* TODO */
+	}
+
+	CL_AircraftReturnToBase(aircraft);
+}
+
+/**
  * @brief
  * @sa B_TransferSelect_f
  * @sa B_TransferInit_f
@@ -2261,11 +2330,17 @@ extern void B_TransferAircraftMenu (aircraft_t* aircraft)
 static void B_TransferStart_f (void)
 {
 	if (!transferAircraft) {
-		Com_Printf("B_TransferStart_f: No aircraft selected\n");
+		Com_DPrintf("B_TransferStart_f: No aircraft selected\n");
 		return;
 	}
+
 	if (!transferBase) {
-		Com_Printf("B_TransferStart_f: No base selected\n");
+		Com_DPrintf("B_TransferStart_f: No base selected\n");
+		return;
+	}
+
+	if (transferAircraft->status != AIR_HOME) {
+		MN_Popup(_("Notice"), _("Can't start the transport mission while we are not in the homebase"));
 		return;
 	}
 
@@ -2273,6 +2348,9 @@ static void B_TransferStart_f (void)
 	transferAircraft->transferBase = transferBase;
 
 	MAP_MapCalcLine(transferAircraft->pos, transferBase->pos, &transferAircraft->route);
+	/* leave to geoscape */
+	MN_PopMenu(qfalse);
+	MN_PopMenu(qfalse);
 }
 
 /**
@@ -2308,17 +2386,17 @@ static void B_TransferListSelect_f (void)
 		return;
 	/* items */
 	case 0:
-		if (transferBase->hasStorage) {
-			for (i = 0; i < csi.numODs; i++)
-				if (baseCurrent->storage.num[i]) {
-					if (cnt == num) {
-						/* TODO: Check space */
-						transferAircraft->num[i]++;
-						break;
-					}
-					cnt++;
+		for (i = 0; i < csi.numODs; i++)
+			if (baseCurrent->storage.num[i]) {
+				if (cnt == num) {
+					/* TODO: Check space */
+					transferAircraft->num[i]++;
+					/* remove it from base storage */
+					baseCurrent->storage.num[i]--;
+					break;
 				}
-		}
+				cnt++;
+			}
 		break;
 	/* humans */
 	case 1:
@@ -2327,16 +2405,23 @@ static void B_TransferListSelect_f (void)
 	case 2:
 		break;
 	}
+
+	/* clear the command buffer
+	 * needed to erase all B_TransferListSelect_f
+	 * paramaters */
+	Cmd_BufClear();
+	B_TransferSelect_f();
 }
 
 /**
  * @brief Display current selected aircraft info in transfer menu
- * @note TODO
  */
 static void B_TransferDisplayAircraftInfo (void)
 {
 	if (!transferAircraft)
 		return;
+
+	/* TODO */
 }
 
 /**
@@ -2373,13 +2458,16 @@ static void B_TransferAircraftListClick_f (void)
 	B_TransferDisplayAircraftInfo();
 }
 
+/**
+ * @brief
+ */
 static void B_TransferBaseSelectPopup_f (void)
 {
 	int i, j = 0, num;
 	base_t* base;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("usage: trans_bases_click <type>\n");
+		Com_Printf("usage: trans_baselist_click <type>\n");
 		return;
 	}
 
@@ -2561,6 +2649,7 @@ void B_ResetBaseManagement(void)
 
 	Cmd_AddCommand("trans_start", B_TransferStart_f, "Starts the tranfer");
 	Cmd_AddCommand("trans_select", B_TransferSelect_f, "Switch between transfer types (employees, techs, items)");
+	Cmd_AddCommand("trans_emptyairstorage", B_TransferEmptyAircraftStorage_f, "Unload everything from aircraft storage back to base storage");
 	Cmd_AddCommand("trans_init", B_TransferInit_f, "Init transfer menu");
 	Cmd_AddCommand("trans_baselist_click", B_TransferBaseSelectPopup_f, "Callback for transfer base list popup");
 	Cmd_AddCommand("trans_bases_click", B_TransferBaseSelect_f, "Callback for base list node click");

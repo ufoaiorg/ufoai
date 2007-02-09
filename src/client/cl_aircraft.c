@@ -599,7 +599,8 @@ void CL_CampaignRunAircraft (int dt)
 						aircraft->pos[0] = end[0];
 						aircraft->pos[1] = end[1];
 
-						if (aircraft->status == AIR_MISSION) {
+						switch (aircraft->status) {
+						case AIR_MISSION:
 							/* Aircraft reach its mission */
 							aircraft->mission->def->active = qtrue;
 							aircraft->status = AIR_DROP;
@@ -611,12 +612,19 @@ void CL_CampaignRunAircraft (int dt)
 							gd.interceptAircraft = aircraft->idx;
 							Com_DPrintf("gd.interceptAircraft: %i\n", gd.interceptAircraft);
 							MN_PushMenu("popup_intercept_ready");
-						} else if (aircraft->status == AIR_RETURNING) {
+							break;
+						case AIR_RETURNING:
 							/* aircraft enter in  homebase */
 							CL_DropshipReturned((base_t*)aircraft->homebase, aircraft);
 							aircraft->status = AIR_REFUEL;
-						} else
+							break;
+						case AIR_TRANSPORT:
+							B_TransferEnd(aircraft);
+							break;
+						default:
 							aircraft->status = AIR_IDLE;
+							break;
+						}
 					}
 				} else if (aircraft->status == AIR_IDLE) {
 					/* Aircraft idle out of base */

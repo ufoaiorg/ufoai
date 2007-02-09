@@ -234,6 +234,7 @@ aircraft_t *B_GetAircraftFromBaseByIndex(base_t* base,int index);
 void B_ReviveSoldiersInBase(base_t* base); /* TODO */
 
 void B_TransferAircraftMenu(aircraft_t* aircraft);
+void B_TransferEnd(aircraft_t* aircraft);
 
 int B_GetAvailableQuarterSpace(const base_t* const base);
 int B_GetEmployeeCount(const base_t* const base);

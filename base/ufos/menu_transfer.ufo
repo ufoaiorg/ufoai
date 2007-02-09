@@ -94,6 +94,7 @@ menu transfer
 		string	"*cvar mn_trans_base_name"
 	}
 
+	// B_TransferBaseSelect_f
 	text trans_bases
 	{
 		num	27
@@ -257,6 +258,46 @@ menu transfer
 		color "1 1 1 0.6"
 		font	"f_normal"
 		string	"_Technologies"
+	}
+
+	pic bt_emptycraftstorage
+	{
+		tooltip	"_Empty the aircraft storage"
+		image	menu/button_blue
+		mousefx	true
+		pos		"655 705"
+		texl	"0 0"
+		texh	"128 52"
+		click	{ cmd "trans_emptyairstorage;" }
+	}
+
+	string s_emptycraftstorage
+	{
+		pos	"719 720"
+		align	uc
+		color "1 1 1 0.6"
+		font	"f_normal"
+		string	"_Unload"
+	}
+
+	pic bt_starttrans
+	{
+		tooltip	"_Start the transfer"
+		image	menu/button_blue
+		mousefx	true
+		pos		"800 705"
+		texl	"0 0"
+		texh	"128 52"
+		click	{ cmd "trans_start;" }
+	}
+
+	string s_starttrans
+	{
+		pos	"864 720"
+		align	uc
+		color "1 1 1 0.6"
+		font	"f_normal"
+		string	"_Transfer"
 	}
 
 	pic bt_continue
