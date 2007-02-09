@@ -622,6 +622,9 @@ static void PR_ProductionIncrease_f (void)
 		if (selectedIndex < 0)
 			return;
 		prod = PR_QueueNew(queue, selectedIndex, amount);
+		/* prod is NULL when queue limit is reached */
+		if (!prod)
+			return;
 
 		/* Get technology of the item in the selected queue-entry. */
 		od = &csi.ods[prod->objID];
