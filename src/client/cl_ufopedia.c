@@ -290,7 +290,7 @@ static void UP_TechDescription (technology_t* t)
  */
 static void UP_BuildingDescription (technology_t* t)
 {
-	building_t* b = B_GetBuildingType ( t->provides );
+	building_t* b = B_GetBuildingType(t->provides);
 
 	if (!b) {
 		Com_sprintf(upBuffer, MAX_UPTEXT, _("Error - could not find building") );
@@ -306,18 +306,27 @@ static void UP_BuildingDescription (technology_t* t)
 
 /**
  * @brief Prints the ufopedia description for aircraft
+ * @note Also checks whether the aircraft tech is already researched or collected
+ *
  * @sa UP_DrawEntry
  */
-static void UP_AircraftDescription (technology_t* t)
+extern void UP_AircraftDescription (technology_t* t)
 {
-	aircraft_t* aircraft = CL_GetAircraft ( t->provides );
-	if ( !aircraft ) {
-		Com_sprintf(upBuffer, MAX_UPTEXT, _("Error - could not find aircraft") );
+	aircraft_t* aircraft;
+
+	if (RS_Collected_(t) || RS_IsResearched_ptr(t)) {
+		aircraft = CL_GetAircraft(t->provides);
+		if (!aircraft) {
+			Com_sprintf(upBuffer, MAX_UPTEXT, _("Error - could not find aircraft") );
+		} else {
+			Com_sprintf(upBuffer, MAX_UPTEXT, _("Speed:\t%.0f\n"), aircraft->speed );
+			Q_strcat(upBuffer, va(_("Fuel:\t%i\n"), aircraft->fuelSize ), sizeof(upBuffer));
+			Q_strcat(upBuffer, va(_("Weapon:\t%s\n"), aircraft->weapon ? _(aircraft->weapon->name) : _("None") ), sizeof(upBuffer)); /* TODO: there is a weapon in a sample aircraft? */
+			Q_strcat(upBuffer, va(_("Shield:\t%s\n"), aircraft->shield ? _(aircraft->shield->name) : _("None") ), sizeof(upBuffer));
+			Q_strcat(upBuffer, va(_("Equipment:\t%s\n"), aircraft->item ? _(aircraft->item->name) : _("None") ), sizeof(upBuffer));
+		}
 	} else {
-		Com_sprintf(upBuffer, MAX_UPTEXT, _("Speed:\t%.0f\n"), aircraft->speed );
-		Q_strcat(upBuffer, va(_("Fuel:\t%i\n"), aircraft->fuelSize ), sizeof(upBuffer));
-		Q_strcat(upBuffer, va(_("Weapon:\t%s\n"), aircraft->weapon ? _(aircraft->weapon->name) : _("None") ), sizeof(upBuffer)); /* TODO: there is a weapon in a sample aircraft? */
-		Q_strcat(upBuffer, va(_("Shield:\t%s\n"), aircraft->shield ? _(aircraft->shield->name) : _("None") ), sizeof(upBuffer));
+		Com_sprintf(upBuffer, sizeof(upBuffer), _("Unknown - need to research this"));
 	}
 	menuText[TEXT_STANDARD] = upBuffer;
 	UP_DisplayTechTree(t);
@@ -347,7 +356,6 @@ extern void UP_Article (technology_t* tech)
 				menuText[TEXT_UFOPEDIA] = _(tech->pre_description);
 			Cvar_SetValue("mn_uppreavailable", 1);
 			Cvar_SetValue("mn_updisplay", 1);
-
 		} else {
 			/* Do not display the buttons if no pre-research text is avaialble (no need to even bother clicking there). */
 			Cvar_SetValue("mn_uppreavailable", 0);
