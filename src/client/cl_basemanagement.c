@@ -2313,11 +2313,26 @@ extern void B_TransferEnd (aircraft_t* aircraft)
 	}
 
 	if (b->hasLab) {
-		/* TODO */
+		/* don't handle alien techs here - see below for hasAlienCont check */
+		/* TODO unload the techs here */
+	} else {
+		/* TODO check whether we have techs on board */
+		MN_Popup(_("Notice"), _("The base doesn't have a lab - can't unload the technologies here"));
 	}
 
 	if (b->hasQuarters) {
-		/* TODO */
+		/* TODO unload the employees here */
+	} else {
+		/* TODO check whether we have employees on board */
+		MN_Popup(_("Notice"), _("The base doesn't have quarters - can't unload the employees here"));
+	}
+
+	/* aliens are stored as techs - but seperatly checked for an alien containment is needed here */
+	if (b->hasAlienCont) {
+		/* TODO unload the alien techs here */
+	} else {
+		/* TODO check whether we have aliens on board */
+		MN_Popup(_("Notice"), _("The base doesn't have an alien containment - can't unload the aliens here"));
 	}
 
 	MN_AddNewMessage(_("Transport mission"), _("Transport mission ended, returning to homebase now"), qfalse, MSG_TRANSFERFINISHED, NULL);
