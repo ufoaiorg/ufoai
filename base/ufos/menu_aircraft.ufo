@@ -189,34 +189,7 @@ menu aircraft
 	}
 
 	// ===============
-	// transfer
-	// ===============
-	pic button_transfer
-	{
-		tooltip	"_Transfer equipment or personnel"
-		image	menu/button
-		pos	"45 310"
-		texl	"0 0"
-		texh	"230 64"
-		mousefx true
-		click
-		{
-			cmd "mn_push transfer"
-		}
-		out		{ *txt_transfer color "0 0.8 0 1" *button_transfer texl "0 0" *button_transfer texh "230 64" }
-		in		{ *txt_transfer color "1 1 1 1" *button_transfer texl "230 0" *button_transfer texh "460 64" }
-	}
-	string txt_transfer
-	{
-		string	"_Transfer"
-		color	"0 0.8 0 1"
-		pos	"160 326"
-		font	f_menu
-		align	uc
-	}
-
-	// ===============
-	// transfer
+	// equip
 	// ===============
 	pic button_equip
 	{
@@ -247,7 +220,6 @@ menu aircraft
 	// ==================
 	// aircraft
 	// ==================
-
 	model aircraft
 	{
 		md2		"*cvar mn_aircraft_model"

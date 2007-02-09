@@ -1176,39 +1176,28 @@ menu buyaircraft
 	// item description
 	// ==================
 
-	string itemname
+	string aircraftname
 	{
-		string	"*cvar mn_itemname"
+		string	"*cvar mn_aircraftname"
 		pos		"793 205"
 		align	uc
 	}
 
-	item itemmodel
-	{
-		string	"*cvar mn_item"
-		pos		"793 288"
-		scale	"7 7 7"
-	}
-
-	item weaponmodel
-	{
-		string	"*cvar mn_weapon"
-		pos		"750 288"
-		scale	"7 7 7"
-	}
-
-	item ammomodel
-	{
-		string	"*cvar mn_ammo"
-		pos		"930 288"
-		scale	"7 7 7"
-	}
-
 	text description
 	{
-		pos		"630 357"
-		size	"326 200"
-		format	"20 0"
+		pos		"620 240"
+		size	"346 90"
+//		bgcolor	"1 1 1 0.5"
+		format	"18 150"
+		height	5
+		wheel
+	}
+
+	model aircraftmodel
+	{
+		md2		"*cvar mn_aircraft_model"
+		origin	"690 240 0"
+		color	"0.5 0.5 0.5 1"
 	}
 
 	// ==================
