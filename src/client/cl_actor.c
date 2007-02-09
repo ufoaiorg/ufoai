@@ -433,7 +433,7 @@ static void CL_SetReactionFiremode( int actor_idx, int handidx, int obj_idx, int
 		Com_DPrintf("CL_SetReactionFiremode: Actor index is negative. Abort.\n");
 		return;
 	}
-	
+
 	if (handidx < 0 || handidx > 1) {
 		Com_DPrintf("CL_SetReactionFiremode: Bad hand index given. Abort.\n");
 		return;
@@ -443,7 +443,7 @@ static void CL_SetReactionFiremode( int actor_idx, int handidx, int obj_idx, int
 	MSG_Write_PA(PA_REACT_SELECT, actor_idx, handidx, fd_idx);
 	REACTION_FIREMODE[actor_idx][handidx][1] = obj_idx;
 }
-	
+
 /**
  * @brief Sets the display for a single weapon/reload HUD button
  * @param[in] fd The firedefinition/firemode to be displayed.
@@ -667,7 +667,7 @@ static void CL_UpdateReactionFiremodes (char hand, int actor_idx, int active_fir
 		Com_DPrintf("CL_UpdateReactionFiremodes: No weapon found for %c hand.\n", hand);
 		return;
 	}
-	
+
 	if (active_firemode >= MAX_FIREDEFS_PER_WEAPON) {
 		Com_Printf("CL_UpdateReactionFiremodes: Firemode index to big (%i). Highest possible number is %i.\n", active_firemode, MAX_FIREDEFS_PER_WEAPON-1);
 		return;
@@ -1532,7 +1532,7 @@ extern void CL_ActorStartMove (le_t * le, pos3_t to)
  */
 void CL_ActorShoot (le_t * le, pos3_t at)
 {
-	byte type;
+	int type;
 	if (!CL_CheckAction())
 		return;
 
@@ -1628,7 +1628,7 @@ void CL_ActorDoMove (sizebuf_t * sb)
 
 	/* get le */
 	le = LE_Get(MSG_ReadShort(sb));
-	if ( !le || (le->type != ET_ACTOR && le->type != ET_UGV) ) {
+	if (!le || (le->type != ET_ACTOR && le->type != ET_UGV)) {
 		Com_Printf("Can't move, LE doesn't exist or is not an actor\n");
 		return;
 	}
@@ -1847,7 +1847,7 @@ void CL_ActorDoShoot (sizebuf_t * sb)
 void CL_ActorShootHidden (sizebuf_t *sb)
 {
 	fireDef_t	*fd;
-	qboolean	first;
+	int first;
 	int obj_idx;
 	int weap_fds_idx, fd_idx;
 

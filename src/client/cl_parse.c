@@ -1217,7 +1217,7 @@ static void CL_ParseEvent (void)
 			case EV_ACTOR_SHOOT_HIDDEN:
 				{
 					fireDef_t *fd;
-					qboolean first;
+					int first;
 					int obj_idx;
 					int weap_fds_idx, fd_idx;
 
@@ -1245,7 +1245,7 @@ static void CL_ParseEvent (void)
 			case EV_ACTOR_SHOOT:
 				{
 					fireDef_t	*fd;
-					int		flags, dummy;
+					int flags, dummy;
 					int obj_idx;
 					int weap_fds_idx, fd_idx;
 					vec3_t	muzzle, impact;
@@ -1381,7 +1381,7 @@ extern void CL_Events (void)
  */
 extern void CL_InitEvents (void)
 {
-	SZ_Init( &evStorage, evBuf, EV_STORAGE_SIZE );
+	SZ_Init(&evStorage, evBuf, EV_STORAGE_SIZE);
 	evStorage.cursize = EV_STORAGE_SIZE;
 	evWp = evBuf;
 }
