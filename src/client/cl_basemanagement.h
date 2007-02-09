@@ -125,6 +125,12 @@ typedef struct building_s {
 	int tech;					/**< link to the building-technology */
 	/** if the building needs another one to work (= to be buildable) .. links to gd.buildingTypes */
 	int dependsBuilding;
+
+	/** this value is used by many buildings in a different way
+	 * e.g. aliencont uses it for - how many aliens can be 'stored'
+	 * the hangar uses it for - how many aircraft are manageable here
+	 */
+	int capacity;
 } building_t;
 
 /** @brief A base with all it's data */

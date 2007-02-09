@@ -112,6 +112,7 @@ static value_t valid_vars[] = {
 	{"varcosts", V_FLOAT, offsetof(building_t, varCosts)},	/**< Costs that will come up by using the building. */
 	{"build_time", V_INT, offsetof(building_t, buildTime)},	/**< How many days it takes to construct the building. */
 	{"max_employees", V_INT, offsetof(building_t, maxEmployees)},	/**< How many employees to hire on construction in the first base. */
+	{"capacity", V_INT, offsetof(building_t, capacity)},	/**< A size value that is used by many buldings in a different way. */
 
 	/*event handler functions */
 	{"onconstruct", V_STRING, offsetof(building_t, onConstruct)}, /**< Event handler. */
