@@ -1002,7 +1002,7 @@ extern void SV_Map (qboolean attractloop, char *levelstring, char *assembly)
 		SCR_BeginLoadingPlaque();	/* for local system */
 		SV_BroadcastCommand("changing\n");
 		SV_SendClientMessages();
-		SV_SpawnServer(level, assembly, ss_game, attractloop);
+		SV_SpawnServer(levelstring, assembly, ss_game, attractloop);
 		Cbuf_CopyToDefer();
 	}
 
