@@ -42,7 +42,6 @@ void UP_AircraftDescription(technology_t* t);
 
 /**
  * @brief Prints general information about aircraft for buy/sell menu
- * TODO
  */
 static void CL_MarketAircraftDescription (int aircraftID)
 {
@@ -98,7 +97,7 @@ static void CL_BuySelect_f (void)
  * @endcode
  * @sa CL_BuyType_f
  */
-static void AIR_GetStorageSupplyCount(char *airCharId, int *const storage, int *const supply)
+static void AIR_GetStorageSupplyCount (char *airCharId, int *const storage, int *const supply)
 {
 	base_t *base;
 	aircraft_t *aircraft;
@@ -264,10 +263,6 @@ static void CL_BuyItem_f (void)
 			CL_UpdateCredits(ccs.credits - csi.ods[item].price * MARKET_BUY_FACTOR / MARKET_BUY_DIVISOR);
 		}
 	}
-	/*
-	RS_MarkCollected(&baseCurrent->storage);
-	*/
-	/*RS_MarkResearchable();*/
 }
 
 /**
@@ -342,6 +337,8 @@ static void CL_BuyAircraft_f (void)
  * at current arraypos is valid
  * FIXME: Remove all soldiers and put equipment back to base
  * @sa CL_BuyAircraft_f
+ * TODO: if we ever produce aircraft equipment or buy and sell the equipment,
+ * make sure, that the equipment gets sold here, too
  */
 static void CL_SellAircraft_f (void)
 {
