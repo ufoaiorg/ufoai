@@ -51,12 +51,12 @@ void *Hunk_Begin (int maxsize)
 	hunkmaxsize = maxsize;
 #ifdef VIRTUAL_ALLOC
 	membase = VirtualAlloc(NULL, maxsize, MEM_RESERVE, PAGE_NOACCESS);
-#else
-	membase = malloc(maxsize);
-#endif
 	if (!membase)
 		Sys_Error("VirtualAlloc reserve failed - not enough memory to allocate %d bytes", maxsize);
-#ifndef VIRTUAL_ALLOC
+#else
+	membase = malloc(maxsize);
+	if (!membase)
+		Sys_Error("malloc failed - not enough memory to allocate %d bytes", maxsize);
 	memset(membase, 0, maxsize);
 #endif
 	return (void *)membase;
