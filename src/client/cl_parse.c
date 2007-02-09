@@ -228,27 +228,27 @@ extern void CL_RegisterSounds (void)
 {
 	int i, j, k;
 
-	S_BeginRegistration ();
+	S_BeginRegistration();
 
 	/* load game sounds */
 	for (i = 1; i < MAX_SOUNDS; i++) {
 		if (!cl.configstrings[CS_SOUNDS+i][0])
 			break;
-		cl.sound_precache[i] = S_RegisterSound (cl.configstrings[CS_SOUNDS+i]);
+		cl.sound_precache[i] = S_RegisterSound(cl.configstrings[CS_SOUNDS+i]);
 		/* pump message loop */
-		Sys_SendKeyEvents ();
+		Sys_SendKeyEvents();
 	}
 
 	/* load weapon sounds */
-	for ( i = 0; i < csi.numODs; i++ ) { /* i = obj */
-		for (j = 0; j < csi.ods[i].numWeapons; j++ ) {	/* j = weapon-entry per obj */
-			for ( k = 0; k < csi.ods[i].numFiredefs[j]; j++ ) { /* k = firedef per wepaon */
-				if ( csi.ods[i].fd[j][k].fireSound[0] )
-					S_RegisterSound( csi.ods[i].fd[j][k].fireSound );
-				if ( csi.ods[i].fd[j][k].impactSound[0] )
-					S_RegisterSound( csi.ods[i].fd[j][k].impactSound );
+	for (i = 0; i < csi.numODs; i++) { /* i = obj */
+		for (j = 0; j < csi.ods[i].numWeapons; j++) {	/* j = weapon-entry per obj */
+			for (k = 0; k < csi.ods[i].numFiredefs[j]; j++) { /* k = firedef per wepaon */
+				if (csi.ods[i].fd[j][k].fireSound[0])
+					S_RegisterSound(csi.ods[i].fd[j][k].fireSound);
+				if (csi.ods[i].fd[j][k].impactSound[0])
+					S_RegisterSound(csi.ods[i].fd[j][k].impactSound);
 				/* pump message loop */
-				Sys_SendKeyEvents ();
+				Sys_SendKeyEvents();
 			}
 		}
 	}
@@ -271,10 +271,10 @@ static void CL_ParseServerData (void)
 	char	*str;
 	int		i;
 
-	Com_DPrintf ("Serverdata packet received.\n");
+	Com_DPrintf("Serverdata packet received.\n");
 
 	/* wipe the client_state_t struct */
-	CL_ClearState ();
+	CL_ClearState();
 	cls.state = ca_connected;
 
 	/* parse protocol version number */
@@ -283,7 +283,7 @@ static void CL_ParseServerData (void)
 
 	/* compare versions */
 	if (i != PROTOCOL_VERSION)
-		Com_Error (ERR_DROP,"Server returned version %i, not %i", i, PROTOCOL_VERSION);
+		Com_Error(ERR_DROP,"Server returned version %i, not %i", i, PROTOCOL_VERSION);
 
 	cl.servercount = MSG_ReadLong (&net_message);
 	cl.attractloop = MSG_ReadByte (&net_message);
@@ -320,9 +320,9 @@ static void CL_ParseConfigString (void)
 	char	*s;
 
 	/* which configstring? */
-	i = MSG_ReadShort (&net_message);
+	i = MSG_ReadShort(&net_message);
 	if (i < 0 || i >= MAX_CONFIGSTRINGS)
-		Com_Error (ERR_DROP, "configstring > MAX_CONFIGSTRINGS");
+		Com_Error(ERR_DROP, "configstring > MAX_CONFIGSTRINGS");
 	/* value */
 	s = MSG_ReadString(&net_message);
 
@@ -417,7 +417,7 @@ static void CL_ParseStartSoundPacket (void)
 
 	/* positioned in space */
 	if (flags & SND_POS) {
-		MSG_ReadPos (&net_message, pos_v);
+		MSG_ReadPos(&net_message, pos_v);
 
 		pos = pos_v;
 	} else /* use entity number */
@@ -489,9 +489,9 @@ static void CL_Reset (sizebuf_t *sb)
  * @brief
  * @sa G_ClientBegin
  */
-static void CL_StartGame( sizebuf_t *sb )
+static void CL_StartGame (sizebuf_t *sb)
 {
-	qboolean team_play = MSG_ReadByte(sb);
+	int team_play = MSG_ReadByte(sb);
 
 	/* init camera position and angles */
 	memset(&cl.cam, 0, sizeof(camera_t));
@@ -605,7 +605,7 @@ static void CL_EntPerish (sizebuf_t *sb)
 		for (i = 0, actor = LEs; i < numLEs; i++, actor++)
 			if (actor->inuse
 				 && (actor->type == ET_ACTOR || actor->type == ET_UGV)
-				 && VectorCompare(actor->pos, le->pos) ) {
+				 && VectorCompare(actor->pos, le->pos)) {
 				Com_DPrintf("CL_EntPerish: le of type ET_ITEM hidden\n");
 				FLOOR(actor) = NULL;
 			}
