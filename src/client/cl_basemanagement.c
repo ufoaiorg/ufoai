@@ -2253,7 +2253,7 @@ static void B_TransferEmptyAircraftStorage_f (void)
 	/* this is a transfer mission to the homebase (though we are still in the homebase) */
 	transferAircraft->transferBase = (void*)transferAircraft->homebase;
 	/* to pass the sanity check in B_TransferEnd */
-	transferAircraft->status != AIR_TRANSPORT;
+	transferAircraft->status = AIR_TRANSPORT;
 	B_TransferEnd(transferAircraft);
 
 	/* clear the command buffer
