@@ -2255,6 +2255,7 @@ static void B_TransferEmptyAircraftStorage_f (void)
 	/* to pass the sanity check in B_TransferEnd */
 	transferAircraft->status = AIR_TRANSPORT;
 	B_TransferEnd(transferAircraft);
+	transferAircraft->status = AIR_HOME;
 
 	/* clear the command buffer
 	 * needed to erase all B_TransferListSelect_f
@@ -2319,6 +2320,7 @@ extern void B_TransferEnd (aircraft_t* aircraft)
 		/* TODO */
 	}
 
+	MN_AddNewMessage(_("Transport mission"), _("Transport mission ended, returning to homebase now"), qfalse, MSG_TRANSFERFINISHED, NULL);
 	CL_AircraftReturnToBase(aircraft);
 }
 
