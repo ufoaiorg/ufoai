@@ -147,14 +147,22 @@ static void SV_Map_f (void)
 	/* base attacks starts with . and random maps with + */
 	/* also check the . to determine whether a pcx or demo should be loaded */
 	if (!strstr(map, ".")) {
-		if (map[0] == '+')
+		if (map[0] == '+') {
 			Com_sprintf(expanded, sizeof(expanded), "maps/%s.ump", map+1);
-		else
+
+			/* check for ump file */
+			if (FS_CheckFile(expanded) < 0) {
+				Com_Printf ("Can't find %s\n", expanded);
+				return;
+			}
+		} else if (!assembly) {
 			Com_sprintf(expanded, sizeof(expanded), "maps/%s.bsp", map);
 
-		if (FS_CheckFile(expanded) < 0) {
-			Com_Printf ("Can't find %s\n", expanded);
-			return;
+			/* check for bsp file */
+			if (FS_CheckFile(expanded) < 0) {
+				Com_Printf ("Can't find %s\n", expanded);
+				return;
+			}
 		}
 	}
 
@@ -162,7 +170,7 @@ static void SV_Map_f (void)
 	SV_Map(qfalse, map, assembly);
 
 	/* archive server state */
-	Q_strncpyz (svs.mapcmd, map, sizeof(svs.mapcmd));
+	Q_strncpyz(svs.mapcmd, map, sizeof(svs.mapcmd));
 }
 
 /**
