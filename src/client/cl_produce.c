@@ -461,6 +461,7 @@ static void PR_UpdateProductionList (void)
 	objDef_t *od;
 	production_queue_t *queue;
 	production_t *prod;
+	technology_t *tech;
 
 	productionAmount[0] = productionList[0] = productionQueued[0] = '\0';
 	queue = &gd.productions[baseCurrent->idx];
@@ -484,8 +485,13 @@ static void PR_UpdateProductionList (void)
 
 	/* then go through all object definitions */
 	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
+		/* we will not show items with producetime = -1 - these are not produceable */
+		if (*od->id)
+			tech = RS_GetTechByProvided(od->id);
+
 		/* we can produce what was researched before */
-		if (od->buytype == produceCategory && RS_IsResearched_ptr(od->tech) && *od->name) {
+		if (od->buytype == produceCategory && RS_IsResearched_ptr(od->tech) 
+		&& *od->name && tech && (tech->produceTime != -1)) {
 			Q_strcat(productionList, va("%s\n", od->name), sizeof(productionList));
 			Q_strcat(productionAmount, va("%i\n", baseCurrent->storage.num[i]), sizeof(productionAmount));
 			Q_strcat(productionQueued, "\n", sizeof(productionQueued));
