@@ -1643,7 +1643,7 @@ void G_ClientAction (player_t * player)
 	int num;
 	pos3_t pos;
 	int i;
-	byte firemode;
+	int firemode;
 	int from, fx, fy, to, tx, ty;
 	int actor, hand, fd_idx;
 
