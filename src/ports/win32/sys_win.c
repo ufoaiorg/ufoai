@@ -162,10 +162,10 @@ void Sys_Error (char *error, ...)
 	__debugbreak();	/* break execution before game shutdown */
 #endif
 
-	CL_Shutdown ();
-	Qcommon_Shutdown ();
+	CL_Shutdown();
+	Qcommon_Shutdown();
 
-	va_start (argptr, error);
+	va_start(argptr, error);
 	Q_vsnprintf(text, sizeof(text), error, argptr);
 	va_end(argptr);
 
@@ -174,10 +174,10 @@ void Sys_Error (char *error, ...)
 	MessageBox(NULL, text, "Error", 0 /* MB_OK */ );
 
 	if (qwclsemaphore)
-		CloseHandle (qwclsemaphore);
+		CloseHandle(qwclsemaphore);
 
 	/* shut down QHOST hooks if necessary */
-	DeinitConProc ();
+	DeinitConProc();
 
 	exit (1);
 }
@@ -187,21 +187,21 @@ void Sys_Error (char *error, ...)
  */
 void Sys_Quit (void)
 {
-	timeEndPeriod( 1 );
+	timeEndPeriod(1);
 
 	CL_Shutdown();
-	Qcommon_Shutdown ();
-	CloseHandle (qwclsemaphore);
+	Qcommon_Shutdown();
+	CloseHandle(qwclsemaphore);
 	if (dedicated && dedicated->value && oldconsole)
-		FreeConsole ();
+		FreeConsole();
 
 	if (procShell_NotifyIcon)
-		procShell_NotifyIcon (NIM_DELETE, &pNdata);
+		procShell_NotifyIcon(NIM_DELETE, &pNdata);
 
 	/* shut down QHOST hooks if necessary */
-	DeinitConProc ();
+	DeinitConProc();
 
-	exit (0);
+	exit(0);
 }
 
 
@@ -223,10 +223,10 @@ static void WinError (void)
 	);
 
 	/* Display the string. */
-	MessageBox( NULL, (char*)lpMsgBuf, "GetLastError", MB_OK|MB_ICONINFORMATION );
+	MessageBox(NULL, (char*)lpMsgBuf, "GetLastError", MB_OK|MB_ICONINFORMATION);
 
 	/* Free the buffer. */
-	LocalFree( lpMsgBuf );
+	LocalFree(lpMsgBuf);
 }
 
 /**
@@ -239,21 +239,21 @@ static void ServerWindowProcCommandExecute (void)
 
 	*(DWORD *)&buff = sizeof(buff)-2;
 
-	ret = (int)SendDlgItemMessage (hwnd_Server, IDC_COMMAND, EM_GETLINE, 1, (LPARAM)buff);
+	ret = (int)SendDlgItemMessage(hwnd_Server, IDC_COMMAND, EM_GETLINE, 1, (LPARAM)buff);
 	if (!ret)
 		return;
 
 	buff[ret] = '\n';
 	buff[ret+1] = '\0';
-	Sys_ConsoleOutput (buff);
-	Cbuf_AddText (buff);
-	SendDlgItemMessage (hwnd_Server, IDC_COMMAND, WM_SETTEXT, 0, (LPARAM)"");
+	Sys_ConsoleOutput(buff);
+	Cbuf_AddText(buff);
+	SendDlgItemMessage(hwnd_Server, IDC_COMMAND, WM_SETTEXT, 0, (LPARAM)"");
 }
 
 /**
  * @brief
  */
-static LRESULT ServerWindowProcCommand(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
+static LRESULT ServerWindowProcCommand (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	UINT idItem = LOWORD(wParam);
 	UINT wNotifyCode = HIWORD(wParam);
@@ -261,9 +261,9 @@ static LRESULT ServerWindowProcCommand(HWND hwnd, UINT message, WPARAM wParam, L
 	switch (idItem) {
 	case IDOK:
 		switch (wNotifyCode) {
-			case BN_CLICKED:
-				ServerWindowProcCommandExecute();
-				break;
+		case BN_CLICKED:
+			ServerWindowProcCommandExecute();
+			break;
 		}
 	}
 	return FALSE;
@@ -272,7 +272,7 @@ static LRESULT ServerWindowProcCommand(HWND hwnd, UINT message, WPARAM wParam, L
 /**
  * @brief
  */
-static LRESULT CALLBACK ServerWindowProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
+static LRESULT CALLBACK ServerWindowProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch (message) {
 	case WM_COMMAND:
@@ -310,13 +310,13 @@ static LRESULT CALLBACK ServerWindowProc(HWND hwnd, UINT message, WPARAM wParam,
 					return FALSE;
 				}
 			}
-			return DefWindowProc (hwnd, message, wParam, lParam);
+			return DefWindowProc(hwnd, message, wParam, lParam);
 		}
 	case WM_USER + 4:
 		if (lParam == WM_LBUTTONDBLCLK) {
-			ShowWindow (hwnd_Server, SW_RESTORE);
-			SetForegroundWindow (hwnd_Server);
-			SetFocus (GetDlgItem (hwnd_Server, IDC_COMMAND));
+			ShowWindow(hwnd_Server, SW_RESTORE);
+			SetForegroundWindow(hwnd_Server);
+			SetFocus(GetDlgItem(hwnd_Server, IDC_COMMAND));
 		}
 		return FALSE;
 	}
@@ -327,16 +327,16 @@ static LRESULT CALLBACK ServerWindowProc(HWND hwnd, UINT message, WPARAM wParam,
 /**
  * @brief Get current user
  */
-char *Sys_GetCurrentUser( void )
+char *Sys_GetCurrentUser (void)
 {
 	static char s_userName[1024];
 	unsigned long size = sizeof( s_userName );
 
-	if ( !GetUserName( s_userName, &size ) )
-		Q_strncpyz( s_userName, "player", sizeof(s_userName) );
+	if (!GetUserName(s_userName, &size))
+		Q_strncpyz(s_userName, "player", sizeof(s_userName));
 
-	if ( !s_userName[0] )
-		Q_strncpyz( s_userName, "player", sizeof(s_userName) );
+	if (!s_userName[0])
+		Q_strncpyz(s_userName, "player", sizeof(s_userName));
 
 	return s_userName;
 }
@@ -344,11 +344,11 @@ char *Sys_GetCurrentUser( void )
 /**
  * @brief Get current working dir
  */
-char *Sys_Cwd( void )
+char *Sys_Cwd (void)
 {
 	static char cwd[MAX_OSPATH];
 
-	if (_getcwd( cwd, sizeof( cwd ) - 1 ) == NULL)
+	if (_getcwd(cwd, sizeof(cwd) - 1) == NULL)
 		return NULL;
 	cwd[MAX_OSPATH-1] = 0;
 
@@ -358,12 +358,12 @@ char *Sys_Cwd( void )
 /**
  * @brief Normalize path (remove all \\ )
  */
-void Sys_NormPath(char* path)
+void Sys_NormPath (char* path)
 {
 	char *tmp = path;
 
-	while ( *tmp ) {
-		if ( *tmp == '\\' )
+	while (*tmp) {
+		if (*tmp == '\\')
 			*tmp = '/';
 		else
 			*tmp = tolower(*tmp);
@@ -442,22 +442,22 @@ void Sys_Init (void)
 	/* front end can tell if it is alive */
 
 	/* mutex will fail if semephore already exists */
-    qwclsemaphore = CreateMutex(
-        NULL,         /* Security attributes */
-        0,            /* owner       */
-        "qwcl"); /* Semaphore name      */
+	qwclsemaphore = CreateMutex(
+		NULL,         /* Security attributes */
+		0,            /* owner       */
+		"qwcl"); /* Semaphore name      */
 	if (!qwclsemaphore)
 		Sys_Error("QWCL is already running on this system");
 	CloseHandle (qwclsemaphore);
 
-    qwclsemaphore = CreateSemaphore(
-        NULL,         /* Security attributes */
-        0,            /* Initial count       */
-        1,            /* Maximum count       */
-        "qwcl"); /* Semaphore name      */
+	qwclsemaphore = CreateSemaphore(
+		NULL,         /* Security attributes */
+		0,            /* Initial count       */
+		1,            /* Maximum count       */
+		"qwcl"); /* Semaphore name      */
 #endif
 
-	timeBeginPeriod( 1 );
+	timeBeginPeriod(1);
 
 	vinfo.dwOSVersionInfoSize = sizeof(vinfo);
 
@@ -468,7 +468,7 @@ void Sys_Init (void)
 		Sys_Error("UFO: AI requires windows version 4 or greater");
 	if (vinfo.dwPlatformId == VER_PLATFORM_WIN32s) /* win3.x with win32 extensions */
 		Sys_Error("UFO: AI doesn't run on Win32s");
-	else if ( vinfo.dwPlatformId == VER_PLATFORM_WIN32_WINDOWS ) /* win95, 98, me */
+	else if (vinfo.dwPlatformId == VER_PLATFORM_WIN32_WINDOWS) /* win95, 98, me */
 		s_win95 = qtrue;
 
 	Cvar_Get("sys_os", "win", CVAR_SERVERINFO, NULL);
@@ -476,27 +476,27 @@ void Sys_Init (void)
 	if (dedicated->value) {
 		oldconsole = Cvar_VariableInteger("oldconsole");
 		if (oldconsole) {
-			if (!AllocConsole ()) {
+			if (!AllocConsole()) {
 				WinError();
 				Sys_Error("Couldn't create dedicated server console");
 			}
-			hinput = GetStdHandle (STD_INPUT_HANDLE);
-			houtput = GetStdHandle (STD_OUTPUT_HANDLE);
+			hinput = GetStdHandle(STD_INPUT_HANDLE);
+			houtput = GetStdHandle(STD_OUTPUT_HANDLE);
 
 			/* let QHOST hook in */
-			InitConProc (argc, argv);
+			InitConProc(argc, argv);
 		} else {
 			HICON hIcon;
-			hwnd_Server = CreateDialog (global_hInstance, MAKEINTRESOURCE(IDD_SERVER_GUI), NULL, (DLGPROC)ServerWindowProc);
+			hwnd_Server = CreateDialog(global_hInstance, MAKEINTRESOURCE(IDD_SERVER_GUI), NULL, (DLGPROC)ServerWindowProc);
 
 			if (!hwnd_Server) {
 				WinError();
 				Sys_Error("Couldn't create dedicated server window. GetLastError() = %d", (int)GetLastError());
 			}
 
-			SendDlgItemMessage (hwnd_Server, IDC_CONSOLE, EM_SETREADONLY, TRUE, 0);
+			SendDlgItemMessage(hwnd_Server, IDC_CONSOLE, EM_SETREADONLY, TRUE, 0);
 
-			SZ_Init (&console_buffer, console_buff, sizeof(console_buff));
+			SZ_Init(&console_buffer, console_buff, sizeof(console_buff));
 			console_buffer.allowoverflow = qtrue;
 
 			hIcon = (HICON)LoadImage(global_hInstance,
@@ -533,7 +533,7 @@ char *Sys_ConsoleInput (void)
 		return NULL;
 
 	for ( ;; ) {
-		if (!GetNumberOfConsoleInputEvents (hinput, &numevents))
+		if (!GetNumberOfConsoleInputEvents(hinput, &numevents))
 			Sys_Error("Error getting # of console events");
 
 		if (numevents <= 0)
@@ -604,18 +604,18 @@ void Sys_UpdateConsoleBuffer (void)
 			p++;
 			q = (consoleFullBuffer + buflen);
 			moved = (buflen + (int)(p - q));
-			memmove (consoleFullBuffer, consoleFullBuffer + moved, consoleBufferPointer - moved);
+			memmove(consoleFullBuffer, consoleFullBuffer + moved, consoleBufferPointer - moved);
 			consoleBufferPointer -= moved;
 			consoleFullBuffer[consoleBufferPointer] = '\0';
 		}
 
-		memcpy (consoleFullBuffer+consoleBufferPointer, console_buffer.data, console_buffer.cursize);
+		memcpy(consoleFullBuffer+consoleBufferPointer, console_buffer.data, console_buffer.cursize);
 		consoleBufferPointer += (console_buffer.cursize - 1);
 
 		if (!Minimized) {
-			SendDlgItemMessage (hwnd_Server, IDC_CONSOLE, WM_SETTEXT, 0, (LPARAM)consoleFullBuffer);
-			len = (int)SendDlgItemMessage (hwnd_Server, IDC_CONSOLE, EM_GETLINECOUNT, 0, 0);
-			SendDlgItemMessage (hwnd_Server, IDC_CONSOLE, EM_LINESCROLL, 0, len);
+			SendDlgItemMessage(hwnd_Server, IDC_CONSOLE, WM_SETTEXT, 0, (LPARAM)consoleFullBuffer);
+			len = (int)SendDlgItemMessage(hwnd_Server, IDC_CONSOLE, EM_GETLINECOUNT, 0, 0);
+			SendDlgItemMessage(hwnd_Server, IDC_CONSOLE, EM_LINESCROLL, 0, len);
 		}
 
 		SZ_Clear (&console_buffer);
@@ -672,7 +672,7 @@ void Sys_ConsoleOutput (char *string)
 		}
 		s[0] = '\0';
 
-		SZ_Print (&console_buffer, text);
+		SZ_Print(&console_buffer, text);
 
 		Sys_UpdateConsoleBuffer();
 	}
@@ -684,14 +684,14 @@ void Sys_ConsoleOutput (char *string)
  */
 void Sys_SendKeyEvents (void)
 {
-	MSG        msg;
+	MSG msg;
 
-	while (PeekMessage (&msg, NULL, 0, 0, PM_NOREMOVE)) {
-		if (!GetMessage (&msg, NULL, 0, 0))
-			Sys_Quit ();
+	while (PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE)) {
+		if (!GetMessage(&msg, NULL, 0, 0))
+			Sys_Quit();
 		sys_msg_time = msg.time;
-		TranslateMessage (&msg);
-		DispatchMessage (&msg);
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
 	}
 
 	/* grab frame time */
@@ -702,19 +702,19 @@ void Sys_SendKeyEvents (void)
 /**
  * @brief
  */
-char *Sys_GetClipboardData( void )
+char *Sys_GetClipboardData (void)
 {
 	char *data = NULL;
 	char *cliptext;
 
-	if ( OpenClipboard( NULL ) != 0 ) {
+	if (OpenClipboard(NULL) != 0) {
 		HANDLE hClipboardData;
 
-		if ( ( hClipboardData = GetClipboardData( CF_TEXT ) ) != 0 ) {
-			if ( ( cliptext = (char*)GlobalLock( hClipboardData ) ) != 0 ) {
-				data = (char*)malloc( GlobalSize( hClipboardData ) + 1 );
-				strcpy( data, cliptext );
-				GlobalUnlock( hClipboardData );
+		if ((hClipboardData = GetClipboardData(CF_TEXT)) != 0 ) {
+			if ((cliptext = (char*)GlobalLock(hClipboardData)) != 0) {
+				data = (char*)malloc( GlobalSize(hClipboardData) + 1);
+				strcpy(data, cliptext);
+				GlobalUnlock(hClipboardData);
 			}
 		}
 		CloseClipboard();
@@ -806,16 +806,16 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 #endif
 
 	if (game_library)
-		Com_Error (ERR_FATAL, "Sys_GetGameAPI without Sys_UnloadingGame");
+		Com_Error(ERR_FATAL, "Sys_GetGameAPI without Sys_UnloadingGame");
 
 	/* run through the search paths */
 	path = NULL;
 	while (1) {
-		path = FS_NextPath (path);
+		path = FS_NextPath(path);
 		if (!path)
 			break;		/* couldn't find one anywhere */
 		Com_sprintf(name, sizeof(name), "%s/game.dll", path);
-		game_library = LoadLibrary (name);
+		game_library = LoadLibrary(name);
 		if (game_library) {
 			Com_DPrintf("LoadLibrary (%s)\n",name);
 			break;
@@ -828,7 +828,7 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 	if (!game_library) {
 		_getcwd (cwd, sizeof(cwd));
 		Com_sprintf(name, sizeof(name), "%s/%s/%s", cwd, debugdir, gamename);
-		game_library = LoadLibrary ( name );
+		game_library = LoadLibrary(name);
 		if (game_library)
 			Com_DPrintf("LoadLibrary (%s)\n", name);
 #ifdef DEBUG
@@ -836,7 +836,7 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 			Com_DPrintf("LoadLibrary (%s) failed\n",name);
 			/* check the current directory for other development purposes */
 			Com_sprintf(name, sizeof(name), "%s/%s", cwd, gamename);
-			game_library = LoadLibrary ( name );
+			game_library = LoadLibrary(name);
 			if (game_library)
 				Com_DPrintf("LoadLibrary (%s)\n", name);
 			else
@@ -852,7 +852,7 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 
 	GetGameAPI = (GetGameApi_t)GetProcAddress (game_library, "GetGameAPI");
 	if (!GetGameAPI) {
-			Sys_UnloadGame ();
+		Sys_UnloadGame();
 		Com_Printf("Could not load game lib '%s'\n", name);
 		return NULL;
 	}
@@ -899,15 +899,15 @@ static void FixWorkingDirectory (void)
 	char	*p;
 	char	curDir[MAX_PATH];
 
-	GetModuleFileName (NULL, curDir, sizeof(curDir)-1);
+	GetModuleFileName(NULL, curDir, sizeof(curDir)-1);
 
-	p = strrchr (curDir, '\\');
+	p = strrchr(curDir, '\\');
 	p[0] = 0;
 
 	if (strlen(curDir) > (MAX_OSPATH - MAX_QPATH))
 		Sys_Error("Current path is too long. Please move your UFO:AI installation to a shorter path.");
 
-	SetCurrentDirectory (curDir);
+	SetCurrentDirectory(curDir);
 }
 
 #if 0
@@ -1196,7 +1196,7 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 
 	global_hInstance = hInstance;
 
-	ParseCommandLine (lpCmdLine);
+	ParseCommandLine(lpCmdLine);
 
 	/* always change to the current working dir */
 	FixWorkingDirectory();
@@ -1205,9 +1205,9 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	__try
 	{
 #endif
-		Qcommon_Init (argc, argv);
+		Qcommon_Init(argc, argv);
 		timescale = 1.0;
-		oldtime = Sys_Milliseconds ();
+		oldtime = Sys_Milliseconds();
 
 		srand( oldtime );
 
@@ -1221,8 +1221,8 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 				if (!GetMessage (&msg, NULL, 0, 0))
 					Com_Quit();
 				sys_msg_time = msg.time;
-				TranslateMessage (&msg);
-				DispatchMessage (&msg);
+				TranslateMessage(&msg);
+				DispatchMessage(&msg);
 			}
 
 			do {
