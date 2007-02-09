@@ -633,6 +633,7 @@ void RS_AssignScientist (technology_t* tech)
 	employee_t *employee = NULL;
 	base_t *base = NULL;
 
+	assert(tech);
 	Com_DPrintf("RS_AssignScientist: %i | %s \n", tech->idx, tech->name);
 
 	if (tech->base_idx >= 0) {

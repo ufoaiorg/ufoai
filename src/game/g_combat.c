@@ -1018,8 +1018,7 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type, int fir
 
 		/* ammo... */
 		if (fd->ammo) {
-			if ( ammo > 0
-				 || !gi.csi->ods[weapon->t].thrown ) {
+			if (ammo > 0 || !gi.csi->ods[weapon->t].thrown) {
 				gi.AddEvent(G_VisToPM(ent->visflags), EV_INV_AMMO);
 				gi.WriteShort(num);
 				gi.WriteByte(ammo);

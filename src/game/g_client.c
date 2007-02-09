@@ -1866,7 +1866,6 @@ void G_ClientTeamInfo (player_t * player)
 	int i, j, k, length;
 	int container, x, y;
 	item_t item;
-	byte count[MAX_OBJDEFS];
 
 	/* find a team */
 	G_GetTeam(player);
@@ -1878,7 +1877,6 @@ void G_ClientTeamInfo (player_t * player)
 			&& player->pers.team == ent->team)
 			break;
 
-	memset(count, 0, sizeof(count));
 	for (i = 0; i < length; i++) {
 		if (j < globals.num_edicts && i < maxsoldiersperplayer->integer) {
 			/* here the actors actually spawn */

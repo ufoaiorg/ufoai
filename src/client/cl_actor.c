@@ -450,7 +450,7 @@ static void CL_SetReactionFiremode( int actor_idx, int handidx, int obj_idx, int
  * @param[in] hand Which list to display. 'l' for left hand list, 'r' for right hand list.
  * @param[in] status Display the firemode clickable/active (1) or inactive (0).
  */
-static void CL_DisplayFiremodeEntry (fireDef_t *fd, char hand, byte status)
+static void CL_DisplayFiremodeEntry (fireDef_t *fd, char hand, qboolean status)
 {
 	/* char cbufText[MAX_VAR]; */
 	if (!fd)
@@ -608,12 +608,12 @@ void CL_DisplayFiremodes_f (void)
 	}
 
 	for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
-		if ( i < ammo->numFiredefs[weap_fd_idx] ) { /* We have a defined fd */
+		if (i < ammo->numFiredefs[weap_fd_idx]) { /* We have a defined fd */
 			/* Display the firemode information (image + text). */
-			if ( ammo->fd[weap_fd_idx][i].time <= selActor->TU ) {  /* Enough timeunits for this firemode?*/
-				CL_DisplayFiremodeEntry(&ammo->fd[weap_fd_idx][i], hand[0], 1);
+			if (ammo->fd[weap_fd_idx][i].time <= selActor->TU ) {  /* Enough timeunits for this firemode?*/
+				CL_DisplayFiremodeEntry(&ammo->fd[weap_fd_idx][i], hand[0], qtrue);
 			} else{
-				CL_DisplayFiremodeEntry(&ammo->fd[weap_fd_idx][i], hand[0], 0);
+				CL_DisplayFiremodeEntry(&ammo->fd[weap_fd_idx][i], hand[0], qfalse);
 			}
 
 			/* Display checkbox for reaction firemode (this needs a sane REACTION_FIREMODE array) */
