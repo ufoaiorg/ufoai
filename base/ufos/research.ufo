@@ -933,7 +933,7 @@ tech rs_weapon_chaingun
 
 	provides	chaingun
 	time	0
-	producetime	40
+	producetime	-1
 }
 
 tech rs_weapon_chaingun_ammo
@@ -952,7 +952,7 @@ tech rs_weapon_chaingun_ammo
 
 	provides	chaingun_ammo
 	time	0
-	producetime	1
+	producetime	-1
 }
 
 tech rs_weapon_shotgun
@@ -1327,6 +1327,7 @@ tech rs_weapon_pbeamrifle_ammo
 
 tech rs_weapon_pbeam_ammo
 {
+	//Note: this is type: tech because it provides three other technologies for ammo, not ammo itself
 	type		tech
 	up_chapter	artifacts
 	description	"_pbeam_ammo_txt"
