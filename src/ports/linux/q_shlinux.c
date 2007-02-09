@@ -38,9 +38,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /*=============================================================================== */
 
-byte *membase;
-int maxhunksize;
-int curhunksize;
+static byte *membase;
+static int maxhunksize;
+static int curhunksize;
 
 /**
  * @brief
@@ -73,7 +73,7 @@ void *Hunk_Alloc (int size)
 	byte *buf;
 
 	/* round to cacheline */
-	size = (size+31)&~31;
+	size = (size + 31) &~ 31;
 	if (curhunksize + size > maxhunksize)
 		Sys_Error("Hunk_Alloc overflow");
 	buf = membase + sizeof(int) + curhunksize;
@@ -190,8 +190,8 @@ static	DIR		*fdir;
 /**
  * @brief
  */
-static qboolean CompareAttributes(char *path, char *name,
-	unsigned musthave, unsigned canthave )
+static qboolean CompareAttributes (char *path, char *name,
+	unsigned musthave, unsigned canthave)
 {
 	struct stat st;
 	char fn[MAX_OSPATH];
