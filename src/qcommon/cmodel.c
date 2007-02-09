@@ -1107,7 +1107,7 @@ static unsigned CM_AddMapTile(char *name, int sX, int sY, int sZ)
  * @brief Loads in the map and all submodels
  * @sa CM_AddMapTile
  */
-void CM_LoadMap(char *tiles, char *pos, unsigned *mapchecksum)
+extern void CM_LoadMap (char *tiles, char *pos, unsigned *mapchecksum)
 {
 	char *token;
 	char name[MAX_VAR];
@@ -1173,7 +1173,7 @@ void CM_LoadMap(char *tiles, char *pos, unsigned *mapchecksum)
  * given modelnumber or -name
  * @param[in] name The modelnumber (e.g. "*2") or the modelname
  */
-cmodel_t *CM_InlineModel(char *name)
+cmodel_t *CM_InlineModel (char *name)
 {
 	int i, num;
 
@@ -1196,7 +1196,7 @@ cmodel_t *CM_InlineModel(char *name)
 /**
  * @brief
  */
-int CM_NumInlineModels(void)
+int CM_NumInlineModels (void)
 {
 	return numInline;
 }
@@ -1204,7 +1204,7 @@ int CM_NumInlineModels(void)
 /**
  * @brief
  */
-char *CM_EntityString(void)
+char *CM_EntityString (void)
 {
 	return map_entitystring;
 }
@@ -1213,7 +1213,7 @@ char *CM_EntityString(void)
  * @brief
  * @param[in] leafnum
  */
-int CM_LeafContents(int leafnum)
+int CM_LeafContents (int leafnum)
 {
 	if (leafnum < 0 || leafnum >= curTile->numleafs)
 		Com_Error(ERR_DROP, "CM_LeafContents: bad number");
@@ -1231,7 +1231,7 @@ BOX TRACING
  * @brief Set up the planes and nodes so that the six floats of a bounding
  * box can just be stored out and get a proper clipping hull structure.
  */
-void CM_InitBoxHull(void)
+void CM_InitBoxHull (void)
 {
 	int i;
 	int side;
@@ -1291,7 +1291,7 @@ void CM_InitBoxHull(void)
  * @brief To keep everything totally uniform, bounding boxes are turned into small
  * BSP trees instead of being compared directly.
  */
-int CM_HeadnodeForBox(int tile, vec3_t mins, vec3_t maxs)
+int CM_HeadnodeForBox (int tile, vec3_t mins, vec3_t maxs)
 {
 	curTile = &mapTiles[tile];
 
@@ -1317,7 +1317,7 @@ int CM_HeadnodeForBox(int tile, vec3_t mins, vec3_t maxs)
  * @param[in] p
  * @param[in] num
  */
-int CM_PointLeafnum_r(vec3_t p, int num)
+int CM_PointLeafnum_r (vec3_t p, int num)
 {
 	float d;
 	cnode_t *node;
