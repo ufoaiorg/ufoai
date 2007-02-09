@@ -33,16 +33,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-
 #include "server.h"
-
-
 
 /**
  * @brief Specify a list of master servers
  * @sa SV_InitGame
  */
-void SV_SetMaster_f(void)
+extern void SV_SetMaster_f (void)
 {
 	if (sv_maxclients->value == 1.0f)
 		return;
@@ -71,7 +68,7 @@ void SV_SetMaster_f(void)
 /**
  * @brief Sets sv_client and sv_player to the player with idnum Cmd_Argv(1)
  */
-qboolean SV_SetPlayer(void)
+static qboolean SV_SetPlayer (void)
 {
 	client_t *cl;
 	int i;
@@ -118,7 +115,7 @@ qboolean SV_SetPlayer(void)
 /**
  * @brief Puts the server in demo mode on a specific map/cinematic
  */
-void SV_Demo_f(void)
+static void SV_Demo_f (void)
 {
 	SV_Map(qtrue, va("%s.dm2", Cmd_Argv(1)), NULL);
 }
@@ -128,7 +125,7 @@ void SV_Demo_f(void)
  * @sa SV_InitGame
  * @sa SV_SpawnServer
  */
-void SV_Map_f(void)
+static void SV_Map_f (void)
 {
 	char	*map, *assembly = NULL;
 	char	expanded[MAX_QPATH];
@@ -171,7 +168,7 @@ void SV_Map_f(void)
 /**
  * @brief Kick a user off of the server
  */
-void SV_Kick_f(void)
+static void SV_Kick_f (void)
 {
 	if (!svs.initialized) {
 		Com_Printf("No server running.\n");
@@ -196,9 +193,10 @@ void SV_Kick_f(void)
 
 
 /**
- * @brief
+ * @brief Prints some server info to the game console - like connected players
+ * and current running map
  */
-void SV_Status_f(void)
+static void SV_Status_f (void)
 {
 	int i, j, l;
 	client_t *cl;
@@ -250,7 +248,7 @@ void SV_Status_f(void)
 /**
  * @brief
  */
-void SV_ConSay_f(void)
+static void SV_ConSay_f (void)
 {
 	client_t *client;
 	int j;
@@ -281,7 +279,7 @@ void SV_ConSay_f(void)
 /**
  * @brief
  */
-void SV_Heartbeat_f(void)
+static void SV_Heartbeat_f (void)
 {
 	svs.last_heartbeat = -9999999;
 }
@@ -290,7 +288,7 @@ void SV_Heartbeat_f(void)
 /**
  * @brief Examine or change the serverinfo string
  */
-void SV_Serverinfo_f(void)
+static void SV_Serverinfo_f (void)
 {
 	Com_Printf("Server info settings:\n");
 	Info_Print(Cvar_Serverinfo());
@@ -300,7 +298,7 @@ void SV_Serverinfo_f(void)
 /**
  * @brief Examine all a users info strings
  */
-void SV_DumpUser_f(void)
+static void SV_DumpUser_f (void)
 {
 	if (Cmd_Argc() != 2) {
 		Com_Printf("Usage: info <userid>\n");
@@ -319,9 +317,9 @@ void SV_DumpUser_f(void)
 
 /**
  * @brief Begins server demo recording.  Every entity and every message will be
- * recorded, but no playerinfo will be stored.  Primarily for demo merging.
+ * recorded, but no playerinfo will be stored. Primarily for demo merging.
  */
-void SV_ServerRecord_f(void)
+static void SV_ServerRecord_f (void)
 {
 	char name[MAX_OSPATH];
 	byte buf_data[32768];
@@ -397,7 +395,7 @@ void SV_ServerRecord_f(void)
 /**
  * @brief Ends server demo recording
  */
-void SV_ServerStop_f(void)
+static void SV_ServerStop_f (void)
 {
 	if (!svs.demofile.f) {
 		Com_Printf("Not doing a serverrecord.\n");
@@ -412,7 +410,7 @@ void SV_ServerStop_f(void)
 /**
  * @brief Kick everyone off, possibly in preparation for a new game
  */
-void SV_KillServer_f(void)
+static void SV_KillServer_f (void)
 {
 	if (!svs.initialized)
 		return;
@@ -423,7 +421,7 @@ void SV_KillServer_f(void)
 /**
  * @brief Let the game dll handle a command
  */
-void SV_ServerCommand_f(void)
+static void SV_ServerCommand_f (void)
 {
 	if (!ge) {
 		Com_Printf("No game loaded.\n");
@@ -439,7 +437,7 @@ void SV_ServerCommand_f(void)
  * @brief List all valid maps
  * @sa FS_GetMaps
  */
-void SV_ListMaps_f(void)
+static void SV_ListMaps_f (void)
 {
 	int i;
 
@@ -477,7 +475,7 @@ static void SV_Minimize_f (void)
 /**
  * @brief
  */
-void SV_InitOperatorCommands(void)
+extern void SV_InitOperatorCommands(void)
 {
 	Cmd_AddCommand("heartbeat", SV_Heartbeat_f, NULL);
 	Cmd_AddCommand("kick", SV_Kick_f, NULL);

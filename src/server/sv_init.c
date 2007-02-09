@@ -606,7 +606,7 @@ static qboolean SV_AddMandatoryParts(byte map[32][32][MAX_TILEALTS], byte * num)
 /**
  * @brief Assembles a "random" map
  * parses the *.ump files for assembling the "random" maps
- * @sa B_AssembleMap
+ * @sa B_AssembleMap_f
  * @sa SV_AddTile
  * @sa SV_AddMandatoryParts
  * @sa SV_ParseAssembly

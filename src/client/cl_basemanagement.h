@@ -208,7 +208,6 @@ void B_ClearBuilding(building_t *building);
 void B_ParseBuildings(char *id, char **text, qboolean link);
 void B_ParseBases(char *title, char **text);
 void B_BuildingInit(void);
-void B_AssembleMap(void);
 void B_BaseAttack(base_t* const base);
 void B_BaseResetStatus (base_t* const base);
 building_t *B_GetBuildingByIdx(base_t* base, int idx);

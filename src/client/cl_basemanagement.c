@@ -1887,7 +1887,7 @@ static void B_BaseAttack_f(void)
  * @todo Add soldier spawn points, the best place is quarters.
  * @todo We need to get rid of the tunnels to nirvana.
  */
-void B_AssembleMap(void)
+static void B_AssembleMap_f (void)
 {
 	int row, col;
 	char baseMapPart[1024];
@@ -1911,7 +1911,7 @@ void B_AssembleMap(void)
 	}
 
 	if (!base) {
-		Com_Printf("B_AssembleMap: No base to assemble\n");
+		Com_Printf("B_AssembleMap_f: No base to assemble\n");
 		return;
 	}
 
@@ -1936,8 +1936,8 @@ void B_AssembleMap(void)
 			}
 		}
 
-	/*TODO: If a building is still under construction, it will be assembled as a finished part */
-	/*otherwise we need mapparts for all the maps under construction */
+	/* TODO: If a building is still under construction, it will be assembled as a finished part */
+	/* otherwise we need mapparts for all the maps under construction */
 	for (row = 0; row < BASE_SIZE; row++)
 		for (col = 0; col < BASE_SIZE; col++) {
 			baseMapPart[0] = '\0';
@@ -1950,7 +1950,7 @@ void B_AssembleMap(void)
 				if (!entry->used && *entry->needs) {
 					entry->used = 1;
 				} else if (*entry->needs) {
-					Com_DPrintf("B_AssembleMap: '%s' needs '%s' (used: %i)\n", entry->id, entry->needs, entry->used );
+					Com_DPrintf("B_AssembleMap_f: '%s' needs '%s' (used: %i)\n", entry->id, entry->needs, entry->used );
 					entry->used = 0;
 					continue;
 				}
@@ -1958,7 +1958,7 @@ void B_AssembleMap(void)
 				if (*entry->mapPart)
 					Q_strncpyz(baseMapPart, va("b/%c/%s", base->mapChar, entry->mapPart), sizeof(baseMapPart));
 				else
-					Com_Printf("B_AssembleMap: Error - map has no mapPart set. Building '%s'\n'", entry->id);
+					Com_Printf("B_AssembleMap_f: Error - map has no mapPart set. Building '%s'\n'", entry->id);
 			} else
 				Q_strncpyz(baseMapPart, va("b/%c/empty", base->mapChar), sizeof(baseMapPart));
 
@@ -2660,7 +2660,7 @@ void B_ResetBaseManagement(void)
 	Cmd_AddCommand("base_attack", B_BaseAttack_f, NULL);
 	Cmd_AddCommand("base_changename", B_ChangeBaseName_f, NULL);
 	Cmd_AddCommand("base_init", B_BaseInit, NULL);
-	Cmd_AddCommand("base_assemble", B_AssembleMap, NULL);
+	Cmd_AddCommand("base_assemble", B_AssembleMap_f, "Called to assemble the current selected base");
 	Cmd_AddCommand("base_assemble_rand", B_AssembleRandomBase, NULL);
 	Cmd_AddCommand("building_open", B_BuildingOpen_f, NULL);
 	Cmd_AddCommand("building_init", B_BuildingInit, NULL);

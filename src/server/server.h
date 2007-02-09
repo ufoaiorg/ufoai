@@ -254,7 +254,6 @@ int SV_CountPlayers (void);
 
 /* sv_ccmds.c */
 void SV_ReadLevelFile(void);
-void SV_Status_f(void);
 void SV_SetMaster_f(void);
 
 /* sv_ents.c */
