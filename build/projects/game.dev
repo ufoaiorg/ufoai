@@ -179,11 +179,11 @@ BuildCmd=$(CC) -c g_combat.c -o g_combat.o $(CFLAGS)
 
 [Unit14]
 FileName=..\..\src\game\g_phys.c
-CompileCpp=1
+CompileCpp=0
 Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=
+BuildCmd=$(CC) -c g_phys.c -o game/g_phys.o $(CFLAGS)
 
