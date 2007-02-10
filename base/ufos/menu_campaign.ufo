@@ -122,24 +122,28 @@ menu campaigns
 
 	pic cp_scrollup
 	{
+		tooltip "_Scroll up (right click to scroll multiple lines)"
 		image menu/buttons_small
 		pos		"930 339"
 		texl	"32 32"
 		texh	"48 48"
 		mousefx	true
 		click	{ cmd "mn_textscroll campaign_desc -1;" }
+		rclick	{ cmd "mn_textscroll campaign_desc -10;" }
 		out	{ *cp_scrollup texl "32 32" *cp_scrollup texh "48 48" }
 		in	{ *cp_scrollup texl "48 32" *cp_scrollup texh "64 48" }
 	}
 
 	pic cp_scrolldown
 	{
+		tooltip "_Scroll down (right click to scroll multiple lines)"
 		image menu/buttons_small
 		pos		"930 355"
 		texl	"32 48"
 		texh	"48 64"
 		mousefx	true
 		click	{ cmd "mn_textscroll campaign_desc 1;" }
+		rclick	{ cmd "mn_textscroll campaign_desc 10;" }
 		out	{ *cp_scrolldown texl "32 48" *cp_scrolldown texh "48 64" }
 		in	{ *cp_scrolldown texl "48 48" *cp_scrolldown texh "64 64" }
 	}

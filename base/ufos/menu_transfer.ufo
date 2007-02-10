@@ -161,26 +161,28 @@ menu transfer
 
 	pic button_scrollup
 	{
-		tooltip "_Scroll up"
+		tooltip "_Scroll up (right click to scroll multiple lines)"
 		image	menu/buttons_small
 		mousefx true
 		pos		"524 370"
 		texh	"48 48"
 		texl	"32 32"
 		click	{ cmd "mn_textscroll trans_list -1;" }
+		rclick	{ cmd "mn_textscroll trans_list -10;" }
 		out		{ *button_scrollup texl "32 32" *button_scrollup texh "48 48" }
 		in		{ *button_scrollup texl "48 32" *button_scrollup texh "64 48" }
 	}
 
 	pic button_scrolldown
 	{
-		tooltip "_Scroll down"
+		tooltip "_Scroll down (right click to scroll multiple lines)"
 		image	menu/buttons_small
 		mousefx true
 		pos		"524 714"
 		texl	"32 48"
 		texh	"48 64"
 		click	{ cmd "mn_textscroll trans_list 1;" }
+		rclick	{ cmd "mn_textscroll trans_list 10;" }
 		out		{ *button_scrolldown texl "32 48" *button_scrolldown texh "48 64" }
 		in		{ *button_scrolldown texl "48 48" *button_scrolldown texh "64 64" }
 	}
