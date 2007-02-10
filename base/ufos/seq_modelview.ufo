@@ -88,7 +88,7 @@ sequence view
 
  	model model_body
  	{
- 		model	models/aliens/bluemedium/body01.md2
+ 		model	models/aliens/tamanmedium/body01.md2
  		skin	1
  		anim	walk0
  		origin	"0 0 0"
@@ -97,14 +97,14 @@ sequence view
  	}
  	model model_head
  	{
- 		model	models/aliens/bluemedium/head01.md2
+ 		model	models/aliens/tamanmedium/head01.md2
  		parent	model_body
  		tag		tag_head
  	}
 
  	model model2_body
  	{
- 		model	models/aliens/bluelight/body01.md2
+ 		model	models/aliens/tamanlight/body01.md2
  		skin	1
  		anim	walk0
  		origin	"0 -30 0"
@@ -113,7 +113,7 @@ sequence view
  	}
  	model model2_head
  	{
- 		model	models/aliens/bluelight/head01.md2
+ 		model	models/aliens/tamanlight/head01.md2
  		parent	model2_body
  		tag		tag_head
  	}

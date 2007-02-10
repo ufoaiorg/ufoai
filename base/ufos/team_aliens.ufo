@@ -125,8 +125,8 @@ actors taman
 {
 	neutral
 	{
-		aliens/blue body01 head01 0
-		aliens/blue body01 head01 1
+		aliens/taman body01 head01 0
+		aliens/taman body01 head01 1
 	}
 }
 

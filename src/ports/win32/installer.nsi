@@ -10,7 +10,8 @@
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"
 
-SetCompressor bzip2
+;SetCompressor bzip2
+SetCompressor lzma
 
 ; MUI 1.67 compatible ------
 !include "MUI.nsh"
@@ -28,6 +29,8 @@ ShowUninstDetails "nevershow"
 !define MUI_LANGDLL_REGISTRY_ROOT "${PRODUCT_UNINST_ROOT_KEY}"
 !define MUI_LANGDLL_REGISTRY_KEY "${PRODUCT_UNINST_KEY}"
 !define MUI_LANGDLL_REGISTRY_VALUENAME "NSIS:Language"
+
+!define MUI_WELCOMEFINISHPAGE_BITMAP "..\..\..\build\installer.bmp"
 
 ; Welcome page
 !insertmacro MUI_PAGE_WELCOME
@@ -143,21 +146,21 @@ Section "Game" SEC01
   File "..\..\..\base\models\aliens\bloodspider\*.jpg"
   File "..\..\..\base\models\aliens\bloodspider\*.tag"
   File "..\..\..\base\models\aliens\bloodspider\*.anm"
-  SetOutPath "$INSTDIR\base\models\aliens\blue"
-  File "..\..\..\base\models\aliens\blue\*.md2"
-  File "..\..\..\base\models\aliens\blue\*.jpg"
-  File "..\..\..\base\models\aliens\blue\*.tag"
-  File "..\..\..\base\models\aliens\blue\*.anm"
-  SetOutPath "$INSTDIR\base\models\aliens\bluelight"
-  File "..\..\..\base\models\aliens\bluelight\*.md2"
-  File "..\..\..\base\models\aliens\bluelight\*.jpg"
-  File "..\..\..\base\models\aliens\bluelight\*.tag"
-  File "..\..\..\base\models\aliens\bluelight\*.anm"
-  SetOutPath "$INSTDIR\base\models\aliens\bluemedium"
-  File "..\..\..\base\models\aliens\bluemedium\*.md2"
-  File "..\..\..\base\models\aliens\bluemedium\*.jpg"
-  File "..\..\..\base\models\aliens\bluemedium\*.tag"
-  File "..\..\..\base\models\aliens\bluemedium\*.anm"
+  SetOutPath "$INSTDIR\base\models\aliens\taman"
+  File "..\..\..\base\models\aliens\taman\*.md2"
+  File "..\..\..\base\models\aliens\taman\*.jpg"
+  File "..\..\..\base\models\aliens\taman\*.tag"
+  File "..\..\..\base\models\aliens\taman\*.anm"
+  SetOutPath "$INSTDIR\base\models\aliens\tamanlight"
+  File "..\..\..\base\models\aliens\tamanlight\*.md2"
+  File "..\..\..\base\models\aliens\tamanlight\*.jpg"
+  File "..\..\..\base\models\aliens\tamanlight\*.tag"
+  File "..\..\..\base\models\aliens\tamanlight\*.anm"
+  SetOutPath "$INSTDIR\base\models\aliens\tamanmedium"
+  File "..\..\..\base\models\aliens\tamanmedium\*.md2"
+  File "..\..\..\base\models\aliens\tamanmedium\*.jpg"
+  File "..\..\..\base\models\aliens\tamanmedium\*.tag"
+  File "..\..\..\base\models\aliens\tamanmedium\*.anm"
   SetOutPath "$INSTDIR\base\models\aliens\ortnok"
   File "..\..\..\base\models\aliens\ortnok\*.md2"
   File "..\..\..\base\models\aliens\ortnok\*.jpg"

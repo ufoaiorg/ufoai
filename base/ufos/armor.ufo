@@ -165,8 +165,8 @@ item light_alien
 item medium_alien
 {
 	name		"_Medium Alien Armour"
-	image		armor/blue_medium
-	model		aliens/bluemedium/body01
+	image		armor/taman_medium
+	model		aliens/tamanmedium/body01
 	type		armor
 	category	3
 	shape		"0 0 3 4"
