@@ -1076,7 +1076,7 @@ void CL_CheckResearchStatus (void)
 
 					RS_MarkResearched(tech->id);
 					researchListLength = 0;
-					researchListPos = -1;
+					researchListPos = 0;
 					newResearch++;
 					tech->time = 0;
 				}
