@@ -451,22 +451,26 @@ float LerpAngle (float a2, float a1, float frac)
 	return a2 + frac * (a1 - a2);
 }
 
-
 /**
- * @brief Returns the equivalent of angle between 0 and 360
- * @param[in] a Angle
+ * @brief returns angle normalized to the range [0 <= angle < 360]
+ * @param[in] angle Angle
  * @sa VecToAngles
  */
-float anglemod (float a)
+float AngleNormalize360 (float angle)
 {
-#if 0
-	if (a >= 0)
-		a -= 360 * (int) (a / 360);
-	else
-		a += 360 * (1 + (int) (-a / 360));
-#endif
-	a = (360.0 / 65536) * ((int) (a * (65536 / 360.0)) & 65535);
-	return a;
+	return (360.0 / 65536) * ((int)(angle * (65536 / 360.0)) & 65535);
+}
+
+/**
+ * @brief returns angle normalized to the range [-180 < angle <= 180]
+ * @param[in] angle Angle
+ */
+float AngleNormalize180 (float angle)
+{
+	angle = AngleNormalize360(angle);
+	if (angle > 180.0)
+		angle -= 360.0;
+	return angle;
 }
 
 /**
@@ -896,11 +900,10 @@ vec_t VectorNormalize2 (vec3_t v, vec3_t out)
 	}
 
 	return length;
-
 }
 
 /**
- * @brief
+ * @brief Sets vector_out (vc) to vevtor1 (va) + scale * vector2 (vb)
  * @param
  * @sa
  */
@@ -964,10 +967,10 @@ void MakeNormalVectors (vec3_t forward, vec3_t right, vec3_t up)
 	right[2] = forward[1];
 	right[0] = forward[2];
 
-	d = DotProduct (right, forward);
-	VectorMA (right, -d, forward, right);
-	VectorNormalize (right);
-	CrossProduct (right, forward, up);
+	d = DotProduct(right, forward);
+	VectorMA(right, -d, forward, right);
+	VectorNormalize(right);
+	CrossProduct(right, forward, up);
 }
 
 

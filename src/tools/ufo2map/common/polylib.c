@@ -218,31 +218,31 @@ extern winding_t *BaseWindingForPlane (vec3_t normal, vec_t dist)
 		break;
 	}
 
-	v = DotProduct (vup, normal);
-	VectorMA (vup, -v, normal, vup);
-	VectorNormalize (vup, vup);
+	v = DotProduct(vup, normal);
+	VectorMA(vup, -v, normal, vup);
+	VectorNormalize(vup, vup);
 
-	VectorScale (normal, dist, org);
+	VectorScale(normal, dist, org);
 
-	CrossProduct (vup, normal, vright);
+	CrossProduct(vup, normal, vright);
 
-	VectorScale (vup, 8192, vup);
-	VectorScale (vright, 8192, vright);
+	VectorScale(vup, 8192, vup);
+	VectorScale(vright, 8192, vright);
 
 	/* project a really big	axis aligned box onto the plane */
-	w = AllocWinding (4);
+	w = AllocWinding(4);
 
-	VectorSubtract (org, vright, w->p[0]);
-	VectorAdd (w->p[0], vup, w->p[0]);
+	VectorSubtract(org, vright, w->p[0]);
+	VectorAdd(w->p[0], vup, w->p[0]);
 
-	VectorAdd (org, vright, w->p[1]);
-	VectorAdd (w->p[1], vup, w->p[1]);
+	VectorAdd(org, vright, w->p[1]);
+	VectorAdd(w->p[1], vup, w->p[1]);
 
-	VectorAdd (org, vright, w->p[2]);
-	VectorSubtract (w->p[2], vup, w->p[2]);
+	VectorAdd(org, vright, w->p[2]);
+	VectorSubtract(w->p[2], vup, w->p[2]);
 
-	VectorSubtract (org, vright, w->p[3]);
-	VectorSubtract (w->p[3], vup, w->p[3]);
+	VectorSubtract(org, vright, w->p[3]);
+	VectorSubtract(w->p[3], vup, w->p[3]);
 
 	w->numpoints = 4;
 
