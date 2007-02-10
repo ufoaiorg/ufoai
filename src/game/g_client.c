@@ -386,10 +386,6 @@ float G_Vis (int team, edict_t * from, edict_t * check, int flags)
 	if (!from->inuse || !check->inuse)
 		return 0.0;
 
-	/* doors are always visible */
-	if (from->solid == SOLID_BSP)
-		return 1.0;
-
 	/* only actors and ugvs can see anything */
 	if ((from->type != ET_ACTOR && from->type != ET_UGV) || (from->state & STATE_DEAD))
 		return 0.0;
