@@ -180,7 +180,7 @@ void InitGame(void)
 	/* civilians for singleplayer */
 	ai_numcivilians = gi.cvar("ai_numcivilians", "8", 0, "How many civilians in this battle");
 	/* aliens in multiplayer */
-	ai_numactors = gi.cvar("ai_numactors", "8", CVAR_ARCHIVE, "How many (human controlled) actors in this battle (multiplayer)");
+	ai_numactors = gi.cvar("ai_numactors", "8", CVAR_ARCHIVE, "How many (ai controlled) actors in this battle (multiplayer)");
 	/* autojoin aliens */
 	ai_autojoin = gi.cvar("ai_autojoin", "0", 0, NULL);
 
@@ -546,7 +546,7 @@ void G_CheckEndGame(void)
  * @sa G_EndGame
  * @sa AI_Run
  */
-void G_RunFrame(void)
+void G_RunFrame (void)
 {
 	level.framenum++;
 	level.time = level.framenum * FRAMETIME;
@@ -569,4 +569,5 @@ void G_RunFrame(void)
 
 	/* run ai */
 	AI_Run();
+	G_PhysicsRun();
 }

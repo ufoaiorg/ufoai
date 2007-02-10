@@ -284,7 +284,6 @@ void FillOutside (node_t *headnode);
 void FloodAreas (tree_t *tree);
 void MarkVisibleSides (tree_t *tree, int start, int end);
 void FreePortal (portal_t *p);
-void EmitAreaPortals (node_t *headnode);
 
 void MakeTreePortals (tree_t *tree);
 

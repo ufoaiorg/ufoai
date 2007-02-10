@@ -386,6 +386,10 @@ float G_Vis (int team, edict_t * from, edict_t * check, int flags)
 	if (!from->inuse || !check->inuse)
 		return 0.0;
 
+	/* doors are always visible */
+	if (from->solid == SOLID_BSP)
+		return 1.0;
+
 	/* only actors and ugvs can see anything */
 	if ((from->type != ET_ACTOR && from->type != ET_UGV) || (from->state & STATE_DEAD))
 		return 0.0;
@@ -2125,8 +2129,9 @@ static void G_SendVisibleEdicts (void)
 		/* don't add actors here */
 		if (!ent->inuse)
 			continue;
-		if (ent->type == ET_BREAKABLE) {
-			gi.AddEvent(~G_VisToPM(ent->visflags), EV_ENT_BREAKABLE);
+		if (ent->type == ET_BREAKABLE || ent->type == ET_DOOR) {
+			gi.AddEvent(~G_VisToPM(ent->visflags), EV_ENT_EDICT);
+			gi.WriteShort(ent->type);
 			gi.WriteShort(ent->number);
 			gi.WriteShort(ent->modelindex);
 			gi.WriteGPos(ent->pos);

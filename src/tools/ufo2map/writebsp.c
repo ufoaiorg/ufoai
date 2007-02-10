@@ -273,7 +273,6 @@ extern void WriteBSP (node_t *headnode)
 
 	oldfaces = numfaces;
 	dmodels[nummodels].headnode = EmitDrawNode_r (headnode);
-	EmitAreaPortals (headnode);
 
 	Sys_FPrintf (SYS_VRB, "%5i nodes with faces\n", c_facenodes);
 	Sys_FPrintf (SYS_VRB, "%5i nodes without faces\n", c_nofaces);

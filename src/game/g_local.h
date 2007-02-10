@@ -236,13 +236,17 @@ extern cvar_t *difficulty;
 void Cmd_Help_f(edict_t * ent);
 void Cmd_Score_f(edict_t * ent);
 
+/* g_phys.c */
+void G_PhysicsRun(void);
 
 /* g_utils.c */
 edict_t *G_Find(edict_t * from, int fieldofs, char *match);
 edict_t *G_FindRadius(edict_t * from, vec3_t org, float rad, entity_type_t type);
-const char* G_GetPlayerName (int pnum);
-const char* G_GetWeaponNameForFiredef (fireDef_t* fd);
-void G_PrintStats (edict_t* victim, edict_t* attacker, fireDef_t* fd);
+const char* G_GetPlayerName(int pnum);
+const char* G_GetWeaponNameForFiredef(fireDef_t* fd);
+void G_PrintStats(edict_t* victim, edict_t* attacker, fireDef_t* fd);
+void Move_Calc(edict_t *ent, vec3_t dest, void(*func)(edict_t*));
+void G_SetMovedir(vec3_t angles, vec3_t movedir);
 
 edict_t *G_Spawn(void);
 void G_FreeEdict(edict_t * e);
@@ -353,6 +357,36 @@ void G_CheckEndGame(void);
 
 /*============================================================================ */
 
+typedef struct
+{
+	/* fixed data */
+	vec3_t		start_origin;
+	vec3_t		start_angles;
+	vec3_t		end_origin;
+	vec3_t		end_angles;
+
+	float		accel;
+	float		speed;
+	float		decel;
+	float		distance;
+
+	float		wait;
+
+	vec3_t		movedir;
+	vec3_t		pos1, pos2;
+	vec3_t		velocity;
+
+	/* state data */
+	int			state;
+	vec3_t		dir;
+	float		current_speed;
+	float		move_speed;
+	float		next_speed;
+	float		remaining_distance;
+	float		decel_distance;
+	void		(*endfunc)(edict_t *);
+} moveinfo_t;
+
 /* client_t->anim_priority */
 #define	ANIM_BASIC		0		/* stand / run */
 #define	ANIM_WAVE		1
@@ -391,7 +425,6 @@ struct player_s {
 	client_persistant_t pers;
 };
 
-
 struct edict_s {
 	qboolean inuse;
 	int linkcount;
@@ -425,6 +458,8 @@ struct edict_s {
 	int clipmask;
 	int modelindex;
 
+	/*================================ */
+	/* don't change anything above here - the server expects the fields in that order */
 	/*================================ */
 
 	int mapNum;
@@ -490,6 +525,11 @@ struct edict_s {
 
 	/* function to call when used */
 	void (*use) (edict_t * self, edict_t * other, edict_t * activator);
+	float nextthink;
+	void (*think)(edict_t *self);
+
+	/* e.g. doors */
+	moveinfo_t		moveinfo;
 };
 
 #endif /* GAME_G_LOCAL_H */

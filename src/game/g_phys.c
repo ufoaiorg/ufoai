@@ -41,7 +41,7 @@ static qboolean G_PhysicsThink (edict_t *ent)
 	ent->nextthink = 0;
 	if (!ent->think)
 		gi.error("G_PhysicsThink ent->think is NULL");
-	ent->think (ent);
+	ent->think(ent);
 
 	return qfalse;
 }
@@ -49,11 +49,18 @@ static qboolean G_PhysicsThink (edict_t *ent)
 /**
  * @brief Handles door and other objects
  * @sa G_RunFrame
+ * FIXME: Make sure, that the think functions are not before EV_RESET was called
+ * they might send data over the netchannel - but without EV_RESET the event timer
+ * will overflow and game
  */
 extern void G_PhysicsRun (void)
 {
 	int i;
 	edict_t *ent;
+
+	/* don't run this too often to prevent overflows */
+	if (level.framenum % 10)
+		return;
 
 	/* treat each object in turn */
 	/* even the world gets a chance to think */
@@ -62,6 +69,6 @@ extern void G_PhysicsRun (void)
 		if (!ent->inuse)
 			continue;
 		if (ent->think)
-			G_PhysicsThink (ent);
+			G_PhysicsThink(ent);
 	}
 }

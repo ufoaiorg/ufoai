@@ -4,6 +4,7 @@ GAME_SRCS=\
 	game/g_client.c \
 	game/g_combat.c \
 	game/g_cmds.c \
+	game/g_phys.c \
 	game/g_main.c \
 	game/g_spawn.c \
 	game/g_svcmds.c \

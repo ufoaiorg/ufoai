@@ -321,14 +321,6 @@ typedef struct
 #define	CONTENTS_ACTORCLIP		0x10000
 #define	CONTENTS_PASSABLE		0x20000
 
-/* currents can be added to any other contents, and may be mixed */
-#define	CONTENTS_CURRENT_0		0x40000
-#define	CONTENTS_CURRENT_90		0x80000
-#define	CONTENTS_CURRENT_180	0x100000
-#define	CONTENTS_CURRENT_270	0x200000
-#define	CONTENTS_CURRENT_UP		0x400000
-#define	CONTENTS_CURRENT_DOWN	0x800000
-
 #define	CONTENTS_ORIGIN			0x1000000	/* removed before bsping an entity */
 
 #define	CONTENTS_WEAPONCLIP		0x2000000

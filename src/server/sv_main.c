@@ -76,7 +76,7 @@ qboolean killserver = qfalse;	/* will initiate shutdown once abandon is set */
  * or unwillingly.  This is NOT called if the entire server is quiting
  * or crashing.
  */
-void SV_DropClient(client_t * drop)
+void SV_DropClient (client_t * drop)
 {
 	/* add the disconnect */
 	MSG_WriteByte(&drop->netchan.message, svc_disconnect);
@@ -132,7 +132,7 @@ CONNECTIONLESS COMMANDS
 /**
  * @brief Builds the string that is sent as heartbeats and status replies
  */
-static char *SV_StatusString(void)
+static char *SV_StatusString (void)
 {
 	char player[1024];
 	static char status[MAX_MSGLEN - 16];
@@ -200,7 +200,7 @@ static char* SV_TeamInfoString (void)
 /**
  * @brief Responds with teaminfo such as free team num
  */
-static void SVC_TeamInfo(void)
+static void SVC_TeamInfo (void)
 {
 	Netchan_OutOfBandPrint(NS_SERVER, net_from, "teaminfo\n%s", SV_TeamInfoString());
 }
@@ -209,7 +209,7 @@ static void SVC_TeamInfo(void)
  * @brief Responds with all the info that qplug or qspy can see
  * @sa SV_StatusString
  */
-static void SVC_Status(void)
+static void SVC_Status (void)
 {
 	Netchan_OutOfBandPrint(NS_SERVER, net_from, "print\n%s", SV_StatusString());
 #if 0
@@ -222,7 +222,7 @@ static void SVC_Status(void)
 /**
  * @brief Sends an acknowledge
  */
-static void SVC_Ack(void)
+static void SVC_Ack (void)
 {
 	Com_Printf("Ping acknowledge from %s\n", NET_AdrToString(net_from));
 }
@@ -234,7 +234,7 @@ static void SVC_Ack(void)
  * interested in a full status
  * @sa CL_ParseStatusMessage
  */
-static void SVC_Info(void)
+static void SVC_Info (void)
 {
 	char string[64];
 	int i, count;
@@ -272,7 +272,7 @@ static void SVC_Info(void)
 /**
  * @brief Just responds with an acknowledgement
  */
-static void SVC_Ping(void)
+static void SVC_Ping (void)
 {
 	Netchan_OutOfBandPrint(NS_SERVER, net_from, "ack");
 }
@@ -285,7 +285,7 @@ static void SVC_Ping(void)
  * flood the server with invalid connection IPs.  With a
  * challenge, they must give a valid IP address.
  */
-static void SVC_GetChallenge(void)
+static void SVC_GetChallenge (void)
 {
 	int i;
 	int oldest;
@@ -319,7 +319,7 @@ static void SVC_GetChallenge(void)
 /**
  * @brief A connection request that did not come from the master
  */
-static void SVC_DirectConnect(void)
+static void SVC_DirectConnect (void)
 {
 	char userinfo[MAX_INFO_STRING];
 	netadr_t adr;
@@ -483,7 +483,7 @@ static void SVC_DirectConnect(void)
 /**
  * @brief
  */
-int Rcon_Validate(void)
+int Rcon_Validate (void)
 {
 	if (!strlen(rcon_password->string))
 		return 0;
@@ -497,7 +497,7 @@ int Rcon_Validate(void)
 /**
  * @brief A client issued an rcon command. Shift down the remaining args. Redirect all printfs
  */
-void SVC_RemoteCommand(void)
+void SVC_RemoteCommand (void)
 {
 	int i;
 	char remaining[1024];
@@ -536,7 +536,7 @@ void SVC_RemoteCommand(void)
  * Clients that are in the game can still send
  * connectionless packets.
  */
-void SV_ConnectionlessPacket(void)
+void SV_ConnectionlessPacket (void)
 {
 	char *s;
 	char *c;
@@ -577,7 +577,7 @@ void SV_ConnectionlessPacket(void)
 /**
  * @brief Updates the cl->ping variables
  */
-void SV_CalcPings(void)
+void SV_CalcPings (void)
 {
 	int i, j;
 	client_t *cl;
@@ -622,7 +622,7 @@ void SV_CalcPings(void)
  * @brief Every few frames, gives all clients an allotment of milliseconds
  * for their command moves.  If they exceed it, assume cheating.
  */
-void SV_GiveMsec(void)
+void SV_GiveMsec (void)
 {
 	int i;
 	client_t *cl;
@@ -643,7 +643,7 @@ void SV_GiveMsec(void)
 /**
  * @brief
  */
-void SV_ReadPackets(void)
+void SV_ReadPackets (void)
 {
 	int i;
 	client_t *cl;
@@ -699,7 +699,7 @@ void SV_ReadPackets(void)
  * for a few seconds to make sure any final reliable message gets resent
  * if necessary
  */
-void SV_CheckTimeouts(void)
+void SV_CheckTimeouts (void)
 {
 	int i;
 	client_t *cl;
@@ -732,7 +732,7 @@ void SV_CheckTimeouts(void)
  * @sa G_RunFrame
  * @sa SV_Frame
  */
-void SV_RunGameFrame(void)
+void SV_RunGameFrame (void)
 {
 	if (host_speeds->value)
 		time_before_game = Sys_Milliseconds();
@@ -754,7 +754,7 @@ void SV_RunGameFrame(void)
  * @brief
  * @sa Qcommon_Frame
  */
-void SV_Frame(int msec)
+void SV_Frame (int msec)
 {
 	time_before_game = time_after_game = 0;
 
@@ -814,7 +814,7 @@ void SV_Frame(int msec)
  * let it know we are alive, and log information
  */
 #define	HEARTBEAT_SECONDS	300
-void Master_Heartbeat(void)
+void Master_Heartbeat (void)
 {
 	char *string;
 
@@ -846,7 +846,7 @@ void Master_Heartbeat(void)
 /**
  * @brief Informs all masters that this server is going down
  */
-void Master_Shutdown(void)
+void Master_Shutdown (void)
 {
 	/* pgm post3.19 change, cvar pointer not validated before dereferencing */
 	if (!dedicated || !dedicated->value)
@@ -869,7 +869,7 @@ void Master_Shutdown(void)
 /**
  * @brief Pull specific info from a newly changed userinfo string into a more C freindly form.
  */
-void SV_UserinfoChanged(client_t * cl)
+void SV_UserinfoChanged (client_t * cl)
 {
 	char *val;
 	unsigned int i;
@@ -907,7 +907,7 @@ void SV_UserinfoChanged(client_t * cl)
 /**
  * @brief Only called at ufo.exe startup, not for each game
  */
-void SV_Init(void)
+extern void SV_Init (void)
 {
 	SV_InitOperatorCommands();
 
@@ -950,7 +950,7 @@ void SV_Init(void)
  * to totally exit after returning from this function.
  * @sa SV_Shutdown
 */
-void SV_FinalMessage(char *message, qboolean reconnect)
+void SV_FinalMessage (char *message, qboolean reconnect)
 {
 	int i;
 	client_t *cl;
@@ -980,7 +980,7 @@ void SV_FinalMessage(char *message, qboolean reconnect)
 /**
  * @brief Called when each game quits, before Sys_Quit or Sys_Error
  */
-void SV_Shutdown(char *finalmsg, qboolean reconnect)
+void SV_Shutdown (char *finalmsg, qboolean reconnect)
 {
 	if (svs.clients)
 		SV_FinalMessage(finalmsg, reconnect);

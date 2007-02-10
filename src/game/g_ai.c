@@ -25,8 +25,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 
-/* ==================================================================== */
-
 typedef struct {
 	pos3_t to, stop;
 	byte mode, shots;
@@ -36,7 +34,7 @@ typedef struct {
 /**
  * @brief
  */
-qboolean AI_CheckFF(edict_t * ent, vec3_t target, float spread)
+qboolean AI_CheckFF (edict_t * ent, vec3_t target, float spread)
 {
 	edict_t *check;
 	vec3_t dtarget, dcheck, back;
@@ -347,7 +345,7 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, ai_action_t * aia)
  * @brief
  * @sa AI_ActorThink
  */
-static float AI_CivilianCalcGuete(edict_t * ent, pos3_t to, ai_action_t * aia)
+static float AI_CivilianCalcGuete (edict_t * ent, pos3_t to, ai_action_t * aia)
 {
 	edict_t *check;
 	int i, move, tu;
@@ -498,7 +496,7 @@ static ai_action_t AI_PrepBestAction (player_t * player, edict_t * ent)
  * @sa G_ClientMove
  * @sa G_ClientShoot
  */
-void AI_ActorThink(player_t * player, edict_t * ent)
+void AI_ActorThink (player_t * player, edict_t * ent)
 {
 	ai_action_t bestAia;
 
@@ -565,8 +563,9 @@ void AI_ActorThink(player_t * player, edict_t * ent)
 
 /**
  * @brief Every server frame one single actor is handled - always in the same order
+ * @sa G_RunFrame
  */
-void AI_Run(void)
+extern void AI_Run (void)
 {
 	player_t *player;
 	edict_t *ent;
@@ -609,7 +608,7 @@ static int spawnPoints[MAX_SPAWNPOINTS];
  * @param[in] numSpawn
  * @sa AI_CreatePlayer
  */
-static void G_SpawnAIPlayer(player_t * player, int numSpawn)
+static void G_SpawnAIPlayer (player_t * player, int numSpawn)
 {
 	edict_t *ent;
 	equipDef_t *ed = &gi.csi->eds[0];
@@ -717,7 +716,7 @@ static void G_SpawnAIPlayer(player_t * player, int numSpawn)
  * @return player_t pointer
  * @note see cvars ai_numaliens, ai_numcivilians, ai_numactors
  */
-player_t *AI_CreatePlayer(int team)
+player_t *AI_CreatePlayer (int team)
 {
 	player_t *p;
 	int i;

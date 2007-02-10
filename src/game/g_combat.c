@@ -226,14 +226,15 @@ static void G_Damage (edict_t * ent, fireDef_t *fd, int damage, edict_t * attack
 	assert (ent);
 	assert (ent->type == ET_ACTOR
 			|| ent->type == ET_UGV
-			|| ent->type == ET_BREAKABLE);
+			|| ent->type == ET_BREAKABLE
+			|| ent->type == ET_DOOR);
 
 	/* Breakables are immune to stun & shock damage. */
-	if ((stun || shock) && (ent->type == ET_BREAKABLE))
+	if ((stun || shock) && (ent->type == ET_BREAKABLE || ent->type == ET_DOOR))
  		return;
 
 	/* Breakables */
-	if (ent->type == ET_BREAKABLE) {
+	if (ent->type == ET_BREAKABLE || ent->type == ET_DOOR) {
 		if (!mock) {
 			if (damage >= ent->HP) {
 				gi.AddEvent(PM_ALL, EV_MODEL_EXPLODE);
@@ -434,7 +435,7 @@ void G_SplashDamage (edict_t * ent, fireDef_t * fd, vec3_t impact, shot_mock_t *
 
 		if (check->type == ET_ACTOR || check->type == ET_UGV)
 			VectorCopy(check->origin, center);
-		else if (check->type == ET_BREAKABLE) {
+		else if (check->type == ET_BREAKABLE || check->type == ET_DOOR) {
 			VectorAdd(check->absmin, check->absmax, center);
 			VectorScale(center, 0.5, center);
 		} else

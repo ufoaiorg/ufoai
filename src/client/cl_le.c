@@ -133,6 +133,39 @@ static void LM_Delete (lm_t * lm)
 	CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE);
 }
 
+/**
+ * @brief
+ */
+void LM_DoorClose (sizebuf_t * sb)
+{
+	lm_t *lm;
+	int lmNum;
+
+	lmNum = MSG_ReadShort(sb);
+	lm = LM_Find(lmNum);
+	if (!lm) {
+		Com_Printf("Can't close the door - lm %i not found\n", lmNum);
+		return;
+	}
+	/* TODO */
+}
+
+/**
+ * @brief
+ */
+void LM_DoorOpen (sizebuf_t * sb)
+{
+	lm_t *lm;
+	int lmNum;
+
+	lmNum = MSG_ReadShort(sb);
+	lm = LM_Find(lmNum);
+	if (!lm) {
+		Com_Printf("Can't open the door - lm %i not found\n", lmNum);
+		return;
+	}
+	/* TODO */
+}
 
 /**
  * @brief

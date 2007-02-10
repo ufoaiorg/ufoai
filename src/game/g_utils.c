@@ -70,7 +70,7 @@ static const objDef_t* G_GetObjectForFiredef (fireDef_t* fd)
 	objDef_t *od;
 
 	/* For each object ... */
-	for (i = 0; i < gi.csi->numODs; i++) { 
+	for (i = 0; i < gi.csi->numODs; i++) {
 		od = &gi.csi->ods[i];
 		/* For each weapon-entry in the object ... */
 		for (j = 0; j < od->numWeapons; j++) {
@@ -319,13 +319,55 @@ char *vtos(vec3_t v)
 	return s;
 }
 
+/**
+ * @brief
+ */
+void Move_Final (edict_t *ent)
+{
+	if (ent->moveinfo.remaining_distance == 0) {
+		VectorClear (ent->moveinfo.velocity);
+		ent->moveinfo.endfunc (ent);
+		return;
+	}
+
+	VectorScale (ent->moveinfo.dir, ent->moveinfo.remaining_distance / FRAMETIME, ent->moveinfo.velocity);
+}
+
+/**
+ * @brief
+ */
+void Move_Begin (edict_t *ent)
+{
+	float	frames;
+
+	if ((ent->moveinfo.speed * FRAMETIME) >= ent->moveinfo.remaining_distance) {
+		Move_Final (ent);
+		return;
+	}
+	VectorScale (ent->moveinfo.dir, ent->moveinfo.speed, ent->moveinfo.velocity);
+	frames = floor((ent->moveinfo.remaining_distance / ent->moveinfo.speed) / FRAMETIME);
+	ent->moveinfo.remaining_distance -= frames * ent->moveinfo.speed * FRAMETIME;
+}
+
+/**
+ * @brief
+ */
+void Move_Calc (edict_t *ent, vec3_t dest, void(*func)(edict_t*))
+{
+	VectorClear (ent->moveinfo.velocity);
+	VectorSubtract (dest, ent->origin, ent->moveinfo.dir);
+	ent->moveinfo.remaining_distance = VectorNormalize (ent->moveinfo.dir);
+	ent->moveinfo.endfunc = func;
+
+	Move_Begin (ent);
+}
+
 
 static const vec3_t VEC_UP = { 0, -1, 0 };
 static const vec3_t MOVEDIR_UP = { 0, 0, 1 };
 static const vec3_t VEC_DOWN = { 0, -2, 0 };
 static const vec3_t MOVEDIR_DOWN = { 0, 0, -1 };
 
-#if 0
 /**
  * @brief
  * @note unused
@@ -341,7 +383,6 @@ void G_SetMovedir(vec3_t angles, vec3_t movedir)
 
 	VectorClear(angles);
 }
-#endif
 
 /**
  * @brief Return the yaw component of the angle vector

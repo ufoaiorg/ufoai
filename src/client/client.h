@@ -568,6 +568,8 @@ void LET_StartPathMove(le_t * le);
 
 void LM_Perish(sizebuf_t * sb);
 void LM_Explode(sizebuf_t * sb);
+void LM_DoorOpen(sizebuf_t * sb);
+void LM_DoorClose(sizebuf_t * sb);
 
 void LM_AddToScene(void);
 void LE_AddToScene(void);

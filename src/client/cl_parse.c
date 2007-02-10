@@ -82,7 +82,7 @@ const char *ev_format[] =
 
 	"sbg",				/* EV_ENT_APPEAR */
 	"s",				/* EV_ENT_PERISH */
-	"ssgpp",			/* EV_ENT_BREAKABLE */
+	"sssgpp",			/* EV_ENT_EDICT */
 
 	"!sbbbgbbbssbsbbbs",	/* EV_ACTOR_APPEAR; beware of the '!' */
 	"s",				/* EV_ACTOR_START_MOVE */
@@ -105,7 +105,10 @@ const char *ev_format[] =
 
 	"s",				/* EV_MODEL_PERISH */
 	"s",				/* EV_MODEL_EXPLODE */
-	"sg*"				/* EV_SPAWN_PARTICLE */
+	"sg*",				/* EV_SPAWN_PARTICLE */
+
+	"sp",				/* EV_DOOR_OPEN */
+	"sp"				/* EV_DOOR_CLOSE */
 };
 
 static const char *ev_names[] =
@@ -119,7 +122,7 @@ static const char *ev_names[] =
 
 	"EV_ENT_APPEAR",
 	"EV_ENT_PERISH",
-	"EV_ENT_BREAKABLE",
+	"EV_ENT_EDICT",
 
 	"EV_ACTOR_APPEAR",
 	"EV_ACTOR_START_MOVE",
@@ -141,23 +144,26 @@ static const char *ev_names[] =
 	"EV_MODEL_PERISH",
 	"EV_MODEL_EXPLODE",
 
-	"EV_SPAWN_PARTICLE"
+	"EV_SPAWN_PARTICLE",
+
+	"EV_DOOR_OPEN",
+	"EV_DOOR_CLOSE"
 };
 
-static void CL_Reset( sizebuf_t *sb );
-static void CL_StartGame( sizebuf_t *sb );
-static void CL_CenterView( sizebuf_t *sb );
-static void CL_EntAppear( sizebuf_t *sb );
-static void CL_EntPerish( sizebuf_t *sb );
-static void CL_EntBreakable( sizebuf_t *sb );
-static void CL_ActorDoStartMove( sizebuf_t *sb );
-static void CL_ActorAppear( sizebuf_t *sb );
-static void CL_ActorStats( sizebuf_t *sb );
-static void CL_ActorStateChange( sizebuf_t *sb );
-static void CL_InvAdd( sizebuf_t *sb );
-static void CL_InvDel( sizebuf_t *sb );
-static void CL_InvAmmo( sizebuf_t *sb );
-static void CL_InvReload( sizebuf_t *sb );
+static void CL_Reset(sizebuf_t *sb);
+static void CL_StartGame(sizebuf_t *sb);
+static void CL_CenterView(sizebuf_t *sb);
+static void CL_EntAppear(sizebuf_t *sb);
+static void CL_EntPerish(sizebuf_t *sb);
+static void CL_EntEdict(sizebuf_t *sb);
+static void CL_ActorDoStartMove(sizebuf_t *sb);
+static void CL_ActorAppear(sizebuf_t *sb);
+static void CL_ActorStats(sizebuf_t *sb);
+static void CL_ActorStateChange(sizebuf_t *sb);
+static void CL_InvAdd(sizebuf_t *sb);
+static void CL_InvDel(sizebuf_t *sb);
+static void CL_InvAmmo(sizebuf_t *sb);
+static void CL_InvReload(sizebuf_t *sb);
 
 static void (*ev_func[])( sizebuf_t *sb ) =
 {
@@ -170,7 +176,7 @@ static void (*ev_func[])( sizebuf_t *sb ) =
 
 	CL_EntAppear,
 	CL_EntPerish,
-	CL_EntBreakable,
+	CL_EntEdict,
 
 	CL_ActorAppear,
 	CL_ActorDoStartMove,
@@ -192,7 +198,10 @@ static void (*ev_func[])( sizebuf_t *sb ) =
 	LM_Perish,
 	LM_Explode,
 
-	CL_ParticleSpawnFromSizeBuf
+	CL_ParticleSpawnFromSizeBuf,
+
+	LM_DoorOpen,
+	LM_DoorClose
 };
 
 #define EV_STORAGE_SIZE		32768
@@ -615,6 +624,7 @@ static void CL_EntPerish (sizebuf_t *sb)
 		Com_DestroyInventory(&le->i);
 		break;
 	case ET_BREAKABLE:
+	case ET_DOOR:
 		break;
 	default:
 		break;
@@ -630,14 +640,14 @@ static void CL_EntPerish (sizebuf_t *sb)
 /**
  * @brief Inits the breakable objects
  */
-static void CL_EntBreakable (sizebuf_t *sb)
+static void CL_EntEdict (sizebuf_t *sb)
 {
 	le_t *le;
-	int entnum, modelnum1;
+	int entnum, modelnum1, type;
 	pos3_t pos;
 	vec3_t mins, maxs;
 
-	MSG_ReadFormat(sb, ev_format[EV_ENT_BREAKABLE], &entnum, &modelnum1, &pos, &mins, &maxs);
+	MSG_ReadFormat(sb, ev_format[EV_ENT_EDICT], &type, &entnum, &modelnum1, &pos, &mins, &maxs);
 
 	/* check if the ent is already visible */
 	le = LE_Get(entnum);
@@ -648,7 +658,7 @@ static void CL_EntBreakable (sizebuf_t *sb)
 		le->inuse = qtrue;
 	}
 
-	le->type = ET_BREAKABLE;
+	le->type = type;
 	le->modelnum1 = modelnum1;
 
 	/* to allow tracing against this le */

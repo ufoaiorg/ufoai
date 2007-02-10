@@ -71,7 +71,7 @@ struct player_s {
 	/* this point in the structure */
 };
 
-
+/* don't change the order - also see edict_s in g_local.h */
 struct edict_s {
 	qboolean inuse;
 	int linkcount;

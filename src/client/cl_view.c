@@ -373,7 +373,8 @@ void CL_ParseEntitystring(char *es)
 			Com_Printf("implement misc_rope\n");
 		} else if (!Q_strcmp(classname, "misc_decal")) {
 			Com_Printf("implement misc_decal\n");
-		} else if (!Q_strcmp(classname, "func_breakable")) {
+		} else if (!Q_strcmp(classname, "func_breakable")
+			|| !Q_strcmp(classname, "func_door")) {
 			angles[0] = angles[1] = angles[2] = 0.0;
 			CL_AddLocalModel(model, particle, origin, angles, entnum, (spawnflags & 0xFF));
 		}

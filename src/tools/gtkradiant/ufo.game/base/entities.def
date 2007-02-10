@@ -127,3 +127,10 @@ Creates ropes - you always have to define a target (start- and endpoint) (TODO: 
 "slack"	slack paramter for this rope
 */
 
+/*QUAKED func_door (0 .5 .8) ? level1 level2 level3 level4 level5 level6 level7 level8
+"angle"		determines the opening direction
+"health"	if set, door must be shot open
+"speed"		movement speed (100 default)
+"wait"		wait before returning (3 default, -1 = never return)
+"lip"		lip remaining at end of move (8 default)
+*/

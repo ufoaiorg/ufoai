@@ -48,6 +48,7 @@ static void SP_ugv_start(edict_t * ent);
 static void SP_civilian_target(edict_t * ent);
 static void SP_misc_mission(edict_t * ent);
 static void SP_misc_mission_aliens(edict_t * ent);
+static void SP_func_door (edict_t *ent);
 
 typedef struct {
 	char *name;
@@ -68,6 +69,7 @@ static spawn_t spawns[] = {
 	{"info_civilian_target", SP_civilian_target},
 	{"info_ugv_start", SP_ugv_start},
 	{"func_breakable", SP_func_breakable},
+	{"func_door", SP_func_door},
 
 	{NULL, NULL}
 };
@@ -356,7 +358,7 @@ void SpawnEntities (char *mapname, char *entities)
 /**
  * @brief QUAKED light (0 1 0) (-8 -8 -8) (8 8 8)
  */
-static void SP_light(edict_t * self)
+static void SP_light (edict_t * self)
 {
 	/* lights aren't client-server communicated items */
 	/* they are completely client side */
@@ -366,7 +368,7 @@ static void SP_light(edict_t * self)
 /**
  * @brief
  */
-static void G_ActorSpawn(edict_t * ent)
+static void G_ActorSpawn (edict_t * ent)
 {
 	/* set properties */
 	level.num_spawnpoints[ent->team]++;
@@ -393,7 +395,7 @@ static void G_ActorSpawn(edict_t * ent)
 /**
  * @brief Spawn an singleplayer UGV
  */
-static void G_UGVSpawn(edict_t * ent)
+static void G_UGVSpawn (edict_t * ent)
 {
 	/* set properties */
 	level.num_ugvspawnpoints[ent->team]++;
@@ -418,7 +420,7 @@ static void G_UGVSpawn(edict_t * ent)
  * "team"	the number of the team for this player starting point
  * "0" is reserved for civilians and critters (use info_civilian_start instead)
  */
-static void SP_player_start(edict_t * ent)
+static void SP_player_start (edict_t * ent)
 {
 	/* only used in multi player */
 	if (sv_maxclients->integer == 1) {
@@ -440,7 +442,7 @@ static void SP_player_start(edict_t * ent)
  * @brief QUAKED info_human_start (1 0 0) (-16 -16 -24) (16 16 32)
  * Starting point for a single player human.
  */
-static void SP_human_start(edict_t * ent)
+static void SP_human_start (edict_t * ent)
 {
 	/* only used in single player */
 	if (sv_maxclients->integer > 1) {
@@ -459,7 +461,7 @@ static void SP_human_start(edict_t * ent)
  * @brief QUAKED info_ugv_start (1 1 0) (-32 -32 -24) (32 32 32)
  * Starting point for a ugv.
  */
-static void SP_ugv_start(edict_t * ent)
+static void SP_ugv_start (edict_t * ent)
 {
 	/* no ugv in multiplayer */
 	if (sv_maxclients->integer > 1) {
@@ -483,7 +485,7 @@ static void SP_ugv_start(edict_t * ent)
  * @brief QUAKED info_alien_start (1 0 0) (-16 -16 -24) (16 16 32)
  * Starting point for a single player alien.
  */
-static void SP_alien_start(edict_t * ent)
+static void SP_alien_start (edict_t * ent)
 {
 	/* deactivateable in multiplayer */
 	if (sv_maxclients->integer > 1 && !ai_numactors->integer) {
@@ -504,7 +506,7 @@ static void SP_alien_start(edict_t * ent)
  * @brief QUAKED info_civilian_start (0 1 1) (-16 -16 -24) (16 16 32)
  * Starting point for a civilian.
  */
-static void SP_civilian_start(edict_t * ent)
+static void SP_civilian_start (edict_t * ent)
 {
 	/* deactivateable in multiplayer */
 	if (sv_maxclients->integer > 1 && !ai_numcivilians->integer) {
@@ -525,7 +527,7 @@ static void SP_civilian_start(edict_t * ent)
  * Way point for a civilian.
  * @sa SP_civilian_start
  */
-static void SP_civilian_target(edict_t * ent)
+static void SP_civilian_target (edict_t * ent)
 {
 	/* target point for which team */
 	ent->team = TEAM_CIVILIAN;
@@ -542,7 +544,7 @@ static void SP_civilian_target(edict_t * ent)
 /**
  * @brief Init the human/phalanx mission entity
  */
-static void SP_misc_mission(edict_t * ent)
+static void SP_misc_mission (edict_t * ent)
 {
 	ent->classname = "mission";
 	ent->type = ET_MISSION;
@@ -558,7 +560,7 @@ static void SP_misc_mission(edict_t * ent)
 /**
  * @brief Init the alien mission entity
  */
-static void SP_misc_mission_aliens(edict_t * ent)
+static void SP_misc_mission_aliens (edict_t * ent)
 {
 	ent->classname = "mission";
 	ent->type = ET_MISSION;
@@ -574,7 +576,7 @@ static void SP_misc_mission_aliens(edict_t * ent)
 /**
  * @brief a dummy to get rid of local entities
  */
-static void SP_misc_dummy(edict_t * self)
+static void SP_misc_dummy (edict_t * self)
 {
 	/* models and particles aren't client-server communicated items */
 	/* they are completely client side */
@@ -592,7 +594,7 @@ static void SP_misc_dummy(edict_t * self)
  * @sa CL_AddLocalModel
  * @sa PF_SetModel
  */
-static void SP_func_breakable(edict_t * self)
+static void SP_func_breakable (edict_t * self)
 {
 	self->type = ET_BREAKABLE;
 	VectorSet(self->origin, 0, 0, 0);
@@ -609,6 +611,222 @@ static void SP_func_breakable(edict_t * self)
 #endif
 }
 
+/*
+=============================================================================
+DOOR FUNCTIONS
+=============================================================================
+*/
+
+/* door states */
+#define STATE_TOP			0
+#define STATE_BOTTOM		1
+#define STATE_UP			2
+#define STATE_DOWN			3
+
+/**
+ * @brief
+ */
+void door_hit_top (edict_t *self)
+{
+	self->moveinfo.state = STATE_TOP;
+}
+
+/**
+ * @brief
+ */
+void door_hit_bottom (edict_t *self)
+{
+	self->moveinfo.state = STATE_BOTTOM;
+}
+
+/**
+ * @brief
+ */
+void door_go_down (edict_t *self)
+{
+	if (self->moveinfo.state == STATE_DOWN
+		|| self->moveinfo.state == STATE_BOTTOM)
+		return; /* already going up or already hit the top */
+
+	self->moveinfo.state = STATE_DOWN;
+	Move_Calc(self, self->moveinfo.start_origin, door_hit_bottom);
+	/* let everybody know, that the door closes */
+	/* FIXME: See door_go_up */
+	gi.AddEvent(PM_ALL, EV_DOOR_CLOSE);
+	gi.WriteShort(self->number);
+	gi.WritePos(self->moveinfo.dir);
+}
+
+/**
+ * @brief
+ */
+void door_go_up (edict_t *self)
+{
+	if (self->moveinfo.state == STATE_UP
+		|| self->moveinfo.state == STATE_TOP)
+		return; /* already going up or already hit the top */
+
+	self->moveinfo.state = STATE_UP;
+	Move_Calc(self, self->moveinfo.end_origin, door_hit_top);
+	/* let everybody know, that the door opens */
+	/* FIXME: Put this to a better place and only update the edict values for
+	 * client side if the door is visible - only update for the one who
+	 * triggered the event
+	 * FIXME: animate this
+	 */
+	gi.AddEvent(PM_ALL, EV_DOOR_OPEN);
+	gi.WriteShort(self->number);
+	gi.WritePos(self->moveinfo.dir);
+}
+
+/**
+ * @brief Trigger to open the door we are standing in front of
+ */
+void Touch_DoorTrigger (edict_t *self)
+{
+	edict_t *e;
+	int i;
+
+	/* no worldspawn here */
+	e = &g_edicts[1];
+	for (i = 1; i < globals.num_edicts; i++, e++) {
+		if (!e->inuse)
+			continue;
+		/* only actors can activate a touch trigger */
+		if (e->type != ET_ACTOR && e->type != ET_UGV)
+			continue;
+		/* TODO/FIXME: Check whether the e->origin is inside of the trigger */
+		if (e->origin) {
+			door_go_up(self->owner);
+			self->nextthink = level.time + FRAMETIME;
+			return;
+		}
+	}
+	door_go_down(self->owner);
+}
+
+/**
+ * @brief
+ * @sa Think_SpawnDoorTrigger
+ */
+static void Think_CalcMoveSpeed (edict_t *self)
+{
+	float	min;
+	float	time;
+	float	newspeed;
+	float	ratio;
+
+	min = fabs(self->moveinfo.distance);
+	time = min / self->moveinfo.speed;
+
+	/* adjust speeds so they will all complete at the same time */
+	newspeed = fabs(self->moveinfo.distance) / time;
+	ratio = newspeed / self->moveinfo.speed;
+	if (self->moveinfo.accel == self->moveinfo.speed)
+		self->moveinfo.accel = newspeed;
+	else
+		self->moveinfo.accel *= ratio;
+	if (self->moveinfo.decel == self->moveinfo.speed)
+		self->moveinfo.decel = newspeed;
+	else
+		self->moveinfo.decel *= ratio;
+	self->moveinfo.speed = newspeed;
+}
+
+/**
+ * @brief Spawns a door trigger around the func_door
+ * @sa Think_CalcMoveSpeed
+ */
+void Think_SpawnDoorTrigger (edict_t *self)
+{
+	edict_t		*other;
+	vec3_t		mins, maxs;
+
+	VectorCopy(self->absmin, mins);
+	VectorCopy(self->absmax, maxs);
+
+	/* expand */
+	mins[0] -= 60;
+	mins[1] -= 60;
+	maxs[0] += 60;
+	maxs[1] += 60;
+
+	other = G_Spawn();
+	VectorCopy(mins, other->mins);
+	VectorCopy(maxs, other->maxs);
+	other->owner = self;
+	other->solid = SOLID_TRIGGER;
+	other->think = Touch_DoorTrigger;
+	other->nextthink = level.time + FRAMETIME;
+	gi.linkentity(other);
+
+	Think_CalcMoveSpeed(self);
+	/**
+	 * don't call the door think function but the
+	 * trigger think function with next frame
+	 */
+	self->think = NULL;
+}
+
+/**
+ * @brief QUAKED func_door (0 .5 .8) ?
+ * "angle"		determines the opening direction
+ * "health"	if set, door must be shot open
+ * "speed"		movement speed (100 default)
+ * "wait"		wait before returning (3 default, -1 = never return)
+ * "lip"		lip remaining at end of move (8 default)
+ */
+void SP_func_door (edict_t *self)
+{
+	vec3_t	abs_movedir;
+
+	G_SetMovedir (self->angles, self->moveinfo.movedir);
+	self->type = ET_DOOR;
+
+	/* some standard values */
+	if (!self->speed)
+		self->speed = 100;
+	if (!self->accel)
+		self->accel = self->speed;
+	if (!self->decel)
+		self->decel = self->speed;
+
+	if (!self->wait)
+		self->wait = 3;
+	if (!st.lip)
+		st.lip = 8;
+	if (!self->dmg)
+		self->dmg = 2;
+
+	/* calculate second position */
+	VectorCopy (self->origin, self->moveinfo.pos1);
+	abs_movedir[0] = fabs(self->moveinfo.movedir[0]);
+	abs_movedir[1] = fabs(self->moveinfo.movedir[1]);
+	abs_movedir[2] = fabs(self->moveinfo.movedir[2]);
+	self->moveinfo.distance = abs_movedir[0] * self->size[0] + abs_movedir[1] * self->size[1] + abs_movedir[2] * self->size[2] - st.lip;
+	VectorMA (self->moveinfo.pos1, self->moveinfo.distance, self->moveinfo.movedir, self->moveinfo.pos2);
+
+	self->moveinfo.state = STATE_BOTTOM;
+
+	self->moveinfo.speed = self->speed;
+	self->moveinfo.accel = self->accel;
+	self->moveinfo.decel = self->decel;
+	self->moveinfo.wait = self->wait;
+	VectorCopy(self->moveinfo.pos1, self->moveinfo.start_origin);
+	VectorCopy(self->angles, self->moveinfo.start_angles);
+	VectorCopy(self->moveinfo.pos2, self->moveinfo.end_origin);
+	VectorCopy(self->angles, self->moveinfo.end_angles);
+
+	/* set an inline model */
+	/* also set self->solid = SOLID_BSP here */
+	/* also linked into the world here */
+	gi.setmodel(self, self->model);
+	if (self->solid != SOLID_BSP)
+		Com_Printf("Error - func_breakable with no SOLID_BSP\n");
+
+	self->nextthink = level.time + FRAMETIME;
+	self->think = Think_SpawnDoorTrigger;
+}
 
 /**
  * @brief QUAKED worldspawn (0 0 0) ?
