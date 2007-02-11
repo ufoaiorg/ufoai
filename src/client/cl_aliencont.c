@@ -485,7 +485,7 @@ static int AL_CountForMenu(int alienidx, qboolean alive)
 }
 
 /**
- * @brief Update menu cvars for selected alien
+ * @brief Update menu cvars for selected alien.
  */
 static void AC_SelectAlien_f (void)
 {
@@ -507,6 +507,27 @@ static void AC_SelectAlien_f (void)
 	Cvar_SetValue("mn_al_alive", AL_CountForMenu(aliencontCurrent->idx, qtrue));
 
 	UP_Article(tech);
+}
+
+/**
+ * @brief Call UFOpedia for selected alien.
+ */
+static void AC_OpenUFOpedia_f (void)
+{
+	technology_t *tech = NULL;
+
+	/* Can be called from everywhere. */
+	if (!baseCurrent ||!curCampaign || !aliencontCurrent)
+		return;
+
+	tech = RS_GetTechByIDX(aliencontCurrent->techIdx);
+
+	/* Should never happen. */
+	if (!tech)
+		return;
+
+	if (RS_IsResearched_ptr(tech))
+		UP_OpenWith(tech->id);
 }
 
 /**
@@ -551,7 +572,7 @@ static void AC_Init (void)
 					Com_sprintf(tmp, sizeof(tmp), "%s\t%s\t%i\n",
 						_(containment[i].alientype),
 						(RS_IsResearched_ptr(tech) ? _("Yes") : _("Needs autopsy!")),
-						containment[i].amount_alive); /* FIXME: what about the dead ones */
+						containment[i].amount_alive); 
 					Q_strcat(aliencontText, tmp, sizeof(aliencontText));
 					numAliensOnList++;
 				}
@@ -561,6 +582,7 @@ static void AC_Init (void)
 
 	Cvar_SetValue("mn_al_globalamount", AL_CountAll());
 	Cvar_SetValue("mn_al_localamount", AL_CountInBase());
+	Cvar_Set("mn_al_base", baseCurrent->name);
 
 	menuText[TEXT_STANDARD] = aliencontText;
 	menuText[TEXT_UFOPEDIA] = NULL;
@@ -620,6 +642,7 @@ void AC_Reset (void)
 	Cmd_AddCommand("aliencont_init", AC_Init, "Init function for alien containment menu");
 	Cmd_AddCommand("aliencontlist_click", AC_AlienListClick_f, "Click function for aliencont list");
 	Cmd_AddCommand("aliencont_select", AC_SelectAlien_f, "Updates the menu cvars for the current selected alien");
+	Cmd_AddCommand("aliencont_pedia", AC_OpenUFOpedia_f, "Opens UFOpedia entry for selected alien");
 
 	/* add cvars */
 	/* TODO */
