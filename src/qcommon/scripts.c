@@ -744,6 +744,11 @@ int Com_GetModelAndName (char *team, character_t * chr)
 				chr->armor = teamDesc[i].armor;
 			}
 
+#ifdef DEBUG
+		if (i == numTeamDesc)
+			Com_DPrintf("Com_GetModelAndName: Warning - could not find a valid teamdesc for team '%s'\n", nameCat[category].title);
+#endif
+
 		/* get name */
 		str = Com_GiveName(gender, nameCat[category].title);
 		if (!str)
