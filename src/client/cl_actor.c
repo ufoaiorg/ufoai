@@ -518,7 +518,7 @@ static void CL_GetWeaponAndAmmo (char hand, objDef_t **weapon, objDef_t **ammo, 
 	else
 		invlist_weapon = LEFT(selActor);
 
-	if (!invlist_weapon || invlist_weapon->item.t < 0)
+	if (!invlist_weapon || invlist_weapon->item.t == NONE)
 		return;
 
 	*weapon = &csi.ods[invlist_weapon->item.t];
@@ -526,7 +526,7 @@ static void CL_GetWeaponAndAmmo (char hand, objDef_t **weapon, objDef_t **ammo, 
 	if (!weapon)
 		return;
 
-	if ((*weapon)->numWeapons) /* TODO: "|| invlist_weapon->item.m < 0" ... actually what does a negative number for ammo mean? */
+	if ((*weapon)->numWeapons) /* TODO: "|| invlist_weapon->item.m == NONE" ... actually what does a negative number for ammo mean? */
 		*ammo = *weapon; /* This weapon doesn't need ammo it already has firedefs */
 	else
 		*ammo = &csi.ods[invlist_weapon->item.m];
