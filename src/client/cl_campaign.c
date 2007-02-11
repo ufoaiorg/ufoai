@@ -2694,7 +2694,7 @@ static void CL_UpdateCharacterStats (int won)
 	character_t *chr = NULL;
 	rank_t *rank = NULL;
 	aircraft_t *aircraft;
-	int i, j;
+	int i, j, idx = 0;
 
 	Com_DPrintf("CL_UpdateCharacterStats: numTeamList: %i\n", cl.numTeamList);
 
@@ -2705,8 +2705,10 @@ static void CL_UpdateCharacterStats (int won)
 	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++)
 		if (CL_SoldierInAircraft(i, gd.interceptAircraft) ) {
 			Com_DPrintf("CL_UpdateCharacterStats: searching for soldier: %i\n", i);
-			chr = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, -(i+1));
+			chr = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, -(idx+1));
 			assert(chr);
+			/* count every hired soldier in aircraft */
+			idx++;
 			chr->assigned_missions++;
 
 			/* FIXME: */
@@ -2731,7 +2733,9 @@ static void CL_UpdateCharacterStats (int won)
 					}
 				}
 			}
-		}
+		/* also count the employees that are only hired but not in the aircraft */
+		} else if (E_GetHiredEmployee(baseCurrent, EMPL_SOLDIER, i))
+			idx++;
 	Com_DPrintf("CL_UpdateCharacterStats: Done\n");
 }
 
