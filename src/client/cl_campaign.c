@@ -1397,13 +1397,13 @@ extern void CL_GameTimeFast (void)
 	}
 }
 
+#define MAX_CREDITS 10000000
 /**
  * @brief Sets credits and update mn_credits cvar
  *
  * Checks whether credits are bigger than MAX_CREDITS
  */
-#define MAX_CREDITS 10000000
-void CL_UpdateCredits (int credits)
+extern void CL_UpdateCredits (int credits)
 {
 	/* credits */
 	if (credits > MAX_CREDITS)
@@ -1417,7 +1417,7 @@ void CL_UpdateCredits (int credits)
 /**
  * @brief Shows the current stats from stats_t stats
  */
-void CL_Stats_Update (void)
+static void CL_Stats_Update_f (void)
 {
 	char *pos;
 	static char statsBuffer[MAX_STATS_BUFFER];
@@ -1515,7 +1515,7 @@ void CL_Stats_Update (void)
  * @sa CL_GameSave
  * @sa MN_AddNewMessage
  */
-void CL_MessageSave (sizebuf_t * sb, message_t * message)
+static void CL_MessageSave (sizebuf_t * sb, message_t * message)
 {
 	int idx = -1;
 
@@ -1548,7 +1548,7 @@ void CL_MessageSave (sizebuf_t * sb, message_t * message)
  * @brief
  * @sa CL_GameLoad
  */
-qboolean CL_GameSave (char *filename, char *comment)
+static qboolean CL_GameSave (char *filename, char *comment)
 {
 	stageState_t *state;
 	actMis_t *mis;
@@ -1757,7 +1757,7 @@ static void CL_GameSave_f (void)
 /**
  * @brief Will fix the pointers in gd after loading
  */
-void CL_UpdatePointersInGlobalData (void)
+static void CL_UpdatePointersInGlobalData (void)
 {
 	int i, j, p, type;
 	base_t *base;
@@ -1821,7 +1821,7 @@ void CL_UpdatePointersInGlobalData (void)
  * @sa CL_ReadSinglePlayerData
  * @sa CL_UpdatePointersInGlobalData
  */
-int CL_GameLoad (char *filename)
+static int CL_GameLoad (char *filename)
 {
 	actMis_t *mis;
 	stageState_t *state;
@@ -3820,7 +3820,7 @@ static const cmdList_t game_commands[] = {
 	,
 	{"aircraft_list", CL_BuildingAircraftList_f, NULL}
 	,
-	{"stats_update", CL_Stats_Update, NULL}
+	{"stats_update", CL_Stats_Update_f, NULL}
 	,
 	{"game_go", CL_GameGo, NULL}
 	,
