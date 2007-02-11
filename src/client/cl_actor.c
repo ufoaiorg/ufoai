@@ -815,8 +815,8 @@ static void CL_RefreshWeaponButtons (int time)
 {
 	int i;
 	invList_t *weaponr, *weaponl = NULL;
-	int minweaponrtime, minweaponltime = 100;
-	int weaponr_fds_idx, weaponl_fds_idx;
+	int minweaponrtime = 100, minweaponltime = 100;
+	int weaponr_fds_idx = -1, weaponl_fds_idx = -1;
 
 	if (!selActor)
 		return;
@@ -867,8 +867,19 @@ static void CL_RefreshWeaponButtons (int time)
 
 	/* Weapon firing buttons. */
 	if (weaponr) {
-		if (INV_FiredefsIDXForWeapon(&csi.ods[weaponr->item.m],weaponr->item.t) > 0)
+		/* Check whether this item use ammo. */
+		if (weaponr->item.m == NONE) {
+			/* This item does not use ammo, check for existing firedefs in this item. */
+			if (&csi.ods[weaponr->item.t].numFiredefs > 0) {
+				/* Get firedef from the weapon entry instead. */
+				weaponr_fds_idx = INV_FiredefsIDXForWeapon(&csi.ods[weaponr->item.m],weaponr->item.t);
+			} else {
+				weaponr_fds_idx = -1;
+			}
+		} else {
+			/* This item uses ammo, get the firedefs from ammo. */
 			weaponr_fds_idx = INV_FiredefsIDXForWeapon(&csi.ods[weaponr->item.m],weaponr->item.t);
+		}
 		/* Search for the smallest TU needed to shoot. */
 		for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
 			if (!weaponr_fds_idx || weaponr_fds_idx == -1)
@@ -887,8 +898,19 @@ static void CL_RefreshWeaponButtons (int time)
 	}
 
 	if (weaponl) {
-		if (INV_FiredefsIDXForWeapon(&csi.ods[weaponl->item.m],weaponl->item.t) > 0)
+		/* Check whether this item use ammo. */
+		if (weaponl->item.m == NONE) {
+			/* This item does not use ammo, check for existing firedefs in this item. */
+			if (&csi.ods[weaponl->item.t].numFiredefs > 0) {
+				/* Get firedef from the weapon entry instead. */
+				weaponl_fds_idx = INV_FiredefsIDXForWeapon(&csi.ods[weaponl->item.m],weaponl->item.t);
+			} else {
+				weaponl_fds_idx = -1;
+			}
+		} else {
+			/* This item uses ammo, get the firedefs from ammo. */
 			weaponl_fds_idx = INV_FiredefsIDXForWeapon(&csi.ods[weaponl->item.m],weaponl->item.t);
+		}
 		/* Search for the smallest TU needed to shoot. */
 		for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
 			if (!weaponl_fds_idx || weaponl_fds_idx == -1)
