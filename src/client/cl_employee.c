@@ -366,6 +366,13 @@ extern employee_t* E_GetHiredEmployee (const base_t* const base, employeeType_t 
 		return NULL;
 	}
 
+#ifdef PARANOID
+	if (j < 0) {
+		i = E_CountHired(base, type);
+		if (i < abs(idx))
+			Sys_Error("Try to get the %ith employee - but you only have %i hired\n", abs(idx), i);
+	}
+#endif
 	for (i = 0; i < gd.numEmployees[type]; i++) {
 		employee = &gd.employees[type][i];
 		if (employee->baseIDHired == base->idx) {
@@ -636,7 +643,7 @@ extern qboolean E_DeleteEmployee (employee_t *employee, employeeType_t type)
 			found = qtrue;
 
 		if (found) {
-			if ( i < MAX_EMPLOYEES-1) { /* Just in case we have _that much_ employees. :) */
+			if (i < MAX_EMPLOYEES-1) { /* Just in case we have _that much_ employees. :) */
 				/* Move all the following employees in the list one place forward and correct its index. */
 				gd.employees[type][i] = gd.employees[type][i + 1];
 				gd.employees[type][i].idx = i;
