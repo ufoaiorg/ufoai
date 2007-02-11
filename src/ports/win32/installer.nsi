@@ -2,6 +2,7 @@
 
 ; HM NIS Edit Wizard helper defines
 !define PRODUCT_NAME "UFO:Alien Invasion"
+!define SHORT_PRODUCT_NAME "UFO:AI"
 !define PRODUCT_NAME_DEDICATED "UFO:Alien Invasion Dedicated Server"
 !define PRODUCT_VERSION "2.1-dev"
 !define PRODUCT_PUBLISHER "UFO:AI Team"
@@ -58,7 +59,7 @@ ShowUninstDetails "nevershow"
 
 ; MUI end ------
 
-Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
+Name "${SHORT_PRODUCT_NAME} ${PRODUCT_VERSION}"
 OutFile "ufoai-${PRODUCT_VERSION}-win32.exe"
 InstallDir "$PROGRAMFILES\UFOAI-${PRODUCT_VERSION}"
 InstallDirRegKey HKLM "${PRODUCT_DIR_REGKEY}" ""
@@ -890,6 +891,7 @@ SectionEnd
 Section "SourceCode" SEC03
   SetOverwrite ifnewer
   SetOutPath "$INSTDIR\build"
+  File "..\..\..\build\*.bmp"
   SetOutPath "$INSTDIR\build\projects"
   File "..\..\..\build\projects\*.cbp"
   File "..\..\..\build\projects\*.dev"
@@ -981,11 +983,11 @@ Section "SourceCode" SEC03
   SetOutPath "$INSTDIR\src\tools\gtkradiant\plugin\ufoai"
   File "..\..\tools\gtkradiant\plugin\ufoai\*.cpp"
   File "..\..\tools\gtkradiant\plugin\ufoai\*.h"
-  SetOutPath "$INSTDIR\src\tools\gtkradiant\ufo.game"
-  File "..\..\tools\gtkradiant\ufo.game\*.xml"
-  File "..\..\tools\gtkradiant\ufo.game\*.xlink"
-  SetOutPath "$INSTDIR\src\tools\gtkradiant\ufo.game\base"
-  File "..\..\tools\gtkradiant\ufo.game\base\*.def"
+  SetOutPath "$INSTDIR\src\tools\gtkradiant\ufoai.game"
+  File "..\..\tools\gtkradiant\ufoai.game\*.xml"
+  File "..\..\tools\gtkradiant\ufoai.game\*.xlink"
+  SetOutPath "$INSTDIR\src\tools\gtkradiant\ufoai.game\base"
+  File "..\..\tools\gtkradiant\ufoai.game\base\*.def"
   SetOutPath "$INSTDIR\src\tools\qdata"
   File "..\..\tools\qdata\*.c"
   File "..\..\tools\qdata\*.h"
