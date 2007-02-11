@@ -35,7 +35,7 @@ item plaspistol_ammo
 	{
 		firedef 
 		{
-			name	"_Charged Pulse"
+			name	"_Ball"
 			skill 	close
 			projtl	plasmaMiniPulse
 			impact	plasmaImpactCharged
@@ -55,7 +55,7 @@ item plaspistol_ammo
 		}
 		firedef 
 		{
-			name	"_Continuous Stream"
+			name	"_Spray"
 			skill 	assault
 			projtl	plasmaContinuous
 			impact	plasmaImpact
@@ -114,7 +114,7 @@ item plasrifle_ammo
 	{
 		firedef 
 		{
-			name	"_Charged Pulse"
+			name	"_Ball"
 			skill 	assault
 			projtl	plasmaPulse
 			impact	plasmaImpactCharged
@@ -134,8 +134,8 @@ item plasrifle_ammo
 		}
 		firedef
 		{
-			name	"_Continuous Stream"
-			skill 	heavy
+			name	"_Spray"
+			skill 	assault
 			projtl	plasmaContinuous
 			impact	plasmaImpact
 			hitbody	plasmaImpact
@@ -194,8 +194,8 @@ item plasblaster_ammo
 	{
 		firedef 
 		{
-			name	"_Charged Ball"
-			skill 	explosive
+			name	"_Ball"
+			skill 	heavy
 			projtl	plasmaBigBall
 			impact	plasmaBigImpact
 			hitbody	plasmaBigImpact
@@ -217,8 +217,8 @@ item plasblaster_ammo
 		}
 		firedef
 		{
-			name	"_Continuous Beam"
-			skill 	heavy
+			name	"_Spray"
+			skill 	assault
 			projtl	plasmaContinuous
 			impact	plasmaImpact
 			hitbody	plasmaImpact

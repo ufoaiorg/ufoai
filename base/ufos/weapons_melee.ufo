@@ -84,25 +84,22 @@ item knifemono
 			range	1.5
 			shots	1
 			time	6
-			damage	"70 20"
+			damage	"50 20"
 			dmgtype normal
 		}
 		firedef
 		{
-			name	"_Throw"
+			name	"_Slash"
 			skill	close
-			projtl	knife
+			projtl	null
 			impact	null
 			hitbody blood
-			impsnd	misc/klonk03.wav
-			bodysnd misc/klonk01.wav
-			speed	320
-			range	7
-			spread	"1 4"
+			firesnd	misc/klonk03.wav
+			speed	0
+			range	1.5
 			shots	1
-			ammo	1
-			time	8
-			damage	"50 25"
+			time	10
+			damage	"70 20"
 			dmgtype normal
 		}
 	}
@@ -129,7 +126,7 @@ item stunrod
 	{
 		firedef 
 		{
-			name	"_Stun"
+			name	"_Stun Charge"
 			skill	close
 			projtl	null
 			impact	null
@@ -145,7 +142,7 @@ item stunrod
 
 		firedef
 		{
-			name	"_Stun Twice"
+			name	"_Double Charge"
 			skill	close
 			projtl	null
 			impact	null
@@ -155,7 +152,7 @@ item stunrod
 			range	1.5
 			shots	2
 			rof		5
-			time	10
+			time	11
 			damage	"50 20"
 			dmgtype stun
 		}
@@ -194,26 +191,22 @@ item kerrblade
 			range	1.5
 			shots	1
 			time	8
-			damage	"70 20"
+			damage	"60 20"
 			dmgtype normal
 		}
-		firedef
+		firedef 
 		{
-			name	"_Throw"
+			name	"_Slash"
 			skill	close
-			projtl	kerrblade
+			projtl	null
 			impact	null
 			hitbody blood
-			firesnd	misc/plopp01.wav
-			impsnd	misc/klonk02.wav
-			bodysnd weapons/kerrblade.wav
-			speed	320
-			range	5
-			spread	"4 9"
+			firesnd	weapons/kerrblade.wav
+			speed	0
+			range	1.5
 			shots	1
-			ammo	1
-			time	12
-			damage	"50 25"
+			time	14
+			damage	"80 20"
 			dmgtype normal
 		}
 	}
@@ -241,7 +234,7 @@ item plasblade
 	{
 		firedef 
 		{
-			name	"_Stab"
+			name	"_Lock"
 			skill	close
 			projtl	null
 			impact	plasmaImpactCharged
@@ -250,8 +243,9 @@ item plasblade
 			speed	0
 			range	1.5
 			shots	1
+			ammo 1
 			time	7
-			damage	"90 5"
+			damage	"100 5"
 			dmgtype plasma
 		}
 		firedef
@@ -268,8 +262,8 @@ item plasblade
 			spread	"2 5"
 			shots	1
 			ammo	1
-			time	10
-			damage	"80 30"
+			time	12
+			damage	"100 5"
 			dmgtype plasma
 		}
 	}
