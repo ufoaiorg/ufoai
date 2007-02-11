@@ -413,7 +413,7 @@ static int CL_GetActorNumber (le_t * le)
 static void HideFiremodes (void)
 {
 	int i;
-	
+
 	visible_firemode_list_left = qfalse;
 	visible_firemode_list_right = qfalse;
 	for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
@@ -542,7 +542,7 @@ void CL_DisplayFiremodes_f (void)
 	int actor_idx;
 	objDef_t *weapon = NULL;
 	objDef_t *ammo = NULL;
-	int weap_fd_idx;
+	int weap_fd_idx = -1;
 	int i;
 	char *hand;
 
@@ -561,6 +561,8 @@ void CL_DisplayFiremodes_f (void)
 	}
 
 	CL_GetWeaponAndAmmo(hand[0], &weapon, &ammo, &weap_fd_idx);
+	if (weap_fd_idx == -1)
+		return;
 
 	Com_DPrintf("CL_DisplayFiremodes_f: %s | %s | %i\n", weapon->name, ammo->name, weap_fd_idx);
 
@@ -655,12 +657,14 @@ static void CL_UpdateReactionFiremodes (char hand, int actor_idx, int active_fir
 {
 	objDef_t *weapon = NULL;
 	objDef_t *ammo = NULL;
-	int weap_fd_idx;
+	int weap_fd_idx = -1;
 	int i;
 
 	int handidx = (hand == 'r') ? 0 : 1;
 
 	CL_GetWeaponAndAmmo(hand, &weapon, &ammo, &weap_fd_idx);
+	if (weap_fd_idx == -1)
+		return;
 
 	if (!weapon) {
 		Com_DPrintf("CL_UpdateReactionFiremodes: No weapon found for %c hand.\n", hand);
@@ -760,7 +764,7 @@ void CL_FireWeapon (void)
 
 	objDef_t *weapon = NULL;
 	objDef_t *ammo = NULL;
-	int weap_fd_idx;
+	int weap_fd_idx = -1;
 
 	if (Cmd_Argc() < 3) { /* no argument given */
 		Com_Printf("Usage: fireweap [l|r] <num>   num=firemode number\n");
@@ -785,6 +789,8 @@ void CL_FireWeapon (void)
 	}
 
 	CL_GetWeaponAndAmmo(hand[0], &weapon, &ammo, &weap_fd_idx);
+	if (weap_fd_idx == -1)
+		return;
 
 	if (ammo->fd[weap_fd_idx][firemode].time <= selActor->TU) {
 		/* Actually start aiming */
