@@ -299,7 +299,7 @@ static void MN_ReinitCurrentMenu_f (void)
 		/* initialize it */
 		if (menuStack[menuStackPos-1]) {
 			MN_ExecuteActions(menuStack[menuStackPos-1], menuStack[menuStackPos-1]->initNode->click);
-			Com_Printf("Reinit %s\n", menuStack[menuStackPos-1]->name);
+			Com_DPrintf("Reinit %s\n", menuStack[menuStackPos-1]->name);
 		}
 	}
 }
