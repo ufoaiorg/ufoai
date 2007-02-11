@@ -857,10 +857,17 @@ static void CL_RefreshWeaponButtons (int time)
 		SetWeaponButton(BT_LEFT_RELOAD, qtrue);
 
 	/* Weapon firing buttons */
-	/* TODO: Anything needed as a replacement? */
-	SetWeaponButton(BT_RIGHT_PRIMARY, qtrue);
-	SetWeaponButton(BT_LEFT_PRIMARY, qtrue);
+	if (!weaponr 
+	|| time < csi.ods[weaponr->item.m].fd[INV_FiredefsIDXForWeapon(&csi.ods[weaponr->item.m],weaponr->item.t)][0].time)
+		SetWeaponButton(BT_RIGHT_PRIMARY, qfalse);
+	else
+		SetWeaponButton(BT_RIGHT_PRIMARY, qtrue);
 
+	if (!weaponl 
+	|| time < csi.ods[weaponl->item.m].fd[INV_FiredefsIDXForWeapon(&csi.ods[weaponl->item.m],weaponl->item.t)][0].time)
+		SetWeaponButton(BT_LEFT_PRIMARY, qfalse);
+	else
+		SetWeaponButton(BT_LEFT_PRIMARY, qtrue);
 }
 
 /**
