@@ -937,7 +937,7 @@ extern qboolean CL_SoldierInAircraft (int employee_idx, int aircraft_idx)
 
 	assert(baseCurrent);
 
-	if (employee_idx < 0)
+	if (employee_idx < 0 || employee_idx > gd.numEmployees[EMPL_SOLDIER])
 		return qfalse;
 
 	if (aircraft_idx < 0) {
