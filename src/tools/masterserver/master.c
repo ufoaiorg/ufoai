@@ -185,7 +185,7 @@ static void MS_AddServer (struct sockaddr_in *from, int normal)
 		addr.sin_family = AF_INET;
 		addr.sin_port = server->port;
 		memset (&addr.sin_zero, 0, sizeof(addr.sin_zero));
-		sendto (listener, "\xFF\xFF\xFF\xFFack", 7, 0, (struct sockaddr *)&addr, sizeof(addr));
+		sendto(listener, "\xFF\xFF\xFF\xFF""ack", 7, 0, (struct sockaddr*)&addr, sizeof(addr));
 	}
 }
 
@@ -342,7 +342,7 @@ static void MS_HeartBeat (struct sockaddr_in *from, char *data)
 			server->validated = 1;
 			server->last_heartbeat = time(0);
 			dprintf ("[I] heartbeat from %s.\n", inet_ntoa (server->ip.sin_addr));
-			sendto (listener, "\xFF\xFF\xFF\xFFack", 7, 0, (struct sockaddr *)&addr, sizeof(addr));
+			sendto(listener, "\xFF\xFF\xFF\xFF""ack", 7, 0, (struct sockaddr*)&addr, sizeof(addr));
 			return;
 		}
 	}
