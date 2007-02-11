@@ -824,10 +824,10 @@ menu hud
 	confunc set_left_inv1 { *bt_left_fm1 invis true	*left_fm_name1 invis true	*left_fm_tu1 invis true	*left_fm_shot1 invis true	*bt_left_cb1 invis true }
 	confunc set_left_inv2 { *bt_left_fm2 invis true	*left_fm_name2 invis true	*left_fm_tu2 invis true	*left_fm_shot2 invis true	*bt_left_cb2 invis true }
 	confunc set_left_inv3 { *bt_left_fm3 invis true	*left_fm_name3 invis true	*left_fm_tu3 invis true	*left_fm_shot3 invis true	*bt_left_cb3 invis true }
-	confunc set_left_inv4 { *bt_left_fm4 invis true	*left_fm_name0 invis true	*left_fm_tu4 invis true	*left_fm_shot4 invis true	*bt_left_cb4 invis true }
-	confunc set_left_inv5 { *bt_left_fm5 invis true	*left_fm_name1 invis true	*left_fm_tu5 invis true	*left_fm_shot5 invis true	*bt_left_cb5 invis true }
-	confunc set_left_inv6 { *bt_left_fm6 invis true	*left_fm_name2 invis true	*left_fm_tu6 invis true	*left_fm_shot6 invis true	*bt_left_cb6 invis true }
-	confunc set_left_inv7 { *bt_left_fm7 invis true	*left_fm_name3 invis true	*left_fm_tu7 invis true	*left_fm_shot7 invis true	*bt_left_cb7 invis true }
+	confunc set_left_inv4 { *bt_left_fm4 invis true	*left_fm_name4 invis true	*left_fm_tu4 invis true	*left_fm_shot4 invis true	*bt_left_cb4 invis true }
+	confunc set_left_inv5 { *bt_left_fm5 invis true	*left_fm_name5 invis true	*left_fm_tu5 invis true	*left_fm_shot5 invis true	*bt_left_cb5 invis true }
+	confunc set_left_inv6 { *bt_left_fm6 invis true	*left_fm_name6 invis true	*left_fm_tu6 invis true	*left_fm_shot6 invis true	*bt_left_cb6 invis true }
+	confunc set_left_inv7 { *bt_left_fm7 invis true	*left_fm_name7 invis true	*left_fm_tu7 invis true	*left_fm_shot7 invis true	*bt_left_cb7 invis true }
 	confunc set_right_inv0 { *bt_right_fm0 invis true	*right_fm_name0 invis true	*right_fm_tu0 invis true	*right_fm_shot0 invis true	*bt_right_cb0 invis true }
 	confunc set_right_inv1 { *bt_right_fm1 invis true	*right_fm_name1 invis true	*right_fm_tu1 invis true	*right_fm_shot1 invis true	*bt_right_cb1 invis true }
 	confunc set_right_inv2 { *bt_right_fm2 invis true	*right_fm_name2 invis true	*right_fm_tu2 invis true	*right_fm_shot2 invis true	*bt_right_cb2 invis true }
