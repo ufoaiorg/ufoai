@@ -49,6 +49,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # include <signal.h>
 # include <errno.h>
 # include <arpa/inet.h>
+# include <netinet/in.h>
+# include <sys/types.h>
+# include <sys/socket.h>
 # define SOCKET int
 # define SOCKET_ERROR -1
 # define TIMEVAL struct timeval
