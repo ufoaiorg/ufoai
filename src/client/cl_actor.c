@@ -864,6 +864,8 @@ static void CL_RefreshWeaponButtons (int time)
 		weaponr_fds_idx = INV_FiredefsIDXForWeapon(&csi.ods[weaponr->item.m],weaponr->item.t);
 		/* Search for the smallest TU needed to shoot. */
 		for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
+			if (weaponr_fds_idx == -1)
+				break;
 			if (!csi.ods[weaponr->item.m].fd[weaponr_fds_idx][i].time)
 				continue;
 			if (csi.ods[weaponr->item.m].fd[weaponr_fds_idx][i].time < minweaponrtime)
@@ -881,6 +883,8 @@ static void CL_RefreshWeaponButtons (int time)
 		weaponl_fds_idx = INV_FiredefsIDXForWeapon(&csi.ods[weaponl->item.m],weaponl->item.t);
 		/* Search for the smallest TU needed to shoot. */
 		for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
+			if (weaponl_fds_idx == -1)
+				break;
 			if (!csi.ods[weaponl->item.m].fd[weaponl_fds_idx][i].time)
 				continue;
 			if (csi.ods[weaponl->item.m].fd[weaponl_fds_idx][i].time < minweaponltime)
