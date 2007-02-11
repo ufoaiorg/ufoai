@@ -290,6 +290,21 @@ menuNode_t *MN_GetNode (const menu_t* const menu, char *name)
 }
 
 /**
+ * @brief This will reinit the current visible menu
+ * @note also available as script command mn_reinit
+ */
+static void MN_ReinitCurrentMenu_f (void)
+{
+	if (menuStackPos > 0) {
+		/* initialize it */
+		if (menuStack[menuStackPos-1]) {
+			MN_ExecuteActions(menuStack[menuStackPos-1], menuStack[menuStackPos-1]->initNode->click);
+			Com_Printf("Reinit %s\n", menuStack[menuStackPos-1]->name);
+		}
+	}
+}
+
+/**
  * @brief Searches a given node in the current menu
  * @sa MN_GetNode
  */
@@ -2859,9 +2874,10 @@ void MN_ResetMenus (void)
 	Cmd_AddCommand("mn_startserver", MN_StartServer_f, NULL);
 	Cmd_AddCommand("mn_nextmap", MN_NextMap_f, NULL);
 	Cmd_AddCommand("mn_prevmap", MN_PrevMap_f, NULL);
-	Cmd_AddCommand("mn_push", MN_PushMenu_f, NULL);
+	Cmd_AddCommand("mn_push", MN_PushMenu_f, "Push a menu to the menustack");
 	Cmd_AddCommand("mn_push_copy", MN_PushCopyMenu_f, NULL);
-	Cmd_AddCommand("mn_pop", MN_PopMenu_f, NULL);
+	Cmd_AddCommand("mn_pop", MN_PopMenu_f, "Pops the current menu from the stack");
+	Cmd_AddCommand("mn_reinit", MN_ReinitCurrentMenu_f, "This will reinit the current menu (recall the init function)");
 	Cmd_AddCommand("mn_modify", MN_Modify_f, NULL);
 	Cmd_AddCommand("mn_modifywrap", MN_ModifyWrap_f, NULL);
 	Cmd_AddCommand("mn_modifystring", MN_ModifyString_f, NULL);
