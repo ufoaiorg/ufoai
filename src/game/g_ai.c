@@ -222,8 +222,8 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, ai_action_t * aia)
 								dmg *= 1.0 - ad->protection[fd->dmgtype] * 0.01;
 						}
 
-						if ( dmg > check->HP
-							&& check->state & STATE_REACTION )
+						if (dmg > check->HP
+							&& check->state & STATE_REACTION)
 							/* reaction shooters eradication bonus */
 							dmg = check->HP + GUETE_KILL
 								+ GUETE_REACTION_ERADICATION;

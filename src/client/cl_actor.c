@@ -102,7 +102,7 @@ static char *CL_GetSkillString (const int skill)
 {
 #ifdef DEBUG
 	if (skill > MAX_SKILL) {
-		Com_Printf("CL_GetSkillString: Skill is bigger than max allowed skill value\n");
+		Com_Printf("CL_GetSkillString: Skill is bigger than max allowed skill value (%i/%i)\n", skill, MAX_SKILL);
 	}
 #endif
 	switch (skill*10/MAX_SKILL) {
