@@ -328,7 +328,7 @@ qboolean scrap_dirty;
  * @brief
  * @return a texture number and the position inside it
  */
-static int Scrap_AllocBlock(int w, int h, int *x, int *y)
+static int Scrap_AllocBlock (int w, int h, int *x, int *y)
 {
 	int i, j;
 	int best, best2;
@@ -370,7 +370,7 @@ static int scrap_uploads = 0;
 /**
  * @brief
  */
-void Scrap_Upload(void)
+void Scrap_Upload (void)
 {
 	scrap_uploads++;
 	GL_Bind(TEXNUM_SCRAPS);
@@ -392,7 +392,7 @@ PCX LOADING
  * @sa LoadPNG
  * @sa GL_FindImage
  */
-static void LoadPCX(char *filename, byte ** pic, byte ** palette, int *width, int *height)
+static void LoadPCX (char *filename, byte ** pic, byte ** palette, int *width, int *height)
 {
 	byte *raw;
 	pcx_t *pcx;

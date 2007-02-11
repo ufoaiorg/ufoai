@@ -1305,7 +1305,7 @@ typedef model_t *model_p;
 /**
  * @brief Specifies the model that will be used as the world
  */
-void R_BeginRegistration(char *tiles, char *pos)
+void R_BeginRegistration (char *tiles, char *pos)
 {
 	char *token;
 	char name[MAX_VAR];
@@ -1369,7 +1369,7 @@ void R_BeginRegistration(char *tiles, char *pos)
 /**
  * @brief
  */
-static signed int Mod_GetTris(short p1, short p2, dtriangle_t * side1, dmdl_t * hdr)
+static signed int Mod_GetTris (short p1, short p2, dtriangle_t * side1, dmdl_t * hdr)
 {
 	dtriangle_t *tris = (dtriangle_t *) ((unsigned char *) hdr + hdr->ofs_tris);
 	int i;
@@ -1393,7 +1393,7 @@ static signed int Mod_GetTris(short p1, short p2, dtriangle_t * side1, dmdl_t * 
 /**
  * @brief
  */
-static void Mod_FindSharedEdges(model_t * mod)
+static void Mod_FindSharedEdges (model_t * mod)
 {
 	dmdl_t *hdr;
 	dtriangle_t *tris;
@@ -1422,7 +1422,7 @@ static void Mod_FindSharedEdges(model_t * mod)
 /**
  * @brief
  */
-struct model_s *R_RegisterModel(const char *name)
+struct model_s *R_RegisterModel (const char *name)
 {
 	model_t *mod;
 	int i;
@@ -1463,8 +1463,7 @@ struct model_s *R_RegisterModel(const char *name)
 
 			pheader3 = (maliasmodel_t *)mod->extradata;
 
-			for (i=0; i<pheader3->num_meshes; i++)
-			{
+			for (i=0; i<pheader3->num_meshes; i++) {
 				for (k=0; k<pheader3->meshes[i].num_skins; k++)
 					mod->skins[i] = GL_FindImage(pheader3->meshes[i].skins[k].name, it_skin);
 			}
@@ -1480,7 +1479,7 @@ struct model_s *R_RegisterModel(const char *name)
 /**
  * @brief
  */
-struct model_s *R_RegisterModelShort(const char *name)
+struct model_s *R_RegisterModelShort (const char *name)
 {
 	if (!name || !name[0])
 		return NULL;
@@ -1498,7 +1497,7 @@ struct model_s *R_RegisterModelShort(const char *name)
  * @brief
  * @sa Mod_FreeAll
  */
-static void Mod_Free(model_t * mod)
+static void Mod_Free (model_t * mod)
 {
 	if (mod->extradatasize)
 		Hunk_Free(mod->extradata);
@@ -1509,7 +1508,7 @@ static void Mod_Free(model_t * mod)
  * @brief
  * @sa R_BeginRegistration
  */
-void R_EndRegistration(void)
+void R_EndRegistration (void)
 {
 	int i;
 	model_t *mod;
@@ -1529,7 +1528,7 @@ void R_EndRegistration(void)
  * @brief
  * @sa Mod_Free
  */
-void Mod_FreeAll(void)
+void Mod_FreeAll (void)
 {
 	int i;
 

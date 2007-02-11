@@ -535,7 +535,7 @@ int RecursiveLightPoint(mnode_t * node, vec3_t start, vec3_t end)
 		return r;				/* hit something */
 
 	if ((back < 0) == side)
-		return -1;				/* didn't hit anuthing */
+		return -1;				/* didn't hit anything */
 
 	/* check for impact on this node */
 	VectorCopy(mid, lightspot);

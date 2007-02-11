@@ -362,7 +362,7 @@ int AL_GetAlienIdx(char *id)
  * @sa RS_RequirementsMet
  * @sa RS_CheckCollected
  */
-int AL_GetAlienAmount(int idx, requirementType_t reqtype)
+int AL_GetAlienAmount (int idx, requirementType_t reqtype)
 {
 	base_t *base = NULL;
 	aliensCont_t *containment = NULL;
@@ -426,7 +426,7 @@ int AL_CountAll(void)
  * @return amount of all alive aliens stored in containment
  * @sa AC_Init
  */
-int AL_CountInBase(void)
+int AL_CountInBase (void)
 {
 	int j;
 	int amount = 0;
@@ -572,7 +572,7 @@ static void AC_Init (void)
 					Com_sprintf(tmp, sizeof(tmp), "%s\t%s\t%i\n",
 						_(containment[i].alientype),
 						(RS_IsResearched_ptr(tech) ? _("Yes") : _("Needs autopsy!")),
-						containment[i].amount_alive); 
+						containment[i].amount_alive);
 					Q_strcat(aliencontText, tmp, sizeof(aliencontText));
 					numAliensOnList++;
 				}
