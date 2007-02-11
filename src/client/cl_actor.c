@@ -807,7 +807,10 @@ void CL_FireWeapon (void)
  */
 static void CL_RefreshWeaponButtons (int time)
 {
+	int i;
 	invList_t *weaponr, *weaponl = NULL;
+	int minweaponrtime, minweaponltime = 100;
+	int weaponr_fds_idx, weaponl_fds_idx;
 
 	if (!selActor)
 		return;
@@ -856,18 +859,40 @@ static void CL_RefreshWeaponButtons (int time)
 	else
 		SetWeaponButton(BT_LEFT_RELOAD, qtrue);
 
-	/* Weapon firing buttons */
-	if (!weaponr 
-	|| time < csi.ods[weaponr->item.m].fd[INV_FiredefsIDXForWeapon(&csi.ods[weaponr->item.m],weaponr->item.t)][0].time)
+	/* Weapon firing buttons. */
+	if (weaponr) {
+		weaponr_fds_idx = INV_FiredefsIDXForWeapon(&csi.ods[weaponr->item.m],weaponr->item.t);
+		/* Search for the smallest TU needed to shoot. */
+		for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
+			if (!csi.ods[weaponr->item.m].fd[weaponr_fds_idx][i].time)
+				continue;
+			if (csi.ods[weaponr->item.m].fd[weaponr_fds_idx][i].time < minweaponrtime)
+				minweaponrtime = csi.ods[weaponr->item.m].fd[weaponr_fds_idx][i].time;
+		}
+		if (time < minweaponrtime)
+			SetWeaponButton(BT_RIGHT_PRIMARY, qfalse);
+		else
+			SetWeaponButton(BT_RIGHT_PRIMARY, qtrue);
+	} else {
 		SetWeaponButton(BT_RIGHT_PRIMARY, qfalse);
-	else
-		SetWeaponButton(BT_RIGHT_PRIMARY, qtrue);
+	}
 
-	if (!weaponl 
-	|| time < csi.ods[weaponl->item.m].fd[INV_FiredefsIDXForWeapon(&csi.ods[weaponl->item.m],weaponl->item.t)][0].time)
+	if (weaponl) {
+		weaponl_fds_idx = INV_FiredefsIDXForWeapon(&csi.ods[weaponl->item.m],weaponl->item.t);
+		/* Search for the smallest TU needed to shoot. */
+		for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
+			if (!csi.ods[weaponl->item.m].fd[weaponl_fds_idx][i].time)
+				continue;
+			if (csi.ods[weaponl->item.m].fd[weaponl_fds_idx][i].time < minweaponltime)
+				minweaponltime = csi.ods[weaponl->item.m].fd[weaponl_fds_idx][i].time;
+		}
+		if (time < minweaponltime)
+			SetWeaponButton(BT_LEFT_PRIMARY, qfalse);
+		else
+			SetWeaponButton(BT_LEFT_PRIMARY, qtrue);
+	} else {
 		SetWeaponButton(BT_LEFT_PRIMARY, qfalse);
-	else
-		SetWeaponButton(BT_LEFT_PRIMARY, qtrue);
+	}
 }
 
 /**
