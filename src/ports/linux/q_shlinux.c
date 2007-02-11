@@ -57,7 +57,7 @@ void *Hunk_Begin (int maxsize)
 	membase = mmap(0, maxhunksize, PROT_READ|PROT_WRITE,
 		MAP_PRIVATE|MAP_ANONYMOUS, -1, 0);
 #endif
-	if (membase == NULL || membase == (byte *)-1)
+	if (membase == MAP_FAILED)
 		Sys_Error("unable to virtual allocate %d bytes", maxsize);
 
 	*((int *)membase) = curhunksize;
