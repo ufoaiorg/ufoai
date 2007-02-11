@@ -1075,37 +1075,69 @@ menu althud
 	confunc set_left_ina1 { *bt_left_fm1	texl "0 64"	*bt_left_fm1 texh "255 128" }
 	confunc set_left_ina2 { *bt_left_fm2	texl "0 64"	*bt_left_fm2 texh "255 128" }
 	confunc set_left_ina3 { *bt_left_fm3	texl "0 64"	*bt_left_fm3 texh "255 128" }
+	confunc set_left_ina4 { *bt_left_fm4	texl "0 64"	*bt_left_fm4 texh "255 128" }
+	confunc set_left_ina5 { *bt_left_fm5	texl "0 64"	*bt_left_fm5 texh "255 128" }
+	confunc set_left_ina6 { *bt_left_fm6	texl "0 64"	*bt_left_fm6 texh "255 128" }
+	confunc set_left_ina7 { *bt_left_fm7	texl "0 64"	*bt_left_fm7 texh "255 128" }
 	confunc set_right_ina0 { *bt_right_fm0	texl "0 64"	*bt_right_fm0 texh "255 128" }
 	confunc set_right_ina1 { *bt_right_fm1	texl "0 64"	*bt_right_fm1 texh "255 128" }
 	confunc set_right_ina2 { *bt_right_fm2	texl "0 64"	*bt_right_fm2 texh "255 128" }
 	confunc set_right_ina3 { *bt_right_fm3	texl "0 64"	*bt_right_fm3 texh "255 128" }
+	confunc set_right_ina4 { *bt_right_fm4	texl "0 64"	*bt_right_fm4 texh "255 128" }
+	confunc set_right_ina5 { *bt_right_fm5	texl "0 64"	*bt_right_fm5 texh "255 128" }
+	confunc set_right_ina6 { *bt_right_fm6	texl "0 64"	*bt_right_fm6 texh "255 128" }
+	confunc set_right_ina7 { *bt_right_fm7	texl "0 64"	*bt_right_fm7 texh "255 128" }
 	
 	confunc set_left_a0 { *bt_left_fm0	texl "0 0"	*bt_left_fm0 texh "255 63" }
 	confunc set_left_a1 { *bt_left_fm1	texl "0 0"	*bt_left_fm1 texh "255 63" }
 	confunc set_left_a2 { *bt_left_fm2	texl "0 0"	*bt_left_fm2 texh "255 63" }
 	confunc set_left_a3 { *bt_left_fm3	texl "0 0"	*bt_left_fm3 texh "255 63" }
+	confunc set_left_a4 { *bt_left_fm4	texl "0 0"	*bt_left_fm4 texh "255 63" }
+	confunc set_left_a5 { *bt_left_fm5	texl "0 0"	*bt_left_fm5 texh "255 63" }
+	confunc set_left_a6 { *bt_left_fm6	texl "0 0"	*bt_left_fm6 texh "255 63" }
+	confunc set_left_a7 { *bt_left_fm7	texl "0 0"	*bt_left_fm7 texh "255 63" }
 	confunc set_right_a0 { *bt_right_fm0	texl "0 0"	*bt_right_fm0 texh "255 63" }
 	confunc set_right_a1 { *bt_right_fm1	texl "0 0"	*bt_right_fm1 texh "255 63" }
 	confunc set_right_a2 { *bt_right_fm2	texl "0 0"	*bt_right_fm2 texh "255 63" }
 	confunc set_right_a3 { *bt_right_fm3	texl "0 0"	*bt_right_fm3 texh "255 63" }
+	confunc set_right_a4 { *bt_right_fm4	texl "0 0"	*bt_right_fm4 texh "255 63" }
+	confunc set_right_a5 { *bt_right_fm5	texl "0 0"	*bt_right_fm5 texh "255 63" }
+	confunc set_right_a6 { *bt_right_fm6	texl "0 0"	*bt_right_fm6 texh "255 63" }
+	confunc set_right_a7 { *bt_right_fm7	texl "0 0"	*bt_right_fm7 texh "255 63" }
 
 	confunc set_left_inv0 { *bt_left_fm0 invis true	*left_fm_name0 invis true	*left_fm_tu0 invis true	*left_fm_shot0 invis true	*bt_left_cb0 invis true }
 	confunc set_left_inv1 { *bt_left_fm1 invis true	*left_fm_name1 invis true	*left_fm_tu1 invis true	*left_fm_shot1 invis true	*bt_left_cb1 invis true }
 	confunc set_left_inv2 { *bt_left_fm2 invis true	*left_fm_name2 invis true	*left_fm_tu2 invis true	*left_fm_shot2 invis true	*bt_left_cb2 invis true }
 	confunc set_left_inv3 { *bt_left_fm3 invis true	*left_fm_name3 invis true	*left_fm_tu3 invis true	*left_fm_shot3 invis true	*bt_left_cb3 invis true }
+	confunc set_left_inv4 { *bt_left_fm4 invis true	*left_fm_name4 invis true	*left_fm_tu4 invis true	*left_fm_shot4 invis true	*bt_left_cb4 invis true }
+	confunc set_left_inv5 { *bt_left_fm5 invis true	*left_fm_name5 invis true	*left_fm_tu5 invis true	*left_fm_shot5 invis true	*bt_left_cb5 invis true }
+	confunc set_left_inv6 { *bt_left_fm6 invis true	*left_fm_name6 invis true	*left_fm_tu6 invis true	*left_fm_shot6 invis true	*bt_left_cb6 invis true }
+	confunc set_left_inv7 { *bt_left_fm7 invis true	*left_fm_name7 invis true	*left_fm_tu7 invis true	*left_fm_shot7 invis true	*bt_left_cb7 invis true }
 	confunc set_right_inv0 { *bt_right_fm0 invis true	*right_fm_name0 invis true	*right_fm_tu0 invis true	*right_fm_shot0 invis true	*bt_right_cb0 invis true }
 	confunc set_right_inv1 { *bt_right_fm1 invis true	*right_fm_name1 invis true	*right_fm_tu1 invis true	*right_fm_shot1 invis true	*bt_right_cb1 invis true }
 	confunc set_right_inv2 { *bt_right_fm2 invis true	*right_fm_name2 invis true	*right_fm_tu2 invis true	*right_fm_shot2 invis true	*bt_right_cb2 invis true }
 	confunc set_right_inv3 { *bt_right_fm3 invis true	*right_fm_name3 invis true	*right_fm_tu3 invis true	*right_fm_shot3 invis true	*bt_right_cb3 invis true }
+	confunc set_right_inv4 { *bt_right_fm4 invis true	*right_fm_name4 invis true	*right_fm_tu4 invis true	*right_fm_shot4 invis true	*bt_right_cb4 invis true }
+	confunc set_right_inv5 { *bt_right_fm5 invis true	*right_fm_name5 invis true	*right_fm_tu5 invis true	*right_fm_shot5 invis true	*bt_right_cb5 invis true }
+	confunc set_right_inv6 { *bt_right_fm6 invis true	*right_fm_name6 invis true	*right_fm_tu6 invis true	*right_fm_shot6 invis true	*bt_right_cb6 invis true }
+	confunc set_right_inv7 { *bt_right_fm7 invis true	*right_fm_name7 invis true	*right_fm_tu7 invis true	*right_fm_shot7 invis true	*bt_right_cb7 invis true }
 	
 	confunc set_left_vis0 { *bt_left_fm0 invis false	*left_fm_name0 invis false	*left_fm_tu0 invis false 	*left_fm_shot0 invis false }
 	confunc set_left_vis1 { *bt_left_fm1 invis false	*left_fm_name1 invis false	*left_fm_tu1 invis false 	*left_fm_shot1 invis false }
 	confunc set_left_vis2 { *bt_left_fm2 invis false	*left_fm_name2 invis false	*left_fm_tu2 invis false 	*left_fm_shot2 invis false }
 	confunc set_left_vis3 { *bt_left_fm3 invis false	*left_fm_name3 invis false	*left_fm_tu3 invis false 	*left_fm_shot3 invis false }
+	confunc set_left_vis4 { *bt_left_fm4 invis false	*left_fm_name4 invis false	*left_fm_tu4 invis false 	*left_fm_shot4 invis false }
+	confunc set_left_vis5 { *bt_left_fm5 invis false	*left_fm_name5 invis false	*left_fm_tu5 invis false 	*left_fm_shot5 invis false }
+	confunc set_left_vis6 { *bt_left_fm6 invis false	*left_fm_name6 invis false	*left_fm_tu6 invis false 	*left_fm_shot6 invis false }
+	confunc set_left_vis7 { *bt_left_fm7 invis false	*left_fm_name7 invis false	*left_fm_tu7 invis false 	*left_fm_shot7 invis false }
 	confunc set_right_vis0 { *bt_right_fm0 invis false	*right_fm_name0 invis false *right_fm_tu0 invis false	*right_fm_shot0 invis false }
 	confunc set_right_vis1 { *bt_right_fm1 invis false	*right_fm_name1 invis false *right_fm_tu1 invis false	*right_fm_shot1 invis false }
 	confunc set_right_vis2 { *bt_right_fm2 invis false	*right_fm_name2 invis false *right_fm_tu2 invis false	*right_fm_shot2 invis false }
 	confunc set_right_vis3 { *bt_right_fm3 invis false	*right_fm_name3 invis false *right_fm_tu3 invis false	*right_fm_shot3 invis false }
+	confunc set_right_vis4 { *bt_right_fm4 invis false	*right_fm_name4 invis false *right_fm_tu4 invis false	*right_fm_shot4 invis false }
+	confunc set_right_vis5 { *bt_right_fm5 invis false	*right_fm_name5 invis false *right_fm_tu5 invis false	*right_fm_shot5 invis false }
+	confunc set_right_vis6 { *bt_right_fm6 invis false	*right_fm_name6 invis false *right_fm_tu6 invis false	*right_fm_shot6 invis false }
+	confunc set_right_vis7 { *bt_right_fm7 invis false	*right_fm_name7 invis false *right_fm_tu7 invis false	*right_fm_shot7 invis false }
 	*/
 
 	/* Firemode checkbox console functions (see also the "xxx_inv" functions above) ===================================*/
@@ -1115,19 +1147,35 @@ menu althud
 	confunc set_left_cb_ina1 { *bt_left_cb1 texl "0 0"	*bt_left_cb1 texh "31 31"	*bt_left_cb1 invis false }
 	confunc set_left_cb_ina2 { *bt_left_cb2 texl "0 0"	*bt_left_cb2 texh "31 31"	*bt_left_cb2 invis false }
 	confunc set_left_cb_ina3 { *bt_left_cb3 texl "0 0"	*bt_left_cb3 texh "31 31"	*bt_left_cb3 invis false }
+	confunc set_left_cb_ina4 { *bt_left_cb4 texl "0 0"	*bt_left_cb4 texh "31 31"	*bt_left_cb4 invis false }
+	confunc set_left_cb_ina5 { *bt_left_cb5 texl "0 0"	*bt_left_cb5 texh "31 31"	*bt_left_cb5 invis false }
+	confunc set_left_cb_ina6 { *bt_left_cb6 texl "0 0"	*bt_left_cb6 texh "31 31"	*bt_left_cb6 invis false }
+	confunc set_left_cb_ina7 { *bt_left_cb7 texl "0 0"	*bt_left_cb7 texh "31 31"	*bt_left_cb7 invis false }
 	confunc set_right_cb_ina0 { *bt_right_cb0 texl "0 0"	*bt_right_cb0 texh "31 31"	*bt_right_cb0 invis false }
 	confunc set_right_cb_ina1 { *bt_right_cb1 texl "0 0"	*bt_right_cb1 texh "31 31"	*bt_right_cb1 invis false }
 	confunc set_right_cb_ina2 { *bt_right_cb2 texl "0 0"	*bt_right_cb2 texh "31 31"	*bt_right_cb2 invis false }
 	confunc set_right_cb_ina3 { *bt_right_cb3 texl "0 0"	*bt_right_cb3 texh "31 31"	*bt_right_cb3 invis false }
+	confunc set_right_cb_ina4 { *bt_right_cb4 texl "0 0"	*bt_right_cb4 texh "31 31"	*bt_right_cb4 invis false }
+	confunc set_right_cb_ina5 { *bt_right_cb5 texl "0 0"	*bt_right_cb5 texh "31 31"	*bt_right_cb5 invis false }
+	confunc set_right_cb_ina6 { *bt_right_cb6 texl "0 0"	*bt_right_cb6 texh "31 31"	*bt_right_cb6 invis false }
+	confunc set_right_cb_ina7 { *bt_right_cb7 texl "0 0"	*bt_right_cb7 texh "31 31"	*bt_right_cb7 invis false }
 
 	confunc set_left_cb_a0 { *bt_left_cb0 texl "0 32"	*bt_left_cb0 texh "31 63"	*bt_left_cb0 invis false }
 	confunc set_left_cb_a1 { *bt_left_cb1 texl "0 32"	*bt_left_cb1 texh "31 63"	*bt_left_cb1 invis false }
 	confunc set_left_cb_a2 { *bt_left_cb2 texl "0 32"	*bt_left_cb2 texh "31 63"	*bt_left_cb2 invis false }
 	confunc set_left_cb_a3 { *bt_left_cb3 texl "0 32"	*bt_left_cb3 texh "31 63"	*bt_left_cb3 invis false }
+	confunc set_left_cb_a4 { *bt_left_cb4 texl "0 32"	*bt_left_cb4 texh "31 63"	*bt_left_cb4 invis false }
+	confunc set_left_cb_a5 { *bt_left_cb5 texl "0 32"	*bt_left_cb5 texh "31 63"	*bt_left_cb5 invis false }
+	confunc set_left_cb_a6 { *bt_left_cb6 texl "0 32"	*bt_left_cb6 texh "31 63"	*bt_left_cb6 invis false }
+	confunc set_left_cb_a7 { *bt_left_cb7 texl "0 32"	*bt_left_cb7 texh "31 63"	*bt_left_cb7 invis false }
 	confunc set_right_cb_a0 { *bt_right_cb0	texl "0 32"	*bt_right_cb0 texh "31 63"	*bt_right_cb0 invis false }
 	confunc set_right_cb_a1 { *bt_right_cb1	texl "0 32"	*bt_right_cb1 texh "31 63"	*bt_right_cb1 invis false }
 	confunc set_right_cb_a2 { *bt_right_cb2	texl "0 32"	*bt_right_cb2 texh "31 63"	*bt_right_cb2 invis false }
 	confunc set_right_cb_a3 { *bt_right_cb3	texl "0 32"	*bt_right_cb3 texh "31 63"	*bt_right_cb3 invis false }
+	confunc set_right_cb_a4 { *bt_right_cb4	texl "0 32"	*bt_right_cb4 texh "31 63"	*bt_right_cb4 invis false }
+	confunc set_right_cb_a5 { *bt_right_cb5	texl "0 32"	*bt_right_cb5 texh "31 63"	*bt_right_cb5 invis false }
+	confunc set_right_cb_a6 { *bt_right_cb6	texl "0 32"	*bt_right_cb6 texh "31 63"	*bt_right_cb6 invis false }
+	confunc set_right_cb_a7 { *bt_right_cb7	texl "0 32"	*bt_right_cb7 texh "31 63"	*bt_right_cb7 invis false }
 	*/
 
 	/* Firemode images ===================================*/
