@@ -412,16 +412,15 @@ static int CL_GetActorNumber (le_t * le)
  */
 static void HideFiremodes (void)
 {
+	int i;
+	
 	visible_firemode_list_left = qfalse;
-	Cbuf_AddText("set_left_inv0\n");
-	Cbuf_AddText("set_left_inv1\n");
-	Cbuf_AddText("set_left_inv2\n");
-	Cbuf_AddText("set_left_inv3\n");
 	visible_firemode_list_right = qfalse;
-	Cbuf_AddText("set_right_inv0\n");
-	Cbuf_AddText("set_right_inv1\n");
-	Cbuf_AddText("set_right_inv2\n");
-	Cbuf_AddText("set_right_inv3\n");
+	for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
+		Cbuf_AddText(va("set_left_inv%i\n", i));
+		Cbuf_AddText(va("set_right_inv%i\n", i));
+	}
+
 }
 
 /**
