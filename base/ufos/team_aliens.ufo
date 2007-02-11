@@ -241,6 +241,7 @@ teamdesc shevaar
 	name "_Shevaar"
 	tech "rs_alien_shevaar_autopsy"
 	alien	true
+	armor false
 }
 
 teamdesc bloodspider
@@ -248,6 +249,8 @@ teamdesc bloodspider
 	name "_Bloodspider"
 	tech "rs_alien_bloodspider_autopsy"
 	alien true
+	armor false
+	weapons false
 }
 
 // I am commenting this since this team seems to have three
@@ -408,7 +411,6 @@ team shevaar
 	{
 	shevaar
 	}
-	armor false
 }
 
 // team hovernet
@@ -421,7 +423,5 @@ team bloodspider
 	{
 	bloodspider
 	}
-	armor false
-	weapons false
 }
 

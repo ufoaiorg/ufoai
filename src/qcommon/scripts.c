@@ -508,7 +508,6 @@ typedef struct teamDef_s {
 	char title[MAX_VAR];
 	char *cats;
 	int num;
-	qboolean armor, weapons; /* able to use weapons/armor */
 } teamDef_t;
 
 teamDesc_t teamDesc[MAX_TEAMDEFS];
@@ -724,16 +723,10 @@ int Com_GetModelAndName (char *team, character_t * chr)
 			category = i;
 	}
 
-	/* set some team definition values to character, too */
-	/* make these values available to the game lib */
-	if (td) {
-		chr->weapons = td->weapons;
-		chr->armor = td->armor;
 #ifdef DEBUG
-	} else {
+	if (!td)
 		Com_DPrintf("Com_GetModelAndName: Warning - this team (%s) could not be handled via aliencont code - no tech pointer will be available\n", team);
 #endif
-	}
 
 	/* get the models */
 	while (retry--) {
@@ -742,9 +735,14 @@ int Com_GetModelAndName (char *team, character_t * chr)
 			category = (int) td->cats[rand() % td->num];
 
 		for (i = 0; i < numTeamDesc; i++)
-			if (!Q_strcmp(teamDesc[i].id, nameCat[category].title))
+			if (!Q_strcmp(teamDesc[i].id, nameCat[category].title)) {
 				/* transfered as byte - 0 means, not found - no -1 possible */
 				chr->teamDesc = i + 1;
+				/* set some team definition values to character, too */
+				/* make these values available to the game lib */
+				chr->weapons = teamDesc[i].weapons;
+				chr->armor = teamDesc[i].armor;
+			}
 
 		/* get name */
 		str = Com_GiveName(gender, nameCat[category].title);
@@ -782,7 +780,12 @@ int Com_GetModelAndName (char *team, character_t * chr)
 }
 
 /**
- * @brief
+ * @brief Parses "name" definition from team_* ufo script files
+ * @sa Com_ParseActors
+ * @sa Com_ParseScripts
+ * @note fills the nameCat array
+ * @note searches whether the actor id is already somewhere in the nameCat array
+ * if not, it generates a new nameCat entry
  */
 static void Com_ParseNames (char *title, char **text)
 {
@@ -874,7 +877,12 @@ static void Com_ParseNames (char *title, char **text)
 
 
 /**
- * @brief
+ * @brief Parses "actor" definition from team_* ufo script files
+ * @sa Com_ParseNames
+ * @sa Com_ParseScripts
+ * @note fills the nameCat array
+ * @note searches whether the actor id is already somewhere in the nameCat array
+ * if not, it generates a new nameCat entry
  */
 static void Com_ParseActors (char *title, char **text)
 {
@@ -970,6 +978,10 @@ static const value_t teamDescValues[] = {
 	,
 	{"alien", V_BOOL, offsetof(teamDesc_t, alien)} /**< is this an alien? */
 	,
+	{"armor", V_BOOL, offsetof(teamDesc_t, armor)} /**< are these team members able to wear armor? */
+	,
+	{"weapons", V_BOOL, offsetof(teamDesc_t, weapons)} /**< are these team members able to use weapons? */
+	,
 	{NULL, 0, 0}
 };
 
@@ -1004,6 +1016,7 @@ static void Com_ParseTeamDesc (char *title, char **text)
 	td = &teamDesc[numTeamDesc++];
 	memset(td, 0, sizeof(teamDesc_t));
 	Q_strncpyz(td->id, title, MAX_VAR);
+	td->armor = td->weapons = qtrue; /* default values */
 
 	/* get name list body body */
 	token = COM_Parse(text);
@@ -1039,14 +1052,6 @@ static void Com_ParseTeamDesc (char *title, char **text)
 	} while (*text);
 }
 
-static const value_t teamValues[] = {
-	{"armor", V_BOOL, offsetof(teamDef_t, armor)} /**< are these team members able to wear armor? */
-	,
-	{"weapons", V_BOOL, offsetof(teamDef_t, weapons)} /**< are these team members able to use weapons? */
-	,
-	{NULL, 0, 0}
-};
-
 /**
  * @brief
  */
@@ -1057,7 +1062,6 @@ static void Com_ParseTeam (char *title, char **text)
 	char *errhead = "Com_ParseTeam: unexptected end of file (team ";
 	char *token;
 	int i;
-	const value_t *v;
 
 	/* check for additions to existing name categories */
 	for (i = 0, td = teamDef; i < numTeamDefs; i++, td++)
@@ -1089,7 +1093,6 @@ static void Com_ParseTeam (char *title, char **text)
 	/* initialize list */
 	td->cats = infoPos;
 	td->num = 0;
-	td->armor = td->weapons = qtrue; /* default values */
 
 	do {
 		/* get the name type */
@@ -1118,21 +1121,6 @@ static void Com_ParseTeam (char *title, char **text)
 			if (*token == '}')
 				break;
 		}
-
-		for (v = teamValues; v->string; v++)
-			if (!Q_strncmp(token, v->string, sizeof(v->string))) {
-				/* found a definition */
-				token = COM_EParse(text, errhead, title);
-				if (!*text)
-					return;
-
-				Com_ParseValue(td, token, v->type, v->ofs);
-				break;
-			}
-
-		if (!v->string)
-			Com_Printf("Com_ParseTeam: unknown token \"%s\" ignored (teamdesc %s)\n", token, title);
-
 	} while (*text);
 }
 

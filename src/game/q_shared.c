@@ -2695,7 +2695,7 @@ int Com_TryAddToInventory(inventory_t* const inv, item_t item, int container)
  * @sa Com_FindSpace
  * @sa Com_AddToInventory
  */
-int Com_TryAddToBuyType(inventory_t* const inv, item_t item, int container)
+int Com_TryAddToBuyType (inventory_t* const inv, item_t item, int container)
 {
 	int x, y;
 	inventory_t hackInv;
