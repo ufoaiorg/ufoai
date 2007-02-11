@@ -2165,6 +2165,10 @@ void B_CheckMaxBases_f(void)
 	}
 }
 
+/**
+ * Transfer menu functions
+ */
+
 /** @brief current selected base for transfer */
 static base_t* transferBase = NULL;
 
@@ -2227,6 +2231,26 @@ static void B_TransferSelect_f (void)
 			Q_strcat(transferList, "TODO: techs", sizeof(transferList));
 		else
 			Q_strcat(transferList, _("Transfer is not possible - the base doesn't have a lab"), sizeof(transferList));
+		break;
+	/* aliens */
+	case 3:
+		if (transferBase->hasAlienCont) {
+			for (i = 0; i < numTeamDesc; i++) {
+				if (baseCurrent->alienscont[i].alientype && baseCurrent->alienscont[i].amount_dead > 0) {
+					if (transferAircraft && transferAircraft->num[i])
+						Com_sprintf(str, sizeof(str), "%s (corpse of %i on board, %i left)\n", 
+						_(AL_AlienTypeToName(i)), transferAircraft->num[i], 
+						baseCurrent->alienscont[i].amount_dead);
+					else
+						Com_sprintf(str, sizeof(str), "%s (corpse of %i available)\n", 
+						_(AL_AlienTypeToName(i)), baseCurrent->alienscont[i].amount_dead);
+					Q_strcat(transferList, str, sizeof(transferList));
+					cnt++;
+				}
+			}
+		} else {
+			Q_strcat(transferList, _("Transfer is not possible - the base doesn't have an alien containment"), sizeof(transferList));
+		}
 		break;
 	default:
 		Com_Printf("B_TransferSelect_f: Unknown type id\n");
@@ -2381,7 +2405,7 @@ static void B_TransferStart_f (void)
 }
 
 /**
- * @brief
+ * @brief Adds a thing to aircraft for transfer by left mouseclick.
  * @sa B_TransferSelect_f
  * @sa B_TransferInit_f
  */
@@ -2430,6 +2454,21 @@ static void B_TransferListSelect_f (void)
 		break;
 	/* techs */
 	case 2:
+		break;
+	/* aliens */
+	case 3:
+		for (i = 0; i < numTeamDesc; i++) {
+			if (baseCurrent->alienscont[i].alientype && baseCurrent->alienscont[i].amount_dead > 0) {
+				if (cnt == num) {
+					/* TODO: Check space */
+					transferAircraft->num[i]++;
+					/* Remove the corpse from Alien Containment. */
+					baseCurrent->alienscont[i].amount_dead--;
+					break;
+				}
+				cnt++;
+			}
+		}
 		break;
 	}
 
@@ -2568,6 +2607,11 @@ static void B_TransferBaseSelect_f (void)
 		Q_strcat(baseInfo, _("You can transfer techs - this base has a laboratory\n"), sizeof(baseInfo));
 	} else {
 		Q_strcat(baseInfo, _("No laboratory in this base\n"), sizeof(baseInfo));
+	}
+	if (base->hasAlienCont ) {
+		Q_strcat(baseInfo, _("You can transfer aliens - this base has alien containment\n"), sizeof(baseInfo));
+	} else {
+		Q_strcat(baseInfo, _("No alien containment in this base\n"), sizeof(baseInfo));
 	}
 
 	menuText[TEXT_BASE_INFO] = baseInfo;

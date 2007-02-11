@@ -197,10 +197,12 @@ menu transfer
 		*s_items	color "1 1 1 0.6"
 		*s_humans	color "1 1 1 0.6"
 		*s_techs	color "1 1 1 0.6"
+		*s_aliens	color "1 1 1 0.6"
 	}
-	confunc trans_items		{ cmd "trans_select 0;" trans_reset *s_items	color "1 1 1 1" }
+	confunc trans_items	{ cmd "trans_select 0;" trans_reset *s_items	color "1 1 1 1" }
 	confunc trans_humans	{ cmd "trans_select 1;" trans_reset *s_humans	color "1 1 1 1" }
-	confunc trans_techs		{ cmd "trans_select 2;" trans_reset *s_techs	color "1 1 1 1" }
+	confunc trans_techs	{ cmd "trans_select 2;" trans_reset *s_techs	color "1 1 1 1" }
+	confunc trans_aliens	{ cmd "trans_select 3;" trans_reset *s_aliens	color "1 1 1 1" }
 
 	pic bt_items
 	{
@@ -260,6 +262,26 @@ menu transfer
 		color "1 1 1 0.6"
 		font	"f_normal"
 		string	"_Technologies"
+	}
+
+	pic bt_aliens
+	{
+		tooltip	"_Show only aliens"
+		image	menu/button_blue
+		mousefx	true
+		pos	"820 615"
+		texl	"0 0"
+		texh	"128 52"
+		click	{ trans_aliens }
+	}
+
+	string s_aliens
+	{
+		pos	"884 630"
+		align	uc
+		color "1 1 1 0.6"
+		font	"f_normal"
+		string	"_Aliens"
 	}
 
 	pic bt_emptycraftstorage
