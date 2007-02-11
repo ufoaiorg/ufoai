@@ -336,7 +336,6 @@ names bloodspider
 
 actors bloodspider
 {
-	// FIXME: Bloodspider doesn't have a head atm
 	neutral
 	{
 		aliens/bloodspider bloodspider head 0
@@ -368,10 +367,10 @@ team alien
 	{
 	ortnok
 	taman
-// 	shevaar
+	shevaar
 // 	hovernet
 // 	cyborg_ortnok
-//	bloodspider
+	bloodspider
 	}
 }
 
@@ -411,10 +410,13 @@ team ortnok_all
 	}
 }
 
-// team shevaar
-// {
-// 	shevaar
-// }
+team shevaar
+{
+	{
+	shevaar
+	}
+	armor false
+}
 
 // team hovernet
 // {
