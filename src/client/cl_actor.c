@@ -808,7 +808,7 @@ void CL_FireWeapon (void)
 
 /**
  * @brief Refreshes the weapon/reload buttons on the HUD
- *
+ * @param[in] time The amount of TU (of an actor) left in case of action.
  * @sa CL_ActorUpdateCVars
  */
 static void CL_RefreshWeaponButtons (int time)
@@ -956,6 +956,14 @@ static void CL_RefreshWeaponButtons (int time)
 
 /**
  * @brief Checks whether an action on hud menu is valid.
+ * @param[in] time The amount of TU (of an actor) left.
+ * @param[in] *weapon An item in hands.
+ * @param[in] mode Reload of item or item usage.
+ * @note This function currently is being called only for reloading - why?
+ * @note TODO would be to change the behaviour of mode - distinguish between FD_PRIMARY and 
+ * @note FD_SECONDARY is not needed in new firemode concept
+ * @sa CL_ReloadLeft
+ * @sa CL_ReloadRight
  */
 qboolean CL_CheckMenuAction (int time, invList_t *weapon, int mode)
 {
