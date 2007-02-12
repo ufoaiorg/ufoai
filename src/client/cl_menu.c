@@ -1640,7 +1640,7 @@ void MN_PrecacheMenus (void)
  * @param[in] menuModel menu model id from script files
  * @return menuModel_t pointer
  */
-static menuModel_t *MN_GetMenuModel (char *menuModel)
+static menuModel_t *MN_GetMenuModel (const char *menuModel)
 {
 	int i;
 	menuModel_t *m;
@@ -1686,7 +1686,7 @@ void MN_DrawMenus (void)
 	char source[MAX_VAR];
 	static char oldSource[MAX_VAR] = "";
 	int sp, pp;
-	item_t item = {1,NONE,NONE}; /* 1 so it's not reddish; fake item anyway */
+	item_t item = {1, NONE, NONE}; /* 1 so it's not reddish; fake item anyway */
 	vec4_t color;
 	int mouseOver = 0;
 	char *cur, *tab, *end;
@@ -2059,10 +2059,19 @@ void MN_DrawMenus (void)
 					/* set model properties */
 					if (source && !*source)
 						break;
-					node->menuModel = MN_GetMenuModel(source);
+					/* maybe it's the first run - or noMenuModel is true
+					 * the later case means, we don't have to search for a
+					 * definition again */
+					if (!node->menuModel && !node->noMenuModel)
+						node->menuModel = MN_GetMenuModel(source);
+
+					/* direct model name - no menumodel definition */
 					if (!node->menuModel) {
+						/* prevent the searching for a menumodel def in the next frame */
+						node->noMenuModel = qtrue;
 						menuModel = NULL;
 						mi.model = re.RegisterModel(source);
+						mi.name = source;
 						if (!mi.model) {
 							Com_Printf("Could not find '%s'\n", source);
 							break;
@@ -2070,17 +2079,11 @@ void MN_DrawMenus (void)
 					} else
 						menuModel = node->menuModel;
 
-					mi.name = source;
-
 					mi.origin = node->origin;
 					mi.angles = node->angles;
 					mi.scale = node->scale;
 					mi.center = node->center;
 					mi.color = node->color;
-					/* no animation */
-					mi.frame = 0;
-					mi.oldframe = 0;
-					mi.backlerp = 0;
 
 					/* autoscale? */
 					if (!node->scale[0]) {
@@ -2089,19 +2092,12 @@ void MN_DrawMenus (void)
 					}
 
 					do {
+						/* no animation */
+						mi.frame = 0;
+						mi.oldframe = 0;
+						mi.backlerp = 0;
 						if (menuModel) {
 							mi.model = re.RegisterModel(menuModel->model);
-							mi.name = menuModel->model;
-							if (VectorNotEmpty(menuModel->origin))
-								mi.origin = menuModel->origin;
-							if (VectorNotEmpty(menuModel->angles))
-								mi.angles = menuModel->angles;
-							if (VectorNotEmpty(menuModel->scale))
-								mi.scale = menuModel->scale;
-							if (VectorNotEmpty(menuModel->center))
-								mi.center = menuModel->center;
-							if (Vector4NotEmpty(menuModel->color))
-								mi.color = menuModel->color;
 							if (!mi.model) {
 								menuModel = menuModel->next;
 								/* list end */
@@ -2109,14 +2105,33 @@ void MN_DrawMenus (void)
 									break;
 								continue;
 							}
-							mi.skin = menuModel->skin;
 
+							mi.skin = menuModel->skin;
+							mi.name = menuModel->model;
+
+							/* set mi pointers to menuModel */
+							mi.origin = menuModel->origin;
+							mi.angles = menuModel->angles;
+							mi.scale = menuModel->scale;
+							mi.center = menuModel->center;
+							mi.color = menuModel->color;
+
+							/* no tag and no parent means - base model or single model */
 							if (!*menuModel->tag && !*menuModel->parent) {
+								VectorCopy(node->color, mi.color);
+								VectorCopy(node->origin, mi.origin);
+								VectorCopy(node->scale, mi.scale);
+								VectorCopy(node->center, mi.center);
+								VectorCopy(node->angles, mi.angles);
+
+								/* get the animation given by menu node properties */
 								if (node->data[1] && *(char *) node->data[1])
 									ref = MN_GetReferenceString(menu, node->data[1]);
+								/* otherwise use the standard animation from modelmenu defintion */
 								else
 									ref = menuModel->anim;
 
+								/* only base models have animations */
 								if (*ref) {
 									as = &menuModel->animState;
 									anim = re.AnimGetName(as, mi.model);
@@ -2130,6 +2145,8 @@ void MN_DrawMenus (void)
 									mi.oldframe = as->oldframe;
 									mi.backlerp = as->backlerp;
 								}
+								re.DrawModelDirect(&mi, NULL, NULL);
+							/* tag and parent defined */
 							} else {
 								/* place this menumodel part on an already existing menumodel tag */
 								menuModelParent = MN_GetMenuModel(menuModel->parent);
@@ -2148,9 +2165,10 @@ void MN_DrawMenus (void)
 								pmi.angles = menuModelParent->angles;
 								pmi.scale = menuModelParent->scale;
 								pmi.center = menuModelParent->center;
+								pmi.color = menuModelParent->color;
 
 								/* autoscale? */
-								if (!node->scale[0]) {
+								if (!mi.scale[0]) {
 									mi.scale = NULL;
 									mi.center = node->size;
 								}
@@ -2161,9 +2179,8 @@ void MN_DrawMenus (void)
 								pmi.backlerp = as->backlerp;
 
 								re.DrawModelDirect(&mi, &pmi, menuModel->tag);
-								break;
 							}
-							re.DrawModelDirect(&mi, NULL, NULL);
+							menuModel = menuModel->next;
 						} else {
 							/* get skin */
 							if (node->data[3] && *(char *) node->data[3])
@@ -2236,6 +2253,7 @@ void MN_DrawMenus (void)
 										pmi.angles = search->angles;
 										pmi.scale = search->scale;
 										pmi.center = search->center;
+										pmi.color = search->color;
 
 										/* autoscale? */
 										if (!node->scale[0]) {
@@ -2247,16 +2265,15 @@ void MN_DrawMenus (void)
 										pmi.frame = as->frame;
 										pmi.oldframe = as->oldframe;
 										pmi.backlerp = as->backlerp;
-
 										re.DrawModelDirect(&mi, &pmi, tag);
 										break;
 									}
 							} else
 								re.DrawModelDirect(&mi, NULL, NULL);
 						}
-
-						if (menuModel)
-							menuModel = menuModel->next;
+					/* for normal models (normal = no menumodel definition) this
+					 * menuModel pointer is null - the do-while loop is only
+					 * ran once */
 					} while (menuModel != NULL);
 					break;
 
@@ -3448,6 +3465,8 @@ void MN_ParseMenuModel (char *name, char **text)
 	/* initialize the menu */
 	menuModel = &menuModels[numMenuModels];
 	memset(menuModel, 0, sizeof(menuModel_t));
+
+	Vector4Set(menuModel->color, 0.5, 0.5, 0.5, 1.0);
 
 	Q_strncpyz(menuModel->id, name, MAX_VAR);
 	Com_DPrintf("Found menu model %s (%i)\n", menuModel->id, numMenuModels);
