@@ -1122,7 +1122,7 @@ menu hud
 		texl	"0 0"
 		texh	"64 64"
 		mousefx	false
-		invis false
+		invis true
 		click	{ cmd "sel_reactmode l 3;" }
 	}
 
@@ -1170,7 +1170,7 @@ menu hud
 		texl	"0 0"
 		texh	"64 64"
 		mousefx	false
-		invis false
+		invis true
 		click	{ cmd "sel_reactmode l 7;" }
 	}
 
