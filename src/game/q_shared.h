@@ -909,7 +909,7 @@ extern const char *pa_format[128];
 
 
 /* this is the absolute max for now */
-#define MAX_OBJDEFS     128
+#define MAX_OBJDEFS     128		/* Remember to adapt the "NONE" define (and similar) if this gets changed. */
 #define MAX_WEAPONS_PER_OBJDEF 4
 #define MAX_FIREDEFS_PER_WEAPON 8
 #define MAX_DAMAGETYPES 32

@@ -500,11 +500,11 @@ static void CL_DisplayFiremodeEntry (fireDef_t *fd, char hand, qboolean status)
 }
 
 /**
- * @brief Start targetting/aiming with the correct weapon&firemode.
- * @param[in] hand Which weapon(-hand) to use.
+ * @brief Returns the weapon its ammo and the firemodes-index inside the ammo for a given hand.
+ * @param[in] hand Which weapon(-hand) to use [l|r].
  * @param[out] weapon The weapon in the hand.
  * @param[out] ammo The ammo used in the weapon (is the same as weapon for grenades and similar).
- * @param[out] weap_fd_idx weapon_mod index in the ammo for the weapon.
+ * @param[out] weap_fd_idx weapon_mod index in the ammo for the weapon (objDef.fd[x][])
  */
 static void CL_GetWeaponAndAmmo (char hand, objDef_t **weapon, objDef_t **ammo, int *weap_fd_idx)
 {
