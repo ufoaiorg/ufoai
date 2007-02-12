@@ -184,7 +184,7 @@ typedef enum mn_s {
 } mn_t;
 
 /** @brief node type strings */
-static char *nt_strings[MN_NUM_NODETYPE] = {
+static const char *nt_strings[MN_NUM_NODETYPE] = {
 	"",
 	"confunc",
 	"cvarfunc",
@@ -237,9 +237,11 @@ typedef struct tutorial_s {
 #define MAX_TUTORIALS 16
 static tutorial_t tutorials[MAX_TUTORIALS];
 
+/* some function prototypes */
 static void MN_GetMaps_f(void);
 static void MN_NextMap_f(void);
 static void MN_PrevMap_f(void);
+static int MN_DrawTooltip(char *font, char *string, int x, int y, int maxWidth);
 
 /*
 ==============================================================
@@ -254,7 +256,7 @@ ACTION EXECUTION
  * id name
  * @return NULL if not found or no menu on the stack
  */
-menu_t *MN_GetMenu (char *name)
+menu_t *MN_GetMenu (const char *name)
 {
 	int i;
 
@@ -278,7 +280,7 @@ menu_t *MN_GetMenu (char *name)
  * @brief Searches all nodes in the given menu for a given nodename
  * @sa MN_GetNodeFromCurrentMenu
  */
-menuNode_t *MN_GetNode (const menu_t* const menu, char *name)
+menuNode_t *MN_GetNode (const menu_t* const menu, const char *name)
 {
 	menuNode_t *node = NULL;
 
@@ -308,7 +310,7 @@ static void MN_ReinitCurrentMenu_f (void)
  * @brief Searches a given node in the current menu
  * @sa MN_GetNode
  */
-menuNode_t* MN_GetNodeFromCurrentMenu (char*name)
+menuNode_t* MN_GetNodeFromCurrentMenu (const char *name)
 {
 	return MN_GetNode(menuStack[menuStackPos-1], name);
 }
@@ -872,7 +874,7 @@ qboolean MN_CursorOnMenu (int x, int y)
  * @brief
  * @note: node->mousefx is the container id
  */
-static void MN_Drag(const menuNode_t* const node, int x, int y)
+static void MN_Drag (const menuNode_t* const node, int x, int y)
 {
 	int px, py;
 
@@ -882,6 +884,7 @@ static void MN_Drag(const menuNode_t* const node, int x, int y)
 	if (mouseSpace == MS_MENU) {
 		invList_t *ic;
 
+		/* normalize it */
 		px = (int) (x - node->pos[0]) / C_UNIT;
 		py = (int) (y - node->pos[1]) / C_UNIT;
 
@@ -891,10 +894,12 @@ static void MN_Drag(const menuNode_t* const node, int x, int y)
 			/* found item to drag */
 			mouseSpace = MS_DRAG;
 			dragItem = ic->item;
+			/* mousefx is the container (see hover code) */
 			dragFrom = node->mousefx;
 			dragFromX = ic->x;
 			dragFromY = ic->y;
 			CL_ItemDescription(ic->item.t);
+/*			MN_DrawTooltip("f_verysmall", _(csi.ods[dragItem.t].name), px, py, 0);*/
 		}
 	} else {
 		/* end drag */
@@ -942,7 +947,7 @@ static void MN_Drag(const menuNode_t* const node, int x, int y)
 			/* update character info (for armor changes) */
 			sel = cl_selected->value;
 			if (sel >= 0 && sel < gd.numEmployees[EMPL_SOLDIER]) {
-				if ( baseCurrent->curTeam[sel]->fieldSize == ACTOR_SIZE_NORMAL )
+				if (baseCurrent->curTeam[sel]->fieldSize == ACTOR_SIZE_NORMAL)
 					CL_CharacterCvars(baseCurrent->curTeam[sel]);
 				else
 					CL_UGVCvars(baseCurrent->curTeam[sel]);
@@ -965,9 +970,11 @@ static void MN_BarClick (menu_t * menu, menuNode_t * node, int x)
 		return;
 
 	Q_strncpyz(var, node->data[2], MAX_VAR);
+	/* no cvar? */
 	if (Q_strncmp(var, "*cvar", 5))
 		return;
 
+	/* normalize it */
 	frac = (float) (x - node->pos[0]) / node->size[0];
 	min = MN_GetReferenceFloat(menu, node->data[1]);
 	Cvar_SetValue(&var[6], min + frac * (MN_GetReferenceFloat(menu, node->data[0]) - min));
@@ -1055,6 +1062,7 @@ static void MN_BaseMapRightClick (menuNode_t * node, int x, int y)
 static void MN_ModelClick (menuNode_t * node)
 {
 	mouseSpace = MS_ROTATE;
+	/* modify node->angles (vec3_t) if you rotate the model */
 	rotateAngles = node->angles;
 }
 
@@ -1212,7 +1220,7 @@ static void MN_TextScroll_f (void)
 
 	node = MN_GetNodeFromCurrentMenu(Cmd_Argv(1));
 
-	if ( !node ) {
+	if (!node) {
 		Com_DPrintf("MN_TextScroll_f: Node '%s' not found.\n", Cmd_Argv(1));
 		return;
 	}
@@ -1224,7 +1232,7 @@ static void MN_TextScroll_f (void)
 
 	offset = atoi(Cmd_Argv(2));
 
-	if ( offset == 0 )
+	if (offset == 0)
 		return;
 
 	MN_TextScroll(node, offset);
@@ -1233,7 +1241,7 @@ static void MN_TextScroll_f (void)
 /**
  * @brief Scroll to the bottom
  */
-void MN_TextScrollBottom (char* nodeName)
+void MN_TextScrollBottom (const char* nodeName)
 {
 	menuNode_t *node = NULL;
 
