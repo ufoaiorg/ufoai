@@ -121,10 +121,6 @@ typedef struct globalData_s
 	aircraft_t ufos[MAX_UFOONGEOSCAPE];
 	int numUfos;
 
-	/* == Alien Containment == */
-	/* uncomment this if you want to test Alien Containment (WIP) stuff
-	aliensTmp_t cargo[MAX_CARGO];
-	int aliensAmount; */
 } globalData_t;
 
 
