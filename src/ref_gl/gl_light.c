@@ -112,7 +112,7 @@ DYNAMIC LIGHTS
 /**
  * @brief
  */
-void R_MarkLights(dlight_t * light, int bit, mnode_t * node)
+void R_MarkLights (dlight_t * light, int bit, mnode_t * node)
 {
 	cplane_t *splitplane;
 	float dist;
@@ -170,7 +170,7 @@ static float s_blocklights[34 * 34 * 3];
 /**
  * @brief
  */
-static void R_AddDynamicLights(msurface_t * surf)
+static void R_AddDynamicLights (msurface_t * surf)
 {
 	int lnum;
 	int sd, td;
@@ -240,7 +240,7 @@ static void R_AddDynamicLights(msurface_t * surf)
 /**
  * @brief
  */
-void R_SetCacheState(msurface_t * surf)
+extern void R_SetCacheState (msurface_t * surf)
 {
 	int maps;
 
@@ -251,7 +251,7 @@ void R_SetCacheState(msurface_t * surf)
 /**
  * @brief Combine and scale multiple lightmaps into the floating format in blocklights
  */
-void R_BuildLightMap(msurface_t * surf, byte * dest, int stride)
+extern void R_BuildLightMap (msurface_t * surf, byte * dest, int stride)
 {
 	unsigned int smax, tmax;
 	int r, g, b, a, max;
@@ -497,7 +497,7 @@ static vec3_t lightspot;
 /**
  * @brief
  */
-int RecursiveLightPoint(mnode_t * node, vec3_t start, vec3_t end)
+extern int RecursiveLightPoint (mnode_t * node, vec3_t start, vec3_t end)
 {
 	float front, back, frac;
 	int side;
@@ -596,7 +596,7 @@ int RecursiveLightPoint(mnode_t * node, vec3_t start, vec3_t end)
 /**
  * @brief
  */
-void R_LightPoint(vec3_t p, vec3_t color)
+extern void R_LightPoint (vec3_t p, vec3_t color)
 {
 	vec3_t end;
 	float r;

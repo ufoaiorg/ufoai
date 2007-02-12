@@ -528,7 +528,7 @@ void R_DrawAliasModel (entity_t * e)
 /**
  * @brief
  */
-static void R_TransformModelDirect(modelInfo_t * mi)
+static void R_TransformModelDirect (modelInfo_t * mi)
 {
 	/* translate and rotate */
 	qglTranslatef(mi->origin[0], mi->origin[1], mi->origin[2]);
