@@ -92,12 +92,12 @@ echo_info:
 	@echo
 	@echo "Gettext"
 	@echo "-----------------------"
-	@echo "Type 'make lang' to compile the gettext translation files."
-	@echo "Type 'make update-po' to update with newest strings"
+	@echo "Type '$(MAKE) lang' to compile the gettext translation files."
+	@echo "Type '$(MAKE) update-po' to update with newest strings"
 	@echo
 	@echo "Maps"
 	@echo "-----------------------"
-	@echo "Type 'make maps' to compile the maps"
+	@echo "Type '$(MAKE) maps' to compile the maps"
 	@echo
 	@echo "Built for $(BUILDDIR)"
 	@echo
