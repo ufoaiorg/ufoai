@@ -814,12 +814,10 @@ void CL_FireWeapon (void)
 static void CL_RefreshWeaponButtons (int time)
 {
 	invList_t *weaponr, *weaponl = NULL;
-#if 0
 	int minweaponrtime = 100, minweaponltime = 100;
 	int weaponr_fds_idx = -1, weaponl_fds_idx = -1;
-	qboleean isammo = qfalse;
+	qboolean isammo = qfalse;
 	int i;
-#endif
 
 	if (!selActor)
 		return;
@@ -854,23 +852,23 @@ static void CL_RefreshWeaponButtons (int time)
 	}
 
 	/* reload buttons */
-	if ( !weaponr || weaponr->item.m == NONE
+	if (!weaponr || weaponr->item.m == NONE
 		 || !csi.ods[weaponr->item.t].reload
-		 || time < CL_CalcReloadTime(weaponr->item.t) )
+		 || time < CL_CalcReloadTime(weaponr->item.t))
 		SetWeaponButton(BT_RIGHT_RELOAD, qfalse);
 	else
 		SetWeaponButton(BT_RIGHT_RELOAD, qtrue);
 
-	if ( !weaponl || weaponl->item.m == NONE
+	if (!weaponl || weaponl->item.m == NONE
 		 || !csi.ods[weaponl->item.t].reload
-		 || time < CL_CalcReloadTime(weaponl->item.t) )
+		 || time < CL_CalcReloadTime(weaponl->item.t))
 		SetWeaponButton(BT_LEFT_RELOAD, qfalse);
 	else
 		SetWeaponButton(BT_LEFT_RELOAD, qtrue);
 
 	/* Weapon firing buttons. */
-#if 0
 	if (weaponr) {
+		assert(weaponr->item.t != NONE);
 		/* Check whether this item use ammo. */
 		if (weaponr->item.m == NONE) {
 			/* This item does not use ammo, check for existing firedefs in this item. */
@@ -909,14 +907,13 @@ static void CL_RefreshWeaponButtons (int time)
 		if (time < minweaponrtime)
 			SetWeaponButton(BT_RIGHT_PRIMARY, qfalse);
 		else
-#endif
 			SetWeaponButton(BT_RIGHT_PRIMARY, qtrue);
-#if 0
 	} else {
 		SetWeaponButton(BT_RIGHT_PRIMARY, qfalse);
 	}
 
 	if (weaponl) {
+		assert(weaponl->item.t != NONE);
 		/* Check whether this item use ammo. */
 		if (weaponl->item.m == NONE) {
 			/* This item does not use ammo, check for existing firedefs in this item. */
@@ -955,13 +952,10 @@ static void CL_RefreshWeaponButtons (int time)
 		if (time < minweaponltime)
 			SetWeaponButton(BT_LEFT_PRIMARY, qfalse);
 		else
-#endif
 			SetWeaponButton(BT_LEFT_PRIMARY, qtrue);
-#if 0
 	} else {
 		SetWeaponButton(BT_LEFT_PRIMARY, qfalse);
 	}
-#endif
 }
 
 /**
@@ -979,26 +973,26 @@ qboolean CL_CheckMenuAction (int time, invList_t *weapon, int mode)
 #if 0
 	case FD_PRIMARY:
 	case FD_SECONDARY:
-		if ( weapon->item.a <= 0 && csi.ods[weapon->item.t].reload) {
+		if (weapon->item.a <= 0 && csi.ods[weapon->item.t].reload) {
 			Com_Printf("Out of ammo!\n");
 			return qfalse;
 		}
-		if ( csi.ods[weapon->item.t].firetwohanded && LEFT(selActor) ) {
+		if (csi.ods[weapon->item.t].firetwohanded && LEFT(selActor)) {
 			Com_Printf("Weapon cannot be fired one handed!\n");
 			return qfalse;
 		}
-		if ( time < csi.ods[weapon->item.m].fd[INV_FiredefsIDXForWeapon(&csi.ods[weapon->item.m],weapon->item.t)][(mode)].time ) {
+		if (time < csi.ods[weapon->item.m].fd[INV_FiredefsIDXForWeapon(&csi.ods[weapon->item.m],weapon->item.t)][(mode)].time) {
 			Com_Printf("Can't perform action: not enough TUs.\n");
 			return qfalse;
 		}
 		break;
 #endif
 	case EV_INV_RELOAD:
-		if ( !csi.ods[weapon->item.t].reload ) {
+		if (!csi.ods[weapon->item.t].reload) {
 			Com_Printf("This weapon can not be reloaded!\n");
 			return qfalse;
 		}
-		if ( time < CL_CalcReloadTime(weapon->item.t) ) {
+		if (time < CL_CalcReloadTime(weapon->item.t)) {
 			Com_Printf("Can't perform action: not enough TUs.\n");
 			return qfalse;
 		}
@@ -1079,6 +1073,11 @@ void CL_ActorUpdateCVars (void)
 			if (selWeapon->item.m == NONE) {
 				selFD = NULL;
 			} else {
+#ifdef DEBUG
+				GET_FIREDEFDEBUG(selWeapon->item.m,
+						INV_FiredefsIDXForWeapon(&csi.ods[selWeapon->item.m],
+						selWeapon->item.t), cl.cfiremode)
+#endif
 				selFD = GET_FIREDEF(selWeapon->item.m,
 						INV_FiredefsIDXForWeapon(&csi.ods[selWeapon->item.m],
 						selWeapon->item.t), cl.cfiremode);
@@ -1898,6 +1897,9 @@ void CL_ActorDoShoot (sizebuf_t * sb)
 	le = LE_Get(number);
 
 	/* get the fire def */
+#ifdef DEBUG
+	GET_FIREDEFDEBUG(obj_idx, weap_fds_idx, fd_idx)
+#endif
 	fd = GET_FIREDEF(obj_idx, weap_fds_idx, fd_idx);
 
 	/* add effect le */
@@ -1954,10 +1956,13 @@ void CL_ActorShootHidden (sizebuf_t *sb)
 	MSG_ReadFormat(sb, ev_format[EV_ACTOR_SHOOT_HIDDEN], &first, &obj_idx, &weap_fds_idx, &fd_idx);
 
 	/* get the fire def */
+#ifdef DEBUG
+	GET_FIREDEFDEBUG(obj_idx, weap_fds_idx, fd_idx)
+#endif
 	fd = GET_FIREDEF(obj_idx, weap_fds_idx, fd_idx);
 
 	/* start the sound; TODO: is check for SF_BOUNCED needed? */
-	if ( ((first && fd->soundOnce) || (!first && !fd->soundOnce)) && fd->fireSound[0] )
+	if (((first && fd->soundOnce) || (!first && !fd->soundOnce)) && fd->fireSound[0] )
 		S_StartLocalSound( fd->fireSound );
 
 	/* if the shooting becomes visibile, don't repeat sounds! */
@@ -1982,6 +1987,9 @@ void CL_ActorDoThrow (sizebuf_t * sb)
 	MSG_ReadFormat(sb, ev_format[EV_ACTOR_THROW], &dtime, &obj_idx, &weap_fds_idx, &fd_idx, &flags, &muzzle, &v0);
 
 	/* get the fire def */
+#ifdef DEBUG
+	GET_FIREDEFDEBUG(obj_idx, weap_fds_idx, fd_idx)
+#endif
 	fd = GET_FIREDEF(obj_idx, weap_fds_idx, fd_idx);
 
 	/* add effect le (local entity) */
@@ -2013,6 +2021,9 @@ void CL_ActorStartShoot (sizebuf_t * sb)
 
 	MSG_ReadFormat(sb, ev_format[EV_ACTOR_START_SHOOT], &number, &obj_idx, &weap_fds_idx, &fd_idx, &from, &target);
 
+#ifdef DEBUG
+	GET_FIREDEFDEBUG(obj_idx, weap_fds_idx, fd_idx)
+#endif
 	fd = GET_FIREDEF(obj_idx, weap_fds_idx, fd_idx);
 
 	le = LE_Get(number);

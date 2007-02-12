@@ -1578,6 +1578,7 @@ static void CL_SwapSkills (character_t *team[], int num)
 					weaponh_fd_idx = INV_FiredefsIDXForWeapon(&csi.ods[HOLSTER(cp1)->item.m], HOLSTER(cp1)->item.t);
 				/* disregard left hand, or dual-wielding guys are too good */
 
+				/* FIXME This will crash if weaponh_fd_idx or weaponr_fd_idx is -1 */
 				no1 = 2 * (RIGHT(cp1) && skill == csi.ods[RIGHT(cp1)->item.m].fd[weaponr_fd_idx][fmode1].weaponSkill)
 					+ 2 * (RIGHT(cp1) && skill == csi.ods[RIGHT(cp1)->item.m].fd[weaponr_fd_idx][fmode2].weaponSkill)
 					+ (HOLSTER(cp1) && csi.ods[HOLSTER(cp1)->item.t].reload
@@ -1593,6 +1594,8 @@ static void CL_SwapSkills (character_t *team[], int num)
 						weaponr_fd_idx = INV_FiredefsIDXForWeapon(&csi.ods[RIGHT(cp2)->item.m], RIGHT(cp2)->item.t);
 					if (HOLSTER(cp2) && HOLSTER(cp2)->item.m != NONE && HOLSTER(cp2)->item.t != NONE)
 						weaponh_fd_idx = INV_FiredefsIDXForWeapon(&csi.ods[HOLSTER(cp2)->item.m], HOLSTER(cp2)->item.t);
+
+					/* FIXME This will crash if weaponh_fd_idx or weaponr_fd_idx is -1 */
 					no2 = 2 * (RIGHT(cp2) && skill == csi.ods[RIGHT(cp2)->item.m].fd[weaponr_fd_idx][fmode1].weaponSkill)
 						+ 2 * (RIGHT(cp2) && skill == csi.ods[RIGHT(cp2)->item.m].fd[weaponr_fd_idx][fmode2].weaponSkill)
 						+ (HOLSTER(cp2) && csi.ods[HOLSTER(cp2)->item.t].reload
@@ -2238,11 +2241,11 @@ static void B_TransferSelect_f (void)
 			for (i = 0; i < numTeamDesc; i++) {
 				if (baseCurrent->alienscont[i].alientype && baseCurrent->alienscont[i].amount_dead > 0) {
 					if (transferAircraft && transferAircraft->num[i])
-						Com_sprintf(str, sizeof(str), "%s (corpse of %i on board, %i left)\n", 
-						_(AL_AlienTypeToName(i)), transferAircraft->num[i], 
+						Com_sprintf(str, sizeof(str), "%s (corpse of %i on board, %i left)\n",
+						_(AL_AlienTypeToName(i)), transferAircraft->num[i],
 						baseCurrent->alienscont[i].amount_dead);
 					else
-						Com_sprintf(str, sizeof(str), "%s (corpse of %i available)\n", 
+						Com_sprintf(str, sizeof(str), "%s (corpse of %i available)\n",
 						_(AL_AlienTypeToName(i)), baseCurrent->alienscont[i].amount_dead);
 					Q_strcat(transferList, str, sizeof(transferList));
 					cnt++;

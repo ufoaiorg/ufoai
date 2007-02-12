@@ -142,7 +142,7 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, ai_action_t * aia)
 	maxDmg = 0.0;
 	for (fm = 0; fm < ST_NUM_SHOOT_TYPES; fm++) {
 		objDef_t *od = NULL;	/* Ammo pointer */
-		int weap_idx;		/* Weapon index */
+		int weap_idx = NONE;		/* Weapon index */
 		fireDef_t *fd;
 
 		/* optimization: reaction fire is automatic */;
@@ -165,14 +165,17 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, ai_action_t * aia)
 			od = &gi.csi->ods[LEFT(ent)->item.m];
 			weap_idx = LEFT(ent)->item.t;
 		} else {
+			Com_Printf("AI_FighterCalcGuete: TODO: grenade/knife toss from inventory using empty hand\n");
 			/* TODO: grenade/knife toss from inventory using empty hand */
 			/* TODO: evaluate possible items to retrieve and pick one, then evaluate an action against the nearby enemies or allies */
 		}
 
-		if (!od)
+		if (!od || weap_idx == NONE)
 			continue;
 
 		weap_fds_idx = INV_FiredefsIDXForWeapon(od, weap_idx);
+		/* if od was not null and weap_idx was not NONE - then we have a problem here */
+		assert(weap_fds_idx != -1);
 		/* TODO: is this how it should work? i just added this additional loop but don't know anything about the function */
 		for (fd_idx = 0; fd_idx < od->numFiredefs[weap_fds_idx]; fd_idx++) {
 			fd = &od->fd[weap_fds_idx][fd_idx];

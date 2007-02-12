@@ -1451,7 +1451,7 @@ void G_ClientReload (player_t *player, int entnum, shoot_types_t st, qboolean qu
 	if (ent->i.c[hand]) {
 		weapon = ent->i.c[hand]->item.t;
 	} else if (hand == gi.csi->idLeft
-			   && gi.csi->ods[ent->i.c[gi.csi->idRight]->item.t].holdtwohanded) {
+			&& gi.csi->ods[ent->i.c[gi.csi->idRight]->item.t].holdtwohanded) {
 		/* Check for two-handed weapon */
 		hand = gi.csi->idRight;
 		weapon = ent->i.c[hand]->item.t;
@@ -1459,7 +1459,9 @@ void G_ClientReload (player_t *player, int entnum, shoot_types_t st, qboolean qu
 	else
 		return;
 
-	/* LordHavoc: Check if item is researched when in singleplayer? I don't think this is really a cheat issue as in singleplayer there is no way to inject fake client commands in the virtual network buffer, and in multiplayer everything is researched */
+	/* LordHavoc: Check if item is researched when in singleplayer? I don't think this is really a
+	 * cheat issue as in singleplayer there is no way to inject fake client commands in the virtual
+	 * network buffer, and in multiplayer everything is researched */
 
 	for (container = 0; container < gi.csi->numIDs; container++) {
 		if (gi.csi->ids[container].out < tu) {
@@ -1468,7 +1470,7 @@ void G_ClientReload (player_t *player, int entnum, shoot_types_t st, qboolean qu
 			/* to retrieve the ammo from them than the one */
 			/* we've already found. */
 			for (ic = ent->i.c[container]; ic; ic = ic->next)
-				if ( INV_LoadableInWeapon(&gi.csi->ods[ic->item.t], weapon) ) {
+				if (INV_LoadableInWeapon(&gi.csi->ods[ic->item.t], weapon)) {
 					x = ic->x;
 					y = ic->y;
 					tu = gi.csi->ids[container].out;

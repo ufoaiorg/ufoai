@@ -3932,8 +3932,9 @@ int INV_FiredefsIDXForWeapon (objDef_t *od, int weapon_idx)
 	if (!od)
 		return -1;
 
-	if (weapon_idx == -1) {
-		Com_DPrintf("INV_FiredefsIDXForWeapon: bad weapon_idx (%i) in item '%s' - using default weapon/firemodes.\n", weapon_idx, od->id);
+	if (weapon_idx == NONE) {
+		Com_DPrintf("INV_FiredefsIDXForWeapon: bad weapon_idx (NONE) in item '%s' - using default weapon/firemodes.\n", od->id);
+		/* FIXME: this won't work if there is no weapon_idx, don't it? - should be -1 here, too */
 		return 0;
 	}
 

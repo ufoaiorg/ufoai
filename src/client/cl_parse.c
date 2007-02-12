@@ -1237,13 +1237,16 @@ static void CL_ParseEvent (void)
 						nextTime += 500;
 						impactTime = shootTime = nextTime;
 					} else {
+#ifdef DEBUG
+						GET_FIREDEFDEBUG(obj_idx, weap_fds_idx, fd_idx)
+#endif
 						fd = GET_FIREDEF(obj_idx, weap_fds_idx, fd_idx);
-/*
+#if 0
 						TODO: not needed? and SF_BOUNCED?
-						if ( fd->speed )
+						if (fd->speed)
 							impactTime = shootTime + 1000 * VectorDist( muzzle, impact ) / fd->speed;
 						else
-*/
+#endif
 							impactTime = shootTime;
 						nextTime = shootTime + 1400;
 						if (fd->rof)
@@ -1263,6 +1266,9 @@ static void CL_ParseEvent (void)
 					/* read data */
 					MSG_ReadFormat(&net_message, ev_format[EV_ACTOR_SHOOT], &dummy, &obj_idx, &weap_fds_idx, &fd_idx, &flags, &muzzle, &impact, &dummy);
 
+#ifdef DEBUG
+					GET_FIREDEFDEBUG(obj_idx, weap_fds_idx, fd_idx)
+#endif
 					fd = GET_FIREDEF(obj_idx, weap_fds_idx, fd_idx);
 
 					if (!(flags & SF_BOUNCED)) {
