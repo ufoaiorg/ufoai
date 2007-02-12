@@ -874,7 +874,9 @@ typedef struct menuNode_s {
 	int type;
 	vec3_t origin, scale, angles, center;
 	vec2_t pos, size, texh, texl;
-	menuModel_t *menuModel;
+	menuModel_t *menuModel;		/**< pointer to menumodel definition from models.ufo */
+	qboolean noMenuModel;		/**< if this is a model name and no menumodel definition we don't have
+								 * to query this again and again */
 	byte state;
 	int align;
 	int border;					/**< border for this node - thickness in pixel - default 0 - also see bgcolor */

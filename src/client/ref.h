@@ -183,13 +183,12 @@ typedef struct {
 	struct model_s *model;
 	char *name;				/**< model path */
 
+	float *origin;			/**< pointer to node/menumodel origin */
+	float *angles;			/**< pointer to node/menumodel angles */
+	float *scale;			/**< pointer to node/menumodel scale */
+	float *center;			/**< pointer to node/menumodel center */
 
-	float *origin;
-	float *angles;
-	float *scale;
-	float *center;
-
-	int frame, oldframe;
+	int frame, oldframe;	/**< animation frames */
 	float backlerp;
 
 	int skin;				/**< skin number */

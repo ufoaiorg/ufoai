@@ -699,7 +699,7 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, char *tagname)
 /**
  * @brief
  */
-void R_DrawModelParticle(modelInfo_t * mi)
+void R_DrawModelParticle (modelInfo_t * mi)
 {
 	dmdl_t *paliashdr;
 	image_t *skin;

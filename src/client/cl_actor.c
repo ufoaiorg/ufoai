@@ -960,15 +960,15 @@ static void CL_RefreshWeaponButtons (int time)
  * @param[in] *weapon An item in hands.
  * @param[in] mode Reload of item or item usage.
  * @note This function currently is being called only for reloading - why?
- * @note TODO would be to change the behaviour of mode - distinguish between FD_PRIMARY and 
+ * @note TODO would be to change the behaviour of mode - distinguish between FD_PRIMARY and
  * @note FD_SECONDARY is not needed in new firemode concept
  * @sa CL_ReloadLeft
  * @sa CL_ReloadRight
  */
-qboolean CL_CheckMenuAction (int time, invList_t *weapon, int mode)
+extern qboolean CL_CheckMenuAction (int time, invList_t *weapon, int mode)
 {
 	/* no weapon */
-	if ( !weapon || weapon->item.m == NONE ) {
+	if (!weapon || weapon->item.m == NONE) {
 		CL_DisplayHudMessage(_("No weapon in hand.\n"), 2000);
 		return qfalse;
 	}
