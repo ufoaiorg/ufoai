@@ -742,12 +742,7 @@ static void CL_CampaignAddMission (setState_t * set)
 	} else {
 		/* A mission must not be very near a base */
 		for (i = 0; i < gd.numBases; i++) {
-#if (0)
-			/* To check multi selection */
-			{
-#else
 			if (CP_GetDistance(mis->def->pos, gd.bases[i].pos) < DIST_MIN_BASE_MISSION) {
-#endif
 				f = frand();
 				mis->def->pos[0] = gd.bases[i].pos[0] + (gd.bases[i].pos[0] < 0 ? f * DIST_MIN_BASE_MISSION : -f * DIST_MIN_BASE_MISSION);
 				f = sin(acos(f));
@@ -972,7 +967,7 @@ static void CL_CampaignCheckEvents (void)
 			switch (mis->def->missionType) {
 			case MIS_BASEATTACK:
 				/* Base attack mission never attended to, so
-					* invaders had plenty of time to ransack it */
+				 * invaders had plenty of time to ransack it */
 				base = (base_t*)mis->def->data;
 				CL_HandleNationData(1, 0, mis->def->civilians, mis->def->aliens, 0, mis);
 				CL_BaseRansacked(base);
@@ -2553,7 +2548,7 @@ static void CL_GameAutoGo_f (void)
 }
 
 /**
- * @brief
+ * @brief Let the aliens win the match
  */
 static void CL_GameAbort_f (void)
 {
@@ -2613,7 +2608,7 @@ static void CL_CollectItemAmmo (invList_t * weapon, int left_hand, qboolean mark
 			ccs.eMission.num_loose[weapon->item.m] -= csi.ods[weapon->item.t].ammo;
 			ccs.eMission.num[weapon->item.m]++;
 		}
-		/* The guys keep their weapons (half-)loaded. Auto-reaload
+		/* The guys keep their weapons (half-)loaded. Auto-reload
 		   will happen at equip screen or at the start of next mission,
 		   but fully loaded weapons will not be reloaded even then. */
 	}
@@ -2643,7 +2638,6 @@ extern void CL_CollectItems (int won, int *item_counter, int *credits_gained)
 	*item_counter = 0;
 
 	for (i = 0, le = LEs; i < numLEs; i++, le++) {
-
 		/* Winner collects everything on the floor, and everything carried */
 		/* by surviving actors.  Loser only gets what their living team */
 		/* members carry. */
@@ -2655,7 +2649,7 @@ extern void CL_CollectItems (int won, int *item_counter, int *credits_gained)
 				for (item = FLOOR(le); item; item = item->next) {
 					*item_counter += 1;
 					CL_CollectItemAmmo(item, 0, MARKET_AUTOSELL);
-		}
+				}
 			break;
 		case ET_ACTOR:
 		case ET_UGV:
@@ -2862,10 +2856,10 @@ static void CL_GameResults_f (void)
 
 	/* campaign effects */
 	selMis->cause->done++;
-	if ( (selMis->cause->def->quota
+	if ((selMis->cause->def->quota
 		  && selMis->cause->done >= selMis->cause->def->quota)
 		 || (selMis->cause->def->number
-			 && selMis->cause->num >= selMis->cause->def->number) ) {
+			 && selMis->cause->num >= selMis->cause->def->number)) {
 		selMis->cause->active = qfalse;
 		CL_CampaignExecute(selMis->cause);
 	}
@@ -2886,7 +2880,7 @@ static void CL_GameResults_f (void)
 
 /* =========================================================== */
 
-
+/** @brief valid mission descriptors */
 static const value_t mission_vals[] = {
 	{"location", V_TRANSLATION_STRING, offsetof(mission_t, location)}
 	,
