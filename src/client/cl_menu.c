@@ -2753,7 +2753,7 @@ static void MN_EditMenuNode_f (void)
 
 	for (val = nps; val->type; val++) {
 		if (!Q_strcmp(val->string, var)) {
-			Com_Printf("Found %s at offset %x\n", var, val->ofs);
+			Com_Printf("Found %s at offset %Zx\n", var, val->ofs);
 			np = cnt;
 			break;
 		}

@@ -134,6 +134,8 @@ typedef struct teamData_s {
 
 static teamData_t teamData;
 
+static void CL_SpawnSoldiers_f(void);
+
 /*====================================================================== */
 
 /**
@@ -1509,7 +1511,7 @@ static int spawnCountFromServer = -1;
  * @brief Send the clc_teaminfo command to server
  * @sa CL_SendCurTeamInfo
  */
-void CL_SpawnSoldiers_f (void)
+static void CL_SpawnSoldiers_f (void)
 {
 	int n = teamnum->integer;
 
@@ -1556,7 +1558,7 @@ void CL_SpawnSoldiers_f (void)
  * @sa CL_StartGame
  * @todo recheck the checksum server side
  */
-void CL_Precache_f (void)
+static void CL_Precache_f (void)
 {
 	unsigned map_checksum = 0;
 	unsigned ufoScript_checksum = 0;
@@ -1668,7 +1670,7 @@ void CL_ParseClientData (char *type, char *name, char **text)
  * @sa Com_ParseScripts
  * @sa CL_ParseScriptSecond
  */
-void CL_ParseScriptFirst(char *type, char *name, char **text)
+void CL_ParseScriptFirst (char *type, char *name, char **text)
 {
 	/* check for client interpretable scripts */
 	if (!Q_strncmp(type, "mission", 7))
@@ -1690,7 +1692,7 @@ void CL_ParseScriptFirst(char *type, char *name, char **text)
 	else if (!Q_strncmp(type, "nation", 6))
 		CL_ParseNations(name, text);
 	else if (!Q_strncmp(type, "rank", 4))
-		CL_ParseMedalsAndRanks( name, text, qtrue );
+		CL_ParseMedalsAndRanks(name, text, qtrue);
 #if 0
 	else if (!Q_strncmp(type, "medal", 5))
 		Com_ParseMedalsAndRanks( name, &text, qfalse );
@@ -1707,7 +1709,7 @@ void CL_ParseScriptFirst(char *type, char *name, char **text)
  * @sa Com_ParseScripts
  * @sa CL_ParseScriptFirst
  */
-void CL_ParseScriptSecond(char *type, char *name, char **text)
+void CL_ParseScriptSecond (char *type, char *name, char **text)
 {
 	/* check for client interpretable scripts */
 	if (!Q_strncmp(type, "stage", 5))
@@ -1721,31 +1723,31 @@ void CL_ParseScriptSecond(char *type, char *name, char **text)
  * @sa CL_GameLoad
  * @sa CL_GameNew
  */
-void CL_ReadSinglePlayerData( void )
+void CL_ReadSinglePlayerData (void)
 {
 	char *type, *name, *text;
 
 	/* pre-stage parsing */
-	FS_BuildFileList( "ufos/*.ufo" );
-	FS_NextScriptHeader( NULL, NULL, NULL );
+	FS_BuildFileList("ufos/*.ufo");
+	FS_NextScriptHeader(NULL, NULL, NULL);
 	text = NULL;
 
 	CL_ResetSinglePlayerData();
-	while ( ( type = FS_NextScriptHeader( "ufos/*.ufo", &name, &text ) ) != 0 )
-		CL_ParseScriptFirst( type, name, &text );
+	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != 0)
+		CL_ParseScriptFirst(type, name, &text);
 
 	/* fill in IDXs for required research techs */
 	RS_RequiredIdxAssign();
 
 	/* stage two parsing */
-	FS_NextScriptHeader( NULL, NULL, NULL );
+	FS_NextScriptHeader(NULL, NULL, NULL);
 	text = NULL;
 
-	Com_DPrintf( "Second stage parsing started...\n" );
-	while ( ( type = FS_NextScriptHeader( "ufos/*.ufo", &name, &text ) ) != 0 )
+	Com_DPrintf("Second stage parsing started...\n");
+	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != 0)
 		CL_ParseScriptSecond( type, name, &text );
 
-	Com_Printf( "Global data loaded - size %d bytes\n", sizeof(gd) );
+	Com_Printf("Global data loaded - size %Zu bytes\n", sizeof(gd));
 }
 
 /**

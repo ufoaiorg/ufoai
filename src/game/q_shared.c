@@ -1667,7 +1667,7 @@ skipwhite:
 				com_token[len] = c;
 				len++;
 			} else {
-				Com_Printf("Com_Parse len exceeded: %i/MAX_TOKEN_CHARS\n", len);
+				Com_Printf("Com_Parse len exceeded: %Zu/MAX_TOKEN_CHARS\n", len);
 			}
 		}
 	}

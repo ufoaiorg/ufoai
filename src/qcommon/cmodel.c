@@ -200,7 +200,7 @@ static void CMod_LoadSubmodels(lump_t * l)
 
 	in = (void *) (cmod_base + l->fileofs);
 	if (l->filelen % sizeof(dmodel_t))
-		Com_Error(ERR_DROP, "CMod_LoadSubmodels: funny lump size (%i => %i", l->filelen, sizeof(dmodel_t));
+		Com_Error(ERR_DROP, "CMod_LoadSubmodels: funny lump size (%i => %Zu", l->filelen, sizeof(dmodel_t));
 	count = l->filelen / sizeof(dmodel_t);
 
 	if (count < 1)

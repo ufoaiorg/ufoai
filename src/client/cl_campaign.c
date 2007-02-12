@@ -1596,7 +1596,7 @@ static qboolean CL_GameSave (char *filename, char *comment)
 
 	/* no more version included - we are using the sizeof(globalData_t) as info */
 	/* when size of globalData_t in savegame differs from actual size of globalData_t we won't even load the game */
-	Com_DPrintf("CL_GameSave: sizeof globalData_t: %i max.gamedatasize: %i\n", sizeof(globalData_t), MAX_GAMESAVESIZE);
+	Com_DPrintf("CL_GameSave: sizeof globalData_t: %Zu max.gamedatasize: %i\n", sizeof(globalData_t), MAX_GAMESAVESIZE);
 	SZ_Write(&sb, &gd, sizeof(globalData_t));
 
 	/* store inventories */

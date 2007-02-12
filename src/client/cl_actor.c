@@ -1073,7 +1073,7 @@ void CL_ActorUpdateCVars (void)
 			if (selWeapon->item.m == NONE) {
 				selFD = NULL;
 			} else {
-#ifdef DEBUG
+#ifdef PARANOID
 				GET_FIREDEFDEBUG(selWeapon->item.m,
 						INV_FiredefsIDXForWeapon(&csi.ods[selWeapon->item.m],
 						selWeapon->item.t), cl.cfiremode)

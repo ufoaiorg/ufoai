@@ -378,18 +378,17 @@ extern refexport_t re;
 
 void CL_Init(void);
 void CL_ParseScriptFirst(char *type, char *name, char **text);
-void CL_ReadSinglePlayerData( void );
+void CL_ReadSinglePlayerData(void);
 
 void CL_StartSingleplayer(qboolean singleplayer);
 void CL_Disconnect(void);
 void CL_GetChallengePacket(void);
 void CL_PingServers_f(void);
 void CL_Snd_Restart_f(void);
-void S_ModifySndRef_f (void);
-void CL_ParseMedalsAndRanks( char *title, char **text, byte parserank );
+void S_ModifySndRef_f(void);
+void CL_ParseMedalsAndRanks(char *title, char **text, byte parserank);
 void CL_ParseUGVs(char *title, char **text);
 char* CL_ToDifficultyName(int difficulty);
-void CL_SpawnSoldiers_f(void);
 
 extern qboolean loadingMessage;
 extern char loadingMessages[96];

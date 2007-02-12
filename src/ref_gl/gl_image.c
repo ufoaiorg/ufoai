@@ -1642,12 +1642,12 @@ static void R_FilterTexture(int filterindex, unsigned int *data, int width, int 
 	int filterX;
 	int filterY;
 	unsigned int *temp;
-	int temp_size = width * height * 4;
+	size_t temp_size = width * height * 4;
 
 	/* allocate a temp buffer */
 	temp = malloc(temp_size);
 	if (!temp) {
-		ri.Sys_Error(ERR_FATAL, "malloc: failed on allocation of %i bytes", temp_size);
+		ri.Sys_Error(ERR_FATAL, "malloc: failed on allocation of %Zu bytes", temp_size);
 		return;					/* never reached. need for code analyst. */
 	}
 
@@ -1898,7 +1898,7 @@ static qboolean GL_Upload8(byte * data, int width, int height, qboolean mipmap, 
 
 	trans = malloc(trans_size);
 	if (!trans) {
-		ri.Sys_Error(ERR_FATAL, "malloc: failed on allocation of %i bytes", trans_size);
+		ri.Sys_Error(ERR_FATAL, "malloc: failed on allocation of %Zu bytes", trans_size);
 		return qfalse;			/* never reached. need for code analyst. */
 	}
 

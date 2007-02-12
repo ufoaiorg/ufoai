@@ -515,10 +515,11 @@ void RunThreadsOn (int workcnt, qboolean showpacifier, void(*func)(unsigned int)
 	pthread_mutexattr_t         mattrib;
 	pthread_t work_threads[MAX_THREADS];
 
-	int	  start, end;
-	int   i=0, status=0;
+	int start, end;
+	int status = 0;
+	unsigned int i = 0;
 
-	start     = I_FloatTime ();
+	start     = I_FloatTime();
 	pacifier  = showpacifier;
 
 	dispatch  = 0;
@@ -543,12 +544,15 @@ void RunThreadsOn (int workcnt, qboolean showpacifier, void(*func)(unsigned int)
 			Error ("pthread_mutexattr_settype failed");
 		recursive_mutex_init(mattrib);
 
-		for (i = 0; i<numthreads ; i++) {
+		for (i = 0; i < numthreads; i++) {
 			/* Default pthread attributes: joinable & non-realtime scheduling */
+			/* on 64bit arch, gcc complains cast to pointer from integer of different sizes
+			 * but it is OK to cast from 4-byte integer to 8-byte pointer */
+			/* TODO: nevertheless fix this warning */
 			if (pthread_create(&work_threads[i], NULL, (void*)func, (void*)i) != 0)
 				Error("pthread_create failed");
 		}
-		for (i = 0; i<numthreads ; i++) {
+		for (i = 0; i < numthreads; i++) {
 			if (pthread_join(work_threads[i], (void **)&status) != 0)
 				Error("pthread_join failed");
 		}
