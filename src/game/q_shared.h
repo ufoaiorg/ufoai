@@ -290,6 +290,7 @@ typedef union {
 #define VectorNegate(a,b)       (b[0]=-a[0],b[1]=-a[1],b[2]=-a[2])
 #define VectorSet(v, x, y, z)   (v[0]=(x), v[1]=(y), v[2]=(z))
 #define Vector2Set(v, x, y)     ((v)[0]=(x), (v)[1]=(y))
+#define Vector4Set(v, r, g, b, a)   (v[0]=(r), v[1]=(g), v[2]=(b), v[3]=(a))
 #define VectorCompare(a,b)      (a[0]==b[0]?a[1]==b[1]?a[2]==b[2]?1:0:0:0)
 #define Vector2Compare(a,b)     (a[0]==b[0]?a[1]==b[1]?1:0:0)
 #define VectorDistSqr(a,b)      ((b[0]-a[0])*(b[0]-a[0])+(b[1]-a[1])*(b[1]-a[1])+(b[2]-a[2])*(b[2]-a[2]))
