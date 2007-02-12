@@ -929,23 +929,21 @@ static void CL_RefreshWeaponButtons (int time)
 		}
 		if (isammo) {
 			/* Search for the smallest TU needed to shoot. */
-			for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
-				if (weaponl_fds_idx == -1)
-					break;
-				if (!csi.ods[weaponl->item.m].fd[weaponl_fds_idx][i].time)
-					continue;
-				if (csi.ods[weaponl->item.m].fd[weaponl_fds_idx][i].time < minweaponltime)
-					minweaponltime = csi.ods[weaponl->item.m].fd[weaponl_fds_idx][i].time;
-			}
+			if (weaponl_fds_idx != -1)
+				for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
+					if (!csi.ods[weaponl->item.m].fd[weaponl_fds_idx][i].time)
+						continue;
+					if (csi.ods[weaponl->item.m].fd[weaponl_fds_idx][i].time < minweaponltime)
+						minweaponltime = csi.ods[weaponl->item.m].fd[weaponl_fds_idx][i].time;
+				}
 		} else {
-			for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
-				if (weaponl_fds_idx == -1)
-					break;
-				if (!csi.ods[weaponl->item.t].fd[weaponl_fds_idx][i].time)
-					continue;
-				if (csi.ods[weaponl->item.t].fd[weaponl_fds_idx][i].time < minweaponltime)
-					minweaponltime = csi.ods[weaponl->item.t].fd[weaponl_fds_idx][i].time;
-			}
+			if (weaponl_fds_idx != -1)
+				for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
+					if (!csi.ods[weaponl->item.t].fd[weaponl_fds_idx][i].time)
+						continue;
+					if (csi.ods[weaponl->item.t].fd[weaponl_fds_idx][i].time < minweaponltime)
+						minweaponltime = csi.ods[weaponl->item.t].fd[weaponl_fds_idx][i].time;
+				}
 		}
 		if (time < minweaponltime)
 			SetWeaponButton(BT_LEFT_PRIMARY, qfalse);
@@ -963,7 +961,7 @@ qboolean CL_CheckMenuAction (int time, invList_t *weapon, int mode)
 {
 	/* no weapon */
 	if ( !weapon || weapon->item.m == NONE ) {
-		Com_Printf("No weapon in hand!\n");
+		CL_DisplayHudMessage(_("No weapon in hand.\n"), 2000);
 		return qfalse;
 	}
 
@@ -972,26 +970,26 @@ qboolean CL_CheckMenuAction (int time, invList_t *weapon, int mode)
 	case FD_PRIMARY:
 	case FD_SECONDARY:
 		if (weapon->item.a <= 0 && csi.ods[weapon->item.t].reload) {
-			Com_Printf("Out of ammo!\n");
+			CL_DisplayHudMessage(_("Out of ammo.\n"), 2000);
 			return qfalse;
 		}
 		if (csi.ods[weapon->item.t].firetwohanded && LEFT(selActor)) {
-			Com_Printf("Weapon cannot be fired one handed!\n");
+			CL_DisplayHudMessage(_("This weapon cannot be fired\none handed.\n"), 2000);
 			return qfalse;
 		}
 		if (time < csi.ods[weapon->item.m].fd[INV_FiredefsIDXForWeapon(&csi.ods[weapon->item.m],weapon->item.t)][(mode)].time) {
-			Com_Printf("Can't perform action: not enough TUs.\n");
+			CL_DisplayHudMessage(_("Can't perform action: not enough TUs.\n"), 2000);
 			return qfalse;
 		}
 		break;
 #endif
 	case EV_INV_RELOAD:
 		if (!csi.ods[weapon->item.t].reload) {
-			Com_Printf("This weapon can not be reloaded!\n");
+			CL_DisplayHudMessage(_("This weapon can not be reloaded.\n"), 2000);
 			return qfalse;
 		}
 		if (time < CL_CalcReloadTime(weapon->item.t)) {
-			Com_Printf("Can't perform action: not enough TUs.\n");
+			CL_DisplayHudMessage(_("Can't perform action: not enough TUs.\n"), 2000);
 			return qfalse;
 		}
 		break;
@@ -2124,7 +2122,7 @@ void CL_ActorDie (sizebuf_t * sb)
 			CL_DisplayHudMessage(_("An alien was killed!\n"), 2000);
 			break;
 		case (TEAM_PHALANX):
-			CL_DisplayHudMessage(_("A solider was killed\n"), 2000);
+			CL_DisplayHudMessage(_("A soldier was killed\n"), 2000);
 			break;
 		default:
 			CL_DisplayHudMessage(va(_("A member of team %i was killed!\n"), le->team), 2000);
