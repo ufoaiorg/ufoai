@@ -768,39 +768,10 @@ menu team
 	// actor info
 	// ==================
 
-	confunc mn_name_changed
-	{
-		*txt_name mousefx false
-		cmd team_changename
-	}
-
 	string txt_name
 	{
 		string	"*cvar mn_name"
 		pos		"475 17"
-	}
-
-	pic bt_editname
-	{
-		tooltip	"_Edit name of the soldier"
-		image	"menu/button_blue"
-		pos		"920 10"
-		texl	"0 90"
-		texh	"94 125"
-		mousefx	true
-		click
-		{
-			cmd "msgmenu ?mn_name"
-			*txt_name mousefx true
-		}
-	}
-
-	string s_editname
-	{
-		pos	"967 15"
-		align	uc
-		string	"_Edit"
-		color "1 1 1 1"
 	}
 
 	model body
