@@ -1120,7 +1120,7 @@ menu hud
 		tooltip	"_Check to use this firemode for reaction fire."
 		pos		"622 416"
 		texl	"0 0"
-		texh	"64 64"
+		texh	"31 31"
 		mousefx	false
 		invis true
 		click	{ cmd "sel_reactmode l 3;" }
@@ -1168,7 +1168,7 @@ menu hud
 		tooltip	"_Check to use this firemode for reaction fire."
 		pos		"622 160"
 		texl	"0 0"
-		texh	"64 64"
+		texh	"31 31"
 		mousefx	false
 		invis true
 		click	{ cmd "sel_reactmode l 7;" }
