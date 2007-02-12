@@ -2325,6 +2325,7 @@ extern void B_TransferEnd (aircraft_t* aircraft)
 		return;
 
 	b = (base_t*)aircraft->transferBase;
+	assert(b);
 
 	/* maybe it was invaded in the meantime */
 	if (!b->founded) {
@@ -2333,6 +2334,7 @@ extern void B_TransferEnd (aircraft_t* aircraft)
 	}
 
 	homebase = (base_t*)aircraft->homebase;
+	assert(homebase);
 
 	/* drop all equipment */
 	if (b->hasStorage) {
