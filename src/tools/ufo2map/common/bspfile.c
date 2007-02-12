@@ -435,9 +435,9 @@ static void AddLump (int lumpnum, void *data, int len)
 
 	lump = &header->lumps[lumpnum];
 
-	lump->fileofs = LittleLong( ftell(wadfile) );
+	lump->fileofs = LittleLong(ftell(wadfile));
 	lump->filelen = LittleLong(len);
-	SafeWrite (wadfile, data, (len+3)&~3);
+	SafeWrite(wadfile, data, (len+3)&~3);
 }
 
 /**
@@ -446,41 +446,41 @@ static void AddLump (int lumpnum, void *data, int len)
 extern void WriteBSPFile (char *filename)
 {
 	header = &outheader;
-	memset (header, 0, sizeof(dheader_t));
+	memset(header, 0, sizeof(dheader_t));
 
-	SwapBSPFile (qtrue);
+	SwapBSPFile(qtrue);
 
 	header->ident = LittleLong (IDBSPHEADER);
 	header->version = LittleLong (BSPVERSION);
 
-	wadfile = SafeOpenWrite (filename);
-	SafeWrite (wadfile, header, sizeof(dheader_t));	/* overwritten later */
+	wadfile = SafeOpenWrite(filename);
+	SafeWrite(wadfile, header, sizeof(dheader_t));	/* overwritten later */
 
-	AddLump (LUMP_PLANES, dplanes, numplanes*sizeof(dplane_t));
-	AddLump (LUMP_LEAFS, dleafs, numleafs*sizeof(dleaf_t));
-	AddLump (LUMP_VERTEXES, dvertexes, numvertexes*sizeof(dvertex_t));
-	AddLump (LUMP_NODES, dnodes, numnodes*sizeof(dnode_t));
-	AddLump (LUMP_TEXINFO, texinfo, numtexinfo*sizeof(texinfo_t));
-	AddLump (LUMP_FACES, dfaces, numfaces*sizeof(dface_t));
-	AddLump (LUMP_BRUSHES, dbrushes, numbrushes*sizeof(dbrush_t));
-	AddLump (LUMP_BRUSHSIDES, dbrushsides, numbrushsides*sizeof(dbrushside_t));
-	AddLump (LUMP_LEAFFACES, dleaffaces, numleaffaces*sizeof(dleaffaces[0]));
-	AddLump (LUMP_LEAFBRUSHES, dleafbrushes, numleafbrushes*sizeof(dleafbrushes[0]));
-	AddLump (LUMP_SURFEDGES, dsurfedges, numsurfedges*sizeof(dsurfedges[0]));
-	AddLump (LUMP_EDGES, dedges, numedges*sizeof(dedge_t));
-	AddLump (LUMP_MODELS, dmodels, nummodels*sizeof(dmodel_t));
-	AddLump (LUMP_AREAS, dareas, numareas*sizeof(darea_t));
-	AddLump (LUMP_AREAPORTALS, dareaportals, numareaportals*sizeof(dareaportal_t));
+	AddLump(LUMP_PLANES, dplanes, numplanes*sizeof(dplane_t));
+	AddLump(LUMP_LEAFS, dleafs, numleafs*sizeof(dleaf_t));
+	AddLump(LUMP_VERTEXES, dvertexes, numvertexes*sizeof(dvertex_t));
+	AddLump(LUMP_NODES, dnodes, numnodes*sizeof(dnode_t));
+	AddLump(LUMP_TEXINFO, texinfo, numtexinfo*sizeof(texinfo_t));
+	AddLump(LUMP_FACES, dfaces, numfaces*sizeof(dface_t));
+	AddLump(LUMP_BRUSHES, dbrushes, numbrushes*sizeof(dbrush_t));
+	AddLump(LUMP_BRUSHSIDES, dbrushsides, numbrushsides*sizeof(dbrushside_t));
+	AddLump(LUMP_LEAFFACES, dleaffaces, numleaffaces*sizeof(dleaffaces[0]));
+	AddLump(LUMP_LEAFBRUSHES, dleafbrushes, numleafbrushes*sizeof(dleafbrushes[0]));
+	AddLump(LUMP_SURFEDGES, dsurfedges, numsurfedges*sizeof(dsurfedges[0]));
+	AddLump(LUMP_EDGES, dedges, numedges*sizeof(dedge_t));
+	AddLump(LUMP_MODELS, dmodels, nummodels*sizeof(dmodel_t));
+	AddLump(LUMP_AREAS, dareas, numareas*sizeof(darea_t));
+	AddLump(LUMP_AREAPORTALS, dareaportals, numareaportals*sizeof(dareaportal_t));
 
-	AddLump (LUMP_LIGHTING, dlightdata, lightdatasize);
+	AddLump(LUMP_LIGHTING, dlightdata, lightdatasize);
 	/* removed LUMP_VISIBILITY and use LUMP_ROUTING */
-	AddLump (LUMP_ROUTING, droutedata, routedatasize);
-	AddLump (LUMP_ENTITIES, dentdata, entdatasize);
-	AddLump (LUMP_POP, dpop, sizeof(dpop));
+	AddLump(LUMP_ROUTING, droutedata, routedatasize);
+	AddLump(LUMP_ENTITIES, dentdata, entdatasize);
+	AddLump(LUMP_POP, dpop, sizeof(dpop));
 
-	fseek (wadfile, 0, SEEK_SET);
-	SafeWrite (wadfile, header, sizeof(dheader_t));
-	fclose (wadfile);
+	fseek(wadfile, 0, SEEK_SET);
+	SafeWrite(wadfile, header, sizeof(dheader_t));
+	fclose(wadfile);
 }
 
 /**

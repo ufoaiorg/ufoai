@@ -155,7 +155,7 @@ static void Check_BSP_Parameter ( int argc, char **argv )
 /**
  * @brief Check for radiosity command line parameters
  */
-static void Check_RAD_Parameter( int argc, char** argv )
+static void Check_RAD_Parameter (int argc, char** argv)
 {
 	int i;
 	for (i = 1; i < argc; i++) {
@@ -217,77 +217,77 @@ int main (int argc, char **argv)
 	Check_RAD_Parameter( argc, argv );
 
 	if (argc < 2)
-		Error ("usage: ufo2map [-threads num] [-convert] [-glview] [-nice prio] [-v] [-draw] [-noweld] [-nocsg] [-noshare] [-notjunc] [-nowater] [-noopt] [-noprune] [-nofill] [-nomerge] [-nosubdiv] [-nodetail] [-fulldetail] [-onlyents] [-micro float] [-verboseentities] [-chop] [-block num num] [-blocks num num num num] [-tmpout] [-norouting] [-nobackclip] [-extra] [-noradiosity] mapfile");
+		Error("usage: ufo2map [-threads num] [-convert] [-glview] [-nice prio] [-v] [-draw] [-noweld] [-nocsg] [-noshare] [-notjunc] [-nowater] [-noopt] [-noprune] [-nofill] [-nomerge] [-nosubdiv] [-nodetail] [-fulldetail] [-onlyents] [-micro float] [-verboseentities] [-chop] [-block num num] [-blocks num num num num] [-tmpout] [-norouting] [-nobackclip] [-extra] [-noradiosity] mapfile");
 
-	start = I_FloatTime ();
+	start = I_FloatTime();
 
-	ThreadSetDefault ();
+	ThreadSetDefault();
 	/* numthreads = 1;		// multiple threads aren't helping... */
-	SetQdirFromPath (argv[argc-1]);
+	SetQdirFromPath(argv[argc-1]);
 
-	strcpy (source, ExpandArg (argv[argc-1]));
-	StripExtension (source);
+	strcpy(source, ExpandArg (argv[argc-1]));
+	StripExtension(source);
 
 	/* delete portal and line files */
-	sprintf (path, "%s.prt", source);
-	remove (path);
-	sprintf (path, "%s.lin", source);
-	remove (path);
+	sprintf(path, "%s.prt", source);
+	remove(path);
+	sprintf(path, "%s.lin", source);
+	remove(path);
 
-	strcpy (name, ExpandArg (argv[argc-1]));
-	DefaultExtension (name, ".map");
+	strcpy(name, ExpandArg (argv[argc-1]));
+	DefaultExtension(name, ".map");
 
 	sprintf (out, "%s.bsp", source);
 
 	/* if onlyents, just grab the entites and resave */
 	if (onlyents) {
-		LoadBSPFile (out);
+		LoadBSPFile(out);
 		num_entities = 0;
 
-		LoadMapFile (name);
-		SetModelNumbers ();
-		SetLightStyles ();
+		LoadMapFile(name);
+		SetModelNumbers();
+		SetLightStyles();
 
-		UnparseEntities ();
+		UnparseEntities();
 
-		WriteBSPFile (out);
+		WriteBSPFile(out);
 	} else if (convertFunc) {
 		convertFunc(source);
 	} else {
 		/* start from scratch */
-		LoadMapFile (name);
-		SetModelNumbers ();
-		SetLightStyles ();
+		LoadMapFile(name);
+		SetModelNumbers();
+		SetLightStyles();
 
-		ProcessModels ();
+		ProcessModels();
 	}
 
 	end = I_FloatTime ();
-	Sys_Printf ("%5.0f seconds elapsed\n", end-start);
+	Sys_Printf("%5.0f seconds elapsed\n", end-start);
 
 	if (!convertFunc && !onlyents && !noradiosity) {
-		Sys_Printf ("----- Radiosity ----\n");
+		Sys_Printf("----- Radiosity ----\n");
 
 		begin = start;
 
-		start = I_FloatTime ();
-		DefaultExtension (source, ".bsp");
+		start = I_FloatTime();
+		DefaultExtension(source, ".bsp");
 
-/*		ReadLightFile (); */
+/*		ReadLightFile(); */
 
-		sprintf (name, "%s%s", inbase, source);
-		CalcTextureReflectivity ();
+		sprintf(name, "%s%s", inbase, source);
+		CalcTextureReflectivity();
 
-		RadWorld ();
+		RadWorld();
 
-		sprintf (name, "%s%s", outbase, source);
-		Sys_Printf ("writing %s\n", name);
-		WriteBSPFile (name);
+		sprintf(name, "%s%s", outbase, source);
+		Sys_Printf("writing %s\n", name);
+		WriteBSPFile(name);
 
-		end = I_FloatTime ();
+		end = I_FloatTime();
 
-		Sys_Printf ("%5.0f seconds elapsed\n", end-start);
-		Sys_Printf ("sum: %5.0f seconds elapsed\n\n", end-begin);
+		Sys_Printf("%5.0f seconds elapsed\n", end-start);
+		Sys_Printf("sum: %5.0f seconds elapsed\n\n", end-begin);
 	}
 
 	return 0;

@@ -30,9 +30,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifdef _WIN32
 #include <direct.h>
 #include <io.h>
+#define PATHSEPERATOR   '\\'
 #else
 #include <unistd.h>
 #include <dirent.h>
+#define PATHSEPERATOR   '/'
 #endif
 
 #ifdef NeXT
@@ -41,7 +43,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define	BASEDIR_ID_FILE	".gamedir"	/* This is the name of the "trunk" directory. */
 #define	BASEDIR	"base"	/* This is the directory the game-data is stored. */
-#define PATHSEPERATOR   '/'
 
 /* set these before calling CheckParm */
 int myargc;
@@ -500,7 +501,7 @@ FILE *SafeOpenWrite (const char *filename)
 
 	f = fopen(filename, "wb");
 	if (!f)
-		Error ("Error opening %s: %s",filename,strerror(errno));
+		Error("Error opening %s: %s",filename,strerror(errno));
 
 	return f;
 }
@@ -514,7 +515,7 @@ FILE *SafeOpenRead (const char *filename)
 
 	f = fopen(filename, "rb");
 	if (!f)
-		Error ("Error opening %s: %s",filename,strerror(errno));
+		Error("Error opening %s: %s",filename,strerror(errno));
 
 	return f;
 }
@@ -526,7 +527,7 @@ FILE *SafeOpenRead (const char *filename)
 void SafeRead (FILE *f, void *buffer, int count)
 {
 	if ( fread (buffer, 1, count, f) != (size_t)count)
-		Error ("File read failure");
+		Error("File read failure");
 }
 
 
@@ -610,9 +611,9 @@ void SaveFile (const char *filename, void *buffer, int count)
 {
 	FILE *f;
 
-	f = SafeOpenWrite (filename);
-	SafeWrite (f, buffer, count);
-	fclose (f);
+	f = SafeOpenWrite(filename);
+	SafeWrite(f, buffer, count);
+	fclose(f);
 }
 
 /**
