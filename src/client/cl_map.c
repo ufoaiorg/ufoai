@@ -234,7 +234,7 @@ static void MAP_MultiSelectNotifyUfoDisappeared(const aircraft_t* ufo)
 /**
  * @brief Click on the map/geoscape
  */
-extern void MAP_MapClick(const menuNode_t* node, int x, int y, qboolean globe)
+extern void MAP_MapClick (const menuNode_t* node, int x, int y, qboolean globe)
 {
 	aircraft_t *aircraft = NULL;
 	actMis_t *ms;
@@ -333,10 +333,10 @@ GEOSCAPE DRAWING AND COORDINATES
 ==============================================================
 */
 
+#define MN_MAP_DIST_SELECTION 15
 /**
  * @brief Tell if the specified position is considered clicked
  */
-#define MN_MAP_DIST_SELECTION 15
 static qboolean MAP_IsMapPositionSelected (const menuNode_t* node, vec2_t pos, int x, int y, qboolean globe)
 {
 	int msx, msy;
@@ -411,7 +411,7 @@ extern qboolean MAP_MapToScreen (const menuNode_t* node, const vec2_t pos, int *
 /**
  * @brief
  */
-static void MAP_ScreenToMap(const menuNode_t* node, int x, int y, vec2_t pos)
+static void MAP_ScreenToMap (const menuNode_t* node, int x, int y, vec2_t pos)
 {
 	pos[0] = (((node->pos[0] - x) / node->size[0] + 0.5) / ccs.zoom - (ccs.center[0] - 0.5)) * 360.0;
 	pos[1] = (((node->pos[1] - y) / node->size[1] + 0.5) / ccs.zoom - (ccs.center[1] - 0.5)) * 180.0;
@@ -435,7 +435,7 @@ static void MAP_ScreenToMap(const menuNode_t* node, int x, int y, vec2_t pos)
  * @param[in] y Y coordinate on the screen that was clicked to
  * @param[in] node The current menuNode we was clicking into (3dmap or map)
  */
-static void MAP3D_ScreenToMap(const menuNode_t* node, int x, int y, vec2_t pos)
+static void MAP3D_ScreenToMap (const menuNode_t* node, int x, int y, vec2_t pos)
 {
 	vec2_t mid;
 	float dist;
@@ -470,7 +470,7 @@ static void MAP3D_ScreenToMap(const menuNode_t* node, int x, int y, vec2_t pos)
  * @brief
  * @sa MAP_MapDrawLine
  */
-extern void MAP_MapCalcLine(const vec2_t start, const vec2_t end, mapline_t* line)
+extern void MAP_MapCalcLine (const vec2_t start, const vec2_t end, mapline_t* line)
 {
 	vec3_t s, e, v;
 	vec3_t normal;
@@ -544,7 +544,7 @@ extern void MAP_MapCalcLine(const vec2_t start, const vec2_t end, mapline_t* lin
  * @brief
  * @sa MAP_MapCalcLine
  */
-static void MAP_MapDrawLine(const menuNode_t* node, const mapline_t* line)
+static void MAP_MapDrawLine (const menuNode_t* node, const mapline_t* line)
 {
 	vec4_t color = {1, 0.5, 0.5, 1};
 	int pts[LINE_MAXPTS * 2];
@@ -587,7 +587,7 @@ static void MAP_MapDrawLine(const menuNode_t* node, const mapline_t* line)
 /**
  * @brief
  */
-static void MAP_Draw3DMapMarkers(const menuNode_t * node, float latitude, float longitude)
+static void MAP_Draw3DMapMarkers (const menuNode_t * node, float latitude, float longitude)
 {
 	aircraft_t *aircraft;
 	actMis_t *ms;
@@ -643,7 +643,7 @@ static void MAP_Draw3DMapMarkers(const menuNode_t * node, float latitude, float 
  * @brief Draws all ufos, aircraft, bases and so on to the geoscape map
  * @sa MAP_DrawMap
  */
-static void MAP_DrawMapMarkers(const menuNode_t* node)
+static void MAP_DrawMapMarkers (const menuNode_t* node)
 {
 	aircraft_t *aircraft;
 	actMis_t *ms;
@@ -756,7 +756,7 @@ static void MAP_DrawMapMarkers(const menuNode_t* node)
  * @sa MAP_DrawMapMarkers
  * @sa MAP_Draw3DMapMarkers
  */
-extern void MAP_DrawMap(const menuNode_t* node, qboolean map3D)
+extern void MAP_DrawMap (const menuNode_t* node, qboolean map3D)
 {
 	float q;
 	base_t* base;
@@ -799,6 +799,8 @@ extern void MAP_DrawMap(const menuNode_t* node, qboolean map3D)
 			break;
 		menuText[TEXT_STANDARD] = _("UFO in radar range\n");
 		return;
+	case MA_NONE:
+		break;
 	}
 
 	/* Nothing is displayed yet */
@@ -823,7 +825,7 @@ extern void MAP_DrawMap(const menuNode_t* node, qboolean map3D)
 /**
  * @brief No more special action in geoscape
  */
-extern void MAP_ResetAction(void)
+extern void MAP_ResetAction (void)
 {
 	/* don't allow a reset when no base is set up */
 	if (gd.numBases)
@@ -843,7 +845,7 @@ extern void MAP_ResetAction(void)
 /**
  * @brief Select the specified aircraft in geoscape
  */
-extern void MAP_SelectAircraft(aircraft_t* aircraft)
+extern void MAP_SelectAircraft (aircraft_t* aircraft)
 {
 	MAP_ResetAction();
 	selectedAircraft = aircraft;
@@ -852,7 +854,7 @@ extern void MAP_SelectAircraft(aircraft_t* aircraft)
 /**
  * @brief Selected the specified mission
  */
-extern void MAP_SelectMission(actMis_t* mission)
+extern void MAP_SelectMission (actMis_t* mission)
 {
 	if (! mission || mission == selMis)
 		return;
@@ -865,7 +867,7 @@ extern void MAP_SelectMission(actMis_t* mission)
  * @brief Notify that a mission has been removed
  * TODO: Destroy base after removing a baseattack mission??
  */
-extern void MAP_NotifyMissionRemoved(const actMis_t* mission)
+extern void MAP_NotifyMissionRemoved (const actMis_t* mission)
 {
 	/* Unselect the current selected mission if its the same */
 	if (selMis == mission && (gd.mapAction == MA_BASEATTACK || gd.mapAction == MA_INTERCEPT))
@@ -880,7 +882,7 @@ extern void MAP_NotifyMissionRemoved(const actMis_t* mission)
 /**
  * @brief Notify that an ufo has been removed
  */
-extern void MAP_NotifyUfoRemoved(const aircraft_t* ufo)
+extern void MAP_NotifyUfoRemoved (const aircraft_t* ufo)
 {
 	/* Unselect the current selected ufo if its the same */
 	if (selectedUfo == ufo)
@@ -900,7 +902,7 @@ extern void MAP_NotifyUfoRemoved(const aircraft_t* ufo)
  * @return NULL if no nation with the given color value was found
  * @note The coodinates already have to be transfored to map coordinates via MAP_ScreenToMap
  */
-extern nation_t* MAP_GetNation(const vec2_t pos)
+extern nation_t* MAP_GetNation (const vec2_t pos)
 {
 	int i;
 	nation_t* nation;
@@ -921,7 +923,7 @@ extern nation_t* MAP_GetNation(const vec2_t pos)
 /**
  * @brief Notify that an ufo disappears on radars
  */
-extern void MAP_NotifyUfoDisappear(const aircraft_t* ufo)
+extern void MAP_NotifyUfoDisappear (const aircraft_t* ufo)
 {
 	/* Unselect the current selected ufo if its the same */
 	if (selectedUfo == ufo)
@@ -934,7 +936,7 @@ extern void MAP_NotifyUfoDisappear(const aircraft_t* ufo)
 /**
  * @brief Initialise MAP/Geoscape
  */
-extern void MAP_GameInit(void)
+extern void MAP_GameInit (void)
 {
 	cl_showCoords = Cvar_Get("cl_showcoords", "0", CVAR_ARCHIVE, NULL);
 	Cmd_AddCommand("multi_select_click", MAP_MultiSelectExecuteAction_f, NULL);

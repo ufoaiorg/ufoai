@@ -82,7 +82,7 @@ typedef struct globalData_s
 
 	/* == misc == */
 	/* MA_NEWBASE, MA_INTERCEPT, MA_BASEATTACK, ... */
-	int mapAction;
+	mapAction_t mapAction;
 	/* how fast the game is running */
 	int gameTimeScale;
 	/* selected aircraft for interceptions */
@@ -122,10 +122,9 @@ typedef struct globalData_s
 	int numUfos;
 
 	/* == Alien Containment == */
-	/* uncomment this if you want to test Alien Containment (WIP) stuff 
+	/* uncomment this if you want to test Alien Containment (WIP) stuff
 	aliensTmp_t cargo[MAX_CARGO];
 	int aliensAmount; */
-
 } globalData_t;
 
 
