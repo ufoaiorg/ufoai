@@ -813,10 +813,13 @@ void CL_FireWeapon (void)
  */
 static void CL_RefreshWeaponButtons (int time)
 {
-	int i;
 	invList_t *weaponr, *weaponl = NULL;
+#if 0
 	int minweaponrtime = 100, minweaponltime = 100;
 	int weaponr_fds_idx = -1, weaponl_fds_idx = -1;
+	qboleean isammo = qfalse;
+	int i;
+#endif
 
 	if (!selActor)
 		return;
@@ -866,33 +869,49 @@ static void CL_RefreshWeaponButtons (int time)
 		SetWeaponButton(BT_LEFT_RELOAD, qtrue);
 
 	/* Weapon firing buttons. */
+#if 0
 	if (weaponr) {
 		/* Check whether this item use ammo. */
 		if (weaponr->item.m == NONE) {
 			/* This item does not use ammo, check for existing firedefs in this item. */
-			if (&csi.ods[weaponr->item.t].numFiredefs > 0) {
+			if (csi.ods[weaponr->item.t].numFiredefs > 0) {
 				/* Get firedef from the weapon entry instead. */
-				weaponr_fds_idx = INV_FiredefsIDXForWeapon(&csi.ods[weaponr->item.m],weaponr->item.t);
+				weaponr_fds_idx = INV_FiredefsIDXForWeapon(&csi.ods[weaponr->item.t], weaponr->item.t);
 			} else {
 				weaponr_fds_idx = -1;
 			}
+			isammo = qfalse;
 		} else {
 			/* This item uses ammo, get the firedefs from ammo. */
-			weaponr_fds_idx = INV_FiredefsIDXForWeapon(&csi.ods[weaponr->item.m],weaponr->item.t);
+			weaponr_fds_idx = INV_FiredefsIDXForWeapon(&csi.ods[weaponr->item.m], weaponr->item.t);
+			isammo = qtrue;
 		}
-		/* Search for the smallest TU needed to shoot. */
-		for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
-			if (!weaponr_fds_idx || weaponr_fds_idx == -1)
-				break;
-			if (!csi.ods[weaponr->item.m].fd[weaponr_fds_idx][i].time)
-				continue;
-			if (csi.ods[weaponr->item.m].fd[weaponr_fds_idx][i].time < minweaponrtime)
+		if (isammo) {
+			/* Search for the smallest TU needed to shoot. */
+			for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
+				if (weaponr_fds_idx == -1)
+					break;
+				if (!csi.ods[weaponr->item.m].fd[weaponr_fds_idx][i].time)
+					continue;
+				if (csi.ods[weaponr->item.m].fd[weaponr_fds_idx][i].time < minweaponrtime)
 				minweaponrtime = csi.ods[weaponr->item.m].fd[weaponr_fds_idx][i].time;
+			}
+		} else {
+			for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
+				if (weaponr_fds_idx == -1)
+					break;
+				if (!csi.ods[weaponr->item.t].fd[weaponr_fds_idx][i].time)
+					continue;
+				if (csi.ods[weaponr->item.t].fd[weaponr_fds_idx][i].time < minweaponrtime)
+					minweaponrtime = csi.ods[weaponr->item.t].fd[weaponr_fds_idx][i].time;
+			}
 		}
 		if (time < minweaponrtime)
 			SetWeaponButton(BT_RIGHT_PRIMARY, qfalse);
 		else
+#endif
 			SetWeaponButton(BT_RIGHT_PRIMARY, qtrue);
+#if 0
 	} else {
 		SetWeaponButton(BT_RIGHT_PRIMARY, qfalse);
 	}
@@ -901,32 +920,48 @@ static void CL_RefreshWeaponButtons (int time)
 		/* Check whether this item use ammo. */
 		if (weaponl->item.m == NONE) {
 			/* This item does not use ammo, check for existing firedefs in this item. */
-			if (&csi.ods[weaponl->item.t].numFiredefs > 0) {
+			if (csi.ods[weaponl->item.t].numFiredefs > 0) {
 				/* Get firedef from the weapon entry instead. */
-				weaponl_fds_idx = INV_FiredefsIDXForWeapon(&csi.ods[weaponl->item.m],weaponl->item.t);
+				weaponl_fds_idx = INV_FiredefsIDXForWeapon(&csi.ods[weaponl->item.t], weaponl->item.t);
 			} else {
 				weaponl_fds_idx = -1;
 			}
+			isammo = qfalse;
 		} else {
 			/* This item uses ammo, get the firedefs from ammo. */
-			weaponl_fds_idx = INV_FiredefsIDXForWeapon(&csi.ods[weaponl->item.m],weaponl->item.t);
+			weaponl_fds_idx = INV_FiredefsIDXForWeapon(&csi.ods[weaponl->item.m], weaponl->item.t);
+			isammo = qtrue;
 		}
-		/* Search for the smallest TU needed to shoot. */
-		for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
-			if (!weaponl_fds_idx || weaponl_fds_idx == -1)
-				break;
-			if (!csi.ods[weaponl->item.m].fd[weaponl_fds_idx][i].time)
-				continue;
-			if (csi.ods[weaponl->item.m].fd[weaponl_fds_idx][i].time < minweaponltime)
-				minweaponltime = csi.ods[weaponl->item.m].fd[weaponl_fds_idx][i].time;
+		if (isammo) {
+			/* Search for the smallest TU needed to shoot. */
+			for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
+				if (weaponl_fds_idx == -1)
+					break;
+				if (!csi.ods[weaponl->item.m].fd[weaponl_fds_idx][i].time)
+					continue;
+				if (csi.ods[weaponl->item.m].fd[weaponl_fds_idx][i].time < minweaponltime)
+					minweaponltime = csi.ods[weaponl->item.m].fd[weaponl_fds_idx][i].time;
+			}
+		} else {
+			for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
+				if (weaponl_fds_idx == -1)
+					break;
+				if (!csi.ods[weaponl->item.t].fd[weaponl_fds_idx][i].time)
+					continue;
+				if (csi.ods[weaponl->item.t].fd[weaponl_fds_idx][i].time < minweaponltime)
+					minweaponltime = csi.ods[weaponl->item.t].fd[weaponl_fds_idx][i].time;
+			}
 		}
 		if (time < minweaponltime)
 			SetWeaponButton(BT_LEFT_PRIMARY, qfalse);
 		else
+#endif
 			SetWeaponButton(BT_LEFT_PRIMARY, qtrue);
+#if 0
 	} else {
 		SetWeaponButton(BT_LEFT_PRIMARY, qfalse);
 	}
+#endif
 }
 
 /**
