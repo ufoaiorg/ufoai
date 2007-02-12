@@ -2069,6 +2069,8 @@ void CL_ActorDie (sizebuf_t * sb)
 	le_t *le;
 	int number, state;
 	int i;
+	int teamDescID = -1;
+	char tmpbuf[128];
 
 	MSG_ReadFormat(sb, ev_format[EV_ACTOR_DIE], &number, &state);
 
@@ -2116,16 +2118,27 @@ void CL_ActorDie (sizebuf_t * sb)
 	} else {
 		switch (le->team) {
 		case (TEAM_CIVILIAN):
-			CL_DisplayHudMessage(_("A civilian was killed!\n"), 2000);
+			CL_DisplayHudMessage(_("A civilian was killed.\n"), 2000);
 			break;
 		case (TEAM_ALIEN):
-			CL_DisplayHudMessage(_("An alien was killed!\n"), 2000);
+			if (le->teamDesc) {
+				teamDescID = le->teamDesc - 1;
+				if (RS_IsResearched_idx(RS_GetTechIdxByName(teamDesc[teamDescID].tech))) {
+					Com_sprintf(tmpbuf, sizeof(tmpbuf), "%s %s!\n",
+					_("An alien was killed:"), _(teamDesc[teamDescID].name));
+					CL_DisplayHudMessage(tmpbuf, 2000);
+				} else {
+					CL_DisplayHudMessage(_("An alien was killed.\n"), 2000);
+				}
+			} else {
+				CL_DisplayHudMessage(_("An alien was killed.\n"), 2000);
+			}
 			break;
 		case (TEAM_PHALANX):
-			CL_DisplayHudMessage(_("A soldier was killed\n"), 2000);
+			CL_DisplayHudMessage(_("A soldier was killed.\n"), 2000);
 			break;
 		default:
-			CL_DisplayHudMessage(va(_("A member of team %i was killed!\n"), le->team), 2000);
+			CL_DisplayHudMessage(va(_("A member of team %i was killed.\n"), le->team), 2000);
 			break;
 		}
 	}
