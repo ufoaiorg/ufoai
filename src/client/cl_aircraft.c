@@ -939,7 +939,7 @@ extern qboolean CL_SendAircraftToMission (aircraft_t* aircraft, actMis_t* missio
 	if (!aircraft || !mission)
 		return qfalse;
 
-	if (! *(aircraft->teamSize)) {
+	if (!*(aircraft->teamSize)) {
 		MN_Popup(_("Notice"), _("Assign a team to aircraft"));
 		return qfalse;
 	}
@@ -949,8 +949,8 @@ extern qboolean CL_SendAircraftToMission (aircraft_t* aircraft, actMis_t* missio
 
 	/* if mission is a base-attack and aircraft already in base, launch
 	 * mission immediately */
-	if ( gd.bases[aircraft->idxBase].baseStatus == BASE_UNDER_ATTACK &&
-		CL_IsAircraftInBase(aircraft) ) {
+	if (gd.bases[aircraft->idxBase].baseStatus == BASE_UNDER_ATTACK &&
+		CL_IsAircraftInBase(aircraft)) {
 		aircraft->mission = mission;
 		mission->def->active = qtrue;
 		MN_PushMenu("popup_baseattack");

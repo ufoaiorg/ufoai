@@ -2325,6 +2325,13 @@ extern void B_TransferEnd (aircraft_t* aircraft)
 		return;
 
 	b = (base_t*)aircraft->transferBase;
+
+	/* maybe it was invaded in the meantime */
+	if (!b->founded) {
+		MN_Popup(_("Notice"), _("The base is not longer existent"));
+		return;
+	}
+
 	homebase = (base_t*)aircraft->homebase;
 
 	/* drop all equipment */

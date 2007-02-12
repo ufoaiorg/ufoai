@@ -59,7 +59,7 @@ static void CL_PopupInterceptNotifyUfoDisappeared(const aircraft_t* ufo);
 /**
  * @brief Initialise popups
  */
-extern void CL_PopupInit(void)
+extern void CL_PopupInit (void)
 {
 	/* popup_aircraft commands */
 	Cmd_AddCommand("popup_aircraft_action_click", CL_PopupAircraftClick_f, NULL);
@@ -78,7 +78,7 @@ extern void CL_PopupInit(void)
 /**
  * @brief Notify that a mission has been removed
  */
-extern void CL_PopupNotifyMIssionRemoved(const actMis_t* mission)
+extern void CL_PopupNotifyMIssionRemoved (const actMis_t* mission)
 {
 	/* Notify all popups */
 	CL_PopupAircraftNotifyMissionRemoved(mission);
@@ -88,7 +88,7 @@ extern void CL_PopupNotifyMIssionRemoved(const actMis_t* mission)
 /**
  * @brief Notify that an ufo has been removed
  */
-extern void CL_PopupNotifyUfoRemoved(const aircraft_t* ufo)
+extern void CL_PopupNotifyUfoRemoved (const aircraft_t* ufo)
 {
 	/* Notify all popups */
 	CL_PopupInterceptNotifyUfoRemoved(ufo);
@@ -97,7 +97,7 @@ extern void CL_PopupNotifyUfoRemoved(const aircraft_t* ufo)
 /**
  * @brief Notify popups that an ufo has disappeared on radars
  */
-extern void CL_PopupNotifyUfoDisappeared(const aircraft_t* ufo)
+extern void CL_PopupNotifyUfoDisappeared (const aircraft_t* ufo)
 {
 	/* Notify all popups */
 	CL_PopupInterceptNotifyUfoDisappeared(ufo);
@@ -123,7 +123,7 @@ popup_interception_ready_t popupInterceptionReady;	/**< Data about popup_interce
 /**
  * @brief Display the popup_interception_ready
  */
-extern void CL_DisplayPopupInterceptionReady(aircraft_t* aircraft, actMis_t* mission)
+extern void CL_DisplayPopupInterceptionReady (aircraft_t* aircraft, actMis_t* mission)
 {
 	if (! popupInterceptionReady.aircraft || ! popupInterceptionReady.mission)
 		return;
@@ -136,7 +136,7 @@ extern void CL_DisplayPopupInterceptionReady(aircraft_t* aircraft, actMis_t* mis
 /**
  * @brief Enter in the mission of the popup_interception_ready
  */
-static void CL_PopupInterceptionReadyEnter_f(void)
+static void CL_PopupInterceptionReadyEnter_f (void)
 {
 	MN_PopMenu(qfalse);	/* Close popup */
 	if (! popupInterceptionReady.aircraft || ! popupInterceptionReady.mission)
@@ -148,7 +148,7 @@ static void CL_PopupInterceptionReadyEnter_f(void)
 /**
  * @brief Auto mission of the popup_interception_ready
  */
-static void CL_PopupInterceptionReadyAuto_f(void)
+static void CL_PopupInterceptionReadyAuto_f (void)
 {
 	MN_PopMenu(qfalse);	/* Close popup */
 	if (! popupInterceptionReady.aircraft || ! popupInterceptionReady.mission)
@@ -162,7 +162,7 @@ static void CL_PopupInterceptionReadyAuto_f(void)
 /**
  * @brief Cancel the popup_interception_ready
  */
-static void CL_PopupInterceptionReadyCancel_f(void)
+static void CL_PopupInterceptionReadyCancel_f (void)
 {
 	MN_PopMenu(qfalse);	/* Close popup */
 
@@ -211,7 +211,7 @@ popup_aircraft_t popupAircraft; /** Data about popup_aircraft */
 /**
  * @brief Display the popup_aircraft
  */
-extern void CL_DisplayPopupAircraft(const aircraft_t* aircraft)
+extern void CL_DisplayPopupAircraft (const aircraft_t* aircraft)
 {
 	int i;
 
@@ -245,7 +245,7 @@ extern void CL_DisplayPopupAircraft(const aircraft_t* aircraft)
 /**
  * @brief User just select an item in the popup_aircraft
  */
-static void CL_PopupAircraftClick_f(void)
+static void CL_PopupAircraftClick_f (void)
 {
 	int num, id;
 	aircraft_t* aircraft;
@@ -290,7 +290,7 @@ static void CL_PopupAircraftClick_f(void)
 /**
  * @brief Notify the popup_aircraft system that a mission has been removed
  */
-static void CL_PopupAircraftNotifyMissionRemoved(const actMis_t* mission)
+static void CL_PopupAircraftNotifyMissionRemoved (const actMis_t* mission)
 {
 	int num = mission - ccs.mission, i;
 
@@ -327,7 +327,7 @@ popup_intercept_t popupIntercept;	/**< Data about popup_intercept */
 /**
  * @brief Display the popup_intercept
  */
-extern void CL_DisplayPopupIntercept(actMis_t* mission, aircraft_t* ufo)
+extern void CL_DisplayPopupIntercept (actMis_t* mission, aircraft_t* ufo)
 {
 	static char aircraftListText[1024];
 	char *s;
@@ -372,7 +372,7 @@ extern void CL_DisplayPopupIntercept(actMis_t* mission, aircraft_t* ufo)
  * @brief return the selected aircraft in popup_intercept
  * Close the popup if required
  */
-static aircraft_t* CL_PopupInterceptGetAircraft(void)
+static aircraft_t* CL_PopupInterceptGetAircraft (void)
 {
 	int num;
 
@@ -394,7 +394,7 @@ static aircraft_t* CL_PopupInterceptGetAircraft(void)
  * @brief User select an item in the popup_aircraft
  * Make the aircraft attack the corresponding mission or UFO
  */
-static void CL_PopupInterceptClick_f(void)
+static void CL_PopupInterceptClick_f (void)
 {
 	aircraft_t* aircraft;
 
@@ -402,7 +402,6 @@ static void CL_PopupInterceptClick_f(void)
 	aircraft = CL_PopupInterceptGetAircraft();
 	if (aircraft == NULL)
 		return;
-
 
 	/* Set action to aircraft */
 	if (popupIntercept.mission)
@@ -415,7 +414,7 @@ static void CL_PopupInterceptClick_f(void)
  * @brief User select an item in the popup_aircraft with right click
  * Opens up the aircraftn
  */
-static void CL_PopupInterceptRClick_f(void)
+static void CL_PopupInterceptRClick_f (void)
 {
 	aircraft_t* aircraft;
 
@@ -436,7 +435,7 @@ static void CL_PopupInterceptRClick_f(void)
 /**
  * @brief Notify the popup_intercept system that a mission has been removed
  */
-static void CL_PopupInterceptNotifyMissionRemoved(const actMis_t* mission)
+static void CL_PopupInterceptNotifyMissionRemoved (const actMis_t* mission)
 {
 	if (popupIntercept.mission == mission)
 		popupIntercept.mission = NULL;
@@ -445,7 +444,7 @@ static void CL_PopupInterceptNotifyMissionRemoved(const actMis_t* mission)
 /**
  * @brief Notify the popup_intercept system that an ufo has been removed
  */
-static void CL_PopupInterceptNotifyUfoRemoved(const aircraft_t* ufo)
+static void CL_PopupInterceptNotifyUfoRemoved (const aircraft_t* ufo)
 {
 	if (popupIntercept.ufo == ufo)
 		popupIntercept.ufo = NULL;
@@ -454,7 +453,7 @@ static void CL_PopupInterceptNotifyUfoRemoved(const aircraft_t* ufo)
 /**
  * @brief Notify the popup_intercept system than an ufo has disappeared on radars
  */
-static void CL_PopupInterceptNotifyUfoDisappeared(const aircraft_t* ufo)
+static void CL_PopupInterceptNotifyUfoDisappeared (const aircraft_t* ufo)
 {
 	CL_PopupInterceptNotifyUfoRemoved(ufo);
 }
