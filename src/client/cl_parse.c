@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "client.h"
+#include "snd_loc.h"
 
 /** @brief see also svc_ops_e in qcommon.h */
 static const char *svc_strings[256] =
