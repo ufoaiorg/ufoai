@@ -994,7 +994,7 @@ extern qboolean CL_CheckMenuAction (int time, invList_t *weapon, int mode)
 {
 	/* No item in hand. */
 	/* TODO: ignore this condition when ammo in hand */
-	if (!weapon || weapon->item.m == NONE) {
+	if (!weapon || weapon->item.t == NONE) {
 		CL_DisplayHudMessage(_("No item in hand.\n"), 2000);
 		return qfalse;
 	}
