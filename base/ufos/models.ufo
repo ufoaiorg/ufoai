@@ -11,6 +11,7 @@ menu_model alien_ortnok_head
 	model	"models/aliens/ortnok/head01.md2"
 	tag	"tag_head"
 	parent	"alien_ortnok"
+	scale	"1.0 1.0 1.0"
 }
 menu_model alien_ortnok
 {
@@ -24,6 +25,7 @@ menu_model alien_ortnok_medium_head
 	model	"models/aliens/ortnokmedium/head01.md2"
 	tag	"tag_head"
 	parent	"alien_ortnok_medium"
+	scale	"1.0 1.0 1.0"
 }
 menu_model alien_ortnok_medium
 {
@@ -37,6 +39,7 @@ menu_model alien_ortnok_light_head
 	model	"models/aliens/ortnoklight/head01.md2"
 	tag	"tag_head"
 	parent	alien_ortnok_light
+	scale	"1.0 1.0 1.0"
 }
 menu_model alien_ortnok_light
 {
@@ -50,6 +53,7 @@ menu_model alien_taman_head
 	model	"models/aliens/taman/head01.md2"
 	tag	"tag_head"
 	parent	"alien_taman"
+	scale	"1.0 1.0 1.0"
 }
 menu_model alien_taman
 {
@@ -63,6 +67,7 @@ menu_model alien_taman_light_head
 	model	"models/aliens/tamanlight/head01.md2"
 	tag	"tag_head"
 	parent	"alien_taman_light"
+	scale	"1.0 1.0 1.0"
 }
 menu_model alien_taman_light
 {
@@ -76,6 +81,7 @@ menu_model alien_taman_medium_head
 	model	"models/aliens/tamanmedium/head01.md2"
 	tag	"tag_head"
 	parent	"alien_taman_medium"
+	scale	"1.0 1.0 1.0"
 }
 menu_model alien_taman_medium
 {
@@ -89,6 +95,7 @@ menu_model alien_shevaar_head
 	model	"models/aliens/shevaar/head01.md2"
 	tag	"tag_head"
 	parent	"alien_shevaar"
+	scale	"1.0 1.0 1.0"
 }
 menu_model alien_shevaar
 {
@@ -102,6 +109,7 @@ menu_model alien_shevaar
 //	model	"models/aliens/hovernet/head01.md2"
 //	tag	"tag_head"
 //	parent	"alien_hovernet"
+//	scale	"1.0 1.0 1.0"
 //}
 //menu_model alien_hovernet
 //{
@@ -115,6 +123,7 @@ menu_model alien_shevaar
 //	model	"models/aliens/cyborg_ortnok/head01.md2"
 //	tag	"tag_head"
 //	parent	"alien_cyborg_ortnok"
+//	scale	"1.0 1.0 1.0"
 //}
 //menu_model alien_cyborg_ortnok
 //{
@@ -130,6 +139,7 @@ menu_model civ_female_head
 	model	"models/civilians/female/head04c.md2"
 	tag	"tag_head"
 	parent	"civ_female"
+	scale	"1.0 1.0 1.0"
 }
 menu_model civ_female
 {
