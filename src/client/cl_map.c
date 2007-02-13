@@ -215,7 +215,7 @@ static void MAP_MultiSelectNotifyUfoRemoved(const aircraft_t* ufo)
 	int i;
 
 	/* Deactive all ufos */
-	/* TO DO : Determine THE corresponding ufo in the multi select list */
+	/* TODO : Determine THE corresponding ufo in the multi select list */
 	for (i = 0 ; i < multiSelect.nbSelect ; i++)
 		if (multiSelect.selectType[i] == MULTISELECT_TYPE_UFO)
 			multiSelect.selectType[i] = MULTISELECT_TYPE_NONE;
@@ -699,7 +699,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 					mapline_t path;
 
 					path.n = aircraft->route.n - aircraft->point;
-					/* TO DO : check why path.n can be sometime equal to -1 */
+					/* TODO : check why path.n can be sometime equal to -1 */
 					if (path.n > 1) {
 						memcpy(path.p, aircraft->pos, sizeof(vec2_t));
 							memcpy(path.p + 1, aircraft->route.p + aircraft->point + 1, (path.n - 1) * sizeof(vec2_t));

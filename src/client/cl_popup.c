@@ -125,7 +125,7 @@ popup_interception_ready_t popupInterceptionReady;	/**< Data about popup_interce
  */
 extern void CL_DisplayPopupInterceptionReady (aircraft_t* aircraft, actMis_t* mission)
 {
-	if (! popupInterceptionReady.aircraft || ! popupInterceptionReady.mission)
+	if (!popupInterceptionReady.aircraft || ! popupInterceptionReady.mission)
 		return;
 
 	popupInterceptionReady.aircraft = aircraft;
@@ -139,7 +139,7 @@ extern void CL_DisplayPopupInterceptionReady (aircraft_t* aircraft, actMis_t* mi
 static void CL_PopupInterceptionReadyEnter_f (void)
 {
 	MN_PopMenu(qfalse);	/* Close popup */
-	if (! popupInterceptionReady.aircraft || ! popupInterceptionReady.mission)
+	if (!popupInterceptionReady.aircraft || ! popupInterceptionReady.mission)
 		return;
 
 	CL_GameGo(popupInterceptionReady.mission->def, popupInterceptionReady.aircraft);
@@ -151,12 +151,12 @@ static void CL_PopupInterceptionReadyEnter_f (void)
 static void CL_PopupInterceptionReadyAuto_f (void)
 {
 	MN_PopMenu(qfalse);	/* Close popup */
-	if (! popupInterceptionReady.aircraft || ! popupInterceptionReady.mission)
+	if (!popupInterceptionReady.aircraft || ! popupInterceptionReady.mission)
 		return;
 	if (popupInterceptionReady.aircraft->status != AIR_DROP)
 		return;
 
-	/* TO DO : launch auto mission */
+	/* TODO : launch auto mission */
 }
 
 /**
