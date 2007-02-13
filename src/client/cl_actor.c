@@ -793,7 +793,8 @@ void CL_FireWeapon (void)
 	if (weap_fd_idx == -1)
 		return;
 
-	/* Let's check if shooting is possible at all. */
+	/* Let's check if shooting is possible.
+	 * Don't let the selActor->TU parameter irritate you, it is not checked/used here. */
 	if (hand[0] == 'r') {
 		if(!CL_CheckMenuAction(selActor->TU, RIGHT(selActor), EV_INV_AMMO))
 			return;
@@ -803,7 +804,7 @@ void CL_FireWeapon (void)
 	}
 
 	if (ammo->fd[weap_fd_idx][firemode].time <= selActor->TU) {
-		/* Actually start aiming */
+		/* Actually start aiming. This is done by changing the current mode of display. */
 		if (hand[0] == 'r')
 			cl.cmode = M_FIRE_R;
 		else
@@ -976,6 +977,7 @@ static void CL_RefreshWeaponButtons (int time)
  * @sa CL_FireWeapon
  * @sa CL_ReloadLeft
  * @sa CL_ReloadRight
+ * @todo Check for ammo in hand and give correct feedback in all cases.
  */
 extern qboolean CL_CheckMenuAction (int time, invList_t *weapon, int mode)
 {
@@ -988,6 +990,11 @@ extern qboolean CL_CheckMenuAction (int time, invList_t *weapon, int mode)
 
 	switch (mode) {
 	case EV_INV_AMMO:
+		/* Check if shooting is possible.
+		 * i.e. The weapon has ammo and can be fired with the 'available' hands.
+		 * TUs (i.e. "time") are are _not_ checked here, this needs to be done
+		 * elsewhere for the correct firemode. */
+
 		/* Cannot shoot because of lack of ammo. */
 		if (weapon->item.a <= 0 && csi.ods[weapon->item.t].reload) {
 			CL_DisplayHudMessage(_("Can't perform action:\nout of ammo.\n"), 2000);
@@ -1000,6 +1007,8 @@ extern qboolean CL_CheckMenuAction (int time, invList_t *weapon, int mode)
 		}
 		break;
 	case EV_INV_RELOAD:
+		/* Check if reload is possible. Also checks for the correct amount of TUs. */
+
 		/* Cannot reload because this item is not reloadable. */
 		if (!csi.ods[weapon->item.t].reload) {
 			CL_DisplayHudMessage(_("Can't perform action:\nthis item is not reloadable.\n"), 2000);
