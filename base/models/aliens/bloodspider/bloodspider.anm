@@ -15,6 +15,8 @@ cwalk1				0	32	22
 cwalk2				0	32	22
 cwalk3				0	32	22
 
+panic0				33	33	1
+
 stand0				33	33	1
 stand1				33	33	1
 stand2				33	33	1
