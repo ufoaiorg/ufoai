@@ -285,7 +285,14 @@ static void CL_ActorGlobalCVars (void)
 }
 
 /**
- * @brief get state of the reaction-fire button
+ * @brief Get state of the reaction-fire button.
+ * @param[in] *le Pointer to local entity structure, a soldier.
+ * @return R_FIRE_MANY when STATE_REACTION_MANY.
+ * @return R_FIRE_ONCE when STATE_REACTION_ONCE.
+ * @return R_FIRE_OFF when no reaction fire.
+ * @sa CL_RefreshWeaponButtons
+ * @sa CL_ActorUpdateCVars
+ * @sa CL_ActorSelect
  */
 static int CL_GetReactionState (le_t *le)
 {
@@ -298,10 +305,14 @@ static int CL_GetReactionState (le_t *le)
 }
 
 /**
- * @brief calculate total reload time for selected actor
- * returns a time of >= 999 units if no suitable ammo found.
- * NB: this routine assumes the time to reload a weapon in
- * in the right hand is the same as the left hand.
+ * @brief Calculate total reload time for selected actor.
+ * @param[in] weapon_id Item in (currently only right) hand.
+ * @return Time needed to reload or >= 999 if no suitable ammo found.
+ * @note This routine assumes the time to reload a weapon
+ * @note in the right hand is the same as the left hand.
+ * @TODO Distinguish between LEFT(selActor) and RIGHT(selActor).
+ * @sa CL_RefreshWeaponButtons
+ * @sa CL_CheckMenuAction
  */
 static int CL_CalcReloadTime (int weapon_id)
 {
