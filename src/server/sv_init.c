@@ -40,7 +40,7 @@ server_t sv;					/* local server */
 /**
  * @brief
  */
-static int SV_FindIndex(char *name, int start, int max, qboolean create)
+static int SV_FindIndex (const char *name, int start, int max, qboolean create)
 {
 	int i;
 
@@ -74,7 +74,7 @@ static int SV_FindIndex(char *name, int start, int max, qboolean create)
 /**
  * @brief
  */
-int SV_ModelIndex(char *name)
+int SV_ModelIndex (const char *name)
 {
 	return SV_FindIndex(name, CS_MODELS, MAX_MODELS, qtrue);
 }
@@ -82,7 +82,7 @@ int SV_ModelIndex(char *name)
 /**
  * @brief
  */
-int SV_SoundIndex(char *name)
+int SV_SoundIndex (const char *name)
 {
 	return SV_FindIndex(name, CS_SOUNDS, MAX_SOUNDS, qtrue);
 }
@@ -90,7 +90,7 @@ int SV_SoundIndex(char *name)
 /**
  * @brief
  */
-int SV_ImageIndex(char *name)
+int SV_ImageIndex (const char *name)
 {
 	return SV_FindIndex(name, CS_IMAGES, MAX_IMAGES, qtrue);
 }

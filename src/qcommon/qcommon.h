@@ -174,7 +174,7 @@ enum svc_ops_e {
 	svc_nop,
 	svc_disconnect,
 	svc_reconnect,
-	svc_sound,					/**< <see code> */
+	svc_breaksound,					/**< <see code> */
 	svc_print,					/**< [byte] id [string] null terminated string */
 	svc_stufftext,				/**< [string] stuffed into client's console buffer, should be \n terminated */
 	svc_serverdata,				/**< [long] protocol ... */

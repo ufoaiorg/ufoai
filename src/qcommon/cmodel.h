@@ -11,7 +11,7 @@ extern vec3_t map_min, map_max;
 
 void CM_LoadMap(char *tiles, char *pos, unsigned *checksum);
 int CheckBSPFile(char *filename);
-cmodel_t *CM_InlineModel(char *name);	/* *0, *1, *2, etc */
+cmodel_t *CM_InlineModel(const char *name);	/* *0, *1, *2, etc */
 
 int CM_NumClusters(void);
 int CM_NumInlineModels(void);

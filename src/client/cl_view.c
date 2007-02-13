@@ -64,7 +64,7 @@ static vec4_t map_fogColor;
  * @brief
  * @sa V_RenderView
  */
-void V_ClearScene(void)
+void V_ClearScene (void)
 {
 	r_numdlights = 0;
 	r_numentities = 0;
@@ -75,7 +75,7 @@ void V_ClearScene(void)
  * @brief
  * @sa
  */
-entity_t *V_GetEntity(void)
+entity_t *V_GetEntity (void)
 {
 	return r_entities + r_numentities;
 }
@@ -86,7 +86,7 @@ entity_t *V_GetEntity(void)
  * @param[in] ent
  * @sa
  */
-void V_AddEntity(entity_t * ent)
+void V_AddEntity (entity_t * ent)
 {
 	if (r_numentities >= MAX_ENTITIES)
 		return;
@@ -100,7 +100,7 @@ void V_AddEntity(entity_t * ent)
  * @param
  * @sa
  */
-void V_AddLight(vec3_t org, float intensity, float r, float g, float b)
+void V_AddLight (vec3_t org, float intensity, float r, float g, float b)
 {
 	dlight_t *dl;
 
@@ -120,7 +120,7 @@ void V_AddLight(vec3_t org, float intensity, float r, float g, float b)
  * @param
  * @sa CL_AddLightStyles
  */
-void V_AddLightStyle(int style, float r, float g, float b)
+void V_AddLightStyle (int style, float r, float g, float b)
 {
 	lightstyle_t *ls;
 
@@ -139,7 +139,7 @@ void V_AddLightStyle(int style, float r, float g, float b)
  * @param
  * @sa
  */
-void CL_ParseEntitystring(char *es)
+void CL_ParseEntitystring (char *es)
 {
 	char *strstart;
 	char *com_token;
@@ -377,6 +377,7 @@ void CL_ParseEntitystring(char *es)
 			|| !Q_strcmp(classname, "func_door")) {
 			angles[0] = angles[1] = angles[2] = 0.0;
 			CL_AddLocalModel(model, particle, origin, angles, entnum, (spawnflags & 0xFF));
+			Com_DPrintf("Add %i as local model (%s)\n", entnum, classname);
 		}
 
 		entnum++;
@@ -387,7 +388,7 @@ void CL_ParseEntitystring(char *es)
 /**
  * @brief Call before entering a new level, or after changing dlls
  */
-void CL_PrepRefresh(void)
+void CL_PrepRefresh (void)
 {
 	le_t *le;
 	int i, max;

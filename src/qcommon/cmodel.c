@@ -1173,7 +1173,7 @@ extern void CM_LoadMap (char *tiles, char *pos, unsigned *mapchecksum)
  * given modelnumber or -name
  * @param[in] name The modelnumber (e.g. "*2") or the modelname
  */
-cmodel_t *CM_InlineModel (char *name)
+cmodel_t *CM_InlineModel (const char *name)
 {
 	int i, num;
 

@@ -68,7 +68,7 @@ static void PF_Unicast(player_t * player)
 /**
  * @brief Debug print to server console
  */
-static void PF_dprintf(char *fmt, ...)
+static void PF_dprintf (const char *fmt, ...)
 {
 	char msg[1024];
 	va_list argptr;
@@ -84,7 +84,7 @@ static void PF_dprintf(char *fmt, ...)
 /**
  * @brief Print to a single client
  */
-static void PF_cprintf(player_t * player, int level, char *fmt, ...)
+static void PF_cprintf (player_t * player, int level, const char *fmt, ...)
 {
 	char msg[1024];
 	va_list argptr;
@@ -116,7 +116,7 @@ static void PF_cprintf(player_t * player, int level, char *fmt, ...)
 /**
  * @brief Centerprint to a single client
  */
-static void PF_centerprintf(player_t * player, char *fmt, ...)
+static void PF_centerprintf (player_t * player, const char *fmt, ...)
 {
 	char msg[1024];
 	va_list argptr;
@@ -141,7 +141,7 @@ static void PF_centerprintf(player_t * player, char *fmt, ...)
 }
 
 
-static void PF_error(const char *fmt, ...) __attribute__((noreturn));
+static void PF_error (const char *fmt, ...) __attribute__((noreturn));
 /**
  * @brief Abort the server with a game error
  */
@@ -169,7 +169,7 @@ static void PF_error (const char *fmt, ...)
  * @note Also sets mins and maxs for inline bmodels
  * @sa CM_InlineModel
  */
-static void PF_SetModel (edict_t * ent, char *name)
+static void PF_SetModel (edict_t * ent, const char *name)
 {
 	cmodel_t *mod;
 
@@ -192,7 +192,7 @@ static void PF_SetModel (edict_t * ent, char *name)
  * @brief
  * @sa CL_ParseConfigString
  */
-static void PF_Configstring (int index, char *val)
+static void PF_Configstring (int index, const char *val)
 {
 	if (index < 0 || index >= MAX_CONFIGSTRINGS)
 		Com_Error(ERR_DROP, "configstring: bad index %i\n", index);
@@ -549,7 +549,7 @@ void SV_InitGameProgs(void)
 	import.setmodel = PF_SetModel;
 
 	import.configstring = PF_Configstring;
-	import.positioned_sound = SV_StartSound;
+	import.break_sound = SV_BreakSound;
 
 	import.WriteChar = PF_WriteChar;
 	import.WriteByte = PF_WriteByte;

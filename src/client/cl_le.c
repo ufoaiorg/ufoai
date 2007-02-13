@@ -111,7 +111,6 @@ static lm_t *LM_Find (int num)
 		if (LMs[i].num == num)
 			return &LMs[i];
 
-	Com_Printf("LM_Perish: Can't find model %i\n", num);
 	return NULL;
 }
 
@@ -139,15 +138,20 @@ static void LM_Delete (lm_t * lm)
 void LM_DoorClose (sizebuf_t * sb)
 {
 	lm_t *lm;
-	int lmNum;
+	int entNum;
+	vec3_t pos;
+	vec3_t newOrigin;
 
-	lmNum = MSG_ReadShort(sb);
-	lm = LM_Find(lmNum);
+	entNum = MSG_ReadShort(sb);
+	lm = LM_Find(entNum);
 	if (!lm) {
-		Com_Printf("Can't close the door - lm %i not found\n", lmNum);
+		MSG_ReadPos(sb, pos);
+		Com_Printf("Can't close the door - lm for entitiy %i not found\n", entNum);
 		return;
 	}
-	/* TODO */
+	MSG_ReadPos(sb, pos);
+	VectorSubtract(pos, lm->origin, newOrigin);
+	VectorCopy(newOrigin, lm->origin);
 }
 
 /**
@@ -156,15 +160,20 @@ void LM_DoorClose (sizebuf_t * sb)
 void LM_DoorOpen (sizebuf_t * sb)
 {
 	lm_t *lm;
-	int lmNum;
+	int entNum;
+	vec3_t pos;
+	vec3_t newOrigin;
 
-	lmNum = MSG_ReadShort(sb);
-	lm = LM_Find(lmNum);
+	entNum = MSG_ReadShort(sb);
+	lm = LM_Find(entNum);
 	if (!lm) {
-		Com_Printf("Can't open the door - lm %i not found\n", lmNum);
+		MSG_ReadPos(sb, pos);
+		Com_Printf("Can't open the door - lm for entitiy %i not found\n", entNum);
 		return;
 	}
-	/* TODO */
+	MSG_ReadPos(sb, pos);
+	VectorSubtract(pos, lm->origin, newOrigin);
+	VectorCopy(newOrigin, lm->origin);
 }
 
 /**
@@ -762,6 +771,7 @@ static void CL_ClipMoveToLEs (moveclip_t * clip)
 	int headnode;
 	cmodel_t *cmodel;
 	float *angles;
+	vec3_t origin;
 
 	if (clip->trace.allsolid)
 		return;
@@ -772,21 +782,25 @@ static void CL_ClipMoveToLEs (moveclip_t * clip)
 		if (le == clip->passle || le == clip->passle2)
 			continue;
 
-		if (le->type == ET_BREAKABLE) {
+		if (le->type == ET_BREAKABLE || le->type == ET_DOOR) {
 			/* special value for bmodel */
 			cmodel = cl.model_clip[le->modelnum1];
-			if (!cmodel)
+			if (!cmodel) {
+				Com_Printf("CL_ClipMoveToLEs: Error - le with no NULL bmodel (%i)\n", le->type);
 				continue;
+			}
 			headnode = cmodel->headnode;
 			angles = le->angles;
+			VectorCopy(le->pos, origin);
 		} else {
 			/* might intersect, so do an exact clip */
 			/* TODO: make headnode = HullForLe(le, &tile) ... the counterpart of SV_HullForEntity in server/sv_world.c */
 			headnode = CM_HeadnodeForBox(0, le->mins, le->maxs);
 			angles = vec3_origin;
+			VectorCopy(le->origin, origin);
 		}
 
-		trace = CM_TransformedBoxTrace(clip->start, clip->end, clip->mins, clip->maxs, 0, headnode, clip->contentmask, le->origin, angles);
+		trace = CM_TransformedBoxTrace(clip->start, clip->end, clip->mins, clip->maxs, 0, headnode, clip->contentmask, origin, angles);
 
 		if (trace.fraction < clip->trace.fraction) {
 			qboolean oldStart;

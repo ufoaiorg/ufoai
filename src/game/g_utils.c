@@ -341,7 +341,7 @@ void Move_Begin (edict_t *ent)
 	float	frames;
 
 	if ((ent->moveinfo.speed * FRAMETIME) >= ent->moveinfo.remaining_distance) {
-		Move_Final (ent);
+		Move_Final(ent);
 		return;
 	}
 	VectorScale (ent->moveinfo.dir, ent->moveinfo.speed, ent->moveinfo.velocity);
@@ -359,7 +359,7 @@ void Move_Calc (edict_t *ent, vec3_t dest, void(*func)(edict_t*))
 	ent->moveinfo.remaining_distance = VectorNormalize (ent->moveinfo.dir);
 	ent->moveinfo.endfunc = func;
 
-	Move_Begin (ent);
+	Move_Begin(ent);
 }
 
 

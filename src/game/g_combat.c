@@ -240,13 +240,12 @@ static void G_Damage (edict_t * ent, fireDef_t *fd, int damage, edict_t * attack
 				gi.AddEvent(PM_ALL, EV_MODEL_EXPLODE);
 				gi.WriteShort(ent->mapNum);
 				if (ent->particle && Q_strcmp(ent->particle, "null")) {
-					/* TODO: Spawn the breaking particle here */
-					/* NOTE: This should already be called in LM_Explode */
 					gi.AddEvent(PM_ALL, EV_SPAWN_PARTICLE);
 					gi.WriteShort(ent->spawnflags);
 					gi.WriteGPos(ent->pos);
 					gi.WriteShort((int)strlen(ent->particle));
 					gi.WriteString(ent->particle);
+					gi.break_sound(ent->origin, ent, CHAN_AUTO, ent->material);
 				}
 				gi.unlinkentity(ent);
 				ent->inuse = qfalse;

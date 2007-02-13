@@ -161,7 +161,7 @@ static void GL_DrawAliasFrameLerp(dmdl_t * paliashdr, float backlerp, int framen
 /**
  * @brief
  */
-static qboolean R_CullAliasModel(vec4_t bbox[8], entity_t * e)
+static qboolean R_CullAliasModel (vec4_t bbox[8], entity_t * e)
 {
 	int i, p, mask, f, aggregatemask = ~0;
 	vec3_t mins, maxs;

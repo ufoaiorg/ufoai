@@ -55,7 +55,7 @@ typedef struct {
 	void (*spawn) (edict_t * ent);
 } spawn_t;
 
-static spawn_t spawns[] = {
+static const spawn_t spawns[] = {
 	{"worldspawn", SP_worldspawn},
 	{"light", SP_light},
 	{"misc_model", SP_misc_dummy},
@@ -82,7 +82,6 @@ typedef enum {
 	F_VECTOR,
 	F_ANGLEHACK,
 	F_EDICT,					/* index on disk, pointer in memory */
-/*	F_ITEM,				// index on disk, pointer in memory */
 	F_CLIENT,					/* index on disk, pointer in memory */
 	F_FUNCTION,
 	F_IGNORE
@@ -95,7 +94,7 @@ typedef struct {
 	int flags;
 } field_t;
 
-static field_t fields[] = {
+static const field_t fields[] = {
 	{"classname", offsetof(edict_t, classname), F_LSTRING, 0},
 	{"model", offsetof(edict_t, model), F_LSTRING, 0},
 	{"spawnflags", offsetof(edict_t, spawnflags), F_INT, 0},
@@ -114,6 +113,7 @@ static field_t fields[] = {
 	{"count", offsetof(edict_t, count), F_INT, 0},
 	{"health", offsetof(edict_t, HP), F_INT, 0},
 	{"sounds", offsetof(edict_t, sounds), F_INT, 0},
+	{"material", offsetof(edict_t, material), F_INT, 0},
 	{"light", 0, F_IGNORE, 0},
 	{"dmg", offsetof(edict_t, dmg), F_INT, 0},
 	{"origin", offsetof(edict_t, origin), F_VECTOR, 0},
@@ -135,9 +135,9 @@ static field_t fields[] = {
 /**
  * @brief Finds the spawn function for the entity and calls it
  */
-static void ED_CallSpawn(edict_t * ent)
+static void ED_CallSpawn (edict_t * ent)
 {
-	spawn_t *s;
+	const spawn_t *s;
 
 	if (!ent->classname) {
 		gi.dprintf("ED_CallSpawn: NULL classname\n");
@@ -160,7 +160,7 @@ static void ED_CallSpawn(edict_t * ent)
 /**
  * @brief
  */
-static char *ED_NewString(char *string)
+static char *ED_NewString (const char *string)
 {
 	char *newb, *new_p;
 	int i;
@@ -189,9 +189,9 @@ static char *ED_NewString(char *string)
 /**
  * @brief Takes a key/value pair and sets the binary values in an edict
  */
-static void ED_ParseField (char *key, char *value, edict_t * ent)
+static void ED_ParseField (const char *key, const char *value, edict_t * ent)
 {
-	field_t *f;
+	const field_t *f;
 	byte *b;
 	float v;
 	vec3_t vec;
@@ -295,7 +295,7 @@ static char *ED_ParseEdict (char *data, edict_t * ent)
  * @brief Creates a server's entity / program execution context
  * by parsing textual entity definitions out of an ent file.
  */
-void SpawnEntities (char *mapname, char *entities)
+void SpawnEntities (const char *mapname, char *entities)
 {
 	edict_t *ent;
 	int entnum;

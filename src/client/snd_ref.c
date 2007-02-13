@@ -715,7 +715,7 @@ void S_EndRegistration(void)
 /**
  * @brief
  */
-channel_t *S_PickChannel(int entnum, int entchannel)
+channel_t *S_PickChannel (int entnum, int entchannel)
 {
 	int ch_idx;
 	int first_to_die;
@@ -723,7 +723,7 @@ channel_t *S_PickChannel(int entnum, int entchannel)
 	channel_t *ch;
 
 	if (entchannel < 0)
-		Com_Error(ERR_DROP, "S_PickChannel: entchannel<0");
+		Com_Error(ERR_DROP, "S_PickChannel: entchannel < 0");
 
 	/* Check for replacement sound, or find the best one to replace */
 	first_to_die = -1;
@@ -862,7 +862,7 @@ void S_FreePlaysound(playsound_t * ps)
  * This is never called directly by S_Play*, but only
  * by the update loop.
  */
-void S_IssuePlaysound(playsound_t * ps)
+void S_IssuePlaysound (playsound_t * ps)
 {
 	channel_t *ch;
 	sfxcache_t *sc;
@@ -905,7 +905,7 @@ Start a sound effect
  * if pos is NULL, the sound will be dynamically sourced from the entity
  * Entchannel 0 will never override a playing sound
  */
-void S_StartSound(vec3_t origin, int entnum, int entchannel, sfx_t * sfx, float fvol, float attenuation, float timeofs)
+void S_StartSound (vec3_t origin, int entnum, int entchannel, sfx_t * sfx, float fvol, float attenuation, float timeofs)
 {
 	sfxcache_t *sc;
 	int vol;
@@ -1709,7 +1709,7 @@ console functions
 /**
  * @brief
  */
-void S_Play_f(void)
+void S_Play_f (void)
 {
 	int i;
 	char name[256];
@@ -1731,7 +1731,7 @@ void S_Play_f(void)
 /**
  * @brief
  */
-void S_SoundList_f(void)
+void S_SoundList_f (void)
 {
 	int i;
 	sfx_t *sfx;

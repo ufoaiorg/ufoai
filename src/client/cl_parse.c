@@ -43,7 +43,7 @@ static const char *svc_strings[256] =
 	"svc_nop",
 	"svc_disconnect",
 	"svc_reconnect",
-	"svc_sound",
+	"svc_breaksound",
 	"svc_print",
 	"svc_stufftext",
 	"svc_serverdata",
@@ -379,44 +379,46 @@ ACTION MESSAGES
 
 /**
  * @brief Parsed a server send sound package
- * @sa svc_sound
- * @sa SV_StartSound
+ * @sa svc_breaksound
+ * @sa SV_BreakSound
  */
-static void CL_ParseStartSoundPacket (void)
+static void CL_ParseStartBreakSoundPacket (void)
 {
 	vec3_t  pos_v;
 	float	*pos;
 	int 	channel, ent;
-	int 	sound_num;
+	edictMaterial_t material;
 	float 	volume;
 	float 	attenuation;
 	int		flags;
 	float	ofs;
+	char	*sound;
+	sfx_t *sfx;
 
-	flags = MSG_ReadByte (&net_message);
-	sound_num = MSG_ReadByte (&net_message);
+	flags = MSG_ReadByte(&net_message);
+	material = MSG_ReadByte(&net_message);
 
 	if (flags & SND_VOLUME)
-		volume = MSG_ReadByte (&net_message) / 255.0;
+		volume = MSG_ReadByte(&net_message) / 255.0;
 	else
 		volume = DEFAULT_SOUND_PACKET_VOLUME;
 
 	if (flags & SND_ATTENUATION)
-		attenuation = MSG_ReadByte (&net_message) / 64.0;
+		attenuation = MSG_ReadByte(&net_message) / 64.0;
 	else
 		attenuation = DEFAULT_SOUND_PACKET_ATTENUATION;
 
 	if (flags & SND_OFFSET)
-		ofs = MSG_ReadByte (&net_message) / 1000.0;
+		ofs = MSG_ReadByte(&net_message) / 1000.0;
 	else
 		ofs = 0;
 
 	/* entity reletive */
 	if (flags & SND_ENT) {
 		channel = MSG_ReadShort(&net_message);
-		ent = channel>>3;
+		ent = channel >> 3;
 		if (ent > MAX_EDICTS)
-			Com_Error (ERR_DROP,"CL_ParseStartSoundPacket: ent = %i", ent);
+			Com_Error(ERR_DROP,"CL_ParseStartSoundPacket: ent = %i", ent);
 
 		channel &= 7;
 	} else {
@@ -432,10 +434,18 @@ static void CL_ParseStartSoundPacket (void)
 	} else /* use entity number */
 		pos = NULL;
 
-	if (!cl.sound_precache[sound_num])
+	switch (material) {
+	case MAT_GLASS:
+		sound = "ambient/breakglass.wav";
+		break;
+	default:
+		/* no sound */
 		return;
+	}
 
-	S_StartSound (pos, ent, channel, cl.sound_precache[sound_num], volume, attenuation, ofs);
+	sfx = S_RegisterSound(sound);
+
+	S_StartSound(pos, ent, channel, sfx, volume, attenuation, ofs);
 }
 
 /**
@@ -638,7 +648,8 @@ static void CL_EntPerish (sizebuf_t *sb)
 }
 
 /**
- * @brief Inits the breakable objects
+ * @brief Inits the breakable or other solid objects
+ * @note func_breakable, func_door
  */
 static void CL_EntEdict (sizebuf_t *sb)
 {
@@ -1494,8 +1505,8 @@ void CL_ParseServerMessage (void)
 			CL_ParseConfigString ();
 			break;
 
-		case svc_sound:
-			CL_ParseStartSoundPacket();
+		case svc_breaksound:
+			CL_ParseStartBreakSoundPacket();
 			break;
 
 		case svc_event:

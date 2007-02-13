@@ -78,7 +78,7 @@ typedef struct
 	int			numbrushes;
 	epair_t		*epairs;
 
-/* only valid for func_areaportals */
+	/* only valid for func_areaportals */
 	int			areaportalnum;
 	int			portalareas[2];
 } entity_t;

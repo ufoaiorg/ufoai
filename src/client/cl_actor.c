@@ -1941,6 +1941,8 @@ void CL_ActorDoShoot (sizebuf_t * sb)
 #endif
 	fd = GET_FIREDEF(obj_idx, weap_fds_idx, fd_idx);
 
+	/* TODO/FIXME: e.g. smoke grenades or particles that stay longer than a few seconds
+	 * should become invisible if out of actor view */
 	/* add effect le */
 	LE_AddProjectile(fd, flags, muzzle, impact, normal);
 
@@ -1952,7 +1954,7 @@ void CL_ActorDoShoot (sizebuf_t * sb)
 
 	/* do actor related stuff */
 	if (!le) {
-		/* it's OK, the actor not visible */
+		/* it's OK, the actor is not visible */
 		return;
 	}
 
@@ -2002,7 +2004,14 @@ void CL_ActorShootHidden (sizebuf_t *sb)
 
 	/* start the sound; TODO: is check for SF_BOUNCED needed? */
 	if (((first && fd->soundOnce) || (!first && !fd->soundOnce)) && fd->fireSound[0] )
-		S_StartLocalSound( fd->fireSound );
+		S_StartLocalSound(fd->fireSound);
+
+#if 0
+	/* TODO/FIXME: e.g. smoke grenades or particles that stay longer than a few seconds should also spawn
+	 * an invisible particles (until it becomes visible) */
+	/* add effect le */
+	LE_AddProjectile(fd, flags, muzzle, impact, normal);
+#endif
 
 	/* if the shooting becomes visibile, don't repeat sounds! */
 	firstShot = qfalse;
@@ -2075,11 +2084,11 @@ void CL_ActorStartShoot (sizebuf_t * sb)
 	firstShot = qtrue;
 
 	/* actor dependant stuff following */
-	if ( !le )
+	if (!le)
 		/* it's OK, the actor not visible */
 		return;
 
-	if ( le->type != ET_ACTOR && le->type != ET_UGV ) {
+	if (le->type != ET_ACTOR && le->type != ET_UGV) {
 		Com_Printf("Can't start shoot, LE not an actor\n");
 		return;
 	}

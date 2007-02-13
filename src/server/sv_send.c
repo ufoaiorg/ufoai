@@ -69,7 +69,7 @@ EVENT MESSAGES
 /**
  * @brief Sends text across to be displayed if the level passes
  */
-void SV_ClientPrintf(client_t * cl, int level, char *fmt, ...)
+void SV_ClientPrintf(client_t * cl, int level, const char *fmt, ...)
 {
 	va_list argptr;
 	char string[1024];
@@ -91,7 +91,7 @@ void SV_ClientPrintf(client_t * cl, int level, char *fmt, ...)
 /**
  * @brief Sends text to all active clients
  */
-void SV_BroadcastPrintf(int level, char *fmt, ...)
+void SV_BroadcastPrintf (int level, const char *fmt, ...)
 {
 	va_list argptr;
 	char string[2048];
@@ -130,7 +130,7 @@ void SV_BroadcastPrintf(int level, char *fmt, ...)
 /**
  * @brief Sends text to all active clients
  */
-void SV_BroadcastCommand(char *fmt, ...)
+void SV_BroadcastCommand (const char *fmt, ...)
 {
 	va_list argptr;
 	char string[1024];
@@ -158,7 +158,7 @@ void SV_BroadcastCommand(char *fmt, ...)
  * @note MULTICAST_PVS send to clients potentially visible from org
  * @note MULTICAST_PHS send to clients potentially hearable from org
  */
-void SV_Multicast(int mask)
+void SV_Multicast (int mask)
 {
 	client_t *c;
 	int j;
@@ -259,7 +259,7 @@ void SV_SendClientMessages(void)
 }
 
 /**
- * Each entity can have eight independant sound sources, like voice, weapon, feet, etc.
+ * @brief Each entity can have eight independant sound sources, like voice, weapon, feet, etc.
  * If cahnnel & 8, the sound will be sent to everyone, not just things in the PHS.
  * FIXME: if entity isn't in PHS, they must be forced to be sent or have the origin explicitly sent.
  *
@@ -271,10 +271,11 @@ void SV_SendClientMessages(void)
  *
  * If origin is NULL, the origin is determined from the entity origin or the midpoint of the entity box for bmodels.
  */
-void SV_StartSound(vec3_t origin, edict_t *entity, int channel,
-	int soundindex, float volume, float attenuation, float timeofs)
+void SV_BreakSound (vec3_t origin, edict_t *entity, int channel, edictMaterial_t material)
 {
-	#if 0
+	float volume = 1.0;
+	float attenuation = 1.0;
+	float timeofs = 0.0;
 	int sendchan;
 	int flags;
 	int i;
@@ -282,20 +283,20 @@ void SV_StartSound(vec3_t origin, edict_t *entity, int channel,
 	vec3_t origin_v;
 
 	if (volume < 0 || volume > 1.0)
-		Com_Error(ERR_FATAL, "SV_StartSound: volume = %f", volume);
+		Com_Error(ERR_FATAL, "SV_BreakSound: volume = %f", volume);
 
 	if (attenuation < 0 || attenuation > 4)
-		Com_Error(ERR_FATAL, "SV_StartSound: attenuation = %f", attenuation);
+		Com_Error(ERR_FATAL, "SV_BreakSound: attenuation = %f", attenuation);
 
 	if (timeofs < 0 || timeofs > 0.255)
-		Com_Error(ERR_FATAL, "SV_StartSound: timeofs = %f", timeofs);
+		Com_Error(ERR_FATAL, "SV_BreakSound: timeofs = %f", timeofs);
 
 	ent = NUM_FOR_EDICT(entity);
 
-	if (channel & 8) { /* no PHS flag */
+	if (channel & 8) /* no PHS flag */
 		channel &= 7;
 
-	sendchan =(ent << 3) |(channel & 7);
+	sendchan = (ent << 3) | (channel & 7);
 
 	flags = 0;
 	if (volume != DEFAULT_SOUND_PACKET_VOLUME)
@@ -321,15 +322,15 @@ void SV_StartSound(vec3_t origin, edict_t *entity, int channel,
 		origin = origin_v;
 		if (entity->solid == SOLID_BSP){
 			for (i = 0; i < 3; i++)
-				origin_v[i] = entity->s.origin[i] + 0.5 *(entity->mins[i] + entity->maxs[i]);
+				origin_v[i] = entity->origin[i] + 0.5 *(entity->mins[i] + entity->maxs[i]);
 		} else {
-			VectorCopy(entity->s.origin, origin_v);
+			VectorCopy(entity->origin, origin_v);
 		}
 	}
 
-	MSG_WriteByte(&sv.multicast, svc_sound);
+	MSG_WriteByte(&sv.multicast, svc_breaksound);
 	MSG_WriteByte(&sv.multicast, flags);
-	MSG_WriteByte(&sv.multicast, soundindex);
+	MSG_WriteByte(&sv.multicast, material);
 
 	if (flags & SND_VOLUME)
 		MSG_WriteByte(&sv.multicast, volume*255);
@@ -344,10 +345,5 @@ void SV_StartSound(vec3_t origin, edict_t *entity, int channel,
 	if (flags & SND_POS)
 		MSG_WritePos(&sv.multicast, origin);
 
-	if (channel & CHAN_RELIABLE){
-		SV_Multicast(origin, MULTICAST_ALL_R);
-	} else {
-		SV_Multicast(origin, MULTICAST_ALL);
-	}
-	#endif
+	SV_Multicast(~0);
 }

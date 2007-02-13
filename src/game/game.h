@@ -120,29 +120,29 @@ typedef struct {
 	/* special messages */
 
 	/* sends message to all entities */
-	void (*bprintf) (int printlevel, char *fmt, ...) __attribute__((format(printf, 2, 3)));
-	void (*dprintf) (char *fmt, ...) __attribute__((format(printf, 1, 2)));
+	void (*bprintf) (int printlevel, const char *fmt, ...) __attribute__((format(printf, 2, 3)));
+	void (*dprintf) (const char *fmt, ...) __attribute__((format(printf, 1, 2)));
 	/* sends message to only one entity */
-	void (*cprintf) (player_t * player, int printlevel, char *fmt, ...) __attribute__((format(printf, 3, 4)));
+	void (*cprintf) (player_t * player, int printlevel, const char *fmt, ...) __attribute__((format(printf, 3, 4)));
 	/* sends message to one entity and displays message on center of the screen */
-	void (*centerprintf) (player_t * player, char *fmt, ...) __attribute__((format(printf, 2, 3)));
-	void (*positioned_sound) (vec3_t origin, edict_t *ent, int channel, int soundinedex, float volume, float attenuation, float timeofs);
+	void (*centerprintf) (player_t * player, const char *fmt, ...) __attribute__((format(printf, 2, 3)));
+	void (*break_sound) (vec3_t origin, edict_t *ent, int channel, edictMaterial_t material);
 
 	/* config strings hold all the index strings, the lightstyles, */
 	/* and misc data like the cdtrack. */
 	/* All of the current configstrings are sent to clients when */
 	/* they connect, and changes are sent to all connected clients. */
-	void (*configstring) (int num, char *string);
+	void (*configstring) (int num, const char *string);
 
 	void (*error) (const char *fmt, ...) __attribute__((noreturn, format(printf, 1, 2)));
 
 	/* the *index functions create configstrings and some internal server state */
-	int (*modelindex) (char *name);
+	int (*modelindex) (const char *name);
 	/* during spawning is caches the sound, after that it simply returns the index which refers to that sound */
-	int (*soundindex) (char *name);
-	int (*imageindex) (char *name);
+	int (*soundindex) (const char *name);
+	int (*imageindex) (const char *name);
 
-	void (*setmodel) (edict_t * ent, char *name);
+	void (*setmodel) (edict_t * ent, const char *name);
 
 	/* collision detection */
 	/* traces a box from start to end, ignoring entities passent, stoping if it hits an object of type specified
