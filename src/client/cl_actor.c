@@ -755,7 +755,8 @@ void CL_SelectReactionFiremode_f (void)
 
 /**
  * @brief Starts aiming/target mode for selected left/right firemode.
- * @note Previously know as a combination of CL_FireRightPrimary, CL_FireRightSecondary, CL_FireLeftPrimary and CL_FireLeftSecondary
+ * @note Previously know as a combination of CL_FireRightPrimary, CL_FireRightSecondary, 
+ * @note CL_FireLeftPrimary and CL_FireLeftSecondary.
  */
 void CL_FireWeapon (void)
 {
@@ -792,6 +793,15 @@ void CL_FireWeapon (void)
 	if (weap_fd_idx == -1)
 		return;
 
+	/* Let's check if shooting is possible at all. */
+	if (hand[0] == 'r') {
+		if(!CL_CheckMenuAction(selActor->TU, RIGHT(selActor), EV_INV_AMMO))
+			return;
+	} else {
+		if(!CL_CheckMenuAction(selActor->TU, LEFT(selActor), EV_INV_AMMO))
+			return;
+	}
+
 	if (ammo->fd[weap_fd_idx][firemode].time <= selActor->TU) {
 		/* Actually start aiming */
 		if (hand[0] == 'r')
@@ -801,13 +811,16 @@ void CL_FireWeapon (void)
 		cl.cfiremode = firemode;	/* Store firemode. */
 		HideFiremodes();
 	} else {
-		Com_Printf("CL_FireWeapon: Firemode not available (%s, %s).\n", hand, ammo->fd[weap_fd_idx][firemode].name);
+		/* Cannot shoot because of not enough TUs - every other
+		   case should be checked previously in this function. */
+		CL_DisplayHudMessage(_("Can't perform action:\nnot enough TUs.\n"), 2000);
+		Com_DPrintf("CL_FireWeapon: Firemode not available (%s, %s).\n", hand, ammo->fd[weap_fd_idx][firemode].name);
 		return;
 	}
 }
 
 /**
- * @brief Refreshes the weapon/reload buttons on the HUD
+ * @brief Refreshes the weapon/reload buttons on the HUD.
  * @param[in] time The amount of TU (of an actor) left in case of action.
  * @sa CL_ActorUpdateCVars
  */
@@ -955,49 +968,51 @@ static void CL_RefreshWeaponButtons (int time)
 }
 
 /**
- * @brief Checks whether an action on hud menu is valid.
+ * @brief Checks whether an action on hud menu is valid and displays proper message.
  * @param[in] time The amount of TU (of an actor) left.
  * @param[in] *weapon An item in hands.
- * @param[in] mode Reload of item or item usage.
- * @note This function currently is being called only for reloading - why?
- * @note TODO would be to change the behaviour of mode - distinguish between FD_PRIMARY and
- * @note FD_SECONDARY is not needed in new firemode concept
+ * @param[in] mode EV_INV_AMMO in case of fire button, EV_INV_RELOAD in case of reload button
+ * @return qfalse when action is not possible, otherwise qtrue
+ * @sa CL_FireWeapon
  * @sa CL_ReloadLeft
  * @sa CL_ReloadRight
  */
 extern qboolean CL_CheckMenuAction (int time, invList_t *weapon, int mode)
 {
-	/* no weapon */
+	/* No item in hand. */
+	/* TODO: ignore this condition when ammo in hand */
 	if (!weapon || weapon->item.m == NONE) {
-		CL_DisplayHudMessage(_("No weapon in hand.\n"), 2000);
+		CL_DisplayHudMessage(_("No item in hand.\n"), 2000);
 		return qfalse;
 	}
 
 	switch (mode) {
-#if 0
-	case FD_PRIMARY:
-	case FD_SECONDARY:
+	case EV_INV_AMMO:
+		/* Cannot shoot because of lack of ammo. */
 		if (weapon->item.a <= 0 && csi.ods[weapon->item.t].reload) {
-			CL_DisplayHudMessage(_("Out of ammo.\n"), 2000);
+			CL_DisplayHudMessage(_("Can't perform action:\nout of ammo.\n"), 2000);
 			return qfalse;
 		}
+		/* Cannot shoot because weapon is firetwohanded, yet both hands handle items. */
 		if (csi.ods[weapon->item.t].firetwohanded && LEFT(selActor)) {
 			CL_DisplayHudMessage(_("This weapon cannot be fired\none handed.\n"), 2000);
 			return qfalse;
 		}
-		if (time < csi.ods[weapon->item.m].fd[INV_FiredefsIDXForWeapon(&csi.ods[weapon->item.m],weapon->item.t)][(mode)].time) {
-			CL_DisplayHudMessage(_("Can't perform action: not enough TUs.\n"), 2000);
-			return qfalse;
-		}
 		break;
-#endif
 	case EV_INV_RELOAD:
+		/* Cannot reload because this item is not reloadable. */
 		if (!csi.ods[weapon->item.t].reload) {
-			CL_DisplayHudMessage(_("This weapon can not be reloaded.\n"), 2000);
+			CL_DisplayHudMessage(_("Can't perform action:\nthis item is not reloadable.\n"), 2000);
 			return qfalse;
 		}
+		/* Cannot reload because of no ammo in inventory. */
+		if (CL_CalcReloadTime(weapon->item.t) >= 999) {
+			CL_DisplayHudMessage(_("Can't perform action:\nammo not available.\n"), 2000);
+			return qfalse;
+		}
+		/* Cannot reload because of not enough TUs. */
 		if (time < CL_CalcReloadTime(weapon->item.t)) {
-			CL_DisplayHudMessage(_("Can't perform action: not enough TUs.\n"), 2000);
+			CL_DisplayHudMessage(_("Can't perform action:\nnot enough TUs.\n"), 2000);
 			return qfalse;
 		}
 		break;
