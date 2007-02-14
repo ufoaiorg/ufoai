@@ -493,6 +493,7 @@ static char cmd_args[MAX_STRING_CHARS];
 
 static cmd_function_t *cmd_functions;	/* possible commands to execute */
 static cmd_function_t *cmd_functions_hash[CMD_HASH_SIZE];
+
 /**
  * @brief
  * @return the number of arguments
@@ -952,7 +953,4 @@ extern void Cmd_Init (void)
 	Cmd_AddCommand("wait", Cmd_Wait_f, NULL);
 	Cmd_AddCommand("cmdclose", Cmd_Close_f, NULL);
 	Cmd_AddCommand("cmdopen", Cmd_Open_f, NULL);
-	/* they are static - but i'm paranoid */
-	memset(cmd_alias_hash, 0, sizeof(cmd_alias_hash));
-	memset(cmd_functions_hash, 0, sizeof(cmd_functions_hash));
 }

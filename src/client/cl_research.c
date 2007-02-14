@@ -751,7 +751,7 @@ static void RS_RemoveScientist_f (void)
  * @brief Starts the research of the selected research-list entry.
  * TODO: Check if laboratory is available.
  */
-static void RS_ResearchStart (void)
+static void RS_ResearchStart_f (void)
 {
 	technology_t *tech = NULL;
 
@@ -813,7 +813,7 @@ static void RS_ResearchStart (void)
  * @brief Pauses the research of the selected research-list entry.
  * TODO: Check if laboratory is available
  */
-static void RS_ResearchStop (void)
+static void RS_ResearchStop_f (void)
 {
 	technology_t *tech = NULL;
 
@@ -974,9 +974,9 @@ void RS_UpdateData (void)
  * otherwise leave the research menu again
  * @note if there is a base but no lab a popup appears
  * @sa RS_UpdateData
- * @sa MN_ResearchInit
+ * @sa MN_ResearchInit_f
  */
-void CL_ResearchType (void)
+static void CL_ResearchType_f (void)
 {
 	/* Update and display the list. */
 	RS_UpdateData();
@@ -1190,11 +1190,11 @@ static void RS_TechnologyList_f (void)
  * @note Command to call this: research_init
  *
  * @note Should be called whenever the research menu gets active
- * @sa CL_ResearchType
+ * @sa CL_ResearchType_f
  */
-void MN_ResearchInit (void)
+static void MN_ResearchInit_f (void)
 {
-	CL_ResearchType();
+	CL_ResearchType_f();
 }
 
 /**
@@ -1288,11 +1288,11 @@ void RS_ResetResearch (void)
 {
 	researchListLength = 0;
 	/* add commands and cvars */
-	Cmd_AddCommand("research_init", MN_ResearchInit, "Research menu init function binding");
+	Cmd_AddCommand("research_init", MN_ResearchInit_f, "Research menu init function binding");
 	Cmd_AddCommand("research_select", CL_ResearchSelect_f, NULL);
-	Cmd_AddCommand("research_type", CL_ResearchType, NULL);
-	Cmd_AddCommand("mn_start_research", RS_ResearchStart, NULL);
-	Cmd_AddCommand("mn_stop_research", RS_ResearchStop, NULL);
+	Cmd_AddCommand("research_type", CL_ResearchType_f, "Switch between differnent research types");
+	Cmd_AddCommand("mn_start_research", RS_ResearchStart_f, NULL);
+	Cmd_AddCommand("mn_stop_research", RS_ResearchStop_f, NULL);
 	Cmd_AddCommand("mn_rs_add", RS_AssignScientist_f, NULL);
 	Cmd_AddCommand("mn_rs_remove", RS_RemoveScientist_f, NULL);
 	Cmd_AddCommand("research_update", RS_UpdateData, NULL);
@@ -1303,7 +1303,7 @@ void RS_ResetResearch (void)
 	Cmd_AddCommand("research_all", RS_DebugResearchAll, NULL);
 	Cmd_AddCommand("researchable_all", RS_DebugResearchableAll, NULL);
 #endif
-	/* they are static - but i'm paranoid */
+	/* they are static - but i'm paranoid - this is called before the techs were parsed */
 	memset(tech_hash, 0, sizeof(tech_hash));
 }
 

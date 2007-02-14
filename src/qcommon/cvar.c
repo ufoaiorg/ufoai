@@ -48,7 +48,7 @@ static cvar_t *cvar_vars;
 /**
  * @brief
  */
-static qboolean Cvar_InfoValidate(const char *s)
+static qboolean Cvar_InfoValidate (const char *s)
 {
 	if (strstr(s, "\\"))
 		return qfalse;
@@ -66,7 +66,7 @@ static qboolean Cvar_InfoValidate(const char *s)
  * @sa Cvar_VariableString
  * @sa Cvar_SetValue
  */
-static cvar_t *Cvar_FindVar(const char *var_name)
+static cvar_t *Cvar_FindVar (const char *var_name)
 {
 	unsigned hash;
 	cvar_t *var;
@@ -86,7 +86,7 @@ static cvar_t *Cvar_FindVar(const char *var_name)
  * @sa Cvar_VariableInteger
  * @return 0 if not defined
  */
-extern float Cvar_VariableValue(const char *var_name)
+extern float Cvar_VariableValue (const char *var_name)
 {
 	cvar_t *var;
 
@@ -181,7 +181,7 @@ extern qboolean Cvar_AssertString (cvar_t * cvar, char **array, int arraySize)
  * @sa Cvar_FindVar
  * @return 0 if not defined
  */
-extern int Cvar_VariableInteger(const char *var_name)
+extern int Cvar_VariableInteger (const char *var_name)
 {
 	cvar_t *var;
 
@@ -199,7 +199,7 @@ extern int Cvar_VariableInteger(const char *var_name)
  * Even if the cvar does not exist this function will not return a null pointer
  * but an empty string
  */
-extern char *Cvar_VariableString(const char *var_name)
+extern char *Cvar_VariableString (const char *var_name)
 {
 	cvar_t *var;
 
@@ -217,7 +217,7 @@ extern char *Cvar_VariableString(const char *var_name)
  * Even if the cvar does not exist this function will not return a null pointer
  * but an empty string
  */
-extern char *Cvar_VariableStringOld(const char *var_name)
+extern char *Cvar_VariableStringOld (const char *var_name)
 {
 	cvar_t *var;
 
@@ -236,7 +236,7 @@ extern char *Cvar_VariableStringOld(const char *var_name)
  * @sa Cmd_CompleteCommand
  * @sa Key_CompleteCommand
  */
-extern int Cvar_CompleteVariable(const char *partial, char **match)
+extern int Cvar_CompleteVariable (const char *partial, char **match)
 {
 	cvar_t *cvar;
 	char *localMatch = NULL;
@@ -255,7 +255,7 @@ extern int Cvar_CompleteVariable(const char *partial, char **match)
 			matches++;
 		}
 
-	if (matches==1)
+	if (matches == 1)
 		*match = localMatch;
 	return matches;
 }
@@ -266,7 +266,7 @@ extern int Cvar_CompleteVariable(const char *partial, char **match)
  * If the variable already exists, the value will not be set
  * The flags will be or'ed in if the variable exists.
  */
-extern cvar_t *Cvar_Get(const char *var_name, const char *var_value, int flags, char* desc)
+extern cvar_t *Cvar_Get (const char *var_name, const char *var_value, int flags, char* desc)
 {
 	unsigned hash;
 	cvar_t *var;
@@ -328,7 +328,7 @@ extern cvar_t *Cvar_Get(const char *var_name, const char *var_value, int flags, 
  * @param value Set the cvar to the value specified by 'value'
  * @param force Force the update of the cvar
  */
-static cvar_t *Cvar_Set2(const char *var_name, const char *value, qboolean force)
+static cvar_t *Cvar_Set2 (const char *var_name, const char *value, qboolean force)
 {
 	cvar_t *var;
 
@@ -403,7 +403,7 @@ static cvar_t *Cvar_Set2(const char *var_name, const char *value, qboolean force
 /**
  * @brief Will set the variable even if NOSET or LATCH
  */
-extern cvar_t *Cvar_ForceSet(const char *var_name, const char *value)
+extern cvar_t *Cvar_ForceSet (const char *var_name, const char *value)
 {
 	return Cvar_Set2(var_name, value, qtrue);
 }
@@ -414,7 +414,7 @@ extern cvar_t *Cvar_ForceSet(const char *var_name, const char *value)
  * @param value Which value should the cvar get
  * @note Look after the CVAR_LATCH stuff and check for write protected cvars
  */
-extern cvar_t *Cvar_Set(const char *var_name, const char *value)
+extern cvar_t *Cvar_Set (const char *var_name, const char *value)
 {
 	return Cvar_Set2(var_name, value, qfalse);
 }
@@ -433,7 +433,7 @@ extern cvar_t *Cvar_Set(const char *var_name, const char *value)
  * @param flags which flags
  * @sa Cvar_Set_f
  */
-extern cvar_t *Cvar_FullSet(const char *var_name, const char *value, int flags)
+extern cvar_t *Cvar_FullSet (const char *var_name, const char *value, int flags)
 {
 	cvar_t *var;
 
@@ -462,7 +462,7 @@ extern cvar_t *Cvar_FullSet(const char *var_name, const char *value, int flags)
 /**
  * @brief Expands value to a string and calls Cvar_Set
  */
-extern void Cvar_SetValue(const char *var_name, float value)
+extern void Cvar_SetValue (const char *var_name, float value)
 {
 	char val[32];
 
@@ -478,7 +478,7 @@ extern void Cvar_SetValue(const char *var_name, float value)
  * @brief Any variables with latched values will now be updated
  * @note CVAR_LATCH cvars are not updated during a game (tactical mission)
  */
-extern void Cvar_GetLatchedVars(void)
+extern void Cvar_GetLatchedVars (void)
 {
 	cvar_t *var;
 
@@ -509,7 +509,7 @@ extern void Cvar_GetLatchedVars(void)
  * @sa Cvar_SetValue
  * @sa Cvar_Set
  */
-extern qboolean Cvar_Command(void)
+extern qboolean Cvar_Command (void)
 {
 	cvar_t *v;
 
@@ -531,7 +531,7 @@ extern qboolean Cvar_Command(void)
 /**
  * @brief Allows resetting cvars to old value from console
  */
-static void Cvar_SetOld_f(void)
+static void Cvar_SetOld_f (void)
 {
 	cvar_t *v;
 
@@ -553,7 +553,7 @@ static void Cvar_SetOld_f(void)
 /**
  * @brief Allows setting and defining of arbitrary cvars from console
  */
-static void Cvar_Set_f(void)
+static void Cvar_Set_f (void)
 {
 	int c;
 	int flags;
@@ -583,7 +583,7 @@ static void Cvar_Set_f(void)
  * @brief Allows copying variables
  * Available via console command copy
  */
-static void Cvar_Copy_f(void)
+static void Cvar_Copy_f (void)
 {
 	int c;
 
@@ -601,7 +601,7 @@ static void Cvar_Copy_f(void)
  * @brief Stores the archive cvars
  * @param path Config file where we will save all cvars with the archive flag set
  */
-extern void Cvar_WriteVariables(const char *path)
+extern void Cvar_WriteVariables (const char *path)
 {
 	cvar_t *var;
 	char buffer[1024];
@@ -626,7 +626,7 @@ extern void Cvar_WriteVariables(const char *path)
 /**
  * @brief List all cvars via console command 'cvarlist'
  */
-static void Cvar_List_f(void)
+static void Cvar_List_f (void)
 {
 	cvar_t *var;
 	int i, c, l = 0;
@@ -678,7 +678,7 @@ static void Cvar_List_f(void)
  * @brief Return a string with all cvars with bitflag given by parameter set
  * @param bit The bitflag we search the global cvar array for
  */
-static char *Cvar_BitInfo(int bit)
+static char *Cvar_BitInfo (int bit)
 {
 	static char info[MAX_INFO_STRING];
 	cvar_t *var;
@@ -694,7 +694,7 @@ static char *Cvar_BitInfo(int bit)
 /**
  * @brief Returns an info string containing all the CVAR_USERINFO cvars
  */
-extern char *Cvar_Userinfo(void)
+extern char *Cvar_Userinfo (void)
 {
 	return Cvar_BitInfo(CVAR_USERINFO);
 }
@@ -717,6 +717,4 @@ extern void Cvar_Init(void)
 	Cmd_AddCommand("set", Cvar_Set_f, NULL);
 	Cmd_AddCommand("copy", Cvar_Copy_f, NULL);
 	Cmd_AddCommand("cvarlist", Cvar_List_f, NULL);
-	/* they are static - but i'm paranoid */
-	memset(cvar_vars_hash, 0, sizeof(cvar_vars_hash));
 }
