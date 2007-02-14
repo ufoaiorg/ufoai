@@ -95,7 +95,7 @@ sequence tut_gameplay
 		text	"_Hire employees: scientists, soldiers"
 		pos	"512 125"
 		align	uc
-		color	"0 1 1 1"
+		color	"1 1 1 1"
 		font	f_big
 	}
 	wait 2
@@ -132,7 +132,7 @@ sequence tut_gameplay
 		text	"_Start some research"
 		pos	"512 150"
 		align	uc
-		color	"1 0 1 1"
+		color	"1 1 1 1"
 		font	f_big
 	}
 	wait 1
@@ -151,7 +151,7 @@ sequence tut_gameplay
 		text	"_Buy weapons and equipment"
 		pos	"512 175"
 		align	uc
-		color	"0 0 1 1"
+		color	"1 1 1 1"
 		font	f_big
 	}
 	wait 1
@@ -188,7 +188,7 @@ sequence tut_gameplay
 		text	"_Equip your aircraft with soldiers and weapons"
 		pos	"512 200"
 		align	uc
-		color	"1 1 0 1"
+		color	"1 1 1 1"
 		font	f_big
 	}
 	wait 2
@@ -226,7 +226,7 @@ sequence tut_gameplay
 		text	"_Speed up time on geoscape until the first alien mission appears"
 		pos	"512 225"
 		align	uc
-		color	"0 1 0 1"
+		color	"1 1 1 1"
 		font	f_big
 	}
 	wait 2
@@ -273,7 +273,7 @@ sequence tut_gameplay
 		text	"_Hit the start or auto-mission button to fight the aliens"
 		pos	"512 275"
 		align	uc
-		color	"1 0 0 1"
+		color	"1 1 1 1"
 		font	f_big
 	}
 	wait 2
@@ -298,7 +298,7 @@ sequence tut_gameplay
 		text	"_For further instructions watch the tactical mission tutorial"
 		pos	"512 550"
 		align	uc
-		color	"0 0.6 0 1"
+		color	"1 1 1 1"
 		font	f_big
 	}
 	wait 300
