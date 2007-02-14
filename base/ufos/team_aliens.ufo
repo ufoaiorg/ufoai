@@ -2,7 +2,6 @@
 // ALIENS
 // ========================================================================
 
-
 // ==================
 // ortnok
 // ==================
@@ -271,60 +270,6 @@ teamdesc bloodspider
 //	alien	true
 //}
 
-//========================================================================
-// ALIENS
-//========================================================================
-
-//==================
-// ortnok
-//==================
-
-names ortnok
-{
-	neutral
-	{
-	Akrokk
-	Mkeek
-	Rniuk
-	Tranok
-	Kronuk
-	Trenakk
-	Zrokk
-	Kraerak
-	Mnookk
-	Zmolukk
-	Abtrenek
-	Uonak
-	Ktrukk
-	Onukark
-	Ebnuzuk
-	Krrnaak
-	Zmuknesk
-	}
-
-	lastname
-	{
-	"Uk Kronok"
-	"Np Zlrok"
-	"T Zruujk"
-	"Kr Zrrosk"
-	"Mt Trekluk"
-	"H Hrkakk"
-	"Pt Mrlkuk"
-	"Tsk Hrekk"
-	"Kkr Kraukk"
-	"Tkr Hruk"
-	"Ts Srulok"
-	"K Krokk"
-	"Zt Hrmokuk"
-	"H Nhrokekk"
-	"Tt Treknk"
-	"Ok Orokk"
-	"Sk Trevuk"
-	"Zr Znaztrk"
-	}
-}
-
 names bloodspider
 {
 	neutral
@@ -342,22 +287,6 @@ actors bloodspider
 	neutral
 	{
 		aliens/bloodspider bloodspider head 0
-	}
-}
-
-actors ortnok
-{
-	neutral
-	{
-		aliens/ortnok body01 head01 0
-		aliens/ortnok body01 head02 0
-		aliens/ortnok body01 head03 0
-		aliens/ortnok body01 head01 1
-		aliens/ortnok body01 head02 1
-		aliens/ortnok body01 head03 1
-		aliens/ortnok body01 head01 2
-		aliens/ortnok body01 head02 2
-		aliens/ortnok body01 head03 2
 	}
 }
 
