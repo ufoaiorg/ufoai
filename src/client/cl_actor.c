@@ -1110,29 +1110,40 @@ void CL_ActorUpdateCVars (void)
 
 		if (selWeapon) {
 			if (selWeapon->item.t == NONE) {
+				/* No valid weapon in the hand. */
 				selFD = NULL;
 			} else {
 #ifdef PARANOID
-				GET_FIREDEFDEBUG(selWeapon->item.m,
-						INV_FiredefsIDXForWeapon(&csi.ods[selWeapon->item.m],
-						selWeapon->item.t), cl.cfiremode)
+				GET_FIREDEFDEBUG(
+					selWeapon->item.m,
+					INV_FiredefsIDXForWeapon(
+						&csi.ods[selWeapon->item.m],
+						selWeapon->item.t),
+					cl.cfiremode);
 #endif
-				/* Check whether this item use ammo. */
+				/* Check whether this item uses/has ammo. */
 				if (selWeapon->item.m == NONE) {
 					/* This item does not use ammo, check for existing firedefs in this item. */
 					if (csi.ods[selWeapon->item.t].numFiredefs > 0) {
 						/* Get firedef from the weapon entry instead. */
-						selFD = GET_FIREDEF(selWeapon->item.t,
-						INV_FiredefsIDXForWeapon(&csi.ods[selWeapon->item.t],
-						selWeapon->item.t), cl.cfiremode);
+						selFD = GET_FIREDEF(
+							selWeapon->item.t,
+							INV_FiredefsIDXForWeapon(
+								&csi.ods[selWeapon->item.t],
+								selWeapon->item.t),
+							cl.cfiremode);
 					} else {
+						/* No firedefinitions found in this presumed 'weapon with no ammo'. */
 						selFD = NULL;
 					}
 				} else {
 					/* This item uses ammo, get the firedefs from ammo. */
-					selFD = GET_FIREDEF(selWeapon->item.m,
-					INV_FiredefsIDXForWeapon(&csi.ods[selWeapon->item.m],
-					selWeapon->item.t), cl.cfiremode);
+					selFD = GET_FIREDEF(
+						selWeapon->item.m,
+						INV_FiredefsIDXForWeapon(
+							&csi.ods[selWeapon->item.m],
+							selWeapon->item.t),
+						cl.cfiremode);
 				}
 			}
 		}
