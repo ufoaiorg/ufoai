@@ -434,12 +434,11 @@ typedef struct {
 
 typedef struct {
 	float mins[3], maxs[3];
-	float origin[3];			/* for sounds or lights */
+	float origin[3];			/**< for sounds or lights */
 	int headnode;
-	int firstface, numfaces;	/* submodels just draw faces */
+	int firstface, numfaces;	/**< submodels just draw faces */
 	/* without walking the bsp tree */
 } dmodel_t;
-
 
 typedef struct {
 	float point[3];
@@ -463,7 +462,7 @@ typedef struct {
 typedef struct {
 	float normal[3];
 	float dist;
-	int type;					/* PLANE_X - PLANE_ANYZ ?remove? trivial to regenerate */
+	int type;					/**< PLANE_X - PLANE_ANYZ ?remove? trivial to regenerate */
 } dplane_t;
 
 

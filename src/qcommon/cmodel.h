@@ -10,7 +10,7 @@ CMODEL
 extern vec3_t map_min, map_max;
 
 void CM_LoadMap(char *tiles, char *pos, unsigned *checksum);
-int CheckBSPFile(char *filename);
+int CheckBSPFile(const char *filename);
 cmodel_t *CM_InlineModel(const char *name);	/* *0, *1, *2, etc */
 
 int CM_NumClusters(void);
@@ -23,23 +23,12 @@ CMODEL BOX TRACING
 ==============================================================
 */
 
-/* FIXME/WARNING: The functions, that are commented out, */
-/* possibly don't give the expected results, because of */
-/* the new map tiles, all the others should work */
-
 /** creates a clipping hull for an arbitrary box */
 int CM_HeadnodeForBox(int tile, vec3_t mins, vec3_t maxs);
-
-
-/* returns an ORed contents mask */
-/*int			CM_PointContents (vec3_t p, int headnode); */
-/*int			CM_TransformedPointContents (vec3_t p, int headnode, vec3_t origin, vec3_t angles); */
 
 trace_t CM_TransformedBoxTrace(vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, int tile, int headnode, int brushmask, vec3_t origin, vec3_t angles);
 trace_t CM_CompleteBoxTrace(vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, int levelmask, int brushmask);
 
-int CM_EntTestLine(vec3_t start, vec3_t stop);
-int CM_EntTestLineDM(vec3_t start, vec3_t stop, vec3_t end);
 int CM_TestLine(vec3_t start, vec3_t stop);
 int CM_TestLineDM(vec3_t start, vec3_t stop, vec3_t end);
 

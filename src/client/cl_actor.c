@@ -766,7 +766,7 @@ void CL_SelectReactionFiremode_f (void)
 
 /**
  * @brief Starts aiming/target mode for selected left/right firemode.
- * @note Previously know as a combination of CL_FireRightPrimary, CL_FireRightSecondary, 
+ * @note Previously know as a combination of CL_FireRightPrimary, CL_FireRightSecondary,
  * @note CL_FireLeftPrimary and CL_FireLeftSecondary.
  */
 void CL_FireWeapon (void)
@@ -2827,7 +2827,7 @@ static void CL_Targeting_Radius (vec3_t center)
  * @sa CL_AddTargeting
  * @sa CL_Trace
  */
-void CL_TargetingStraight(pos3_t fromPos, pos3_t toPos)
+static void CL_TargetingStraight (pos3_t fromPos, pos3_t toPos)
 {
 	vec3_t start, end;
 	vec3_t dir, mid;
@@ -2907,7 +2907,7 @@ void CL_TargetingStraight(pos3_t fromPos, pos3_t toPos)
  * @param[in] fromPos
  * @param[in] toPos
  */
-void CL_TargetingGrenade(pos3_t fromPos, pos3_t toPos)
+static void CL_TargetingGrenade (pos3_t fromPos, pos3_t toPos)
 {
 	vec3_t from, at, cross;
 	float vz, dt;

@@ -297,7 +297,6 @@ typedef struct
 	int		type;		/* PLANE_X - PLANE_ANYZ ?remove? trivial to regenerate */
 } dplane_t;
 
-
 /* contents flags are seperate bits */
 /* a given brush can contribute multiple content bits */
 /* multiple brushes can be in a single leaf */

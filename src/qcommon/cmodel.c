@@ -177,7 +177,7 @@ static byte tfList[HEIGHT][WIDTH][WIDTH];
 static byte tf;
 
 void CM_MakeTnodes(void);
-void CM_InitBoxHull(void);
+static void CM_InitBoxHull(void);
 
 
 /*
@@ -192,7 +192,7 @@ MAP LOADING
  * @param[in] l
  * @sa CM_AddMapTile
  */
-static void CMod_LoadSubmodels(lump_t * l)
+static void CMod_LoadSubmodels (lump_t * l)
 {
 	dmodel_t *in;
 	cmodel_t *out;
@@ -232,7 +232,7 @@ static void CMod_LoadSubmodels(lump_t * l)
  * @param[in] l
  * @sa CM_AddMapTile
  */
-static void CMod_LoadSurfaces(lump_t * l)
+static void CMod_LoadSurfaces (lump_t * l)
 {
 	texinfo_t *in;
 	mapsurface_t *out;
@@ -267,7 +267,7 @@ static void CMod_LoadSurfaces(lump_t * l)
  * @param[in] l
  * @sa CM_AddMapTile
  */
-static void CMod_LoadNodes(lump_t * l)
+static void CMod_LoadNodes (lump_t * l)
 {
 	dnode_t *in;
 	int child;
@@ -312,7 +312,7 @@ static void CMod_LoadNodes(lump_t * l)
  * @param[in] l
  * @sa CM_AddMapTile
  */
-static void CMod_LoadBrushes(lump_t * l)
+static void CMod_LoadBrushes (lump_t * l)
 {
 	dbrush_t *in;
 	cbrush_t *out;
@@ -344,7 +344,7 @@ static void CMod_LoadBrushes(lump_t * l)
  * @param[in] l
  * @sa CM_AddMapTile
  */
-static void CMod_LoadLeafs(lump_t * l)
+static void CMod_LoadLeafs (lump_t * l)
 {
 	int i;
 	cleaf_t *out;
@@ -393,7 +393,7 @@ static void CMod_LoadLeafs(lump_t * l)
  * @param[in] l
  * @sa CM_AddMapTile
  */
-static void CMod_LoadPlanes(lump_t * l)
+static void CMod_LoadPlanes (lump_t * l)
 {
 	int i, j;
 	cplane_t *out;
@@ -441,7 +441,7 @@ static void CMod_LoadPlanes(lump_t * l)
  * @param[in] l
  * @sa CM_AddMapTile
  */
-static void CMod_LoadLeafBrushes(lump_t * l)
+static void CMod_LoadLeafBrushes (lump_t * l)
 {
 	int i;
 	unsigned short *out;
@@ -474,7 +474,7 @@ static void CMod_LoadLeafBrushes(lump_t * l)
  * @param[in] l
  * @sa CM_AddMapTile
  */
-static void CMod_LoadBrushSides(lump_t * l)
+static void CMod_LoadBrushSides (lump_t * l)
 {
 	int i, j;
 	cbrushside_t *out;
@@ -510,7 +510,7 @@ static void CMod_LoadBrushSides(lump_t * l)
 /**
  * @brief Source will be set to the end of the compressed data block!
  */
-static int Cmod_DeCompressRouting(byte ** source, byte * dataStart)
+static int Cmod_DeCompressRouting (byte ** source, byte * dataStart)
 {
 	int i, c;
 	byte *data_p;
@@ -541,16 +541,16 @@ static int Cmod_DeCompressRouting(byte ** source, byte * dataStart)
 }
 
 /**
-  * @brief Checks for valid BSP-file
-  *
-  * @param[in] filename BSP-file to check
-  *
-  * @return 0 if valid
-  * @return 1 could not open file
-  * @return 2 if magic number is bad
-  * @return 3 if version of bsp-file is bad
-  */
-int CheckBSPFile(char *filename)
+ * @brief Checks for valid BSP-file
+ *
+ * @param[in] filename BSP-file to check
+ *
+ * @return 0 if valid
+ * @return 1 could not open file
+ * @return 2 if magic number is bad
+ * @return 3 if version of bsp-file is bad
+ */
+extern int CheckBSPFile (const char *filename)
 {
 	int i;
 	int header[2];
@@ -589,7 +589,7 @@ int CheckBSPFile(char *filename)
  * @sa CM_TransformedBoxTrace
  * @return 1 - hit something; 0 - hit nothing
  */
-int CM_EntTestLine (vec3_t start, vec3_t stop)
+static int CM_EntTestLine (vec3_t start, vec3_t stop)
 {
 	trace_t trace;
 	cmodel_t *model;
@@ -630,7 +630,7 @@ int CM_EntTestLine (vec3_t start, vec3_t stop)
  * @sa CM_TestLineDM
  * @sa CM_TransformedBoxTrace
  */
-int CM_EntTestLineDM(vec3_t start, vec3_t stop, vec3_t end)
+static int CM_EntTestLineDM (vec3_t start, vec3_t stop, vec3_t end)
 {
 	trace_t trace;
 	cmodel_t *model;
@@ -677,7 +677,7 @@ int CM_EntTestLineDM(vec3_t start, vec3_t stop, vec3_t end)
  * @param[in] dir
  * @param[in] fill
  */
-qboolean CM_TestConnection(routing_t * map, int x, int y, int z, int dir, qboolean fill)
+static qboolean CM_TestConnection (routing_t * map, int x, int y, int z, int dir, qboolean fill)
 {
 	vec3_t start, end;
 	pos3_t pos;
@@ -734,7 +734,7 @@ qboolean CM_TestConnection(routing_t * map, int x, int y, int z, int dir, qboole
  * @param[in] z
  * @sa Grid_RecalcRouting
  */
-void CM_CheckUnit(routing_t * map, int x, int y, int z)
+static void CM_CheckUnit (routing_t * map, int x, int y, int z)
 {
 	vec3_t start, end;
 	vec3_t tend, tvs, tve;
@@ -830,9 +830,9 @@ void CM_CheckUnit(routing_t * map, int x, int y, int z)
  * @brief
  * @param[in] map
  */
-void CMod_GetMapSize(routing_t * map)
+static void CMod_GetMapSize (routing_t * map)
 {
-	vec3_t offset = { 100, 100, 100 };
+	const vec3_t offset = { 100, 100, 100 };
 	pos3_t min, max;
 	int x, y;
 
@@ -871,7 +871,7 @@ void CMod_GetMapSize(routing_t * map)
  * @param[in] sZ
  * @sa CM_AddMapTile
  */
-void CMod_LoadRouting(lump_t * l, int sX, int sY, int sZ)
+static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
 {
 	static byte temp_route[8][256][256];
 	static byte temp_fall[256][256];
@@ -942,7 +942,7 @@ void CMod_LoadRouting(lump_t * l, int sX, int sY, int sZ)
  * @param[in] l
  * @sa CM_AddMapTile
  */
-void CMod_LoadEntityString(lump_t * l)
+static void CMod_LoadEntityString (lump_t * l)
 {
 	char *com_token;
 	char *es;
@@ -1020,7 +1020,7 @@ void CMod_LoadEntityString(lump_t * l)
  * @brief Frees a map tile
  * @param[in] tile
  */
-void CM_FreeTile(mapTile_t * tile)
+static void CM_FreeTile (mapTile_t * tile)
 {
 	if (tile->extraData) {
 		Hunk_Free(tile->extraData);
@@ -1173,7 +1173,7 @@ extern void CM_LoadMap (char *tiles, char *pos, unsigned *mapchecksum)
  * given modelnumber or -name
  * @param[in] name The modelnumber (e.g. "*2") or the modelname
  */
-cmodel_t *CM_InlineModel (const char *name)
+extern cmodel_t *CM_InlineModel (const char *name)
 {
 	int i, num;
 
@@ -1196,7 +1196,7 @@ cmodel_t *CM_InlineModel (const char *name)
 /**
  * @brief
  */
-int CM_NumInlineModels (void)
+extern int CM_NumInlineModels (void)
 {
 	return numInline;
 }
@@ -1204,22 +1204,23 @@ int CM_NumInlineModels (void)
 /**
  * @brief
  */
-char *CM_EntityString (void)
+extern char *CM_EntityString (void)
 {
 	return map_entitystring;
 }
 
+#if 0
 /**
  * @brief
  * @param[in] leafnum
  */
-int CM_LeafContents (int leafnum)
+static int CM_LeafContents (int leafnum)
 {
 	if (leafnum < 0 || leafnum >= curTile->numleafs)
 		Com_Error(ERR_DROP, "CM_LeafContents: bad number");
 	return curTile->leafs[leafnum].contents;
 }
-
+#endif
 
 /*
 ===============================================================================
@@ -1231,7 +1232,7 @@ BOX TRACING
  * @brief Set up the planes and nodes so that the six floats of a bounding
  * box can just be stored out and get a proper clipping hull structure.
  */
-void CM_InitBoxHull (void)
+static void CM_InitBoxHull (void)
 {
 	int i;
 	int side;
@@ -1291,7 +1292,7 @@ void CM_InitBoxHull (void)
  * @brief To keep everything totally uniform, bounding boxes are turned into small
  * BSP trees instead of being compared directly.
  */
-int CM_HeadnodeForBox (int tile, vec3_t mins, vec3_t maxs)
+extern int CM_HeadnodeForBox (int tile, vec3_t mins, vec3_t maxs)
 {
 	curTile = &mapTiles[tile];
 
@@ -1311,13 +1312,13 @@ int CM_HeadnodeForBox (int tile, vec3_t mins, vec3_t maxs)
 	return curTile->box_headnode;
 }
 
-
+#if 0
 /**
  * @brief
  * @param[in] p
  * @param[in] num
  */
-int CM_PointLeafnum_r (vec3_t p, int num)
+static int CM_PointLeafnum_r (vec3_t p, int num)
 {
 	float d;
 	cnode_t *node;
@@ -1341,26 +1342,28 @@ int CM_PointLeafnum_r (vec3_t p, int num)
 
 	return -1 - num;
 }
+#endif
 
+#if 0
 /**
  * @brief
  * @param[in] p
  * @sa CM_PointLeafnum_r
  */
-int CM_PointLeafnum(vec3_t p)
+static int CM_PointLeafnum (vec3_t p)
 {
 	if (!curTile->numplanes)
 		return 0;				/* sound may call this without map loaded */
 	return CM_PointLeafnum_r(p, 0);
 }
-
+#endif
 
 /**
  * @brief Fills in a list of all the leafs touched
  * call with topnode set to the headnode, returns with topnode
  * set to the first node that splits the box
  */
-void CM_BoxLeafnums_r(int nodenum)
+static void CM_BoxLeafnums_r (int nodenum)
 {
 	cplane_t *plane;
 	cnode_t *node;
@@ -1398,7 +1401,7 @@ void CM_BoxLeafnums_r(int nodenum)
  * @param
  * @sa
  */
-int CM_BoxLeafnums_headnode(vec3_t mins, vec3_t maxs, int *list, int listsize, int headnode, int *topnode)
+static  int CM_BoxLeafnums_headnode (vec3_t mins, vec3_t maxs, int *list, int listsize, int headnode, int *topnode)
 {
 	leaf_list = list;
 	leaf_count = 0;
@@ -1416,22 +1419,28 @@ int CM_BoxLeafnums_headnode(vec3_t mins, vec3_t maxs, int *list, int listsize, i
 	return leaf_count;
 }
 
+#if 0
 /**
  * @brief
  * @param
  * @sa
  */
-int CM_BoxLeafnums(vec3_t mins, vec3_t maxs, int *list, int listsize, int *topnode)
+static int CM_BoxLeafnums (vec3_t mins, vec3_t maxs, int *list, int listsize, int *topnode)
 {
 	return CM_BoxLeafnums_headnode(mins, maxs, list, listsize, curTile->cmodels[0].headnode, topnode);
 }
+#endif
 
+#if 0
 /**
- * @brief
+ * @brief returns an ORed contents mask
+ * @note FIXME/WARNING: The functions, that are commented out, possibly don't
+ * give the expected results, because of the new map tiles, all the others
+ * should work
  * @param
  * @sa
  */
-int CM_PointContents(vec3_t p, int headnode)
+static int CM_PointContents (vec3_t p, int headnode)
 {
 	int l;
 
@@ -1442,11 +1451,16 @@ int CM_PointContents(vec3_t p, int headnode)
 
 	return curTile->leafs[l].contents;
 }
+#endif
 
+#if 0
 /**
  * @brief Handles offseting and rotation of the end points for moving and rotating entities
+ * @note FIXME/WARNING: The functions, that are commented out, possibly don't
+ * give the expected results, because of the new map tiles, all the others
+ * should work
  */
-int CM_TransformedPointContents(vec3_t p, int headnode, vec3_t origin, vec3_t angles)
+static int CM_TransformedPointContents (vec3_t p, int headnode, vec3_t origin, vec3_t angles)
 {
 	vec3_t p_l;
 	vec3_t temp;
@@ -1470,7 +1484,7 @@ int CM_TransformedPointContents(vec3_t p, int headnode, vec3_t origin, vec3_t an
 
 	return curTile->leafs[l].contents;
 }
-
+#endif
 
 /*======================================================================= */
 
@@ -1480,7 +1494,7 @@ int CM_TransformedPointContents(vec3_t p, int headnode, vec3_t origin, vec3_t an
  * @param
  * @sa
  */
-void CM_ClipBoxToBrush(vec3_t mins, vec3_t maxs, vec3_t p1, vec3_t p2, trace_t * trace, cbrush_t * brush)
+static void CM_ClipBoxToBrush (vec3_t mins, vec3_t maxs, vec3_t p1, vec3_t p2, trace_t * trace, cbrush_t * brush)
 {
 	int i, j;
 	cplane_t *plane, *clipplane;
@@ -1578,7 +1592,7 @@ void CM_ClipBoxToBrush(vec3_t mins, vec3_t maxs, vec3_t p1, vec3_t p2, trace_t *
  * @param
  * @sa CM_TraceToLeaf
  */
-void CM_TestBoxInBrush(vec3_t mins, vec3_t maxs, vec3_t p1, trace_t * trace, cbrush_t * brush)
+static void CM_TestBoxInBrush (vec3_t mins, vec3_t maxs, vec3_t p1, trace_t * trace, cbrush_t * brush)
 {
 	int i, j;
 	cplane_t *plane;
@@ -1627,7 +1641,7 @@ void CM_TestBoxInBrush(vec3_t mins, vec3_t maxs, vec3_t p1, trace_t * trace, cbr
  * @param[in] leafnum
  * @sa CM_ClipBoxToBrush
  */
-void CM_TraceToLeaf(int leafnum)
+static void CM_TraceToLeaf (int leafnum)
 {
 	int k;
 	int brushnum;
@@ -1693,10 +1707,12 @@ void CM_TestInLeaf(int leafnum)
  * @param[in] num
  * @param[in] p1f
  * @param[in] p2f
- * @param[in] p1
- * @param[in] p2
+ * @param[in] p1 start vector
+ * @param[in] p2 end vector
+ * @sa CM_BoxTrace
+ * @sa CM_TraceToLeaf
  */
-void CM_RecursiveHullCheck(int num, float p1f, float p2f, vec3_t p1, vec3_t p2)
+static void CM_RecursiveHullCheck (int num, float p1f, float p2f, vec3_t p1, vec3_t p2)
 {
 	cnode_t *node;
 	cplane_t *plane;
@@ -1781,7 +1797,6 @@ void CM_RecursiveHullCheck(int num, float p1f, float p2f, vec3_t p1, vec3_t p2)
 
 	CM_RecursiveHullCheck(node->children[side], p1f, midf, p1, mid);
 
-
 	/* go past the node */
 	if (frac2 < 0)
 		frac2 = 0;
@@ -1801,15 +1816,17 @@ void CM_RecursiveHullCheck(int num, float p1f, float p2f, vec3_t p1, vec3_t p2)
 
 /**
  * @brief
- * @param[in] start
- * @param[in] end
- * @param[in] mins
- * @param[in] max
- * @param[in] tile
+ * @param[in] start trace start vector
+ * @param[in] end trace end vector
+ * @param[in] mins box mins
+ * @param[in] max box maxs
+ * @param[in] tile Tile to check (normally 0 - except in assembled maps)
  * @param[in] headnode
- * @param[in] brushmask
+ * @param[in] brushmask brushes the trace should stop at (see MASK_*)
  * @sa CM_TransformedBoxTrace
  * @sa CM_CompleteBoxTrace
+ * @sa CM_RecursiveHullCheck
+ * @sa CM_BoxLeafnums_headnode
  */
 static trace_t CM_BoxTrace (vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, int tile, int headnode, int brushmask)
 {
@@ -1838,7 +1855,7 @@ static trace_t CM_BoxTrace (vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, 
 	/* check for position test special case */
 	if (start[0] == end[0] && start[1] == end[1] && start[2] == end[2]) {
 		int leafs[1024];
-		int i, numleafs;
+		int numleafs;
 		vec3_t c1, c2;
 		int topnode;
 
@@ -1873,7 +1890,7 @@ static trace_t CM_BoxTrace (vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, 
 	/* general sweeping through world */
 	CM_RecursiveHullCheck(headnode, 0, 1, start, end);
 
-	if (trace_trace.fraction == 1) {
+	if (trace_trace.fraction == 1.0) {
 		FastVectorCopy(*end, trace_trace.endpos);
 	} else {
 		for (i = 0; i < 3; i++)
@@ -1932,7 +1949,7 @@ trace_t CM_TransformedBoxTrace (vec3_t start, vec3_t end, vec3_t mins, vec3_t ma
 	}
 
 	/* sweep the box through the model */
-	trace = CM_BoxTrace (start_l, end_l, mins, maxs, tile, headnode, brushmask);
+	trace = CM_BoxTrace(start_l, end_l, mins, maxs, tile, headnode, brushmask);
 
 	if (rotated && trace.fraction != 1.0) {
 		/* FIXME: figure out how to do this with existing angles */

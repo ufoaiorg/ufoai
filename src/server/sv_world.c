@@ -189,10 +189,6 @@ extern void SV_LinkEdict (edict_t * ent)
 	VectorAdd(ent->origin, ent->mins, ent->absmin);
 	VectorAdd(ent->origin, ent->maxs, ent->absmax);
 
-	/* get all leafs, including solids */
-/*	num_leafs = CM_BoxLeafnums (ent->absmin, ent->absmax, */
-/*		leafs, MAX_TOTAL_ENT_LEAFS, &topnode); */
-
 	ent->linkcount++;
 
 	if (ent->solid == SOLID_NOT)

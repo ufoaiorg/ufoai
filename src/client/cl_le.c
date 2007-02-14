@@ -811,9 +811,11 @@ static void CL_ClipMoveToLEs (moveclip_t * clip)
 			trace.le = le;
 			clip->trace = trace;
 			clip->trace.startsolid |= oldStart;
+		/* if true, plane is not valid */
 		} else if (trace.allsolid) {
 			trace.le = le;
 			clip->trace = trace;
+		/* if true, the initial point was in a solid area */
 		} else if (trace.startsolid) {
 			trace.le = le;
 			clip->trace.startsolid = qtrue;

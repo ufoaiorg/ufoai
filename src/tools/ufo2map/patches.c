@@ -43,10 +43,10 @@ extern void CalcTextureReflectivity (void)
 	byte *palette;
 	char path[1024];
 
-	sprintf (path, "%spics/colormap.pcx", gamedir);
+	sprintf(path, "%spics/colormap.pcx", gamedir);
 
 	/* get the game palette */
-	Load256Image (path, NULL, &palette, NULL, NULL);
+	Load256Image(path, NULL, &palette, NULL, NULL);
 
 	/* allways set index 0 even if no textures */
 	texture_reflectivity[0][0] = 0.5;
@@ -56,8 +56,8 @@ extern void CalcTextureReflectivity (void)
 	for (i = 0; i < numtexinfo; i++) {
 		/* see if an earlier texinfo allready got the value */
 		for (j = 0; j < i; j++)
-			if (!strcmp (texinfo[i].texture, texinfo[j].texture)) {
-				VectorCopy (texture_reflectivity[j], texture_reflectivity[i]);
+			if (!strcmp(texinfo[i].texture, texinfo[j].texture)) {
+				VectorCopy(texture_reflectivity[j], texture_reflectivity[i]);
 				break;
 			}
 		if (j != i)
@@ -86,7 +86,7 @@ static winding_t *WindingFromFace (dface_t *f)
 	int			v;
 	winding_t	*w;
 
-	w = AllocWinding (f->numedges);
+	w = AllocWinding(f->numedges);
 	w->numpoints = f->numedges;
 
 	for (i = 0; i < f->numedges; i++) {
@@ -97,10 +97,10 @@ static winding_t *WindingFromFace (dface_t *f)
 			v = dedges[se].v[0];
 
 		dv = &dvertexes[v];
-		VectorCopy (dv->point, w->p[i]);
+		VectorCopy(dv->point, w->p[i]);
 	}
 
-	RemoveColinearPoints (w);
+	RemoveColinearPoints(w);
 
 	return w;
 }
@@ -115,11 +115,11 @@ static void BaseLightForFace (dface_t *f, vec3_t color)
 	/* check for light emited by texture */
 	tx = &texinfo[f->texinfo];
 	if (!(tx->flags & SURF_LIGHT) || tx->value == 0) {
-		VectorClear (color);
+		VectorClear(color);
 		return;
 	}
 
-	VectorScale (texture_reflectivity[f->texinfo], tx->value, color);
+	VectorScale(texture_reflectivity[f->texinfo], tx->value, color);
 }
 
 static float totalarea;
@@ -156,21 +156,21 @@ static void MakePatchForFace (int fn, winding_t *w)
 	/* origin offset faces must create new planes */
 	if (face_offset[fn][0] || face_offset[fn][1] || face_offset[fn][2] ) {
 		if (numplanes + fakeplanes >= MAX_MAP_PLANES)
-			Error ("numplanes + fakeplanes >= MAX_MAP_PLANES");
+			Error("numplanes + fakeplanes >= MAX_MAP_PLANES");
 		pl = &dplanes[numplanes + fakeplanes];
 		fakeplanes++;
 
 		*pl = *(patch->plane);
-		pl->dist += DotProduct (face_offset[fn], pl->normal);
+		pl->dist += DotProduct(face_offset[fn], pl->normal);
 		patch->plane = pl;
 	}
 
-	WindingCenter (w, patch->origin);
-	VectorAdd (patch->origin, patch->plane->normal, patch->origin);
+	WindingCenter(w, patch->origin);
+	VectorAdd(patch->origin, patch->plane->normal, patch->origin);
 	leaf = Rad_PointInLeaf(patch->origin);
 	patch->cluster = leaf->cluster;
 	if (patch->cluster == -1)
-		Sys_FPrintf( SYS_VRB, "patch->cluster == -1\n");
+		Sys_FPrintf(SYS_VRB, "patch->cluster == -1\n");
 
 	patch->area = area;
 	if (patch->area <= 1)
@@ -180,14 +180,14 @@ static void MakePatchForFace (int fn, winding_t *w)
 
 	/* non-bmodel patches can emit light */
 	if (fn < dmodels[0].numfaces) {
-		BaseLightForFace (f, patch->baselight);
+		BaseLightForFace(f, patch->baselight);
 
-		ColorNormalize (patch->reflectivity, color);
+		ColorNormalize(patch->reflectivity, color);
 
-		for (i=0 ; i<3 ; i++)
+		for (i = 0; i < 3; i++)
 			patch->baselight[i] *= color[i];
 
-		VectorCopy (patch->baselight, patch->totallight);
+		VectorCopy(patch->baselight, patch->totallight);
 	}
 	num_patches++;
 }
@@ -230,20 +230,20 @@ extern void MakePatches (void)
 
 	for (i = 0; i < nummodels; i++) {
 		mod = &dmodels[i];
-		VectorCopy (vec3_origin, origin);
+		VectorCopy(vec3_origin, origin);
 
 		for (j = 0; j < mod->numfaces; j++) {
 			fn = mod->firstface + j;
-			VectorCopy (origin, face_offset[fn]);
+			VectorCopy(origin, face_offset[fn]);
 			f = &dfaces[fn];
-			w = WindingFromFace (f);
+			w = WindingFromFace(f);
 			for (k = 0; k < w->numpoints; k++)
-				VectorAdd (w->p[k], origin, w->p[k]);
-			MakePatchForFace (fn, w);
+				VectorAdd(w->p[k], origin, w->p[k]);
+			MakePatchForFace(fn, w);
 		}
 	}
 
-	Sys_FPrintf( SYS_VRB, "%i square feet\n", (int)(totalarea/64));
+	Sys_FPrintf(SYS_VRB, "%i square feet\n", (int)(totalarea/64));
 }
 
 /*
@@ -259,32 +259,32 @@ static void FinishSplit (patch_t *patch, patch_t *newp)
 {
 	dleaf_t		*leaf;
 
-	VectorCopy (patch->baselight, newp->baselight);
-	VectorCopy (patch->totallight, newp->totallight);
-	VectorCopy (patch->reflectivity, newp->reflectivity);
+	VectorCopy(patch->baselight, newp->baselight);
+	VectorCopy(patch->totallight, newp->totallight);
+	VectorCopy(patch->reflectivity, newp->reflectivity);
 	newp->plane = patch->plane;
 
-	patch->area = WindingArea (patch->winding);
-	newp->area = WindingArea (newp->winding);
+	patch->area = WindingArea(patch->winding);
+	newp->area = WindingArea(newp->winding);
 
 	if (patch->area <= 1)
 		patch->area = 1;
 	if (newp->area <= 1)
 		newp->area = 1;
 
-	WindingCenter (patch->winding, patch->origin);
-	VectorAdd (patch->origin, patch->plane->normal, patch->origin);
+	WindingCenter(patch->winding, patch->origin);
+	VectorAdd(patch->origin, patch->plane->normal, patch->origin);
 	leaf = Rad_PointInLeaf(patch->origin);
 	patch->cluster = leaf->cluster;
 	if (patch->cluster == -1)
-		Sys_FPrintf( SYS_VRB, "patch->cluster == -1\n");
+		Sys_FPrintf(SYS_VRB, "patch->cluster == -1\n");
 
-	WindingCenter (newp->winding, newp->origin);
-	VectorAdd (newp->origin, newp->plane->normal, newp->origin);
+	WindingCenter(newp->winding, newp->origin);
+	VectorAdd(newp->origin, newp->plane->normal, newp->origin);
 	leaf = Rad_PointInLeaf(newp->origin);
 	newp->cluster = leaf->cluster;
 	if (newp->cluster == -1)
-		Sys_FPrintf( SYS_VRB, "patch->cluster == -1\n");
+		Sys_FPrintf(SYS_VRB, "patch->cluster == -1\n");
 }
 
 /**
@@ -320,10 +320,10 @@ static void SubdividePatch (patch_t *patch)
 		return;
 
 	/* split the winding */
-	VectorCopy (vec3_origin, split);
+	VectorCopy(vec3_origin, split);
 	split[i] = 1;
 	dist = (mins[i] + maxs[i])*0.5;
-	ClipWindingEpsilon (w, split, dist, ON_EPSILON, &o1, &o2);
+	ClipWindingEpsilon(w, split, dist, ON_EPSILON, &o1, &o2);
 
 	/* create a new patch */
 	if (num_patches == MAX_PATCHES)
@@ -337,10 +337,10 @@ static void SubdividePatch (patch_t *patch)
 	patch->winding = o1;
 	newp->winding = o2;
 
-	FinishSplit (patch, newp);
+	FinishSplit(patch, newp);
 
-	SubdividePatch (patch);
-	SubdividePatch (newp);
+	SubdividePatch(patch);
+	SubdividePatch(newp);
 }
 
 
@@ -357,19 +357,19 @@ static void DicePatch (patch_t *patch)
 	patch_t	*newp;
 
 	w = patch->winding;
-	WindingBounds (w, mins, maxs);
+	WindingBounds(w, mins, maxs);
 	for (i = 0; i < 3; i++)
-		if (floor((mins[i]+1)/subdiv) < floor((maxs[i]-1)/subdiv))
+		if (floor((mins[i] + 1) / subdiv) < floor((maxs[i] - 1) / subdiv))
 			break;
 	/* no splitting needed */
 	if (i == 3)
 		return;
 
 	/* split the winding */
-	VectorCopy (vec3_origin, split);
+	VectorCopy(vec3_origin, split);
 	split[i] = 1;
-	dist = subdiv*(1+floor((mins[i]+1)/subdiv));
-	ClipWindingEpsilon (w, split, dist, ON_EPSILON, &o1, &o2);
+	dist = subdiv * (1 + floor((mins[i] + 1) / subdiv));
+	ClipWindingEpsilon(w, split, dist, ON_EPSILON, &o1, &o2);
 
 	/* create a new patch */
 	if (num_patches == MAX_PATCHES)
@@ -383,10 +383,10 @@ static void DicePatch (patch_t *patch)
 	patch->winding = o1;
 	newp->winding = o2;
 
-	FinishSplit (patch, newp);
+	FinishSplit(patch, newp);
 
-	DicePatch (patch);
-	DicePatch (newp);
+	DicePatch(patch);
+	DicePatch(newp);
 }
 
 
@@ -403,6 +403,6 @@ extern void SubdividePatches (void)
 	/* because the list will grow */
 	num = num_patches;
 	for (i = 0; i < num ; i++)
-		DicePatch (&patches[i]);
-	Sys_FPrintf( SYS_VRB, "%i patches after subdivision\n", num_patches);
+		DicePatch(&patches[i]);
+	Sys_FPrintf(SYS_VRB, "%i patches after subdivision\n", num_patches);
 }
