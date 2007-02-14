@@ -596,6 +596,7 @@ static void SP_misc_dummy (edict_t * self)
  */
 static void SP_func_breakable (edict_t * self)
 {
+	self->classname = "breakable";
 	self->type = ET_BREAKABLE;
 	VectorSet(self->origin, 0, 0, 0);
 	/* set an inline model */
@@ -781,6 +782,7 @@ void SP_func_door (edict_t *self)
 	vec3_t	abs_movedir;
 
 	G_SetMovedir (self->angles, self->moveinfo.movedir);
+	self->classname = "door";
 	self->type = ET_DOOR;
 
 	/* some standard values */

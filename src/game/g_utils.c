@@ -372,7 +372,7 @@ static const vec3_t MOVEDIR_DOWN = { 0, 0, -1 };
  * @brief
  * @note unused
  */
-void G_SetMovedir(vec3_t angles, vec3_t movedir)
+void G_SetMovedir (vec3_t angles, vec3_t movedir)
 {
 	if (VectorCompare(angles, VEC_UP))
 		VectorCopy(MOVEDIR_UP, movedir);
@@ -387,7 +387,7 @@ void G_SetMovedir(vec3_t angles, vec3_t movedir)
 /**
  * @brief Return the yaw component of the angle vector
  */
-float vectoyaw(vec3_t vec)
+float vectoyaw (vec3_t vec)
 {
 	float yaw;
 
@@ -409,7 +409,7 @@ float vectoyaw(vec3_t vec)
 /**
  * @brief Allocates memory in TAG_LEVEL context for edicts
  */
-char *G_CopyString(char *in)
+char *G_CopyString (char *in)
 {
 	char *out;
 	size_t l = strlen(in);
@@ -423,7 +423,7 @@ char *G_CopyString(char *in)
  * @brief
  * @sa G_Spawn
  */
-static void G_InitEdict(edict_t * e)
+static void G_InitEdict (edict_t * e)
 {
 	e->inuse = qtrue;
 	e->classname = "noclass";
@@ -438,7 +438,7 @@ static void G_InitEdict(edict_t * e)
  * angles and bad trails.
  * @sa G_InitEdict
  */
-edict_t *G_Spawn(void)
+edict_t *G_Spawn (void)
 {
 	int i;
 	edict_t *e;
@@ -451,7 +451,7 @@ edict_t *G_Spawn(void)
 		}
 
 	if (i == game.maxentities)
-		gi.error("ED_Alloc: no free edicts");
+		gi.error("G_Spawn: no free edicts");
 
 	globals.num_edicts++;
 	G_InitEdict(e);
@@ -467,7 +467,7 @@ static char *entList[ENTLIST_LENGTH];
  * @sa G_CompleteRecalcRouting
  * @sa Grid_RecalcRouting
  */
-void G_RecalcRouting(edict_t * self)
+void G_RecalcRouting (edict_t * self)
 {
 	int i;
 	edict_t *ent;
@@ -486,7 +486,7 @@ void G_RecalcRouting(edict_t * self)
  * @brief
  * @sa G_RecalcRouting
  */
-void G_CompleteRecalcRouting(void)
+void G_CompleteRecalcRouting (void)
 {
 	edict_t *ent;
 

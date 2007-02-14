@@ -791,7 +791,7 @@ static void CL_ClipMoveToLEs (moveclip_t * clip)
 			}
 			headnode = cmodel->headnode;
 			angles = le->angles;
-			/* bmodel don't have a origin (it's 0, 0, 0) - they use the pos instead */
+			/* bmodel don't have an origin (it's 0, 0, 0) - they use the pos instead */
 			VectorCopy(le->pos, origin);
 		} else {
 			/* might intersect, so do an exact clip */

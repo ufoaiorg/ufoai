@@ -2348,7 +2348,7 @@ menu_t* MN_ActiveMenu (void)
  * @param[in] name Name of the menu to push onto menu stack
  * @return pointer to menu_t
  */
-menu_t* MN_PushMenuDelete (char *name, qboolean delete)
+static menu_t* MN_PushMenuDelete (const char *name, qboolean delete)
 {
 	int i;
 	menuNode_t *node;
@@ -2388,7 +2388,7 @@ menu_t* MN_PushMenuDelete (char *name, qboolean delete)
  * @param[in] name Name of the menu to push onto menu stack
  * @return pointer to menu_t
  */
-menu_t* MN_PushMenu (char *name)
+menu_t* MN_PushMenu (const char *name)
 {
 	return MN_PushMenuDelete(name, qtrue);
 }

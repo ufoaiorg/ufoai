@@ -46,7 +46,7 @@ typedef struct cmd_alias_s {
 } cmd_alias_t;
 
 static cmd_alias_t *cmd_alias;
-cmd_alias_t *cmd_alias_hash[ALIAS_HASH_SIZE];
+static cmd_alias_t *cmd_alias_hash[ALIAS_HASH_SIZE];
 
 static qboolean cmd_wait, cmd_closed;
 
@@ -440,7 +440,7 @@ static void Cmd_Alias_f (void)
 
 	/* if the alias already exists, reuse it */
 	hash = Com_HashKey (s, ALIAS_HASH_SIZE);
-	for (a = cmd_alias_hash[hash] ; a ; a=a->hash_next) {
+	for (a = cmd_alias_hash[hash]; a; a = a->hash_next) {
 		if (!Q_strncmp(s, a->name, MAX_ALIAS_NAME)) {
 			Mem_Free(a->value);
 			break;
@@ -450,6 +450,7 @@ static void Cmd_Alias_f (void)
 	if (!a) {
 		a = Mem_Alloc(sizeof(cmd_alias_t));
 		a->next = cmd_alias;
+		/* cmd_alias_hash should be null on the first run */
 		a->hash_next = cmd_alias_hash[hash];
 		cmd_alias_hash[hash] = a;
 		cmd_alias = a;
@@ -735,6 +736,7 @@ extern void Cmd_AddCommand (char *cmd_name, xcommand_t function, char *desc)
 	cmd->name = cmd_name;
 	cmd->description = desc;
 	cmd->function = function;
+	/* cmd_functions_hash should be null on the first run */
 	cmd->hash_next = cmd_functions_hash[hash];
 	cmd_functions_hash[hash] = cmd;
 	cmd->next = cmd_functions;
@@ -950,4 +952,7 @@ extern void Cmd_Init (void)
 	Cmd_AddCommand("wait", Cmd_Wait_f, NULL);
 	Cmd_AddCommand("cmdclose", Cmd_Close_f, NULL);
 	Cmd_AddCommand("cmdopen", Cmd_Open_f, NULL);
+	/* they are static - but i'm paranoid */
+	memset(cmd_alias_hash, 0, sizeof(cmd_alias_hash));
+	memset(cmd_functions_hash, 0, sizeof(cmd_functions_hash));
 }

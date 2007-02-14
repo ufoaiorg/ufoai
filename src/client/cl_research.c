@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_global.h"
 
 #define TECH_HASH_SIZE 64
-technology_t *tech_hash[TECH_HASH_SIZE];
+static technology_t *tech_hash[TECH_HASH_SIZE];
 
 qboolean RS_TechIsResearchable(technology_t *t);
 
@@ -1303,6 +1303,8 @@ void RS_ResetResearch (void)
 	Cmd_AddCommand("research_all", RS_DebugResearchAll, NULL);
 	Cmd_AddCommand("researchable_all", RS_DebugResearchableAll, NULL);
 #endif
+	/* they are static - but i'm paranoid */
+	memset(tech_hash, 0, sizeof(tech_hash));
 }
 
 /**
@@ -1369,7 +1371,13 @@ extern void RS_ParseTechnologies (char *id, char **text)
 	Com_sprintf(tech->description, MAX_VAR, _("No description available."));
 
 	/* link the variable in */
+	/* tech_hash should be null on the first run */
 	tech->hash_next = tech_hash[hash];
+	/* set the tech_hash pointer to the current tech */
+	/* if there were already others in tech_hash at position hash, they are now
+	 * accessable via tech->next - loop until tech->next is null (the first tech
+	 * at that position)
+	 */
 	tech_hash[hash] = tech;
 
 	tech->type = RS_TECH;

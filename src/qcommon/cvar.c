@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define CVAR_HASH_SIZE          64
 
-cvar_t  *cvar_vars_hash[CVAR_HASH_SIZE];
+static cvar_t *cvar_vars_hash[CVAR_HASH_SIZE];
 
 /**
  * @brief This is set each time a CVAR_USERINFO variable is changed
@@ -305,7 +305,13 @@ extern cvar_t *Cvar_Get(const char *var_name, const char *var_value, int flags, 
 	var->description = desc;
 
 	/* link the variable in */
+	/* cvar_vars_hash should be null on the first run */
 	var->hash_next = cvar_vars_hash[hash];
+	/* set the cvar_vars_hash pointer to the current cvar */
+	/* if there were already others in cvar_vars_hash at position hash, they are
+	 * now accessable via var->next - loop until var->next is null (the first
+	 * cvar at that position)
+	 */
 	cvar_vars_hash[hash] = var;
 	var->next = cvar_vars;
 	cvar_vars = var;
@@ -711,4 +717,6 @@ extern void Cvar_Init(void)
 	Cmd_AddCommand("set", Cvar_Set_f, NULL);
 	Cmd_AddCommand("copy", Cvar_Copy_f, NULL);
 	Cmd_AddCommand("cvarlist", Cvar_List_f, NULL);
+	/* they are static - but i'm paranoid */
+	memset(cvar_vars_hash, 0, sizeof(cvar_vars_hash));
 }
