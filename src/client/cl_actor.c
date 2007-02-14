@@ -1109,7 +1109,7 @@ void CL_ActorUpdateCVars (void)
 			selWeapon = RIGHT(selActor);
 
 		if (selWeapon) {
-			if (selWeapon->item.m == NONE) {
+			if (selWeapon->item.t == NONE) {
 				selFD = NULL;
 			} else {
 #ifdef PARANOID
@@ -1117,12 +1117,24 @@ void CL_ActorUpdateCVars (void)
 						INV_FiredefsIDXForWeapon(&csi.ods[selWeapon->item.m],
 						selWeapon->item.t), cl.cfiremode)
 #endif
-				selFD = GET_FIREDEF(selWeapon->item.m,
-						INV_FiredefsIDXForWeapon(&csi.ods[selWeapon->item.m],
+				/* Check whether this item use ammo. */
+				if (selWeapon->item.m == NONE) {
+					/* This item does not use ammo, check for existing firedefs in this item. */
+					if (csi.ods[selWeapon->item.t].numFiredefs > 0) {
+						/* Get firedef from the weapon entry instead. */
+						selFD = GET_FIREDEF(selWeapon->item.t,
+						INV_FiredefsIDXForWeapon(&csi.ods[selWeapon->item.t],
 						selWeapon->item.t), cl.cfiremode);
+					} else {
+						selFD = NULL;
+					}
+				} else {
+					/* This item uses ammo, get the firedefs from ammo. */
+					selFD = GET_FIREDEF(selWeapon->item.m,
+					INV_FiredefsIDXForWeapon(&csi.ods[selWeapon->item.m],
+					selWeapon->item.t), cl.cfiremode);
+				}
 			}
-		} else {
-			selFD = NULL;
 		}
 
 		/* write info */
