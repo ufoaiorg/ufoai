@@ -1024,8 +1024,11 @@ typedef struct objDef_s {
 	int buytype;		/**< In which category of the buy menu is this item listed. */
 
 	/* Weapon specific */
-	int ammo;			/**< how much can we load into this weapon at once */
-	int reload;			/**< time units for reloading the weapon */
+	int ammo;			/**< How much can we load into this weapon at once. */
+	int reload;			/**< Time units (TUs) for reloading the weapon. */
+	byte oneshot;			/**< This weapon contains its own ammo (it is loaded in the base).
+					 ** Don't confuse "oneshot" with "only one shot is possible",
+					 ** the number of the "ammo" value above defines how many shots are possible. */
 
 	/* Firemodes (per weapon) */
 	char weap_id[MAX_WEAPONS_PER_OBJDEF][MAX_VAR];	/**< List of weapon ids as parsed from the ufo file "weapon_mod <id>" */

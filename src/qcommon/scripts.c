@@ -65,6 +65,7 @@ static const value_t od_vals[] = {
 	{"headgear", V_BOOL, offsetof(objDef_t, headgear)},
 	{"thrown", V_BOOL, offsetof(objDef_t, thrown)},
 	{"ammo", V_INT, offsetof(objDef_t, ammo)},
+	{"oneshot", V_BOOL, offsetof(objDef_t, oneshot)},
 	{"reload", V_INT, offsetof(objDef_t, reload)},
 	{"price", V_INT, offsetof(objDef_t, price)},
 	{"buytype", V_INT, offsetof(objDef_t, buytype)},

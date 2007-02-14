@@ -431,7 +431,16 @@ static item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
 
 	if (csi.ods[type].weap_idx[0] >= 0) {
 		/* The given item is ammo or self-contained weapon (i.e. It has firedefinitions. */
-		return item;
+		if (csi.ods[type].oneshot) {
+			/* "Recharge" the oneshot weapon. */
+			item.a = csi.ods[type].ammo;
+			item.m = item.t; /* Just in case this hasn't been done yet. */
+			Com_Printf("CL_AddWeaponAmmo: oneshot weapon '%s'.\n", csi.ods[type].id);
+			return item;
+		} else {
+			/* No change, nothing needs to be done to this item. */
+			return item;
+		}
 	} else if (!csi.ods[type].reload) {
 		/* The given item is a weapon but no ammo is needed,
 		 * so fire definitions are in t (the weapon). Setting equal. */

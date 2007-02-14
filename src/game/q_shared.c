@@ -2756,23 +2756,30 @@ int Com_PackAmmoAndWeapon (inventory_t* const inv, const int weapon, const int e
 	if (!CSI->ods[weapon].reload) {
 		item.m = item.t; /* no ammo needed, so fire definitions are in t */
 	} else {
-		max_price = 0;
-		/* find some suitable ammo for the weapon */
-		for (i = CSI->numODs - 1; i >= 0; i--)
-			if (equip[i]
-			&& INV_LoadableInWeapon(&CSI->ods[i], weapon)
-			&& (CSI->ods[i].price > max_price) ) {
-				ammo = i;
-				max_price = CSI->ods[i].price;
-			}
+		if (CSI->ods[weapon].oneshot) {
+			/* The weapon provides its own ammo (i.e. it is charged or loaded in the base.) */
+			item.a = CSI->ods[weapon].ammo;
+			item.m = weapon;
+			Com_Printf("Com_PackAmmoAndWeapon: oneshot weapon '%s' in equipment '%s'.\n", CSI->ods[weapon].id, name);
+		} else {
+			max_price = 0;
+			/* find some suitable ammo for the weapon */
+			for (i = CSI->numODs - 1; i >= 0; i--)
+				if (equip[i]
+				&& INV_LoadableInWeapon(&CSI->ods[i], weapon)
+				&& (CSI->ods[i].price > max_price) ) {
+					ammo = i;
+					max_price = CSI->ods[i].price;
+				}
 
-		if (ammo < 0) {
-			Com_DPrintf("Com_PackAmmoAndWeapon: no ammo for sidearm or primary weapon '%s' in equipment '%s'.\n", CSI->ods[weapon].id, name);
-			return 0;
+			if (ammo < 0) {
+				Com_DPrintf("Com_PackAmmoAndWeapon: no ammo for sidearm or primary weapon '%s' in equipment '%s'.\n", CSI->ods[weapon].id, name);
+				return 0;
+			}
+			/* load ammo */
+			item.a = CSI->ods[weapon].ammo;
+			item.m = ammo;
 		}
-		/* load ammo */
-		item.a = CSI->ods[weapon].ammo;
-		item.m = ammo;
 	}
 
 	if (item.m == NONE) {

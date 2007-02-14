@@ -121,6 +121,8 @@ item stunrod
 	price		2400
 	buytype	1
 	thrown	false
+	oneshot true
+	ammo 4
 
 	weapon_mod stunrod
 	{
@@ -135,6 +137,7 @@ item stunrod
 			speed	0
 			range	1.5
 			shots	1
+			ammo	1
 			time	7
 			damage	"60 20"
 			dmgtype stun
@@ -151,6 +154,7 @@ item stunrod
 			speed	0
 			range	1.5
 			shots	2
+			ammo	2
 			rof		5
 			time	11
 			damage	"50 20"
@@ -229,6 +233,8 @@ item plasblade
 	price		3710
 	buytype		1
 	thrown		true
+	oneshot true
+	ammo 1
 
 	weapon_mod plasblade
 	{
