@@ -148,13 +148,13 @@ void R_DrawAliasMD3Model (entity_t *e)
 		qglEnable (GL_BLEND);
 
 	if ((e->frame >= paliashdr->num_frames) || (e->frame < 0)) {
-		ri.Con_Printf (PRINT_ALL, "R_DrawAliasMD3Model %s: no such frame %d\n", currentmodel->name, e->frame);
+		ri.Con_Printf(PRINT_ALL, "R_DrawAliasMD3Model %s: no such frame %d\n", currentmodel->name, e->frame);
 		e->frame = 0;
 		e->oldframe = 0;
 	}
 
 	if ((e->oldframe >= paliashdr->num_frames) || (e->oldframe < 0)) {
-		ri.Con_Printf (PRINT_ALL, "R_DrawAliasModel %s: no such oldframe %d\n",
+		ri.Con_Printf(PRINT_ALL, "R_DrawAliasModel %s: no such oldframe %d\n",
 			currentmodel->name, e->oldframe);
 		e->frame = 0;
 		e->oldframe = 0;
@@ -193,7 +193,7 @@ void R_DrawAliasMD3Model (entity_t *e)
 	if (gl_fog->value && r_newrefdef.fog)
 		qglDisable(GL_FOG);
 
-	for (i=0; i < paliashdr->num_meshes; i++) {
+	for (i = 0; i < paliashdr->num_meshes; i++) {
 		skin = currentmodel->skins[e->skinnum];
 		if (!skin)
 			skin = r_notexture;

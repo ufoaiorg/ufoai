@@ -170,31 +170,31 @@ int GLimp_SetMode( int *pwidth, int *pheight, int mode, qboolean fullscreen )
 
 	fprintf(stderr, "GLimp_SetMode\n");
 
-	ri.Con_Printf( PRINT_ALL, "Initializing OpenGL display\n");
+	ri.Con_Printf(PRINT_ALL, "Initializing OpenGL display\n");
 
-	ri.Con_Printf (PRINT_ALL, "...setting mode %d:", mode );
+	ri.Con_Printf(PRINT_ALL, "...setting mode %d:", mode);
 
 	if (!ri.Vid_GetModeInfo(&width, &height, mode)) {
-		ri.Con_Printf( PRINT_ALL, " invalid mode\n" );
+		ri.Con_Printf(PRINT_ALL, " invalid mode\n");
 		return rserr_invalid_mode;
 	}
 
-	ri.Con_Printf( PRINT_ALL, " %d %d\n", width, height );
+	ri.Con_Printf(PRINT_ALL, " %d %d\n", width, height);
 
 	/* destroy the existing window */
-	GLimp_Shutdown ();
+	GLimp_Shutdown();
 
 	*pwidth = width;
 	*pheight = height;
 
-	if ( !GLimp_InitGraphics( fullscreen ) ) {
+	if (!GLimp_InitGraphics(fullscreen)) {
 		/* failed to set a valid mode in windowed mode */
 		return rserr_invalid_mode;
 	}
 /* 	gl_cx = glXCreateContext( x_disp, x_visinfo, 0, True ); */
 
 	/* let the sound and input subsystems know about the new window */
-	ri.Vid_NewWindow (width, height);
+	ri.Vid_NewWindow(width, height);
 
 	return rserr_ok;
 }
@@ -423,9 +423,9 @@ qboolean GLimp_InitGraphics( qboolean fullscreen )
 		XSizeHints              sizehints;
 		XWindowChanges  changes;
 
-		aHints = XInternAtom( x_disp, "_MOTIF_WM_HINTS", 0 );
+		aHints = XInternAtom(x_disp, "_MOTIF_WM_HINTS", 0);
 		if (aHints == None) {
-			ri.Con_Printf( PRINT_ALL, "Could not intern X atom for _MOTIF_WM_HINTS." );
+			ri.Con_Printf(PRINT_ALL, "Could not intern X atom for _MOTIF_WM_HINTS.");
 		} else {
 			wmhints.flags = MWM_HINTS_DECORATIONS;
 			wmhints.decorations = 0; /* Absolutely no decorations. */
@@ -456,8 +456,7 @@ qboolean GLimp_InitGraphics( qboolean fullscreen )
 	/* wait for first exposure event */
 	{
 		XEvent event;
-		do
-		{
+		do {
 			XNextEvent(x_disp, &event);
 			if (event.type == Expose && !event.xexpose.count)
 				oktodraw = qtrue;
@@ -465,21 +464,19 @@ qboolean GLimp_InitGraphics( qboolean fullscreen )
 	}
 	/* now safe to draw */
 
-        gl_cx = glXCreateContext( x_disp, x_visinfo, 0, True );
-	if (!glXMakeCurrent( x_disp, x_win, gl_cx ))
-		Sys_Error( "Can't make window current to context\n" );
+        gl_cx = glXCreateContext(x_disp, x_visinfo, 0, True);
+	if (!glXMakeCurrent(x_disp, x_win, gl_cx))
+		Sys_Error("Can't make window current to context\n");
 
 	/* even if MITSHM is available, make sure it's a local connection */
 #if 0
 	/* This is messing up the DISPLAY environment variable so can't close and */
 	/* reopen the window (it lops off the :0.0)... */
-	if (XShmQueryExtension(x_disp))
-	{
+	if (XShmQueryExtension(x_disp)) {
 		char *displayname;
 		doShm = qtrue;
 		displayname = (char *) getenv("DISPLAY");
-		if (displayname)
-		{
+		if (displayname) {
 			char *d = displayname;
 			while (*d && (*d != ':')) d++;
 			if (*d) *d = 0;
@@ -490,8 +487,7 @@ qboolean GLimp_InitGraphics( qboolean fullscreen )
 #endif
 
 #if 0
-	if (doShm)
-	{
+	if (doShm) {
 		x_shmeventtype = XShmGetEventBase(x_disp) + ShmCompletion;
 		ResetSharedFrameBuffers();
 	}
@@ -514,9 +510,8 @@ qboolean GLimp_InitGraphics( qboolean fullscreen )
 /**
  * @brief
  */
-int XLateKey(XKeyEvent *ev)
+int XLateKey (XKeyEvent *ev)
 {
-
 	int key;
 	char buf[64];
 	KeySym keysym;
@@ -525,8 +520,7 @@ int XLateKey(XKeyEvent *ev)
 
 	XLookupString(ev, buf, sizeof buf, &keysym, 0);
 
-	switch(keysym)
-	{
+	switch(keysym) {
 		case XK_KP_Page_Up:	 key = K_KP_PGUP; break;
 		case XK_Page_Up:	 key = K_PGUP; break;
 
@@ -648,7 +642,7 @@ int XLateKey(XKeyEvent *ev)
 /**
  * @brief
  */
-void GetEvent(void)
+void GetEvent (void)
 {
 	XEvent x_event;
 	int b;

@@ -1005,7 +1005,7 @@ static cmdList_t r_commands[] = {
 /**
  * @brief
  */
-static void R_Register(void)
+static void R_Register (void)
 {
 	cmdList_t *commands;
 
@@ -1125,24 +1125,24 @@ static qboolean R_SetMode (void)
 	gl_mode->modified = qfalse;
 	gl_ext_texture_compression->modified = qfalse;
 
-	if ( ( err = GLimp_SetMode( &vid.width, &vid.height, gl_mode->value, fullscreen ) ) == rserr_ok )
+	if ((err = GLimp_SetMode(&vid.width, &vid.height, gl_mode->value, fullscreen)) == rserr_ok)
 		gl_state.prev_mode = gl_mode->value;
 	else {
-		if ( err == rserr_invalid_fullscreen ) {
-			ri.Cvar_SetValue( "vid_fullscreen", 0);
+		if (err == rserr_invalid_fullscreen) {
+			ri.Cvar_SetValue("vid_fullscreen", 0);
 			vid_fullscreen->modified = qfalse;
-			ri.Con_Printf( PRINT_ALL, "ref_gl::R_SetMode() - fullscreen unavailable in this mode\n" );
-			if ( ( err = GLimp_SetMode( &vid.width, &vid.height, gl_mode->value, qfalse ) ) == rserr_ok )
+			ri.Con_Printf(PRINT_ALL, "ref_gl::R_SetMode() - fullscreen unavailable in this mode\n");
+			if ((err = GLimp_SetMode(&vid.width, &vid.height, gl_mode->value, qfalse)) == rserr_ok)
 				return qtrue;
-		} else if ( err == rserr_invalid_mode ) {
-			ri.Cvar_SetValue( "gl_mode", gl_state.prev_mode );
+		} else if (err == rserr_invalid_mode) {
+			ri.Cvar_SetValue("gl_mode", gl_state.prev_mode);
 			gl_mode->modified = qfalse;
-			ri.Con_Printf( PRINT_ALL, "ref_gl::R_SetMode() - invalid mode\n" );
+			ri.Con_Printf(PRINT_ALL, "ref_gl::R_SetMode() - invalid mode\n");
 		}
 
 		/* try setting it back to something safe */
-		if ( ( err = GLimp_SetMode( &vid.width, &vid.height, gl_state.prev_mode, qfalse ) ) != rserr_ok ) {
-			ri.Con_Printf( PRINT_ALL, "ref_gl::R_SetMode() - could not revert to safe mode\n" );
+		if ((err = GLimp_SetMode(&vid.width, &vid.height, gl_state.prev_mode, qfalse)) != rserr_ok) {
+			ri.Con_Printf(PRINT_ALL, "ref_gl::R_SetMode() - could not revert to safe mode\n");
 			return qfalse;
 		}
 	}
@@ -1152,7 +1152,7 @@ static qboolean R_SetMode (void)
 /**
  * @brief
  */
-static qboolean R_Init( HINSTANCE hinstance, WNDPROC wndproc )
+static qboolean R_Init (HINSTANCE hinstance, WNDPROC wndproc)
 {
 	char renderer_buffer[1000];
 	char vendor_buffer[1000];
@@ -1161,24 +1161,24 @@ static qboolean R_Init( HINSTANCE hinstance, WNDPROC wndproc )
 	extern float r_turbsin[256];
 	int aniso_level, max_aniso;
 
-	for ( j = 0; j < 256; j++ )
+	for (j = 0; j < 256; j++)
 		r_turbsin[j] *= 0.5;
 
-	ri.Con_Printf (PRINT_ALL, "ref_gl version: "REF_VERSION"\n");
+	ri.Con_Printf(PRINT_ALL, "ref_gl version: "REF_VERSION"\n");
 
-	Draw_GetPalette ();
+	Draw_GetPalette();
 
 	R_Register();
 
 	/* initialize our QGL dynamic bindings */
-	if ( !QGL_Init( gl_driver->string ) ) {
+	if (!QGL_Init( gl_driver->string)) {
 		QGL_Shutdown();
-		ri.Con_Printf (PRINT_ALL, "ref_gl::R_Init() - could not load \"%s\"\n", gl_driver->string );
+		ri.Con_Printf(PRINT_ALL, "ref_gl::R_Init() - could not load \"%s\"\n", gl_driver->string);
 		return qfalse;
 	}
 
 	/* initialize OS-specific parts of OpenGL */
-	if ( !GLimp_Init( hinstance, wndproc ) ) {
+	if (!GLimp_Init(hinstance, wndproc)) {
 		QGL_Shutdown();
 		return qfalse;
 	}
@@ -1187,59 +1187,58 @@ static qboolean R_Init( HINSTANCE hinstance, WNDPROC wndproc )
 	gl_state.prev_mode = 3;
 
 	/* create the window and set up the context */
-	if ( !R_SetMode () ) {
+	if (!R_SetMode()) {
 		QGL_Shutdown();
-		ri.Con_Printf (PRINT_ALL, "ref_gl::R_Init() - could not R_SetMode()\n" );
+		ri.Con_Printf(PRINT_ALL, "ref_gl::R_Init() - could not R_SetMode()\n");
 		return qfalse;
 	}
 
 	/* get our various GL strings */
 	gl_config.vendor_string = (char *)qglGetString (GL_VENDOR);
-	ri.Con_Printf (PRINT_ALL, "GL_VENDOR: %s\n", gl_config.vendor_string );
+	ri.Con_Printf(PRINT_ALL, "GL_VENDOR: %s\n", gl_config.vendor_string);
 	gl_config.renderer_string = (char *)qglGetString (GL_RENDERER);
-	ri.Con_Printf (PRINT_ALL, "GL_RENDERER: %s\n", gl_config.renderer_string );
+	ri.Con_Printf(PRINT_ALL, "GL_RENDERER: %s\n", gl_config.renderer_string);
 	gl_config.version_string = (char *)qglGetString (GL_VERSION);
-	ri.Con_Printf (PRINT_ALL, "GL_VERSION: %s\n", gl_config.version_string );
+	ri.Con_Printf(PRINT_ALL, "GL_VERSION: %s\n", gl_config.version_string);
 	gl_config.extensions_string = (char *)qglGetString (GL_EXTENSIONS);
-	ri.Con_Printf (PRINT_ALL, "GL_EXTENSIONS: %s\n", gl_config.extensions_string );
+	ri.Con_Printf(PRINT_ALL, "GL_EXTENSIONS: %s\n", gl_config.extensions_string);
 
-	Q_strncpyz( renderer_buffer, gl_config.renderer_string, sizeof(renderer_buffer) );
+	Q_strncpyz(renderer_buffer, gl_config.renderer_string, sizeof(renderer_buffer));
 	renderer_buffer[sizeof(renderer_buffer)-1] = 0;
-	Q_strlwr( renderer_buffer );
+	Q_strlwr(renderer_buffer);
 
-	Q_strncpyz( vendor_buffer, gl_config.vendor_string, sizeof(vendor_buffer) );
+	Q_strncpyz( vendor_buffer, gl_config.vendor_string, sizeof(vendor_buffer));
 	vendor_buffer[sizeof(vendor_buffer)-1] = 0;
-	Q_strlwr( vendor_buffer );
+	Q_strlwr(vendor_buffer);
 
-	if ( strstr( renderer_buffer, "voodoo" ) ) {
-		if ( !strstr( renderer_buffer, "rush" ) )
+	if (strstr(renderer_buffer, "voodoo")) {
+		if (!strstr(renderer_buffer, "rush"))
 			gl_config.renderer = GL_RENDERER_VOODOO;
 		else
 			gl_config.renderer = GL_RENDERER_VOODOO_RUSH;
-	} else if ( strstr( vendor_buffer, "sgi" ) )
+	} else if (strstr(vendor_buffer, "sgi"))
 		gl_config.renderer = GL_RENDERER_SGI;
-	else if ( strstr( renderer_buffer, "permedia" ) )
+	else if (strstr(renderer_buffer, "permedia"))
 		gl_config.renderer = GL_RENDERER_PERMEDIA2;
-	else if ( strstr( renderer_buffer, "glint" ) )
+	else if (strstr(renderer_buffer, "glint"))
 		gl_config.renderer = GL_RENDERER_GLINT_MX;
-	else if ( strstr( renderer_buffer, "glzicd" ) )
+	else if (strstr(renderer_buffer, "glzicd"))
 		gl_config.renderer = GL_RENDERER_REALIZM;
-	else if ( strstr( renderer_buffer, "gdi" ) )
+	else if (strstr(renderer_buffer, "gdi"))
 		gl_config.renderer = GL_RENDERER_MCD;
-	else if ( strstr( renderer_buffer, "pcx2" ) )
+	else if (strstr(renderer_buffer, "pcx2"))
 		gl_config.renderer = GL_RENDERER_PCX2;
-	else if ( strstr( renderer_buffer, "verite" ) )
+	else if (strstr(renderer_buffer, "verite"))
 		gl_config.renderer = GL_RENDERER_RENDITION;
 	else
 		gl_config.renderer = GL_RENDERER_OTHER;
 
-	if ( toupper( gl_monolightmap->string[1] ) != 'F' ) {
-		if ( gl_config.renderer == GL_RENDERER_PERMEDIA2 ) {
-			ri.Cvar_Set( "gl_monolightmap", "A" );
-			ri.Con_Printf( PRINT_ALL, "...using gl_monolightmap ' a '\n" );
-		}
-		else if ( gl_config.renderer & GL_RENDERER_POWERVR )
-			ri.Cvar_Set( "gl_monolightmap", "0" );
+	if (toupper(gl_monolightmap->string[1]) != 'F') {
+		if (gl_config.renderer == GL_RENDERER_PERMEDIA2) {
+			ri.Cvar_Set("gl_monolightmap", "A");
+			ri.Con_Printf(PRINT_ALL, "...using gl_monolightmap ' a '\n");
+		} else if (gl_config.renderer & GL_RENDERER_POWERVR)
+			ri.Cvar_Set("gl_monolightmap", "0");
 		else
 			ri.Cvar_Set( "gl_monolightmap", "0" );
 	}
@@ -1329,11 +1328,11 @@ static qboolean R_Init( HINSTANCE hinstance, WNDPROC wndproc )
 		if (gl_ext_texture_compression->value) {
 			ri.Con_Printf(PRINT_ALL, "...using GL_ARB_texture_compression\n");
 			if (gl_ext_s3tc_compression->value && strstr(gl_config.extensions_string, "GL_EXT_texture_compression_s3tc")) {
-/*				ri.Con_Printf( PRINT_ALL, "   with s3tc compression\n" ); */
+/*				ri.Con_Printf(PRINT_ALL, "   with s3tc compression\n"); */
 				gl_compressed_solid_format = GL_COMPRESSED_RGB_S3TC_DXT1_EXT;
 				gl_compressed_alpha_format = GL_COMPRESSED_RGBA_S3TC_DXT5_EXT;
 			} else {
-/*				ri.Con_Printf( PRINT_ALL, "   without s3tc compression\n" ); */
+/*				ri.Con_Printf(PRINT_ALL, "   without s3tc compression\n"); */
 				gl_compressed_solid_format = GL_COMPRESSED_RGB_ARB;
 				gl_compressed_alpha_format = GL_COMPRESSED_RGBA_ARB;
 			}

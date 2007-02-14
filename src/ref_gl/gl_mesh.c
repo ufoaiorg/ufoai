@@ -312,7 +312,7 @@ void R_EnableLights(qboolean fixed, float *matrix, float *lightparam, float *lig
 			VectorMA(sumColor, bright, light->color, sumColor);
 			VectorScale(delta, 1.0 / sqrt(lsqr), delta);
 			VectorMA(sumDelta, bright, delta, sumDelta);
-/*			ri.Con_Printf( PRINT_ALL, "%f %f\n", bright, VectorLength( delta ) ); */
+/*			ri.Con_Printf(PRINT_ALL, "%f %f\n", bright, VectorLength(delta)); */
 		}
 	}
 

@@ -226,11 +226,11 @@ rserr_t GLimp_SetMode (unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 	if (fullscreen) {
 		DEVMODE dm;
 
-		ri.Con_Printf( PRINT_ALL, "...attempting fullscreen\n" );
+		ri.Con_Printf(PRINT_ALL, "...attempting fullscreen\n");
 
-		memset( &dm, 0, sizeof( dm ) );
+		memset(&dm, 0, sizeof(dm));
 
-		dm.dmSize = sizeof( dm );
+		dm.dmSize = sizeof(dm);
 		dm.dmPelsWidth  = width;
 		dm.dmPelsHeight = height;
 		dm.dmFields     = DM_PELSWIDTH | DM_PELSHEIGHT;
@@ -399,7 +399,7 @@ qboolean GLimp_Init (HINSTANCE hinstance, WNDPROC wndproc)
 					glw_state.allowdisplaydepthchange = qtrue;
 		}
 	} else {
-		ri.Con_Printf( PRINT_ALL, "GLimp_Init() - GetVersionEx failed\n" );
+		ri.Con_Printf(PRINT_ALL, "GLimp_Init() - GetVersionEx failed\n");
 		return qfalse;
 	}
 

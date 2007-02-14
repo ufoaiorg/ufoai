@@ -126,13 +126,13 @@ void GL_ScreenShot_f(void)
 	/* Set necessary values */
 	switch (type) {
 	case SSHOTTYPE_TGA:
-		ri.Con_Printf (PRINT_ALL, "Taking TGA screenshot...\n");
+		ri.Con_Printf(PRINT_ALL, "Taking TGA screenshot...\n");
 		quality = 100;
 		ext = "tga";
 		break;
 
 	case SSHOTTYPE_PNG:
-		ri.Con_Printf (PRINT_ALL, "Taking PNG screenshot...\n");
+		ri.Con_Printf(PRINT_ALL, "Taking PNG screenshot...\n");
 		quality = 100;
 		ext = "png";
 		break;
@@ -145,15 +145,15 @@ void GL_ScreenShot_f(void)
 		if (quality > 100 || quality <= 0)
 			quality = 100;
 
-		ri.Con_Printf (PRINT_ALL, "Taking JPG screenshot (at %i%% quality)...\n", quality);
+		ri.Con_Printf(PRINT_ALL, "Taking JPG screenshot (at %i%% quality)...\n", quality);
 		ext = "jpg";
 		break;
 	}
 
 	/* Find a file name to save it to */
-	for (shotNum = 0 ; shotNum < 1000 ; shotNum++) {
+	for (shotNum = 0; shotNum < 1000; shotNum++) {
 		Com_sprintf(checkName, MAX_OSPATH, "%s/scrnshot/ufo%i%i.%s", ri.FS_Gamedir(), shotNum / 10, shotNum % 10, ext);
-		f = fopen (checkName, "rb");
+		f = fopen(checkName, "rb");
 		if (!f)
 			break;
 		fclose (f);
@@ -162,45 +162,45 @@ void GL_ScreenShot_f(void)
 	ri.FS_CreatePath(checkName);
 
 	/* Open it */
-	f = fopen (checkName, "wb");
+	f = fopen(checkName, "wb");
 
 	if (!f) {
-		ri.Con_Printf (PRINT_ALL, "GL_ScreenShot_f: Couldn't create file: %s\n", checkName);
+		ri.Con_Printf(PRINT_ALL, "GL_ScreenShot_f: Couldn't create file: %s\n", checkName);
 		return;
 	}
 
 	if (shotNum == 1000) {
-		ri.Con_Printf (PRINT_ALL, "GL_ScreenShot_f: screenshot limit (of 1000) exceeded!\n");
-		fclose (f);
+		ri.Con_Printf(PRINT_ALL, "GL_ScreenShot_f: screenshot limit (of 1000) exceeded!\n");
+		fclose(f);
 		return;
 	}
 
 	/* Allocate room for a copy of the framebuffer */
-	buffer = malloc (vid.width * vid.height * 3);
+	buffer = malloc(vid.width * vid.height * 3);
 
 	/* Read the framebuffer into our storage */
-	qglReadPixels (0, 0, vid.width, vid.height, GL_RGB, GL_UNSIGNED_BYTE, buffer);
+	qglReadPixels(0, 0, vid.width, vid.height, GL_RGB, GL_UNSIGNED_BYTE, buffer);
 
 	/* Write */
 	switch (type) {
 	case SSHOTTYPE_TGA:
-		WriteTGA (f, buffer, vid.width, vid.height);
+		WriteTGA(f, buffer, vid.width, vid.height);
 		break;
 
 	case SSHOTTYPE_PNG:
-		WritePNG (f, buffer, vid.width, vid.height);
+		WritePNG(f, buffer, vid.width, vid.height);
 		break;
 
 	case SSHOTTYPE_JPG:
-		WriteJPG (f, buffer, vid.width, vid.height, quality);
+		WriteJPG(f, buffer, vid.width, vid.height, quality);
 		break;
 	}
 
 	/* Finish */
-	fclose (f);
-	free (buffer);
+	fclose(f);
+	free(buffer);
 
-	ri.Con_Printf (PRINT_ALL, "Wrote %s\n", checkName);
+	ri.Con_Printf(PRINT_ALL, "Wrote %s\n", checkName);
 }
 
 

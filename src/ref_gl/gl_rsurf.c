@@ -1165,5 +1165,5 @@ void GL_EndBuildingLightmaps(void)
 {
 	LM_UploadBlock(qfalse);
 	GL_EnableMultitexture(qfalse);
-/*	ri.Con_Printf( PRINT_ALL, "lightmaps: %i\n", gl_lms.current_lightmap_texture ); */
+/*	ri.Con_Printf(PRINT_ALL, "lightmaps: %i\n", gl_lms.current_lightmap_texture); */
 }
