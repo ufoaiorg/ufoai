@@ -90,9 +90,9 @@ up_chapters main
 	threat	"_The Alien Threat"
 }
 
-//========================
-// Basic Technologies
-//========================
+//============================
+// Main Research Technologies
+//============================
 
 tech rs_laser
 {
@@ -106,6 +106,23 @@ tech rs_laser
 
 	time	1500
 	image_top	techs/laser
+}
+
+tech rs_antimatter
+{
+	type		tech
+	name		"_Antimatter"
+	up_chapter	tech
+	description	"_antimatter_txt"
+	pre_description	"_antimatter_pre_txt"
+
+	require_AND
+	{
+		tech rs_craft_ufo_scout
+	}
+
+	time 2800
+//	image_top	techs/antimatter
 }
 
 // Should contain _every_ enemy possible.
@@ -136,13 +153,13 @@ tech rs_contained_organic_alien
 	}
 }
 
-tech rs_live_alien
+tech rs_alien_live
 {
 	type	tech
 	name	"_Live Alien"
 	up_chapter	aliens
-	description	"_live_alien_txt"
-	pre_description	"_live_alien_pre_txt"
+	description	"_alien_live_txt"
+	pre_description	"_alien_live_pre_txt"
 	require_AND
 	{
 		tech rs_alien_breathing
@@ -171,22 +188,6 @@ tech rs_alien_breathing
 //	image_top	techs/alienbreathing //TODO: add image
 }
 
-tech rs_monomolecular_blades
-{
-	type	tech
-	name	"_Monomolecular Blades"
-	up_chapter	artifacts
-	description	"_monomolecular_blades_txt"
-	pre_description	"_monomolecular_blades_pre_txt"
-
-	require_AND
-	{
-		item	kerrblade 1
-		tech rs_alien_bloodspider_autopsy
-	}
-	time	1500
-}
-
 tech rs_alien_mind
 {
 	type	tech
@@ -197,11 +198,29 @@ tech rs_alien_mind
 
 	require_AND
 	{
-		tech rs_live_alien
+		tech rs_alien_live
+		//TODO alien Unknown 3
+		
+
 	}
 	time	1500
 }
 
+tech rs_alien_oddbehaviour
+{
+	type		tech
+	name		"_Odd Behaviour"
+	up_chapter	threat
+	description	"_alien_odd_behaviour_txt"
+	pre_description	"_alien_odd_behaviour_pre_txt"
+
+	require_AND
+	{
+		tech rs_alien_mind
+		//TODO alien Unknown 10
+	}
+	time		1500
+}
 
 //=================================
 // weapons and items
@@ -299,7 +318,8 @@ tech rs_weapon_monoknife
 
 	require_AND
 	{
-		tech rs_monomolecular_blades
+		tech rs_weapon_kerrblade
+		tech rs_alien_bloodspider_autopsy
 		tech rs_skill_close
 		tech rs_damage_normal
 	}
@@ -1180,7 +1200,7 @@ tech rs_weapon_stungren
 
 	require_AND
 	{
-		tech rs_live_alien
+		tech rs_alien_live
 		tech rs_alien_ortnok_autopsy
 		tech rs_alien_taman_autopsy
 		tech rs_contained_organic_alien	// LOGIC tech - see there for more
