@@ -642,7 +642,7 @@ void GLimp_EndFrame (void)
  */
 rserr_t GLimp_SetMode (unsigned int *pwidth, unsigned int *pheight, int mode, qboolean fullscreen)
 {
-	ri.Con_Printf (PRINT_ALL, "setting mode %d:", mode );
+	ri.Con_Printf(PRINT_ALL, "setting mode %d:", mode );
 
 	if (!ri.Vid_GetModeInfo((int*)pwidth, (int*)pheight, mode)) {
 		ri.Con_Printf(PRINT_ALL, " invalid mode\n");

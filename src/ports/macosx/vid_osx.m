@@ -98,8 +98,8 @@ static CGDisplayCount	gVIDGammaCount = 0;
 extern void	IN_ShowCursor (qboolean theState);
 extern void	Sys_Sleep (void);
 
-void 		VID_Printf (int thePrintLevel, char *theFormat, ...);
-void 		VID_Error (int theErrorLevel, char *theFormat, ...);
+void 		VID_Printf (int thePrintLevel, const char *theFormat, ...);
+void 		VID_Error (int theErrorLevel, const char *theFormat, ...);
 void 		VID_NewWindow (int theWidth, int theHeight);
 qboolean 	VID_GetModeInfo (int *theWidth, int *theHeight, int theMode);
 void		VID_Init (void);
@@ -117,7 +117,7 @@ static void	VID_FadeGammaIn (qboolean theFadeOnAllDisplays, float theDuration);
 /*=======================
 VID_Printf
 =======================*/
-void VID_Printf (int thePrintLevel, char *theFormat, ...)
+void VID_Printf (int thePrintLevel, const char *theFormat, ...)
 {
 	va_list		myArgPtr;
 	char		myMessage[VID_MAX_PRINT_MSG];
@@ -137,7 +137,7 @@ void VID_Printf (int thePrintLevel, char *theFormat, ...)
 /*=======================
 VID_Error
 =======================*/
-void VID_Error (int theErrorLevel, char *theFormat, ...)
+void VID_Error (int theErrorLevel, const char *theFormat, ...)
 {
 	va_list		myArgPtr;
 	char		myMessage[VID_MAX_PRINT_MSG];

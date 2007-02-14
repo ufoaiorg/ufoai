@@ -113,7 +113,7 @@ DLL GLUE
 /**
  * @brief
  */
-void VID_Printf (int print_level, char *fmt, ...)
+void VID_Printf (int print_level, const char *fmt, ...)
 {
 	va_list		argptr;
 	char		msg[MAXPRINTMSG];
@@ -137,7 +137,7 @@ void VID_Printf (int print_level, char *fmt, ...)
 /**
  * @brief
  */
-void VID_Error (int err_level, char *fmt, ...)
+void VID_Error (int err_level, const char *fmt, ...)
 {
 	va_list		argptr;
 	char		msg[MAXPRINTMSG];
@@ -453,22 +453,22 @@ void VID_FreeReflib (void)
 /**
  * @brief
  */
-qboolean VID_LoadRefresh( char *name )
+qboolean VID_LoadRefresh(const char *name)
 {
 	refimport_t	ri;
 	GetRefAPI_t	GetRefAPI;
 	qboolean restart = qfalse;
 
-	if ( reflib_active ) {
+	if (reflib_active) {
 		re.Shutdown();
 		VID_FreeReflib ();
 		restart = qtrue;
 	}
 
-	Com_Printf( "------- Loading %s -------\n", name );
+	Com_Printf("------- Loading %s -------\n", name);
 
-	if ( ( reflib_library = LoadLibrary( name ) ) == 0 ) {
-		Com_Printf( "LoadLibrary(\"%s\") failed\n", name );
+	if ((reflib_library = LoadLibrary(name)) == 0) {
+		Com_Printf("LoadLibrary(\"%s\") failed\n", name);
 		return qfalse;
 	}
 
@@ -495,27 +495,27 @@ qboolean VID_LoadRefresh( char *name )
 	ri.CL_WriteAVIVideoFrame = CL_WriteAVIVideoFrame;
 	ri.CL_GetFontData = CL_GetFontData;
 
-	if ( ( GetRefAPI = (GetRefAPI_t) GetProcAddress( reflib_library, "GetRefAPI" ) ) == 0 )
-		Com_Error( ERR_FATAL, "GetProcAddress failed on %s", name );
+	if ((GetRefAPI = (GetRefAPI_t) GetProcAddress(reflib_library, "GetRefAPI")) == 0)
+		Com_Error(ERR_FATAL, "GetProcAddress failed on %s", name);
 
-	re = GetRefAPI( ri );
+	re = GetRefAPI(ri);
 
 	if (re.api_version != API_VERSION) {
-		VID_FreeReflib ();
-		Com_Error (ERR_FATAL, "%s has incompatible api_version", name);
+		VID_FreeReflib();
+		Com_Error(ERR_FATAL, "%s has incompatible api_version", name);
 	}
 
-	if ( re.Init( global_hInstance, MainWndProc ) == -1 ) {
+	if (re.Init(global_hInstance, MainWndProc) == -1) {
 		re.Shutdown();
-		VID_FreeReflib ();
+		VID_FreeReflib();
 		return qfalse;
 	}
 
 	/* vid_restart */
-	if ( restart )
+	if (restart)
 		CL_InitFonts();
 
-	Com_Printf( "------------------------------------\n");
+	Com_Printf("------------------------------------\n");
 	reflib_active = qtrue;
 
 	return qtrue;
@@ -530,15 +530,15 @@ void VID_CheckChanges (void)
 {
 	char name[100];
 
-	if ( win_noalttab->modified ) {
-		if ( win_noalttab->value )
+	if (win_noalttab->modified) {
+		if (win_noalttab->value)
 			WIN_DisableAltTab();
 		else
 			WIN_EnableAltTab();
 		win_noalttab->modified = qfalse;
 	}
 
-	if ( vid_ref->modified ) {
+	if (vid_ref->modified) {
 		/* can't use a paused refdef */
 		cl.force_refdef = qtrue;
 		S_StopAllSounds();
@@ -552,32 +552,32 @@ void VID_CheckChanges (void)
 
 		/* try generic refresh lib first */
 		Com_sprintf( name, sizeof(name), "ref_%s.dll", vid_ref->string );
-		if ( !VID_LoadRefresh( name ) ) {
+		if (!VID_LoadRefresh(name)) {
 #if defined _M_IX86
 #ifdef DEBUG
-			Com_sprintf( name, sizeof(name), "ref_%s32d.dll", vid_ref->string );
+			Com_sprintf(name, sizeof(name), "ref_%s32d.dll", vid_ref->string);
 #else
-			Com_sprintf( name, sizeof(name), "ref_%s32.dll", vid_ref->string );
+			Com_sprintf(name, sizeof(name), "ref_%s32.dll", vid_ref->string);
 #endif
 #elif defined _M_X64
 #ifdef DEBUG
-			Com_sprintf( name, sizeof(name), "ref_%s64d.dll", vid_ref->string );
+			Com_sprintf(name, sizeof(name), "ref_%s64d.dll", vid_ref->string);
 #else
-			Com_sprintf( name, sizeof(name), "ref_%s64.dll", vid_ref->string );
+			Com_sprintf(name, sizeof(name), "ref_%s64.dll", vid_ref->string);
 #endif
 #endif
-			if ( !VID_LoadRefresh( name ) ) {
-				Cmd_ExecuteString( "condump gl_debug" );
-				Com_Error (ERR_FATAL, "Couldn't initialize OpenGL renderer!\nConsult gl_debug.txt for further information.");
+			if (!VID_LoadRefresh(name)) {
+				Cmd_ExecuteString("condump gl_debug");
+				Com_Error(ERR_FATAL, "Couldn't initialize OpenGL renderer!\nConsult gl_debug.txt for further information.");
 			}
 		}
 		cls.disable_screen = qfalse;
 	}
 
 	/* update our window position */
-	if ( vid_xpos->modified || vid_ypos->modified ) {
+	if (vid_xpos->modified || vid_ypos->modified) {
 		if (!vid_fullscreen->value)
-			VID_UpdateWindowPosAndSize( vid_xpos->value, vid_ypos->value );
+			VID_UpdateWindowPosAndSize(vid_xpos->value, vid_ypos->value);
 
 		vid_xpos->modified = qfalse;
 		vid_ypos->modified = qfalse;
@@ -591,17 +591,17 @@ void VID_CheckChanges (void)
 void VID_Init (void)
 {
 	/* Create the video variables so we know how to start the graphics drivers */
-	vid_ref = Cvar_Get ("vid_ref", "gl", CVAR_ARCHIVE, NULL);
-	vid_xpos = Cvar_Get ("vid_xpos", "3", CVAR_ARCHIVE, NULL);
-	vid_ypos = Cvar_Get ("vid_ypos", "22", CVAR_ARCHIVE, NULL);
-	vid_fullscreen = Cvar_Get ("vid_fullscreen", "0", CVAR_ARCHIVE, NULL);
-	vid_grabmouse = Cvar_Get ("vid_grabmouse", "1", CVAR_ARCHIVE, NULL);
+	vid_ref = Cvar_Get("vid_ref", "gl", CVAR_ARCHIVE, NULL);
+	vid_xpos = Cvar_Get("vid_xpos", "3", CVAR_ARCHIVE, NULL);
+	vid_ypos = Cvar_Get("vid_ypos", "22", CVAR_ARCHIVE, NULL);
+	vid_fullscreen = Cvar_Get("vid_fullscreen", "0", CVAR_ARCHIVE, NULL);
+	vid_grabmouse = Cvar_Get("vid_grabmouse", "1", CVAR_ARCHIVE, NULL);
 	vid_gamma = Cvar_Get("vid_gamma", "1", CVAR_ARCHIVE, NULL);
 	win_noalttab = Cvar_Get("win_noalttab", "0", CVAR_ARCHIVE, NULL);
 
 	/* Add some console commands that we want to handle */
-	Cmd_AddCommand ("vid_restart", VID_Restart_f, NULL);
-	Cmd_AddCommand ("vid_front", VID_Front_f, NULL);
+	Cmd_AddCommand("vid_restart", VID_Restart_f, NULL);
+	Cmd_AddCommand("vid_front", VID_Front_f, NULL);
 
 	/* Start the graphics mode and load refresh DLL */
 	VID_CheckChanges();
@@ -614,9 +614,9 @@ void VID_Init (void)
  */
 void VID_Shutdown (void)
 {
-	if ( reflib_active ) {
-		re.Shutdown ();
-		VID_FreeReflib ();
+	if (reflib_active) {
+		re.Shutdown();
+		VID_FreeReflib();
 	}
 }
 

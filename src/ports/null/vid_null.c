@@ -44,7 +44,7 @@ DIRECT LINK GLUE
 /**
  * @brief
  */
-void VID_Printf (int print_level, char *fmt, ...)
+void VID_Printf (int print_level, const char *fmt, ...)
 {
 	va_list		argptr;
 	char		msg[MAXPRINTMSG];
@@ -64,7 +64,7 @@ void VID_Printf (int print_level, char *fmt, ...)
 /**
  * @brief
  */
-void VID_Error (int err_level, char *fmt, ...)
+void VID_Error (int err_level, const char *fmt, ...)
 {
 	va_list		argptr;
 	char		msg[MAXPRINTMSG];

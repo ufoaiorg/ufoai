@@ -83,7 +83,7 @@ DLL GLUE
 /**
  * @brief
  */
-void VID_Printf (int print_level, char *fmt, ...)
+void VID_Printf (int print_level, const char *fmt, ...)
 {
 	va_list		argptr;
 	char		msg[MAXPRINTMSG];
@@ -104,7 +104,7 @@ void VID_Printf (int print_level, char *fmt, ...)
  * @brief Calls Com_Error with err_level
  * @sa Com_Error
  */
-void VID_Error (int err_level, char *fmt, ...)
+void VID_Error (int err_level, const char *fmt, ...)
 {
 	va_list		argptr;
 	char		msg[MAXPRINTMSG];
@@ -215,7 +215,7 @@ void VID_FreeReflib (void)
 /**
  * @brief
  */
-qboolean VID_LoadRefresh( char *name )
+qboolean VID_LoadRefresh (const char *name)
 {
 	refimport_t ri;
 	GetRefAPI_t GetRefAPI;
@@ -309,7 +309,7 @@ qboolean VID_LoadRefresh( char *name )
 
 	Real_IN_Init();
 
-	if ( re.Init( 0, 0 ) == -1 ) {
+	if (re.Init(0, 0) == -1) {
 		re.Shutdown();
 		VID_FreeReflib ();
 		return qfalse;
@@ -340,10 +340,10 @@ qboolean VID_LoadRefresh( char *name )
 	setegid(getgid());
 
 	/* vid_restart */
-	if ( restart )
+	if (restart)
 		CL_InitFonts();
 
-	Com_Printf( "------------------------------------\n");
+	Com_Printf("------------------------------------\n");
 
 	reflib_active = qtrue;
 
@@ -359,7 +359,7 @@ void VID_CheckChanges (void)
 {
 	char name[100];
 
-	if ( vid_ref->modified )
+	if (vid_ref->modified)
 		S_StopAllSounds();
 
 	while (vid_ref->modified) {
@@ -370,7 +370,7 @@ void VID_CheckChanges (void)
 		cls.disable_screen = qtrue;
 
 		Com_sprintf(name, sizeof(name), "ref_%s.so", vid_ref->string);
-		if ( !VID_LoadRefresh( name ) ) {
+		if (!VID_LoadRefresh(name)) {
 			Cmd_ExecuteString( "condump gl_debug" );
 
 			Com_Error (ERR_FATAL, "Couldn't initialize OpenGL renderer!\nConsult gl_debug.txt for further information.");
@@ -386,14 +386,14 @@ void VID_CheckChanges (void)
 void VID_Init (void)
 {
 	/* Create the video variables so we know how to start the graphics drivers */
-	vid_ref = Cvar_Get ("vid_ref", "glx", CVAR_ARCHIVE, NULL);
-	vid_xpos = Cvar_Get ("vid_xpos", "3", CVAR_ARCHIVE, NULL);
-	vid_ypos = Cvar_Get ("vid_ypos", "22", CVAR_ARCHIVE, NULL);
-	vid_fullscreen = Cvar_Get ("vid_fullscreen", "1", CVAR_ARCHIVE, NULL);
+	vid_ref = Cvar_Get("vid_ref", "glx", CVAR_ARCHIVE, NULL);
+	vid_xpos = Cvar_Get("vid_xpos", "3", CVAR_ARCHIVE, NULL);
+	vid_ypos = Cvar_Get("vid_ypos", "22", CVAR_ARCHIVE, NULL);
+	vid_fullscreen = Cvar_Get("vid_fullscreen", "1", CVAR_ARCHIVE, NULL);
 	vid_gamma = Cvar_Get("vid_gamma", "1", CVAR_ARCHIVE, NULL);
 
 	/* Add some console commands that we want to handle */
-	Cmd_AddCommand ("vid_restart", VID_Restart_f, NULL);
+	Cmd_AddCommand("vid_restart", VID_Restart_f, NULL);
 
 	/* Start the graphics mode and load refresh DLL */
 	VID_CheckChanges();
@@ -405,15 +405,15 @@ void VID_Init (void)
  */
 void VID_Shutdown (void)
 {
-	if ( reflib_active ) {
+	if (reflib_active) {
 		if (KBD_Close_fp)
 			KBD_Close_fp();
 		if (RW_IN_Shutdown_fp)
 			RW_IN_Shutdown_fp();
 		KBD_Close_fp = NULL;
 		RW_IN_Shutdown_fp = NULL;
-		re.Shutdown ();
-		VID_FreeReflib ();
+		re.Shutdown();
+		VID_FreeReflib();
 	}
 }
 
@@ -471,7 +471,7 @@ void IN_GetMousePos (int *mx, int *my)
 void IN_Frame (void)
 {
 	if (RW_IN_Activate_fp) {
-		if ( cls.key_dest == key_console)
+		if (cls.key_dest == key_console)
 			RW_IN_Activate_fp(qfalse);
 		else
 			RW_IN_Activate_fp(qtrue);
@@ -491,7 +491,7 @@ void IN_Activate (qboolean active)
 /**
  * @brief
  */
-void Do_Key_Event(int key, qboolean down)
+void Do_Key_Event (int key, qboolean down)
 {
 	Key_Event(key, down, Sys_Milliseconds());
 }
