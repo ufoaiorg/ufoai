@@ -436,8 +436,11 @@ static void HideFiremodes (void)
 
 /**
  * @brief Stores the given firedef index and object index for reaction fire and sends in over the network as well.
+ * @param[in] actor_idx Index of an actor.
+ * @param[in] handidx Index of hand with item, which will be used for reactionfire.
+ * @param[in] fd_idx Index of firedefinition for an item in given hand.
  */
-static void CL_SetReactionFiremode( int actor_idx, int handidx, int obj_idx, int fd_idx )
+static void CL_SetReactionFiremode(int actor_idx, int handidx, int obj_idx, int fd_idx)
 {
 	if (actor_idx < 0) {
 		Com_DPrintf("CL_SetReactionFiremode: Actor index is negative. Abort.\n");
@@ -449,15 +452,16 @@ static void CL_SetReactionFiremode( int actor_idx, int handidx, int obj_idx, int
 		return;
 	}
 
+	/* TODO: document me, what exactly is being set up here in REACTION_FIREMODE calls? */
 	REACTION_FIREMODE[actor_idx][handidx][0] = fd_idx;
 	MSG_Write_PA(PA_REACT_SELECT, actor_idx, handidx, fd_idx);
 	REACTION_FIREMODE[actor_idx][handidx][1] = obj_idx;
 }
 
 /**
- * @brief Sets the display for a single weapon/reload HUD button
- * @param[in] fd The firedefinition/firemode to be displayed.
- * @param[in] hand Which list to display. 'l' for left hand list, 'r' for right hand list.
+ * @brief Sets the display for a single weapon/reload HUD button.
+ * @param[in] *fd Pointer to the firedefinition/firemode to be displayed.
+ * @param[in] hand Which list to display: 'l' for left hand list, 'r' for right hand list.
  * @param[in] status Display the firemode clickable/active (1) or inactive (0).
  */
 static void CL_DisplayFiremodeEntry (fireDef_t *fd, char hand, qboolean status)
@@ -2007,7 +2011,7 @@ void CL_ActorDoShoot (sizebuf_t * sb)
 
 
 /**
- * @brief
+ * @brief Shoot with weapon but don't bother with animations - actor is hidden.
  * @sa CL_ActorShoot
  */
 void CL_ActorShootHidden (sizebuf_t *sb)
