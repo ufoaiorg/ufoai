@@ -76,7 +76,7 @@ BRUSH MODELS
 /**
  * @brief Returns the proper texture for a given time and base texture
  */
-static image_t *R_TextureAnimation(mtexinfo_t * tex)
+static image_t *R_TextureAnimation (mtexinfo_t * tex)
 {
 	int c;
 
@@ -95,7 +95,7 @@ static image_t *R_TextureAnimation(mtexinfo_t * tex)
 /**
  * @brief
  */
-static void DrawGLPoly(glpoly_t * p)
+static void DrawGLPoly (glpoly_t * p)
 {
 	int i;
 	float *v;
@@ -112,7 +112,7 @@ static void DrawGLPoly(glpoly_t * p)
 /**
  * @brief version of DrawGLPoly that handles scrolling texture
  */
-static void DrawGLFlowingPoly(msurface_t * fa)
+static void DrawGLFlowingPoly (msurface_t * fa)
 {
 	int i;
 	float *v;
@@ -137,7 +137,7 @@ static void DrawGLFlowingPoly(msurface_t * fa)
 /**
  * @brief
  */
-void R_DrawTriangleOutlines(void)
+void R_DrawTriangleOutlines (void)
 {
 	int i, j;
 	glpoly_t *p;
@@ -174,7 +174,7 @@ void R_DrawTriangleOutlines(void)
 /**
  * @brief
  */
-static void DrawGLPolyChain(glpoly_t * p, float soffset, float toffset)
+static void DrawGLPolyChain (glpoly_t * p, float soffset, float toffset)
 {
 	if (soffset == 0 && toffset == 0) {
 		for (; p != 0; p = p->chain) {
@@ -209,7 +209,7 @@ static void DrawGLPolyChain(glpoly_t * p, float soffset, float toffset)
  * @brief This routine takes all the given light mapped surfaces in the world and
  * blends them into the framebuffer.
  */
-static void R_BlendLightmaps(void)
+static void R_BlendLightmaps (void)
 {
 	int i;
 	msurface_t *surf, *newdrawsurf = 0;
@@ -228,7 +228,7 @@ static void R_BlendLightmaps(void)
 	 ** lightmaps.
 	 */
 	if (!gl_lightmap->value) {
-		qglEnable(GL_BLEND);
+		GLSTATE_ENABLE_BLEND
 
 		if (gl_saturatelighting->value)
 			qglBlendFunc(GL_ONE, GL_ONE);
@@ -333,7 +333,7 @@ static void R_BlendLightmaps(void)
 	}
 
 	/* restore state */
-	qglDisable(GL_BLEND);
+	GLSTATE_DISABLE_BLEND
 	qglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	qglDepthMask(1);
 }
@@ -341,7 +341,7 @@ static void R_BlendLightmaps(void)
 /**
  * @brief
  */
-static void R_RenderBrushPoly(msurface_t * fa)
+static void R_RenderBrushPoly (msurface_t * fa)
 {
 	int maps;
 	image_t *image;
@@ -428,7 +428,7 @@ static void R_RenderBrushPoly(msurface_t * fa)
  * The BSP tree is waled front to back, so unwinding the chain
  * of alpha_surfaces will draw back to front, giving proper ordering.
  */
-void R_DrawAlphaSurfaces(void)
+void R_DrawAlphaSurfaces (void)
 {
 	msurface_t *s;
 	float intens;
@@ -436,7 +436,8 @@ void R_DrawAlphaSurfaces(void)
 	/* go back to the world matrix */
 	qglLoadMatrixf(r_world_matrix);
 
-	qglEnable(GL_BLEND);
+	GLSTATE_ENABLE_BLEND
+	qglDepthMask(0);	/* disable depth writing */
 	GL_TexEnv(GL_MODULATE);
 
 	/* the textures are prescaled up for a better lighting range, */
@@ -446,12 +447,14 @@ void R_DrawAlphaSurfaces(void)
 	for (s = r_alpha_surfaces; s; s = s->texturechain) {
 		GL_Bind(s->texinfo->image->texnum);
 		c_brush_polys++;
+
 		if (s->texinfo->flags & SURF_TRANS33)
 			qglColor4f(intens, intens, intens, 0.33);
 		else if (s->texinfo->flags & SURF_TRANS66)
 			qglColor4f(intens, intens, intens, 0.66);
 		else
 			qglColor4f(intens, intens, intens, 1);
+
 		if (s->flags & SURF_DRAWTURB)
 			EmitWaterPolys(s);
 		else if (s->texinfo->flags & SURF_FLOWING)
@@ -462,7 +465,8 @@ void R_DrawAlphaSurfaces(void)
 
 	GL_TexEnv(GL_REPLACE);
 	qglColor4f(1, 1, 1, 1);
-	qglDisable(GL_BLEND);
+	qglDepthMask(1); /* reenable depth writing */
+	GLSTATE_DISABLE_BLEND
 
 	r_alpha_surfaces = NULL;
 }
@@ -481,7 +485,7 @@ static void GL_RenderLightmappedPoly(msurface_t * surf)
 	glpoly_t *p;
 
 	if (surf->texinfo->flags & SURF_ALPHATEST)
-		qglEnable(GL_ALPHA_TEST);
+		GLSTATE_ENABLE_ALPHATEST
 
 	for (map = 0; map < MAXLIGHTMAPS && surf->styles[map] != 255; map++) {
 		if (r_newrefdef.lightstyles[surf->styles[map]].white != surf->cached_light[map])
@@ -599,13 +603,13 @@ static void GL_RenderLightmappedPoly(msurface_t * surf)
 		}
 	}
 
-	qglDisable(GL_ALPHA_TEST);
+	GLSTATE_DISABLE_ALPHATEST
 }
 
 /**
  * @brief
  */
-static void R_DrawInlineBModel(void)
+static void R_DrawInlineBModel (void)
 {
 	int i, k;
 	cplane_t *pplane;
@@ -623,7 +627,7 @@ static void R_DrawInlineBModel(void)
 	psurf = &currentmodel->surfaces[currentmodel->firstmodelsurface];
 
 	if (currententity->flags & RF_TRANSLUCENT) {
-		qglEnable(GL_BLEND);
+		GLSTATE_ENABLE_BLEND
 		qglColor4f(1, 1, 1, 0.25);
 		GL_TexEnv(GL_MODULATE);
 	}
@@ -661,7 +665,7 @@ static void R_DrawInlineBModel(void)
 		if (!qglMTexCoord2fSGIS)
 			R_BlendLightmaps();
 	} else {
-		qglDisable(GL_BLEND);
+		GLSTATE_DISABLE_BLEND
 		qglColor4f(1, 1, 1, 1);
 		GL_TexEnv(GL_REPLACE);
 	}

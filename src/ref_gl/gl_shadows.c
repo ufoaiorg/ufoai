@@ -533,7 +533,7 @@ void R_DrawShadow(entity_t * e)
 			vec3_t end;
 
 			qglDisable(GL_TEXTURE_2D);
-			qglEnable(GL_BLEND);
+			GLSTATE_ENABLE_BLEND
 			qglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			qglTranslatef(e->origin[0], e->origin[1], e->origin[2]);
 			qglRotatef(e->angles[1], 0, 0, 1);
@@ -543,7 +543,7 @@ void R_DrawShadow(entity_t * e)
 			GL_DrawAliasShadow(e, paliashdr, currententity->as.frame);
 		}
 		qglEnable(GL_TEXTURE_2D);
-		qglDisable(GL_BLEND);
+		GLSTATE_DISABLE_BLEND
 		qglPopMatrix();
 	}
 }

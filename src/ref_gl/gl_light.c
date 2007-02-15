@@ -76,7 +76,7 @@ void R_RenderDlight(const dlight_t const* light)
  * @brief Renders all dynamic lights
  * @sa R_RenderDlight
  */
-void R_RenderDlights(void)
+void R_RenderDlights (void)
 {
 	int i;
 	dlight_t *l;
@@ -88,7 +88,7 @@ void R_RenderDlights(void)
 	/*  advanced yet for this frame */
 	qglDepthMask(0);
 	qglDisable(GL_TEXTURE_2D);
-	qglEnable(GL_BLEND);
+	GLSTATE_ENABLE_BLEND
 	qglBlendFunc(GL_ONE, GL_ONE);
 
 	l = r_newrefdef.dlights;
@@ -96,7 +96,7 @@ void R_RenderDlights(void)
 		R_RenderDlight(l);
 
 	qglColor3f(1, 1, 1);
-	qglDisable(GL_BLEND);
+	GLSTATE_DISABLE_BLEND
 	qglEnable(GL_TEXTURE_2D);
 	qglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	qglDepthMask(1);

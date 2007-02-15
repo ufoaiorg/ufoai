@@ -420,7 +420,7 @@ static int Font_GenerateGLSurface(fontCache_t *cache, int x, int y, int absX, in
 	GL_Bind(cache->texPos);
 
 	/* draw it */
-	qglEnable(GL_BLEND);
+	GLSTATE_ENABLE_BLEND
 
 	qglBegin(GL_TRIANGLE_STRIP);
 	qglTexCoord2f(start[0], start[1]);
@@ -433,7 +433,7 @@ static int Font_GenerateGLSurface(fontCache_t *cache, int x, int y, int absX, in
 	qglVertex2f(x + tw, y + th);
 	qglEnd();
 
-	qglDisable(GL_BLEND);
+	GLSTATE_DISABLE_BLEND
 
 	return 0;
 }

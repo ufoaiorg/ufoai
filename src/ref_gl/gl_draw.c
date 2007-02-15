@@ -210,10 +210,10 @@ void Draw_Color (const float *rgba)
 {
 	if (rgba) {
 		if (rgba[3] < 1.0f)
-			qglEnable(GL_BLEND);
+			GLSTATE_ENABLE_BLEND
 		qglColor4fv(rgba);
 	} else {
-		qglDisable(GL_BLEND);
+		GLSTATE_DISABLE_BLEND
 		qglColor4f(1, 1, 1, 1);
 	}
 }
@@ -368,7 +368,7 @@ void Draw_NormPic (float x, float y, float w, float h, float sh, float th, float
 	}
 
 	if (blend)
-		qglEnable(GL_BLEND);
+		GLSTATE_ENABLE_BLEND
 
 #ifdef HAVE_SHADERS
 	if (gl->shader)
@@ -388,7 +388,7 @@ void Draw_NormPic (float x, float y, float w, float h, float sh, float th, float
 	qglEnd();
 
 	if (blend)
-		qglDisable(GL_BLEND);
+		GLSTATE_DISABLE_BLEND
 
 #ifdef HAVE_SHADERS
 	if (gl->shader)
@@ -523,7 +523,7 @@ void Draw_Fill (int x, int y, int w, int h, int style, const vec4_t color)
  */
 void Draw_FadeScreen (void)
 {
-	qglEnable(GL_BLEND);
+	GLSTATE_ENABLE_BLEND
 	qglDisable(GL_TEXTURE_2D);
 	qglColor4f(0, 0, 0, 0.8);
 	qglBegin(GL_QUADS);
@@ -536,7 +536,7 @@ void Draw_FadeScreen (void)
 	qglEnd();
 	qglColor4f(1, 1, 1, 1);
 	qglEnable(GL_TEXTURE_2D);
-	qglDisable(GL_BLEND);
+	GLSTATE_DISABLE_BLEND
 }
 
 static float lastQ;
@@ -594,7 +594,7 @@ void Draw_DayAndNight (int x, int y, int w, int h, float p, float q, float cx, f
 		SH_UseShader(gl->shader, qfalse);
 #endif
 	/* init combiner */
-	qglEnable(GL_BLEND);
+	GLSTATE_ENABLE_BLEND
 
 	GL_SelectTexture(gl_texture0);
 	GL_Bind(gl->texnum);
@@ -639,7 +639,7 @@ void Draw_DayAndNight (int x, int y, int w, int h, float p, float q, float cx, f
 	qglDisable(GL_TEXTURE_2D);
 	GL_SelectTexture(gl_texture0);
 
-	qglDisable(GL_BLEND);
+	GLSTATE_DISABLE_BLEND
 	if (gl_drawclouds->value)
 		Draw_Clouds(x, y, w, h, p, q, cx, cy, iz, map);
 }
@@ -669,7 +669,7 @@ void Draw_Clouds (int x, int y, int w, int h, float p, float q, float cx, float 
 		SH_UseShader(gl->shader, qfalse);
 #endif
 	/* init combiner */
-	qglEnable(GL_BLEND);
+	GLSTATE_ENABLE_BLEND
 	qglBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_SRC_COLOR);
 
 	qglEnable(GL_TEXTURE_2D);
@@ -694,7 +694,7 @@ void Draw_Clouds (int x, int y, int w, int h, float p, float q, float cx, float 
 	/* reset mode */
 	qglDisable(GL_TEXTURE_2D);
 
-	qglDisable(GL_BLEND);
+	GLSTATE_DISABLE_BLEND
 	qglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
@@ -709,7 +709,7 @@ void Draw_Circle (vec3_t mid, float radius, const vec4_t color)
 {
 	qglDisable(GL_TEXTURE_2D);
 	qglEnable(GL_LINE_SMOOTH);
-	qglEnable(GL_BLEND);
+	GLSTATE_ENABLE_BLEND
 
 	Draw_Color(color);
 
@@ -729,7 +729,7 @@ void Draw_Circle (vec3_t mid, float radius, const vec4_t color)
 	qglEnd();
 	Draw_Color(NULL);
 
-	qglDisable(GL_BLEND);
+	GLSTATE_DISABLE_BLEND
 	qglDisable(GL_LINE_SMOOTH);
 	qglEnable(GL_TEXTURE_2D);
 }
@@ -893,7 +893,7 @@ void Draw_3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate, 
 		/* maybe the campaign map doesn't have a night image */
 		if (gl) {
 			/* init combiner */
-			qglEnable(GL_BLEND);
+			GLSTATE_ENABLE_BLEND
 
 			/* night texture */
 			GL_SelectTexture(gl_texture0);
@@ -914,7 +914,7 @@ void Draw_3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate, 
 
 			GL_SelectTexture(gl_texture0);
 
-			qglDisable(GL_BLEND);
+			GLSTATE_DISABLE_BLEND
 		}
 	}
 #endif

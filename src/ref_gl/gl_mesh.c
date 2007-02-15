@@ -432,7 +432,7 @@ void R_DrawAliasModel (entity_t * e)
 	}
 
 	if ((e->flags & RF_TRANSLUCENT))
-		qglEnable(GL_BLEND);
+		GLSTATE_ENABLE_BLEND
 
 	GL_DrawAliasFrameLerp(paliashdr, e->as.backlerp, e->as.frame, e->as.oldframe);
 
@@ -440,12 +440,12 @@ void R_DrawAliasModel (entity_t * e)
 	qglDisable(GL_LIGHTING);
 
 	if ((e->flags & RF_TRANSLUCENT) || (skin && skin->has_alpha))
-		qglDisable(GL_BLEND);
+		GLSTATE_DISABLE_BLEND
 
 	if (gl_shadows->integer == 1 && (e->flags & RF_SHADOW)) {
 		if (!(e->flags & RF_TRANSLUCENT))
 			qglDepthMask(0);
-		qglEnable(GL_BLEND);
+		GLSTATE_ENABLE_BLEND
 
 		qglColor4f(1, 1, 1, 1);
 		GL_Bind(shadow->texnum);
@@ -462,7 +462,7 @@ void R_DrawAliasModel (entity_t * e)
 
 		qglEnd();
 
-		qglDisable(GL_BLEND);
+		GLSTATE_DISABLE_BLEND
 		if (!(e->flags & RF_TRANSLUCENT))
 			qglDepthMask(1);
 	} else if (gl_shadows->integer == 2 && (e->flags & RF_SHADOW)) {
@@ -476,7 +476,7 @@ void R_DrawAliasModel (entity_t * e)
 	if (e->flags & (RF_SELECTED | RF_ALLIED | RF_MEMBER)) {
 		qglDisable(GL_TEXTURE_2D);
 		qglEnable(GL_LINE_SMOOTH);
-		qglEnable(GL_BLEND);
+		GLSTATE_ENABLE_BLEND
 
 		if (e->flags & RF_MEMBER) {
 			if (e->flags & RF_SELECTED)
@@ -506,7 +506,7 @@ void R_DrawAliasModel (entity_t * e)
 
 		qglEnd();
 
-		qglDisable(GL_BLEND);
+		GLSTATE_DISABLE_BLEND
 		qglDisable(GL_LINE_SMOOTH);
 		qglEnable(GL_TEXTURE_2D);
 	}
@@ -679,7 +679,7 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, char *tagname)
 	}
 
 	if ((mi->color[3] && mi->color[3] < 1.0f) || (skin && skin->has_alpha))
-		qglEnable(GL_BLEND);
+		GLSTATE_ENABLE_BLEND
 
 	/* draw the model */
 	GL_DrawAliasFrameLerp(paliashdr, mi->backlerp, mi->frame, mi->oldframe);
@@ -689,7 +689,7 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, char *tagname)
 	qglDisable(GL_DEPTH_TEST);
 
 	if ((mi->color[3] && mi->color[3] < 1.0f) || (skin && skin->has_alpha))
-		qglDisable(GL_BLEND);
+		GLSTATE_DISABLE_BLEND
 
 	qglPopMatrix();
 
@@ -758,7 +758,7 @@ void R_DrawModelParticle (modelInfo_t * mi)
 	}
 
 	if ((mi->color[3] && mi->color[3] < 1.0f) || (skin && skin->has_alpha))
-		qglEnable(GL_BLEND);
+		GLSTATE_ENABLE_BLEND
 
 	/* draw the model */
 	GL_DrawAliasFrameLerp(paliashdr, mi->backlerp, mi->frame, mi->oldframe);
@@ -768,7 +768,7 @@ void R_DrawModelParticle (modelInfo_t * mi)
 	qglDisable(GL_DEPTH_TEST);
 
 	if ((mi->color[3] && mi->color[3] < 1.0f) || (skin && skin->has_alpha))
-		qglDisable(GL_BLEND);
+		GLSTATE_DISABLE_BLEND
 
 	qglPopMatrix();
 

@@ -234,7 +234,7 @@ SPRITE MODELS
 /**
  * @brief
  */
-static void R_DrawSpriteModel(entity_t * e)
+static void R_DrawSpriteModel (entity_t * e)
 {
 	float alpha = 1.0F;
 	vec3_t point;
@@ -275,7 +275,7 @@ static void R_DrawSpriteModel(entity_t * e)
 		alpha = e->alpha;
 
 	if (alpha != 1.0F)
-		qglEnable(GL_BLEND);
+		GLSTATE_ENABLE_BLEND
 
 	qglColor4f(1, 1, 1, alpha);
 
@@ -283,10 +283,11 @@ static void R_DrawSpriteModel(entity_t * e)
 
 	GL_TexEnv(GL_MODULATE);
 
-	if (alpha == 1.0)
-		qglEnable(GL_ALPHA_TEST);
-	else
-		qglDisable(GL_ALPHA_TEST);
+	if (alpha == 1.0) {
+		GLSTATE_ENABLE_ALPHATEST
+	} else {
+		GLSTATE_DISABLE_ALPHATEST
+	}
 
 	qglBegin(GL_QUADS);
 
@@ -312,11 +313,11 @@ static void R_DrawSpriteModel(entity_t * e)
 
 	qglEnd();
 
-	qglDisable(GL_ALPHA_TEST);
+	GLSTATE_DISABLE_ALPHATEST
 	GL_TexEnv(GL_REPLACE);
 
 	if (alpha != 1.0F)
-		qglDisable(GL_BLEND);
+		GLSTATE_DISABLE_BLEND
 
 	qglColor4f(1, 1, 1, 1);
 }
@@ -325,7 +326,7 @@ static void R_DrawSpriteModel(entity_t * e)
 /**
  * @brief
  */
-static void R_DrawNullModel(void)
+static void R_DrawNullModel (void)
 {
 	vec3_t shadelight;
 	int i;
@@ -626,8 +627,8 @@ static void R_PolyBlend(void)
 	if (!v_blend[3])
 		return;
 
-	qglDisable(GL_ALPHA_TEST);
-	qglEnable(GL_BLEND);
+	GLSTATE_DISABLE_ALPHATEST
+	GLSTATE_ENABLE_BLEND
 	qglDisable(GL_DEPTH_TEST);
 	qglDisable(GL_TEXTURE_2D);
 
@@ -647,9 +648,9 @@ static void R_PolyBlend(void)
 	qglVertex3f(10, 100, -100);
 	qglEnd();
 
-	qglDisable(GL_BLEND);
+	GLSTATE_DISABLE_BLEND
 	qglEnable(GL_TEXTURE_2D);
-	qglEnable(GL_ALPHA_TEST);
+	GLSTATE_ENABLE_ALPHATEST
 
 	qglColor4f(1, 1, 1, 1);
 }
@@ -808,8 +809,8 @@ static void R_SetupGL (void)
 	else
 		qglDisable(GL_CULL_FACE);
 
-	qglDisable(GL_BLEND);
-	qglDisable(GL_ALPHA_TEST);
+	GLSTATE_DISABLE_BLEND
+	GLSTATE_DISABLE_ALPHATEST
 	qglEnable(GL_DEPTH_TEST);
 
 	if (gl_fog->value && r_newrefdef.fog && gl_state.fog_coord) {
@@ -965,7 +966,7 @@ void R_LeaveGL2D(void)
  * @brief
  * @sa R_LeaveGL2D
  */
-static void R_SetGL2D(void)
+static void R_SetGL2D (void)
 {
 	/* set 2D virtual screen size */
 	qglViewport(0, 0, vid.width, vid.height);
@@ -976,9 +977,9 @@ static void R_SetGL2D(void)
 	qglLoadIdentity();
 	qglDisable(GL_DEPTH_TEST);
 	qglDisable(GL_CULL_FACE);
-	qglDisable(GL_BLEND);
+	GLSTATE_DISABLE_BLEND
 	qglDisable(GL_FOG);
-	qglEnable(GL_ALPHA_TEST);
+	GLSTATE_ENABLE_ALPHATEST
 	GL_TexEnv(GL_MODULATE);
 	qglColor4f(1, 1, 1, 1);
 }

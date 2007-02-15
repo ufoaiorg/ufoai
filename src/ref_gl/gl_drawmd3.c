@@ -145,7 +145,7 @@ void R_DrawAliasMD3Model (entity_t *e)
 	e->angles[YAW] = e->angles[YAW] + 90;
 
 	if (e->flags & RF_TRANSLUCENT)
-		qglEnable (GL_BLEND);
+		GLSTATE_ENABLE_BLEND
 
 	if ((e->frame >= paliashdr->num_frames) || (e->frame < 0)) {
 		ri.Con_Printf(PRINT_ALL, "R_DrawAliasMD3Model %s: no such frame %d\n", currentmodel->name, e->frame);
@@ -166,7 +166,7 @@ void R_DrawAliasMD3Model (entity_t *e)
 	if (gl_shadows->integer == 1 && (e->flags & RF_SHADOW)) {
 		if (!(e->flags & RF_TRANSLUCENT))
 			qglDepthMask(0);
-		qglEnable(GL_BLEND);
+		GLSTATE_ENABLE_BLEND
 
 		qglColor4f(1, 1, 1, 1);
 		GL_Bind(shadow->texnum);
@@ -183,7 +183,7 @@ void R_DrawAliasMD3Model (entity_t *e)
 
 		qglEnd();
 
-		qglDisable(GL_BLEND);
+		GLSTATE_DISABLE_BLEND
 		if (!(e->flags & RF_TRANSLUCENT))
 			qglDepthMask(1);
 	} else if (gl_shadows->integer == 2 && (e->flags & RF_SHADOW)) {
@@ -204,7 +204,7 @@ void R_DrawAliasMD3Model (entity_t *e)
 	qglDisableClientState(GL_COLOR_ARRAY);
 
 	if (e->flags & RF_TRANSLUCENT)
-		qglDisable (GL_BLEND);
+		GLSTATE_DISABLE_BLEND
 
 	if (e->flags & RF_DEPTHHACK)
 		qglDepthRange (gldepthmin, gldepthmax);

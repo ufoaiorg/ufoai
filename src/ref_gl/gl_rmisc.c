@@ -207,19 +207,21 @@ void GL_ScreenShot_f(void)
 /**
  * @brief
  */
-void GL_SetDefaultState(void)
+void GL_SetDefaultState (void)
 {
 	qglCullFace(GL_FRONT);
 	qglEnable(GL_TEXTURE_2D);
 
 	qglEnable(GL_ALPHA_TEST);
-	qglAlphaFunc(GL_GREATER, 0.1);
+	qglAlphaFunc(GL_GREATER, 0.666f);
+	gl_state.alpha_test = qtrue;
 
 	qglDisable(GL_DEPTH_TEST);
 	qglDisable(GL_CULL_FACE);
 	qglDisable(GL_BLEND);
+	gl_state.blend = qfalse;
 
-	qglColor4f(1, 1, 1, 1);
+	qglColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 	qglClearColor(0, 0, 0, 0);
 
 	qglPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
@@ -286,7 +288,7 @@ SOME DRAWING
 /**
  * @brief
  */
-void R_DrawBeam(entity_t * e)
+void R_DrawBeam (entity_t * e)
 {
 #define NUM_BEAM_SEGS 6
 
@@ -323,7 +325,7 @@ void R_DrawBeam(entity_t * e)
 	}
 
 	qglDisable(GL_TEXTURE_2D);
-	qglEnable(GL_BLEND);
+	GLSTATE_ENABLE_BLEND
 	qglDepthMask(GL_FALSE);
 
 	r = (d_8to24table[e->skinnum & 0xFF]) & 0xFF;
@@ -346,7 +348,7 @@ void R_DrawBeam(entity_t * e)
 	qglEnd();
 
 	qglEnable(GL_TEXTURE_2D);
-	qglDisable(GL_BLEND);
+	GLSTATE_DISABLE_BLEND
 	qglDepthMask(GL_TRUE);
 }
 
@@ -363,7 +365,7 @@ void R_DrawBox(entity_t * e)
 /*		return; */
 
 	qglDepthMask(GL_FALSE);
-	qglEnable(GL_BLEND);
+	GLSTATE_ENABLE_BLEND
 	qglDisable(GL_CULL_FACE);
 	qglDisable(GL_TEXTURE_2D);
 	if (!gl_wire->value)
@@ -407,6 +409,6 @@ void R_DrawBox(entity_t * e)
 		qglPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	qglEnable(GL_TEXTURE_2D);
 	qglEnable(GL_CULL_FACE);
-	qglDisable(GL_BLEND);
+	GLSTATE_DISABLE_BLEND
 	qglDepthMask(GL_TRUE);
 }
