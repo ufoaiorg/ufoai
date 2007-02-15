@@ -187,7 +187,7 @@ static int shift[3];
 /**
  * @brief
  */
-static void Mod_LoadLighting(lump_t * l)
+static void Mod_LoadLighting (lump_t * l)
 {
 	if (!l->filelen) {
 		loadmodel->lightdata = NULL;
@@ -202,7 +202,7 @@ static void Mod_LoadLighting(lump_t * l)
 /**
  * @brief
  */
-static void Mod_LoadVertexes(lump_t * l)
+static void Mod_LoadVertexes (lump_t * l)
 {
 	dvertex_t *in;
 	mvertex_t *out;
@@ -227,7 +227,7 @@ static void Mod_LoadVertexes(lump_t * l)
 /**
  * @brief
  */
-static float RadiusFromBounds(vec3_t mins, vec3_t maxs)
+static float RadiusFromBounds (vec3_t mins, vec3_t maxs)
 {
 	int i;
 	vec3_t corner;
@@ -242,7 +242,7 @@ static float RadiusFromBounds(vec3_t mins, vec3_t maxs)
 /**
  * @brief
  */
-static void Mod_LoadSubmodels(lump_t * l)
+static void Mod_LoadSubmodels (lump_t * l)
 {
 	dmodel_t *in;
 	mmodel_t *out;
@@ -274,7 +274,7 @@ static void Mod_LoadSubmodels(lump_t * l)
 /**
  * @brief
  */
-static void Mod_LoadEdges(lump_t * l)
+static void Mod_LoadEdges (lump_t * l)
 {
 	dedge_t *in;
 	medge_t *out;
@@ -298,7 +298,7 @@ static void Mod_LoadEdges(lump_t * l)
 /**
  * @brief
  */
-static void Mod_LoadTexinfo(lump_t * l)
+static void Mod_LoadTexinfo (lump_t * l)
 {
 	texinfo_t *in;
 	mtexinfo_t *out, *step;
@@ -346,7 +346,7 @@ static void Mod_LoadTexinfo(lump_t * l)
 /**
  * @brief Fills in s->texturemins[] and s->extents[]
  */
-static void CalcSurfaceExtents(msurface_t * s)
+static void CalcSurfaceExtents (msurface_t * s)
 {
 	float mins[2], maxs[2], val;
 
@@ -394,7 +394,7 @@ void GL_CreateSurfaceLightmap(msurface_t * surf);
 /**
  * @brief
  */
-static void Mod_LoadFaces(lump_t * l)
+static void Mod_LoadFaces (lump_t * l)
 {
 	dface_t *in;
 	msurface_t *out;
@@ -467,7 +467,7 @@ static void Mod_LoadFaces(lump_t * l)
 /**
  * @brief
  */
-static void Mod_SetParent(mnode_t * node, mnode_t * parent)
+static void Mod_SetParent (mnode_t * node, mnode_t * parent)
 {
 	node->parent = parent;
 	if (node->contents != -1)
@@ -479,7 +479,7 @@ static void Mod_SetParent(mnode_t * node, mnode_t * parent)
 /**
  * @brief
  */
-static void Mod_LoadNodes(lump_t * l)
+static void Mod_LoadNodes (lump_t * l)
 {
 	int i, j, count, p;
 	dnode_t *in;
@@ -527,7 +527,7 @@ static void Mod_LoadNodes(lump_t * l)
 /**
  * @brief
  */
-static void Mod_LoadLeafs(lump_t * l)
+static void Mod_LoadLeafs (lump_t * l)
 {
 	dleaf_t *in;
 	mleaf_t *out;
@@ -564,7 +564,7 @@ static void Mod_LoadLeafs(lump_t * l)
 /**
  * @brief
  */
-static void Mod_LoadMarksurfaces(lump_t * l)
+static void Mod_LoadMarksurfaces (lump_t * l)
 {
 	int i, j, count;
 	short *in;
@@ -590,7 +590,7 @@ static void Mod_LoadMarksurfaces(lump_t * l)
 /**
  * @brief
  */
-static void Mod_LoadSurfedges(lump_t * l)
+static void Mod_LoadSurfedges (lump_t * l)
 {
 	int i, count;
 	int *in, *out;
@@ -615,7 +615,7 @@ static void Mod_LoadSurfedges(lump_t * l)
 /**
  * @brief
  */
-static void Mod_LoadPlanes(lump_t * l)
+static void Mod_LoadPlanes (lump_t * l)
 {
 	int i, j;
 	cplane_t *out;
@@ -650,7 +650,7 @@ static void Mod_LoadPlanes(lump_t * l)
 /**
  * @brief
  */
-static void Mod_ShiftTile(void)
+static void Mod_ShiftTile (void)
 {
 	mvertex_t *vert;
 	cplane_t *plane;
@@ -672,7 +672,7 @@ static void Mod_ShiftTile(void)
 /**
  * @brief
  */
-static void R_AddMapTile(const char *name, int sX, int sY, int sZ)
+static void R_AddMapTile (const char *name, int sX, int sY, int sZ)
 {
 	int i;
 	unsigned *buffer;
@@ -779,7 +779,7 @@ ALIAS MODELS
 /**
  * @brief
  */
-static void Mod_LoadTags(model_t * mod, void *buffer)
+static void Mod_LoadTags (model_t * mod, void *buffer)
 {
 	dtag_t *pintag, *pheader;
 	int version;
@@ -831,7 +831,7 @@ static void Mod_LoadTags(model_t * mod, void *buffer)
 /**
  * @brief
  */
-static void Mod_LoadAnims(model_t * mod, void *buffer)
+static void Mod_LoadAnims (model_t * mod, void *buffer)
 {
 	char *text, *token;
 	manim_t *anim;
@@ -890,7 +890,7 @@ MD2 ALIAS MODELS
 /**
  * @brief Load MD2 models from file.
  */
-static void Mod_LoadAliasModel(model_t * mod, void *buffer)
+static void Mod_LoadAliasModel (model_t * mod, void *buffer)
 {
 	int i, j;
 	size_t l;

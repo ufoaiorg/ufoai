@@ -197,7 +197,7 @@ static void R_CastShadow (void)
 /**
  * @brief Returns true if the box is completely outside the frustom
  */
-qboolean R_CullBox(vec3_t mins, vec3_t maxs)
+qboolean R_CullBox (vec3_t mins, vec3_t maxs)
 {
 	int i;
 
@@ -614,7 +614,6 @@ static void R_DrawEntitiesOnList(void)
 		}
 	}
 	qglDepthMask(1);			/* back to writing */
-
 }
 
 /**
@@ -1538,7 +1537,7 @@ static qboolean R_Init (HINSTANCE hinstance, WNDPROC wndproc)
  * @brief
  * @sa R_Init
  */
-static void R_Shutdown(void)
+static void R_Shutdown (void)
 {
 	cmdList_t *commands;
 
@@ -1565,7 +1564,7 @@ static void R_Shutdown(void)
 /**
  * @brief
  */
-static void R_BeginFrame(float camera_separation)
+static void R_BeginFrame (float camera_separation)
 {
 	gl_state.camera_separation = camera_separation;
 
@@ -1641,7 +1640,7 @@ static void R_BeginFrame(float camera_separation)
 /**
  * @brief
  */
-static void R_TakeVideoFrame(int w, int h, byte * captureBuffer, byte * encodeBuffer, qboolean motionJpeg)
+static void R_TakeVideoFrame (int w, int h, byte * captureBuffer, byte * encodeBuffer, qboolean motionJpeg)
 {
 	int frameSize;
 	int i;
@@ -1654,7 +1653,7 @@ static void R_TakeVideoFrame(int w, int h, byte * captureBuffer, byte * encodeBu
 	} else {
 		frameSize = w * h;
 
-		for( i = 0; i < frameSize; i++) {   /* Pack to 24bpp and swap R and B */
+		for (i = 0; i < frameSize; i++) {   /* Pack to 24bpp and swap R and B */
 			encodeBuffer[ i*3 ]     = captureBuffer[ i*4 + 2 ];
 			encodeBuffer[ i*3 + 1 ] = captureBuffer[ i*4 + 1 ];
 			encodeBuffer[ i*3 + 2 ] = captureBuffer[ i*4 ];
@@ -1666,7 +1665,7 @@ static void R_TakeVideoFrame(int w, int h, byte * captureBuffer, byte * encodeBu
 /**
  * @brief
  */
-refexport_t GetRefAPI(refimport_t rimp)
+refexport_t GetRefAPI (refimport_t rimp)
 {
 	refexport_t re;
 
@@ -1730,7 +1729,7 @@ refexport_t GetRefAPI(refimport_t rimp)
 /**
  * @brief
  */
-void Sys_Error(char *error, ...)
+void Sys_Error (const char *error, ...)
 {
 	va_list argptr;
 	char text[1024];
@@ -1751,7 +1750,7 @@ void Sys_Error(char *error, ...)
 /**
  * @brief
  */
-void Com_Printf(char *fmt, ...)
+void Com_Printf (const char *fmt, ...)
 {
 	va_list argptr;
 	char text[1024];
@@ -1768,7 +1767,7 @@ void Com_Printf(char *fmt, ...)
 /**
  * @brief
  */
-void Com_DPrintf(char *fmt, ...)
+void Com_DPrintf(const char *fmt, ...)
 {
 	va_list argptr;
 	char text[1024];

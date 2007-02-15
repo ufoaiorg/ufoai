@@ -269,7 +269,7 @@ void Sys_Backtrace (int sig, siginfo_t *siginfo, void *secret)
 /**
  * @brief
  */
-void Sys_ConsoleOutput (char *string)
+void Sys_ConsoleOutput (const char *string)
 {
 	char text[2048];
 	int i, j;
@@ -315,7 +315,7 @@ int Sys_FileLength (const char *path)
 /**
  * @brief
  */
-void Sys_Printf (char *fmt, ...)
+void Sys_Printf (const char *fmt, ...)
 {
 	va_list		argptr;
 	char		text[1024];
@@ -410,7 +410,7 @@ void Sys_Minimize (void)
 /**
  * @brief
  */
-void Sys_Error (char *error, ...)
+void Sys_Error (const char *error, ...)
 {
 	va_list     argptr;
 	char        string[1024];

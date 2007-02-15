@@ -44,12 +44,12 @@ static snd_pcm_uframes_t buffer_size = 8192;
 /**
   * @brief The sample rates which will be attempted.
   */
-static unsigned int RATES[] = { 48000, 44100, 22050, 11025 };
+static const unsigned int RATES[] = { 48000, 44100, 22050, 11025 };
 
 /**
   * @brief Initialize ALSA pcm device, and bind it to sndinfo.
   */
-qboolean SND_Init(struct sndinfo *s)
+qboolean SND_Init (struct sndinfo *s)
 {
 	int i, err, dir = 0;
 	unsigned int r;
@@ -194,7 +194,7 @@ qboolean SND_Init(struct sndinfo *s)
 /**
   * @brief Returns the current sample position, if sound is running.
   */
-int SND_GetDMAPos(void)
+int SND_GetDMAPos (void)
 {
 	if(si->dma->buffer)
 		return si->dma->samplepos;
@@ -206,7 +206,7 @@ int SND_GetDMAPos(void)
 /**
   * @brief Closes the ALSA pcm device and frees the dma buffer.
   */
-void SND_Shutdown(void)
+void SND_Shutdown (void)
 {
 	if(!si->dma->buffer)
 		return;
@@ -221,7 +221,7 @@ void SND_Shutdown(void)
 /**
   * @brief Writes the dma buffer to the ALSA pcm device.
   */
-void SND_Submit(void)
+void SND_Submit (void)
 {
 	int s, w, frames;
 	void *start;
@@ -252,7 +252,7 @@ void SND_Submit(void)
 /**
   * @brief Callback provided by the engine in case we need it.  We don't.
   */
-void SND_BeginPainting(void)
+void SND_BeginPainting (void)
 {
 }
 

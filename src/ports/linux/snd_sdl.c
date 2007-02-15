@@ -37,7 +37,7 @@ static struct sndinfo *si;
 /**
  * @brief
  */
-void paint_audio(void *unused, Uint8 *stream, int len)
+void paint_audio (void *unused, Uint8 *stream, int len)
 {
 	if(!si)
 		return;
@@ -215,7 +215,7 @@ void SND_Submit (void)
 /**
  * @brief
  */
-void SND_BeginPainting(void)
+void SND_BeginPainting (void)
 {
 /*	SDL_LockAudio();*/
 }

@@ -113,7 +113,7 @@ qboolean strwildcomp(const char *string, const char *pattern)
  * @brief
  * @sa Sys_NormPath
  */
-void FS_NormPath(char *path)
+void FS_NormPath (char *path)
 {
 	Sys_NormPath(path);
 }
@@ -121,7 +121,7 @@ void FS_NormPath(char *path)
 /**
  * @brief
  */
-int FS_FileLength(qFILE * f)
+int FS_FileLength (qFILE * f)
 {
 	int pos;
 	int end;
@@ -141,12 +141,17 @@ int FS_FileLength(qFILE * f)
 /**
  * @brief Creates any directories needed to store the given filename
  * @sa Sys_Mkdir
+ * @note Paths should already be normalized
+ * @sa FS_NormPath
  */
-void FS_CreatePath(char *path)
+void FS_CreatePath (const char *path)
 {
+	char pathCopy[MAX_OSPATH];
 	char *ofs;
 
-	for (ofs = path + 1; *ofs; ofs++) {
+	Q_strncpyz(pathCopy, path, sizeof(pathCopy));
+
+	for (ofs = pathCopy + 1; *ofs; ofs++) {
 		/* create the directory */
 		if (*ofs == '/') {
 			*ofs = 0;
@@ -160,7 +165,7 @@ void FS_CreatePath(char *path)
  * @brief For some reason, other dll's can't just call fclose()
  * on files returned by FS_FOpenFile...
  */
-void FS_FCloseFile(qFILE * f)
+void FS_FCloseFile (qFILE * f)
 {
 	if (f->f)
 		fclose (f->f);
@@ -175,7 +180,7 @@ void FS_FCloseFile(qFILE * f)
  * @return filesize and an open qFILE *
  * @note Used for streaming data out of either a pak file or a seperate file.
  */
-static int FS_FOpenFileSingle(const char *filename, qFILE * file)
+static int FS_FOpenFileSingle (const char *filename, qFILE * file)
 {
 	searchpath_t *search;
 	char netpath[MAX_OSPATH];
@@ -245,7 +250,7 @@ static int FS_FOpenFileSingle(const char *filename, qFILE * file)
 /**
  * @brief
  */
-int FS_Seek(qFILE * f, long offset, int origin)
+int FS_Seek (qFILE * f, long offset, int origin)
 {
 	int _origin;
 
@@ -304,7 +309,7 @@ int FS_Seek(qFILE * f, long offset, int origin)
  * @returns filesize
  * @sa FS_FOpenFileSingle
  */
-int FS_FOpenFile(const char *filename, qFILE * file)
+int FS_FOpenFile (const char *filename, qFILE * file)
 {
 	int result, len;
 
@@ -323,7 +328,7 @@ int FS_FOpenFile(const char *filename, qFILE * file)
 /**
  * @brief
  */
-int FS_FOpenFileRead(const char *filename, qFILE * f)
+int FS_FOpenFileRead (const char *filename, qFILE * f)
 {
 	char *ospath = NULL;
 	int l;
@@ -342,7 +347,7 @@ int FS_FOpenFileRead(const char *filename, qFILE * f)
 /**
  * @brief
  */
-void FS_FOpenFileWrite(const char *filename, qFILE * f)
+void FS_FOpenFileWrite (const char *filename, qFILE * f)
 {
 	if (f->z)
 		return;

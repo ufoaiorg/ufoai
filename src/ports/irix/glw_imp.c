@@ -339,20 +339,20 @@ qboolean GLimp_InitGraphics( qboolean fullscreen )
 	}
 
 	/* pick a visual- warn if more than one was available */
-	x_visinfo = glXChooseVisual( x_disp, DefaultScreen( x_disp ),
-				     StudlyRGBattributes );
+	x_visinfo = glXChooseVisual(x_disp, DefaultScreen( x_disp ),
+				     StudlyRGBattributes);
 	if (!x_visinfo) {
 		fprintf(stderr, "Using non studly RGB attributes\n");
-		x_visinfo = glXChooseVisual( x_disp, DefaultScreen( x_disp ),
-					     RGBattributes );
-		if (!x_visinfo) Sys_Error( "No matching visual available!\n" );
+		x_visinfo = glXChooseVisual(x_disp, DefaultScreen( x_disp ),
+					     RGBattributes);
+		if (!x_visinfo)
+			Sys_Error("No matching visual available!\n");
 	}
 
 	ri.Con_Printf(PRINT_ALL, "Using visualid 0x%x:\n",
 		   (int)(x_visinfo->visualid));
 #if 0
-	if (verbose)
-	{
+	if (verbose) {
 		printf("Using visualid %d:\n", (int)(x_visinfo->visualid));
 		printf("	screen %d\n", x_visinfo->screen);
 		printf("	red_mask 0x%x\n", (int)(x_visinfo->red_mask));
@@ -375,13 +375,12 @@ qboolean GLimp_InitGraphics( qboolean fullscreen )
 
 		tmpcmap = XCreateColormap(x_disp, root_win, x_vis, AllocNone);
 
-
 		attribs.event_mask = STD_EVENT_MASK;
 		attribs.border_pixel = 0;
 		attribs.colormap = tmpcmap;
 
 		/* create the main window */
-		x_win = XCreateWindow(	x_disp,
+		x_win = XCreateWindow(x_disp,
 			root_win,
 			0, 0,	/* x, y */
 			vid.width, vid.height,
@@ -390,7 +389,7 @@ qboolean GLimp_InitGraphics( qboolean fullscreen )
 			InputOutput,
 			x_vis,
 			attribmask,
-			&attribs );
+			&attribs);
 		XStoreName(x_disp, x_win, "UFO:Alien Invasion");
 
 		if (x_visinfo->class != TrueColor)
@@ -413,15 +412,15 @@ qboolean GLimp_InitGraphics( qboolean fullscreen )
 		XGCValues xgcvalues;
 		int valuemask = GCGraphicsExposures;
 		xgcvalues.graphics_exposures = False;
-		x_gc = XCreateGC(x_disp, x_win, valuemask, &xgcvalues );
+		x_gc = XCreateGC(x_disp, x_win, valuemask, &xgcvalues);
 	}
 
 	/* set window properties for full screen */
 	if (fullscreen) {
-		MotifWmHints    wmhints;
+		MotifWmHints wmhints;
 		Atom aHints;
-		XSizeHints              sizehints;
-		XWindowChanges  changes;
+		XSizeHints sizehints;
+		XWindowChanges changes;
 
 		aHints = XInternAtom(x_disp, "_MOTIF_WM_HINTS", 0);
 		if (aHints == None) {

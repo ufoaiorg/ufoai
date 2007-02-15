@@ -445,7 +445,7 @@ SYSTEM SPECIFIC
 extern int curtime;             /* time returned by last Sys_Milliseconds */
 
 int Sys_Milliseconds(void);
-void Sys_Mkdir(char *path);
+void Sys_Mkdir(const char *path);
 char *strlwr(char *s);          /* this is non ansi and is defined for some OSs */
 
 /* large block stack allocation routines */
@@ -468,9 +468,9 @@ void Sys_FindClose(void);
 
 
 /* this is only here so the functions in q_shared.c and q_shwin.c can link */
-void Sys_Error(char *error, ...) __attribute__((noreturn, format(printf, 1, 2)));
-void Com_Printf(char *msg, ...) __attribute__((format(printf, 1, 2)));
-void Com_DPrintf(char *msg, ...) __attribute__((format(printf, 1, 2)));
+void Sys_Error(const char *error, ...) __attribute__((noreturn, format(printf, 1, 2)));
+void Com_Printf(const char *msg, ...) __attribute__((format(printf, 1, 2)));
+void Com_DPrintf(const char *msg, ...) __attribute__((format(printf, 1, 2)));
 
 
 /*
@@ -634,7 +634,7 @@ typedef struct {
 #define torad (M_PI/180.0f)
 #define todeg (180.0f/M_PI)
 
-/* entity_state_t->renderfx flags */
+/* entity->flags (render flags) */
 #define RF_MINLIGHT         0x00000001  /* allways have some light (viewmodel) */
 #define RF_VIEWERMODEL      0x00000002  /* don't draw through eyes, only mirrors */
 #define RF_WEAPONMODEL      0x00000004  /* only draw through eyes */
@@ -649,18 +649,18 @@ typedef struct {
 #define RF_SHELL_GREEN      0x00000800
 #define RF_SHELL_BLUE       0x00001000
 
-#define RF_BOX              0x00002000
-#define RF_SHADOW           0x00004000
-#define RF_SELECTED         0x00008000
-#define RF_MEMBER           0x00010000
-#define RF_ALLIED           0x00020000
+#define RF_BOX              0x00002000	/* actor selection box */
+#define RF_SHADOW           0x00004000	/* shadow for this entity */
+#define RF_SELECTED         0x00008000	/* selected actor */
+#define RF_MEMBER           0x00010000	/* actor in the same team */
+#define RF_ALLIED           0x00020000	/* actor in an allied team (controlled by another player) */
 
 #define RF_LIGHTFIXED       0x00040000
 #define RF_NOSMOOTH         0x00080000
 
 /* player_state_t->refdef flags */
 #define RDF_UNDERWATER      1   /* warp the screen as apropriate */
-#define RDF_NOWORLDMODEL    2   /* used for player configuration screen */
+#define RDF_NOWORLDMODEL    2   /* e.g. used for sequences */
 
 /*ROGUE */
 #define RDF_IRGOGGLES       4

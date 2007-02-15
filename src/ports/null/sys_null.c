@@ -26,22 +26,22 @@ int curtime;
 unsigned sys_frame_time;
 
 
-char *Sys_Cwd(void)
+char *Sys_Cwd (void)
 {
 	return NULL;
 }
 
-void Sys_Error (char *error, ...)
+void Sys_Error (const char *error, ...)
 {
 	va_list argptr;
 
-	printf ("Sys_Error: ");
-	va_start (argptr,error);
-	vprintf (error,argptr);
-	va_end (argptr);
-	printf ("\n");
+	printf("Sys_Error: ");
+	va_start(argptr,error);
+	vprintf(error,argptr);
+	va_end(argptr);
+	printf("\n");
 
-	exit (1);
+	exit(1);
 }
 
 void Sys_Quit (void)
@@ -76,7 +76,7 @@ void Sys_AppActivate (void)
 }
 
 
-char *Sys_GetClipboardData( void )
+char *Sys_GetClipboardData (void)
 {
 	return NULL;
 }
@@ -109,7 +109,7 @@ void Sys_Mkdir (const char *path)
 {
 }
 
-void Sys_NormPath(char* path)
+void Sys_NormPath (char* path)
 {
 }
 
@@ -131,12 +131,12 @@ void Sys_Init (void)
 {
 }
 
-char *Sys_GetHomeDirectory(void)
+char *Sys_GetHomeDirectory (void)
 {
 	return NULL;
 }
 
-char *Sys_GetCurrentUser(void)
+char *Sys_GetCurrentUser (void)
 {
 	return NULL;
 }
@@ -146,10 +146,10 @@ char *Sys_GetCurrentUser(void)
 
 void main (int argc, char **argv)
 {
-	Qcommon_Init (argc, argv);
+	Qcommon_Init(argc, argv);
 
 	while (1) {
-		Qcommon_Frame (0.1);
+		Qcommon_Frame(0.1);
 	}
 }
 

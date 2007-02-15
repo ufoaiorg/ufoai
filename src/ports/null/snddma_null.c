@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -24,17 +24,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../client/client.h"
 #include "../../client/snd_loc.h"
 
-qboolean SND_Init(struct sndinfo *s)
+qboolean SND_Init (struct sndinfo *s)
 {
 	return qfalse;
 }
 
-int SND_GetDMAPos(void)
+int SND_GetDMAPos (void)
 {
 	return 0;
 }
 
-void SND_Shutdown(void)
+void SND_Shutdown (void)
 {
 }
 
@@ -42,6 +42,6 @@ void SND_BeginPainting (void)
 {
 }
 
-void SND_Submit(void)
+void SND_Submit (void)
 {
 }

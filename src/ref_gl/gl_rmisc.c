@@ -356,7 +356,7 @@ void R_DrawBeam (entity_t * e)
  * @brief Draws the field marker entity is specified in cl_actor.c CL_AddTargeting
  * @sa CL_AddTargeting
  */
-void R_DrawBox(entity_t * e)
+void R_DrawBox (entity_t * e)
 {
 	vec3_t upper, lower;
 	float dx, dy;

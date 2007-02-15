@@ -49,7 +49,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #pragma mark =Macros=
 
 #define SYS_CHECK_MALLOC(MEM_PTR)	if ((MEM_PTR) == NULL) {	\
-			Sys_Error ("Out of memory!");	\
+			Sys_Error("Out of memory!");	\
 		}
 
 #define SYS_CHECK_MOUSE_ENABLED()	if ((vid_fullscreen != NULL && vid_fullscreen->value == 0.0f &&		 \
@@ -463,7 +463,7 @@ char *Sys_ConsoleInput (void)
 /**
  * @brief
  */
-void Sys_ConsoleOutput (char *theString)
+void Sys_ConsoleOutput (const char *theString)
 {
 #ifdef DEDICATED_ONLY
 	unsigned char	*myChar;

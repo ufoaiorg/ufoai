@@ -37,7 +37,7 @@ static struct sndinfo *si;
 /**
  * @brief
  */
-qboolean SND_Init(struct sndinfo *s)
+qboolean SND_Init (struct sndinfo *s)
 {
 	int errorcode;
 	int frag_spec;
@@ -97,7 +97,7 @@ qboolean SND_Init(struct sndinfo *s)
 /**
  * @brief
  */
-int SND_GetDMAPos(void)
+int SND_GetDMAPos (void)
 {
 	if (snd_inited)
 		return si->dma->samplepos;
@@ -109,7 +109,7 @@ int SND_GetDMAPos(void)
 /**
  * @brief
  */
-void SND_Shutdown(void)
+void SND_Shutdown (void)
 {
 	if (!snd_inited) {
 		Com_Printf ("Sound not inizialized\n");
@@ -133,7 +133,7 @@ void SND_BeginPainting (void)
 /**
  * @brief
  */
-void SND_Submit(void)
+void SND_Submit (void)
 {
 	int written;
 

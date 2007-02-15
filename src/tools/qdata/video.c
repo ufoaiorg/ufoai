@@ -105,7 +105,7 @@ static void FindNextChunk(char *name)
 			return;
 		}
 /*		if (iff_chunk_len > 1024*1024) */
-/*			Sys_Error ("FindNextChunk: %i length is past the 1 meg sanity limit", iff_chunk_len); */
+/*			Sys_Error("FindNextChunk: %i length is past the 1 meg sanity limit", iff_chunk_len); */
 		data_p -= 8;
 		last_chunk = data_p + 8 + ( (iff_chunk_len + 1) & ~1 );
 		if (!strncmp((char*)data_p, name, 4))

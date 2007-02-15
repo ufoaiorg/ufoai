@@ -162,9 +162,9 @@ int Sys_Milliseconds (void)
 /**
  * @brief Creates a directory with all right (rwx) for user, group and world
  */
-void Sys_Mkdir (char *path)
+void Sys_Mkdir (const char *path)
 {
-	mkdir (path, 0777);
+	mkdir(path, 0777);
 }
 
 /**
@@ -225,7 +225,7 @@ char *Sys_FindFirst (const char *path, unsigned musthave, unsigned canhave)
 	char *p;
 
 	if (fdir)
-		Sys_Error ("Sys_BeginFind without close");
+		Sys_Error("Sys_BeginFind without close");
 
 /*	COM_FilePath (path, findbase); */
 	Q_strncpyz(findbase, path, MAX_OSPATH);

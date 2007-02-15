@@ -53,7 +53,7 @@ int gl_filter_max = GL_LINEAR;
 /**
  * @brief
  */
-void GL_EnableMultitexture(qboolean enable)
+extern void GL_EnableMultitexture (qboolean enable)
 {
 	if (!qglSelectTextureSGIS && !qglActiveTextureARB)
 		return;
@@ -74,7 +74,7 @@ void GL_EnableMultitexture(qboolean enable)
 /**
  * @brief
  */
-void GL_SelectTexture(GLenum texture)
+extern void GL_SelectTexture (GLenum texture)
 {
 	int tmu;
 
@@ -102,7 +102,7 @@ void GL_SelectTexture(GLenum texture)
 /**
  * @brief
  */
-void GL_TexEnv(GLenum mode)
+extern void GL_TexEnv (GLenum mode)
 {
 	static GLenum lastmodes[2] = { (GLenum) - 1, (GLenum) - 1 };
 
@@ -115,7 +115,7 @@ void GL_TexEnv(GLenum mode)
 /**
  * @brief
  */
-void GL_Bind(int texnum)
+extern void GL_Bind (int texnum)
 {
 	extern image_t *draw_chars;
 
@@ -130,7 +130,7 @@ void GL_Bind(int texnum)
 /**
  * @brief
  */
-void GL_MBind(GLenum target, int texnum)
+extern void GL_MBind (GLenum target, int texnum)
 {
 	GL_SelectTexture(target);
 	if (target == gl_texture0) {
@@ -148,7 +148,7 @@ typedef struct {
 	int minimize, maximize;
 } glmode_t;
 
-static glmode_t modes[] = {
+static const glmode_t modes[] = {
 	{"GL_NEAREST", GL_NEAREST, GL_NEAREST},
 	{"GL_LINEAR", GL_LINEAR, GL_LINEAR},
 	{"GL_NEAREST_MIPMAP_NEAREST", GL_NEAREST_MIPMAP_NEAREST, GL_NEAREST},
@@ -164,7 +164,7 @@ typedef struct {
 	int mode;
 } gltmode_t;
 
-static gltmode_t gl_alpha_modes[] = {
+static const gltmode_t gl_alpha_modes[] = {
 	{"default", 4},
 	{"GL_RGBA", GL_RGBA},
 	{"GL_RGBA8", GL_RGBA8},
@@ -175,7 +175,7 @@ static gltmode_t gl_alpha_modes[] = {
 
 #define NUM_GL_ALPHA_MODES (sizeof(gl_alpha_modes) / sizeof (gltmode_t))
 
-static gltmode_t gl_solid_modes[] = {
+static const gltmode_t gl_solid_modes[] = {
 	{"default", 3},
 	{"GL_RGB", GL_RGB},
 	{"GL_RGB8", GL_RGB8},
@@ -192,7 +192,7 @@ static gltmode_t gl_solid_modes[] = {
 /**
  * @brief
  */
-void GL_TextureMode(const char *string)
+extern void GL_TextureMode (const char *string)
 {
 	int i;
 	image_t *glt;
@@ -223,7 +223,7 @@ void GL_TextureMode(const char *string)
 /**
  * @brief
  */
-void GL_TextureAlphaMode(const char *string)
+extern void GL_TextureAlphaMode (const char *string)
 {
 	int i;
 
@@ -243,7 +243,7 @@ void GL_TextureAlphaMode(const char *string)
 /**
  * @brief
  */
-void GL_TextureSolidMode(const char *string)
+extern void GL_TextureSolidMode (const char *string)
 {
 	int i;
 
@@ -263,7 +263,7 @@ void GL_TextureSolidMode(const char *string)
 /**
  * @brief Shows all loaded images
  */
-void GL_ImageList_f(void)
+extern void GL_ImageList_f (void)
 {
 	int i;
 	image_t *image;
@@ -370,7 +370,7 @@ static int scrap_uploads = 0;
 /**
  * @brief
  */
-void Scrap_Upload (void)
+extern void Scrap_Upload (void)
 {
 	scrap_uploads++;
 	GL_Bind(TEXNUM_SCRAPS);
@@ -471,7 +471,6 @@ static void LoadPCX (char *filename, byte ** pic, byte ** palette, int *width, i
 			while (runLength-- > 0)
 				pix[x++] = dataByte;
 		}
-
 	}
 
 	if (raw - (byte *) pcx > len) {
@@ -494,7 +493,7 @@ typedef struct pngBuf_s {
 	size_t	pos;
 } pngBuf_t;
 
-void PngReadFunc (png_struct *Png, png_bytep buf, png_size_t size)
+static void PngReadFunc (png_struct *Png, png_bytep buf, png_size_t size)
 {
 	pngBuf_t *PngFileBuffer = (pngBuf_t*)png_get_io_ptr(Png);
 	memcpy (buf,PngFileBuffer->buffer + PngFileBuffer->pos, size);
@@ -610,7 +609,7 @@ static int LoadPNG (char *name, byte **pic, int *width, int *height)
  * @sa LoadPCX
  * @sa GL_FindImage
  */
-void WritePNG (FILE *f, byte *buffer, int width, int height)
+extern void WritePNG (FILE *f, byte *buffer, int width, int height)
 {
 	int			i;
 	png_structp	png_ptr;
@@ -673,7 +672,7 @@ typedef struct _TargaHeader {
  * @sa LoadPNG
  * @sa GL_FindImage
  */
-void LoadTGA(const char *name, byte ** pic, int *width, int *height)
+extern void LoadTGA (const char *name, byte ** pic, int *width, int *height)
 {
 	int columns, rows, numPixels;
 	byte *pixbuf;
@@ -866,7 +865,7 @@ void LoadTGA(const char *name, byte ** pic, int *width, int *height)
  * @brief
  * @sa LoadTGA
  */
-void WriteTGA (FILE *f, byte *buffer, int width, int height)
+extern void WriteTGA (FILE *f, byte *buffer, int width, int height)
 {
 	int		i, size, temp;
 	byte	*out;
@@ -887,7 +886,7 @@ void WriteTGA (FILE *f, byte *buffer, int width, int height)
 	memcpy (out + 18, buffer, width * height * 3);
 
 	/* Swap rgb to bgr */
-	for (i=18 ; i<size ; i+=3) {
+	for (i = 18; i < size; i += 3) {
 		temp = out[i];
 		out[i] = out[i+2];
 		out[i+2] = temp;
@@ -909,14 +908,14 @@ By Robert 'Heffo' Heffernan
 /**
  * @brief
  */
-void jpg_null(j_decompress_ptr cinfo)
+static void jpg_null (j_decompress_ptr cinfo)
 {
 }
 
 /**
  * @brief
  */
-boolean jpg_fill_input_buffer(j_decompress_ptr cinfo)
+static boolean jpg_fill_input_buffer (j_decompress_ptr cinfo)
 {
 	ri.Con_Printf(PRINT_ALL, "Premature end of JPEG data\n");
 	return 1;
@@ -925,7 +924,7 @@ boolean jpg_fill_input_buffer(j_decompress_ptr cinfo)
 /**
  * @brief
  */
-void jpg_skip_input_data(j_decompress_ptr cinfo, long num_bytes)
+static void jpg_skip_input_data (j_decompress_ptr cinfo, long num_bytes)
 {
 	if (cinfo->src->bytes_in_buffer < (size_t) num_bytes)
 		ri.Con_Printf(PRINT_ALL, "Premature end of JPEG data\n");
@@ -937,7 +936,7 @@ void jpg_skip_input_data(j_decompress_ptr cinfo, long num_bytes)
 /**
  * @brief
  */
-void jpeg_mem_src(j_decompress_ptr cinfo, byte * mem, int len)
+static void jpeg_mem_src (j_decompress_ptr cinfo, byte * mem, int len)
 {
 	cinfo->src = (struct jpeg_source_mgr *) (*cinfo->mem->alloc_small) ((j_common_ptr) cinfo, JPOOL_PERMANENT, sizeof(struct jpeg_source_mgr));
 	cinfo->src->init_source = jpg_null;
@@ -956,7 +955,7 @@ void jpeg_mem_src(j_decompress_ptr cinfo, byte * mem, int len)
  * @sa LoadPNG
  * @sa GL_FindImage
  */
-void LoadJPG(const char *filename, byte ** pic, int *width, int *height)
+static void LoadJPG (const char *filename, byte ** pic, int *width, int *height)
 {
 	struct jpeg_decompress_struct cinfo;
 	struct jpeg_error_mgr jerr;
@@ -1066,7 +1065,7 @@ typedef my_destination_mgr *my_dest_ptr;
 /**
  * @brief Initialize destination --- called by jpeg_start_compress before any data is actually written
  */
-void init_destination(j_compress_ptr cinfo)
+static void init_destination (j_compress_ptr cinfo)
 {
 	my_dest_ptr dest = (my_dest_ptr) cinfo->dest;
 
@@ -1084,7 +1083,7 @@ static size_t hackSize;
  * application must deal with any cleanup that should happen even
  * for error exit.
  */
-void term_destination(j_compress_ptr cinfo)
+static void term_destination (j_compress_ptr cinfo)
 {
 	my_dest_ptr dest = (my_dest_ptr) cinfo->dest;
 	size_t datacount = dest->size - dest->pub.free_in_buffer;
@@ -1114,7 +1113,7 @@ void term_destination(j_compress_ptr cinfo)
  * Data beyond this point will be regenerated after resumption, so do not
  * write it out when emptying the buffer externally.
  */
-boolean empty_output_buffer(j_compress_ptr cinfo)
+static boolean empty_output_buffer (j_compress_ptr cinfo)
 {
 	return TRUE;
 }
@@ -1124,7 +1123,7 @@ boolean empty_output_buffer(j_compress_ptr cinfo)
  * The caller must have already opened the stream, and is responsible
  * for closing it after finishing compression.
  */
-void jpegDest(j_compress_ptr cinfo, byte * outfile, int size)
+static void jpegDest (j_compress_ptr cinfo, byte * outfile, int size)
 {
 	my_dest_ptr dest;
 
@@ -1151,7 +1150,7 @@ void jpegDest(j_compress_ptr cinfo, byte * outfile, int size)
  * @brief
  * @sa LoadJPG
  */
-void SaveJPG(char *filename, int quality, int image_width, int image_height, unsigned char *image_buffer)
+void SaveJPG (char *filename, int quality, int image_width, int image_height, unsigned char *image_buffer)
 {
 	/* This struct contains the JPEG compression parameters and pointers to
 	 * working space (which is allocated as needed by the JPEG library).
@@ -1263,7 +1262,7 @@ void SaveJPG(char *filename, int quality, int image_width, int image_height, uns
  * @sa SaveJPG
  * @sa LoadJPG
  */
-size_t SaveJPGToBuffer(byte * buffer, int quality, int image_width, int image_height, byte * image_buffer)
+extern size_t SaveJPGToBuffer (byte * buffer, int quality, int image_width, int image_height, byte * image_buffer)
 {
 	struct jpeg_compress_struct cinfo;
 	struct jpeg_error_mgr jerr;
@@ -1402,7 +1401,7 @@ typedef struct {
 /**
  * @brief Fill background pixels so mipmapping doesn't have haloes
  */
-static void R_FloodFillSkin(byte * skin, int skinwidth, int skinheight)
+static void R_FloodFillSkin (byte * skin, int skinwidth, int skinheight)
 {
 	byte fillcolor = *skin;		/* assume this is the pixel to fill */
 	floodfill_t fifo[FLOODFILL_FIFO_SIZE];
@@ -1460,7 +1459,7 @@ static void R_FloodFillSkin(byte * skin, int skinwidth, int skinheight)
 /**
  * @brief
  */
-static void GL_ResampleTexture(unsigned *in, int inwidth, int inheight, unsigned *out, int outwidth, int outheight)
+static void GL_ResampleTexture (unsigned *in, int inwidth, int inheight, unsigned *out, int outwidth, int outheight)
 {
 	int i, j;
 	unsigned *inrow, *inrow2;
@@ -1506,7 +1505,7 @@ static void GL_ResampleTexture(unsigned *in, int inwidth, int inheight, unsigned
 /**
  * @brief Scale up the pixel values in a texture to increase the lighting range
  */
-static void GL_LightScaleTexture(unsigned *in, int inwidth, int inheight, qboolean only_gamma)
+static void GL_LightScaleTexture (unsigned *in, int inwidth, int inheight, qboolean only_gamma)
 {
 	if (gl_combine || only_gamma) {
 		int i, c;
@@ -1538,7 +1537,7 @@ static void GL_LightScaleTexture(unsigned *in, int inwidth, int inheight, qboole
 /**
  * @brief Operates in place, quartering the size of the texture
  */
-static void GL_MipMap(byte * in, int width, int height)
+static void GL_MipMap (byte * in, int width, int height)
 {
 	int i, j;
 	byte *out;
@@ -1634,7 +1633,7 @@ static const float FilterMatrix[][FILTER_SIZE][FILTER_SIZE] = {
  * Filtering algorithm from http://www.student.kuleuven.ac.be/~m0216922/CG/filtering.html
  * All credit due
  */
-static void R_FilterTexture(int filterindex, unsigned int *data, int width, int height, float factor, float bias, qboolean greyscale, int blend)
+static void R_FilterTexture (int filterindex, unsigned int *data, int width, int height, float factor, float bias, qboolean greyscale, int blend)
 {
 	int i;
 	int x;
@@ -1756,7 +1755,7 @@ static unsigned scaled_buffer[1024 * 1024];
  * @brief
  * @return has_alpha
  */
-static qboolean GL_Upload32(unsigned *data, int width, int height, qboolean mipmap, qboolean clamp, imagetype_t type, image_t* image)
+static qboolean GL_Upload32 (unsigned *data, int width, int height, qboolean mipmap, qboolean clamp, imagetype_t type, image_t* image)
 {
 	unsigned *scaled;
 	int samples;
@@ -1888,7 +1887,7 @@ static qboolean GL_Upload32(unsigned *data, int width, int height, qboolean mipm
  * @brief
  * @return has_alpha
  */
-static qboolean GL_Upload8(byte * data, int width, int height, qboolean mipmap, imagetype_t type, image_t* image)
+static qboolean GL_Upload8 (byte * data, int width, int height, qboolean mipmap, imagetype_t type, image_t* image)
 {
 	unsigned *trans;
 	size_t trans_size = 512 * 256 * sizeof(trans[0]);
@@ -1948,7 +1947,7 @@ image_t *DaN;
 /**
  * @brief
  */
-void GL_CalcDayAndNight(float q)
+void GL_CalcDayAndNight (float q)
 {
 	int x, y;
 	float phi, dphi, a, da;
@@ -2011,7 +2010,7 @@ void GL_CalcDayAndNight(float q)
 /**
  * @brief This is also used as an entry point for the generated r_notexture
  */
-image_t *GL_LoadPic(const char *name, byte * pic, int width, int height, imagetype_t type, int bits)
+image_t *GL_LoadPic (const char *name, byte * pic, int width, int height, imagetype_t type, int bits)
 {
 	image_t *image;
 	int i;
@@ -2101,7 +2100,7 @@ image_t *GL_LoadPic(const char *name, byte * pic, int width, int height, imagety
 /**
  * @brief
  */
-image_t *GL_LoadWal(const char *name)
+image_t *GL_LoadWal (const char *name)
 {
 	miptex_t *mt;
 	int width, height, ofs;
@@ -2128,7 +2127,7 @@ image_t *GL_LoadWal(const char *name)
 /**
  * @brief Finds an image for a shader
  */
-image_t *GL_FindImageForShader(const char *name)
+image_t *GL_FindImageForShader (const char *name)
 {
 	int i;
 	image_t *image;
@@ -2150,7 +2149,7 @@ image_t *GL_FindImageForShader(const char *name)
  * @sa LoadPNG
  * @sa LoadPCX
  */
-image_t *GL_FindImage(const char *pname, imagetype_t type)
+image_t *GL_FindImage (const char *pname, imagetype_t type)
 {
 	char lname[MAX_QPATH];
 	char *ename;
@@ -2266,7 +2265,7 @@ image_t *GL_FindImage(const char *pname, imagetype_t type)
 /**
  * @brief
  */
-struct image_s *R_RegisterSkin(const char *name)
+struct image_s *R_RegisterSkin (const char *name)
 {
 	return GL_FindImage(name, it_skin);
 }
@@ -2274,7 +2273,7 @@ struct image_s *R_RegisterSkin(const char *name)
 /**
  * @brief Any image that was not touched on this registration sequence will be freed
  */
-void GL_FreeUnusedImages(void)
+void GL_FreeUnusedImages (void)
 {
 	int i;
 	image_t *image;
@@ -2300,7 +2299,7 @@ void GL_FreeUnusedImages(void)
 /**
  * @brief
  */
-int Draw_GetPalette(void)
+int Draw_GetPalette (void)
 {
 	int i;
 	int r, g, b;
@@ -2336,7 +2335,7 @@ int Draw_GetPalette(void)
 /**
  * @brief
  */
-void GL_InitImages(void)
+void GL_InitImages (void)
 {
 	int i, j;
 	float g = vid_gamma->value;
@@ -2388,7 +2387,7 @@ void GL_InitImages(void)
 /**
  * @brief
  */
-void GL_ShutdownImages(void)
+void GL_ShutdownImages (void)
 {
 	int i;
 	image_t *image;

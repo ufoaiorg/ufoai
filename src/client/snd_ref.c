@@ -158,7 +158,7 @@ SND_Activate_t SND_Activate;
 /**
  * @brief Prints sound variables
  */
-void S_SoundInfo_f(void)
+static void S_SoundInfo_f (void)
 {
 	vorbis_info *vi;
 	int i;
@@ -194,7 +194,7 @@ void S_SoundInfo_f(void)
  * @brief Lists all sound renderers for options menu - and cycles between them
  * @note Sound renderer differers from os to os
  */
-void S_ModifySndRef_f (void)
+extern void S_ModifySndRef_f (void)
 {
 	if (!Q_strcmp(snd_ref->string, "sdl")) {
 #ifdef _WIN32
@@ -219,7 +219,7 @@ void S_ModifySndRef_f (void)
  * @note initiate a sound renderer restart at change
  * @sa CL_Snd_Restart_f
  */
-void S_ModifyKhz_f(void)
+static void S_ModifyKhz_f (void)
 {
 	if (Cmd_Argc() < 2)
 		return;
@@ -256,7 +256,7 @@ void S_ModifyKhz_f(void)
  * @brief Sets the music cvar to a random track
  * @note You have to start the music track afterwards
  */
-void S_RandomTrack (void)
+static void S_RandomTrack_f (void)
 {
 	char findname[MAX_OSPATH];
 	int i, ndirs, randomID, count = 0;
@@ -277,7 +277,7 @@ void S_RandomTrack (void)
 	}
 
 	randomID = rand() & count;
-	Com_DPrintf("S_RandomTrack: random track id: %i/%i\n", randomID, count);
+	Com_DPrintf("S_RandomTrack_f: random track id: %i/%i\n", randomID, count);
 
 	count = 0;
 	while ((path = FS_NextPath(path)) != NULL) {
@@ -302,7 +302,7 @@ void S_RandomTrack (void)
 /**
  * @brief List all available music tracks
  */
-void S_MusicList (void)
+static void S_MusicList_f (void)
 {
 	char findname[MAX_OSPATH];
 	int i, ndirs;
@@ -325,13 +325,14 @@ void S_MusicList (void)
 	}
 }
 
-static cmdList_t r_commands[] = {
-	{"musiclist", S_MusicList, "List all available music files"},
+/** @brief sound renderer commands */
+static const cmdList_t r_commands[] = {
+	{"musiclist", S_MusicList_f, "List all available music files"},
 	{"snd_play", S_Play_f, NULL},
 	{"snd_stop", S_StopAllSounds, "Stop all sounds"},
 	{"snd_list", S_SoundList_f, "List of loaded sounds"},
 	{"snd_info", S_SoundInfo_f, NULL},
-	{"music_randomtrack", S_RandomTrack, "Play random music track"},
+	{"music_randomtrack", S_RandomTrack_f, "Play random music track"},
 	{"music_play", S_PlayOGG, "Play an ogg sound track"},
 	{"music_start", S_StartOGG, "Start the ogg music track from cvar music"},
 	{"music_stop", OGG_Stop, "Stop currently playing music tracks"},
@@ -345,12 +346,12 @@ static cmdList_t r_commands[] = {
  * @sa S_Shutdown
  * @sa CL_Snd_Restart_f
  */
-void S_Init(void)
+void S_Init (void)
 {
 #ifndef _WIN32
 	cvar_t *s_libdir;
 #endif
-	cmdList_t *commands;
+	const cmdList_t *commands;
 
 	Com_Printf("\n------- sound initialization -------\n");
 
@@ -508,11 +509,11 @@ Shutdown sound engine
  * @sa S_Init
  * @sa CL_Snd_Restart_f
  */
-void S_Shutdown(void)
+void S_Shutdown (void)
 {
 	int i;
 	sfx_t *sfx;
-	cmdList_t *commands;
+	const cmdList_t *commands;
 
 	if (!sound_started)
 		return;
@@ -569,7 +570,7 @@ Load a sound
 /**
  * @brief
  */
-sfx_t *S_FindName(char *name, qboolean create)
+static sfx_t *S_FindName (const char *name, qboolean create)
 {
 	int i;
 	sfx_t *sfx;
@@ -611,41 +612,6 @@ sfx_t *S_FindName(char *name, qboolean create)
 	return sfx;
 }
 
-
-/**
- * @brief
- */
-sfx_t *S_AliasName(char *aliasname, char *truename)
-{
-	sfx_t *sfx;
-	char *s;
-
-	int i;
-
-	s = Mem_Alloc(MAX_QPATH);
-	Q_strncpyz(s, truename, MAX_QPATH);
-
-	/* find a free sfx */
-	for (i = 0; i < num_sfx; i++)
-		if (!known_sfx[i].name[0])
-			break;
-
-	if (i == num_sfx) {
-		if (num_sfx == MAX_SFX)
-			Com_Error(ERR_FATAL, "S_FindName: out of sfx_t");
-		num_sfx++;
-	}
-
-	sfx = &known_sfx[i];
-	memset(sfx, 0, sizeof(*sfx));
-	Q_strncpyz(sfx->name, aliasname, MAX_QPATH);
-	sfx->registration_sequence = s_registration_sequence;
-	sfx->truename = s;
-
-	return sfx;
-}
-
-
 /**
  * @brief
  */
@@ -658,7 +624,7 @@ void S_BeginRegistration(void)
 /**
  * @brief
  */
-sfx_t *S_RegisterSound(char *name)
+extern sfx_t *S_RegisterSound (const char *name)
 {
 	sfx_t *sfx;
 
@@ -678,7 +644,7 @@ sfx_t *S_RegisterSound(char *name)
 /**
  * @brief
  */
-void S_EndRegistration(void)
+extern void S_EndRegistration (void)
 {
 	int i;
 	sfx_t *sfx;
@@ -713,9 +679,9 @@ void S_EndRegistration(void)
 
 
 /**
- * @brief
+ * @brief picks a channel based on priorities, empty slots, number of channels
  */
-channel_t *S_PickChannel (int entnum, int entchannel)
+static channel_t *S_PickChannel (int entnum, int entchannel)
 {
 	int ch_idx;
 	int first_to_die;
@@ -757,7 +723,7 @@ channel_t *S_PickChannel (int entnum, int entchannel)
 /**
  * @brief Used for spatializing channels and autosounds
  */
-void S_SpatializeOrigin(vec3_t origin, float master_vol, float dist_mult, int *left_vol, int *right_vol)
+static void S_SpatializeOrigin (vec3_t origin, float master_vol, float dist_mult, int *left_vol, int *right_vol)
 {
 	vec_t dot;
 	vec_t dist;
@@ -801,9 +767,9 @@ void S_SpatializeOrigin(vec3_t origin, float master_vol, float dist_mult, int *l
 }
 
 /**
- * @brief
+ * @brief spatializes a channel
  */
-void S_Spatialize(channel_t * ch)
+static void S_Spatialize (channel_t * ch)
 {
 	vec3_t origin;
 
@@ -823,7 +789,7 @@ void S_Spatialize(channel_t * ch)
 /**
  * @brief
  */
-playsound_t *S_AllocPlaysound(void)
+static playsound_t *S_AllocPlaysound (void)
 {
 	playsound_t *ps;
 
@@ -842,7 +808,7 @@ playsound_t *S_AllocPlaysound(void)
 /**
  * @brief
  */
-void S_FreePlaysound(playsound_t * ps)
+static void S_FreePlaysound (playsound_t * ps)
 {
 	/* unlink from channel */
 	ps->prev->next = ps->next;
@@ -862,7 +828,7 @@ void S_FreePlaysound(playsound_t * ps)
  * This is never called directly by S_Play*, but only
  * by the update loop.
  */
-void S_IssuePlaysound (playsound_t * ps)
+extern void S_IssuePlaysound (playsound_t * ps)
 {
 	channel_t *ch;
 	sfxcache_t *sc;
@@ -905,7 +871,7 @@ Start a sound effect
  * if pos is NULL, the sound will be dynamically sourced from the entity
  * Entchannel 0 will never override a playing sound
  */
-void S_StartSound (vec3_t origin, int entnum, int entchannel, sfx_t * sfx, float fvol, float attenuation, float timeofs)
+extern void S_StartSound (vec3_t origin, int entnum, int entchannel, sfx_t * sfx, float fvol, float attenuation, float timeofs)
 {
 	sfxcache_t *sc;
 	int vol;
@@ -970,7 +936,7 @@ void S_StartSound (vec3_t origin, int entnum, int entchannel, sfx_t * sfx, float
 /**
  * @brief
  */
-void S_StartLocalSound(char *sound)
+extern void S_StartLocalSound (char *sound)
 {
 	sfx_t *sfx;
 
@@ -989,7 +955,7 @@ void S_StartLocalSound(char *sound)
 /**
  * @brief
  */
-void S_ClearBuffer(void)
+extern void S_ClearBuffer (void)
 {
 	int clear;
 

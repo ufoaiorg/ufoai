@@ -131,7 +131,7 @@ invList_t invChain[MAX_INVLIST];
  * @brief This will be called when the dll is first loaded
  * @note only happens when a new game is started or a save game is loaded.
  */
-void InitGame(void)
+void InitGame (void)
 {
 	gi.dprintf("==== InitGame ====\n");
 
@@ -298,7 +298,7 @@ game_export_t *GetGameAPI(game_import_t * import)
 
 #ifndef GAME_HARD_LINKED
 /* this is only here so the functions in q_shared.c and q_shwin.c can link */
-void Sys_Error(char *error, ...)
+void Sys_Error (const char *error, ...)
 {
 	va_list argptr;
 	char text[1024];
@@ -316,7 +316,7 @@ void Sys_Error(char *error, ...)
 	gi.error("%s", text);
 }
 
-void Com_Printf(char *msg, ...)
+void Com_Printf (const char *msg, ...)
 {
 	va_list argptr;
 	char text[1024];
@@ -330,7 +330,7 @@ void Com_Printf(char *msg, ...)
 	gi.dprintf("%s", text);
 }
 
-void Com_DPrintf(char *msg, ...)
+void Com_DPrintf (const char *msg, ...)
 {
 	va_list argptr;
 	char text[1024];
@@ -353,7 +353,7 @@ void Com_DPrintf(char *msg, ...)
 /**
  * @brief If password or spectator_password has changed, update needpass as needed
  */
-void CheckNeedPass(void)
+void CheckNeedPass (void)
 {
 	int need;
 
@@ -380,7 +380,7 @@ void CheckNeedPass(void)
  * @sa G_EndGame
  * @note you also have to update the pascal string size in G_EndGame if you change the buffer here
  */
-static void G_SendCharacterData( edict_t* ent )
+static void G_SendCharacterData (edict_t* ent)
 {
 	int k;
 
@@ -409,7 +409,7 @@ static void G_SendCharacterData( edict_t* ent )
  * @sa G_RunFrame
  * @sa CL_ParseResults
  */
-void G_EndGame(int team)
+void G_EndGame (int team)
 {
 	edict_t *ent;
 	int i, j = 0;
@@ -514,7 +514,7 @@ int G_MissionObjective (int activeTeams, int* winningTeam)
  * @brief Checks whether there are still actors to fight with left
  * @sa G_EndGame
  */
-void G_CheckEndGame(void)
+void G_CheckEndGame (void)
 {
 	int activeTeams;
 	int i, last;

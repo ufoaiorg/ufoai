@@ -143,8 +143,8 @@ struct sndinfo {
 	cvar_t *device;
 	cvar_t *khz;
 
-	void (*Com_Printf) (char *fmt, ...);
-	void (*Com_DPrintf) (char *fmt, ...);
+	void (*Com_Printf) (const char *fmt, ...);
+	void (*Com_DPrintf) (const char *fmt, ...);
 	void (*S_PaintChannels) (int);
 	cvar_t* (*Cvar_Get)(const char *var_name, const char *value, int flags, char *desc);
 	cvar_t* (*Cvar_Set)(const char *var_name, const char *value);
@@ -194,12 +194,6 @@ sfxcache_t *S_LoadSound(sfx_t * s);
 void S_IssuePlaysound(playsound_t * ps);
 
 void S_PaintChannels(int endtime);
-
-/* picks a channel based on priorities, empty slots, number of channels */
-channel_t *S_PickChannel(int entnum, int entchannel);
-
-/* spatializes a channel */
-void S_Spatialize(channel_t * ch);
 
 void S_ClearBuffer(void);
 

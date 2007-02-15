@@ -144,9 +144,9 @@ int Sys_Milliseconds (void)
 /**
  * @brief
  */
-void Sys_Mkdir (char *path)
+void Sys_Mkdir (const char *path)
 {
-	_mkdir (path);
+	_mkdir(path);
 }
 
 static char findbase[MAX_OSPATH];

@@ -153,7 +153,7 @@ void Sys_Minimize (void)
 /**
  * @brief
  */
-void Sys_Error (char *error, ...)
+void Sys_Error (const char *error, ...)
 {
 	va_list		argptr;
 	char		text[1024];
@@ -625,7 +625,7 @@ void Sys_UpdateConsoleBuffer (void)
 /**
  * @brief Print text to the dedicated console
  */
-void Sys_ConsoleOutput (char *string)
+void Sys_ConsoleOutput (const char *string)
 {
 	DWORD	dummy;
 	char text[2048];

@@ -69,6 +69,6 @@ int FS_CheckFile(const char *path);
 
 void FS_BuildFileList(char *files);
 char *FS_NextScriptHeader(const char *files, char **name, char **text);
-void FS_CreatePath(char *path);
+void FS_CreatePath(const char *path);
 
 

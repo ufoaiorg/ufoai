@@ -32,7 +32,7 @@ static struct sndinfo *si;
 static int tryrates[] = { 22050, 11025, 44100, 48000, 8000 };
 static unsigned long mmaplen;
 
-qboolean SND_Init(struct sndinfo *s)
+qboolean SND_Init (struct sndinfo *s)
 {
 	int rc, fmt, tmp, i, caps;
 	struct audio_buf_info info;
@@ -87,7 +87,7 @@ qboolean SND_Init(struct sndinfo *s)
 		return qfalse;
 	}
 
-	if ( ioctl ( audio_fd, SNDCTL_DSP_GETCAPS, &caps ) == -1 ) {
+	if (ioctl(audio_fd, SNDCTL_DSP_GETCAPS, &caps) == -1) {
 		perror(si->device->string);
 		si->Com_Printf("SND_Init: Sound driver too old. %s\n", strerror(errno));
 		close(audio_fd);
@@ -95,7 +95,7 @@ qboolean SND_Init(struct sndinfo *s)
 		return qfalse;
 	}
 
-	if ( ! ( caps & DSP_CAP_TRIGGER ) || ! ( caps & DSP_CAP_MMAP ) ) {
+	if (!(caps & DSP_CAP_TRIGGER) || ! (caps & DSP_CAP_MMAP)) {
 		si->Com_Printf("SND_Init: Sorry, but your soundcard doesn't support trigger or mmap. (%08x). %s\n", caps, strerror(errno));
 		close(audio_fd);
 		audio_fd = -1;
@@ -122,8 +122,8 @@ qboolean SND_Init(struct sndinfo *s)
 		si->dma->speed = 0;
 
 	if (!si->dma->speed) {
-		for ( i = 0 ; i < sizeof ( tryrates ) / 4 ; i++ )
-			if ( ! ioctl(audio_fd, SNDCTL_DSP_SPEED, &tryrates[i]) )
+		for (i = 0 ; i < sizeof ( tryrates ) / 4 ; i++)
+			if (!ioctl(audio_fd, SNDCTL_DSP_SPEED, &tryrates[i]))
 				break;
 		si->dma->speed = tryrates[i];
 	}
@@ -252,7 +252,7 @@ qboolean SND_Init(struct sndinfo *s)
 	return qtrue;
 }
 
-int SND_GetDMAPos(void)
+int SND_GetDMAPos (void)
 {
 	struct count_info count;
 
@@ -272,7 +272,7 @@ int SND_GetDMAPos(void)
 	return si->dma->samplepos;
 }
 
-void SND_Shutdown(void)
+void SND_Shutdown (void)
 {
 #if 0
 	if (snd_inited) {
@@ -286,7 +286,7 @@ void SND_Shutdown(void)
 /**
  * @brief Send sound to device if buffer isn't really the dma buffer
  */
-void SND_Submit(void)
+void SND_Submit (void)
 {
 }
 

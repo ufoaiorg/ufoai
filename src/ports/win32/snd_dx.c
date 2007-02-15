@@ -79,7 +79,7 @@ static struct sndinfo *si;
 /**
  * @brief
  */
-static const char *DSoundError( int error )
+static const char *DSoundError (int error)
 {
 	switch ( error ) {
 	case DSERR_BUFFERLOST:
@@ -98,7 +98,7 @@ static const char *DSoundError( int error )
 /**
  * @brief
  */
-static qboolean DS_CreateBuffers( void )
+static qboolean DS_CreateBuffers (void)
 {
 	DSBUFFERDESC	dsbuf;
 	DSBCAPS			dsbcaps;
@@ -225,24 +225,24 @@ static qboolean DS_CreateBuffers( void )
 /**
  * @brief
  */
-static void DS_DestroyBuffers( void )
+static void DS_DestroyBuffers (void)
 {
 	si->Com_DPrintf("Destroying DS buffers\n");
-	if ( pDS ) {
+	if (pDS) {
 		si->Com_DPrintf("...setting NORMAL coop level\n");
 		pDS->lpVtbl->SetCooperativeLevel( pDS, si->cl_hwnd, DSSCL_NORMAL );
 	}
 
-	if ( pDSBuf ) {
+	if (pDSBuf) {
 		si->Com_DPrintf("...stopping and releasing sound buffer\n");
 		pDSBuf->lpVtbl->Stop( pDSBuf );
 		pDSBuf->lpVtbl->Release( pDSBuf );
 	}
 
 	/* only release primary buffer if it's not also the mixing buffer we just released */
-	if ( pDSPBuf && ( pDSBuf != pDSPBuf ) ) {
+	if (pDSPBuf && (pDSBuf != pDSPBuf)) {
 		si->Com_DPrintf( "...releasing primary buffer\n" );
-		pDSPBuf->lpVtbl->Release( pDSPBuf );
+		pDSPBuf->lpVtbl->Release(pDSPBuf);
 	}
 	pDSBuf = NULL;
 	pDSPBuf = NULL;
@@ -385,7 +385,7 @@ static sndinitstat SND_InitDirect (void)
  * @brief Try to find a sound device to mix for.
  * @return false if nothing is found.
  */
-qboolean SND_Init(struct sndinfo *s)
+qboolean SND_Init (struct sndinfo *s)
 {
 	sndinitstat	stat;
 
@@ -426,7 +426,7 @@ qboolean SND_Init(struct sndinfo *s)
  * inside the recirculating dma buffer, so the mixing code will know
  * how many sample are required to fill it up.
  */
-int SND_GetDMAPos(void)
+int SND_GetDMAPos (void)
 {
 	MMTIME	mmtime;
 	int		s = 0;
@@ -447,7 +447,7 @@ int SND_GetDMAPos(void)
 /**
  * @brief Reset the sound device for exiting
  */
-void SND_Shutdown(void)
+void SND_Shutdown (void)
 {
 	FreeSound();
 }
@@ -501,7 +501,7 @@ void SND_BeginPainting (void)
 /**
  * @brief Unlocks the dsound buffer
  */
-void SND_Submit(void)
+void SND_Submit (void)
 {
 	if (!si->dma->buffer)
 		return;

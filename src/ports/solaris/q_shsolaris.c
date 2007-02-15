@@ -107,7 +107,7 @@ int Sys_Milliseconds (void)
 
 void Sys_Mkdir (const char *path)
 {
-	mkdir (path, 0777);
+	mkdir(path, 0777);
 }
 
 /*============================================ */

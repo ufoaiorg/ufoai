@@ -239,7 +239,7 @@ static qboolean SND_InitWav (void)
  * @brief Try to find a sound device to mix for.
  * @return false if nothing is found.
  */
-qboolean SND_Init(struct sndinfo *s)
+qboolean SND_Init (struct sndinfo *s)
 {
 	wav_init = qfalse;
 
@@ -275,7 +275,7 @@ qboolean SND_Init(struct sndinfo *s)
  * inside the recirculating dma buffer, so the mixing code will know
  * how many sample are required to fill it up.
  */
-int SND_GetDMAPos(void)
+int SND_GetDMAPos (void)
 {
 	int		s = 0;
 
@@ -299,7 +299,7 @@ void SND_BeginPainting (void)
 /**
  @brief Send sound to device if buffer isn't really the dma buffer
  */
-void SND_Submit(void)
+void SND_Submit (void)
 {
 	LPWAVEHDR	h;
 	int			wResult;
@@ -348,7 +348,7 @@ void SND_Submit(void)
  * @brief Reset the sound device for exiting
  * @sa SND_Init
  */
-void SND_Shutdown(void)
+void SND_Shutdown (void)
 {
 	FreeSound ();
 }

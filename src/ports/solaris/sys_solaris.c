@@ -54,7 +54,7 @@ qboolean stdin_active = qtrue;
 /**
  * @brief
  */
-void Sys_ConsoleOutput (char *string)
+void Sys_ConsoleOutput (const char *string)
 {
 	if (nostdout && nostdout->value)
 		return;
@@ -65,7 +65,7 @@ void Sys_ConsoleOutput (char *string)
 /**
  * @brief
  */
-void Sys_Printf (char *fmt, ...)
+void Sys_Printf (const char *fmt, ...)
 {
 	va_list argptr;
 	char text[1024];
@@ -106,7 +106,7 @@ void Sys_Quit (void)
 /**
  * @brief
  */
-void Sys_Init(void)
+void Sys_Init (void)
 {
 	Cvar_Get("sys_os", "solaris", CVAR_SERVERINFO, NULL);
 #if id386
@@ -117,7 +117,7 @@ void Sys_Init(void)
 /**
  * @brief
  */
-void Sys_Error (char *error, ...)
+void Sys_Error (const char *error, ...)
 {
 	va_list argptr;
 	char string[1024];

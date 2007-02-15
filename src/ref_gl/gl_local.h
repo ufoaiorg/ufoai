@@ -147,9 +147,9 @@ const void *RB_TakeVideoFrameCmd(const void *data);
 
 /*=================================================================== */
 
-void WritePNG (FILE *f, byte *buffer, int width, int height);
-void WriteJPG (FILE *f, byte *buffer, int width, int height, int quality);
-void WriteTGA (FILE *f, byte *buffer, int width, int height);
+void WritePNG(FILE *f, byte *buffer, int width, int height);
+void WriteJPG(FILE *f, byte *buffer, int width, int height, int quality);
+void WriteTGA(FILE *f, byte *buffer, int width, int height);
 
 /*=================================================================== */
 

@@ -47,7 +47,7 @@ long long sgisnd_lastframewritten = 0;
  * @return false if nothing is found.
  * @return true and fills in the "dma" structure with information for the mixer.
  */
-qboolean SND_Init(struct sndinfo *s)
+qboolean SND_Init (struct sndinfo *s)
 {
 	ALconfig	ac = NULL;
 	ALpv	pvbuf[2];
@@ -142,7 +142,7 @@ qboolean SND_Init(struct sndinfo *s)
  * inside the recirculating dma buffer, so the mixing code will know
  * how many sample are required to fill it up.
  */
-int SND_GetDMAPos(void)
+int SND_GetDMAPos (void)
 {
 	long long ustFuture, ustNow;
 	if (!sgisnd_aport)
@@ -158,7 +158,7 @@ int SND_GetDMAPos(void)
 /**
  * @brief Reset the sound device for exiting
  */
-void SND_Shutdown(void)
+void SND_Shutdown (void)
 {
 	if (sgisnd_aport)
 		alClosePort( sgisnd_aport );
@@ -170,7 +170,7 @@ extern int soundtime;
 /**
  * @brief Send sound to device if buffer isn't really the dma buffer
  */
-void SND_Submit(void)
+void SND_Submit (void)
 {
 	int nFillable, nFilled, nPos;
 	int nFrames, nFramesLeft;

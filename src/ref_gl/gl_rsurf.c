@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static vec3_t modelorg;			/* relative to viewpoint */
 
-msurface_t *r_alpha_surfaces;
+static msurface_t *r_alpha_surfaces;
 
 #define DYNAMIC_LIGHT_WIDTH  256
 #define DYNAMIC_LIGHT_HEIGHT 256
@@ -137,7 +137,7 @@ static void DrawGLFlowingPoly (msurface_t * fa)
 /**
  * @brief
  */
-void R_DrawTriangleOutlines (void)
+extern void R_DrawTriangleOutlines (void)
 {
 	int i, j;
 	glpoly_t *p;
@@ -437,7 +437,7 @@ void R_DrawAlphaSurfaces (void)
 	qglLoadMatrixf(r_world_matrix);
 
 	GLSTATE_ENABLE_BLEND
-	qglDepthMask(0);	/* disable depth writing */
+	qglDepthMask(GL_FALSE);	/* disable depth writing */
 	GL_TexEnv(GL_MODULATE);
 
 	/* the textures are prescaled up for a better lighting range, */
@@ -465,7 +465,7 @@ void R_DrawAlphaSurfaces (void)
 
 	GL_TexEnv(GL_REPLACE);
 	qglColor4f(1, 1, 1, 1);
-	qglDepthMask(1); /* reenable depth writing */
+	qglDepthMask(GL_TRUE); /* reenable depth writing */
 	GLSTATE_DISABLE_BLEND
 
 	r_alpha_surfaces = NULL;
@@ -474,7 +474,7 @@ void R_DrawAlphaSurfaces (void)
 /**
  * @brief
  */
-static void GL_RenderLightmappedPoly(msurface_t * surf)
+static void GL_RenderLightmappedPoly (msurface_t * surf)
 {
 	int i, nv = surf->polys->numverts;
 	int map;
@@ -681,7 +681,7 @@ void R_DrawBrushModel (entity_t * e)
 	int i;
 	qboolean rotated;
 
-/*	Com_Printf( "Brush model %i!\n", currentmodel->nummodelsurfaces ); */
+/*	Com_Printf("Brush model %i!\n", currentmodel->nummodelsurfaces); */
 
 	if (currentmodel->nummodelsurfaces == 0)
 		return;
@@ -749,7 +749,7 @@ WORLD MODEL
  * @brief
  * @sa R_DrawWorld
  */
-static void R_RecursiveWorldNode(mnode_t * node)
+static void R_RecursiveWorldNode (mnode_t * node)
 {
 	int c, side, sidebit;
 	cplane_t *plane;
@@ -822,8 +822,9 @@ static void R_RecursiveWorldNode(mnode_t * node)
 /**
  * @brief
  * @sa R_RecursiveWorldNode
+ * @sa R_DrawLevelBrushes
  */
-static void R_DrawWorld(mnode_t * nodes)
+static void R_DrawWorld (mnode_t * nodes)
 {
 	entity_t ent;
 
@@ -870,8 +871,9 @@ static void R_DrawWorld(mnode_t * nodes)
 
 /**
  * @brief
+ * @sa R_DrawLevelBrushes
  */
-static void R_FindModelNodes_r(mnode_t * node)
+static void R_FindModelNodes_r (mnode_t * node)
 {
 	if (!node->plane) {
 		R_FindModelNodes_r(node->children[0]);
@@ -886,7 +888,7 @@ static void R_FindModelNodes_r(mnode_t * node)
  * @brief Draws the brushes for the current worldlevel
  * @sa cvar cl_worldlevel
  */
-void R_DrawLevelBrushes(void)
+void R_DrawLevelBrushes (void)
 {
 	entity_t ent;
 	int i, tile, mask;
@@ -903,6 +905,7 @@ void R_DrawLevelBrushes(void)
 		currentmodel = rTiles[tile];
 
 		for (i = 0; i < 256; i++) {
+			/* check the worldlevel flags */
 			if (i && !(i & mask))
 				continue;
 
@@ -925,7 +928,7 @@ LIGHTMAP ALLOCATION
 /**
  * @brief
  */
-static void LM_InitBlock(void)
+static void LM_InitBlock (void)
 {
 	memset(gl_lms.allocated, 0, sizeof(gl_lms.allocated));
 }
@@ -933,7 +936,7 @@ static void LM_InitBlock(void)
 /**
  * @brief
  */
-static void LM_UploadBlock(qboolean dynamic)
+static void LM_UploadBlock (qboolean dynamic)
 {
 	int texture;
 	int height = 0;
@@ -966,7 +969,7 @@ static void LM_UploadBlock(qboolean dynamic)
 /**
  * @brief returns a texture number and the position inside it
  */
-static qboolean LM_AllocBlock(int w, int h, int *x, int *y)
+static qboolean LM_AllocBlock (int w, int h, int *x, int *y)
 {
 	int i, j;
 	int best, best2;
@@ -1001,7 +1004,7 @@ static qboolean LM_AllocBlock(int w, int h, int *x, int *y)
 /**
  * @brief
  */
-void GL_BuildPolygonFromSurface(msurface_t * fa, int shift[3])
+extern void GL_BuildPolygonFromSurface (msurface_t * fa, int shift[3])
 {
 	int i, lindex, lnumverts;
 	medge_t *pedges, *r_pedge;
@@ -1068,7 +1071,7 @@ void GL_BuildPolygonFromSurface(msurface_t * fa, int shift[3])
 /**
  * @brief
  */
-void GL_CreateSurfaceLightmap(msurface_t * surf)
+void GL_CreateSurfaceLightmap (msurface_t * surf)
 {
 	int smax, tmax;
 	byte *base;
@@ -1099,7 +1102,7 @@ void GL_CreateSurfaceLightmap(msurface_t * surf)
 /**
  * @brief
  */
-void GL_BeginBuildingLightmaps(void)
+void GL_BeginBuildingLightmaps (void)
 {
 	static lightstyle_t lightstyles[MAX_LIGHTSTYLES];
 	int i;
@@ -1165,7 +1168,7 @@ void GL_BeginBuildingLightmaps(void)
 /**
  * @brief
  */
-void GL_EndBuildingLightmaps(void)
+void GL_EndBuildingLightmaps (void)
 {
 	LM_UploadBlock(qfalse);
 	GL_EnableMultitexture(qfalse);

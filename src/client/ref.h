@@ -359,7 +359,7 @@ typedef struct {
 	int (*FS_WriteFile) (const void *buffer, size_t len, const char *filename);
 	int (*FS_LoadFile) (const char *name, void **buf);
 	void (*FS_FreeFile) (void *buf);
-	void (*FS_CreatePath) (char *name);
+	void (*FS_CreatePath) (const char *name);
 	int (*FS_CheckFile) (const char *name);
 	char **(*FS_ListFiles) (const char *findname, int *numfiles, unsigned musthave, unsigned canthave);
 

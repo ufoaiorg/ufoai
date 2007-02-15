@@ -138,10 +138,10 @@ int Sys_Milliseconds (void)
 /**
  * @brief
  */
-void Sys_Mkdir (char *thePath)
+void Sys_Mkdir (const char *thePath)
 {
 	if (mkdir (thePath, 0777) != -1)
-	return;
+		return;
 
 	if (errno != EEXIST)
 		Sys_Error ("\"mkdir %s\" failed, reason: \"%s\".", thePath, strerror(errno));
