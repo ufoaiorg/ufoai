@@ -1674,7 +1674,7 @@ static void CM_TraceToLeaf (int leafnum)
  * @param[in] leafnum
  * @sa CM_TestBoxInBrush
  */
-void CM_TestInLeaf(int leafnum)
+void CM_TestInLeaf (int leafnum)
 {
 	int k;
 	int brushnum;
@@ -2012,7 +2012,7 @@ trace_t CM_CompleteBoxTrace (vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs,
 /**
  * @brief Converts the disk node structure into the efficient tracing structure
  */
-void MakeTnode(int nodenum)
+void MakeTnode (int nodenum)
 {
 	tnode_t *t;
 	cplane_t *plane;
@@ -2047,7 +2047,7 @@ void MakeTnode(int nodenum)
  * @param
  * @sa
  */
-void BuildTnode_r(int node)
+void BuildTnode_r (int node)
 {
 	if (!curTile->nodes[node].plane) {
 		cnode_t *n;
@@ -2110,7 +2110,7 @@ void BuildTnode_r(int node)
  * @brief Loads the node structure out of a .bsp file to be used for light occlusion
  * @sa BuildTnode_r
  */
-void CM_MakeTnodes(void)
+void CM_MakeTnodes (void)
 {
 	int i;
 
@@ -2147,7 +2147,7 @@ void CM_MakeTnodes(void)
  * @sa TestLineDist_r
  * @sa CM_TestLine
  */
-int TestLine_r(int node, vec3_t start, vec3_t stop)
+int TestLine_r (int node, vec3_t start, vec3_t stop)
 {
 	tnode_t *tnode;
 	float front, back;
@@ -2215,7 +2215,7 @@ int TestLine_r(int node, vec3_t start, vec3_t stop)
  * @sa TestLine_r
  * @sa CM_TestLineDM
  */
-int TestLineDist_r(int node, vec3_t start, vec3_t stop)
+int TestLineDist_r (int node, vec3_t start, vec3_t stop)
 {
 	tnode_t *tnode;
 	float front, back;
@@ -2301,7 +2301,7 @@ int TestLineDist_r(int node, vec3_t start, vec3_t stop)
  * @sa TestLine_r
  * @sa CL_TargetingToHit
  */
-int CM_TestLine(vec3_t start, vec3_t stop)
+int CM_TestLine (vec3_t start, vec3_t stop)
 {
 	int tile, i;
 
@@ -2323,7 +2323,7 @@ int CM_TestLine(vec3_t start, vec3_t stop)
  * @sa CM_TestLine
  * @sa CL_ActorMouseTrace
  */
-int CM_TestLineDM(vec3_t start, vec3_t stop, vec3_t end)
+int CM_TestLineDM (vec3_t start, vec3_t stop, vec3_t end)
 {
 	int tile, i;
 
@@ -2355,7 +2355,7 @@ int CM_TestLineDM(vec3_t start, vec3_t stop, vec3_t end)
  * @param
  * @sa Grid_MoveMark
  */
-qboolean Grid_CheckForbidden(struct routing_s * map, int x, int y, int z)
+qboolean Grid_CheckForbidden (struct routing_s * map, int x, int y, int z)
 {
 	byte **p;
 	int i;
@@ -2372,7 +2372,7 @@ qboolean Grid_CheckForbidden(struct routing_s * map, int x, int y, int z)
  * @param
  * @sa Grid_CheckForbidden
  */
-void Grid_MoveMark(struct routing_s *map, int x, int y, int z, int dv, int h, int ol)
+void Grid_MoveMark (struct routing_s *map, int x, int y, int z, int dv, int h, int ol)
 {
 	int nx, ny, sh, l;
 	int dx, dy;
@@ -2424,7 +2424,7 @@ void Grid_MoveMark(struct routing_s *map, int x, int y, int z, int dv, int h, in
  * @param
  * @sa Grid_MoveMark
  */
-static void Grid_MoveMarkRoute(struct routing_s *map, int xl, int yl, int xh, int yh)
+static void Grid_MoveMarkRoute (struct routing_s *map, int xl, int yl, int xh, int yh)
 {
 	int x, y, z, h;
 	int dv, l;
@@ -2458,7 +2458,7 @@ static void Grid_MoveMarkRoute(struct routing_s *map, int xl, int yl, int xh, in
  * @sa Grid_MoveMarkRoute
  * @sa G_MoveCalc
  */
-void Grid_MoveCalc(struct routing_s *map, pos3_t from, int distance, byte ** fb_list, int fb_length)
+void Grid_MoveCalc (struct routing_s *map, pos3_t from, int distance, byte ** fb_list, int fb_length)
 {
 	int xl, xh, yl, yh;
 	int i;
@@ -2506,7 +2506,7 @@ void Grid_MoveCalc(struct routing_s *map, pos3_t from, int distance, byte ** fb_
  * @param
  * @sa AI_ActorThink
  */
-void Grid_MoveStore(struct routing_s *map)
+void Grid_MoveStore (struct routing_s *map)
 {
 	memcpy(map->areaStored, map->area, WIDTH * WIDTH * HEIGHT);
 }
@@ -2520,7 +2520,7 @@ void Grid_MoveStore(struct routing_s *map)
  * @return 0xFF if the move isn't possible
  * @return length of move otherwise
  */
-int Grid_MoveLength(struct routing_s *map, pos3_t to, qboolean stored)
+int Grid_MoveLength (struct routing_s *map, pos3_t to, qboolean stored)
 {
 #ifdef PARANOID
 	if (to[2] >= HEIGHT) {
@@ -2544,7 +2544,7 @@ int Grid_MoveLength(struct routing_s *map, pos3_t to, qboolean stored)
  * @param[in] l
  * @sa Grid_MoveNext
  */
-int Grid_MoveCheck(struct routing_s *map, pos3_t pos, int sz, int l)
+int Grid_MoveCheck (struct routing_s *map, pos3_t pos, int sz, int l)
 {
 	int x, y, sh;
 	int dv, dx, dy;
@@ -2608,7 +2608,7 @@ int Grid_MoveCheck(struct routing_s *map, pos3_t pos, int sz, int l)
  * @param[in] from
  * @sa Grid_MoveCheck
  */
-int Grid_MoveNext(struct routing_s *map, pos3_t from)
+int Grid_MoveNext (struct routing_s *map, pos3_t from)
 {
 	int l, x, y, z, dv;
 
@@ -2641,7 +2641,7 @@ int Grid_MoveNext(struct routing_s *map, pos3_t from)
  * @param
  * @sa
  */
-int Grid_Height(struct routing_s *map, pos3_t pos)
+int Grid_Height (struct routing_s *map, pos3_t pos)
 {
 	/* max 8 levels */
 	if (pos[2] > 7) {
@@ -2658,7 +2658,7 @@ int Grid_Height(struct routing_s *map, pos3_t pos)
  * @param
  * @sa
  */
-int Grid_Fall(struct routing_s *map, pos3_t pos)
+int Grid_Fall (struct routing_s *map, pos3_t pos)
 {
 	int z = pos[2];
 
@@ -2675,7 +2675,7 @@ int Grid_Fall(struct routing_s *map, pos3_t pos)
  * @brief
  * @sa Grid_Height
  */
-void Grid_PosToVec(struct routing_s *map, pos3_t pos, vec3_t vec)
+void Grid_PosToVec (struct routing_s *map, pos3_t pos, vec3_t vec)
 {
 	PosToVec(pos, vec);
 #ifdef PARANOID
@@ -2854,7 +2854,7 @@ TARGETING FUNCTIONS
 /**
  * @brief
  */
-float Com_GrenadeTarget(vec3_t from, vec3_t at, float speed, qboolean launched, qboolean rolled, vec3_t v0)
+float Com_GrenadeTarget (vec3_t from, vec3_t at, float speed, qboolean launched, qboolean rolled, vec3_t v0)
 {
 	const float rollAngle = 3.0; /* angle to throw at for rolling, in degrees. */
 	vec3_t delta;

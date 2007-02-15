@@ -529,7 +529,6 @@ static void GL_RenderLightmappedPoly (msurface_t * surf)
 			lmtex = 0;
 
 			qglTexSubImage2D(GL_TEXTURE_2D, 0, surf->light_s, surf->light_t, smax, tmax, GL_LIGHTMAP_FORMAT, GL_UNSIGNED_BYTE, temp);
-
 		}
 
 		c_brush_polys++;
