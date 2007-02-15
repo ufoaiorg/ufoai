@@ -1383,8 +1383,6 @@ tech rs_combat_armor
 tech rs_nano_armor
 {
 	type	armor
-	// name	"_Nanocomposite Armour"
-	// names are defined in armor.ufo
 	up_chapter	equipment
 	description	"_nano_armor_txt"
 	pre_description	"_nano_armor_pre_txt"
@@ -1394,14 +1392,13 @@ tech rs_nano_armor
 		tech rs_alien_body_armour
 	}
 	provides	medium
-	time	2500
+	time	2000
 	producetime	100
 }
 
 tech rs_alien_body_armour
 {
-	type	tech
-	// name	"_Alien Body Armour"
+	type		armor
 	up_chapter	artifacts
 	description	"_alien_body_armour_txt"
 	pre_description	"_alien_body_armour_pre_txt"

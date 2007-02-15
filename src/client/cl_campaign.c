@@ -2653,6 +2653,18 @@ extern void CL_CollectItems (int won, int *item_counter, int *credits_gained)
 			break;
 		case ET_ACTOR:
 		case ET_UGV:
+			if ((le->HP <= 0 || le->state & STATE_STUN) && le->team == TEAM_ALIEN) {
+				/* FIXME: this does not work; this collect alien armour when
+				   an alien is alive, (catch mission with alien with armour and
+				   break the mission - you will collect alien armour */
+				if (le->i.c[csi.idArmor]) {
+					item = le->i.c[csi.idArmor];
+					eTempMarket.num[item->item.t]++;
+					eTempCredits += csi.ods[item->item.t].price;
+					Com_DPrintf("CL_CollectItems().. market: %s, amount: %i\n", csi.ods[item->item.t].name, eTempMarket.num[item->item.t]);
+				}
+				break;
+			}
 			/* TODO: Does a stunned actor lose his inventory, too? */
 			if (le->state & STATE_DEAD || le->team != cls.team)
 				/* the items are already dropped to floor and are available
