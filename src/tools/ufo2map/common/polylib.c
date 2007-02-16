@@ -46,7 +46,7 @@ int	c_winding_points;
 extern winding_t *AllocWinding (int points)
 {
 	winding_t *w;
-	int s;
+	size_t s;
 
 	if (numthreads == 1) {
 		c_winding_allocs++;
@@ -55,9 +55,13 @@ extern winding_t *AllocWinding (int points)
 		if (c_active_windings > c_peak_windings)
 			c_peak_windings = c_active_windings;
 	}
-	s = sizeof(vec_t)*3*points + sizeof(int);
-	w = malloc (s);
-	memset (w, 0, s);
+	s = sizeof(vec_t) * 3 * points + sizeof(int);
+	w = malloc(s);
+	if (!w) {
+		Error("could not allocate winding of size: %Zu\n", s);
+		return NULL;
+	}
+	memset(w, 0, s);
 	return w;
 }
 
@@ -68,12 +72,12 @@ extern winding_t *AllocWinding (int points)
 extern void FreeWinding (winding_t *w)
 {
 	if (*(unsigned *)w == 0xdeaddead)
-		Error ("FreeWinding: freed a freed winding");
+		Error("FreeWinding: freed a freed winding");
 	*(unsigned *)w = 0xdeaddead;
 
 	if (numthreads == 1)
 		c_active_windings--;
-	free (w);
+	free(w);
 }
 
 static int c_removed;
@@ -90,14 +94,14 @@ extern void RemoveColinearPoints (winding_t *w)
 
 	nump = 0;
 	for (i = 0; i < w->numpoints; i++) {
-		j = (i+1)%w->numpoints;
-		k = (i+w->numpoints-1)%w->numpoints;
-		VectorSubtract (w->p[j], w->p[i], v1);
-		VectorSubtract (w->p[i], w->p[k], v2);
+		j = (i + 1) % w->numpoints;
+		k = (i + w->numpoints - 1) % w->numpoints;
+		VectorSubtract(w->p[j], w->p[i], v1);
+		VectorSubtract(w->p[i], w->p[k], v2);
 		VectorNormalize(v1,v1);
 		VectorNormalize(v2,v2);
 		if (DotProduct(v1, v2) < 0.999) {
-			VectorCopy (w->p[i], p[nump]);
+			VectorCopy(w->p[i], p[nump]);
 			nump++;
 		}
 	}
@@ -108,7 +112,7 @@ extern void RemoveColinearPoints (winding_t *w)
 	if (numthreads == 1)
 		c_removed += w->numpoints - nump;
 	w->numpoints = nump;
-	memcpy (w->p, p, nump*sizeof(p[0]));
+	memcpy(w->p, p, nump*sizeof(p[0]));
 }
 
 #if 0
@@ -204,7 +208,7 @@ extern winding_t *BaseWindingForPlane (vec3_t normal, vec_t dist)
 			max = v;
 		}
 	}
-	if (x==-1)
+	if (x == -1)
 		Error ("BaseWindingForPlane: no axis found");
 
 	VectorCopy (vec3_origin, vup);
@@ -231,6 +235,8 @@ extern winding_t *BaseWindingForPlane (vec3_t normal, vec_t dist)
 
 	/* project a really big	axis aligned box onto the plane */
 	w = AllocWinding(4);
+	if (!w)
+		return NULL;
 
 	VectorSubtract(org, vright, w->p[0]);
 	VectorAdd(w->p[0], vup, w->p[0]);
@@ -257,9 +263,9 @@ extern winding_t *CopyWinding (winding_t *w)
 	ptrdiff_t	size;
 	winding_t	*c;
 
-	c = AllocWinding (w->numpoints);
+	c = AllocWinding(w->numpoints);
 	size = (ptrdiff_t)((winding_t *)0)->p[w->numpoints];
-	memcpy (c, w, size);
+	memcpy(c, w, size);
 	return c;
 }
 
@@ -317,19 +323,19 @@ extern void ClipWindingEpsilon (winding_t *in, vec3_t normal, vec_t dist,
 	*front = *back = NULL;
 
 	if (!counts[0]) {
-		*back = CopyWinding (in);
+		*back = CopyWinding(in);
 		return;
 	}
 	if (!counts[1]) {
-		*front = CopyWinding (in);
+		*front = CopyWinding(in);
 		return;
 	}
 
-	maxpts = in->numpoints+4;	/* cant use counts[0]+2 because */
+	maxpts = in->numpoints + 4;	/* cant use counts[0]+2 because */
 								/* of fp grouping errors */
 
-	*front = f = AllocWinding (maxpts);
-	*back = b = AllocWinding (maxpts);
+	*front = f = AllocWinding(maxpts);
+	*back = b = AllocWinding(maxpts);
 
 	for (i = 0; i < in->numpoints; i++) {
 		p1 = in->p[i];

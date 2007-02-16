@@ -452,7 +452,7 @@ static qboolean MakeBrushWindings (mapbrush_t *ob)
 	for (i = 0; i < ob->numsides; i++) {
 		plane = &mapplanes[ob->original_sides[i].planenum];
 		w = BaseWindingForPlane (plane->normal, plane->dist);
-		for (j=0 ; j<ob->numsides && w; j++) {
+		for (j = 0; j < ob->numsides && w; j++) {
 			if (i == j)
 				continue;
 			if (ob->original_sides[j].bevel)
@@ -466,7 +466,7 @@ static qboolean MakeBrushWindings (mapbrush_t *ob)
 		if (w) {
 			side->visible = qtrue;
 			for (j = 0; j < w->numpoints; j++)
-				AddPointToBounds (w->p[j], ob->mins, ob->maxs);
+				AddPointToBounds(w->p[j], ob->mins, ob->maxs);
 		}
 	}
 

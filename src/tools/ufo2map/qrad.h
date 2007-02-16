@@ -109,7 +109,7 @@ extern	unsigned	num_patches;
 extern	float	lightscale;
 extern	int		lightquant;
 
-void MakeShadowSplits (void);
+void MakeShadowSplits(void);
 
 /*============================================== */
 
@@ -121,7 +121,7 @@ qboolean CheckVisBit (unsigned p1, unsigned p2);
 
 extern	float ambient_red, ambient_green, ambient_blue, maxlight;
 
-void LinkPlaneFaces (void);
+void LinkPlaneFaces(void);
 
 extern	qboolean	extrasamples;
 extern unsigned int numbounce;
@@ -132,20 +132,21 @@ extern char		inbase[32], outbase[32];
 
 extern	byte	nodehit[MAX_MAP_NODES];
 
-void BuildLightmaps (void);
+void BuildLightmaps(void);
 
-void BuildFacelights (unsigned int facenum);
+void BuildFacelights(unsigned int facenum);
 
-void FinalLightFace (unsigned int facenum);
+void FinalLightFace(unsigned int facenum);
 
-qboolean PvsForOrigin (vec3_t org, byte *pvs);
+qboolean PvsForOrigin(vec3_t org, byte *pvs);
 
-void MakeTnodes ( int levels );
-int TestLine (vec3_t start, vec3_t stop);
+void MakeTnodes(int levels);
+void CloseTNodes(void);
+int TestLine(vec3_t start, vec3_t stop);
 
-void CreateDirectLights (void);
+void CreateDirectLights(void);
 
-dleaf_t		*Rad_PointInLeaf (vec3_t point);
+dleaf_t		*Rad_PointInLeaf(vec3_t point);
 
 
 extern	dplane_t	backplanes[MAX_MAP_PLANES];
@@ -158,7 +159,10 @@ extern	float	entity_scale;
 
 extern	vec3_t		vnormals[MAX_MAP_VERTS];
 
-void MakePatches (void);
-void SubdividePatches (void);
-void PairEdges (void);
-void CalcTextureReflectivity (void);
+void MakePatches(void);
+void SubdividePatches(void);
+void PairEdges(void);
+void CalcTextureReflectivity(void);
+
+extern directlight_t *directlights;
+

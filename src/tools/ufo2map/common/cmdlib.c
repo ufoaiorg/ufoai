@@ -160,10 +160,10 @@ char gamedir[1024];
 /**
  * @brief
  */
-void SetQdirFromPath (const char *path)
+void SetQdirFromPath (char *path)
 {
-	char	temp[1024];
-	char	c[1024];
+	char	temp[1024] = "";
+	char	c[1024] = "";
 	int pathlength = 0;
 
 	if (!(path[0] == '/' || path[0] == '\\' || path[1] == ':')) {	/* path is partial */
@@ -174,7 +174,7 @@ void SetQdirFromPath (const char *path)
 
 	/* search for ".gamedir"-file in path */
 	strncpy (c, path, strlen(path)-1);
-	for (pathlength=strlen(c)-1; pathlength > 0 ; pathlength--) {
+	for (pathlength = strlen(c)-1; pathlength > 0; pathlength--) {
 		c[pathlength] = 0;
 		if ( (!c[strlen(c)-1] == '/')
 		&& (!c[strlen(c)-1] == '\\')

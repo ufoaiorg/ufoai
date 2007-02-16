@@ -1077,7 +1077,7 @@ void BuildFacelights (unsigned int facenum)
 			VectorAdd (spot, face_patches[facenum]->baselight, spot);
 	}
 
-	free( l );
+	free(l);
 }
 
 

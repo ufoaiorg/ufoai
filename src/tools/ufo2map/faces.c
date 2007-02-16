@@ -641,7 +641,7 @@ static winding_t *TryMergeWinding (winding_t *f1, winding_t *f2, vec3_t planenor
 	keep2 = (qboolean)(dot < -CONTINUOUS_EPSILON);
 
 	/* build the new polygon */
-	newf = AllocWinding (f1->numpoints + f2->numpoints);
+	newf = AllocWinding(f1->numpoints + f2->numpoints);
 
 	/* copy first polygon */
 	for (k = (i+1) % f1->numpoints; k != i; k = (k+1) % f1->numpoints) {

@@ -879,7 +879,7 @@ extern void SplitBrush (bspbrush_t *brush, int planenum, bspbrush_t **front, bsp
 		cs->texinfo = TEXINFO_NODE;
 		cs->visible = qfalse;
 		cs->tested = qfalse;
-		if (i==0)
+		if (i == 0)
 			cs->winding = CopyWinding (midwinding);
 		else
 			cs->winding = midwinding;

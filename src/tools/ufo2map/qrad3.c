@@ -486,49 +486,50 @@ void RadWorld (void)
 {
 	if (numnodes == 0 || numfaces == 0)
 		Error ("Empty map");
-	MakeBackplanes ();
+	MakeBackplanes();
 
-	MakeTnodes ( 256 );
+	MakeTnodes (256);
 
 	/* turn each face into a single patch */
-	MakePatches ();
+	MakePatches();
 
 	/* subdivide patches to a maximum dimension */
-	SubdividePatches ();
+	SubdividePatches();
 
 	/* calculate vertex normals for smooth lightning */
-/*	RunThreadsOnIndividual (numvertexes-1, qtrue, CalcVertexNormals); */
+/*	RunThreadsOnIndividual(numvertexes-1, qtrue, CalcVertexNormals); */
 
 	/* create directlights out of patches and lights */
-	CreateDirectLights ();
+	CreateDirectLights();
 
 	/* build initial facelights */
-	RunThreadsOnIndividual (numfaces, qtrue, BuildFacelights);
+	RunThreadsOnIndividual(numfaces, qtrue, BuildFacelights);
 
 	if (numbounce > 0) {
 		/* build transfer lists */
-		RunThreadsOnIndividual (num_patches, qtrue, MakeTransfers);
-		Sys_FPrintf( SYS_VRB, "transfer lists: %5.1f megs\n"
+		RunThreadsOnIndividual(num_patches, qtrue, MakeTransfers);
+		Sys_FPrintf(SYS_VRB, "transfer lists: %5.1f megs\n"
 		, (float)total_transfer * sizeof(transfer_t) / (1024*1024));
 
 		/* spread light around */
-		BounceLight ();
+		BounceLight();
 
-		FreeTransfers ();
+		FreeTransfers();
 
-		CheckPatches ();
+		CheckPatches();
 	}
 
 	if (glview)
-		WriteGlView ();
+		WriteGlView();
 
 	/* blend bounced light into direct light and save */
-	PairEdges ();
-	LinkPlaneFaces ();
+	PairEdges();
+	LinkPlaneFaces();
 
 	/* initialize light data */
 	dlightdata[0] = lightquant;
 	lightdatasize = 1;
 
-	RunThreadsOnIndividual (numfaces, qtrue, FinalLightFace);
+	RunThreadsOnIndividual(numfaces, qtrue, FinalLightFace);
+/*	CloseTNodes();*/
 }

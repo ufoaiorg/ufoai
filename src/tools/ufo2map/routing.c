@@ -236,7 +236,7 @@ static void CheckConnections_Thread (unsigned int unitnum)
  * @sa CheckUnit_Thread
  * @sa CheckConnections_Thread
  */
-extern void DoRouting(void)
+extern void DoRouting (void)
 {
 	int		x, y, i;
 	byte	*data;
@@ -295,4 +295,6 @@ extern void DoRouting(void)
 	data = CompressRouting( &(step[0][0]), data, 256*256 );
 
 	routedatasize = data - droutedata;
+
+/*	CloseTNodes();*/
 }

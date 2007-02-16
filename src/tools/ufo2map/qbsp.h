@@ -319,11 +319,12 @@ void FreeTree (tree_t *tree);
 
 /* trace.c */
 
-void MakeTnodes ( int levels );
-int TestLine (vec3_t start, vec3_t stop);
-int TestLineMask (vec3_t start, vec3_t stop, int levels);
-int TestLineDM (vec3_t start, vec3_t stop, vec3_t end, int levels);
-int TestContents (vec3_t pos);
+void MakeTnodes(int levels);
+void CloseTNodes(void);
+int TestLine(vec3_t start, vec3_t stop);
+int TestLineMask(vec3_t start, vec3_t stop, int levels);
+int TestLineDM(vec3_t start, vec3_t stop, vec3_t end, int levels);
+int TestContents(vec3_t pos);
 
 /* levels.c */
 

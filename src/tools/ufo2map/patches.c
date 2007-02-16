@@ -40,7 +40,7 @@ extern void CalcTextureReflectivity (void)
 {
 	int i, j;
 
-	byte *palette;
+	byte *palette = NULL;
 	char path[1024];
 
 	sprintf(path, "%spics/colormap.pcx", gamedir);
@@ -67,6 +67,8 @@ extern void CalcTextureReflectivity (void)
 		texture_reflectivity[i][1] = 0.5;
 		texture_reflectivity[i][2] = 0.5;
 	}
+	if (palette)
+		free(palette);
 }
 
 /*

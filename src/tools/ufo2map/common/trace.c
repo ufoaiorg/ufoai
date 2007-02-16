@@ -40,7 +40,7 @@ typedef struct tnode_s
 	int		pad;
 } tnode_t;
 
-static tnode_t *tnodes, *tnode_p;
+static tnode_t *tnodes, *tnode_p, *freeTnodes;
 
 static int numtheads;
 static int thead[260];
@@ -72,13 +72,13 @@ extern void MakeTnode (int nodenum)
 	for (i = 0; i < 2; i++) {
 		if (node->children[i] < 0) {
 			contents = dleafs[-node->children[i] - 1].contents & ~(1<<31);
-			if ( (contents & neededContents) && !(contents & forbiddenContents) )
+			if ((contents & neededContents) && !(contents & forbiddenContents))
 				t->children[i] = 1 | (1<<31); /*-node->children[i] | (1<<31); // leaf+1 */
 			else
 				t->children[i] = (1<<31);
 		} else {
 			t->children[i] = tnode_p - tnodes;
-			MakeTnode (node->children[i]);
+			MakeTnode(node->children[i]);
 		}
 	}
 
@@ -143,13 +143,14 @@ static void BuildTnode_r (int node)
 /**
  * @brief Loads the node structure out of a .bsp file to be used for light occlusion
  */
-void MakeTnodes (int levels)
+extern void MakeTnodes (int levels)
 {
 	int i;
 
 	/* 32 byte align the structs */
-	tnodes = malloc( (numnodes+1) * sizeof(tnode_t));
-	tnodes = (tnode_t *)(((ptrdiff_t)tnodes + 31)&~31);
+	tnodes = malloc((numnodes+1) * sizeof(tnode_t));
+	freeTnodes = tnodes;
+	tnodes = (tnode_t *)(((ptrdiff_t)tnodes + 31) &~ 31);
 	tnode_p = tnodes;
 	numtheads = 0;
 
@@ -160,7 +161,7 @@ void MakeTnodes (int levels)
 		thead[numtheads] = tnode_p - tnodes;
 		theadlevel[numtheads] = i;
 		numtheads++;
-		BuildTnode_r( dmodels[i].headnode );
+		BuildTnode_r(dmodels[i].headnode);
 	}
 }
 
@@ -168,7 +169,7 @@ void MakeTnodes (int levels)
 /**
  * @brief
  */
-int TestLine_r (int node, vec3_t start, vec3_t stop)
+static int TestLine_r (int node, vec3_t start, vec3_t stop)
 {
 	tnode_t	*tnode;
 	float	front, back;
@@ -229,7 +230,7 @@ int TestLine_r (int node, vec3_t start, vec3_t stop)
 /**
  * @brief
  */
-int TestLineDist_r (int node, vec3_t start, vec3_t stop)
+static int TestLineDist_r (int node, vec3_t start, vec3_t stop)
 {
 	tnode_t	*tnode;
 	float	front, back;
@@ -308,8 +309,8 @@ int TestLine (vec3_t start, vec3_t stop)
 {
 	int i;
 
-	for ( i = 0; i < numtheads; i++ ) {
-		if ( TestLine_r( thead[i], start, stop ) )
+	for (i = 0; i < numtheads; i++) {
+		if (TestLine_r(thead[i], start, stop))
 			return 1;
 	}
 	return 0;
@@ -323,10 +324,10 @@ int TestLineMask (vec3_t start, vec3_t stop, int levels)
 	int i;
 
 	for (i = 0; i < numtheads; i++) {
-		if ( theadlevel[i] > 255 + levels )
+		if (theadlevel[i] > 255 + levels)
 			continue;
 
-		if ( TestLine_r( thead[i], start, stop ) )
+		if (TestLine_r(thead[i], start, stop))
 			return 1;
 	}
 	return 0;
@@ -339,18 +340,18 @@ int TestLineDM (vec3_t start, vec3_t stop, vec3_t end, int levels)
 {
 	int i;
 
-	VectorCopy( stop, end );
+	VectorCopy(stop, end);
 
 	for (i = 0; i < numtheads; i++) {
-		if ( theadlevel[i] > 255 + levels )
+		if (theadlevel[i] > 255 + levels)
 			continue;
 
-		if ( TestLineDist_r( thead[i], start, stop ) )
-			if ( VectorNearer( tr_end, end, start ) )
-				VectorCopy( tr_end, end );
+		if (TestLineDist_r(thead[i], start, stop))
+			if (VectorNearer(tr_end, end, start))
+				VectorCopy(tr_end, end);
 	}
 
-	if ( VectorCompare( end, stop ) )
+	if (VectorCompare(end, stop))
 		return 0;
 	else
 		return 1;
@@ -390,9 +391,9 @@ int TestContents_r (int node, vec3_t pos)
 	}
 
 	if (front >= 0)
-		return TestContents_r (tnode->children[0], pos);
+		return TestContents_r(tnode->children[0], pos);
 	else
-		return TestContents_r (tnode->children[1], pos);
+		return TestContents_r(tnode->children[1], pos);
 }
 
 
@@ -404,13 +405,19 @@ int TestContents (vec3_t pos)
 	int i;
 
 	for (i = numtheads-1; i >= 0; i--) {
-		if ( theadlevel[i] != 258 )
+		if (theadlevel[i] != 258)
 			continue;
 
-		if ( TestContents_r( thead[i], pos ) )
+		if (TestContents_r(thead[i], pos))
 			return 1;
 		break;
 	}
 	return 0;
 }
 
+void CloseTNodes (void)
+{
+	if (freeTnodes)
+		free(freeTnodes);
+	freeTnodes = NULL;
+}

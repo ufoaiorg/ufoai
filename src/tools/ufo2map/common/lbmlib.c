@@ -390,8 +390,10 @@ void LoadPCX (char *filename, byte **pic, byte **palette, int *width, int *heigh
 	if (height)
 		*height = pcx->ymax+1;
 
-	if (!pic)
+	if (!pic) {
+		/* free palette in CalcTextureReflectivity */
 		return;
+	}
 
 	out = malloc ( (pcx->ymax+1) * (pcx->xmax+1) );
 	if (!out)
@@ -401,22 +403,22 @@ void LoadPCX (char *filename, byte **pic, byte **palette, int *width, int *heigh
 
 	pix = out;
 
-	for (y=0 ; y<=pcx->ymax ; y++, pix += pcx->xmax+1) {
-		for (x=0 ; x<=pcx->xmax ; ) {
+	for (y = 0; y <= pcx->ymax; y++, pix += pcx->xmax + 1) {
+		for (x = 0; x <= pcx->xmax; ) {
 			dataByte = *raw++;
 
-			if((dataByte & 0xC0) == 0xC0) {
+			if ((dataByte & 0xC0) == 0xC0) {
 				runLength = dataByte & 0x3F;
 				dataByte = *raw++;
 			} else
 				runLength = 1;
 
-			while(runLength-- > 0)
+			while (runLength-- > 0)
 				pix[x++] = dataByte;
 		}
 	}
 
-	if ( raw - (byte *)pcx > len)
+	if (raw - (byte *)pcx > len)
 		Error ("PCX file %s was malformed", filename);
 
 	free (pcx);
@@ -452,9 +454,9 @@ void WritePCXfile (char *filename, byte *data, int width, int height, byte *pale
 	/* pack the image */
 	pack = &pcx->data;
 
-	for (i=0 ; i<height ; i++) {
-		for (j=0 ; j<width ; j++) {
-			if ( (*data & 0xc0) != 0xc0)
+	for (i = 0; i < height; i++) {
+		for (j = 0; j < width; j++) {
+			if ((*data & 0xc0) != 0xc0)
 				*pack++ = *data++;
 			else {
 				*pack++ = 0xc1;
@@ -465,7 +467,7 @@ void WritePCXfile (char *filename, byte *data, int width, int height, byte *pale
 
 	/* write the palette */
 	*pack++ = 0x0c;	/* palette ID byte */
-	for (i=0 ; i<768 ; i++)
+	for (i = 0; i < 768; i++)
 		*pack++ = *palette++;
 
 	/* write output file */
@@ -598,16 +600,16 @@ void LoadTGA (char *name, byte **pixels, int *width, int *height)
 		*width = columns;
 	if (height)
 		*height = rows;
-	targa_rgba = malloc(numPixels*4);
+	targa_rgba = malloc(numPixels * 4);
 	*pixels = targa_rgba;
 
 	if (targa_header.id_length != 0)
 		fseek(fin, targa_header.id_length, SEEK_CUR);  /* skip TARGA image comment */
 
-	if (targa_header.image_type==2) {  /* Uncompressed, RGB images */
-		for (row=rows-1; row>=0; row--) {
+	if (targa_header.image_type == 2) {  /* Uncompressed, RGB images */
+		for (row = rows - 1; row >= 0; row--) {
 			pixbuf = targa_rgba + row*columns*4;
-			for (column=0; column<columns; column++) {
+			for (column = 0; column < columns; column++) {
 				unsigned char red,green,blue,alphabyte;
 				switch (targa_header.pixel_size) {
 				case 24:
@@ -632,7 +634,7 @@ void LoadTGA (char *name, byte **pixels, int *width, int *height)
 				}
 			}
 		}
-	} else if (targa_header.image_type==10) {   /* Runlength encoded RGB images */
+	} else if (targa_header.image_type == 10) {   /* Runlength encoded RGB images */
 		unsigned char red,green,blue,alphabyte,packetHeader,packetSize,j;
 		red=green=blue=alphabyte=0;
 		for (row=rows-1; row>=0; row--) {
