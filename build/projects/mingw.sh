@@ -170,8 +170,9 @@ tar -xvz -f SDL-devel-$version-mingw32.tar.gz
 mkdir -p build-sdl/usr/i586-mingw32msvc
 make -C SDL-$version prefix="`pwd`/build-sdl/usr/i586-mingw32msvc/" install
 
-echo "set prefix to /usr/i586-mingw32msvc"
-$sed_soft -e 's/^\(prefix=\)/\1\/usr\/i586-mingw32msvc/' build-sdl/usr/i586-mingw32msvc/bin/i386-mingw32msvc-sdl-config > build-sdl/usr/i586-mingw32msvc/bin/i386-mingw32msvc-sdl-config
+echo "set prefix to /usr/i586-mingw32msvc (TODO/FIXME)"
+#TODO: should be i586-mingw32msvc-sdl-config not i386-mingw32msvc-sdl-config
+$sed_soft -e 's/^\(prefix=\).*/\1\/usr\/i586-mingw32msvc/' build-sdl/usr/i586-mingw32msvc/bin/i386-mingw32msvc-sdl-config > build-sdl/usr/i586-mingw32msvc/bin/i386-mingw32msvc-sdl-config
 
 tar -cvz --owner=root --group=root -C build-sdl -f mingw32-libsdl1.2-dev-$version.tgz .
 fakeroot alien mingw32-libsdl1.2-dev-$version.tgz
