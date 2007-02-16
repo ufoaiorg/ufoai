@@ -155,7 +155,7 @@ void FS_CreatePath (const char *path)
 		/* create the directory */
 		if (*ofs == '/') {
 			*ofs = 0;
-			Sys_Mkdir(path);
+			Sys_Mkdir(pathCopy);
 			*ofs = '/';
 		}
 	}
