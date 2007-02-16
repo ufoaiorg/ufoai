@@ -767,6 +767,7 @@ Section "Game" SEC01
   File "..\..\..\base\textures\tex_lights\*.jpg"
   SetOutPath "$INSTDIR\base\textures\tex_material"
   File "..\..\..\base\textures\tex_material\*.jpg"
+  File "..\..\..\base\textures\tex_material\*.tga"
   SetOutPath "$INSTDIR\base\textures\tex_misc"
   File "..\..\..\base\textures\tex_misc\*.jpg"
   SetOutPath "$INSTDIR\base\textures\tex_nature"
