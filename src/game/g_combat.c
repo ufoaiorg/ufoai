@@ -836,7 +836,7 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 /**
  * @brief
  */
-static void G_GetShotOrigin(edict_t *shooter, fireDef_t *fd, vec3_t dir, vec3_t shotOrigin)
+static void G_GetShotOrigin (edict_t *shooter, fireDef_t *fd, vec3_t dir, vec3_t shotOrigin)
 {
 	/* get weapon position */
 	gi.GridPosToVec(gi.map, shooter->pos, shotOrigin);
@@ -1085,7 +1085,7 @@ qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type, int fir
  * @sa G_ReactionFire (Not there anymore?)
  * @sa G_ClientShoot
  */
-static qboolean G_FireWithJudgementCall(player_t * player, int num, pos3_t at, int type, int firemode)
+static qboolean G_FireWithJudgementCall (player_t * player, int num, pos3_t at, int type, int firemode)
 {
 	shot_mock_t mock;
 	edict_t *shooter;
@@ -1126,7 +1126,7 @@ static qboolean G_FireWithJudgementCall(player_t * player, int num, pos3_t at, i
  * @param[out] reason If not null then it prints the reason that reaction fire wasn't possible
  * @returns Whether 'ent' can actually fire at 'target'
  */
-static qboolean G_CanReactionFire(edict_t *ent, edict_t *target, char *reason)
+static qboolean G_CanReactionFire (edict_t *ent, edict_t *target, char *reason)
 {
 	float actorVis;
 	qboolean frustom;
@@ -1451,7 +1451,7 @@ qboolean G_CheckRFResolution (edict_t *target, qboolean mock)
  * @returns true If any shots were (or would be) taken
  * @sa G_ClientMove
  */
-qboolean G_ReactToMove(edict_t *target, qboolean mock)
+qboolean G_ReactToMove (edict_t *target, qboolean mock)
 {
 	qboolean fired;
 
@@ -1468,7 +1468,7 @@ qboolean G_ReactToMove(edict_t *target, qboolean mock)
  * @param[in] target The entity about to fire
  * @sa G_ClientShoot
  */
-void G_ReactToPreFire(edict_t *target)
+void G_ReactToPreFire (edict_t *target)
 {
 	edict_t *ent;
 	int i, entTUs, targTUs;
@@ -1518,7 +1518,7 @@ void G_ReactToPreFire(edict_t *target)
  * @param[in] target The entity that has just fired
  * @sa G_ClientShoot
  */
-void G_ReactToPostFire(edict_t *target)
+void G_ReactToPostFire (edict_t *target)
 {
 	/* same as movement, but never mocked */
 	G_ReactToMove(target, qfalse);
@@ -1528,7 +1528,7 @@ void G_ReactToPostFire(edict_t *target)
  * @brief Called at the end of turn, all outstanding reaction fire is resolved
  * @sa G_ClientEndRound
  */
-void G_ReactToEndTurn(void)
+void G_ReactToEndTurn (void)
 {
 	edict_t *ent;
 	int i;
@@ -1544,7 +1544,3 @@ void G_ReactToEndTurn(void)
 		ent->reactionTarget = NULL;
 	}
 }
-
-
-
-

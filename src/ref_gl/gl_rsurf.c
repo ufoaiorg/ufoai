@@ -463,7 +463,7 @@ void R_DrawAlphaSurfaces (void)
 	qglLoadMatrixf(r_world_matrix);
 
 	GLSTATE_ENABLE_BLEND
-	qglDepthMask(GL_FALSE);	/* disable depth writing */
+	qglDepthMask(GL_FALSE); /* disable depth writing */
 	GL_TexEnv(GL_MODULATE);
 
 	/* the textures are prescaled up for a better lighting range, */

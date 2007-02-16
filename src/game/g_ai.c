@@ -111,11 +111,11 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, ai_action_t * aia)
 	/* see if we are very well visible by a reacting enemy */
 	/* TODO: this is worthless now; need to check all squares along our way! */
 	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++)
-		if ( check->inuse && check->type == ET_ACTOR && ent != check
+		if (check->inuse && check->type == ET_ACTOR && ent != check
 			 && (check->team != ent->team || ent->state & STATE_INSANE)
 			 && !(check->state & STATE_DEAD)
 			 /* also check if we are in range of the weapon's primary mode */
-			 && check->state & STATE_REACTION ) {
+			 && check->state & STATE_REACTION) {
 			qboolean frustom;
 			float actorVis;
 
@@ -165,7 +165,7 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, ai_action_t * aia)
 			od = &gi.csi->ods[LEFT(ent)->item.m];
 			weap_idx = LEFT(ent)->item.t;
 		} else {
-			Com_Printf("AI_FighterCalcGuete: TODO: grenade/knife toss from inventory using empty hand\n");
+			Com_DPrintf("AI_FighterCalcGuete: TODO: grenade/knife toss from inventory using empty hand\n");
 			/* TODO: grenade/knife toss from inventory using empty hand */
 			/* TODO: evaluate possible items to retrieve and pick one, then evaluate an action against the nearby enemies or allies */
 		}
