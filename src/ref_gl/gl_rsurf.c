@@ -95,15 +95,37 @@ static image_t *R_TextureAnimation (mtexinfo_t * tex)
 /**
  * @brief
  */
-static void DrawGLPoly (glpoly_t * p)
+static void DrawGLPoly (msurface_t * fa)
 {
 	int i;
 	float *v;
+	glpoly_t *p = fa->polys;
 
 	qglBegin(GL_POLYGON);
 	v = p->verts[0];
 	for (i = 0; i < p->numverts; i++, v += VERTEXSIZE) {
 		qglTexCoord2f(v[3], v[4]);
+		qglVertex3fv(v);
+	}
+	qglEnd();
+}
+
+/**
+ * @brief
+ */
+static void DrawGLPolyARB (msurface_t * fa)
+{
+	int i;
+	float *v;
+	glpoly_t *p = fa->polys;
+
+	qglActiveTextureARB(GL_TEXTURE0_ARB);
+	qglBindTexture(GL_TEXTURE_2D, fa->texinfo->image->texnum);
+
+	qglBegin(GL_TRIANGLE_FAN);
+	v = p->verts[0];
+	for (i = 0; i < p->numverts; i++, v += VERTEXSIZE) {
+		qglMTexCoord2fSGIS(GL_TEXTURE0_ARB, v[3], v[4]);
 		qglVertex3fv(v);
 	}
 	qglEnd();
@@ -372,8 +394,12 @@ static void R_RenderBrushPoly (msurface_t * fa)
 
 	if (fa->texinfo->flags & SURF_FLOWING)
 		DrawGLFlowingPoly(fa);
-	else
-		DrawGLPoly(fa->polys);
+	else {
+		if (qglMTexCoord2fSGIS)
+			DrawGLPolyARB(fa);
+		else
+			DrawGLPoly(fa);
+	}
 
 	/* check for lightmap modification */
 	for (maps = 0; maps < MAXLIGHTMAPS && fa->styles[maps] != 255; maps++) {
@@ -459,8 +485,12 @@ void R_DrawAlphaSurfaces (void)
 			EmitWaterPolys(s);
 		else if (s->texinfo->flags & SURF_FLOWING)
 			DrawGLFlowingPoly(s);
-		else
-			DrawGLPoly(s->polys);
+		else {
+			if (qglMTexCoord2fSGIS)
+				DrawGLPolyARB(s);
+			else
+				DrawGLPoly(s);
+		}
 	}
 
 	GL_TexEnv(GL_REPLACE);
@@ -473,6 +503,7 @@ void R_DrawAlphaSurfaces (void)
 
 /**
  * @brief
+ * @note only called when qglMTexCoord2fSGIS is not null
  */
 static void GL_RenderLightmappedPoly (msurface_t * surf)
 {
@@ -632,7 +663,8 @@ static void R_DrawInlineBModel (void)
 	}
 
 	/* set r_alpha_surfaces = NULL to ensure psurf->texturechain terminates */
-	r_alpha_surfaces = NULL;
+	/* FIXME: needed? if we do this, transparent surfaces may be skipped */
+	/*r_alpha_surfaces = NULL;*/
 
 	/* draw texture */
 	for (i = 0; i < currentmodel->nummodelsurfaces; i++, psurf++) {
