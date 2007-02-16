@@ -56,7 +56,7 @@ static int upDisplay = UFOPEDIA_CHAPTERS;
 
 /**
  * @brief Checks If a technology/up-entry will be displayed in the ufopedia.
- * @note This doesn not check for different display modes (only pre-research text, what stats, etc...).
+ * @note This does not check for different display modes (only pre-research text, what stats, etc...).
  * @return qtrue if the tech gets displayed at all, otherwise qfalse.
  */
 static qboolean UP_TechGetsDisplayed (technology_t *tech)
@@ -313,8 +313,8 @@ static void UP_BuildingDescription (technology_t* t)
 extern void UP_AircraftDescription (technology_t* t)
 {
 	aircraft_t* aircraft;
-
-	if (RS_Collected_(t) || RS_IsResearched_ptr(t)) {
+	
+	if (RS_IsResearched_ptr(t)) {
 		aircraft = CL_GetAircraft(t->provides);
 		if (!aircraft) {
 			Com_sprintf(upBuffer, MAX_UPTEXT, _("Error - could not find aircraft") );
@@ -326,7 +326,13 @@ extern void UP_AircraftDescription (technology_t* t)
 			Q_strcat(upBuffer, va(_("Shield:\t%s\n"), aircraft->shield ? _(aircraft->shield->name) : _("None") ), sizeof(upBuffer));
 			Q_strcat(upBuffer, va(_("Equipment:\t%s\n"), aircraft->item ? _(aircraft->item->name) : _("None") ), sizeof(upBuffer));
 		}
-	} else {
+	}
+#if 0 
+	else if RS_Collected_(t) {
+		/* Display crippled info and pre-research text here */
+	}
+#endif
+	else {
 		Com_sprintf(upBuffer, sizeof(upBuffer), _("Unknown - need to research this"));
 	}
 	menuText[TEXT_STANDARD] = upBuffer;
@@ -619,7 +625,7 @@ static void UP_Index_f (void)
 	/* get next entry */
 	while (t) {
 		if ( UP_TechGetsDisplayed(t) ) {
-			/* add this tech to the index - it is researched already */
+			/* Add this tech to the index - it gets dsiplayed. */
 			Q_strcat(upText, va("%s\n", _(t->name)), sizeof(upText));
 		}
 		if (t->next >= 0)
@@ -747,7 +753,7 @@ static void UP_Click_f (void)
 		/* get next entry */
 		while (t) {
 			if ( UP_TechGetsDisplayed(t) ) {
-				/* add this tech to the index - it is researched already */
+				/* Add this tech to the index - it gets displayed. */
 				if (num > 0)
 					num--;
 				else
