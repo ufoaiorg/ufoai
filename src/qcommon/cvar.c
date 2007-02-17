@@ -236,10 +236,10 @@ extern char *Cvar_VariableStringOld (const char *var_name)
  * @sa Cmd_CompleteCommand
  * @sa Key_CompleteCommand
  */
-extern int Cvar_CompleteVariable (const char *partial, char **match)
+extern int Cvar_CompleteVariable (const char *partial, const char **match)
 {
 	cvar_t *cvar;
-	char *localMatch = NULL;
+	const char *localMatch = NULL;
 	int len, matches = 0;
 
 	len = strlen(partial);
@@ -266,7 +266,7 @@ extern int Cvar_CompleteVariable (const char *partial, char **match)
  * If the variable already exists, the value will not be set
  * The flags will be or'ed in if the variable exists.
  */
-extern cvar_t *Cvar_Get (const char *var_name, const char *var_value, int flags, char* desc)
+extern cvar_t *Cvar_Get (const char *var_name, const char *var_value, int flags, const char* desc)
 {
 	unsigned hash;
 	cvar_t *var;

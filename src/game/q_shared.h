@@ -498,7 +498,7 @@ typedef struct cvar_s {
 	char *string;			/**< value as string */
 	char *latched_string;	/**< for CVAR_LATCH vars */
 	char *old_string;		/**< value of the cvar before we changed it */
-	char *description;		/**< cvar description */
+	const char *description;		/**< cvar description */
 	int flags;				/**< cvar flags CVAR_ARCHIVE|CVAR_NOSET.... */
 	qboolean modified;		/**< set each time the cvar is changed */
 	float value;			/**< value as float */
@@ -508,7 +508,7 @@ typedef struct cvar_s {
 	struct cvar_s *hash_next;
 } cvar_t;
 
-cvar_t *Cvar_Get(const char *var_name, const char *var_value, int flags, char* desc);
+cvar_t *Cvar_Get(const char *var_name, const char *var_value, int flags, const char* desc);
 
 #endif                          /* CVAR */
 

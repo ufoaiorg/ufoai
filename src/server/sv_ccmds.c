@@ -442,6 +442,74 @@ static void SV_ServerCommand_f (void)
 /*=========================================================== */
 
 /**
+ * @brief Autocomplete function for the map command
+ * @sa Cmd_AddParamCompleteFunction
+ */
+static int SV_CompleteMapCommand (const char *partial, const char **match)
+{
+	int i, j, matches = 0;
+	const char *localMatch[128];
+	size_t len, lenResult = 0, tmp;
+	static char matchString[MAX_QPATH];
+
+	FS_GetMaps(qfalse);
+
+	len = strlen(partial);
+	if (!len) {
+		for (i = 0; i <= anzInstalledMaps; i++)
+			Com_Printf("%s\n", maps[i]);
+		return anzInstalledMaps;
+	}
+
+	localMatch[matches] = NULL;
+
+	/* search all matches and fill the localMatch array */
+	for (i = 0; i <= anzInstalledMaps; i++)
+		if (!Q_strncmp(partial, maps[i], len)) {
+			Com_Printf("%s\n", maps[i]);
+			localMatch[matches++] = maps[i];
+		}
+
+	/* no matches or exactly one match */
+	if (matches <= 1) {
+		if (matches == 1)
+			*match = localMatch[0];
+	} else {
+		/* get the shortest string of the results */
+		lenResult = strlen(localMatch[0]);
+		for (i = 0; i < matches; i++) {
+			tmp = strlen(localMatch[i]);
+			if (tmp < lenResult)
+				lenResult = tmp;
+		}
+		/* len is >= 1 here */
+		if (len != lenResult) {
+			if (lenResult >= MAX_QPATH)
+				lenResult = MAX_QPATH - 1;
+			/* compare up to lenResult chars */
+			for (i = len + 1; i < lenResult; i++) {
+				/* just take the first string */
+				Q_strncpyz(matchString, localMatch[0], i + 1);
+				for (j = 1; j < matches; j++) {
+					if (Q_strncmp(matchString, localMatch[j], i)) {
+						break;
+					}
+				}
+				if (j < matches)
+					break;
+
+				/* j must be bigger than 0 here */
+				Q_strncpyz(matchString, localMatch[0], i+1);
+				*match = matchString;
+				matches = 1;
+			}
+		}
+	}
+
+	return matches;
+}
+
+/**
  * @brief List all valid maps
  * @sa FS_GetMaps
  */
@@ -492,6 +560,7 @@ extern void SV_InitOperatorCommands(void)
 	Cmd_AddCommand("dumpuser", SV_DumpUser_f, NULL);
 
 	Cmd_AddCommand("map", SV_Map_f, "Quit client and load the new map");
+	Cmd_AddParamCompleteFunction("map", SV_CompleteMapCommand);
 	Cmd_AddCommand("demo", SV_Demo_f, NULL);
 	Cmd_AddCommand("maplist", SV_ListMaps_f, "List of all available maps");
 

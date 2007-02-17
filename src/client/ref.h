@@ -343,7 +343,7 @@ typedef struct {
 typedef struct {
 	void (*Sys_Error) (int err_level, const char *str, ...) __attribute__((noreturn, format(printf, 2, 3)));
 
-	void (*Cmd_AddCommand) (char *name, void (*cmd) (void), char *desc);
+	void (*Cmd_AddCommand) (const char *name, void (*cmd) (void), const char *desc);
 	void (*Cmd_RemoveCommand) (const char *name);
 	int (*Cmd_Argc) (void);
 	char *(*Cmd_Argv) (int i);
@@ -371,7 +371,7 @@ typedef struct {
 	char *(*FS_Gamedir) (void);
 	char *(*FS_NextPath) (const char *prevpath);
 
-	cvar_t *(*Cvar_Get) (const char *name, const char *value, int flags, char* desc);
+	cvar_t *(*Cvar_Get) (const char *name, const char *value, int flags, const char* desc);
 	cvar_t *(*Cvar_Set) (const char *name, const char *value);
 	void (*Cvar_SetValue) (const char *name, float value);
 

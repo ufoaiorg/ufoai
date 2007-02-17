@@ -232,7 +232,7 @@ typedef struct {
 	void (*FreeTags) (int tag);
 
 	/* console variable interaction */
-	cvar_t *(*cvar) (const char *var_name, const char *value, int flags, char* desc);
+	cvar_t *(*cvar) (const char *var_name, const char *value, int flags, const char* desc);
 	cvar_t *(*cvar_set) (const char *var_name, const char *value);
 	cvar_t *(*cvar_forceset) (const char *var_name, const char *value);
 	char *(*cvar_string) (const char *var_name);

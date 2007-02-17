@@ -481,9 +481,10 @@ COMMAND EXECUTION
 typedef struct cmd_function_s {
 	struct cmd_function_s *next;
 	struct cmd_function_s *hash_next;
-	char *name;
-	char *description;
+	const char *name;
+	const char *description;
 	xcommand_t function;
+	int (*completeParam) (const char *partial, const char **match);
 } cmd_function_t;
 
 static int cmd_argc;
@@ -677,7 +678,7 @@ extern void Cmd_TokenizeString (char *text, qboolean macroExpand)
  * @note never returns a NULL pointer
  * @todo - search alias, too
  */
-extern char* Cmd_GetCommandDesc (const char* cmd_name)
+extern const char* Cmd_GetCommandDesc (const char* cmd_name)
 {
 	cmd_function_t *cmd;
 	char *sep = NULL;
@@ -703,6 +704,31 @@ extern char* Cmd_GetCommandDesc (const char* cmd_name)
 	return "";
 }
 
+/**
+ * @brief
+ * @param[in] cmd_name The name the command we want to add the complete function
+ * @param[in] function The complete function pointer
+ * @sa Cmd_AddCommand
+ * @sa Cmd_CompleteCommandParameters
+ */
+extern void Cmd_AddParamCompleteFunction (const char *cmd_name, int (*function)(const char *partial, const char **match))
+{
+	cmd_function_t *cmd;
+	unsigned int hash;
+
+	if (!cmd_name || !cmd_name[0])
+		return;
+
+	/* fail if the command already exists */
+	hash = Com_HashKey(cmd_name, CMD_HASH_SIZE);
+	for (cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
+		if (!Q_strcmp(cmd_name, cmd->name)) {
+			cmd->completeParam = function;
+			return;
+		}
+	}
+	return;
+}
 
 /**
  * @brief Add a new command to the script interface
@@ -710,7 +736,7 @@ extern char* Cmd_GetCommandDesc (const char* cmd_name)
  * @param[in] function The function pointer
  * @sa Cmd_RemoveCommand
  */
-extern void Cmd_AddCommand (char *cmd_name, xcommand_t function, char *desc)
+extern void Cmd_AddCommand (const char *cmd_name, xcommand_t function, const char *desc)
 {
 	cmd_function_t *cmd;
 	unsigned int hash;
@@ -737,6 +763,7 @@ extern void Cmd_AddCommand (char *cmd_name, xcommand_t function, char *desc)
 	cmd->name = cmd_name;
 	cmd->description = desc;
 	cmd->function = function;
+	cmd->completeParam = NULL;
 	/* cmd_functions_hash should be null on the first run */
 	cmd->hash_next = cmd_functions_hash[hash];
 	cmd_functions_hash[hash] = cmd;
@@ -804,16 +831,40 @@ extern qboolean Cmd_Exists (const char *cmd_name)
 }
 
 /**
-  * @brief Unix like tab completion for console commands
-  * @param partial The beginning of the command we try to complete
-  * @sa Cvar_CompleteVariable
-  * @sa Key_CompleteCommand
-  */
-extern int Cmd_CompleteCommand (const char *partial, char **match)
+ * @brief Unix like tab completion for console commands parameters
+ * @param[in] command The command we try to complete the parameter for
+ * @param[in] partial The beginning of the parameter we try to complete
+ * @sa Cvar_CompleteVariable
+ * @sa Key_CompleteCommand
+ */
+extern int Cmd_CompleteCommandParameters (const char *command, const char *partial, const char **match)
+{
+	cmd_function_t *cmd;
+	unsigned int hash;
+
+	/* check for partial matches in commands */
+	hash = Com_HashKey (command, CMD_HASH_SIZE);
+	for (cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
+		if (!Q_strcasecmp(command, cmd->name)) {
+			if (!cmd->completeParam)
+				return 0;
+			return cmd->completeParam(partial, match);
+		}
+	}
+	return 0;
+}
+
+/**
+ * @brief Unix like tab completion for console commands
+ * @param[in] partial The beginning of the command we try to complete
+ * @sa Cvar_CompleteVariable
+ * @sa Key_CompleteCommand
+ */
+extern int Cmd_CompleteCommand (const char *partial, const char **match)
 {
 	cmd_function_t *cmd;
 	cmd_alias_t *a;
-	char *localMatch = NULL;
+	const char *localMatch = NULL;
 	int len, matches = 0;
 
 	len = strlen(partial);

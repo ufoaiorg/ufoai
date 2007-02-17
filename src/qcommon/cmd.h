@@ -82,7 +82,7 @@ typedef struct cmdList_s {
 
 void Cmd_Init(void);
 
-void Cmd_AddCommand(char *cmd_name, xcommand_t function, char* desc);
+void Cmd_AddCommand(const char *cmd_name, xcommand_t function, const char* desc);
 
 /* called by the init functions of other parts of the program to */
 /* register commands and functions to call for them. */
@@ -91,11 +91,14 @@ void Cmd_AddCommand(char *cmd_name, xcommand_t function, char* desc);
 /* as a clc_stringcmd instead of executed locally */
 void Cmd_RemoveCommand(const char *cmd_name);
 
+extern void Cmd_AddParamCompleteFunction(const char *cmd_name, int (*function)(const char *partial, const char **match));
+
 qboolean Cmd_Exists(const char *cmd_name);
 
 /* used by the cvar code to check for cvar / command name overlap */
 
-int Cmd_CompleteCommand(const char *partial, char **match);
+int Cmd_CompleteCommandParameters(const char *command, const char *partial, const char **match);
+int Cmd_CompleteCommand(const char *partial, const char **match);
 
 /* attempts to match a partial command for automatic command line completion */
 /* returns NULL if nothing fits */
@@ -125,6 +128,6 @@ void Cmd_ForwardToServer(void);
 /* so when they are typed in at the console, they will need to be forwarded. */
 
 
-char* Cmd_GetCommandDesc(const char* command);
+const char* Cmd_GetCommandDesc(const char* command);
 
 void Cmd_BufClear(void);

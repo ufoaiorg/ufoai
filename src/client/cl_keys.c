@@ -190,31 +190,59 @@ LINE TYPING INTO THE CONSOLE
  */
 static void Key_CompleteCommand (void)
 {
-	char *cmd = NULL, *cvar = NULL, *use = NULL, *s;
-	int cntCmd = 0, cntCvar = 0;
+	const char *cmd = NULL, *cvar = NULL, *use = NULL, *s;
+	int cntCmd = 0, cntCvar = 0, cntParams = 0;
+	char cmdLine[MAXCMDLINE] = "";
+	qboolean append = qtrue;
+	char *tmp;
 
 	s = key_lines[edit_line] + 1;
 	if (*s == '\\' || *s == '/')
 		s++;
-	if (!*s)
+	if (!*s || *s == ' ')
 		return;
 
-	cntCmd = Cmd_CompleteCommand(s, &cmd);
-	cntCvar = Cvar_CompleteVariable(s, &cvar);
+	/* don't try to search a command or cvar if we are already in the
+	 * parameter stage */
+	if (strstr(s, " ")) {
+		tmp = cmdLine;
+		while (*s != ' ')
+			*tmp++ = *s++;
+		/* terminate the string at whitespace position to seperate the cmd */
+		*tmp++ = '\0';
+		/* get rid of the whitespace */
+		s++;
+		cntParams = Cmd_CompleteCommandParameters(cmdLine, s, &cmd);
+		if (cntParams == 1) {
+			/* append the found parameter */
+			Q_strcat(cmdLine, " ", sizeof(cmdLine));
+			Q_strcat(cmdLine, cmd, sizeof(cmdLine));
+			append = qfalse;
+			use = cmdLine;
+		} else if (cntParams > 1) {
+			Com_Printf("\n");
+		} else
+			return;
+	} else {
+		cntCmd = Cmd_CompleteCommand(s, &cmd);
+		cntCvar = Cvar_CompleteVariable(s, &cvar);
 
-	if (cntCmd == 1 && !cntCvar)
-		use = cmd;
-	else if (!cntCmd && cntCvar == 1)
-		use = cvar;
-	else
-		Com_Printf("\n");
+		if (cntCmd == 1 && !cntCvar)
+			use = cmd;
+		else if (!cntCmd && cntCvar == 1)
+			use = cvar;
+		else
+			Com_Printf("\n");
+	}
 
 	if (use) {
 		key_lines[edit_line][1] = '/';
 		Q_strncpyz(key_lines[edit_line] + 2, use, MAXCMDLINE - 2);
 		key_linepos = strlen(use) + 2;
-		key_lines[edit_line][key_linepos] = ' ';
-		key_linepos++;
+		if (append) {
+			key_lines[edit_line][key_linepos] = ' ';
+			key_linepos++;
+		}
 		key_lines[edit_line][key_linepos] = 0;
 		return;
 	}

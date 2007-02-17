@@ -17,7 +17,7 @@ Cvars are restricted from having the same names as commands to keep this
 interface from being ambiguous.
 */
 
-cvar_t *Cvar_Get(const char *var_name, const char *value, int flags, char* desc);
+cvar_t *Cvar_Get(const char *var_name, const char *value, int flags, const char* desc);
 
 /* creates the variable if it doesn't exist, or returns the existing one */
 /* if it exists, the value will not be changed, but flags will be ORed in */
@@ -53,7 +53,7 @@ char *Cvar_VariableStringOld(const char *var_name);
 
 /* returns an empty string if not defined */
 
-int Cvar_CompleteVariable(const char *partial, char **match);
+int Cvar_CompleteVariable(const char *partial, const char **match);
 
 /* attempts to match a partial variable name for command line completion */
 /* returns NULL if nothing fits */
@@ -88,14 +88,14 @@ extern qboolean userinfo_modified;
 /* this is set each time a CVAR_USERINFO variable is changed */
 /* so that the client knows to send it to the server */
 
-qboolean Cvar_AssertValue (cvar_t * cvar, float minVal, float maxVal, qboolean shouldBeIntegral);
+qboolean Cvar_AssertValue(cvar_t * cvar, float minVal, float maxVal, qboolean shouldBeIntegral);
 
 /* this function checks cvar ranges and integral values */
 
-qboolean Cvar_AssertString (cvar_t * cvar, char **array, int arraySize);
+qboolean Cvar_AssertString(cvar_t * cvar, char **array, int arraySize);
 
 /* this function checks whether the cvar string is a valid string in char ** array */
 
-qboolean Cvar_SetCheckFunction (char *var_name, qboolean (*check) (void) );
+qboolean Cvar_SetCheckFunction(char *var_name, qboolean (*check) (void));
 
 /* Sets the check functions for a cvar (e.g. Cvar_Assert) */

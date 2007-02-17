@@ -817,7 +817,7 @@ char **FS_ListFiles(const char *findname, int *numfiles, unsigned musthave, unsi
 	Sys_FindClose();
 
 	qsort(tempList, nfiles, MAX_OSPATH, Q_StringSort);
-	for (i=0; i<nfiles; i++) {
+	for (i = 0; i < nfiles; i++) {
 		list[i] = Q_strdup(tempList[i]);
 	}
 
