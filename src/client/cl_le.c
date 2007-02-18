@@ -133,7 +133,7 @@ static void LM_Delete (lm_t * lm)
 }
 
 /**
- * @brief
+ * @brief Callback for EV_DOOR_CLOSE event
  */
 void LM_DoorClose (sizebuf_t * sb)
 {
@@ -143,6 +143,7 @@ void LM_DoorClose (sizebuf_t * sb)
 	vec3_t newOrigin;
 
 	entNum = MSG_ReadShort(sb);
+	/* FIXME: entNum != lmNum */
 	lm = LM_Find(entNum);
 	if (!lm) {
 		MSG_ReadPos(sb, pos);
@@ -155,7 +156,7 @@ void LM_DoorClose (sizebuf_t * sb)
 }
 
 /**
- * @brief
+ * @brief Callback for EV_DOOR_OPEN event
  */
 void LM_DoorOpen (sizebuf_t * sb)
 {
@@ -165,6 +166,7 @@ void LM_DoorOpen (sizebuf_t * sb)
 	vec3_t newOrigin;
 
 	entNum = MSG_ReadShort(sb);
+	/* FIXME: entNum != lmNum */
 	lm = LM_Find(entNum);
 	if (!lm) {
 		MSG_ReadPos(sb, pos);
