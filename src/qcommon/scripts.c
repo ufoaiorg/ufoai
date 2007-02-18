@@ -164,12 +164,12 @@ static void Com_ParseFire (char *name, char **text, fireDef_t * fd)
 				token = COM_EParse(text, errhead, name);
 				if (!*text)
 					return;
-				fd->range = atof(token) * 32.0f;
+				fd->range = atof(token) * UNIT_SIZE;
 			} else if (!Q_strncmp(token, "splrad", 6)) {
 				token = COM_EParse(text, errhead, name);
 				if (!*text)
 					return;
-				fd->splrad = atof(token) * 32.0f;
+				fd->splrad = atof(token) * UNIT_SIZE;
 			} else
 				Com_Printf("Com_ParseFire: unknown token \"%s\" ignored (weapon %s)\n", token, name);
 		}
