@@ -655,6 +655,7 @@ static void door_go_down (edict_t *self)
 	/* FIXME: See door_go_up */
 	gi.AddEvent(PM_ALL, EV_DOOR_CLOSE);
 	gi.WriteShort(self->number);
+	gi.WriteShort(self->mapNum);
 	gi.WritePos(self->moveinfo.dir);
 }
 
@@ -677,6 +678,7 @@ static void door_go_up (edict_t *self)
 	 */
 	gi.AddEvent(PM_ALL, EV_DOOR_OPEN);
 	gi.WriteShort(self->number);
+	gi.WriteShort(self->mapNum);
 	gi.WritePos(self->moveinfo.dir);
 }
 

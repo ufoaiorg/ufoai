@@ -138,18 +138,23 @@ static void LM_Delete (lm_t * lm)
 void LM_DoorClose (sizebuf_t * sb)
 {
 	lm_t *lm;
-	int entNum;
+	le_t *le;
+	int lmNum, entNum;
 	vec3_t pos;
 	vec3_t newOrigin;
 
 	entNum = MSG_ReadShort(sb);
-	/* FIXME: entNum != lmNum */
-	lm = LM_Find(entNum);
-	if (!lm) {
+	le = LE_Get(entNum);
+	lmNum = MSG_ReadShort(sb);
+	lm = LM_Find(lmNum);
+	if (!lm || !le) {
 		MSG_ReadPos(sb, pos);
-		Com_Printf("Can't close the door - lm for entity %i not found\n", entNum);
+		Com_Printf("Can't close the door - lm for mapNum %i not found or le (%i) not found\n", lmNum, entNum);
 		return;
+	} else {
+		Com_Printf("Close the door\n");
 	}
+	le->contents = CONTENTS_SOLID;
 	MSG_ReadPos(sb, pos);
 	VectorSubtract(pos, lm->origin, newOrigin);
 	VectorCopy(newOrigin, lm->origin);
@@ -161,18 +166,25 @@ void LM_DoorClose (sizebuf_t * sb)
 void LM_DoorOpen (sizebuf_t * sb)
 {
 	lm_t *lm;
-	int entNum;
+	le_t *le;
+	int lmNum, entNum;
 	vec3_t pos;
 	vec3_t newOrigin;
 
 	entNum = MSG_ReadShort(sb);
-	/* FIXME: entNum != lmNum */
-	lm = LM_Find(entNum);
-	if (!lm) {
+	le = LE_Get(entNum);
+	lmNum = MSG_ReadShort(sb);
+	lm = LM_Find(lmNum);
+	if (!lm || !le) {
 		MSG_ReadPos(sb, pos);
-		Com_Printf("Can't open the door - lm for entity %i not found\n", entNum);
+		Com_Printf("Can't open the door - lm for mapNum %i not found or le (%i) not found\n", lmNum, entNum);
 		return;
+	} else {
+		Com_Printf("Open the door\n");
 	}
+	/* don't trace against an opened door */
+	/* NOTE: this is no func_door_rotating */
+	le->contents = 0;
 	MSG_ReadPos(sb, pos);
 	VectorSubtract(pos, lm->origin, newOrigin);
 	VectorCopy(newOrigin, lm->origin);
@@ -633,7 +645,8 @@ le_t *LE_Add (int entnum)
 }
 
 /**
- * @brief
+ * @brief Searches all local entities for the one with the searched entnum
+ * @param[in] entnum The entity number (server side)
  */
 le_t *LE_Get (int entnum)
 {

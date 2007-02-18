@@ -108,8 +108,8 @@ const char *ev_format[] =
 	"s",				/* EV_MODEL_EXPLODE */
 	"sg*",				/* EV_SPAWN_PARTICLE */
 
-	"sp",				/* EV_DOOR_OPEN */
-	"sp"				/* EV_DOOR_CLOSE */
+	"ssp",				/* EV_DOOR_OPEN */
+	"ssp"				/* EV_DOOR_CLOSE */
 };
 
 static const char *ev_names[] =
