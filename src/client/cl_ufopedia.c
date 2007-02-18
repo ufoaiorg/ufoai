@@ -215,7 +215,7 @@ extern void CL_ItemDescription (int item)
 			Com_sprintf(itemText, sizeof(itemText), _("%s auxiliary equipment with\n"), (od->firetwohanded ? _("Two-handed") : _("One-handed")));
 			Q_strcat(itemText, va(_("Action:\t%s\n"), od->fd[0][0].name), sizeof(itemText));
 			Q_strcat(itemText, va(_("Time units:\t%i\n"), od->fd[0][0].time), sizeof(itemText));
-			Q_strcat(itemText, va(_("Range:\t%g\n"), od->fd[0][0].range / 32.0), sizeof(itemText));
+			Q_strcat(itemText, va(_("Range:\t%g\n"), od->fd[0][0].range / UNIT_SIZE), sizeof(itemText));
 		}
 
 		if ( !Q_strncmp(od->type, "ammo", 4)
@@ -227,7 +227,7 @@ extern void CL_ItemDescription (int item)
 					va(_("Damage:\t%i / %i\n"), (int) ((od->fd[0][0].damage[0] + od->fd[0][0].spldmg[0]) * od->fd[0][0].shots),
 						(int) ((od->fd[0][1].damage[0] + od->fd[0][1].spldmg[0]) * od->fd[0][1].shots)), sizeof(itemText));
 			Q_strcat(itemText, va(_("Time units:\t%i / %i\n"), od->fd[0][0].time, od->fd[0][1].time), sizeof(itemText));
-			Q_strcat(itemText, va(_("Range:\t%g / %g\n"), od->fd[0][0].range / 32.0, od->fd[0][1].range / 32.0), sizeof(itemText));
+			Q_strcat(itemText, va(_("Range:\t%g / %g\n"), od->fd[0][0].range / UNIT_SIZE, od->fd[0][1].range / 32.0), sizeof(itemText));
 			Q_strcat(itemText,
 					va(_("Spreads:\t%g / %g\n"), (od->fd[0][0].spread[0] + od->fd[0][0].spread[1]) / 2, (od->fd[0][1].spread[0] + od->fd[0][1].spread[1]) / 2), sizeof(itemText));
 		}
@@ -313,7 +313,7 @@ static void UP_BuildingDescription (technology_t* t)
 extern void UP_AircraftDescription (technology_t* t)
 {
 	aircraft_t* aircraft;
-	
+
 	if (RS_IsResearched_ptr(t)) {
 		aircraft = CL_GetAircraft(t->provides);
 		if (!aircraft) {
@@ -327,7 +327,7 @@ extern void UP_AircraftDescription (technology_t* t)
 			Q_strcat(upBuffer, va(_("Equipment:\t%s\n"), aircraft->item ? _(aircraft->item->name) : _("None") ), sizeof(upBuffer));
 		}
 	}
-#if 0 
+#if 0
 	else if RS_Collected_(t) {
 		/* Display crippled info and pre-research text here */
 	}
