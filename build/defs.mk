@@ -1,7 +1,7 @@
 # Some variables needed by the modules
 SRCDIR=src
 
-CFLAGS+=-DHAVE_CONFIG_H -Wall -pipe -DHAVE_SVNVERSION_H
+CFLAGS+=-DHAVE_CONFIG_H -Wall -pipe
 #-combine -fwhole-program
 
 ifeq ($(HAVE_SHADERS),1)
