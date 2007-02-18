@@ -659,7 +659,7 @@ void B_SetBuildingByClick (int row, int col)
 /**
  * @brief Places the current building in the base (x/y give via console).
  */
-static void B_SetBuilding(void)
+static void B_SetBuilding_f (void)
 {
 	int row, col;
 
@@ -682,7 +682,7 @@ static void B_SetBuilding(void)
 /**
  * @brief Build building from the list of those available.
  */
-static void B_NewBuildingFromList(void)
+static void B_NewBuildingFromList_f(void)
 {
 	/*maybe someone call this command before the buildings are parsed?? */
 	if (!baseCurrent || !baseCurrent->buildingCurrent)
@@ -1389,7 +1389,7 @@ void B_DrawBase(menuNode_t * node)
 /**
  * @brief Initialises base.
  */
-void B_BaseInit(void)
+static void B_BaseInit_f (void)
 {
 	int baseID = Cvar_VariableInteger("mn_base_id");
 
@@ -1405,7 +1405,7 @@ void B_BaseInit(void)
 /**
  * @brief Renames a base.
  */
-void B_RenameBase(void)
+static void B_RenameBase_f (void)
 {
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: rename_base <name>\n");
@@ -1419,9 +1419,9 @@ void B_RenameBase(void)
 /**
  * @brief Cycles to the next base.
  * @sa B_PrevBase
- * @sa B_SelectBase
+ * @sa B_SelectBase_f
  */
-void B_NextBase(void)
+static void B_NextBase_f (void)
 {
 	int baseID = Cvar_VariableInteger("mn_base_id");
 
@@ -1442,9 +1442,9 @@ void B_NextBase(void)
 /**
  * @brief Cycles to the previous base.
  * @sa B_NextBase
- * @sa B_SelectBase
+ * @sa B_SelectBase_f
  */
-void B_PrevBase(void)
+static void B_PrevBase_f (void)
 {
 	int baseID = Cvar_VariableInteger("mn_base_id");
 
@@ -1469,7 +1469,7 @@ void B_PrevBase(void)
  *
  * For a new base the baseID is -1.
  */
-void B_SelectBase(void)
+static void B_SelectBase_f (void)
 {
 	int baseID;
 
@@ -1484,11 +1484,11 @@ void B_SelectBase(void)
 	if (baseID < 0) {
 		gd.mapAction = MA_NEWBASE;
 		baseID = gd.numBases;
-		Com_DPrintf("B_SelectBase: new baseID is %i\n", baseID);
+		Com_DPrintf("B_SelectBase_f: new baseID is %i\n", baseID);
 		if (baseID < MAX_BASES) {
 			baseCurrent = &gd.bases[baseID];
 			baseCurrent->idx = baseID;
-			Com_DPrintf("B_SelectBase: baseID is valid for base: %s\n", baseCurrent->name);
+			Com_DPrintf("B_SelectBase_f: baseID is valid for base: %s\n", baseCurrent->name);
 			Cbuf_ExecuteText(EXEC_NOW, "set_base_to_normal");
 		} else {
 			Com_Printf("MaxBases reached\n");
@@ -1497,7 +1497,7 @@ void B_SelectBase(void)
 			gd.mapAction = MA_NONE;
 		}
 	} else if (baseID < MAX_BASES) {
-		Com_DPrintf("B_SelectBase: select base with id %i\n", baseID);
+		Com_DPrintf("B_SelectBase_f: select base with id %i\n", baseID);
 		baseCurrent = &gd.bases[baseID];
 		if (baseCurrent->founded) {
 			gd.mapAction = MA_NONE;
@@ -1767,7 +1767,7 @@ static void B_PackInitialEquipment_f (void)
  * @brief Constructs a new base.
  * @sa CL_NewBase
  */
-void B_BuildBase (void)
+static void B_BuildBase_f (void)
 {
 	assert(baseCurrent);
 
@@ -1776,7 +1776,7 @@ void B_BuildBase (void)
 
 	if (ccs.credits - BASE_COSTS > 0) {
 		if (CL_NewBase(newBasePos)) {
-			Com_DPrintf("B_BuildBase: numBases: %i\n", gd.numBases);
+			Com_DPrintf("B_BuildBase_f: numBases: %i\n", gd.numBases);
 			baseCurrent->idx = gd.numBases - 1;
 			baseCurrent->founded = qtrue;
 			baseCurrent->numAircraftInBase = 0;
@@ -1810,7 +1810,7 @@ void B_BuildBase (void)
 						if (!Q_strncmp(name, ed->name, MAX_VAR))
 							break;
 					if (i == csi.numEDs) {
-						Com_DPrintf("B_BuildBase: Initial Phalanx equipment %s not found.\n", name);
+						Com_DPrintf("B_BuildBase_f: Initial Phalanx equipment %s not found.\n", name);
 					} else {
 						for (i = 0; i < csi.numODs; i++)
 							baseCurrent->storage.num[i] += ed->num[i] / 5;
@@ -2096,9 +2096,9 @@ static void B_BaseList_f(void)
 /**
  * @brief Sets the title of the base.
  */
-static void B_SetBaseTitle(void)
+static void B_SetBaseTitle_f(void)
 {
-	Com_DPrintf("B_SetBaseTitle: #bases: %i\n", gd.numBases);
+	Com_DPrintf("B_SetBaseTitle_f: #bases: %i\n", gd.numBases);
 	if (gd.numBases < MAX_BASES)
 		Cvar_Set("mn_base_title", gd.bases[gd.numBases].name);
 	else {
@@ -2704,18 +2704,18 @@ void B_ResetBaseManagement(void)
 	Com_DPrintf("Reset basemanagement\n");
 
 	/* add commands and cvars */
-	Cmd_AddCommand("mn_prev_base", B_PrevBase, NULL);
-	Cmd_AddCommand("mn_next_base", B_NextBase, NULL);
-	Cmd_AddCommand("mn_select_base", B_SelectBase, NULL);
-	Cmd_AddCommand("mn_build_base", B_BuildBase, NULL);
-	Cmd_AddCommand("new_building", B_NewBuildingFromList, NULL);
-	Cmd_AddCommand("set_building", B_SetBuilding, NULL);
-	Cmd_AddCommand("mn_setbasetitle", B_SetBaseTitle, NULL);
+	Cmd_AddCommand("mn_prev_base", B_PrevBase_f, NULL);
+	Cmd_AddCommand("mn_next_base", B_NextBase_f, NULL);
+	Cmd_AddCommand("mn_select_base", B_SelectBase_f, NULL);
+	Cmd_AddCommand("mn_build_base", B_BuildBase_f, NULL);
+	Cmd_AddCommand("new_building", B_NewBuildingFromList_f, NULL);
+	Cmd_AddCommand("set_building", B_SetBuilding_f, NULL);
+	Cmd_AddCommand("mn_setbasetitle", B_SetBaseTitle_f, NULL);
 	Cmd_AddCommand("bases_check_max", B_CheckMaxBases_f, NULL);
-	Cmd_AddCommand("rename_base", B_RenameBase, NULL);
+	Cmd_AddCommand("rename_base", B_RenameBase_f, NULL);
 	Cmd_AddCommand("base_attack", B_BaseAttack_f, NULL);
 	Cmd_AddCommand("base_changename", B_ChangeBaseName_f, NULL);
-	Cmd_AddCommand("base_init", B_BaseInit, NULL);
+	Cmd_AddCommand("base_init", B_BaseInit_f, NULL);
 	Cmd_AddCommand("base_assemble", B_AssembleMap_f, "Called to assemble the current selected base");
 	Cmd_AddCommand("base_assemble_rand", B_AssembleRandomBase, NULL);
 	Cmd_AddCommand("building_open", B_BuildingOpen_f, NULL);
