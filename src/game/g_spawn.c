@@ -824,7 +824,7 @@ void SP_func_door (edict_t *self)
 	/* also linked into the world here */
 	gi.setmodel(self, self->model);
 	if (self->solid != SOLID_BSP)
-		Com_Printf("Error - func_breakable with no SOLID_BSP\n");
+		Com_Printf("Error - func_door with no SOLID_BSP\n");
 
 	self->nextthink = level.time + FRAMETIME;
 	self->think = Think_SpawnDoorTrigger;
