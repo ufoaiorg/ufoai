@@ -48,7 +48,7 @@ int registration_sequence;
 /**
  * @brief Prints all loaded models
  */
-void Mod_Modellist_f(void)
+void Mod_Modellist_f (void)
 {
 	int i;
 	model_t *mod;
@@ -69,6 +69,9 @@ void Mod_Modellist_f(void)
 		case mod_sprite:
 			ri.Con_Printf(PRINT_ALL, "SP2");
 			break;
+		case mod_obj:
+			ri.Con_Printf(PRINT_ALL, "OBJ");
+			break;
 		default:
 			ri.Con_Printf(PRINT_ALL, "%3i", mod->type);
 			break;
@@ -83,7 +86,7 @@ void Mod_Modellist_f(void)
 /**
  * @brief Loads in a model for the given name
  */
-static model_t *Mod_ForName(const char *name, qboolean crash)
+static model_t *Mod_ForName (const char *name, qboolean crash)
 {
 	model_t *mod;
 	unsigned *buf;
@@ -1433,11 +1436,14 @@ struct model_s *R_RegisterModel (const char *name)
 	mod = Mod_ForName(name, qfalse);
 	if (mod) {
 		/* register any images used by the models */
-		if (mod->type == mod_sprite) {
+		switch (mod->type) {
+		case mod_sprite:
 			sprout = (dsprite_t *) mod->extradata;
 			for (i = 0; i < sprout->numframes; i++)
 				mod->skins[i] = GL_FindImage(sprout->frames[i].name, it_sprite);
-		} else if (mod->type == mod_alias) {
+			break;
+		case mod_alias:
+			{
 			char path[MAX_QPATH];
 			char *skin, *slash, *end;
 
@@ -1458,7 +1464,10 @@ struct model_s *R_RegisterModel (const char *name)
 			mod->numframes = pheader->num_frames;
 			if (gl_shadows->value == 2)
 				Mod_FindSharedEdges(mod);
-		} else if (mod->type == mod_alias_md3) {
+			break;
+			}
+		case mod_alias_md3:
+			{
 			int	k;
 
 			pheader3 = (maliasmodel_t *)mod->extradata;
@@ -1468,9 +1477,17 @@ struct model_s *R_RegisterModel (const char *name)
 					mod->skins[i] = GL_FindImage(pheader3->meshes[i].skins[k].name, it_skin);
 			}
 			mod->numframes = pheader3->num_frames;
-		} else if (mod->type == mod_brush) {
+			break;
+			}
+		case mod_brush:
 			for (i = 0; i < mod->numtexinfo; i++)
 				mod->texinfo[i].image->registration_sequence = registration_sequence;
+			break;
+		case mod_obj:
+			/* TODO: */
+			break;
+		default:
+			break;
 		}
 	}
 	return mod;
