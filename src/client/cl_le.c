@@ -146,7 +146,7 @@ void LM_DoorClose (sizebuf_t * sb)
 	lm = LM_Find(entNum);
 	if (!lm) {
 		MSG_ReadPos(sb, pos);
-		Com_Printf("Can't close the door - lm for entitiy %i not found\n", entNum);
+		Com_Printf("Can't close the door - lm for entity %i not found\n", entNum);
 		return;
 	}
 	MSG_ReadPos(sb, pos);
@@ -168,7 +168,7 @@ void LM_DoorOpen (sizebuf_t * sb)
 	lm = LM_Find(entNum);
 	if (!lm) {
 		MSG_ReadPos(sb, pos);
-		Com_Printf("Can't open the door - lm for entitiy %i not found\n", entNum);
+		Com_Printf("Can't open the door - lm for entity %i not found\n", entNum);
 		return;
 	}
 	MSG_ReadPos(sb, pos);
