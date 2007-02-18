@@ -696,8 +696,8 @@ void Touch_DoorTrigger (edict_t *self)
 		/* only actors can activate a touch trigger */
 		if (e->type != ET_ACTOR && e->type != ET_UGV)
 			continue;
-		/* TODO/FIXME: Check whether the e->origin is inside of the trigger */
-		if (e->origin) {
+		/* FIXME: if a spawnpoint is too close to this door, the EV_RESET was not send */
+		if (VectorDist(e->origin, self->origin) < 32.0f) {
 			door_go_up(self->owner);
 			self->nextthink = level.time + FRAMETIME;
 			return;
