@@ -154,9 +154,9 @@ void G_ResetReactionFire (int team)
 
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
 		if (ent->inuse && !(ent->state & STATE_DEAD) && (ent->type == ET_ACTOR || ent->type == ET_UGV) && ent->team == team) {
-			TU_REACTIONS[ent->number][1]  = 0;	/* reset 'RF used' flag */
-			if ( ent->state & STATE_REACTION ) {
-				if (ent->TU >= TU_REACTION ) {
+			TU_REACTIONS[ent->number][1] = 0;	/* reset 'RF used' flag */
+			if (ent->state & STATE_REACTION) {
+				if (ent->TU >= TU_REACTION) {
 					/* Enough TUs for reaction fire available. */
 					ent->TU -= TU_REACTION;
 					TU_REACTIONS[ent->number][0] = TU_REACTION;	/* Save the used TUs for possible later re-adding. */

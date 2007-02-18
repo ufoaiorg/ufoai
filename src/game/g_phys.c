@@ -35,10 +35,10 @@ static qboolean G_PhysicsThink (edict_t *ent)
 	thinktime = ent->nextthink;
 	if (thinktime <= 0)
 		return qtrue;
-	if (thinktime > level.time+0.001)
+	if (thinktime > level.time + 0.001f)
 		return qtrue;
 
-	ent->nextthink = 0;
+	ent->nextthink = level.time + FRAMETIME;
 	if (!ent->think)
 		gi.error("G_PhysicsThink ent->think is NULL");
 	ent->think(ent);
