@@ -218,8 +218,7 @@ extern void CL_ItemDescription (int item)
 			Q_strcat(itemText, va(_("Range:\t%g\n"), od->fd[0][0].range / UNIT_SIZE), sizeof(itemText));
 		}
 
-		if ( !Q_strncmp(od->type, "ammo", 4)
-			 || (od->weapon && !od->reload) ) {
+		if (!Q_strncmp(od->type, "ammo", 4) || (od->weapon && !od->reload)) {
 			/* TODO: We use the default firemodes here. We might need some change the "fd[0]" below to INV_FiredefsIDXForWeapon(od,weapon_idx) on future changes. */
 			Q_strcat(itemText, va(_("Primary:\t%s\t(%s)\n"), od->fd[0][0].name, CL_WeaponSkillToName(od->fd[0][0].weaponSkill)), sizeof(itemText));
 			Q_strcat(itemText, va(_("Secondary:\t%s\t(%s)\n"), od->fd[0][1].name, CL_WeaponSkillToName(od->fd[0][1].weaponSkill)), sizeof(itemText));

@@ -182,12 +182,14 @@ void LM_DoorOpen (sizebuf_t * sb)
 	} else {
 		Com_Printf("Open the door\n");
 	}
-	/* don't trace against an opened door */
+	/* FIXME: don't trace against an opened door */
 	/* NOTE: this is no func_door_rotating */
 	le->contents = 0;
+	/* FIXME: lm->origin is wrong here */
 	MSG_ReadPos(sb, pos);
 	VectorSubtract(pos, lm->origin, newOrigin);
 	VectorCopy(newOrigin, lm->origin);
+	/*Print3Vector(lm->origin);*/
 }
 
 /**
