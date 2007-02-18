@@ -645,9 +645,8 @@ static void door_hit_bottom (edict_t *self)
  */
 static void door_go_down (edict_t *self)
 {
-	if (self->moveinfo.state == STATE_DOWN
-		|| self->moveinfo.state == STATE_BOTTOM)
-		return; /* already going up or already hit the top */
+	if (self->moveinfo.state == STATE_BOTTOM)
+		return; /* already hit the bottom */
 
 	self->moveinfo.state = STATE_DOWN;
 	Move_Calc(self, self->moveinfo.start_origin, door_hit_bottom);
@@ -664,9 +663,8 @@ static void door_go_down (edict_t *self)
  */
 static void door_go_up (edict_t *self)
 {
-	if (self->moveinfo.state == STATE_UP
-		|| self->moveinfo.state == STATE_TOP)
-		return; /* already going up or already hit the top */
+	if (self->moveinfo.state == STATE_TOP)
+		return; /* already hit the top */
 
 	self->moveinfo.state = STATE_UP;
 	Move_Calc(self, self->moveinfo.end_origin, door_hit_top);
@@ -699,7 +697,7 @@ static void Touch_DoorTrigger (edict_t *self)
 		if (e->type != ET_ACTOR && e->type != ET_UGV)
 			continue;
 		/* FIXME: if a spawnpoint is too close to this door, the EV_RESET was not send */
-		if (VectorDist(e->origin, self->origin) < 32.0f) {
+		if (VectorDist(e->origin, self->owner->absmin) < UNIT_SIZE) {
 			door_go_up(self->owner);
 			self->nextthink = level.time + FRAMETIME;
 			return;
@@ -754,13 +752,16 @@ void Think_SpawnDoorTrigger (edict_t *self)
 	maxs[0] += 60;
 	maxs[1] += 60;
 
+	/* spawn the trigger entity */
 	other = G_Spawn();
 	VectorCopy(mins, other->mins);
 	VectorCopy(maxs, other->maxs);
+	/* link the door into the trigger */
 	other->owner = self;
 	other->solid = SOLID_TRIGGER;
 	other->think = Touch_DoorTrigger;
 	other->nextthink = level.time + FRAMETIME;
+	/* link into the world */
 	gi.linkentity(other);
 
 	Think_CalcMoveSpeed(self);
