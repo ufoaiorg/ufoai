@@ -627,7 +627,7 @@ DOOR FUNCTIONS
 /**
  * @brief
  */
-void door_hit_top (edict_t *self)
+static void door_hit_top (edict_t *self)
 {
 	self->moveinfo.state = STATE_TOP;
 }
@@ -635,7 +635,7 @@ void door_hit_top (edict_t *self)
 /**
  * @brief
  */
-void door_hit_bottom (edict_t *self)
+static void door_hit_bottom (edict_t *self)
 {
 	self->moveinfo.state = STATE_BOTTOM;
 }
@@ -643,7 +643,7 @@ void door_hit_bottom (edict_t *self)
 /**
  * @brief
  */
-void door_go_down (edict_t *self)
+static void door_go_down (edict_t *self)
 {
 	if (self->moveinfo.state == STATE_DOWN
 		|| self->moveinfo.state == STATE_BOTTOM)
@@ -661,7 +661,7 @@ void door_go_down (edict_t *self)
 /**
  * @brief
  */
-void door_go_up (edict_t *self)
+static void door_go_up (edict_t *self)
 {
 	if (self->moveinfo.state == STATE_UP
 		|| self->moveinfo.state == STATE_TOP)
@@ -683,7 +683,7 @@ void door_go_up (edict_t *self)
 /**
  * @brief Trigger to open the door we are standing in front of
  */
-void Touch_DoorTrigger (edict_t *self)
+static void Touch_DoorTrigger (edict_t *self)
 {
 	edict_t *e;
 	int i;

@@ -43,7 +43,7 @@ static aliensCont_t* aliencontCurrent;
  * @sa B_BuildBase
  * @sa AL_AddAliens
  */
-void AL_FillInContainment(void)
+void AL_FillInContainment (void)
 {
 	int i, j;
 	base_t *base = NULL;
@@ -87,7 +87,7 @@ void AL_FillInContainment(void)
  * @param[in] type
  * @return name
  */
-char *AL_AlienTypeToName(int teamDescIdx)
+char *AL_AlienTypeToName (int teamDescIdx)
 {
 	if (teamDescIdx < 0 || teamDescIdx >= numTeamDesc)
 		return "";
@@ -98,7 +98,7 @@ char *AL_AlienTypeToName(int teamDescIdx)
  * @brief Collecting stunned aliens and alien bodies after the mission.
  * @sa CL_ParseResults
  */
-void CL_CollectingAliens(void)
+void CL_CollectingAliens (void)
 {
 	int i, j;
 	int teamDescID = -1;
@@ -187,7 +187,7 @@ void CL_CollectingAliens(void)
  * @sa CL_DropshipReturned
  * @sa AL_FillInContainment
  */
-void AL_AddAliens(void)
+void AL_AddAliens (void)
 {
 	int i, j;
 	base_t *tobase = NULL;
@@ -279,7 +279,7 @@ void AL_AddAliens(void)
  * matter what type.
  * @TODO integrate this with research system
  */
-void AL_RemoveAliens(alienType_t alientype, int amount, alienCalcType_t action)
+void AL_RemoveAliens (alienType_t alientype, int amount, alienCalcType_t action)
 {
 	int j;
 	int maxamount = 0; /* amount (of alive type), which is max in Containment) */
@@ -339,7 +339,7 @@ void AL_RemoveAliens(alienType_t alientype, int amount, alienCalcType_t action)
  * @return index of alien
  * @sa RS_AssignTechIdxs
  */
-int AL_GetAlienIdx(char *id)
+int AL_GetAlienIdx (const char *id)
 {
 	int i;
 
@@ -400,7 +400,7 @@ int AL_GetAlienAmount (int idx, requirementType_t reqtype)
  * @sa CL_DropshipReturned
  * @sa AC_Init
  */
-int AL_CountAll(void)
+int AL_CountAll (void)
 {
 	int i, j;
 	int amount = 0;
@@ -458,7 +458,7 @@ int AL_CountInBase (void)
  * @return amount of killed aliens of given type
  * @sa AC_SelectAlien_f
  */
-static int AL_CountForMenu(int alienidx, qboolean alive)
+static int AL_CountForMenu (int alienidx, qboolean alive)
 {
 	int i, j;
 	int amount = 0;
@@ -636,7 +636,7 @@ static void AC_AlienListClick_f (void)
  * @brief Defines commands and cvars for the alien containment menu(s)
  * @sa MN_ResetMenus
  */
-void AC_Reset (void)
+extern void AC_Reset (void)
 {
 	/* add commands */
 	Cmd_AddCommand("aliencont_init", AC_Init, "Init function for alien containment menu");
