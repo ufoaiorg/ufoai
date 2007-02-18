@@ -1683,7 +1683,7 @@ void MN_DrawMenus (void)
 	animState_t *as;
 	char *ref, *font;
 	char *anim;					/* model anim state */
-	char source[MAX_VAR];
+	char source[MAX_VAR] = "";
 	static char oldSource[MAX_VAR] = "";
 	int sp, pp;
 	item_t item = {1, NONE, NONE}; /* 1 so it's not reddish; fake item anyway */
@@ -1825,8 +1825,10 @@ void MN_DrawMenus (void)
 						continue;
 					}
 					Q_strncpyz(source, ref, MAX_VAR);
-				} else
+				} else {
 					ref = NULL;
+					*source = '\0';
+				}
 
 				switch (node->type) {
 				case MN_PIC:
@@ -2057,13 +2059,19 @@ void MN_DrawMenus (void)
 
 				case MN_MODEL:
 					/* set model properties */
-					if (source && !*source)
+					if (!*source)
 						break;
 					/* maybe it's the first run - or noMenuModel is true
 					 * the later case means, we don't have to search for a
 					 * definition again */
-					if (!node->menuModel && !node->noMenuModel)
+					if (!node->menuModel && !node->noMenuModel) {
 						node->menuModel = MN_GetMenuModel(source);
+						Q_strncpyz(oldSource, source, MAX_VAR);
+					} else {
+						/* check whether the cvar value changed */
+						if (Q_strncmp(oldSource, source, MAX_VAR))
+							node->menuModel = MN_GetMenuModel(source);
+					}
 
 					/* direct model name - no menumodel definition */
 					if (!node->menuModel) {
