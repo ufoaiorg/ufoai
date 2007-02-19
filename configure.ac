@@ -185,12 +185,6 @@ fi
 AC_MSG_RESULT($TARGET_CPU)
 
 #---------------------------------------------------------------------------------------------
-# CHECK SVN version
-#---------------------------------------------------------------------------------------------
-
-AC_CHECK_PROG(HAVE_SVNVERSION,svnversion,yes)
-
-#---------------------------------------------------------------------------------------------
 # CHECK CC
 #---------------------------------------------------------------------------------------------
 
@@ -447,13 +441,13 @@ fi
 # Check for pthreads
 #---------------------------------------------------------------------------------------------
 
-AC_SEARCH_LIBS([pthread_create],[pthread])
+AC_SEARCH_LIBS([pthread_create],[pthread pthreads thread threads])
 if test "$ac_cv_search_pthread_create" = "no"
 then
-        AC_SUBST([HAVE_PTHREAD], 0)
+	AC_SUBST([HAVE_PTHREAD], 0)
 	AC_MSG_WARN([couldn't find pthread!])
 else
-        AC_SUBST([HAVE_PTHREAD], 1)
+	AC_SUBST([HAVE_PTHREAD], 1)
 fi
 
 #---------------------------------------------------------------------------------------------

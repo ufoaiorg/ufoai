@@ -651,7 +651,6 @@ HAVE_SED
 HAVE_ECHO
 TARGET_OS
 TARGET_CPU
-HAVE_SVNVERSION
 CC
 CFLAGS
 LDFLAGS
@@ -2318,48 +2317,6 @@ echo "$as_me: WARNING: Please contact the developers for assistance" >&2;}
 fi
 { echo "$as_me:$LINENO: result: $TARGET_CPU" >&5
 echo "${ECHO_T}$TARGET_CPU" >&6; }
-
-#---------------------------------------------------------------------------------------------
-# CHECK SVN version
-#---------------------------------------------------------------------------------------------
-
-# Extract the first word of "svnversion", so it can be a program name with args.
-set dummy svnversion; ac_word=$2
-{ echo "$as_me:$LINENO: checking for $ac_word" >&5
-echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6; }
-if test "${ac_cv_prog_HAVE_SVNVERSION+set}" = set; then
-  echo $ECHO_N "(cached) $ECHO_C" >&6
-else
-  if test -n "$HAVE_SVNVERSION"; then
-  ac_cv_prog_HAVE_SVNVERSION="$HAVE_SVNVERSION" # Let the user override the test.
-else
-as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
-for as_dir in $PATH
-do
-  IFS=$as_save_IFS
-  test -z "$as_dir" && as_dir=.
-  for ac_exec_ext in '' $ac_executable_extensions; do
-  if { test -f "$as_dir/$ac_word$ac_exec_ext" && $as_executable_p "$as_dir/$ac_word$ac_exec_ext"; }; then
-    ac_cv_prog_HAVE_SVNVERSION="yes"
-    echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
-    break 2
-  fi
-done
-done
-IFS=$as_save_IFS
-
-fi
-fi
-HAVE_SVNVERSION=$ac_cv_prog_HAVE_SVNVERSION
-if test -n "$HAVE_SVNVERSION"; then
-  { echo "$as_me:$LINENO: result: $HAVE_SVNVERSION" >&5
-echo "${ECHO_T}$HAVE_SVNVERSION" >&6; }
-else
-  { echo "$as_me:$LINENO: result: no" >&5
-echo "${ECHO_T}no" >&6; }
-fi
-
-
 
 #---------------------------------------------------------------------------------------------
 # CHECK CC
@@ -6520,7 +6477,7 @@ return pthread_create ();
   return 0;
 }
 _ACEOF
-for ac_lib in '' pthread; do
+for ac_lib in '' pthread pthreads thread threads; do
   if test -z "$ac_lib"; then
     ac_res="none required"
   else
@@ -6593,12 +6550,12 @@ fi
 
 if test "$ac_cv_search_pthread_create" = "no"
 then
-        HAVE_PTHREAD=0
+	HAVE_PTHREAD=0
 
 	{ echo "$as_me:$LINENO: WARNING: couldn't find pthread!" >&5
 echo "$as_me: WARNING: couldn't find pthread!" >&2;}
 else
-        HAVE_PTHREAD=1
+	HAVE_PTHREAD=1
 
 fi
 
@@ -11317,7 +11274,6 @@ HAVE_SED!$HAVE_SED$ac_delim
 HAVE_ECHO!$HAVE_ECHO$ac_delim
 TARGET_OS!$TARGET_OS$ac_delim
 TARGET_CPU!$TARGET_CPU$ac_delim
-HAVE_SVNVERSION!$HAVE_SVNVERSION$ac_delim
 CC!$CC$ac_delim
 CFLAGS!$CFLAGS$ac_delim
 LDFLAGS!$LDFLAGS$ac_delim
@@ -11361,6 +11317,7 @@ BUILD_DEDICATED!$BUILD_DEDICATED$ac_delim
 BUILD_MASTER!$BUILD_MASTER$ac_delim
 BUILD_UFO2MAP!$BUILD_UFO2MAP$ac_delim
 BUILD_QDATA!$BUILD_QDATA$ac_delim
+BUILD_DEBUG!$BUILD_DEBUG$ac_delim
 _ACEOF
 
   if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 97; then
@@ -11402,7 +11359,6 @@ _ACEOF
 ac_delim='%!_!# '
 for ac_last_try in false false false false false :; do
   cat >conf$$subs.sed <<_ACEOF
-BUILD_DEBUG!$BUILD_DEBUG$ac_delim
 PARANOID!$PARANOID$ac_delim
 PROFILING!$PROFILING$ac_delim
 EXE_EXT!$EXE_EXT$ac_delim
@@ -11410,7 +11366,7 @@ LIBOBJS!$LIBOBJS$ac_delim
 LTLIBOBJS!$LTLIBOBJS$ac_delim
 _ACEOF
 
-  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 6; then
+  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 5; then
     break
   elif $ac_last_try; then
     { { echo "$as_me:$LINENO: error: could not make $CONFIG_STATUS" >&5
