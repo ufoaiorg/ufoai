@@ -334,9 +334,7 @@ extern int turnTeam;
 qboolean G_ClientShoot(player_t * player, int num, pos3_t at, int type, int firemode, shot_mock_t *mock, qboolean allowReaction);
 void G_ResetReactionFire(int team);
 qboolean G_ReactToMove(edict_t *target, qboolean mock);
-void G_ReactToPreFire(edict_t *target);
-void G_ReactToPostFire(edict_t *target);
-void G_ReactToEndTurn();
+void G_ReactToEndTurn(void);
 
 /* g_ai.c */
 void AI_Run(void);
@@ -346,7 +344,6 @@ player_t *AI_CreatePlayer(int team);
 /* g_svcmds.c */
 void ServerCommand(void);
 qboolean SV_FilterPacket(char *from);
-
 
 /* g_main.c */
 void SaveClientData(void);

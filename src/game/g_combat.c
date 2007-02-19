@@ -31,6 +31,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*#define DEBUG_REACTION*/
 
 qboolean G_ResolveReactionFire(edict_t *target, qboolean force, qboolean endTurn, qboolean doShoot);
+static void G_ReactToPreFire(edict_t *target);
+static void G_ReactToPostFire(edict_t *target);
 
 /*
  * 0: Stores the used TUs for Reaction fire for each edict.
@@ -46,7 +48,7 @@ typedef enum {
 /**
  * @brief test if point is "visible" from team
  */
-qboolean G_TeamPointVis (int team, vec3_t point)
+static qboolean G_TeamPointVis (int team, vec3_t point)
 {
 	edict_t *from;
 	vec3_t eye;
@@ -147,7 +149,7 @@ static void G_Morale (int type, edict_t * victim, edict_t * attacker, int param)
  * @sa G_ClientStateChange
  * @param[in] team Index of team to loop through.
  */
-void G_ResetReactionFire (int team)
+extern void G_ResetReactionFire (int team)
 {
 	edict_t *ent;
 	int i;
@@ -371,10 +373,11 @@ static void G_Damage (edict_t * ent, fireDef_t *fd, int damage, edict_t * attack
 	}
 }
 
+#ifdef DEBUG
 /**
  * @brief Stun all members of a giben team.
  */
-void G_StunTeam (void)
+extern void G_StunTeam (void)
 {
 	/* default is to kill all teams */
 	int teamToKill = -1, i;
@@ -403,6 +406,7 @@ void G_StunTeam (void)
 	/* check for win conditions */
 	G_CheckEndGame();
 }
+#endif
 
 /**
  * @brief Deals splash damage to a target and its surroundings.
@@ -411,7 +415,7 @@ void G_StunTeam (void)
  * @param[in] impact TODO ???
  * @param[in] mock TODO ???
  */
-void G_SplashDamage (edict_t * ent, fireDef_t * fd, vec3_t impact, shot_mock_t *mock)
+static void G_SplashDamage (edict_t * ent, fireDef_t * fd, vec3_t impact, shot_mock_t *mock)
 {
 	edict_t *check;
 	vec3_t center;
@@ -914,7 +918,7 @@ static qboolean G_GetShotFromType (edict_t *ent, int type, int firemode, item_t 
  * @param[in] allowReaction Set to qtrue to check whether this has forced any reaction fire, otherwise qfalse.
  * @return qtrue if everthing went ok (i.e. the shot(s) where fired ok), otherwise qfalse.
  */
-qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type, int firemode, shot_mock_t *mock, qboolean allowReaction)
+extern qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type, int firemode, shot_mock_t *mock, qboolean allowReaction)
 {
 	fireDef_t *fd = NULL;
 	edict_t *ent;
@@ -1272,7 +1276,7 @@ static int G_GetFiringTUs (edict_t *ent, edict_t *target, int *hand, int *firemo
  * @param[in] target The entity triggering fire
  * @returns qtrue if some entity initiated firing
  */
-qboolean G_CheckRFTrigger (edict_t *target)
+static qboolean G_CheckRFTrigger (edict_t *target)
 {
 	edict_t *ent;
 	int i, tus;
@@ -1314,7 +1318,7 @@ qboolean G_CheckRFTrigger (edict_t *target)
  * @param[in] mock If true then don't actually fire
  * @return true if the entity fired (or would have fired if mock), false otherwise
  */
-qboolean G_ResolveRF (edict_t *ent, qboolean mock)
+static qboolean G_ResolveRF (edict_t *ent, qboolean mock)
 {
 	player_t *player;
 	int tus, hand, team;
@@ -1406,7 +1410,7 @@ qboolean G_ResolveRF (edict_t *ent, qboolean mock)
  * @sa G_ReactToMove
  * @sa G_ReactToPostFire
  */
-qboolean G_CheckRFResolution (edict_t *target, qboolean mock)
+static qboolean G_CheckRFResolution (edict_t *target, qboolean mock)
 {
 	edict_t *ent;
 	int i;
@@ -1451,7 +1455,7 @@ qboolean G_CheckRFResolution (edict_t *target, qboolean mock)
  * @returns true If any shots were (or would be) taken
  * @sa G_ClientMove
  */
-qboolean G_ReactToMove (edict_t *target, qboolean mock)
+extern qboolean G_ReactToMove (edict_t *target, qboolean mock)
 {
 	qboolean fired;
 
@@ -1468,7 +1472,7 @@ qboolean G_ReactToMove (edict_t *target, qboolean mock)
  * @param[in] target The entity about to fire
  * @sa G_ClientShoot
  */
-void G_ReactToPreFire (edict_t *target)
+static void G_ReactToPreFire (edict_t *target)
 {
 	edict_t *ent;
 	int i, entTUs, targTUs;
@@ -1518,7 +1522,7 @@ void G_ReactToPreFire (edict_t *target)
  * @param[in] target The entity that has just fired
  * @sa G_ClientShoot
  */
-void G_ReactToPostFire (edict_t *target)
+static void G_ReactToPostFire (edict_t *target)
 {
 	/* same as movement, but never mocked */
 	G_ReactToMove(target, qfalse);
@@ -1528,7 +1532,7 @@ void G_ReactToPostFire (edict_t *target)
  * @brief Called at the end of turn, all outstanding reaction fire is resolved
  * @sa G_ClientEndRound
  */
-void G_ReactToEndTurn (void)
+extern void G_ReactToEndTurn (void)
 {
 	edict_t *ent;
 	int i;
