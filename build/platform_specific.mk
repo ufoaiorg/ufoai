@@ -6,6 +6,7 @@
 SHARED_EXT=so
 SHARED_LDFLAGS=-shared
 SHARED_CFLAGS=-fPIC
+SERVER_LDFLAGS=-lz -lm
 JPEG_CFLAGS=
 
 # MinGW32
@@ -30,6 +31,7 @@ endif
 
 ifeq ($(TARGET_OS),netbsd)
 	CFLAGS +=-I/usr/X11R6/include -D_BSD_SOURCE -D_NETBSD_SOURCE -std=c89
+	SERVER_LDFLAGS +=-lintl
 endif
 
 # Darwin
