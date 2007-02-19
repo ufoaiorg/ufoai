@@ -1154,8 +1154,6 @@ static void CL_ServerListClick_f (void)
 	}
 	num = atoi(Cmd_Argv(1));
 
-	Com_Printf("num: %i\n", num);
-
 	menuText[TEXT_STANDARD] = serverInfoText;
 	if (num >= 0 && num < serverListLength)
 		for (i = 0; i < serverListLength; i++)
