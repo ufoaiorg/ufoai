@@ -670,6 +670,7 @@ HAVE_OPENAL_CONFIG
 OPENAL_CFLAGS
 OPENAL_LIBS
 HAVE_OPENAL
+HAVE_PTHREAD
 HAVE_SDL_CONFIG
 SDL_CFLAGS
 SDL_LIBS
@@ -6488,6 +6489,120 @@ echo "$as_me: error: couldn't find libvorbisfile!" >&2;}
 fi
 
 #---------------------------------------------------------------------------------------------
+# Check for pthreads
+#---------------------------------------------------------------------------------------------
+
+{ echo "$as_me:$LINENO: checking for library containing pthread_create" >&5
+echo $ECHO_N "checking for library containing pthread_create... $ECHO_C" >&6; }
+if test "${ac_cv_search_pthread_create+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  ac_func_search_save_LIBS=$LIBS
+cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+char pthread_create ();
+int
+main ()
+{
+return pthread_create ();
+  ;
+  return 0;
+}
+_ACEOF
+for ac_lib in '' pthread; do
+  if test -z "$ac_lib"; then
+    ac_res="none required"
+  else
+    ac_res=-l$ac_lib
+    LIBS="-l$ac_lib  $ac_func_search_save_LIBS"
+  fi
+  rm -f conftest.$ac_objext conftest$ac_exeext
+if { (ac_try="$ac_link"
+case "(($ac_try" in
+  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
+  *) ac_try_echo=$ac_try;;
+esac
+eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
+  (eval "$ac_link") 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_c_werror_flag" || test ! -s conftest.err'
+  { (case "(($ac_try" in
+  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
+  *) ac_try_echo=$ac_try;;
+esac
+eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
+  (eval "$ac_try") 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest$ac_exeext'
+  { (case "(($ac_try" in
+  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
+  *) ac_try_echo=$ac_try;;
+esac
+eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
+  (eval "$ac_try") 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  ac_cv_search_pthread_create=$ac_res
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+
+fi
+
+rm -f core conftest.err conftest.$ac_objext \
+      conftest$ac_exeext
+  if test "${ac_cv_search_pthread_create+set}" = set; then
+  break
+fi
+done
+if test "${ac_cv_search_pthread_create+set}" = set; then
+  :
+else
+  ac_cv_search_pthread_create=no
+fi
+rm conftest.$ac_ext
+LIBS=$ac_func_search_save_LIBS
+fi
+{ echo "$as_me:$LINENO: result: $ac_cv_search_pthread_create" >&5
+echo "${ECHO_T}$ac_cv_search_pthread_create" >&6; }
+ac_res=$ac_cv_search_pthread_create
+if test "$ac_res" != no; then
+  test "$ac_res" = "none required" || LIBS="$ac_res $LIBS"
+
+fi
+
+if test "$ac_cv_search_pthread_create" = "no"
+then
+        HAVE_PTHREAD=0
+
+	{ echo "$as_me:$LINENO: WARNING: couldn't find pthread!" >&5
+echo "$as_me: WARNING: couldn't find pthread!" >&2;}
+else
+        HAVE_PTHREAD=1
+
+fi
+
+#---------------------------------------------------------------------------------------------
 # Check for gettext
 #---------------------------------------------------------------------------------------------
 
@@ -11221,6 +11336,7 @@ HAVE_OPENAL_CONFIG!$HAVE_OPENAL_CONFIG$ac_delim
 OPENAL_CFLAGS!$OPENAL_CFLAGS$ac_delim
 OPENAL_LIBS!$OPENAL_LIBS$ac_delim
 HAVE_OPENAL!$HAVE_OPENAL$ac_delim
+HAVE_PTHREAD!$HAVE_PTHREAD$ac_delim
 HAVE_SDL_CONFIG!$HAVE_SDL_CONFIG$ac_delim
 SDL_CFLAGS!$SDL_CFLAGS$ac_delim
 SDL_LIBS!$SDL_LIBS$ac_delim
@@ -11245,7 +11361,6 @@ BUILD_DEDICATED!$BUILD_DEDICATED$ac_delim
 BUILD_MASTER!$BUILD_MASTER$ac_delim
 BUILD_UFO2MAP!$BUILD_UFO2MAP$ac_delim
 BUILD_QDATA!$BUILD_QDATA$ac_delim
-BUILD_DEBUG!$BUILD_DEBUG$ac_delim
 _ACEOF
 
   if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 97; then
@@ -11287,6 +11402,7 @@ _ACEOF
 ac_delim='%!_!# '
 for ac_last_try in false false false false false :; do
   cat >conf$$subs.sed <<_ACEOF
+BUILD_DEBUG!$BUILD_DEBUG$ac_delim
 PARANOID!$PARANOID$ac_delim
 PROFILING!$PROFILING$ac_delim
 EXE_EXT!$EXE_EXT$ac_delim
@@ -11294,7 +11410,7 @@ LIBOBJS!$LIBOBJS$ac_delim
 LTLIBOBJS!$LTLIBOBJS$ac_delim
 _ACEOF
 
-  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 5; then
+  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 6; then
     break
   elif $ac_last_try; then
     { { echo "$as_me:$LINENO: error: could not make $CONFIG_STATUS" >&5
