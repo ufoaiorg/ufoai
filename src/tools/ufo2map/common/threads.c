@@ -526,7 +526,7 @@ void RunThreadsOn (int workcnt, qboolean showpacifier, void(*func)(unsigned int)
 	oldf      = -1;
 	workcount = workcnt;
 
-	if(numthreads == 1)
+	if (numthreads == 1)
 		func(0);
 	else {
 		threaded = qtrue;
@@ -548,8 +548,7 @@ void RunThreadsOn (int workcnt, qboolean showpacifier, void(*func)(unsigned int)
 			/* Default pthread attributes: joinable & non-realtime scheduling */
 			/* on 64bit arch, gcc complains cast to pointer from integer of different sizes
 			 * but it is OK to cast from 4-byte integer to 8-byte pointer */
-			/* TODO: nevertheless fix this warning */
-			if (pthread_create(&work_threads[i], NULL, (void*)func, (void*)i) != 0)
+			if (pthread_create(&work_threads[i], NULL, (void*)func, &i) != 0)
 				Error("pthread_create failed");
 		}
 		for (i = 0; i < numthreads; i++) {
