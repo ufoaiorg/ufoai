@@ -1,7 +1,7 @@
 #!/bin/bash
 
 stop_on_error=1
-init=0
+init=1
 dont_install=0
 sed_soft="sed"
 user=`whoami`
@@ -170,15 +170,15 @@ echo " SDL"
 echo "========================================"
 version="1.2.11"
 download http://www.libsdl.org/release/ SDL-devel-$version-mingw32.tar.gz
-tar -xvz -f SDL-devel-$version-mingw32.tar.gz >> /dev/null
+tar -xz -f SDL-devel-$version-mingw32.tar.gz
 mkdir -p build-sdl/usr/i586-mingw32msvc
-make -C SDL-$version prefix="`pwd`/build-sdl/usr/i586-mingw32msvc/" install
+make -C SDL-$version prefix="`pwd`/build-sdl/usr/i586-mingw32msvc/" install >> /dev/null
 
-echo "set prefix to /usr/i586-mingw32msvc (TODO/FIXME)"
+echo "set prefix to /usr/i586-mingw32msvc"
 #TODO: should be i586-mingw32msvc-sdl-config not i386-mingw32msvc-sdl-config
-$sed_soft -e 's/^\(prefix=\).*/\1\/usr\/i586-mingw32msvc/' build-sdl/usr/i586-mingw32msvc/bin/i386-mingw32msvc-sdl-config > build-sdl/usr/i586-mingw32msvc/bin/i386-mingw32msvc-sdl-config
+$sed_soft -e 's/^\(prefix\=\).*/\1\/usr\/i586-mingw32msvc/' build-sdl/usr/i586-mingw32msvc/bin/i386-mingw32msvc-sdl-config > build-sdl/usr/i586-mingw32msvc/bin/i386-mingw32msvc-sdl-config
 
-tar -cvz --owner=root --group=root -C build-sdl -f mingw32-libsdl1.2-dev-$version.tgz . >> /dev/null
+tar -cz --owner=root --group=root -C build-sdl -f mingw32-libsdl1.2-dev-$version.tgz .
 fakeroot alien mingw32-libsdl1.2-dev-$version.tgz >> /dev/null
 
 if [ "$dont_install" -ne "1" ]
