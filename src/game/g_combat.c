@@ -34,7 +34,7 @@ qboolean G_ResolveReactionFire(edict_t *target, qboolean force, qboolean endTurn
 
 /*
  * 0: Stores the used TUs for Reaction fire for each edict.
- * 1: Stores if the edict has fired in rection.
+ * 1: Stores if the edict has fired in reaction.
 */
 int TU_REACTIONS[MAX_EDICTS][2];
 
@@ -1255,8 +1255,8 @@ static int G_GetFiringTUs (edict_t *ent, edict_t *target, int *hand, int *firemo
 		if (*firemode < 0)
 			*firemode = Com_GetDefaultReactionFire(&gi.csi->ods[LEFT(ent)->item.m], weapon_fd_idx);	/* Set the default reaction-firemode. */
 
-		if ( gi.csi->ods[LEFT(ent)->item.m].fd[weapon_fd_idx][*firemode].time + sv_reaction_leftover->integer <= ent->TU
-		  && gi.csi->ods[LEFT(ent)->item.m].fd[weapon_fd_idx][*firemode].range > VectorDist(ent->origin, target->origin) ) {
+		if (gi.csi->ods[LEFT(ent)->item.m].fd[weapon_fd_idx][*firemode].time + sv_reaction_leftover->integer <= ent->TU
+		  && gi.csi->ods[LEFT(ent)->item.m].fd[weapon_fd_idx][*firemode].range > VectorDist(ent->origin, target->origin)) {
 
 			if (hand) {
 				*hand = ST_LEFT_REACTION;
