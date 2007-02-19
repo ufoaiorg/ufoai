@@ -992,7 +992,7 @@ static void R_RenderFrame (refdef_t * fd)
 	R_SetGL2D();
 }
 
-static cmdList_t r_commands[] = {
+static const cmdList_t r_commands[] = {
 	{"imagelist", GL_ImageList_f, NULL},
 	{"fontcachelist", Font_ListCache_f, NULL},
 	{"screenshot", GL_ScreenShot_f, "Take a screenshot"},
@@ -1007,7 +1007,7 @@ static cmdList_t r_commands[] = {
  */
 static void R_Register (void)
 {
-	cmdList_t *commands;
+	const cmdList_t *commands;
 
 /*	r_lefthand = ri.Cvar_Get("hand", "0", CVAR_USERINFO | CVAR_ARCHIVE, NULL);*/
 	r_norefresh = ri.Cvar_Get("r_norefresh", "0", 0, NULL);
@@ -1539,7 +1539,7 @@ static qboolean R_Init (HINSTANCE hinstance, WNDPROC wndproc)
  */
 static void R_Shutdown (void)
 {
-	cmdList_t *commands;
+	const cmdList_t *commands;
 
 	for (commands = r_commands; commands->name; commands++)
 		ri.Cmd_RemoveCommand(commands->name);

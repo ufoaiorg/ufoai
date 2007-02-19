@@ -102,7 +102,7 @@ enum {
 /**
  * @brief
  */
-void GL_ScreenShot_f(void)
+extern void GL_ScreenShot_f (void)
 {
 	char	checkName[MAX_OSPATH];
 	int		type, shotNum, quality;
@@ -111,8 +111,8 @@ void GL_ScreenShot_f(void)
 	FILE	*f;
 
 	/* Find out what format to save in */
-	if (ri.Cmd_Argc () > 1)
-		ext = ri.Cmd_Argv (1);
+	if (ri.Cmd_Argc() > 1)
+		ext = ri.Cmd_Argv(1);
 	else
 		ext = gl_screenshot->string;
 
@@ -138,8 +138,8 @@ void GL_ScreenShot_f(void)
 		break;
 
 	case SSHOTTYPE_JPG:
-		if (ri.Cmd_Argc () == 3)
-			quality = atoi (ri.Cmd_Argv (2));
+		if (ri.Cmd_Argc() == 3)
+			quality = atoi(ri.Cmd_Argv(2));
 		else
 			quality = gl_screenshot_jpeg_quality->integer;
 		if (quality > 100 || quality <= 0)
@@ -177,6 +177,11 @@ void GL_ScreenShot_f(void)
 
 	/* Allocate room for a copy of the framebuffer */
 	buffer = malloc(vid.width * vid.height * 3);
+	if (!buffer) {
+		ri.Con_Printf(PRINT_ALL, "GL_ScreenShot_f: Could not allocate %i bytes for screenshot!\n", vid.width * vid.height * 3);
+		fclose(f);
+		return;
+	}
 
 	/* Read the framebuffer into our storage */
 	qglReadPixels(0, 0, vid.width, vid.height, GL_RGB, GL_UNSIGNED_BYTE, buffer);
