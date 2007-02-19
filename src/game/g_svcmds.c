@@ -331,11 +331,12 @@ static void SVCmd_StartGame_f (void)
 	for (i = 0, p = game.players; i < game.maxplayers; i++, p++) {
 		if (p->inuse && !p->pers.spectator && p->pers.team > 0) {
 			playerCount++;
-			for (j = 0; j <= teamCount; j++)
-				if (p->pers.team != knownTeams[j]) {
-					knownTeams[teamCount++] = p->pers.team;
+			for (j = 0; j < teamCount; j++) {
+				if (p->pers.team == knownTeams[j])
 					break;
-				}
+			}
+			if (j == teamCount)
+				knownTeams[teamCount++] = p->pers.team;
 		}
 	}
 	Com_DPrintf("SVCmd_StartGame_f: Players in game: %i, Unique teams in game: %i\n", playerCount, teamCount);

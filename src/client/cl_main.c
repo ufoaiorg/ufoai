@@ -1128,7 +1128,7 @@ static void CL_ServerInfo_f (void)
 		Com_Printf("ip: %s\n", ip);
 	} else {
 		Q_strncpyz(ip, Cmd_Argv(1), sizeof(ip));
-		Cvar_Set("mn_server_ip",ip);
+		Cvar_Set("mn_server_ip", ip);
 	}
 	if (!NET_StringToAdr(ip, &adr)) {
 		Com_Printf("Bad address: %s\n", ip);

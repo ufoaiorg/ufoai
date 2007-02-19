@@ -1832,11 +1832,12 @@ void G_ClientTeamAssign (player_t * player)
 	for (i = 0, p = game.players; i < game.maxplayers; i++, p++) {
 		if (p->inuse && !p->pers.spectator && p->pers.team > 0) {
 			playerCount++;
-			for (j = 0; j < teamCount; j++)
-				if (p->pers.team != knownTeams[j]) {
-					knownTeams[teamCount++] = p->pers.team;
+			for (j = 0; j < teamCount; j++) {
+				if (p->pers.team == knownTeams[j])
 					break;
-				}
+			}
+			if (j == teamCount)
+				knownTeams[teamCount++] = p->pers.team;
 		}
 	}
 	Com_DPrintf("G_ClientTeamAssign: Players in game: %i, Unique teams in game: %i\n", playerCount, teamCount);
