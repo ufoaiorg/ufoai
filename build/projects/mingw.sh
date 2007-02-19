@@ -2,7 +2,7 @@
 
 stop_on_error=0
 init=0
-dont_install=1
+dont_install=0
 sed_soft="sed"
 user=`whoami`
 
@@ -193,9 +193,21 @@ fi
 echo "========================================"
 echo " SDLTTF"
 echo "========================================"
-version="2.0.8-1"
-download http://cefiro.homelinux.org/resources/files/SDL_ttf/ SDL_ttf-$version-i386-mingw32.tar.gz
-echo "TODO"
+version="2.0.8"
+download http://cefiro.homelinux.org/resources/files/SDL_ttf/ SDL_ttf-$version-1-i386-mingw32.tar.gz
+any2deb mingw32-libsdl-ttf2.0-dev $version SDL_ttf-$version-1-i386-mingw32.tar.gz /usr/i586-mingw32msvc
+if [ "$dont_install" != "1" ]
+then
+	dpkg -i mingw32-libsdl-ttf2.0-dev_$version-2_all.deb
+	if [ $? -ne 0 ]
+	then
+		echo "Fatal error with dpkg (libsdl-ttf)"
+		if [ "$stop_on_error" == "1" ]
+		then
+			exit 1
+		fi
+	fi
+fi
 
 echo "========================================"
 echo " LIBOGG"
@@ -203,13 +215,37 @@ echo "========================================"
 version="1.1.3"
 download http://oss.netfarm.it/mplayer/pkgs/common/ libogg-mingw32-$version.tar.gz
 any2deb mingw32-libogg-dev $version libogg-mingw32-$version.tar.gz /usr/i586-mingw32msvc
+if [ "$dont_install" != "1" ]
+then
+	dpkg -i mingw32-libogg-dev_$version-2_all.deb
+	if [ $? -ne 0 ]
+	then
+		echo "Fatal error with dpkg (libogg)"
+		if [ "$stop_on_error" == "1" ]
+		then
+			exit 1
+		fi
+	fi
+fi
 
 echo "========================================"
 echo " LIBVORBIS"
 echo "========================================"
 version="1.1.2"
-download http://oss.netfarm.it/mplayer/pkgs/common/ libvorbis-mingw32-1.1.2.tar.gz
+download http://oss.netfarm.it/mplayer/pkgs/common/ libvorbis-mingw32-$version.tar.gz
 any2deb mingw32-libvorbis-dev $version libvorbis-mingw32-$version.tar.gz /usr/i586-mingw32msvc
+if [ "$dont_install" != "1" ]
+then
+	dpkg -i mingw32-libvorbis-dev_$version-2_all.deb
+	if [ $? -ne 0 ]
+	then
+		echo "Fatal error with dpkg (libvorbis)"
+		if [ "$stop_on_error" == "1" ]
+		then
+			exit 1
+		fi
+	fi
+fi
 
 if [ "$dont_install" == "1" ]
 then
