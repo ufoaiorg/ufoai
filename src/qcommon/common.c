@@ -1450,7 +1450,6 @@ extern void Qcommon_Init (int argc, char **argv)
 	Netchan_Init();
 
 	SV_Init();
-	CL_Init();
 
 #ifndef DEDICATED_ONLY /* no gettext support for dedicated servers please */
 #ifdef HAVE_GETTEXT
@@ -1471,9 +1470,7 @@ extern void Qcommon_Init (int argc, char **argv)
 #endif /* HAVE_GETTEXT */
 #endif /* DEDICATED_ONLY */
 
-#ifdef SVN
-	Com_Printf("...svn revision: %s\n", SVN);
-#endif /* SVN */
+	CL_Init();
 
 	Com_ParseScripts();
 
