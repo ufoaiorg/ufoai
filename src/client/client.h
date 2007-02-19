@@ -377,13 +377,11 @@ void CL_Video_f(void);
 extern refexport_t re;
 
 void CL_Init(void);
-void CL_ParseScriptFirst(char *type, char *name, char **text);
 void CL_ReadSinglePlayerData(void);
 
 void CL_StartSingleplayer(qboolean singleplayer);
 void CL_Disconnect(void);
 void CL_GetChallengePacket(void);
-void CL_PingServers_f(void);
 void CL_Snd_Restart_f(void);
 void S_ModifySndRef_f(void);
 void CL_ParseMedalsAndRanks(char *title, char **text, byte parserank);
@@ -428,8 +426,6 @@ void CL_CameraRoute(pos3_t from, pos3_t target);
 void CL_ParseInput(void);
 
 void CL_ClearState(void);
-
-void CL_ReadPackets(void);
 
 float CL_KeyState(kbutton_t * key);
 char *Key_KeynumToString(int keynum);

@@ -143,7 +143,7 @@ static void CL_SpawnSoldiers_f(void);
  * things like action, turn, etc, are commands directed to the server,
  * so when they are typed in at the console, they will need to be forwarded.
  */
-void Cmd_ForwardToServer(void)
+void Cmd_ForwardToServer (void)
 {
 	char *cmd;
 
@@ -165,7 +165,7 @@ void Cmd_ForwardToServer(void)
  * @brief Set or print some environment variables via console command
  * @sa Q_putenv
  */
-void CL_Env_f(void)
+static void CL_Env_f (void)
 {
 	int argc = Cmd_Argc();
 
@@ -185,7 +185,7 @@ void CL_Env_f(void)
 /**
  * @brief
  */
-void CL_ForwardToServer_f(void)
+static void CL_ForwardToServer_f (void)
 {
 	if (cls.state != ca_connected && cls.state != ca_active) {
 		Com_Printf("Can't \"%s\", not connected\n", Cmd_Argv(0));
@@ -203,7 +203,7 @@ void CL_ForwardToServer_f(void)
 /**
  * @brief Allow server (singleplayer and multiplayer) to pause the game
  */
-static void CL_Pause_f(void)
+static void CL_Pause_f (void)
 {
 	/* never pause in multiplayer (as client - server is allowed) */
 	if (!ccs.singleplayer || !Com_ServerState()) {
@@ -217,7 +217,7 @@ static void CL_Pause_f(void)
 /**
  * @brief
  */
-static void CL_Quit_f(void)
+static void CL_Quit_f (void)
 {
 	CL_Disconnect();
 	Com_Quit();
@@ -226,7 +226,7 @@ static void CL_Quit_f(void)
 /**
  * @brief Disconnects a multiplayer game if singleplayer is true and set ccs.singleplayer to true
  */
-void CL_StartSingleplayer(qboolean singleplayer)
+extern void CL_StartSingleplayer (qboolean singleplayer)
 {
 	if (singleplayer) {
 		ccs.singleplayer = qtrue;
@@ -269,7 +269,7 @@ void CL_StartSingleplayer(qboolean singleplayer)
  * @brief
  * @note Called after an ERR_DROP was thrown
  */
-void CL_Drop(void)
+void CL_Drop (void)
 {
 	/* TODO: I hope this will work for all CL_Drop calls.
 	   at least it is working when a map isn't found */
@@ -296,7 +296,7 @@ void CL_Drop(void)
 /**
  * @brief We have gotten a challenge from the server, so try and connect.
  */
-void CL_SendConnectPacket(void)
+void CL_SendConnectPacket (void)
 {
 	netadr_t adr;
 	int port;
@@ -320,7 +320,7 @@ void CL_SendConnectPacket(void)
 /**
  * @brief Resend a connect message if the last one has timed out
  */
-void CL_CheckForResend(void)
+void CL_CheckForResend (void)
 {
 	netadr_t adr;
 
@@ -362,7 +362,7 @@ void CL_CheckForResend(void)
  *
  * FIXME: Spectator needs no team
  */
-void CL_Connect_f(void)
+static void CL_Connect_f (void)
 {
 	char *server;
 
@@ -408,7 +408,7 @@ void CL_Connect_f(void)
  * Send the rest of the command line over as
  * an unconnected command.
  */
-void CL_Rcon_f(void)
+static void CL_Rcon_f (void)
 {
 	char message[1024];
 	int i;
@@ -424,7 +424,7 @@ void CL_Rcon_f(void)
 		return;
 	}
 
-	message[0] = (char) 255;
+	message[0] = (char) 255; /* \xFF - for searching only */
 	message[1] = (char) 255;
 	message[2] = (char) 255;
 	message[3] = (char) 255;
@@ -467,7 +467,7 @@ void CL_Rcon_f(void)
  * @sa CL_ParseServerData
  * @sa CL_Disconnect
  */
-void CL_ClearState(void)
+extern void CL_ClearState (void)
 {
 	S_StopAllSounds();
 	CL_ClearEffects();
@@ -553,7 +553,7 @@ static void CL_Disconnect_f (void)
  * packet [destination] [contents]
  * Contents allows \n escape character
  */
-static void CL_Packet_f(void)
+static void CL_Packet_f (void)
 {
 	char send[2048];
 
@@ -598,7 +598,7 @@ static void CL_Packet_f(void)
 /**
  * @brief Just sent as a hint to the client that they should drop to full console
  */
-static void CL_Changing_f(void)
+static void CL_Changing_f (void)
 {
 	SCR_BeginLoadingPlaque();
 	cls.state = ca_connected;	/* not active anymore, but not disconnected */
@@ -611,7 +611,7 @@ static void CL_Changing_f(void)
  *
  * The server is changing levels
  */
-static void CL_Reconnect_f(void)
+static void CL_Reconnect_f (void)
 {
 	S_StopAllSounds();
 	if (cls.state == ca_connected) {
@@ -768,7 +768,7 @@ static int CL_AddServerToList (netadr_t* adr, char *msg)
  * @sa CL_PingServers_f
  * @sa SVC_Info
  */
-static void CL_ParseStatusMessage(void)
+static void CL_ParseStatusMessage (void)
 {
 	int serverID = -1;
 	char *s = MSG_ReadString(&net_message);
@@ -878,7 +878,7 @@ static char serverInfoText[MAX_MESSAGE_TEXT];
  * This function fills the network browser server information with text
  * @sa Netchan_OutOfBandPrint
  */
-static void CL_ParseServerInfoMessage(void)
+static void CL_ParseServerInfoMessage (void)
 {
 	char *s = MSG_ReadString(&net_message);
 	char *var = NULL;
@@ -959,7 +959,7 @@ static void CL_ParseServerInfoMessage(void)
  * @sa Netchan_OutOfBandPrint
  * @sa CL_ConnectionlessPacket
  */
-static void CL_ParseMasterServerResponse(void)
+static void CL_ParseMasterServerResponse (void)
 {
 	byte* buffptr;
 	byte* buffend;
@@ -1001,7 +1001,7 @@ static void CL_ParseMasterServerResponse(void)
  * called via server_connect
  * FIXME: Spectator needs no team
  */
-static void CL_ServerConnect_f(void)
+static void CL_ServerConnect_f (void)
 {
 	char *ip = Cvar_VariableString("mn_server_ip");
 
@@ -1023,7 +1023,7 @@ static void CL_ServerConnect_f(void)
  * bookmarks are saved in cvar adr[0-15]
  */
 static char bookmarkText[MAX_MESSAGE_TEXT];
-static void CL_BookmarkPrint_f(void)
+static void CL_BookmarkPrint_f (void)
 {
 	int i;
 
@@ -1041,7 +1041,7 @@ static void CL_BookmarkPrint_f(void)
  *
  * bookmarks are saved in cvar adr[0-15]
  */
-static void CL_BookmarkAdd_f(void)
+static void CL_BookmarkAdd_f (void)
 {
 	int i;
 	char *bookmark = NULL;
@@ -1077,7 +1077,7 @@ static void CL_BookmarkAdd_f(void)
  * @brief
  * @sa CL_ParseServerInfoMessage
  */
-void CL_BookmarkListClick_f(void)
+void CL_BookmarkListClick_f (void)
 {
 	int num;
 	char *bookmark = NULL;
@@ -1106,7 +1106,7 @@ void CL_BookmarkListClick_f(void)
 /**
  * @brief
  */
-void CL_ServerInfo_f (void)
+static void CL_ServerInfo_f (void)
 {
 	char ip[MAX_VAR];
 	netadr_t adr;
@@ -1133,7 +1133,7 @@ void CL_ServerInfo_f (void)
 /**
  * @brief Callback for text node serverlist in multiplayer menu
  */
-void CL_ServerListClick_f (void)
+static void CL_ServerListClick_f (void)
 {
 	int num, i;
 
@@ -1189,7 +1189,7 @@ static int lastServerQuery = 0;
  * @sa CL_ParseStatusMessage
  * @note Use a parameter for pingservers to update the current serverlist
  */
-void CL_PingServers_f (void)
+static void CL_PingServers_f (void)
 {
 	netadr_t adr;
 	int i;
@@ -1272,7 +1272,7 @@ void CL_PingServers_f (void)
  * @sa CL_ReadPackets
  * @sa CL_Frame
  */
-void CL_ConnectionlessPacket (void)
+static void CL_ConnectionlessPacket (void)
 {
 	char *s;
 	char *c;
@@ -1364,15 +1364,16 @@ void CL_ConnectionlessPacket (void)
 	Com_Printf("Unknown command.\n");
 }
 
-
+#if 0
 /**
  * @brief A vain attempt to help bad TCP stacks that cause problems when they overflow
  */
-void CL_DumpPackets(void)
+void CL_DumpPackets (void)
 {
 	while (NET_GetPacket(NS_CLIENT, &net_from, &net_message))
 		Com_Printf("dumnping a packet\n");
 }
+#endif
 
 /**
  * @brief
@@ -1380,7 +1381,7 @@ void CL_DumpPackets(void)
  * @sa CL_Frame
  * @sa CL_ParseServerMessage
  */
-void CL_ReadPackets(void)
+static void CL_ReadPackets (void)
 {
 	while (NET_GetPacket(NS_CLIENT, &net_from, &net_message)) {
 		/* remote command packet */
@@ -1426,7 +1427,7 @@ void CL_ReadPackets(void)
 /**
  * @brief
  */
-void CL_Userinfo_f(void)
+static void CL_Userinfo_f (void)
 {
 	Com_Printf("User info settings:\n");
 	Info_Print(Cvar_Userinfo());
@@ -1438,7 +1439,7 @@ void CL_Userinfo_f(void)
  * @sa S_Init
  * @sa CL_RegisterSounds
  */
-void CL_Snd_Restart_f(void)
+extern void CL_Snd_Restart_f (void)
 {
 	S_Shutdown();
 	S_Init();
@@ -1450,7 +1451,7 @@ void CL_Snd_Restart_f(void)
  * @sa CL_SelectTeam_Init_f
  * TODO: If no team is free - change to spectator
  */
-void CL_TeamNum_f (void)
+static void CL_TeamNum_f (void)
 {
 	int max = 4;
 	int maxteamnum = 0;
@@ -1614,7 +1615,7 @@ static void CL_Precache_f (void)
  * @brief Init function for clients - called after menu was inited and ufo-scripts were parsed
  * @sa Qcommon_Init
  */
-void CL_InitAfter (void)
+extern void CL_InitAfter (void)
 {
 	/* this will init some more employee stuff */
 	E_Init();
@@ -1635,7 +1636,7 @@ void CL_InitAfter (void)
  * but e.g. techs would need those parsed items - thus we have to parse e.g. techs
  * at a later stage)
  */
-void CL_ParseClientData (char *type, char *name, char **text)
+extern void CL_ParseClientData (char *type, char *name, char **text)
 {
 	if (!Q_strncmp(type, "shader", 6))
 		CL_ParseShaders(name, text);
@@ -1670,7 +1671,7 @@ void CL_ParseClientData (char *type, char *name, char **text)
  * @sa Com_ParseScripts
  * @sa CL_ParseScriptSecond
  */
-void CL_ParseScriptFirst (char *type, char *name, char **text)
+static void CL_ParseScriptFirst (char *type, char *name, char **text)
 {
 	/* check for client interpretable scripts */
 	if (!Q_strncmp(type, "mission", 7))
@@ -1709,7 +1710,7 @@ void CL_ParseScriptFirst (char *type, char *name, char **text)
  * @sa Com_ParseScripts
  * @sa CL_ParseScriptFirst
  */
-void CL_ParseScriptSecond (char *type, char *name, char **text)
+static void CL_ParseScriptSecond (char *type, char *name, char **text)
 {
 	/* check for client interpretable scripts */
 	if (!Q_strncmp(type, "stage", 5))
@@ -1723,7 +1724,7 @@ void CL_ParseScriptSecond (char *type, char *name, char **text)
  * @sa CL_GameLoad
  * @sa CL_GameNew
  */
-void CL_ReadSinglePlayerData (void)
+extern void CL_ReadSinglePlayerData (void)
 {
 	char *type, *name, *text;
 
@@ -1765,7 +1766,7 @@ static void CL_ShowIP_f (void)
  * also inits the cvars and commands
  * @sa CL_Init
  */
-void CL_InitLocal (void)
+static void CL_InitLocal (void)
 {
 	cls.state = ca_disconnected;
 	cls.realtime = Sys_Milliseconds();
@@ -1951,7 +1952,7 @@ void CL_InitLocal (void)
 /**
  * @brief Writes key bindings and archived cvars to config.cfg
  */
-void CL_WriteConfiguration(void)
+static void CL_WriteConfiguration (void)
 {
 	char path[MAX_QPATH];
 
@@ -1964,8 +1965,8 @@ void CL_WriteConfiguration(void)
 
 
 typedef struct {
-	char *name;
-	char *value;
+	const char *name;
+	const char *value;
 	cvar_t *var;
 } cheatvar_t;
 
@@ -1987,7 +1988,7 @@ static int numcheatvars = 0;
  * @brief
  * @sa CL_SendCommand
  */
-void CL_FixCvarCheats(void)
+static void CL_FixCvarCheats (void)
 {
 	int i;
 	cheatvar_t *var;
@@ -2016,7 +2017,7 @@ void CL_FixCvarCheats(void)
 /**
  * @brief
  */
-void CL_SendCmd(void)
+static void CL_SendCmd (void)
 {
 	/* send a userinfo update if needed */
 	if (cls.state >= ca_connected) {
@@ -2036,7 +2037,7 @@ void CL_SendCmd(void)
  * @brief
  * @sa CL_Frame
  */
-void CL_SendCommand(void)
+static void CL_SendCommand (void)
 {
 	/* get new key events */
 	Sys_SendKeyEvents();
@@ -2061,7 +2062,7 @@ void CL_SendCommand(void)
 /**
  * @brief
  */
-void CL_AddMapParticle(char *ptl, vec3_t origin, vec2_t wait, char *info, int levelflags)
+extern void CL_AddMapParticle (char *ptl, vec3_t origin, vec2_t wait, char *info, int levelflags)
 {
 	mp_t *mp;
 
@@ -2087,7 +2088,7 @@ void CL_AddMapParticle(char *ptl, vec3_t origin, vec2_t wait, char *info, int le
  * @brief Returns the current campaign index in global campaign array
  * @sa Com_CharGenAbilitySkills
  */
-int CL_GetCampaignID (void)
+extern int CL_GetCampaignID (void)
 {
 	if (curCampaign)
 		return curCampaign->idx;
@@ -2098,7 +2099,7 @@ int CL_GetCampaignID (void)
  * @brief Translate the difficulty int to a translated string
  * @param difficulty the difficulty integer value
  */
-char* CL_ToDifficultyName(int difficulty)
+extern char* CL_ToDifficultyName (int difficulty)
 {
 	switch (difficulty) {
 	case -4:
@@ -2127,7 +2128,7 @@ char* CL_ToDifficultyName(int difficulty)
 /**
  * @brief
  */
-void CL_CvarCheck(void)
+static void CL_CvarCheck (void)
 {
 	int v;
 
@@ -2174,7 +2175,7 @@ void CL_CvarCheck(void)
  * @brief
  * @sa Qcommon_Frame
  */
-void CL_Frame (int msec)
+extern void CL_Frame (int msec)
 {
 	static int extratime = 0;
 	static int lasttimecalled = 0;
@@ -2334,7 +2335,7 @@ void CL_Frame (int msec)
  * @sa CL_Shutdown
  * @sa CL_InitAfter
  */
-void CL_Init(void)
+extern void CL_Init (void)
 {
 	if (dedicated->value)
 		return;					/* nothing running on the client */
@@ -2379,7 +2380,7 @@ void CL_Init(void)
  * @sa Sys_Quit
  * @sa CL_Init
  */
-void CL_Shutdown(void)
+extern void CL_Shutdown (void)
 {
 	static qboolean isdown = qfalse;
 
