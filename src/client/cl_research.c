@@ -1032,6 +1032,7 @@ void RS_MarkResearched (const char *id)
 		if (!Q_stricmp (id, tech->id)) {
 			RS_ResearchFinish(tech);
 			Com_DPrintf("Research of \"%s\" finished.\n", tech->id);
+			break;
 #if 0
 		} else if (RS_DependsOn(tech->id, id) && (tech->time <= 0) && RS_TechIsResearchable(tech)) {
 			RS_ResearchFinish(tech);
@@ -1263,7 +1264,7 @@ static void RS_DebugResearchableAll (void)
 /**
  * @brief Opens UFOpedia by clicking dependency list
  */
-void RS_DependenciesClick_f (void)
+static void RS_DependenciesClick_f (void)
 {
 	int num;
 
@@ -1284,7 +1285,7 @@ void RS_DependenciesClick_f (void)
  * Bind some of the functions in this file to console-commands that you can call ingame.
  * Called from MN_ResetMenus resp. CL_InitLocal
  */
-void RS_ResetResearch (void)
+extern void RS_ResetResearch (void)
 {
 	researchListLength = 0;
 	/* add commands and cvars */
@@ -1303,6 +1304,13 @@ void RS_ResetResearch (void)
 	Cmd_AddCommand("research_all", RS_DebugResearchAll, NULL);
 	Cmd_AddCommand("researchable_all", RS_DebugResearchableAll, NULL);
 #endif
+}
+
+/**
+ * @brief This i called everytime RS_ParseTechnologies i called - to prevent cyclic hash tables
+ */
+extern void RS_ResetHash (void)
+{
 	/* they are static - but i'm paranoid - this is called before the techs were parsed */
 	memset(tech_hash, 0, sizeof(tech_hash));
 }
@@ -1367,7 +1375,7 @@ extern void RS_ParseTechnologies (char *id, char **text)
 	/*set standard values */
 	tech->idx = gd.numTechnologies - 1;
 	Com_sprintf(tech->id, MAX_VAR, id);
-	hash = Com_HashKey (tech->id, TECH_HASH_SIZE);
+	hash = Com_HashKey(tech->id, TECH_HASH_SIZE);
 	Com_sprintf(tech->description, MAX_VAR, _("No description available."));
 
 	/* link the variable in */
@@ -1758,9 +1766,9 @@ technology_t *RS_GetTechByID (const char *id)
 	if (!Q_strncmp((char *) id, "nothing", MAX_VAR))
 		return NULL;
 
-	hash = Com_HashKey (id, TECH_HASH_SIZE);
+	hash = Com_HashKey(id, TECH_HASH_SIZE);
 	for (tech = tech_hash[hash]; tech; tech = tech->hash_next)
-		if (!Q_stricmp (id, tech->id))
+		if (!Q_stricmp(id, tech->id))
 			return tech;
 
 	Com_Printf("RS_GetTechByID: Could not find a technology with id \"%s\"\n", id);
@@ -1857,9 +1865,9 @@ int RS_GetTechIdxByName (const char *name)
 	if (!Q_strncmp(name, "nothing", MAX_VAR))
 		return -1;
 
-	hash = Com_HashKey (name, TECH_HASH_SIZE);
+	hash = Com_HashKey(name, TECH_HASH_SIZE);
 	for (tech = tech_hash[hash]; tech; tech = tech->hash_next)
-		if (!Q_stricmp (name, tech->id))
+		if (!Q_stricmp(name, tech->id))
 			return tech->idx;
 
 	Com_Printf("RS_GetTechIdxByName: Could not find tech '%s'\n", name);

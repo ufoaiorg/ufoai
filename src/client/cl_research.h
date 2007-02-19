@@ -141,6 +141,7 @@ typedef struct technology_s {
 } technology_t;
 
 void RS_ResetResearch(void);
+void RS_ResetHash(void);
 void CL_CheckResearchStatus(void);
 void RS_UpdateData(void);
 void RS_ParseTechnologies(char *title, char **text);

@@ -2187,6 +2187,7 @@ void CL_Frame (int msec)
 			selMis = NULL;
 			baseCurrent = &gd.bases[0];
 			B_ClearBase(&gd.bases[0]);
+			RS_ResetHash();
 			gd.numBases = 1;
 			gd.numAircraft = 0;
 
@@ -2201,11 +2202,11 @@ void CL_Frame (int msec)
 				CL_Disconnect();
 
 			/* pre-stage parsing */
-			FS_BuildFileList( "ufos/*.ufo" );
-			FS_NextScriptHeader( NULL, NULL, NULL );
+			FS_BuildFileList("ufos/*.ufo");
+			FS_NextScriptHeader(NULL, NULL, NULL);
 			text = NULL;
 
-			while ( ( type = FS_NextScriptHeader( "ufos/*.ufo", &name, &text ) ) != 0 )
+			while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != 0)
 				if (!Q_strncmp(type, "tech", 4))
 					RS_ParseTechnologies(name, &text);
 

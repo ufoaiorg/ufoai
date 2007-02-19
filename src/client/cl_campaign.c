@@ -4104,13 +4104,16 @@ static void CP_CampaignsClick_f (void)
  * @brief Will clear most of the parsed singleplayer data
  * @sa Com_InitInventory
  */
-void CL_ResetSinglePlayerData (void)
+extern void CL_ResetSinglePlayerData (void)
 {
 	numStageSets = numStages = numMissions = 0;
 	memset(missions, 0, sizeof(mission_t) * MAX_MISSIONS);
 	memset(stageSets, 0, sizeof(stageSet_t) * MAX_STAGESETS);
 	memset(stages, 0, sizeof(stage_t) * MAX_STAGES);
 	memset(&invList, 0, sizeof(invList));
+	/* called to flood the hash list - because the parse tech function
+	 * was maybe already called */
+	RS_ResetHash();
 	E_ResetEmployees();
 	Com_InitInventory(invList);
 }
