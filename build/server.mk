@@ -95,17 +95,12 @@ endif
 
 DEDICATED_CFLAGS=-DDEDICATED_ONLY
 
+SERVERLIBS+=-lz -lm
+
 # Say how to link the exe
-# FIXME: detect via configure script
-ifeq ($(TARGET_OS),netbsd)
 $(SERVER_TARGET): $(SERVER_OBJS) $(BUILDDIR)/.dirs
 	@echo " * [DED] ... linking"; \
-		$(CC) $(LDFLAGS) -o $@ $(SERVER_OBJS) -lz -lm -lintl
-else
-$(SERVER_TARGET): $(SERVER_OBJS) $(BUILDDIR)/.dirs
-	@echo " * [DED] ... linking"; \
-		$(CC) $(LDFLAGS) -o $@ $(SERVER_OBJS) -lz -lm -ldl
-endif
+		$(CC) $(LDFLAGS) -o $@ $(SERVER_OBJS) $(SERVERLIBS) $(LIBS)
 
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/server/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs

@@ -40,10 +40,16 @@ ifeq ($(BUILD_UFO2MAP),1)
 	TARGETS+=$(UFO2MAP_TARGET)
 endif
 
+TOOLSLIBS+=-lm
+ifeq ($(HAVE_PTHREAD),1)
+	TOOLSLIBS+=-lpthread
+endif
+
+
 # Say how to like the exe
 $(UFO2MAP_TARGET): $(UFO2MAP_OBJS) $(BUILDDIR)/.dirs
 	@echo " * [MAP] ... linking"; \
-		$(CC) $(LDFLAGS) -o $@ $(UFO2MAP_OBJS) -lm -lpthread $(LNKFLAGS)
+		$(CC) $(LDFLAGS) -o $@ $(UFO2MAP_OBJS) $(TOOLSLIBS) $(LNKFLAGS)
 
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/tools/ufo2map/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
@@ -93,7 +99,7 @@ endif
 # Say how to like the exe
 $(QDATA_TARGET): $(QDATA_OBJS) $(BUILDDIR)/.dirs
 	@echo " * [QDT] ... linking"; \
-		$(CC) $(LDFLAGS) -o $@ $(QDATA_OBJS) -lm -lpthread $(LNKFLAGS)
+		$(CC) $(LDFLAGS) -o $@ $(QDATA_OBJS) $(TOOLSLIBS) $(LNKFLAGS)
 
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/tools/qdata/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
