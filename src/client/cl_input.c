@@ -300,7 +300,7 @@ void CL_CameraModeChange (camera_mode_t new_camera_mode)
 		Com_Printf("Changed camera mode to first-person.\n");
 		camera_mode = CAMERA_MODE_FIRSTPERSON;
 		VectorCopy(selActor->origin, cl.cam.camorg);
-		Cvar_SetValue("cl_worldlevel", selActor->pos[2]);
+		Cvar_SetValue("cl_worldlevel", map_maxlevel);
 		VectorCopy(selActor->angles, cl.cam.angles);
 		cl.refdef.fov_x = FOV_FPS;
 		cl.cam.zoom = 1.0;
