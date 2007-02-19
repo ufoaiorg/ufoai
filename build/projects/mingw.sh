@@ -177,7 +177,7 @@ $sed_soft -e 's/^\(prefix=\).*/\1\/usr\/i586-mingw32msvc/' build-sdl/usr/i586-mi
 tar -cvz --owner=root --group=root -C build-sdl -f mingw32-libsdl1.2-dev-$version.tgz .
 fakeroot alien mingw32-libsdl1.2-dev-$version.tgz
 
-if [ "$dont_install" ne "1" ]
+if [ "$dont_install" != "1" ]
 then
 	dpkg -i mingw32-libsdl1.2-dev_$version-2_all.deb
 	if [ $? -ne 0 ]
@@ -200,18 +200,18 @@ echo "TODO"
 echo "========================================"
 echo " LIBOGG"
 echo "========================================"
-version="1.1.3-1"
-download http://cefiro.homelinux.org/resources/files/ogg/ libogg-$version-i386-mingw32.tar.gz
-echo "TODO"
+version="1.1.3"
+download http://oss.netfarm.it/mplayer/pkgs/common/ libogg-mingw32-$version.tar.gz
+any2deb mingw32-libogg-dev $version libogg-mingw32-$version.tar.gz /usr/i586-mingw32msvc
 
 echo "========================================"
 echo " LIBVORBIS"
 echo "========================================"
-version="1.1.2-1"
-download http://cefiro.homelinux.org/resources/files/vorbis/ libvorbis-$version-i386-mingw32.tar.gz
-echo "TODO"
+version="1.1.2"
+download http://oss.netfarm.it/mplayer/pkgs/common/ libvorbis-mingw32-1.1.2.tar.gz
+any2deb mingw32-libvorbis-dev $version libvorbis-mingw32-$version.tar.gz /usr/i586-mingw32msvc
 
-if [ "$dont_install" ne "1" ]
+if [ "$dont_install" == "1" ]
 then
 	echo "NOTE: No packages were installed - deactivate dont_install if you want to install them automatically"
 fi
