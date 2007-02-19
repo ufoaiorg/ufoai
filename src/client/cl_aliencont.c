@@ -139,18 +139,20 @@ void CL_CollectingAliens (void)
 				continue;
 			}
 
-			if (le->HP <= 0 || (le->state & STATE_STUN)) {
+			/* le->state & STATE_DEAD includes STATE_STUN */
+			if (le->state & STATE_DEAD)) { 
 				for (j = 0; j < aircraft->alientypes; j++) {
 					/* Search alien type and increase amount */
 					if (Q_strncmp(cargo[j].alientype, teamDesc[teamDescID].name, MAX_VAR) == 0) {
-						if (le->HP <= 0) {
-							/* alien body */
-							cargo[j].amount_dead++;
-							Com_DPrintf("Counting: dead %s count: %i\n", cargo[j].alientype, cargo[j].amount_dead);
-						} else {
+						/* Search stunned first. */
+						if (le->state == STATE_STUN) {
 							/* alive alien */
 							cargo[j].amount_alive++;
 							Com_DPrintf("Counting: alive %s count: %i\n", cargo[j].alientype, cargo[j].amount_alive);
+						} else {
+							/* alien body */
+							cargo[j].amount_dead++;
+							Com_DPrintf("Counting: dead %s count: %i\n", cargo[j].alientype, cargo[j].amount_dead);
 						}
 						break;
 					}
@@ -158,14 +160,15 @@ void CL_CollectingAliens (void)
 				if (j == aircraft->alientypes) {
 					/* otherwise add new alien type */
 					Q_strncpyz(cargo[j].alientype, teamDesc[teamDescID].name, MAX_VAR);
-					if (le->HP <= 0) {
-						/* alien body */
-						cargo[j].amount_dead++;
-						Com_DPrintf("Adding: dead %s count: %i\n", cargo[j].alientype, cargo[j].amount_dead);
-					} else {
+					/* Search stunned first. */
+					if (le->state == STATE_STUN) {
 						/* alive alien */
 						cargo[j].amount_alive++;
 						Com_DPrintf("Adding: alive %s count: %i\n", cargo[j].alientype, cargo[j].amount_alive);
+					} else {
+						/* alien body */
+						cargo[j].amount_dead++;
+						Com_DPrintf("Adding: dead %s count: %i\n", cargo[j].alientype, cargo[j].amount_dead);
 					}
 					aircraft->alientypes++;
 				}
