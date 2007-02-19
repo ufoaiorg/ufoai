@@ -795,6 +795,17 @@ static void CL_ParseStatusMessage (void)
 }
 
 /**
+ * @brief Multiplayer wait menu init function
+ */
+static void CL_Wait_Init_f (void)
+{
+	/* the server knows this already */
+	if (!Com_ServerState()) {
+		Cvar_SetValue("sv_maxteams", atoi(cl.configstrings[CS_MAXTEAMS]));
+	}
+}
+
+/**
  * @brief Team selection text
  *
  * This function fills the multiplayer_selectteam menu with content
@@ -1921,7 +1932,8 @@ static void CL_InitLocal (void)
 	Cmd_AddCommand("env", CL_Env_f, NULL);
 
 	Cmd_AddCommand("precache", CL_Precache_f, "Function that is called at mapload to precache map data");
-	Cmd_AddCommand("selectteam_init", CL_SelectTeam_Init_f, "Function that gets all connected players and let you choose a free team");
+	Cmd_AddCommand("mp_selectteam_init", CL_SelectTeam_Init_f, "Function that gets all connected players and let you choose a free team");
+	Cmd_AddCommand("mp_wait_init", CL_Wait_Init_f, "Function that inits some nodes");
 	Cmd_AddCommand("spawnsoldiers", CL_SpawnSoldiers_f, "Spawns the soldiers for the selected teamnum");
 	Cmd_AddCommand("teamnum_dec", CL_TeamNum_f, "Decrease the prefered teamnum");
 	Cmd_AddCommand("teamnum_inc", CL_TeamNum_f, "Increase the prefered teamnum");

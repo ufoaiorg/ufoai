@@ -1814,6 +1814,7 @@ int G_ClientGetTeamNumPref (player_t * player)
 /**
  * @brief Tests if all teams are connected for a multiplayer match and if so,
  * randomly assigns the first turn to a team.
+ * @sa SVCmd_StartGame_f
  */
 void G_ClientTeamAssign (player_t * player)
 {
@@ -1823,7 +1824,7 @@ void G_ClientTeamAssign (player_t * player)
 	player_t *p;
 	knownTeams[0] = player->pers.team;
 
-	/* return with no action if activeTeam already assigned or if in single-player mode*/
+	/* return with no action if activeTeam already assigned or if in single-player mode */
 	if (level.activeTeam != -1 || sv_maxclients->integer == 1)
 		return;
 
@@ -1843,8 +1844,7 @@ void G_ClientTeamAssign (player_t * player)
 	/* if all teams/players have joined the game, randomly assign which team gets the first turn */
 	if ((!sv_teamplay->integer && teamCount >= sv_maxteams->integer) ||
 		(sv_teamplay->integer && playerCount >= sv_maxclients->integer)) {
-		char buffer[MAX_VAR];
-		Q_strncpyz(buffer, "", MAX_VAR);
+		char buffer[MAX_VAR] = "";
 		level.activeTeam = knownTeams[(int)(frand() * (teamCount - 1) + 0.5)];
 		turnTeam = level.activeTeam;
 		for (i = 0, p = game.players; i < game.maxplayers; i++, p++) {

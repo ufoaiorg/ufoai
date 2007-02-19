@@ -34,8 +34,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "g_local.h"
 
-
-void Svcmd_Test_f(void)
+/**
+ * @brief
+ */
+static void SVCmd_Test_f (void)
 {
 	gi.cprintf(NULL, PRINT_HIGH, "Svcmd_Test_f()\n");
 }
@@ -310,6 +312,50 @@ static void SVCmd_ShowAll_f (void)
 }
 
 /**
+ * @brief Start the game even if not all players are connected
+ * @sa G_ClientTeamAssign
+ */
+static void SVCmd_StartGame_f (void)
+{
+	int i, j, teamCount = 0;
+	int playerCount = 0;
+	int knownTeams[MAX_TEAMS];
+	player_t *p;
+	char buffer[MAX_VAR] = "";
+
+	/* return with no action if activeTeam already assigned or if in single-player mode */
+	if (level.activeTeam != -1 || sv_maxclients->integer == 1)
+		return;
+
+	/* count number of currently connected unique teams and players */
+	for (i = 0, p = game.players; i < game.maxplayers; i++, p++) {
+		if (p->inuse && !p->pers.spectator && p->pers.team > 0) {
+			playerCount++;
+			for (j = 0; j <= teamCount; j++)
+				if (p->pers.team != knownTeams[j]) {
+					knownTeams[teamCount++] = p->pers.team;
+					break;
+				}
+		}
+	}
+	Com_DPrintf("SVCmd_StartGame_f: Players in game: %i, Unique teams in game: %i\n", playerCount, teamCount);
+
+	Q_strncpyz(buffer, "", MAX_VAR);
+	level.activeTeam = knownTeams[(int)(frand() * (teamCount - 1) + 0.5)];
+	turnTeam = level.activeTeam;
+	for (i = 0, p = game.players; i < game.maxplayers; i++, p++) {
+		if (!p->inuse || p->pers.spectator)
+			continue;
+		G_ClientSpawn(p);
+		if (p->pers.team == level.activeTeam) {
+			Q_strcat(buffer, p->pers.netname, MAX_VAR);
+			Q_strcat(buffer, " ", MAX_VAR);
+		}
+	}
+	gi.bprintf(PRINT_HIGH, _("Team %i (%s) will get the first turn.\n"), turnTeam, buffer);
+}
+
+/**
  * @brief ServerCommand will be called when an "sv" command is issued.
  * The game can issue gi.argc() / gi.argv() commands to get the rest
  * of the parameters
@@ -320,7 +366,9 @@ extern void ServerCommand (void)
 
 	cmd = gi.argv(1);
 	if (Q_stricmp(cmd, "test") == 0)
-		Svcmd_Test_f();
+		SVCmd_Test_f();
+	else if (Q_stricmp(cmd, "startgame") == 0)
+		SVCmd_StartGame_f();
 	else if (Q_stricmp(cmd, "addip") == 0)
 		SVCmd_AddIP_f();
 	else if (Q_stricmp(cmd, "removeip") == 0)

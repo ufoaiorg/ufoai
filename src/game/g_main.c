@@ -157,6 +157,7 @@ void InitGame (void)
 	maxentities = gi.cvar("maxentities", "1024", CVAR_LATCH, NULL);
 
 	sv_maxteams = gi.cvar("sv_maxteams", "2", CVAR_SERVERINFO, "How many teams for current running map");
+	sv_maxteams->modified = qfalse;
 
 	/* change anytime vars */
 	password = gi.cvar("password", "", CVAR_USERINFO, NULL);
@@ -248,7 +249,7 @@ void InitGame (void)
  * @brief Free the tags TAG_LEVEL and TAG_GAME
  * @sa Mem_FreeTags
  */
-void ShutdownGame(void)
+void ShutdownGame (void)
 {
 	gi.dprintf("==== ShutdownGame ====\n");
 
@@ -264,7 +265,7 @@ void ShutdownGame(void)
 /**
  * @brief Returns a pointer to the structure with all entry points and global variables
  */
-game_export_t *GetGameAPI(game_import_t * import)
+game_export_t *GetGameAPI (game_import_t * import)
 {
 	gi = *import;
 	srand(gi.seed);
@@ -551,6 +552,15 @@ void G_RunFrame (void)
 	level.framenum++;
 	level.time = level.framenum * FRAMETIME;
 /*	Com_Printf( "frame: %i   time: %f\n", level.framenum, level.time ); */
+
+	/* still waiting for other players */
+	if (level.activeTeam == -1) {
+		if (sv_maxteams->modified) {
+			/* inform the client */
+			gi.configstring(CS_MAXTEAMS, va("%i", sv_maxteams->integer));
+			sv_maxteams->modified = qfalse;
+		}
+	}
 
 	/* check for intermission */
 	if (level.intermissionTime && level.time > level.intermissionTime) {

@@ -37,7 +37,6 @@ player_t *sv_player;
 
 /*
 ============================================================
-
 USER STRINGCMD EXECUTION
 
 sv_client and sv_player will be valid.
@@ -47,7 +46,7 @@ sv_client and sv_player will be valid.
 /**
  * @brief
  */
-void SV_BeginDemoserver(void)
+void SV_BeginDemoserver (void)
 {
 	char name[MAX_OSPATH];
 
@@ -62,7 +61,7 @@ void SV_BeginDemoserver(void)
  * This will be sent on the initial connection and upon each server load.
  * Client reads via CL_ParseServerData in cl_parse.c
  */
-static void SV_New_f(void)
+static void SV_New_f (void)
 {
 	char *gamedir;
 	int playernum;
@@ -126,7 +125,7 @@ static void SV_New_f(void)
 /**
  * @brief Send the configstrings to the client
  */
-static void SV_Configstrings_f(void)
+static void SV_Configstrings_f (void)
 {
 	int start;
 
@@ -193,7 +192,7 @@ int SV_CountPlayers (void)
  * @brief
  * @sa SV_Spawn_f
  */
-static void SV_Begin_f(void)
+static void SV_Begin_f (void)
 {
 	Com_DPrintf("Begin() from %s\n", sv_client->name);
 
@@ -243,7 +242,7 @@ void SV_SpawnAllPending (void)
  * @brief
  * @sa SV_Begin_f
  */
-static void SV_Spawn_f(void)
+static void SV_Spawn_f (void)
 {
 	Com_DPrintf("Spawn() from %s\n", sv_client->name);
 
@@ -265,7 +264,7 @@ static void SV_Spawn_f(void)
 /**
  * @brief The client is going to disconnect, so remove the connection immediately
  */
-static void SV_Disconnect_f(void)
+static void SV_Disconnect_f (void)
 {
 /*	SV_EndRedirect (); */
 	SV_DropClient(sv_client);
@@ -275,7 +274,7 @@ static void SV_Disconnect_f(void)
 /**
  * @brief Dumps the serverinfo info string
  */
-static void SV_ShowServerinfo_f(void)
+static void SV_ShowServerinfo_f (void)
 {
 	Info_Print(Cvar_Serverinfo());
 }
@@ -289,7 +288,7 @@ static void SV_ShowServerinfo_f(void)
  * 'alias l2 "someothercommandhere; set nextserver l1"'.
  * These two aliases would loop the commands until a key is pressed.
  */
-static void SV_Nextserver(void)
+static void SV_Nextserver (void)
 {
 	char *v;
 
@@ -311,7 +310,7 @@ static void SV_Nextserver(void)
 /**
  * @brief A cinematic has completed or been aborted by a client, so move to the next server,
  */
-static void SV_Nextserver_f(void)
+static void SV_Nextserver_f (void)
 {
 	if (atoi(Cmd_Argv(1)) != svs.spawncount) {
 		Com_DPrintf("Nextserver() from wrong level, from %s\n", sv_client->name);
@@ -328,7 +327,7 @@ typedef struct {
 	void (*func) (void);
 } ucmd_t;
 
-static ucmd_t ucmds[] = {
+static const ucmd_t ucmds[] = {
 	/* auto issued */
 	{"new", SV_New_f},
 	{"configstrings", SV_Configstrings_f},
@@ -348,9 +347,9 @@ static ucmd_t ucmds[] = {
 /**
  * @brief
  */
-static void SV_ExecuteUserCommand(char *s)
+static void SV_ExecuteUserCommand (char *s)
 {
-	ucmd_t *u;
+	const ucmd_t *u;
 
 	Cmd_TokenizeString(s, qfalse);
 	sv_player = sv_client->player;
@@ -379,13 +378,11 @@ void SV_ExecuteClientMessage (client_t * cl)
 	int c;
 	char *s;
 
-	int stringCmdCount;
+	/* only allow one move command */
+	int stringCmdCount = 0;
 
 	sv_client = cl;
 	sv_player = sv_client->player;
-
-	/* only allow one move command */
-	stringCmdCount = 0;
 
 	while (1) {
 		if (net_message.readcount > net_message.cursize) {

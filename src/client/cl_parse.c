@@ -548,7 +548,7 @@ static void CL_StartGame (sizebuf_t *sb)
 			MN_PushMenu("multiplayer_selectteam");
 			Cvar_Set("mn_active", "multiplayer_selectteam");
 		} else {
-			Cbuf_AddText("selectteam_init\n");
+			Cbuf_AddText("mp_selectteam_init\n");
 		}
 	} else {
 		MN_PushMenu(mn_hud->string);

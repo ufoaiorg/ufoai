@@ -261,7 +261,6 @@ float vectoyaw(vec3_t vec);
 void G_CompleteRecalcRouting(void);
 void G_RecalcRouting(edict_t * ent);
 
-
 /* g_client.c */
 #define VIS_CHANGE	1
 #define VIS_YES		2
