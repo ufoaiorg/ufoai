@@ -1545,7 +1545,7 @@ menu multiplayer_wait
 
 	func event
 	{
-		timeout 10
+		timeout 2000
 		cmd "mp_wait_init"
 	}
 }
