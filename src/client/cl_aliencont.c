@@ -139,8 +139,8 @@ void CL_CollectingAliens (void)
 				continue;
 			}
 
-			/* le->state & STATE_DEAD includes STATE_STUN */
-			if (le->state & STATE_DEAD)) { 
+			/* (le->state & STATE_DEAD) includes STATE_STUN */
+			if (le->state & STATE_DEAD) { 
 				for (j = 0; j < aircraft->alientypes; j++) {
 					/* Search alien type and increase amount */
 					if (Q_strncmp(cargo[j].alientype, teamDesc[teamDescID].name, MAX_VAR) == 0) {
