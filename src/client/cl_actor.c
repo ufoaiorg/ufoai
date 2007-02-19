@@ -773,7 +773,7 @@ void CL_SelectReactionFiremode_f (void)
  * @note Previously know as a combination of CL_FireRightPrimary, CL_FireRightSecondary,
  * @note CL_FireLeftPrimary and CL_FireLeftSecondary.
  */
-void CL_FireWeapon (void)
+void CL_FireWeapon_f (void)
 {
 	char *hand;
 	int firemode;
@@ -800,7 +800,7 @@ void CL_FireWeapon (void)
 	firemode = atoi(Cmd_Argv(2));
 
 	if (firemode >= MAX_FIREDEFS_PER_WEAPON) {
-		Com_Printf("CL_FireWeapon: Firemode index to big (%i). Highest possible number is %i.\n", firemode, MAX_FIREDEFS_PER_WEAPON-1);
+		Com_Printf("CL_FireWeapon_f: Firemode index to big (%i). Highest possible number is %i.\n", firemode, MAX_FIREDEFS_PER_WEAPON-1);
 		return;
 	}
 
@@ -830,7 +830,7 @@ void CL_FireWeapon (void)
 		/* Cannot shoot because of not enough TUs - every other
 		   case should be checked previously in this function. */
 		CL_DisplayHudMessage(_("Can't perform action:\nnot enough TUs.\n"), 2000);
-		Com_DPrintf("CL_FireWeapon: Firemode not available (%s, %s).\n", hand, ammo->fd[weap_fd_idx][firemode].name);
+		Com_DPrintf("CL_FireWeapon_f: Firemode not available (%s, %s).\n", hand, ammo->fd[weap_fd_idx][firemode].name);
 		return;
 	}
 }
@@ -989,9 +989,9 @@ static void CL_RefreshWeaponButtons (int time)
  * @param[in] *weapon An item in hands.
  * @param[in] mode EV_INV_AMMO in case of fire button, EV_INV_RELOAD in case of reload button
  * @return qfalse when action is not possible, otherwise qtrue
- * @sa CL_FireWeapon
- * @sa CL_ReloadLeft
- * @sa CL_ReloadRight
+ * @sa CL_FireWeapon_f
+ * @sa CL_ReloadLeft_f
+ * @sa CL_ReloadRight_f
  * @todo Check for ammo in hand and give correct feedback in all cases.
  */
 extern qboolean CL_CheckMenuAction (int time, invList_t *weapon, int mode)
@@ -1875,7 +1875,7 @@ void CL_ActorDoTurn (sizebuf_t *sb)
 /**
  * @brief Stands or crouches actor.
  */
-void CL_ActorStandCrouch (void)
+extern void CL_ActorStandCrouch_f (void)
 {
 	if (!CL_CheckAction())
 		return;
@@ -1886,13 +1886,15 @@ void CL_ActorStandCrouch (void)
 	MSG_Write_PA(PA_STATE, selActor->entnum, STATE_CROUCHED);
 }
 
-
+#if 0
 /**
  * @brief Stuns an actor.
  *
  * Stunning is handled as a dead actor but afterwards in CL_CollectingAliens we only collect aliens with STATE_STUN
  * @note: we can do this because STATE_STUN is 0x43 and STATE_DEAD is 0x03 (checking for STATE_DEAD is also true when STATE_STUN was set)
  * @note: Do we really need this as a script command? Currently there is no binding - but who knows?
+ *
+ * @note Unused atm
  */
 void CL_ActorStun (void)
 {
@@ -1903,12 +1905,12 @@ void CL_ActorStun (void)
 	/* the server currently will refuse to stun an actor sent via PA_STATE */
 	MSG_Write_PA(PA_STATE, selActor->entnum, STATE_STUN);
 }
-
+#endif
 
 /**
  * @brief Toggles reaction fire.
  */
-void CL_ActorToggleReaction (void)
+extern void CL_ActorToggleReaction_f (void)
 {
 	int state = 0;
 
@@ -2316,7 +2318,7 @@ ROUND MANAGEMENT
 /**
  * @brief Finishes the current round of the player in battlescape and starts the round for the next team.
  */
-void CL_NextRound (void)
+extern void CL_NextRound_f (void)
 {
 	/* can't end round if we are not in battlescape */
 	if (!CL_OnBattlescape())

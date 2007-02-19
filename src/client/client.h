@@ -430,7 +430,6 @@ void CL_ClearState(void);
 float CL_KeyState(kbutton_t * key);
 char *Key_KeynumToString(int keynum);
 
-void CL_CameraMode(void);
 void CL_CameraModeChange(camera_mode_t newcameramode);
 
 void CL_Sniper(void);
@@ -631,7 +630,7 @@ qboolean CL_CheckMenuAction(int time, invList_t *weapon, int mode);
 void CL_DisplayHudMessage(char *text, int time);
 void CL_ResetWeaponButtons(void);
 void CL_DisplayFiremodes_f(void);
-void CL_FireWeapon(void);
+void CL_FireWeapon_f(void);
 void CL_SelectReactionFiremode_f(void);
 
 void CL_ConditionalMoveCalc(struct routing_s *map, le_t *le, int distance);
@@ -644,21 +643,20 @@ void CL_ActorSelectMouse(void);
 void CL_ActorReload(int hand);
 void CL_ActorTurnMouse(void);
 void CL_ActorDoTurn(sizebuf_t * sb);
-void CL_ActorStandCrouch(void);
-void CL_ActorStun(void);
-void CL_ActorToggleReaction(void);
+void CL_ActorStandCrouch_f(void);
+void CL_ActorToggleReaction_f(void);
 void CL_ActorStartMove(le_t * le, pos3_t to);
 void CL_ActorShoot(le_t * le, pos3_t at);
 void CL_ActorDoMove(sizebuf_t * sb);
 void CL_ActorDoShoot(sizebuf_t * sb);
-void CL_ActorShootHidden( sizebuf_t *sb );
+void CL_ActorShootHidden(sizebuf_t *sb);
 void CL_ActorDoThrow(sizebuf_t * sb);
 void CL_ActorStartShoot(sizebuf_t * sb);
 void CL_ActorDie(sizebuf_t * sb);
 
 void CL_ActorActionMouse(void);
 
-void CL_NextRound(void);
+void CL_NextRound_f(void);
 void CL_DoEndRound(sizebuf_t * sb);
 
 void CL_ResetMouseLastPos(void);

@@ -80,13 +80,10 @@ static kbutton_t in_shiftup, in_shiftdown;
 static kbutton_t in_zoomin, in_zoomout;
 static kbutton_t in_turnup, in_turndown;
 
-static int in_impulse;
-
-
 /**
  * @brief
  */
-static void KeyDown(kbutton_t * b)
+static void KeyDown (kbutton_t * b)
 {
 	int k;
 	char *c;
@@ -128,7 +125,7 @@ static void KeyDown(kbutton_t * b)
 /**
  * @brief
  */
-void KeyUp(kbutton_t * b)
+void KeyUp (kbutton_t * b)
 {
 	int k;
 	char *c;
@@ -175,96 +172,91 @@ void KeyUp(kbutton_t * b)
 	b->state |= 4;
 }
 
-static void IN_TurnLeftDown(void)
+static void IN_TurnLeftDown_f (void)
 {
 	KeyDown(&in_turnleft);
 }
-static void IN_TurnLeftUp(void)
+static void IN_TurnLeftUp_f (void)
 {
 	KeyUp(&in_turnleft);
 }
-static void IN_TurnRightDown(void)
+static void IN_TurnRightDown_f (void)
 {
 	KeyDown(&in_turnright);
 }
-static void IN_TurnRightUp(void)
+static void IN_TurnRightUp_f (void)
 {
 	KeyUp(&in_turnright);
 }
-static void IN_TurnUpDown(void)
+static void IN_TurnUpDown_f (void)
 {
 	KeyDown(&in_turnup);
 }
-static void IN_TurnUpUp(void)
+static void IN_TurnUpUp_f (void)
 {
 	KeyUp(&in_turnup);
 }
-static void IN_TurnDownDown(void)
+static void IN_TurnDownDown_f (void)
 {
 	KeyDown(&in_turndown);
 }
-static void IN_TurnDownUp(void)
+static void IN_TurnDownUp_f (void)
 {
 	KeyUp(&in_turndown);
 }
-static void IN_ShiftLeftDown(void)
+static void IN_ShiftLeftDown_f (void)
 {
 	KeyDown(&in_shiftleft);
 }
-static void IN_ShiftLeftUp(void)
+static void IN_ShiftLeftUp_f (void)
 {
 	KeyUp(&in_shiftleft);
 }
-static void IN_ShiftRightDown(void)
+static void IN_ShiftRightDown_f (void)
 {
 	KeyDown(&in_shiftright);
 }
-static void IN_ShiftRightUp(void)
+static void IN_ShiftRightUp_f (void)
 {
 	KeyUp(&in_shiftright);
 }
-static void IN_ShiftUpDown(void)
+static void IN_ShiftUpDown_f (void)
 {
 	KeyDown(&in_shiftup);
 }
-static void IN_ShiftUpUp(void)
+static void IN_ShiftUpUp_f (void)
 {
 	KeyUp(&in_shiftup);
 }
-static void IN_ShiftDownDown(void)
+static void IN_ShiftDownDown_f (void)
 {
 	KeyDown(&in_shiftdown);
 }
-static void IN_ShiftDownUp(void)
+static void IN_ShiftDownUp_f (void)
 {
 	KeyUp(&in_shiftdown);
 }
-static void IN_ZoomInDown(void)
+static void IN_ZoomInDown_f (void)
 {
 	KeyDown(&in_zoomin);
 }
-static void IN_ZoomInUp(void)
+static void IN_ZoomInUp_f (void)
 {
 	KeyUp(&in_zoomin);
 }
-static void IN_ZoomOutDown(void)
+static void IN_ZoomOutDown_f (void)
 {
 	KeyDown(&in_zoomout);
 }
-static void IN_ZoomOutUp(void)
+static void IN_ZoomOutUp_f (void)
 {
 	KeyUp(&in_zoomout);
-}
-
-static void IN_Impulse(void)
-{
-	in_impulse = atoi(Cmd_Argv(1));
 }
 
 /**
  * @brief Switches camera mode between remote and firstperson
  */
-void CL_CameraMode(void)
+static void CL_CameraMode_f (void)
 {
 	if (!selActor)
 		return;
@@ -277,7 +269,7 @@ void CL_CameraMode(void)
 /**
  * @brief
  */
-void CL_CameraModeChange(camera_mode_t new_camera_mode)
+void CL_CameraModeChange (camera_mode_t new_camera_mode)
 {
 	static vec3_t save_camorg, save_camangles;
 	static float save_camzoom;
@@ -400,7 +392,7 @@ cvar_t *cl_anglespeedkey;
 /**
  * @brief Switch one worldlevel up
  */
-void CL_LevelUp (void)
+static void CL_LevelUp_f (void)
 {
 	if (!CL_OnBattlescape())
 		return;
@@ -411,7 +403,7 @@ void CL_LevelUp (void)
 /**
  * @brief Switch on worldlevel down
  */
-void CL_LevelDown (void)
+static void CL_LevelDown_f (void)
 {
 	if (!CL_OnBattlescape())
 		return;
@@ -423,7 +415,7 @@ void CL_LevelDown (void)
 /**
  * @brief
  */
-void CL_ZoomInQuant (void)
+static void CL_ZoomInQuant_f (void)
 {
 	float quant;
 
@@ -454,7 +446,7 @@ void CL_ZoomInQuant (void)
 /**
  * @brief
  */
-void CL_ZoomOutQuant (void)
+static void CL_ZoomOutQuant_f (void)
 {
 	float quant;
 
@@ -501,7 +493,7 @@ invList_t* CL_GetLeftHandWeapon (le_t *actor)
 /**
  * @brief
  */
-void CL_ConfirmAction (void)
+static void CL_ConfirmAction_f (void)
 {
 	extern pos3_t mousePos;
 
@@ -519,7 +511,7 @@ void CL_ConfirmAction (void)
 /**
  * @brief Reload left weapon.
  */
-void CL_ReloadLeft (void)
+static void CL_ReloadLeft_f (void)
 {
 	if (!selActor || !CL_CheckMenuAction(selActor->TU, CL_GetLeftHandWeapon(selActor), EV_INV_RELOAD))
 		return;
@@ -529,7 +521,7 @@ void CL_ReloadLeft (void)
 /**
  * @brief Reload right weapon.
  */
-void CL_ReloadRight (void)
+static void CL_ReloadRight_f (void)
 {
 	if (!selActor || !CL_CheckMenuAction(selActor->TU, RIGHT(selActor), EV_INV_RELOAD))
 		 return;
@@ -540,7 +532,7 @@ void CL_ReloadRight (void)
 /**
  * @brief Left mouse click
  */
-void CL_SelectDown (void)
+static void CL_SelectDown_f (void)
 {
 	menu_t* menu;
 	switch (mouseSpace) {
@@ -569,7 +561,7 @@ void CL_SelectDown (void)
 /**
  * @brief
  */
-void CL_SelectUp (void)
+static void CL_SelectUp_f (void)
 {
 	if (mouseSpace == MS_DRAG)
 		MN_Click(mx, my);
@@ -579,7 +571,7 @@ void CL_SelectUp (void)
 /**
  * @brief Mouse click
  */
-void CL_ActionDown (void)
+static void CL_ActionDown_f (void)
 {
 	switch (mouseSpace) {
 	case MS_WORLD:
@@ -594,7 +586,7 @@ void CL_ActionDown (void)
 /**
  * @brief
  */
-void CL_ActionUp (void)
+static void CL_ActionUp_f (void)
 {
 	mouseSpace = MS_NULL;
 }
@@ -602,7 +594,7 @@ void CL_ActionUp (void)
 /**
  * @brief Turn button is hit - middle mouse button
  */
-void CL_TurnDown (void)
+static void CL_TurnDown_f (void)
 {
 	if (mouseSpace == MS_WORLD)
 		CL_ActorTurnMouse();
@@ -613,7 +605,7 @@ void CL_TurnDown (void)
 /**
  * @brief
  */
-void CL_TurnUp (void)
+static void CL_TurnUp_f (void)
 {
 	mouseSpace = MS_NULL;
 }
@@ -624,7 +616,7 @@ void CL_TurnUp (void)
  */
 static int lastAlien = 0;
 
-void CL_NextAlien (void)
+static void CL_NextAlien_f (void)
 {
 	le_t *le;
 	int i;
@@ -656,7 +648,7 @@ void CL_NextAlien (void)
  * @note Only available in debug mode
  * Accessable via console command camangles
  */
-void CL_CamPrintAngles(void)
+static void CL_CamPrintAngles_f (void)
 {
 	Com_Printf("camera angles %0.3f:%0.3f:%0.3f\n", cl.cam.angles[0], cl.cam.angles[1], cl.cam.angles[2]);
 }
@@ -665,7 +657,7 @@ void CL_CamPrintAngles(void)
 /**
  * @brief
  */
-void CL_CamSetAngles(void)
+static void CL_CamSetAngles_f (void)
 {
 	int c = Cmd_Argc();
 
@@ -686,7 +678,7 @@ void CL_CamSetAngles(void)
  * after this all you have to do is hit the screenshot button (F12)
  * to make a new screenshot of the basetile
  */
-void CL_MakeBaseMapShot(void)
+static void CL_MakeBaseMapShot_f (void)
 {
 	if (Cmd_Argc() > 1)
 		Cbuf_ExecuteText(EXEC_NOW, va("map %s", Cmd_Argv(1)));
@@ -700,41 +692,40 @@ void CL_MakeBaseMapShot(void)
 
 /**
  * @brief Init some bindable commands
+ * @sa CL_InitLocal
  */
-void CL_InitInput(void)
+extern void CL_InitInput (void)
 {
-	Cmd_AddCommand("+turnleft", IN_TurnLeftDown, _("Rotate battlescape camera anti-clockwise"));
-	Cmd_AddCommand("-turnleft", IN_TurnLeftUp, NULL);
-	Cmd_AddCommand("+turnright", IN_TurnRightDown, _("Rotate battlescape camera clockwise"));
-	Cmd_AddCommand("-turnright", IN_TurnRightUp, NULL);
-	Cmd_AddCommand("+turnup", IN_TurnUpDown, _("Tilt battlescape camera up"));
-	Cmd_AddCommand("-turnup", IN_TurnUpUp, NULL);
-	Cmd_AddCommand("+turndown", IN_TurnDownDown, _("Tilt battlescape camera down"));
-	Cmd_AddCommand("-turndown", IN_TurnDownUp, NULL);
-	Cmd_AddCommand("+shiftleft", IN_ShiftLeftDown, _("Move battlescape camera left"));
-	Cmd_AddCommand("-shiftleft", IN_ShiftLeftUp, NULL);
-	Cmd_AddCommand("+shiftright", IN_ShiftRightDown, _("Move battlescape camera right"));
-	Cmd_AddCommand("-shiftright", IN_ShiftRightUp, NULL);
-	Cmd_AddCommand("+shiftup", IN_ShiftUpDown, _("Move battlescape camera forward"));
-	Cmd_AddCommand("-shiftup", IN_ShiftUpUp, NULL);
-	Cmd_AddCommand("+shiftdown", IN_ShiftDownDown, _("Move battlescape camera backward"));
-	Cmd_AddCommand("-shiftdown", IN_ShiftDownUp, NULL);
-	Cmd_AddCommand("+zoomin", IN_ZoomInDown, _("Zoom in"));
-	Cmd_AddCommand("-zoomin", IN_ZoomInUp, NULL);
-	Cmd_AddCommand("+zoomout", IN_ZoomOutDown, _("Zoom out"));
-	Cmd_AddCommand("-zoomout", IN_ZoomOutUp, NULL);
+	Cmd_AddCommand("+turnleft", IN_TurnLeftDown_f, _("Rotate battlescape camera anti-clockwise"));
+	Cmd_AddCommand("-turnleft", IN_TurnLeftUp_f, NULL);
+	Cmd_AddCommand("+turnright", IN_TurnRightDown_f, _("Rotate battlescape camera clockwise"));
+	Cmd_AddCommand("-turnright", IN_TurnRightUp_f, NULL);
+	Cmd_AddCommand("+turnup", IN_TurnUpDown_f, _("Tilt battlescape camera up"));
+	Cmd_AddCommand("-turnup", IN_TurnUpUp_f, NULL);
+	Cmd_AddCommand("+turndown", IN_TurnDownDown_f, _("Tilt battlescape camera down"));
+	Cmd_AddCommand("-turndown", IN_TurnDownUp_f, NULL);
+	Cmd_AddCommand("+shiftleft", IN_ShiftLeftDown_f, _("Move battlescape camera left"));
+	Cmd_AddCommand("-shiftleft", IN_ShiftLeftUp_f, NULL);
+	Cmd_AddCommand("+shiftright", IN_ShiftRightDown_f, _("Move battlescape camera right"));
+	Cmd_AddCommand("-shiftright", IN_ShiftRightUp_f, NULL);
+	Cmd_AddCommand("+shiftup", IN_ShiftUpDown_f, _("Move battlescape camera forward"));
+	Cmd_AddCommand("-shiftup", IN_ShiftUpUp_f, NULL);
+	Cmd_AddCommand("+shiftdown", IN_ShiftDownDown_f, _("Move battlescape camera backward"));
+	Cmd_AddCommand("-shiftdown", IN_ShiftDownUp_f, NULL);
+	Cmd_AddCommand("+zoomin", IN_ZoomInDown_f, _("Zoom in"));
+	Cmd_AddCommand("-zoomin", IN_ZoomInUp_f, NULL);
+	Cmd_AddCommand("+zoomout", IN_ZoomOutDown_f, _("Zoom out"));
+	Cmd_AddCommand("-zoomout", IN_ZoomOutUp_f, NULL);
 
-	Cmd_AddCommand("impulse", IN_Impulse, NULL);
-
-	Cmd_AddCommand("+select", CL_SelectDown, _("Select objects/Walk to a square/In fire mode, fire etc"));
-	Cmd_AddCommand("-select", CL_SelectUp, NULL);
-	Cmd_AddCommand("+action", CL_ActionDown, _("Walk to a square/In fire mode, cancel action"));
-	Cmd_AddCommand("-action", CL_ActionUp, NULL);
-	Cmd_AddCommand("+turn", CL_TurnDown, _("Turn soldier toward mouse pointer"));
-	Cmd_AddCommand("-turn", CL_TurnUp, NULL);
-	Cmd_AddCommand("standcrouch", CL_ActorStandCrouch, _("Toggle stand/crounch"));
-	Cmd_AddCommand("togglereaction", CL_ActorToggleReaction, _("Toggle reaction fire"));
-	Cmd_AddCommand("nextalien", CL_NextAlien, _("Toogle to next alien"));
+	Cmd_AddCommand("+select", CL_SelectDown_f, _("Select objects/Walk to a square/In fire mode, fire etc"));
+	Cmd_AddCommand("-select", CL_SelectUp_f, NULL);
+	Cmd_AddCommand("+action", CL_ActionDown_f, _("Walk to a square/In fire mode, cancel action"));
+	Cmd_AddCommand("-action", CL_ActionUp_f, NULL);
+	Cmd_AddCommand("+turn", CL_TurnDown_f, _("Turn soldier toward mouse pointer"));
+	Cmd_AddCommand("-turn", CL_TurnUp_f, NULL);
+	Cmd_AddCommand("standcrouch", CL_ActorStandCrouch_f, _("Toggle stand/crounch"));
+	Cmd_AddCommand("togglereaction", CL_ActorToggleReaction_f, _("Toggle reaction fire"));
+	Cmd_AddCommand("nextalien", CL_NextAlien_f, _("Toogle to next alien"));
 
 #if 0
 	Cmd_AddCommand("firerp", CL_FireRightPrimary, NULL);
@@ -744,25 +735,25 @@ void CL_InitInput(void)
 	/* TODO: The fireweap entry below replaces these 4. Please leave this in until all hud files (esp. althud) are converted to the new firemode lists. */
 #endif
 	Cmd_AddCommand("list_firemodes", CL_DisplayFiremodes_f, "Display a list of firemodes for a weapon+ammo.");
-	Cmd_AddCommand("fireweap", CL_FireWeapon, "Start aiming the weapon.");
+	Cmd_AddCommand("fireweap", CL_FireWeapon_f, "Start aiming the weapon.");
 	Cmd_AddCommand("sel_reactmode", CL_SelectReactionFiremode_f, "Change/Select firemode used for reaction fire.");
 
-	Cmd_AddCommand("reloadleft", CL_ReloadLeft, NULL);
-	Cmd_AddCommand("reloadright", CL_ReloadRight, NULL);
-	Cmd_AddCommand("nextround", CL_NextRound, _("Ends current round"));
-	Cmd_AddCommand("levelup", CL_LevelUp, _("Slice through terrain at a higher level"));
-	Cmd_AddCommand("leveldown", CL_LevelDown, _("Slice through terrain at a lower level"));
-	Cmd_AddCommand("zoominquant", CL_ZoomInQuant, _("Zoom in"));
-	Cmd_AddCommand("zoomoutquant", CL_ZoomOutQuant, _("Zoom out"));
-	Cmd_AddCommand("confirmaction", CL_ConfirmAction, _("Confirm the current action"));
+	Cmd_AddCommand("reloadleft", CL_ReloadLeft_f, _("Reload the weapon in the soldiers left hand"));
+	Cmd_AddCommand("reloadright", CL_ReloadRight_f, _("Reload the weapon in the soldiers right hand"));
+	Cmd_AddCommand("nextround", CL_NextRound_f, _("Ends current round"));
+	Cmd_AddCommand("levelup", CL_LevelUp_f, _("Slice through terrain at a higher level"));
+	Cmd_AddCommand("leveldown", CL_LevelDown_f, _("Slice through terrain at a lower level"));
+	Cmd_AddCommand("zoominquant", CL_ZoomInQuant_f, _("Zoom in"));
+	Cmd_AddCommand("zoomoutquant", CL_ZoomOutQuant_f, _("Zoom out"));
+	Cmd_AddCommand("confirmaction", CL_ConfirmAction_f, _("Confirm the current action"));
 
 #ifdef DEBUG
-	Cmd_AddCommand("camangles", CL_CamPrintAngles, NULL);
+	Cmd_AddCommand("camangles", CL_CamPrintAngles_f, NULL);
 #endif /* DEBUG */
-	Cmd_AddCommand("camsetangles", CL_CamSetAngles, NULL);
-	Cmd_AddCommand("basemapshot", CL_MakeBaseMapShot, NULL);
+	Cmd_AddCommand("camsetangles", CL_CamSetAngles_f, NULL);
+	Cmd_AddCommand("basemapshot", CL_MakeBaseMapShot_f, NULL);
 
-	Cmd_AddCommand("cameramode", CL_CameraMode, _("Toggle first-person/third-person camera mode"));
+	Cmd_AddCommand("cameramode", CL_CameraMode_f, _("Toggle first-person/third-person camera mode"));
 }
 
 
@@ -778,7 +769,7 @@ void CL_InitInput(void)
  * @brief
  * @note see SCROLL_BORDER define
  */
-float CL_GetKeyMouseState(int dir)
+float CL_GetKeyMouseState (int dir)
 {
 	float value;
 
@@ -810,7 +801,7 @@ float CL_GetKeyMouseState(int dir)
 /**
  * @brief
  */
-void CL_CameraMoveFirstPerson(void)
+void CL_CameraMoveFirstPerson (void)
 {
 	float rotation_speed;
 
@@ -878,7 +869,7 @@ void CL_CameraMoveFirstPerson(void)
  * @brief forces the camera to stay within the horizontal bounds of the
  * map plus some border
  */
-void CL_ClampCamToMap(float border)
+void CL_ClampCamToMap (float border)
 {
 	if (cl.cam.reforg[0] < map_min[0] - border)
 		cl.cam.reforg[0] = map_min[0] - border;
@@ -1041,7 +1032,7 @@ void CL_CameraMoveRemote (void)
 /**
  * @brief
  */
-void CL_CameraMove(void)
+void CL_CameraMove (void)
 {
 	if (cls.state != ca_active)
 		return;
@@ -1084,7 +1075,7 @@ void CL_CameraRoute (pos3_t from, pos3_t target)
  * @note The geoscape zooming code is in MN_MouseWheel too
  * @sa CL_Frame
  */
-void CL_ParseInput(void)
+void CL_ParseInput (void)
 {
 	int i, oldx, oldy;
 
