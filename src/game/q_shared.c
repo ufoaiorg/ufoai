@@ -2774,7 +2774,7 @@ int Com_PackAmmoAndWeapon (inventory_t* const inv, const int weapon, const int e
 			/* The weapon provides its own ammo (i.e. it is charged or loaded in the base.) */
 			item.a = CSI->ods[weapon].ammo;
 			item.m = weapon;
-			Com_Printf("Com_PackAmmoAndWeapon: oneshot weapon '%s' in equipment '%s'.\n", CSI->ods[weapon].id, name);
+			Com_DPrintf("Com_PackAmmoAndWeapon: oneshot weapon '%s' in equipment '%s'.\n", CSI->ods[weapon].id, name);
 		} else {
 			max_price = 0;
 			/* find some suitable ammo for the weapon */
