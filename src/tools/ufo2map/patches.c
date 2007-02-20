@@ -227,12 +227,22 @@ extern void MakePatches (void)
 	winding_t	*w;
 	dmodel_t	*mod;
 	vec3_t		origin;
+#if 0
+	entity_t	*ent;
+#endif
 
 	Sys_FPrintf( SYS_VRB, "%i faces\n", numfaces);
 
 	for (i = 0; i < nummodels; i++) {
 		mod = &dmodels[i];
+#if 0
+		ent = EntityForModel(i);
+		/* bmodels with origin brushes need to be offset into their
+		 * in-use position */
+		GetVectorForKey(ent, "origin", origin);
+#else
 		VectorCopy(vec3_origin, origin);
+#endif
 
 		for (j = 0; j < mod->numfaces; j++) {
 			fn = mod->firstface + j;

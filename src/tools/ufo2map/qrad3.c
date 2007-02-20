@@ -313,26 +313,22 @@ void WriteWorld (char *name)
 	patch_t *patch;
 	winding_t *w;
 
-	out = fopen (name, "w");
+	out = fopen(name, "w");
 	if (!out)
-		Error ("Couldn't open %s", name);
+		Error("Couldn't open %s", name);
 
-	for (j=0, patch=patches ; j<num_patches ; j++, patch++) {
+	for (j = 0, patch = patches; j < num_patches; j++, patch++) {
 		w = patch->winding;
-		fprintf (out, "%i\n", w->numpoints);
-		for (i=0 ; i<w->numpoints ; i++) {
-			fprintf (out, "%5.2f %5.2f %5.2f %5.3f %5.3f %5.3f\n",
-				w->p[i][0],
-				w->p[i][1],
-				w->p[i][2],
-				patch->totallight[0],
-				patch->totallight[1],
-				patch->totallight[2]);
+		fprintf(out, "%i\n", w->numpoints);
+		for (i = 0; i < w->numpoints; i++) {
+			fprintf(out, "%5.2f %5.2f %5.2f %5.3f %5.3f %5.3f\n",
+				w->p[i][0], w->p[i][1], w->p[i][2],
+				patch->totallight[0], patch->totallight[1], patch->totallight[2]);
 		}
-		fprintf (out, "\n");
+		fprintf(out, "\n");
 	}
 
-	fclose (out);
+	fclose(out);
 }
 
 /**
@@ -340,38 +336,6 @@ void WriteWorld (char *name)
  */
 void WriteGlView (void)
 {
-	char name[1024];
-	FILE *f;
-	unsigned int j;
-	int i;
-	patch_t *p;
-	winding_t *w;
-
-	strcpy (name, source);
-	StripExtension (name);
-	strcat (name, ".glr");
-
-	f = fopen (name, "w");
-	if (!f)
-		Error ("Couldn't open %s", name);
-
-	for (j=0 ; j<num_patches ; j++) {
-		p = &patches[j];
-		w = p->winding;
-		fprintf (f, "%i\n", w->numpoints);
-		for (i=0 ; i<w->numpoints ; i++) {
-			fprintf (f, "%5.2f %5.2f %5.2f %5.3f %5.3f %5.3f\n",
-				w->p[i][0],
-				w->p[i][1],
-				w->p[i][2],
-				p->totallight[0]/128,
-				p->totallight[1]/128,
-				p->totallight[2]/128);
-		}
-		fprintf (f, "\n");
-	}
-
-	fclose (f);
 }
 
 
@@ -388,14 +352,14 @@ float CollectLight (void)
 
 	total = 0;
 
-	for (i=0, patch=patches ; i<num_patches ; i++, patch++) {
-		for (j=0 ; j<3 ; j++) {
+	for (i = 0, patch = patches; i < num_patches; i++, patch++) {
+		for (j = 0; j < 3; j++) {
 			patch->totallight[j] += illumination[i][j] / patch->area;
 			radiosity[i][j] = illumination[i][j] * patch->reflectivity[j];
 		}
 
 		total += radiosity[i][0] + radiosity[i][1] + radiosity[i][2];
-		VectorClear (illumination[i]);
+		VectorClear(illumination[i]);
 	}
 
 	return total;
@@ -417,15 +381,15 @@ void ShootLight (unsigned int patchnum)
 	/* this is the amount of light we are distributing */
 	/* prescale it so that multiplying by the 16 bit */
 	/* transfer values gives a proper output value */
-	for (k=0 ; k<3 ; k++)
+	for (k = 0; k < 3; k++)
 		send[k] = radiosity[patchnum][k] / 0x10000;
 	patch = &patches[patchnum];
 
 	trans = patch->transfers;
 	num = patch->numtransfers;
 
-	for (k=0 ; k<num ; k++, trans++) {
-		for (l=0 ; l<3 ; l++)
+	for (k = 0 ; k < num; k++, trans++) {
+		for (l = 0; l < 3; l++)
 			illumination[trans->patch][l] += send[l]*trans->transfer;
 	}
 }
@@ -449,13 +413,13 @@ void BounceLight (void)
 	}
 
 	for (i = 0; i < numbounce; i++) {
-		RunThreadsOnIndividual (num_patches, qfalse, ShootLight);
-		added = CollectLight ();
+		RunThreadsOnIndividual(num_patches, qfalse, ShootLight);
+		added = CollectLight();
 
-		Sys_FPrintf( SYS_VRB, "bounce:%i added:%f\n", i, added);
+		Sys_FPrintf(SYS_VRB, "bounce:%i added:%f\n", i, added);
 		if (dumppatches && (i == 0 || i == numbounce-1)) {
-			sprintf (name, "bounce%i.txt", i);
-			WriteWorld (name);
+			sprintf(name, "bounce%i.txt", i);
+			WriteWorld(name);
 		}
 	}
 }
@@ -475,7 +439,7 @@ void CheckPatches (void)
 	for (i = 0; i < num_patches; i++) {
 		patch = &patches[i];
 		if (patch->totallight[0] < 0 || patch->totallight[1] < 0 || patch->totallight[2] < 0)
-			Error ("negative patch totallight\n");
+			Error("negative patch totallight\n");
 	}
 }
 
@@ -485,10 +449,11 @@ void CheckPatches (void)
 void RadWorld (void)
 {
 	if (numnodes == 0 || numfaces == 0)
-		Error ("Empty map");
+		Error("Empty map");
+
 	MakeBackplanes();
 
-	MakeTnodes (256);
+	MakeTnodes(256);
 
 	/* turn each face into a single patch */
 	MakePatches();
@@ -497,7 +462,7 @@ void RadWorld (void)
 	SubdividePatches();
 
 	/* calculate vertex normals for smooth lightning */
-/*	RunThreadsOnIndividual(numvertexes-1, qtrue, CalcVertexNormals); */
+	/*RunThreadsOnIndividual(numvertexes-1, qtrue, CalcVertexNormals);*/
 
 	/* create directlights out of patches and lights */
 	CreateDirectLights();

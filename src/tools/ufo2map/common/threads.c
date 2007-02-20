@@ -122,7 +122,7 @@ void ThreadSetDefault (void)
 	SYSTEM_INFO info;
 
 	if (numthreads == -1) {	/* not set manually */
-		GetSystemInfo (&info);
+		GetSystemInfo(&info);
 		numthreads = info.dwNumberOfProcessors;
 		if (numthreads < 1 || numthreads > 32)
 			numthreads = 1;

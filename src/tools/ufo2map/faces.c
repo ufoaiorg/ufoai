@@ -235,7 +235,7 @@ static void EmitFaceVertexes (node_t *node, face_t *f)
 		/* make every point unique */
 		if (noweld) {
 			if (numvertexes == MAX_MAP_VERTS)
-				Error ("MAX_MAP_VERTS");
+				Error("MAX_MAP_VERTS");
 			superverts[i] = numvertexes;
 			VectorCopy (w->p[i], dvertexes[numvertexes].point);
 			numvertexes++;
@@ -752,7 +752,7 @@ static void SubdivideFace (node_t *node, face_t *f)
 	/* special (non-surface cached) faces don't need subdivision */
 	tex = &texinfo[f->texinfo];
 
-	if ( tex->flags & SURF_WARP )
+	if (tex->flags & SURF_WARP)
 		return;
 
 	for (axis = 0; axis < 2; axis++) {

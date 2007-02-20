@@ -17,8 +17,6 @@ typedef vec_t vec3_t[3];
 #define	SIDE_BACK		1
 #define	SIDE_CROSS		-2
 
-#define	Q_PI	3.14159265358979323846
-
 extern vec3_t vec3_origin;
 
 #define	EQUAL_EPSILON	0.001

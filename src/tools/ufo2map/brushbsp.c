@@ -51,7 +51,7 @@ static void FindBrushInTree (node_t *node, int brushnum)
 	if (node->planenum == PLANENUM_LEAF) {
 		for (b = node->brushlist; b; b = b->next)
 			if (b->original->brushnum == brushnum)
-				Sys_Printf ("here\n");
+				Sys_Printf("here\n");
 		return;
 	}
 	FindBrushInTree (node->children[0], brushnum);
@@ -393,7 +393,7 @@ static int TestBrushToPlanenum (bspbrush_t *brush, int planenum,
 
 	/* if the brush actually uses the planenum, */
 	/* we can tell the side for sure */
-	for (i=0 ; i<brush->numsides ; i++) {
+	for (i = 0; i < brush->numsides; i++) {
 		num = brush->sides[i].planenum;
 		if (num >= 0x10000)
 			Error ("bad planenum");
@@ -413,7 +413,7 @@ static int TestBrushToPlanenum (bspbrush_t *brush, int planenum,
 	/* if both sides, count the visible faces split */
 	d_front = d_back = 0;
 
-	for (i=0 ; i<brush->numsides ; i++) {
+	for (i = 0; i < brush->numsides; i++) {
 		if (brush->sides[i].texinfo == TEXINFO_NODE)
 			continue;		/* on node, don't worry about splits */
 		if (!brush->sides[i].visible)
@@ -422,7 +422,7 @@ static int TestBrushToPlanenum (bspbrush_t *brush, int planenum,
 		if (!w)
 			continue;
 		front = back = 0;
-		for (j=0 ; j<w->numpoints; j++) {
+		for (j = 0; j < w->numpoints; j++) {
 			d = DotProduct (w->p[j], plane->normal) - plane->dist;
 			if (d > d_front)
 				d_front = d;
@@ -443,8 +443,8 @@ static int TestBrushToPlanenum (bspbrush_t *brush, int planenum,
 		}
 	}
 
-	if ( (d_front > 0.0 && d_front < 1.0)
-		|| (d_back < 0.0 && d_back > -1.0) )
+	if ((d_front > 0.0 && d_front < 1.0)
+		|| (d_back < 0.0 && d_back > -1.0))
 		(*epsilonbrush)++;
 
 #if 0
@@ -547,7 +547,7 @@ static void CheckPlaneAgainstParents (int pnum, node_t *node)
 
 	for (p = node->parent; p; p = p->parent) {
 		if (p->planenum == pnum)
-			Error ("Tried parent");
+			Error("Tried parent");
 	}
 }
 
@@ -559,7 +559,7 @@ static qboolean CheckPlaneAgainstVolume (int pnum, node_t *node)
 	bspbrush_t	*front, *back;
 	qboolean	good;
 
-	SplitBrush (node->volume, pnum, &front, &back);
+	SplitBrush(node->volume, pnum, &front, &back);
 
 	good = (front && back);
 
@@ -601,9 +601,9 @@ static side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 	numpasses = 4;
 	for (pass = 0; pass < numpasses; pass++) {
 		for (brush = brushes; brush; brush = brush->next) {
-			if ( (pass & 1) && !(brush->original->contents & CONTENTS_DETAIL) )
+			if ((pass & 1) && !(brush->original->contents & CONTENTS_DETAIL))
 				continue;
-			if ( !(pass & 1) && (brush->original->contents & CONTENTS_DETAIL) )
+			if (!(pass & 1) && (brush->original->contents & CONTENTS_DETAIL))
 				continue;
 			for (i = 0; i < brush->numsides; i++) {
 				side = brush->sides + i;
@@ -640,7 +640,7 @@ static side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 
 					splits += bsplits;
 					if (bsplits && (s&PSIDE_FACING) )
-						Error ("PSIDE_FACING with splits");
+						Error("PSIDE_FACING with splits");
 
 					test->testside = s;
 					/* if the brush shares this face, don't bother */
@@ -662,11 +662,11 @@ static side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 
 				/* give a value estimate for using this plane */
 
-				value =  5*facing - 5*splits - abs(front-back);
+				value =  5 * facing - 5 * splits - abs(front-back);
 /*					value =  -5*splits; */
 /*					value =  5*facing - 5*splits; */
 				if (mapplanes[pnum].type < 3)
-					value+=5;		/* axial is better */
+					value += 5;		/* axial is better */
 				value -= epsilonbrush*1000;	/* avoid! */
 
 				/* never split a hint side except with another hint */
@@ -799,7 +799,7 @@ extern void SplitBrush (bspbrush_t *brush, int planenum, bspbrush_t **front, bsp
 	}
 
 	if (WindingIsHuge (w))
-		Sys_FPrintf( SYS_VRB, "WARNING: huge winding\n");
+		Sys_FPrintf(SYS_VRB, "WARNING: huge winding\n");
 
 	midwinding = w;
 
@@ -841,9 +841,9 @@ extern void SplitBrush (bspbrush_t *brush, int planenum, bspbrush_t **front, bsp
 	/* see if we have valid polygons on both sides */
 	for (i = 0; i < 2; i++) {
 		BoundBrush (b[i]);
-		for (j=0 ; j<3 ; j++) {
+		for (j = 0; j < 3; j++) {
 			if (b[i]->mins[j] < -4096 || b[i]->maxs[j] > 4096) {
-				Sys_FPrintf( SYS_VRB, "bogus brush after clip\n");
+				Sys_FPrintf(SYS_VRB, "bogus brush after clip\n");
 				break;
 			}
 		}
@@ -856,9 +856,9 @@ extern void SplitBrush (bspbrush_t *brush, int planenum, bspbrush_t **front, bsp
 
 	if (!(b[0] && b[1])) {
 		if (!b[0] && !b[1])
-			Sys_FPrintf( SYS_VRB, "split removed brush\n");
+			Sys_FPrintf(SYS_VRB, "split removed brush\n");
 		else
-			Sys_FPrintf( SYS_VRB, "split not on both sides\n");
+			Sys_FPrintf(SYS_VRB, "split not on both sides\n");
 		if (b[0]) {
 			FreeBrush (b[0]);
 			*front = CopyBrush (brush);
@@ -886,17 +886,17 @@ extern void SplitBrush (bspbrush_t *brush, int planenum, bspbrush_t **front, bsp
 	}
 
 	{
-	vec_t	v1;
-	int		i;
+		vec_t	v1;
+		int		i;
 
-	for (i = 0; i < 2; i++) {
-		v1 = BrushVolume (b[i]);
-		if (v1 < 1.0) {
-			FreeBrush (b[i]);
-			b[i] = NULL;
-/*			Sys_FPrintf( SYS_VRB, "tiny volume after clip\n"); */
+		for (i = 0; i < 2; i++) {
+			v1 = BrushVolume (b[i]);
+			if (v1 < 1.0) {
+				FreeBrush (b[i]);
+				b[i] = NULL;
+/*				Sys_FPrintf(SYS_VRB, "tiny volume after clip\n"); */
+			}
 		}
-	}
 	}
 
 	*front = b[0];
@@ -916,7 +916,7 @@ static void SplitBrushList (bspbrush_t *brushes,
 
 	*front = *back = NULL;
 
-	for (brush = brushes ; brush ; brush=brush->next) {
+	for (brush = brushes; brush; brush = brush->next) {
 		sides = brush->side;
 
 		if (sides == PSIDE_BOTH) {	/* split into two brushes */
@@ -938,9 +938,9 @@ static void SplitBrushList (bspbrush_t *brushes,
 		/* find the plane and flag it as used so it won't be tried */
 		/* as a splitter again */
 		if (sides & PSIDE_FACING) {
-			for (i=0 ; i<newbrush->numsides ; i++) {
+			for (i = 0; i < newbrush->numsides; i++) {
 				side = newbrush->sides + i;
-				if ( (side->planenum& ~1) == node->planenum)
+				if ((side->planenum& ~1) == node->planenum)
 					side->texinfo = TEXINFO_NODE;
 			}
 		}
@@ -1023,23 +1023,23 @@ extern tree_t *BrushBSP (bspbrush_t *brushlist, vec3_t mins, vec3_t maxs)
 	int			i;
 	vec_t		volume;
 
-	Sys_FPrintf( SYS_VRB, "--- BrushBSP ---\n");
+	Sys_FPrintf(SYS_VRB, "--- BrushBSP ---\n");
 
-	tree = AllocTree ();
+	tree = AllocTree();
 
 	c_faces = 0;
 	c_nonvisfaces = 0;
 	c_brushes = 0;
-	for (b=brushlist ; b ; b=b->next) {
+	for (b = brushlist; b; b = b->next) {
 		c_brushes++;
 
-		volume = BrushVolume (b);
+		volume = BrushVolume(b);
 		if (volume < microvolume) {
-			Sys_Printf ("WARNING: entity %i, brush %i: microbrush\n",
+			Sys_Printf("WARNING: entity %i, brush %i: microbrush\n",
 				b->original->entitynum, b->original->brushnum);
 		}
 
-		for (i=0 ; i<b->numsides ; i++) {
+		for (i = 0; i < b->numsides; i++) {
 			if (b->sides[i].bevel)
 				continue;
 			if (!b->sides[i].winding)
@@ -1056,9 +1056,9 @@ extern tree_t *BrushBSP (bspbrush_t *brushlist, vec3_t mins, vec3_t maxs)
 		AddPointToBounds (b->maxs, tree->mins, tree->maxs);
 	}
 
-	Sys_FPrintf( SYS_VRB, "%5i brushes\n", c_brushes);
-	Sys_FPrintf( SYS_VRB, "%5i visible faces\n", c_faces);
-	Sys_FPrintf( SYS_VRB, "%5i nonvisible faces\n", c_nonvisfaces);
+	Sys_FPrintf(SYS_VRB, "%5i brushes\n", c_brushes);
+	Sys_FPrintf(SYS_VRB, "%5i visible faces\n", c_faces);
+	Sys_FPrintf(SYS_VRB, "%5i nonvisible faces\n", c_nonvisfaces);
 
 	c_nodes = 0;
 	c_nonvis = 0;
@@ -1069,21 +1069,21 @@ extern tree_t *BrushBSP (bspbrush_t *brushlist, vec3_t mins, vec3_t maxs)
 	tree->headnode = node;
 
 	node = BuildTree_r (node, brushlist);
-	Sys_FPrintf( SYS_VRB, "%5i visible nodes\n", c_nodes/2 - c_nonvis);
-	Sys_FPrintf( SYS_VRB, "%5i nonvis nodes\n", c_nonvis);
-	Sys_FPrintf( SYS_VRB, "%5i leafs\n", (c_nodes+1)/2);
+	Sys_FPrintf(SYS_VRB, "%5i visible nodes\n", c_nodes/2 - c_nonvis);
+	Sys_FPrintf(SYS_VRB, "%5i nonvis nodes\n", c_nonvis);
+	Sys_FPrintf(SYS_VRB, "%5i leafs\n", (c_nodes+1)/2);
 #if 0
-{	/* debug code */
-static node_t	*tnode;
-vec3_t	p;
+	{	/* debug code */
+		static node_t	*tnode;
+		vec3_t	p;
 
-p[0] = -1469;
-p[1] = -118;
-p[2] = 119;
-tnode = PointInLeaf (tree->headnode, p);
-printf ("contents: %i\n", tnode->contents);
-p[0] = 0;
-}
+		p[0] = -1469;
+		p[1] = -118;
+		p[2] = 119;
+		tnode = PointInLeaf (tree->headnode, p);
+		printf ("contents: %i\n", tnode->contents);
+		p[0] = 0;
+	}
 #endif
 	return tree;
 }
