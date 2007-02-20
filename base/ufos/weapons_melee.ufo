@@ -228,8 +228,8 @@ item plasblade
 	type		melee
 	category	2
 	shape		"0 0 1 2"
-	center		"-6 -13 0.5"
-	scale  		0.77
+	center		"1 4.5 0"
+	scale  		1.5
 	price		3710
 	buytype		1
 	thrown		true
