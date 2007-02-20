@@ -1547,7 +1547,7 @@ void G_ClientGetWeaponFromInventory (player_t *player, int entnum, qboolean quie
 			/* to retrieve the ammo from them than the one */
 			/* we've already found. */
 			for (ic = ent->i.c[container]; ic; ic = ic->next)
-				if ( gi.csi->ods[ic->item.t].weapon && (ic->item.a > 0 || !gi.csi->ods[ic->item.t].reload)) {
+				if (gi.csi->ods[ic->item.t].weapon && (ic->item.a > 0 || !gi.csi->ods[ic->item.t].reload)) {
 					x = ic->x;
 					y = ic->y;
 					tu = gi.csi->ids[container].out;
@@ -2068,7 +2068,7 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 		}
 
 		if (nextTeam == -1) {
-/*			gi.bprintf( PRINT_HIGH, "Can't change round - no living actors left.\n" ); */
+/*			gi.bprintf(PRINT_HIGH, "Can't change round - no living actors left.\n"); */
 			level.activeTeam = lastTeam;
 			gi.EndEvents();
 			return;

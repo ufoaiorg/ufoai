@@ -65,9 +65,38 @@ static void Cmd_Players_f (player_t * player)
 }
 
 /**
+ * @brief Check whether the user can talk
+ */
+static qboolean G_CheckFlood (player_t *player)
+{
+	int		i;
+
+	if (flood_msgs->value) {
+		if (level.time < player->pers.flood_locktill) {
+			gi.cprintf(player, PRINT_HIGH, "You can't talk for %d more seconds\n",
+					   (int)(player->pers.flood_locktill - level.time));
+			return qtrue;
+		}
+		i = player->pers.flood_whenhead - flood_msgs->value + 1;
+		if (i < 0)
+			i = (sizeof(player->pers.flood_when)/sizeof(player->pers.flood_when[0])) + i;
+		if (player->pers.flood_when[i] && level.time - player->pers.flood_when[i] < flood_persecond->value) {
+			player->pers.flood_locktill = level.time + flood_waitdelay->value;
+			gi.cprintf(player, PRINT_CHAT, "Flood protection: You can't talk for %d seconds.\n",
+					   flood_waitdelay->integer);
+			return qtrue;
+		}
+		player->pers.flood_whenhead = (player->pers.flood_whenhead + 1) %
+				(sizeof(player->pers.flood_when)/sizeof(player->pers.flood_when[0]));
+		player->pers.flood_when[player->pers.flood_whenhead] = level.time;
+	}
+	return qfalse;
+}
+
+/**
  * @brief
  */
-static void Cmd_Say_f (player_t * player, qboolean arg0, qboolean team)
+static void Cmd_Say_f (player_t *player, qboolean arg0, qboolean team)
 {
 	int j;
 	char *p;
@@ -100,6 +129,9 @@ static void Cmd_Say_f (player_t * player, qboolean arg0, qboolean team)
 		text[150] = 0;
 
 	Q_strcat(text, "\n", sizeof(text));
+
+	if (G_CheckFlood(player))
+		return;
 
 	if (dedicated->value)
 		gi.cprintf(NULL, PRINT_CHAT, "%s", text);

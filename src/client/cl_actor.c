@@ -2449,7 +2449,7 @@ void CL_ActorMouseTrace (void)
 	}
 
 	if (cl_isometric->value)
-		frustumslope[0] = 10. * cl.refdef.fov_x;
+		frustumslope[0] = 10.0 * cl.refdef.fov_x;
 	else
 		frustumslope[0] = tan(cl.refdef.fov_x * M_PI / 360) * projectiondistance;
 	frustumslope[1] = frustumslope[0] * ((float)scr_vrect.height / scr_vrect.width);

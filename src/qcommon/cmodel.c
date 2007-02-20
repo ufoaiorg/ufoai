@@ -669,8 +669,8 @@ static int CM_EntTestLineDM (vec3_t start, vec3_t stop, vec3_t end)
 
 
 /**
- * @brief
- * @param[in] map
+ * @brief Routing function to check the connection between two fields
+ * @param[in] map Routing field of the current loaded map
  * @param[in] x
  * @param[in] y
  * @param[in] z
@@ -693,7 +693,9 @@ static qboolean CM_TestConnection (routing_t * map, int x, int y, int z, int dir
 	VectorSet(pos, x, y, z);
 	PosToVec(pos, start);
 	start[2] += h * 4;
-	VectorSet(end, start[0] + 32 * dvecs[dir][0], start[1] + 32 * dvecs[dir][1], start[2]);
+	assert(dir < 8);
+	assert(dir >= 0);
+	VectorSet(end, start[0] + UNIT_HEIGHT * dvecs[dir][0], start[1] + UNIT_HEIGHT* dvecs[dir][1], start[2]);
 
 	ax = x + dvecs[dir][0];
 	ay = y + dvecs[dir][1];
@@ -897,9 +899,11 @@ static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
 	if (length != 256 * 256 * 10)
 		Com_Error(ERR_DROP, "Map has BAD routing lump");
 
-	/* shift and merge the routing information */
+	/* shift and merge the routing information
+	 * in case of map assemble (random maps) */
 	maxX = sX > 0 ? 256 - sX : 256;
 	maxY = sY > 0 ? 256 - sY : 256;
+	/* no z movement */
 	sZ = 0;
 
 	for (y = sY < 0 ? -sY : 0; y < maxY; y++)

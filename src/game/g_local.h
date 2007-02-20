@@ -222,6 +222,10 @@ extern cvar_t *m_panic_stop;
 
 extern cvar_t *g_nodamage;
 
+extern cvar_t *flood_msgs;
+extern cvar_t *flood_persecond;
+extern cvar_t *flood_waitdelay;
+
 extern cvar_t *difficulty;
 
 /*#define world	(&g_edicts[0])*/
@@ -397,14 +401,18 @@ typedef struct {
 	char userinfo[MAX_INFO_STRING];
 	char netname[16];
 
-	/* the number of the team for this player */
-	/* 0 is reserved for civilians and critters */
+	/** the number of the team for this player
+	 * 0 is reserved for civilians and critters */
 	int team;
-	qboolean spectator;			/* client is a spectator */
-	qboolean ai;				/* client controlled by ai */
+	qboolean spectator;			/**< client is a spectator */
+	qboolean ai;				/**< client controlled by ai */
 
-	/* ai specific data */
+	/** ai specific data */
 	edict_t *last;
+
+	float		flood_locktill;		/**< locked from talking */
+	float		flood_when[10];		/**< when messages were said */
+	int			flood_whenhead;		/**< head pointer for when said */
 } client_persistant_t;
 
 /* this structure is cleared on each PutClientInServer(), */

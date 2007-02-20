@@ -115,6 +115,9 @@ cvar_t *m_rage_stop;
 cvar_t *m_panic_stop;
 
 cvar_t *g_nodamage;
+cvar_t *flood_msgs;
+cvar_t *flood_persecond;
+cvar_t *flood_waitdelay;
 
 cvar_t *difficulty;
 
@@ -215,6 +218,11 @@ void InitGame (void)
 
 	/* TODO: add CVAR_DEVELOPER flag which if !COM_CheckParm("-developer") acts like CVAR_NOSET and hides the cvar from the console */
 	g_nodamage = gi.cvar("g_nodamage", "0", 0, "No damage in developer mode");
+
+	/* flood control */
+	flood_msgs = gi.cvar("flood_msgs", "4", 0, NULL);
+	flood_persecond = gi.cvar("flood_persecond", "4", 0, NULL);
+	flood_waitdelay = gi.cvar("flood_waitdelay", "10", 0, "Delay until someone is unlocked from talking again");
 
 	difficulty = gi.cvar("difficulty", "0", CVAR_NOSET, "Difficulty level");
 

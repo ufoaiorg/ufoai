@@ -231,7 +231,7 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, ai_action_t * aia)
 							dmg = check->HP + GUETE_KILL
 								+ GUETE_REACTION_ERADICATION;
 						else if (dmg > check->HP)
-						/* standard kill bonus */
+							/* standard kill bonus */
 							dmg = check->HP + GUETE_KILL;
 
 						/* ammo is limited and shooting gives away your position */
@@ -272,7 +272,7 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, ai_action_t * aia)
 			/* is a hiding spot */
 			guete += GUETE_HIDE + (aia->target ? GUETE_CLOSE_IN : 0);
 		} else if (aia->target && tu >= 2) {
-				byte minX, maxX, minY, maxY;
+			byte minX, maxX, minY, maxY;
 			/* reward short walking to shooting spot, when seen by enemies;
 			TODO: do this decently, only penalizing the visible part of walk
 			and penalizing much more for reaction shooters around;
@@ -455,7 +455,7 @@ static ai_action_t AI_PrepBestAction (player_t * player, edict_t * ent)
 				Com_DPrintf("civ found civtarget with %i\n", checkPoint->count);
 				/* test for time */
 				if (ent->TU - gi.MoveLength(gi.map, checkPoint->pos, qtrue) < 0) {
-					Com_DPrintf("civtarget to far away (%i)\n", checkPoint->count);
+					Com_DPrintf("civtarget too far away (%i)\n", checkPoint->count);
 					/* FIXME: Nevertheless walk to that direction */
 					continue;
 				}
