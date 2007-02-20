@@ -884,6 +884,7 @@ vec_t VectorNormalize (vec3_t v)
  * @param[out] out The normalized vector
  * @sa VectorNormalize
  * @return vector length as vec_t
+ * @sa CrossProduct
  */
 vec_t VectorNormalize2 (vec3_t v, vec3_t out)
 {
@@ -956,6 +957,7 @@ void VectorClampMA (vec3_t veca, float scale, vec3_t vecb, vec3_t vecc)
  * @brief
  * @param
  * @sa VectorNormalize
+ * @sa CrossProduct
  */
 void MakeNormalVectors (vec3_t forward, vec3_t right, vec3_t up)
 {
@@ -1040,9 +1042,12 @@ void VectorRotate (vec3_t m[3], vec3_t va, vec3_t vb)
 
 
 /**
- * @brief
- * @param
- * @sa
+ * @brief binary operation which takes two vectors returns a scalar quantity
+ * It is the standard inner product of the Euclidean space.
+ * @note also known as the scalar product
+ * @param[in] v1
+ * @param[in] v2
+ * @sa CrossProduct
  */
 vec_t _DotProduct (vec3_t v1, vec3_t v2)
 {
@@ -1140,9 +1145,18 @@ void _VectorCopy (vec3_t in, vec3_t out)
 }
 
 /**
- * @brief
- * @param
- * @sa
+ * @brief binary operation on vectors in a three-dimensional space
+ * @note also known as the vector product or outer product
+ * @note It differs from the dot product in that it results in a vector
+ * rather than in a scalar
+ * @note Its main use lies in the fact that the cross product of two vectors
+ * is orthogonal to both of them.
+ * @param[in] v1
+ * @param[in] v2
+ * @param[in] cross
+ * @sa _DotProduct
+ * @sa DotProduct
+ * @sa VectorNormalize2
  */
 void CrossProduct (vec3_t v1, vec3_t v2, vec3_t cross)
 {
