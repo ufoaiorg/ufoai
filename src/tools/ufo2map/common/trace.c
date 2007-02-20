@@ -381,9 +381,10 @@ int TestContents_r (int node, vec3_t pos)
 		front = pos[2] - tnode->dist;
 		break;
 	case PLANE_NONE:
-		r = TestContents_r (tnode->children[0], pos);
-		if (r) return r;
-		return TestContents_r (tnode->children[1], pos);
+		r = TestContents_r(tnode->children[0], pos);
+		if (r)
+			return r;
+		return TestContents_r(tnode->children[1], pos);
 		break;
 	default:
 		front = (pos[0]*tnode->normal[0] + pos[1]*tnode->normal[1] + pos[2]*tnode->normal[2]) - tnode->dist;

@@ -71,8 +71,8 @@ static void CheckUnit_Thread (unsigned int unitnum)
 	x = unitnum % WIDTH;
 
 	/* test bounds */
-	if ( x > wpMaxs[0] || y > wpMaxs[1] || z > wpMaxs[2]
-			|| x < wpMins[0] || y < wpMins[1] || z < wpMins[2] ) {
+	if (x > wpMaxs[0] || y > wpMaxs[1] || z > wpMaxs[2]
+			|| x < wpMins[0] || y < wpMins[1] || z < wpMins[2]) {
 		/* don't enter */
 		fall[y][x] |= 1 << z;
 		return;
@@ -80,34 +80,34 @@ static void CheckUnit_Thread (unsigned int unitnum)
 
 	/* calculate tracing coordinates */
 	pos[0] = x; pos[1] = y; pos[2] = z;
-	PosToVec( pos, end );
+	PosToVec(pos, end);
 
 	/* step height check */
-	if ( TestContents( end ) )
+	if (TestContents(end))
 		step[y][x] |= 1 << z;
 
 	/* prepare fall down check */
-	VectorCopy( end, start );
+	VectorCopy(end, start);
 	start[2] -= UH/2-4;
 	end[2]   -= UH/2+4;
 
 	/* test for fall down */
-	if ( TestLineMask( start, end, 2 ) ) {
-		PosToVec( pos, end );
-		VectorAdd( end, dup, start );
-		VectorAdd( end, dwn, end );
+	if (TestLineMask(start, end, 2)) {
+		PosToVec(pos, end);
+		VectorAdd(end, dup, start);
+		VectorAdd(end, dwn, end);
 		height = 0;
 
 		/* test for ground with a "middled" height */
-		for ( i = 0; i < 5; i++ ) {
-			VectorAdd( start, testvec[i], tvs );
-			VectorAdd( end, testvec[i], tve );
-			TestLineDM( tvs, tve, tr_end, 2 );
+		for (i = 0; i < 5; i++) {
+			VectorAdd(start, testvec[i], tvs);
+			VectorAdd(end, testvec[i], tve);
+			TestLineDM(tvs, tve, tr_end, 2);
 			height += tr_end[2];
 
 			/* stop if it's totally blocked somewhere */
 			/* and try a higher starting point */
-			if ( VectorCompare( tvs, tr_end ) )
+			if (VectorCompare(tvs, tr_end))
 				break;
 		}
 
@@ -115,12 +115,12 @@ static void CheckUnit_Thread (unsigned int unitnum)
 		height += tr_end[2];
 		tr_end[2] = height / 6.0;
 
-		if ( i == 5 && !VectorCompare( start, tr_end ) ) {
+		if (i == 5 && !VectorCompare(start, tr_end)) {
 			/* found a possibly valid ground */
 			height = PH - (start[2]-tr_end[2]);
 			end[2] = start[2] + height;
 
-			if ( !TestLineDM( start, end, tr_end, 2 ) )
+			if (!TestLineDM(start, end, tr_end, 2))
 				area[z][y][x] = ((height+QUANT/2)/QUANT < 0) ? 0 : (height+QUANT/2)/QUANT;
 			else
 				filled[y][x] |= 1 << z; /* don't enter */
@@ -132,18 +132,18 @@ static void CheckUnit_Thread (unsigned int unitnum)
 			height = 0;
 
 			/* test for ground with a "middled" height */
-			for ( i = 0; i < 5; i++ ) {
-				VectorAdd( start, testvec[i], tvs );
-				VectorAdd( end, testvec[i], tve );
-				TestLineDM( tvs, tve, tr_end, 2 );
+			for (i = 0; i < 5; i++) {
+				VectorAdd(start, testvec[i], tvs);
+				VectorAdd(end, testvec[i], tve);
+				TestLineDM(tvs, tve, tr_end, 2);
 				height += tr_end[2];
 			}
 			/* tr_end[0] & [1] are correct (testvec[4]) */
 			height += tr_end[2];
 			tr_end[2] = height / 6.0;
 
-			if ( VectorCompare( start, tr_end ) ) {
-				filled[y][x] |= 1<<z; /* don't enter */
+			if (VectorCompare(start, tr_end)) {
+				filled[y][x] |= 1 << z; /* don't enter */
 			} else {
 				/* found a possibly valid elevated ground */
 				end[2] = start[2] + PH - (start[2]-tr_end[2]);
@@ -151,8 +151,8 @@ static void CheckUnit_Thread (unsigned int unitnum)
 
 /*				Sys_Printf( "%i %i\n", (int)height, (int)(start[2]-tr_end[2]) ); */
 
-				if ( !TestLineDM( start, end, tr_end, 2 ) )
-					area[z][y][x] = ((height+QUANT/2)/QUANT < 0) ? 0 : (height+QUANT/2)/QUANT;
+				if (!TestLineDM( start, end, tr_end, 2))
+					area[z][y][x] = ((height + QUANT / 2) / QUANT < 0) ? 0 : (height + QUANT / 2) / QUANT;
 				else
 					filled[y][x] |= 1 << z; /* don't enter */
 			}
