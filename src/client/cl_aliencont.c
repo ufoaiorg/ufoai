@@ -145,7 +145,7 @@ void CL_CollectingAliens (void)
 					/* Search alien type and increase amount */
 					if (Q_strncmp(cargo[j].alientype, teamDesc[teamDescID].name, MAX_VAR) == 0) {
 						/* Search stunned first. */
-						if (le->state == STATE_STUN) {
+						if ((le->state & STATE_STUN) & ~STATE_DEAD) {
 							/* alive alien */
 							cargo[j].amount_alive++;
 							Com_DPrintf("Counting: alive %s count: %i\n", cargo[j].alientype, cargo[j].amount_alive);
@@ -161,7 +161,7 @@ void CL_CollectingAliens (void)
 					/* otherwise add new alien type */
 					Q_strncpyz(cargo[j].alientype, teamDesc[teamDescID].name, MAX_VAR);
 					/* Search stunned first. */
-					if (le->state == STATE_STUN) {
+					if ((le->state & STATE_STUN) & ~STATE_DEAD) {
 						/* alive alien */
 						cargo[j].amount_alive++;
 						Com_DPrintf("Adding: alive %s count: %i\n", cargo[j].alientype, cargo[j].amount_alive);
