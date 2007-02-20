@@ -63,6 +63,16 @@ Non-displayed light.
 "angle"
 */
 
+/*QUAKED light_spot (0 1 0) (-8 -8 -8) (8 8 8) linear
+Non-displayed light.
+"style"		"1-32"
+"_color"	Color for the light RGB
+"light"		intensity 0-255
+"_cone"
+"origin"
+"angle"
+*/
+
 
 /*QUAKED func_group (0 0 0) ?
 Only for editor convenience.
