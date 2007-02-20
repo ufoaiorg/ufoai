@@ -63,7 +63,7 @@ item irgoggles
 	category	2
 	shape		"0 0 2 1"
 	center		"0 0 0"
-	scale		1.0
+	scale		1.5
 	price		200
 	buytype		2
 	thrown		true
