@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-02-16 19:17+0100\n"
-"PO-Revision-Date: 2007-02-16 19:20+0100\n"
+"PO-Revision-Date: 2007-02-20 17:46+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -506,9 +506,8 @@ msgid "Back to baseview"
 msgstr "Zurück zur Basisübersicht"
 
 #: ../base/ufos/menu_aliencont.ufo:79
-#, fuzzy
 msgid "Check UFOpedia Entry"
-msgstr "Ufopedia Verzeichnis"
+msgstr "Wechsele zum Ufopediaeintrag"
 
 #: ../base/ufos/menu_aliencont.ufo:106
 msgid "Alive Aliens in all bases:"
@@ -540,9 +539,8 @@ msgid "Base Info"
 msgstr "Basisinformationen"
 
 #: ../base/ufos/menu_aliencont.ufo:198
-#, fuzzy
 msgid "Current base:"
-msgstr "Basis anlegen"
+msgstr "Aktuelle Basis:"
 
 #: ../base/ufos/menu_aliencont.ufo:212
 msgid "Alien Type:"
@@ -2241,7 +2239,7 @@ msgstr "Aliens"
 
 #: ../base/ufos/menu_transfer.ufo:289
 msgid "Empty the aircraft storage"
-msgstr ""
+msgstr "Entlade das Flugzeug"
 
 #: ../base/ufos/menu_transfer.ufo:304
 msgid "Unload"
@@ -8143,9 +8141,8 @@ msgid ""
 msgstr "Nicht genug Zeiteinheiten\n"
 
 #: client/cl_actor.c:1002
-#, fuzzy
 msgid "No item in hand.\n"
-msgstr "Keine Ausrüstung an Board"
+msgstr "Keinen Gegenstand in der Hand\n"
 
 #: client/cl_actor.c:1015
 msgid ""
@@ -8154,25 +8151,28 @@ msgid ""
 msgstr "Keine Munition!\n"
 
 #: client/cl_actor.c:1020
-#, fuzzy
 msgid ""
 "This weapon cannot be fired\n"
 "one handed.\n"
-msgstr "Kann Aktion nicht ausführen, da diese Waffe nicht einhändig benutzt werden kann\n"
+msgstr ""
+"Diese Waffe kann nicht\n"
+"einhändig benutzt werden\n"
 
 #: client/cl_actor.c:1029
-#, fuzzy
 msgid ""
 "Can't perform action:\n"
 "this item is not reloadable.\n"
-msgstr "Nicht deine Runde\n"
+msgstr ""
+"Kann Aktion nicht ausführen:\n"
+"Der Gegenstand kann nicht nachgeladen werden\n"
 
 #: client/cl_actor.c:1034
-#, fuzzy
 msgid ""
 "Can't perform action:\n"
 "ammo not available.\n"
-msgstr "Objekt nicht vorhanden!\n"
+msgstr ""
+"Kann Aktion nicht ausführen:\n"
+"Keine Munition vorhanden!\n"
 
 #: client/cl_actor.c:1168
 #, c-format
@@ -8231,7 +8231,6 @@ msgid "%s has been killed!\n"
 msgstr "%s wurde getötet\n"
 
 #: client/cl_actor.c:2200
-#, fuzzy
 msgid "A civilian was killed.\n"
 msgstr "Ein Zivilist wurde getötet\n"
 
@@ -8541,11 +8540,11 @@ msgstr "Transfer nicht möglich - Basis hat keine Quartänestation"
 
 #: client/cl_basemanagement.c:2277
 msgid "Can't unload while we are not in the homebase"
-msgstr ""
+msgstr "Kann das Flugzeug nicht entladen wenn wir nicht in der Heimatbasis sind"
 
 #: client/cl_basemanagement.c:2332
 msgid "The base is not longer existent"
-msgstr ""
+msgstr "Die Basis existiert nicht mehr"
 
 #: client/cl_basemanagement.c:2349
 msgid "The base doesn't have a storage"
@@ -8553,15 +8552,15 @@ msgstr "TDie Basis hat kein Lager"
 
 #: client/cl_basemanagement.c:2359
 msgid "The base doesn't have a lab - can't unload the technologies here"
-msgstr ""
+msgstr "Die Basis hat kein Labor - kann Technologien nicht ausladen"
 
 #: client/cl_basemanagement.c:2373
 msgid "The base doesn't have quarters - can't unload the employees here"
-msgstr ""
+msgstr "Die Basis hat keine Quartiere - kann Angestellte hier nicht absetzen"
 
 #: client/cl_basemanagement.c:2381
 msgid "The base doesn't have an alien containment - can't unload the aliens here"
-msgstr ""
+msgstr "Die Basis hat keine Quarantänestation - kann Aliens hier nicht entladen"
 
 #: client/cl_basemanagement.c:2384
 msgid "Transport mission"
@@ -8569,11 +8568,11 @@ msgstr "Transportmission"
 
 #: client/cl_basemanagement.c:2384
 msgid "Transport mission ended, returning to homebase now"
-msgstr ""
+msgstr "Transportmission beendet - kehre zur Heimatbasis zurück"
 
 #: client/cl_basemanagement.c:2406
 msgid "Can't start the transport mission while we are not in the homebase"
-msgstr ""
+msgstr "Kann Transportmission nicht starten - Flugzeug ist nicht in der Heimatbasis"
 
 #: client/cl_basemanagement.c:2432
 msgid "No target base selected"
@@ -8616,14 +8615,12 @@ msgid "No laboratory in this base\n"
 msgstr "Keine Laboratorien in dieser Basis\n"
 
 #: client/cl_basemanagement.c:2624
-#, fuzzy
 msgid "You can transfer aliens - this base has alien containment\n"
-msgstr "Transfer möglich - Basis hat ein Labor\n"
+msgstr "Transfer von Aliens möglich - Basis hat eine Quarantänestation\n"
 
 #: client/cl_basemanagement.c:2626
-#, fuzzy
 msgid "No alien containment in this base\n"
-msgstr "Keine Laboratorien in dieser Basis\n"
+msgstr "Keine Quarantänestation in dieser Basis\n"
 
 #: client/cl_basemanagement.c:2782
 #, c-format
@@ -9016,19 +9013,19 @@ msgstr ""
 
 #: client/cl_input.c:714
 msgid "Move battlescape camera left"
-msgstr ""
+msgstr "Bewegen der Einsatzkamera nach links"
 
 #: client/cl_input.c:716
 msgid "Move battlescape camera right"
-msgstr ""
+msgstr "Bewegen der Einsatzkamera nach rechts"
 
 #: client/cl_input.c:718
 msgid "Move battlescape camera forward"
-msgstr ""
+msgstr "Bewegen der Einsatzkamera nach vorne"
 
 #: client/cl_input.c:720
 msgid "Move battlescape camera backward"
-msgstr ""
+msgstr "Bewegen der Einsatzkamera nach hinten"
 
 #: client/cl_input.c:722
 #: client/cl_input.c:755
@@ -9285,7 +9282,7 @@ msgstr "Status:\t%s\n"
 
 #: client/cl_market.c:391
 msgid "You can't sell an aircraft if it still has a team assigned"
-msgstr ""
+msgstr "Flugzeug kann nicht verkauft werden solange ein Team an Board ist"
 
 #: client/cl_menu.c:481
 msgid "Set playersoldiers lower than teamsoldiers"
