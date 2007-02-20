@@ -361,9 +361,8 @@ extern void UP_Article (technology_t* tech)
 			if (mn_uppretext->value)
 				menuText[TEXT_UFOPEDIA] = _(tech->pre_description);
 			Cvar_SetValue("mn_uppreavailable", 1);
-			Cvar_SetValue("mn_updisplay", 1);
 		} else {
-			/* Do not display the buttons if no pre-research text is avaialble (no need to even bother clicking there). */
+			/* Do not display the pre-research-text button if none is available (no need to even bother clicking there). */
 			Cvar_SetValue("mn_uppreavailable", 0);
 			Cvar_SetValue("mn_updisplay", 0);
 		}
