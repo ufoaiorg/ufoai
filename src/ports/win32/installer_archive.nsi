@@ -20,7 +20,7 @@
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"
 
 ;SetCompressor bzip2
-SetCompressor lzma
+SetCompressor none
 
 ; MUI 1.67 compatible ------
 !include "MUI.nsh"
