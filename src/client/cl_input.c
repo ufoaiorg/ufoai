@@ -727,13 +727,6 @@ extern void CL_InitInput (void)
 	Cmd_AddCommand("togglereaction", CL_ActorToggleReaction_f, _("Toggle reaction fire"));
 	Cmd_AddCommand("nextalien", CL_NextAlien_f, _("Toogle to next alien"));
 
-#if 0
-	Cmd_AddCommand("firerp", CL_FireRightPrimary, NULL);
-	Cmd_AddCommand("firers", CL_FireRightSecondary, NULL);
-	Cmd_AddCommand("firelp", CL_FireLeftPrimary, NULL);
-	Cmd_AddCommand("firels", CL_FireLeftSecondary, NULL);
-	/* TODO: The fireweap entry below replaces these 4. Please leave this in until all hud files (esp. althud) are converted to the new firemode lists. */
-#endif
 	Cmd_AddCommand("list_firemodes", CL_DisplayFiremodes_f, "Display a list of firemodes for a weapon+ammo.");
 	Cmd_AddCommand("fireweap", CL_FireWeapon_f, "Start aiming the weapon.");
 	Cmd_AddCommand("sel_reactmode", CL_SelectReactionFiremode_f, "Change/Select firemode used for reaction fire.");
