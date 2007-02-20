@@ -70,7 +70,7 @@ searchpath_t *fs_base_searchpaths;	/* without gamedirs */
 /**
  * @brief
  */
-qboolean strwildcomp(const char *string, const char *pattern)
+qboolean strwildcomp (const char *string, const char *pattern)
 {
 	const char *s = 0;
 	char c = '\0';
@@ -360,7 +360,7 @@ void FS_FOpenFileWrite (const char *filename, qFILE * f)
  * @brief Just returns the filelength and -1 if the file wasn't found
  * @note Won't print any errors
  */
-int FS_CheckFile(const char *filename)
+int FS_CheckFile (const char *filename)
 {
 	int result;
 	qFILE file;
@@ -372,16 +372,16 @@ int FS_CheckFile(const char *filename)
 	return result;
 }
 
-void CDAudio_Stop(void);
+void CDAudio_Stop (void);
 
 #define	MAX_READ	0x10000		/* read in blocks of 64k */
 /**
  * @brief Properly handles partial reads
  */
 #ifdef DEBUG
-int FS_ReadDebug(void *buffer, int len, qFILE * f, char* file, int line)
+int FS_ReadDebug (void *buffer, int len, qFILE * f, char* file, int line)
 #else
-int FS_Read(void *buffer, int len, qFILE * f)
+int FS_Read (void *buffer, int len, qFILE * f)
 #endif
 {
 	int block, remaining;
@@ -446,7 +446,7 @@ int FS_Read(void *buffer, int len, qFILE * f)
  * @param[in] buffer a null buffer will just return the file length without loading
  * @return a -1 length means that the file is not present
  */
-int FS_LoadFile(const char *path, void **buffer)
+int FS_LoadFile (const char *path, void **buffer)
 {
 	qFILE h;
 	byte *buf;
@@ -482,7 +482,7 @@ int FS_LoadFile(const char *path, void **buffer)
 /**
  * @brief
  */
-void FS_FreeFile(void *buffer)
+void FS_FreeFile (void *buffer)
 {
 	Mem_Free(buffer);
 }
@@ -491,7 +491,7 @@ void FS_FreeFile(void *buffer)
  * @brief Takes an explicit (not game tree related) path to a pak file.
  * Adding the files at the beginning of the list so they override previous pack files.
  */
-pack_t *FS_LoadPackFile(const char *packfile)
+pack_t *FS_LoadPackFile (const char *packfile)
 {
 	unsigned int i, len, err;
 	packfile_t *newfiles;
@@ -567,7 +567,7 @@ pack_t *FS_LoadPackFile(const char *packfile)
 /**
  * @brief Sets fs_gamedir, adds the directory to the head of the path
  */
-void FS_AddGameDirectory(const char *dir)
+void FS_AddGameDirectory (const char *dir)
 {
 	searchpath_t *search;
 	pack_t *pak;
@@ -638,7 +638,7 @@ void FS_AddGameDirectory(const char *dir)
 /**
  * @brief Called to find where to write a file (demos, savegames, etc)
  */
-char *FS_Gamedir(void)
+char *FS_Gamedir (void)
 {
 	if (*fs_gamedir)
 		return fs_gamedir;
@@ -651,7 +651,7 @@ char *FS_Gamedir(void)
  * @note e.g. *nix: Use ~/.ufoai/dir as fs_gamedir
  * @sa Sys_GetHomeDirectory
  */
-void FS_AddHomeAsGameDirectory(const char *dir)
+void FS_AddHomeAsGameDirectory (const char *dir)
 {
 	char gdir[MAX_OSPATH];
 	char *homedir = Sys_GetHomeDirectory();
@@ -670,7 +670,7 @@ void FS_AddHomeAsGameDirectory(const char *dir)
 /**
  * @brief
  */
-void FS_ExecAutoexec(void)
+void FS_ExecAutoexec (void)
 {
 	char *dir;
 	char name[MAX_QPATH];
@@ -689,7 +689,7 @@ void FS_ExecAutoexec(void)
 /**
  * @brief Sets the gamedir and path to a different directory.
  */
-void FS_SetGamedir(const char *dir)
+void FS_SetGamedir (const char *dir)
 {
 	searchpath_t *next;
 
@@ -775,7 +775,7 @@ static void FS_Link_f (void)
  * @sa Sys_FindClose
  * @note Don't forget to free the filelist array and the file itself
  */
-char **FS_ListFiles(const char *findname, int *numfiles, unsigned musthave, unsigned canthave)
+char **FS_ListFiles (const char *findname, int *numfiles, unsigned musthave, unsigned canthave)
 {
 	char *s;
 	int nfiles = 0, i;
@@ -888,7 +888,7 @@ static void FS_Path_f (void)
 /**
  * @brief Allows enumerating all of the directories in the search path
  */
-char *FS_NextPath(const char *prevpath)
+char *FS_NextPath (const char *prevpath)
 {
 	searchpath_t *s;
 	char *prev;
@@ -912,7 +912,7 @@ char *FS_NextPath(const char *prevpath)
 /**
  * @brief
  */
-void FS_InitFilesystem(void)
+void FS_InitFilesystem (void)
 {
 	Cmd_AddCommand("path", FS_Path_f, NULL);
 	Cmd_AddCommand("link", FS_Link_f, NULL);
@@ -952,7 +952,7 @@ static listBlock_t *fs_blocklist = NULL;
  * @note also checks for duplicates
  * @sa FS_BuildFileList
  */
-static void _AddToListBlock(char** fl, listBlock_t* block, listBlock_t* tblock, char* name)
+static void _AddToListBlock (char** fl, listBlock_t* block, listBlock_t* tblock, char* name)
 {
 	char *f, *tl = NULL;
 	int len;
@@ -1001,7 +1001,7 @@ static void _AddToListBlock(char** fl, listBlock_t* block, listBlock_t* tblock, 
  * @brief Build a filelist
  * @param[in] fileList e.g. ufos\*.ufo to get all ufo files in the gamedir/ufos dir
  */
-void FS_BuildFileList(char *fileList)
+void FS_BuildFileList (char *fileList)
 {
 	listBlock_t *block, *tblock;
 	searchpath_t *search;
@@ -1095,7 +1095,7 @@ void FS_BuildFileList(char *fileList)
 /**
  * @brief
  */
-void FS_SkipBlock(char **text)
+void FS_SkipBlock (char **text)
 {
 	char *token;
 	int depth;
@@ -1125,7 +1125,7 @@ static char headerName[32];
 /**
  * @brief
  */
-char *FS_NextScriptHeader(const char *files, char **name, char **text)
+char *FS_NextScriptHeader (const char *files, char **name, char **text)
 {
 	listBlock_t *block;
 	char *token;
@@ -1221,7 +1221,7 @@ int mapInstalledIndex = 0;
  * @param[in] reset If true the directory is scanned everytime for new maps (useful for dedicated servers).
  * If false we only use the maps array (for clients e.g.)
  */
-void FS_GetMaps(qboolean reset)
+void FS_GetMaps (qboolean reset)
 {
 	char findname[MAX_OSPATH];
 	char filename[MAX_QPATH];
@@ -1277,7 +1277,7 @@ void FS_GetMaps(qboolean reset)
 /**
  * @brief Properly handles partial writes
  */
-int FS_Write(const void *buffer, int len, qFILE * f)
+int FS_Write (const void *buffer, int len, qFILE * f)
 {
 	int block, remaining;
 	int written;
@@ -1319,7 +1319,7 @@ int FS_Write(const void *buffer, int len, qFILE * f)
 /**
  * @brief
  */
-int FS_WriteFile(const void *buffer, size_t len, const char *filename)
+int FS_WriteFile (const void *buffer, size_t len, const char *filename)
 {
 	qFILE f;
 	int c, lencheck;
@@ -1351,7 +1351,7 @@ int FS_WriteFile(const void *buffer, size_t len, const char *filename)
 /**
  * @brief Return current working dir
  */
-char *FS_GetCwd(void)
+char *FS_GetCwd (void)
 {
 	static char buf[MAX_QPATH];
 	char *path = Q_getcwd(buf, sizeof(buf));
@@ -1369,7 +1369,7 @@ char *FS_GetCwd(void)
  * @sa FS_CheckFile
  * @param[in] filename Full filesystem path to the file
  */
-qboolean FS_FileExists(const char *filename)
+qboolean FS_FileExists (const char *filename)
 {
 #ifdef _WIN32
 	return (_access(filename, 00) == 0);
@@ -1383,7 +1383,7 @@ qboolean FS_FileExists(const char *filename)
  * @param[in] filename The complete filename
  * @return pointer to start location of the base path
  */
-char* FS_GetBasePath(char* filename)
+char* FS_GetBasePath (char* filename)
 {
 	char* pathSep = filename;
 	char* endPos;
@@ -1402,7 +1402,7 @@ char* FS_GetBasePath(char* filename)
 /**
  * @brief Cleanup function
  */
-void FS_Shutdown(void)
+void FS_Shutdown (void)
 {
 	int i;
 

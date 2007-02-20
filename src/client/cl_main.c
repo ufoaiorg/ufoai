@@ -2233,6 +2233,10 @@ extern void CL_Frame (int msec)
 
 	extratime += msec;
 
+	/* don't allow setting maxfps too low (or game could stop responding) */
+	if (cl_maxfps->integer < 10)
+		Cvar_SetValue("cl_maxfps", 10);
+
 	if (!cl_timedemo->value) {
 		/* don't flood packets out while connecting */
 		if (cls.state == ca_connected && extratime < 100)
