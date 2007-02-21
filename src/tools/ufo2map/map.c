@@ -873,41 +873,41 @@ extern void LoadMapFile (char *filename)
 {
 	int i;
 
-	Sys_FPrintf( SYS_VRB, "--- LoadMapFile ---\n");
+	Sys_FPrintf(SYS_VRB, "--- LoadMapFile ---\n");
 
-	LoadScriptFile (filename);
+	LoadScriptFile(filename);
 
 	nummapbrushsides = 0;
 	num_entities = 0;
 
-	while (ParseMapEntity ());
+	while (ParseMapEntity());
 
-	ClearBounds (map_mins, map_maxs);
+	ClearBounds(map_mins, map_maxs);
 	for (i = 0; i < entities[0].numbrushes ; i++) {
 		if (mapbrushes[i].mins[0] > 4096)
 			continue;	/* no valid points */
-		AddPointToBounds (mapbrushes[i].mins, map_mins, map_maxs);
-		AddPointToBounds (mapbrushes[i].maxs, map_mins, map_maxs);
+		AddPointToBounds(mapbrushes[i].mins, map_mins, map_maxs);
+		AddPointToBounds(mapbrushes[i].maxs, map_mins, map_maxs);
 	}
 
 	for (i = 0; i < nummapbrushes; i++)
 		mapbrushes[i].finished = qfalse;
 
 	/* save a copy of the brushes */
-	memcpy( mapbrushes + nummapbrushes, mapbrushes, sizeof(mapbrush_t)*nummapbrushes );
+	memcpy(mapbrushes + nummapbrushes, mapbrushes, sizeof(mapbrush_t)*nummapbrushes);
 
-	Sys_FPrintf( SYS_VRB, "%5i brushes\n", nummapbrushes);
-	Sys_FPrintf( SYS_VRB, "%5i clipbrushes\n", c_clipbrushes);
-	Sys_FPrintf( SYS_VRB, "%5i total sides\n", nummapbrushsides);
-	Sys_FPrintf( SYS_VRB, "%5i boxbevels\n", c_boxbevels);
-	Sys_FPrintf( SYS_VRB, "%5i edgebevels\n", c_edgebevels);
-	Sys_FPrintf( SYS_VRB, "%5i entities\n", num_entities);
-	Sys_FPrintf( SYS_VRB, "%5i planes\n", nummapplanes);
-	Sys_FPrintf( SYS_VRB, "%5i areaportals\n", c_areaportals);
-	Sys_FPrintf( SYS_VRB, "size: %5.0f,%5.0f,%5.0f to %5.0f,%5.0f,%5.0f\n", map_mins[0],map_mins[1],map_mins[2],
+	Sys_FPrintf(SYS_VRB, "%5i brushes\n", nummapbrushes);
+	Sys_FPrintf(SYS_VRB, "%5i clipbrushes\n", c_clipbrushes);
+	Sys_FPrintf(SYS_VRB, "%5i total sides\n", nummapbrushsides);
+	Sys_FPrintf(SYS_VRB, "%5i boxbevels\n", c_boxbevels);
+	Sys_FPrintf(SYS_VRB, "%5i edgebevels\n", c_edgebevels);
+	Sys_FPrintf(SYS_VRB, "%5i entities\n", num_entities);
+	Sys_FPrintf(SYS_VRB, "%5i planes\n", nummapplanes);
+	Sys_FPrintf(SYS_VRB, "%5i areaportals\n", c_areaportals);
+	Sys_FPrintf(SYS_VRB, "size: %5.0f,%5.0f,%5.0f to %5.0f,%5.0f,%5.0f\n", map_mins[0],map_mins[1],map_mins[2],
 		map_maxs[0],map_maxs[1],map_maxs[2]);
 
 #ifdef TESTEXPANDBRUSHES
-	TestExpandBrushes ();
+	TestExpandBrushes();
 #endif
 }

@@ -225,10 +225,10 @@ int main (int argc, char **argv)
 	start = I_FloatTime();
 
 	ThreadSetDefault();
-	/* numthreads = 1;		// multiple threads aren't helping... */
+	numthreads = 1;		/* multiple threads aren't helping... */
 	SetQdirFromPath(argv[argc-1]);
 
-	strcpy(source, ExpandArg (argv[argc-1]));
+	strcpy(source, ExpandArg(argv[argc-1]));
 	StripExtension(source);
 
 	/* delete portal and line files */
@@ -237,10 +237,12 @@ int main (int argc, char **argv)
 	sprintf(path, "%s.lin", source);
 	remove(path);
 
-	strcpy(name, ExpandArg (argv[argc-1]));
+	strcpy(name, ExpandArg(argv[argc-1]));
 	DefaultExtension(name, ".map");
 
-	sprintf (out, "%s.bsp", source);
+	sprintf(out, "%s.bsp", source);
+
+	Sys_Printf("...map: '%s'\n...bsp: '%s'\n", name, out);
 
 	/* if onlyents, just grab the entites and resave */
 	if (onlyents) {

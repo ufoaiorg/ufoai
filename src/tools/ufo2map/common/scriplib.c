@@ -59,12 +59,12 @@ static void AddScriptToStack (char *filename)
 
 	script++;
 	if (script == &scriptstack[MAX_INCLUDES])
-		Error ("script file exceeded MAX_INCLUDES");
-	strncpy (script->filename, ExpandPath (filename), sizeof(script->filename));
+		Error("script file exceeded MAX_INCLUDES");
+	strncpy(script->filename, ExpandPath(filename), sizeof(script->filename));
 
-	size = LoadFile (script->filename, (void **)&script->buffer);
+	size = LoadFile(script->filename, (void **)&script->buffer);
 
-	Sys_Printf ("entering %s\n", script->filename);
+	Sys_Printf("entering %s\n", script->filename);
 
 	script->line = 1;
 
@@ -79,7 +79,7 @@ static void AddScriptToStack (char *filename)
 extern void LoadScriptFile (char *filename)
 {
 	script = scriptstack;
-	AddScriptToStack (filename);
+	AddScriptToStack(filename);
 
 	endofscript = qfalse;
 }
@@ -193,20 +193,20 @@ skipspace:
 		}
 		script->script_p++;
 	} else	/* regular token */
-		while ( *script->script_p > 32 && *script->script_p != ';') {
+		while (*script->script_p > 32 && *script->script_p != ';') {
 			*token_p++ = *script->script_p++;
 			if (script->script_p == script->end_p)
 				break;
 			if (token_p == &token[MAXTOKEN])
-				Error ("Token too large on line %i\n",scriptline);
+				Error("Token too large on line %i\n",scriptline);
 		}
 
 	*token_p = 0;
 
-	if (!strcmp (token, "$include")) {
-		GetToken (qfalse);
-		AddScriptToStack (token);
-		return GetToken (crossline);
+	if (!strcmp(token, "$include")) {
+		GetToken(qfalse);
+		AddScriptToStack(token);
+		return GetToken(crossline);
 	}
 
 	return qtrue;

@@ -115,16 +115,16 @@ void Error (const char *error, ...)
 	char	text2[1024];
 	int		err;
 
-	err = GetLastError ();
+	err = GetLastError();
 
-	va_start (argptr,error);
-	vsprintf (text, error,argptr);
-	va_end (argptr);
+	va_start(argptr,error);
+	vsprintf(text, error,argptr);
+	va_end(argptr);
 
-	snprintf (text2, sizeof(text2), "%s\nGetLastError() = %i", text, err);
+	snprintf(text2, sizeof(text2), "%s\nGetLastError() = %i", text, err);
 	MessageBox(NULL, text2, "Error", 0 /* MB_OK */ );
 
-	exit (1);
+	exit(1);
 }
 
 #else
@@ -134,15 +134,16 @@ void Error (const char *error, ...)
 void Error (const char *error, ...)
 {
 	va_list argptr;
+	char	text[1024];
 
-	Sys_Printf ("\n************ ERROR ************\n");
+	Sys_Printf("\n************ ERROR ************\n");
 
-	va_start (argptr,error);
-	vprintf (error,argptr);
-	va_end (argptr);
-	Sys_Printf ("%s\n", error);
+	va_start(argptr, error);
+	vsprintf(text, error, argptr);
+	va_end(argptr);
+	Sys_Printf("%s\n", text);
 
-	exit (1);
+	exit(1);
 }
 #endif
 
@@ -197,12 +198,27 @@ void SetQdirFromPath (char *path)
 char *ExpandArg (const char *path)
 {
 	static char full[1024];
+#if 0
+	size_t l;
+	int i;
+#endif
 
 	if (path[0] != '/' && path[0] != '\\' && path[1] != ':') {
 		Q_getwd (full);
 		strcat (full, path);
 	} else
 		strncpy (full, path, sizeof(full));
+
+
+#if 0
+	l = strlen(full);
+
+	/* normalize */
+	for (i = 0; i < l; i++)
+		if (full[i] == '\\')
+			full[i] = '/';
+#endif
+
 	return full;
 }
 
@@ -214,7 +230,7 @@ char *ExpandPath (const char *path)
 	static char full[1024];
 	if (!qdir)
 		Error ("ExpandPath called without qdir set");
-	if (path[0] == PATHSEPERATOR) {
+	if (path[0] == '/' || path[0] == '\\' || path[1] == ':') {
 		strncpy(full, path, sizeof(full));
 		return full;
 	}
@@ -501,7 +517,7 @@ FILE *SafeOpenWrite (const char *filename)
 
 	f = fopen(filename, "wb");
 	if (!f)
-		Error("Error opening %s: %s",filename,strerror(errno));
+		Error("Error opening %s for writing: %s", filename, strerror(errno));
 
 	return f;
 }
@@ -515,7 +531,7 @@ FILE *SafeOpenRead (const char *filename)
 
 	f = fopen(filename, "rb");
 	if (!f)
-		Error("Error opening %s: %s",filename,strerror(errno));
+		Error("Error opening %s for reading: %s", filename, strerror(errno));
 
 	return f;
 }
@@ -548,10 +564,10 @@ qboolean FileExists (const char *filename)
 {
 	FILE	*f;
 
-	f = fopen (filename, "r");
+	f = fopen(filename, "r");
 	if (!f)
 		return qfalse;
-	fclose (f);
+	fclose(f);
 	return qtrue;
 }
 
@@ -559,18 +575,18 @@ qboolean FileExists (const char *filename)
  * @brief
  * @sa SaveFile
  */
-int LoadFile (const char *filename, void **bufferptr)
+extern int LoadFile (const char *filename, void **bufferptr)
 {
 	FILE *f;
 	int length;
 	void *buffer;
 
-	f = SafeOpenRead (filename);
+	f = SafeOpenRead(filename);
 	length = Q_filelength (f);
-	buffer = malloc (length+1);
+	buffer = malloc(length+1);
 	((char *)buffer)[length] = 0;
-	SafeRead (f, buffer, length);
-	fclose (f);
+	SafeRead(f, buffer, length);
+	fclose(f);
 
 	*bufferptr = buffer;
 	return length;
