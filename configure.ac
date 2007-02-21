@@ -9,7 +9,7 @@ AC_ARG_WITH(sdl_config,
 	[], [with_sdl_config=sdl-config])
 
 AC_ARG_WITH(vid_glx,
-	[AS_HELP_STRING([--with-glx], [with GLX support @<:@default=check@:>@])],
+	[AS_HELP_STRING([--with-vid-glx], [with GLX support @<:@default=check@:>@])],
 	[], [with_vid_glx=check])
 
 AC_ARG_WITH(shaders,
@@ -41,11 +41,11 @@ AC_ARG_WITH(snd_dx,
 	[], [with_snd_dx=check])
 
 AC_ARG_WITH(vid_dga,
-	[AS_HELP_STRING([--with-dga], [compile with DGA support  @<:@default=check@:>@])],
+	[AS_HELP_STRING([--with-vid-dga], [compile with DGA support  @<:@default=check@:>@])],
 	[], [with_vid_dga=check])
 
 AC_ARG_WITH(vid_vidmode,
-	[AS_HELP_STRING([--with-vidmode], [compile with vidmode support @<:@default=check@:>@])],
+	[AS_HELP_STRING([--with-vid-vidmode], [compile with vidmode support @<:@default=check@:>@])],
 	[], [with_vid_vidmode=check])
 
 AC_ARG_WITH(ipv6,
@@ -643,7 +643,7 @@ then
 		fi
 	elif test "$with_vid_glx" = "yes"
 	then
-		AC_MSG_ERROR([--with-glx specified but failed find GLX header])
+		AC_MSG_ERROR([--with-vid-glx specified but failed find GLX header])
 	fi
 fi
 
@@ -834,7 +834,7 @@ then
 			AC_DEFINE([HAVE_DGA],1)
 		elif test "$with_vid_dga" = "yes"
 		then
-			AC_MSG_ERROR([--with-dga specified but couldn't find X11/extensions/xf86dga.h])
+			AC_MSG_ERROR([--with-vid-dga specified but couldn't find X11/extensions/xf86dga.h])
 		fi
 	else
 		AC_SUBST([HAVE_DGA1], 1)
@@ -867,11 +867,11 @@ then
 			AC_DEFINE([HAVE_VIDMODE],1)
 		elif test "$with_vid_vidmode" = "yes"
 		then
-			AC_MSG_ERROR([--with-vidmode specified but couldn't find XF86VidModeQueryVersion])
+			AC_MSG_ERROR([--with-vid-vidmode specified but couldn't find XF86VidModeQueryVersion])
 		fi
 	elif test "$with_vid_vidmode" = "yes"
 	then
-		AC_MSG_ERROR([--with-vidmode specified but couldn't find X11/extensions/xf86vmode.h])
+		AC_MSG_ERROR([--with-vid-vidmode specified but couldn't find X11/extensions/xf86vmode.h])
 	fi
 fi
 

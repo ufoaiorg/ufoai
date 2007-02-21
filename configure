@@ -1299,7 +1299,7 @@ Optional Packages:
   --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
   --with-sdl              with SDL support [default=yes]
   --with-sdl-config=FILE  using the given sdl-config [default=sdl-config]
-  --with-glx              with GLX support [default=check]
+  --with-vid-glx          with GLX support [default=check]
   --with-shaders          with OpenGL shader support [default=check]
   --with-snd-sdl          with SDL sound support [default=check]
   --with-snd-alsa         with ALSA sound support [default=check]
@@ -1307,8 +1307,8 @@ Optional Packages:
   --with-snd-arts         with arts sound support [default=check]
   --with-snd-wapi         with wapi sound support [default=check]
   --with-snd-dx           with directX sound support [default=check]
-  --with-dga              compile with DGA support [default=check]
-  --with-vidmode          compile with vidmode support [default=check]
+  --with-vid-dga          compile with DGA support [default=check]
+  --with-vid-vidmode      compile with vidmode support [default=check]
   --with-ipv6             compile with ipv6 support [default=no]
   --with-openal-framework compile with given openal framework
                           [default=/System/Library/Frameworks/OpenAL.framework]
@@ -8450,8 +8450,8 @@ echo "$as_me: WARNING: found GLX headers but couldn't find GLX libraries, GLX wi
 		fi
 	elif test "$with_vid_glx" = "yes"
 	then
-		{ { echo "$as_me:$LINENO: error: --with-glx specified but failed find GLX header" >&5
-echo "$as_me: error: --with-glx specified but failed find GLX header" >&2;}
+		{ { echo "$as_me:$LINENO: error: --with-vid-glx specified but failed find GLX header" >&5
+echo "$as_me: error: --with-vid-glx specified but failed find GLX header" >&2;}
    { (exit 1); exit 1; }; }
 	fi
 fi
@@ -10236,8 +10236,8 @@ _ACEOF
 
 		elif test "$with_vid_dga" = "yes"
 		then
-			{ { echo "$as_me:$LINENO: error: --with-dga specified but couldn't find X11/extensions/xf86dga.h" >&5
-echo "$as_me: error: --with-dga specified but couldn't find X11/extensions/xf86dga.h" >&2;}
+			{ { echo "$as_me:$LINENO: error: --with-vid-dga specified but couldn't find X11/extensions/xf86dga.h" >&5
+echo "$as_me: error: --with-vid-dga specified but couldn't find X11/extensions/xf86dga.h" >&2;}
    { (exit 1); exit 1; }; }
 		fi
 	else
@@ -10451,14 +10451,14 @@ _ACEOF
 
 		elif test "$with_vid_vidmode" = "yes"
 		then
-			{ { echo "$as_me:$LINENO: error: --with-vidmode specified but couldn't find XF86VidModeQueryVersion" >&5
-echo "$as_me: error: --with-vidmode specified but couldn't find XF86VidModeQueryVersion" >&2;}
+			{ { echo "$as_me:$LINENO: error: --with-vid-vidmode specified but couldn't find XF86VidModeQueryVersion" >&5
+echo "$as_me: error: --with-vid-vidmode specified but couldn't find XF86VidModeQueryVersion" >&2;}
    { (exit 1); exit 1; }; }
 		fi
 	elif test "$with_vid_vidmode" = "yes"
 	then
-		{ { echo "$as_me:$LINENO: error: --with-vidmode specified but couldn't find X11/extensions/xf86vmode.h" >&5
-echo "$as_me: error: --with-vidmode specified but couldn't find X11/extensions/xf86vmode.h" >&2;}
+		{ { echo "$as_me:$LINENO: error: --with-vid-vidmode specified but couldn't find X11/extensions/xf86vmode.h" >&5
+echo "$as_me: error: --with-vid-vidmode specified but couldn't find X11/extensions/xf86vmode.h" >&2;}
    { (exit 1); exit 1; }; }
 	fi
 fi
