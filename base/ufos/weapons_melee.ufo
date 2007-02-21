@@ -234,6 +234,7 @@ item plasblade
 	buytype		1
 	thrown		true
 	oneshot true
+	deplete true
 	ammo 1
 
 	weapon_mod plasblade

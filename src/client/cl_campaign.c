@@ -2647,8 +2647,15 @@ extern void CL_CollectItems (int won, int *item_counter, int *credits_gained)
 		case ET_ITEM:
 			if (won)
 				for (item = FLOOR(le); item; item = item->next) {
-					*item_counter += 1;
-					CL_CollectItemAmmo(item, 0, MARKET_AUTOSELL);
+					/* TODO: Currently assumes that item.t is good to use. */
+					if ((item->item.a <= 0)		/* No ammo left and ..*/
+					&& csi.ods[item->item.t].oneshot	/* ... oneshot wepaon and ... */
+					&& csi.ods[item->item.t].deplete) { /* ... useless after ammo is gone. */
+						Com_DPrintf("CL_CollectItems: item not collected: %i\n", csi.ods[item->item.t].name);
+					} else {
+						*item_counter += 1;
+						CL_CollectItemAmmo(item, 0, MARKET_AUTOSELL);
+					}
 				}
 			break;
 		case ET_ACTOR:

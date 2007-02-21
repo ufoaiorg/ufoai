@@ -1029,6 +1029,7 @@ typedef struct objDef_s {
 	byte oneshot;			/**< This weapon contains its own ammo (it is loaded in the base).
 					 ** Don't confuse "oneshot" with "only one shot is possible",
 					 ** the number of the "ammo" value above defines how many shots are possible. */
+	byte deplete;			/**< Is this weapon useless after all ("oneshot") ammo is used up? If true this item will not be collected on mission-end. (see CL_CollectItems) */
 
 	/* Firemodes (per weapon) */
 	char weap_id[MAX_WEAPONS_PER_OBJDEF][MAX_VAR];	/**< List of weapon ids as parsed from the ufo file "weapon_mod <id>" */
