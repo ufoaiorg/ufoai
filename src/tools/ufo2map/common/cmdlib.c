@@ -298,8 +298,8 @@ double I_FloatTime (void)
 void Q_getwd (char *out)
 {
 #ifdef _WIN32
-	_getcwd (out, 256);
-	strcat (out, "\\");
+	_getcwd(out, 256);
+	strcat(out, "\\");
 #else
 	if (getcwd(out, 256) == NULL)
 		Sys_Printf("Warning, getcwd failed\n");
@@ -314,14 +314,14 @@ void Q_getwd (char *out)
 void Q_mkdir (const char *path)
 {
 #ifdef _WIN32
-	if (_mkdir (path) != -1)
+	if (_mkdir(path) != -1)
 		return;
 #else
-	if (mkdir (path, 0777) != -1)
+	if (mkdir(path, 0777) != -1)
 		return;
 #endif
 	if (errno != EEXIST)
-		Error ("mkdir %s: %s",path, strerror(errno));
+		Error("mkdir %s: %s",path, strerror(errno));
 }
 
 /**
@@ -332,7 +332,7 @@ int	FileTime (const char *path)
 {
 	struct stat buf;
 
-	if (stat (path,&buf) == -1)
+	if (stat(path,&buf) == -1)
 		return -1;
 
 	return buf.st_mtime;
@@ -353,7 +353,7 @@ char *COM_Parse (char *data)
 
 	/* skip whitespace */
 skipwhite:
-	while ( (c = *data) <= ' ') {
+	while ((c = *data) <= ' ') {
 		if (c == 0) {
 			com_eof = qtrue;
 			return NULL;			/* end of file; */
@@ -362,7 +362,7 @@ skipwhite:
 	}
 
 	/* skip // comments */
-	if (c=='/' && data[1] == '/') {
+	if (c == '/' && data[1] == '/') {
 		while (*data && *data != '\n')
 			data++;
 		goto skipwhite;
@@ -374,7 +374,7 @@ skipwhite:
 		data++;
 		do {
 			c = *data++;
-			if (c=='\"') {
+			if (c == '\"') {
 				com_token[len] = 0;
 				return data;
 			}
@@ -388,7 +388,7 @@ skipwhite:
 		com_token[len] = c;
 		len++;
 		com_token[len] = 0;
-		return data+1;
+		return data + 1;
 	}
 
 	/* parse a regular word */
@@ -399,7 +399,7 @@ skipwhite:
 		c = *data;
 	if (c=='{' || c=='}'|| c==')'|| c=='(' || c=='\'' || c==':')
 			break;
-	} while (c>32);
+	} while (c > 32);
 
 	com_token[len] = 0;
 	return data;
@@ -437,7 +437,7 @@ int Q_strncasecmp (const char *s1, const char *s2, int n)
  */
 int Q_strcasecmp (const char *s1, const char *s2)
 {
-	return Q_strncasecmp (s1, s2, 99999);
+	return Q_strncasecmp(s1, s2, 99999);
 }
 
 
@@ -485,8 +485,8 @@ int CheckParm (char *check)
 {
 	int i;
 
-	for (i = 1;i<myargc;i++) {
-		if ( !Q_strcasecmp(check, myargv[i]) )
+	for (i = 1; i < myargc; i++) {
+		if (!Q_strcasecmp(check, myargv[i]))
 			return i;
 	}
 
@@ -542,7 +542,7 @@ FILE *SafeOpenRead (const char *filename)
  */
 void SafeRead (FILE *f, void *buffer, int count)
 {
-	if ( fread (buffer, 1, count, f) != (size_t)count)
+	if (fread (buffer, 1, count, f) != (size_t)count)
 		Error("File read failure");
 }
 
@@ -642,7 +642,7 @@ void DefaultExtension (char *path, char *extension)
 	/* (extension should include the .) */
 	src = path + strlen(path) - 1;
 
-	while (*src != PATHSEPERATOR && src != path) {
+	while (*src != '/' && *src != '\\' && src != path) {
 		if (*src == '.')
 			return;                 /* it has an extension */
 		src--;
@@ -658,7 +658,7 @@ void DefaultPath (char *path, char *basepath)
 {
 	char temp[128];
 
-	if (path[0] == PATHSEPERATOR)
+	if (path[0] == '\\' || path[0] == '/' || path[1] == ':')
 		return;                   /* absolute path location */
 	strcpy(temp,path);
 	strcpy(path,basepath);
@@ -674,7 +674,7 @@ void StripFilename (char *path)
 	int length;
 
 	length = strlen(path)-1;
-	while (length > 0 && path[length] != PATHSEPERATOR)
+	while (length > 0 && path[length] != '\\' && path[length] != '/')
 		length--;
 	path[length] = 0;
 }
@@ -689,7 +689,7 @@ void StripExtension (char *path)
 	length = strlen(path)-1;
 	while (length > 0 && path[length] != '.') {
 		length--;
-		if (path[length] == PATHSEPERATOR)
+		if (path[length] == '\\' || path[length] == '/')
 			return;		/* no extension */
 	}
 	if (length)
@@ -726,7 +726,7 @@ void ExtractFileBase (char *path, char *dest)
 	src = path + strlen(path) - 1;
 
 	/* back up until a \ or the start */
-	while (src != path && *(src-1) != PATHSEPERATOR)
+	while (src != path && *(src-1) != '\\' && *(src-1) != '/')
 		src--;
 
 	while (*src && *src != '.') {
@@ -963,7 +963,7 @@ void CreatePath (char *path)
 
 	for (ofs = path + 1; *ofs; ofs++) {
 		c = *ofs;
-		if (c == PATHSEPERATOR) {	/* create the directory */
+		if (c == '/' || c == '\\') {	/* create the directory */
 			*ofs = 0;
 			Q_mkdir (path);
 			*ofs = c;
@@ -980,10 +980,10 @@ void QCopyFile (const char *from, char *to)
 	void	*buffer;
 	int		length;
 
-	length = LoadFile (from, &buffer);
-	CreatePath (to);
-	SaveFile (to, buffer, length);
-	free (buffer);
+	length = LoadFile(from, &buffer);
+	CreatePath(to);
+	SaveFile(to, buffer, length);
+	free(buffer);
 }
 
 /**
@@ -997,9 +997,9 @@ void Sys_FPrintf (int flag, const char *format, ...)
 	if ((flag == SYS_VRB) && (verbose == qfalse))
 		return;
 
-	va_start (argptr, format);
-	vsprintf (out_buffer, format, argptr);
-	va_end (argptr);
+	va_start(argptr, format);
+	vsprintf(out_buffer, format, argptr);
+	va_end(argptr);
 
 	printf(out_buffer);
 }
@@ -1012,9 +1012,9 @@ void Sys_Printf (const char *format, ...)
 	char out_buffer[4096];
 	va_list argptr;
 
-	va_start (argptr, format);
-	vsprintf (out_buffer, format, argptr);
-	va_end (argptr);
+	va_start(argptr, format);
+	vsprintf(out_buffer, format, argptr);
+	va_end(argptr);
 
 	printf(out_buffer);
 }
