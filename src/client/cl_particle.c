@@ -154,7 +154,7 @@ static const const value_t pps[] = {
 	{"fps", V_FLOAT, offsetof(ptl_t, fps)},
 	{"lastframe", V_FLOAT, offsetof(ptl_t, lastFrame)},
 	{"levelflags", V_INT, offsetof(ptl_t, levelFlags)},
-	{"light", V_BOOL, offsetof(ptl_t, light)},
+	{"light", V_INT, offsetof(ptl_t, light)},
 
 	{NULL, 0, 0}
 };
@@ -810,13 +810,17 @@ ptl_t *CL_ParticleSpawn (char *name, int levelFlags, const vec3_t s, const vec3_
 	p->pic = -1;
 	p->model = -1;
 
+	/* copy location */
 	if (s)
 		VectorCopy(s, p->s);
+	/* copy velocity */
 	if (v)
 		VectorCopy(v, p->v);
+	/* copy acceleration */
 	if (a)
 		VectorCopy(a, p->a);
 
+	/* copy levelflags */
 	p->levelFlags = levelFlags;
 
 	/* run init function */
@@ -962,6 +966,9 @@ static void CL_ParticleRun2 (ptl_t *p)
 		p->lastThink -= 1.0 / p->tps;
 	}
 
+	if (p->light)
+		V_AddLight(p->s, p->light, p->color[0], p->color[1], p->color[2]);
+
 	/* animate */
 	while (p->fps && p->lastFrame * p->fps >= 1) {
 		/* advance frame */
@@ -985,10 +992,6 @@ static void CL_ParticleRun2 (ptl_t *p)
 				CL_Fading(p->color, p->thinkFade, p->lastThink * p->tps, p->blend == BLEND_BLEND);
 			if (p->frameFade)
 				CL_Fading(p->color, p->frameFade, p->lastFrame * p->fps, p->blend == BLEND_BLEND);
-	}
-	if (p->light) {
-		V_AddLight(p->s, 256, p->color[0], p->color[1], p->color[2]);
-/*		Com_Printf("Add a light\n");*/
 	}
 }
 
@@ -1147,6 +1150,7 @@ void CL_ParsePtlCmds (char *name, char **text)
 				if (!*text)
 					return;
 
+				/* operate on the top element on the stack */
 				if (token[0] == '#') {
 					pc->ref = RSTACK;
 					if (token[1] == '.')
@@ -1237,7 +1241,6 @@ void CL_ParsePtlCmds (char *name, char **text)
 				token = COM_EParse(text, errhead, name);
 				if (!*text)
 					return;
-
 
 				/* translate set to a push and pop */
 				pc = &ptlCmd[numPtlCmds++];

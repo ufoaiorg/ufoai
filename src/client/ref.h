@@ -223,7 +223,7 @@ typedef struct ptl_s {
 	float t, dt, life;
 	int rounds, roundsCnt;
 	vec3_t a, v, omega;
-	qboolean light;
+	int light;
 } ptl_t;
 
 typedef struct ptlArt_s {

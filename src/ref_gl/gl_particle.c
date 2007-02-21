@@ -235,6 +235,7 @@ extern void R_DrawPtls (void)
 	qglDepthMask(GL_FALSE);
 	qglDisable(GL_CULL_FACE);
 	GLSTATE_ENABLE_BLEND
+/*	GLSTATE_ENABLE_ALPHATEST*/
 	blend_mode = BLEND_REPLACE;
 
 	for (i = 0, p = r_newrefdef.ptls; i < r_newrefdef.num_ptls; i++, p++)
@@ -258,6 +259,7 @@ extern void R_DrawPtls (void)
 		}
 
 	GLSTATE_DISABLE_BLEND
+/*	GLSTATE_DISABLE_ALPHATEST*/
 	qglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	qglEnable(GL_CULL_FACE);
 	qglDepthMask(GL_TRUE);
