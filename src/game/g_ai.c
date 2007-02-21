@@ -174,8 +174,10 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, ai_action_t * aia)
 			continue;
 
 		weap_fds_idx = INV_FiredefsIDXForWeapon(od, weap_idx);
-		/* if od was not null and weap_idx was not NONE - then we have a problem here */
-		assert(weap_fds_idx != -1);
+		/* if od was not null and weap_idx was not NONE - then we have a problem here
+		 * maybe this is only a maptest and thus no scripts parsed */
+		if (weap_fds_idx != -1)
+			continue;
 		/* TODO: is this how it should work? i just added this additional loop but don't know anything about the function */
 		for (fd_idx = 0; fd_idx < od->numFiredefs[weap_fds_idx]; fd_idx++) {
 			fd = &od->fd[weap_fds_idx][fd_idx];

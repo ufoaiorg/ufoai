@@ -497,7 +497,7 @@ extern void CL_ResetParticles (void)
 /**
  * @brief
  */
-void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
+static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 {
 	int s, e;
 	int type;
@@ -810,7 +810,6 @@ ptl_t *CL_ParticleSpawn (char *name, int levelFlags, const vec3_t s, const vec3_
 	p->pic = -1;
 	p->model = -1;
 
-	/* execute init function */
 	if (s)
 		VectorCopy(s, p->s);
 	if (v)
@@ -987,8 +986,10 @@ static void CL_ParticleRun2 (ptl_t *p)
 			if (p->frameFade)
 				CL_Fading(p->color, p->frameFade, p->lastFrame * p->fps, p->blend == BLEND_BLEND);
 	}
-	if (p->light)
+	if (p->light) {
 		V_AddLight(p->s, 256, p->color[0], p->color[1], p->color[2]);
+/*		Com_Printf("Add a light\n");*/
+	}
 }
 
 /**
@@ -1262,12 +1263,13 @@ void CL_ParsePtlCmds (char *name, char **text)
 	memset(pc, 0, sizeof(ptlCmd_t));
 }
 
+#if 0
 /**
  * @brief Searches for the particle index in ptlDef array
  * @param[in] name Name of the particle
  * @return id of the particle in ptlDef array
  */
-int CL_GetParticleIndex (char *name)
+int CL_GetParticleIndex (const char *name)
 {
 	int i;
 
@@ -1283,6 +1285,7 @@ int CL_GetParticleIndex (char *name)
 
 	return i;
 }
+#endif
 
 /**
  * @brief Parses particle definitions from UFO-script files
@@ -1307,9 +1310,14 @@ int CL_ParseParticle (char *name, char **text)
 		pos = i;
 		pd = &ptlDef[i];
 	} else {
-		/* initialize the new particle */
-		pos = numPtlDefs;
-		pd = &ptlDef[numPtlDefs++];
+		if (numPtlDefs < MAX_PTLDEFS - 1) {
+			/* initialize the new particle */
+			pos = numPtlDefs;
+			pd = &ptlDef[numPtlDefs++];
+		} else {
+			Com_Printf("CL_ParseParticle: max particle definitions reached - skip the current one: '%s'\n", name);
+			return -1;
+		}
 	}
 	memset(pd, 0, sizeof(ptlDef_t));
 

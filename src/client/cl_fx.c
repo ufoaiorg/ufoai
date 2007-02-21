@@ -59,7 +59,7 @@ void CL_RunLightStyles (void)
 		return;
 	lastofs = ofs;
 
-	for (i=0,ls=cl_lightstyle; i<MAX_LIGHTSTYLES ; i++, ls++ ) {
+	for (i = 0, ls = cl_lightstyle; i < MAX_LIGHTSTYLES; i++, ls++ ) {
 		if (!ls->length) {
 			ls->value[0] = ls->value[1] = ls->value[2] = 1.0;
 			continue;
@@ -107,7 +107,7 @@ void CL_AddLightStyles (void)
 	clightstyle_t	*ls;
 
 	for (i = 0, ls = cl_lightstyle; i < MAX_LIGHTSTYLES; i++, ls++)
-		V_AddLightStyle (i, ls->value[0], ls->value[1], ls->value[2]);
+		V_AddLightStyle(i, ls->value[0], ls->value[1], ls->value[2]);
 }
 
 /**
@@ -116,6 +116,6 @@ void CL_AddLightStyles (void)
  */
 void CL_ClearEffects (void)
 {
-	memset (cl_lightstyle, 0, sizeof(cl_lightstyle));
+	memset(cl_lightstyle, 0, sizeof(cl_lightstyle));
 	lastofs = -1;
 }

@@ -30,7 +30,6 @@ static vec3_t shadevector;
 float shadelight[3];
 
 static int c_shadow_volumes = 0;
-static int worldlight = 0;
 
 /*
 =============================================
@@ -43,7 +42,7 @@ static int worldlight = 0;
 /**
  * @brief
  */
-static void vectoangles(vec3_t value1, vec3_t angles)
+static void vectoangles (vec3_t value1, vec3_t angles)
 {
 	float forward;
 	float yaw, pitch;
@@ -81,7 +80,7 @@ static qboolean nolight;
 /**
  * @brief
  */
-static void R_ShadowLight(vec3_t pos, vec3_t lightAdd)
+static void R_ShadowLight (vec3_t pos, vec3_t lightAdd)
 {
 	int i;
 	dlight_t *dl;
@@ -362,6 +361,7 @@ static void GL_DrawAliasShadowVolume (dmdl_t * paliashdr, int posenumm)
 	int *order, i, o, dist;
 	vec3_t light, temp;
 	dtriangle_t *t, *tris;
+	int worldlight = 0;
 
 	daliasframe_t *frame, *oldframe;
 	dtrivertx_t *ov, *verts;
@@ -369,6 +369,7 @@ static void GL_DrawAliasShadowVolume (dmdl_t * paliashdr, int posenumm)
 	float cost, sint, is, it;
 	int projected_distance;
 
+	c_shadow_volumes = 0;
 	l = r_newrefdef.dlights;
 
 	if (gl_shadows->integer != 2)
@@ -406,15 +407,19 @@ static void GL_DrawAliasShadowVolume (dmdl_t * paliashdr, int posenumm)
 
 /*	if (clamp) qglEnable(GL_DEPTH_CLAMP_NV); */
 
+/*	qglEnable(GL_CULL_FACE);*/
 	qglDepthMask(qfalse);
 	qglStencilMask(255);
 	qglDepthFunc(GL_LESS);
 
 	if (gl_state.ati_separate_stencil)
+/*		qglStencilFuncSeparateATI(GL_ALWAYS, GL_ALWAYS, 128, 255);*/
 		qglStencilFuncSeparateATI(GL_NOTEQUAL, GL_NOTEQUAL, 128, 255);
 	else
+/*		qglStencilFunc(GL_ALWAYS, 128, 255);*/
 		qglStencilFunc(GL_NOTEQUAL, 128, 255);
-	qglStencilOp(GL_KEEP, GL_KEEP, GL_INCR);
+
+	qglStencilOp(GL_KEEP, GL_KEEP, (gl_state.stencil_wrap ? GL_INCR_WRAP_EXT : GL_INCR));
 
 	for (i = 0; i < r_newrefdef.num_dlights; i++, l++) {
 		if ((l->origin[0] == currententity->origin[0]) && (l->origin[1] == currententity->origin[1]) && (l->origin[2] == currententity->origin[2]))
@@ -457,6 +462,7 @@ static void GL_DrawAliasShadowVolume (dmdl_t * paliashdr, int posenumm)
 		qglDisable(GL_STENCIL_TEST_TWO_SIDE_EXT);
 
 	qglDisable(GL_STENCIL_TEST);
+	qglStencilMask(0);
 
 /* 	if (clamp) qglDisable(GL_DEPTH_CLAMP_NV); */
 
@@ -469,6 +475,7 @@ static void GL_DrawAliasShadowVolume (dmdl_t * paliashdr, int posenumm)
 	qglStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
 	qglDepthMask(qtrue);
 	qglDepthFunc(GL_LEQUAL);
+/*	Com_Printf("worldlight: %i - c_shadow_volumes: %i - dlights: %i\n", worldlight, c_shadow_volumes, r_newrefdef.num_dlights);*/
 }
 
 /**
@@ -606,12 +613,10 @@ void R_DrawShadowVolume (entity_t * e)
 /*	|RF_NOSHADOW|RF_NOSHADOW2 */
 	if (!(currententity->flags & (RF_TRANSLUCENT | RF_WEAPONMODEL))) {
 		qglPushMatrix();
-		{
-			qglDisable(GL_TEXTURE_2D);
-			qglTranslatef(e->origin[0], e->origin[1], e->origin[2]);
-			qglRotatef(e->angles[1], 0, 0, 1);
-			GL_DrawAliasShadowVolume(paliashdr, currententity->as.frame);
-		}
+		qglDisable(GL_TEXTURE_2D);
+		qglTranslatef(e->origin[0], e->origin[1], e->origin[2]);
+		qglRotatef(e->angles[1], 0, 0, 1);
+		GL_DrawAliasShadowVolume(paliashdr, currententity->as.frame);
 		qglEnable(GL_TEXTURE_2D);
 		qglPopMatrix();
 	}
