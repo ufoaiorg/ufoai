@@ -8,7 +8,13 @@ use strict;
 # built, and does not handle the case when qrad3 gets interrupted
 # mid-way.
 
-my $extra = "-bounce 0 -chop 32 -extra";
+my $extra = "-bounce 0 -chop 32 -extra -threads 1";
+
+my $ufo2map = "../../ufo2map";
+
+if ($^O =~ /windows/i || $^O =~ /mswin/i) {
+	$ufo2map .= ".exe";
+}
 
 sub readDir
 {
@@ -36,7 +42,7 @@ sub compile
 	print "...entering $dir\n";
 	foreach ( readDir( $dir ) )
 	{
-		next if $_ =~ /^\.|(CVS)/;
+		next if $_ =~ /^\./;
 		if ( -d "$dir/$_" )
 		{
 			print "...found dir $_\n";
@@ -62,7 +68,7 @@ sub compile
 		unless ( -e "$dir/$_.bsp" )
 		{
 			print "..found $dir/$_\n";
-			if (system("ufo2map $extra $dir/$_") != 0)
+			if (system("$ufo2map $extra $dir/$_") != 0)
 			{
 				die "ufo2map failed";
 			}
@@ -84,10 +90,16 @@ print "Giving base/maps as parameter or start from base/maps\n";
 print "will compile all maps were no bsp-file exists\n";
 print "Keep in mind that ufo2map needs to be in path\n";
 print "=====================================================\n";
+print "Running at: $^O\n";
 
 die "Dir $dir does not exists\n" if ( !-e $dir );
 
+if (!-e "$ufo2map") {
+	print "$ufo2map wasn't found\n";
+	$ufo2map = "ufo2map";
+}
 
+print "Found ufo2map in \"$ufo2map\"\n";
 print "Found ". compile($dir) ." maps\n";
 
 print "...finished\n"
