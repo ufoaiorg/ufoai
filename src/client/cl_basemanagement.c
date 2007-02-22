@@ -167,7 +167,7 @@ static const value_t valid_vars[] = {
  * inc_sensor and dec_sensor are script commands that increase the amount
  * of the radar width for a given base
  */
-void B_SetSensor(void)
+extern void B_SetSensor_f (void)
 {
 	int i = 0;
 	int amount = 0;

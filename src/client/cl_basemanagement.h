@@ -197,7 +197,7 @@ typedef struct base_s {
 /** Currently displayed/accessed base. */
 extern base_t *baseCurrent;
 
-void B_SetSensor(void);
+void B_SetSensor_f(void);
 
 void B_UpdateBaseData(void);
 base_t *B_GetBase(int id);
