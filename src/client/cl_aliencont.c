@@ -140,7 +140,7 @@ void CL_CollectingAliens (void)
 			}
 
 			/* (le->state & STATE_DEAD) includes STATE_STUN */
-			if (le->state & STATE_DEAD) { 
+			if (le->state & STATE_DEAD) {
 				for (j = 0; j < aircraft->alientypes; j++) {
 					/* Search alien type and increase amount */
 					if (Q_strncmp(cargo[j].alientype, teamDesc[teamDescID].name, MAX_VAR) == 0) {
@@ -534,34 +534,34 @@ static void AC_SelectAlien_f (void)
  */
 static qboolean AC_NextAC (void)
 {
-	int i;
+	int i, baseID;
 	qboolean found = qfalse;
 
 	if (!baseCurrent)
 		return qfalse;
 
-	int baseID = baseCurrent->idx;
+	baseID = baseCurrent->idx;
 
-	for (i = (baseID + 1) & (MAX_BASES - 1); i <= gd.numBases; i++) {
+	/* not all maxbases must be founded already */
+	i = (baseID + 1) & (MAX_BASES - 1);
+	if (i >= gd.numBases)
+		i = 0; /* i -= gd.numBases - but 0 should work, too */
+
+	for (; i < gd.numBases; i++) {
 		if (!gd.bases[i].hasAlienCont)
 			continue;
 		if (B_CheckBuildingTypeStatus(&gd.bases[i], B_ALIEN_CONTAINMENT, B_STATUS_WORKING, NULL)) {
 			baseID = i;
 			found = qtrue;
 			break;
-		} else {
-			found = qfalse;
 		}
 	}
 
-	if (!found)
+	/* might still be the case */
+	if (baseID == baseCurrent->idx)
 		return qfalse;
-	else {
-		if (baseID == baseCurrent->idx)
-			return qfalse;
-		else
-			return qtrue;
-	}
+	else
+		return found;
 }
 
 /**
@@ -572,29 +572,32 @@ static qboolean AC_NextAC (void)
  */
 static void AC_NextAC_f (void)
 {
-	int i;
+	int i, baseID;
 	qboolean found = qfalse;
 
 	/* Can be called from everywhere. */
 	if (!baseCurrent ||!curCampaign || !aliencontCurrent)
 		return;
 
-	int baseID = baseCurrent->idx;
+	baseID = baseCurrent->idx;
 
-	for (i = (baseID + 1) & (MAX_BASES - 1); i <= gd.numBases; i++) {
-		if (!gd.bases[i].hasAlienCont)
+	/* not all maxbases must be founded already */
+	i = (baseID + 1) & (MAX_BASES - 1);
+	if (i >= gd.numBases)
+		i = 0; /* i -= gd.numBases - but 0 should work, too */
+
+	for (; i < gd.numBases; i++) {
+		if (!gd.bases[i].founded || !gd.bases[i].hasAlienCont)
 			continue;
 		if (B_CheckBuildingTypeStatus(&gd.bases[i], B_ALIEN_CONTAINMENT, B_STATUS_WORKING, NULL)) {
 			baseID = i;
 			found = qtrue;
 			break;
-		} else {
-			found = qfalse;
 		}
 	}
 
 	if (!found)
-		baseID == baseCurrent->idx;
+		baseID = baseCurrent->idx;
 
 	if (!gd.bases[baseID].founded)
 		return;
@@ -611,34 +614,28 @@ static void AC_NextAC_f (void)
  */
 static qboolean AC_PrevAC (void)
 {
-	int i;
+	int i, baseID;
 	qboolean found = qfalse;
 
 	if (!baseCurrent)
 		return qfalse;
 
-	int baseID = baseCurrent->idx;
+	baseID = baseCurrent->idx;
 
 	for (i = (baseID - 1) & (MAX_BASES - 1); i >= 0; i--) {
-		if (!gd.bases[i].hasAlienCont)
+		if (!gd.bases[i].founded || !gd.bases[i].hasAlienCont)
 			continue;
 		if (B_CheckBuildingTypeStatus(&gd.bases[i], B_ALIEN_CONTAINMENT, B_STATUS_WORKING, NULL)) {
 			baseID = i;
 			found = qtrue;
 			break;
-		} else {
-			found = qfalse;
 		}
 	}
 
-	if (!found)
+	if (baseID == baseCurrent->idx)
 		return qfalse;
-	else {
-		if (baseID == baseCurrent->idx)
-			return qfalse;
-		else
-			return qtrue;
-	}
+	else
+		return found;
 }
 
 /**
@@ -649,14 +646,14 @@ static qboolean AC_PrevAC (void)
  */
 static void AC_PrevAC_f (void)
 {
-	int i;
+	int i, baseID;
 	qboolean found = qfalse;
 
 	/* Can be called from everywhere. */
 	if (!baseCurrent ||!curCampaign || !aliencontCurrent)
-		return qfalse;
+		return;
 
-	int baseID = baseCurrent->idx;
+	baseID = baseCurrent->idx;
 
 	for (i = (baseID - 1) & (MAX_BASES - 1); i >= 0; i--) {
 		if (!gd.bases[i].hasAlienCont)
@@ -665,13 +662,11 @@ static void AC_PrevAC_f (void)
 			baseID = i;
 			found = qtrue;
 			break;
-		} else {
-			found = qfalse;
 		}
 	}
 
 	if (!found)
-		baseID == baseCurrent->idx;
+		baseID = baseCurrent->idx;
 
 	if (!gd.bases[baseID].founded)
 		return;
@@ -710,7 +705,7 @@ static void AC_KillAll_f (void)
 		return;
 
 	AL_RemoveAliens(0, 0, AL_KILL);
-	
+
 	/* Reinit menu to display proper values. */
 	AC_SelectAlien_f();
 	Cbuf_AddText("aliencont_init\n");
