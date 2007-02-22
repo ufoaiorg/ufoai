@@ -265,8 +265,6 @@ int main (int argc, char **argv)
 		SetLightStyles();
 
 		ProcessModels();
-		if (noradiosity)
-			WriteBSPFile(out);
 	}
 
 	end = I_FloatTime ();

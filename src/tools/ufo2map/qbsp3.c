@@ -47,8 +47,6 @@ qboolean	nobackclip;
 char outbase[32];
 int block_xl = -8, block_xh = 7, block_yl = -8, block_yh = 7;
 int entity_num;
-vec3_t g_mins, g_maxs;
-int level;
 
 
 #define NUMMODELS 258

@@ -9,7 +9,6 @@ extern	dmodel_t	dmodels[MAX_MAP_MODELS];
 
 extern	int			routedatasize;
 extern	byte		droutedata[MAX_MAP_ROUTING];
-/*extern	dvis_t		*dvis; */
 
 extern	int			lightdatasize;
 extern	byte		dlightdata[MAX_MAP_LIGHTING];
@@ -43,12 +42,6 @@ extern	unsigned short	dleafbrushes[MAX_MAP_LEAFBRUSHES];
 
 extern	int			numsurfedges;
 extern	int			dsurfedges[MAX_MAP_SURFEDGES];
-
-extern	int			numareas;
-extern	darea_t		dareas[MAX_MAP_AREAS];
-
-extern	int			numareaportals;
-extern	dareaportal_t	dareaportals[MAX_MAP_AREAPORTALS];
 
 extern	int			numbrushes;
 extern	dbrush_t	dbrushes[MAX_MAP_BRUSHES];

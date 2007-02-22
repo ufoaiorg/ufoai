@@ -78,14 +78,6 @@ dbrush_t dbrushes[MAX_MAP_BRUSHES];
 int numbrushsides;
 dbrushside_t dbrushsides[MAX_MAP_BRUSHSIDES];
 
-int numareas;
-darea_t dareas[MAX_MAP_AREAS];
-
-int numareaportals;
-dareaportal_t dareaportals[MAX_MAP_AREAPORTALS];
-
-static byte dpop[256];
-
 /**
  * @brief Compress the routing data of a map
  * @sa DeCompressRouting
@@ -100,12 +92,12 @@ extern byte *CompressRouting( byte *dataStart, byte *destStart, int l )
 	data = dataStart;
 	dend = dataStart + l;
 
-	while ( data < dend ) {
-		if ( data+1 < dend && *data == *(data+1) ) {
+	while (data < dend) {
+		if (data + 1 < dend && *data == *(data + 1)) {
 			/* repetitions */
 			val = *data++;
 			c = 0;
-			while ( data+1 < dend && *data == *(data+1) ) {
+			while (data + 1 < dend && *data == *(data + 1)) {
 				if (c >= 0x7F)
 					break;
 				data++;
@@ -117,7 +109,7 @@ extern byte *CompressRouting( byte *dataStart, byte *destStart, int l )
 			/* identities */
 			count_p = dest_p++;
 			c = 0;
-			while ( (data+1 < dend && *data != *(data+1)) || data == dend-1 ) {
+			while ((data + 1 < dend && *data != *(data + 1)) || data == dend - 1) {
 				if (c >= 0x7F)
 					break;
 				*dest_p++ = *data++;
@@ -148,17 +140,17 @@ extern int DeCompressRouting( byte **source, byte *dataStart )
 	data_p = dataStart;
 	src = *source;
 
-	while ( *src ) {
-		if ( *src & 0x80 ) {
+	while (*src) {
+		if (*src & 0x80) {
 			/* repetitions */
 			c = *src++ & ~0x80;
-			for ( i = 0; i < c+1; i++ )
+			for (i = 0; i < c+1; i++)
 				*data_p++ = *src;
 			src++;
 		} else {
 			/* identities */
 			c = *src++;
-			for ( i = 0; i < c; i++ )
+			for (i = 0; i < c; i++)
 				*data_p++ = *src++;
 		}
 	}
@@ -178,7 +170,6 @@ static void SwapBSPFile (qboolean todisk)
 	int i, j;
 	dmodel_t *d;
 
-
 	/* models	 */
 	for (i = 0; i < nummodels; i++) {
 		d = &dmodels[i];
@@ -197,21 +188,21 @@ static void SwapBSPFile (qboolean todisk)
 	/* vertexes */
 	for (i = 0; i < numvertexes; i++) {
 		for (j = 0; j < 3; j++)
-			dvertexes[i].point[j] = LittleFloat (dvertexes[i].point[j]);
+			dvertexes[i].point[j] = LittleFloat(dvertexes[i].point[j]);
 	}
 
 	/* planes */
 	for (i = 0; i < numplanes; i++) {
 		for (j = 0; j < 3; j++)
-			dplanes[i].normal[j] = LittleFloat (dplanes[i].normal[j]);
-		dplanes[i].dist = LittleFloat (dplanes[i].dist);
+			dplanes[i].normal[j] = LittleFloat(dplanes[i].normal[j]);
+		dplanes[i].dist = LittleFloat(dplanes[i].dist);
 		dplanes[i].type = LittleLong(dplanes[i].type);
 	}
 
 	/* texinfos */
 	for (i = 0; i < numtexinfo; i++) {
 		for (j = 0; j < 8; j++)
-			texinfo[i].vecs[0][j] = LittleFloat (texinfo[i].vecs[0][j]);
+			texinfo[i].vecs[0][j] = LittleFloat(texinfo[i].vecs[0][j]);
 		texinfo[i].flags = LittleLong(texinfo[i].flags);
 		texinfo[i].value = LittleLong(texinfo[i].value);
 		texinfo[i].nexttexinfo = LittleLong(texinfo[i].nexttexinfo);
@@ -281,18 +272,6 @@ static void SwapBSPFile (qboolean todisk)
 		dbrushes[i].contents = LittleLong(dbrushes[i].contents);
 	}
 
-	/* areas */
-	for (i = 0 ; i < numareas; i++) {
-		dareas[i].numareaportals = LittleLong(dareas[i].numareaportals);
-		dareas[i].firstareaportal = LittleLong(dareas[i].firstareaportal);
-	}
-
-	/* areasportals */
-	for (i = 0 ; i < numareaportals; i++) {
-		dareaportals[i].portalnum = LittleLong(dareaportals[i].portalnum);
-		dareaportals[i].otherarea = LittleLong(dareaportals[i].otherarea);
-	}
-
 	/* brushsides */
 	for (i = 0; i < numbrushsides; i++) {
 		dbrushsides[i].planenum = LittleShort(dbrushsides[i].planenum);
@@ -329,7 +308,7 @@ static int CopyLump (int lump, void *dest, int size)
 	if (length % size)
 		Error("LoadBSPFile: odd lump size");
 
-	memcpy (dest, (byte *)header + ofs, length);
+	memcpy(dest, (byte *)header + ofs, length);
 
 	return length / size;
 }
@@ -366,19 +345,15 @@ extern void LoadBSPFile (char *filename)
 	numedges = CopyLump(LUMP_EDGES, dedges, sizeof(dedge_t));
 	numbrushes = CopyLump(LUMP_BRUSHES, dbrushes, sizeof(dbrush_t));
 	numbrushsides = CopyLump(LUMP_BRUSHSIDES, dbrushsides, sizeof(dbrushside_t));
-	numareas = CopyLump(LUMP_AREAS, dareas, sizeof(darea_t));
-	numareaportals = CopyLump(LUMP_AREAPORTALS, dareaportals, sizeof(dareaportal_t));
 
 	routedatasize = CopyLump(LUMP_ROUTING, droutedata, 1);
 	lightdatasize = CopyLump(LUMP_LIGHTING, dlightdata, 1);
 	entdatasize = CopyLump(LUMP_ENTITIES, dentdata, 1);
 
-	CopyLump(LUMP_POP, dpop, 1);
-
 	free(header);		/* everything has been copied out */
 
 	/* swap everything */
-	SwapBSPFile (qfalse);
+	SwapBSPFile(qfalse);
 }
 
 
@@ -470,14 +445,11 @@ extern void WriteBSPFile (const char *filename)
 	AddLump(LUMP_SURFEDGES, dsurfedges, numsurfedges*sizeof(dsurfedges[0]));
 	AddLump(LUMP_EDGES, dedges, numedges*sizeof(dedge_t));
 	AddLump(LUMP_MODELS, dmodels, nummodels*sizeof(dmodel_t));
-	AddLump(LUMP_AREAS, dareas, numareas*sizeof(darea_t));
-	AddLump(LUMP_AREAPORTALS, dareaportals, numareaportals*sizeof(dareaportal_t));
 
 	AddLump(LUMP_LIGHTING, dlightdata, lightdatasize);
 	/* removed LUMP_VISIBILITY and use LUMP_ROUTING */
 	AddLump(LUMP_ROUTING, droutedata, routedatasize);
 	AddLump(LUMP_ENTITIES, dentdata, entdatasize);
-	AddLump(LUMP_POP, dpop, sizeof(dpop));
 
 	fseek(wadfile, 0, SEEK_SET);
 	SafeWrite(wadfile, header, sizeof(dheader_t));
@@ -491,7 +463,7 @@ extern void WriteBSPFile (const char *filename)
 extern void PrintBSPFileSizes (void)
 {
 	if (!num_entities)
-		ParseEntities ();
+		ParseEntities();
 
 	Sys_Printf("%5i models       %7i\n"
 		,nummodels, (int)(nummodels*sizeof(dmodel_t)));
@@ -554,20 +526,20 @@ extern epair_t *ParseEpair (void)
 {
 	epair_t	*e;
 
-	e = malloc (sizeof(epair_t));
-	memset (e, 0, sizeof(epair_t));
+	e = malloc(sizeof(epair_t));
+	memset(e, 0, sizeof(epair_t));
 
-	if (strlen(token) >= MAX_KEY-1)
+	if (strlen(token) >= MAX_KEY - 1)
 		Error("ParseEpar: token too long");
 	e->key = copystring(token);
-	GetToken (qfalse);
-	if (strlen(token) >= MAX_VALUE-1)
+	GetToken(qfalse);
+	if (strlen(token) >= MAX_VALUE - 1)
 		Error("ParseEpar: token too long");
 	e->value = copystring(token);
 
 	/* strip trailing spaces */
-	StripTrailing (e->key);
-	StripTrailing (e->value);
+	StripTrailing(e->key);
+	StripTrailing(e->value);
 
 	return e;
 }
@@ -582,22 +554,22 @@ static qboolean ParseEntity (void)
 	epair_t		*e;
 	entity_t	*mapent;
 
-	if (!GetToken (qtrue))
+	if (!GetToken(qtrue))
 		return qfalse;
 
-	if (strcmp (token, "{") )
+	if (strcmp(token, "{"))
 		Error("ParseEntity: { not found");
 
-	if (num_entities == MAX_MAP_ENTITIES)
-		Error("num_entities == MAX_MAP_ENTITIES");
+	if (num_entities >= MAX_MAP_ENTITIES)
+		Error("num_entities >= MAX_MAP_ENTITIES (%i)", num_entities);
 
 	mapent = &entities[num_entities];
 	num_entities++;
 
 	do {
-		if (!GetToken (qtrue))
+		if (!GetToken(qtrue))
 			Error("ParseEntity: EOF without closing brace");
-		if (!strcmp (token, "}") )
+		if (!strcmp(token, "}") )
 			break;
 		e = ParseEpair ();
 		e->next = mapent->epairs;
@@ -615,10 +587,9 @@ static qboolean ParseEntity (void)
 extern void ParseEntities (void)
 {
 	num_entities = 0;
-	ParseFromMemory (dentdata, entdatasize);
+	ParseFromMemory(dentdata, entdatasize);
 
-	while (ParseEntity ())
-	{
+	while (ParseEntity()) {
 	}
 }
 
@@ -647,17 +618,17 @@ extern void UnparseEntities (void)
 		strcat (end,"{\n");
 		end += 2;
 
-		for (ep = entities[i].epairs ; ep ; ep=ep->next) {
-			strncpy (key, ep->key, sizeof(key));
-			StripTrailing (key);
-			strncpy (value, ep->value, sizeof(value));
-			StripTrailing (value);
+		for (ep = entities[i].epairs; ep; ep = ep->next) {
+			strncpy(key, ep->key, sizeof(key));
+			StripTrailing(key);
+			strncpy(value, ep->value, sizeof(value));
+			StripTrailing(value);
 
-			snprintf (line, sizeof(line), "\"%s\" \"%s\"\n", key, value);
-			strcat (end, line);
+			snprintf(line, sizeof(line), "\"%s\" \"%s\"\n", key, value);
+			strcat(end, line);
 			end += strlen(line);
 		}
-		strcat (end,"}\n");
+		strcat(end,"}\n");
 		end += 2;
 
 		if (end > buf + MAX_MAP_ENTSTRING)
@@ -707,8 +678,8 @@ extern char *ValueForKey (entity_t *ent, char *key)
 {
 	epair_t *ep;
 
-	for (ep=ent->epairs ; ep ; ep=ep->next)
-		if (!strcmp (ep->key, key) )
+	for (ep = ent->epairs; ep; ep = ep->next)
+		if (!strcmp(ep->key, key) )
 			return ep->value;
 	return "";
 }
@@ -720,7 +691,7 @@ extern vec_t FloatForKey (entity_t *ent, char *key)
 {
 	char *k;
 
-	k = ValueForKey (ent, key);
+	k = ValueForKey(ent, key);
 	return atof(k);
 }
 
@@ -732,10 +703,10 @@ extern void GetVectorForKey (entity_t *ent, char *key, vec3_t vec)
 	char *k;
 	double v1, v2, v3;
 
-	k = ValueForKey (ent, key);
+	k = ValueForKey(ent, key);
 	/* scanf into doubles, then assign, so it is vec_t size independent */
 	v1 = v2 = v3 = 0;
-	sscanf (k, "%lf %lf %lf", &v1, &v2, &v3);
+	sscanf(k, "%lf %lf %lf", &v1, &v2, &v3);
 	vec[0] = v1;
 	vec[1] = v2;
 	vec[2] = v3;

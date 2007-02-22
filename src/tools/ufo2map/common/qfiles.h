@@ -248,9 +248,6 @@ typedef struct
 #define	LUMP_MODELS			13
 #define	LUMP_BRUSHES		14
 #define	LUMP_BRUSHSIDES		15
-#define	LUMP_POP			16
-#define	LUMP_AREAS			17
-#define	LUMP_AREAPORTALS	18
 #define	HEADER_LUMPS		19
 
 typedef struct
@@ -420,19 +417,3 @@ typedef struct
 
 #define	ANGLE_UP	-1
 #define	ANGLE_DOWN	-2
-
-
-/* each area has a list of portals that lead into other areas */
-/* when portals are closed, other areas may not be visible or */
-/* hearable even if the vis info says that it should be */
-typedef struct
-{
-	int		portalnum;
-	int		otherarea;
-} dareaportal_t;
-
-typedef struct
-{
-	int		numareaportals;
-	int		firstareaportal;
-} darea_t;
