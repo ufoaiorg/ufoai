@@ -74,16 +74,17 @@ menu aliencont
 		click	{ cmd mn_pop }
 	}
 
-	//TODO
+	confunc aliencont_prevbb { *bt_alc_prevbase image menu/button_aliencont1 }
+	confunc aliencont_prevbg { *bt_alc_prevbase image menu/button_aliencont2 }
+
 	pic bt_alc_prevbase
 	{
-		tooltip	"TODO"
-		image	menu/button_aliencont1
+		tooltip	"_Previous Alien Containment"
 		mousefx	true
 		pos	"610 692"
 		texl	"0 0"
 		texh	"32 64"
-		click	{ cmd mn_pop }
+		click	{ cmd aliencont_prevbase }
 	}
 
 	confunc aliencont_researchb { *bt_alc_research image menu/button_aliencont1 }
@@ -104,7 +105,7 @@ menu aliencont
 
 	pic bt_alc_ufopedia
 	{
-		tooltip	"_Check UFOpedia Entry"
+		tooltip	"_Check UFOpedia entry"
 		mousefx	true
 		pos	"720 694"
 		texl	"64 0"
@@ -125,16 +126,17 @@ menu aliencont
 		click	{ cmd aliencont_killall }
 	}
 
-	//TODO
+	confunc aliencont_nextbb { *bt_alc_nextbase image menu/button_aliencont1 }
+	confunc aliencont_nextbg { *bt_alc_nextbase image menu/button_aliencont2 }
+
 	pic bt_alc_nextbase
 	{
-		tooltip	"TODO"
-		image	menu/button_aliencont1
+		tooltip	"_Next Alien Containment"
 		mousefx	true
 		pos	"860 692"
 		texl	"32 0"
 		texh	"64 64"
-		click	{ cmd mn_pop }
+		click	{ cmd aliencont_nextbase }
 	}
 
 	// ==================

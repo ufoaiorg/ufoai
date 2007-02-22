@@ -526,6 +526,160 @@ static void AC_SelectAlien_f (void)
 }
 
 /**
+ * @brief Check if there is working Alien Containment in next base.
+ * @sa AC_PrevAC
+ * @sa AC_PrevAC_f
+ * @sa AC_NextAC_f
+ * @return qtrue if there is working Alien Containment in next base.
+ */
+static qboolean AC_NextAC (void)
+{
+	int i;
+	qboolean found = qfalse;
+
+	if (!baseCurrent)
+		return qfalse;
+
+	int baseID = baseCurrent->idx;
+
+	for (i = (baseID + 1) & (MAX_BASES - 1); i <= gd.numBases; i++) {
+		if (!gd.bases[i].hasAlienCont)
+			continue;
+		if (B_CheckBuildingTypeStatus(&gd.bases[i], B_ALIEN_CONTAINMENT, B_STATUS_WORKING, NULL)) {
+			baseID = i;
+			found = qtrue;
+			break;
+		} else {
+			found = qfalse;
+		}
+	}
+
+	if (!found)
+		return qfalse;
+	else {
+		if (baseID == baseCurrent->idx)
+			return qfalse;
+		else
+			return qtrue;
+	}
+}
+
+/**
+ * @brief Open menu for next Alien Containment.
+ * @sa AC_NextAC
+ * @sa AC_PrevAC
+ * @sa AC_PrevAC_f
+ */
+static void AC_NextAC_f (void)
+{
+	int i;
+	qboolean found = qfalse;
+
+	/* Can be called from everywhere. */
+	if (!baseCurrent ||!curCampaign || !aliencontCurrent)
+		return;
+
+	int baseID = baseCurrent->idx;
+
+	for (i = (baseID + 1) & (MAX_BASES - 1); i <= gd.numBases; i++) {
+		if (!gd.bases[i].hasAlienCont)
+			continue;
+		if (B_CheckBuildingTypeStatus(&gd.bases[i], B_ALIEN_CONTAINMENT, B_STATUS_WORKING, NULL)) {
+			baseID = i;
+			found = qtrue;
+			break;
+		} else {
+			found = qfalse;
+		}
+	}
+
+	if (!found)
+		baseID == baseCurrent->idx;
+
+	if (!gd.bases[baseID].founded)
+		return;
+	else
+		Cbuf_AddText(va("mn_pop;mn_select_base %i;mn_push aliencont\n", baseID));
+}
+
+/**
+ * @brief Check if there is working Alien Containment in previous base.
+ * @sa AC_PrevAC_f
+ * @sa AC_NextAC
+ * @sa AC_NextAC_f
+ * @return qtrue if there is working Alien Containment in previous base.
+ */
+static qboolean AC_PrevAC (void)
+{
+	int i;
+	qboolean found = qfalse;
+
+	if (!baseCurrent)
+		return qfalse;
+
+	int baseID = baseCurrent->idx;
+
+	for (i = (baseID - 1) & (MAX_BASES - 1); i >= 0; i--) {
+		if (!gd.bases[i].hasAlienCont)
+			continue;
+		if (B_CheckBuildingTypeStatus(&gd.bases[i], B_ALIEN_CONTAINMENT, B_STATUS_WORKING, NULL)) {
+			baseID = i;
+			found = qtrue;
+			break;
+		} else {
+			found = qfalse;
+		}
+	}
+
+	if (!found)
+		return qfalse;
+	else {
+		if (baseID == baseCurrent->idx)
+			return qfalse;
+		else
+			return qtrue;
+	}
+}
+
+/**
+ * @brief Open menu for previous Alien Containment.
+ * @sa AC_PrevAC
+ * @sa AC_NextAC
+ * @sa AC_NextAC_f
+ */
+static void AC_PrevAC_f (void)
+{
+	int i;
+	qboolean found = qfalse;
+
+	/* Can be called from everywhere. */
+	if (!baseCurrent ||!curCampaign || !aliencontCurrent)
+		return qfalse;
+
+	int baseID = baseCurrent->idx;
+
+	for (i = (baseID - 1) & (MAX_BASES - 1); i >= 0; i--) {
+		if (!gd.bases[i].hasAlienCont)
+			continue;
+		if (B_CheckBuildingTypeStatus(&gd.bases[i], B_ALIEN_CONTAINMENT, B_STATUS_WORKING, NULL)) {
+			baseID = i;
+			found = qtrue;
+			break;
+		} else {
+			found = qfalse;
+		}
+	}
+
+	if (!found)
+		baseID == baseCurrent->idx;
+
+	if (!gd.bases[baseID].founded)
+		return;
+	else
+		Cbuf_AddText(va("mn_pop;mn_select_base %i;mn_push aliencont\n", baseID));
+}
+
+/**
  * @brief Call UFOpedia for selected alien.
  */
 static void AC_OpenUFOpedia_f (void)
@@ -558,6 +712,7 @@ static void AC_KillAll_f (void)
 	AL_RemoveAliens(0, 0, AL_KILL);
 	
 	/* Reinit menu to display proper values. */
+	AC_SelectAlien_f();
 	Cbuf_AddText("aliencont_init\n");
 }
 
@@ -647,6 +802,16 @@ static void AC_Init (void)
 	/* By default Research and UFOpedia buttons should be disabled. */
 	Cbuf_AddText("aliencont_researchg;aliencont_ufopediag\n");
 
+	/* State of next and prev AC buttons. */
+	if (AC_NextAC())
+		Cbuf_AddText("aliencont_nextbb\n");
+	else
+		Cbuf_AddText("aliencont_nextbg\n");
+	if (AC_PrevAC())
+		Cbuf_AddText("aliencont_prevbb\n");
+	else
+		Cbuf_AddText("aliencont_prevbg\n");
+
 	Cvar_SetValue("mn_al_globalamount", AL_CountAll());
 	Cvar_SetValue("mn_al_localamount", AL_CountInBase());
 	Cvar_Set("mn_al_base", baseCurrent->name);
@@ -710,11 +875,10 @@ extern void AC_Reset (void)
 	Cmd_AddCommand("aliencontlist_click", AC_AlienListClick_f, "Click function for aliencont list");
 	Cmd_AddCommand("aliencont_select", AC_SelectAlien_f, "Updates the menu cvars for the current selected alien");
 	Cmd_AddCommand("aliencont_pedia", AC_OpenUFOpedia_f, "Opens UFOpedia entry for selected alien");
-	Cmd_AddCommand("aliencont_killall", AC_KillAll_f, "Kill all aliens in current base");
+	Cmd_AddCommand("aliencont_killall", AC_KillAll_f, "Kills all aliens in current base");
 	Cmd_AddCommand("aliencont_research", AC_ResearchAlien_f, "Opens research menu");
-
-	/* add cvars */
-	/* TODO */
+	Cmd_AddCommand("aliencont_nextbase", AC_NextAC_f, "Opens Alien Containment menu in next base");
+	Cmd_AddCommand("aliencont_prevbase", AC_PrevAC_f, "Opens Alien Containment menu in previous base");
 
 	memset(aliencontText, 0, sizeof(aliencontText));
 	aliencontCurrent = NULL;
