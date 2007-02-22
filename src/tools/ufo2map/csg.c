@@ -166,40 +166,40 @@ static bspbrush_t *ClipBrushToBox (bspbrush_t *brush, vec3_t clipmins, vec3_t cl
 static qboolean IsInLevel( int contents, int level )
 {
 	/* special levels */
-	if ( level == 256 ) {
+	if (level == 256) {
 		if (contents & CONTENTS_WEAPONCLIP)
 			return qtrue;
 		else
 			return qfalse;
 	}
 
-	if ( level == 257 ) {
+	if (level == 257) {
 		if (contents & CONTENTS_ACTORCLIP)
 			return qtrue;
 		else
 			return qfalse;
 	}
 
-	if ( level == 258 ) {
+	if (level == 258) {
 		if (contents & CONTENTS_STEPON)
 			return qtrue;
 		else
 			return qfalse;
 	}
 
-	if (contents & MASK_CLIP )
+	if (contents & MASK_CLIP)
 		return qfalse;
 
 	/* standard levels */
-	if ( level == -1 )
+	if (level == -1)
 		return qtrue;
-	else if ( level ) {
-		if ( ((contents >> 8) & 0xFF) == level )
+	else if (level) {
+		if (((contents >> 8) & 0xFF) == level)
 			return qtrue;
 		else
 			return qfalse;
 	} else {
-		if ( contents & 0xFF00 )
+		if (contents & 0xFF00)
 			return qfalse;
 		else
 			return qtrue;
@@ -210,35 +210,35 @@ static qboolean IsInLevel( int contents, int level )
 /**
  * @brief
  */
-extern int MapBrushesBounds( int startbrush, int endbrush, int level, vec3_t clipmins, vec3_t clipmaxs, vec3_t mins, vec3_t maxs )
+extern int MapBrushesBounds (int startbrush, int endbrush, int level, vec3_t clipmins, vec3_t clipmaxs, vec3_t mins, vec3_t maxs)
 {
 	mapbrush_t	*b;
 	int		i, j, num;
 
-	ClearBounds( mins, maxs );
+	ClearBounds(mins, maxs);
 	num = 0;
 
-	for ( i = startbrush; i < endbrush; i++ ) {
+	for (i = startbrush; i < endbrush; i++) {
 		b = &mapbrushes[i];
 
 		/* don't use finished brushes again */
-		if ( b->finished )
+		if (b->finished)
 			continue;
 
-		if ( !IsInLevel( b->contents, level ) )
+		if (!IsInLevel(b->contents, level))
 			continue;
 
 		/* check the bounds */
-		for (j=0 ; j<3 ; j++)
+		for (j = 0; j < 3; j++)
 			if (b->mins[j] < clipmins[j]
-			|| b->maxs[j] > clipmaxs[j])
+			 || b->maxs[j] > clipmaxs[j])
 			break;
 		if (j != 3)
 			continue;
 
 		num++;
-		AddPointToBounds( b->mins, mins, maxs );
-		AddPointToBounds( b->maxs, mins, maxs );
+		AddPointToBounds(b->mins, mins, maxs);
+		AddPointToBounds(b->maxs, mins, maxs);
 	}
 
 	return num;
@@ -260,26 +260,26 @@ extern bspbrush_t *MakeBspBrushList (int startbrush, int endbrush, int level, ve
 	vec3_t		normal;
 	float		dist;
 
-	for (i=0 ; i<2 ; i++) {
-		VectorClear (normal);
+	for (i = 0; i < 2; i++) {
+		VectorClear(normal);
 		normal[i] = 1;
 		dist = clipmaxs[i];
-		maxplanenums[i] = FindFloatPlane (normal, dist);
+		maxplanenums[i] = FindFloatPlane(normal, dist);
 		dist = clipmins[i];
-		minplanenums[i] = FindFloatPlane (normal, dist);
+		minplanenums[i] = FindFloatPlane(normal, dist);
 	}
 
 	brushlist = NULL;
 	c_faces = 0;
 	c_brushes = 0;
 
-	for (i=startbrush ; i<endbrush ; i++) {
+	for (i = startbrush; i < endbrush; i++) {
 		mb = &mapbrushes[i];
 
-		if ( !IsInLevel( mb->contents, level ) )
+		if (!IsInLevel(mb->contents, level))
 			continue;
 
-		if ( mb->finished )
+		if (mb->finished)
 			continue;
 
 		numsides = mb->numsides;
@@ -287,13 +287,13 @@ extern bspbrush_t *MakeBspBrushList (int startbrush, int endbrush, int level, ve
 			continue;
 		/* make sure the brush has at least one face showing */
 		vis = 0;
-		for (j=0 ; j<numsides ; j++)
+		for (j = 0; j < numsides; j++)
 			if (mb->original_sides[j].visible && mb->original_sides[j].winding)
 				vis++;
 		/* if the brush is outside the clip area, skip it */
-		for (j=0 ; j<3 ; j++)
+		for (j = 0; j < 3; j++)
 			if (mb->mins[j] < clipmins[j]
-			|| mb->maxs[j] > clipmaxs[j])
+			 || mb->maxs[j] > clipmaxs[j])
 			break;
 		if (j != 3)
 			continue;
@@ -301,21 +301,21 @@ extern bspbrush_t *MakeBspBrushList (int startbrush, int endbrush, int level, ve
 		mb->finished = qtrue;
 
 		/* make a copy of the brush */
-		newbrush = AllocBrush (mb->numsides);
+		newbrush = AllocBrush(mb->numsides);
 		newbrush->original = mb;
 		newbrush->numsides = mb->numsides;
-		memcpy (newbrush->sides, mb->original_sides, numsides*sizeof(side_t));
-		for (j=0 ; j<numsides ; j++) {
+		memcpy(newbrush->sides, mb->original_sides, numsides * sizeof(side_t));
+		for (j = 0; j < numsides; j++) {
 			if (newbrush->sides[j].winding)
-				newbrush->sides[j].winding = CopyWinding (newbrush->sides[j].winding);
+				newbrush->sides[j].winding = CopyWinding(newbrush->sides[j].winding);
 			if (newbrush->sides[j].surf & SURF_HINT)
 				newbrush->sides[j].visible = qtrue; /* hints are always visible */
 		}
-		VectorCopy (mb->mins, newbrush->mins);
-		VectorCopy (mb->maxs, newbrush->maxs);
+		VectorCopy(mb->mins, newbrush->mins);
+		VectorCopy(mb->maxs, newbrush->maxs);
 
 		/* carve off anything outside the clip box */
-		newbrush = ClipBrushToBox (newbrush, clipmins, clipmaxs);
+		newbrush = ClipBrushToBox(newbrush, clipmins, clipmaxs);
 		if (!newbrush)
 			continue;
 
@@ -336,7 +336,7 @@ static bspbrush_t *AddBrushListToTail (bspbrush_t *list, bspbrush_t *tail)
 {
 	bspbrush_t	*walk, *next;
 
-	for (walk=list ; walk ; walk=next) {	/* add to end of list */
+	for (walk = list; walk; walk = next) {	/* add to end of list */
 		next = walk->next;
 		walk->next = NULL;
 		tail->next = walk;
@@ -356,10 +356,10 @@ static bspbrush_t *CullList (bspbrush_t *list, bspbrush_t *skip1)
 
 	newlist = NULL;
 
-	for ( ; list ; list = next) {
+	for (; list; list = next) {
 		next = list->next;
 		if (list == skip1) {
-			FreeBrush (list);
+			FreeBrush(list);
 			continue;
 		}
 		list->next = newlist;
@@ -374,8 +374,8 @@ static bspbrush_t *CullList (bspbrush_t *list, bspbrush_t *skip1)
 static qboolean BrushGE (bspbrush_t *b1, bspbrush_t *b2)
 {
 	/* detail brushes never bite structural brushes */
-	if ( (b1->original->contents & CONTENTS_DETAIL)
-		&& !(b2->original->contents & CONTENTS_DETAIL) )
+	if ((b1->original->contents & CONTENTS_DETAIL)
+		&& !(b2->original->contents & CONTENTS_DETAIL))
 		return qfalse;
 	if (b1->original->contents & CONTENTS_SOLID)
 		return qtrue;
@@ -393,8 +393,8 @@ extern bspbrush_t *ChopBrushes (bspbrush_t *head)
 	bspbrush_t	*sub, *sub2;
 	int			c1, c2;
 
-	Sys_FPrintf( SYS_VRB, "---- ChopBrushes ----\n");
-	Sys_FPrintf( SYS_VRB, "original brushes: %i\n", CountBrushList (head));
+	Sys_FPrintf(SYS_VRB, "---- ChopBrushes ----\n");
+	Sys_FPrintf(SYS_VRB, "original brushes: %i\n", CountBrushList(head));
 
 	keep = NULL;
 
@@ -408,7 +408,7 @@ newlist:
 	for (b1 = head; b1; b1 = next) {
 		next = b1->next;
 		for (b2 = b1->next; b2; b2 = b2->next) {
-			if (BrushesDisjoint (b1, b2))
+			if (BrushesDisjoint(b1, b2))
 				continue;
 
 			sub = NULL;
@@ -416,27 +416,27 @@ newlist:
 			c1 = 999999;
 			c2 = 999999;
 
-			if ( BrushGE (b2, b1) ) {
-				sub = SubtractBrush (b1, b2);
+			if (BrushGE(b2, b1)) {
+				sub = SubtractBrush(b1, b2);
 				if (sub == b1)
 					continue;		/* didn't really intersect */
 				if (!sub) {	/* b1 is swallowed by b2 */
-					head = CullList (b1, b1);
+					head = CullList(b1, b1);
 					goto newlist;
 				}
-				c1 = CountBrushList (sub);
+				c1 = CountBrushList(sub);
 			}
 
-			if ( BrushGE (b1, b2) ) {
-				sub2 = SubtractBrush (b2, b1);
+			if (BrushGE(b1, b2)) {
+				sub2 = SubtractBrush(b2, b1);
 				if (sub2 == b2)
 					continue;		/* didn't really intersect */
 				if (!sub2) {	/* b2 is swallowed by b1 */
-					FreeBrushList (sub);
-					head = CullList (b1, b2);
+					FreeBrushList(sub);
+					head = CullList(b1, b2);
 					goto newlist;
 				}
-				c2 = CountBrushList (sub2);
+				c2 = CountBrushList(sub2);
 			}
 
 			if (!sub && !sub2)
@@ -446,23 +446,23 @@ newlist:
 			/* (commening this out allows full fragmentation) */
 			if (c1 > 1 && c2 > 1) {
 				if (sub2)
-					FreeBrushList (sub2);
+					FreeBrushList(sub2);
 				if (sub)
-					FreeBrushList (sub);
+					FreeBrushList(sub);
 				continue;
 			}
 
 			if (c1 < c2) {
 				if (sub2)
-					FreeBrushList (sub2);
-				tail = AddBrushListToTail (sub, tail);
-				head = CullList (b1, b1);
+					FreeBrushList(sub2);
+				tail = AddBrushListToTail(sub, tail);
+				head = CullList(b1, b1);
 				goto newlist;
 			} else {
 				if (sub)
-					FreeBrushList (sub);
-				tail = AddBrushListToTail (sub2, tail);
-				head = CullList (b1, b2);
+					FreeBrushList(sub);
+				tail = AddBrushListToTail(sub2, tail);
+				head = CullList(b1, b2);
 				goto newlist;
 			}
 		}
@@ -473,7 +473,7 @@ newlist:
 		}
 	}
 
-	Sys_FPrintf( SYS_VRB, "output brushes: %i\n", CountBrushList (keep));
+	Sys_FPrintf(SYS_VRB, "output brushes: %i\n", CountBrushList (keep));
 	return keep;
 }
 

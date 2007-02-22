@@ -51,7 +51,7 @@ vec3_t g_mins, g_maxs;
 int level;
 
 
-
+#define NUMMODELS 258
 /**
  * @brief
  */
@@ -60,38 +60,37 @@ static void ProcessWorldModel (void)
 	entity_t	*e;
 	int			i;
 
-/*	BeginModel (); */
+/*	BeginModel(); */
 
 	e = &entities[entity_num];
 
 	brush_start = e->firstbrush;
 	brush_end = brush_start + e->numbrushes;
 
-	ClearBounds( worldMins, worldMaxs );
+	ClearBounds(worldMins, worldMaxs);
 
 	/* process levels */
 	{
 		int	start, end;
-		nummodels = 258;
+		nummodels = NUMMODELS;
 
 		start = I_FloatTime();
-		for ( i = 0; i < 258; i++ ) {
-			if ( !(i%26) ) {
-				fprintf (stdout, "%i...", (int)(i/26));
+		for (i = 0; i < NUMMODELS; i++) {
+			if (!(i % 26)) {
+				fprintf(stdout, "%i...", (int)(i / 26));
 				fflush(stdout);
-			/*	Sys_Printf ("%i...", (int)(i/26) );*/
 			}
 
 			/* process brushes with that level mask */
-			ProcessLevel( i );
+			ProcessLevel(i);
 		}
 		end = I_FloatTime();
 
-		Sys_Printf( " (%i)\n", end-start );
+		Sys_Printf(" (%i)\n", end - start);
 	}
 
 	/* calculate routing */
-	if ( !norouting )
+	if (!norouting)
 		DoRouting();
 }
 
@@ -107,30 +106,32 @@ static void ProcessSubModel (void)
 	bspbrush_t	*list;
 	vec3_t		mins, maxs;
 
-	BeginModel ();
+	BeginModel();
 
 	e = &entities[entity_num];
 
 	start = e->firstbrush;
 	end = start + e->numbrushes;
 
-	if ( !strcmp ("func_detail", ValueForKey (e, "classname") ) ) {
+#if 0
+	if (!strcmp("func_detail", ValueForKey(e, "classname"))) {
 	}
+#endif
 
 	mins[0] = mins[1] = mins[2] = -4096;
 	maxs[0] = maxs[1] = maxs[2] = 4096;
-	list = MakeBspBrushList (start, end, -1, mins, maxs);
+	list = MakeBspBrushList(start, end, -1, mins, maxs);
 	if (!nocsg)
-		list = ChopBrushes (list);
-	tree = BrushBSP (list, mins, maxs);
-	MakeTreePortals (tree);
-	MarkVisibleSides (tree, start, end);
-	MakeFaces (tree->headnode);
-	FixTjuncs (tree->headnode);
-	WriteBSP (tree->headnode);
-	FreeTree (tree);
+		list = ChopBrushes(list);
+	tree = BrushBSP(list, mins, maxs);
+	MakeTreePortals(tree);
+	MarkVisibleSides(tree, start, end);
+	MakeFaces(tree->headnode);
+	FixTjuncs(tree->headnode);
+	WriteBSP(tree->headnode);
+	FreeTree(tree);
 
-	EndModel ();
+	EndModel();
 }
 
 
@@ -139,21 +140,21 @@ static void ProcessSubModel (void)
  */
 extern void ProcessModels (void)
 {
-	BeginBSPFile ();
+	BeginBSPFile();
 
 	for (entity_num = 0; entity_num < num_entities; entity_num++) {
 		if (!entities[entity_num].numbrushes)
 			continue;
 
-		Sys_FPrintf( SYS_VRB, "############### model %i ###############\n", nummodels);
+		Sys_FPrintf(SYS_VRB, "############### model %i ###############\n", nummodels);
 		if (entity_num == 0)
-			ProcessWorldModel ();
+			ProcessWorldModel();
 		else
-			ProcessSubModel ();
+			ProcessSubModel();
 
 		if (!verboseentities)
 			verbose = qfalse;	/* don't bother printing submodels */
 	}
 
-	EndBSPFile ();
+	EndBSPFile();
 }

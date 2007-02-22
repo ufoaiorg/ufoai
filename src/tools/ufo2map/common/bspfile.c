@@ -183,9 +183,9 @@ static void SwapBSPFile (qboolean todisk)
 	for (i = 0; i < nummodels; i++) {
 		d = &dmodels[i];
 
-		d->firstface = LittleLong (d->firstface);
-		d->numfaces = LittleLong (d->numfaces);
-		d->headnode = LittleLong (d->headnode);
+		d->firstface = LittleLong(d->firstface);
+		d->numfaces = LittleLong(d->numfaces);
+		d->headnode = LittleLong(d->headnode);
 
 		for (j = 0; j < 3; j++) {
 			d->mins[j] = LittleFloat(d->mins[j]);
@@ -205,110 +205,112 @@ static void SwapBSPFile (qboolean todisk)
 		for (j = 0; j < 3; j++)
 			dplanes[i].normal[j] = LittleFloat (dplanes[i].normal[j]);
 		dplanes[i].dist = LittleFloat (dplanes[i].dist);
-		dplanes[i].type = LittleLong (dplanes[i].type);
+		dplanes[i].type = LittleLong(dplanes[i].type);
 	}
 
 	/* texinfos */
 	for (i = 0; i < numtexinfo; i++) {
 		for (j = 0; j < 8; j++)
 			texinfo[i].vecs[0][j] = LittleFloat (texinfo[i].vecs[0][j]);
-		texinfo[i].flags = LittleLong (texinfo[i].flags);
-		texinfo[i].value = LittleLong (texinfo[i].value);
-		texinfo[i].nexttexinfo = LittleLong (texinfo[i].nexttexinfo);
+		texinfo[i].flags = LittleLong(texinfo[i].flags);
+		texinfo[i].value = LittleLong(texinfo[i].value);
+		texinfo[i].nexttexinfo = LittleLong(texinfo[i].nexttexinfo);
 	}
 
 	/* faces */
 	for (i = 0; i < numfaces; i++) {
-		dfaces[i].texinfo = LittleShort (dfaces[i].texinfo);
-		dfaces[i].planenum = LittleShort (dfaces[i].planenum);
-		dfaces[i].side = LittleShort (dfaces[i].side);
-		dfaces[i].lightofs = LittleLong (dfaces[i].lightofs);
-		dfaces[i].firstedge = LittleLong (dfaces[i].firstedge);
-		dfaces[i].numedges = LittleShort (dfaces[i].numedges);
+		dfaces[i].texinfo = LittleShort(dfaces[i].texinfo);
+		dfaces[i].planenum = LittleShort(dfaces[i].planenum);
+		dfaces[i].side = LittleShort(dfaces[i].side);
+		dfaces[i].lightofs = LittleLong(dfaces[i].lightofs);
+		dfaces[i].firstedge = LittleLong(dfaces[i].firstedge);
+		dfaces[i].numedges = LittleShort(dfaces[i].numedges);
 	}
 
 	/* nodes */
 	for (i = 0; i < numnodes; i++) {
-		dnodes[i].planenum = LittleLong (dnodes[i].planenum);
+		dnodes[i].planenum = LittleLong(dnodes[i].planenum);
 		for (j = 0; j < 3; j++) {
-			dnodes[i].mins[j] = LittleShort (dnodes[i].mins[j]);
-			dnodes[i].maxs[j] = LittleShort (dnodes[i].maxs[j]);
+			dnodes[i].mins[j] = LittleShort(dnodes[i].mins[j]);
+			dnodes[i].maxs[j] = LittleShort(dnodes[i].maxs[j]);
 		}
-		dnodes[i].children[0] = LittleLong (dnodes[i].children[0]);
-		dnodes[i].children[1] = LittleLong (dnodes[i].children[1]);
-		dnodes[i].firstface = LittleShort (dnodes[i].firstface);
-		dnodes[i].numfaces = LittleShort (dnodes[i].numfaces);
+		dnodes[i].children[0] = LittleLong(dnodes[i].children[0]);
+		dnodes[i].children[1] = LittleLong(dnodes[i].children[1]);
+		dnodes[i].firstface = LittleShort(dnodes[i].firstface);
+		dnodes[i].numfaces = LittleShort(dnodes[i].numfaces);
 	}
 
 	/* leafs */
 	for (i = 0; i < numleafs; i++) {
-		dleafs[i].contents = LittleLong (dleafs[i].contents);
-		dleafs[i].cluster = LittleShort (dleafs[i].cluster);
-		dleafs[i].area = LittleShort (dleafs[i].area);
+		dleafs[i].contents = LittleLong(dleafs[i].contents);
+		dleafs[i].cluster = LittleShort(dleafs[i].cluster);
+		dleafs[i].area = LittleShort(dleafs[i].area);
 		for (j = 0; j < 3; j++) {
-			dleafs[i].mins[j] = LittleShort (dleafs[i].mins[j]);
-			dleafs[i].maxs[j] = LittleShort (dleafs[i].maxs[j]);
+			dleafs[i].mins[j] = LittleShort(dleafs[i].mins[j]);
+			dleafs[i].maxs[j] = LittleShort(dleafs[i].maxs[j]);
 		}
 
-		dleafs[i].firstleafface = LittleShort (dleafs[i].firstleafface);
-		dleafs[i].numleaffaces = LittleShort (dleafs[i].numleaffaces);
-		dleafs[i].firstleafbrush = LittleShort (dleafs[i].firstleafbrush);
-		dleafs[i].numleafbrushes = LittleShort (dleafs[i].numleafbrushes);
+		dleafs[i].firstleafface = LittleShort(dleafs[i].firstleafface);
+		dleafs[i].numleaffaces = LittleShort(dleafs[i].numleaffaces);
+		dleafs[i].firstleafbrush = LittleShort(dleafs[i].firstleafbrush);
+		dleafs[i].numleafbrushes = LittleShort(dleafs[i].numleafbrushes);
 	}
 
 	/* leaffaces */
 	for (i = 0; i < numleaffaces; i++)
-		dleaffaces[i] = LittleShort (dleaffaces[i]);
+		dleaffaces[i] = LittleShort(dleaffaces[i]);
 
 	/* leafbrushes */
 	for (i = 0; i < numleafbrushes; i++)
-		dleafbrushes[i] = LittleShort (dleafbrushes[i]);
+		dleafbrushes[i] = LittleShort(dleafbrushes[i]);
 
 	/* surfedges */
 	for (i = 0; i < numsurfedges; i++)
-		dsurfedges[i] = LittleLong (dsurfedges[i]);
+		dsurfedges[i] = LittleLong(dsurfedges[i]);
 
 	/* edges */
 	for (i = 0; i < numedges; i++) {
-		dedges[i].v[0] = LittleShort (dedges[i].v[0]);
-		dedges[i].v[1] = LittleShort (dedges[i].v[1]);
+		dedges[i].v[0] = LittleShort(dedges[i].v[0]);
+		dedges[i].v[1] = LittleShort(dedges[i].v[1]);
 	}
 
 	/* brushes */
 	for (i = 0; i < numbrushes; i++) {
-		dbrushes[i].firstside = LittleLong (dbrushes[i].firstside);
-		dbrushes[i].numsides = LittleLong (dbrushes[i].numsides);
-		dbrushes[i].contents = LittleLong (dbrushes[i].contents);
+		dbrushes[i].firstside = LittleLong(dbrushes[i].firstside);
+		dbrushes[i].numsides = LittleLong(dbrushes[i].numsides);
+		dbrushes[i].contents = LittleLong(dbrushes[i].contents);
 	}
 
 	/* areas */
 	for (i = 0 ; i < numareas; i++) {
-		dareas[i].numareaportals = LittleLong (dareas[i].numareaportals);
-		dareas[i].firstareaportal = LittleLong (dareas[i].firstareaportal);
+		dareas[i].numareaportals = LittleLong(dareas[i].numareaportals);
+		dareas[i].firstareaportal = LittleLong(dareas[i].firstareaportal);
 	}
 
 	/* areasportals */
 	for (i = 0 ; i < numareaportals; i++) {
-		dareaportals[i].portalnum = LittleLong (dareaportals[i].portalnum);
-		dareaportals[i].otherarea = LittleLong (dareaportals[i].otherarea);
+		dareaportals[i].portalnum = LittleLong(dareaportals[i].portalnum);
+		dareaportals[i].otherarea = LittleLong(dareaportals[i].otherarea);
 	}
 
 	/* brushsides */
 	for (i = 0; i < numbrushsides; i++) {
-		dbrushsides[i].planenum = LittleShort (dbrushsides[i].planenum);
-		dbrushsides[i].texinfo = LittleShort (dbrushsides[i].texinfo);
+		dbrushsides[i].planenum = LittleShort(dbrushsides[i].planenum);
+		dbrushsides[i].texinfo = LittleShort(dbrushsides[i].texinfo);
 	}
 
+#if 0
 	/* visibility */
-/*	if (todisk)
+	if (todisk)
 		j = dvis->numclusters;
 	else
 		j = LittleLong(dvis->numclusters);
-	dvis->numclusters = LittleLong (dvis->numclusters);
-	for (i=0 ; i<j ; i++) {
-		dvis->bitofs[i][0] = LittleLong (dvis->bitofs[i][0]);
-		dvis->bitofs[i][1] = LittleLong (dvis->bitofs[i][1]);
-	}*/
+	dvis->numclusters = LittleLong(dvis->numclusters);
+	for (i = 0; i < j; i++) {
+		dvis->bitofs[i][0] = LittleLong(dvis->bitofs[i][0]);
+		dvis->bitofs[i][1] = LittleLong(dvis->bitofs[i][1]);
+	}
+#endif
 }
 
 
@@ -325,7 +327,7 @@ static int CopyLump (int lump, void *dest, int size)
 	ofs = header->lumps[lump].fileofs;
 
 	if (length % size)
-		Error ("LoadBSPFile: odd lump size");
+		Error("LoadBSPFile: odd lump size");
 
 	memcpy (dest, (byte *)header + ofs, length);
 
@@ -340,40 +342,40 @@ extern void LoadBSPFile (char *filename)
 	int i;
 
 	/* load the file header */
-	LoadFile (filename, (void **)&header);
+	LoadFile(filename, (void **)&header);
 
 	/* swap the header */
 	for (i = 0; i < sizeof(dheader_t) / 4; i++)
-		((int *)header)[i] = LittleLong (((int *)header)[i]);
+		((int *)header)[i] = LittleLong(((int *)header)[i]);
 
 	if (header->ident != IDBSPHEADER)
-		Error ("%s is not a IBSP file", filename);
+		Error("%s is not a IBSP file", filename);
 	if (header->version != BSPVERSION)
-		Error ("%s is version %i, not %i", filename, header->version, BSPVERSION);
+		Error("%s is version %i, not %i", filename, header->version, BSPVERSION);
 
-	nummodels = CopyLump (LUMP_MODELS, dmodels, sizeof(dmodel_t));
-	numvertexes = CopyLump (LUMP_VERTEXES, dvertexes, sizeof(dvertex_t));
-	numplanes = CopyLump (LUMP_PLANES, dplanes, sizeof(dplane_t));
-	numleafs = CopyLump (LUMP_LEAFS, dleafs, sizeof(dleaf_t));
-	numnodes = CopyLump (LUMP_NODES, dnodes, sizeof(dnode_t));
-	numtexinfo = CopyLump (LUMP_TEXINFO, texinfo, sizeof(texinfo_t));
-	numfaces = CopyLump (LUMP_FACES, dfaces, sizeof(dface_t));
-	numleaffaces = CopyLump (LUMP_LEAFFACES, dleaffaces, sizeof(dleaffaces[0]));
-	numleafbrushes = CopyLump (LUMP_LEAFBRUSHES, dleafbrushes, sizeof(dleafbrushes[0]));
-	numsurfedges = CopyLump (LUMP_SURFEDGES, dsurfedges, sizeof(dsurfedges[0]));
-	numedges = CopyLump (LUMP_EDGES, dedges, sizeof(dedge_t));
-	numbrushes = CopyLump (LUMP_BRUSHES, dbrushes, sizeof(dbrush_t));
-	numbrushsides = CopyLump (LUMP_BRUSHSIDES, dbrushsides, sizeof(dbrushside_t));
-	numareas = CopyLump (LUMP_AREAS, dareas, sizeof(darea_t));
-	numareaportals = CopyLump (LUMP_AREAPORTALS, dareaportals, sizeof(dareaportal_t));
+	nummodels = CopyLump(LUMP_MODELS, dmodels, sizeof(dmodel_t));
+	numvertexes = CopyLump(LUMP_VERTEXES, dvertexes, sizeof(dvertex_t));
+	numplanes = CopyLump(LUMP_PLANES, dplanes, sizeof(dplane_t));
+	numleafs = CopyLump(LUMP_LEAFS, dleafs, sizeof(dleaf_t));
+	numnodes = CopyLump(LUMP_NODES, dnodes, sizeof(dnode_t));
+	numtexinfo = CopyLump(LUMP_TEXINFO, texinfo, sizeof(texinfo_t));
+	numfaces = CopyLump(LUMP_FACES, dfaces, sizeof(dface_t));
+	numleaffaces = CopyLump(LUMP_LEAFFACES, dleaffaces, sizeof(dleaffaces[0]));
+	numleafbrushes = CopyLump(LUMP_LEAFBRUSHES, dleafbrushes, sizeof(dleafbrushes[0]));
+	numsurfedges = CopyLump(LUMP_SURFEDGES, dsurfedges, sizeof(dsurfedges[0]));
+	numedges = CopyLump(LUMP_EDGES, dedges, sizeof(dedge_t));
+	numbrushes = CopyLump(LUMP_BRUSHES, dbrushes, sizeof(dbrush_t));
+	numbrushsides = CopyLump(LUMP_BRUSHSIDES, dbrushsides, sizeof(dbrushside_t));
+	numareas = CopyLump(LUMP_AREAS, dareas, sizeof(darea_t));
+	numareaportals = CopyLump(LUMP_AREAPORTALS, dareaportals, sizeof(dareaportal_t));
 
-	routedatasize = CopyLump (LUMP_ROUTING, droutedata, 1);
-	lightdatasize = CopyLump (LUMP_LIGHTING, dlightdata, 1);
-	entdatasize = CopyLump (LUMP_ENTITIES, dentdata, 1);
+	routedatasize = CopyLump(LUMP_ROUTING, droutedata, 1);
+	lightdatasize = CopyLump(LUMP_LIGHTING, dlightdata, 1);
+	entdatasize = CopyLump(LUMP_ENTITIES, dentdata, 1);
 
-	CopyLump (LUMP_POP, dpop, 1);
+	CopyLump(LUMP_POP, dpop, 1);
 
-	free (header);		/* everything has been copied out */
+	free(header);		/* everything has been copied out */
 
 	/* swap everything */
 	SwapBSPFile (qfalse);
@@ -390,36 +392,35 @@ extern void LoadBSPFileTexinfo (char *filename)
 
 	header = malloc(sizeof(dheader_t));
 
-	f = fopen (filename, "rb");
-	if (fread (header, sizeof(dheader_t), 1, f) != 1) {
+	f = fopen(filename, "rb");
+	if (fread(header, sizeof(dheader_t), 1, f) != 1) {
 		Sys_Printf("LoadBSPFileTexinfo: Header size mismatch\n");
-		free (header);
+		free(header);
 		return;
 	}
 
 	/* swap the header */
 	for (i = 0; i < sizeof(dheader_t) / 4; i++)
-		((int *)header)[i] = LittleLong (((int *)header)[i]);
+		((int *)header)[i] = LittleLong(((int *)header)[i]);
 
 	if (header->ident != IDBSPHEADER)
-		Error ("%s is not a IBSP file", filename);
+		Error("%s is not a IBSP file", filename);
 	if (header->version != BSPVERSION)
-		Error ("%s is version %i, not %i", filename, header->version, BSPVERSION);
-
+		Error("%s is version %i, not %i", filename, header->version, BSPVERSION);
 
 	length = header->lumps[LUMP_TEXINFO].filelen;
 	ofs = header->lumps[LUMP_TEXINFO].fileofs;
 
-	fseek (f, ofs, SEEK_SET);
-	if (fread (texinfo, length, 1, f) != 1)
+	fseek(f, ofs, SEEK_SET);
+	if (fread(texinfo, length, 1, f) != 1)
 		Sys_Printf("LoadBSPFileTexInfo: Warning, read error\n");
-	fclose (f);
+	fclose(f);
 
 	numtexinfo = length / sizeof(texinfo_t);
 
-	free (header);		/* everything has been copied out */
+	free(header);		/* everything has been copied out */
 
-	SwapBSPFile (qfalse);
+	SwapBSPFile(qfalse);
 }
 
 
@@ -437,7 +438,7 @@ static void AddLump (int lumpnum, void *data, int len)
 
 	lump->fileofs = LittleLong(ftell(wadfile));
 	lump->filelen = LittleLong(len);
-	SafeWrite(wadfile, data, (len+3)&~3);
+	SafeWrite(wadfile, data, (len + 3) &~ 3);
 }
 
 /**
@@ -450,8 +451,8 @@ extern void WriteBSPFile (const char *filename)
 
 	SwapBSPFile(qtrue);
 
-	header->ident = LittleLong (IDBSPHEADER);
-	header->version = LittleLong (BSPVERSION);
+	header->ident = LittleLong(IDBSPHEADER);
+	header->version = LittleLong(BSPVERSION);
 
 	wadfile = SafeOpenWrite(filename);
 	SafeWrite(wadfile, header, sizeof(dheader_t));	/* overwritten later */
@@ -492,38 +493,38 @@ extern void PrintBSPFileSizes (void)
 	if (!num_entities)
 		ParseEntities ();
 
-	Sys_Printf ("%5i models       %7i\n"
+	Sys_Printf("%5i models       %7i\n"
 		,nummodels, (int)(nummodels*sizeof(dmodel_t)));
-	Sys_Printf ("%5i brushes      %7i\n"
+	Sys_Printf("%5i brushes      %7i\n"
 		,numbrushes, (int)(numbrushes*sizeof(dbrush_t)));
-	Sys_Printf ("%5i brushsides   %7i\n"
+	Sys_Printf("%5i brushsides   %7i\n"
 		,numbrushsides, (int)(numbrushsides*sizeof(dbrushside_t)));
-	Sys_Printf ("%5i planes       %7i\n"
+	Sys_Printf("%5i planes       %7i\n"
 		,numplanes, (int)(numplanes*sizeof(dplane_t)));
-	Sys_Printf ("%5i texinfo      %7i\n"
+	Sys_Printf("%5i texinfo      %7i\n"
 		,numtexinfo, (int)(numtexinfo*sizeof(texinfo_t)));
-	Sys_Printf ("%5i entdata      %7i\n", num_entities, entdatasize);
+	Sys_Printf("%5i entdata      %7i\n", num_entities, entdatasize);
 
-	Sys_Printf ("\n");
+	Sys_Printf("\n");
 
-	Sys_Printf ("%5i vertexes     %7i\n"
+	Sys_Printf("%5i vertexes     %7i\n"
 		,numvertexes, (int)(numvertexes*sizeof(dvertex_t)));
-	Sys_Printf ("%5i nodes        %7i\n"
+	Sys_Printf("%5i nodes        %7i\n"
 		,numnodes, (int)(numnodes*sizeof(dnode_t)));
-	Sys_Printf ("%5i faces        %7i\n"
+	Sys_Printf("%5i faces        %7i\n"
 		,numfaces, (int)(numfaces*sizeof(dface_t)));
-	Sys_Printf ("%5i leafs        %7i\n"
+	Sys_Printf("%5i leafs        %7i\n"
 		,numleafs, (int)(numleafs*sizeof(dleaf_t)));
-	Sys_Printf ("%5i leaffaces    %7i\n"
+	Sys_Printf("%5i leaffaces    %7i\n"
 		,numleaffaces, (int)(numleaffaces*sizeof(dleaffaces[0])));
-	Sys_Printf ("%5i leafbrushes  %7i\n"
+	Sys_Printf("%5i leafbrushes  %7i\n"
 		,numleafbrushes, (int)(numleafbrushes*sizeof(dleafbrushes[0])));
-	Sys_Printf ("%5i surfedges    %7i\n"
+	Sys_Printf("%5i surfedges    %7i\n"
 		,numsurfedges, (int)(numsurfedges*sizeof(dsurfedges[0])));
-	Sys_Printf ("%5i edges        %7i\n"
+	Sys_Printf("%5i edges        %7i\n"
 		,numedges, (int)(numedges*sizeof(dedge_t)));
-	Sys_Printf ("      lightdata    %7i\n", lightdatasize);
-	Sys_Printf ("      routedata    %7i\n", routedatasize);
+	Sys_Printf("      lightdata    %7i\n", lightdatasize);
+	Sys_Printf("      routedata    %7i\n", routedatasize);
 }
 
 
@@ -557,11 +558,11 @@ extern epair_t *ParseEpair (void)
 	memset (e, 0, sizeof(epair_t));
 
 	if (strlen(token) >= MAX_KEY-1)
-		Error ("ParseEpar: token too long");
+		Error("ParseEpar: token too long");
 	e->key = copystring(token);
 	GetToken (qfalse);
 	if (strlen(token) >= MAX_VALUE-1)
-		Error ("ParseEpar: token too long");
+		Error("ParseEpar: token too long");
 	e->value = copystring(token);
 
 	/* strip trailing spaces */
@@ -585,17 +586,17 @@ static qboolean ParseEntity (void)
 		return qfalse;
 
 	if (strcmp (token, "{") )
-		Error ("ParseEntity: { not found");
+		Error("ParseEntity: { not found");
 
 	if (num_entities == MAX_MAP_ENTITIES)
-		Error ("num_entities == MAX_MAP_ENTITIES");
+		Error("num_entities == MAX_MAP_ENTITIES");
 
 	mapent = &entities[num_entities];
 	num_entities++;
 
 	do {
 		if (!GetToken (qtrue))
-			Error ("ParseEntity: EOF without closing brace");
+			Error("ParseEntity: EOF without closing brace");
 		if (!strcmp (token, "}") )
 			break;
 		e = ParseEpair ();
@@ -660,7 +661,7 @@ extern void UnparseEntities (void)
 		end += 2;
 
 		if (end > buf + MAX_MAP_ENTSTRING)
-			Error ("Entity text too long");
+			Error("Entity text too long");
 	}
 	entdatasize = end - buf + 1;
 }
@@ -673,9 +674,9 @@ static void PrintEntity (entity_t *ent)
 {
 	epair_t *ep;
 
-	Sys_Printf ("------- entity %p -------\n", ent);
+	Sys_Printf("------- entity %p -------\n", ent);
 	for (ep = ent->epairs; ep; ep = ep->next)
-		Sys_Printf ("%s = %s\n", ep->key, ep->value);
+		Sys_Printf("%s = %s\n", ep->key, ep->value);
 }
 #endif
 
@@ -688,7 +689,7 @@ extern void SetKeyValue (entity_t *ent, char *key, char *value)
 
 	for (ep = ent->epairs; ep; ep = ep->next)
 		if (!strcmp (ep->key, key) ) {
-			free (ep->value);
+			free(ep->value);
 			ep->value = copystring(value);
 			return;
 		}

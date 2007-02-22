@@ -273,7 +273,7 @@ char *copystring(const char *s)
 double I_FloatTime (void)
 {
 	time_t t;
-	time (&t);
+	time(&t);
 	return t;
 #if 0
 	/* more precise, less portable */
