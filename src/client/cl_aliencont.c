@@ -278,6 +278,7 @@ void AL_AddAliens (void)
  * @param[in] alientype
  * @param[in] amount of alientype to be removed
  * @param[in] type of action
+ * @sa AC_KillAll_f
  * @note Call it with alientype AL_UNKNOWN when it does not
  * matter what type.
  * @TODO integrate this with research system
@@ -288,18 +289,12 @@ void AL_RemoveAliens (alienType_t alientype, int amount, alienCalcType_t action)
 	int maxamount = 0; /* amount (of alive type), which is max in Containment) */
 	int maxidx = 0;
 	char name[MAX_VAR];
-	base_t *base = NULL;
 	aliensCont_t *containment = NULL;
 
-	if (baseCurrent) {
-		base = baseCurrent;
-	} else {
-		/* should never happen */
-		Com_Printf("AL_RemoveAliens()... No base selected!\n");
+	if (!baseCurrent)
 		return;
-	}
 
-	containment = base->alienscont;
+	containment = baseCurrent->alienscont;
 	Q_strncpyz(name, AL_AlienTypeToName(alientype), MAX_VAR);
 
 	switch (action) {
@@ -329,11 +324,22 @@ void AL_RemoveAliens (alienType_t alientype, int amount, alienCalcType_t action)
 				return;
 			}
 		}
+		break;
 	case AL_KILL:
-		/* TODO: killing aliens during base defence */
+		/* We ignore 1st and 2nd parameter of AL_RemoveAliens() here. */
+		for (j = 0; j < numTeamDesc; j++) {
+			if (!teamDesc[j].alien)
+				continue;
+			if (containment[j].amount_alive > 0) {
+				containment[j].amount_dead += containment[j].amount_alive;
+				containment[j].amount_alive = 0;
+			}
+		}
+		break;
 	default:
-		return;
+		break;
 	}
+	return;
 }
 
 /**
@@ -506,10 +512,17 @@ static void AC_SelectAlien_f (void)
 
 	Cvar_Set("mn_al_alienmodel", tech->mdl_top);
 	Cvar_Set("mn_al_alientype", _(aliencontCurrent->alientype));
+	Cvar_SetValue("mn_al_techidx", tech->idx);
 	Cvar_SetValue("mn_al_killed", AL_CountForMenu(aliencontCurrent->idx, qfalse));
 	Cvar_SetValue("mn_al_alive", AL_CountForMenu(aliencontCurrent->idx, qtrue));
 
 	UP_Article(tech);
+
+	/* Set state of Research and UFOpedia buttons. */
+	if (tech && RS_IsResearched_idx(tech->idx))
+		Cbuf_AddText("aliencont_researchg;aliencont_ufopediab\n");
+	else
+		Cbuf_AddText("aliencont_researchb;aliencont_ufopediag\n");
 }
 
 /**
@@ -534,19 +547,53 @@ static void AC_OpenUFOpedia_f (void)
 }
 
 /**
- * @brief Alien containment menu init function
+ * @brief Kill all aliens in current base.
+ */
+static void AC_KillAll_f (void)
+{
+	/* Can be called from everywhere. */
+	if (!baseCurrent ||!curCampaign || !aliencontCurrent)
+		return;
+
+	AL_RemoveAliens(0, 0, AL_KILL);
+	
+	/* Reinit menu to display proper values. */
+	Cbuf_AddText("aliencont_init\n");
+}
+
+/**
+ * @brief Open research menu.
+ */
+static void AC_ResearchAlien_f (void)
+{
+	/* Can be called from everywhere. */
+	if (!baseCurrent ||!curCampaign || !aliencontCurrent)
+		return;
+
+	int techidx = Cvar_VariableInteger("mn_al_techidx");
+
+	if (!techidx)
+		return;
+
+	if (!RS_IsResearched_idx(techidx))
+		Cbuf_AddText("mn_push research\n");
+}
+
+/**
+ * @brief Alien containment menu init function.
  * @note Command to call this: aliencont_init
- * @note Should be called whenever the research menu gets active
+ * @note Should be called whenever the alien containment menu gets active.
  */
 static void AC_Init (void)
 {
 	int i;
-	/* tmp buffer for string generating */
+	/* Tmp buffer for string generating. */
 	char tmp[128];
 	technology_t* tech;
 	aliensCont_t *containment = NULL;
+	qboolean killall_state = qfalse;
 
-	/* reset the aliencont list */
+	/* Reset the aliencont list. */
 	aliencontText[0] = '\0';
 	numAliensOnList = 0;
 
@@ -583,6 +630,23 @@ static void AC_Init (void)
 		}
 	}
 
+	/* Set state of KillAll button. */
+	for (i = 0; i < numTeamDesc; i++) {
+		if (!teamDesc[i].alien)
+			continue;
+		if (containment[i].amount_alive > 0) {
+			killall_state = qtrue;
+			break;
+		}
+	}
+	if (killall_state)
+		Cbuf_AddText("aliencont_killb\n");
+	else
+		Cbuf_AddText("aliencont_killg\n");
+
+	/* By default Research and UFOpedia buttons should be disabled. */
+	Cbuf_AddText("aliencont_researchg;aliencont_ufopediag\n");
+
 	Cvar_SetValue("mn_al_globalamount", AL_CountAll());
 	Cvar_SetValue("mn_al_localamount", AL_CountInBase());
 	Cvar_Set("mn_al_base", baseCurrent->name);
@@ -592,7 +656,7 @@ static void AC_Init (void)
 }
 
 /**
- * @brief Click function for aliencont menu list
+ * @brief Click function for aliencont menu list.
  * @sa AC_Reset
  */
 static void AC_AlienListClick_f (void)
@@ -636,7 +700,7 @@ static void AC_AlienListClick_f (void)
 }
 
 /**
- * @brief Defines commands and cvars for the alien containment menu(s)
+ * @brief Defines commands and cvars for the alien containment menu(s).
  * @sa MN_ResetMenus
  */
 extern void AC_Reset (void)
@@ -646,6 +710,8 @@ extern void AC_Reset (void)
 	Cmd_AddCommand("aliencontlist_click", AC_AlienListClick_f, "Click function for aliencont list");
 	Cmd_AddCommand("aliencont_select", AC_SelectAlien_f, "Updates the menu cvars for the current selected alien");
 	Cmd_AddCommand("aliencont_pedia", AC_OpenUFOpedia_f, "Opens UFOpedia entry for selected alien");
+	Cmd_AddCommand("aliencont_killall", AC_KillAll_f, "Kill all aliens in current base");
+	Cmd_AddCommand("aliencont_research", AC_ResearchAlien_f, "Opens research menu");
 
 	/* add cvars */
 	/* TODO */
