@@ -1212,10 +1212,10 @@ static qboolean G_CanReactionFire (edict_t *ent, edict_t *target, char *reason)
  * @brief Get the number of TUs that ent needs to fire at target, also optionally return the firing hand. Used for reaction fire.
  * @param[in] ent The shooter entity.
  * @param[in] target The target entity.
- * @param[out] hand If not NULL then this stores the hand (combind with the 'reaction' info) that the shooter will fire with.
+ * @param[out] fire_hand_type If not NULL then this stores the hand (combind with the 'reaction' info) that the shooter will fire with.
  * @returns The number of TUs required to fire or -1 if firing is not possible
  */
-static int G_GetFiringTUs (edict_t *ent, edict_t *target, int *hand, int *firemode)
+static int G_GetFiringTUs (edict_t *ent, edict_t *target, int *fire_hand_type, int *firemode)
 {
 	int weapon_fd_idx;
 	int tmp;
@@ -1240,8 +1240,8 @@ static int G_GetFiringTUs (edict_t *ent, edict_t *target, int *hand, int *firemo
 
 			if (gi.csi->ods[RIGHT(ent)->item.m].fd[weapon_fd_idx][*firemode].time + sv_reaction_leftover->integer <= ent->TU
 			&&  gi.csi->ods[RIGHT(ent)->item.m].fd[weapon_fd_idx][*firemode].range > VectorDist(ent->origin, target->origin) ) {
-				if (hand) {
-					*hand = ST_RIGHT_REACTION;
+				if (fire_hand_type) {
+					*fire_hand_type = ST_RIGHT_REACTION;
 				}
 				return gi.csi->ods[RIGHT(ent)->item.m].fd[weapon_fd_idx][*firemode].time + sv_reaction_leftover->integer;
 			}
@@ -1264,8 +1264,8 @@ static int G_GetFiringTUs (edict_t *ent, edict_t *target, int *hand, int *firemo
 
 			if (gi.csi->ods[LEFT(ent)->item.m].fd[weapon_fd_idx][*firemode].time + sv_reaction_leftover->integer <= ent->TU
 			&&  gi.csi->ods[LEFT(ent)->item.m].fd[weapon_fd_idx][*firemode].range > VectorDist(ent->origin, target->origin)) {
-				if (hand) {
-					*hand = ST_LEFT_REACTION;
+				if (fire_hand_type) {
+					*fire_hand_type = ST_LEFT_REACTION;
 				}
 				return gi.csi->ods[LEFT(ent)->item.m].fd[weapon_fd_idx][*firemode].time + sv_reaction_leftover->integer;
 			}
@@ -1324,8 +1324,8 @@ static qboolean G_CheckRFTrigger (edict_t *target)
 static qboolean G_ResolveRF (edict_t *ent, qboolean mock)
 {
 	player_t *player;
-	int tus, hand, team;
-	int firemode;
+	int tus, fire_hand_type, team;
+	int firemode = -1;
 	qboolean tookShot;
 	char reason[64];
 
@@ -1359,7 +1359,7 @@ static qboolean G_ResolveRF (edict_t *ent, qboolean mock)
 	}
 
 	/* check ent can fire (necessary? covered by G_CanReactionFire?) */
-	tus = G_GetFiringTUs(ent, ent->reactionTarget, &hand, &firemode);
+	tus = G_GetFiringTUs(ent, ent->reactionTarget, &fire_hand_type, &firemode);
 	if (tus < 0) {
 #ifdef DEBUG_REACTION
 		if (!mock)
@@ -1388,7 +1388,8 @@ static qboolean G_ResolveRF (edict_t *ent, qboolean mock)
 	level.activeTeam = ent->team;
 
 	/* take the shot */
-	tookShot = G_FireWithJudgementCall(player, ent->number, ent->reactionTarget->pos, hand, firemode);
+	Com_Printf("G_ResolveRF: reaction shot: fire_hand_type:%i fd:%i\n", fire_hand_type, firemode);	/* TODO: DEBUG - remove me */
+	tookShot = G_FireWithJudgementCall(player, ent->number, ent->reactionTarget->pos, fire_hand_type, firemode);
 
 	/* Revert active team. */
 	level.activeTeam = team;

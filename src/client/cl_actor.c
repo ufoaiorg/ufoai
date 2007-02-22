@@ -454,6 +454,8 @@ static void CL_SetReactionFiremode(int actor_idx, int handidx, int obj_idx, int 
 		Com_DPrintf("CL_SetReactionFiremode: Bad hand index given. Abort.\n");
 		return;
 	}
+	
+	Com_Printf("CL_SetReactionFiremode: hand:%i fd:%i\n", handidx, fd_idx); /* TODO: DEBUG - remove me */
 
 	REACTION_FIREMODE[actor_idx][0] = handidx;	/* Store the given hand. */
 	REACTION_FIREMODE[actor_idx][1] = fd_idx;	/* Store the given firemode for this hand. */
