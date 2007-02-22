@@ -275,13 +275,6 @@ tree_t *BrushBSP (bspbrush_t *brushlist, vec3_t mins, vec3_t maxs);
 
 int VisibleContents (int contents);
 
-void MakeHeadnodePortals (tree_t *tree);
-void MakeNodePortal (node_t *node);
-void SplitNodePortals (node_t *node);
-
-qboolean FloodEntities (tree_t *tree);
-void FillOutside (node_t *headnode);
-void FloodAreas (tree_t *tree);
 void MarkVisibleSides (tree_t *tree, int start, int end);
 void FreePortal (portal_t *p);
 

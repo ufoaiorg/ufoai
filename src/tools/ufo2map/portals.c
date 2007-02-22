@@ -98,26 +98,6 @@ static int ClusterContents (node_t *node)
 	return c;
 }
 
-/**
- * @brief The entity flood determines which areas are
- * "outside" on the map, which are then filled in.
- * Flowing from side s to side !s
- */
-static qboolean Portal_EntityFlood (portal_t *p, int s)
-{
-	if (p->nodes[0]->planenum != PLANENUM_LEAF
-	 || p->nodes[1]->planenum != PLANENUM_LEAF)
-		Error("Portal_EntityFlood: not a leaf");
-
-	/* can never cross to a solid */
-	if ((p->nodes[0]->contents & CONTENTS_SOLID)
-	 || (p->nodes[1]->contents & CONTENTS_SOLID))
-		return qfalse;
-
-	/* can flood through everything else */
-	return qtrue;
-}
-
 
 /*============================================================================= */
 
@@ -126,10 +106,10 @@ static int c_tinyportals = 0;
 /**
  * @brief
  */
-void AddPortalToNodes (portal_t *p, node_t *front, node_t *back)
+static void AddPortalToNodes (portal_t *p, node_t *front, node_t *back)
 {
 	if (p->nodes[0] || p->nodes[1])
-		Error("AddPortalToNode: allready included");
+		Error("AddPortalToNode: already included");
 
 	p->nodes[0] = front;
 	p->next[0] = front->portals;
@@ -144,7 +124,7 @@ void AddPortalToNodes (portal_t *p, node_t *front, node_t *back)
 /**
  * @brief
  */
-void RemovePortalFromNode (portal_t *portal, node_t *l)
+extern void RemovePortalFromNode (portal_t *portal, node_t *l)
 {
 	portal_t	**pp, *t;
 
@@ -175,11 +155,11 @@ void RemovePortalFromNode (portal_t *portal, node_t *l)
 	}
 }
 
+#define	SIDESPACE	8
 /**
  * @brief The created portals will face the global outside_node
  */
-#define	SIDESPACE	8
-void MakeHeadnodePortals (tree_t *tree)
+static void MakeHeadnodePortals (tree_t *tree)
 {
 	vec3_t bounds[2];
 	int i, j, n;
@@ -240,7 +220,7 @@ void MakeHeadnodePortals (tree_t *tree)
 /**
  * @brief
  */
-winding_t *BaseWindingForNode (node_t *node)
+static winding_t *BaseWindingForNode (node_t *node)
 {
 	winding_t *w;
 	node_t *n;
@@ -277,7 +257,7 @@ qboolean WindingIsTiny(winding_t *w);
  * @brief Create the new portal by taking the full plane winding for the cutting plane
  * and clipping it by all of parents of this node
  */
-void MakeNodePortal (node_t *node)
+static void MakeNodePortal (node_t *node)
 {
 	portal_t *new_portal, *p;
 	winding_t *w;
@@ -324,7 +304,7 @@ void MakeNodePortal (node_t *node)
  * @brief Move or split the portals that bound node so that the node's
  * children have portals instead of node.
  */
-void SplitNodePortals (node_t *node)
+static void SplitNodePortals (node_t *node)
 {
 	portal_t *p, *next_portal, *new_portal;
 	node_t *f, *b, *other_node;
@@ -409,7 +389,7 @@ void SplitNodePortals (node_t *node)
 /**
  * @brief
  */
-void CalcNodeBounds (node_t *node)
+static void CalcNodeBounds (node_t *node)
 {
 	portal_t *p;
 	int s, i;
@@ -429,7 +409,7 @@ void CalcNodeBounds (node_t *node)
 /**
  * @brief
  */
-void MakeTreePortals_r (node_t *node)
+static void MakeTreePortals_r (node_t *node)
 {
 	int i;
 
@@ -457,335 +437,10 @@ void MakeTreePortals_r (node_t *node)
 /**
  * @brief
  */
-void MakeTreePortals (tree_t *tree)
+extern void MakeTreePortals (tree_t *tree)
 {
 	MakeHeadnodePortals(tree);
 	MakeTreePortals_r(tree->headnode);
-}
-
-/*
-=========================================================
-FLOOD ENTITIES
-=========================================================
-*/
-
-/**
- * @brief
- */
-void FloodPortals_r (node_t *node, int dist)
-{
-	portal_t *p;
-	int s;
-
-	node->occupied = dist;
-
-	for (p = node->portals; p; p = p->next[s]) {
-		s = (p->nodes[1] == node);
-
-		if (p->nodes[!s]->occupied)
-			continue;
-
-		if (!Portal_EntityFlood(p, s))
-			continue;
-
-		FloodPortals_r(p->nodes[!s], dist+1);
-	}
-}
-
-/**
- * @brief
- */
-qboolean PlaceOccupant (node_t *headnode, vec3_t origin, entity_t *occupant)
-{
-	node_t *node;
-	vec_t d;
-	plane_t *plane;
-
-	/* find the leaf to start in */
-	node = headnode;
-	while (node->planenum != PLANENUM_LEAF) {
-		plane = &mapplanes[node->planenum];
-		d = DotProduct (origin, plane->normal) - plane->dist;
-		if (d >= 0)
-			node = node->children[0];
-		else
-			node = node->children[1];
-	}
-
-	if (node->contents == CONTENTS_SOLID)
-		return qfalse;
-	node->occupant = occupant;
-
-	FloodPortals_r (node, 1);
-
-	return qtrue;
-}
-
-/**
- * @brief Marks all nodes that can be reached by entites
- */
-qboolean FloodEntities (tree_t *tree)
-{
-	int		i;
-	vec3_t	origin;
-	char	*cl;
-	qboolean	inside;
-	node_t *headnode;
-
-	headnode = tree->headnode;
-	Sys_FPrintf(SYS_VRB, "--- FloodEntities ---\n");
-	inside = qfalse;
-	tree->outside_node.occupied = 0;
-
-	for (i = 1; i < num_entities; i++) {
-		GetVectorForKey(&entities[i], "origin", origin);
-		if (VectorCompare(origin, vec3_origin))
-			continue;
-
-		cl = ValueForKey(&entities[i], "classname");
-		origin[2] += 1;	/* so objects on floor are ok */
-
-		/* nudge playerstart around if needed so clipping hulls always */
-		/* have a valid point */
-		if (!strcmp(cl, "info_player_start") || !strcmp(cl, "info_human_start")
-		 || !strcmp(cl, "info_alien_start") || !strcmp(cl, "info_civilian_start")
-		 || !strcmp(cl, "info_ugv_start")) {
-			int	x, y;
-
-			for (x = -16; x <= 16; x += 16) {
-				for (y = -16; y <= 16; y += 16) {
-					origin[0] += x;
-					origin[1] += y;
-					if (PlaceOccupant(headnode, origin, &entities[i])) {
-						inside = qtrue;
-						goto gotit;
-					}
-					origin[0] -= x;
-					origin[1] -= y;
-				}
-			}
-gotit: ;
-		} else {
-			if (PlaceOccupant(headnode, origin, &entities[i]))
-				inside = qtrue;
-		}
-	}
-
-	if (!inside) {
-		Sys_FPrintf(SYS_VRB, "no entities in open -- no filling\n");
-	} else if (tree->outside_node.occupied) {
-		Sys_FPrintf(SYS_VRB, "entity reached from outside -- no filling\n");
-	}
-
-	return (qboolean)(inside && !tree->outside_node.occupied);
-}
-
-/*
-=========================================================
-FLOOD AREAS
-=========================================================
-*/
-
-int		c_areas;
-
-/**
- * @brief
- */
-void FloodAreas_r (node_t *node)
-{
-	portal_t	*p;
-	int			s;
-	bspbrush_t	*b;
-	entity_t	*e;
-
-	if (node->contents == CONTENTS_AREAPORTAL) {
-		/* this node is part of an area portal */
-		b = node->brushlist;
-		e = &entities[b->original->entitynum];
-
-		/* if the current area has allready touched this */
-		/* portal, we are done */
-		if (e->portalareas[0] == c_areas || e->portalareas[1] == c_areas)
-			return;
-
-		/* note the current area as bounding the portal */
-		if (e->portalareas[1]) {
-			Sys_Printf("WARNING: areaportal entity %i touches > 2 areas\n", b->original->entitynum);
-			return;
-		}
-		if (e->portalareas[0])
-			e->portalareas[1] = c_areas;
-		else
-			e->portalareas[0] = c_areas;
-
-		return;
-	}
-
-	if (node->area)
-		return;		/* allready got it */
-	node->area = c_areas;
-
-	for (p = node->portals; p; p = p->next[s]) {
-		s = (p->nodes[1] == node);
-#if 0
-		if (p->nodes[!s]->occupied)
-			continue;
-#endif
-		if (!Portal_EntityFlood(p, s))
-			continue;
-
-		FloodAreas_r(p->nodes[!s]);
-	}
-}
-
-/**
- * @brief Just decend the tree, and for each node that hasn't had an area set, flood fill out from there
- */
-void FindAreas_r (node_t *node)
-{
-	if (node->planenum != PLANENUM_LEAF) {
-		FindAreas_r(node->children[0]);
-		FindAreas_r(node->children[1]);
-		return;
-	}
-
-	if (node->area)
-		return;		/* allready got it */
-
-	if (node->contents & CONTENTS_SOLID)
-		return;
-
-	if (!node->occupied)
-		return;			/* not reachable by entities */
-
-	/* area portals are allways only flooded into, never */
-	/* out of */
-	if (node->contents == CONTENTS_AREAPORTAL)
-		return;
-
-	c_areas++;
-	FloodAreas_r(node);
-}
-
-/**
- * @brief Just decend the tree, and for each node that hasn't had an area set, flood fill out from there
- */
-void SetAreaPortalAreas_r (node_t *node)
-{
-	bspbrush_t	*b;
-	entity_t	*e;
-
-	if (node->planenum != PLANENUM_LEAF) {
-		SetAreaPortalAreas_r(node->children[0]);
-		SetAreaPortalAreas_r(node->children[1]);
-		return;
-	}
-
-	if (node->contents == CONTENTS_AREAPORTAL) {
-		if (node->area)
-			return;		/* allready set */
-
-		b = node->brushlist;
-		e = &entities[b->original->entitynum];
-		node->area = e->portalareas[0];
-		if (!e->portalareas[1]) {
-			Sys_Printf("WARNING: areaportal entity %i doesn't touch two areas\n", b->original->entitynum);
-			return;
-		}
-	}
-}
-
-/**
- * @brief
- */
-void EmitAreaPortals (node_t *headnode)
-{
-	int				i, j;
-	entity_t		*e;
-	dareaportal_t	*dp;
-
-	if (c_areas > MAX_MAP_AREAS)
-		Error("MAX_MAP_AREAS (%i)", c_areas);
-	numareas = c_areas + 1;
-	numareaportals = 1;		/* leave 0 as an error */
-
-	for (i = 1; i <= c_areas; i++) {
-		dareas[i].firstareaportal = numareaportals;
-		for (j = 0; j < num_entities; j++) {
-			e = &entities[j];
-			if (!e->areaportalnum)
-				continue;
-			dp = &dareaportals[numareaportals];
-			if (e->portalareas[0] == i) {
-				dp->portalnum = e->areaportalnum;
-				dp->otherarea = e->portalareas[1];
-				numareaportals++;
-			} else if (e->portalareas[1] == i) {
-				dp->portalnum = e->areaportalnum;
-				dp->otherarea = e->portalareas[0];
-				numareaportals++;
-			}
-		}
-		dareas[i].numareaportals = numareaportals - dareas[i].firstareaportal;
-	}
-
-	Sys_FPrintf(SYS_VRB, "%5i numareas\n", numareas);
-	Sys_FPrintf(SYS_VRB, "%5i numareaportals\n", numareaportals);
-}
-
-/**
- * @brief Mark each leaf with an area, bounded by CONTENTS_AREAPORTAL
- */
-void FloodAreas (tree_t *tree)
-{
-	Sys_FPrintf(SYS_VRB, "--- FloodAreas ---\n");
-	FindAreas_r(tree->headnode);
-	SetAreaPortalAreas_r(tree->headnode);
-	Sys_FPrintf(SYS_VRB, "%5i areas\n", c_areas);
-}
-
-/*====================================================== */
-
-int		c_outside;
-int		c_inside;
-int		c_solid;
-
-/**
- * @brief
- */
-void FillOutside_r (node_t *node)
-{
-	if (node->planenum != PLANENUM_LEAF) {
-		FillOutside_r(node->children[0]);
-		FillOutside_r(node->children[1]);
-		return;
-	}
-
-	/* anything not reachable by an entity */
-	/* can be filled away */
-	if (!node->occupied) {
-		if (node->contents != CONTENTS_SOLID) {
-			c_outside++;
-			node->contents = CONTENTS_SOLID;
-		} else
-			c_solid++;
-	} else
-		c_inside++;
-}
-
-/**
- * @brief Fill all nodes that can't be reached by entities
- */
-void FillOutside (node_t *headnode)
-{
-	c_outside = 0;
-	c_inside = 0;
-	c_solid = 0;
-	Sys_FPrintf(SYS_VRB, "--- FillOutside ---\n");
-	FillOutside_r(headnode);
-	Sys_FPrintf(SYS_VRB, "%5i solid leafs\n", c_solid);
-	Sys_FPrintf(SYS_VRB, "%5i leafs filled\n", c_outside);
-	Sys_FPrintf(SYS_VRB, "%5i inside leafs\n", c_inside);
 }
 
 
@@ -794,7 +449,7 @@ void FillOutside (node_t *headnode)
 /**
  * @brief Finds a brush side to use for texturing the given portal
  */
-void FindPortalSide (portal_t *p)
+static void FindPortalSide (portal_t *p)
 {
 	int			viscontents;
 	bspbrush_t	*bb;
@@ -857,7 +512,7 @@ gotit:
 /**
  * @brief
  */
-void MarkVisibleSides_r (node_t *node)
+static void MarkVisibleSides_r (node_t *node)
 {
 	portal_t	*p;
 	int			s;
@@ -888,7 +543,7 @@ void MarkVisibleSides_r (node_t *node)
 /**
  * @brief
  */
-void MarkVisibleSides (tree_t *tree, int startbrush, int endbrush)
+extern void MarkVisibleSides (tree_t *tree, int startbrush, int endbrush)
 {
 	int		i, j;
 	mapbrush_t	*mb;

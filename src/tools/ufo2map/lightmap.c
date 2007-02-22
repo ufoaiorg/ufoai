@@ -229,13 +229,13 @@ static void TriEdge_r (triangulation_t *trian, triedge_t *e)
 		/* a 0 dist will form a degenerate triangle */
 		if (DotProduct(p, e->normal) - e->dist < 0)
 			continue;	/* behind edge */
-		VectorSubtract (p0, p, v1);
-		VectorSubtract (p1, p, v2);
-		if (!VectorNormalize (v1,v1))
+		VectorSubtract(p0, p, v1);
+		VectorSubtract(p1, p, v2);
+		if (!VectorNormalize(v1,v1))
 			continue;
-		if (!VectorNormalize (v2,v2))
+		if (!VectorNormalize(v2,v2))
 			continue;
-		ang = DotProduct (v1, v2);
+		ang = DotProduct(v1, v2);
 		if (ang < best) {
 			best = ang;
 			bestp = i;
@@ -245,14 +245,14 @@ static void TriEdge_r (triangulation_t *trian, triedge_t *e)
 		return;		/* edge doesn't match anything */
 
 	/* make a new triangle */
-	nt = AllocTriangle (trian);
+	nt = AllocTriangle(trian);
 	nt->edges[0] = e;
-	nt->edges[1] = FindEdge (trian, e->p1, bestp);
-	nt->edges[2] = FindEdge (trian, bestp, e->p0);
+	nt->edges[1] = FindEdge(trian, e->p1, bestp);
+	nt->edges[2] = FindEdge(trian, bestp, e->p0);
 	for (i = 0; i < 3; i++)
 		nt->edges[i]->tri = nt;
-	TriEdge_r (trian, FindEdge (trian, bestp, e->p1));
-	TriEdge_r (trian, FindEdge (trian, e->p0, bestp));
+	TriEdge_r(trian, FindEdge(trian, bestp, e->p1));
+	TriEdge_r(trian, FindEdge(trian, e->p0, bestp));
 }
 
 /**
@@ -275,8 +275,8 @@ static void TriangulatePoints (triangulation_t *trian)
 		p1 = trian->points[i]->origin;
 		for (j = i+1; j < trian->numpoints; j++) {
 			p2 = trian->points[j]->origin;
-			VectorSubtract (p2, p1, v1);
-			d = VectorLength (v1);
+			VectorSubtract(p2, p1, v1);
+			d = VectorLength(v1);
 			if (d < bestd) {
 				bestd = d;
 				bp1 = i;
@@ -285,10 +285,10 @@ static void TriangulatePoints (triangulation_t *trian)
 		}
 	}
 
-	e = FindEdge (trian, bp1, bp2);
-	e2 = FindEdge (trian, bp2, bp1);
-	TriEdge_r (trian, e);
-	TriEdge_r (trian, e2);
+	e = FindEdge(trian, bp1, bp2);
+	e2 = FindEdge(trian, bp2, bp1);
+	TriEdge_r(trian, e);
+	TriEdge_r(trian, e2);
 }
 
 /**
@@ -300,7 +300,7 @@ static void AddPointToTriangulation (patch_t *patch, triangulation_t *trian)
 
 	pnum = trian->numpoints;
 	if (pnum == MAX_TRI_POINTS)
-		Error ("trian->numpoints == MAX_TRI_POINTS");
+		Error("trian->numpoints == MAX_TRI_POINTS (%i)", pnum);
 	trian->points[pnum] = patch;
 	trian->numpoints++;
 }
@@ -318,26 +318,26 @@ static void LerpTriangle (triangulation_t *trian, triangle_t *t, vec3_t point, v
 	p2 = trian->points[t->edges[1]->p0];
 	p3 = trian->points[t->edges[2]->p0];
 
-	VectorCopy (p1->totallight, base);
-	VectorSubtract (p2->totallight, base, d1);
-	VectorSubtract (p3->totallight, base, d2);
+	VectorCopy(p1->totallight, base);
+	VectorSubtract(p2->totallight, base, d1);
+	VectorSubtract(p3->totallight, base, d2);
 
-	x = DotProduct (point, t->edges[0]->normal) - t->edges[0]->dist;
-	y = DotProduct (point, t->edges[2]->normal) - t->edges[2]->dist;
+	x = DotProduct(point, t->edges[0]->normal) - t->edges[0]->dist;
+	y = DotProduct(point, t->edges[2]->normal) - t->edges[2]->dist;
 
 	x1 = 0;
-	y1 = DotProduct (p2->origin, t->edges[2]->normal) - t->edges[2]->dist;
+	y1 = DotProduct(p2->origin, t->edges[2]->normal) - t->edges[2]->dist;
 
-	x2 = DotProduct (p3->origin, t->edges[0]->normal) - t->edges[0]->dist;
+	x2 = DotProduct(p3->origin, t->edges[0]->normal) - t->edges[0]->dist;
 	y2 = 0;
 
-	if (fabs(y1)<ON_EPSILON || fabs(x2)<ON_EPSILON) {
-		VectorCopy (base, color);
+	if (fabs(y1) < ON_EPSILON || fabs(x2)<ON_EPSILON) {
+		VectorCopy(base, color);
 		return;
 	}
 
-	VectorMA (base, x/x2, d2, color);
-	VectorMA (color, y/y1, d1, color);
+	VectorMA(base, x/x2, d2, color);
+	VectorMA(color, y/y1, d1, color);
 }
 
 /**
@@ -351,7 +351,7 @@ static qboolean PointInTriangle (vec3_t point, triangle_t *t)
 
 	for (i = 0; i < 3; i++) {
 		e = t->edges[i];
-		d = DotProduct (e->normal, point) - e->dist;
+		d = DotProduct(e->normal, point) - e->dist;
 		if (d < 0)
 			return qfalse;	/* not inside */
 	}
@@ -372,17 +372,17 @@ static void SampleTriangulation (vec3_t point, triangulation_t *trian, vec3_t co
 	int			i, j;
 
 	if (trian->numpoints == 0) {
-		VectorClear (color);
+		VectorClear(color);
 		return;
 	}
 	if (trian->numpoints == 1) {
-		VectorCopy (trian->points[0]->totallight, color);
+		VectorCopy(trian->points[0]->totallight, color);
 		return;
 	}
 
 	/* search for triangles */
-	for (t = trian->tris, j=0 ; j < trian->numtris ; t++, j++) {
-		if (!PointInTriangle (point, t))
+	for (t = trian->tris, j = 0; j < trian->numtris; t++, j++) {
+		if (!PointInTriangle(point, t))
 			continue;
 
 		/* this is it */
@@ -395,17 +395,17 @@ static void SampleTriangulation (vec3_t point, triangulation_t *trian, vec3_t co
 		if (e->tri)
 			continue;		/* not an exterior edge */
 
-		d = DotProduct (point, e->normal) - e->dist;
+		d = DotProduct(point, e->normal) - e->dist;
 		if (d < 0)
 			continue;	/* not in front of edge */
 
 		p0 = trian->points[e->p0];
 		p1 = trian->points[e->p1];
 
-		VectorSubtract (p1->origin, p0->origin, v1);
-		VectorNormalize (v1, v1);
-		VectorSubtract (point, p0->origin, v2);
-		d = DotProduct (v2, v1);
+		VectorSubtract(p1->origin, p0->origin, v1);
+		VectorNormalize(v1, v1);
+		VectorSubtract(point, p0->origin, v2);
+		d = DotProduct(v2, v1);
 		if (d < 0)
 			continue;
 		if (d > 1)
@@ -420,8 +420,8 @@ static void SampleTriangulation (vec3_t point, triangulation_t *trian, vec3_t co
 	p1 = NULL;
 	for (j = 0; j < trian->numpoints; j++) {
 		p0 = trian->points[j];
-		VectorSubtract (point, p0->origin, v1);
-		d = VectorLength (v1);
+		VectorSubtract(point, p0->origin, v1);
+		d = VectorLength(v1);
 		if (d < best) {
 			best = d;
 			p1 = p0;
@@ -429,9 +429,9 @@ static void SampleTriangulation (vec3_t point, triangulation_t *trian, vec3_t co
 	}
 
 	if (!p1)
-		Error ("SampleTriangulation: no points");
+		Error("SampleTriangulation: no points");
 
-	VectorCopy (p1->totallight, color);
+	VectorCopy(p1->totallight, color);
 }
 
 /*
@@ -495,7 +495,7 @@ static void CalcFaceExtents (lightinfo_t *l)
 		VectorCopy (v->point, vt);
 
 		for (j = 0; j < 2; j++) {
-			val = DotProduct (vt, tex->vecs[j]) + tex->vecs[j][3];
+			val = DotProduct(vt, tex->vecs[j]) + tex->vecs[j][3];
 			if (val < mins[j])
 				mins[j] = val;
 			if (val > maxs[j])
@@ -513,7 +513,7 @@ static void CalcFaceExtents (lightinfo_t *l)
 		l->texmins[i] = mins[i];
 		l->texsize[i] = maxs[i] - mins[i];
 		if (l->texsize[0] * l->texsize[1] > SINGLEMAP)
-			Error ("Surface to large to map %i - %i (%i)", l->texsize[0], l->texsize[1], SINGLEMAP);
+			Error("Surface to large to map %i - %i (%i)", l->texsize[0], l->texsize[1], SINGLEMAP);
 	}
 }
 
@@ -547,26 +547,26 @@ static void CalcFaceVectors (lightinfo_t *l)
 	VectorNormalize (texnormal, texnormal);
 
 	/* flip it towards plane normal */
-	distscale = DotProduct (texnormal, l->facenormal);
+	distscale = DotProduct(texnormal, l->facenormal);
 	if (!distscale) {
-		Sys_FPrintf (SYS_VRB, "WARNING: Texture axis perpendicular to face\n");
+		Sys_FPrintf(SYS_VRB, "WARNING: Texture axis perpendicular to face\n");
 		distscale = 1;
 	}
 	if (distscale < 0) {
 		distscale = -distscale;
-		VectorSubtract (vec3_origin, texnormal, texnormal);
+		VectorSubtract(vec3_origin, texnormal, texnormal);
 	}
 
 	/* distscale is the ratio of the distance along the texture normal to */
 	/* the distance along the plane normal */
-	distscale = 1/distscale;
+	distscale = 1 / distscale;
 
 	for (i = 0; i < 2; i++) {
-		len = VectorLength (l->worldtotex[i]);
-		dist = DotProduct (l->worldtotex[i], l->facenormal);
+		len = VectorLength(l->worldtotex[i]);
+		dist = DotProduct(l->worldtotex[i], l->facenormal);
 		dist *= distscale;
-		VectorMA (l->worldtotex[i], -dist, texnormal, l->textoworld[i]);
-		VectorScale (l->textoworld[i], (1/len)*(1/len), l->textoworld[i]);
+		VectorMA(l->worldtotex[i], -dist, texnormal, l->textoworld[i]);
+		VectorScale(l->textoworld[i], (1/len)*(1/len), l->textoworld[i]);
 	}
 
 
@@ -575,12 +575,12 @@ static void CalcFaceVectors (lightinfo_t *l)
 		l->texorg[i] = -tex->vecs[0][3]* l->textoworld[0][i] - tex->vecs[1][3] * l->textoworld[1][i];
 
 	/* project back to the face plane */
-	dist = DotProduct (l->texorg, l->facenormal) - l->facedist - 1;
+	dist = DotProduct(l->texorg, l->facenormal) - l->facedist - 1;
 	dist *= distscale;
-	VectorMA (l->texorg, -dist, texnormal, l->texorg);
+	VectorMA(l->texorg, -dist, texnormal, l->texorg);
 
 	/* compensate for org'd bmodels */
-	VectorAdd (l->texorg, l->modelorg, l->texorg);
+	VectorAdd(l->texorg, l->modelorg, l->texorg);
 
 	/* total sample count */
 	h = l->texsize[1]+1;
@@ -634,9 +634,9 @@ static void CalcPoints (lightinfo_t *l, float sofs, float tofs)
 					surf[j] = l->texorg[j] + l->textoworld[0][j]*us
 					+ l->textoworld[1][j]*ut;
 
-				leaf = Rad_PointInLeaf (surf);
+				leaf = Rad_PointInLeaf(surf);
 				if (leaf->contents != CONTENTS_SOLID) {
-					if (!TestLine (facemid, surf))
+					if (!TestLine(facemid, surf))
 						break;	/* got it */
 				}
 
@@ -700,8 +700,8 @@ static entity_t *FindTargetEntity (char *target)
 	char	*n;
 
 	for (i = 0; i < num_entities; i++) {
-		n = ValueForKey (&entities[i], "targetname");
-		if (!strcmp (n, target))
+		n = ValueForKey(&entities[i], "targetname");
+		if (!strcmp(n, target))
 			return &entities[i];
 	}
 
@@ -795,7 +795,7 @@ void CreateDirectLights (void)
 			dl->stopdot = FloatForKey (e, "_cone");
 			if (!dl->stopdot)
 				dl->stopdot = 10;
-			dl->stopdot = cos(dl->stopdot/180.0f*M_PI);
+			dl->stopdot = cos(dl->stopdot / 180.0f * M_PI);
 			if (target[0]) {	/* point towards target */
 				e2 = FindTargetEntity(target);
 				if (!e2)

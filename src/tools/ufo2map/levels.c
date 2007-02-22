@@ -36,7 +36,7 @@ static int oldleafs, oldleaffaces, oldleafbrushes, oldplanes, oldvertexes, oldno
 /**
  * @brief
  */
-extern void PushInfo ( void )
+extern void PushInfo (void)
 {
 	oldleafs = numleafs;
 	oldleaffaces = numleaffaces;
@@ -53,7 +53,7 @@ extern void PushInfo ( void )
 /**
  * @brief
  */
-extern void PopInfo ( void )
+extern void PopInfo (void)
 {
 	numleafs = oldleafs;
 	numleaffaces = oldleaffaces;
@@ -71,7 +71,7 @@ extern void PopInfo ( void )
 /**
  * @brief
  */
-static int BuildNodeChildren( vec3_t mins, vec3_t maxs, int n[3] )
+static int BuildNodeChildren (vec3_t mins, vec3_t maxs, int n[3])
 {
 	int		node;
 	int		i;
@@ -79,10 +79,10 @@ static int BuildNodeChildren( vec3_t mins, vec3_t maxs, int n[3] )
 	node = -1;
 
 	for (i = 0; i < 3; i++) {
-		if ( n[i] == -1 )
+		if (n[i] == -1)
 			continue;
 
-		if ( node == -1 ) {
+		if (node == -1) {
 			/* store the valid node */
 			node = n[i];
 		} else {
@@ -100,16 +100,20 @@ static int BuildNodeChildren( vec3_t mins, vec3_t maxs, int n[3] )
 			newnode->firstface = 0;
 			newnode->numfaces = 0;
 
-			ClearBounds( newmins, newmaxs );
-			VectorCopy( dnodes[node].mins, addvec ); AddPointToBounds( addvec, newmins, newmaxs );
-			VectorCopy( dnodes[node].maxs, addvec ); AddPointToBounds( addvec, newmins, newmaxs );
-			VectorCopy( dnodes[n[i]].mins, addvec ); AddPointToBounds( addvec, newmins, newmaxs );
-			VectorCopy( dnodes[n[i]].maxs, addvec ); AddPointToBounds( addvec, newmins, newmaxs );
-			VectorCopy( newmins, newnode->mins );
-			VectorCopy( newmaxs, newnode->maxs );
+			ClearBounds(newmins, newmaxs);
+			VectorCopy(dnodes[node].mins, addvec);
+			AddPointToBounds(addvec, newmins, newmaxs);
+			VectorCopy(dnodes[node].maxs, addvec);
+			AddPointToBounds(addvec, newmins, newmaxs);
+			VectorCopy(dnodes[n[i]].mins, addvec);
+			AddPointToBounds(addvec, newmins, newmaxs);
+			VectorCopy(dnodes[n[i]].maxs, addvec);
+			AddPointToBounds(addvec, newmins, newmaxs);
+			VectorCopy(newmins, newnode->mins);
+			VectorCopy(newmaxs, newnode->maxs);
 
-			AddPointToBounds( newmins, worldMins, worldMaxs );
-			AddPointToBounds( newmaxs, worldMins, worldMaxs );
+			AddPointToBounds(newmins, worldMins, worldMaxs);
+			AddPointToBounds(newmaxs, worldMins, worldMaxs);
 
 			node = numnodes - 1;
 		}
@@ -133,87 +137,87 @@ static int ConstructLevelNodes_r (int levelnum, vec3_t cmins, vec3_t cmaxs)
 	node_t		*n;
 
 	/* calculate bounds, stop if no brushes are available */
-	if ( !MapBrushesBounds( brush_start, brush_end, levelnum, cmins, cmaxs, bmins, bmaxs ) )
+	if (!MapBrushesBounds(brush_start, brush_end, levelnum, cmins, cmaxs, bmins, bmaxs))
 		return -1;
 
 /*	VectorCopy( cmins, bmins ); */
 /*	VectorCopy( cmaxs, bmaxs ); */
 
-	VectorSubtract( bmaxs, bmins, diff );
+	VectorSubtract(bmaxs, bmins, diff);
 
 /*	Sys_Printf( "(%i): %i %i: (%i %i) (%i %i) -> (%i %i) (%i %i)\n", levelnum, (int)diff[0], (int)diff[1],
 		(int)cmins[0], (int)cmins[1], (int)cmaxs[0], (int)cmaxs[1],
 		(int)bmins[0], (int)bmins[1], (int)bmaxs[0], (int)bmaxs[1] ); */
 
-	if ( diff[0] > 256 || diff[1] > 256 ) {
+	if (diff[0] > 256 || diff[1] > 256) {
 		/* continue subdivision */
 		/* split the remaining hull at the middle of */
 		/* the longer axis */
 		vec3_t		nmins, nmaxs;
 		int			n;
 
-		if ( diff[1] > diff[0] )
+		if (diff[1] > diff[0])
 			n = 1;
 		else
 			n = 0;
 
-		VectorCopy( bmins, nmins );
-		VectorCopy( bmaxs, nmaxs );
+		VectorCopy(bmins, nmins);
+		VectorCopy(bmaxs, nmaxs);
 
-		nmaxs[n] -= diff[n]/2;
+		nmaxs[n] -= diff[n] / 2;
 /*		Sys_Printf( "  (%i %i) (%i %i)\n", (int)nmins[0], (int)nmins[1], (int)nmaxs[0], (int)nmaxs[1] ); */
-		nn[0] = ConstructLevelNodes_r( levelnum, nmins, nmaxs );
+		nn[0] = ConstructLevelNodes_r(levelnum, nmins, nmaxs);
 
-		nmins[n] += diff[n]/2;
-		nmaxs[n] += diff[n]/2;
+		nmins[n] += diff[n] / 2;
+		nmaxs[n] += diff[n] / 2;
 /*		Sys_Printf( "    (%i %i) (%i %i)\n", (int)nmins[0], (int)nmins[1], (int)nmaxs[0], (int)nmaxs[1] ); */
-		nn[1] = ConstructLevelNodes_r( levelnum, nmins, nmaxs );
+		nn[1] = ConstructLevelNodes_r(levelnum, nmins, nmaxs);
 	} else {
 		/* no children */
 		nn[0] = -1;
 		nn[1] = -1;
 	}
 
-	BeginModel ();
+	BeginModel();
 
 	/* add v_epsilon to avoid clipping errors */
-	VectorSubtract( bmins, v_epsilon, bmins );
-	VectorAdd( bmaxs, v_epsilon, bmaxs );
+	VectorSubtract(bmins, v_epsilon, bmins);
+	VectorAdd(bmaxs, v_epsilon, bmaxs);
 
-	list = MakeBspBrushList( brush_start, brush_end, levelnum, bmins, bmaxs);
-	if ( !list ) {
+	list = MakeBspBrushList(brush_start, brush_end, levelnum, bmins, bmaxs);
+	if (!list) {
 		nn[2] = -1;
-		return BuildNodeChildren( bmins, bmaxs, nn );
+		return BuildNodeChildren(bmins, bmaxs, nn);
 	}
 
 	if (!nocsg)
-		list = ChopBrushes (list);
+		list = ChopBrushes(list);
 
 	/* begin model creation now */
-	tree = BrushBSP (list, bmins, bmaxs);
-	MakeTreePortals (tree);
-	MarkVisibleSides (tree, brush_start, brush_end);
-	MakeFaces (tree->headnode);
-	FixTjuncs (tree->headnode);
+	tree = BrushBSP(list, bmins, bmaxs);
+	MakeTreePortals(tree);
+	MarkVisibleSides(tree, brush_start, brush_end);
+	MakeFaces(tree->headnode);
+	FixTjuncs(tree->headnode);
 
 	if (!noprune)
-		PruneNodes (tree->headnode);
+		PruneNodes(tree->headnode);
 
 	/* correct bounds */
 	n = tree->headnode;
-	VectorAdd( bmins, v_epsilon, n->mins );
-	VectorSubtract( bmaxs, v_epsilon, n->maxs );
+	VectorAdd(bmins, v_epsilon, n->mins);
+	VectorSubtract(bmaxs, v_epsilon, n->maxs);
 
 	/* finish model */
-	WriteBSP (tree->headnode);
-	FreeTree (tree);
+	WriteBSP(tree->headnode);
+	FreeTree(tree);
 
-/*	EndModel (); */
+/*	EndModel(); */
 
-/*	Sys_Printf( "  headnode: %i\n", dmodels[nummodels].headnode ); */
+/*	Sys_Printf("  headnode: %i\n", dmodels[nummodels].headnode); */
 
 	nn[2] = dmodels[nummodels].headnode;
-	return BuildNodeChildren( bmins, bmaxs, nn );
+	return BuildNodeChildren(bmins, bmaxs, nn);
 }
 
 
@@ -235,19 +239,19 @@ extern void ProcessLevel (int levelnum)
 	maxs[2] = 4096-1;
 
 	dm = &dmodels[levelnum];
-	memset( dm, 0, sizeof(dmodel_t) );
+	memset(dm, 0, sizeof(dmodel_t));
 
 	/* back copy backup brush sides structure */
 	/* to reset all the changed values (especialy "finished") */
-	memcpy( mapbrushes, mapbrushes + nummapbrushes, sizeof(mapbrush_t)*nummapbrushes );
+	memcpy(mapbrushes, mapbrushes + nummapbrushes, sizeof(mapbrush_t)*nummapbrushes);
 
 	/* store face number for later use */
 	dm->firstface = numfaces;
-	dm->headnode = ConstructLevelNodes_r( levelnum, mins, maxs );
+	dm->headnode = ConstructLevelNodes_r(levelnum, mins, maxs);
 	dm->numfaces = numfaces - dm->firstface;
 
 /*	if (!dm->numfaces)
-		Sys_Printf( "level: %i -> %i : f %i\n", levelnum, dm->headnode, dm->numfaces );
+		Sys_Printf("level: %i -> %i : f %i\n", levelnum, dm->headnode, dm->numfaces);
 */
 }
 
