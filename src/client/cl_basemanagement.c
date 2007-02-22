@@ -52,6 +52,40 @@ extern int B_GetEmployeeCount (const base_t* const base)
 }
 
 /**
+ * @brief Searches the base for a given building type with the given status
+ * @param[in] base Base to search
+ * @param[in] type Building type to search
+ * @param[in] status The status the building should have
+ * @param[out] cnt This is a pointer to an int value which will hold the building
+ * count of that type with the status you are searching - might also be NULL
+ * if you are not interested in this value
+ * @note If you are searching for a quarter (e.g.) you should perform a
+ * <code>if (base->hasQuarters)</code> check - this is not available for all
+ * building types but should speed things up a lot
+ * @return true if building with status was found
+ */
+extern qboolean B_CheckBuildingTypeStatus (const base_t* const base, buildingType_t type, buildingStatus_t status, int *cnt)
+{
+	int cntlocal = 0, i;
+
+	for (i = 0; i < gd.numBuildings[base->idx]; i++) {
+		if (gd.buildings[base->idx][i].buildingType == type
+		 && gd.buildings[base->idx][i].buildingStatus == status) {
+			cntlocal++;
+			/* don't count any further - the caller doesn't want to know the value */
+			if (!cnt)
+				return qtrue;
+		}
+	}
+
+	/* set the cnt pointer if the caller wants to know this value */
+	if (cnt)
+		*cnt = cntlocal;
+
+	return cntlocal ? qtrue : qfalse;
+}
+
+/**
  * @brief Sums up max_employees quarter values
  */
 extern int B_GetAvailableQuarterSpace (const base_t* const base)

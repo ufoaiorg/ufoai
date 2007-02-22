@@ -244,6 +244,8 @@ void B_TransferEnd(aircraft_t* aircraft);
 int B_GetAvailableQuarterSpace(const base_t* const base);
 int B_GetEmployeeCount(const base_t* const base);
 
+qboolean B_CheckBuildingTypeStatus(const base_t* const base, buildingType_t type, buildingStatus_t status, int *cnt);
+
 void B_BuildingDestroy(building_t* building, base_t* base);
 void CL_DropshipReturned(base_t* base, aircraft_t* aircraft);
 
