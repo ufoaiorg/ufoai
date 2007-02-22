@@ -74,28 +74,68 @@ menu aliencont
 		click	{ cmd mn_pop }
 	}
 
-	pic bt_alc_ufopedia
-	{
-		tooltip	"_Check UFOpedia Entry"
-		image	menu/button_research
-		mousefx	true
-		pos	"650 696"
-		texl	"0 64"
-		texh	"64 128"
-		click	{ cmd aliencont_pedia }
-	}
-
-	pic bt_alc_1
+	//TODO
+	pic bt_alc_prevbase
 	{
 		tooltip	"TODO"
-		image	menu/button_research
+		image	menu/button_aliencont1
 		mousefx	true
-		pos	"720 700"
-		texl    "0 0"
-		texh    "64 64"
+		pos	"610 692"
+		texl	"0 0"
+		texh	"32 64"
 		click	{ cmd mn_pop }
 	}
 
+	confunc aliencont_researchb { *bt_alc_research image menu/button_aliencont1 }
+	confunc aliencont_researchg { *bt_alc_research image menu/button_aliencont2 }
+
+	pic bt_alc_research
+	{
+		tooltip	"_Click to do autopsy"
+		mousefx	true
+		pos	"650 690"
+		texl	"0 64"
+		texh	"64 128"
+		click	{ cmd aliencont_research }
+	}
+
+	confunc aliencont_ufopediab { *bt_alc_ufopedia image menu/button_aliencont1 }
+	confunc aliencont_ufopediag { *bt_alc_ufopedia image menu/button_aliencont2 }
+
+	pic bt_alc_ufopedia
+	{
+		tooltip	"_Check UFOpedia Entry"
+		mousefx	true
+		pos	"720 694"
+		texl	"64 0"
+		texh	"128 64"
+		click	{ cmd aliencont_pedia }
+	}
+
+	confunc aliencont_killb { *bt_alc_killaliens image menu/button_aliencont1 }
+	confunc aliencont_killg { *bt_alc_killaliens image menu/button_aliencont2 }
+
+	pic bt_alc_killaliens
+	{
+		tooltip	"_Kill all aliens in this base"
+		mousefx	true
+		pos	"790 690"
+		texl    "64 64"
+		texh    "128 128"
+		click	{ cmd aliencont_killall }
+	}
+
+	//TODO
+	pic bt_alc_nextbase
+	{
+		tooltip	"TODO"
+		image	menu/button_aliencont1
+		mousefx	true
+		pos	"860 692"
+		texl	"32 0"
+		texh	"64 64"
+		click	{ cmd mn_pop }
+	}
 
 	// ==================
 	// main window
