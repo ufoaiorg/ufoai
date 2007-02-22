@@ -263,6 +263,12 @@ extern void R_BuildLightMap (msurface_t * surf, byte * dest, int stride)
 	lightstyle_t *style;
 	int monolightmap;
 
+	/* no rad processing - for map testing */
+	if (!surf->lquant) {
+		ri.Con_Printf(PRINT_ALL, "R_BuildLightMap - no lightmap\n");
+		return;
+	}
+
 	if (surf->texinfo->flags & (SURF_TRANS33 | SURF_TRANS66 | SURF_WARP))
 		ri.Sys_Error(ERR_DROP, "R_BuildLightMap called for non-lit surface");
 
