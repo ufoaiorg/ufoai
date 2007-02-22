@@ -1213,12 +1213,13 @@ static qboolean G_CanReactionFire (edict_t *ent, edict_t *target, char *reason)
  * @param[in] ent The shooter entity.
  * @param[in] target The target entity.
  * @param[out] fire_hand_type If not NULL then this stores the hand (combind with the 'reaction' info) that the shooter will fire with.
+ * @param[out] firemode The firemode that will be used for the shot.
  * @returns The number of TUs required to fire or -1 if firing is not possible
  */
 static int G_GetFiringTUs (edict_t *ent, edict_t *target, int *fire_hand_type, int *firemode)
 {
 	int weapon_fd_idx;
-	int tmp;
+	int tmp = -2;
 
 	/* The caller doesn't use this parameter, use a temporary one instead. */
 	if (!firemode)
@@ -1243,6 +1244,8 @@ static int G_GetFiringTUs (edict_t *ent, edict_t *target, int *fire_hand_type, i
 				if (fire_hand_type) {
 					*fire_hand_type = ST_RIGHT_REACTION;
 				}
+
+				Com_Printf("G_GetFiringTUs: right entnumber:%i firemode:%i entteam:%i\n", ent->number, *firemode, ent->team); /* TODO: DEBUG - remove me */
 				return gi.csi->ods[RIGHT(ent)->item.m].fd[weapon_fd_idx][*firemode].time + sv_reaction_leftover->integer;
 			}
 		}
@@ -1267,6 +1270,8 @@ static int G_GetFiringTUs (edict_t *ent, edict_t *target, int *fire_hand_type, i
 				if (fire_hand_type) {
 					*fire_hand_type = ST_LEFT_REACTION;
 				}
+
+				Com_Printf("G_GetFiringTUs: left entnumber:%i firemode:%i entteam:%i\n", ent->number, *firemode, ent->team); /* TODO: DEBUG - remove me */
 				return gi.csi->ods[LEFT(ent)->item.m].fd[weapon_fd_idx][*firemode].time + sv_reaction_leftover->integer;
 			}
 		}

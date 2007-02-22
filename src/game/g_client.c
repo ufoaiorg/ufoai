@@ -1685,6 +1685,7 @@ void G_ClientAction (player_t * player)
 		hand = -1;
 		fd_idx = -1;
 		gi.ReadFormat(pa_format[PA_REACT_SELECT], &actor, &hand, &fd_idx);
+		Com_Printf("G_ClientAction: actor:%i hand:%i fd:%i\n", actor, hand, fd_idx);	/* TODO: DEBUG - remove me */
 		REACTION_FIREMODE[player->pers.team][actor][0] = hand;
 		REACTION_FIREMODE[player->pers.team][actor][1] = fd_idx;
 		break;
