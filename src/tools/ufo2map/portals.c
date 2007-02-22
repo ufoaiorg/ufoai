@@ -533,7 +533,7 @@ qboolean FloodEntities (tree_t *tree)
 	node_t *headnode;
 
 	headnode = tree->headnode;
-	Sys_FPrintf( SYS_VRB, "--- FloodEntities ---\n");
+	Sys_FPrintf(SYS_VRB, "--- FloodEntities ---\n");
 	inside = qfalse;
 	tree->outside_node.occupied = 0;
 
@@ -570,9 +570,9 @@ gotit: ;
 	}
 
 	if (!inside) {
-		Sys_FPrintf( SYS_VRB, "no entities in open -- no filling\n");
+		Sys_FPrintf(SYS_VRB, "no entities in open -- no filling\n");
 	} else if (tree->outside_node.occupied) {
-		Sys_FPrintf( SYS_VRB, "entity reached from outside -- no filling\n");
+		Sys_FPrintf(SYS_VRB, "entity reached from outside -- no filling\n");
 	}
 
 	return (qboolean)(inside && !tree->outside_node.occupied);
@@ -703,7 +703,7 @@ void EmitAreaPortals (node_t *headnode)
 	dareaportal_t	*dp;
 
 	if (c_areas > MAX_MAP_AREAS)
-		Error ("MAX_MAP_AREAS");
+		Error("MAX_MAP_AREAS (%i)", c_areas);
 	numareas = c_areas+1;
 	numareaportals = 1;		/* leave 0 as an error */
 
@@ -727,8 +727,8 @@ void EmitAreaPortals (node_t *headnode)
 		dareas[i].numareaportals = numareaportals - dareas[i].firstareaportal;
 	}
 
-	Sys_FPrintf( SYS_VRB, "%5i numareas\n", numareas);
-	Sys_FPrintf( SYS_VRB, "%5i numareaportals\n", numareaportals);
+	Sys_FPrintf(SYS_VRB, "%5i numareas\n", numareas);
+	Sys_FPrintf(SYS_VRB, "%5i numareaportals\n", numareaportals);
 }
 
 /**
@@ -736,10 +736,10 @@ void EmitAreaPortals (node_t *headnode)
  */
 void FloodAreas (tree_t *tree)
 {
-	Sys_FPrintf( SYS_VRB, "--- FloodAreas ---\n");
+	Sys_FPrintf(SYS_VRB, "--- FloodAreas ---\n");
 	FindAreas_r (tree->headnode);
 	SetAreaPortalAreas_r (tree->headnode);
-	Sys_FPrintf( SYS_VRB, "%5i areas\n", c_areas);
+	Sys_FPrintf(SYS_VRB, "%5i areas\n", c_areas);
 }
 
 /*====================================================== */
@@ -779,11 +779,11 @@ void FillOutside (node_t *headnode)
 	c_outside = 0;
 	c_inside = 0;
 	c_solid = 0;
-	Sys_FPrintf( SYS_VRB, "--- FillOutside ---\n");
+	Sys_FPrintf(SYS_VRB, "--- FillOutside ---\n");
 	FillOutside_r (headnode);
-	Sys_FPrintf( SYS_VRB, "%5i solid leafs\n", c_solid);
-	Sys_FPrintf( SYS_VRB, "%5i leafs filled\n", c_outside);
-	Sys_FPrintf( SYS_VRB, "%5i inside leafs\n", c_inside);
+	Sys_FPrintf(SYS_VRB, "%5i solid leafs\n", c_solid);
+	Sys_FPrintf(SYS_VRB, "%5i leafs filled\n", c_outside);
+	Sys_FPrintf(SYS_VRB, "%5i inside leafs\n", c_inside);
 }
 
 
@@ -845,7 +845,7 @@ void FindPortalSide (portal_t *p)
 
 gotit:
 	if (!bestside)
-		Sys_FPrintf( SYS_VRB, "WARNING: side not found for portal\n");
+		Sys_FPrintf(SYS_VRB, "WARNING: side not found for portal\n");
 
 	p->sidefound = qtrue;
 	p->side = bestside;
@@ -892,7 +892,7 @@ void MarkVisibleSides (tree_t *tree, int startbrush, int endbrush)
 	mapbrush_t	*mb;
 	int		numsides;
 
-	Sys_FPrintf( SYS_VRB, "--- MarkVisibleSides ---\n");
+	Sys_FPrintf(SYS_VRB, "--- MarkVisibleSides ---\n");
 
 	/* clear all the visible flags */
 	for (i = startbrush; i < endbrush; i++) {

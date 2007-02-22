@@ -443,7 +443,7 @@ static void AddLump (int lumpnum, void *data, int len)
 /**
  * @brief Swaps the bsp file in place, so it should not be referenced again
  */
-extern void WriteBSPFile (char *filename)
+extern void WriteBSPFile (const char *filename)
 {
 	header = &outheader;
 	memset(header, 0, sizeof(dheader_t));

@@ -339,7 +339,7 @@ static void SubdividePatch (patch_t *patch)
 
 	/* create a new patch */
 	if (num_patches == MAX_PATCHES)
-		Error ("MAX_PATCHES");
+		Error("MAX_PATCHES (%i)", num_patches);
 	newp = &patches[num_patches];
 	num_patches++;
 
@@ -385,7 +385,7 @@ static void DicePatch (patch_t *patch)
 
 	/* create a new patch */
 	if (num_patches == MAX_PATCHES)
-		Error ("MAX_PATCHES");
+		Error("MAX_PATCHES (%i)", num_patches);
 	newp = &patches[num_patches];
 	num_patches++;
 

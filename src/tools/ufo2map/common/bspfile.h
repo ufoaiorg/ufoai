@@ -56,10 +56,10 @@ extern	dbrush_t	dbrushes[MAX_MAP_BRUSHES];
 extern	int			numbrushsides;
 extern	dbrushside_t	dbrushsides[MAX_MAP_BRUSHSIDES];
 
-void LoadBSPFile (char *filename);
-void LoadBSPFileTexinfo (char *filename);	/* just for qdata */
-void WriteBSPFile (char *filename);
-void PrintBSPFileSizes (void);
+void LoadBSPFile(char *filename);
+void LoadBSPFileTexinfo(char *filename);	/* just for qdata */
+void WriteBSPFile(const char *filename);
+void PrintBSPFileSizes(void);
 
 /*=============== */
 
@@ -86,19 +86,19 @@ typedef struct
 extern	int			num_entities;
 extern	entity_t	entities[MAX_MAP_ENTITIES];
 
-void	ParseEntities (void);
-void	UnparseEntities (void);
+void	ParseEntities(void);
+void	UnparseEntities(void);
 
-void 	SetKeyValue (entity_t *ent, char *key, char *value);
-char 	*ValueForKey (entity_t *ent, char *key);
+void 	SetKeyValue(entity_t *ent, char *key, char *value);
+char 	*ValueForKey(entity_t *ent, char *key);
 /* will return "" if not present */
 
-vec_t	FloatForKey (entity_t *ent, char *key);
-void 	GetVectorForKey (entity_t *ent, char *key, vec3_t vec);
+vec_t	FloatForKey(entity_t *ent, char *key);
+void 	GetVectorForKey(entity_t *ent, char *key, vec3_t vec);
 
-epair_t *ParseEpair (void);
+epair_t *ParseEpair(void);
 
-byte *CompressRouting( byte *dataStart, byte *destStart, int l );
-/*int DeCompressRouting( byte **source, byte *dataStart );*/
+byte *CompressRouting(byte *dataStart, byte *destStart, int l);
+/*int DeCompressRouting(byte **source, byte *dataStart );*/
 
 #endif /* _BSP_FILE */

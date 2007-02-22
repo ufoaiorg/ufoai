@@ -1116,7 +1116,7 @@ void FinalLightFace (unsigned int facenum)
 
 	ThreadLock();
 	f->lightofs = lightdatasize;
-	lightdatasize += fl->numstyles*(fl->numsamples*3);
+	lightdatasize += fl->numstyles * (fl->numsamples * 3);
 
 #if 0
 	/* add green sentinals between lightmaps */
@@ -1126,7 +1126,7 @@ void FinalLightFace (unsigned int facenum)
 #endif
 
 	if (lightdatasize > MAX_MAP_LIGHTING)
-		Error("MAX_MAP_LIGHTING");
+		Error("MAX_MAP_LIGHTING (%i)", lightdatasize);
 	ThreadUnlock();
 
 	f->styles[0] = 0;
@@ -1181,7 +1181,8 @@ void FinalLightFace (unsigned int facenum)
 
 	if (fl->numstyles > MAXLIGHTMAPS) {
 		fl->numstyles = MAXLIGHTMAPS;
-		Sys_Printf("face with too many lightstyles: (%f %f %f)\n",
+		Sys_Printf("face with too many lightstyles (%i): (%f %f %f)\n",
+			fl->numstyles,
 			face_patches[facenum]->origin[0],
 			face_patches[facenum]->origin[1],
 			face_patches[facenum]->origin[2]

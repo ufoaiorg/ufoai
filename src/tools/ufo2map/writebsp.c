@@ -83,12 +83,12 @@ static void EmitMarkFace (dleaf_t *leaf_p, face_t *f)
 
 	if (facenum < 0 || facenum >= numfaces)
 		Error ("Bad leafface");
-	for (i=leaf_p->firstleafface ; i<numleaffaces ; i++)
+	for (i = leaf_p->firstleafface; i < numleaffaces; i++)
 		if (dleaffaces[i] == facenum)
 			break;		/* merged out face */
 	if (i == numleaffaces) {
 		if (numleaffaces >= MAX_MAP_LEAFFACES)
-			Error ("MAX_MAP_LEAFFACES");
+			Error("MAX_MAP_LEAFFACES (%i)", numleaffaces);
 
 		dleaffaces[numleaffaces] =  facenum;
 		numleaffaces++;
@@ -112,7 +112,7 @@ static void EmitLeaf (node_t *node)
 
 	/* emit a leaf */
 	if (numleafs >= MAX_MAP_LEAFS)
-		Error ("MAX_MAP_LEAFS");
+		Error("MAX_MAP_LEAFS (%i)", numleafs);
 
 	leaf_p = &dleafs[numleafs];
 	numleafs++;
@@ -122,14 +122,14 @@ static void EmitLeaf (node_t *node)
 	leaf_p->area = node->area;
 
 	/* write bounding box info */
-	VectorCopy ((short)node->mins, leaf_p->mins);
-	VectorCopy ((short)node->maxs, leaf_p->maxs);
+	VectorCopy((short)node->mins, leaf_p->mins);
+	VectorCopy((short)node->maxs, leaf_p->maxs);
 
 	/* write the leafbrushes */
 	leaf_p->firstleafbrush = numleafbrushes;
 	for (b = node->brushlist; b; b = b->next) {
 		if (numleafbrushes >= MAX_MAP_LEAFBRUSHES)
-			Error ("MAX_MAP_LEAFBRUSHES");
+			Error("MAX_MAP_LEAFBRUSHES (%i)", numleafbrushes);
 
 		brushnum = b->original - mapbrushes;
 		for (i=leaf_p->firstleafbrush ; i<numleafbrushes ; i++)
@@ -220,7 +220,7 @@ static int EmitDrawNode_r (node_t *node)
 
 	/* emit a node	 */
 	if (numnodes == MAX_MAP_NODES)
-		Error ("MAX_MAP_NODES");
+		Error("MAX_MAP_NODES (%i)", numnodes);
 	n = &dnodes[numnodes];
 	numnodes++;
 
@@ -231,7 +231,7 @@ static int EmitDrawNode_r (node_t *node)
 	planeused[node->planenum^1]++;
 
 	if (node->planenum & 1)
-		Error ("WriteDrawNodes_r: odd planenum");
+		Error("WriteDrawNodes_r: odd planenum");
 	n->planenum = node->planenum;
 	n->firstface = numfaces;
 
@@ -368,7 +368,7 @@ static void EmitBrushes (void)
 		db->numsides = b->numsides;
 		for (j = 0; j < b->numsides; j++) {
 			if (numbrushsides == MAX_MAP_BRUSHSIDES)
-				Error ("MAX_MAP_BRUSHSIDES");
+				Error("MAX_MAP_BRUSHSIDES (%i)", numbrushsides);
 			cp = &dbrushsides[numbrushsides];
 			numbrushsides++;
 			cp->planenum = b->original_sides[j].planenum;
@@ -385,13 +385,13 @@ static void EmitBrushes (void)
 					dist = -b->mins[x];
 				else
 					dist = b->maxs[x];
-				planenum = FindFloatPlane (normal, dist);
+				planenum = FindFloatPlane(normal, dist);
 				for (i = 0; i < b->numsides; i++)
 					if (b->original_sides[i].planenum == planenum)
 						break;
 				if (i == b->numsides) {
 					if (numbrushsides >= MAX_MAP_BRUSHSIDES)
-						Error ("MAX_MAP_BRUSHSIDES");
+						Error("MAX_MAP_BRUSHSIDES (%i)", numbrushsides);
 
 					dbrushsides[numbrushsides].planenum = planenum;
 					dbrushsides[numbrushsides].texinfo =
@@ -480,7 +480,7 @@ extern void BeginModel (void)
 	vec3_t		mins, maxs;
 
 	if (nummodels == MAX_MAP_MODELS)
-		Error ("MAX_MAP_MODELS");
+		Error("MAX_MAP_MODELS (%i)", nummodels);
 	mod = &dmodels[nummodels];
 
 	mod->firstface = numfaces;
