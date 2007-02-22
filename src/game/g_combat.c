@@ -1230,20 +1230,21 @@ static int G_GetFiringTUs (edict_t *ent, edict_t *target, int *hand, int *firemo
 		&& gi.csi->ods[RIGHT(ent)->item.t].weapon
 		&& (!gi.csi->ods[RIGHT(ent)->item.t].reload
 			|| RIGHT(ent)->item.a > 0) ) {
+
 		weapon_fd_idx = INV_FiredefsIDXForWeapon(&gi.csi->ods[RIGHT(ent)->item.m], RIGHT(ent)->item.t);
 		assert(weapon_fd_idx != -1);
 
-		*firemode = REACTION_FIREMODE[ent->team][ent->number][0]; /* Get selected (or default) firemode for the weapon in the right hand. */
-		if (*firemode < 0)
-			*firemode = Com_GetDefaultReactionFire(&gi.csi->ods[RIGHT(ent)->item.m], weapon_fd_idx);	/* Set the default reaction-firemode. */
+		if (REACTION_FIREMODE[ent->team][ent->number][0] == 0
+		&&  REACTION_FIREMODE[ent->team][ent->number][0] >= 0) { /* If a RIGHT-hand firemode is selected and sane. */
+			*firemode = REACTION_FIREMODE[ent->team][ent->number][1]; /* Get selected (if any) firemode for the weapon in the right hand. */
 
-		if (gi.csi->ods[RIGHT(ent)->item.m].fd[weapon_fd_idx][*firemode].time + sv_reaction_leftover->integer <= ent->TU
-		  && gi.csi->ods[RIGHT(ent)->item.m].fd[weapon_fd_idx][*firemode].range > VectorDist(ent->origin, target->origin) ) {
-
-			if (hand) {
-				*hand = ST_RIGHT_REACTION;
+			if (gi.csi->ods[RIGHT(ent)->item.m].fd[weapon_fd_idx][*firemode].time + sv_reaction_leftover->integer <= ent->TU
+			  && gi.csi->ods[RIGHT(ent)->item.m].fd[weapon_fd_idx][*firemode].range > VectorDist(ent->origin, target->origin) ) {
+				if (hand) {
+					*hand = ST_RIGHT_REACTION;
+				}
+				return gi.csi->ods[RIGHT(ent)->item.m].fd[weapon_fd_idx][*firemode].time + sv_reaction_leftover->integer; /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
 			}
-			return gi.csi->ods[RIGHT(ent)->item.m].fd[weapon_fd_idx][*firemode].time + sv_reaction_leftover->integer; /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
 		}
 	}
 	if (LEFT(ent)
@@ -1255,17 +1256,17 @@ static int G_GetFiringTUs (edict_t *ent, edict_t *target, int *hand, int *firemo
 		weapon_fd_idx = INV_FiredefsIDXForWeapon(&gi.csi->ods[LEFT(ent)->item.m], LEFT(ent)->item.t);
 		assert(weapon_fd_idx != -1);
 
-		*firemode = REACTION_FIREMODE[ent->team][ent->number][1]; /* Get selected (or default) firemode for the weapon in the left hand. */
-		if (*firemode < 0)
-			*firemode = Com_GetDefaultReactionFire(&gi.csi->ods[LEFT(ent)->item.m], weapon_fd_idx);	/* Set the default reaction-firemode. */
+		if (REACTION_FIREMODE[ent->team][ent->number][0] == 1
+		&&  REACTION_FIREMODE[ent->team][ent->number][0] >= 0) { /* If a LEFT-hand firemode is selected and sane. */
+			*firemode = REACTION_FIREMODE[ent->team][ent->number][1]; /* Get selected firemode for the weapon in the left hand. */
 
-		if (gi.csi->ods[LEFT(ent)->item.m].fd[weapon_fd_idx][*firemode].time + sv_reaction_leftover->integer <= ent->TU
-		  && gi.csi->ods[LEFT(ent)->item.m].fd[weapon_fd_idx][*firemode].range > VectorDist(ent->origin, target->origin)) {
-
-			if (hand) {
-				*hand = ST_LEFT_REACTION;
+			if (gi.csi->ods[LEFT(ent)->item.m].fd[weapon_fd_idx][*firemode].time + sv_reaction_leftover->integer <= ent->TU
+			  && gi.csi->ods[LEFT(ent)->item.m].fd[weapon_fd_idx][*firemode].range > VectorDist(ent->origin, target->origin)) {
+				if (hand) {
+					*hand = ST_LEFT_REACTION;
+				}
+				return gi.csi->ods[LEFT(ent)->item.m].fd[weapon_fd_idx][*firemode].time + sv_reaction_leftover->integer; /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
 			}
-			return gi.csi->ods[LEFT(ent)->item.m].fd[weapon_fd_idx][*firemode].time + sv_reaction_leftover->integer; /* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
 		}
 	}
 	return -1;

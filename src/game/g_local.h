@@ -321,15 +321,16 @@ void G_SendInventory(int player_mask, edict_t * ent);
 int G_TeamToPM(int team);
 
 extern int TU_REACTIONS[MAX_EDICTS][2];
-extern int REACTION_FIREMODE[MAX_TEAMS][MAX_EDICTS][2]; /*[2]; */
+extern int REACTION_FIREMODE[MAX_TEAMS][MAX_EDICTS][2];
 	/* Per player-team and per actor: Stores the firemode to be used for reaction fire (if the fireDef allows that)
-	 * 1. sub-array	The player
-	 * 2. sub-array	0 right hand
-	 *		1 left hand
-
-	 * NOT USED -> 3. sub-array	0 stores the firemode
-	 *		1 stores the weapon idx in ods.
-	 * Max. number is MAX_FIREDEFS_PER_WEAPON */
+	 * Used in g_combat.c for choosing correct reaction fire. It is filled with data from cl_actor.c
+	 * The client has to make sure that any default firemodes (and unusable firemodes) are transferred correctly.
+	 * Otherwise reaction fire will not work at all.
+	 * 1. sub-array	The player/team
+	 * 2. sub-array	The actor in team
+	 * 3. sub-array	0 ... stores the used hand (0=right, 1=left, -1 undefined)
+	 *		1 ... stores the used firemode Max. number is MAX_FIREDEFS_PER_WEAPON. -1 = undefined
+	 */
 
 extern int turnTeam;
 
