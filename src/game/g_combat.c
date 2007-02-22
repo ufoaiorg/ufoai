@@ -1388,7 +1388,7 @@ static qboolean G_ResolveRF (edict_t *ent, qboolean mock)
 	level.activeTeam = ent->team;
 
 	/* take the shot */
-	Com_Printf("G_ResolveRF: reaction shot: fire_hand_type:%i fd:%i\n", fire_hand_type, firemode);	/* TODO: DEBUG - remove me */
+	Com_Printf("G_ResolveRF: reaction shot: fd:%i\n", firemode);	/* TODO: DEBUG - remove me */
 	tookShot = G_FireWithJudgementCall(player, ent->number, ent->reactionTarget->pos, fire_hand_type, firemode);
 
 	/* Revert active team. */
