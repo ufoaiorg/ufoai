@@ -53,35 +53,35 @@ static void GL_DrawSphere (void)
 		/* build the sphere display list */
 		spherelist = qglGenLists(1);
 
-		qglNewList (spherelist, GL_COMPILE);
+		qglNewList(spherelist, GL_COMPILE);
 
-		qglEnable (GL_NORMALIZE);
+		qglEnable(GL_NORMALIZE);
 
 		for (i = 0; i < GLOBE_TRIS; i++) {
-			qglBegin (GL_TRIANGLE_STRIP);
+			qglBegin(GL_TRIANGLE_STRIP);
 
 			for (j = 0; j <= GLOBE_TRIS; j++) {
-				qglNormal3fv (&globeverts[vertspos]);
-				qglTexCoord2fv (&globetexes[texespos]);
-				qglVertex3fv (&globeverts[vertspos]);
+				qglNormal3fv(&globeverts[vertspos]);
+				qglTexCoord2fv(&globetexes[texespos]);
+				qglVertex3fv(&globeverts[vertspos]);
 
 				texespos += 2;
 				vertspos += 3;
 
-				qglNormal3fv (&globeverts[vertspos]);
-				qglTexCoord2fv (&globetexes[texespos]);
-				qglVertex3fv (&globeverts[vertspos]);
+				qglNormal3fv(&globeverts[vertspos]);
+				qglTexCoord2fv(&globetexes[texespos]);
+				qglVertex3fv(&globeverts[vertspos]);
 
 				texespos += 2;
 				vertspos += 3;
 			}
 
-			qglEnd ();
+			qglEnd();
 		}
 
 		qglDisable(GL_NORMALIZE);
 
-		qglEndList ();
+		qglEndList();
 	}
 }
 
@@ -776,6 +776,7 @@ void Draw_3DMapMarkers (vec3_t angles, float zoom, float latitude, float longitu
 	vec3_t v;
 	vec2_t a;
 	image_t *gl;
+	float theta, phi;
 
 	gl = Draw_FindPic(image);
 	if (!gl) {
@@ -798,7 +799,25 @@ void Draw_3DMapMarkers (vec3_t angles, float zoom, float latitude, float longitu
 	/* bind the marker texture */
 	GL_Bind(gl->texnum);
 
-	/* TODO - draw a marker */
+	qglColor4f(1, 0, 0, 1);
+	qglDisable(GL_TEXTURE_2D);
+
+	qglBegin(GL_LINES);
+	theta = (90.0 - longitude) * torad;
+	phi = latitude * torad;
+	qglVertex3f(0.25 * sin(theta) * cos(phi),
+		0.25 * sin(theta) * sin(phi),
+		0.25 * cos(theta));
+	qglVertex3f((0.25 + MARKER_SIZE) * sin(theta) * cos(phi),
+		(0.25 + MARKER_SIZE) * sin(theta) * sin(phi),
+		(0.25 + MARKER_SIZE) * cos(theta));
+	qglEnd();
+
+	qglEnable(GL_TEXTURE_2D);
+
+	/* TODO: Draw the icon ot model of the crashsite or base */
+
+	qglColor4f(1, 1, 1, 1);
 
 	/* restore the matrix */
 	qglPopMatrix();
@@ -869,21 +888,21 @@ void Draw_3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate, 
 	qglTranslatef ((nx+nw)/2, (ny+nh)/2, 0);
 
 	/* flatten the sphere */
-	qglScalef (fullscale, fullscale, fullscale);
+	qglScalef(fullscale, fullscale, fullscale);
 
 	/* rotate the globe as given in ccs.angles */
-	qglRotatef (rotate[YAW], 1, 0, 0);
-	qglRotatef (rotate[ROLL], 0, 1, 0);
-	qglRotatef (rotate[PITCH], 0, 0, 1);
+	qglRotatef(rotate[YAW], 1, 0, 0);
+	qglRotatef(rotate[ROLL], 0, 1, 0);
+	qglRotatef(rotate[PITCH], 0, 0, 1);
 
 	/* solid globe texture */
-	qglBindTexture (GL_TEXTURE_2D, gl->texnum);
+	qglBindTexture(GL_TEXTURE_2D, gl->texnum);
 
 	qglEnable(GL_CULL_FACE);
 	qglCullFace(GL_BACK);
 
 	/* draw the sphere */
-	qglCallList (spherelist);
+	qglCallList(spherelist);
 
 	/* qglMTexCoord2fSGIS isn't working with compiled lists afaik */
 #if 0

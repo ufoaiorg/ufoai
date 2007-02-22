@@ -4018,8 +4018,7 @@ static void CL_GameNew (void)
 	}
 
 	/* set map view */
-	ccs.center[0] = 0.5;
-	ccs.center[1] = 0.5;
+	ccs.center[0] = ccs.center[1] = 0.5;
 	ccs.zoom = 1.0;
 
 	CL_UpdateCredits(curCampaign->credits);
@@ -4034,7 +4033,7 @@ static void CL_GameNew (void)
 	Cbuf_ExecuteText(EXEC_NOW, "mn_select_base -1");
 
 	/* add some items to the market so it does not start empty */
-	for (i = 0;i < 7;i++)
+	for (i = 0; i < 7; i++)
 		CL_CampaignRunMarket();
 
 	CL_GameInit();
