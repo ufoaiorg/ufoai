@@ -443,7 +443,7 @@ static void HideFiremodes (void)
  * @param[in] handidx Index of hand with item, which will be used for reactionfire.
  * @param[in] fd_idx Index of firedefinition for an item in given hand.
  */
-static void CL_SetReactionFiremode(int actor_idx, int handidx, int obj_idx, int fd_idx)
+static void CL_SetReactionFiremode (int actor_idx, int handidx, int obj_idx, int fd_idx)
 {
 	le_t *le;
 	if (actor_idx < 0) {
@@ -455,11 +455,12 @@ static void CL_SetReactionFiremode(int actor_idx, int handidx, int obj_idx, int 
 		Com_DPrintf("CL_SetReactionFiremode: Bad hand index given. Abort.\n");
 		return;
 	}
-	
+
+	assert(actor_idx < MAX_TEAMLIST);
+
 	le = cl.teamList[actor_idx];
 	Com_Printf("CL_SetReactionFiremode: actor:%i entnum:%i hand:%i fd:%i\n", actor_idx,le->entnum, handidx, fd_idx); /* TODO: DEBUG - remove me */
 
-	
 	REACTION_FIREMODE[actor_idx][0] = handidx;	/* Store the given hand. */
 	REACTION_FIREMODE[actor_idx][1] = fd_idx;	/* Store the given firemode for this hand. */
 	MSG_Write_PA(PA_REACT_SELECT, le->entnum, actor_idx, handidx, fd_idx); /* Send hand and firemode to server-side storage as well. See g_local.h for more. */
