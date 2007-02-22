@@ -445,6 +445,7 @@ static void HideFiremodes (void)
  */
 static void CL_SetReactionFiremode(int actor_idx, int handidx, int obj_idx, int fd_idx)
 {
+	le_t *le;
 	if (actor_idx < 0) {
 		Com_DPrintf("CL_SetReactionFiremode: Actor index is negative. Abort.\n");
 		return;
@@ -455,11 +456,13 @@ static void CL_SetReactionFiremode(int actor_idx, int handidx, int obj_idx, int 
 		return;
 	}
 	
-	Com_Printf("CL_SetReactionFiremode: hand:%i fd:%i\n", handidx, fd_idx); /* TODO: DEBUG - remove me */
+	le = cl.teamList[actor_idx];
+	Com_Printf("CL_SetReactionFiremode: actor:%i entnum:%i hand:%i fd:%i\n", actor_idx,le->entnum, handidx, fd_idx); /* TODO: DEBUG - remove me */
 
+	
 	REACTION_FIREMODE[actor_idx][0] = handidx;	/* Store the given hand. */
 	REACTION_FIREMODE[actor_idx][1] = fd_idx;	/* Store the given firemode for this hand. */
-	MSG_Write_PA(PA_REACT_SELECT, actor_idx, handidx, fd_idx); /* Send hand and firemode to server-side storage as well. See g_local.h for more. */
+	MSG_Write_PA(PA_REACT_SELECT, le->entnum, actor_idx, handidx, fd_idx); /* Send hand and firemode to server-side storage as well. See g_local.h for more. */
 	REACTION_FIREMODE[actor_idx][2] = obj_idx;	/* Store the weapon-idx of the object in the hand (for faster access). */
 }
 
