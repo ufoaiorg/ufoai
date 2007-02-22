@@ -133,7 +133,7 @@ static void B_ResetBuildingCurrent_f (void)
  * The valid definition names for BUILDINGS (building_t) in the basemagagement.ufo file.
  * to the appropriate values in the corresponding struct
  */
-static value_t valid_vars[] = {
+static const value_t valid_vars[] = {
 	{"map_name", V_STRING, offsetof(building_t, mapPart)},	/**< Name of the map file for generating basemap. */
 	{"more_than_one", V_BOOL, offsetof(building_t, moreThanOne)},	/**< Is the building allowed to be build more the one time? */
 	{"name", V_TRANSLATION_STRING, offsetof(building_t, name)},	/**< The displayed building name. */
@@ -1017,7 +1017,7 @@ void B_ParseBuildings(char *id, char **text, qboolean link)
 	building_t *building = NULL;
 	building_t *dependsBuilding = NULL;
 	technology_t *tech_link = NULL;
-	value_t *edp = NULL;
+	const value_t *edp = NULL;
 	char *errhead = "B_ParseBuildings: unexptected end of file (names ";
 	char *token = NULL;
 #if 0
