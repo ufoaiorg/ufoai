@@ -313,6 +313,7 @@ static int SV_HullForEntity (edict_t * ent, int *tile)
 
 	/* decide which clipping hull to use, based on the size */
 	if (ent->solid == SOLID_BSP) {	/* explicit hulls in the BSP model */
+		assert(ent->modelindex < MAX_MODELS);
 		model = sv.models[ent->modelindex];
 
 		if (!model)

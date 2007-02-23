@@ -72,7 +72,6 @@ static char cursor_pic[MAX_QPATH];
 static void SCR_TimeRefresh_f(void);
 static void SCR_Loading_f(void);
 static void SCR_DrawString(int x, int y, const char *string, qboolean bitmapFont);
-
 qboolean loadingMessage;
 char loadingMessages[96];
 float loadingPercent;
@@ -86,7 +85,7 @@ BAR GRAPHS
 /**
  * @brief A new packet was just parsed
  */
-void CL_AddNetgraph(void)
+void CL_AddNetgraph (void)
 {
 	int i;
 	int in;
@@ -125,7 +124,7 @@ static graphsamp_t values[1024];
 /**
  * @brief
  */
-void SCR_DebugGraph(float value, int color)
+void SCR_DebugGraph (float value, int color)
 {
 	values[current & 1023].value = value;
 	values[current & 1023].color = color;
@@ -135,7 +134,7 @@ void SCR_DebugGraph(float value, int color)
 /**
  * @brief
  */
-static void SCR_DrawDebugGraph(void)
+static void SCR_DrawDebugGraph (void)
 {
 	int a, x, y, w, i, h;
 	float v;
@@ -176,7 +175,7 @@ static int scr_erase_center;
 /**
  * @brief Called for important messages that should stay in the center of the screen for a few moments
  */
-void SCR_CenterPrint(char *str)
+void SCR_CenterPrint (char *str)
 {
 	char *s;
 	char line[64];
@@ -226,7 +225,7 @@ void SCR_CenterPrint(char *str)
 /**
  * @brief
  */
-static void SCR_DrawCenterString(void)
+static void SCR_DrawCenterString (void)
 {
 	char *start;
 	int l;
@@ -273,7 +272,7 @@ static void SCR_DrawCenterString(void)
 /**
  * @brief
  */
-static void SCR_CheckDrawCenterString(void)
+static void SCR_CheckDrawCenterString (void)
 {
 	scr_centertime_off -= cls.frametime;
 
@@ -286,7 +285,7 @@ static void SCR_CheckDrawCenterString(void)
 /**
  * @brief
  */
-void SCR_Init(void)
+void SCR_Init (void)
 {
 	scr_conspeed = Cvar_Get("scr_conspeed", "3", 0, NULL);
 	scr_consize = Cvar_Get("scr_consize", "1.0", 0, NULL);
@@ -310,9 +309,9 @@ void SCR_Init(void)
 
 
 /**
- * @brief
+ * @brief Draws a net-connection-problems icon
  */
-static void SCR_DrawNet(void)
+static void SCR_DrawNet (void)
 {
 	if (cls.netchan.outgoing_sequence - cls.netchan.incoming_acknowledged < CMD_BACKUP - 1)
 		return;
@@ -323,7 +322,7 @@ static void SCR_DrawNet(void)
 /**
  * @brief
  */
-static void SCR_DrawPause(void)
+static void SCR_DrawPause (void)
 {
 	int w = 0, h = 0;
 
@@ -360,7 +359,7 @@ void SCR_DrawLoadingBar (int x, int y, int w, int h, int percent)
  * @brief Draws the current loading pic of the map from base/pics/maps/loading
  * @sa SCR_DrawLoadingBar
  */
-static void SCR_DrawLoading(void)
+static void SCR_DrawLoading (void)
 {
 	char loadingPic[MAX_QPATH];
 	const vec4_t color = {0.0, 0.7, 0.0, 0.8};
@@ -422,24 +421,30 @@ static void SCR_DrawCursor (void)
 		else
 			re.DrawNormPic(mx, my, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, cursor_pic);
 
-		if (cls.state == ca_active && selActor && mouseSpace == MS_WORLD) {
-			/* Display 'crouch' icon if actor is crouched. */
-			if (selActor->state & STATE_CROUCHED)
-				re.DrawNormPic(mx + icon_offset_x, my + icon_offset_y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "ducked");
-			icon_offset_y += 16;	/* Height of 'crouched' icon. */
-			icon_offset_y += icon_spacing;
+		if (cls.state == ca_active && mouseSpace == MS_WORLD) {
+			if (selActor) {
+				/* Display 'crouch' icon if actor is crouched. */
+				if (selActor->state & STATE_CROUCHED)
+					re.DrawNormPic(mx + icon_offset_x, my + icon_offset_y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "ducked");
+				icon_offset_y += 16;	/* Height of 'crouched' icon. */
+				icon_offset_y += icon_spacing;
 
-			/* Display 'Reaction shot' icon if actor has it activated. */
-			if (selActor->state & STATE_REACTION_ONCE)
-				re.DrawNormPic(mx + icon_offset_x, my + icon_offset_y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "reactionfire");
-			else if (selActor->state & STATE_REACTION_MANY)
-				re.DrawNormPic(mx + icon_offset_x, my + icon_offset_y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "reactionfiremany");
-			icon_offset_y += 16;	/* Height of 'reaction fire' icon. ... just in case we add further icons below.*/
-			icon_offset_y += icon_spacing;
+				/* Display 'Reaction shot' icon if actor has it activated. */
+				if (selActor->state & STATE_REACTION_ONCE)
+					re.DrawNormPic(mx + icon_offset_x, my + icon_offset_y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "reactionfire");
+				else if (selActor->state & STATE_REACTION_MANY)
+					re.DrawNormPic(mx + icon_offset_x, my + icon_offset_y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qtrue, "reactionfiremany");
+				icon_offset_y += 16;	/* Height of 'reaction fire' icon. ... just in case we add further icons below.*/
+				icon_offset_y += icon_spacing;
 
-			/* Display weaponmode (text) here. */
-			if (menuText[TEXT_MOUSECURSOR_RIGHT] && cl_show_cursor_tooltips->value)
-				SCR_DrawString(mx + icon_offset_x,my - 16, menuText[TEXT_MOUSECURSOR_RIGHT], qfalse);
+				/* Display weaponmode (text) here. */
+				if (menuText[TEXT_MOUSECURSOR_RIGHT] && cl_show_cursor_tooltips->value)
+					SCR_DrawString(mx + icon_offset_x,my - 16, menuText[TEXT_MOUSECURSOR_RIGHT], qfalse);
+			/* playernames */
+			} else if (menuText[TEXT_MOUSECURSOR_PLAYERNAMES] && cl_show_cursor_tooltips->value) {
+				SCR_DrawString(mx + icon_offset_x,my - 16, menuText[TEXT_MOUSECURSOR_PLAYERNAMES], qfalse);
+				menuText[TEXT_MOUSECURSOR_PLAYERNAMES] = NULL;
+			}
 		}
 	} else {
 		vec3_t scale = { 3.5, 3.5, 3.5 };
@@ -637,8 +642,11 @@ void SCR_TouchPics(void)
  * @brief
  * @sa Font_DrawString
  */
-static void SCR_DrawString(int x, int y, const char *string, qboolean bitmapFont)
+static void SCR_DrawString (int x, int y, const char *string, qboolean bitmapFont)
 {
+	if (!string || !*string)
+		return;
+
 	if (bitmapFont) {
 		while (*string) {
 			re.DrawChar(x, y, *string);

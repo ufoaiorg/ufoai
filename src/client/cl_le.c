@@ -801,6 +801,7 @@ static void CL_ClipMoveToLEs (moveclip_t * clip)
 
 		if (le->type == ET_BREAKABLE || le->type == ET_DOOR) {
 			/* special value for bmodel */
+			assert(le->modelnum1 < MAX_MODELS);
 			cmodel = cl.model_clip[le->modelnum1];
 			if (!cmodel) {
 				Com_Printf("CL_ClipMoveToLEs: Error - le with no NULL bmodel (%i)\n", le->type);
