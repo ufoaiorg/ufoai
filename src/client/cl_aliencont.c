@@ -279,6 +279,7 @@ void AL_AddAliens (void)
  * @param[in] amount of alientype to be removed
  * @param[in] type of action
  * @sa AC_KillAll_f
+ * @sa AC_KillOne_f
  * @note Call it with alientype AL_UNKNOWN when it does not
  * matter what type.
  * @TODO integrate this with research system
@@ -294,7 +295,6 @@ void AL_RemoveAliens (const char *name, int amount, alienCalcType_t action)
 		return;
 
 	containment = baseCurrent->alienscont;
-	Q_strncpyz(name, AL_AlienTypeToName(alientype), MAX_VAR);
 
 	switch (action) {
 	case AL_RESEARCH:
