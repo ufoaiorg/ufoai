@@ -86,10 +86,10 @@ typedef struct {
 	mapsurface_t *surfaces;
 
 	int numplanes;
-	cplane_t *planes;
+	cplane_t *planes; /* numplanes + 12 for box hull */
 
 	int numnodes;
-	cnode_t *nodes;
+	cnode_t *nodes; /* numnodes + 6 for box hull */
 
 	int numleafs;
 	cleaf_t *leafs;
@@ -1245,6 +1245,13 @@ static void CM_InitBoxHull (void)
 
 	curTile->box_headnode = curTile->numnodes;
 	curTile->box_planes = &curTile->planes[curTile->numplanes];
+	/* sanity check if you only use one maptile => no map assembly */
+	if (mapTiles == 1 && (curTile->numnodes + 6 > MAX_MAP_NODES
+		|| curTile->numbrushes + 1 > MAX_MAP_BRUSHES
+		|| curTile->numleafbrushes + 1 > MAX_MAP_LEAFBRUSHES
+		|| curTile->numbrushsides + 6 > MAX_MAP_BRUSHSIDES
+		|| curTile->numplanes + 12 > MAX_MAP_PLANES))
+		Com_Error(ERR_DROP, "Not enough room for box tree");
 
 	curTile->box_brush = &curTile->brushes[curTile->numbrushes];
 	curTile->box_brush->numsides = 6;
@@ -1297,7 +1304,7 @@ static void CM_InitBoxHull (void)
  */
 extern int CM_HeadnodeForBox (int tile, vec3_t mins, vec3_t maxs)
 {
-	assert(tile < MAX_MAPTILES);
+	assert(tile < numTiles);
 	curTile = &mapTiles[tile];
 
 	curTile->box_planes[0].dist = maxs[0];
