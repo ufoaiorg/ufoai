@@ -1246,7 +1246,7 @@ static void CM_InitBoxHull (void)
 	curTile->box_headnode = curTile->numnodes;
 	curTile->box_planes = &curTile->planes[curTile->numplanes];
 	/* sanity check if you only use one maptile => no map assembly */
-	if (mapTiles == 1 && (curTile->numnodes + 6 > MAX_MAP_NODES
+	if (numTiles == 1 && (curTile->numnodes + 6 > MAX_MAP_NODES
 		|| curTile->numbrushes + 1 > MAX_MAP_BRUSHES
 		|| curTile->numleafbrushes + 1 > MAX_MAP_LEAFBRUSHES
 		|| curTile->numbrushsides + 6 > MAX_MAP_BRUSHSIDES
