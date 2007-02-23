@@ -214,6 +214,76 @@ menu aliencont
 		click mclick rclick
 	}
 
+	// ==================
+	// list
+	// =================
+
+	pic bt_alien0
+	{
+		tooltip	"_Kill one alien"
+		image menu/button_alienkill1
+		pos		"30 150"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx true
+		click { cmd "aliencont_killone 0" }
+	}
+
+	pic bt_alien1
+	{
+		tooltip	"_Kill one alien"
+		image menu/button_alienkill1
+		pos		"30 165"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx true
+		click { cmd "aliencont_killone 1" }
+	}
+
+	pic bt_alien2
+	{
+		tooltip	"_Kill one alien"
+		image menu/button_alienkill1
+		pos		"30 180"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx true
+		click { cmd "aliencont_killone 2" }
+	}
+
+	pic bt_alien3
+	{
+		tooltip	"_Kill one alien"
+		image menu/button_alienkill1
+		pos		"30 195"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx true
+		click { cmd "aliencont_killone 3" }
+	}
+
+	pic bt_alien4
+	{
+		tooltip	"_Kill one alien"
+		image menu/button_alienkill1
+		pos		"30 210"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx true
+		click { cmd "aliencont_killone 4" }
+	}
+
+	pic bt_alien5
+	{
+		tooltip	"_Kill one alien"
+		image menu/button_alienkill1
+		pos		"30 225"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx true
+		click { cmd "aliencont_killone 5" }
+	}
+
 	text aliencontUFOpedia
 	{
 		pos "50 330"

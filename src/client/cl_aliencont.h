@@ -34,6 +34,7 @@ typedef enum {
 	AL_ORTNOK,
 	AL_TAMAN,
 	AL_SHEVAAR,
+	AL_BLOODSPIDER,
 	AL_UNKNOWN	/**< dummy, to get all */
 } alienType_t;
 
@@ -49,7 +50,8 @@ typedef enum {
 /** cases of alien amount calculation */
 typedef enum {
 	AL_RESEARCH,
-	AL_KILL
+	AL_KILL,
+	AL_KILLONE
 } alienCalcType_t;
 
 /** structure of Alien Containment being a member of base_t */
@@ -76,7 +78,7 @@ void AL_FillInContainment(void);
 char *AL_AlienTypeToName(int teamDescIdx);
 void CL_CollectingAliens(void);
 void AL_AddAliens(void);
-void AL_RemoveAliens(alienType_t alientype, int amount, alienCalcType_t action);
+void AL_RemoveAliens(const char *name, int amount, alienCalcType_t action);
 int AL_GetAlienIdx(const char *id);
 int AL_GetAlienAmount(int idx, requirementType_t reqtype);
 

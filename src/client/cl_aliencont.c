@@ -283,12 +283,11 @@ void AL_AddAliens (void)
  * matter what type.
  * @TODO integrate this with research system
  */
-void AL_RemoveAliens (alienType_t alientype, int amount, alienCalcType_t action)
+void AL_RemoveAliens (const char *name, int amount, alienCalcType_t action)
 {
 	int j;
 	int maxamount = 0; /* amount (of alive type), which is max in Containment) */
 	int maxidx = 0;
-	char name[MAX_VAR];
 	aliensCont_t *containment = NULL;
 
 	if (!baseCurrent)
@@ -299,7 +298,7 @@ void AL_RemoveAliens (alienType_t alientype, int amount, alienCalcType_t action)
 
 	switch (action) {
 	case AL_RESEARCH:
-		if (alientype == AL_UNKNOWN) {
+		if (Q_strncmp("AL_UNKNOWN", name, MAX_VAR) == 0) {
 			/* search for the type of alien, which has max amount
 			   in Alien Containment; then remove (amount) */
 			/* FIXME: do not let to remove to negative value */
@@ -333,6 +332,22 @@ void AL_RemoveAliens (alienType_t alientype, int amount, alienCalcType_t action)
 			if (containment[j].amount_alive > 0) {
 				containment[j].amount_dead += containment[j].amount_alive;
 				containment[j].amount_alive = 0;
+			}
+		}
+		break;
+	case AL_KILLONE:
+		/* We ignore 2nd parameter of AL_RemoveAliens() here. */
+		for (j = 0; j < numTeamDesc; j++) {
+			if (!teamDesc[j].alien)
+				continue;
+			if (Q_strncmp(containment[j].alientype, name, MAX_VAR) == 0) {
+				if (containment[j].amount_alive == 0)
+					return;
+				/* We are killing only one here, so we
+				   don't care about amount param.   */
+				containment[j].amount_alive -= 1;
+				containment[j].amount_dead += 1;
+				return;
 			}
 		}
 		break;
@@ -704,8 +719,57 @@ static void AC_KillAll_f (void)
 	if (!baseCurrent ||!curCampaign || !aliencontCurrent)
 		return;
 
-	AL_RemoveAliens(0, 0, AL_KILL);
+	AL_RemoveAliens(NULL, 0, AL_KILL);
 
+	/* Reinit menu to display proper values. */
+	AC_SelectAlien_f();
+	Cbuf_AddText("aliencont_init\n");
+}
+
+/**
+ * @brief Kill single alien of a given type.
+ */
+static void AC_KillOne_f (void)
+{
+	int num, i, step;
+	aliensCont_t *containment = NULL;
+	
+	/* Can be called from everywhere. */
+	if (!baseCurrent ||!curCampaign || !aliencontCurrent)
+		return;
+
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
+		return;
+	}
+
+	/* which item from the list? */
+	num = atoi(Cmd_Argv(1));
+
+	Com_DPrintf("AC_KillOne_f: listnumber %i\n", num);
+
+	if (num >= numAliensOnList || num < 0) {
+		Com_DPrintf("AC_KillOne_f: max exceeded %i/%i\n", num, numAliensOnList);
+		return;
+	}
+
+	if (baseCurrent->hasAlienCont) {
+		containment = baseCurrent->alienscont;
+		for (i = 0, step = 0; i < numTeamDesc; i++) {
+			if (!teamDesc[i].alien)
+				continue;
+			if (!containment[i].amount_alive && !containment[i].amount_dead)
+				continue;
+			if (step == num) {
+				num = i;
+				break;
+			}
+			step++;
+		}
+	} else
+		return;
+
+	AL_RemoveAliens(containment[num].alientype, 1, AL_KILLONE);
 	/* Reinit menu to display proper values. */
 	AC_SelectAlien_f();
 	Cbuf_AddText("aliencont_init\n");
@@ -874,6 +938,7 @@ extern void AC_Reset (void)
 	Cmd_AddCommand("aliencont_research", AC_ResearchAlien_f, "Opens research menu");
 	Cmd_AddCommand("aliencont_nextbase", AC_NextAC_f, "Opens Alien Containment menu in next base");
 	Cmd_AddCommand("aliencont_prevbase", AC_PrevAC_f, "Opens Alien Containment menu in previous base");
+	Cmd_AddCommand("aliencont_killone", AC_KillOne_f, "Kills one alien of a given type");
 
 	memset(aliencontText, 0, sizeof(aliencontText));
 	aliencontCurrent = NULL;
