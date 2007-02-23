@@ -25,15 +25,17 @@ print "====================================================="
 sys.stdout.write("...checking for msgfmt: "); sys.stdout.flush();
 if not os.access(msgfmt, os.X_OK):
     print "is not executable. exiting..."
+    print
+    print "usage: compile_po.py E:\\path\\to\\poEdit\\bin\\msgfmt.exe"
     sys.exit(1)
 print "%s - ok" % msgfmt
 
-podir = "src/po"
+podir = "."
 podir = os.path.normpath(podir)
 if not os.path.isdir(podir):
     print "%s does not exists" % podir
     sys.exit(1)
-i18ndir = "base/i18n"
+i18ndir = "../../base/i18n"
 i18ndir = os.path.normpath(i18ndir)
 if not os.path.isdir(i18ndir):
     print "%s does not exists" % i18ndir
