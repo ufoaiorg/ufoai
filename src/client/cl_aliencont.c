@@ -833,6 +833,12 @@ static void AC_Init (void)
 					aliencontCurrent = &containment[i];
 				}
 				if ((containment[i].amount_alive > 0) || (containment[i].amount_dead > 0)) {
+					/* Set state of KillOne button. */
+					if (containment[i].amount_alive > 0)
+						Cbuf_AddText(va("aliencont_alienb%i\n", numAliensOnList));
+					else
+						Cbuf_AddText(va("aliencont_alieng%i\n", numAliensOnList));
+					/* Generate a list entry. */
 					Com_sprintf(tmp, sizeof(tmp), "%s\t%s\t%i\n",
 						_(containment[i].alientype),
 						(RS_IsResearched_ptr(tech) ? _("Yes") : _("Needs autopsy!")),
@@ -842,6 +848,13 @@ static void AC_Init (void)
 				}
 			}
 		}
+	}
+
+	/* Disable KillOne buttons for empty entries. */
+	for (i = 0; i < 10; i++) {
+		if (i < numAliensOnList)
+			continue;
+		Cbuf_AddText(va("aliencont_aliend%i\n", i));
 	}
 
 	/* Set state of KillAll button. */

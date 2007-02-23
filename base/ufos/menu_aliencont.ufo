@@ -218,10 +218,13 @@ menu aliencont
 	// list
 	// =================
 
+	confunc aliencont_alienb0 { *bt_alien0 image menu/button_alienkill1 }
+	confunc aliencont_alieng0 { *bt_alien0 image menu/button_alienkill2 }
+	confunc aliencont_aliend0 { *bt_alien0 image menu/button_alienkill2 }
+
 	pic bt_alien0
 	{
 		tooltip	"_Kill one alien"
-		image menu/button_alienkill1
 		pos		"30 150"
 		texl	"0 0"
 		texh	"16 16"
@@ -229,10 +232,13 @@ menu aliencont
 		click { cmd "aliencont_killone 0" }
 	}
 
+	confunc aliencont_alienb1 { *bt_alien1 image menu/button_alienkill1 }
+	confunc aliencont_alieng1 { *bt_alien1 image menu/button_alienkill2 }
+	confunc aliencont_aliend1 { *bt_alien1 image menu/button_alienkill2 }
+
 	pic bt_alien1
 	{
 		tooltip	"_Kill one alien"
-		image menu/button_alienkill1
 		pos		"30 165"
 		texl	"0 0"
 		texh	"16 16"
@@ -240,10 +246,13 @@ menu aliencont
 		click { cmd "aliencont_killone 1" }
 	}
 
+	confunc aliencont_alienb2 { *bt_alien2 image menu/button_alienkill1 }
+	confunc aliencont_alieng2 { *bt_alien2 image menu/button_alienkill2 }
+	confunc aliencont_aliend2 { *bt_alien2 image menu/button_alienkill2 }
+
 	pic bt_alien2
 	{
 		tooltip	"_Kill one alien"
-		image menu/button_alienkill1
 		pos		"30 180"
 		texl	"0 0"
 		texh	"16 16"
@@ -251,10 +260,13 @@ menu aliencont
 		click { cmd "aliencont_killone 2" }
 	}
 
+	confunc aliencont_alienb3 { *bt_alien3 image menu/button_alienkill1 }
+	confunc aliencont_alieng3 { *bt_alien3 image menu/button_alienkill2 }
+	confunc aliencont_aliend3 { *bt_alien3 image menu/button_alienkill2 }
+
 	pic bt_alien3
 	{
 		tooltip	"_Kill one alien"
-		image menu/button_alienkill1
 		pos		"30 195"
 		texl	"0 0"
 		texh	"16 16"
@@ -262,10 +274,13 @@ menu aliencont
 		click { cmd "aliencont_killone 3" }
 	}
 
+	confunc aliencont_alienb4 { *bt_alien4 image menu/button_alienkill1 }
+	confunc aliencont_alieng4 { *bt_alien4 image menu/button_alienkill2 }
+	confunc aliencont_aliend4 { *bt_alien4 image menu/button_alienkill2 }
+
 	pic bt_alien4
 	{
 		tooltip	"_Kill one alien"
-		image menu/button_alienkill1
 		pos		"30 210"
 		texl	"0 0"
 		texh	"16 16"
@@ -273,15 +288,74 @@ menu aliencont
 		click { cmd "aliencont_killone 4" }
 	}
 
+	confunc aliencont_alienb5 { *bt_alien5 image menu/button_alienkill1 }
+	confunc aliencont_alieng5 { *bt_alien5 image menu/button_alienkill2 }
+	confunc aliencont_aliend5 { *bt_alien5 image menu/button_alienkill2 }
+
 	pic bt_alien5
 	{
 		tooltip	"_Kill one alien"
-		image menu/button_alienkill1
 		pos		"30 225"
 		texl	"0 0"
 		texh	"16 16"
 		mousefx true
 		click { cmd "aliencont_killone 5" }
+	}
+
+	confunc aliencont_alienb6 { *bt_alien6 image menu/button_alienkill1 }
+	confunc aliencont_alieng6 { *bt_alien6 image menu/button_alienkill2 }
+	confunc aliencont_aliend6 { *bt_alien6 image menu/button_alienkill2 }
+
+	pic bt_alien6
+	{
+		tooltip	"_Kill one alien"
+		pos		"30 240"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx true
+		click { cmd "aliencont_killone 6" }
+	}
+
+	confunc aliencont_alienb7 { *bt_alien7 image menu/button_alienkill1 }
+	confunc aliencont_alieng7 { *bt_alien7 image menu/button_alienkill2 }
+	confunc aliencont_aliend7 { *bt_alien7 image menu/button_alienkill2 }
+
+	pic bt_alien7
+	{
+		tooltip	"_Kill one alien"
+		pos		"30 255"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx true
+		click { cmd "aliencont_killone 7" }
+	}
+
+	confunc aliencont_alienb8 { *bt_alien8 image menu/button_alienkill1 }
+	confunc aliencont_alieng8 { *bt_alien8 image menu/button_alienkill2 }
+	confunc aliencont_aliend8 { *bt_alien8 image menu/button_alienkill2 }
+
+	pic bt_alien8
+	{
+		tooltip	"_Kill one alien"
+		pos		"30 270"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx true
+		click { cmd "aliencont_killone 8" }
+	}
+
+	confunc aliencont_alienb9 { *bt_alien9 image menu/button_alienkill1 }
+	confunc aliencont_alieng9 { *bt_alien9 image menu/button_alienkill2 }
+	confunc aliencont_aliend9 { *bt_alien9 image menu/button_alienkill2 }
+
+	pic bt_alien9
+	{
+		tooltip	"_Kill one alien"
+		pos		"30 285"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx true
+		click { cmd "aliencont_killone 9" }
 	}
 
 	text aliencontUFOpedia
