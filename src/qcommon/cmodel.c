@@ -304,7 +304,6 @@ static void CMod_LoadNodes (lump_t * l)
 			out->children[j] = child;
 		}
 	}
-
 }
 
 /**
@@ -1038,7 +1037,7 @@ static void CM_FreeTile (mapTile_t * tile)
  * @sa CM_LoadMap
  * FIXME: here might be the map memory leak - every new map eats more and more memory
  */
-static unsigned CM_AddMapTile(char *name, int sX, int sY, int sZ)
+static unsigned CM_AddMapTile (char *name, int sX, int sY, int sZ)
 {
 	char filename[MAX_QPATH];
 	unsigned checksum;
@@ -1298,6 +1297,7 @@ static void CM_InitBoxHull (void)
  */
 extern int CM_HeadnodeForBox (int tile, vec3_t mins, vec3_t maxs)
 {
+	assert(tile < MAX_MAPTILES);
 	curTile = &mapTiles[tile];
 
 	curTile->box_planes[0].dist = maxs[0];
@@ -1372,6 +1372,8 @@ static void CM_BoxLeafnums_r (int nodenum)
 	cplane_t *plane;
 	cnode_t *node;
 	int s;
+
+	assert(nodenum < curTile->numnodes);
 
 	while (1) {
 		if (nodenum < 0) {
@@ -1702,7 +1704,6 @@ void CM_TestInLeaf (int leafnum)
 		if (!trace_trace.fraction)
 			return;
 	}
-
 }
 
 
@@ -1731,14 +1732,16 @@ static void CM_RecursiveHullCheck (int num, float p1f, float p2f, vec3_t p1, vec
 	if (trace_trace.fraction <= p1f)
 		return;					/* already hit something nearer */
 
+	assert(num < curTile->numnodes);
+
 	/* if < 0, we are in a leaf node */
 	if (num < 0) {
 		CM_TraceToLeaf(-1 - num);
 		return;
 	}
 
-	/* find the point distances to the seperating plane */
-	/* and the offset for the size of the box */
+	/* find the point distances to the seperating plane
+	 * and the offset for the size of the box */
 	node = curTile->nodes + num;
 	plane = node->plane;
 
@@ -2053,6 +2056,8 @@ void MakeTnode (int nodenum)
  */
 void BuildTnode_r (int node)
 {
+	assert(node < curTile->numnodes);
+
 	if (!curTile->nodes[node].plane) {
 		cnode_t *n;
 		tnode_t *t;
@@ -2136,7 +2141,7 @@ void CM_MakeTnodes (void)
 		cur_level = i;
 
 		BuildTnode_r(curTile->cmodels[i].headnode);
-/*		MakeTnode (map_models[i].headnode); */
+/*		MakeTnode(map_models[i].headnode); */
 	}
 }
 
@@ -2163,6 +2168,8 @@ int TestLine_r (int node, vec3_t start, vec3_t stop)
 	/* leaf node */
 	if (node & (1 << 31))
 		return node & ~(1 << 31);
+
+	assert(node < curTile->numnodes + 1);
 
 	tnode = &curTile->tnodes[node];
 	assert(tnode);
