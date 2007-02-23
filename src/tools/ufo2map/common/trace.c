@@ -148,7 +148,7 @@ extern void MakeTnodes (int levels)
 	int i;
 
 	/* 32 byte align the structs */
-	tnodes = malloc((numnodes+1) * sizeof(tnode_t));
+	tnodes = malloc((numnodes + 1) * sizeof(tnode_t));
 	freeTnodes = tnodes;
 	tnodes = (tnode_t *)(((ptrdiff_t)tnodes + 31) &~ 31);
 	tnode_p = tnodes;

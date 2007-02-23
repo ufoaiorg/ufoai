@@ -1739,8 +1739,6 @@ static void CM_RecursiveHullCheck (int num, float p1f, float p2f, vec3_t p1, vec
 	if (trace_trace.fraction <= p1f)
 		return;					/* already hit something nearer */
 
-	assert(num < curTile->numnodes);
-
 	/* if < 0, we are in a leaf node */
 	if (num < 0) {
 		CM_TraceToLeaf(-1 - num);
@@ -2132,7 +2130,7 @@ void CM_MakeTnodes (void)
 
 	/* 32 byte align the structs */
 	curTile->tnodes = Hunk_Alloc((curTile->numnodes + 1) * sizeof(tnode_t));
-	curTile->tnodes = (tnode_t *) (((size_t) curTile->tnodes + 31) & ~31);
+	curTile->tnodes = (tnode_t *) (((ptrdiff_t)curTile->tnodes + 31) & ~31);
 	tnode_p = curTile->tnodes;
 
 	curTile->numtheads = 0;
@@ -2175,8 +2173,6 @@ int TestLine_r (int node, vec3_t start, vec3_t stop)
 	/* leaf node */
 	if (node & (1 << 31))
 		return node & ~(1 << 31);
-
-	assert(node < curTile->numnodes + 1);
 
 	tnode = &curTile->tnodes[node];
 	assert(tnode);
