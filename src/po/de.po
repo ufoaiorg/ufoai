@@ -3,9 +3,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-02-16 19:17+0100\n"
-"PO-Revision-Date: 2007-02-20 17:46+0100\n"
-"Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
+"POT-Creation-Date: 2007-02-24 19:52+0100\n"
+"PO-Revision-Date: 2007-02-24 20:16+0100\n"
+"Last-Translator: Kracken <kracken@users.sourceforge.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -505,52 +505,87 @@ msgstr "Guthaben"
 msgid "Back to baseview"
 msgstr "Zurück zur Basisübersicht"
 
-#: ../base/ufos/menu_aliencont.ufo:79
-msgid "Check UFOpedia Entry"
+#: ../base/ufos/menu_aliencont.ufo:82
+#, fuzzy
+msgid "Previous Alien Containment"
+msgstr "Quarantänestation"
+
+#: ../base/ufos/menu_aliencont.ufo:95
+#, fuzzy
+msgid "Click to do autopsy"
+msgstr "Beenden mit Mausklick"
+
+#: ../base/ufos/menu_aliencont.ufo:108
+#, fuzzy
+msgid "Check UFOpedia entry"
 msgstr "Wechsele zum Ufopediaeintrag"
 
-#: ../base/ufos/menu_aliencont.ufo:106
+#: ../base/ufos/menu_aliencont.ufo:121
+#, fuzzy
+msgid "Kill all aliens in this base"
+msgstr "Lebende Aliens in dieser Basis:"
+
+#: ../base/ufos/menu_aliencont.ufo:134
+#, fuzzy
+msgid "Next Alien Containment"
+msgstr "Quarantänestation"
+
+#: ../base/ufos/menu_aliencont.ufo:148
 msgid "Alive Aliens in all bases:"
 msgstr "Lebende Aliens in allen Basen:"
 
-#: ../base/ufos/menu_aliencont.ufo:121
+#: ../base/ufos/menu_aliencont.ufo:163
 msgid "Alive Aliens in this base:"
 msgstr "Lebende Aliens in dieser Basis:"
 
-#: ../base/ufos/menu_aliencont.ufo:136
+#: ../base/ufos/menu_aliencont.ufo:178
 msgid "Aliens available to process:"
 msgstr "Verfügbare Aliens:"
 
-#: ../base/ufos/menu_aliencont.ufo:143
+#: ../base/ufos/menu_aliencont.ufo:185
 msgid "Alien type"
 msgstr "Alien Spezies"
 
-#: ../base/ufos/menu_aliencont.ufo:150
+#: ../base/ufos/menu_aliencont.ufo:192
 msgid "Examinated"
 msgstr "Geprüft"
 
-#: ../base/ufos/menu_aliencont.ufo:157
+#: ../base/ufos/menu_aliencont.ufo:199
 msgid "Amount"
 msgstr "Anzahl"
 
-#: ../base/ufos/menu_aliencont.ufo:192
+#: ../base/ufos/menu_aliencont.ufo:227
+#: ../base/ufos/menu_aliencont.ufo:241
+#: ../base/ufos/menu_aliencont.ufo:255
+#: ../base/ufos/menu_aliencont.ufo:269
+#: ../base/ufos/menu_aliencont.ufo:283
+#: ../base/ufos/menu_aliencont.ufo:297
+#: ../base/ufos/menu_aliencont.ufo:311
+#: ../base/ufos/menu_aliencont.ufo:325
+#: ../base/ufos/menu_aliencont.ufo:339
+#: ../base/ufos/menu_aliencont.ufo:353
+#, fuzzy
+msgid "Kill one alien"
+msgstr "ZUm nächsten Alien"
+
+#: ../base/ufos/menu_aliencont.ufo:378
 #: ../base/ufos/menu_research.ufo:825
 msgid "Base Info"
 msgstr "Basisinformationen"
 
-#: ../base/ufos/menu_aliencont.ufo:198
+#: ../base/ufos/menu_aliencont.ufo:384
 msgid "Current base:"
 msgstr "Aktuelle Basis:"
 
-#: ../base/ufos/menu_aliencont.ufo:212
+#: ../base/ufos/menu_aliencont.ufo:398
 msgid "Alien Type:"
 msgstr "Alien Spezies"
 
-#: ../base/ufos/menu_aliencont.ufo:239
+#: ../base/ufos/menu_aliencont.ufo:425
 msgid "Killed:"
 msgstr "Getötet:"
 
-#: ../base/ufos/menu_aliencont.ufo:253
+#: ../base/ufos/menu_aliencont.ufo:439
 msgid "Captured in all bases:"
 msgstr "Gefangene in allen Basen:"
 
@@ -1684,6 +1719,18 @@ msgstr "Bitte warten"
 msgid "Waiting for other players to join the game"
 msgstr "Warte auf andere Spieler"
 
+#: ../base/ufos/menu_multiplayer.ufo:1516
+msgid "Players that must join before starting: "
+msgstr ""
+
+#: ../base/ufos/menu_multiplayer.ufo:1528
+msgid "Start the game even if not all teams have joined"
+msgstr ""
+
+#: ../base/ufos/menu_multiplayer.ufo:1541
+msgid "Force start"
+msgstr ""
+
 #: ../base/ufos/menu_multiplayeringame.ufo:109
 msgid "Abort Game"
 msgstr "Spiel abbrechen"
@@ -1974,7 +2021,7 @@ msgid "Slow"
 msgstr "Langsam"
 
 #: ../base/ufos/menu_ptleditor.ufo:74
-#: client/cl_main.c:2112
+#: client/cl_main.c:2123
 msgid "Normal"
 msgstr "Normal"
 
@@ -2233,7 +2280,7 @@ msgid "Show only aliens"
 msgstr "Nur Aliens anzeigen"
 
 #: ../base/ufos/menu_transfer.ufo:284
-#: client/cl_campaign.c:4091
+#: client/cl_campaign.c:4097
 msgid "Aliens"
 msgstr "Aliens"
 
@@ -2655,21 +2702,21 @@ msgstr ""
 "BETREFF: Re: Fortgeschrittene Lasertechnologie\n"
 "\n"
 "\n"
-"Herr Kommandant, ich bin in der glücklich Lage, Ihnen mitteilen zu können, dass unser Projekt von Erfolg gekrönt war. Ich habe Bilder Prototypen eingefügt, die einen kontinuierlichen Energiestrom in einer tragbaren Hülle liefern.\n"
+"Herr Kommandant, ich bin in der glücklichen Lage, Ihnen mitteilen zu können, dass unser Projekt von Erfolg gekrönt war. Ich habe Bilder unseres Prototyps eingefügt, die einen kontinuierlichen Energiestrom in einem tragbaren Paket verwirklichen.\n"
 "\n"
-"Die praktische Lösung lag nicht darin, größere Batterien zu entwickeln, sondern eher darin, radikale Miniaturisierungstechnologien zu nutzen, um die bereits existierenden chemiebetriebenen Laserkomponenten leichter und kleiner zu machen. Chemische Laser waren schon für eine lange Zeit in Benutzung und waren Teil von experimentellen Waffenprogrammen seit dem späten 20. Jahrhundert, aber sie hatten immer viele Probleme. Die einzigen chemischen Laser mit militärischer Zukunft waren zu groß und sperrig, um von einem Soldaten getragen zu werden. Bis jetzt lag ihre Kampfeffektivität bei panzergestützten Laserkanonen und auf Schiffen installierte Antiraketen Batterien.\n"
+"Statt immer größere Batterien zu entwickeln lag die praktische Lösung eher darin, radikale Miniaturisierungstechnologien zu nutzen, um die bereits existierenden chemiebetriebenen Laserkomponenten leichter und kleiner zu machen. Chemische Laser werden schon seit langer Zeit benutzt und waren seit dem späten 20. Jahrhundert Teil von experimentellen Waffenprogrammen, wiesen aber viele Probleme auf. Die einzigen chemischen Laser mit militärischer Zukunft waren zu groß und sperrig, um von einem Soldaten getragen zu werden. Bis jetzt lag ihre Kampfeffektivität bei panzergestützten Laserkanonen und auf Schiffen installierter Raketenabwehr.\n"
 "\n"
-"Nun aber haben wir bei PHALANX eine konventionelle Laserkanone in Miniaturform gebaut. Trotz der geringen Größe ist sie in der Lage, die Deuterium-Fluorreaktion zu bewältigen und die giftigen Abfallprodukte zu speichern, ohne die Gefahr einer Vergiftung.\n"
+"Nun aber haben wir bei PHALANX eine konventionelle Laserkanone in Miniaturform gebaut. Trotz der geringen Größe ist sie in der Lage, die Deuterium-Fluorreaktion zu bewältigen und die giftigen Abfallprodukte ohne die Gefahr einer Vergiftung zu speichern.\n"
 "\n"
-"Innerhalb der Brennkammer wird Ethylen in nitrogene Trifluoride verbrannt. Diese Reaktion produziert angeregte Fluoridradikale, die dann in Kontakt mit einer Helium-Deuterummixtur gebracht wird. Das Deuterium reagiert mit dem Fluor, was angeregte Deuterium-Fluoridmoleküle. Diese durchleben stimulierte Emissionen im optischen Resonator der Waffe, was schlussendlich den Strahl generiert. Eine Serie intelligenter Linsen fokussiert und lenkt den Strahl an den Zielpunkt des Schützen und korrigiert sogar kleine Bewegungen des Schützen oder des Ziels. Die Deuteriumgasreste werden durch unseren speziell entwickelten Hochleistungsfilter gerammt, welcher alle giftigen und radioaktiven Moleküle abfängt und die restlichen harmlosen Abgase zurück in die Atmosphäre lässt.\n"
+"Innerhalb der Brennkammer wird Ethylen in Stickstofftrifluorid verbrannt. Dabei entstehen angeregte Fluorradikale, die dann mit einer Helium-Deuterummixtur in Kontakt gebracht werden. Das Deuterium reagiert mit dem Fluor zu angeregten Deuteriumfluoridmolekülen. Durch stimulierte Emissionen im optischen Resonator der Waffe wird schlussendlich der Strahl generiert. Eine Serie intelligenter Linsen fokussiert und lenkt den Strahl zum Zielpunkt des Schützen und korrigiert sogar kleine Bewegungen des Schützen oder des Ziels. Die Deuteriumgasreste werden durch unseren speziell entwickelten Hochleistungsfilter gepresst, welcher alle giftigen und radioaktiven Moleküle abfängt und die restlichen harmlosen Abgase zurück in die Atmosphäre lässt.\n"
 "\n"
-"Der Filter muss nach jeder Mission ersetzt werden, aber wir haben das System so entwickelt, dass es einfach und schmerzlos ist. Sollte der Filter während einer Mission beschädigt werden, schaltet sich die Waffe automatisch ab, um Verschmutzung zu vermeiden.\n"
+"Der Filter muss nach jeder Mission ersetzt werden, aber wir haben das System so entwickelt, dass es einfach und schmerzlos ist. Sollte der Filter während einer Mission beschädigt werden, schaltet sich die Waffe automatisch ab, um eine Kontaminierung zu vermeiden.\n"
 "\n"
-"Der Laser funktioniert innerhalb der infraroten Wellenlängen, daher sieht man den Strahl nicht, außer man trägt eine Infrarotbrille.\n"
+"Der Laser arbeitet im mittleren Infrarotbereich, daher sieht man den Strahl nicht, außer man trägt eine Infrarotbrille.\n"
 "\n"
-"Der von uns gebaute Prototyp ist leider noch nicht für die Massenproduktion geeignet, da noch Verfeinerungen für die menschliche Nutzung nötig sind, aber die Fortschritte, die wir hier gemacht haben, können ebenfalls an Fahrzeugwaffen angewandt werden -- vielleicht sogar Flugzeugkanonen. Ich habe Ihnen mehrere Anträge geschickt, die die Ideen darlegen, die wir haben.\n"
+"Der von uns gebaute Prototyp ist leider noch nicht für die Massenproduktion geeignet, da noch Verfeinerungen für die menschliche Nutzung nötig sind. Jedoch können die Fortschritte, die wir hier gemacht haben, ebenfalls an Fahrzeugwaffen angewandt werden -- vielleicht sogar Flugzeugkanonen. Ich habe Ihnen mehrere Anträge geschickt, die unsere Ideen darlegen.\n"
 "\n"
-"Lassen sie es mich wissen, wenn sie wollen, dass die Arbeit daran angefangen wird, Herr Kommandant.\n"
+"Lassen sie es mich wissen, wenn wir mit der Arbeit beginnen sollen, Herr Kommandant.\n"
 "\n"
 "--Cdr. Navarre"
 
@@ -2685,22 +2732,21 @@ msgstr ""
 "BETREFF: Antrag: Fortgeschrittene Lasertechnologie\n"
 "\n"
 "\n"
-"Unsere gesammelten UN Forschungsdaten haben uns eine Menge nützlicher Informationen über die Waffenentwicklung der Erde am Anfang des Jahrhunderts gegeben. Eines der interessantesten Themen war die Produktion von GEW (gesteuerten Energiewaffen), Waffen, die Energie mit anderen Mitteln als ein Projektil zu einem Ziel bringen können. Wir sind besonders interessiert an den Dateien über beständige Wellenlaser, oder auch nur kurz: Laser.\n"
+"Die gesammelten Forschungsdaten der Vereinten Nationen haben eine Menge wertvoller Erkenntnisse über die Waffenentwicklung der Erde Anfang des Jahrhunderts erbracht. Eines der interessantesten Themen war die Produktion von GEW (gesteuerten Energiewaffen), die Energie auf anderem Wege als ein Projektil auf ein Ziel übertragen können. Wir sind besonders interessiert an den Dateien über beständige Wellenlaser, oder auch nur kurz: Laser.\n"
 "\n"
-"Viele Länder und Firmen haben über die Jahre versucht, Laserwaffen herzustellen, aber niemand war in der Lage, einen Laser herzustellen, der tragbar war und einen Energieausstoß hatte, der hoch genug war, um mit herkömmlichen Feuerwaffen zu konkurrieren. Nun aber haben wir Zugang zu all dieser kombinierten Forschung, sowie ganze Bibliotheken gefüllt mit der höchsten Technologie der Erde. Ich glaube, wir können nicht nur eine tragbare Laserwaffe herstellen, sondern sie auch zu einer Größe reduzieren, die noch nie für eine GEW in Betracht gezogen wurde.\n"
+"Viele Länder und Firmen haben über die Jahre versucht, Laserwaffen herzustellen. Aber niemand vermochte einen tragbaren Laser zu fertigen, der einen ausreichenden Energieausstoß hatte, um mit herkömmlichen Feuerwaffen zu konkurrieren. Nun aber haben wir Zugang zu all dieser kombinierten Forschung und ganzen Bibliotheken über die höchsten Technologien der Erde. Ich glaube, wir können nicht nur eine tragbare Laserwaffe herstellen, sondern sie auch zu einer Größe reduzieren, die noch nie für eine GEW in Betracht gezogen wurde.\n"
 "\n"
-"Herr Kommandant, wir sollten diese Forschung so schnell wie möglich starten. Wenn wir unser Waffenarsenal mehr variieren, wird es schwerer für die Aliens, sich dagegen zu verteidigen und unsere Erfahrung könnte uns zu der Entwicklung von brauchbaren Flugzeuglasern führen, die gegen sehr schnelle UFOs weit effektiver sein sollten als koventionelle Feuerwaffen.\n"
+"Herr Kommandant, wir sollten diese Forschung so schnell wie möglich beginnen. Ein vielseitigeres Waffenarsenal erschwert es den Aliens, sich dagegen zu verteidigen. Darüberhinaus könnten uns unsere Erfahrungen zu der Entwicklung von brauchbaren Flugzeuglasern führen, die gegen sehr schnelle UFOs weit effektiver sein sollten als konventionelle Feuerwaffen.\n"
 "\n"
-"Soweit es mich betrifft, dürften wir bei PHALANX das Unmögliche vollbringen und wir können damit anfangen, sobald sie diesen Antrag befürworten.\n"
+"Soweit es mich betrifft, können wir bei PHALANX das Unmögliche vollbringen und wir werden damit anfangen, sobald sie diesen Antrag bestätigen.\n"
 "\n"
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:114
 msgid "Antimatter"
-msgstr ""
+msgstr "Antimaterie"
 
 #: ../base/ufos/research.ufo:116
-#, fuzzy
 msgid "antimatter_txt"
 msgstr ""
 "AN: Basiskommandeur, PHALANX, Atlantisches Operationskommando\n"
@@ -2709,25 +2755,26 @@ msgstr ""
 "\n"
 "DATUM: %02i %s %i\n"
 "\n"
-"BETREFF: Re: Alienwerkstoffe\n"
+"BETREFF: Re: Antimaterie\n"
 "\n"
 "\n"
-"Herr Kommandant, ich denke, wir haben das Geheimnis der Alienwerkstoffe aufgedeckt. Nach einigen Modifikationen an unserer Werkstattausrüstung dürften wir in der Lage sein, das Zeug zu reproduzieren und es in fortgeschrittene Formen zu \"programmieren\".\n"
+"Unsere Forschung der Antimaterie ist vollständig, Herr Kommandant, und wir sind bereit, Ihnen die Ergebnisse zu präsentieren. Aber ich fürchte, sie sind größtenteils schlecht.\n"
 "\n"
-"Wie ich vorhin angemerkt habe formen die Alienwerkstoffe eine Art 'Erinnerungslegierung', die mehrere Formen erinnert, in die sie sich umformt, sobald sie den richtigen Impuls erhalten. Erstaunlicherweise kann die Alienlegierung in zwei Arten stimuliert werden: Hitze und Elektrizität. Hitze ist eine offensichtliche Wahl, damit sich der UFO Rumpf während des Atmosphärenfluges ausdehnt, um einen besseren Flug zu ermöglichen. Elektrizität ist jedoch eine neue Art.\n"
+"Es gibt eine Menge Dinge, die die Aliens wissen, die wir nicht wissen. Nirgends ist das klarer als in ihrer großflächigen Nutzung von Antimaterie. Es scheint, als hätten sie davon ziemlich viel, jedenfalls so viel, dass sie UFO über UFO auf die Erde schicken können und dabei eine Menge Tankfüllungen von Antiprotonen verbrauchen. Menschliche Experimente mit Antimaterie dagegen . . .\n"
 "\n"
-"Wenn man Elektrizität anwendet, reagiert die Legierung nur zu einer konstanten, geringen Flussspannung mit einer spezifischen Stromstärke. Die Form des Materials deformiert sich und bleibt so, solange die Spannung erhalten bleibt. Sobald die Spannung abgeschalten wird, wandelt sich das Material in seine 'Ruheform' oder in eine bestimmte hitzeabhängige Form zurück, je nach dem, ob und wieviel Hitze präsent ist. Die elektrisch erzeugte Form hat vorrang vor jeder durch Hitze erzeugte Form.\n"
+"Die erste künstlich hergestellte Antimaterie der Erde bestand aus 9 Atomen Anti-Wasserstoff, die in dem CERN Partikelphysiklabor in der Nähe von Genf an der Französisch-Schweizer Grenze hergestellt wurden. Nicht lange danach produzierte ein anderes Labor ungefähr 100 Atome. In den letzten Jahren kamen wir kleine, kleine Schritte vorwärts, aber selbst da wir jetzt schon Millionen von Antiprotonen erzeugen können, ist es leicht zu vergessen, wie wenig das wirklich ist.\n"
 "\n"
-"Das bedeutet, dass die Form eines UFO Rumpfes (und allem anderen, dass aus diesen Materialien hergestellt wurde) auf Wunsch verändert werden kann, entweder durch ein Kommando eines Bedieners oder durch Automatik.\n"
+"Tatsächlich ist die größte Hürde in unserer Anpassung des Alientreibstoffes für uns die Verfügbarkeit von Antiprotonen. Wir sind seit 1995 weit gekommen, aber selbst wenn jedes Partikelphysiklabor der Erde soviel Antiprotonen wie möglich herstellen würde, würde es 80 Millionen Jahre dauern, um ein Gram Antiprotonen zu erzeugen. Zum Vergleich: Die Menge im Tank eines UFO Scouts übertrifft sämtliche Antimaterie, die in den letzten hundert Jahren auf der Erde produziert wurde.\n"
 "\n"
-"Das ganze hat uns eine Menge unglaublicher Ideen geliefert. Wir werden nur ein paar davon in diesem Krieg umsetzen können, da einige davon Jahre zur Erforschung benötigen, aber sie sollten uns nichtsdestotrotz erlauben, ein paar Dinge zu bauen, die noch nie zuvor erdacht wurden.\n"
+"Eine andere Sorge ist die Tatsache, dass die Aliens Antimaterie scheinbar als Teil ihrer Waffensysteme nutzen. Mit Antimaterie gefüllte Raketen sind eine Sache; was ist, wenn sie anfangen, Antimaterie selber als ein Sprengstoff zu nutzen? Mein Team hatte dabei mehrere beunruhigende Ideen. Ich selber denke, dass wir die Aliens in dieser Sache überholen sollten. Ein spezielles Programm für Antimaterie basierte Waffen könnte eine interessante Sache sein -- es sollte wirtschaftlicher als der Versuch, die Alienraketen für unsere Abfangjäger umzubauen, sein.\n"
 "\n"
-"Alienwerkstoffe sollten nun für die Produktion verfügbar sein. Wir können in unseren Werkstätten auch mehr davon produzieren, obwohl das lange dauert und teuer ist.\n"
+"Die Menschheit ist noch einen sehr weiten Weg davon entfernt, genug Antiprotonen zu erzeugen, um diese Materie-Antimaterie Raketen zu betreiben. Das Endresultat ist, wir können diese außerirdische Technologie nicht kopieren. Wir wissen nicht, wie sie ihre Antimaterie herstellen, oder wie sie genug Energie dafür produzieren. Solange wir nicht an diese Technologie kommen, werden unsere Bemühungen fruchtlos bleiben. Unsere einzigen großen Erfolge sind auf die Informationen über die Lagerung der Antimaterie der Aliens zurückzuführen. Wir sind sicher, dass wir die gleichen Lagertechniken anwenden können, spezielle Schutzboxen, die ohne weitere Modifikationen in unsere Lagereinrichtungen passen und wir haben Antimaterietreibstofftanks entwickelt, die nach einigen Änderungen in unsere Abfangjäger passen. Natürlich brauchen wir ein komplettes Verständnis über die Alientriebwerke, bevor wir anfangen können, die Tanks einzusetzen.\n"
+"\n"
+"Trotz aller Absichten und Einsatzmöglichkeiten sind wir nicht in der Lage, den Alientreibstoff zu replizieren. Wenn wir Antimaterie mit unserer eigenen Technologie verwenden, sind wir auf die Bergung der Antimaterie von Alienquellen angewiesen. Das mag zwar gefährlich sein, aber wir haben keine andere Wahl; wir müssen diese Technologie sobald wie möglich anpassen, wenn wir eine Chance haben wollen diese Invasion zu stoppen.\n"
 "\n"
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:117
-#, fuzzy
 msgid "antimatter_pre_txt"
 msgstr ""
 "AN: Basiskommandeur, PHALANX, Atlantisches Operationskommando\n"
@@ -2736,28 +2783,66 @@ msgstr ""
 "\n"
 "DATUM: %02i %s %i\n"
 "\n"
-"BETREFF: Antrag: Alienwerkstoffe\n"
+"BETREFF: Antrag: Antimaterie\n"
 "\n"
 "\n"
-"Herr Kommandant, wie ich in meinem vorherigen Bericht erwähnte, war der UFO Scout mit einer höchst interessanten Legierung beschichtet, die Metall und Plastik zu einem einzelnen Material verbindet. Diese Materialien scheinen als Basis der gesamten Alientechnologien benutzt zu werden. Es ist fortgeschrittenes Zeug, höchstgradig vielseitig und hat tausende Gebrauchsmöglichkeiten.\n"
+"Herr Kommandant, basierend auf den extrem interessanten Funden, die wir während unserer Untersuchung des Scout UFOs gemacht haben, würde ich gerne um Ihre Zustimmung für Laborzeit bitten, um die beträchtliche Nutzung von Antimaterie auf Seiten der Aliens und die daraus resultierenden Folgen für den Krieg zu untersuchen.\n"
 "\n"
-"Ich denke, es lohnt sich die Erforschung auf Reproduzierbarkeit in unseren Werkstätten, aber selbst, wenn wir das nicht können, bekommen wir genug davon von jedem UFO, dass wir bergen. Wir finden definitiv neue, menschliche Verwendungen dafür, um unsere Kampffähigkeiten zu verbessern und zu erweitern.\n"
+"Im Besonderen würde ich gerne untersuchen, ob wir nicht eine Möglichkeit finden können, Antimaterie für unsere eigenen Zwecke herstellen zu können. Materie-Antimaterie Aufhebung hat erstaunliches Potential als Treibstoff. In Sachen Energieerzeugung hat Antimaterie wahrscheinlich das beste Masse-Gewicht Verhältnis von allen Materialien im Universum; die Fähigkeit, es wie die Aliens zu nutzen, würde unsere Technologie Jahrhunderte in die Zukunft katapultieren. Wir müssen diese Forschung sobald wie möglich durchführen!\n"
 "\n"
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:159
 msgid "Live Alien"
-msgstr "Lebendes Alien"
+msgstr "Lebendiger Alien"
 
 #: ../base/ufos/research.ufo:161
-#, fuzzy
 msgid "alien_live_txt"
-msgstr "TEXT"
+msgstr ""
+"AN: Basiskommandeur, PHALANX, Atlantisches Operationskommando\n"
+"\n"
+"VON: Dr. Connor, F&E: Abteilung Biologie & Eindämmung, PHALANX, Atlantisches Operationskommando\n"
+"\n"
+"DATUM: %02i %s %i\n"
+"\n"
+"BETREFF: Re: Lebendiges Alien\n"
+"\n"
+"\n"
+"Herr Kommandant,\n"
+"\n"
+"Wir haben unsere ersten Untersuchungen eines lebenden Aliens abgeschlossen. Das Projekt hat gemischte Ergebnisse geliefert.\n"
+"\n"
+"Das Subjekt ist auf jeden Fall lebendig und wir haben es durch eine lange Reihe toxikologischer Experimente geschliffen, die wichtige Daten über seine Verwundbarkeiten gegen verschiedene Chemikalien geliefert haben. Leider waren wir nicht in der Lage, eine Verhaltensanalyse des Verstandes der Außerirdischen durchzuführen. Der Grund dafür ist, dass das Subjekt augenscheinlich keinerlei Anzeichen von Intelligenz gezeigt hat, seit es in Gefangenschaft ist. Es hat wenig mehr getan als zu essen, zu schlafen und an die Wände der Quarantänestation zu starren. Es reagiert auf physikalische Stimulationen mit Reflexreaktionen, Aggression und/oder Unterwerfung, aber wir konnten bisher keinerlei Information herausholen. Sogar einfachste Handsignale scheinen über das Verständnis der Kreatur hinaus zu gehen. EEG Beobachtung zeigt, dass das scheinbar hoch entwickelte Gehirn offenbar keine Gehirnstromaktivität zeigt.\n"
+"\n"
+"Es ist schwer zu glauben, dass das die gleiche Kreatur ist, die fortgeschrittene Alienwaffen auf unsere Soldaten abgefeuert hat. Es gibt kein physisches Trauma, die solch eine Zurückentwicklung erklären könnte. Vielleicht hat seine Gefangennahme eine Art Anti-Verhör-Methode gestartet; wir wissen es nicht. Niemand aus meinem Team hat eine brauchbare Hypothese über die Gründe aufstellen können. Es erfordert auf jeden Fall mehr Forschung. Wir werden das Subjekt weiter beobachten und sie sofort benachrichtigen, wenn sich etwas ändert.\n"
+"\n"
+"Mit freundlichen Grüßen,\n"
+"\n"
+"Dr. Connor"
 
 #: ../base/ufos/research.ufo:162
-#, fuzzy
 msgid "alien_live_pre_txt"
-msgstr "Noch keine Informationen verfügbar. Bitte erst erforschen."
+msgstr ""
+"AN: Basiskommandeur, PHALANX, Atlantisches Operationskommando\n"
+"\n"
+"VON: Dr. Connor, F&E: Abteilung Biologie & Eindämmung, PHALANX, Atlantisches Operationskommando\n"
+"\n"
+"DATUM: %02i %s %i\n"
+"\n"
+"BETREFF: Antrag: Lebendiges Alien\n"
+"\n"
+"\n"
+"Herr Kommandant,\n"
+"\n"
+"Wir haben ein lebendes Alien auf dem Schlachtfeld gefangen genommen! Die Kreatur wurde nach der letzten taktischen Mission geborgen und wird in unserer neuen Quarantänestation festgehalten, welche hervorragend funktioniert.\n"
+"\n"
+"Ich brauche nicht zu erklären, dass wir die Forschung an diesem Subjekt sofort beginnen sollten. Die Information, die wir davon bekommen können, verdrängt alles andere. Bis jetzt hatten wir keine Chance, den Verstand, die Gedanken oder Motivationen der Außerirdischen zu untersuchen, ohne dass sie uns angreifen. Es ist unsere erste Chance, ihre Vorhaben mit den Menschen herauszufinden, vielleicht sogar eine Erklärung zu bekommen. Wer sind sie? Warum sind sie hier? Was können wir gegen sie unternehmen? Wir können nichts erfahren, ohne dieses Subjekt zu verhören.\n"
+"\n"
+"Bitte geben sie ihre Erlaubnis für dieses Programm sobald wie möglich.\n"
+"\n"
+"Mit freundlichen Grüßen,\n"
+"\n"
+"Dr. Connor"
 
 #: ../base/ufos/research.ufo:176
 msgid "Alien Breathing Apparatus"
@@ -2822,9 +2907,8 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/research.ufo:194
-#, fuzzy
 msgid "The Alien Mind"
-msgstr "UFO-Absturzstelle"
+msgstr "Der Alien Verstand"
 
 #: ../base/ufos/research.ufo:196
 #, fuzzy
@@ -2840,7 +2924,7 @@ msgstr "Noch keine Informationen verfügbar. Bitte erst erforschen."
 
 #: ../base/ufos/research.ufo:212
 msgid "Odd Behaviour"
-msgstr ""
+msgstr "Seltsames Verhalten"
 
 #: ../base/ufos/research.ufo:214
 #, fuzzy
@@ -2870,23 +2954,8 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:215
-#, fuzzy
 msgid "alien_odd_behaviour_pre_txt"
-msgstr ""
-"AN: Basiskommandeur, PHALANX, Atlantisches Operationskommando\n"
-"\n"
-"VON: Cdr. Paul Navarre, F&E: Technische Abteilung, PHALANX, Atlantisches Operationskommando\n"
-"\n"
-"DATUM: %02i %s %i\n"
-"\n"
-"BETREFF: Alien Artefakt -- Alienrüstung\n"
-"\n"
-"\n"
-"Herr Kommandant, wir haben eine Gefechtsrüstung der Aliens vom Schlachtfeld geborgen. Diese Rüstung war aufgrund ihres hohen Widerstands gegen verschiedene Schadenstypen für unsere Soldaten eine Plage; die Aliens, die sie trugen, haben Treffer abgeschüttelt, die ihre ungepanzerten Kollegen zerrissen haben. Es ist wenig überraschend, dass wir es immer noch nicht geschafft haben, sie aufzuschneiden, um einen ersten Blick auf ihre Zusammensetzung zu bekommen. Wir sollten ihre Schwächen sobald wie möglich herausfinden und vielleicht finden wir einen Weg, sie für unsere Zwecke anzupassen.\n"
-"\n"
-"Dieses Projekt wird einen durchschnittlichen Verbrauch an Laborzeit und Mittel benötigen. Die Arbeit beginnt, sobald sie ihre Zustimmung gegeben haben, Herr Kommandant.\n"
-"\n"
-"--Cdr. Navarre"
+msgstr "Noch keine Informationen verfügbar. Bitte erst erforschen."
 
 #: ../base/ufos/research.ufo:233
 msgid "assault_txt"
@@ -3746,13 +3815,52 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:627
-#, fuzzy
 msgid "laserrifle_txt"
-msgstr "Das LAS-24 hat einen starken YAG-Laser mit dem es in der Lage ist die Photonen mit kinetischer Energie anzureichern die den meisten uns bekannten Panzerungen und Einheiten Schaden zufügen kann."
+msgstr ""
+"AN: Basiskommandeur, PHALANX, Atlantisches Operationskommando\n"
+"\n"
+"VON: Cdr. Paul Navarre, F&E: Technische Abteilung, PHALANX, Atlantisches Operationskommando\n"
+"\n"
+"DATUM: %02i %s %i\n"
+"\n"
+"BETREFF: Re: Lasergewehr\n"
+"\n"
+"\n"
+"Es ist soweit, Herr Kommandant. Wir sind nun die stolzen Besitzer eines funktionierenden Lasergewehres und die kompletten Produktionspläne sind in unsere Computer übertragen. Wir haben mehrere bewegliche Teile entfernt und die Elektronik verfeinert, um die Produktions- und Wartungskosten so zu senken, damit sie in unser Budget passen. I glaube, sie werden die Daten der Waffe zufriedenstellend finden.\n"
+"\n"
+"Dieses Gewehr ist womöglich die zielgenaueste Waffe, die je entwickelt wurde. Es ist leicht, liegt gut in der Hand und die Fokussierlinsen korrigieren automatisch das Zielen des Schützen, um den Strahl ins Ziel zu bringen -- und ihn dort zu halten. Es mag zwar weniger Schaden pro Schuss anrichten, als konventionelle Projektilwaffen, aber es richtet mehr Schaden an, wenn der Schütze sein Ziel in Sicht behält. 8 Soldaten mit konventionellen Sturmgewehren, die mit Dauerfeuer schießen, können ein sich bewegendes Ziel. Mit Lasergewehren ist das fast unmöglich.\n"
+"\n"
+"Es feuert schnell, eine gute Munitionskapazität, keinen Rückstoß, eine ordentliche Reichweite und es räumt mit vielen Problemchen auf, die normale Schusswaffen haben. Es wird nie versagen oder Ladehemmung haben. Es wird nie wegen eines verschmutzten oder verbogenen Laufs explodieren. Es wird nie Probleme mit unpassender oder fehlerhafter Munition haben. Es kann gesprungene Linsen haben, wenn es schwerer Misshandlung ausgesetzt ist, aber diese Linsen sind gut geschützt und liegen in stoßresistentem Schaum, umgeben von einer Metallblende, die sich nur öffnet, wenn das Gewehr abgefeuert werden soll.\n"
+"\n"
+"Die größte Schwäche des Lasergewehres ist die Unfähigkeit, durch Rauchwolken, Gas oder Feuer zu schießen. Alle unser Laser haben dieses Problem; Wolken unterschiedlichen Materials brechen den Strahl schnell zu harmlosen Licht, also werden wir vorsichtig sein müssen, wie wir Rauch- oder Brandwaffen einsetzen.\n"
+"\n"
+"Wir haben das Gewehr so entwickelt, dass es die normalen D-F Patronen benutzen kann, die wir gebaut haben, um unsere Laserwaffen zu betreiben. Das gibt dem Gewehr ungefähr zwei Minuten Dauerfeuer, bevor eine neue Patrone eingesetzt werden muss. Die Patronen können ausgestoßen und auf dem Boden liegen gelassen werden, ohne sich über Verschmutzung der Gegend Gedanken machen zu müssen, aber es braucht eine besondere Gefahrgutentsorgung, wenn die Mission beendet ist.\n"
+"\n"
+"Wir brauchen mindestens eine D-F Patrone, um das Lasergewehr zu laden und zu benutzen.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:628
 msgid "laserrifle_pre_txt"
-msgstr "Noch keine Informationen verfügbar. Bitte erst erforschen."
+msgstr ""
+"AN: Basiskommandeur, PHALANX, Atlantisches Operationskommando\n"
+"\n"
+"VON: Cdr. Paul Navarre, F&E: Technische Abteilung, PHALANX, Atlantisches Operationskommando\n"
+"\n"
+"DATUM: %02i %s %i\n"
+"\n"
+"BETREFF: Antrag: Lasergewehr\n"
+"\n"
+"\n"
+"Dies ist eine von mehreren Anträgen, die ich ich Ihnen zu Forschung und Entwicklung von neuen Laserwaffen zuschicke. Jede davon muss aufgrund ihrer Größenunterschiede, Energieleveln und Komplexitäten der involvierten Systeme separat erforscht werden.\n"
+"\n"
+"Das Lasergewehr ist der primäre Entwurf unser neuen Deuteriumfluorid-Laserfamilie. Es wird die perfekte Mischung aus Stärke, Genauigkeit, Reichweite, Beweglichkeit und Munitionskapazität sein. Sogar auf dem Papier kann das Lasergewehr mit jedem üblichen Sturmgewehr konkurrieren. Das einzige Problem wird es sein, es überhaupt zu bauen.\n"
+"\n"
+"Die Bestandteile, die wir in unseren ersten Prototypen der fortgeschrittenen Lasertechnolgie benutzt haben, waren unhandlich, zerbrechlich und sehr teuer. Unsere Soldaten brauchen gewisse Unempfindlichkeiten in ihren Gewehren, etwas, was sie durch die Schläge und Erschütterungen des Kampfes bringt und wir müssen dringend die Produktionskosten senken, damit sich das Programm lohnt. So wie es jetzt ist, kostet die Ausrüstung eines Trupps mit Lasergewehren so viel wie ein durchschnittlicher Kampfpanzer. Wir brauchen Finanzierung und Laborzeit, um die Kosten zu senken, die empfindlichsten Komponenten zu reparieren oder auszutauschen, damit die Waffe verlässlich wird, und um ihre Form so zu verändern, damit sie bequem von einem menschlichen Soldaten abgefeuert werden kann.\n"
+"\n"
+"Wie immer werden wir unsere Arbeit beginnen, sobald sie uns ihre Erlaubnis gegeben haben, Herr Kommandant.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:663
 msgid "medikit_txt"
@@ -4876,18 +4984,50 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/research.ufo:1241
-#, fuzzy
 msgid "pbeampistol_txt"
 msgstr ""
-"Using the same technology as the Plasma Rifle, the Plasma Pistol can also do considerable damage\n"
-"to its target. The overheated xenon plasma is also contained inside a strong magnetic field\n"
-"implemented in the pistol's clip. Because of the smaller dimensions of this one-handed weapon,\n"
-"the magnetic field generators are not that capable as the ones used in the Plasma Rifle.\n"
-"Therefore the cinetic energy given to the plasma beam is lessened."
+"AN: Basiskommandeur, PHALANX, Atlantisches Operationskommando\n"
+"\n"
+"VON: Cdr. Paul Navarre, F&E: Technische Abteilung, PHALANX, Atlantisches Operationskommando\n"
+"\n"
+"DATUM: %02i %s %i\n"
+"\n"
+"BETREFF: Re: Alien Artefakt -- Partikelstrahlpistole\n"
+"\n"
+"\n"
+"Herr Kommandant, ich habe die Daten der neuen Alienpistole für sie, und sie sind nicht gut.\n"
+"\n"
+"Wir haben immer gemutmaßt, dass eine wirkliche Alienarmee mehr als nur Plasmawaffen und Kerrklinken ins Feld führen würde. Nun haben sie gezeigt, dass wir recht hatten. Diese Partikelstrahlpistole ist sehr fortschrittlich, einen Quantensprung über den Plasmawaffen, und so sehr miniaturisiert, dass wir keinerlei Möglichkeit haben, sie zu vervielfältigen.\n"
+"\n"
+"Partikelstrahlwaffen sind dazu entwickelt, ein Zielobjekt mit einem Strahl von fast bis zu Lichtgeschwindigkeit beschleunigten Partikeln zu treffen, wodurch eine enorme kinetische Energie entsteht. Bis jetzt haben wir diese Technologie nur in den Waffen der großen UFOs gesehen. Nun aber nutzen sie sie auf dem Boden, und das in der schlimmsten Art und Weise.\n"
+"\n"
+"Die Pistole selber hat eine einfache Bauweise, eine Hülle, die eine Reihe Magneten und elektrostatische Linsen zum Bündeln und Einengen des Partikelstrahls umgibt. Das ist alles Material, dass wir mit genug Geld und Einsatz leicht reproduzieren können. Wir haben aber bis jetzt noch nicht herausgefunden, wie die Waffe mit Munition versorgt wird. Die Energiewerte, die wir von den Magazinen abgelesen haben, sind unglaublich und trotz aller Vorsicht, konnten wir bisher keines entschärfen oder abschalten, um es sicher zu öffnen. Selbst das Leerschießen schaltet ein Magazin nicht ab. Es wird mehr Forschung benötigt, bevor wir sie verstehen können und vielleicht können wir sie dann sogar reproduzieren.\n"
+"\n"
+"Diese Pistole ist mit Abstand die schlimmste Waffe, die ich in meiner Karriere gesehen haben, mit einer beeindrucken panzerbrechenden Wirkung und extremen Schadenspotential. Der Partikelstrahl kann einen leichtgerüsteten Menschen aus Entfernungen bis zu 40 Meter mit einem Schuss umbringen. Nur ein Schuss! In Sachen Tödlichkeit bei höheren Reichweiten ist er besser als unsere Laserpistole. Die einzige gute Nachricht ist, dass die PS Pistole um einiges weniger genau als unsere Laser ist und viel zu viel Rückstoß erzeugt, um schnelle, zielgenaue Schüsse abzufeuern.\n"
+"\n"
+"Alleine das Abfeuern der Pistole dürfte für einen Soldaten ohne die erforderliche Stärke erhebliche Probleme bereiten. Die Partikel verlassen den Lauf beinahe mit Lichtgeschwindigkeit, daher erzeugen sie einen unglaublichen Rückstoß. Es dürfte für schwächere Soldaten schon schwer sein, die Waffe auf das Ziel gerichtet zu halten. Wenn wir diese Waffen einsetzen, empfehlen wir, sie nur an körperlich starke Soldaten zu verteilen.\n"
+"\n"
+"Ich halte sie über unsere Fortschritte mit den Magazinen auf dem Laufenden, Herr Kommandant.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1242
 msgid "pbeampistol_pre_txt"
-msgstr "Noch keine Informationen verfügbar. Bitte erst erforschen."
+msgstr ""
+"AN: Basiskommandeur, PHALANX, Atlantisches Operationskommando\n"
+"\n"
+"VON: Cdr. Paul Navarre, F&E: Technische Abteilung, PHALANX, Atlantisches Operationskommando\n"
+"\n"
+"DATUM: %02i %s %i\n"
+"\n"
+"BETREFF: Antrag: Alien Artefakt -- Partikelstrahlpistole\n"
+"\n"
+"\n"
+"Herr Kommandant, wir haben eine gefährliche, neue Alienpistole geborgen, die einen hochenergetischen Partikelstrahl abfeuert -- tödlicher als Laser, zielgenauer als Plasmawaffen und eine äußerst gemeine Bedrohung für unsere Soldaten auf dem Schlachtfeld. Vorläufige Tests gegen unsere Rüstungen haben schlechte Ergebnisse geliefert. Wir müssen diese Waffen sofort erforschen.\n"
+"\n"
+"Bitte autorisieren sie dieses Programm so bald wie möglich.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1259
 #: ../base/ufos/research.ufo:1296
@@ -6422,13 +6562,70 @@ msgid "Alien Autopsy - Shevaar"
 msgstr "Alien Autopsie - Shevaar"
 
 #: ../base/ufos/research.ufo:2170
-#, fuzzy
 msgid "shevaar_autopsy_txt"
-msgstr "TEXT"
+msgstr ""
+"AN: Basiskommandeur, PHALANX, Atlantisches Operationskommando\n"
+"\n"
+"VON: Dr. Connor, R&D: Abteilung Biologie & Eindämmung, PHALANX, Atlantisches Operationskommando\n"
+"\n"
+"DATUM: %02i %s %i\n"
+"\n"
+"BETREFF: Re: Alien Autopsie -- Shevaar\n"
+"\n"
+"\n"
+"Herr Kommandant,\n"
+"\n"
+"Unsere Autopsie dieses neuen Aliens -- des Shevaar -- war sehr interessant. Es ist eine deutliche Abweichung zu den humanoideren Tamans und Ortnoks. Es besitzt zehengängige Beine und einen kleinen Schwanz, der ein Überbleibsel der andauernden Evolution dieser Spezies zu sein scheint. Die Kreatur scheint ebenfalls total blind zu sein. Ihr fehlen Augen und jedwede andere Organe, die man zur Verarbeitung visuellen Lichtes verwenden könnte. Es scheint dagegen ein paar sehr interessante Organe zu haben, um diesen Nachteil auszugleichen.\n"
+"\n"
+"Zu allererst scheint der Shevaar wie eine unheilige Verbindung zwischen Mensch und Echse auszusehen. Im Gegensatz zu Erdechsen ist er warmblütig und hat ein Gehirn, dessen Größe ungefähr des unsrigen entspricht -- vielleicht sogar größer. Seine massiven Füße sind überraschend federnd und er kann eine Menge Boden mit einem langen, sprunghaften Schritt gutmachen. Die großen Hände scheinen keine Probleme damit zu haben, eine große Auswahl an außerirdischen Waffen zu tragen.\n"
+"\n"
+"Die Ergebnisse der Autopsie sind nicht weniger interessant. Nach dem Öffnen des Brustbereiches fanden wir heraus, dass der Brustkorb ein solides Knochenschild, verstärkt mit hartem Knorpel, nach vorne hin bildet. Der Aufbau der Knochen ist im Vergleich zu unseren ebenfalls anders und bestehen eher aus Kohlenstoff, denn aus Kalzium, mit Spuren von Metall, was sie unglaublich hart und fest macht. Messer und Kugeln werden große Schwierigkeiten haben, durchzubrechen und es wird sogar schwerer sein, wichtige Organe zum Verletzen zu finden. Jede Körpermasse, die nicht durch Knochen geschützt ist, scheint aus dünnen, drahtigen Muskeln zu bestehen.\n"
+"\n"
+"Das Gehirn ist besonders schwer geschützt. Mehrere Schichten Horn umwickeln es wie eine undurchdringliche Rüstung. Anhand der Abnutzungsspuren in dem Bereich glauben wir, dass sich diese Aliens regelmäßig gegenseitig starke Kopfstöße verpassen, vielleicht als Teil von Paarungsritualen. Ein kleiner, allesfressender Mund ragt aus der Knochenmasse heraus und führt in einen einfachen, aber zweckmäßigen Verdauungstrakt.\n"
+"\n"
+"Es gibt aber noch mehr Organe im Kopf als das Gehirn und den Mund. Hinter den Knochenwirbeln sind drei Organe, die scheinbar infrarote Strahlung erfassen können. Das scheint der Shevaar als seine Augen zu benutzen. Wir schätzen die Sensibilität dieser Organe ungefähr vergleichbar mit einem Menschen, der eine standard PHALANX Infrarotbrille trägt.\n"
+"\n"
+"Aus der Autopsie und unserer Analyse der Schlachtfeldaufnahmen schließen wir das folgende:\n"
+"\n"
+"- Der Shevaar sieht im Infrarotbereich. Das macht es schwer, sich zu verstecken oder sich unentdeckt an sie heranzuschleichen.\n"
+"\n"
+"- Sie tragen meistens leichte Ausrüstung, um ihre natürliche Beweglichkeit zu erhalten. Das erlaubt ihnen, effektive Zuschlagen-und-Verschwinden Taktiken anzuwenden.\n"
+"\n"
+"- Die Körper der Shevaar sind sehr widerstandsfähig gegen Einschlags- und Schnittschäden und ihre kompakten, internen Organe können nicht so leicht durch Erschütterungen oder Sprengstoffe beschädigt werden. Dagegen bietet ihre schuppige Haut nicht viel Schutz gegen Feuer, Laser oder Elektrizität.\n"
+"\n"
+"Shevaar werden meistens als schnelle, gepanzerte Aufklärer verwendet. Sie sind extrem effektiv in dieser Rolle und verbinden hohe Beweglichkeit mit erweiterten Sehfähigkeiten und die Außerirdischen scheinen keine Knappheit an diesen Kreaturen zu haben. Die Shevaar scheinen in der nebulösen Alienhierarchie irgendwo zwischen den Taman und den Ortnok zu stehen. Daher füllen sie manchmal eine Spezialisten- oder Kommandorolle aus, aber diese Aufgaben werden meistens von den Tamans ausgeführt.\n"
+"\n"
+"Wenn nicht im Kampf, verbringen die Shevaar ihre Zeit als Aufklärer oder Plänkler, oder als Treiber für gefangengenommene Menschen.\n"
+"\n"
+")EEs gibt noch eine komplexe Reihe Implantate in der Kehle des Subjekts, die mehr Forschung benötigen, um voll verstanden zu werden. Ich werde ihnen eine detailliertere Analyse zusammen mit einem Forschungsantrag zuschicken.\n"
+"\n"
+"Wir sollten vorsichtig sein, wenn wir diesen Außerirdischen im Feld begegnen. Sie sind schnelle und gefährliche Pänkler, die es vorziehen, aus der Deckung zu kämpfen und sollten bei Sichtung verfolgt und beschossen werden, solange es nicht unsere Position gefährdet. Das Entblößen unserer Flanken oder Rücken gegen eine Einheit Shevaar könnte katastrophale Auswirkungen haben. Obwohl eine Granate wohl keinen Shevaar sofort umbringt, werden sie sehr wirksam sein, einen Shevaar aus seiner Deckung zu treiben.\n"
+"\n"
+"Obwohl blind, besitzen Shevaar Gleichgewichtsorgane, die durch den Ton unserer Blendgranaten beeinflusst werden können. Sie werden gleiche Ergebnisse wie gegen Menschen erzielen.\n"
+"\n"
+"Mit freundlichen Grüßen,\n"
+"\n"
+"Dr. Connor"
 
 #: ../base/ufos/research.ufo:2171
 msgid "shevaar_autopsy_pre_txt"
-msgstr "Noch keine Informationen verfügbar. Bitte erst erforschen."
+msgstr ""
+"AN: Basiskommandeur, PHALANX, Atlantisches Operationskommando\n"
+"\n"
+"VON: Dr. Connor, F&E: Abteilung Biologie & Eindämmung, PHALANX, Atlantisches Operationskommando\n"
+"\n"
+"DATUM: %02i %s %i\n"
+"\n"
+"BETREFF: Antrag: Alien Autopsie -- Shevaar\n"
+"\n"
+"\n"
+"Herr Kommandant,\n"
+"\n"
+"Wir haben den Leichnam einer neuen Alienart vom Schlachtfeld geborgen. Wir sollten die Analyse und Einschätzung sobald wir möglich beginnen.\n"
+"\n"
+"Mit freundlichen Grüßen,\n"
+"\n"
+"Dr. Connor"
 
 #: ../base/ufos/research.ufo:2243
 msgid "Phoenix UGV"
@@ -6542,7 +6739,7 @@ msgstr ""
 "\n"
 "Es wird empfohlen, diese Panzerung auf Flugzeuge zu beschränken, die für schnelle Abfangmanöver auf kurzer Entfernung, nicht weit von der Basis, gedacht sind. Der Einbau von Zusatzpanzerung in unsere Langstreckenabfangjäger ist die Entscheidung des Kommandanten, aber ihre effektive Reichweite auf diese Art zu verringern, könnte gefährlich sein, da es mehrere Stunden dauert, die Panzerung abzubauen, wenn sie erst mal dran ist. Während dieser Zeit ist der Flieger 'in der Werkstatt' und kann daher nicht starten. Jede Wiederbewaffnung und Betankung muss auch warten, bis der Einbau komplett ist. Unsere Techniker können nicht mit diesem Material arbeiten, wenn Munition oder Treibstoff in der Nähe ist.\n"
 "\n"
-"Ein Flugzeug mitten in einer Neupanzerung hochzuschicken ist möglich, wird aber nicht empfohlen. Das Flugzeug wird sehr unausgeglichen sein und es besteht die Gefahr des Absturzes, da die Steuerung und das Verhalten des Flugzeuges unvorhersehbar ist. Es wird auf keinen Fall kampftauglich sein, da seine elektrischen Geräte für die Wartung abgeschalten wurden, und sie können in einer Notsituation nicht rechtzeitig hochgefahren werden.\n"
+"Ein Flugzeug mitten in einer Neupanzerung hochzuschicken ist möglich, wird aber nicht empfohlen. Das Flugzeug wird sehr unausgeglichen sein und es besteht die Gefahr des Absturzes, da die Steuerung und das Verhalten des Flugzeuges unvorhersehbar ist. Es wird auf keinen Fall kampftauglich sein, da seine elektrischen Geräte für die Wartung abgeschaltet wurden, und sie können in einer Notsituation nicht rechtzeitig hochgefahren werden.\n"
 "\n"
 "\n"
 "Zusatz\n"
@@ -7028,7 +7225,7 @@ msgstr ""
 "\n"
 "Wie ich vorhin angemerkt habe formen die Alienwerkstoffe eine Art 'Erinnerungslegierung', die mehrere Formen erinnert, in die sie sich umformt, sobald sie den richtigen Impuls erhalten. Erstaunlicherweise kann die Alienlegierung in zwei Arten stimuliert werden: Hitze und Elektrizität. Hitze ist eine offensichtliche Wahl, damit sich der UFO Rumpf während des Atmosphärenfluges ausdehnt, um einen besseren Flug zu ermöglichen. Elektrizität ist jedoch eine neue Art.\n"
 "\n"
-"Wenn man Elektrizität anwendet, reagiert die Legierung nur zu einer konstanten, geringen Flussspannung mit einer spezifischen Stromstärke. Die Form des Materials deformiert sich und bleibt so, solange die Spannung erhalten bleibt. Sobald die Spannung abgeschalten wird, wandelt sich das Material in seine 'Ruheform' oder in eine bestimmte hitzeabhängige Form zurück, je nach dem, ob und wieviel Hitze präsent ist. Die elektrisch erzeugte Form hat vorrang vor jeder durch Hitze erzeugte Form.\n"
+"Wenn man Elektrizität anwendet, reagiert die Legierung nur zu einer konstanten, geringen Flussspannung mit einer spezifischen Stromstärke. Die Form des Materials deformiert sich und bleibt so, solange die Spannung erhalten bleibt. Sobald die Spannung abgeschaltet wird, wandelt sich das Material in seine 'Ruheform' oder in eine bestimmte hitzeabhängige Form zurück, je nach dem, ob und wieviel Hitze präsent ist. Die elektrisch erzeugte Form hat Vorrang vor jeder durch Hitze erzeugte Form.\n"
 "\n"
 "Das bedeutet, dass die Form eines UFO Rumpfes (und allem anderen, dass aus diesen Materialien hergestellt wurde) auf Wunsch verändert werden kann, entweder durch ein Kommando eines Bedieners oder durch Automatik.\n"
 "\n"
@@ -7398,35 +7595,43 @@ msgstr "Endlich: Die Attacke auf die Alien Basis"
 
 #: ../base/ufos/seq_intro.ufo:8
 msgid "intro_sentence1"
-msgstr "Wir schreiben das Jahr 2084. Die Erde, die nie der ruhigste Ort war, erfreut sich einer Zeit relativen Friedens. Die gewaltätigen Anfänge des 21. Jahrhunderts sind jetzt weit weg; ferne Erinnerungen, aber nicht so weit weg, dass sie vergessen werden. Für die meisten Menschen ist der zweite Kalte Krieg ein dunkler Schatten der Vergangenheit, so wie die Weltkriege es für die Kinder des späten 20. Jahrhunderts waren."
+msgstr ""
+"Wir schreiben das Jahr 2084. Die Erde, die nie der ruhigste Ort war, erfreut sich einer Zeit relativen Friedens. Die gewaltätigen Anfänge des 21. Jahrhunderts sind jetzt weit weg; ferne Erinnerungen, aber nicht so weit weg, dass sie vergessen werden. Für die meisten Menschen ist der zweite Kalte Krieg ein dunkler Schatten der Vergangenheit, so wie die Weltkriege es für die Kinder des späten 20. Jahrhunderts waren."
 
 #: ../base/ufos/seq_intro.ufo:16
 msgid "intro_sentence2"
-msgstr "Konflikte wurden gegen Ende des Jahrhunderts seltener, nachdem das allgemeine Gesundheitswesen für die dritte Welt verfügbar wurde. Sogar die Feuer des Terrorismus sind als Folge des zweiten kalten Krieges abgekühlt, mit den Schrecken und Unmenschlichkeiten immer noch frisch im Gedächtnis der Menschen, von den alten Vereinigten Staaten bis hin zum verwüsteten indischen Subkontinent. Klassenkämpfe haben sich auf das politische Schlachtfeld verlagert, da nun jedes Land einen garantierten Platz in der UN hat und der globale Lebensstandard ist auch in den entlegensten Teilen der Welt am steigen. Länder haben sich gefestigt, sich um eine umstrukturierte UN stabilisiert, welche erfolgreich die Regierungen der Welt kontrolliert. Verteilte Klumpen kleinerer Länder, zuerst verängstigt durch die starken Machtblöcke um China und die Europäische Union, haben sich in mächtige politische Lager zusammengeschlossen -- um dann herauszufinden, dass es keine Nachbarn gibt, die man sicher bekämpfen könnte. Zum ersten Mal in der Geschichte der Menschheit gibt es Recht und Ordnung auf mehr als einem dreiviertel der Erde."
+msgstr ""
+"Konflikte wurden gegen Ende des Jahrhunderts seltener, nachdem das allgemeine Gesundheitswesen für die dritte Welt verfügbar wurde. Sogar die Feuer des Terrorismus sind als Folge des zweiten kalten Krieges abgekühlt, mit den Schrecken und Unmenschlichkeiten immer noch frisch im Gedächtnis der Menschen, von den alten Vereinigten Staaten bis hin zum verwüsteten indischen Subkontinent. Klassenkämpfe haben sich auf das politische Schlachtfeld verlagert, da nun jedes Land einen garantierten Platz in der UN hat und der globale Lebensstandard ist auch in den entlegensten Teilen der Welt am steigen. Länder haben sich gefestigt, sich um eine umstrukturierte UN stabilisiert, welche erfolgreich die Regierungen der Welt kontrolliert. Verteilte Klumpen kleinerer Länder, zuerst verängstigt durch die starken Machtblöcke um China und die Europäische Union, haben sich in mächtige politische Lager zusammengeschlossen -- um dann herauszufinden, dass es keine Nachbarn gibt, die man sicher bekämpfen könnte. Zum ersten Mal in der Geschichte der Menschheit gibt es Recht und Ordnung auf mehr als einem dreiviertel der Erde."
 
 #: ../base/ufos/seq_intro.ufo:24
 msgid "intro_sentence3"
-msgstr "Für viele Menschen scheint es, als würden alle endlich gut werden."
+msgstr ""
+"Für viele Menschen scheint es, als würden alle endlich gut werden."
 
 #: ../base/ufos/seq_intro.ufo:32
 msgid "intro_sentence4"
-msgstr "Der erste Angriff traf die Stadt Mumbai am 3. März 2084. Sechs kleine UFOs erschienen aus dem Nirgendwo und kamen, unentdeckt von den starken Radaranlagen um Mumbai herum, aus dem Himmel und landeten in der wohl bevölkerungsreichsten Stadt der Welt. Es gab keine Warnung, keine Erklärung. Zwanzig Tausend unschuldige Zivilisten und drei Bataillone Elitesoldaten wurden innerhalb von zwölf Stunden brutal massakriert, bevor eine große Zahl Commonwealth Soldaten es schaffte, den Alienvormarsch aufzuhalten. Dann, so plötzlich wie sie erschienen, zogen sie sich zu ihren Schiffen zurück und verschwanden wieder im Orbit. Der einzige Beweis für ihr Dasein waren die verwüsteten Straßen Mumbais."
+msgstr ""
+"Der erste Angriff traf die Stadt Mumbai am 3. März 2084. Sechs kleine UFOs erschienen aus dem Nirgendwo und kamen, unentdeckt von den starken Radaranlagen um Mumbai herum, aus dem Himmel und landeten in der wohl bevölkerungsreichsten Stadt der Welt. Es gab keine Warnung, keine Erklärung. Zwanzig Tausend unschuldige Zivilisten und drei Bataillone Elitesoldaten wurden innerhalb von zwölf Stunden brutal massakriert, bevor eine große Zahl Commonwealth Soldaten es schaffte, den Alienvormarsch aufzuhalten. Dann, so plötzlich wie sie erschienen, zogen sie sich zu ihren Schiffen zurück und verschwanden wieder im Orbit. Der einzige Beweis für ihr Dasein waren die verwüsteten Straßen Mumbais."
 
 #: ../base/ufos/seq_intro.ufo:40
 msgid "intro_sentence5"
-msgstr "Eine Notfallversammlung der UN ergab keine schlüssige Richtung. Die Einfälle der Aliens häufen sich, größer und grausamer als vorher, dieses mal in Bonn, Johannesburg und Bangkok. Einige Nationen versuchten es mit Diplomatie und schickten Nachrichten in tausend verschiedenen Sprachen an die Aliens, die das Land verwüsteten. Ihre Worte wurden ignoriert. Innerhalb weniger Stunden waren diese drei Städte jedem Leben beraubt. Der Angriff ist schon vorbei, bevor irgendwelche Militärkräfte die Erlaubnis zum Zurückschlagen haben. Die Aliens lassen nichts zurück außer Beton und Blut. Alle UFOs verschwinden, ohne Spuren zu hinterlassen -- aber niemand zweifelt, dass sie zurückkehren."
+msgstr ""
+"Eine Notfallversammlung der UN ergab keine schlüssige Richtung. Die Einfälle der Aliens häufen sich, größer und grausamer als vorher, dieses mal in Bonn, Johannesburg und Bangkok. Einige Nationen versuchten es mit Diplomatie und schickten Nachrichten in tausend verschiedenen Sprachen an die Aliens, die das Land verwüsteten. Ihre Worte wurden ignoriert. Innerhalb weniger Stunden waren diese drei Städte jedem Leben beraubt. Der Angriff ist schon vorbei, bevor irgendwelche Militärkräfte die Erlaubnis zum Zurückschlagen haben. Die Aliens lassen nichts zurück außer Beton und Blut. Alle UFOs verschwinden, ohne Spuren zu hinterlassen -- aber niemand zweifelt, dass sie zurückkehren."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence6"
-msgstr "87 Stunden nach dem Angriff auf Mumbai erklärt die Erde den Aliens den Krieg. Für 2 Wochen versuchen die Armeen der Menschen, die Alienangriffe abzuwehren. Sie erzielen sehr wenig Erfolge."
+msgstr ""
+"87 Stunden nach dem Angriff auf Mumbai erklärt die Erde den Aliens den Krieg. Für 2 Wochen versuchen die Armeen der Menschen, die Alienangriffe abzuwehren. Sie erzielen sehr wenig Erfolge."
 
 #: ../base/ufos/seq_intro.ufo:56
 msgid "intro_sentence7"
-msgstr "Als alles fehlschlägt, tritt die UN in Aktion. Uralte Ausrüstung wird entstaubt, einiges älter als ein Jahrhundert, und die lange nicht mehr bestehende Anti-Außerirdische Behörde der früheren Vereinigten Staaten -- PHALANX -- entsteht unter dem Banner der UN neu. Ihre Pflicht ist es, die Alienbedrohung zu bekämpfen und das Überleben der Menschheit unter allen Umständen zu sichern."
+msgstr ""
+"Als alles fehlschlägt, tritt die UN in Aktion. Uralte Ausrüstung wird entstaubt, einiges älter als ein Jahrhundert, und die lange nicht mehr bestehende Anti-Außerirdische Behörde der früheren Vereinigten Staaten -- PHALANX -- entsteht unter dem Banner der UN neu. Ihre Pflicht ist es, die Alienbedrohung zu bekämpfen und das Überleben der Menschheit unter allen Umständen zu sichern."
 
 #: ../base/ufos/seq_intro.ufo:64
 msgid "intro_sentence8"
-msgstr "Finanziert durch alle acht politischen Mächte und durch das Rekrutieren der besten Soldaten aller Armeen, ist PHALANX das beste der besten. Diese Soldaten sind die erste und einzige Verteidigungslinie der Erde. Sie können es sich nicht leisten, zu verlieren; denn wenn sie es tun, ist die Menschheit verloren."
+msgstr ""
+"Finanziert durch alle acht politischen Mächte und durch das Rekrutieren der besten Soldaten aller Armeen, ist PHALANX das beste der besten. Diese Soldaten sind die erste und einzige Verteidigungslinie der Erde. Sie können es sich nicht leisten, zu verlieren; denn wenn sie es tun, ist die Menschheit verloren."
 
 #: ../base/ufos/seq_intro.ufo:73
 #: ../base/ufos/seq_intro.ufo:192
@@ -7435,43 +7640,53 @@ msgstr "Mauklick um fortzufahren"
 
 #: ../base/ufos/seq_intro.ufo:100
 msgid "prolog_sentence1"
-msgstr "An: Basiskommando, PHALANX, Kommando Atlantische Operationen"
+msgstr ""
+"An: Basiskommando, PHALANX, Kommando Atlantische Operationen"
 
 #: ../base/ufos/seq_intro.ufo:110
 msgid "prolog_sentence2"
-msgstr "Von: SecGen. Mahouf Serra, Vereinte Nationen, New York City"
+msgstr ""
+"Von: SecGen. Mahouf Serra, Vereinte Nationen, New York City"
 
 #: ../base/ufos/seq_intro.ufo:119
 msgid "prolog_sentence3"
-msgstr "Datum: 21 März 2084"
+msgstr ""
+"Datum: 21 März 2084"
 
 #: ../base/ufos/seq_intro.ufo:128
 msgid "prolog_sentence4"
-msgstr "Betreff: Viel Glück!"
+msgstr ""
+"Betreff: Viel Glück!"
 
 #: ../base/ufos/seq_intro.ufo:137
 msgid "prolog_sentence5"
-msgstr "Willkommen Kommander. Sie haben das Kommando über PHALANX erhalten. Ihre Mission: Beschützen sie die Bewohner dieses Planeten und stoppen sie die Alienbedrohung mit allen Mitteln. Wie Sie das bewerkstelligen ist Ihnen überlassen - aber bedenken Sie: Scheitern ist keine Option."
+msgstr ""
+"Willkommen Kommander. Sie haben das Kommando über PHALANX erhalten. Ihre Mission: Beschützen sie die Bewohner dieses Planeten und stoppen sie die Alienbedrohung mit allen Mitteln. Wie Sie das bewerkstelligen ist Ihnen überlassen - aber bedenken Sie: Scheitern ist keine Option."
 
 #: ../base/ufos/seq_intro.ufo:146
 msgid "prolog_sentence6"
-msgstr "Ihr erster Auftrag lautet ein Hauptquartier einzurichten. Die UN hat Zugang zu allen Militärbasen der Welt. Wählen Sie die geographische Position sorgfältig, sie könnte großen Einfluss auf den Erfolg oder Misserfolg des PHALANX Projektes haben."
+msgstr ""
+"Ihr erster Auftrag lautet ein Hauptquartier einzurichten. Die UN hat Zugang zu allen Militärbasen der Welt. Wählen Sie die geographische Position sorgfältig, sie könnte großen Einfluss auf den Erfolg oder Misserfolg des PHALANX Projektes haben."
 
 #: ../base/ufos/seq_intro.ufo:155
 msgid "prolog_sentence7"
-msgstr "Eine kürzlich erstellte Analyse der Angriffe auf Mumbai und Bonn ergab, dass sich UFO Sichtungen und Alienaktivität auf dichtbesiedelsten Gebiete der Erde konzentrieren, einschließlich Nord- und Südamerika, Europa, Ostasien, Süd- und Mittelafrika sowie Australien. Sie sollten in Erwägung ziehen Ihre Einzugsgebiete diesbezgl. zu wählen."
+msgstr ""
+"Eine kürzlich erstellte Analyse der Angriffe auf Mumbai und Bonn ergab, dass sich UFO Sichtungen und Alienaktivität auf dichtbesiedelsten Gebiete der Erde konzentrieren, einschließlich Nord- und Südamerika, Europa, Ostasien, Süd- und Mittelafrika sowie Australien. Sie sollten in Erwägung ziehen Ihre Einzugsgebiete diesbezgl. zu wählen."
 
 #: ../base/ufos/seq_intro.ufo:164
 msgid "prolog_sentence8"
-msgstr "Haben Sie erstmal Ihre erste Basis errichtet, müssen Sie Ihre Soldaten vorbereiten. Die Rekruten die für PHALANX abgestellt wurden, müssen einem Einsatzschiff zugeteilt und für den Kampf ausgerüstet werden."
+msgstr ""
+"Haben Sie erstmal Ihre erste Basis errichtet, müssen Sie Ihre Soldaten vorbereiten. Die Rekruten die für PHALANX abgestellt wurden, müssen einem Einsatzschiff zugeteilt und für den Kampf ausgerüstet werden."
 
 #: ../base/ufos/seq_intro.ufo:173
 msgid "prolog_sentence9"
-msgstr "Vergessen Sie nicht gut auf die Soldaten aufzupassen - ein lebender Soldat kann mehr Aliens töten als ein toter Soldat. Der Rest von uns zählt auf sie - und betet für ihren Erfolg."
+msgstr ""
+"Vergessen Sie nicht gut auf die Soldaten aufzupassen - ein lebender Soldat kann mehr Aliens töten als ein toter Soldat. Der Rest von uns zählt auf sie - und betet für ihren Erfolg."
 
 #: ../base/ufos/seq_intro.ufo:182
 msgid "prolog_sentence10"
-msgstr "Das ist erstmal alles Herr Kommandant, viel Glück und viel Erfolg."
+msgstr ""
+"Das ist erstmal alles Herr Kommandant, viel Glück und viel Erfolg."
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"
@@ -7620,7 +7835,7 @@ msgstr "Medikit"
 #: ../base/ufos/weapons.ufo:35
 #: ../base/ufos/weapons.ufo:86
 #: ../base/ufos/weapons_melee.ufo:37
-#: ../base/ufos/weapons_melee.ufo:259
+#: ../base/ufos/weapons_melee.ufo:260
 msgid "Throw"
 msgstr "Wurf"
 
@@ -7984,15 +8199,14 @@ msgstr "Kerrklinge"
 msgid "Plasma Blade"
 msgstr "Plasmaklinge"
 
-#: ../base/ufos/weapons_melee.ufo:243
+#: ../base/ufos/weapons_melee.ufo:244
 #, fuzzy
 msgid "Lock"
 msgstr "Schock"
 
 #: ../base/ufos/weapons_particle.ufo:6
-#, fuzzy
 msgid "Particle Beam Pistol"
-msgstr "Partikelstrahlwaffe"
+msgstr "Partikelstrahlpistole"
 
 #: ../base/ufos/weapons_particle.ufo:24
 msgid "Pistol Particle Accelerator"
@@ -8005,9 +8219,8 @@ msgid "Rapid Shots"
 msgstr "Dauerschuss"
 
 #: ../base/ufos/weapons_particle.ufo:83
-#, fuzzy
 msgid "Particle Beam Cannon"
-msgstr "Partikelstrahlwaffe"
+msgstr "Partikelstrahlkanone"
 
 #: ../base/ufos/weapons_particle.ufo:101
 msgid "Cannon Particle Accelerator"
@@ -8018,9 +8231,8 @@ msgid "Charged Blast"
 msgstr "Geladener Impuls"
 
 #: ../base/ufos/weapons_particle.ufo:163
-#, fuzzy
 msgid "Particle Beam Rifle"
-msgstr "Partikelstrahlwaffe"
+msgstr "Partikelstrahlgewehr"
 
 #: ../base/ufos/weapons_particle.ufo:181
 msgid "Rifle Particle Accelerator"
@@ -8065,92 +8277,92 @@ msgstr "Plasmablaster"
 msgid "Plasma Blaster Charge"
 msgstr "Plasmawerfermunition"
 
-#: client/cl_actor.c:110
+#: client/cl_actor.c:113
 msgid "Pathetic"
 msgstr "Erbärmlich"
 
-#: client/cl_actor.c:112
+#: client/cl_actor.c:115
 msgid "Very Poor"
 msgstr "Sehr schlecht"
 
-#: client/cl_actor.c:114
+#: client/cl_actor.c:117
 msgid "Poor"
 msgstr "Schlecht"
 
-#: client/cl_actor.c:116
+#: client/cl_actor.c:119
 msgid "Mediocre"
 msgstr "Mittelmäßig"
 
-#: client/cl_actor.c:118
+#: client/cl_actor.c:121
 msgid "Good"
 msgstr "Gut"
 
-#: client/cl_actor.c:120
+#: client/cl_actor.c:123
 msgid "Very Good"
 msgstr "Sehr gut"
 
-#: client/cl_actor.c:122
+#: client/cl_actor.c:125
 msgid "Excellent"
 msgstr "Exzellent"
 
-#: client/cl_actor.c:124
+#: client/cl_actor.c:127
 msgid "Amazing"
 msgstr "Hervorragend"
 
-#: client/cl_actor.c:126
+#: client/cl_actor.c:129
 msgid "Superhuman"
 msgstr "Übernatürlich"
 
-#: client/cl_actor.c:129
+#: client/cl_actor.c:132
 msgid "Godlike"
 msgstr "Göttlich"
 
-#: client/cl_actor.c:163
+#: client/cl_actor.c:166
 #, c-format
 msgid "Rank: %s"
 msgstr "Rang: %s"
 
-#: client/cl_actor.c:486
-#: client/cl_actor.c:504
+#: client/cl_actor.c:495
+#: client/cl_actor.c:513
 #, c-format
 msgid "Remaining TUs: %i"
 msgstr "Verbleibende Zeiteinheiten: %i"
 
-#: client/cl_actor.c:488
-#: client/cl_actor.c:506
+#: client/cl_actor.c:497
+#: client/cl_actor.c:515
 msgid "No remaining TUs left after shot."
 msgstr "Keine weiteren Zeiteinheiten nach dem Schuß verfügbar."
 
-#: client/cl_actor.c:491
-#: client/cl_actor.c:509
+#: client/cl_actor.c:500
+#: client/cl_actor.c:518
 #, c-format
 msgid "TU: %i"
 msgstr "ZE: %i"
 
-#: client/cl_actor.c:492
-#: client/cl_actor.c:510
+#: client/cl_actor.c:501
+#: client/cl_actor.c:519
 #, c-format
 msgid "Shots:%i"
 msgstr "Schüsse: %i"
 
-#: client/cl_actor.c:832
-#: client/cl_actor.c:1039
+#: client/cl_actor.c:863
+#: client/cl_actor.c:1070
 msgid ""
 "Can't perform action:\n"
 "not enough TUs.\n"
 msgstr "Nicht genug Zeiteinheiten\n"
 
-#: client/cl_actor.c:1002
+#: client/cl_actor.c:1033
 msgid "No item in hand.\n"
 msgstr "Keinen Gegenstand in der Hand\n"
 
-#: client/cl_actor.c:1015
+#: client/cl_actor.c:1046
 msgid ""
 "Can't perform action:\n"
 "out of ammo.\n"
 msgstr "Keine Munition!\n"
 
-#: client/cl_actor.c:1020
+#: client/cl_actor.c:1051
 msgid ""
 "This weapon cannot be fired\n"
 "one handed.\n"
@@ -8158,7 +8370,7 @@ msgstr ""
 "Diese Waffe kann nicht\n"
 "einhändig benutzt werden\n"
 
-#: client/cl_actor.c:1029
+#: client/cl_actor.c:1060
 msgid ""
 "Can't perform action:\n"
 "this item is not reloadable.\n"
@@ -8166,7 +8378,7 @@ msgstr ""
 "Kann Aktion nicht ausführen:\n"
 "Der Gegenstand kann nicht nachgeladen werden\n"
 
-#: client/cl_actor.c:1034
+#: client/cl_actor.c:1065
 msgid ""
 "Can't perform action:\n"
 "ammo not available.\n"
@@ -8174,12 +8386,12 @@ msgstr ""
 "Kann Aktion nicht ausführen:\n"
 "Keine Munition vorhanden!\n"
 
-#: client/cl_actor.c:1168
+#: client/cl_actor.c:1199
 #, c-format
 msgid "Armor  %i\tMorale  %i\n"
 msgstr "Rüstung %i\tMoral %i\n"
 
-#: client/cl_actor.c:1175
+#: client/cl_actor.c:1206
 #, c-format
 msgid ""
 "Armor  %i\tMorale  %i\n"
@@ -8188,7 +8400,7 @@ msgstr ""
 "Rüstung %i\tMoral %i\n"
 "Bewegung %i (%i übrige Zeiteinheiten)\n"
 
-#: client/cl_actor.c:1194
+#: client/cl_actor.c:1225
 msgid ""
 "You cannot use this unknown item.\n"
 "You need to research it first.\n"
@@ -8196,7 +8408,7 @@ msgstr ""
 "Dieser unbekannte Gegenstand kann nicht verwendet werden.\n"
 "Er muss erst erforscht werden.\n"
 
-#: client/cl_actor.c:1211
+#: client/cl_actor.c:1242
 #, c-format
 msgid ""
 "%s\n"
@@ -8205,19 +8417,19 @@ msgstr ""
 "%s\n"
 "(leer)\n"
 
-#: client/cl_actor.c:1220
+#: client/cl_actor.c:1251
 msgid "Currently panics!\n"
 msgstr "In Panik!\n"
 
-#: client/cl_actor.c:1612
+#: client/cl_actor.c:1642
 msgid "Nobody selected\n"
 msgstr "Niemand ausgewählt\n"
 
-#: client/cl_actor.c:1623
+#: client/cl_actor.c:1653
 msgid "This isn't your round\n"
 msgstr "Du bist nicht dran\n"
 
-#: client/cl_actor.c:1756
+#: client/cl_actor.c:1786
 msgid ""
 "You cannot reload this unknown item.\n"
 "You need to research it and its ammunition first.\n"
@@ -8225,34 +8437,34 @@ msgstr ""
 "Dieser unbekannte Gegenstand kann nicht geladen werden.\n"
 "Er muss erst erforscht werden.\n"
 
-#: client/cl_actor.c:2196
+#: client/cl_actor.c:2228
 #, c-format
 msgid "%s has been killed!\n"
 msgstr "%s wurde getötet\n"
 
-#: client/cl_actor.c:2200
+#: client/cl_actor.c:2232
 msgid "A civilian was killed.\n"
 msgstr "Ein Zivilist wurde getötet\n"
 
-#: client/cl_actor.c:2207
+#: client/cl_actor.c:2239
 msgid "An alien was killed:"
 msgstr "Ein Alien wurde getötet:"
 
-#: client/cl_actor.c:2210
-#: client/cl_actor.c:2213
+#: client/cl_actor.c:2242
+#: client/cl_actor.c:2245
 msgid "An alien was killed.\n"
 msgstr "Ein Alien wurde getötet\n"
 
-#: client/cl_actor.c:2217
+#: client/cl_actor.c:2249
 msgid "A soldier was killed.\n"
 msgstr "Ein Soldat wurde getötet\n"
 
-#: client/cl_actor.c:2220
+#: client/cl_actor.c:2252
 #, c-format
 msgid "A member of team %i was killed.\n"
 msgstr "Ein Mitglied im Team %i wurde getötet!\n"
 
-#: client/cl_actor.c:2371
+#: client/cl_actor.c:2403
 msgid "Your round started!\n"
 msgstr "Du bist an der Reihe!\n"
 
@@ -8264,15 +8476,15 @@ msgstr "Flugzeug gestartet"
 #: client/cl_aircraft.c:476
 #: client/cl_aircraft.c:643
 #: client/cl_aircraft.c:943
-#: client/cl_basemanagement.c:578
-#: client/cl_basemanagement.c:2105
-#: client/cl_basemanagement.c:2277
-#: client/cl_basemanagement.c:2332
-#: client/cl_basemanagement.c:2349
-#: client/cl_basemanagement.c:2359
-#: client/cl_basemanagement.c:2373
-#: client/cl_basemanagement.c:2381
-#: client/cl_basemanagement.c:2406
+#: client/cl_basemanagement.c:612
+#: client/cl_basemanagement.c:2139
+#: client/cl_basemanagement.c:2311
+#: client/cl_basemanagement.c:2366
+#: client/cl_basemanagement.c:2383
+#: client/cl_basemanagement.c:2393
+#: client/cl_basemanagement.c:2407
+#: client/cl_basemanagement.c:2415
+#: client/cl_basemanagement.c:2440
 #: client/cl_campaign.c:447
 #: client/cl_campaign.c:923
 #: client/cl_campaign.c:979
@@ -8289,7 +8501,7 @@ msgstr "Flugzeug gestartet"
 #: client/cl_campaign.c:2505
 #: client/cl_campaign.c:2542
 #: client/cl_campaign.c:2544
-#: client/cl_campaign.c:2884
+#: client/cl_campaign.c:2891
 #: client/cl_map.c:270
 #: client/cl_research.c:664
 #: client/cl_research.c:787
@@ -8353,7 +8565,7 @@ msgstr "Zurück zur Basis"
 
 #: client/cl_aircraft.c:408
 #: client/cl_map.c:817
-#: client/cl_ufopedia.c:322
+#: client/cl_ufopedia.c:321
 #, c-format
 msgid "Speed:\t%.0f\n"
 msgstr "Geschwindigkeit:\t%.0f\n"
@@ -8367,21 +8579,21 @@ msgstr "Treibstoff:\t%i/%i\n"
 #: client/cl_aircraft.c:410
 #: client/cl_aircraft.c:411
 #: client/cl_aircraft.c:412
-#: client/cl_ufopedia.c:298
+#: client/cl_ufopedia.c:297
+#: client/cl_ufopedia.c:324
 #: client/cl_ufopedia.c:325
 #: client/cl_ufopedia.c:326
-#: client/cl_ufopedia.c:327
 msgid "None"
 msgstr "Keine"
 
 #: client/cl_aircraft.c:410
-#: client/cl_ufopedia.c:325
+#: client/cl_ufopedia.c:324
 #, c-format
 msgid "Weapon:\t%s\n"
 msgstr "Bewaffnung:\t%s\n"
 
 #: client/cl_aircraft.c:411
-#: client/cl_ufopedia.c:326
+#: client/cl_ufopedia.c:325
 #, c-format
 msgid "Shield:\t%s\n"
 msgstr "Schild:\t%s\n"
@@ -8435,199 +8647,199 @@ msgstr "Kein Schild montiert"
 msgid "Assign a team to aircraft"
 msgstr "Weise dem Flugzeug zuerst ein Team zu"
 
-#: client/cl_basemanagement.c:280
+#: client/cl_basemanagement.c:314
 msgid "Not set"
 msgstr "Nicht plaziert"
 
-#: client/cl_basemanagement.c:286
+#: client/cl_basemanagement.c:320
 #, c-format
 msgid "Already %i in base"
 msgstr "Bereits %i-mal in der Basis"
 
-#: client/cl_basemanagement.c:292
+#: client/cl_basemanagement.c:326
 msgid "Construction finished"
 msgstr "Konstruktion abgeschlossen"
 
-#: client/cl_basemanagement.c:295
+#: client/cl_basemanagement.c:329
 msgid "Working 100%"
 msgstr "Arbeitet: 100%"
 
-#: client/cl_basemanagement.c:298
+#: client/cl_basemanagement.c:332
 msgid "Down"
 msgstr "Ausser Betrieb"
 
-#: client/cl_basemanagement.c:578
+#: client/cl_basemanagement.c:612
 msgid "Not enough credits to build this\n"
 msgstr "Nicht genug Kapital um das Gebäude zu bauen\n"
 
-#: client/cl_basemanagement.c:715
+#: client/cl_basemanagement.c:749
 #, c-format
 msgid "Costs:\t%1.0f c\n"
 msgstr "Kosten:\t%1.0f c\n"
 
-#: client/cl_basemanagement.c:718
+#: client/cl_basemanagement.c:752
 #, c-format
 msgid "%i Day to build\n"
 msgid_plural "%i Days to build\n"
 msgstr[0] "%i Tag Bauzeit\n"
 msgstr[1] "%i Tage Bauzeit\n"
 
-#: client/cl_basemanagement.c:721
+#: client/cl_basemanagement.c:755
 #, c-format
 msgid "Running Costs:\t%1.0f c\n"
 msgstr "Laufende Kosten:\t%1.2f\n"
 
-#: client/cl_basemanagement.c:1374
+#: client/cl_basemanagement.c:1408
 #, c-format
 msgid "%i day left"
 msgid_plural "%i days left"
 msgstr[0] "%i Tag übrig"
 msgstr[1] "%i Tage übrig"
 
-#: client/cl_basemanagement.c:1402
+#: client/cl_basemanagement.c:1436
 #: client/cl_campaign.c:1407
 #, c-format
 msgid "%i c"
 msgstr "%i c"
 
-#: client/cl_basemanagement.c:1508
+#: client/cl_basemanagement.c:1542
 msgid "Base is under attack"
 msgstr "Basis wird angegriffen"
 
-#: client/cl_basemanagement.c:1707
+#: client/cl_basemanagement.c:1741
 #: client/cl_team.c:1207
 #: client/cl_team.c:1400
 msgid "NewTeam"
 msgstr "Neues Team"
 
-#: client/cl_basemanagement.c:1787
+#: client/cl_basemanagement.c:1821
 #, c-format
 msgid "A new base has been built: %s."
 msgstr "Eine neue Basis wurde gebaut: %s."
 
-#: client/cl_basemanagement.c:1788
-#: client/cl_basemanagement.c:1832
+#: client/cl_basemanagement.c:1822
+#: client/cl_basemanagement.c:1866
 msgid "Base built"
 msgstr "Basis gebaut"
 
-#: client/cl_basemanagement.c:1831
+#: client/cl_basemanagement.c:1865
 msgid "Not enough credits to set up a new base."
 msgstr "Nicht genug Kapital um eine neue Basis zu bauen."
 
-#: client/cl_basemanagement.c:2105
+#: client/cl_basemanagement.c:2139
 msgid "You've reached the base limit."
 msgstr "Max. Anzahl Basen erreicht."
 
-#: client/cl_basemanagement.c:2220
+#: client/cl_basemanagement.c:2254
 msgid "Storage is empty\n"
 msgstr "Lager ist leer\n"
 
-#: client/cl_basemanagement.c:2222
+#: client/cl_basemanagement.c:2256
 msgid "Transfer is not possible - the base doesn't have a storage building"
 msgstr "Transfer nicht möglich - Basis hat kein Lager"
 
-#: client/cl_basemanagement.c:2229
+#: client/cl_basemanagement.c:2263
 msgid "Transfer is not possible - the base doesn't have quarters"
 msgstr "Transfer nicht möglich - Basis hat keine Quartiere"
 
-#: client/cl_basemanagement.c:2236
+#: client/cl_basemanagement.c:2270
 msgid "Transfer is not possible - the base doesn't have a lab"
 msgstr "Transfer nicht möglich - Basis hat kein Labor"
 
-#: client/cl_basemanagement.c:2255
+#: client/cl_basemanagement.c:2289
 msgid "Transfer is not possible - the base doesn't have an alien containment"
 msgstr "Transfer nicht möglich - Basis hat keine Quartänestation"
 
-#: client/cl_basemanagement.c:2277
+#: client/cl_basemanagement.c:2311
 msgid "Can't unload while we are not in the homebase"
 msgstr "Kann das Flugzeug nicht entladen wenn wir nicht in der Heimatbasis sind"
 
-#: client/cl_basemanagement.c:2332
+#: client/cl_basemanagement.c:2366
 msgid "The base is not longer existent"
 msgstr "Die Basis existiert nicht mehr"
 
-#: client/cl_basemanagement.c:2349
+#: client/cl_basemanagement.c:2383
 msgid "The base doesn't have a storage"
 msgstr "TDie Basis hat kein Lager"
 
-#: client/cl_basemanagement.c:2359
+#: client/cl_basemanagement.c:2393
 msgid "The base doesn't have a lab - can't unload the technologies here"
 msgstr "Die Basis hat kein Labor - kann Technologien nicht ausladen"
 
-#: client/cl_basemanagement.c:2373
+#: client/cl_basemanagement.c:2407
 msgid "The base doesn't have quarters - can't unload the employees here"
 msgstr "Die Basis hat keine Quartiere - kann Angestellte hier nicht absetzen"
 
-#: client/cl_basemanagement.c:2381
+#: client/cl_basemanagement.c:2415
 msgid "The base doesn't have an alien containment - can't unload the aliens here"
 msgstr "Die Basis hat keine Quarantänestation - kann Aliens hier nicht entladen"
 
-#: client/cl_basemanagement.c:2384
+#: client/cl_basemanagement.c:2418
 msgid "Transport mission"
 msgstr "Transportmission"
 
-#: client/cl_basemanagement.c:2384
+#: client/cl_basemanagement.c:2418
 msgid "Transport mission ended, returning to homebase now"
 msgstr "Transportmission beendet - kehre zur Heimatbasis zurück"
 
-#: client/cl_basemanagement.c:2406
+#: client/cl_basemanagement.c:2440
 msgid "Can't start the transport mission while we are not in the homebase"
 msgstr "Kann Transportmission nicht starten - Flugzeug ist nicht in der Heimatbasis"
 
-#: client/cl_basemanagement.c:2432
+#: client/cl_basemanagement.c:2466
 msgid "No target base selected"
 msgstr "Keine Zielbasis ausgewählt"
 
-#: client/cl_basemanagement.c:2432
+#: client/cl_basemanagement.c:2466
 msgid "Please select the target base from the list"
 msgstr "Bitte wähle die Zielbasis aus der Liste"
 
-#: client/cl_basemanagement.c:2437
+#: client/cl_basemanagement.c:2471
 msgid "No aircraft selected"
 msgstr "Keinen Flugzeug ausgewählt"
 
-#: client/cl_basemanagement.c:2437
+#: client/cl_basemanagement.c:2471
 msgid "Please select the aircraft to use from the list"
 msgstr "Bitte wähle das gewünschte Flugzeug aus der Liste"
 
-#: client/cl_basemanagement.c:2606
+#: client/cl_basemanagement.c:2640
 msgid "You can transfer equipment - this base has a storage building\n"
 msgstr "Transfer möglich - Basis hat ein Lager\n"
 
-#: client/cl_basemanagement.c:2609
+#: client/cl_basemanagement.c:2643
 msgid "No storage building in this base\n"
 msgstr "Kein Lager in dieser Basis\n"
 
-#: client/cl_basemanagement.c:2613
+#: client/cl_basemanagement.c:2647
 msgid "You can transfer employees - this base has quarters\n"
 msgstr "Transfer möglich - Basis hat ein Quartier\n"
 
-#: client/cl_basemanagement.c:2616
+#: client/cl_basemanagement.c:2650
 msgid "No quarters in this base\n"
 msgstr "Keine Quartiere in dieser Basis\n"
 
-#: client/cl_basemanagement.c:2619
+#: client/cl_basemanagement.c:2653
 msgid "You can transfer techs - this base has a laboratory\n"
 msgstr "Transfer möglich - Basis hat ein Labor\n"
 
-#: client/cl_basemanagement.c:2621
+#: client/cl_basemanagement.c:2655
 msgid "No laboratory in this base\n"
 msgstr "Keine Laboratorien in dieser Basis\n"
 
-#: client/cl_basemanagement.c:2624
+#: client/cl_basemanagement.c:2658
 msgid "You can transfer aliens - this base has alien containment\n"
 msgstr "Transfer von Aliens möglich - Basis hat eine Quarantänestation\n"
 
-#: client/cl_basemanagement.c:2626
+#: client/cl_basemanagement.c:2660
 msgid "No alien containment in this base\n"
 msgstr "Keine Quarantänestation in dieser Basis\n"
 
-#: client/cl_basemanagement.c:2782
+#: client/cl_basemanagement.c:2816
 #, c-format
 msgid "Construction of %s building finished in base %s."
 msgstr "Konstruktion von %s in Basis %s abgeschlossen."
 
-#: client/cl_basemanagement.c:2783
+#: client/cl_basemanagement.c:2817
 msgid "Building finished"
 msgstr "Konstruktion abgeschlossen"
 
@@ -8766,28 +8978,28 @@ msgstr[0] "credit"
 msgstr[1] "credits"
 
 #: client/cl_campaign.c:1139
-#: client/cl_campaign.c:4096
+#: client/cl_campaign.c:4102
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "Forscher"
 msgstr[1] "Forscher"
 
 #: client/cl_campaign.c:1140
-#: client/cl_campaign.c:4098
+#: client/cl_campaign.c:4104
 msgid "medic"
 msgid_plural "medics"
 msgstr[0] "Arzt"
 msgstr[1] "Ärzte"
 
 #: client/cl_campaign.c:1141
-#: client/cl_campaign.c:4095
+#: client/cl_campaign.c:4101
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "Soldat"
 msgstr[1] "Soldaten"
 
 #: client/cl_campaign.c:1142
-#: client/cl_campaign.c:4097
+#: client/cl_campaign.c:4103
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] "Arbeiter"
@@ -8930,30 +9142,30 @@ msgstr "Rüste ein Team aus oder lade ein gespeichertes Team."
 msgid "Your dropship is not near the landing zone"
 msgstr "Das Einsatzschiff ist nicht nahe einer Landungszone"
 
-#: client/cl_campaign.c:2734
+#: client/cl_campaign.c:2741
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s wurde zum %s befördert\n"
 
-#: client/cl_campaign.c:2736
+#: client/cl_campaign.c:2743
 #, c-format
 msgid "%s has been awarded the posthumous rank of %s\\for inspirational gallantry in the face of overwhelming odds.\n"
 msgstr ""
 
-#: client/cl_campaign.c:2737
+#: client/cl_campaign.c:2744
 msgid "Soldier promoted"
 msgstr "Soldat wurde befördert"
 
-#: client/cl_campaign.c:2883
+#: client/cl_campaign.c:2890
 #, c-format
 msgid "Defense of base: %s successful!"
 msgstr "Verteidigung der Basis: %s erfolgreich"
 
-#: client/cl_campaign.c:4091
+#: client/cl_campaign.c:4097
 msgid "Human"
 msgstr "Mensch"
 
-#: client/cl_campaign.c:4093
+#: client/cl_campaign.c:4099
 #, c-format
 msgid ""
 "Race: %s\n"
@@ -8995,111 +9207,119 @@ msgstr "Heilung abgeschlossen"
 msgid "%s\t%s\t(%i/%i)\n"
 msgstr "%s\t%s\t(%i/%i)\n"
 
-#: client/cl_input.c:706
+#: client/cl_input.c:699
 msgid "Rotate battlescape camera anti-clockwise"
 msgstr "Rotiere Kamera gegen den Uhrzeigersinn"
 
-#: client/cl_input.c:708
+#: client/cl_input.c:701
 msgid "Rotate battlescape camera clockwise"
 msgstr "Rotiere Kameramit den Uhrzeigersinn"
 
-#: client/cl_input.c:710
+#: client/cl_input.c:703
 msgid "Tilt battlescape camera up"
 msgstr ""
 
-#: client/cl_input.c:712
+#: client/cl_input.c:705
 msgid "Tilt battlescape camera down"
 msgstr ""
 
-#: client/cl_input.c:714
+#: client/cl_input.c:707
 msgid "Move battlescape camera left"
 msgstr "Bewegen der Einsatzkamera nach links"
 
-#: client/cl_input.c:716
+#: client/cl_input.c:709
 msgid "Move battlescape camera right"
 msgstr "Bewegen der Einsatzkamera nach rechts"
 
-#: client/cl_input.c:718
+#: client/cl_input.c:711
 msgid "Move battlescape camera forward"
 msgstr "Bewegen der Einsatzkamera nach vorne"
 
-#: client/cl_input.c:720
+#: client/cl_input.c:713
 msgid "Move battlescape camera backward"
 msgstr "Bewegen der Einsatzkamera nach hinten"
 
-#: client/cl_input.c:722
-#: client/cl_input.c:755
+#: client/cl_input.c:715
+#: client/cl_input.c:739
 msgid "Zoom in"
 msgstr "Hereinzoomen"
 
-#: client/cl_input.c:724
-#: client/cl_input.c:756
+#: client/cl_input.c:717
+#: client/cl_input.c:740
 msgid "Zoom out"
 msgstr "Herauszoomen"
 
-#: client/cl_input.c:729
+#: client/cl_input.c:720
 msgid "Select objects/Walk to a square/In fire mode, fire etc"
 msgstr ""
 
-#: client/cl_input.c:731
+#: client/cl_input.c:722
 msgid "Walk to a square/In fire mode, cancel action"
 msgstr ""
 
-#: client/cl_input.c:733
+#: client/cl_input.c:724
 msgid "Turn soldier toward mouse pointer"
 msgstr "Soldat zum Mauszeiger drehen"
 
-#: client/cl_input.c:735
+#: client/cl_input.c:726
 msgid "Toggle stand/crounch"
 msgstr "Umschalten zwischen stehend/kniend"
 
-#: client/cl_input.c:736
+#: client/cl_input.c:727
 msgid "Toggle reaction fire"
 msgstr "Reactionfire ein/ausschalten"
 
-#: client/cl_input.c:737
+#: client/cl_input.c:728
 msgid "Toogle to next alien"
 msgstr "ZUm nächsten Alien"
 
-#: client/cl_input.c:752
+#: client/cl_input.c:734
+msgid "Reload the weapon in the soldiers left hand"
+msgstr ""
+
+#: client/cl_input.c:735
+msgid "Reload the weapon in the soldiers right hand"
+msgstr ""
+
+#: client/cl_input.c:736
 msgid "Ends current round"
 msgstr "Runde beenden"
 
-#: client/cl_input.c:753
+#: client/cl_input.c:737
 msgid "Slice through terrain at a higher level"
 msgstr ""
 
-#: client/cl_input.c:754
+#: client/cl_input.c:738
 msgid "Slice through terrain at a lower level"
 msgstr ""
 
-#: client/cl_input.c:757
+#: client/cl_input.c:741
 msgid "Confirm the current action"
 msgstr "Aktuelle Aktion bestätigten"
 
-#: client/cl_input.c:765
+#: client/cl_input.c:749
 msgid "Toggle first-person/third-person camera mode"
 msgstr ""
 
 #: client/cl_main.c:375
-#: client/cl_main.c:1010
+#: client/cl_main.c:1021
 msgid "Assemble a team first"
 msgstr "Zuerst ein Team zusammenstellen"
 
 #: client/cl_main.c:375
-#: client/cl_main.c:1010
-#: client/cl_main.c:1574
-#: client/cl_main.c:1579
-#: client/cl_main.c:1585
-#: client/cl_main.c:1590
+#: client/cl_main.c:1021
+#: client/cl_main.c:1584
+#: client/cl_main.c:1589
+#: client/cl_main.c:1595
+#: client/cl_main.c:1600
 msgid "Error"
 msgstr "Fehler"
 
-#: client/cl_main.c:861
+#: client/cl_main.c:872
 msgid "No player connected\n"
 msgstr "Keine Spieler verbunden\n"
 
-#: client/cl_main.c:899
+#: client/cl_main.c:910
 #, c-format
 msgid ""
 "IP\t%s\n"
@@ -9108,118 +9328,118 @@ msgstr ""
 "IP\t%s\n"
 "\n"
 
-#: client/cl_main.c:920
+#: client/cl_main.c:931
 #, c-format
 msgid "Map:\t%s\n"
 msgstr "Karte:\t%s\n"
 
-#: client/cl_main.c:931
+#: client/cl_main.c:942
 #, c-format
 msgid "Version:\t%s\n"
 msgstr "Version:\t%s\n"
 
-#: client/cl_main.c:933
+#: client/cl_main.c:944
 #, c-format
 msgid "Servername:\t%s\n"
 msgstr "Servername:\t%s\n"
 
-#: client/cl_main.c:935
+#: client/cl_main.c:946
 #, c-format
 msgid "Moralestates:\t%s\n"
 msgstr "Moralschwankungen:\t%s\n"
 
-#: client/cl_main.c:937
+#: client/cl_main.c:948
 #, c-format
 msgid "Teamplay:\t%s\n"
 msgstr "Teamspiel:\t%s\n"
 
-#: client/cl_main.c:939
+#: client/cl_main.c:950
 #, c-format
 msgid "Max. players per team:\t%s\n"
 msgstr "Max. Soldaten pro Team:\t%s\n"
 
-#: client/cl_main.c:941
+#: client/cl_main.c:952
 #, c-format
 msgid "Max. teams allowed in this map:\t%s\n"
 msgstr "Max. erlaubte Teams für diese Map:\t%s\n"
 
-#: client/cl_main.c:943
+#: client/cl_main.c:954
 #, c-format
 msgid "Max. clients:\t%s\n"
 msgstr "Max. Clients:\t%s\n"
 
-#: client/cl_main.c:945
+#: client/cl_main.c:956
 #, c-format
 msgid "Max. soldiers per player:\t%s\n"
 msgstr "Max. Soldaten pro Spieler:\t%s\n"
 
-#: client/cl_main.c:947
+#: client/cl_main.c:958
 #, c-format
 msgid "Max. soldiers per team:\t%s\n"
 msgstr "Max. Soldaten pro Team:\t%s\n"
 
-#: client/cl_main.c:1176
+#: client/cl_main.c:1185
 msgid "Select a free team or your coop team"
 msgstr "Wähle ein freies Team oder ein Coop-Team"
 
-#: client/cl_main.c:1476
-#: client/cl_main.c:1490
+#: client/cl_main.c:1486
+#: client/cl_main.c:1500
 #, c-format
 msgid "Current team: %i"
 msgstr "Aktuelles Team: %i"
 
-#: client/cl_main.c:1480
-#: client/cl_main.c:1494
+#: client/cl_main.c:1490
+#: client/cl_main.c:1504
 msgid "Team is already in use"
 msgstr "Team ist bereits in Benutzung"
 
-#: client/cl_main.c:1504
-#: client/cl_main.c:1530
+#: client/cl_main.c:1514
+#: client/cl_main.c:1540
 msgid "Invalid or full team"
 msgstr "Ungültiges oder volles Team"
 
-#: client/cl_main.c:1574
+#: client/cl_main.c:1584
 msgid "Local game version differs from the servers"
 msgstr "Deine Spielversion unterscheidet sich von der auf dem Server"
 
-#: client/cl_main.c:1579
+#: client/cl_main.c:1589
 msgid "Local map version differs from server"
 msgstr "Deine Version der Map unterscheidet sich von der auf dem Server"
 
-#: client/cl_main.c:1585
+#: client/cl_main.c:1595
 msgid "You are using modified ufo script files - you won't be able to connect to the server"
 msgstr "Du benutzt modifizierte UFO-Script Dateien - daher ist das Spielen auf diesem Server unmöglich"
 
-#: client/cl_main.c:1590
+#: client/cl_main.c:1600
 #, c-format
 msgid "Local game version differs from the servers (%s)"
 msgstr "Deine Spielversion unterscheidet sich von der auf dem Server (%s)"
 
-#: client/cl_main.c:1871
+#: client/cl_main.c:1881
 msgid "Unnamed"
 msgstr "Unbekannt"
 
-#: client/cl_main.c:2105
+#: client/cl_main.c:2116
 msgid "Chicken-hearted"
 msgstr "Extrem einfach"
 
-#: client/cl_main.c:2107
+#: client/cl_main.c:2118
 msgid "Very Easy"
 msgstr "Sehr einfach"
 
-#: client/cl_main.c:2110
+#: client/cl_main.c:2121
 msgid "Easy"
 msgstr "Einfach"
 
-#: client/cl_main.c:2115
+#: client/cl_main.c:2126
 msgid "Hard"
 msgstr "Schwer"
 
-#: client/cl_main.c:2117
+#: client/cl_main.c:2128
 msgid "Very Hard"
 msgstr "Sehr schwer"
 
-#: client/cl_main.c:2119
+#: client/cl_main.c:2130
 msgid "Insane"
 msgstr "Wahnsinnig schwer"
 
@@ -9302,7 +9522,7 @@ msgstr "Rein: %i Raus: %i"
 msgid "Key: %s"
 msgstr "Taste: %s"
 
-#: client/cl_menu.c:2913
+#: client/cl_menu.c:2921
 msgid "Hide the HUD (press ESC to reactivate HUD)"
 msgstr "Verstecke das HUD (ESC drücken um es zu reaktivieren)"
 
@@ -9472,20 +9692,20 @@ msgstr " [noch nicht erforschbar]"
 msgid "Build a laboratory first"
 msgstr "Baue erst ein Forschungslabor"
 
-#: client/cl_research.c:1070
+#: client/cl_research.c:1071
 #, c-format
 msgid "Research of %s finished\n"
 msgstr "Forschung für %s ist abgeschlossen\n"
 
-#: client/cl_research.c:1071
+#: client/cl_research.c:1072
 msgid "Research finished"
 msgstr "Forschung abgeschlossen"
 
-#: client/cl_research.c:1371
+#: client/cl_research.c:1379
 msgid "No description available."
 msgstr "Keine Beschreibung vorhanden."
 
-#: client/cl_scrn.c:384
+#: client/cl_scrn.c:383
 #, c-format
 msgid "Loading Map [%s]"
 msgstr "Lade Level [%s]"
@@ -9811,104 +10031,104 @@ msgstr "Zeiteinheiten:\t%i\n"
 msgid "Range:\t%g\n"
 msgstr "Reichweite:\t%g\n"
 
-#: client/cl_ufopedia.c:224
+#: client/cl_ufopedia.c:223
 #, c-format
 msgid "Primary:\t%s\t(%s)\n"
 msgstr "Primär:\t%s\t(%s)\n"
 
-#: client/cl_ufopedia.c:225
+#: client/cl_ufopedia.c:224
 #, c-format
 msgid "Secondary:\t%s\t(%s)\n"
 msgstr "Sekundär:\t%s\t(%s)\n"
 
-#: client/cl_ufopedia.c:227
+#: client/cl_ufopedia.c:226
 #, c-format
 msgid "Damage:\t%i / %i\n"
 msgstr "Schaden:\t%i / %i\n"
 
-#: client/cl_ufopedia.c:229
+#: client/cl_ufopedia.c:228
 #, c-format
 msgid "Time units:\t%i / %i\n"
 msgstr "Zeiteinheiten:\t%i / %i\n"
 
-#: client/cl_ufopedia.c:230
+#: client/cl_ufopedia.c:229
 #, c-format
 msgid "Range:\t%g / %g\n"
 msgstr "Reichweite:\t%g / %g\n"
 
-#: client/cl_ufopedia.c:232
+#: client/cl_ufopedia.c:231
 #, c-format
 msgid "Spreads:\t%g / %g\n"
 msgstr "Streuung:\t%g / %g\n"
 
-#: client/cl_ufopedia.c:237
-#: client/cl_ufopedia.c:330
+#: client/cl_ufopedia.c:236
+#: client/cl_ufopedia.c:335
 msgid "Unknown - need to research this"
 msgstr "Unbekannt - muss noch erforscht werden"
 
-#: client/cl_ufopedia.c:260
+#: client/cl_ufopedia.c:259
 msgid "Could not find armor definition"
 msgstr "Fehler: Konnte Rüstungsdefinition nicht finden"
 
-#: client/cl_ufopedia.c:262
+#: client/cl_ufopedia.c:261
 #, c-format
 msgid "Item %s is no armor but %s"
 msgstr "Gegenstand %s ist keine Rüstung - sondern %s"
 
-#: client/cl_ufopedia.c:272
+#: client/cl_ufopedia.c:271
 #, c-format
 msgid "%s:\tProtection: %i\tHardness: %i\n"
 msgstr "%s:\tSchutz: %i\tHärte: %i\n"
 
-#: client/cl_ufopedia.c:296
+#: client/cl_ufopedia.c:295
 msgid "Error - could not find building"
 msgstr "Fehler: Konnte Gebäude nicht finden"
 
-#: client/cl_ufopedia.c:298
+#: client/cl_ufopedia.c:297
 #, c-format
 msgid "Depends:\t%s\n"
 msgstr "Benötigt:\t%s\n"
 
-#: client/cl_ufopedia.c:299
+#: client/cl_ufopedia.c:298
 #, c-format
 msgid "Buildtime:\t%i day\n"
 msgid_plural "Buildtime:\t%i days\n"
 msgstr[0] "Bauzeit:\t%i Tag\n"
 msgstr[1] "Bauzeit:\t%i Tage\n"
 
-#: client/cl_ufopedia.c:300
+#: client/cl_ufopedia.c:299
 #, c-format
 msgid "Fixcosts:\t%i c\n"
 msgstr "Fixkosten:\t%i c\n"
 
-#: client/cl_ufopedia.c:301
+#: client/cl_ufopedia.c:300
 #, c-format
 msgid "Running costs:\t%i c\n"
 msgstr "Variable Kosten:\t%i c\n"
 
-#: client/cl_ufopedia.c:320
+#: client/cl_ufopedia.c:319
 msgid "Error - could not find aircraft"
 msgstr "Fehler: Konnte Flugzeug nicht finden"
 
-#: client/cl_ufopedia.c:323
+#: client/cl_ufopedia.c:322
 #, c-format
 msgid "Fuel:\t%i\n"
 msgstr "Treibstoff:\t%i\n"
 
-#: client/cl_ufopedia.c:327
+#: client/cl_ufopedia.c:326
 #, c-format
 msgid "Equipment:\t%s\n"
 msgstr "Ausrüstung:\t%s\n"
 
-#: client/cl_ufopedia.c:402
+#: client/cl_ufopedia.c:406
 msgid "No pre-research description available."
 msgstr "Keine Beschreibung vorhanden."
 
-#: client/cl_ufopedia.c:560
+#: client/cl_ufopedia.c:564
 msgid "Ufopedia Content"
 msgstr "Ufopedia Verzeichnis"
 
-#: client/cl_ufopedia.c:615
+#: client/cl_ufopedia.c:619
 #, c-format
 msgid "Ufopedia Index: %s"
 msgstr "Ufopedia Index: %s"
@@ -9937,70 +10157,75 @@ msgstr "Sende eine Nachricht an alle Spieler"
 msgid "Send a message to allied team members"
 msgstr "Sende eine Nachricht an alle Teammitglieder"
 
-#: game/g_client.c:600
+#: game/g_client.c:599
 msgid "Can't perform action - this isn't your round!\n"
 msgstr "Nicht deine Runde\n"
 
-#: game/g_client.c:607
+#: game/g_client.c:606
 msgid "Can't perform action - object not present!\n"
 msgstr "Objekt nicht vorhanden\n"
 
-#: game/g_client.c:612
+#: game/g_client.c:611
 msgid "Can't perform action - not an actor!\n"
 msgstr "Kein Spieler\n"
 
-#: game/g_client.c:617
+#: game/g_client.c:616
 msgid "Can't perform action - actor is stunned!\n"
 msgstr "Soldat ist betäubt!\n"
 
-#: game/g_client.c:622
+#: game/g_client.c:621
 msgid "Can't perform action - actor is dead!\n"
 msgstr "Spieler ist tod\n"
 
-#: game/g_client.c:627
+#: game/g_client.c:626
 msgid "Can't perform action - not on same team!\n"
 msgstr "Nicht im gleichen Team\n"
 
-#: game/g_client.c:632
+#: game/g_client.c:631
 msgid "Can't perform action - no control over allied actors!\n"
 msgstr "Keine Kontrolle über verbündete Spieler\n"
 
-#: game/g_client.c:637
-#: game/g_client.c:739
+#: game/g_client.c:636
+#: game/g_client.c:738
 msgid "Can't perform action - not enough TUs!\n"
 msgstr "Nicht genug Zeiteinheiten\n"
 
-#: game/g_client.c:742
+#: game/g_client.c:741
 msgid "Can't perform action - weapon already fully loaded with the same ammunition!\n"
 msgstr "Waffe ist bereits mit der gleichen Munition geladen\n"
 
-#: game/g_client.c:1222
+#: game/g_client.c:1221
 msgid "Currently shaken, won't let it's guard down.\n"
 msgstr "Unter Schock, nimmt keine Befehle entgegen.\n"
 
-#: game/g_client.c:1293
+#: game/g_client.c:1292
 #, c-format
 msgid "%s panics!\n"
 msgstr "%s ist panisch!\n"
 
-#: game/g_client.c:1346
+#: game/g_client.c:1345
 #, c-format
 msgid "%s is on a rampage.\n"
 msgstr "%s randaliert.\n"
 
-#: game/g_client.c:1348
+#: game/g_client.c:1347
 #, c-format
 msgid "%s is in mad rage!\n"
 msgstr "%s dreht durch!\n"
 
-#: game/g_client.c:1401
+#: game/g_client.c:1400
 #, c-format
 msgid "%s is currently shaken.\n"
 msgstr "%s ist verwirrt\n"
 
-#: game/g_client.c:1856
+#: game/g_client.c:1860
 #, c-format
 msgid "Team %i ( %s) will get the first turn.\n"
+msgstr "Team %i ( %s) hat den ersten Zug.\n"
+
+#: game/g_svcmds.c:356
+#, fuzzy, c-format
+msgid "Team %i (%s) will get the first turn.\n"
 msgstr "Team %i ( %s) hat den ersten Zug.\n"
 
 #: po/OTHER_STRINGS:2

@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-02-16 19:17+0100\n"
-"PO-Revision-Date: 2007-02-16 19:21+0100\n"
-"Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
+"POT-Creation-Date: 2007-02-24 19:52+0100\n"
+"PO-Revision-Date: 2007-02-24 20:22+0100\n"
+"Last-Translator: Kracken <kracken@users.sourceforge.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -503,52 +503,81 @@ msgstr "CREDIT"
 msgid "Back to baseview"
 msgstr "Back to baseview"
 
-#: ../base/ufos/menu_aliencont.ufo:79
-msgid "Check UFOpedia Entry"
-msgstr "Check UFOpedia Entry"
+#: ../base/ufos/menu_aliencont.ufo:82
+msgid "Previous Alien Containment"
+msgstr "Previous Alien Containment"
 
-#: ../base/ufos/menu_aliencont.ufo:106
+#: ../base/ufos/menu_aliencont.ufo:95
+msgid "Click to do autopsy"
+msgstr "Click to do autopsy"
+
+#: ../base/ufos/menu_aliencont.ufo:108
+msgid "Check UFOpedia entry"
+msgstr "Check UFOpedia entry"
+
+#: ../base/ufos/menu_aliencont.ufo:121
+msgid "Kill all aliens in this base"
+msgstr "Kill all aliens in this base"
+
+#: ../base/ufos/menu_aliencont.ufo:134
+msgid "Next Alien Containment"
+msgstr "Next Alien Containment"
+
+#: ../base/ufos/menu_aliencont.ufo:148
 msgid "Alive Aliens in all bases:"
 msgstr "Alive Aliens in all bases:"
 
-#: ../base/ufos/menu_aliencont.ufo:121
+#: ../base/ufos/menu_aliencont.ufo:163
 msgid "Alive Aliens in this base:"
 msgstr "Alive Aliens in this base:"
 
-#: ../base/ufos/menu_aliencont.ufo:136
+#: ../base/ufos/menu_aliencont.ufo:178
 msgid "Aliens available to process:"
 msgstr "Aliens available to process:"
 
-#: ../base/ufos/menu_aliencont.ufo:143
+#: ../base/ufos/menu_aliencont.ufo:185
 msgid "Alien type"
 msgstr "Alien type"
 
-#: ../base/ufos/menu_aliencont.ufo:150
+#: ../base/ufos/menu_aliencont.ufo:192
 msgid "Examinated"
 msgstr "Examinated"
 
-#: ../base/ufos/menu_aliencont.ufo:157
+#: ../base/ufos/menu_aliencont.ufo:199
 msgid "Amount"
 msgstr "Amount"
 
-#: ../base/ufos/menu_aliencont.ufo:192
+#: ../base/ufos/menu_aliencont.ufo:227
+#: ../base/ufos/menu_aliencont.ufo:241
+#: ../base/ufos/menu_aliencont.ufo:255
+#: ../base/ufos/menu_aliencont.ufo:269
+#: ../base/ufos/menu_aliencont.ufo:283
+#: ../base/ufos/menu_aliencont.ufo:297
+#: ../base/ufos/menu_aliencont.ufo:311
+#: ../base/ufos/menu_aliencont.ufo:325
+#: ../base/ufos/menu_aliencont.ufo:339
+#: ../base/ufos/menu_aliencont.ufo:353
+msgid "Kill one alien"
+msgstr "Kill one alien"
+
+#: ../base/ufos/menu_aliencont.ufo:378
 #: ../base/ufos/menu_research.ufo:825
 msgid "Base Info"
 msgstr "Base Info"
 
-#: ../base/ufos/menu_aliencont.ufo:198
+#: ../base/ufos/menu_aliencont.ufo:384
 msgid "Current base:"
 msgstr "Current base:"
 
-#: ../base/ufos/menu_aliencont.ufo:212
+#: ../base/ufos/menu_aliencont.ufo:398
 msgid "Alien Type:"
 msgstr "Alien Type:"
 
-#: ../base/ufos/menu_aliencont.ufo:239
+#: ../base/ufos/menu_aliencont.ufo:425
 msgid "Killed:"
 msgstr "Killed:"
 
-#: ../base/ufos/menu_aliencont.ufo:253
+#: ../base/ufos/menu_aliencont.ufo:439
 msgid "Captured in all bases:"
 msgstr "Captured in all bases:"
 
@@ -1682,6 +1711,18 @@ msgstr "Please wait"
 msgid "Waiting for other players to join the game"
 msgstr "Waiting for other players to join the game"
 
+#: ../base/ufos/menu_multiplayer.ufo:1516
+msgid "Players that must join before starting: "
+msgstr "Players that must join before starting: "
+
+#: ../base/ufos/menu_multiplayer.ufo:1528
+msgid "Start the game even if not all teams have joined"
+msgstr "Start the game even if not all teams have joined"
+
+#: ../base/ufos/menu_multiplayer.ufo:1541
+msgid "Force start"
+msgstr "Force start"
+
 #: ../base/ufos/menu_multiplayeringame.ufo:109
 msgid "Abort Game"
 msgstr "Abort Game"
@@ -1972,7 +2013,7 @@ msgid "Slow"
 msgstr "Slow"
 
 #: ../base/ufos/menu_ptleditor.ufo:74
-#: client/cl_main.c:2112
+#: client/cl_main.c:2123
 msgid "Normal"
 msgstr "Normal"
 
@@ -2231,7 +2272,7 @@ msgid "Show only aliens"
 msgstr "Show only aliens"
 
 #: ../base/ufos/menu_transfer.ufo:284
-#: client/cl_campaign.c:4091
+#: client/cl_campaign.c:4097
 msgid "Aliens"
 msgstr "Aliens"
 
@@ -2693,7 +2734,6 @@ msgid "Antimatter"
 msgstr "Antimatter"
 
 #: ../base/ufos/research.ufo:116
-#, fuzzy
 msgid "antimatter_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -2702,25 +2742,26 @@ msgstr ""
 "\n"
 "DATE: %02i %s %i\n"
 "\n"
-"SUB: Re: Alien Materials\n"
+"SUB: Re: Antimatter\n"
 "\n"
 "\n"
-"Commander, I think we've uncovered the secret to the alien materials. After some modifications to our Workshop equipment, we should now be able to reproduce the stuff and 'program' it into advanced new shapes.\n"
+"Our study on antimatter is complete, Commander, and we're ready to present our results. I'm afraid the news is mostly bad.\n"
 "\n"
-"As I've mentioned before, the alien materials form a 'memory alloy', remembering several shapes that it can change into if the materials are given the right stimulus. Amazingly, the alien alloy can be stimulated by two different things: heat and electricity. Heat is an obvious choice to make the UFO fuselage splay out during atmospheric flight, to provide better lift. Electricity, though, is a new one.\n"
+"There are a lot of things the aliens know that we don't. Nowhere is this more clear in their widespread use of antimatter. It seems to be plentiful for them, at least plentiful enough to send out UFO after UFO to Earth, burning tanks full of antiprotons. Human experiments into antimatter, on the other hand . . .\n"
 "\n"
-"When applying electricity, the alloy responds only to a constant, low-voltage current at a very specific amperage. The material's shape will deform and stay deformed for as long as that current is maintained. Once the current is switched off, the shape will revert to its normal 'at rest' shape or a heat-induced shape if enough heat is present. The electricity-induced shape takes precedence over the heat-induced shape.\n"
+"The first artificially produced antimatter on Earth consisted of 9 atoms of anti-hydrogen created at the CERN particle physics laboratory, situated near Geneva on the border between France and Switzerland. Not long after, another lab produced approximately 100 atoms. We've come slowly forward over the years in tiny, tiny steps, but even though we can now produce antiprotons by the millions, it's easy to forget just how little that really is.\n"
 "\n"
-"This means that the shape of a UFO fuselage (and anything else made with these materials) can be changed at will, either by a command from the operator or by automated electronics.\n"
+"In fact, the biggest obstacle to our adaptation of the alien fuel is the availability of antiprotons. We've come a long way since 1995, but even with every particle physics laboratory in the world churning out as many antiprotons as possible, it would take eighty million years to produce 1 gramme's worth of antiprotons. By comparison, the amount contained in a Scout UFO's tank exceeds that of all the antimatter produced on Earth over the past hundred years.\n"
 "\n"
-"This has given us a lot of amazing new ideas. We'll only be able to develop a few of these ideas in time for use in the war, as some of them would take years of research time, but they should nevertheless allow us to build things we could never have attempted before.\n"
+"Another worrying point is that the aliens also seem to be using antimatter as part of their weapons systems. Antimatter-fuelled alien missiles are one thing; what if they begin using antimatter itself as an explosive? My staff has come up with more than one disconcerting idea along these lines. For myself, I think we should try to head the aliens off at the pass in this regard. A special program regarding antimatter-based weapons may be a highly interesting option to pursue -- it may be a more economical prospect than trying to adapt alien rockets to our interceptor craft.\n"
 "\n"
-"Alien Materials should now be available for use in production. We can also begin to produce more of it in our Workshops, although it will be difficult and expensive to make.\n"
+"Humanity is a long, long way off from being able to create antiprotons in the amounts necessary to fuel these matter-antimatter rockets. The bottom line is, we cannot duplicate this alien technology. We don't know how they create their antimatter or how they manage to generate enough electricity to do so. Unless and until we can get our hands on this equipment, our efforts will be fruitless. Our only major successes have come from studying how the aliens store their antimatter. We are confident we can employ the same magnetic storage techniques, creating special protective pallets that will fit in our Storage facilities without any further adaptations, and we've designed antimatter fuel tanks that will fit in our interceptors, given some major overhaul. Of course we'll need a full understanding of the alien engines before we can begin incorporating it.\n"
+"\n"
+"For all intents and purposes, we are unable to replicate the alien fuel. If we use antimatter in our own technology we will be dependent upon recovering it from alien sources. This seems a dangerous course of action, but we may have no choice; we need to adapt this technology as soon as possible if we are to have any chance of truly stopping the invasion.\n"
 "\n"
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:117
-#, fuzzy
 msgid "antimatter_pre_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -2729,12 +2770,12 @@ msgstr ""
 "\n"
 "DATE: %02i %s %i\n"
 "\n"
-"SUB: Proposal: Alien Materials\n"
+"SUB: Proposal: Antimatter\n"
 "\n"
 "\n"
-"Commander, as I mentioned in my previous report, the Scout UFO was plated with a highly interesting alloy which blends plastic and metal together into a single material. These materials seem to be used almost universally throughout the alien technology base. It's advanced stuff, massively versatile and with a thousand possible uses.\n"
+"Commander, based on the extremely interesting findings we've made during our examination of the Scout UFO, I'd like your permission to use some lab time in order to more closely analyse the aliens' extensive use of antimatter and its implications on this war.\n"
 "\n"
-"I think it warrants the research to see if we can reproduce this stuff in our Workshops, but even if we can't, it seems likely we'll be getting our hands on large quantities of it with every UFO we salvage. We'll definitely be able to find new, human applications for it that will extend and expand our combat capabilites.\n"
+"Particularly I would like to see if we can find some way to replicate antimatter for our own purposes. Matter-antimatter annihilation has astonishing potential as a fuel. In terms of energy generation, it has probably the best size-to-weight ratio of any material in the universe; the ability to use it like the aliens use it would catapult our technology base centuries into the future. We must research this at the earliest opportunity!\n"
 "\n"
 "--Cdr. Navarre"
 
@@ -2743,14 +2784,52 @@ msgid "Live Alien"
 msgstr "Live Alien"
 
 #: ../base/ufos/research.ufo:161
-#, fuzzy
 msgid "alien_live_txt"
-msgstr "live_alien_txt"
+msgstr ""
+"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
+"\n"
+"FROM: Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command\n"
+"\n"
+"DATE: %02i %s %i\n"
+"\n"
+"SUB: Re: Live Alien\n"
+"\n"
+"\n"
+"Commander,\n"
+"\n"
+"We have finished our first survey of a live alien specimen. The project has produced mixed results.\n"
+"\n"
+"The subject is certainly alive, and we have put it through an extensive array of toxicology experiments which have provided vital data about its vulnerabilities to various chemicals and bio-agents. However, we have been completely unable to produce a behavioural analysis of the alien mind. This is because the specimen has showed virtually no signs of intelligence since its capture. It has done little more than eat, sleep, and stare at the walls of its containment unit. It responds to physical stimuli with reflex actions, aggression and/or submission, but we could not coax any information out of it. Even simple hand signals seem to be beyond the creature's comprehension. EEG monitoring reveals that the seemingly highly-developed brain registers virtually no brainwave activity at all.\n"
+"\n"
+"It is hard to believe this same specimen could have fired advanced alien weaponry at our troops during a tactical mission. There is no physical trauma that might explain the regression. Perhaps its capture has activated some manner of alien counter-interrogation mechanism; we don't know. None of my team have managed to produce a viable hypothesis as to the reason why. Certainly more research is required. We will keep monitoring the specimen, and will notify you immediately if the situation changes.\n"
+"\n"
+"Sincerely,\n"
+"\n"
+"Dr. Connor"
 
 #: ../base/ufos/research.ufo:162
-#, fuzzy
 msgid "alien_live_pre_txt"
-msgstr "No pre research info available"
+msgstr ""
+"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
+"\n"
+"FROM: Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command\n"
+"\n"
+"DATE: %02i %s %i\n"
+"\n"
+"SUB: Proposal: Live Alien\n"
+"\n"
+"\n"
+"Commander,\n"
+"\n"
+"We have captured a live alien in the field! The creature has been recovered from our last tactical mission and is being held in our new Containment unit, which I'm pleased to report seems to be working up to spec.\n"
+"\n"
+"I don't need to explain why we should start research on this specimen right away. The information that could be gleaned from it supercedes all other considerations. Up until now we've had no chance to study the alien mind, their thoughts and motivations, except through their continued attacks upon our world. This is our first chance to discover the aliens' purpose for humanity, perhaps even an explanation. Who are they? Why are they here? What can we do against them? We can know nothing without interrogating this specimen.\n"
+"\n"
+"Please send your approval for this program at your earliest convenience.\n"
+"\n"
+"Sincerely,\n"
+"\n"
+"Dr. Connor"
 
 #: ../base/ufos/research.ufo:176
 msgid "Alien Breathing Apparatus"
@@ -2820,61 +2899,117 @@ msgstr "The Alien Mind"
 
 #: ../base/ufos/research.ufo:196
 msgid "alien_mind_txt"
-msgstr "alien_mind_txt"
+msgstr ""
+"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
+"\n"
+"FROM: Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command\n"
+"\n"
+"DATE: %02i %s %i\n"
+"\n"
+"SUB: Re: The Alien Mind\n"
+"\n"
+"\n"
+"Commander,\n"
+"\n"
+"My team has finished conducting a number of tests on our captives that have shed some light on the aliens' behaviour.\n"
+"\n"
+"In one experiment, an alien specimen was given a box of food, sealed by a two-digit number lock. The subject took six hours to find the right combination by trial and error. This places the alien's IQ well below most large terrestrial mammals; however, when other subjects in the Containment were given the same task, with exactly the same lock, they all immediately input the right combination on their first attempt without having been exposed to the first specimen's attempts. We know how this looks, Commander, but I assure you my team and I have been thoroughly conscientious about security and separation. The aliens have not been allowed to communicate in any way. We're not yet willing to commit to any definite hypothesis about these events, though we're working on it.\n"
+"\n"
+"Unfortunately, results of our other experiments have been inconclusive at best. Various ways of communication have been attempted without success. Despite having fully functional vocal cords and/or working hands, they do not seem to speak or sign in any sense that we understand. Pheromone communication has had no effect beyond simple physical reactions. The large biological disparity between alien species also creates its own share of problems with containment and communication -- please refer to the alien autopsy reports for more details on individual alien physiology.\n"
+"\n"
+"Nevertheless, I believe we're making progress, however slowly. Communication with the aliens is certainly within the realm of possibility. Our studies confirm that all alien specimens react to external stimuli. This means that we can make them respond, one way or another. Dr. Yamamura is currently working on teaching an isolated group how to express desire, acknowledgement and denial. Their intelligence is too limited to attempt anything more sophisticated at the moment. Once the subjects have mastered these basic concepts, we will have some data on the rate at which the aliens can learn, and a solid foundation upon which to build. Yamamura hopes we can gradually raise their communication skills until they can make themselves intelligible to us, thereby spreading this knowledge to others of their kind who may possess superior intellect and talents.\n"
+"\n"
+"As always, I will keep you informed, Commander.\n"
+"\n"
+"Sincerely,\n"
+"\n"
+"Dr. Connor"
 
 #: ../base/ufos/research.ufo:197
 msgid "alien_mind_pre_txt"
-msgstr "No pre research info available"
+msgstr ""
+"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
+"\n"
+"FROM: Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command\n"
+"\n"
+"DATE: %02i %s %i\n"
+"\n"
+"SUB: Proposal: The Alien Mind\n"
+"\n"
+"\n"
+"Commander,\n"
+"\n"
+"Though we've achieved limited results so far, research must continue on our alien captives. There's a number of experiments we'd like to run that require your authorisation for lab time and funding. I assure you this is not blue-sky research; with enough tests and behavioural data, we may be able to figure out a way to communicate with these aliens, perhaps even reawaken their intelligence somehow. We don't know what the results of the program will be -- we simply know too little about these aliens, our body of data is far too small to make any predictions at this point. What we do know is that every tidbit we learn about alien psychology is a valuable piece of the puzzle.\n"
+"\n"
+"On a personal note, I'm convinced they must know something, Commander. The trick is in getting it out of them, and we're by God going to do it.\n"
+"\n"
+"My team and I are all eagerly awaiting your approval for the program.\n"
+"\n"
+"Sincerely,\n"
+"\n"
+"Dr. Connor"
 
 #: ../base/ufos/research.ufo:212
 msgid "Odd Behaviour"
 msgstr "Odd Behaviour"
 
 #: ../base/ufos/research.ufo:214
-#, fuzzy
 msgid "alien_odd_behaviour_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
 "\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
+"FROM: Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command\n"
 "\n"
 "DATE: %02i %s %i\n"
 "\n"
-"SUB: Re: Alien Artifact -- Alien Body Armour\n"
+"SUB: Re: Odd Behaviour\n"
 "\n"
 "\n"
-"Commander, we've got a full report on the alien armour for you.\n"
+"Commander,\n"
 "\n"
-"It was something of a surprise to learn that the alien armour is made of a composite of plastics and carbon containing no metal whatsoever. In fact, the most important element is something with which humanity is already well-acquainted: carbon nanotubes. Carbon nanotubes (also known as CNTs or 'buckytubes') are cylindrical carbon molecules that are incredibly strong, one of the strongest materials known to humankind. They have been relatively little-used on Earth because of their extreme cost. No economical means of mass-production has been found to date, restricting their use to the most expensive programs on Earth, such as aeronautics and space exploration.\n"
+"We have spent the past few weeks investigating these strange occurrences in our Containment unit, and we believe we've formulated a theory that may begin to explain the aliens' newfound intelligence.\n"
 "\n"
-"The alien armour uses CNTs as its penetration layer, i.e. the layer that stops bullets and other incoming ordnance from penetrating into the body. The nanotubes are woven into long latticework patterns and recessed into a bed of hard polymer, backed by a layer of semi-liquid gel that very effectively dampens the energy of a blow and spreads the remaining force across a very large area. The final layer -- woven from flexible aramid fibre -- serves to contain the gel and doubles as a spall liner, catching any fragments that may be blown loose from the inside of the armour.\n"
+"It seems that we were off in our preliminary appraisal of how the alien intellect works. We first believed them to be autonomously operating individuals, in the same way humans are, though with superior communications and team tactics. However, our lab experiments and an intense review of battlefield footage now seem to contradict that hypothesis.\n"
 "\n"
-"Thanks to the conductive properties of carbon nanotubes, the armour performs very well against plasma as well as against ordinary bullets, lasers and explosives. However ironically, it's not very effective against incendiary devices or flamethrowers, since these weapons also raise the atmospheric temperature around the wearer. In this scenario the armour is left with no place to effectively dump its heat and will not protect the wearer as he roasts inside his suit.\n"
+"In our video records, we have often seen the aliens seeking cover, coordinating their fire, working as a team even though they carry no obvious communications equipment. However, when we captured a few live specimens in our Containment unit, they never displayed anything above the level of animal instinct. This seems incongruous with the evidence we have; large, well-developed brain structures and a proven knowledge of combat tactics.\n"
 "\n"
-"Other features of the armour include servo-assisted movement in the boots, allowing the wearer to move more quickly, and a curious system built into the bracers that automatically assists the wearer's aim by selectively applying pressure to parts of the forearm. We are looking into many new uses for this technology.\n"
+"We sought to reconcile these ideas in a new hypothesis, and our experiments have begun to produce tangible results. The new specimens certainly are responsible for the strange behaviour we've observed, but we originally assumed that they were officers of some type under colour of authority. We now believe that theory to also be wrong. Our experiments prove that when the aliens are allowed to congregate, with or without the suspected 'officers', they become significantly more active and sophisticated. When they are separated from each other for a large enough distance, they revert back to their basic states. The conclusion is obvious. There is some kind of communal force binding these creatures together.\n"
 "\n"
-"Adapting this armour to a human body would be impossible due to the differences in physique and the difficulty of working with the materials involved. However, I've written up a separate research proposal to investigate the possibility of designing and mass-producing our own armour using the alien suit as a template. It will be in your inbox presently, Commander.\n"
+"A string of new theories has emerged. The most likely explanation is in the alien brain. There are several species of alien, all of which meet the physiological requirements for a sentient species, but they show little to no brainwave activity of their own. This implies the presence of some kind of shared or distributed thought between them, a hive mind that grows more intelligent as it grows in numbers. We're not sure how it's possible for this hive mind to cross species boundaries; it's obvious that the different alien races originated on different worlds, with vastly divergent evolutionary paths, and some species appear to have been around far longer than others. However, given the aliens' advanced technology, the 'how' is less of an enigma than the 'why'.\n"
 "\n"
-"--Cdr. Navarre"
+"These new findings also seem to suggest that specimens down on Earth are cut off from the source of their intelligence. While this may be an important advantage for PHALANX forces, it also brings up threats we had not yet considered. Our research into alien physiology has established that isolated specimens cannot survive very long in our environment, and behave with little enough intelligence while they're on the surface; but if a large enough number is allowed to escape and coordinate with each other -- or with alien sympathisers on Earth -- we could be looking at a serious infiltration risk.\n"
+"\n"
+"With several specimens on hand, their intelligence now seems to be approaching the human level. If we can create a suitable translation device or common language, we believe we may finally be able to establish communications with aliens in PHALANX captivity. Perhaps some of our linguists or psychology experts could form a dialogue. This is an avenue of inquiry that we cannot afford to ignore.\n"
+"\n"
+"Of course, if such experiments were to be approved by the Base Commander, I assure you that my team would take full precautions. Nothing is more important to us than the lives of our men and the security of our facilities.\n"
+"\n"
+"Sincerely,\n"
+"\n"
+"Dr. Connor"
 
 #: ../base/ufos/research.ufo:215
-#, fuzzy
 msgid "alien_odd_behaviour_pre_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
 "\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
+"FROM: Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command\n"
 "\n"
 "DATE: %02i %s %i\n"
 "\n"
-"SUB: Alien Artifact -- Alien Body Armour\n"
+"SUB: Proposal: Odd Behaviour\n"
 "\n"
 "\n"
-"Commander, we've recovered a suit of alien body armour from the battlefield. This armour has been a plague to our soldiers due to its very high resistance to various types of damage; aliens wearing it have shrugged off shots that would have torn their unarmoured friends apart. It's not surprising that we still haven't managed to cut it open to perform an initial survey of its composition. We should investigate the armour's weaknesses as soon as we can, and perhaps ascertain a way to adapt it for our own uses.\n"
+"Commander,\n"
 "\n"
-"This project will require a moderate amount of lab time and funding. Work will start as soon as we have your authorisation, Commander.\n"
+"The live aliens in our Containment unit have begun to display erratic behaviour since the last tactical mission.\n"
 "\n"
-"--Cdr. Navarre"
+"Before, the specimens were barely intelligent, operating solely on instinct despite their significantly-developed brain structures. Yet they now seem to be exercising some sort of intelligent control, clearly communicating through the soundproof cells and operating as a team, even going so far as to engineer coordinated escape attempts. Sedative darts were required to subdue the more active specimens.\n"
+"\n"
+"We believe the new specimens recently added to Containment are having some sort of effect on the group. They may be higher-ranking members of the alien hierarchy. If we have captured an alien officer, or if there is some entirely different cause for the new behaviour, we need to investigate the how and why of this right away. On behalf of DivBio, I would like your permission to start a new research project to look into the matter.\n"
+"\n"
+"Sincerely,\n"
+"\n"
+"Dr. Connor"
 
 #: ../base/ufos/research.ufo:233
 msgid "assault_txt"
@@ -3047,11 +3182,51 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:316
 msgid "monoknife_txt"
-msgstr "monoknife_txt"
+msgstr ""
+"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
+"\n"
+"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
+"\n"
+"DATE: %02i %s %i\n"
+"\n"
+"SUB: Re: Monomolecular Blades\n"
+"\n"
+"\n"
+"Commander, I'm hereby reporting our success in the creation of alien blade materials. We've loaded the production specs into our Workshop machinery and have constructed a small forge for shaping our new monomolecular knives.\n"
+"\n"
+"The reproduction process has been very interesting on this one. After we'd figured out how to 'cook' the alien plastics to the right temperatures, we ended up with bars of incredibly hard material which we then tried to shape into knives. On our first attempts we tried to create a straight-edged blade with a powerful point, like most modern combat knives, so that it could be used for both cutting and stabbing. All of these models snapped in half during the cooling process. We had a devil of a time figuring out why until we placed a small camera inside the furnace.\n"
+"\n"
+"It turns out that the curve of the Kerrblade isn't a design choice -- it's a function of the material itself. The plastic radically curves and expands during heat-moulding in our furnace, and contracts again during cooling, which ended up cracking all of our straight-edged blades. It demands a particular curved shape to retain its durability as a blade. We had to completely redesign the knife to account for this effect, which brought it to its current shape.\n"
+"\n"
+"In length, it's either a long knife or a short sword, depending on who you ask. The design of the handle and crossguard are based on Middle-Eastern and Asian swordmaking traditions mixed in with modern-day science and know-how. The handle is made from semi-solid rubber, which automatically moulds itself to the wielder's hand to maximise comfort and gripping power. Both the triangular crossguard and pommel are unbreakable carbon-nanotube-reinforced plastic, a material that even Kerrblades have trouble with.\n"
+"\n"
+"This knife goes a long way towards evening the odds for our soldiers when they get caught in hand-to-hand. Though it's larger than our old combat knife, doesn't thrust as well, and doesn't have the power of the Kerrblade's sword-length swing, it strikes an ideal middle ground between these two weapons. The monomolecular knife is almost the equal of the Kerrblade in lethality but still small enough to be worn in our standard holster or in a sheath hung from the belt. It amounts to a significant upgrade of our melee combat capabilities, and I'm thoroughly pleased with the result.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:317
 msgid "monoknife_pre_txt"
-msgstr "No pre research info available"
+msgstr ""
+"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
+"\n"
+"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
+"\n"
+"DATE: %02i %s %i\n"
+"\n"
+"SUB: Proposal: Monomolecular Blades\n"
+"\n"
+"\n"
+"Commander, now that we've had a good look at the alien blade technology from several sources -- the Bloodspider's 'fangs' and the Kerrblade -- we're starting to form a picture of how to recreate the unknown or ill-understood materials used in their construction.\n"
+"\n"
+"Some of this stuff is completely new to us. The plastics from which the alien blades are forged are harder than damascus steel, sharper than a razor, and yet shock-resistant and flexible enough to survive the stresses of melee combat. Once forged they are nearly impossible to break, nick or bend. Applying a hammer and chisel directly to the blade just means you end up with two neatly-sliced halves of a chisel.\n"
+"\n"
+"Obviously it would be of great interest to us if we could create our own knives made from these materials, with edges tapering to the width of a single molecule. My team and I believe it may now be possible.\n"
+"\n"
+"If you give us the funding and lab time we need, we can design and create a new monomolecular combat knife that will even the playing field for our soldiers when forced into hand-to-hand combat. This knife will be far more compact than the Kerrblade and much easier for humans to wield, and it'll be small enough to be used one-handed.\n"
+"\n"
+"Equipping our troops with such weapons could give them a major advantage, as they'll be able to properly defend themselves in melee for the first time whilst using other weapons or equipment -- such as pistols, grenades, medikits, or other useful items of tactical or life-saving importance.\n"
+"\n"
+"--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:335
 msgid "flamer_txt"
@@ -3737,7 +3912,7 @@ msgstr ""
 "\n"
 "The laser rifle is the flagship design of our new deuterium-fluoride laser family. It will be a perfect marriage of power, accuracy, range, manoeuvrability and ammo capacity. Even on paper the laser rifle's specs can compete with any conventional assault rifle. The only problem will be actually building it.\n"
 "\n"
-"The components we've been using in our Continuous Wave Laser prototypes have been cumbersome, fragile and very expensive. Out soldiers need ruggedness in a rifle, something that will last through the bumps and bashes of combat, and we badly need to bring down production costs to make the program worthwhile. As it is, the price of a squad of working laser rifles would be on par with your average main battle tank. We need funding and lab time to bring costs down, fix or replace the most sensitive components to make the weapon more reliable, and reduce its form factor to something that can be comfortably fired by a human soldier.\n"
+"The components we've been using in our Continuous Wave Laser prototypes have been cumbersome, fragile and very expensive. Our soldiers need ruggedness in a rifle, something that will last through the bumps and bashes of combat, and we badly need to bring down production costs to make the program worthwhile. As it is, the price of a squad of working laser rifles would be on par with your average main battle tank. We need funding and lab time to bring costs down, fix or replace the most sensitive components to make the weapon more reliable, and reduce its form factor to something that can be comfortably fired by a human soldier.\n"
 "\n"
 "As always, Commander, we'll begin work as soon as you give us your authorisation.\n"
 "\n"
@@ -4826,11 +5001,13 @@ msgstr ""
 "\n"
 "The combat applications are simple. The soldier wielding it would enter into melee with an alien, bring the prongs into contact with the enemy's skin or armour, and pull the trigger. The ensuing electrical discharge would stun or disable the subject for some time, even through armour or protective skin. The period of unconsciousness will vary from species to species and between individuals, depending on their exposure, metabolism, mental state, and more. I'm afraid I cannot provide you with any hard numbers yet. However, we estimate the stun rod to give us more than enough time to secure the prisoner and render it harmless.\n"
 "\n"
-"We realise the difficulty of bringing such a large weapon to bear in melee combat, but it has been a challenge to build man-portable batteries and electrical systems capable of handling this kind of load. We could not have produced it smaller. The outputs that the stun rod can deliver -- repeatedly -- make it the most powerful electricity-based weapon on Earth at this time.\n"
+"We fully realise the difficulty of bringing the aliens to melee and then besting them. This is why we've armoured the stun rod's body to stand up against the Kerrblade without being sliced in two. It's designed to use as a staff or club in melee during an emergency, and it will not break, crack or become unreliable.\n"
 "\n"
-"Unfortunately, despite efforts to push our designs further, we don't have the technology to create ranged electrical weapons that can match the stun rod's capabilities. Electrolasers are still too weak for their power consumption and wire-tasers can only be used once. We are however looking into adapting alien power cells for use in PHALANX-built electrolasers. This is a possibility that holds great promise for the future of our bio research.\n"
+"Unfortunately, with these heavy-duty batteries and electrical systems and additional armour, the stun rod has become a rather hefty weapon. It will require two hands to use effectively in combat as a prod or a blunt instrument, though it will not restrict grenade throwing or pistol use in the off hand.\n"
 "\n"
-"Thank you for your indulgence in this program, Commander, I firmly believe this will be a great help to our capture efforts. However I will try to leave further technical matters with Cdr. Navarre, where they belong.\n"
+"The outputs that the stun rod can deliver -- repeatedly -- make it the most powerful electrical weapon on Earth at this time. However, despite efforts to push our designs further, we don't yet have the technology to create ranged weapons that can match the stun rod's capabilities. Electrolasers are still too weak for their power consumption and wire-tasers can only be used once at limited ranges. We are however looking into adapting alien power cells for use in PHALANX-built electrolasers. This is a possibility that holds great promise for the future of our bio research.\n"
+"\n"
+"Thank you for your indulgence in this program, Commander. I firmly believe this will be a great help to our capture efforts. Still, I will try to leave further technical matters with Cdr. Navarre, where they belong.\n"
 "\n"
 "Sincerely,\n"
 "\n"
@@ -4854,9 +5031,9 @@ msgstr ""
 "\n"
 "As you know, we've yet to capture an alien alive during our tactical engagements in all the weeks we've been waging this war. Now that we know how to keep them alive in containment, our lack of specimens is becoming a serious impediment to our biological and chemical research. We need living tissue to study, performing its natural functions inside a living body, and we don't have the ability to simply clone up some aliens to research. We need prisoners. The sooner the better.\n"
 "\n"
-"That's why I would like to propose a simple but high-powered electrical shock weapon, not unlike a military stun gun, designed to disable our enemies without killing them. It would be a heavy man-portable unit with a large battery and several charge settings, the highest of which should be sufficient even to disable alien robots such as the Bloodspider. We in the Bio division believe that any alien subjected to this weapon would be disabled long enough for our soldiers to take control of the situation and secure prisoners.\n"
+"That's why I would like to propose a simple but high-powered electrical shock weapon, not unlike a military stun gun, designed to disable our enemies without killing them. It would be a two-handed man-portable unit with a large battery and several charge settings, the highest of which should be sufficient even to disable alien robots such as the Bloodspider. We in DivBio believe that any alien subjected to this weapon would be disabled long enough for our soldiers to take control of the situation and secure prisoners.\n"
 "\n"
-"Cdr. Navarre, however, feels that such a weapon would be hazardous to our soldiers and \"a throwback to the 20th century\", and refuses to endorse it. He doesn't seem to understand. We have no alternative method of disabling enemies at the voltages required. Commander, we need this weapon as badly as we need live aliens from the field. We can't merely shoot them and hope to patch one or two up again upon return to base. Even if we succeeded in that mindset, the Bio division's needs will be far, far higher than that for proper research and interrogation.\n"
+"Cdr. Navarre, however, feels that such a weapon would be hazardous to our soldiers and \"a throwback to the 20th century\", and refuses to endorse it. He doesn't seem to understand. We have no alternative method of disabling enemies at the voltages required. Commander, we need this weapon as badly as we need live aliens from the field. We can't merely shoot them and hope to patch one or two up again upon return to base. Even if we succeeded in that mindset, my division's needs will be far, far higher than that for proper research and interrogation.\n"
 "\n"
 "I hope you understand. Please authorise lab time and funding for this project as soon as you can, and I'll get some people from DivEngine together to develop this project properly. I would of course be delighted if you could explain things to Cdr. Navarre. I'm sure he'll be happy to receive a message from you.\n"
 "\n"
@@ -6376,7 +6553,7 @@ msgstr ""
 "\n"
 "In proportion to its body weight, the Ortnok has more muscle than a professional body builder. At first we concluded this was solely the product of an extreme-heavy-gravity homeworld, but subsequent hormone and toxicology work on our specimen have revealed something interesting. The subject seems to have been raised from birth on a heavy diet of genetic tampering and anabolic steroids. This, combined with the incredible density of the muscle tissue, makes the Ortnok physically stronger than any biological entity on Earth.\n"
 "\n"
-"During our first incisions, we were surprised to find the Ortnok to be without blood. It has lungs, viscera and something akin to digestive organs, but no liver or heart that we can identify. Instead of veins there is a very well-developed nervous system that seems to power and control the muscles by direct electrical stimulation. The needed electricity is generated through digestion of organic matter and stored in a set of large eel-like organs underneath the lungs. The nervous system itself is nourished by the leftover products of the digestion process by way of veins filled with pressurised air. The whole chest cavity has been richly furnished with armour plating inserted just underneath the leathery green skin.\n"
+"During our first incisions, we were surprised to find the Ortnok to be without blood. It has lungs, viscera and something akin to digestive organs, but no liver or heart that we can identify. Instead of veins there is a very well-developed system of nerve tubes, filled with a kind of electrically conductive gel, that seems to power and control the muscles by direct electrical stimulation. The needed electricity is generated through digestion of organic matter and stored in a set of large eel-like organs underneath the lungs. The nervous system itself is nourished by the leftover products of the digestion process by way of veins filled with pressurised air. The whole chest cavity has been richly furnished with armour plating inserted just underneath the leathery green skin.\n"
 "\n"
 "The eyes are covered with surgically-implanted lenses that improve the Ortnok's already excellent vision, stretching it into the infrared spectrum. The ears consist of a series of small cavities, three on either side of the head, which are surprisingly large and well-developed. Given the evidence we must conclude that Ortnoks have acute hearing, though the nose and olfactory organs are quite small, atrophied almost to the point of being vestigial.\n"
 "\n"
@@ -6500,11 +6677,69 @@ msgstr "Alien Autopsy - Shevaar"
 
 #: ../base/ufos/research.ufo:2170
 msgid "shevaar_autopsy_txt"
-msgstr "The sheer muscular bulk of the Shevaar is supported by a stout, rugged skeleton, giving the species its fearsome strength. The two sets of jaws are anchored on the creature's enormous shoulder blades, making them as wide as the creature itself, and provide phenomenal crushing force.The huge wet nose of the beast is in fact its brain, covered with a dense array of sensory cells of varying types. While the ability of the Shevaar to hunt down its prey is heightened by this combined sensory and cognitive organ, its prominent placement and lack of protective bone renders it susceptible to psionic attack, as well as providing an obvious weak point in melee combat."
+msgstr ""
+"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
+"\n"
+"FROM: Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command\n"
+"\n"
+"DATE: %02i %s %i\n"
+"\n"
+"SUB: Re: Alien Autopsy -- Shevaar\n"
+"\n"
+"\n"
+"Commander,\n"
+"\n"
+"Our autopsy of this new alien -- the Shevaar -- has been very interesting. It's a significant departure from the more humanoid Tamans and Ortnoks, possessing digitigrade legs and a small tail that seems to be a remnant of this species's continuing evolution. The creature also appears to be completely blind. It lacks eyes and any other kind of organ that could be used to process visual light. However, it seems to have other interesting organs to make up for this deficiency.\n"
+"\n"
+"First off, the Shevaar looks like the unholy merger of a man and a lizard. Unlike most Earth lizards, however, the alien is warm-blooded and its brain is similar in size to our own -- probably slightly larger. Its massive feet are surprisingly springy, and it can cover large amounts of ground in a long, leaping gait. The large hands seem to have no problem wielding the many varieties of alien weaponry.\n"
+"\n"
+"The results of the autopsy are no less interesting. Upon cutting upon the chest, we find that the rib cage is a solid shield of bone down the front, reinforced with stiff cartilege. The makeup of the bones is different from ours as well, made up mostly of carbon rather than calcium, with traces of metal that make them extremely hard and tough. Knives and bullets will have a great deal of trouble penetrating it, and it will be even harder to find vital organs to damage. Any body mass that isn't shielded by bone seems to be made up only of lean, wiry muscle.\n"
+"\n"
+"The brain is particularly heavily-defended. Several layers of horn wrap around it like an impenetrable suit of armour. From the marks of wear and tear around this area, we surmise that these aliens regularly engage in vigorous head-butting, probably as part of their mating rituals. A small, omnivorous mouth protrudes from the mass of bone and leads down to a simple but functional digestive tract.\n"
+"\n"
+"There are more organs in the head than just the brain and the mouth, however. Behind the curls of bone there is a set of three organs that seem to detect infrared radiation. This is apparently what the Shevaar uses in lieu of eyes. We conclude that the sensitivity of these organs is roughly comparable to that of a human wearing PHALANX-standard IR Goggles.\n"
+"\n"
+"From the autopsy and our analysis of battlefield footage, we can conclude the following:\n"
+"\n"
+"- The Shevaar see in infrared. This will make it difficult to hide from them or approach them undetected.\n"
+"\n"
+"- They carry mostly light equipment to preserve their natural mobility. This allows them to employ effective hit-and-run tactics.\n"
+"\n"
+"- Shevaar bodies are highly resistant to impact and cutting damage, and their compact internals are not easily damaged by concussion or explosives. However, their scaly hides provide little protection from fire, lasers or electricity.\n"
+"\n"
+"Shevaar are most often used as fast, armoured scouts. They're extremely effective in this role, combining high mobility with extended vision capabilities, and the aliens seem to have no shortage of these creatures. The Shevaar seem to be located between Tamans and Ortnoks in the nebulous alien hierarchy, in that they sometimes fill specialist or command roles, unlike Ortnoks, but these tasks are still usually taken by Tamans whenever the two races are deployed together.\n"
+"\n"
+"When not engaged in combat, Shevaar spend most of their time as scouts or skirmishers, or as herders for captured humans.\n"
+"\n"
+")There is a complex set of implants in the subject's throat that will require further research to be fully understood. I will send you a more detailed analysis along with a research proposal.\n"
+"\n"
+"We should be careful whenever we encounter these aliens in the field. They are fast and dangerous skirmishers who prefer to fight from cover, and should be pursued and kept under fire at all times when discovered, as long as this does not overextend our position. Exposing our team's flanks or rear to a squad of Shevaar could have disastrous results. Although grenades are unlikely to kill any Shevaar outright, they will be very useful for flushing them out into our troops' sights.\n"
+"\n"
+"Also, although blind, Shevaar possess balance organs that are affected by the sound of our flashbang. It will achieve similar results on them as it does on humans.\n"
+"\n"
+"Sincerely,\n"
+"\n"
+"Dr. Connor"
 
 #: ../base/ufos/research.ufo:2171
 msgid "shevaar_autopsy_pre_txt"
-msgstr "No pre research info available"
+msgstr ""
+"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
+"\n"
+"FROM: Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command\n"
+"\n"
+"DATE: %02i %s %i\n"
+"\n"
+"SUB: Proposal: Alien Autopsy -- Shevaar\n"
+"\n"
+"\n"
+"Commander,\n"
+"\n"
+"We've recovered a new alien corpse from the battlefield. We should begin dissection and assessment as soon as possible.\n"
+"\n"
+"Sincerely,\n"
+"\n"
+"Dr. Connor"
 
 #: ../base/ufos/research.ufo:2243
 msgid "Phoenix UGV"
@@ -7693,7 +7928,7 @@ msgstr "Medikit"
 #: ../base/ufos/weapons.ufo:35
 #: ../base/ufos/weapons.ufo:86
 #: ../base/ufos/weapons_melee.ufo:37
-#: ../base/ufos/weapons_melee.ufo:259
+#: ../base/ufos/weapons_melee.ufo:260
 msgid "Throw"
 msgstr "Throw"
 
@@ -8046,7 +8281,7 @@ msgstr "Kerrblade"
 msgid "Plasma Blade"
 msgstr "Plasma Blade"
 
-#: ../base/ufos/weapons_melee.ufo:243
+#: ../base/ufos/weapons_melee.ufo:244
 msgid "Lock"
 msgstr "Lock"
 
@@ -8120,76 +8355,76 @@ msgstr "Plasma Blaster"
 msgid "Plasma Blaster Charge"
 msgstr "Plasma Blaster Charge"
 
-#: client/cl_actor.c:110
+#: client/cl_actor.c:113
 msgid "Pathetic"
 msgstr "Pathetic"
 
-#: client/cl_actor.c:112
+#: client/cl_actor.c:115
 msgid "Very Poor"
 msgstr "Very Poor"
 
-#: client/cl_actor.c:114
+#: client/cl_actor.c:117
 msgid "Poor"
 msgstr "Poor"
 
-#: client/cl_actor.c:116
+#: client/cl_actor.c:119
 msgid "Mediocre"
 msgstr "Mediocre"
 
-#: client/cl_actor.c:118
+#: client/cl_actor.c:121
 msgid "Good"
 msgstr "Good"
 
-#: client/cl_actor.c:120
+#: client/cl_actor.c:123
 msgid "Very Good"
 msgstr "Very Good"
 
-#: client/cl_actor.c:122
+#: client/cl_actor.c:125
 msgid "Excellent"
 msgstr "Excellent"
 
-#: client/cl_actor.c:124
+#: client/cl_actor.c:127
 msgid "Amazing"
 msgstr "Amazing"
 
-#: client/cl_actor.c:126
+#: client/cl_actor.c:129
 msgid "Superhuman"
 msgstr "Superhuman"
 
-#: client/cl_actor.c:129
+#: client/cl_actor.c:132
 msgid "Godlike"
 msgstr "Godlike"
 
-#: client/cl_actor.c:163
+#: client/cl_actor.c:166
 #, c-format
 msgid "Rank: %s"
 msgstr "Rank: %s"
 
-#: client/cl_actor.c:486
-#: client/cl_actor.c:504
+#: client/cl_actor.c:495
+#: client/cl_actor.c:513
 #, c-format
 msgid "Remaining TUs: %i"
 msgstr "Remaining TUs: %i"
 
-#: client/cl_actor.c:488
-#: client/cl_actor.c:506
+#: client/cl_actor.c:497
+#: client/cl_actor.c:515
 msgid "No remaining TUs left after shot."
 msgstr "No remaining TUs left after shot."
 
-#: client/cl_actor.c:491
-#: client/cl_actor.c:509
+#: client/cl_actor.c:500
+#: client/cl_actor.c:518
 #, c-format
 msgid "TU: %i"
 msgstr "TU: %i"
 
-#: client/cl_actor.c:492
-#: client/cl_actor.c:510
+#: client/cl_actor.c:501
+#: client/cl_actor.c:519
 #, c-format
 msgid "Shots:%i"
 msgstr "Shots:%i"
 
-#: client/cl_actor.c:832
-#: client/cl_actor.c:1039
+#: client/cl_actor.c:863
+#: client/cl_actor.c:1070
 msgid ""
 "Can't perform action:\n"
 "not enough TUs.\n"
@@ -8197,11 +8432,11 @@ msgstr ""
 "Can't perform action:\n"
 "not enough TUs.\n"
 
-#: client/cl_actor.c:1002
+#: client/cl_actor.c:1033
 msgid "No item in hand.\n"
 msgstr "No item in hand.\n"
 
-#: client/cl_actor.c:1015
+#: client/cl_actor.c:1046
 msgid ""
 "Can't perform action:\n"
 "out of ammo.\n"
@@ -8209,7 +8444,7 @@ msgstr ""
 "Can't perform action:\n"
 "out of ammo.\n"
 
-#: client/cl_actor.c:1020
+#: client/cl_actor.c:1051
 msgid ""
 "This weapon cannot be fired\n"
 "one handed.\n"
@@ -8217,7 +8452,7 @@ msgstr ""
 "This weapon cannot be fired\n"
 "one handed.\n"
 
-#: client/cl_actor.c:1029
+#: client/cl_actor.c:1060
 msgid ""
 "Can't perform action:\n"
 "this item is not reloadable.\n"
@@ -8225,7 +8460,7 @@ msgstr ""
 "Can't perform action:\n"
 "this item is not reloadable.\n"
 
-#: client/cl_actor.c:1034
+#: client/cl_actor.c:1065
 msgid ""
 "Can't perform action:\n"
 "ammo not available.\n"
@@ -8233,12 +8468,12 @@ msgstr ""
 "Can't perform action:\n"
 "ammo not available.\n"
 
-#: client/cl_actor.c:1168
+#: client/cl_actor.c:1199
 #, c-format
 msgid "Armor  %i\tMorale  %i\n"
 msgstr "Armor  %i\tMorale  %i\n"
 
-#: client/cl_actor.c:1175
+#: client/cl_actor.c:1206
 #, c-format
 msgid ""
 "Armor  %i\tMorale  %i\n"
@@ -8247,7 +8482,7 @@ msgstr ""
 "Armor  %i\tMorale  %i\n"
 "Move %i (%i TU left)\n"
 
-#: client/cl_actor.c:1194
+#: client/cl_actor.c:1225
 msgid ""
 "You cannot use this unknown item.\n"
 "You need to research it first.\n"
@@ -8255,7 +8490,7 @@ msgstr ""
 "You cannot use this unknown item.\n"
 "You need to research it first.\n"
 
-#: client/cl_actor.c:1211
+#: client/cl_actor.c:1242
 #, c-format
 msgid ""
 "%s\n"
@@ -8264,19 +8499,19 @@ msgstr ""
 "%s\n"
 "(empty)\n"
 
-#: client/cl_actor.c:1220
+#: client/cl_actor.c:1251
 msgid "Currently panics!\n"
 msgstr "Currently panics!\n"
 
-#: client/cl_actor.c:1612
+#: client/cl_actor.c:1642
 msgid "Nobody selected\n"
 msgstr "Nobody selected\n"
 
-#: client/cl_actor.c:1623
+#: client/cl_actor.c:1653
 msgid "This isn't your round\n"
 msgstr "This isn't your round\n"
 
-#: client/cl_actor.c:1756
+#: client/cl_actor.c:1786
 msgid ""
 "You cannot reload this unknown item.\n"
 "You need to research it and its ammunition first.\n"
@@ -8284,34 +8519,34 @@ msgstr ""
 "You cannot reload this unknown item.\n"
 "You need to research it and its ammunition first.\n"
 
-#: client/cl_actor.c:2196
+#: client/cl_actor.c:2228
 #, c-format
 msgid "%s has been killed!\n"
 msgstr "%s has been killed!\n"
 
-#: client/cl_actor.c:2200
+#: client/cl_actor.c:2232
 msgid "A civilian was killed.\n"
 msgstr "A civilian was killed.\n"
 
-#: client/cl_actor.c:2207
+#: client/cl_actor.c:2239
 msgid "An alien was killed:"
 msgstr "An alien was killed:"
 
-#: client/cl_actor.c:2210
-#: client/cl_actor.c:2213
+#: client/cl_actor.c:2242
+#: client/cl_actor.c:2245
 msgid "An alien was killed.\n"
 msgstr "An alien was killed.\n"
 
-#: client/cl_actor.c:2217
+#: client/cl_actor.c:2249
 msgid "A soldier was killed.\n"
 msgstr "A soldier was killed.\n"
 
-#: client/cl_actor.c:2220
+#: client/cl_actor.c:2252
 #, c-format
 msgid "A member of team %i was killed.\n"
 msgstr "A member of team %i was killed.\n"
 
-#: client/cl_actor.c:2371
+#: client/cl_actor.c:2403
 msgid "Your round started!\n"
 msgstr "Your round started!\n"
 
@@ -8323,15 +8558,15 @@ msgstr "Aircraft started"
 #: client/cl_aircraft.c:476
 #: client/cl_aircraft.c:643
 #: client/cl_aircraft.c:943
-#: client/cl_basemanagement.c:578
-#: client/cl_basemanagement.c:2105
-#: client/cl_basemanagement.c:2277
-#: client/cl_basemanagement.c:2332
-#: client/cl_basemanagement.c:2349
-#: client/cl_basemanagement.c:2359
-#: client/cl_basemanagement.c:2373
-#: client/cl_basemanagement.c:2381
-#: client/cl_basemanagement.c:2406
+#: client/cl_basemanagement.c:612
+#: client/cl_basemanagement.c:2139
+#: client/cl_basemanagement.c:2311
+#: client/cl_basemanagement.c:2366
+#: client/cl_basemanagement.c:2383
+#: client/cl_basemanagement.c:2393
+#: client/cl_basemanagement.c:2407
+#: client/cl_basemanagement.c:2415
+#: client/cl_basemanagement.c:2440
 #: client/cl_campaign.c:447
 #: client/cl_campaign.c:923
 #: client/cl_campaign.c:979
@@ -8348,7 +8583,7 @@ msgstr "Aircraft started"
 #: client/cl_campaign.c:2505
 #: client/cl_campaign.c:2542
 #: client/cl_campaign.c:2544
-#: client/cl_campaign.c:2884
+#: client/cl_campaign.c:2891
 #: client/cl_map.c:270
 #: client/cl_research.c:664
 #: client/cl_research.c:787
@@ -8412,7 +8647,7 @@ msgstr "Back to base"
 
 #: client/cl_aircraft.c:408
 #: client/cl_map.c:817
-#: client/cl_ufopedia.c:322
+#: client/cl_ufopedia.c:321
 #, c-format
 msgid "Speed:\t%.0f\n"
 msgstr "Speed:\t%.0f\n"
@@ -8426,21 +8661,21 @@ msgstr "Fuel:\t%i/%i\n"
 #: client/cl_aircraft.c:410
 #: client/cl_aircraft.c:411
 #: client/cl_aircraft.c:412
-#: client/cl_ufopedia.c:298
+#: client/cl_ufopedia.c:297
+#: client/cl_ufopedia.c:324
 #: client/cl_ufopedia.c:325
 #: client/cl_ufopedia.c:326
-#: client/cl_ufopedia.c:327
 msgid "None"
 msgstr "None"
 
 #: client/cl_aircraft.c:410
-#: client/cl_ufopedia.c:325
+#: client/cl_ufopedia.c:324
 #, c-format
 msgid "Weapon:\t%s\n"
 msgstr "Weapon:\t%s\n"
 
 #: client/cl_aircraft.c:411
-#: client/cl_ufopedia.c:326
+#: client/cl_ufopedia.c:325
 #, c-format
 msgid "Shield:\t%s\n"
 msgstr "Shield:\t%s\n"
@@ -8494,199 +8729,199 @@ msgstr "No shield assigned"
 msgid "Assign a team to aircraft"
 msgstr "Assign a team to aircraft"
 
-#: client/cl_basemanagement.c:280
+#: client/cl_basemanagement.c:314
 msgid "Not set"
 msgstr "Not set"
 
-#: client/cl_basemanagement.c:286
+#: client/cl_basemanagement.c:320
 #, c-format
 msgid "Already %i in base"
 msgstr "Already %i in base"
 
-#: client/cl_basemanagement.c:292
+#: client/cl_basemanagement.c:326
 msgid "Construction finished"
 msgstr "Construction finished"
 
-#: client/cl_basemanagement.c:295
+#: client/cl_basemanagement.c:329
 msgid "Working 100%"
 msgstr "Working 100%"
 
-#: client/cl_basemanagement.c:298
+#: client/cl_basemanagement.c:332
 msgid "Down"
 msgstr "Down"
 
-#: client/cl_basemanagement.c:578
+#: client/cl_basemanagement.c:612
 msgid "Not enough credits to build this\n"
 msgstr "Not enough credits to build this\n"
 
-#: client/cl_basemanagement.c:715
+#: client/cl_basemanagement.c:749
 #, c-format
 msgid "Costs:\t%1.0f c\n"
 msgstr "Costs:\t%1.0f c\n"
 
-#: client/cl_basemanagement.c:718
+#: client/cl_basemanagement.c:752
 #, c-format
 msgid "%i Day to build\n"
 msgid_plural "%i Days to build\n"
 msgstr[0] "%i Day to build\n"
 msgstr[1] "%i Days to build\n"
 
-#: client/cl_basemanagement.c:721
+#: client/cl_basemanagement.c:755
 #, c-format
 msgid "Running Costs:\t%1.0f c\n"
 msgstr "Running Costs:\t%1.0f c\n"
 
-#: client/cl_basemanagement.c:1374
+#: client/cl_basemanagement.c:1408
 #, c-format
 msgid "%i day left"
 msgid_plural "%i days left"
 msgstr[0] "%i day left"
 msgstr[1] "%i days left"
 
-#: client/cl_basemanagement.c:1402
+#: client/cl_basemanagement.c:1436
 #: client/cl_campaign.c:1407
 #, c-format
 msgid "%i c"
 msgstr "%i c"
 
-#: client/cl_basemanagement.c:1508
+#: client/cl_basemanagement.c:1542
 msgid "Base is under attack"
 msgstr "Base is under attack"
 
-#: client/cl_basemanagement.c:1707
+#: client/cl_basemanagement.c:1741
 #: client/cl_team.c:1207
 #: client/cl_team.c:1400
 msgid "NewTeam"
 msgstr "NewTeam"
 
-#: client/cl_basemanagement.c:1787
+#: client/cl_basemanagement.c:1821
 #, c-format
 msgid "A new base has been built: %s."
 msgstr "A new base has been built: %s."
 
-#: client/cl_basemanagement.c:1788
-#: client/cl_basemanagement.c:1832
+#: client/cl_basemanagement.c:1822
+#: client/cl_basemanagement.c:1866
 msgid "Base built"
 msgstr "Base built"
 
-#: client/cl_basemanagement.c:1831
+#: client/cl_basemanagement.c:1865
 msgid "Not enough credits to set up a new base."
 msgstr "Not enough credits to set up a new base."
 
-#: client/cl_basemanagement.c:2105
+#: client/cl_basemanagement.c:2139
 msgid "You've reached the base limit."
 msgstr "You've reached the base limit."
 
-#: client/cl_basemanagement.c:2220
+#: client/cl_basemanagement.c:2254
 msgid "Storage is empty\n"
 msgstr "Storage is empty\n"
 
-#: client/cl_basemanagement.c:2222
+#: client/cl_basemanagement.c:2256
 msgid "Transfer is not possible - the base doesn't have a storage building"
 msgstr "Transfer is not possible - the base doesn't have a storage building"
 
-#: client/cl_basemanagement.c:2229
+#: client/cl_basemanagement.c:2263
 msgid "Transfer is not possible - the base doesn't have quarters"
 msgstr "Transfer is not possible - the base doesn't have quarters"
 
-#: client/cl_basemanagement.c:2236
+#: client/cl_basemanagement.c:2270
 msgid "Transfer is not possible - the base doesn't have a lab"
 msgstr "Transfer is not possible - the base doesn't have a lab"
 
-#: client/cl_basemanagement.c:2255
+#: client/cl_basemanagement.c:2289
 msgid "Transfer is not possible - the base doesn't have an alien containment"
 msgstr "Transfer is not possible - the base doesn't have an alien containment"
 
-#: client/cl_basemanagement.c:2277
+#: client/cl_basemanagement.c:2311
 msgid "Can't unload while we are not in the homebase"
 msgstr "Can't unload while we are not in the homebase"
 
-#: client/cl_basemanagement.c:2332
+#: client/cl_basemanagement.c:2366
 msgid "The base is not longer existent"
 msgstr "The base is not longer existent"
 
-#: client/cl_basemanagement.c:2349
+#: client/cl_basemanagement.c:2383
 msgid "The base doesn't have a storage"
 msgstr "The base doesn't have a storage"
 
-#: client/cl_basemanagement.c:2359
+#: client/cl_basemanagement.c:2393
 msgid "The base doesn't have a lab - can't unload the technologies here"
 msgstr "The base doesn't have a lab - can't unload the technologies here"
 
-#: client/cl_basemanagement.c:2373
+#: client/cl_basemanagement.c:2407
 msgid "The base doesn't have quarters - can't unload the employees here"
 msgstr "The base doesn't have quarters - can't unload the employees here"
 
-#: client/cl_basemanagement.c:2381
+#: client/cl_basemanagement.c:2415
 msgid "The base doesn't have an alien containment - can't unload the aliens here"
 msgstr "The base doesn't have an alien containment - can't unload the aliens here"
 
-#: client/cl_basemanagement.c:2384
+#: client/cl_basemanagement.c:2418
 msgid "Transport mission"
 msgstr "Transport mission"
 
-#: client/cl_basemanagement.c:2384
+#: client/cl_basemanagement.c:2418
 msgid "Transport mission ended, returning to homebase now"
 msgstr "Transport mission ended, returning to homebase now"
 
-#: client/cl_basemanagement.c:2406
+#: client/cl_basemanagement.c:2440
 msgid "Can't start the transport mission while we are not in the homebase"
 msgstr "Can't start the transport mission while we are not in the homebase"
 
-#: client/cl_basemanagement.c:2432
+#: client/cl_basemanagement.c:2466
 msgid "No target base selected"
 msgstr "No target base selected"
 
-#: client/cl_basemanagement.c:2432
+#: client/cl_basemanagement.c:2466
 msgid "Please select the target base from the list"
 msgstr "Please select the target base from the list"
 
-#: client/cl_basemanagement.c:2437
+#: client/cl_basemanagement.c:2471
 msgid "No aircraft selected"
 msgstr "No aircraft selected"
 
-#: client/cl_basemanagement.c:2437
+#: client/cl_basemanagement.c:2471
 msgid "Please select the aircraft to use from the list"
 msgstr "Please select the aircraft to use from the list"
 
-#: client/cl_basemanagement.c:2606
+#: client/cl_basemanagement.c:2640
 msgid "You can transfer equipment - this base has a storage building\n"
 msgstr "You can transfer equipment - this base has a storage building\n"
 
-#: client/cl_basemanagement.c:2609
+#: client/cl_basemanagement.c:2643
 msgid "No storage building in this base\n"
 msgstr "No storage building in this base\n"
 
-#: client/cl_basemanagement.c:2613
+#: client/cl_basemanagement.c:2647
 msgid "You can transfer employees - this base has quarters\n"
 msgstr "You can transfer employees - this base has quarters\n"
 
-#: client/cl_basemanagement.c:2616
+#: client/cl_basemanagement.c:2650
 msgid "No quarters in this base\n"
 msgstr "No quarters in this base\n"
 
-#: client/cl_basemanagement.c:2619
+#: client/cl_basemanagement.c:2653
 msgid "You can transfer techs - this base has a laboratory\n"
 msgstr "You can transfer techs - this base has a laboratory\n"
 
-#: client/cl_basemanagement.c:2621
+#: client/cl_basemanagement.c:2655
 msgid "No laboratory in this base\n"
 msgstr "No laboratory in this base\n"
 
-#: client/cl_basemanagement.c:2624
+#: client/cl_basemanagement.c:2658
 msgid "You can transfer aliens - this base has alien containment\n"
 msgstr "You can transfer aliens - this base has alien containment\n"
 
-#: client/cl_basemanagement.c:2626
+#: client/cl_basemanagement.c:2660
 msgid "No alien containment in this base\n"
 msgstr "No alien containment in this base\n"
 
-#: client/cl_basemanagement.c:2782
+#: client/cl_basemanagement.c:2816
 #, c-format
 msgid "Construction of %s building finished in base %s."
 msgstr "Construction of %s building finished in base %s."
 
-#: client/cl_basemanagement.c:2783
+#: client/cl_basemanagement.c:2817
 msgid "Building finished"
 msgstr "Building finished"
 
@@ -8825,28 +9060,28 @@ msgstr[0] "credit"
 msgstr[1] "credits"
 
 #: client/cl_campaign.c:1139
-#: client/cl_campaign.c:4096
+#: client/cl_campaign.c:4102
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "scientist"
 msgstr[1] "scientists"
 
 #: client/cl_campaign.c:1140
-#: client/cl_campaign.c:4098
+#: client/cl_campaign.c:4104
 msgid "medic"
 msgid_plural "medics"
 msgstr[0] "medic"
 msgstr[1] "medics"
 
 #: client/cl_campaign.c:1141
-#: client/cl_campaign.c:4095
+#: client/cl_campaign.c:4101
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "soldier"
 msgstr[1] "soldiers"
 
 #: client/cl_campaign.c:1142
-#: client/cl_campaign.c:4097
+#: client/cl_campaign.c:4103
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] "worker"
@@ -8989,30 +9224,30 @@ msgstr "Assemble or load a team"
 msgid "Your dropship is not near the landing zone"
 msgstr "Your dropship is not near the landing zone"
 
-#: client/cl_campaign.c:2734
+#: client/cl_campaign.c:2741
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s has been promoted to %s.\n"
 
-#: client/cl_campaign.c:2736
+#: client/cl_campaign.c:2743
 #, c-format
 msgid "%s has been awarded the posthumous rank of %s\\for inspirational gallantry in the face of overwhelming odds.\n"
 msgstr "%s has been awarded the posthumous rank of %s\\for inspirational gallantry in the face of overwhelming odds.\n"
 
-#: client/cl_campaign.c:2737
+#: client/cl_campaign.c:2744
 msgid "Soldier promoted"
 msgstr "Soldier promoted"
 
-#: client/cl_campaign.c:2883
+#: client/cl_campaign.c:2890
 #, c-format
 msgid "Defense of base: %s successful!"
 msgstr "Defense of base: %s successful!"
 
-#: client/cl_campaign.c:4091
+#: client/cl_campaign.c:4097
 msgid "Human"
 msgstr "Human"
 
-#: client/cl_campaign.c:4093
+#: client/cl_campaign.c:4099
 #, c-format
 msgid ""
 "Race: %s\n"
@@ -9054,111 +9289,119 @@ msgstr "Healing complete"
 msgid "%s\t%s\t(%i/%i)\n"
 msgstr "%s\t%s\t(%i/%i)\n"
 
-#: client/cl_input.c:706
+#: client/cl_input.c:699
 msgid "Rotate battlescape camera anti-clockwise"
 msgstr "Rotate battlescape camera anti-clockwise"
 
-#: client/cl_input.c:708
+#: client/cl_input.c:701
 msgid "Rotate battlescape camera clockwise"
 msgstr "Rotate battlescape camera clockwise"
 
-#: client/cl_input.c:710
+#: client/cl_input.c:703
 msgid "Tilt battlescape camera up"
 msgstr "Tilt battlescape camera up"
 
-#: client/cl_input.c:712
+#: client/cl_input.c:705
 msgid "Tilt battlescape camera down"
 msgstr "Tilt battlescape camera down"
 
-#: client/cl_input.c:714
+#: client/cl_input.c:707
 msgid "Move battlescape camera left"
 msgstr "Move battlescape camera left"
 
-#: client/cl_input.c:716
+#: client/cl_input.c:709
 msgid "Move battlescape camera right"
 msgstr "Move battlescape camera right"
 
-#: client/cl_input.c:718
+#: client/cl_input.c:711
 msgid "Move battlescape camera forward"
 msgstr "Move battlescape camera forward"
 
-#: client/cl_input.c:720
+#: client/cl_input.c:713
 msgid "Move battlescape camera backward"
 msgstr "Move battlescape camera backward"
 
-#: client/cl_input.c:722
-#: client/cl_input.c:755
+#: client/cl_input.c:715
+#: client/cl_input.c:739
 msgid "Zoom in"
 msgstr "Zoom in"
 
-#: client/cl_input.c:724
-#: client/cl_input.c:756
+#: client/cl_input.c:717
+#: client/cl_input.c:740
 msgid "Zoom out"
 msgstr "Zoom out"
 
-#: client/cl_input.c:729
+#: client/cl_input.c:720
 msgid "Select objects/Walk to a square/In fire mode, fire etc"
 msgstr "Select objects/Walk to a square/In fire mode, fire etc"
 
-#: client/cl_input.c:731
+#: client/cl_input.c:722
 msgid "Walk to a square/In fire mode, cancel action"
 msgstr "Walk to a square/In fire mode, cancel action"
 
-#: client/cl_input.c:733
+#: client/cl_input.c:724
 msgid "Turn soldier toward mouse pointer"
 msgstr "Turn soldier toward mouse pointer"
 
-#: client/cl_input.c:735
+#: client/cl_input.c:726
 msgid "Toggle stand/crounch"
 msgstr "Toggle stand/crounch"
 
-#: client/cl_input.c:736
+#: client/cl_input.c:727
 msgid "Toggle reaction fire"
 msgstr "Toggle reaction fire"
 
-#: client/cl_input.c:737
+#: client/cl_input.c:728
 msgid "Toogle to next alien"
 msgstr "Toogle to next alien"
 
-#: client/cl_input.c:752
+#: client/cl_input.c:734
+msgid "Reload the weapon in the soldiers left hand"
+msgstr "Reload the weapon in the soldiers left hand"
+
+#: client/cl_input.c:735
+msgid "Reload the weapon in the soldiers right hand"
+msgstr "Reload the weapon in the soldiers right hand"
+
+#: client/cl_input.c:736
 msgid "Ends current round"
 msgstr "Ends current round"
 
-#: client/cl_input.c:753
+#: client/cl_input.c:737
 msgid "Slice through terrain at a higher level"
 msgstr "Slice through terrain at a higher level"
 
-#: client/cl_input.c:754
+#: client/cl_input.c:738
 msgid "Slice through terrain at a lower level"
 msgstr "Slice through terrain at a lower level"
 
-#: client/cl_input.c:757
+#: client/cl_input.c:741
 msgid "Confirm the current action"
 msgstr "Confirm the current action"
 
-#: client/cl_input.c:765
+#: client/cl_input.c:749
 msgid "Toggle first-person/third-person camera mode"
 msgstr "Toggle first-person/third-person camera mode"
 
 #: client/cl_main.c:375
-#: client/cl_main.c:1010
+#: client/cl_main.c:1021
 msgid "Assemble a team first"
 msgstr "Assemble a team first"
 
 #: client/cl_main.c:375
-#: client/cl_main.c:1010
-#: client/cl_main.c:1574
-#: client/cl_main.c:1579
-#: client/cl_main.c:1585
-#: client/cl_main.c:1590
+#: client/cl_main.c:1021
+#: client/cl_main.c:1584
+#: client/cl_main.c:1589
+#: client/cl_main.c:1595
+#: client/cl_main.c:1600
 msgid "Error"
 msgstr "Error"
 
-#: client/cl_main.c:861
+#: client/cl_main.c:872
 msgid "No player connected\n"
 msgstr "No player connected\n"
 
-#: client/cl_main.c:899
+#: client/cl_main.c:910
 #, c-format
 msgid ""
 "IP\t%s\n"
@@ -9167,118 +9410,118 @@ msgstr ""
 "IP\t%s\n"
 "\n"
 
-#: client/cl_main.c:920
+#: client/cl_main.c:931
 #, c-format
 msgid "Map:\t%s\n"
 msgstr "Map:\t%s\n"
 
-#: client/cl_main.c:931
+#: client/cl_main.c:942
 #, c-format
 msgid "Version:\t%s\n"
 msgstr "Version:\t%s\n"
 
-#: client/cl_main.c:933
+#: client/cl_main.c:944
 #, c-format
 msgid "Servername:\t%s\n"
 msgstr "Servername:\t%s\n"
 
-#: client/cl_main.c:935
+#: client/cl_main.c:946
 #, c-format
 msgid "Moralestates:\t%s\n"
 msgstr "Moralestates:\t%s\n"
 
-#: client/cl_main.c:937
+#: client/cl_main.c:948
 #, c-format
 msgid "Teamplay:\t%s\n"
 msgstr "Teamplay:\t%s\n"
 
-#: client/cl_main.c:939
+#: client/cl_main.c:950
 #, c-format
 msgid "Max. players per team:\t%s\n"
 msgstr "Max. players per team:\t%s\n"
 
-#: client/cl_main.c:941
+#: client/cl_main.c:952
 #, c-format
 msgid "Max. teams allowed in this map:\t%s\n"
 msgstr "Max. teams allowed in this map:\t%s\n"
 
-#: client/cl_main.c:943
+#: client/cl_main.c:954
 #, c-format
 msgid "Max. clients:\t%s\n"
 msgstr "Max. clients:\t%s\n"
 
-#: client/cl_main.c:945
+#: client/cl_main.c:956
 #, c-format
 msgid "Max. soldiers per player:\t%s\n"
 msgstr "Max. soldiers per player:\t%s\n"
 
-#: client/cl_main.c:947
+#: client/cl_main.c:958
 #, c-format
 msgid "Max. soldiers per team:\t%s\n"
 msgstr "Max. soldiers per team:\t%s\n"
 
-#: client/cl_main.c:1176
+#: client/cl_main.c:1185
 msgid "Select a free team or your coop team"
 msgstr "Select a free team or your coop team"
 
-#: client/cl_main.c:1476
-#: client/cl_main.c:1490
+#: client/cl_main.c:1486
+#: client/cl_main.c:1500
 #, c-format
 msgid "Current team: %i"
 msgstr "Current team: %i"
 
-#: client/cl_main.c:1480
-#: client/cl_main.c:1494
+#: client/cl_main.c:1490
+#: client/cl_main.c:1504
 msgid "Team is already in use"
 msgstr "Team is already in use"
 
-#: client/cl_main.c:1504
-#: client/cl_main.c:1530
+#: client/cl_main.c:1514
+#: client/cl_main.c:1540
 msgid "Invalid or full team"
 msgstr "Invalid or full team"
 
-#: client/cl_main.c:1574
+#: client/cl_main.c:1584
 msgid "Local game version differs from the servers"
 msgstr "Local game version differs from the servers"
 
-#: client/cl_main.c:1579
+#: client/cl_main.c:1589
 msgid "Local map version differs from server"
 msgstr "Local map version differs from server"
 
-#: client/cl_main.c:1585
+#: client/cl_main.c:1595
 msgid "You are using modified ufo script files - you won't be able to connect to the server"
 msgstr "You are using modified ufo script files - you won't be able to connect to the server"
 
-#: client/cl_main.c:1590
+#: client/cl_main.c:1600
 #, c-format
 msgid "Local game version differs from the servers (%s)"
 msgstr "Local game version differs from the servers (%s)"
 
-#: client/cl_main.c:1871
+#: client/cl_main.c:1881
 msgid "Unnamed"
 msgstr "Unnamed"
 
-#: client/cl_main.c:2105
+#: client/cl_main.c:2116
 msgid "Chicken-hearted"
 msgstr "Chicken-hearted"
 
-#: client/cl_main.c:2107
+#: client/cl_main.c:2118
 msgid "Very Easy"
 msgstr "Very Easy"
 
-#: client/cl_main.c:2110
+#: client/cl_main.c:2121
 msgid "Easy"
 msgstr "Easy"
 
-#: client/cl_main.c:2115
+#: client/cl_main.c:2126
 msgid "Hard"
 msgstr "Hard"
 
-#: client/cl_main.c:2117
+#: client/cl_main.c:2128
 msgid "Very Hard"
 msgstr "Very Hard"
 
-#: client/cl_main.c:2119
+#: client/cl_main.c:2130
 msgid "Insane"
 msgstr "Insane"
 
@@ -9359,7 +9602,7 @@ msgstr "In: %i Out: %i"
 msgid "Key: %s"
 msgstr "Key: %s"
 
-#: client/cl_menu.c:2913
+#: client/cl_menu.c:2921
 msgid "Hide the HUD (press ESC to reactivate HUD)"
 msgstr "Hide the HUD (press ESC to reactivate HUD)"
 
@@ -9529,20 +9772,20 @@ msgstr " [not yet researchable]"
 msgid "Build a laboratory first"
 msgstr "Build a laboratory first"
 
-#: client/cl_research.c:1070
+#: client/cl_research.c:1071
 #, c-format
 msgid "Research of %s finished\n"
 msgstr "Research of %s finished\n"
 
-#: client/cl_research.c:1071
+#: client/cl_research.c:1072
 msgid "Research finished"
 msgstr "Research finished"
 
-#: client/cl_research.c:1371
+#: client/cl_research.c:1379
 msgid "No description available."
 msgstr "No description available."
 
-#: client/cl_scrn.c:384
+#: client/cl_scrn.c:383
 #, c-format
 msgid "Loading Map [%s]"
 msgstr "Loading Map [%s]"
@@ -9870,104 +10113,104 @@ msgstr "Time units:\t%i\n"
 msgid "Range:\t%g\n"
 msgstr "Range:\t%g\n"
 
-#: client/cl_ufopedia.c:224
+#: client/cl_ufopedia.c:223
 #, c-format
 msgid "Primary:\t%s\t(%s)\n"
 msgstr "Primary:\t%s\t(%s)\n"
 
-#: client/cl_ufopedia.c:225
+#: client/cl_ufopedia.c:224
 #, c-format
 msgid "Secondary:\t%s\t(%s)\n"
 msgstr "Secondary:\t%s\t(%s)\n"
 
-#: client/cl_ufopedia.c:227
+#: client/cl_ufopedia.c:226
 #, c-format
 msgid "Damage:\t%i / %i\n"
 msgstr "Damage:\t%i / %i\n"
 
-#: client/cl_ufopedia.c:229
+#: client/cl_ufopedia.c:228
 #, c-format
 msgid "Time units:\t%i / %i\n"
 msgstr "Time units:\t%i / %i\n"
 
-#: client/cl_ufopedia.c:230
+#: client/cl_ufopedia.c:229
 #, c-format
 msgid "Range:\t%g / %g\n"
 msgstr "Range:\t%g / %g\n"
 
-#: client/cl_ufopedia.c:232
+#: client/cl_ufopedia.c:231
 #, c-format
 msgid "Spreads:\t%g / %g\n"
 msgstr "Spreads:\t%g / %g\n"
 
-#: client/cl_ufopedia.c:237
-#: client/cl_ufopedia.c:330
+#: client/cl_ufopedia.c:236
+#: client/cl_ufopedia.c:335
 msgid "Unknown - need to research this"
 msgstr "Unknown - need to research this"
 
-#: client/cl_ufopedia.c:260
+#: client/cl_ufopedia.c:259
 msgid "Could not find armor definition"
 msgstr "Could not find armor definition"
 
-#: client/cl_ufopedia.c:262
+#: client/cl_ufopedia.c:261
 #, c-format
 msgid "Item %s is no armor but %s"
 msgstr "Item %s is no armor but %s"
 
-#: client/cl_ufopedia.c:272
+#: client/cl_ufopedia.c:271
 #, c-format
 msgid "%s:\tProtection: %i\tHardness: %i\n"
 msgstr "%s:\tProtection: %i\tHardness: %i\n"
 
-#: client/cl_ufopedia.c:296
+#: client/cl_ufopedia.c:295
 msgid "Error - could not find building"
 msgstr "Error - could not find building"
 
-#: client/cl_ufopedia.c:298
+#: client/cl_ufopedia.c:297
 #, c-format
 msgid "Depends:\t%s\n"
 msgstr "Depends:\t%s\n"
 
-#: client/cl_ufopedia.c:299
+#: client/cl_ufopedia.c:298
 #, c-format
 msgid "Buildtime:\t%i day\n"
 msgid_plural "Buildtime:\t%i days\n"
 msgstr[0] "Buildtime:\t%i day\n"
 msgstr[1] "Buildtime:\t%i days\n"
 
-#: client/cl_ufopedia.c:300
+#: client/cl_ufopedia.c:299
 #, c-format
 msgid "Fixcosts:\t%i c\n"
 msgstr "Fixcosts:\t%i c\n"
 
-#: client/cl_ufopedia.c:301
+#: client/cl_ufopedia.c:300
 #, c-format
 msgid "Running costs:\t%i c\n"
 msgstr "Running costs:\t%i c\n"
 
-#: client/cl_ufopedia.c:320
+#: client/cl_ufopedia.c:319
 msgid "Error - could not find aircraft"
 msgstr "Error - could not find aircraft"
 
-#: client/cl_ufopedia.c:323
+#: client/cl_ufopedia.c:322
 #, c-format
 msgid "Fuel:\t%i\n"
 msgstr "Fuel:\t%i\n"
 
-#: client/cl_ufopedia.c:327
+#: client/cl_ufopedia.c:326
 #, c-format
 msgid "Equipment:\t%s\n"
 msgstr "Equipment:\t%s\n"
 
-#: client/cl_ufopedia.c:402
+#: client/cl_ufopedia.c:406
 msgid "No pre-research description available."
 msgstr "No pre-research description available."
 
-#: client/cl_ufopedia.c:560
+#: client/cl_ufopedia.c:564
 msgid "Ufopedia Content"
 msgstr "Ufopedia Content"
 
-#: client/cl_ufopedia.c:615
+#: client/cl_ufopedia.c:619
 #, c-format
 msgid "Ufopedia Index: %s"
 msgstr "Ufopedia Index: %s"
@@ -9996,71 +10239,76 @@ msgstr "Send a message to all players"
 msgid "Send a message to allied team members"
 msgstr "Send a message to allied team members"
 
-#: game/g_client.c:600
+#: game/g_client.c:599
 msgid "Can't perform action - this isn't your round!\n"
 msgstr "Can't perform action - this isn't your round!\n"
 
-#: game/g_client.c:607
+#: game/g_client.c:606
 msgid "Can't perform action - object not present!\n"
 msgstr "Can't perform action - object not present!\n"
 
-#: game/g_client.c:612
+#: game/g_client.c:611
 msgid "Can't perform action - not an actor!\n"
 msgstr "Can't perform action - not an actor!\n"
 
-#: game/g_client.c:617
+#: game/g_client.c:616
 msgid "Can't perform action - actor is stunned!\n"
 msgstr "Can't perform action - actor is stunned!\n"
 
-#: game/g_client.c:622
+#: game/g_client.c:621
 msgid "Can't perform action - actor is dead!\n"
 msgstr "Can't perform action - actor is dead!\n"
 
-#: game/g_client.c:627
+#: game/g_client.c:626
 msgid "Can't perform action - not on same team!\n"
 msgstr "Can't perform action - not on same team!\n"
 
-#: game/g_client.c:632
+#: game/g_client.c:631
 msgid "Can't perform action - no control over allied actors!\n"
 msgstr "Can't perform action - no control over allied actors!\n"
 
-#: game/g_client.c:637
-#: game/g_client.c:739
+#: game/g_client.c:636
+#: game/g_client.c:738
 msgid "Can't perform action - not enough TUs!\n"
 msgstr "Can't perform action - not enough TUs!\n"
 
-#: game/g_client.c:742
+#: game/g_client.c:741
 msgid "Can't perform action - weapon already fully loaded with the same ammunition!\n"
 msgstr "Can't perform action - weapon already fully loaded with the same ammunition!\n"
 
-#: game/g_client.c:1222
+#: game/g_client.c:1221
 msgid "Currently shaken, won't let it's guard down.\n"
 msgstr "Currently shaken, won't let its guard down.\n"
 
-#: game/g_client.c:1293
+#: game/g_client.c:1292
 #, c-format
 msgid "%s panics!\n"
 msgstr "%s panics!\n"
 
-#: game/g_client.c:1346
+#: game/g_client.c:1345
 #, c-format
 msgid "%s is on a rampage.\n"
 msgstr "%s is on a rampage.\n"
 
-#: game/g_client.c:1348
+#: game/g_client.c:1347
 #, c-format
 msgid "%s is in mad rage!\n"
 msgstr "%s is in mad rage!\n"
 
-#: game/g_client.c:1401
+#: game/g_client.c:1400
 #, c-format
 msgid "%s is currently shaken.\n"
 msgstr "%s is currently shaken.\n"
 
-#: game/g_client.c:1856
+#: game/g_client.c:1860
 #, c-format
 msgid "Team %i ( %s) will get the first turn.\n"
 msgstr "Team %i ( %s) will get the first turn.\n"
+
+#: game/g_svcmds.c:356
+#, c-format
+msgid "Team %i (%s) will get the first turn.\n"
+msgstr "Team %i (%s) will get the first turn.\n"
 
 #: po/OTHER_STRINGS:2
 msgid "Yes"
