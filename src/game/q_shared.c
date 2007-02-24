@@ -3996,3 +3996,27 @@ int Com_GetDefaultReactionFire (objDef_t *ammo, int weapon_fds_idx)
 
 	return 0; /* 0 = The first firemode. Default for objects without a reaction-firemode */
 }
+
+/**
+ * @brief Safe (null terminating) vsnprintf implementation
+ */
+int Q_vsnprintf (char *str, size_t size, const char *format, va_list ap)
+{
+	size_t len;
+#if defined(_WIN32)
+	len = _vsnprintf(str, size, format, ap);
+	str[size-1] = '\0';
+#else
+	len = vsnprintf(str, size, format, ap);
+#endif
+
+#ifdef DEBUG
+	if (len >= size)
+		Com_Printf("Q_vsnprintf: string was truncated - target buffer too small\n");
+#endif
+
+	if (len < 0)
+		Com_Printf("Q_vsnprintf: error %i\n", len);
+
+	return len;
+}

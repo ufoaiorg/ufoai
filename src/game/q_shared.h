@@ -85,9 +85,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # ifndef snprintf
 #  define snprintf _snprintf
 # endif
-# define Q_vsnprintf _vsnprintf
-#else
-# define Q_vsnprintf vsnprintf
 #endif
 
 /* i18n support via gettext */
@@ -397,6 +394,8 @@ int Q_strcmp(const char *s1, const char *s2) __attribute__((nonnull));
 int Q_stricmp(const char *s1, const char *s2) __attribute__((nonnull));
 int Q_strcasecmp(const char *s1, const char *s2) __attribute__((nonnull));
 int Q_strncasecmp(const char *s1, const char *s2, size_t n) __attribute__((nonnull));
+
+int Q_vsnprintf(char *str, size_t size, const char *format, va_list ap);
 
 int Q_StringSort(const void *string1, const void *string2) __attribute__((nonnull));
 
