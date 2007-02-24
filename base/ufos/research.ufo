@@ -1281,7 +1281,7 @@ tech rs_weapon_pbeamcannon
 	{
 		tech rs_skill_explosive
 		tech rs_skill_heavy
-		item pbeamcannon 7
+		item pbeamcannon 1
 	}
 
 	provides	pbeamcannon
