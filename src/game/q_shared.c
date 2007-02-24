@@ -4014,12 +4014,9 @@ int Q_vsnprintf (char *str, size_t size, const char *format, va_list ap)
 #else
 	len = vsnprintf(str, size, format, ap);
 #ifdef DEBUG
-	if (len >= size)
+	if ((size_t)len >= size)
 		Com_Printf("Q_vsnprintf: string was truncated - target buffer too small\n");
 #endif
-
-	if (len < 0)
-		Com_Printf("Q_vsnprintf: error %i\n", len);
 #endif
 
 	return len;
