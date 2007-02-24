@@ -4002,14 +4002,17 @@ int Com_GetDefaultReactionFire (objDef_t *ammo, int weapon_fds_idx)
  */
 int Q_vsnprintf (char *str, size_t size, const char *format, va_list ap)
 {
-	size_t len;
+	int len;
+
 #if defined(_WIN32)
 	len = _vsnprintf(str, size, format, ap);
 	str[size-1] = '\0';
+#ifdef DEBUG
+	if (len == -1)
+		Com_Printf("Q_vsnprintf: string was truncated - target buffer too small\n");
+#endif
 #else
 	len = vsnprintf(str, size, format, ap);
-#endif
-
 #ifdef DEBUG
 	if (len >= size)
 		Com_Printf("Q_vsnprintf: string was truncated - target buffer too small\n");
@@ -4017,6 +4020,7 @@ int Q_vsnprintf (char *str, size_t size, const char *format, va_list ap)
 
 	if (len < 0)
 		Com_Printf("Q_vsnprintf: error %i\n", len);
+#endif
 
 	return len;
 }
