@@ -322,6 +322,40 @@ static void CL_ParseServerData (void)
 
 /**
  * @brief
+ */
+static void CL_LoadClientinfo (clientinfo_t *ci, char *s)
+{
+	char		*t;
+
+	Q_strncpyz(ci->cinfo, s, sizeof(ci->cinfo));
+
+	/* isolate the player's name */
+	Q_strncpyz(ci->name, s, sizeof(ci->name));
+	t = strstr(s, "\\");
+	if (t) {
+		ci->name[t-s] = 0;
+		s = t+1;
+	}
+	Com_Printf("name: %s\n", ci->name);
+}
+
+/**
+ * @brief
+ */
+static void CL_ParseClientinfo (int player)
+{
+	char			*s;
+	clientinfo_t	*ci;
+
+	s = cl.configstrings[player+CS_PLAYERSKINS];
+
+	ci = &cl.clientinfo[player];
+
+	CL_LoadClientinfo(ci, s);
+}
+
+/**
+ * @brief
  * @sa PF_Configstring
  */
 static void CL_ParseConfigString (void)
@@ -353,21 +387,24 @@ static void CL_ParseConfigString (void)
 		CL_SetLightstyle (i - CS_LIGHTS);
 	else if (i == CS_CDTRACK) {
 		if (cl.refresh_prepped)
-			CDAudio_Play (atoi(cl.configstrings[CS_CDTRACK]), qtrue);
-	} else if (i >= CS_MODELS && i < CS_MODELS+MAX_MODELS) {
+			CDAudio_Play(atoi(cl.configstrings[CS_CDTRACK]), qtrue);
+	} else if (i >= CS_MODELS && i < CS_MODELS + MAX_MODELS) {
 		if (cl.refresh_prepped) {
-			cl.model_draw[i-CS_MODELS] = re.RegisterModel (cl.configstrings[i]);
+			cl.model_draw[i-CS_MODELS] = re.RegisterModel(cl.configstrings[i]);
 			if (cl.configstrings[i][0] == '*')
-				cl.model_clip[i-CS_MODELS] = CM_InlineModel (cl.configstrings[i]);
+				cl.model_clip[i-CS_MODELS] = CM_InlineModel(cl.configstrings[i]);
 			else
 				cl.model_clip[i-CS_MODELS] = NULL;
 		}
 	} else if (i >= CS_SOUNDS && i < CS_SOUNDS+MAX_MODELS) {
 		if (cl.refresh_prepped)
-			cl.sound_precache[i-CS_SOUNDS] = S_RegisterSound (cl.configstrings[i]);
-	} else if (i >= CS_IMAGES && i < CS_IMAGES+MAX_MODELS) {
+			cl.sound_precache[i-CS_SOUNDS] = S_RegisterSound(cl.configstrings[i]);
+	} else if (i >= CS_IMAGES && i < CS_IMAGES + MAX_MODELS) {
 		if (cl.refresh_prepped)
-			cl.image_precache[i-CS_IMAGES] = re.RegisterPic (cl.configstrings[i]);
+			cl.image_precache[i-CS_IMAGES] = re.RegisterPic(cl.configstrings[i]);
+	} else if (i >= CS_PLAYERSKINS && i < CS_PLAYERSKINS + MAX_CLIENTS) {
+		if (cl.refresh_prepped)
+			CL_ParseClientinfo(i-CS_PLAYERSKINS);
 	}
 }
 
