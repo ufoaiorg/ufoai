@@ -915,6 +915,7 @@ static void CL_MarkTeam_f (void)
 			Cbuf_AddText(va("listdisable%i\n", k));
 
 		for (j = 0; j < csi.numIDs; j++) {
+			/* FIXME: Wouldn't it be better here to check for temp containers */
 			if (j != csi.idFloor && j != csi.idEquip && gd.employees[EMPL_SOLDIER][i].inv.c[j])
 				break;
 		}

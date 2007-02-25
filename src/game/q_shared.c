@@ -2591,7 +2591,7 @@ int Com_MoveInInventory (inventory_t* const i, int from, int fx, int fy, int to,
  * @param[in] container
  * @sa Com_DestroyInventory
  */
-void Com_EmptyContainer(inventory_t* const i, const int container)
+void Com_EmptyContainer (inventory_t* const i, const int container)
 {
 	invList_t *ic, *old;
 
@@ -2714,6 +2714,7 @@ int Com_TryAddToBuyType (inventory_t* const inv, item_t item, int container)
 	int x, y;
 	inventory_t hackInv;
 
+	/* link the temp container */
 	hackInv.c[CSI->idEquip] = inv->c[container];
 
 	Com_FindSpace(&hackInv, item.t, CSI->idEquip, &x, &y);
