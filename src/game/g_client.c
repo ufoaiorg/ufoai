@@ -887,6 +887,13 @@ void G_InventoryToFloor (edict_t * ent)
 		/* skip floor - we want to drop to floor */
 		if (k == gi.csi->idFloor)
 			continue;
+		/* skip csi->idArmor, we will collect armours using idArmour container,
+		   not idFloor */
+		if (k == gi.csi->idArmor) {
+			if (ent->i.c[gi.csi->idArmor])
+				Com_DPrintf("G_InventoryToFloor()... this actor has armour: %s\n", gi.csi->ods[ent->i.c[gi.csi->idArmor]->item.t].name);
+			continue;
+		}
 		/* now cycle through all items for the container of the character (or the entity) */
 		for (ic = ent->i.c[k]; ic; ic = next) {
 			int x, y;
@@ -917,11 +924,18 @@ void G_InventoryToFloor (edict_t * ent)
 #endif
 			}
 		}
+
 		/* destroy link */
 		ent->i.c[k] = NULL;
+
 	}
 
 	FLOOR(ent) = FLOOR(floor);
+
+	if (ent->i.c[gi.csi->idArmor])
+		Com_DPrintf("At the end of G_InventoryToFloor()... this actor has armor in idArmor container: %s\n", gi.csi->ods[ent->i.c[gi.csi->idArmor]->item.t].name);
+	else
+		Com_DPrintf("At the end of G_InventoryToFloor()... this actor has NOT armor in idArmor container\n");
 
 	/* send item info to the clients */
 	G_CheckVis(floor, qtrue);
