@@ -81,32 +81,36 @@ static const vec3_t baseaxis[18] =
 /**
  * @brief
  */
-static void TextureAxisFromPlane(plane_t *pln, vec3_t xv, vec3_t yv)
+static void TextureAxisFromPlane (plane_t *pln, vec3_t xv, vec3_t yv, qboolean isTerrain)
 {
 	int		bestaxis;
 	vec_t	dot,best;
 	int		i;
+	int numaxis;
+
+	/* Knightmare- terrain support, use floor/ceiling axis only */
+	numaxis = (isTerrain) ? 2 : 6;
 
 	best = 0;
 	bestaxis = 0;
 
-	for (i = 0; i < 6; i++) {
-		dot = DotProduct (pln->normal, baseaxis[i*3]);
+	for (i = 0; i < numaxis; i++) {
+		dot = DotProduct(pln->normal, baseaxis[i*3]);
 		if (dot > best) {
 			best = dot;
 			bestaxis = i;
 		}
 	}
 
-	VectorCopy (baseaxis[bestaxis*3+1], xv);
-	VectorCopy (baseaxis[bestaxis*3+2], yv);
+	VectorCopy(baseaxis[bestaxis*3+1], xv);
+	VectorCopy(baseaxis[bestaxis*3+2], yv);
 }
 
 
 /**
  * @brief
  */
-extern int TexinfoForBrushTexture (plane_t *plane, brush_texture_t *bt, vec3_t origin)
+extern int TexinfoForBrushTexture (plane_t *plane, brush_texture_t *bt, vec3_t origin, qboolean isTerrain)
 {
 	vec3_t vecs[2];
 	int sv, tv;
@@ -123,7 +127,7 @@ extern int TexinfoForBrushTexture (plane_t *plane, brush_texture_t *bt, vec3_t o
 	memset (&tx, 0, sizeof(tx));
 	strcpy (tx.texture, bt->name);
 
-	TextureAxisFromPlane(plane, vecs[0], vecs[1]);
+	TextureAxisFromPlane(plane, vecs[0], vecs[1], isTerrain);
 
 	shift[0] = DotProduct (origin, vecs[0]);
 	shift[1] = DotProduct (origin, vecs[1]);
@@ -208,7 +212,7 @@ skip:;
 	if (textureref[mt].animname[0]) {
 		anim = *bt;
 		strcpy (anim.name, textureref[mt].animname);
-		tc->nexttexinfo = TexinfoForBrushTexture (plane, &anim, origin);
+		tc->nexttexinfo = TexinfoForBrushTexture (plane, &anim, origin, isTerrain);
 	} else
 		tc->nexttexinfo = -1;
 

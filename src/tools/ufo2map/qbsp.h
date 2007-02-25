@@ -96,6 +96,9 @@ typedef struct brush_s
 	side_t	*original_sides;
 
 	qboolean finished;
+	qboolean isTerrain;
+	qboolean isGenSurf;
+	qboolean optimizedDetail;
 } mapbrush_t;
 
 #define	PLANENUM_LEAF			-1
@@ -238,20 +241,20 @@ typedef struct
 #define	MAX_MAP_TEXTURES	1024
 
 extern	textureref_t	textureref[MAX_MAP_TEXTURES];
-int	FindMiptex (char *name);
-int TexinfoForBrushTexture (plane_t *plane, brush_texture_t *bt, vec3_t origin);
+int	FindMiptex(char *name);
+int TexinfoForBrushTexture(plane_t *plane, brush_texture_t *bt, vec3_t origin, qboolean isTerrain);
 
 /* draw.c */
 
 extern vec3_t	draw_mins, draw_maxs;
 extern	qboolean	drawflag;
 
-void Draw_ClearWindow (void);
-void DrawWinding (winding_t *w);
+void Draw_ClearWindow(void);
+void DrawWinding(winding_t *w);
 
-void GLS_BeginScene (void);
-void GLS_Winding (winding_t *w, int code);
-void GLS_EndScene (void);
+void GLS_BeginScene(void);
+void GLS_Winding(winding_t *w, int code);
+void GLS_EndScene(void);
 
 /* csg */
 

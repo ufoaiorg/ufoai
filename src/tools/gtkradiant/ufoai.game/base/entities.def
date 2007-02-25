@@ -75,7 +75,10 @@ Non-displayed light.
 
 
 /*QUAKED func_group (0 0 0) ?
-Only for editor convenience.
+Only for editor and terrain convenience.
+"terrain"
+"gensurf"
+"phongshading"
 */
 
 /*QUAKED func_breakable (0 0 0) ? level1 level2 level3 level4 level5 level6 level7 level8

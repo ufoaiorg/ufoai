@@ -830,6 +830,10 @@ static face_t *FaceFromPortal (portal_t *p, int pside)
 	if (!side)
 		return NULL;
 
+	/* nodraw/caulk faces */
+	if ((side->surf & SURF_NODRAW) && !(side->surf & SURF_SKIP))
+		return NULL;
+
 	f = AllocFace();
 
 	f->texinfo = side->texinfo;

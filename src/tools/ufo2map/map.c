@@ -490,6 +490,7 @@ static void ParseBrush (entity_t *mapent)
 	int			planenum;
 	brush_texture_t	td;
 	int			planepts[3][3];
+	qboolean		phongShading;
 
 	if (nummapbrushes == MAX_MAP_BRUSHES)
 		Error("nummapbrushes == MAX_MAP_BRUSHES (%i)", nummapbrushes);
@@ -499,10 +500,24 @@ static void ParseBrush (entity_t *mapent)
 	b->entitynum = num_entities-1;
 	b->brushnum = nummapbrushes - mapent->firstbrush;
 
+	b->optimizedDetail = qfalse;
+	b->isTerrain = (!strcmp("func_group", ValueForKey(&entities[b->entitynum], "classname"))
+				&& strlen(ValueForKey(&entities[b->entitynum], "terrain")) > 0);
+	b->isGenSurf = (!strcmp("func_group", ValueForKey(&entities[b->entitynum], "classname"))
+				&& strlen(ValueForKey(&entities[b->entitynum], "gensurf")) > 0);
+	phongShading = (!strcmp("func_group", ValueForKey(&entities[b->entitynum], "classname"))
+				&& strlen(ValueForKey(&entities[b->entitynum], "phongshading")) > 0);
+#if 1
+	if (b->isTerrain)
+		Sys_Printf("Brush number %i in entity number %i has terrain flag set.\n", b->brushnum, b->entitynum);
+	if (phongShading)
+		Sys_Printf("Brush number %i in entity number %i has phong shading flag set.\n", b->brushnum, b->entitynum);
+#endif
+
 	do {
-		if (!GetToken (qtrue))
+		if (!GetToken(qtrue))
 			break;
-		if (!strcmp (token, "}") )
+		if (!strcmp(token, "}") )
 			break;
 
 		if (nummapbrushsides == MAX_MAP_BRUSHSIDES)
@@ -600,7 +615,7 @@ static void ParseBrush (entity_t *mapent)
 		side = b->original_sides + b->numsides;
 		side->planenum = planenum;
 		side->texinfo = TexinfoForBrushTexture(&mapplanes[planenum],
-			&td, vec3_origin);
+			&td, vec3_origin, b->isTerrain);
 
 		/* save the td off in case there is an origin brush and we */
 		/* have to recalculate the texinfo */
@@ -611,7 +626,7 @@ static void ParseBrush (entity_t *mapent)
 	} while (1);
 
 	/* get the content for the entire brush */
-	b->contents = BrushContents (b);
+	b->contents = BrushContents(b);
 
 	/* allow detail brushes to be removed  */
 	if (nodetail && (b->contents & CONTENTS_DETAIL)) {
@@ -624,6 +639,29 @@ static void ParseBrush (entity_t *mapent)
 		b->numsides = 0;
 		return;
 	}
+
+	/* Knightmare- check if this is an optimized detail brush (has caulk faces)
+	 * also exclude trans brushes and terrain */
+	if ((b->contents & CONTENTS_DETAIL) && (b->contents & CONTENTS_SOLID) && !b->isTerrain && !b->isGenSurf)
+		for (i = 0; i < b->numsides; i++) {
+			/* nodraw/caulk faces */
+			if ((b->original_sides[i].surf & SURF_NODRAW) && !(b->original_sides[i].surf & SURF_SKIP)) {
+				b->optimizedDetail = qtrue;
+				Sys_Printf("Entity %i, Brush %i: optimized detail\n", b->entitynum, b->brushnum);
+				break;
+			}
+		}
+
+	/* Knightmare- special handling for terrain brushes */
+	if (b->isTerrain || b->isGenSurf || phongShading)
+		for (i = 0; i < b->numsides; i++) {
+			s2 = &b->original_sides[i];
+			/* set ArghRad phong shading value (because EasyGen/GTKGenSurf doesn't allow this) */
+			if (!(b->original_sides[i].surf & SURF_NODRAW) && (b->original_sides[i].surf & SURF_SKIP)) {
+				texinfo[s2->texinfo].value = 777 + b->entitynum;	/* lucky 7's */
+				texinfo[s2->texinfo].flags &= ~SURF_LIGHT;			/* must not be light-emitting */
+			}
+		}
 
 	/* create windings for sides and bounds for brush */
 	MakeBrushWindings (b);
@@ -775,7 +813,7 @@ static qboolean ParseMapEntity (void)
 					DotProduct(mapplanes[s->planenum].normal, mapent->origin);
 				s->planenum = FindFloatPlane(mapplanes[s->planenum].normal, newdist);
 				s->texinfo = TexinfoForBrushTexture(&mapplanes[s->planenum],
-					&side_brushtextures[s-brushsides], mapent->origin);
+					&side_brushtextures[s-brushsides], mapent->origin, qfalse);
 			}
 			MakeBrushWindings(b);
 		}
