@@ -819,7 +819,7 @@ static void CL_ClipMoveToLEs (moveclip_t * clip)
 			VectorCopy(le->origin, origin);
 		}
 
-		assert(headnode < curTile->numnodes);
+		assert(headnode < MAX_MAP_NODES);
 		trace = CM_TransformedBoxTrace(clip->start, clip->end, clip->mins, clip->maxs, 0, headnode, clip->contentmask, origin, angles);
 
 		if (trace.fraction < clip->trace.fraction) {
