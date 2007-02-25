@@ -1710,7 +1710,7 @@ static qboolean CL_GameSave (char *filename, char *comment)
  */
 static void CL_GameSave_f (void)
 {
-	char comment[MAX_COMMENTLENGTH];
+	char comment[MAX_COMMENTLENGTH] = "";
 	char *arg;
 	qboolean result;
 
@@ -1734,8 +1734,7 @@ static void CL_GameSave_f (void)
 		/* comment as parameter */
 		else
 			Q_strncpyz(comment, arg, MAX_COMMENTLENGTH);
-	} else
-		comment[0] = 0;
+	}
 
 	/* save the game */
 	result = CL_GameSave(Cmd_Argv(1), comment);
