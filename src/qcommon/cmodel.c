@@ -1426,7 +1426,7 @@ static int CM_BoxLeafnums_headnode (vec3_t mins, vec3_t maxs, int *list, int lis
 
 	leaf_topnode = -1;
 
-	assert(headnode < curTile->numnodes);
+	assert(headnode < curTile->numnodes + 6); /* +6 => bbox */
 	CM_BoxLeafnums_r(headnode);
 
 	if (topnode)
@@ -1854,7 +1854,7 @@ static trace_t CM_BoxTrace (vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, 
 	assert(tile < numTiles);
 	curTile = &mapTiles[tile];
 
-	assert(headnode < curTile->numnodes);
+	assert(headnode < curTile->numnodes + 6); /* +6 => bbox */
 
 	/* fill in a default trace */
 	memset(&trace_trace, 0, sizeof(trace_trace));
@@ -1934,7 +1934,7 @@ trace_t CM_TransformedBoxTrace (vec3_t start, vec3_t end, vec3_t mins, vec3_t ma
 	vec3_t temp;
 	qboolean rotated;
 
-	assert(headnode < curTile->numnodes);
+	assert(headnode < curTile->numnodes + 6); /* +6 => bbox */
 
 	if (tile >= MAX_MAPTILES) {
 		Com_Printf("CM_TransformedBoxTrace: too many tiles loaded\n");
