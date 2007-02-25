@@ -2816,9 +2816,11 @@ static void MN_ReloadMenus_f (void)
 	if (menuStackPos <= 0)
 		return;
 
+	assert(adataize);
+
 	/* pre-stage parsing */
 	FS_BuildFileList( "ufos/*.ufo" );
-	FS_NextScriptHeader( NULL, NULL, NULL );
+	FS_NextScriptHeader(NULL, NULL, NULL);
 	text = NULL;
 
 	/* reset menu structures */
@@ -2828,13 +2830,8 @@ static void MN_ReloadMenus_f (void)
 	numMenuModels = 0;
 
 	/* get action data memory */
-	if (adataize)
-		memset(adata, 0, adataize);
-	else {
-		Hunk_Begin(0x40000);
-		adata = Hunk_Alloc(0x40000);
-		adataize = Hunk_End();
-	}
+	memset(adata, 0, adataize);
+
 	curadata = adata;
 
 	while ((type = FS_NextScriptHeader( "ufos/*.ufo", &name, &text)) != 0 )
@@ -2924,9 +2921,9 @@ void MN_ResetMenus (void)
 	if (adataize)
 		memset(adata, 0, adataize);
 	else {
-		Hunk_Begin(0x40000);
-		adata = Hunk_Alloc(0x40000);
-		adataize = Hunk_End();
+		/* 256kb */
+		adata = malloc(0x40000);
+		adataize = 0x40000;
 	}
 	curadata = adata;
 
@@ -2953,7 +2950,9 @@ void MN_Shutdown (void)
 {
 	/* free the memory */
 	if (adataize)
-		Hunk_Free(adata);
+		free(adata);
+	adata = NULL;
+	adataize = 0;
 }
 
 /*
