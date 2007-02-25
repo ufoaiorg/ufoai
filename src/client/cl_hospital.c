@@ -54,7 +54,7 @@ void HOS_CheckRemovalFromEmployeeList (employee_t* employee)
 		for (; i < employeesInHospitalListCount; i++, j++) {
 			if (employeesInHospitalList[i] == employee) {
 				j++;
-				Com_sprintf(messageBuffer, sizeof(messageBuffer), "Healing of %s completed - %i active healings left\n", employee->chr.name, employeesInHospitalListCount-1);
+				Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Healing of %s completed - %i active healings left\n"), employee->chr.name, employeesInHospitalListCount-1);
 				employeesInHospitalListCount--;
 				MN_AddNewMessage(_("Healing complete"), messageBuffer, qfalse, MSG_STANDARD, NULL);
 			}
@@ -62,8 +62,11 @@ void HOS_CheckRemovalFromEmployeeList (employee_t* employee)
 		}
 		for (; j < MAX_EMPLOYEES_IN_HOSPITAL; j++)
 			employeesInHospitalList[j] = NULL;
-	} else
-		Com_Printf("character with %i hp\n", employee->chr.HP);
+#ifdef DEBUG
+	} else {
+		Com_DPrintf("character with %i hp\n", employee->chr.HP);
+#endif
+	}
 }
 
 /**
