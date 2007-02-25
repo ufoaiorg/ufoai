@@ -609,6 +609,7 @@ static int CM_EntTestLine (vec3_t start, vec3_t stop)
 		if (!model)
 			continue;
 /*		Com_Printf("CM_EntTestLine call function\n"); */
+		assert(model->headnode < curTile->numnodes);
 		trace = CM_TransformedBoxTrace(start, stop, vec3_origin, vec3_origin, model->tile, model->headnode, MASK_ALL, model->origin, vec3_origin);
 		/* if we started the trace in a wall */
 		/* or the trace is not finished */
@@ -649,6 +650,7 @@ static int CM_EntTestLineDM (vec3_t start, vec3_t stop, vec3_t end)
 		if (!model)
 			continue;
 /*		Com_Printf("CM_EntTestLineDM call function\n"); */
+		assert(model->headnode < curTile->numnodes);
 		trace = CM_TransformedBoxTrace(start, end, vec3_origin, vec3_origin, model->tile, model->headnode, MASK_ALL, model->origin, vec3_origin);
 		/* if we started the trace in a wall */
 		if (trace.startsolid) {

@@ -371,6 +371,7 @@ static void SV_ClipMoveToEntities (moveclip_t * clip)
 		if (touch->solid != SOLID_BSP)
 			angles = vec3_origin;	/* boxes don't rotate */
 
+		assert(headnode < curTile->numnodes);
 		trace = CM_TransformedBoxTrace(clip->start, clip->end, clip->mins, clip->maxs, tile, headnode, clip->contentmask, touch->origin, angles);
 
 #ifdef PARANOID
