@@ -708,6 +708,10 @@ char *MSG_ReadStringLine (sizebuf_t * msg_read)
 		c = MSG_ReadByte(msg_read);
 		if (c == -1 || c == 0 || c == '\n')
 			break;
+		/* translate all format specs to avoid crash bugs */
+		/* don't allow higher ascii values */
+		if (c == '%' || c > 127)
+			c = '.';
 		string[l] = c;
 		l++;
 	} while (l < sizeof(string) - 1);
