@@ -80,11 +80,6 @@ typedef struct {
 typedef struct {
 	char name[MAX_QPATH];
 	char cinfo[MAX_QPATH];
-	struct image_s *skin;
-	struct image_s *icon;
-	char iconname[MAX_QPATH];
-	struct model_s *model;
-	struct model_s *weaponmodel[MAX_CLIENTWEAPONMODELS];
 } clientinfo_t;
 
 #define	CMD_BACKUP		64		/* allow a lot of command backups for very fast systems */
@@ -1012,8 +1007,6 @@ extern qboolean blockEvents;
 
 void CL_SetLastMoving(le_t *le);
 void CL_ParseServerMessage(void);
-void CL_LoadClientinfo(clientinfo_t * ci, char *s);
-void CL_ParseClientinfo(int player);
 void CL_InitEvents(void);
 void CL_Events(void);
 
