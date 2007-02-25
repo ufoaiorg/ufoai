@@ -877,6 +877,10 @@ void RS_UpdateData (void)
 
 		/* TODO: add check for collected items */
 
+		/* Don't show technologies with time == 0 - those are NOT separate research topics. */
+		if (tech->time == 0)
+			continue;
+
 		if (tech->statusCollected && !tech->statusResearchable && (tech->statusResearch != RS_FINISH)) {
 			/* An unresearched collected item that cannot yet be researched. */
 			Q_strcat(name, _(" [not yet researchable]"), MAX_VAR);
