@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define snd_buf (si->dma->samples * 2)
 
 static arts_stream_t stream;
-static int snd_inited;
+static int snd_inited = 0;
 static struct sndinfo *si;
 
 /**
@@ -49,14 +49,16 @@ qboolean SND_Init (struct sndinfo *s)
 
 	errorcode = arts_init();
 
-	if (errorcode)
-		Com_Printf ("aRts: %s\n", arts_error_text(errorcode));
+	if (errorcode) {
+		Com_Printf("aRts: %s\n", arts_error_text(errorcode));
+		return qfalse;
+	}
 
-	si->dma->samplebits=(si->Cvar_Get("snd_bits", "16", CVAR_ARCHIVE, NULL))->value;
+	si->dma->samplebits = (si->Cvar_Get("snd_bits", "16", CVAR_ARCHIVE, NULL))->value;
 
 	si->Com_Printf("Initializing aRts\n");
 
-	si->dma->speed=(si->Cvar_Get("snd_khz", "44", CVAR_ARCHIVE, NULL))->value;
+	si->dma->speed = (si->Cvar_Get("snd_khz", "44", CVAR_ARCHIVE, NULL))->value;
 
 	if (si->dma->speed >= 48)
 		si->dma->speed = 48000;
@@ -76,9 +78,9 @@ qboolean SND_Init (struct sndinfo *s)
 	else
 		si->dma->samples = (512 * si->dma->channels);
 
-	for ( frag_spec = 0; (0x01<<frag_spec) < snd_buf; ++frag_spec );
+	for (frag_spec = 0; (0x01<<frag_spec) < snd_buf; ++frag_spec);
 
-	si->dma->buffer=malloc(snd_buf);
+	si->dma->buffer = malloc(snd_buf);
 	memset(si->dma->buffer, 0, snd_buf);
 
 	frag_spec |= 0x00020000;
@@ -89,7 +91,7 @@ qboolean SND_Init (struct sndinfo *s)
 	si->dma->samplepos = 0;
 	si->dma->submission_chunk = 1;
 
-	snd_inited=1;
+	snd_inited = 1;
 
 	return qtrue;
 }
