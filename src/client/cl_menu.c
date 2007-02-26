@@ -2867,7 +2867,13 @@ static void MN_PrintMenu_f (void)
 }
 
 /**
- * @brief
+ * @brief Initialize the menu data hunk, add cvars and commands
+ * @note Also calls the 'reset' functions for production, basemanagement,
+ * aliencontainmenu, employee, hospital and a lot more subfunctions
+ * @note This function is called once
+ * @sa MN_Shutdown
+ * @sa B_ResetBaseManagement
+ * @sa CL_InitLocal
  */
 void MN_ResetMenus (void)
 {
@@ -2919,6 +2925,7 @@ void MN_ResetMenus (void)
 	Cmd_AddCommand("mn_debugreload", MN_ReloadMenus_f, "Reloads the menus to show updates without the need to restart");
 	/* get action data memory */
 	if (adataize)
+		/* TODO: should not be needed - this function is only called once - check this */
 		memset(adata, 0, adataize);
 	else {
 		/* 256kb */
@@ -2944,11 +2951,14 @@ void MN_ResetMenus (void)
 }
 
 /**
- * @brief
+ * @brief Reset and free the menu data hunk
+ * @note Even called in case of an error when CL_Shutdown was called - maybe even
+ * before CL_InitLocal (and thus MN_ResetMenus) was called
+ * @sa CL_Shutdown
+ * @sa MN_ResetMenus
  */
 void MN_Shutdown (void)
 {
-	/* free the memory */
 	if (adataize)
 		free(adata);
 	adata = NULL;
