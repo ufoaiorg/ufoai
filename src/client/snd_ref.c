@@ -405,7 +405,7 @@ void S_Init (void)
 				Com_Printf("Load library failed - no sound available\n");
 				return;
 			}
-#else
+#else /* WIN32 */
 		s_libdir = Cvar_Get("s_libdir", "", CVAR_ARCHIVE, "lib dir for graphic and sound renderer - no game libs");
 
 			/* try path given via cvar */
@@ -425,7 +425,7 @@ void S_Init (void)
 				Com_Printf("Load library failed: %s\n", dlerror());
 				return;
 			}
-#endif
+#endif /* WIN32 */
 		}
 
 		if ((SND_Init = (SND_Init_t) dlladdr(snd_ref_lib, "SND_Init")) == 0)
@@ -461,6 +461,13 @@ void S_Init (void)
 
 	if (!SND_Init(&si)) {
 		Com_Printf("SND_Init failed\n");
+#ifdef _WIN32
+		FreeLibrary(snd_ref_lib);
+#else
+		dlclose(snd_ref_lib);
+#endif
+		snd_ref_lib = NULL;
+		sound_started = 0;
 		return;
 	}
 
