@@ -2290,7 +2290,7 @@ static void B_TransferSelect_f (void)
 		}
 		break;
 	default:
-		Com_Printf("B_TransferSelect_f: Unknown type id\n");
+		Com_Printf("B_TransferSelect_f: Unknown type id %i\n", type);
 		return;
 	}
 
@@ -2575,8 +2575,11 @@ static void B_TransferAircraftListClick_f (void)
  */
 static void B_TransferBaseSelectPopup_f (void)
 {
-	int i, j = 0, num;
+	int i, j = -1, num;
 	base_t* base;
+
+	if (!baseCurrent)
+		return;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("usage: trans_baselist_click <type>\n");
@@ -2595,7 +2598,7 @@ static void B_TransferBaseSelectPopup_f (void)
 	}
 
 	/* no base founded */
-	if (j < 0)
+	if (j < 0 || i == gd.numBases)
 		return;
 
 	transferBase = base;
@@ -2610,6 +2613,9 @@ static void B_TransferBaseSelect_f (void)
 	/*char str[128];*/
 	int j = -1, num, i;
 	base_t* base;
+
+	if (!baseCurrent)
+		return;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("usage: trans_bases_click <type>\n");
@@ -2628,10 +2634,8 @@ static void B_TransferBaseSelect_f (void)
 	}
 
 	/* no base founded */
-	if (j < 0) {
-		menuText[TEXT_BASE_INFO] = NULL;
+	if (j < 0 || i == gd.numBases)
 		return;
-	}
 
 	Com_sprintf(baseInfo, sizeof(baseInfo), "%s\n\n", base->name);
 
@@ -2733,7 +2737,7 @@ static void B_TransferInit_f (void)
  * @brief Resets console commands.
  * @sa MN_ResetMenus
  */
-void B_ResetBaseManagement(void)
+extern void B_ResetBaseManagement (void)
 {
 	Com_DPrintf("Reset basemanagement\n");
 
@@ -2779,7 +2783,7 @@ void B_ResetBaseManagement(void)
  * @brief Counts the number of bases.
  * @return The number of founded bases.
  */
-int B_GetCount(void)
+int B_GetCount (void)
 {
 	int i, cnt = 0;
 
@@ -2797,7 +2801,7 @@ int B_GetCount(void)
  * @sa CL_CampaignRun
  * @note called every "day"
  */
-void B_UpdateBaseData(void)
+void B_UpdateBaseData (void)
 {
 	building_t *b = NULL;
 	int i, j;
@@ -2825,7 +2829,7 @@ void B_UpdateBaseData(void)
  *
  * Calls the onConstruct functions and assign workers, too.
  */
-int B_CheckBuildingConstruction(building_t * building, int base_idx)
+int B_CheckBuildingConstruction (building_t * building, int base_idx)
 {
 	int newBuilding = 0;
 
@@ -2852,7 +2856,7 @@ int B_CheckBuildingConstruction(building_t * building, int base_idx)
 /**
  * @brief Selects a base by its index.
  */
-base_t *B_GetBase(int idx)
+base_t *B_GetBase (int idx)
 {
 	int i;
 
@@ -2866,7 +2870,7 @@ base_t *B_GetBase(int idx)
 /**
  * @brief Counts the number of soldiers in a current aircraft/team.
  */
-int B_GetNumOnTeam(void)
+int B_GetNumOnTeam (void)
 {
 	if (!baseCurrent)
 		return 0;
@@ -2878,7 +2882,7 @@ int B_GetNumOnTeam(void)
  * @param[in] base
  * @param[in] index
  */
-aircraft_t *B_GetAircraftFromBaseByIndex(base_t* base,int index)
+aircraft_t *B_GetAircraftFromBaseByIndex (base_t* base,int index)
 {
 	if (index<base->numAircraftInBase) {
 		return &base->aircraft[index];
@@ -2896,7 +2900,7 @@ aircraft_t *B_GetAircraftFromBaseByIndex(base_t* base,int index)
  * when Drophip returns to base.
  * @sa CL_CampaignRunAircraft
  */
-void CL_DropshipReturned(base_t* base, aircraft_t* aircraft)
+void CL_DropshipReturned (base_t* base, aircraft_t* aircraft)
 {
 	baseCurrent = base;
 	AL_AddAliens(); /* Add aliens to Alien Containment */
@@ -2912,7 +2916,7 @@ void CL_DropshipReturned(base_t* base, aircraft_t* aircraft)
  * @todo TODO/FIXME: Make this work _only_ on base-storage, no market. See the comment in the code.
  * @note Formerly known as RS_ItemInBase.
  */
-int B_ItemInBase(int item_idx, base_t *base)
+int B_ItemInBase (int item_idx, base_t *base)
 {
 	equipDef_t *ed = NULL;
 
@@ -2946,7 +2950,7 @@ int B_ItemInBase(int item_idx, base_t *base)
  * @sa B_ItemInBase
  * @todo Use this fucntion instead of B_ItemInBase everywhere.
  */
-int B_ItemInBase2(int item_idx, base_t *base)
+int B_ItemInBase2 (int item_idx, base_t *base)
 {
 	equipDef_t *ed = NULL;
 
