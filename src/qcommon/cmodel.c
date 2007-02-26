@@ -1382,7 +1382,7 @@ static void CM_BoxLeafnums_r (int nodenum)
 	cnode_t *node;
 	int s;
 
-	assert(nodenum < curTile->numnodes);
+	assert(nodenum < curTile->numnodes + 6);
 
 	while (1) {
 		if (nodenum < 0) {
