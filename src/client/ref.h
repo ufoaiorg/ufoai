@@ -143,6 +143,10 @@ typedef struct shader_s {
 	/** filename is for an external filename to load the shader from */
 	char filename[MAX_VAR];
 
+	/** image filenames */
+	char distort[MAX_VAR];
+	char normal[MAX_VAR];
+
 	qboolean glsl;				/**< glsl shader */
 	qboolean frag;				/**< fragment-shader */
 	qboolean vertex;			/**< vertex-shader */

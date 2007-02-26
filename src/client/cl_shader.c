@@ -41,8 +41,10 @@ int r_numshaders;
 /* r_shaders is external and is linked to cl.refdef.shaders in cl_view.c V_RenderView */
 shader_t r_shaders[MAX_SHADERS];
 
-static value_t shader_values[] = {
+static const value_t shader_values[] = {
 	{"filename",	V_STRING,	offsetof( shader_t, filename)},
+	{"normal",	V_STRING,	offsetof( shader_t, normal)},
+	{"distort",	V_STRING,	offsetof( shader_t, distort)},
 	{"frag",	V_BOOL,	offsetof( shader_t, frag)},
 	{"vertex",	V_BOOL,	offsetof( shader_t, vertex)},
 	{"glsl",	V_BOOL,	offsetof( shader_t, glsl)},
@@ -66,7 +68,7 @@ static value_t shader_values[] = {
 void CL_ParseShaders(char *title, char **text)
 {
 	shader_t *entry;
-	value_t *v;
+	const value_t *v;
 	char *errhead = "CL_ParseShaders: unexptected end of file (names ";
 	char *token;
 
