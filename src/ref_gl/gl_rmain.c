@@ -1432,9 +1432,6 @@ static qboolean R_Init (HINSTANCE hinstance, WNDPROC wndproc)
 		qglGetProgramivARB = (void *) qwglGetProcAddress("glGetProgramivARB");
 		qglGetProgramStringARB = (void *) qwglGetProcAddress("glGetProgramStringARB");
 		qglIsProgramARB = (void *) qwglGetProcAddress("glIsProgramARB");
-
-/*		water_shader = LoadProgram_ARB_FP("arb_water"); */
-/*		water_shader = CompileWaterShader(); */
 	} else {
 		ri.Con_Printf(PRINT_ALL, "...GL_ARB_fragment_program not found\n");
 		gl_state.arb_fragment_program = qfalse;
