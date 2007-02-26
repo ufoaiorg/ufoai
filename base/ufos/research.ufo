@@ -2552,6 +2552,24 @@ tech news_phalanx_mumbai_aftermath
 	time	0
 }
 
+tech news_newtwist
+{
+	type		news
+	name		"_A New Twist"
+	description	"_news_newtwist"
+	up_chapter	news
+
+	require_AND
+	{
+		tech rs_alien_ortnok_autopsy
+		tech rs_alien_taman_autopsy
+		tech rs_alien_shevaar_autopsy
+		tech rs_alien_oddbehaviour
+	}
+
+	time		0
+}
+
 //========================
 // WIPs
 //========================
