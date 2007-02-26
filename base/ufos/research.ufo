@@ -2556,7 +2556,7 @@ tech news_newtwist
 {
 	type		news
 	name		"_A New Twist"
-	description	"_news_newtwist"
+	description	"_news_newtwist_txt"
 	up_chapter	news
 
 	require_AND
