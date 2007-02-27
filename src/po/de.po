@@ -3,9 +3,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-02-24 19:52+0100\n"
-"PO-Revision-Date: 2007-02-24 20:16+0100\n"
-"Last-Translator: Kracken <kracken@users.sourceforge.net>\n"
+"POT-Creation-Date: 2007-02-27 17:51+0100\n"
+"PO-Revision-Date: 2007-02-27 17:59+0100\n"
+"Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -371,20 +371,34 @@ msgid "Worker"
 msgstr "Arbeiter"
 
 #: ../base/ufos/medals.ufo:58
+#: ../base/ufos/medals.ufo:59
 msgid "Rookie"
 msgstr "Rekrut"
 
-#: ../base/ufos/medals.ufo:65
+#: ../base/ufos/medals.ufo:66
 msgid "Squad Leader"
 msgstr "Gruppenführer"
 
-#: ../base/ufos/medals.ufo:75
+#: ../base/ufos/medals.ufo:67
+#, fuzzy
+msgid "Sqd Ldr"
+msgstr "Gruppenführer"
+
+#: ../base/ufos/medals.ufo:77
 msgid "Sergeant"
 msgstr "Sergeant"
 
-#: ../base/ufos/medals.ufo:85
+#: ../base/ufos/medals.ufo:78
+msgid "Sgt"
+msgstr ""
+
+#: ../base/ufos/medals.ufo:88
 msgid "Captain"
 msgstr "Hauptmann"
+
+#: ../base/ufos/medals.ufo:89
+msgid "Cpt"
+msgstr ""
 
 #: ../base/ufos/menu_aircraft.ufo:49
 msgid "Assign your squad"
@@ -506,29 +520,24 @@ msgid "Back to baseview"
 msgstr "Zurück zur Basisübersicht"
 
 #: ../base/ufos/menu_aliencont.ufo:82
-#, fuzzy
 msgid "Previous Alien Containment"
-msgstr "Quarantänestation"
+msgstr "Vorherige Quarantänestation"
 
 #: ../base/ufos/menu_aliencont.ufo:95
-#, fuzzy
 msgid "Click to do autopsy"
-msgstr "Beenden mit Mausklick"
+msgstr "Autopsie durch Klick starten"
 
 #: ../base/ufos/menu_aliencont.ufo:108
-#, fuzzy
 msgid "Check UFOpedia entry"
 msgstr "Wechsele zum Ufopediaeintrag"
 
 #: ../base/ufos/menu_aliencont.ufo:121
-#, fuzzy
 msgid "Kill all aliens in this base"
-msgstr "Lebende Aliens in dieser Basis:"
+msgstr "Töte alle Aliens in dieser Basis"
 
 #: ../base/ufos/menu_aliencont.ufo:134
-#, fuzzy
 msgid "Next Alien Containment"
-msgstr "Quarantänestation"
+msgstr "Nächste Quarantänestation"
 
 #: ../base/ufos/menu_aliencont.ufo:148
 msgid "Alive Aliens in all bases:"
@@ -564,9 +573,8 @@ msgstr "Anzahl"
 #: ../base/ufos/menu_aliencont.ufo:325
 #: ../base/ufos/menu_aliencont.ufo:339
 #: ../base/ufos/menu_aliencont.ufo:353
-#, fuzzy
 msgid "Kill one alien"
-msgstr "ZUm nächsten Alien"
+msgstr "Töte ein Alien"
 
 #: ../base/ufos/menu_aliencont.ufo:378
 #: ../base/ufos/menu_research.ufo:825
@@ -1721,15 +1729,15 @@ msgstr "Warte auf andere Spieler"
 
 #: ../base/ufos/menu_multiplayer.ufo:1516
 msgid "Players that must join before starting: "
-msgstr ""
+msgstr "Benötigte Spieler bis zum automatischen Start:"
 
 #: ../base/ufos/menu_multiplayer.ufo:1528
 msgid "Start the game even if not all teams have joined"
-msgstr ""
+msgstr "Start das Spiel - auch wenn noch nicht alle Teams verbunden sind"
 
 #: ../base/ufos/menu_multiplayer.ufo:1541
 msgid "Force start"
-msgstr ""
+msgstr "Erzwinge Start"
 
 #: ../base/ufos/menu_multiplayeringame.ufo:109
 msgid "Abort Game"
@@ -2280,7 +2288,7 @@ msgid "Show only aliens"
 msgstr "Nur Aliens anzeigen"
 
 #: ../base/ufos/menu_transfer.ufo:284
-#: client/cl_campaign.c:4097
+#: client/cl_campaign.c:4096
 msgid "Aliens"
 msgstr "Aliens"
 
@@ -7426,6 +7434,122 @@ msgstr ""
 "\n"
 "Alles, was noch fehlte, war ein Anführer."
 
+#: ../base/ufos/research.ufo:2558
+msgid "A New Twist"
+msgstr ""
+
+#: ../base/ufos/research.ufo:2559
+#, fuzzy
+msgid "news_newtwist_txt"
+msgstr ""
+"Die Asiatische Republik:\n"
+"\n"
+"In den folgenden Jahren gab die Chinesische Republik -- die ihren alten vor-kommunistischen Namen annahm -- langsam ihre eroberten Gebiete auf, einschließlich die, die sie in vergangenen Jahrhunderten erobert hatte und gab ihnen die Wahl zwischen Unabhängigkeit oder einem Sitz in der neuen Regierung als gleichgestellter und respektierter Teil der neuen Republik. Taiwan war, aufgrund seiner Zugehörigkeit zur Rebellion, der erste, der mit der neuen Republik verschmolzen ist und seine Differenzen mit dem Hauptland beilegte, nachdem die kommunistische Regierung kapitulierte. Taiwan wurde schnell ein Hauptbestandteil der neuen Regierung und war der Hauptgrund, dass die ehemaligen Führer der Nation zum Kriegsverbrewchertribunal nach Den Haag geschickt wurden. Nordkorea, eine andere rebellische Nation, wählte ebenfalls für den Verbleib in der Republik, da es wahrscheinlich einen Schub in der Ökonomie versprach und die Diktatur endlich beendete. Sie sollten nicht enttäuscht werden.\n"
+"\n"
+"Die Wiederauferstehung der chinesischen Wirtschaft wurde von heutigen Historikern als Wunder bezeichnet. Die ersten Durchbrüche in Nanotechnologie wurden von chinesischen Wisenschaftlern erreicht, was ihnen hochdotierte Verträge mit der Pharmaindustrie auf der ganzen Welt einbrachte. Trotz altem Hass und Misstrauen traten bald andere Ostasiatische Staaten der Republik bei, welche sich bald Asiatische Republik nannte, um ihre neuen Mitglieder zu ehren. Sogar Japan trat der Republik bei, um seine schwächelnde Wirtschaft und dir Bevölkerung zu stärken, welche durch den Krieg stark abgenommen hat. Die Republik blieb ihren Prinzipien treu, wohl auch wegen der immer noch frischen Wunden des Bürgerkrieges. Über die Jahre hat sie sich einen Ruf erarbeitet, sich immer gut um ihre Mitglieder zu kümmern und genug Vertrauen aufgebaut, dass sie nun mit einer Stimme für die Milliarden Menschen in Südostasien sprechen kann.\n"
+"\n"
+"Heute hat sich die Wirtschaft der Asiatischen Republik aufgrund der Vermarktung von Nanotechnologie und Holografietechniken so gut wie erholt. Sie hat immer noch eine moderne und starke Armee, trainiert zu einem höheren Standard als jedes andere Land.\n"
+"\n"
+"\n"
+"\n"
+"Revolutionäre Staaten:\n"
+"\n"
+"Mit dem Fall der Vereinigten Staaten und Chinas flaute der Sozialismus in Südamerika während der Nachkriegsjahre immer mehr ab. Der Tod der amerikanischen Wirtschaft brauchte einen Anstieg revolutionärer Glut mit sich, der mehrere Nationen von dem Einfluss des Kapitalismus befreite. Dennoch, mit einem in den meisten Ländern bereits vorhandenen demokratischen Gerüst, könnte die Vorstellung der Regierung des Volkes das erste mal ohne Korruption realisiert werden. Diese neue Bewegung schlug vor, Demokratie mit wahren sozialistischen Idealen zu vereinen.\n"
+"\n"
+"Der ganze Kontinent sah dem Horror zu, als Shanghai während des zweiten kalten Krieges mit Atombomben zerstört wurde, da es bis zur letzten Sekunde auf der ganzen Welt live übertragen wurde. Die neue Bewegung bekam einen weiteren Rückschlag zu spüren, als China fiel. Dadurch konnte nämlich jeder sehen, was passierte, wenn Revolution den Weg der Diktatur und des Totalitarismus geht. Es dauerte nicht lange, und die Führer der Regierungen reagierten entsprechend.\n"
+"\n"
+"Mehrere diktatorische Regierungen versuchten sofort, die Daumenschrauben anzuziehen, um jede Rebellion im Keim zu ersticken, was eine heftige Gegenreaktion der größeren demokratishen Nationen hervorrief, vor allem Kuba, Brasilien und Argentinien. Plötzlich hatten die letzten verbliebenden Könige in Südamerika gar keine Freunde mehr.\n"
+"\n"
+"Einer nach dem anderen gaben sie dem öffentlichen und politischen Druck nach und wurden durch eine gewählte Regierung ersetzt. Die Revolution nahm noch Fahrt auf, anstatt sie zu verlieren; sie ermutigten mehr Handel, engere Zusammenarbeit und folgten schlussendlich Europas Beispiel der offenen Grenzen. Ein neues Netzwerk von Autobahnen über den ganzen Kontinent stärkte die Wirtschaft und erlaubte eine bessere Nutzung von kulturfähigen Land. Südamerikas natürliche Reichtümer wurden wie nie zuvor angezapft und es wurden faire Preise für sie verlangt.\n"
+"\n"
+"Heute haben sich die Mitgliedsstaaten so eng zusammengeschlossen, dass sie ein einzelner Block sind; die Revolutionären Staaten. Eine vereinte Regierung repräsentiert den ganzen Kontinent und sie leiten ein wirtschaftliches Schwergewicht, der nur von der erweiterten Europäischen Union übertroffen wird. Ihr Militär ist klein, aber hochmodern, ihr Training ist gut, aber nicht hervorragend.\n"
+"\n"
+"\n"
+"\n"
+"Vereinigtes Amerika:\n"
+"\n"
+"Als die US Wirtschaft in den späten 2020ern zusammenbrach, verließen mehr und mehr Leute das Land für die grüneren Weiden Kanadas und, ironischweise, Mexikos. Der Wert des Dollars fiel in ungeahnte Tiefen und verarmte Millionen bis sein Preis durch den IWF (Internationaler Währungsfond) und die internationale Bankengesellschaft stabilisiert wurde. Dem Land wurde dann ein harter Reformplan aufgezwungen, was die Regierung zwang, die Hälfte ihres Militärarsenals entweder zu verkaufen oder einzumotten. Um ihre Schulden von 16 Billionen Dollar zurückzuzahlen, wurden die Zinsen eingefroren und die Exporte auf Technologie und Luxusgüter konzentriert. Eine erfolgreiche Restrukturierung der NASA, kombiniert mit einem funktionierenden Prototyp eines neuen Raumschiffes, machte auch das Weltall zu einer Geldquelle für die nach-Kollaps USA. Cape Canaveral begann, die billigsten Raketenstarts der ganzen Welt anzubieten, erst mit ihrem Prototyp, später mit voll funktionsfähigen fortgeschrittenen Raumfahrzeugdesigns. Das hat dem Land sehr geholfen, wieder in die schwarzen Zahlen zu kommen.\n"
+"\n"
+"Die Zusammenarbeit zwischen den nordamerikanischen Nationen begann mit finanzieller Hilfe von Kanada und Mexiko, die ihre Exporte in die USA schwer einbrechen sahen und wollten ihrem wichtigsten Handelspartner helfen. Die wachsende Zahl Auswanderer half auch, engere Bindungen zu erzeugen. Dann, in der am wenigsten erwarteten politischen Wende im Jahr 2042, wählte Mexiko den US Auswanderer Esteban Villa-Lobos Garcia zum Präsidenten.\n"
+"\n"
+"Die Wahl wurde hetigst angezweifelt. Jedoch hielt die Wahl zwei weitere Stimmauszählungen stand und der neue Präsident wurde im Juli 2042 in sein Amt eingeführt. Letzten Endes brachte die Kombination von persönlichen Charisma und gute Politik die Bevölkerung hinter Garcia und dann stellte er seinen \"Plan für Morgen\" vor.\n"
+"\n"
+"Laut diesem Plan würden sich Mexiko, Kanada und die USA zu einem Land vereinigen, um die nordamerikanische Supermacht wieder zu erwecken. In einer Zahl von kontroversen öffentlichen Abstimmung stimmte die mexikanische Bevölkerung dem \"Plan für Morgen\" zu; 52% in den Vereinigten Staaten, 64% in Kanada und 71% in Mexiko. Der Zusammenschluss wurde 2050 entgültig, und schaffte ein Vereinigtes Amerika aus den dominaten Staaten der neuen Welt. Die boomende Weltraumindustrie verbreitete sich schnell in dem neuen Land und abgesehen von einigen Hindernissen war Nordamerika auf dem Weg zur Erholung.\n"
+"\n"
+"Heute hat sich der Schuldenberg von UA von 16 Billionen auf 2 verringert und der Lebensstandard ist beinahe wieder da, wo er vor dem Zusammenbruch war. UA hat die am weitesten fortgeschrittene Raumfahrtindustrie auf dem Planeten; NASA vollzieht beinah 70% aller kommerziellen Starts auf der ganzen Welt. Sie exportiert große Mengen Waren in andere NAtionen und es wird geschätzt, dass UA in weniger als 3 Jahren wieder Zahlungsfähig ist. Militärisch gesehen ist die UA die schwächste aller Meganationen. Sie hat nur ein kleine Freiwilligenarmee und ein winziges Verteidigungsbudget, so wie es vom IWF vorgegeben ist. Dennoch sind die Truppen der UA sehr gut ausgebildet und können innerhalb von 2 Stunden an jedem Ort der Welt sein.\n"
+"\n"
+"\n"
+"\n"
+"Groß-Europäische Vereinigung:\n"
+"\n"
+"Langsam, aber sicher, hatte die Europäische Union ihre Grenzen mit jedem vergangenem Jahrzehnt immer weiter ausgedehnt. Zuerst breiteten sie sich in den Nahen Osten aus, als Israel 2011 eine Partnerschaft einging. 2017 wurden Israel und die Türkei vollwertige Mitglieder. Mehrere Inseln im Atlantik wurden ebenfalls aufgenommen, was es zur größten EU Erweiterungen im 21. Jahrhundert machte.\n"
+"\n"
+"Nach dem Eintritt Israels verabschiedete die EU strengere Gesetze zu den Menschenrechten, Freiheit und Religion und Trennung von Kirche uns Staat. Sie war auch die erste westliche Supermacht, die die Mittel-Östliche Allianz anerkannte und pflegten enge Beziehungen mit der Allianz – trotz Protesten der USA – in der Hoffnung, den Zusammenprall der Kulturen und so die Terrorismusgefahr zu verringern. Sie waren größtenteils erfolgreich. 2028 erklärte Grönland – nachdem es durch die Auswanderung der Amerikaner immer stärker wurde – formell seine Unabhängigkeit von Dänemark. Es wurden keinerlei Kämpfe geführt. Widerwillig akzeptierte die dänische Regierung die Unabhängigkeitserklärung aufgrund von Druck der anderen europäischen Staaten. In den folgenden Monaten erwog Grönland, dem Vereinigten Amerika als Protektorat beizutreten, aber nahm davon Abstand, als die Europäische Union volle Mitgliedschaft in der EU anbot. Dies, zusammen mit den Überläufen mehrerer US Inselprotektoraten, trieb sich die EU dazu, ihren Namen in Groß-Europäische Union zu ändern.\n"
+"\n"
+"In den Nachwehen des zweiten kalten Krieges war die GEU immer an der Spitze der politischen Entwicklungen. Sie war die einzige westliche Nation, die die Mittel-Östliche Allianz bei dem Misstrauensantrag gegen die USA unterstützte, nachdem die UN ihre vollkommene Handelsunfähigkeit während der chinesischen Expansion und dem nachfolgenden Bürgerkrieg bewiesen hatte. Die GEU unterstützte ebenso die Anstrengungen der Allianz, eine neue UN zu gründen, bot faire Repräsentation aller Nationen der Welt und mit genug Mumm, um ihre Prinzipien zu verteidigen, auf denen sie gegründet wurde.\n"
+"\n"
+"Heute ist die GEU die stärkste Wirtschafts- und politische Macht der Welt. Dennoch, ihre gewaltige Bürokratie und große Zahl Mitglieder – Mitglieder, die nicht immer am gleichen Strang ziehen – machen es schwer zu reagieren. Das Militär ist groß und mächtig, aber nicht gut vereinigt, da jede Armee ihre Sprache und Traditionen behält. Militärische Kooperation ist schwer zu erreichen und es muss durch Unmengen an bürokratischen Hindernissen gewühlt werden. Die GEU stellt den Großteil der UN Truppen, aber sie werden nur als Friedenshüter benutzt. Ob die Militärs der GEU ihren Vorteil verloren haben, ist für mehrere Jahre Subjekt heißer Debatten in Brüssel und es ist keine Entscheidung in Sicht.\n"
+"\n"
+"\n"
+"\n"
+"Allianz des Mittleren Osten:\n"
+"\n"
+"Der Aufstieg der Mittel-Östlichen Allianz war eine Überraschung für jeden, auch für die Leute, die daran beteiligt waren. Sie wurde eigentlich nur geschlossen, um den westlichen Einfluss im mittleren Osten zu schwächen. Ihre Gründungsmitglieder – Iran, Syrien, Jordanien und Afghanistan – glaubten nie daran, dass die Allianz länger als 10 Jahre hält, da sie glaubten, sie würde bis dahin unter der Last der eigenen Differenzen zusammenbrechen.\n"
+"\n"
+"Der zweite Kalte Krieg änderte alles. Die Volksrepublik China war nicht länger die nahe Mauer gegen den Westen, sondern wurde eine sich vergrößernde, Bedrohung, die hungrige Augen auf Nepal, Teile von Indien und sogar die souveränen Staaten in ihrem Westen warf. Pakistan, Tadschikistan und Kirgisien rannten sie förmlich in die Hände der Allianz, um sich gegen eine Invasion zu schützen. Der arabische Subkontinent trat der Allianz nicht ganz ein Jahr später bei, um ihren politischen Einfluss auf den Westen zu vergrößern. Ohne es zu merken hatten sie einen Machtblock geschaffen, der den gesamten mittleren Osten umspannte. Ihre Position war viel zu gut, um sie zerbröckeln zu lassen.\n"
+"\n"
+"Die erweiterte Allianz, die nun auch von der EU anerkannt wurde, gibt mit einem Messer in der Hand auf die Weltbühne. Sie hatten Zugriff auf die meisten auf der Welt befindlichen Ölreserven und sollten dies ausnutzen.\n"
+"\n"
+"Die Wirtschaftskraft der Allianz wuchs, als Ölreserven im Rest der Welt zurückgingen. Pharmazeutische Betriebe packten in Massen ihre Sachen und zogen in den mittleren Osten, da es der letzte Ort war, an dem Öl billig und reichlich vorhanden war. Das, zusammen mit vielen anderen Rohölnutzungen, erlaubte es dem mittleren Osten, die russische ‚Nuklearrevolution’, und die darauf folgende Zuwendung der Welt zu nuklearer Energie weltweite, zu überstehen. Sie setzte ihre Expansion mit der Aufnahme von Ägypten, Usbekistan, Turkmenistan und umkämpften Teilen Afrikas um das rote Meer herum fort. Die gesamte Region um das rote Meer wurde schnell befriedet, als die Allianz ihr Militär einsetzte, um die neuen afrikanischen Mitglieder zu unterstützen.\n"
+"\n"
+"Heute hat die Verbreitung von Wohlstand die Allianz weg von der Glaubenslehre hin zu weltlichem Gesetz und Gleichheit der Geschlechter geführt. Sie wird immer noch von Individuen regiert – Sultane, Emire, Maliks, Präsidenten und Generälen – aber deren persönliche Macht wird von den anderen Nationen der Allianz begrenzt, die nicht wollen, dass ein Mitglied aus der Reihe tanzt. Abweichende politische Meinungen werden durch Druck der EU und anderen Nationen toleriert, aber sogar in 2084 haben nur wenige Länder der Allianz eine funktionierende Demokratie.\n"
+"\n"
+"Das Militär der Allianz ist groß, schnell und gemein. Es ist eines der besten und am besten ausgerüsteten Mächte auf der Welt und nutzt die freizügigsten Regeln der Kriegsführung als Vereinigtes Amerika oder die Asiatische Republik. Ihre Klausel der ‚akzeptablen zivilen Verluste’ war Quelle großer Mengen Kritik aus der ganzen Welt, aber die Allianz hat stur diese Klausel in den vier Jahrzehnten, die sie in Benutzung ist, behalten.\n"
+"\n"
+"\n"
+"\n"
+"Neu Afrika:\n"
+"\n"
+"Geboren aus Gewalt und Kampf fand Neu Afrika seine Einheit durch Teilung. Es siechte für drei Dekaden in das 21. Jahrhundert, so wie es das schon zu lange getan hatte, mit seinen Bürgerkriegen, ethnischen Säuberungen und anderen maßlosen Gräueltaten. Bis mehrere zentralafrikanische Nationen im Jahre 2039 ein massives Projekt in Angriff nahmen, um den Griff des berüchtigten Diamantkartells zu brechen und Mittel zu bekommen, um Langzeitprojekte in Angriff nehmen zu können, die nationale Verbesserungen bringen sollen.\n"
+"\n"
+"Es endete in einem militärischen und wirtschaftlichen Blutbad. Die UN versuchte mehrere Maßnahmen, um die Kämpfe zu stoppen, war aber noch machtloser zuvor und erreichte nichts. Jedoch wurde die Liga der Nationen von anderen ergänzt, die es leid waren, von den westlichen Großkonzernen herumgeschubst zu werden und nach mehreren Jahren erbitterter Kämpfe schafften sie es, die Kartelle eins nach dem anderen zu stürzen. Das hinterließ ihnen einige der größten und fortgeschrittensten Diamant- und Goldminen; ihr vereintes Gebiet wurde zum größten Lieferanten von natürlichen Diamanten der Welt. Es gab ihnen auch ein Zeichen, was sie gemeinsam erreichen konnten. Der Kern von Neu Afrika war geboren.\n"
+"\n"
+"Alle beteiligten afrikanischen Nationen, die am Kartellkrieg beteiligt waren, mit Ausnahme von Gebieten loyal zur Nationengemeinschaft von Ozeanien (Commonwealth) und zur Mittel-Östlichen Allianz, begannen, viel enger zusammen zu arbeiten und wie Südamerika ein verlässliches Straßennetzwerk aufzubauen, um Handel und Kommunikation zu verbessern. Es verbesserte auch die Verteilung von Nahrung. Die nächsten 30 Jahre eliminierte Neu Afrika alle Hungersnöte innerhalb seiner Grenzen, was es grundlegend veränderte. Es erreichte, ethnische Unterschiede in Einklang zu bringen, einen Drang nach Unabhängigkeit in seinen Territorien und brachte ein soziales, öffentliches Krankenkassensystem, was enorme Kosten mit sich brachte, die sie fast ruinierten. Die Mitgliedsnationen fanden neue Exportartikel in Form von kommerziellen, umweltverträglichem Wachstum von tropischen Hartholz und exotischen Früchten. Die neue Kooperationen machte zum ersten mal Preisabsprachen auf dem ganzen Kontinent möglich; wie die Revolutionären Staaten zwang Neu Afrika den Rest der Welt, gut für seine Produkte und Dienste zu zahlen.\n"
+"\n"
+"Heute ist Neu Afrika wirtschaftlich immer noch die schwächste Macht, aber es wächst schnell. Es hat eine große, hoch motivierte Armee, aber die Truppen sind nicht so gut ausgerüstet, bewaffnet mit alten US Waffen oder sogar ein Jahrhundert alten Sowjetwaffen. Sie haben auch Schwierigkeiten, aufgrund von öfters auftretenden Materialschäden und der Geografie des Kontinents, in entlegene Gebiete zu kommen. Meistens ist das beste, was die Neu Afrikaner machen können, UFOs mit einem der tausenden von Aufklärern und kleinen Patrouillen, die im Land sind, um Schmuggel zu bekämpfen, zu entdecken, wenn sie landen.\n"
+"\n"
+"\n"
+"\n"
+"Russland:\n"
+"\n"
+"Russland hat Jahrzehnte gebraucht, um sich von Fall der Sowjetunion und den Verwüstungen des Sowjetsystems auf die Wirtschaft des Landes zu erholen. Es faulte wie eine offene Wunde für die erste Hälfte des 21. Jahrhunderts vor sich hin, immer noch dabei, die dauernden Rebellionen in Tschetschenien zu unterdrücken und immer noch dabei, eine Reform nach 70 Jahren Kontrolle durch den Staat zu machen und immer noch dabei zu versuchen, seine verlorene Position als Weltmacht zurückzuerlangen.\n"
+"\n"
+"Als der damalige Premierminister Jewgeni Karamasov im Jahr 2047 Tschetschenien vollständige Unabhängigkeit gewährte, wurden die Dinge endlich besser. Während die neue tschetschenische Republik aufgrund der Frage, wer genau denn regieren sollte, in einem Sturm aus Gewalt versank, kümmerte sich Russland um seine eigenen Problemen und überließ Tschetschenien sich selber – und der neugeformten UN, die sofort versuchte, das Blutvergießen zu stoppen. Unglücklichweise würde das für lange Zeit nicht passieren, und selbst dann konnte es nur funktionieren, als Tschetschenien unter russischen Einfluss zurückkehrte, aber diesmal zum ersten Mal als vollwertige, unabhängige Stimme.\n"
+"\n"
+"Die wirtschaftliche Rettung Russlands – vor allem nachdem die Ölversorgung aus dem mittleren Osten versiegte – begann mit dem Bohren nach dem eigenen Öl des Landes in Sibirien, und das mit neuester Technik und Ausrüstung, die die harten Winterkonditionen aushielt und später mit der Produktion mehrerer neuer Atomkraftwerke. Russland investierte viel in die Forschung, um die Kraftwerke kleiner, sicherer und – am wichtigesten – umweltverträglich zu machen. Das beinhaltete den Wechsel von angereicherten Uran zu Thorium als Hauptnukleartreibstoff in allen russischen Kraftwerken und fortgeschrittene neue Designs, die auf dem ‚Energieverstärker’ basieren, einem neuen Fusionsreaktor, der das erste mal zwischen 2004 und 2011 nahe Rom gebaut wurde. Zwei der neuen Reaktoren verbrauchten sogar Plutonium von zerlegten Atomwaffen und von dem gelagerten Müll alter Kraftwerke.\n"
+"\n"
+"Dann, 8 Jahre nach der Unabhängigkeit Tschetscheniens, wurde Russlands ‚Nuklearrevolution’ richtig revolutionär, als russische Wissenschaftler die Verarbeitungsanlagen für verbrauchte Elemente entwickelten. Diese Anlage konnte 90% des Abfalls des Energieverstärkers innerhalb weniger Wochen, anstatt Jahrhunderte, in radioaktivitätsfreie Elemente umwandeln. Die Russen beendeten die lang anhaltende Energiekrise fast über Nacht. Nukleare Fusion wurde sicher, relativ sauber und weltweite Thoriumvorkommen würden die Welt bis ins Jahr 3000 mit sauberer Energie versorgen.\n"
+"\n"
+"Heute haben sich viele ehemalige Sowjetrepubliken wieder Russland angeschlossen und folgen so dem Beispiel anderer großer Nationen, begierig, sich den Vorteil der Energieerzeugung und Nukleartechnologie zu sichern, der Russlands Hauptexportartikel geworden ist. Die Nuklearrevolution schreitet heute durch die stufenweise Weiterentwicklung und Kommerzialisierung der Fusionsenergie immer noch voran. Obwohl die Wirtschaft immer noch nicht ganz stabil ist, ist das Land heute in besserer Verfassung als in den letzten Jahrhunderten – ob nun unter den Khanen, den Zaren oder den Sowjets. Das Militär ist etwas antiquiert, aber sehr gut ausgebildet, diszipliniert und professionell und es fehlt nicht an Soldaten.\n"
+"\n"
+"\n"
+"\n"
+"Das Ozeanische Commonwealth:\n"
+"\n"
+"Das Commonwealth, eine politische Organisation bestehend aus den meisten Ländern des alten britischen Empires, verlor einen großen Teil seiner Macht, als der zweite kalte Krieg begann. Als erstes kappte Pakistan alle Verbindungen zum Commonwealth, als es der Mittel-Östlichen Allianz beitrat. Dann, als die Vereinigten Staaten zusammenbrachen, wurden Großbritannien und Kanada besorgter um sich selbst und ließen ihre Zugehörigkeit zum Commonwealth immer mehr schwinden. Gegen 2030 waren sie nur noch vom Namen her Mitglieder.\n"
+"\n"
+"Die wachsende Macht Chinas während des Krieges verursachte einen gewaltigen Anstieg in den Militärbudgets von Indien und Australien, deren Wirtschaft diese Geldmengen kaum aufbringen konnten. Dann, 2035, wurde Indien ein weiteres Schlachtfeld im chinesischen Bürgerkrieg. Erfahrene Regierungstruppen besiegten die indische Armee in mehreren kurzen, aber blutigen Schlachten mit Leichtigkeit während die Rebellen folgten.\n"
+"\n"
+"Australien versprach ein volles militärisches Eingreifen zusammen mit mehreren südafrikanischen Commonwealth Mitgliedern. Nach Wochen brutaler Kämpfe schafften es die australischen Divisionen, sich mit chinesischen Rebellentruppen und den überlebenden indischen Truppen zu vereinigen und zusammen vernichteten sie beinahe die gesamten Regierungstruppen, bevor diese im Jahr 2036 kapitulierten.\n"
+"\n"
+"Die Kosten waren hoch. Die eroberten indischen Gebiete waren ein verwüstetes Ödland, das Land hatte keine Regierung mehr, nachdem Neu Delhi von einem Nuklearschlag zerstört wurde und Hungersnöte grassierten. Indien begann, wertlose Gebiete an andere Nationen abzutreten und kleineren Regionen Unabhängigkeit zu geben. Die übrigen Commonwealth Mitglieder versuchten, Indien wieder aufzubauen, aber viele gaben das Projekt und auch das Commonwealth auf, um in einer anderen der wachsenden Großmächte unterzukommen.\n"
+"\n"
+"Der Wiederaufbau von Indien vereinigte das Commonwealth zu einer Nation, was auch durch die geografische Lage der Mitgliedsländer begünstigt wurde. Ihre Lage um den indischen Ozean und Südpazifik herum, erlaubte es ihnen, von Schiffe Gebühren für die Durchfuhr durch die Gewässer zu verlangen. Commonwealth Schiffe waren von der Gebühr ausgenommen, wodurch sie schnell zur Dominanz in diesem umkämpften Markt kamen. Später, als das Diamantkartell in Afrika zerbrochen wurde, bekam das Commonwealth Zugang zu mehreren Minen innerhalb seiner Grenzen und sie nutzen sie zu voller Kapazität.\n"
+"\n"
+"Heute ist das Commonwealth besser bekannt unter dem Namen ‚Ozeanisches Commonwealth’ oder nur ‚Ozeanien’. Seit seiner Gründung hat es mehrere Nicht-Commonwealth Länder in ihre Mitte aufgenommen, unter anderem Madagaskar, Zimbabwe und Indonesien, und hat dadurch seine Kontrolle über die Ozeanischen Gewässer erweitert. Während es noch immer wirtschaftlich nicht mit den reicheren Nationen mithalten kann, hat es sich doch seine Nische erobert und ist ganz glücklich, darin zu gedeihen.\n"
+"\n"
+"Ozeaniens Militär beinhaltet hauptsächlich eine mächtige Flotte. Seine Landarmee ist winzig im Vergleich gegen andere, mit Ausnahme vom Vereinigten Amerika und dient nur zur Verteidigung, mit durchschnittlichem Training und Ausrüstung. Dennoch kann es ziemlich schnell auf Notsituationen zu reagieren."
+
 #: ../base/ufos/seq_credits.ufo:54
 #: ../base/ufos/seq_credits.ufo:100
 msgid "Project leader"
@@ -7595,43 +7719,35 @@ msgstr "Endlich: Die Attacke auf die Alien Basis"
 
 #: ../base/ufos/seq_intro.ufo:8
 msgid "intro_sentence1"
-msgstr ""
-"Wir schreiben das Jahr 2084. Die Erde, die nie der ruhigste Ort war, erfreut sich einer Zeit relativen Friedens. Die gewaltätigen Anfänge des 21. Jahrhunderts sind jetzt weit weg; ferne Erinnerungen, aber nicht so weit weg, dass sie vergessen werden. Für die meisten Menschen ist der zweite Kalte Krieg ein dunkler Schatten der Vergangenheit, so wie die Weltkriege es für die Kinder des späten 20. Jahrhunderts waren."
+msgstr "Wir schreiben das Jahr 2084. Die Erde, die nie der ruhigste Ort war, erfreut sich einer Zeit relativen Friedens. Die gewaltätigen Anfänge des 21. Jahrhunderts sind jetzt weit weg; ferne Erinnerungen, aber nicht so weit weg, dass sie vergessen werden. Für die meisten Menschen ist der zweite Kalte Krieg ein dunkler Schatten der Vergangenheit, so wie die Weltkriege es für die Kinder des späten 20. Jahrhunderts waren."
 
 #: ../base/ufos/seq_intro.ufo:16
 msgid "intro_sentence2"
-msgstr ""
-"Konflikte wurden gegen Ende des Jahrhunderts seltener, nachdem das allgemeine Gesundheitswesen für die dritte Welt verfügbar wurde. Sogar die Feuer des Terrorismus sind als Folge des zweiten kalten Krieges abgekühlt, mit den Schrecken und Unmenschlichkeiten immer noch frisch im Gedächtnis der Menschen, von den alten Vereinigten Staaten bis hin zum verwüsteten indischen Subkontinent. Klassenkämpfe haben sich auf das politische Schlachtfeld verlagert, da nun jedes Land einen garantierten Platz in der UN hat und der globale Lebensstandard ist auch in den entlegensten Teilen der Welt am steigen. Länder haben sich gefestigt, sich um eine umstrukturierte UN stabilisiert, welche erfolgreich die Regierungen der Welt kontrolliert. Verteilte Klumpen kleinerer Länder, zuerst verängstigt durch die starken Machtblöcke um China und die Europäische Union, haben sich in mächtige politische Lager zusammengeschlossen -- um dann herauszufinden, dass es keine Nachbarn gibt, die man sicher bekämpfen könnte. Zum ersten Mal in der Geschichte der Menschheit gibt es Recht und Ordnung auf mehr als einem dreiviertel der Erde."
+msgstr "Konflikte wurden gegen Ende des Jahrhunderts seltener, nachdem das allgemeine Gesundheitswesen für die dritte Welt verfügbar wurde. Sogar die Feuer des Terrorismus sind als Folge des zweiten kalten Krieges abgekühlt, mit den Schrecken und Unmenschlichkeiten immer noch frisch im Gedächtnis der Menschen, von den alten Vereinigten Staaten bis hin zum verwüsteten indischen Subkontinent. Klassenkämpfe haben sich auf das politische Schlachtfeld verlagert, da nun jedes Land einen garantierten Platz in der UN hat und der globale Lebensstandard ist auch in den entlegensten Teilen der Welt am steigen. Länder haben sich gefestigt, sich um eine umstrukturierte UN stabilisiert, welche erfolgreich die Regierungen der Welt kontrolliert. Verteilte Klumpen kleinerer Länder, zuerst verängstigt durch die starken Machtblöcke um China und die Europäische Union, haben sich in mächtige politische Lager zusammengeschlossen -- um dann herauszufinden, dass es keine Nachbarn gibt, die man sicher bekämpfen könnte. Zum ersten Mal in der Geschichte der Menschheit gibt es Recht und Ordnung auf mehr als einem dreiviertel der Erde."
 
 #: ../base/ufos/seq_intro.ufo:24
 msgid "intro_sentence3"
-msgstr ""
-"Für viele Menschen scheint es, als würden alle endlich gut werden."
+msgstr "Für viele Menschen scheint es, als würden alle endlich gut werden."
 
 #: ../base/ufos/seq_intro.ufo:32
 msgid "intro_sentence4"
-msgstr ""
-"Der erste Angriff traf die Stadt Mumbai am 3. März 2084. Sechs kleine UFOs erschienen aus dem Nirgendwo und kamen, unentdeckt von den starken Radaranlagen um Mumbai herum, aus dem Himmel und landeten in der wohl bevölkerungsreichsten Stadt der Welt. Es gab keine Warnung, keine Erklärung. Zwanzig Tausend unschuldige Zivilisten und drei Bataillone Elitesoldaten wurden innerhalb von zwölf Stunden brutal massakriert, bevor eine große Zahl Commonwealth Soldaten es schaffte, den Alienvormarsch aufzuhalten. Dann, so plötzlich wie sie erschienen, zogen sie sich zu ihren Schiffen zurück und verschwanden wieder im Orbit. Der einzige Beweis für ihr Dasein waren die verwüsteten Straßen Mumbais."
+msgstr "Der erste Angriff traf die Stadt Mumbai am 3. März 2084. Sechs kleine UFOs erschienen aus dem Nirgendwo und kamen, unentdeckt von den starken Radaranlagen um Mumbai herum, aus dem Himmel und landeten in der wohl bevölkerungsreichsten Stadt der Welt. Es gab keine Warnung, keine Erklärung. Zwanzig Tausend unschuldige Zivilisten und drei Bataillone Elitesoldaten wurden innerhalb von zwölf Stunden brutal massakriert, bevor eine große Zahl Commonwealth Soldaten es schaffte, den Alienvormarsch aufzuhalten. Dann, so plötzlich wie sie erschienen, zogen sie sich zu ihren Schiffen zurück und verschwanden wieder im Orbit. Der einzige Beweis für ihr Dasein waren die verwüsteten Straßen Mumbais."
 
 #: ../base/ufos/seq_intro.ufo:40
 msgid "intro_sentence5"
-msgstr ""
-"Eine Notfallversammlung der UN ergab keine schlüssige Richtung. Die Einfälle der Aliens häufen sich, größer und grausamer als vorher, dieses mal in Bonn, Johannesburg und Bangkok. Einige Nationen versuchten es mit Diplomatie und schickten Nachrichten in tausend verschiedenen Sprachen an die Aliens, die das Land verwüsteten. Ihre Worte wurden ignoriert. Innerhalb weniger Stunden waren diese drei Städte jedem Leben beraubt. Der Angriff ist schon vorbei, bevor irgendwelche Militärkräfte die Erlaubnis zum Zurückschlagen haben. Die Aliens lassen nichts zurück außer Beton und Blut. Alle UFOs verschwinden, ohne Spuren zu hinterlassen -- aber niemand zweifelt, dass sie zurückkehren."
+msgstr "Eine Notfallversammlung der UN ergab keine schlüssige Richtung. Die Einfälle der Aliens häufen sich, größer und grausamer als vorher, dieses mal in Bonn, Johannesburg und Bangkok. Einige Nationen versuchten es mit Diplomatie und schickten Nachrichten in tausend verschiedenen Sprachen an die Aliens, die das Land verwüsteten. Ihre Worte wurden ignoriert. Innerhalb weniger Stunden waren diese drei Städte jedem Leben beraubt. Der Angriff ist schon vorbei, bevor irgendwelche Militärkräfte die Erlaubnis zum Zurückschlagen haben. Die Aliens lassen nichts zurück außer Beton und Blut. Alle UFOs verschwinden, ohne Spuren zu hinterlassen -- aber niemand zweifelt, dass sie zurückkehren."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence6"
-msgstr ""
-"87 Stunden nach dem Angriff auf Mumbai erklärt die Erde den Aliens den Krieg. Für 2 Wochen versuchen die Armeen der Menschen, die Alienangriffe abzuwehren. Sie erzielen sehr wenig Erfolge."
+msgstr "87 Stunden nach dem Angriff auf Mumbai erklärt die Erde den Aliens den Krieg. Für 2 Wochen versuchen die Armeen der Menschen, die Alienangriffe abzuwehren. Sie erzielen sehr wenig Erfolge."
 
 #: ../base/ufos/seq_intro.ufo:56
 msgid "intro_sentence7"
-msgstr ""
-"Als alles fehlschlägt, tritt die UN in Aktion. Uralte Ausrüstung wird entstaubt, einiges älter als ein Jahrhundert, und die lange nicht mehr bestehende Anti-Außerirdische Behörde der früheren Vereinigten Staaten -- PHALANX -- entsteht unter dem Banner der UN neu. Ihre Pflicht ist es, die Alienbedrohung zu bekämpfen und das Überleben der Menschheit unter allen Umständen zu sichern."
+msgstr "Als alles fehlschlägt, tritt die UN in Aktion. Uralte Ausrüstung wird entstaubt, einiges älter als ein Jahrhundert, und die lange nicht mehr bestehende Anti-Außerirdische Behörde der früheren Vereinigten Staaten -- PHALANX -- entsteht unter dem Banner der UN neu. Ihre Pflicht ist es, die Alienbedrohung zu bekämpfen und das Überleben der Menschheit unter allen Umständen zu sichern."
 
 #: ../base/ufos/seq_intro.ufo:64
 msgid "intro_sentence8"
-msgstr ""
-"Finanziert durch alle acht politischen Mächte und durch das Rekrutieren der besten Soldaten aller Armeen, ist PHALANX das beste der besten. Diese Soldaten sind die erste und einzige Verteidigungslinie der Erde. Sie können es sich nicht leisten, zu verlieren; denn wenn sie es tun, ist die Menschheit verloren."
+msgstr "Finanziert durch alle acht politischen Mächte und durch das Rekrutieren der besten Soldaten aller Armeen, ist PHALANX das beste der besten. Diese Soldaten sind die erste und einzige Verteidigungslinie der Erde. Sie können es sich nicht leisten, zu verlieren; denn wenn sie es tun, ist die Menschheit verloren."
 
 #: ../base/ufos/seq_intro.ufo:73
 #: ../base/ufos/seq_intro.ufo:192
@@ -7640,53 +7756,43 @@ msgstr "Mauklick um fortzufahren"
 
 #: ../base/ufos/seq_intro.ufo:100
 msgid "prolog_sentence1"
-msgstr ""
-"An: Basiskommando, PHALANX, Kommando Atlantische Operationen"
+msgstr "An: Basiskommando, PHALANX, Kommando Atlantische Operationen"
 
 #: ../base/ufos/seq_intro.ufo:110
 msgid "prolog_sentence2"
-msgstr ""
-"Von: SecGen. Mahouf Serra, Vereinte Nationen, New York City"
+msgstr "Von: SecGen. Mahouf Serra, Vereinte Nationen, New York City"
 
 #: ../base/ufos/seq_intro.ufo:119
 msgid "prolog_sentence3"
-msgstr ""
-"Datum: 21 März 2084"
+msgstr "Datum: 21 März 2084"
 
 #: ../base/ufos/seq_intro.ufo:128
 msgid "prolog_sentence4"
-msgstr ""
-"Betreff: Viel Glück!"
+msgstr "Betreff: Viel Glück!"
 
 #: ../base/ufos/seq_intro.ufo:137
 msgid "prolog_sentence5"
-msgstr ""
-"Willkommen Kommander. Sie haben das Kommando über PHALANX erhalten. Ihre Mission: Beschützen sie die Bewohner dieses Planeten und stoppen sie die Alienbedrohung mit allen Mitteln. Wie Sie das bewerkstelligen ist Ihnen überlassen - aber bedenken Sie: Scheitern ist keine Option."
+msgstr "Willkommen Kommander. Sie haben das Kommando über PHALANX erhalten. Ihre Mission: Beschützen sie die Bewohner dieses Planeten und stoppen sie die Alienbedrohung mit allen Mitteln. Wie Sie das bewerkstelligen ist Ihnen überlassen - aber bedenken Sie: Scheitern ist keine Option."
 
 #: ../base/ufos/seq_intro.ufo:146
 msgid "prolog_sentence6"
-msgstr ""
-"Ihr erster Auftrag lautet ein Hauptquartier einzurichten. Die UN hat Zugang zu allen Militärbasen der Welt. Wählen Sie die geographische Position sorgfältig, sie könnte großen Einfluss auf den Erfolg oder Misserfolg des PHALANX Projektes haben."
+msgstr "Ihr erster Auftrag lautet ein Hauptquartier einzurichten. Die UN hat Zugang zu allen Militärbasen der Welt. Wählen Sie die geographische Position sorgfältig, sie könnte großen Einfluss auf den Erfolg oder Misserfolg des PHALANX Projektes haben."
 
 #: ../base/ufos/seq_intro.ufo:155
 msgid "prolog_sentence7"
-msgstr ""
-"Eine kürzlich erstellte Analyse der Angriffe auf Mumbai und Bonn ergab, dass sich UFO Sichtungen und Alienaktivität auf dichtbesiedelsten Gebiete der Erde konzentrieren, einschließlich Nord- und Südamerika, Europa, Ostasien, Süd- und Mittelafrika sowie Australien. Sie sollten in Erwägung ziehen Ihre Einzugsgebiete diesbezgl. zu wählen."
+msgstr "Eine kürzlich erstellte Analyse der Angriffe auf Mumbai und Bonn ergab, dass sich UFO Sichtungen und Alienaktivität auf dichtbesiedelsten Gebiete der Erde konzentrieren, einschließlich Nord- und Südamerika, Europa, Ostasien, Süd- und Mittelafrika sowie Australien. Sie sollten in Erwägung ziehen Ihre Einzugsgebiete diesbezgl. zu wählen."
 
 #: ../base/ufos/seq_intro.ufo:164
 msgid "prolog_sentence8"
-msgstr ""
-"Haben Sie erstmal Ihre erste Basis errichtet, müssen Sie Ihre Soldaten vorbereiten. Die Rekruten die für PHALANX abgestellt wurden, müssen einem Einsatzschiff zugeteilt und für den Kampf ausgerüstet werden."
+msgstr "Haben Sie erstmal Ihre erste Basis errichtet, müssen Sie Ihre Soldaten vorbereiten. Die Rekruten die für PHALANX abgestellt wurden, müssen einem Einsatzschiff zugeteilt und für den Kampf ausgerüstet werden."
 
 #: ../base/ufos/seq_intro.ufo:173
 msgid "prolog_sentence9"
-msgstr ""
-"Vergessen Sie nicht gut auf die Soldaten aufzupassen - ein lebender Soldat kann mehr Aliens töten als ein toter Soldat. Der Rest von uns zählt auf sie - und betet für ihren Erfolg."
+msgstr "Vergessen Sie nicht gut auf die Soldaten aufzupassen - ein lebender Soldat kann mehr Aliens töten als ein toter Soldat. Der Rest von uns zählt auf sie - und betet für ihren Erfolg."
 
 #: ../base/ufos/seq_intro.ufo:182
 msgid "prolog_sentence10"
-msgstr ""
-"Das ist erstmal alles Herr Kommandant, viel Glück und viel Erfolg."
+msgstr "Das ist erstmal alles Herr Kommandant, viel Glück und viel Erfolg."
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"
@@ -8437,34 +8543,59 @@ msgstr ""
 "Dieser unbekannte Gegenstand kann nicht geladen werden.\n"
 "Er muss erst erforscht werden.\n"
 
-#: client/cl_actor.c:2228
-#, c-format
-msgid "%s has been killed!\n"
-msgstr "%s wurde getötet\n"
+#: client/cl_actor.c:2230
+msgid "was stunned.\n"
+msgstr "wurde betäubt.\n"
 
-#: client/cl_actor.c:2232
+#: client/cl_actor.c:2235
+msgid "was killed.\n"
+msgstr "wurde getötet\n"
+
+#: client/cl_actor.c:2242
+msgid "A civilian was stunned.\n"
+msgstr "Ein Zivilist wurde betäubt\n"
+
+#: client/cl_actor.c:2244
 msgid "A civilian was killed.\n"
 msgstr "Ein Zivilist wurde getötet\n"
 
-#: client/cl_actor.c:2239
+#: client/cl_actor.c:2252
+msgid "An alien was stunned:"
+msgstr "Ein Alien wurde betäubt:"
+
+#: client/cl_actor.c:2256
 msgid "An alien was killed:"
 msgstr "Ein Alien wurde getötet:"
 
-#: client/cl_actor.c:2242
-#: client/cl_actor.c:2245
+#: client/cl_actor.c:2261
+#: client/cl_actor.c:2267
+msgid "An alien was stunned.\n"
+msgstr "Ein Alien wurde betäubt\n"
+
+#: client/cl_actor.c:2263
+#: client/cl_actor.c:2269
 msgid "An alien was killed.\n"
 msgstr "Ein Alien wurde getötet\n"
 
-#: client/cl_actor.c:2249
+#: client/cl_actor.c:2274
+msgid "A soldier was stunned.\n"
+msgstr "Ein Soldat wurde betäubt\n"
+
+#: client/cl_actor.c:2276
 msgid "A soldier was killed.\n"
 msgstr "Ein Soldat wurde getötet\n"
 
-#: client/cl_actor.c:2252
+#: client/cl_actor.c:2280
+#, c-format
+msgid "A member of team %i was stunned.\n"
+msgstr "Ein Mitglied im Team %i wurde betäubt!\n"
+
+#: client/cl_actor.c:2282
 #, c-format
 msgid "A member of team %i was killed.\n"
 msgstr "Ein Mitglied im Team %i wurde getötet!\n"
 
-#: client/cl_actor.c:2403
+#: client/cl_actor.c:2433
 msgid "Your round started!\n"
 msgstr "Du bist an der Reihe!\n"
 
@@ -8498,18 +8629,18 @@ msgstr "Flugzeug gestartet"
 #: client/cl_campaign.c:1219
 #: client/cl_campaign.c:1226
 #: client/cl_campaign.c:1234
-#: client/cl_campaign.c:2505
-#: client/cl_campaign.c:2542
-#: client/cl_campaign.c:2544
-#: client/cl_campaign.c:2891
+#: client/cl_campaign.c:2504
+#: client/cl_campaign.c:2541
+#: client/cl_campaign.c:2543
+#: client/cl_campaign.c:2890
 #: client/cl_map.c:270
-#: client/cl_research.c:664
-#: client/cl_research.c:787
-#: client/cl_research.c:790
-#: client/cl_research.c:794
-#: client/cl_research.c:807
-#: client/cl_research.c:843
-#: client/cl_research.c:989
+#: client/cl_research.c:685
+#: client/cl_research.c:808
+#: client/cl_research.c:811
+#: client/cl_research.c:815
+#: client/cl_research.c:828
+#: client/cl_research.c:864
+#: client/cl_research.c:1014
 #: client/cl_ufo.c:194
 #: client/cl_ufo.c:199
 msgid "Notice"
@@ -8618,12 +8749,12 @@ msgid "Interception"
 msgstr "Abfangen"
 
 #: client/cl_aircraft.c:682
-#: client/cl_campaign.c:2542
+#: client/cl_campaign.c:2541
 msgid "You've won the battle"
 msgstr "Du hast die Schlacht gewonnen"
 
 #: client/cl_aircraft.c:689
-#: client/cl_campaign.c:2544
+#: client/cl_campaign.c:2543
 msgid "You've lost the battle"
 msgstr "Du hast die Schlacht verloren"
 
@@ -8707,8 +8838,8 @@ msgid "Base is under attack"
 msgstr "Basis wird angegriffen"
 
 #: client/cl_basemanagement.c:1741
-#: client/cl_team.c:1207
-#: client/cl_team.c:1400
+#: client/cl_team.c:1208
+#: client/cl_team.c:1401
 msgid "NewTeam"
 msgstr "Neues Team"
 
@@ -8802,44 +8933,44 @@ msgstr "Keinen Flugzeug ausgewählt"
 msgid "Please select the aircraft to use from the list"
 msgstr "Bitte wähle das gewünschte Flugzeug aus der Liste"
 
-#: client/cl_basemanagement.c:2640
+#: client/cl_basemanagement.c:2644
 msgid "You can transfer equipment - this base has a storage building\n"
 msgstr "Transfer möglich - Basis hat ein Lager\n"
 
-#: client/cl_basemanagement.c:2643
+#: client/cl_basemanagement.c:2647
 msgid "No storage building in this base\n"
 msgstr "Kein Lager in dieser Basis\n"
 
-#: client/cl_basemanagement.c:2647
+#: client/cl_basemanagement.c:2651
 msgid "You can transfer employees - this base has quarters\n"
 msgstr "Transfer möglich - Basis hat ein Quartier\n"
 
-#: client/cl_basemanagement.c:2650
+#: client/cl_basemanagement.c:2654
 msgid "No quarters in this base\n"
 msgstr "Keine Quartiere in dieser Basis\n"
 
-#: client/cl_basemanagement.c:2653
+#: client/cl_basemanagement.c:2657
 msgid "You can transfer techs - this base has a laboratory\n"
 msgstr "Transfer möglich - Basis hat ein Labor\n"
 
-#: client/cl_basemanagement.c:2655
+#: client/cl_basemanagement.c:2659
 msgid "No laboratory in this base\n"
 msgstr "Keine Laboratorien in dieser Basis\n"
 
-#: client/cl_basemanagement.c:2658
+#: client/cl_basemanagement.c:2662
 msgid "You can transfer aliens - this base has alien containment\n"
 msgstr "Transfer von Aliens möglich - Basis hat eine Quarantänestation\n"
 
-#: client/cl_basemanagement.c:2660
+#: client/cl_basemanagement.c:2664
 msgid "No alien containment in this base\n"
 msgstr "Keine Quarantänestation in dieser Basis\n"
 
-#: client/cl_basemanagement.c:2816
+#: client/cl_basemanagement.c:2820
 #, c-format
 msgid "Construction of %s building finished in base %s."
 msgstr "Konstruktion von %s in Basis %s abgeschlossen."
 
-#: client/cl_basemanagement.c:2817
+#: client/cl_basemanagement.c:2821
 msgid "Building finished"
 msgstr "Konstruktion abgeschlossen"
 
@@ -8978,28 +9109,28 @@ msgstr[0] "credit"
 msgstr[1] "credits"
 
 #: client/cl_campaign.c:1139
-#: client/cl_campaign.c:4102
+#: client/cl_campaign.c:4101
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "Forscher"
 msgstr[1] "Forscher"
 
 #: client/cl_campaign.c:1140
-#: client/cl_campaign.c:4104
+#: client/cl_campaign.c:4103
 msgid "medic"
 msgid_plural "medics"
 msgstr[0] "Arzt"
 msgstr[1] "Ärzte"
 
 #: client/cl_campaign.c:1141
-#: client/cl_campaign.c:4101
+#: client/cl_campaign.c:4100
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "Soldat"
 msgstr[1] "Soldaten"
 
 #: client/cl_campaign.c:1142
-#: client/cl_campaign.c:4103
+#: client/cl_campaign.c:4102
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] "Arbeiter"
@@ -9123,49 +9254,49 @@ msgstr ""
 "\t-------\n"
 "Insgesamt:\t%i c\n"
 
-#: client/cl_campaign.c:1748
+#: client/cl_campaign.c:1747
 msgid "Error saving game. Check free disk space!"
 msgstr "Fehler beim Speichern des Spiels. Überprüfen Sie ihren Speicher."
 
-#: client/cl_campaign.c:1748
-#: client/cl_campaign.c:2336
+#: client/cl_campaign.c:1747
+#: client/cl_campaign.c:2335
 #: client/cl_market.c:391
-#: client/cl_team.c:1252
+#: client/cl_team.c:1253
 msgid "Note"
 msgstr "Hinweis"
 
-#: client/cl_campaign.c:2336
+#: client/cl_campaign.c:2335
 msgid "Assemble or load a team"
 msgstr "Rüste ein Team aus oder lade ein gespeichertes Team."
 
-#: client/cl_campaign.c:2505
+#: client/cl_campaign.c:2504
 msgid "Your dropship is not near the landing zone"
 msgstr "Das Einsatzschiff ist nicht nahe einer Landungszone"
 
-#: client/cl_campaign.c:2741
+#: client/cl_campaign.c:2740
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s wurde zum %s befördert\n"
 
-#: client/cl_campaign.c:2743
+#: client/cl_campaign.c:2742
 #, c-format
 msgid "%s has been awarded the posthumous rank of %s\\for inspirational gallantry in the face of overwhelming odds.\n"
 msgstr ""
 
-#: client/cl_campaign.c:2744
+#: client/cl_campaign.c:2743
 msgid "Soldier promoted"
 msgstr "Soldat wurde befördert"
 
-#: client/cl_campaign.c:2890
+#: client/cl_campaign.c:2889
 #, c-format
 msgid "Defense of base: %s successful!"
 msgstr "Verteidigung der Basis: %s erfolgreich"
 
-#: client/cl_campaign.c:4097
+#: client/cl_campaign.c:4096
 msgid "Human"
 msgstr "Mensch"
 
-#: client/cl_campaign.c:4099
+#: client/cl_campaign.c:4098
 #, c-format
 msgid ""
 "Race: %s\n"
@@ -9198,11 +9329,16 @@ msgstr "Du hast nicht genug Quartiere für all dein Personal. Du musst %i Angest
 msgid "You don't have enough quarters for your employees."
 msgstr "Du hast nicht genug Quartiere für all deine Angestellten"
 
+#: client/cl_hospital.c:57
+#, c-format
+msgid "Healing of %s completed - %i active healings left\n"
+msgstr "Die Behandlung von %s wurde abgeschlossen. Noch %i Behandlungen ausstehend\n"
+
 #: client/cl_hospital.c:59
 msgid "Healing complete"
 msgstr "Heilung abgeschlossen"
 
-#: client/cl_hospital.c:171
+#: client/cl_hospital.c:198
 #, c-format
 msgid "%s\t%s\t(%i/%i)\n"
 msgstr "%s\t%s\t(%i/%i)\n"
@@ -9271,15 +9407,15 @@ msgstr "Reactionfire ein/ausschalten"
 
 #: client/cl_input.c:728
 msgid "Toogle to next alien"
-msgstr "ZUm nächsten Alien"
+msgstr "Zum nächsten Alien"
 
 #: client/cl_input.c:734
 msgid "Reload the weapon in the soldiers left hand"
-msgstr ""
+msgstr "Lade die Waffe in der linken Hand nach"
 
 #: client/cl_input.c:735
 msgid "Reload the weapon in the soldiers right hand"
-msgstr ""
+msgstr "Lade die Waffe in der rechten Hand nach"
 
 #: client/cl_input.c:736
 msgid "Ends current round"
@@ -9287,11 +9423,11 @@ msgstr "Runde beenden"
 
 #: client/cl_input.c:737
 msgid "Slice through terrain at a higher level"
-msgstr ""
+msgstr "Wechsele in das nächst höhere Level"
 
 #: client/cl_input.c:738
 msgid "Slice through terrain at a lower level"
-msgstr ""
+msgstr "Wechsele in das nächst niedrigere Level"
 
 #: client/cl_input.c:741
 msgid "Confirm the current action"
@@ -9299,7 +9435,7 @@ msgstr "Aktuelle Aktion bestätigten"
 
 #: client/cl_input.c:749
 msgid "Toggle first-person/third-person camera mode"
-msgstr ""
+msgstr "Wechsele zwischen Ich-Perspektive und Vogelansicht"
 
 #: client/cl_main.c:375
 #: client/cl_main.c:1021
@@ -9522,24 +9658,24 @@ msgstr "Rein: %i Raus: %i"
 msgid "Key: %s"
 msgstr "Taste: %s"
 
-#: client/cl_menu.c:2921
+#: client/cl_menu.c:2924
 msgid "Hide the HUD (press ESC to reactivate HUD)"
 msgstr "Verstecke das HUD (ESC drücken um es zu reaktivieren)"
 
-#: client/cl_parse.c:798
+#: client/cl_parse.c:835
 msgid "Alien spotted:"
 msgstr "Alien gesichtet:"
 
-#: client/cl_parse.c:801
-#: client/cl_parse.c:803
+#: client/cl_parse.c:838
+#: client/cl_parse.c:840
 msgid "Alien spotted!\n"
 msgstr "Alien gesichtet!\n"
 
-#: client/cl_parse.c:805
+#: client/cl_parse.c:842
 msgid "Enemy spotted!\n"
 msgstr "Gegner gesichtet!\n"
 
-#: client/cl_parse.c:807
+#: client/cl_parse.c:844
 msgid "Civilian spotted!\n"
 msgstr "Zivilist gesichtet!\n"
 
@@ -9610,50 +9746,60 @@ msgstr "Warteschlange voll!"
 msgid "You cannot queue any more items!"
 msgstr "Es können nicht mehr Gegenstände in die Produktionsliste eingereiht werden"
 
-#: client/cl_research.c:555
+#: client/cl_research.c:83
+#, c-format
+msgid "New technology researched: %s. You should read this at UFOpedia.\n"
+msgstr "Es wurde eine neue Technologie erforscht (%s). Du solltest dir den Bericht in der Ufopedia durchlesen\n"
+
+#: client/cl_research.c:85
+#: client/cl_research.c:1097
+msgid "Research finished"
+msgstr "Forschung abgeschlossen"
+
+#: client/cl_research.c:576
 #, c-format
 msgid "Available scientists in this base: %i"
 msgstr "Verfügbare Forscher in dieser Basis: %i"
 
-#: client/cl_research.c:556
+#: client/cl_research.c:577
 msgid "Not researched in any base."
 msgstr "In keiner Basis erforscht"
 
-#: client/cl_research.c:562
+#: client/cl_research.c:583
 #, c-format
 msgid "Researched in %s"
 msgstr "Erforscht in %s"
 
-#: client/cl_research.c:564
+#: client/cl_research.c:585
 msgid "Researched in this base."
 msgstr "Erforscht in dieser Basis"
 
-#: client/cl_research.c:575
+#: client/cl_research.c:596
 #, c-format
 msgid "Progress: %.1f%%"
 msgstr "Fortschritt: %.1f%%"
 
-#: client/cl_research.c:577
+#: client/cl_research.c:598
 msgid "Progress: Not available."
 msgstr "Fortschritt: Nicht verfügbar."
 
-#: client/cl_research.c:581
+#: client/cl_research.c:602
 msgid "Status: Under research"
 msgstr "Status: Wird erforscht"
 
-#: client/cl_research.c:584
+#: client/cl_research.c:605
 msgid "Status: Research paused"
 msgstr "Status: Forschung angehalten"
 
-#: client/cl_research.c:587
+#: client/cl_research.c:608
 msgid "Status: Research finished"
 msgstr "Status: Forschung abgeschlossen"
 
-#: client/cl_research.c:590
+#: client/cl_research.c:611
 msgid "Status: Unknown technology"
 msgstr "Status: Unbekannte Technologie"
 
-#: client/cl_research.c:665
+#: client/cl_research.c:686
 msgid ""
 "There is no free lab available.\n"
 "You need to build one or free another\n"
@@ -9663,20 +9809,20 @@ msgstr ""
 "Neues Labor bauen oder ein anderes freigeben\n"
 "um Forscher an dieser Technologie arbeiten zu lassen.\n"
 
-#: client/cl_research.c:787
+#: client/cl_research.c:808
 msgid "This item is already under research by your scientists."
 msgstr "Forschung bereits im Gange."
 
-#: client/cl_research.c:790
+#: client/cl_research.c:811
 msgid "The research on this item continues."
 msgstr "Forschung wird fortgesetzt."
 
-#: client/cl_research.c:794
-#: client/cl_research.c:843
+#: client/cl_research.c:815
+#: client/cl_research.c:864
 msgid "The research on this item is complete."
 msgstr "Forschung abgeschlossen."
 
-#: client/cl_research.c:807
+#: client/cl_research.c:828
 msgid ""
 "The research on this item is not yet possible.\n"
 "You need to research the technologies it's based on first."
@@ -9684,24 +9830,20 @@ msgstr ""
 "Forschung kann nicht gestartet werden.\n"
 "Es fehlt eine zugrunde liegende Technologie."
 
-#: client/cl_research.c:882
+#: client/cl_research.c:907
 msgid " [not yet researchable]"
 msgstr " [noch nicht erforschbar]"
 
-#: client/cl_research.c:989
+#: client/cl_research.c:1014
 msgid "Build a laboratory first"
 msgstr "Baue erst ein Forschungslabor"
 
-#: client/cl_research.c:1071
+#: client/cl_research.c:1096
 #, c-format
 msgid "Research of %s finished\n"
 msgstr "Forschung für %s ist abgeschlossen\n"
 
-#: client/cl_research.c:1072
-msgid "Research finished"
-msgstr "Forschung abgeschlossen"
-
-#: client/cl_research.c:1379
+#: client/cl_research.c:1405
 msgid "No description available."
 msgstr "Keine Beschreibung vorhanden."
 
@@ -9731,30 +9873,30 @@ msgstr "Schneetarnung"
 msgid "%i of %i"
 msgstr "%i von %i"
 
-#: client/cl_team.c:1252
+#: client/cl_team.c:1253
 msgid "Error saving team. Check free disk space!"
 msgstr "Fehler beim Speichern des Teams. Überprüfen Sie ob sie genügend Speicherplatz haben."
 
-#: client/cl_team.c:1423
+#: client/cl_team.c:1424
 msgid "Select a soldier from list"
 msgstr "Soldaten per Mausklick auswählen"
 
-#: client/cl_team.c:1424
+#: client/cl_team.c:1425
 msgid "Toggle to next soldier"
 msgstr "ZUm nächsten Soldaten"
 
-#: client/cl_team.c:1718
-#: client/cl_team.c:1766
+#: client/cl_team.c:1719
+#: client/cl_team.c:1767
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "Aliens getötet\t%i\n"
 
-#: client/cl_team.c:1721
+#: client/cl_team.c:1722
 #, c-format
 msgid "Enemies killed\t%i\n"
 msgstr "Gegner getötet\t%i\n"
 
-#: client/cl_team.c:1726
+#: client/cl_team.c:1727
 #, c-format
 msgid ""
 "Aliens captured\t%i\n"
@@ -9763,8 +9905,8 @@ msgstr ""
 "Aliens gefangen\t%i\n"
 "\n"
 
-#: client/cl_team.c:1727
-#: client/cl_team.c:1770
+#: client/cl_team.c:1728
+#: client/cl_team.c:1771
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -9773,14 +9915,14 @@ msgstr ""
 "überlebende Aliens\t%i\n"
 "\n"
 
-#: client/cl_team.c:1729
+#: client/cl_team.c:1730
 #, c-format
 msgid ""
 "Enemies captured\t%i\n"
 "\n"
 msgstr "Gegner gefangen\t%i\n"
 
-#: client/cl_team.c:1730
+#: client/cl_team.c:1731
 #, c-format
 msgid ""
 "Enemy survivors\t%i\n"
@@ -9789,22 +9931,22 @@ msgstr ""
 "Überlebende Gegner\t%i\n"
 "\n"
 
-#: client/cl_team.c:1734
+#: client/cl_team.c:1735
 #, c-format
 msgid "Team losses\t%i\n"
 msgstr "Eigene Verluste\t%i\n"
 
-#: client/cl_team.c:1735
+#: client/cl_team.c:1736
 #, c-format
 msgid "Team missing in action\t%i\n"
 msgstr "Verluste im Einsatz\t%i\n"
 
-#: client/cl_team.c:1736
+#: client/cl_team.c:1737
 #, c-format
 msgid "Friendly fire losses\t%i\n"
 msgstr "Verluste durch Friendlyfire\t%i\n"
 
-#: client/cl_team.c:1737
+#: client/cl_team.c:1738
 #, c-format
 msgid ""
 "Team survivors\t%i\n"
@@ -9813,22 +9955,22 @@ msgstr ""
 "Überlebende\t%i\n"
 "\n"
 
-#: client/cl_team.c:1740
+#: client/cl_team.c:1741
 #, c-format
 msgid "Civilians killed by the Aliens\t%i\n"
 msgstr "Durch Aliens getötete Zivilisten\t%i\n"
 
-#: client/cl_team.c:1742
+#: client/cl_team.c:1743
 #, c-format
 msgid "Civilians killed by the Enemies\t%i\n"
 msgstr "Durch Gegner getötete Zivilisten\t%i\n"
 
-#: client/cl_team.c:1744
+#: client/cl_team.c:1745
 #, c-format
 msgid "Civilians killed by your Team\t%i\n"
 msgstr "Durch eigenes Team getötete Zivilisten\t%i\n"
 
-#: client/cl_team.c:1745
+#: client/cl_team.c:1746
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -9839,27 +9981,27 @@ msgstr ""
 "\n"
 "\n"
 
-#: client/cl_team.c:1769
+#: client/cl_team.c:1770
 #, c-format
 msgid "Aliens captured\t%i\n"
 msgstr "Aliens gefangen\t%i\n"
 
-#: client/cl_team.c:1773
+#: client/cl_team.c:1774
 #, c-format
 msgid "Phalanx soldiers killed by Aliens\t%i\n"
 msgstr "Durch Aliens getötete Phalanx Soldaten\t%i\n"
 
-#: client/cl_team.c:1774
+#: client/cl_team.c:1775
 #, c-format
 msgid "Phalanx soldiers missing in action\t%i\n"
 msgstr "Durch Aliens getötete Phalanx Soldaten\t%i\n"
 
-#: client/cl_team.c:1775
+#: client/cl_team.c:1776
 #, c-format
 msgid "Phalanx friendly fire losses\t%i\n"
 msgstr "Phalanx Verluste durch Friendlyfire\t%i\n"
 
-#: client/cl_team.c:1776
+#: client/cl_team.c:1777
 #, c-format
 msgid ""
 "Phalanx survivors\t%i\n"
@@ -9868,17 +10010,17 @@ msgstr ""
 "Phalanx Überlebende\t%i\n"
 "\n"
 
-#: client/cl_team.c:1778
+#: client/cl_team.c:1779
 #, c-format
 msgid "Civilians killed by Aliens\t%i\n"
 msgstr "Durch Aliens getötete Zivilisten\t%i\n"
 
-#: client/cl_team.c:1779
+#: client/cl_team.c:1780
 #, c-format
 msgid "Civilians killed by friendly fire\t%i\n"
 msgstr "Durch Phalanx getötete Zivilisten\t%i\n"
 
-#: client/cl_team.c:1780
+#: client/cl_team.c:1781
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -9887,12 +10029,12 @@ msgstr ""
 "Zivilisten gerettet\t%i\n"
 "\n"
 
-#: client/cl_team.c:1784
+#: client/cl_team.c:1785
 #, c-format
 msgid "Items salvaged and sold\t%i\n"
 msgstr "Geborgene Gegenstänge geborgen und verkauft\t%i\n"
 
-#: client/cl_team.c:1785
+#: client/cl_team.c:1786
 #, c-format
 msgid ""
 "Total item sale value\t%i\n"
@@ -9901,7 +10043,7 @@ msgstr ""
 "Wert der verkauften Gegenstände\t%i\n"
 "\n"
 
-#: client/cl_team.c:1801
+#: client/cl_team.c:1802
 #, c-format
 msgid ""
 "\n"
@@ -9914,15 +10056,15 @@ msgstr ""
 "Gegner getötet:  %i\n"
 "Überlebende Teammitglieder:  %i"
 
-#: client/cl_team.c:1803
+#: client/cl_team.c:1804
 msgid "You won the game!"
 msgstr "Du hast das Spiel gewonnen"
 
-#: client/cl_team.c:1805
+#: client/cl_team.c:1806
 msgid "Congratulations"
 msgstr "Herzlichen Glückwunsch"
 
-#: client/cl_team.c:1807
+#: client/cl_team.c:1808
 msgid ""
 "The game was a draw!\n"
 "\n"
@@ -9932,15 +10074,15 @@ msgstr ""
 "\n"
 "Keine Überlebenden auf beiden Seiten."
 
-#: client/cl_team.c:1808
+#: client/cl_team.c:1809
 msgid "Game Drawn!"
 msgstr "Unentschieden"
 
-#: client/cl_team.c:1810
+#: client/cl_team.c:1811
 msgid "You lost the game"
 msgstr "Du hast das Spiel verloren"
 
-#: client/cl_team.c:1812
+#: client/cl_team.c:1813
 msgid "Better luck next time"
 msgstr "Mehr Glück beim nächsten Mal"
 
@@ -10194,37 +10336,37 @@ msgstr "Nicht genug Zeiteinheiten\n"
 msgid "Can't perform action - weapon already fully loaded with the same ammunition!\n"
 msgstr "Waffe ist bereits mit der gleichen Munition geladen\n"
 
-#: game/g_client.c:1221
+#: game/g_client.c:1235
 msgid "Currently shaken, won't let it's guard down.\n"
 msgstr "Unter Schock, nimmt keine Befehle entgegen.\n"
 
-#: game/g_client.c:1292
+#: game/g_client.c:1306
 #, c-format
 msgid "%s panics!\n"
 msgstr "%s ist panisch!\n"
 
-#: game/g_client.c:1345
+#: game/g_client.c:1359
 #, c-format
 msgid "%s is on a rampage.\n"
 msgstr "%s randaliert.\n"
 
-#: game/g_client.c:1347
+#: game/g_client.c:1361
 #, c-format
 msgid "%s is in mad rage!\n"
 msgstr "%s dreht durch!\n"
 
-#: game/g_client.c:1400
+#: game/g_client.c:1414
 #, c-format
 msgid "%s is currently shaken.\n"
 msgstr "%s ist verwirrt\n"
 
-#: game/g_client.c:1860
+#: game/g_client.c:1874
 #, c-format
 msgid "Team %i ( %s) will get the first turn.\n"
 msgstr "Team %i ( %s) hat den ersten Zug.\n"
 
 #: game/g_svcmds.c:356
-#, fuzzy, c-format
+#, c-format
 msgid "Team %i (%s) will get the first turn.\n"
 msgstr "Team %i ( %s) hat den ersten Zug.\n"
 
@@ -10260,6 +10402,8 @@ msgstr "1 Tag"
 msgid "5 days"
 msgstr "5 Tage"
 
+#~ msgid "%s has been killed!\n"
+#~ msgstr "%s wurde getötet\n"
 #~ msgid "Edit name of the soldier"
 #~ msgstr "Namen dieses Soldaten ändern"
 #~ msgid "monomolecular_blades_pre_txt"

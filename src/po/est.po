@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Trans.Estonia\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-02-24 19:52+0100\n"
+"POT-Creation-Date: 2007-02-27 17:51+0100\n"
 "PO-Revision-Date: 2006-11-13 05:27+0200\n"
 "Last-Translator: Northen Wolf <semukas@hot.ee>\n"
 "Language-Team: Northen Wolf <semukas@hot.ee>\n"
@@ -349,20 +349,34 @@ msgstr "Mehitamata masinad"
 msgid "Worker"
 msgstr "Tööline"
 
-#: ../base/ufos/medals.ufo:58
+#: ../base/ufos/medals.ufo:58 ../base/ufos/medals.ufo:59
 msgid "Rookie"
 msgstr "Algaja"
 
-#: ../base/ufos/medals.ufo:65
+#: ../base/ufos/medals.ufo:66
 msgid "Squad Leader"
 msgstr "Rühma juht"
 
-#: ../base/ufos/medals.ufo:75
+#: ../base/ufos/medals.ufo:67
+#, fuzzy
+msgid "Sqd Ldr"
+msgstr "Rühma juht"
+
+#: ../base/ufos/medals.ufo:77
 msgid "Sergeant"
 msgstr "Seersant"
 
-#: ../base/ufos/medals.ufo:85
+#: ../base/ufos/medals.ufo:78
+msgid "Sgt"
+msgstr ""
+
+#: ../base/ufos/medals.ufo:88
 msgid "Captain"
+msgstr "Kapten"
+
+#: ../base/ufos/medals.ufo:89
+#, fuzzy
+msgid "Cpt"
 msgstr "Kapten"
 
 #: ../base/ufos/menu_aircraft.ufo:49
@@ -2045,7 +2059,7 @@ msgstr "Nano tehnoloogja"
 msgid "Show only aliens"
 msgstr "Näita ainult kehakaitseid"
 
-#: ../base/ufos/menu_transfer.ufo:284 client/cl_campaign.c:4097
+#: ../base/ufos/menu_transfer.ufo:284 client/cl_campaign.c:4096
 #, fuzzy
 msgid "Aliens"
 msgstr "Tulnukas"
@@ -3844,6 +3858,15 @@ msgstr "<TODO>"
 msgid "news_phalanx_and_mumbai_aftermath_txt"
 msgstr "<TODO>"
 
+#: ../base/ufos/research.ufo:2558
+msgid "A New Twist"
+msgstr ""
+
+#: ../base/ufos/research.ufo:2559
+#, fuzzy
+msgid "news_newtwist_txt"
+msgstr "<TODO>"
+
 #: ../base/ufos/seq_credits.ufo:54 ../base/ufos/seq_credits.ufo:100
 msgid "Project leader"
 msgstr "projekti Juht"
@@ -4903,37 +4926,66 @@ msgstr ""
 "Sa ei saa seda tundmatut eset laadida.\n"
 "Sa pead selle enne uurima. et seda relvastada\n"
 
-#: client/cl_actor.c:2228
-#, fuzzy, c-format
-msgid "%s has been killed!\n"
-msgstr "%s on ülendatud %s.\n"
+#: client/cl_actor.c:2230
+msgid "was stunned.\n"
+msgstr ""
 
-#: client/cl_actor.c:2232
+#: client/cl_actor.c:2235
+#, fuzzy
+msgid "was killed.\n"
+msgstr "Tulnukaid tapetud\t%i\n"
+
+#: client/cl_actor.c:2242
+#, fuzzy
+msgid "A civilian was stunned.\n"
+msgstr "Tulnukaid tapetud\t%i\n"
+
+#: client/cl_actor.c:2244
 #, fuzzy
 msgid "A civilian was killed.\n"
 msgstr "Tulnukaid tapetud\t%i\n"
 
-#: client/cl_actor.c:2239
+#: client/cl_actor.c:2252
+#, fuzzy
+msgid "An alien was stunned:"
+msgstr "Tulnukaid tapetud\t%i\n"
+
+#: client/cl_actor.c:2256
 #, fuzzy
 msgid "An alien was killed:"
 msgstr "Tulnukaid tapetud\t%i\n"
 
-#: client/cl_actor.c:2242 client/cl_actor.c:2245
+#: client/cl_actor.c:2261 client/cl_actor.c:2267
+#, fuzzy
+msgid "An alien was stunned.\n"
+msgstr "Tulnukaid tapetud\t%i\n"
+
+#: client/cl_actor.c:2263 client/cl_actor.c:2269
 #, fuzzy
 msgid "An alien was killed.\n"
 msgstr "Tulnukaid tapetud\t%i\n"
 
-#: client/cl_actor.c:2249
+#: client/cl_actor.c:2274
+#, fuzzy
+msgid "A soldier was stunned.\n"
+msgstr "Tulnukaid tapetud\t%i\n"
+
+#: client/cl_actor.c:2276
 #, fuzzy
 msgid "A soldier was killed.\n"
 msgstr "Tulnukaid tapetud\t%i\n"
 
-#: client/cl_actor.c:2252
+#: client/cl_actor.c:2280
+#, fuzzy, c-format
+msgid "A member of team %i was stunned.\n"
+msgstr "Tulnukaid tapetud\t%i\n"
+
+#: client/cl_actor.c:2282
 #, fuzzy, c-format
 msgid "A member of team %i was killed.\n"
 msgstr "Tulnukaid tapetud\t%i\n"
 
-#: client/cl_actor.c:2403
+#: client/cl_actor.c:2433
 msgid "Your round started!\n"
 msgstr "Sinu käik algas!\n"
 
@@ -4953,11 +5005,11 @@ msgstr "Lennumasin alustatud"
 #: client/cl_campaign.c:1185 client/cl_campaign.c:1196
 #: client/cl_campaign.c:1209 client/cl_campaign.c:1219
 #: client/cl_campaign.c:1226 client/cl_campaign.c:1234
-#: client/cl_campaign.c:2505 client/cl_campaign.c:2542
-#: client/cl_campaign.c:2544 client/cl_campaign.c:2891 client/cl_map.c:270
-#: client/cl_research.c:664 client/cl_research.c:787 client/cl_research.c:790
-#: client/cl_research.c:794 client/cl_research.c:807 client/cl_research.c:843
-#: client/cl_research.c:989 client/cl_ufo.c:194 client/cl_ufo.c:199
+#: client/cl_campaign.c:2504 client/cl_campaign.c:2541
+#: client/cl_campaign.c:2543 client/cl_campaign.c:2890 client/cl_map.c:270
+#: client/cl_research.c:685 client/cl_research.c:808 client/cl_research.c:811
+#: client/cl_research.c:815 client/cl_research.c:828 client/cl_research.c:864
+#: client/cl_research.c:1014 client/cl_ufo.c:194 client/cl_ufo.c:199
 msgid "Notice"
 msgstr "Teade"
 
@@ -5054,11 +5106,11 @@ msgstr "Sinu transpordilaeval on vähe kütust ja see pöördub tagasi baasi"
 msgid "Interception"
 msgstr "Hävitaja F-48"
 
-#: client/cl_aircraft.c:682 client/cl_campaign.c:2542
+#: client/cl_aircraft.c:682 client/cl_campaign.c:2541
 msgid "You've won the battle"
 msgstr "Sa VÕITSID lahingu"
 
-#: client/cl_aircraft.c:689 client/cl_campaign.c:2544
+#: client/cl_aircraft.c:689 client/cl_campaign.c:2543
 msgid "You've lost the battle"
 msgstr "Sa KAOTASID lahingu"
 
@@ -5141,7 +5193,7 @@ msgstr ""
 msgid "Base is under attack"
 msgstr "Sinu baasi on rünnakku all"
 
-#: client/cl_basemanagement.c:1741 client/cl_team.c:1207 client/cl_team.c:1400
+#: client/cl_basemanagement.c:1741 client/cl_team.c:1208 client/cl_team.c:1401
 msgid "NewTeam"
 msgstr "Uus tiim"
 
@@ -5238,48 +5290,48 @@ msgstr "Ühtegi eseti pole valitud"
 msgid "Please select the aircraft to use from the list"
 msgstr ""
 
-#: client/cl_basemanagement.c:2640
+#: client/cl_basemanagement.c:2644
 msgid "You can transfer equipment - this base has a storage building\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:2643
+#: client/cl_basemanagement.c:2647
 #, fuzzy
 msgid "No storage building in this base\n"
 msgstr "Ühtegi ehitist pole valmis"
 
-#: client/cl_basemanagement.c:2647
+#: client/cl_basemanagement.c:2651
 msgid "You can transfer employees - this base has quarters\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:2650
+#: client/cl_basemanagement.c:2654
 #, fuzzy
 msgid "No quarters in this base\n"
 msgstr "Selle Baasi nimi"
 
-#: client/cl_basemanagement.c:2653
+#: client/cl_basemanagement.c:2657
 msgid "You can transfer techs - this base has a laboratory\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:2655
+#: client/cl_basemanagement.c:2659
 #, fuzzy
 msgid "No laboratory in this base\n"
 msgstr "Vabu laboreid selles baasis: %i"
 
-#: client/cl_basemanagement.c:2658
+#: client/cl_basemanagement.c:2662
 msgid "You can transfer aliens - this base has alien containment\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:2660
+#: client/cl_basemanagement.c:2664
 #, fuzzy
 msgid "No alien containment in this base\n"
 msgstr "Vabu laboreid selles baasis: %i"
 
-#: client/cl_basemanagement.c:2816
+#: client/cl_basemanagement.c:2820
 #, c-format
 msgid "Construction of %s building finished in base %s."
 msgstr "%s ehitamine on lõpetatud baas %s"
 
-#: client/cl_basemanagement.c:2817
+#: client/cl_basemanagement.c:2821
 msgid "Building finished"
 msgstr "Ehitis lõpetatud"
 
@@ -5422,28 +5474,28 @@ msgid_plural "credits"
 msgstr[0] "Autorid ja abilised"
 msgstr[1] "Autorid ja abilised"
 
-#: client/cl_campaign.c:1139 client/cl_campaign.c:4102
+#: client/cl_campaign.c:1139 client/cl_campaign.c:4101
 #, fuzzy
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "teadlane(sed)"
 msgstr[1] "teadlane(sed)"
 
-#: client/cl_campaign.c:1140 client/cl_campaign.c:4104
+#: client/cl_campaign.c:1140 client/cl_campaign.c:4103
 #, fuzzy
 msgid "medic"
 msgid_plural "medics"
 msgstr[0] "Meedik"
 msgstr[1] "Meedik"
 
-#: client/cl_campaign.c:1141 client/cl_campaign.c:4101
+#: client/cl_campaign.c:1141 client/cl_campaign.c:4100
 #, fuzzy
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "Sõdur"
 msgstr[1] "Sõdur"
 
-#: client/cl_campaign.c:1142 client/cl_campaign.c:4103
+#: client/cl_campaign.c:1142 client/cl_campaign.c:4102
 #, fuzzy
 msgid "worker"
 msgid_plural "workers"
@@ -5568,50 +5620,50 @@ msgstr ""
 "\t-------\n"
 "Sum:\t%i c\n"
 
-#: client/cl_campaign.c:1748
+#: client/cl_campaign.c:1747
 msgid "Error saving game. Check free disk space!"
 msgstr "Ebaõnnestus mäng salvestada. Kontrolli ketta ruumi!"
 
-#: client/cl_campaign.c:1748 client/cl_campaign.c:2336 client/cl_market.c:391
-#: client/cl_team.c:1252
+#: client/cl_campaign.c:1747 client/cl_campaign.c:2335 client/cl_market.c:391
+#: client/cl_team.c:1253
 msgid "Note"
 msgstr "Teade"
 
-#: client/cl_campaign.c:2336
+#: client/cl_campaign.c:2335
 msgid "Assemble or load a team"
 msgstr "Kogu või lae tiim"
 
-#: client/cl_campaign.c:2505
+#: client/cl_campaign.c:2504
 msgid "Your dropship is not near the landing zone"
 msgstr "Sinu transpordilaev ei ole maadumispaiga lähedal "
 
-#: client/cl_campaign.c:2741
+#: client/cl_campaign.c:2740
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s on ülendatud %s.\n"
 
-#: client/cl_campaign.c:2743
+#: client/cl_campaign.c:2742
 #, c-format
 msgid ""
 "%s has been awarded the posthumous rank of %s\\for inspirational gallantry "
 "in the face of overwhelming odds.\n"
 msgstr ""
 
-#: client/cl_campaign.c:2744
+#: client/cl_campaign.c:2743
 msgid "Soldier promoted"
 msgstr "Sõdur sai ametikõrgendust"
 
-#: client/cl_campaign.c:2890
+#: client/cl_campaign.c:2889
 #, c-format
 msgid "Defense of base: %s successful!"
 msgstr "Baasi kaitse: %s edukas"
 
-#: client/cl_campaign.c:4097
+#: client/cl_campaign.c:4096
 #, fuzzy
 msgid "Human"
 msgstr "Busan"
 
-#: client/cl_campaign.c:4099
+#: client/cl_campaign.c:4098
 #, fuzzy, c-format
 msgid ""
 "Race: %s\n"
@@ -5645,11 +5697,16 @@ msgstr ""
 msgid "You don't have enough quarters for your employees."
 msgstr ""
 
+#: client/cl_hospital.c:57
+#, c-format
+msgid "Healing of %s completed - %i active healings left\n"
+msgstr ""
+
 #: client/cl_hospital.c:59
 msgid "Healing complete"
 msgstr ""
 
-#: client/cl_hospital.c:171
+#: client/cl_hospital.c:198
 #, fuzzy, c-format
 msgid "%s\t%s\t(%i/%i)\n"
 msgstr "Nimii:\t%s (%i/%i)\n"
@@ -5964,24 +6021,24 @@ msgstr ""
 msgid "Key: %s"
 msgstr "Nupp %s"
 
-#: client/cl_menu.c:2921
+#: client/cl_menu.c:2924
 msgid "Hide the HUD (press ESC to reactivate HUD)"
 msgstr ""
 
-#: client/cl_parse.c:798
+#: client/cl_parse.c:835
 #, fuzzy
 msgid "Alien spotted:"
 msgstr "Tulnukat on märgatud\n"
 
-#: client/cl_parse.c:801 client/cl_parse.c:803
+#: client/cl_parse.c:838 client/cl_parse.c:840
 msgid "Alien spotted!\n"
 msgstr "Tulnukat on märgatud\n"
 
-#: client/cl_parse.c:805
+#: client/cl_parse.c:842
 msgid "Enemy spotted!\n"
 msgstr "Vastast on märgatudl\n"
 
-#: client/cl_parse.c:807
+#: client/cl_parse.c:844
 msgid "Civilian spotted!\n"
 msgstr "Inimest on märgatud!\n"
 
@@ -6053,50 +6110,59 @@ msgstr "Järjekord on täis! "
 msgid "You cannot queue any more items!"
 msgstr ""
 
-#: client/cl_research.c:555
+#: client/cl_research.c:83
+#, c-format
+msgid "New technology researched: %s. You should read this at UFOpedia.\n"
+msgstr ""
+
+#: client/cl_research.c:85 client/cl_research.c:1097
+msgid "Research finished"
+msgstr "Uurimustöö lõpetatud"
+
+#: client/cl_research.c:576
 #, c-format
 msgid "Available scientists in this base: %i"
 msgstr "Vabu teadlasi selles baasis: %i"
 
-#: client/cl_research.c:556
+#: client/cl_research.c:577
 msgid "Not researched in any base."
 msgstr "Ei uurita ühesgi baasis"
 
-#: client/cl_research.c:562
+#: client/cl_research.c:583
 #, c-format
 msgid "Researched in %s"
 msgstr "Uuritakse %s"
 
-#: client/cl_research.c:564
+#: client/cl_research.c:585
 msgid "Researched in this base."
 msgstr "Uuritakse selles baasis"
 
-#: client/cl_research.c:575
+#: client/cl_research.c:596
 #, c-format
 msgid "Progress: %.1f%%"
 msgstr "Edasijõudmine: %.1f%%"
 
-#: client/cl_research.c:577
+#: client/cl_research.c:598
 msgid "Progress: Not available."
 msgstr "Areng: Pole teada"
 
-#: client/cl_research.c:581
+#: client/cl_research.c:602
 msgid "Status: Under research"
 msgstr "Seisund: Uuritakse praegu"
 
-#: client/cl_research.c:584
+#: client/cl_research.c:605
 msgid "Status: Research paused"
 msgstr "Seisund: Uurimine on peatatud"
 
-#: client/cl_research.c:587
+#: client/cl_research.c:608
 msgid "Status: Research finished"
 msgstr "Seisund: Uurimine lõpetatud"
 
-#: client/cl_research.c:590
+#: client/cl_research.c:611
 msgid "Status: Unknown technology"
 msgstr "Seisund: Tundmatu tehnoloogja"
 
-#: client/cl_research.c:665
+#: client/cl_research.c:686
 msgid ""
 "There is no free lab available.\n"
 "You need to build one or free another\n"
@@ -6106,19 +6172,19 @@ msgstr ""
 " Sa pead ehitama uue labori või peatama teise\n"
 " uurimuse, et teadlased saaksid seda tehnoloogjat uurida.\n"
 
-#: client/cl_research.c:787
+#: client/cl_research.c:808
 msgid "This item is already under research by your scientists."
 msgstr "Seda asja juba uuritakse juba meie teadlaste poolt."
 
-#: client/cl_research.c:790
+#: client/cl_research.c:811
 msgid "The research on this item continues."
 msgstr "Selle asja uurimine jätkub."
 
-#: client/cl_research.c:794 client/cl_research.c:843
+#: client/cl_research.c:815 client/cl_research.c:864
 msgid "The research on this item is complete."
 msgstr "Uurimus selle asja kohta on lõppenud."
 
-#: client/cl_research.c:807
+#: client/cl_research.c:828
 msgid ""
 "The research on this item is not yet possible.\n"
 "You need to research the technologies it's based on first."
@@ -6126,24 +6192,20 @@ msgstr ""
 "See uurimus ei ole veel kättesaadav.\n"
 " Sa pead uurima tehnoloogiad millele see uurimus on rajatud"
 
-#: client/cl_research.c:882
+#: client/cl_research.c:907
 msgid " [not yet researchable]"
 msgstr "[pole piisavalt infot uurimiseks]"
 
-#: client/cl_research.c:989
+#: client/cl_research.c:1014
 msgid "Build a laboratory first"
 msgstr "Ehita labor enne"
 
-#: client/cl_research.c:1071
+#: client/cl_research.c:1096
 #, c-format
 msgid "Research of %s finished\n"
 msgstr "%s uurimine lõpetatud\n"
 
-#: client/cl_research.c:1072
-msgid "Research finished"
-msgstr "Uurimustöö lõpetatud"
-
-#: client/cl_research.c:1379
+#: client/cl_research.c:1405
 msgid "No description available."
 msgstr "Ei ole infot selle asja kohta"
 
@@ -6173,30 +6235,30 @@ msgstr "Arktiline"
 msgid "%i of %i"
 msgstr "%i  %i"
 
-#: client/cl_team.c:1252
+#: client/cl_team.c:1253
 msgid "Error saving team. Check free disk space!"
 msgstr "Ei õnnestu salvestad tiimi. Kontrolli ketta vaba ruumi!"
 
-#: client/cl_team.c:1423
+#: client/cl_team.c:1424
 msgid "Select a soldier from list"
 msgstr "Vali sõdurenimekirjast"
 
-#: client/cl_team.c:1424
+#: client/cl_team.c:1425
 #, fuzzy
 msgid "Toggle to next soldier"
 msgstr "Järgmine tulnukas"
 
-#: client/cl_team.c:1718 client/cl_team.c:1766
+#: client/cl_team.c:1719 client/cl_team.c:1767
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "Tulnukaid tapetud\t%i\n"
 
-#: client/cl_team.c:1721
+#: client/cl_team.c:1722
 #, c-format
 msgid "Enemies killed\t%i\n"
 msgstr "Vastaseid tapetud\t%i\n"
 
-#: client/cl_team.c:1726
+#: client/cl_team.c:1727
 #, c-format
 msgid ""
 "Aliens captured\t%i\n"
@@ -6205,7 +6267,7 @@ msgstr ""
 "Tulnukaid kinnipüütud\t%i\n"
 "\n"
 
-#: client/cl_team.c:1727 client/cl_team.c:1770
+#: client/cl_team.c:1728 client/cl_team.c:1771
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -6214,7 +6276,7 @@ msgstr ""
 "Tulnukate ellujäänuid\t%i\n"
 "\n"
 
-#: client/cl_team.c:1729
+#: client/cl_team.c:1730
 #, c-format
 msgid ""
 "Enemies captured\t%i\n"
@@ -6223,7 +6285,7 @@ msgstr ""
 "Vastaseid kinnipüütud\t%i\n"
 "\n"
 
-#: client/cl_team.c:1730
+#: client/cl_team.c:1731
 #, c-format
 msgid ""
 "Enemy survivors\t%i\n"
@@ -6232,22 +6294,22 @@ msgstr ""
 "Vastase ellujäänuid\t%i\n"
 "\n"
 
-#: client/cl_team.c:1734
+#: client/cl_team.c:1735
 #, c-format
 msgid "Team losses\t%i\n"
 msgstr "Tiimi kaotusi\t%i\n"
 
-#: client/cl_team.c:1735
+#: client/cl_team.c:1736
 #, c-format
 msgid "Team missing in action\t%i\n"
 msgstr "Kaotasid tiimi:\t%i\n"
 
-#: client/cl_team.c:1736
+#: client/cl_team.c:1737
 #, c-format
 msgid "Friendly fire losses\t%i\n"
 msgstr "Enda poolt tapetud tiimikaaslasi\t%i\n"
 
-#: client/cl_team.c:1737
+#: client/cl_team.c:1738
 #, c-format
 msgid ""
 "Team survivors\t%i\n"
@@ -6256,22 +6318,22 @@ msgstr ""
 "Tiimis ellujäänuid?t%i\n"
 "\n"
 
-#: client/cl_team.c:1740
+#: client/cl_team.c:1741
 #, c-format
 msgid "Civilians killed by the Aliens\t%i\n"
 msgstr "Tulnukate poolt tapetud inimesi\t%i\n"
 
-#: client/cl_team.c:1742
+#: client/cl_team.c:1743
 #, c-format
 msgid "Civilians killed by the Enemies\t%i\n"
 msgstr "Vastaste poolt tapetud inimesi\t%i\n"
 
-#: client/cl_team.c:1744
+#: client/cl_team.c:1745
 #, c-format
 msgid "Civilians killed by your Team\t%i\n"
 msgstr "Sinu poolt mõrvatud inimesi\t%i\n"
 
-#: client/cl_team.c:1745
+#: client/cl_team.c:1746
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -6282,27 +6344,27 @@ msgstr ""
 "\n"
 "\n"
 
-#: client/cl_team.c:1769
+#: client/cl_team.c:1770
 #, c-format
 msgid "Aliens captured\t%i\n"
 msgstr "Tulnukaid kinnipüütud\t%i\n"
 
-#: client/cl_team.c:1773
+#: client/cl_team.c:1774
 #, c-format
 msgid "Phalanx soldiers killed by Aliens\t%i\n"
 msgstr "Phalanxi sõdureid tapetud tulnukate poolt\t%i\n"
 
-#: client/cl_team.c:1774
+#: client/cl_team.c:1775
 #, c-format
 msgid "Phalanx soldiers missing in action\t%i\n"
 msgstr "Phalanxi sõdureid kadunud lahingus\t%i\n"
 
-#: client/cl_team.c:1775
+#: client/cl_team.c:1776
 #, c-format
 msgid "Phalanx friendly fire losses\t%i\n"
 msgstr "Phalanxi poolt tapetud tiimikaaslasi\t%i\n"
 
-#: client/cl_team.c:1776
+#: client/cl_team.c:1777
 #, c-format
 msgid ""
 "Phalanx survivors\t%i\n"
@@ -6311,17 +6373,17 @@ msgstr ""
 "Phalanxi ellujäänud\t%i\n"
 "\n"
 
-#: client/cl_team.c:1778
+#: client/cl_team.c:1779
 #, c-format
 msgid "Civilians killed by Aliens\t%i\n"
 msgstr "Tulnukate tapetud inimesi\t%i\n"
 
-#: client/cl_team.c:1779
+#: client/cl_team.c:1780
 #, c-format
 msgid "Civilians killed by friendly fire\t%i\n"
 msgstr "Phalanxi poolt tapetud inimesi\t%i\n"
 
-#: client/cl_team.c:1780
+#: client/cl_team.c:1781
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -6330,12 +6392,12 @@ msgstr ""
 "Inimesi päästetud\t%i\n"
 "\n"
 
-#: client/cl_team.c:1784
+#: client/cl_team.c:1785
 #, c-format
 msgid "Items salvaged and sold\t%i\n"
 msgstr "Asju kogutud ja müüdud\t%i\n"
 
-#: client/cl_team.c:1785
+#: client/cl_team.c:1786
 #, c-format
 msgid ""
 "Total item sale value\t%i\n"
@@ -6344,7 +6406,7 @@ msgstr ""
 "Kõikide asjade müügi hind\t%i\n"
 "\n"
 
-#: client/cl_team.c:1801
+#: client/cl_team.c:1802
 #, c-format
 msgid ""
 "\n"
@@ -6353,32 +6415,32 @@ msgid ""
 "Team survivors:  %i"
 msgstr ""
 
-#: client/cl_team.c:1803
+#: client/cl_team.c:1804
 #, fuzzy
 msgid "You won the game!"
 msgstr "Sa VÕITSID lahingu"
 
-#: client/cl_team.c:1805
+#: client/cl_team.c:1806
 msgid "Congratulations"
 msgstr ""
 
-#: client/cl_team.c:1807
+#: client/cl_team.c:1808
 msgid ""
 "The game was a draw!\n"
 "\n"
 "No survivors left on any side."
 msgstr ""
 
-#: client/cl_team.c:1808
+#: client/cl_team.c:1809
 msgid "Game Drawn!"
 msgstr ""
 
-#: client/cl_team.c:1810
+#: client/cl_team.c:1811
 #, fuzzy
 msgid "You lost the game"
 msgstr "Sa KAOTASID lahingu"
 
-#: client/cl_team.c:1812
+#: client/cl_team.c:1813
 msgid "Better luck next time"
 msgstr ""
 
@@ -6629,31 +6691,31 @@ msgid ""
 "ammunition!\n"
 msgstr "Sa ei saa relva laadida - Relv on juba laetud\n"
 
-#: game/g_client.c:1221
+#: game/g_client.c:1235
 msgid "Currently shaken, won't let it's guard down.\n"
 msgstr "On halvas vaimses seisundis aga saab hakkama\n"
 
-#: game/g_client.c:1292
+#: game/g_client.c:1306
 #, c-format
 msgid "%s panics!\n"
 msgstr "%s on paanikas\n"
 
-#: game/g_client.c:1345
+#: game/g_client.c:1359
 #, c-format
 msgid "%s is on a rampage.\n"
 msgstr "%s Keeb vihast\n"
 
-#: game/g_client.c:1347
+#: game/g_client.c:1361
 #, c-format
 msgid "%s is in mad rage!\n"
 msgstr "%s on hullumeelsuse piiri ületanud!\n"
 
-#: game/g_client.c:1400
+#: game/g_client.c:1414
 #, c-format
 msgid "%s is currently shaken.\n"
 msgstr "%s on vaimselt raputatud.\n"
 
-#: game/g_client.c:1860
+#: game/g_client.c:1874
 #, c-format
 msgid "Team %i ( %s) will get the first turn.\n"
 msgstr ""
@@ -6694,6 +6756,10 @@ msgstr ""
 #: po/OTHER_STRINGS:9
 msgid "5 days"
 msgstr ""
+
+#, fuzzy
+#~ msgid "%s has been killed!\n"
+#~ msgstr "%s on ülendatud %s.\n"
 
 #~ msgid "Edit name of the soldier"
 #~ msgstr "Muuda sõduri nime"

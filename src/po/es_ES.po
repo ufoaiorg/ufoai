@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-02-24 19:52+0100\n"
+"POT-Creation-Date: 2007-02-27 17:51+0100\n"
 "PO-Revision-Date: 2007-01-06 19:30+0100\n"
 "Last-Translator: Kracken <kracken@users.sourceforge.net>\n"
 "Language-Team: \n"
@@ -369,20 +369,34 @@ msgstr "UGV"
 msgid "Worker"
 msgstr "Trabajador"
 
-#: ../base/ufos/medals.ufo:58
+#: ../base/ufos/medals.ufo:58 ../base/ufos/medals.ufo:59
 msgid "Rookie"
 msgstr "Novato"
 
-#: ../base/ufos/medals.ufo:65
+#: ../base/ufos/medals.ufo:66
 msgid "Squad Leader"
 msgstr "Jefe de escuadrón"
 
-#: ../base/ufos/medals.ufo:75
+#: ../base/ufos/medals.ufo:67
+#, fuzzy
+msgid "Sqd Ldr"
+msgstr "Jefe de escuadrón"
+
+#: ../base/ufos/medals.ufo:77
 msgid "Sergeant"
 msgstr "Sargento"
 
-#: ../base/ufos/medals.ufo:85
+#: ../base/ufos/medals.ufo:78
+msgid "Sgt"
+msgstr ""
+
+#: ../base/ufos/medals.ufo:88
 msgid "Captain"
+msgstr "Capitán"
+
+#: ../base/ufos/medals.ufo:89
+#, fuzzy
+msgid "Cpt"
 msgstr "Capitán"
 
 #: ../base/ufos/menu_aircraft.ufo:49
@@ -2067,7 +2081,7 @@ msgstr "Tecnologías"
 msgid "Show only aliens"
 msgstr "Mostrar sólo objetos"
 
-#: ../base/ufos/menu_transfer.ufo:284 client/cl_campaign.c:4097
+#: ../base/ufos/menu_transfer.ufo:284 client/cl_campaign.c:4096
 #, fuzzy
 msgid "Aliens"
 msgstr "Aliens"
@@ -8225,6 +8239,415 @@ msgstr ""
 "\n"
 "Lo único que faltaba era un lider."
 
+#: ../base/ufos/research.ufo:2558
+msgid "A New Twist"
+msgstr ""
+
+#: ../base/ufos/research.ufo:2559
+#, fuzzy
+msgid "news_newtwist_txt"
+msgstr ""
+"La República Asiática:\n"
+"\n"
+"En los años que siguieron, la reformada Republica de China -- volviendo "
+"adoptar su nombre precomunista -- fue devolviendo los territorios "
+"conquistados incluyendo aquellos ganados siglos atrás, ofreciendo a sus "
+"gentes la elección entre la independencia total o un asiento en el nuevo "
+"consejo de gobierno como una parte igual de la nueva Republica. Después de "
+"haber luchado en el bando rebelde durante la guerra civil, Taiwan fue el "
+"primeró que se unió a esta nueva Republica, reconciliando sus diferencias "
+"con el continente después de que el gobierno comunista se rindiera. Taiwan "
+"se convirtió rápidamente en un jugador importante en el nuevo consejo de "
+"gobierno y su actuación fue decisiva para enviar a los líderes capturados "
+"del antiguo gobierno al Tribunal de la Haya para Crimenes de Guerra. Corea "
+"del Norte, otra nación rebelde, también decidio quedarse en la república al "
+"ver una oportunidad de gran crecimiento económico y de liberación de la "
+"dictadura. Y no se sintieron decepcionados.\n"
+"\n"
+"El renacimiento de la economía China fue considerada casi milagrosa por los "
+"historiadores contemporaneos. Los primeros avances en nanotecnología fue "
+"realizado por investigadores chinos, proporcionandoles cuantiosos contratos "
+"en la industria médica alrededor del mundo. A pesar de antiguos odios y "
+"enemistades, otras naciones del sureste asiático se fueron incorporando a la "
+"Republica, que fue rápidamente rebautizada como República Asiática para "
+"reconocer la presencia de sus nuevos miembros. Incluso Japón se unió "
+"finalmente para revitalizar su economía en recesión y tratar de recuperar a "
+"la población perdida durante los años de la guerra. La Republica continuó "
+"esencialmente fiel a sus principios con la guerra civil todavía fresca en la "
+"memoria. A lo largo de los años se ha forjado una reputación de tratar de "
+"buena fe con todos sus miembros, y ha construido una imagen de confianza y "
+"solidaridad lo que le permite hablar como una sola voz representando a los "
+"miles de millones de personas de Asia.\n"
+"\n"
+"Hoy en día, la economía de la República Asiática se ha recuperado gracias a "
+"la comercialización de la nanotecnología y de los dispositivos holográficos. "
+"Continua teniendo un ejercito fuerte, entrenado al mayor nivel posible.\n"
+"\n"
+"\n"
+"\n"
+"Los Países Revolucionarios:\n"
+"\n"
+"Con la sucesiva caida de los regímenes de Estados Unidos y China, el "
+"socialismo en sudamerica campó por sus respetos. La muerte de la economía de "
+"EEUU llevó al resurgimiento del fervor revolucionario, alejando a muchas "
+"naciones de la influencia del capitalismo. Sin embargo, con un entorno "
+"democrático inestable en la mayoría de estos países, el ideal del poder del "
+"pueblo pudo ser una realidad. Esta nueva tendencia proponía unir a las "
+"principales democracias con los verdaderos ideales socialistas.\n"
+"\n"
+"El continente entero miraba con horror el bombardeo de Shanghai durante la "
+"Segunda Guerra Fría, televisada por todo el mundo hasta el último segundo. "
+"La nueva ola de socialismo sufrió otro duro golpe con la caida de China; "
+"todos podían observar de primera lo que podría pasar a la revolución si "
+"seguía el camino de la dictadura y el totalitarismo. No les llevo mucho "
+"tiempo a los lideres a tener una respuesta.\n"
+"\n"
+"Muchos paises, dirigidos por dictadores, intentaron sofocar las rebeliones "
+"incluso antes de que comenzaran, lo que provocó graves disturbios en las "
+"naciones democráticas más grandes, principalmente en Cuba, Brasil y "
+"Argentina. Repentinamente, los últimos reyes de sudamérica se encontraron "
+"sin aliados.\n"
+"\n"
+"Uno a uno acabaron cediendo a la presión pública y política y fueron "
+"reemplazados por un parlamento. La revolución volvió a coger velocidad en "
+"lugar de perderla; trataban de conseguir mayores economías, mayor "
+"integración y posiblemente seguir el ejemplo de las fronteras abiertas de "
+"Europa. Una nueva red de autopistas recorria las economías más consolidadas "
+"del continente, lo que permitió un uso mucho más eficiente de la tierra. Los "
+"recursos naturales de sudamérica fueron explotados como nunca antes, y "
+"demandaban un precio por cada pequeña parte de ellos.\n"
+"\n"
+"Hoy en día, los países miembros se han unido tan estrechamente que desde "
+"fuera se les trata como un sólo organismo: los Paises Revolucionarios. Una "
+"junta de gobierno representa a todo el continente y administra un monstruo "
+"económico sólo superado por el de la Gran Union Europea. Su ejercito es "
+"pequeño, pero cuenta con la última tecnología; sin embargo su entrenamiento "
+"no esta entre los mejores.\n"
+"\n"
+"\n"
+"\n"
+"América Unida:\n"
+"\n"
+"A raiz del descalabro de la economía estadounidense a finales de la decada "
+"de 2020, más y más gente fue abandonando el país en busca de los prados "
+"verdes de Canadá y de, irónicamente, Méjico. El valor del dolar se desplomó "
+"a niveles sin precedentes empobreciendo a millones de personas, hasta que el "
+"FMI y la banca internacional fijaron su precio por decreto. El país fue "
+"sometido a un plan de reformas brutal, que requería la venta o "
+"desmantelamiento de la mitad de su fuerza militar. Para cumplir con el pago "
+"de los 6 billones de dólares de deuda, sus tipos de interes fueron "
+"congelados y sus exportaciones se orientaron hacia la tecnologia y los "
+"artículos de lujo. La reestructuración de la NASA, combinado con el nuevo "
+"diseño de un avion estratosférico, hizo del espacio exterior una fuente de "
+"ingresos importante para los EEUU; Cabo Cañaveral empezó a ofrecer los "
+"despegues espaciales más baratos del mundo, al principio sólo con unos "
+"cuantos proptotipos pero creando después una flota importante de aviones "
+"estratosfericos, lo que permitió a la economía del país ir encauzandose poco "
+"a poco hacia la recuperación.\n"
+"\n"
+"La cooperación entre los países de Norteamérica empezó con las ayudas "
+"financieras procedentes de Canadá y Méjico, que veían como sus exportaciones "
+"hacia los Estados Unidos caían en picado y trataban de ayudar a su cliente "
+"comercial más importante. El creciente número de emigrantes también servía "
+"para para acercar las relaciones entre los países vecinos. Entonces, en "
+"2042, en un movimiento político completamente inesperado, Méjico eligió como "
+"presidente al emigrante estadounidense Esteban Villa-Lobos García.\n"
+"\n"
+"Las elecciones fueron rechazadas fervientemente, pero la decisión final "
+"permanecio tras dos recuentos de los votos, y el nuevo presidente fue "
+"investido en julio de 2042. Finalmente, una combinación de carisma personal "
+"y buenas prácticas políticas llevo a todo el país a apoyar a García. Poco "
+"después se proponía el Plan del Mañana.\n"
+"\n"
+"Según ese plan, Méjico, Canadá y los Estados Unidos se unirían en un solo "
+"país para hacer renacer una superpotencia en Norteamérica. En diversas y "
+"controvertidas elecciones, la población de los tres países dio visto bueno "
+"al Plan del Mañana; 52% de aceptación en los Estados Unidos, 64% en Canadá y "
+"71% en Méjico. La unión se formalizó en 2050, creando la América Unida a "
+"partir de las potencias principales del Nuevo Mundo. La incipiente industria "
+"espacial pronto se extendio al resto del país y, a pesar de algunos "
+"tropiezos menores, Norteamérica aceleró su proceso de recuperación "
+"economómica.\n"
+"\n"
+"A día de hoy, la deuda de AU ha descendido desde 6 a 2 billones, y el nivel "
+"de riqueza se ha practicamente ha vuelto a los niveles anteriores al "
+"desplome. AU tiene la industria espacial más avanzada del planeta; la NASA "
+"realiza casi el 70% de los lanzamientos comerciales alrededor del mundo. "
+"Exporta grandes cantidades de bienes a otros países y está previsto que sea "
+"solvente en menos de tres años. Militarmente, AU es la más debil de todas "
+"las mega-naciones. Sólo cuenta con un ejercito de voluntarios y un pequeño "
+"presupuesto de defensa, impuesto por el FMI. Sin embargo, su pequeña armada "
+"está muy bien entrenada y es capaz de llegar a cualquier lugar del país en "
+"menos de dos horas.\n"
+"\n"
+"\n"
+"\n"
+"La Gran Unión Europea:\n"
+"\n"
+"Lenta pero constantemente, la Unión Europea ha extendido sus fronteras más y "
+"más con cada década que pasa. Su primer movimiento fue hacia Oriente Medio "
+"con la aceptación de Israel como miembro asociado en 2011, y la promoción de "
+"Israel y de Turquía a miembros de pleno derecho en 2017. Muchas islas "
+"atlánticas fueron aceptadas en la misma resolución, haciendo de esta la "
+"expansión más grande de la Union Europea en el siglo XXI.\n"
+"\n"
+"Poco despues de la controvertida entrada de Israel como estado asociado, la "
+"UE promulgó leyes más estrictas en cuestiones como derechos humanos, "
+"libertad de religión y separación entre Iglesia y Estado. Fue también la "
+"primera superpotencia occidental en reconocer la Alianza de Oriente Medio, y "
+"en mantener estrechas relaciones con ella -- a pesar de las protestas de "
+"Estados Unidos -- con la esperanza de reducir las distancias culturales y el "
+"creciente peligro de terrorismo. En la mayoría de los casos esta política "
+"fue todo un éxito.\n"
+"\n"
+"En 2028 Groenlandia -- que había crecido muchísmo debido a la emigración de "
+"estadounidenses -- declaró formalmente su independencia de Dinamarca. No se "
+"libró ninguna batalla; el gobierno danés reconoció la autonomía de la región "
+"a causa de las presiones políticas de otrs países europeos. En los meses "
+"siguientes Groenlandia consideró brevemente unirse a los Estados Unidos en "
+"condición de protectorado, pero esta idea fue descartada en cuanto la UE le "
+"ofreció ser miembro de pleno derecho de la unión. Este hecho, así como la "
+"deserción de varias islas atlánticas que habían sido protectorados de los "
+"Estados Unidos y que ahora querían unirse a Europa, impulsó a la UE a "
+"cambiar su nombre por el de la Gran Union Europea.\n"
+"\n"
+"Desde el final de la Segunda Guerra Fría, la GUE siempre ha estado en la "
+"primera linea del desarrollo político. Fue la única nacion que secundó la "
+"proposición de censura de la Alianza de Oriente Medio sobre los antiguos "
+"Estados Unidos, después de la ONU no consiguiera actuar durante la expansión "
+"China y la subsiguiente guerra civil. LA GUE también apoyó los efuerzos de "
+"la Alianza de crear una nueva ONU en la que todos los paises tuvieran igual "
+"representación, y con suficiente poder como para hacerse obedecer en los "
+"principios para los que se había creado.\n"
+"\n"
+"Hoy en día la GUE es la fuerza política y económica más potente en todo el "
+"mundo. Sin embargo, la enorme burocracia necesaria para mantener a tan "
+"elevado número de miembros hacen que las decisiones GUE se tomen con mucha "
+"lentitud. Su ejercito es grande y poderoso pero poco cohesionado, con cada "
+"país manteniendo su lengua y tradiciones en sus propias tropas. La "
+"cooperación militar es complicada y siempre se requiere mucha diplomacia "
+"para llegar a cualquier compromiso. La mayor parte de las tropas de la ONU "
+"están proporcionadas por la GUE, pero sólo son usados como mantenedores de "
+"la paz. El hecho de que el ejercito haya perdido su fuerza anterior ha sido "
+"largamente debatido en Bruselas durante muchos años, sin llegar a tener a la "
+"vista ninguna solución.\n"
+"\n"
+"\n"
+"\n"
+"La Alianza de Oriente Medio:\n"
+"\n"
+"El nacimiento de la Alianza de Oriente Medio fue una sorpresa para todos, "
+"incluidos los países implicados. Fue ideada simplemente para debilitar la "
+"influencia de occidente en Oriente Medio. Los principales ideólogos y "
+"primeros miembros de dicha alianza -- Iran, Siria, Jordania y Afganistan -- "
+"nunca pensaron que duraría más de una década, después de lo cual esperaban "
+"que sencillamente moriría y cada uno se ocuparía de sus asuntos.\n"
+"\n"
+"La Segunda Guerra Fría trastocó todos los planes. La República Popular China "
+"había dejado de ser el aliado de antaño contra occidente; se había "
+"convertido en cambio en una amenaza en expansión, con los ojos puestos en "
+"Nepal, algunos trozos de la India y posiblemente con planes para el resto de "
+"países con los que tenía frontera por el Oeste. Paquistán, Tayiquistán y "
+"Kyrgyzistán corrieron a los brazos de la alianza por temor a una invasión. "
+"El subcontinente arábigo se unió en su totalidad a la Alianza ese mismo año, "
+"buscando expandir su lucha política con occidente. Sin ni siquiera "
+"proponerselo, la Alianza había formado un bloque político que cubría "
+"prácticamente todo Oriente Medio. Su posición era demasiado buena como para "
+"dejar que simplemente desapareciera.\n"
+"\n"
+"La Alianza extendida, ahora reconocida por la Union Europea, entró en la "
+"escena internacional con el cuchillo en la mano. Controlaban la mayor parte "
+"de las reservas mundiales de crudo y querían explotar su riqueza.\n"
+"\n"
+"El poder económico de la Alianza creció en la misma medida en que las "
+"reservas de petróleo disminuían. Los grandes fabricantes farmacéuticos se "
+"trasladaron a Oriente Medio, el único lugar del mundo donde el petróleo era "
+"todavia barato y abundante. Esto, junto con las otras aplicaciones "
+"industriales del petróleo, permitió a Oriente Medio a superar la crisis "
+"originada por la 'revolución nuclear' rusa, y el consiguiente cambio a la "
+"generación de energía por medios nucleares que se impuso en el resto del "
+"mundo. La Alianza continuó su expansion por Egipto, Uzbekistán, Turkmenistán "
+"y algunos territorios en disputa alrededor del Mar Rojo. Toda la región que "
+"rodea a dicho mar fue rápidamente pacificada cuando la Alianza desplazó a su "
+"ejercito para ayudar a sus nuevos miembros africanos.\n"
+"\n"
+"A día de hoy, la prosperidad ha alejado a Oriente Medio de cualquier dogma "
+"de fe y lo han conducido al camino de las leyes seculares y de igualdad. Sus "
+"países todavía son gobernados por una sóla persona -- sultanes, emires, "
+"maliks, presidentes y generales -- pero el poder personal de cada uno de "
+"ellos está vigilado por el resto de miembros de la Alianza para que no se "
+"pasen de la raya. La disensión política está tolerada principalmente por las "
+"presiones de de la UE y de otras naciones, pero incluso en 2084 son pocas "
+"las naciones de la Alianza que cuentan con un proceso democrático eficaz.\n"
+"\n"
+"El ejercito de la Alianza es grande, rápido y potente. Cuenta con una de las "
+"mejores fuerzas de élite del mundo, tanto en entrenamiento como en "
+"equipamiento. Su permisividad ante las 'bajas civiles aceptables' ha sido "
+"fuente de críticas del resto del mundo, pero la Alianza ha conservado esta "
+"política durante las cuatro décadas que lleva existiendo.\n"
+"\n"
+"\n"
+"\n"
+"Nueva África:\n"
+"\n"
+"Nacida de la violencia y del enfrentamiento, Nueva África basó su "
+"unificación en su inicial distanciamiento. África languideció durante las "
+"tres primeras décadas del siglo XXI tal y como lo había hecho en el pasado, "
+"con guerras civiles y purgas étnicas a la orden del día. Esto sucedió hasta "
+"que varios países centroafricanos empredieron un gran proyecto en 2039 con "
+"el fin de desmantelar los diversos cárteles existentes en el comercio del "
+"diamante y usar los beneficios de la operación en el desarrollo a largo "
+"plazo de sus respectivos países.\n"
+"\n"
+"Esta acción produjo un baño de sangre, tanto militar como económico. La ONU "
+"intentó detener la lucha por varios medios, pero en la peor tradición de la "
+"antigua organización, sus propuestas se perdieron en la burocracia como "
+"simples llamamientos al orden sin ninguna acción concreta. Sin embargo, al "
+"grupo de naciones que comenzaron la lucha se le unieron pronto otras muchas, "
+"cansadas de ser manipuladas por los grandes conglomerados empresariales de "
+"occidente. Después de varios años de amarga lucha, consiguieron acabar con "
+"los cárteles uno a uno. Esto les permitión controlar algunas de las minas de "
+"oro y diamante más grandes y avanzadas del mundo; su territorio en conjunto "
+"era, de largo, el suministrador más importante de diamantes naturales del "
+"mundo. Esta victoria también les proporcionó una visión de lo que podían "
+"conseguir si trabajaban todos juntos. Nueva África había nacido.\n"
+"\n"
+"Todos los países africanos implicado en la guerra anti-cárteles, con la "
+"excepción de aquellos territorios leales a la Commonwealth de Oceanía o a la "
+"Alianza de Oriente Medio, comenzaron a trabajar de manera muy estrecha en la "
+"construcción de vias de comunicación para el transporte de petroleo y "
+"mercancías. Esto permitió que el reparto de alimento también fuera mucho más "
+"eficiente. En los siguientes treinta años Nueva África acabó con las "
+"hambrunas, modificó sus fronteras para permitir algunos focos de "
+"independentismo étnico existente e instauró un sistema de salud pública a "
+"coste casi nulo para sus ciudadanos. También encontraron un nuevo y próspero "
+"mercado en la comercialización sostenible de maderas y frutas exóticas. El "
+"nuevo clima de cooperación permitió acuerdos de exportación entre sus "
+"miembros por primera vez en toda la historia. Como hicieron los Países "
+"Revolucionarios, Nueva África forzó al resto del mundo a pagar un precio "
+"justo por todos sus productos.\n"
+"\n"
+"Hoy en día Nueva África es todavía la más debil de todas las grandes "
+"agrupaciones de naciones, pero está creciendo rápidamente. Tiene un ejercito "
+"numeroso y motivado aunque no demasiado bien equipado; su arsenal se basa "
+"sobre todo en antigüedades del ejercito de los EEUU e incluso equipos rusos "
+"con más de un siglo de vida. Sus tropas tienen problemas para acceder "
+"rápidamente a algunos lugares de su territorio, debido principalmente a los "
+"fallos del equipo y a su difícil orografía. La mayor parte de las veces lo "
+"único en lo que colaboran sus tropas es en el avistamiento de OVNIs gracias "
+"a las miles de patrullas que recorren su territorio en misiones de "
+"vigilancia.\n"
+"\n"
+"\n"
+"\n"
+"Rusia:\n"
+"\n"
+"A Rusia le llevó décadas recuperarse de la caída de la Union Soviética y de "
+"los estragos que el sistema soviético ocasionó a la economía del país. El "
+"país estuvo sangrando como una herida abierta durante la primera mitad del "
+"siglo XII, intentando reprimir la eterna rebelion en Chechenia, intentando "
+"encontrar una reforma eficaz después de 70 años de dominación por parte del "
+"Estado, intentando volver a la posición perdida de superpotencia mundial.\n"
+"\n"
+"Las cosas finalmente empezaron a ir mejor cuando el entonces primer ministro "
+"Yevgeny Karamazov permitió la completa independencia de Chechenia en 2047. "
+"Mientras que la nueva República de Chechenia explotaba en una tormenta de "
+"violencia a causa de la decisión sobre quién debía gobernar, Rusia se "
+"desentendió y se puso a resolver sus propios problemas dejando que los "
+"chechenos -- y la nueva ONU -- trataran de detener el derramamiento de "
+"sangre. Desafortunadamente esto no ocurrió en mucho tiempo y Chechenia tuvo "
+"que volver a la esfera de influencia de Rusia para evitar la guerra civil, "
+"pero esta vez como miembro independiente reconocido.\n"
+"\n"
+"La recuperacion económica de Rusia -- especialmente debido a las menguantes "
+"reservas de petróleo de Oriente Medio -- empezó con la perforación de las "
+"reservas de crudo de Siberia, con nuevas técnicas y equipos que permitían a "
+"los operarios sobrevivir a los rigores del invero; esta recuperación "
+"continuó un poco más tarde con la construcción de una serie de nuevas "
+"centrales nucleares. Rusia invirtió grandes cantidades en una investigación "
+"que permitiera construir plantas nucleares mas pequeñas, más seguras y, lo "
+"que es más importante, sostenibles. Esto implicó un cambio desde el uranio "
+"enriquecido hacia el torio como combustilbe nuclear y avances en el diseño "
+"del 'amplificador de energía', un nuevo tipo de reactor de fisión cuyo "
+"primer prototipo estuvo instalado en Roma desde 2004 hasta 2011. Dos de los "
+"nuevos reactores tambien podían consumir plutonio proveniente del "
+"desmantelamiento de las antiguas armas nucleares o de los residuos "
+"radiactivos de las plantas más antiguas.\n"
+"\n"
+"Entonces, ocho años después de la independencia chechena, la 'revolución "
+"nuclear' rusa llegó a su climax con la invención del postprocesador de "
+"combustible, que podía convertir el 90% de los residuos del amplificador de "
+"energía en elementos libres de radiación en semanas en lugar de en siglos. "
+"Los rusos acabaron con la interminable crisis de energía de la noche a la "
+"mañana; la fisión nuclear era segura, relativamente limpia y el suministro "
+"global de torio podía durar hasta el año 3000.\n"
+"\n"
+"Mucha de las antiguas repúblicas ex-soviéticas han decidido volver a unirse "
+"a Rusia siguiendo el ejemplo de otras grandes naciones. La revolución "
+"nuclear continúa hoy en día con los primeros intentos de desarrollo y "
+"comercialización de la energía producida por fusión. Aunque su economía "
+"todavía no es lo que era, el país esta ahora en mejor forma de lo que ha "
+"estado en siglos, ya sea bajo el control de los khanes, los zares o los "
+"soviéticos. Su ejercito es quizás algo anticuado, pero muy bien entrenado y "
+"disciplinado.\n"
+"\n"
+"\n"
+"\n"
+"La Commonwealth de Oceanía:\n"
+"\n"
+"La antigua Commonwealth, una organización política fundada por la mayoría de "
+"los países que formaban el antiguo Imperio Británico, perdió gran parte de "
+"su poder durante la Segunda Guerra Fría. Primeramente Paquistán cortó sus "
+"relaciones con la Commonwealth cuando se unió a la Alianza de Oriente Medio. "
+"Después, mientras los Estados Unidos se desplomaban, Inglaterra y Canadá "
+"estaban tan preocupados por sus propios problemas que redujeron su "
+"participación en la organización al mínimo. Para el año 2030 se podía "
+"considerar que eran miembros sólo de nombre.\n"
+"\n"
+"El creciente poder de China durante la guerra provocó un gran incremento del "
+"gasto militar en la India y Australia, gastos que eran difíciles de mantener "
+"por sus respectivas economías. Entonces, en 2035, la India se convirtió en "
+"un campo de batalla más de la guerra civil China. Las veteranas tropas "
+"chinas derrotaron fácilmente al ejercito indio en varias sangrientas "
+"escaramuzas, y sitiaron al país mientra los rebeldes eran perseguidos.\n"
+"\n"
+"Australia accedió a una intervención militar completa junto con varios "
+"miembros sudafricanos de la Commonwealth. Después de semanas de brutales "
+"combates, las divisiones australianas consiguieron unirse a los rebeldes "
+"chinos y a los restantes regimientos del ejercito indio y, juntos, casi "
+"aniquilaron al ejercito rojo antes de su rendición en 2036.\n"
+"\n"
+"El coste fue alto. Las zonas conquistadas de la India eran eriales, el país "
+"no tenia gobierno desde el bombardeo de Nueva Delhi y la hambruna empezaba a "
+"atacar a la población. Se empezó a ceder tierras sin valor a otras naciones "
+"y a conceder la independencia a varias regiones pequeñas a lo largo de la "
+"frontera. Las restantes naciones de la Commonwealth iniciaron la inmensa "
+"tarea de reconstruir la India, pero varios abandonaron el proyecto, y la "
+"propia Commonwealth, en favor de otras superpotencias.\n"
+"\n"
+"La reconstrucción de la India finalmente unió a la Commonwealth en una gran "
+"nación, que explotaba su posición geográfica alrededor del océano Índico y "
+"el sur del Pacífico para gravar a los barcos y mercantes que cruzaban estas "
+"aguas estratégicas. Por otro lado, la mercancía de la propia Commonwealth "
+"estaba exenta de este impuesto y pronto llegaron a dominar el mercado de "
+"transporte. Poco después, con el final de los cárteles de diamante en "
+"África, la Commonwealth se apropió de muchas minas sin dueño dentro de su "
+"propio territorio y las explotó comercialmente al máximo.\n"
+"\n"
+"Hoy en dia a la antigua Commonwealth se le conoce como 'Commonwealth de "
+"Oceanía' o simplemente 'Oceanía'. Desde su invención se han aceptado a "
+"varios miembros no pertenecientes a la antigua organización, incluyendo "
+"Madagascar, Zimbabwe e Indonesia, lo que afianzó su control sobre las aguas "
+"de esa parte del mundo. Aunque todavía no pueden competir con las naciones "
+"más ricas, se ha creado su propio nicho de prosperidad y pretenden seguir en "
+"él.\n"
+"\n"
+"El ejercito de Oceanía consiste principalmente en una poderosa armada naval. "
+"Sus ejercitos de tierra son minúsculos comparados con los de cualquier otra "
+"nación, excepto quizas los de América Unida, y sólo desarrolla tareas de "
+"defensa estratégica, con un entrenamiento y equipamiento comparables con los "
+"de cualquier otra nación."
+
 #: ../base/ufos/seq_credits.ufo:54 ../base/ufos/seq_credits.ufo:100
 msgid "Project leader"
 msgstr "Lider del proyecto"
@@ -9297,37 +9720,66 @@ msgstr ""
 "No puedes recargar un objeto desconocido.\n"
 "Tienes que investigar el objeto y su munición.\n"
 
-#: client/cl_actor.c:2228
-#, fuzzy, c-format
-msgid "%s has been killed!\n"
-msgstr "%s Ha sido ascendido a %s.\n"
+#: client/cl_actor.c:2230
+msgid "was stunned.\n"
+msgstr ""
 
-#: client/cl_actor.c:2232
+#: client/cl_actor.c:2235
+#, fuzzy
+msgid "was killed.\n"
+msgstr "Un alienígena ha muerto!\n"
+
+#: client/cl_actor.c:2242
+#, fuzzy
+msgid "A civilian was stunned.\n"
+msgstr "Un civil ha sido asesinado!\n"
+
+#: client/cl_actor.c:2244
 #, fuzzy
 msgid "A civilian was killed.\n"
 msgstr "Un civil ha sido asesinado!\n"
 
-#: client/cl_actor.c:2239
+#: client/cl_actor.c:2252
+#, fuzzy
+msgid "An alien was stunned:"
+msgstr "Un alienígena ha muerto!\n"
+
+#: client/cl_actor.c:2256
 #, fuzzy
 msgid "An alien was killed:"
 msgstr "Un alienígena ha muerto!\n"
 
-#: client/cl_actor.c:2242 client/cl_actor.c:2245
+#: client/cl_actor.c:2261 client/cl_actor.c:2267
+#, fuzzy
+msgid "An alien was stunned.\n"
+msgstr "Un alienígena ha muerto!\n"
+
+#: client/cl_actor.c:2263 client/cl_actor.c:2269
 #, fuzzy
 msgid "An alien was killed.\n"
 msgstr "Un alienígena ha muerto!\n"
 
-#: client/cl_actor.c:2249
+#: client/cl_actor.c:2274
+#, fuzzy
+msgid "A soldier was stunned.\n"
+msgstr "Un soldado ha sido asesinado!\n"
+
+#: client/cl_actor.c:2276
 #, fuzzy
 msgid "A soldier was killed.\n"
 msgstr "Un soldado ha sido asesinado!\n"
 
-#: client/cl_actor.c:2252
+#: client/cl_actor.c:2280
+#, fuzzy, c-format
+msgid "A member of team %i was stunned.\n"
+msgstr "Un miembro del equipo %i ha muerto!\n"
+
+#: client/cl_actor.c:2282
 #, fuzzy, c-format
 msgid "A member of team %i was killed.\n"
 msgstr "Un miembro del equipo %i ha muerto!\n"
 
-#: client/cl_actor.c:2403
+#: client/cl_actor.c:2433
 msgid "Your round started!\n"
 msgstr "Tu turno ha comenzado!\n"
 
@@ -9348,11 +9800,11 @@ msgstr "Aircraft started"
 #: client/cl_campaign.c:1185 client/cl_campaign.c:1196
 #: client/cl_campaign.c:1209 client/cl_campaign.c:1219
 #: client/cl_campaign.c:1226 client/cl_campaign.c:1234
-#: client/cl_campaign.c:2505 client/cl_campaign.c:2542
-#: client/cl_campaign.c:2544 client/cl_campaign.c:2891 client/cl_map.c:270
-#: client/cl_research.c:664 client/cl_research.c:787 client/cl_research.c:790
-#: client/cl_research.c:794 client/cl_research.c:807 client/cl_research.c:843
-#: client/cl_research.c:989 client/cl_ufo.c:194 client/cl_ufo.c:199
+#: client/cl_campaign.c:2504 client/cl_campaign.c:2541
+#: client/cl_campaign.c:2543 client/cl_campaign.c:2890 client/cl_map.c:270
+#: client/cl_research.c:685 client/cl_research.c:808 client/cl_research.c:811
+#: client/cl_research.c:815 client/cl_research.c:828 client/cl_research.c:864
+#: client/cl_research.c:1014 client/cl_ufo.c:194 client/cl_ufo.c:199
 #, fuzzy
 msgid "Notice"
 msgstr "Notice"
@@ -9451,11 +9903,11 @@ msgstr "Tu nave tiene poco combustible y regresa a la base"
 msgid "Interception"
 msgstr "Interceptación"
 
-#: client/cl_aircraft.c:682 client/cl_campaign.c:2542
+#: client/cl_aircraft.c:682 client/cl_campaign.c:2541
 msgid "You've won the battle"
 msgstr "Has ganado la batalla"
 
-#: client/cl_aircraft.c:689 client/cl_campaign.c:2544
+#: client/cl_aircraft.c:689 client/cl_campaign.c:2543
 msgid "You've lost the battle"
 msgstr "Has perdido la batalla"
 
@@ -9538,7 +9990,7 @@ msgstr ""
 msgid "Base is under attack"
 msgstr "La base está siendo atacada"
 
-#: client/cl_basemanagement.c:1741 client/cl_team.c:1207 client/cl_team.c:1400
+#: client/cl_basemanagement.c:1741 client/cl_team.c:1208 client/cl_team.c:1401
 #, fuzzy
 msgid "NewTeam"
 msgstr "NewTeam"
@@ -9636,47 +10088,47 @@ msgstr "No hay seleccionado ningun objeto"
 msgid "Please select the aircraft to use from the list"
 msgstr ""
 
-#: client/cl_basemanagement.c:2640
+#: client/cl_basemanagement.c:2644
 msgid "You can transfer equipment - this base has a storage building\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:2643
+#: client/cl_basemanagement.c:2647
 #, fuzzy
 msgid "No storage building in this base\n"
 msgstr "Sin edificios en la base inicial"
 
-#: client/cl_basemanagement.c:2647
+#: client/cl_basemanagement.c:2651
 msgid "You can transfer employees - this base has quarters\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:2650
+#: client/cl_basemanagement.c:2654
 #, fuzzy
 msgid "No quarters in this base\n"
 msgstr "Nombre de esta base"
 
-#: client/cl_basemanagement.c:2653
+#: client/cl_basemanagement.c:2657
 msgid "You can transfer techs - this base has a laboratory\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:2655
+#: client/cl_basemanagement.c:2659
 msgid "No laboratory in this base\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:2658
+#: client/cl_basemanagement.c:2662
 msgid "You can transfer aliens - this base has alien containment\n"
 msgstr ""
 
-#: client/cl_basemanagement.c:2660
+#: client/cl_basemanagement.c:2664
 #, fuzzy
 msgid "No alien containment in this base\n"
 msgstr "Nombre de esta base"
 
-#: client/cl_basemanagement.c:2816
+#: client/cl_basemanagement.c:2820
 #, c-format
 msgid "Construction of %s building finished in base %s."
 msgstr "Construccion de %s finalizada en base %s."
 
-#: client/cl_basemanagement.c:2817
+#: client/cl_basemanagement.c:2821
 msgid "Building finished"
 msgstr "Edificio finalizado"
 
@@ -9822,28 +10274,28 @@ msgid_plural "credits"
 msgstr[0] "Creditos"
 msgstr[1] "Creditos"
 
-#: client/cl_campaign.c:1139 client/cl_campaign.c:4102
+#: client/cl_campaign.c:1139 client/cl_campaign.c:4101
 #, fuzzy
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "Científico"
 msgstr[1] "Científico"
 
-#: client/cl_campaign.c:1140 client/cl_campaign.c:4104
+#: client/cl_campaign.c:1140 client/cl_campaign.c:4103
 #, fuzzy
 msgid "medic"
 msgid_plural "medics"
 msgstr[0] "Médico"
 msgstr[1] "Médico"
 
-#: client/cl_campaign.c:1141 client/cl_campaign.c:4101
+#: client/cl_campaign.c:1141 client/cl_campaign.c:4100
 #, fuzzy
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "Soldado"
 msgstr[1] "Soldado"
 
-#: client/cl_campaign.c:1142 client/cl_campaign.c:4103
+#: client/cl_campaign.c:1142 client/cl_campaign.c:4102
 #, fuzzy
 msgid "worker"
 msgid_plural "workers"
@@ -9968,30 +10420,30 @@ msgstr ""
 "\t-------\n"
 "Sum:\t%i c\n"
 
-#: client/cl_campaign.c:1748
+#: client/cl_campaign.c:1747
 msgid "Error saving game. Check free disk space!"
 msgstr "Error guardando el juego. Comprueba que hay espacio en el disco."
 
-#: client/cl_campaign.c:1748 client/cl_campaign.c:2336 client/cl_market.c:391
-#: client/cl_team.c:1252
+#: client/cl_campaign.c:1747 client/cl_campaign.c:2335 client/cl_market.c:391
+#: client/cl_team.c:1253
 msgid "Note"
 msgstr "Nota"
 
-#: client/cl_campaign.c:2336
+#: client/cl_campaign.c:2335
 msgid "Assemble or load a team"
 msgstr "Forma o carga un equipo"
 
-#: client/cl_campaign.c:2505
+#: client/cl_campaign.c:2504
 #, fuzzy
 msgid "Your dropship is not near the landing zone"
 msgstr "Your dropship is not near the landing zone"
 
-#: client/cl_campaign.c:2741
+#: client/cl_campaign.c:2740
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s ha sido ascendido a %s.\n"
 
-#: client/cl_campaign.c:2743
+#: client/cl_campaign.c:2742
 #, c-format
 msgid ""
 "%s has been awarded the posthumous rank of %s\\for inspirational gallantry "
@@ -10000,21 +10452,21 @@ msgstr ""
 "%s ha sido galardonado con el rango póstumo de %s\\por su inspiradora forma "
 "de enfrentarse a las adversidades.\n"
 
-#: client/cl_campaign.c:2744
+#: client/cl_campaign.c:2743
 msgid "Soldier promoted"
 msgstr "Soldado ascendido"
 
-#: client/cl_campaign.c:2890
+#: client/cl_campaign.c:2889
 #, c-format
 msgid "Defense of base: %s successful!"
 msgstr "La defensa de la base %s ha sido un exito!"
 
-#: client/cl_campaign.c:4097
+#: client/cl_campaign.c:4096
 #, fuzzy
 msgid "Human"
 msgstr "Busan"
 
-#: client/cl_campaign.c:4099
+#: client/cl_campaign.c:4098
 #, fuzzy, c-format
 msgid ""
 "Race: %s\n"
@@ -10048,11 +10500,16 @@ msgstr ""
 msgid "You don't have enough quarters for your employees."
 msgstr ""
 
+#: client/cl_hospital.c:57
+#, c-format
+msgid "Healing of %s completed - %i active healings left\n"
+msgstr ""
+
 #: client/cl_hospital.c:59
 msgid "Healing complete"
 msgstr "Curación completa"
 
-#: client/cl_hospital.c:171
+#: client/cl_hospital.c:198
 #, fuzzy, c-format
 msgid "%s\t%s\t(%i/%i)\n"
 msgstr "Name:\t%s (%i/%i)\n"
@@ -10369,24 +10826,24 @@ msgstr ""
 msgid "Key: %s"
 msgstr "Clave: %s"
 
-#: client/cl_menu.c:2921
+#: client/cl_menu.c:2924
 msgid "Hide the HUD (press ESC to reactivate HUD)"
 msgstr "Esconde el HUD (pulsa ESC para reactivar el HUD)"
 
-#: client/cl_parse.c:798
+#: client/cl_parse.c:835
 #, fuzzy
 msgid "Alien spotted:"
 msgstr "Alien avistado!\n"
 
-#: client/cl_parse.c:801 client/cl_parse.c:803
+#: client/cl_parse.c:838 client/cl_parse.c:840
 msgid "Alien spotted!\n"
 msgstr "Alien avistado!\n"
 
-#: client/cl_parse.c:805
+#: client/cl_parse.c:842
 msgid "Enemy spotted!\n"
 msgstr "Enemigo avistado!\n"
 
-#: client/cl_parse.c:807
+#: client/cl_parse.c:844
 msgid "Civilian spotted!\n"
 msgstr "Civil avistado!\n"
 
@@ -10458,50 +10915,59 @@ msgstr "Cola llena!"
 msgid "You cannot queue any more items!"
 msgstr "No puedes poner en la cola más objetos!"
 
-#: client/cl_research.c:555
+#: client/cl_research.c:83
+#, c-format
+msgid "New technology researched: %s. You should read this at UFOpedia.\n"
+msgstr ""
+
+#: client/cl_research.c:85 client/cl_research.c:1097
+msgid "Research finished"
+msgstr "Investigación finalizada"
+
+#: client/cl_research.c:576
 #, c-format
 msgid "Available scientists in this base: %i"
 msgstr "Científicos disponibles en esta base: %i"
 
-#: client/cl_research.c:556
+#: client/cl_research.c:577
 msgid "Not researched in any base."
 msgstr "No investigado en ninguna base."
 
-#: client/cl_research.c:562
+#: client/cl_research.c:583
 #, c-format
 msgid "Researched in %s"
 msgstr "Investigado en %s"
 
-#: client/cl_research.c:564
+#: client/cl_research.c:585
 msgid "Researched in this base."
 msgstr "Investigado en esta base."
 
-#: client/cl_research.c:575
+#: client/cl_research.c:596
 #, c-format
 msgid "Progress: %.1f%%"
 msgstr "Progreso: %.1f%%"
 
-#: client/cl_research.c:577
+#: client/cl_research.c:598
 msgid "Progress: Not available."
 msgstr "Progreso: No disponible."
 
-#: client/cl_research.c:581
+#: client/cl_research.c:602
 msgid "Status: Under research"
 msgstr "Estado: Investigando"
 
-#: client/cl_research.c:584
+#: client/cl_research.c:605
 msgid "Status: Research paused"
 msgstr "Estado: Investigación detenida"
 
-#: client/cl_research.c:587
+#: client/cl_research.c:608
 msgid "Status: Research finished"
 msgstr "Estado: Investigación terminada"
 
-#: client/cl_research.c:590
+#: client/cl_research.c:611
 msgid "Status: Unknown technology"
 msgstr "Estado: Tecnología desconocida"
 
-#: client/cl_research.c:665
+#: client/cl_research.c:686
 msgid ""
 "There is no free lab available.\n"
 "You need to build one or free another\n"
@@ -10511,19 +10977,19 @@ msgstr ""
 "Tienes que construir uno o hacer sitio en otro\n"
 "para asignar científicos que investiguen esta tecnología.\n"
 
-#: client/cl_research.c:787
+#: client/cl_research.c:808
 msgid "This item is already under research by your scientists."
 msgstr "Este objeto ya está siendo investigado por tus científicos."
 
-#: client/cl_research.c:790
+#: client/cl_research.c:811
 msgid "The research on this item continues."
 msgstr "Contnúa la investigación de este objeto."
 
-#: client/cl_research.c:794 client/cl_research.c:843
+#: client/cl_research.c:815 client/cl_research.c:864
 msgid "The research on this item is complete."
 msgstr "La investigación de este objeto esta completada."
 
-#: client/cl_research.c:807
+#: client/cl_research.c:828
 msgid ""
 "The research on this item is not yet possible.\n"
 "You need to research the technologies it's based on first."
@@ -10531,24 +10997,20 @@ msgstr ""
 "Todavía no es posible investigar este objeto.\n"
 "Antes tienes que investigar las tecnologías en las que se basa."
 
-#: client/cl_research.c:882
+#: client/cl_research.c:907
 msgid " [not yet researchable]"
 msgstr " [no investigable]"
 
-#: client/cl_research.c:989
+#: client/cl_research.c:1014
 msgid "Build a laboratory first"
 msgstr "Construye un laboratorio primero"
 
-#: client/cl_research.c:1071
+#: client/cl_research.c:1096
 #, c-format
 msgid "Research of %s finished\n"
 msgstr "Investigación de %s finalizada\n"
 
-#: client/cl_research.c:1072
-msgid "Research finished"
-msgstr "Investigación finalizada"
-
-#: client/cl_research.c:1379
+#: client/cl_research.c:1405
 msgid "No description available."
 msgstr "Sin descripción."
 
@@ -10578,29 +11040,29 @@ msgstr "Ártico"
 msgid "%i of %i"
 msgstr "%i de %i"
 
-#: client/cl_team.c:1252
+#: client/cl_team.c:1253
 msgid "Error saving team. Check free disk space!"
 msgstr "Error guardando el equipo. Comprueba el espacio del disco!."
 
-#: client/cl_team.c:1423
+#: client/cl_team.c:1424
 msgid "Select a soldier from list"
 msgstr "Selecciona un soldado de la lista"
 
-#: client/cl_team.c:1424
+#: client/cl_team.c:1425
 msgid "Toggle to next soldier"
 msgstr "Cambiar al siguiente soldado"
 
-#: client/cl_team.c:1718 client/cl_team.c:1766
+#: client/cl_team.c:1719 client/cl_team.c:1767
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "Aliens muertos\t%i\n"
 
-#: client/cl_team.c:1721
+#: client/cl_team.c:1722
 #, c-format
 msgid "Enemies killed\t%i\n"
 msgstr "Enemigos muertos\t%i\n"
 
-#: client/cl_team.c:1726
+#: client/cl_team.c:1727
 #, c-format
 msgid ""
 "Aliens captured\t%i\n"
@@ -10609,7 +11071,7 @@ msgstr ""
 "Aliens capturados\t%i\n"
 "\n"
 
-#: client/cl_team.c:1727 client/cl_team.c:1770
+#: client/cl_team.c:1728 client/cl_team.c:1771
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -10618,7 +11080,7 @@ msgstr ""
 "Supervivientes Alien\t%i\n"
 "\n"
 
-#: client/cl_team.c:1729
+#: client/cl_team.c:1730
 #, c-format
 msgid ""
 "Enemies captured\t%i\n"
@@ -10627,7 +11089,7 @@ msgstr ""
 "Enemigos capturados\t%i\n"
 "\n"
 
-#: client/cl_team.c:1730
+#: client/cl_team.c:1731
 #, c-format
 msgid ""
 "Enemy survivors\t%i\n"
@@ -10636,22 +11098,22 @@ msgstr ""
 "Supervivientes enemigos\t%i\n"
 "\n"
 
-#: client/cl_team.c:1734
+#: client/cl_team.c:1735
 #, c-format
 msgid "Team losses\t%i\n"
 msgstr "Perdidas del equipo\t%i\n"
 
-#: client/cl_team.c:1735
+#: client/cl_team.c:1736
 #, c-format
 msgid "Team missing in action\t%i\n"
 msgstr "Equipo desaparecido en combate\t%i\n"
 
-#: client/cl_team.c:1736
+#: client/cl_team.c:1737
 #, c-format
 msgid "Friendly fire losses\t%i\n"
 msgstr "Perdidas por fuego amigo\t%i\n"
 
-#: client/cl_team.c:1737
+#: client/cl_team.c:1738
 #, c-format
 msgid ""
 "Team survivors\t%i\n"
@@ -10660,22 +11122,22 @@ msgstr ""
 "Supervivientes del equipo\t%i\n"
 "\n"
 
-#: client/cl_team.c:1740
+#: client/cl_team.c:1741
 #, c-format
 msgid "Civilians killed by the Aliens\t%i\n"
 msgstr "Civiles asesinados por los Aliens\t%i\n"
 
-#: client/cl_team.c:1742
+#: client/cl_team.c:1743
 #, c-format
 msgid "Civilians killed by the Enemies\t%i\n"
 msgstr "Civiles asesinados por el enemigo\t%i\n"
 
-#: client/cl_team.c:1744
+#: client/cl_team.c:1745
 #, c-format
 msgid "Civilians killed by your Team\t%i\n"
 msgstr "Civiles asesinados por tu equipo\t%i\n"
 
-#: client/cl_team.c:1745
+#: client/cl_team.c:1746
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -10686,27 +11148,27 @@ msgstr ""
 "\n"
 "\n"
 
-#: client/cl_team.c:1769
+#: client/cl_team.c:1770
 #, c-format
 msgid "Aliens captured\t%i\n"
 msgstr "Aliens capturados\t%i\n"
 
-#: client/cl_team.c:1773
+#: client/cl_team.c:1774
 #, c-format
 msgid "Phalanx soldiers killed by Aliens\t%i\n"
 msgstr "Soldados de Phalanx asesinados por los Aliens\t%i\n"
 
-#: client/cl_team.c:1774
+#: client/cl_team.c:1775
 #, c-format
 msgid "Phalanx soldiers missing in action\t%i\n"
 msgstr "Soldados de Phalanx desaparecidos en combate\t%i\n"
 
-#: client/cl_team.c:1775
+#: client/cl_team.c:1776
 #, c-format
 msgid "Phalanx friendly fire losses\t%i\n"
 msgstr "Muertos de Phalanx por fuego amigo\t%i\n"
 
-#: client/cl_team.c:1776
+#: client/cl_team.c:1777
 #, c-format
 msgid ""
 "Phalanx survivors\t%i\n"
@@ -10715,17 +11177,17 @@ msgstr ""
 "Supervivientes de Phalanx\t%i\n"
 "\n"
 
-#: client/cl_team.c:1778
+#: client/cl_team.c:1779
 #, c-format
 msgid "Civilians killed by Aliens\t%i\n"
 msgstr "Civiles asesinados por los Aliens\t%i\n"
 
-#: client/cl_team.c:1779
+#: client/cl_team.c:1780
 #, c-format
 msgid "Civilians killed by friendly fire\t%i\n"
 msgstr "Civiles muertos por fuego aliado\t%i\n"
 
-#: client/cl_team.c:1780
+#: client/cl_team.c:1781
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -10734,12 +11196,12 @@ msgstr ""
 "Civiles salvados\t%i\n"
 "\n"
 
-#: client/cl_team.c:1784
+#: client/cl_team.c:1785
 #, c-format
 msgid "Items salvaged and sold\t%i\n"
 msgstr "Objetos recuperados y vendidos\t%i\n"
 
-#: client/cl_team.c:1785
+#: client/cl_team.c:1786
 #, c-format
 msgid ""
 "Total item sale value\t%i\n"
@@ -10748,7 +11210,7 @@ msgstr ""
 "Valor total de la venta\t%i\n"
 "\n"
 
-#: client/cl_team.c:1801
+#: client/cl_team.c:1802
 #, c-format
 msgid ""
 "\n"
@@ -10757,32 +11219,32 @@ msgid ""
 "Team survivors:  %i"
 msgstr ""
 
-#: client/cl_team.c:1803
+#: client/cl_team.c:1804
 #, fuzzy
 msgid "You won the game!"
 msgstr "Has ganado la batalla"
 
-#: client/cl_team.c:1805
+#: client/cl_team.c:1806
 msgid "Congratulations"
 msgstr ""
 
-#: client/cl_team.c:1807
+#: client/cl_team.c:1808
 msgid ""
 "The game was a draw!\n"
 "\n"
 "No survivors left on any side."
 msgstr ""
 
-#: client/cl_team.c:1808
+#: client/cl_team.c:1809
 msgid "Game Drawn!"
 msgstr ""
 
-#: client/cl_team.c:1810
+#: client/cl_team.c:1811
 #, fuzzy
 msgid "You lost the game"
 msgstr "Has perdido la batalla"
 
-#: client/cl_team.c:1812
+#: client/cl_team.c:1813
 msgid "Better luck next time"
 msgstr ""
 
@@ -11031,31 +11493,31 @@ msgid ""
 msgstr ""
 "No puedes hacerlo - el arma ya está completamente cargada con esa munición\n"
 
-#: game/g_client.c:1221
+#: game/g_client.c:1235
 msgid "Currently shaken, won't let it's guard down.\n"
 msgstr "Currently shaken, won't let its guard down.\n"
 
-#: game/g_client.c:1292
+#: game/g_client.c:1306
 #, c-format
 msgid "%s panics!\n"
 msgstr "%s panics!\n"
 
-#: game/g_client.c:1345
+#: game/g_client.c:1359
 #, c-format
 msgid "%s is on a rampage.\n"
 msgstr "%s is on a rampage.\n"
 
-#: game/g_client.c:1347
+#: game/g_client.c:1361
 #, c-format
 msgid "%s is in mad rage!\n"
 msgstr "%s is in mad rage!\n"
 
-#: game/g_client.c:1400
+#: game/g_client.c:1414
 #, c-format
 msgid "%s is currently shaken.\n"
 msgstr "%s is currently shaken.\n"
 
-#: game/g_client.c:1860
+#: game/g_client.c:1874
 #, c-format
 msgid "Team %i ( %s) will get the first turn.\n"
 msgstr ""
@@ -11096,6 +11558,10 @@ msgstr ""
 #: po/OTHER_STRINGS:9
 msgid "5 days"
 msgstr ""
+
+#, fuzzy
+#~ msgid "%s has been killed!\n"
+#~ msgstr "%s Ha sido ascendido a %s.\n"
 
 #~ msgid "Edit name of the soldier"
 #~ msgstr "Editar nombre del soldado"
