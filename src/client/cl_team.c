@@ -1846,11 +1846,12 @@ static int CL_GetRank (char* rankID)
 
 static const value_t rankValues[] =
 {
-	{ "name",	V_TRANSLATION_STRING,	offsetof( rank_t, name ) },
-	{ "image",	V_STRING,				offsetof( rank_t, image ) },
-	{ "mind",		V_INT,			offsetof( rank_t, mind ) },
-	{ "killed_enemies",	V_INT,			offsetof( rank_t, killed_enemies ) },
-	{ "killed_others",	V_INT,			offsetof( rank_t, killed_others ) },
+	{ "name",		V_TRANSLATION_STRING,	offsetof(rank_t, name) },
+	{ "shortname",		V_TRANSLATION_STRING,	offsetof(rank_t, shortname) },
+	{ "image",		V_STRING,		offsetof(rank_t, image) },
+	{ "mind",		V_INT,			offsetof(rank_t, mind) },
+	{ "killed_enemies",	V_INT,			offsetof(rank_t, killed_enemies) },
+	{ "killed_others",	V_INT,			offsetof(rank_t, killed_others) },
 	{ NULL,	0, 0 }
 };
 

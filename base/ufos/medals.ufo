@@ -55,37 +55,42 @@ rank worker
 
 rank rookie
 {
-	name "_Rookie"
-	image "hud/rank_01"
-	type EMPL_SOLDIER
+	name		"_Rookie"
+	shortname	"_Rookie"
+	image		"hud/rank_01"
+	type		EMPL_SOLDIER
 }
 
 rank squadleader
 {
-	name "_Squad Leader"
-	image "hud/rank_02"
-	mind 75
+	name		"_Squad Leader"
+	shortname	"_Sqd Ldr"
+	image		"hud/rank_02"
+	mind		75
 	killed_enemies	5
 	killed_others	3
-	type EMPL_SOLDIER
+	type		EMPL_SOLDIER
 }
 
 rank sergeant
 {
-	name "_Sergeant"
-	image "hud/rank_03"
-	mind 80
+	name		"_Sergeant"
+	shortname	"_Sgt"
+	image		"hud/rank_03"
+	mind		80
 	killed_enemies	20
 	killed_others	5
-	type EMPL_SOLDIER
+	type		EMPL_SOLDIER
 }
 
 rank captain
 {
-	name "_Captain"
-	image "hud/rank_04"
-	mind 80
-	killed_enemies	30
+	name		"_Captain"
+	shortname	"_Cpt"
+	image		"hud/rank_04"
+	mind		80
+	killed_enemie	30
 	killed_others	7
-	type EMPL_SOLDIER
+	type		EMPL_SOLDIER
 }
+

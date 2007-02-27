@@ -1187,13 +1187,14 @@ typedef struct medals_s {
 
 /** @brief Describes a rank that a recruit can gain */
 typedef struct rank_s {
-	char id[MAX_VAR];
-	char name[MAX_MEDALTITLE];
-	char image[MAX_VAR];
-	int type; /**< employeeType_t */
-	int mind;
-	int killed_enemies;
-	int killed_others;
+	char id[MAX_VAR];		/**< Index in gd.ranks */
+	char name[MAX_MEDALTITLE];	/**< Rank name (Captain, Squad Leader) */
+	char shortname[8];		/**< Rank shortname (Cpt, Sqd Ldr) */
+	char image[MAX_VAR];		/**< Image to show in menu */
+	int type;			/**< employeeType_t */
+	int mind;			/**< character mind attribute needed */
+	int killed_enemies;		/**< needed amount of enemies killed */
+	int killed_others;		/**< needed amount of other actors killed */
 } rank_t;
 
 extern rank_t ranks[MAX_RANKS]; /**< Global list of all ranks defined in medals.ufo. */

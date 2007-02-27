@@ -2221,15 +2221,17 @@ void CL_ActorDie (sizebuf_t * sb)
 	re.AnimChange(&le->as, le->model1, va("death%i", le->state & STATE_DEAD));
 	re.AnimAppend(&le->as, le->model1, va("dead%i", le->state & STATE_DEAD));
 
-	/* print some info about the death */
+	/* Print some info about the death or stun. */
 	if (le->team == cls.team && baseCurrent) {
 		i = CL_GetActorNumber(le);
 		if (i >= 0 && ((le->state & STATE_STUN) & ~STATE_DEAD)) {
-			Com_sprintf(tmpbuf, sizeof(tmpbuf), "%s %s\n",
+			Com_sprintf(tmpbuf, sizeof(tmpbuf), "%s %s %s\n",
+			gd.ranks[baseCurrent->curTeam[i]->rank].shortname,
 			baseCurrent->curTeam[i]->name, _("was stunned.\n"));
 			CL_DisplayHudMessage(tmpbuf, 2000);
 		} else if (i >= 0) {
-			Com_sprintf(tmpbuf, sizeof(tmpbuf), "%s %s\n",
+			Com_sprintf(tmpbuf, sizeof(tmpbuf), "%s %s %s\n",
+			gd.ranks[baseCurrent->curTeam[i]->rank].shortname,
 			baseCurrent->curTeam[i]->name, _("was killed.\n"));
 			CL_DisplayHudMessage(tmpbuf, 2000);
 		}
