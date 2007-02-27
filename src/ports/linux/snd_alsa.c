@@ -169,6 +169,14 @@ qboolean SND_Init (struct sndinfo *s)
 		return qfalse;
 	}
 
+	if ((err = snd_pcm_hw_params(pcm_handle, hw_params)) < 0) {  /* set params */
+		si->Com_Printf("ALSA: cannot set params (%s)\n", snd_strerror(err));
+		snd_pcm_hw_params_free(hw_params);
+		free(si->dma->buffer);
+		si->dma->buffer = NULL;
+		return qfalse;
+	}
+
 	si->Com_Printf("ALSA: period size %d, buffer size %d\n", period_size, buffer_size );
 
 	sample_bytes = si->dma->samplebits / 8;
@@ -182,13 +190,6 @@ qboolean SND_Init (struct sndinfo *s)
 
 	si->dma->samplepos = 0;
 
-	if ((err = snd_pcm_hw_params(pcm_handle, hw_params)) < 0) {  /* set params */
-		si->Com_Printf("ALSA: cannot set params (%s)\n", snd_strerror(err));
-		snd_pcm_hw_params_free(hw_params);
-		free(si->dma->buffer);
-		si->dma->buffer = NULL;
-		return qfalse;
-	}
 	snd_pcm_hw_params_free(hw_params);
 
 	/* already called in snd_pcm_hw_params */
