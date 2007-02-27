@@ -280,13 +280,12 @@ void AL_AddAliens (void)
  * @param[in] type of action
  * @sa AC_KillAll_f
  * @sa AC_KillOne_f
- * @note Call it with alientype AL_UNKNOWN when it does not
- * matter what type.
+ * @note Call with name AL_UNKNOWN when no matters what type to remove.
  * @TODO integrate this with research system
  */
 void AL_RemoveAliens (const char *name, int amount, alienCalcType_t action)
 {
-	int j;
+	int j, toremove;
 	int maxamount = 0; /* amount (of alive type), which is max in Containment) */
 	int maxidx = 0;
 	aliensCont_t *containment = NULL;
@@ -299,28 +298,37 @@ void AL_RemoveAliens (const char *name, int amount, alienCalcType_t action)
 	switch (action) {
 	case AL_RESEARCH:
 		if (Q_strncmp("AL_UNKNOWN", name, MAX_VAR) == 0) {
-			/* search for the type of alien, which has max amount
-			   in Alien Containment; then remove (amount) */
-			/* FIXME: do not let to remove to negative value */
-			for (j = 0; j < numTeamDesc; j++) {
-				if (!teamDesc[j].alien)
-					continue;
-				if (maxamount < containment[j].amount_alive) {
-					maxamount = containment[j].amount_alive;
-					maxidx = j;
+			/* Search for the type of alien, which has max amount
+			   in Alien Containment, then remove (amount). */
+			while (amount > 0) {
+				/* Find the type with maxamount. */
+				for (j = 0; j < numTeamDesc; j++) {
+					if (!teamDesc[j].alien)
+						continue;
+					if (maxamount < containment[j].amount_alive) {
+						maxamount = containment[j].amount_alive;
+						maxidx = j;
+					}
 				}
-			}
-
-			containment[maxidx].amount_alive -= amount;
-			return;
-		}
-
-		for (j = 0; j < numTeamDesc; j++) {
-			if (!teamDesc[j].alien)
-				continue;
-			if (Q_strncmp(containment[j].alientype, name, MAX_VAR) == 0) {
-				containment[j].amount_alive -= amount;
-				return;
+				if (maxamount == 0) {
+					/* That should never happen. */
+					Com_Printf("AL_RemoveAliens()... unable to find alive aliens\n");
+					return;
+				}
+				if (maxamount == 1) {
+					/* If only one here, just remove. */
+					containment[maxidx].amount_alive = 0;
+					containment[maxidx].amount_dead++;
+					--amount;
+				} else {
+					/* If more than one, remove the amount. */
+					toremove = maxamount - 1;
+					if (toremove > amount)
+						toremove = amount;
+					containment[maxidx].amount_alive -= toremove;
+					containment[maxidx].amount_dead += toremove;
+					amount -= toremove;
+				}
 			}
 		}
 		break;
@@ -345,8 +353,8 @@ void AL_RemoveAliens (const char *name, int amount, alienCalcType_t action)
 					return;
 				/* We are killing only one here, so we
 				   don't care about amount param.   */
-				containment[j].amount_alive -= 1;
-				containment[j].amount_dead += 1;
+				containment[j].amount_alive--;
+				containment[j].amount_dead++;
 				return;
 			}
 		}
