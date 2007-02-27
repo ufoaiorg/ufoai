@@ -53,14 +53,18 @@ qboolean SND_Init (struct sndinfo *s)
 {
 	int i, err, dir = 0;
 	unsigned int r;
+	char *device;
 
 	si = s;
+	device = si->device->string;
 
 	/* oss => alsa */
-	if (!strcmp(si->device->string, "/dev/dsp"))
-		si->device->string = "default";
+	if (strcmp(device, "/dev/dsp"))
+		device = si->device->string;
+	else
+		device = "default"; /* plughw:0,0 */
 
-	if ((err = snd_pcm_open(&pcm_handle, si->device->string,
+	if ((err = snd_pcm_open(&pcm_handle, device,
 			SND_PCM_STREAM_PLAYBACK, SND_PCM_NONBLOCK)) < 0) {
 		si->Com_Printf("ALSA: cannot open device %s (%s)\n", si->device->string, snd_strerror(err));
 		return qfalse;
@@ -71,12 +75,14 @@ qboolean SND_Init (struct sndinfo *s)
 		return qfalse;
 	}
 
+	/* choose all parameters */
 	if ((err = snd_pcm_hw_params_any(pcm_handle, hw_params)) < 0) {
 		si->Com_Printf("ALSA: cannot init hw params (%s)\n", snd_strerror(err));
 		snd_pcm_hw_params_free(hw_params);
 		return qfalse;
 	}
 
+	/* set the interleaved read/write format */
 	if ((err = snd_pcm_hw_params_set_access(pcm_handle, hw_params,
 			SND_PCM_ACCESS_RW_INTERLEAVED)) < 0) {
 		si->Com_Printf("ALSA: cannot set access (%s)\n", snd_strerror(err));
@@ -84,6 +90,7 @@ qboolean SND_Init (struct sndinfo *s)
 		return qfalse;
 	}
 
+	/* set the sample format */
 	si->dma->samplebits = si->bits->integer;
 	if (si->dma->samplebits != 8) {  /* try 16 by default */
 		si->dma->samplebits = 16;  /* ensure this is set for other calculations */
@@ -95,16 +102,19 @@ qboolean SND_Init (struct sndinfo *s)
 	}
 	if (si->dma->samplebits == 8) {  /* or 8 if specifically asked to */
 		if ((err = snd_pcm_hw_params_set_format(pcm_handle, hw_params, SND_PCM_FORMAT_U8)) < 0) {
-			si->Com_Printf("ALSA: cannot set format (%s)\n", snd_strerror(err));
+			si->Com_Printf("ALSA: cannot set sample format (%s)\n", snd_strerror(err));
 			snd_pcm_hw_params_free(hw_params);
 			return qfalse;
 		}
 	}
 
+	/* set the count of channels */
 	si->dma->channels = si->channels->integer;
 
-	if (si->dma->channels < 1 || si->dma->channels > 2)
-		si->dma->channels = 2;  /* ensure either stereo or mono */
+/*	if (!snd_pcm_hw_params_test_channels(pcm_handle, hw_params, si->dma->channels)) {*/
+		if (si->dma->channels < 1 || si->dma->channels > 2)
+			si->dma->channels = 2;  /* ensure either stereo or mono */
+/*	}*/
 
 	if ((err = snd_pcm_hw_params_set_channels(pcm_handle, hw_params, si->dma->channels)) < 0) {
 		si->Com_Printf("ALSA: cannot set channels %d (%s)\n",
@@ -113,6 +123,7 @@ qboolean SND_Init (struct sndinfo *s)
 		return qfalse;
 	}
 
+	/* set the stream rate */
 	if (si->khz->integer == 48)
 		si->dma->speed = 48000;
 	else if (si->khz->integer == 44)
@@ -170,7 +181,7 @@ qboolean SND_Init (struct sndinfo *s)
 	}
 
 	if ((err = snd_pcm_hw_params(pcm_handle, hw_params)) < 0) {  /* set params */
-		si->Com_Printf("ALSA: cannot set params (%s)\n", snd_strerror(err));
+		si->Com_Printf("ALSA: cannot write hw params to device (%s)\n", snd_strerror(err));
 		snd_pcm_hw_params_free(hw_params);
 		free(si->dma->buffer);
 		si->dma->buffer = NULL;
@@ -189,8 +200,6 @@ qboolean SND_Init (struct sndinfo *s)
 	si->dma->submission_chunk = period_size * si->dma->channels;
 
 	si->dma->samplepos = 0;
-
-	snd_pcm_hw_params_free(hw_params);
 
 	/* already called in snd_pcm_hw_params */
 	snd_pcm_prepare(pcm_handle);
@@ -241,7 +250,7 @@ void SND_Submit (void)
 	frames = si->dma->submission_chunk / si->dma->channels;
 
 	/* write to card */
-	if((w = snd_pcm_writei(pcm_handle, start, frames)) < 0) {
+	if ((w = snd_pcm_writei(pcm_handle, start, frames)) < 0) {
 		/* xrun occured */
 		snd_pcm_prepare(pcm_handle);
 		return;
