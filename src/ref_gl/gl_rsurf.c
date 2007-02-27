@@ -111,27 +111,6 @@ static void DrawGLPoly (msurface_t * fa)
 }
 
 /**
- * @brief
- */
-static void DrawGLPolyARB (msurface_t * fa)
-{
-	int i;
-	float *v;
-	glpoly_t *p = fa->polys;
-
-	qglActiveTextureARB(GL_TEXTURE0_ARB);
-	qglBindTexture(GL_TEXTURE_2D, fa->texinfo->image->texnum);
-
-	qglBegin(GL_TRIANGLE_FAN);
-	v = p->verts[0];
-	for (i = 0; i < p->numverts; i++, v += VERTEXSIZE) {
-		qglMTexCoord2fSGIS(GL_TEXTURE0_ARB, v[3], v[4]);
-		qglVertex3fv(v);
-	}
-	qglEnd();
-}
-
-/**
  * @brief version of DrawGLPoly that handles scrolling texture
  */
 static void DrawGLFlowingPoly (msurface_t * fa)
@@ -394,12 +373,8 @@ static void R_RenderBrushPoly (msurface_t * fa)
 
 	if (fa->texinfo->flags & SURF_FLOWING)
 		DrawGLFlowingPoly(fa);
-	else {
-		if (qglMTexCoord2fSGIS)
-			DrawGLPolyARB(fa);
-		else
-			DrawGLPoly(fa);
-	}
+	else
+		DrawGLPoly(fa);
 
 	/* check for lightmap modification */
 	for (maps = 0; maps < MAXLIGHTMAPS && fa->styles[maps] != 255; maps++) {
@@ -471,6 +446,11 @@ void R_DrawAlphaSurfaces (void)
 	intens = gl_state.inverse_intensity;
 
 	for (s = r_alpha_surfaces; s; s = s->texturechain) {
+#ifdef HAVE_SHADERS
+		if (s->texinfo->image->shader)
+			SH_UseShader(s->texinfo->image->shader, qfalse);
+		else
+#endif
 		GL_Bind(s->texinfo->image->texnum);
 		c_brush_polys++;
 
@@ -485,12 +465,13 @@ void R_DrawAlphaSurfaces (void)
 			EmitWaterPolys(s);
 		else if (s->texinfo->flags & SURF_FLOWING)
 			DrawGLFlowingPoly(s);
-		else {
-			if (qglMTexCoord2fSGIS)
-				DrawGLPolyARB(s);
-			else
-				DrawGLPoly(s);
-		}
+		else
+			DrawGLPoly(s);
+
+#ifdef HAVE_SHADERS
+		if (s->texinfo->image->shader)
+			SH_UseShader(s->texinfo->image->shader, qtrue);
+#endif
 	}
 
 	GL_TexEnv(GL_REPLACE);

@@ -27,8 +27,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "gl_local.h"
 
 #ifdef HAVE_SHADERS
-static unsigned int SH_LoadProgram_ARB_FP(char *path);
-static unsigned int SH_LoadProgram_ARB_VP(char *path);
+static unsigned int SH_LoadProgram_ARB_FP(const char *path);
+static unsigned int SH_LoadProgram_ARB_VP(const char *path);
 static unsigned int SH_LoadProgram_GLSL(shader_t* s);
 static qboolean shaderInited = qfalse;
 
@@ -36,7 +36,7 @@ static qboolean shaderInited = qfalse;
  * @brief Cycle through all parsed shaders and compile them
  * @sa GL_ShutdownShaders
  */
-void GL_ShaderInit(void)
+void GL_ShaderInit (void)
 {
 	int i = 0;
 	shader_t *s;
@@ -91,7 +91,7 @@ shader_t* GL_GetShaderForImage (char* image)
  * @brief Delete all ARB shader programs at shutdown
  * GL_ShaderInit
  */
-void GL_ShutdownShaders(void)
+void GL_ShutdownShaders (void)
 {
 	int i = 0;
 	shader_t *s;
@@ -129,7 +129,7 @@ void GL_ShutdownShaders(void)
  * @param[in] path The shader file path (relative to game-dir)
  * @return fpid - id of shader
  */
-unsigned int SH_LoadProgram_ARB_FP(char *path)
+unsigned int SH_LoadProgram_ARB_FP (const char *path)
 {
 	char *fbuf, *buf;
 	unsigned int size;
@@ -180,7 +180,7 @@ unsigned int SH_LoadProgram_ARB_FP(char *path)
  * @param[in] path The shader file path (relative to game-dir)
  * @return vpid - id of shader
  */
-unsigned int SH_LoadProgram_ARB_VP(char *path)
+unsigned int SH_LoadProgram_ARB_VP (const char *path)
 {
 	char *fbuf, *buf;
 	unsigned int size, vpid;
@@ -231,7 +231,7 @@ unsigned int SH_LoadProgram_ARB_VP(char *path)
  * @param[in] path The shader file path (relative to game-dir)
  * @return vpid - id of shader
  */
-unsigned int SH_LoadProgram_GLSL(shader_t* s)
+unsigned int SH_LoadProgram_GLSL (shader_t* s)
 {
 	char *fbuf;
 	unsigned int size;
@@ -275,7 +275,7 @@ unsigned int SH_LoadProgram_GLSL(shader_t* s)
  * @param[in] fpid the shader id
  * @sa SH_LoadProgram_ARB_FP
  */
-void SH_UseProgram_ARB_FP(unsigned int fpid)
+void SH_UseProgram_ARB_FP (unsigned int fpid)
 {
 	if (fpid > 0) {
 		qglEnable(GL_FRAGMENT_PROGRAM_ARB);
@@ -290,7 +290,7 @@ void SH_UseProgram_ARB_FP(unsigned int fpid)
  * @param[in] vpid the shader id
  * @sa SH_LoadProgram_ARB_VP
  */
-void SH_UseProgram_ARB_VP(unsigned int vpid)
+void SH_UseProgram_ARB_VP (unsigned int vpid)
 {
 	if (vpid > 0) {
 		qglEnable(GL_VERTEX_PROGRAM_ARB);
@@ -306,31 +306,74 @@ void SH_UseProgram_ARB_VP(unsigned int vpid)
  * @sa SH_UseProgram_ARB_VP
  * @param[in] shader Shader pointer (see image_t)
  */
-void SH_UseShader(shader_t * shader, qboolean deactivate)
+void SH_UseShader (shader_t * shader, qboolean deactivate)
 {
-	assert(shader);
+	image_t *gl, *normal, *distort;
+
 	/* no shaders supported */
 	if (gl_state.arb_fragment_program == qfalse)
 		return;
+
+	assert(shader);
+
+	if (!deactivate)
+		gl = GL_FindImageForShader(shader->title);
+
 	if (shader->glslpid > 0) {
 		if (deactivate)
 			qglUseProgram(0);
 		else
 			qglUseProgram(shader->glslpid);
 	} else if (shader->fpid > 0) {
-		if (deactivate)
+		if (deactivate) {
 			SH_UseProgram_ARB_FP(0);
-		else {
+			if (shader->distort[0]) {
+				qglActiveTextureARB(GL_TEXTURE1_ARB);
+				qglDisable(GL_TEXTURE_2D);
+				qglActiveTextureARB(GL_TEXTURE0_ARB);
+			}
+		} else {
+			assert(gl);
 			qglActiveTextureARB(GL_TEXTURE0_ARB);
+			qglBindTexture(GL_TEXTURE_2D, gl->texnum);
+			if (shader->distort[0]) {
+				distort = GL_FindImage(shader->distort, it_pic);
+				qglActiveTextureARB(GL_TEXTURE1_ARB);
+				qglBindTexture(GL_TEXTURE_2D, distort->texnum);
+				qglEnable(GL_TEXTURE_2D);
+			}
+			if (shader->normal[0]) {
+				normal = GL_FindImage(shader->normal, it_pic);
+			}
 			SH_UseProgram_ARB_FP(shader->fpid);
 		}
 	} else if (shader->vpid > 0) {
-		if (deactivate)
+		if (deactivate) {
 			SH_UseProgram_ARB_VP(0);
-		else {
+			if (shader->distort[0]) {
+				qglActiveTextureARB(GL_TEXTURE1_ARB);
+				qglDisable(GL_TEXTURE_2D);
+				qglActiveTextureARB(GL_TEXTURE0_ARB);
+			}
+		} else {
+			assert(gl);
 			qglActiveTextureARB(GL_TEXTURE0_ARB);
+			qglBindTexture(GL_TEXTURE_2D, gl->texnum);
+			if (shader->distort[0]) {
+				distort = GL_FindImage(shader->distort, it_pic);
+				if (distort) {
+					qglActiveTextureARB(GL_TEXTURE1_ARB);
+					qglBindTexture(GL_TEXTURE_2D, distort->texnum);
+					qglEnable(GL_TEXTURE_2D);
+				}
+			}
+			if (shader->normal[0]) {
+				normal = GL_FindImage(shader->normal, it_pic);
+			}
 			SH_UseProgram_ARB_VP(shader->vpid);
 		}
+	} else {
+		return;
 	}
 }
 
