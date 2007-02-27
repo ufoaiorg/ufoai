@@ -159,7 +159,7 @@ void VID_Error (int err_level, const char *fmt, ...)
 /**
  * @brief
  */
-void AppActivate(BOOL fActive, BOOL minimize)
+void AppActivate (BOOL fActive, BOOL minimize)
 {
 	Minimized = minimize;
 
@@ -173,17 +173,17 @@ void AppActivate(BOOL fActive, BOOL minimize)
 
 	/* minimize/restore mouse-capture on demand */
 	if (!ActiveApp) {
-		IN_Activate (qfalse);
-		CDAudio_Activate (qfalse);
-		S_Activate (qfalse);
+		IN_Activate(qfalse);
+		CDAudio_Activate(qfalse);
+		S_Activate(qfalse);
 
-		if ( win_noalttab->value )
+		if (win_noalttab->value)
 			WIN_EnableAltTab();
 	} else {
-		IN_Activate (qtrue);
-		CDAudio_Activate (qtrue);
-		S_Activate (qtrue);
-		if ( win_noalttab->value )
+		IN_Activate(qtrue);
+		CDAudio_Activate(qtrue);
+		S_Activate(qtrue);
+		if (win_noalttab->value)
 			WIN_DisableAltTab();
 	}
 }

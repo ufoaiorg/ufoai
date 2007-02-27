@@ -24,6 +24,10 @@ AC_ARG_WITH(snd_alsa,
 	[AS_HELP_STRING([--with-snd-alsa], [with ALSA sound support @<:@default=check@:>@])],
 	[], [with_snd_alsa=check])
 
+AC_ARG_WITH(snd_jack,
+	[AS_HELP_STRING([--with-snd-jack], [with JACK sound support @<:@default=check@:>@])],
+	[], [with_snd_jack=check])
+
 AC_ARG_WITH(snd_oss,
 	[AS_HELP_STRING([--with-snd-oss], [with OSS sound support @<:@default=check@:>@])],
 	[], [with_snd_oss=check])
@@ -708,6 +712,29 @@ then
 				AC_MSG_ERROR([--with-shaders specified but couldn't use OpenGL shaders!])
 			fi
 		fi
+	fi
+fi
+
+#---------------------------------------------------------------------------------------------
+# Check JACK
+#---------------------------------------------------------------------------------------------
+
+if test "$with_snd_jack" = "check" || test "$with_snd_jack" = "yes"
+then
+	AC_CHECK_HEADERS([jack/jack.h])
+	if test "$ac_cv_header_jack_jack_h" = "yes"
+	then
+		AC_SEARCH_LIBS([jack_client_open], [jack])
+		if test "$ac_cv_search_jack_client_open" != "no"
+		then
+			AC_SUBST([HAVE_SND_JACK],1)
+			AC_DEFINE([USE_JACK],1)
+		else
+			AC_MSG_ERROR([found jack header but couldn't locate jack library!])
+		fi
+	elif test "$with_snd_jack" = "yes"
+	then
+		AC_MSG_ERROR([specified --with-snd-jack specified but cannot find jack/jack.h!])
 	fi
 fi
 

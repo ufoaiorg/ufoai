@@ -42,13 +42,13 @@ static snd_pcm_uframes_t period_size = 2048;
 static snd_pcm_uframes_t buffer_size = 8192;
 
 /**
-  * @brief The sample rates which will be attempted.
-  */
+ * @brief The sample rates which will be attempted.
+ */
 static const unsigned int RATES[] = { 48000, 44100, 22050, 11025 };
 
 /**
-  * @brief Initialize ALSA pcm device, and bind it to sndinfo.
-  */
+ * @brief Initialize ALSA pcm device, and bind it to sndinfo.
+ */
 qboolean SND_Init (struct sndinfo *s)
 {
 	int i, err, dir = 0;
@@ -62,7 +62,7 @@ qboolean SND_Init (struct sndinfo *s)
 
 	if ((err = snd_pcm_open(&pcm_handle, si->device->string,
 			SND_PCM_STREAM_PLAYBACK, SND_PCM_NONBLOCK)) < 0) {
-		si->Com_Printf("ALSA: cannot open device %s(%s)\n", si->device->string, snd_strerror(err));
+		si->Com_Printf("ALSA: cannot open device %s (%s)\n", si->device->string, snd_strerror(err));
 		return qfalse;
 	}
 
@@ -72,19 +72,19 @@ qboolean SND_Init (struct sndinfo *s)
 	}
 
 	if ((err = snd_pcm_hw_params_any(pcm_handle, hw_params)) < 0) {
-		si->Com_Printf("ALSA: cannot init hw params(%s)\n", snd_strerror(err));
+		si->Com_Printf("ALSA: cannot init hw params (%s)\n", snd_strerror(err));
 		snd_pcm_hw_params_free(hw_params);
 		return qfalse;
 	}
 
 	if ((err = snd_pcm_hw_params_set_access(pcm_handle, hw_params,
 			SND_PCM_ACCESS_RW_INTERLEAVED)) < 0) {
-		si->Com_Printf("ALSA: cannot set access(%s)\n", snd_strerror(err));
+		si->Com_Printf("ALSA: cannot set access (%s)\n", snd_strerror(err));
 		snd_pcm_hw_params_free(hw_params);
 		return qfalse;
 	}
 
-	si->dma->samplebits = si->bits->value;
+	si->dma->samplebits = si->bits->integer;
 	if (si->dma->samplebits != 8) {  /* try 16 by default */
 		si->dma->samplebits = 16;  /* ensure this is set for other calculations */
 
@@ -95,7 +95,7 @@ qboolean SND_Init (struct sndinfo *s)
 	}
 	if (si->dma->samplebits == 8) {  /* or 8 if specifically asked to */
 		if ((err = snd_pcm_hw_params_set_format(pcm_handle, hw_params, SND_PCM_FORMAT_U8)) < 0) {
-			si->Com_Printf("ALSA: cannot set format(%s)\n", snd_strerror(err));
+			si->Com_Printf("ALSA: cannot set format (%s)\n", snd_strerror(err));
 			snd_pcm_hw_params_free(hw_params);
 			return qfalse;
 		}
@@ -107,17 +107,17 @@ qboolean SND_Init (struct sndinfo *s)
 		si->dma->channels = 2;  /* ensure either stereo or mono */
 
 	if ((err = snd_pcm_hw_params_set_channels(pcm_handle, hw_params, si->dma->channels)) < 0) {
-		si->Com_Printf("ALSA: cannot set channels %d(%s)\n",
+		si->Com_Printf("ALSA: cannot set channels %d (%s)\n",
 				si->dma->channels, snd_strerror(err));
 		snd_pcm_hw_params_free(hw_params);
 		return qfalse;
 	}
 
-	if (si->khz->value == 48)
+	if (si->khz->integer == 48)
 		si->dma->speed = 48000;
-	else if (si->khz->value == 44)
+	else if (si->khz->integer == 44)
 		si->dma->speed = 44100;
-	else if (si->khz->value == 22)
+	else if (si->khz->integer == 22)
 		si->dma->speed = 22050;
 	else
 		si->dma->speed = 0;
@@ -125,13 +125,14 @@ qboolean SND_Init (struct sndinfo *s)
 	if (si->dma->speed) {  /* try specified rate */
 		r = si->dma->speed;
 		if ((err = snd_pcm_hw_params_set_rate_near(pcm_handle, hw_params, &r, &dir)) < 0) {
-			si->Com_Printf("ALSA: cannot set rate %d(%s)\n", r, snd_strerror(err));
+			si->Com_Printf("ALSA: cannot set rate %d (%s)\n", r, snd_strerror(err));
 			si->dma->speed = 0;  /* will be caught below */
 		} else {  /* rate succeeded, but is perhaps slightly different */
-			if(dir != 0)
+			if (dir != 0)
 				si->Com_Printf("ALSA: rate %d not supported, using %d\n", si->dma->speed, r);
 			si->dma->speed = r;
 		}
+		si->Com_Printf("ALSA: set to user rate %d\n", si->dma->speed);
 	}
 	if (!si->dma->speed) {  /* or all available ones */
 		for (i = 0; i < sizeof(RATES) / sizeof(int); i++) {
@@ -139,10 +140,10 @@ qboolean SND_Init (struct sndinfo *s)
 			dir = 0;
 
 			if ((err = snd_pcm_hw_params_set_rate_near(pcm_handle, hw_params, &r, &dir)) < 0)
-				si->Com_Printf("ALSA: cannot set rate %d(%s)\n", r, snd_strerror(err));
+				si->Com_Printf("ALSA: cannot set rate %d (%s)\n", r, snd_strerror(err));
 			else {  /* rate succeeded, but is perhaps slightly different */
-				if(dir != 0)
-					si->Com_Printf("ALSA: rate %d not supported, using %d\n", RATES[i], r);
+				if (dir != 0)
+					si->Com_Printf("ALSA: system rate %d not supported, using %d\n", RATES[i], r);
 				si->dma->speed = r;
 				break;
 			}
@@ -156,20 +157,14 @@ qboolean SND_Init (struct sndinfo *s)
 
 	if ((err = snd_pcm_hw_params_set_period_size_near(pcm_handle,
 			hw_params, &period_size, 0)) < 0) {
-		si->Com_Printf("ALSA: cannot set period size near(%s)\n", snd_strerror(err));
+		si->Com_Printf("ALSA: cannot set period size near (%s)\n", snd_strerror(err));
 		snd_pcm_hw_params_free(hw_params);
 		return qfalse;
 	}
 
 	if ((err = snd_pcm_hw_params_set_buffer_size_near(pcm_handle,
 			hw_params, &buffer_size)) < 0) {
-		si->Com_Printf("ALSA: cannot set buffer size near(%s)\n", snd_strerror(err));
-		snd_pcm_hw_params_free(hw_params);
-		return qfalse;
-	}
-
-	if ((err = snd_pcm_hw_params(pcm_handle, hw_params)) < 0) {  /* set params */
-		si->Com_Printf("ALSA: cannot set params(%s)\n", snd_strerror(err));
+		si->Com_Printf("ALSA: cannot set buffer size near (%s)\n", snd_strerror(err));
 		snd_pcm_hw_params_free(hw_params);
 		return qfalse;
 	}
@@ -187,13 +182,23 @@ qboolean SND_Init (struct sndinfo *s)
 
 	si->dma->samplepos = 0;
 
+	if ((err = snd_pcm_hw_params(pcm_handle, hw_params)) < 0) {  /* set params */
+		si->Com_Printf("ALSA: cannot set params (%s)\n", snd_strerror(err));
+		snd_pcm_hw_params_free(hw_params);
+		free(si->dma->buffer);
+		si->dma->buffer = NULL;
+		return qfalse;
+	}
+	snd_pcm_hw_params_free(hw_params);
+
+	/* already called in snd_pcm_hw_params */
 	snd_pcm_prepare(pcm_handle);
 	return qtrue;
 }
 
 /**
-  * @brief Returns the current sample position, if sound is running.
-  */
+ * @brief Returns the current sample position, if sound is running.
+ */
 int SND_GetDMAPos (void)
 {
 	if(si->dma->buffer)
@@ -204,8 +209,8 @@ int SND_GetDMAPos (void)
 }
 
 /**
-  * @brief Closes the ALSA pcm device and frees the dma buffer.
-  */
+ * @brief Closes the ALSA pcm device and frees the dma buffer.
+ */
 void SND_Shutdown (void)
 {
 	if(!si->dma->buffer)
@@ -219,8 +224,8 @@ void SND_Shutdown (void)
 }
 
 /**
-  * @brief Writes the dma buffer to the ALSA pcm device.
-  */
+ * @brief Writes the dma buffer to the ALSA pcm device.
+ */
 void SND_Submit (void)
 {
 	int s, w, frames;
@@ -250,8 +255,8 @@ void SND_Submit (void)
 }
 
 /**
-  * @brief Callback provided by the engine in case we need it.  We don't.
-  */
+ * @brief Callback provided by the engine in case we need it.  We don't.
+ */
 void SND_BeginPainting (void)
 {
 }

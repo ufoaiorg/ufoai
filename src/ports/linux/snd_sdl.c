@@ -37,9 +37,9 @@ static struct sndinfo *si;
 /**
  * @brief
  */
-void paint_audio (void *unused, Uint8 *stream, int len)
+static void paint_audio (void *unused, Uint8 *stream, int len)
 {
-	if(!si)
+	if (!si)
 		return;
 
 	si->dma->buffer = stream;
