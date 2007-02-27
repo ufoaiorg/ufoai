@@ -120,9 +120,10 @@ typedef struct technology_s {
 	char mdl_top[MAX_QPATH];
 	char mdl_bottom[MAX_QPATH];
 
-	byte statusResearchable;	/**< Is this item researchable? */
+	byte statusResearchable;		/**< Is this item researchable? */
 
 	int produceTime;			/**< How many days the production of this items runs. */
+	qboolean pushnews;			/**< Push news about this tech when researched. Note: usually you should use this only for tech with time = 0. */
 	requirements_t require_for_production;	/**< A list of items that are needed (and used up) on production of _this_ item.
 						 * Only "item"-type is allowed.
 						 * All requirements need to be fulfilled in order for _one_ item to be produced.
@@ -161,6 +162,7 @@ void RS_MarkResearchable(void);
 void RS_MarkOneResearchable(int tech_idx);
 void RS_MarkResearchedAll(void);
 void RS_MarkResearched(const char *id);
+void RS_PushNewsWhenResearched (int tech_idx);
 void RS_AssignScientist(technology_t* tech);
 technology_t *RS_GetTechByID(const char *id);
 technology_t *RS_GetTechByProvided(const char *id_provided);

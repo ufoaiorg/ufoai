@@ -62,6 +62,27 @@ void RS_ResearchFinish (technology_t* tech)
 		CL_DateConvert(&ccs.date, &tech->preResearchedDateDay, &tech->preResearchedDateMonth);
 		tech->preResearchedDateYear = ccs.date.day / 365;
 	}
+	if (tech->pushnews)
+		RS_PushNewsWhenResearched(tech->idx);
+}
+
+/**
+ * @brief Push a news about this tech when researched.
+ * @param[in] tech_idx Technology index in global data.
+ * @sa RS_ResearchFinish
+ */
+void RS_PushNewsWhenResearched (int tech_idx)
+{
+	char str[128];
+
+	technology_t *tech = &gd.technologies[tech_idx];
+
+	if (!tech->pushnews)
+		return;
+
+	Com_sprintf(str, sizeof(str), _("New technology researched: %s. You should read this at UFOpedia.\n"),
+	_(tech->name));
+	MN_AddNewMessage(_("Research finished"), str, qfalse, MSG_STANDARD, NULL);
 }
 
 /**
@@ -1072,7 +1093,7 @@ void CL_CheckResearchStatus (void)
 				/* TODO include employee-skill in calculation. */
 				/* Will be a good thing (think of percentage-calculation) once non-integer values are used. */
 				if (tech->time <= 0) {
-					Com_sprintf(messageBuffer, MAX_MESSAGE_TEXT, _("Research of %s finished\n"), tech->name);
+					Com_sprintf(messageBuffer, MAX_MESSAGE_TEXT, _("Research of %s finished\n"), _(tech->name));
 					MN_AddNewMessage(_("Research finished"), messageBuffer, qfalse, MSG_RESEARCH, tech);
 
 					/* Remove all scientists from the technology. */
@@ -1335,6 +1356,7 @@ static const value_t valid_tech_vars[] = {
 	{"delay", V_INT, offsetof(technology_t, delay)},
 	{"producetime", V_INT, offsetof(technology_t, produceTime)},
 	{"time", V_FLOAT, offsetof(technology_t, time)},
+	{"pushnews", V_BOOL, offsetof(technology_t, pushnews)},
 	{"image_top", V_STRING, offsetof(technology_t, image_top)},
 	{"image_bottom", V_STRING, offsetof(technology_t, image_bottom)},
 	{"mdl_top", V_STRING, offsetof(technology_t, mdl_top)},

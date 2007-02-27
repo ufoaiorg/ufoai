@@ -2568,6 +2568,7 @@ tech news_newtwist
 	}
 
 	time		0
+	pushnews	true
 }
 
 //========================
