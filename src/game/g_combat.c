@@ -914,6 +914,7 @@ static qboolean G_GetShotFromType (edict_t *ent, int type, int firemode, item_t 
 		/* This weapon does not use ammo, check for existing firedefs in the weapon. */
 		if (&gi.csi->ods[(*weapon)->t].numFiredefs > 0) {
 			/* Get firedef from the weapon entry instead */
+			gi.dprintf("od->numWeapons: %i\n", od->numWeapons);
 			weapon_fd_idx = INV_FiredefsIDXForWeapon(&gi.csi->ods[(*weapon)->t], (*weapon)->t);
 			gi.dprintf("weapon_fd_idx: %i (%s), firemode: %i\n", weapon_fd_idx, gi.csi->ods[(*weapon)->t].name, firemode);
 			assert(weapon_fd_idx != -1);
