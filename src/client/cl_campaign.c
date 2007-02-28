@@ -1956,8 +1956,9 @@ static int CL_GameLoad (char *filename)
 	i = MSG_ReadLong(&sb);
 	Com_DPrintf("CL_GameLoad: %i messages on messagestack.\n", i);
 	for (; i--;) {
-		title = MSG_ReadString(&sb);
-		text = MSG_ReadString(&sb);
+		/* can contain high bits due to utf8 */
+		title = MSG_ReadStringRaw(&sb);
+		text = MSG_ReadStringRaw(&sb);
 		mtype = MSG_ReadByte(&sb);
 		idx = MSG_ReadLong(&sb);
 		Com_DPrintf("Load message '%s' - '%s'; type = %i; idx = %i\n", title, text, mtype, idx);

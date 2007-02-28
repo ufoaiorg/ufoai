@@ -1737,7 +1737,7 @@ void S_SoundList_f (void)
 /**
  * @brief
  */
-void S_Activate(qboolean active)
+void S_Activate (qboolean active)
 {
 	if (SND_Activate)
 		SND_Activate(active);
