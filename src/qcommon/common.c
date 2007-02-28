@@ -670,6 +670,29 @@ float MSG_ReadFloat (sizebuf_t * msg_read)
 /**
  * @brief
  */
+char *MSG_ReadStringRaw (sizebuf_t * msg_read)
+{
+	static char string[2048];
+	unsigned int l;
+	int c;
+
+	l = 0;
+	do {
+		c = MSG_ReadByte(msg_read);
+		if (c == -1 || c == 0)
+			break;
+		string[l] = c;
+		l++;
+	} while (l < sizeof(string) - 1);
+
+	string[l] = 0;
+
+	return string;
+}
+
+/**
+ * @brief
+ */
 char *MSG_ReadString (sizebuf_t * msg_read)
 {
 	static char string[2048];

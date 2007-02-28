@@ -56,6 +56,7 @@ int MSG_ReadLong(sizebuf_t * sb);
 float MSG_ReadFloat(sizebuf_t * sb);
 char *MSG_ReadString(sizebuf_t * sb);
 char *MSG_ReadStringLine(sizebuf_t * sb);
+char *MSG_ReadStringRaw(sizebuf_t * msg_read);
 
 float MSG_ReadCoord(sizebuf_t * sb);
 void MSG_ReadPos(sizebuf_t * sb, vec3_t pos);
