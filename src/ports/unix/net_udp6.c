@@ -85,7 +85,7 @@ void Net_Stats_f (void)
 	int now = time(0);
 	int diff = now - net_inittime;
 
-	Com_Printf ("Network up for %i seconds.\n"
+	Com_Printf("Network up for %i seconds.\n"
 			"%llu bytes in %llu packets received (av: %i kbps)\n"
 			"%llu bytes in %llu packets sent (av: %i kbps)\n", diff,
 	net_total_in, net_packets_in, (int)(((net_total_in * 8) / 1024) / diff),
@@ -402,7 +402,7 @@ qboolean NET_StringToSockaddr (char *s, struct sockaddr_storage *sadr)
 		addrs++;
 		for (; *space && *space != ']'; space++);
 		if (!*space) {
-			Com_Printf ("NET_StringToSockaddr: invalid IPv6 address %s\n", s);
+			Com_Printf("NET_StringToSockaddr: invalid IPv6 address %s\n", s);
 			return 0;
 		}
 		*space++ = '\0';
@@ -417,7 +417,7 @@ qboolean NET_StringToSockaddr (char *s, struct sockaddr_storage *sadr)
 
 	if ((err = getaddrinfo (addrs, ports, &hints, &resultp))) {
 		/* Error */
-		Com_Printf ("NET_StringToSockaddr: string %s:\n%s\n", s, gai_strerror(err));
+		Com_Printf("NET_StringToSockaddr: string %s:\n%s\n", s, gai_strerror(err));
 		return 0;
 	}
 
@@ -530,7 +530,7 @@ void NET_SendLoopPacket (netsrc_t sock, int length, void *data, netadr_t to)
 /**
  * @brief
  */
-qboolean NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_message)
+int NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_message)
 {
 	int 	ret;
 	struct sockaddr_storage	from;
@@ -540,7 +540,7 @@ qboolean NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_messag
 	int		err;
 
 	if (NET_GetLoopPacket (sock, net_from, net_message))
-		return qtrue;
+		return 1;
 
 	for (protocol = 0 ; protocol < 3 ; protocol++) {
 		if (protocol == 0)
@@ -567,21 +567,21 @@ qboolean NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_messag
 
 			if (err == EWOULDBLOCK || err == ECONNREFUSED)
 				continue;
-			Com_Printf ("NET_GetPacket: %s from %s\n", NET_ErrorString(),
+			Com_Printf("NET_GetPacket: %s from %s\n", NET_ErrorString(),
 				NET_AdrToString(*net_from));
 			continue;
 		}
 
 		if (ret == net_message->maxsize) {
-			Com_Printf ("Oversize packet from %s\n", NET_AdrToString (*net_from));
+			Com_Printf("Oversize packet from %s\n", NET_AdrToString (*net_from));
 			continue;
 		}
 
 		net_message->cursize = ret;
-		return qtrue;
+		return 1;
 	}
 
-	return qfalse;
+	return 0;
 }
 
 /**
@@ -687,7 +687,7 @@ void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 
 	ret = sendto (net_socket, data, length, 0, (struct sockaddr *)&addr, addr_size );
 	if (ret == -1)
-		Com_Printf ("NET_SendPacket ERROR: %s to %s\n", NET_ErrorString(), NET_AdrToString (to));
+		Com_Printf("NET_SendPacket ERROR: %s to %s\n", NET_ErrorString(), NET_AdrToString (to));
 	else {
 		net_packets_out++;
 		net_total_out += ret;
@@ -829,7 +829,7 @@ int NET_Socket (char *net_interface, int port, netsrc_t type, int family)
 		if (family == AF_INET) {
 			/* make it broadcast capable */
 			if (setsockopt(newsocket, SOL_SOCKET, SO_BROADCAST, (char *)&i, sizeof(i)) == -1) {
-				Com_Printf ("ERROR: NET_Socket: setsockopt SO_BROADCAST:%s\n", NET_ErrorString());
+				Com_Printf("ERROR: NET_Socket: setsockopt SO_BROADCAST:%s\n", NET_ErrorString());
 				return 0;
 			}
 		}

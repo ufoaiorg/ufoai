@@ -1392,7 +1392,11 @@ void CL_DumpPackets (void)
  */
 static void CL_ReadPackets (void)
 {
-	while (NET_GetPacket(NS_CLIENT, &net_from, &net_message)) {
+	int j;
+	while ((j = NET_GetPacket(NS_CLIENT, &net_from, &net_message)) != 0) {
+		/* icmp ignore cvar */
+		if (j == -2)
+			continue;
 		/* remote command packet */
 		if (*(int *) net_message.data == -1) {
 			CL_ConnectionlessPacket();

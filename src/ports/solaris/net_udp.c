@@ -282,7 +282,7 @@ void NET_SendLoopPacket (netsrc_t sock, int length, void *data, netadr_t to)
 /**
  * @brief
  */
-qboolean NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_message)
+int NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_message)
 {
 	int 	ret;
 	struct sockaddr_in	from;
@@ -292,7 +292,7 @@ qboolean NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_messag
 	int		err;
 
 	if (NET_GetLoopPacket (sock, net_from, net_message))
-		return qtrue;
+		return 1;
 
 	for (protocol = 0 ; protocol < 2 ; protocol++) {
 		if (protocol == 0)
@@ -311,21 +311,21 @@ qboolean NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_messag
 
 			if (err == EWOULDBLOCK || err == ECONNREFUSED)
 				continue;
-			Com_Printf ("NET_GetPacket: %s", NET_ErrorString());
+			Com_Printf("NET_GetPacket: %s", NET_ErrorString());
 			continue;
 		}
 
 		if (ret == net_message->maxsize) {
-			Com_Printf ("Oversize packet from %s\n", NET_AdrToString (*net_from));
+			Com_Printf("Oversize packet from %s\n", NET_AdrToString (*net_from));
 			continue;
 		}
 
 		net_message->cursize = ret;
 		SockadrToNetadr (&from, net_from);
-		return qtrue;
+		return 1;
 	}
 
-	return qfalse;
+	return 0;
 }
 
 /**
@@ -366,7 +366,7 @@ void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 	ret = sendto (net_socket, data, length, 0, (struct sockaddr *)&addr, sizeof(addr) );
 	if (ret == -1)
 	{
-		Com_Printf ("NET_SendPacket ERROR: %i\n", NET_ErrorString());
+		Com_Printf("NET_SendPacket ERROR: %i\n", NET_ErrorString());
 	}
 }
 
@@ -442,19 +442,19 @@ int NET_Socket (char *net_interface, int port)
 	int	i = 1;
 
 	if ((newsocket = socket (PF_INET, SOCK_DGRAM, IPPROTO_UDP)) == -1) {
-		Com_Printf ("ERROR: UDP_OpenSocket: socket:", NET_ErrorString());
+		Com_Printf("ERROR: UDP_OpenSocket: socket:", NET_ErrorString());
 		return 0;
 	}
 
 	/* make it non-blocking */
 	if (ioctl (newsocket, FIONBIO, &_true) == -1) {
-		Com_Printf ("ERROR: UDP_OpenSocket: ioctl FIONBIO:%s\n", NET_ErrorString());
+		Com_Printf("ERROR: UDP_OpenSocket: ioctl FIONBIO:%s\n", NET_ErrorString());
 		return 0;
 	}
 
 	/* make it broadcast capable */
 	if (setsockopt(newsocket, SOL_SOCKET, SO_BROADCAST, (char *)&i, sizeof(i)) == -1) {
-		Com_Printf ("ERROR: UDP_OpenSocket: setsockopt SO_BROADCAST:%s\n", NET_ErrorString());
+		Com_Printf("ERROR: UDP_OpenSocket: setsockopt SO_BROADCAST:%s\n", NET_ErrorString());
 		return 0;
 	}
 
@@ -471,7 +471,7 @@ int NET_Socket (char *net_interface, int port)
 	address.sin_family = AF_INET;
 
 	if( bind (newsocket, (void *)&address, sizeof(address)) == -1) {
-		Com_Printf ("ERROR: UDP_OpenSocket: bind: %s\n", NET_ErrorString());
+		Com_Printf("ERROR: UDP_OpenSocket: bind: %s\n", NET_ErrorString());
 		close (newsocket);
 		return 0;
 	}

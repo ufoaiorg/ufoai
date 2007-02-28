@@ -58,8 +58,9 @@ static loopback_t	loopbacks[2];
 static int			ip_sockets[2];
 static int			ipx_sockets[2];
 
-int NET_Socket (char *net_interface, int port);
-char *NET_ErrorString (void);
+int NET_Socket(char *net_interface, int port);
+char *NET_ErrorString(void);
+static cvar_t *net_ignore_icmp;
 
 
 #define	MAX_IPS		16
@@ -81,7 +82,7 @@ void Net_Stats_f (void)
 	int now = time(0);
 	int diff = now - net_inittime;
 
-	Com_Printf ("Network up for %i seconds.\n"
+	Com_Printf("Network up for %i seconds.\n"
 			"%llu bytes in %llu packets received (av: %i kbps)\n"
 			"%llu bytes in %llu packets sent (av: %i kbps)\n", diff,
 	net_total_in, net_packets_in, (int)(((net_total_in * 8) / 1024) / diff),
@@ -92,7 +93,7 @@ void Net_Stats_f (void)
  * @brief
  * @sa NET_GetLocalAddress
  */
-void Sys_ShowIP(void)
+void Sys_ShowIP (void)
 {
 	int i;
 
@@ -103,7 +104,7 @@ void Sys_ShowIP(void)
 /**
  * @brief
  */
-void NET_GetLocalAddress( void )
+void NET_GetLocalAddress (void)
 {
 	char hostname[256];
 	struct hostent *hostInfo;
@@ -375,7 +376,7 @@ void NET_SendLoopPacket (netsrc_t sock, int length, void *data, netadr_t to)
 /**
  * @brief
  */
-qboolean NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_message)
+int NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_message)
 {
 	int 	ret;
 	struct sockaddr_in	from;
@@ -384,10 +385,12 @@ qboolean NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_messag
 	int		protocol;
 	int		err;
 
-	if (NET_GetLoopPacket (sock, net_from, net_message))
-		return qtrue;
+#ifndef DEDICATED_ONLY
+	if (NET_GetLoopPacket(sock, net_from, net_message))
+		return 1;
+#endif
 
-	for (protocol = 0 ; protocol < 2 ; protocol++) {
+	for (protocol = 0; protocol < 2; protocol++) {
 		if (protocol == 0)
 			net_socket = ip_sockets[sock];
 		else
@@ -397,34 +400,47 @@ qboolean NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_messag
 			continue;
 
 		fromlen = sizeof(from);
-		ret = recvfrom (net_socket, net_message->data, net_message->maxsize
+		ret = recvfrom(net_socket, net_message->data, net_message->maxsize
 			, 0, (struct sockaddr *)&from, &fromlen);
 
 		net_packets_in++;
 		net_total_in += ret;
 
-		SockadrToNetadr (&from, net_from);
+		SockadrToNetadr(&from, net_from);
 
 		if (ret == -1) {
 			err = errno;
 
+			switch (err) {
+			case ECONNREFUSED:
+			case EHOSTUNREACH:
+			case ENETUNREACH:
+				Com_Printf("NET_GetPacket: %s from %s\n", strerror(err), NET_AdrToString(*net_from));
+				if (net_ignore_icmp->integer)
+					return 0;
+				else
+					return -1;
+			default:
+/*				Com_Printf("NET_GetPacket: %s from %s\n", strerror(err), NET_AdrToString(*net_from));*/
+				continue;
+			}
 			if (err == EWOULDBLOCK || err == ECONNREFUSED)
 				continue;
-			Com_Printf ("NET_GetPacket: %s from %s\n", NET_ErrorString(),
+			Com_Printf("NET_GetPacket: %s from %s\n", NET_ErrorString(),
 						NET_AdrToString(*net_from));
 			continue;
 		}
 
 		if (ret == net_message->maxsize) {
-			Com_Printf ("Oversize packet from %s\n", NET_AdrToString (*net_from));
+			Com_Printf("Oversize packet from %s\n", NET_AdrToString (*net_from));
 			continue;
 		}
 
 		net_message->cursize = ret;
-		return qtrue;
+		return 1;
 	}
 
-	return qfalse;
+	return 0;
 }
 
 
@@ -462,7 +478,7 @@ void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 
 	ret = sendto (net_socket, data, length, 0, (struct sockaddr *)&addr, sizeof(addr) );
 	if (ret == -1) {
-		Com_Printf ("NET_SendPacket Warning: %s to %s\n", NET_ErrorString(),
+		Com_Printf("NET_SendPacket Warning: %s to %s\n", NET_ErrorString(),
 			NET_AdrToString (to));
 	} else {
 		net_packets_out++;
@@ -479,21 +495,21 @@ void NET_OpenIP (void)
 	cvar_t	*ip;
 	int port;
 
-	port = Cvar_Get ("ip_hostport", va("%i", PORT_SERVER), CVAR_NOSET, NULL)->integer;
+	port = Cvar_Get("ip_hostport", va("%i", PORT_SERVER), CVAR_NOSET, NULL)->integer;
 	if (!port) {
 		port = Cvar_Get("hostport", "0", CVAR_NOSET, NULL)->integer;
 		if (!port) {
 			port = Cvar_Get("port", va("%i", PORT_SERVER), CVAR_NOSET, NULL)->integer;
 		}
 	}
-	ip = Cvar_Get ("ip", "localhost", CVAR_NOSET, NULL);
+	ip = Cvar_Get("ip", "localhost", CVAR_NOSET, NULL);
 
 	if (!ip_sockets[NS_SERVER]) {
 		ip_sockets[NS_SERVER] = NET_Socket (ip->string, port);
 		if (!ip_sockets[NS_SERVER] && dedicated)
 			Com_Error (ERR_FATAL, "Couldn't allocate server IP port (%i) - use cvar ip_hostport", port);
 	}
-	port = Cvar_Get ("clientport", va("%i", PORT_CLIENT), CVAR_NOSET, NULL)->integer;
+	port = Cvar_Get("clientport", va("%i", PORT_CLIENT), CVAR_NOSET, NULL)->integer;
 	if (!ip_sockets[NS_CLIENT]) {
 		ip_sockets[NS_CLIENT] = NET_Socket (ip->string, port);
 		if (!ip_sockets[NS_CLIENT])
@@ -544,6 +560,8 @@ void NET_Config (qboolean multiplayer)
  */
 void NET_Init (void)
 {
+	net_ignore_icmp = Cvar_Get("net_ignore_icmp", "0", 0, NULL);
+
 	NET_GetLocalAddress();
 }
 
@@ -558,20 +576,20 @@ int NET_Socket (char *net_interface, int port)
 	qboolean _true = qtrue;
 	int	i = 1;
 
-	if ((newsocket = socket (PF_INET, SOCK_DGRAM, IPPROTO_UDP)) == -1) {
-		Com_Printf ("ERROR: UDP_OpenSocket: socket: %s", NET_ErrorString());
+	if ((newsocket = socket(PF_INET, SOCK_DGRAM, IPPROTO_UDP)) == -1) {
+		Com_Printf("ERROR: UDP_OpenSocket: socket: %s", NET_ErrorString());
 		return 0;
 	}
 
 	/* make it non-blocking */
-	if (ioctl (newsocket, FIONBIO, &_true) == -1) {
-		Com_Printf ("ERROR: UDP_OpenSocket: ioctl FIONBIO:%s\n", NET_ErrorString());
+	if (ioctl(newsocket, FIONBIO, &_true) == -1) {
+		Com_Printf("ERROR: UDP_OpenSocket: ioctl FIONBIO:%s\n", NET_ErrorString());
 		return 0;
 	}
 
 	/* make it broadcast capable */
 	if (setsockopt(newsocket, SOL_SOCKET, SO_BROADCAST, (char *)&i, sizeof(i)) == -1) {
-		Com_Printf ("ERROR: UDP_OpenSocket: setsockopt SO_BROADCAST:%s\n", NET_ErrorString());
+		Com_Printf("ERROR: UDP_OpenSocket: setsockopt SO_BROADCAST:%s\n", NET_ErrorString());
 		return 0;
 	}
 
@@ -592,7 +610,7 @@ int NET_Socket (char *net_interface, int port)
 	address.sin_family = AF_INET;
 
 	if( bind (newsocket, (void *)&address, sizeof(address)) == -1) {
-		Com_Printf ("ERROR: UDP_OpenSocket: bind: %s\n", NET_ErrorString());
+		Com_Printf("ERROR: UDP_OpenSocket: bind: %s\n", NET_ErrorString());
 		close (newsocket);
 		return 0;
 	}

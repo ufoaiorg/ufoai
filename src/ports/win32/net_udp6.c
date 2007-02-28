@@ -552,7 +552,7 @@ void NET_SendLoopPacket (netsrc_t sock, int length, void *data, netadr_t to)
 /**
  * @brief
  */
-qboolean NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_message)
+int NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_message)
 {
 	int 	ret;
 	struct sockaddr_storage	from;
@@ -562,7 +562,7 @@ qboolean NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_messag
 	int		err;
 
 	if (NET_GetLoopPacket (sock, net_from, net_message))
-		return qtrue;
+		return 1;
 
 	for (protocol = 0 ; protocol < 3 ; protocol++) {
 		if (protocol == 0)
@@ -610,10 +610,10 @@ qboolean NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_messag
 		}
 
 		net_message->cursize = ret;
-		return qtrue;
+		return 1;
 	}
 
-	return qfalse;
+	return 0;
 }
 
 /**

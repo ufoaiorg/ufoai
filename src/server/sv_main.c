@@ -645,11 +645,15 @@ void SV_GiveMsec (void)
  */
 void SV_ReadPackets (void)
 {
-	int i;
+	int i, j;
 	client_t *cl;
 	int qport;
 
-	while (NET_GetPacket(NS_SERVER, &net_from, &net_message)) {
+	while ((j = NET_GetPacket(NS_SERVER, &net_from, &net_message)) != 0) {
+		/* icmp ignore cvar */
+		if (j == -2)
+			continue;
+
 		/* check for connectionless packet (0xffffffff) first */
 		if (*(int *) net_message.data == -1) {
 			SV_ConnectionlessPacket();
@@ -664,11 +668,25 @@ void SV_ReadPackets (void)
 		qport = MSG_ReadShort(&net_message) & 0xffff;
 
 		/* check for packets from connected clients */
-		for (i = 0, cl = svs.clients; i < sv_maxclients->value; i++, cl++) {
-			if (cl->state == cs_free)
+		for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++) {
+			if (cl->state <= cs_zombie)
 				continue;
-			if (!NET_CompareBaseAdr(net_from, cl->netchan.remote_address))
+			/* r1: workaround for broken linux kernel */
+			if (net_from.port == 0) {
+				if (!NET_CompareBaseAdr(net_from, cl->netchan.remote_address))
+					continue;
+			} else if (!NET_CompareBaseAdr(net_from, cl->netchan.remote_address))
 				continue;
+#if 0
+			if (cl->state == cs_spawned) {
+				if (cl->lastmessage > svs.realtime - 1500)
+					continue;
+			} else {
+				/* r1: longer delay if they are still loading */
+				if (cl->lastmessage > svs.realtime - 10000)
+					continue;
+			}
+#endif
 			if (cl->netchan.qport != qport)
 				continue;
 			if (cl->netchan.remote_address.port != net_from.port) {

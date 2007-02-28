@@ -43,6 +43,7 @@ typedef struct
 
 
 cvar_t		*net_shownet;
+static cvar_t	*net_ignore_icmp;
 static cvar_t	*noudp;
 static cvar_t	*noipx;
 
@@ -50,7 +51,7 @@ loopback_t	loopbacks[2];
 int			ip_sockets[2];
 int			ipx_sockets[2];
 
-char *NET_ErrorString (void);
+char *NET_ErrorString(void);
 
 #define	MAX_IPS		16
 static	int		numIP;
@@ -71,7 +72,7 @@ void Net_Stats_f (void)
 	unsigned int now = (unsigned int)time(NULL);
 	unsigned int diff = now - net_inittime;
 
-	Com_Printf ("Network up for %u seconds.\n"
+	Com_Printf("Network up for %u seconds.\n"
 		"%I64u bytes in %I64u packets received (av: %i kbps)\n"
 		"%I64u bytes in %I64u packets sent (av: %i kbps)\n", diff,
 		net_total_in, net_packets_in, (int)(((net_total_in * 8) / 1024) / diff),
@@ -418,7 +419,7 @@ void NET_SendLoopPacket (netsrc_t sock, int length, void *data, netadr_t to)
  * @brief
  * @sa NET_SendPacket
  */
-qboolean NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_message)
+int NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_message)
 {
 	int 	ret;
 	struct sockaddr from;
@@ -427,10 +428,10 @@ qboolean NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_messag
 	int		protocol;
 	int		err;
 
-	if (NET_GetLoopPacket (sock, net_from, net_message))
-		return qtrue;
+	if (NET_GetLoopPacket(sock, net_from, net_message))
+		return 1;
 
-	for (protocol = 0 ; protocol < 2 ; protocol++) {
+	for (protocol = 0; protocol < 2 ; protocol++) {
 		if (protocol == 0)
 			net_socket = ip_sockets[sock];
 		else
@@ -451,12 +452,23 @@ qboolean NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_messag
 		if (ret == -1) {
 			err = WSAGetLastError();
 
-			if (err == WSAEWOULDBLOCK)
+			switch (err) {
+			case WSAEWOULDBLOCK:
 				continue;
-			if (err == WSAEMSGSIZE) {
-				Com_Printf("Warning:  Oversize packet from %s\n",
+			case WSAECONNRESET:
+				if (net_ignore_icmp->integer) {
+					return -2;
+				} else {
+					SockadrToNetadr(&from, net_from);
+					return -1;
+				}
+			/* r1: WSAEMSGSIZE can be caused by someone UDP packeting a client. */
+			case WSAEMSGSIZE:
+				Com_Printf("Warning: Oversize packet from %s\n",
 						NET_AdrToString(*net_from));
 				continue;
+			default:
+				break;
 			}
 
 			Com_Printf("NET_GetPacket: %s from %s\n", NET_ErrorString(),
@@ -470,10 +482,10 @@ qboolean NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_messag
 		}
 
 		net_message->cursize = ret;
-		return qtrue;
+		return 1;
 	}
 
-	return qfalse;
+	return 0;
 }
 
 /**
@@ -518,7 +530,7 @@ void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 			return;
 
 		/* some PPP links dont allow broadcasts */
-		if ((err == WSAEADDRNOTAVAIL) && ((to.type == NA_BROADCAST) || (to.type == NA_BROADCAST_IPX)))
+		if ((err == WSAEADDRNOTAVAIL || Q_strcmp(NET_ErrorString(), "NO ERROR")) && ((to.type == NA_BROADCAST) || (to.type == NA_BROADCAST_IPX)))
 			return;
 
 		if (dedicated->value) { /* let dedicated servers continue after errors */
@@ -533,7 +545,7 @@ void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 					NET_ErrorString(), NET_AdrToString (to));
 			/**
 			 *  r1: ignore "errors" from connectionless info packets (FUCKING UGLY HACK)
-			 *      if the first 4 bytes are connectionless and len=10 (info 3) ignore.
+			 *      if the first 4 bytes are connectionless and len=10 (ÿÿÿÿinfo 34) ignore.
 			 */
 
 			/**
@@ -837,6 +849,7 @@ void NET_Init (void)
 	noipx = Cvar_Get("noipx", "0", CVAR_NOSET, NULL);
 
 	net_shownet = Cvar_Get("net_shownet", "0", 0, NULL);
+	net_ignore_icmp = Cvar_Get("net_ignore_icmp", "0", 0, NULL);
 
 	NET_GetLocalAddress();
 }

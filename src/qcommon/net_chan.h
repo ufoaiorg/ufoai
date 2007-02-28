@@ -46,7 +46,7 @@ void NET_Shutdown(void);
 
 void NET_Config(qboolean multiplayer);
 
-qboolean NET_GetPacket(netsrc_t sock, netadr_t * net_from, sizebuf_t * net_message);
+int NET_GetPacket(netsrc_t sock, netadr_t * net_from, sizebuf_t * net_message);
 void NET_SendPacket(netsrc_t sock, int length, void *data, netadr_t to);
 
 qboolean NET_CompareAdr(netadr_t a, netadr_t b);
@@ -55,11 +55,11 @@ qboolean NET_IsLocalAddress(netadr_t adr);
 char *NET_AdrToString(netadr_t a);
 qboolean NET_StringToAdr(char *s, netadr_t * a);
 void NET_Sleep(int msec);
-char *NET_SocketToString (void *s_ptr);
+char *NET_SocketToString(void *s_ptr);
 #ifdef HAVE_IPV6
-int NET_Socket (char *net_interface, int port, netsrc_t type, int family);
+int NET_Socket(char *net_interface, int port, netsrc_t type, int family);
 #else
-int NET_Socket (char *net_interface, int port);
+int NET_Socket(char *net_interface, int port);
 #endif
 /*============================================================================ */
 
@@ -112,4 +112,4 @@ void Netchan_Transmit(netchan_t * chan, int length, byte * data);
 void Netchan_OutOfBandPrint(int net_socket, netadr_t adr, char *format, ...) __attribute__((format(printf, 3, 4)));
 qboolean Netchan_Process(netchan_t * chan, sizebuf_t * msg);
 
-void Net_Stats_f (void);
+void Net_Stats_f(void);
