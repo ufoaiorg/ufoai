@@ -159,10 +159,6 @@ void Sys_Error (const char *error, ...)
 	char		text[1024];
 	int			ret;
 
-#if defined DEBUG
-	Sys_DebugBreak();
-#endif
-
 	CL_Shutdown();
 	Qcommon_Shutdown();
 
@@ -182,7 +178,7 @@ rebox:;
 	if (ret == IDYES) {
 		ret = MessageBox(NULL, "Please attach your debugger now to prevent the built in exception handler from catching the breakpoint. When ready, press Yes to cause a breakpoint or No to cancel.", "UFO:AI Fatal Error", MB_ICONEXCLAMATION | MB_YESNO | MB_DEFBUTTON2);
 		if (ret == IDYES) {
-#ifndef _DEBUG
+#ifndef DEBUG
 			if (!IsDebuggerPresent())
 				ExitProcess(0x1d107);
 #endif
