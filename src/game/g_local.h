@@ -131,14 +131,14 @@ typedef struct {
 	int maxteams; /**< the max team amount for multiplayer games for the current map */
 } spawn_temp_t;
 
-/* used in shot probability calculations */
+/** @brief used in shot probability calculations (pseudo shots) */
 typedef struct {
-	int enemy;
-	int friend;
-	int civilian;
-	int self; /* FIXME: incorrect actor facing or shotOrg, or bug in trace code? */
-	int damage;
-	qboolean allow_self;
+	int enemy;				/**< @brief shot would hit that much enemies */
+	int friend;				/**< @brief shot would hit that much friends */
+	int civilian;			/**< @brief shot would hit that much civilians */
+	int self;				/**< FIXME: incorrect actor facing or shotOrg, or bug in trace code? */
+	int damage;				/**< */
+	qboolean allow_self;	/**< */
 } shot_mock_t;
 
 extern game_locals_t game;
