@@ -47,6 +47,8 @@ typedef enum {
 
 /**
  * @brief test if point is "visible" from team
+ * @param[in] team
+ * @param[in] point
  */
 static qboolean G_TeamPointVis (int team, vec3_t point)
 {
@@ -76,6 +78,10 @@ static qboolean G_TeamPointVis (int team, vec3_t point)
 /**
  * @brief Applies morale changes to actors around a wounded or killed actor
  * @note only called when mor_panic is not zero
+ * @param[in] type
+ * @param[in] victim
+ * @param[in] attacker
+ * @param[in] param
  */
 static void G_Morale (int type, edict_t * victim, edict_t * attacker, int param)
 {
@@ -182,7 +188,7 @@ extern void G_ResetReactionFire (int team)
 
 /**
  * @brief
- * @param[in] mock
+ * @param[in] mock pseudo action - only for calculating mock values - NULL for real action
  * @param[in] shooter
  * @param[in] struck
  * @param[in] damage
@@ -216,7 +222,7 @@ static void G_UpdateShotMock (shot_mock_t *mock, edict_t *shooter, edict_t *stru
  * @param[in] fd The fire definition that defines what type of damage is dealt.
  * @param[in] damage The value of the damage.
  * @param[in] attacker The attacker.
- * @param[in] mock TODO ???
+ * @param[in] mock pseudo shooting - only for calculating mock values - NULL for real shots
  * @sa G_SplashDamage
  * @sa G_PrintStats
  */
@@ -413,7 +419,7 @@ extern void G_StunTeam (void)
  * @param[in] ent TODO ???
  * @param[in] fd The fire definition that defines what type of damage is dealt and how big the splash radius is.
  * @param[in] impact TODO ???
- * @param[in] mock TODO ???
+ * @param[in] mock pseudo shooting - only for calculating mock values - NULL for real shots
  */
 static void G_SplashDamage (edict_t * ent, fireDef_t * fd, vec3_t impact, shot_mock_t *mock)
 {
@@ -423,7 +429,7 @@ static void G_SplashDamage (edict_t * ent, fireDef_t * fd, vec3_t impact, shot_m
 	int damage;
 	int i;
 
-	qboolean shock = (fd->dmgtype==gi.csi->damShock);
+	qboolean shock = (fd->dmgtype == gi.csi->damShock);
 
 	assert (fd->splrad);
 
@@ -485,6 +491,15 @@ static void G_SplashDamage (edict_t * ent, fireDef_t * fd, vec3_t impact, shot_m
 #define GRENADE_STOPSPEED	60.0
 /**
  * @brief
+ * @sa G_ShootSingle
+ * @param[in] player
+ * @param[in] ent
+ * @param[in] fd
+ * @param[in] from
+ * @param[in] at
+ * @param[in] mask
+ * @param[in] weapon
+ * @param[in] mock pseudo shooting - only for calculating mock values - NULL for real shots
  */
 static void G_ShootGrenade (player_t * player, edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at, int mask, item_t * weapon, shot_mock_t *mock)
 {
@@ -661,6 +676,8 @@ static void G_ShootGrenade (player_t * player, edict_t * ent, fireDef_t * fd, ve
  * @param[in] from Location of the gun muzzle.
  * @param[in] at Grid coordinate of the target.
  * @param[in] mask ?? TODO Visibility bit-mask of the others?
+ * @param[in] weapon
+ * @param[in] mock pseudo shooting - only for calculating mock values - NULL for real shots
  */
 static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at, int mask, item_t * weapon, shot_mock_t *mock)
 {
@@ -839,6 +856,10 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 
 /**
  * @brief
+ * @param[in] shooter
+ * @param[in] fd
+ * @param[in] dir
+ * @param[in] shotOrigin
  */
 static void G_GetShotOrigin (edict_t *shooter, fireDef_t *fd, vec3_t dir, vec3_t shotOrigin)
 {
@@ -863,6 +884,12 @@ static void G_GetShotOrigin (edict_t *shooter, fireDef_t *fd, vec3_t dir, vec3_t
 /**
  * @brief
  * @sa G_ClientShoot
+ * @param[in] ent
+ * @param[in] type
+ * @param[in] firemode
+ * @param[in] weapon
+ * @param[in] container
+ * @param[in] fd
  */
 static qboolean G_GetShotFromType (edict_t *ent, int type, int firemode, item_t **weapon, int *container, fireDef_t **fd)
 {
@@ -914,7 +941,7 @@ static qboolean G_GetShotFromType (edict_t *ent, int type, int firemode, item_t 
  * @param[in] at Position to fire on.
  * @param[in] type What type of shot this is (left, right reaction-left etc...).
  * @param[in] firemode The firemode index of the ammo for the used weapon (objDef.fd[][x])  .
- * @param[in] mock TODO: ?
+ * @param[in] mock pseudo shooting - only for calculating mock values - NULL for real shots
  * @param[in] allowReaction Set to qtrue to check whether this has forced any reaction fire, otherwise qfalse.
  * @return qtrue if everthing went ok (i.e. the shot(s) where fired ok), otherwise qfalse.
  */
@@ -1250,7 +1277,7 @@ static int G_GetFiringTUs (edict_t *ent, edict_t *target, int *fire_hand_type, i
 			}
 		}
 	}
-	
+
 	/* Fire the weapon in the left hand if everything is ok. */
 	if (LEFT(ent)
 	&& (LEFT(ent)->item.m != NONE)
