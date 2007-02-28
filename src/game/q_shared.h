@@ -1066,8 +1066,8 @@ typedef struct invDef_s {
 /** item definition */
 typedef struct item_s {
 	int a;	/**< number of ammo rounds left */
-	int m;	/**< index of ammo type on csi->ods  */
-	int t;	/**< index of weapon == csi->ods[m].link */
+	int m;	/**< unique index of ammo type on csi->ods */
+	int t;	/**< unique index of weapon in csi.ods array */
 } item_t;
 
 /** container/inventory list (linked list) with items */
