@@ -77,6 +77,12 @@ typedef struct aircraftItem_s {
 	int price;
 } aircraftItem_t;
 
+/** @brief A cargo of items collected after mission. */
+typedef struct itemsTmp_s {
+	int idx;		/**< Item idx (csi.ods[idx]). */
+	int amount;		/**< Amount of collected items of this idx. */
+} itemsTmp_t;
+
 /** @brief An aircraft with all it's data */
 typedef struct aircraft_s {
 	int idx;					/**< unique id */
@@ -123,9 +129,11 @@ typedef struct aircraft_s {
 	technology_t *item;
 	mapline_t route;
 	void *homebase;				/**< pointer to homebase */
-	void *transferBase;				/**< pointer to the base we are transfering equipment to */
-	aliensTmp_t aliencargo[MAX_CARGO];	/**< cargo of aliens */
-	int alientypes;				/**< how many types we collected */
+	void *transferBase;			/**< pointer to the base we are transfering equipment to */
+	aliensTmp_t aliencargo[MAX_CARGO];	/**< Cargo of aliens. */
+	int alientypes;				/**< How many types of aliens we collected. */
+	itemsTmp_t itemcargo[MAX_CARGO];	/**< Cargo of items. */
+	int itemtypes;				/**< How many types of items we collected. */
 
 	char building[MAX_VAR];		/**< id of the building needed as hangar */
 

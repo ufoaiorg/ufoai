@@ -1629,7 +1629,13 @@ extern void CL_ParseResults (sizebuf_t * buf)
 	byte num_stuns[MAX_TEAMS][MAX_TEAMS];
 	byte winner, we;
 
+#if 0
+/* 20070228 Zenerka: new solution for collecting items from the battlefield
+   see CL_CollectingItems(), CL_SellorAddItems(), CL_CollectingAmmo(), CL_CarriedItems() */
 	int i, j, num, number_items, credits_gained;
+#endif
+
+	int i, j, num;
 	int our_surviviurs,our_killed,our_stunned;
 	int thier_surviviurs,thier_killed,thier_stunned;
 	int civilian_surviviurs,civilian_killed,civilian_stunned;
@@ -1751,14 +1757,16 @@ extern void CL_ParseResults (sizebuf_t * buf)
 		Cvar_Set("mn_active", "");
 		MN_PushMenu("main");
 	} else {
+#if 0
+/* 20070228 Zenerka: new solution for collecting items from the battlefield
+   see CL_CollectingItems(), CL_SellorAddItems(), CL_CollectingAmmo(), CL_CarriedItems() */
 		/* the mission was in singleplayer */
 		/* loot the battlefield */
 		CL_CollectItems(winner == we, &number_items, &credits_gained);
-
-		/* check for stunned aliens;
-		 TODO: make this reversible, like CL_CollectItems above */
-		if (winner == we)
-			CL_CollectingAliens();
+#endif
+		CL_CollectingItems(winner == we);	/**< Collect items from the battlefield. */
+		if (winner == we)		
+			CL_CollectingAliens();		/**< Collect aliens from the battlefield. */
 
 		/* clear unused LE inventories */
 		LE_Cleanup();
@@ -1782,8 +1790,12 @@ extern void CL_ParseResults (sizebuf_t * buf)
 
 		ccs.civiliansKilled += civilian_killed;
 
+#if 0
+/* 20070228 Zenerka: new solution for collecting items from the battlefield
+   see CL_CollectingItems(), CL_SellorAddItems(), CL_CollectingAmmo(), CL_CarriedItems() */
 		Q_strcat(resultText, va(_("Items salvaged and sold\t%i\n"), number_items),sizeof(resultText));
 		Q_strcat(resultText, va(_("Total item sale value\t%i\n\n"), credits_gained),sizeof(resultText));
+#endif
 
 		MN_PopMenu(qtrue);
 		Cvar_Set("mn_main", "singleplayerInGame");
