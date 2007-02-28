@@ -2981,7 +2981,7 @@ void CL_SellOrAddItems (void)
 		}
 		tech = csi.ods[cargo[i].idx].tech;
 		if (!tech)
-			Sys_Error("CL_SellOrAddItems: No tech for %s / %s\n", csi.ods[cargo[i].idx].id, csi.ods[cargo[i].idx].name)
+			Sys_Error("CL_SellOrAddItems: No tech for %s / %s\n", csi.ods[cargo[i].idx].id, csi.ods[cargo[i].idx].name);
 		tech->statusCollected += cargo[i].amount;
 	}
 
