@@ -157,6 +157,7 @@ void Sys_Error (const char *error, ...)
 {
 	va_list		argptr;
 	char		text[1024];
+	int			ret;
 
 #if defined DEBUG
 	Sys_DebugBreak();
@@ -171,7 +172,24 @@ void Sys_Error (const char *error, ...)
 
 	text[sizeof(text)-1] = 0;
 
-	MessageBox(NULL, text, "Error", 0 /* MB_OK */ );
+	if (strlen(text) < 900)
+		strcat (text, "\n\nWould you like to debug? (DEVELOPERS ONLY!)\n");
+
+rebox:;
+
+	ret = MessageBox(NULL, text, "UFO:AI Fatal Error", MB_ICONEXCLAMATION | MB_YESNO);
+
+	if (ret == IDYES) {
+		ret = MessageBox(NULL, "Please attach your debugger now to prevent the built in exception handler from catching the breakpoint. When ready, press Yes to cause a breakpoint or No to cancel.", "UFO:AI Fatal Error", MB_ICONEXCLAMATION | MB_YESNO | MB_DEFBUTTON2);
+		if (ret == IDYES) {
+#ifndef _DEBUG
+			if (!IsDebuggerPresent())
+				ExitProcess(0x1d107);
+#endif
+			Sys_DebugBreak();
+		} else
+			goto rebox;
+	}
 
 	if (qwclsemaphore)
 		CloseHandle(qwclsemaphore);
@@ -179,7 +197,7 @@ void Sys_Error (const char *error, ...)
 	/* shut down QHOST hooks if necessary */
 	DeinitConProc();
 
-	exit(1);
+	ExitProcess(0xDEAD);
 }
 
 /**
@@ -201,7 +219,8 @@ void Sys_Quit (void)
 	/* shut down QHOST hooks if necessary */
 	DeinitConProc();
 
-	exit(0);
+	/* exit(0) */
+	ExitProcess(0);
 }
 
 
