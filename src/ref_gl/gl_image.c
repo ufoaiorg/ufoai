@@ -50,6 +50,32 @@ int gl_compressed_alpha_format = 0;
 int gl_filter_min = GL_LINEAR_MIPMAP_NEAREST;
 int gl_filter_max = GL_LINEAR;
 
+#if 0
+/**
+ * @brief Set the anisotropic value for textures
+ * @note not used atm
+ * @sa GL_ResampleTexture
+ */
+extern void GL_UpdateAnisotropy (void)
+{
+	int		i;
+	image_t	*glt;
+	float	value;
+
+	if (!gl_state.anisotropic)
+		value = 0;
+	else
+		value = r_ext_max_anisotropy->value;
+
+	for (i = 0, glt = gltextures; i < numgltextures; i++, glt++) {
+		if (glt->type != it_pic) {
+			GL_Bind(glt->texnum);
+			qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, value);
+		}
+	}
+}
+#endif
+
 /**
  * @brief
  */

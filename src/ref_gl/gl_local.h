@@ -322,6 +322,7 @@ void R_TranslatePlayerSkin(int playernum);
 void GL_Bind(int texnum);
 void GL_MBind(GLenum target, int texnum);
 void GL_TexEnv(GLenum value);
+/*void GL_UpdateAnisotropy(void);*/
 void GL_EnableMultitexture(qboolean enable);
 void GL_SelectTexture(GLenum);
 void GL_CalcDayAndNight(float q);

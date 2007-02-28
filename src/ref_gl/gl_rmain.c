@@ -1556,8 +1556,6 @@ static void R_Shutdown (void)
 	QGL_Shutdown();
 }
 
-
-
 /**
  * @brief
  */
@@ -1577,10 +1575,11 @@ static void R_BeginFrame (float camera_separation)
 	}
 
 	if (r_anisotropic->modified) {
-		if (r_anisotropic->value > r_ext_max_anisotropy->value) {
-			ri.Con_Printf(PRINT_ALL, "...max GL_EXT_texture_filter_anisotropic value is %.0f\n", r_ext_max_anisotropy->value);
+		if (r_anisotropic->integer > r_ext_max_anisotropy->integer) {
+			ri.Con_Printf(PRINT_ALL, "...max GL_EXT_texture_filter_anisotropic value is %i\n", r_ext_max_anisotropy->integer);
 			ri.Cvar_SetValue("r_anisotropic", r_ext_max_anisotropy->value);
 		}
+		/*GL_UpdateAnisotropy();*/
 		r_anisotropic->modified = qfalse;
 	}
 
