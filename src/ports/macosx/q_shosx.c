@@ -239,3 +239,12 @@ void Sys_FindClose (void)
 		closedir (gSysFindDir);
 	gSysFindDir = NULL;
 }
+
+/**
+ * @brief Breakpoint for debugger sessions
+ */
+void Sys_DebugBreak (void)
+{
+#if defined DEBUG
+#endif
+}

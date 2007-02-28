@@ -31,7 +31,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <direct.h>
 #include <io.h>
 #include <conio.h>
-
+#if defined DEBUG && defined _MSC_VER
+#include <intrin.h>
+#endif
 
 static int hunkcount;
 
@@ -252,4 +254,18 @@ void Sys_FindClose (void)
 	if (findhandle != -1)
 		_findclose (findhandle);
 	findhandle = 0;
+}
+
+/**
+ * @brief Breakpoint for debugger sessions
+ */
+void Sys_DebugBreak (void)
+{
+#if defined DEBUG
+# ifdef _MSC_VER
+	__debugbreak();	/* break execution before game shutdown */
+# else
+	/*DebugBreak();*/
+# endif
+#endif
 }

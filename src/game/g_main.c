@@ -312,8 +312,14 @@ void Sys_Error (const char *error, ...)
 	va_list argptr;
 	char text[1024];
 
-#if defined DEBUG && defined _MSC_VER
+#if defined DEBUG
+# if defined _MSC_VER
 	__debugbreak();	/* break execution before game shutdown */
+# else
+#  ifdef __linux__
+	__asm ("int $3");
+#  endif
+# endif
 #endif
 
 	va_start(argptr, error);

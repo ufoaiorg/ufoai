@@ -194,8 +194,8 @@ void Com_Error (int code, const char *fmt, ...)
 	static char msg[MAXPRINTMSG];
 	static qboolean recursive = qfalse;
 
-#if defined DEBUG && defined _MSC_VER
-	__debugbreak();				/* break execution before game shutdown */
+#if defined DEBUG
+	Sys_DebugBreak();				/* break execution before game shutdown */
 #endif
 
 	if (recursive)

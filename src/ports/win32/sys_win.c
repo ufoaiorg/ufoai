@@ -158,8 +158,8 @@ void Sys_Error (const char *error, ...)
 	va_list		argptr;
 	char		text[1024];
 
-#if defined DEBUG && defined _MSC_VER
-	__debugbreak();	/* break execution before game shutdown */
+#if defined DEBUG
+	Sys_DebugBreak();
 #endif
 
 	CL_Shutdown();

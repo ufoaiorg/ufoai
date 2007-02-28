@@ -240,3 +240,13 @@ void Sys_FindClose (void)
 		closedir(fdir);
 	fdir = NULL;
 }
+
+/**
+ * @brief Breakpoint for debugger sessions
+ */
+void Sys_DebugBreak (void)
+{
+#if defined DEBUG
+	__asm ("int $3");
+#endif
+}

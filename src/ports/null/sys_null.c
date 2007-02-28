@@ -141,6 +141,9 @@ char *Sys_GetCurrentUser (void)
 	return NULL;
 }
 
+void Sys_DebugBreak (void)
+{
+}
 
 /*============================================================================= */
 
