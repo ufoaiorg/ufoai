@@ -129,8 +129,11 @@ qboolean VID_CreateWindow (int width, int height, qboolean fullscreen)
 	wc.lpszMenuName  = 0;
 	wc.lpszClassName = GAME_TITLE;
 
-	if (!RegisterClass(&wc))
-		ri.Sys_Error(ERR_FATAL, "Couldn't register window class");
+	if (!RegisterClass(&wc)) {
+		char    *msg;
+		FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM, NULL, GetLastError(), MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR)&msg, 0, NULL);
+		ri.Sys_Error(ERR_FATAL, "Couldn't register window class.%s\r\n\r\nPlease make sure you have installed the latest drivers for your video card.", msg);
+	}
 
 	if (fullscreen) {
 		exstyle = WS_EX_TOPMOST;
