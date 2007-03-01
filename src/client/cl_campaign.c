@@ -32,34 +32,34 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MONTHS_PER_YEAR 12
 
 /* public vars */
-static mission_t missions[MAX_MISSIONS];
-static int numMissions;
-actMis_t *selMis;
+static mission_t missions[MAX_MISSIONS];	/**< Document me. */
+static int numMissions;				/**< Document me. */
+actMis_t *selMis;				/**< Document me. */
 
-static campaign_t campaigns[MAX_CAMPAIGNS];
-static int numCampaigns = 0;
+static campaign_t campaigns[MAX_CAMPAIGNS];	/**< Document me. */
+static int numCampaigns = 0;			/**< Document me. */
 
-static stageSet_t stageSets[MAX_STAGESETS];
-static stage_t stages[MAX_STAGES];
-static int numStageSets = 0;
-static int numStages = 0;
+static stageSet_t stageSets[MAX_STAGESETS];	/**< Document me. */
+static stage_t stages[MAX_STAGES];		/**< Document me. */
+static int numStageSets = 0;			/**< Document me. */
+static int numStages = 0;			/**< Document me. */
 
-campaign_t *curCampaign;
-ccs_t ccs;
-base_t *baseCurrent;
+campaign_t *curCampaign;			/**< Document me. */
+ccs_t ccs;					/**< Document me. */
+base_t *baseCurrent;				/**< Pointer to current base. */
 
-static byte *maskPic;
-static int maskWidth, maskHeight;
+static byte *maskPic;				/**< Document me. */
+static int maskWidth, maskHeight;		/**< Document me. */
 
-static byte *nationsPic;
-static int nationsWidth, nationsHeight;
+static byte *nationsPic;			/**< Document me. */
+static int nationsWidth, nationsHeight;		/**< Document me. */
 
 #if 0
 static int ever4hours;
 #endif
 
 /* extern in client.h */
-stats_t stats;
+stats_t stats;					/**< Document me. */
 
 extern qboolean CL_SendAircraftToMission(aircraft_t * aircraft, actMis_t * mission);
 extern void CL_AircraftsNotifyMissionRemoved(const actMis_t * mission);
@@ -85,7 +85,7 @@ enum {
 	BEPERR_NOTFOUND
 } BEPerror;
 
-static char varName[MAX_VAR];
+static char varName[MAX_VAR];			/**< Document me. */
 
 static qboolean(*varFunc)(char *var);
 static qboolean CheckAND(char **s);
@@ -244,7 +244,10 @@ static qboolean CheckBEP (char *expr, qboolean(*varFuncParam) (char *var))
 /* =========================================================== */
 
 /**
- * @brief
+ * @brief Calculate distance on the geoscape.
+ * @param[in] pos1 Position at the start.
+ * @param[in] pos2 Position at the end.
+ * @return Distance from pos1 to pos2.
  */
 extern float CP_GetDistance (const vec2_t pos1, const vec2_t pos2)
 {
@@ -258,7 +261,9 @@ extern float CP_GetDistance (const vec2_t pos1, const vec2_t pos2)
 
 
 /**
- * @brief
+ * @brief Check whether given position is Day or Night.
+ * @param[in] pos Given position.
+ * @return True if given position is Night.
  */
 extern qboolean CL_MapIsNight (vec2_t pos)
 {
@@ -275,7 +280,10 @@ extern qboolean CL_MapIsNight (vec2_t pos)
 
 
 /**
- * @brief
+ * @brief Check wheter given date and time is later than current date.
+ * @param[in] now Current date.
+ * @param[in] compare Date to compare.
+ * @return True if current date is later than given one.
  */
 static qboolean Date_LaterThan (date_t now, date_t compare)
 {
@@ -290,7 +298,10 @@ static qboolean Date_LaterThan (date_t now, date_t compare)
 
 
 /**
- * @brief
+ * @brief Add two dates and return the result.
+ * @param[in] a First date.
+ * @param[in] b Second date.
+ * @return The result of adding date_ b to date_t a.
  */
 static date_t Date_Add (date_t a, date_t b)
 {
@@ -315,6 +326,8 @@ static date_t Date_Random (date_t frame)
 
 /**
  * @brief
+ * @param[in] frame
+ * @return
  */
 static date_t Date_Random_Begin (date_t frame)
 {
@@ -330,6 +343,8 @@ static date_t Date_Random_Begin (date_t frame)
 
 /**
  * @brief
+ * @param[in] frame
+ * @return
  */
 static date_t Date_Random_Middle (date_t frame)
 {
@@ -348,6 +363,9 @@ static date_t Date_Random_Middle (date_t frame)
 
 /**
  * @brief
+ * @param[in] *color
+ * @param[in] polar
+ * @return
  */
 static qboolean CL_MapMaskFind (byte * color, vec2_t polar)
 {
@@ -386,6 +404,7 @@ static qboolean CL_MapMaskFind (byte * color, vec2_t polar)
 /**
  * @brief Returns the color value from geoscape of maskPic at a given position.
  * @param[in] pos vec2_t Value of position on map to get the color value from.
+ * @param[in] type
  * @return Returns the color value at given position.
  */
 extern byte *CL_GetMapColor (const vec2_t pos, mapType_t type)
@@ -421,7 +440,9 @@ extern byte *CL_GetMapColor (const vec2_t pos, mapType_t type)
 }
 
 /**
- * @brief
+ * @brief Check conditions for new base and build it.
+ * @param[in] pos Position on the geoscape.
+ * @return True if the base has been build.
  * @sa B_BuildBase
  */
 extern qboolean CL_NewBase (vec2_t pos)
@@ -470,11 +491,11 @@ extern qboolean CL_NewBase (vec2_t pos)
 }
 
 
-static stage_t *testStage;
+static stage_t *testStage;			/**< Document me. */
 
 /**
  * @brief Checks wheter a stage set exceeded the quota
- * @param[in] name Stage set name from script file
+ * @param[in] *name Stage set name from script file
  * @return qboolean
  */
 static qboolean CL_StageSetDone (char *name)
@@ -495,6 +516,7 @@ static qboolean CL_StageSetDone (char *name)
 
 /**
  * @brief
+ * @param[in] *stage
  * @sa CL_CampaignExecute
  */
 static void CL_CampaignActivateStageSets (stage_t *stage)
