@@ -150,10 +150,10 @@ static void GL_DrawAliasShadow (entity_t * e, dmdl_t * paliashdr, int posenum)
 		return;
 
 	/*calculate model lighting and setup shadow transparenty */
-/*	if(r_shading->value) */
-/*		R_LightPointDynamics (currententity->origin, shadelight, model_dlights, &model_dlights_num, 3); */
-/*	else */
-	R_LightPoint(currententity->origin, shadelight);
+/*	if(r_shading->value)
+		R_LightPointDynamics (currententity->origin, shadelight, model_dlights, &model_dlights_num, 3);
+	else*/
+		R_LightPoint(currententity->origin, shadelight);
 
 	alpha = 1 - (shadelight[0] + shadelight[1] + shadelight[2]);
 
@@ -215,10 +215,10 @@ static void GL_DrawAliasShadow (entity_t * e, dmdl_t * paliashdr, int posenum)
 static void BuildShadowVolume (dmdl_t * hdr, vec3_t light, float projectdistance)
 {
 	dtriangle_t *ot, *tris;
+	neighbors_t	*neighbors;
 	int i, j;
 	qboolean trianglefacinglight[MAX_TRIANGLES];
 	vec3_t v0, v1, v2, v3;
-
 	daliasframe_t *frame;
 	dtrivertx_t *verts;
 
@@ -240,39 +240,45 @@ static void BuildShadowVolume (dmdl_t * hdr, vec3_t light, float projectdistance
 	}
 
 	qglBegin(GL_QUADS);
-	for (i = 0, tris = ot; i < hdr->num_tris; i++, tris++) {
+	for (i = 0, tris = ot, neighbors = currentmodel->neighbors; i < hdr->num_tris; i++, tris++, neighbors++) {
 		if (!trianglefacinglight[i])
 			continue;
 
-		if (!trianglefacinglight[currentmodel->edge_tri[i][0]]) {
+		if (neighbors->n[0] < 0 || !trianglefacinglight[neighbors->n[0]]) {
 			for (j = 0; j < 3; j++) {
 				v0[j] = s_lerped[tris->index_xyz[1]][j];
 				v1[j] = s_lerped[tris->index_xyz[0]][j];
+
 				v2[j] = v1[j] + ((v1[j] - light[j]) * projectdistance);
 				v3[j] = v0[j] + ((v0[j] - light[j]) * projectdistance);
 			}
+
 			qglVertex3fv(v0);
 			qglVertex3fv(v1);
 			qglVertex3fv(v2);
 			qglVertex3fv(v3);
 		}
 
-		if (!trianglefacinglight[currentmodel->edge_tri[i][1]]) {
+		if (neighbors->n[1] < 0 || !trianglefacinglight[neighbors->n[1]]) {
 			for (j = 0; j < 3; j++) {
 				v0[j] = s_lerped[tris->index_xyz[2]][j];
 				v1[j] = s_lerped[tris->index_xyz[1]][j];
+
 				v2[j] = v1[j] + ((v1[j] - light[j]) * projectdistance);
 				v3[j] = v0[j] + ((v0[j] - light[j]) * projectdistance);
 			}
+
 			qglVertex3fv(v0);
 			qglVertex3fv(v1);
 			qglVertex3fv(v2);
 			qglVertex3fv(v3);
 		}
-		if (!trianglefacinglight[currentmodel->edge_tri[i][2]]) {
+
+		if (neighbors->n[2] < 0 || !trianglefacinglight[neighbors->n[2]]) {
 			for (j = 0; j < 3; j++) {
 				v0[j] = s_lerped[tris->index_xyz[0]][j];
 				v1[j] = s_lerped[tris->index_xyz[2]][j];
+
 				v2[j] = v1[j] + ((v1[j] - light[j]) * projectdistance);
 				v3[j] = v0[j] + ((v0[j] - light[j]) * projectdistance);
 			}
@@ -302,10 +308,12 @@ static void BuildShadowVolume (dmdl_t * hdr, vec3_t light, float projectdistance
 			v0[j] = s_lerped[tris->index_xyz[0]][j];
 			v1[j] = s_lerped[tris->index_xyz[1]][j];
 			v2[j] = s_lerped[tris->index_xyz[2]][j];
+
 			v0[j] = v0[j] + ((v0[j] - light[j]) * projectdistance);
 			v1[j] = v1[j] + ((v1[j] - light[j]) * projectdistance);
 			v2[j] = v2[j] + ((v2[j] - light[j]) * projectdistance);
 		}
+
 		qglVertex3fv(v0);
 		qglVertex3fv(v1);
 		qglVertex3fv(v2);
@@ -628,50 +636,46 @@ void R_DrawShadowVolume (entity_t * e)
  */
 void R_ShadowBlend (void)
 {
-	if (gl_shadows->integer != 2)
-		return;
-
 	if (r_newrefdef.rdflags & RDF_NOWORLDMODEL)
 		return;
 
+	if (gl_shadows->integer < 2)
+		return;
+
+	qglMatrixMode(GL_PROJECTION);
+	qglPushMatrix();
+	qglLoadIdentity();
+	qglOrtho(0, 1, 1, 0, -99999, 99999);
+
+	qglMatrixMode(GL_MODELVIEW);
+	qglPushMatrix();
 	qglLoadIdentity();
 
-	/* FIXME: get rid of these */
-	qglRotatef(-90, 1, 0, 0);	/* put Z going up */
-	qglRotatef(90, 0, 0, 1);	/* put Z going up */
-
-	if (gl_shadow_debug_shade->integer)
-		qglColor3f(0, 0, 1);
-	else
-		qglColor4f(0, 0, 0, 0.3);
-
+	GLSTATE_DISABLE_ALPHATEST
+	GLSTATE_ENABLE_BLEND
 	qglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-	qglDisable(GL_DEPTH_TEST);
-
-	qglDepthMask(qfalse);
+	qglDepthMask(0);
+	qglDisable(GL_TEXTURE_2D);
+	qglColor4f(0, 0, 0, 0.5);
 
 	qglEnable(GL_STENCIL_TEST);
+	qglStencilFunc(GL_NOTEQUAL, 128, 255);
+	qglStencilMask(0);
 
-	if (gl_state.ati_separate_stencil)
-		qglStencilFuncSeparateATI(GL_NOTEQUAL, GL_NOTEQUAL, 128, 255);
-	else
-		qglStencilFunc(GL_NOTEQUAL, 128, 255);
-	qglStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
-	qglDisable(GL_TEXTURE_2D);
-	qglBegin(GL_QUADS);
-	qglVertex3f(10, 100, 100);
-	qglVertex3f(10, -100, 100);
-	qglVertex3f(10, -100, -100);
-	qglVertex3f(10, 100, -100);
+	qglBegin(GL_TRIANGLES);
+	qglVertex2f(-5, -5);
+	qglVertex2f(10, -5);
+	qglVertex2f(-5, 10);
 	qglEnd();
 
+	GLSTATE_DISABLE_BLEND
 	qglEnable(GL_TEXTURE_2D);
+	GLSTATE_ENABLE_ALPHATEST
 	qglDisable(GL_STENCIL_TEST);
-	qglDepthMask(qtrue);
+	qglDepthMask(1);
 
-	if (gl_shadow_debug_shade->value)
-		qglColor3f(1, 1, 1);
-	else
-		qglColor4f(1, 1, 1, 1);
-}
+	qglMatrixMode(GL_PROJECTION);
+	qglPopMatrix();
+
+	qglMatrixMode(GL_MODELVIEW);
+	qglPopMatrix();}

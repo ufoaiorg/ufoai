@@ -703,30 +703,46 @@ void Draw_Clouds (int x, int y, int w, int h, float p, float q, float cx, float 
  * @param[in] mid Center of the circle
  * @param[in] radius Radius of the circle
  * @param[in] color The color of the circle lines
- * FIXME: Doesn't work atm
  */
-void Draw_Circle (vec3_t mid, float radius, const vec4_t color)
+void Draw_Circle (vec3_t mid, float radius, const vec4_t color, int thickness)
 {
+	float theta;
+	const float accuracy = 5.0f;
+
 	qglDisable(GL_TEXTURE_2D);
 	qglEnable(GL_LINE_SMOOTH);
 	GLSTATE_ENABLE_BLEND
 
 	Draw_Color(color);
 
-	qglBegin(GL_LINE_STRIP);
+	assert(radius > thickness);
 
-	/* circle points */
-	qglVertex3f(10.0 * radius, 0.0, mid[2]);
-	qglVertex3f(7.0 * radius, -7.0 * radius, mid[2]);
-	qglVertex3f(0.0, -10.0 * radius, mid[2]);
-	qglVertex3f(-7.0 * radius, -7.0 * radius, mid[2]);
-	qglVertex3f(-10.0 * radius, 0.0, mid[2]);
-	qglVertex3f(-7.0 * radius, 7.0 * radius, mid[2]);
-	qglVertex3f(0.0, 10.0 * radius, mid[2]);
-	qglVertex3f(7.0 * radius, 7.0 * radius, mid[2]);
-	qglVertex3f(10.0 * radius, 0.0, mid[2]);
+	/* store the matrix - we are using glTranslate */
+	qglPushMatrix();
 
-	qglEnd();
+	/* translate the position */
+	qglTranslated(mid[0], mid[1], mid[2]);
+
+	if (thickness <= 1) {
+		qglBegin(GL_LINE_STRIP);
+		for (theta = 0.0f; theta <= 2.0f * M_PI; theta += M_PI / (radius * accuracy)) {
+			qglVertex3f(radius * cos(theta), 0.0, radius * sin(theta));
+		}
+		qglEnd();
+	} else {
+		qglBegin(GL_TRIANGLE_FAN);
+		for (theta = 0; theta <= 2 * M_PI; theta += M_PI / (radius * accuracy)) {
+			qglVertex3f(radius * cos(theta), 0, radius * sin(theta));
+			qglVertex3f(radius * cos(theta - M_PI / (radius * accuracy)), 0, radius * sin(theta - M_PI / (radius * accuracy)));
+			qglVertex3f((radius - thickness) * cos(theta - M_PI / (radius * accuracy)), 0, (radius - thickness) * sin(theta - M_PI / (radius * accuracy)));
+			qglVertex3f((radius - thickness) * cos(theta), 0, (radius - thickness) * sin(theta));
+		}
+		qglEnd();
+
+	}
+
+	qglPopMatrix();
+
 	Draw_Color(NULL);
 
 	GLSTATE_DISABLE_BLEND
@@ -862,30 +878,30 @@ void Draw_3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate, 
 	/* "airy" far-away look, and has the knock-on effect of preventing the */
 	/* old "texture distortion at the poles" problem. */
 	if (gl_fog->value) {
-		qglFogi (GL_FOG_MODE, GL_LINEAR);
-		qglFogfv (GL_FOG_COLOR, globe_fog);
-		qglFogf (GL_FOG_START, 5.0);
+		qglFogi(GL_FOG_MODE, GL_LINEAR);
+		qglFogfv(GL_FOG_COLOR, globe_fog);
+		qglFogf(GL_FOG_START, 5.0);
 
 		/* must tweak the fog end too!!! */
-		qglFogf (GL_FOG_END, r_newrefdef.fog);
-		qglEnable (GL_FOG);
+		qglFogf(GL_FOG_END, r_newrefdef.fog);
+		qglEnable(GL_FOG);
 	}
 
 	/* globe texture scaling */
 	/* previous releases made a tiled version of the globe texture.  here i just shrink it using the */
 	/* texture matrix, for much the same effect */
-	qglMatrixMode (GL_TEXTURE);
-	qglLoadIdentity ();
+	qglMatrixMode(GL_TEXTURE);
+	qglLoadIdentity();
 	/* scale the texture */
-	qglScalef (2, 1, 1);
-	qglMatrixMode (GL_MODELVIEW);
+	qglScalef(2, 1, 1);
+	qglMatrixMode(GL_MODELVIEW);
 
 	/* background */
 	/* go to a new matrix */
-	qglPushMatrix ();
+	qglPushMatrix();
 
 	/* center it */
-	qglTranslatef ((nx+nw)/2, (ny+nh)/2, 0);
+	qglTranslatef((nx+nw)/2, (ny+nh)/2, 0);
 
 	/* flatten the sphere */
 	qglScalef(fullscale, fullscale, fullscale);

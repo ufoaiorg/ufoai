@@ -386,7 +386,7 @@ void Draw_FadeScreen(void);
 void Draw_DayAndNight(int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, char *map);
 void Draw_Clouds(int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, char *map);
 void Draw_LineStrip(int points, int *verts);
-void Draw_Circle (vec3_t mid, float radius, const vec4_t color);
+void Draw_Circle(vec3_t mid, float radius, const vec4_t color, int thickness);
 
 void R_SwapBuffers(int);
 

@@ -165,6 +165,10 @@ typedef struct manim_s {
 
 typedef enum {mod_bad, mod_brush, mod_sprite, mod_alias, mod_alias_md3, mod_obj} modtype_t;
 
+typedef struct {
+	int n[3];
+} neighbors_t;
+
 typedef struct model_s {
 	/* the name needs to be the first entry in the struct */
 	char name[MAX_QPATH];
@@ -241,6 +245,7 @@ typedef struct model_s {
 	char animname[MAX_QPATH];
 	int numanims;
 	manim_t *animdata;
+	neighbors_t *neighbors;
 } model_t;
 
 /*============================================================================ */
