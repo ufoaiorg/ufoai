@@ -329,7 +329,7 @@ menu buy
 		texl	"0 0"
 		texh	"16 16"
 		mousefx true
-		click { cmd "mn_autosell 0" }
+		click { cmd "buy_autosell 0" }
 	}
 	pic bt_buy1
 	{
@@ -353,7 +353,7 @@ menu buy
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "mn_autosell 1" }
+		click		{ cmd "buy_autosell 1" }
 	}
 	pic bt_buy2
 	{
@@ -377,7 +377,7 @@ menu buy
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "mn_autosell 2" }
+		click		{ cmd "buy_autosell 2" }
 	}
 	pic bt_buy3
 	{
@@ -401,7 +401,7 @@ menu buy
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "mn_autosell 3" }
+		click		{ cmd "buy_autosell 3" }
 	}
 	pic bt_buy4
 	{
@@ -425,7 +425,7 @@ menu buy
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "mn_autosell 4" }
+		click		{ cmd "buy_autosell 4" }
 	}
 	pic bt_buy5
 	{
@@ -449,7 +449,7 @@ menu buy
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "mn_autosell 5" }
+		click		{ cmd "buy_autosell 5" }
 	}
 	pic bt_buy6
 	{
@@ -473,7 +473,7 @@ menu buy
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "mn_autosell 6" }
+		click		{ cmd "buy_autosell 6" }
 	}
 	pic bt_buy7
 	{
@@ -497,7 +497,7 @@ menu buy
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "mn_autosell 7" }
+		click		{ cmd "buy_autosell 7" }
 	}
 	pic bt_buy8
 	{
@@ -521,7 +521,7 @@ menu buy
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "mn_autosell 8" }
+		click		{ cmd "buy_autosell 8" }
 	}
 	pic bt_buy9
 	{
@@ -545,7 +545,7 @@ menu buy
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "mn_autosell 9" }
+		click		{ cmd "buy_autosell 9" }
 	}
 	pic bt_buy10
 	{
@@ -569,7 +569,7 @@ menu buy
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "mn_autosell 10" }
+		click		{ cmd "buy_autosell 10" }
 	}
 	pic bt_buy11
 	{
@@ -593,7 +593,7 @@ menu buy
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "mn_autosell 11" }
+		click		{ cmd "buy_autosell 11" }
 	}
 	pic bt_buy12
 	{
@@ -617,7 +617,7 @@ menu buy
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "mn_autosell 12" }
+		click		{ cmd "buy_autosell 12" }
 	}
 	pic bt_buy13
 	{
@@ -641,7 +641,7 @@ menu buy
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "mn_autosell 13" }
+		click		{ cmd "buy_autosell 13" }
 	}
 	pic bt_buy14
 	{
@@ -665,7 +665,7 @@ menu buy
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "mn_autosell 14" }
+		click		{ cmd "buy_autosell 14" }
 	}
 	pic bt_buy15
 	{
@@ -689,7 +689,7 @@ menu buy
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "mn_autosell 15" }
+		click		{ cmd "buy_autosell 15" }
 	}
 	pic bt_buy16
 	{
@@ -713,7 +713,7 @@ menu buy
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "mn_autosell 16" }
+		click		{ cmd "buy_autosell 16" }
 	}
 	pic bt_buy17
 	{
@@ -737,7 +737,7 @@ menu buy
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "mn_autosell 17" }
+		click		{ cmd "buy_autosell 17" }
 	}
 	pic bt_buy18
 	{
@@ -761,7 +761,7 @@ menu buy
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "mn_autosell 18" }
+		click		{ cmd "buy_autosell 18" }
 	}
 	pic bt_buy19
 	{
@@ -785,7 +785,7 @@ menu buy
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "mn_autosell 19" }
+		click		{ cmd "buy_autosell 19" }
 	}
 	pic bt_buy20
 	{
@@ -809,7 +809,7 @@ menu buy
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "mn_autosell 20" }
+		click		{ cmd "buy_autosell 20" }
 	}
 	pic bt_buy21
 	{
@@ -833,7 +833,7 @@ menu buy
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "mn_autosell 21" }
+		click		{ cmd "buy_autosell 21" }
 	}
 	pic bt_buy22
 	{
@@ -857,7 +857,7 @@ menu buy
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "mn_autosell 22" }
+		click		{ cmd "buy_autosell 22" }
 	}
 	pic bt_buy23
 	{
@@ -881,7 +881,7 @@ menu buy
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "mn_autosell 23" }
+		click		{ cmd "buy_autosell 23" }
 	}
 	pic bt_buy24
 	{
@@ -905,7 +905,7 @@ menu buy
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "mn_autosell 24" }
+		click		{ cmd "buy_autosell 24" }
 	}
 	pic bt_buy25
 	{
@@ -929,7 +929,7 @@ menu buy
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "mn_autosell 25" }
+		click		{ cmd "buy_autosell 25" }
 	}
 	pic bt_buy26
 	{
@@ -953,7 +953,7 @@ menu buy
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "mn_autosell 26" }
+		click		{ cmd "buy_autosell 26" }
 	}
 	pic bt_buy27
 	{
@@ -977,7 +977,7 @@ menu buy
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
-		click		{ cmd "mn_autosell 27" }
+		click		{ cmd "buy_autosell 27" }
 	}
 
 	// ==================
