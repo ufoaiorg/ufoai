@@ -3054,13 +3054,10 @@ static void CL_TargetingGrenade (pos3_t fromPos, pos3_t toPos)
 	else
 		CL_ParticleSpawn("cross", 0, cross, NULL, NULL);
 
-#if 0
 	if (selFD->splrad) {
-		/* FIXME at should be relative to selActor's origin */
-		VectorAdd(at, selActor->origin, at);
+		Grid_PosToVec(&clMap, toPos, at);
 		CL_Targeting_Radius(at);
 	}
-#endif
 
 	selToHit = 100 * CL_TargetingToHit(toPos);
 
