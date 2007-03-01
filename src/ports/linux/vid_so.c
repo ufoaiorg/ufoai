@@ -285,6 +285,7 @@ qboolean VID_LoadRefresh (const char *name)
 	ri.Vid_NewWindow = VID_NewWindow;
 	ri.CL_WriteAVIVideoFrame = CL_WriteAVIVideoFrame;
 	ri.CL_GetFontData = CL_GetFontData;
+	ri.RenderTrace = SV_RenderTrace;
 
 	if ((GetRefAPI = (void *) dlsym(reflib_library, "GetRefAPI")) == 0)
 		Com_Error(ERR_FATAL, "dlsym failed on %s", name);

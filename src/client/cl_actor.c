@@ -2873,16 +2873,22 @@ float CL_TargetingToHit (pos3_t toPos)
 
 /**
  * @brief Show weapon radius
- * @param[in] pos The center of the circle
- * TODO/FIXME make this working
+ * @param[in] center The center of the circle
  */
 static void CL_Targeting_Radius (vec3_t center)
 {
 	const vec4_t color = {0, 1, 0, 1};
+	ptl_t *ptl = NULL;
 
 	assert(selFD);
 
-	re.DrawCircle(center, selFD->splrad, color);
+	ptl = CL_ParticleSpawn("*circle", 0, center, NULL, NULL);
+	ptl->size[0] = selFD->splrad; /* misuse size vector as radius */
+	ptl->size[1] = 1; /* thickness */
+	ptl->style = STYLE_CIRCLE;
+	/* free the particle every frame */
+	ptl->life = 0.0001;
+	Vector4Copy(color, ptl->color);
 }
 
 
@@ -2953,13 +2959,9 @@ static void CL_TargetingStraight (pos3_t fromPos, pos3_t toPos)
 	CL_ParticleSpawn("inRangeTracer", 0, start, mid, NULL);
 	if (crossNo) {
 		CL_ParticleSpawn("longRangeTracer", 0, mid, end, NULL);
-		if (selFD->splrad)
-			CL_Targeting_Radius(end);
 		CL_ParticleSpawn("cross_no", 0, end, NULL, NULL);
 	} else {
 		CL_ParticleSpawn("cross", 0, end, NULL, NULL);
-		if (selFD->splrad)
-			CL_Targeting_Radius(end);
 	}
 
 	selToHit = 100 * CL_TargetingToHit(toPos);
@@ -3051,6 +3053,14 @@ static void CL_TargetingGrenade (pos3_t fromPos, pos3_t toPos)
 		CL_ParticleSpawn("cross_no", 0, cross, NULL, NULL);
 	else
 		CL_ParticleSpawn("cross", 0, cross, NULL, NULL);
+
+#if 0
+	if (selFD->splrad) {
+		/* FIXME at should be relative to selActor's origin */
+		VectorAdd(at, selActor->origin, at);
+		CL_Targeting_Radius(at);
+	}
+#endif
 
 	selToHit = 100 * CL_TargetingToHit(toPos);
 

@@ -991,6 +991,7 @@ void CL_ResetParticles(void);
 void CL_ParticleRun(void);
 void CL_RunMapParticles(void);
 int CL_ParseParticle(char *name, char **text);
+void CL_InitParticles(void);
 ptl_t *CL_ParticleSpawn(char *name, int levelFlags, const vec3_t s, const vec3_t v, const vec3_t a);
 void PE_RenderParticles(void);
 

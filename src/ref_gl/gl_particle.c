@@ -246,8 +246,14 @@ extern void R_DrawPtls (void)
 
 			/* set blend mode and draw gfx */
 			GL_SetBlendMode(p->blend);
-			if (p->style == STYLE_LINE)
+			switch (p->style) {
+			case STYLE_LINE:
 				R_DrawPtlLine(p);
+				break;
+			case STYLE_CIRCLE:
+				Draw_Circle(p->s, p->size[0], p->color, (int)p->size[1]);
+				break;
+			}
 			if (p->pic != -1)
 				R_DrawSprite(p);
 			if (p->model != -1) {

@@ -324,7 +324,7 @@ typedef struct {
 	void (*DrawFadeScreen) (void);
 	void (*DrawDayAndNight) (int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, char *map);
 	void (*DrawLineStrip) (int points, int *verts);
-	void (*DrawCircle) (vec3_t mid, float radius, const vec4_t color);
+	void (*DrawCircle) (vec3_t mid, float radius, const vec4_t color, int thickness);
 	void (*Draw3DGlobe) (int x, int y, int w, int h, float p, float q, vec3_t rotate, float zoom, char *map);
 	void (*Draw3DMapMarkers) (vec3_t angles, float zoom, float latitude, float longitude, char *image);
 	void (*Draw3DMapLine) (vec3_t angles, float zoom, int n, float dist, vec2_t * v);
@@ -369,6 +369,7 @@ typedef struct {
 
 	/* will return the size and the path for each font */
 	void (*CL_GetFontData) (const char *name, int *size, char *path);
+	qboolean (*RenderTrace) (vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end);
 
 	/* gamedir will be the current directory that generated */
 	/* files should be stored to, ie: "f:\quake\id1" */

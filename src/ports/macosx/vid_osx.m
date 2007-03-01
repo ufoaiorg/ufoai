@@ -348,6 +348,7 @@ qboolean VID_LoadRefresh (char *theName)
 	ri.Vid_NewWindow = VID_NewWindow;
 	ri.CL_WriteAVIVideoFrame = CL_WriteAVIVideoFrame;
 	ri.CL_GetFontData = CL_GetFontData;
+	ri.RenderTrace = SV_RenderTrace;
 
 	re = myGetRefAPIProc (ri);
 

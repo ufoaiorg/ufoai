@@ -1296,14 +1296,14 @@ int CL_GetParticleIndex (const char *name)
  * @param[in] text pointer to the buffer to parse from
  * @return the position of the particle in ptlDef array
  */
-int CL_ParseParticle (char *name, char **text)
+extern int CL_ParseParticle (char *name, char **text)
 {
 	char *errhead = "CL_ParseParticle: unexptected end of file (particle ";
 	ptlDef_t *pd;
 	char *token;
 	int i, pos;
 
-	/* search for menus with same name */
+	/* search for particles with same name */
 	for (i = 0; i < numPtlDefs; i++)
 		if (!Q_strncmp(name, ptlDef[i].name, MAX_VAR))
 			break;
@@ -1369,4 +1369,17 @@ int CL_ParseParticle (char *name, char **text)
 		return -1;
 	}
 	return pos;
+}
+
+/**
+ * @brief Inits some fixed particles that are not in our script files
+ * @note fixed particles start with a * in their name
+ */
+extern void CL_InitParticles (void)
+{
+	ptlDef_t *pd;
+
+	pd = &ptlDef[numPtlDefs++];
+	memset(pd, 0, sizeof(ptlDef_t));
+	Q_strncpyz(pd->name, "*circle", MAX_VAR);
 }

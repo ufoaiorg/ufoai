@@ -2388,6 +2388,8 @@ extern void CL_Init (void)
 	memset(&teamData, 0, sizeof(teamData_t));
 	/* Default to single-player mode */
 	ccs.singleplayer = qtrue;
+
+	CL_InitParticles();
 }
 
 

@@ -347,5 +347,6 @@ void SV_Init(void);
 void SV_Shutdown(char *finalmsg, qboolean reconnect);
 void SV_ShutdownWhenEmpty(void);
 void SV_Frame(int msec);
+qboolean SV_RenderTrace(vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end);
 
 #endif							/* QCOMMON_DEFINED */

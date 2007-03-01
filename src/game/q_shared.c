@@ -1151,9 +1151,12 @@ void _VectorCopy (vec3_t in, vec3_t out)
  * rather than in a scalar
  * @note Its main use lies in the fact that the cross product of two vectors
  * is orthogonal to both of them.
- * @param[in] v1
- * @param[in] v2
- * @param[in] cross
+ * @param[in] v1 directional vector
+ * @param[in] v2 directional vector
+ * @param[in] cross output
+ * @example
+ * you have the right and forward values of an axis, their cross product will
+ * be a properly oriented "up" direction
  * @sa _DotProduct
  * @sa DotProduct
  * @sa VectorNormalize2

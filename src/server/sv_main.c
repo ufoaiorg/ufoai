@@ -1034,3 +1034,21 @@ void SV_ShutdownWhenEmpty (void)
 	/* pretend server is already dead, otherwise clients may try and reconnect */
 	Com_SetServerState(ss_dead);
 }
+
+/**
+ * @brief
+ */
+extern qboolean SV_RenderTrace (vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end)
+{
+	trace_t	trace;
+
+	if (sv.state == ss_dead || sv.state == ss_loading)
+		return qfalse;
+
+	trace = SV_Trace(start, mins, maxs, end, NULL, MASK_VISIBILILITY);
+
+	if (trace.fraction != 1)
+		return qfalse;
+
+	return qtrue;
+}

@@ -726,7 +726,7 @@ void Draw_Circle (vec3_t mid, float radius, const vec4_t color, int thickness)
 	if (thickness <= 1) {
 		qglBegin(GL_LINE_STRIP);
 		for (theta = 0.0f; theta <= 2.0f * M_PI; theta += M_PI / (radius * accuracy)) {
-			qglVertex3f(radius * cos(theta), 0.0, radius * sin(theta));
+			qglVertex3f(radius * cos(theta), radius * sin(theta), 0.0);
 		}
 		qglEnd();
 	} else {
