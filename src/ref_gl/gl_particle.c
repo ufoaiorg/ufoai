@@ -154,6 +154,46 @@ static void R_DrawPtlModel (ptl_t * p)
 	R_DrawModelParticle(&mi);
 }
 
+/**
+ * @brief Draws a circle out of lines
+ * @param[in] mid Center of the circle
+ * @param[in] radius Radius of the circle
+ * @param[in] color The color of the circle lines
+ * @sa Draw_Circle
+ */
+static void R_DrawPtlCircle (ptl_t* p)
+{
+	float radius = p->size[0];
+	int thickness = (int)p->size[1];
+	float theta;
+	const float accuracy = 5.0f;
+
+	qglDisable(GL_TEXTURE_2D);
+	qglEnable(GL_LINE_SMOOTH);
+
+	qglColor4fv(p->color);
+
+	assert(radius > thickness);
+	if (thickness <= 1) {
+		qglBegin(GL_LINE_STRIP);
+		for (theta = 0.0f; theta <= 2.0f * M_PI; theta += M_PI / (radius * accuracy)) {
+			qglVertex3f(p->s[0] + radius * cos(theta), p->s[1] + radius * sin(theta), p->s[2]);
+		}
+		qglEnd();
+	} else {
+		qglBegin(GL_TRIANGLE_STRIP);
+		for (theta = 0; theta <= 2 * M_PI; theta += M_PI / (radius * accuracy)) {
+			qglVertex3f(p->s[0] + radius * cos(theta), p->s[1] + radius * sin(theta), p->s[2]);
+			qglVertex3f(p->s[0] + radius * cos(theta - M_PI / (radius * accuracy)), p->s[1] + radius * sin(theta - M_PI / (radius * accuracy)), p->s[2]);
+			qglVertex3f(p->s[0] + (radius - thickness) * cos(theta - M_PI / (radius * accuracy)), p->s[1] + (radius - thickness) * sin(theta - M_PI / (radius * accuracy)), p->s[2]);
+			qglVertex3f(p->s[0] + (radius - thickness) * cos(theta), p->s[1] + (radius - thickness) * sin(theta), p->s[2]);
+		}
+		qglEnd();
+	}
+
+	qglDisable(GL_LINE_SMOOTH);
+	qglEnable(GL_TEXTURE_2D);
+}
 
 /**
  * @brief
@@ -187,7 +227,7 @@ static int blend_mode;
  * @brief
  * @sa R_DrawPtls
  */
-static void GL_SetBlendMode(int mode)
+static void GL_SetBlendMode (int mode)
 {
 	if (blend_mode != mode) {
 		blend_mode = mode;
@@ -251,7 +291,7 @@ extern void R_DrawPtls (void)
 				R_DrawPtlLine(p);
 				break;
 			case STYLE_CIRCLE:
-				Draw_Circle(p->s, p->size[0], p->color, (int)p->size[1]);
+				R_DrawPtlCircle(p);
 				break;
 			}
 			if (p->pic != -1)

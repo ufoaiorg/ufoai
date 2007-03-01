@@ -703,6 +703,7 @@ void Draw_Clouds (int x, int y, int w, int h, float p, float q, float cx, float 
  * @param[in] mid Center of the circle
  * @param[in] radius Radius of the circle
  * @param[in] color The color of the circle lines
+ * @sa R_DrawPtlCircle
  */
 void Draw_Circle (vec3_t mid, float radius, const vec4_t color, int thickness)
 {

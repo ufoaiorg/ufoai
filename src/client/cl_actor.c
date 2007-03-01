@@ -2877,7 +2877,7 @@ float CL_TargetingToHit (pos3_t toPos)
  */
 static void CL_Targeting_Radius (vec3_t center)
 {
-	const vec4_t color = {0, 1, 0, 1};
+	const vec4_t color = {0, 1, 0, .3};
 	ptl_t *ptl = NULL;
 
 	assert(selFD);
@@ -2886,6 +2886,7 @@ static void CL_Targeting_Radius (vec3_t center)
 	ptl->size[0] = selFD->splrad; /* misuse size vector as radius */
 	ptl->size[1] = 1; /* thickness */
 	ptl->style = STYLE_CIRCLE;
+	ptl->blend = BLEND_BLEND;
 	/* free the particle every frame */
 	ptl->life = 0.0001;
 	Vector4Copy(color, ptl->color);
