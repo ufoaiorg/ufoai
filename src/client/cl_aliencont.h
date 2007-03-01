@@ -1,6 +1,6 @@
 /**
  * @file cl_aliencont.h
- * @brief Header file for alien containment stuff
+ * @brief Header file for Alien Containment stuff.
  */
 
 /*
@@ -49,9 +49,9 @@ typedef enum {
 
 /** cases of alien amount calculation */
 typedef enum {
-	AL_RESEARCH,
-	AL_KILL,
-	AL_KILLONE
+	AL_RESEARCH,			/**< When we remove alien(s) because of research topic. */
+	AL_KILL,			/**< When we kill all aliens in base because of base defence mission. */
+	AL_KILLONE			/**< When we kill one alien of given type in AC menu. */
 } alienCalcType_t;
 
 /** structure of Alien Containment being a member of base_t */
@@ -71,7 +71,7 @@ typedef struct aliensTmp_s {
 } aliensTmp_t;
 
 /**
- * Collecting aliens functions
+ * Collecting aliens functions.
  */
 
 void AL_FillInContainment(void);

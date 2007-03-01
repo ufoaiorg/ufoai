@@ -1,7 +1,7 @@
 
 /**
  * @file cl_aliencont.c
- * @brief Deals with the alien containment stuff
+ * @brief Deals with the Alien Containment stuff.
  */
 
 /*
@@ -26,13 +26,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 #include "cl_global.h"
-static char aliencontText[1024];
 
-/* amount of aliens that are on the aliencont list - see AC_Init */
-static int numAliensOnList = 0;
-
-/* current selected aliencont */
-static aliensCont_t* aliencontCurrent;
+/** Statics for menu. */
+static char aliencontText[1024];		/**< Used in menu lists. */
+static int numAliensOnList = 0;			/**< Number of aliens on AC menu list. */
+static aliensCont_t* aliencontCurrent;		/**< Current selected Alien Containment. */
 
 /**
  * Collecting aliens functions
@@ -52,8 +50,10 @@ void AL_FillInContainment (void)
 	if (baseCurrent) {
 		base = baseCurrent;
 	} else {
+#ifdef DEBUG
 		/* should never happen */
 		Com_Printf("AL_FillInContainment()... No base selected!\n");
+#endif
 		return;
 	}
 
@@ -108,20 +108,24 @@ void CL_CollectingAliens (void)
 	aircraft_t *aircraft = NULL;
 
 	if (!baseCurrent) {
+#ifdef DEBUG
 		/* should never happen */
 		Com_Printf("CL_CollectingAliens()... No base selected!\n");
+#endif
 		return;
 	}
 
 	if (baseCurrent->aircraftCurrent >= 0) {
 		aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
 	} else {
+#ifdef DEBUG
 		/* should never happen */
 		Com_Printf("CL_CollectingAliens()... No aircraft selected!\n");
+#endif
 		return;
 	}
 
-	/* make sure dropship aliencargo is empty */
+	/* Make sure dropship aliencargo is empty. */
 	memset(aircraft->aliencargo,0,sizeof(aircraft->aliencargo));
 
 	cargo = aircraft->aliencargo;
@@ -203,8 +207,10 @@ void AL_AddAliens (void)
 	if (baseCurrent) {
 		tobase = baseCurrent;
 	} else {
+#ifdef DEBUG
 		/* should never happen */
 		Com_Printf("AL_AddAliens()... No base selected!\n");
+#endif
 		return;
 	}
 
@@ -216,8 +222,10 @@ void AL_AddAliens (void)
 	if (tobase->aircraftCurrent >= 0) {
 		aircraft = &tobase->aircraft[tobase->aircraftCurrent];
 	} else {
+#ifdef DEBUG
 		/* should never happen */
 		Com_Printf("AL_AddAliens()... No aircraft selected!\n");
+#endif
 		return;
 	}
 
@@ -367,7 +375,7 @@ void AL_RemoveAliens (const char *name, int amount, alienCalcType_t action)
 
 /**
  * @brief Get index of alien.
- * @param[in] alientype
+ * @param[in] *id Pointer to alien type.
  * @return index of alien
  * @sa RS_AssignTechIdxs
  */
@@ -388,9 +396,9 @@ int AL_GetAlienIdx (const char *id)
 
 /**
  * @brief Get amount of live aliens or alien bodies stored in Containment.
- * @param[in] index of alien
- * @param[in] requirement type (RS_LINK_ALIEN/RS_LINK_ALIEN_DEAD)
- * @return amount of desired alien/body
+ * @param[in] idx Index of alien.
+ * @param[in] reqtype Requirement type (RS_LINK_ALIEN/RS_LINK_ALIEN_DEAD).
+ * @return Amount of desired alien/body.
  * @sa RS_RequirementsMet
  * @sa RS_CheckCollected
  */
@@ -427,7 +435,7 @@ int AL_GetAlienAmount (int idx, requirementType_t reqtype)
 /**
  * @brief Counts alive aliens in all bases.
  * @note This should be called whenever you add or remove
- * aliens from alien containment.
+ * @note aliens from alien containment.
  * @return amount of all alive aliens stored in containments
  * @sa CL_DropshipReturned
  * @sa AC_Init
@@ -467,8 +475,10 @@ int AL_CountInBase (void)
 	if (baseCurrent) {
 		base = baseCurrent;
 	} else {
+#ifdef DEBUG
 		/* should never happen */
 		Com_Printf("AL_CountInBase()... No base selected!\n");
+#endif
 		return -1;
 	}
 	if (!base->hasAlienCont)
