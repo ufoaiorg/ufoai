@@ -1427,6 +1427,7 @@ static void CL_ReadPackets (void)
 	if (cls.state >= ca_connected && cls.realtime - cls.netchan.last_received > cl_timeout->value * 1000) {
 		/* timeoutcount saves debugger */
 		if (++cl.timeoutcount > 5) {
+			MN_Popup(_("Network error"), _("Connection timed out - server is no longer reachable"));
 			Com_Printf("\nServer connection timed out.\n");
 			CL_Disconnect();
 			return;
