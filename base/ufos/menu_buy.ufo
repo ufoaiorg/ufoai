@@ -266,6 +266,16 @@ menu buy
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 0" }
 	}
+	pic bt_autosell0
+	{
+		tooltip "_Autosell item"
+		image	menu/button_alienkill1
+		pos	"30 40"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx true
+		click { cmd "mn_autosell 0" }
+	}
 	pic bt_buy1
 	{
 		tooltip	"_Buy item"
@@ -281,6 +291,16 @@ menu buy
 		pos		"392 65"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 1" }
+	}
+	pic bt_autosell1
+	{
+		tooltip		"_Autosell item"
+		image		menu/button_alienkill1
+		pos		"30 65"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "mn_autosell 1" }
 	}
 	pic bt_buy2
 	{
@@ -298,6 +318,16 @@ menu buy
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 2" }
 	}
+	pic bt_autosell2
+	{
+		tooltip		"_Autosell item"
+		image		menu/button_alienkill1
+		pos		"30 90"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "mn_autosell 2" }
+	}
 	pic bt_buy3
 	{
 		tooltip	"_Buy item"
@@ -313,6 +343,16 @@ menu buy
 		pos		"392 115"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 3" }
+	}
+	pic bt_autosell3
+	{
+		tooltip		"_Autosell item"
+		image		menu/button_alienkill1
+		pos		"30 115"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "mn_autosell 3" }
 	}
 	pic bt_buy4
 	{
@@ -330,6 +370,16 @@ menu buy
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 4" }
 	}
+	pic bt_autosell4
+	{
+		tooltip		"_Autosell item"
+		image		menu/button_alienkill1
+		pos		"30 140"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "mn_autosell 4" }
+	}
 	pic bt_buy5
 	{
 		tooltip	"_Buy item"
@@ -345,6 +395,16 @@ menu buy
 		pos		"392 165"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 5" }
+	}
+	pic bt_autosell5
+	{
+		tooltip		"_Autosell item"
+		image		menu/button_alienkill1
+		pos		"30 156"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "mn_autosell 5" }
 	}
 	pic bt_buy6
 	{
@@ -362,6 +422,16 @@ menu buy
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 6" }
 	}
+	pic bt_autosell6
+	{
+		tooltip		"_Autosell item"
+		image		menu/button_alienkill1
+		pos		"30 190"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "mn_autosell 6" }
+	}
 	pic bt_buy7
 	{
 		tooltip	"_Buy item"
@@ -377,6 +447,16 @@ menu buy
 		pos		"392 215"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 7" }
+	}
+	pic bt_autosell7
+	{
+		tooltip		"_Autosell item"
+		image		menu/button_alienkill1
+		pos		"30 215"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "mn_autosell 7" }
 	}
 	pic bt_buy8
 	{
@@ -394,6 +474,16 @@ menu buy
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 8" }
 	}
+	pic bt_autosell8
+	{
+		tooltip		"_Autosell item"
+		image		menu/button_alienkill1
+		pos		"30 240"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "mn_autosell 8" }
+	}
 	pic bt_buy9
 	{
 		tooltip	"_Buy item"
@@ -409,6 +499,16 @@ menu buy
 		pos		"392 265"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 9" }
+	}
+	pic bt_autosell9
+	{
+		tooltip		"_Autosell item"
+		image		menu/button_alienkill1
+		pos		"30 265"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "mn_autosell 9" }
 	}
 	pic bt_buy10
 	{
@@ -426,6 +526,16 @@ menu buy
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 10" }
 	}
+	pic bt_autosell10
+	{
+		tooltip		"_Autosell item"
+		image		menu/button_alienkill1
+		pos		"30 290"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "mn_autosell 10" }
+	}
 	pic bt_buy11
 	{
 		tooltip	"_Buy item"
@@ -441,6 +551,16 @@ menu buy
 		pos		"392 315"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 11" }
+	}
+	pic bt_autosell11
+	{
+		tooltip		"_Autosell item"
+		image		menu/button_alienkill1
+		pos		"30 315"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "mn_autosell 11" }
 	}
 	pic bt_buy12
 	{
@@ -458,6 +578,16 @@ menu buy
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 12" }
 	}
+	pic bt_autosell12
+	{
+		tooltip		"_Autosell item"
+		image		menu/button_alienkill1
+		pos		"30 340"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "mn_autosell 12" }
+	}
 	pic bt_buy13
 	{
 		tooltip	"_Buy item"
@@ -473,6 +603,16 @@ menu buy
 		pos		"392 365"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 13" }
+	}
+	pic bt_autosell13
+	{
+		tooltip		"_Autosell item"
+		image		menu/button_alienkill1
+		pos		"30 365"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "mn_autosell 13" }
 	}
 	pic bt_buy14
 	{
@@ -490,6 +630,16 @@ menu buy
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 14" }
 	}
+	pic bt_autosell14
+	{
+		tooltip		"_Autosell item"
+		image		menu/button_alienkill1
+		pos		"30 390"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "mn_autosell 14" }
+	}
 	pic bt_buy15
 	{
 		tooltip	"_Buy item"
@@ -505,6 +655,16 @@ menu buy
 		pos		"392 415"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 15" }
+	}
+	pic bt_autosell15
+	{
+		tooltip		"_Autosell item"
+		image		menu/button_alienkill1
+		pos		"30 415"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "mn_autosell 15" }
 	}
 	pic bt_buy16
 	{
@@ -522,6 +682,16 @@ menu buy
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 16" }
 	}
+	pic bt_autosell16
+	{
+		tooltip		"_Autosell item"
+		image		menu/button_alienkill1
+		pos		"30 440"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "mn_autosell 16" }
+	}
 	pic bt_buy17
 	{
 		tooltip	"_Buy item"
@@ -537,6 +707,16 @@ menu buy
 		pos		"392 465"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 17" }
+	}
+	pic bt_autosell17
+	{
+		tooltip		"_Autosell item"
+		image		menu/button_alienkill1
+		pos		"30 465"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "mn_autosell 17" }
 	}
 	pic bt_buy18
 	{
@@ -554,6 +734,16 @@ menu buy
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 18" }
 	}
+	pic bt_autosell18
+	{
+		tooltip		"_Autosell item"
+		image		menu/button_alienkill1
+		pos		"30 490"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "mn_autosell 18" }
+	}
 	pic bt_buy19
 	{
 		tooltip	"_Buy item"
@@ -569,6 +759,16 @@ menu buy
 		pos		"392 515"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 19" }
+	}
+	pic bt_autosell19
+	{
+		tooltip		"_Autosell item"
+		image		menu/button_alienkill1
+		pos		"30 515"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "mn_autosell 19" }
 	}
 	pic bt_buy20
 	{
@@ -586,6 +786,16 @@ menu buy
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 20" }
 	}
+	pic bt_autosell20
+	{
+		tooltip		"_Autosell item"
+		image		menu/button_alienkill1
+		pos		"30 540"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "mn_autosell 20" }
+	}
 	pic bt_buy21
 	{
 		tooltip	"_Buy item"
@@ -601,6 +811,16 @@ menu buy
 		pos		"392 565"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 21" }
+	}
+	pic bt_autosell21
+	{
+		tooltip		"_Autosell item"
+		image		menu/button_alienkill1
+		pos		"30 565"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "mn_autosell 21" }
 	}
 	pic bt_buy22
 	{
@@ -618,6 +838,16 @@ menu buy
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 22" }
 	}
+	pic bt_autosell22
+	{
+		tooltip		"_Autosell item"
+		image		menu/button_alienkill1
+		pos		"30 590"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "mn_autosell 22" }
+	}
 	pic bt_buy23
 	{
 		tooltip	"_Buy item"
@@ -633,6 +863,16 @@ menu buy
 		pos		"392 615"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 23" }
+	}
+	pic bt_autosell23
+	{
+		tooltip		"_Autosell item"
+		image		menu/button_alienkill1
+		pos		"30 615"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "mn_autosell 23" }
 	}
 	pic bt_buy24
 	{
@@ -650,6 +890,16 @@ menu buy
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 24" }
 	}
+	pic bt_autosell24
+	{
+		tooltip		"_Autosell item"
+		image		menu/button_alienkill1
+		pos		"30 640"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "mn_autosell 24" }
+	}
 	pic bt_buy25
 	{
 		tooltip	"_Buy item"
@@ -665,6 +915,16 @@ menu buy
 		pos		"392 665"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 25" }
+	}
+	pic bt_autosell25
+	{
+		tooltip		"_Autosell item"
+		image		menu/button_alienkill1
+		pos		"30 665"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "mn_autosell 25" }
 	}
 	pic bt_buy26
 	{
@@ -682,6 +942,16 @@ menu buy
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 26" }
 	}
+	pic bt_autosell26
+	{
+		tooltip		"_Autosell item"
+		image		menu/button_alienkill1
+		pos		"30 690"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "mn_autosell 26" }
+	}
 	pic bt_buy27
 	{
 		tooltip	"_Buy item"
@@ -697,6 +967,16 @@ menu buy
 		pos		"392 715"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 27" }
+	}
+	pic bt_autosell27
+	{
+		tooltip		"_Autosell item"
+		image		menu/button_alienkill1
+		pos		"30 715"
+		texl		"0 0"
+		texh		"16 16"
+		mousefx		true
+		click		{ cmd "mn_autosell 27" }
 	}
 
 	// ==================
