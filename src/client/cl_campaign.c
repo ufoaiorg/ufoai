@@ -2733,7 +2733,7 @@ static void CL_CollectingAmmo (invList_t *magazine, aircraft_t *aircraft)
 		cargo = aircraft->itemcargo;
 	}
 
-	/* Let's add remaining ammo to market. */	
+	/* Let's add remaining ammo to market. */
 	eTempEq.num_loose[magazine->item.m] += magazine->item.a;
 	if (eTempEq.num_loose[magazine->item.m] >= csi.ods[magazine->item.t].ammo) {
 		/* There are more or equal ammo on the market than magazine needs - collect magazine. */
@@ -2772,8 +2772,8 @@ static void CL_CarriedItems (le_t *soldier)
 			/* Fake item. */
 			assert(item->item.t != NONE);
 			/* Twohanded weapons and container is left hand container. */
-			// FIXME:
-			// assert(container == csi.idLeft && csi.ods[item->item.t].holdtwohanded);
+			/* FIXME: */
+			/* assert(container == csi.idLeft && csi.ods[item->item.t].holdtwohanded); */
 
 			ccs.eMission.num[item->item.t]++;
 			tech = csi.ods[item->item.t].tech;
@@ -2852,8 +2852,8 @@ extern void CL_CollectingItems (int won)
 			if (won) {
 				for (item = FLOOR(le); item; item = item->next) {
 					if ((item->item.a <= 0) /* No ammo left, and... */
-					&& csi.ods[item->item.t].oneshot /* ... oneshot weapon, and... */
-					&& csi.ods[item->item.t].deplete) { /* ... useless after ammo is gone. */
+					 && csi.ods[item->item.t].oneshot /* ... oneshot weapon, and... */
+					 && csi.ods[item->item.t].deplete) { /* ... useless after ammo is gone. */
 						Com_DPrintf("CL_CollectItems: depletable item not collected: %s\n", csi.ods[item->item.t].name);
 						continue;
 					}
