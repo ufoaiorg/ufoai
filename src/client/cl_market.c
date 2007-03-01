@@ -164,6 +164,12 @@ static void CL_BuyType_f (void)
 					Q_strncpyz(str, va("mn_price%i", j), MAX_VAR);
 					Cvar_Set(str, va("%i c", od->price));
 
+					/* Set state of Autosell button. */
+					if (od->autosell)
+						Cbuf_AddText(va("buy_autoselle%i\n", j));
+					else
+						Cbuf_AddText(va("buy_autoselld%i\n", j));
+
 					buyList[j] = i;
 					j++;
 				}
@@ -301,6 +307,37 @@ static void CL_SellItem_f (void)
 }
 
 /**
+ * @brief Enable or disable autosell option for given itemtype.
+ */
+static void BS_Autosell_f (void)
+{
+	int num, item;
+
+	/* Can be called from everywhere. */
+	if (!baseCurrent || !curCampaign)
+		return;
+
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
+		return;
+	}
+
+	num = atoi(Cmd_Argv(1));
+	Com_DPrintf("BS_Autosell_f: listnumber %i\n", num);
+	if (num < 0 || num >= buyListLength)
+		return;
+	item = buyList[num];
+
+	if (csi.ods[item].autosell)
+		csi.ods[item].autosell = qfalse;
+	else
+		csi.ods[item].autosell = qtrue;
+
+	/* Reinit the menu. */
+	Cbuf_AddText(va("buy_type %i\n", buyCategory));
+}
+
+/**
  * @brief
  * @sa CL_SellAircraft_f
  */
@@ -405,5 +442,6 @@ extern void CL_ResetMarket (void)
 	Cmd_AddCommand("mn_sell", CL_SellItem_f, NULL);
 	Cmd_AddCommand("mn_buy_aircraft", CL_BuyAircraft_f, NULL);
 	Cmd_AddCommand("mn_sell_aircraft", CL_SellAircraft_f, NULL);
+	Cmd_AddCommand("buy_autosell", BS_Autosell_f, "Enable or disable autosell option for given item.");
 	buyListLength = -1;
 }

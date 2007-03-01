@@ -1021,6 +1021,7 @@ typedef struct objDef_s {
 	byte thrown;		/**< This item is thrown. */
 	int price;		/**< the price for this item */
 	int buytype;		/**< In which category of the buy menu is this item listed. */
+	qboolean autosell;	/**< True if this item should be autosold after collecting. */
 
 	/* Weapon specific */
 	int ammo;			/**< How much can we load into this weapon at once. */

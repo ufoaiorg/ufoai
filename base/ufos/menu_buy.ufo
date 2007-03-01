@@ -246,9 +246,66 @@ menu buy
 	string txt_supply27	{ string "*cvar mn_supply27"	pos "440 715"	color "0 .48 0 1"	align ur }
 	string txt_price27	{ string "*cvar mn_price27"		pos "540 715"	color "0 .48 0 1"	align ur }
 
-	// ==================
-	// buy/sell buttons
-	// ==================
+	// =========================
+	// buy/sell/autosell buttons
+	// =========================
+	confunc buy_autoselle0 { *bt_autosell0 image menu/button_autosell1	*bt_autosell0 tooltip "_Item autosell enabled."  }
+	confunc buy_autoselld0 { *bt_autosell0 image menu/button_autosell2	*bt_autosell0 tooltip "_Item autosell disabled." }
+	confunc buy_autoselle1 { *bt_autosell1 image menu/button_autosell1	*bt_autosell1 tooltip "_Item autosell enabled."  }
+	confunc buy_autoselld1 { *bt_autosell1 image menu/button_autosell2	*bt_autosell1 tooltip "_Item autosell disabled." }
+	confunc buy_autoselle2 { *bt_autosell2 image menu/button_autosell1	*bt_autosell2 tooltip "_Item autosell enabled."  }
+	confunc buy_autoselld2 { *bt_autosell2 image menu/button_autosell2	*bt_autosell2 tooltip "_Item autosell disabled." }
+	confunc buy_autoselle3 { *bt_autosell3 image menu/button_autosell1	*bt_autosell3 tooltip "_Item autosell enabled."  }
+	confunc buy_autoselld3 { *bt_autosell3 image menu/button_autosell2	*bt_autosell3 tooltip "_Item autosell disabled." }
+	confunc buy_autoselle4 { *bt_autosell4 image menu/button_autosell1	*bt_autosell4 tooltip "_Item autosell enabled."  }
+	confunc buy_autoselld4 { *bt_autosell4 image menu/button_autosell2	*bt_autosell4 tooltip "_Item autosell disabled." }
+	confunc buy_autoselle5 { *bt_autosell5 image menu/button_autosell1	*bt_autosell5 tooltip "_Item autosell enabled."  }
+	confunc buy_autoselld5 { *bt_autosell5 image menu/button_autosell2	*bt_autosell5 tooltip "_Item autosell disabled." }
+	confunc buy_autoselle6 { *bt_autosell6 image menu/button_autosell1	*bt_autosell6 tooltip "_Item autosell enabled."  }
+	confunc buy_autoselld6 { *bt_autosell6 image menu/button_autosell2	*bt_autosell6 tooltip "_Item autosell disabled." }
+	confunc buy_autoselle7 { *bt_autosell7 image menu/button_autosell1	*bt_autosell7 tooltip "_Item autosell enabled."  }
+	confunc buy_autoselld7 { *bt_autosell7 image menu/button_autosell2	*bt_autosell7 tooltip "_Item autosell disabled." }
+	confunc buy_autoselle8 { *bt_autosell8 image menu/button_autosell1	*bt_autosell8 tooltip "_Item autosell enabled."  }
+	confunc buy_autoselld8 { *bt_autosell8 image menu/button_autosell2	*bt_autosell8 tooltip "_Item autosell disabled." }
+	confunc buy_autoselle9 { *bt_autosell9 image menu/button_autosell1	*bt_autosell9 tooltip "_Item autosell enabled."  }
+	confunc buy_autoselld9 { *bt_autosell9 image menu/button_autosell2	*bt_autosell9 tooltip "_Item autosell disabled." }
+	confunc buy_autoselle10 { *bt_autosell10 image menu/button_autosell1	*bt_autosell10 tooltip "_Item autosell enabled."  }
+	confunc buy_autoselld10 { *bt_autosell10 image menu/button_autosell2	*bt_autosell10 tooltip "_Item autosell disabled." }
+	confunc buy_autoselle11 { *bt_autosell11 image menu/button_autosell1	*bt_autosell11 tooltip "_Item autosell enabled."  }
+	confunc buy_autoselld11 { *bt_autosell11 image menu/button_autosell2	*bt_autosell11 tooltip "_Item autosell disabled." }
+	confunc buy_autoselle12 { *bt_autosell12 image menu/button_autosell1	*bt_autosell12 tooltip "_Item autosell enabled."  }
+	confunc buy_autoselld12 { *bt_autosell12 image menu/button_autosell2	*bt_autosell12 tooltip "_Item autosell disabled." }
+	confunc buy_autoselle13 { *bt_autosell13 image menu/button_autosell1	*bt_autosell13 tooltip "_Item autosell enabled."  }
+	confunc buy_autoselld13 { *bt_autosell13 image menu/button_autosell2	*bt_autosell13 tooltip "_Item autosell disabled." }
+	confunc buy_autoselle14 { *bt_autosell14 image menu/button_autosell1	*bt_autosell14 tooltip "_Item autosell enabled."  }
+	confunc buy_autoselld14 { *bt_autosell14 image menu/button_autosell2	*bt_autosell14 tooltip "_Item autosell disabled." }
+	confunc buy_autoselle15 { *bt_autosell15 image menu/button_autosell1	*bt_autosell15 tooltip "_Item autosell enabled."  }
+	confunc buy_autoselld15 { *bt_autosell15 image menu/button_autosell2	*bt_autosell15 tooltip "_Item autosell disabled." }
+	confunc buy_autoselle16 { *bt_autosell16 image menu/button_autosell1	*bt_autosell16 tooltip "_Item autosell enabled."  }
+	confunc buy_autoselld16 { *bt_autosell16 image menu/button_autosell2	*bt_autosell16 tooltip "_Item autosell disabled." }
+	confunc buy_autoselle17 { *bt_autosell17 image menu/button_autosell1	*bt_autosell17 tooltip "_Item autosell enabled."  }
+	confunc buy_autoselld17 { *bt_autosell17 image menu/button_autosell2	*bt_autosell17 tooltip "_Item autosell disabled." }
+	confunc buy_autoselle18 { *bt_autosell18 image menu/button_autosell1	*bt_autosell18 tooltip "_Item autosell enabled."  }
+	confunc buy_autoselld18 { *bt_autosell18 image menu/button_autosell2	*bt_autosell18 tooltip "_Item autosell disabled." }
+	confunc buy_autoselle19 { *bt_autosell19 image menu/button_autosell1	*bt_autosell19 tooltip "_Item autosell enabled."  }
+	confunc buy_autoselld19 { *bt_autosell19 image menu/button_autosell2	*bt_autosell19 tooltip "_Item autosell disabled." }
+	confunc buy_autoselle20 { *bt_autosell20 image menu/button_autosell1	*bt_autosell20 tooltip "_Item autosell enabled."  }
+	confunc buy_autoselld20 { *bt_autosell20 image menu/button_autosell2	*bt_autosell20 tooltip "_Item autosell disabled." }
+	confunc buy_autoselle21 { *bt_autosell21 image menu/button_autosell1	*bt_autosell21 tooltip "_Item autosell enabled."  }
+	confunc buy_autoselld21 { *bt_autosell21 image menu/button_autosell2	*bt_autosell21 tooltip "_Item autosell disabled." }
+	confunc buy_autoselle22 { *bt_autosell22 image menu/button_autosell1	*bt_autosell22 tooltip "_Item autosell enabled."  }
+	confunc buy_autoselld22 { *bt_autosell22 image menu/button_autosell2	*bt_autosell22 tooltip "_Item autosell disabled." }
+	confunc buy_autoselle23 { *bt_autosell23 image menu/button_autosell1	*bt_autosell23 tooltip "_Item autosell enabled."  }
+	confunc buy_autoselld23 { *bt_autosell23 image menu/button_autosell2	*bt_autosell23 tooltip "_Item autosell disabled." }
+	confunc buy_autoselle24 { *bt_autosell24 image menu/button_autosell1	*bt_autosell24 tooltip "_Item autosell enabled."  }
+	confunc buy_autoselld24 { *bt_autosell24 image menu/button_autosell2	*bt_autosell24 tooltip "_Item autosell disabled." }
+	confunc buy_autoselle25 { *bt_autosell25 image menu/button_autosell1	*bt_autosell25 tooltip "_Item autosell enabled."  }
+	confunc buy_autoselld25 { *bt_autosell25 image menu/button_autosell2	*bt_autosell25 tooltip "_Item autosell disabled." }
+	confunc buy_autoselle26 { *bt_autosell26 image menu/button_autosell1	*bt_autosell26 tooltip "_Item autosell enabled."  }
+	confunc buy_autoselld26 { *bt_autosell26 image menu/button_autosell2	*bt_autosell26 tooltip "_Item autosell disabled." }
+	confunc buy_autoselle27 { *bt_autosell27 image menu/button_autosell1	*bt_autosell27 tooltip "_Item autosell enabled."  }
+	confunc buy_autoselld27 { *bt_autosell27 image menu/button_autosell2	*bt_autosell27 tooltip "_Item autosell disabled." }
+
 
 	pic bt_buy0
 	{
@@ -268,8 +325,6 @@ menu buy
 	}
 	pic bt_autosell0
 	{
-		tooltip "_Autosell item"
-		image	menu/button_alienkill1
 		pos	"30 40"
 		texl	"0 0"
 		texh	"16 16"
@@ -294,8 +349,6 @@ menu buy
 	}
 	pic bt_autosell1
 	{
-		tooltip		"_Autosell item"
-		image		menu/button_alienkill1
 		pos		"30 65"
 		texl		"0 0"
 		texh		"16 16"
@@ -320,8 +373,6 @@ menu buy
 	}
 	pic bt_autosell2
 	{
-		tooltip		"_Autosell item"
-		image		menu/button_alienkill1
 		pos		"30 90"
 		texl		"0 0"
 		texh		"16 16"
@@ -346,8 +397,6 @@ menu buy
 	}
 	pic bt_autosell3
 	{
-		tooltip		"_Autosell item"
-		image		menu/button_alienkill1
 		pos		"30 115"
 		texl		"0 0"
 		texh		"16 16"
@@ -372,8 +421,6 @@ menu buy
 	}
 	pic bt_autosell4
 	{
-		tooltip		"_Autosell item"
-		image		menu/button_alienkill1
 		pos		"30 140"
 		texl		"0 0"
 		texh		"16 16"
@@ -398,9 +445,7 @@ menu buy
 	}
 	pic bt_autosell5
 	{
-		tooltip		"_Autosell item"
-		image		menu/button_alienkill1
-		pos		"30 156"
+		pos		"30 165"
 		texl		"0 0"
 		texh		"16 16"
 		mousefx		true
@@ -424,8 +469,6 @@ menu buy
 	}
 	pic bt_autosell6
 	{
-		tooltip		"_Autosell item"
-		image		menu/button_alienkill1
 		pos		"30 190"
 		texl		"0 0"
 		texh		"16 16"
@@ -450,8 +493,6 @@ menu buy
 	}
 	pic bt_autosell7
 	{
-		tooltip		"_Autosell item"
-		image		menu/button_alienkill1
 		pos		"30 215"
 		texl		"0 0"
 		texh		"16 16"
@@ -476,8 +517,6 @@ menu buy
 	}
 	pic bt_autosell8
 	{
-		tooltip		"_Autosell item"
-		image		menu/button_alienkill1
 		pos		"30 240"
 		texl		"0 0"
 		texh		"16 16"
@@ -502,8 +541,6 @@ menu buy
 	}
 	pic bt_autosell9
 	{
-		tooltip		"_Autosell item"
-		image		menu/button_alienkill1
 		pos		"30 265"
 		texl		"0 0"
 		texh		"16 16"
@@ -528,8 +565,6 @@ menu buy
 	}
 	pic bt_autosell10
 	{
-		tooltip		"_Autosell item"
-		image		menu/button_alienkill1
 		pos		"30 290"
 		texl		"0 0"
 		texh		"16 16"
@@ -554,8 +589,6 @@ menu buy
 	}
 	pic bt_autosell11
 	{
-		tooltip		"_Autosell item"
-		image		menu/button_alienkill1
 		pos		"30 315"
 		texl		"0 0"
 		texh		"16 16"
@@ -580,8 +613,6 @@ menu buy
 	}
 	pic bt_autosell12
 	{
-		tooltip		"_Autosell item"
-		image		menu/button_alienkill1
 		pos		"30 340"
 		texl		"0 0"
 		texh		"16 16"
@@ -606,8 +637,6 @@ menu buy
 	}
 	pic bt_autosell13
 	{
-		tooltip		"_Autosell item"
-		image		menu/button_alienkill1
 		pos		"30 365"
 		texl		"0 0"
 		texh		"16 16"
@@ -632,8 +661,6 @@ menu buy
 	}
 	pic bt_autosell14
 	{
-		tooltip		"_Autosell item"
-		image		menu/button_alienkill1
 		pos		"30 390"
 		texl		"0 0"
 		texh		"16 16"
@@ -658,8 +685,6 @@ menu buy
 	}
 	pic bt_autosell15
 	{
-		tooltip		"_Autosell item"
-		image		menu/button_alienkill1
 		pos		"30 415"
 		texl		"0 0"
 		texh		"16 16"
@@ -676,7 +701,7 @@ menu buy
 	}
 	pic bt_sell16
 	{
-		tooltip	"_Sell item"
+		tooltip "_Sell item"
 		image	menu/buttons_small
 		pos		"392 440"	mousefx	true
 		texl	"16 0"		texh	"32 16"
@@ -684,8 +709,6 @@ menu buy
 	}
 	pic bt_autosell16
 	{
-		tooltip		"_Autosell item"
-		image		menu/button_alienkill1
 		pos		"30 440"
 		texl		"0 0"
 		texh		"16 16"
@@ -710,8 +733,6 @@ menu buy
 	}
 	pic bt_autosell17
 	{
-		tooltip		"_Autosell item"
-		image		menu/button_alienkill1
 		pos		"30 465"
 		texl		"0 0"
 		texh		"16 16"
@@ -736,8 +757,6 @@ menu buy
 	}
 	pic bt_autosell18
 	{
-		tooltip		"_Autosell item"
-		image		menu/button_alienkill1
 		pos		"30 490"
 		texl		"0 0"
 		texh		"16 16"
@@ -762,8 +781,6 @@ menu buy
 	}
 	pic bt_autosell19
 	{
-		tooltip		"_Autosell item"
-		image		menu/button_alienkill1
 		pos		"30 515"
 		texl		"0 0"
 		texh		"16 16"
@@ -788,8 +805,6 @@ menu buy
 	}
 	pic bt_autosell20
 	{
-		tooltip		"_Autosell item"
-		image		menu/button_alienkill1
 		pos		"30 540"
 		texl		"0 0"
 		texh		"16 16"
@@ -814,8 +829,6 @@ menu buy
 	}
 	pic bt_autosell21
 	{
-		tooltip		"_Autosell item"
-		image		menu/button_alienkill1
 		pos		"30 565"
 		texl		"0 0"
 		texh		"16 16"
@@ -840,8 +853,6 @@ menu buy
 	}
 	pic bt_autosell22
 	{
-		tooltip		"_Autosell item"
-		image		menu/button_alienkill1
 		pos		"30 590"
 		texl		"0 0"
 		texh		"16 16"
@@ -866,8 +877,6 @@ menu buy
 	}
 	pic bt_autosell23
 	{
-		tooltip		"_Autosell item"
-		image		menu/button_alienkill1
 		pos		"30 615"
 		texl		"0 0"
 		texh		"16 16"
@@ -892,8 +901,6 @@ menu buy
 	}
 	pic bt_autosell24
 	{
-		tooltip		"_Autosell item"
-		image		menu/button_alienkill1
 		pos		"30 640"
 		texl		"0 0"
 		texh		"16 16"
@@ -918,8 +925,6 @@ menu buy
 	}
 	pic bt_autosell25
 	{
-		tooltip		"_Autosell item"
-		image		menu/button_alienkill1
 		pos		"30 665"
 		texl		"0 0"
 		texh		"16 16"
@@ -944,8 +949,6 @@ menu buy
 	}
 	pic bt_autosell26
 	{
-		tooltip		"_Autosell item"
-		image		menu/button_alienkill1
 		pos		"30 690"
 		texl		"0 0"
 		texh		"16 16"
@@ -970,8 +973,6 @@ menu buy
 	}
 	pic bt_autosell27
 	{
-		tooltip		"_Autosell item"
-		image		menu/button_alienkill1
 		pos		"30 715"
 		texl		"0 0"
 		texh		"16 16"
