@@ -730,15 +730,14 @@ void Draw_Circle (vec3_t mid, float radius, const vec4_t color, int thickness)
 		}
 		qglEnd();
 	} else {
-		qglBegin(GL_TRIANGLE_FAN);
+		qglBegin(GL_TRIANGLE_STRIP);
 		for (theta = 0; theta <= 2 * M_PI; theta += M_PI / (radius * accuracy)) {
-			qglVertex3f(radius * cos(theta), 0, radius * sin(theta));
-			qglVertex3f(radius * cos(theta - M_PI / (radius * accuracy)), 0, radius * sin(theta - M_PI / (radius * accuracy)));
-			qglVertex3f((radius - thickness) * cos(theta - M_PI / (radius * accuracy)), 0, (radius - thickness) * sin(theta - M_PI / (radius * accuracy)));
-			qglVertex3f((radius - thickness) * cos(theta), 0, (radius - thickness) * sin(theta));
+			qglVertex3f(radius * cos(theta), radius * sin(theta), 0);
+			qglVertex3f(radius * cos(theta - M_PI / (radius * accuracy)), radius * sin(theta - M_PI / (radius * accuracy)), 0);
+			qglVertex3f((radius - thickness) * cos(theta - M_PI / (radius * accuracy)), (radius - thickness) * sin(theta - M_PI / (radius * accuracy)), 0);
+			qglVertex3f((radius - thickness) * cos(theta), (radius - thickness) * sin(theta), 0);
 		}
 		qglEnd();
-
 	}
 
 	qglPopMatrix();
