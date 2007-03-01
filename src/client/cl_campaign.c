@@ -2967,12 +2967,6 @@ void CL_SellOrAddItems (void)
 	aircraft_t *aircraft = NULL;
 	technology_t *tech = NULL;
 
-	/* TODO: now we assume, we are selling everything.
-	   When we implement the equipement menu to decide whether
-	   autosell this kind of item or not, replace qboolean market
-	   in every condition here to qboolean item->market. */
-	qboolean market = qtrue;
-
 	if (!baseCurrent) {
 #ifdef DEBUG
 		/* should never happen */
@@ -2994,17 +2988,26 @@ void CL_SellOrAddItems (void)
 	cargo = aircraft->itemcargo;
 
 	for (i = 0; i < aircraft->itemtypes; i++) {
-		if (market) {
-			ccs.eMarket.num[cargo[i].idx] += cargo[i].amount;
-			eTempCredits += (csi.ods[cargo[i].idx].price * cargo[i].amount);
-			numitems += cargo[i].amount;
-		} else {
-			/* TODO: add this item to base storage */
-		}
 		tech = csi.ods[cargo[i].idx].tech;
 		if (!tech)
 			Sys_Error("CL_SellOrAddItems: No tech for %s / %s\n", csi.ods[cargo[i].idx].id, csi.ods[cargo[i].idx].name);
-		tech->statusCollected += cargo[i].amount;
+		/* If the related technology is NOT researched, don't sell items. */
+		if (!RS_IsResearched_ptr(tech)) {
+			baseCurrent->storage.num[cargo[i].idx] += cargo[i].amount;
+			tech->statusCollected += cargo[i].amount;
+			continue;
+		}
+		/* If the related technology is researched, check the autosell option. */
+		if (RS_IsResearched_ptr(tech)) {
+			if (gd.autosell[cargo[i].idx]) { /* Sell items if autosell is enabled. */
+				ccs.eMarket.num[cargo[i].idx] += cargo[i].amount;
+				eTempCredits += (csi.ods[cargo[i].idx].price * cargo[i].amount);
+				numitems += cargo[i].amount;
+			} else { /* Store items if autosell is disabled. */
+				baseCurrent->storage.num[cargo[i].idx] += cargo[i].amount;
+			}
+			continue;
+		}
 	}
 
 	gained = eTempCredits - ccs.credits;

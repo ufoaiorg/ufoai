@@ -93,6 +93,7 @@ typedef struct globalData_s
 	char oldMis1[MAX_VAR];
 	char oldMis2[MAX_VAR];
 	char oldMis3[MAX_VAR];
+	qboolean autosell[MAX_OBJDEFS];		/**< True if this objDef_t has autosell enabled. */
 
 	/* == production == */
 	/* we will allow only one active production at the same time for each base */

@@ -145,6 +145,9 @@ static void CL_BuyType_f (void)
 
 	/* 'normal' items */
 	if (buyCategory < NUM_BUYTYPES) {
+		/* Add autosell button for every entry. */
+		for (j = 0; j < 28; j++)
+			Cbuf_AddText(va("buy_autoselld%i\n", j));
 		/* get item list */
 		for (i = 0, j = 0, od = csi.ods; i < csi.numODs; i++, od++) {
 			tech = (technology_t *) od->tech;
@@ -165,7 +168,7 @@ static void CL_BuyType_f (void)
 					Cvar_Set(str, va("%i c", od->price));
 
 					/* Set state of Autosell button. */
-					if (od->autosell)
+					if (gd.autosell[i])
 						Cbuf_AddText(va("buy_autoselle%i\n", j));
 					else
 						Cbuf_AddText(va("buy_autoselld%i\n", j));
@@ -312,6 +315,7 @@ static void CL_SellItem_f (void)
 static void BS_Autosell_f (void)
 {
 	int num, item;
+	technology_t *tech = NULL;
 
 	/* Can be called from everywhere. */
 	if (!baseCurrent || !curCampaign)
@@ -328,10 +332,17 @@ static void BS_Autosell_f (void)
 		return;
 	item = buyList[num];
 
-	if (csi.ods[item].autosell)
-		csi.ods[item].autosell = qfalse;
-	else
-		csi.ods[item].autosell = qtrue;
+	if (gd.autosell[item]) {
+		gd.autosell[item] = qfalse;
+		Com_DPrintf("item name: %s, autosell false\n", csi.ods[item].name);
+	} else {
+		/* Don't allow to enable autosell for items not researched. */
+		tech = csi.ods[item].tech;
+		if (!RS_IsResearched_ptr(tech))
+			return;
+		gd.autosell[item] = qtrue;
+		Com_DPrintf("item name: %s, autosell true\n", csi.ods[item].name);
+	}
 
 	/* Reinit the menu. */
 	Cbuf_AddText(va("buy_type %i\n", buyCategory));
