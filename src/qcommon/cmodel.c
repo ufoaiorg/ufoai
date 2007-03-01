@@ -609,7 +609,7 @@ static int CM_EntTestLine (vec3_t start, vec3_t stop)
 		if (!model)
 			continue;
 /*		Com_Printf("CM_EntTestLine call function\n"); */
-		assert(model->headnode < curTile->numnodes);
+		assert(model->headnode < curTile->numnodes + 6); /* +6 => bbox */
 		trace = CM_TransformedBoxTrace(start, stop, vec3_origin, vec3_origin, model->tile, model->headnode, MASK_ALL, model->origin, vec3_origin);
 		/* if we started the trace in a wall */
 		/* or the trace is not finished */
@@ -650,7 +650,7 @@ static int CM_EntTestLineDM (vec3_t start, vec3_t stop, vec3_t end)
 		if (!model)
 			continue;
 /*		Com_Printf("CM_EntTestLineDM call function\n"); */
-		assert(model->headnode < curTile->numnodes);
+		assert(model->headnode < curTile->numnodes + 6); /* +6 => bbox */
 		trace = CM_TransformedBoxTrace(start, end, vec3_origin, vec3_origin, model->tile, model->headnode, MASK_ALL, model->origin, vec3_origin);
 		/* if we started the trace in a wall */
 		if (trace.startsolid) {
@@ -1382,7 +1382,7 @@ static void CM_BoxLeafnums_r (int nodenum)
 	cnode_t *node;
 	int s;
 
-	assert(nodenum < curTile->numnodes + 6);
+	assert(nodenum < curTile->numnodes + 6); /* +6 => bbox */
 
 	while (1) {
 		if (nodenum < 0) {
@@ -2013,7 +2013,7 @@ trace_t CM_CompleteBoxTrace (vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs,
 			if (h->level && levelmask && !(h->level & levelmask))
 				continue;
 
-			assert(h->cnode < curTile->numnodes);
+			assert(h->cnode < curTile->numnodes + 6); /* +6 => bbox */
 			newtr = CM_BoxTrace(start, end, mins, maxs, tile, h->cnode, brushmask);
 
 			/* memorize the trace with the minimal fraction */
@@ -2070,7 +2070,7 @@ void MakeTnode (int nodenum)
  */
 void BuildTnode_r (int node)
 {
-	assert(node < curTile->numnodes);
+	assert(node < curTile->numnodes + 6); /* +6 => bbox */
 
 	if (!curTile->nodes[node].plane) {
 		cnode_t *n;
