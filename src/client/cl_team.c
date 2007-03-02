@@ -340,7 +340,7 @@ static void CL_ChangeName_f (void)
 
 
 /**
- * @brief Change the skin of the selected actor
+ * @brief Change the skin of the selected actor.
  */
 static void CL_ChangeSkin_f (void)
 {
@@ -356,6 +356,39 @@ static void CL_ChangeSkin_f (void)
 
 		Cvar_SetValue("mn_skin", newSkin);
 		Cvar_Set("mn_skinname", CL_GetTeamSkinName(newSkin));
+	}
+}
+
+/**
+ * @brief Use current skin with the team onboard.
+ */
+static void CL_ChangeSkinOnBoard_f (void)
+{
+	int i, sel, newSkin;
+	aircraft_t *aircraft = NULL;
+
+	if (!baseCurrent)
+		return;
+
+	if (baseCurrent->aircraftCurrent >= 0) {
+		aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
+	} else {
+#ifdef DEBUG
+		/* should never happen */
+		Com_Printf("CL_CollectingAliens()... No aircraft selected!\n");
+#endif
+		return;
+	}
+
+	sel = cl_selected->value;
+	if (sel >= 0 && sel < gd.numEmployees[EMPL_SOLDIER]) {
+		newSkin = Cvar_VariableInteger("mn_skin");
+		if (newSkin >= NUM_TEAMSKINS || newSkin < 0)
+			newSkin = 0;
+		for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++) {
+			if (CL_IsInAircraftTeam(aircraft, i))
+				baseCurrent->curTeam[i]->skin = newSkin;
+		}
 	}
 }
 
@@ -1419,6 +1452,7 @@ extern void CL_ResetTeams (void)
 	Cmd_AddCommand("team_select", CL_Select_f, NULL);
 	Cmd_AddCommand("team_changename", CL_ChangeName_f, NULL);
 	Cmd_AddCommand("team_changeskin", CL_ChangeSkin_f, NULL);
+	Cmd_AddCommand("team_changeskinteam", CL_ChangeSkinOnBoard_f, NULL);
 	Cmd_AddCommand("team_comments", CL_TeamComments_f, NULL);
 	Cmd_AddCommand("equip_select", CL_Select_f, NULL);
 	Cmd_AddCommand("soldier_select", CL_Select_f, _("Select a soldier from list"));

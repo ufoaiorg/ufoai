@@ -93,6 +93,7 @@ aircraft craft_ufo_scout
 {
 	speed		25.0
 	name		"_UFO - Scout"
+	shortname	"_Scout U"
 	type		ufo
 	model		"ufo1"
 	size		4
@@ -111,6 +112,7 @@ aircraft craft_ufo_fighter
 {
 	speed		18.0
 	name		"_UFO - Fighter"
+	shortname	"_Fighter U"
 	type		ufo
 	model		"ufobig"
 	size		8

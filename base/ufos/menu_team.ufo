@@ -1480,6 +1480,18 @@ menu equipment
 		scale	"1.0 1.0 1.0"
 	}
 
+	pic bt_skinforteam
+	{
+//		FIXME: probably add better button here
+		image	menu/button_autosell1
+		tooltip	"_Use current skin with every soldier onboard."
+		pos	"640 300"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx	true
+		click	{ cmd "team_changeskinteam" }
+	}
+
 	string changeskin
 	{
 		string	"*cvar mn_skinname"
