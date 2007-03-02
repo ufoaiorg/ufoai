@@ -489,7 +489,7 @@ static void GL_DrawAliasShadowVolume (dmdl_t * paliashdr, int posenumm)
 /**
  * @brief
  */
-void R_DrawShadow(entity_t * e)
+void R_DrawShadow (entity_t * e)
 {
 	dmdl_t *paliashdr;
 
@@ -549,6 +549,7 @@ void R_DrawShadow(entity_t * e)
 
 			qglDisable(GL_TEXTURE_2D);
 			GLSTATE_ENABLE_BLEND
+			qglDepthMask(0);
 			qglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			qglTranslatef(e->origin[0], e->origin[1], e->origin[2]);
 			qglRotatef(e->angles[1], 0, 0, 1);
@@ -556,6 +557,7 @@ void R_DrawShadow(entity_t * e)
 			RecursiveLightPoint(rTiles[0]->nodes, currententity->origin, end);
 			R_ShadowLight(currententity->origin, shadevector);
 			GL_DrawAliasShadow(e, paliashdr, currententity->as.frame);
+			qglDepthMask(1);
 		}
 		qglEnable(GL_TEXTURE_2D);
 		GLSTATE_DISABLE_BLEND

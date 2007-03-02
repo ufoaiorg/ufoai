@@ -1482,8 +1482,6 @@ struct model_s *R_RegisterModel (const char *name)
 				}
 			}
 			mod->numframes = pheader->num_frames;
-			if (gl_shadows->value == 2)
-				Mod_FindSharedEdges(mod);
 			break;
 			}
 		case mod_alias_md3:

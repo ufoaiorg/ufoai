@@ -1434,7 +1434,6 @@ static void CL_ReadPackets (void)
 		}
 	} else
 		cl.timeoutcount = 0;
-
 }
 
 

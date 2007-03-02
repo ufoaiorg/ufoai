@@ -2877,7 +2877,7 @@ float CL_TargetingToHit (pos3_t toPos)
  */
 static void CL_Targeting_Radius (vec3_t center)
 {
-	const vec4_t color = {0, 1, 0, .3};
+	const vec4_t color = {0, 1, 0, 0.3};
 	ptl_t *ptl = NULL;
 
 	assert(selFD);
