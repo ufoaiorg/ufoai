@@ -1057,6 +1057,8 @@ void RS_MarkResearched (const char *id)
 		if (!Q_stricmp (id, tech->id)) {
 			RS_ResearchFinish(tech);
 			Com_DPrintf("Research of \"%s\" finished.\n", tech->id);
+			/* FIXME: uncomment this after fixing INV_EnableAutosell(). */
+			/* INV_EnableAutosell(tech); */
 			break;
 #if 0
 		} else if (RS_DependsOn(tech->id, id) && (tech->time <= 0) && RS_TechIsResearchable(tech)) {
@@ -1900,3 +1902,42 @@ int RS_GetTechIdxByName (const char *name)
 	/* return -1 if not found */
 	return -1;
 }
+
+/**
+ * @brief Enable autosell option.
+ * @param[in] *tech Pointer to newly researched technology.
+ * @sa RS_MarkResearched
+ */
+void INV_EnableAutosell (technology_t *tech)
+{  
+	int i, j;
+	technology_t *ammotech = NULL;
+
+	/* If the tech leads to weapon or armour, find related item and enable autosell. */
+	if ((tech->type == RS_WEAPON) || (tech->type == RS_ARMOR)) {
+		for (i = 0; i < csi.numODs; i++) {
+			if (Q_strncmp(tech->provides, csi.ods[i].id, MAX_VAR) == 0) {
+				gd.autosell[i] = qtrue;
+				Com_DPrintf("Marked researched tech->provides: %s, item name: %s, autosell: true\n", tech->provides, csi.ods[i].name);
+				break;
+			}
+		}
+	}
+	/* If the weapon has ammo, enable autosell for proper ammo as well. */
+	if ((tech->type == RS_WEAPON) && (csi.ods[i].reload)) {
+		/* FIXME: I don't think this is the correct way to get ammo related to given weapon. */            
+		for (j = 0; j < csi.numODs; j++) {
+			if (csi.ods[j].weap_idx[0] && (csi.ods[j].weap_idx[0] == i)) {
+				ammotech = RS_GetTechByProvided(csi.ods[j].id);
+				/* If the ammo is not produceable, don't enable autosell. */
+				if (ammotech && (ammotech->produceTime < 0))
+					return;
+				gd.autosell[j] = qtrue;
+				Com_Printf("Marked researched item name: %s, autosell: true\n", csi.ods[j].name);
+			}
+			break;
+		}
+	}
+}
+
+
