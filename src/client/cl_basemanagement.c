@@ -2902,6 +2902,9 @@ aircraft_t *B_GetAircraftFromBaseByIndex (base_t* base,int index)
  */
 void CL_DropshipReturned (base_t* base, aircraft_t* aircraft)
 {
+	/* Don't call cargo functions if aircraft is not a transporter. */
+	if (aircraft->type != AIRCRAFT_TRANSPORTER)
+		return;
 	baseCurrent = base;
 	AL_AddAliens();		/**< Add aliens to Alien Containment. */
 	AL_CountAll();		/**< Count all alive aliens. */
