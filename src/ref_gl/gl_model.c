@@ -1389,6 +1389,7 @@ void R_BeginRegistration (char *tiles, char *pos)
 	ri.Sys_Error(ERR_DROP, "R_BeginRegistration: invalid tile names\n");
 }
 
+#if 0
 /**
  * @brief
  */
@@ -1412,7 +1413,9 @@ static signed int Mod_GetTris (short p1, short p2, dtriangle_t * side1, dmdl_t *
 	tris--;
 	return -1;
 }
+#endif
 
+#if 0
 /**
  * @brief
  */
@@ -1440,7 +1443,7 @@ static void Mod_FindSharedEdges (model_t * mod)
 		tris++;
 	}
 }
-
+#endif
 
 /**
  * @brief
