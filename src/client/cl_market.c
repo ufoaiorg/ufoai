@@ -1,6 +1,7 @@
 /**
  * @file cl_market.c
  * @brief Single player market stuff.
+ * @note Buy/Sell menu functions prefix: BS_
  */
 
 /*
@@ -28,9 +29,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_BUYLIST		32
 
-static byte buyList[MAX_BUYLIST];
-static int buyListLength;
-static int buyCategory;
+static byte buyList[MAX_BUYLIST];	/**< Current entry on the list. */
+static int buyListLength;		/**< Amount of entries on the list. */
+static int buyCategory;			/**< Category of items in the menu. */
 
 /* 20060921 LordHavoc: added market buy/sell factors */
 static const int MARKET_BUY_FACTOR = 1;
@@ -60,9 +61,9 @@ static void CL_MarketAircraftDescription (int aircraftID)
 }
 
 /**
- * @brief
+ * @brief Select one entry on the list.
  */
-static void CL_BuySelect_f (void)
+static void BS_BuySelect_f (void)
 {
 	int num;
 
@@ -95,7 +96,7 @@ static void CL_BuySelect_f (void)
  * for (i = 0, j = 0, air_samp = aircraft_samples; i < numAircraft_samples; i++, air_samp++)
  *   AIR_GetStorageSupplyCount(air_samp->id, &storage, &supply);
  * @endcode
- * @sa CL_BuyType_f
+ * @sa BS_BuyType_f
  */
 static void AIR_GetStorageSupplyCount (char *airCharId, int *const storage, int *const supply)
 {
@@ -119,9 +120,9 @@ static void AIR_GetStorageSupplyCount (char *airCharId, int *const storage, int 
 }
 
 /**
- * @brief
+ * @brief Init function for Buy/Sell menu. Updates the Buy/Sell menu list.
  */
-static void CL_BuyType_f (void)
+static void BS_BuyType_f (void)
 {
 	objDef_t *od;
 	aircraft_t *air_samp;
@@ -238,10 +239,10 @@ static void CL_BuyType_f (void)
 
 
 /**
- * @brief
- * @sa CL_SellItem
+ * @brief Buy one item of a given type.
+ * @sa BS_SellItem_f
  */
-static void CL_BuyItem_f (void)
+static void BS_BuyItem_f (void)
 {
 	int num, item;
 
@@ -261,11 +262,11 @@ static void CL_BuyItem_f (void)
 	Cbuf_AddText(va("buyselect%i\n", num));
 	if (buyCategory == NUM_BUYTYPES) {
 		CL_MarketAircraftDescription(item);
-		Com_DPrintf("CL_BuyItem: aircraft %i\n", item);
+		Com_DPrintf("BS_BuyItem_f: aircraft %i\n", item);
 		/* TODO: Buy aircraft */
 	} else {
 		CL_ItemDescription(item);
-		Com_DPrintf("CL_BuyItem: item %i\n", item);
+		Com_DPrintf("BS_BuyItem_f: item %i\n", item);
 		if (ccs.credits >= csi.ods[item].price * MARKET_BUY_FACTOR / MARKET_BUY_DIVISOR && ccs.eMarket.num[item]) {
 			Cvar_SetValue(va("mn_storage%i", num), ++baseCurrent->storage.num[item]);
 			Cvar_SetValue(va("mn_supply%i", num), --ccs.eMarket.num[item]);
@@ -275,10 +276,10 @@ static void CL_BuyItem_f (void)
 }
 
 /**
- * @brief
- * @sa CL_BuyItem
+ * @brief Sell one item of a given type.
+ * @sa BS_BuyItem_f
  */
-static void CL_SellItem_f (void)
+static void BS_SellItem_f (void)
 {
 	int num, item;
 
@@ -447,10 +448,10 @@ static void CL_SellAircraft_f (void)
  */
 extern void CL_ResetMarket (void)
 {
-	Cmd_AddCommand("buy_type", CL_BuyType_f, NULL);
-	Cmd_AddCommand("buy_select", CL_BuySelect_f, NULL);
-	Cmd_AddCommand("mn_buy", CL_BuyItem_f, NULL);
-	Cmd_AddCommand("mn_sell", CL_SellItem_f, NULL);
+	Cmd_AddCommand("buy_type", BS_BuyType_f, NULL);
+	Cmd_AddCommand("buy_select", BS_BuySelect_f, NULL);
+	Cmd_AddCommand("mn_buy", BS_BuyItem_f, NULL);
+	Cmd_AddCommand("mn_sell", BS_SellItem_f, NULL);
 	Cmd_AddCommand("mn_buy_aircraft", CL_BuyAircraft_f, NULL);
 	Cmd_AddCommand("mn_sell_aircraft", CL_SellAircraft_f, NULL);
 	Cmd_AddCommand("buy_autosell", BS_Autosell_f, "Enable or disable autosell option for given item.");
