@@ -6,7 +6,7 @@
 "ambient" "0.4 0.4 0.4"
 "light" "140"
 "_angles" "30 210"
-"maxlevel" "3"
+"maxlevel" "4"
 // brush 0
 {
 ( -544 98 68 ) ( -576 98 68 ) ( -576 96 68 ) tex_material/c_orange2 0 0 0 0.5 0.5 65536 0 0
