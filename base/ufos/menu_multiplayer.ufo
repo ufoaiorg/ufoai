@@ -1552,7 +1552,6 @@ menu multiplayer_wait
 	}
 }
 
-// always sync with dedicated.cfg
 gametype 1on1
 {
 	name "_1on1"
