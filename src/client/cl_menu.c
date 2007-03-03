@@ -43,7 +43,7 @@ typedef enum ea_s {
 } ea_t;
 
 /** @brief valid node event actions */
-static char *ea_strings[EA_NUM_EVENTACTION] = {
+static const char *ea_strings[EA_NUM_EVENTACTION] = {
 	"",
 	"cmd",
 
@@ -52,7 +52,7 @@ static char *ea_strings[EA_NUM_EVENTACTION] = {
 	"&"
 };
 
-static int ea_values[EA_NUM_EVENTACTION] = {
+static const int ea_values[EA_NUM_EVENTACTION] = {
 	V_NULL,
 	V_LONGSTRING,
 
@@ -76,7 +76,7 @@ typedef enum ne_s {
 } ne_t;
 
 /** @brief valid node event ids */
-static char *ne_strings[NE_NUM_NODEEVENT] = {
+static const char *ne_strings[NE_NUM_NODEEVENT] = {
 	"",
 	"click",
 	"rclick",
@@ -86,7 +86,7 @@ static char *ne_strings[NE_NUM_NODEEVENT] = {
 	"out"
 };
 
-size_t ne_values[NE_NUM_NODEEVENT] = {
+static size_t const ne_values[NE_NUM_NODEEVENT] = {
 	0,
 	offsetof(menuNode_t, click),
 	offsetof(menuNode_t, rclick),
@@ -99,7 +99,7 @@ size_t ne_values[NE_NUM_NODEEVENT] = {
 /* =========================================================== */
 
 /** @brief valid properties for a menu node */
-static value_t nps[] = {
+static const value_t nps[] = {
 	{"invis", V_BOOL, offsetof(menuNode_t, invis)},
 	{"mousefx", V_BOOL, offsetof(menuNode_t, mousefx)},
 	{"blend", V_BOOL, offsetof(menuNode_t, blend)},
@@ -144,7 +144,7 @@ static value_t nps[] = {
 };
 
 /** @brief valid properties for a menu model definition */
-static value_t menuModelValues[] = {
+static const value_t menuModelValues[] = {
 	{"model", V_STRING, offsetof(menuModel_t, model)},
 	{"need", V_NULL, 0},
 	{"anim", V_STRING, offsetof(menuModel_t, anim)},
@@ -368,7 +368,7 @@ static char *MN_GetReferenceString (const menu_t* const menu, char *ref)
 			return "TOOD";
 		} else {
 			menuNode_t *refNode;
-			value_t *val;
+			const value_t *val;
 
 			/* draw a reference to a node property */
 			refNode = MN_GetNode(menu, ident);
@@ -427,7 +427,7 @@ static float MN_GetReferenceFloat (const menu_t* const menu, void *ref)
 			return Cvar_VariableValue(token);
 		} else {
 			menuNode_t *refNode;
-			value_t *val;
+			const value_t *val;
 
 			/* draw a reference to a node property */
 			refNode = MN_GetNode(menu, ident);
@@ -2755,9 +2755,9 @@ void MN_InitKeyList_f (void)
  */
 static void MN_EditMenuNode_f (void)
 {
-	menuNode_t* node;
-	value_t* val;
-	menu_t* current;
+	menuNode_t *node;
+	const value_t *val;
+	menu_t *current;
 	char *nodeID, *var, *value;
 	int np = -1, cnt = 0;
 
@@ -2844,9 +2844,9 @@ static void MN_ReloadMenus_f (void)
  */
 static void MN_PrintMenu_f (void)
 {
-	menuNode_t* node;
-	value_t* val;
-	menu_t* current;
+	menuNode_t *node;
+	const value_t *val;
+	menu_t *current;
 
 	/* not initialized yet - commandline? */
 	if (menuStackPos <= 0)
@@ -2980,7 +2980,7 @@ qboolean MN_ParseAction (menuNode_t * menuNode, menuAction_t * action, char **te
 	menuAction_t *lastAction;
 	menuNode_t *node;
 	qboolean found;
-	value_t *val;
+	const value_t *val;
 	int i;
 
 	lastAction = NULL;
@@ -3152,7 +3152,7 @@ qboolean MN_ParseNodeBody (menuNode_t * node, char **text, char **token)
 {
 	char *errhead = "MN_ParseNodeBody: unexpected end of file (node";
 	qboolean found;
-	value_t *val;
+	const value_t *val;
 	int i;
 
 	/* functions are a special case */
@@ -3464,7 +3464,7 @@ void MN_ParseMenuModel (char *name, char **text)
 	menuModel_t *menuModel;
 	char *token;
 	int i;
-	value_t *v = NULL;
+	const value_t *v = NULL;
 	char *errhead = "MN_ParseMenuModel: unexptected end of file (names ";
 
 	/* search for menumodels with same name */
