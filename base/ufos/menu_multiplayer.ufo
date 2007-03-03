@@ -1561,6 +1561,8 @@ gametype 1on1
 		maxsoldiersperplayer 8
 		maxsoldiers 8
 		ai_numactors 0
+		sv_ai 0
+		ai_autojoin 0
 	}
 }
 gametype 1on1on1
@@ -1572,6 +1574,8 @@ gametype 1on1on1
 		maxsoldiersperplayer 8
 		maxsoldiers 8
 		ai_numactors 0
+		sv_ai 0
+		ai_autojoin 0
 	}
 }
 gametype 2on2
@@ -1583,6 +1587,8 @@ gametype 2on2
 		maxsoldiersperplayer 4
 		maxsoldiers 8
 		ai_numactors 0
+		sv_ai 0
+		ai_autojoin 0
 	}
 }
 gametype 2on2on2
@@ -1594,6 +1600,8 @@ gametype 2on2on2
 		maxsoldiersperplayer 4
 		maxsoldiers 8
 		ai_numactors 0
+		sv_ai 0
+		ai_autojoin 0
 	}
 }
 gametype 3on3
@@ -1605,6 +1613,8 @@ gametype 3on3
 		maxsoldiersperplayer 3
 		maxsoldiers 6
 		ai_numactors 0
+		sv_ai 0
+		ai_autojoin 0
 	}
 }
 gametype 3on3on3
@@ -1616,6 +1626,8 @@ gametype 3on3on3
 		maxsoldiersperplayer 3
 		maxsoldiers 6
 		ai_numactors 0
+		sv_ai 0
+		ai_autojoin 0
 	}
 }
 gametype 4on4
@@ -1627,6 +1639,8 @@ gametype 4on4
 		maxsoldiersperplayer 2
 		maxsoldiers 8
 		ai_numactors 0
+		sv_ai 0
+		ai_autojoin 0
 	}
 }
 gametype 4on4on4
@@ -1638,11 +1652,13 @@ gametype 4on4on4
 		maxsoldiersperplayer 2
 		maxsoldiers 8
 		ai_numactors 0
+		sv_ai 0
+		ai_autojoin 0
 	}
 }
 gametype coop2
 {
-	name "_coop2"
+	name "_Coop 2 players"
 	{
 		sv_teamplay 1
 		maxclients 2
@@ -1650,11 +1666,12 @@ gametype coop2
 		maxsoldiers 8
 		ai_numactors 8
 		sv_ai 1
+		ai_autojoin 1
 	}
 }
 gametype coop3
 {
-	name "_coop3"
+	name "_Coop 3 players"
 	{
 		sv_teamplay 1
 		maxclients 3
@@ -1662,11 +1679,12 @@ gametype coop3
 		maxsoldiers 6
 		ai_numactors 6
 		sv_ai 1
+		ai_autojoin 1
 	}
 }
 gametype coop4
 {
-	name "_coop4"
+	name "_Coop 4 players"
 	{
 		sv_teamplay 1
 		maxclients 4
@@ -1674,5 +1692,6 @@ gametype coop4
 		maxsoldiers 8
 		ai_numactors 8
 		sv_ai 1
+		ai_autojoin 1
 	}
 }
