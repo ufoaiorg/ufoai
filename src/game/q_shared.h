@@ -947,7 +947,7 @@ extern const char *pa_format[128];
 		Sys_Error("GET_FIREDEF: fd_idx out of bounds [%i] (%s: %i)\n", fd_idx, __FILE__, __LINE__);
 
 #define GET_FIREDEF(obj_idx,weap_fds_idx,fd_idx) \
-	(&csi.ods[obj_idx & (MAX_OBJDEFS-1)].fd[weap_fds_idx & (MAX_WEAPONS_PER_OBJDEF-1)][!!(fd_idx & (MAX_FIREDEFS_PER_WEAPON-1))])
+	(&csi.ods[obj_idx & (MAX_OBJDEFS-1)].fd[weap_fds_idx & (MAX_WEAPONS_PER_OBJDEF-1)][fd_idx & (MAX_FIREDEFS_PER_WEAPON-1)])
 
 /** this is a fire definition for our weapons/ammo */
 typedef struct fireDef_s {
