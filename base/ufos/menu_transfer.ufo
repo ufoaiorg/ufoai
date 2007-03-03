@@ -187,6 +187,27 @@ menu transfer
 		in		{ *button_scrolldown texl "48 48" *button_scrolldown texh "64 64" }
 	}
 
+	string s_cargolist
+	{
+		pos	"790 360"
+		align	uc
+		color "1 1 1 1"
+		font	"f_normal"
+		string	"_Cargo onboard"
+	}
+
+	text cargo_list
+	{
+		num 10
+		pos	"610 380"
+		size	"460 360"
+		mousefx	true
+		click
+		format	"20 0"
+		wheel
+		height	"20"
+//		bgcolor	"1 1 1 0.5"
+	}
 
 	// ==================
 	// buttons
@@ -209,7 +230,7 @@ menu transfer
 		tooltip	"_Show only items"
 		image	menu/button_blue
 		mousefx	true
-		pos		"635 525"
+		pos	"635 590"
 		texl	"0 0"
 		texh	"128 52"
 		click	{ trans_items }
@@ -217,7 +238,7 @@ menu transfer
 
 	string s_items
 	{
-		pos	"699 540"
+		pos	"699 605"
 		align	uc
 		color "1 1 1 0.6"
 		font	"f_normal"
@@ -229,7 +250,7 @@ menu transfer
 		tooltip	"_Show only employees"
 		image	menu/button_blue
 		mousefx	true
-		pos		"635 615"
+		pos	"635 650"
 		texl	"0 0"
 		texh	"128 52"
 		click	{ trans_humans }
@@ -237,7 +258,7 @@ menu transfer
 
 	string s_humans
 	{
-		pos	"699 630"
+		pos	"699 665"
 		align	uc
 		color "1 1 1 0.6"
 		font	"f_normal"
@@ -249,7 +270,7 @@ menu transfer
 		tooltip	"_Show only technologies"
 		image	menu/button_blue
 		mousefx	true
-		pos		"820 525"
+		pos	"820 590"
 		texl	"0 0"
 		texh	"128 52"
 		click	{ trans_techs }
@@ -257,7 +278,7 @@ menu transfer
 
 	string s_techs
 	{
-		pos	"884 540"
+		pos	"884 605"
 		align	uc
 		color "1 1 1 0.6"
 		font	"f_normal"
@@ -269,7 +290,7 @@ menu transfer
 		tooltip	"_Show only aliens"
 		image	menu/button_blue
 		mousefx	true
-		pos	"820 615"
+		pos	"820 650"
 		texl	"0 0"
 		texh	"128 52"
 		click	{ trans_aliens }
@@ -277,7 +298,7 @@ menu transfer
 
 	string s_aliens
 	{
-		pos	"884 630"
+		pos	"884 665"
 		align	uc
 		color "1 1 1 0.6"
 		font	"f_normal"
@@ -289,7 +310,7 @@ menu transfer
 		tooltip	"_Empty the aircraft storage"
 		image	menu/button_blue
 		mousefx	true
-		pos		"655 705"
+		pos	"655 715"
 		texl	"0 0"
 		texh	"128 52"
 		click	{ cmd "trans_emptyairstorage;" }
@@ -297,7 +318,7 @@ menu transfer
 
 	string s_emptycraftstorage
 	{
-		pos	"719 720"
+		pos	"719 730"
 		align	uc
 		color "1 1 1 0.6"
 		font	"f_normal"
@@ -309,7 +330,7 @@ menu transfer
 		tooltip	"_Start the transfer"
 		image	menu/button_blue
 		mousefx	true
-		pos		"800 705"
+		pos	"800 715"
 		texl	"0 0"
 		texh	"128 52"
 		click	{ cmd "trans_start;" }
@@ -317,7 +338,7 @@ menu transfer
 
 	string s_starttrans
 	{
-		pos	"864 720"
+		pos	"864 730"
 		align	uc
 		color "1 1 1 0.6"
 		font	"f_normal"
@@ -329,7 +350,7 @@ menu transfer
 		tooltip	"_Back to baseview"
 		image	hud/buttons2
 		mousefx	true
-		pos		"940 720"
+		pos	"940 725"
 		texl	"0 0"
 		texh	"64 37"
 		click	{ cmd mn_pop }
