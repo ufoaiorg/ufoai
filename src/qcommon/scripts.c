@@ -1133,6 +1133,98 @@ static void Com_ParseTeam (char *title, char **text)
 
 /*
 ==============================================================================
+GAMETYPE INTERPRETER
+==============================================================================
+*/
+
+gametype_t gts[MAX_GAMETYPES];
+int numGTs = 0;
+
+/** @brief possible gametype values for the gameserver (ufo-scriptfiles) */
+static const value_t gameTypeValues[] = {
+	{"name", V_TRANSLATION2_STRING, offsetof(gametype_t, name)} /**< translated game-type name for menu displaying */
+	,
+	{NULL, 0, 0}
+};
+
+static void Com_ParseGameTypes (char *name, char **text)
+{
+	char *errhead = "Com_ParseGameTypes: unexptected end of file (gametype ";
+	char *token;
+	int i;
+	const value_t *v;
+	gametype_t* gt;
+	cvarlist_t* cvarlist;
+
+	/* get it's body */
+	token = COM_Parse(text);
+	if (!*text || *token != '{') {
+		Com_Printf("Com_ParseGameTypes: gametype \"%s\" without body ignored\n", name);
+		return;
+	}
+
+	/* search for game types with same name */
+	for (i = 0; i < numGTs; i++)
+		if (!Q_strncmp(token, gts[i].id, MAX_VAR))
+			break;
+
+	if (i == numGTs) {
+		gt = &gts[numGTs++];
+		memset(gt, 0, sizeof(gametype_t));
+		Q_strncpyz(gt->id, name, MAX_VAR);
+		if (numGTs >= MAX_GAMETYPES)
+			Sys_Error("Com_ParseGameTypes: Too many damage types.\n");
+
+		do {
+			token = COM_EParse(text, errhead, name);
+			if (!*text)
+				break;
+			if (*token == '}')
+				break;
+
+			for (v = gameTypeValues; v->string; v++)
+				if (!Q_strncmp(token, v->string, sizeof(v->string))) {
+					/* found a definition */
+					token = COM_EParse(text, errhead, name);
+					if (!*text)
+						return;
+
+					Com_ParseValue(gt, token, v->type, v->ofs);
+					break;
+				}
+
+			if (!v->string) {
+				if (*token != '{')
+					Sys_Error("Com_ParseGameTypes: gametype \"%s\" without cvarlist\n", name);
+
+				do {
+					token = COM_EParse(text, errhead, name);
+					if (!*text || *token == '}') {
+						if (!gt->num_cvars)
+							Sys_Error("Com_ParseGameTypes: gametype \"%s\" with empty cvarlist\n", name);
+						else
+							break;
+					}
+					/* initial pointer */
+					cvarlist = &gt->cvars[gt->num_cvars++];
+					if (gt->num_cvars >= MAX_CVARLISTINGAMETYPE)
+						Sys_Error("Com_ParseGameTypes: gametype \"%s\" max cvarlist hit\n", name);
+					Q_strncpyz(cvarlist->name, token, sizeof(cvarlist->name));
+					token = COM_EParse(text, errhead, name);
+					if (!*text || *token == '}')
+						Sys_Error("Com_ParseGameTypes: gametype \"%s\" cvar \"%s\" with no value\n", name, cvarlist->name);
+					Q_strncpyz(cvarlist->value, token, sizeof(cvarlist->value));
+				} while (*text && *token != '}');
+			}
+		} while (*text);
+	} else {
+		Com_Printf("Com_ParseGameTypes: gametype \"%s\" with same already exists - ignore the second one\n", name);
+		FS_SkipBlock(text);
+	}
+}
+
+/*
+==============================================================================
 DAMAGE TYPES INTERPRETER
 ==============================================================================
 */
@@ -1142,7 +1234,7 @@ DAMAGE TYPES INTERPRETER
  */
 static void Com_ParseDamageTypes (char *name, char **text)
 {
-	char *errhead = "Com_ParseTypes: unexptected end of file (weapon ";
+	char *errhead = "Com_ParseDamageTypes: unexptected end of file (damagetype ";
 	char *token;
 	int i;
 
@@ -1150,9 +1242,7 @@ static void Com_ParseDamageTypes (char *name, char **text)
 	token = COM_Parse(text);
 
 	if (!*text || *token != '{') {
-		Com_Printf("Com_ParseTypes: damage type list \"%s\" without body ignored\n", name);
-		/* FIXME: Why is numODs decremented here? */
-		csi.numODs--;
+		Com_Printf("Com_ParseDamageTypes: damage type list \"%s\" without body ignored\n", name);
 		return;
 	}
 
@@ -1168,10 +1258,8 @@ static void Com_ParseDamageTypes (char *name, char **text)
 			if (!Q_strncmp(token, csi.dts[i], MAX_VAR))
 				break;
 
-		if (i >= csi.numDTs) {
-			if (csi.numDTs >= MAX_DAMAGETYPES)
-				Sys_Error("Com_ParseTypes: Too many damage types.\n");
-
+		/* not found in the for loop */
+		if (i == csi.numDTs) {
 			/* gettext marker */
 			if (*token == '_')
 				token++;
@@ -1196,6 +1284,12 @@ static void Com_ParseDamageTypes (char *name, char **text)
 				csi.damStun = csi.numDTs;
 
 			csi.numDTs++;
+			if (csi.numDTs >= MAX_DAMAGETYPES)
+				Sys_Error("Com_ParseDamageTypes: Too many damage types.\n");
+		} else {
+			Com_Printf("Com_ParseDamageTypes: damage type list \"%s\" with same already exists - ignore the second one\n", name);
+			FS_SkipBlock(text);
+			return;
 		}
 	} while (*text);
 }
@@ -1300,6 +1394,8 @@ extern void Com_ParseScripts (void)
 	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != 0)
 		if (!Q_strncmp(type, "damagetypes", 11))
 			Com_ParseDamageTypes(name, &text);
+		else if (!Q_strncmp(type, "gametype", 8))
+			Com_ParseGameTypes(name, &text);
 
 	/* stage one parsing */
 	FS_NextScriptHeader(NULL, NULL, NULL);

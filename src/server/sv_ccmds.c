@@ -551,7 +551,7 @@ static void SV_Minimize_f (void)
 /**
  * @brief
  */
-extern void SV_InitOperatorCommands(void)
+extern void SV_InitOperatorCommands (void)
 {
 	Cmd_AddCommand("heartbeat", SV_Heartbeat_f, NULL);
 	Cmd_AddCommand("kick", SV_Kick_f, NULL);

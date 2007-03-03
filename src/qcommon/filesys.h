@@ -42,6 +42,7 @@ char *FS_GetCwd(void);
 void FS_NormPath(char *path);
 qboolean FS_FileExists(const char *filename);
 char* FS_GetBasePath(char* filename);
+void FS_SkipBlock(char **text);
 
 void FS_GetMaps(qboolean reset);
 

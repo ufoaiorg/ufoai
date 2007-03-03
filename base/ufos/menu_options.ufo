@@ -857,92 +857,6 @@ menu options_game
 		font	"f_menubig"
 	}
 
-	// =====================
-	// START WITH EMPLOYEES
-	// =====================
-	string start_employees_str
-	{
-		string	"_Start with employees:"
-		pos		"500 105"
-	}
-	string start_employees_value
-	{
-		string	"*cvar mn_start_employees"
-		pos		"840 105"
-		align	ur
-	}
-	pic start_employees_dec
-	{
-		image	menu/buttons_small
-		pos		"868 109"
-		texl	"0 0"
-		texh	"16 16"
-		mousefx	true
-		tooltip	"_No employees hired at campaign start"
-		click
-		{
-			cmd "mn_modify cl_start_employees -1 0 1;"
-			cmd "mn_translate cl_start_employees mn_start_employees 0:No,1:Yes;"
-		}
-	}
-	pic start_employees_inc
-	{
-		image	menu/buttons_small
-		pos		"884 109"
-		texl	"16 0"
-		texh	"32 16"
-		mousefx	true
-		tooltip	"_Employees already hired at campaign start"
-		click
-		{
-			cmd "mn_modify cl_start_employees +1 0 1;"
-			cmd "mn_translate cl_start_employees mn_start_employees 0:No,1:Yes;"
-		}
-	}
-
-	// =====================
-	// START WITH BUILDINGS
-	// =====================
-	string start_buildings_str
-	{
-		string	"_Start with buildings:"
-		pos		"500 130"
-	}
-	string start_buildings_value
-	{
-		string	"*cvar mn_start_buildings"
-		pos		"840 130"
-		align	ur
-	}
-	pic start_buildings_dec
-	{
-		image	menu/buttons_small
-		pos		"868 134"
-		texl	"0 0"
-		texh	"16 16"
-		mousefx	true
-		tooltip	"_No buildings in the initial base"
-		click
-		{
-			cmd "mn_modify cl_start_buildings -1 0 1;"
-			cmd "mn_translate cl_start_buildings mn_start_buildings 0:No,1:Yes;"
-		}
-	}
-	pic start_buildings_inc
-	{
-		image	menu/buttons_small
-		pos		"884 134"
-		texl	"16 0"
-		texh	"32 16"
-		mousefx	true
-		tooltip	"_Buildings already built in the initial base"
-		click
-		{
-			cmd "mn_modify cl_start_buildings +1 0 1;"
-			cmd "mn_translate cl_start_buildings mn_start_buildings 0:No,1:Yes;"
-		}
-	}
-
 	// ===================
 	// CONFIRM ACTIONS
 	// ===================
@@ -1282,6 +1196,92 @@ menu options_game
 		align	ul
 		mousefx	true
 		click	{ }
+	}
+
+	// =====================
+	// START WITH EMPLOYEES
+	// =====================
+	string start_employees_str
+	{
+		string	"_Start with employees:"
+		pos		"500 375"
+	}
+	string start_employees_value
+	{
+		string	"*cvar mn_start_employees"
+		pos		"840 375"
+		align	ur
+	}
+	pic start_employees_dec
+	{
+		image	menu/buttons_small
+		pos		"868 379"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx	true
+		tooltip	"_No employees hired at campaign start"
+		click
+		{
+			cmd "mn_modify cl_start_employees -1 0 1;"
+			cmd "mn_translate cl_start_employees mn_start_employees 0:No,1:Yes;"
+		}
+	}
+	pic start_employees_inc
+	{
+		image	menu/buttons_small
+		pos		"884 379"
+		texl	"16 0"
+		texh	"32 16"
+		mousefx	true
+		tooltip	"_Employees already hired at campaign start"
+		click
+		{
+			cmd "mn_modify cl_start_employees +1 0 1;"
+			cmd "mn_translate cl_start_employees mn_start_employees 0:No,1:Yes;"
+		}
+	}
+
+	// =====================
+	// START WITH BUILDINGS
+	// =====================
+	string start_buildings_str
+	{
+		string	"_Start with buildings:"
+		pos		"500 400"
+	}
+	string start_buildings_value
+	{
+		string	"*cvar mn_start_buildings"
+		pos		"840 400"
+		align	ur
+	}
+	pic start_buildings_dec
+	{
+		image	menu/buttons_small
+		pos		"868 404"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx	true
+		tooltip	"_No buildings in the initial base"
+		click
+		{
+			cmd "mn_modify cl_start_buildings -1 0 1;"
+			cmd "mn_translate cl_start_buildings mn_start_buildings 0:No,1:Yes;"
+		}
+	}
+	pic start_buildings_inc
+	{
+		image	menu/buttons_small
+		pos		"884 404"
+		texl	"16 0"
+		texh	"32 16"
+		mousefx	true
+		tooltip	"_Buildings already built in the initial base"
+		click
+		{
+			cmd "mn_modify cl_start_buildings +1 0 1;"
+			cmd "mn_translate cl_start_buildings mn_start_buildings 0:No,1:Yes;"
+		}
 	}
 
 	// ===================

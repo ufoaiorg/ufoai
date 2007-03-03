@@ -1095,7 +1095,7 @@ void FS_BuildFileList (char *fileList)
 /**
  * @brief
  */
-void FS_SkipBlock (char **text)
+extern void FS_SkipBlock (char **text)
 {
 	char *token;
 	int depth;

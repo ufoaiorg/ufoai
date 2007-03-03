@@ -270,6 +270,7 @@ extern cvar_t *sv_reaction_leftover;
 extern cvar_t *sv_shot_origin;
 extern cvar_t *cl_maxfps;
 extern cvar_t *teamnum;
+extern cvar_t *gametype;
 
 extern FILE *log_stats_file;
 
@@ -282,6 +283,25 @@ extern int time_after_ref;
 extern csi_t csi;
 
 extern char map_entitystring[MAX_MAP_ENTSTRING];
+
+
+#define MAX_CVARLISTINGAMETYPE 16
+typedef struct cvarlist_s {
+	char name[MAX_VAR];
+	char value[MAX_VAR];
+} cvarlist_t;
+
+typedef struct gametype_s {
+	char id[MAX_VAR];	/**< script id */
+	char name[MAX_VAR];	/**< translated menu name */
+	struct cvarlist_s cvars[MAX_CVARLISTINGAMETYPE];
+	int num_cvars;
+} gametype_t;
+
+/** game types */
+#define MAX_GAMETYPES 16
+extern gametype_t gts[MAX_GAMETYPES];
+extern int numGTs;
 
 
 #include "mem.h"

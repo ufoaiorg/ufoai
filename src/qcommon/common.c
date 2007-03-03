@@ -55,6 +55,7 @@ cvar_t *showtrace;
 cvar_t *dedicated;
 cvar_t *cl_maxfps;
 cvar_t *teamnum;
+cvar_t *gametype;
 static FILE *logfile;
 
 static int server_state;
@@ -1390,6 +1391,51 @@ extern void Qcommon_LocaleInit (void)
 #endif /* HAVE_GETTEXT */
 
 /**
+ * @brief
+ */
+static void Com_SetGameType (void)
+{
+	int i, j;
+	gametype_t* gt;
+	cvarlist_t* list;
+
+	for (i = 0; i < numGTs; i++) {
+		gt = &gts[i];
+		if (!Q_strncmp(gt->id, gametype->string, MAX_VAR)) {
+			if (dedicated->value)
+				Com_Printf("set gametype to: %s\n", gt->id);
+			for (j = 0, list = gt->cvars; j < gt->num_cvars; j++, list++) {
+				Cvar_Set(list->name, list->value);
+				if (dedicated->value)
+					Com_Printf("  %s = %s\n", list->name, list->value);
+			}
+			break;
+		}
+	}
+
+	if (i == numGTs)
+		Com_Printf("Can't set the gametype - unknown value for cvar gametype: '%s'\n", gametype->string);
+}
+
+/**
+ * @brief
+ */
+static void Com_GameTypeList_f (void)
+{
+	int i, j;
+	gametype_t* gt;
+	cvarlist_t* list;
+
+	Com_Printf("Available gametypes:\n");
+	for (i = 0; i < numGTs; i++) {
+		gt = &gts[i];
+		Com_Printf("%s\n", gt->id);
+		for (j = 0, list = gt->cvars; j < gt->num_cvars; j++, list++)
+			Com_Printf("  %s = %s\n", list->name, list->value);
+	}
+}
+
+/**
  * @brief Init function
  *
  * @param[in] argc int
@@ -1451,6 +1497,7 @@ extern void Qcommon_Init (int argc, char **argv)
 	/* init commands and vars */
 	Cmd_AddCommand("mem_stats", Mem_Stats_f, NULL);
 	Cmd_AddCommand("error", Com_Error_f, NULL);
+	Cmd_AddCommand("gametypelist", Com_GameTypeList_f, "List all available multiplayer game types");
 
 	s_sleep = Cvar_Get("s_sleep", "1", CVAR_ARCHIVE, "Use the sleep function to redruce cpu usage");
 	host_speeds = Cvar_Get("host_speeds", "0", 0, NULL);
@@ -1467,6 +1514,7 @@ extern void Qcommon_Init (int argc, char **argv)
 #endif
 	cl_maxfps = Cvar_Get("cl_maxfps", "90", 0, NULL);
 	teamnum = Cvar_Get("teamnum", "1", CVAR_ARCHIVE, NULL);
+	gametype = Cvar_Get("gametype", "1on1", CVAR_ARCHIVE | CVAR_LATCH | CVAR_SERVERINFO, "Sets the multiplayer gametype - see gametypelist command for a list of all gametypes");
 
 	s = va("UFO: Alien Invasion %s %s %s %s", UFO_VERSION, CPUSTRING, __DATE__, BUILDSTRING);
 	Cvar_Get("version", s, CVAR_NOSET, NULL);
@@ -1583,6 +1631,11 @@ float Qcommon_Frame (int msec)
 			Com_DPrintf("Sys_Sleep for %i ms\n", wait);
 		Sys_Sleep(wait);
 		return timescale->value;
+	}
+
+	if (gametype->modified) {
+		Com_SetGameType();
+		gametype->modified = qfalse;
 	}
 
 	if (log_stats->modified) {
