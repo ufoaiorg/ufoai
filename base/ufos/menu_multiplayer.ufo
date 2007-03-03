@@ -1374,24 +1374,6 @@ menu multiplayer_selectteam
 		align	uc
 	}
 
-	string teamplay
-	{
-		font	f_small
-		color	"0 0.5 0 1"
-		string	"_Teamplay"
-		pos	"208 230"
-		align	uc
-	}
-
-	string teamplay_v
-	{
-		font	f_small
-		color	"0 0.5 0 1"
-		string	"*cvar mn_teamplay"
-		pos	"358 230"
-		align	uc
-	}
-
 	text team_info
 	{
 		pos		"300 200"
@@ -1410,6 +1392,23 @@ menu multiplayer_selectteam
 //		bgcolor	"1 1 1 0.5"
 		num		0
 		height	1
+	}
+
+
+	string teamplay
+	{
+		font	f_small
+		string	"_Teamplay"
+		pos	"300 540"
+		align	uc
+	}
+
+	string teamplay_v
+	{
+		font	f_small
+		string	"*cvar mn_teamplay"
+		pos	"550 540"
+		align	uc
 	}
 
 	string maxplayersperteams_str
