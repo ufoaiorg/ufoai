@@ -195,7 +195,6 @@ static void TR_TransferSelect_f (void)
  */
 static void TR_TransferEmptyAircraftStorage_f (void)
 {
-	base_t *destination = NULL;
 	transferlist_t *transferidx = NULL;
 
 	if (!transferAircraft)
@@ -249,7 +248,7 @@ void TR_EmptyTransferCargo (aircraft_t *aircraft)
 #ifdef DEBUG
 		/* should never happen */
 		Com_Printf("TR_EmptyTransferCargo()... called with transferidx->type != TR_STUFF\n");
-#enfif
+#endif
 		return;
 	}
 

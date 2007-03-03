@@ -32,6 +32,7 @@ typedef enum {
 	TR_AIRCRAFT			/**< Transfer of aircraft. */
 } transferType_t;
 
+/** @brief Transfer informations (they are being saved in gd.alltransfers[MAX_AIRCRAFT]. */
 typedef struct transferlist_s {
 	transferType_t type;		/**< Type of transfer to determine what to do with load/unload. */
 	int itemAmount[MAX_OBJDEFS];	/**< Amount of given item [csi.ods[idx]]. */
