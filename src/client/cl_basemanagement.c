@@ -2202,6 +2202,9 @@ void B_CheckMaxBases_f(void)
 	}
 }
 
+#if 0
+/* 20070303 Zenerka: Transfer stuff moved to cl_transfer.c|h. */
+
 /**
  * Transfer menu functions
  */
@@ -2732,6 +2735,7 @@ static void B_TransferInit_f (void)
 	menuText[TEXT_BASE_LIST] = baseList;
 	menuText[TEXT_AIRCRAFT_LIST] = aircraftList;
 }
+#endif
 
 /**
  * @brief Resets console commands.
@@ -2768,6 +2772,8 @@ extern void B_ResetBaseManagement (void)
 	Cmd_AddCommand("pack_initial", B_PackInitialEquipment_f, NULL);
 	Cmd_AddCommand("assign_initial", B_AssignInitial_f, NULL);
 
+#if 0
+/* 20070303 Zenerka: Transfer stuff moved to cl_transfer.c|h. */
 	Cmd_AddCommand("trans_start", B_TransferStart_f, "Starts the tranfer");
 	Cmd_AddCommand("trans_select", B_TransferSelect_f, "Switch between transfer types (employees, techs, items)");
 	Cmd_AddCommand("trans_emptyairstorage", B_TransferEmptyAircraftStorage_f, "Unload everything from aircraft storage back to base storage");
@@ -2776,6 +2782,7 @@ extern void B_ResetBaseManagement (void)
 	Cmd_AddCommand("trans_bases_click", B_TransferBaseSelect_f, "Callback for base list node click");
 	Cmd_AddCommand("trans_list_click", B_TransferListSelect_f, "Callback for transfer list node click");
 	Cmd_AddCommand("trans_aircraft_click", B_TransferAircraftListClick_f, "Callback for aircraft list node click");
+#endif
 	mn_base_count = Cvar_Get("mn_base_count", "0", 0, NULL);
 }
 

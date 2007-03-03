@@ -735,6 +735,9 @@ const struct aircraft_s* ufo, qboolean wasUfoSensored);
 /* cl_hospital.c */
 #include "cl_hospital.h"
 
+/* cl_transfer.c */
+#include "cl_transfer.h"
+
 /* MISC */
 /* TODO: needs to be sorted (e.g what file is it defined?) */
 #define MAX_TEAMDATASIZE	32768
@@ -818,6 +821,9 @@ void CL_InitMessageSystem(void);
 
 /* cl_aliencont.c */
 void AC_Reset (void);
+
+/* cl_transfer.c */
+void TR_Reset (void);
 
 /* cl_menu.c */
 #define MAX_MENUS			128

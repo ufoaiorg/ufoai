@@ -122,6 +122,9 @@ typedef struct globalData_s
 	aircraft_t ufos[MAX_UFOONGEOSCAPE];
 	int numUfos;
 
+	/* All transfers. */
+	transferlist_t alltransfers[MAX_AIRCRAFT];
+
 } globalData_t;
 
 

@@ -3004,6 +3004,7 @@ void MN_ResetMenus (void)
 	AC_Reset();
 	MAP_ResetAction();
 	UFO_Reset();
+	TR_Reset();
 }
 
 /**

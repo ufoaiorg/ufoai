@@ -187,7 +187,7 @@ menu transfer
 		in		{ *button_scrolldown texl "48 48" *button_scrolldown texh "64 64" }
 	}
 
-	string s_cargolist
+	string s_trans_cargolist
 	{
 		pos	"790 360"
 		align	uc
@@ -196,7 +196,7 @@ menu transfer
 		string	"_Cargo onboard"
 	}
 
-	text cargo_list
+	text trans_cargolist
 	{
 		num 10
 		pos	"610 380"
@@ -217,13 +217,13 @@ menu transfer
 	{
 		*s_items	color "1 1 1 0.6"
 		*s_humans	color "1 1 1 0.6"
-		*s_techs	color "1 1 1 0.6"
 		*s_aliens	color "1 1 1 0.6"
+		*s_crafts	color "1 1 1 0.6"
 	}
 	confunc trans_items	{ cmd "trans_select 0;" trans_reset *s_items	color "1 1 1 1" }
 	confunc trans_humans	{ cmd "trans_select 1;" trans_reset *s_humans	color "1 1 1 1" }
-	confunc trans_techs	{ cmd "trans_select 2;" trans_reset *s_techs	color "1 1 1 1" }
-	confunc trans_aliens	{ cmd "trans_select 3;" trans_reset *s_aliens	color "1 1 1 1" }
+	confunc trans_aliens	{ cmd "trans_select 2;" trans_reset *s_aliens	color "1 1 1 1" }
+	confunc trans_crafts	{ cmd "trans_select 3;" trans_reset *s_crafts	color "1 1 1 1" }
 
 	pic bt_items
 	{
@@ -265,32 +265,12 @@ menu transfer
 		string	"_Employees"
 	}
 
-	pic bt_techs
-	{
-		tooltip	"_Show only technologies"
-		image	menu/button_blue
-		mousefx	true
-		pos	"820 590"
-		texl	"0 0"
-		texh	"128 52"
-		click	{ trans_techs }
-	}
-
-	string s_techs
-	{
-		pos	"884 605"
-		align	uc
-		color "1 1 1 0.6"
-		font	"f_normal"
-		string	"_Technologies"
-	}
-
 	pic bt_aliens
 	{
 		tooltip	"_Show only aliens"
 		image	menu/button_blue
 		mousefx	true
-		pos	"820 650"
+		pos	"820 590"
 		texl	"0 0"
 		texh	"128 52"
 		click	{ trans_aliens }
@@ -298,11 +278,31 @@ menu transfer
 
 	string s_aliens
 	{
-		pos	"884 665"
+		pos	"884 605"
 		align	uc
 		color "1 1 1 0.6"
 		font	"f_normal"
 		string	"_Aliens"
+	}
+
+	pic bt_crafts
+	{
+		tooltip	"_Show only aircrafts"
+		image	menu/button_blue
+		mousefx	true
+		pos	"820 650"
+		texl	"0 0"
+		texh	"128 52"
+		click	{ trans_crafts }
+	}
+
+	string s_crafts
+	{
+		pos	"884 665"
+		align	uc
+		color "1 1 1 0.6"
+		font	"f_normal"
+		string	"_Aircrafts"
 	}
 
 	pic bt_emptycraftstorage

@@ -3208,7 +3208,7 @@ static void CL_GameResults_f (void)
 		baseCurrent->aircraft[baseCurrent->aircraftCurrent].homebase = baseCurrent;
 		CL_AircraftReturnToBase_f();
 	} else
-		B_TransferAircraftMenu(&(baseCurrent->aircraft[baseCurrent->aircraftCurrent]));
+		TR_TransferAircraftMenu(&(baseCurrent->aircraft[baseCurrent->aircraftCurrent]));
 
 	/* campaign effects */
 	selMis->cause->done++;

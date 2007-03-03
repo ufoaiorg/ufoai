@@ -24,6 +24,7 @@ CLIENT_SRCS = \
 	client/cl_scrn.c \
 	client/cl_sequence.c \
 	client/cl_team.c \
+	client/cl_transfer.c \
 	client/cl_inventory.c \
 	client/cl_ufopedia.c \
 	client/cl_view.c \

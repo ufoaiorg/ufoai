@@ -619,7 +619,7 @@ void CL_CampaignRunAircraft (int dt)
 							aircraft->status = AIR_REFUEL;
 							break;
 						case AIR_TRANSPORT:
-							B_TransferEnd(aircraft);
+							TR_TransferEnd(aircraft);
 							break;
 						default:
 							aircraft->status = AIR_IDLE;
