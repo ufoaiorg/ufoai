@@ -1394,23 +1394,6 @@ menu multiplayer_selectteam
 		height	1
 	}
 
-
-	string teamplay
-	{
-		font	f_small
-		string	"_Teamplay"
-		pos	"300 540"
-		align	uc
-	}
-
-	string teamplay_v
-	{
-		font	f_small
-		string	"*cvar mn_teamplay"
-		pos	"550 540"
-		align	uc
-	}
-
 	string maxplayersperteams_str
 	{
 		string	"_Max. players per team"
