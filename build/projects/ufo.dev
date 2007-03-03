@@ -9,7 +9,7 @@ CppCompiler=
 Includes=
 Linker=-lvorbisfile_@@_-lvorbis_@@_-logg_@@_-lwinmm _@@_-lwsock32 _@@_-lkernel32 _@@_-luser32 _@@_-lgdi32 _@@_-lgmon_@@_../../src/ports/win32/intl.lib _@@_-lSDL_@@_-lSDL_ttf_@@_../../src/ports/win32/libjpeg.lib_@@_-lz_@@_
 Libs=C:\Dev-Cpp\lib
-UnitCount=109
+UnitCount=111
 Folders="Header Files","Resource Files","Source Files"
 ObjFiles=
 PrivateResource=ufo_private.rc
@@ -1128,6 +1128,26 @@ BuildCmd=
 
 [Unit109]
 FileName=..\..\src\client\cl_global.h
+CompileCpp=1
+Folder=Header Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit110]
+FileName=..\..\src\client\cl_transfer.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=$(CC) -c cl_transfer.c -o ufo/cl_transfer.o $(CFLAGS)
+
+[Unit111]
+FileName=..\..\src\client\cl_transfer.h
 CompileCpp=1
 Folder=Header Files
 Compile=1
