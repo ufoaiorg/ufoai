@@ -913,20 +913,20 @@ menu mp_create_server
 	}
 
 	// ===================
-	// DEDICATED SERVER
+	// GAME TYPE
 	// ===================
-	string dedicated_str
+	string gametype_str
 	{
-		string	"_Dedicated server:"
+		string	"_Gametype:"
 		pos	"500 160"
 	}
-	string dedicated_value
+	string gametype_value
 	{
-		string	"*cvar mn_dedicated"
+		string	"*cvar gametype"
 		pos	"840 160"
 		align	ur
 	}
-	pic dedicated_dec
+	pic gametype_dec
 	{
 		image	menu/buttons_small
 		pos	"868 162"
@@ -935,11 +935,10 @@ menu mp_create_server
 		mousefx	true
 		click
 		{
-			cmd "mn_modify dedicated -1 0 1;"
-			cmd "mn_translate dedicated mn_dedicated 0:No,1:Yes;"
+			cmd "mn_prevgametype;"
 		}
 	}
-	pic dedicated_inc
+	pic gametype_inc
 	{
 		image	menu/buttons_small
 		pos	"884 162"
@@ -948,8 +947,7 @@ menu mp_create_server
 		mousefx	true
 		click
 		{
-			cmd "mn_modify dedicated +1 0 1;"
-			cmd "mn_translate dedicated mn_dedicated 0:No,1:Yes;"
+			cmd "mn_nextgametype;"
 		}
 	}
 
@@ -1322,20 +1320,24 @@ menu mp_create_server
 		align	uc
 	}
 
+	confunc mn_servercreate_update
+	{
+		cmd "mn_translate public mn_public 0:No,1:Yes;"
+		cmd "mn_translate sv_teamplay mn_teamplay 0:No,1:Yes;"
+		cmd "mn_translate sv_enablemorale mn_enablemorale 0:No,1:Yes;"
+	}
+
 	// ===================
 	// INIT
 	// ===================
 	func init
 	{
-		cmd "killserver;"
-		cmd "set maxclients 2;"
-		cmd "getmaps;"
+		cmd "killserver"
+		cmd "set maxclients 2"
+		cmd "getmaps"
 		cmd "set maxplayers 8; set ai_numactors 0"
-		cmd "mn_modify sv_teamplay -1 0 1;"
-		cmd "mn_translate dedicated mn_dedicated 0:No,1:Yes;"
-		cmd "mn_translate public mn_public 0:No,1:Yes;"
-		cmd "mn_translate sv_teamplay mn_teamplay 0:No,1:Yes;"
-		cmd "mn_translate sv_enablemorale mn_enablemorale 0:No,1:Yes;"
+		cmd "mn_modify sv_teamplay -1 0 1"
+		cmd "mn_servercreate_update"
 	}
 }
 

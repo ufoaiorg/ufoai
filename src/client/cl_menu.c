@@ -456,6 +456,60 @@ static float MN_GetReferenceFloat (const menu_t* const menu, void *ref)
 }
 
 /**
+ * @brief Switch to the next multiplayer game type
+ */
+static void MN_NextGametype_f (void)
+{
+	int i, newType;
+	gametype_t* gt;
+
+	/* no types defined or parsed */
+	if (numGTs == 0)
+		return;
+
+	for (i = 0; i < numGTs; i++) {
+		gt = &gts[i];
+		if (!Q_strncmp(gt->id, gametype->string, MAX_VAR)) {
+			newType = (i + 1);
+			if (newType >= numGTs)
+				newType = 0;
+			Cvar_Set("gametype", gts[newType].id);
+			Com_SetGameType();
+			/* confunc in menu_multiplayer.ufo */
+			Cbuf_ExecuteText(EXEC_NOW, "mn_servercreate_update");
+			break;
+		}
+	}
+}
+
+/**
+ * @brief Switch to the previous multiplayer game type
+ */
+static void MN_PrevGametype_f (void)
+{
+	int i, newType;
+	gametype_t* gt;
+
+	/* no types defined or parsed */
+	if (numGTs == 0)
+		return;
+
+	for (i = 0; i < numGTs; i++) {
+		gt = &gts[i];
+		if (!Q_strncmp(gt->id, gametype->string, MAX_VAR)) {
+			newType = (i - 1);
+			if (newType < 0)
+				newType = numGTs - 1;
+			Cvar_Set("gametype", gts[newType].id);
+			Com_SetGameType();
+			/* confunc in menu_multiplayer.ufo */
+			Cbuf_ExecuteText(EXEC_NOW, "mn_servercreate_update");
+			break;
+		}
+	}
+}
+
+/**
  * @brief Starts a server and checks if the server loads a team unless he is a dedicated
  * server admin
  */
@@ -2902,14 +2956,16 @@ void MN_ResetMenus (void)
 	Cmd_AddCommand("mn_resolution_change", MN_ResolutionChange_f, NULL);
 
 	/* tutorial stuff */
-	Cmd_AddCommand("listtutorials", MN_ListTutorials_f, NULL);
+	Cmd_AddCommand("listtutorials", MN_ListTutorials_f, "Show all tutorials");
 	Cmd_AddCommand("gettutorials", MN_GetTutorials_f, NULL);
 	Cmd_AddCommand("tutoriallist_click", MN_TutorialListClick_f, NULL);
 
-	Cmd_AddCommand("getmaps", MN_GetMaps_f, NULL);
+	Cmd_AddCommand("getmaps", MN_GetMaps_f, "Get the list of available maps");
 	Cmd_AddCommand("mn_startserver", MN_StartServer_f, NULL);
-	Cmd_AddCommand("mn_nextmap", MN_NextMap_f, NULL);
-	Cmd_AddCommand("mn_prevmap", MN_PrevMap_f, NULL);
+	Cmd_AddCommand("mn_nextgametype", MN_NextGametype_f, "Switch to the next multiplayer game type");
+	Cmd_AddCommand("mn_prevgametype", MN_PrevGametype_f, "Switch to the previous multiplayer game type");
+	Cmd_AddCommand("mn_nextmap", MN_NextMap_f, "Switch to the next multiplayer map");
+	Cmd_AddCommand("mn_prevmap", MN_PrevMap_f, "Switch to the previous multiplayer map");
 	Cmd_AddCommand("mn_push", MN_PushMenu_f, "Push a menu to the menustack");
 	Cmd_AddCommand("mn_push_copy", MN_PushCopyMenu_f, NULL);
 	Cmd_AddCommand("mn_pop", MN_PopMenu_f, "Pops the current menu from the stack");

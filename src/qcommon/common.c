@@ -1393,7 +1393,7 @@ extern void Qcommon_LocaleInit (void)
 /**
  * @brief
  */
-static void Com_SetGameType (void)
+extern void Com_SetGameType (void)
 {
 	int i, j;
 	gametype_t* gt;

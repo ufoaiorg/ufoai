@@ -311,6 +311,7 @@ void Qcommon_Init(int argc, char **argv);
 float Qcommon_Frame(int msec);
 void Qcommon_Shutdown(void);
 qboolean Qcommon_ServerActive(void);
+void Com_SetGameType(void);
 
 #define NUMVERTEXNORMALS	162
 extern const vec3_t bytedirs[NUMVERTEXNORMALS];

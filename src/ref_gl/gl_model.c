@@ -1272,7 +1272,7 @@ static void Mod_LoadAliasMD3Model (model_t *mod, void *buffer)
 		/* find neighbours */
 		poutmesh->trneighbors = Hunk_Alloc(sizeof(int) * poutmesh->num_tris * 3);
 		/* FIXME */
-		Mod_BuildTriangleNeighbors(poutmesh->trneighbors, poutmesh->indexes, poutmesh->num_tris);
+		/*Mod_BuildTriangleNeighbors(poutmesh->trneighbors, poutmesh->indexes, poutmesh->num_tris);*/
 	}
 	mod->type = mod_alias_md3;
 }
