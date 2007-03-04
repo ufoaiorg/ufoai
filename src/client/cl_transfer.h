@@ -44,7 +44,7 @@ typedef struct transferlist_s {
 
 /** @brief Array of current cargo onboard. */
 typedef struct transferCargo_s {
-	int type;			/**< Type of cargo (0 - items, 1 - employees, 2 - alien bodies, 3 - alive aliens). */
+	int type;			/**< Type of cargo (1 - items, 2 - employees, 3 - alien bodies, 4 - alive aliens). */
 	int itemidx;			/**< Index of item in cargo. */
 } transferCargo_t;
 

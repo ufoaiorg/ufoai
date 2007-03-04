@@ -69,7 +69,7 @@ static void TR_CargoList (void)
 				Com_sprintf(str, sizeof(str), _("%s (%i on board)\n"),
 				csi.ods[i].name, transferidx->itemAmount[i]);
 				Q_strcat(cargoList, str, sizeof(cargoList));
-				cargo[cnt].type = 0;
+				cargo[cnt].type = 1;
 				cargo[cnt].itemidx = i;
 				cnt++;
 			}
@@ -82,7 +82,7 @@ static void TR_CargoList (void)
 				Com_sprintf(str, sizeof(str), _("Corpse of %s (%i on board)\n"),
 				_(AL_AlienTypeToName(i)), transferidx->alienBodyAmount[i]);
 				Q_strcat(cargoList, str, sizeof(cargoList));
-				cargo[cnt].type = 2;
+				cargo[cnt].type = 3;
 				cargo[cnt].itemidx = i;
 				cnt++;
 			}
@@ -92,7 +92,7 @@ static void TR_CargoList (void)
 				Com_sprintf(str, sizeof(str), _("%s (%i on board)\n"),
 				_(AL_AlienTypeToName(i)), transferidx->alienLiveAmount[i]);
 				Q_strcat(cargoList, str, sizeof(cargoList));
-				cargo[cnt].type = 3;
+				cargo[cnt].type = 4;
 				cargo[cnt].itemidx = i;
 				cnt++;
 			}
@@ -703,7 +703,7 @@ static void TR_TransferBaseSelect_f (void)
  */
 static void TR_CargoListSelect_f (void)
 {
-	int num, cnt = 0, i;
+	int num, cnt = 0, entries = 0, i;
 	transferlist_t *transferidx = NULL;
 
 	if (Cmd_Argc() < 2)
@@ -721,7 +721,7 @@ static void TR_CargoListSelect_f (void)
 	num = atoi(Cmd_Argv(1));
 
 	switch (cargo[num].type) {
-	case 0:		/**< items */
+	case 1:		/**< items */
 		for (i = 0; i < csi.numODs; i++) {
 			if (transferidx->itemAmount[i] > 0) {
 				if (cnt == num) {
@@ -733,10 +733,17 @@ static void TR_CargoListSelect_f (void)
 			}
 		}
 		break;
-	case 1:		/**< employees */
+	case 2:		/**< employees */
 		/*   TODO    */
 		break;
-	case 2:		/**< alien bodies */
+	case 3:		/**< alien bodies */
+		for (i = 0; i < MAX_CARGO; i++) {
+			/* Count previous types on the list. */
+			if (cargo[i].type == 1 || cargo[i].type == 2)
+				entries++;
+		}
+		/* Start increasing cnt from the amount of previous entries. */
+		cnt = entries;
 		for (i = 0; i < numTeamDesc; i++) {
 			if (transferidx->alienBodyAmount[i] > 0) {
 				if (cnt == num) {
@@ -748,7 +755,14 @@ static void TR_CargoListSelect_f (void)
 			}
 		}
 		break;
-	case 3:		/**< alive aliens */
+	case 4:		/**< alive aliens */
+		for (i = 0; i < MAX_CARGO; i++) {
+			/* Count previous types on the list. */
+			if (cargo[i].type == 1 || cargo[i].type == 2 || cargo[i].type == 3)
+				entries++;
+		}
+		/* Start increasing cnt from the amount of previous entries. */
+		cnt = entries;
 		for (i = 0; i < numTeamDesc; i++) {
 			if (transferidx->alienLiveAmount[i] > 0) {
 				if (cnt == num) {
@@ -764,7 +778,7 @@ static void TR_CargoListSelect_f (void)
 		return;
 	}
 
-	TR_TransferSelect_f();
+	Cbuf_AddText(va("trans_select %i\n", transferType));
 }
 
 /**
