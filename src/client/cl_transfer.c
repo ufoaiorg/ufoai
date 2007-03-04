@@ -386,7 +386,6 @@ extern void TR_TransferEnd (aircraft_t* aircraft)
 
 	/* Clear this transferidx. */
 	/* TODO: clear only if it was TR_STUFF, or if TR_AIRCRAFT had succed. */
-	/* FIXME: is that correct memset? */
 	memset(&gd.alltransfers[aircraft->idx], 0, sizeof(transferlist_t));
 }
 
@@ -470,7 +469,7 @@ static void TR_TransferListSelect_f (void)
 		} else if (transferidx->type != TR_STUFF) {
 			/* TODO: Allow to transfer both aircraft transporter with cargo onboard? */
 			MN_Popup(_("Notice"),
-			("You are transferring aircraft. You cannot use this aircraft to transfer things or employees."));
+			_("You are transferring aircraft. You cannot use this aircraft to transfer things or employees."));
 			return;
 		}
 		for (i = 0; i < csi.numODs; i++)
@@ -491,7 +490,7 @@ static void TR_TransferListSelect_f (void)
 		} else if (transferidx->type != TR_STUFF) {
 			/* TODO: Allow to transfer both aircraft transporter with cargo onboard? */
 			MN_Popup(_("Notice"),
-			("You are transferring aircraft. You cannot use this aircraft to transfer things or employees."));
+			_("You are transferring aircraft. You cannot use this aircraft to transfer things or employees."));
 			return;
 		}
 		/* TODO: employees here. */
@@ -502,7 +501,7 @@ static void TR_TransferListSelect_f (void)
 		} else if (transferidx->type != TR_STUFF) {
 			/* TODO: Allow to transfer both aircraft transporter with cargo onboard? */
 			MN_Popup(_("Notice"),
-			("You are transferring aircraft. You cannot use this aircraft to transfer things or employees."));
+			_("You are transferring aircraft. You cannot use this aircraft to transfer things or employees."));
 			return;
 		}
 		for (i = 0; i < numTeamDesc; i++) {
@@ -534,7 +533,7 @@ static void TR_TransferListSelect_f (void)
 		} else if (transferidx->type != TR_AIRCRAFT) {
 			/* TODO: Allow to transfer both aircraft transporter with cargo onboard? */
 			MN_Popup(_("Notice"),
-			("You are transferring stuff. You cannot use this aircraft to transfer itself."));
+			_("You are transferring stuff. You cannot use this aircraft to transfer itself."));
 			return;
 		}
 		/* TODO: aircrafts here. */
@@ -823,6 +822,7 @@ static void TR_Init_f (void)
 	TR_TransferBaseSelect_f();
 
 	/* Set up cvars used to display transferAircraft and transferBase. */
+	/* FIXME: Translate the shortname? */
 	if (transferAircraft)
 		Cvar_Set("mn_trans_aircraft_name", transferAircraft->shortname);
 	if (transferBase)
