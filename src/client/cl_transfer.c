@@ -355,8 +355,9 @@ extern void TR_TransferEnd (aircraft_t* aircraft)
 	/* If we are transfering stuff - unload it here. */
 	if (transferidx->type == TR_STUFF) {
 		TR_EmptyTransferCargo (aircraft);
-		MN_AddNewMessage(_("Transport mission"), 
-		_("Transport mission ended, returning to homebase now."), qfalse, MSG_TRANSFERFINISHED, NULL);
+		if (transferidx->destBase != baseCurrent->idx)
+			MN_AddNewMessage(_("Transport mission"), 
+			_("Transport mission ended, returning to homebase now."), qfalse, MSG_TRANSFERFINISHED, NULL);
 		CL_AircraftReturnToBase(aircraft);
 	} else {
 		/* Otherwise this is an aircraft transfer. */
