@@ -144,6 +144,10 @@ typedef uint8_t byte;
 #define min(a,b) ((a)<(b)?(a):(b))
 #endif
 
+#ifndef logf
+#define logf(x) ((float)log((double)(x)))
+#endif
+
 #define DEFAULT_TEAMNUM 1
 
 /* NOTE: place this macro after stddef.h inclusion. */
