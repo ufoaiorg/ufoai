@@ -168,7 +168,7 @@ void InitGame (void)
 	needpass = gi.cvar("needpass", "0", CVAR_SERVERINFO, NULL);
 	filterban = gi.cvar("filterban", "1", 0, NULL);
 	sv_ai = gi.cvar("sv_ai", "1", 0, NULL);
-	sv_teamplay = gi.cvar("sv_teamplay", "0", CVAR_ARCHIVE | CVAR_SERVERINFO, "Is teamplay activated? see maxclients, maxplayers, maxsoldiers and maxsoldiersperplayer");
+	sv_teamplay = gi.cvar("sv_teamplay", "0", CVAR_ARCHIVE | CVAR_LATCH | CVAR_SERVERINFO, "Is teamplay activated? see maxclients, maxplayers, maxsoldiers and maxsoldiersperplayer");
 	/* how many connected clients */
 	sv_maxclients = gi.cvar("maxclients", "1", CVAR_SERVERINFO | CVAR_LATCH, "If maxclients is 1 we are in singleplayer - otherwise we are mutliplayer mode (see sv_teamplay)");
 	/* reaction leftover is 0 for acceptance testing; should default to 13 */

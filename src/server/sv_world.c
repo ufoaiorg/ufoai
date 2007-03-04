@@ -159,14 +159,9 @@ extern void SV_UnlinkEdict (edict_t * ent)
 	ent->area.prev = ent->area.next = NULL;
 }
 
-
-#define MAX_TOTAL_ENT_LEAFS		128
 /**
  * @brief Needs to be called any time an entity changes origin, mins, maxs,
- * or solid.  Automatically unlinks if needed.
- * sets ent->v.absmin and ent->v.absmax
- * sets ent->leafnums[] for pvs determination even if the entity
- * is not solid
+ * or solid. Automatically unlinks if needed. Sets ent->absmin and ent->absmax
  */
 extern void SV_LinkEdict (edict_t * ent)
 {
@@ -240,6 +235,7 @@ static void SV_AreaEdicts_r (areanode_t * node, int area_type)
 	for (l = start->next; l != start; l = next) {
 		next = l->next;
 		check = EDICT_FROM_AREA(l);
+		/*Com_Printf("check->number: %i - headnode: %i\n", check->number, check->headnode);*/
 
 		if (check->solid == SOLID_NOT)
 			continue;			/* deactivated */

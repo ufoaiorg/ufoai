@@ -441,7 +441,6 @@ struct edict_s {
 
 	/* FIXME: move these fields to a server private sv_entity_t */
 	link_t area;				/* linked to a division node or leaf */
-
 	int headnode;				/* unused if num_clusters != -1 */
 
 	/* tracing info */
