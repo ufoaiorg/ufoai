@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-03-04 16:29+0100\n"
-"PO-Revision-Date: 2007-03-04 16:31+0100\n"
+"POT-Creation-Date: 2007-03-04 20:42+0100\n"
+"PO-Revision-Date: 2007-03-04 20:43+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -99,6 +99,8 @@ msgstr "Saracen I"
 
 #: ../base/ufos/aircraftmanagement.ufo:95
 #: ../base/ufos/research.ufo:2433
+#: ../base/ufos/research.ufo:2442
+#: ../base/ufos/research.ufo:2449
 msgid "UFO - Scout"
 msgstr "UFO - Scout"
 
@@ -108,6 +110,8 @@ msgstr "Scout U"
 
 #: ../base/ufos/aircraftmanagement.ufo:114
 #: ../base/ufos/research.ufo:2480
+#: ../base/ufos/research.ufo:2489
+#: ../base/ufos/research.ufo:2496
 msgid "UFO - Fighter"
 msgstr "UFO - Fighter"
 
@@ -2809,21 +2813,14 @@ msgid "The Alien Threat"
 msgstr "The Alien Threat"
 
 #: ../base/ufos/research.ufo:100
+#: ../base/ufos/research.ufo:109
+#: ../base/ufos/research.ufo:116
 msgid "Continuous Wave Laser Operation"
 msgstr "Continuous Wave Laser Operation"
 
 #: ../base/ufos/research.ufo:102
 msgid "laser_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Re: Continuous Wave Laser Operation\n"
-"\n"
-"\n"
 "Commander, I'm extremely pleased to report that our project has been succesful. I've included images of our prototype laser weapon, which achieves continuous wave output in a man-portable package.\n"
 "\n"
 "The practical solution did not lie in futilely trying to create bigger battery packs, but rather in using radical miniaturisation technologies to lighten and scale down existing chemical-powered laser components. Chemical lasers have been in use for a very long time, and have been part of experimental weapons programs since the late 20th century, but they have always suffered many problems. The only types of chemical lasers with real military promise have been much too large and cumbersome for an infantryman to carry into battle. Until now their combat applications were limited to those of tank-mounted laser cannons or ship-based anti-missile batteries.\n"
@@ -2845,15 +2842,6 @@ msgstr ""
 #: ../base/ufos/research.ufo:103
 msgid "laser_pre_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Proposal: Continuous Wave Laser Operation\n"
-"\n"
-"\n"
 "Our collected UN research files have yielded a lot of valuable information about weapons development done on Earth since the beginning of this century. One of the most interesting topics has been the production of DEWs (Directed Energy Weapons), weapons that transfers energy to a target by means other than a projectile. We are particularly interested in the files on Continuous Wave Lasers.\n"
 "\n"
 "Many countries and companies have attempted to create weapons-grade lasers over the years, but no one has ever been able to create a laser that's man-portable and has a power output high enough to compete with ordinary firearms. Now, however, we've been given access to all this combined research, as well as whole libraries filled with the highest technology on Earth. I believe that not only can we make an effective man-portable laser weapon, we can make it into sizes previously unheard-of for a DEW.\n"
@@ -3011,30 +2999,15 @@ msgstr "Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operatio
 msgid "mail_to_base_commander"
 msgstr "Base Commander, PHALANX, Atlantic Operations Command"
 
-#: ../base/ufos/research.ufo:109
-msgid "Proposal: Continuous Wave Laser Operation"
-msgstr "Proposal: Continuous Wave Laser Operation"
-
-#: ../base/ufos/research.ufo:116
-msgid "Re: Continuous Wave Laser Operation"
-msgstr "Re: Continuous Wave Laser Operation"
-
 #: ../base/ufos/research.ufo:128
+#: ../base/ufos/research.ufo:137
+#: ../base/ufos/research.ufo:144
 msgid "Antimatter"
 msgstr "Antimatter"
 
 #: ../base/ufos/research.ufo:130
 msgid "antimatter_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Re: Antimatter\n"
-"\n"
-"\n"
 "Our study on antimatter is complete, Commander, and we're ready to present our results. I'm afraid the news is mostly bad.\n"
 "\n"
 "There are a lot of things the aliens know that we don't. Nowhere is this more clear in their widespread use of antimatter. It seems to be plentiful for them, at least plentiful enough to send out UFO after UFO to Earth, burning tanks full of antiprotons. Human experiments into antimatter, on the other hand . . .\n"
@@ -3054,45 +3027,21 @@ msgstr ""
 #: ../base/ufos/research.ufo:131
 msgid "antimatter_pre_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Proposal: Antimatter\n"
-"\n"
-"\n"
 "Commander, based on the extremely interesting findings we've made during our examination of the Scout UFO, I'd like your permission to use some lab time in order to more closely analyse the aliens' extensive use of antimatter and its implications on this war.\n"
 "\n"
 "Particularly I would like to see if we can find some way to replicate antimatter for our own purposes. Matter-antimatter annihilation has astonishing potential as a fuel. In terms of energy generation, it has probably the best size-to-weight ratio of any material in the universe; the ability to use it like the aliens use it would catapult our technology base centuries into the future. We must research this at the earliest opportunity!\n"
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:137
-msgid "Proposal: Antimatter"
-msgstr "Proposal: Antimatter"
-
-#: ../base/ufos/research.ufo:144
-msgid "Re: Antimatter"
-msgstr "Re: Antimatter"
-
 #: ../base/ufos/research.ufo:187
+#: ../base/ufos/research.ufo:196
+#: ../base/ufos/research.ufo:203
 msgid "Live Alien"
 msgstr "Live Alien"
 
 #: ../base/ufos/research.ufo:189
 msgid "alien_live_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Re: Live Alien\n"
-"\n"
-"\n"
 "Commander,\n"
 "\n"
 "We have finished our first survey of a live alien specimen. The project has produced mixed results.\n"
@@ -3108,15 +3057,6 @@ msgstr ""
 #: ../base/ufos/research.ufo:190
 msgid "alien_live_pre_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Proposal: Live Alien\n"
-"\n"
-"\n"
 "Commander,\n"
 "\n"
 "We have captured a live alien in the field! The creature has been recovered from our last tactical mission and is being held in our new Containment unit, which I'm pleased to report seems to be working up to spec.\n"
@@ -3149,30 +3089,15 @@ msgstr ""
 msgid "mail_from_dr_connor"
 msgstr "Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command"
 
-#: ../base/ufos/research.ufo:196
-msgid "Proposal: Live Alien"
-msgstr "Proposal: Live Alien"
-
-#: ../base/ufos/research.ufo:203
-msgid "Re: Live Alien"
-msgstr "Re: Live Alien"
-
 #: ../base/ufos/research.ufo:219
+#: ../base/ufos/research.ufo:228
+#: ../base/ufos/research.ufo:235
 msgid "Alien Breathing Apparatus"
 msgstr "Alien Breathing Apparatus"
 
 #: ../base/ufos/research.ufo:221
 msgid "alien_breathing_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Re: Alien Breathing Apparatus\n"
-"\n"
-"\n"
 "Commander,\n"
 "\n"
 "I have made a thorough examination of the devices found during the alien autopsies we've performed. I believe we're now ready to present our conclusions.\n"
@@ -3198,15 +3123,6 @@ msgstr ""
 #: ../base/ufos/research.ufo:222
 msgid "alien_breathing_pre_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Proposal: Alien Breathing Apparatus\n"
-"\n"
-"\n"
 "Commander,\n"
 "\n"
 "During autopsy of the alien corpses we've recovered, my team and I uncovered some peculiar machinery implanted into the throat of the alien specimen. It consists of two metal spheres located on either side of the brainstem, connected directly to the windpipe by way of a small tube. The windpipe itself is protected by some manner of valve or filter. We believe this interconnected apparatus may be some kind of breathing equipment or rebreather, or even something else entirely; we're not sure how it works yet.\n"
@@ -3219,30 +3135,15 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:228
-msgid "Proposal: Alien Breathing Apparatus"
-msgstr "Proposal: Alien Breathing Apparatus"
-
-#: ../base/ufos/research.ufo:235
-msgid "Re: Alien Breathing Apparatus"
-msgstr "Re: Alien Breathing Apparatus"
-
 #: ../base/ufos/research.ufo:252
+#: ../base/ufos/research.ufo:261
+#: ../base/ufos/research.ufo:268
 msgid "The Alien Mind"
 msgstr "The Alien Mind"
 
 #: ../base/ufos/research.ufo:254
 msgid "alien_mind_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Re: The Alien Mind\n"
-"\n"
-"\n"
 "Commander,\n"
 "\n"
 "My team has finished conducting a number of tests on our captives that have shed some light on the aliens' behaviour.\n"
@@ -3262,15 +3163,6 @@ msgstr ""
 #: ../base/ufos/research.ufo:255
 msgid "alien_mind_pre_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Proposal: The Alien Mind\n"
-"\n"
-"\n"
 "Commander,\n"
 "\n"
 "Though we've achieved limited results so far, research must continue on our alien captives. There's a number of experiments we'd like to run that require your authorisation for lab time and funding. I assure you this is not blue-sky research; with enough tests and behavioural data, we may be able to figure out a way to communicate with these aliens, perhaps even reawaken their intelligence somehow. We don't know what the results of the program will be -- we simply know too little about these aliens, our body of data is far too small to make any predictions at this point. What we do know is that every tidbit we learn about alien psychology is a valuable piece of the puzzle.\n"
@@ -3283,30 +3175,15 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:261
-msgid "Proposal: The Alien Mind"
-msgstr "Proposal: The Alien Mind"
-
-#: ../base/ufos/research.ufo:268
-msgid "Re: The Alien Mind"
-msgstr "Re: The Alien Mind"
-
 #: ../base/ufos/research.ufo:282
+#: ../base/ufos/research.ufo:291
+#: ../base/ufos/research.ufo:298
 msgid "Odd Behaviour"
 msgstr "Odd Behaviour"
 
 #: ../base/ufos/research.ufo:284
 msgid "alien_odd_behaviour_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Re: Odd Behaviour\n"
-"\n"
-"\n"
 "Commander,\n"
 "\n"
 "We have spent the past few weeks investigating these strange occurrences in our Containment unit, and we believe we've formulated a theory that may begin to explain the aliens' newfound intelligence.\n"
@@ -3332,15 +3209,6 @@ msgstr ""
 #: ../base/ufos/research.ufo:285
 msgid "alien_odd_behaviour_pre_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Proposal: Odd Behaviour\n"
-"\n"
-"\n"
 "Commander,\n"
 "\n"
 "The live aliens in our Containment unit have begun to display erratic behaviour since the last tactical mission.\n"
@@ -3352,14 +3220,6 @@ msgstr ""
 "Sincerely,\n"
 "\n"
 "Dr. Connor"
-
-#: ../base/ufos/research.ufo:291
-msgid "Proposal: Odd Behaviour"
-msgstr "Proposal: Odd Behaviour"
-
-#: ../base/ufos/research.ufo:298
-msgid "Re: Odd Behaviour"
-msgstr "Re: Odd Behaviour"
 
 #: ../base/ufos/research.ufo:317
 msgid "assault_txt"
@@ -3441,15 +3301,6 @@ msgstr ""
 #: ../base/ufos/research.ufo:380
 msgid "bolterrifle_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Re: Electromagnetic Rifle\n"
-"\n"
-"\n"
 "The EM rifle project has been a resounding success! For the first time in human history, we've created a viable man-portable electromagnetic weapon. We have named our weapon the Bolter Rifle to avoid ambiguity with other existing MAG (Magnetic Accelerator Gun) implementations. I'll do my best to explain its operation in this short summary.\n"
 "\n"
 "The Bolter Rifle is equipped with a railgun configuration, as opposed to a coilgun/Gauss gun configuration, due to the high inefficiency and generally poor operation of coilguns. Railguns work by utilising electromagnetic force to propel an electrically conductive projectile along two conducting rails. The electric current flowing through the rails sets up a magnetic field between them and through the projectile. The direction of the magnetic field is perpendicular to the current flowing through the rails and the projectile; this results in the rails and projectile pushing each other, thereby accelerating the projectile along the rails.\n"
@@ -3470,15 +3321,6 @@ msgstr ""
 #: ../base/ufos/research.ufo:381
 msgid "bolterrifle_pre_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Proposal: Electromagnetic Rifle\n"
-"\n"
-"\n"
 "Commander, we've received a number of research files from several UN nations concerning research and development for man-portable electromagnetic weaponry; various designs have been proposed and even prototyped for railguns, coilguns and quench guns. Of course, all these experiments have failed, since electromagnetic weapons require huge amounts of power -- and therefore banks of capacitors so heavy that no human soldier could possibly carry them. Even atomic batteries have not given us the power output we need to make man-portable electromagnetic guns a reality. It is impossible.\n"
 "\n"
 "At least, that's what we thought, until the aliens showed up.\n"
@@ -3490,14 +3332,11 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:357
-#: ../base/ufos/research.ufo:387
-msgid "Proposal: Electromagnetic Rifle"
-msgstr "Proposal: Electromagnetic Rifle"
-
 #: ../base/ufos/research.ufo:364
+#: ../base/ufos/research.ufo:387
 #: ../base/ufos/research.ufo:394
-msgid "Re: Electromagnetic Rifle"
-msgstr "Re: Electromagnetic Rifle"
+msgid "Electromagnetic Rifle"
+msgstr "Electromagnetic Rifle"
 
 #: ../base/ufos/research.ufo:411
 msgid "combatknife_txt"
@@ -3543,15 +3382,6 @@ msgstr ""
 #: ../base/ufos/research.ufo:428
 msgid "monoknife_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Re: Monomolecular Blades\n"
-"\n"
-"\n"
 "Commander, I'm hereby reporting our success in the creation of alien blade materials. We've loaded the production specs into our Workshop machinery and have constructed a small forge for shaping our new monomolecular knives.\n"
 "\n"
 "The reproduction process has been very interesting on this one. After we'd figured out how to 'cook' the alien plastics to the right temperatures, we ended up with bars of incredibly hard material which we then tried to shape into knives. On our first attempts we tried to create a straight-edged blade with a powerful point, like most modern combat knives, so that it could be used for both cutting and stabbing. All of these models snapped in half during the cooling process. We had a devil of a time figuring out why until we placed a small camera inside the furnace.\n"
@@ -3567,15 +3397,6 @@ msgstr ""
 #: ../base/ufos/research.ufo:429
 msgid "monoknife_pre_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Proposal: Monomolecular Blades\n"
-"\n"
-"\n"
 "Commander, now that we've had a good look at the alien blade technology from several sources -- the Bloodspider's 'fangs' and the Kerrblade -- we're starting to form a picture of how to recreate the unknown or ill-understood materials used in their construction.\n"
 "\n"
 "Some of this stuff is completely new to us. The plastics from which the alien blades are forged are harder than damascus steel, sharper than a razor, and yet shock-resistant and flexible enough to survive the stresses of melee combat. Once forged they are nearly impossible to break, nick or bend. Applying a hammer and chisel directly to the blade just means you end up with two neatly-sliced halves of a chisel.\n"
@@ -3589,12 +3410,9 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:435
-msgid "Proposal: Monomolecular Blades"
-msgstr "Proposal: Monomolecular Blades"
-
 #: ../base/ufos/research.ufo:442
-msgid "Re: Monomolecular Blades"
-msgstr "Re: Monomolecular Blades"
+msgid "Monomolecular Blades"
+msgstr "Monomolecular Blades"
 
 #: ../base/ufos/research.ufo:461
 msgid "flamer_txt"
@@ -3956,15 +3774,6 @@ msgstr ""
 #: ../base/ufos/research.ufo:611
 msgid "grenl_plasma_ammo_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Re: Plasma And The Grenade Launcher\n"
-"\n"
-"\n"
 "Commander, we've finished the testing and prototype phase of our new 25mm plasma grenades. We're ready to move it to mass-production and full field deployment.\n"
 "\n"
 "For this project, we already had ready access to all the required technology. We've made very few changes to the general design of the grenade. The only real challenge was to shrink the complex machinery enough to fit inside a standard 25mm shell. We've had to scale back the power of the plasma grenade somewhat in order to do that -- the hydrogen core of our new 25mm shell is a fair bit smaller, emitting less plasma than the alien hand grenade. However, this is offset by the fact that it can be fired en masse from our HPGL Grenade Launcher over relatively long distances.\n"
@@ -3978,15 +3787,6 @@ msgstr ""
 #: ../base/ufos/research.ufo:612
 msgid "grenl_plasma_ammo_pre_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Proposal: Plasma And The Grenade Launcher\n"
-"\n"
-"\n"
 "Commander, my team and I have drawn up a research proposal for a new tac weapon based on our plasma grenade research.\n"
 "\n"
 "Now that we're able to reproduce these alien plasma grenades, we've been looking into the possibility of adapting the technology to be fired from a grenade launcher. This would be a challenge, as the plasma hand grenades are significantly larger than 25mm, but we may be able to produce a scaled-back version that -- while not as powerful -- will have all the advantages of being fired from our standard HPGL Grenade Launcher.\n"
@@ -3998,25 +3798,13 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:618
-msgid "Proposal: Plasma And The Grenade Launcher"
-msgstr "Proposal: Plasma And The Grenade Launcher"
-
 #: ../base/ufos/research.ufo:625
-msgid "Re: Re: Plasma And The Grenade Launcher"
-msgstr "Re: Re: Plasma And The Grenade Launcher"
+msgid "Plasma And The Grenade Launcher"
+msgstr "Plasma And The Grenade Launcher"
 
 #: ../base/ufos/research.ufo:645
 msgid "laser_ammo_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Re: D-F Cartridge\n"
-"\n"
-"\n"
 "Commander, we've finalised the design of the Deuterium-Fluoride Cartridges and they're now ready for mass production. They'll be expensive to make and use, but we've done everything we can to keep the costs down.\n"
 "\n"
 "The cartridge is essentially a hard plastic shell containing five separate chambers. These are four pressurised storage reservoirs for ethylene, nitrogen trifluoride, helium and deuterium, plus a small battery to power the laser's electronics.\n"
@@ -4030,15 +3818,6 @@ msgstr ""
 #: ../base/ufos/research.ufo:646
 msgid "laser_ammo_pre_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Proposal: D-F Cartridge\n"
-"\n"
-"\n"
 "This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.\n"
 "\n"
 "In order to power our deuterium-fluoride laser weaponry, we need to design a magazine that can safely store a lot of different hazardous materials. Ethylene, nitrogen trifluoride, helium and deuterium -- three of which are toxic compounds -- have to be kept in separate pressurised compartments, under complete control at all times. If these materials were allowed to mix, it would be what we engineers call a 'Bad Thing'.\n"
@@ -4052,15 +3831,6 @@ msgstr ""
 #: ../base/ufos/research.ufo:662
 msgid "heavylaser_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Re: Heavy Laser\n"
-"\n"
-"\n"
 "Commander, our heavy laser program has been a success. We've got it prototyped and ready to go into production at your say-so.\n"
 "\n"
 "As promised, the heavy laser is a revolution in our heavy weapons arsenal. In the hands of a qualified soldier, it can provide long-range continuous wave fire that is both far more accurate than conventional heavy weapons and far more powerful than our other infantry laser designs. We in DivEngine have no doubt that it will serve a vital role throughout the war.\n"
@@ -4080,15 +3850,6 @@ msgstr ""
 #: ../base/ufos/research.ufo:663
 msgid "heavylaser_pre_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Proposal: Heavy Laser\n"
-"\n"
-"\n"
 "This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.\n"
 "\n"
 "Thanks to the experience we've gained from our Continuous Wave Laser research, my team and I have figured out one or two possible ways to further amplify the damage output of our infantry lasers. However, this will require significant research and refining of our prototype, as well as enlarging several of the components. The result will be a strictly heavy-infantry weapon of about the same size and weight as our HPML Rocket Launcher.\n"
@@ -4100,12 +3861,10 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:669
-msgid "Proposal: Heavy Laser"
-msgstr "Proposal: Heavy Laser"
-
 #: ../base/ufos/research.ufo:676
-msgid "Re: Heavy Laser"
-msgstr "Re: Heavy Laser"
+#: ../base/ufos/weapons_laser.ufo:103
+msgid "Heavy Laser"
+msgstr "Heavy Laser"
 
 #: ../base/ufos/research.ufo:712
 msgid "irgoggles_txt"
@@ -4157,15 +3916,6 @@ msgstr ""
 #: ../base/ufos/research.ufo:728
 msgid "kerrblade_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Re: Alien Artifact -- Kerrblade\n"
-"\n"
-"\n"
 "Our analysis of the Kerrblade is complete, Commander. Here is my summary for your review.\n"
 "\n"
 "The Kerrblade seems at first glance like the alien equivalent of our combat knife. Reality would be a better place if that were true. We've concluded it is much more than that, and the truth is far from comforting.\n"
@@ -4185,15 +3935,6 @@ msgstr ""
 #: ../base/ufos/research.ufo:729
 msgid "kerrblade_pre_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Proposal: Alien Artifact -- Kerrblade\n"
-"\n"
-"\n"
 "Commander, we've recovered an interesting alien weapon from the battlefield. It looks to be some kind of knife or sword with an edge sharper than anything on Earth. It can slice steel like tissue paper and goes through our soldiers' body armour as if it wasn't even there. The troops have named it the 'Kerrblade' after the distinctive sound it makes when shredding our armour.\n"
 "\n"
 "We should examine the blade to determine its function and see how it was made. There may be a way to duplicate this technology in a form that's compatible for human use, which would make melee engagements with alien combatants far more survivable than going at them with a combat knife.\n"
@@ -4203,25 +3944,13 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:735
-msgid "Proposal: Alien Artifact -- Kerrblade"
-msgstr "Proposal: Alien Artifact -- Kerrblade"
-
 #: ../base/ufos/research.ufo:742
-msgid "Re: Alien Artifact -- Kerrblade"
-msgstr "Re: Alien Artifact -- Kerrblade"
+msgid "Alien Artifact - Kerrblade"
+msgstr "Alien Artifact - Kerrblade"
 
 #: ../base/ufos/research.ufo:760
 msgid "laserpistol_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Re: Laser Pistol\n"
-"\n"
-"\n"
 "Commander, I apologise in advance if my typing isn't up to standard in this message. We've had a lot of sleepless nights down here in DivEngine working on the laser pistol project. It's been a gruelling amount of work, but I'm very proud to say that we've pulled it off. We have prototyped a working laser pistol.\n"
 "\n"
 "The system is essentially the same as the one I've outlined for you in my report on Continuous Wave Laser Operation. Excited molecules of deuterium fluoride are lased and focused through a series of intelligent lenses. Waste gases are put through our custom filtering system, which we've scaled down even further. However, the reduced capacity of the filtering system and the smaller optical resonator have demanded some tradeoffs.\n"
@@ -4241,15 +3970,6 @@ msgstr ""
 #: ../base/ufos/research.ufo:761
 msgid "laserpistol_pre_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Proposal: Laser Pistol\n"
-"\n"
-"\n"
 "This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.\n"
 "\n"
 "Our notes on Continuous Wave Laser Operation have produced a lot of designs, and this is possibly the most difficult one to bring into reality: a deuterium-fluoride laser weapon the size of an ordinary pistol.\n"
@@ -4263,25 +3983,14 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:767
-msgid "Proposal: Laser Pistol"
-msgstr "Proposal: Laser Pistol"
-
 #: ../base/ufos/research.ufo:774
-msgid "Re: Laser Pistol"
-msgstr "Re: Laser Pistol"
+#: ../base/ufos/weapons_laser.ufo:6
+msgid "Laser Pistol"
+msgstr "Laser Pistol"
 
 #: ../base/ufos/research.ufo:809
 msgid "laserrifle_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Re: Laser Rifle\n"
-"\n"
-"\n"
 "It's done, Commander. We are now the proud owners of a working laser rifle, with full production plans loaded into our computers. We've eliminated several moving parts and refined the electronics to bring production and maintenance costs down into our budget range. I believe you'll find the weapon's specs to your satisfaction.\n"
 "\n"
 "This rifle is possibly the most accurate weapon ever designed. It's light, rests easily in the shooter's hands, and the focusing lenses automatically correct the user's aim to help bring the beam on target -- and keep it there. It may inflict less damage per shot than its conventional projectile-firing counterparts, but it can do more over time if the shooter keeps the target in his sights. Eight troops with conventional assault rifles firing away at full-auto can easily miss a moving target. With laser rifles, that becomes a near-impossibility.\n"
@@ -4299,15 +4008,6 @@ msgstr ""
 #: ../base/ufos/research.ufo:810
 msgid "laserrifle_pre_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Proposal: Laser Rifle\n"
-"\n"
-"\n"
 "This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.\n"
 "\n"
 "The laser rifle is the flagship design of our new deuterium-fluoride laser family. It will be a perfect marriage of power, accuracy, range, manoeuvrability and ammo capacity. Even on paper the laser rifle's specs can compete with any conventional assault rifle. The only problem will be actually building it.\n"
@@ -4319,12 +4019,10 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:816
-msgid "Proposal: Laser Rifle"
-msgstr "Proposal: Laser Rifle"
-
 #: ../base/ufos/research.ufo:823
-msgid "Re: Laser Rifle"
-msgstr "Re: Laser Rifle"
+#: ../base/ufos/weapons_laser.ufo:81
+msgid "Laser Rifle"
+msgstr "Laser Rifle"
 
 #: ../base/ufos/research.ufo:859
 msgid "medikit_txt"
@@ -4535,15 +4233,6 @@ msgstr ""
 #: ../base/ufos/research.ufo:978
 msgid "plasatomizer_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Re: Alien Artifact -- Plasma Pistol\n"
-"\n"
-"\n"
 "When the aliens need a sidearm, they don't screw around.\n"
 "\n"
 "This plasma pistol is a nasty piece of work, Commander. Its operation is extremely complex and inventive, requiring a great deal of technical skill to create. The power pack alone is hundreds of years ahead of our technology. It stores enough power to heat several charges of hydrogen to a plasmatic state inside the miniature fusion chamber, which are expelled as plasma using the ionised particles' own velocity.\n"
@@ -4564,15 +4253,6 @@ msgstr ""
 #: ../base/ufos/research.ufo:979
 msgid "plasatomizer_pre_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Proposal: Alien Artifact -- Plasma Pistol\n"
-"\n"
-"\n"
 "Commander, we've recovered the first alien plasma weapon of the war. I don't need to tell you how important this is. The alien armaments are highly-advanced, powerful and extremely lethal; we must figure out how they work in order to arm and armour ourselves against them.\n"
 "\n"
 "The alien plasma weapons represent a curious application of the plasma-thrower concept, which was previously believed to be unfeasible as a battlefield weapon. I would very much like to figure out how it works. My team and I are confident that -- with enough time and proper safety procedures -- we can hammer out the plasma pistol's function and controls and write a small operational manual; our soldiers could actually use the aliens' weapons against them!\n"
@@ -4582,28 +4262,16 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:952
-#: ../base/ufos/research.ufo:985
-msgid "Proposal: Alien Artifact -- Plasma Pistol"
-msgstr "Proposal: Alien Artifact -- Plasma Pistol"
-
 #: ../base/ufos/research.ufo:959
+#: ../base/ufos/research.ufo:985
 #: ../base/ufos/research.ufo:992
-msgid "Re: Alien Artifact -- Plasma Pistol"
-msgstr "Re: Alien Artifact -- Plasma Pistol"
+msgid "Alien Artifact - Plasma Pistol"
+msgstr "Alien Artifact - Plasma Pistol"
 
 #: ../base/ufos/research.ufo:1009
 #: ../base/ufos/research.ufo:1041
 msgid "plasblaster_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Re: Alien Artifact -- Plasma Blaster\n"
-"\n"
-"\n"
 "Commander, here's my report on our alien plasma blaster research.\n"
 "\n"
 "This is by far the heaviest member we've observed out of the plasma weapon family, and it seems unlikely that they will get any larger. The blaster requires at least two people and a heavy-duty cart to get it in and out of secure storage. It's barely man-portable, requiring a troop with great strength to carry it into battle. It is so large that, if it were a vehicle-mounted piece, it wouldn't even fit on most of our UGVs. The magazines weigh nearly a kilogramme apiece and the plasma generated is hot enough to melt through conventional armoured vehicles.\n"
@@ -4620,15 +4288,6 @@ msgstr ""
 #: ../base/ufos/research.ufo:1042
 msgid "plasblaster_pre_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Proposal: Alien Artifact -- Plasma Blaster\n"
-"\n"
-"\n"
 "Commander, we've recovered an alien plasma blaster from the field. This is an extremely powerful new plasma weapon that warrants immediate research. Preliminary testing confirms that blaster shots tear right through our Combat Armour and have a far longer range than the other plasma weapons we've recovered.\n"
 "\n"
 "Please authorise this research program at your earliest convenience.\n"
@@ -4636,27 +4295,15 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1016
-#: ../base/ufos/research.ufo:1048
-msgid "Proposal: Alien Artifact -- Plasma Blaster"
-msgstr "Proposal: Alien Artifact -- Plasma Blaster"
-
 #: ../base/ufos/research.ufo:1023
+#: ../base/ufos/research.ufo:1048
 #: ../base/ufos/research.ufo:1055
-msgid "Re: Alien Artifact -- Plasma Blaster"
-msgstr "Re: Alien Artifact -- Plasma Blaster"
+msgid "Alien Artifact - Plasma Blaster"
+msgstr "Alien Artifact - Plasma Blaster"
 
 #: ../base/ufos/research.ufo:1072
 msgid "plasblade_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Re: Alien Artifact -- Plasma Blade\n"
-"\n"
-"\n"
 "Commander, we've figured out the secrets of the alien weapon. I'm afraid the news is not good.\n"
 "\n"
 "We were wrong to think of the plasma blade as a knife. In essence, it is a one-shot anti-armour weapon, like the Panzerfaust of WW2, except designed to kill armoured infantry and small vehicles rather than tanks.\n"
@@ -4676,15 +4323,6 @@ msgstr ""
 #: ../base/ufos/research.ufo:1073
 msgid "plasblade_pre_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Proposal: Alien Artifact -- Plasma Blade\n"
-"\n"
-"\n"
 "Commander, our last tactical mission brought back a strange alien weapon in the form of a plasma chamber with a handle. At least, we assume it's a weapon; the shape seems to suggest some kind of plasma-based knife, though I have no idea how this would work. We can't quite figure out how to turn it on or what purpose it serves in the alien arsenal.\n"
 "\n"
 "More research is definitely required, Commander. Whenever we have a bit of free lab time, I'd like a go at it.\n"
@@ -4692,25 +4330,13 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1079
-msgid "Proposal: Alien Artifact -- Plasma Blade"
-msgstr "Proposal: Alien Artifact -- Plasma Blade"
-
 #: ../base/ufos/research.ufo:1086
-msgid "Re: Alien Artifact -- Plasma Blade"
-msgstr "Re: Alien Artifact -- Plasma Blade"
+msgid "Alien Artifact - Plasma Blade"
+msgstr "Alien Artifact - Plasma Blade"
 
 #: ../base/ufos/research.ufo:1104
 msgid "plasmagren_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Re: Alien Artifact -- Plasma Grenade\n"
-"\n"
-"\n"
 "Commander, our assessment of the alien plasma grenade is complete. Like all the alien weapons, it's very nasty and very dangerous.\n"
 "\n"
 "The device is essentially made up of seven components: a casing, a trigger, a battery, a timer, an explosive charge, a plasma chamber and a solid hydrogen core. The casing is specially shaped to create a toroidal blast zone around the grenade, concentrating power into a smaller area. The battery is highly powerful and barely within our power to duplicate. The trigger is of particular interest, because it contains a tiny thumbprint scanner which verifies that the grenade is not being accidentally activated. A legitimate (i.e. non-accidental) activation starts the timer countdown. The length of the countdown is variable depending on the number of seconds that the trigger is held down, but it has a built-in safe minimum of three seconds.\n"
@@ -4726,15 +4352,6 @@ msgstr ""
 #: ../base/ufos/research.ufo:1105
 msgid "plasmagren_pre_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Proposal: Alien Artifact -- Plasma Grenade\n"
-"\n"
-"\n"
 "Commander, our last tac mission has brought back an alien plasma grenade. This is a highly powerful grenade-type weapon that, once thrown, explodes in a shower of superheated plasma. It's somewhat larger and appears to be a good deal more dangerous than our standard frag grenades.\n"
 "\n"
 "We should examine this weapon to see how it works, what it's made of, and how it's put together. Once we have those points figured out, we should be able to replicate it for our own use.\n"
@@ -4744,26 +4361,14 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1111
-msgid "Proposal: Alien Artifact -- Plasma Grenade"
-msgstr "Proposal: Alien Artifact -- Plasma Grenade"
-
 #: ../base/ufos/research.ufo:1118
-msgid "Re: Alien Artifact -- Plasma Grenade"
-msgstr "Re: Alien Artifact -- Plasma Grenade"
+msgid "Alien Artifact - Plasma Grenade"
+msgstr "Alien Artifact - Plasma Grenade"
 
 #: ../base/ufos/research.ufo:1136
 #: ../base/ufos/research.ufo:1169
 msgid "plasrifle_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Re: Alien Artifact -- Plasma Rifle\n"
-"\n"
-"\n"
 "Commander, here's my report on our alien plasma rifle research.\n"
 "\n"
 "At its most basic level, the plasma rifle is little more than an upscaled version of the plasma pistol. However, as any firearms fanatic will tell you, pistols are pistols and rifles are rifles. Handguns are small, personal defence weapons. Rifles are weapons of war. The disparity in power is remarkable.\n"
@@ -4782,28 +4387,16 @@ msgstr ""
 #: ../base/ufos/research.ufo:1170
 msgid "plasrifle_pre_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Proposal: Alien Artifact -- Plasma Rifle\n"
-"\n"
-"\n"
 "Commander, my department is ready to begin studying the recovered alien plasma rifle. This is a highly dangerous and versatile weapon, vastly outstripping the plasma pistol in range and power; something we should try to put into the hands of our own soldiers ASAP. Please approve lab time and funding as soon as our schedule permits.\n"
 "\n"
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1143
-#: ../base/ufos/research.ufo:1176
-msgid "Proposal: Alien Artifact -- Plasma Rifle"
-msgstr "Proposal: Alien Artifact -- Plasma Rifle"
-
 #: ../base/ufos/research.ufo:1150
+#: ../base/ufos/research.ufo:1176
 #: ../base/ufos/research.ufo:1183
-msgid "Re: Alien Artifact -- Plasma Rifle"
-msgstr "Re: Alien Artifact -- Plasma Rifle"
+msgid "Alien Artifact - Plasma Rifle"
+msgstr "Alien Artifact - Plasma Rifle"
 
 #: ../base/ufos/research.ufo:1200
 msgid "rpg_txt"
@@ -5382,15 +4975,6 @@ msgstr ""
 #: ../base/ufos/research.ufo:1506
 msgid "stungren_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Re: Anti-Alien Gas\n"
-"\n"
-"\n"
 "Commander,\n"
 "\n"
 "We've achieved results in our effort to create anti-alien chemicals that can be effectively used on the battlefield. One agent in particular has been classified as fully combat-capable and is ready to be deployed at your say-so.\n"
@@ -5412,15 +4996,6 @@ msgstr ""
 #: ../base/ufos/research.ufo:1507
 msgid "stungren_pre_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Proposal: Anti-Alien Gas\n"
-"\n"
-"\n"
 "Commander,\n"
 "\n"
 "Ever since the start of the invasion, we have been left scratching our heads about the aliens' biology. We knew almost nothing about them, their biology, their genetics or their potential vulnerabilities. This left us helpless in the fields of biological and chemical warfare.\n"
@@ -5436,25 +5011,13 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/research.ufo:1513
-msgid "Proposal: Anti-Alien Gas"
-msgstr "Proposal: Anti-Alien Gas"
-
 #: ../base/ufos/research.ufo:1520
-msgid "Re: Anti-Alien Gas"
-msgstr "Re: Anti-Alien Gas"
+msgid "Anti-Alien Gas"
+msgstr "Anti-Alien Gas"
 
 #: ../base/ufos/research.ufo:1544
 msgid "stunrod_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Re: Stun Rod\n"
-"\n"
-"\n"
 "Commander,\n"
 "\n"
 "We've finished prototyping our experimental electrical weapon, and it's now ready to begin full production.\n"
@@ -5478,15 +5041,6 @@ msgstr ""
 #: ../base/ufos/research.ufo:1545
 msgid "stunrod_pre_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Proposal: Stun Rod\n"
-"\n"
-"\n"
 "Commander,\n"
 "\n"
 "I hope I'm not overstepping my bounds, but I have an important technical research proposal to make, a proposal to create a new piece of PHALANX equipment for use by our field agents. I realise this falls outside the responsibilities of my division. However, I've already discussed things with Cdr. Navarre, and he doesn't quite see eye-to-eye with me on the necessity of the item in question. I had no choice but to go to straight to you with the proposal.\n"
@@ -5504,25 +5058,14 @@ msgstr ""
 "Dr. Connor"
 
 #: ../base/ufos/research.ufo:1551
-msgid "Proposal: Stun Rod"
-msgstr "Proposal: Stun Rod"
-
 #: ../base/ufos/research.ufo:1558
-msgid "Re: Stun Rod"
-msgstr "Re: Stun Rod"
+#: ../base/ufos/weapons_melee.ufo:113
+msgid "Stun Rod"
+msgstr "Stun Rod"
 
 #: ../base/ufos/research.ufo:1577
 msgid "pbeampistol_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Re: Alien Artifact -- Particle Beam Pistol\n"
-"\n"
-"\n"
 "Commander, I've got the specs of the new alien pistol for you, and they're not good.\n"
 "\n"
 "We've always suspected that a real alien army would field more than just plasma weapons and Kerrblades. Now they've gone and proved us right. This particle beam weaponry is extremely advanced, a quantum leap above the plasma weapons, miniaturised far beyond our ability to duplicate.\n"
@@ -5542,15 +5085,6 @@ msgstr ""
 #: ../base/ufos/research.ufo:1578
 msgid "pbeampistol_pre_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Proposal: Alien Artifact -- Particle Beam Pistol\n"
-"\n"
-"\n"
 "Commander, we've recovered a dangerous new alien pistol that seems to fire high-energy particle beams -- more deadly than lasers, more accurate than plasma weapons, and an extremely nasty new threat to our troops on the battlefield. Preliminary tests against our armour have produced distressing results. We need to perform more research on these weapons immediately.\n"
 "\n"
 "Please authorise this program at your earliest convenience.\n"
@@ -5558,29 +5092,17 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1584
-#: ../base/ufos/research.ufo:1616
-msgid "Proposal: Alien Artifact -- Particle Beam Pistol"
-msgstr "Proposal: Alien Artifact -- Particle Beam Pistol"
-
 #: ../base/ufos/research.ufo:1591
+#: ../base/ufos/research.ufo:1616
 #: ../base/ufos/research.ufo:1623
-msgid "Re: Alien Artifact -- Particle Beam Pistol"
-msgstr "Re: Alien Artifact -- Particle Beam Pistol"
+msgid "Alien Artifact - Particle Beam Pistol"
+msgstr "Alien Artifact - Particle Beam Pistol"
 
 #: ../base/ufos/research.ufo:1609
 #: ../base/ufos/research.ufo:1674
 #: ../base/ufos/research.ufo:1738
 msgid "pbeamammo_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Re: Man-Portable Particle Beams\n"
-"\n"
-"\n"
 "Commander, my method worked. I think we've managed to crack the secrets of the mysterious particle beam weaponry. Here are my conclusions.\n"
 "\n"
 "The appearance of man-portable particle beam weaponry suggests a serious escalation in this war. Prior to being shot at with it, we had no idea that the aliens possessed such advanced technology, and we have no idea why it was not deployed before now. The aliens' motivations and strategy remain a complete mystery to us. Still, I don't believe I'm overstating the issue that these weapons change everything.\n"
@@ -5602,15 +5124,6 @@ msgstr ""
 #: ../base/ufos/research.ufo:1739
 msgid "pbeamammo_pre_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Proposal: Man-Portable Particle Beams\n"
-"\n"
-"\n"
 "Commander, we've decided that more research is badly needed on the particle beam weaponry, especially their mysterious power source, the magazines which we've been utterly unable to examine. No amount of finesse or ingenuity has been able to open them. That's why I'm hereby proposing extreme measures.\n"
 "\n"
 "I want to use our lab's radiation chamber to bombard one of the magazines with electromagnetic pulses, destroying most of the internal electronics, and hopefully causing it to shut down. Once it's safely deactivated, we can use brute force to open it up.\n"
@@ -5624,15 +5137,6 @@ msgstr ""
 #: ../base/ufos/research.ufo:1641
 msgid "pbeamcannon_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Re: Alien Artifact -- Particle Beam Cannon\n"
-"\n"
-"\n"
 "Commander, we've finished work on this big damned cannon we brought back.\n"
 "\n"
 "We've always suspected that a real alien army would field more than just plasma weapons and Kerrblades. Now they've gone and proved us right. This particle beam weaponry is extremely advanced, a quantum leap above the plasma weapons, miniaturised far beyond our ability to duplicate.\n"
@@ -5652,15 +5156,6 @@ msgstr ""
 #: ../base/ufos/research.ufo:1642
 msgid "pbeamcannon_pre_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Proposal: Alien Artifact -- Particle Beam Cannon\n"
-"\n"
-"\n"
 "Commander, we've recovered a large alien cannon that fires high-energy particle beams. It is extremely deadly and has frightening effects on our armour during preliminary testing. We need to perform more research on these weapons immediately.\n"
 "\n"
 "Please authorise this program at your earliest convenience.\n"
@@ -5668,27 +5163,15 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1648
-#: ../base/ufos/research.ufo:1681
-msgid "Proposal: Alien Artifact -- Particle Beam Cannon"
-msgstr "Proposal: Alien Artifact -- Particle Beam Cannon"
-
 #: ../base/ufos/research.ufo:1655
+#: ../base/ufos/research.ufo:1681
 #: ../base/ufos/research.ufo:1688
-msgid "Re: Alien Artifact -- Particle Beam Cannon"
-msgstr "Re: Alien Artifact -- Particle Beam Cannon"
+msgid "Alien Artifact - Particle Beam Cannon"
+msgstr "Alien Artifact - Particle Beam Cannon"
 
 #: ../base/ufos/research.ufo:1706
 msgid "pbeamrifle_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Re: Alien Artifact -- Particle Beam Rifle\n"
-"\n"
-"\n"
 "Commander, we've gotten all the info we can from this new alien rifle. It's more bad news, I'm afraid.\n"
 "\n"
 "We've always suspected that a real alien army would field more than just plasma weapons and Kerrblades. Now they've gone and proved us right. This particle beam weaponry is extremely advanced, a quantum leap above the plasma weapons, miniaturised far beyond our ability to duplicate.\n"
@@ -5710,15 +5193,6 @@ msgstr ""
 #: ../base/ufos/research.ufo:1707
 msgid "pbeamrifle_pre_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Proposal: Alien Artifact -- Particle Beam Rifle\n"
-"\n"
-"\n"
 "Commander, we've recovered an alien rifle that fires high-energy particle beams. It's more deadly than lasers, more accurate than plasma weapons, and an extremely nasty new threat to our troops on the battlefield. Preliminary tests against our armour confirm that the aliens have seriously upgunned their troops. We need to perform more research on these weapons immediately.\n"
 "\n"
 "Please authorise this program at your earliest convenience.\n"
@@ -5726,14 +5200,11 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1713
-#: ../base/ufos/research.ufo:1745
-msgid "Proposal: Alien Artifact -- Particle Beam Rifle"
-msgstr "Proposal: Alien Artifact -- Particle Beam Rifle"
-
 #: ../base/ufos/research.ufo:1720
+#: ../base/ufos/research.ufo:1745
 #: ../base/ufos/research.ufo:1752
-msgid "Re: Alien Artifact -- Particle Beam Rifle"
-msgstr "Re: Alien Artifact -- Particle Beam Rifle"
+msgid "Alien Artifact - Particle Beam Rifle"
+msgstr "Alien Artifact - Particle Beam Rifle"
 
 #: ../base/ufos/research.ufo:1771
 msgid "pbeam_ammo_txt"
@@ -5744,12 +5215,9 @@ msgid "pbeam_ammo_pre_txt"
 msgstr "No pre research info available"
 
 #: ../base/ufos/research.ufo:1778
-msgid "Proposal: Man-Portable Particle Beams"
-msgstr "Proposal: Man-Portable Particle Beams"
-
 #: ../base/ufos/research.ufo:1785
-msgid "Re: Man-Portable Particle Beams"
-msgstr "Re: Man-Portable Particle Beams"
+msgid "Man-Portable Particle Beams"
+msgstr "Man-Portable Particle Beams"
 
 #: ../base/ufos/research.ufo:1807
 msgid "combat_armor_txt"
@@ -5795,15 +5263,6 @@ msgstr ""
 #: ../base/ufos/research.ufo:1821
 msgid "nano_armor_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Re: Nanocomposite Armour\n"
-"\n"
-"\n"
 "Commander, I would like to report the success of our nanocomposite production research!\n"
 "\n"
 "I won't bore you with the intricacies of CNT production; suffice it to say that, by close study of the telltale traces left by alien production lines, we've been able to identify some of their processes. Apparently they use some kind of plasma furnace in order to spin, shape and press the nanotubes into a latticework pattern. We've been able to create a prototype furnace of our own, and have made various modifications to our nanotube production methods based on the alien examples. The result is a significant increase in power efficiency and production volume.\n"
@@ -5823,15 +5282,6 @@ msgstr ""
 #: ../base/ufos/research.ufo:1822
 msgid "nano_armor_pre_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Proposal: Nanocomposite Armour\n"
-"\n"
-"\n"
 "Our examination of the alien body armour has led us to many interesting realisations. Obviously, the key to creating more effective mobile armour based on the alien suits lies in the direction of nanocomposites. This will require large amounts of carbon nanotubes.\n"
 "\n"
 "In the past, carbon nanotubes have been difficult and expensive to produce, and trying to work them into a proper shape was even worse. Because of this nanocomposite armour has never been used except in high-cost vehicles such as aircraft and tanks, and then only in plating that requires minimal shaping or other work. The alien armour, however, uses carbon nanotube composites in abundance. It's our manufacturing processes that are holding us back.\n"
@@ -5845,15 +5295,6 @@ msgstr ""
 #: ../base/ufos/research.ufo:1837
 msgid "alien_body_armour_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Re: Alien Artifact -- Alien Body Armour\n"
-"\n"
-"\n"
 "Commander, we've got a full report on the alien armour for you.\n"
 "\n"
 "It was something of a surprise to learn that the alien armour is made of a composite of plastics and carbon containing no metal whatsoever. In fact, the most important element is something with which humanity is already well-acquainted: carbon nanotubes. Carbon nanotubes (also known as CNTs or 'buckytubes') are cylindrical carbon molecules that are incredibly strong, one of the strongest materials known to humankind. They have been relatively little-used on Earth because of their extreme cost. No economical means of mass-production has been found to date, restricting their use to the most expensive programs on Earth, such as aeronautics and space exploration.\n"
@@ -5871,15 +5312,6 @@ msgstr ""
 #: ../base/ufos/research.ufo:1838
 msgid "alien_body_armour_pre_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Alien Artifact -- Alien Body Armour\n"
-"\n"
-"\n"
 "Commander, we've recovered a suit of alien body armour from the battlefield. This armour has been a plague to our soldiers due to its very high resistance to various types of damage; aliens wearing it have shrugged off shots that would have torn their unarmoured friends apart. It's not surprising that we still haven't managed to cut it open to perform an initial survey of its composition. We should investigate the armour's weaknesses as soon as we can, and perhaps ascertain a way to adapt it for our own uses.\n"
 "\n"
 "This project will require a moderate amount of lab time and funding. Work will start as soon as we have your authorisation, Commander.\n"
@@ -6770,15 +6202,6 @@ msgstr ""
 #: ../base/ufos/research.ufo:2434
 msgid "ufo_scout_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Re: UFO -- Scout\n"
-"\n"
-"\n"
 "Commander, my team and I have finished our analysis of the small UFO we captured. It's a real miracle of engineering, and we're all looking forward to getting a chance to sink our own hooks into all this lovely technology.\n"
 "\n"
 "The craft's strange construction has raised a lot of questions for us to answer. Much of the design seems to make little sense when viewed from the ground. However, now that we've managed to look 'under the hood' and test the alien hull materials under laboratory conditions, we have gained a far clearer picture of UFO capabilities. I've made a list of our most important discoveries.\n"
@@ -6816,39 +6239,13 @@ msgstr ""
 #: ../base/ufos/research.ufo:2435
 msgid "ufo_scout_pre_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: UFO -- Scout\n"
-"\n"
-"\n"
 "Commander, we've recovered a new UFO type which is now waiting in our hangar for disassembly. We're ready to start studying and dismantling the craft whenever you say, but we will need some lab time and funding to make a proper assessment of its function and capabilities.\n"
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:2442
-msgid "UFO -- Scout"
-msgstr "UFO -- Scout"
-
-#: ../base/ufos/research.ufo:2449
-msgid "Re: UFO -- Scout"
-msgstr "Re: UFO -- Scout"
-
 #: ../base/ufos/research.ufo:2481
 msgid "ufo_fighter_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Re: UFO -- Fighter\n"
-"\n"
-"\n"
 "Commander, my team and I have just finished another UFO report for you. Here is my summary for your review.\n"
 "\n"
 "The Fighter craft seems to serve the role of escort to alien harvesting expeditions and similar operations. It is frequently deployed as a Harvester UFO's fighter wing, or even as a diversion to mask some other mission somewhere else.\n"
@@ -6882,45 +6279,21 @@ msgstr ""
 #: ../base/ufos/research.ufo:2482
 msgid "ufo_fighter_pre_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: UFO -- Fighter\n"
-"\n"
-"\n"
 "Commander, we've recovered a new UFO type which is now waiting in our hangar for disassembly. Recovering a Fighter-class UFO has been one of the things we at DivEngine have been praying for. This is the first armed combat UFO that PHALANX has observed; it is vital that we study these alien craft and weapons and learn their weaknesses, if they have any.\n"
 "\n"
 "We're ready to start studying and dismantling the craft whenever you say, but we will need some lab time and funding to make a proper assessment of its function and capabilities.\n"
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:2489
-msgid "UFO -- Fighter"
-msgstr "UFO -- Fighter"
-
-#: ../base/ufos/research.ufo:2496
-msgid "Re: UFO -- Fighter"
-msgstr "Re: UFO -- Fighter"
-
 #: ../base/ufos/research.ufo:2522
+#: ../base/ufos/research.ufo:2531
+#: ../base/ufos/research.ufo:2538
 msgid "UFO - Harvester"
 msgstr "UFO - Harvester"
 
 #: ../base/ufos/research.ufo:2523
 msgid "ufo_harvester_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Re: UFO -- Harvester\n"
-"\n"
-"\n"
 "Commander, my team and I have just finished another UFO report for you. Here is my summary for your review.\n"
 "\n"
 "This craft -- which we've dubbed the 'Harvester' -- appears designed specifically for landing on a planetary surface and deploying an alien harvesting party. It is equipped with a set of large, sturdy landing legs and a special set of thrusters located in the UFO's belly to give it VTOL (Vertical Take-Off and Landing) capability. Once the landed Harvester's crew has collected enough captives, corpses and other biomass, they return to the UFO and lift off into orbit, quickly disappearing back to wherever it is they came from.\n"
@@ -6954,28 +6327,11 @@ msgstr ""
 #: ../base/ufos/research.ufo:2524
 msgid "ufo_harvester_pre_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: UFO -- Harvester\n"
-"\n"
-"\n"
 "Commander, we've recovered a new UFO type which is now waiting in our hangar for disassembly. This one is significantly larger than previous UFOs we've observed and seems to be the centre of many alien formations, making it an especially important target for our research. Uncovering the craft's purpose and examining its special equipment may give us essential new insights into the aliens' mission here on Earth.\n"
 "\n"
 "We're ready to start studying and dismantling the craft whenever you say, but we will need some lab time and funding to make a proper assessment of its function and capabilities.\n"
 "\n"
 "--Cdr. Navarre"
-
-#: ../base/ufos/research.ufo:2531
-msgid "UFO -- Harvester"
-msgstr "UFO -- Harvester"
-
-#: ../base/ufos/research.ufo:2538
-msgid "Re: UFO -- Harvester"
-msgstr "Re: UFO -- Harvester"
 
 #: ../base/ufos/research.ufo:2564
 msgid "Live Specimen - Bloodspider"
@@ -7006,21 +6362,14 @@ msgid "bloodspider_notes_pre_txt"
 msgstr "No pre research info available"
 
 #: ../base/ufos/research.ufo:2582
+#: ../base/ufos/research.ufo:2591
+#: ../base/ufos/research.ufo:2598
 msgid "Alien Autopsy - Bloodspider"
 msgstr "Alien Autopsy - Bloodspider"
 
 #: ../base/ufos/research.ufo:2583
 msgid "bloodspider_autopsy_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Re: Alien Autopsy -- Bloodspider\n"
-"\n"
-"\n"
 "Commander,\n"
 "\n"
 "My team has analysed the remains of the arachnid machine our operatives brought back, and we have prepared a summary for your review.\n"
@@ -7044,15 +6393,6 @@ msgstr ""
 #: ../base/ufos/research.ufo:2584
 msgid "bloodspider_autopsy_pre_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Proposal: Alien Autopsy -- Bloodspider\n"
-"\n"
-"\n"
 "Commander,\n"
 "\n"
 "We've recovered a new alien corpse from the battlefield. We should begin dissection and assessment as soon as possible.\n"
@@ -7061,30 +6401,15 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:2591
-msgid "Proposal: Alien Autopsy -- Bloodspider"
-msgstr "Proposal: Alien Autopsy -- Bloodspider"
-
-#: ../base/ufos/research.ufo:2598
-msgid "Re: Alien Autopsy -- Bloodspider"
-msgstr "Re: Alien Autopsy -- Bloodspider"
-
 #: ../base/ufos/research.ufo:2617
+#: ../base/ufos/research.ufo:2626
+#: ../base/ufos/research.ufo:2633
 msgid "Alien Autopsy - Ortnok"
 msgstr "Alien Autopsy - Ortnok"
 
 #: ../base/ufos/research.ufo:2618
 msgid "ortnok_autopsy_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Re: Alien Autopsy -- Ortnok\n"
-"\n"
-"\n"
 "Commander,\n"
 "\n"
 "The autopsy and evaluation of the green alien specimen is complete. I'm hereby submitting my summary for your review.\n"
@@ -7122,15 +6447,6 @@ msgstr ""
 #: ../base/ufos/research.ufo:2619
 msgid "ortnok_autopsy_pre_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Proposal: Alien Autopsy -- Ortnok\n"
-"\n"
-"\n"
 "Commander,\n"
 "\n"
 "We've recovered a new alien corpse from the battlefield. We should begin dissection and assessment as soon as possible.\n"
@@ -7139,30 +6455,15 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:2626
-msgid "Proposal: Alien Autopsy -- Ortnok"
-msgstr "Proposal: Alien Autopsy -- Ortnok"
-
-#: ../base/ufos/research.ufo:2633
-msgid "Re: Alien Autopsy -- Ortnok"
-msgstr "Re: Alien Autopsy -- Ortnok"
-
 #: ../base/ufos/research.ufo:2653
+#: ../base/ufos/research.ufo:2662
+#: ../base/ufos/research.ufo:2669
 msgid "Alien Autopsy - Taman"
 msgstr "Alien Autopsy - Taman"
 
 #: ../base/ufos/research.ufo:2654
 msgid "taman_autopsy_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Re: Alien Autopsy -- Taman\n"
-"\n"
-"\n"
 "Commander,\n"
 "\n"
 "My team and I have completed our autopsy of the 'grey' body we recovered. Here is my summary of our findings.\n"
@@ -7202,15 +6503,6 @@ msgstr ""
 #: ../base/ufos/research.ufo:2655
 msgid "taman_autopsy_pre_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Proposal: Alien Autopsy -- Taman\n"
-"\n"
-"\n"
 "Commander,\n"
 "\n"
 "We've recovered a new alien corpse from the battlefield. We should begin dissection and assessment as soon as possible.\n"
@@ -7219,30 +6511,15 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:2662
-msgid "Proposal: Alien Autopsy -- Taman"
-msgstr "Proposal: Alien Autopsy -- Taman"
-
-#: ../base/ufos/research.ufo:2669
-msgid "Re: Alien Autopsy -- Taman"
-msgstr "Re: Alien Autopsy -- Taman"
-
 #: ../base/ufos/research.ufo:2687
+#: ../base/ufos/research.ufo:2696
+#: ../base/ufos/research.ufo:2703
 msgid "Alien Autopsy - Shevaar"
 msgstr "Alien Autopsy - Shevaar"
 
 #: ../base/ufos/research.ufo:2688
 msgid "shevaar_autopsy_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Re: Alien Autopsy -- Shevaar\n"
-"\n"
-"\n"
 "Commander,\n"
 "\n"
 "Our autopsy of this new alien -- the Shevaar -- has been very interesting. It's a significant departure from the more humanoid Tamans and Ortnoks, possessing digitigrade legs and a small tail that seems to be a remnant of this species's continuing evolution. The creature also appears to be completely blind. It lacks eyes and any other kind of organ that could be used to process visual light. However, it seems to have other interesting organs to make up for this deficiency.\n"
@@ -7280,15 +6557,6 @@ msgstr ""
 #: ../base/ufos/research.ufo:2689
 msgid "shevaar_autopsy_pre_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Proposal: Alien Autopsy -- Shevaar\n"
-"\n"
-"\n"
 "Commander,\n"
 "\n"
 "We've recovered a new alien corpse from the battlefield. We should begin dissection and assessment as soon as possible.\n"
@@ -7296,14 +6564,6 @@ msgstr ""
 "Sincerely,\n"
 "\n"
 "Dr. Connor"
-
-#: ../base/ufos/research.ufo:2696
-msgid "Proposal: Alien Autopsy -- Shevaar"
-msgstr "Proposal: Alien Autopsy -- Shevaar"
-
-#: ../base/ufos/research.ufo:2703
-msgid "Re: Alien Autopsy -- Shevaar"
-msgstr "Re: Alien Autopsy -- Shevaar"
 
 #: ../base/ufos/research.ufo:2775
 msgid "Phoenix UGV"
@@ -7747,21 +7007,14 @@ msgstr ""
 "None."
 
 #: ../base/ufos/research.ufo:2975
+#: ../base/ufos/research.ufo:2985
+#: ../base/ufos/research.ufo:2992
 msgid "Particle Beam Weapon"
 msgstr "Particle Beam Weapon"
 
 #: ../base/ufos/research.ufo:2976
 msgid "craft_weapon_particle_beam_pre_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Proposal: Particle Beam Weapon\n"
-"\n"
-"\n"
 "Commander, one of the UFOs we've recovered was equipped with a very interesting type of weapon that we'd like to research right away. It seems to fire some kind of high-velocity particle beam; if we can master this technology, or at least adapt it for use on our own aircraft, we could make air engagements with armed alien craft significantly more survivable for our craft and pilots.\n"
 "\n"
 "--Cdr. Navarre"
@@ -7769,15 +7022,6 @@ msgstr ""
 #: ../base/ufos/research.ufo:2977
 msgid "craft_weapon_particle_beam_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Re: Particle Beam Weapon\n"
-"\n"
-"\n"
 "Our report on the alien PBW (Particle Beam Weapon) is ready for your review, Commander.\n"
 "\n"
 "The general idea of particle-beam weaponry is to hit a target object with a stream of accelerated particles moving at near-light velocities, therefore carrying tremendous kinetic energy. The alien weapon is an elegantly simple application of this concept. It is essentially nothing more than a big particle accelerator and a set of focusing equipment, consisting of a high-powered magnetic containment and pinch system.\n"
@@ -7793,14 +7037,6 @@ msgstr ""
 "On a brighter note, we've confirmed that all the weapon's components are within our ability to replicate, and their specs have been loaded into our Workshop machinery. We should be able to begin production straight away.\n"
 "\n"
 "--Cdr. Navarre"
-
-#: ../base/ufos/research.ufo:2985
-msgid "Proposal: Particle Beam Weapon"
-msgstr "Proposal: Particle Beam Weapon"
-
-#: ../base/ufos/research.ufo:2992
-msgid "Re: Particle Beam Weapon"
-msgstr "Re: Particle Beam Weapon"
 
 #: ../base/ufos/research.ufo:3013
 msgid "Targeting Computer"
@@ -7893,15 +7129,6 @@ msgstr "Alien Materials"
 #: ../base/ufos/research.ufo:3050
 msgid "alienmaterials_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Re: Alien Materials\n"
-"\n"
-"\n"
 "Commander, I think we've uncovered the secret to the alien materials. After some modifications to our Workshop equipment, we should now be able to reproduce the stuff and 'program' it into advanced new shapes.\n"
 "\n"
 "As I've mentioned before, the alien materials form a 'memory alloy', remembering several shapes that it can change into if the materials are given the right stimulus. Amazingly, the alien alloy can be stimulated by two different things: heat and electricity. Heat is an obvious choice to make the UFO fuselage splay out during atmospheric flight, to provide better lift. Electricity, though, is a new one.\n"
@@ -7919,15 +7146,6 @@ msgstr ""
 #: ../base/ufos/research.ufo:3051
 msgid "alienmaterials_pre_txt"
 msgstr ""
-"TO: Base Commander, PHALANX, Atlantic Operations Command\n"
-"\n"
-"FROM: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
-"\n"
-"DATE: %02i %s %i\n"
-"\n"
-"SUB: Proposal: Alien Materials\n"
-"\n"
-"\n"
 "Commander, as I mentioned in my previous report, the Scout UFO was plated with a highly interesting alloy which blends plastic and metal together into a single material. These materials seem to be used almost universally throughout the alien technology base. It's advanced stuff, massively versatile and with a thousand possible uses.\n"
 "\n"
 "I think it warrants the research to see if we can reproduce this stuff in our Workshops, but even if we can't, it seems likely we'll be getting our hands on large quantities of it with every UFO we salvage. We'll definitely be able to find new, human applications for it that will extend and expand our combat capabilites.\n"
@@ -8068,7 +7286,7 @@ msgstr ""
 "\n"
 "The cost was high. The conquered parts of India were a wasteland, the country had no government left after the nuking of New Delhi, and famines were already starting to grip the population. It began ceding worthless parts of land to other nations and gave independence to several small regions along its border. The remaining Commonwealth nations undertook the vast task of reconstructing India, though many abandoned the project and the Commonwealth in favour of the other growing superpowers.\n"
 "\n"
-"The reconstruction of India eventually united the Commonwealth into one great nation, taking advantage of their geographic location around the Indian Ocean and the South Pacific to charge strategic tariffs for ships passing through their waters. Commonwealth shipping, on the other hand, was free from tariffs and quickly rose to dominance in the competitive market. Later, with the breaking of the diamond cartels in Africa, the Commonwealth seized several leaderless mines inside its borders and used them to their full.\n"
+"The reconstruction of India eventually united the Commonwealth into one great nation, taking advantage of their geographic location around the Indian Ocean and the South Pacific to charge strategic tariffs for ships passing through their waters. Commonwealth shipping, on the other hand, was free from tariffs and quickly rose to dominance in the competitive market. Later, with the breaking of the diamond cartels in Africa, the Commonwealth seized several leaderless mines inside its borders and used them to their full potential.\n"
 "\n"
 "Today, the Commonwealth of Nations is better known as the 'Commonwealth of Oceania' or just 'Oceania'. Since its inception it has accepted several non-Commonwealth countries into its midst, notably Madagascar, Zimbabwe and Indonesia, extending its control over the Oceanian waters. While it still can't compete economically with the richer nations, it has carved out its own niche, and is quite happy to go on prospering in it.\n"
 "\n"
@@ -8116,7 +7334,28 @@ msgstr "A New Twist"
 
 #: ../base/ufos/research.ufo:3105
 msgid "news_newtwist_txt"
-msgstr "<TODO>"
+msgstr ""
+"Commander,\n"
+"\n"
+"New information has come to light during the last batch of autopsies you requested. Our reports stand, but we've discovered a commonality that may give us some new insight into the aliens' diversity.\n"
+"\n"
+"During our first analyses of the aliens' cellular structure, we encountered some anomalies where our DNA replication tests would fail due to unexplained sample contamination. We initially discarded this as human error, but the problem has continued to appear with surprising regularity. The same result, again and again; every time we run a sample that hasn't been cryofrozen for storage, we have difficulty extracting a single uncontaminated sequence. I spent some of my off hours studying the problem, and I believe I've found the cause.\n"
+"\n"
+"The simplest explanation is this: There are two types of DNA present in our blood samples. The foreign DNA's prevalence is total; these sequences can be found in every member of the Taman species, and closer study has confirmed that similar sequences exist in the blood of other species we've recovered. The source seems to be a kind of single-cellular organism present in huge numbers in the alien bloodstream. There are several versions of it, one for each species of alien, and they all share remarkable DNA similarities. Interestingly, although these organisms all have an identical number of chromosomes, none of them can survive in a body that is not a member of its source species. Also curious is the fact that there are absolutely no variations in DNA between organisms of the same version. This leads us to believe that the different versions may have been engineered -- wholly or in part -- to suit the individual species.\n"
+"\n"
+"We now surmise that all aliens carry a version of this micro-organic infection. The organism's function is not readily apparent. We've run tests on various experimental tissue samples, both infected and control specimens. The infected tissues do not appear to suffer any negative effects -- or positive ones, for that matter -- from the organism's presence. They are essentially indistinguishable from uninfected tissues. Since the organism requires a living host for its own survival, it seems to be either a parasite or a symbiote with currently unobserved benefits.\n"
+"\n"
+"We have dubbed this organism the EXtraterrestrial Viral Infection, or XVI. This may be somewhat of a misnomer in microbiological terms; XVI is far more complex than any terrestrial virus, but it acts and replicates exactly like one. Therefore we feel the term is warranted. As each alien species carries a unique strand of the infection, we have given them alphabetical designations after the source species in which the strand can be found. Tamans have XVI-T, Shevaar have XVI-S, and so forth.\n"
+"\n"
+"The infection's purpose remains nebulous at this point, but it is the only thing we've found so far that binds these diverse races together physically. We can only assume that new strands of the infection were engineered to suit each species.\n"
+"\n"
+"There is no indication that this organism is contagious for humans. When injecting cultures of human tissue with fresh alien blood, we have observed the alien blood being completely rejected, as expected. Unexpectedly, however, any trace of the infection was subsequently annihilated by standard human T cells. The organism was unable to deactivate our immune system in order to take root.\n"
+"\n"
+"We currently do not believe the XVI organism poses a threat to our soldiers on the battlefield. However, we will continue research and keep you updated about any developments. A thorough blood screening of all our personnel is in progress, just in case, and standard quarantine procedures will be maintained throughout the lab.\n"
+"\n"
+"Sincerely,\n"
+"\n"
+"Dr. Connor"
 
 #: ../base/ufos/seq_credits.ufo:54
 #: ../base/ufos/seq_credits.ufo:100
@@ -8287,35 +7526,43 @@ msgstr "Finally: The attack on the alien base ..."
 
 #: ../base/ufos/seq_intro.ufo:8
 msgid "intro_sentence1"
-msgstr "It is the year 2084. Earth, never the most stable of places, enjoys a time of relative peace. The violent beginnings of the 21st century are far away now; distant memories, but not so distant that they've been forgotten. To most of Earth's people, the Second Cold War is a dark shadow from the past, much like the World Wars were to the children of the late 20th."
+msgstr ""
+"It is the year 2084. Earth, never the most stable of places, enjoys a time of relative peace. The violent beginnings of the 21st century are far away now; distant memories, but not so distant that they've been forgotten. To most of Earth's people, the Second Cold War is a dark shadow from the past, much like the World Wars were to the children of the late 20th."
 
 #: ../base/ufos/seq_intro.ufo:16
 msgid "intro_sentence2"
-msgstr "Conflicts have gotten rarer near the end of the century as new technology and universal health-care finally became available to the third world. Even the fires of terrorism have cooled in the wake of the Second Cold War, with its horrors and inhumanities still fresh in the minds of the people, from the old United States to the ravaged Indian subcontinent. Class struggles are ascending to the political battlefield now that every nation is guaranteed fair representation in the UN, and the global standard of living is slowly on the rise down to the most impoverished corners of the planet. Countries have solidified, stabilised around a restructured United Nations that successfully polices the world governments. Fragmented clumps of smaller nations, frightened at first by the vast power blocks accumulating around China and the European Union, have banded together into powerful political leagues of their own -- then found themselves with no neighbours they could safely fight. For the first time in the history of mankind, there is law and order across more than three quarters of the world."
+msgstr ""
+"Conflicts have gotten rarer near the end of the century as new technology and universal health-care finally became available to the third world. Even the fires of terrorism have cooled in the wake of the Second Cold War, with its horrors and inhumanities still fresh in the minds of the people, from the old United States to the ravaged Indian subcontinent. Class struggles are ascending to the political battlefield now that every nation is guaranteed fair representation in the UN, and the global standard of living is slowly on the rise down to the most impoverished corners of the planet. Countries have solidified, stabilised around a restructured United Nations that successfully polices the world governments. Fragmented clumps of smaller nations, frightened at first by the vast power blocks accumulating around China and the European Union, have banded together into powerful political leagues of their own -- then found themselves with no neighbours they could safely fight. For the first time in the history of mankind, there is law and order across more than three quarters of the world."
 
 #: ../base/ufos/seq_intro.ufo:24
 msgid "intro_sentence3"
-msgstr "To many people on Earth, it seems like things are going all right."
+msgstr ""
+"To many people on Earth, it seems like things are going all right."
 
 #: ../base/ufos/seq_intro.ufo:32
 msgid "intro_sentence4"
-msgstr "The first attack hits the city of Mumbai on the 3rd of March, 2084. Six small UFOs appear out of nowhere and come screaming down from orbit, undetected by the vast radar installations covering the skies over Mumbai, and set down in the single most densely-populated city on Earth. They offer no warning, no explanation. Twenty thousand innocent civilians and three battalions of elite troops are massacred over the course of twelve brutal hours before massed Commonwealth soldiers manage to bring the aliens' advance to a standstill. Then, as suddenly as they appeared, they retreat to their craft and vanish back into orbit, leaving only the ravaged streets of Mumbai as evidence."
+msgstr ""
+"The first attack hits the city of Mumbai on the 3rd of March, 2084. Six small UFOs appear out of nowhere and come screaming down from orbit, undetected by the vast radar installations covering the skies over Mumbai, and set down in the single most densely-populated city on Earth. They offer no warning, no explanation. Twenty thousand innocent civilians and three battalions of elite troops are massacred over the course of twelve brutal hours before massed Commonwealth soldiers manage to bring the aliens' advance to a standstill. Then, as suddenly as they appeared, they retreat to their craft and vanish back into orbit, leaving only the ravaged streets of Mumbai as evidence."
 
 #: ../base/ufos/seq_intro.ufo:40
 msgid "intro_sentence5"
-msgstr "An emergency meeting of the UN provides no conclusive direction. The incursions continue faster, larger and more savage than before, this time in Bonn, Johannesburg and Bangkok. Some nations attempt diplomacy, sending messages in a thousand different languages to the aliens ravaging across the countryside. Their words are ignored. Within hours, all three cities are emptied of human life. The attack is over by the time the various militaries are given permission to strike back. The aliens leave nothing behind them but concrete and blood. All the UFOs disappear without a trace -- but no one doubts they'll be back."
+msgstr ""
+"An emergency meeting of the UN provides no conclusive direction. The incursions continue faster, larger and more savage than before, this time in Bonn, Johannesburg and Bangkok. Some nations attempt diplomacy, sending messages in a thousand different languages to the aliens ravaging across the countryside. Their words are ignored. Within hours, all three cities are emptied of human life. The attack is over by the time the various militaries are given permission to strike back. The aliens leave nothing behind them but concrete and blood. All the UFOs disappear without a trace -- but no one doubts they'll be back."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence6"
-msgstr "Eighty-seven hours after the initial attack on Mumbai, Earth declares war. For two weeks, the armies of humanity each try to fend off the mysterious alien attackers to the best of their ability. They score precious few successes."
+msgstr ""
+"Eighty-seven hours after the initial attack on Mumbai, Earth declares war. For two weeks, the armies of humanity each try to fend off the mysterious alien attackers to the best of their ability. They score precious few successes."
 
 #: ../base/ufos/seq_intro.ufo:56
 msgid "intro_sentence7"
-msgstr "Left with only one alternative, the UN takes action. Ancient equipment is dusted off, some of it more than a century old, and the long-defunct anti-extraterrestrial agency of the former United States -- PHALANX -- is resurrected under a new UN banner. Its sworn duty is to combat the alien threat, and to ensure the survival of the human race at all costs."
+msgstr ""
+"Left with only one alternative, the UN takes action. Ancient equipment is dusted off, some of it more than a century old, and the long-defunct anti-extraterrestrial agency of the former United States -- PHALANX -- is resurrected under a new UN banner. Its sworn duty is to combat the alien threat, and to ensure the survival of the human race at all costs."
 
 #: ../base/ufos/seq_intro.ufo:64
 msgid "intro_sentence8"
-msgstr "Funded by all eight of the political powers, and drawing its soldiers from the elite of their armies, PHALANX is the best of the best. It is Earth's first and only line of defence. It can't afford to fail; because if it does, humanity doesn't stand a chance."
+msgstr ""
+"Funded by all eight of the political powers, and drawing its soldiers from the elite of their armies, PHALANX is the best of the best. It is Earth's first and only line of defence. It can't afford to fail; because if it does, humanity doesn't stand a chance."
 
 #: ../base/ufos/seq_intro.ufo:73
 #: ../base/ufos/seq_intro.ufo:192
@@ -8324,43 +7571,53 @@ msgstr "Click to continue"
 
 #: ../base/ufos/seq_intro.ufo:100
 msgid "prolog_sentence1"
-msgstr "TO: Base Commander, PHALANX, Atlantic Operations Command"
+msgstr ""
+"TO: Base Commander, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/seq_intro.ufo:110
 msgid "prolog_sentence2"
-msgstr "FROM: SecGen. Mahouf Serra, United Nations, New York City"
+msgstr ""
+"FROM: SecGen. Mahouf Serra, United Nations, New York City"
 
 #: ../base/ufos/seq_intro.ufo:119
 msgid "prolog_sentence3"
-msgstr "DATE: 21 March 2084"
+msgstr ""
+"DATE: 21 March 2084"
 
 #: ../base/ufos/seq_intro.ufo:128
 msgid "prolog_sentence4"
-msgstr "SUB: Good Luck"
+msgstr ""
+"SUB: Good Luck"
 
 #: ../base/ufos/seq_intro.ufo:137
 msgid "prolog_sentence5"
-msgstr "Welcome to your new post, Commander. You now have full command over the PHALANX Extraterrestrial Response Unit. Your mission is to protect the citizens of Earth and stop the alien threat at all costs. How you accomplish this is up to you; our only requirement is that you succeed."
+msgstr ""
+"Welcome to your new post, Commander. You now have full command over the PHALANX Extraterrestrial Response Unit. Your mission is to protect the citizens of Earth and stop the alien threat at all costs. How you accomplish this is up to you; our only requirement is that you succeed."
 
 #: ../base/ufos/seq_intro.ufo:146
 msgid "prolog_sentence6"
-msgstr "Your first order of business is to set up a headquarters. The UN has access to military bases all over the world, so you may consider any region for your base of operations. Choose the location wisely, because it will have great influence on the success of the PHALANX project."
+msgstr ""
+"Your first order of business is to set up a headquarters. The UN has access to military bases all over the world, so you may consider any region for your base of operations. Choose the location wisely, because it will have great influence on the success of the PHALANX project."
 
 #: ../base/ufos/seq_intro.ufo:155
 msgid "prolog_sentence7"
-msgstr "A recent analysis of the attacks on Mumbai and Bonn reveal that UFO sightings and alien activity seems to focus on the most densely populated regions of Earth, including coastal North- and South-America, Europe, Eastasia, South and Mediterranean Africa, and Australia. You should consider including these territories in your field of operations."
+msgstr ""
+"A recent analysis of the attacks on Mumbai and Bonn reveal that UFO sightings and alien activity seems to focus on the most densely populated regions of Earth, including coastal North- and South-America, Europe, Eastasia, South and Mediterranean Africa, and Australia. You should consider including these territories in your field of operations."
 
 #: ../base/ufos/seq_intro.ufo:164
 msgid "prolog_sentence8"
-msgstr "Once you've established your first base, you must prepare your soldiers. The recruits we have assigned to PHALANX must be stationed on your dropship, then equipped for battle."
+msgstr ""
+"Once you've established your first base, you must prepare your soldiers. The recruits we have assigned to PHALANX must be stationed on your dropship, then equipped for battle."
 
 #: ../base/ufos/seq_intro.ufo:173
 msgid "prolog_sentence9"
-msgstr "Take care of them, Commander. The rest of us are all counting on you, and praying for you."
+msgstr ""
+"Take care of them, Commander. The rest of us are all counting on you, and praying for you."
 
 #: ../base/ufos/seq_intro.ufo:182
 msgid "prolog_sentence10"
-msgstr "That is all. Good luck and good hunting."
+msgstr ""
+"That is all. Good luck and good hunting."
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"
@@ -8795,18 +8052,6 @@ msgstr "Cannonade"
 msgid "Precision Shot"
 msgstr "Precision Shot"
 
-#: ../base/ufos/weapons_laser.ufo:6
-msgid "Laser Pistol"
-msgstr "Laser Pistol"
-
-#: ../base/ufos/weapons_laser.ufo:81
-msgid "Laser Rifle"
-msgstr "Laser Rifle"
-
-#: ../base/ufos/weapons_laser.ufo:103
-msgid "Heavy Laser"
-msgstr "Heavy Laser"
-
 #: ../base/ufos/weapons_laser.ufo:175
 msgid "D-F Cartridge"
 msgstr "D-F Cartridge"
@@ -8841,10 +8086,6 @@ msgstr "Monomolecular Knife"
 #: ../base/ufos/weapons_melee.ufo:203
 msgid "Slash"
 msgstr "Slash"
-
-#: ../base/ufos/weapons_melee.ufo:113
-msgid "Stun Rod"
-msgstr "Stun Rod"
 
 #: ../base/ufos/weapons_melee.ufo:131
 msgid "Stun Charge"
@@ -9199,13 +8440,13 @@ msgstr "Aircraft started"
 #: client/cl_research.c:828
 #: client/cl_research.c:864
 #: client/cl_research.c:1014
-#: client/cl_transfer.c:239
-#: client/cl_transfer.c:363
-#: client/cl_transfer.c:418
-#: client/cl_transfer.c:471
-#: client/cl_transfer.c:492
-#: client/cl_transfer.c:503
-#: client/cl_transfer.c:535
+#: client/cl_transfer.c:241
+#: client/cl_transfer.c:365
+#: client/cl_transfer.c:420
+#: client/cl_transfer.c:473
+#: client/cl_transfer.c:494
+#: client/cl_transfer.c:505
+#: client/cl_transfer.c:537
 #: client/cl_ufo.c:194
 #: client/cl_ufo.c:199
 msgid "Notice"
@@ -9275,6 +8516,8 @@ msgstr "Fuel:\t%i/%i\n"
 #: client/cl_aircraft.c:410
 #: client/cl_aircraft.c:411
 #: client/cl_aircraft.c:412
+#: client/cl_transfer.c:836
+#: client/cl_transfer.c:837
 #: client/cl_ufopedia.c:297
 #: client/cl_ufopedia.c:324
 #: client/cl_ufopedia.c:325
@@ -9435,7 +8678,7 @@ msgid "Transfer is not possible - the base doesn't have a storage building"
 msgstr "Transfer is not possible - the base doesn't have a storage building"
 
 #: client/cl_basemanagement.c:2266
-#: client/cl_transfer.c:164
+#: client/cl_transfer.c:165
 msgid "Transfer is not possible - the base doesn't have quarters"
 msgstr "Transfer is not possible - the base doesn't have quarters"
 
@@ -9444,7 +8687,7 @@ msgid "Transfer is not possible - the base doesn't have a lab"
 msgstr "Transfer is not possible - the base doesn't have a lab"
 
 #: client/cl_basemanagement.c:2292
-#: client/cl_transfer.c:195
+#: client/cl_transfer.c:198
 msgid "Transfer is not possible - the base doesn't have an alien containment"
 msgstr "Transfer is not possible - the base doesn't have an alien containment"
 
@@ -9473,8 +8716,8 @@ msgid "The base doesn't have an alien containment - can't unload the aliens here
 msgstr "The base doesn't have an alien containment - can't unload the aliens here"
 
 #: client/cl_basemanagement.c:2421
-#: client/cl_transfer.c:371
-#: client/cl_transfer.c:382
+#: client/cl_transfer.c:373
+#: client/cl_transfer.c:384
 msgid "Transport mission"
 msgstr "Transport mission"
 
@@ -9483,47 +8726,47 @@ msgid "Transport mission ended, returning to homebase now"
 msgstr "Transport mission ended, returning to homebase now"
 
 #: client/cl_basemanagement.c:2443
-#: client/cl_transfer.c:418
+#: client/cl_transfer.c:420
 msgid "Can't start the transport mission while we are not in the homebase"
 msgstr "Can't start the transport mission while we are not in the homebase"
 
 #: client/cl_basemanagement.c:2469
-#: client/cl_transfer.c:447
+#: client/cl_transfer.c:449
 msgid "No target base selected"
 msgstr "No target base selected"
 
 #: client/cl_basemanagement.c:2469
-#: client/cl_transfer.c:447
+#: client/cl_transfer.c:449
 msgid "Please select the target base from the list"
 msgstr "Please select the target base from the list"
 
 #: client/cl_basemanagement.c:2474
-#: client/cl_transfer.c:452
+#: client/cl_transfer.c:454
 msgid "No aircraft selected"
 msgstr "No aircraft selected"
 
 #: client/cl_basemanagement.c:2474
-#: client/cl_transfer.c:452
+#: client/cl_transfer.c:454
 msgid "Please select the aircraft to use from the list"
 msgstr "Please select the aircraft to use from the list"
 
 #: client/cl_basemanagement.c:2647
-#: client/cl_transfer.c:670
+#: client/cl_transfer.c:672
 msgid "You can transfer equipment - this base has a storage building\n"
 msgstr "You can transfer equipment - this base has a storage building\n"
 
 #: client/cl_basemanagement.c:2650
-#: client/cl_transfer.c:673
+#: client/cl_transfer.c:675
 msgid "No storage building in this base\n"
 msgstr "No storage building in this base\n"
 
 #: client/cl_basemanagement.c:2654
-#: client/cl_transfer.c:677
+#: client/cl_transfer.c:679
 msgid "You can transfer employees - this base has quarters\n"
 msgstr "You can transfer employees - this base has quarters\n"
 
 #: client/cl_basemanagement.c:2657
-#: client/cl_transfer.c:680
+#: client/cl_transfer.c:682
 msgid "No quarters in this base\n"
 msgstr "No quarters in this base\n"
 
@@ -9536,12 +8779,12 @@ msgid "No laboratory in this base\n"
 msgstr "No laboratory in this base\n"
 
 #: client/cl_basemanagement.c:2665
-#: client/cl_transfer.c:684
+#: client/cl_transfer.c:686
 msgid "You can transfer aliens - this base has alien containment\n"
 msgstr "You can transfer aliens - this base has alien containment\n"
 
 #: client/cl_basemanagement.c:2667
-#: client/cl_transfer.c:686
+#: client/cl_transfer.c:688
 msgid "No alien containment in this base\n"
 msgstr "No alien containment in this base\n"
 
@@ -10691,82 +9934,86 @@ msgstr "You lost the game"
 msgid "Better luck next time"
 msgstr "Better luck next time"
 
-#: client/cl_transfer.c:69
-#: client/cl_transfer.c:92
+#: client/cl_transfer.c:72
+#: client/cl_transfer.c:95
 #, c-format
 msgid "%s (%i on board)\n"
 msgstr "%s (%i on board)\n"
 
-#: client/cl_transfer.c:82
+#: client/cl_transfer.c:85
 #, c-format
 msgid "Corpse of %s (%i on board)\n"
 msgstr "Corpse of %s (%i on board)\n"
 
-#: client/cl_transfer.c:146
+#: client/cl_transfer.c:147
 #, c-format
 msgid "%s (%i on board, %i left)\n"
 msgstr "%s (%i on board, %i left)\n"
 
-#: client/cl_transfer.c:148
+#: client/cl_transfer.c:149
 #, c-format
 msgid "%s (%i available)\n"
 msgstr "%s (%i available)\n"
 
-#: client/cl_transfer.c:153
+#: client/cl_transfer.c:154
 msgid "Storage is empty.\n"
 msgstr "Storage is empty.\n"
 
-#: client/cl_transfer.c:156
+#: client/cl_transfer.c:157
 msgid "Transfer is not possible - the base doesn't have a storage building."
 msgstr "Transfer is not possible - the base doesn't have a storage building."
 
-#: client/cl_transfer.c:172
+#: client/cl_transfer.c:173
 #, c-format
 msgid "Corpse of %s (%i on board, %i left)\n"
 msgstr "Corpse of %s (%i on board, %i left)\n"
 
-#: client/cl_transfer.c:176
+#: client/cl_transfer.c:177
 #, c-format
 msgid "Corpse of %s (%i available)\n"
 msgstr "Corpse of %s (%i available)\n"
 
-#: client/cl_transfer.c:183
+#: client/cl_transfer.c:184
 #, c-format
 msgid "Alive %s (%i on board, %i left)\n"
 msgstr "Alive %s (%i on board, %i left)\n"
 
-#: client/cl_transfer.c:187
+#: client/cl_transfer.c:188
 #, c-format
 msgid "Alive %s (%i available)\n"
 msgstr "Alive %s (%i available)\n"
 
-#: client/cl_transfer.c:204
+#: client/cl_transfer.c:195
+msgid "Alien Containment is empty.\n"
+msgstr "Alien Containment is empty.\n"
+
+#: client/cl_transfer.c:207
 msgid "Transfer is not possible - the base doesn't have hangar"
 msgstr "Transfer is not possible - the base doesn't have hangar"
 
-#: client/cl_transfer.c:239
+#: client/cl_transfer.c:241
 msgid "Can't unload while we are not in the homebase."
 msgstr "Can't unload while we are not in the homebase."
 
-#: client/cl_transfer.c:363
+#: client/cl_transfer.c:365
 msgid "The base does not exist anymore."
 msgstr "The base does not exist anymore."
 
-#: client/cl_transfer.c:372
+#: client/cl_transfer.c:374
 msgid "Transport mission ended, returning to homebase now."
 msgstr "Transport mission ended, returning to homebase now."
 
-#: client/cl_transfer.c:383
+#: client/cl_transfer.c:385
 msgid "Transport mission ended, aircraft assigned to new base."
 msgstr "Transport mission ended, aircraft assigned to new base."
 
-#: client/cl_transfer.c:472
-#: client/cl_transfer.c:493
-#: client/cl_transfer.c:504
+#: client/cl_transfer.c:474
+#: client/cl_transfer.c:495
+#: client/cl_transfer.c:506
 msgid "You are transferring aircraft. You cannot use this aircraft to transfer things or employees."
 msgstr "You are transferring aircraft. You cannot use this aircraft to transfer things or employees."
 
-#: client/cl_transfer.c:536
+#: client/cl_transfer.c:538
 msgid "You are transferring stuff. You cannot use this aircraft to transfer itself."
 msgstr "You are transferring stuff. You cannot use this aircraft to transfer itself."
 
@@ -10946,28 +10193,36 @@ msgstr "Fuel:\t%i\n"
 msgid "Equipment:\t%s\n"
 msgstr "Equipment:\t%s\n"
 
-#: client/cl_ufopedia.c:363
+#: client/cl_ufopedia.c:368
+msgid "Proposal: "
+msgstr "Proposal: "
+
+#: client/cl_ufopedia.c:371
+msgid "Re: "
+msgstr "Re: "
+
+#: client/cl_ufopedia.c:379
 #, c-format
 msgid ""
 "FROM: %s\n"
 "TO: %s\n"
 "DATE: %s\n"
-"SUBJECT: %s\n"
+"SUBJECT: %s%s\n"
 msgstr ""
 "FROM: %s\n"
 "TO: %s\n"
 "DATE: %s\n"
-"SUBJECT: %s\n"
+"SUBJECT: %s%s\n"
 
-#: client/cl_ufopedia.c:448
+#: client/cl_ufopedia.c:465
 msgid "No pre-research description available."
 msgstr "No pre-research description available."
 
-#: client/cl_ufopedia.c:607
+#: client/cl_ufopedia.c:624
 msgid "Ufopedia Content"
 msgstr "Ufopedia Content"
 
-#: client/cl_ufopedia.c:662
+#: client/cl_ufopedia.c:679
 #, c-format
 msgid "Ufopedia Index: %s"
 msgstr "Ufopedia Index: %s"
@@ -11099,6 +10354,120 @@ msgstr "1 day"
 msgid "5 days"
 msgstr "5 days"
 
+#~ msgid "UFO -- Scout"
+#~ msgstr "UFO -- Scout"
+#~ msgid "UFO -- Fighter"
+#~ msgstr "UFO -- Fighter"
+#~ msgid "UFO -- Harvester"
+#~ msgstr "UFO -- Harvester"
+
+#, fuzzy
+#~ msgid "Alien Autopsy -- Bloodspider"
+#~ msgstr "Alien Autopsy - Bloodspider"
+
+#, fuzzy
+#~ msgid "Alien Autopsy -- Ortnok"
+#~ msgstr "Alien Autopsy - Ortnok"
+
+#, fuzzy
+#~ msgid "Alien Autopsy -- Taman"
+#~ msgstr "Alien Autopsy - Taman"
+
+#, fuzzy
+#~ msgid "Alien Autopsy -- Shevaar"
+#~ msgstr "Alien Autopsy - Shevaar"
+#~ msgid "Proposal: Continuous Wave Laser Operation"
+#~ msgstr "Proposal: Continuous Wave Laser Operation"
+#~ msgid "Re: Continuous Wave Laser Operation"
+#~ msgstr "Re: Continuous Wave Laser Operation"
+#~ msgid "Proposal: Antimatter"
+#~ msgstr "Proposal: Antimatter"
+#~ msgid "Re: Antimatter"
+#~ msgstr "Re: Antimatter"
+#~ msgid "Proposal: Live Alien"
+#~ msgstr "Proposal: Live Alien"
+#~ msgid "Re: Live Alien"
+#~ msgstr "Re: Live Alien"
+#~ msgid "Proposal: Alien Breathing Apparatus"
+#~ msgstr "Proposal: Alien Breathing Apparatus"
+#~ msgid "Re: Alien Breathing Apparatus"
+#~ msgstr "Re: Alien Breathing Apparatus"
+#~ msgid "Proposal: The Alien Mind"
+#~ msgstr "Proposal: The Alien Mind"
+#~ msgid "Re: The Alien Mind"
+#~ msgstr "Re: The Alien Mind"
+#~ msgid "Proposal: Odd Behaviour"
+#~ msgstr "Proposal: Odd Behaviour"
+#~ msgid "Re: Odd Behaviour"
+#~ msgstr "Re: Odd Behaviour"
+#~ msgid "Proposal: Electromagnetic Rifle"
+#~ msgstr "Proposal: Electromagnetic Rifle"
+#~ msgid "Proposal: Monomolecular Blades"
+#~ msgstr "Proposal: Monomolecular Blades"
+#~ msgid "Proposal: Plasma And The Grenade Launcher"
+#~ msgstr "Proposal: Plasma And The Grenade Launcher"
+#~ msgid "Proposal: Heavy Laser"
+#~ msgstr "Proposal: Heavy Laser"
+#~ msgid "Re: Heavy Laser"
+#~ msgstr "Re: Heavy Laser"
+#~ msgid "Proposal: Alien Artifact -- Kerrblade"
+#~ msgstr "Proposal: Alien Artifact -- Kerrblade"
+#~ msgid "Proposal: Laser Pistol"
+#~ msgstr "Proposal: Laser Pistol"
+#~ msgid "Re: Laser Pistol"
+#~ msgstr "Re: Laser Pistol"
+#~ msgid "Proposal: Laser Rifle"
+#~ msgstr "Proposal: Laser Rifle"
+#~ msgid "Re: Laser Rifle"
+#~ msgstr "Re: Laser Rifle"
+#~ msgid "Proposal: Alien Artifact -- Plasma Pistol"
+#~ msgstr "Proposal: Alien Artifact -- Plasma Pistol"
+#~ msgid "Proposal: Alien Artifact -- Plasma Blaster"
+#~ msgstr "Proposal: Alien Artifact -- Plasma Blaster"
+#~ msgid "Proposal: Alien Artifact -- Plasma Blade"
+#~ msgstr "Proposal: Alien Artifact -- Plasma Blade"
+#~ msgid "Proposal: Alien Artifact -- Plasma Grenade"
+#~ msgstr "Proposal: Alien Artifact -- Plasma Grenade"
+#~ msgid "Proposal: Alien Artifact -- Plasma Rifle"
+#~ msgstr "Proposal: Alien Artifact -- Plasma Rifle"
+#~ msgid "Proposal: Anti-Alien Gas"
+#~ msgstr "Proposal: Anti-Alien Gas"
+#~ msgid "Re: Stun Rod"
+#~ msgstr "Re: Stun Rod"
+#~ msgid "Proposal: Alien Artifact -- Particle Beam Pistol"
+#~ msgstr "Proposal: Alien Artifact -- Particle Beam Pistol"
+#~ msgid "Proposal: Alien Artifact -- Particle Beam Cannon"
+#~ msgstr "Proposal: Alien Artifact -- Particle Beam Cannon"
+#~ msgid "Proposal: Alien Artifact -- Particle Beam Rifle"
+#~ msgstr "Proposal: Alien Artifact -- Particle Beam Rifle"
+#~ msgid "Proposal: Man-Portable Particle Beams"
+#~ msgstr "Proposal: Man-Portable Particle Beams"
+#~ msgid "Re: UFO -- Scout"
+#~ msgstr "Re: UFO -- Scout"
+#~ msgid "Re: UFO -- Fighter"
+#~ msgstr "Re: UFO -- Fighter"
+#~ msgid "Re: UFO -- Harvester"
+#~ msgstr "Re: UFO -- Harvester"
+#~ msgid "Proposal: Alien Autopsy -- Bloodspider"
+#~ msgstr "Proposal: Alien Autopsy -- Bloodspider"
+#~ msgid "Re: Alien Autopsy -- Bloodspider"
+#~ msgstr "Re: Alien Autopsy -- Bloodspider"
+#~ msgid "Proposal: Alien Autopsy -- Ortnok"
+#~ msgstr "Proposal: Alien Autopsy -- Ortnok"
+#~ msgid "Re: Alien Autopsy -- Ortnok"
+#~ msgstr "Re: Alien Autopsy -- Ortnok"
+#~ msgid "Proposal: Alien Autopsy -- Taman"
+#~ msgstr "Proposal: Alien Autopsy -- Taman"
+#~ msgid "Re: Alien Autopsy -- Taman"
+#~ msgstr "Re: Alien Autopsy -- Taman"
+#~ msgid "Proposal: Alien Autopsy -- Shevaar"
+#~ msgstr "Proposal: Alien Autopsy -- Shevaar"
+#~ msgid "Re: Alien Autopsy -- Shevaar"
+#~ msgstr "Re: Alien Autopsy -- Shevaar"
+#~ msgid "Proposal: Particle Beam Weapon"
+#~ msgstr "Proposal: Particle Beam Weapon"
+#~ msgid "Re: Particle Beam Weapon"
+#~ msgstr "Re: Particle Beam Weapon"
 #~ msgid "Teamplay"
 #~ msgstr "Teamplay"
 #~ msgid "Show only technologies"

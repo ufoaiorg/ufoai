@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-03-04 16:29+0100\n"
+"POT-Creation-Date: 2007-03-04 20:42+0100\n"
 "PO-Revision-Date: 2007-02-28 13:38+0100\n"
 "Last-Translator: Maciej Wierzbicki <voovoos@killfile.pl>\n"
 "Language-Team: \n"
@@ -85,6 +85,7 @@ msgid "Saracen I"
 msgstr "Saracen I"
 
 #: ../base/ufos/aircraftmanagement.ufo:95 ../base/ufos/research.ufo:2433
+#: ../base/ufos/research.ufo:2442 ../base/ufos/research.ufo:2449
 msgid "UFO - Scout"
 msgstr "UFO - Pojazd zwiadowczy"
 
@@ -93,6 +94,7 @@ msgid "Scout U"
 msgstr ""
 
 #: ../base/ufos/aircraftmanagement.ufo:114 ../base/ufos/research.ufo:2480
+#: ../base/ufos/research.ufo:2489 ../base/ufos/research.ufo:2496
 msgid "UFO - Fighter"
 msgstr "UFO - Myśliwiec"
 
@@ -2458,7 +2460,8 @@ msgstr "Autopsje i obserwacje"
 msgid "The Alien Threat"
 msgstr "Zagrożenie Obcych"
 
-#: ../base/ufos/research.ufo:100
+#: ../base/ufos/research.ufo:100 ../base/ufos/research.ufo:109
+#: ../base/ufos/research.ufo:116
 msgid "Continuous Wave Laser Operation"
 msgstr "Lasery o pracy ciągłej"
 
@@ -2648,17 +2651,8 @@ msgstr ""
 msgid "mail_to_base_commander"
 msgstr ""
 
-#: ../base/ufos/research.ufo:109
-#, fuzzy
-msgid "Proposal: Continuous Wave Laser Operation"
-msgstr "Lasery o pracy ciągłej"
-
-#: ../base/ufos/research.ufo:116
-#, fuzzy
-msgid "Re: Continuous Wave Laser Operation"
-msgstr "Lasery o pracy ciągłej"
-
-#: ../base/ufos/research.ufo:128
+#: ../base/ufos/research.ufo:128 ../base/ufos/research.ufo:137
+#: ../base/ufos/research.ufo:144
 msgid "Antimatter"
 msgstr "Antymateria"
 
@@ -2670,17 +2664,8 @@ msgstr ""
 msgid "antimatter_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:137
-#, fuzzy
-msgid "Proposal: Antimatter"
-msgstr "Antymateria"
-
-#: ../base/ufos/research.ufo:144
-#, fuzzy
-msgid "Re: Antimatter"
-msgstr "Antymateria"
-
-#: ../base/ufos/research.ufo:187
+#: ../base/ufos/research.ufo:187 ../base/ufos/research.ufo:196
+#: ../base/ufos/research.ufo:203
 msgid "Live Alien"
 msgstr "Żywy Obcy"
 
@@ -2704,17 +2689,8 @@ msgstr "Brak informacji przed wynalezieniem."
 msgid "mail_from_dr_connor"
 msgstr ""
 
-#: ../base/ufos/research.ufo:196
-#, fuzzy
-msgid "Proposal: Live Alien"
-msgstr "Żywy Obcy"
-
-#: ../base/ufos/research.ufo:203
-#, fuzzy
-msgid "Re: Live Alien"
-msgstr "Żywy Obcy"
-
-#: ../base/ufos/research.ufo:219
+#: ../base/ufos/research.ufo:219 ../base/ufos/research.ufo:228
+#: ../base/ufos/research.ufo:235
 msgid "Alien Breathing Apparatus"
 msgstr "Aparat oddechowy Obcych"
 
@@ -2726,17 +2702,8 @@ msgstr ""
 msgid "alien_breathing_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:228
-#, fuzzy
-msgid "Proposal: Alien Breathing Apparatus"
-msgstr "Aparat oddechowy Obcych"
-
-#: ../base/ufos/research.ufo:235
-#, fuzzy
-msgid "Re: Alien Breathing Apparatus"
-msgstr "Aparat oddechowy Obcych"
-
-#: ../base/ufos/research.ufo:252
+#: ../base/ufos/research.ufo:252 ../base/ufos/research.ufo:261
+#: ../base/ufos/research.ufo:268
 msgid "The Alien Mind"
 msgstr "Umysł_Obcych"
 
@@ -2748,17 +2715,8 @@ msgstr ""
 msgid "alien_mind_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:261
-#, fuzzy
-msgid "Proposal: The Alien Mind"
-msgstr "Umysł_Obcych"
-
-#: ../base/ufos/research.ufo:268
-#, fuzzy
-msgid "Re: The Alien Mind"
-msgstr "Umysł_Obcych"
-
-#: ../base/ufos/research.ufo:282
+#: ../base/ufos/research.ufo:282 ../base/ufos/research.ufo:291
+#: ../base/ufos/research.ufo:298
 msgid "Odd Behaviour"
 msgstr ""
 
@@ -2769,14 +2727,6 @@ msgstr ""
 #: ../base/ufos/research.ufo:285
 msgid "alien_odd_behaviour_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
-
-#: ../base/ufos/research.ufo:291
-msgid "Proposal: Odd Behaviour"
-msgstr ""
-
-#: ../base/ufos/research.ufo:298
-msgid "Re: Odd Behaviour"
-msgstr ""
 
 #: ../base/ufos/research.ufo:317
 msgid "assault_txt"
@@ -2915,12 +2865,9 @@ msgstr ""
 msgid "bolterrifle_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:357 ../base/ufos/research.ufo:387
-msgid "Proposal: Electromagnetic Rifle"
-msgstr ""
-
-#: ../base/ufos/research.ufo:364 ../base/ufos/research.ufo:394
-msgid "Re: Electromagnetic Rifle"
+#: ../base/ufos/research.ufo:357 ../base/ufos/research.ufo:364
+#: ../base/ufos/research.ufo:387 ../base/ufos/research.ufo:394
+msgid "Electromagnetic Rifle"
 msgstr ""
 
 #: ../base/ufos/research.ufo:411
@@ -3010,12 +2957,8 @@ msgstr ""
 msgid "monoknife_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:435
-msgid "Proposal: Monomolecular Blades"
-msgstr ""
-
-#: ../base/ufos/research.ufo:442
-msgid "Re: Monomolecular Blades"
+#: ../base/ufos/research.ufo:435 ../base/ufos/research.ufo:442
+msgid "Monomolecular Blades"
 msgstr ""
 
 #: ../base/ufos/research.ufo:461
@@ -3707,13 +3650,10 @@ msgstr ""
 "\n"
 "--Mjr Navarre"
 
-#: ../base/ufos/research.ufo:618
-msgid "Proposal: Plasma And The Grenade Launcher"
-msgstr ""
-
-#: ../base/ufos/research.ufo:625
-msgid "Re: Re: Plasma And The Grenade Launcher"
-msgstr ""
+#: ../base/ufos/research.ufo:618 ../base/ufos/research.ufo:625
+#, fuzzy
+msgid "Plasma And The Grenade Launcher"
+msgstr "Granatnik ręczny"
 
 #: ../base/ufos/research.ufo:645
 msgid "laser_ammo_txt"
@@ -3731,14 +3671,9 @@ msgstr ""
 msgid "heavylaser_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:669
-#, fuzzy
-msgid "Proposal: Heavy Laser"
-msgstr "Ciężki laser"
-
-#: ../base/ufos/research.ufo:676
-#, fuzzy
-msgid "Re: Heavy Laser"
+#: ../base/ufos/research.ufo:669 ../base/ufos/research.ufo:676
+#: ../base/ufos/weapons_laser.ufo:103
+msgid "Heavy Laser"
 msgstr "Ciężki laser"
 
 #: ../base/ufos/research.ufo:712
@@ -3831,13 +3766,9 @@ msgstr ""
 "\n"
 "--Mjr Navarre"
 
-#: ../base/ufos/research.ufo:735
-msgid "Proposal: Alien Artifact -- Kerrblade"
-msgstr ""
-
-#: ../base/ufos/research.ufo:742
+#: ../base/ufos/research.ufo:735 ../base/ufos/research.ufo:742
 #, fuzzy
-msgid "Re: Alien Artifact -- Kerrblade"
+msgid "Alien Artifact - Kerrblade"
 msgstr "Artefakty Obcych"
 
 #: ../base/ufos/research.ufo:760
@@ -3848,14 +3779,9 @@ msgstr ""
 msgid "laserpistol_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:767
-#, fuzzy
-msgid "Proposal: Laser Pistol"
-msgstr "Pistolet laserowy"
-
-#: ../base/ufos/research.ufo:774
-#, fuzzy
-msgid "Re: Laser Pistol"
+#: ../base/ufos/research.ufo:767 ../base/ufos/research.ufo:774
+#: ../base/ufos/weapons_laser.ufo:6
+msgid "Laser Pistol"
 msgstr "Pistolet laserowy"
 
 #: ../base/ufos/research.ufo:809
@@ -3866,14 +3792,9 @@ msgstr ""
 msgid "laserrifle_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:816
-#, fuzzy
-msgid "Proposal: Laser Rifle"
-msgstr "Karabin laserowy"
-
-#: ../base/ufos/research.ufo:823
-#, fuzzy
-msgid "Re: Laser Rifle"
+#: ../base/ufos/research.ufo:816 ../base/ufos/research.ufo:823
+#: ../base/ufos/weapons_laser.ufo:81
+msgid "Laser Rifle"
 msgstr "Karabin laserowy"
 
 #: ../base/ufos/research.ufo:859
@@ -4318,13 +4239,10 @@ msgstr ""
 "\n"
 "--Mjr Navarre"
 
-#: ../base/ufos/research.ufo:952 ../base/ufos/research.ufo:985
-msgid "Proposal: Alien Artifact -- Plasma Pistol"
-msgstr ""
-
-#: ../base/ufos/research.ufo:959 ../base/ufos/research.ufo:992
+#: ../base/ufos/research.ufo:952 ../base/ufos/research.ufo:959
+#: ../base/ufos/research.ufo:985 ../base/ufos/research.ufo:992
 #, fuzzy
-msgid "Re: Alien Artifact -- Plasma Pistol"
+msgid "Alien Artifact - Plasma Pistol"
 msgstr "Artefakty Obcych"
 
 #: ../base/ufos/research.ufo:1009 ../base/ufos/research.ufo:1041
@@ -4335,13 +4253,11 @@ msgstr ""
 msgid "plasblaster_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:1016 ../base/ufos/research.ufo:1048
-msgid "Proposal: Alien Artifact -- Plasma Blaster"
-msgstr ""
-
-#: ../base/ufos/research.ufo:1023 ../base/ufos/research.ufo:1055
-msgid "Re: Alien Artifact -- Plasma Blaster"
-msgstr ""
+#: ../base/ufos/research.ufo:1016 ../base/ufos/research.ufo:1023
+#: ../base/ufos/research.ufo:1048 ../base/ufos/research.ufo:1055
+#, fuzzy
+msgid "Alien Artifact - Plasma Blaster"
+msgstr "Artefakty Obcych"
 
 #: ../base/ufos/research.ufo:1072
 msgid "plasblade_txt"
@@ -4351,13 +4267,9 @@ msgstr ""
 msgid "plasblade_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:1079
-msgid "Proposal: Alien Artifact -- Plasma Blade"
-msgstr ""
-
-#: ../base/ufos/research.ufo:1086
+#: ../base/ufos/research.ufo:1079 ../base/ufos/research.ufo:1086
 #, fuzzy
-msgid "Re: Alien Artifact -- Plasma Blade"
+msgid "Alien Artifact - Plasma Blade"
 msgstr "Artefakty Obcych"
 
 #: ../base/ufos/research.ufo:1104
@@ -4439,13 +4351,10 @@ msgstr ""
 "\n"
 "--Mjr Navarre"
 
-#: ../base/ufos/research.ufo:1111
-msgid "Proposal: Alien Artifact -- Plasma Grenade"
-msgstr ""
-
-#: ../base/ufos/research.ufo:1118
-msgid "Re: Alien Artifact -- Plasma Grenade"
-msgstr ""
+#: ../base/ufos/research.ufo:1111 ../base/ufos/research.ufo:1118
+#, fuzzy
+msgid "Alien Artifact - Plasma Grenade"
+msgstr "Artefakty Obcych"
 
 #: ../base/ufos/research.ufo:1136 ../base/ufos/research.ufo:1169
 msgid "plasrifle_txt"
@@ -4525,13 +4434,10 @@ msgstr ""
 "\n"
 "--Mjr Navarre"
 
-#: ../base/ufos/research.ufo:1143 ../base/ufos/research.ufo:1176
-msgid "Proposal: Alien Artifact -- Plasma Rifle"
-msgstr ""
-
-#: ../base/ufos/research.ufo:1150 ../base/ufos/research.ufo:1183
+#: ../base/ufos/research.ufo:1143 ../base/ufos/research.ufo:1150
+#: ../base/ufos/research.ufo:1176 ../base/ufos/research.ufo:1183
 #, fuzzy
-msgid "Re: Alien Artifact -- Plasma Rifle"
+msgid "Alien Artifact - Plasma Rifle"
 msgstr "Artefakty Obcych"
 
 #: ../base/ufos/research.ufo:1200
@@ -5349,13 +5255,10 @@ msgstr ""
 msgid "stungren_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:1513
-msgid "Proposal: Anti-Alien Gas"
-msgstr ""
-
-#: ../base/ufos/research.ufo:1520
-msgid "Re: Anti-Alien Gas"
-msgstr ""
+#: ../base/ufos/research.ufo:1513 ../base/ufos/research.ufo:1520
+#, fuzzy
+msgid "Anti-Alien Gas"
+msgstr "Obcy"
 
 #: ../base/ufos/research.ufo:1544
 msgid "stunrod_txt"
@@ -5365,14 +5268,9 @@ msgstr ""
 msgid "stunrod_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:1551
-#, fuzzy
-msgid "Proposal: Stun Rod"
-msgstr "Paralizator"
-
-#: ../base/ufos/research.ufo:1558
-#, fuzzy
-msgid "Re: Stun Rod"
+#: ../base/ufos/research.ufo:1551 ../base/ufos/research.ufo:1558
+#: ../base/ufos/weapons_melee.ufo:113
+msgid "Stun Rod"
 msgstr "Paralizator"
 
 #: ../base/ufos/research.ufo:1577
@@ -5383,13 +5281,10 @@ msgstr ""
 msgid "pbeampistol_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:1584 ../base/ufos/research.ufo:1616
-msgid "Proposal: Alien Artifact -- Particle Beam Pistol"
-msgstr ""
-
-#: ../base/ufos/research.ufo:1591 ../base/ufos/research.ufo:1623
+#: ../base/ufos/research.ufo:1584 ../base/ufos/research.ufo:1591
+#: ../base/ufos/research.ufo:1616 ../base/ufos/research.ufo:1623
 #, fuzzy
-msgid "Re: Alien Artifact -- Particle Beam Pistol"
+msgid "Alien Artifact - Particle Beam Pistol"
 msgstr "Pistolet cząsteczkowy"
 
 #: ../base/ufos/research.ufo:1609 ../base/ufos/research.ufo:1674
@@ -5410,13 +5305,10 @@ msgstr ""
 msgid "pbeamcannon_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:1648 ../base/ufos/research.ufo:1681
-msgid "Proposal: Alien Artifact -- Particle Beam Cannon"
-msgstr ""
-
-#: ../base/ufos/research.ufo:1655 ../base/ufos/research.ufo:1688
+#: ../base/ufos/research.ufo:1648 ../base/ufos/research.ufo:1655
+#: ../base/ufos/research.ufo:1681 ../base/ufos/research.ufo:1688
 #, fuzzy
-msgid "Re: Alien Artifact -- Particle Beam Cannon"
+msgid "Alien Artifact - Particle Beam Cannon"
 msgstr "Ręczne działo cząsteczkowe"
 
 #: ../base/ufos/research.ufo:1706
@@ -5427,13 +5319,10 @@ msgstr ""
 msgid "pbeamrifle_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:1713 ../base/ufos/research.ufo:1745
-msgid "Proposal: Alien Artifact -- Particle Beam Rifle"
-msgstr ""
-
-#: ../base/ufos/research.ufo:1720 ../base/ufos/research.ufo:1752
+#: ../base/ufos/research.ufo:1713 ../base/ufos/research.ufo:1720
+#: ../base/ufos/research.ufo:1745 ../base/ufos/research.ufo:1752
 #, fuzzy
-msgid "Re: Alien Artifact -- Particle Beam Rifle"
+msgid "Alien Artifact - Particle Beam Rifle"
 msgstr "Karabin cząsteczkowy"
 
 #: ../base/ufos/research.ufo:1771
@@ -5444,13 +5333,10 @@ msgstr ""
 msgid "pbeam_ammo_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:1778
-msgid "Proposal: Man-Portable Particle Beams"
-msgstr ""
-
-#: ../base/ufos/research.ufo:1785
-msgid "Re: Man-Portable Particle Beams"
-msgstr ""
+#: ../base/ufos/research.ufo:1778 ../base/ufos/research.ufo:1785
+#, fuzzy
+msgid "Man-Portable Particle Beams"
+msgstr "Działo cząsteczkowe"
 
 #: ../base/ufos/research.ufo:1807
 msgid "combat_armor_txt"
@@ -6039,16 +5925,6 @@ msgstr ""
 msgid "ufo_scout_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:2442
-#, fuzzy
-msgid "UFO -- Scout"
-msgstr "UFO - Pojazd zwiadowczy"
-
-#: ../base/ufos/research.ufo:2449
-#, fuzzy
-msgid "Re: UFO -- Scout"
-msgstr "UFO - Pojazd zwiadowczy"
-
 #: ../base/ufos/research.ufo:2481
 msgid "ufo_fighter_txt"
 msgstr ""
@@ -6057,17 +5933,8 @@ msgstr ""
 msgid "ufo_fighter_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:2489
-#, fuzzy
-msgid "UFO -- Fighter"
-msgstr "UFO - Myśliwiec"
-
-#: ../base/ufos/research.ufo:2496
-#, fuzzy
-msgid "Re: UFO -- Fighter"
-msgstr "UFO - Myśliwiec"
-
-#: ../base/ufos/research.ufo:2522
+#: ../base/ufos/research.ufo:2522 ../base/ufos/research.ufo:2531
+#: ../base/ufos/research.ufo:2538
 msgid "UFO - Harvester"
 msgstr "UFO - Żniwiarz"
 
@@ -6078,16 +5945,6 @@ msgstr ""
 #: ../base/ufos/research.ufo:2524
 msgid "ufo_harvester_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
-
-#: ../base/ufos/research.ufo:2531
-#, fuzzy
-msgid "UFO -- Harvester"
-msgstr "UFO - Żniwiarz"
-
-#: ../base/ufos/research.ufo:2538
-#, fuzzy
-msgid "Re: UFO -- Harvester"
-msgstr "UFO - Żniwiarz"
 
 #: ../base/ufos/research.ufo:2564
 msgid "Live Specimen - Bloodspider"
@@ -6101,7 +5958,8 @@ msgstr ""
 msgid "bloodspider_notes_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:2582
+#: ../base/ufos/research.ufo:2582 ../base/ufos/research.ufo:2591
+#: ../base/ufos/research.ufo:2598
 msgid "Alien Autopsy - Bloodspider"
 msgstr "Autopsja Obcego - Bloodspider"
 
@@ -6113,17 +5971,8 @@ msgstr ""
 msgid "bloodspider_autopsy_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:2591
-#, fuzzy
-msgid "Proposal: Alien Autopsy -- Bloodspider"
-msgstr "Autopsja Obcego - Bloodspider"
-
-#: ../base/ufos/research.ufo:2598
-#, fuzzy
-msgid "Re: Alien Autopsy -- Bloodspider"
-msgstr "Autopsja Obcego - Bloodspider"
-
-#: ../base/ufos/research.ufo:2617
+#: ../base/ufos/research.ufo:2617 ../base/ufos/research.ufo:2626
+#: ../base/ufos/research.ufo:2633
 msgid "Alien Autopsy - Ortnok"
 msgstr "Autopsja Obcego - Ortnok"
 
@@ -6135,17 +5984,8 @@ msgstr ""
 msgid "ortnok_autopsy_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:2626
-#, fuzzy
-msgid "Proposal: Alien Autopsy -- Ortnok"
-msgstr "Autopsja Obcego - Ortnok"
-
-#: ../base/ufos/research.ufo:2633
-#, fuzzy
-msgid "Re: Alien Autopsy -- Ortnok"
-msgstr "Autopsja Obcego - Ortnok"
-
-#: ../base/ufos/research.ufo:2653
+#: ../base/ufos/research.ufo:2653 ../base/ufos/research.ufo:2662
+#: ../base/ufos/research.ufo:2669
 msgid "Alien Autopsy - Taman"
 msgstr "Autopsja Obcego - Tamanin"
 
@@ -6157,17 +5997,8 @@ msgstr ""
 msgid "taman_autopsy_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
 
-#: ../base/ufos/research.ufo:2662
-#, fuzzy
-msgid "Proposal: Alien Autopsy -- Taman"
-msgstr "Autopsja Obcego - Tamanin"
-
-#: ../base/ufos/research.ufo:2669
-#, fuzzy
-msgid "Re: Alien Autopsy -- Taman"
-msgstr "Autopsja Obcego - Tamanin"
-
-#: ../base/ufos/research.ufo:2687
+#: ../base/ufos/research.ufo:2687 ../base/ufos/research.ufo:2696
+#: ../base/ufos/research.ufo:2703
 msgid "Alien Autopsy - Shevaar"
 msgstr "Autopsja Obcego - Shevaar"
 
@@ -6178,16 +6009,6 @@ msgstr ""
 #: ../base/ufos/research.ufo:2689
 msgid "shevaar_autopsy_pre_txt"
 msgstr "Brak informacji przed wynalezieniem."
-
-#: ../base/ufos/research.ufo:2696
-#, fuzzy
-msgid "Proposal: Alien Autopsy -- Shevaar"
-msgstr "Autopsja Obcego - Shevaar"
-
-#: ../base/ufos/research.ufo:2703
-#, fuzzy
-msgid "Re: Alien Autopsy -- Shevaar"
-msgstr "Autopsja Obcego - Shevaar"
 
 #: ../base/ufos/research.ufo:2775
 msgid "Phoenix UGV"
@@ -6640,7 +6461,8 @@ msgstr "Rakieta TR-20"
 msgid "craft_ammo_tr20_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2975
+#: ../base/ufos/research.ufo:2975 ../base/ufos/research.ufo:2985
+#: ../base/ufos/research.ufo:2992
 msgid "Particle Beam Weapon"
 msgstr "Działo cząsteczkowe"
 
@@ -6737,16 +6559,6 @@ msgstr ""
 "cząsteczkowe od zaraz.\n"
 "\n"
 "--Mjr Navarre"
-
-#: ../base/ufos/research.ufo:2985
-#, fuzzy
-msgid "Proposal: Particle Beam Weapon"
-msgstr "Działo cząsteczkowe"
-
-#: ../base/ufos/research.ufo:2992
-#, fuzzy
-msgid "Re: Particle Beam Weapon"
-msgstr "Działo cząsteczkowe"
 
 #: ../base/ufos/research.ufo:3013
 msgid "Targeting Computer"
@@ -7456,18 +7268,6 @@ msgstr "Kanonada"
 msgid "Precision Shot"
 msgstr "Dokładny"
 
-#: ../base/ufos/weapons_laser.ufo:6
-msgid "Laser Pistol"
-msgstr "Pistolet laserowy"
-
-#: ../base/ufos/weapons_laser.ufo:81
-msgid "Laser Rifle"
-msgstr "Karabin laserowy"
-
-#: ../base/ufos/weapons_laser.ufo:103
-msgid "Heavy Laser"
-msgstr "Ciężki laser"
-
 #: ../base/ufos/weapons_laser.ufo:175
 msgid "D-F Cartridge"
 msgstr "Pakiet FD"
@@ -7498,10 +7298,6 @@ msgstr ""
 #: ../base/ufos/weapons_melee.ufo:92 ../base/ufos/weapons_melee.ufo:203
 msgid "Slash"
 msgstr "Z zamachem"
-
-#: ../base/ufos/weapons_melee.ufo:113
-msgid "Stun Rod"
-msgstr "Paralizator"
 
 #: ../base/ufos/weapons_melee.ufo:131
 msgid "Stun Charge"
@@ -7825,9 +7621,9 @@ msgstr "Pojazd powietrzny wystartował"
 #: client/cl_campaign.c:3228 client/cl_map.c:270 client/cl_research.c:685
 #: client/cl_research.c:808 client/cl_research.c:811 client/cl_research.c:815
 #: client/cl_research.c:828 client/cl_research.c:864 client/cl_research.c:1014
-#: client/cl_transfer.c:239 client/cl_transfer.c:363 client/cl_transfer.c:418
-#: client/cl_transfer.c:471 client/cl_transfer.c:492 client/cl_transfer.c:503
-#: client/cl_transfer.c:535 client/cl_ufo.c:194 client/cl_ufo.c:199
+#: client/cl_transfer.c:241 client/cl_transfer.c:365 client/cl_transfer.c:420
+#: client/cl_transfer.c:473 client/cl_transfer.c:494 client/cl_transfer.c:505
+#: client/cl_transfer.c:537 client/cl_ufo.c:194 client/cl_ufo.c:199
 msgid "Notice"
 msgstr "Info"
 
@@ -7890,8 +7686,8 @@ msgid "Fuel:\t%i/%i\n"
 msgstr "Paliwo:\t%i/%i\n"
 
 #: client/cl_aircraft.c:410 client/cl_aircraft.c:411 client/cl_aircraft.c:412
-#: client/cl_ufopedia.c:297 client/cl_ufopedia.c:324 client/cl_ufopedia.c:325
-#: client/cl_ufopedia.c:326
+#: client/cl_transfer.c:836 client/cl_transfer.c:837 client/cl_ufopedia.c:297
+#: client/cl_ufopedia.c:324 client/cl_ufopedia.c:325 client/cl_ufopedia.c:326
 msgid "None"
 msgstr "Brak"
 
@@ -8038,7 +7834,7 @@ msgstr "Magazyn jest pusty\n"
 msgid "Transfer is not possible - the base doesn't have a storage building"
 msgstr "Transfer niemożliwy - baza nie posiada magazynu"
 
-#: client/cl_basemanagement.c:2266 client/cl_transfer.c:164
+#: client/cl_basemanagement.c:2266 client/cl_transfer.c:165
 msgid "Transfer is not possible - the base doesn't have quarters"
 msgstr "Transfer niemożliwy - baza nie posiada kwater"
 
@@ -8046,7 +7842,7 @@ msgstr "Transfer niemożliwy - baza nie posiada kwater"
 msgid "Transfer is not possible - the base doesn't have a lab"
 msgstr "Transfer niemożliwy - baza nie posiada laboratorium"
 
-#: client/cl_basemanagement.c:2292 client/cl_transfer.c:195
+#: client/cl_basemanagement.c:2292 client/cl_transfer.c:198
 msgid "Transfer is not possible - the base doesn't have an alien containment"
 msgstr ""
 "Nie można dokonać transferu Obcych - baza nie posiada modułu kwarantanny"
@@ -8076,8 +7872,8 @@ msgid ""
 "The base doesn't have an alien containment - can't unload the aliens here"
 msgstr "Baza nie posiada kwarantanny - nie można przenieść Obcych"
 
-#: client/cl_basemanagement.c:2421 client/cl_transfer.c:371
-#: client/cl_transfer.c:382
+#: client/cl_basemanagement.c:2421 client/cl_transfer.c:373
+#: client/cl_transfer.c:384
 msgid "Transport mission"
 msgstr "Misja transportowa"
 
@@ -8085,39 +7881,39 @@ msgstr "Misja transportowa"
 msgid "Transport mission ended, returning to homebase now"
 msgstr "Misja transportowa zakończona, powrót do bazy"
 
-#: client/cl_basemanagement.c:2443 client/cl_transfer.c:418
+#: client/cl_basemanagement.c:2443 client/cl_transfer.c:420
 msgid "Can't start the transport mission while we are not in the homebase"
 msgstr "Nie można rozpocząć misji transportowej nie będąc w bazie macierzystej"
 
-#: client/cl_basemanagement.c:2469 client/cl_transfer.c:447
+#: client/cl_basemanagement.c:2469 client/cl_transfer.c:449
 msgid "No target base selected"
 msgstr "Nie wybrano bazy docelowej"
 
-#: client/cl_basemanagement.c:2469 client/cl_transfer.c:447
+#: client/cl_basemanagement.c:2469 client/cl_transfer.c:449
 msgid "Please select the target base from the list"
 msgstr "Wybierz z listy bazę docelową"
 
-#: client/cl_basemanagement.c:2474 client/cl_transfer.c:452
+#: client/cl_basemanagement.c:2474 client/cl_transfer.c:454
 msgid "No aircraft selected"
 msgstr "Nie wybrano pojazdu powietrznego"
 
-#: client/cl_basemanagement.c:2474 client/cl_transfer.c:452
+#: client/cl_basemanagement.c:2474 client/cl_transfer.c:454
 msgid "Please select the aircraft to use from the list"
 msgstr "Wybierz z listy pojazd powietrzny"
 
-#: client/cl_basemanagement.c:2647 client/cl_transfer.c:670
+#: client/cl_basemanagement.c:2647 client/cl_transfer.c:672
 msgid "You can transfer equipment - this base has a storage building\n"
 msgstr "Można dokonać transferu ekwipunku - ta baza posiada magazyn\n"
 
-#: client/cl_basemanagement.c:2650 client/cl_transfer.c:673
+#: client/cl_basemanagement.c:2650 client/cl_transfer.c:675
 msgid "No storage building in this base\n"
 msgstr "Brak magazynu w tej bazie\n"
 
-#: client/cl_basemanagement.c:2654 client/cl_transfer.c:677
+#: client/cl_basemanagement.c:2654 client/cl_transfer.c:679
 msgid "You can transfer employees - this base has quarters\n"
 msgstr "Można dokonać transferu pracowników - ta baza posiada kwatery\n"
 
-#: client/cl_basemanagement.c:2657 client/cl_transfer.c:680
+#: client/cl_basemanagement.c:2657 client/cl_transfer.c:682
 msgid "No quarters in this base\n"
 msgstr "Brak kwater w tej bazie\n"
 
@@ -8129,11 +7925,11 @@ msgstr "Można dokonać transferu technologii - ta baza posiada laboratorium\n"
 msgid "No laboratory in this base\n"
 msgstr "Brak laboratorium w tej bazie\n"
 
-#: client/cl_basemanagement.c:2665 client/cl_transfer.c:684
+#: client/cl_basemanagement.c:2665 client/cl_transfer.c:686
 msgid "You can transfer aliens - this base has alien containment\n"
 msgstr "Można dokonać transferu Obcych - baza posiada moduł kwarantanny\n"
 
-#: client/cl_basemanagement.c:2667 client/cl_transfer.c:686
+#: client/cl_basemanagement.c:2667 client/cl_transfer.c:688
 msgid "No alien containment in this base\n"
 msgstr "Brak modułu kwarantanny w tej bazie\n"
 
@@ -9273,88 +9069,93 @@ msgstr "Przegrałeś"
 msgid "Better luck next time"
 msgstr "Więcej szczęścia następnym razem"
 
-#: client/cl_transfer.c:69 client/cl_transfer.c:92
+#: client/cl_transfer.c:72 client/cl_transfer.c:95
 #, c-format
 msgid "%s (%i on board)\n"
 msgstr ""
 
-#: client/cl_transfer.c:82
+#: client/cl_transfer.c:85
 #, c-format
 msgid "Corpse of %s (%i on board)\n"
 msgstr ""
 
-#: client/cl_transfer.c:146
+#: client/cl_transfer.c:147
 #, c-format
 msgid "%s (%i on board, %i left)\n"
 msgstr ""
 
-#: client/cl_transfer.c:148
+#: client/cl_transfer.c:149
 #, c-format
 msgid "%s (%i available)\n"
 msgstr ""
 
-#: client/cl_transfer.c:153
+#: client/cl_transfer.c:154
 #, fuzzy
 msgid "Storage is empty.\n"
 msgstr "Magazyn jest pusty\n"
 
-#: client/cl_transfer.c:156
+#: client/cl_transfer.c:157
 #, fuzzy
 msgid "Transfer is not possible - the base doesn't have a storage building."
 msgstr "Transfer niemożliwy - baza nie posiada magazynu"
 
-#: client/cl_transfer.c:172
+#: client/cl_transfer.c:173
 #, c-format
 msgid "Corpse of %s (%i on board, %i left)\n"
 msgstr ""
 
-#: client/cl_transfer.c:176
+#: client/cl_transfer.c:177
 #, c-format
 msgid "Corpse of %s (%i available)\n"
 msgstr ""
 
-#: client/cl_transfer.c:183
+#: client/cl_transfer.c:184
 #, c-format
 msgid "Alive %s (%i on board, %i left)\n"
 msgstr ""
 
-#: client/cl_transfer.c:187
+#: client/cl_transfer.c:188
 #, c-format
 msgid "Alive %s (%i available)\n"
 msgstr ""
 
-#: client/cl_transfer.c:204
+#: client/cl_transfer.c:195
+#, fuzzy
+msgid "Alien Containment is empty.\n"
+msgstr "Kwarantanna"
+
+#: client/cl_transfer.c:207
 #, fuzzy
 msgid "Transfer is not possible - the base doesn't have hangar"
 msgstr "Transfer niemożliwy - baza nie posiada laboratorium"
 
-#: client/cl_transfer.c:239
+#: client/cl_transfer.c:241
 #, fuzzy
 msgid "Can't unload while we are not in the homebase."
 msgstr "Nie można wyładować poza bazą macierzystą"
 
-#: client/cl_transfer.c:363
+#: client/cl_transfer.c:365
 #, fuzzy
 msgid "The base does not exist anymore."
 msgstr "Baza nie posiada magazynu"
 
-#: client/cl_transfer.c:372
+#: client/cl_transfer.c:374
 #, fuzzy
 msgid "Transport mission ended, returning to homebase now."
 msgstr "Misja transportowa zakończona, powrót do bazy"
 
-#: client/cl_transfer.c:383
+#: client/cl_transfer.c:385
 #, fuzzy
 msgid "Transport mission ended, aircraft assigned to new base."
 msgstr "Misja transportowa zakończona, powrót do bazy"
 
-#: client/cl_transfer.c:472 client/cl_transfer.c:493 client/cl_transfer.c:504
+#: client/cl_transfer.c:474 client/cl_transfer.c:495 client/cl_transfer.c:506
 msgid ""
 "You are transferring aircraft. You cannot use this aircraft to transfer "
 "things or employees."
 msgstr ""
 
-#: client/cl_transfer.c:536
+#: client/cl_transfer.c:538
 msgid ""
 "You are transferring stuff. You cannot use this aircraft to transfer itself."
 msgstr ""
@@ -9530,24 +9331,34 @@ msgstr "Paliwo:\t%i\n"
 msgid "Equipment:\t%s\n"
 msgstr "Wyposażenie:\t%s\n"
 
-#: client/cl_ufopedia.c:363
+#: client/cl_ufopedia.c:368
+#, fuzzy
+msgid "Proposal: "
+msgstr "Paralizator"
+
+#: client/cl_ufopedia.c:371
+#, fuzzy
+msgid "Re: "
+msgstr "Rasa:"
+
+#: client/cl_ufopedia.c:379
 #, c-format
 msgid ""
 "FROM: %s\n"
 "TO: %s\n"
 "DATE: %s\n"
-"SUBJECT: %s\n"
+"SUBJECT: %s%s\n"
 msgstr ""
 
-#: client/cl_ufopedia.c:448
+#: client/cl_ufopedia.c:465
 msgid "No pre-research description available."
 msgstr "Brak informacji przed wylazieniem."
 
-#: client/cl_ufopedia.c:607
+#: client/cl_ufopedia.c:624
 msgid "Ufopedia Content"
 msgstr "Zawartość UFOpedii"
 
-#: client/cl_ufopedia.c:662
+#: client/cl_ufopedia.c:679
 #, c-format
 msgid "Ufopedia Index: %s"
 msgstr "Indeks UFOpedii: %s"
@@ -9677,6 +9488,150 @@ msgstr "1 dzień"
 #: po/OTHER_STRINGS:9
 msgid "5 days"
 msgstr "5 dni"
+
+#, fuzzy
+#~ msgid "UFO -- Scout"
+#~ msgstr "UFO - Pojazd zwiadowczy"
+
+#, fuzzy
+#~ msgid "UFO -- Fighter"
+#~ msgstr "UFO - Myśliwiec"
+
+#, fuzzy
+#~ msgid "UFO -- Harvester"
+#~ msgstr "UFO - Żniwiarz"
+
+#, fuzzy
+#~ msgid "Alien Autopsy -- Bloodspider"
+#~ msgstr "Autopsja Obcego - Bloodspider"
+
+#, fuzzy
+#~ msgid "Alien Autopsy -- Ortnok"
+#~ msgstr "Autopsja Obcego - Ortnok"
+
+#, fuzzy
+#~ msgid "Alien Autopsy -- Taman"
+#~ msgstr "Autopsja Obcego - Tamanin"
+
+#, fuzzy
+#~ msgid "Alien Autopsy -- Shevaar"
+#~ msgstr "Autopsja Obcego - Shevaar"
+
+#, fuzzy
+#~ msgid "Proposal: Continuous Wave Laser Operation"
+#~ msgstr "Lasery o pracy ciągłej"
+
+#, fuzzy
+#~ msgid "Re: Continuous Wave Laser Operation"
+#~ msgstr "Lasery o pracy ciągłej"
+
+#, fuzzy
+#~ msgid "Proposal: Antimatter"
+#~ msgstr "Antymateria"
+
+#, fuzzy
+#~ msgid "Re: Antimatter"
+#~ msgstr "Antymateria"
+
+#, fuzzy
+#~ msgid "Proposal: Live Alien"
+#~ msgstr "Żywy Obcy"
+
+#, fuzzy
+#~ msgid "Re: Live Alien"
+#~ msgstr "Żywy Obcy"
+
+#, fuzzy
+#~ msgid "Proposal: Alien Breathing Apparatus"
+#~ msgstr "Aparat oddechowy Obcych"
+
+#, fuzzy
+#~ msgid "Re: Alien Breathing Apparatus"
+#~ msgstr "Aparat oddechowy Obcych"
+
+#, fuzzy
+#~ msgid "Proposal: The Alien Mind"
+#~ msgstr "Umysł_Obcych"
+
+#, fuzzy
+#~ msgid "Re: The Alien Mind"
+#~ msgstr "Umysł_Obcych"
+
+#, fuzzy
+#~ msgid "Proposal: Heavy Laser"
+#~ msgstr "Ciężki laser"
+
+#, fuzzy
+#~ msgid "Re: Heavy Laser"
+#~ msgstr "Ciężki laser"
+
+#, fuzzy
+#~ msgid "Proposal: Laser Pistol"
+#~ msgstr "Pistolet laserowy"
+
+#, fuzzy
+#~ msgid "Re: Laser Pistol"
+#~ msgstr "Pistolet laserowy"
+
+#, fuzzy
+#~ msgid "Proposal: Laser Rifle"
+#~ msgstr "Karabin laserowy"
+
+#, fuzzy
+#~ msgid "Re: Laser Rifle"
+#~ msgstr "Karabin laserowy"
+
+#, fuzzy
+#~ msgid "Re: Stun Rod"
+#~ msgstr "Paralizator"
+
+#, fuzzy
+#~ msgid "Re: UFO -- Scout"
+#~ msgstr "UFO - Pojazd zwiadowczy"
+
+#, fuzzy
+#~ msgid "Re: UFO -- Fighter"
+#~ msgstr "UFO - Myśliwiec"
+
+#, fuzzy
+#~ msgid "Re: UFO -- Harvester"
+#~ msgstr "UFO - Żniwiarz"
+
+#, fuzzy
+#~ msgid "Proposal: Alien Autopsy -- Bloodspider"
+#~ msgstr "Autopsja Obcego - Bloodspider"
+
+#, fuzzy
+#~ msgid "Re: Alien Autopsy -- Bloodspider"
+#~ msgstr "Autopsja Obcego - Bloodspider"
+
+#, fuzzy
+#~ msgid "Proposal: Alien Autopsy -- Ortnok"
+#~ msgstr "Autopsja Obcego - Ortnok"
+
+#, fuzzy
+#~ msgid "Re: Alien Autopsy -- Ortnok"
+#~ msgstr "Autopsja Obcego - Ortnok"
+
+#, fuzzy
+#~ msgid "Proposal: Alien Autopsy -- Taman"
+#~ msgstr "Autopsja Obcego - Tamanin"
+
+#, fuzzy
+#~ msgid "Re: Alien Autopsy -- Taman"
+#~ msgstr "Autopsja Obcego - Tamanin"
+
+#, fuzzy
+#~ msgid "Proposal: Alien Autopsy -- Shevaar"
+#~ msgstr "Autopsja Obcego - Shevaar"
+
+#, fuzzy
+#~ msgid "Re: Alien Autopsy -- Shevaar"
+#~ msgstr "Autopsja Obcego - Shevaar"
+
+#, fuzzy
+#~ msgid "Re: Particle Beam Weapon"
+#~ msgstr "Działo cząsteczkowe"
 
 #~ msgid "Teamplay"
 #~ msgstr "Gra drużynowa"
