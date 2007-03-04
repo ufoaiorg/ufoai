@@ -59,8 +59,8 @@ static menuNode_t *node1, *node2, *prodlist;
  */
 static int PR_RequirementsMet (int amount, requirements_t *req)
 {
-	int a,i;
-	int produceable_amount;
+	int a, i;
+	int produceable_amount = 0;
 	qboolean produceable = qfalse;
 
 	for (a = 0; a < amount; a++) {
@@ -490,7 +490,7 @@ static void PR_UpdateProductionList (void)
 			tech = RS_GetTechByProvided(od->id);
 
 		/* we can produce what was researched before */
-		if (od->buytype == produceCategory && RS_IsResearched_ptr(od->tech) 
+		if (od->buytype == produceCategory && RS_IsResearched_ptr(od->tech)
 		&& *od->name && tech && (tech->produceTime != -1)) {
 			Q_strcat(productionList, va("%s\n", od->name), sizeof(productionList));
 			Q_strcat(productionAmount, va("%i\n", baseCurrent->storage.num[i]), sizeof(productionAmount));
