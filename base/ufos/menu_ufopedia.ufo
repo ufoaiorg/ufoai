@@ -214,6 +214,7 @@ menu ufopedia
 		size	"660 98"
 		num		32
 		format	"24 0"
+		font	"f_small_bold"
 //		bgcolor " 0.5 1 0.5 0.3"
 	}
 

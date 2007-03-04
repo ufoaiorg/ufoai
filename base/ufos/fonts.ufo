@@ -16,10 +16,24 @@ font f_verysmall
 	size	11
 }
 
+font f_small_bold
+{
+	font	"_media/DejaVuSans.ttf"
+	size	14
+	style	TTF_STYLE_BOLD
+}
+
 font f_small
 {
 	font	"_media/DejaVuSans.ttf"
 	size	14
+}
+
+font f_normal_bold
+{
+	font	"_media/DejaVuSans.ttf"
+	size	18
+	style	TTF_STYLE_BOLD
 }
 
 font f_normal
