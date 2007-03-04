@@ -3520,7 +3520,7 @@ int Com_ParseValue (void *base, char *token, int type, int ofs)
 
 	case V_STRING:
 		Q_strncpyz((char *) b, token, MAX_VAR);
-		w = strlen(token) + 1;
+		w = (int)strlen(token) + 1;
 		if (w > MAX_VAR)
 			w = MAX_VAR;
 		return ALIGN(w);
@@ -3530,7 +3530,7 @@ int Com_ParseValue (void *base, char *token, int type, int ofs)
 			token++;
 
 		Q_strncpyz((char *) b, _(token), MAX_VAR);
-		return ALIGN(strlen((char *) b) + 1);
+		return ALIGN((int)strlen((char *) b) + 1);
 
 	/* just remove the _ but don't translate */
 	case V_TRANSLATION2_STRING:
@@ -3538,17 +3538,17 @@ int Com_ParseValue (void *base, char *token, int type, int ofs)
 			token++;
 
 		Q_strncpyz((char *) b, token, MAX_VAR);
-		w = strlen((char *) b) + 1;
+		w = (int)strlen((char *) b) + 1;
 		return ALIGN(w);
 
 	case V_LONGSTRING:
 		strcpy((char *) b, token);
-		w = strlen(token) + 1;
+		w = (int)strlen(token) + 1;
 		return ALIGN(w);
 
 	case V_POINTER:
 		*(void **) b = (void *) token;
-		return ALIGN(sizeof(void *));
+		return ALIGN((int)sizeof(void *));
 
 	case V_ALIGN:
 		for (w = 0; w < ALIGN_LAST; w++)
@@ -3723,14 +3723,14 @@ int Com_SetValue (void *base, void *set, int type, int ofs)
 
 	case V_STRING:
 		Q_strncpyz((char *) b, (char *) set, MAX_VAR);
-		len = strlen((char *) set) + 1;
+		len = (int)strlen((char *) set) + 1;
 		if (len > MAX_VAR)
 			len = MAX_VAR;
 		return len;
 
 	case V_LONGSTRING:
 		strcpy((char *) b, (char *) set);
-		len = strlen((char *) set) + 1;
+		len = (int)strlen((char *) set) + 1;
 		return len;
 
 	case V_ALIGN:

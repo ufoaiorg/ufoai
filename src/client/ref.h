@@ -382,7 +382,7 @@ typedef struct {
 
 	qboolean(*Vid_GetModeInfo) (int *width, int *height, int mode);
 	void (*Vid_NewWindow) (int width, int height);
-	void (*CL_WriteAVIVideoFrame) (const byte * buffer, int size);
+	void (*CL_WriteAVIVideoFrame) (const byte * buffer, size_t size);
 } refimport_t;
 
 

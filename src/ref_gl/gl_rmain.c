@@ -1638,7 +1638,7 @@ static void R_BeginFrame (float camera_separation)
  */
 static void R_TakeVideoFrame (int w, int h, byte * captureBuffer, byte * encodeBuffer, qboolean motionJpeg)
 {
-	int frameSize;
+	size_t frameSize;
 	int i;
 
 	qglReadPixels(0, 0, w, h, GL_RGB, GL_UNSIGNED_BYTE, captureBuffer);

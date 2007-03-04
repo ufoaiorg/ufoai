@@ -1267,7 +1267,7 @@ static qboolean CL_CheckFileSize(int bytesToAdd)
  * @brief
  * @sa R_TakeVideoFrame
  */
-void CL_WriteAVIVideoFrame(const byte * imageBuffer, int size)
+void CL_WriteAVIVideoFrame (const byte * imageBuffer, size_t size)
 {
 	int chunkOffset = afd.fileSize - afd.moviOffset - 8;
 	int chunkSize = 8 + size;
@@ -1312,7 +1312,7 @@ void CL_WriteAVIVideoFrame(const byte * imageBuffer, int size)
 /**
  * @brief
  */
-void CL_WriteAVIAudioFrame(const byte * pcmBuffer, int size)
+void CL_WriteAVIAudioFrame(const byte * pcmBuffer, size_t size)
 {
 	static byte pcmCaptureBuffer[PCM_BUFFER_SIZE] = { 0 };
 	static int bytesInBuffer = 0;
