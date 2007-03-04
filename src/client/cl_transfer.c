@@ -60,8 +60,7 @@ static void TR_CargoList (void)
 	transferidx = &gd.alltransfers[transferAircraft->idx];
 
 	cargoList[0] = '\0';
-	/* FIXME: is that correct memset? */
-	memset(cargo, 0, sizeof(cargo[MAX_CARGO]));
+	memset(&cargo, 0, sizeof(cargo));
 
 	if (transferidx->type == TR_STUFF) {
 		/* Show items. */
