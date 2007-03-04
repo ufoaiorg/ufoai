@@ -143,9 +143,9 @@ static void TR_TransferSelect_f (void)
 			for (i = 0; i < csi.numODs; i++)
 				if (baseCurrent->storage.num[i]) {
 					if (transferidx->itemAmount[i] > 0)
-						Com_sprintf(str, sizeof(str), "%s (%i on board, %i left)\n", csi.ods[i].name, transferidx->itemAmount[i], baseCurrent->storage.num[i]);
+						Com_sprintf(str, sizeof(str), _("%s (%i on board, %i left)\n"), csi.ods[i].name, transferidx->itemAmount[i], baseCurrent->storage.num[i]);
 					else
-						Com_sprintf(str, sizeof(str), "%s (%i available)\n", csi.ods[i].name, baseCurrent->storage.num[i]);
+						Com_sprintf(str, sizeof(str), _("%s (%i available)\n"), csi.ods[i].name, baseCurrent->storage.num[i]);
 					Q_strcat(transferList, str, sizeof(transferList));
 					cnt++;
 				}
@@ -169,22 +169,22 @@ static void TR_TransferSelect_f (void)
 			for (i = 0; i < numTeamDesc; i++) {
 				if (baseCurrent->alienscont[i].alientype && baseCurrent->alienscont[i].amount_dead > 0) {
 					if (transferidx->alienBodyAmount[i] > 0)
-						Com_sprintf(str, sizeof(str), "Corpse of %s (%i on board, %i left)\n",
+						Com_sprintf(str, sizeof(str), _("Corpse of %s (%i on board, %i left)\n"),
 						_(AL_AlienTypeToName(i)), transferidx->alienBodyAmount[i],
 						baseCurrent->alienscont[i].amount_dead);
 					else
-						Com_sprintf(str, sizeof(str), "Corpse of %s (%i available)\n",
+						Com_sprintf(str, sizeof(str), _("Corpse of %s (%i available)\n"),
 						_(AL_AlienTypeToName(i)), baseCurrent->alienscont[i].amount_dead);
 					Q_strcat(transferList, str, sizeof(transferList));
 					cnt++;
 				}
 				if (baseCurrent->alienscont[i].alientype && baseCurrent->alienscont[i].amount_alive > 0) {
 					if (transferidx->alienLiveAmount[i] > 0)
-						Com_sprintf(str, sizeof(str), "Alive %s (%i on board, %i left)\n",
+						Com_sprintf(str, sizeof(str), _("Alive %s (%i on board, %i left)\n"),
 						_(AL_AlienTypeToName(i)), transferidx->alienLiveAmount[i],
 						baseCurrent->alienscont[i].amount_alive);
 					else
-						Com_sprintf(str, sizeof(str), "Alive %s (%i available)\n",
+						Com_sprintf(str, sizeof(str), _("Alive %s (%i available)\n"),
 						_(AL_AlienTypeToName(i)), baseCurrent->alienscont[i].amount_alive);
 					Q_strcat(transferList, str, sizeof(transferList));
 					cnt++;
