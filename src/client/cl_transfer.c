@@ -50,17 +50,20 @@ static void TR_CargoList (void)
 	transferlist_t *transferidx = NULL;
 	char str[128];
 
-	if (!transferAircraft)
+	cargoList[0] = '\0';
+	memset(&cargo, 0, sizeof(cargo));
+
+	if (!transferAircraft) {
+		/* Needed to clear cargo list. */
+		menuText[TEXT_CARGO_LIST] = cargoList;
 		return;
+	}
 
 	if (!baseCurrent)
 		return;
 
 	/* Check the transfer index in gd.alltransfers array. */
 	transferidx = &gd.alltransfers[transferAircraft->idx];
-
-	cargoList[0] = '\0';
-	memset(&cargo, 0, sizeof(cargo));
 
 	if (transferidx->type == TR_STUFF) {
 		/* Show items. */
@@ -121,15 +124,13 @@ static void TR_TransferSelect_f (void)
 	if (!transferBase)
 		return;
 
-	if (!transferAircraft)
-		return;
-
 	if (Cmd_Argc() < 2)
 		type = transferType;
 	else
 		type = atoi(Cmd_Argv(1));
 
-	transferidx = &gd.alltransfers[transferAircraft->idx];
+	if (transferAircraft)
+		transferidx = &gd.alltransfers[transferAircraft->idx];
 
 	if (transferidx)
 		transferidx->destBase = transferBase->idx;
@@ -142,7 +143,7 @@ static void TR_TransferSelect_f (void)
 		if (transferBase->hasStorage) {
 			for (i = 0; i < csi.numODs; i++)
 				if (baseCurrent->storage.num[i]) {
-					if (transferidx->itemAmount[i] > 0)
+					if (transferidx && (transferidx->itemAmount[i] > 0))
 						Com_sprintf(str, sizeof(str), _("%s (%i on board, %i left)\n"), csi.ods[i].name, transferidx->itemAmount[i], baseCurrent->storage.num[i]);
 					else
 						Com_sprintf(str, sizeof(str), _("%s (%i available)\n"), csi.ods[i].name, baseCurrent->storage.num[i]);
@@ -168,7 +169,7 @@ static void TR_TransferSelect_f (void)
 		if (transferBase->hasAlienCont) {
 			for (i = 0; i < numTeamDesc; i++) {
 				if (baseCurrent->alienscont[i].alientype && baseCurrent->alienscont[i].amount_dead > 0) {
-					if (transferidx->alienBodyAmount[i] > 0)
+					if (transferidx && (transferidx->alienBodyAmount[i] > 0))
 						Com_sprintf(str, sizeof(str), _("Corpse of %s (%i on board, %i left)\n"),
 						_(AL_AlienTypeToName(i)), transferidx->alienBodyAmount[i],
 						baseCurrent->alienscont[i].amount_dead);
@@ -179,7 +180,7 @@ static void TR_TransferSelect_f (void)
 					cnt++;
 				}
 				if (baseCurrent->alienscont[i].alientype && baseCurrent->alienscont[i].amount_alive > 0) {
-					if (transferidx->alienLiveAmount[i] > 0)
+					if (transferidx && (transferidx->alienLiveAmount[i] > 0))
 						Com_sprintf(str, sizeof(str), _("Alive %s (%i on board, %i left)\n"),
 						_(AL_AlienTypeToName(i)), transferidx->alienLiveAmount[i],
 						baseCurrent->alienscont[i].amount_alive);
@@ -190,6 +191,8 @@ static void TR_TransferSelect_f (void)
 					cnt++;
 				}
 			}
+			if (!cnt)
+				Q_strncpyz(transferList, _("Alien Containment is empty.\n"), sizeof(transferList));
 		} else {
 			/* TODO: print proper info if base has AC but not operational or limits are not sufficient. */
 			Q_strcat(transferList, _("Transfer is not possible - the base doesn't have an alien containment"), sizeof(transferList));
@@ -214,7 +217,6 @@ static void TR_TransferSelect_f (void)
 
 	transferType = type;
 	menuText[TEXT_TRANSFER_LIST] = transferList;
-	transferidx->destBase = transferBase->idx;
 }
 
 /**
