@@ -349,6 +349,21 @@ SOURCE=..\..\src\client\cl_inventory.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\client\cl_keys.c
+
+!IF  "$(CFG)" == "ufo - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\client\cl_le.c
 
 !IF  "$(CFG)" == "ufo - Win32 Release"
@@ -574,6 +589,21 @@ SOURCE=..\..\src\client\cl_team.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\client\cl_transfer.c
+
+!IF  "$(CFG)" == "ufo - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\client\cl_ufo.c
 
 !IF  "$(CFG)" == "ufo - Win32 Release"
@@ -740,21 +770,6 @@ SOURCE=..\..\src\ports\win32\in_win.c
 # Begin Source File
 
 SOURCE=..\..\src\qcommon\ioapi.c
-
-!IF  "$(CFG)" == "ufo - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\client\cl_keys.c
 
 !IF  "$(CFG)" == "ufo - Win32 Release"
 
@@ -1144,6 +1159,14 @@ SOURCE=..\..\src\client\cl_hospital.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\client\cl_input.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\cl_keys.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\client\cl_market.h
 # End Source File
 # Begin Source File
@@ -1156,6 +1179,10 @@ SOURCE=..\..\src\client\cl_research.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\client\cl_transfer.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\client\cl_ufopedia.h
 # End Source File
 # Begin Source File
@@ -1165,14 +1192,6 @@ SOURCE=..\..\src\client\client.h
 # Begin Source File
 
 SOURCE=..\..\src\client\console.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\client\cl_input.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\client\cl_keys.h
 # End Source File
 # Begin Source File
 

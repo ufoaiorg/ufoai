@@ -540,6 +540,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\client\cl_keys.c"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\client\cl_le.c"
 				>
 			</File>
@@ -600,6 +604,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\client\cl_transfer.c"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\client\cl_ufo.c"
 				>
 			</File>
@@ -649,10 +657,6 @@
 			</File>
 			<File
 				RelativePath="..\..\src\qcommon\irc.c"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\client\cl_keys.c"
 				>
 			</File>
 			<File
@@ -769,7 +773,19 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\client\cl_input.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\client\cl_keys.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\client\cl_research.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\client\cl_transfer.h"
 				>
 			</File>
 			<File
@@ -786,14 +802,6 @@
 			</File>
 			<File
 				RelativePath="..\..\src\game\game.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\client\cl_input.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\client\cl_keys.h"
 				>
 			</File>
 			<File

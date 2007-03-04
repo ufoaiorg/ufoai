@@ -238,6 +238,21 @@ SOURCE=..\..\src\game\g_main.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\game\g_phys.c
+
+!IF  "$(CFG)" == "game - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "game - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "game - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "game - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\game\g_spawn.c
 
 !IF  "$(CFG)" == "game - Win32 Release"
