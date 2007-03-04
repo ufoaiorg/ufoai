@@ -339,6 +339,41 @@ extern void UP_AircraftDescription (technology_t* t)
 }
 
 /**
+ * @brief Binds the mail header (if needed) to the menuText array
+ * @note The cvar mn_up_mail is set to 1 (for activate mail nodes from menu_ufopedia.ufo)
+ * if there is a mail header
+ */
+static void UP_SetMailHeader (technology_t* tech, techMailType_t type)
+{
+	static char mailHeader[8 * MAX_VAR] = ""; /* bigger as techMail_t (utf8) */
+	char dateBuf[MAX_VAR] = "";
+
+	assert(tech);
+	assert(type < TECHMAIL_MAX);
+
+	if (tech->mail[type].date[0]) {
+		Q_strncpyz(dateBuf, tech->mail[type].date, sizeof(dateBuf));
+	} else {
+		Com_sprintf(dateBuf, sizeof(dateBuf), "%02i %s %i",
+			tech->researchedDateDay,
+			CL_DateGetMonthName(tech->researchedDateMonth),
+			tech->researchedDateYear);
+	}
+	if (tech->mail[type].from[0]) {
+		Com_sprintf(mailHeader, sizeof(mailHeader), _("FROM: %s\nTO: %s\nDATE: %s\nSUBJECT: %s\n"),
+			tech->mail[type].from,
+			tech->mail[type].to,
+			dateBuf,
+			tech->mail[type].subject);
+		menuText[TEXT_UFOPEDIA_MAILHEADER] = mailHeader;
+		Cvar_Set("mn_up_mail", "1"); /* use strings here - no int */
+	} else {
+		menuText[TEXT_UFOPEDIA_MAILHEADER] = NULL;
+		Cvar_Set("mn_up_mail", "0"); /* use strings here - no int */
+	}
+}
+
+/**
  * @brief Display only the TEXT_UFOPEDIA part - don't reset any other menuText pointers here
  * @param[in] tech The technology_t pointer to print the ufopedia article for
  * @sa UP_DrawEntry
@@ -358,12 +393,18 @@ extern void UP_Article (technology_t* tech)
 		menuText[TEXT_UFOPEDIA] = _(tech->description);
 		if (*tech->pre_description) {
 			/* Display pre-research text and the buttons if a pre-research text is available. */
-			if (mn_uppretext->value)
+			if (mn_uppretext->value) {
 				menuText[TEXT_UFOPEDIA] = _(tech->pre_description);
+				UP_SetMailHeader(tech, TECHMAIL_PRE);
+			} else {
+				UP_SetMailHeader(tech, TECHMAIL_RESEARCHED);
+			}
 			Cvar_SetValue("mn_uppreavailable", 1);
 		} else {
 			/* Do not display the pre-research-text button if none is available (no need to even bother clicking there). */
 			Cvar_SetValue("mn_uppreavailable", 0);
+			Cvar_SetValue("mn_updisplay", 0);
+			UP_SetMailHeader(tech, TECHMAIL_RESEARCHED);
 			Cvar_SetValue("mn_updisplay", 0);
 		}
 
@@ -400,10 +441,12 @@ extern void UP_Article (technology_t* tech)
 		year = tech->preResearchedDateYear;
 		Cvar_Set("mn_uptitle", _(tech->name));
 		/* Not researched but some items collected -> display pre-research text if available. */
-		if (*tech->pre_description)
+		if (*tech->pre_description) {
 			menuText[TEXT_UFOPEDIA] = _(tech->pre_description);
-		else
+			UP_SetMailHeader(tech, TECHMAIL_PRE);
+		} else {
 			menuText[TEXT_UFOPEDIA] = _("No pre-research description available.");
+		}
 	} else {
 		Cvar_Set("mn_uptitle", _(tech->name));
 		menuText[TEXT_UFOPEDIA] = NULL;
@@ -550,8 +593,8 @@ static void UP_Content_f (void)
 		/* .. and if so add them to the displaylist of chapters. */
 		if (researched_entries) {
 			upChapters_displaylist[numChapters_displaylist++] = &gd.upChapters[i];
-			Q_strcat( cp, gd.upChapters[i].name, MAX_UPTEXT);
-			Q_strcat( cp, "\n", MAX_UPTEXT);
+			Q_strcat(cp, gd.upChapters[i].name, MAX_UPTEXT);
+			Q_strcat(cp, "\n", MAX_UPTEXT);
 		}
 	}
 

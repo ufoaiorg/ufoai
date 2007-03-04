@@ -87,6 +87,20 @@ typedef struct markResearched_s {
 	int numDefinitions;
 } markResearched_t;
 
+typedef enum {
+	TECHMAIL_PRE,
+	TECHMAIL_RESEARCHED,
+
+	TECHMAIL_MAX
+} techMailType_t;
+
+typedef struct techMail_s {
+	char from[MAX_VAR];
+	char to[MAX_VAR];
+	char subject[MAX_VAR];
+	char date[MAX_VAR];
+} techMail_t;
+
 /** @brief This is the technology parsed from research.ufo */
 typedef struct technology_s {
 	char id[MAX_VAR];		/**< Short (unique) id/name. */
@@ -138,6 +152,12 @@ typedef struct technology_s {
 	int up_chapter;			/**< Ufopedia chapter as stored in research.ufo. */
 	int prev;			/**< Previous tech in pedia. */
 	int next;			/**< Next tech in pedia. */
+
+	/** mail[0] == pre header
+	 * mail[1] == normal header */
+	techMail_t mail[TECHMAIL_MAX];	/**< ufopedia mails */
+	int numTechMails;
+
 	struct technology_s *hash_next;
 } technology_t;
 

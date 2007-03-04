@@ -121,6 +121,7 @@ menu ufopedia
 
 	pic button_scrollup
 	{
+		if "mn_up_mail == 0"
 		tooltip "_Scroll up (right click to scroll multiple lines)"
 		image	menu/buttons_small
 		mousefx true
@@ -135,6 +136,7 @@ menu ufopedia
 
 	pic button_scrolldown
 	{
+		if "mn_up_mail == 0"
 		tooltip "_Scroll down (right click to scroll multiple lines)"
 		image	menu/buttons_small
 		mousefx true
@@ -147,12 +149,43 @@ menu ufopedia
 		in		{ *button_scrolldown texl "48 48" *button_scrolldown texh "64 64" }
 	}
 
+	pic button_scrollup_mail
+	{
+		if "mn_up_mail == 1"
+		tooltip "_Scroll up (right click to scroll multiple lines)"
+		image	menu/buttons_small
+		mousefx true
+		pos		"25 185"
+		texh	"48 48"
+		texl	"32 32"
+		click	{ cmd "mn_textscroll ufopedia_mail -1;" }
+		rclick	{ cmd "mn_textscroll ufopedia_mail -10;" }
+		out		{ *button_scrollup_mail texl "32 32" *button_scrollup_mail texh "48 48" }
+		in		{ *button_scrollup_mail texl "48 32" *button_scrollup_mail texh "64 48" }
+	}
+
+	pic button_scrolldown_mail
+	{
+		if "mn_up_mail == 1"
+		tooltip "_Scroll down (right click to scroll multiple lines)"
+		image	menu/buttons_small
+		mousefx true
+		pos		"25 450"
+		texl	"32 48"
+		texh	"48 64"
+		click	{ cmd "mn_textscroll ufopedia_mail 1;" }
+		rclick	{ cmd "mn_textscroll ufopedia_mail 10;" }
+		out		{ *button_scrolldown_mail texl "32 48" *button_scrolldown_mail texh "48 64" }
+		in		{ *button_scrolldown_mail texl "48 48" *button_scrolldown_mail texh "64 64" }
+	}
+
 	// ==================
 	// text and info
 	// ==================
 
 	text ufopedia
 	{
+		if "mn_up_mail == 0"
 		pos		"50 80"
 		size	"660 390"
 		num		2
@@ -160,6 +193,28 @@ menu ufopedia
 		click rclick wheel
 //		bgcolor " 0.5 1 0.5 0.3"
 		height	"21"
+	}
+
+	text ufopedia_mail
+	{
+		if "mn_up_mail == 1"
+		pos		"50 180"
+		size	"660 290"
+		num		2
+		format	"24 0"
+		click rclick wheel
+//		bgcolor " 0.5 1 0.5 0.3"
+		height	"17"
+	}
+
+	text ufopedia_mail_header
+	{
+		if "mn_up_mail == 1"
+		pos		"50 80"
+		size	"660 98"
+		num		32
+		format	"24 0"
+//		bgcolor " 0.5 1 0.5 0.3"
 	}
 
 	confunc mn_upfbig

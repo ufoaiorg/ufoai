@@ -1363,6 +1363,19 @@ static const value_t valid_tech_vars[] = {
 	{"image_bottom", V_STRING, offsetof(technology_t, image_bottom)},
 	{"mdl_top", V_STRING, offsetof(technology_t, mdl_top)},
 	{"mdl_bottom", V_STRING, offsetof(technology_t, mdl_bottom)},
+
+	{NULL, 0, 0}
+};
+
+/**
+ * @brief The valid definition names in the research.ufo file for tech mails
+ */
+static const value_t valid_techmail_vars[] = {
+	{"from", V_TRANSLATION2_STRING, offsetof(techMail_t, from)},
+	{"to", V_TRANSLATION2_STRING, offsetof(techMail_t, to)},
+	{"subject", V_TRANSLATION2_STRING, offsetof(techMail_t, subject)},
+	{"date", V_TRANSLATION2_STRING, offsetof(techMail_t, date)},
+
 	{NULL, 0, 0}
 };
 
@@ -1465,10 +1478,9 @@ extern void RS_ParseTechnologies (char *id, char **text)
 				Com_Printf("RS_ParseTechnologies: \"%s\" unknown techtype: \"%s\" - ignored.\n", id, token);
 		} else {
 
-			if ( (!Q_strncmp(token, "require_AND", MAX_VAR))
-			|| (!Q_strncmp(token, "require_OR", MAX_VAR))
-			|| (!Q_strncmp(token, "require_for_production", MAX_VAR))
-			) {
+			if ((!Q_strncmp(token, "require_AND", MAX_VAR))
+			 || (!Q_strncmp(token, "require_OR", MAX_VAR))
+			 || (!Q_strncmp(token, "require_for_production", MAX_VAR))) {
 				/* Link to correct list. */
 				if (!Q_strncmp(token, "require_AND", MAX_VAR)) {
 					required_temp = &tech->require_AND;
@@ -1586,6 +1598,46 @@ extern void RS_ParseTechnologies (char *id, char **text)
 							Com_Printf("RS_ParseTechnologies: \"%s\" - chapter \"%s\" not found.\n", id, token);
 					}
 				}
+			} else if (!Q_strncmp(token, "mail", 4)) { /* also mail_pre */
+				techMail_t* mail;
+
+				/* how many mails found for this technology
+				 * used in ufopedia to check which article to display */
+				tech->numTechMails++;
+
+				if (!Q_strncmp(token, "mail_pre", 8)) {
+					mail = &tech->mail[TECHMAIL_PRE];
+				} else {
+					mail = &tech->mail[TECHMAIL_RESEARCHED];
+				}
+				token = COM_EParse(text, errhead, id);
+				if (!*text || *token != '{')
+					return;
+
+				/* grab the initial mail entry */
+				token = COM_EParse(text, errhead, id);
+				if (!*text || *token == '}')
+					return;
+				do {
+					for (var = valid_techmail_vars; var->string; var++)
+						if (!Q_strncmp(token, var->string, sizeof(var->string))) {
+							/* found a definition */
+							token = COM_EParse(text, errhead, id);
+							if (!*text)
+								return;
+
+							if (var->type != V_NULL)
+								Com_ParseValue(mail, token, var->type, var->ofs);
+							else
+								/* NOTE: do we need a buffer here? for saving or something like that? */
+								Com_Printf("RS_ParseTechnologies Error: - no buffer for technologies - V_NULL not allowed (token: '%s') entry: '%s' - offset: %Zu\n", token, id, var->ofs);
+							break;
+						}
+					/* grab the next entry */
+					token = COM_EParse(text, errhead, id);
+					if (!*text)
+						return;
+				} while (*text && *token != '}');
 			} else {
 				for (var = valid_tech_vars; var->string; var++)
 					if (!Q_strncmp(token, var->string, sizeof(var->string))) {
@@ -1598,7 +1650,7 @@ extern void RS_ParseTechnologies (char *id, char **text)
 							Com_ParseValue(tech, token, var->type, var->ofs);
 						else
 							/* NOTE: do we need a buffer here? for saving or something like that? */
-							Com_Printf("RS_ParseTechnologies Error: - no buffer for technologies - V_NULL not allowed\n");
+							Com_Printf("RS_ParseTechnologies Error: - no buffer for technologies - V_NULL not allowed (token: '%s') entry: '%s'\n", token, id);
 						break;
 					}
 				/*TODO: escape "type weapon/tech/etc.." here */
@@ -1909,7 +1961,7 @@ int RS_GetTechIdxByName (const char *name)
  * @sa RS_MarkResearched
  */
 void INV_EnableAutosell (technology_t *tech)
-{  
+{
 	int i, j;
 	technology_t *ammotech = NULL;
 
@@ -1925,7 +1977,7 @@ void INV_EnableAutosell (technology_t *tech)
 	}
 	/* If the weapon has ammo, enable autosell for proper ammo as well. */
 	if ((tech->type == RS_WEAPON) && (csi.ods[i].reload)) {
-		/* FIXME: I don't think this is the correct way to get ammo related to given weapon. */            
+		/* FIXME: I don't think this is the correct way to get ammo related to given weapon. */
 		for (j = 0; j < csi.numODs; j++) {
 			if (csi.ods[j].weap_idx[0] && (csi.ods[j].weap_idx[0] == i)) {
 				ammotech = RS_GetTechByProvided(csi.ods[j].id);

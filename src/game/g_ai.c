@@ -156,7 +156,6 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, ai_action_t * aia)
 				|| RIGHT(ent)->item.a > 0)) {
 			od = &gi.csi->ods[RIGHT(ent)->item.m];
 			weap_idx = RIGHT(ent)->item.t;
-
 		} else if (IS_SHOT_LEFT(fm) && LEFT(ent)
 			&& (LEFT(ent)->item.m != NONE)
 			&& gi.csi->ods[LEFT(ent)->item.t].weapon
@@ -511,7 +510,7 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 
 	/* if a weapon can be reloaded we attempt to do so if TUs permit, otherwise drop it */
 	if (!(ent->state & STATE_PANIC)) {
-		if ( RIGHT(ent) && gi.csi->ods[RIGHT(ent)->item.t].reload && RIGHT(ent)->item.a == 0 ) {
+		if (RIGHT(ent) && gi.csi->ods[RIGHT(ent)->item.t].reload && RIGHT(ent)->item.a == 0) {
 			if (G_ClientCanReload(game.players + ent->pnum, ent->number, gi.csi->idRight)) {
 #ifdef PARANOID
 				Com_DPrintf("AI_ActorThink: Reloading right hand weapon\n");
@@ -524,7 +523,7 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 				G_ClientInvMove(game.players + ent->pnum, ent->number, gi.csi->idRight, 0, 0, gi.csi->idFloor, NONE, NONE, qtrue, QUIET);
 			}
 		}
-		if ( LEFT(ent) && gi.csi->ods[LEFT(ent)->item.t].reload && LEFT(ent)->item.a == 0 ) {
+		if (LEFT(ent) && gi.csi->ods[LEFT(ent)->item.t].reload && LEFT(ent)->item.a == 0) {
 			if (G_ClientCanReload(game.players + ent->pnum, ent->number, gi.csi->idLeft)) {
 #ifdef PARANOID
 				Com_DPrintf("AI_ActorThink: Reloading left hand weapon\n");

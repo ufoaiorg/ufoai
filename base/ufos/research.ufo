@@ -102,6 +102,22 @@ tech rs_laser
 	description	"_laser_txt"
 	pre_description	"_laser_pre_txt"
 
+	mail_pre
+	{
+		from	"_Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+		to		"_Base Commander, PHALANX, Atlantic Operations Command"
+		subject	"_Proposal: Continuous Wave Laser Operation"
+		date	""
+	}
+
+	mail
+	{
+		from	"_Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+		to		"_Base Commander, PHALANX, Atlantic Operations Command"
+		subject	"_Re: Continuous Wave Laser Operation"
+		date	""
+	}
+
 	require_AND { tech nothing }
 
 	time	1500
@@ -115,6 +131,22 @@ tech rs_antimatter
 	up_chapter	tech
 	description	"_antimatter_txt"
 	pre_description	"_antimatter_pre_txt"
+
+	mail_pre
+	{
+		from	"_Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+		to		"_Base Commander, PHALANX, Atlantic Operations Command"
+		subject	"_Proposal: Antimatter"
+		date	""
+	}
+
+	mail
+	{
+		from	"_Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+		to		"_Base Commander, PHALANX, Atlantic Operations Command"
+		subject	"_Re: Antimatter"
+		date	""
+	}
 
 	require_AND
 	{
@@ -160,6 +192,23 @@ tech rs_alien_live
 	up_chapter	aliens
 	description	"_alien_live_txt"
 	pre_description	"_alien_live_pre_txt"
+
+	mail_pre
+	{
+		from	"_Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command"
+		to		"_Base Commander, PHALANX, Atlantic Operations Command"
+		subject	"_Proposal: Live Alien"
+		date	""
+	}
+
+	mail
+	{
+		from	"_Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command"
+		to		"_Base Commander, PHALANX, Atlantic Operations Command"
+		subject	"_Re: Live Alien"
+		date	""
+	}
+
 	require_AND
 	{
 		tech rs_alien_breathing
@@ -177,6 +226,23 @@ tech rs_alien_breathing
 	up_chapter	aliens
 	description	"_alien_breathing_txt"
 	pre_description	"_alien_breathing_pre_txt"
+
+	mail_pre
+	{
+		from	"_Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command"
+		to		"_Base Commander, PHALANX, Atlantic Operations Command"
+		subject	"_Proposal: Alien Breathing Apparatus"
+		date	""
+	}
+
+	mail
+	{
+		from	"_Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command"
+		to		"_Base Commander, PHALANX, Atlantic Operations Command"
+		subject	"_Re: Alien Breathing Apparatus"
+		date	""
+	}
+
 	require_OR
 	{
 		tech rs_alien_ortnok_autopsy
@@ -196,12 +262,26 @@ tech rs_alien_mind
 	description	"_alien_mind_txt"
 	pre_description	"_alien_mind_pre_txt"
 
+	mail_pre
+	{
+		from	"_Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command"
+		to		"_Base Commander, PHALANX, Atlantic Operations Command"
+		subject	"_Proposal: The Alien Mind"
+		date	""
+	}
+
+	mail
+	{
+		from	"_Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command"
+		to		"_Base Commander, PHALANX, Atlantic Operations Command"
+		subject	"_Re: The Alien Mind"
+		date	""
+	}
+
 	require_AND
 	{
 		tech rs_alien_live
 		//TODO alien Unknown 3
-		
-
 	}
 	time	1500
 }
@@ -213,6 +293,22 @@ tech rs_alien_oddbehaviour
 	up_chapter	threat
 	description	"_alien_odd_behaviour_txt"
 	pre_description	"_alien_odd_behaviour_pre_txt"
+
+	mail_pre
+	{
+		from	"_Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command"
+		to		"_Base Commander, PHALANX, Atlantic Operations Command"
+		subject	"_Proposal: Odd Behaviour"
+		date	""
+	}
+
+	mail
+	{
+		from	"_Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command"
+		to		"_Base Commander, PHALANX, Atlantic Operations Command"
+		subject	"_Re: Odd Behaviour"
+		date	""
+	}
 
 	require_AND
 	{
@@ -266,6 +362,22 @@ tech rs_weapon_bolterrifle
 	description	"_bolterrifle_txt"
 	pre_description	"_bolterrifle_pre_txt"
 
+	mail_pre
+	{
+		from	"_Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+		to		"_Base Commander, PHALANX, Atlantic Operations Command"
+		subject	"_Proposal: Electromagnetic Rifle"
+		date	""
+	}
+
+	mail
+	{
+		from	"_Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+		to		"_Base Commander, PHALANX, Atlantic Operations Command"
+		subject	"_Re: Electromagnetic Rifle"
+		date	""
+	}
+
 	require_AND
 	{
 		tech rs_skill_assault
@@ -281,6 +393,22 @@ tech rs_weapon_bolterrifle_ammo
 	up_chapter	equipment
 	description	"_bolterrifle_txt"
 	pre_description	"_bolterrifle_pre_txt"
+
+	mail_pre
+	{
+		from	"_Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+		to		"_Base Commander, PHALANX, Atlantic Operations Command"
+		subject	"_Proposal: Electromagnetic Rifle"
+		date	""
+	}
+
+	mail
+	{
+		from	"_Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+		to		"_Base Commander, PHALANX, Atlantic Operations Command"
+		subject	"_Re: Electromagnetic Rifle"
+		date	""
+	}
 
 	require_AND
 	{
@@ -315,6 +443,22 @@ tech rs_weapon_monoknife
 	up_chapter	equipment
 	description	"_monoknife_txt"
 	pre_description	"_monoknife_pre_txt"
+
+	mail_pre
+	{
+		from	"_Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+		to		"_Base Commander, PHALANX, Atlantic Operations Command"
+		subject	"_Proposal: Monomolecular Blades"
+		date	""
+	}
+
+	mail
+	{
+		from	"_Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+		to		"_Base Commander, PHALANX, Atlantic Operations Command"
+		subject	"_Re: Monomolecular Blades"
+		date	""
+	}
 
 	require_AND
 	{

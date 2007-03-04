@@ -43,7 +43,7 @@ extern void RADAR_DrawCoverage(const menuNode_t* node, const radar_t* radar, vec
 	re.DrawColor(color);
 
 	rangeTracking = radar->range + radar->range / 10.0f;
-	for ( i = 0 ; i <= RADAR_DRAW_POINTS ; i++ ) {
+	for (i = 0 ; i <= RADAR_DRAW_POINTS ; i++) {
 		cosinus = cos(i * 6.283185306 / RADAR_DRAW_POINTS);
 		sinus = sin(i * 6.283185306 / RADAR_DRAW_POINTS);
 		posCircle[0] = pos[0] + cosinus * radar->range;
