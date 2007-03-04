@@ -42,6 +42,12 @@ typedef struct transferlist_s {
 	int destBase;			/**< Index of destination base. */
 } transferlist_t;
 
+/** @brief Array of current cargo onboard. */
+typedef struct transferCargo_s {
+	int type;			/**< Type of cargo (0 - items, 1 - employees, 2 - alien bodies, 3 - alive aliens). */
+	int itemidx;			/**< Index of item in cargo. */
+} transferCargo_s;
+
 void TR_TransferAircraftMenu(aircraft_t* aircraft);
 void TR_TransferEnd(aircraft_t* aircraft);
 void TR_EmptyTransferCargo (aircraft_t *aircraft);

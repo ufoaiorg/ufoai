@@ -37,6 +37,9 @@ static aircraft_t *transferAircraft = NULL;
 /** @brief Current transfer type (item, employee, alien, aircraft). */
 static int transferType = -1;
 
+/** @brief Current cargo onboard. */
+static transferCargo_s cargo[MAX_CARGO];
+
 /**
  * @brief Display cargo list.
  */
@@ -57,6 +60,8 @@ static void TR_CargoList (void)
 	transferidx = &gd.alltransfers[transferAircraft->idx];
 
 	cargoList[0] = '\0';
+	/* FIXME: is that correct memset? */
+	memset (cargo, 0, sizeof(cargo[MAX_CARGO]));
 
 	if (transferidx->type == TR_STUFF) {
 		/* Show items. */
@@ -65,6 +70,8 @@ static void TR_CargoList (void)
 				Com_sprintf(str, sizeof(str), "%s (%i on board)\n", 
 				csi.ods[i].name, transferidx->itemAmount[i]);
 				Q_strcat(cargoList, str, sizeof(cargoList));
+				cargo[cnt].type = 0;
+				cargo[cnt].itemidx = i;
 				cnt++;
 			}
 		}
@@ -76,12 +83,18 @@ static void TR_CargoList (void)
 				Com_sprintf(str, sizeof(str), "Corpse of %s (%i on board)\n", 
 				_(AL_AlienTypeToName(i)), transferidx->alienBodyAmount[i]);
 				Q_strcat(cargoList, str, sizeof(cargoList));
+				cargo[cnt].type = 2;
+				cargo[cnt].itemidx = i;
 				cnt++;
 			}
+		}
+		for (i = 0; i < numTeamDesc; i++) {
 			if (transferidx->alienLiveAmount[i] > 0) {
 				Com_sprintf(str, sizeof(str), "%s (%i on board)\n",
 				_(AL_AlienTypeToName(i)), transferidx->alienLiveAmount[i]);
 				Q_strcat(cargoList, str, sizeof(cargoList));
+				cargo[cnt].type = 3;
+				cargo[cnt].itemidx = i;
 				cnt++;
 			}
 		}
@@ -688,6 +701,75 @@ static void TR_TransferBaseSelect_f (void)
 }
 
 /**
+ * @brief Removes single item from cargolist by click.
+ */
+static void TR_CargoListSelect_f (void)
+{
+	int num, cnt = 0, i;
+	transferlist_t *transferidx = NULL;
+
+	if (Cmd_Argc() < 2)
+		return;
+
+	if (!baseCurrent)
+		return;
+		
+	if (!transferAircraft)
+		return;
+
+	/* Check the transfer index in gd.alltransfers array. */   
+	transferidx = &gd.alltransfers[transferAircraft->idx];
+
+	num = atoi(Cmd_Argv(1));
+	
+	switch (cargo[num].type) {
+	case 0:		/**< items */
+		for (i = 0; i < csi.numODs; i++) {
+			if (transferidx->itemAmount[i] > 0) {
+				if (cnt == num) {
+					transferidx->itemAmount[i]--;
+					baseCurrent->storage.num[i]++;
+					break;
+				}
+				cnt++;
+			}
+		}
+		break;
+	case 1:		/**< employees */
+		/*   TODO    */
+		break;
+	case 2:		/**< alien bodies */
+		for (i = 0; i < numTeamDesc; i++) {
+			if (transferidx->alienBodyAmount[i] > 0) {
+				if (cnt == num) {
+					transferidx->alienBodyAmount[i]--;
+					baseCurrent->alienscont[i].amount_dead++;
+					break;
+				}
+				cnt++;
+			}
+		}
+		break;
+	case 3:		/**< alive aliens */
+		for (i = 0; i < numTeamDesc; i++) {
+			if (transferidx->alienLiveAmount[i] > 0) {
+				if (cnt == num) {
+					transferidx->alienLiveAmount[i]--;
+					baseCurrent->alienscont[i].amount_alive--;
+					break;
+				}
+				cnt++;
+			}
+		}
+		break;
+	default:
+		return;
+	}
+    
+	TR_TransferSelect_f();	
+}
+
+/**
  * @brief Transfer menu init function.
  * @note Command to call this: trans_init
  * @note Should be called whenever the Transfer menu gets active.
@@ -766,7 +848,7 @@ extern void TR_Reset (void)
 	Cmd_AddCommand("trans_bases_click", TR_TransferBaseSelect_f, "Callback for base list node click");
 	Cmd_AddCommand("trans_list_click", TR_TransferListSelect_f, "Callback for transfer list node click");
 	Cmd_AddCommand("trans_aircraft_click", TR_TransferAircraftListClick_f, "Callback for aircraft list node click");
+	Cmd_AddCommand("trans_cargolist_click", TR_CargoListSelect_f, "Callback for cargo list node click");
 }
-
 
 
