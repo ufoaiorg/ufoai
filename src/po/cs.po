@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-03-04 20:42+0100\n"
-"PO-Revision-Date: 2007-02-25 20:06+0100\n"
+"POT-Creation-Date: 2007-03-04 22:19+0100\n"
+"PO-Revision-Date: 2007-03-04 22:17+0100\n"
 "Last-Translator: Lubomír Bláha <tritol@trilogic.cz>\n"
 "Language-Team: čeština <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -93,23 +93,20 @@ msgid "Saracen I"
 msgstr "s. Saracen"
 
 #: ../base/ufos/aircraftmanagement.ufo:95 ../base/ufos/research.ufo:2433
-#: ../base/ufos/research.ufo:2442 ../base/ufos/research.ufo:2449
 msgid "UFO - Scout"
 msgstr "UFO - Průzkumník"
 
 #: ../base/ufos/aircraftmanagement.ufo:96
 msgid "Scout U"
-msgstr ""
+msgstr "u. Průzkumník"
 
 #: ../base/ufos/aircraftmanagement.ufo:114 ../base/ufos/research.ufo:2480
-#: ../base/ufos/research.ufo:2489 ../base/ufos/research.ufo:2496
 msgid "UFO - Fighter"
 msgstr "UFO - Stíhačka"
 
 #: ../base/ufos/aircraftmanagement.ufo:115
-#, fuzzy
 msgid "Fighter U"
-msgstr "UFO - Stíhačka"
+msgstr "u. Stíhačka"
 
 #: ../base/ufos/armor.ufo:3
 msgid "normal"
@@ -137,7 +134,7 @@ msgstr "Plasma"
 
 #: ../base/ufos/armor.ufo:9
 msgid "particlebeam"
-msgstr ""
+msgstr "Částice"
 
 #: ../base/ufos/armor.ufo:10
 msgid "stun"
@@ -387,33 +384,31 @@ msgstr "Dělník"
 
 #: ../base/ufos/medals.ufo:58 ../base/ufos/medals.ufo:59
 msgid "Rookie"
-msgstr "Zelenáč"
+msgstr "vojín"
 
 #: ../base/ufos/medals.ufo:66
 msgid "Squad Leader"
-msgstr "Četař"
+msgstr "desátník"
 
 #: ../base/ufos/medals.ufo:67
-#, fuzzy
 msgid "Sqd Ldr"
-msgstr "Četař"
+msgstr "des."
 
 #: ../base/ufos/medals.ufo:77
 msgid "Sergeant"
-msgstr "Seržant"
+msgstr "četař"
 
 #: ../base/ufos/medals.ufo:78
 msgid "Sgt"
-msgstr ""
+msgstr "čet."
 
 #: ../base/ufos/medals.ufo:88
 msgid "Captain"
-msgstr "Kapitán"
+msgstr "kapitán"
 
 #: ../base/ufos/medals.ufo:89
-#, fuzzy
 msgid "Cpt"
-msgstr "Kapitán"
+msgstr "kpt."
 
 #: ../base/ufos/menu_aircraft.ufo:49
 msgid "Assign your squad"
@@ -503,7 +498,7 @@ msgstr "Štíty"
 
 #: ../base/ufos/menu_aircraft.ufo:427 ../base/ufos/menu_aircraft.ufo:437
 msgid "Items"
-msgstr ""
+msgstr "Vybavení"
 
 #: ../base/ufos/menu_aliencont.ufo:48 ../base/ufos/menu_bases.ufo:335
 #: ../base/ufos/menu_buildings.ufo:76 ../base/ufos/menu_buy.ufo:989
@@ -727,16 +722,16 @@ msgstr "Nákup / Prodej"
 
 #: ../base/ufos/menu_bases.ufo:188
 msgid "Transfer equipment or personnel"
-msgstr "Přesun vybavení nebo osob"
+msgstr "Přeprava vybavení nebo osob"
 
 #: ../base/ufos/menu_bases.ufo:204
 msgid "Can't transfer - only one base"
-msgstr "Nelze přesouvat - pouze jedna základna"
+msgstr "Nelze přepravovat - máš jen jednu základnu"
 
 #: ../base/ufos/menu_bases.ufo:213 ../base/ufos/menu_geoscape.ufo:458
 #: ../base/ufos/menu_transfer.ufo:146 ../base/ufos/menu_transfer.ufo:345
 msgid "Transfer"
-msgstr "Přesun"
+msgstr "Přeprava"
 
 #: ../base/ufos/menu_bases.ufo:224
 msgid "Research new technology"
@@ -785,11 +780,11 @@ msgstr "Přejít na další základnu"
 
 #: ../base/ufos/menu_bases.ufo:484
 msgid "Destroy building"
-msgstr ""
+msgstr "Zbourat budovu"
 
 #: ../base/ufos/menu_bases.ufo:493
 msgid "Are you sure, that you want to destroy this building?"
-msgstr ""
+msgstr "Jsi si jistý že chceš zbourat tuto budovu?"
 
 #: ../base/ufos/menu_bases.ufo:500 ../base/ufos/menu_geoscape.ufo:322
 #: ../base/ufos/menu_geoscape.ufo:425 ../base/ufos/menu_geoscape.ufo:513
@@ -830,7 +825,7 @@ msgstr "Zbořit"
 #: ../base/ufos/menu_buy.ufo:300 ../base/ufos/menu_buy.ufo:302
 #: ../base/ufos/menu_buy.ufo:304 ../base/ufos/menu_buy.ufo:306
 msgid "Item autosell enabled."
-msgstr ""
+msgstr "Automatický prodej předmětu povolen."
 
 #: ../base/ufos/menu_buy.ufo:253 ../base/ufos/menu_buy.ufo:255
 #: ../base/ufos/menu_buy.ufo:257 ../base/ufos/menu_buy.ufo:259
@@ -847,7 +842,7 @@ msgstr ""
 #: ../base/ufos/menu_buy.ufo:301 ../base/ufos/menu_buy.ufo:303
 #: ../base/ufos/menu_buy.ufo:305 ../base/ufos/menu_buy.ufo:307
 msgid "Item autosell disabled."
-msgstr ""
+msgstr "Automatický prodej předmětu zakázán."
 
 #: ../base/ufos/menu_buy.ufo:312 ../base/ufos/menu_buy.ufo:336
 #: ../base/ufos/menu_buy.ufo:360 ../base/ufos/menu_buy.ufo:384
@@ -960,14 +955,14 @@ msgstr "Zpět"
 #: ../base/ufos/menu_transfer.ufo:164 ../base/ufos/menu_ufopedia.ufo:125
 #: ../base/ufos/menu_ufopedia.ufo:155
 msgid "Scroll up (right click to scroll multiple lines)"
-msgstr ""
+msgstr "Posunout nahoru (pravé tlačítko posouvá více řádek)"
 
 #: ../base/ufos/menu_campaign.ufo:139 ../base/ufos/menu_irc.ufo:160
 #: ../base/ufos/menu_options.ufo:826 ../base/ufos/menu_production.ufo:123
 #: ../base/ufos/menu_transfer.ufo:178 ../base/ufos/menu_ufopedia.ufo:140
 #: ../base/ufos/menu_ufopedia.ufo:170
 msgid "Scroll down (right click to scroll multiple lines)"
-msgstr ""
+msgstr "Posunout dolů (pravé tlačítko posouvá více řádek)"
 
 #: ../base/ufos/menu_geoscape.ufo:106
 msgid "Reset time to 5 seconds"
@@ -1030,11 +1025,11 @@ msgstr "Automise"
 
 #: ../base/ufos/menu_geoscape.ufo:405
 msgid "Select base to transfer to"
-msgstr ""
+msgstr "Vyber základnu kam přepravit"
 
 #: ../base/ufos/menu_geoscape.ufo:445 ../base/ufos/menu_transfer.ufo:330
 msgid "Start the transfer"
-msgstr "Zahájit přesun"
+msgstr "Zahájit přepravu"
 
 #: ../base/ufos/menu_geoscape.ufo:481
 msgid "New base"
@@ -1496,9 +1491,8 @@ msgid "Enable morale states:"
 msgstr "Povolit morálku:"
 
 #: ../base/ufos/menu_multiplayer.ufo:920
-#, fuzzy
 msgid "Gametype:"
-msgstr "Hra"
+msgstr "Typ hry:"
 
 #: ../base/ufos/menu_multiplayer.ufo:959
 msgid "Teamplay:"
@@ -2119,7 +2113,7 @@ msgstr "Informace o základně"
 
 #: ../base/ufos/menu_transfer.ufo:196
 msgid "Cargo onboard"
-msgstr ""
+msgstr "Náklad na palubě"
 
 #: ../base/ufos/menu_transfer.ufo:230
 msgid "Show only items"
@@ -2143,18 +2137,16 @@ msgid "Aliens"
 msgstr "Cizáci"
 
 #: ../base/ufos/menu_transfer.ufo:290
-#, fuzzy
 msgid "Show only aircrafts"
-msgstr "Ukázat jen zbroj"
+msgstr "Ukázat jen letouny"
 
 #: ../base/ufos/menu_transfer.ufo:305
-#, fuzzy
 msgid "Aircrafts"
 msgstr "Letouny"
 
 #: ../base/ufos/menu_transfer.ufo:310
 msgid "Empty the aircraft storage"
-msgstr ""
+msgstr "Vyprázdnit sklad letounu"
 
 #: ../base/ufos/menu_transfer.ufo:325
 msgid "Unload"
@@ -2518,8 +2510,7 @@ msgstr "Pitvy a pozorování"
 msgid "The Alien Threat"
 msgstr "Cizácká hrozba"
 
-#: ../base/ufos/research.ufo:100 ../base/ufos/research.ufo:109
-#: ../base/ufos/research.ufo:116
+#: ../base/ufos/research.ufo:100
 msgid "Continuous Wave Laser Operation"
 msgstr ""
 
@@ -2608,8 +2599,15 @@ msgstr ""
 msgid "mail_to_base_commander"
 msgstr ""
 
-#: ../base/ufos/research.ufo:128 ../base/ufos/research.ufo:137
-#: ../base/ufos/research.ufo:144
+#: ../base/ufos/research.ufo:109
+msgid "Proposal: Continuous Wave Laser Operation"
+msgstr ""
+
+#: ../base/ufos/research.ufo:116
+msgid "Re: Continuous Wave Laser Operation"
+msgstr ""
+
+#: ../base/ufos/research.ufo:128
 msgid "Antimatter"
 msgstr "Antihmota"
 
@@ -2621,8 +2619,15 @@ msgstr ""
 msgid "antimatter_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:187 ../base/ufos/research.ufo:196
-#: ../base/ufos/research.ufo:203
+#: ../base/ufos/research.ufo:137
+msgid "Proposal: Antimatter"
+msgstr "Návrh: Antihmota"
+
+#: ../base/ufos/research.ufo:144
+msgid "Re: Antimatter"
+msgstr "Výsledek: Antihmota"
+
+#: ../base/ufos/research.ufo:187
 msgid "Live Alien"
 msgstr "Živý cizák"
 
@@ -2646,8 +2651,15 @@ msgstr "Před výzkumem nejsou dostupné žádné informace."
 msgid "mail_from_dr_connor"
 msgstr ""
 
-#: ../base/ufos/research.ufo:219 ../base/ufos/research.ufo:228
-#: ../base/ufos/research.ufo:235
+#: ../base/ufos/research.ufo:196
+msgid "Proposal: Live Alien"
+msgstr "Návrh: Živý cizák"
+
+#: ../base/ufos/research.ufo:203
+msgid "Re: Live Alien"
+msgstr "Výsledek: Živý cizák"
+
+#: ../base/ufos/research.ufo:219
 msgid "Alien Breathing Apparatus"
 msgstr ""
 
@@ -2659,8 +2671,15 @@ msgstr ""
 msgid "alien_breathing_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:252 ../base/ufos/research.ufo:261
-#: ../base/ufos/research.ufo:268
+#: ../base/ufos/research.ufo:228
+msgid "Proposal: Alien Breathing Apparatus"
+msgstr ""
+
+#: ../base/ufos/research.ufo:235
+msgid "Re: Alien Breathing Apparatus"
+msgstr ""
+
+#: ../base/ufos/research.ufo:252
 msgid "The Alien Mind"
 msgstr ""
 
@@ -2672,8 +2691,15 @@ msgstr ""
 msgid "alien_mind_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:282 ../base/ufos/research.ufo:291
-#: ../base/ufos/research.ufo:298
+#: ../base/ufos/research.ufo:261
+msgid "Proposal: The Alien Mind"
+msgstr ""
+
+#: ../base/ufos/research.ufo:268
+msgid "Re: The Alien Mind"
+msgstr ""
+
+#: ../base/ufos/research.ufo:282
 msgid "Odd Behaviour"
 msgstr ""
 
@@ -2684,6 +2710,14 @@ msgstr ""
 #: ../base/ufos/research.ufo:285
 msgid "alien_odd_behaviour_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
+
+#: ../base/ufos/research.ufo:291
+msgid "Proposal: Odd Behaviour"
+msgstr ""
+
+#: ../base/ufos/research.ufo:298
+msgid "Re: Odd Behaviour"
+msgstr ""
 
 #: ../base/ufos/research.ufo:317
 msgid "assault_txt"
@@ -2701,9 +2735,12 @@ msgstr ""
 msgid "bolterrifle_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:357 ../base/ufos/research.ufo:364
-#: ../base/ufos/research.ufo:387 ../base/ufos/research.ufo:394
-msgid "Electromagnetic Rifle"
+#: ../base/ufos/research.ufo:357 ../base/ufos/research.ufo:387
+msgid "Proposal: Electromagnetic Rifle"
+msgstr ""
+
+#: ../base/ufos/research.ufo:364 ../base/ufos/research.ufo:394
+msgid "Re: Electromagnetic Rifle"
 msgstr ""
 
 #: ../base/ufos/research.ufo:411
@@ -2718,9 +2755,13 @@ msgstr ""
 msgid "monoknife_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:435 ../base/ufos/research.ufo:442
-msgid "Monomolecular Blades"
-msgstr ""
+#: ../base/ufos/research.ufo:435
+msgid "Proposal: Monomolecular Blades"
+msgstr "Návrh: Monomolekulární nůž"
+
+#: ../base/ufos/research.ufo:442
+msgid "Re: Monomolecular Blades"
+msgstr "Výsledek: Monomolekulární nůž"
 
 #: ../base/ufos/research.ufo:461
 msgid "flamer_txt"
@@ -2766,10 +2807,13 @@ msgstr ""
 msgid "grenl_plasma_ammo_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:618 ../base/ufos/research.ufo:625
-#, fuzzy
-msgid "Plasma And The Grenade Launcher"
-msgstr "Granátomet"
+#: ../base/ufos/research.ufo:618
+msgid "Proposal: Plasma And The Grenade Launcher"
+msgstr ""
+
+#: ../base/ufos/research.ufo:625
+msgid "Re: Re: Plasma And The Grenade Launcher"
+msgstr ""
 
 #: ../base/ufos/research.ufo:645
 msgid "laser_ammo_txt"
@@ -2787,10 +2831,13 @@ msgstr ""
 msgid "heavylaser_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:669 ../base/ufos/research.ufo:676
-#: ../base/ufos/weapons_laser.ufo:103
-msgid "Heavy Laser"
-msgstr "Výkonný laser"
+#: ../base/ufos/research.ufo:669
+msgid "Proposal: Heavy Laser"
+msgstr "Návrh: Výkonný laser"
+
+#: ../base/ufos/research.ufo:676
+msgid "Re: Heavy Laser"
+msgstr "Výsledek: Výkonný laser"
 
 #: ../base/ufos/research.ufo:712
 msgid "irgoggles_txt"
@@ -2804,10 +2851,13 @@ msgstr ""
 msgid "kerrblade_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:735 ../base/ufos/research.ufo:742
-#, fuzzy
-msgid "Alien Artifact - Kerrblade"
-msgstr "Cizácké artefakty"
+#: ../base/ufos/research.ufo:735
+msgid "Proposal: Alien Artifact -- Kerrblade"
+msgstr ""
+
+#: ../base/ufos/research.ufo:742
+msgid "Re: Alien Artifact -- Kerrblade"
+msgstr "Výsledek: Cizácký artefakt -- Rrrozparovač"
 
 #: ../base/ufos/research.ufo:760
 msgid "laserpistol_txt"
@@ -2817,10 +2867,13 @@ msgstr ""
 msgid "laserpistol_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:767 ../base/ufos/research.ufo:774
-#: ../base/ufos/weapons_laser.ufo:6
-msgid "Laser Pistol"
-msgstr "Laserová pistole"
+#: ../base/ufos/research.ufo:767
+msgid "Proposal: Laser Pistol"
+msgstr "Návrh: Laserová pistole"
+
+#: ../base/ufos/research.ufo:774
+msgid "Re: Laser Pistol"
+msgstr "Výsledek: Laserová pistole"
 
 #: ../base/ufos/research.ufo:809
 msgid "laserrifle_txt"
@@ -2830,10 +2883,13 @@ msgstr ""
 msgid "laserrifle_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:816 ../base/ufos/research.ufo:823
-#: ../base/ufos/weapons_laser.ufo:81
-msgid "Laser Rifle"
-msgstr "Laserová puška"
+#: ../base/ufos/research.ufo:816
+msgid "Proposal: Laser Rifle"
+msgstr "Návrh: Laserová puška"
+
+#: ../base/ufos/research.ufo:823
+msgid "Re: Laser Rifle"
+msgstr "Výsledek: Laserová puška"
 
 #: ../base/ufos/research.ufo:859
 msgid "medikit_txt"
@@ -2863,11 +2919,13 @@ msgstr ""
 msgid "plasatomizer_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:952 ../base/ufos/research.ufo:959
-#: ../base/ufos/research.ufo:985 ../base/ufos/research.ufo:992
-#, fuzzy
-msgid "Alien Artifact - Plasma Pistol"
-msgstr "Cizácké artefakty"
+#: ../base/ufos/research.ufo:952 ../base/ufos/research.ufo:985
+msgid "Proposal: Alien Artifact -- Plasma Pistol"
+msgstr ""
+
+#: ../base/ufos/research.ufo:959 ../base/ufos/research.ufo:992
+msgid "Re: Alien Artifact -- Plasma Pistol"
+msgstr "Výsledek: Cizácký artefakt -- Plasmová pistole"
 
 #: ../base/ufos/research.ufo:1009 ../base/ufos/research.ufo:1041
 msgid "plasblaster_txt"
@@ -2877,11 +2935,13 @@ msgstr ""
 msgid "plasblaster_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:1016 ../base/ufos/research.ufo:1023
-#: ../base/ufos/research.ufo:1048 ../base/ufos/research.ufo:1055
-#, fuzzy
-msgid "Alien Artifact - Plasma Blaster"
-msgstr "Cizácké artefakty"
+#: ../base/ufos/research.ufo:1016 ../base/ufos/research.ufo:1048
+msgid "Proposal: Alien Artifact -- Plasma Blaster"
+msgstr ""
+
+#: ../base/ufos/research.ufo:1023 ../base/ufos/research.ufo:1055
+msgid "Re: Alien Artifact -- Plasma Blaster"
+msgstr ""
 
 #: ../base/ufos/research.ufo:1072
 msgid "plasblade_txt"
@@ -2891,10 +2951,13 @@ msgstr ""
 msgid "plasblade_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:1079 ../base/ufos/research.ufo:1086
-#, fuzzy
-msgid "Alien Artifact - Plasma Blade"
-msgstr "Cizácké artefakty"
+#: ../base/ufos/research.ufo:1079
+msgid "Proposal: Alien Artifact -- Plasma Blade"
+msgstr ""
+
+#: ../base/ufos/research.ufo:1086
+msgid "Re: Alien Artifact -- Plasma Blade"
+msgstr "Výsledek: Cizácký artefakt -- Plasmová dýka"
 
 #: ../base/ufos/research.ufo:1104
 msgid "plasmagren_txt"
@@ -2904,10 +2967,13 @@ msgstr ""
 msgid "plasmagren_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:1111 ../base/ufos/research.ufo:1118
-#, fuzzy
-msgid "Alien Artifact - Plasma Grenade"
-msgstr "Cizácké artefakty"
+#: ../base/ufos/research.ufo:1111
+msgid "Proposal: Alien Artifact -- Plasma Grenade"
+msgstr ""
+
+#: ../base/ufos/research.ufo:1118
+msgid "Re: Alien Artifact -- Plasma Grenade"
+msgstr ""
 
 #: ../base/ufos/research.ufo:1136 ../base/ufos/research.ufo:1169
 msgid "plasrifle_txt"
@@ -2917,11 +2983,13 @@ msgstr ""
 msgid "plasrifle_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:1143 ../base/ufos/research.ufo:1150
-#: ../base/ufos/research.ufo:1176 ../base/ufos/research.ufo:1183
-#, fuzzy
-msgid "Alien Artifact - Plasma Rifle"
-msgstr "Cizácké artefakty"
+#: ../base/ufos/research.ufo:1143 ../base/ufos/research.ufo:1176
+msgid "Proposal: Alien Artifact -- Plasma Rifle"
+msgstr ""
+
+#: ../base/ufos/research.ufo:1150 ../base/ufos/research.ufo:1183
+msgid "Re: Alien Artifact -- Plasma Rifle"
+msgstr "Výsledek: Cizácký artefakt -- Plasmová puška"
 
 #: ../base/ufos/research.ufo:1200
 msgid "rpg_txt"
@@ -3003,11 +3071,13 @@ msgstr ""
 msgid "stungren_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-# Alien = cizák - tradice českého překladu UFO: Enemy Unknown
-#: ../base/ufos/research.ufo:1513 ../base/ufos/research.ufo:1520
-#, fuzzy
-msgid "Anti-Alien Gas"
-msgstr "Cizáci"
+#: ../base/ufos/research.ufo:1513
+msgid "Proposal: Anti-Alien Gas"
+msgstr ""
+
+#: ../base/ufos/research.ufo:1520
+msgid "Re: Anti-Alien Gas"
+msgstr ""
 
 #: ../base/ufos/research.ufo:1544
 msgid "stunrod_txt"
@@ -3017,10 +3087,13 @@ msgstr ""
 msgid "stunrod_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:1551 ../base/ufos/research.ufo:1558
-#: ../base/ufos/weapons_melee.ufo:113
-msgid "Stun Rod"
-msgstr "Paralyzátor"
+#: ../base/ufos/research.ufo:1551
+msgid "Proposal: Stun Rod"
+msgstr "Návrh: Paralyzátor"
+
+#: ../base/ufos/research.ufo:1558
+msgid "Re: Stun Rod"
+msgstr "Výsledek: Paralyzátor"
 
 #: ../base/ufos/research.ufo:1577
 msgid "pbeampistol_txt"
@@ -3030,11 +3103,13 @@ msgstr ""
 msgid "pbeampistol_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:1584 ../base/ufos/research.ufo:1591
-#: ../base/ufos/research.ufo:1616 ../base/ufos/research.ufo:1623
-#, fuzzy
-msgid "Alien Artifact - Particle Beam Pistol"
-msgstr "Cizácké artefakty"
+#: ../base/ufos/research.ufo:1584 ../base/ufos/research.ufo:1616
+msgid "Proposal: Alien Artifact -- Particle Beam Pistol"
+msgstr ""
+
+#: ../base/ufos/research.ufo:1591 ../base/ufos/research.ufo:1623
+msgid "Re: Alien Artifact -- Particle Beam Pistol"
+msgstr "Výsledek: Cizácký artefakt -- Částicová pistole"
 
 #: ../base/ufos/research.ufo:1609 ../base/ufos/research.ufo:1674
 #: ../base/ufos/research.ufo:1738
@@ -3054,11 +3129,13 @@ msgstr ""
 msgid "pbeamcannon_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:1648 ../base/ufos/research.ufo:1655
-#: ../base/ufos/research.ufo:1681 ../base/ufos/research.ufo:1688
-#, fuzzy
-msgid "Alien Artifact - Particle Beam Cannon"
-msgstr "Cizácké artefakty"
+#: ../base/ufos/research.ufo:1648 ../base/ufos/research.ufo:1681
+msgid "Proposal: Alien Artifact -- Particle Beam Cannon"
+msgstr ""
+
+#: ../base/ufos/research.ufo:1655 ../base/ufos/research.ufo:1688
+msgid "Re: Alien Artifact -- Particle Beam Cannon"
+msgstr "Výsledek: Cizácký artefakt -- Částicové dělo"
 
 #: ../base/ufos/research.ufo:1706
 msgid "pbeamrifle_txt"
@@ -3068,11 +3145,13 @@ msgstr ""
 msgid "pbeamrifle_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:1713 ../base/ufos/research.ufo:1720
-#: ../base/ufos/research.ufo:1745 ../base/ufos/research.ufo:1752
-#, fuzzy
-msgid "Alien Artifact - Particle Beam Rifle"
-msgstr "Cizácké artefakty"
+#: ../base/ufos/research.ufo:1713 ../base/ufos/research.ufo:1745
+msgid "Proposal: Alien Artifact -- Particle Beam Rifle"
+msgstr ""
+
+#: ../base/ufos/research.ufo:1720 ../base/ufos/research.ufo:1752
+msgid "Re: Alien Artifact -- Particle Beam Rifle"
+msgstr "Výsledek: Cizácký artefakt -- Částicová puška"
 
 #: ../base/ufos/research.ufo:1771
 msgid "pbeam_ammo_txt"
@@ -3082,8 +3161,12 @@ msgstr ""
 msgid "pbeam_ammo_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:1778 ../base/ufos/research.ufo:1785
-msgid "Man-Portable Particle Beams"
+#: ../base/ufos/research.ufo:1778
+msgid "Proposal: Man-Portable Particle Beams"
+msgstr ""
+
+#: ../base/ufos/research.ufo:1785
+msgid "Re: Man-Portable Particle Beams"
 msgstr ""
 
 #: ../base/ufos/research.ufo:1807
@@ -3136,7 +3219,7 @@ msgstr "Druh poškození - Omračuje"
 
 #: ../base/ufos/research.ufo:1994
 msgid "Particle Beam Damage Type"
-msgstr ""
+msgstr "Druh poškození - Částicové zbraně"
 
 #: ../base/ufos/research.ufo:2011
 msgid "Accuracy Attribute"
@@ -3402,6 +3485,14 @@ msgstr ""
 msgid "ufo_scout_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
+#: ../base/ufos/research.ufo:2442
+msgid "UFO -- Scout"
+msgstr "UFO -- Průzkumník"
+
+#: ../base/ufos/research.ufo:2449
+msgid "Re: UFO -- Scout"
+msgstr "Výsledek: UFO -- Průzkumník"
+
 #: ../base/ufos/research.ufo:2481
 msgid "ufo_fighter_txt"
 msgstr ""
@@ -3410,8 +3501,15 @@ msgstr ""
 msgid "ufo_fighter_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:2522 ../base/ufos/research.ufo:2531
-#: ../base/ufos/research.ufo:2538
+#: ../base/ufos/research.ufo:2489
+msgid "UFO -- Fighter"
+msgstr "UFO -- Stíhačka"
+
+#: ../base/ufos/research.ufo:2496
+msgid "Re: UFO -- Fighter"
+msgstr "Výsledek: UFO -- Stíhačka"
+
+#: ../base/ufos/research.ufo:2522
 msgid "UFO - Harvester"
 msgstr "UFO - Sklízeč"
 
@@ -3422,6 +3520,14 @@ msgstr ""
 #: ../base/ufos/research.ufo:2524
 msgid "ufo_harvester_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
+
+#: ../base/ufos/research.ufo:2531
+msgid "UFO -- Harvester"
+msgstr "UFO -- Sklízeč"
+
+#: ../base/ufos/research.ufo:2538
+msgid "Re: UFO -- Harvester"
+msgstr "Výsledek: UFO -- Sklízeč"
 
 #: ../base/ufos/research.ufo:2564
 msgid "Live Specimen - Bloodspider"
@@ -3435,8 +3541,7 @@ msgstr ""
 msgid "bloodspider_notes_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:2582 ../base/ufos/research.ufo:2591
-#: ../base/ufos/research.ufo:2598
+#: ../base/ufos/research.ufo:2582
 msgid "Alien Autopsy - Bloodspider"
 msgstr "Pitva cizáka - Bloodspider"
 
@@ -3448,8 +3553,15 @@ msgstr ""
 msgid "bloodspider_autopsy_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:2617 ../base/ufos/research.ufo:2626
-#: ../base/ufos/research.ufo:2633
+#: ../base/ufos/research.ufo:2591
+msgid "Proposal: Alien Autopsy -- Bloodspider"
+msgstr "Návrh: Pitva cizáka -- Bloodspider"
+
+#: ../base/ufos/research.ufo:2598
+msgid "Re: Alien Autopsy -- Bloodspider"
+msgstr "Výsledek: Pitva cizáka -- Bloodspider"
+
+#: ../base/ufos/research.ufo:2617
 msgid "Alien Autopsy - Ortnok"
 msgstr "Pitva cizáka - Ortnok"
 
@@ -3461,8 +3573,15 @@ msgstr ""
 msgid "ortnok_autopsy_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:2653 ../base/ufos/research.ufo:2662
-#: ../base/ufos/research.ufo:2669
+#: ../base/ufos/research.ufo:2626
+msgid "Proposal: Alien Autopsy -- Ortnok"
+msgstr "Návrh: Pitva cizáka -- Ortnok"
+
+#: ../base/ufos/research.ufo:2633
+msgid "Re: Alien Autopsy -- Ortnok"
+msgstr "Výsledek: Pitva cizáka -- Ortnok"
+
+#: ../base/ufos/research.ufo:2653
 msgid "Alien Autopsy - Taman"
 msgstr "Pitva cizáka - Taman"
 
@@ -3474,8 +3593,15 @@ msgstr ""
 msgid "taman_autopsy_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
 
-#: ../base/ufos/research.ufo:2687 ../base/ufos/research.ufo:2696
-#: ../base/ufos/research.ufo:2703
+#: ../base/ufos/research.ufo:2662
+msgid "Proposal: Alien Autopsy -- Taman"
+msgstr "Návrh: Pitva cizáka -- Taman"
+
+#: ../base/ufos/research.ufo:2669
+msgid "Re: Alien Autopsy -- Taman"
+msgstr "Výsledek: Pitva cizáka -- Taman"
+
+#: ../base/ufos/research.ufo:2687
 msgid "Alien Autopsy - Shevaar"
 msgstr "Pitva cizáka - Shevaar"
 
@@ -3486,6 +3612,14 @@ msgstr ""
 #: ../base/ufos/research.ufo:2689
 msgid "shevaar_autopsy_pre_txt"
 msgstr "Před výzkumem nejsou dostupné žádné informace."
+
+#: ../base/ufos/research.ufo:2696
+msgid "Proposal: Alien Autopsy -- Shevaar"
+msgstr "Návrh: Pitva cizáka -- Shevaar"
+
+#: ../base/ufos/research.ufo:2703
+msgid "Re: Alien Autopsy -- Shevaar"
+msgstr "Výsledek: Pitva cizáka -- Shevaar"
 
 #: ../base/ufos/research.ufo:2775
 msgid "Phoenix UGV"
@@ -3552,10 +3686,10 @@ msgstr ""
 msgid "craft_ammo_shiva_2_txt"
 msgstr ""
 
-# Co je AA?
+# VV = Vzduch-Vzduch
 #: ../base/ufos/research.ufo:2897
 msgid "'Sparrowhawk' AA Missile Rack"
-msgstr "Nosič střel 'Sparrowhawk' AA"
+msgstr "Nosič střel VV 'Sparrowhawk'"
 
 #: ../base/ufos/research.ufo:2899
 msgid "craft_weapon_sparrowhawk_txt"
@@ -3585,11 +3719,9 @@ msgstr "Raketa TR-20"
 msgid "craft_ammo_tr20_txt"
 msgstr ""
 
-# to chce stejny nazev pro vsechny varianty (pistole, raketa atd)
-#: ../base/ufos/research.ufo:2975 ../base/ufos/research.ufo:2985
-#: ../base/ufos/research.ufo:2992
+#: ../base/ufos/research.ufo:2975
 msgid "Particle Beam Weapon"
-msgstr ""
+msgstr "Částicová zbraň"
 
 #: ../base/ufos/research.ufo:2976
 msgid "craft_weapon_particle_beam_pre_txt"
@@ -3598,6 +3730,14 @@ msgstr "Před výzkumem nejsou dostupné žádné informace."
 #: ../base/ufos/research.ufo:2977
 msgid "craft_weapon_particle_beam_txt"
 msgstr ""
+
+#: ../base/ufos/research.ufo:2985
+msgid "Proposal: Particle Beam Weapon"
+msgstr "Návrh: Částicová zbraň"
+
+#: ../base/ufos/research.ufo:2992
+msgid "Re: Particle Beam Weapon"
+msgstr "Výsledek: Částicová zbraň"
 
 #: ../base/ufos/research.ufo:3013
 msgid "Targeting Computer"
@@ -4316,465 +4456,9 @@ msgstr ""
 msgid "A New Twist"
 msgstr ""
 
-# The Asian Republic\n
-# \n
-# In the years that followed, the reformed Republic of China -- taking up its old, pre-Communist name -- slowly relinquished its conquered territories, including those seized in centuries past, offering them a choice between independence or a seat on the new governmental council as an equal and respected part of the new Republic. Having fought on the rebel side throughout the civil war, Taiwan was the first to merge with the new Republic, reconciling its differences with the mainland after the Communist government surrendered. Taiwan quickly became a major player in the new council and was instrumental in sending the captured government leaders off to The Hague to face a war crimes tribunal. North Korea, another rebel nation, also elected to remain in the Republic, sensing opportunities for greater economic growth and freedom from dictatorship. They would not be disappointed.\n
-# \n
-# The resurgence of the Chinese economy was dubbed a miracle by contemporary historians. The first breakthroughs in nanotechnology were made by Chinese researchers, bringing in vast medical-industrial contracts from all over the world. Despite old hatreds and mistrust, other east-Asian nations slowly joined the Republic, which was soon redubbed the Asian Republic to honour its new members. Even Japan eventually joined to bolster its flagging economy and a population which had dwindled through the war years. The Republic continued mostly true to its principles with the civil war still fresh in mind. Over the years it made a reputation for dealing with all its member nations in good faith, and built enough trust and solidarity that it can now speak with a single voice for all the billions of people of south-east Asia.\n
-# \n
-# Today, the Asian Republic's economy has all but recovered due to the commercialisation of nanotech and holographics. It still possesses a strong and up-to-date military, trained to a higher standard than any other country.\n
-# \n
-# \n
-# The Revolutionary Countries\n
-# \n
-# With the successive fall of both the United States and China, Socialism in South-America waxed and waned during the post-war years. The US's economic death brought on a surge of revolutionary fervor, swaying several nations away from the influence of capitalism. However, with a democratic framework already halfway in place in most countries, the ideal of rule of the people could for the first time be realised without corruption. This new wave proposed to unite the principles of democracy with true Socialist ideals.\n
-# \n
-# The whole continent watched in horror at the nuking of Shanghai during the Second Cold War, televised all over the globe right up to the final second. The new wave suffered another major blow when China fell. In that, everyone could see a first-hand example of what might happen to the revolution if it went the way of dictatorship and totalitarianism. It didn't take long for the leaders to respond.\n
-# \n
-# Several dictator-led countries immediately tried to turn on the thumbscrews, trying to head off a rebellion before it began, which caused a huge backlash in the larger democratic nations, particularly Cuba, Brazil and Argentina. Suddenly, the last remaining kings of South-America were left with no friends at all.\n
-# \n
-# One by one, they caved to public and political pressure and were replaced by elected houses. The revolution picked up speed instead of losing it; they encouraged greater trade, closer integration, and eventually followed Europe's example of open borders. A new network of highways all over the continent strengthened economies and allowed far more efficient use of arable land. South-America's natural riches were tapped like never before, and they demanded fair prices for every bit of it.\n
-# \n
-# Today, the member nations have merged so closely that they are better known as a single body: the Revolutionary Countries. One joint government represents the entire continent, and they manage an economical juggernaut surpassed only by the Greater European Union. Their military is small but has state-of-the-art equipment. Their training is not exceptional.\n
-# \n
-# \n
-# United America\n
-# \n
-# As the US economy started to break down in the late 2020s, more and more people abandoned the country for the greener pastures of Canada and, ironically, Mexico. The value of the dollar plummeted to unprecedented depths, impoverishing millions until its price was fixed by the IMF and the international banking community. The country was then saddled with a brutal reform plan, requiring it to sell off or mothball over half of its military arsenal. To cope with the repayment on sixteen trillion dollars of debt, its interest rate was frozen and its exports shifted to technology and luxury goods. Successful restructuring of NASA, combined with a functional spaceplane prototype, also turned outer space into a money-maker for the post-collapse US. Cape Canaveral began offering the cheapest space launches anywhere on the planet, first with their prototype, later with fully-functional advanced spaceplane designs. This significantly helped the beleaguered country claw its way back towards the black.\n
-# \n
-# The cooperation between North-American nations began with financial aid from Canada and Mexico, which saw their exports to the US dipping dangerously and wanted to help fix their most important trading partner. The growing number of expatriates also served to create closer ties. Then, in the most unexpected political turnaround in 2042, Mexico elected the US expatriate Esteban Villa-Lobos Garcia to the office of president.\n
-# \n
-# The election was hotly contested. However, the decision held through two recounts, and the new president was inaugurated in July of 2042. Eventually, a combination of sound policies and personal charisma brought most of the country around on Garcia; and then he proposed the Tomorrow Plan.\n
-# \n
-# Under the plan, Mexico, Canada and the USA would unite into one country to reawaken the North American superpower. In a number of controversial public votes, the general population in all three countries gave majority support for the Tomorrow Plan; 52% in the United States, 64% in Canada, and 71% in Mexico. The merger was eventually finalised in 2050, creating a United America out of the dominant powers of the New World. The booming space industry quickly spread throughout the new country, and despite a few stumbles along the way, North America steamed headlong towards recovery.\n
-# \n
-# Today, UA's debt has decreased from sixteen trillion to two, and standards of living have nearly recovered to what they were before the crash. UA has the most advanced space industry on the planet; NASA performs almost 70% of commercial space launches around the globe. It exports vast quantities of goods to every other nation and is projected to return to solvency in less than three years. Militarily, the UA is the weakest of all the meganations. It has only a small volunteer army and a tiny defence budget as mandated by the IMF. However, what forces the UA does have are highly-trained and can turn on a dime, able to reach any place in the country within two hours.\n
-# \n
-# \n
-# The Greater European Union\n
-# \n
-# Slowly but surely, the European Union has expanded borders further and further with every passing decade. It first moved into the Middle-East when it accepted Israel as an associate member in 2011, and then upgraded both Israel and Turkey to full membership in 2017. Several Atlantic islands were also accepted in the same resolution, making it the single greatest EU expansion of the 21st century.\n
-# \n
-# Following Israel's controversial entrance as an associate member, the EU passed stricter laws on human rights, freedom of religion and separation of church and state. It was also the first Western superpower to officially recognise the Middle-Eastern Alliance, and fostered close relations with the Alliance -- despite United States protests -- in the hope of reducing culture clash and the ongoing threat of terrorism. For the most part, they were successful.\n
-# \n
-# In 2028, Greenland -- having grown strong due to immigration from the United States -- formally declared its independence from Denmark. No battles were fought; the Danish government grudgingly recognised the independence due to political pressure from other European countries. In the following months, Greenland briefly considered joining the US as a protectorate, but reconsidered when the EU offered a full membership. This, along with the defection of several US island protectorates in the Atlantic, impelled the EU to rename itself the 'Greater European Union'.\n
-# \n
-# In the aftermath of the Second Cold War, the GEU has always been on the forefront of political development. It was the only Western nation to second the Middle-Eastern Alliance's vote of no confidence on the old United Nations, after the UN's complete failure to act during the Chinese expansion and eventual civil war. The GEU also strongly supported the Alliance's efforts to create a new UN, providing fair representation to all the world's nations, and with enough teeth to live up to the principles under which it was first created.\n
-# \n
-# Today, the GEU is the strongest economical and political force in the world. However, its vast bureaucracy and large number of members -- members who don't always see eye-to-eye -- make it slow to manoeuvre in every way. Its military is large and powerful but poorly-integrated, with each individual army sticking to the language and traditions of their country. Military cooperation is difficult to achieve and requires going through huge amounts of red tape. The GEU contributes a majority of UN troops, but they are only ever used as peacekepeers. Whether or not the GEU militaries have lost their 'edge' has been a subject of hot debate in Brussels for many years, and there appears to be no decision in sight.\n
-# \n
-# \n
-# The Middle-Eastern Alliance\n
-# \n
-# The rise of the Middle-Eastern Alliance was a surprise to everyone, including the people involved. It was designed solely to weaken Western influence in the Middle-East. The principal designers and first members -- Iran, Syria, Jordan and Afghanistan -- never meant the Alliance to last more than a decade, by which time they expected it to fragment and disband under the weight of its own differences.\n
-# \n
-# The Second Cold War changed everything. The People's Republic of China was no longer a nearby ally against the West; it became an expanding threat with an appetite, casting hungry eyes on Nepal, chunks of India, and possibly even the sovereign states on China's western border. Pakistan, Tajikistan and Kyrgyzstan rushed into the arms of the Alliance in order to guard themselves against invasion. The Arabian subcontinent joined the Alliance not a year later, seeking to expand their political pull with the West. Without even realising it, they had formed a power block covering nearly the entire Middle-East. Their position was simply too good to allow it to crumble.\n
-# \n
-# The expanded Alliance, now recognised by the European Union, stepped onto the international stage with knife in hand. They had a stranglehold on most of the world's remaining oil supplies and the will to exploit it.\n
-# \n
-# The Alliance's economic power grew as outside oil reserves dwindled. Pharmaceutical manufacturers packed up in droves and moved to the Middle-East, the only place left in the world where oil was cheap and plentiful. This, along with the many other applications of crude oil, allowed the Middle-East to survive the Russian 'nuclear revolution' and the subsequent worldwide migration to nuclear power. It continued its expansion with Egypt, Uzbekistan, Turkmenistan, and disputed chunks of Africa around the Red Sea. The entire Red Sea region was quickly pacified when the Alliance moved in its military to assist the new African members.\n
-# \n
-# Today, the spread of prosperity has turned the Middle-East away from dogma and towards secular law and gender equality. It is still ruled by individuals -- Sultans, Emirs, Maliks, Presidents and Generals -- but their personal power is kept in check by the rest of the Alliance, rulers who do not want their colleagues stepping out of line. Political dissent is tolerated due to pressure from the EU and other nations, but even in 2084 few of the Alliance's member nations have a functioning democratic process.\n
-# \n
-# The Alliance military is large, fast and mean. It is one of the most elite and well-equipped forces in the world, and it uses more permissive rules of engagement than either United America or the Asian Republic. Their clause for 'acceptable civilian casualties' has been the source of huge amounts of criticism from across the world, but the Alliance has stubbornly maintained this clause throughout the four decades it has been in effect.\n
-# \n
-# \n
-# New Africa\n
-# \n
-# Born out of violence and strife, New Africa found its unification in separation. It languished onwards for three decades into the 21st century, as it had done for far too long, with its civil wars and ethnic purges and atrocities beyond measure. That is, until several central-African nations undertook a massive project in 2039 to break the notorious diamond cartels and seize their revenue for long-term national improvement.\n
-# \n
-# It resulted in a military and economic bloodbath. The UN attempted various measures to stop the fighting but, even more toothless than ever before, it accomplished nothing. However, the league of nations was eventually joined by several others, tired of being pushed around by Western conglomerates, and after several years of bitter fighting they were successful in taking down the cartels one by one. This left them with some of the largest, most advanced diamond and gold mines in the world; it made their combined territory the largest single supplier of natural diamonds in the world. It also gave them a new sense of what they could accomplish together. The core of New Africa was born.\n
-# \n
-# All the African nations involved in the anti-cartel war, with the exception of territories loyal to the Commonwealth of Oceania and the Middle-Eastern Alliance, began to work much more closely together, taking cues from South-America in building a dependable road network to fuel trade and communication. It also allowed a much better distribution of food. Over the next thirty years, New Africa completely eliminated famine within its borders, which it changed completely to accomodate ethnicity and a desire for independence within its territories, and brought socialised public health-care to its people at near-ruinous cost. However, it also found new exports in the commercialised, sustainable growth of tropical hardwood and exotic fruit. The new cooperation made price agreements across the continent possible for the first time; like the Revolutionary Countries, New Africa forced the rest of the world to pay fairly for all goods and services.\n
-# \n
-# Today, New Africa is still the weakest of the great powers economically, but it is growing fast. It has a large, motivated standing army, but the troops are not well-equipped, armed mostly with former US antiques and even century-old Soviet equipment. They also have trouble getting to remote locations due to frequent equipment failures and the continent's difficult geography. Most of the time, the best the New Africans can do is spot UFOs as they land with one of thousands of scouts and small patrols out in the country to combat poaching and smuggling.\n
-# \n
-# \n
-# Russia\n
-# \n
-# Russia took decades to recover from the fall of the Soviet Union and the ravages of the Soviet system on the country's economy. It festered like an open wound for the first half of the 21st century, still trying to quash the constant rebellions in Chechnya, still trying to reform after 70 years of state domination, still trying to get back its lost position as a world superpower.\n
-# \n
-# Things finally started getting better for Russia when then-prime minister Yevgeny Karamazov granted complete independence to Chechnya in 2047. While the newly official Chechen Republic imploded in a storm of violence about who exactly should rule, Russia turned away and set itself to fixing its own problems, leaving Chechnya to itself -- and to the new and improved UN, which immediately took an interest in trying to stop the bloodshed. Unfortunately that wouldn't happen for a long time, and even then Chechnya could only return to Russia's sphere of influence, but for the first time it did so as a fully-recognised independent voice.\n
-# \n
-# Economic salvation for Russia -- especially with oil supplies from the Middle-East dwindling -- began with drilling the country's own oil in Siberia, with new techniques and equipment able to survive the harsh winter conditions, and later with the construction of a series of new nuclear power plants. Russia invested heavily in research to make the new plants smaller, safer and -- more importantly -- sustainable. This involved a switch from enriched uranium to thorium as the main nuclear fuel for all the new Russian plants, and advanced new designs based upon the 'energy amplifier', a new type of fission reactor first test-built near Rome from 2004 to 2011. Two of the new reactors even consumed plutonium from dismantled nuclear weapons and from the stored waste of older power plants.\n
-# \n
-# Then, eight years after the Chechen independence, Russia's 'nuclear revolution' really came into its own with the invention of the depleted element postprocessor, which could convert 90% of an energy amplifier's waste into radiation-free elements in weeks instead of centuries. The Russians ended the age-old energy crisis almost overnight; nuclear fission became safe, relatively clean, and global thorium supplies would see the world clear into the year 3000.\n
-# \n
-# Today, many of the ex-Soviet republics have rejoined Russia, following the example of the other great nations, eager to take advantage of the power generation and nuclear technology that are now Russia's main exports. The nuclear revolution continues even today with the gradual development and commercialisation of fusion power. Though its economy is still troubled, the country is now in better shape than it has been for centuries -- whether under the khans, the czars or the Soviets. Its military is somewhat antiquated but highly-trained, well-disciplined and professional, and it does not lack for manpower.\n
-# \n
-# \n
-# The Commonwealth of Oceania\n
-# \n
-# The Commonwealth of Nations, a political organisation made up of most of the countries of the old British Empire, lost a great deal of power going into the Second Cold War. First, Pakistan cut its ties to the Commonwealth when joining the Middle-Eastern Alliance. Then, as the United States crashed and burned, Britain and Canada became more and more concerned with their own parts of the world and let their participation dwindle to nothing. By 2030, they were members in name only.\n
-# \n
-# The growing power of China throughout the war caused a huge expansion in military budgets for India and Australia, budgets which their economies had trouble supporting. Then, in 2035, India became one more battlefield in the Chinese civil war. Veteran government troops easily defeated the Indian military in several short but bloody engagements and seized most of the country while the rebels pursued.\n
-# \n
-# Australia pledged a full-scale military intervention along with several South-African Commonwealth members. After weeks of brutal fighting, the Australian divisions managed to link up with Chinese rebel forces and the surviving regiments of the Indian army, and together they nearly annihilated the governmental army before the surrender in 2036.\n
-# \n
-# The cost was high. The conquered parts of India were a wasteland, the country had no government left after the nuking of New Delhi, and famines were already starting to grip the population. It began ceding worthless parts of land to other nations and gave independence to several small regions along its border. The remaining Commonwealth nations undertook the vast task of reconstructing India, though many abandoned the project and the Commonwealth in favour of the other growing superpowers.\n
-# \n
-# The reconstruction of India eventually united the Commonwealth into one great nation, taking advantage of their geographic location around the Indian Ocean and the South Pacific to charge strategic tariffs for ships passing through their waters. Commonwealth shipping, on the other hand, was free from tariffs and quickly rose to dominance in the competitive market. Later, with the breaking of the diamond cartels in Africa, the Commonwealth seized several leaderless mines inside its borders and used them to their full.\n
-# \n
-# Today, the Commonwealth of Nations is better known as the 'Commonwealth of Oceania' or just 'Oceania'. Since its inception it has accepted several non-Commonwealth countries into its midst, notably Madagascar, Zimbabwe and Indonesia, extending its control over the Oceanian waters. While it still can't compete economically with the richer nations, it has carved out its own niche, and is quite happy to go on prospering in it.\n
-# \n
-# Oceania's military consists mainly of a powerful navy. Its land army is minuscule compared to that of any nation except United America, and serves only in a defensive capacity, with average training and equipment. However, it can respond fairly quickly in emergency situations.
-# [04.01.2007]
 #: ../base/ufos/research.ufo:3105
-#, fuzzy
 msgid "news_newtwist_txt"
 msgstr ""
-"Asijská Republika\n"
-"\n"
-"V následujících letech se reformovaná Čínská republika vrátila ke svému "
-"starému předkomunistickému jménu a pomalu se vzdávala svých dobytých území, "
-"včetně těch zabraných v minulých stoletích. Jejich obyvatelům nabídla volbu "
-"mezi nezávislostí nebo poslaneckým křeslem v  nové vládní radě jako "
-"rovnocenná a uznávaná součást nové republiky. Taiwan během celé občanské "
-"války bojoval na straně povstalců, po kapitulaci komunistické vlády urovnal "
-"své spory s pevninou a byl prvním kdo se připojil k nové republice. Rychle "
-"se stal hlavním hráčem v nové radě a pomáhal při vydání zajatých vládních "
-"vůdců do Haagu, kde se měli zpovídat z válečných zločinů. Severní korea, "
-"další z povstaleckých států, také zvolila zůstat v Republice cítíc "
-"přiležitosti pro velký ekonomický růst a svobodu od diktatury. Nikdo z nich "
-"nebyl zklamán.\n"
-"\n"
-"Obnova čínské ekonomiky je současnými historiky považována za zázrak. Čínští "
-"výzkumníci udělali první zásadní objevy v nanotechnologii a to přineslo "
-"ohromné zdravotnicko-průmyslové zakázky z celého světa. Navzdory staré "
-"nenávisti a nedůvěrě se ostatní východoasijské národy pomalu připojovaly k "
-"Republice, která byla záhy přejmenována na Asijskou Republiku aby byli "
-"zohledněni její noví členové. Dokonce i Japonsko se nakonec připojilo aby "
-"podpořilo svoji ochabující ekonomiku a zvětšilo počet obyvatel, kterých "
-"během války povážlivě ubylo. S čerstvou vzpomínkou na občanskou válku "
-"Republika dál prosazovala své zásady. Během let získala solidní pověst za "
-"poctivé jednání se všemi svými členy a vybudovala si dostatek důvěry a "
-"solidarity k tomu, aby nyní mohla mluvit jedním hlasem za miliardy lidí v "
-"jihovýchodní Asii.\n"
-"\n"
-"Dnes je její ekonomika téměř obnovena díky komercializaci nanotechnologie a "
-"holografie. Republika stále vlastní silnou a moderní armádu, která je "
-"vycvičena lépe než v jakákoliv jiné zemi.\n"
-"\n"
-"\n"
-"Revoluční země\n"
-"\n"
-"S postupným pádem Spojených států a Číny socialismus v Jižní Americe "
-"posiloval a běhěm poválečných let slábnul. Smrt americké ekonomiky přinesla "
-"vlnu revolučního zápalu, který odklonil několik národů od vlivu kapitalismu. "
-"Nicméně díky tomu, že ve většině zemí byl již víceméně zaveden demokratický "
-"systém, mohla být vláda lidu poprve realizována bez korupce a úpadku. Tento "
-"nový směr zamýšlel sjednotit principy demokracie se socialistickými ideály.\n"
-"\n"
-"Během Druhé studené války celý kontinent sledoval hrůzu jaderného útoku na "
-"Šanghaj, vysílaný televizí po celé zeměkouli až do poslední vteřiny. Když "
-"Čína padla, získal nový směr další významný vítr do svých plachet. Každý "
-"totiž mohl na vlastní oči vidět, co se může stát revoluci pokud jde cestou "
-"diktatury a totalitářství. Reakce vůdců na sebe nenechala dlouho čekat.\n"
-"\n"
-"Několik diktátorských států se okamžitě pokusilo zahájit tvrdé represe a "
-"předejít povstání dříve než nastane a tím způsobilo prudkou reakci větších "
-"demokratických národů, zejména Kuby, Brazílie a Argentiny. Poslední "
-"zbývající králové Jižní Ameriky byly najednou opuštěni a bez jakýchkoliv "
-"spojenců.\n"
-"\n"
-"Jeden za druhým podléhali tlaku veřejnosti a politické situaci a byli "
-"nahrazováni volenými sněmovnami. Revoluce získávala rychlost místo toho aby "
-"ji ztrácela. Její zastánci podporovali větší obchodování, těsnější spojení a "
-"případně otevřené hranice dle evropského vzoru. Nová síť dálnic po celém "
-"kontinentu posilovala ekonomiky a umožnila mnohem efektivnější použití orné "
-"půdy. Přírodní bohatství Jižní Ameriky bylo využito jako nikdy předtím a "
-"každý jeho kousek byl přiměřeně oceněn.\n"
-"\n"
-"Dnes se členské národy semkly tak těsně, že jsou víceméně známy jako jeden "
-"celek: Revoluční země. Jedna společná vláda zastupuje celý kontinent a řídí "
-"ekonomické impérium, které překonává pouze Rozšířená Evropská Unie. Jejich "
-"armáda je malá ale disponuje nejmodernějším vybavením. Výcvik není nijak "
-"mimořádný.\n"
-"\n"
-"\n"
-"Sjednocená Amerika\n"
-"\n"
-"Když se ke konci dvacátých let 21. století začala Americká ekonomika "
-"hroutit, čím dále tím více lidí opouštělo zemi a vydávalo se za lepším "
-"bydlem v Kanadě a paradoxně v Mexiku. Hodnota dolaru se propadla do nevídané "
-"hloubky a ožebračila miliony než byla stabilizována Mezinárodním měnovým "
-"fondem a mezinárodním společenstvím bank. Poté byl v zemi zaveden drastický "
-"reformní plán požadující rozprodání nebo zástavu vice než poloviny veškerého "
-"vojenského arzenálu. Byly zmrazeny úrokové sazby a vyváženy technologie a "
-"nadbytek zboží aby byl šestnáctibiliónový dluh splacen. Také úspěšné "
-"přeorganizovávání NASA spojené s funkčním prototypem vesmírného letounu "
-"přeměnilo kosmický prostor na výnosný podnik. Mys Canaveral začal nabízet "
-"nejlevnější vesmírné starty kdekoliv na světě, nejdříve s vlastním "
-"prototypem, později se zcela funkčními a zdokonalenými kontrukcemi vemírných "
-"letounů. To výrazně pomohlo obléhané zemi vzít svůj osud zpět do vlastních "
-"rukou.\n"
-"\n"
-"Spolupráce mezi severoamerickými národy začala finanční pomocí z Kanady a "
-"Mexika. Ti viděli, že jejich export do USA jde ke dnu a chtěli pomoci "
-"stabilizovat svého nejdůležitějšího obchodního partnera. Rostoucí počet "
-"emigrantů také vytvářel těsnější vazby. Pak v roce 2042 došlo k naprosto "
-"nečekanému politickém obratu když byl v Mexiku zvolen americký emigrant "
-"Esteban Villa-Lobos Garcia prezidentem.\n"
-"\n"
-"Volby byly velice sporné, nicméně rozhodnutí ustálo dvě přepočítávání a nový "
-"prezident byl uveden do úřadu v červenci 2042. Kombinace rozumných zásad a "
-"osobního kouzla nakonec způsobila, že se ke Garciovi přiklonila celá země. A "
-"on potom navrhl Zítřejší plán.\n"
-"\n"
-"V tomto plánu se mělo Mexiko, Kanada a USA spojit do jedné země a opět tak "
-"dosáhnout severoamerické supervelmoci. V několika kontroverzních referendech "
-"získal Zítřejší plán nadpoloviční většinu ve všech třech státech; 52 % ve "
-"Spojených státech, 64 % v Kanadě a 71 % v Mexiku. Spojení bylo nakonec "
-"dokončeno v roce 2050 a vznikla Sjednocená Amerika, jedna z nejvlivnějších "
-"sil v novém světě. Vzkvétající vesmírný průmysl se rychle rozšířil po celé "
-"nové zemi a navzdory několika přehmatům po cestě se Severní Amerika vydala "
-"plnou parou k obnově.\n"
-"\n"
-"Dnes je dluh Sjednocené Ameriky z původních šestnácti biliónů pouze dva a "
-"životní úroveň se víceméně vrátila tam kde byla před pádem. SA má "
-"nejrozvinutější vesmírný průmysl na planetě -- NASA vykonává téměř 70 % "
-"komerčních vesmírných startů po celé zeměkouli. Vyváží obrovské množství "
-"zboží do všech ostatních zemí a plánuje návrat k platební schopnosti do méně "
-"než tří let. Armáda je nejslabší ze všech supervelmocí. SA má pouze malou "
-"armádu dobrovolníků a malý finanční rozpočet na obranu jak je požadováno "
-"MMF. Nicméně to nutí SA mít to co má velice dobře vycvičené a pohyblivé, "
-"schopné dosáhnout jakéhokoliv místa v zemi během dvou hodin.\n"
-"\n"
-"\n"
-"Rozšířená Evropská Unie\n"
-"\n"
-"Každou uplynulou dekádu Evropská Unie pomalu ale jistě dál a dál rozširovala "
-"své hranice. Nejprve se vydala na Střední východ ve chvíli, kdy v roce 2011 "
-"přijala Izrael jako přidruženého člena a poté v roce 2017 povýšila Izrael a "
-"Turecko na členy plnohodnotné. Ve stejnou chvíli bylo také přijako několik "
-"atlantických ostrovů a jednalo se tak o největší hromadné rozšíření EU v "
-"jednadvacátém století.\n"
-"\n"
-"Po kontroverzním přijetí Izraele jako přidruženého člena v EU následovalo "
-"přijetí přísnějších zákonů o lidských právech, svobodě víry a o oddělení "
-"církve a státu. Evropská Unie byla také první západní supervelmocí která "
-"oficiálně uznala Středovýchodní Koalici a navzdory protestům Spojených států "
-"podporovala těsnější vztahy s ní v naději, že dojde ke snížení kulturních "
-"konfliktů a pokračující hrozby terorismu. Z větší části uspěla.\n"
-"\n"
-"Díky přistěhovalectví ze Spojených států v roce 2028 výrazně posílilo "
-"Grónsko a formálně deklarovalo svoji nezávislost na Dánsku. Díky tlaku "
-"ostatních evropských států dánská vláda neochotně nezávislost uznala a "
-"neproběhly tak žádné boje. V následujících měsících Grónsko krátce zvažovalo "
-"připojení k USA jako protektorát ale změnilo názor když mu Evropská Unie "
-"nabídla plnohodnotné členství. Toto společně s přistoupením několika "
-"amerických ostrovních protektorátů v Atlantiku přimělo EU k přejmenování "
-"sebe sama na 'Rozšířenou Evropskou Unii'.\n"
-"\n"
-"Po skončení Druhé studené války byla REU vždy v čele politického vývoje. "
-"Byla jedinou západní mocností, která podporovala Středovýchodní Koalici ve "
-"vyslovení nedůvěry starým Spojeným Národům za jejich naprosté selhání a "
-"neschopnost zasáhnout v případě Čínské rozpínavosti a následné občanské "
-"války. REU také silně podporovala úsilí Koalice vybudovat nové Spojené "
-"Národy, které by poskytovaly rovnocenné zastoupení všem světovým národům a "
-"měly více pravomocí prosazovat principy, pro které byly původně založeny.\n"
-"\n"
-"Dnes je Rozšířená Evropská Unie nejsilnější ekonomickou a politickou silou "
-"na světě. Nicméně díky její obrovské byrokracii a velkému počtu členů, kteří "
-"nemají pokaždé naprosto shodný názor, jsou její manévry pomalé ve všech "
-"směrech. Její armáda je velká a silná ale nejdnotná, kdy každá členská "
-"armáda lpí na jazyce a tradicích své země. Je složité dosáhnout vojenské "
-"spolupráce a je třeba při tom přemoci spousty úředních šimlů. Většina vojáků "
-"Spojených Národů je pravě z REU, ale ti jsou vždy používáni pouze pro "
-"udržování pořádku. V Bruselu se mnoho let vedou vášnivé debaty o tom, jestli "
-"armády REU ztratily svou údernou sílu a zdá se, že v dohledu není žádné "
-"rozhodnutí.\n"
-"\n"
-"\n"
-"Středovýchodní Koalice\n"
-"\n"
-"Vznik Středovýchodní Koalice byl pro všechny překvapením, včetně lidí, kteří "
-"se na něm podíleli. Původní záměr byl pouze oslabit vliv západu na Středním "
-"východě. Zakládající a první členové -- Írán, Sýrie, Jordánsko a Afghánistán "
-"-- nikdy neplánovali Koalici na déle než jedno desetiletí, předpokládaný čas "
-"rozpadu a rozpuštění pod tíhou rozdílů jednotlivých členů.\n"
-"\n"
-"Všechno změnila Druhá studená válka. Čínská lidová republika už nebyla dále "
-"blízkým spojencem proti Západu. Stala se rozpínající se hrozbou a "
-"pošilhávala hladovými očky po Nepálu, částech Indie a pravděpodobně i po "
-"svrchovaných státech kolem svých západních hranic. Pákistán, Tádžikistán a "
-"Kyrgyzstán se hnali do náruče Koalice aby chránili sami sebe před invazí. "
-"Arabský poloostrov se připojil ani ne rok poté hledajíc jak zmenšit "
-"politický vliv Západu. Aniž by si to uvědomovali, vytvořili tak silný útvar "
-"pokrývající téměř celý Střední východ. Jejich pozice byla prostě příliš "
-"dobrá aby jim dovolila rozpadnout se.\n"
-"\n"
-"Rozšířená Koalice byla uznána Evropskou Unií a vstoupila na mezinárodní "
-"scénu s trumfy v ruce. Měla pod palcem víceméně všechny zbývající zásoby "
-"ropy na světě a měla v úmyslu vytěžit je.\n"
-"\n"
-"Ekonomická síla Koalice rostla s tím, jak se ztenčovaly zásoby ropy v "
-"zahraničí. Výrobci farmaceutik se houfem sbalili a přestěhovali se na "
-"Střední východ, do jediného zbývajícího místa na světě, kde je ropa levná a "
-"dostupná. To a spousta dalších použití surové ropy umožnilo Střednímu "
-"východu přežít Ruskou 'atomovou revoluci' a následný celosvětový přechod k "
-"atomové energii. Koalice pokračovala ve svém rozšiřování Egyptem, "
-"Uzbekistánem, Turkmenistánem a spornými částmi Afriky okolo Rudého moře. "
-"Celá oblast Rudého moře byla rychle uklidněna když Koalice přesunula svou "
-"armádu k podpoře nových Afrických členů.\n"
-"\n"
-"Rozšíření blahobytu odvrátilo dnešní Střední východ od dogmat a nasměrovalo "
-"ho k světským zákonům a rovnosti pohlaví. Je stále ovládaný jednotlivci -- "
-"sultány, emíry, maliky, prezidenty a generály -- ale jejich pravomoce jsou "
-"udržovány pod dohledem zbytku Koalice, vládci kteří nejsou přijati svými "
-"kolegy jsou sesazeni. Politická opozice je tolerována díky tlaku z EU a "
-"ostatních národů, ale i v roce 2084 má jen pár členských národů Koalice "
-"fungující demokracii.\n"
-"\n"
-"Armáda Koalice je velká, rychlá a zákeřná. Je to jedna z nejelitnějších a "
-"výborně vybavených sil na světě. Navíc užívá volnější pravidla boje než "
-"Sjednocená Amerika nebo Asijská Republika. Jejich odstavec o 'přijatelných "
-"civilních obětech' byl zdrojem obrovského množství kritiky z celého světa, "
-"ale Koalice neústupně udržuje v platnosti tento odstavec po čtyři "
-"desetiletí.\n"
-"\n"
-"\n"
-"Nová Afrika\n"
-"\n"
-"Zrozena z násilí a hádek, Nová Afrika nalezla svoji jednotnost v odloučení. "
-"Po tři desetiletí 21. století postupně slábla, stějně jak to dělala již "
-"dlouho před tím se svými občanskými válkami, etnickými čistkami a "
-"nepředstavitelnými zvěrstvy. A to až do roku 2039, kdy několik států ze "
-"střední Afriky podniklo masívní plán, který měl za úkol vypořádat se s "
-"neblaze proslulými diamatovými kartely a vyvlastnit jejich příjmy pro "
-"dlouhodobý národní pokrok.\n"
-"\n"
-"Ten však skončil krvavým vojenským a ekonomickým masakrem. Spojené Národy "
-"zkusili různá opatření aby zastavili boje, ale bezzubější než kdykoliv "
-"předtím nedosáhli ničeho. Nicméně ke svazu států se nakonec přidalo několik "
-"dalších, zhnusených sekýrováním západních korporací a po několika letech "
-"urputných bojů porazily kartely jeden po druhém. Tím jim zůstaly některé z "
-"největších a nejrozvinutějších diamantových a zlatých dolů na světě; jejich "
-"spojené území se tak stalo největším světovým dodavatelem pravých diamantů. "
-"Zároveň získaly nový smysl čeho by mohly společně dosáhnout. Zrodilo se "
-"jádro Nové Afriky.\n"
-"\n"
-"Všechny africké státy zapojené do antikartelové války, s výjimkou území "
-"věrných Oceánskému Společenství a Středovýchodní Koalici, spolu začali "
-"mnohem těsněji spolupracovat berouc si příklad z Jižní Ameriky v budování "
-"spolehlivé sítě silnic pro podporu obchodu a komunikace. To zároveň umožnilo "
-"mnohem lepší distribuci potravin. Během dalších třiceti let se Nová Afrika "
-"úplně zbavila hladomoru uvnitř svých hranic, což ji zcela změnilo v "
-"přizpůsobivé etnikum s touhou po nezávislosti uvnitř svých územní a s "
-"obrovskými náklady přineslo veřejně dostupnou zdravotnickou péči jejím "
-"lidem. Ale také byly v hospodářství objeveny nové možnosti vývozu, "
-"udržitelný růst tropických tvrdých dřevin a exotického ovoce. Pravděpodobně "
-"poprvé vytvořila tato nová spolupráce cenové smlouvy po celém kontinentu; "
-"stejně jako Revoluční země přiměla Nová Afrika okolní svět aby obstojně "
-"platil za veškeré zboží a služby.\n"
-"\n"
-"Dnes je Nová Afrika ekonomicky stále nejslabší z velmocí, ale rychle roste. "
-"Má velkou motivovanou stálou armádu, ale vojáci jsou špatně vybaveni, "
-"vyzbrojeni převážně starožitnostmi z bývalých Spojených států a více než "
-"století starým sovětským vybavením. Mají také problémy s přesunem na "
-"vzdálená místa díky častým poruchám na vybavení a složité geografii "
-"kontinentu. Nejlepší možností je pro Nové Afričany partyzánský způsob boje, "
-"kdy jsou po celé zemi rozprostřeny malé hlídky a přistání cizáckých plavidel "
-"stopují tisíce průzkumníků.\n"
-"\n"
-"\n"
-"Rusko\n"
-"\n"
-"Vzpamatování se z pádu Sovětského svazu a obnova sovětským systémem "
-"vydrancované státní ekonomiky trvala Rusku několik desetiletí. Hnisalo jako "
-"otevřená rána celou první polovinu 21. století, stále se snažilo potlačit "
-"neustálá povstání v Čečensku, stále se snažilo reformovat po 70 letech "
-"státní nadvlády, stále se snažilo získat zpátky ztracenou pozici světové "
-"supervelmoci.\n"
-"\n"
-"Věci se pro Rusko konečně začaly zlepšovat když v roce 2047 tehdejší "
-"předseda vlády Jevgenij Karamazov uznal úplnou nezávislost Čečenska. Zatímco "
-"se v nově oficiální Čečenské republice strhla vlna násilí ve sporu kdo by "
-"vlastně měl vládnout, Rusko dalo ruce pryč snažíc se vyrovnat s vlastními "
-"problémy a ponechalo Čečensko svému osudu a novým vylepšeným Spojeným "
-"Národům, které se okamžitě snažily zastavit krveprolití. To se bohužel "
-"dlouho nedařilo a nakonec byla pro Čečensko jediná šance vrátit se do sféry "
-"ruského vlivu, ale poprvé tak učinilo jako plnohodnotný nezávislý hlas.\n"
-"\n"
-"Ekonomická záchrana pro Rusko -- zvláště s tenčícími se dodávkami ropy ze "
-"Středního východu -- začala novými postupy těžby vlastní ropy na Sibiři s "
-"vybavením, které umožňovalo přežití v krutých zimních podmínkách a později "
-"pokračovala výstavbou řady nových atomových elektráren. Rusko hodně "
-"investovalo do výzkumu aby nové elektrárny byly menší, bezpečnější a hlavně "
-"životaschopné. To vyžadovalo přechod z obohaceného uranu na thorium jako "
-"hlavního jaderného paliva ve všech těchto elektrárnách a použití nové "
-"zdokonalené konstrukce založené na 'energetickém zesilovači', novém typu "
-"štěpného reaktoru poprvé testovaného nedaleko Říma v letech 2004 až 2011. "
-"Dva z nových reaktorů dokonce zpracovávaly plutonium z demontovaných "
-"jaderných zbraní a z uloženého odpadu starších elektráren.\n"
-"\n"
-"Osm let po Čečenské nezávislosti přišla skutečná Ruská 'atomová revoluce' s "
-"vynálezem zpracování vyhořelého paliva, které bylo schopno přeměnit 90 % "
-"odpadu z energetického zesilovače na neradioaktivní materiál během týdnů "
-"místo několika století. Rusové ukončili letitou energetickou krizi víceméně "
-"přes noc; jaderné štěpení se stalo bezpečným, poměrně čistým a celosvětové "
-"zásoby thoria mohly zaručit čistotu Země až do roku 3000.\n"
-"\n"
-"Dnes se mnoho bývalých sovětských států znovu připojilo k Rusku následujíc "
-"příkladu ostatních mocností a dychtíc po výhodách, které přináší výroba "
-"energie a jaderná technologie, které jsou teď hlavní Ruskou komoditou. "
-"Atomová revoluce dokonce dále pokračuje díky pozvolnému rozvoji a "
-"komercializaci fúzní energie. Přestože jejich ekonomika má stále problémy, "
-"jejich země je na tom lépe než kdykoliv během posledních několika století, "
-"ať za vlády chánů, carů nebo sovětů. Jejich armáda je poněkud zastaralá ale "
-"profesionální, velice dobře vycvičená s dobrou disciplínou a nepostrádá "
-"lidské zdroje.\n"
-"\n"
-"\n"
-"Oceánské Společenství\n"
-"\n"
-"Společenství národů, politická organizace složená převážně ze států starého "
-"britského impéria, ztratilo velmi mnoho sil když vstoupilo do Druhé studené "
-"války. Nejdříve Pákistán přetrhal vazby se Společenstvím když se připojil ke "
-"Středovýchodní Koalici. Když se poté Spojené státy hroutily a kolabovaly, "
-"začala se Británie a Kanada víc a víc zajímat jen o své vlastní části světa "
-"a nechala svoji spoluúčast zcela vyprchat. V roce 2030 byly členy jen podle "
-"jména.\n"
-"\n"
-"Rostoucí síla Číny během války způsobila obrovský nárůst ve vojenských "
-"rozpočtech Indie a Austrálie a to takovým způsobem, že jejich ekonomika měla "
-"problém je uspokojit. Poté se v roce 2035 Indie stala jedním velkým bojištěm "
-"v Čínské občanské válce. Zkušení vládní válečníci snadno porazili Indickou "
-"armádu v několika krátkých ale krvavých bitvách a ukořistili většinu země "
-"zatímco je pronásledovali povstalci.\n"
-"\n"
-"Austrálie společně s několika jihoafrickými členy Společenství slíbila "
-"rozsáhlý vojenský zákrok. Po týdnech ukrutných bojů se australským divizí "
-"podařilo spojit se s čínskými povstaleckými silami a přeživšími pluky "
-"indické armády a společně víceméně vyhladili vládní armádu předtím, než v "
-"roce 2036 kapitulovala.\n"
-"\n"
-"Cena byla vysoká. Z dobyté části Indie byly pustina, po vyhlazení Nového "
-"Dili byla země bez vlády a obyvatelstvo začal sužovat hladomor. Začalo se s "
-"předáváním bezcenných částí země ostatním státům a byla dána nezávislost "
-"několika malým oblastem kolem hranic. Zbývající státy Společenství se ujaly "
-"obrovského úkolu obnovy Indie, přestože mnoho z nich opustilo projekt a "
-"Společenství a přidali se k ostatním rostoucím velmocem.\n"
-"\n"
-"Obnova Indie nakonec sjednotila Společenství v jeden velký národ, který "
-"využíval se své geografické polohy kolem Indického oceánu a Jižního Pacifiku "
-"a vybíral strategické clo od lodí, které křižovaly jejich vodami. Na druhou "
-"stranu byla lodní doprava Společenství bezcelní a rychle se v konkurenčním "
-"prostředí stala dominantní. Když byly později rozbity diamantové kartely v "
-"Africe, Společenství zkonsfiskovalo několik nespravovaných dolů uvnitř svých "
-"hranic a zcela jich využilo.\n"
-"\n"
-"Dnes je Společenství národů známé spíše jako 'Oceánské Společenství' nebo "
-"jenom 'Oceánie'. Od založení do svého středu přijalo několik zemí, které "
-"nebyly ve Společenství, hlavně Madagaskar, Zimbabwe a Indonésii, čímž "
-"rozšířili svůj vliv na vody Oceánie. Přestože stále nemohou ekonomicky "
-"konkurovat bohatším národům, vytvořili si svůj vlastní kout a jsou zcela "
-"spokojeni s tím jak se jim daří v něm prosperovat.\n"
-"\n"
-"Oceánská armáda spočívá hlavně v silném loďstvu. Jejich pozemní armáda je "
-"nepatrná a v porovnání s jakoukoliv jinou kromě Sjednocené Ameriky a má "
-"pouze obrannou funkci, je průměrně trénovaná a vybavená. Nicméně v krizových "
-"situacích může zareagovat poměrně rychle."
 
 #: ../base/ufos/seq_credits.ufo:54 ../base/ufos/seq_credits.ufo:100
 msgid "Project leader"
@@ -5291,7 +4975,7 @@ msgstr "Dýmový granát"
 
 #: ../base/ufos/weapons.ufo:324
 msgid "Gas Grenade"
-msgstr ""
+msgstr "Plynový granát"
 
 #: ../base/ufos/weapons.ufo:396
 msgid "Incendiary grenade"
@@ -5356,7 +5040,7 @@ msgstr "Cílený výstřel"
 
 #: ../base/ufos/weapons_human.ufo:254
 msgid "Headshot"
-msgstr ""
+msgstr "Výstřel na hlavu"
 
 #: ../base/ufos/weapons_human.ufo:280
 msgid "7.62mm Pistol"
@@ -5437,19 +5121,17 @@ msgstr "Peklo"
 msgid "Rocket Launcher"
 msgstr "Raketomet"
 
-# Vysocevýbušná raketa
 #: ../base/ufos/weapons_human.ufo:1025
 msgid "HE Rocket"
-msgstr ""
+msgstr "Vysocevýbušná raketa"
 
-# Zápalná raketa
 #: ../base/ufos/weapons_human.ufo:1064
 msgid "IC Rocket"
-msgstr ""
+msgstr "Zápalná raketa"
 
 #: ../base/ufos/weapons_human.ufo:1104
 msgid "Particle-Beam Rocket"
-msgstr ""
+msgstr "Částicová raketa"
 
 #: ../base/ufos/weapons_human.ufo:1147
 msgid "Grenade Launcher"
@@ -5462,32 +5144,32 @@ msgstr "25mm výbušné granáty"
 #: ../base/ufos/weapons_human.ufo:1179 ../base/ufos/weapons_human.ufo:1351
 #: ../base/ufos/weapons_human.ufo:1577
 msgid "Snap Shot - Airburst"
-msgstr ""
+msgstr "Od boku - vzdušný výbuch"
 
 #: ../base/ufos/weapons_human.ufo:1204 ../base/ufos/weapons_human.ufo:1377
 #: ../base/ufos/weapons_human.ufo:1602
 msgid "Aimed Shot - Airburst"
-msgstr ""
+msgstr "Cílený - vzdušný výbuch"
 
 #: ../base/ufos/weapons_human.ufo:1229 ../base/ufos/weapons_human.ufo:1402
 #: ../base/ufos/weapons_human.ufo:1627
 msgid "3-Round Burst - Airburst"
-msgstr ""
+msgstr "Tříranný - vzdušný výbuch"
 
 #: ../base/ufos/weapons_human.ufo:1254 ../base/ufos/weapons_human.ufo:1427
 #: ../base/ufos/weapons_human.ufo:1652
 msgid "Snap Shot - Timed"
-msgstr ""
+msgstr "Od boku - časovaný"
 
 #: ../base/ufos/weapons_human.ufo:1281 ../base/ufos/weapons_human.ufo:1454
 #: ../base/ufos/weapons_human.ufo:1679
 msgid "Aimed Shot - Timed"
-msgstr ""
+msgstr "Od boku - časovaný"
 
 #: ../base/ufos/weapons_human.ufo:1308 ../base/ufos/weapons_human.ufo:1481
 #: ../base/ufos/weapons_human.ufo:1706
 msgid "3-Round Burst - Timed"
-msgstr ""
+msgstr "Tříranný - časovaný"
 
 #: ../base/ufos/weapons_human.ufo:1337
 msgid "25mm IC Grenades"
@@ -5501,12 +5183,10 @@ msgstr "25mm flešetové granáty"
 msgid "25mm PB Grenades"
 msgstr "25mm plasmové granáty"
 
-# FIXME
 #: ../base/ufos/weapons_human.ufo:1739
 msgid "Bolter Rifle"
 msgstr "Průrazná puška"
 
-# FIXME
 #: ../base/ufos/weapons_human.ufo:1757
 msgid "Bolter Rifle Magazine"
 msgstr "Zásobník průrazné pušky"
@@ -5517,21 +5197,33 @@ msgstr "Kanonáda"
 
 #: ../base/ufos/weapons_human.ufo:1811
 msgid "Precision Shot"
-msgstr ""
+msgstr "Přesný výstřel"
+
+#: ../base/ufos/weapons_laser.ufo:6
+msgid "Laser Pistol"
+msgstr "Laserová pistole"
+
+#: ../base/ufos/weapons_laser.ufo:81
+msgid "Laser Rifle"
+msgstr "Laserová puška"
+
+#: ../base/ufos/weapons_laser.ufo:103
+msgid "Heavy Laser"
+msgstr "Výkonný laser"
 
 #: ../base/ufos/weapons_laser.ufo:175
 msgid "D-F Cartridge"
-msgstr ""
+msgstr "D-F náplň"
 
 #: ../base/ufos/weapons_laser.ufo:189 ../base/ufos/weapons_laser.ufo:231
 #: ../base/ufos/weapons_laser.ufo:273
 msgid "Pulse Fire"
-msgstr ""
+msgstr "Pulsní střelba"
 
 #: ../base/ufos/weapons_laser.ufo:209 ../base/ufos/weapons_laser.ufo:250
 #: ../base/ufos/weapons_laser.ufo:293
 msgid "Wave Fire"
-msgstr ""
+msgstr "Vlnová střelba"
 
 #: ../base/ufos/weapons_melee.ufo:6
 msgid "Combat Knife"
@@ -5544,19 +5236,23 @@ msgstr "Bodnutí"
 
 #: ../base/ufos/weapons_melee.ufo:61
 msgid "Monomolecular Knife"
-msgstr ""
+msgstr "Monomolekulární nůž"
 
 #: ../base/ufos/weapons_melee.ufo:92 ../base/ufos/weapons_melee.ufo:203
 msgid "Slash"
-msgstr ""
+msgstr "Říznutí"
+
+#: ../base/ufos/weapons_melee.ufo:113
+msgid "Stun Rod"
+msgstr "Paralyzátor"
 
 #: ../base/ufos/weapons_melee.ufo:131
 msgid "Stun Charge"
-msgstr ""
+msgstr "Paralyzující výboj"
 
 #: ../base/ufos/weapons_melee.ufo:148
 msgid "Double Charge"
-msgstr ""
+msgstr "Dvojnásobný výboj"
 
 # Tři R jsou schválně. Po nahlédnutí do UFOpedie to bude jasné :)
 #: ../base/ufos/weapons_melee.ufo:172
@@ -5569,15 +5265,15 @@ msgstr "Plasmová dýka"
 
 #: ../base/ufos/weapons_melee.ufo:244
 msgid "Lock"
-msgstr ""
+msgstr "Zaseknout"
 
 #: ../base/ufos/weapons_particle.ufo:6
 msgid "Particle Beam Pistol"
-msgstr ""
+msgstr "Částicová pistole"
 
 #: ../base/ufos/weapons_particle.ufo:24
 msgid "Pistol Particle Accelerator"
-msgstr ""
+msgstr "Urychlovač pro částicovou pistoli"
 
 #: ../base/ufos/weapons_particle.ufo:57 ../base/ufos/weapons_particle.ufo:136
 #: ../base/ufos/weapons_particle.ufo:214
@@ -5586,11 +5282,11 @@ msgstr "Dávka"
 
 #: ../base/ufos/weapons_particle.ufo:83
 msgid "Particle Beam Cannon"
-msgstr ""
+msgstr "Částicové dělo"
 
 #: ../base/ufos/weapons_particle.ufo:101
 msgid "Cannon Particle Accelerator"
-msgstr ""
+msgstr "Urychlovač pro částicové dělo"
 
 #: ../base/ufos/weapons_particle.ufo:115
 msgid "Charged Blast"
@@ -5598,11 +5294,11 @@ msgstr "Nasycená nálož"
 
 #: ../base/ufos/weapons_particle.ufo:163
 msgid "Particle Beam Rifle"
-msgstr ""
+msgstr "Částicová puška"
 
 #: ../base/ufos/weapons_particle.ufo:181
 msgid "Rifle Particle Accelerator"
-msgstr ""
+msgstr "Urychlovač pro částicovou pušku"
 
 #: ../base/ufos/weapons_plasma.ufo:6
 msgid "Plasma Pistol"
@@ -5615,12 +5311,12 @@ msgstr "Nabíječka plasmové pistole"
 #: ../base/ufos/weapons_plasma.ufo:38 ../base/ufos/weapons_plasma.ufo:117
 #: ../base/ufos/weapons_plasma.ufo:197
 msgid "Ball"
-msgstr ""
+msgstr "Chuchvalec"
 
 #: ../base/ufos/weapons_plasma.ufo:58 ../base/ufos/weapons_plasma.ufo:137
 #: ../base/ufos/weapons_plasma.ufo:220
 msgid "Spray"
-msgstr ""
+msgstr "Sprška"
 
 #: ../base/ufos/weapons_plasma.ufo:85
 msgid "Plasma Rifle"
@@ -5686,16 +5382,16 @@ msgstr "Hodnost: %s"
 #: client/cl_actor.c:495 client/cl_actor.c:513
 #, c-format
 msgid "Remaining TUs: %i"
-msgstr ""
+msgstr "Zbývající čas: %i"
 
 #: client/cl_actor.c:497 client/cl_actor.c:515
 msgid "No remaining TUs left after shot."
-msgstr ""
+msgstr "Po výstřelu nezbývá žádný čas."
 
 #: client/cl_actor.c:500 client/cl_actor.c:518
 #, c-format
 msgid "TU: %i"
-msgstr ""
+msgstr "Čas: %i"
 
 #: client/cl_actor.c:501 client/cl_actor.c:519
 #, c-format
@@ -5712,7 +5408,7 @@ msgstr ""
 
 #: client/cl_actor.c:1033
 msgid "No item in hand.\n"
-msgstr "Nic nedrží.\n"
+msgstr "V ruce není žádný předmět.\n"
 
 #: client/cl_actor.c:1046
 msgid ""
@@ -5720,25 +5416,31 @@ msgid ""
 "out of ammo.\n"
 msgstr ""
 "Nelze provést:\n"
-"není munice.\n"
+"došla munice.\n"
 
 #: client/cl_actor.c:1051
 msgid ""
 "This weapon cannot be fired\n"
 "one handed.\n"
 msgstr ""
+"Z této zbraně nelze střílet\n"
+"jednou rukou.\n"
 
 #: client/cl_actor.c:1060
 msgid ""
 "Can't perform action:\n"
 "this item is not reloadable.\n"
 msgstr ""
+"Nelze provést:\n"
+"tento předmět není nabíjecí.\n"
 
 #: client/cl_actor.c:1065
 msgid ""
 "Can't perform action:\n"
 "ammo not available.\n"
 msgstr ""
+"Nelze provést:\n"
+"munice není k dispozici.\n"
 
 #: client/cl_actor.c:1199
 #, c-format
@@ -5793,7 +5495,7 @@ msgstr ""
 
 #: client/cl_actor.c:2230
 msgid "was stunned.\n"
-msgstr ""
+msgstr "byl omráčen.\n"
 
 #: client/cl_actor.c:2235
 msgid "was killed.\n"
@@ -6076,48 +5778,48 @@ msgstr "Bylo dosaženo maximum počtu základen."
 
 #: client/cl_basemanagement.c:2257
 msgid "Storage is empty\n"
-msgstr ""
+msgstr "Sklad je prázdný\n"
 
 #: client/cl_basemanagement.c:2259
 msgid "Transfer is not possible - the base doesn't have a storage building"
-msgstr ""
+msgstr "Přeprava není možná - základna nemá sklady"
 
 #: client/cl_basemanagement.c:2266 client/cl_transfer.c:165
 msgid "Transfer is not possible - the base doesn't have quarters"
-msgstr ""
+msgstr "Přeprava není možná - základna nemá ubikace"
 
 #: client/cl_basemanagement.c:2273
 msgid "Transfer is not possible - the base doesn't have a lab"
-msgstr ""
+msgstr "Přeprava není možná - základna nemá laboratoř"
 
 #: client/cl_basemanagement.c:2292 client/cl_transfer.c:198
 msgid "Transfer is not possible - the base doesn't have an alien containment"
-msgstr ""
+msgstr "Přeprava není možná - základna nemá cizáckou celu"
 
 #: client/cl_basemanagement.c:2314
 msgid "Can't unload while we are not in the homebase"
-msgstr ""
+msgstr "Dokud nejsme na základně není možné vykládat"
 
 #: client/cl_basemanagement.c:2369
 msgid "The base is not longer existent"
-msgstr ""
+msgstr "Základna již neexistuje"
 
 #: client/cl_basemanagement.c:2386
 msgid "The base doesn't have a storage"
-msgstr ""
+msgstr "Základna nemá sklady"
 
 #: client/cl_basemanagement.c:2396
 msgid "The base doesn't have a lab - can't unload the technologies here"
-msgstr ""
+msgstr "Základna nemá laboratoř - nelze zde vyložit technologie"
 
 #: client/cl_basemanagement.c:2410
 msgid "The base doesn't have quarters - can't unload the employees here"
-msgstr ""
+msgstr "Základna nemá ubikace - nelze zde vysadit zaměstnance"
 
 #: client/cl_basemanagement.c:2418
 msgid ""
 "The base doesn't have an alien containment - can't unload the aliens here"
-msgstr ""
+msgstr "Základna nemá cizáckou celu - nelze zde vysadit cizáky"
 
 #: client/cl_basemanagement.c:2421 client/cl_transfer.c:373
 #: client/cl_transfer.c:384
@@ -6126,31 +5828,31 @@ msgstr "Přepravní mise"
 
 #: client/cl_basemanagement.c:2421
 msgid "Transport mission ended, returning to homebase now"
-msgstr ""
+msgstr "Přepravní mise ukončena, vrací se na základnu"
 
 #: client/cl_basemanagement.c:2443 client/cl_transfer.c:420
 msgid "Can't start the transport mission while we are not in the homebase"
-msgstr ""
+msgstr "Dokud nejsme na domovské základně není možné zahájit přepravní misi"
 
 #: client/cl_basemanagement.c:2469 client/cl_transfer.c:449
 msgid "No target base selected"
-msgstr "Nevybrána cílová základna"
+msgstr "Není vybrána cílová základna"
 
 #: client/cl_basemanagement.c:2469 client/cl_transfer.c:449
 msgid "Please select the target base from the list"
-msgstr ""
+msgstr "Ze seznamnu prosím vyber cílovou základnu"
 
 #: client/cl_basemanagement.c:2474 client/cl_transfer.c:454
 msgid "No aircraft selected"
-msgstr "Nevybrán letoun"
+msgstr "Není vybrán letoun"
 
 #: client/cl_basemanagement.c:2474 client/cl_transfer.c:454
 msgid "Please select the aircraft to use from the list"
-msgstr ""
+msgstr "Ze seznamu prosím vyber letoun který použít"
 
 #: client/cl_basemanagement.c:2647 client/cl_transfer.c:672
 msgid "You can transfer equipment - this base has a storage building\n"
-msgstr ""
+msgstr "Můžeš přepravit vybavení - tato základna má sklady\n"
 
 #: client/cl_basemanagement.c:2650 client/cl_transfer.c:675
 msgid "No storage building in this base\n"
@@ -6158,7 +5860,7 @@ msgstr "Na této základně nejsou sklady\n"
 
 #: client/cl_basemanagement.c:2654 client/cl_transfer.c:679
 msgid "You can transfer employees - this base has quarters\n"
-msgstr ""
+msgstr "Můžeš přepravit zaměstnance - tato základna má ubikace\n"
 
 #: client/cl_basemanagement.c:2657 client/cl_transfer.c:682
 msgid "No quarters in this base\n"
@@ -6166,7 +5868,7 @@ msgstr "Na této základně nejsou obytné místnosti\n"
 
 #: client/cl_basemanagement.c:2660
 msgid "You can transfer techs - this base has a laboratory\n"
-msgstr ""
+msgstr "Můžeš přepravit technologie - tato základna má laboratoř\n"
 
 #: client/cl_basemanagement.c:2662
 msgid "No laboratory in this base\n"
@@ -6174,7 +5876,7 @@ msgstr "Na této základně nejsou laboratoře\n"
 
 #: client/cl_basemanagement.c:2665 client/cl_transfer.c:686
 msgid "You can transfer aliens - this base has alien containment\n"
-msgstr ""
+msgstr "Můžeš přepravit cizáky - tato základna má cizáckou celu\n"
 
 #: client/cl_basemanagement.c:2667 client/cl_transfer.c:688
 msgid "No alien containment in this base\n"
@@ -6183,7 +5885,7 @@ msgstr "Na této základně nejsou cizácké cely\n"
 #: client/cl_basemanagement.c:2827
 #, c-format
 msgid "Construction of %s building finished in base %s."
-msgstr "Dokončena stavba budovy »%s« na základně »%s«."
+msgstr "Dokončena stavba budovy %s na základně %s."
 
 #: client/cl_basemanagement.c:2828
 msgid "Building finished"
@@ -6196,7 +5898,7 @@ msgstr "Na tomto místě nelze vybudovat základnu"
 #: client/cl_campaign.c:765
 #, c-format
 msgid "Your base %s is under attack."
-msgstr "Probíhá útok na základnu »%s«."
+msgstr "Probíhá útok na základnu %s."
 
 #: client/cl_campaign.c:785
 #, c-format
@@ -6213,8 +5915,8 @@ msgid ""
 "Your base: %s has been ransacked! All employees killed and all equipment "
 "destroyed."
 msgstr ""
-"Tvoje základna »%s« byla vypleněna! Všichni zaměstnanci byli zabiti a "
-"veškeré vybavení zničeno."
+"Tvoje základna %s byla vypleněna! Všichni zaměstnanci byli zabiti a veškeré "
+"vybavení zničeno."
 
 #: client/cl_campaign.c:1004
 #, c-format
@@ -6389,7 +6091,7 @@ msgstr "Zaplaceno %i kreditů za letoun"
 #: client/cl_campaign.c:1244
 #, c-format
 msgid "Paid %i credits for upkeep of base %s"
-msgstr "Zaplaceno %i kreditů za údržby základny »%s«."
+msgstr "Zaplaceno %i kreditů za údržby základny %s."
 
 #: client/cl_campaign.c:1250
 #, c-format
@@ -6495,20 +6197,20 @@ msgstr "Transportér není v blízkosti přistávacího prostoru"
 #: client/cl_campaign.c:3015
 #, c-format
 msgid "By selling %s %s"
-msgstr ""
+msgstr "Prodáním %s %s"
 
 #: client/cl_campaign.c:3016
-#, fuzzy, c-format
+#, c-format
 msgid "%i collected item"
 msgid_plural "%i collected items"
-msgstr[0] "Zvolit položku"
-msgstr[1] "Zvolit položku"
-msgstr[2] "Zvolit položku"
+msgstr[0] "%i shromážděný předmět"
+msgstr[1] "%i shromážděné předměty"
+msgstr[2] "%i shromážděných předmětů"
 
 #: client/cl_campaign.c:3017
 #, c-format
 msgid "you gathered %i credits."
-msgstr ""
+msgstr "si získal %i kreditů."
 
 #: client/cl_campaign.c:3074
 #, c-format
@@ -6566,6 +6268,8 @@ msgid ""
 "You don't have enough living quarters to house all of your personnel. You "
 "need to fire %i personnel until more living space becomes available."
 msgstr ""
+"Nemáš dostatek ubikací k ubytování všech svých zaměstnanců. Musíš propustit %"
+"i zaměstnanců dokud nebude k dispozici více životního prostoru."
 
 #: client/cl_employee.c:492
 msgid "You don't have enough quarters for your employees."
@@ -6574,7 +6278,7 @@ msgstr "Nemáš dostatek ubytovacích prostor pro zaměstnance."
 #: client/cl_hospital.c:57
 #, c-format
 msgid "Healing of %s completed - %i active healings left\n"
-msgstr ""
+msgstr "%s je vyléčen - ještě zbývá %i léčených\n"
 
 #: client/cl_hospital.c:59
 msgid "Healing complete"
@@ -6587,35 +6291,35 @@ msgstr "%s\t%s\t(%i/%i)\n"
 
 #: client/cl_input.c:699
 msgid "Rotate battlescape camera anti-clockwise"
-msgstr "Otáčí kamerou nad bojištěm v protisměru hodinových ručiček"
+msgstr "Otočit kamerou nad bojištěm v protisměru hodinových ručiček"
 
 #: client/cl_input.c:701
 msgid "Rotate battlescape camera clockwise"
-msgstr "Otáčí kamerou nad bojištěm po směru hodinových ručiček"
+msgstr "Otočit kamerou nad bojištěm po směru hodinových ručiček"
 
 #: client/cl_input.c:703
 msgid "Tilt battlescape camera up"
-msgstr "Naklání kameru nad bojištěm vzhůru"
+msgstr "Naklonit kameru nad bojištěm vzhůru"
 
 #: client/cl_input.c:705
 msgid "Tilt battlescape camera down"
-msgstr "Naklání kameru nad bojištěm dolů"
+msgstr "Naklonit kameru nad bojištěm dolů"
 
 #: client/cl_input.c:707
 msgid "Move battlescape camera left"
-msgstr "Posune kameru nad bojištěm doleva"
+msgstr "Posunout kameru nad bojištěm doleva"
 
 #: client/cl_input.c:709
 msgid "Move battlescape camera right"
-msgstr "Posune kameru nad bojištěm doprava"
+msgstr "Posunout kameru nad bojištěm doprava"
 
 #: client/cl_input.c:711
 msgid "Move battlescape camera forward"
-msgstr "Posune kameru nad bojištěm dopředu"
+msgstr "Posunout kameru nad bojištěm dopředu"
 
 #: client/cl_input.c:713
 msgid "Move battlescape camera backward"
-msgstr "Posune kameru nad bojištěm dozadu"
+msgstr "Posunout kameru nad bojištěm dozadu"
 
 #: client/cl_input.c:715 client/cl_input.c:739
 msgid "Zoom in"
@@ -6627,15 +6331,15 @@ msgstr "Oddálit"
 
 #: client/cl_input.c:720
 msgid "Select objects/Walk to a square/In fire mode, fire etc"
-msgstr "Vybírá objekt/Chůze na čtverec/V režimu střelby střílí atd."
+msgstr "Zvolit objekt/Jít na čtverec/V režimu střelby střílet atd."
 
 #: client/cl_input.c:722
 msgid "Walk to a square/In fire mode, cancel action"
-msgstr "Chůze na čtverec/V režimu střelby ruší střelbu"
+msgstr "Jít na čtverec/V režimu střelby zrušit střelbu"
 
 #: client/cl_input.c:724
 msgid "Turn soldier toward mouse pointer"
-msgstr "Natočí vojáka směrem ke kurzoru myši"
+msgstr "Natočení vojáka směrem ke kurzoru myši"
 
 #: client/cl_input.c:726
 msgid "Toggle stand/crounch"
@@ -6643,39 +6347,39 @@ msgstr "Zakleknout/postavit se"
 
 #: client/cl_input.c:727
 msgid "Toggle reaction fire"
-msgstr "Vyhradí čas na zpětnou palbu"
+msgstr "Vyhradit čas na zpětnou palbu"
 
 #: client/cl_input.c:728
 msgid "Toogle to next alien"
-msgstr "Přepne na dalšího viděného cizáka"
+msgstr "Přepnout na dalšího viděného cizáka"
 
 #: client/cl_input.c:734
 msgid "Reload the weapon in the soldiers left hand"
-msgstr ""
+msgstr "Nabít zbraň v levé ruce vojáka"
 
 #: client/cl_input.c:735
 msgid "Reload the weapon in the soldiers right hand"
-msgstr ""
+msgstr "Nabít zbraň v pravé ruce vojáka"
 
 #: client/cl_input.c:736
 msgid "Ends current round"
-msgstr "Ukončí aktuální tah"
+msgstr "Ukončit aktuální tah"
 
 #: client/cl_input.c:737
 msgid "Slice through terrain at a higher level"
-msgstr "Nastaví řez terénem na vyšší úroveň"
+msgstr "Nastavit řez terénem na vyšší úroveň"
 
 #: client/cl_input.c:738
 msgid "Slice through terrain at a lower level"
-msgstr "Nastaví řez terénem na nižší úroveň"
+msgstr "Nastavit řez terénem na nižší úroveň"
 
 #: client/cl_input.c:741
 msgid "Confirm the current action"
-msgstr "Potvrdí aktuální akci"
+msgstr "Potvrdit aktuální akci"
 
 #: client/cl_input.c:749
 msgid "Toggle first-person/third-person camera mode"
-msgstr "Přepne režim pohledu mezi první a třetí osobou"
+msgstr "Přepnout režim pohledu mezi první a třetí osobou"
 
 #: client/cl_main.c:375 client/cl_main.c:1021
 msgid "Assemble a team first"
@@ -6758,9 +6462,8 @@ msgid "Connection timed out - server is no longer reachable"
 msgstr ""
 
 #: client/cl_main.c:1430
-#, fuzzy
 msgid "Network error"
-msgstr "dělník"
+msgstr "Chyba sítě"
 
 #: client/cl_main.c:1490 client/cl_main.c:1504
 #, c-format
@@ -6877,7 +6580,7 @@ msgstr "Stav:\t%s\n"
 
 #: client/cl_market.c:440
 msgid "You can't sell an aircraft if it still has a team assigned"
-msgstr ""
+msgstr "Nemůžeš prodat letoun dokud má posádku"
 
 # co je zas proboha tohle? :(
 #: client/cl_menu.c:535
@@ -6948,7 +6651,7 @@ msgstr "Výrobní fronta je prázdná"
 #: client/cl_produce.c:280
 #, c-format
 msgid "The production of %s has finished."
-msgstr "Dokončena výroba položky »%s«"
+msgstr "Dokončena výroba položky \"%s\"."
 
 #: client/cl_produce.c:281
 msgid "Production finished"
@@ -6971,7 +6674,7 @@ msgstr "Nic nevybráno"
 #: client/cl_produce.c:657
 #, c-format
 msgid "Production of %s started"
-msgstr "Zahájena výroba položky »%s«"
+msgstr "Zahájena výroba položky \"%s\""
 
 #: client/cl_produce.c:658
 msgid "Production started"
@@ -6989,6 +6692,7 @@ msgstr "Nemůžeš do fronty přidat další položku!"
 #, c-format
 msgid "New technology researched: %s. You should read this at UFOpedia.\n"
 msgstr ""
+"Dokončen výzkum nové technologie: %s. Měl by sis o tom přečíst v UFOpedii.\n"
 
 #: client/cl_research.c:85 client/cl_research.c:1099
 msgid "Research finished"
@@ -7078,7 +6782,7 @@ msgstr "Nejprve vybuduj laboratoř"
 #: client/cl_research.c:1098
 #, c-format
 msgid "Research of %s finished\n"
-msgstr "Dokončen výzkum »%s«\n"
+msgstr "Dokončen výzkum \"%s\"\n"
 
 #: client/cl_research.c:1420
 msgid "No description available."
@@ -7327,86 +7031,86 @@ msgstr "Příště více štestí"
 #: client/cl_transfer.c:72 client/cl_transfer.c:95
 #, c-format
 msgid "%s (%i on board)\n"
-msgstr ""
+msgstr "%s (%i na palubě)\n"
 
 #: client/cl_transfer.c:85
 #, c-format
 msgid "Corpse of %s (%i on board)\n"
-msgstr ""
+msgstr "%s - mrtvola (%i na palubě)\n"
 
 #: client/cl_transfer.c:147
 #, c-format
 msgid "%s (%i on board, %i left)\n"
-msgstr ""
+msgstr "%s (%i na palubě, %i zbývá)\n"
 
 #: client/cl_transfer.c:149
 #, c-format
 msgid "%s (%i available)\n"
-msgstr ""
+msgstr "%s (%i k dispozici)\n"
 
 #: client/cl_transfer.c:154
 msgid "Storage is empty.\n"
-msgstr ""
+msgstr "Sklad je prázdný.\n"
 
 #: client/cl_transfer.c:157
 msgid "Transfer is not possible - the base doesn't have a storage building."
-msgstr ""
+msgstr "Přeprava není možná - základna nemá sklady."
 
 #: client/cl_transfer.c:173
 #, c-format
 msgid "Corpse of %s (%i on board, %i left)\n"
-msgstr ""
+msgstr "%s - mrtvola (%i na palubě, %i zbývá)\n"
 
 #: client/cl_transfer.c:177
 #, c-format
 msgid "Corpse of %s (%i available)\n"
-msgstr ""
+msgstr "%s - mrtvola (%i k dispozici)\n"
 
 #: client/cl_transfer.c:184
 #, c-format
 msgid "Alive %s (%i on board, %i left)\n"
-msgstr ""
+msgstr "%s - živý (%i na palubě, %i zbývá)\n"
 
 #: client/cl_transfer.c:188
 #, c-format
 msgid "Alive %s (%i available)\n"
-msgstr ""
+msgstr "%s - živý (%i k dispozici)\n"
 
 #: client/cl_transfer.c:195
-#, fuzzy
 msgid "Alien Containment is empty.\n"
-msgstr "Cizácká cela"
+msgstr "Cizácká cela je prázdná.\n"
 
 #: client/cl_transfer.c:207
 msgid "Transfer is not possible - the base doesn't have hangar"
-msgstr ""
+msgstr "Přeprava není možná - základna nemá hangár"
 
 #: client/cl_transfer.c:241
 msgid "Can't unload while we are not in the homebase."
-msgstr ""
+msgstr "Dokud nejsme na základně není možné vykládat."
 
 #: client/cl_transfer.c:365
 msgid "The base does not exist anymore."
-msgstr ""
+msgstr "Základna již neexistuje."
 
 #: client/cl_transfer.c:374
 msgid "Transport mission ended, returning to homebase now."
-msgstr ""
+msgstr "Přepravní mise ukončena, vrací se na základnu."
 
 #: client/cl_transfer.c:385
 msgid "Transport mission ended, aircraft assigned to new base."
-msgstr ""
+msgstr "Přepravní mise ukončena, letoun byl přiřazen nové základně"
 
 #: client/cl_transfer.c:474 client/cl_transfer.c:495 client/cl_transfer.c:506
 msgid ""
 "You are transferring aircraft. You cannot use this aircraft to transfer "
 "things or employees."
-msgstr ""
+msgstr "Probíhá přeprava letounu. Nemužeš ho použít k přepravě věcí nebo osob."
 
 #: client/cl_transfer.c:538
 msgid ""
 "You are transferring stuff. You cannot use this aircraft to transfer itself."
 msgstr ""
+"Probíhá přeprava vybavení. Nemužeš tento letoun použít k přepravě sebe sama."
 
 #: client/cl_ufo.c:194
 msgid "UFO appears on our radar"
@@ -7580,34 +7284,24 @@ msgstr "Palivo:\t%i\n"
 msgid "Equipment:\t%s\n"
 msgstr "Vybavení:\t%s\n"
 
-#: client/cl_ufopedia.c:368
-#, fuzzy
-msgid "Proposal: "
-msgstr "Paralyzátor"
-
-#: client/cl_ufopedia.c:371
-#, fuzzy
-msgid "Re: "
-msgstr "Druh:"
-
-#: client/cl_ufopedia.c:379
+#: client/cl_ufopedia.c:363
 #, c-format
 msgid ""
 "FROM: %s\n"
 "TO: %s\n"
 "DATE: %s\n"
-"SUBJECT: %s%s\n"
+"SUBJECT: %s\n"
 msgstr ""
 
-#: client/cl_ufopedia.c:465
+#: client/cl_ufopedia.c:448
 msgid "No pre-research description available."
 msgstr "Popis není před výzkumem dostupný."
 
-#: client/cl_ufopedia.c:624
+#: client/cl_ufopedia.c:607
 msgid "Ufopedia Content"
 msgstr "Obsah Ufopedie"
 
-#: client/cl_ufopedia.c:679
+#: client/cl_ufopedia.c:662
 #, c-format
 msgid "Ufopedia Index: %s"
 msgstr "Oddíl Ufopedie: %s"
@@ -7740,121 +7434,8 @@ msgstr "1 den"
 msgid "5 days"
 msgstr "5 dnů"
 
-#, fuzzy
-#~ msgid "UFO -- Scout"
-#~ msgstr "UFO - Průzkumník"
-
-#, fuzzy
-#~ msgid "UFO -- Fighter"
-#~ msgstr "UFO - Stíhačka"
-
-#, fuzzy
-#~ msgid "UFO -- Harvester"
-#~ msgstr "UFO - Sklízeč"
-
-#, fuzzy
-#~ msgid "Alien Autopsy -- Bloodspider"
-#~ msgstr "Pitva cizáka - Bloodspider"
-
-#, fuzzy
-#~ msgid "Alien Autopsy -- Ortnok"
-#~ msgstr "Pitva cizáka - Ortnok"
-
-#, fuzzy
-#~ msgid "Alien Autopsy -- Taman"
-#~ msgstr "Pitva cizáka - Taman"
-
-#, fuzzy
-#~ msgid "Alien Autopsy -- Shevaar"
-#~ msgstr "Pitva cizáka - Shevaar"
-
-#, fuzzy
-#~ msgid "Proposal: Antimatter"
-#~ msgstr "Antihmota"
-
-#, fuzzy
-#~ msgid "Re: Antimatter"
-#~ msgstr "Antihmota"
-
-#, fuzzy
-#~ msgid "Proposal: Live Alien"
-#~ msgstr "Živý cizák"
-
-#, fuzzy
-#~ msgid "Re: Live Alien"
-#~ msgstr "Živý cizák"
-
-#, fuzzy
-#~ msgid "Proposal: Heavy Laser"
-#~ msgstr "Výkonný laser"
-
-#, fuzzy
-#~ msgid "Re: Heavy Laser"
-#~ msgstr "Výkonný laser"
-
-#, fuzzy
-#~ msgid "Proposal: Laser Pistol"
-#~ msgstr "Laserová pistole"
-
-#, fuzzy
-#~ msgid "Re: Laser Pistol"
-#~ msgstr "Laserová pistole"
-
-#, fuzzy
-#~ msgid "Proposal: Laser Rifle"
-#~ msgstr "Laserová puška"
-
-#, fuzzy
-#~ msgid "Re: Laser Rifle"
-#~ msgstr "Laserová puška"
-
-#, fuzzy
-#~ msgid "Re: Stun Rod"
-#~ msgstr "Paralyzátor"
-
-#, fuzzy
-#~ msgid "Re: UFO -- Scout"
-#~ msgstr "UFO - Průzkumník"
-
-#, fuzzy
-#~ msgid "Re: UFO -- Fighter"
-#~ msgstr "UFO - Stíhačka"
-
-#, fuzzy
-#~ msgid "Re: UFO -- Harvester"
-#~ msgstr "UFO - Sklízeč"
-
-#, fuzzy
-#~ msgid "Proposal: Alien Autopsy -- Bloodspider"
-#~ msgstr "Pitva cizáka - Bloodspider"
-
-#, fuzzy
-#~ msgid "Re: Alien Autopsy -- Bloodspider"
-#~ msgstr "Pitva cizáka - Bloodspider"
-
-#, fuzzy
-#~ msgid "Proposal: Alien Autopsy -- Ortnok"
-#~ msgstr "Pitva cizáka - Ortnok"
-
-#, fuzzy
-#~ msgid "Re: Alien Autopsy -- Ortnok"
-#~ msgstr "Pitva cizáka - Ortnok"
-
-#, fuzzy
-#~ msgid "Proposal: Alien Autopsy -- Taman"
-#~ msgstr "Pitva cizáka - Taman"
-
-#, fuzzy
-#~ msgid "Re: Alien Autopsy -- Taman"
-#~ msgstr "Pitva cizáka - Taman"
-
-#, fuzzy
-#~ msgid "Proposal: Alien Autopsy -- Shevaar"
-#~ msgstr "Pitva cizáka - Shevaar"
-
-#, fuzzy
-#~ msgid "Re: Alien Autopsy -- Shevaar"
-#~ msgstr "Pitva cizáka - Shevaar"
+#~ msgid "Dedicated server:"
+#~ msgstr "Vyhrazený server:"
 
 #~ msgid "Teamplay"
 #~ msgstr "Týmová hra"
@@ -7864,9 +7445,6 @@ msgstr "5 dnů"
 
 #~ msgid "Technologies"
 #~ msgstr "Technologie"
-
-#~ msgid "Dedicated server:"
-#~ msgstr "Vyhrazený server:"
 
 #~ msgid "tachyon"
 #~ msgstr "Tachyonové"
