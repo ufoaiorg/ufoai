@@ -791,8 +791,8 @@ static void TR_Init_f (void)
 	static char baseList[1024];
 	static char aircraftList[1024];
 	int i;
-	base_t* base;
-	aircraft_t* aircraft;
+	base_t* base = NULL;
+	aircraft_t* aircraft = NULL;
 
 	if (!baseCurrent)
 		return;
@@ -827,6 +827,12 @@ static void TR_Init_f (void)
 			Q_strcat(aircraftList, aircraft->shortname, sizeof(aircraftList));
 			Q_strcat(aircraftList, "\n", sizeof(aircraftList));
 		}
+	}
+
+	/* Fill up the nodes in case of lack of aircraft (none at all or none suitable). */
+	if (!aircraft || !transferAircraft) {
+		Q_strcat(aircraftList, _("None"), sizeof(aircraftList));
+		Cvar_Set("mn_trans_aircraft_name", _("None"));
 	}
 
 	/* TODO: check the transfercargo at selected aircraft and fill up the list. */
