@@ -162,7 +162,7 @@ EMPLOYEE BACKEND STUFF
 /**
  * @brief Checks whether the given employee is in the given base
  */
-extern qboolean E_IsInBase (employee_t* empl, const base_t const * base)
+extern qboolean E_IsInBase (employee_t* empl, const base_t* const base)
 {
 	if (empl->baseIDHired == base->idx)
 		return qtrue;

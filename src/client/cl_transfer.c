@@ -38,7 +38,7 @@ static aircraft_t *transferAircraft = NULL;
 static int transferType = -1;
 
 /** @brief Current cargo onboard. */
-static transferCargo_s cargo[MAX_CARGO];
+static transferCargo_t cargo[MAX_CARGO];
 
 /**
  * @brief Display cargo list.
@@ -56,18 +56,18 @@ static void TR_CargoList (void)
 	if (!baseCurrent)
 		return;
 
-	/* Check the transfer index in gd.alltransfers array. */   
+	/* Check the transfer index in gd.alltransfers array. */
 	transferidx = &gd.alltransfers[transferAircraft->idx];
 
 	cargoList[0] = '\0';
 	/* FIXME: is that correct memset? */
-	memset (cargo, 0, sizeof(cargo[MAX_CARGO]));
+	memset(cargo, 0, sizeof(cargo[MAX_CARGO]));
 
 	if (transferidx->type == TR_STUFF) {
 		/* Show items. */
 		for (i = 0; i < csi.numODs; i++) {
 			if (transferidx->itemAmount[i] > 0) {
-				Com_sprintf(str, sizeof(str), "%s (%i on board)\n", 
+				Com_sprintf(str, sizeof(str), _("%s (%i on board)\n"),
 				csi.ods[i].name, transferidx->itemAmount[i]);
 				Q_strcat(cargoList, str, sizeof(cargoList));
 				cargo[cnt].type = 0;
@@ -80,7 +80,7 @@ static void TR_CargoList (void)
 		/* Show aliens. */
 		for (i = 0; i < numTeamDesc; i++) {
 			if (transferidx->alienBodyAmount[i] > 0) {
-				Com_sprintf(str, sizeof(str), "Corpse of %s (%i on board)\n", 
+				Com_sprintf(str, sizeof(str), _("Corpse of %s (%i on board)\n"),
 				_(AL_AlienTypeToName(i)), transferidx->alienBodyAmount[i]);
 				Q_strcat(cargoList, str, sizeof(cargoList));
 				cargo[cnt].type = 2;
@@ -90,7 +90,7 @@ static void TR_CargoList (void)
 		}
 		for (i = 0; i < numTeamDesc; i++) {
 			if (transferidx->alienLiveAmount[i] > 0) {
-				Com_sprintf(str, sizeof(str), "%s (%i on board)\n",
+				Com_sprintf(str, sizeof(str), _("%s (%i on board)\n"),
 				_(AL_AlienTypeToName(i)), transferidx->alienLiveAmount[i]);
 				Q_strcat(cargoList, str, sizeof(cargoList));
 				cargo[cnt].type = 3;
@@ -131,7 +131,7 @@ static void TR_TransferSelect_f (void)
 		type = atoi(Cmd_Argv(1));
 
 	transferidx = &gd.alltransfers[transferAircraft->idx];
-    
+
 	if (transferidx)
 		transferidx->destBase = transferBase->idx;
 
@@ -209,7 +209,7 @@ static void TR_TransferSelect_f (void)
 		Com_Printf("TR_TransferSelect_f: Unknown type id %i\n", type);
 		return;
 	}
-	
+
 	/* Update cargo list. */
 	TR_CargoList();
 
@@ -248,7 +248,7 @@ static void TR_TransferEmptyAircraftStorage_f (void)
 	/* Now unload the cargo. */
 	TR_TransferEnd(transferAircraft);
 	transferAircraft->status = AIR_HOME;
-	
+
 	/* clear the command buffer
 	 * needed to erase all TR_TransferListSelect_f
 	 * paramaters */
@@ -305,7 +305,7 @@ void TR_EmptyTransferCargo (aircraft_t *aircraft)
 		      /*E_UnhireEmployee(homebase, ...)*/
 		      /*E_HireEmployee(b, ...)*/
 	}
-	/* Unload aliens. TODO: check building status and limits. */   
+	/* Unload aliens. TODO: check building status and limits. */
 	if (!destination->hasAlienCont) {
 		/* TODO: destroy aliens in transfercargo and inform an user. */
 	} else {
@@ -358,7 +358,7 @@ extern void TR_TransferEnd (aircraft_t* aircraft)
 		return;
 
 	assert(destination);
-	
+
 	/* Maybe it was invaded in the meantime. */
 	if (!destination->founded) {
 		MN_Popup(_("Notice"), _("The base does not exist anymore."));
@@ -369,7 +369,7 @@ extern void TR_TransferEnd (aircraft_t* aircraft)
 	if (transferidx->type == TR_STUFF) {
 		TR_EmptyTransferCargo (aircraft);
 		if (transferidx->destBase != baseCurrent->idx)
-			MN_AddNewMessage(_("Transport mission"), 
+			MN_AddNewMessage(_("Transport mission"),
 			_("Transport mission ended, returning to homebase now."), qfalse, MSG_TRANSFERFINISHED, NULL);
 		CL_AircraftReturnToBase(aircraft);
 	} else {
@@ -380,15 +380,15 @@ extern void TR_TransferEnd (aircraft_t* aircraft)
 			   Second step: use fuel/range limits when calculating this. */
 		} else {
 			/* TODO: stuff about changing homebase for aircraft. */
-			MN_AddNewMessage(_("Transport mission"), 
+			MN_AddNewMessage(_("Transport mission"),
 			_("Transport mission ended, aircraft assigned to new base."), qfalse, MSG_TRANSFERFINISHED, NULL);
 		}
 	}
-    
+
 	/* Clear this transferidx. */
 	/* TODO: clear only if it was TR_STUFF, or if TR_AIRCRAFT had succed. */
 	/* FIXME: is that correct memset? */
-	memset(&gd.alltransfers[aircraft->idx], 0, sizeof(transferlist_t));	
+	memset(&gd.alltransfers[aircraft->idx], 0, sizeof(transferlist_t));
 }
 
 /**
@@ -400,7 +400,7 @@ static void TR_TransferStart_f (void)
 {
 	base_t* destination = NULL;
 	transferlist_t *transferidx = NULL;
-	
+
 	if (!transferAircraft) {
 		Com_Printf("TR_TransferStart_f: No aircraft selected\n");
 		return;
@@ -410,9 +410,9 @@ static void TR_TransferStart_f (void)
 		Com_Printf("TR_TransferStart_f: No base selected\n");
 		return;
 	}
-	
+
 	transferidx = &gd.alltransfers[transferAircraft->idx];
-	
+
 	if (transferidx)
 		destination = &gd.bases[transferidx->destBase];
 
@@ -448,17 +448,17 @@ static void TR_TransferListSelect_f (void)
 	if (!transferBase) {
 		MN_Popup(_("No target base selected"), _("Please select the target base from the list"));
 		return;
-	}      
+	}
 
 	if (!transferAircraft) {
 		MN_Popup(_("No aircraft selected"), _("Please select the aircraft to use from the list"));
 		return;
 	}
 
-	/* Prepare the transfer in gd.alltransfers array. */   
+	/* Prepare the transfer in gd.alltransfers array. */
 	transferidx = &gd.alltransfers[transferAircraft->idx];
 	if (transferidx)
-		transferidx->destBase = transferBase->idx;   
+		transferidx->destBase = transferBase->idx;
 
 	num = atoi(Cmd_Argv(1));
 
@@ -470,7 +470,7 @@ static void TR_TransferListSelect_f (void)
 			transferidx->type = TR_STUFF;
 		} else if (transferidx->type != TR_STUFF) {
 			/* TODO: Allow to transfer both aircraft transporter with cargo onboard? */
-			MN_Popup(_("Notice"), 
+			MN_Popup(_("Notice"),
 			("You are transferring aircraft. You cannot use this aircraft to transfer things or employees."));
 			return;
 		}
@@ -491,7 +491,7 @@ static void TR_TransferListSelect_f (void)
 			transferidx->type = TR_STUFF;
 		} else if (transferidx->type != TR_STUFF) {
 			/* TODO: Allow to transfer both aircraft transporter with cargo onboard? */
-			MN_Popup(_("Notice"), 
+			MN_Popup(_("Notice"),
 			("You are transferring aircraft. You cannot use this aircraft to transfer things or employees."));
 			return;
 		}
@@ -502,7 +502,7 @@ static void TR_TransferListSelect_f (void)
 			transferidx->type = TR_STUFF;
 		} else if (transferidx->type != TR_STUFF) {
 			/* TODO: Allow to transfer both aircraft transporter with cargo onboard? */
-			MN_Popup(_("Notice"), 
+			MN_Popup(_("Notice"),
 			("You are transferring aircraft. You cannot use this aircraft to transfer things or employees."));
 			return;
 		}
@@ -534,7 +534,7 @@ static void TR_TransferListSelect_f (void)
 			transferidx->type = TR_AIRCRAFT;
 		} else if (transferidx->type != TR_AIRCRAFT) {
 			/* TODO: Allow to transfer both aircraft transporter with cargo onboard? */
-			MN_Popup(_("Notice"), 
+			MN_Popup(_("Notice"),
 			("You are transferring stuff. You cannot use this aircraft to transfer itself."));
 			return;
 		}
@@ -543,7 +543,7 @@ static void TR_TransferListSelect_f (void)
 	default:
 		return;
 	}
-   
+
 	/* clear the command buffer
 	 * needed to erase all TR_TransferListSelect_f
 	 * paramaters */
@@ -713,15 +713,15 @@ static void TR_CargoListSelect_f (void)
 
 	if (!baseCurrent)
 		return;
-		
+
 	if (!transferAircraft)
 		return;
 
-	/* Check the transfer index in gd.alltransfers array. */   
+	/* Check the transfer index in gd.alltransfers array. */
 	transferidx = &gd.alltransfers[transferAircraft->idx];
 
 	num = atoi(Cmd_Argv(1));
-	
+
 	switch (cargo[num].type) {
 	case 0:		/**< items */
 		for (i = 0; i < csi.numODs; i++) {
@@ -765,8 +765,8 @@ static void TR_CargoListSelect_f (void)
 	default:
 		return;
 	}
-    
-	TR_TransferSelect_f();	
+
+	TR_TransferSelect_f();
 }
 
 /**
@@ -816,9 +816,9 @@ static void TR_Init_f (void)
 			Q_strcat(aircraftList, "\n", sizeof(aircraftList));
 		}
 	}
-	
+
 	/* TODO: check the transfercargo at selected aircraft and fill up the list. */
-	
+
 	/* Select first available base. */
 	/* TODO: if the selected aircraft has it's cargo, select destination base instead. */
 	TR_TransferBaseSelect_f();
