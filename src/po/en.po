@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-03-03 14:05+0100\n"
-"PO-Revision-Date: 2007-03-03 14:06+0100\n"
+"POT-Creation-Date: 2007-03-04 09:58+0100\n"
+"PO-Revision-Date: 2007-03-04 09:59+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1762,91 +1762,87 @@ msgstr "Start server"
 msgid "Team selection"
 msgstr "Team selection"
 
-#: ../base/ufos/menu_multiplayer.ufo:1381
-msgid "Teamplay"
-msgstr "Teamplay"
-
-#: ../base/ufos/menu_multiplayer.ufo:1417
+#: ../base/ufos/menu_multiplayer.ufo:1399
 msgid "Max. players per team"
 msgstr "Max. players per team"
 
-#: ../base/ufos/menu_multiplayer.ufo:1429
+#: ../base/ufos/menu_multiplayer.ufo:1411
 msgid "Max. teams for this map"
 msgstr "Max. teams for this map"
 
-#: ../base/ufos/menu_multiplayer.ufo:1441
+#: ../base/ufos/menu_multiplayer.ufo:1423
 msgid "Team preference:"
 msgstr "Team preference:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1452
+#: ../base/ufos/menu_multiplayer.ufo:1434
 msgid "Next free team"
 msgstr "Next free team"
 
-#: ../base/ufos/menu_multiplayer.ufo:1462
+#: ../base/ufos/menu_multiplayer.ufo:1444
 msgid "Previous free team"
 msgstr "Previous free team"
 
-#: ../base/ufos/menu_multiplayer.ufo:1506
+#: ../base/ufos/menu_multiplayer.ufo:1488
 msgid "Please wait"
 msgstr "Please wait"
 
-#: ../base/ufos/menu_multiplayer.ufo:1512
+#: ../base/ufos/menu_multiplayer.ufo:1494
 msgid "Waiting for other players to join the game"
 msgstr "Waiting for other players to join the game"
 
-#: ../base/ufos/menu_multiplayer.ufo:1518
+#: ../base/ufos/menu_multiplayer.ufo:1500
 msgid "Players that must join before starting: "
 msgstr "Players that must join before starting: "
 
-#: ../base/ufos/menu_multiplayer.ufo:1530
+#: ../base/ufos/menu_multiplayer.ufo:1512
 msgid "Start the game even if not all teams have joined"
 msgstr "Start the game even if not all teams have joined"
 
-#: ../base/ufos/menu_multiplayer.ufo:1543
+#: ../base/ufos/menu_multiplayer.ufo:1525
 msgid "Force start"
 msgstr "Force start"
 
-#: ../base/ufos/menu_multiplayer.ufo:1557
+#: ../base/ufos/menu_multiplayer.ufo:1539
 msgid "1on1"
 msgstr "1on1"
 
-#: ../base/ufos/menu_multiplayer.ufo:1570
+#: ../base/ufos/menu_multiplayer.ufo:1552
 msgid "1on1on1"
 msgstr "1on1on1"
 
-#: ../base/ufos/menu_multiplayer.ufo:1583
+#: ../base/ufos/menu_multiplayer.ufo:1565
 msgid "2on2"
 msgstr "2on2"
 
-#: ../base/ufos/menu_multiplayer.ufo:1596
+#: ../base/ufos/menu_multiplayer.ufo:1578
 msgid "2on2on2"
 msgstr "2on2on2"
 
-#: ../base/ufos/menu_multiplayer.ufo:1609
+#: ../base/ufos/menu_multiplayer.ufo:1591
 msgid "3on3"
 msgstr "3on3"
 
-#: ../base/ufos/menu_multiplayer.ufo:1622
+#: ../base/ufos/menu_multiplayer.ufo:1604
 msgid "3on3on3"
 msgstr "3on3on3"
 
-#: ../base/ufos/menu_multiplayer.ufo:1635
+#: ../base/ufos/menu_multiplayer.ufo:1617
 msgid "4on4"
 msgstr "4on4"
 
-#: ../base/ufos/menu_multiplayer.ufo:1648
+#: ../base/ufos/menu_multiplayer.ufo:1630
 msgid "4on4on4"
 msgstr "4on4on4"
 
-#: ../base/ufos/menu_multiplayer.ufo:1661
+#: ../base/ufos/menu_multiplayer.ufo:1643
 msgid "Coop 2 players"
 msgstr "Coop 2 players"
 
-#: ../base/ufos/menu_multiplayer.ufo:1674
+#: ../base/ufos/menu_multiplayer.ufo:1656
 msgid "Coop 3 players"
 msgstr "Coop 3 players"
 
-#: ../base/ufos/menu_multiplayer.ufo:1687
+#: ../base/ufos/menu_multiplayer.ufo:1669
 msgid "Coop 4 players"
 msgstr "Coop 4 players"
 
@@ -2395,21 +2391,21 @@ msgid "Show only employees"
 msgstr "Show only employees"
 
 #: ../base/ufos/menu_transfer.ufo:270
-msgid "Show only technologies"
-msgstr "Show only technologies"
-
-#: ../base/ufos/menu_transfer.ufo:285
-msgid "Technologies"
-msgstr "Technologies"
-
-#: ../base/ufos/menu_transfer.ufo:290
 msgid "Show only aliens"
 msgstr "Show only aliens"
 
-#: ../base/ufos/menu_transfer.ufo:305
+#: ../base/ufos/menu_transfer.ufo:285
 #: client/cl_campaign.c:4434
 msgid "Aliens"
 msgstr "Aliens"
+
+#: ../base/ufos/menu_transfer.ufo:290
+msgid "Show only aircrafts"
+msgstr "Show only aircrafts"
+
+#: ../base/ufos/menu_transfer.ufo:305
+msgid "Aircrafts"
+msgstr "Aircrafts"
 
 #: ../base/ufos/menu_transfer.ufo:310
 msgid "Empty the aircraft storage"
@@ -8728,13 +8724,13 @@ msgstr "Aircraft started"
 #: client/cl_aircraft.c:943
 #: client/cl_basemanagement.c:612
 #: client/cl_basemanagement.c:2139
-#: client/cl_basemanagement.c:2311
-#: client/cl_basemanagement.c:2366
-#: client/cl_basemanagement.c:2383
-#: client/cl_basemanagement.c:2393
-#: client/cl_basemanagement.c:2407
-#: client/cl_basemanagement.c:2415
-#: client/cl_basemanagement.c:2440
+#: client/cl_basemanagement.c:2314
+#: client/cl_basemanagement.c:2369
+#: client/cl_basemanagement.c:2386
+#: client/cl_basemanagement.c:2396
+#: client/cl_basemanagement.c:2410
+#: client/cl_basemanagement.c:2418
+#: client/cl_basemanagement.c:2443
 #: client/cl_campaign.c:472
 #: client/cl_campaign.c:949
 #: client/cl_campaign.c:1005
@@ -8761,6 +8757,13 @@ msgstr "Aircraft started"
 #: client/cl_research.c:828
 #: client/cl_research.c:864
 #: client/cl_research.c:1014
+#: client/cl_transfer.c:239
+#: client/cl_transfer.c:363
+#: client/cl_transfer.c:418
+#: client/cl_transfer.c:471
+#: client/cl_transfer.c:492
+#: client/cl_transfer.c:503
+#: client/cl_transfer.c:535
 #: client/cl_ufo.c:194
 #: client/cl_ufo.c:199
 msgid "Notice"
@@ -8981,116 +8984,131 @@ msgstr "Not enough credits to set up a new base."
 msgid "You've reached the base limit."
 msgstr "You've reached the base limit."
 
-#: client/cl_basemanagement.c:2254
+#: client/cl_basemanagement.c:2257
 msgid "Storage is empty\n"
 msgstr "Storage is empty\n"
 
-#: client/cl_basemanagement.c:2256
+#: client/cl_basemanagement.c:2259
 msgid "Transfer is not possible - the base doesn't have a storage building"
 msgstr "Transfer is not possible - the base doesn't have a storage building"
 
-#: client/cl_basemanagement.c:2263
+#: client/cl_basemanagement.c:2266
+#: client/cl_transfer.c:164
 msgid "Transfer is not possible - the base doesn't have quarters"
 msgstr "Transfer is not possible - the base doesn't have quarters"
 
-#: client/cl_basemanagement.c:2270
+#: client/cl_basemanagement.c:2273
 msgid "Transfer is not possible - the base doesn't have a lab"
 msgstr "Transfer is not possible - the base doesn't have a lab"
 
-#: client/cl_basemanagement.c:2289
+#: client/cl_basemanagement.c:2292
+#: client/cl_transfer.c:195
 msgid "Transfer is not possible - the base doesn't have an alien containment"
 msgstr "Transfer is not possible - the base doesn't have an alien containment"
 
-#: client/cl_basemanagement.c:2311
+#: client/cl_basemanagement.c:2314
 msgid "Can't unload while we are not in the homebase"
 msgstr "Can't unload while we are not in the homebase"
 
-#: client/cl_basemanagement.c:2366
+#: client/cl_basemanagement.c:2369
 msgid "The base is not longer existent"
 msgstr "The base is not longer existent"
 
-#: client/cl_basemanagement.c:2383
+#: client/cl_basemanagement.c:2386
 msgid "The base doesn't have a storage"
 msgstr "The base doesn't have a storage"
 
-#: client/cl_basemanagement.c:2393
+#: client/cl_basemanagement.c:2396
 msgid "The base doesn't have a lab - can't unload the technologies here"
 msgstr "The base doesn't have a lab - can't unload the technologies here"
 
-#: client/cl_basemanagement.c:2407
+#: client/cl_basemanagement.c:2410
 msgid "The base doesn't have quarters - can't unload the employees here"
 msgstr "The base doesn't have quarters - can't unload the employees here"
 
-#: client/cl_basemanagement.c:2415
+#: client/cl_basemanagement.c:2418
 msgid "The base doesn't have an alien containment - can't unload the aliens here"
 msgstr "The base doesn't have an alien containment - can't unload the aliens here"
 
-#: client/cl_basemanagement.c:2418
+#: client/cl_basemanagement.c:2421
+#: client/cl_transfer.c:371
+#: client/cl_transfer.c:382
 msgid "Transport mission"
 msgstr "Transport mission"
 
-#: client/cl_basemanagement.c:2418
+#: client/cl_basemanagement.c:2421
 msgid "Transport mission ended, returning to homebase now"
 msgstr "Transport mission ended, returning to homebase now"
 
-#: client/cl_basemanagement.c:2440
+#: client/cl_basemanagement.c:2443
+#: client/cl_transfer.c:418
 msgid "Can't start the transport mission while we are not in the homebase"
 msgstr "Can't start the transport mission while we are not in the homebase"
 
-#: client/cl_basemanagement.c:2466
+#: client/cl_basemanagement.c:2469
+#: client/cl_transfer.c:447
 msgid "No target base selected"
 msgstr "No target base selected"
 
-#: client/cl_basemanagement.c:2466
+#: client/cl_basemanagement.c:2469
+#: client/cl_transfer.c:447
 msgid "Please select the target base from the list"
 msgstr "Please select the target base from the list"
 
-#: client/cl_basemanagement.c:2471
+#: client/cl_basemanagement.c:2474
+#: client/cl_transfer.c:452
 msgid "No aircraft selected"
 msgstr "No aircraft selected"
 
-#: client/cl_basemanagement.c:2471
+#: client/cl_basemanagement.c:2474
+#: client/cl_transfer.c:452
 msgid "Please select the aircraft to use from the list"
 msgstr "Please select the aircraft to use from the list"
 
-#: client/cl_basemanagement.c:2644
+#: client/cl_basemanagement.c:2647
+#: client/cl_transfer.c:670
 msgid "You can transfer equipment - this base has a storage building\n"
 msgstr "You can transfer equipment - this base has a storage building\n"
 
-#: client/cl_basemanagement.c:2647
+#: client/cl_basemanagement.c:2650
+#: client/cl_transfer.c:673
 msgid "No storage building in this base\n"
 msgstr "No storage building in this base\n"
 
-#: client/cl_basemanagement.c:2651
+#: client/cl_basemanagement.c:2654
+#: client/cl_transfer.c:677
 msgid "You can transfer employees - this base has quarters\n"
 msgstr "You can transfer employees - this base has quarters\n"
 
-#: client/cl_basemanagement.c:2654
+#: client/cl_basemanagement.c:2657
+#: client/cl_transfer.c:680
 msgid "No quarters in this base\n"
 msgstr "No quarters in this base\n"
 
-#: client/cl_basemanagement.c:2657
+#: client/cl_basemanagement.c:2660
 msgid "You can transfer techs - this base has a laboratory\n"
 msgstr "You can transfer techs - this base has a laboratory\n"
 
-#: client/cl_basemanagement.c:2659
+#: client/cl_basemanagement.c:2662
 msgid "No laboratory in this base\n"
 msgstr "No laboratory in this base\n"
 
-#: client/cl_basemanagement.c:2662
+#: client/cl_basemanagement.c:2665
+#: client/cl_transfer.c:684
 msgid "You can transfer aliens - this base has alien containment\n"
 msgstr "You can transfer aliens - this base has alien containment\n"
 
-#: client/cl_basemanagement.c:2664
+#: client/cl_basemanagement.c:2667
+#: client/cl_transfer.c:686
 msgid "No alien containment in this base\n"
 msgstr "No alien containment in this base\n"
 
-#: client/cl_basemanagement.c:2820
+#: client/cl_basemanagement.c:2827
 #, c-format
 msgid "Construction of %s building finished in base %s."
 msgstr "Construction of %s building finished in base %s."
 
-#: client/cl_basemanagement.c:2821
+#: client/cl_basemanagement.c:2828
 msgid "Building finished"
 msgstr "Building finished"
 
@@ -10231,6 +10249,85 @@ msgstr "You lost the game"
 msgid "Better luck next time"
 msgstr "Better luck next time"
 
+#: client/cl_transfer.c:69
+#: client/cl_transfer.c:92
+#, c-format
+msgid "%s (%i on board)\n"
+msgstr "%s (%i on board)\n"
+
+#: client/cl_transfer.c:82
+#, c-format
+msgid "Corpse of %s (%i on board)\n"
+msgstr "Corpse of %s (%i on board)\n"
+
+#: client/cl_transfer.c:146
+#, c-format
+msgid "%s (%i on board, %i left)\n"
+msgstr "%s (%i on board, %i left)\n"
+
+#: client/cl_transfer.c:148
+#, c-format
+msgid "%s (%i available)\n"
+msgstr "%s (%i available)\n"
+
+#: client/cl_transfer.c:153
+msgid "Storage is empty.\n"
+msgstr "Storage is empty.\n"
+
+#: client/cl_transfer.c:156
+msgid "Transfer is not possible - the base doesn't have a storage building."
+msgstr "Transfer is not possible - the base doesn't have a storage building."
+
+#: client/cl_transfer.c:172
+#, c-format
+msgid "Corpse of %s (%i on board, %i left)\n"
+msgstr "Corpse of %s (%i on board, %i left)\n"
+
+#: client/cl_transfer.c:176
+#, c-format
+msgid "Corpse of %s (%i available)\n"
+msgstr "Corpse of %s (%i available)\n"
+
+#: client/cl_transfer.c:183
+#, c-format
+msgid "Alive %s (%i on board, %i left)\n"
+msgstr "Alive %s (%i on board, %i left)\n"
+
+#: client/cl_transfer.c:187
+#, c-format
+msgid "Alive %s (%i available)\n"
+msgstr "Alive %s (%i available)\n"
+
+#: client/cl_transfer.c:204
+msgid "Transfer is not possible - the base doesn't have hangar"
+msgstr "Transfer is not possible - the base doesn't have hangar"
+
+#: client/cl_transfer.c:239
+msgid "Can't unload while we are not in the homebase."
+msgstr "Can't unload while we are not in the homebase."
+
+#: client/cl_transfer.c:363
+msgid "The base does not exist anymore."
+msgstr "The base does not exist anymore."
+
+#: client/cl_transfer.c:372
+msgid "Transport mission ended, returning to homebase now."
+msgstr "Transport mission ended, returning to homebase now."
+
+#: client/cl_transfer.c:383
+msgid "Transport mission ended, aircraft assigned to new base."
+msgstr "Transport mission ended, aircraft assigned to new base."
+
+#: client/cl_transfer.c:472
+#: client/cl_transfer.c:493
+#: client/cl_transfer.c:504
+msgid "You are transferring aircraft. You cannot use this aircraft to transfer things or employees."
+msgstr "You are transferring aircraft. You cannot use this aircraft to transfer things or employees."
+
+#: client/cl_transfer.c:536
+msgid "You are transferring stuff. You cannot use this aircraft to transfer itself."
+msgstr "You are transferring stuff. You cannot use this aircraft to transfer itself."
+
 #: client/cl_ufo.c:194
 msgid "UFO appears on our radar"
 msgstr "UFO appears on our radar"
@@ -10547,6 +10644,12 @@ msgstr "1 day"
 msgid "5 days"
 msgstr "5 days"
 
+#~ msgid "Teamplay"
+#~ msgstr "Teamplay"
+#~ msgid "Show only technologies"
+#~ msgstr "Show only technologies"
+#~ msgid "Technologies"
+#~ msgstr "Technologies"
 #~ msgid "Dedicated server:"
 #~ msgstr "Dedicated server:"
 #~ msgid "%s has been killed!\n"
