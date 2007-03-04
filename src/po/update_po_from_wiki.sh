@@ -356,7 +356,7 @@ update_txt()
 			gsub (/[ \t]*$/,"")
 			$0="\\n\n"$0"\\n\n"}
 		$0 !~ /^[ \t\n]*$/ {
-			if (line == 4 && '$pre_txt'==1) {printf "\\n\n"}
+			if (line < 4 && '$pre_txt'==1) {line++;next}
 			gsub (/[ \t]*$/,"")
 			if (already_written_test) {printf "\\n\n\\n\n"}
 			printf "%s",$0
@@ -527,6 +527,17 @@ then
 	english="news_phalanx_and_mumbai_aftermath_txt"
 	update_news "3" "3" "1"
   
+	english="news_newtwist_txt"
+	download_description
+	test=$?
+	if [[ "$test" -eq 0 ]]
+	then
+		clean_html
+		pre_txt=1
+		update_txt 2 0 0
+		pre_txt=0
+	fi
+
 	if [[ "$debug" = "1" ]]
 	then
 		echo "Checking news descriptions : done." >> $log_file
@@ -623,7 +634,7 @@ do
 #				if [[ ${english} = "ufo_"*"_txt" ]] || [[ ${english} = *"_autopsy_txt"* ]] || [[ ${english} = "kerrblade_txt" ]] || [[ ${english} = "plas"*"_txt" ]] || [[ ${english} = "bolterrifle"*"_txt" ]] || [[ ${english} = "nano_armor_txt" ]]
 				if [[ $pre_txt -eq 1 ]]
 				then
-				# Case of Alien Research : only the second part of the text has to be taken
+				# Case of Research with proposal part: only the second part of the text has to be taken
 				update_txt 3 0 0
 
 				english=${english:0:${#english}-4}_pre_txt
