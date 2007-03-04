@@ -198,8 +198,8 @@ menu transfer
 
 	text trans_cargolist
 	{
-		num 10
-		pos	"610 380"
+		num	31
+		pos	"607 382"
 		size	"460 360"
 		mousefx	true
 		click

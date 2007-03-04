@@ -83,7 +83,7 @@ static void TR_CargoList (void)
 		/* TODO: show aircraft info here. */
 	}
 
-	menuText[TEXT_TRANSFER_LIST] = cargoList;
+	menuText[TEXT_CARGO_LIST] = cargoList;
 }
 
 /**
