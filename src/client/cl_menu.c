@@ -388,7 +388,7 @@ static char *MN_GetReferenceString (const menu_t* const menu, char *ref)
 			if ((val->ofs > 0) && (val->ofs < (size_t)-5))
 				return Com_ValueToStr(refNode, val->type, val->ofs);
 			else
-				return Com_ValueToStr(refNode->data[-(val->ofs)], val->type, 0);
+				return Com_ValueToStr(refNode->data[-((int)val->ofs)], val->type, 0);
 		}
 	} else if (*ref == '_') {
 		ref++;
@@ -447,7 +447,7 @@ static float MN_GetReferenceFloat (const menu_t* const menu, void *ref)
 			if ((val->ofs > 0) && (val->ofs < (size_t)-5))
 				return *(float *) ((byte *) refNode + val->ofs);
 			else
-				return *(float *) refNode->data[-(val->ofs)];
+				return *(float *) refNode->data[-((int)val->ofs)];
 		}
 	} else {
 		/* just get the data */
@@ -720,7 +720,7 @@ extern void MN_ExecuteActions (const menu_t* const menu, menuAction_t* const fir
 				if ((nps[np].ofs > 0) && (nps[np].ofs < (size_t)-5))
 					Com_SetValue(node, (char *) data, nps[np].type, nps[np].ofs);
 				else
-					node->data[-(nps[np].ofs)] = data;
+					node->data[-((int)nps[np].ofs)] = data;
 			}
 			break;
 		default:
@@ -3258,7 +3258,7 @@ qboolean MN_ParseNodeBody (menuNode_t * node, char **text, char **token)
 						else {
 							/* a reference to data is handled like this */
 /* 							Com_Printf( "%i %s\n", val->ofs, *token ); */
-							node->data[-(val->ofs)] = curadata;
+							node->data[-((int)val->ofs)] = curadata;
 							if (**token == '*')
 								curadata += Com_ParseValue(curadata, *token, V_STRING, 0);
 							else

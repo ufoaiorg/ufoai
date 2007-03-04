@@ -392,7 +392,7 @@ static void SCR_DrawLoading (void)
 		(int)(viddef.height * 0.5),
 		0, 1, viddef.width, viddef.height, 50, loadingMessages, 0, 0, NULL, qfalse);
 
-	SCR_DrawLoadingBar(viddef.width * 0.5 - 300, viddef.height - 30, 600, 20, (int)loadingPercent);
+	SCR_DrawLoadingBar((int)(viddef.width * 0.5) - 300, viddef.height - 30, 600, 20, (int)loadingPercent);
 }
 
 /**

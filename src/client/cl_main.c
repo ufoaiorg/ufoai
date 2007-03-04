@@ -307,7 +307,7 @@ void CL_SendConnectPacket (void)
 		return;
 	}
 	if (adr.port == 0)
-		adr.port = BigShort(PORT_SERVER);
+		adr.port = (unsigned)BigShort(PORT_SERVER);
 
 	port = Cvar_VariableInteger("qport");
 	userinfo_modified = qfalse;
@@ -348,7 +348,7 @@ void CL_CheckForResend (void)
 		return;
 	}
 	if (adr.port == 0)
-		adr.port = BigShort(PORT_SERVER);
+		adr.port = (unsigned)BigShort(PORT_SERVER);
 
 	cls.connect_time = cls.realtime;	/* for retransmit requests */
 
@@ -455,7 +455,7 @@ static void CL_Rcon_f (void)
 			return;
 		}
 		if (to.port == 0)
-			to.port = BigShort(PORT_SERVER);
+			to.port = (unsigned)BigShort(PORT_SERVER);
 	}
 
 	NET_SendPacket(NS_CLIENT, strlen(message) + 1, message, to);
@@ -574,7 +574,7 @@ static void CL_Packet_f (void)
 		return;
 	}
 	if (!adr.port)
-		adr.port = BigShort(PORT_SERVER);
+		adr.port = (unsigned)BigShort(PORT_SERVER);
 
 	in = Cmd_Argv(2);
 	out = send + 4;
@@ -1107,7 +1107,7 @@ void CL_BookmarkListClick_f (void)
 			return;
 		}
 		if (adr.port == 0)
-			adr.port = BigShort(PORT_SERVER);
+			adr.port = (unsigned)BigShort(PORT_SERVER);
 
 		Cvar_Set("mn_server_ip", bookmark);
 		Netchan_OutOfBandPrint(NS_CLIENT, adr, "status %i", PROTOCOL_VERSION);
@@ -1136,7 +1136,7 @@ static void CL_ServerInfo_f (void)
 	}
 
 	if (adr.port == 0)
-		adr.port = BigShort(PORT_SERVER);
+		adr.port = (unsigned)BigShort(PORT_SERVER);
 
 	Netchan_OutOfBandPrint(NS_CLIENT, adr, "status %i", PROTOCOL_VERSION);
 }
@@ -1179,7 +1179,7 @@ static void CL_SelectTeam_Init_f (void)
 		return;
 	}
 	if (!adr.port)
-		adr.port = BigShort(PORT_SERVER);
+		adr.port = (unsigned)BigShort(PORT_SERVER);
 
 	Netchan_OutOfBandPrint(NS_CLIENT, adr, "teaminfo %i", PROTOCOL_VERSION);
 	menuText[TEXT_STANDARD] = _("Select a free team or your coop team");
@@ -1225,13 +1225,13 @@ static void CL_PingServers_f (void)
 
 	if (!noudp->value) {
 		adr.type = NA_BROADCAST;
-		adr.port = BigShort(PORT_SERVER);
+		adr.port = (unsigned)BigShort(PORT_SERVER);
 		Netchan_OutOfBandPrint(NS_CLIENT, adr, "info %i", PROTOCOL_VERSION);
 	}
 
 	if (!noipx->value) {
 		adr.type = NA_BROADCAST_IPX;
-		adr.port = BigShort(PORT_SERVER);
+		adr.port = (unsigned)BigShort(PORT_SERVER);
 		Netchan_OutOfBandPrint(NS_CLIENT, adr, "info %i", PROTOCOL_VERSION);
 	}
 
@@ -1247,7 +1247,7 @@ static void CL_PingServers_f (void)
 		}
 
 		if (!adr.port)
-			adr.port = BigShort(PORT_SERVER);
+			adr.port = (unsigned)BigShort(PORT_SERVER);
 		CL_AddServerToList(&adr, NULL);
 	}
 
@@ -1264,10 +1264,10 @@ static void CL_PingServers_f (void)
 	/* query master server? */
 	/* TODO: Cache this to save bandwidth */
 	if (!noudp->value && (Cmd_Argc() == 2 || Q_strcmp(Cmd_Argv(1), "local"))) {
-		adr.port = masterserver_port->integer;
-		if (NET_StringToAdr (masterserver_ip->string, &adr)) {
+		adr.port = (unsigned)BigShort(masterserver_port->integer);
+		if (NET_StringToAdr(masterserver_ip->string, &adr)) {
 			if (!adr.port)
-				adr.port = BigShort(masterserver_port->integer);
+				adr.port = (unsigned)BigShort(masterserver_port->integer);
 			adr.type = NA_IP;
 			Com_DPrintf("Send master server query request to '%s:%s'\n", masterserver_ip->string, masterserver_port->string);
 			Netchan_OutOfBandPrint (NS_CLIENT, adr, "getservers");

@@ -135,7 +135,7 @@ extern qboolean HOS_HealEmployee (employee_t* employee)
  * @param[in] base The base the employees should become healed
  * @sa HOS_HealEmployee
  */
-extern void HOS_HealAll (const base_t const* base)
+extern void HOS_HealAll (const base_t* const base)
 {
 	int i, type;
 

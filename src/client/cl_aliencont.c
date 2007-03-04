@@ -751,7 +751,7 @@ static void AC_KillOne_f (void)
 {
 	int num, i, step;
 	aliensCont_t *containment = NULL;
-	
+
 	/* Can be called from everywhere. */
 	if (!baseCurrent ||!curCampaign || !aliencontCurrent)
 		return;
@@ -798,11 +798,13 @@ static void AC_KillOne_f (void)
  */
 static void AC_ResearchAlien_f (void)
 {
+	int techidx;
+
 	/* Can be called from everywhere. */
 	if (!baseCurrent ||!curCampaign || !aliencontCurrent)
 		return;
 
-	int techidx = Cvar_VariableInteger("mn_al_techidx");
+	techidx = Cvar_VariableInteger("mn_al_techidx");
 
 	if (!techidx)
 		return;

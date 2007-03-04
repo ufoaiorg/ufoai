@@ -123,7 +123,7 @@ static const int pc_types[PC_NUM_PTLCMDS] = {
 };
 
 /** @brief particle script values */
-static const const value_t pps[] = {
+static const value_t pps[] = {
 	{"image", V_STRING, offsetof(ptl_t, pic)},
 	{"model", V_STRING, offsetof(ptl_t, model)},
 	{"blend", V_BLEND, offsetof(ptl_t, blend)},
@@ -1191,7 +1191,7 @@ void CL_ParsePtlCmds (char *name, char **text)
 						/* get single component */
 						if ((1 << pp->type) & V_VECS) {
 							pc->type = V_FLOAT;
-							pc->ref = -pp->ofs - (token[len - 1] - '1') * sizeof(float);
+							pc->ref = -((int)pp->ofs) - (token[len - 1] - '1') * sizeof(float);
 							break;
 						} else
 							Com_Printf("CL_ParsePtlCmds: can't get components of a non-vector type (particle %s)\n", name);
@@ -1199,7 +1199,7 @@ void CL_ParsePtlCmds (char *name, char **text)
 
 					/* set the values */
 					pc->type = pp->type;
-					pc->ref = -pp->ofs;
+					pc->ref = -((int)pp->ofs);
 					break;
 				}
 
@@ -1252,7 +1252,7 @@ void CL_ParsePtlCmds (char *name, char **text)
 				pc = &ptlCmd[numPtlCmds++];
 				pc->cmd = PC_POP;
 				pc->type = pp->type;
-				pc->ref = -pp->ofs;
+				pc->ref = -((int)pp->ofs);
 				break;
 			}
 

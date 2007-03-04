@@ -48,16 +48,16 @@ extern void SV_SetMaster_f (void)
 	Cvar_Set("public", "1");
 
 	/* do the first slot for all servers */
-	if (!NET_StringToAdr (masterserver_ip->string, &master_adr)) {
+	if (!NET_StringToAdr(masterserver_ip->string, &master_adr))
 		Com_Printf("SV_SetMaster_f: Bad Master IP");
-	}
+
 	if (master_adr.port == 0)
-		master_adr.port = BigShort(masterserver_port->integer);
+		master_adr.port = (unsigned)BigShort(masterserver_port->integer);
 
-	Com_Printf("Master server at %s - sending a ping\n", NET_AdrToString (master_adr));
+	Com_Printf("Master server at %s - sending a ping\n", NET_AdrToString(master_adr));
 
-	Netchan_OutOfBandPrint (NS_SERVER, master_adr, "ping");
-	if (!dedicated->value)
+	Netchan_OutOfBandPrint(NS_SERVER, master_adr, "ping");
+	if (!dedicated->integer)
 		return;
 
 	svs.last_heartbeat = -9999999;

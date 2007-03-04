@@ -154,7 +154,6 @@ extern qboolean Cvar_AssertString (cvar_t * cvar, char **array, int arraySize)
 	int i;
 	char *string;
 
-	assert(string);
 	assert(cvar);
 
 	for (i = 0; i < arraySize; i++) {

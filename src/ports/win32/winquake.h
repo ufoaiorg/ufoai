@@ -27,6 +27,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <shlobj.h>
 #include "../../client/snd_loc.h"
 
+#ifndef DWORD_PTR
+# ifndef _WIN64
+#  define DWORD_PTR DWORD
+# endif
+#endif
+
 #define	WINDOW_STYLE	(WS_OVERLAPPED|WS_BORDER|WS_CAPTION|WS_VISIBLE)
 
 extern	HINSTANCE	global_hInstance;

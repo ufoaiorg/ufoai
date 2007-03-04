@@ -130,7 +130,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define idaxp   0
 #endif
 
+#ifndef byte
 typedef uint8_t byte;
+#endif
 
 #ifndef NULL
 #define NULL ((void *)0)

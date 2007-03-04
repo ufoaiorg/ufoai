@@ -146,9 +146,9 @@ static qboolean SND_InitWav (void)
 		}
 
 		if (MessageBox (NULL,
-				(LPCWSTR)"The sound hardware is in use by another app.\n\n"
+				(LPCTSTR)"The sound hardware is in use by another app.\n\n"
 				"Select Retry to try to start sound again or Cancel to run UFO with no sound.",
-				(LPCWSTR)"Sound not available",
+				(LPCTSTR)"Sound not available",
 				MB_RETRYCANCEL | MB_SETFOREGROUND | MB_ICONEXCLAMATION) != IDRETRY) {
 			si->Com_DPrintf ("hw in use\n" );
 			return qfalse;

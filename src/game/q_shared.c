@@ -3637,14 +3637,14 @@ int Com_ParseValue (void *base, char *token, int type, int ofs)
 
 	case V_RELABS:
 		if (token[0] == '-' || token[0] == '+') {
-			if (abs(atof(token + 1)) <= 2.0f)
+			if (fabs(atof(token + 1)) <= 2.0f)
 				Com_Printf("Com_ParseValue: a V_RELABS (absolute) value should always be bigger than +/-2.0\n");
 			if (token[0] == '-')
 				*(float *) b = atof(token+1) * (-1);
 			else
 				*(float *) b = atof(token+1);
 		} else {
-			if (abs(atof(token)) > 2.0f)
+			if (fabs(atof(token)) > 2.0f)
 				Com_Printf("Com_ParseValue: a V_RELABS (relative) value should only be between 0.00..1 and 2.0\n");
 			*(float *) b = atof(token);
 		}
