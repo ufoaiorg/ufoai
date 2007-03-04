@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Trans.Estonia\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-03-04 09:58+0100\n"
+"POT-Creation-Date: 2007-03-04 16:29+0100\n"
 "PO-Revision-Date: 2006-11-13 05:27+0200\n"
 "Last-Translator: Northen Wolf <semukas@hot.ee>\n"
 "Language-Team: Northen Wolf <semukas@hot.ee>\n"
@@ -87,7 +87,7 @@ msgstr "Hävitaja F-48"
 msgid "Saracen I"
 msgstr ""
 
-#: ../base/ufos/aircraftmanagement.ufo:95 ../base/ufos/research.ufo:1999
+#: ../base/ufos/aircraftmanagement.ufo:95 ../base/ufos/research.ufo:2433
 msgid "UFO - Scout"
 msgstr "Ufo - Luuraja"
 
@@ -95,7 +95,7 @@ msgstr "Ufo - Luuraja"
 msgid "Scout U"
 msgstr ""
 
-#: ../base/ufos/aircraftmanagement.ufo:114 ../base/ufos/research.ufo:2032
+#: ../base/ufos/aircraftmanagement.ufo:114 ../base/ufos/research.ufo:2480
 msgid "UFO - Fighter"
 msgstr "Ufo - Hävitus"
 
@@ -323,12 +323,13 @@ msgid "Alien stealth aircraft sighted"
 msgstr "Hiilija tüüpi UFOt märgatud"
 
 #: ../base/ufos/fonts.ufo:15 ../base/ufos/fonts.ufo:21
-#: ../base/ufos/fonts.ufo:27 ../base/ufos/fonts.ufo:33
+#: ../base/ufos/fonts.ufo:28 ../base/ufos/fonts.ufo:34
+#: ../base/ufos/fonts.ufo:41 ../base/ufos/fonts.ufo:47
 msgid "media/DejaVuSans.ttf"
 msgstr "media/DejaVuSans.ttf"
 
-#: ../base/ufos/fonts.ufo:39 ../base/ufos/fonts.ufo:45
-#: ../base/ufos/fonts.ufo:52
+#: ../base/ufos/fonts.ufo:53 ../base/ufos/fonts.ufo:59
+#: ../base/ufos/fonts.ufo:66
 msgid "media/FreeSans.ttf"
 msgstr "media/FreeSans.ttf"
 
@@ -947,13 +948,15 @@ msgstr "Tagasi"
 
 #: ../base/ufos/menu_campaign.ufo:125 ../base/ufos/menu_irc.ufo:146
 #: ../base/ufos/menu_options.ufo:812 ../base/ufos/menu_production.ufo:109
-#: ../base/ufos/menu_transfer.ufo:164 ../base/ufos/menu_ufopedia.ufo:124
+#: ../base/ufos/menu_transfer.ufo:164 ../base/ufos/menu_ufopedia.ufo:125
+#: ../base/ufos/menu_ufopedia.ufo:155
 msgid "Scroll up (right click to scroll multiple lines)"
 msgstr ""
 
 #: ../base/ufos/menu_campaign.ufo:139 ../base/ufos/menu_irc.ufo:160
 #: ../base/ufos/menu_options.ufo:826 ../base/ufos/menu_production.ufo:123
-#: ../base/ufos/menu_transfer.ufo:178 ../base/ufos/menu_ufopedia.ufo:138
+#: ../base/ufos/menu_transfer.ufo:178 ../base/ufos/menu_ufopedia.ufo:140
+#: ../base/ufos/menu_ufopedia.ufo:170
 msgid "Scroll down (right click to scroll multiple lines)"
 msgstr ""
 
@@ -2541,70 +2544,206 @@ msgstr "laser.txt"
 msgid "laser_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:114
-msgid "Antimatter"
+#: ../base/ufos/research.ufo:107 ../base/ufos/research.ufo:114
+#: ../base/ufos/research.ufo:135 ../base/ufos/research.ufo:142
+#: ../base/ufos/research.ufo:355 ../base/ufos/research.ufo:362
+#: ../base/ufos/research.ufo:385 ../base/ufos/research.ufo:392
+#: ../base/ufos/research.ufo:433 ../base/ufos/research.ufo:440
+#: ../base/ufos/research.ufo:616 ../base/ufos/research.ufo:623
+#: ../base/ufos/research.ufo:667 ../base/ufos/research.ufo:674
+#: ../base/ufos/research.ufo:733 ../base/ufos/research.ufo:740
+#: ../base/ufos/research.ufo:765 ../base/ufos/research.ufo:772
+#: ../base/ufos/research.ufo:814 ../base/ufos/research.ufo:821
+#: ../base/ufos/research.ufo:950 ../base/ufos/research.ufo:957
+#: ../base/ufos/research.ufo:983 ../base/ufos/research.ufo:990
+#: ../base/ufos/research.ufo:1014 ../base/ufos/research.ufo:1021
+#: ../base/ufos/research.ufo:1046 ../base/ufos/research.ufo:1053
+#: ../base/ufos/research.ufo:1077 ../base/ufos/research.ufo:1084
+#: ../base/ufos/research.ufo:1109 ../base/ufos/research.ufo:1116
+#: ../base/ufos/research.ufo:1141 ../base/ufos/research.ufo:1148
+#: ../base/ufos/research.ufo:1174 ../base/ufos/research.ufo:1181
+#: ../base/ufos/research.ufo:1511 ../base/ufos/research.ufo:1518
+#: ../base/ufos/research.ufo:1549 ../base/ufos/research.ufo:1556
+#: ../base/ufos/research.ufo:1582 ../base/ufos/research.ufo:1589
+#: ../base/ufos/research.ufo:1614 ../base/ufos/research.ufo:1621
+#: ../base/ufos/research.ufo:1646 ../base/ufos/research.ufo:1653
+#: ../base/ufos/research.ufo:1679 ../base/ufos/research.ufo:1686
+#: ../base/ufos/research.ufo:1711 ../base/ufos/research.ufo:1718
+#: ../base/ufos/research.ufo:1743 ../base/ufos/research.ufo:1750
+#: ../base/ufos/research.ufo:1776 ../base/ufos/research.ufo:1783
+#: ../base/ufos/research.ufo:2440 ../base/ufos/research.ufo:2447
+#: ../base/ufos/research.ufo:2487 ../base/ufos/research.ufo:2494
+#: ../base/ufos/research.ufo:2529 ../base/ufos/research.ufo:2536
+#: ../base/ufos/research.ufo:2983 ../base/ufos/research.ufo:2990
+msgid "mail_from_paul_navarre"
+msgstr ""
+
+#: ../base/ufos/research.ufo:108 ../base/ufos/research.ufo:115
+#: ../base/ufos/research.ufo:136 ../base/ufos/research.ufo:143
+#: ../base/ufos/research.ufo:195 ../base/ufos/research.ufo:202
+#: ../base/ufos/research.ufo:227 ../base/ufos/research.ufo:234
+#: ../base/ufos/research.ufo:260 ../base/ufos/research.ufo:267
+#: ../base/ufos/research.ufo:290 ../base/ufos/research.ufo:297
+#: ../base/ufos/research.ufo:356 ../base/ufos/research.ufo:363
+#: ../base/ufos/research.ufo:386 ../base/ufos/research.ufo:393
+#: ../base/ufos/research.ufo:434 ../base/ufos/research.ufo:441
+#: ../base/ufos/research.ufo:617 ../base/ufos/research.ufo:624
+#: ../base/ufos/research.ufo:668 ../base/ufos/research.ufo:675
+#: ../base/ufos/research.ufo:734 ../base/ufos/research.ufo:741
+#: ../base/ufos/research.ufo:766 ../base/ufos/research.ufo:773
+#: ../base/ufos/research.ufo:815 ../base/ufos/research.ufo:822
+#: ../base/ufos/research.ufo:951 ../base/ufos/research.ufo:958
+#: ../base/ufos/research.ufo:984 ../base/ufos/research.ufo:991
+#: ../base/ufos/research.ufo:1015 ../base/ufos/research.ufo:1022
+#: ../base/ufos/research.ufo:1047 ../base/ufos/research.ufo:1054
+#: ../base/ufos/research.ufo:1078 ../base/ufos/research.ufo:1085
+#: ../base/ufos/research.ufo:1110 ../base/ufos/research.ufo:1117
+#: ../base/ufos/research.ufo:1142 ../base/ufos/research.ufo:1149
+#: ../base/ufos/research.ufo:1175 ../base/ufos/research.ufo:1182
+#: ../base/ufos/research.ufo:1512 ../base/ufos/research.ufo:1519
+#: ../base/ufos/research.ufo:1550 ../base/ufos/research.ufo:1557
+#: ../base/ufos/research.ufo:1583 ../base/ufos/research.ufo:1590
+#: ../base/ufos/research.ufo:1615 ../base/ufos/research.ufo:1622
+#: ../base/ufos/research.ufo:1647 ../base/ufos/research.ufo:1654
+#: ../base/ufos/research.ufo:1680 ../base/ufos/research.ufo:1687
+#: ../base/ufos/research.ufo:1712 ../base/ufos/research.ufo:1719
+#: ../base/ufos/research.ufo:1744 ../base/ufos/research.ufo:1751
+#: ../base/ufos/research.ufo:1777 ../base/ufos/research.ufo:1784
+#: ../base/ufos/research.ufo:2441 ../base/ufos/research.ufo:2448
+#: ../base/ufos/research.ufo:2488 ../base/ufos/research.ufo:2495
+#: ../base/ufos/research.ufo:2530 ../base/ufos/research.ufo:2537
+#: ../base/ufos/research.ufo:2590 ../base/ufos/research.ufo:2597
+#: ../base/ufos/research.ufo:2625 ../base/ufos/research.ufo:2632
+#: ../base/ufos/research.ufo:2661 ../base/ufos/research.ufo:2668
+#: ../base/ufos/research.ufo:2695 ../base/ufos/research.ufo:2702
+#: ../base/ufos/research.ufo:2984 ../base/ufos/research.ufo:2991
+#: ../base/ufos/research.ufo:3111
+msgid "mail_to_base_commander"
+msgstr ""
+
+#: ../base/ufos/research.ufo:109
+msgid "Proposal: Continuous Wave Laser Operation"
 msgstr ""
 
 #: ../base/ufos/research.ufo:116
+msgid "Re: Continuous Wave Laser Operation"
+msgstr ""
+
+#: ../base/ufos/research.ufo:128
+msgid "Antimatter"
+msgstr ""
+
+#: ../base/ufos/research.ufo:130
 #, fuzzy
 msgid "antimatter_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:117
+#: ../base/ufos/research.ufo:131
 #, fuzzy
 msgid "antimatter_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:159
+#: ../base/ufos/research.ufo:137
+msgid "Proposal: Antimatter"
+msgstr ""
+
+#: ../base/ufos/research.ufo:144
+#, fuzzy
+msgid "Re: Antimatter"
+msgstr "<TODO>"
+
+#: ../base/ufos/research.ufo:187
 #, fuzzy
 msgid "Live Alien"
 msgstr "Tulnukas"
 
-#: ../base/ufos/research.ufo:161
+#: ../base/ufos/research.ufo:189
 #, fuzzy
 msgid "alien_live_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:162
+#: ../base/ufos/research.ufo:190
 #, fuzzy
 msgid "alien_live_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:176
+#: ../base/ufos/research.ufo:194 ../base/ufos/research.ufo:201
+#: ../base/ufos/research.ufo:226 ../base/ufos/research.ufo:233
+#: ../base/ufos/research.ufo:259 ../base/ufos/research.ufo:266
+#: ../base/ufos/research.ufo:289 ../base/ufos/research.ufo:296
+#: ../base/ufos/research.ufo:2589 ../base/ufos/research.ufo:2596
+#: ../base/ufos/research.ufo:2624 ../base/ufos/research.ufo:2631
+#: ../base/ufos/research.ufo:2660 ../base/ufos/research.ufo:2667
+#: ../base/ufos/research.ufo:2694 ../base/ufos/research.ufo:2701
+#: ../base/ufos/research.ufo:3110
+msgid "mail_from_dr_connor"
+msgstr ""
+
+#: ../base/ufos/research.ufo:196
+#, fuzzy
+msgid "Proposal: Live Alien"
+msgstr "Tulnukas"
+
+#: ../base/ufos/research.ufo:203
+#, fuzzy
+msgid "Re: Live Alien"
+msgstr "Tulnukas"
+
+#: ../base/ufos/research.ufo:219
 #, fuzzy
 msgid "Alien Breathing Apparatus"
 msgstr "Tulnukate tegevus"
 
-#: ../base/ufos/research.ufo:178
+#: ../base/ufos/research.ufo:221
 #, fuzzy
 msgid "alien_breathing_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:179
+#: ../base/ufos/research.ufo:222
 #, fuzzy
 msgid "alien_breathing_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:194
+#: ../base/ufos/research.ufo:228
+#, fuzzy
+msgid "Proposal: Alien Breathing Apparatus"
+msgstr "Tulnukate tegevus"
+
+#: ../base/ufos/research.ufo:235
+#, fuzzy
+msgid "Re: Alien Breathing Apparatus"
+msgstr "Tulnukate tegevus"
+
+#: ../base/ufos/research.ufo:252
 #, fuzzy
 msgid "The Alien Mind"
 msgstr "Alla tulistatud Tulnukate laev"
 
-#: ../base/ufos/research.ufo:196
+#: ../base/ufos/research.ufo:254
 #, fuzzy
 msgid "alien_mind_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:197
+#: ../base/ufos/research.ufo:255
 #, fuzzy
 msgid "alien_mind_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:212
+#: ../base/ufos/research.ufo:261
+#, fuzzy
+msgid "Proposal: The Alien Mind"
+msgstr "Alla tulistatud Tulnukate laev"
+
+#: ../base/ufos/research.ufo:268
+#, fuzzy
+msgid "Re: The Alien Mind"
+msgstr "Alla tulistatud Tulnukate laev"
+
+#: ../base/ufos/research.ufo:282
 msgid "Odd Behaviour"
 msgstr ""
 
-#: ../base/ufos/research.ufo:214
+#: ../base/ufos/research.ufo:284
 #, fuzzy
 msgid "alien_odd_behaviour_txt"
 msgstr ""
@@ -2615,7 +2754,7 @@ msgstr ""
 "kehakaitseta. Energiarünnakud kanduvad järiest edasi mööda silindreid, "
 "aeglaselt vähendades plasma relva jõud nii, et sõdur seda peaaegu ei tunnegi."
 
-#: ../base/ufos/research.ufo:215
+#: ../base/ufos/research.ufo:285
 #, fuzzy
 msgid "alien_odd_behaviour_pre_txt"
 msgstr ""
@@ -2626,7 +2765,15 @@ msgstr ""
 "kehakaitseta. Energiarünnakud kanduvad järiest edasi mööda silindreid, "
 "aeglaselt vähendades plasma relva jõud nii, et sõdur seda peaaegu ei tunnegi."
 
-#: ../base/ufos/research.ufo:233
+#: ../base/ufos/research.ufo:291
+msgid "Proposal: Odd Behaviour"
+msgstr ""
+
+#: ../base/ufos/research.ufo:298
+msgid "Re: Odd Behaviour"
+msgstr ""
+
+#: ../base/ufos/research.ufo:317
 msgid "assault_txt"
 msgstr ""
 "AR-80 on enim levinud relv Phalanxi vägedes. Kasutades erilisi kuule ja "
@@ -2637,7 +2784,7 @@ msgstr ""
 "tõmmates vana välja ja pannes uue asemele. Kogu protsess võta aega ainult "
 "natuke üle minuti."
 
-#: ../base/ufos/research.ufo:249
+#: ../base/ufos/research.ufo:333
 #, fuzzy
 msgid "assault_mag_txt"
 msgstr ""
@@ -2649,7 +2796,7 @@ msgstr ""
 "tõmmates vana välja ja pannes uue asemele. Kogu protsess võta aega ainult "
 "natuke üle minuti."
 
-#: ../base/ufos/research.ufo:266 ../base/ufos/research.ufo:282
+#: ../base/ufos/research.ufo:350 ../base/ufos/research.ufo:380
 msgid "bolterrifle_txt"
 msgstr ""
 "MkII Elektromagnet püss laseb välja väga suure võimsusega, väikse "
@@ -2659,7 +2806,7 @@ msgstr ""
 "Laskude vahel on märgatav taaslaadimis aeg mis tõttu on täiest automaatne "
 "valang võimatu. Kuigi saab lasta mitu lasku tihedalt järiest. "
 
-#: ../base/ufos/research.ufo:267 ../base/ufos/research.ufo:283
+#: ../base/ufos/research.ufo:351 ../base/ufos/research.ufo:381
 #, fuzzy
 msgid "bolterrifle_pre_txt"
 msgstr ""
@@ -2670,7 +2817,15 @@ msgstr ""
 "Laskude vahel on märgatav taaslaadimis aeg mis tõttu on täiest automaatne "
 "valang võimatu. Kuigi saab lasta mitu lasku tihedalt järiest. "
 
-#: ../base/ufos/research.ufo:299
+#: ../base/ufos/research.ufo:357 ../base/ufos/research.ufo:387
+msgid "Proposal: Electromagnetic Rifle"
+msgstr ""
+
+#: ../base/ufos/research.ufo:364 ../base/ufos/research.ufo:394
+msgid "Re: Electromagnetic Rifle"
+msgstr ""
+
+#: ../base/ufos/research.ufo:411
 #, fuzzy
 msgid "combatknife_txt"
 msgstr ""
@@ -2678,7 +2833,7 @@ msgstr ""
 "sina avasid ukse või saab seda visata. Nagu ka püstoleid saab 2 nuga korraga "
 "kanda."
 
-#: ../base/ufos/research.ufo:316
+#: ../base/ufos/research.ufo:428
 #, fuzzy
 msgid "monoknife_txt"
 msgstr ""
@@ -2686,7 +2841,7 @@ msgstr ""
 "sina avasid ukse või saab seda visata. Nagu ka püstoleid saab 2 nuga korraga "
 "kanda."
 
-#: ../base/ufos/research.ufo:317
+#: ../base/ufos/research.ufo:429
 #, fuzzy
 msgid "monoknife_pre_txt"
 msgstr ""
@@ -2694,7 +2849,20 @@ msgstr ""
 "sina avasid ukse või saab seda visata. Nagu ka püstoleid saab 2 nuga korraga "
 "kanda."
 
-#: ../base/ufos/research.ufo:335
+#: ../base/ufos/research.ufo:435
+msgid "Proposal: Monomolecular Blades"
+msgstr ""
+
+#: ../base/ufos/research.ufo:442
+#, fuzzy
+msgid "Re: Monomolecular Blades"
+msgstr ""
+"See lähivõitluse relv on kujunenud väga kasulikuks lähivõitluses, kuna iga "
+"üks kes selle Plasmalmõõga tera puutudab saab tohutuid põletushaavu. "
+"Tavaliselt ei suuda vaenlane pärast ühte lööki enam edasi võidelda. "
+"Miinuseks on selle relva väike ulatus."
+
+#: ../base/ufos/research.ufo:461
 msgid "flamer_txt"
 msgstr ""
 "FT-207 leegiheitja on üks uuemaid lisasid Phalanxi relvade poolel. Eelmised "
@@ -2702,7 +2870,7 @@ msgstr ""
 "ülitäpse gaaside väljalaske süsteemiga mis ei sütita põlema ümbritesevaid "
 "alasid, vaid ainult ala mida sihitakse."
 
-#: ../base/ufos/research.ufo:351
+#: ../base/ufos/research.ufo:477
 #, fuzzy
 msgid "flamer_mag_txt"
 msgstr ""
@@ -2711,7 +2879,7 @@ msgstr ""
 "ülitäpse gaaside väljalaske süsteemiga mis ei sütita põlema ümbritesevaid "
 "alasid, vaid ainult ala mida sihitakse."
 
-#: ../base/ufos/research.ufo:368
+#: ../base/ufos/research.ufo:494
 #, fuzzy
 msgid "flashbang_txt"
 msgstr ""
@@ -2722,7 +2890,7 @@ msgstr ""
 "mõista enamust plasma tehnoloogiaga seotud tehnoloogiat. Kui me saaksime "
 "uurida nende relvade tehnoloogiat, saame me varsti sarnast varustust toota."
 
-#: ../base/ufos/research.ufo:384
+#: ../base/ufos/research.ufo:510
 #, fuzzy
 msgid "fraggren_txt"
 msgstr ""
@@ -2732,25 +2900,25 @@ msgstr ""
 "2 et sinu järgmise käigu alguses jne. Ajastatud granaate võib ülesse korjata "
 "ja edasi visata."
 
-#: ../base/ufos/research.ufo:401
+#: ../base/ufos/research.ufo:527
 #, fuzzy
 msgid "incgren_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:418
+#: ../base/ufos/research.ufo:544
 msgid "grenl_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:434
+#: ../base/ufos/research.ufo:560
 msgid "grenl_ammo_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:451
+#: ../base/ufos/research.ufo:577
 #, fuzzy
 msgid "grenl_fle_ammo_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:468
+#: ../base/ufos/research.ufo:594
 #, fuzzy
 msgid "grenl_incendiary_ammo_txt"
 msgstr ""
@@ -2762,52 +2930,79 @@ msgstr ""
 "on RL-1056 piiratud väärtus sest seda tuleb enamasti kasutada lukustamata "
 "sihtmärkidel, kuna lukustamiseks pole aega."
 
-#: ../base/ufos/research.ufo:485
+#: ../base/ufos/research.ufo:611
 #, fuzzy
 msgid "grenl_plasma_ammo_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:486
+#: ../base/ufos/research.ufo:612
 #, fuzzy
 msgid "grenl_plasma_ammo_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:505
+#: ../base/ufos/research.ufo:618
+msgid "Proposal: Plasma And The Grenade Launcher"
+msgstr ""
+
+#: ../base/ufos/research.ufo:625
+msgid "Re: Re: Plasma And The Grenade Launcher"
+msgstr ""
+
+#: ../base/ufos/research.ufo:645
 #, fuzzy
 msgid "laser_ammo_txt"
 msgstr "laser.txt"
 
-#: ../base/ufos/research.ufo:506
+#: ../base/ufos/research.ufo:646
 #, fuzzy
 msgid "laser_ammo_pre_txt"
 msgstr "laser.txt"
 
-#: ../base/ufos/research.ufo:522
+#: ../base/ufos/research.ufo:662
 #, fuzzy
 msgid "heavylaser_txt"
 msgstr "laser.txt"
 
-#: ../base/ufos/research.ufo:523
+#: ../base/ufos/research.ufo:663
 #, fuzzy
 msgid "heavylaser_pre_txt"
 msgstr "laser.txt"
 
-#: ../base/ufos/research.ufo:558
+#: ../base/ufos/research.ufo:669
+#, fuzzy
+msgid "Proposal: Heavy Laser"
+msgstr "Kahur-Laser"
+
+#: ../base/ufos/research.ufo:676
+#, fuzzy
+msgid "Re: Heavy Laser"
+msgstr "Kahur-Laser"
+
+#: ../base/ufos/research.ufo:712
 msgid "irgoggles_txt"
 msgstr ""
 "Need prillid lubavad sõduril näha soojusallikaid isegi läbi 1m paksuse "
 "seina, kahjuks ei ole õpitud veel eristama tulnukate soojust inimest omast. "
 
-#: ../base/ufos/research.ufo:574
+#: ../base/ufos/research.ufo:728
 msgid "kerrblade_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:575
+#: ../base/ufos/research.ufo:729
 #, fuzzy
 msgid "kerrblade_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:592
+#: ../base/ufos/research.ufo:735
+msgid "Proposal: Alien Artifact -- Kerrblade"
+msgstr ""
+
+#: ../base/ufos/research.ufo:742
+#, fuzzy
+msgid "Re: Alien Artifact -- Kerrblade"
+msgstr "Tulnukate tegevus"
+
+#: ../base/ufos/research.ufo:760
 msgid "laserpistol_txt"
 msgstr ""
 "Kasutades väiksemat ja vähem võimsat versiooni \"YAG laser reaktorist\"\\ on "
@@ -2816,7 +3011,7 @@ msgstr ""
 "tavaline püstol. Nagu ka püstolit, võib proffesionaal ka 2 laser püstolit "
 "korraga tulistada."
 
-#: ../base/ufos/research.ufo:593
+#: ../base/ufos/research.ufo:761
 #, fuzzy
 msgid "laserpistol_pre_txt"
 msgstr ""
@@ -2826,27 +3021,47 @@ msgstr ""
 "tavaline püstol. Nagu ka püstolit, võib proffesionaal ka 2 laser püstolit "
 "korraga tulistada."
 
-#: ../base/ufos/research.ufo:627
+#: ../base/ufos/research.ufo:767
+#, fuzzy
+msgid "Proposal: Laser Pistol"
+msgstr "Laser püstol LAS-10"
+
+#: ../base/ufos/research.ufo:774
+#, fuzzy
+msgid "Re: Laser Pistol"
+msgstr "Laser püstol LAS-10"
+
+#: ../base/ufos/research.ufo:809
 msgid "laserrifle_txt"
 msgstr ""
 "Nagu ka AR-80 on LA-24 effektiivne keskmisel kaugusel. See teeb rohkem kahju "
 "kui AR-80 ja on täpsem tänu vähendatud tagasilöögile."
 
-#: ../base/ufos/research.ufo:628
+#: ../base/ufos/research.ufo:810
 #, fuzzy
 msgid "laserrifle_pre_txt"
 msgstr ""
 "Nagu ka AR-80 on LA-24 effektiivne keskmisel kaugusel. See teeb rohkem kahju "
 "kui AR-80 ja on täpsem tänu vähendatud tagasilöögile."
 
-#: ../base/ufos/research.ufo:663
+#: ../base/ufos/research.ufo:816
+#, fuzzy
+msgid "Proposal: Laser Rifle"
+msgstr "Laser automaat LAS-24"
+
+#: ../base/ufos/research.ufo:823
+#, fuzzy
+msgid "Re: Laser Rifle"
+msgstr "Laser automaat LAS-24"
+
+#: ../base/ufos/research.ufo:859
 msgid "medikit_txt"
 msgstr ""
 "Pakk erinevaid arstivahendeid alustades skapellidest lõpedades "
 "valuvaigistitega. Arstipakk suudab parandada haavad või väheamalt peatada "
 "sõdurite haavade laienemise ja sõdurite suremise."
 
-#: ../base/ufos/research.ufo:679
+#: ../base/ufos/research.ufo:875
 msgid "pistol_txt"
 msgstr ""
 "P-95 on enim levinud Phalanxi abi relv. Selle relva lihtne disain teeb selle "
@@ -2857,7 +3072,7 @@ msgstr ""
 "täpne ka keskmisel kaugusel. P-95 saab tulistada kiiresti aga AR-80 "
 "automaadile jääb ta alla jõus. "
 
-#: ../base/ufos/research.ufo:696
+#: ../base/ufos/research.ufo:892
 #, fuzzy
 msgid "pistol_mag_txt"
 msgstr ""
@@ -2869,7 +3084,7 @@ msgstr ""
 "täpne ka keskmisel kaugusel. P-95 saab tulistada kiiresti aga AR-80 "
 "automaadile jääb ta alla jõus. "
 
-#: ../base/ufos/research.ufo:714
+#: ../base/ufos/research.ufo:910
 #, fuzzy
 msgid "pistol2_txt"
 msgstr ""
@@ -2881,7 +3096,7 @@ msgstr ""
 "täpne ka keskmisel kaugusel. P-95 saab tulistada kiiresti aga AR-80 "
 "automaadile jääb ta alla jõus. "
 
-#: ../base/ufos/research.ufo:731
+#: ../base/ufos/research.ufo:927
 #, fuzzy
 msgid "pistol2_mag_txt"
 msgstr ""
@@ -2893,7 +3108,7 @@ msgstr ""
 "täpne ka keskmisel kaugusel. P-95 saab tulistada kiiresti aga AR-80 "
 "automaadile jääb ta alla jõus. "
 
-#: ../base/ufos/research.ufo:749 ../base/ufos/research.ufo:768
+#: ../base/ufos/research.ufo:945 ../base/ufos/research.ufo:978
 #, fuzzy
 msgid "plasatomizer_txt"
 msgstr ""
@@ -2904,7 +3119,7 @@ msgstr ""
 "põletushaavu, tekitab plasma kahur tohutud põletushaavad mis enamasti "
 "savaadgi surmavaks. "
 
-#: ../base/ufos/research.ufo:750 ../base/ufos/research.ufo:769
+#: ../base/ufos/research.ufo:946 ../base/ufos/research.ufo:979
 #, fuzzy
 msgid "plasatomizer_pre_txt"
 msgstr ""
@@ -2915,7 +3130,16 @@ msgstr ""
 "põletushaavu, tekitab plasma kahur tohutud põletushaavad mis enamasti "
 "savaadgi surmavaks. "
 
-#: ../base/ufos/research.ufo:785 ../base/ufos/research.ufo:803
+#: ../base/ufos/research.ufo:952 ../base/ufos/research.ufo:985
+msgid "Proposal: Alien Artifact -- Plasma Pistol"
+msgstr ""
+
+#: ../base/ufos/research.ufo:959 ../base/ufos/research.ufo:992
+#, fuzzy
+msgid "Re: Alien Artifact -- Plasma Pistol"
+msgstr "Tulnukate tegevus"
+
+#: ../base/ufos/research.ufo:1009 ../base/ufos/research.ufo:1041
 msgid "plasblaster_txt"
 msgstr ""
 "Seda plasmarelva kasutatakse kõige enam osavate tulnukate sõdalaste poolt. "
@@ -2925,7 +3149,7 @@ msgstr ""
 "põletushaavu, tekitab plasma kahur tohutud põletushaavad mis enamasti "
 "savaadgi surmavaks. "
 
-#: ../base/ufos/research.ufo:786 ../base/ufos/research.ufo:804
+#: ../base/ufos/research.ufo:1010 ../base/ufos/research.ufo:1042
 #, fuzzy
 msgid "plasblaster_pre_txt"
 msgstr ""
@@ -2936,7 +3160,15 @@ msgstr ""
 "põletushaavu, tekitab plasma kahur tohutud põletushaavad mis enamasti "
 "savaadgi surmavaks. "
 
-#: ../base/ufos/research.ufo:820
+#: ../base/ufos/research.ufo:1016 ../base/ufos/research.ufo:1048
+msgid "Proposal: Alien Artifact -- Plasma Blaster"
+msgstr ""
+
+#: ../base/ufos/research.ufo:1023 ../base/ufos/research.ufo:1055
+msgid "Re: Alien Artifact -- Plasma Blaster"
+msgstr ""
+
+#: ../base/ufos/research.ufo:1072
 msgid "plasblade_txt"
 msgstr ""
 "See lähivõitluse relv on kujunenud väga kasulikuks lähivõitluses, kuna iga "
@@ -2944,7 +3176,7 @@ msgstr ""
 "Tavaliselt ei suuda vaenlane pärast ühte lööki enam edasi võidelda. "
 "Miinuseks on selle relva väike ulatus."
 
-#: ../base/ufos/research.ufo:821
+#: ../base/ufos/research.ufo:1073
 #, fuzzy
 msgid "plasblade_pre_txt"
 msgstr ""
@@ -2953,7 +3185,16 @@ msgstr ""
 "Tavaliselt ei suuda vaenlane pärast ühte lööki enam edasi võidelda. "
 "Miinuseks on selle relva väike ulatus."
 
-#: ../base/ufos/research.ufo:838
+#: ../base/ufos/research.ufo:1079
+msgid "Proposal: Alien Artifact -- Plasma Blade"
+msgstr ""
+
+#: ../base/ufos/research.ufo:1086
+#, fuzzy
+msgid "Re: Alien Artifact -- Plasma Blade"
+msgstr "Tulnukate tegevus"
+
+#: ../base/ufos/research.ufo:1104
 #, fuzzy
 msgid "plasmagren_txt"
 msgstr ""
@@ -2964,7 +3205,7 @@ msgstr ""
 "mõista enamust plasma tehnoloogiaga seotud tehnoloogiat. Kui me saaksime "
 "uurida nende relvade tehnoloogiat, saame me varsti sarnast varustust toota."
 
-#: ../base/ufos/research.ufo:839
+#: ../base/ufos/research.ufo:1105
 #, fuzzy
 msgid "plasmagren_pre_txt"
 msgstr ""
@@ -2975,7 +3216,15 @@ msgstr ""
 "mõista enamust plasma tehnoloogiaga seotud tehnoloogiat. Kui me saaksime "
 "uurida nende relvade tehnoloogiat, saame me varsti sarnast varustust toota."
 
-#: ../base/ufos/research.ufo:856 ../base/ufos/research.ufo:875
+#: ../base/ufos/research.ufo:1111
+msgid "Proposal: Alien Artifact -- Plasma Grenade"
+msgstr ""
+
+#: ../base/ufos/research.ufo:1118
+msgid "Re: Alien Artifact -- Plasma Grenade"
+msgstr ""
+
+#: ../base/ufos/research.ufo:1136 ../base/ufos/research.ufo:1169
 msgid "plasrifle_txt"
 msgstr ""
 "Kasutades sama tehnoloogiat mida plasmapüssgi, suudab plasma püstol teha "
@@ -2983,7 +3232,7 @@ msgstr ""
 "tugevat kahju teha kuna plasma hulk on piiratud, sellegi poolest suudab "
 "plasma püstol tulistada läbi 5cm paksuse teras plaadi."
 
-#: ../base/ufos/research.ufo:857 ../base/ufos/research.ufo:876
+#: ../base/ufos/research.ufo:1137 ../base/ufos/research.ufo:1170
 #, fuzzy
 msgid "plasrifle_pre_txt"
 msgstr ""
@@ -2992,7 +3241,16 @@ msgstr ""
 "tugevat kahju teha kuna plasma hulk on piiratud, sellegi poolest suudab "
 "plasma püstol tulistada läbi 5cm paksuse teras plaadi."
 
-#: ../base/ufos/research.ufo:892
+#: ../base/ufos/research.ufo:1143 ../base/ufos/research.ufo:1176
+msgid "Proposal: Alien Artifact -- Plasma Rifle"
+msgstr ""
+
+#: ../base/ufos/research.ufo:1150 ../base/ufos/research.ufo:1183
+#, fuzzy
+msgid "Re: Alien Artifact -- Plasma Rifle"
+msgstr "Tulnukate tegevus"
+
+#: ../base/ufos/research.ufo:1200
 msgid "rpg_txt"
 msgstr ""
 "RL-1056 eelkäiad olid Stingeri raketid. Phalanxi teadlased ja insenärid "
@@ -3003,7 +3261,7 @@ msgstr ""
 "on RL-1056 piiratud väärtus sest seda tuleb enamasti kasutada lukustamata "
 "sihtmärkidel, kuna lukustamiseks pole aega."
 
-#: ../base/ufos/research.ufo:909
+#: ../base/ufos/research.ufo:1217
 msgid "rpg_ammo_txt"
 msgstr ""
 "RL-1056 eelkäiad olid Stingeri raketid. Phalanxi teadlased ja insenärid "
@@ -3014,7 +3272,7 @@ msgstr ""
 "on RL-1056 piiratud väärtus sest seda tuleb enamasti kasutada lukustamata "
 "sihtmärkidel, kuna lukustamiseks pole aega."
 
-#: ../base/ufos/research.ufo:927
+#: ../base/ufos/research.ufo:1235
 #, fuzzy
 msgid "rpg_incendiary_ammo_txt"
 msgstr ""
@@ -3026,7 +3284,7 @@ msgstr ""
 "on RL-1056 piiratud väärtus sest seda tuleb enamasti kasutada lukustamata "
 "sihtmärkidel, kuna lukustamiseks pole aega."
 
-#: ../base/ufos/research.ufo:946
+#: ../base/ufos/research.ufo:1254
 #, fuzzy
 msgid "chaingun_txt"
 msgstr ""
@@ -3038,7 +3296,7 @@ msgstr ""
 "kehakaitsetega vastaste vastu. SG-260 on väge hea relv väikses ruumis ja "
 "lähivõitluses näiteks: majas."
 
-#: ../base/ufos/research.ufo:947
+#: ../base/ufos/research.ufo:1255
 #, fuzzy
 msgid "chaingun_pre_txt"
 msgstr ""
@@ -3049,17 +3307,17 @@ msgstr ""
 "ühedavad baasi maapinnaga., seega on see nõrk koht baasi kaitses ja kõige "
 "tõenäolisemalt rünnatakse just sealt baasi baasi rünnaku ajal.  "
 
-#: ../base/ufos/research.ufo:964
+#: ../base/ufos/research.ufo:1272
 #, fuzzy
 msgid "chaingun_ammo_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:965
+#: ../base/ufos/research.ufo:1273
 #, fuzzy
 msgid "chaingun_ammo_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:983
+#: ../base/ufos/research.ufo:1291
 msgid "shotgun_txt"
 msgstr ""
 "Phalanxi väed kasutavad SG-260 juba pikka aega. Võrreldes tavaliste "
@@ -3070,7 +3328,7 @@ msgstr ""
 "kehakaitsetega vastaste vastu. SG-260 on väge hea relv väikses ruumis ja "
 "lähivõitluses näiteks: majas."
 
-#: ../base/ufos/research.ufo:1002
+#: ../base/ufos/research.ufo:1310
 #, fuzzy
 msgid "shotgun_ammo_txt"
 msgstr ""
@@ -3082,7 +3340,7 @@ msgstr ""
 "kehakaitsetega vastaste vastu. SG-260 on väge hea relv väikses ruumis ja "
 "lähivõitluses näiteks: majas."
 
-#: ../base/ufos/research.ufo:1021
+#: ../base/ufos/research.ufo:1329
 #, fuzzy
 msgid "shotgun2_txt"
 msgstr ""
@@ -3094,7 +3352,7 @@ msgstr ""
 "kehakaitsetega vastaste vastu. SG-260 on väge hea relv väikses ruumis ja "
 "lähivõitluses näiteks: majas."
 
-#: ../base/ufos/research.ufo:1057
+#: ../base/ufos/research.ufo:1365
 #, fuzzy
 msgid "shotgun2_slug_ammo_txt"
 msgstr ""
@@ -3106,7 +3364,7 @@ msgstr ""
 "kehakaitsetega vastaste vastu. SG-260 on väge hea relv väikses ruumis ja "
 "lähivõitluses näiteks: majas."
 
-#: ../base/ufos/research.ufo:1075
+#: ../base/ufos/research.ufo:1383
 #, fuzzy
 msgid "shotgun_micro_txt"
 msgstr ""
@@ -3118,7 +3376,7 @@ msgstr ""
 "kehakaitsetega vastaste vastu. SG-260 on väge hea relv väikses ruumis ja "
 "lähivõitluses näiteks: majas."
 
-#: ../base/ufos/research.ufo:1092
+#: ../base/ufos/research.ufo:1400
 #, fuzzy
 msgid "shotgun_micro_ammo_txt"
 msgstr ""
@@ -3130,7 +3388,7 @@ msgstr ""
 "kehakaitsetega vastaste vastu. SG-260 on väge hea relv väikses ruumis ja "
 "lähivõitluses näiteks: majas."
 
-#: ../base/ufos/research.ufo:1110
+#: ../base/ufos/research.ufo:1418
 msgid "smg_txt"
 msgstr ""
 "Võrreldes AR-80 automaadiga suudab SMG-68 tulistada rohkem kuule korraga, "
@@ -3139,7 +3397,7 @@ msgstr ""
 "vähendad tagasilööki, kasutatakse arenenud gaaside väljalaske süsteemi. SMG-"
 "68 on ebatäpne, isegi keskmisel kaugusel aga ideaalne lähedal võitluses."
 
-#: ../base/ufos/research.ufo:1127
+#: ../base/ufos/research.ufo:1435
 #, fuzzy
 msgid "smg_mag_txt"
 msgstr ""
@@ -3149,7 +3407,7 @@ msgstr ""
 "vähendad tagasilööki, kasutatakse arenenud gaaside väljalaske süsteemi. SMG-"
 "68 on ebatäpne, isegi keskmisel kaugusel aga ideaalne lähedal võitluses."
 
-#: ../base/ufos/research.ufo:1145
+#: ../base/ufos/research.ufo:1453
 #, fuzzy
 msgid "smokegren_txt"
 msgstr ""
@@ -3160,7 +3418,7 @@ msgstr ""
 "mõista enamust plasma tehnoloogiaga seotud tehnoloogiat. Kui me saaksime "
 "uurida nende relvade tehnoloogiat, saame me varsti sarnast varustust toota."
 
-#: ../base/ufos/research.ufo:1162
+#: ../base/ufos/research.ufo:1470
 msgid "sniper_txt"
 msgstr ""
 "Kasutades tugevat ja mehaanilist sihikut on uus snaiper püss kõige surmavam "
@@ -3168,7 +3426,7 @@ msgstr ""
 "petoon seina 200 m kauguselt lastuna. Aga kuna relv on väga kohmakas, võtab "
 "sellega sihtimine kaua aega. Seega ei sobi WE-78 kindlasti lähivõitlusesse."
 
-#: ../base/ufos/research.ufo:1179
+#: ../base/ufos/research.ufo:1487
 #, fuzzy
 msgid "sniper_mag_txt"
 msgstr ""
@@ -3177,7 +3435,7 @@ msgstr ""
 "petoon seina 200 m kauguselt lastuna. Aga kuna relv on väga kohmakas, võtab "
 "sellega sihtimine kaua aega. Seega ei sobi WE-78 kindlasti lähivõitlusesse."
 
-#: ../base/ufos/research.ufo:1198
+#: ../base/ufos/research.ufo:1506
 #, fuzzy
 msgid "stungren_txt"
 msgstr ""
@@ -3186,7 +3444,7 @@ msgstr ""
 "pool selles, et Elektripiits on mitu korda effektiivsem kui uimastamise "
 "granaadid."
 
-#: ../base/ufos/research.ufo:1199
+#: ../base/ufos/research.ufo:1507
 #, fuzzy
 msgid "stungren_pre_txt"
 msgstr ""
@@ -3195,7 +3453,17 @@ msgstr ""
 "pool selles, et Elektripiits on mitu korda effektiivsem kui uimastamise "
 "granaadid."
 
-#: ../base/ufos/research.ufo:1222
+#: ../base/ufos/research.ufo:1513
+#, fuzzy
+msgid "Proposal: Anti-Alien Gas"
+msgstr "Tulnukas"
+
+#: ../base/ufos/research.ufo:1520
+#, fuzzy
+msgid "Re: Anti-Alien Gas"
+msgstr "Tulnukas"
+
+#: ../base/ufos/research.ufo:1544
 msgid "stunrod_txt"
 msgstr ""
 "Kergesti kasutatav, tugeva uinutiga ja uimastitega-elektripiitsa on kerge "
@@ -3203,7 +3471,7 @@ msgstr ""
 "pool selles, et Elektripiits on mitu korda effektiivsem kui uimastamise "
 "granaadid."
 
-#: ../base/ufos/research.ufo:1223
+#: ../base/ufos/research.ufo:1545
 #, fuzzy
 msgid "stunrod_pre_txt"
 msgstr ""
@@ -3212,7 +3480,17 @@ msgstr ""
 "pool selles, et Elektripiits on mitu korda effektiivsem kui uimastamise "
 "granaadid."
 
-#: ../base/ufos/research.ufo:1241
+#: ../base/ufos/research.ufo:1551
+#, fuzzy
+msgid "Proposal: Stun Rod"
+msgstr "Elektri piits"
+
+#: ../base/ufos/research.ufo:1558
+#, fuzzy
+msgid "Re: Stun Rod"
+msgstr "Elektri piits"
+
+#: ../base/ufos/research.ufo:1577
 #, fuzzy
 msgid "pbeampistol_txt"
 msgstr ""
@@ -3224,7 +3502,7 @@ msgstr ""
 "täpne ka keskmisel kaugusel. P-95 saab tulistada kiiresti aga AR-80 "
 "automaadile jääb ta alla jõus. "
 
-#: ../base/ufos/research.ufo:1242
+#: ../base/ufos/research.ufo:1578
 #, fuzzy
 msgid "pbeampistol_pre_txt"
 msgstr ""
@@ -3236,8 +3514,17 @@ msgstr ""
 "täpne ka keskmisel kaugusel. P-95 saab tulistada kiiresti aga AR-80 "
 "automaadile jääb ta alla jõus. "
 
-#: ../base/ufos/research.ufo:1259 ../base/ufos/research.ufo:1296
-#: ../base/ufos/research.ufo:1332
+#: ../base/ufos/research.ufo:1584 ../base/ufos/research.ufo:1616
+msgid "Proposal: Alien Artifact -- Particle Beam Pistol"
+msgstr ""
+
+#: ../base/ufos/research.ufo:1591 ../base/ufos/research.ufo:1623
+#, fuzzy
+msgid "Re: Alien Artifact -- Particle Beam Pistol"
+msgstr "Plasma Automaat"
+
+#: ../base/ufos/research.ufo:1609 ../base/ufos/research.ufo:1674
+#: ../base/ufos/research.ufo:1738
 #, fuzzy
 msgid "pbeamammo_txt"
 msgstr ""
@@ -3249,8 +3536,8 @@ msgstr ""
 "on RL-1056 piiratud väärtus sest seda tuleb enamasti kasutada lukustamata "
 "sihtmärkidel, kuna lukustamiseks pole aega."
 
-#: ../base/ufos/research.ufo:1260 ../base/ufos/research.ufo:1297
-#: ../base/ufos/research.ufo:1333
+#: ../base/ufos/research.ufo:1610 ../base/ufos/research.ufo:1675
+#: ../base/ufos/research.ufo:1739
 #, fuzzy
 msgid "pbeamammo_pre_txt"
 msgstr ""
@@ -3262,7 +3549,7 @@ msgstr ""
 "on RL-1056 piiratud väärtus sest seda tuleb enamasti kasutada lukustamata "
 "sihtmärkidel, kuna lukustamiseks pole aega."
 
-#: ../base/ufos/research.ufo:1277
+#: ../base/ufos/research.ufo:1641
 #, fuzzy
 msgid "pbeamcannon_txt"
 msgstr ""
@@ -3273,7 +3560,7 @@ msgstr ""
 "mõista enamust plasma tehnoloogiaga seotud tehnoloogiat. Kui me saaksime "
 "uurida nende relvade tehnoloogiat, saame me varsti sarnast varustust toota."
 
-#: ../base/ufos/research.ufo:1278
+#: ../base/ufos/research.ufo:1642
 #, fuzzy
 msgid "pbeamcannon_pre_txt"
 msgstr ""
@@ -3284,7 +3571,15 @@ msgstr ""
 "mõista enamust plasma tehnoloogiaga seotud tehnoloogiat. Kui me saaksime "
 "uurida nende relvade tehnoloogiat, saame me varsti sarnast varustust toota."
 
-#: ../base/ufos/research.ufo:1314
+#: ../base/ufos/research.ufo:1648 ../base/ufos/research.ufo:1681
+msgid "Proposal: Alien Artifact -- Particle Beam Cannon"
+msgstr ""
+
+#: ../base/ufos/research.ufo:1655 ../base/ufos/research.ufo:1688
+msgid "Re: Alien Artifact -- Particle Beam Cannon"
+msgstr ""
+
+#: ../base/ufos/research.ufo:1706
 #, fuzzy
 msgid "pbeamrifle_txt"
 msgstr ""
@@ -3293,7 +3588,7 @@ msgstr ""
 "tugevat kahju teha kuna plasma hulk on piiratud, sellegi poolest suudab "
 "plasma püstol tulistada läbi 5cm paksuse teras plaadi."
 
-#: ../base/ufos/research.ufo:1315
+#: ../base/ufos/research.ufo:1707
 #, fuzzy
 msgid "pbeamrifle_pre_txt"
 msgstr ""
@@ -3302,7 +3597,16 @@ msgstr ""
 "tugevat kahju teha kuna plasma hulk on piiratud, sellegi poolest suudab "
 "plasma püstol tulistada läbi 5cm paksuse teras plaadi."
 
-#: ../base/ufos/research.ufo:1351
+#: ../base/ufos/research.ufo:1713 ../base/ufos/research.ufo:1745
+msgid "Proposal: Alien Artifact -- Particle Beam Rifle"
+msgstr ""
+
+#: ../base/ufos/research.ufo:1720 ../base/ufos/research.ufo:1752
+#, fuzzy
+msgid "Re: Alien Artifact -- Particle Beam Rifle"
+msgstr "Plasma Automaat"
+
+#: ../base/ufos/research.ufo:1771
 #, fuzzy
 msgid "pbeam_ammo_txt"
 msgstr ""
@@ -3314,7 +3618,7 @@ msgstr ""
 "on RL-1056 piiratud väärtus sest seda tuleb enamasti kasutada lukustamata "
 "sihtmärkidel, kuna lukustamiseks pole aega."
 
-#: ../base/ufos/research.ufo:1352
+#: ../base/ufos/research.ufo:1772
 #, fuzzy
 msgid "pbeam_ammo_pre_txt"
 msgstr ""
@@ -3326,7 +3630,15 @@ msgstr ""
 "on RL-1056 piiratud väärtus sest seda tuleb enamasti kasutada lukustamata "
 "sihtmärkidel, kuna lukustamiseks pole aega."
 
-#: ../base/ufos/research.ufo:1373
+#: ../base/ufos/research.ufo:1778
+msgid "Proposal: Man-Portable Particle Beams"
+msgstr ""
+
+#: ../base/ufos/research.ufo:1785
+msgid "Re: Man-Portable Particle Beams"
+msgstr ""
+
+#: ../base/ufos/research.ufo:1807
 #, fuzzy
 msgid "combat_armor_txt"
 msgstr ""
@@ -3337,12 +3649,12 @@ msgstr ""
 "kehakaitseta. Energiarünnakud kanduvad järiest edasi mööda silindreid, "
 "aeglaselt vähendades plasma relva jõud nii, et sõdur seda peaaegu ei tunnegi."
 
-#: ../base/ufos/research.ufo:1387
+#: ../base/ufos/research.ufo:1821
 #, fuzzy
 msgid "nano_armor_txt"
 msgstr "<TODO<"
 
-#: ../base/ufos/research.ufo:1388
+#: ../base/ufos/research.ufo:1822
 #, fuzzy
 msgid "nano_armor_pre_txt"
 msgstr ""
@@ -3352,7 +3664,7 @@ msgstr ""
 "paranda relvade ja kehakaitsete tugevus,t vaid teeb neid ka kergemaks ja "
 "kuumakindlamaks kui seni tuntud materiaalid."
 
-#: ../base/ufos/research.ufo:1403
+#: ../base/ufos/research.ufo:1837
 #, fuzzy
 msgid "alien_body_armour_txt"
 msgstr ""
@@ -3363,7 +3675,7 @@ msgstr ""
 "kehakaitseta. Energiarünnakud kanduvad järiest edasi mööda silindreid, "
 "aeglaselt vähendades plasma relva jõud nii, et sõdur seda peaaegu ei tunnegi."
 
-#: ../base/ufos/research.ufo:1404
+#: ../base/ufos/research.ufo:1838
 #, fuzzy
 msgid "alien_body_armour_pre_txt"
 msgstr ""
@@ -3374,76 +3686,76 @@ msgstr ""
 "kehakaitseta. Energiarünnakud kanduvad järiest edasi mööda silindreid, "
 "aeglaselt vähendades plasma relva jõud nii, et sõdur seda peaaegu ei tunnegi."
 
-#: ../base/ufos/research.ufo:1453
+#: ../base/ufos/research.ufo:1887
 msgid "Blast Damage Type"
 msgstr "Blast Damage Type"
 
-#: ../base/ufos/research.ufo:1465
+#: ../base/ufos/research.ufo:1899
 msgid "Fire Damage Type"
 msgstr "Tule tüüpi kahju"
 
-#: ../base/ufos/research.ufo:1477
+#: ../base/ufos/research.ufo:1911
 msgid "Laser Damage Type"
 msgstr "Laser tüüpi kahju"
 
-#: ../base/ufos/research.ufo:1493
+#: ../base/ufos/research.ufo:1927
 msgid "Impact Damage Type"
 msgstr "Kokkupõrke kahju tüüp"
 
-#: ../base/ufos/research.ufo:1505 ../base/ufos/research.ufo:1536
+#: ../base/ufos/research.ufo:1939 ../base/ufos/research.ufo:1970
 msgid "Shock Damage Type"
 msgstr "Shock Damage Type"
 
-#: ../base/ufos/research.ufo:1517
+#: ../base/ufos/research.ufo:1951
 msgid "Plasma Damage Type"
 msgstr "Plasma kahju"
 
-#: ../base/ufos/research.ufo:1548
+#: ../base/ufos/research.ufo:1982
 msgid "Stun Damage Type"
 msgstr "Paralüseerimis tüüpi kahju"
 
-#: ../base/ufos/research.ufo:1560
+#: ../base/ufos/research.ufo:1994
 #, fuzzy
 msgid "Particle Beam Damage Type"
 msgstr "Plasma kahju"
 
-#: ../base/ufos/research.ufo:1577
+#: ../base/ufos/research.ufo:2011
 msgid "Accuracy Attribute"
 msgstr "Täpsus"
 
-#: ../base/ufos/research.ufo:1589
+#: ../base/ufos/research.ufo:2023
 msgid "Assault Guns Proficiency"
 msgstr "Ründe relvade oskus"
 
-#: ../base/ufos/research.ufo:1601
+#: ../base/ufos/research.ufo:2035
 msgid "Close Combat Proficiency"
 msgstr "Lähivõitlususe oskus"
 
-#: ../base/ufos/research.ufo:1613
+#: ../base/ufos/research.ufo:2047
 msgid "High-Explosives Proficiency"
 msgstr "Raske lõhkeaine oskus"
 
-#: ../base/ufos/research.ufo:1625
+#: ../base/ufos/research.ufo:2059
 msgid "Heavy Weapons Proficiency"
 msgstr "Raske relvade oskus"
 
-#: ../base/ufos/research.ufo:1637
+#: ../base/ufos/research.ufo:2071
 msgid "Mind Attribute"
 msgstr "Mõttejõud"
 
-#: ../base/ufos/research.ufo:1649
+#: ../base/ufos/research.ufo:2083
 msgid "Power Attribute"
 msgstr "Jõud"
 
-#: ../base/ufos/research.ufo:1661
+#: ../base/ufos/research.ufo:2095
 msgid "Sniper Rifles Proficiency"
 msgstr "Snaiper püsside oskus"
 
-#: ../base/ufos/research.ufo:1673
+#: ../base/ufos/research.ufo:2107
 msgid "Speed Attribute"
 msgstr "Kiirus"
 
-#: ../base/ufos/research.ufo:1689
+#: ../base/ufos/research.ufo:2123
 #, fuzzy
 msgid "b_aliencontainment_txt"
 msgstr ""
@@ -3456,7 +3768,7 @@ msgstr ""
 "ikkagi nõrgaks kohaks baasi kaitsel. Kui tulnukad peaksid baasi ründama "
 "sisenevad nad kindlasti siit."
 
-#: ../base/ufos/research.ufo:1705
+#: ../base/ufos/research.ufo:2139
 #, fuzzy
 msgid "b_command_txt"
 msgstr ""
@@ -3465,7 +3777,7 @@ msgstr ""
 "keskuseta ei saa ükski baas töötada, kui sa ehitad uue baasi siis ehita "
 "kindlasti juhtimis keskus muidu baas ei saa töötada."
 
-#: ../base/ufos/research.ufo:1721
+#: ../base/ufos/research.ufo:2155
 msgid "b_entrance_txt"
 msgstr ""
 "See on personali sissekäik Phalanxi baasi. See on põhiliselt lift mis sõidab "
@@ -3477,7 +3789,7 @@ msgstr ""
 "ikkagi nõrgaks kohaks baasi kaitsel. Kui tulnukad peaksid baasi ründama "
 "sisenevad nad kindlasti siit."
 
-#: ../base/ufos/research.ufo:1733
+#: ../base/ufos/research.ufo:2167
 #, fuzzy
 msgid "b_large_hangar_txt"
 msgstr ""
@@ -3488,7 +3800,7 @@ msgstr ""
 "ühedavad baasi maapinnaga., seega on see nõrk koht baasi kaitses ja kõige "
 "tõenäolisemalt rünnatakse just sealt baasi baasi rünnaku ajal.  "
 
-#: ../base/ufos/research.ufo:1749
+#: ../base/ufos/research.ufo:2183
 #, fuzzy
 msgid "b_hospital_txt"
 msgstr ""
@@ -3500,7 +3812,7 @@ msgstr ""
 "täpne ka keskmisel kaugusel. P-95 saab tulistada kiiresti aga AR-80 "
 "automaadile jääb ta alla jõus. "
 
-#: ../base/ufos/research.ufo:1765
+#: ../base/ufos/research.ufo:2199
 #, fuzzy
 msgid "b_small_hangar_txt"
 msgstr ""
@@ -3511,7 +3823,7 @@ msgstr ""
 "ühedavad baasi maapinnaga., seega on see nõrk koht baasi kaitses ja kõige "
 "tõenäolisemalt rünnatakse just sealt baasi baasi rünnaku ajal.  "
 
-#: ../base/ufos/research.ufo:1781
+#: ../base/ufos/research.ufo:2215
 msgid "b_lab_txt"
 msgstr ""
 "Labor on koht kus katsetatakse, uuritakse nii relvi, tulnukaid ja nende "
@@ -3520,14 +3832,14 @@ msgstr ""
 "laborit, et baasis elada, ei saa nad ilma laborita töötada. Iga labor annab "
 "töökoha 10 le teadlasele"
 
-#: ../base/ufos/research.ufo:1797
+#: ../base/ufos/research.ufo:2231
 msgid "b_powerplant_txt"
 msgstr ""
 "Jõujaam varustab baasi energiaga. Ilma energiata enamus baasi ehitisi ei "
 "suuda töötada. Selle pärast on jõujaam eluliselt vajalik ja seda üritatakse "
 "kindlasti hävitada kui vastased peaksid baasi ründama"
 
-#: ../base/ufos/research.ufo:1813
+#: ../base/ufos/research.ufo:2247
 msgid "b_quarters_txt"
 msgstr ""
 "Eluruumid on mõeldud Phalanxi töötajatele elamiseks. Nii sõdurid, teadlased "
@@ -3536,7 +3848,7 @@ msgstr ""
 "Lisaks on eluruumid koht kus töötajad saavad suhelda ja puhata. Iga eluruum "
 "pakub elukohta 20le inimesele."
 
-#: ../base/ufos/research.ufo:1829
+#: ../base/ufos/research.ufo:2263
 msgid "b_radar_txt"
 msgstr ""
 "Radar tähendab tegelikult ruumi koos erinevate UFO avastus seadmetega. "
@@ -3544,17 +3856,17 @@ msgstr ""
 "ufod 25 sekundi täpsusega, lubades juhtimis keskusle saata välja UFOde ründe "
 "missioone või evakueerida baas Baasi rünnaku ohu korral."
 
-#: ../base/ufos/research.ufo:1845
+#: ../base/ufos/research.ufo:2279
 msgid "b_storage_txt"
 msgstr ""
 "See ehitis on varustuse ja varuosade hoidmiseks. Iga hoidla suudab hoida 50 "
 "objekti. "
 
-#: ../base/ufos/research.ufo:1861
+#: ../base/ufos/research.ufo:2295
 msgid "b_teamroom_txt"
 msgstr "<unknow> scrapped or renamed"
 
-#: ../base/ufos/research.ufo:1877
+#: ../base/ufos/research.ufo:2311
 #, fuzzy
 msgid "b_small_ufo_hangar_txt"
 msgstr ""
@@ -3564,7 +3876,7 @@ msgstr ""
 "sõdurite abiga seega pole see Phalanxi mure. UFO hangaar pakub kohta igale "
 "ufole kuni transport UFO klassini."
 
-#: ../base/ufos/research.ufo:1893
+#: ../base/ufos/research.ufo:2327
 #, fuzzy
 msgid "b_large_ufo_hangar_txt"
 msgstr ""
@@ -3574,7 +3886,7 @@ msgstr ""
 "sõdurite abiga seega pole see Phalanxi mure. UFO hangaar pakub kohta igale "
 "ufole kuni transport UFO klassini."
 
-#: ../base/ufos/research.ufo:1909
+#: ../base/ufos/research.ufo:2343
 #, fuzzy
 msgid "b_workshop_txt"
 msgstr ""
@@ -3587,7 +3899,7 @@ msgstr ""
 "H-92 suurimaks miinuseks on vähene relvastus. Sellepärast ongi välja "
 "töötatud hävitajad(F-48), mis katavad H-92 kui ta maandub, et rünnata UFOt."
 
-#: ../base/ufos/research.ufo:1928
+#: ../base/ufos/research.ufo:2362
 msgid "dropship_txt"
 msgstr ""
 "Transpordi laeva tüüp koodnimega H-92 on üks põhilisi transpordi vahendeid "
@@ -3599,7 +3911,7 @@ msgstr ""
 "H-92 suurimaks miinuseks on vähene relvastus. Sellepärast ongi välja "
 "töötatud hävitajad(F-48), mis katavad H-92 kui ta maandub, et rünnata UFOt."
 
-#: ../base/ufos/research.ufo:1943
+#: ../base/ufos/research.ufo:2377
 msgid "interceptor_txt"
 msgstr ""
 "F-48 hävitaja on Phalanxi õhuväe au ja uhkus. Saades energiat kahest Volkot "
@@ -3611,7 +3923,7 @@ msgstr ""
 "maaaluse maandumise ja stardi paigani. See on kõige kindlam viis kuidas "
 "varjata lennuvälja maapinnalt avastamise vastu. "
 
-#: ../base/ufos/research.ufo:1958
+#: ../base/ufos/research.ufo:2392
 #, fuzzy
 msgid "saracen_interceptor_txt"
 msgstr ""
@@ -3624,62 +3936,92 @@ msgstr ""
 "maaaluse maandumise ja stardi paigani. See on kõige kindlam viis kuidas "
 "varjata lennuvälja maapinnalt avastamise vastu. "
 
-#: ../base/ufos/research.ufo:2000
+#: ../base/ufos/research.ufo:2434
 #, fuzzy
 msgid "ufo_scout_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2001
+#: ../base/ufos/research.ufo:2435
 #, fuzzy
 msgid "ufo_scout_pre_txt"
 msgstr ""
 "See ehitis on varustuse ja varuosade hoidmiseks. Iga hoidla suudab hoida 50 "
 "objekti. "
 
-#: ../base/ufos/research.ufo:2033
+#: ../base/ufos/research.ufo:2442
+#, fuzzy
+msgid "UFO -- Scout"
+msgstr "Ufo - Luuraja"
+
+#: ../base/ufos/research.ufo:2449
+#, fuzzy
+msgid "Re: UFO -- Scout"
+msgstr "Ufo - Luuraja"
+
+#: ../base/ufos/research.ufo:2481
 #, fuzzy
 msgid "ufo_fighter_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2034
+#: ../base/ufos/research.ufo:2482
 #, fuzzy
 msgid "ufo_fighter_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2060
+#: ../base/ufos/research.ufo:2489
+#, fuzzy
+msgid "UFO -- Fighter"
+msgstr "Ufo - Hävitus"
+
+#: ../base/ufos/research.ufo:2496
+#, fuzzy
+msgid "Re: UFO -- Fighter"
+msgstr "Ufo - Hävitus"
+
+#: ../base/ufos/research.ufo:2522
 #, fuzzy
 msgid "UFO - Harvester"
 msgstr "Ufo - Hävitus"
 
-#: ../base/ufos/research.ufo:2061
+#: ../base/ufos/research.ufo:2523
 #, fuzzy
 msgid "ufo_harvester_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2062
+#: ../base/ufos/research.ufo:2524
 #, fuzzy
 msgid "ufo_harvester_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2088
+#: ../base/ufos/research.ufo:2531
+#, fuzzy
+msgid "UFO -- Harvester"
+msgstr "Ufo - Hävitus"
+
+#: ../base/ufos/research.ufo:2538
+#, fuzzy
+msgid "Re: UFO -- Harvester"
+msgstr "Ufo - Hävitus"
+
+#: ../base/ufos/research.ufo:2564
 msgid "Live Specimen - Bloodspider"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2089
+#: ../base/ufos/research.ufo:2565
 #, fuzzy
 msgid "bloodspider_notes_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2090
+#: ../base/ufos/research.ufo:2566
 #, fuzzy
 msgid "bloodspider_notes_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2106
+#: ../base/ufos/research.ufo:2582
 msgid "Alien Autopsy - Bloodspider"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2107
+#: ../base/ufos/research.ufo:2583
 #, fuzzy
 msgid "bloodspider_autopsy_txt"
 msgstr ""
@@ -3690,7 +4032,7 @@ msgstr ""
 "kergelt jahtida igat saaki, aga kuna tema aju pole kaitstud ei naha ega "
 "luude poolt on Shevaar nõrk nii psionic rünnakule kui ka lähivõitluses."
 
-#: ../base/ufos/research.ufo:2108
+#: ../base/ufos/research.ufo:2584
 #, fuzzy
 msgid "bloodspider_autopsy_pre_txt"
 msgstr ""
@@ -3701,11 +4043,19 @@ msgstr ""
 "kergelt jahtida igat saaki, aga kuna tema aju pole kaitstud ei naha ega "
 "luude poolt on Shevaar nõrk nii psionic rünnakule kui ka lähivõitluses."
 
-#: ../base/ufos/research.ufo:2127
+#: ../base/ufos/research.ufo:2591
+msgid "Proposal: Alien Autopsy -- Bloodspider"
+msgstr ""
+
+#: ../base/ufos/research.ufo:2598
+msgid "Re: Alien Autopsy -- Bloodspider"
+msgstr ""
+
+#: ../base/ufos/research.ufo:2617
 msgid "Alien Autopsy - Ortnok"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2128
+#: ../base/ufos/research.ufo:2618
 msgid "ortnok_autopsy_txt"
 msgstr ""
 "Rohelin nahk on soomuseline ja tugev, rakuanalüüsid näitavad, et kehas on "
@@ -3716,7 +4066,7 @@ msgstr ""
 "töötades isegi kuni 14 tundi pärast ortnoki surma.Sellepärast kasutavadgi "
 "Antareanid neid kauhrilihana kõikides kohtades mida nad tahavd valitseda."
 
-#: ../base/ufos/research.ufo:2129
+#: ../base/ufos/research.ufo:2619
 #, fuzzy
 msgid "ortnok_autopsy_pre_txt"
 msgstr ""
@@ -3728,24 +4078,40 @@ msgstr ""
 "töötades isegi kuni 14 tundi pärast ortnoki surma.Sellepärast kasutavadgi "
 "Antareanid neid kauhrilihana kõikides kohtades mida nad tahavd valitseda."
 
-#: ../base/ufos/research.ufo:2149
+#: ../base/ufos/research.ufo:2626
+msgid "Proposal: Alien Autopsy -- Ortnok"
+msgstr ""
+
+#: ../base/ufos/research.ufo:2633
+msgid "Re: Alien Autopsy -- Ortnok"
+msgstr ""
+
+#: ../base/ufos/research.ufo:2653
 msgid "Alien Autopsy - Taman"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2150
+#: ../base/ufos/research.ufo:2654
 msgid "taman_autopsy_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2151
+#: ../base/ufos/research.ufo:2655
 #, fuzzy
 msgid "taman_autopsy_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2169
+#: ../base/ufos/research.ufo:2662
+msgid "Proposal: Alien Autopsy -- Taman"
+msgstr ""
+
+#: ../base/ufos/research.ufo:2669
+msgid "Re: Alien Autopsy -- Taman"
+msgstr ""
+
+#: ../base/ufos/research.ufo:2687
 msgid "Alien Autopsy - Shevaar"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2170
+#: ../base/ufos/research.ufo:2688
 msgid "shevaar_autopsy_txt"
 msgstr ""
 "Tugev ja muskliline keha toetub suurele, sirgel skelettile andes sellel "
@@ -3755,7 +4121,7 @@ msgstr ""
 "kergelt jahtida igat saaki, aga kuna tema aju pole kaitstud ei naha ega "
 "luude poolt on Shevaar nõrk nii psionic rünnakule kui ka lähivõitluses."
 
-#: ../base/ufos/research.ufo:2171
+#: ../base/ufos/research.ufo:2689
 #, fuzzy
 msgid "shevaar_autopsy_pre_txt"
 msgstr ""
@@ -3766,194 +4132,212 @@ msgstr ""
 "kergelt jahtida igat saaki, aga kuna tema aju pole kaitstud ei naha ega "
 "luude poolt on Shevaar nõrk nii psionic rünnakule kui ka lähivõitluses."
 
-#: ../base/ufos/research.ufo:2243
+#: ../base/ufos/research.ufo:2696
+msgid "Proposal: Alien Autopsy -- Shevaar"
+msgstr ""
+
+#: ../base/ufos/research.ufo:2703
+msgid "Re: Alien Autopsy -- Shevaar"
+msgstr ""
+
+#: ../base/ufos/research.ufo:2775
 #, fuzzy
 msgid "Phoenix UGV"
 msgstr "Phoenix"
 
-#: ../base/ufos/research.ufo:2244
+#: ../base/ufos/research.ufo:2776
 msgid "ugv_phoenix_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2245
+#: ../base/ufos/research.ufo:2777
 #, fuzzy
 msgid "ugv_phoenix_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2259
+#: ../base/ufos/research.ufo:2791
 #, fuzzy
 msgid "Triax UGV"
 msgstr "Triax"
 
-#: ../base/ufos/research.ufo:2260
+#: ../base/ufos/research.ufo:2792
 msgid "ugv_triax_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2261
+#: ../base/ufos/research.ufo:2793
 #, fuzzy
 msgid "ugv_triax_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2279
+#: ../base/ufos/research.ufo:2811
 msgid "'Raven' ECM Unit"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2281
+#: ../base/ufos/research.ufo:2813
 #, fuzzy
 msgid "craft_electronics_raven_txt"
 msgstr "craft_weapon_flac_txt"
 
-#: ../base/ufos/research.ufo:2295
+#: ../base/ufos/research.ufo:2827
 msgid "Polymer Aircraft Armour"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2297
+#: ../base/ufos/research.ufo:2829
 #, fuzzy
 msgid "craft_shield_light_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2311
+#: ../base/ufos/research.ufo:2843
 msgid "SHIVA Rotary Cannon"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2313
+#: ../base/ufos/research.ufo:2845
 #, fuzzy
 msgid "craft_weapon_shiva_txt"
 msgstr "craft_weapon_flac_txt"
 
-#: ../base/ufos/research.ufo:2327
+#: ../base/ufos/research.ufo:2859
 msgid "SHIVA 20mm API Rounds"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2329
+#: ../base/ufos/research.ufo:2861
 #, fuzzy
 msgid "craft_ammo_shiva_1_txt"
 msgstr "craft_weapon_flac_txt"
 
-#: ../base/ufos/research.ufo:2346
+#: ../base/ufos/research.ufo:2878
 msgid "SHIVA 20mm HEI Rounds"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2348
+#: ../base/ufos/research.ufo:2880
 #, fuzzy
 msgid "craft_ammo_shiva_2_txt"
 msgstr "craft_weapon_flac_txt"
 
-#: ../base/ufos/research.ufo:2365
+#: ../base/ufos/research.ufo:2897
 msgid "'Sparrowhawk' AA Missile Rack"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2367
+#: ../base/ufos/research.ufo:2899
 #, fuzzy
 msgid "craft_weapon_sparrowhawk_txt"
 msgstr "craft_weapon_flac_txt"
 
-#: ../base/ufos/research.ufo:2381
+#: ../base/ufos/research.ufo:2913
 msgid "'Sparrowhawk' Missile"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2383
+#: ../base/ufos/research.ufo:2915
 #, fuzzy
 msgid "craft_ammo_sparrowhawk_txt"
 msgstr "craft_weapon_flac_txt"
 
-#: ../base/ufos/research.ufo:2400
+#: ../base/ufos/research.ufo:2932
 msgid "TR-20 Rocket Pod"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2402
+#: ../base/ufos/research.ufo:2934
 #, fuzzy
 msgid "craft_weapon_tr20_txt"
 msgstr "craft_weapon_flac_txt"
 
-#: ../base/ufos/research.ufo:2416
+#: ../base/ufos/research.ufo:2948
 #, fuzzy
 msgid "TR-20 Rocket"
 msgstr "Suurejõulise lõhkeainega raketid"
 
-#: ../base/ufos/research.ufo:2418
+#: ../base/ufos/research.ufo:2950
 #, fuzzy
 msgid "craft_ammo_tr20_txt"
 msgstr "craft_weapon_flac_txt"
 
-#: ../base/ufos/research.ufo:2443
+#: ../base/ufos/research.ufo:2975
 msgid "Particle Beam Weapon"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2444
+#: ../base/ufos/research.ufo:2976
 #, fuzzy
 msgid "craft_weapon_particle_beam_pre_txt"
 msgstr "craft_weapon_flac_txt"
 
-#: ../base/ufos/research.ufo:2445
+#: ../base/ufos/research.ufo:2977
 #, fuzzy
 msgid "craft_weapon_particle_beam_txt"
 msgstr "craft_weapon_flac_txt"
 
-#: ../base/ufos/research.ufo:2467
+#: ../base/ufos/research.ufo:2985
+#, fuzzy
+msgid "Proposal: Particle Beam Weapon"
+msgstr "Plasma Automaat"
+
+#: ../base/ufos/research.ufo:2992
+#, fuzzy
+msgid "Re: Particle Beam Weapon"
+msgstr "Plasma Automaat"
+
+#: ../base/ufos/research.ufo:3013
 msgid "Targeting Computer"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2469
+#: ../base/ufos/research.ufo:3015
 #, fuzzy
 msgid "craft_electronics_targeting_txt"
 msgstr "craft_weapon_flac_txt"
 
-#: ../base/ufos/research.ufo:2483
+#: ../base/ufos/research.ufo:3029
 msgid "Fuel Pod"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2485
+#: ../base/ufos/research.ufo:3031
 #, fuzzy
 msgid "craft_electronics_fuelpod_txt"
 msgstr "craft_weapon_flac_txt"
 
-#: ../base/ufos/research.ufo:2503
+#: ../base/ufos/research.ufo:3049
 #, fuzzy
 msgid "Alien Materials"
 msgstr "Tulnukate tegevus"
 
-#: ../base/ufos/research.ufo:2504
+#: ../base/ufos/research.ufo:3050
 #, fuzzy
 msgid "alienmaterials_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2505
+#: ../base/ufos/research.ufo:3051
 #, fuzzy
 msgid "alienmaterials_pre_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2525
+#: ../base/ufos/research.ufo:3071
 #, fuzzy
 msgid "Political Situation Before The Invasion"
 msgstr "Poolitiline olukord enne kallaletungi"
 
-#: ../base/ufos/research.ufo:2526
+#: ../base/ufos/research.ufo:3072
 msgid "news_initial_political_situation_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2536
+#: ../base/ufos/research.ufo:3082
 #, fuzzy
 msgid "After The War"
 msgstr "Pärast sõda"
 
-#: ../base/ufos/research.ufo:2537
+#: ../base/ufos/research.ufo:3083
 msgid "news_after_the_war_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2547
+#: ../base/ufos/research.ufo:3093
 msgid "PHALANX And The Mumbai Aftermath"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2548
+#: ../base/ufos/research.ufo:3094
 msgid "news_phalanx_and_mumbai_aftermath_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2558
+#: ../base/ufos/research.ufo:3104 ../base/ufos/research.ufo:3112
 msgid "A New Twist"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2559
+#: ../base/ufos/research.ufo:3105
 #, fuzzy
 msgid "news_newtwist_txt"
 msgstr "<TODO>"
@@ -6326,7 +6710,7 @@ msgstr "Ehita labor enne"
 msgid "Research of %s finished\n"
 msgstr "%s uurimine lõpetatud\n"
 
-#: client/cl_research.c:1407
+#: client/cl_research.c:1420
 msgid "No description available."
 msgstr "Ei ole infot selle asja kohta"
 
@@ -6817,15 +7201,24 @@ msgstr "Kütus:\t%i\n"
 msgid "Equipment:\t%s\n"
 msgstr "Relvasta"
 
-#: client/cl_ufopedia.c:406
+#: client/cl_ufopedia.c:363
+#, c-format
+msgid ""
+"FROM: %s\n"
+"TO: %s\n"
+"DATE: %s\n"
+"SUBJECT: %s\n"
+msgstr ""
+
+#: client/cl_ufopedia.c:448
 msgid "No pre-research description available."
 msgstr "Ei ole uuritud infot selle eseme kohta"
 
-#: client/cl_ufopedia.c:564
+#: client/cl_ufopedia.c:607
 msgid "Ufopedia Content"
 msgstr "Ufopedia sisu"
 
-#: client/cl_ufopedia.c:619
+#: client/cl_ufopedia.c:662
 #, fuzzy, c-format
 msgid "Ufopedia Index: %s"
 msgstr "Ufopedia sisu"
@@ -6978,14 +7371,6 @@ msgstr ""
 
 #~ msgid "Edit name of the soldier"
 #~ msgstr "Muuda sõduri nime"
-
-#, fuzzy
-#~ msgid "monomolecular_blades_pre_txt"
-#~ msgstr ""
-#~ "See lähivõitluse relv on kujunenud väga kasulikuks lähivõitluses, kuna "
-#~ "iga üks kes selle Plasmalmõõga tera puutudab saab tohutuid põletushaavu. "
-#~ "Tavaliselt ei suuda vaenlane pärast ühte lööki enam edasi võidelda. "
-#~ "Miinuseks on selle relva väike ulatus."
 
 #, fuzzy
 #~ msgid "Aimed Burst"
@@ -7304,10 +7689,6 @@ msgstr ""
 
 #~ msgid "Advanced Laser Technology"
 #~ msgstr "Arenenud Laser tehnoloogja"
-
-#, fuzzy
-#~ msgid "Anti-Alien Gas"
-#~ msgstr "Tulnukas"
 
 #, fuzzy
 #~ msgid "anti_alien_gas_txt"

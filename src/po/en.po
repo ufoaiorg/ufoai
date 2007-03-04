@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-03-04 09:58+0100\n"
-"PO-Revision-Date: 2007-03-04 09:59+0100\n"
+"POT-Creation-Date: 2007-03-04 16:29+0100\n"
+"PO-Revision-Date: 2007-03-04 16:31+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -98,7 +98,7 @@ msgid "Saracen I"
 msgstr "Saracen I"
 
 #: ../base/ufos/aircraftmanagement.ufo:95
-#: ../base/ufos/research.ufo:1999
+#: ../base/ufos/research.ufo:2433
 msgid "UFO - Scout"
 msgstr "UFO - Scout"
 
@@ -107,7 +107,7 @@ msgid "Scout U"
 msgstr "Scout U"
 
 #: ../base/ufos/aircraftmanagement.ufo:114
-#: ../base/ufos/research.ufo:2032
+#: ../base/ufos/research.ufo:2480
 msgid "UFO - Fighter"
 msgstr "UFO - Fighter"
 
@@ -335,14 +335,16 @@ msgstr "Alien stealth aircraft sighted"
 
 #: ../base/ufos/fonts.ufo:15
 #: ../base/ufos/fonts.ufo:21
-#: ../base/ufos/fonts.ufo:27
-#: ../base/ufos/fonts.ufo:33
+#: ../base/ufos/fonts.ufo:28
+#: ../base/ufos/fonts.ufo:34
+#: ../base/ufos/fonts.ufo:41
+#: ../base/ufos/fonts.ufo:47
 msgid "media/DejaVuSans.ttf"
 msgstr "media/DejaVuSans.ttf"
 
-#: ../base/ufos/fonts.ufo:39
-#: ../base/ufos/fonts.ufo:45
-#: ../base/ufos/fonts.ufo:52
+#: ../base/ufos/fonts.ufo:53
+#: ../base/ufos/fonts.ufo:59
+#: ../base/ufos/fonts.ufo:66
 msgid "media/FreeSans.ttf"
 msgstr "media/FreeSans.ttf"
 
@@ -1095,7 +1097,8 @@ msgstr "Back"
 #: ../base/ufos/menu_options.ufo:812
 #: ../base/ufos/menu_production.ufo:109
 #: ../base/ufos/menu_transfer.ufo:164
-#: ../base/ufos/menu_ufopedia.ufo:124
+#: ../base/ufos/menu_ufopedia.ufo:125
+#: ../base/ufos/menu_ufopedia.ufo:155
 msgid "Scroll up (right click to scroll multiple lines)"
 msgstr "Scroll up (right click to scroll multiple lines)"
 
@@ -1104,7 +1107,8 @@ msgstr "Scroll up (right click to scroll multiple lines)"
 #: ../base/ufos/menu_options.ufo:826
 #: ../base/ufos/menu_production.ufo:123
 #: ../base/ufos/menu_transfer.ufo:178
-#: ../base/ufos/menu_ufopedia.ufo:138
+#: ../base/ufos/menu_ufopedia.ufo:140
+#: ../base/ufos/menu_ufopedia.ufo:170
 msgid "Scroll down (right click to scroll multiple lines)"
 msgstr "Scroll down (right click to scroll multiple lines)"
 
@@ -2860,11 +2864,166 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
+#: ../base/ufos/research.ufo:107
 #: ../base/ufos/research.ufo:114
+#: ../base/ufos/research.ufo:135
+#: ../base/ufos/research.ufo:142
+#: ../base/ufos/research.ufo:355
+#: ../base/ufos/research.ufo:362
+#: ../base/ufos/research.ufo:385
+#: ../base/ufos/research.ufo:392
+#: ../base/ufos/research.ufo:433
+#: ../base/ufos/research.ufo:440
+#: ../base/ufos/research.ufo:616
+#: ../base/ufos/research.ufo:623
+#: ../base/ufos/research.ufo:667
+#: ../base/ufos/research.ufo:674
+#: ../base/ufos/research.ufo:733
+#: ../base/ufos/research.ufo:740
+#: ../base/ufos/research.ufo:765
+#: ../base/ufos/research.ufo:772
+#: ../base/ufos/research.ufo:814
+#: ../base/ufos/research.ufo:821
+#: ../base/ufos/research.ufo:950
+#: ../base/ufos/research.ufo:957
+#: ../base/ufos/research.ufo:983
+#: ../base/ufos/research.ufo:990
+#: ../base/ufos/research.ufo:1014
+#: ../base/ufos/research.ufo:1021
+#: ../base/ufos/research.ufo:1046
+#: ../base/ufos/research.ufo:1053
+#: ../base/ufos/research.ufo:1077
+#: ../base/ufos/research.ufo:1084
+#: ../base/ufos/research.ufo:1109
+#: ../base/ufos/research.ufo:1116
+#: ../base/ufos/research.ufo:1141
+#: ../base/ufos/research.ufo:1148
+#: ../base/ufos/research.ufo:1174
+#: ../base/ufos/research.ufo:1181
+#: ../base/ufos/research.ufo:1511
+#: ../base/ufos/research.ufo:1518
+#: ../base/ufos/research.ufo:1549
+#: ../base/ufos/research.ufo:1556
+#: ../base/ufos/research.ufo:1582
+#: ../base/ufos/research.ufo:1589
+#: ../base/ufos/research.ufo:1614
+#: ../base/ufos/research.ufo:1621
+#: ../base/ufos/research.ufo:1646
+#: ../base/ufos/research.ufo:1653
+#: ../base/ufos/research.ufo:1679
+#: ../base/ufos/research.ufo:1686
+#: ../base/ufos/research.ufo:1711
+#: ../base/ufos/research.ufo:1718
+#: ../base/ufos/research.ufo:1743
+#: ../base/ufos/research.ufo:1750
+#: ../base/ufos/research.ufo:1776
+#: ../base/ufos/research.ufo:1783
+#: ../base/ufos/research.ufo:2440
+#: ../base/ufos/research.ufo:2447
+#: ../base/ufos/research.ufo:2487
+#: ../base/ufos/research.ufo:2494
+#: ../base/ufos/research.ufo:2529
+#: ../base/ufos/research.ufo:2536
+#: ../base/ufos/research.ufo:2983
+#: ../base/ufos/research.ufo:2990
+msgid "mail_from_paul_navarre"
+msgstr "Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
+
+#: ../base/ufos/research.ufo:108
+#: ../base/ufos/research.ufo:115
+#: ../base/ufos/research.ufo:136
+#: ../base/ufos/research.ufo:143
+#: ../base/ufos/research.ufo:195
+#: ../base/ufos/research.ufo:202
+#: ../base/ufos/research.ufo:227
+#: ../base/ufos/research.ufo:234
+#: ../base/ufos/research.ufo:260
+#: ../base/ufos/research.ufo:267
+#: ../base/ufos/research.ufo:290
+#: ../base/ufos/research.ufo:297
+#: ../base/ufos/research.ufo:356
+#: ../base/ufos/research.ufo:363
+#: ../base/ufos/research.ufo:386
+#: ../base/ufos/research.ufo:393
+#: ../base/ufos/research.ufo:434
+#: ../base/ufos/research.ufo:441
+#: ../base/ufos/research.ufo:617
+#: ../base/ufos/research.ufo:624
+#: ../base/ufos/research.ufo:668
+#: ../base/ufos/research.ufo:675
+#: ../base/ufos/research.ufo:734
+#: ../base/ufos/research.ufo:741
+#: ../base/ufos/research.ufo:766
+#: ../base/ufos/research.ufo:773
+#: ../base/ufos/research.ufo:815
+#: ../base/ufos/research.ufo:822
+#: ../base/ufos/research.ufo:951
+#: ../base/ufos/research.ufo:958
+#: ../base/ufos/research.ufo:984
+#: ../base/ufos/research.ufo:991
+#: ../base/ufos/research.ufo:1015
+#: ../base/ufos/research.ufo:1022
+#: ../base/ufos/research.ufo:1047
+#: ../base/ufos/research.ufo:1054
+#: ../base/ufos/research.ufo:1078
+#: ../base/ufos/research.ufo:1085
+#: ../base/ufos/research.ufo:1110
+#: ../base/ufos/research.ufo:1117
+#: ../base/ufos/research.ufo:1142
+#: ../base/ufos/research.ufo:1149
+#: ../base/ufos/research.ufo:1175
+#: ../base/ufos/research.ufo:1182
+#: ../base/ufos/research.ufo:1512
+#: ../base/ufos/research.ufo:1519
+#: ../base/ufos/research.ufo:1550
+#: ../base/ufos/research.ufo:1557
+#: ../base/ufos/research.ufo:1583
+#: ../base/ufos/research.ufo:1590
+#: ../base/ufos/research.ufo:1615
+#: ../base/ufos/research.ufo:1622
+#: ../base/ufos/research.ufo:1647
+#: ../base/ufos/research.ufo:1654
+#: ../base/ufos/research.ufo:1680
+#: ../base/ufos/research.ufo:1687
+#: ../base/ufos/research.ufo:1712
+#: ../base/ufos/research.ufo:1719
+#: ../base/ufos/research.ufo:1744
+#: ../base/ufos/research.ufo:1751
+#: ../base/ufos/research.ufo:1777
+#: ../base/ufos/research.ufo:1784
+#: ../base/ufos/research.ufo:2441
+#: ../base/ufos/research.ufo:2448
+#: ../base/ufos/research.ufo:2488
+#: ../base/ufos/research.ufo:2495
+#: ../base/ufos/research.ufo:2530
+#: ../base/ufos/research.ufo:2537
+#: ../base/ufos/research.ufo:2590
+#: ../base/ufos/research.ufo:2597
+#: ../base/ufos/research.ufo:2625
+#: ../base/ufos/research.ufo:2632
+#: ../base/ufos/research.ufo:2661
+#: ../base/ufos/research.ufo:2668
+#: ../base/ufos/research.ufo:2695
+#: ../base/ufos/research.ufo:2702
+#: ../base/ufos/research.ufo:2984
+#: ../base/ufos/research.ufo:2991
+#: ../base/ufos/research.ufo:3111
+msgid "mail_to_base_commander"
+msgstr "Base Commander, PHALANX, Atlantic Operations Command"
+
+#: ../base/ufos/research.ufo:109
+msgid "Proposal: Continuous Wave Laser Operation"
+msgstr "Proposal: Continuous Wave Laser Operation"
+
+#: ../base/ufos/research.ufo:116
+msgid "Re: Continuous Wave Laser Operation"
+msgstr "Re: Continuous Wave Laser Operation"
+
+#: ../base/ufos/research.ufo:128
 msgid "Antimatter"
 msgstr "Antimatter"
 
-#: ../base/ufos/research.ufo:116
+#: ../base/ufos/research.ufo:130
 msgid "antimatter_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -2892,7 +3051,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:117
+#: ../base/ufos/research.ufo:131
 msgid "antimatter_pre_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -2910,11 +3069,19 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:159
+#: ../base/ufos/research.ufo:137
+msgid "Proposal: Antimatter"
+msgstr "Proposal: Antimatter"
+
+#: ../base/ufos/research.ufo:144
+msgid "Re: Antimatter"
+msgstr "Re: Antimatter"
+
+#: ../base/ufos/research.ufo:187
 msgid "Live Alien"
 msgstr "Live Alien"
 
-#: ../base/ufos/research.ufo:161
+#: ../base/ufos/research.ufo:189
 msgid "alien_live_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -2938,7 +3105,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:162
+#: ../base/ufos/research.ufo:190
 msgid "alien_live_pre_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -2962,11 +3129,39 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:176
+#: ../base/ufos/research.ufo:194
+#: ../base/ufos/research.ufo:201
+#: ../base/ufos/research.ufo:226
+#: ../base/ufos/research.ufo:233
+#: ../base/ufos/research.ufo:259
+#: ../base/ufos/research.ufo:266
+#: ../base/ufos/research.ufo:289
+#: ../base/ufos/research.ufo:296
+#: ../base/ufos/research.ufo:2589
+#: ../base/ufos/research.ufo:2596
+#: ../base/ufos/research.ufo:2624
+#: ../base/ufos/research.ufo:2631
+#: ../base/ufos/research.ufo:2660
+#: ../base/ufos/research.ufo:2667
+#: ../base/ufos/research.ufo:2694
+#: ../base/ufos/research.ufo:2701
+#: ../base/ufos/research.ufo:3110
+msgid "mail_from_dr_connor"
+msgstr "Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command"
+
+#: ../base/ufos/research.ufo:196
+msgid "Proposal: Live Alien"
+msgstr "Proposal: Live Alien"
+
+#: ../base/ufos/research.ufo:203
+msgid "Re: Live Alien"
+msgstr "Re: Live Alien"
+
+#: ../base/ufos/research.ufo:219
 msgid "Alien Breathing Apparatus"
 msgstr "Alien Breathing Apparatus"
 
-#: ../base/ufos/research.ufo:178
+#: ../base/ufos/research.ufo:221
 msgid "alien_breathing_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -3000,7 +3195,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:179
+#: ../base/ufos/research.ufo:222
 msgid "alien_breathing_pre_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -3024,11 +3219,19 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:194
+#: ../base/ufos/research.ufo:228
+msgid "Proposal: Alien Breathing Apparatus"
+msgstr "Proposal: Alien Breathing Apparatus"
+
+#: ../base/ufos/research.ufo:235
+msgid "Re: Alien Breathing Apparatus"
+msgstr "Re: Alien Breathing Apparatus"
+
+#: ../base/ufos/research.ufo:252
 msgid "The Alien Mind"
 msgstr "The Alien Mind"
 
-#: ../base/ufos/research.ufo:196
+#: ../base/ufos/research.ufo:254
 msgid "alien_mind_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -3056,7 +3259,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:197
+#: ../base/ufos/research.ufo:255
 msgid "alien_mind_pre_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -3080,11 +3283,19 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:212
+#: ../base/ufos/research.ufo:261
+msgid "Proposal: The Alien Mind"
+msgstr "Proposal: The Alien Mind"
+
+#: ../base/ufos/research.ufo:268
+msgid "Re: The Alien Mind"
+msgstr "Re: The Alien Mind"
+
+#: ../base/ufos/research.ufo:282
 msgid "Odd Behaviour"
 msgstr "Odd Behaviour"
 
-#: ../base/ufos/research.ufo:214
+#: ../base/ufos/research.ufo:284
 msgid "alien_odd_behaviour_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -3118,7 +3329,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:215
+#: ../base/ufos/research.ufo:285
 msgid "alien_odd_behaviour_pre_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -3142,7 +3353,15 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:233
+#: ../base/ufos/research.ufo:291
+msgid "Proposal: Odd Behaviour"
+msgstr "Proposal: Odd Behaviour"
+
+#: ../base/ufos/research.ufo:298
+msgid "Re: Odd Behaviour"
+msgstr "Re: Odd Behaviour"
+
+#: ../base/ufos/research.ufo:317
 msgid "assault_txt"
 msgstr ""
 "Technical Specifications: AR-80 Assault Rifle\n"
@@ -3185,7 +3404,7 @@ msgstr ""
 "\n"
 "While the AR-80 is a fine rifle in all respects, it was not designed to fight an alien invasion force. We should develop our own purpose-built weapons as soon as it becomes feasible to do so."
 
-#: ../base/ufos/research.ufo:249
+#: ../base/ufos/research.ufo:333
 msgid "assault_mag_txt"
 msgstr ""
 "Technical Specifications: Assault Rifle Magazine\n"
@@ -3218,8 +3437,8 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:266
-#: ../base/ufos/research.ufo:282
+#: ../base/ufos/research.ufo:350
+#: ../base/ufos/research.ufo:380
 msgid "bolterrifle_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -3247,8 +3466,8 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:267
-#: ../base/ufos/research.ufo:283
+#: ../base/ufos/research.ufo:351
+#: ../base/ufos/research.ufo:381
 msgid "bolterrifle_pre_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -3270,7 +3489,17 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:299
+#: ../base/ufos/research.ufo:357
+#: ../base/ufos/research.ufo:387
+msgid "Proposal: Electromagnetic Rifle"
+msgstr "Proposal: Electromagnetic Rifle"
+
+#: ../base/ufos/research.ufo:364
+#: ../base/ufos/research.ufo:394
+msgid "Re: Electromagnetic Rifle"
+msgstr "Re: Electromagnetic Rifle"
+
+#: ../base/ufos/research.ufo:411
 msgid "combatknife_txt"
 msgstr ""
 "Technical Specifications: Combat Knife\n"
@@ -3311,7 +3540,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:316
+#: ../base/ufos/research.ufo:428
 msgid "monoknife_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -3335,7 +3564,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:317
+#: ../base/ufos/research.ufo:429
 msgid "monoknife_pre_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -3359,7 +3588,15 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:335
+#: ../base/ufos/research.ufo:435
+msgid "Proposal: Monomolecular Blades"
+msgstr "Proposal: Monomolecular Blades"
+
+#: ../base/ufos/research.ufo:442
+msgid "Re: Monomolecular Blades"
+msgstr "Re: Monomolecular Blades"
+
+#: ../base/ufos/research.ufo:461
 msgid "flamer_txt"
 msgstr ""
 "Technical Specifications: CRC-FL Flamethrower\n"
@@ -3406,7 +3643,7 @@ msgstr ""
 "\n"
 "This weapon should not be fired if there are civilians in or near the target zone."
 
-#: ../base/ufos/research.ufo:351
+#: ../base/ufos/research.ufo:477
 msgid "flamer_mag_txt"
 msgstr ""
 "Technical Specifications: C90 Canister\n"
@@ -3439,7 +3676,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:368
+#: ../base/ufos/research.ufo:494
 msgid "flashbang_txt"
 msgstr ""
 "Technical Specifications: Flashbang\n"
@@ -3482,7 +3719,7 @@ msgstr ""
 "\n"
 "Naturally the flashbang is only effective against organic aliens with eyes and ears."
 
-#: ../base/ufos/research.ufo:384
+#: ../base/ufos/research.ufo:510
 msgid "fraggren_txt"
 msgstr ""
 "Technical Specifications: Fragmentation Grenade\n"
@@ -3523,7 +3760,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:401
+#: ../base/ufos/research.ufo:527
 msgid "incgren_txt"
 msgstr ""
 "Technical Specifications: Incendiary Grenade\n"
@@ -3566,7 +3803,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:418
+#: ../base/ufos/research.ufo:544
 msgid "grenl_txt"
 msgstr ""
 "Technical Specifications: HPGL Grenade Launcher\n"
@@ -3617,7 +3854,7 @@ msgstr ""
 "\n"
 "Along with sniper rifles and rocket launchers, this is one of the few standard-issue human weapons that are fully effective against robotic aliens."
 
-#: ../base/ufos/research.ufo:434
+#: ../base/ufos/research.ufo:560
 msgid "grenl_ammo_txt"
 msgstr ""
 "Technical Specifications: 25mm HIT Grenades\n"
@@ -3650,7 +3887,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:451
+#: ../base/ufos/research.ufo:577
 msgid "grenl_fle_ammo_txt"
 msgstr ""
 "Technical Specifications: 25mm Flechette Grenades\n"
@@ -3683,7 +3920,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:468
+#: ../base/ufos/research.ufo:594
 msgid "grenl_incendiary_ammo_txt"
 msgstr ""
 "Technical Specifications: 25mm IC Grenades\n"
@@ -3716,7 +3953,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:485
+#: ../base/ufos/research.ufo:611
 msgid "grenl_plasma_ammo_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -3738,7 +3975,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:486
+#: ../base/ufos/research.ufo:612
 msgid "grenl_plasma_ammo_pre_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -3760,7 +3997,15 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:505
+#: ../base/ufos/research.ufo:618
+msgid "Proposal: Plasma And The Grenade Launcher"
+msgstr "Proposal: Plasma And The Grenade Launcher"
+
+#: ../base/ufos/research.ufo:625
+msgid "Re: Re: Plasma And The Grenade Launcher"
+msgstr "Re: Re: Plasma And The Grenade Launcher"
+
+#: ../base/ufos/research.ufo:645
 msgid "laser_ammo_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -3782,7 +4027,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:506
+#: ../base/ufos/research.ufo:646
 msgid "laser_ammo_pre_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -3804,7 +4049,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:522
+#: ../base/ufos/research.ufo:662
 msgid "heavylaser_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -3832,7 +4077,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:523
+#: ../base/ufos/research.ufo:663
 msgid "heavylaser_pre_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -3854,7 +4099,15 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:558
+#: ../base/ufos/research.ufo:669
+msgid "Proposal: Heavy Laser"
+msgstr "Proposal: Heavy Laser"
+
+#: ../base/ufos/research.ufo:676
+msgid "Re: Heavy Laser"
+msgstr "Re: Heavy Laser"
+
+#: ../base/ufos/research.ufo:712
 msgid "irgoggles_txt"
 msgstr ""
 "Technical Specifications: IR Goggles\n"
@@ -3901,7 +4154,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:574
+#: ../base/ufos/research.ufo:728
 msgid "kerrblade_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -3929,7 +4182,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:575
+#: ../base/ufos/research.ufo:729
 msgid "kerrblade_pre_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -3949,7 +4202,15 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:592
+#: ../base/ufos/research.ufo:735
+msgid "Proposal: Alien Artifact -- Kerrblade"
+msgstr "Proposal: Alien Artifact -- Kerrblade"
+
+#: ../base/ufos/research.ufo:742
+msgid "Re: Alien Artifact -- Kerrblade"
+msgstr "Re: Alien Artifact -- Kerrblade"
+
+#: ../base/ufos/research.ufo:760
 msgid "laserpistol_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -3977,7 +4238,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:593
+#: ../base/ufos/research.ufo:761
 msgid "laserpistol_pre_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -4001,7 +4262,15 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:627
+#: ../base/ufos/research.ufo:767
+msgid "Proposal: Laser Pistol"
+msgstr "Proposal: Laser Pistol"
+
+#: ../base/ufos/research.ufo:774
+msgid "Re: Laser Pistol"
+msgstr "Re: Laser Pistol"
+
+#: ../base/ufos/research.ufo:809
 msgid "laserrifle_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -4027,7 +4296,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:628
+#: ../base/ufos/research.ufo:810
 msgid "laserrifle_pre_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -4049,7 +4318,15 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:663
+#: ../base/ufos/research.ufo:816
+msgid "Proposal: Laser Rifle"
+msgstr "Proposal: Laser Rifle"
+
+#: ../base/ufos/research.ufo:823
+msgid "Re: Laser Rifle"
+msgstr "Re: Laser Rifle"
+
+#: ../base/ufos/research.ufo:859
 msgid "medikit_txt"
 msgstr ""
 "Technical Specifications: Medikit\n"
@@ -4092,7 +4369,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:679
+#: ../base/ufos/research.ufo:875
 msgid "pistol_txt"
 msgstr ""
 "Technical Specifications: P-12 Pistol\n"
@@ -4141,7 +4418,7 @@ msgstr ""
 "\n"
 "Despite good penetration against organics, this weapon performs very poorly against robotic targets."
 
-#: ../base/ufos/research.ufo:696
+#: ../base/ufos/research.ufo:892
 msgid "pistol_mag_txt"
 msgstr ""
 "Technical Specifications: 7.62mm Pistol Magazine\n"
@@ -4174,7 +4451,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:714
+#: ../base/ufos/research.ufo:910
 msgid "pistol2_txt"
 msgstr ""
 "Technical Specifications: MP-699 Machine Pistol\n"
@@ -4221,7 +4498,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:731
+#: ../base/ufos/research.ufo:927
 msgid "pistol2_mag_txt"
 msgstr ""
 "Technical Specifications: 4.2mm MP Magazine\n"
@@ -4254,8 +4531,8 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:749
-#: ../base/ufos/research.ufo:768
+#: ../base/ufos/research.ufo:945
+#: ../base/ufos/research.ufo:978
 msgid "plasatomizer_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -4283,8 +4560,8 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:750
-#: ../base/ufos/research.ufo:769
+#: ../base/ufos/research.ufo:946
+#: ../base/ufos/research.ufo:979
 msgid "plasatomizer_pre_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -4304,8 +4581,18 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:785
-#: ../base/ufos/research.ufo:803
+#: ../base/ufos/research.ufo:952
+#: ../base/ufos/research.ufo:985
+msgid "Proposal: Alien Artifact -- Plasma Pistol"
+msgstr "Proposal: Alien Artifact -- Plasma Pistol"
+
+#: ../base/ufos/research.ufo:959
+#: ../base/ufos/research.ufo:992
+msgid "Re: Alien Artifact -- Plasma Pistol"
+msgstr "Re: Alien Artifact -- Plasma Pistol"
+
+#: ../base/ufos/research.ufo:1009
+#: ../base/ufos/research.ufo:1041
 msgid "plasblaster_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -4329,8 +4616,8 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:786
-#: ../base/ufos/research.ufo:804
+#: ../base/ufos/research.ufo:1010
+#: ../base/ufos/research.ufo:1042
 msgid "plasblaster_pre_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -4348,7 +4635,17 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:820
+#: ../base/ufos/research.ufo:1016
+#: ../base/ufos/research.ufo:1048
+msgid "Proposal: Alien Artifact -- Plasma Blaster"
+msgstr "Proposal: Alien Artifact -- Plasma Blaster"
+
+#: ../base/ufos/research.ufo:1023
+#: ../base/ufos/research.ufo:1055
+msgid "Re: Alien Artifact -- Plasma Blaster"
+msgstr "Re: Alien Artifact -- Plasma Blaster"
+
+#: ../base/ufos/research.ufo:1072
 msgid "plasblade_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -4376,7 +4673,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:821
+#: ../base/ufos/research.ufo:1073
 msgid "plasblade_pre_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -4394,7 +4691,15 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:838
+#: ../base/ufos/research.ufo:1079
+msgid "Proposal: Alien Artifact -- Plasma Blade"
+msgstr "Proposal: Alien Artifact -- Plasma Blade"
+
+#: ../base/ufos/research.ufo:1086
+msgid "Re: Alien Artifact -- Plasma Blade"
+msgstr "Re: Alien Artifact -- Plasma Blade"
+
+#: ../base/ufos/research.ufo:1104
 msgid "plasmagren_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -4418,7 +4723,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:839
+#: ../base/ufos/research.ufo:1105
 msgid "plasmagren_pre_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -4438,8 +4743,16 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:856
-#: ../base/ufos/research.ufo:875
+#: ../base/ufos/research.ufo:1111
+msgid "Proposal: Alien Artifact -- Plasma Grenade"
+msgstr "Proposal: Alien Artifact -- Plasma Grenade"
+
+#: ../base/ufos/research.ufo:1118
+msgid "Re: Alien Artifact -- Plasma Grenade"
+msgstr "Re: Alien Artifact -- Plasma Grenade"
+
+#: ../base/ufos/research.ufo:1136
+#: ../base/ufos/research.ufo:1169
 msgid "plasrifle_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -4465,8 +4778,8 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:857
-#: ../base/ufos/research.ufo:876
+#: ../base/ufos/research.ufo:1137
+#: ../base/ufos/research.ufo:1170
 msgid "plasrifle_pre_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -4482,7 +4795,17 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:892
+#: ../base/ufos/research.ufo:1143
+#: ../base/ufos/research.ufo:1176
+msgid "Proposal: Alien Artifact -- Plasma Rifle"
+msgstr "Proposal: Alien Artifact -- Plasma Rifle"
+
+#: ../base/ufos/research.ufo:1150
+#: ../base/ufos/research.ufo:1183
+msgid "Re: Alien Artifact -- Plasma Rifle"
+msgstr "Re: Alien Artifact -- Plasma Rifle"
+
+#: ../base/ufos/research.ufo:1200
 msgid "rpg_txt"
 msgstr ""
 "Technical Specifications: HPML Rocket Launcher\n"
@@ -4529,7 +4852,7 @@ msgstr ""
 "\n"
 "Along with sniper rifles and grenades, this is one of the few standard-issue human weapons that are fully effective against robotic aliens."
 
-#: ../base/ufos/research.ufo:909
+#: ../base/ufos/research.ufo:1217
 msgid "rpg_ammo_txt"
 msgstr ""
 "Technical Specifications: HE Rocket\n"
@@ -4564,7 +4887,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:927
+#: ../base/ufos/research.ufo:1235
 msgid "rpg_incendiary_ammo_txt"
 msgstr ""
 "Technical Specifications: IC Rocket\n"
@@ -4601,23 +4924,23 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:946
+#: ../base/ufos/research.ufo:1254
 msgid "chaingun_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:947
+#: ../base/ufos/research.ufo:1255
 msgid "chaingun_pre_txt"
 msgstr "No pre research info available"
 
-#: ../base/ufos/research.ufo:964
+#: ../base/ufos/research.ufo:1272
 msgid "chaingun_ammo_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:965
+#: ../base/ufos/research.ufo:1273
 msgid "chaingun_ammo_pre_txt"
 msgstr "No pre research info available"
 
-#: ../base/ufos/research.ufo:983
+#: ../base/ufos/research.ufo:1291
 msgid "shotgun_txt"
 msgstr ""
 "Technical Specifications: CRC-212 Riot Shotgun\n"
@@ -4662,7 +4985,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1002
+#: ../base/ufos/research.ufo:1310
 msgid "shotgun_ammo_txt"
 msgstr ""
 "Technical Specifications: Flechette Shells\n"
@@ -4697,7 +5020,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1021
+#: ../base/ufos/research.ufo:1329
 msgid "shotgun2_txt"
 msgstr ""
 "Technical Specifications: CRC-212 Riot Shotgun\n"
@@ -4742,7 +5065,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1057
+#: ../base/ufos/research.ufo:1365
 msgid "shotgun2_slug_ammo_txt"
 msgstr ""
 "Technical Specifications: Saboted Slugs\n"
@@ -4775,7 +5098,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1075
+#: ../base/ufos/research.ufo:1383
 msgid "shotgun_micro_txt"
 msgstr ""
 "Technical Specifications: CRC-M9 Micro Shotgun\n"
@@ -4824,7 +5147,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1092
+#: ../base/ufos/research.ufo:1400
 msgid "shotgun_micro_ammo_txt"
 msgstr ""
 "Technical Specifications: Flechette Shells\n"
@@ -4859,7 +5182,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1110
+#: ../base/ufos/research.ufo:1418
 msgid "smg_txt"
 msgstr ""
 "Technical Specifications: CRC-8 SMG\n"
@@ -4904,7 +5227,7 @@ msgstr ""
 "\n"
 "Despite good penetration against organics, this weapon performs very poorly against robotic targets."
 
-#: ../base/ufos/research.ufo:1127
+#: ../base/ufos/research.ufo:1435
 msgid "smg_mag_txt"
 msgstr ""
 "Technical Specifications: SMG Magazine\n"
@@ -4937,7 +5260,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1145
+#: ../base/ufos/research.ufo:1453
 msgid "smokegren_txt"
 msgstr ""
 "Technical Specifications: Smoke Grenade\n"
@@ -4978,7 +5301,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1162
+#: ../base/ufos/research.ufo:1470
 msgid "sniper_txt"
 msgstr ""
 "Technical Specifications: S-1 Sniper Rifle\n"
@@ -5023,7 +5346,7 @@ msgstr ""
 "\n"
 "Along with high-explosive rockets and grenades, this is one of the few standard-issue human weapons that are fully effective against robotic aliens."
 
-#: ../base/ufos/research.ufo:1179
+#: ../base/ufos/research.ufo:1487
 msgid "sniper_mag_txt"
 msgstr ""
 "Technical Specifications: Sniper Rifle Magazine\n"
@@ -5056,7 +5379,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1198
+#: ../base/ufos/research.ufo:1506
 msgid "stungren_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -5086,7 +5409,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:1199
+#: ../base/ufos/research.ufo:1507
 msgid "stungren_pre_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -5112,7 +5435,15 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:1222
+#: ../base/ufos/research.ufo:1513
+msgid "Proposal: Anti-Alien Gas"
+msgstr "Proposal: Anti-Alien Gas"
+
+#: ../base/ufos/research.ufo:1520
+msgid "Re: Anti-Alien Gas"
+msgstr "Re: Anti-Alien Gas"
+
+#: ../base/ufos/research.ufo:1544
 msgid "stunrod_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -5144,7 +5475,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:1223
+#: ../base/ufos/research.ufo:1545
 msgid "stunrod_pre_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -5172,7 +5503,15 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:1241
+#: ../base/ufos/research.ufo:1551
+msgid "Proposal: Stun Rod"
+msgstr "Proposal: Stun Rod"
+
+#: ../base/ufos/research.ufo:1558
+msgid "Re: Stun Rod"
+msgstr "Re: Stun Rod"
+
+#: ../base/ufos/research.ufo:1577
 msgid "pbeampistol_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -5200,7 +5539,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1242
+#: ../base/ufos/research.ufo:1578
 msgid "pbeampistol_pre_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -5218,9 +5557,19 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1259
-#: ../base/ufos/research.ufo:1296
-#: ../base/ufos/research.ufo:1332
+#: ../base/ufos/research.ufo:1584
+#: ../base/ufos/research.ufo:1616
+msgid "Proposal: Alien Artifact -- Particle Beam Pistol"
+msgstr "Proposal: Alien Artifact -- Particle Beam Pistol"
+
+#: ../base/ufos/research.ufo:1591
+#: ../base/ufos/research.ufo:1623
+msgid "Re: Alien Artifact -- Particle Beam Pistol"
+msgstr "Re: Alien Artifact -- Particle Beam Pistol"
+
+#: ../base/ufos/research.ufo:1609
+#: ../base/ufos/research.ufo:1674
+#: ../base/ufos/research.ufo:1738
 msgid "pbeamammo_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -5248,9 +5597,9 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1260
-#: ../base/ufos/research.ufo:1297
-#: ../base/ufos/research.ufo:1333
+#: ../base/ufos/research.ufo:1610
+#: ../base/ufos/research.ufo:1675
+#: ../base/ufos/research.ufo:1739
 msgid "pbeamammo_pre_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -5272,7 +5621,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1277
+#: ../base/ufos/research.ufo:1641
 msgid "pbeamcannon_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -5300,7 +5649,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1278
+#: ../base/ufos/research.ufo:1642
 msgid "pbeamcannon_pre_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -5318,7 +5667,17 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1314
+#: ../base/ufos/research.ufo:1648
+#: ../base/ufos/research.ufo:1681
+msgid "Proposal: Alien Artifact -- Particle Beam Cannon"
+msgstr "Proposal: Alien Artifact -- Particle Beam Cannon"
+
+#: ../base/ufos/research.ufo:1655
+#: ../base/ufos/research.ufo:1688
+msgid "Re: Alien Artifact -- Particle Beam Cannon"
+msgstr "Re: Alien Artifact -- Particle Beam Cannon"
+
+#: ../base/ufos/research.ufo:1706
 msgid "pbeamrifle_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -5348,7 +5707,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1315
+#: ../base/ufos/research.ufo:1707
 msgid "pbeamrifle_pre_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -5366,15 +5725,33 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1351
+#: ../base/ufos/research.ufo:1713
+#: ../base/ufos/research.ufo:1745
+msgid "Proposal: Alien Artifact -- Particle Beam Rifle"
+msgstr "Proposal: Alien Artifact -- Particle Beam Rifle"
+
+#: ../base/ufos/research.ufo:1720
+#: ../base/ufos/research.ufo:1752
+msgid "Re: Alien Artifact -- Particle Beam Rifle"
+msgstr "Re: Alien Artifact -- Particle Beam Rifle"
+
+#: ../base/ufos/research.ufo:1771
 msgid "pbeam_ammo_txt"
 msgstr "pbeam_ammo_txt"
 
-#: ../base/ufos/research.ufo:1352
+#: ../base/ufos/research.ufo:1772
 msgid "pbeam_ammo_pre_txt"
 msgstr "No pre research info available"
 
-#: ../base/ufos/research.ufo:1373
+#: ../base/ufos/research.ufo:1778
+msgid "Proposal: Man-Portable Particle Beams"
+msgstr "Proposal: Man-Portable Particle Beams"
+
+#: ../base/ufos/research.ufo:1785
+msgid "Re: Man-Portable Particle Beams"
+msgstr "Re: Man-Portable Particle Beams"
+
+#: ../base/ufos/research.ufo:1807
 msgid "combat_armor_txt"
 msgstr ""
 "Technical Specifications: Combat Armour\n"
@@ -5415,7 +5792,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1387
+#: ../base/ufos/research.ufo:1821
 msgid "nano_armor_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -5443,7 +5820,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1388
+#: ../base/ufos/research.ufo:1822
 msgid "nano_armor_pre_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -5465,7 +5842,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1403
+#: ../base/ufos/research.ufo:1837
 msgid "alien_body_armour_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -5491,7 +5868,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1404
+#: ../base/ufos/research.ufo:1838
 msgid "alien_body_armour_pre_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -5509,76 +5886,76 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:1453
+#: ../base/ufos/research.ufo:1887
 msgid "Blast Damage Type"
 msgstr "Blast Damage Type"
 
-#: ../base/ufos/research.ufo:1465
+#: ../base/ufos/research.ufo:1899
 msgid "Fire Damage Type"
 msgstr "Fire Damage Type"
 
-#: ../base/ufos/research.ufo:1477
+#: ../base/ufos/research.ufo:1911
 msgid "Laser Damage Type"
 msgstr "Laser Damage Type"
 
-#: ../base/ufos/research.ufo:1493
+#: ../base/ufos/research.ufo:1927
 msgid "Impact Damage Type"
 msgstr "Impact Damage Type"
 
-#: ../base/ufos/research.ufo:1505
-#: ../base/ufos/research.ufo:1536
+#: ../base/ufos/research.ufo:1939
+#: ../base/ufos/research.ufo:1970
 msgid "Shock Damage Type"
 msgstr "Shock Damage Type"
 
-#: ../base/ufos/research.ufo:1517
+#: ../base/ufos/research.ufo:1951
 msgid "Plasma Damage Type"
 msgstr "Plasma Damage Type"
 
-#: ../base/ufos/research.ufo:1548
+#: ../base/ufos/research.ufo:1982
 msgid "Stun Damage Type"
 msgstr "Stun Damage Type"
 
-#: ../base/ufos/research.ufo:1560
+#: ../base/ufos/research.ufo:1994
 msgid "Particle Beam Damage Type"
 msgstr "Particle Beam Damage Type"
 
-#: ../base/ufos/research.ufo:1577
+#: ../base/ufos/research.ufo:2011
 msgid "Accuracy Attribute"
 msgstr "Accuracy Attribute"
 
-#: ../base/ufos/research.ufo:1589
+#: ../base/ufos/research.ufo:2023
 msgid "Assault Guns Proficiency"
 msgstr "Assault Guns Proficiency"
 
-#: ../base/ufos/research.ufo:1601
+#: ../base/ufos/research.ufo:2035
 msgid "Close Combat Proficiency"
 msgstr "Close Combat Proficiency"
 
-#: ../base/ufos/research.ufo:1613
+#: ../base/ufos/research.ufo:2047
 msgid "High-Explosives Proficiency"
 msgstr "High-Explosives Proficiency"
 
-#: ../base/ufos/research.ufo:1625
+#: ../base/ufos/research.ufo:2059
 msgid "Heavy Weapons Proficiency"
 msgstr "Heavy Weapons Proficiency"
 
-#: ../base/ufos/research.ufo:1637
+#: ../base/ufos/research.ufo:2071
 msgid "Mind Attribute"
 msgstr "Mind Attribute"
 
-#: ../base/ufos/research.ufo:1649
+#: ../base/ufos/research.ufo:2083
 msgid "Power Attribute"
 msgstr "Power Attribute"
 
-#: ../base/ufos/research.ufo:1661
+#: ../base/ufos/research.ufo:2095
 msgid "Sniper Rifles Proficiency"
 msgstr "Sniper Rifles Proficiency"
 
-#: ../base/ufos/research.ufo:1673
+#: ../base/ufos/research.ufo:2107
 msgid "Speed Attribute"
 msgstr "Speed Attribute"
 
-#: ../base/ufos/research.ufo:1689
+#: ../base/ufos/research.ufo:2123
 msgid "b_aliencontainment_txt"
 msgstr ""
 "Blueprints -- Alien Containment Facility\n"
@@ -5617,7 +5994,7 @@ msgstr ""
 "\n"
 "To whatever future Commanders might be reviewing this file: Keep in mind that the machinery in the Containment Facility, like a fair portion of PHALANX equipment, has yet to undergo its true acid test against an extraterrestrial force. Upgrades or adjustments may be required for it to perform up to its design spec."
 
-#: ../base/ufos/research.ufo:1705
+#: ../base/ufos/research.ufo:2139
 msgid "b_command_txt"
 msgstr ""
 "Blueprints -- Command Centre\n"
@@ -5658,7 +6035,7 @@ msgstr ""
 "\n"
 "The old CC blueprints have been updated by our engineers to replace the ancient H-9000 mainframe and terminals with up-to-date holo-workstations and a fresh supercomputer installation. All other components are still viable and effective."
 
-#: ../base/ufos/research.ufo:1721
+#: ../base/ufos/research.ufo:2155
 msgid "b_entrance_txt"
 msgstr ""
 "Blueprints -- Entrance\n"
@@ -5691,7 +6068,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1733
+#: ../base/ufos/research.ufo:2167
 msgid "b_large_hangar_txt"
 msgstr ""
 "Blueprints -- Large Hangar\n"
@@ -5736,7 +6113,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1749
+#: ../base/ufos/research.ufo:2183
 msgid "b_hospital_txt"
 msgstr ""
 "Blueprints -- Hospital\n"
@@ -5779,7 +6156,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1765
+#: ../base/ufos/research.ufo:2199
 msgid "b_small_hangar_txt"
 msgstr ""
 "Blueprints -- Small Hangar\n"
@@ -5824,7 +6201,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1781
+#: ../base/ufos/research.ufo:2215
 msgid "b_lab_txt"
 msgstr ""
 "Blueprints -- Laboratory\n"
@@ -5869,7 +6246,7 @@ msgstr ""
 "\n"
 "Reviewing the files on PHALANX laboratory facilities, I have concluded that these blueprints were well ahead of their time. The design is still viable and can be adapted to our use with only minor equipment upgrades."
 
-#: ../base/ufos/research.ufo:1797
+#: ../base/ufos/research.ufo:2231
 msgid "b_powerplant_txt"
 msgstr ""
 "Blueprints -- Power Plant\n"
@@ -5910,7 +6287,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1813
+#: ../base/ufos/research.ufo:2247
 msgid "b_quarters_txt"
 msgstr ""
 "Blueprints -- Living Quarters\n"
@@ -5951,7 +6328,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1829
+#: ../base/ufos/research.ufo:2263
 msgid "b_radar_txt"
 msgstr ""
 "Blueprints -- Radar\n"
@@ -5998,7 +6375,7 @@ msgstr ""
 "\n"
 "We should not consider the Radar facility to be an end-all solution to UFO detection. Even with supplemental systems our coverage is not fully reliable, and we should research ways to improve our detection technology if we're to have any chance of stopping the bastards."
 
-#: ../base/ufos/research.ufo:1845
+#: ../base/ufos/research.ufo:2279
 msgid "b_storage_txt"
 msgstr ""
 "Blueprints -- Storage\n"
@@ -6041,7 +6418,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1861
+#: ../base/ufos/research.ufo:2295
 msgid "b_teamroom_txt"
 msgstr ""
 "Blueprints -- Team Room\n"
@@ -6082,7 +6459,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1877
+#: ../base/ufos/research.ufo:2311
 msgid "b_small_ufo_hangar_txt"
 msgstr ""
 "Blueprints -- Small UFO Hangar\n"
@@ -6123,7 +6500,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1893
+#: ../base/ufos/research.ufo:2327
 msgid "b_large_ufo_hangar_txt"
 msgstr ""
 "Blueprints -- Large UFO Hangar\n"
@@ -6164,7 +6541,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1909
+#: ../base/ufos/research.ufo:2343
 msgid "b_workshop_txt"
 msgstr ""
 "Blueprints -- Workshop\n"
@@ -6203,7 +6580,7 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:1928
+#: ../base/ufos/research.ufo:2362
 msgid "dropship_txt"
 msgstr ""
 "Aircraft Evaluation -- Firebird-class Dropship\n"
@@ -6264,7 +6641,7 @@ msgstr ""
 "\n"
 "Weapon capacity: 1 Medium hardpoint (nose)"
 
-#: ../base/ufos/research.ufo:1943
+#: ../base/ufos/research.ufo:2377
 msgid "interceptor_txt"
 msgstr ""
 "Aircraft Evaluation -- Stiletto-class Interceptor\n"
@@ -6331,7 +6708,7 @@ msgstr ""
 "\n"
 "Weapon capacity: 1 Small hardpoint (nose), 2 Medium hardpoints (wings)"
 
-#: ../base/ufos/research.ufo:1958
+#: ../base/ufos/research.ufo:2392
 msgid "saracen_interceptor_txt"
 msgstr ""
 "Aircraft Evaluation -- Saracen-class Interceptor\n"
@@ -6390,7 +6767,7 @@ msgstr ""
 "\n"
 "Weapon capacity: 2 Medium hardpoints (belly)"
 
-#: ../base/ufos/research.ufo:2000
+#: ../base/ufos/research.ufo:2434
 msgid "ufo_scout_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -6436,7 +6813,7 @@ msgstr ""
 "\n"
 "Weapon capacity: None"
 
-#: ../base/ufos/research.ufo:2001
+#: ../base/ufos/research.ufo:2435
 msgid "ufo_scout_pre_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -6452,7 +6829,15 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:2033
+#: ../base/ufos/research.ufo:2442
+msgid "UFO -- Scout"
+msgstr "UFO -- Scout"
+
+#: ../base/ufos/research.ufo:2449
+msgid "Re: UFO -- Scout"
+msgstr "Re: UFO -- Scout"
+
+#: ../base/ufos/research.ufo:2481
 msgid "ufo_fighter_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -6494,7 +6879,7 @@ msgstr ""
 "\n"
 "Weapon capacity: 1 Particle Beam hardpoint"
 
-#: ../base/ufos/research.ufo:2034
+#: ../base/ufos/research.ufo:2482
 msgid "ufo_fighter_pre_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -6512,11 +6897,19 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:2060
+#: ../base/ufos/research.ufo:2489
+msgid "UFO -- Fighter"
+msgstr "UFO -- Fighter"
+
+#: ../base/ufos/research.ufo:2496
+msgid "Re: UFO -- Fighter"
+msgstr "Re: UFO -- Fighter"
+
+#: ../base/ufos/research.ufo:2522
 msgid "UFO - Harvester"
 msgstr "UFO - Harvester"
 
-#: ../base/ufos/research.ufo:2061
+#: ../base/ufos/research.ufo:2523
 msgid "ufo_harvester_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -6558,7 +6951,7 @@ msgstr ""
 "\n"
 "Weapon capacity: 2 Particle Beam hardpoints, 1 Alien Launcher hardpoint"
 
-#: ../base/ufos/research.ufo:2062
+#: ../base/ufos/research.ufo:2524
 msgid "ufo_harvester_pre_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -6576,11 +6969,19 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:2088
+#: ../base/ufos/research.ufo:2531
+msgid "UFO -- Harvester"
+msgstr "UFO -- Harvester"
+
+#: ../base/ufos/research.ufo:2538
+msgid "Re: UFO -- Harvester"
+msgstr "Re: UFO -- Harvester"
+
+#: ../base/ufos/research.ufo:2564
 msgid "Live Specimen - Bloodspider"
 msgstr "Live Specimen - Bloodspider"
 
-#: ../base/ufos/research.ufo:2089
+#: ../base/ufos/research.ufo:2565
 msgid "bloodspider_notes_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -6600,15 +7001,15 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:2090
+#: ../base/ufos/research.ufo:2566
 msgid "bloodspider_notes_pre_txt"
 msgstr "No pre research info available"
 
-#: ../base/ufos/research.ufo:2106
+#: ../base/ufos/research.ufo:2582
 msgid "Alien Autopsy - Bloodspider"
 msgstr "Alien Autopsy - Bloodspider"
 
-#: ../base/ufos/research.ufo:2107
+#: ../base/ufos/research.ufo:2583
 msgid "bloodspider_autopsy_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -6640,7 +7041,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:2108
+#: ../base/ufos/research.ufo:2584
 msgid "bloodspider_autopsy_pre_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -6660,11 +7061,19 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:2127
+#: ../base/ufos/research.ufo:2591
+msgid "Proposal: Alien Autopsy -- Bloodspider"
+msgstr "Proposal: Alien Autopsy -- Bloodspider"
+
+#: ../base/ufos/research.ufo:2598
+msgid "Re: Alien Autopsy -- Bloodspider"
+msgstr "Re: Alien Autopsy -- Bloodspider"
+
+#: ../base/ufos/research.ufo:2617
 msgid "Alien Autopsy - Ortnok"
 msgstr "Alien Autopsy - Ortnok"
 
-#: ../base/ufos/research.ufo:2128
+#: ../base/ufos/research.ufo:2618
 msgid "ortnok_autopsy_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -6710,7 +7119,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:2129
+#: ../base/ufos/research.ufo:2619
 msgid "ortnok_autopsy_pre_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -6730,11 +7139,19 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:2149
+#: ../base/ufos/research.ufo:2626
+msgid "Proposal: Alien Autopsy -- Ortnok"
+msgstr "Proposal: Alien Autopsy -- Ortnok"
+
+#: ../base/ufos/research.ufo:2633
+msgid "Re: Alien Autopsy -- Ortnok"
+msgstr "Re: Alien Autopsy -- Ortnok"
+
+#: ../base/ufos/research.ufo:2653
 msgid "Alien Autopsy - Taman"
 msgstr "Alien Autopsy - Taman"
 
-#: ../base/ufos/research.ufo:2150
+#: ../base/ufos/research.ufo:2654
 msgid "taman_autopsy_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -6782,7 +7199,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:2151
+#: ../base/ufos/research.ufo:2655
 msgid "taman_autopsy_pre_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -6802,11 +7219,19 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:2169
+#: ../base/ufos/research.ufo:2662
+msgid "Proposal: Alien Autopsy -- Taman"
+msgstr "Proposal: Alien Autopsy -- Taman"
+
+#: ../base/ufos/research.ufo:2669
+msgid "Re: Alien Autopsy -- Taman"
+msgstr "Re: Alien Autopsy -- Taman"
+
+#: ../base/ufos/research.ufo:2687
 msgid "Alien Autopsy - Shevaar"
 msgstr "Alien Autopsy - Shevaar"
 
-#: ../base/ufos/research.ufo:2170
+#: ../base/ufos/research.ufo:2688
 msgid "shevaar_autopsy_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -6852,7 +7277,7 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:2171
+#: ../base/ufos/research.ufo:2689
 msgid "shevaar_autopsy_pre_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -6872,35 +7297,43 @@ msgstr ""
 "\n"
 "Dr. Connor"
 
-#: ../base/ufos/research.ufo:2243
+#: ../base/ufos/research.ufo:2696
+msgid "Proposal: Alien Autopsy -- Shevaar"
+msgstr "Proposal: Alien Autopsy -- Shevaar"
+
+#: ../base/ufos/research.ufo:2703
+msgid "Re: Alien Autopsy -- Shevaar"
+msgstr "Re: Alien Autopsy -- Shevaar"
+
+#: ../base/ufos/research.ufo:2775
 msgid "Phoenix UGV"
 msgstr "Phoenix UGV"
 
-#: ../base/ufos/research.ufo:2244
+#: ../base/ufos/research.ufo:2776
 msgid "ugv_phoenix_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2245
+#: ../base/ufos/research.ufo:2777
 msgid "ugv_phoenix_pre_txt"
 msgstr "No pre research info available"
 
-#: ../base/ufos/research.ufo:2259
+#: ../base/ufos/research.ufo:2791
 msgid "Triax UGV"
 msgstr "Triax UGV"
 
-#: ../base/ufos/research.ufo:2260
+#: ../base/ufos/research.ufo:2792
 msgid "ugv_triax_txt"
 msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2261
+#: ../base/ufos/research.ufo:2793
 msgid "ugv_triax_pre_txt"
 msgstr "No pre research info available"
 
-#: ../base/ufos/research.ufo:2279
+#: ../base/ufos/research.ufo:2811
 msgid "'Raven' ECM Unit"
 msgstr "'Raven' ECM Unit"
 
-#: ../base/ufos/research.ufo:2281
+#: ../base/ufos/research.ufo:2813
 msgid "craft_electronics_raven_txt"
 msgstr ""
 "Technical Specifications: \"Raven\" ECM Unit\n"
@@ -6939,11 +7372,11 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:2295
+#: ../base/ufos/research.ufo:2827
 msgid "Polymer Aircraft Armour"
 msgstr "Polymer Aircraft Armour"
 
-#: ../base/ufos/research.ufo:2297
+#: ../base/ufos/research.ufo:2829
 msgid "craft_shield_light_txt"
 msgstr ""
 "Technical Specifications: Polymer Aircraft Armour\n"
@@ -6986,11 +7419,11 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:2311
+#: ../base/ufos/research.ufo:2843
 msgid "SHIVA Rotary Cannon"
 msgstr "SHIVA Rotary Cannon"
 
-#: ../base/ufos/research.ufo:2313
+#: ../base/ufos/research.ufo:2845
 msgid "craft_weapon_shiva_txt"
 msgstr ""
 "Technical Specifications: SHIVA Rotary Cannon\n"
@@ -7033,11 +7466,11 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:2327
+#: ../base/ufos/research.ufo:2859
 msgid "SHIVA 20mm API Rounds"
 msgstr "SHIVA 20mm API Rounds"
 
-#: ../base/ufos/research.ufo:2329
+#: ../base/ufos/research.ufo:2861
 msgid "craft_ammo_shiva_1_txt"
 msgstr ""
 "Technical Specifications: SHIVA 20mm API Rounds\n"
@@ -7076,11 +7509,11 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:2346
+#: ../base/ufos/research.ufo:2878
 msgid "SHIVA 20mm HEI Rounds"
 msgstr "SHIVA 20mm HEI Rounds"
 
-#: ../base/ufos/research.ufo:2348
+#: ../base/ufos/research.ufo:2880
 msgid "craft_ammo_shiva_2_txt"
 msgstr ""
 "Technical Specifications: SHIVA 20mm HEI Rounds\n"
@@ -7119,11 +7552,11 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:2365
+#: ../base/ufos/research.ufo:2897
 msgid "'Sparrowhawk' AA Missile Rack"
 msgstr "'Sparrowhawk' AA Missile Rack"
 
-#: ../base/ufos/research.ufo:2367
+#: ../base/ufos/research.ufo:2899
 msgid "craft_weapon_sparrowhawk_txt"
 msgstr ""
 "Technical Specifications: \"Sparrowhawk\" AA Missile Rack\n"
@@ -7172,11 +7605,11 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:2381
+#: ../base/ufos/research.ufo:2913
 msgid "'Sparrowhawk' Missile"
 msgstr "'Sparrowhawk' Missile"
 
-#: ../base/ufos/research.ufo:2383
+#: ../base/ufos/research.ufo:2915
 msgid "craft_ammo_sparrowhawk_txt"
 msgstr ""
 "Technical Specifications: \"Sparrowhawk\" Missile\n"
@@ -7219,11 +7652,11 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:2400
+#: ../base/ufos/research.ufo:2932
 msgid "TR-20 Rocket Pod"
 msgstr "TR-20 Rocket Pod"
 
-#: ../base/ufos/research.ufo:2402
+#: ../base/ufos/research.ufo:2934
 msgid "craft_weapon_tr20_txt"
 msgstr ""
 "Technical Specifications: TR-20 Rocket Pod\n"
@@ -7266,11 +7699,11 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:2416
+#: ../base/ufos/research.ufo:2948
 msgid "TR-20 Rocket"
 msgstr "TR-20 Rocket"
 
-#: ../base/ufos/research.ufo:2418
+#: ../base/ufos/research.ufo:2950
 msgid "craft_ammo_tr20_txt"
 msgstr ""
 "Technical Specifications: TR-20 Rocket\n"
@@ -7313,11 +7746,11 @@ msgstr ""
 "\n"
 "None."
 
-#: ../base/ufos/research.ufo:2443
+#: ../base/ufos/research.ufo:2975
 msgid "Particle Beam Weapon"
 msgstr "Particle Beam Weapon"
 
-#: ../base/ufos/research.ufo:2444
+#: ../base/ufos/research.ufo:2976
 msgid "craft_weapon_particle_beam_pre_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -7333,7 +7766,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:2445
+#: ../base/ufos/research.ufo:2977
 msgid "craft_weapon_particle_beam_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -7361,11 +7794,19 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:2467
+#: ../base/ufos/research.ufo:2985
+msgid "Proposal: Particle Beam Weapon"
+msgstr "Proposal: Particle Beam Weapon"
+
+#: ../base/ufos/research.ufo:2992
+msgid "Re: Particle Beam Weapon"
+msgstr "Re: Particle Beam Weapon"
+
+#: ../base/ufos/research.ufo:3013
 msgid "Targeting Computer"
 msgstr "Targeting Computer"
 
-#: ../base/ufos/research.ufo:2469
+#: ../base/ufos/research.ufo:3015
 msgid "craft_electronics_targeting_txt"
 msgstr ""
 "Technical Specifications: Targeting Computer\n"
@@ -7404,11 +7845,11 @@ msgstr ""
 "\n"
 "With all the possibilities and different scenarios waiting in our future, there is no golden rule that will help decide when to deploy the Targeting Computer. It is ready for use at the Commander's discretion."
 
-#: ../base/ufos/research.ufo:2483
+#: ../base/ufos/research.ufo:3029
 msgid "Fuel Pod"
 msgstr "Fuel Pod"
 
-#: ../base/ufos/research.ufo:2485
+#: ../base/ufos/research.ufo:3031
 msgid "craft_electronics_fuelpod_txt"
 msgstr ""
 "Technical Specifications: Fuel Pod\n"
@@ -7445,11 +7886,11 @@ msgstr ""
 "\n"
 "Having read Cdr. Navarre's report, Commander, I have to stress that our charter stipulates we must stop any and all alien activity on Earth. We can't afford to let some of it continue because it's just out of our planes' reach. If civilians were to die because the dropship couldn't quite make it, our image would be shattered and our funding may suffer the consequences. We should keep some fuel pod-equipped planes on standby to deal with distant incidents."
 
-#: ../base/ufos/research.ufo:2503
+#: ../base/ufos/research.ufo:3049
 msgid "Alien Materials"
 msgstr "Alien Materials"
 
-#: ../base/ufos/research.ufo:2504
+#: ../base/ufos/research.ufo:3050
 msgid "alienmaterials_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -7475,7 +7916,7 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:2505
+#: ../base/ufos/research.ufo:3051
 msgid "alienmaterials_pre_txt"
 msgstr ""
 "TO: Base Commander, PHALANX, Atlantic Operations Command\n"
@@ -7493,11 +7934,11 @@ msgstr ""
 "\n"
 "--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:2525
+#: ../base/ufos/research.ufo:3071
 msgid "Political Situation Before The Invasion"
 msgstr "Political Situation Before The Invasion"
 
-#: ../base/ufos/research.ufo:2526
+#: ../base/ufos/research.ufo:3072
 msgid "news_initial_political_situation_txt"
 msgstr ""
 "In the year 2084, Earth is in better shape than it has been for more than a century. Perhaps for the first time, peace and cooperation are the norm rather than the exception. The current state of affairs, however, can only be explained through the brutal history of the 21st century.\n"
@@ -7516,11 +7957,11 @@ msgstr ""
 "\n"
 "The loyalist army suffered massive desertions in the days that followed; it was the single event that eventually spelled doom for the government. More than six million lives were lost before the surrender of loyalist forces on 15 August 2036, having fought tooth and nail and employed large-scale scorched earth tactics as the rebels slowly drove them into the Indian Ocean. This is the official ending of the Second Cold War."
 
-#: ../base/ufos/research.ufo:2536
+#: ../base/ufos/research.ufo:3082
 msgid "After The War"
 msgstr "After The War"
 
-#: ../base/ufos/research.ufo:2537
+#: ../base/ufos/research.ufo:3083
 msgid "news_after_the_war_txt"
 msgstr ""
 "The Asian Republic:\n"
@@ -7633,11 +8074,11 @@ msgstr ""
 "\n"
 "Oceania's military consists mainly of a powerful navy. Its land army is minuscule compared to that of any nation except United America, and serves only in a defensive capacity, with average training and equipment. However, it can respond fairly quickly in emergency situations."
 
-#: ../base/ufos/research.ufo:2547
+#: ../base/ufos/research.ufo:3093
 msgid "PHALANX And The Mumbai Aftermath"
 msgstr "PHALANX And The Mumbai Aftermath"
 
-#: ../base/ufos/research.ufo:2548
+#: ../base/ufos/research.ufo:3094
 msgid "news_phalanx_and_mumbai_aftermath_txt"
 msgstr ""
 "\"Project PHALANX\" was first conceived by the United States Department of Defense in 1955, after years of growing concern over increased numbers of UFO sightings all across the world. The possibility of an alien invasion plagued badly on the minds of politicians already unnerved by the nuclear power of the Soviet Union. The existence of hostile extraterrestrial life in the universe seemed a very remote possibility, even moreso that these hostiles might find Earth among all the vastness of space -- but could America afford to take that chance?\n"
@@ -7668,11 +8109,12 @@ msgstr ""
 "\n"
 "All it lacked was a leader."
 
-#: ../base/ufos/research.ufo:2558
+#: ../base/ufos/research.ufo:3104
+#: ../base/ufos/research.ufo:3112
 msgid "A New Twist"
 msgstr "A New Twist"
 
-#: ../base/ufos/research.ufo:2559
+#: ../base/ufos/research.ufo:3105
 msgid "news_newtwist_txt"
 msgstr "<TODO>"
 
@@ -10004,7 +10446,7 @@ msgstr "Build a laboratory first"
 msgid "Research of %s finished\n"
 msgstr "Research of %s finished\n"
 
-#: client/cl_research.c:1407
+#: client/cl_research.c:1420
 msgid "No description available."
 msgstr "No description available."
 
@@ -10504,15 +10946,28 @@ msgstr "Fuel:\t%i\n"
 msgid "Equipment:\t%s\n"
 msgstr "Equipment:\t%s\n"
 
-#: client/cl_ufopedia.c:406
+#: client/cl_ufopedia.c:363
+#, c-format
+msgid ""
+"FROM: %s\n"
+"TO: %s\n"
+"DATE: %s\n"
+"SUBJECT: %s\n"
+msgstr ""
+"FROM: %s\n"
+"TO: %s\n"
+"DATE: %s\n"
+"SUBJECT: %s\n"
+
+#: client/cl_ufopedia.c:448
 msgid "No pre-research description available."
 msgstr "No pre-research description available."
 
-#: client/cl_ufopedia.c:564
+#: client/cl_ufopedia.c:607
 msgid "Ufopedia Content"
 msgstr "Ufopedia Content"
 
-#: client/cl_ufopedia.c:619
+#: client/cl_ufopedia.c:662
 #, c-format
 msgid "Ufopedia Index: %s"
 msgstr "Ufopedia Index: %s"
@@ -10656,8 +11111,6 @@ msgstr "5 days"
 #~ msgstr "%s has been killed!\n"
 #~ msgid "Edit name of the soldier"
 #~ msgstr "Edit name of the soldier"
-#~ msgid "Monomolecular Blades"
-#~ msgstr "Monomolecular Blades"
 #~ msgid "monomolecular_blades_txt"
 #~ msgstr "monomolecular_blades_txt"
 #~ msgid "monomolecular_blades_pre_txt"
@@ -10839,8 +11292,6 @@ msgstr "5 days"
 #~ msgstr "needs autopsy"
 #~ msgid "Advanced Laser Technology"
 #~ msgstr "Advanced Laser Technology"
-#~ msgid "Anti-Alien Gas"
-#~ msgstr "Anti-Alien Gas"
 #~ msgid "anti_alien_gas_txt"
 #~ msgstr "anti_alien_gas_txt"
 #~ msgid "anti_alien_gas_pre_txt"
