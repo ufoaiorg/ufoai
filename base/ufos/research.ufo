@@ -104,18 +104,16 @@ tech rs_laser
 
 	mail_pre
 	{
-		from	"_Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
-		to		"_Base Commander, PHALANX, Atlantic Operations Command"
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
 		subject	"_Proposal: Continuous Wave Laser Operation"
-		date	""
 	}
 
 	mail
 	{
-		from	"_Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
-		to		"_Base Commander, PHALANX, Atlantic Operations Command"
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
 		subject	"_Re: Continuous Wave Laser Operation"
-		date	""
 	}
 
 	require_AND { tech nothing }
@@ -134,18 +132,16 @@ tech rs_antimatter
 
 	mail_pre
 	{
-		from	"_Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
-		to		"_Base Commander, PHALANX, Atlantic Operations Command"
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
 		subject	"_Proposal: Antimatter"
-		date	""
 	}
 
 	mail
 	{
-		from	"_Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
-		to		"_Base Commander, PHALANX, Atlantic Operations Command"
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
 		subject	"_Re: Antimatter"
-		date	""
 	}
 
 	require_AND
@@ -195,18 +191,16 @@ tech rs_alien_live
 
 	mail_pre
 	{
-		from	"_Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command"
-		to		"_Base Commander, PHALANX, Atlantic Operations Command"
+		from	"_mail_from_dr_connor"
+		to		"_mail_to_base_commander"
 		subject	"_Proposal: Live Alien"
-		date	""
 	}
 
 	mail
 	{
-		from	"_Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command"
-		to		"_Base Commander, PHALANX, Atlantic Operations Command"
+		from	"_mail_from_dr_connor"
+		to		"_mail_to_base_commander"
 		subject	"_Re: Live Alien"
-		date	""
 	}
 
 	require_AND
@@ -229,18 +223,16 @@ tech rs_alien_breathing
 
 	mail_pre
 	{
-		from	"_Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command"
-		to		"_Base Commander, PHALANX, Atlantic Operations Command"
+		from	"_mail_from_dr_connor"
+		to		"_mail_to_base_commander"
 		subject	"_Proposal: Alien Breathing Apparatus"
-		date	""
 	}
 
 	mail
 	{
-		from	"_Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command"
-		to		"_Base Commander, PHALANX, Atlantic Operations Command"
+		from	"_mail_from_dr_connor"
+		to		"_mail_to_base_commander"
 		subject	"_Re: Alien Breathing Apparatus"
-		date	""
 	}
 
 	require_OR
@@ -264,18 +256,16 @@ tech rs_alien_mind
 
 	mail_pre
 	{
-		from	"_Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command"
-		to		"_Base Commander, PHALANX, Atlantic Operations Command"
+		from	"_mail_from_dr_connor"
+		to		"_mail_to_base_commander"
 		subject	"_Proposal: The Alien Mind"
-		date	""
 	}
 
 	mail
 	{
-		from	"_Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command"
-		to		"_Base Commander, PHALANX, Atlantic Operations Command"
+		from	"_mail_from_dr_connor"
+		to		"_mail_to_base_commander"
 		subject	"_Re: The Alien Mind"
-		date	""
 	}
 
 	require_AND
@@ -296,18 +286,16 @@ tech rs_alien_oddbehaviour
 
 	mail_pre
 	{
-		from	"_Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command"
-		to		"_Base Commander, PHALANX, Atlantic Operations Command"
+		from	"_mail_from_dr_connor"
+		to		"_mail_to_base_commander"
 		subject	"_Proposal: Odd Behaviour"
-		date	""
 	}
 
 	mail
 	{
-		from	"_Dr. Connor, R&D: Bio & Containment Division, PHALANX, Atlantic Operations Command"
-		to		"_Base Commander, PHALANX, Atlantic Operations Command"
+		from	"_mail_from_dr_connor"
+		to		"_mail_to_base_commander"
 		subject	"_Re: Odd Behaviour"
-		date	""
 	}
 
 	require_AND
@@ -364,18 +352,16 @@ tech rs_weapon_bolterrifle
 
 	mail_pre
 	{
-		from	"_Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
-		to		"_Base Commander, PHALANX, Atlantic Operations Command"
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
 		subject	"_Proposal: Electromagnetic Rifle"
-		date	""
 	}
 
 	mail
 	{
-		from	"_Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
-		to		"_Base Commander, PHALANX, Atlantic Operations Command"
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
 		subject	"_Re: Electromagnetic Rifle"
-		date	""
 	}
 
 	require_AND
@@ -396,18 +382,16 @@ tech rs_weapon_bolterrifle_ammo
 
 	mail_pre
 	{
-		from	"_Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
-		to		"_Base Commander, PHALANX, Atlantic Operations Command"
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
 		subject	"_Proposal: Electromagnetic Rifle"
-		date	""
 	}
 
 	mail
 	{
-		from	"_Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
-		to		"_Base Commander, PHALANX, Atlantic Operations Command"
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
 		subject	"_Re: Electromagnetic Rifle"
-		date	""
 	}
 
 	require_AND
@@ -446,18 +430,16 @@ tech rs_weapon_monoknife
 
 	mail_pre
 	{
-		from	"_Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
-		to		"_Base Commander, PHALANX, Atlantic Operations Command"
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
 		subject	"_Proposal: Monomolecular Blades"
-		date	""
 	}
 
 	mail
 	{
-		from	"_Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command"
-		to		"_Base Commander, PHALANX, Atlantic Operations Command"
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
 		subject	"_Re: Monomolecular Blades"
-		date	""
 	}
 
 	require_AND
@@ -629,6 +611,20 @@ tech rs_weapon_grenl_plasma_ammo
 	description	"_grenl_plasma_ammo_txt"
 	pre_description	"_grenl_plasma_ammo_pre_txt"
 
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Proposal: Plasma And The Grenade Launcher"
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Re: Re: Plasma And The Grenade Launcher"
+	}
+
 	require_AND
 	{
 		tech rs_damage_plasma
@@ -665,6 +661,20 @@ tech rs_weapon_heavylaser
 	up_chapter	equipment
 	description	"_heavylaser_txt"
 	pre_description	"_heavylaser_pre_txt"
+
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Proposal: Heavy Laser"
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Re: Heavy Laser"
+	}
 
 	require_AND
 	{
@@ -718,6 +728,20 @@ tech rs_weapon_kerrblade
 	description	"_kerrblade_txt"
 	pre_description	"_kerrblade_pre_txt"
 
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Proposal: Alien Artifact -- Kerrblade"
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Re: Alien Artifact -- Kerrblade"
+	}
+
 	require_AND
 	{
 		item kerrblade 1
@@ -735,6 +759,20 @@ tech rs_weapon_laserpistol
 	up_chapter	equipment
 	description	"_laserpistol_txt"
 	pre_description	"_laserpistol_pre_txt"
+
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Proposal: Laser Pistol"
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Re: Laser Pistol"
+	}
 
 	require_AND
 	{
@@ -770,6 +808,20 @@ tech rs_weapon_laserrifle
 	up_chapter	equipment
 	description	"_laserrifle_txt"
 	pre_description	"_laserrifle_pre_txt"
+
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Proposal: Laser Rifle"
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Re: Laser Rifle"
+	}
 
 	require_AND
 	{
@@ -893,6 +945,20 @@ tech rs_weapon_plasatomizer
 	description	"_plasatomizer_txt"
 	pre_description	"_plasatomizer_pre_txt"
 
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Proposal: Alien Artifact -- Plasma Pistol"
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Re: Alien Artifact -- Plasma Pistol"
+	}
+
 	require_AND
 	{
 		tech rs_skill_assault
@@ -912,6 +978,20 @@ tech rs_weapon_plasatomizer_ammo
 	description	"_plasatomizer_txt"
 	pre_description	"_plasatomizer_pre_txt"
 
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Proposal: Alien Artifact -- Plasma Pistol"
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Re: Alien Artifact -- Plasma Pistol"
+	}
+
 	require_AND
 	{
 		tech rs_damage_plasma
@@ -928,6 +1008,20 @@ tech rs_weapon_plasblaster
 	up_chapter	artifacts
 	description	"_plasblaster_txt"
 	pre_description	"_plasblaster_pre_txt"
+
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Proposal: Alien Artifact -- Plasma Blaster"
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Re: Alien Artifact -- Plasma Blaster"
+	}
 
 	require_AND
 	{
@@ -947,6 +1041,20 @@ tech rs_weapon_plasblaster_ammo
 	description	"_plasblaster_txt"
 	pre_description	"_plasblaster_pre_txt"
 
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Proposal: Alien Artifact -- Plasma Blaster"
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Re: Alien Artifact -- Plasma Blaster"
+	}
+
 	require_AND
 	{
 		tech rs_damage_plasma
@@ -963,6 +1071,20 @@ tech rs_weapon_plasblade
 	up_chapter	artifacts
 	description	"_plasblade_txt"
 	pre_description	"_plasblade_pre_txt"
+
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Proposal: Alien Artifact -- Plasma Blade"
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Re: Alien Artifact -- Plasma Blade"
+	}
 
 	require_AND
 	{
@@ -982,6 +1104,20 @@ tech rs_weapon_plasmagren
 	description	"_plasmagren_txt"
 	pre_description	"_plasmagren_pre_txt"
 
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Proposal: Alien Artifact -- Plasma Grenade"
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Re: Alien Artifact -- Plasma Grenade"
+	}
+
 	require_AND
 	{
 		tech rs_skill_explosive
@@ -999,6 +1135,20 @@ tech rs_weapon_plasrifle
 	up_chapter	artifacts
 	description	"_plasrifle_txt"
 	pre_description	"_plasrifle_pre_txt"
+
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Proposal: Alien Artifact -- Plasma Rifle"
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Re: Alien Artifact -- Plasma Rifle"
+	}
 
 	require_AND
 	{
@@ -1018,6 +1168,20 @@ tech rs_weapon_plasrifle_ammo
 	up_chapter	artifacts
 	description	"_plasrifle_txt"
 	pre_description	"_plasrifle_pre_txt"
+
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Proposal: Alien Artifact -- Plasma Rifle"
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Re: Alien Artifact -- Plasma Rifle"
+	}
 
 	require_AND
 	{
@@ -1342,6 +1506,20 @@ tech rs_weapon_stungren
 	description	"_stungren_txt"
 	pre_description	"_stungren_pre_txt"
 
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Proposal: Anti-Alien Gas"
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Re: Anti-Alien Gas"
+	}
+
 	require_AND
 	{
 		tech rs_alien_live
@@ -1366,6 +1544,20 @@ tech rs_weapon_stunrod
 	description	"_stunrod_txt"
 	pre_description	"_stunrod_pre_txt"
 
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Proposal: Stun Rod"
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Re: Stun Rod"
+	}
+
 	require_AND
 	{
 		tech rs_skill_close
@@ -1385,6 +1577,20 @@ tech rs_weapon_pbeampistol
 	description	"_pbeampistol_txt"
 	pre_description	"_pbeampistol_pre_txt"
 
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Proposal: Alien Artifact -- Particle Beam Pistol"
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Re: Alien Artifact -- Particle Beam Pistol"
+	}
+
 	require_AND
 	{
 		tech rs_skill_close
@@ -1403,6 +1609,20 @@ tech rs_weapon_pbeampistol_ammo
 	description	"_pbeamammo_txt"
 	pre_description	"_pbeamammo_pre_txt"
 
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Proposal: Alien Artifact -- Particle Beam Pistol"
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Re: Alien Artifact -- Particle Beam Pistol"
+	}
+
 	require_AND
 	{
 		tech rs_damage_pbeam
@@ -1420,6 +1640,20 @@ tech rs_weapon_pbeamcannon
 	up_chapter	artifacts
 	description	"_pbeamcannon_txt"
 	pre_description	"_pbeamcannon_pre_txt"
+
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Proposal: Alien Artifact -- Particle Beam Cannon"
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Re: Alien Artifact -- Particle Beam Cannon"
+	}
 
 	require_AND
 	{
@@ -1440,6 +1674,20 @@ tech rs_weapon_pbeamcannon_ammo
 	description	"_pbeamammo_txt"
 	pre_description	"_pbeamammo_pre_txt"
 
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Proposal: Alien Artifact -- Particle Beam Cannon"
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Re: Alien Artifact -- Particle Beam Cannon"
+	}
+
 	require_AND
 	{
 		tech rs_damage_pbeam
@@ -1457,6 +1705,20 @@ tech rs_weapon_pbeamrifle
 	up_chapter	artifacts
 	description	"_pbeamrifle_txt"
 	pre_description	"_pbeamrifle_pre_txt"
+
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Proposal: Alien Artifact -- Particle Beam Rifle"
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Re: Alien Artifact -- Particle Beam Rifle"
+	}
 
 	require_AND
 	{
@@ -1476,6 +1738,20 @@ tech rs_weapon_pbeamrifle_ammo
 	description	"_pbeamammo_txt"
 	pre_description	"_pbeamammo_pre_txt"
 
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Proposal: Alien Artifact -- Particle Beam Rifle"
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Re: Alien Artifact -- Particle Beam Rifle"
+	}
+
 	require_AND
 	{
 		tech rs_damage_pbeam
@@ -1494,6 +1770,20 @@ tech rs_weapon_pbeam_ammo
 	up_chapter	artifacts
 	description	"_pbeam_ammo_txt"
 	pre_description	"_pbeam_ammo_pre_txt"
+
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Proposal: Man-Portable Particle Beams"
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Re: Man-Portable Particle Beams"
+	}
 
 	require_AND
 	{
@@ -2145,6 +2435,20 @@ tech rs_craft_ufo_scout
 	pre_description	"_ufo_scout_pre_txt"
 	up_chapter	crafts
 
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_UFO -- Scout"
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Re: UFO -- Scout"
+	}
+
 	// FIXME
 	require_AND
 	{
@@ -2178,6 +2482,20 @@ tech rs_craft_ufo_fighter
 	description	"_ufo_fighter_pre_txt"
 	up_chapter	crafts
 
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_UFO -- Fighter"
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Re: UFO -- Fighter"
+	}
+
 	// FIXME
 	require_AND
 	{
@@ -2205,6 +2523,20 @@ tech rs_craft_ufo_harvester
 	description	"_ufo_harvester_txt"
 	description	"_ufo_harvester_pre_txt"
 	up_chapter	crafts
+
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_UFO -- Harvester"
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Re: UFO -- Harvester"
+	}
 
 	// FIXME
 	require_AND
@@ -2252,6 +2584,20 @@ tech rs_alien_bloodspider_autopsy
 	pre_description	"_bloodspider_autopsy_pre_txt"
 	up_chapter	aliens
 
+	mail_pre
+	{
+		from	"_mail_from_dr_connor"
+		to		"_mail_to_base_commander"
+		subject	"_Proposal: Alien Autopsy -- Bloodspider"
+	}
+
+	mail
+	{
+		from	"_mail_from_dr_connor"
+		to		"_mail_to_base_commander"
+		subject	"_Re: Alien Autopsy -- Bloodspider"
+	}
+
 	require_AND
 	{
 		alien_dead Bloodspider 1
@@ -2272,6 +2618,20 @@ tech rs_alien_ortnok_autopsy
 	description	"_ortnok_autopsy_txt"
 	pre_description	"_ortnok_autopsy_pre_txt"
 	up_chapter	aliens
+
+	mail_pre
+	{
+		from	"_mail_from_dr_connor"
+		to		"_mail_to_base_commander"
+		subject	"_Proposal: Alien Autopsy -- Ortnok"
+	}
+
+	mail
+	{
+		from	"_mail_from_dr_connor"
+		to		"_mail_to_base_commander"
+		subject	"_Re: Alien Autopsy -- Ortnok"
+	}
 
 	require_AND
 	{
@@ -2295,6 +2655,20 @@ tech rs_alien_taman_autopsy
 	pre_description	"_taman_autopsy_pre_txt"
 	up_chapter	aliens
 
+	mail_pre
+	{
+		from	"_mail_from_dr_connor"
+		to		"_mail_to_base_commander"
+		subject	"_Proposal: Alien Autopsy -- Taman"
+	}
+
+	mail
+	{
+		from	"_mail_from_dr_connor"
+		to		"_mail_to_base_commander"
+		subject	"_Re: Alien Autopsy -- Taman"
+	}
+
 	require_AND
 	{
 		alien_dead Taman 1
@@ -2314,6 +2688,20 @@ tech rs_alien_shevaar_autopsy
 	description	"_shevaar_autopsy_txt"
 	pre_description	"_shevaar_autopsy_pre_txt"
 	up_chapter	aliens
+
+	mail_pre
+	{
+		from	"_mail_from_dr_connor"
+		to		"_mail_to_base_commander"
+		subject	"_Proposal: Alien Autopsy -- Shevaar"
+	}
+
+	mail
+	{
+		from	"_mail_from_dr_connor"
+		to		"_mail_to_base_commander"
+		subject	"_Re: Alien Autopsy -- Shevaar"
+	}
 
 	require_AND
 	{
@@ -2590,6 +2978,20 @@ tech rs_craft_weapon_particle
 
 	provides	craft_weapon_particle
 
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Proposal: Particle Beam Weapon"
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_Re: Particle Beam Weapon"
+	}
+
 	require_OR
 	{
 //		tech rs_craft_ufo_fighter
@@ -2702,6 +3104,13 @@ tech news_newtwist
 	name		"_A New Twist"
 	description	"_news_newtwist_txt"
 	up_chapter	news
+
+	mail
+	{
+		from	"_mail_from_dr_connor"
+		to		"_mail_to_base_commander"
+		subject	"_A New Twist"
+	}
 
 	require_AND
 	{
