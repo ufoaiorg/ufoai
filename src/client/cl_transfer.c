@@ -78,6 +78,12 @@ static void TR_CargoList (void)
 				Q_strcat(cargoList, str, sizeof(cargoList));
 				cnt++;
 			}
+			if (transferidx->alienLiveAmount[i] > 0) {
+				Com_sprintf(str, sizeof(str), "%s (%i on board)\n",
+				_(AL_AlienTypeToName(i)), transferidx->alienLiveAmount[i]);
+				Q_strcat(cargoList, str, sizeof(cargoList));
+				cnt++;
+			}
 		}
 	} else {
 		/* TODO: show aircraft info here. */
@@ -157,6 +163,17 @@ static void TR_TransferSelect_f (void)
 					else
 						Com_sprintf(str, sizeof(str), "Corpse of %s (%i available)\n",
 						_(AL_AlienTypeToName(i)), baseCurrent->alienscont[i].amount_dead);
+					Q_strcat(transferList, str, sizeof(transferList));
+					cnt++;
+				}
+				if (baseCurrent->alienscont[i].alientype && baseCurrent->alienscont[i].amount_alive > 0) {
+					if (transferidx->alienLiveAmount[i] > 0)
+						Com_sprintf(str, sizeof(str), "Alive %s (%i on board, %i left)\n",
+						_(AL_AlienTypeToName(i)), transferidx->alienLiveAmount[i],
+						baseCurrent->alienscont[i].amount_alive);
+					else
+						Com_sprintf(str, sizeof(str), "Alive %s (%i available)\n",
+						_(AL_AlienTypeToName(i)), baseCurrent->alienscont[i].amount_alive);
 					Q_strcat(transferList, str, sizeof(transferList));
 					cnt++;
 				}
@@ -482,6 +499,16 @@ static void TR_TransferListSelect_f (void)
 					transferidx->alienBodyAmount[i]++;
 					/* Remove the corpse from Alien Containment. */
 					baseCurrent->alienscont[i].amount_dead--;
+					break;
+				}
+				cnt++;
+			}
+			if (baseCurrent->alienscont[i].alientype && baseCurrent->alienscont[i].amount_alive > 0) {
+				if (cnt == num) {
+					/* TODO: Check space in transportship. */
+					transferidx->alienLiveAmount[i]++;
+					/* Remove an alien from Alien Containment. */
+					baseCurrent->alienscont[i].amount_alive--;
 					break;
 				}
 				cnt++;
