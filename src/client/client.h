@@ -309,6 +309,9 @@ extern cvar_t *confirm_movement;
 
 extern cvar_t *cl_precachemenus;
 
+/** limit the input for cvar editing (base name, save slots and so on) */
+#define MAX_CVAR_EDITING_LENGTH 32
+
 typedef struct {
 	int key;					/**< so entities can reuse same entry */
 	vec3_t color;

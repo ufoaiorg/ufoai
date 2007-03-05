@@ -1170,52 +1170,6 @@ static void CL_AssignSoldier_f (void)
 	Cbuf_AddText(va("team_select %i\n", num));
 }
 
-
-/**
- * @brief Calls script function on cvar change
- *
- * This is for inline editing of cvar values
- * The cvarname_changed function are called,
- * the editing is activated and ended here
- *
- * Done by the script command msgmenu [?|!|:][cvarname]
- */
-static void CL_MessageMenu_f (void)
-{
-	static char nameBackup[MAX_VAR];
-	static char cvarName[MAX_VAR];
-	char *msg;
-
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: msgmenu <msg>\n");
-		return;
-	}
-
-	msg = Cmd_Argv(1);
-	if (msg[0] == '?') {
-		/* start */
-		Cbuf_AddText("messagemenu\n");
-		Q_strncpyz(cvarName, msg + 1, MAX_VAR);
-		Q_strncpyz(nameBackup, Cvar_VariableString(cvarName), MAX_VAR);
-		Q_strncpyz(msg_buffer, nameBackup, sizeof(msg_buffer));
-		msg_bufferlen = strlen(nameBackup);
-	} else if (msg[0] == '!') {
-		/* cancel */
-		Cvar_ForceSet(cvarName, nameBackup);
-		Cvar_ForceSet(va("%s%i", cvarName, cl_selected->integer), nameBackup);
-		Cbuf_AddText(va("%s_changed\n", cvarName));
-	} else if (msg[0] == ':') {
-		/* end */
-		Cvar_ForceSet(cvarName, msg + 1);
-		Cvar_ForceSet(va("%s%i", cvarName, cl_selected->integer), msg + 1);
-		Cbuf_AddText(va("%s_changed\n", cvarName));
-	} else {
-		/* continue */
-		Cvar_ForceSet(cvarName, msg);
-		Cvar_ForceSet(va("%s%i", cvarName, cl_selected->integer), msg);
-	}
-}
-
 /**
  * @brief Saves a team
  */
@@ -1459,7 +1413,6 @@ extern void CL_ResetTeams (void)
 	Cmd_AddCommand("nextsoldier", CL_NextSoldier_f, _("Toggle to next soldier"));
 	Cmd_AddCommand("saveteamslot", CL_SaveTeamSlot_f, NULL);
 	Cmd_AddCommand("loadteamslot", CL_LoadTeamSlot_f, NULL);
-	Cmd_AddCommand("msgmenu", CL_MessageMenu_f, NULL);
 #ifdef DEBUG
 	Cmd_AddCommand("teamlist", CL_TeamListDebug_f, "Debug function to show all hired and assigned teammembers");
 #endif
@@ -1799,7 +1752,7 @@ extern void CL_ParseResults (sizebuf_t * buf)
 		CL_CollectItems(winner == we, &number_items, &credits_gained);
 #endif
 		CL_CollectingItems(winner == we);	/**< Collect items from the battlefield. */
-		if (winner == we)		
+		if (winner == we)
 			CL_CollectingAliens();		/**< Collect aliens from the battlefield. */
 
 		/* clear unused LE inventories */

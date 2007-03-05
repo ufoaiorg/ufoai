@@ -110,7 +110,7 @@ void Con_ToggleChat_f(void)
 /**
  * @brief Clears the console buffer
  */
-static void Con_Clear_f(void)
+static void Con_Clear_f (void)
 {
 	memset(con.text, ' ', sizeof(con.text));
 }
@@ -119,7 +119,7 @@ static void Con_Clear_f(void)
 /**
  * @brief Save the console contents out to a file
  */
-static void Con_Dump_f(void)
+static void Con_Dump_f (void)
 {
 	int l, x;
 	char *line;
@@ -176,7 +176,7 @@ static void Con_Dump_f(void)
 /**
  * @brief
  */
-void Con_ClearNotify(void)
+void Con_ClearNotify (void)
 {
 	int i;
 
@@ -188,7 +188,7 @@ void Con_ClearNotify(void)
 /**
  * @brief
  */
-void Con_MessageModeSay_f(void)
+void Con_MessageModeSay_f (void)
 {
 	msg_mode = MSG_SAY;
 	cls.key_dest = key_message;
@@ -197,16 +197,17 @@ void Con_MessageModeSay_f(void)
 /**
  * @brief
  */
-static void Con_MessageModeSayTeam_f(void)
+static void Con_MessageModeSayTeam_f (void)
 {
 	msg_mode = MSG_SAY_TEAM;
 	cls.key_dest = key_message;
 }
 
 /**
- * @brief
+ * @brief Activated the inline cvar editing
+ * @note E.g. used in our saving dialog to enter the save game comment
  */
-static void Con_MessageModeMenu_f(void)
+static void Con_MessageModeMenu_f (void)
 {
 	msg_mode = MSG_MENU;
 	cls.key_dest = key_message;
@@ -215,7 +216,7 @@ static void Con_MessageModeMenu_f(void)
 /**
  * @brief If the line width has changed, reformat the buffer.
  */
-void Con_CheckResize(void)
+void Con_CheckResize (void)
 {
 	int i, j, width, oldwidth, oldtotallines, numlines, numchars;
 	char tbuf[CON_TEXTSIZE];
@@ -357,7 +358,7 @@ void Con_SaveConsoleHistory (const char *path)
 /**
  * @brief
  */
-void Con_Init(void)
+extern void Con_Init (void)
 {
 	con.linewidth = -1;
 
@@ -387,7 +388,7 @@ void Con_Init(void)
 /**
  * @brief
  */
-static void Con_Linefeed(void)
+static void Con_Linefeed (void)
 {
 	con.x = 0;
 	if (con.display == con.current)
@@ -402,7 +403,7 @@ static void Con_Linefeed(void)
  * If no console is visible, the text will appear at the top of the game window
  * @sa Sys_ConsoleOutput
  */
-void Con_Print(char *txt)
+void Con_Print (char *txt)
 {
 	int y;
 	int c, l;

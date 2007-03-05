@@ -760,7 +760,7 @@ MENU ZONE DETECTION
 /**
  * @brief
  */
-static void MN_FindContainer(menuNode_t* const node)
+static void MN_FindContainer (menuNode_t* const node)
 {
 	invDef_t *id;
 	int i, j;
@@ -872,9 +872,13 @@ static qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 	if (node->align > 0 && node->align < ALIGN_LAST) {
 		switch ( node->align % 3 ) {
 		/* center */
-		case 1: tx = x - node->pos[0] + sx / 2; break;
+		case 1:
+			tx = x - node->pos[0] + sx / 2;
+			break;
 		/* right */
-		case 2: tx = x - node->pos[0] + sx; break;
+		case 2:
+			tx = x - node->pos[0] + sx;
+			break;
 		}
 	}
 
@@ -1014,7 +1018,8 @@ static void MN_Drag (const menuNode_t* const node, int x, int y)
 
 
 /**
- * @brief
+ * @brief Handles the bar cvar values
+ * @sa Key_Message
  */
 static void MN_BarClick (menu_t * menu, menuNode_t * node, int x)
 {
@@ -1154,6 +1159,9 @@ static void MN_TextRightClick (menuNode_t * node, int mouseOver)
  * @sa MAP_MapClick
  * @sa MN_ExecuteActions
  * @sa MN_RightClick
+ * @sa Key_Message
+ * @sa CL_MessageMenu_f
+ * @note inline editing of cvars (e.g. save dialog) is done in Key_Message
  */
 void MN_Click (int x, int y)
 {
@@ -1215,6 +1223,57 @@ void MN_Click (int x, int y)
 		/* don't care about non-rendered windows */
 		if (menu->renderNode || menu->popupNode)
 			return;
+	}
+}
+
+/**
+ * @brief Calls script function on cvar change
+ *
+ * This is for inline editing of cvar values
+ * The cvarname_changed function are called,
+ * the editing is activated and ended here
+ *
+ * Done by the script command msgmenu [?|!|:][cvarname]
+ * @sa Key_Message
+ */
+static void CL_MessageMenu_f (void)
+{
+	static char nameBackup[MAX_CVAR_EDITING_LENGTH];
+	static char cvarName[MAX_VAR];
+	char *msg;
+
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: msgmenu <msg>\n");
+		return;
+	}
+
+	msg = Cmd_Argv(1);
+	switch (msg[0]) {
+	case '?':
+		/* start */
+		Cbuf_AddText("messagemenu\n");
+		Q_strncpyz(cvarName, msg + 1, MAX_VAR);
+		Q_strncpyz(nameBackup, Cvar_VariableString(cvarName), sizeof(nameBackup));
+		Q_strncpyz(msg_buffer, nameBackup, sizeof(msg_buffer));
+		msg_bufferlen = strlen(nameBackup);
+		break;
+	case '!':
+		/* cancel */
+		Cvar_ForceSet(cvarName, nameBackup);
+		Cvar_ForceSet(va("%s%i", cvarName, cl_selected->integer), nameBackup);
+		Cbuf_AddText(va("%s_changed\n", cvarName));
+		break;
+	case ':':
+		/* end */
+		Cvar_ForceSet(cvarName, msg + 1);
+		Cvar_ForceSet(va("%s%i", cvarName, cl_selected->integer), msg + 1);
+		Cbuf_AddText(va("%s_changed\n", cvarName));
+		break;
+	default:
+		/* continue */
+		Cvar_ForceSet(cvarName, msg);
+		Cvar_ForceSet(va("%s%i", cvarName, cl_selected->integer), msg);
+		break;
 	}
 }
 
@@ -2971,6 +3030,7 @@ void MN_ResetMenus (void)
 
 	/* textbox */
 	Cmd_AddCommand("mn_textscroll", MN_TextScroll_f, NULL);
+	Cmd_AddCommand("msgmenu", CL_MessageMenu_f, "Activates the inline cvar editing");
 
 	/* print the keybindings to menuText */
 	Cmd_AddCommand("mn_init_keylist", MN_InitKeyList_f, NULL);

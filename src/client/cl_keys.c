@@ -502,6 +502,8 @@ static void Key_Console (int key)
  * @brief Handles input when cls.key_dest == key_message
  * @note Used for chatting and cvar editing via menu
  * @sa Key_Event
+ * @sa MN_Click
+ * @sa CL_MessageMenu_f
  */
 static void Key_Message (int key)
 {
@@ -522,6 +524,7 @@ static void Key_Message (int key)
 				send = qfalse;
 			break;
 		case MSG_MENU:
+			/* end the editing (don't cancel) */
 			Cbuf_AddText("msgmenu \":");
 			break;
 		}
@@ -540,6 +543,7 @@ static void Key_Message (int key)
 		cls.key_dest = key_game;
 		msg_bufferlen = 0;
 		msg_buffer[0] = 0;
+		/* cancel the inline cvar editing */
 		if (msg_mode == MSG_MENU)
 			Cbuf_AddText("msgmenu !");
 		return;
@@ -561,8 +565,11 @@ static void Key_Message (int key)
 	if (msg_bufferlen == sizeof(msg_buffer) - 1)
 		return;					/* all full */
 
-	msg_buffer[msg_bufferlen++] = key;
-	msg_buffer[msg_bufferlen] = 0;
+	/* limit the length for cvar inline editing */
+	if (msg_mode != MSG_MENU || msg_bufferlen < MAX_CVAR_EDITING_LENGTH) {
+		msg_buffer[msg_bufferlen++] = key;
+		msg_buffer[msg_bufferlen] = 0;
+	}
 
 	if (msg_mode == MSG_MENU)
 		Cbuf_AddText(va("msgmenu \"%s\"\n", msg_buffer));
