@@ -430,6 +430,9 @@ void Sys_Error (const char *error, ...)
 	string[sizeof(string)-1] = 0;
 
 	fprintf(stderr, "Error: %s\n", string);
+#if defined DEBUG
+	Sys_DebugBreak();				/* break execution before game shutdown */
+#endif
 	exit(1);
 }
 

@@ -195,10 +195,6 @@ void Com_Error (int code, const char *fmt, ...)
 	static char msg[MAXPRINTMSG];
 	static qboolean recursive = qfalse;
 
-#if defined DEBUG
-	Sys_DebugBreak();				/* break execution before game shutdown */
-#endif
-
 	if (recursive)
 		Sys_Error("recursive error after: %s", msg);
 	recursive = qtrue;
