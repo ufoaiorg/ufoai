@@ -2449,16 +2449,10 @@ tech rs_craft_ufo_scout
 		subject	"_UFO - Scout"
 	}
 
-	// FIXME
 	require_AND
 	{
 		item craft_ufo_scout 1
-	}
-
-	require_OR
-	{
 		tech rs_building_small_ufo_hangar
-		tech rs_building_large_ufo_hangar
 	}
 
 	provides	"craft_ufo_scout"
