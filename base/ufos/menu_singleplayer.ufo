@@ -465,14 +465,14 @@ menu load
 		click	{ cmd "game_load slot7" }
 	}
 
-	string txt_slot0 { string "*cvar mn_slot0" pos "650 205" color "0 .78 0 1" }
-	string txt_slot1 { string "*cvar mn_slot1" pos "650 240" color "0 .78 0 1" }
-	string txt_slot2 { string "*cvar mn_slot2" pos "650 275" color "0 .78 0 1" }
-	string txt_slot3 { string "*cvar mn_slot3" pos "650 310" color "0 .78 0 1" }
-	string txt_slot4 { string "*cvar mn_slot4" pos "650 345" color "0 .78 0 1" }
-	string txt_slot5 { string "*cvar mn_slot5" pos "650 380" color "0 .78 0 1" }
-	string txt_slot6 { string "*cvar mn_slot6" pos "650 415" color "0 .78 0 1" }
-	string txt_slot7 { string "*cvar mn_slot7" pos "650 450" color "0 .78 0 1" }
+	string txt_slot0 { font "f_verysmall" string "*cvar mn_slot0" pos "648 210" size "240 11" color "0 .78 0 1" }
+	string txt_slot1 { font "f_verysmall" string "*cvar mn_slot1" pos "648 245" size "240 11" color "0 .78 0 1" }
+	string txt_slot2 { font "f_verysmall" string "*cvar mn_slot2" pos "648 280" size "240 11" color "0 .78 0 1" }
+	string txt_slot3 { font "f_verysmall" string "*cvar mn_slot3" pos "648 315" size "240 11" color "0 .78 0 1" }
+	string txt_slot4 { font "f_verysmall" string "*cvar mn_slot4" pos "648 350" size "240 11" color "0 .78 0 1" }
+	string txt_slot5 { font "f_verysmall" string "*cvar mn_slot5" pos "648 385" size "240 11" color "0 .78 0 1" }
+	string txt_slot6 { font "f_verysmall" string "*cvar mn_slot6" pos "648 420" size "240 11" color "0 .78 0 1" }
+	string txt_slot7 { font "f_verysmall" string "*cvar mn_slot7" pos "648 455" size "240 11" color "0 .78 0 1" }
 
 	// ==================
 	// buttons
