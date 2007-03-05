@@ -242,6 +242,7 @@ static void MN_GetMaps_f(void);
 static void MN_NextMap_f(void);
 static void MN_PrevMap_f(void);
 static int MN_DrawTooltip(char *font, char *string, int x, int y, int maxWidth);
+static void CL_ShowMessagesOnStack_f(void);
 
 /*
 ==============================================================
@@ -1713,7 +1714,7 @@ static menuModel_t *MN_GetMenuModel (const char *menuModel)
  * @param[in] n The node to get the font for - if NULL f_small is returned
  * @return char pointer with font name (default is f_small)
  */
-char *MN_GetFont (const menu_t *m, const menuNode_t *const n)
+const char *MN_GetFont (const menu_t *m, const menuNode_t *const n)
 {
 	if (!n || n->data[1]) {
 		if (!m) {
@@ -1735,7 +1736,8 @@ void MN_DrawMenus (void)
 	menuNode_t *node;
 	menu_t *menu;
 	animState_t *as;
-	char *ref, *font;
+	char *ref;
+	const char *font;
 	char *anim;					/* model anim state */
 	char source[MAX_VAR] = "";
 	static char oldSource[MAX_VAR] = "";
@@ -1916,9 +1918,12 @@ void MN_DrawMenus (void)
 					if (menuText[node->num]) {
 						char textCopy[MAX_MENUTEXTLEN];
 						int lineHeight = 0;
+						char newFont[MAX_VAR];
+						const char* oldFont = NULL;
+
+						font = MN_GetFont(menu, node);
 
 						Q_strncpyz(textCopy, menuText[node->num], MAX_MENUTEXTLEN);
-						font = MN_GetFont(menu, node);
 
 						cur = textCopy;
 						y = node->pos[1];
@@ -1932,6 +1937,21 @@ void MN_DrawMenus (void)
 						do {
 							/* new line starts from node x position */
 							x = node->pos[0];
+							if (oldFont) {
+								font = oldFont;
+								oldFont = NULL;
+							}
+
+							if (cur[0] == '^') {
+								switch (toupper(cur[1])) {
+								case 'B':
+									Com_sprintf(newFont, sizeof(newFont), "%s_bold", font);
+									oldFont = font;
+									font = newFont;
+									cur += 2; /* don't print the format string */
+									break;
+								}
+							}
 
 							/* get the position of the next newline - otherwise end will be null */
 							end = strchr(cur, '\n');
@@ -1980,6 +2000,7 @@ void MN_DrawMenus (void)
 
 							/* now set cur to the next char after the \n (see above) */
 							cur = end;
+
 						} while (cur);
 					} else if (node->num == TEXT_MESSAGESYSTEM) {
 						if (node->data[1])
@@ -2959,7 +2980,7 @@ void MN_ResetMenus (void)
 	Cmd_AddCommand("listtutorials", MN_ListTutorials_f, "Show all tutorials");
 	Cmd_AddCommand("gettutorials", MN_GetTutorials_f, NULL);
 	Cmd_AddCommand("tutoriallist_click", MN_TutorialListClick_f, NULL);
-
+	Cmd_AddCommand("messagelist", CL_ShowMessagesOnStack_f, "Print all messages to the game console");
 	Cmd_AddCommand("getmaps", MN_GetMaps_f, "Get the list of available maps");
 	Cmd_AddCommand("mn_startserver", MN_StartServer_f, NULL);
 	Cmd_AddCommand("mn_nextgametype", MN_NextGametype_f, "Switch to the next multiplayer game type");
@@ -3750,7 +3771,7 @@ static void MN_PrevMap_f (void)
 /**
  * @brief Script command to show all messages on the stack
  */
-void CL_ShowMessagesOnStack (void)
+static void CL_ShowMessagesOnStack_f (void)
 {
 	message_t *m = messageStack;
 
@@ -3806,6 +3827,12 @@ message_t *MN_AddNewMessage (const char *title, const char *text, qboolean popup
 	case MSG_DEATH:
 		break;
 	case MSG_RESEARCH:
+		assert(pedia);
+		/* proposal and re */
+		gd.anzUnreadMails++;
+		/* no break here! count the news, too */
+	case MSG_NEWS:
+		gd.anzUnreadMails++;
 	case MSG_CONSTRUCTION:
 	case MSG_UFOSPOTTED:
 	case MSG_TERRORSITE:
@@ -3813,8 +3840,6 @@ message_t *MN_AddNewMessage (const char *title, const char *text, qboolean popup
 	case MSG_PRODUCTION:
 		/*TODO: S_StartLocalSound(); */
 		break;
-	default:
-		Com_Printf("Warning: Unhandled message type: %i\n", type);
 	}
 
 	return mess;

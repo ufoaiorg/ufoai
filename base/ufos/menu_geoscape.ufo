@@ -240,6 +240,17 @@ menu map
 				*bt_menu texh "128 64"
 			}
 	}
+	pic mailclient_show
+	{
+//		if "mn_unreadmails > 0"
+		tooltip	"_New mails available"
+		image	menu/mailclient
+		texl	"0 0"
+		texh	"32 32"
+		pos		"300 32"
+		mousefx true
+		click	{ cmd "mn_push ufopedia_mail" }
+	}
 
 	pic messagesystem_show
 	{

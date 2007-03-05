@@ -52,6 +52,7 @@ typedef struct globalData_s
 	pediaChapter_t upChapters[MAX_PEDIACHAPTERS];
 	/* Total number uf upchapters */
 	int numChapters;
+	int anzUnreadMails; /**< only for faster access (don't cycle all techs every frame) */
 
 	/* == employees == */
 	/* A list of all phalanx employees (soldiers, scies, workers, etc...) */

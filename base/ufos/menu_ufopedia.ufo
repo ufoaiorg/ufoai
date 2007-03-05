@@ -116,7 +116,7 @@ menu ufopedia
 		texh	"64 37"
 		click	{
 			cmd "mn_pop; mn_reinit"
-			}
+		}
 	}
 
 	pic button_scrollup
@@ -346,6 +346,81 @@ menu ufopedia
 
 	func init
 	{
-		cmd "mn_upcontent;"
+		cmd "mn_upcontent"
+	}
+}
+
+menu ufopedia_mail
+{
+	// ==================
+	// don't render
+	// ==================
+
+	zone render
+	{
+		invis true
+	}
+
+	// ==================
+	// background
+	// ==================
+
+	pic back_ul
+	{
+		image	menu/ufopedia_ul
+		pos		"0 0"
+	}
+
+	pic back_ur
+	{
+		image	menu/ufopedia_ur
+		pos		"512 0"
+	}
+
+	pic back_ll
+	{
+		image	menu/ufopedia_ll
+		pos		"0 512"
+	}
+
+	pic back_lr
+	{
+		image	menu/ufopedia_lr
+		pos		"512 512"
+	}
+
+	// ==================
+	// text and info
+	// ==================
+
+	text mailclient
+	{
+		pos		"30 77"
+		size	"960 396"
+		num		33
+		font	"f_verysmall"
+		format	"12 0"
+		click rclick wheel
+		mousefx	true
+//		bgcolor " 0 1 0 0.5"
+		height	"33"
+	}
+
+	pic button_exit
+	{
+		tooltip "_Leave Ufopedia"
+		image	hud/buttons2
+		mousefx true
+		pos		"950 720"
+		texl	"0 0"
+		texh	"64 37"
+		click	{
+			cmd "mn_pop"
+		}
+	}
+
+	func init
+	{
+		cmd "ufopedia_openmail"
 	}
 }

@@ -84,7 +84,7 @@ CLICK ON MAP and MULTI SELECTION FUNCTIONS
 /**
  * @brief Add an element in the multiselection list
  */
-static void MAP_MultiSelectListAddItem(multiSelectType_t item_type, int item_id,
+static void MAP_MultiSelectListAddItem (multiSelectType_t item_type, int item_id,
 	const char* item_description, const char* item_name)
 {
 	Q_strcat(multiSelect.popupText, va("%s\t%s\n", item_description, item_name), sizeof(multiSelect.popupText));
@@ -97,7 +97,7 @@ static void MAP_MultiSelectListAddItem(multiSelectType_t item_type, int item_id,
  * @brief Execute action for 1 element of the multi selection
  * Param Cmd_Argv(1) is the element selected in the popup_multi_selection menu
  */
-static void MAP_MultiSelectExecuteAction_f(void)
+static void MAP_MultiSelectExecuteAction_f (void)
 {
 	int selected, id;
 	aircraft_t* aircraft;
@@ -194,7 +194,7 @@ static void MAP_MultiSelectExecuteAction_f(void)
 /**
  * @brief Notify the multi select system that a mission has been removed
  */
-static void MAP_MultiSelectNotifyMissionRemoved(const actMis_t* mission)
+static void MAP_MultiSelectNotifyMissionRemoved (const actMis_t* mission)
 {
 	int num = mission - ccs.mission, i;
 
@@ -210,7 +210,7 @@ static void MAP_MultiSelectNotifyMissionRemoved(const actMis_t* mission)
 /**
  * @brief Notify the multi select system that an ufo has been removed
  */
-static void MAP_MultiSelectNotifyUfoRemoved(const aircraft_t* ufo)
+static void MAP_MultiSelectNotifyUfoRemoved (const aircraft_t* ufo)
 {
 	int i;
 
@@ -224,7 +224,7 @@ static void MAP_MultiSelectNotifyUfoRemoved(const aircraft_t* ufo)
 /**
  * @brief Notify the multi select system that an ufo disapeard on radars
  */
-static void MAP_MultiSelectNotifyUfoDisappeared(const aircraft_t* ufo)
+static void MAP_MultiSelectNotifyUfoDisappeared (const aircraft_t* ufo)
 {
 	MAP_MultiSelectNotifyUfoRemoved(ufo);
 }
@@ -649,7 +649,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 	actMis_t *ms;
 	int x, y, i;
 	base_t* base;
-	char* font = NULL;
+	const char* font = NULL;
 
 	assert(node);
 

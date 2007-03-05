@@ -793,6 +793,7 @@ typedef enum {
 	MSG_TRANSFERFINISHED,
 	MSG_PROMOTION,
 	MSG_PRODUCTION,
+	MSG_NEWS,
 	MSG_DEATH
 } messagetype_t;
 
@@ -935,6 +936,7 @@ typedef enum {
 	TEXT_MOUSECURSOR_PLAYERNAMES = 30,
 	TEXT_CARGO_LIST,
 	TEXT_UFOPEDIA_MAILHEADER,
+	TEXT_UFOPEDIA_MAIL,
 
 	MAX_MENUTEXTS
 } texts_t;
@@ -955,7 +957,7 @@ menuNode_t* MN_GetNodeFromCurrentMenu(const char *name);
 void MN_SetNewNodePos(menuNode_t* node, int x, int y);
 menuNode_t *MN_GetNode(const menu_t* const menu, const char *name);
 menu_t *MN_GetMenu(const char *name);
-char *MN_GetFont(const menu_t *m, const menuNode_t *const n);
+const char *MN_GetFont(const menu_t *m, const menuNode_t *const n);
 void MN_TextScrollBottom(const char* nodeName);
 void MN_ExecuteActions(const menu_t* const menu, menuAction_t* const first);
 

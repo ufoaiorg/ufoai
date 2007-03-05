@@ -347,6 +347,7 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type)
 {
 	static char mailHeader[8 * MAX_VAR] = ""; /* bigger as techMail_t (utf8) */
 	char dateBuf[MAX_VAR] = "";
+	char *subjectType = NULL;
 
 	assert(tech);
 	assert(type < TECHMAIL_MAX);
@@ -354,17 +355,38 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type)
 	if (tech->mail[type].date[0]) {
 		Q_strncpyz(dateBuf, tech->mail[type].date, sizeof(dateBuf));
 	} else {
-		Com_sprintf(dateBuf, sizeof(dateBuf), "%02i %s %i",
+		Com_sprintf(dateBuf, sizeof(dateBuf), _("%02i %s %i"),
 			tech->researchedDateDay,
 			CL_DateGetMonthName(tech->researchedDateMonth),
 			tech->researchedDateYear);
 	}
 	if (tech->mail[type].from[0]) {
-		Com_sprintf(mailHeader, sizeof(mailHeader), _("FROM: %s\nTO: %s\nDATE: %s\nSUBJECT: %s\n"),
-			tech->mail[type].from,
-			tech->mail[type].to,
+		if (!tech->mail[type].read) {
+			tech->mail[type].read = qtrue;
+			gd.anzUnreadMails--;
+			assert(gd.anzUnreadMails >= 0);
+		}
+		/* only if mail and mail_pre are available */
+		if (tech->numTechMails == TECHMAIL_MAX) {
+			switch (type) {
+			case TECHMAIL_PRE:
+				subjectType = _("Proposal: ");
+				break;
+			case TECHMAIL_RESEARCHED:
+				subjectType = _("Re: ");
+				break;
+			default:
+				Sys_Error("unhandled techMailType_t %i\n", type);
+			}
+		} else {
+			subjectType = "";
+		}
+		Com_sprintf(mailHeader, sizeof(mailHeader), _("FROM: %s\nTO: %s\nDATE: %s\nSUBJECT: %s%s\n"),
+			_(tech->mail[type].from),
+			_(tech->mail[type].to),
 			dateBuf,
-			tech->mail[type].subject);
+			subjectType,
+			_(tech->mail[type].subject));
 		menuText[TEXT_UFOPEDIA_MAILHEADER] = mailHeader;
 		Cvar_Set("mn_up_mail", "1"); /* use strings here - no int */
 	} else {
@@ -393,7 +415,7 @@ extern void UP_Article (technology_t* tech)
 		menuText[TEXT_UFOPEDIA] = _(tech->description);
 		if (*tech->pre_description) {
 			/* Display pre-research text and the buttons if a pre-research text is available. */
-			if (mn_uppretext->value) {
+			if (mn_uppretext->integer) {
 				menuText[TEXT_UFOPEDIA] = _(tech->pre_description);
 				UP_SetMailHeader(tech, TECHMAIL_PRE);
 			} else {
@@ -574,12 +596,16 @@ static void UP_Content_f (void)
 	cp = upText;
 	*cp = '\0';
 
+	/* make sure, that we leave the mail header space */
+	menuText[TEXT_UFOPEDIA_MAILHEADER] = NULL;
+	Cvar_Set("mn_up_mail", "0"); /* use strings here - no int */
+
 	for (i = 0; i < gd.numChapters; i++) {
 		/* Check if there are any researched or collected items in this chapter ... */
 		researched_entries = qfalse;
 		upCurrent = &gd.technologies[gd.upChapters[i].first];
 		do {
-			if ( UP_TechGetsDisplayed(upCurrent) ) {
+			if (UP_TechGetsDisplayed(upCurrent)) {
 				researched_entries = qtrue;
 				break;
 			}
@@ -776,10 +802,10 @@ static void UP_Click_f (void)
 
 	switch (upDisplay) {
 	case UFOPEDIA_CHAPTERS:
-		if ( num < numChapters_displaylist && upChapters_displaylist[num]->first ) {
+		if (num < numChapters_displaylist && upChapters_displaylist[num]->first) {
 			upCurrent = &gd.technologies[upChapters_displaylist[num]->first];
 			do {
-				if ( UP_TechGetsDisplayed(upCurrent) ) {
+				if (UP_TechGetsDisplayed(upCurrent)) {
 					Cbuf_AddText(va("mn_upindex %i;", upCurrent->up_chapter));
 					return;
 				}
@@ -793,7 +819,7 @@ static void UP_Click_f (void)
 
 		/* get next entry */
 		while (t) {
-			if ( UP_TechGetsDisplayed(t) ) {
+			if (UP_TechGetsDisplayed(t)) {
 				/* Add this tech to the index - it gets displayed. */
 				if (num > 0)
 					num--;
@@ -859,17 +885,6 @@ static void UP_TechTreeClick_f (void)
 }
 
 /**
- * @brief
- */
-static void UP_SwitchDescriptions_f (void)
-{
-	if (!Q_strncmp(Cvar_VariableString("mn_up_desc"), "pre", 3))
-		Cvar_Set("mn_up_desc", "normal");
-	else
-		Cvar_Set("mn_up_desc", "pre");
-}
-
-/**
  * @brief Redraw the ufopedia article
  */
 static void UP_Update_f (void)
@@ -887,6 +902,109 @@ static void UP_List_f (void)
 }
 
 /**
+ * @brief Mailclient click function callback
+ * @sa UP_OpenMail_f
+ */
+static void UP_MailClientClick_f (void)
+{
+	message_t *m = messageStack;
+	int num, cnt = -1;
+
+	if (Cmd_Argc() < 2)
+		return;
+
+	num = atoi(Cmd_Argv(1));
+
+	while (m) {
+		switch (m->type) {
+		/* research entries may have two mails - proposal and re */
+		case MSG_RESEARCH:
+			cnt++;
+			/* pre is the first one - see UP_OpenMail_f */
+			if (cnt == num) {
+				Cvar_SetValue("mn_uppretext", 1);
+				UP_OpenWith(m->pedia->id);
+				return;
+			}
+			if (RS_IsResearched_ptr(m->pedia)) {
+				cnt++;
+				if (cnt == num) {
+					UP_OpenWith(m->pedia->id);
+					return;
+				}
+			}
+			break;
+		case MSG_NEWS:
+			if (m->pedia->mail[TECHMAIL_PRE].from[0] || m->pedia->mail[TECHMAIL_RESEARCHED].from[0]) {
+				cnt++;
+				if (cnt >= num) {
+					UP_OpenWith(m->pedia->id);
+					return;
+				}
+			}
+			break;
+		default:
+			break;
+		}
+		m = m->next;
+	}
+}
+
+/**
+ * @brief Start the mailclient
+ * @sa UP_MailClientClick_f
+ * @note use TEXT_UFOPEDIA_MAIL in menuText array (33)
+ */
+static void UP_OpenMail_f (void)
+{
+	char tempBuf[512] = "";
+	message_t *m = messageStack;
+
+	/* FIXME: not all MSG_RESEARCH appear in our 'mailclient' */
+	*upText = '\0';
+	while (m) {
+		switch (m->type) {
+		case MSG_RESEARCH:
+			*tempBuf = '\0';
+			if (m->pedia->mail[TECHMAIL_PRE].read == qfalse)
+				Com_sprintf(tempBuf, sizeof(tempBuf), _("^BProposal: %s (%s)\n"), _(m->pedia->mail[TECHMAIL_PRE].subject), _(m->pedia->mail[TECHMAIL_PRE].from));
+			else
+				Com_sprintf(tempBuf, sizeof(tempBuf), _("Proposal: %s (%s)\n"), _(m->pedia->mail[TECHMAIL_PRE].subject), _(m->pedia->mail[TECHMAIL_PRE].from));
+			Q_strcat(upText, tempBuf, sizeof(upText));
+			if (RS_IsResearched_ptr(m->pedia)) {
+				*tempBuf = '\0';
+				if (m->pedia->mail[TECHMAIL_RESEARCHED].read == qfalse)
+					Com_sprintf(tempBuf, sizeof(tempBuf), _("^BRe: %s (%s)\n"), _(m->pedia->mail[TECHMAIL_RESEARCHED].subject), _(m->pedia->mail[TECHMAIL_RESEARCHED].from));
+				else
+					Com_sprintf(tempBuf, sizeof(tempBuf), _("Re: %s (%s)\n"), _(m->pedia->mail[TECHMAIL_RESEARCHED].subject), _(m->pedia->mail[TECHMAIL_RESEARCHED].from));
+				Q_strcat(upText, tempBuf, sizeof(upText));
+			}
+			break;
+		case MSG_NEWS:
+			*tempBuf = '\0';
+			if (m->pedia->mail[TECHMAIL_PRE].from[0]) {
+				if (m->pedia->mail[TECHMAIL_PRE].read == qfalse)
+					Com_sprintf(tempBuf, sizeof(tempBuf), _("^B%s (%s)\n"), _(m->pedia->mail[TECHMAIL_PRE].subject), _(m->pedia->mail[TECHMAIL_PRE].from));
+				else
+					Com_sprintf(tempBuf, sizeof(tempBuf), _("%s (%s)\n"), _(m->pedia->mail[TECHMAIL_PRE].subject), _(m->pedia->mail[TECHMAIL_PRE].from));
+				Q_strcat(upText, tempBuf, sizeof(upText));
+			} else if (m->pedia->mail[TECHMAIL_RESEARCHED].from[0]) {
+				if (m->pedia->mail[TECHMAIL_RESEARCHED].read == qfalse)
+					Com_sprintf(tempBuf, sizeof(tempBuf), _("^B%s (%s)\n"), _(m->pedia->mail[TECHMAIL_RESEARCHED].subject), _(m->pedia->mail[TECHMAIL_RESEARCHED].from));
+				else
+					Com_sprintf(tempBuf, sizeof(tempBuf), _("%s (%s)\n"), _(m->pedia->mail[TECHMAIL_RESEARCHED].subject), _(m->pedia->mail[TECHMAIL_RESEARCHED].from));
+				Q_strcat(upText, tempBuf, sizeof(upText));
+			}
+			break;
+		default:
+			break;
+		}
+		m = m->next;
+	}
+	menuText[TEXT_UFOPEDIA_MAIL] = upText;
+}
+
+/**
  * @brief
  * @sa CL_ResetMenus
  */
@@ -896,7 +1014,6 @@ extern void UP_ResetUfopedia (void)
 	gd.numChapters = 0;
 
 	/* add commands and cvars */
-	Cmd_AddCommand("mn_upswitch", UP_SwitchDescriptions_f, "Cycles through the ufopedia emails that are available for the current tech");
 	Cmd_AddCommand("ufopedialist", UP_List_f, NULL);
 	Cmd_AddCommand("mn_upindex", UP_Index_f, "Shows the ufopedia index for the current chapter");
 	Cmd_AddCommand("mn_upcontent", UP_Content_f, "Shows the ufopedia chapters");
@@ -906,7 +1023,9 @@ extern void UP_ResetUfopedia (void)
 	Cmd_AddCommand("mn_upupdate", UP_Update_f, NULL);
 	Cmd_AddCommand("ufopedia", UP_FindEntry_f, NULL);
 	Cmd_AddCommand("ufopedia_click", UP_Click_f, NULL);
+	Cmd_AddCommand("mailclient_click", UP_MailClientClick_f, NULL);
 	Cmd_AddCommand("ufopedia_rclick", UP_RightClick_f, NULL);
+	Cmd_AddCommand("ufopedia_openmail", UP_OpenMail_f, "Start the mailclient");
 	Cmd_AddCommand("techtree_click", UP_TechTreeClick_f, NULL);
 
 	mn_uppretext = Cvar_Get("mn_uppretext", "0", 0, NULL);

@@ -95,10 +95,13 @@ typedef enum {
 } techMailType_t;
 
 typedef struct techMail_s {
-	char from[MAX_VAR];
-	char to[MAX_VAR];
-	char subject[MAX_VAR];
-	char date[MAX_VAR];
+	char from[MAX_VAR];			/**< sender (_mail_from_paul_navarre, _mail_from_dr_connor) */
+	char to[MAX_VAR];			/**< recipient (_mail_to_base_commander) */
+	char subject[MAX_VAR];		/**< mail subject line - if mail and mail_pre are available
+								 * this will be filled with Proposal: (mail_pre) and Re: (mail)
+								 * automatically */
+	char date[MAX_VAR];			/**< date string, if empty use the date of research */
+	qboolean read;				/**< already read the mail? */
 } techMail_t;
 
 /** @brief This is the technology parsed from research.ufo */
