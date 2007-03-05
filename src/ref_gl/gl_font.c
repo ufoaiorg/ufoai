@@ -334,7 +334,7 @@ static fontCache_t *Font_GenerateCache (const char *s, const char *fontString, f
  * @param[in] maxWidth is a pixel value
  * FIXME: if maxWidth is too small to display even the first word this has bugs
  */
-static char *Font_GetLineWrap(font_t * f, char *buffer, int maxWidth, int *width, int *height)
+static char *Font_GetLineWrap (font_t * f, char *buffer, int maxWidth, int *width, int *height)
 {
 	char *space = NULL;
 	char *newlineTest = NULL;
@@ -406,7 +406,7 @@ static char *Font_GetLineWrap(font_t * f, char *buffer, int maxWidth, int *width
  * @return -1 for scrolling down (TODO)
  * @return +1 for scrolling up (TODO)
  */
-static int Font_GenerateGLSurface(fontCache_t *cache, int x, int y, int absX, int absY, int width, int height)
+static int Font_GenerateGLSurface (fontCache_t *cache, int x, int y, int absX, int absY, int width, int height)
 {
 	int h = cache->size[1];
 	int tw = cache->texsize[0];
@@ -414,7 +414,7 @@ static int Font_GenerateGLSurface(fontCache_t *cache, int x, int y, int absX, in
 	vec2_t start = {0.0f, 0.0f}, end = {1.0f, 1.0f};
 
 	/* if height is too much we should be able to scroll down */
-	if (height > 0 && y+h > absY+height)
+	if (height > 0 && y + h > absY + height)
 		return 1;
 
 	GL_Bind(cache->texPos);
@@ -441,7 +441,7 @@ static int Font_GenerateGLSurface(fontCache_t *cache, int x, int y, int absX, in
 /**
  * @brief
  */
-static void Font_ConvertChars(char *buffer)
+static void Font_ConvertChars (char *buffer)
 {
 	char *replace = NULL;
 
@@ -480,7 +480,7 @@ static void Font_ConvertChars(char *buffer)
  * @param[in] cur_line Current line (see lineHeight)
  * @param[in] increaseLine If true cur_line is increased with every linebreak
  */
-int Font_DrawString(const char *fontID, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight,
+int Font_DrawString (const char *fontID, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight,
 	const int lineHeight, const char *c, int box_height, int scroll_pos, int *cur_line, qboolean increaseLine)
 {
 	int w = 0, h = 0, locX;
@@ -630,7 +630,7 @@ int Font_DrawString(const char *fontID, int align, int x, int y, int absX, int a
 /**
  * @brief
  */
-void Font_Init(void)
+void Font_Init (void)
 {
 #ifdef SDL_TTF_VERSION
 	SDL_version version;
@@ -671,7 +671,7 @@ void Font_Init(void)
 /**
  * @brief
  */
-void Font_Register(const char *name, int size, char *path, char *style)
+void Font_Register (const char *name, int size, char *path, char *style)
 {
 	int renderstyle = 0;		/* NORMAL is standard */
 	int i;

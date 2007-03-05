@@ -879,6 +879,7 @@ typedef struct menuNode_s {
 	int padding;				/**< padding for this node - default 3 - see bgcolor */
 	byte invis, blend;
 	int mousefx;
+	int horizontalScroll;		/**< if text is too long, the text is horizontally scrolled */
 	int textScroll;				/**< textfields - current scroll position */
 	int textLines;				/**< How many lines there are (set by MN_DrawMenus)*/
 	int timeOut;				/**< ms value until invis is set (see cl.time) */

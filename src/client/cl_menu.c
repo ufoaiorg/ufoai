@@ -1908,6 +1908,7 @@ void MN_DrawMenus (void)
 
 				case MN_STRING:
 					font = MN_GetFont(menu, node);
+					ref += node->horizontalScroll;
 					if (!node->mousefx || cl.time % 1000 < 500)
 						re.FontDrawString(font, node->align, node->pos[0], node->pos[1], node->pos[0], node->pos[1], node->size[0], 0, node->texh[0], ref, 0, 0, NULL, qfalse);
 					else

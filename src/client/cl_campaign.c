@@ -1583,6 +1583,9 @@ static qboolean CL_GameSave (char *filename, char *comment)
 	int res;
 	int i, j, type;
 	base_t *base;
+	/* if you change MAX_VAR here - change it below, too */
+	char description[MAX_VAR];
+	int day, month;
 
 	if (!curCampaign) {
 		Com_Printf("No campaign active.\n");
@@ -1702,12 +1705,15 @@ static qboolean CL_GameSave (char *filename, char *comment)
 	SZ_Write(&sb, &stats, sizeof(stats_t));
 
 	/* compress data using zlib before writing */
-	bufLen = (uLongf) (24 + 1.02*sb.cursize);
+	bufLen = (uLongf) (24 + 1.02 * sb.cursize);
 	fbuf = (byte *) malloc(sizeof(byte) * (bufLen + MAX_VAR));
 
-	/* write an uncompressed header containing the comment */
+	/* write an uncompressed header containing the comment and a timestamp */
 	memset(fbuf, 0, sizeof(byte) * MAX_VAR);
-	memcpy(fbuf, comment, strlen(comment));
+	CL_DateConvert(&ccs.date, &day, &month);
+	Com_sprintf(description, sizeof(description), "%s - %02i %s %i", comment,
+		day, CL_DateGetMonthName(month), ccs.date.day / 365);
+	memcpy(fbuf, description, strlen(description));
 
 	res = compress(fbuf + MAX_VAR, &bufLen, buf, sb.cursize);
 	free(buf);
@@ -2206,10 +2212,6 @@ static void CL_GameComments_f (void)
 			continue;
 		}
 
-		/* skip the version number */
-		/*fread(comment, sizeof(int), 1, f);*/
-		/* skip the globalData_t size */
-		/*fread(comment, sizeof(int), 1, f);*/
 		/* read the comment */
 		if (fread(comment, 1, MAX_VAR, f) != MAX_VAR)
 			Com_Printf("Warning: Savefile comment may be corrupted\n");
