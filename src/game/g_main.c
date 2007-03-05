@@ -479,18 +479,18 @@ void G_EndGame (int team)
 
 	/* how many actors */
 	for (j = 0, i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)
-		if ( ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV)
-			 && ent->team == TEAM_PHALANX )
+		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV)
+			 && ent->team == TEAM_PHALANX)
 			j++;
 
 	Com_DPrintf("Sending results with %i actors.\n", j);
 	/* this is (size of updateCharacter_t) * number of phalanx actors - see CL_ParseCharacterData for more info */
-	gi.WriteShort(((KILLED_NUM_TYPES + 2) * 2 + 3) * j );
+	gi.WriteShort(((KILLED_NUM_TYPES + 2) * 2 + 3) * j);
 
 	if (j) {
 		for (i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)
-			if ( ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV)
-				 && ent->team == TEAM_PHALANX ) {
+			if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV)
+				 && ent->team == TEAM_PHALANX) {
 				Com_DPrintf("Sending results for actor %i.\n", i);
 				G_SendCharacterData(ent);
 			}

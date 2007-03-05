@@ -1828,7 +1828,7 @@ static void CL_UpdatePointersInGlobalData (void)
 		aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
 
 		for (i = 0, p = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++)
-			if ( CL_SoldierInAircraft(i, aircraft->idx) ) {
+			if (CL_SoldierInAircraft(i, aircraft->idx)) {
 				/* maybe we already have soldiers in this base */
 				base->curTeam[p] = E_GetHiredCharacter(base, EMPL_SOLDIER, i);
 				assert(base->curTeam[p]);
@@ -2379,7 +2379,7 @@ static void CL_GameGo (void)
 
 	/* retrieve the correct team */
 	for (i = 0, p = 0; i < cl_numnames->integer; i++)
-		if ( CL_SoldierInAircraft(i, aircraft->idx) ) {
+		if (CL_SoldierInAircraft(i, aircraft->idx)) {
 			baseCurrent->curTeam[p] = E_GetCharacter(baseCurrent, EMPL_SOLDIER, i);
 			p++;
 		}
