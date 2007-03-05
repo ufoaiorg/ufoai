@@ -485,6 +485,10 @@ void G_EndGame (int team)
 
 	Com_DPrintf("Sending results with %i actors.\n", j);
 	/* this is (size of updateCharacter_t) * number of phalanx actors - see CL_ParseCharacterData for more info */
+	/* KILLED_NUM_TYPES + 2 gi.WriteShorts */
+	/* 3 gi.WriteByte */
+	/* j how many iterations in the for loop */
+	/* *2 because a short is send as 2 bytes */
 	gi.WriteShort(((KILLED_NUM_TYPES + 2) * 2 + 3) * j);
 
 	if (j) {
