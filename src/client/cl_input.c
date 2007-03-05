@@ -901,9 +901,12 @@ void CL_CameraMoveRemote (void)
 		(cl_cammoveaccel->value >
 		MIN_CAMMOVE_ACCEL) ? ((cl_cammoveaccel->value < MAX_CAMMOVE_ACCEL) ? cl_cammoveaccel->value : MAX_CAMMOVE_ACCEL) : MIN_CAMMOVE_ACCEL;
 
+	movespeed /= cl.cam.zoom;
+	moveaccel /= cl.cam.zoom;
+
 	/* calculate camera omega */
 	/* stop acceleration */
-	frac = cls.frametime * rotaccel;
+	frac = cls.frametime * moveaccel * 2.5;
 
 	for (i = 0; i < 2; i++) {
 		if (fabs(cl.cam.omega[i]) > frac) {
@@ -970,7 +973,7 @@ void CL_CameraMoveRemote (void)
 			VectorClear(cl.cam.speed);
 
 		/* acceleration */
-		frac = cls.frametime * moveaccel * 2;
+		frac = cls.frametime * moveaccel * 3.5;
 		VectorClear(delta);
 		VectorScale(g_forward, CL_GetKeyMouseState(STATE_FORWARD), delta);
 		VectorMA(delta, CL_GetKeyMouseState(STATE_RIGHT), g_right, delta);
