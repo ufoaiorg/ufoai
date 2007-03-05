@@ -220,14 +220,14 @@ menu mp_team
 		click	{ teamslot7 }
 	}
 
-	string txt_slot0 { string "*cvar mn_slot0" pos "510 135" color "0 .78 0 1" }
-	string txt_slot1 { string "*cvar mn_slot1" pos "510 170" color "0 .78 0 1" }
-	string txt_slot2 { string "*cvar mn_slot2" pos "510 205" color "0 .78 0 1" }
-	string txt_slot3 { string "*cvar mn_slot3" pos "510 240" color "0 .78 0 1" }
-	string txt_slot4 { string "*cvar mn_slot4" pos "510 275" color "0 .78 0 1" }
-	string txt_slot5 { string "*cvar mn_slot5" pos "510 310" color "0 .78 0 1" }
-	string txt_slot6 { string "*cvar mn_slot6" pos "510 345" color "0 .78 0 1" }
-	string txt_slot7 { string "*cvar mn_slot7" pos "510 380" color "0 .78 0 1" }
+	string txt_slot0 { font "f_verysmall" string "*cvar mn_slot0" pos "510 140" size "240 11" color "0 .78 0 1" }
+	string txt_slot1 { font "f_verysmall" string "*cvar mn_slot1" pos "510 175" size "240 11" color "0 .78 0 1" }
+	string txt_slot2 { font "f_verysmall" string "*cvar mn_slot2" pos "510 210" size "240 11" color "0 .78 0 1" }
+	string txt_slot3 { font "f_verysmall" string "*cvar mn_slot3" pos "510 245" size "240 11" color "0 .78 0 1" }
+	string txt_slot4 { font "f_verysmall" string "*cvar mn_slot4" pos "510 280" size "240 11" color "0 .78 0 1" }
+	string txt_slot5 { font "f_verysmall" string "*cvar mn_slot5" pos "510 315" size "240 11" color "0 .78 0 1" }
+	string txt_slot6 { font "f_verysmall" string "*cvar mn_slot6" pos "510 350" size "240 11" color "0 .78 0 1" }
+	string txt_slot7 { font "f_verysmall" string "*cvar mn_slot7" pos "510 385" size "240 11" color "0 .78 0 1" }
 
 	pic button_load
 	{
