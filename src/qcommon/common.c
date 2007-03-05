@@ -1511,6 +1511,7 @@ extern void Qcommon_Init (int argc, char **argv)
 	cl_maxfps = Cvar_Get("cl_maxfps", "90", 0, NULL);
 	teamnum = Cvar_Get("teamnum", "1", CVAR_ARCHIVE, NULL);
 	gametype = Cvar_Get("gametype", "1on1", CVAR_ARCHIVE | CVAR_SERVERINFO, "Sets the multiplayer gametype - see gametypelist command for a list of all gametypes");
+	gametype->modified = qfalse;
 
 	s = va("UFO: Alien Invasion %s %s %s %s", UFO_VERSION, CPUSTRING, __DATE__, BUILDSTRING);
 	Cvar_Get("version", s, CVAR_NOSET, NULL);
