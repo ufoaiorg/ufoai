@@ -598,6 +598,7 @@ static void SP_func_breakable (edict_t * self)
 {
 	self->classname = "breakable";
 	self->type = ET_BREAKABLE;
+	VectorCopy(self->origin, self->pos);
 	VectorSet(self->origin, 0, 0, 0);
 	/* set an inline model */
 	/* also set self->solid = SOLID_BSP here */
@@ -605,6 +606,8 @@ static void SP_func_breakable (edict_t * self)
 	gi.setmodel(self, self->model);
 	if (self->solid != SOLID_BSP)
 		Com_Printf("Error - func_breakable with no SOLID_BSP\n");
+	if (!self->model)
+		Com_Printf("Error - func_breakable with no model\n");
 #if 0
 	Com_Printf( "model (%s) num: %i mins: %i %i %i maxs: %i %i %i\n",
 		self->model, self->mapNum, (int)self->mins[0], (int)self->mins[1], (int)self->mins[2],
@@ -743,6 +746,8 @@ void Think_SpawnDoorTrigger (edict_t *self)
 	edict_t		*other;
 	vec3_t		mins, maxs;
 
+	VectorCopy(self->origin, self->pos);
+	VectorSet(self->origin, 0, 0, 0);
 	VectorCopy(self->absmin, mins);
 	VectorCopy(self->absmax, maxs);
 
