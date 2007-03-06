@@ -268,7 +268,7 @@ static void G_UpdateCharacterScore (edict_t *attacker, fireDef_t *fd, edict_t *t
 		if (target->HP <= 0)
 			attacker->chr.chrscore.teamkilled++;
 		else
-			attacker->chr.chrscore.teamstunned++; 
+			attacker->chr.chrscore.teamstunned++;
 		break;
 	default:
 		break;
