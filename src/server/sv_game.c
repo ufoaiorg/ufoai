@@ -146,10 +146,6 @@ static void PF_error (const char *fmt, ...)
 	char msg[1024];
 	va_list argptr;
 
-#if defined DEBUG
-	Sys_DebugBreak();
-#endif
-
 	va_start(argptr, fmt);
 	Q_vsnprintf(msg, sizeof(msg), fmt, argptr);
 	va_end(argptr);
@@ -177,6 +173,7 @@ static void PF_SetModel (edict_t * ent, const char *name)
 	/* if it is an inline model, get the size information for it */
 	if (name[0] == '*') {
 		mod = CM_InlineModel(name);
+		assert(mod);
 		VectorCopy(mod->mins, ent->mins);
 		VectorCopy(mod->maxs, ent->maxs);
 		ent->solid = SOLID_BSP;
