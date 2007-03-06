@@ -707,6 +707,7 @@ static void CL_EntEdict (sizebuf_t *sb)
 		le->inuse = qtrue;
 	}
 
+	le->invis = qtrue;
 	le->type = type;
 	le->modelnum1 = modelnum1;
 
