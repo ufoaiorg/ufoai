@@ -3028,6 +3028,8 @@ void CL_SellOrAddItems (void)
 /**
  * @brief Update employeer stats after mission.
  * @param[in] won Determines whether we won the mission or not.
+ * @note Soldier promotion is being done here.
+ * @note Soldier skill upgrade is being done here.
  * @sa CL_GameResults_f
  *
  * FIXME: See TODO and FIXME included
@@ -3054,14 +3056,11 @@ static void CL_UpdateCharacterStats (int won)
 			idx++;
 			chr->assigned_missions++;
 
-			/* FIXME: */
-			for (j = 0; j < SKILL_NUM_TYPES; j++)
-				if (chr->skills[j] < MAX_SKILL)
-					chr->skills[j]++;
+			CL_UpdateCharacterSkills(chr);
 
-			/* TODO: improve weapon, power and accuracy skills here.
-			   Add to character_t some killed_by_heavy, killed_by_sniper,
-			   etc, count proper kills and calculate skills to improve here. */
+			/* TODO: use chrScore_t to determine negative influence on soldier here,
+			   like killing too many civilians and teammates can lead to unhire and disband
+			   such soldier, or maybe rank degradation. */
 
 			/* Check if the soldier meets the requirements for a higher rank
 			   and do a promotion. */

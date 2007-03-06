@@ -416,6 +416,21 @@ static void G_SendCharacterData (edict_t* ent)
 	/* scores */
 	for (k = 0; k < KILLED_NUM_TYPES; k++)
 		gi.WriteShort(ent->chr.kills[k]);
+
+	/* Send chr->chrscore as well. */	
+	gi.WriteByte(ent->chr.chrscore.alienskilled);
+	gi.WriteByte(ent->chr.chrscore.aliensstunned);
+	gi.WriteByte(ent->chr.chrscore.civilianskilled);
+	gi.WriteByte(ent->chr.chrscore.civiliansstunned);
+	gi.WriteByte(ent->chr.chrscore.teamkilled);
+	gi.WriteByte(ent->chr.chrscore.teamstunned);
+	gi.WriteByte(ent->chr.chrscore.closekills);
+	gi.WriteByte(ent->chr.chrscore.heavykills);
+	gi.WriteByte(ent->chr.chrscore.assaultkills);
+	gi.WriteByte(ent->chr.chrscore.sniperkills);
+	gi.WriteByte(ent->chr.chrscore.explosivekills);
+	gi.WriteByte(ent->chr.chrscore.accuracystat);
+	gi.WriteByte(ent->chr.chrscore.powerstat);
 }
 
 /**
@@ -486,10 +501,10 @@ void G_EndGame (int team)
 	Com_DPrintf("Sending results with %i actors.\n", j);
 	/* this is (size of updateCharacter_t) * number of phalanx actors - see CL_ParseCharacterData for more info */
 	/* KILLED_NUM_TYPES + 2 gi.WriteShorts */
-	/* 3 gi.WriteByte */
+	/* 16 gi.WriteByte */
 	/* j how many iterations in the for loop */
 	/* *2 because a short is send as 2 bytes */
-	gi.WriteShort(((KILLED_NUM_TYPES + 2) * 2 + 3) * j);
+	gi.WriteShort(((KILLED_NUM_TYPES + 2) * 2 + 16) * j);
 
 	if (j) {
 		for (i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)

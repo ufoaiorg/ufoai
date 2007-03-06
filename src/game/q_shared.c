@@ -3259,8 +3259,13 @@ void Com_CharGenAbilitySkills (character_t * chr, int team)
 			min = rand_avg - min;
 		else
 			min = max - rand_avg;
-		for (i = 0; i < ABILITY_NUM_TYPES; i++)
-			chr->skills[i] = ((randomArray[i] - rand_avg) / min * (maxAbility - minAbility) + minAbility + maxAbility) / 2 + frand() * 3;
+		for (i = 0; i < ABILITY_NUM_TYPES; i++) {
+			/* Don't allow to generate skill > 100 - more than 100 only with implants. */
+			if ((((randomArray[i] - rand_avg) / min * (maxAbility - minAbility) + minAbility + maxAbility) / 2 + frand() * 3) > 100)
+				chr->skills[i] = 100;
+			else
+				chr->skills[i] = ((randomArray[i] - rand_avg) / min * (maxAbility - minAbility) + minAbility + maxAbility) / 2 + frand() * 3;
+		}
 
 		/* Skills */
 		max = 0;
@@ -3279,8 +3284,13 @@ void Com_CharGenAbilitySkills (character_t * chr, int team)
 			min = rand_avg - min;
 		else
 			min = max - rand_avg;
-		for (i = 0; i < SKILL_NUM_TYPES - ABILITY_NUM_TYPES; i++)
-			chr->skills[ABILITY_NUM_TYPES + i] = ((randomArray[i] - rand_avg) / min * (maxSkill - minSkill) + minSkill + maxSkill) / 2 + frand() * 3;
+		for (i = 0; i < SKILL_NUM_TYPES - ABILITY_NUM_TYPES; i++) {
+			/* Don't allow to generate skill > 100 - more than 100 only with implants. */
+			if ((((randomArray[i] - rand_avg) / min * (maxSkill - minSkill) + minSkill + maxSkill) / 2 + frand() * 3) > 100)
+				chr->skills[ABILITY_NUM_TYPES + i] = 100;
+			else
+				chr->skills[ABILITY_NUM_TYPES + i] = ((randomArray[i] - rand_avg) / min * (maxSkill - minSkill) + minSkill + maxSkill) / 2 + frand() * 3;
+		}
 
 		/* Check if it makes sense */
 		max = ((max - rand_avg) / min * (maxSkill - minSkill) + minSkill + maxSkill) / 2;

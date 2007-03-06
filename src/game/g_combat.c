@@ -217,6 +217,65 @@ static void G_UpdateShotMock (shot_mock_t *mock, edict_t *shooter, edict_t *stru
 }
 
 /**
+ * @brief Update character stats after succesful shoot.
+ * @param[in] *attacker Pointer to attacker.
+ * @param[in] *fd Pointer to fireDef_t used in shoot.
+ * @param[in] *target Pointer to target.
+ * @note chr.chrscore is being sent to client in CL_ParseCharacterData()
+ * @sa CL_UpdateCharacterSkills
+ */
+static void G_UpdateCharacterScore (edict_t *attacker, fireDef_t *fd, edict_t *target)
+{
+	if (!attacker || !fd || !target)
+		return;
+
+	switch (target->team) {
+	case TEAM_ALIEN:	/**< Aliens. */
+		if (target->HP <= 0)
+			attacker->chr.chrscore.alienskilled++;
+		else
+			attacker->chr.chrscore.aliensstunned++;
+		attacker->chr.chrscore.accuracystat++;
+		/* Only killing/stunning an alien can lead to skill improve. */
+		switch (fd->weaponSkill) {
+		case SKILL_CLOSE:
+			attacker->chr.chrscore.closekills++;
+			break;
+		case SKILL_HEAVY:
+			attacker->chr.chrscore.heavykills++;
+			attacker->chr.chrscore.powerstat++;
+			break;
+		case SKILL_ASSAULT:
+			attacker->chr.chrscore.assaultkills++;
+			break;
+		case SKILL_SNIPER:
+			attacker->chr.chrscore.sniperkills++;
+			break;
+		case SKILL_EXPLOSIVE:
+			attacker->chr.chrscore.explosivekills++;
+			break;
+		default:
+			break;
+		}
+		break;
+	case TEAM_CIVILIAN:	/**< Civilians. */
+		if (target->HP <= 0)
+			attacker->chr.chrscore.civilianskilled++;
+		else
+			attacker->chr.chrscore.civiliansstunned++;
+		break;
+	case TEAM_PHALANX:	/* PHALANX soldiers. */
+		if (target->HP <= 0)
+			attacker->chr.chrscore.teamkilled++;
+		else
+			attacker->chr.chrscore.teamstunned++; 
+		break;
+	default:
+		break;
+	}
+}
+
+/**
  * @brief Deals damage of a give type and amount to a target.
  * @param[in] ent TODO ???
  * @param[in] fd The fire definition that defines what type of damage is dealt.
@@ -367,6 +426,7 @@ static void G_Damage (edict_t * ent, fireDef_t *fd, int damage, edict_t * attack
 			attacker->chr.kills[KILLED_TEAM]++;
 		else
 			attacker->chr.kills[KILLED_ALIENS]++;
+		G_UpdateCharacterScore(attacker, fd, ent);
 
 	} else {
 		if (damage > 0 && mor_panic->value) {

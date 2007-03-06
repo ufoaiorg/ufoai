@@ -1534,6 +1534,21 @@ typedef struct updateCharacter_s {
 	int kills[KILLED_NUM_TYPES];
 	int HP, AP, STUN;
 	int morale;
+
+	/* Those are chrScore_t. */
+	int alienskilled;
+	int aliensstunned;
+	int civilianskilled;
+	int civiliansstunned;
+	int teamkilled;
+	int teamstunned;
+	int closekills;
+	int heavykills;
+	int assaultkills;
+	int sniperkills;
+	int explosivekills;
+	int accuracystat;
+	int powerstat;
 } updateCharacter_t;
 
 /**
@@ -1567,6 +1582,20 @@ extern void CL_ParseCharacterData (sizebuf_t *buf, qboolean updateCharacter)
 
 			for (j = 0; j < KILLED_NUM_TYPES; j++)
 				chr->kills[j] = updateCharacterArray[i].kills[j];
+
+			chr->chrscore.alienskilled = updateCharacterArray[i].alienskilled;
+			chr->chrscore.aliensstunned = updateCharacterArray[i].aliensstunned;
+			chr->chrscore.civilianskilled = updateCharacterArray[i].civilianskilled;
+			chr->chrscore.civiliansstunned = updateCharacterArray[i].civiliansstunned;
+			chr->chrscore.teamkilled = updateCharacterArray[i].teamkilled;
+			chr->chrscore.teamstunned = updateCharacterArray[i].teamstunned;
+			chr->chrscore.closekills = updateCharacterArray[i].closekills;
+			chr->chrscore.heavykills = updateCharacterArray[i].heavykills;
+			chr->chrscore.assaultkills = updateCharacterArray[i].assaultkills;
+			chr->chrscore.sniperkills = updateCharacterArray[i].sniperkills;
+			chr->chrscore.explosivekills = updateCharacterArray[i].explosivekills;
+			chr->chrscore.accuracystat = updateCharacterArray[i].accuracystat;
+			chr->chrscore.powerstat = updateCharacterArray[i].powerstat;
 		}
 		num = 0;
 	} else {
@@ -1580,9 +1609,9 @@ extern void CL_ParseCharacterData (sizebuf_t *buf, qboolean updateCharacter)
 		 * KILLED_NUM_TYPES => size of kills array
 		 * +2 => HP and ucn
 		 * *2 => for shorts
-		 * +3 => STUN and AP
+		 * +16 => STUN, AP and chrScore_t
 		 */
-		num = MSG_ReadShort(buf) / ((KILLED_NUM_TYPES + 2) * 2 + 3);
+		num = MSG_ReadShort(buf) / ((KILLED_NUM_TYPES + 2) * 2 + 16);
 		if (num > MAX_EMPLOYEES)
 			Sys_Error("CL_ParseCharacterData: num exceeded MAX_WHOLETEAM\n");
 		else if (num < 0)
@@ -1596,10 +1625,23 @@ extern void CL_ParseCharacterData (sizebuf_t *buf, qboolean updateCharacter)
 
 			for (j = 0; j < KILLED_NUM_TYPES; j++)
 				updateCharacterArray[i].kills[j] = MSG_ReadShort(buf);
+
+			updateCharacterArray[i].alienskilled = MSG_ReadByte(buf);
+			updateCharacterArray[i].aliensstunned = MSG_ReadByte(buf);
+			updateCharacterArray[i].civilianskilled = MSG_ReadByte(buf);
+			updateCharacterArray[i].civiliansstunned = MSG_ReadByte(buf);
+			updateCharacterArray[i].teamkilled = MSG_ReadByte(buf);
+			updateCharacterArray[i].teamstunned = MSG_ReadByte(buf);
+			updateCharacterArray[i].closekills = MSG_ReadByte(buf);
+			updateCharacterArray[i].heavykills = MSG_ReadByte(buf);
+			updateCharacterArray[i].assaultkills = MSG_ReadByte(buf);
+			updateCharacterArray[i].sniperkills = MSG_ReadByte(buf);
+			updateCharacterArray[i].explosivekills = MSG_ReadByte(buf);
+			updateCharacterArray[i].accuracystat = MSG_ReadByte(buf);
+			updateCharacterArray[i].powerstat = MSG_ReadByte(buf);
 		}
 	}
 }
-
 
 /**
  * @brief Reads mission result data from server
@@ -1973,3 +2015,87 @@ extern void CL_ParseUGVs (char *title, char **text)
 				Com_Printf( "Com_ParseUGVs: unknown token \"%s\" ignored (ugv %s)\n", token, title );
 	} while ( *text );
 }
+
+/**
+ * @brief Updates character skills after a mission.
+ * @param[in] *chr Pointer to a character_t.
+ * @sa CL_UpdateCharacterStats
+ * @sa G_UpdateCharacterScore
+ */
+extern void CL_UpdateCharacterSkills(character_t *chr)
+{
+	qboolean changed = qfalse;
+
+	if (!chr)
+		return;
+	/* We are only updating skills to max value 100.
+	   More than 100 is available only with implants. */
+
+	/* Update SKILL_CLOSE. 4 closekills needed. */
+	if (chr->skills[SKILL_CLOSE] < 100) {
+		if (chr->chrscore.closekills >= 4) {
+			chr->skills[SKILL_CLOSE]++;
+			chr->chrscore.closekills = chr->chrscore.closekills - 4;
+			changed = qtrue;
+		}   
+	}
+
+	/* Update SKILL_HEAVY. 6 heavykills needed.*/
+	if (chr->skills[SKILL_HEAVY] < 100) {
+		if (chr->chrscore.heavykills >= 6) {
+			chr->skills[SKILL_HEAVY]++;
+			chr->chrscore.heavykills = chr->chrscore.heavykills - 6;
+			changed = qtrue;
+		}
+	}
+
+	/* Update SKILL_ASSAULT. 5 assaultkills needed.*/
+	if (chr->skills[SKILL_ASSAULT] < 100) {
+		if (chr->chrscore.assaultkills >= 5) {
+			chr->skills[SKILL_ASSAULT]++;
+			chr->chrscore.assaultkills = chr->chrscore.assaultkills - 5;
+			changed = qtrue;
+		}
+	}
+
+	/* Update SKILL_SNIPER. 5 sniperkills needed. */
+	if (chr->skills[SKILL_SNIPER] < 100) {
+		if (chr->chrscore.sniperkills >= 5) {
+			chr->skills[SKILL_SNIPER]++;
+			chr->chrscore.sniperkills = chr->chrscore.sniperkills - 5;
+			changed = qtrue;
+		}
+	}
+
+	/* Update SKILL_EXPLOSIVE. 8 explosivekills needed. */
+	if (chr->skills[SKILL_EXPLOSIVE] < 100) {
+		if (chr->chrscore.explosivekills >= 8) {
+			chr->skills[SKILL_EXPLOSIVE]++;
+			chr->chrscore.explosivekills = chr->chrscore.explosivekills - 8;
+			changed = qtrue;
+		}
+	}
+
+	/* Update ABILITY_ACCURACY. 12 accuracystat (succesful kill or stun) needed. */
+	if (chr->skills[ABILITY_ACCURACY] < 100) {
+		if (chr->chrscore.accuracystat >= 12) {
+			chr->skills[ABILITY_ACCURACY]++;
+			chr->chrscore.accuracystat = chr->chrscore.accuracystat - 12;
+			changed = qtrue;
+		}
+	}
+
+	/* Update ABILITY_POWER. 12 powerstat (succesful kill or stun with heavy) needed. */
+	if (chr->skills[ABILITY_POWER] < 100) {
+		if (chr->chrscore.powerstat >= 12) {
+			chr->skills[ABILITY_POWER]++;
+			chr->chrscore.powerstat = chr->chrscore.powerstat - 12;
+			changed = qtrue;
+		}
+	}
+
+	/* Repeat to make sure we update skills with huge amount of chrscore->*kills. */
+	if (changed)
+		CL_UpdateCharacterSkills(chr);
+}
+

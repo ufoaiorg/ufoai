@@ -1208,6 +1208,24 @@ typedef struct rank_s {
 extern rank_t ranks[MAX_RANKS]; /**< Global list of all ranks defined in medals.ufo. */
 extern int numRanks;            /**< The number of entries in the list above. */
 
+/** @brief Structure of scores being counted after soldier kill or stun. */
+typedef struct chrScore_s {
+	int alienskilled;	/**< Killed aliens. */
+	int aliensstunned;	/**< Stunned aliens. */
+	int civilianskilled;	/**< Killed civilians. TODO: use me. */
+	int civiliansstunned;	/**< Stunned civilians. TODO: use me. */
+	int teamkilled;		/**< Killed teammates. TODO: use me. */
+	int teamstunned;	/**< Stunned teammates. TODO: use me. */
+	int closekills;		/**< Aliens killed by CLOSE. */
+	int heavykills;		/**< Aliens killed by HEAVY. */
+	int assaultkills;	/**< Aliens killed by ASSAULT. */
+	int sniperkills;	/**< Aliens killed by SNIPER. */
+	int explosivekills;	/**< Aliens killed by EXPLOSIVE. */
+	int accuracystat;	/**< Aliens kills or stuns counted to ACCURACY. */
+	int powerstat;		/**< Aliens kills or stuns counted to POWER. */
+	int survivedmissions;	/**< Missions survived. TODO: use me. */
+} chrScore_t;
+
 /** @brief Describes a character with all its attributes */
 typedef struct character_s {
 	int ucn;
@@ -1223,6 +1241,8 @@ typedef struct character_s {
 	int HP, STUN, AP, morale;
 
 	/** score */
+	chrScore_t chrscore;
+
 	int kills[KILLED_NUM_TYPES];
 /*  int     destroyed_objects; */
 /*  int     hit_ratio; */
