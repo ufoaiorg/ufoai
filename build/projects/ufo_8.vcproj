@@ -355,7 +355,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/NODEFAULTLIB:LIBCMT"
-				AdditionalDependencies="kernel32.lib user32.lib winmm.lib wsock32.lib advapi32.lib zlib.lib &quot;$(ProjectDir)\..\..\src\ports\win32\vc8\intl.lib&quot;"
+				AdditionalDependencies="kernel32.lib user32.lib winmm.lib wsock32.lib advapi32.lib zlib.lib &quot;$(ProjectDir)\..\..\src\ports\win32\intl.lib&quot;"
 				OutputFile="..\..\ufo.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
