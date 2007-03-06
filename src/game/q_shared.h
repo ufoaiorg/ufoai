@@ -829,9 +829,9 @@ extern const char *fade_names[FADE_LAST];
 
 /** used e.g. in our parsers */
 typedef struct value_s {
-	char *string;
-	int type;
-	size_t ofs;
+	const char *string;
+	const int type;
+	const size_t ofs;
 } value_t;
 
 int Com_ParseValue(void *base, char *token, int type, int ofs);

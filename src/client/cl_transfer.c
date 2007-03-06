@@ -1,4 +1,3 @@
-
 /**
  * @file cl_transfer.c
  * @brief Deals with the Transfer stuff.

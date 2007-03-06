@@ -48,10 +48,10 @@ static void SP_ugv_start(edict_t * ent);
 static void SP_civilian_target(edict_t * ent);
 static void SP_misc_mission(edict_t * ent);
 static void SP_misc_mission_aliens(edict_t * ent);
-static void SP_func_door (edict_t *ent);
+static void SP_func_door(edict_t *ent);
 
 typedef struct {
-	char *name;
+	const char *name;
 	void (*spawn) (edict_t * ent);
 } spawn_t;
 
