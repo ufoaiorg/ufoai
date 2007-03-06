@@ -207,17 +207,15 @@ building_t *B_GetLab(int base_id);
 void B_ClearBuilding(building_t *building);
 void B_ParseBuildings(char *id, char **text, qboolean link);
 void B_ParseBases(char *title, char **text);
-void B_BuildingInit(void);
 void B_BaseAttack(base_t* const base);
 void B_BaseResetStatus (base_t* const base);
 building_t *B_GetBuildingByIdx(base_t* base, int idx);
-building_t *B_GetBuildingInBase(base_t* base, char* buildingID);
-building_t *B_GetBuildingType(char *buildingName);
+/*building_t *B_GetBuildingInBase(base_t* base, char* buildingID);*/
+building_t *B_GetBuildingType(const char *buildingName);
 
 /** Coordinates to place the new base at (long, lat) */
 extern vec3_t newBasePos;
 
-void B_BuildingInit(void);
 int B_GetCount(void);
 void B_SetUpBase(void);
 

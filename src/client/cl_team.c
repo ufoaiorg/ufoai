@@ -1901,23 +1901,23 @@ static const value_t rankValues[] =
  */
 extern void CL_ParseMedalsAndRanks (char *title, char **text, byte parserank)
 {
-	rank_t		*rank = NULL;
-	char	*errhead = "Com_ParseMedalsAndRanks: unexptected end of file (medal/rank ";
-	char	*token;
+	rank_t *rank = NULL;
+	const char *errhead = "Com_ParseMedalsAndRanks: unexptected end of file (medal/rank ";
+	char *token;
 	const value_t	*v;
 
 	/* get name list body body */
-	token = COM_Parse( text );
+	token = COM_Parse(text);
 
 	if (!*text || *token != '{') {
-		Com_Printf( "Com_ParseMedalsAndRanks: rank/medal \"%s\" without body ignored\n", title );
+		Com_Printf("Com_ParseMedalsAndRanks: rank/medal \"%s\" without body ignored\n", title);
 		return;
 	}
 
 	if (parserank) {
 		/* parse ranks */
 		if (gd.numRanks >= MAX_RANKS) {
-			Com_Printf( "Too many rank descriptions, '%s' ignored.\n", title );
+			Com_Printf("Too many rank descriptions, '%s' ignored.\n", title);
 			gd.numRanks = MAX_RANKS;
 			return;
 		}
@@ -1950,7 +1950,7 @@ extern void CL_ParseMedalsAndRanks (char *title, char **text, byte parserank)
 					return;
 				rank->type = E_GetEmployeeType(token);
 			} else if (!v->string)
-				Com_Printf( "Com_ParseMedalsAndRanks: unknown token \"%s\" ignored (medal/rank %s)\n", token, title );
+				Com_Printf("Com_ParseMedalsAndRanks: unknown token \"%s\" ignored (medal/rank %s)\n", token, title);
 		} while (*text);
 	} else {
 		/* parse medals */
@@ -1972,48 +1972,48 @@ static const value_t ugvValues[] =
  */
 extern void CL_ParseUGVs (char *title, char **text)
 {
-	char	*errhead = "Com_ParseUGVs: unexptected end of file (ugv ";
+	const char *errhead = "Com_ParseUGVs: unexptected end of file (ugv ";
 	char	*token;
 	const value_t	*v;
 	ugv_t*	ugv;
 
 	/* get name list body body */
-	token = COM_Parse( text );
+	token = COM_Parse(text);
 
-	if ( !*text || *token != '{' ) {
-		Com_Printf( "Com_ParseUGVs: ugv \"%s\" without body ignored\n", title );
+	if (!*text || *token != '{') {
+		Com_Printf("Com_ParseUGVs: ugv \"%s\" without body ignored\n", title);
 		return;
 	}
 
 	/* parse ugv */
-	if ( gd.numUGV >= MAX_UGV ) {
-		Com_Printf( "Too many UGV descriptions, '%s' ignored.\n", title );
+	if (gd.numUGV >= MAX_UGV) {
+		Com_Printf("Too many UGV descriptions, '%s' ignored.\n", title);
 		gd.numUGV = MAX_UGV;
 		return;
 	}
 
 	ugv = &gd.ugvs[gd.numUGV++];
-	memset( ugv, 0, sizeof( ugv_t ) );
+	memset(ugv, 0, sizeof(ugv_t));
 
 	do {
 		/* get the name type */
-		token = COM_EParse( text, errhead, title );
-		if ( !*text )
+		token = COM_EParse(text, errhead, title);
+		if (!*text)
 			break;
-		if ( *token == '}' )
+		if (*token == '}')
 			break;
-		for ( v = ugvValues; v->string; v++ )
-			if ( !Q_strncmp( token, v->string, sizeof(v->string) ) ) {
+		for (v = ugvValues; v->string; v++)
+			if (!Q_strncmp(token, v->string, sizeof(v->string))) {
 				/* found a definition */
-				token = COM_EParse( text, errhead, title );
-				if ( !*text )
+				token = COM_EParse(text, errhead, title);
+				if (!*text)
 					return;
-				Com_ParseValue( ugv, token, v->type, v->ofs );
+				Com_ParseValue(ugv, token, v->type, v->ofs);
 				break;
 			}
-			if ( !v->string )
-				Com_Printf( "Com_ParseUGVs: unknown token \"%s\" ignored (ugv %s)\n", token, title );
-	} while ( *text );
+			if (!v->string)
+				Com_Printf("Com_ParseUGVs: unknown token \"%s\" ignored (ugv %s)\n", token, title);
+	} while (*text);
 }
 
 /**
@@ -2022,7 +2022,7 @@ extern void CL_ParseUGVs (char *title, char **text)
  * @sa CL_UpdateCharacterStats
  * @sa G_UpdateCharacterScore
  */
-extern void CL_UpdateCharacterSkills(character_t *chr)
+extern void CL_UpdateCharacterSkills (character_t *chr)
 {
 	qboolean changed = qfalse;
 
@@ -2037,7 +2037,7 @@ extern void CL_UpdateCharacterSkills(character_t *chr)
 			chr->skills[SKILL_CLOSE]++;
 			chr->chrscore.closekills = chr->chrscore.closekills - 4;
 			changed = qtrue;
-		}   
+		}
 	}
 
 	/* Update SKILL_HEAVY. 6 heavykills needed.*/

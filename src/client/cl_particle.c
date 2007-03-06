@@ -1113,7 +1113,7 @@ void CL_ParsePtlCmds (char *name, char **text)
 {
 	ptlCmd_t *pc;
 	const value_t *pp;
-	char *errhead = "CL_ParsePtlCmds: unexptected end of file";
+	const char *errhead = "CL_ParsePtlCmds: unexptected end of file";
 	char *token;
 	int i, j;
 
@@ -1298,7 +1298,7 @@ int CL_GetParticleIndex (const char *name)
  */
 extern int CL_ParseParticle (char *name, char **text)
 {
-	char *errhead = "CL_ParseParticle: unexptected end of file (particle ";
+	const char *errhead = "CL_ParseParticle: unexptected end of file (particle ";
 	ptlDef_t *pd;
 	char *token;
 	int i, pos;

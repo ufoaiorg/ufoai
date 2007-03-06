@@ -65,11 +65,11 @@ static const value_t shader_values[] = {
  * @note Called from CL_ParseScriptSecond
  * @sa CL_ParseScriptSecond
  */
-void CL_ParseShaders(char *title, char **text)
+void CL_ParseShaders (char *title, char **text)
 {
 	shader_t *entry;
 	const value_t *v;
-	char *errhead = "CL_ParseShaders: unexptected end of file (names ";
+	const char *errhead = "CL_ParseShaders: unexptected end of file (names ";
 	char *token;
 
 	/* get name list body body */
@@ -117,7 +117,7 @@ void CL_ParseShaders(char *title, char **text)
 /**
  * @brief List all loaded shaders via console
  */
-void CL_ShaderList_f(void)
+void CL_ShaderList_f (void)
 {
 	int i;
 

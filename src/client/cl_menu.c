@@ -3115,7 +3115,7 @@ MENU PARSING
  */
 qboolean MN_ParseAction (menuNode_t * menuNode, menuAction_t * action, char **text, char **token)
 {
-	char *errhead = "MN_ParseAction: unexpected end of file (in event)";
+	const char *errhead = "MN_ParseAction: unexpected end of file (in event)";
 	menuAction_t *lastAction;
 	menuNode_t *node;
 	qboolean found;
@@ -3289,7 +3289,7 @@ qboolean MN_ParseAction (menuNode_t * menuNode, menuAction_t * action, char **te
  */
 qboolean MN_ParseNodeBody (menuNode_t * node, char **text, char **token)
 {
-	char *errhead = "MN_ParseNodeBody: unexpected end of file (node";
+	const char *errhead = "MN_ParseNodeBody: unexpected end of file (node";
 	qboolean found;
 	const value_t *val;
 	int i;
@@ -3410,7 +3410,7 @@ qboolean MN_ParseNodeBody (menuNode_t * node, char **text, char **token)
  */
 void MN_HideNode (menuNode_t* node)
 {
-	if ( node && node->invis == qtrue )
+	if (node && node->invis == qtrue)
 		node->invis = qfalse;
 }
 
@@ -3420,7 +3420,7 @@ void MN_HideNode (menuNode_t* node)
  */
 void MN_UnHideNode (menuNode_t* node)
 {
-	if ( node && node->invis == qfalse )
+	if (node && node->invis == qfalse)
 		node->invis = qtrue;
 }
 
@@ -3429,7 +3429,7 @@ void MN_UnHideNode (menuNode_t* node)
  */
 qboolean MN_ParseMenuBody (menu_t * menu, char **text)
 {
-	char *errhead = "MN_ParseMenuBody: unexpected end of file (menu";
+	const char *errhead = "MN_ParseMenuBody: unexpected end of file (menu";
 	char *token;
 	qboolean found;
 	menuNode_t *node, *lastNode, *iNode;
@@ -3604,7 +3604,7 @@ void MN_ParseMenuModel (char *name, char **text)
 	char *token;
 	int i;
 	const value_t *v = NULL;
-	char *errhead = "MN_ParseMenuModel: unexptected end of file (names ";
+	const char *errhead = "MN_ParseMenuModel: unexptected end of file (names ";
 
 	/* search for menumodels with same name */
 	for (i = 0; i < numMenuModels; i++)
@@ -4006,7 +4006,7 @@ void CL_GetFontData (const char *name, int *size, char *path)
 void CL_ParseFont (char *name, char **text)
 {
 	font_t *font;
-	char *errhead = "CL_ParseFont: unexpected end of file (font";
+	const char *errhead = "CL_ParseFont: unexpected end of file (font";
 	char *token;
 	int i;
 	const value_t *v = NULL;
@@ -4104,7 +4104,7 @@ static const value_t tutValues[] = {
 extern void MN_ParseTutorials (char *title, char **text)
 {
 	tutorial_t *t = NULL;
-	char *errhead = "MN_ParseTutorials: unexptected end of file (tutorial ";
+	const char *errhead = "MN_ParseTutorials: unexptected end of file (tutorial ";
 	char *token;
 	const value_t *v;
 

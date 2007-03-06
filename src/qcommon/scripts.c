@@ -117,7 +117,7 @@ static const value_t fdps[] = {
 static void Com_ParseFire (char *name, char **text, fireDef_t * fd)
 {
 	const value_t *fdp;
-	char *errhead = "Com_ParseFire: unexptected end of file";
+	const char *errhead = "Com_ParseFire: unexptected end of file";
 	char *token;
 
 	/* get its body */
@@ -183,7 +183,7 @@ static void Com_ParseFire (char *name, char **text, fireDef_t * fd)
  */
 static void Com_ParseArmor (char *name, char **text, short *ad)
 {
-	char *errhead = "Com_ParseFire: unexptected end of file";
+	const char *errhead = "Com_ParseFire: unexptected end of file";
 	char *token;
 	int i;
 
@@ -223,7 +223,7 @@ static void Com_ParseArmor (char *name, char **text, short *ad)
  */
 static void Com_ParseItem (char *name, char **text)
 {
-	char *errhead = "Com_ParseItem: unexptected end of file (weapon ";
+	const char *errhead = "Com_ParseItem: unexptected end of file (weapon ";
 	const value_t *val;
 	objDef_t *od;
 	char *token;
@@ -397,7 +397,7 @@ static const value_t idps[] = {
  */
 static void Com_ParseInventory (char *name, char **text)
 {
-	char *errhead = "Com_ParseInventory: unexptected end of file (inventory ";
+	const char *errhead = "Com_ParseInventory: unexptected end of file (inventory ";
 	invDef_t *id;
 	const value_t *idp;
 	char *token;
@@ -537,7 +537,7 @@ const char *name_strings[NAME_NUM_TYPES] = {
  */
 static void Com_ParseEquipment (char *name, char **text)
 {
-	char *errhead = "Com_ParseEquipment: unexptected end of file (equipment ";
+	const char *errhead = "Com_ParseEquipment: unexptected end of file (equipment ";
 	equipDef_t *ed;
 	char *token;
 	int i, n;
@@ -797,7 +797,7 @@ int Com_GetModelAndName (char *team, character_t * chr)
 static void Com_ParseNames (char *title, char **text)
 {
 	nameCategory_t *nc;
-	char *errhead = "Com_ParseNames: unexptected end of file (names ";
+	const char *errhead = "Com_ParseNames: unexptected end of file (names ";
 	char *token;
 	int i;
 
@@ -894,7 +894,7 @@ static void Com_ParseNames (char *title, char **text)
 static void Com_ParseActors (char *title, char **text)
 {
 	nameCategory_t *nc;
-	char *errhead = "Com_ParseActors: unexptected end of file (actors ";
+	const char *errhead = "Com_ParseActors: unexptected end of file (actors ";
 	char *token;
 	int i, j;
 
@@ -999,7 +999,7 @@ static const value_t teamDescValues[] = {
 static void Com_ParseTeamDesc (char *title, char **text)
 {
 	teamDesc_t *td;
-	char *errhead = "Com_ParseTeamDesc: unexptected end of file (teamdesc ";
+	const char *errhead = "Com_ParseTeamDesc: unexptected end of file (teamdesc ";
 	char *token;
 	int i;
 	const value_t *v;
@@ -1066,7 +1066,7 @@ static void Com_ParseTeam (char *title, char **text)
 {
 	nameCategory_t *nc;
 	teamDef_t *td;
-	char *errhead = "Com_ParseTeam: unexptected end of file (team ";
+	const char *errhead = "Com_ParseTeam: unexptected end of file (team ";
 	char *token;
 	int i;
 
@@ -1149,7 +1149,7 @@ static const value_t gameTypeValues[] = {
 
 static void Com_ParseGameTypes (char *name, char **text)
 {
-	char *errhead = "Com_ParseGameTypes: unexptected end of file (gametype ";
+	const char *errhead = "Com_ParseGameTypes: unexptected end of file (gametype ";
 	char *token;
 	int i;
 	const value_t *v;
@@ -1234,7 +1234,7 @@ DAMAGE TYPES INTERPRETER
  */
 static void Com_ParseDamageTypes (char *name, char **text)
 {
-	char *errhead = "Com_ParseDamageTypes: unexptected end of file (damagetype ";
+	const char *errhead = "Com_ParseDamageTypes: unexptected end of file (damagetype ";
 	char *token;
 	int i;
 

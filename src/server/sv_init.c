@@ -219,7 +219,7 @@ static byte tileChar (const char chr)
  */
 static void SV_ParseMapTile (char *filename, char **text)
 {
-	char *errhead = "SV_ParseMapTile: Unexpected end of file (";
+	const char *errhead = "SV_ParseMapTile: Unexpected end of file (";
 	char *token, *chr;
 	mTile_t *t;
 	int x, y, i;
@@ -298,7 +298,7 @@ static void SV_ParseMapTile (char *filename, char **text)
  */
 static void SV_ParseAssembly (char *filename, char **text)
 {
-	char *errhead = "SV_ParseAssembly: Unexpected end of file (";
+	const char *errhead = "SV_ParseAssembly: Unexpected end of file (";
 	char *token;
 	mAssembly_t *a;
 	int i, x, y;

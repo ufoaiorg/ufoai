@@ -1390,7 +1390,7 @@ extern void RS_ParseTechnologies (char *id, char **text)
 	technology_t *tech = NULL;
 	unsigned hash;
 	int tech_old;
-	char *errhead = "RS_ParseTechnologies: unexptected end of file.";
+	const char *errhead = "RS_ParseTechnologies: unexptected end of file.";
 	char *token = NULL;
 	requirements_t *required_temp = NULL;
 

@@ -1000,7 +1000,7 @@ static const value_t aircraftitems_vals[] = {
  */
 extern void CL_ParseAircraftItem (char *name, char **text)
 {
-	char *errhead = "CL_ParseAircraftItem: unexptected end of file (aircraft ";
+	const char *errhead = "CL_ParseAircraftItem: unexptected end of file (aircraft ";
 	aircraftItem_t *airItem;
 	const value_t *vp;
 	char *token;
@@ -1130,7 +1130,7 @@ static const value_t aircraft_vals[] = {
  */
 extern void CL_ParseAircraft (char *name, char **text)
 {
-	char *errhead = "CL_ParseAircraft: unexptected end of file (aircraft ";
+	const char *errhead = "CL_ParseAircraft: unexptected end of file (aircraft ";
 	aircraft_t *air_samp;
 	const value_t *vp;
 	char *token;

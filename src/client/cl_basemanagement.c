@@ -36,6 +36,8 @@ static cvar_t *mn_base_count;
 static int BuildingConstructionList[MAX_BUILDINGS];
 static int numBuildingConstructionList;
 
+static void B_BuildingInit(void);
+
 /**
  * @brief Count all employees (hired) in the given base
  */
@@ -297,8 +299,9 @@ extern void B_BuildingDestroy (building_t* building, base_t* base)
  *
  * updates the cvar mn_building_status which is used in some menus to display
  * the building status
+ * @note also script command function binding for 'building_status'
  */
-extern void B_BuildingStatus(void)
+extern void B_BuildingStatus (void)
 {
 	int daysLeft;
 	int NumberOfBuildings = 0;
@@ -343,7 +346,7 @@ extern void B_BuildingStatus(void)
  *
  * @sa B_SetUpBase
  */
-void B_HireForBuilding (building_t * building, int num)
+static void B_HireForBuilding (building_t * building, int num)
 {
 	employeeType_t employeeType;
 
@@ -389,7 +392,7 @@ void B_HireForBuilding (building_t * building, int num)
 /**
  * @brief Checks whether a building as status B_STATUS_WORKING and sets hasLab, hasHospital and so on
  */
-void B_UpdateBaseBuildingStatus(building_t* building, base_t* base, buildingStatus_t status)
+static void B_UpdateBaseBuildingStatus (building_t* building, base_t* base, buildingStatus_t status)
 {
 	assert(base);
 	assert(building);
@@ -431,9 +434,10 @@ void B_UpdateBaseBuildingStatus(building_t* building, base_t* base, buildingStat
 }
 
 /**
- * @brief Setup new base?
+ * @brief Setup new base
+ * @sa CL_NewBase
  */
-void B_SetUpBase(void)
+extern void B_SetUpBase (void)
 {
 	int i;
 	building_t *building = NULL;
@@ -490,13 +494,13 @@ void B_SetUpBase(void)
 }
 
 /**
- * Returns the building in the global building-types list that has the unique name buildingID.
+ * @brief Returns the building in the global building-types list that has the unique name buildingID.
  *
  * @param[in] buildingName The unique id of the building (building_t->id).
  *
  * @return building_t If a building was found it is returned, if no id was give the current building is returned, otherwise->NULL.
  */
-building_t *B_GetBuildingType(char *buildingName)
+extern building_t *B_GetBuildingType (const char *buildingName)
 {
 	int i = 0;
 
@@ -521,7 +525,7 @@ building_t *B_GetBuildingType(char *buildingName)
  * @sa B_NewBuilding
  * Checks whether the given costs are bigger than the current available credits
  */
-static qboolean B_CheckCredits( int costs )
+static qboolean B_CheckCredits (int costs)
 {
 	if (costs > ccs.credits)
 		return qfalse;
@@ -538,7 +542,7 @@ static qboolean B_CheckCredits( int costs )
  * Checks whether the player has enough credits to construct the current selected
  * building before starting construction.
  */
-static qboolean B_ConstructBuilding(void)
+static qboolean B_ConstructBuilding (void)
 {
 	building_t *building_to_build = NULL;
 
@@ -575,7 +579,7 @@ static qboolean B_ConstructBuilding(void)
 /**
  * @brief Build new building.
  */
-void B_NewBuilding(void)
+static void B_NewBuilding (void)
 {
 	/*maybe someone call this command before the buildings are parsed?? */
 	if (!baseCurrent || !baseCurrent->buildingCurrent)
@@ -595,7 +599,7 @@ void B_NewBuilding(void)
  * @param[in] row Set building (baseCurrent->buildingCurrent) to row
  * @param[in] col Set building (baseCurrent->buildingCurrent) to col
  */
-void B_SetBuildingByClick (int row, int col)
+extern void B_SetBuildingByClick (int row, int col)
 {
 	int j;
 	qboolean freeSlot = qfalse;
@@ -716,7 +720,7 @@ static void B_SetBuilding_f (void)
 /**
  * @brief Build building from the list of those available.
  */
-static void B_NewBuildingFromList_f(void)
+static void B_NewBuildingFromList_f (void)
 {
 	/*maybe someone call this command before the buildings are parsed?? */
 	if (!baseCurrent || !baseCurrent->buildingCurrent)
@@ -729,7 +733,7 @@ static void B_NewBuildingFromList_f(void)
 /**
  * @brief Draws a building.
  */
-static void B_DrawBuilding(void)
+static void B_DrawBuilding (void)
 {
 	building_t *building = NULL;
 
@@ -777,7 +781,7 @@ static void B_DrawBuilding(void)
  * This way every base can hold its own building list.
  * The content is updated everytime B_BuildingInit is called (i.e everytime the buildings-list is dispplayed/updated)
  */
-void B_BuildingAddToList(building_t * building)
+static void B_BuildingAddToList (building_t * building)
 {
 	assert(baseCurrent);
 
@@ -793,7 +797,7 @@ void B_BuildingAddToList(building_t * building)
  * @param[in] type_idx Which buildingtype
  * @sa B_GetNumberOfBuildingsInBaseByType
  */
-int B_GetNumberOfBuildingsInBaseByTypeIDX(int base_idx, int type_idx)
+extern int B_GetNumberOfBuildingsInBaseByTypeIDX (int base_idx, int type_idx)
 {
 	int i;
 	int NumberOfBuildings = 0;
@@ -819,7 +823,7 @@ int B_GetNumberOfBuildingsInBaseByTypeIDX(int base_idx, int type_idx)
  * @param[in] type Building type value
  * @sa B_GetNumberOfBuildingsInBaseByTypeIDX
  */
-int B_GetNumberOfBuildingsInBaseByType(int base_idx, buildingType_t type)
+extern int B_GetNumberOfBuildingsInBaseByType (int base_idx, buildingType_t type)
 {
 	int i;
 	int NumberOfBuildings = 0;
@@ -847,7 +851,7 @@ int B_GetNumberOfBuildingsInBaseByType(int base_idx, buildingType_t type)
  * @param[in] buildingType Which buildingtype
  * @return The max./highest building status found.
  */
-buildingStatus_t B_GetMaximumBuildingStatus(int base_idx, buildingType_t buildingType)
+static buildingStatus_t B_GetMaximumBuildingStatus (int base_idx, buildingType_t buildingType)
 {
 	int i;
 	buildingStatus_t status = B_STATUS_NOT_SET;
@@ -868,7 +872,7 @@ buildingStatus_t B_GetMaximumBuildingStatus(int base_idx, buildingType_t buildin
 /**
  * @brief Update the building-list.
  */
-void B_BuildingInit (void)
+static void B_BuildingInit (void)
 {
 	int i;
 	int numSameBuildings;
@@ -925,7 +929,7 @@ void B_BuildingInit (void)
  * @param[in] idx The index of the building in gd.buildings[]
  * @return buildings_t pointer to gd.buildings[idx]
  */
-building_t *B_GetBuildingByIdx(base_t* base, int idx)
+extern building_t *B_GetBuildingByIdx (base_t* base, int idx)
 {
 	if (base)
 		return &gd.buildings[base->idx][idx];
@@ -943,7 +947,8 @@ building_t *B_GetBuildingByIdx(base_t* base, int idx)
  * @param[in] buildingID Pointer to char
  * @return buildings_t pointer to gd.buildings
  */
-building_t *B_GetBuildingInBase(base_t* base, char* buildingID)
+#if 0
+static building_t *B_GetBuildingInBase (base_t* base, char* buildingID)
 {
 	int row, col;
 
@@ -959,6 +964,7 @@ building_t *B_GetBuildingInBase(base_t* base, char* buildingID)
 	/* just that there are no warnings */
 	return NULL;
 }
+#endif
 
 /**
  * @brief Opens up the 'pedia if you right click on a building in the list.
@@ -966,7 +972,7 @@ building_t *B_GetBuildingInBase(base_t* base, char* buildingID)
  * @todo Really only do this on rightclick.
  * @todo Left click should show building-status.
  */
-void B_BuildingInfoClick_f(void)
+static void B_BuildingInfoClick_f (void)
 {
 	if (baseCurrent && baseCurrent->buildingCurrent) {
 		Com_DPrintf("B_BuildingInfoClick_f: %s - %i\n", baseCurrent->buildingCurrent->id, baseCurrent->buildingCurrent->buildingStatus);
@@ -977,7 +983,7 @@ void B_BuildingInfoClick_f(void)
 /**
  * @brief Script function for clicking the building list text field.
  */
-void B_BuildingClick_f(void)
+static void B_BuildingClick_f (void)
 {
 	int num;
 	building_t *building = NULL;
@@ -1012,13 +1018,13 @@ void B_BuildingClick_f(void)
  * @param[in] text TODO: document this ... It appears to be the whole following text that is part of the "building" item definition in .ufo.
  * @param[in] link Bool value that decides whether to link the tech pointer in or not
  */
-void B_ParseBuildings(char *id, char **text, qboolean link)
+extern void B_ParseBuildings (char *id, char **text, qboolean link)
 {
 	building_t *building = NULL;
 	building_t *dependsBuilding = NULL;
 	technology_t *tech_link = NULL;
 	const value_t *edp = NULL;
-	char *errhead = "B_ParseBuildings: unexptected end of file (names ";
+	const char *errhead = "B_ParseBuildings: unexptected end of file (names ";
 	char *token = NULL;
 #if 0
 	char *split = NULL;
@@ -1163,7 +1169,7 @@ void B_ParseBuildings(char *id, char **text, qboolean link)
  * @return The (empty) building.
  */
 #if 0
-building_t *B_GetFreeBuilding(int base_idx, buildingType_t type)
+building_t *B_GetFreeBuilding (int base_idx, buildingType_t type)
 {
 	int i;
 	building_t *building = NULL;
@@ -1192,7 +1198,8 @@ building_t *B_GetFreeBuilding(int base_idx, buildingType_t type)
  *
  * @return The (empty) building.
  */
-building_t *B_GetFreeBuildingType(buildingType_t type)
+#if 0
+static building_t *B_GetFreeBuildingType (buildingType_t type)
 {
 	int i;
 	building_t *building = NULL;
@@ -1211,6 +1218,7 @@ building_t *B_GetFreeBuildingType(buildingType_t type)
 	/* no buildings available at all, no correct building type found or no building free */
 	return NULL;
 }
+#endif
 
 /**
  * @brief Gets a lab in the given base
@@ -1220,7 +1228,7 @@ building_t *B_GetFreeBuildingType(buildingType_t type)
  *
  * @return The lab or NULL if base has no lab
  */
-building_t *B_GetLab(int base_idx)
+extern building_t *B_GetLab (int base_idx)
 {
 	int i;
 	building_t *building = NULL;
@@ -1238,7 +1246,7 @@ building_t *B_GetLab(int base_idx)
  * @sa CL_ResetCharacters
  * @sa CL_GenerateCharacter
  */
-void B_ClearBase(base_t *const base)
+extern void B_ClearBase (base_t *const base)
 {
 	int row, col, i;
 
@@ -1279,9 +1287,9 @@ void B_ClearBase(base_t *const base)
  * @brief Reads information about bases.
  * @sa CL_ParseScriptFirst
  */
-void B_ParseBases(char *title, char **text)
+extern void B_ParseBases (char *title, char **text)
 {
-	char *errhead = "B_ParseBases: unexptected end of file (names ";
+	const char *errhead = "B_ParseBases: unexptected end of file (names ";
 	char *token;
 	base_t *base;
 
@@ -1333,8 +1341,9 @@ void B_ParseBases(char *title, char **text)
 
 /**
  * @brief Draws a base.
+ * @sa MN_DrawMenus
  */
-void B_DrawBase(menuNode_t * node)
+extern void B_DrawBase (menuNode_t * node)
 {
 	float x, y;
 	int mx, my, width, height, row, col, time;
@@ -1870,8 +1879,9 @@ static void B_BuildBase_f (void)
 /**
  * @brief Sets the baseStatus to BASE_NOT_USED
  * @param[in] base Which base should be resetted?
+ * @sa CL_CampaignRemoveMission
  */
-void B_BaseResetStatus (base_t* const base)
+extern void B_BaseResetStatus (base_t* const base)
 {
 	assert(base);
 	base->baseStatus = BASE_NOT_USED;
@@ -1882,9 +1892,10 @@ void B_BaseResetStatus (base_t* const base)
 /**
  * @brief Initiates an attack on a base.
  * @sa B_BaseAttack_f
+ * @sa CL_CampaignAddMission
  * @param[in] base Which base is under attack?
  */
-void B_BaseAttack (base_t* const base)
+extern void B_BaseAttack (base_t* const base)
 {
 	assert(base);
 	base->baseStatus = BASE_UNDER_ATTACK;
@@ -1898,7 +1909,7 @@ void B_BaseAttack (base_t* const base)
  * @brief Initiates an attack on a base.
  * @sa B_BaseAttack
  */
-static void B_BaseAttack_f(void)
+static void B_BaseAttack_f (void)
 {
 	int whichBaseID;
 
@@ -2014,8 +2025,9 @@ static void B_AssembleMap_f (void)
 
 /**
  * @brief Cleans all bases but restart the base names
+ * @sa CL_GameNew
  */
-void B_NewBases(void)
+extern void B_NewBases (void)
 {
 	/* reset bases */
 	int i;
@@ -2033,7 +2045,7 @@ void B_NewBases(void)
  *
  * call B_AssembleMap with a random base over script command 'base_assemble_rand'
  */
-static void B_AssembleRandomBase(void)
+static void B_AssembleRandomBase_f (void)
 {
 	int setUnderAttack = 0;
 	int randomBase = rand() % gd.numBases;
@@ -2056,7 +2068,7 @@ static void B_AssembleRandomBase(void)
  * Just for debugging purposes - not needed in game
  * @todo To be extended for load/save purposes
  */
-static void B_BuildingList_f(void)
+static void B_BuildingList_f (void)
 {
 	int i, j, k;
 	base_t *base;
@@ -2099,7 +2111,7 @@ static void B_BuildingList_f(void)
  * Just for debugging purposes - not needed in game
  * @todo To be extended for load/save purposes
  */
-static void B_BaseList_f(void)
+static void B_BaseList_f (void)
 {
 	int i, row, col, j;
 	base_t *base;
@@ -2130,7 +2142,7 @@ static void B_BaseList_f(void)
 /**
  * @brief Sets the title of the base.
  */
-static void B_SetBaseTitle_f(void)
+static void B_SetBaseTitle_f (void)
 {
 	Com_DPrintf("B_SetBaseTitle_f: #bases: %i\n", gd.numBases);
 	if (gd.numBases < MAX_BASES)
@@ -2146,7 +2158,7 @@ static void B_SetBaseTitle_f(void)
  * Copies the value of the cvar mn_base_title over as the name of the
  * current selected base
  */
-static void B_ChangeBaseName_f(void)
+static void B_ChangeBaseName_f (void)
 {
 	/* maybe called without base initialized or active */
 	if (!baseCurrent)
@@ -2158,7 +2170,7 @@ static void B_ChangeBaseName_f(void)
 /**
  * @brief Checks whether the building menu or the pedia entry should be called when baseCurrent->buildingCurrent is set
  */
-void B_BuildingOpen_f (void)
+static void B_BuildingOpen_f (void)
 {
 	if (baseCurrent && baseCurrent->buildingCurrent) {
 		if (baseCurrent->buildingCurrent->buildingStatus != B_STATUS_WORKING) {
@@ -2195,7 +2207,7 @@ void B_BuildingOpen_f (void)
 /**
  * @brief
  */
-void B_CheckMaxBases_f(void)
+static void B_CheckMaxBases_f (void)
 {
 	if (gd.numBases >= MAX_BASES) {
 		MN_PopMenu(qfalse);
@@ -2759,7 +2771,7 @@ extern void B_ResetBaseManagement (void)
 	Cmd_AddCommand("base_changename", B_ChangeBaseName_f, NULL);
 	Cmd_AddCommand("base_init", B_BaseInit_f, NULL);
 	Cmd_AddCommand("base_assemble", B_AssembleMap_f, "Called to assemble the current selected base");
-	Cmd_AddCommand("base_assemble_rand", B_AssembleRandomBase, NULL);
+	Cmd_AddCommand("base_assemble_rand", B_AssembleRandomBase_f, NULL);
 	Cmd_AddCommand("building_open", B_BuildingOpen_f, NULL);
 	Cmd_AddCommand("building_init", B_BuildingInit, NULL);
 	Cmd_AddCommand("building_status", B_BuildingStatus, NULL);

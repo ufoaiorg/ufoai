@@ -3325,7 +3325,7 @@ extern mission_t *CL_AddMission (char *name)
  */
 extern void CL_ParseMission (char *name, char **text)
 {
-	char *errhead = "CL_ParseMission: unexptected end of file (mission ";
+	const char *errhead = "CL_ParseMission: unexptected end of file (mission ";
 	mission_t *ms;
 	const value_t *vp;
 	char *token;
@@ -3415,7 +3415,7 @@ extern void CL_ParseMission (char *name, char **text)
  */
 extern void CL_ParseResearchedCampaignItems (char *name, char **text)
 {
-	char *errhead = "CL_ParseResearchedCampaignItems: unexptected end of file (equipment ";
+	const char *errhead = "CL_ParseResearchedCampaignItems: unexptected end of file (equipment ";
 	char *token;
 	int i;
 	campaign_t* campaign = NULL;
@@ -3462,7 +3462,7 @@ extern void CL_ParseResearchedCampaignItems (char *name, char **text)
  */
 extern void CL_ParseResearchableCampaignStates (char *name, char **text, qboolean researchable)
 {
-	char *errhead = "CL_ParseResearchableCampaignStates: unexptected end of file (equipment ";
+	const char *errhead = "CL_ParseResearchableCampaignStates: unexptected end of file (equipment ";
 	char *token;
 	int i;
 	campaign_t* campaign = NULL;
@@ -3540,7 +3540,7 @@ static const value_t stageset_vals[] = {
  */
 static void CL_ParseStageSet (char *name, char **text)
 {
-	char *errhead = "CL_ParseStageSet: unexptected end of file (stageset ";
+	const char *errhead = "CL_ParseStageSet: unexptected end of file (stageset ";
 	stageSet_t *sp;
 	const value_t *vp;
 	char missionstr[256];
@@ -3631,7 +3631,7 @@ static void CL_ParseStageSet (char *name, char **text)
  */
 extern void CL_ParseStage (char *name, char **text)
 {
-	char *errhead = "CL_ParseStage: unexptected end of file (stage ";
+	const char *errhead = "CL_ParseStage: unexptected end of file (stage ";
 	stage_t *sp;
 	char *token;
 	int i;
@@ -3741,7 +3741,7 @@ static const value_t salary_vals[] = {
  */
 extern void CL_ParseSalary (char *name, char **text, int campaignID)
 {
-	char *errhead = "CL_ParseSalary: unexptected end of file ";
+	const char *errhead = "CL_ParseSalary: unexptected end of file ";
 	salary_t *s;
 	const value_t *vp;
 	char *token;
@@ -3797,7 +3797,7 @@ extern void CL_ParseSalary (char *name, char **text, int campaignID)
  */
 extern void CL_ParseCharacterValues (char *name, char **text, int campaignID)
 {
-	char *errhead = "CL_ParseCharacterValues: unexptected end of file (aircraft ";
+	const char *errhead = "CL_ParseCharacterValues: unexptected end of file (aircraft ";
 	char *token;
 	int team = 0, i, empl_type = 0;
 
@@ -3892,7 +3892,7 @@ static const value_t campaign_vals[] = {
  */
 extern void CL_ParseCampaign (char *id, char **text)
 {
-	char *errhead = "CL_ParseCampaign: unexptected end of file (campaign ";
+	const char *errhead = "CL_ParseCampaign: unexptected end of file (campaign ";
 	campaign_t *cp;
 	const value_t *vp;
 	char *token;
@@ -4023,7 +4023,7 @@ static const value_t nation_vals[] = {
  */
 extern void CL_ParseNations (char *name, char **text)
 {
-	char *errhead = "CL_ParseNations: unexptected end of file (aircraft ";
+	const char *errhead = "CL_ParseNations: unexptected end of file (aircraft ";
 	nation_t *nation;
 	const value_t *vp;
 	char *token;

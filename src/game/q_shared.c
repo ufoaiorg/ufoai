@@ -1715,7 +1715,7 @@ skipwhite:
  * @param
  * @sa Com_Parse
  */
-char *COM_EParse (char **text, char *errhead, char *errinfo)
+char *COM_EParse (char **text, const char *errhead, char *errinfo)
 {
 	char *token;
 
@@ -1982,7 +1982,7 @@ int Q_strcasecmp (const char *s1, const char *s2)
  * @return false if overflowed - true otherwise
  * @sa
  */
-qboolean Com_sprintf (char *dest, size_t size, char *fmt, ...)
+qboolean Com_sprintf (char *dest, size_t size, const char *fmt, ...)
 {
 	size_t len;
 	va_list argptr;

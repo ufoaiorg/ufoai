@@ -697,7 +697,7 @@ int SEQ_Remove(char *name, char *data)
  * @return 1 - increase the command position of the sequence by one
  * @sa Cbuf_AddText
  */
-int SEQ_Command(char *name, char *data)
+int SEQ_Command (char *name, char *data)
 {
 	/* add the command */
 	Cbuf_AddText(name);
@@ -707,9 +707,9 @@ int SEQ_Command(char *name, char *data)
 /**
  * @brief Reads the sequence values from given text-pointer
  */
-void CL_ParseSequence(char *name, char **text)
+void CL_ParseSequence (char *name, char **text)
 {
-	char *errhead = "CL_ParseSequence: unexptected end of file (sequence ";
+	const char *errhead = "CL_ParseSequence: unexptected end of file (sequence ";
 	sequence_t *sp;
 	seqCmd_t *sc;
 	char *token, *data;
@@ -870,7 +870,7 @@ static int bufIndex;
  * video
  * video [filename]
  */
-void CL_Video_f(void)
+void CL_Video_f (void)
 {
 	char filename[MAX_OSPATH];
 	int i, last;

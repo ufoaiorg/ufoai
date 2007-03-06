@@ -1040,8 +1040,8 @@ extern void UP_ResetUfopedia (void)
  */
 extern void UP_ParseUpChapters (char *id, char **text)
 {
-	char	*errhead = "UP_ParseUpChapters: unexptected end of file (names ";
-	char	*token;
+	const char *errhead = "UP_ParseUpChapters: unexptected end of file (names ";
+	char *token;
 
 	/* get name list body body */
 	token = COM_Parse(text);
