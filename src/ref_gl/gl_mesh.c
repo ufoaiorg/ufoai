@@ -436,8 +436,13 @@ void R_DrawAliasModel (entity_t * e)
 	if ((e->flags & RF_TRANSLUCENT))
 		GLSTATE_ENABLE_BLEND
 
+	qglEnable(GL_DEPTH_TEST);
+	qglEnable(GL_CULL_FACE);
+
 	GL_DrawAliasFrameLerp(paliashdr, e->as.backlerp, e->as.frame, e->as.oldframe);
 
+	qglDisable(GL_CULL_FACE);
+	qglDisable(GL_DEPTH_TEST);
 	GL_TexEnv(GL_REPLACE);
 	qglDisable(GL_LIGHTING);
 
@@ -519,7 +524,7 @@ void R_DrawAliasModel (entity_t * e)
 		qglDepthRange(gldepthmin, gldepthmax);
 
 	/* show model bounding box */
-	Mod_DrawModelBBox (bbox, e);
+	Mod_DrawModelBBox(bbox, e);
 
 	if (gl_fog->value && r_newrefdef.fog)
 		qglEnable(GL_FOG);
