@@ -688,6 +688,7 @@ static void CL_EntPerish (sizebuf_t *sb)
 /**
  * @brief Inits the breakable or other solid objects
  * @note func_breakable, func_door
+ * @sa G_SendVisibleEdicts
  */
 static void CL_EntEdict (sizebuf_t *sb)
 {

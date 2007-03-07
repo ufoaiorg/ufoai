@@ -2737,10 +2737,9 @@ void Grid_RecalcRouting (struct routing_s *map, char *name, char **list)
 	memset(filled, 0, WIDTH * WIDTH);
 
 	/**
-	 * FIXME: what's this? if activated - the stairs in city04d are broken
-	 * (due to func_breakables)
+	 * FIXME: what's this?
 	 */
-#if 0
+#if 1
 	max[0] = max[0] < 253 ? max[0] + 2 : 255;
 	max[1] = max[1] < 253 ? max[1] + 2 : 255;
 	max[2] = max[2] < 5 ? max[2] + 2 : 7;

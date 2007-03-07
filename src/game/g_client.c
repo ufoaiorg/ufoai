@@ -2133,6 +2133,7 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 
 /**
  * @brief
+ * @sa CL_EntEdict
  */
 static void G_SendVisibleEdicts (void)
 {
