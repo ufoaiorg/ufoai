@@ -136,6 +136,11 @@ static void SV_Map_f (void)
 		return;
 	}
 
+	if (!Q_strncmp(Cmd_Argv(0), "devmap", 6)) {
+		Com_Printf("deactivate ai - make sure to reset sv_ai after maptesting");
+		Cvar_SetValue("sv_ai", 0);
+	}
+
 	/* if not a pcx, demo, or cinematic, check to make sure the level exists */
 	map = Cmd_Argv(1);
 	/* random maps uses position strings */
@@ -561,6 +566,8 @@ extern void SV_InitOperatorCommands (void)
 
 	Cmd_AddCommand("map", SV_Map_f, "Quit client and load the new map");
 	Cmd_AddParamCompleteFunction("map", SV_CompleteMapCommand);
+	Cmd_AddCommand("devmap", SV_Map_f, "Quit client and load the new map - deactivate the ai");
+	Cmd_AddParamCompleteFunction("devmap", SV_CompleteMapCommand);
 	Cmd_AddCommand("demo", SV_Demo_f, NULL);
 	Cmd_AddCommand("maplist", SV_ListMaps_f, "List of all available maps");
 
