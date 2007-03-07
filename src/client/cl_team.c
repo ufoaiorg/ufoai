@@ -426,6 +426,7 @@ extern void CL_AddCarriedToEq (equipDef_t * ed)
 	int p, container;
 
 	assert(baseCurrent);
+	assert(baseCurrent->aircraftCurrent != -1);
 
 	for (container = 0; container < csi.numIDs; container++) {
 		for (p = 0; p < baseCurrent->teamNum[baseCurrent->aircraftCurrent]; p++) {
@@ -564,6 +565,7 @@ extern void CL_ReloadAndRemoveCarried (equipDef_t * ed)
 	int p, container;
 
 	assert(baseCurrent);
+	assert(baseCurrent->aircraftCurrent != -1);
 
 	/* Iterate through in container order (right hand, left hand, belt, */
 	/* holster, backpack) at the top level, i.e. each squad member reloads */
@@ -622,6 +624,7 @@ static void CL_GenerateEquipment_f (void)
 	item_t item = {0,NONE,NONE};
 
 	assert(baseCurrent);
+	assert(baseCurrent->aircraftCurrent != -1);
 
 	/* Popup if no soldiers are assigned to the current aircraft. */
 	/* if ( !baseCurrent->numHired) { */
@@ -823,6 +826,7 @@ extern void CL_UpdateHireVar (void)
 	employee_t *employee = NULL;
 
 	assert(baseCurrent);
+	assert(baseCurrent->aircraftCurrent != -1);
 
 	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
 	Cvar_Set("mn_hired", va(_("%i of %i"), baseCurrent->teamNum[baseCurrent->aircraftCurrent], aircraft->size));
@@ -917,6 +921,11 @@ static void CL_MarkTeam_f (void)
 	/* we are only allowed to be here if we already set up a base */
 	if (!baseCurrent) {
 		Com_Printf("No base set up\n");
+		MN_PopMenu(qfalse);
+		return;
+	}
+	if (baseCurrent->aircraftCurrent == -1) {
+		Com_Printf("No aircraft selected\n");
 		MN_PopMenu(qfalse);
 		return;
 	}

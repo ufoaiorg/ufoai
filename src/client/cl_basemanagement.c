@@ -1784,7 +1784,7 @@ static void B_PackInitialEquipment_f (void)
 			break;
 	if (i == csi.numEDs) {
 		Com_DPrintf("B_PackInitialEquipment_f: Initial Phalanx equipment %s not found.\n", name);
-	} else {
+	} else if (baseCurrent->aircraftCurrent >= 0) {
 		for (i = 0; i < baseCurrent->teamNum[baseCurrent->aircraftCurrent]; i++) {
 			chr = baseCurrent->curTeam[i];
 			/* pack equipment */
@@ -2193,7 +2193,16 @@ static void B_BuildingOpen_f (void)
 				MN_PushMenu("production");
 				break;
 			case B_HANGAR:
-				MN_PushMenu("aircraft");
+				if (baseCurrent->numAircraftInBase)
+					MN_PushMenu("aircraft");
+				else {
+					MN_PushMenu("buyaircraft");
+					/* transfer is only possible when there are at least two bases */
+					if (gd.numBases > 1)
+						MN_Popup(_("Note"), _("No aircraft in this base - You first have to purchase or transfer an aircraft\n"));
+					else
+						MN_Popup(_("Note"), _("No aircraft in this base - You first have to purchase an aircraft\n"));
+				}
 				break;
 			default:
 				UP_OpenWith(baseCurrent->buildingCurrent->pedia);
@@ -2891,7 +2900,7 @@ base_t *B_GetBase (int idx)
  */
 int B_GetNumOnTeam (void)
 {
-	if (!baseCurrent)
+	if (!baseCurrent && baseCurrent->aircraftCurrent >= 0)
 		return 0;
 	return baseCurrent->teamNum[baseCurrent->aircraftCurrent];
 }

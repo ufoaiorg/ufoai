@@ -291,7 +291,7 @@ extern void CL_NewAircraft_f (void)
  */
 extern void MN_NextAircraft_f (void)
 {
-	if (!baseCurrent)
+	if (!baseCurrent || !baseCurrent->numAircraftInBase)
 		return;
 
 	if (Cvar_VariableInteger("mn_aircraft_id") < baseCurrent->numAircraftInBase - 1) {
@@ -307,8 +307,14 @@ extern void MN_NextAircraft_f (void)
  */
 extern void MN_PrevAircraft_f (void)
 {
-	if (Cvar_VariableInteger("mn_aircraft_id") > 0) {
-		Cvar_SetValue("mn_aircraft_id", Cvar_VariableInteger("mn_aircraft_id") - 1);
+	int aircraftID;
+
+	if (!baseCurrent || !baseCurrent->numAircraftInBase)
+		return;
+
+	aircraftID = Cvar_VariableInteger("mn_aircraft_id");
+	if (aircraftID >= 1) {
+		Cvar_SetValue("mn_aircraft_id", aircraftID - 1);
 		CL_AircraftSelect(NULL);
 	}
 }
@@ -355,8 +361,11 @@ extern void CL_AircraftReturnToBase_f (void)
 
 /**
  * @brief Sets aircraftCurrent and updates cvars
- *
- * uses cvar mn_aircraft_id to determine which aircraft to select
+ * @note uses cvar mn_aircraft_id to determine which aircraft to select (if aircraft
+ * pointer is NULL)
+ * @param[in] aircraft If this is NULL the cvar mn_aircraft_id will be used
+ * to determine the aircraft which should be displayed - if this will fail, too,
+ * the first aircraft in the base is taken (if there is one)
  */
 extern void CL_AircraftSelect (aircraft_t* aircraft)
 {
@@ -418,7 +427,16 @@ extern void CL_AircraftSelect (aircraft_t* aircraft)
  */
 extern void CL_AircraftSelect_f (void)
 {
+	/* calling from console? with no baseCurrent? */
+	if (!baseCurrent || !baseCurrent->numAircraftInBase || !baseCurrent->hasHangar) {
+		MN_PopMenu(qfalse);
+		return;
+	}
+
+	baseCurrent->aircraftCurrent = -1;
 	CL_AircraftSelect(NULL);
+	if (baseCurrent->aircraftCurrent == -1)
+		MN_PopMenu(qfalse);
 }
 
 /**

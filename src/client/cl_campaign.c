@@ -3152,6 +3152,8 @@ static void CL_GameResults_f (void)
 	}
 	won = atoi(Cmd_Argv(1));
 
+	assert(gd.interceptAircraft != -1);
+
 	baseCurrent = CL_AircraftGetFromIdx(gd.interceptAircraft)->homebase;
 	baseCurrent->aircraftCurrent = gd.interceptAircraft;
 
@@ -3205,6 +3207,7 @@ static void CL_GameResults_f (void)
 	/* onwin and onlose triggers */
 	CP_ExecuteMissionTrigger(selMis->def, won, baseCurrent);
 
+	/* aircraftCurrent must be valid here */
 	if (!baseCurrent->aircraft[baseCurrent->aircraftCurrent].alientypes
 		|| (baseCurrent->hasAlienCont && baseCurrent->aircraft[baseCurrent->aircraftCurrent].alientypes)) {
 		/* send the dropship back to base */
