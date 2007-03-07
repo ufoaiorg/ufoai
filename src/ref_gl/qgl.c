@@ -3822,7 +3822,7 @@ static void APIENTRY logViewport(GLint x, GLint y, GLsizei width, GLsizei height
 /**
  * @brief Mark a new frame in our gl log file
  */
-void GLimp_LogNewFrame( void )
+void GLimp_LogNewFrame (void)
 {
 	fprintf( glw_state.log_fp, "*** R_BeginFrame ***\n");
 }
@@ -3830,7 +3830,7 @@ void GLimp_LogNewFrame( void )
 /**
  * @brief Qgl function pointers for logging or normal opengl function
  */
-void GLimp_EnableLogging( qboolean enable )
+void GLimp_EnableLogging (qboolean enable)
 {
 	if (enable) {
 		if (!glw_state.log_fp) {

@@ -812,6 +812,11 @@ static void R_SetupGL (void)
 	GLSTATE_DISABLE_ALPHATEST
 	qglEnable(GL_DEPTH_TEST);
 
+#if 0
+	qglHint(GL_LINE_SMOOTH_HINT, GL_DONT_CARE);
+	qglHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_DONT_CARE);
+#endif
+
 	if (gl_fog->value && r_newrefdef.fog && gl_state.fog_coord) {
 		qglEnable(GL_FOG);
 		qglFogi(GL_FOG_MODE, GL_EXP2);
@@ -1156,7 +1161,6 @@ static qboolean R_Init (HINSTANCE hinstance, WNDPROC wndproc)
 {
 	char renderer_buffer[1000];
 	char vendor_buffer[1000];
-	int		err;
 	int		j;
 	extern float r_turbsin[256];
 	int aniso_level, max_aniso;
@@ -1504,7 +1508,7 @@ static qboolean R_Init (HINSTANCE hinstance, WNDPROC wndproc)
 		if (gl_config.maxTextureSize <= 0)
 			gl_config.maxTextureSize = 0;
 
-		if ((err = qglGetError()) != 0) {
+		if ((err = qglGetError()) != GL_NO_ERROR) {
 			ri.Con_Printf(PRINT_ALL, "......cannot detect !\n");
 		} else {
 			ri.Con_Printf(PRINT_ALL, "......detected %d\n", size);
@@ -1523,9 +1527,7 @@ static qboolean R_Init (HINSTANCE hinstance, WNDPROC wndproc)
 	R_InitParticleTexture();
 	Draw_InitLocal();
 
-	err = qglGetError();
-	if (err != GL_NO_ERROR)
-		ri.Con_Printf(PRINT_ALL, "glGetError() = 0x%x\n", err);
+	GL_CHECK_ERROR();
 
 	return qfalse;
 }

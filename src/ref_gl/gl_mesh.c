@@ -260,8 +260,10 @@ static qboolean R_CullAliasModel (vec4_t bbox[8], entity_t * e)
 
 /**
  * @brief
+ * @sa R_DrawAliasModel
+ * @sa R_DrawAliasMD3Model
  */
-void R_EnableLights(qboolean fixed, float *matrix, float *lightparam, float *lightambient)
+extern void R_EnableLights (qboolean fixed, float *matrix, float *lightparam, float *lightambient)
 {
 	dlight_t *light;
 	vec3_t delta;
