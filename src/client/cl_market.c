@@ -189,6 +189,12 @@ static void BS_BuyType_f (void)
 	}
 	/* aircraft */
 	else if (buyCategory == NUM_BUYTYPES) {
+		/* we can't buy aircraft without a hangar */
+		if (!baseCurrent->hasHangar) {
+			MN_PopMenu(qfalse);
+			MN_Popup(_("Note"), _("Build a hangar first"));
+			return;
+		}
 		for (i = 0, j = 0, air_samp = aircraft_samples; i < numAircraft_samples; i++, air_samp++) {
 			tech = RS_GetTechByProvided(air_samp->id);
 			assert(tech);
