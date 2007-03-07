@@ -75,7 +75,7 @@ sub check
 						if ($ent_end) {
 							$brush = 0;
 							if ($brushcount > 1) {
-								print "Warning - func_breakables with more than one brush found - might break pathfinding ($brushcount)\n";
+								print "Warning - func_breakables with more than one brush found - might break pathfinding ($brushcount - line $line)\n";
 							}
 							$ent_end = 0;
 						} else {
