@@ -64,7 +64,7 @@ void GL_LerpVerts(int nverts, dtrivertx_t * v, dtrivertx_t * ov, float *lerp, fl
  * @brief interpolates between two frames and origins
  * FIXME: batch lerp all vertexes
  */
-static void GL_DrawAliasFrameLerp(dmdl_t * paliashdr, float backlerp, int framenum, int oldframenum)
+static void GL_DrawAliasFrameLerp (dmdl_t * paliashdr, float backlerp, int framenum, int oldframenum)
 {
 	daliasframe_t *frame, *oldframe;
 	dtrivertx_t *v, *ov, *verts;
@@ -441,8 +441,6 @@ void R_DrawAliasModel (entity_t * e)
 
 	GL_DrawAliasFrameLerp(paliashdr, e->as.backlerp, e->as.frame, e->as.oldframe);
 
-	qglDisable(GL_CULL_FACE);
-	qglDisable(GL_DEPTH_TEST);
 	GL_TexEnv(GL_REPLACE);
 	qglDisable(GL_LIGHTING);
 
@@ -478,6 +476,9 @@ void R_DrawAliasModel (entity_t * e)
 
 	if (gl_fog->value && r_newrefdef.fog)
 		qglDisable(GL_FOG);
+
+	qglDisable(GL_CULL_FACE);
+	qglDisable(GL_DEPTH_TEST);
 
 	/* draw the circles for team-members and allied troops */
 	if (e->flags & (RF_SELECTED | RF_ALLIED | RF_MEMBER)) {
@@ -517,6 +518,9 @@ void R_DrawAliasModel (entity_t * e)
 		qglDisable(GL_LINE_SMOOTH);
 		qglEnable(GL_TEXTURE_2D);
 	}
+
+	qglEnable(GL_DEPTH_TEST);
+	qglEnable(GL_CULL_FACE);
 
 	qglPopMatrix();
 
