@@ -29,6 +29,9 @@ sub check
 	my $line = 0;
 	my $teamfound = 0;
 	my $team = 0; # search for team id in info_player_start (multiplayer)
+	my $brush = 0; # search for brushes inside of the entity (bmodels)
+	my $brushcount = 0;
+	my $ent_end = 0;
 	foreach ( readDir( $dir ) ) {
 		next if $_ =~ /^\.|(CVS)/;
 		if ( -d "$dir/$_" && $recursive ) {
@@ -46,8 +49,8 @@ sub check
 		%teamcount = ();
 		foreach ( <MAP> ) {
 			$line++;
-			unless ( $team ) {
-				m/^\"classname\"\s+\"(info_\w+_start)\"/ig;
+			unless ( $team || $brush ) {
+				m/^\"classname\"\s+\"(\w+)\"/ig;
 				if ( !$1 ) {
 					m/^\"team\"\s+\"(\d+)\"/ig;
 					next unless $1;
@@ -57,15 +60,32 @@ sub check
 				}
 				$entity = $1;
 			} else {
-				if ( m/^\}\n$/ ) {
+				if ($team) {
+					if ( m/^\}\n$/ ) {
+						$team = 0;
+						print "Error - no team for $entity (near line $line)\n";
+						next;
+					}
+					m/^\"team\"\s+\"(\d+)\"/ig;
+					next unless ( $1 );
+					$teamcount{$1}++;
 					$team = 0;
-					print "Error - no team for $entity (near line $line)\n";
-					next;
+				} elsif ($brush) {
+					if ( m/^\}\n$/ ) {
+						if ($ent_end) {
+							$brush = 0;
+							if ($brushcount > 1) {
+								print "Warning - func_breakables with more than one brush found - might break pathfinding ($brushcount)\n";
+							}
+							$ent_end = 0;
+						} else {
+							$brushcount++;
+							$ent_end = 1;
+						}
+					} elsif ( m/^\{\n$/ ) {
+						$ent_end = 0;
+					}
 				}
-				m/^\"team\"\s+\"(\d+)\"/ig;
-				next unless ( $1 );
-				$teamcount{$1}++;
-				$team = 0;
 				next;
 			}
 			$count{$entity}++;
@@ -79,8 +99,13 @@ sub check
 					$team = 1;
 				}
 				$teamfound = 0;
+			} elsif ( $entity eq "func_breakable" ) {
+				$brush = 1;
+				$brushcount = 0;
+				$ent_end = 0;
 			} else {
 				$team = 0;
+				$brush = 0;
 			}
 
 		}
