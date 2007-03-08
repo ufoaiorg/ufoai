@@ -306,6 +306,7 @@ static void G_Damage (edict_t * ent, fireDef_t *fd, int damage, edict_t * attack
 			if (damage >= ent->HP) {
 				gi.AddEvent(PM_ALL, EV_MODEL_EXPLODE);
 				gi.WriteShort(ent->mapNum);
+				gi.WriteShort(ent->number);
 				if (ent->particle && Q_strcmp(ent->particle, "null")) {
 					gi.AddEvent(PM_ALL, EV_SPAWN_PARTICLE);
 					gi.WriteShort(ent->spawnflags);

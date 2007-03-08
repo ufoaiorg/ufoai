@@ -128,7 +128,7 @@ static void LM_Delete (lm_t * lm)
 
 	LM_GenerateList();
 	Grid_RecalcRouting(&clMap, backup.name, lmList);
-	/* TODO: before CL_ConditionalMoveCalc() was implemented, forbidden list wasn't recalculated here */
+	/* also recalc forbidden list for func_breakable and func_door e.g. */
 	CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE);
 }
 
@@ -213,10 +213,19 @@ void LM_Perish (sizebuf_t * sb)
 void LM_Explode (sizebuf_t * sb)
 {
 	lm_t *lm;
+	le_t *le;
 
 	lm = LM_Find(MSG_ReadShort(sb));
 	if (!lm)
 		return;
+
+	/* now remove also the le to allow the tracing code to skip this le */
+	/* func_breakable and func_door e.g. */
+	le = LE_Get(MSG_ReadShort(sb));
+	if (le)
+		le->inuse = qfalse;
+	else
+		Com_Error(ERR_DROP, "LM_Explode: Could not find le");
 
 	if (lm->particle[0]) {
 		cmodel_t *mod;
