@@ -281,7 +281,7 @@ extern qboolean G_FrustomVis (edict_t * from, vec3_t point)
 	delta[1] = point[1] - from->origin[1];
 	delta[2] = 0;
 	VectorNormalize(delta);
-	dv = from->dir & 7;
+	dv = from->dir & (DIRECTIONS-1);
 
 	/* test 120 frustom (cos 60 = 0.5) */
 	if ((delta[0] * dvecsn[dv][0] + delta[1] * dvecsn[dv][1]) < 0.5)
@@ -540,18 +540,20 @@ int G_DoTurn (edict_t * ent, byte toDV)
 	int i, num;
 	int status;
 
-	assert(ent->dir <= 7);
+	assert(ent->dir < DIRECTIONS);
 #ifdef DEBUG
-	if (ent->dir > 7)
+	if (ent->dir >= DIRECTIONS)
 		return 0;	/* never reached. need for code analyst. */
 #endif
 
+	toDV &= (DIRECTIONS-1);
+
 	/* return if no rotation needs to be done */
-	if ((ent->dir) == (toDV & 7))
+	if ((ent->dir) == (toDV))
 		return 0;
 
 	/* calculate angle difference */
-	angleDiv = dangle[toDV & 7] - dangle[ent->dir];
+	angleDiv = dangle[toDV] - dangle[ent->dir];
 	if (angleDiv > 180.0)
 		angleDiv -= 360.0;
 	if (angleDiv < -180.0)
@@ -1046,7 +1048,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 		while ((dv = gi.MoveNext(gi.map, pos)) < 0xFF) {
 			/* store the inverted dv */
 			/* (invert by flipping the first bit and add the old height) */
-			dvtab[numdv++] = ((dv ^ 1) & 7) | (pos[2] << 3);
+			dvtab[numdv++] = ((dv ^ 1) & (DIRECTIONS - 1)) | (pos[2] << 3);
 			PosAddDV(pos, dv);
 		}
 
@@ -1087,7 +1089,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 					break;
 
 				/* decrease TUs */
-				div = ((dvtab[numdv] & 7) < 4) ? 2 : 3;
+				div = ((dvtab[numdv] & (DIRECTIONS - 1)) < 4) ? 2 : 3;
 				if (ent->state & STATE_CROUCHED)
 					div *= 1.5;
 				if ((int) (tu + div) > ent->TU)
@@ -1237,10 +1239,10 @@ static void G_ClientStateChange (player_t * player, int num, int reqState)
 				/* Turn off reaction fire and give the soldier back his TUs if it used some. */
 				ent->state &= ~STATE_REACTION;
 
-				if ( TU_REACTIONS[ent->number][0] > 0) {
+				if (TU_REACTIONS[ent->number][0] > 0) {
 					/* TUs where used for activation. */
 					ent->TU += TU_REACTIONS[ent->number][0];
-				} else if ( TU_REACTIONS[ent->number][0] < 0) {
+				} else if (TU_REACTIONS[ent->number][0] < 0) {
 					/* No TUs where used for activation. */
 					/* Don't give TUs back because none where used up (reaction fire was already active from previous turn) */
 				} else {
@@ -1262,10 +1264,10 @@ static void G_ClientStateChange (player_t * player, int num, int reqState)
 			/* Turn on reaction fire and save the used TUs to the list. */
 			ent->state |= STATE_REACTION_ONCE;
 
-			if ( TU_REACTIONS[ent->number][0] > 0) {
+			if (TU_REACTIONS[ent->number][0] > 0) {
 				/* TUs where saved for this turn (either the full TU_REACTION or some remaining TUs from the shot. This was done either in the last turn or this one. */
 				ent->TU -= TU_REACTIONS[ent->number][0];
-			} else if ( TU_REACTIONS[ent->number][0] == 0) {
+			} else if (TU_REACTIONS[ent->number][0] == 0) {
 				/* Reaction fire was not triggered in the last turn. */
 				ent->TU -= TU_REACTION;
 				TU_REACTIONS[ent->number][0] = TU_REACTION;
@@ -2151,9 +2153,6 @@ static void G_SendVisibleEdicts (void)
 			gi.WriteShort(ent->type);
 			gi.WriteShort(ent->number);
 			gi.WriteShort(ent->modelindex);
-			gi.WriteGPos(ent->pos);
-			gi.WritePos(ent->mins);
-			gi.WritePos(ent->maxs);
 			ent->visflags |= ~ent->visflags;
 			end = qtrue;
 		}

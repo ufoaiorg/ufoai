@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define	BOGUS_RANGE	8192
 
-#define	TEXINFO_NODE		-1		/* side is allready on a node */
+#define	TEXINFO_NODE		-1		/* side is already on a node */
 
 
 #define UNIT_SIZE			32

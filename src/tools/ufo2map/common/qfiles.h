@@ -219,6 +219,7 @@ typedef struct miptex_s
 #define	MAX_MAP_EDGES		128000
 #define	MAX_MAP_SURFEDGES	256000
 #define	MAX_MAP_LIGHTING	0x1000000
+/* 256 * 256 * 4 */
 #define	MAX_MAP_ROUTING		0x40000
 
 /* key / value pair sizes */

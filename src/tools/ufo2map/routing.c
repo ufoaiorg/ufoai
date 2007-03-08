@@ -182,7 +182,7 @@ static void CheckConnections_Thread (unsigned int unitnum)
 	x = unitnum % WIDTH;
 
 	/* totally blocked unit */
-	if ( filled[y][x] & (1<<z) )
+	if (filled[y][x] & (1<<z))
 		return;
 
 	h = (area[z][y][x] & 0xF);
@@ -198,11 +198,12 @@ static void CheckConnections_Thread (unsigned int unitnum)
 	h = (h + sh) % 0x10;
 
 	/* range check */
-	if ( sz >= 8 ) {
-		sz = 7; h = 0x0F;
+	if (sz >= HEIGHT) {
+		sz = HEIGHT - 1;
+		h = 0x0F;
 	}
 
-	/* test connections */
+	/* test connections in all 4 directions */
 	for ( i = 0; i < 4; i++ ) {
 		/* range check and test height */
 		if ( i == 0 && (x >= 255 || (filled[y][x+1] & (1<<sz)) || (area[sz][y][x+1]&0x0F) > h) )
@@ -290,9 +291,9 @@ extern void DoRouting (void)
 	data = droutedata;
 	*data++ = SH_LOW;
 	*data++ = SH_BIG;
-	data = CompressRouting( &(area[0][0][0]), data, 256*256*8 );
-	data = CompressRouting( &(fall[0][0]), data, 256*256 );
-	data = CompressRouting( &(step[0][0]), data, 256*256 );
+	data = CompressRouting( &(area[0][0][0]), data, WIDTH*WIDTH*HEIGHT );
+	data = CompressRouting( &(fall[0][0]), data, WIDTH*WIDTH );
+	data = CompressRouting( &(step[0][0]), data, WIDTH*WIDTH );
 
 	routedatasize = data - droutedata;
 

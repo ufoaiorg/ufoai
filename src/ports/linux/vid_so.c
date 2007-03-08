@@ -252,16 +252,16 @@ qboolean VID_LoadRefresh (const char *name)
 	Q_strcat(libPath, name, sizeof(libPath));
 
 	if (stat(libPath, &st) == -1) {
-		Com_Printf( "LoadLibrary(\"%s\") failed: %s\n", name, strerror(errno));
+		Com_Printf("LoadLibrary (\"%s\") failed: %s\n", name, strerror(errno));
 		return qfalse;
 	}
 
 	if ((reflib_library = dlopen(libPath, RTLD_LAZY|RTLD_GLOBAL)) == 0) {
-		Com_Printf("LoadLibrary(\"%s\") failed: %s\n", name , dlerror());
+		Com_Printf("LoadLibrary (\"%s\") failed: %s\n", name , dlerror());
 		return qfalse;
 	}
 
-	Com_Printf("LoadLibrary(\"%s\")\n", libPath);
+	Com_Printf("LoadLibrary (\"%s\")\n", libPath);
 
 	ri.Cmd_AddCommand = Cmd_AddCommand;
 	ri.Cmd_RemoveCommand = Cmd_RemoveCommand;

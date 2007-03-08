@@ -51,7 +51,7 @@ int (*qglXGetConfig) (Display *dpy, XVisualInfo *vis, int attrib, int *value);
  * @brief Unloads the specified DLL then nulls out all the proc pointers.
  * @sa QGL_UnLink
  */
-void QGL_Shutdown( void )
+void QGL_Shutdown (void)
 {
 	if (glw_state.OpenGLLib) {
 		dlclose ( glw_state.OpenGLLib );
@@ -75,7 +75,7 @@ void QGL_Shutdown( void )
 /**
  * @brief Debug function for library symbol loading
  */
-static void *GPA2(char* symbol)
+static void *GPA2 (char* symbol)
 {
 	void *sym = NULL;
 	sym = GPA(symbol);
@@ -88,7 +88,7 @@ static void *GPA2(char* symbol)
 /**
  * @brief
  */
-void *qwglGetProcAddress(char *symbol)
+void *qwglGetProcAddress (char *symbol)
 {
 	if (glw_state.OpenGLLib)
 #ifdef DEBUG
@@ -103,7 +103,7 @@ void *qwglGetProcAddress(char *symbol)
  * @brief This is responsible for binding our qgl function pointers to the appropriate GL stuff
  * @sa QGL_Link
  */
-qboolean QGL_Init( const char *dllname )
+qboolean QGL_Init (const char *dllname)
 {
 	if ((glw_state.OpenGLLib = dlopen(dllname, RTLD_LAZY|RTLD_GLOBAL)) == 0) {
 		char libPath[MAX_OSPATH];

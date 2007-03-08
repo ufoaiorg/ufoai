@@ -48,12 +48,12 @@ static int globalCampaignID = -1;
 
 #define RT2	0.707107
 
-const int dvecs[8][2] = { {1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {-1, -1}, {-1, 1}, {1, -1} };
-const float dvecsn[8][2] = { {1, 0}, {-1, 0}, {0, 1}, {0, -1}, {RT2, RT2}, {-RT2, -RT2}, {-RT2, RT2}, {RT2, -RT2} };
-const float dangle[8] = { 0, 180.0f, 90.0f, 270.0f, 45.0f, 225.0f, 135.0f, 315.0f };
+const int dvecs[DIRECTIONS][2] = { {1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {-1, -1}, {-1, 1}, {1, -1} };
+const float dvecsn[DIRECTIONS][2] = { {1, 0}, {-1, 0}, {0, 1}, {0, -1}, {RT2, RT2}, {-RT2, -RT2}, {-RT2, RT2}, {RT2, -RT2} };
+const float dangle[DIRECTIONS] = { 0, 180.0f, 90.0f, 270.0f, 45.0f, 225.0f, 135.0f, 315.0f };
 
-const byte dvright[8] = { 7, 6, 4, 5, 0, 1, 2, 3 };
-const byte dvleft[8] = { 4, 5, 6, 7, 2, 3, 1, 0 };
+const byte dvright[DIRECTIONS] = { 7, 6, 4, 5, 0, 1, 2, 3 };
+const byte dvleft[DIRECTIONS] = { 4, 5, 6, 7, 2, 3, 1, 0 };
 
 /*===========================================================================*/
 

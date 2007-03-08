@@ -83,7 +83,7 @@ const char *ev_format[] =
 
 	"sbg",				/* EV_ENT_APPEAR */
 	"s",				/* EV_ENT_PERISH */
-	"sssgpp",			/* EV_ENT_EDICT */
+	"sss",				/* EV_ENT_EDICT */
 
 	"!sbbbgbbbssbsbbbs",	/* EV_ACTOR_APPEAR; beware of the '!' */
 	"s",				/* EV_ACTOR_START_MOVE */
@@ -694,10 +694,10 @@ static void CL_EntEdict (sizebuf_t *sb)
 {
 	le_t *le;
 	int entnum, modelnum1, type;
-	pos3_t pos;
-	vec3_t mins, maxs;
+	char *inline_model_name;
+	cmodel_t *model;
 
-	MSG_ReadFormat(sb, ev_format[EV_ENT_EDICT], &type, &entnum, &modelnum1, &pos, &mins, &maxs);
+	MSG_ReadFormat(sb, ev_format[EV_ENT_EDICT], &type, &entnum, &modelnum1);
 
 	/* check if the ent is already visible */
 	le = LE_Get(entnum);
@@ -711,14 +711,16 @@ static void CL_EntEdict (sizebuf_t *sb)
 	le->invis = qtrue;
 	le->type = type;
 	le->modelnum1 = modelnum1;
+	inline_model_name = va("*%i", le->modelnum1);
+	model = CM_InlineModel(inline_model_name);
+	if (!model)
+		Com_Error(ERR_DROP, "CL_EntEdict: Could not find inline model %i", le->modelnum1);
+	VectorCopy(model->origin, le->origin);
+	VectorCopy(model->mins, le->mins);
+	VectorCopy(model->maxs, le->maxs);
 
 	/* to allow tracing against this le */
 	le->contents = CONTENTS_SOLID;
-
-	VectorCopy(pos, le->pos);
-	VectorCopy(mins, le->mins);
-	VectorCopy(maxs, le->maxs);
-	Grid_PosToVec(&clMap, le->pos, le->origin);
 }
 
 

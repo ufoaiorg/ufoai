@@ -598,7 +598,6 @@ static void SP_func_breakable (edict_t * self)
 {
 	self->classname = "breakable";
 	self->type = ET_BREAKABLE;
-	VectorCopy(self->origin, self->pos);
 	VectorSet(self->origin, 0, 0, 0);
 	/* set an inline model */
 	/* also set self->solid = SOLID_BSP here */

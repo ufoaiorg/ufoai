@@ -228,12 +228,14 @@ typedef uint8_t byte;
 #define CENTER_LAT  0.0
 #define SIZE_LAT    2.0
 
-extern const int dvecs[8][2];
-extern const float dvecsn[8][2];
-extern const float dangle[8];
+#define DIRECTIONS 8
 
-extern const byte dvright[8];
-extern const byte dvleft[8];
+extern const int dvecs[DIRECTIONS][2];
+extern const float dvecsn[DIRECTIONS][2];
+extern const float dangle[DIRECTIONS];
+
+extern const byte dvright[DIRECTIONS];
+extern const byte dvleft[DIRECTIONS];
 
 /*
 ==============================================================
@@ -302,7 +304,7 @@ typedef union {
 #define VectorNotEmpty(a)           (a[0]||a[1]||a[2])
 #define Vector4NotEmpty(a)          (a[0]||a[1]||a[2]||a[3])
 
-#define PosAddDV(p,dv)          (p[0]+=dvecs[dv&7][0], p[1]+=dvecs[dv&7][1], p[2]=(dv>>3)&7)
+#define PosAddDV(p,dv)          (p[0]+=dvecs[dv&(DIRECTIONS-1)][0], p[1]+=dvecs[dv&(DIRECTIONS-1)][1], p[2]=(dv>>3)&(DIRECTIONS-1))
 int AngleToDV(int angle);
 
 void VectorMA(vec3_t veca, float scale, vec3_t vecb, vec3_t vecc);

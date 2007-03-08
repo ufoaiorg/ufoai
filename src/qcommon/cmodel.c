@@ -678,7 +678,7 @@ static int CM_EntTestLineDM (vec3_t start, vec3_t stop, vec3_t end)
  * @param[in] dir
  * @param[in] fill
  */
-static qboolean CM_TestConnection (routing_t * map, int x, int y, int z, int dir, qboolean fill)
+static qboolean CM_TestConnection (routing_t * map, int x, int y, int z, unsigned int dir, qboolean fill)
 {
 	vec3_t start, end;
 	pos3_t pos;
@@ -694,8 +694,7 @@ static qboolean CM_TestConnection (routing_t * map, int x, int y, int z, int dir
 	VectorSet(pos, x, y, z);
 	PosToVec(pos, start);
 	start[2] += h * 4;
-	assert(dir < 8);
-	assert(dir >= 0);
+	assert(dir < DIRECTIONS);
 	VectorSet(end, start[0] + UNIT_HEIGHT * dvecs[dir][0], start[1] + UNIT_HEIGHT* dvecs[dir][1], start[2]);
 
 	ax = x + dvecs[dir][0];
@@ -744,6 +743,10 @@ static void CM_CheckUnit (routing_t * map, int x, int y, int z)
 	pos3_t pos;
 	float height;
 	int i;
+
+	assert(x < WIDTH);
+	assert(y < WIDTH);
+	assert(z < HEIGHT);
 
 	/* reset flags */
 	filled[y][x] &= ~(1 << z);
@@ -883,7 +886,8 @@ static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
 	int length;
 	int x, y, z;
 	int maxX, maxY;
-	int i, ax, ay;
+	int ax, ay;
+	unsigned int i;
 
 	inlineList = NULL;
 
@@ -915,11 +919,11 @@ static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
 				clMap.step[y + sY][x + sX] = temp_step[y][x];
 
 				/* copy routing info */
-				for (z = 0; z < 8; z++)
+				for (z = 0; z < HEIGHT; z++)
 					clMap.route[z][y + sY][x + sX] = temp_route[z][y][x];
 
 				/* check border connections */
-				for (i = 0; i < 8; i++) {
+				for (i = 0; i < DIRECTIONS; i++) {
 					/* test for border */
 					ax = x + dvecs[i][0];
 					ay = y + dvecs[i][1];
@@ -927,7 +931,7 @@ static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
 						continue;
 
 					/* check for walls */
-					for (z = 0; z < 8; z++) {
+					for (z = 0; z < HEIGHT; z++) {
 						CM_TestConnection(&clMap, x + sX, y + sY, z, i, qfalse);
 						CM_TestConnection(&clMap, ax + sX, ay + sY, z, i ^ 1, qfalse);
 					}
@@ -2466,7 +2470,7 @@ static void Grid_MoveMarkRoute (struct routing_s *map, int xl, int yl, int xh, i
 						continue;
 
 					/* test the next connections */
-					for (dv = 0; dv < 8; dv++)
+					for (dv = 0; dv < DIRECTIONS; dv++)
 						Grid_MoveMark(map, x, y, z, dv, h, l);
 				}
 }
@@ -2670,6 +2674,9 @@ int Grid_Height (struct routing_s *map, pos3_t pos)
 	if (pos[2] > 7) {
 		Com_Printf("Grid_Height: Warning: z level is bigger than 7: %i\n", pos[2]);
 		pos[2] &= 7;
+#if 0
+		Sys_DebugBreak();
+#endif
 	}
 
 	return (map->route[pos[2]][pos[1]][pos[0]] & 0x0F) * QUANT;
@@ -2720,7 +2727,7 @@ void Grid_RecalcRouting (struct routing_s *map, char *name, char **list)
 	cmodel_t *model;
 	pos3_t min, max;
 	int x, y, z;
-	int i;
+	unsigned int i;
 
 	/* get inline model, if it is one */
 	if (*name != '*')
@@ -2740,11 +2747,11 @@ void Grid_RecalcRouting (struct routing_s *map, char *name, char **list)
 	 * FIXME: what's this?
 	 */
 #if 0
-	max[0] = max[0] < 253 ? max[0] + 2 : 255;
-	max[1] = max[1] < 253 ? max[1] + 2 : 255;
-	max[2] = max[2] < 5 ? max[2] + 2 : 7;
+	max[0] = min(max[0] + 2, WIDTH - 1);
+	max[1] = min(max[1] + 2, WIDTH - 1);
+	max[2] = min(max[2] + 2, HEIGHT - 1);
 	for (i = 0; i < 3; i++)
-		min[i] = min[i] > 2 ? min[i] - 2 : 0;
+		min[i] = max(min[i] - 2, 0);
 #endif
 
 #if 0
@@ -2763,6 +2770,7 @@ void Grid_RecalcRouting (struct routing_s *map, char *name, char **list)
 	for (z = min[2]; z < max[2]; z++)
 		for (y = min[1]; y < max[1]; y++)
 			for (x = min[0]; x < max[0]; x++)
+				/* check all 4 directions */
 				for (i = 0; i < 4; i++)
 					CM_TestConnection(map, x, y, z, i, qtrue);
 
