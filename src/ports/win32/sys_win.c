@@ -387,7 +387,9 @@ void Sys_NormPath (char* path)
 
 /**
  * @brief Get the home directory in Application Data
- * @note Currently disabled
+ * @note Forced for Windows Vista
+ * @note Use the cvar sys_usehomedir if you want to use the homedir for other
+ * Windows versions, too
  */
 char *Sys_GetHomeDirectory (void)
 {
@@ -496,7 +498,7 @@ void Sys_Init (void)
 
 	Cvar_Get("sys_os", "win", CVAR_SERVERINFO, NULL);
 	/* too late here - but define it as archive cvar and provide a description */
-	Cvar_Get("sys_usehomedir", "0", CVAR_ARCHIVE, "Use the homedir for windows user to store files like savegames and screenshots");
+	Cvar_Get("sys_usehomedir", "1", CVAR_ARCHIVE, "Use the homedir for windows user to store files like savegames and screenshots");
 
 	if (dedicated->value) {
 		oldconsole = Cvar_VariableInteger("oldconsole");

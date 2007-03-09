@@ -44,7 +44,6 @@ typedef struct pack_s {
 	packfile_t *files;
 } pack_t;
 
-static char fs_gamedir[MAX_OSPATH];
 static cvar_t *fs_basedir;
 cvar_t *fs_gamedirvar;
 
@@ -107,6 +106,22 @@ qboolean strwildcomp (const char *string, const char *pattern)
 			break;
 		}
 	}
+}
+
+/**
+ * @brief Called to find where to write a file (demos, savegames, etc)
+ * @note We will use the searchpath that isn't a pack and has highest priority
+ */
+char *FS_Gamedir (void)
+{
+	searchpath_t *search;
+
+	for (search = fs_searchpaths; search; search = search->next) {
+		if (search->pack == NULL)
+			return search->filename;
+	}
+
+	return NULL;
 }
 
 /**
@@ -565,7 +580,8 @@ pack_t *FS_LoadPackFile (const char *packfile)
 
 #define MAX_PACKFILES 1024
 /**
- * @brief Sets fs_gamedir, adds the directory to the head of the path
+ * @brief Adds the directory to the head of the search path
+ * @note No ending slash here
  */
 void FS_AddGameDirectory (const char *dir)
 {
@@ -577,9 +593,7 @@ void FS_AddGameDirectory (const char *dir)
 	int pakfile_count = 0;
 	char pattern[MAX_OSPATH];
 
-	Q_strncpyz(fs_gamedir, dir, MAX_QPATH);
-
-	Com_Printf("Adding game dir: %s\n", fs_gamedir);
+	Com_Printf("Adding game dir: %s\n", dir);
 
 	/* add the directory to the search path */
 	search = Mem_Alloc(sizeof(searchpath_t));
@@ -589,7 +603,7 @@ void FS_AddGameDirectory (const char *dir)
 	fs_searchpaths = search;
 
 	Com_sprintf(pattern, sizeof(pattern), "%s/*.zip", dir);
-	if ((dirnames = FS_ListFiles(pattern, &ndirs, 0, 0)) != 0) {
+	if ((dirnames = FS_ListFiles(pattern, &ndirs, 0, SFF_SUBDIR | SFF_HIDDEN | SFF_SYSTEM)) != 0) {
 		for (i = 0; i < ndirs - 1; i++) {
 			if (strrchr(dirnames[i], '/')) {
 				Q_strncpyz(pakfile_list[pakfile_count], dirnames[i], MAX_OSPATH);
@@ -636,19 +650,8 @@ void FS_AddGameDirectory (const char *dir)
 }
 
 /**
- * @brief Called to find where to write a file (demos, savegames, etc)
- */
-char *FS_Gamedir (void)
-{
-	if (*fs_gamedir)
-		return fs_gamedir;
-	else
-		return BASEDIRNAME;
-}
-
-/**
  * @brief
- * @note e.g. *nix: Use ~/.ufoai/dir as fs_gamedir
+ * @note e.g. *nix: Use ~/.ufoai/dir as gamedir
  * @sa Sys_GetHomeDirectory
  */
 void FS_AddHomeAsGameDirectory (const char *dir)
@@ -660,8 +663,6 @@ void FS_AddHomeAsGameDirectory (const char *dir)
 		Com_sprintf(gdir, MAX_OSPATH, "%s/.ufoai/%s", homedir, dir);
 		Com_Printf("using %s for writing\n", gdir);
 		FS_CreatePath(va("%s/", gdir));
-
-		Q_strncpyz(fs_gamedir, gdir, MAX_QPATH);
 
 		FS_AddGameDirectory(gdir);
 	} else {
@@ -717,8 +718,6 @@ void FS_SetGamedir (const char *dir)
 	/* flush all data, so it will be forced to reload */
 	if (dedicated && !dedicated->value)
 		Cbuf_AddText("vid_restart\nsnd_restart\n");
-
-	Com_sprintf(fs_gamedir, sizeof(fs_gamedir), "%s/%s", fs_basedir->string, dir);
 
 	if (!Q_strncmp(dir, BASEDIRNAME, strlen(BASEDIRNAME)) || (*dir == 0)) {
 		Cvar_FullSet("gamedir", "", CVAR_SERVERINFO | CVAR_NOSET);
@@ -847,7 +846,7 @@ static void FS_Dir_f (void)
 		Com_Printf("Directory of %s\n", findname);
 		Com_Printf("----\n");
 
-		if ((dirnames = FS_ListFiles(findname, &ndirs, 0, 0)) != 0) {
+		if ((dirnames = FS_ListFiles(findname, &ndirs, 0, SFF_HIDDEN | SFF_SYSTEM)) != 0) {
 			int i;
 
 			for (i = 0; i < ndirs - 1; i++) {
@@ -896,9 +895,9 @@ char *FS_NextPath (const char *prevpath)
 	char *prev;
 
 	if (!prevpath)
-		return fs_gamedir;
+		return FS_Gamedir();
 
-	prev = NULL;				/*fs_gamedir; */
+	prev = NULL;
 	for (s = fs_searchpaths; s; s = s->next) {
 		if (s->pack)
 			continue;
@@ -1077,7 +1076,7 @@ void FS_BuildFileList (char *fileList)
 			Com_sprintf(findname, sizeof(findname), "%s/%s", search->filename, files);
 			FS_NormPath(findname);
 
-			if ((filenames = FS_ListFiles(findname, &nfiles, 0, 0)) != 0) {
+			if ((filenames = FS_ListFiles(findname, &nfiles, 0, SFF_HIDDEN | SFF_SYSTEM)) != 0) {
 				int i;
 
 				for (i = 0; i < nfiles - 1; i++) {
@@ -1239,7 +1238,7 @@ void FS_GetMaps (qboolean reset)
 	else if (mapsInstalledInit) {
 		Com_DPrintf("Free old list with %i entries\n", anzInstalledMaps);
 		for (i = 0; i < anzInstalledMaps; i++)
-			free (maps[i]);
+			free(maps[i]);
 	}
 
 	mapInstalledIndex = 0;
@@ -1249,7 +1248,7 @@ void FS_GetMaps (qboolean reset)
 		Com_sprintf(findname, sizeof(findname), "%s/maps/*.bsp", path);
 		FS_NormPath(findname);
 
-		if ((dirnames = FS_ListFiles(findname, &ndirs, 0, 0)) != 0) {
+		if ((dirnames = FS_ListFiles(findname, &ndirs, 0, SFF_HIDDEN | SFF_SYSTEM)) != 0) {
 			for (i = 0; i < ndirs - 1; i++) {
 				Com_DPrintf("... found map: '%s' (pos %i out of %i)\n", dirnames[i], i+1, ndirs);
 				baseMapName = COM_SkipPath(dirnames[i]);

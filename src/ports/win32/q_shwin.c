@@ -190,7 +190,7 @@ static qboolean CompareAttributes (unsigned found, unsigned musthave, unsigned c
  * @sa Sys_FindNext
  * @sa Sys_FindClose
  */
-char *Sys_FindFirst (const char *path, unsigned musthave, unsigned canthave )
+char *Sys_FindFirst (const char *path, unsigned musthave, unsigned canthave)
 {
 	struct _finddata_t findinfo;
 
@@ -204,7 +204,8 @@ char *Sys_FindFirst (const char *path, unsigned musthave, unsigned canthave )
 		if (findhandle == -1)
 			return NULL;
 		/* found one that matched */
-		if (CompareAttributes(findinfo.attrib, musthave, canthave)) {
+		if (strcmp(findinfo.name, ".") && strcmp(findinfo.name, "..") &&
+			CompareAttributes(findinfo.attrib, musthave, canthave)) {
 			Com_sprintf(findpath, sizeof(findpath), "%s/%s", findbase, findinfo.name);
 			return findpath;
 		/* doesn't match - try the next one */
@@ -233,7 +234,8 @@ char *Sys_FindNext (unsigned musthave, unsigned canthave)
 
 	/* until we found the next entry */
 	while (_findnext (findhandle, &findinfo) != -1) {
-		if (CompareAttributes(findinfo.attrib, musthave, canthave)) {
+		if (strcmp(findinfo.name, ".") && strcmp(findinfo.name, "..") &&
+			CompareAttributes(findinfo.attrib, musthave, canthave)) {
 			Com_sprintf(findpath, sizeof(findpath), "%s/%s", findbase, findinfo.name);
 			return findpath;
 		}
@@ -252,7 +254,7 @@ char *Sys_FindNext (unsigned musthave, unsigned canthave)
 void Sys_FindClose (void)
 {
 	if (findhandle != -1)
-		_findclose (findhandle);
+		_findclose(findhandle);
 	findhandle = 0;
 }
 

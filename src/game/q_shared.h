@@ -53,8 +53,20 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #pragma warning(disable : 4018) /* signed/unsigned mismatch */
 #pragma warning(disable : 4305) /* truncation from const double to float */
+#pragma warning(disable : 4152) /* nonstandard extension, function/data pointer conversion in expression */
+#pragma warning(disable : 4201) /* nonstandard extension used : nameless struct/union */
 #pragma warning(disable : 4100) /* unreferenced formal parameter */
 #pragma warning(disable : 4127) /* conditional expression is constant */
+#if defined _M_AMD64
+# pragma warning(disable : 4267) /* conversion from 'size_t' to whatever, possible loss of data */
+#endif
+
+#endif /* _MSC_VER */
+
+#ifdef LCC_WIN32
+# ifndef C_ONLY
+#  define C_ONLY
+# endif
 #endif
 
 #ifdef HAVE_CONFIG_H
@@ -253,7 +265,11 @@ typedef byte pos_t;
 typedef pos_t pos3_t[3];
 
 #ifndef M_PI
-#define M_PI        3.14159265358979323846  /* matches value in gcc v2 math.h */
+#define M_PI	3.14159265358979323846  /* matches value in gcc v2 math.h */
+#endif
+
+#ifndef M_TWOPI
+#define M_TWOPI	6.28318530717958647692
 #endif
 
 struct cplane_s;

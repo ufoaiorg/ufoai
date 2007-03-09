@@ -225,6 +225,13 @@ Section "Game" SEC01
   File "..\..\..\base\models\civilians\male\*.tag"
 
 ;======================================================================
+; models/geoscape
+;======================================================================
+  SetOutPath "$INSTDIR\base\models\geoscape"
+;  File "..\..\..\base\models\geoscape\*.jpg"
+;  File "..\..\..\base\models\geoscape\*.md2"
+
+;======================================================================
 ; models/objects
 ;======================================================================
   SetOutPath "$INSTDIR\base\models\objects"

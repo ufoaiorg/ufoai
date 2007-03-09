@@ -190,8 +190,7 @@ static	DIR		*fdir;
 /**
  * @brief
  */
-static qboolean CompareAttributes (char *path, char *name,
-	unsigned musthave, unsigned canthave)
+static qboolean CompareAttributes (const char *path, const char *name, unsigned musthave, unsigned canthave)
 {
 	struct stat st;
 	char fn[MAX_OSPATH];
@@ -200,15 +199,16 @@ static qboolean CompareAttributes (char *path, char *name,
 	if (Q_strcmp(name, ".") == 0 || Q_strcmp(name, "..") == 0)
 		return qfalse;
 
-	return qtrue;
-
-	if (stat(fn, &st) == -1)
+	Com_sprintf(fn, sizeof(fn), "%s/%s", path, name);
+	if (stat(fn, &st) == -1) {
+		Com_Printf("CompareAttributes: Warning, stat failed: %s\n", name);
 		return qfalse; /* shouldn't happen */
+	}
 
-	if ( ( st.st_mode & S_IFDIR ) && ( canthave & SFF_SUBDIR ) )
+	if ((st.st_mode & S_IFDIR) && (canthave & SFF_SUBDIR))
 		return qfalse;
 
-	if ( ( musthave & SFF_SUBDIR ) && !( st.st_mode & S_IFDIR ) )
+	if ((musthave & SFF_SUBDIR) && !(st.st_mode & S_IFDIR))
 		return qfalse;
 
 	return qtrue;

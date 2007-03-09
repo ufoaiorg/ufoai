@@ -403,7 +403,7 @@ static void Con_Linefeed (void)
  * If no console is visible, the text will appear at the top of the game window
  * @sa Sys_ConsoleOutput
  */
-void Con_Print (char *txt)
+void Con_Print (const char *txt)
 {
 	int y;
 	int c, l;

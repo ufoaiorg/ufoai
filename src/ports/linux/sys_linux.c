@@ -160,7 +160,7 @@ char *Sys_BinName( const char *arg0 )
  */
 char *Sys_GetHomeDirectory (void)
 {
-	return getenv ( "HOME" );
+	return getenv("HOME");
 }
 
 #ifdef __linux__
@@ -500,7 +500,7 @@ char *Sys_ConsoleInput (void)
 void Sys_UnloadGame (void)
 {
 	if (game_library)
-		dlclose (game_library);
+		dlclose(game_library);
 	game_library = NULL;
 }
 

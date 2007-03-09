@@ -51,7 +51,7 @@ void CL_ParseClientData (char *type, char *name, char **text)
 {
 }
 
-void Con_Print (char *text)
+void Con_Print (const char *text)
 {
 }
 

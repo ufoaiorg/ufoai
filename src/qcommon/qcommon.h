@@ -359,7 +359,7 @@ void CL_Drop(void);
 void CL_Shutdown(void);
 void CL_Frame(int msec);
 void CL_ParseClientData(char *type, char *name, char **text);
-void Con_Print(char *text);
+void Con_Print(const char *text);
 void SCR_BeginLoadingPlaque(void);
 void MN_PrecacheMenus(void);
 void CL_InitAfter(void);
