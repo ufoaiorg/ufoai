@@ -52,7 +52,7 @@ HMODULE hSh32 = NULL;
 FARPROC procShell_NotifyIcon = NULL;
 NOTIFYICONDATA pNdata;
 
-qboolean s_win95;
+qboolean s_win95, s_winxp, s_vista;
 
 int			starttime;
 qboolean	ActiveApp;
@@ -392,44 +392,47 @@ void Sys_NormPath (char* path)
  */
 char *Sys_GetHomeDirectory (void)
 {
-#if 0
 	TCHAR szPath[MAX_PATH];
 	static char path[MAX_OSPATH];
 	FARPROC qSHGetFolderPath;
-	HMODULE shfolder = LoadLibrary("shfolder.dll");
+	HMODULE shfolder;
 
-	if (shfolder == NULL) {
-		Com_Printf("Unable to load SHFolder.dll\n");
-		return NULL;
-	}
+	if (s_vista || Cvar_VariableInteger("sys_usehomedir")) {
+		Com_Printf("try to detect the windows home dir\n");
+		shfolder = LoadLibrary("shfolder.dll");
 
-	qSHGetFolderPath = GetProcAddress(shfolder, "SHGetFolderPathA");
-	if (qSHGetFolderPath == NULL) {
-		Com_Printf("Unable to find SHGetFolderPath in SHFolder.dll\n");
-		FreeLibrary(shfolder);
-		return NULL;
-	}
-
-	if (!SUCCEEDED(SHGetFolderPath(NULL, CSIDL_APPDATA, NULL, 0, szPath))) {
-		Com_Printf("Unable to detect CSIDL_APPDATA\n");
-		FreeLibrary(shfolder);
-		return NULL;
-	}
-
-	Q_strncpyz(path, szPath, sizeof(path));
-	Q_strcat(path, "\\UFOAI", sizeof(path));
-	FreeLibrary(shfolder);
-
-	if (!CreateDirectory(path, NULL)) {
-		if (GetLastError() != ERROR_ALREADY_EXISTS) {
-			Com_Printf("Unable to create directory \"%s\"\n", path);
+		if (shfolder == NULL) {
+			Com_Printf("Unable to load SHFolder.dll\n");
 			return NULL;
 		}
-	}
-	return path;
-#else
-	return NULL;
-#endif
+
+		qSHGetFolderPath = GetProcAddress(shfolder, "SHGetFolderPathA");
+		if (qSHGetFolderPath == NULL) {
+			Com_Printf("Unable to find SHGetFolderPath in SHFolder.dll\n");
+			FreeLibrary(shfolder);
+			return NULL;
+		}
+
+		if (!SUCCEEDED(SHGetFolderPath(NULL, CSIDL_APPDATA, NULL, 0, szPath))) {
+			Com_Printf("Unable to detect CSIDL_APPDATA\n");
+			FreeLibrary(shfolder);
+			return NULL;
+		}
+
+		Q_strncpyz(path, szPath, sizeof(path));
+		Q_strcat(path, "\\UFOAI", sizeof(path));
+		FreeLibrary(shfolder);
+
+		if (!CreateDirectory(path, NULL)) {
+			if (GetLastError() != ERROR_ALREADY_EXISTS) {
+				Com_Printf("Unable to create directory \"%s\"\n", path);
+				return NULL;
+			}
+		}
+		Com_Printf("...'%s'\n", path);
+		return path;
+	} else
+		return NULL;
 }
 
 /**
@@ -485,8 +488,15 @@ void Sys_Init (void)
 		Sys_Error("UFO: AI doesn't run on Win32s");
 	else if (vinfo.dwPlatformId == VER_PLATFORM_WIN32_WINDOWS) /* win95, 98, me */
 		s_win95 = qtrue;
+	else if (vinfo.dwPlatformId == VER_PLATFORM_WIN32_NT) { /* win nt, xp */
+		if (vinfo.dwMajorVersion == 5)
+			s_winxp = qtrue;
+		else if (vinfo.dwMajorVersion == 6)
+			s_vista = qtrue;
+	}
 
 	Cvar_Get("sys_os", "win", CVAR_SERVERINFO, NULL);
+	Cvar_Get("sys_usehomedir", "0", CVAR_ARCHIVE, "Use the homedir for windows user to store files like savegames and screenshots");
 
 	if (dedicated->value) {
 		oldconsole = Cvar_VariableInteger("oldconsole");

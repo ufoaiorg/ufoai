@@ -66,22 +66,22 @@ static qboolean s_alttab_disabled;
 
 extern uint32_t sys_msg_time;
 
-extern qboolean s_win95;
+extern qboolean s_win95, s_winxp, s_vista;
 
 /**
  * @brief
  */
-static void WIN_DisableAltTab( void )
+static void WIN_DisableAltTab (void)
 {
-	if ( s_alttab_disabled )
+	if (s_alttab_disabled)
 		return;
 
-	if ( s_win95 ) {
+	if (s_win95) {
 		BOOL old;
-		SystemParametersInfo( SPI_SCREENSAVERRUNNING, 1, &old, 0 );
+		SystemParametersInfo(SPI_SCREENSAVERRUNNING, 1, &old, 0);
 	} else {
-		RegisterHotKey( 0, 0, MOD_ALT, VK_TAB );
-		RegisterHotKey( 0, 1, MOD_ALT, VK_RETURN );
+		RegisterHotKey(0, 0, MOD_ALT, VK_TAB);
+		RegisterHotKey(0, 1, MOD_ALT, VK_RETURN);
 	}
 	s_alttab_disabled = qtrue;
 }
@@ -89,15 +89,15 @@ static void WIN_DisableAltTab( void )
 /**
  * @brief
  */
-static void WIN_EnableAltTab( void )
+static void WIN_EnableAltTab (void)
 {
-	if ( s_alttab_disabled ) {
-		if ( s_win95 ) {
+	if (s_alttab_disabled) {
+		if (s_win95) {
 			BOOL old;
-			SystemParametersInfo( SPI_SCREENSAVERRUNNING, 0, &old, 0 );
+			SystemParametersInfo(SPI_SCREENSAVERRUNNING, 0, &old, 0);
 		} else {
-			UnregisterHotKey( 0, 0 );
-			UnregisterHotKey( 0, 1 );
+			UnregisterHotKey(0, 0);
+			UnregisterHotKey(0, 1);
 		}
 		s_alttab_disabled = qfalse;
 	}
@@ -344,7 +344,7 @@ LRESULT WINAPI MainWndProc (HWND hWnd, UINT uMsg, WPARAM  wParam, LPARAM lParam)
  * simply by setting the modified flag for the vid_ref variable, which will
  * cause the entire video mode and refresh DLL to be reset on the next frame.
  */
-void VID_Restart_f (void)
+static void VID_Restart_f (void)
 {
 	vid_ref->modified = qtrue;
 }
@@ -352,10 +352,10 @@ void VID_Restart_f (void)
 /**
  * @brief
  */
-void VID_Front_f( void )
+static void VID_Front_f (void)
 {
-	SetWindowLong( cl_hwnd, GWL_EXSTYLE, WS_EX_TOPMOST );
-	SetForegroundWindow( cl_hwnd );
+	SetWindowLong(cl_hwnd, GWL_EXSTYLE, WS_EX_TOPMOST);
+	SetForegroundWindow(cl_hwnd);
 }
 
 int maxVidModes;
@@ -391,9 +391,9 @@ const vidmode_t vid_modes[] =
 /**
  * @brief
  */
-qboolean VID_GetModeInfo( int *width, int *height, int mode )
+qboolean VID_GetModeInfo (int *width, int *height, int mode)
 {
-	if ( mode < 0 || mode >= VID_NUM_MODES )
+	if (mode < 0 || mode >= VID_NUM_MODES)
 		return qfalse;
 
 	*width  = vid_modes[mode].width;
@@ -405,7 +405,7 @@ qboolean VID_GetModeInfo( int *width, int *height, int mode )
 /**
  * @brief
  */
-static void VID_UpdateWindowPosAndSize( int x, int y )
+static void VID_UpdateWindowPosAndSize (int x, int y)
 {
 	RECT r;
 	int		style;
@@ -416,19 +416,19 @@ static void VID_UpdateWindowPosAndSize( int x, int y )
 	r.right  = viddef.width;
 	r.bottom = viddef.height;
 
-	style = GetWindowLong( cl_hwnd, GWL_STYLE );
-	AdjustWindowRect( &r, style, FALSE );
+	style = GetWindowLong(cl_hwnd, GWL_STYLE);
+	AdjustWindowRect(&r, style, FALSE);
 
 	w = r.right - r.left;
 	h = r.bottom - r.top;
 
-	MoveWindow( cl_hwnd, vid_xpos->value, vid_ypos->value, w, h, TRUE );
+	MoveWindow(cl_hwnd, vid_xpos->value, vid_ypos->value, w, h, TRUE);
 }
 
 /**
  * @brief
  */
-void VID_NewWindow ( int width, int height)
+void VID_NewWindow (int width, int height)
 {
 	viddef.width  = width;
 	viddef.height = height;
@@ -443,9 +443,9 @@ void VID_NewWindow ( int width, int height)
  */
 void VID_FreeReflib (void)
 {
-	if ( reflib_library && !FreeLibrary( reflib_library ) )
-		Com_Error( ERR_FATAL, "Reflib FreeLibrary failed" );
-	memset (&re, 0, sizeof(re));
+	if (reflib_library && !FreeLibrary(reflib_library))
+		Com_Error(ERR_FATAL, "Reflib FreeLibrary failed");
+	memset(&re, 0, sizeof(re));
 	reflib_library = NULL;
 	reflib_active  = qfalse;
 }
@@ -453,7 +453,7 @@ void VID_FreeReflib (void)
 /**
  * @brief
  */
-qboolean VID_LoadRefresh(const char *name)
+qboolean VID_LoadRefresh (const char *name)
 {
 	refimport_t	ri;
 	GetRefAPI_t	GetRefAPI;
