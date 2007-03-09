@@ -909,15 +909,33 @@ char *FS_NextPath (const char *prevpath)
 	return NULL;
 }
 
+static void FS_Info_f (void)
+{
+	searchpath_t *search;
+
+	Com_Printf("Filesystem information\n");
+	Com_Printf("...write dir: '%s'\n", FS_Gamedir());
+
+	for (search = fs_searchpaths; search; search = search->next) {
+		if (search->pack == NULL)
+			Com_Printf("...path: '%s'\n", search->filename);
+		else
+			Com_Printf("...pakfile: '%s'\n", search->filename);
+	}
+}
 
 /**
  * @brief
  */
 void FS_InitFilesystem (void)
 {
+	cvar_t* fs_usehomedir;
+
 	Cmd_AddCommand("path", FS_Path_f, NULL);
 	Cmd_AddCommand("link", FS_Link_f, NULL);
 	Cmd_AddCommand("dir", FS_Dir_f, NULL);
+	Cmd_AddCommand("fs_info", FS_Info_f, "Show information about the virtuell filesystem");
+	fs_usehomedir = Cvar_Get("fs_usehomedir", "1", CVAR_ARCHIVE, "Use the homedir to store files like savegames and screenshots");
 
 	/* basedir <path> */
 	/* allows the game to run from outside the data tree */
@@ -927,7 +945,8 @@ void FS_InitFilesystem (void)
 	FS_AddGameDirectory(va("%s/" BASEDIRNAME, fs_basedir->string));
 
 	/* then add a '.ufoai/base' directory in home directory by default */
-	FS_AddHomeAsGameDirectory(BASEDIRNAME);
+	if (fs_usehomedir->integer)
+		FS_AddHomeAsGameDirectory(BASEDIRNAME);
 
 	/* any set gamedirs will be freed up to here */
 	fs_base_searchpaths = fs_searchpaths;

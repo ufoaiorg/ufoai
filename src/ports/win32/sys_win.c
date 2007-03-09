@@ -388,7 +388,7 @@ void Sys_NormPath (char* path)
 /**
  * @brief Get the home directory in Application Data
  * @note Forced for Windows Vista
- * @note Use the cvar sys_usehomedir if you want to use the homedir for other
+ * @note Use the cvar fs_usehomedir if you want to use the homedir for other
  * Windows versions, too
  */
 char *Sys_GetHomeDirectory (void)
@@ -398,42 +398,37 @@ char *Sys_GetHomeDirectory (void)
 	FARPROC qSHGetFolderPath;
 	HMODULE shfolder;
 
-	if (s_vista || Cvar_VariableInteger("sys_usehomedir")) {
-		Com_Printf("try to detect the windows home dir\n");
-		shfolder = LoadLibrary("shfolder.dll");
+	shfolder = LoadLibrary("shfolder.dll");
 
-		if (shfolder == NULL) {
-			Com_Printf("Unable to load SHFolder.dll\n");
-			return NULL;
-		}
-
-		qSHGetFolderPath = GetProcAddress(shfolder, "SHGetFolderPathA");
-		if (qSHGetFolderPath == NULL) {
-			Com_Printf("Unable to find SHGetFolderPath in SHFolder.dll\n");
-			FreeLibrary(shfolder);
-			return NULL;
-		}
-
-		if (!SUCCEEDED(SHGetFolderPath(NULL, CSIDL_APPDATA, NULL, 0, szPath))) {
-			Com_Printf("Unable to detect CSIDL_APPDATA\n");
-			FreeLibrary(shfolder);
-			return NULL;
-		}
-
-		Q_strncpyz(path, szPath, sizeof(path));
-		Q_strcat(path, "\\UFOAI", sizeof(path));
-		FreeLibrary(shfolder);
-
-		if (!CreateDirectory(path, NULL)) {
-			if (GetLastError() != ERROR_ALREADY_EXISTS) {
-				Com_Printf("Unable to create directory \"%s\"\n", path);
-				return NULL;
-			}
-		}
-		Com_Printf("...'%s'\n", path);
-		return path;
-	} else
+	if (shfolder == NULL) {
+		Com_Printf("Unable to load SHFolder.dll\n");
 		return NULL;
+	}
+
+	qSHGetFolderPath = GetProcAddress(shfolder, "SHGetFolderPathA");
+	if (qSHGetFolderPath == NULL) {
+		Com_Printf("Unable to find SHGetFolderPath in SHFolder.dll\n");
+		FreeLibrary(shfolder);
+		return NULL;
+	}
+
+	if (!SUCCEEDED(SHGetFolderPath(NULL, CSIDL_APPDATA, NULL, 0, szPath))) {
+		Com_Printf("Unable to detect CSIDL_APPDATA\n");
+		FreeLibrary(shfolder);
+		return NULL;
+	}
+
+	Q_strncpyz(path, szPath, sizeof(path));
+	Q_strcat(path, "\\UFOAI", sizeof(path));
+	FreeLibrary(shfolder);
+
+	if (!CreateDirectory(path, NULL)) {
+		if (GetLastError() != ERROR_ALREADY_EXISTS) {
+			Com_Printf("Unable to create directory \"%s\"\n", path);
+			return NULL;
+		}
+	}
+	return path;
 }
 
 /**
@@ -497,8 +492,6 @@ void Sys_Init (void)
 	}
 
 	Cvar_Get("sys_os", "win", CVAR_SERVERINFO, NULL);
-	/* too late here - but define it as archive cvar and provide a description */
-	Cvar_Get("sys_usehomedir", "1", CVAR_ARCHIVE, "Use the homedir for windows user to store files like savegames and screenshots");
 
 	if (dedicated->value) {
 		oldconsole = Cvar_VariableInteger("oldconsole");
