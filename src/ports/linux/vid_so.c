@@ -95,9 +95,9 @@ void VID_Printf (int print_level, const char *fmt, ...)
 	msg[sizeof(msg)-1] = 0;
 
 	if (print_level == PRINT_ALL)
-		Com_Printf ("%s", msg);
+		Com_Printf("%s", msg);
 	else
-		Com_DPrintf ("%s", msg);
+		Com_DPrintf("%s", msg);
 }
 
 /**

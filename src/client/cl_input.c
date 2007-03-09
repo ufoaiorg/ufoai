@@ -854,8 +854,8 @@ void CL_CameraMoveFirstPerson (void)
 
 	/* move camera forward horizontally to where soldier eyes are */
 	AngleVectors(cl.cam.angles, cl.cam.axis[0], cl.cam.axis[1], cl.cam.axis[2]);
-	cl.cam.axis[0][2] = 0.;
-	VectorMA(cl.cam.camorg, 5., cl.cam.axis[0], cl.cam.camorg);
+	cl.cam.axis[0][2] = 0.0;
+	VectorMA(cl.cam.camorg, 5.0, cl.cam.axis[0], cl.cam.camorg);
 }
 
 /**

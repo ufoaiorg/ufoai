@@ -157,7 +157,7 @@ static void SV_Map_f (void)
 
 			/* check for ump file */
 			if (FS_CheckFile(expanded) < 0) {
-				Com_Printf ("Can't find %s\n", expanded);
+				Com_Printf("Can't find %s\n", expanded);
 				return;
 			}
 		} else if (!assembly) {
@@ -165,7 +165,7 @@ static void SV_Map_f (void)
 
 			/* check for bsp file */
 			if (FS_CheckFile(expanded) < 0) {
-				Com_Printf ("Can't find %s\n", expanded);
+				Com_Printf("Can't find %s\n", expanded);
 				return;
 			}
 		}
@@ -535,7 +535,7 @@ static void SV_ListMaps_f (void)
 static void SV_Trayicon_f (void)
 {
 	if (Cmd_Argc() < 2) {
-		Com_Printf ("Usage tray [on|off]\n");
+		Com_Printf("Usage tray [on|off]\n");
 		return;
 	}
 

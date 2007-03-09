@@ -253,7 +253,7 @@ void S_PaintChannels(int endtime)
 
 	snd_vol = snd_volume->value * 256;
 
-/*	Com_Printf ("%i to %i\n", paintedtime, endtime); */
+/*	Com_Printf("%i to %i\n", paintedtime, endtime); */
 	while (paintedtime < endtime) {
 		/* if paintbuffer is smaller than DMA buffer */
 		end = endtime;
@@ -279,7 +279,7 @@ void S_PaintChannels(int endtime)
 			snd_vol *= .75;		/*normalize */
 
 		if (s_rawend < paintedtime) {
-/*			Com_Printf ("clear\n"); */
+/*			Com_Printf("clear\n"); */
 			memset(paintbuffer, 0, (end - paintedtime) * sizeof(portable_samplepair_t));
 		} else {				/* copy from the streaming sound source */
 			int s;
@@ -292,9 +292,9 @@ void S_PaintChannels(int endtime)
 				paintbuffer[i - paintedtime] = s_rawsamples[s];
 			}
 /*			if (i != end) */
-/*				Com_Printf ("partial stream\n"); */
+/*				Com_Printf("partial stream\n"); */
 /*			else */
-/*				Com_Printf ("full stream\n"); */
+/*				Com_Printf("full stream\n"); */
 			for (; i < end; i++) {
 				paintbuffer[i - paintedtime].left = paintbuffer[i - paintedtime].right = 0;
 			}

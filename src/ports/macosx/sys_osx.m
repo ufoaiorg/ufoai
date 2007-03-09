@@ -367,12 +367,12 @@ BOOL Sys_OpenGameAPI (const char *theGameName, char *thePath, char *theCurPath)
 {
 	char	myName[MAXPATHLEN];
 
-	snprintf (myName, MAXPATHLEN, "%s/%s/%s", theCurPath, thePath, theGameName);
-	Com_Printf ("Trying to load library (%s)\n", myName);
+	snprintf(myName, MAXPATHLEN, "%s/%s/%s", theCurPath, thePath, theGameName);
+	Com_Printf("Trying to load library (%s)\n", myName);
 
-	gSysGameLibrary = dlopen (myName, RTLD_NOW );
+	gSysGameLibrary = dlopen(myName, RTLD_NOW );
 	if (gSysGameLibrary != NULL) {
-		Com_DPrintf ("LoadLibrary (%s)\n", myName);
+		Com_DPrintf("LoadLibrary (%s)\n", myName);
 		return (YES);
 	}
 	return (NO);
@@ -388,36 +388,36 @@ game_export_t *Sys_GetGameAPI (game_import_t *theParameters)
 	char	*myPath;
 
 	if (gSysGameLibrary != NULL) {
-		Com_Error (ERR_FATAL, "Sys_GetGameAPI without Sys_UnloadingGame");
+		Com_Error(ERR_FATAL, "Sys_GetGameAPI without Sys_UnloadingGame");
 	}
 
-	getcwd (myCurPath, sizeof (myCurPath));
+	getcwd(myCurPath, sizeof (myCurPath));
 
-	Com_Printf ("------ Loading GamePPC.q2plug ------\n");
+	Com_Printf("------ Loading GamePPC.ufoplug ------\n");
 
 	// now run through the search paths
 	myPath = NULL;
 	while (1) {
-		myPath = FS_NextPath (myPath);
+		myPath = FS_NextPath(myPath);
 		if (myPath == NULL)
 			return (NULL);
 
-		if (Sys_OpenGameAPI ("../debugppc/game.dylib", "", myCurPath) == YES)
+		if (Sys_OpenGameAPI("../debugppc/game.dylib", "", myCurPath) == YES)
 			break;
 		// we try both extensions since we need to be compatible with the pre v1.0.6 ".bundle" extension:
-		if (Sys_OpenGameAPI ("GamePPC.q2plug/Contents/MacOS/GamePPC", myPath, myCurPath) == YES)
+		if (Sys_OpenGameAPI("GamePPC.ufoplug/Contents/MacOS/GamePPC", myPath, myCurPath) == YES)
 			break;
-		if (Sys_OpenGameAPI ("GamePPC.bundle/Contents/MacOS/GamePPC", myPath, myCurPath) == YES)
+		if (Sys_OpenGameAPI("GamePPC.bundle/Contents/MacOS/GamePPC", myPath, myCurPath) == YES)
 			break;
 	}
 
-	myGameAPI = (void *) dlsym (gSysGameLibrary, "GetGameAPI");
+	myGameAPI = (void *) dlsym(gSysGameLibrary, "GetGameAPI");
 	if (myGameAPI == NULL) {
-		Sys_UnloadGame ();
+		Sys_UnloadGame();
 		return (NULL);
 	}
 
-	return (myGameAPI (theParameters));
+	return (myGameAPI(theParameters));
 }
 
 /**
@@ -442,11 +442,11 @@ char *Sys_ConsoleInput (void)
 	FD_SET (0, &myFDSet);
 	myTimeOut.tv_sec = 0;
 	myTimeOut.tv_usec = 0;
-	if (select (1, &myFDSet, NULL, NULL, &myTimeOut) == -1 || !FD_ISSET (0, &myFDSet)) {
+	if (select(1, &myFDSet, NULL, NULL, &myTimeOut) == -1 || !FD_ISSET (0, &myFDSet)) {
 		return (NULL);
 	}
 
-	myLength = read (0, myText, sizeof (myText));
+	myLength = read(0, myText, sizeof (myText));
 	if (myLength == 0) {
 		stdin_active = false;
 		return (NULL);
@@ -577,7 +577,7 @@ int	Sys_CheckSpecialKeys (int theKey)
 	case 'H':
 		// CMD-TAB is handled by the system if windowed:
 		if (myKey == 'H' || (vid_fullscreen != NULL && vid_fullscreen->value != 0.0f)) {
-			Sys_HideApplication_f ();
+			Sys_HideApplication_f();
 			return (1);
 		}
 		break;
@@ -596,7 +596,7 @@ int	Sys_CheckSpecialKeys (int theKey)
 		break;
 	case 'Q':
 		// application quit [CMD-Q]:
-		//M_Menu_Quit_f ();
+		//M_Menu_Quit_f();
 
 		return (1);
 	case '?':
@@ -919,10 +919,10 @@ void Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
 			BOOL		myDirectory;
 
 			if (![[NSFileManager defaultManager] fileExistsAtPath: theFilePath isDirectory: &myDirectory]) {
-				Com_Printf ("Error: The dragged item is not a valid file!\n");
+				Com_Printf("Error: The dragged item is not a valid file!\n");
 			} else {
 				if (myDirectory == NO) {
-					Com_Printf ("Error: The dragged item is not a folder!\n");
+					Com_Printf("Error: The dragged item is not a folder!\n");
 				} else {
 					const char 	*myPath =[theFilePath fileSystemRepresentation];
 
@@ -931,14 +931,14 @@ void Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
 
 						while (myIndex > 1) {
 							if (myPath[myIndex - 1] == '/') {
-								Cbuf_ExecuteText (EXEC_APPEND, va("set game \"%s\"\n", myPath + myIndex));
+								Cbuf_ExecuteText(EXEC_APPEND, va("set game \"%s\"\n", myPath + myIndex));
 								return (YES);
 							}
 							myIndex--;
 						}
-						Com_Printf ("Error: Can\'t extract path!\n");
+						Com_Printf("Error: Can\'t extract path!\n");
 					} else {
-						Com_Printf ("Error: Unable to obtain filesystem representation!\n");
+						Com_Printf("Error: Unable to obtain filesystem representation!\n");
 					}
 				}
 			}

@@ -664,6 +664,8 @@ void FS_AddHomeAsGameDirectory (const char *dir)
 		Q_strncpyz(fs_gamedir, gdir, MAX_QPATH);
 
 		FS_AddGameDirectory(gdir);
+	} else {
+		Com_Printf("could not find the home directory\n");
 	}
 }
 

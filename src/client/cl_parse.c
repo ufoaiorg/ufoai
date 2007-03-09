@@ -314,7 +314,7 @@ static void CL_ParseServerData (void)
 
 	if (cl.pnum >= 0) {
 		/* seperate the printfs so the server message can have a color */
-/*		Com_Printf ("%c%s\n", 2, str);*/
+/*		Com_Printf("%c%s\n", 2, str);*/
 		/* need to prep refresh at next oportunity */
 		cl.refresh_prepped = qfalse;
 	}
@@ -1462,7 +1462,7 @@ extern void CL_InitEvents (void)
 static void CL_ShowNet (const char *s)
 {
 	if (cl_shownet->value >= 2)
-		Com_Printf ("%3i:%s\n", net_message.readcount-1, s);
+		Com_Printf("%3i:%s\n", net_message.readcount-1, s);
 }
 
 /**
@@ -1505,7 +1505,7 @@ void CL_ParseServerMessage (void)
 		/* other commands */
 		switch (cmd) {
 		case svc_nop:
-/*			Com_Printf ("svc_nop\n"); */
+/*			Com_Printf("svc_nop\n"); */
 			break;
 
 		case svc_disconnect:
@@ -1513,7 +1513,7 @@ void CL_ParseServerMessage (void)
 			break;
 
 		case svc_reconnect:
-			Com_Printf ("Server disconnected, reconnecting\n");
+			Com_Printf("Server disconnected, reconnecting\n");
 			cls.state = ca_connecting;
 			cls.connect_time = -99999;	/* CL_CheckForResend() will fire immediately */
 			break;
@@ -1521,7 +1521,7 @@ void CL_ParseServerMessage (void)
 		case svc_print:
 			i = MSG_ReadByte(&net_message);
 			if (i == PRINT_CHAT) {
-				S_StartLocalSound ("misc/talk.wav");
+				S_StartLocalSound("misc/talk.wav");
 				con.ormask = 128;
 			}
 			Com_Printf("%s", MSG_ReadString(&net_message));
@@ -1540,11 +1540,11 @@ void CL_ParseServerMessage (void)
 
 		case svc_serverdata:
 			Cbuf_Execute ();		/* make sure any stuffed commands are done */
-			CL_ParseServerData ();
+			CL_ParseServerData();
 			break;
 
 		case svc_configstring:
-			CL_ParseConfigString ();
+			CL_ParseConfigString();
 			break;
 
 		case svc_breaksound:
@@ -1560,7 +1560,7 @@ void CL_ParseServerMessage (void)
 			break;
 
 		default:
-			Com_Error (ERR_DROP,"CL_ParseServerMessage: Illegible server message %d\n", cmd);
+			Com_Error(ERR_DROP,"CL_ParseServerMessage: Illegible server message %d\n", cmd);
 			break;
 		}
 	}

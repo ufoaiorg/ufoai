@@ -251,7 +251,7 @@ extern void MAP_MapClick (const menuNode_t* node, int x, int y, qboolean globe)
 	}
 	if (cl_showCoords->value) {
 		Com_sprintf(clickBuffer, sizeof(clickBuffer), "Long: %.1f Lat: %.1f", pos[0], pos[1]);
-		MN_AddNewMessage(_("Click"), clickBuffer, qfalse, MSG_DEBUG, NULL);
+		MN_AddNewMessage("Click"	, clickBuffer, qfalse, MSG_DEBUG, NULL);
 		Com_Printf("Clicked at %.1f %.1f\n", pos[0], pos[1]);
 	}
 
@@ -607,12 +607,12 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node, float latitude, float
 	Cvar_Set("mn_mapdaytime", "");
 	for (i = 0; i < ccs.numMissions; i++) {
 		ms = &ccs.mission[i];
-		if (!MAP_3DMapToScreen(node, ms->realPos, &x, &y))
-			continue;
-		re.Draw3DMapMarkers(ccs.angles, ccs.zoom, latitude, longitude, "cross");
+/*		if (!MAP_3DMapToScreen(node, ms->realPos, &x, &y))
+			continue;*/
+		re.Draw3DMapMarkers(ccs.angles, ccs.zoom, ms->def->pos[0], ms->def->pos[1], "cross");
 
 		if (ms == selMis) {
-			re.Draw3DMapMarkers(ccs.angles, ccs.zoom, latitude, longitude, selMis->def->active ? "circleactive" : "circle");
+		/*	re.Draw3DMapMarkers(ccs.angles, ccs.zoom, latitude, longitude, selMis->def->active ? "circleactive" : "circle");*/
 			Cvar_Set("mn_mapdaytime", CL_MapIsNight(ms->realPos) ? _("Night") : _("Day"));
 		}
 	}
@@ -620,12 +620,12 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node, float latitude, float
 	/* draw base pics */
 	for (j = 0; j < gd.numBases; j++)
 		if (gd.bases[j].founded) {
-			re.Draw3DMapMarkers(ccs.angles, ccs.zoom, latitude, longitude, "base");
+			re.Draw3DMapMarkers(ccs.angles, ccs.zoom, gd.bases[j].pos[0], gd.bases[j].pos[1], "base");
 
 			/* draw aircraft */
 			for (i = 0, aircraft = (aircraft_t *) gd.bases[j].aircraft; i < gd.bases[j].numAircraftInBase; i++, aircraft++)
 				if (aircraft->status > AIR_HOME) {
-					re.Draw3DMapMarkers(ccs.angles, ccs.zoom, latitude, longitude, aircraft->image);
+					re.Draw3DMapMarkers(ccs.angles, ccs.zoom, aircraft->pos[0], aircraft->pos[0], aircraft->image);
 
 					if (aircraft->status >= AIR_TRANSIT) {
 						mapline_t path;

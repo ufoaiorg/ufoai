@@ -785,35 +785,41 @@ void Draw_LineStrip (int points, int *verts)
 #define MARKER_SIZE 0.03
 /**
  * @brief
+ * @todo implement me
  */
-void Draw_3DMapMarkers (vec3_t angles, float zoom, float latitude, float longitude, char *image)
+void Draw_3DMapMarkers (vec3_t angles, float zoom, float latitude, float longitude, char *model)
 {
+	modelInfo_t mi;
 	float factor;
 	vec3_t v;
 	vec2_t a;
-	image_t *gl;
 	float theta, phi;
+	char path[MAX_QPATH] = "";
+	vec3_t scale;
+	vec4_t color = {1, 1, 1, 1};
 
-	gl = Draw_FindPic(image);
-	if (!gl) {
-		ri.Sys_Error(ERR_FATAL, "MapMakers: could not find '%s'", image);
-		return;
-	}
-
+	Com_Printf("lat: %.0f - long: %.0f\n", latitude, longitude);
 	Vector2Set(a, latitude, longitude);
+	factor = 1.0 + (2.0 * MARKER_SIZE) / zoom;
+	/* convert to vector coordinates */
+	PolarToVec(a, v);
+	VectorSet(scale, zoom, zoom, zoom);
+
+	memset(&mi, 0, sizeof(modelInfo_t));
+	Com_sprintf(path, sizeof(path), "models/geoscape/%s.md2", model);
+	mi.name = path;
+	mi.angles = angles;
+	mi.origin = v;
+	mi.center = v;
+	mi.scale = scale;
+	mi.color = color;
+
+	Print3Vector(v);
 
 	qglPushMatrix();
 
-	factor = 1.0 + (2.0 * MARKER_SIZE) / zoom;
-
-	/* convert to vector coordinates */
-	PolarToVec(a, v);
-
 	/* translate the position */
 	qglTranslated(v[1] * factor, v[2] * factor, v[1] * factor);
-
-	/* bind the marker texture */
-	GL_Bind(gl->texnum);
 
 	qglColor4f(1, 0, 0, 1);
 	qglDisable(GL_TEXTURE_2D);
@@ -821,22 +827,23 @@ void Draw_3DMapMarkers (vec3_t angles, float zoom, float latitude, float longitu
 	qglBegin(GL_LINES);
 	theta = (90.0 - longitude) * torad;
 	phi = latitude * torad;
-	qglVertex3f(0.25 * sin(theta) * cos(phi),
-		0.25 * sin(theta) * sin(phi),
-		0.25 * cos(theta));
-	qglVertex3f((0.25 + MARKER_SIZE) * sin(theta) * cos(phi),
-		(0.25 + MARKER_SIZE) * sin(theta) * sin(phi),
-		(0.25 + MARKER_SIZE) * cos(theta));
+	qglVertex3f(gl_3dmapradius->value * 0.25 * sin(theta) * cos(phi),
+		gl_3dmapradius->value * 0.25 * sin(theta) * sin(phi),
+		gl_3dmapradius->value * 0.25 * cos(theta));
+	qglVertex3f(gl_3dmapradius->value * (0.25 + MARKER_SIZE) * sin(theta) * cos(phi),
+		gl_3dmapradius->value * (0.25 + MARKER_SIZE) * sin(theta) * sin(phi),
+		gl_3dmapradius->value * (0.25 + MARKER_SIZE) * cos(theta));
 	qglEnd();
 
 	qglEnable(GL_TEXTURE_2D);
 
-	/* TODO: Draw the icon ot model of the crashsite or base */
-
-	qglColor4f(1, 1, 1, 1);
-
 	/* restore the matrix */
 	qglPopMatrix();
+
+	/* TODO: Draw the icon ot model of the crashsite or base */
+	R_DrawModelDirect(&mi, NULL, NULL);
+
+	qglColor4f(1, 1, 1, 1);
 }
 
 /**

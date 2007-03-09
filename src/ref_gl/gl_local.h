@@ -566,7 +566,7 @@ void GLimp_SetGamma(void);
 
 void Draw_3DGlobe(int x, int y, int w, int h, float p, float q, vec3_t rotate, float zoom, char *map);
 void Draw_3DMapLine(vec3_t angles, float zoom, int n, float dist, vec2_t * path);
-void Draw_3DMapMarkers(vec3_t angles, float zoom, float latitude, float longitude, char *image);
+void Draw_3DMapMarkers(vec3_t angles, float zoom, float latitude, float longitude, char *model);
 
 /* end of 3d globe */
 

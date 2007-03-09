@@ -104,7 +104,7 @@ int SND_GetDMAPos (void)
 	if (snd_inited)
 		return si->dma->samplepos;
 	else
-		Com_Printf ("Sound not inizialized\n");
+		Com_Printf("Sound not inizialized\n");
 	return 0;
 }
 
@@ -114,7 +114,7 @@ int SND_GetDMAPos (void)
 void SND_Shutdown (void)
 {
 	if (!snd_inited) {
-		Com_Printf ("Sound not inizialized\n");
+		Com_Printf("Sound not inizialized\n");
 		return;
 	}
 	arts_close_stream(stream);

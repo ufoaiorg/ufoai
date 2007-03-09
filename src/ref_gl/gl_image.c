@@ -557,7 +557,7 @@ static int LoadPNG (char *name, byte **pic, int *width, int *height)
 
 	/* Parse the PNG file */
 	if ((png_check_sig (PngFileBuffer.buffer, 8)) == 0) {
-		Com_Printf ("LoadPNG: Not a PNG file: %s\n", name);
+		Com_Printf("LoadPNG: Not a PNG file: %s\n", name);
 		ri.FS_FreeFile (PngFileBuffer.buffer);
 		return 0;
 	}
@@ -566,7 +566,7 @@ static int LoadPNG (char *name, byte **pic, int *width, int *height)
 
 	png_ptr = png_create_read_struct (PNG_LIBPNG_VER_STRING, NULL,  NULL, NULL);
 	if (!png_ptr) {
-		Com_Printf ("LoadPNG: Bad PNG file: %s\n", name);
+		Com_Printf("LoadPNG: Bad PNG file: %s\n", name);
 		ri.FS_FreeFile (PngFileBuffer.buffer);
 		return 0;
 	}
@@ -574,7 +574,7 @@ static int LoadPNG (char *name, byte **pic, int *width, int *height)
 	info_ptr = png_create_info_struct (png_ptr);
 	if (!info_ptr) {
 		png_destroy_read_struct (&png_ptr, (png_infopp)NULL, (png_infopp)NULL);
-		Com_Printf ("LoadPNG: Bad PNG file: %s\n", name);
+		Com_Printf("LoadPNG: Bad PNG file: %s\n", name);
 		ri.FS_FreeFile (PngFileBuffer.buffer);
 		return 0;
 	}
@@ -582,7 +582,7 @@ static int LoadPNG (char *name, byte **pic, int *width, int *height)
 	end_info = png_create_info_struct (png_ptr);
 	if (!end_info) {
 		png_destroy_read_struct (&png_ptr, &info_ptr, (png_infopp)NULL);
-		Com_Printf ("LoadPNG: Bad PNG file: %s\n", name);
+		Com_Printf("LoadPNG: Bad PNG file: %s\n", name);
 		ri.FS_FreeFile (PngFileBuffer.buffer);
 		return 0;
 	}
@@ -644,14 +644,14 @@ extern void WritePNG (FILE *f, byte *buffer, int width, int height)
 
 	png_ptr = png_create_write_struct (PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
 	if (!png_ptr) {
-		Com_Printf ("WritePNG: LibPNG Error!\n");
+		Com_Printf("WritePNG: LibPNG Error!\n");
 		return;
 	}
 
 	info_ptr = png_create_info_struct(png_ptr);
 	if (!info_ptr) {
 		png_destroy_write_struct (&png_ptr, (png_infopp)NULL);
-		Com_Printf ("WritePNG: LibPNG Error!\n");
+		Com_Printf("WritePNG: LibPNG Error!\n");
 		return;
 	}
 

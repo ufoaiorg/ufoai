@@ -129,9 +129,9 @@ void VID_Printf (int thePrintLevel, const char *theFormat, ...)
 
 	/* print according to the print level: */
 	if (thePrintLevel == PRINT_ALL)
-		Com_Printf ("%s", myMessage);
+		Com_Printf("%s", myMessage);
 	else
-		Com_DPrintf ("%s", myMessage);
+		Com_DPrintf("%s", myMessage);
 }
 
 /*=======================
@@ -143,12 +143,12 @@ void VID_Error (int theErrorLevel, const char *theFormat, ...)
 	char		myMessage[VID_MAX_PRINT_MSG];
 
 	/* formatted output conversion: */
-	va_start (myArgPtr, theFormat);
-	Q_vsnprintf (myMessage, VID_MAX_PRINT_MSG, theFormat, myArgPtr);
-	va_end (myArgPtr);
+	va_start(myArgPtr, theFormat);
+	Q_vsnprintf(myMessage, VID_MAX_PRINT_MSG, theFormat, myArgPtr);
+	va_end(myArgPtr);
 
 	/* submitt the error string: */
-	Com_Error (theErrorLevel, "%s", myMessage);
+	Com_Error(theErrorLevel, "%s", myMessage);
 }
 
 /*=======================
@@ -213,22 +213,21 @@ VID_Init
 void VID_Init (void)
 {
 	/* Create the video variables so we know how to start the graphics drivers */
-	vid_ref = Cvar_Get ("vid_ref", "glx", CVAR_ARCHIVE);
-	vid_xpos = Cvar_Get ("vid_xpos", "3", CVAR_ARCHIVE);
-	vid_ypos = Cvar_Get ("vid_ypos", "22", CVAR_ARCHIVE);
-	vid_fullscreen = Cvar_Get ("vid_fullscreen", "1", CVAR_ARCHIVE);
-	vid_gamma = Cvar_Get( "vid_gamma", "1", CVAR_ARCHIVE );
+	vid_ref = Cvar_Get("vid_ref", "glx", CVAR_ARCHIVE);
+	vid_xpos = Cvar_Get("vid_xpos", "3", CVAR_ARCHIVE);
+	vid_ypos = Cvar_Get("vid_ypos", "22", CVAR_ARCHIVE);
+	vid_fullscreen = Cvar_Get("vid_fullscreen", "1", CVAR_ARCHIVE);
+	vid_gamma = Cvar_Get("vid_gamma", "1", CVAR_ARCHIVE);
 
 	/* Add some console commands that we want to handle */
-	Cmd_AddCommand ("vid_restart", VID_Restart_f);
+	Cmd_AddCommand("vid_restart", VID_Restart_f);
 
 	/* Hide the cursor */
-	if ( vid_fullscreen->value )
-		IN_ShowCursor (qfalse);
+	if (vid_fullscreen->value)
+		IN_ShowCursor(qfalse);
 
 	/* Capture the screen(s): */
-	if (vid_fullscreen->value)
-	{
+	if (vid_fullscreen->value) {
 		VID_FadeGammaOut (VID_FADE_ALL_SCREENS, VID_FADE_DURATION);
 		VID_CAPTURE_DISPLAYS ();
 		VID_FadeGammaIn (VID_FADE_ALL_SCREENS, 0.0f);
@@ -244,25 +243,22 @@ VID_Shutdown
 =======================*/
 void VID_Shutdown (void)
 {
-	// shutdown the ref library:
-	if (reflib_active)
-	{
+	/* shutdown the ref library: */
+	if (reflib_active) {
 		re.Shutdown ();
 		VID_FreeReflib ();
 	}
 
-	// release the screen(s):
-	if (vid_fullscreen->value != 0.0f)
-	{
+	/* release the screen(s): */
+	if (vid_fullscreen->value != 0.0f) {
 		VID_FadeGammaOut (VID_FADE_ALL_SCREENS, 0.0f);
-		if (CGDisplayIsCaptured (kCGDirectMainDisplay) == true)
-		{
-		VID_RELEASE_DISPLAYS ();
+		if (CGDisplayIsCaptured (kCGDirectMainDisplay) == true) {
+			VID_RELEASE_DISPLAYS ();
 		}
 		VID_FadeGammaIn (VID_FADE_ALL_SCREENS, VID_FADE_DURATION);
 	}
 
-	// show the cursor:
+	/* show the cursor: */
 	IN_ShowCursor (YES);
 }
 
@@ -278,30 +274,27 @@ qboolean VID_LoadRefresh (char *theName)
 			myCurrentPath[MAXPATHLEN],
 			myFileName[MAXPATHLEN];
 
-	// get current game directory:
+	/* get current game directory: */
 	getcwd (myCurrentPath, sizeof (myCurrentPath));
 
-	// get the plugin dir of the application:
+	/* get the plugin dir of the application: */
 	myAppBundle = [NSBundle mainBundle];
-	if (myAppBundle == NULL)
-	{
-		Sys_Error ("Error while loading the renderer plug-in (invalid application bundle)!\n");
+	if (myAppBundle == NULL) {
+		Sys_Error("Error while loading the renderer plug-in (invalid application bundle)!\n");
 	}
 
 	myBundlePath = (char *) [[myAppBundle builtInPlugInsPath] fileSystemRepresentation];
-	if (myBundlePath == NULL)
-	{
-		Sys_Error ("Error while loading the renderer plug-in (invalid plug-in path)!\n");
+	if (myBundlePath == NULL) {
+		Sys_Error("Error while loading the renderer plug-in (invalid plug-in path)!\n");
 	}
 
 	chdir (myBundlePath);
 	[myAppBundle release];
 
-	// prepare the bundle name:
+	/* prepare the bundle name: */
 	snprintf (myFileName, MAXPATHLEN, "%s.q2plug/Contents/MacOS/%s", theName, theName);
 
-	if (reflib_active == true)
-	{
+	if (reflib_active == true) {
 		re.Shutdown ();
 		VID_FreeReflib ();
 		reflib_active = qfalse;
@@ -311,20 +304,18 @@ qboolean VID_LoadRefresh (char *theName)
 
 	reflib_library = dlopen (myFileName, RTLD_LAZY | RTLD_GLOBAL);
 
-	// return to the game directory:
+	/* return to the game directory: */
 	chdir (myCurrentPath);
 
-	if (reflib_library == NULL)
-	{
-		Com_Printf ("LoadLibrary(\"%s\") failed: %s\n", theName , dlerror());
+	if (reflib_library == NULL) {
+		Com_Printf("LoadLibrary(\"%s\") failed: %s\n", theName , dlerror());
 		return (qfalse);
 	}
 
-	Com_Printf ("LoadLibrary(\"%s\")\n", myFileName);
+	Com_Printf("LoadLibrary(\"%s\")\n", myFileName);
 
-	if ((myGetRefAPIProc = (void *) dlsym (reflib_library, "GetRefAPI")) == NULL)
-	{
-		Com_Error (ERR_FATAL, "dlsym failed on %s", theName);
+	if ((myGetRefAPIProc = (void *) dlsym (reflib_library, "GetRefAPI")) == NULL) {
+		Com_Error(ERR_FATAL, "dlsym failed on %s", theName);
 	}
 
 	ri.Cmd_AddCommand = Cmd_AddCommand;
@@ -350,22 +341,20 @@ qboolean VID_LoadRefresh (char *theName)
 	ri.CL_GetFontData = CL_GetFontData;
 	ri.RenderTrace = SV_RenderTrace;
 
-	re = myGetRefAPIProc (ri);
+	re = myGetRefAPIProc(ri);
 
-	if (re.api_version != API_VERSION)
-	{
-		VID_FreeReflib ();
-		Com_Error (ERR_FATAL, "%s has incompatible api_version!", theName);
+	if (re.api_version != API_VERSION) {
+		VID_FreeReflib();
+		Com_Error(ERR_FATAL, "%s has incompatible api_version!", theName);
 	}
 
-	if (re.Init (0, 0) == -1)
-	{
-		re.Shutdown ();
-		VID_FreeReflib ();
+	if (re.Init (0, 0) == -1) {
+		re.Shutdown();
+		VID_FreeReflib();
 		return qfalse;
 	}
 
-	Com_Printf ("------------------------------------\n");
+	Com_Printf("------------------------------------\n");
 	reflib_active = qtrue;
 	return qtrue;
 }
@@ -373,7 +362,7 @@ qboolean VID_LoadRefresh (char *theName)
 /*=======================
 VID_FreeReflib
 =======================*/
-void	VID_FreeReflib (void)
+void VID_FreeReflib (void)
 {
 	memset (&re, 0, sizeof (re));
 	reflib_library = NULL;
@@ -390,16 +379,14 @@ void VID_CheckChanges (void)
 	if (vid_ref->modified)
 		S_StopAllSounds ();
 
-	while (vid_ref->modified)
-	{
+	while (vid_ref->modified) {
 		vid_ref->modified = qfalse;
 		vid_fullscreen->modified = qtrue;
 		cl.refresh_prepped = qfalse;
 		cls.disable_screen = qtrue;
 
-		snprintf (myName, VID_MAX_REF_NAME, "ref_%s", vid_ref->string);
-		if (VID_LoadRefresh (myName) == qfalse)
-		{
+		Com_sprintf(myName, VID_MAX_REF_NAME, "ref_%s", vid_ref->string);
+		if (VID_LoadRefresh (myName) == qfalse) {
 			if (cls.key_dest != key_console)
 				Con_ToggleConsole_f ();
 		}
@@ -425,9 +412,8 @@ qboolean VID_FadeGammaInit (qboolean theFadeOnAllDisplays)
 	CGDisplayErr	myError;
 	UInt32		i;
 
-	// if init fails, no gamma fading will be used!
-	if (gVIDOriginalGamma != NULL)
-	{
+	/* if init fails, no gamma fading will be used! */
+	if (gVIDOriginalGamma != NULL) {
 		// initialized, but did we change the number of displays?
 		if (theFadeOnAllDisplays == myFadeOnAllDisplays)
 			return qtrue; // FIXME Should this be qfalse? It was just qboolean, but that can't be right...
@@ -435,7 +421,7 @@ qboolean VID_FadeGammaInit (qboolean theFadeOnAllDisplays)
 		gVIDOriginalGamma = NULL;
 	}
 
-	// get the list of displays:
+	/* get the list of displays: */
 	if (CGGetActiveDisplayList (VID_MAX_DISPLAYS, myDisplayList, &gVIDGammaCount) != CGDisplayNoErr)
 		return qfalse;
 
@@ -451,8 +437,7 @@ qboolean VID_FadeGammaInit (qboolean theFadeOnAllDisplays)
 		return qfalse;
 
 	// store the original gamma values within this table(s):
-	for (i = 0; i < gVIDGammaCount; i++)
-	{
+	for (i = 0; i < gVIDGammaCount; i++) {
 		if (gVIDGammaCount == 1)
 			gVIDOriginalGamma[i].displayID = kCGDirectMainDisplay;
 		else
@@ -468,8 +453,7 @@ qboolean VID_FadeGammaInit (qboolean theFadeOnAllDisplays)
 							&gVIDOriginalGamma[i].component[6],
 							&gVIDOriginalGamma[i].component[7],
 							&gVIDOriginalGamma[i].component[8]);
-		if (myError != CGDisplayNoErr)
-		{
+		if (myError != CGDisplayNoErr) {
 			free (gVIDOriginalGamma);
 			gVIDOriginalGamma = NULL;
 			return qfalse;
@@ -498,19 +482,16 @@ void VID_FadeGammaOut (qboolean theFadeOnAllDisplays, float theDuration)
 	theDuration *= 1000.0f;
 
 	// fade for the choosen duration:
-	while (1)
-	{
+	while (1) {
 		// calculate the current scale and clamp it:
-		if (theDuration > 0.0f)
-		{
+		if (theDuration > 0.0f) {
 			myCurScale = 1.0f - (Sys_Milliseconds () - myStartTime) / theDuration;
 			if (myCurScale < 0.0f)
 				myCurScale = 0.0f;
 		}
 
 		// fade the gamma for each display:
-		for (i = 0; i < gVIDGammaCount; i++)
-		{
+		for (i = 0; i < gVIDGammaCount; i++) {
 			// calculate the current intensity for each color component:
 			for (j = 1; j < 9; j += 3)
 				myCurGamma.component[j] = myCurScale * gVIDOriginalGamma[i].component[j];
@@ -552,19 +533,16 @@ void VID_FadeGammaIn (qboolean theFadeOnAllDisplays, float theDuration)
 	theDuration *= 1000.0f;
 
 	// fade for the choosen duration:
-	while (1)
-	{
+	while (1) {
 		// calculate the current scale and clamp it:
-		if (theDuration > 0.0f)
-		{
+		if (theDuration > 0.0f) {
 			myCurScale = (Sys_Milliseconds () - myStartTime) / theDuration;
 			if (myCurScale > 1.0f)
 				myCurScale = 1.0f;
 		}
 
 		// fade the gamma for each display:
-		for (i = 0; i < gVIDGammaCount; i++)
-		{
+		for (i = 0; i < gVIDGammaCount; i++) {
 			// calculate the current intensity for each color component:
 			for (j = 1; j < 9; j += 3)
 				myCurGamma.component[j] = myCurScale * gVIDOriginalGamma[i].component[j];

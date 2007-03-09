@@ -590,7 +590,7 @@ int NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_message)
 			if (err == WSAEWOULDBLOCK)
 				continue;
 				if (err == WSAEMSGSIZE) {
-					Com_Printf ("Warning:  Oversize packet from %s\n", NET_AdrToString(*net_from));
+					Com_Printf("Warning:  Oversize packet from %s\n", NET_AdrToString(*net_from));
 				continue;
 			}
 
@@ -826,7 +826,7 @@ int NET_IPSocket (char *net_interface, int port, netsrc_t type, int family)
 			if (family == AF_INET) {
 				/* make it broadcast capable */
 				if (setsockopt(newsocket, SOL_SOCKET, SO_BROADCAST, (char *)&one, sizeof(one))) {
-						Com_Printf ("ERROR: NET_IPSocket: setsockopt SO_BROADCAST:%s\n", strerror (errno));
+						Com_Printf("ERROR: NET_IPSocket: setsockopt SO_BROADCAST:%s\n", strerror (errno));
 						return 0;
 				}
 			}

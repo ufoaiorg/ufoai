@@ -1121,7 +1121,7 @@ void S_RawSamples(int samples, int rate, int width, int channels, byte * data, f
 
 	scale = (float) rate / dma.speed;
 
-/*	Com_Printf ("%i < %i < %i\n", soundtime, paintedtime, s_rawend); */
+/*	Com_Printf("%i < %i < %i\n", soundtime, paintedtime, s_rawend); */
 	if (channels == 2 && width == 2) {
 		if (scale == 1.0) {		/* optimized case */
 			for (i = 0; i < samples; i++) {

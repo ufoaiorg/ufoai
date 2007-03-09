@@ -56,9 +56,9 @@ void VID_Printf (int print_level, const char *fmt, ...)
 	msg[sizeof(msg)-1] = 0;
 
 	if (print_level == PRINT_ALL)
-		Com_Printf ("%s", msg);
+		Com_Printf("%s", msg);
 	else
-		Com_DPrintf ("%s", msg);
+		Com_DPrintf("%s", msg);
 }
 
 /**
@@ -69,13 +69,13 @@ void VID_Error (int err_level, const char *fmt, ...)
 	va_list		argptr;
 	char		msg[MAXPRINTMSG];
 
-	va_start (argptr,fmt);
+	va_start(argptr,fmt);
 	Q_vsnprintf(msg, sizeof(msg), fmt, argptr);
 	va_end(argptr);
 
 	msg[sizeof(msg)-1] = 0;
 
-	Com_Error (err_level, "%s", msg);
+	Com_Error(err_level, "%s", msg);
 }
 
 /**
@@ -123,9 +123,9 @@ const vidmode_t vid_modes[] =
 /**
  * @brief
  */
-qboolean VID_GetModeInfo( int *width, int *height, int mode )
+qboolean VID_GetModeInfo (int *width, int *height, int mode)
 {
-	if ( mode < 0 || mode >= VID_NUM_MODES )
+	if (mode < 0 || mode >= VID_NUM_MODES)
 		return qfalse;
 
 	*width  = vid_modes[mode].width;

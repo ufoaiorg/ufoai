@@ -182,13 +182,13 @@ qboolean SNDDMA_Init (struct sndinfo *si__) /* argument ignored */
 
 	/* find a suitable audio device: */
 	if (AudioHardwareGetProperty (kAudioHardwarePropertyDefaultOutputDevice, &myPropertySize, &gSNDDMASoundDeviceID)) {
-		Com_Printf ("Audio init fails: Can\'t get audio device.\n");
+		Com_Printf("Audio init fails: Can\'t get audio device.\n");
 		return (0);
 	}
 
 	/* is the device valid? */
 	if (gSNDDMASoundDeviceID == kAudioDeviceUnknown) {
-		Com_Printf ("Audio init fails: Unsupported audio device.\n");
+		Com_Printf("Audio init fails: Unsupported audio device.\n");
 		return (0);
 	}
 
@@ -196,46 +196,46 @@ qboolean SNDDMA_Init (struct sndinfo *si__) /* argument ignored */
 	myPropertySize = sizeof (gSNDDMABufferByteCount);
 	if (AudioDeviceGetProperty (gSNDDMASoundDeviceID, 0, NO, kAudioDevicePropertyBufferSize,
 								&myPropertySize, &gSNDDMABufferByteCount) || gSNDDMABufferByteCount == 0) {
-		Com_Printf ("Audio init fails: Can't get audiobuffer.\n");
+		Com_Printf("Audio init fails: Can't get audiobuffer.\n");
 		return (0);
 	}
 
 	/*check the buffersize: */
 	gSNDDMABufferByteCount /= sizeof (float);
 	if (gSNDDMABufferByteCount != OUTPUT_BUFFER_SIZE) {
-		Com_Printf ("Audio init: Audiobuffer size is not sufficient for clean movie playback!\n");
+		Com_Printf("Audio init: Audiobuffer size is not sufficient for clean movie playback!\n");
 	}
 	if (sizeof (gSNDDMABuffer) % gSNDDMABufferByteCount != 0 ||
 		sizeof (gSNDDMABuffer) / gSNDDMABufferByteCount < 2) {
-		Com_Printf ("Audio init: Bad audiobuffer size!\n");
+		Com_Printf("Audio init: Bad audiobuffer size!\n");
 		return (0);
 	}
 
 	/* get the audiostream format: */
 	myPropertySize = sizeof (gSNDDMABasicDescription);
-	if (AudioDeviceGetProperty (gSNDDMASoundDeviceID, 0, NO, kAudioDevicePropertyStreamFormat,
+	if (AudioDeviceGetProperty(gSNDDMASoundDeviceID, 0, NO, kAudioDevicePropertyStreamFormat,
 								&myPropertySize, &gSNDDMABasicDescription)) {
-		Com_Printf ("Audio init fails.\n");
+		Com_Printf("Audio init fails.\n");
 		return (0);
 	}
 
 	/* is the format LinearPCM? */
 	if (gSNDDMABasicDescription.mFormatID != kAudioFormatLinearPCM) {
-		Com_Printf ("Default Audio Device doesn't support Linear PCM!\n");
+		Com_Printf("Default Audio Device doesn't support Linear PCM!\n");
 		return(0);
 	}
 
 	/* is sound ouput suppressed? */
-	if (!COM_CheckParm ("-nosound")) {
+	if (!COM_CheckParm("-nosound")) {
 		/* add the sound FX IO: */
-		if (AudioDeviceAddIOProc (gSNDDMASoundDeviceID, SNDDMA_AudioIOProc, NULL)) {
-			Com_Printf ("Audio init fails: Can\'t install IOProc.\n");
+		if (AudioDeviceAddIOProc(gSNDDMASoundDeviceID, SNDDMA_AudioIOProc, NULL)) {
+			Com_Printf("Audio init fails: Can\'t install IOProc.\n");
 			return (0);
 		}
 
 		/* start the sound FX: */
-		if (AudioDeviceStart (gSNDDMASoundDeviceID, SNDDMA_AudioIOProc)) {
-			Com_Printf ("Audio init fails: Can\'t start audio.\n");
+		if (AudioDeviceStart(gSNDDMASoundDeviceID, SNDDMA_AudioIOProc)) {
+			Com_Printf("Audio init fails: Can\'t start audio.\n");
 			return (0);
 		}
 		gSNDDMAIOProcIsInstalled = YES;

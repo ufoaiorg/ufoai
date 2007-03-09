@@ -222,7 +222,7 @@ qboolean SND_Init (struct sndinfo *s)
 		audio_fd = -1;
 		return qfalse;;
 	}
-	si->Com_Printf ("...mmaped %u bytes buffer\n", mmaplen);
+	si->Com_Printf("...mmaped %u bytes buffer\n", mmaplen);
 
 	/* toggle the trigger & start her up */
 	tmp = 0;

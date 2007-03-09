@@ -1391,7 +1391,7 @@ static void CM_BoxLeafnums_r (int nodenum)
 	while (1) {
 		if (nodenum < 0) {
 			if (leaf_count >= leaf_maxcount) {
-/*				Com_Printf ("CM_BoxLeafnums_r: overflow\n"); */
+/*				Com_Printf("CM_BoxLeafnums_r: overflow\n"); */
 				return;
 			}
 			leaf_list[leaf_count++] = -1 - nodenum;
@@ -1400,7 +1400,7 @@ static void CM_BoxLeafnums_r (int nodenum)
 
 		node = &curTile->nodes[nodenum];
 		plane = node->plane;
-/*		s = BoxOnPlaneSide (leaf_mins, leaf_maxs, plane); */
+/*		s = BoxOnPlaneSide(leaf_mins, leaf_maxs, plane); */
 		s = BOX_ON_PLANE_SIDE(leaf_mins, leaf_maxs, plane);
 		if (s == 1)
 			nodenum = node->children[0];

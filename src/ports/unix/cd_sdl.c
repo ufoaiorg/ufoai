@@ -260,24 +260,24 @@ int CDAudio_Init( void )
 	if (initialized)
 		return 0;
 
-	cv = Cvar_Get ("nocdaudio", "0", CVAR_NOSET, NULL);
+	cv = Cvar_Get("nocdaudio", "0", CVAR_NOSET, NULL);
 	if (cv->value)
 		return -1;
 
-	cd_nocd = Cvar_Get ("cd_nocd", "0", CVAR_ARCHIVE, NULL);
+	cd_nocd = Cvar_Get("cd_nocd", "0", CVAR_ARCHIVE, NULL);
 	if (cd_nocd->value)
 		return -1;
 
-	cd_volume = Cvar_Get ("cd_volume", "1", CVAR_ARCHIVE, NULL);
+	cd_volume = Cvar_Get("cd_volume", "1", CVAR_ARCHIVE, NULL);
 
 	if (SDL_WasInit(SDL_INIT_EVERYTHING) == 0) {
 		if (SDL_Init(SDL_INIT_CDROM) < 0) {
-			Com_Printf ("Couldn't init SDL cdrom: %s\n", SDL_GetError ());
+			Com_Printf("Couldn't init SDL cdrom: %s\n", SDL_GetError());
 			return -1;
 		}
 	} else if (SDL_WasInit(SDL_INIT_CDROM) == 0) {
 		if (SDL_InitSubSystem(SDL_INIT_CDROM) < 0) {
-			Com_Printf ("Couldn't init SDL cdrom: %s\n", SDL_GetError ());
+			Com_Printf("Couldn't init SDL cdrom: %s\n", SDL_GetError());
 			return -1;
 		}
 	}
@@ -378,7 +378,7 @@ static void CD_f( void )
 
 		cdstate = SDL_CDStatus(cd_id);
 		Com_Printf("%d tracks\n",cd_id->numtracks);
-		switch ( cdstate ) {
+		switch (cdstate) {
 		case CD_PLAYING:
 			Com_Printf("Currently %s track %d\n",
 				playLooping ? "looping" : "playing",

@@ -336,7 +336,7 @@ static sndinitstat SND_InitDirect (void)
 		pDirectSoundCreate = ( HRESULT (WINAPI *)(GUID FAR *, LPDIRECTSOUND FAR *, IUnknown FAR *) )GetProcAddress(hInstDS,"DirectSoundCreate");
 
 		if (!pDirectSoundCreate) {
-			si->Com_Printf ("*** couldn't get DS proc addr ***\n");
+			si->Com_Printf("*** couldn't get DS proc addr ***\n");
 			return SIS_FAILURE;
 		}
 	}
@@ -344,11 +344,11 @@ static sndinitstat SND_InitDirect (void)
 	si->Com_DPrintf("...creating DS object: ");
 	while ((hresult = pDirectSoundCreate(NULL, &pDS, NULL))!= DS_OK) {
 		if (hresult != DSERR_ALLOCATED) {
-			si->Com_DPrintf( "failed\n" );
+			si->Com_DPrintf("failed\n");
 			return SIS_FAILURE;
 		}
 
-		if (MessageBox (NULL,
+		if (MessageBox(NULL,
 						"The sound hardware is in use by another app.\n\n"
 						"Select Retry to try to start sound again or Cancel to run Quake with no sound.",
 						"Sound not available",
@@ -361,22 +361,22 @@ static sndinitstat SND_InitDirect (void)
 
 	dscaps.dwSize = sizeof(dscaps);
 
-	if ( DS_OK != pDS->lpVtbl->GetCaps( pDS, &dscaps ) ) {
-		si->Com_DPrintf ("*** couldn't get DS caps ***\n");
+	if (DS_OK != pDS->lpVtbl->GetCaps(pDS, &dscaps)) {
+		si->Com_DPrintf("*** couldn't get DS caps ***\n");
 	}
 
-	if ( dscaps.dwFlags & DSCAPS_EMULDRIVER ) {
+	if (dscaps.dwFlags & DSCAPS_EMULDRIVER) {
 		si->Com_Printf("...no DSound driver found\n");
 		FreeSound();
 		return SIS_FAILURE;
 	}
 
-	if ( !DS_CreateBuffers() )
+	if (!DS_CreateBuffers())
 		return SIS_FAILURE;
 
 	dsound_init = qtrue;
 
-	si->Com_DPrintf("...completed successfully\n" );
+	si->Com_DPrintf("...completed successfully\n");
 
 	return SIS_SUCCESS;
 }
@@ -403,7 +403,7 @@ qboolean SND_Init (struct sndinfo *s)
 			if (snd_firsttime)
 				si->Com_DPrintf("dsound init succeeded\n");
 		} else {
-			si->Com_Printf ("*** dsound init failed ***\n");
+			si->Com_Printf("*** dsound init failed ***\n");
 		}
 	}
 
@@ -413,7 +413,7 @@ qboolean SND_Init (struct sndinfo *s)
 
 	if (!dsound_init) {
 		if (snd_firsttime)
-			si->Com_Printf ("*** No sound device initialized ***\n");
+			si->Com_Printf("*** No sound device initialized ***\n");
 
 		return qfalse;
 	}
@@ -469,10 +469,10 @@ void SND_BeginPainting (void)
 
 	/* if the buffer was lost or stopped, restore it and/or restart it */
 	if (pDSBuf->lpVtbl->GetStatus (pDSBuf, &dwStatus) != DS_OK)
-		si->Com_Printf ("Couldn't get sound buffer status\n");
+		si->Com_Printf("Couldn't get sound buffer status\n");
 
 	if (dwStatus & DSBSTATUS_BUFFERLOST)
-		pDSBuf->lpVtbl->Restore (pDSBuf);
+		pDSBuf->lpVtbl->Restore(pDSBuf);
 
 	if (!(dwStatus & DSBSTATUS_PLAYING))
 		pDSBuf->lpVtbl->Play(pDSBuf, 0, 0, DSBPLAY_LOOPING);
@@ -484,7 +484,7 @@ void SND_BeginPainting (void)
 	while ((hresult = pDSBuf->lpVtbl->Lock(pDSBuf, 0, gSndBufSize, &pbuf, &locksize,
 								&pbuf2, &dwSize2, 0)) != DS_OK) {
 		if (hresult != DSERR_BUFFERLOST) {
-			si->Com_Printf( "SND_BeginPainting: Lock failed with error '%s'\n", DSoundError( hresult ) );
+			si->Com_Printf("SND_BeginPainting: Lock failed with error '%s'\n", DSoundError(hresult));
 			/* FIXME: maybe a Sys_Error? */
 			SND_Shutdown();
 			SND_Init(si);

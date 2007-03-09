@@ -129,14 +129,14 @@ qboolean SND_Init (struct sndinfo *s)
 	else if(desired.channels > 2)
 		desired.channels = 2;
 
-	si->Com_Printf ("Bits: %i\n", desired_bits );
-	si->Com_Printf ("Frequency: %i\n", desired.freq );
-	si->Com_Printf ("Samples: %i\n", desired.samples );
-	si->Com_Printf ("Channels: %i\n", desired.channels );
+	si->Com_Printf("Bits: %i\n", desired_bits );
+	si->Com_Printf("Frequency: %i\n", desired.freq );
+	si->Com_Printf("Samples: %i\n", desired.samples );
+	si->Com_Printf("Channels: %i\n", desired.channels );
 
 	/* Open the audio device */
 	if (SDL_OpenAudio (&desired, &obtained) == -1) {
-		si->Com_Printf ("Couldn't open SDL audio: %s\n", SDL_GetError ());
+		si->Com_Printf("Couldn't open SDL audio: %s\n", SDL_GetError ());
 		SDL_QuitSubSystem(SDL_INIT_AUDIO);
 		return qfalse;
 	}
@@ -158,7 +158,7 @@ qboolean SND_Init (struct sndinfo *s)
 		/* Not supported -- force SDL to do our bidding */
 		SDL_CloseAudio ();
 		if (SDL_OpenAudio (&desired, NULL) == -1) {
-			si->Com_Printf ("Couldn't open SDL audio (format): %s\n", SDL_GetError ());
+			si->Com_Printf("Couldn't open SDL audio (format): %s\n", SDL_GetError ());
 			return qfalse;
 		}
 		memcpy (&obtained, &desired, sizeof (desired));

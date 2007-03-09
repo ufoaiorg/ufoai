@@ -317,7 +317,7 @@ void Sys_Error (const char *error, ...)
 	__debugbreak();	/* break execution before game shutdown */
 # else
 #  ifdef __linux__
-	__asm ("int $3");
+	__asm("int $3");
 #  endif
 # endif
 #endif
@@ -417,7 +417,7 @@ static void G_SendCharacterData (edict_t* ent)
 	for (k = 0; k < KILLED_NUM_TYPES; k++)
 		gi.WriteShort(ent->chr.kills[k]);
 
-	/* Send chr->chrscore as well. */	
+	/* Send chr->chrscore as well. */
 	gi.WriteByte(ent->chr.chrscore.alienskilled);
 	gi.WriteByte(ent->chr.chrscore.aliensstunned);
 	gi.WriteByte(ent->chr.chrscore.civilianskilled);

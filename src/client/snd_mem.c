@@ -59,9 +59,9 @@ static void ResampleSfx(sfx_t * sfx, int inrate, int inwidth, byte * data)
 
 	outcount = (int)(sc->length / stepscale);
 	if (outcount == 0) {
-		Com_Printf ("ResampleSfx: Invalid sound file '%s' (zero length)\n", sfx->name);
+		Com_Printf("ResampleSfx: Invalid sound file '%s' (zero length)\n", sfx->name);
 		/* free at next opportunity */
-		Mem_Free (sfx->cache);
+		Mem_Free(sfx->cache);
 		sfx->cache = NULL;
 		return;
 	}
@@ -125,7 +125,7 @@ extern sfxcache_t *S_LoadSound(sfx_t * s)
 	if (sc)
 		return sc;
 
-	/*Com_Printf ("S_LoadSound: %x\n", (int)stackbuf); */
+	/*Com_Printf("S_LoadSound: %x\n", (int)stackbuf); */
 	/* load it in */
 	if (s->truename)
 		name = s->truename;
@@ -137,7 +137,7 @@ extern sfxcache_t *S_LoadSound(sfx_t * s)
 	else
 		Com_sprintf(namebuffer, sizeof(namebuffer), "sound/%s", name);
 
-/*	Com_Printf ("loading %s\n",namebuffer); */
+/*	Com_Printf("loading %s\n",namebuffer); */
 
 	size = FS_LoadFile(namebuffer, (void **) (char *) &data);
 
@@ -159,7 +159,7 @@ extern sfxcache_t *S_LoadSound(sfx_t * s)
 
 	if (info.samples == 0 || len == 0) {
 		Com_Printf("WARNING: Zero length sound encountered: %s\n", s->name);
-		FS_FreeFile (data);
+		FS_FreeFile(data);
 		return NULL;
 	}
 

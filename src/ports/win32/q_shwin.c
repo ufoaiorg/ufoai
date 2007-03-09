@@ -100,13 +100,13 @@ int Hunk_End (void)
 	void	*buf;
 
 	/* write protect it */
-	buf = VirtualAlloc (membase, cursize, MEM_COMMIT, PAGE_READONLY);
+	buf = VirtualAlloc(membase, cursize, MEM_COMMIT, PAGE_READONLY);
 	if (!buf)
-		Sys_Error ("VirtualAlloc commit failed");
+		Sys_Error("VirtualAlloc commit failed");
 #endif
 
 	hunkcount++;
-/*	Com_Printf ("hunkcount: %i\n", hunkcount); */
+/*	Com_Printf("hunkcount: %i\n", hunkcount); */
 	return cursize;
 }
 
