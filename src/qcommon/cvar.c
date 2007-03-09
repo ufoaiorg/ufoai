@@ -701,7 +701,7 @@ extern char *Cvar_Userinfo (void)
 /**
  * @brief Returns an info string containing all the CVAR_SERVERINFO cvars
  */
-extern char *Cvar_Serverinfo(void)
+extern char *Cvar_Serverinfo (void)
 {
 	return Cvar_BitInfo(CVAR_SERVERINFO);
 }
@@ -710,7 +710,7 @@ extern char *Cvar_Serverinfo(void)
  * @brief Reads in all archived cvars
  * @sa Qcommon_Init
  */
-extern void Cvar_Init(void)
+extern void Cvar_Init (void)
 {
 	Cmd_AddCommand("setold", Cvar_SetOld_f, NULL);
 	Cmd_AddCommand("set", Cvar_Set_f, NULL);

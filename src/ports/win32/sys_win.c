@@ -54,26 +54,25 @@ NOTIFYICONDATA pNdata;
 
 qboolean s_win95, s_winxp, s_vista;
 
-int			starttime;
-qboolean	ActiveApp;
-qboolean	Minimized;
+qboolean ActiveApp;
+qboolean Minimized;
 static qboolean	oldconsole = qfalse;
 
-static HANDLE		hinput, houtput;
+static HANDLE hinput, houtput;
 
-uint32_t	sys_msg_time;
-uint32_t	sys_frame_time;
+uint32_t sys_msg_time;
+uint32_t sys_frame_time;
 
 /* Main window handle for life of the client */
-HWND        cl_hwnd;
+HWND cl_hwnd;
 /* Main server console handle for life of the server */
-HWND		hwnd_Server;
+static HWND hwnd_Server;
 
-int consoleBufferPointer = 0;
-byte consoleFullBuffer[16384];
+static int consoleBufferPointer = 0;
+static byte consoleFullBuffer[16384];
 
-sizebuf_t	console_buffer;
-byte console_buff[8192];
+static sizebuf_t console_buffer;
+static byte console_buff[8192];
 
 static HANDLE		qwclsemaphore;
 
@@ -81,7 +80,7 @@ static HANDLE		qwclsemaphore;
 int			argc;
 char		*argv[MAX_NUM_ARGVS];
 
-int SV_CountPlayers (void);
+int SV_CountPlayers(void);
 
 /*
 ===============================================================================
@@ -496,6 +495,7 @@ void Sys_Init (void)
 	}
 
 	Cvar_Get("sys_os", "win", CVAR_SERVERINFO, NULL);
+	/* too late here - but define it as archive cvar and provide a description */
 	Cvar_Get("sys_usehomedir", "0", CVAR_ARCHIVE, "Use the homedir for windows user to store files like savegames and screenshots");
 
 	if (dedicated->value) {
@@ -531,7 +531,7 @@ void Sys_Init (void)
 				GetSystemMetrics(SM_CYSMICON),
 				0);
 
-			if(hIcon)
+			if (hIcon)
 				SendMessage(hwnd_Server, WM_SETICON, ICON_SMALL, (LPARAM)hIcon);
 
 			UpdateWindow(hwnd_Server);

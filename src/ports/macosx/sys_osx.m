@@ -59,8 +59,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 			return;	\
 		}
 
-#define SYS_Q2_DURING			NS_DURING
-#define	SYS_Q2_HANDLER			NS_HANDLER		\
+#define SYS_UFO_DURING			NS_DURING
+#define	SYS_UFO_HANDLER			NS_HANDLER		\
 		{	\
 			NSString	*myException = [localException reason];	\
 			if (myException == NULL) {	\
@@ -90,8 +90,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SYS_INITIAL_USE_PARAMETERS	@"NO"
 #define SYS_DEFAULT_PARAMETERS		@"UFO:AI Command-Line Parameters"
 #define SYS_INITIAL_PARAMETERS		@""
-#define SYS_BASEQ2_PATH			@"baseq2"
-#define	SYS_VALIDATION_FILE1		@"GamePPC.q2plug/Contents/MacOS/GamePPC"
+#define SYS_BASEUFO_PATH			@"base"
+#define	SYS_VALIDATION_FILE1		@"GamePPC.ufoplug/Contents/MacOS/GamePPC"
 #define	SYS_VALIDATION_FILE2		@"GamePPC.bundle/Contents/MacOS/GamePPC"
 #define SYS_UFOAI_HP		@"http://www.ufoai.net/"
 #define	SYS_SET_COMMAND			"+set"
@@ -682,7 +682,7 @@ void Sys_CheckForIDDirectory (void)
 		// as our Quake 2 application:
 		if (myDefaultPath == YES) {
 			myBasePath = [[[[NSBundle mainBundle] bundlePath] stringByDeletingLastPathComponent]
-															stringByAppendingPathComponent: SYS_BASEQ2_PATH];
+															stringByAppendingPathComponent: SYS_BASEUFO_PATH];
 			myPathChanged = YES;
 			myDefaultPath = NO;
 			continue;
@@ -870,7 +870,7 @@ void Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
 {
 	NSUserDefaults	*myDefaults = [NSUserDefaults standardUserDefaults];
 	NSString		*myDefaultPath = [[[[NSBundle mainBundle] bundlePath] stringByDeletingLastPathComponent]
-					stringByAppendingPathComponent: SYS_BASEQ2_PATH];
+					stringByAppendingPathComponent: SYS_BASEUFO_PATH];
 
 	gSysRequestedCommand[0] = 0x0;
 
@@ -1083,7 +1083,7 @@ void Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
  */
 - (void) applicationDidFinishLaunching: (NSNotification *) theNote
 {
-	SYS_Q2_DURING
+	SYS_UFO_DURING
 	{
 		NSTimer		*myTimer;
 
@@ -1105,7 +1105,7 @@ void Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
 			[self setupDialog: NULL];
 		}
 	}
-	SYS_Q2_HANDLER;
+	SYS_UFO_HANDLER;
 }
 
 /**
@@ -1234,7 +1234,7 @@ void Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
  */
 - (void) setupDialog: (NSTimer *) theTimer
 {
-	SYS_Q2_DURING
+	SYS_UFO_DURING
 	{
 		NSUserDefaults 	*myDefaults = NULL;
 
@@ -1262,7 +1262,7 @@ void Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
 			// start the game immediately:
 			[self startUFO: nil];
 		}
-	} SYS_Q2_HANDLER;
+	} SYS_UFO_HANDLER;
 }
 
 /**
@@ -1381,7 +1381,7 @@ void Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
  */
 - (void) scanMediaThread: (id) theSender
 {
-	SYS_Q2_DURING
+	SYS_UFO_DURING
 	{
 		// scan for media files:
 		CDAudio_GetTrackList ();
@@ -1391,7 +1391,7 @@ void Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
 
 		// job done, good bye!
 		[NSThread exit];
-	} SYS_Q2_HANDLER;
+	} SYS_UFO_HANDLER;
 }
 
 /**
@@ -1407,7 +1407,7 @@ void Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
  */
 - (void) fireFrameTimer: (NSNotification *) theNotification
 {
-	SYS_Q2_DURING
+	SYS_UFO_DURING
 	{
 		// close the media scan window:
 		[mediascanProgressIndicator stopAnimation: self];
@@ -1423,10 +1423,10 @@ void Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
 
 		[NSApp activateIgnoringOtherApps: YES];
 
-		Qcommon_Init (gSysArgCount, gSysArgValues);
+		Qcommon_Init(gSysArgCount, gSysArgValues);
 
 		if (gSysRequestedCommand[0] != 0x00) {
-			Cbuf_ExecuteText (EXEC_APPEND, va("%s\n", gSysRequestedCommand));
+			Cbuf_ExecuteText(EXEC_APPEND, va("%s\n", gSysRequestedCommand));
 		}
 
 		gSysHostInitialized = YES;
@@ -1441,13 +1441,13 @@ void Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
 				fcntl(0, F_SETFL, fcntl (0, F_GETFL, 0) | FNDELAY);
 		}
 
-		gSysLastFrameTime = Sys_Milliseconds ();
+		gSysLastFrameTime = Sys_Milliseconds();
 
-		Qcommon_Frame (0.1);
+		Qcommon_Frame(0.1);
 
 		// install our frame renderer to the default runloop:
 		[self installFrameTimer];
-	} SYS_Q2_HANDLER;
+	} SYS_UFO_HANDLER;
 }
 
 /**
@@ -1455,7 +1455,7 @@ void Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
  */
 - (IBAction) startUFO: (id) theSender
 {
-	SYS_Q2_DURING
+	SYS_UFO_DURING
 	{
 		NSUserDefaults	*myDefaults = [NSUserDefaults standardUserDefaults];
 
@@ -1511,7 +1511,7 @@ void Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
 															object: NULL];
 
 		[NSThread detachNewThreadSelector: @selector (scanMediaThread:) toTarget: self withObject: nil];
-	} SYS_Q2_HANDLER;
+	} SYS_UFO_HANDLER;
 }
 
 /**
@@ -1777,7 +1777,7 @@ int main (int theArgCount, const char **theArgValues)
 	gSysArgCount = theArgCount;
 	gSysArgValues = (char **) theArgValues;
 
-	Qcommon_Init (gSysArgCount, gSysArgValues);
+	Qcommon_Init(gSysArgCount, gSysArgValues);
 
 	fcntl(0, F_SETFL, fcntl (0, F_GETFL, 0) | FNDELAY);
 

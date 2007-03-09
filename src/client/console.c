@@ -216,7 +216,7 @@ static void Con_MessageModeMenu_f (void)
 /**
  * @brief If the line width has changed, reformat the buffer.
  */
-void Con_CheckResize (void)
+extern void Con_CheckResize (void)
 {
 	int i, j, width, oldwidth, oldtotallines, numlines, numchars;
 	char tbuf[CON_TEXTSIZE];

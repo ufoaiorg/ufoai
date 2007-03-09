@@ -72,7 +72,7 @@ CLIENT / SERVER interactions
 ============================================================================
 */
 
-static int rd_target;
+static int rd_target; /**< redirect the output to e.g. an rcon user */
 static char *rd_buffer;
 static unsigned int rd_buffersize;
 static void (*rd_flush) (int target, char *buffer);
@@ -126,6 +126,7 @@ void Com_Printf (const char *fmt, ...)
 
 	msg[sizeof(msg)-1] = 0;
 
+	/* redirect the output? */
 	if (rd_target) {
 		if ((strlen(msg) + strlen(rd_buffer)) > (rd_buffersize - 1)) {
 			rd_flush(rd_target, rd_buffer);
@@ -1498,10 +1499,10 @@ extern void Qcommon_Init (int argc, char **argv)
 	s_sleep = Cvar_Get("s_sleep", "1", CVAR_ARCHIVE, "Use the sleep function to redruce cpu usage");
 	host_speeds = Cvar_Get("host_speeds", "0", 0, NULL);
 	log_stats = Cvar_Get("log_stats", "0", 0, NULL);
-	developer = Cvar_Get("developer", "0", 0, NULL);
+	developer = Cvar_Get("developer", "0", 0, "Activate developer output to logfile and gameconsole");
 	timescale = Cvar_Get("timescale", "1", 0, NULL);
 	fixedtime = Cvar_Get("fixedtime", "0", 0, NULL);
-	logfile_active = Cvar_Get("logfile", "1", 0, NULL);
+	logfile_active = Cvar_Get("logfile", "1", 0, "0 = deacticate logfile, 1 = write normal logfile, 2 = flush on every new line");
 	showtrace = Cvar_Get("showtrace", "0", 0, NULL);
 #ifdef DEDICATED_ONLY
 	dedicated = Cvar_Get("dedicated", "1", CVAR_SERVERINFO | CVAR_NOSET, "Is this a dedicated server?");

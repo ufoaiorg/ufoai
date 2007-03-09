@@ -85,47 +85,47 @@ void	CDAudio_Error (cderror_t theErrorNumber)
 {
     if (gSysMP3Folder == NULL)
     {
-        Con_Print ("Audio-CD driver: ");
+        Com_Printf("Audio-CD driver: ");
     }
     else
     {
-        Con_Print ("MP3/MP4 driver: ");
+        Com_Printf("MP3/MP4 driver: ");
     }
 
     switch (theErrorNumber)
     {
         case CDERR_ALLOC_TRACK:
-            Con_Print ("Failed to allocate track!\n");
+            Com_Printf("Failed to allocate track!\n");
             break;
         case CDERR_MOVIE_DATA:
-            Con_Print ("Failed to retrieve track data!\n");
+            Com_Printf("Failed to retrieve track data!\n");
             break;
         case CDERR_AUDIO_DATA:
-            Con_Print ("File without audio data!\n");
+            Com_Printf("File without audio data!\n");
             break;
         case CDERR_QUICKTIME_ERROR:
-            Con_Print ("QuickTime error!\n");
+            Com_Printf("QuickTime error!\n");
             break;
         case CDERR_NO_MEDIA_FOUND:
-            Con_Print ("No Audio-CD found.\n");
+            Com_Printf("No Audio-CD found.\n");
             break;
         case CDERR_MEDIA_TRACK:
-            Con_Print ("Failed to retrieve media track!\n");
+            Com_Printf("Failed to retrieve media track!\n");
             break;
         case CDERR_MEDIA_TRACK_CONTROLLER:
-            Con_Print ("Failed to retrieve track controller!\n");
+            Com_Printf("Failed to retrieve track controller!\n");
             break;
         case CDERR_EJECT:
-            Con_Print ("Can\'t eject Audio-CD!\n");
+            Com_Printf("Can\'t eject Audio-CD!\n");
             break;
         case CDERR_NO_FILES_FOUND:
             if (gSysMP3Folder == NULL)
             {
-                Con_Print ("No audio tracks found.\n");
+                Com_Printf("No audio tracks found.\n");
             }
             else
             {
-                Con_Print ("No files found with the extension \'.mp3\'!\n");
+                Com_Printf("No files found with the extension \'.mp3\'!\n");
             }
             break;
     }
@@ -262,7 +262,7 @@ BOOL	CDAudio_GetTrackList (void)
     if (gSysMP3Folder != NULL)
     {
         CDAudio_SafePath ([gSysMP3Folder fileSystemRepresentation]);
-        Con_Print ("Scanning for audio tracks. Be patient!\n");
+        Com_Printf("Scanning for audio tracks. Be patient!\n");
         CDAudio_AddTracks2List (gSysMP3Folder, [NSArray arrayWithObjects: @"mp3", @"mp4", NULL]);
     }
     else
@@ -511,11 +511,11 @@ int	CDAudio_Init (void)
     {
         if (gSysMP3Folder == NULL)
         {
-            Con_Print ("QuickTime CD driver initialized...\n");
+            Com_Printf("QuickTime CD driver initialized...\n");
         }
         else
         {
-            Con_Print ("QuickTime MP3/MP4 driver initialized...\n");
+            Com_Printf("QuickTime MP3/MP4 driver initialized...\n");
         }
 
         return (1);
@@ -524,11 +524,11 @@ int	CDAudio_Init (void)
     // failure. return 0.
     if (gSysMP3Folder == NULL)
     {
-        Con_Print ("QuickTime CD driver failed.\n");
+        Com_Printf("QuickTime CD driver failed.\n");
     }
     else
     {
-        Con_Print ("QuickTime MP3/MP4 driver failed.\n");
+        Com_Printf("QuickTime MP3/MP4 driver failed.\n");
     }
 
     return (0);
