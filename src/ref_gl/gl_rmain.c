@@ -1527,7 +1527,7 @@ static qboolean R_Init (HINSTANCE hinstance, WNDPROC wndproc)
 	R_InitParticleTexture();
 	Draw_InitLocal();
 
-	GL_CHECK_ERROR();
+	GL_CHECK_ERROR
 
 	return qfalse;
 }

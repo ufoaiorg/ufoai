@@ -87,16 +87,16 @@ typedef struct {
 extern viddef_t vid;
 
 #ifdef DEBUG
-# define GL_CHECK_ERROR() \
+# define GL_CHECK_ERROR \
 	do { \
 		GLenum error = qglGetError(); \
 		if (error != GL_NO_ERROR) \
 			ri.Con_Printf(PRINT_ALL, "OpenGL err: %s (%d): %s 0x%X\n", \
 					__FILE__, __LINE__, \
 					__PRETTY_FUNCTION__, error); \
-	} while(0)
+	} while(0);
 #else
-# define GL_CHECK_ERROR() 1
+# define GL_CHECK_ERROR
 #endif
 
 /*
