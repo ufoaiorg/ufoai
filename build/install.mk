@@ -7,6 +7,9 @@ mappack:
 win32installer:
 	makensis src/ports/win32/installer.nsi
 
+win32installerarchive:
+	makensis src/ports/win32/installer_archive.nsi
+
 linuxarchive:
 	tar -cvjp --exclude-from=src/ports/linux/tar.ex -f ufoai-$(VERSION)-linux.tar.bz2 ./
 
