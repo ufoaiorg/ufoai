@@ -840,7 +840,7 @@ static void S_FreePlaysound (playsound_t * ps)
 extern void S_IssuePlaysound (playsound_t * ps)
 {
 	channel_t *ch;
-	sfxcache_t *sc;
+	sfxcache_t *sc = NULL;
 
 	if (snd_show->value)
 		Com_Printf("Issue %i\n", ps->begin);
@@ -863,6 +863,8 @@ extern void S_IssuePlaysound (playsound_t * ps)
 
 	ch->pos = 0;
 	sc = S_LoadSound(ch->sfx);
+	if (!sc)
+		return;
 	ch->end = paintedtime + sc->length;
 
 	/* free the playsound */
