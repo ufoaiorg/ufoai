@@ -587,11 +587,13 @@ static void MAP_MapDrawLine (const menuNode_t* node, const mapline_t* line)
 /**
  * @brief
  */
-static void MAP_Draw3DMapMarkers (const menuNode_t * node, float latitude, float longitude)
+static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 {
 	aircraft_t *aircraft;
 	actMis_t *ms;
-	int i, j, x, y;
+	int i, j;
+#if 0
+	int x, y;
 	vec2_t pos = {0, 0};
 
 	if (MAP_3DMapToScreen(node, pos, &x, &y))
@@ -602,6 +604,7 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node, float latitude, float
 	pos[0] = 90; pos[1] = 180;
 	if (MAP_3DMapToScreen(node, pos, &x, &y))
 		re.FontDrawString("f_verysmall", 0, x, y, x, y, node->size[0], 0, 0, "90, 180", 0, 0, NULL, qfalse);
+#endif
 
 	/* draw mission pics */
 	Cvar_Set("mn_mapdaytime", "");
@@ -749,6 +752,9 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 	re.DrawColor(NULL);
 }
 
+/** @brief geobackground image for 3d globe */
+static menuNode_t* geobackground = NULL;
+
 /**
  * @brief Draw the geoscape
  * @param[in] node The map menu node
@@ -760,13 +766,21 @@ extern void MAP_DrawMap (const menuNode_t* node, qboolean map3D)
 {
 	float q;
 	base_t* base;
+
+	/* store these values in ccs struct to be able to handle this even in the input code */
+	Vector2Copy(node->pos, ccs.mapPos);
+	Vector2Copy(node->size, ccs.mapSize);
+
 	/* Draw the map and markers */
 	if (map3D || cl_3dmap->value) {
+		if (!geobackground)
+			geobackground = MN_GetNodeFromCurrentMenu("geobackground");
+		/* TODO change texh, texl of geobackground with zoomlevel */
 		q = (ccs.date.day % 365 + (float) (ccs.date.sec / (3600 * 6)) / 4) * 2 * M_PI / 365 - M_PI;
 		re.Draw3DGlobe(node->pos[0], node->pos[1], node->size[0], node->size[1],
 			(float) ccs.date.sec / (3600 * 24), q, ccs.angles, ccs.zoom / 10, curCampaign->map);
 
-		MAP_Draw3DMapMarkers(node, 0.0, 0.0);	/* FIXME: */
+		MAP_Draw3DMapMarkers(node);
 	} else {
 		q = (ccs.date.day % 365 + (float) (ccs.date.sec / (3600 * 6)) / 4) * 2 * M_PI / 365 - M_PI;
 		re.DrawDayAndNight(node->pos[0], node->pos[1], node->size[0], node->size[1], (float) ccs.date.sec / (3600 * 24), q,

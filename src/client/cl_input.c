@@ -1098,8 +1098,8 @@ void CL_ParseInput (void)
 
 	case MS_SHIFTMAP:
 		/* shift the map */
-		ccs.center[0] -= (float) (mx - oldx) / (VID_NORM_WIDTH * ccs.zoom);
-		ccs.center[1] -= (float) (my - oldy) / (512 * ccs.zoom);
+		ccs.center[0] -= (float) (mx - oldx) / (ccs.mapSize[0] * ccs.zoom);
+		ccs.center[1] -= (float) (my - oldy) / (ccs.mapSize[1] * ccs.zoom);
 		for (i = 0; i < 2; i++) {
 			while (ccs.center[i] < 0.0)
 				ccs.center[i] += 1.0;

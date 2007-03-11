@@ -236,6 +236,9 @@ typedef struct ccs_s {
 	actMis_t mission[MAX_ACTMISSIONS];
 	int numMissions;
 
+	vec2_t mapPos;
+	vec2_t mapSize;
+
 	qboolean singleplayer;	/**< singleplayer or multiplayer */
 
 	int credits;			/**< actual credits amount */
