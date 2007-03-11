@@ -20,7 +20,7 @@
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"
 
 ;SetCompressor bzip2
-SetCompressor none
+SetCompressor lzma
 
 ; MUI 1.67 compatible ------
 !include "MUI.nsh"
@@ -44,8 +44,9 @@ ShowUninstDetails "nevershow"
 ; Welcome page
 !insertmacro MUI_PAGE_WELCOME
 ; License page
+!define MUI_LICENSEPAGE_CHECKBOX
 !insertmacro MUI_PAGE_LICENSE "..\..\..\COPYING"
-; Components page
+!define MUI_COMPONENTSPAGE_SMALLDESC
 !insertmacro MUI_PAGE_COMPONENTS
 ; Directory page
 !insertmacro MUI_PAGE_DIRECTORY
