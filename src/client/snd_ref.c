@@ -639,6 +639,8 @@ extern sfx_t *S_RegisterSound (const char *name)
 		return NULL;
 
 	sfx = S_FindName(name, qtrue);
+	if (!sfx)
+		return NULL;
 	sfx->registration_sequence = s_registration_sequence;
 
 	if (!s_registering)
@@ -943,7 +945,7 @@ extern void S_StartSound (vec3_t origin, int entnum, int entchannel, sfx_t * sfx
 /**
  * @brief
  */
-extern void S_StartLocalSound (char *sound)
+extern void S_StartLocalSound (const char *sound)
 {
 	sfx_t *sfx;
 
