@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-03-11 23:23+0100\n"
-"PO-Revision-Date: 2007-03-11 23:17+0100\n"
+"POT-Creation-Date: 2007-03-11 23:33+0100\n"
+"PO-Revision-Date: 2007-03-11 23:31+0100\n"
 "Last-Translator: Lubomír Bláha <tritol@trilogic.cz>\n"
 "Language-Team: čeština <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2176,24 +2176,20 @@ msgid "Leave Ufopedia"
 msgstr "Opustit Ufopedii"
 
 #: ../base/ufos/menu_ufopedia.ufo:398
-#, fuzzy
 msgid "Mailclient"
-msgstr "Maximum klientů:"
+msgstr "Čtení pošty"
 
 #: ../base/ufos/menu_ufopedia.ufo:407
-#, fuzzy
 msgid "Time:"
-msgstr "Jméno:"
+msgstr "Čas:"
 
 #: ../base/ufos/menu_ufopedia.ufo:424
-#, fuzzy
 msgid "Date:"
-msgstr "Jméno:"
+msgstr "Datum:"
 
 #: ../base/ufos/menu_ufopedia.ufo:454
-#, fuzzy
 msgid "Leave mailclient"
-msgstr "Živý cizák"
+msgstr "Opustit čtení pošty"
 
 #: ../base/ufos/missions.ufo:5 ../base/ufos/missions.ufo:305
 msgid "New York"
