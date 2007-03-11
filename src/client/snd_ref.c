@@ -43,8 +43,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <dlfcn.h>
 #endif
 
-void S_Play_f(void);
-void S_SoundList_f(void);
+static void S_Play_f(void);
+static void S_SoundList_f(void);
 void S_Update_(void);
 void S_StopAllSounds(void);
 
@@ -1111,7 +1111,7 @@ void S_AddLoopSounds(void)
 /**
  * @brief Cinematic streaming and voice over network
  */
-void S_RawSamples(int samples, int rate, int width, int channels, byte * data, float volume)
+void S_RawSamples (int samples, int rate, int width, int channels, byte * data, float volume)
 {
 	int i;
 	int src, dst;
@@ -1181,7 +1181,7 @@ void S_RawSamples(int samples, int rate, int width, int channels, byte * data, f
 /**
  * @brief Called once each time through the main loop
  */
-void S_Update(vec3_t origin, vec3_t forward, vec3_t right, vec3_t up)
+void S_Update (vec3_t origin, vec3_t forward, vec3_t right, vec3_t up)
 {
 	int i;
 	int total;
@@ -1269,7 +1269,7 @@ void S_Update(vec3_t origin, vec3_t forward, vec3_t right, vec3_t up)
 /**
  * @brief
  */
-void GetSoundtime(void)
+void GetSoundtime (void)
 {
 	int samplepos;
 	static int buffers;
@@ -1300,7 +1300,7 @@ void GetSoundtime(void)
 /**
  * @brief
  */
-void S_Update_(void)
+void S_Update_ (void)
 {
 	unsigned int samps, endtime;
 
@@ -1346,7 +1346,7 @@ OGG Vorbis decoding
 /**
  * @brief fread() replacement
  */
-static size_t S_OGG_Callback_read(void *ptr, size_t size, size_t nmemb, void *datasource)
+static size_t S_OGG_Callback_read (void *ptr, size_t size, size_t nmemb, void *datasource)
 {
 	snd_stream_t *stream;
 	int byteSize = 0;
@@ -1396,7 +1396,7 @@ static size_t S_OGG_Callback_read(void *ptr, size_t size, size_t nmemb, void *da
 /**
  * @brief fseek() replacement
  */
-static int S_OGG_Callback_seek(void *datasource, ogg_int64_t offset, int whence)
+static int S_OGG_Callback_seek (void *datasource, ogg_int64_t offset, int whence)
 {
 	snd_stream_t *stream;
 	int retVal = 0;
@@ -1475,7 +1475,7 @@ static int S_OGG_Callback_seek(void *datasource, ogg_int64_t offset, int whence)
 /**
  * @brief fclose() replacement
  */
-static int S_OGG_Callback_close(void *datasource)
+static int S_OGG_Callback_close (void *datasource)
 {
 	/* we do nothing here and close all things manually in S_OGG_CodecCloseStream() */
 	return 0;
@@ -1484,7 +1484,7 @@ static int S_OGG_Callback_close(void *datasource)
 /**
  * @brief ftell() replacement
  */
-static long S_OGG_Callback_tell(void *datasource)
+static long S_OGG_Callback_tell (void *datasource)
 {
 	/* check if input is valid */
 	if (!datasource) {
@@ -1497,7 +1497,7 @@ static long S_OGG_Callback_tell(void *datasource)
 }
 
 /* the callback structure */
-const ov_callbacks S_OGG_Callbacks = {
+static const ov_callbacks S_OGG_Callbacks = {
 	&S_OGG_Callback_read,
 	&S_OGG_Callback_seek,
 	&S_OGG_Callback_close,
@@ -1509,7 +1509,7 @@ const ov_callbacks S_OGG_Callbacks = {
  * @brief Opens the given ogg file
  * @sa OGG_Stop
  */
-qboolean OGG_Open(char *filename)
+qboolean OGG_Open (char *filename)
 {
 	int length;
 	vorbis_info *vi;
@@ -1587,7 +1587,7 @@ qboolean OGG_Open(char *filename)
  * @sa S_StartOGG
  * @sa S_PlayOGG
  */
-void OGG_Stop(void)
+void OGG_Stop (void)
 {
 	if (!stream)
 		return;
@@ -1604,7 +1604,7 @@ void OGG_Stop(void)
  * @sa OGG_Stop
  * @sa S_RawSamples
  */
-int OGG_Read(void)
+int OGG_Read (void)
 {
 	int res;
 
@@ -1653,7 +1653,7 @@ int OGG_Read(void)
  * @sa S_StartOGG
  * @sa OGG_Stop
  */
-void S_PlayOGG(void)
+void S_PlayOGG (void)
 {
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: music_play <filename>\n");
@@ -1668,7 +1668,7 @@ void S_PlayOGG(void)
  * @sa S_PlayOGG
  * @sa OGG_Stop
  */
-void S_StartOGG(void)
+void S_StartOGG (void)
 {
 	char *str;
 
@@ -1686,7 +1686,7 @@ console functions
 /**
  * @brief
  */
-void S_Play_f (void)
+static void S_Play_f (void)
 {
 	int i;
 	char name[256];
@@ -1708,7 +1708,7 @@ void S_Play_f (void)
 /**
  * @brief
  */
-void S_SoundList_f (void)
+static void S_SoundList_f (void)
 {
 	int i;
 	sfx_t *sfx;

@@ -798,7 +798,6 @@ void Draw_3DMapMarkers (vec3_t angles, float zoom, float latitude, float longitu
 	vec3_t scale;
 	vec4_t color = {1, 1, 1, 1};
 
-	Com_Printf("lat: %.0f - long: %.0f\n", latitude, longitude);
 	Vector2Set(a, latitude, longitude);
 	factor = 1.0 + (2.0 * MARKER_SIZE) / zoom;
 	/* convert to vector coordinates */
@@ -911,7 +910,13 @@ void Draw_3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate, 
 	qglTranslatef((nx+nw)/2, (ny+nh)/2, 0);
 
 	/* flatten the sphere */
+	/* this will also scale the normal vectors */
 	qglScalef(fullscale, fullscale, fullscale);
+
+#if 0
+	/* call this to rescale the normal vectors */
+	qglEnable(GL_RESCALE_NORMAL);
+#endif
 
 	/* rotate the globe as given in ccs.angles */
 	qglRotatef(rotate[YAW], 1, 0, 0);

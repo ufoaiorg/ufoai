@@ -957,7 +957,7 @@ static void UP_MailClientClick_f (void)
  */
 static void UP_OpenMail_f (void)
 {
-	char tempBuf[512] = "";
+	char tempBuf[256] = "";
 	message_t *m = messageStack;
 
 	/* FIXME: not all MSG_RESEARCH appear in our 'mailclient' */
@@ -965,14 +965,12 @@ static void UP_OpenMail_f (void)
 	while (m) {
 		switch (m->type) {
 		case MSG_RESEARCH:
-			*tempBuf = '\0';
 			if (m->pedia->mail[TECHMAIL_PRE].read == qfalse)
 				Com_sprintf(tempBuf, sizeof(tempBuf), _("^BProposal: %s (%s)\n"), _(m->pedia->mail[TECHMAIL_PRE].subject), _(m->pedia->mail[TECHMAIL_PRE].from));
 			else
 				Com_sprintf(tempBuf, sizeof(tempBuf), _("Proposal: %s (%s)\n"), _(m->pedia->mail[TECHMAIL_PRE].subject), _(m->pedia->mail[TECHMAIL_PRE].from));
 			Q_strcat(upText, tempBuf, sizeof(upText));
 			if (RS_IsResearched_ptr(m->pedia)) {
-				*tempBuf = '\0';
 				if (m->pedia->mail[TECHMAIL_RESEARCHED].read == qfalse)
 					Com_sprintf(tempBuf, sizeof(tempBuf), _("^BRe: %s (%s)\n"), _(m->pedia->mail[TECHMAIL_RESEARCHED].subject), _(m->pedia->mail[TECHMAIL_RESEARCHED].from));
 				else
@@ -981,7 +979,6 @@ static void UP_OpenMail_f (void)
 			}
 			break;
 		case MSG_NEWS:
-			*tempBuf = '\0';
 			if (m->pedia->mail[TECHMAIL_PRE].from[0]) {
 				if (m->pedia->mail[TECHMAIL_PRE].read == qfalse)
 					Com_sprintf(tempBuf, sizeof(tempBuf), _("^B%s (%s)\n"), _(m->pedia->mail[TECHMAIL_PRE].subject), _(m->pedia->mail[TECHMAIL_PRE].from));
@@ -999,6 +996,10 @@ static void UP_OpenMail_f (void)
 		default:
 			break;
 		}
+#if 0
+		if (m->pedia)
+			Com_Printf("list: '%s'\n", m->pedia->id);
+#endif
 		m = m->next;
 	}
 	menuText[TEXT_UFOPEDIA_MAIL] = upText;

@@ -36,13 +36,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /* #define DUMPCHUNKS */
 
-byte *S_Alloc(int size);
 static wavinfo_t GetWavinfo(char *name, byte * wav, int wavlength);
 
 /**
  * @brief
  */
-static void ResampleSfx(sfx_t * sfx, int inrate, int inwidth, byte * data)
+static void ResampleSfx (sfx_t * sfx, int inrate, int inwidth, byte * data)
 {
 	int outcount;
 	int srcsample;
@@ -106,7 +105,7 @@ static void ResampleSfx(sfx_t * sfx, int inrate, int inwidth, byte * data)
 /**
  * @brief
  */
-extern sfxcache_t *S_LoadSound(sfx_t * s)
+extern sfxcache_t *S_LoadSound (sfx_t * s)
 {
 	char namebuffer[MAX_QPATH];
 	byte *data;
@@ -157,7 +156,7 @@ extern sfxcache_t *S_LoadSound(sfx_t * s)
 	stepscale = (float) info.rate / dma.speed;
 	len = (int)(info.samples / stepscale);
 
-	if (info.samples == 0 || len == 0) {
+	if (info.samples == 0) {
 		Com_Printf("WARNING: Zero length sound encountered: %s\n", s->name);
 		FS_FreeFile(data);
 		return NULL;
@@ -201,12 +200,16 @@ static int iff_chunk_len;
 /**
  * @brief
  */
-static short GetLittleShort(void)
+static short GetLittleShort (void)
 {
 	short val = 0;
 
+#if 1
 	val = *data_p;
 	val = val + (*(data_p + 1) << 8);
+#else
+	val = LittleShort(*data_p);
+#endif
 	data_p += 2;
 	return val;
 }
@@ -214,14 +217,18 @@ static short GetLittleShort(void)
 /**
  * @brief
  */
-static int GetLittleLong(void)
+static int GetLittleLong (void)
 {
 	int val = 0;
 
+#if 1
 	val = *data_p;
 	val = val + (*(data_p + 1) << 8);
 	val = val + (*(data_p + 2) << 16);
 	val = val + (*(data_p + 3) << 24);
+#else
+	LittleLong(*data_p);
+#endif
 	data_p += 4;
 	return val;
 }
@@ -230,7 +237,7 @@ static int GetLittleLong(void)
  * @brief
  * @sa FindChunk
  */
-static void FindNextChunk(char *name)
+static void FindNextChunk (const char *name)
 {
 	while (1) {
 		data_p = last_chunk;
@@ -260,7 +267,7 @@ static void FindNextChunk(char *name)
  * @brief
  * @sa FindNextChunk
  */
-static void FindChunk(char *name)
+static void FindChunk (const char *name)
 {
 	last_chunk = iff_data;
 	FindNextChunk(name);
@@ -270,7 +277,7 @@ static void FindChunk(char *name)
 /**
  * @brief
  */
-static void DumpChunks(void)
+static void DumpChunks (void)
 {
 	char str[5];
 
@@ -289,7 +296,7 @@ static void DumpChunks(void)
 /**
  * @brief
  */
-static wavinfo_t GetWavinfo(char *name, byte * wav, int wavlength)
+static wavinfo_t GetWavinfo (char *name, byte * wav, int wavlength)
 {
 	wavinfo_t info;
 	int i;
