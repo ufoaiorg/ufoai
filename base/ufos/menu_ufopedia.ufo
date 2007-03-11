@@ -367,25 +367,25 @@ menu ufopedia_mail
 
 	pic back_ul
 	{
-		image	menu/ufopedia_ul
+		image	menu/mail_ul
 		pos		"0 0"
 	}
 
 	pic back_ur
 	{
-		image	menu/ufopedia_ur
+		image	menu/mail_ur
 		pos		"512 0"
 	}
 
 	pic back_ll
 	{
-		image	menu/ufopedia_ll
+		image	menu/mail_ll
 		pos		"0 512"
 	}
 
 	pic back_lr
 	{
-		image	menu/ufopedia_lr
+		image	menu/mail_lr
 		pos		"512 512"
 	}
 
@@ -393,25 +393,68 @@ menu ufopedia_mail
 	// text and info
 	// ==================
 
+	string mailclienthead
+	{
+		string	"_Mailclient"
+		pos	"500 30"
+		align	uc
+		color	"0 .78 0 1"
+		font	f_big
+	}
+
+	string timehead
+	{
+		string	"_Time:"
+		pos	"710 36"
+		align	ul
+		color	"0 .78 0 1"
+		font	f_normal
+	}
+	string time
+	{
+		string	"*cvar mn_maptime"
+		pos	"780 36"
+		align	ul
+		color	"0 .9 0 1"
+		font	f_normal
+	}
+
+	string datehead
+	{
+		string	"_Date:"
+		pos	"710 56"
+		align	ul
+		color	"0 .78 0 1"
+		font	f_normal
+	}
+	string date
+	{
+		string	"*cvar mn_mapdate"
+		pos	"780 56"
+		align	ul
+		color	"0 .9 0 1"
+		font	f_normal
+	}
+
 	text mailclient
 	{
-		pos		"30 77"
-		size	"960 396"
+		pos		"50 120"
+		size	"920 564"
 		num		33
 		font	"f_verysmall"
 		format	"12 0"
 		click rclick wheel
 		mousefx	true
 //		bgcolor " 0 1 0 0.5"
-		height	"33"
+		height	"47"
 	}
 
 	pic button_exit
 	{
-		tooltip "_Leave Ufopedia"
+		tooltip "_Leave mailclient"
 		image	hud/buttons2
 		mousefx true
-		pos		"950 720"
+		pos		"920 720"
 		texl	"0 0"
 		texh	"64 37"
 		click	{

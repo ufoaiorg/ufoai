@@ -17,6 +17,14 @@ menu map
 	// background
 	// ==================
 
+	pic geobackground
+	{
+		if "cl_3dmap == 1"
+		pos		"0 0"
+		size	"1024 768"
+		image	menu/map_background
+		blend	true
+	}
 	map themap
 	{
 		pos		"0 96"
