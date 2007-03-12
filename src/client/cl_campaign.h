@@ -208,6 +208,8 @@ typedef struct salary_s {
 
 extern salary_t salaries[MAX_CAMPAIGNS];
 
+#define MAX_NATION_BORDERS 64
+
 /** nation definition */
 typedef struct nation_s {
 	char id[MAX_VAR];
@@ -223,6 +225,8 @@ typedef struct nation_s {
 	int medics;			/**< how many (monthly) medics */
 	int ugvs;			/**< how many (monthly) ugvs (robots) */
 	char names[MAX_VAR];
+	vec2_t borders[MAX_NATION_BORDERS];	/**< GL_LINE_LOOP coordinates */
+	int numBorders;		/**< coordinate count */
 } nation_t;
 
 #define MAX_NATIONS 8

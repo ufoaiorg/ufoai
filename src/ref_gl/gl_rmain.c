@@ -1696,6 +1696,8 @@ refexport_t GetRefAPI (refimport_t rimp)
 	re.DrawFadeScreen = Draw_FadeScreen;
 	re.DrawDayAndNight = Draw_DayAndNight;
 	re.DrawLineStrip = Draw_LineStrip;
+	re.DrawLineLoop = Draw_LineLoop;
+	re.DrawPolygon = Draw_Polygon;
 	re.DrawCircle = Draw_Circle;
 	re.Draw3DGlobe = Draw_3DGlobe;
 	re.Draw3DMapMarkers = Draw_3DMapMarkers;

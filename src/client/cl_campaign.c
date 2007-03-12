@@ -4059,21 +4059,51 @@ extern void CL_ParseNations (char *name, char **text)
 		if (*token == '}')
 			break;
 
-		/* check for some standard values */
-		for (vp = nation_vals; vp->string; vp++)
-			if (!Q_strcmp(token, vp->string)) {
-				/* found a definition */
+		/**
+		 * <code>
+		 * borders {
+		 *	"13.5 27.4"
+		 *	"-13.5 87.4"
+		 *	"[...]"
+		 * }
+		 * </code>
+		 */
+		if (!Q_strcmp(token, "borders")) {
+			/* found border definitions */
+			token = COM_EParse(text, errhead, name);
+			if (!*text)
+				return;
+			if (*token != '{') {
+				Com_Printf("CL_ParseNations: empty nation borders - skip it (%s)\n", name);
+				continue;
+			}
+			do {
 				token = COM_EParse(text, errhead, name);
 				if (!*text)
 					return;
+				if (*token != '}') {
+					if (nation->numBorders >= MAX_NATION_BORDERS)
+						Sys_Error("CL_ParseNations: too many nation borders for nation '%s'\n", name);
+					Com_ParseValue(nation, token, V_POS, offsetof(nation_t, borders[nation->numBorders++]));
+				}
+			} while (*token != '}');
+		} else {
+			/* check for some standard values */
+			for (vp = nation_vals; vp->string; vp++)
+				if (!Q_strcmp(token, vp->string)) {
+					/* found a definition */
+					token = COM_EParse(text, errhead, name);
+					if (!*text)
+						return;
 
-				Com_ParseValue(nation, token, vp->type, vp->ofs);
-				break;
+					Com_ParseValue(nation, token, vp->type, vp->ofs);
+					break;
+				}
+
+			if (!vp->string) {
+				Com_Printf("CL_ParseNations: unknown token \"%s\" ignored (nation %s)\n", token, name);
+				COM_EParse(text, errhead, name);
 			}
-
-		if (!vp->string) {
-			Com_Printf("CL_ParseNations: unknown token \"%s\" ignored (nation %s)\n", token, name);
-			COM_EParse(text, errhead, name);
 		}
 	} while (*text);
 }

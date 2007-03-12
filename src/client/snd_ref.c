@@ -345,6 +345,7 @@ static const cmdList_t r_commands[] = {
  * @brief
  * @sa S_Shutdown
  * @sa CL_Snd_Restart_f
+ * @todo: openal should be an replacement for the 'normal' snd_ref
  */
 void S_Init (void)
 {
@@ -485,7 +486,7 @@ void S_Init (void)
 
 	Com_Printf("sound sampling rate: %i\n", dma.speed);
 
-	/* FIXME: Error checking */
+	/* FIXME: Error checking/wrong place here */
 	if (snd_openal->value) {
 #ifdef HAVE_OPENAL
 		/* bindings */

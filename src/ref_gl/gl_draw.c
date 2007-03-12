@@ -704,6 +704,7 @@ void Draw_Clouds (int x, int y, int w, int h, float p, float q, float cx, float 
  * @param[in] radius Radius of the circle
  * @param[in] color The color of the circle lines
  * @sa R_DrawPtlCircle
+ * @sa Draw_LineStrip
  */
 void Draw_Circle (vec3_t mid, float radius, const vec4_t color, int thickness)
 {
@@ -717,6 +718,10 @@ void Draw_Circle (vec3_t mid, float radius, const vec4_t color, int thickness)
 	Draw_Color(color);
 
 	assert(radius > thickness);
+
+	/* scale it */
+	radius *= vid.rx;
+	thickness *= vid.rx;
 
 	/* store the matrix - we are using glTranslate */
 	qglPushMatrix();
@@ -753,6 +758,8 @@ void Draw_Circle (vec3_t mid, float radius, const vec4_t color, int thickness)
 #define MAX_LINEVERTS 256
 /**
  * @brief
+ * @sa Draw_Circle
+ * @sa Draw_LineLoop
  */
 void Draw_LineStrip (int points, int *verts)
 {
@@ -781,6 +788,71 @@ void Draw_LineStrip (int points, int *verts)
 	qglEnable(GL_TEXTURE_2D);
 }
 
+/**
+ * @brief
+ * @sa Draw_Circle
+ * @sa Draw_LineStrip
+ */
+void Draw_LineLoop (int points, int *verts)
+{
+	static int vs[MAX_LINEVERTS * 2];
+	int i;
+
+	/* fit it on screen */
+	if (points > MAX_LINEVERTS * 2)
+		points = MAX_LINEVERTS * 2;
+
+	for (i = 0; i < points * 2; i += 2) {
+		vs[i] = verts[i] * vid.rx;
+		vs[i + 1] = verts[i + 1] * vid.ry;
+	}
+
+	/* init vertex array */
+	qglDisable(GL_TEXTURE_2D);
+	qglEnableClientState(GL_VERTEX_ARRAY);
+	qglVertexPointer(2, GL_INT, 0, vs);
+
+	/* draw */
+	qglDrawArrays(GL_LINE_LOOP, 0, points);
+
+	/* reset state */
+	qglDisableClientState(GL_VERTEX_ARRAY);
+	qglEnable(GL_TEXTURE_2D);
+}
+
+
+/**
+ * @brief
+ * @sa Draw_Circle
+ * @sa Draw_LineStrip
+ * @sa Draw_LineLoop
+ */
+void Draw_Polygon (int points, int *verts)
+{
+	static int vs[MAX_LINEVERTS * 2];
+	int i;
+
+	/* fit it on screen */
+	if (points > MAX_LINEVERTS * 2)
+		points = MAX_LINEVERTS * 2;
+
+	for (i = 0; i < points * 2; i += 2) {
+		vs[i] = verts[i] * vid.rx;
+		vs[i + 1] = verts[i + 1] * vid.ry;
+	}
+
+	/* init vertex array */
+	qglDisable(GL_TEXTURE_2D);
+	qglEnableClientState(GL_VERTEX_ARRAY);
+	qglVertexPointer(2, GL_INT, 0, vs);
+
+	/* draw */
+	qglDrawArrays(GL_POLYGON, 0, points);
+
+	/* reset state */
+	qglDisableClientState(GL_VERTEX_ARRAY);
+	qglEnable(GL_TEXTURE_2D);
+}
 
 #define MARKER_SIZE 0.03
 /**

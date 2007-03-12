@@ -3394,17 +3394,25 @@ SCRIPT VALUE PARSING
 ==============================================================================
 */
 
+
+/**
+ * @brief possible values for parsing functions
+ * @sa value_types
+ */
 const char *vt_names[V_NUM_TYPES] = {
 	"",
 	"bool",
 	"char",
 	"int",
+	"int2",
 	"float",
 	"pos",
 	"vector",
 	"color",
 	"rgba",
 	"string",
+	"translation_string",
+	"translation2_string",
 	"longstring",
 	"pointer",
 	"align",
@@ -3414,7 +3422,9 @@ const char *vt_names[V_NUM_TYPES] = {
 	"shapes",
 	"shapeb",
 	"dmgtype",
-	"date"
+	"date",
+	"if",
+	"relabs"
 };
 
 const char *align_names[ALIGN_LAST] = {
@@ -3500,31 +3510,37 @@ int Com_ParseValue (void *base, char *token, int type, int ofs)
 		*(int *) b = atoi(token);
 		return ALIGN(sizeof(int));
 
+	case V_INT2:
+		if (strstr(token, " ") == NULL)
+			Sys_Error("Com_ParseValue: Illegal int2 statement '%s'\n", token);
+		sscanf(token, "%i %i", &((int *) b)[0], &((int *) b)[1]);
+		return ALIGN(2 * sizeof(int));
+
 	case V_FLOAT:
 		*(float *) b = atof(token);
 		return ALIGN(sizeof(float));
 
 	case V_POS:
 		if (strstr(token, " ") == NULL)
-			Sys_Error("Com_ParseValue: Illegal pos statement\n");
+			Sys_Error("Com_ParseValue: Illegal pos statement '%s'\n", token);
 		sscanf(token, "%f %f", &((float *) b)[0], &((float *) b)[1]);
 		return ALIGN(2 * sizeof(float));
 
 	case V_VECTOR:
 		if (strstr(strstr(token, " "), " ") == NULL)
-			Sys_Error("Com_ParseValue: Illegal vector statement\n");
+			Sys_Error("Com_ParseValue: Illegal vector statement '%s'\n", token);
 		sscanf(token, "%f %f %f", &((float *) b)[0], &((float *) b)[1], &((float *) b)[2]);
 		return ALIGN(3 * sizeof(float));
 
 	case V_COLOR:
 		if (strstr(strstr(strstr(token, " "), " "), " ") == NULL)
-			Sys_Error("Com_ParseValue: Illegal color statement\n");
+			Sys_Error("Com_ParseValue: Illegal color statement '%s'\n", token);
 		sscanf(token, "%f %f %f %f", &((float *) b)[0], &((float *) b)[1], &((float *) b)[2], &((float *) b)[3]);
 		return ALIGN(4 * sizeof(float));
 
 	case V_RGBA:
 		if (strstr(strstr(strstr(token, " "), " "), " ") == NULL)
-			Sys_Error("Com_ParseValue: Illegal rgba statement\n");
+			Sys_Error("Com_ParseValue: Illegal rgba statement '%s'\n", token);
 		sscanf(token, "%i %i %i %i", &((int *) b)[0], &((int *) b)[1], &((int *) b)[2], &((int *) b)[3]);
 		return ALIGN(4);
 
@@ -3602,7 +3618,7 @@ int Com_ParseValue (void *base, char *token, int type, int ofs)
 
 	case V_SHAPE_SMALL:
 		if (strstr(strstr(strstr(token, " "), " "), " ") == NULL)
-			Sys_Error("Com_ParseValue: Illegal shape small statement\n");
+			Sys_Error("Com_ParseValue: Illegal shape small statement '%s'\n", token);
 		sscanf(token, "%i %i %i %i", &x, &y, &w, &h);
 		for (h += y; y < h; y++)
 			*(int *) b |= ((1 << w) - 1) << x << (y * 8);
@@ -3610,7 +3626,7 @@ int Com_ParseValue (void *base, char *token, int type, int ofs)
 
 	case V_SHAPE_BIG:
 		if (strstr(strstr(strstr(token, " "), " "), " ") == NULL)
-			Sys_Error("Com_ParseValue: Illegal shape big statement\n");
+			Sys_Error("Com_ParseValue: Illegal shape big statement '%s'\n", token);
 		sscanf(token, "%i %i %i %i", &x, &y, &w, &h);
 		w = ((1 << w) - 1) << x;
 		for (h += y; y < h; y++)
@@ -3629,7 +3645,7 @@ int Com_ParseValue (void *base, char *token, int type, int ofs)
 
 	case V_DATE:
 		if (strstr(strstr(token, " "), " ") == NULL)
-			Sys_Error("Com_ParseValue: Illegal if statement\n");
+			Sys_Error("Com_ParseValue: Illegal if statement '%s'\n", token);
 		sscanf(token, "%i %i %i", &x, &y, &w);
 		((date_t *) b)->day = 365 * x + y;
 		((date_t *) b)->sec = 3600 * w;
@@ -3637,7 +3653,7 @@ int Com_ParseValue (void *base, char *token, int type, int ofs)
 
 	case V_IF:
 		if (strstr(strstr(token, " "), " ") == NULL)
-			Sys_Error("Com_ParseValue: Illegal if statement\n");
+			Sys_Error("Com_ParseValue: Illegal if statement '%s'\n", token);
 		sscanf(token, "%s %s %s", string, condition, string2);
 
 		Q_strncpyz(((menuDepends_t *) b)->var, string, MAX_VAR);
@@ -3661,7 +3677,7 @@ int Com_ParseValue (void *base, char *token, int type, int ofs)
 		return ALIGN(sizeof(float));
 
 	default:
-		Sys_Error("Com_ParseValue: unknown value type\n");
+		Sys_Error("Com_ParseValue: unknown value type '%s'\n", token);
 		return -1;
 	}
 }
@@ -3701,6 +3717,11 @@ int Com_SetValue (void *base, void *set, int type, int ofs)
 	case V_INT:
 		*(int *) b = *(int *) set;
 		return sizeof(int);
+
+	case V_INT2:
+		((int *) b)[0] = ((int *) set)[0];
+		((int *) b)[1] = ((int *) set)[1];
+		return 2 * sizeof(int);
 
 	case V_FLOAT:
 		*(float *) b = *(float *) set;
@@ -3803,6 +3824,10 @@ char *Com_ValueToStr (void *base, int type, int ofs)
 
 	case V_INT:
 		Com_sprintf(valuestr, MAX_VAR, "%i", *(int *) b);
+		return valuestr;
+
+	case V_INT2:
+		Com_sprintf(valuestr, MAX_VAR, "%i %i", ((int *) b)[0], ((int *) b)[1]);
 		return valuestr;
 
 	case V_FLOAT:

@@ -344,12 +344,12 @@ static qboolean MAP_IsMapPositionSelected (const menuNode_t* node, vec2_t pos, i
 	if (!globe) {
 		if (MAP_MapToScreen(node, pos, &msx, &msy))
 			if (x >= msx - MN_MAP_DIST_SELECTION && x <= msx + MN_MAP_DIST_SELECTION
-			&& y >= msy - MN_MAP_DIST_SELECTION && y <= msy + MN_MAP_DIST_SELECTION)
+			 && y >= msy - MN_MAP_DIST_SELECTION && y <= msy + MN_MAP_DIST_SELECTION)
 				return qtrue;
 	} else {
 		if (MAP_3DMapToScreen(node, pos, &msx, &msy))
 			if (x >= msx - MN_MAP_DIST_SELECTION && x <= msx + MN_MAP_DIST_SELECTION
-			&& y >= msy - MN_MAP_DIST_SELECTION && y <= msy + MN_MAP_DIST_SELECTION)
+			 && y >= msy - MN_MAP_DIST_SELECTION && y <= msy + MN_MAP_DIST_SELECTION)
 				return qtrue;
 	}
 
@@ -650,9 +650,10 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 {
 	aircraft_t *aircraft;
 	actMis_t *ms;
-	int x, y, i;
+	int x, y, i, j;
 	base_t* base;
 	const char* font = NULL;
+	int borders[MAX_NATION_BORDERS * 2];	/**< GL_LINE_LOOP coordinates for nation borders */
 
 	assert(node);
 
@@ -731,21 +732,34 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 			MAP_MapDrawLine(node, &(aircraft->route)); /* Draw ufo route */
 		} else
 #endif
-		if (! aircraft->visible || ! MAP_MapToScreen(node, aircraft->pos, &x, &y))
+		if (!aircraft->visible || !MAP_MapToScreen(node, aircraft->pos, &x, &y))
 			continue;
 		re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, aircraft->image);
 		if (aircraft == selectedUfo)
 			re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "circle");
 	}
 
-	if (ccs.zoom >= 3.0f) {
-		/* TODO: Draw nation borders */
-		for (i = 0; i < gd.numNations; i++) {
-			/* font color for nations */
-			re.DrawColor(gd.nations[i].color);
-			MAP_MapToScreen(node, gd.nations[i].pos, &x, &y);
-			re.FontDrawString("f_big", ALIGN_UC, x , y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1], gd.nations[i].name, 0, 0, NULL, qfalse);
+	/* use the latitude and longitude values from nation border definition to draw a polygon */
+	for (i = 0; i < gd.numNations; i++) {
+		/* font color for nations */
+		re.DrawColor(gd.nations[i].color);
+		if (gd.nations[i].numBorders) {
+			for (j = 0; j < gd.nations[i].numBorders; j++) {
+				MAP_MapToScreen(node, gd.nations[i].borders[j], &x, &y);
+				borders[j * 2] = x;
+				borders[j * 2 + 1] = y;
+			}
+			re.DrawPolygon(gd.nations[i].numBorders, borders);
+			re.DrawColor(NULL);
+			re.DrawLineLoop(gd.nations[i].numBorders, borders);
 		}
+	}
+
+	re.DrawColor(NULL);
+
+	for (i = 0; i < gd.numNations; i++) {
+		MAP_MapToScreen(node, gd.nations[i].pos, &x, &y);
+		re.FontDrawString("f_verysmall", ALIGN_UC, x , y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1], gd.nations[i].name, 0, 0, NULL, qfalse);
 	}
 
 	/* reset color */

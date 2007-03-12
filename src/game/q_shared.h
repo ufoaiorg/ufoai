@@ -754,29 +754,33 @@ typedef struct menuDepends_s {
 #endif
 #define ALIGN(size)  ((size) + ((ALIGN_BYTES - ((size) % ALIGN_BYTES)) % ALIGN_BYTES))
 
-/** possible values for parsing functions */
+/**
+ * @brief possible values for parsing functions
+ * @sa vt_names
+ */
 typedef enum {
 	V_NULL,
 	V_BOOL,
 	V_CHAR,
 	V_INT,
-	V_FLOAT,
-	V_POS = 5,
+	V_INT2,
+	V_FLOAT = 5,
+	V_POS,
 	V_VECTOR,
 	V_COLOR,
 	V_RGBA,
-	V_STRING,
-	V_TRANSLATION_STRING = 10,	/**< translate via gettext */
+	V_STRING = 10,
+	V_TRANSLATION_STRING,	/**< translate via gettext */
 	V_TRANSLATION2_STRING,		/**< remove _ but don't translate */
 	V_LONGSTRING,
 	V_POINTER,
-	V_ALIGN,
-	V_BLEND = 15,
+	V_ALIGN = 15,
+	V_BLEND,
 	V_STYLE,
 	V_FADE,
 	V_SHAPE_SMALL,
-	V_SHAPE_BIG,
-	V_DMGTYPE = 20,
+	V_SHAPE_BIG = 20,
+	V_DMGTYPE,
 	V_DATE,
 	V_IF,
 	V_RELABS,					/**< relative (e.g. 1.50) and absolute (e.g. +15) values */
@@ -788,7 +792,7 @@ typedef enum {
 
 extern const char *vt_names[V_NUM_TYPES];
 
-/** possible alien values */
+/** possible alien values - see also align_names */
 typedef enum {
 	ALIGN_UL,
 	ALIGN_UC,
@@ -803,7 +807,7 @@ typedef enum {
 	ALIGN_LAST
 } align_t;
 
-/** possible blend modes */
+/** possible blend modes - see also blend_names */
 typedef enum {
 	BLEND_REPLACE,
 	BLEND_BLEND,

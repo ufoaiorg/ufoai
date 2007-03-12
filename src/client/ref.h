@@ -324,6 +324,8 @@ typedef struct {
 	void (*DrawFadeScreen) (void);
 	void (*DrawDayAndNight) (int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, char *map);
 	void (*DrawLineStrip) (int points, int *verts);
+	void (*DrawLineLoop) (int points, int *verts);
+	void (*DrawPolygon) (int points, int *verts);
 	void (*DrawCircle) (vec3_t mid, float radius, const vec4_t color, int thickness);
 	void (*Draw3DGlobe) (int x, int y, int w, int h, float p, float q, vec3_t rotate, float zoom, char *map);
 	void (*Draw3DMapMarkers) (vec3_t angles, float zoom, float latitude, float longitude, char *image);
