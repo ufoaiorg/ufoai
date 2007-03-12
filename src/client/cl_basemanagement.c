@@ -1621,107 +1621,117 @@ static void CL_SwapSkills (character_t *team[], int num)
 					weaponh_fd_idx = INV_FiredefsIDXForWeapon(&csi.ods[HOLSTER(cp1)->item.m], HOLSTER(cp1)->item.t);
 				/* disregard left hand, or dual-wielding guys are too good */
 
-				/* FIXME This will crash if weaponh_fd_idx or weaponr_fd_idx is -1 */
-				no1 = 2 * (RIGHT(cp1) && skill == csi.ods[RIGHT(cp1)->item.m].fd[weaponr_fd_idx][fmode1].weaponSkill)
-					+ 2 * (RIGHT(cp1) && skill == csi.ods[RIGHT(cp1)->item.m].fd[weaponr_fd_idx][fmode2].weaponSkill)
-					+ (HOLSTER(cp1) && csi.ods[HOLSTER(cp1)->item.t].reload
-					   && skill == csi.ods[HOLSTER(cp1)->item.m].fd[weaponh_fd_idx][fmode1].weaponSkill)
-					+ (HOLSTER(cp1) && csi.ods[HOLSTER(cp1)->item.t].reload
-					   && skill == csi.ods[HOLSTER(cp1)->item.m].fd[weaponh_fd_idx][fmode2].weaponSkill);
+				if (weaponr_fd_idx < 0 || weaponh_fd_idx < 0) {
+					/* TODO: Is there a better way to check for this case? */
+					Com_DPrintf("CL_SwapSkills: Bad or no firedef indices found (weaponr_fd_idx=%i and weaponh_fd_idx=%i)... skipping\n", weaponr_fd_idx, weaponh_fd_idx);
+				} else {
+					no1 = 2 * (RIGHT(cp1) && skill == csi.ods[RIGHT(cp1)->item.m].fd[weaponr_fd_idx][fmode1].weaponSkill)
+						+ 2 * (RIGHT(cp1) && skill == csi.ods[RIGHT(cp1)->item.m].fd[weaponr_fd_idx][fmode2].weaponSkill)
+						+ (HOLSTER(cp1) && csi.ods[HOLSTER(cp1)->item.t].reload
+						   && skill == csi.ods[HOLSTER(cp1)->item.m].fd[weaponh_fd_idx][fmode1].weaponSkill)
+						+ (HOLSTER(cp1) && csi.ods[HOLSTER(cp1)->item.t].reload
+						   && skill == csi.ods[HOLSTER(cp1)->item.m].fd[weaponh_fd_idx][fmode2].weaponSkill);
 
-				for (i2 = i1 + 1 ; i2 < num; i2++) {
-					cp2 = team[i2];
-					weaponr_fd_idx = -1;
-					weaponh_fd_idx = -1;
-					if (RIGHT(cp2) && RIGHT(cp2)->item.m != NONE && RIGHT(cp2)->item.t != NONE)
-						weaponr_fd_idx = INV_FiredefsIDXForWeapon(&csi.ods[RIGHT(cp2)->item.m], RIGHT(cp2)->item.t);
-					if (HOLSTER(cp2) && HOLSTER(cp2)->item.m != NONE && HOLSTER(cp2)->item.t != NONE)
-						weaponh_fd_idx = INV_FiredefsIDXForWeapon(&csi.ods[HOLSTER(cp2)->item.m], HOLSTER(cp2)->item.t);
+					for (i2 = i1 + 1 ; i2 < num; i2++) {
+						cp2 = team[i2];
+						weaponr_fd_idx = -1;
+						weaponh_fd_idx = -1;
+						
+						if (RIGHT(cp2) && RIGHT(cp2)->item.m != NONE && RIGHT(cp2)->item.t != NONE)
+							weaponr_fd_idx = INV_FiredefsIDXForWeapon(&csi.ods[RIGHT(cp2)->item.m], RIGHT(cp2)->item.t);
+						if (HOLSTER(cp2) && HOLSTER(cp2)->item.m != NONE && HOLSTER(cp2)->item.t != NONE)
+							weaponh_fd_idx = INV_FiredefsIDXForWeapon(&csi.ods[HOLSTER(cp2)->item.m], HOLSTER(cp2)->item.t);
 
-					/* FIXME This will crash if weaponh_fd_idx or weaponr_fd_idx is -1 */
-					no2 = 2 * (RIGHT(cp2) && skill == csi.ods[RIGHT(cp2)->item.m].fd[weaponr_fd_idx][fmode1].weaponSkill)
-						+ 2 * (RIGHT(cp2) && skill == csi.ods[RIGHT(cp2)->item.m].fd[weaponr_fd_idx][fmode2].weaponSkill)
-						+ (HOLSTER(cp2) && csi.ods[HOLSTER(cp2)->item.t].reload
-						   && skill == csi.ods[HOLSTER(cp2)->item.m].fd[weaponh_fd_idx][fmode1].weaponSkill)
-						+ (HOLSTER(cp2) && csi.ods[HOLSTER(cp2)->item.t].reload
-						   && skill == csi.ods[HOLSTER(cp2)->item.m].fd[weaponh_fd_idx][fmode2].weaponSkill);
+						if (weaponr_fd_idx < 0 || weaponh_fd_idx < 0) {
+							/* TODO: Is there a better way to check for this case? */
+							Com_DPrintf("CL_SwapSkills: Bad or no firedef indices found (weaponr_fd_idx=%i and weaponh_fd_idx=%i)... skipping\n", weaponr_fd_idx, weaponh_fd_idx);
+						} else {
+							/* FIXME This will crash if weaponh_fd_idx or weaponr_fd_idx is -1 */
+							no2 = 2 * (RIGHT(cp2) && skill == csi.ods[RIGHT(cp2)->item.m].fd[weaponr_fd_idx][fmode1].weaponSkill)
+								+ 2 * (RIGHT(cp2) && skill == csi.ods[RIGHT(cp2)->item.m].fd[weaponr_fd_idx][fmode2].weaponSkill)
+								+ (HOLSTER(cp2) && csi.ods[HOLSTER(cp2)->item.t].reload
+								   && skill == csi.ods[HOLSTER(cp2)->item.m].fd[weaponh_fd_idx][fmode1].weaponSkill)
+								+ (HOLSTER(cp2) && csi.ods[HOLSTER(cp2)->item.t].reload
+								   && skill == csi.ods[HOLSTER(cp2)->item.m].fd[weaponh_fd_idx][fmode2].weaponSkill);
 
-					if ( no1 > no2 /* more use of this skill */
-						 || (no1 && no1 == no2) ) { /* or earlier on list */
-						tmp1 = cp1->skills[skill];
-						tmp2 = cp2->skills[skill];
-						cp1->skills[skill] = MAX(tmp1, tmp2);
-						cp2->skills[skill] = MIN(tmp1, tmp2);
+							if ( no1 > no2 /* more use of this skill */
+								 || (no1 && no1 == no2) ) { /* or earlier on list */
+								tmp1 = cp1->skills[skill];
+								tmp2 = cp2->skills[skill];
+								cp1->skills[skill] = MAX(tmp1, tmp2);
+								cp2->skills[skill] = MIN(tmp1, tmp2);
 
-						switch (skill) {
-						case SKILL_CLOSE:
-							tmp1 = cp1->skills[ABILITY_SPEED];
-							tmp2 = cp2->skills[ABILITY_SPEED];
-							cp1->skills[ABILITY_SPEED] = MAX(tmp1, tmp2);
-							cp2->skills[ABILITY_SPEED] = MIN(tmp1, tmp2);
-							break;
-						case SKILL_HEAVY:
-							tmp1 = cp1->skills[ABILITY_POWER];
-							tmp2 = cp2->skills[ABILITY_POWER];
-							cp1->skills[ABILITY_POWER] = MAX(tmp1, tmp2);
-							cp2->skills[ABILITY_POWER] = MIN(tmp1, tmp2);
-							break;
-						case SKILL_ASSAULT:
-							/* no related basic attribute */
-							break;
-						case SKILL_SNIPER:
-							tmp1 = cp1->skills[ABILITY_ACCURACY];
-							tmp2 = cp2->skills[ABILITY_ACCURACY];
-							cp1->skills[ABILITY_ACCURACY] = MAX(tmp1, tmp2);
-							cp2->skills[ABILITY_ACCURACY] = MIN(tmp1, tmp2);
-							break;
-						case SKILL_EXPLOSIVE:
-							tmp1 = cp1->skills[ABILITY_MIND];
-							tmp2 = cp2->skills[ABILITY_MIND];
-							cp1->skills[ABILITY_MIND] = MAX(tmp1, tmp2);
-							cp2->skills[ABILITY_MIND] = MIN(tmp1, tmp2);
-							break;
-						default:
-							Sys_Error("CL_SwapSkills: illegal skill %i.\n", skill);
-						}
-					} else if (no1 < no2) {
-						tmp1 = cp1->skills[skill];
-						tmp2 = cp2->skills[skill];
-						cp2->skills[skill] = MAX(tmp1, tmp2);
-						cp1->skills[skill] = MIN(tmp1, tmp2);
+								switch (skill) {
+								case SKILL_CLOSE:
+									tmp1 = cp1->skills[ABILITY_SPEED];
+									tmp2 = cp2->skills[ABILITY_SPEED];
+									cp1->skills[ABILITY_SPEED] = MAX(tmp1, tmp2);
+									cp2->skills[ABILITY_SPEED] = MIN(tmp1, tmp2);
+									break;
+								case SKILL_HEAVY:
+									tmp1 = cp1->skills[ABILITY_POWER];
+									tmp2 = cp2->skills[ABILITY_POWER];
+									cp1->skills[ABILITY_POWER] = MAX(tmp1, tmp2);
+									cp2->skills[ABILITY_POWER] = MIN(tmp1, tmp2);
+									break;
+								case SKILL_ASSAULT:
+									/* no related basic attribute */
+									break;
+								case SKILL_SNIPER:
+									tmp1 = cp1->skills[ABILITY_ACCURACY];
+									tmp2 = cp2->skills[ABILITY_ACCURACY];
+									cp1->skills[ABILITY_ACCURACY] = MAX(tmp1, tmp2);
+									cp2->skills[ABILITY_ACCURACY] = MIN(tmp1, tmp2);
+									break;
+								case SKILL_EXPLOSIVE:
+									tmp1 = cp1->skills[ABILITY_MIND];
+									tmp2 = cp2->skills[ABILITY_MIND];
+									cp1->skills[ABILITY_MIND] = MAX(tmp1, tmp2);
+									cp2->skills[ABILITY_MIND] = MIN(tmp1, tmp2);
+									break;
+								default:
+									Sys_Error("CL_SwapSkills: illegal skill %i.\n", skill);
+								}
+							} else if (no1 < no2) {
+								tmp1 = cp1->skills[skill];
+								tmp2 = cp2->skills[skill];
+								cp2->skills[skill] = MAX(tmp1, tmp2);
+								cp1->skills[skill] = MIN(tmp1, tmp2);
 
-						switch (skill) {
-						case SKILL_CLOSE:
-							tmp1 = cp1->skills[ABILITY_SPEED];
-							tmp2 = cp2->skills[ABILITY_SPEED];
-							cp2->skills[ABILITY_SPEED] = MAX(tmp1, tmp2);
-							cp1->skills[ABILITY_SPEED] = MIN(tmp1, tmp2);
-							break;
-						case SKILL_HEAVY:
-							tmp1 = cp1->skills[ABILITY_POWER];
-							tmp2 = cp2->skills[ABILITY_POWER];
-							cp2->skills[ABILITY_POWER] = MAX(tmp1, tmp2);
-							cp1->skills[ABILITY_POWER] = MIN(tmp1, tmp2);
-							break;
-						case SKILL_ASSAULT:
-							break;
-						case SKILL_SNIPER:
-							tmp1 = cp1->skills[ABILITY_ACCURACY];
-							tmp2 = cp2->skills[ABILITY_ACCURACY];
-							cp2->skills[ABILITY_ACCURACY] = MAX(tmp1, tmp2);
-							cp1->skills[ABILITY_ACCURACY] = MIN(tmp1, tmp2);
-							break;
-						case SKILL_EXPLOSIVE:
-							tmp1 = cp1->skills[ABILITY_MIND];
-							tmp2 = cp2->skills[ABILITY_MIND];
-							cp2->skills[ABILITY_MIND] = MAX(tmp1, tmp2);
-							cp1->skills[ABILITY_MIND] = MIN(tmp1, tmp2);
-							break;
-						default:
-							Sys_Error("CL_SwapSkills: illegal skill %i.\n", skill);
-						}
-					}
-				}
+								switch (skill) {
+								case SKILL_CLOSE:
+									tmp1 = cp1->skills[ABILITY_SPEED];
+									tmp2 = cp2->skills[ABILITY_SPEED];
+									cp2->skills[ABILITY_SPEED] = MAX(tmp1, tmp2);
+									cp1->skills[ABILITY_SPEED] = MIN(tmp1, tmp2);
+									break;
+								case SKILL_HEAVY:
+									tmp1 = cp1->skills[ABILITY_POWER];
+									tmp2 = cp2->skills[ABILITY_POWER];
+									cp2->skills[ABILITY_POWER] = MAX(tmp1, tmp2);
+									cp1->skills[ABILITY_POWER] = MIN(tmp1, tmp2);
+									break;
+								case SKILL_ASSAULT:
+									break;
+								case SKILL_SNIPER:
+									tmp1 = cp1->skills[ABILITY_ACCURACY];
+									tmp2 = cp2->skills[ABILITY_ACCURACY];
+									cp2->skills[ABILITY_ACCURACY] = MAX(tmp1, tmp2);
+									cp1->skills[ABILITY_ACCURACY] = MIN(tmp1, tmp2);
+									break;
+								case SKILL_EXPLOSIVE:
+									tmp1 = cp1->skills[ABILITY_MIND];
+									tmp2 = cp2->skills[ABILITY_MIND];
+									cp2->skills[ABILITY_MIND] = MAX(tmp1, tmp2);
+									cp1->skills[ABILITY_MIND] = MIN(tmp1, tmp2);
+									break;
+								default:
+									Sys_Error("CL_SwapSkills: illegal skill %i.\n", skill);
+								}
+							}
+						} /* if xx_fd_xx < 0 */
+					} /* for */
+				} /* if xx_fd_xx < 0 */
 			}
 		}
 	}
