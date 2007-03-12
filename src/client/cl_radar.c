@@ -32,7 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 extern void RADAR_DrawCoverage (const menuNode_t* node, const radar_t* radar, vec2_t pos, qboolean globe)
 {
-	int i, xCircle, yCircle;
+	int i, xCircle, yCircle, zCircle;
 	int pts[RADAR_DRAW_POINTS * 2 + 2];
 	int pts2[RADAR_DRAW_POINTS * 2 + 2];
 	vec2_t posCircle;
@@ -51,7 +51,7 @@ extern void RADAR_DrawCoverage (const menuNode_t* node, const radar_t* radar, ve
 		if (!globe)
 			MAP_MapToScreen(node, posCircle, &xCircle, &yCircle);
 		else
-			MAP_3DMapToScreen(node, posCircle, &xCircle, &yCircle);
+			MAP_3DMapToScreen(node, posCircle, &xCircle, &yCircle, &zCircle);
 		pts[i * 2] = xCircle;
 		pts[i * 2 + 1] = yCircle;
 		posCircle[0] = pos[0] + cosinus * rangeTracking;
@@ -59,7 +59,7 @@ extern void RADAR_DrawCoverage (const menuNode_t* node, const radar_t* radar, ve
 		if (!globe)
 			MAP_MapToScreen(node, posCircle, &xCircle, &yCircle);
 		else
-			MAP_3DMapToScreen(node, posCircle, &xCircle, &yCircle);
+			MAP_3DMapToScreen(node, posCircle, &xCircle, &yCircle, &zCircle);
 		pts2[i * 2] = xCircle;
 		pts2[i * 2 + 1] = yCircle;
 	}
@@ -74,7 +74,7 @@ extern void RADAR_DrawCoverage (const menuNode_t* node, const radar_t* radar, ve
  */
 extern void RADAR_DrawInMap (const menuNode_t* node, const radar_t* radar, int x, int y, vec2_t pos, qboolean globe)
 {
-	int i;
+	int i, z;
 	const vec4_t color = {0, 1, 0, 1};
 	int pts[4];
 
@@ -93,7 +93,7 @@ extern void RADAR_DrawInMap (const menuNode_t* node, const radar_t* radar, int x
 		if (!globe && MAP_MapToScreen(node, (gd.ufos + radar->ufos[i])->pos, &x, &y)) {
 			Vector2Set(pts + 2, x, y);
 			re.DrawLineStrip(2, pts);
-		} else if (globe && MAP_3DMapToScreen(node, (gd.ufos + radar->ufos[i])->pos, &x, &y)) {
+		} else if (globe && MAP_3DMapToScreen(node, (gd.ufos + radar->ufos[i])->pos, &x, &y, &z)) {
 			Vector2Set(pts + 2, x, y);
 			re.DrawLineStrip(2, pts); /* FIXME */
 		}

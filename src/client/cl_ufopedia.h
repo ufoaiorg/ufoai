@@ -42,5 +42,6 @@ void UP_ParseUpChapters(char *title, char **text);
 void UP_OpenWith(char *name);
 void UP_OpenCopyWith(char *name);
 void CL_ItemDescription(int item);
+int UP_GetUnreadMails(void);
 
 #endif /* CLIENT_CL_UFOPEDIA_H */

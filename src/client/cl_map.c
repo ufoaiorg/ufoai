@@ -347,7 +347,7 @@ static qboolean MAP_IsMapPositionSelected (const menuNode_t* node, vec2_t pos, i
 			 && y >= msy - MN_MAP_DIST_SELECTION && y <= msy + MN_MAP_DIST_SELECTION)
 				return qtrue;
 	} else {
-		if (MAP_3DMapToScreen(node, pos, &msx, &msy))
+		if (MAP_3DMapToScreen(node, pos, &msx, &msy, NULL))
 			if (x >= msx - MN_MAP_DIST_SELECTION && x <= msx + MN_MAP_DIST_SELECTION
 			 && y >= msy - MN_MAP_DIST_SELECTION && y <= msy + MN_MAP_DIST_SELECTION)
 				return qtrue;
@@ -359,12 +359,13 @@ static qboolean MAP_IsMapPositionSelected (const menuNode_t* node, vec2_t pos, i
 #define GLOBE_RADIUS gl_3dmapradius->value * (ccs.zoom / 4.0f) * 0.1
 /**
  * @brief
- * @param[in] x normalized x value of mouseclick
- * @param[in] y normalized y value of mouseclick
- * @param[in] pos vector to return the screen coordinates
+ * @param[out] x normalized (rotated and scaled) x value of mouseclick
+ * @param[out] y normalized (rotated and scaled) y value of mouseclick
+ * @param[out] z z value of the given latitude and longitude - might also be NULL if not needed
+ * @param[in] pos vector that holds longitude and latitude
  * @sa MAP_MapToScreen
  */
-extern qboolean MAP_3DMapToScreen (const menuNode_t* node, const vec2_t pos, int *x, int *y)
+extern qboolean MAP_3DMapToScreen (const menuNode_t* node, const vec2_t pos, int *x, int *y, int *z)
 {
 	vec2_t tmp;
 	const float radius = GLOBE_RADIUS;
@@ -375,6 +376,9 @@ extern qboolean MAP_3DMapToScreen (const menuNode_t* node, const vec2_t pos, int
 	/* pos[1] = latitude (phi) */
 	*x = (radius * cos(pos[0]) * cos(pos[1]+ccs.angles[1])) + tmp[0];
 	*y = (radius * cos(pos[0]) * sin(pos[1]+ccs.angles[1])) + tmp[1];
+	if (z) {
+		*z = 0; /* FIXME */
+	}
 /*	Com_Printf("MAP_3DMapToScreen: %i:%i\n", *x, *y);*/
 
 	/* TODO: Check ccs.angle */
@@ -385,6 +389,9 @@ extern qboolean MAP_3DMapToScreen (const menuNode_t* node, const vec2_t pos, int
 
 /**
  * @brief
+ * @param[out] x normalized (shiften and scaled) x value of mouseclick
+ * @param[out] y normalized (shiften and scaled) y value of mouseclick
+ * @param[in] pos vector that holds longitude and latitude
  * @sa MAP_3DMapToScreen
  */
 extern qboolean MAP_MapToScreen (const menuNode_t* node, const vec2_t pos, int *x, int *y)
@@ -410,6 +417,10 @@ extern qboolean MAP_MapToScreen (const menuNode_t* node, const vec2_t pos, int *
 
 /**
  * @brief
+ * @return pos vec2_t was filled with longitude and latitude
+ * @param[in] x X coordinate on the screen that was clicked to
+ * @param[in] y Y coordinate on the screen that was clicked to
+ * @param[in] node The current menuNode we was clicking into (3dmap or map)
  */
 static void MAP_ScreenToMap (const menuNode_t* node, int x, int y, vec2_t pos)
 {
@@ -592,17 +603,18 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 	aircraft_t *aircraft;
 	actMis_t *ms;
 	int i, j;
+	int borders[MAX_NATION_BORDERS * 2];	/**< GL_LINE_LOOP coordinates for nation borders */
+	int x, y, z;
 #if 0
-	int x, y;
 	vec2_t pos = {0, 0};
 
-	if (MAP_3DMapToScreen(node, pos, &x, &y))
+	if (MAP_3DMapToScreen(node, pos, &x, &y, &z))
 		re.FontDrawString("f_verysmall", 0, x, y, x, y, node->size[0], 0, 0, "0, 0", 0, 0, NULL, qfalse);
 	pos[0] = 90; pos[1] = 90;
-	if (MAP_3DMapToScreen(node, pos, &x, &y))
+	if (MAP_3DMapToScreen(node, pos, &x, &y, &z))
 		re.FontDrawString("f_verysmall", 0, x, y, x, y, node->size[0], 0, 0, "90, 90", 0, 0, NULL, qfalse);
 	pos[0] = 90; pos[1] = 180;
-	if (MAP_3DMapToScreen(node, pos, &x, &y))
+	if (MAP_3DMapToScreen(node, pos, &x, &y, &z))
 		re.FontDrawString("f_verysmall", 0, x, y, x, y, node->size[0], 0, 0, "90, 180", 0, 0, NULL, qfalse);
 #endif
 
@@ -610,8 +622,8 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 	Cvar_Set("mn_mapdaytime", "");
 	for (i = 0; i < ccs.numMissions; i++) {
 		ms = &ccs.mission[i];
-/*		if (!MAP_3DMapToScreen(node, ms->realPos, &x, &y))
-			continue;*/
+/*		if (!MAP_3DMapToScreen(node, ms->realPos, &x, &y, &z))
+			continue; */
 		re.Draw3DMapMarkers(ccs.angles, ccs.zoom, ms->def->pos[0], ms->def->pos[1], "cross");
 
 		if (ms == selMis) {
@@ -640,6 +652,27 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 					}
 				}
 		}
+
+		/* FIXME */
+		/* use the latitude and longitude values from nation border definition to draw a polygon */
+		for (i = 0; i < gd.numNations; i++) {
+			/* font color for nations */
+			re.DrawColor(gd.nations[i].color);
+			if (gd.nations[i].numBorders) {
+				for (j = 0; j < gd.nations[i].numBorders; j++) {
+					/* FIXME: doesn't work for z positions */
+					MAP_3DMapToScreen(node, gd.nations[i].borders[j], &x, &y, &z);
+					borders[j * 2] = x;
+					borders[j * 2 + 1] = y;
+/*					borders[j * 2 + 2] = z;*/
+				}
+				re.DrawPolygon(gd.nations[i].numBorders, borders);
+				re.DrawColor(NULL);
+				re.DrawLineLoop(gd.nations[i].numBorders, borders);
+			}
+		}
+
+		re.DrawColor(NULL);
 }
 
 /**
@@ -727,7 +760,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 #ifdef DEBUG
 		/* in debug mode you execute set showufos 1 to see the ufos on geoscape */
 		if (Cvar_VariableInteger("showufos")) {
-			if (! MAP_MapToScreen(node, aircraft->pos, &x, &y))
+			if (!MAP_MapToScreen(node, aircraft->pos, &x, &y))
 				continue;
 			MAP_MapDrawLine(node, &(aircraft->route)); /* Draw ufo route */
 		} else
@@ -739,12 +772,14 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 			re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "circle");
 	}
 
+	/* FIXME */
 	/* use the latitude and longitude values from nation border definition to draw a polygon */
 	for (i = 0; i < gd.numNations; i++) {
 		/* font color for nations */
 		re.DrawColor(gd.nations[i].color);
 		if (gd.nations[i].numBorders) {
 			for (j = 0; j < gd.nations[i].numBorders; j++) {
+				/* FIXME: doesn't work for scrolling the map */
 				MAP_MapToScreen(node, gd.nations[i].borders[j], &x, &y);
 				borders[j * 2] = x;
 				borders[j * 2 + 1] = y;
@@ -758,6 +793,8 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 	re.DrawColor(NULL);
 
 	for (i = 0; i < gd.numNations; i++) {
+		/* font color for nations */
+		re.DrawColor(gd.nations[i].color);
 		MAP_MapToScreen(node, gd.nations[i].pos, &x, &y);
 		re.FontDrawString("f_verysmall", ALIGN_UC, x , y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1], gd.nations[i].name, 0, 0, NULL, qfalse);
 	}

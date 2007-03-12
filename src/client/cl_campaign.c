@@ -1336,7 +1336,7 @@ extern void CL_CampaignRun (void)
 		} else if (day > 1)
 			gd.fund = qtrue;
 
-		Cvar_SetValue("mn_unreadmails", gd.anzUnreadMails);
+		Cvar_SetValue("mn_unreadmails", UP_GetUnreadMails());
 		Cvar_Set("mn_mapdate", va("%i %s %i", ccs.date.day / DAYS_PER_YEAR, CL_DateGetMonthName(month), day));	/* CL_DateGetMonthName is already "gettexted" */
 		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("%02i:%02i"), ccs.date.sec / 3600, ((ccs.date.sec % 3600) / 60));
 		Cvar_Set("mn_maptime", messageBuffer);

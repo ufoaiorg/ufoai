@@ -339,6 +339,41 @@ extern void UP_AircraftDescription (technology_t* t)
 }
 
 /**
+ * @brief Sets the amount of unread/new mails
+ * @note This is called every campaign frame - to update gd.anzUnreadMails
+ * just set it to -1 before calling this function
+ * @sa CL_CampaignRun
+ */
+extern int UP_GetUnreadMails (void)
+{
+	message_t *m = messageStack;
+
+	if (gd.anzUnreadMails != -1)
+		return gd.anzUnreadMails;
+
+	while (m) {
+		switch (m->type) {
+		case MSG_RESEARCH:
+			if (m->pedia->mail[TECHMAIL_PRE].read == qfalse)
+				gd.anzUnreadMails++;
+			if (RS_IsResearched_ptr(m->pedia) && m->pedia->mail[TECHMAIL_RESEARCHED].read == qfalse)
+				gd.anzUnreadMails++;
+			break;
+		case MSG_NEWS:
+			if (m->pedia->mail[TECHMAIL_PRE].from[0] && m->pedia->mail[TECHMAIL_PRE].read == qfalse)
+				gd.anzUnreadMails++;
+			if (m->pedia->mail[TECHMAIL_RESEARCHED].from[0] && m->pedia->mail[TECHMAIL_RESEARCHED].read == qfalse)
+				gd.anzUnreadMails++;
+			break;
+		default:
+			break;
+		}
+		m = m->next;
+	}
+	return gd.anzUnreadMails;
+}
+
+/**
  * @brief Binds the mail header (if needed) to the menuText array
  * @note The cvar mn_up_mail is set to 1 (for activate mail nodes from menu_ufopedia.ufo)
  * if there is a mail header
@@ -363,8 +398,8 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type)
 	if (tech->mail[type].from[0]) {
 		if (!tech->mail[type].read) {
 			tech->mail[type].read = qtrue;
-			gd.anzUnreadMails--;
-			assert(gd.anzUnreadMails >= 0);
+			/* reread the unread mails in UP_GetUnreadMails */
+			gd.anzUnreadMails = -1;
 		}
 		/* only if mail and mail_pre are available */
 		if (tech->numTechMails == TECHMAIL_MAX) {
@@ -954,6 +989,7 @@ static void UP_MailClientClick_f (void)
  * @brief Start the mailclient
  * @sa UP_MailClientClick_f
  * @note use TEXT_UFOPEDIA_MAIL in menuText array (33)
+ * @sa CP_GetUnreadMails
  */
 static void UP_OpenMail_f (void)
 {
@@ -962,6 +998,8 @@ static void UP_OpenMail_f (void)
 
 	/* FIXME: not all MSG_RESEARCH appear in our 'mailclient' */
 	*upText = '\0';
+	gd.anzUnreadMails = 0;
+
 	while (m) {
 		switch (m->type) {
 		case MSG_RESEARCH:
@@ -1075,9 +1113,9 @@ extern void UP_ParseUpChapters (char *id, char **text)
 			break;
 		if (*token == '}')
 			break;
-		if ( *token == '_' )
+		if (*token == '_')
 			token++;
-		if ( !*token )
+		if (!*token)
 			continue;
 		Q_strncpyz(gd.upChapters[gd.numChapters].name, _(token), MAX_VAR);
 

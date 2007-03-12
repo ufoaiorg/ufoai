@@ -3889,11 +3889,9 @@ message_t *MN_AddNewMessage (const char *title, const char *text, qboolean popup
 		break;
 	case MSG_RESEARCH:
 		assert(pedia);
-		/* proposal and re */
-		gd.anzUnreadMails++;
-		/* no break here! count the news, too */
 	case MSG_NEWS:
-		gd.anzUnreadMails++;
+		/* reread the new mails in UP_GetUnreadMails */
+		gd.anzUnreadMails = -1;
 	case MSG_CONSTRUCTION:
 	case MSG_UFOSPOTTED:
 	case MSG_TERRORSITE:
