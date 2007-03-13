@@ -1591,7 +1591,7 @@ void G_ActorDie (edict_t * ent, int state)
 	Com_DPrintf("G_ActorDie: kill actor on team %i\n", ent->team);
 	switch (state) {
 	case STATE_DEAD:
-		ent->state |= (1 + rand() % 3);
+		ent->state |= (1 + rand() % MAX_DEATH);
 		break;
 	case STATE_STUN:
 		ent->STUN = 0;

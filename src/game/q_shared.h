@@ -1356,10 +1356,12 @@ typedef enum {
 #define SF_BOUNCING         4
 #define SF_BOUNCED          8
 
+#define MAX_DEATH	3	/**< @sa STATE_DEAD */
+
 /* state flags */
 /* public */
 #define STATE_PUBLIC		0x00FF
-#define STATE_DEAD			0x0003	/**< 0 alive, 1-3 different deaths */
+#define STATE_DEAD			0x0003	/**< 0 alive, 1-3 different deaths @sa MAX_DEATH*/
 #define STATE_CROUCHED		0x0004
 #define STATE_PANIC			0x0008
 
