@@ -209,6 +209,7 @@ void LM_Perish (sizebuf_t * sb)
 
 /**
  * @brief
+ * @note e.g. func_breakable or func_door with health
  */
 void LM_Explode (sizebuf_t * sb)
 {

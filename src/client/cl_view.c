@@ -231,7 +231,7 @@ void CL_ParseEntitystring (char *es)
 
 			/* filter interesting keys */
 			if (!Q_strcmp(keyname, "classname"))
-				Q_strncpyz(classname, com_token, 64);
+				Q_strncpyz(classname, com_token, MAX_VAR);
 
 			if (!Q_strcmp(keyname, "model"))
 				Q_strncpyz(model, com_token, MAX_VAR);
@@ -294,8 +294,8 @@ void CL_ParseEntitystring (char *es)
 		/* analyze values */
 		if (!Q_strcmp(classname, "worldspawn")) {
 			/* init sun */
-			angles[YAW] *= 3.14159 / 180;
-			angles[PITCH] *= 3.14159 / 180;
+			angles[YAW] *= torad;
+			angles[PITCH] *= torad;
 			map_sun.dir[0] = cos(angles[YAW]) * sin(angles[PITCH]);
 			map_sun.dir[1] = sin(angles[YAW]) * sin(angles[PITCH]);
 			map_sun.dir[2] = cos(angles[PITCH]);
@@ -351,8 +351,8 @@ void CL_ParseEntitystring (char *es)
 					lm->lightcolor[3] = light;
 					lm->lightambient[3] = 1.0;
 
-					lightangles[YAW] *= 3.14159 / 180;
-					lightangles[PITCH] *= 3.14159 / 180;
+					lightangles[YAW] *= torad;
+					lightangles[PITCH] *= torad;
 					lm->lightorigin[0] = cos(lightangles[YAW]) * sin(lightangles[PITCH]);
 					lm->lightorigin[1] = sin(lightangles[YAW]) * sin(lightangles[PITCH]);
 					lm->lightorigin[2] = cos(lightangles[PITCH]);
@@ -375,7 +375,7 @@ void CL_ParseEntitystring (char *es)
 			Com_Printf("implement misc_decal\n");
 		} else if (!Q_strcmp(classname, "func_breakable")
 			|| !Q_strcmp(classname, "func_door")) {
-			angles[0] = angles[1] = angles[2] = 0.0;
+			VectorClear(angles);
 			CL_AddLocalModel(model, particle, origin, angles, entnum, (spawnflags & 0xFF));
 			Com_DPrintf("Add %i as local model (%s)\n", entnum, classname);
 		}
