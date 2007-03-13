@@ -25,7 +25,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "qcommon.h"
 #define	ON_EPSILON	0.1
-/* TODO: What is PH? */
+/* player height - 12 to be able to walk trough doors
+ * UNIT_HEIGHT is the height of one level */
 #define PH		(UNIT_HEIGHT-12)
 #define QUANT	4
 #define GRENADE_ALPHAFAC	0.7
@@ -219,6 +220,8 @@ static void CMod_LoadSubmodels (lump_t * l)
 		for (j = 0; j < 3; j++) {
 			out->mins[j] = LittleFloat(in->mins[j]) - 1 + shift[j];
 			out->maxs[j] = LittleFloat(in->maxs[j]) + 1 + shift[j];
+			/* FIXME: why don't we shift the origin, too? It is relative to the
+			 * global origin, too - or am I wrong? */
 			out->origin[j] = LittleFloat(in->origin[j]);
 		}
 		out->headnode = LittleLong(in->headnode);
@@ -429,7 +432,7 @@ static void CMod_LoadPlanes (lump_t * l)
 		out->type = LittleLong(in->type);
 		out->signbits = bits;
 
-		/* shift */
+		/* shift (map assembly) */
 		for (j = 0; j < 3; j++)
 			out->dist += out->normal[j] * shift[j];
 	}
@@ -507,7 +510,9 @@ static void CMod_LoadBrushSides (lump_t * l)
 }
 
 /**
- * @brief Source will be set to the end of the compressed data block!
+ * @brief
+ * @param[in] source Source will be set to the end of the compressed data block!
+ * @sa CompressRouting (ufo2map)
  */
 static int Cmod_DeCompressRouting (byte ** source, byte * dataStart)
 {
@@ -2745,6 +2750,7 @@ void Grid_RecalcRouting (struct routing_s *map, char *name, char **list)
 
 	/**
 	 * FIXME: what's this?
+	 * if deactivated it will break pathfinding - if activated, too ;-)
 	 */
 #if 0
 	max[0] = min(max[0] + 2, WIDTH - 1);
