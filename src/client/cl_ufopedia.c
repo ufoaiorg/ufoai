@@ -351,6 +351,8 @@ extern int UP_GetUnreadMails (void)
 	if (gd.anzUnreadMails != -1)
 		return gd.anzUnreadMails;
 
+	gd.anzUnreadMails = 0;
+
 	while (m) {
 		switch (m->type) {
 		case MSG_RESEARCH:
@@ -998,7 +1000,6 @@ static void UP_OpenMail_f (void)
 
 	/* FIXME: not all MSG_RESEARCH appear in our 'mailclient' */
 	*upText = '\0';
-	gd.anzUnreadMails = 0;
 
 	while (m) {
 		switch (m->type) {

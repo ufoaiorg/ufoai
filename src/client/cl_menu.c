@@ -870,7 +870,7 @@ static qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 	tx = x - node->pos[0];
 	ty = y - node->pos[1];
 	if (node->align > 0 && node->align < ALIGN_LAST) {
-		switch ( node->align % 3 ) {
+		switch (node->align % 3) {
 		/* center */
 		case 1:
 			tx = x - node->pos[0] + sx / 2;
