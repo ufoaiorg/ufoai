@@ -700,7 +700,7 @@ static qboolean CM_TestConnection (routing_t * map, int x, int y, int z, unsigne
 	PosToVec(pos, start);
 	start[2] += h * 4;
 	assert(dir < DIRECTIONS);
-	VectorSet(end, start[0] + UNIT_HEIGHT * dvecs[dir][0], start[1] + UNIT_HEIGHT* dvecs[dir][1], start[2]);
+	VectorSet(end, start[0] + (UNIT_HEIGHT / 2) * dvecs[dir][0], start[1] + (UNIT_HEIGHT / 2) * dvecs[dir][1], start[2]);
 
 	ax = x + dvecs[dir][0];
 	ay = y + dvecs[dir][1];
@@ -2725,6 +2725,7 @@ void Grid_PosToVec (struct routing_s *map, pos3_t pos, vec3_t vec)
  * @sa CM_InlineModel
  * @sa CM_CheckUnit
  * @sa CM_TestConnection
+ * @sa CMod_LoadSubmodels
  * @param[in] list The local models list
  */
 void Grid_RecalcRouting (struct routing_s *map, char *name, char **list)
@@ -2750,9 +2751,8 @@ void Grid_RecalcRouting (struct routing_s *map, char *name, char **list)
 
 	/**
 	 * FIXME: what's this?
-	 * if deactivated it will break pathfinding - if activated, too ;-)
 	 */
-#if 0
+#if 1
 	max[0] = min(max[0] + 2, WIDTH - 1);
 	max[1] = min(max[1] + 2, WIDTH - 1);
 	max[2] = min(max[2] + 2, HEIGHT - 1);
@@ -2776,8 +2776,8 @@ void Grid_RecalcRouting (struct routing_s *map, char *name, char **list)
 	for (z = min[2]; z < max[2]; z++)
 		for (y = min[1]; y < max[1]; y++)
 			for (x = min[0]; x < max[0]; x++)
-				/* check all 4 directions */
-				for (i = 0; i < 4; i++)
+				/* check all directions */
+				for (i = 0; i < DIRECTIONS; i++)
 					CM_TestConnection(map, x, y, z, i, qtrue);
 
 	inlineList = NULL;
