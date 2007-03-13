@@ -1009,6 +1009,8 @@ static void CL_ResearchType_f (void)
 	/* Nothing to research here. */
 	if (!researchListLength || !gd.numBases) {
 		Cbuf_ExecuteText(EXEC_NOW, "mn_pop");
+		if (!researchListLength)
+			MN_Popup(_("Notice"), _("Nothing to research"));
 	} else if (baseCurrent && !baseCurrent->hasLab) {
 		Cbuf_ExecuteText(EXEC_NOW, "mn_pop");
 		MN_Popup(_("Notice"), _("Build a laboratory first"));
