@@ -5,7 +5,7 @@ FILESYSTEM
 */
 #define MAX_MAPS 400
 extern char *maps[MAX_MAPS];
-extern int anzInstalledMaps;
+extern int numInstalledMaps;
 extern int mapInstalledIndex;
 
 typedef struct qFILE_s {

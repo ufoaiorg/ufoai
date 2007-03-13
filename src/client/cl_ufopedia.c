@@ -340,7 +340,7 @@ extern void UP_AircraftDescription (technology_t* t)
 
 /**
  * @brief Sets the amount of unread/new mails
- * @note This is called every campaign frame - to update gd.anzUnreadMails
+ * @note This is called every campaign frame - to update gd.numUnreadMails
  * just set it to -1 before calling this function
  * @sa CL_CampaignRun
  */
@@ -348,31 +348,31 @@ extern int UP_GetUnreadMails (void)
 {
 	message_t *m = messageStack;
 
-	if (gd.anzUnreadMails != -1)
-		return gd.anzUnreadMails;
+	if (gd.numUnreadMails != -1)
+		return gd.numUnreadMails;
 
-	gd.anzUnreadMails = 0;
+	gd.numUnreadMails = 0;
 
 	while (m) {
 		switch (m->type) {
 		case MSG_RESEARCH:
 			if (m->pedia->mail[TECHMAIL_PRE].read == qfalse)
-				gd.anzUnreadMails++;
+				gd.numUnreadMails++;
 			if (RS_IsResearched_ptr(m->pedia) && m->pedia->mail[TECHMAIL_RESEARCHED].read == qfalse)
-				gd.anzUnreadMails++;
+				gd.numUnreadMails++;
 			break;
 		case MSG_NEWS:
 			if (m->pedia->mail[TECHMAIL_PRE].from[0] && m->pedia->mail[TECHMAIL_PRE].read == qfalse)
-				gd.anzUnreadMails++;
+				gd.numUnreadMails++;
 			if (m->pedia->mail[TECHMAIL_RESEARCHED].from[0] && m->pedia->mail[TECHMAIL_RESEARCHED].read == qfalse)
-				gd.anzUnreadMails++;
+				gd.numUnreadMails++;
 			break;
 		default:
 			break;
 		}
 		m = m->next;
 	}
-	return gd.anzUnreadMails;
+	return gd.numUnreadMails;
 }
 
 /**
@@ -401,7 +401,7 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type)
 		if (!tech->mail[type].read) {
 			tech->mail[type].read = qtrue;
 			/* reread the unread mails in UP_GetUnreadMails */
-			gd.anzUnreadMails = -1;
+			gd.numUnreadMails = -1;
 		}
 		/* only if mail and mail_pre are available */
 		if (tech->numTechMails == TECHMAIL_MAX) {

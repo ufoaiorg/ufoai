@@ -3749,7 +3749,7 @@ static void MN_MapInfo (void)
 	Cvar_Set("mn_mappic3", "maps/shots/na.jpg");
 
 	/* check whether there are maps */
-	if (anzInstalledMaps == -1)
+	if (numInstalledMaps == -1)
 		return;
 
 	/* remove the day and night char */
@@ -3810,7 +3810,7 @@ static void MN_GetMaps_f (void)
  */
 static void MN_NextMap_f (void)
 {
-	if (mapInstalledIndex < anzInstalledMaps)
+	if (mapInstalledIndex < numInstalledMaps)
 		mapInstalledIndex++;
 	else
 		mapInstalledIndex = 0;
@@ -3825,7 +3825,7 @@ static void MN_PrevMap_f (void)
 	if (mapInstalledIndex > 0)
 		mapInstalledIndex--;
 	else
-		mapInstalledIndex = anzInstalledMaps;
+		mapInstalledIndex = numInstalledMaps;
 	MN_MapInfo();
 }
 
@@ -3891,7 +3891,7 @@ message_t *MN_AddNewMessage (const char *title, const char *text, qboolean popup
 		assert(pedia);
 	case MSG_NEWS:
 		/* reread the new mails in UP_GetUnreadMails */
-		gd.anzUnreadMails = -1;
+		gd.numUnreadMails = -1;
 	case MSG_CONSTRUCTION:
 	case MSG_UFOSPOTTED:
 	case MSG_TERRORSITE:

@@ -461,15 +461,15 @@ static int SV_CompleteMapCommand (const char *partial, const char **match)
 
 	len = strlen(partial);
 	if (!len) {
-		for (i = 0; i <= anzInstalledMaps; i++)
+		for (i = 0; i <= numInstalledMaps; i++)
 			Com_Printf("%s\n", maps[i]);
-		return anzInstalledMaps;
+		return numInstalledMaps;
 	}
 
 	localMatch[matches] = NULL;
 
 	/* search all matches and fill the localMatch array */
-	for (i = 0; i <= anzInstalledMaps; i++)
+	for (i = 0; i <= numInstalledMaps; i++)
 		if (!Q_strncmp(partial, maps[i], len)) {
 			Com_Printf("%s\n", maps[i]);
 			localMatch[matches++] = maps[i];
@@ -524,9 +524,9 @@ static void SV_ListMaps_f (void)
 
 	FS_GetMaps(qtrue);
 
-	for (i = 0; i <= anzInstalledMaps; i++)
+	for (i = 0; i <= numInstalledMaps; i++)
 		Com_Printf("%s\n", maps[i]);
-	Com_Printf("-----\n %i installed maps\n", anzInstalledMaps+1);
+	Com_Printf("-----\n %i installed maps\n", numInstalledMaps+1);
 }
 
 /**

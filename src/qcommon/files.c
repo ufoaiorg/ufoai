@@ -1232,7 +1232,7 @@ char *FS_NextScriptHeader (const char *files, char **name, char **text)
 
 /* global vars for maplisting */
 char *maps[MAX_MAPS];
-int anzInstalledMaps = -1;
+int numInstalledMaps = -1;
 static qboolean mapsInstalledInit = qfalse;
 int mapInstalledIndex = 0;
 
@@ -1255,13 +1255,13 @@ void FS_GetMaps (qboolean reset)
 	if (!reset && mapsInstalledInit)
 		return;
 	else if (mapsInstalledInit) {
-		Com_DPrintf("Free old list with %i entries\n", anzInstalledMaps);
-		for (i = 0; i < anzInstalledMaps; i++)
+		Com_DPrintf("Free old list with %i entries\n", numInstalledMaps);
+		for (i = 0; i < numInstalledMaps; i++)
 			free(maps[i]);
 	}
 
 	mapInstalledIndex = 0;
-	anzInstalledMaps = -1;
+	numInstalledMaps = -1;
 
 	while ((path = FS_NextPath(path)) != NULL) {
 		Com_sprintf(findname, sizeof(findname), "%s/maps/*.bsp", path);
@@ -1275,14 +1275,14 @@ void FS_GetMaps (qboolean reset)
 				status = CheckBSPFile(filename);
 				if (!status) {
 					/*searched a specific map? */
-					maps[anzInstalledMaps+1] = (char *) malloc(MAX_QPATH * sizeof(char));
-					if (maps[anzInstalledMaps+1] == NULL) {
+					maps[numInstalledMaps+1] = (char *) malloc(MAX_QPATH * sizeof(char));
+					if (maps[numInstalledMaps+1] == NULL) {
 						Com_Printf("Could not allocate memory in MN_GetMaps\n");
 						free(dirnames[i]);
 						continue;
 					}
-					Q_strncpyz(maps[anzInstalledMaps+1], filename, MAX_QPATH);
-					anzInstalledMaps++;
+					Q_strncpyz(maps[numInstalledMaps+1], filename, MAX_QPATH);
+					numInstalledMaps++;
 				} else
 					Com_Printf("invalid mapstatus: %i (%s)\n", status, dirnames[i]);
 				free(dirnames[i]);
@@ -1428,7 +1428,7 @@ void FS_Shutdown (void)
 
 	/* free malloc'ed space for maplist */
 	if (mapsInstalledInit) {
-		for (i=0; i<=anzInstalledMaps;i++)
+		for (i=0; i<=numInstalledMaps;i++)
 			free(maps[i]);
 	}
 }
