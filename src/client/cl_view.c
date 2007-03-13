@@ -231,19 +231,19 @@ void CL_ParseEntitystring (char *es)
 
 			/* filter interesting keys */
 			if (!Q_strcmp(keyname, "classname"))
-				Q_strncpyz(classname, com_token, MAX_VAR);
+				Q_strncpyz(classname, com_token, sizeof(classname));
 
 			if (!Q_strcmp(keyname, "model"))
-				Q_strncpyz(model, com_token, MAX_VAR);
+				Q_strncpyz(model, com_token, sizeof(model));
 
 			if (!Q_strcmp(keyname, "frame"))
 				frame = atoi(com_token);
 
 			if (!Q_strcmp(keyname, "anim"))
-				Q_strncpyz(animname, com_token, MAX_QPATH);
+				Q_strncpyz(animname, com_token, sizeof(animname));
 
 			if (!Q_strcmp(keyname, "particle"))
-				Q_strncpyz(particle, com_token, MAX_VAR);
+				Q_strncpyz(particle, com_token, sizeof(particle));
 
 			if (!Q_strcmp(keyname, "_color") || !Q_strcmp(keyname, "lightcolor"))
 				sscanf(com_token, "%f %f %f", &(color[0]), &(color[1]), &(color[2]));
@@ -361,7 +361,7 @@ void CL_ParseEntitystring (char *es)
 				lm->skin = skin;
 				lm->frame = frame;
 				if (!lm->frame)
-					Q_strncpyz(lm->animname, animname, MAX_QPATH);
+					Q_strncpyz(lm->animname, animname, sizeof(lm->animname));
 				else
 					Com_Printf("Warning: Model has frame and anim parameters - using frame (no animation)\n");
 			}
