@@ -894,7 +894,7 @@ Section "MappingTools" SEC02
   ; EULA
   File "..\..\..\contrib\*.doc"
   File "..\..\..\contrib\*.exe"
-  File "..\..\tools\ufo2map\*.exe"
+  File "..\..\..\ufo2map.exe"
   CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\MAP-Editor.lnk" "$INSTDIR\tools\q3radiant.exe" "" "$INSTDIR\tools\q3radiant.exe" 0
 SectionEnd
 
@@ -1036,9 +1036,9 @@ SectionEnd
 
 ; Section descriptions
 !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
-  !insertmacro MUI_DESCRIPTION_TEXT ${SEC01} ""
-  !insertmacro MUI_DESCRIPTION_TEXT ${SEC02} ""
-  !insertmacro MUI_DESCRIPTION_TEXT ${SEC03} ""
+  !insertmacro MUI_DESCRIPTION_TEXT ${SEC01} "The game and its data"
+  !insertmacro MUI_DESCRIPTION_TEXT ${SEC02} "Mapping (and modelling) tools and map source files"
+  !insertmacro MUI_DESCRIPTION_TEXT ${SEC03} "C-Source code for UFO:Alien Invasion"
 !insertmacro MUI_FUNCTION_DESCRIPTION_END
 
 
@@ -1055,7 +1055,6 @@ FunctionEnd
 
 Section Uninstall
   RMDIR /r $INSTDIR
-; TODO: Check whether this will remove the dir, too
   RMDIR $INSTDIR
   RMDir /r "$SMPROGRAMS\${PRODUCT_NAME}"
   Delete "$DESKTOP\${PRODUCT_NAME}.lnk"
