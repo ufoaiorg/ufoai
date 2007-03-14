@@ -200,7 +200,7 @@ qboolean Irc_Proto_Disconnect (void)
 qboolean Irc_Proto_Quit (const char *quitmsg)
 {
 	char msg[IRC_SEND_BUF_SIZE];
-	const int msg_len = Com_sprintf(msg, sizeof(msg) - 1, "QUIT %s\r\n", quitmsg);
+	const int msg_len = snprintf(msg, sizeof(msg) - 1, "QUIT %s\r\n", quitmsg);
 	msg[sizeof(msg) - 1] = '\0';
 	return Irc_Net_Send(msg, msg_len);	/* send immediately */
 }
