@@ -216,7 +216,7 @@ menu hospital_employee
 	pic	rank_img { pos "475 370" image "*cvar mn_chrrank_img" }
 	string	rank_lbl { pos "475 75" string "*cvar mn_chrrank" }
 
-	string pwr_lbl { pos "700 80"  string "_Power:" }
+	string pwr_lbl { pos "700 80"  string "_Strength:" }
 	string pwr_val { pos "975 80"  string "*cvar mn_tpwr" align ur }
 	pic pwr_rahmen { pos "707 98"  image menu/bar_rahmen }
 	bar pwr_bar    { pos "716 103" current "*cvar mn_vpwr" size "245 6" color "0 .8 0 1" max 100 align uc }
@@ -246,7 +246,7 @@ menu hospital_employee
 	pic hvy_rahmen { pos "707 258" image menu/bar_rahmen }
 	bar hvy_bar    { pos "716 263" current "*cvar mn_vhvy" size "245 6" color "0 .8 0 1" max 100 align uc }
 
-	string ass_lbl { pos "700 270" string "_Assault Guns:" }
+	string ass_lbl { pos "700 270" string "_Assault Weapons:" }
 	string ass_val { pos "975 270" string "*cvar mn_tass" align ur }
 	pic ass_rahmen { pos "707 288" image menu/bar_rahmen }
 	bar ass_bar    { pos "716 293" current "*cvar mn_vass" size "245 6" color "0 .8 0 1" max 100 align uc }

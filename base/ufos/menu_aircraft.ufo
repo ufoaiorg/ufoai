@@ -197,7 +197,7 @@ menu aircraft
 	pic button_equip
 	{
 		if "mn_aircraftinbase > 0"
-		tooltip	"_Equip weapons and shields"
+		tooltip	"_Equip aircraft components"
 		image	menu/button
 		pos	"45 380"
 		texl	"0 0"
@@ -410,7 +410,7 @@ menu aircraft_equip
 
 	pic airequip_button_shields
 	{
-		tooltip	"_Shields"
+		tooltip	"_Armour"
 		mousefx	true
 		pos		"670 4"
 		image	menu/button_blue
@@ -420,7 +420,7 @@ menu aircraft_equip
 	}
 	string airequip_button_shields_str
 	{
-		string "_Shields"
+		string "_Armour"
 		pos		"734 20"
 		align	uc
 	}

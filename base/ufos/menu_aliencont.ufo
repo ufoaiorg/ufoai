@@ -189,7 +189,7 @@ menu aliencont
 
 	string txt_alcheader_examinated
 	{
-	    string "_Examinated"
+	    string "_Examined"
 	    pos "220 130"
 	    color "0 .78 0 1"
 	}

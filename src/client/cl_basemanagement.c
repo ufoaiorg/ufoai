@@ -2342,7 +2342,7 @@ static void B_TransferEmptyAircraftStorage_f (void)
 
 	/* we can't unload if we are not in our homebase */
 	if (transferAircraft->status != AIR_HOME) {
-		MN_Popup(_("Notice"), _("Can't unload while we are not in the homebase"));
+		MN_Popup(_("Notice"), _("Can't unload while not at a base"));
 		return;
 	}
 
@@ -2397,7 +2397,7 @@ extern void B_TransferEnd (aircraft_t* aircraft)
 
 	/* maybe it was invaded in the meantime */
 	if (!b->founded) {
-		MN_Popup(_("Notice"), _("The base is not longer existent"));
+		MN_Popup(_("Notice"), _("The base doesn't exist anymore"));
 		return;
 	}
 
@@ -2471,7 +2471,7 @@ static void B_TransferStart_f (void)
 	}
 
 	if (transferAircraft->status != AIR_HOME) {
-		MN_Popup(_("Notice"), _("Can't start the transport mission while we are not in the homebase"));
+		MN_Popup(_("Notice"), _("Can't start a transport mission while not at base"));
 		return;
 	}
 

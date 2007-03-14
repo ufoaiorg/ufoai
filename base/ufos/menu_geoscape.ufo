@@ -207,7 +207,7 @@ menu map
 
 	pic bt_ufopedia
 	{
-		tooltip	"_Ufopedia"
+		tooltip	"_UFOpaedia"
 		image	menu/b_geobuttons
 		pos	 "172 544"
 		texl	"128 64"
@@ -339,7 +339,7 @@ menu popup_intercept_ready
 
 	pic bt_cancel
 	{
-		tooltip	"_Close this dialog"
+		tooltip	"_Close this dialogue"
 		image	menu/multi_buttons3
 		texh	"180 64"
 		texl	"0 33"
@@ -442,7 +442,7 @@ menu popup_transferbaselist
 
 	pic bt_cancel
 	{
-		tooltip	"_Close this dialog"
+		tooltip	"_Close this dialogue"
 		image	menu/multi_buttons3
 		texh	"180 64"
 		texl	"0 33"
@@ -530,7 +530,7 @@ menu popup_newbase
 
 	pic bt_cancel
 	{
-		tooltip	"_Close this dialog"
+		tooltip	"_Close this dialogue"
 		image	menu/multi_buttons3
 		texh	"256 64"
 		texl	"0 33"
@@ -627,7 +627,7 @@ menu popup_intercept
 
 	pic bt_cancel
 	{
-		tooltip	"_Close this dialog"
+		tooltip	"_Close this dialogue"
 		image	menu/multi_buttons3
 		texh	"256 64"
 		texl	"0 33"
@@ -678,7 +678,7 @@ menu popup_baseattack
 
 	pic bt_cancel
 	{
-		tooltip	"_Close this dialog"
+		tooltip	"_Close this dialogue"
 		image	menu/multi_buttons3
 		texh	"180 64"
 		texl	"0 33"
@@ -770,7 +770,7 @@ menu popup_multi_selection
 
 	pic bt_cancel
 	{
-		tooltip	"_Close this dialog"
+		tooltip	"_Close this dialogue"
 		image	menu/multi_buttons3
 		texh	"256 64"
 		texl	"0 33"
@@ -838,7 +838,7 @@ menu popup_aircraft
 
 	pic bt_cancel
 	{
-		tooltip	"_Close this dialog"
+		tooltip	"_Close this dialogue"
 		image	menu/multi_buttons3
 		texh	"256 64"
 		texl	"0 33"
@@ -896,7 +896,7 @@ menu popup
 	}
 	pic bt_ok
 	{
-		tooltip	"_Close this dialog"
+		tooltip	"_Close this dialogue"
 		image	menu/multi_buttons3
 		texh	"256 64"
 		texl	"0 33"

@@ -191,7 +191,7 @@ extern void UFO_CampaignCheckEvents (void)
 		/* Check if ufo appears or disappears on radar */
 		if (visible != ufo->visible) {
 			if (ufo->visible) {
-				MN_AddNewMessage(_("Notice"), _("UFO appears on our radar"), qfalse, MSG_STANDARD, NULL);
+				MN_AddNewMessage(_("Notice"), _("UFO appears from our radar"), qfalse, MSG_STANDARD, NULL);
 				CL_GameTimeStop();
 			}
 			else {

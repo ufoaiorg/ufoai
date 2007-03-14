@@ -154,7 +154,7 @@ sequence credits
 
 	2dobj winter_text
 	{
-		text	"_Storywriter"
+		text	"_Lead Story Developer"
 		pos		"50 50"		align	ul
 		color	"0 1 0 0"	fade	"0 0 0 1"
 	}
@@ -206,7 +206,7 @@ sequence credits
 
 	2dobj btaxis_text
 	{
-		text	"_Co-Storywriter"
+		text	"_Story Developer"
 		pos		"50 50"		align	ul
 		color	"0 1 0 0"	fade	"0 0 0 1"
 	}

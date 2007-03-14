@@ -46,7 +46,7 @@ menu bases
 
 	pic back_geo
 	{
-		tooltip	"_Back to worldview"
+		tooltip	"_Back to geoscape"
 		image	menu/button_mapmen_options2
 		pos	"950 10"
 		texl	"0 64"
@@ -71,7 +71,7 @@ menu bases
 	{
 		// only if base is not under attack
 		if "mn_base_status_id != 1"
-		tooltip	"_Build base-facilities"
+		tooltip	"_Build base facilities"
 		image	menu/button
 		pos	"755 130"
 		texl	"0 0"
@@ -88,7 +88,7 @@ menu bases
 	{
 		// only if base is not under attack
 		if "mn_base_status_id == 1"
-		tooltip	"_Build base-facilities"
+		tooltip	"_Build base facilities"
 		image	menu/button
 		pos	"755 130"
 		texl	"0 64"
@@ -167,7 +167,7 @@ menu bases
 	{
 		// only if base is not under attack
 		if "mn_base_status_id == 1"
-		tooltip	"_Build base-facilities"
+		tooltip	"_Build base facilities"
 		image	menu/button
 		pos	"755 270"
 		texl	"0 64"
@@ -238,7 +238,7 @@ menu bases
 	{
 		// only if base is not under attack
 		if "mn_base_status_id == 1"
-		tooltip	"_Build base-facilities"
+		tooltip	"_Build base facilities"
 		image	menu/button
 		pos	"755 410"
 		texl	"0 64"
@@ -311,7 +311,7 @@ menu bases
 	{
 		// only if base is not under attack
 		if "mn_base_status_id == 1"
-		tooltip	"_Build base-facilities"
+		tooltip	"_Build base facilities"
 		image	menu/button
 		pos	"755 550"
 		texl	"0 64"
@@ -490,14 +490,14 @@ menu building_destroy
 	{
 		font	f_small
 		color	"1 1 1 1"
-		string	"_Are you sure, that you want to destroy this building?"
+		string	"_Are you sure you want to destroy this building?"
 		pos	"512 358"
 		align	uc
 	}
 
 	pic bt_cancel
 	{
-		tooltip	"_Close this dialog"
+		tooltip	"_Close this dialogue"
 		image	menu/multi_buttons3
 		texh	"180 64"
 		texl	"0 33"

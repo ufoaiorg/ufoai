@@ -237,7 +237,7 @@ static void TR_TransferEmptyAircraftStorage_f (void)
 
 	/* We can't unload if we are not in our homebase. */
 	if (transferAircraft->status != AIR_HOME) {
-		MN_Popup(_("Notice"), _("Can't unload while we are not in the homebase."));
+		MN_Popup(_("Notice"), _("Can't unload while not at a base"));
 		return;
 	}
 
@@ -416,7 +416,7 @@ static void TR_TransferStart_f (void)
 		destination = &gd.bases[transferidx->destBase];
 
 	if (transferAircraft->status != AIR_HOME) {
-		MN_Popup(_("Notice"), _("Can't start the transport mission while we are not in the homebase"));
+		MN_Popup(_("Notice"), _("Can't start a transport mission while not at base"));
 		return;
 	}
 

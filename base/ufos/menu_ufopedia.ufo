@@ -108,7 +108,7 @@ menu ufopedia
 
 	pic button_exit
 	{
-		tooltip "_Leave Ufopedia"
+		tooltip "_Leave UFOpaedia"
 		image	hud/buttons2
 		mousefx true
 		pos		"950 720"

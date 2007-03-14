@@ -358,7 +358,7 @@ menu employees
 		pos "475 75" string "*cvar mn_chrrank"
 	}
 
-	string pwr_lbl { pos "700 80"  string "_Power:" }
+	string pwr_lbl { pos "700 80"  string "_Strength:" }
 	string pwr_val
 	{
 		if "mn_show_employee == 1"
@@ -438,7 +438,7 @@ menu employees
 		pos "716 263" current "*cvar mn_vhvy" size "245 6" color "0 .8 0 1" max 100 align uc
 	}
 
-	string ass_lbl { pos "700 270" string "_Assault Guns:" }
+	string ass_lbl { pos "700 270" string "_Assault Weapons:" }
 	string ass_val
 	{
 		if "mn_show_employee == 1"
@@ -478,14 +478,14 @@ menu employees
 		pos "716 353" current "*cvar mn_vexp" size "245 6" color "0 .8 0 1" max 100 align uc
 	}
 
-	string	missions_lbl { pos "700 380" string "_Survived Missions:" }
+	string	missions_lbl { pos "700 380" string "_Missions Performed:" }
 	string	missions_val
 	{
 		if "mn_show_employee == 1"
 		pos "975 380" string "*cvar mn_chrmis" align ur
 	}
 
-	string	kills_lbl { pos "700 400" string "_Killed Enemies:" }
+	string	kills_lbl { pos "700 400" string "_Enemies Killed:" }
 	string	kills_val
 	{
 		if "mn_show_employee == 1"

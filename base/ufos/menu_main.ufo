@@ -67,7 +67,7 @@ menu main
 	{
 		font	f_menubig
 		color	"0 0.5 0 1"
-		string	"_Singleplayer"
+		string	"_Single-player"
 		pos	"768 180"
 		align	uc
 	}
