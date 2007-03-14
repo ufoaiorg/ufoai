@@ -342,7 +342,7 @@ void RS_AssignTechIdxs (requirements_t *req)
 			break;
 		case RS_LINK_ITEM:
 			/* Get index in item-list. */
-			req->idx[i] = RS_GetItem(req->id[i]);
+			req->idx[i] = Com_GetItemByID(req->id[i]);
 			break;
 		case RS_LINK_EVENT:
 			/* TODO: Get index of event in event-list. */
@@ -1792,33 +1792,6 @@ void RS_GetProvided (char *id, char *provided)
 	Com_Printf("RS_GetProvided: research item \"%s\" not found.\n", id);
 }
 #endif
-
-/**
- * @brief Returns the index of this item in the inventory.
- * @todo This function should be located in a inventory-related file.
- * @note id may not be null or empty
- * @param[in] id the item id in our object definition array (csi.ods)
- */
-int RS_GetItem (const char *id)
-{
-	int i;
-	objDef_t *item = NULL;
-
-#ifdef DEBUG
-	if (!id || !*id)
-		Com_Printf("RS_GetItem: Called with empty id\n");
-#endif
-	for (i = 0; i < csi.numODs; i++) {	/* i = item index */
-		item = &csi.ods[i];
-		if (!Q_strncmp(id, item->id, MAX_VAR)) {
-			return i;
-		}
-	}
-
-	Com_Printf("RS_GetItem: Item \"%s\" not found.\n", id);
-	return -1;
-}
-
 
 /**
  * @brief Returns the tech pointer

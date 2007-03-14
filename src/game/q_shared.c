@@ -3949,6 +3949,36 @@ void Com_InventoryList_f (void)
 }
 
 /**
+ * @brief Returns the index of this item in the inventory.
+ * @todo This function should be located in a inventory-related file.
+ * @note id may not be null or empty
+ * @note previously known as RS_GetItem
+ * @param[in] id the item id in our object definition array (csi.ods)
+ */
+int Com_GetItemByID (const char *id)
+{
+	int i;
+	objDef_t *item = NULL;
+
+#ifdef DEBUG
+	if (!id || !*id) {
+		Com_Printf("Com_GetItemByID: Called with empty id\n");
+		return -1;
+	}
+#endif
+
+	for (i = 0; i < CSI->numODs; i++) {	/* i = item index */
+		item = &CSI->ods[i];
+		if (!Q_strncmp(id, item->id, MAX_VAR)) {
+			return i;
+		}
+	}
+	
+	Com_Printf("Com_GetItemByID: Item \"%s\" not found.\n", id);
+	return -1;
+}
+
+/**
  * @brief Checks if an item can be used to reload a weapon.
  * @param[in] od The object definition of the ammo.
  * @param[in] weapon_idx The index of the weapon (in the inventory) to check the item with.
@@ -3990,8 +4020,10 @@ int INV_FiredefsIDXForWeapon (objDef_t *od, int weapon_idx)
 {
 	int i;
 
-	if (!od)
+	if (!od) {
+		Com_DPrintf("INV_FiredefsIDXForWeapon: object definition is NULL.\n");
 		return -1;
+	}
 
 	if (weapon_idx == NONE) {
 		Com_DPrintf("INV_FiredefsIDXForWeapon: bad weapon_idx (NONE) in item '%s' - using default weapon/firemodes.\n", od->id);
@@ -4003,6 +4035,11 @@ int INV_FiredefsIDXForWeapon (objDef_t *od, int weapon_idx)
 		if (weapon_idx == od->weap_idx[i])
 			return i;
 	}
+	
+	/* No firedef index found for this weapon/ammo. */
+#ifdef DEBUG
+	Com_DPrintf("INV_FiredefsIDXForWeapon: No firedef index found for weapon. od:%s weap_idx:%i).\n", od->id, weapon_idx);
+#endif
 	return -1;
 }
 
