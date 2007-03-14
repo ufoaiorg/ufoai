@@ -956,6 +956,10 @@ extern void SV_Init (void)
 	if (dedicated->value)
 		Cvar_Set("maxclients", "8");
 
+	/* to make sure, that all values are set to 1on1 */
+	Cvar_Set("gametype", "2on2");
+	Cvar_Set("gametype", "1on1");
+
 	sv_maxclients->modified = qfalse;
 
 	SZ_Init(&net_message, net_message_buffer, sizeof(net_message_buffer));

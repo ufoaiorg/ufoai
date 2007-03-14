@@ -1573,6 +1573,8 @@ extern void Qcommon_Init (int argc, char **argv)
 		MN_PrecacheMenus();
 
 	CL_InitAfter();
+#else
+	Com_AddObjectLinks();	/* Add tech links + ammo<->weapon links to items.*/
 #endif
 
 	Com_Printf("====== UFO Initialized ======\n\n");
