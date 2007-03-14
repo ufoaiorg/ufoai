@@ -1347,7 +1347,7 @@ int FS_WriteFile (const void *buffer, size_t len, const char *filename)
 	qFILE f;
 	int c, lencheck;
 
-	FS_CreatePath((char *) filename);
+	FS_CreatePath(filename);
 
 	f.f = fopen(filename, "wb");
 

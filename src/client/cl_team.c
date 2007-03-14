@@ -1182,7 +1182,7 @@ static void CL_AssignSoldier_f (void)
 /**
  * @brief Saves a team
  */
-static qboolean CL_SaveTeam (char *filename)
+static qboolean CL_SaveTeam (const char *filename)
 {
 	sizebuf_t sb;
 	byte buf[MAX_TEAMDATASIZE];
@@ -1192,9 +1192,6 @@ static qboolean CL_SaveTeam (char *filename)
 
 	assert(baseCurrent);
 	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
-
-	/* create the save dir - if needed */
-	FS_CreatePath(filename);
 
 	/* create data */
 	SZ_Init(&sb, buf, MAX_TEAMDATASIZE);
