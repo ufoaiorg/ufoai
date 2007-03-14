@@ -435,6 +435,8 @@ float G_Vis (int team, edict_t * from, edict_t * check, int flags)
 
 /**
  * @brief test if check is visible by team (or if visibility changed?)
+ * @sa G_CheckVisTeam
+ * @sa AI_FighterCalcGuete
  */
 int G_TestVis (int team, edict_t * check, int flags)
 {
@@ -459,6 +461,7 @@ int G_TestVis (int team, edict_t * check, int flags)
 
 /**
  * @brief
+ * @sa G_TestVis
  */
 int G_CheckVisTeam (int team, edict_t * check, qboolean perish)
 {
@@ -500,6 +503,7 @@ int G_CheckVisTeam (int team, edict_t * check, qboolean perish)
 
 /**
  * @brief
+ * @sa G_CheckVisTeam
  */
 int G_CheckVis (edict_t * check, qboolean perish)
 {
