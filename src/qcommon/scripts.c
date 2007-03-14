@@ -1306,23 +1306,27 @@ MAIN SCRIPT PARSING FUNCTION
  */
 extern void Com_AddObjectLinks (void)
 {
-#ifndef DEDICATED_ONLY
 	objDef_t *od = NULL;
 	int i;
 	byte j, k;
+#ifndef DEDICATED_ONLY
 	technology_t *tech = NULL;
+#endif
 
 	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
+
+#ifndef DEDICATED_ONLY
 		/* Add links to technologies. */
 		tech = RS_GetTechByProvided(od->id);
 		od->tech = tech;
 		if (!od->tech) {
 			Com_Printf("Com_AddObjectLinks: Could not find a valid tech for item %s\n", od->id);
 		}
+#endif
 
 		/* Add links to weapons. */
 		for (j = 0; j < od->numWeapons; j++ ) {
-			od->weap_idx[j] = RS_GetItem(od->weap_id[j]);
+			od->weap_idx[j] = Com_GetItemByID(od->weap_id[j]);
 			assert(od->weap_idx[j] != -1);
 			/* Back-link the obj-idx inside the fds */
 			for (k = 0; k < od->numFiredefs[j]; k++ ) {
@@ -1330,34 +1334,6 @@ extern void Com_AddObjectLinks (void)
 			}
 		}
 	}
-#endif
-
-#if 0
-/* TODO: can we use this for all compile-flags? */
-	objDef_t *od = NULL;
-	int i;
-	byte j, k;
-	int i2;
-	objDef_t *od2 = NULL;
-
-	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
-		/* Add links to weapons. */
-
-		for (j = 0; j < od->numWeapons; j++ ) {
-			for (i2 = 0, od2 = csi.ods; i2 < csi.numODs; i2++, od2++) {
-				if (!Q_strncmp(od->weap_id[j], od2->id, MAX_VAR)) {
-					od->weap_idx[j] = i2;
-					break;
-				}
-			}
-
-			/* Back-link the obj-idx inside the fds */
-			for (k = 0; k < od->numFiredefs[j]; k++ ) {
-				od->fd[j][k].obj_idx = i;
-			}
-		}
-	}
-#endif
 }
 
 /**

@@ -1423,6 +1423,7 @@ typedef enum {
 
 void Com_PrintItemDescription(int i);
 void Com_InventoryList_f(void);
+int Com_GetItemByID (const char *id);
 qboolean INV_LoadableInWeapon(objDef_t *od, int weapon_idx);
 int INV_FiredefsIDXForWeapon(objDef_t *od, int weapon_idx);
 int Com_GetDefaultReactionFire(objDef_t *ammo, int weapon_fds_idx);

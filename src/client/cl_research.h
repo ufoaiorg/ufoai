@@ -192,7 +192,6 @@ technology_t *RS_GetTechByProvided(const char *id_provided);
 technology_t* RS_GetTechByIDX(int tech_idx);
 technology_t *RS_GetTechWithMostScientists(int base_idx);
 int RS_GetTechIdxByName(const char *name);
-int RS_GetItem(const char *id);
 void INV_EnableAutosell(technology_t *tech);
 
 /* ufopedia function - but needs technology_t */
