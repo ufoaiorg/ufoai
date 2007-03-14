@@ -956,9 +956,11 @@ extern void SV_Init (void)
 	if (dedicated->value)
 		Cvar_Set("maxclients", "8");
 
+#ifdef DEDICATED_ONLY
 	/* to make sure, that all values are set to 1on1 */
 	Cvar_Set("gametype", "2on2");
 	Cvar_Set("gametype", "1on1");
+#endif
 
 	sv_maxclients->modified = qfalse;
 
