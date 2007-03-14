@@ -3990,8 +3990,10 @@ int INV_FiredefsIDXForWeapon (objDef_t *od, int weapon_idx)
 {
 	int i;
 
-	if (!od)
+	if (!od) {
+		Com_DPrintf("INV_FiredefsIDXForWeapon: object definition is NULL.\n");
 		return -1;
+	}
 
 	if (weapon_idx == NONE) {
 		Com_DPrintf("INV_FiredefsIDXForWeapon: bad weapon_idx (NONE) in item '%s' - using default weapon/firemodes.\n", od->id);
@@ -4003,6 +4005,8 @@ int INV_FiredefsIDXForWeapon (objDef_t *od, int weapon_idx)
 		if (weapon_idx == od->weap_idx[i])
 			return i;
 	}
+	
+	/* No firedef index found for this weapon/ammo. */
 	return -1;
 }
 
