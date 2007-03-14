@@ -382,17 +382,17 @@ static void SCR_DrawLoading (void)
 	if (cl.configstrings[CS_TILES][0]) {
 		mapmsg = va(_("Loading Map [%s]"), _(cl.configstrings[CS_MAPTITLE]));
 		re.FontDrawString("f_menubig", ALIGN_UC,
-			(int)(viddef.width * 0.5),
-			(int)(viddef.height * 0.5 - 60),
-			0, 1, viddef.width, viddef.height, 50, mapmsg, 0, 0, NULL, qfalse);
+			(int)(VID_NORM_WIDTH / 2),
+			(int)(VID_NORM_HEIGHT / 2 - 60),
+			0, 1, VID_NORM_WIDTH, VID_NORM_HEIGHT, 50, mapmsg, 0, 0, NULL, qfalse);
 	}
 
 	re.FontDrawString("f_menu", ALIGN_UC,
-		(int)(viddef.width * 0.5),
-		(int)(viddef.height * 0.5),
-		0, 1, viddef.width, viddef.height, 50, loadingMessages, 0, 0, NULL, qfalse);
+		(int)(VID_NORM_WIDTH / 2),
+		(int)(VID_NORM_HEIGHT / 2),
+		0, 1, VID_NORM_WIDTH, VID_NORM_HEIGHT, 50, loadingMessages, 0, 0, NULL, qfalse);
 
-	SCR_DrawLoadingBar((int)(viddef.width * 0.5) - 300, viddef.height - 30, 600, 20, (int)loadingPercent);
+	SCR_DrawLoadingBar((int)(VID_NORM_WIDTH / 2) - 300, VID_NORM_HEIGHT - 30, 600, 20, (int)loadingPercent);
 }
 
 /**
@@ -654,7 +654,7 @@ static void SCR_DrawString (int x, int y, const char *string, qboolean bitmapFon
 			string++;
 		}
 	} else
-		re.FontDrawString("f_verysmall", ALIGN_UL, x, y, 0, 0, viddef.width, viddef.height, 12, string, 0, 0, NULL, qfalse);
+		re.FontDrawString("f_verysmall", ALIGN_UL, x, y, 0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, 12, string, 0, 0, NULL, qfalse);
 }
 
 /**

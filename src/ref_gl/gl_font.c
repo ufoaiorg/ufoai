@@ -479,6 +479,9 @@ static void Font_ConvertChars (char *buffer)
  * @param[in] scroll_pos Starting line in this node (due to scrolling)
  * @param[in] cur_line Current line (see lineHeight)
  * @param[in] increaseLine If true cur_line is increased with every linebreak
+ * @note the x, y, width and height values are all normalized here - don't use the
+ * viddef settings for drawstring calls - make them all relative to VID_NORM_WIDTH
+ * and VID_NORM_HEIGHT
  */
 int Font_DrawString (const char *fontID, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight,
 	const int lineHeight, const char *c, int box_height, int scroll_pos, int *cur_line, qboolean increaseLine)
