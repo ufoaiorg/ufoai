@@ -55,6 +55,7 @@ researched rslist_human
 	rs_building_lab
 	rs_building_hospital
 	rs_building_small_ufo_hangar
+	rs_building_large_ufo_hangar
 	rs_craft_dropship
 	rs_craft_stiletto_interceptor
 	rs_ugv_phoenix

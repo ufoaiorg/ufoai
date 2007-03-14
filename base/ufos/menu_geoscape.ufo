@@ -175,6 +175,18 @@ menu map
 	// buttons
 	// ==================
 
+	// FIXME: another icon
+	pic bt_mailclient
+	{
+		tooltip	"_INBOX"
+		image	menu/mailclient
+		texl	"0 0"
+		texh	"32 32"
+		pos		"300 32"
+		mousefx true
+		click	{ cmd "mn_push ufopedia_mail" }
+	}
+
 	pic bt_stats
 	{
 		tooltip	"_Organisation statistics"
@@ -247,17 +259,6 @@ menu map
 				*bt_menu texl "64 0"
 				*bt_menu texh "128 64"
 			}
-	}
-	pic mailclient_show
-	{
-//		if "mn_unreadmails > 0"
-		tooltip	"_New mails available"
-		image	menu/mailclient
-		texl	"0 0"
-		texh	"32 32"
-		pos		"300 32"
-		mousefx true
-		click	{ cmd "mn_push ufopedia_mail" }
 	}
 
 	pic messagesystem_show

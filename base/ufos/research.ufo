@@ -645,6 +645,19 @@ tech rs_weapon_laserammo
 	description	"_laser_ammo_txt"
 	pre_description	"_laser_ammo_pre_txt"
 
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_D-F Cartridge"
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_D-F Cartridge"
+	}
 	require_AND
 	{
 		tech rs_laser
@@ -2318,7 +2331,7 @@ tech rs_building_small_ufo_hangar
 	}
 
 	provides	building_small_ufo_hangar
-	time	4000
+	time	0
 }
 
 tech rs_building_large_ufo_hangar
@@ -2334,7 +2347,7 @@ tech rs_building_large_ufo_hangar
 	}
 
 	provides	building_large_ufo_hangar
-	time	6000
+	time	0
 }
 
 tech rs_building_workshop

@@ -1997,13 +1997,14 @@ qboolean Com_sprintf (char *dest, size_t size, const char *fmt, ...)
 
 	bigbuffer[sizeof(bigbuffer)-1] = 0;
 
+	Q_strncpyz(dest, bigbuffer, size);
+
 	if (len >= size) {
 #ifdef PARANOID
 		Com_Printf("Com_sprintf: overflow of %Zu in %Zu\n", len, size);
 #endif
 		return qfalse;
 	}
-	Q_strncpyz(dest, bigbuffer, size);
 	return qtrue;
 }
 
@@ -3973,7 +3974,7 @@ int Com_GetItemByID (const char *id)
 			return i;
 		}
 	}
-	
+
 	Com_Printf("Com_GetItemByID: Item \"%s\" not found.\n", id);
 	return -1;
 }
@@ -4035,7 +4036,7 @@ int INV_FiredefsIDXForWeapon (objDef_t *od, int weapon_idx)
 		if (weapon_idx == od->weap_idx[i])
 			return i;
 	}
-	
+
 	/* No firedef index found for this weapon/ammo. */
 #ifdef DEBUG
 	Com_DPrintf("INV_FiredefsIDXForWeapon: No firedef index found for weapon. od:%s weap_idx:%i).\n", od->id, weapon_idx);
