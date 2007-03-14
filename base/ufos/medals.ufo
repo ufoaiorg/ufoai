@@ -56,7 +56,7 @@ rank worker
 rank rookie
 {
 	name		"_Rifleman"
-	shortname	"_Rifleman"
+	shortname	"_Rfn"
 	image		"hud/rank_01"
 	type		EMPL_SOLDIER
 }
