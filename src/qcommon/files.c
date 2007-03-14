@@ -909,6 +909,9 @@ char *FS_NextPath (const char *prevpath)
 	return NULL;
 }
 
+/**
+ * @brief Print all searchpaths
+ */
 static void FS_Info_f (void)
 {
 	searchpath_t *search;
@@ -920,7 +923,7 @@ static void FS_Info_f (void)
 		if (search->pack == NULL)
 			Com_Printf("...path: '%s'\n", search->filename);
 		else
-			Com_Printf("...pakfile: '%s'\n", search->filename);
+			Com_Printf("...pakfile: '%s'\n", search->pack->filename);
 	}
 }
 

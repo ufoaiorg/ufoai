@@ -552,7 +552,7 @@ void VID_CheckChanges (void)
 		cls.disable_screen = qtrue;
 
 		/* try generic refresh lib first */
-		Com_sprintf( name, sizeof(name), "ref_%s.dll", vid_ref->string );
+		Com_sprintf(name, sizeof(name), "ref_%s.dll", vid_ref->string);
 		if (!VID_LoadRefresh(name)) {
 #if defined _M_IX86
 #ifdef DEBUG
