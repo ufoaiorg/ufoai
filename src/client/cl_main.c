@@ -697,11 +697,11 @@ static int CL_AddServerToList (netadr_t* adr, char *msg)
 	/* check some server data */
 	if (msg) {
 		if (PROTOCOL_VERSION != atoi(Info_ValueForKey(msg, "protocol"))) {
-			Com_Printf("Protocol mismatch\n");
+			Com_DPrintf("CL_AddServerToList: Protocol mismatch\n");
 			return -1;
 		}
 		if (Q_strcmp(UFO_VERSION, Info_ValueForKey(msg, "version"))) {
-			Com_Printf("Version mismatch\n");
+			Com_DPrintf("CL_AddServerToList: Version mismatch\n");
 			return -1;
 		}
 		/* hide full servers */
@@ -710,13 +710,13 @@ static int CL_AddServerToList (netadr_t* adr, char *msg)
 			break;
 		case SERVERLIST_HIDEFULL:
 			if (atoi(Info_ValueForKey(msg, "maxclients")) <= atoi(Info_ValueForKey(msg, "clients"))) {
-				Com_DPrintf("Server is full - hide from list\n");
+				Com_DPrintf("CL_AddServerToList: Server is full - hide from list\n");
 				return -1;
 			}
 			break;
 		case SERVERLIST_HIDEEMPTY:
 			if (!atoi(Info_ValueForKey(msg, "clients"))) {
-				Com_DPrintf("Server is empty - hide from list\n");
+				Com_DPrintf("CL_AddServerToList: Server is empty - hide from list\n");
 				return -1;
 			}
 			break;
