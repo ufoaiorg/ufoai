@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-03-14 20:11+0100\n"
+"POT-Creation-Date: 2007-03-14 20:23+0100\n"
 "PO-Revision-Date: 2007-03-11 23:31+0100\n"
 "Last-Translator: Lubomír Bláha <tritol@trilogic.cz>\n"
 "Language-Team: čeština <cs@li.org>\n"
@@ -376,8 +376,12 @@ msgstr "PVBO"
 msgid "Worker"
 msgstr "Dělník"
 
-#: ../base/ufos/medals.ufo:58 ../base/ufos/medals.ufo:59
+#: ../base/ufos/medals.ufo:58
 msgid "Rifleman"
+msgstr ""
+
+#: ../base/ufos/medals.ufo:59
+msgid "Rfn"
 msgstr ""
 
 #: ../base/ufos/medals.ufo:66
@@ -1175,9 +1179,9 @@ msgstr "Ostřelovačské pušky:"
 msgid "High-Explosives:"
 msgstr "Silné výbušniny:"
 
-#: ../base/ufos/menu_hire.ufo:481
-msgid "Survived Missions:"
-msgstr "Počet misí:"
+#: ../base/ufos/menu_hire.ufo:481 ../base/ufos/menu_team.ufo:845
+msgid "Missions Performed:"
+msgstr ""
 
 #: ../base/ufos/menu_hire.ufo:488 ../base/ufos/menu_team.ufo:847
 #, fuzzy
@@ -2079,10 +2083,6 @@ msgstr "Voják nenese vybavení"
 #: ../base/ufos/menu_team.ufo:624
 msgid "Add/remove this soldier"
 msgstr "Přidat/odebrat vojáka"
-
-#: ../base/ufos/menu_team.ufo:845
-msgid "Missions Performed:"
-msgstr ""
 
 #: ../base/ufos/menu_team.ufo:1069 ../base/ufos/menu_team.ufo:1078
 #: ../base/ufos/menu_team.ufo:1087 ../base/ufos/menu_team.ufo:1096
@@ -7219,6 +7219,9 @@ msgstr "1 den"
 #: po/OTHER_STRINGS:9
 msgid "5 days"
 msgstr "5 dnů"
+
+#~ msgid "Survived Missions:"
+#~ msgstr "Počet misí:"
 
 #~ msgid "Alien stealth aircraft sighted"
 #~ msgstr "Spatřen cizácký tajný letoun"

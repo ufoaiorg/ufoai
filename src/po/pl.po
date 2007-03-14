@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-03-14 20:11+0100\n"
+"POT-Creation-Date: 2007-03-14 20:23+0100\n"
 "PO-Revision-Date: 2007-02-28 13:38+0100\n"
 "Last-Translator: Maciej Wierzbicki <voovoos@killfile.pl>\n"
 "Language-Team: \n"
@@ -341,8 +341,12 @@ msgstr "UPN"
 msgid "Worker"
 msgstr "Technik"
 
-#: ../base/ufos/medals.ufo:58 ../base/ufos/medals.ufo:59
+#: ../base/ufos/medals.ufo:58
 msgid "Rifleman"
+msgstr ""
+
+#: ../base/ufos/medals.ufo:59
+msgid "Rfn"
 msgstr ""
 
 #: ../base/ufos/medals.ufo:66
@@ -1138,9 +1142,9 @@ msgstr "Snajperskie:"
 msgid "High-Explosives:"
 msgstr "Mat. wybuchowe:"
 
-#: ../base/ufos/menu_hire.ufo:481
-msgid "Survived Missions:"
-msgstr "Liczba przeżytych misji:"
+#: ../base/ufos/menu_hire.ufo:481 ../base/ufos/menu_team.ufo:845
+msgid "Missions Performed:"
+msgstr ""
 
 #: ../base/ufos/menu_hire.ufo:488 ../base/ufos/menu_team.ufo:847
 #, fuzzy
@@ -2033,10 +2037,6 @@ msgstr "Żołnierz nie jest wyposażony"
 #: ../base/ufos/menu_team.ufo:624
 msgid "Add/remove this soldier"
 msgstr "Dodaj/usuń tego żołnierza"
-
-#: ../base/ufos/menu_team.ufo:845
-msgid "Missions Performed:"
-msgstr ""
 
 #: ../base/ufos/menu_team.ufo:1069 ../base/ufos/menu_team.ufo:1078
 #: ../base/ufos/menu_team.ufo:1087 ../base/ufos/menu_team.ufo:1096
@@ -9692,6 +9692,9 @@ msgstr "1 dzień"
 #: po/OTHER_STRINGS:9
 msgid "5 days"
 msgstr "5 dni"
+
+#~ msgid "Survived Missions:"
+#~ msgstr "Liczba przeżytych misji:"
 
 #~ msgid "Alien stealth aircraft sighted"
 #~ msgstr "Zauważono niewykrywalny statek Obcych"

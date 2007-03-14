@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-03-14 20:11+0100\n"
+"POT-Creation-Date: 2007-03-14 20:23+0100\n"
 "PO-Revision-Date: 2006-10-24 13:31+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
@@ -406,8 +406,12 @@ msgstr "VTNT"
 msgid "Worker"
 msgstr "Trabajador"
 
-#: ../base/ufos/medals.ufo:58 ../base/ufos/medals.ufo:59
+#: ../base/ufos/medals.ufo:58
 msgid "Rifleman"
+msgstr ""
+
+#: ../base/ufos/medals.ufo:59
+msgid "Rfn"
 msgstr ""
 
 #: ../base/ufos/medals.ufo:66
@@ -1225,9 +1229,9 @@ msgstr "Rifle Francotirador:"
 msgid "High-Explosives:"
 msgstr "Altamente Explosivos:"
 
-#: ../base/ufos/menu_hire.ufo:481
-msgid "Survived Missions:"
-msgstr "Misiones Sobrevividas:"
+#: ../base/ufos/menu_hire.ufo:481 ../base/ufos/menu_team.ufo:845
+msgid "Missions Performed:"
+msgstr ""
 
 #: ../base/ufos/menu_hire.ufo:488 ../base/ufos/menu_team.ufo:847
 #, fuzzy
@@ -2145,10 +2149,6 @@ msgstr "Soldado Carga el Equipo"
 #: ../base/ufos/menu_team.ufo:624
 msgid "Add/remove this soldier"
 msgstr "Agregar/Quitar este soldado"
-
-#: ../base/ufos/menu_team.ufo:845
-msgid "Missions Performed:"
-msgstr ""
 
 #: ../base/ufos/menu_team.ufo:1069 ../base/ufos/menu_team.ufo:1078
 #: ../base/ufos/menu_team.ufo:1087 ../base/ufos/menu_team.ufo:1096
@@ -7963,6 +7963,9 @@ msgstr ""
 #: po/OTHER_STRINGS:9
 msgid "5 days"
 msgstr ""
+
+#~ msgid "Survived Missions:"
+#~ msgstr "Misiones Sobrevividas:"
 
 #~ msgid "Alien stealth aircraft sighted"
 #~ msgstr "Aeronave Extraterrestre invisible avistada"
