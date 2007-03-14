@@ -4007,6 +4007,9 @@ int INV_FiredefsIDXForWeapon (objDef_t *od, int weapon_idx)
 	}
 	
 	/* No firedef index found for this weapon/ammo. */
+#ifdef DEBUG
+	Com_DPrintf("INV_FiredefsIDXForWeapon: No firedef index found for weapon. od:%s weap_idx:%i).\n", od->id, weapon_idx);
+#endif
 	return -1;
 }
 
