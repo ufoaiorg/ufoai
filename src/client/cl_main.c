@@ -697,11 +697,11 @@ static int CL_AddServerToList (netadr_t* adr, char *msg)
 	/* check some server data */
 	if (msg) {
 		if (PROTOCOL_VERSION != atoi(Info_ValueForKey(msg, "protocol"))) {
-			Com_Printf("Protocol mismatch\n");
+			Com_DPrintf("CL_AddServerToList: Protocol mismatch\n");
 			return -1;
 		}
 		if (Q_strcmp(UFO_VERSION, Info_ValueForKey(msg, "version"))) {
-			Com_Printf("Version mismatch\n");
+			Com_DPrintf("CL_AddServerToList: Version mismatch\n");
 			return -1;
 		}
 		/* hide full servers */
@@ -710,13 +710,13 @@ static int CL_AddServerToList (netadr_t* adr, char *msg)
 			break;
 		case SERVERLIST_HIDEFULL:
 			if (atoi(Info_ValueForKey(msg, "maxclients")) <= atoi(Info_ValueForKey(msg, "clients"))) {
-				Com_DPrintf("Server is full - hide from list\n");
+				Com_DPrintf("CL_AddServerToList: Server is full - hide from list\n");
 				return -1;
 			}
 			break;
 		case SERVERLIST_HIDEEMPTY:
 			if (!atoi(Info_ValueForKey(msg, "clients"))) {
-				Com_DPrintf("Server is empty - hide from list\n");
+				Com_DPrintf("CL_AddServerToList: Server is empty - hide from list\n");
 				return -1;
 			}
 			break;
@@ -1575,6 +1575,7 @@ static void CL_SpawnSoldiers_f (void)
 static void CL_Precache_f (void)
 {
 	unsigned map_checksum = 0;
+	char str[MAX_VAR] = "";
 	unsigned ufoScript_checksum = 0;
 	/* stop sound */
 	S_StopAllSounds();
@@ -1585,24 +1586,26 @@ static void CL_Precache_f (void)
 		SCR_BeginLoadingPlaque();
 		CM_LoadMap(cl.configstrings[CS_TILES], cl.configstrings[CS_POSITIONS], &map_checksum);
 		if (!*cl.configstrings[CS_VERSION] || !*cl.configstrings[CS_MAPCHECKSUM] || !*cl.configstrings[CS_UFOCHECKSUM]) {
-			MN_Popup(_("Error"), _("Local game version differs from the servers"));
-			Com_Error (ERR_DROP, "Local game version (%s) differs from the servers", UFO_VERSION);
+			Com_sprintf(str, sizeof(str), _("Local game version (%s) differs from the servers"), UFO_VERSION);
+			MN_Popup(_("Error"), str);
+			Com_Error(ERR_DROP, "Local game version (%s) differs from the servers", UFO_VERSION);
 			return;
 		/* checksum doesn't match with the one the server gave us via configstring */
 		} else if (map_checksum != atoi(cl.configstrings[CS_MAPCHECKSUM])) {
 			MN_Popup(_("Error"), _("Local map version differs from server"));
-			Com_Error (ERR_DROP, "Local map version differs from server: %u != '%s'\n",
+			Com_Error(ERR_DROP, "Local map version differs from server: %u != '%s'\n",
 				map_checksum, cl.configstrings[CS_MAPCHECKSUM]);
 			return;
 		/* checksum doesn't match with the one the server gave us via configstring */
 		} else if (atoi(cl.configstrings[CS_UFOCHECKSUM]) && ufoScript_checksum != atoi(cl.configstrings[CS_UFOCHECKSUM])) {
 			MN_Popup(_("Error"), _("You are using modified ufo script files - you won't be able to connect to the server"));
-			Com_Error (ERR_DROP, "You are using modified ufo script files - you won't be able to connect to the server: %u != '%s'\n",
+			Com_Error(ERR_DROP, "You are using modified ufo script files - you won't be able to connect to the server: %u != '%s'\n",
 				ufoScript_checksum, cl.configstrings[CS_UFOCHECKSUM]);
 			return;
 		} else if (Q_strncmp(UFO_VERSION, cl.configstrings[CS_VERSION], sizeof(UFO_VERSION))) {
-			MN_Popup(_("Error"), va(_("Local game version differs from the servers (%s)"), cl.configstrings[CS_VERSION]));
-			Com_Error (ERR_DROP, "Local game version (%s) differs from the servers (%s)", UFO_VERSION, cl.configstrings[CS_VERSION]);
+			Com_sprintf(str, sizeof(str), _("Local game version (%s) differs from the servers (%s)"), UFO_VERSION, cl.configstrings[CS_VERSION]);
+			MN_Popup(_("Error"), str);
+			Com_Error(ERR_DROP, "Local game version (%s) differs from the servers (%s)", UFO_VERSION, cl.configstrings[CS_VERSION]);
 			return;
 		}
 	}

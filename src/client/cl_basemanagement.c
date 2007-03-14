@@ -1636,7 +1636,7 @@ static void CL_SwapSkills (character_t *team[], int num)
 						cp2 = team[i2];
 						weaponr_fd_idx = -1;
 						weaponh_fd_idx = -1;
-						
+
 						if (RIGHT(cp2) && RIGHT(cp2)->item.m != NONE && RIGHT(cp2)->item.t != NONE)
 							weaponr_fd_idx = INV_FiredefsIDXForWeapon(&csi.ods[RIGHT(cp2)->item.m], RIGHT(cp2)->item.t);
 						if (HOLSTER(cp2) && HOLSTER(cp2)->item.m != NONE && HOLSTER(cp2)->item.t != NONE)
@@ -2910,7 +2910,7 @@ base_t *B_GetBase (int idx)
  */
 int B_GetNumOnTeam (void)
 {
-	if (!baseCurrent && baseCurrent->aircraftCurrent >= 0)
+	if (!baseCurrent || baseCurrent->aircraftCurrent >= 0)
 		return 0;
 	return baseCurrent->teamNum[baseCurrent->aircraftCurrent];
 }
