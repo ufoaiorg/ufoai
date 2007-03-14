@@ -1238,7 +1238,7 @@ static void G_ClientStateChange (player_t * player, int num, int reqState)
 	case ~STATE_REACTION: /* request to turn off reactio fire */
 		if (ent->state & STATE_REACTION_MANY) {
 			if (ent->state & STATE_SHAKEN)
-				gi.cprintf(player, PRINT_HIGH, _("Currently shaken, won't let it's guard down.\n"));
+				gi.cprintf(player, PRINT_HIGH, _("Currently shaken, won't let their guard down.\n"));
 			else {
 				/* Turn off reaction fire and give the soldier back his TUs if it used some. */
 				ent->state &= ~STATE_REACTION;
@@ -1364,7 +1364,7 @@ static void G_MoraleRage (edict_t * ent, qboolean sanity)
 	if (sanity)
 		gi.bprintf(PRINT_HIGH, _("%s is on a rampage.\n"), ent->chr.name);
 	else
-		gi.bprintf(PRINT_HIGH, _("%s is in mad rage!\n"), ent->chr.name);
+		gi.bprintf(PRINT_HIGH, _("%s is consumed by mad rage!\n"), ent->chr.name);
 	AI_ActorThink(game.players + ent->pnum, ent);
 }
 

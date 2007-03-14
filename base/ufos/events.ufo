@@ -26,7 +26,7 @@ news_event mumbai
 
 news_event stealth_craft_sighted
 {
-	name "_Alien stealth aircraft sighted"
+	name "_Alien aircraft spotted"
 	min_date "1 100"	// one year and 100 days after start
 	max_date "1 150"
 	event	mumbai

@@ -55,16 +55,16 @@ rank worker
 
 rank rookie
 {
-	name		"_Rookie"
-	shortname	"_Rookie"
+	name		"_Rifleman"
+	shortname	"_Rifleman"
 	image		"hud/rank_01"
 	type		EMPL_SOLDIER
 }
 
 rank squadleader
 {
-	name		"_Squad Leader"
-	shortname	"_Sqd Ldr"
+	name		"_Corporal"
+	shortname	"_Cpl"
 	image		"hud/rank_02"
 	mind		75
 	killed_enemies	5

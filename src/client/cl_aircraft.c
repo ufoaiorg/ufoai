@@ -658,7 +658,7 @@ void CL_CampaignRunAircraft (int dt)
 
 				/* Check aircraft low fuel */
 				if (aircraft->fuel <= 0 && aircraft->status >= AIR_IDLE && aircraft->status != AIR_RETURNING) {
-					MN_AddNewMessage(_("Notice"), _("Your dropship has low fuel and returns to base"), qfalse, MSG_STANDARD, NULL);
+					MN_AddNewMessage(_("Notice"), _("Your dropship is low on fuel and returns to base"), qfalse, MSG_STANDARD, NULL);
 					CL_AircraftReturnToBase(aircraft);
 				}
 

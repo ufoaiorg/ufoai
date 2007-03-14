@@ -1817,10 +1817,10 @@ extern void CL_ParseResults (sizebuf_t * buf)
 		Q_strcat(resultText, va(_("Alien survivors\t%i\n\n"), thier_surviviurs), sizeof(resultText));
 
 		/* team stats */
-		Q_strcat(resultText, va(_("Phalanx soldiers killed by Aliens\t%i\n"), our_killed - num_kills[we][we] - num_kills[TEAM_CIVILIAN][we]), sizeof(resultText));
-		Q_strcat(resultText, va(_("Phalanx soldiers missing in action\t%i\n"), our_stunned), sizeof(resultText));
-		Q_strcat(resultText, va(_("Phalanx friendly fire losses\t%i\n"), num_kills[we][we] + num_kills[TEAM_CIVILIAN][we]), sizeof(resultText));
-		Q_strcat(resultText, va(_("Phalanx survivors\t%i\n\n"), our_surviviurs), sizeof(resultText));
+		Q_strcat(resultText, va(_("PHALANX soldiers killed by Aliens\t%i\n"), our_killed - num_kills[we][we] - num_kills[TEAM_CIVILIAN][we]), sizeof(resultText));
+		Q_strcat(resultText, va(_("PHALANX soldiers missing in action\t%i\n"), our_stunned), sizeof(resultText));
+		Q_strcat(resultText, va(_("PHALANX friendly fire losses\t%i\n"), num_kills[we][we] + num_kills[TEAM_CIVILIAN][we]), sizeof(resultText));
+		Q_strcat(resultText, va(_("PHALANX survivors\t%i\n\n"), our_surviviurs), sizeof(resultText));
 
 		Q_strcat(resultText, va(_("Civilians killed by Aliens\t%i\n"), civilian_killed), sizeof(resultText));
 		Q_strcat(resultText, va(_("Civilians killed by friendly fire\t%i\n"), num_kills[we][TEAM_CIVILIAN] + num_kills[TEAM_CIVILIAN][TEAM_CIVILIAN]), sizeof(resultText));

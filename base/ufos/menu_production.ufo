@@ -282,7 +282,7 @@ menu production
 
 	pic bt_primary
 	{
-		tooltip	"_Show only primary weapons"
+		tooltip	"_Show primary weapons"
 		image	menu/button_blue
 		mousefx	true
 		pos		"615 585"
@@ -322,7 +322,7 @@ menu production
 
 	pic bt_misc
 	{
-		tooltip	"_Show other equipment"
+		tooltip	"_Show miscellaneous equipment"
 		image	menu/button_blue
 		mousefx	true
 		pos		"765 585"
@@ -342,7 +342,7 @@ menu production
 
 	pic bt_armor
 	{
-		tooltip	"_Show only armor"
+		tooltip	"_Show armor"
 		image	menu/button_blue
 		mousefx	true
 		pos		"765 655"

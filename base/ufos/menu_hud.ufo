@@ -234,7 +234,7 @@ menu hud
 		pos		"840 28"
 		size		"48 34"
 		align	cc
-		tooltip "_Click to cycle through the spotted enemies"
+		tooltip "_Click to cycle through spotted enemies"
 		in
 	}
 
@@ -765,13 +765,13 @@ menu hud
 		cmd "music_start;"
 		cmd "set mn_showchatbuttons 0;"
 	}
-	
+
 	// ==================
 	//  FIREMODES (seperate lists for each weaponhand)
 	// ==================
 	/*
 		fm	... firemode
-		left/right/l/r  ... The hand/side of the firemode list 
+		left/right/l/r  ... The hand/side of the firemode list
 		name ... The name of the firemode.
 		tu ... timeunits
 		shots ... The number of shots one firemode will use.
@@ -785,7 +785,7 @@ menu hud
 	// ==================
 
 	/* Firemode console functions ===================================*/
-	
+
 	confunc set_left_ina0 { *bt_left_fm0	texl "0 64"	*bt_left_fm0 texh "255 128" }
 	confunc set_left_ina1 { *bt_left_fm1	texl "0 64"	*bt_left_fm1 texh "255 128" }
 	confunc set_left_ina2 { *bt_left_fm2	texl "0 64"	*bt_left_fm2 texh "255 128" }
@@ -802,7 +802,7 @@ menu hud
 	confunc set_right_ina5 { *bt_right_fm5	texl "0 64"	*bt_right_fm5 texh "255 128" }
 	confunc set_right_ina6 { *bt_right_fm6	texl "0 64"	*bt_right_fm6 texh "255 128" }
 	confunc set_right_ina7 { *bt_right_fm7	texl "0 64"	*bt_right_fm7 texh "255 128" }
-	
+
 	confunc set_left_a0 { *bt_left_fm0	texl "0 0"	*bt_left_fm0 texh "255 63" }
 	confunc set_left_a1 { *bt_left_fm1	texl "0 0"	*bt_left_fm1 texh "255 63" }
 	confunc set_left_a2 { *bt_left_fm2	texl "0 0"	*bt_left_fm2 texh "255 63" }
@@ -836,7 +836,7 @@ menu hud
 	confunc set_right_inv5 { *bt_right_fm5 invis true	*right_fm_name5 invis true	*right_fm_tu5 invis true	*right_fm_shot5 invis true	*bt_right_cb5 invis true }
 	confunc set_right_inv6 { *bt_right_fm6 invis true	*right_fm_name6 invis true	*right_fm_tu6 invis true	*right_fm_shot6 invis true	*bt_right_cb6 invis true }
 	confunc set_right_inv7 { *bt_right_fm7 invis true	*right_fm_name7 invis true	*right_fm_tu7 invis true	*right_fm_shot7 invis true	*bt_right_cb7 invis true }
-	
+
 	confunc set_left_vis0 { *bt_left_fm0 invis false	*left_fm_name0 invis false	*left_fm_tu0 invis false 	*left_fm_shot0 invis false }
 	confunc set_left_vis1 { *bt_left_fm1 invis false	*left_fm_name1 invis false	*left_fm_tu1 invis false 	*left_fm_shot1 invis false }
 	confunc set_left_vis2 { *bt_left_fm2 invis false	*left_fm_name2 invis false	*left_fm_tu2 invis false 	*left_fm_shot2 invis false }
@@ -1074,8 +1074,8 @@ menu hud
 	/* Firemode checkbox images ===================================*/
 	/*
 		Some helpful info:
-		hud/checkbox (inactive)	->	texl "0 0"	texh "31 31" 
-		hud/checkbox (active)	->	texl "0 32"	texh "31 63" 
+		hud/checkbox (inactive)	->	texl "0 0"	texh "31 31"
+		hud/checkbox (active)	->	texl "0 32"	texh "31 63"
 	*/
 
 	pic bt_left_cb0
@@ -1269,8 +1269,8 @@ menu hud
 		invis true
 		click	{ cmd "sel_reactmode r 7;" }
 	}
-	
-	/* Firemode text ===================================*/	
+
+	/* Firemode text ===================================*/
 	string left_fm_name0 { string "*cvar mn_l_fm_name0"	pos "654 582"	invis true }
 	string left_fm_name1 { string "*cvar mn_l_fm_name1"	pos "654 518"	invis true }
 	string left_fm_name2 { string "*cvar mn_l_fm_name2"	pos "654 454"	invis true }

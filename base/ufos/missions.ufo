@@ -857,7 +857,7 @@ mission baseattack
 {
 	location	""
 	type		"_Base Attack"
-	text		"_Aliens attacked one of our home bases"
+	text		"_Aliens attacked one of our bases"
 // 	. means that they attack a random base (only the first char counts)
 	map			".base"
 	music		turinItalyM

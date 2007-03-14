@@ -110,26 +110,26 @@ static char *CL_GetSkillString (const int skill)
 #endif
 	switch (skill*10/MAX_SKILL) {
 	case 0:
-		return _("Pathetic");
-	case 1:
-		return _("Very Poor");
-	case 2:
 		return _("Poor");
-	case 3:
+	case 1:
 		return _("Mediocre");
+	case 2:
+		return _("Average");
+	case 3:
+		return _("Competent");
 	case 4:
-		return _("Good");
+		return _("Proficient");
 	case 5:
 		return _("Very Good");
 	case 6:
-		return _("Excellent");
+		return _("Highly Proficient");
 	case 7:
-		return _("Amazing");
+		return _("Excellent");
 	case 8:
-		return _("Superhuman");
+		return _("Outstanding");
 	case 9:
 	case 10:
-		return _("Godlike");
+		return _("Superhuman");
 	default:
 		Com_Printf("CL_GetSkillString: Unknown skill: %i (index: %i)\n", skill, skill*10/MAX_SKILL);
 		return "";

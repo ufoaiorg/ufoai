@@ -596,7 +596,7 @@ menu popup_maintain_resolution
 
 	pic bt_cancel
 	{
-		tooltip	"_Close this dialog"
+		tooltip	"_Close this dialogue"
 		image	menu/multi_buttons3
 		texh	"256 64"
 		texl	"0 33"
@@ -1026,7 +1026,7 @@ menu options_game
 	// ===================
 	string centerview_str
 	{
-		string	"_Center view:"
+		string	"_Centre view:"
 		pos		"500 255"
 	}
 	string centerview_value
@@ -1042,7 +1042,7 @@ menu options_game
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
-		tooltip	"_No centering at soldier selecting, shooting and appearing"
+		tooltip	"_No centring at soldier selecting, shooting and appearing"
 		click
 		{
 			cmd "mn_modify cl_centerview -1 0 1;"
@@ -1056,7 +1056,7 @@ menu options_game
 		texl	"16 0"
 		texh	"32 16"
 		mousefx	true
-		tooltip	"_Centering at soldier selecting, shooting and appearing"
+		tooltip	"_Centring at soldier selecting, shooting and appearing"
 		click
 		{
 			cmd "mn_modify cl_centerview +1 0 1;"
@@ -1128,7 +1128,7 @@ menu options_game
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
-		tooltip	"_Use a flat geoscape"
+		tooltip	"_Use 2D geoscape"
 		click
 		{
 			cmd "mn_modify cl_3dmap -1 0 1;"
@@ -1142,7 +1142,7 @@ menu options_game
 		texl	"16 0"
 		texh	"32 16"
 		mousefx	true
-		tooltip	"_Use a 3D geoscape"
+		tooltip	"_Use 3D geoscape"
 		click
 		{
 			cmd "mn_modify cl_3dmap +1 0 1;"
