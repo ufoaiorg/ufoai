@@ -55,13 +55,23 @@ nation states
 nation europa
 {
 	name "_The Greater European Union"
-	color "255 255 255 1"
+	color "255 255 255 0.16"
 	names "german spanish_italian french english_american scandinavian"
 	funding	750000
 	happiness 0.44
 	alien_friendly	45
 	soldiers 3
 	scientists 3
+/*	borders {
+		"13.0 39.6"
+		"12.3 57.1"
+		"-16.9 69.6"
+		"-46.8 69.4"
+		"-43.6 38.6"
+		"-30.6 33.2"
+		"-5.3 38.8"
+		"10.5 34.6"
+	}*/
 	pos "-10 50"
 }
 
