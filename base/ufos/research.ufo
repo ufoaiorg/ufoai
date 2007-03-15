@@ -1863,8 +1863,8 @@ tech rs_alien_medium_armour
 {
 	type		armor
 	up_chapter	artifacts
-	description	"TODO"
-	pre_description	"TODO"
+	description	"_alien_medium_armour_txt"
+	pre_description	"_alien_medium_armour_pre_txt"
 
 	require_AND
 	{
