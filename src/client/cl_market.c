@@ -152,31 +152,28 @@ static void BS_BuyType_f (void)
 		/* get item list */
 		for (i = 0, j = 0, od = csi.ods; i < csi.numODs; i++, od++) {
 			tech = (technology_t *) od->tech;
-			/* is researched OR collected */
-			if (!tech || RS_Collected_(tech) || RS_IsResearched_ptr(tech)) {
-				/* check primary, secondary, misc, armor and available amount */
-				if (od->buytype == num && (baseCurrent->storage.num[i] || ccs.eMarket.num[i])) {
-					Q_strncpyz(str, va("mn_item%i", j), MAX_VAR);
-					Cvar_Set(str, _(od->name));
+			/* Check whether the proper buytype, storage in current base and market. */
+			if (tech && od->buytype == num && (baseCurrent->storage.num[i] || ccs.eMarket.num[i])) {
+				Q_strncpyz(str, va("mn_item%i", j), MAX_VAR);
+				Cvar_Set(str, _(od->name));
 
-					Q_strncpyz(str, va("mn_storage%i", j), MAX_VAR);
-					Cvar_SetValue(str, baseCurrent->storage.num[i]);
+				Q_strncpyz(str, va("mn_storage%i", j), MAX_VAR);
+				Cvar_SetValue(str, baseCurrent->storage.num[i]);
 
-					Q_strncpyz(str, va("mn_supply%i", j), MAX_VAR);
-					Cvar_SetValue(str, ccs.eMarket.num[i]);
+				Q_strncpyz(str, va("mn_supply%i", j), MAX_VAR);
+				Cvar_SetValue(str, ccs.eMarket.num[i]);
 
-					Q_strncpyz(str, va("mn_price%i", j), MAX_VAR);
-					Cvar_Set(str, va("%i c", od->price));
+				Q_strncpyz(str, va("mn_price%i", j), MAX_VAR);
+				Cvar_Set(str, va("%i c", od->price));
 
-					/* Set state of Autosell button. */
-					if (gd.autosell[i])
-						Cbuf_AddText(va("buy_autoselle%i\n", j));
-					else
-						Cbuf_AddText(va("buy_autoselld%i\n", j));
+				/* Set state of Autosell button. */
+				if (gd.autosell[i])
+					Cbuf_AddText(va("buy_autoselle%i\n", j));
+				else
+					Cbuf_AddText(va("buy_autoselld%i\n", j));
 
-					buyList[j] = i;
-					j++;
-				}
+				buyList[j] = i;
+				j++;
 			}
 		}
 		buyListLength = j;
