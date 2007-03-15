@@ -231,7 +231,11 @@ int B_GetNumberOfBuildingsInBaseByTypeIDX(int base_idx, int type_idx);
 int B_GetNumberOfBuildingsInBaseByType(int base_idx, buildingType_t type);
 
 int B_ItemInBase(int item_idx, base_t *base);
+
+/* 20070315 Zenerka: fixed B_ItemInBase(), B_ItemInBase2() is not necessary anymore. */
+#if 0
 int B_ItemInBase2(int item_idx, base_t *base);
+#endif
 
 aircraft_t *B_GetAircraftFromBaseByIndex(base_t* base,int index);
 void B_ReviveSoldiersInBase(base_t* base); /* TODO */

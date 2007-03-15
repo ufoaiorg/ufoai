@@ -1859,11 +1859,9 @@ tech rs_alien_body_armour
 	producetime	-1
 }
 
-//TODO: proper name
-tech rs_alien_body_armour2
+tech rs_alien_medium_armour
 {
-	type	tech
-	// name	"TODO: alien armor2"
+	type		armor
 	up_chapter	artifacts
 	description	"TODO"
 	pre_description	"TODO"

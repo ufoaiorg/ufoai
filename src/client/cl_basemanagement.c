@@ -2959,7 +2959,6 @@ void CL_DropshipReturned (base_t* base, aircraft_t* aircraft)
  * @param[in] item_idx The index of the item in the item-list.
  * @param[in] base The base to search in.
  * @return amount Number of available items in base
- * @todo TODO/FIXME: Make this work _only_ on base-storage, no market. See the comment in the code.
  * @note Formerly known as RS_ItemInBase.
  */
 int B_ItemInBase (int item_idx, base_t *base)
@@ -2976,17 +2975,11 @@ int B_ItemInBase (int item_idx, base_t *base)
 
 	/* Com_DPrintf("B_ItemInBase: DEBUG idx %s\n",  csi.ods[item_idx].id); */
 
-	/* FIXME/TODO: currently since all alien artifacts are added to the
-	 * market, this check ensures market items are researchable too...
-	 * otherwise the user must buy each item before researching it.
-	 * Suggestion: if an unknown alien tech is found, sell all but the
-	 * required number of items to perform research on that tech. Then
-	 * the eMarket addition below would not be required.
-	 * Right now this function is just confusing for every part
-	 * of the code that uses it since they get higher numbers than are really in the base (as one would assume from the func.-name) */
-	return ed->num[item_idx] + ccs.eMarket.num[item_idx];
+	return ed->num[item_idx];
 }
 
+/* 20070315 Zenerka: fixed B_ItemInBase(), B_ItemInBase2() is not necessary anymore. */
+#if 0
 /**
  * @brief Check if the item has been collected (i.e it is in the storage) in the given base.
  * @param[in] item_idx The index of the item in the item-list.
@@ -3010,3 +3003,5 @@ int B_ItemInBase2 (int item_idx, base_t *base)
 
 	return ed->num[item_idx];
 }
+#endif
+
