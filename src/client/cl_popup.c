@@ -32,6 +32,54 @@ extern void CL_PopupNotifyMIssionRemoved(const actMis_t* mission);
 extern void CL_PopupNotifyUfoRemoved(const aircraft_t* ufo);
 extern void CL_PopupNotifyUfoDisappeared(const aircraft_t* ufo);
 
+/* popup_aircraft display the actions availables for an aircraft */
+
+#define POPUP_AIRCRAFT_MAX_ITEMS	10		/**< Max items displayed in popup_aircraft */
+#define POPUP_AIRCARFT_MAX_TEXT		2048	/**< Max size of text displayed in popup_aircraft */
+
+/**
+ * Enumerate type of actions available for popup_aircraft
+ */
+typedef enum {
+	POPUP_AIRCRAFT_ACTION_BACKTOBASE = 1,	/**< Aircraft back to base */
+	POPUP_AIRCRAFT_ACTION_STOP = 2,			/**< Aircraft stops */
+	POPUP_AIRCRAFT_ACTION_MOVETOMISSION = 3,/**< Aircraft move to a mission */
+	POPUP_AIRCRAFT_ACTION_NONE,				/**< Do nothing */
+
+	POPUP_AIRCRAFT_ACTION_MAX
+
+} popup_aircraft_action_e;
+
+/**
+ * @brief Structure to store information about popup_aircraft
+ */
+typedef struct popup_aircarft_s {
+	int nbItems;			/**< Count of items displayed in popup_aircraft */
+	int aircraft_idx;		/**< Aircraft linked to popup_aircraft */
+	popup_aircraft_action_e itemsAction[POPUP_AIRCRAFT_MAX_ITEMS];	/**< Action type of items */
+	int itemsId[POPUP_AIRCRAFT_MAX_ITEMS];	/**< IDs corresponding to items */
+	char text_popup[POPUP_AIRCARFT_MAX_TEXT];	/**< Text displayed in popup_aircraft */
+
+} popup_aircraft_t;
+
+/** FIXME: Save me */
+static popup_aircraft_t popupAircraft; /** Data about popup_aircraft */
+
+/* popup_intercept display list of aircraft availables to move to a mission or an ufo */
+
+#define POPUP_INTERCEPT_MAX_AIRCRAFT 64	/**< Max aircrafts in popup list */
+
+typedef struct popup_intercept_s {
+	int numAircraft;	/**< Count of aircrafts displayed in list */
+	int idBaseAircraft[POPUP_INTERCEPT_MAX_AIRCRAFT];	/**< Base ID of aircrafts in list */
+	int idInBaseAircraft[POPUP_INTERCEPT_MAX_AIRCRAFT];	/**< ID in base of aircrafts in list */
+	actMis_t* mission;	/**< Mission the selected aircraft have to move to */
+	aircraft_t* ufo;		/**< UFO the selected aircraft have to move to */
+} popup_intercept_t;
+
+/** FIXME: Save me */
+static popup_intercept_t popupIntercept;	/**< Data about popup_intercept */
+
 #if 0
 
 /* popup_interception_ready */
@@ -73,6 +121,9 @@ extern void CL_PopupInit (void)
 	Cmd_AddCommand("popup_interception_ready_auto", CL_PopupInterceptionReadyAuto_f, NULL);
 	Cmd_AddCommand("popup_interception_ready_cancel", CL_PopupInterceptionReadyCancel_f, NULL);
 	*/
+
+	memset(&popupIntercept, 0, sizeof(popup_intercept_t));
+	memset(&popupAircraft, 0, sizeof(popup_aircraft_t));
 }
 
 /**
@@ -176,38 +227,6 @@ static void CL_PopupInterceptionReadyCancel_f (void)
 POPUP_AIRCRAFT
 ========================================*/
 
-/* popup_aircraft display the actions availables for an aircraft */
-
-#define POPUP_AIRCRAFT_MAX_ITEMS	10		/**< Max items displayed in popup_aircraft */
-#define POPUP_AIRCARFT_MAX_TEXT		2048	/**< Max size of text displayed in popup_aircraft */
-
-/**
- * Enumerate type of actions available for popup_aircraft
- */
-typedef enum {
-	POPUP_AIRCRAFT_ACTION_BACKTOBASE = 1,	/**< Aircraft back to base */
-	POPUP_AIRCRAFT_ACTION_STOP = 2,			/**< Aircraft stops */
-	POPUP_AIRCRAFT_ACTION_MOVETOMISSION = 3,/**< Aircraft move to a mission */
-	POPUP_AIRCRAFT_ACTION_NONE,				/**< Do nothing */
-
-	POPUP_AIRCRAFT_ACTION_MAX
-
-} popup_aircraft_action_e;
-
-/**
- * @brief Structure to store information about popup_aircraft
- */
-typedef struct popup_aircarft_s {
-	int nbItems;			/**< Count of items displayed in popup_aircraft */
-	int aircraft_idx;		/**< Aircraft linked to popup_aircraft */
-	popup_aircraft_action_e itemsAction[POPUP_AIRCRAFT_MAX_ITEMS];	/**< Action type of items */
-	int itemsId[POPUP_AIRCRAFT_MAX_ITEMS];	/**< IDs corresponding to items */
-	char text_popup[POPUP_AIRCARFT_MAX_TEXT];	/**< Text displayed in popup_aircraft */
-
-} popup_aircraft_t;
-
-popup_aircraft_t popupAircraft; /** Data about popup_aircraft */
-
 /**
  * @brief Display the popup_aircraft
  */
@@ -309,21 +328,6 @@ static void CL_PopupAircraftNotifyMissionRemoved (const actMis_t* mission)
 POPUP_INTERCEPT
 ========================================*/
 
-/* popup_intercept display list of aircraft availables to move to a mission or an ufo */
-
-#define POPUP_INTERCEPT_MAX_AIRCRAFT 10	/**< Max aircrafts in popup list */
-
-typedef struct popup_intercept_s {
-	int numAircraft;	/**< Count of aircrafts displayed in list */
-	int idBaseAircraft[POPUP_INTERCEPT_MAX_AIRCRAFT];	/**< Base ID of aircrafts in list */
-	int idInBaseAircraft[POPUP_INTERCEPT_MAX_AIRCRAFT];	/**< ID in base of aircrafts in list */
-	actMis_t*	mission;	/**< Mission the selected aircraft have to move to */
-	aircraft_t*	ufo;		/**< UFO the selected aircraft have to move to */
-} popup_intercept_t;
-
-popup_intercept_t popupIntercept;	/**< Data about popup_intercept */
-
-
 /**
  * @brief Display the popup_intercept
  */
@@ -359,7 +363,12 @@ extern void CL_DisplayPopupIntercept (actMis_t* mission, aircraft_t* ufo)
 			popupIntercept.idBaseAircraft[popupIntercept.numAircraft] = j;
 			popupIntercept.idInBaseAircraft[popupIntercept.numAircraft] = i;
 			popupIntercept.numAircraft++;
+			if (popupIntercept.numAircraft >= POPUP_INTERCEPT_MAX_AIRCRAFT)
+				break;
 		}
+		/* also leave the outer loop */
+		if (popupIntercept.numAircraft >= POPUP_INTERCEPT_MAX_AIRCRAFT)
+			break;
 	}
 	menuText[TEXT_AIRCRAFT_LIST] = aircraftListText;
 
