@@ -231,16 +231,9 @@ int B_GetNumberOfBuildingsInBaseByTypeIDX(int base_idx, int type_idx);
 int B_GetNumberOfBuildingsInBaseByType(int base_idx, buildingType_t type);
 
 int B_ItemInBase(int item_idx, base_t *base);
-int B_ItemInBase2(int item_idx, base_t *base);
 
 aircraft_t *B_GetAircraftFromBaseByIndex(base_t* base,int index);
 void B_ReviveSoldiersInBase(base_t* base); /* TODO */
-
-#if 0
-/* 20070303 Zenerka: Transfer stuff moved to cl_transfer.c|h. */
-void B_TransferAircraftMenu(aircraft_t* aircraft);
-void B_TransferEnd(aircraft_t* aircraft);
-#endif
 
 int B_GetAvailableQuarterSpace(const base_t* const base);
 int B_GetEmployeeCount(const base_t* const base);

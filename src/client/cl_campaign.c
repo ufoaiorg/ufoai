@@ -65,13 +65,6 @@ extern qboolean CL_SendAircraftToMission(aircraft_t * aircraft, actMis_t * missi
 extern void CL_AircraftsNotifyMissionRemoved(const actMis_t * mission);
 static void CL_GameExit(void);
 
-#if 0
-/* 20070228 Zenerka: new solution for collecting items from the battlefield
-   see CL_CollectingItems(), CL_SellorAddItems(), CL_CollectingAmmo(), CL_CarriedItems() */
-/* 20060923 LordHavoc: made autosell an option here */
-static qboolean MARKET_AUTOSELL = qtrue;
-#endif
-
 /*
 ============================================================================
 Boolean expression parser
@@ -2586,151 +2579,6 @@ static void CL_GameAbort_f (void)
 	Cbuf_AddText(va("sv win %i\n", TEAM_ALIEN));
 }
 
-/* =========================================================== */
-
-#if 0
-/* 20070228 Zenerka: new solution for collecting items from the battlefield
-   see CL_CollectingItems(), CL_SellorAddItems(), CL_CollectingAmmo(), CL_CarriedItems() */
-static equipDef_t eTempMarket; /* a terrible hack so that "abort;try again" works */
-static int eTempCredits;
-
-/**
- * @brief Do the real collection of the items
- *
- * @param[in] weapon Which weapon
- * @param[in] left_hand Determines whether the container is the left hand container
- * @param[in] market Add it to market or mission equipment
- *
- * Called from CL_CollectItems.
- * Put every item to the market inventory list
- */
-static void CL_CollectItemAmmo (invList_t * weapon, int left_hand, qboolean market)
-{
-	technology_t *tech = NULL;
-
-	/* fake item */
-	assert (weapon->item.t != NONE);
-	/* twohanded weapons and container is left hand container */
-	assert (!(left_hand && csi.ods[weapon->item.t].holdtwohanded));
-
-	if (market) {
-		eTempMarket.num[weapon->item.t]++;
-		eTempCredits += csi.ods[weapon->item.t].price;
-	} else {
-		ccs.eMission.num[weapon->item.t]++;
-	}
-
-	tech = csi.ods[weapon->item.t].tech;
-
-	if (!tech)
-		Sys_Error("CL_CollectItemAmmo: No tech for %s / %s\n", csi.ods[weapon->item.t].id, csi.ods[weapon->item.t].name);
-	tech->statusCollected++;
-
-	if (!csi.ods[weapon->item.t].reload || weapon->item.a == 0)
-		return;
-	if (market) {
-		eTempMarket.num_loose[weapon->item.m] += weapon->item.a;
-		if (eTempMarket.num_loose[weapon->item.m] >= csi.ods[weapon->item.t].ammo) {
-			eTempMarket.num_loose[weapon->item.m] -= csi.ods[weapon->item.t].ammo;
-			eTempMarket.num[weapon->item.m]++;
-			eTempCredits += csi.ods[weapon->item.m].price;
-		}
-	} else {
-		ccs.eMission.num_loose[weapon->item.m] += weapon->item.a;
-		if (ccs.eMission.num_loose[weapon->item.m] >= csi.ods[weapon->item.t].ammo) {
-			ccs.eMission.num_loose[weapon->item.m] -= csi.ods[weapon->item.t].ammo;
-			ccs.eMission.num[weapon->item.m]++;
-		}
-		/* The guys keep their weapons (half-)loaded. Auto-reload
-		   will happen at equip screen or at the start of next mission,
-		   but fully loaded weapons will not be reloaded even then. */
-	}
-}
-
-/**
- * @brief Collect items from battlefield
- *
- * @param[in] won Determines whether we have won the match or not
- * @param[out] item_counter Returns count of items collected from battlefield
- * @param[out] credits_gained Return total credits gained from sale of items
- *
- * collects all items from battlefield (if we've won the match)
- * and put them back to inventory. Calls CL_CollectItemAmmo which
- * does the real collecting
- */
-extern void CL_CollectItems (int won, int *item_counter, int *credits_gained)
-{
-	int i;
-	le_t *le;
-	invList_t *item;
-	int container;
-
-	eTempMarket = ccs.eMarket;
-	eTempCredits = ccs.credits;
-
-	*item_counter = 0;
-
-	for (i = 0, le = LEs; i < numLEs; i++, le++) {
-		/* Winner collects everything on the floor, and everything carried */
-		/* by surviving actors.  Loser only gets what their living team */
-		/* members carry. */
-		if (!le->inuse)
-			continue;
-		switch (le->type) {
-		case ET_ITEM:
-			if (won)
-				for (item = FLOOR(le); item; item = item->next) {
-					/* TODO: Currently assumes that item.t is good to use. */
-					if ((item->item.a <= 0)		/* No ammo left and ..*/
-					&& csi.ods[item->item.t].oneshot	/* ... oneshot wepaon and ... */
-					&& csi.ods[item->item.t].deplete) { /* ... useless after ammo is gone. */
-						Com_DPrintf("CL_CollectItems: item not collected: %s\n", csi.ods[item->item.t].name);
-					} else {
-						*item_counter += 1;
-						CL_CollectItemAmmo(item, 0, MARKET_AUTOSELL);
-					}
-				}
-			break;
-		case ET_ACTOR:
-		case ET_UGV:
-			if ((le->HP <= 0 || le->state & STATE_STUN) && le->team == TEAM_ALIEN) {
-				/* FIXME: this does not work; this collect alien armour when
-				   an alien is alive, (catch mission with alien with armour and
-				   break the mission - you will collect alien armour */
-				if (le->i.c[csi.idArmor]) {
-					item = le->i.c[csi.idArmor];
-					eTempMarket.num[item->item.t]++;
-					eTempCredits += csi.ods[item->item.t].price;
-					Com_DPrintf("CL_CollectItems().. market: %s, amount: %i\n", csi.ods[item->item.t].name, eTempMarket.num[item->item.t]);
-				}
-				break;
-			}
-			/* TODO: Does a stunned actor lose his inventory, too? */
-			if (le->state & STATE_DEAD || le->team != cls.team)
-				/* the items are already dropped to floor and are available
-				   as ET_ITEM; or the actor is not ours */
-				break;
-			/* living actor */
-			for (container = 0; container < csi.numIDs; container++) {
-				if (csi.ids[container].temp) /* collected above */
-					break;
-				for (item = le->i.c[container]; item; item = item->next)
-					CL_CollectItemAmmo(item, (container == csi.idLeft), qfalse);
-			}
-			break;
-		default:
-			break;
-		}
-	}
-	/* work out the difference in credits before and after the sales */
-	*credits_gained = eTempCredits - ccs.credits;
-
-/*	RS_MarkCollected(&ccs.eMission); not needed due to statusCollected above */
-	/* TODO: make this reversible, like eTempMarket */
-	RS_MarkResearchable();
-}
-#endif
-
 /**
  * Collecting items functions.
  */
@@ -2915,9 +2763,6 @@ extern void CL_CollectingItems (int won)
 			if (won) {
 				/* (le->state & STATE_DEAD) includes STATE_STUN */
 				if (le->state & STATE_DEAD) {
-					/* FIXME: this does not work; this collect alien armour when
-					   an alien is alive, (catch mission with alien with armour
-					   and break the mission - you will collect alien armour */
 					if (le->i.c[csi.idArmor]) {
 						item = le->i.c[csi.idArmor];
 						for (j = 0; j < aircraft->itemtypes; j++) {

@@ -69,7 +69,7 @@ static int PR_RequirementsMet (int amount, requirements_t *req)
 			if (req->type[i] == RS_LINK_ITEM) {
 				/* The same code is used in "RS_RequirementsMet" */
 				Com_DPrintf("PR_RequirementsMet: %s / %i\n", req->id[i], req->idx[i]);
-				if (B_ItemInBase2(req->idx[i], baseCurrent) < req->amount[i]) {
+				if (B_ItemInBase(req->idx[i], baseCurrent) < req->amount[i]) {
 					produceable = qfalse;
 				}
 			}
