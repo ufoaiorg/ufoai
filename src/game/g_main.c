@@ -438,6 +438,7 @@ static void G_SendCharacterData (edict_t* ent)
  * @note Called by game_abort command (or sv win [team])
  * @sa G_RunFrame
  * @sa CL_ParseResults
+ * @sa G_SendInventory
  */
 void G_EndGame (int team)
 {
@@ -452,7 +453,7 @@ void G_EndGame (int team)
 			if ( ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV)
 				 && !(ent->state & STATE_DEAD) && ent->team == TEAM_PHALANX ) {
 				ent->state = STATE_DEAD;
-				ent->HP=0;
+				ent->HP = 0;
 				gi.AddEvent(PM_ALL, EV_ACTOR_STATECHANGE);
 				gi.WriteShort(ent->number);
 				gi.WriteShort(STATE_DEAD);
