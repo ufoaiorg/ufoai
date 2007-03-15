@@ -862,6 +862,7 @@ void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int 
 
 /**
  * @brief Move the whole given inventory to the floor and destroy the items that do not fit there.
+ * @sa G_ActorDie
  */
 void G_InventoryToFloor (edict_t * ent)
 {
@@ -874,6 +875,7 @@ void G_InventoryToFloor (edict_t * ent)
 		if (ent->i.c[k])
 			break;
 
+	/* edict is not carrying any items */
 	if (k >= gi.csi->numIDs)
 		return;
 
@@ -956,6 +958,7 @@ int fb_length;
  * @note The forbidden list is a list of entity positions that are
  * occupied by an entity. This list is checked everytime an actor wants to
  * walk there
+ * @sa G_MoveCalc
  */
 void G_BuildForbiddenList (int team)
 {
@@ -984,6 +987,7 @@ void G_BuildForbiddenList (int team)
 
 /**
  * @brief
+ * @sa G_BuildForbiddenList
  */
 void G_MoveCalc (int team, pos3_t from, int distance)
 {
@@ -993,7 +997,10 @@ void G_MoveCalc (int team, pos3_t from, int distance)
 
 
 /**
- * @brief
+ * @brief Check whether there is already an edict on the field where the actor
+ * is trying to get with the next move
+ * @param[in] dv direction to walk to
+ * @param[in] from starting point to walk from
  */
 static qboolean G_CheckMoveBlock (pos3_t from, int dv)
 {
@@ -1003,6 +1010,7 @@ static qboolean G_CheckMoveBlock (pos3_t from, int dv)
 
 	/* get target position */
 	VectorCopy(from, pos);
+	/* check the next field in the given direction */
 	PosAddDV(pos, dv);
 
 	/* search for blocker */
@@ -1306,6 +1314,10 @@ static void G_ClientStateChange (player_t * player, int num, int reqState)
 
 /**
  * @brief
+ * @sa G_MoraleStopPanic
+ * @sa G_MoraleRage
+ * @sa G_MoraleStopRage
+ * @sa G_MoraleBehaviour
  */
 static void G_MoralePanic (edict_t * ent, qboolean sanity, qboolean quiet)
 {
@@ -1341,6 +1353,10 @@ static void G_MoralePanic (edict_t * ent, qboolean sanity, qboolean quiet)
 /**
  * @brief Stops the panic state of an actor
  * @note This is only called when cvar mor_panic is not zero
+ * @sa G_MoralePanic
+ * @sa G_MoraleRage
+ * @sa G_MoraleStopRage
+ * @sa G_MoraleBehaviour
  */
 static void G_MoraleStopPanic (edict_t * ent, qboolean quiet)
 {
@@ -1352,6 +1368,10 @@ static void G_MoraleStopPanic (edict_t * ent, qboolean quiet)
 
 /**
  * @brief
+ * @sa G_MoralePanic
+ * @sa G_MoraleStopPanic
+ * @sa G_MoraleStopRage
+ * @sa G_MoraleBehaviour
  */
 static void G_MoraleRage (edict_t * ent, qboolean sanity)
 {
@@ -1371,6 +1391,10 @@ static void G_MoraleRage (edict_t * ent, qboolean sanity)
 /**
  * @brief Stops the rage state of an actor
  * @note This is only called when cvar mor_panic is not zero
+ * @sa G_MoralePanic
+ * @sa G_MoraleRage
+ * @sa G_MoraleStopPanic
+ * @sa G_MoraleBehaviour
  */
 static void G_MoraleStopRage (edict_t * ent, qboolean quiet)
 {
@@ -1384,6 +1408,10 @@ static void G_MoraleStopRage (edict_t * ent, qboolean quiet)
 /**
  * @brief Applies morale behaviour on actors
  * @note only called when mor_panic is not zero
+ * @sa G_MoralePanic
+ * @sa G_MoraleRage
+ * @sa G_MoraleStopRage
+ * @sa G_MoraleStopPanic
  */
 static void G_MoraleBehaviour (int team, qboolean quiet)
 {
@@ -1613,7 +1641,7 @@ void G_ActorDie (edict_t * ent, int state)
 	gi.WriteShort(ent->number);
 	gi.WriteShort(ent->state);
 
-	/* handle inventory */
+	/* handle inventory - drop everything to floor edict (but not the armor) */
 	G_InventoryToFloor(ent);
 
 	/* check if the player appears/perishes, seen from other teams */
