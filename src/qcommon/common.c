@@ -1504,15 +1504,17 @@ extern void Qcommon_Init (int argc, char **argv)
 	fixedtime = Cvar_Get("fixedtime", "0", 0, NULL);
 	logfile_active = Cvar_Get("logfile", "1", 0, "0 = deacticate logfile, 1 = write normal logfile, 2 = flush on every new line");
 	showtrace = Cvar_Get("showtrace", "0", 0, NULL);
+	gametype = Cvar_Get("gametype", "1on1", CVAR_ARCHIVE | CVAR_SERVERINFO, "Sets the multiplayer gametype - see gametypelist command for a list of all gametypes");
 #ifdef DEDICATED_ONLY
 	dedicated = Cvar_Get("dedicated", "1", CVAR_SERVERINFO | CVAR_NOSET, "Is this a dedicated server?");
 #else
 	dedicated = Cvar_Get("dedicated", "0", CVAR_SERVERINFO | CVAR_NOSET, "Is this a dedicated server?");
+
+	/* set this to false for client - otherwise Qcommon_Frame would set the initial values to multiplayer */
+	gametype->modified = qfalse;
 #endif
 	cl_maxfps = Cvar_Get("cl_maxfps", "90", 0, NULL);
 	teamnum = Cvar_Get("teamnum", "1", CVAR_ARCHIVE, NULL);
-	gametype = Cvar_Get("gametype", "1on1", CVAR_ARCHIVE | CVAR_SERVERINFO, "Sets the multiplayer gametype - see gametypelist command for a list of all gametypes");
-	gametype->modified = qfalse;
 
 	s = va("UFO: Alien Invasion %s %s %s %s", UFO_VERSION, CPUSTRING, __DATE__, BUILDSTRING);
 	Cvar_Get("version", s, CVAR_NOSET, NULL);
