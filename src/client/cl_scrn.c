@@ -175,9 +175,9 @@ static int scr_erase_center;
 /**
  * @brief Called for important messages that should stay in the center of the screen for a few moments
  */
-void SCR_CenterPrint (char *str)
+void SCR_CenterPrint (const char *str)
 {
-	char *s;
+	const char *s;
 	char line[64];
 	int i, j, l;
 
@@ -464,7 +464,7 @@ static void SCR_DrawCursor (void)
 /**
  * @brief Scroll it up or down
  */
-void SCR_RunConsole(void)
+void SCR_RunConsole (void)
 {
 	/* decide on the height of the console */
 	if (cls.key_dest == key_console)
@@ -491,7 +491,7 @@ void SCR_RunConsole(void)
  * @sa Con_DrawConsole
  * @sa Con_DrawNotify
  */
-static void SCR_DrawConsole(void)
+static void SCR_DrawConsole (void)
 {
 	Con_CheckResize();
 
@@ -522,7 +522,7 @@ static void SCR_DrawConsole(void)
  * @sa SCR_EndLoadingPlaque
  * @sa SCR_DrawLoading
  */
-void SCR_BeginLoadingPlaque(void)
+void SCR_BeginLoadingPlaque (void)
 {
 	S_StopAllSounds();
 	cl.sound_prepped = qfalse;	/* don't play ambients */
@@ -541,7 +541,7 @@ void SCR_BeginLoadingPlaque(void)
  * @brief
  * @sa SCR_BeginLoadingPlaque
  */
-void SCR_EndLoadingPlaque(void)
+void SCR_EndLoadingPlaque (void)
 {
 	cls.disable_screen = 0;
 	scr_draw_loading = 0;
@@ -554,7 +554,7 @@ void SCR_EndLoadingPlaque(void)
  * @sa SCR_BeginLoadingPlaque
  * @sa SCR_EndLoadingPlaque
  */
-static void SCR_Loading_f(void)
+static void SCR_Loading_f (void)
 {
 	SCR_BeginLoadingPlaque();
 }
@@ -599,7 +599,7 @@ static void SCR_TimeRefresh_f (void)
  * @brief
  * @sa SCR_DirtyScreen
  */
-void SCR_AddDirtyPoint(int x, int y)
+void SCR_AddDirtyPoint (int x, int y)
 {
 	if (x < scr_dirty.x1)
 		scr_dirty.x1 = x;
@@ -615,7 +615,7 @@ void SCR_AddDirtyPoint(int x, int y)
  * @brief
  * @sa SCR_AddDirtyPoint
  */
-void SCR_DirtyScreen(void)
+void SCR_DirtyScreen (void)
 {
 	SCR_AddDirtyPoint(0, 0);
 	SCR_AddDirtyPoint(viddef.width - 1, viddef.height - 1);
@@ -624,7 +624,7 @@ void SCR_DirtyScreen(void)
 /**
  * @brief Allows rendering code to cache all needed sbar graphics
  */
-void SCR_TouchPics(void)
+void SCR_TouchPics (void)
 {
 	if (cursor->value) {
 		if (cursor->value > 9 || cursor->value < 0)
