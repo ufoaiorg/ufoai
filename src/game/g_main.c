@@ -464,7 +464,7 @@ void G_EndGame (int team)
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; ent++, i++)
 		if (ent->inuse) {
 			G_AppearPerishEvent(~G_VisToPM(ent->visflags), 1, ent);
-			if ((ent->type == ET_ACTOR || ent->type == ET_UGV) && !(ent->state & STATE_DEAD))
+			if (ent->type == ET_ACTOR || ent->type == ET_UGV)
 				G_SendInventory(~G_TeamToPM(ent->team), ent);
 		}
 
