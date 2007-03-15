@@ -164,6 +164,9 @@ void G_SendState (int player_mask, edict_t * ent)
 
 /**
  * @brief
+ * @sa G_EndGame
+ * @sa G_AppearPerishEvent
+ * @sa CL_InvAdd
  */
 void G_SendInventory (int player_mask, edict_t * ent)
 {

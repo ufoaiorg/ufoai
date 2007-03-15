@@ -438,6 +438,7 @@ static void G_SendCharacterData (edict_t* ent)
  * @note Called by game_abort command (or sv win [team])
  * @sa G_RunFrame
  * @sa CL_ParseResults
+ * @sa G_SendInventory
  */
 void G_EndGame (int team)
 {

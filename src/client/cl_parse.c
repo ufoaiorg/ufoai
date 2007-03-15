@@ -1003,6 +1003,7 @@ static void CL_PlaceItem (le_t *le)
 /**
  * @brief
  * @sa CL_InvDel
+ * @sa G_SendInventory
  */
 static void CL_InvAdd (sizebuf_t *sb)
 {
