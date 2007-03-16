@@ -231,7 +231,7 @@ building building_large_ufo_hangar
 	map_name	"ufohangar_l"
 	capacity	1
 	pedia		rs_building_large_ufo_hangar
-	needs		building_ufo_hangar2
+	needs		building_large_ufo_hangar2
 	more_than_one	true
 	type		hangar
 	onclick		"building_open"
