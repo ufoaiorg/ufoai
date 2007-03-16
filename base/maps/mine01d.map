@@ -9796,12 +9796,12 @@
 // entity 70
 {
 "classname" "info_civilian_start"
-"origin" "720 336 280"
+"origin" "432 304 220"
 }
 // entity 71
 {
 "classname" "info_civilian_start"
-"origin" "112 432 216"
+"origin" "16 -48 88"
 }
 // entity 72
 {
@@ -15519,4 +15519,29 @@
 ( 610 128 256 ) ( 610 128 288 ) ( 610 160 288 ) tex_misc/barrel1 32 108 -90 1 1 14336 0 0
 ( 574 160 288 ) ( 574 128 288 ) ( 574 128 256 ) tex_misc/barrel1 32 108 -90 1 1 14336 0 0
 }
+}
+// entity 210
+{
+"classname" "info_civilian_start"
+"origin" "272 208 152"
+}
+// entity 211
+{
+"classname" "info_civilian_start"
+"origin" "-80 368 88"
+}
+// entity 212
+{
+"classname" "info_civilian_start"
+"origin" "112 432 216"
+}
+// entity 213
+{
+"classname" "info_civilian_start"
+"origin" "272 400 152"
+}
+// entity 214
+{
+"classname" "info_civilian_start"
+"origin" "720 336 280"
 }

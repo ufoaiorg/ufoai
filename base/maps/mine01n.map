@@ -15512,3 +15512,28 @@
 ( 256 -384 192 ) ( 256 -384 188 ) ( 256 -520 188 ) tex_nature/desert005 4 116 0 0.5 0.5 14336 0 0
 }
 }
+// entity 208
+{
+"classname" "info_civilian_start"
+"origin" "432 304 220"
+}
+// entity 209
+{
+"classname" "info_civilian_start"
+"origin" "16 -48 88"
+}
+// entity 210
+{
+"classname" "info_civilian_start"
+"origin" "272 208 152"
+}
+// entity 211
+{
+"classname" "info_civilian_start"
+"origin" "-80 368 88"
+}
+// entity 212
+{
+"classname" "info_civilian_start"
+"origin" "272 400 152"
+}
