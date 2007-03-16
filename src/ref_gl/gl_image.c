@@ -2175,7 +2175,11 @@ image_t *GL_FindImageForShader (const char *name)
  * @sa LoadPNG
  * @sa LoadPCX
  */
+#ifdef DEBUG
+image_t *GL_FindImageDebug (const char *pname, imagetype_t type, char *file, int line)
+#else
 image_t *GL_FindImage (const char *pname, imagetype_t type)
+#endif
 {
 	char lname[MAX_QPATH];
 	char *ename;
@@ -2268,7 +2272,11 @@ image_t *GL_FindImage (const char *pname, imagetype_t type)
 	image = r_notexture;
 
 	*ename = 0;
+#ifdef DEBUG
+	ri.Con_Printf(PRINT_ALL, "GL_FindImage: Can't find %s (%s) - file: %s, line %i\n", lname, pname, file, line);
+#else
 	ri.Con_Printf(PRINT_ALL, "GL_FindImage: Can't find %s (%s)\n", lname, pname);
+#endif
 
 	if ((glerrortexend - glerrortex) + strlen(lname) < MAX_GLERRORTEX) {
 		Q_strncpyz(glerrortexend, lname, MAX_QPATH);

@@ -419,7 +419,12 @@ char *Anim_GetName(animState_t * as, model_t * mod);
 struct image_s *R_RegisterSkin(const char *name);
 
 image_t *GL_LoadPic(const char *name, byte * pic, int width, int height, imagetype_t type, int bits);
+#ifdef DEBUG
+image_t *GL_FindImageDebug(const char *pname, imagetype_t type, char *file, int line);
+#define GL_FindImage(pname,type) GL_FindImageDebug(pname, type, __FILE__, __LINE__ )
+#else
 image_t *GL_FindImage(const char *pname, imagetype_t type);
+#endif
 image_t *GL_FindImageForShader(const char *name);
 void GL_TextureMode(const char *string);
 void GL_ImageList_f(void);
