@@ -1238,10 +1238,10 @@ static qboolean CL_SaveTeam (const char *filename)
  */
 static void CL_SaveTeamSlot_f (void)
 {
-	char filename[MAX_QPATH];
+	char filename[MAX_OSPATH];
 
 	/* save */
-	Com_sprintf(filename, MAX_QPATH, "%s/save/team%s.mpt", FS_Gamedir(), Cvar_VariableString("mn_slot"));
+	Com_sprintf(filename, sizeof(filename), "%s/save/team%s.mpt", FS_Gamedir(), Cvar_VariableString("mn_slot"));
 	if (!CL_SaveTeam(filename))
 		MN_Popup(_("Note"), _("Error saving team. Check free disk space!"));
 }
@@ -1291,7 +1291,7 @@ static void CL_LoadTeamMember (sizebuf_t * sb, character_t * chr)
  * @sa CL_LoadTeam
  * @sa CL_SaveTeam
  */
-static void CL_LoadTeamMultiplayer (char *filename)
+static void CL_LoadTeamMultiplayer (const char *filename)
 {
 	sizebuf_t sb;
 	byte buf[MAX_TEAMDATASIZE];
@@ -1371,7 +1371,7 @@ static void CL_LoadTeamMultiplayer (char *filename)
  */
 static void CL_LoadTeamSlot_f (void)
 {
-	char filename[MAX_QPATH];
+	char filename[MAX_OSPATH];
 
 	if (ccs.singleplayer) {
 		Com_Printf("Only for multiplayer\n");
@@ -1379,7 +1379,7 @@ static void CL_LoadTeamSlot_f (void)
 	}
 
 	/* load */
-	Com_sprintf(filename, MAX_QPATH, "%s/save/team%s.mpt", FS_Gamedir(), Cvar_VariableString("mn_slot"));
+	Com_sprintf(filename, sizeof(filename), "%s/save/team%s.mpt", FS_Gamedir(), Cvar_VariableString("mn_slot"));
 	CL_LoadTeamMultiplayer(filename);
 
 	Com_Printf("Team 'team%s' loaded.\n", Cvar_VariableString("mn_slot"));
