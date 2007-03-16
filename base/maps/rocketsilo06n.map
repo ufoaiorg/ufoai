@@ -5,7 +5,7 @@
 "_color" "1 1 0.85"
 "ambient" "0.35 0.35 0.35"
 "angles" "30 30"
-"light" "80"
+"light" "60"
 "maxlevel" "8"
 // brush 0
 {
@@ -2433,28 +2433,28 @@
 "classname" "light"
 "origin" "-251 342 42"
 "light" "200"
-"color" "0.8 0 0 "
+"_color" "0.8 0 0 "
 }
 // entity 3
 {
 "classname" "light"
 "origin" "-357 256 378"
 "light" "400"
-"color" "0.8 0 0 "
+"_color" "0.8 0 0 "
 }
 // entity 4
 {
 "classname" "light"
 "origin" "-251 170 42"
 "light" "200"
-"color" "0.8 0 0 "
+"_color" "0.8 0 0 "
 }
 // entity 5
 {
 "classname" "light"
 "origin" "-159 256 378"
 "light" "200"
-"color" "0.8 0 0 "
+"_color" "0.8 0 0 "
 }
 // entity 6
 {
@@ -2557,28 +2557,28 @@
 "classname" "light"
 "origin" "-362 256 152"
 "light" "200"
-"color" "0.8 0 0 "
+"_color" "0.8 0 0 "
 }
 // entity 23
 {
 "classname" "light"
 "origin" "-256 170 152"
 "light" "200"
-"color" "0.8 0 0 "
+"_color" "0.8 0 0 "
 }
 // entity 24
 {
 "classname" "light"
 "origin" "-388 208 336"
 "light" "400"
-"color" "0.8 0 0 "
+"_color" "0.8 0 0 "
 }
 // entity 25
 {
 "classname" "light"
 "origin" "-256 342 488"
 "light" "200"
-"color" "0.8 0 0 "
+"_color" "0.8 0 0 "
 }
 // entity 26
 {
@@ -2615,21 +2615,21 @@
 "classname" "light"
 "origin" "-357 256 42"
 "light" "400"
-"color" "0.8 0 0 "
+"_color" "0.8 0 0 "
 }
 // entity 32
 {
 "classname" "light"
 "origin" "-159 256 42"
 "light" "200"
-"color" "0.8 0 0 "
+"_color" "0.8 0 0 "
 }
 // entity 33
 {
 "classname" "light"
 "origin" "-164 118 -28"
 "light" "500"
-"color" "0.8 0 0 "
+"_color" "0.8 0 0 "
 }
 // entity 34
 {
@@ -2642,56 +2642,56 @@
 "classname" "light"
 "origin" "-164 256 152"
 "light" "400"
-"color" "0.8 0 0 "
+"_color" "0.8 0 0 "
 }
 // entity 36
 {
 "classname" "light"
 "origin" "-256 350 186"
 "light" "500"
-"color" "0.8 0 0 "
+"_color" "0.8 0 0 "
 }
 // entity 37
 {
 "classname" "light"
 "origin" "-360 182 152"
 "light" "500"
-"color" "0.8 0 0 "
+"_color" "0.8 0 0 "
 }
 // entity 38
 {
 "classname" "light"
 "origin" "-132 130 152"
 "light" "500"
-"color" "0.8 0 0 "
+"_color" "0.8 0 0 "
 }
 // entity 39
 {
 "classname" "light"
 "origin" "-120 382 152"
 "light" "500"
-"color" "0.8 0 0 "
+"_color" "0.8 0 0 "
 }
 // entity 40
 {
 "classname" "light"
 "origin" "-356 426 152"
 "light" "500"
-"color" "0.8 0 0 "
+"_color" "0.8 0 0 "
 }
 // entity 41
 {
 "classname" "light"
 "origin" "-260 426 -32"
 "light" "500"
-"color" "0.8 0 0 "
+"_color" "0.8 0 0 "
 }
 // entity 42
 {
 "classname" "light"
 "origin" "-396 426 -32"
 "light" "500"
-"color" "0.8 0 0 "
+"_color" "0.8 0 0 "
 }
 // entity 43
 {
