@@ -498,12 +498,17 @@ typedef enum model_script_s {
 	MODEL_NUM_TYPES
 } model_script_t;
 
+/* different sounds for each sex and actor definition */
+#define MAX_ACTOR_SOUNDS 16
+
 typedef struct nameCategory_s {
 	char title[MAX_VAR];
 	char *names[NAME_NUM_TYPES];
 	int numNames[NAME_NUM_TYPES];
 	char *models[NAME_LAST];
 	int numModels[NAME_LAST];
+	char sounds[MAX_SOUND_TYPES][NAME_LAST][MAX_ACTOR_SOUNDS][MAX_QPATH];
+	int numSounds[MAX_SOUND_TYPES][NAME_LAST];
 } nameCategory_t;
 
 typedef struct teamDef_s {
@@ -884,7 +889,7 @@ static void Com_ParseNames (char *title, char **text)
 
 
 /**
- * @brief Parses "actor" definition from team_* ufo script files
+ * @brief Parses "actors" definition from team_* ufo script files
  * @sa Com_ParseNames
  * @sa Com_ParseScripts
  * @note fills the nameCat array
@@ -972,7 +977,91 @@ static void Com_ParseActors (char *title, char **text)
 			}
 
 		if (i == NAME_NUM_TYPES)
-			Com_Printf("Com_ParseNames: unknown token \"%s\" ignored (actors %s)\n", token, title);
+			Com_Printf("Com_ParseActors: unknown token \"%s\" ignored (actors %s)\n", token, title);
+
+	} while (*text);
+}
+
+/**
+ * @brief Parses "actorsounds" definition from team_* ufo script files
+ * @sa Com_ParseNames
+ * @sa Com_ParseScripts
+ */
+static void Com_ParseActorSounds (char *title, char **text)
+{
+	nameCategory_t *nc;
+	const char *errhead = "Com_ParseActorSounds: unexptected end of file (actorsounds ";
+	char *token;
+	int i;
+
+	/* check for additions to existing name categories */
+	for (i = 0, nc = nameCat; i < numNameCats; i++, nc++)
+		if (!Q_strncmp(nc->title, title, MAX_VAR))
+			break;
+
+	/* reset new category */
+	if (i == numNameCats) {
+		if (numNameCats < MAX_NAMECATS) {
+			memset(nc, 0, sizeof(nameCategory_t));
+			numNameCats++;
+		} else {
+			Com_Printf("Too many name categories, '%s' ignored.\n", title);
+			return;
+		}
+	}
+	Q_strncpyz(nc->title, title, MAX_VAR);
+
+	/* get name list body body */
+	token = COM_Parse(text);
+
+	if (!*text || *token != '{') {
+		Com_Printf("Com_ParseActorSounds: actorsounds def \"%s\" without body ignored\n", title);
+		if (numNameCats - 1 == nc - nameCat)
+			numNameCats--;
+		return;
+	}
+
+	do {
+		/* get the name type */
+		token = COM_EParse(text, errhead, title);
+		if (!*text)
+			break;
+		if (*token == '}')
+			break;
+
+		for (i = 0; i < NAME_NUM_TYPES; i++)
+			if (!Q_strcmp(token, name_strings[i])) {
+				token = COM_EParse(text, errhead, title);
+				if (!*text)
+					break;
+				if (*token != '{')
+					break;
+
+				do {
+					/* get the sounds */
+					token = COM_EParse(text, errhead, title);
+					if (!*text)
+						break;
+					if (*token == '}')
+						break;
+					if (!Q_strcmp(token, "hurtsound")) {
+						token = COM_EParse(text, errhead, title);
+						if (!*text)
+							break;
+						Q_strncpyz(nc->sounds[SOUND_HURT][i][nc->numSounds[SOUND_HURT][i]++], token, MAX_QPATH);
+					} else if (!Q_strcmp(token, "hurtsound")) {
+						token = COM_EParse(text, errhead, title);
+						if (!*text)
+							break;
+						Q_strncpyz(nc->sounds[SOUND_HURT][i][nc->numSounds[SOUND_HURT][i]++], token, MAX_QPATH);
+					}
+				}
+				while (*text);
+				break;
+			}
+
+		if (i == NAME_NUM_TYPES)
+			Com_Printf("Com_ParseActorSounds: unknown token \"%s\" ignored (actors %s)\n", token, title);
 
 	} while (*text);
 }
@@ -1346,6 +1435,7 @@ extern void Com_AddObjectLinks (void)
 extern void Com_ParseScripts (void)
 {
 	char *type, *name, *text;
+	ptrdiff_t infoSize = 0;
 
 	/* reset csi basic info */
 	Com_InitCSI(&csi);
@@ -1385,6 +1475,8 @@ extern void Com_ParseScripts (void)
 			Com_ParseInventory(name, &text);
 		else if (!Q_strncmp(type, "names", 5))
 			Com_ParseNames(name, &text);
+		else if (!Q_strncmp(type, "actorsounds", 11))
+			Com_ParseActorSounds(name, &text);
 		else if (!Q_strncmp(type, "actors", 6))
 			Com_ParseActors(name, &text);
 		else if (!dedicated->value)
@@ -1404,6 +1496,14 @@ extern void Com_ParseScripts (void)
 		else if (!Q_strncmp(type, "team", 4))
 			Com_ParseTeam(name, &text);
 	}
+
+	infoSize = infoPos - infoStr;
+	if (infoSize > sizeof(infoStr))
+		Sys_Error("Com_ParseScripts: infoStr overflow\n");
+#ifdef DEBUG
+	else
+		Com_DPrintf("Free info memory: %ib\n", (int)infoSize);
+#endif
 
 	Com_Printf("Shared Client/Server Info loaded\n");
 }

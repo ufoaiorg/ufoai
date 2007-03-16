@@ -227,6 +227,13 @@ enum clc_ops_e {
 
 #include "scripts.h"
 
+typedef enum actor_sounds_s {
+	SOUND_DEATH,
+	SOUND_HURT,
+
+	MAX_SOUND_TYPES
+} actor_sounds_t;
+
 /*
 ==============================================================
 MISC
