@@ -298,7 +298,7 @@ menu hospital_employee
 
 	pic button_hosp_bionic_start
 	{
-		tooltip	"_Implants"
+		tooltip	"TODO: this function will be available in future versions"
 		image   menu/button
 		pos	"45 170"
 		texl	"0 0"
