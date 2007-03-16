@@ -40,7 +40,7 @@ stage intro
 		delay		"0 10 7"
 		frame		"0 15 0" // big missions, but less traffic
 		expire		"0 45 0" // three at geoscape, but lots of time to do them
-		missions	"bunker japan dam spedition" //stadium... need a night version
+		missions	"bunker japan dam spedition stadium"
 		number		4 // no mission will get repeated
 		quota		4
 	}
@@ -127,14 +127,14 @@ stage alienbase
 		delay		"0 11 0"
 		// aliencolony mission here
 
-		commands	"mn_push enddemo;" // until aliencolony is done
+		commands	"mn_push endgame;" // until aliencolony is done
 	}
 	set stop_alienbase
 	{
 		needed		first_alienbase
 		delay		"0 12 0"
 		endstage	alienbase
-//		commands	"mn_push enddemo;"
+//		commands	"mn_push endgame;"
 	}
 }
 
