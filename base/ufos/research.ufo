@@ -271,7 +271,7 @@ tech rs_alien_mind
 	require_AND
 	{
 		tech rs_alien_live
-		//TODO alien Unknown 3
+		alienglobal 3
 	}
 	time	1500
 }
@@ -301,7 +301,7 @@ tech rs_alien_oddbehaviour
 	require_AND
 	{
 		tech rs_alien_mind
-		//TODO alien Unknown 10
+		alienglobal 10
 	}
 	time		1500
 }

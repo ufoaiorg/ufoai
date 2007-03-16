@@ -143,7 +143,8 @@ static qboolean RS_RequirementsMet (requirements_t *required_AND, requirements_t
 					met_AND = qfalse;
 				break;
 			case RS_LINK_ALIEN_GLOBAL:
-				/* TODO: @zenerka: check if the amount is there and set met_AND = qfalse if it isn't */
+				if (AL_CountAll() < required_AND->amount[i])
+					met_AND = qfalse;
 				break;
 			default:
 				break;
@@ -179,7 +180,8 @@ static qboolean RS_RequirementsMet (requirements_t *required_AND, requirements_t
 					met_OR = qtrue;
 				break;
 			case RS_LINK_ALIEN_GLOBAL:
-				/* TODO: @zenerka: check if the amount is there and set met_OR = qtrue if it is */
+				if (AL_CountAll() >= required_OR->amount[i])
+					met_OR = qtrue;
 				break;
 			default:
 				break;
@@ -247,7 +249,13 @@ qboolean RS_CheckCollected (requirements_t *required)
 			}
 			break;
 		case RS_LINK_ALIEN_GLOBAL:
-			/* TODO: @zenerka: set required->collected[i] to global amount similar to the RS_LINK_ALIEN stuff */
+			amount = AL_CountAll();
+			if (amount > 0) {
+				required->collected[i] = amount;
+			} else {
+				required->collected[i] = 0;
+				something_collected_from_each = qfalse;
+			}
 			break;
 		case RS_LINK_EVENT:
 			break;
