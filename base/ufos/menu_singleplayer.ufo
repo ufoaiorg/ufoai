@@ -732,7 +732,7 @@ menu endgame
 	string endgame_multiplayer
 	{
 		pos	"512 640"
-		string	"_No after you have finished the single-player campaigns"
+		string	"_Now after you have finished the single-player campaigns"
 		font "f_normal"
 		align	uc
 		color	"0 0.8 0 0.9"
