@@ -1251,8 +1251,9 @@ void FS_GetMaps (qboolean reset)
 	int status, i;
 	char *baseMapName = NULL;
 	char **dirnames;
-	char *path = NULL;
 	int ndirs;
+	searchpath_t *search;
+	pack_t *pak;
 
 	/* force a reread */
 	if (!reset && mapsInstalledInit)
@@ -1266,31 +1267,73 @@ void FS_GetMaps (qboolean reset)
 	mapInstalledIndex = 0;
 	numInstalledMaps = -1;
 
-	while ((path = FS_NextPath(path)) != NULL) {
-		Com_sprintf(findname, sizeof(findname), "%s/maps/*.bsp", path);
-		FS_NormPath(findname);
+	/* search through the path, one element at a time */
+	for (search = fs_searchpaths; search; search = search->next) {
+		/* is the element a pak file? */
+		if (search->pack) {
+			/* look through all the pak file elements */
+			pak = search->pack;
+			for (i = 0; i < pak->numfiles; i++) {
+				/* found it! */
+				baseMapName = strchr(pak->files[i].name, '/');
+				if (baseMapName) {
+					/* FIXME: paths are normalized here? */
+					baseMapName = strchr(baseMapName+1, '/');
+					/* ugly hack - only show the maps in base/maps - not in base/maps/b and so on */
+					if (baseMapName)
+						continue;
+				} else {
+					Com_Printf("map is not in maps/ folder '%s'\n", pak->files[i].name);
+					continue;
+				}
 
-		if ((dirnames = FS_ListFiles(findname, &ndirs, 0, SFF_HIDDEN | SFF_SYSTEM)) != 0) {
-			for (i = 0; i < ndirs - 1; i++) {
-				Com_DPrintf("... found map: '%s' (pos %i out of %i)\n", dirnames[i], i+1, ndirs);
-				baseMapName = COM_SkipPath(dirnames[i]);
-				COM_StripExtension(baseMapName, filename);
-				status = CheckBSPFile(filename);
-				if (!status) {
-					/*searched a specific map? */
+				if (strstr(pak->files[i].name, ".bsp")) {
+					if (numInstalledMaps+1 >= MAX_MAPS) {
+						Com_Printf("FS_GetMaps: Max maps limit hit\n");
+						break;
+					}
 					maps[numInstalledMaps+1] = (char *) malloc(MAX_QPATH * sizeof(char));
 					if (maps[numInstalledMaps+1] == NULL) {
-						Com_Printf("Could not allocate memory in MN_GetMaps\n");
-						free(dirnames[i]);
+						Com_Printf("Could not allocate memory in FS_GetMaps\n");
 						continue;
 					}
+					Q_strncpyz(findname, pak->files[i].name, sizeof(findname));
+					FS_NormPath(findname);
+					baseMapName = COM_SkipPath(findname);
+					COM_StripExtension(baseMapName, filename);
 					Q_strncpyz(maps[numInstalledMaps+1], filename, MAX_QPATH);
 					numInstalledMaps++;
-				} else
-					Com_Printf("invalid mapstatus: %i (%s)\n", status, dirnames[i]);
-				free(dirnames[i]);
+				}
 			}
-			free(dirnames);
+		} else {
+			Com_sprintf(findname, sizeof(findname), "%s/maps/*.bsp", search->filename);
+			FS_NormPath(findname);
+
+			if ((dirnames = FS_ListFiles(findname, &ndirs, 0, SFF_HIDDEN | SFF_SYSTEM)) != 0) {
+				for (i = 0; i < ndirs - 1; i++) {
+					Com_DPrintf("... found map: '%s' (pos %i out of %i)\n", dirnames[i], i+1, ndirs);
+					baseMapName = COM_SkipPath(dirnames[i]);
+					COM_StripExtension(baseMapName, filename);
+					status = CheckBSPFile(filename);
+					if (!status) {
+						if (numInstalledMaps+1 >= MAX_MAPS) {
+							Com_Printf("FS_GetMaps: Max maps limit hit\n");
+							break;
+						}
+						maps[numInstalledMaps+1] = (char *) malloc(MAX_QPATH * sizeof(char));
+						if (maps[numInstalledMaps+1] == NULL) {
+							Com_Printf("Could not allocate memory in FS_GetMaps\n");
+							free(dirnames[i]);
+							continue;
+						}
+						Q_strncpyz(maps[numInstalledMaps+1], filename, MAX_QPATH);
+						numInstalledMaps++;
+					} else
+						Com_Printf("invalid mapstatus: %i (%s)\n", status, dirnames[i]);
+					free(dirnames[i]);
+				}
+				free(dirnames);
+			}
 		}
 	}
 

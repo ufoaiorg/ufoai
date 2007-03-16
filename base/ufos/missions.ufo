@@ -1,13 +1,12 @@
-// TODO: no night version
 // America
 mission stadium
 {
 	location	"_New York"
 	type		"_Terror Attack"
-	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!"
-	map			stadium06
+	text		"_Damn it, you've let some of them get away again! Reequip your squad and get after them!"
+	map		stadium06
 	music		mission4
-	pos			"74 41"
+	pos		"74 41"
 	aliens		4
 	alienteam	alien
 	alienequip	stage4_soldiers
@@ -24,10 +23,10 @@ mission terrain
 {
 	location	"_Altdorf"
 	type		"_Terror Attack"
-	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!"
-	map			terrain08
+	text		"_Damn it, you've let some of them get away again! Reequip your squad and get after them!"
+	map		terrain08
 	music		mission2
-	pos			"-9 46"
+	pos		"-9 46"
 	aliens		4
 	alienteam	alien
 	alienequip	stage4_soldiers_plasma
@@ -44,10 +43,10 @@ mission spedition
 {
 	location	"_Oslo"
 	type		"_Terror Attack"
-	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!"
-	map			spedition06
+	text		"_Damn it, you've let some of them get away again! Reequip your squad and get after them!"
+	map		spedition06
 	music		geoscape
-	pos			"-10 60"
+	pos		"-10 60"
 	aliens		4
 	alienteam	alien
 	alienequip	stage4_soldiers
@@ -64,15 +63,15 @@ mission pdi
 {
 	location	"_Antalya"
 	type		"_Terror Attack"
-	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!"
-	map			pdi08
+	text		"_Damn it, you've let some of them get away again! Reequip your squad and get after them!"
+	map		pdi08
 	music		PsymongO5
-	pos			"-30 36"
+	pos		"-30 36"
 	aliens		4
 	alienteam	alien
 	alienequip	stage3_workers_explosive
 	civilians	2
-	civteam     oriental
+	civteam		oriental
 	nation		"europa"
 	onlose		""
 	onwin		""
@@ -85,9 +84,9 @@ mission mart
 	location	"_Berlin"
 	type		"_Terror Attack"
 	text		"_Protect civilians"
-	map			mart05
+	map		mart05
 	music		PsymongO4
-	pos			"-13 52"
+	pos		"-13 52"
 	aliens		6
 	alienteam	taman
 	alienequip	stage1_workers
@@ -105,9 +104,9 @@ mission mine_crash
 	location	"_Wajir"
 	type		"_Crash Site"
 	text		"_Secure Area"
-	map			mine_crash05
+	map		mine_crash05
 	music		PsymongR2
-	pos			"-40 2"
+	pos		"-40 2"
 	aliens		7
 	alienteam	alien
 	alienequip	stage2_soldiers
@@ -119,21 +118,21 @@ mission mine_crash
 	storyrelated	true
 }
 
-// FIXME, America
+// Netherlands
 mission bridge
 {
-	location	"_FIXME"
+	location	"_Arnhem"
 	type		"_Crash Site"
 	text		"_Secure Area"
-	map			bridge01
+	map		bridge01
 	music		PsymongR2
-	pos			"-40 2"
+	pos		"-6 52"
 	aliens		7
 	alienteam	alien
 	alienequip	stage2_soldiers
 	civilians	6
-	civteam		americans
-	nation		"states"
+	civteam		european
+	nation		"europa"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -144,14 +143,14 @@ mission mine
 {
 	location	"_Wellington"
 	type		"_Terror Attack"
-	text		"_There are rumors of a mine being\overrun by aliens. Although this\source of information is doubtful,\you'll need to investigate."
-	map			mine01
+	text		"_There are rumors of a mine being overrun by aliens. Although this source of information is doubtful, you'll need to investigate."
+	map		mine01
 	music		alBasrahM
-	pos			"-174 -41"
+	pos		"-174 -41"
 	aliens		7
 	alienteam	ortnok
 	alienequip	stage1_workers_explosive
-	civilians	3
+	civilians	6
 	civteam		european
 	nation		"oceania"
 	onlose		""
@@ -165,9 +164,9 @@ mission office
 	location	"_Mackay"
 	type		"_Terror Attack"
 	text		"_Protect inhabitants"
-	map			office06
+	map		office06
 	music		dawn
-	pos			"-149 -21"
+	pos		"-149 -21"
 	aliens		8
 	alienteam	taman
 	alienequip	stage3_soldiers
@@ -185,9 +184,9 @@ mission africa
 	location	"_Dongola"
 	type		"_Crashed Alien Ship"
 	text		"_Secure area"
-	map			africa04
+	map		africa04
 	music		mission4
-	pos			"-30 18"
+	pos		"-30 18"
 	aliens		10
 	alienteam	alien
 	alienequip	stage4_workers
@@ -205,9 +204,9 @@ mission bunker
 	location	"_Bristol"
 	type		"_Terror Attack"
 	text		"_Protect the military installation crew"
-	map			bunker01
+	map		bunker01
 	music		greecei
-	pos			"2 51"
+	pos		"2 51"
 	aliens		8
 	alienteam	alien
 	alienequip	stage1_workers_explosive
@@ -225,9 +224,9 @@ mission city
 	location	"_Veracruz"
 	type		"_Terror Attack"
 	text		"_Protect inhabitants"
-	map			city04
+	map		city04
 	music		ufo1
-	pos			"96 19"
+	pos		"96 19"
 	aliens		6
 	alienteam	taman
 	alienequip	stage2_workers
@@ -245,9 +244,9 @@ mission construction
 	location	"_Uppsala"
 	type		"_Terror Attack"
 	text		"_Protect inhabitants"
-	map			const05
+	map		const05
 	music		PsymongR1
-	pos			"-17 60"
+	pos		"-17 60"
 	aliens		6
 	alienteam	alien
 	alienequip	stage3_soldiers
@@ -265,9 +264,9 @@ mission africa_excavation
 	location	"_Gwanda"
 	type		"_Terror Attack"
 	text		"_Protect the excavation site at all cost."
-	map			excavation06
+	map		excavation06
 	music		PsymongN1
-	pos			"-29 -20"
+	pos		"-29 -20"
 	aliens		5
 	alienteam	ortnok
 	alienequip	stage1_workers
@@ -285,9 +284,9 @@ mission italy
 	location	"_Marina Serra"
 	type		"_Terror Attack"
 	text		"_Protect inhabitants"
-	map			italy05
+	map		italy05
 	music		PsymongO2
-	pos			"-18 40"
+	pos		"-18 40"
 	aliens		3
 	alienteam	taman
 	alienequip	stage1_soldiers
@@ -304,10 +303,10 @@ mission subway
 {
 	location	"_New York"
 	type		"_Terror Attack"
-	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!"
-	map			subway07
+	text		"_Damn it, you've let some of them get away again! Reequip your squad and get after them!"
+	map		subway07
 	music		PsymongN4
-	pos			"74 40"
+	pos		"74 40"
 	aliens		6
 	alienteam	alien
 	alienequip	stage2_workers
@@ -325,10 +324,10 @@ mission vil_lille
 	location	"_Lille"
 	type		"_Terror Attack"
 	text		"_Protect inhabitants"
-	map			"+village"
+	map		"+village"
 	param		recreational
 	music		PsymongN5
-	pos			"-3 50"
+	pos		"-3 50"
 	aliens		7
 	alienteam	ortnok
 	alienequip	stage2_workers
@@ -346,9 +345,9 @@ mission harbor
 	location	"_Busan"
 	type		"_Terror Attack"
 	text		"_Protect inhabitants"
-	map			harbor07
+	map		harbor07
 	music		theme
-	pos			"-129 35"
+	pos		"-129 35"
 	aliens		8
 	alienteam	ortnok
 	alienequip	stage3_workers
@@ -366,9 +365,9 @@ mission japan
 	location	"_Morioka"
 	type		"_Alien Hideout"
 	text		"_Eliminate intruders"
-	map			japan06
+	map		japan06
 	music		mission3
-	pos			"-141 39"
+	pos		"-141 39"
 	aliens		10
 	alienteam	taman
 	alienequip	stage2_soldiers_melee
@@ -387,9 +386,9 @@ mission falconcrash
 	location	"_Atacama Desert"
 	type		"_Crashed Alien Ship"
 	text		"_Secure Alien Ship"
-	map			falcon_crash04
+	map		falcon_crash04
 	music		PsymongR3
-	pos			"70 -27"
+	pos		"70 -27"
 	aliens		7
 	alienteam	alien
 	alienequip	stage4_soldiers
@@ -406,9 +405,9 @@ mission farm
 	location	"_Revelstoke"
 	type		"_Landed Alien Ship"
 	text		"_Secure Alien Ship before Liftoff"
-	map			farm08
+	map		farm08
 	music		PsymongN2
-	pos			"116 52"
+	pos		"116 52"
 	aliens  	4
 	alienteam	taman
 	alienequip	stage1_workers
@@ -425,9 +424,9 @@ mission farm2
 	location	"_Revelstoke"
 	type		"_Landed Alien Ship"
 	text		"_Secure Alien Ship"
-	map			farm08
+	map		farm08
 	music		mission
-	pos			"116 52"
+	pos		"116 52"
 	aliens  	5
 	alienteam	alien
 	alienequip	stage3_workers
@@ -444,10 +443,10 @@ mission frozen_groenland
 	location	"_Nuuk"
 	type		"_Terror Attack"
 	text		"_Protect inhabitants"
-	map			"+frozen"
+	map		"+frozen"
 	param		small
 	music		theme
-	pos			"47 -42"
+	pos		"47 -42"
 	aliens		6
 	alienteam	alien
 	alienequip	stage4_soldiers
@@ -464,10 +463,10 @@ mission frozen_small
 	location	"_Revelstoke" // TODO: change location?
 	type		"_Terror Attack"
 	text		"_Protect inhabitants"
-	map			"+frozen"
+	map		"+frozen"
 	param		small
 	music		mission2
-	pos			"116 52"
+	pos		"116 52"
 	aliens		7
 	alienteam	alien
 	alienequip	stage4_soldiers
@@ -484,10 +483,10 @@ mission frozen_landingnature
 	location	"_Antarctic"
 	type		"_Landed Alien Ship"
 	text		"_Secure Alien Ship before Liftoff"
-	map			"+frozen"
+	map		"+frozen"
 	param		alienlandingnature
 	music		mission3
-	pos			"32 -66"
+	pos		"32 -66"
 	aliens		7
 	alienteam	alien
 	alienequip	stage4_soldiers
@@ -504,10 +503,10 @@ mission frozen_industrial
 	location	"_Agpat"
 	type		"_Terror Attack"
 	text		"_Protect inhabitants"
-	map			"+frozen"
+	map		"+frozen"
 	param		industrial
 	music		mission4
-	pos			"54 75"
+	pos		"54 75"
 	aliens		7
 	alienteam	alien
 	alienequip	stage4_soldiers
@@ -521,13 +520,13 @@ mission frozen_industrial
 
 mission frozen_alienlandingindustrial
 {
-	location	"_Dunholm"
+	location	"_Somewhere in Antarctica"
 	type		"_Landed Alien Ship"
 	text		"_Secure Alien Ship before Liftoff"
-	map			"+frozen"
+	map		"+frozen"
 	param		alienlandingindustrial
 	music		alBasrahM
-	pos			"25 -64"
+	pos		"22 -77"
 	aliens		7
 	alienteam	alien
 	alienequip	stage4_soldiers
@@ -544,9 +543,9 @@ mission gasstation
 	location	"_La Paz"
 	type		"_Terror Attack"
 	text		"_Protect inhabitants"
-	map			gasstation05
+	map		gasstation05
 	music		credits
-	pos			"-111 21"
+	pos		"-111 21"
 	aliens		4
 	alienteam	taman
 	alienequip	stage2_soldiers
@@ -563,9 +562,9 @@ mission lake
 	location	"_Tazovskij"
 	type		"_Terror Attack"
 	text		"_Protect inhabitants"
-	map			lake03
+	map		lake03
 	music		mission2
-	pos			"-77 67"
+	pos		"-77 67"
 	aliens		6
 	alienteam	alien
 	alienequip	stage4_soldiers
@@ -582,9 +581,9 @@ mission oriental
 	location	"_Gobabis"
 	type		"_Terror Attack"
 	text		"_Protect inhabitants"
-	map			oriental06
+	map		oriental06
 	music		mission
-	pos			"-20 -23"
+	pos		"-20 -23"
 	aliens		5
 	alienteam	ortnok
 	alienequip	stage2_soldiers
@@ -602,9 +601,9 @@ mission dam
 	location	"_Jiwani"
 	type		"_Terror Attack"
 	text		"_Secure Dam"
-	map			dam01
+	map		dam01
 	music		PsymongO1
-	pos			"-62 25"
+	pos		"-62 25"
 	aliens		7
 	alienteam	alien
 	alienequip	stage1_soldiers
@@ -622,9 +621,9 @@ mission estate
 	location	"_Wachau"
 	type		"_Terror Attack"
 	text		"_Protect inhabitants"
-	map			estate01
+	map		estate01
 	music		PsymongO3
-	pos			"-15 48"
+	pos		"-15 48"
 	aliens		7
 	alienteam	alien
 	alienequip	stage1_soldiers
@@ -641,9 +640,9 @@ mission or_asyut
 	location	"_Asyut"
 	type		"_Terror Attack"
 	text		"_Protect inhabitants"
-	map			"+oriental"
+	map		"+oriental"
 	music		mission2
-	pos			"-31 27"
+	pos		"-31 27"
 	aliens		7
 	alienteam	alien
 	alienequip	stage4_soldiers
@@ -660,9 +659,9 @@ mission or_tabelbala
 	location	"_Tabelbala"
 	type		"_Terror Attack"
 	text		"_Protect inhabitants"
-	map			"+oriental"
+	map		"+oriental"
 	music		mission
-	pos			"3 28"
+	pos		"3 28"
 	aliens		7
 	alienteam	alien
 	alienequip	stage4_soldiers
@@ -697,10 +696,10 @@ mission tower
 {
 	location	"_San Francisco"
 	type		"_Terror Attack"
-	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!"
-	map			tower06
+	text		"_Damn it, you've let some of them get away again! Reequip your squad and get after them!"
+	map		tower06
 	music		greecei
-	pos			"119 34"
+	pos		"119 34"
 	aliens		6
 	alienteam	alien
 	alienequip	stage2_soldiers
@@ -718,9 +717,9 @@ mission transport
 	location	"_Greeneville"
 	type		"_Terror Attack"
 	text		"_Protect inhabitants"
-	map			transport06
+	map		transport06
 	music		dbsea
-	pos			"83 36"
+	pos		"83 36"
 	aliens		3
 	alienteam	alien
 	alienequip	stage1_soldiers
@@ -737,8 +736,8 @@ mission tropic_river
 {
 	location	"_Wiwili" // Wiwili is a river-side town
 	type		"_Terror Attack"
-	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!"
-	map			"+tropic"
+	text		"_Damn it, you've let some of them get away again! Reequip your squad and get after them!"
+	map		"+tropic"
 	param		river
 	music		mission3
 	pos			"86 14"
@@ -758,11 +757,11 @@ mission tropic_drug
 {
 	location	"_Linstead"
 	type		"_Terror Attack"
-	text		"_Damn it, you've let some of them get\away again! Reequip your squad and\get after them!"
-	map			"+tropic"
+	text		"_Damn it, you've let some of them get away again! Reequip your squad and get after them!"
+	map		"+tropic"
 	param		drug
 	music		mission3
-	pos			"77 18"
+	pos		"77 18"
 	aliens		4
 	alienteam	alien
 	alienequip	stage4_soldiers
@@ -779,9 +778,9 @@ mission village
 	location	"_Fargo"
 	type		"_Terror Attack"
 	text		"_Protect inhabitants"
-	map			village07
+	map		village07
 	music		PsymongO3
-	pos			"97 47"
+	pos		"97 47"
 	aliens		4
 	alienteam	ortnok
 	alienequip	stage4_soldiers
@@ -798,10 +797,10 @@ mission vil_grenchen
 	location	"_Grenchen"
 	type		"_Terror Attack"
 	text		"_Protect inhabitants"
-	map			"+village"
+	map		"+village"
 	param		residential
 	music		mission2
-	pos			"-7 47"
+	pos		"-7 47"
 	aliens		3
 	alienteam	alien
 	alienequip	stage4_soldiers
@@ -818,10 +817,10 @@ mission vil_albany
 	location	"_Albany"
 	type		"_Terror Attack"
 	text		"_Protect inhabitants"
-	map			"+village"
+	map		"+village"
 	param		commercial
 	music		mission
-	pos			"84 32"
+	pos		"84 32"
 	aliens		8
 	alienteam	alien
 	alienequip	stage4_soldiers
@@ -838,10 +837,10 @@ mission vil_shannon
 	location	"_Shannon"
 	type		"_Major Alien Intrusion"
 	text		"_Stop them"
-	map			"+village"
+	map		"+village"
 	param		big
 	music		mission3
-	pos			"9 52"
+	pos		"9 52"
 	aliens		18
 	alienteam	alien
 	alienequip	stage4_soldiers
