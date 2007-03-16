@@ -13528,7 +13528,7 @@
 // entity 88
 {
 "classname" "info_alien_start"
-"origin" "1776 304 32"
+"origin" "1648 304 32"
 "angle" "180"
 }
 // entity 89
