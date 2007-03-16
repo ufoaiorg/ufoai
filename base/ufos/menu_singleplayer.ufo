@@ -681,10 +681,10 @@ menu save
 
 
 // ==================
-// END DEMO MENU
+// END GAME MENU
 // ==================
 
-menu enddemo
+menu endgame
 {
 	// ==================
 	// don't render
@@ -701,23 +701,76 @@ menu enddemo
 
 	pic back_ul
 	{
-		image	menu/enddemo_ul
+		image	menu/endgame_ul
 		pos		"0 0"
 	}
 	pic back_ur
 	{
-		image	menu/enddemo_ur
+		image	menu/endgame_ur
 		pos		"512 0"
 	}
 	pic back_ll
 	{
-		image	menu/enddemo_ll
+		image	menu/endgame_ll
 		pos		"0 512"
 	}
 	pic back_lr
 	{
-		image	menu/enddemo_lr
+		image	menu/endgame_lr
 		pos		"512 512"
+	}
+
+	string endgame
+	{
+		pos	"512 20"
+		string	"_Thank you for playing UFO:Alien Invasion"
+		font "f_menubig"
+		align	uc
+		color	"0 0.8 0 1"
+	}
+
+	string endgame_multiplayer
+	{
+		pos	"512 640"
+		string	"_No after you have finished the single-player campaigns"
+		font "f_normal"
+		align	uc
+		color	"0 0.8 0 0.9"
+	}
+	string endgame_multiplayer_2
+	{
+		pos	"512 660"
+		string	"_you should try the multiplayer features"
+		font "f_normal"
+		align	uc
+		color	"0 0.8 0 0.9"
+	}
+
+	string endgame_note
+	{
+		pos	"512 700"
+		string	"_Visit http://www.ufoai.net"
+		font "f_normal"
+		align	uc
+		color	"0 0.8 0 0.9"
+	}
+
+	string endgame_note_irc
+	{
+		pos	"512 720"
+		string	"_and join irc.freenode.org #ufo:ai"
+		font "f_normal"
+		align	uc
+		color	"0 0.8 0 0.9"
+	}
+
+	string endgame_click
+	{
+		pos	"1014 750"
+		string	"_Click to continue"
+		font "f_verysmall"
+		align	ur
+		color	"0 0.8 0 0.9"
 	}
 
 	// ==================
