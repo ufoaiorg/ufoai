@@ -2364,7 +2364,7 @@ base_t *B_GetBase (int idx)
  */
 int B_GetNumOnTeam (void)
 {
-	if (!baseCurrent || baseCurrent->aircraftCurrent >= 0)
+	if (!baseCurrent || baseCurrent->aircraftCurrent < 0)
 		return 0;
 	return baseCurrent->teamNum[baseCurrent->aircraftCurrent];
 }
