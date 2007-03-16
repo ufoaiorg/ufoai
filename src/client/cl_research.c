@@ -145,6 +145,10 @@ static qboolean RS_RequirementsMet (requirements_t *required_AND, requirements_t
 				if (AL_GetAlienAmount(required_AND->idx[i], required_AND->type[i]) < required_AND->amount[i])
 					met_AND = qfalse;
 				break;
+			case RS_LINK_ALIEN_GLOBAL:
+				if (AL_CountAll() < required_AND->amount[i])
+					met_AND = qfalse;
+				break;
 			default:
 				break;
 			}
@@ -179,6 +183,10 @@ static qboolean RS_RequirementsMet (requirements_t *required_AND, requirements_t
 				if (AL_GetAlienAmount(required_OR->idx[i], RS_LINK_ALIEN_DEAD) >= required_OR->amount[i])
 					met_OR = qtrue;
 				break;
+			case RS_LINK_ALIEN_GLOBAL:
+				if (AL_CountAll() >= required_OR->amount[i])
+					met_OR = qtrue;
+				break;
 			default:
 				break;
 			}
@@ -201,7 +209,7 @@ qboolean RS_CheckCollected (requirements_t *required)
 {
 	int i;
 	int amount;
-	qboolean somehting_collected_from_each = qtrue;
+	qboolean something_collected_from_each = qtrue;
 	technology_t *tech = NULL;
 
 	if (!required)
@@ -218,7 +226,7 @@ qboolean RS_CheckCollected (requirements_t *required)
 				required->collected[i] = amount;
 			} else {
 				required->collected[i] = 0;
-				somehting_collected_from_each = qfalse;
+				something_collected_from_each = qfalse;
 			}
 			break;
 		case RS_LINK_TECH:
@@ -227,7 +235,7 @@ qboolean RS_CheckCollected (requirements_t *required)
 			if (tech->type == RS_LOGIC) {
 				if (!RS_CheckCollected(&tech->require_AND)) {
 					tech->statusCollected = qfalse;
-					somehting_collected_from_each = qfalse;
+					something_collected_from_each = qfalse;
 				} else {
 					tech->statusCollected = qtrue;
 				}
@@ -241,7 +249,16 @@ qboolean RS_CheckCollected (requirements_t *required)
 				required->collected[i] = amount;
 			} else {
 				required->collected[i] = 0;
-				somehting_collected_from_each = qfalse;
+				something_collected_from_each = qfalse;
+			}
+			break;
+		case RS_LINK_ALIEN_GLOBAL:
+			amount = AL_CountAll();
+			if (amount > 0) {
+				required->collected[i] = amount;
+			} else {
+				required->collected[i] = 0;
+				something_collected_from_each = qfalse;
 			}
 			break;
 		case RS_LINK_EVENT:
@@ -250,7 +267,7 @@ qboolean RS_CheckCollected (requirements_t *required)
 			break;
 		}
 	}
-	return somehting_collected_from_each;
+	return something_collected_from_each;
 }
 
 /**
@@ -351,6 +368,11 @@ void RS_AssignTechIdxs (requirements_t *req)
 		case RS_LINK_ALIEN_DEAD:
 			req->idx[i] = AL_GetAlienIdx(req->id[i]);
 			break;
+#if 0
+		case RS_LINK_ALIEN_GLOBAL:
+			/* not linked */
+			break;
+#endif
 		default:
 			break;
 		}
@@ -1543,6 +1565,18 @@ extern void RS_ParseTechnologies (char *id, char **text)
 						required_temp->type[required_temp->numLinks] = RS_LINK_EVENT;
 						/* Get name/id & amount of required item. */
 						/* TODO: Implement final event system, so this can work 100% */
+					} else if (!Q_strncmp(token, "alienglobal", MAX_VAR)) {
+						if (required_temp->numLinks < MAX_TECHLINKS) {
+							/* Set requirement-type. */
+							required_temp->type[required_temp->numLinks] = RS_LINK_ALIEN_GLOBAL;
+							Com_DPrintf("RS_ParseTechnologies: require-alienglobal - %i\n", required_temp->amount[required_temp->numLinks]);
+							/* Set requirement-amount of item. */
+							token = COM_Parse(text);
+							required_temp->amount[required_temp->numLinks] = atoi(token);
+							required_temp->numLinks++;
+						} else {
+							Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", id, MAX_TECHLINKS);
+						}
 					} else if ( (!Q_strncmp(token, "alien_dead", MAX_VAR)) ||  (!Q_strncmp(token, "alien", MAX_VAR)) ) { /* Does this only check the beginning of the string? */
 						/* Defines what live or dead aliens need to be collected for this item to be researchable. */
 						if (required_temp->numLinks < MAX_TECHLINKS) {

@@ -63,6 +63,7 @@ typedef enum requirementType_s {
 	RS_LINK_EVENT,
 	RS_LINK_ALIEN,
 	RS_LINK_ALIEN_DEAD,
+	RS_LINK_ALIEN_GLOBAL,
 	MAX_RS_LINKTYPES
 } requirementType_t;
 

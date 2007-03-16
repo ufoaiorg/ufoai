@@ -362,8 +362,8 @@ item pistol2
 	holdtwohanded	false
 	firetwohanded 	false
 	shape		"0 0 2 2"
-	center		"2 0 1"
-	scale		1.35
+	center		"-0.1 0 0.9"
+	scale		2.0
 	ammo		30
 	reload		12
 	price		900
@@ -376,9 +376,9 @@ item pistol2_ammo
 	model		weapons/pistol2/pistol2_clip
 	type		ammo
 	category	0
-	shape		"0 0 1 1"
+	shape		"0 0 1 2"
 	center		"0 0 -0.21"
-	scale		1.57
+	scale		2.5
 	price		20
 	buytype		1
 
