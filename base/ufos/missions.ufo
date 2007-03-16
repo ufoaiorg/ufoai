@@ -119,21 +119,21 @@ mission mine_crash
 	storyrelated	true
 }
 
-// FIXME, America
+// Arnhem
 mission bridge
 {
-	location	"_FIXME"
+	location	"_Arnhem"
 	type		"_Crash Site"
 	text		"_Secure Area"
-	map			bridge01
+	map		bridge01
 	music		PsymongR2
-	pos			"-40 2"
+	pos		"-6 52"
 	aliens		7
 	alienteam	alien
 	alienequip	stage2_soldiers
 	civilians	6
-	civteam		americans
-	nation		"states"
+	civteam		european
+	nation		"europa"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -145,13 +145,13 @@ mission mine
 	location	"_Wellington"
 	type		"_Terror Attack"
 	text		"_There are rumors of a mine being\overrun by aliens. Although this\source of information is doubtful,\you'll need to investigate."
-	map			mine01
+	map		mine01
 	music		alBasrahM
-	pos			"-174 -41"
+	pos		"-174 -41"
 	aliens		7
 	alienteam	ortnok
 	alienequip	stage1_workers_explosive
-	civilians	3
+	civilians	6
 	civteam		european
 	nation		"oceania"
 	onlose		""
@@ -521,13 +521,13 @@ mission frozen_industrial
 
 mission frozen_alienlandingindustrial
 {
-	location	"_Dunholm"
+	location	"_Somewhere in Antarctica"
 	type		"_Landed Alien Ship"
 	text		"_Secure Alien Ship before Liftoff"
-	map			"+frozen"
+	map		"+frozen"
 	param		alienlandingindustrial
 	music		alBasrahM
-	pos			"25 -64"
+	pos		"22 -77"
 	aliens		7
 	alienteam	alien
 	alienequip	stage4_soldiers
