@@ -82,8 +82,8 @@ stage ufos_are_coming
 //		frame		"0 10 0"
 		frame		"0 23 0"
 		expire		"0 8 0"
-		missions	"construction farm2 office harbor pdi"
-		quota		4
+		missions	"construction farm2 office harbor pdi bridge"
+		quota		5
 		commands	"addufo;"
 		nextstage	invasion
 	}
