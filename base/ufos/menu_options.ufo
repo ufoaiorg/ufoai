@@ -1107,7 +1107,7 @@ menu options_game
 		}
 	}
 
-	// =====================
+/*	// =====================
 	// 3DMAP
 	// =====================
 	string 3dmap_str
@@ -1149,7 +1149,7 @@ menu options_game
 			cmd "mn_translate cl_3dmap mn_3dmap 0:No,1:Yes;"
 		}
 	}
-
+*/
 	// ===================
 	// CAMERA
 	// ===================
