@@ -129,7 +129,7 @@ mission bridge
 	pos		"-6 52"
 	aliens		7
 	alienteam	alien
-	alienequip	stage2_soldiers
+	alienequip	stage3_soldiers
 	civilians	6
 	civteam		european
 	nation		"europa"
