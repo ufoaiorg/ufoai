@@ -20,10 +20,12 @@ SYSTEM REQUIREMENTS
 
 	glibc >= 2.3.5
 	SDL >= 1.2.7
-	SDL_ttf >= 2.0.6
+	SDL_ttf >= 2.0.7
 	ogg >= 1.1
 	vorbis >= 1.1
 	libjpeg >= 6.2
+	zlib >= 1.2.3
+	libpng
 
 RUNNING THE GAME
 ==================
