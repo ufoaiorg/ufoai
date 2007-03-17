@@ -13,14 +13,19 @@
   README
  </readme>
 
+ <eula>
+  ../../../../GPL
+ </eula>
+
  <component name="UFO:Alien Invasion gamedata" version="@VERSION@" default="yes">
-  <option install="true" required="true" size="527M">
+  <option install="true" required="true" size="@SIZE@">
    Base Install
    <help>
     Required for play
    </help>
    <files>
-    data.tar.bz2
+    data.tar
+    i18n.tar.bz2
    </files>
   </option>
  </component>
@@ -49,6 +54,16 @@
    </binary>
    <files>
     ufo-x86.tar.bz2
+   </files>
+  </option>
+ </component>
+
+ <!-- make sure to grab the linux version from mattn.ninex.info -->
+ <component if="|(x86,x86_64)" name="i386" version="1.5">
+  <option arch="any" install="true" default="yes">
+   GTKRadiant 1.5
+   <files>
+    gtkradiant.tar.bz2
    </files>
   </option>
  </component>

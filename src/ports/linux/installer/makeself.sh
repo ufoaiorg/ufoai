@@ -1,3 +1,4 @@
+
 #!/bin/sh
 #
 # Makeself version 2.1.x
@@ -22,13 +23,13 @@
 #         support for non-temporary archives. Ideas thanks to Francois Petitjean
 # - 1.3 : More patches from Bjarni R. Einarsson and Francois Petitjean:
 #         Support for no compression (--nocomp), script is no longer mandatory,
-#         automatic launch in an xterm, optional verbose output, and -target 
+#         automatic launch in an xterm, optional verbose output, and -target
 #         archive option to indicate where to extract the files.
 # - 1.4 : Improved UNIX compatibility (Francois Petitjean)
 #         Automatic integrity checking, support of LSM files (Francois Petitjean)
 # - 1.5 : Many bugfixes. Optionally disable xterm spawning.
 # - 1.5.1 : More bugfixes, added archive options -list and -check.
-# - 1.5.2 : Cosmetic changes to inform the user of what's going on with big 
+# - 1.5.2 : Cosmetic changes to inform the user of what's going on with big
 #           archives (Quake III demo)
 # - 1.5.3 : Check for validity of the DISPLAY variable before launching an xterm.
 #           More verbosity in xterms and check for embedded command's return value.
@@ -63,7 +64,7 @@
 #           Added support for the digest command on Solaris 10 for MD5 checksums
 #           Check for available disk space before extracting to the target directory (Andreas Schweitzer)
 #
-# (C) 1998-2006 by Stéphane Peter <megastep@megastep.org>
+# (C) 1998-2006 by Stï¿½hane Peter <megastep@megastep.org>
 #
 # This software is released under the terms of the GNU GPL version 2 and above
 # Please read the license at http://www.gnu.org/copyleft/gpl.html
@@ -330,7 +331,7 @@ fi
 test -d "$archdir" || { echo "Error: $archdir does not exist."; rm -f "$tmpfile"; exit 1; }
 echo About to compress $USIZE KB of data...
 echo Adding files to archive named \"$archname\"...
-(cd "$archdir" && ( tar $TAR_ARGS - . | eval "$GZIP_CMD" ) >> "$tmpfile") || { echo Aborting: Archive directory not found or temporary file: "$tmpfile" could not be created.; rm -f "$tmpfile"; exit 1; }
+(cd "$archdir" && ( tar $TAR_ARGS - . --exclude .svn | eval "$GZIP_CMD" ) >> "$tmpfile") || { echo Aborting: Archive directory not found or temporary file: "$tmpfile" could not be created.; rm -f "$tmpfile"; exit 1; }
 echo >> "$tmpfile" >&- # try to close the archive
 
 fsize=`cat "$tmpfile" | wc -c | tr -d " "`
