@@ -1,6 +1,8 @@
 all: update_installer_data makeself
 
 ROOTDIR=../../../../
+#relative from root dir
+INSTDIR=src/ports/linux/installer/
 #everything inside this dir will be compressed to the self extracting archive
 DATADIR=data
 #this is only for arranging the path names and tar the zip files
@@ -11,7 +13,7 @@ TEMPDIR=tmp
 VERSION_UC=$(shell grep UFO_VERSION $(ROOTDIR)src/qcommon/qcommon.h | sed -e 's/.*UFO_VERSION\s*\(.*\)/\1/' | sed -e 's/\"//g')
 VERSION_LC=$(shell echo $(VERSION_UC) | sed -e 'y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/;')
 #get the size of the zip data archives
-SIZE=$(shell LANG=C; du -sch data/base/*.zip $(BINARIES) | tail -1 | cut -f1;)
+SIZE=$(shell LANG=C; du -sch $(TEMPDIR)/base/*.zip $(BINARIES) | tail -1 | cut -f1;)
 
 BINARIES = \
 	$(ROOTDIR)ufo \
@@ -39,10 +41,10 @@ packdata:
 	@mkdir -p $(TEMPDIR)/base
 	@tar -cvjp -f $(DATADIR)/ufo-x86.tar.bz2 $(BINARIES)
 	@tar -cvjp -f $(DATADIR)/ufo-x86_64.tar.bz2 $(BINARIES)
-	@cd $(ROOTDIR); tar -cvjp -f i18n.tar.bz2 base/i18n/ --exclude .svn --exclude updated*
+	@cd $(ROOTDIR); tar -cvjp -f $(INSTDIR)$(DATADIR)/i18n.tar.bz2 base/i18n/ --exclude .svn --exclude updated*
+	cd $(ROOTDIR); tar -cvjp -f $(INSTDIR)$(DATADIR)/mapsource.tar.bz2 base/maps/ --exclude .svn --exclude *.bsp --exclude *.autosave* --exclude *.bak
 	@cd $(ROOTDIR)base; ./archives.sh
 	@cp -u $(ROOTDIR)base/*.zip $(TEMPDIR)/base
-	@cp -u $(ROOTDIR)i18n.tar.bz2 $(DATADIR)
 	@cd $(TEMPDIR); tar -cvp -f ../$(DATADIR)/data.tar base
 
 update_installer_data:
