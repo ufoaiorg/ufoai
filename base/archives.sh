@@ -18,5 +18,6 @@ echo "ufos..."
 zip -ru9 0ufos.zip ufos -i \*.ufo
 echo "base..."
 #don't add the user settings
-rm config.cfg
+rm -f config.cfg
 zip -u9 0base.zip *.cfg
+echo "...finished"
