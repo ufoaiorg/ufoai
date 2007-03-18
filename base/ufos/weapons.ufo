@@ -52,57 +52,6 @@ item medikit
 
 
 // =======================
-// IR-GOGGLES
-// =======================
-item irgoggles
-{
-	name		"_IR Goggles"
-	model		weapons/irgoggles/irgoggles
-	weapon		false
-	type		melee
-	category	2
-	shape		"0 0 2 1"
-	center		"0 0 0"
-	scale		1.5
-	price		200
-	buytype		2
-	thrown		true
-	headgear		true
-
-	weapon_mod irgoggles
-	{
-		firedef
-		{
-			name	"_Scan"
-			firesnd	misc/plopp03.wav
-			splrad	10
-			range	9.5
-			time	12
-			shots	1
-			irgoggles	true
-		}
-		firedef
-		{
-			name	"_Throw"
-			skill	close
-			projtl	irgoggles
-			impsnd	misc/klonk03.wav
-			bodysnd misc/klonk01.wav
-			gravity	true
-			speed	220
-			range	10
-			spread	"4 7"
-			shots	1
-			ammo	1
-			time	10
-			damage	"1 2"
-			dmgtype normal
-		}
-	}
-}
-
-
-// =======================
 // FRAGMENTATION GRENADE
 // =======================
 item fraggrenade

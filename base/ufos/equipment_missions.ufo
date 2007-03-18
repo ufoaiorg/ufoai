@@ -293,7 +293,6 @@ equipment human_phalanx_initial
 	knife				23
 	light	    		17
 	medikit				20
-	irgoggles			5
 	smokegrenade		20
 }
 
@@ -420,7 +419,6 @@ equipment multiplayer_initial
 	fraggrenade			50
 	knife				5
 	knifemono			5
-	irgoggles			5
 	medikit				5
 	plasmagrenade		50
 	kerrblade           25 // bulky, will rarely get into the backpack
