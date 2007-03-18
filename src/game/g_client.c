@@ -643,7 +643,6 @@ qboolean G_ActionCheck (player_t * player, edict_t * ent, int TU, qboolean quiet
 	}
 
 	if (TU > ent->TU) {
-		gi.cprintf(player, msglevel, _("Can't perform action - not enough TUs!\n"));
 		return qfalse;
 	}
 
