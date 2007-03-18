@@ -642,7 +642,6 @@ qboolean G_ActionCheck (player_t * player, edict_t * ent, int TU, qboolean quiet
 	}
 
 	if (TU > ent->TU) {
-		gi.cprintf(player, msglevel, _("Can't perform action - not enough TUs!\n"));
 		return qfalse;
 	}
 
@@ -1697,7 +1696,7 @@ void G_ClientAction (player_t * player)
 	int i;
 	int firemode;
 	int from, fx, fy, to, tx, ty;
-	int actor, hand, fd_idx;
+	int hand, fd_idx;
 
 	/* read the header */
 	action = gi.ReadByte();
@@ -1735,10 +1734,10 @@ void G_ClientAction (player_t * player)
 	case PA_REACT_SELECT:
 		hand = -1;
 		fd_idx = -1;
-		gi.ReadFormat(pa_format[PA_REACT_SELECT], &actor, &hand, &fd_idx);
-		Com_Printf("G_ClientAction: actor:%i hand:%i fd:%i\n", actor, hand, fd_idx);	/* TODO: DEBUG - remove me */
-		REACTION_FIREMODE[player->pers.team][actor][0] = hand;
-		REACTION_FIREMODE[player->pers.team][actor][1] = fd_idx;
+		gi.ReadFormat(pa_format[PA_REACT_SELECT], &hand, &fd_idx);
+		Com_DPrintf("G_ClientAction: entnum:%i hand:%i fd:%i\n", num, hand, fd_idx);
+		REACTION_FIREMODE[player->pers.team][num][0] = hand;
+		REACTION_FIREMODE[player->pers.team][num][1] = fd_idx;
 		break;
 
 	default:
