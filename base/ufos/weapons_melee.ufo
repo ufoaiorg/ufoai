@@ -233,6 +233,7 @@ item plasblade
 	price		3710
 	buytype		1
 	thrown		true
+	reload		1
 	oneshot true
 	deplete true
 	ammo 1
