@@ -260,9 +260,9 @@ static void UP_ArmorDescription (technology_t* t)
 
 #ifdef DEBUG
 	if (od == NULL)
-		Com_sprintf( upBuffer, MAX_UPTEXT, _("Could not find armor definition"));
+		Com_sprintf(upBuffer, sizeof(upBuffer), "Could not find armor definition");
 	else if (Q_strncmp(od->type, "armor", MAX_VAR))
-		Com_sprintf(upBuffer, MAX_UPTEXT, _("Item %s is no armor but %s"), od->id, od->type);
+		Com_sprintf(upBuffer, sizeof(upBuffer), "Item %s is no armor but %s", od->id, od->type);
 	else
 #endif
 	{
