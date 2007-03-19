@@ -61,7 +61,7 @@ static int upDisplay = UFOPEDIA_CHAPTERS;
  */
 static qboolean UP_TechGetsDisplayed (technology_t *tech)
 {
-		return RS_IsResearched_ptr(tech) || RS_Collected_(tech);
+	return RS_IsResearched_ptr(tech) || RS_Collected_(tech);
 }
 
 /**
@@ -707,7 +707,7 @@ static void UP_Index_f (void)
 
 	/* get next entry */
 	while (t) {
-		if ( UP_TechGetsDisplayed(t) ) {
+		if (UP_TechGetsDisplayed(t)) {
 			/* Add this tech to the index - it gets dsiplayed. */
 			Q_strcat(upText, va("%s\n", _(t->name)), sizeof(upText));
 		}
