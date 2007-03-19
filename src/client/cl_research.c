@@ -792,6 +792,7 @@ static void RS_RemoveScientist_f (void)
 static void RS_ResearchStart_f (void)
 {
 	technology_t *tech = NULL;
+	employee_t *employee = NULL;
 
 	/* We are not in base view. */
 	if (!baseCurrent)
@@ -824,17 +825,23 @@ static void RS_ResearchStart_f (void)
 		case RS_RUNNING:
 			MN_Popup(_("Notice"), _("This item is already under research by your scientists."));
 			break;
-		case RS_PAUSED:
-			MN_Popup(_("Notice"), _("The research on this item continues."));
-			tech->statusResearch = RS_RUNNING;
-			break;
 		case RS_FINISH:
 			MN_Popup(_("Notice"), _("The research on this item is complete."));
 			break;
+		case RS_PAUSED:
 		case RS_NONE:
+			if (tech->statusResearch == RS_PAUSED) {
+				MN_Popup(_("Notice"), _("The research on this item continues."));
+			}
 			if (tech->scientists <= 0) {
-				/* Add scientists to tech. */
-				RS_AssignScientist(tech);
+				tech->scientists = 0; /* Just in case it's negative. */
+
+				/* Add as many scientists as possible to this tech. */
+				do {
+					employee = E_GetUnassignedEmployee(baseCurrent, EMPL_SCIENTIST);
+					if (employee)
+						RS_AssignScientist(tech);
+				} while (employee);
 			}
 			tech->statusResearch = RS_RUNNING;
 			break;
@@ -848,7 +855,7 @@ static void RS_ResearchStart_f (void)
 }
 
 /**
- * @brief Pauses the research of the selected research-list entry.
+ * @brief Removes all scientists from teh selected research-list entry.
  */
 static void RS_ResearchStop_f (void)
 {
@@ -870,11 +877,14 @@ static void RS_ResearchStop_f (void)
 
 	switch (tech->statusResearch) {
 	case RS_RUNNING:
-		/* TODO: remove lab from technology and scientists from lab */
+		/* Remove all scis from it and set the status to paused (i.e. it's differnet from a RS_NONE since it may have a little bit of progress already). */
+		while (tech->scientists > 0)
+			RS_RemoveScientist(tech);
 		tech->statusResearch = RS_PAUSED;
 		break;
 	case RS_PAUSED:
-		tech->statusResearch = RS_RUNNING;
+		/* TODO: remove? Popup info how much is already researched? */
+		/* tech->statusResearch = RS_RUNNING; */
 		break;
 	case RS_FINISH:
 		MN_Popup(_("Notice"), _("The research on this item is complete."));
