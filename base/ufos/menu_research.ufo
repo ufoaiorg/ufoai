@@ -937,6 +937,17 @@ menu research
 		click	{ cmd mn_start_research }
 	}
 
+	pic bt_pedia
+	{
+		tooltip	"_Show research proposal"
+		image	menu/button_research
+		mousefx	true
+		pos		"790 696"
+		texl	"64 64"
+		texh	"128 128"
+		click	{ cmd mn_show_ufopedia }
+	}
+
 	// ==================
 	// buttons
 	// ==================
