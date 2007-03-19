@@ -734,7 +734,7 @@ extern void MN_ExecuteActions (const menu_t* const menu, menuAction_t* const fir
 /**
  * @brief
  */
-static void MN_Command(void)
+static void MN_Command_f (void)
 {
 	menuNode_t *node;
 	char *name;
@@ -3306,7 +3306,7 @@ qboolean MN_ParseNodeBody (menuNode_t * node, char **text, char **token)
 		memset(*action, 0, sizeof(menuAction_t));
 
 		if (node->type == MN_CONFUNC)
-			Cmd_AddCommand(node->name, MN_Command, NULL);
+			Cmd_AddCommand(node->name, MN_Command_f, "Confunc callback");
 
 		return MN_ParseAction(node, *action, text, token);
 	}
