@@ -1440,7 +1440,7 @@ extern void CL_UpdateCredits (int credits)
 /**
  * @brief Shows the current stats from stats_t stats
  */
-static void CL_Stats_Update_f (void)
+static void CL_StatsUpdate_f (void)
 {
 	char *pos;
 	static char statsBuffer[MAX_STATS_BUFFER];
@@ -1458,7 +1458,7 @@ static void CL_Stats_Update_f (void)
 	/* bases */
 	pos += (strlen(pos) + 1);
 	menuText[TEXT_STATS_2] = pos;
-	Com_sprintf(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), _("Build:\t%i\nActive:\t%i\nAttacked:\t%i\n"),
+	Com_sprintf(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), _("Built:\t%i\nActive:\t%i\nAttacked:\t%i\n"),
 		stats.basesBuild, gd.numBases, stats.basesAttacked),
 
 	/* nations */
@@ -4205,7 +4205,7 @@ static const cmdList_t game_commands[] = {
 	,
 	{"aircraft_list", CL_BuildingAircraftList_f, NULL}
 	,
-	{"stats_update", CL_Stats_Update_f, NULL}
+	{"stats_update", CL_StatsUpdate_f, NULL}
 	,
 	{"game_go", CL_GameGo, NULL}
 	,
