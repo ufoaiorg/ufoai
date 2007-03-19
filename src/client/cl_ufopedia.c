@@ -76,6 +76,10 @@ static void UP_ChangeDisplay (int newDisplay)
 
 	Cvar_SetValue("mn_uppreavailable", 0);
 
+	/* make sure, that we leave the mail header space */
+	menuText[TEXT_UFOPEDIA_MAILHEADER] = NULL;
+	Cvar_Set("mn_up_mail", "0"); /* use strings here - no int */
+
 	switch (upDisplay) {
 	case UFOPEDIA_CHAPTERS:
 		/* confunc */
@@ -633,10 +637,6 @@ static void UP_Content_f (void)
 	cp = upText;
 	*cp = '\0';
 
-	/* make sure, that we leave the mail header space */
-	menuText[TEXT_UFOPEDIA_MAILHEADER] = NULL;
-	Cvar_Set("mn_up_mail", "0"); /* use strings here - no int */
-
 	for (i = 0; i < gd.numChapters; i++) {
 		/* Check if there are any researched or collected items in this chapter ... */
 		researched_entries = qfalse;
@@ -668,27 +668,6 @@ static void UP_Content_f (void)
 	menuText[TEXT_UFOPEDIA] = upText;
 	menuText[TEXT_LIST] = NULL;
 	Cvar_Set("mn_uptitle", _("Ufopedia Content"));
-}
-
-/**
- * @brief Displays the index of the current chapter
- * @sa UP_Content_f
- * @sa UP_ChangeDisplay
- * @sa UP_Index_f
- * @sa UP_DrawEntry
- */
-static void UP_Back_f (void)
-{
-	switch (upDisplay) {
-	case UFOPEDIA_ARTICLE:
-		Cbuf_AddText("mn_upindex;");
-		break;
-	case UFOPEDIA_INDEX:
-		Cbuf_AddText("mn_upcontent;");
-		break;
-	default:
-		break;
-	}
 }
 
 /**
@@ -739,6 +718,26 @@ static void UP_Index_f (void)
 	}
 }
 
+/**
+ * @brief Displays the index of the current chapter
+ * @sa UP_Content_f
+ * @sa UP_ChangeDisplay
+ * @sa UP_Index_f
+ * @sa UP_DrawEntry
+ */
+static void UP_Back_f (void)
+{
+	switch (upDisplay) {
+	case UFOPEDIA_ARTICLE:
+		UP_Index_f();
+		break;
+	case UFOPEDIA_INDEX:
+		UP_Content_f();
+		break;
+	default:
+		break;
+	}
+}
 
 /**
  * @brief Displays the previous entry in the ufopedia
