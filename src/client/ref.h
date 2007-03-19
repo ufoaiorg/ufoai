@@ -138,7 +138,7 @@ typedef struct shader_s {
 	/* title is internal for finding the shader */
 
 	/** we should use this shader when loading the image */
-	char title[MAX_VAR];
+	char name[MAX_VAR];
 
 	/** filename is for an external filename to load the shader from */
 	char filename[MAX_VAR];

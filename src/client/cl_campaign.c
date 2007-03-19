@@ -3297,7 +3297,7 @@ static char *mtp = missionTexts;
  * @param[in] name valid mission name
  * @return ms is the mission_t pointer of the mission to add
  */
-extern mission_t *CL_AddMission (char *name)
+extern mission_t *CL_AddMission (const char *name)
 {
 	int i;
 	mission_t *ms;
@@ -3325,7 +3325,7 @@ extern mission_t *CL_AddMission (char *name)
 /**
  * @brief
  */
-extern void CL_ParseMission (char *name, char **text)
+extern void CL_ParseMission (const char *name, char **text)
 {
 	const char *errhead = "CL_ParseMission: unexptected end of file (mission ";
 	mission_t *ms;
@@ -3415,7 +3415,7 @@ extern void CL_ParseMission (char *name, char **text)
  * @brief This function parses a list of items that should be set to researched = true after campaign start
  * @TODO: Implement the use of this function
  */
-extern void CL_ParseResearchedCampaignItems (char *name, char **text)
+extern void CL_ParseResearchedCampaignItems (const char *name, char **text)
 {
 	const char *errhead = "CL_ParseResearchedCampaignItems: unexptected end of file (equipment ";
 	char *token;
@@ -3462,7 +3462,7 @@ extern void CL_ParseResearchedCampaignItems (char *name, char **text)
  * @brief This function parses a list of items that should be set to researched = true after campaign start
  * @param researchable Mark them researchable or not researchable
  */
-extern void CL_ParseResearchableCampaignStates (char *name, char **text, qboolean researchable)
+extern void CL_ParseResearchableCampaignStates (const char *name, char **text, qboolean researchable)
 {
 	const char *errhead = "CL_ParseResearchableCampaignStates: unexptected end of file (equipment ";
 	char *token;
@@ -3540,7 +3540,7 @@ static const value_t stageset_vals[] = {
 /**
  * @brief
  */
-static void CL_ParseStageSet (char *name, char **text)
+static void CL_ParseStageSet (const char *name, char **text)
 {
 	const char *errhead = "CL_ParseStageSet: unexptected end of file (stageset ";
 	stageSet_t *sp;
@@ -3631,7 +3631,7 @@ static void CL_ParseStageSet (char *name, char **text)
  * @brief
  * @sa CL_ParseStageSet
  */
-extern void CL_ParseStage (char *name, char **text)
+extern void CL_ParseStage (const char *name, char **text)
 {
 	const char *errhead = "CL_ParseStage: unexptected end of file (stage ";
 	stage_t *sp;
@@ -3741,7 +3741,7 @@ static const value_t salary_vals[] = {
  *  soldier_base 3000
  * }</code>
  */
-extern void CL_ParseSalary (char *name, char **text, int campaignID)
+extern void CL_ParseSalary (const char *name, char **text, int campaignID)
 {
 	const char *errhead = "CL_ParseSalary: unexptected end of file ";
 	salary_t *s;
@@ -3797,7 +3797,7 @@ extern void CL_ParseSalary (char *name, char **text, int campaignID)
  *  TEAM_ALIEN ability 15 95
  * }</code>
  */
-extern void CL_ParseCharacterValues (char *name, char **text, int campaignID)
+extern void CL_ParseCharacterValues (const char *name, char **text, int campaignID)
 {
 	const char *errhead = "CL_ParseCharacterValues: unexptected end of file (aircraft ";
 	char *token;
@@ -3892,7 +3892,7 @@ static const value_t campaign_vals[] = {
 /**
  * @brief
  */
-extern void CL_ParseCampaign (char *id, char **text)
+extern void CL_ParseCampaign (const char *name, char **text)
 {
 	const char *errhead = "CL_ParseCampaign: unexptected end of file (campaign ";
 	campaign_t *cp;
@@ -3903,11 +3903,11 @@ extern void CL_ParseCampaign (char *id, char **text)
 
 	/* search for campaigns with same name */
 	for (i = 0; i < numCampaigns; i++)
-		if (!Q_strncmp(id, campaigns[i].id, MAX_VAR))
+		if (!Q_strncmp(name, campaigns[i].id, sizeof(campaigns[i].id)))
 			break;
 
 	if (i < numCampaigns) {
-		Com_Printf("CL_ParseCampaign: campaign def \"%s\" with same name found, second ignored\n", id);
+		Com_Printf("CL_ParseCampaign: campaign def \"%s\" with same name found, second ignored\n", name);
 		return;
 	}
 
@@ -3921,20 +3921,20 @@ extern void CL_ParseCampaign (char *id, char **text)
 	memset(cp, 0, sizeof(campaign_t));
 
 	cp->idx = numCampaigns-1;
-	Q_strncpyz(cp->id, id, MAX_VAR);
+	Q_strncpyz(cp->id, name, sizeof(cp->id));
 
 	memset(skillValues[cp->idx], -1, sizeof(skillValues[cp->idx]));
 	memset(abilityValues[cp->idx], -1, sizeof(abilityValues[cp->idx]));
 
 	/* some default values */
-	Q_strncpyz(cp->team, "human", MAX_VAR);
-	Q_strncpyz(cp->researched, "researched_human", MAX_VAR);
+	Q_strncpyz(cp->team, "human", sizeof(cp->team));
+	Q_strncpyz(cp->researched, "researched_human", sizeof(cp->researched));
 
 	/* get it's body */
 	token = COM_Parse(text);
 
 	if (!*text || *token != '{') {
-		Com_Printf("CL_ParseCampaign: campaign def \"%s\" without body ignored\n", id);
+		Com_Printf("CL_ParseCampaign: campaign def \"%s\" without body ignored\n", name);
 		numCampaigns--;
 		return;
 	}
@@ -3964,7 +3964,7 @@ extern void CL_ParseCampaign (char *id, char **text)
 	s->debt_interest = 0.005;
 
 	do {
-		token = COM_EParse(text, errhead, id);
+		token = COM_EParse(text, errhead, name);
 		if (!*text)
 			break;
 		if (*token == '}')
@@ -3974,7 +3974,7 @@ extern void CL_ParseCampaign (char *id, char **text)
 		for (vp = campaign_vals; vp->string; vp++)
 			if (!Q_strcmp(token, vp->string)) {
 				/* found a definition */
-				token = COM_EParse(text, errhead, id);
+				token = COM_EParse(text, errhead, name);
 				if (!*text)
 					return;
 
@@ -3986,8 +3986,8 @@ extern void CL_ParseCampaign (char *id, char **text)
 		} else if (!Q_strncmp(token, "salary", MAX_VAR)) {
 			CL_ParseSalary(token, text, numCampaigns-1);
 		} else if (!vp->string) {
-			Com_Printf("CL_ParseCampaign: unknown token \"%s\" ignored (campaign %s)\n", token, id);
-			COM_EParse(text, errhead, id);
+			Com_Printf("CL_ParseCampaign: unknown token \"%s\" ignored (campaign %s)\n", token, name);
+			COM_EParse(text, errhead, name);
 		}
 	} while (*text);
 }
@@ -4023,7 +4023,7 @@ static const value_t nation_vals[] = {
  * @param[in] text The text of the nation node
  * @sa nation_vals
  */
-extern void CL_ParseNations (char *name, char **text)
+extern void CL_ParseNations (const char *name, char **text)
 {
 	const char *errhead = "CL_ParseNations: unexptected end of file (aircraft ";
 	nation_t *nation;
@@ -4040,7 +4040,7 @@ extern void CL_ParseNations (char *name, char **text)
 	memset(nation, 0, sizeof(nation_t));
 
 	Com_DPrintf("...found nation %s\n", name);
-	Q_strncpyz(nation->id, name, MAX_VAR);
+	Q_strncpyz(nation->id, name, sizeof(nation->id));
 
 	/* get it's body */
 	token = COM_Parse(text);
@@ -4302,7 +4302,7 @@ void CL_GameInit (void)
  * @param name Name of the campaign
  * @return campaign_t pointer to campaign with name or NULL if not found
  */
-campaign_t* CL_GetCampaign (char* name)
+campaign_t* CL_GetCampaign (const char* name)
 {
 	campaign_t* campaign;
 	int i;

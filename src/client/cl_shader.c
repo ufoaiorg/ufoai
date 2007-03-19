@@ -86,7 +86,7 @@ void CL_ParseShaders (const char *name, char **text)
 	/* default value */
 	entry->glMode = BLEND_FILTER;
 
-	Q_strncpyz(entry->title, name, MAX_VAR);
+	Q_strncpyz(entry->name, name, sizeof(entry->name));
 	do {
 		/* get the name type */
 		token = COM_EParse(text, errhead, name);
@@ -122,7 +122,7 @@ void CL_ShaderList_f (void)
 	int i;
 
 	for (i = 0; i < r_numshaders; i++) {
-		Com_Printf("Shader %s\n", r_shaders[i].title);
+		Com_Printf("Shader %s\n", r_shaders[i].name);
 		Com_Printf("..filename: %s\n", r_shaders[i].filename);
 		Com_Printf("..frag %i\n", (int) r_shaders[i].frag);
 		Com_Printf("..vertex %i\n", (int) r_shaders[i].vertex);

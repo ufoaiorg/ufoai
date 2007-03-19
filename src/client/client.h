@@ -982,7 +982,7 @@ extern inventory_t *menuInventory;
 extern const char *menuText[MAX_MENUTEXTS];
 
 /* this is the function where all the sdl_ttf fonts are parsed */
-void CL_ParseFont(char *name, char **text);
+void CL_ParseFont(const char *name, char **text);
 
 /* here they get reinit after a vid_restart */
 void CL_InitFonts(void);
@@ -1005,9 +1005,9 @@ void CL_ParticleRegisterArt(void);
 void CL_ResetParticles(void);
 void CL_ParticleRun(void);
 void CL_RunMapParticles(void);
-int CL_ParseParticle(char *name, char **text);
+int CL_ParseParticle(const char *name, char **text);
 void CL_InitParticles(void);
-ptl_t *CL_ParticleSpawn(char *name, int levelFlags, const vec3_t s, const vec3_t v, const vec3_t a);
+ptl_t *CL_ParticleSpawn(const char *name, int levelFlags, const vec3_t s, const vec3_t v, const vec3_t a);
 void PE_RenderParticles(void);
 
 extern ptlArt_t ptlArt[MAX_PTL_ART];

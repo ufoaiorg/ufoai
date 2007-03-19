@@ -176,12 +176,12 @@ void CL_DecreaseAircraftTeamIdxGreaterThan(aircraft_t *aircraft,int idx);
 qboolean CL_IsInAircraftTeam(aircraft_t *aircraft,int idx);
 
 void CL_CampaignRunAircraft(int dt);
-aircraft_t *CL_GetAircraft(char *name);
+aircraft_t *CL_GetAircraft(const char *name);
 extern aircraft_t* CL_AircraftGetFromIdx(int idx);
 extern void CP_GetRandomPosForAircraft(float *pos);
 extern qboolean CL_AircraftMakeMove(int dt, aircraft_t* aircraft);
-void CL_ParseAircraft(char *name, char **text);
-void CL_ParseAircraftItem(char *name, char **text);
+void CL_ParseAircraft(const char *name, char **text);
+void CL_ParseAircraftItem(const char *name, char **text);
 extern void CL_AircraftReturnToBase(aircraft_t *aircraft);
 extern qboolean CL_SendAircraftToMission(aircraft_t* aircraft, struct actMis_s* mission);
 extern void CL_SendAircraftPurchasingUfo(aircraft_t* aircraft, aircraft_t* ufo);

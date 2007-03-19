@@ -4001,7 +4001,7 @@ void CL_GetFontData (const char *name, int *size, char *path)
 /**
  * @brief
  */
-void CL_ParseFont (char *name, char **text)
+void CL_ParseFont (const char *name, char **text)
 {
 	font_t *font;
 	const char *errhead = "CL_ParseFont: unexpected end of file (font";

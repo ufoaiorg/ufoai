@@ -301,11 +301,11 @@ void CL_GameTimeFast(void);
 void CL_GameTimeSlow(void);
 extern byte *CL_GetMapColor(const vec2_t pos, mapType_t type);
 extern qboolean CL_NewBase(vec2_t pos);
-void CL_ParseMission(char *name, char **text);
-mission_t* CL_AddMission(char *name);
-void CL_ParseStage(char *name, char **text);
-void CL_ParseCampaign(char *name, char **text);
-void CL_ParseNations(char *name, char **text);
+void CL_ParseMission(const char *name, char **text);
+mission_t* CL_AddMission(const char *name);
+void CL_ParseStage(const char *name, char **text);
+void CL_ParseCampaign(const char *name, char **text);
+void CL_ParseNations(const char *name, char **text);
 #if 0
 /* 20070228 Zenerka: new solution for collecting items from the battlefield
    see CL_CollectingItems(), CL_SellorAddItems(), CL_CollectingAmmo(), CL_CarriedItems() */
@@ -318,9 +318,9 @@ qboolean CL_OnBattlescape(void);
 void CL_GameInit (void);
 extern float CP_GetDistance(const vec2_t pos1, const vec2_t pos2);
 void CL_NewAircraft(base_t * base, char *name);
-void CL_ParseResearchedCampaignItems(char *name, char **text);
-void CL_ParseResearchableCampaignStates(char *name, char **text, qboolean researchable);
+void CL_ParseResearchedCampaignItems(const char *name, char **text);
+void CL_ParseResearchableCampaignStates(const char *name, char **text, qboolean researchable);
 
-campaign_t* CL_GetCampaign(char* name);
+campaign_t* CL_GetCampaign(const char* name);
 
 #endif /* CLIENT_CL_CAMPAIGN_H */

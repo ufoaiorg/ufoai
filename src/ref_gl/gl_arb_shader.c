@@ -78,7 +78,7 @@ shader_t* GL_GetShaderForImage (char* image)
 	/* search for shader title and check whether it matches an image name */
 	for (i = 0; i < r_newrefdef.num_shaders; i++) {
 		s = &r_newrefdef.shaders[i];
-		if (!Q_strcmp(s->title, image)) {
+		if (!Q_strcmp(s->name, image)) {
 			ri.Con_Printf(PRINT_DEVELOPER, "shader for '%s' found\n", image);
 			return s;
 		}
@@ -317,7 +317,7 @@ void SH_UseShader (shader_t * shader, qboolean deactivate)
 	assert(shader);
 
 	if (!deactivate)
-		gl = GL_FindImageForShader(shader->title);
+		gl = GL_FindImageForShader(shader->name);
 
 	if (shader->glslpid > 0) {
 		if (deactivate)
