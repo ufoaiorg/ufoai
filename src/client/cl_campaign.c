@@ -550,7 +550,7 @@ static void CL_CampaignActivateStageSets (stage_t *stage)
  * @sa CL_CampaignActivateStageSets
  * @sa CL_CampaignExecute
  */
-static stageState_t *CL_CampaignActivateStage (char *name, qboolean setsToo)
+static stageState_t *CL_CampaignActivateStage (const char *name, qboolean setsToo)
 {
 	stage_t *stage;
 	stageState_t *state;
@@ -588,7 +588,7 @@ static stageState_t *CL_CampaignActivateStage (char *name, qboolean setsToo)
  * @brief
  * @sa CL_CampaignExecute
  */
-static void CL_CampaignEndStage (char *name)
+static void CL_CampaignEndStage (const char *name)
 {
 	stageState_t *state;
 	int i;
@@ -1433,7 +1433,7 @@ extern void CL_UpdateCredits (int credits)
 /**
  * @brief Shows the current stats from stats_t stats
  */
-static void CL_Stats_Update_f (void)
+static void CL_StatsUpdate_f (void)
 {
 	char *pos;
 	static char statsBuffer[MAX_STATS_BUFFER];
@@ -1451,7 +1451,7 @@ static void CL_Stats_Update_f (void)
 	/* bases */
 	pos += (strlen(pos) + 1);
 	menuText[TEXT_STATS_2] = pos;
-	Com_sprintf(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), _("Build:\t%i\nActive:\t%i\nAttacked:\t%i\n"),
+	Com_sprintf(pos, (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos), _("Built:\t%i\nActive:\t%i\nAttacked:\t%i\n"),
 		stats.basesBuild, gd.numBases, stats.basesAttacked),
 
 	/* nations */
@@ -1564,7 +1564,7 @@ static void CL_MessageSave (sizebuf_t * sb, message_t * message)
  * @brief
  * @sa CL_GameLoad
  */
-static qboolean CL_GameSave (char *filename, char *comment)
+static qboolean CL_GameSave (const char *filename, const char *comment)
 {
 	stageState_t *state;
 	actMis_t *mis;
@@ -1842,7 +1842,7 @@ static void CL_UpdatePointersInGlobalData (void)
  * @sa CL_ReadSinglePlayerData
  * @sa CL_UpdatePointersInGlobalData
  */
-static int CL_GameLoad (char *filename)
+static int CL_GameLoad (const char *filename)
 {
 	actMis_t *mis;
 	stageState_t *state;
@@ -4051,7 +4051,7 @@ static const cmdList_t game_commands[] = {
 	,
 	{"aircraft_list", CL_BuildingAircraftList_f, NULL}
 	,
-	{"stats_update", CL_Stats_Update_f, NULL}
+	{"stats_update", CL_StatsUpdate_f, NULL}
 	,
 	{"game_go", CL_GameGo, NULL}
 	,

@@ -207,19 +207,19 @@ extern player_t *sv_player;
 /*=========================================================== */
 
 /* sv_main.c */
-void SV_FinalMessage(char *message, qboolean reconnect);
-void SV_DropClient(client_t * drop);
+void SV_FinalMessage(const char *message, qboolean reconnect);
+void SV_DropClient(client_t *drop);
 
 int SV_ModelIndex(const char *name);
 int SV_SoundIndex(const char *name);
 int SV_ImageIndex(const char *name);
 
-void SV_WriteClientdataToMessage(client_t * client, sizebuf_t * msg);
+void SV_WriteClientdataToMessage(client_t * client, sizebuf_t *msg);
 
 void SV_InitOperatorCommands(void);
 
-void SV_SendServerinfo(client_t * client);
-void SV_UserinfoChanged(client_t * cl);
+void SV_SendServerinfo(client_t *client);
+void SV_UserinfoChanged(client_t *cl);
 
 void Master_Heartbeat(void);
 void Master_Packet(void);
@@ -247,7 +247,7 @@ void SV_BroadcastCommand(const char *fmt, ...) __attribute__((format(printf,1,2)
 
 /* sv_user.c */
 void SV_ExecuteClientMessage(client_t * cl);
-int SV_CountPlayers (void);
+int SV_CountPlayers(void);
 
 /* sv_ccmds.c */
 void SV_ReadLevelFile(void);
@@ -256,9 +256,6 @@ void SV_SetMaster_f(void);
 /* sv_ents.c */
 void SV_WriteFrameToClient(client_t * client, sizebuf_t * msg);
 void SV_BuildClientFrame(client_t * client);
-
-
-void SV_Error(char *error, ...) __attribute__((format(printf,1,2)));
 
 /* sv_game.c */
 extern game_export_t *ge;

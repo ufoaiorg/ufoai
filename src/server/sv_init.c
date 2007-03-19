@@ -217,7 +217,7 @@ static byte tileChar (const char chr)
  * @sa SV_ParseAssembly
  * @sa SV_AssembleMap
  */
-static void SV_ParseMapTile (char *filename, char **text)
+static void SV_ParseMapTile (const char *filename, char **text)
 {
 	const char *errhead = "SV_ParseMapTile: Unexpected end of file (";
 	char *token, *chr;
@@ -296,7 +296,7 @@ static void SV_ParseMapTile (char *filename, char **text)
  * @note: format of fix: "fix [tilename] x y"
  * @note: format of tile: "[tilename] min max"
  */
-static void SV_ParseAssembly (char *filename, char **text)
+static void SV_ParseAssembly (const char *filename, char **text)
 {
 	const char *errhead = "SV_ParseAssembly: Unexpected end of file (";
 	char *token;
@@ -612,7 +612,7 @@ static qboolean SV_AddMandatoryParts (byte map[32][32][MAX_TILEALTS], byte * num
  * @sa SV_ParseAssembly
  * @sa SV_ParseMapTile
  */
-static void SV_AssembleMap (char *name, char *assembly, char **map, char **pos)
+static void SV_AssembleMap (const char *name, const char *assembly, char **map, char **pos)
 {
 	mPlaced_t *pl;
 	byte curMap[32][32][MAX_TILEALTS];
