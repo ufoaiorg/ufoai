@@ -459,7 +459,7 @@ static void CL_SetReactionFiremode (int actor_idx, int handidx, int obj_idx, int
 	assert(actor_idx < MAX_TEAMLIST);
 
 	le = cl.teamList[actor_idx];
-	Com_Printf("CL_SetReactionFiremode: actor:%i entnum:%i hand:%i fd:%i\n", actor_idx,le->entnum, handidx, fd_idx); /* TODO: DEBUG - remove me */
+	Com_DPrintf("CL_SetReactionFiremode: actor:%i entnum:%i hand:%i fd:%i\n", actor_idx,le->entnum, handidx, fd_idx);
 
 	REACTION_FIREMODE[actor_idx][0] = handidx;	/* Store the given hand. */
 	REACTION_FIREMODE[actor_idx][1] = fd_idx;	/* Store the given firemode for this hand. */

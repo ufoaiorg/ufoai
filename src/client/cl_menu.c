@@ -734,20 +734,35 @@ extern void MN_ExecuteActions (const menu_t* const menu, menuAction_t* const fir
 /**
  * @brief
  */
-static void MN_Command(void)
+static void MN_Command_f (void)
 {
 	menuNode_t *node;
 	char *name;
 	int i;
 
 	name = Cmd_Argv(0);
+
+	/* first search all menus on the stack */
+	for (i = 0; i <= menuStackPos; i++)
+		for (node = menuStack[i]->firstNode; node; node = node->next)
+			if (node->type == MN_CONFUNC && !Q_strncmp(node->name, name, sizeof(node->name))) {
+				/* found the node */
+				Com_DPrintf("MN_Command_f: menu '%s'\n", menuStack[i]->name);
+				MN_ExecuteActions(menuStack[i], node->click);
+				return;
+			}
+
+	/* not found - now query all in the menu definitions */
 	for (i = 0; i < numMenus; i++)
 		for (node = menus[i].firstNode; node; node = node->next)
 			if (node->type == MN_CONFUNC && !Q_strncmp(node->name, name, sizeof(node->name))) {
 				/* found the node */
+				Com_DPrintf("MN_Command_f: menu '%s'\n", menus[i].name);
 				MN_ExecuteActions(&menus[i], node->click);
 				return;
 			}
+
+	Com_Printf("MN_Command_f: confunc '%s' was not found in any menu\n", name);
 }
 
 
@@ -3305,8 +3320,13 @@ qboolean MN_ParseNodeBody (menuNode_t * node, char **text, char **token)
 		*action = &menuActions[numActions++];
 		memset(*action, 0, sizeof(menuAction_t));
 
-		if (node->type == MN_CONFUNC)
-			Cmd_AddCommand(node->name, MN_Command, NULL);
+		if (node->type == MN_CONFUNC) {
+			/* don't add a callback twice */
+			if (!Cmd_Exists(node->name))
+				Cmd_AddCommand(node->name, MN_Command_f, "Confunc callback");
+			else
+				Com_DPrintf("MN_ParseNodeBody: skip confunc '%s' - already added\n", node->name);
+		}
 
 		return MN_ParseAction(node, *action, text, token);
 	}

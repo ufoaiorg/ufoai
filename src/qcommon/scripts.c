@@ -1021,7 +1021,7 @@ static void Com_ParseTeamDesc (const char *name, char **text)
 
 	td = &teamDesc[numTeamDesc++];
 	memset(td, 0, sizeof(teamDesc_t));
-	Q_strncpyz(td->id, name, MAX_VAR);
+	Q_strncpyz(td->id, name, sizeof(td->id));
 	td->armor = td->weapons = qtrue; /* default values */
 
 	/* get name list body body */
@@ -1170,7 +1170,7 @@ static void Com_ParseGameTypes (const char *name, char **text)
 	if (i == numGTs) {
 		gt = &gts[numGTs++];
 		memset(gt, 0, sizeof(gametype_t));
-		Q_strncpyz(gt->id, name, MAX_VAR);
+		Q_strncpyz(gt->id, name, sizeof(gt->id));
 		if (numGTs >= MAX_GAMETYPES)
 			Sys_Error("Com_ParseGameTypes: Too many damage types.\n");
 
@@ -1262,7 +1262,7 @@ static void Com_ParseDamageTypes (const char *name, char **text)
 			/* gettext marker */
 			if (*token == '_')
 				token++;
-			Q_strncpyz(csi.dts[csi.numDTs], token, MAX_VAR);
+			Q_strncpyz(csi.dts[csi.numDTs], token, sizeof(csi.dts[csi.numDTs]));
 
 			/* special IDs */
 			if (!Q_strncmp(token, "normal", 6))

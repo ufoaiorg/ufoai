@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 int turnTeam;	/* Defined in g_local.h Stores level.activeTeam while G_CanReactionFire() is abusing it. */
 
-int REACTION_FIREMODE[MAX_TEAMS][MAX_EDICTS][2]; /* Defined in g_local.h See there for full info. */
+int REACTION_FIREMODE[MAX_EDICTS][2]; /* Defined in g_local.h See there for full info. */
 
 static qboolean sentAppearPerishEvent;
 
@@ -1736,8 +1736,8 @@ void G_ClientAction (player_t * player)
 		fd_idx = -1;
 		gi.ReadFormat(pa_format[PA_REACT_SELECT], &hand, &fd_idx);
 		Com_DPrintf("G_ClientAction: entnum:%i hand:%i fd:%i\n", num, hand, fd_idx);
-		REACTION_FIREMODE[player->pers.team][num][0] = hand;
-		REACTION_FIREMODE[player->pers.team][num][1] = fd_idx;
+		REACTION_FIREMODE[num][0] = hand;
+		REACTION_FIREMODE[num][1] = fd_idx;
 		break;
 
 	default:
