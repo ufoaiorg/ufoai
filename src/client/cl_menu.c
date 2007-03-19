@@ -741,13 +741,28 @@ static void MN_Command_f (void)
 	int i;
 
 	name = Cmd_Argv(0);
+
+	/* first search all menus on the stack */
+	for (i = 0; i <= menuStackPos; i++)
+		for (node = menuStack[i]->firstNode; node; node = node->next)
+			if (node->type == MN_CONFUNC && !Q_strncmp(node->name, name, sizeof(node->name))) {
+				/* found the node */
+				Com_DPrintf("MN_Command_f: menu '%s'\n", menuStack[i]->name);
+				MN_ExecuteActions(menuStack[i], node->click);
+				return;
+			}
+
+	/* not found - now query all in the menu definitions */
 	for (i = 0; i < numMenus; i++)
 		for (node = menus[i].firstNode; node; node = node->next)
 			if (node->type == MN_CONFUNC && !Q_strncmp(node->name, name, sizeof(node->name))) {
 				/* found the node */
+				Com_DPrintf("MN_Command_f: menu '%s'\n", menus[i].name);
 				MN_ExecuteActions(&menus[i], node->click);
 				return;
 			}
+
+	Com_Printf("MN_Command_f: confunc '%s' was not found in any menu\n", name);
 }
 
 
