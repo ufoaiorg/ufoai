@@ -404,7 +404,7 @@ void COM_DefaultExtension(char *path, char *extension);
 char *COM_Parse(char **data_p);
 
 /* data is an in/out parm, returns a parsed out token */
-char *COM_EParse(char **text, const char *errhead, char *errinfo);
+char *COM_EParse(char **text, const char *errhead, const char *errinfo);
 
 qboolean Com_sprintf(char *dest, size_t size, const char *fmt, ...) __attribute__((format(printf, 3, 4)));
 

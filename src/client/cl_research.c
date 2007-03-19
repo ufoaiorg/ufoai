@@ -1403,7 +1403,7 @@ static const value_t valid_techmail_vars[] = {
  * @param[in] id Unique id of a technology_t. This is parsed from "tech xxx" -> id=xxx
  * @param[in] text the whole following text that is part of the "tech" item definition in research.ufo.
  */
-extern void RS_ParseTechnologies (char *id, char **text)
+extern void RS_ParseTechnologies (const char *name, char **text)
 {
 	const value_t *var = NULL;
 	technology_t *tech = NULL;
@@ -1418,7 +1418,7 @@ extern void RS_ParseTechnologies (char *id, char **text)
 	/* get body */
 	token = COM_Parse(text);
 	if (!*text || *token != '{') {
-		Com_Printf("RS_ParseTechnologies: \"%s\" technology def without body ignored.\n", id);
+		Com_Printf("RS_ParseTechnologies: \"%s\" technology def without body ignored.\n", name);
 		return;
 	}
 	if (gd.numTechnologies >= MAX_TECHNOLOGIES) {
@@ -1434,7 +1434,7 @@ extern void RS_ParseTechnologies (char *id, char **text)
 
 	/*set standard values */
 	tech->idx = gd.numTechnologies - 1;
-	Com_sprintf(tech->id, MAX_VAR, id);
+	Com_sprintf(tech->id, sizeof(tech->id), name);
 	hash = Com_HashKey(tech->id, TECH_HASH_SIZE);
 	Com_sprintf(tech->description, MAX_VAR, _("No description available."));
 
@@ -1461,7 +1461,7 @@ extern void RS_ParseTechnologies (char *id, char **text)
 
 	do {
 		/* get the name type */
-		token = COM_EParse(text, errhead, id);
+		token = COM_EParse(text, errhead, name);
 		if (!*text)
 			break;
 		if (*token == '}')
@@ -1469,7 +1469,7 @@ extern void RS_ParseTechnologies (char *id, char **text)
 		/* get values */
 		if (!Q_strncmp(token, "type", MAX_VAR)) {
 			/* what type of tech this is */
-			token = COM_EParse(text, errhead, id);
+			token = COM_EParse(text, errhead, name);
 			if (!*text)
 				return;
 			/* redundant, but oh well. */
@@ -1494,7 +1494,7 @@ extern void RS_ParseTechnologies (char *id, char **text)
 			else if (!Q_strncmp(token, "logic", MAX_VAR))
 				tech->type = RS_LOGIC;
 			else
-				Com_Printf("RS_ParseTechnologies: \"%s\" unknown techtype: \"%s\" - ignored.\n", id, token);
+				Com_Printf("RS_ParseTechnologies: \"%s\" unknown techtype: \"%s\" - ignored.\n", name, token);
 		} else {
 
 			if ((!Q_strncmp(token, "require_AND", MAX_VAR))
@@ -1509,7 +1509,7 @@ extern void RS_ParseTechnologies (char *id, char **text)
 					required_temp = &tech->require_for_production;
 				}
 
-				token = COM_EParse(text, errhead, id);
+				token = COM_EParse(text, errhead, name);
 				if (!*text)
 					break;
 				if (*token != '{')
@@ -1518,7 +1518,7 @@ extern void RS_ParseTechnologies (char *id, char **text)
 					break;
 
 				do {	/* Loop through all 'require' entries.*/
-					token = COM_EParse(text, errhead, id);
+					token = COM_EParse(text, errhead, name);
 					if (!*text)
 						return;
 					if (*token == '}')
@@ -1537,7 +1537,7 @@ extern void RS_ParseTechnologies (char *id, char **text)
 
 							required_temp->numLinks++;
 						} else {
-							Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", id, MAX_TECHLINKS);
+							Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", name, MAX_TECHLINKS);
 						}
 					} else if (!Q_strncmp(token, "item", MAX_VAR)) {
 						/* Defines what items need to be collected for this item to be researchable. */
@@ -1553,7 +1553,7 @@ extern void RS_ParseTechnologies (char *id, char **text)
 							Com_DPrintf("RS_ParseTechnologies: require-item - %s - %i\n", required_temp->id[required_temp->numLinks], required_temp->amount[required_temp->numLinks]);
 							required_temp->numLinks++;
 						} else {
-							Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", id, MAX_TECHLINKS);
+							Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", name, MAX_TECHLINKS);
 						}
 					} else if (!Q_strncmp(token, "event", MAX_VAR)) {
 						token = COM_Parse(text);
@@ -1566,13 +1566,13 @@ extern void RS_ParseTechnologies (char *id, char **text)
 							/* Set requirement-type. */
 							required_temp->type[required_temp->numLinks] = RS_LINK_ALIEN_GLOBAL;
 							Com_DPrintf("RS_ParseTechnologies:  require-alienglobal - %i\n", required_temp->amount[required_temp->numLinks]);
-							
+
 							/* Set requirement-amount of item. */
 							token = COM_Parse(text);
 							required_temp->amount[required_temp->numLinks] = atoi(token);
 							required_temp->numLinks++;
 						} else {
-							Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", id, MAX_TECHLINKS);
+							Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", name, MAX_TECHLINKS);
 						}
 					} else if ( (!Q_strncmp(token, "alien_dead", MAX_VAR)) ||  (!Q_strncmp(token, "alien", MAX_VAR)) ) { /* Does this only check the beginning of the string? */
 						/* Defines what live or dead aliens need to be collected for this item to be researchable. */
@@ -1593,15 +1593,15 @@ extern void RS_ParseTechnologies (char *id, char **text)
 							required_temp->amount[required_temp->numLinks] = atoi(token);
 							required_temp->numLinks++;
 						} else {
-							Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", id, MAX_TECHLINKS);
+							Com_Printf("RS_ParseTechnologies: \"%s\" Too many 'required' defined. Limit is %i - ignored.\n", name, MAX_TECHLINKS);
 						}
 					} else {
-						Com_Printf("RS_ParseTechnologies: \"%s\" unknown requirement-type: \"%s\" - ignored.\n", id, token);
+						Com_Printf("RS_ParseTechnologies: \"%s\" unknown requirement-type: \"%s\" - ignored.\n", name, token);
 					}
 				} while (*text);
 			} else if (!Q_strncmp(token, "up_chapter", MAX_VAR)) {
 				/* ufopedia chapter */
-				token = COM_EParse(text, errhead, id);
+				token = COM_EParse(text, errhead, name);
 				if (!*text)
 					return;
 
@@ -1627,7 +1627,7 @@ extern void RS_ParseTechnologies (char *id, char **text)
 							break;
 						}
 						if (i == gd.numChapters)
-							Com_Printf("RS_ParseTechnologies: \"%s\" - chapter \"%s\" not found.\n", id, token);
+							Com_Printf("RS_ParseTechnologies: \"%s\" - chapter \"%s\" not found.\n", name, token);
 					}
 				}
 			} else if (!Q_strncmp(token, "mail", 4)) { /* also mail_pre */
@@ -1642,19 +1642,19 @@ extern void RS_ParseTechnologies (char *id, char **text)
 				} else {
 					mail = &tech->mail[TECHMAIL_RESEARCHED];
 				}
-				token = COM_EParse(text, errhead, id);
+				token = COM_EParse(text, errhead, name);
 				if (!*text || *token != '{')
 					return;
 
 				/* grab the initial mail entry */
-				token = COM_EParse(text, errhead, id);
+				token = COM_EParse(text, errhead, name);
 				if (!*text || *token == '}')
 					return;
 				do {
 					for (var = valid_techmail_vars; var->string; var++)
 						if (!Q_strncmp(token, var->string, sizeof(var->string))) {
 							/* found a definition */
-							token = COM_EParse(text, errhead, id);
+							token = COM_EParse(text, errhead, name);
 							if (!*text)
 								return;
 
@@ -1662,11 +1662,11 @@ extern void RS_ParseTechnologies (char *id, char **text)
 								Com_ParseValue(mail, token, var->type, var->ofs);
 							else
 								/* NOTE: do we need a buffer here? for saving or something like that? */
-								Com_Printf("RS_ParseTechnologies Error: - no buffer for technologies - V_NULL not allowed (token: '%s') entry: '%s' - offset: %Zu\n", token, id, var->ofs);
+								Com_Printf("RS_ParseTechnologies Error: - no buffer for technologies - V_NULL not allowed (token: '%s') entry: '%s' - offset: %Zu\n", token, name, var->ofs);
 							break;
 						}
 					/* grab the next entry */
-					token = COM_EParse(text, errhead, id);
+					token = COM_EParse(text, errhead, name);
 					if (!*text)
 						return;
 				} while (*text && *token != '}');
@@ -1674,7 +1674,7 @@ extern void RS_ParseTechnologies (char *id, char **text)
 				for (var = valid_tech_vars; var->string; var++)
 					if (!Q_strncmp(token, var->string, sizeof(var->string))) {
 						/* found a definition */
-						token = COM_EParse(text, errhead, id);
+						token = COM_EParse(text, errhead, name);
 						if (!*text)
 							return;
 
@@ -1682,12 +1682,12 @@ extern void RS_ParseTechnologies (char *id, char **text)
 							Com_ParseValue(tech, token, var->type, var->ofs);
 						else
 							/* NOTE: do we need a buffer here? for saving or something like that? */
-							Com_Printf("RS_ParseTechnologies Error: - no buffer for technologies - V_NULL not allowed (token: '%s') entry: '%s'\n", token, id);
+							Com_Printf("RS_ParseTechnologies Error: - no buffer for technologies - V_NULL not allowed (token: '%s') entry: '%s'\n", token, name);
 						break;
 					}
 				/*TODO: escape "type weapon/tech/etc.." here */
 				if (!var->string)
-					Com_Printf("RS_ParseTechnologies: unknown token \"%s\" ignored (entry %s)\n", token, id);
+					Com_Printf("RS_ParseTechnologies: unknown token \"%s\" ignored (entry %s)\n", token, name);
 			}
 		}
 	} while (*text);
@@ -1729,7 +1729,7 @@ qboolean RS_IsResearched_ptr (technology_t * tech)
  * @return qboolean
  * @sa RS_IsResearched_ptr
  */
-qboolean RS_ItemIsResearched (char *id_provided)
+qboolean RS_ItemIsResearched (const char *id_provided)
 {
 	technology_t *tech = NULL;
 

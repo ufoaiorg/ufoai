@@ -65,7 +65,7 @@ static const value_t shader_values[] = {
  * @note Called from CL_ParseScriptSecond
  * @sa CL_ParseScriptSecond
  */
-void CL_ParseShaders (char *title, char **text)
+void CL_ParseShaders (const char *name, char **text)
 {
 	shader_t *entry;
 	const value_t *v;
@@ -75,7 +75,7 @@ void CL_ParseShaders (char *title, char **text)
 	/* get name list body body */
 	token = COM_Parse(text);
 	if (!*text || *token != '{') {
-		Com_Printf("CL_ParseShaders: shader \"%s\" without body ignored\n", title);
+		Com_Printf("CL_ParseShaders: shader \"%s\" without body ignored\n", name);
 		return;
 	}
 
@@ -86,10 +86,10 @@ void CL_ParseShaders (char *title, char **text)
 	/* default value */
 	entry->glMode = BLEND_FILTER;
 
-	Q_strncpyz(entry->title, title, MAX_VAR);
+	Q_strncpyz(entry->title, name, MAX_VAR);
 	do {
 		/* get the name type */
-		token = COM_EParse(text, errhead, title);
+		token = COM_EParse(text, errhead, name);
 		if (!*text)
 			break;
 		if (*token == '}')
@@ -99,7 +99,7 @@ void CL_ParseShaders (char *title, char **text)
 		for (v = shader_values; v->string; v++)
 			if (!Q_strcmp(token, v->string)) {
 				/* found a definition */
-				token = COM_EParse(text, errhead, title);
+				token = COM_EParse(text, errhead, name);
 				if (!*text)
 					return;
 
@@ -109,7 +109,7 @@ void CL_ParseShaders (char *title, char **text)
 			}
 
 		if (!v->string)
-			Com_Printf("CL_ParseShaders: unknown token \"%s\" ignored (entry %s)\n", token, title);
+			Com_Printf("CL_ParseShaders: unknown token \"%s\" ignored (entry %s)\n", token, name);
 
 	} while (*text);
 }

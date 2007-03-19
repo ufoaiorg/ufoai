@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MAX_DATA_LENGTH 2048
 
 typedef struct seqCmd_s {
-	int (*handler) (char *name, char *data);
+	int (*handler) (const char *name, char *data);
 	char name[MAX_VAR];
 	char data[MAX_DATA_LENGTH];
 } seqCmd_t;
@@ -55,7 +55,7 @@ typedef enum {
 	SEQ_NUMCMDS
 } seqCmdEnum_t;
 
-char *seqCmdName[SEQ_NUMCMDS] = {
+static const char *seqCmdName[SEQ_NUMCMDS] = {
 	"end",
 	"wait",
 	"click",
@@ -101,16 +101,16 @@ typedef struct seq2D_s {
 	qboolean relativePos;		/* useful for translations when sentence length may differ */
 } seq2D_t;
 
-int SEQ_Click(char *name, char *data);
-int SEQ_Wait(char *name, char *data);
-int SEQ_Precache(char *name, char *data);
-int SEQ_Camera(char *name, char *data);
-int SEQ_Model(char *name, char *data);
-int SEQ_2Dobj(char *name, char *data);
-int SEQ_Remove(char *name, char *data);
-int SEQ_Command(char *name, char *data);
+int SEQ_Click(const char *name, char *data);
+int SEQ_Wait(const char *name, char *data);
+int SEQ_Precache(const char *name, char *data);
+int SEQ_Camera(const char *name, char *data);
+int SEQ_Model(const char *name, char *data);
+int SEQ_2Dobj(const char *name, char *data);
+int SEQ_Remove(const char *name, char *data);
+int SEQ_Command(const char *name, char *data);
 
-int (*seqCmdFunc[SEQ_NUMCMDS]) (char *name, char *data) = {
+static int (*seqCmdFunc[SEQ_NUMCMDS]) (const char *name, char *data) = {
 	NULL,
 	SEQ_Wait,
 	SEQ_Click,
@@ -192,7 +192,7 @@ static void CL_SequenceCamera (void)
  * @brief Finds a given entity in all sequence entities
  * @sa CL_SequenceFind2D
  */
-seqEnt_t *CL_SequenceFindEnt(char *name)
+static seqEnt_t *CL_SequenceFindEnt (const char *name)
 {
 	seqEnt_t *se;
 	int i;
@@ -211,7 +211,7 @@ seqEnt_t *CL_SequenceFindEnt(char *name)
  * @brief Finds a given 2d object in the current sequence data
  * @sa CL_SequenceFindEnt
  */
-seq2D_t *CL_SequenceFind2D(char *name)
+static seq2D_t *CL_SequenceFind2D (const char *name)
 {
 	seq2D_t *s2d;
 	int i;
@@ -426,7 +426,7 @@ void CL_SequenceStart_f (void)
 /**
  * @brief
  */
-void CL_ResetSequences(void)
+void CL_ResetSequences (void)
 {
 	/* reset counters */
 	seq_animspeed = Cvar_Get("seq_animspeed", "1000", 0, NULL);
@@ -441,7 +441,7 @@ void CL_ResetSequences(void)
 /* =========================================================== */
 
 /** @brief valid id names for camera */
-static value_t seqCamera_vals[] = {
+static const value_t seqCamera_vals[] = {
 	{"origin", V_VECTOR, offsetof(seqCamera_t, origin)},
 	{"speed", V_VECTOR, offsetof(seqCamera_t, speed)},
 	{"angles", V_VECTOR, offsetof(seqCamera_t, angles)},
@@ -454,7 +454,7 @@ static value_t seqCamera_vals[] = {
 };
 
 /** @brief valid entity names for a sequence */
-static value_t seqEnt_vals[] = {
+static const value_t seqEnt_vals[] = {
 	{"name", V_STRING, offsetof(seqEnt_t, name)},
 	{"skin", V_INT, offsetof(seqEnt_t, skin)},
 	{"alpha", V_FLOAT, offsetof(seqEnt_t, alpha)},
@@ -468,7 +468,7 @@ static value_t seqEnt_vals[] = {
 };
 
 /** @brief valid id names for 2d entity */
-static value_t seq2D_vals[] = {
+static const value_t seq2D_vals[] = {
 	{"name", V_STRING, offsetof(seq2D_t, name)},
 	{"text", V_TRANSLATION2_STRING, offsetof(seq2D_t, text)},
 	{"font", V_STRING, offsetof(seq2D_t, font)},
@@ -490,7 +490,7 @@ static value_t seq2D_vals[] = {
  * @return 0 if you wait for the click
  * @return 1 if the click occured
  */
-int SEQ_Click(char *name, char *data)
+int SEQ_Click (const char *name, char *data)
 {
 	/* if a CL_SequenceClick_f event was called */
 	if (seqEndClickLoop) {
@@ -509,7 +509,7 @@ int SEQ_Click(char *name, char *data)
  * @brief Increase the sequence time
  * @return 1 - increase the command position of the sequence by one
  */
-int SEQ_Wait(char *name, char *data)
+int SEQ_Wait (const char *name, char *data)
 {
 	seqTime += 1000 * atof(name);
 	return 1;
@@ -521,7 +521,7 @@ int SEQ_Wait(char *name, char *data)
  * @sa R_RegisterModel
  * @sa Draw_FindPic
  */
-int SEQ_Precache(char *name, char *data)
+int SEQ_Precache (const char *name, char *data)
 {
 	if (!Q_strncmp(name, "models", 6)) {
 		while (*data) {
@@ -543,9 +543,9 @@ int SEQ_Precache(char *name, char *data)
 /**
  * @brief Parse the values for the camera like given in seqCamera
  */
-int SEQ_Camera(char *name, char *data)
+int SEQ_Camera (const char *name, char *data)
 {
-	value_t *vp;
+	const value_t *vp;
 
 	/* get values */
 	while (*data) {
@@ -569,10 +569,10 @@ int SEQ_Camera(char *name, char *data)
  * @sa seqEnt_vals
  * @sa CL_SequenceFindEnt
  */
-int SEQ_Model(char *name, char *data)
+int SEQ_Model (const char *name, char *data)
 {
 	seqEnt_t *se;
-	value_t *vp;
+	const value_t *vp;
 	int i;
 
 	/* get sequence entity */
@@ -625,10 +625,10 @@ int SEQ_Model(char *name, char *data)
  * @sa seq2D_vals
  * @sa CL_SequenceFind2D
  */
-int SEQ_2Dobj(char *name, char *data)
+int SEQ_2Dobj (const char *name, char *data)
 {
 	seq2D_t *s2d;
-	value_t *vp;
+	const value_t *vp;
 	int i;
 
 	/* get sequence text */
@@ -674,7 +674,7 @@ int SEQ_2Dobj(char *name, char *data)
  * @sa CL_SequenceFind2D
  * @sa CL_SequenceFindEnt
  */
-int SEQ_Remove(char *name, char *data)
+int SEQ_Remove (const char *name, char *data)
 {
 	seqEnt_t *se;
 	seq2D_t *s2d;
@@ -697,7 +697,7 @@ int SEQ_Remove(char *name, char *data)
  * @return 1 - increase the command position of the sequence by one
  * @sa Cbuf_AddText
  */
-int SEQ_Command (char *name, char *data)
+int SEQ_Command (const char *name, char *data)
 {
 	/* add the command */
 	Cbuf_AddText(name);
@@ -707,7 +707,7 @@ int SEQ_Command (char *name, char *data)
 /**
  * @brief Reads the sequence values from given text-pointer
  */
-void CL_ParseSequence (char *name, char **text)
+void CL_ParseSequence (const char *name, char **text)
 {
 	const char *errhead = "CL_ParseSequence: unexptected end of file (sequence ";
 	sequence_t *sp;
@@ -912,7 +912,7 @@ void CL_Video_f (void)
 /**
  * @brief
  */
-void CL_StopVideo_f(void)
+void CL_StopVideo_f (void)
 {
 	CL_CloseAVI();
 }
@@ -920,7 +920,7 @@ void CL_StopVideo_f(void)
 /**
  * @brief
  */
-static void SafeFS_Write(const void *buffer, int len, qFILE * f)
+static void SafeFS_Write (const void *buffer, int len, qFILE * f)
 {
 	int write = FS_Write(buffer, len, f);
 
@@ -931,7 +931,7 @@ static void SafeFS_Write(const void *buffer, int len, qFILE * f)
 /**
  * @brief
  */
-static void WRITE_STRING(const char *s)
+static void WRITE_STRING (const char *s)
 {
 	memcpy(&buffer[bufIndex], s, strlen(s));
 	bufIndex += strlen(s);
@@ -940,7 +940,7 @@ static void WRITE_STRING(const char *s)
 /**
  * @brief
  */
-static void WRITE_4BYTES(int x)
+static void WRITE_4BYTES (int x)
 {
 	buffer[bufIndex + 0] = (byte) ((x >> 0) & 0xFF);
 	buffer[bufIndex + 1] = (byte) ((x >> 8) & 0xFF);
@@ -952,7 +952,7 @@ static void WRITE_4BYTES(int x)
 /**
  * @brief
  */
-static void WRITE_2BYTES(int x)
+static void WRITE_2BYTES (int x)
 {
 	buffer[bufIndex + 0] = (byte) ((x >> 0) & 0xFF);
 	buffer[bufIndex + 1] = (byte) ((x >> 8) & 0xFF);
@@ -963,7 +963,7 @@ static void WRITE_2BYTES(int x)
 /**
  * @brief
  */
-static void WRITE_1BYTES(int x)
+static void WRITE_1BYTES (int x)
 {
 	buffer[bufIndex] = x;
 	bufIndex += 1;
@@ -973,7 +973,7 @@ static void WRITE_1BYTES(int x)
 /**
  * @brief
  */
-static void START_CHUNK(const char *s)
+static void START_CHUNK (const char *s)
 {
 	if (afd.chunkStackTop == MAX_RIFF_CHUNKS)
 		Sys_Error("ERROR: Top of chunkstack breached\n");
@@ -987,7 +987,7 @@ static void START_CHUNK(const char *s)
 /**
  * @brief
  */
-static void END_CHUNK(void)
+static void END_CHUNK (void)
 {
 	int endIndex = bufIndex;
 
@@ -1005,7 +1005,7 @@ static void END_CHUNK(void)
 /**
  * @brief
  */
-void CL_WriteAVIHeader(void)
+void CL_WriteAVIHeader (void)
 {
 	bufIndex = 0;
 	afd.chunkStackTop = 0;
@@ -1143,7 +1143,7 @@ void CL_WriteAVIHeader(void)
  * @brief Creates an AVI file and gets it into a state where
  * writing the actual data can begin
  */
-qboolean CL_OpenAVIForWriting(char *fileName)
+qboolean CL_OpenAVIForWriting (const char *fileName)
 {
 	if (afd.fileOpen)
 		return qfalse;
@@ -1239,7 +1239,7 @@ qboolean CL_OpenAVIForWriting(char *fileName)
 /**
  * @brief
  */
-static qboolean CL_CheckFileSize(int bytesToAdd)
+static qboolean CL_CheckFileSize (int bytesToAdd)
 {
 	unsigned int newFileSize;
 
@@ -1312,7 +1312,7 @@ void CL_WriteAVIVideoFrame (const byte * imageBuffer, size_t size)
 /**
  * @brief
  */
-void CL_WriteAVIAudioFrame(const byte * pcmBuffer, size_t size)
+void CL_WriteAVIAudioFrame (const byte * pcmBuffer, size_t size)
 {
 	static byte pcmCaptureBuffer[PCM_BUFFER_SIZE] = { 0 };
 	static int bytesInBuffer = 0;
@@ -1369,7 +1369,7 @@ void CL_WriteAVIAudioFrame(const byte * pcmBuffer, size_t size)
 /**
  * @brief Calls the renderer function to capture the frame
  */
-void CL_TakeVideoFrame(void)
+void CL_TakeVideoFrame (void)
 {
 	/* AVI file isn't open */
 	if (!afd.fileOpen)
@@ -1381,7 +1381,7 @@ void CL_TakeVideoFrame(void)
 /**
  * @brief Closes the AVI file and writes an index chunk
  */
-qboolean CL_CloseAVI(void)
+qboolean CL_CloseAVI (void)
 {
 	int indexRemainder;
 	int indexSize = afd.numIndices * 16;
@@ -1449,7 +1449,7 @@ qboolean CL_CloseAVI(void)
  * @brief Status of video recording
  * @return true if video recording is active
  */
-qboolean CL_VideoRecording(void)
+qboolean CL_VideoRecording (void)
 {
 	return afd.fileOpen;
 }
