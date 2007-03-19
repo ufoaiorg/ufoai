@@ -418,7 +418,7 @@ PCX LOADING
  * @sa LoadPNG
  * @sa GL_FindImage
  */
-static void LoadPCX (char *filename, byte ** pic, byte ** palette, int *width, int *height)
+static void LoadPCX (const char *filename, byte ** pic, byte ** palette, int *width, int *height)
 {
 	byte *raw;
 	pcx_t *pcx;
@@ -534,7 +534,7 @@ static void PngReadFunc (png_struct *Png, png_bytep buf, png_size_t size)
  * @sa LoadJPG
  * @sa GL_FindImage
  */
-static int LoadPNG (char *name, byte **pic, int *width, int *height)
+static int LoadPNG (const char *name, byte **pic, int *width, int *height)
 {
 	int				rowptr;
 	int				samples;
@@ -1176,7 +1176,7 @@ static void jpegDest (j_compress_ptr cinfo, byte * outfile, int size)
  * @brief
  * @sa LoadJPG
  */
-void SaveJPG (char *filename, int quality, int image_width, int image_height, unsigned char *image_buffer)
+void SaveJPG (const char *filename, int quality, int image_width, int image_height, unsigned char *image_buffer)
 {
 	/* This struct contains the JPEG compression parameters and pointers to
 	 * working space (which is allocated as needed by the JPEG library).

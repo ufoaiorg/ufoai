@@ -583,7 +583,7 @@ static void Key_Message (int key)
  * the given string.  Single ascii characters return themselves, while
  * the K_* names are matched up.
  */
-static int Key_StringToKeynum (char *str)
+static int Key_StringToKeynum (const char *str)
 {
 	const keyname_t *kn;
 
@@ -631,7 +631,7 @@ char *Key_KeynumToString (int keynum)
  * @sa Key_SetBinding
  * @return the binded key or empty string if not found
  */
-char* Key_GetBinding (char *binding, keyBindSpace_t space)
+char* Key_GetBinding (const char *binding, keyBindSpace_t space)
 {
 	int i;
 	char **keySpace = NULL;

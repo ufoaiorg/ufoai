@@ -557,7 +557,7 @@ static void CL_CampaignActivateStageSets (stage_t *stage)
  * @sa CL_CampaignActivateStageSets
  * @sa CL_CampaignExecute
  */
-static stageState_t *CL_CampaignActivateStage (char *name, qboolean setsToo)
+static stageState_t *CL_CampaignActivateStage (const char *name, qboolean setsToo)
 {
 	stage_t *stage;
 	stageState_t *state;
@@ -595,7 +595,7 @@ static stageState_t *CL_CampaignActivateStage (char *name, qboolean setsToo)
  * @brief
  * @sa CL_CampaignExecute
  */
-static void CL_CampaignEndStage (char *name)
+static void CL_CampaignEndStage (const char *name)
 {
 	stageState_t *state;
 	int i;
@@ -1571,7 +1571,7 @@ static void CL_MessageSave (sizebuf_t * sb, message_t * message)
  * @brief
  * @sa CL_GameLoad
  */
-static qboolean CL_GameSave (char *filename, char *comment)
+static qboolean CL_GameSave (const char *filename, const char *comment)
 {
 	stageState_t *state;
 	actMis_t *mis;
@@ -1849,7 +1849,7 @@ static void CL_UpdatePointersInGlobalData (void)
  * @sa CL_ReadSinglePlayerData
  * @sa CL_UpdatePointersInGlobalData
  */
-static int CL_GameLoad (char *filename)
+static int CL_GameLoad (const char *filename)
 {
 	actMis_t *mis;
 	stageState_t *state;

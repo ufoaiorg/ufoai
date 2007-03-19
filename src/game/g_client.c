@@ -1792,7 +1792,7 @@ void G_GetTeam (player_t * player)
 	if (sv_maxclients->integer == 1)
 		player->pers.team = TEAM_PHALANX;
 	else if (atoi(Info_ValueForKey(player->pers.userinfo, "spectator"))) {
-		/* TODO: spectors get in a game menu to select the team */
+		/* TODO: spectators get in a game menu to select the team */
 		player->pers.spectator = qtrue;
 	} else if (sv_teamplay->integer) {
 		/* set the team specified in the userinfo */

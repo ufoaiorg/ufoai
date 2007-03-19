@@ -219,7 +219,6 @@ extern vec3_t newBasePos;
 int B_GetCount(void);
 void B_SetUpBase(void);
 
-void B_ParseProductions(char *title, char **text);
 void B_SetBuildingByClick(int row, int col);
 void B_ResetBaseManagement(void);
 void B_ClearBase(base_t *const base);
