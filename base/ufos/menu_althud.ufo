@@ -1069,8 +1069,6 @@ menu althud
 	// ==================
 
 	/* Firemode console functions ===================================*/
-	/* defined in menu_hud already */
-	/*
 	confunc set_left_ina0 { *bt_left_fm0	texl "0 64"	*bt_left_fm0 texh "255 128" }
 	confunc set_left_ina1 { *bt_left_fm1	texl "0 64"	*bt_left_fm1 texh "255 128" }
 	confunc set_left_ina2 { *bt_left_fm2	texl "0 64"	*bt_left_fm2 texh "255 128" }
@@ -1138,11 +1136,8 @@ menu althud
 	confunc set_right_vis5 { *bt_right_fm5 invis false	*right_fm_name5 invis false *right_fm_tu5 invis false	*right_fm_shot5 invis false }
 	confunc set_right_vis6 { *bt_right_fm6 invis false	*right_fm_name6 invis false *right_fm_tu6 invis false	*right_fm_shot6 invis false }
 	confunc set_right_vis7 { *bt_right_fm7 invis false	*right_fm_name7 invis false *right_fm_tu7 invis false	*right_fm_shot7 invis false }
-	*/
 
 	/* Firemode checkbox console functions (see also the "xxx_inv" functions above) ===================================*/
-	/* defined in menu_hud.ufo already, see there for the definition that is actually _used_ :) */
-	/*
 	confunc set_left_cb_ina0 { *bt_left_cb0 texl "0 0"	*bt_left_cb0 texh "31 31"	*bt_left_cb0 invis false }
 	confunc set_left_cb_ina1 { *bt_left_cb1 texl "0 0"	*bt_left_cb1 texh "31 31"	*bt_left_cb1 invis false }
 	confunc set_left_cb_ina2 { *bt_left_cb2 texl "0 0"	*bt_left_cb2 texh "31 31"	*bt_left_cb2 invis false }
@@ -1176,7 +1171,6 @@ menu althud
 	confunc set_right_cb_a5 { *bt_right_cb5	texl "0 32"	*bt_right_cb5 texh "31 63"	*bt_right_cb5 invis false }
 	confunc set_right_cb_a6 { *bt_right_cb6	texl "0 32"	*bt_right_cb6 texh "31 63"	*bt_right_cb6 invis false }
 	confunc set_right_cb_a7 { *bt_right_cb7	texl "0 32"	*bt_right_cb7 texh "31 63"	*bt_right_cb7 invis false }
-	*/
 
 	/* Firemode images ===================================*/
 	/*
