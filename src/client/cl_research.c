@@ -1434,9 +1434,9 @@ extern void RS_ParseTechnologies (const char *name, char **text)
 
 	/*set standard values */
 	tech->idx = gd.numTechnologies - 1;
-	Com_sprintf(tech->id, sizeof(tech->id), name);
+	Q_strncpyz(tech->id, name, sizeof(tech->id));
 	hash = Com_HashKey(tech->id, TECH_HASH_SIZE);
-	Com_sprintf(tech->description, MAX_VAR, _("No description available."));
+	Q_strncpyz(tech->description, _("No description available."), sizeof(tech->description));
 
 	/* link the variable in */
 	/* tech_hash should be null on the first run */
