@@ -3320,8 +3320,13 @@ qboolean MN_ParseNodeBody (menuNode_t * node, char **text, char **token)
 		*action = &menuActions[numActions++];
 		memset(*action, 0, sizeof(menuAction_t));
 
-		if (node->type == MN_CONFUNC)
-			Cmd_AddCommand(node->name, MN_Command_f, "Confunc callback");
+		if (node->type == MN_CONFUNC) {
+			/* don't add a callback twice */
+			if (!Cmd_Exists(node->name))
+				Cmd_AddCommand(node->name, MN_Command_f, "Confunc callback");
+			else
+				Com_DPrintf("MN_ParseNodeBody: skip confunc '%s' - already added\n", node->name);
+		}
 
 		return MN_ParseAction(node, *action, text, token);
 	}
