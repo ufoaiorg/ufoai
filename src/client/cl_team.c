@@ -1905,7 +1905,7 @@ static const value_t rankValues[] =
 /**
  * @brief Parse medals and ranks defined in the medals.ufo file.
  */
-extern void CL_ParseMedalsAndRanks (char *title, char **text, byte parserank)
+extern void CL_ParseMedalsAndRanks (const char *name, char **text, byte parserank)
 {
 	rank_t *rank = NULL;
 	const char *errhead = "Com_ParseMedalsAndRanks: unexptected end of file (medal/rank ";
@@ -1916,25 +1916,25 @@ extern void CL_ParseMedalsAndRanks (char *title, char **text, byte parserank)
 	token = COM_Parse(text);
 
 	if (!*text || *token != '{') {
-		Com_Printf("Com_ParseMedalsAndRanks: rank/medal \"%s\" without body ignored\n", title);
+		Com_Printf("Com_ParseMedalsAndRanks: rank/medal \"%s\" without body ignored\n", name);
 		return;
 	}
 
 	if (parserank) {
 		/* parse ranks */
 		if (gd.numRanks >= MAX_RANKS) {
-			Com_Printf("Too many rank descriptions, '%s' ignored.\n", title);
+			Com_Printf("Too many rank descriptions, '%s' ignored.\n", name);
 			gd.numRanks = MAX_RANKS;
 			return;
 		}
 
 		rank = &gd.ranks[gd.numRanks++];
 		memset(rank, 0, sizeof(rank_t));
-		Q_strncpyz(rank->id, title, MAX_VAR);
+		Q_strncpyz(rank->id, name, MAX_VAR);
 
 		do {
 			/* get the name type */
-			token = COM_EParse(text, errhead, title);
+			token = COM_EParse(text, errhead, name);
 			if (!*text)
 				break;
 			if (*token == '}')
@@ -1942,7 +1942,7 @@ extern void CL_ParseMedalsAndRanks (char *title, char **text, byte parserank)
 			for (v = rankValues; v->string; v++)
 				if (!Q_strncmp(token, v->string, sizeof(v->string))) {
 					/* found a definition */
-					token = COM_EParse(text, errhead, title);
+					token = COM_EParse(text, errhead, name);
 					if (!*text)
 						return;
 					Com_ParseValue(rank, token, v->type, v->ofs);
@@ -1951,12 +1951,12 @@ extern void CL_ParseMedalsAndRanks (char *title, char **text, byte parserank)
 
 			if (!Q_strncmp(token, "type", 4)) {
 				/* employeeType_t */
-				token = COM_EParse(text, errhead, title);
+				token = COM_EParse(text, errhead, name);
 				if (!*text)
 					return;
 				rank->type = E_GetEmployeeType(token);
 			} else if (!v->string)
-				Com_Printf("Com_ParseMedalsAndRanks: unknown token \"%s\" ignored (medal/rank %s)\n", token, title);
+				Com_Printf("Com_ParseMedalsAndRanks: unknown token \"%s\" ignored (medal/rank %s)\n", token, name);
 		} while (*text);
 	} else {
 		/* parse medals */
@@ -1976,7 +1976,7 @@ static const value_t ugvValues[] =
 /**
  * @brief Parse UGVs
  */
-extern void CL_ParseUGVs (char *title, char **text)
+extern void CL_ParseUGVs (const char *name, char **text)
 {
 	const char *errhead = "Com_ParseUGVs: unexptected end of file (ugv ";
 	char	*token;
@@ -1987,13 +1987,13 @@ extern void CL_ParseUGVs (char *title, char **text)
 	token = COM_Parse(text);
 
 	if (!*text || *token != '{') {
-		Com_Printf("Com_ParseUGVs: ugv \"%s\" without body ignored\n", title);
+		Com_Printf("Com_ParseUGVs: ugv \"%s\" without body ignored\n", name);
 		return;
 	}
 
 	/* parse ugv */
 	if (gd.numUGV >= MAX_UGV) {
-		Com_Printf("Too many UGV descriptions, '%s' ignored.\n", title);
+		Com_Printf("Too many UGV descriptions, '%s' ignored.\n", name);
 		gd.numUGV = MAX_UGV;
 		return;
 	}
@@ -2003,7 +2003,7 @@ extern void CL_ParseUGVs (char *title, char **text)
 
 	do {
 		/* get the name type */
-		token = COM_EParse(text, errhead, title);
+		token = COM_EParse(text, errhead, name);
 		if (!*text)
 			break;
 		if (*token == '}')
@@ -2011,14 +2011,14 @@ extern void CL_ParseUGVs (char *title, char **text)
 		for (v = ugvValues; v->string; v++)
 			if (!Q_strncmp(token, v->string, sizeof(v->string))) {
 				/* found a definition */
-				token = COM_EParse(text, errhead, title);
+				token = COM_EParse(text, errhead, name);
 				if (!*text)
 					return;
 				Com_ParseValue(ugv, token, v->type, v->ofs);
 				break;
 			}
 			if (!v->string)
-				Com_Printf("Com_ParseUGVs: unknown token \"%s\" ignored (ugv %s)\n", token, title);
+				Com_Printf("Com_ParseUGVs: unknown token \"%s\" ignored (ugv %s)\n", token, name);
 	} while (*text);
 }
 

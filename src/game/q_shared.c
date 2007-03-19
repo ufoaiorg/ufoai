@@ -1715,7 +1715,7 @@ skipwhite:
  * @param
  * @sa Com_Parse
  */
-char *COM_EParse (char **text, const char *errhead, char *errinfo)
+char *COM_EParse (char **text, const char *errhead, const char *errinfo)
 {
 	char *token;
 

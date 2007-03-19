@@ -338,7 +338,7 @@ shader stuff
 */
 
 void CL_ShaderList_f(void);
-void CL_ParseShaders(char *title, char **text);
+void CL_ParseShaders(const char *name, char **text);
 extern int r_numshaders;
 extern shader_t r_shaders[MAX_SHADERS];
 
@@ -361,7 +361,7 @@ void CL_RegisterLocalModels(void);
 void IN_Accumulate(void);
 
 /* cl_sequence.c (avi stuff) */
-qboolean CL_OpenAVIForWriting(char *filename);
+qboolean CL_OpenAVIForWriting(const char *filename);
 void CL_TakeVideoFrame(void);
 void CL_WriteAVIVideoFrame(const byte * imageBuffer, size_t size);
 void CL_WriteAVIAudioFrame(const byte * pcmBuffer, size_t size);
@@ -382,8 +382,8 @@ void CL_Disconnect(void);
 void CL_GetChallengePacket(void);
 void CL_Snd_Restart_f(void);
 void S_ModifySndRef_f(void);
-void CL_ParseMedalsAndRanks(char *title, char **text, byte parserank);
-void CL_ParseUGVs(char *title, char **text);
+void CL_ParseMedalsAndRanks(const char *name, char **text, byte parserank);
+void CL_ParseUGVs(const char *name, char **text);
 void CL_UpdateCharacterSkills(character_t *chr);	/* cl_team.c */
 char* CL_ToDifficultyName(int difficulty);
 
@@ -968,13 +968,13 @@ void MN_ExecuteActions(const menu_t* const menu, menuAction_t* const first);
 
 void MN_ResetMenus(void);
 void MN_Shutdown(void);
-void MN_ParseMenu(char *name, char **text);
-void MN_ParseMenuModel(char *name, char **text);
+void MN_ParseMenu(const char *name, char **text);
+void MN_ParseMenuModel(const char *name, char **text);
 menu_t* MN_PushMenu(const char *name);
 void MN_PopMenu(qboolean all);
 menu_t* MN_ActiveMenu(void);
 void MN_Popup(const char *title, const char *text);
-void MN_ParseTutorials(char *title, char **text);
+void MN_ParseTutorials(const char *title, char **text);
 
 void B_DrawBase(menuNode_t * node);
 
@@ -982,7 +982,7 @@ extern inventory_t *menuInventory;
 extern const char *menuText[MAX_MENUTEXTS];
 
 /* this is the function where all the sdl_ttf fonts are parsed */
-void CL_ParseFont(char *name, char **text);
+void CL_ParseFont(const char *name, char **text);
 
 /* here they get reinit after a vid_restart */
 void CL_InitFonts(void);
@@ -1005,9 +1005,9 @@ void CL_ParticleRegisterArt(void);
 void CL_ResetParticles(void);
 void CL_ParticleRun(void);
 void CL_RunMapParticles(void);
-int CL_ParseParticle(char *name, char **text);
+int CL_ParseParticle(const char *name, char **text);
 void CL_InitParticles(void);
-ptl_t *CL_ParticleSpawn(char *name, int levelFlags, const vec3_t s, const vec3_t v, const vec3_t a);
+ptl_t *CL_ParticleSpawn(const char *name, int levelFlags, const vec3_t s, const vec3_t v, const vec3_t a);
 void PE_RenderParticles(void);
 
 extern ptlArt_t ptlArt[MAX_PTL_ART];
@@ -1050,7 +1050,7 @@ void CL_SequenceClick_f(void);
 void CL_SequenceStart_f(void);
 void CL_SequenceEnd_f(void);
 void CL_ResetSequences(void);
-void CL_ParseSequence(char *name, char **text);
+void CL_ParseSequence(const char *name, char **text);
 
 /* cl_fx.c */
 cdlight_t *CL_AllocDlight(int key);

@@ -762,7 +762,7 @@ static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
  * @sa V_UpdateRefDef
  * @sa R_DrawPtls
  */
-ptl_t *CL_ParticleSpawn (char *name, int levelFlags, const vec3_t s, const vec3_t v, const vec3_t a)
+ptl_t *CL_ParticleSpawn (const char *name, int levelFlags, const vec3_t s, const vec3_t v, const vec3_t a)
 {
 	ptlDef_t *pd;
 	ptl_t *p;
@@ -1109,7 +1109,7 @@ void CL_RunMapParticles (void)
 /**
  * @brief
  */
-void CL_ParsePtlCmds (char *name, char **text)
+void CL_ParsePtlCmds (const char *name, char **text)
 {
 	ptlCmd_t *pc;
 	const value_t *pp;
@@ -1296,7 +1296,7 @@ int CL_GetParticleIndex (const char *name)
  * @param[in] text pointer to the buffer to parse from
  * @return the position of the particle in ptlDef array
  */
-extern int CL_ParseParticle (char *name, char **text)
+extern int CL_ParseParticle (const char *name, char **text)
 {
 	const char *errhead = "CL_ParseParticle: unexptected end of file (particle ";
 	ptlDef_t *pd;

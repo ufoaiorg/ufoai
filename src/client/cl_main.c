@@ -1652,7 +1652,7 @@ extern void CL_InitAfter (void)
  * but e.g. techs would need those parsed items - thus we have to parse e.g. techs
  * at a later stage)
  */
-extern void CL_ParseClientData (char *type, char *name, char **text)
+extern void CL_ParseClientData (char *type, const char *name, char **text)
 {
 	if (!Q_strncmp(type, "shader", 6))
 		CL_ParseShaders(name, text);

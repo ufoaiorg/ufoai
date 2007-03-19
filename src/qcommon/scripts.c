@@ -114,7 +114,7 @@ static const value_t fdps[] = {
 /**
  * @brief
  */
-static void Com_ParseFire (char *name, char **text, fireDef_t * fd)
+static void Com_ParseFire (const char *name, char **text, fireDef_t * fd)
 {
 	const value_t *fdp;
 	const char *errhead = "Com_ParseFire: unexptected end of file";
@@ -181,7 +181,7 @@ static void Com_ParseFire (char *name, char **text, fireDef_t * fd)
 /**
  * @brief
  */
-static void Com_ParseArmor (char *name, char **text, short *ad)
+static void Com_ParseArmor (const char *name, char **text, short *ad)
 {
 	const char *errhead = "Com_ParseFire: unexptected end of file";
 	char *token;
@@ -221,7 +221,7 @@ static void Com_ParseArmor (char *name, char **text, short *ad)
 /**
  * @brief
  */
-static void Com_ParseItem (char *name, char **text)
+static void Com_ParseItem (const char *name, char **text)
 {
 	const char *errhead = "Com_ParseItem: unexptected end of file (weapon ";
 	const value_t *val;
@@ -232,7 +232,7 @@ static void Com_ParseItem (char *name, char **text)
 
 	/* search for menus with same name */
 	for (i = 0; i < csi.numODs; i++)
-		if (!Q_strncmp(name, csi.ods[i].name, MAX_VAR))
+		if (!Q_strncmp(name, csi.ods[i].name, sizeof(csi.ods[i].name)))
 			break;
 
 	if (i < csi.numODs) {
@@ -247,7 +247,7 @@ static void Com_ParseItem (char *name, char **text)
 	/* default value is no ammo */
 	memset(od->weap_idx, -1, sizeof(od->weap_idx));
 
-	Q_strncpyz(od->id, name, MAX_VAR);
+	Q_strncpyz(od->id, name, sizeof(od->id));
 
 	/* get it's body */
 	token = COM_Parse(text);
@@ -395,7 +395,7 @@ static const value_t idps[] = {
 /**
  * @brief
  */
-static void Com_ParseInventory (char *name, char **text)
+static void Com_ParseInventory (const char *name, char **text)
 {
 	const char *errhead = "Com_ParseInventory: unexptected end of file (inventory ";
 	invDef_t *id;
@@ -405,7 +405,7 @@ static void Com_ParseInventory (char *name, char **text)
 
 	/* search for containers with same name */
 	for (i = 0; i < csi.numIDs; i++)
-		if (!Q_strncmp(name, csi.ids[i].name, MAX_VAR))
+		if (!Q_strncmp(name, csi.ids[i].name, sizeof(csi.ids[i].name)))
 			break;
 
 	if (i < csi.numIDs) {
@@ -422,7 +422,7 @@ static void Com_ParseInventory (char *name, char **text)
 	id = &csi.ids[csi.numIDs++];
 	memset(id, 0, sizeof(invDef_t));
 
-	Q_strncpyz(id->name, name, MAX_VAR);
+	Q_strncpyz(id->name, name, sizeof(id->name));
 
 	/* get it's body */
 	token = COM_Parse(text);
@@ -794,7 +794,7 @@ int Com_GetModelAndName (char *team, character_t * chr)
  * @note searches whether the actor id is already somewhere in the nameCat array
  * if not, it generates a new nameCat entry
  */
-static void Com_ParseNames (char *title, char **text)
+static void Com_ParseNames (const char *name, char **text)
 {
 	nameCategory_t *nc;
 	const char *errhead = "Com_ParseNames: unexptected end of file (names ";
@@ -803,7 +803,7 @@ static void Com_ParseNames (char *title, char **text)
 
 	/* check for additions to existing name categories */
 	for (i = 0, nc = nameCat; i < numNameCats; i++, nc++)
-		if (!Q_strncmp(nc->title, title, MAX_VAR))
+		if (!Q_strncmp(nc->title, name, sizeof(nc->title)))
 			break;
 
 	/* reset new category */
@@ -811,13 +811,13 @@ static void Com_ParseNames (char *title, char **text)
 		memset(nc, 0, sizeof(nameCategory_t));
 		numNameCats++;
 	}
-	Q_strncpyz(nc->title, title, MAX_VAR);
+	Q_strncpyz(nc->title, name, sizeof(nc->title));
 
 	/* get name list body body */
 	token = COM_Parse(text);
 
 	if (!*text || *token != '{') {
-		Com_Printf("Com_ParseNames: name def \"%s\" without body ignored\n", title);
+		Com_Printf("Com_ParseNames: name def \"%s\" without body ignored\n", name);
 		if (numNameCats - 1 == nc - nameCat)
 			numNameCats--;
 		return;
@@ -825,7 +825,7 @@ static void Com_ParseNames (char *title, char **text)
 
 	do {
 		/* get the name type */
-		token = COM_EParse(text, errhead, title);
+		token = COM_EParse(text, errhead, name);
 		if (!*text)
 			break;
 		if (*token == '}')
@@ -837,7 +837,7 @@ static void Com_ParseNames (char *title, char **text)
 				nc->names[i] = infoPos;
 				nc->numNames[i] = 0;
 
-				token = COM_EParse(text, errhead, title);
+				token = COM_EParse(text, errhead, name);
 				if (!*text)
 					break;
 				if (*token != '{')
@@ -845,7 +845,7 @@ static void Com_ParseNames (char *title, char **text)
 
 				do {
 					/* get a name */
-					token = COM_EParse(text, errhead, title);
+					token = COM_EParse(text, errhead, name);
 					if (!*text)
 						break;
 					if (*token == '}')
@@ -870,7 +870,7 @@ static void Com_ParseNames (char *title, char **text)
 			}
 
 		if (i == NAME_NUM_TYPES)
-			Com_Printf("Com_ParseNames: unknown token \"%s\" ignored (names %s)\n", token, title);
+			Com_Printf("Com_ParseNames: unknown token \"%s\" ignored (names %s)\n", token, name);
 
 	} while (*text);
 
@@ -891,7 +891,7 @@ static void Com_ParseNames (char *title, char **text)
  * @note searches whether the actor id is already somewhere in the nameCat array
  * if not, it generates a new nameCat entry
  */
-static void Com_ParseActors (char *title, char **text)
+static void Com_ParseActors (const char *name, char **text)
 {
 	nameCategory_t *nc;
 	const char *errhead = "Com_ParseActors: unexptected end of file (actors ";
@@ -900,7 +900,7 @@ static void Com_ParseActors (char *title, char **text)
 
 	/* check for additions to existing name categories */
 	for (i = 0, nc = nameCat; i < numNameCats; i++, nc++)
-		if (!Q_strncmp(nc->title, title, MAX_VAR))
+		if (!Q_strncmp(nc->title, name, sizeof(nc->title)))
 			break;
 
 	/* reset new category */
@@ -909,17 +909,17 @@ static void Com_ParseActors (char *title, char **text)
 			memset(nc, 0, sizeof(nameCategory_t));
 			numNameCats++;
 		} else {
-			Com_Printf("Too many name categories, '%s' ignored.\n", title);
+			Com_Printf("Too many name categories, '%s' ignored.\n", name);
 			return;
 		}
 	}
-	Q_strncpyz(nc->title, title, MAX_VAR);
+	Q_strncpyz(nc->title, name, sizeof(nc->title));
 
 	/* get name list body body */
 	token = COM_Parse(text);
 
 	if (!*text || *token != '{') {
-		Com_Printf("Com_ParseActors: actor def \"%s\" without body ignored\n", title);
+		Com_Printf("Com_ParseActors: actor def \"%s\" without body ignored\n", name);
 		if (numNameCats - 1 == nc - nameCat)
 			numNameCats--;
 		return;
@@ -927,7 +927,7 @@ static void Com_ParseActors (char *title, char **text)
 
 	do {
 		/* get the name type */
-		token = COM_EParse(text, errhead, title);
+		token = COM_EParse(text, errhead, name);
 		if (!*text)
 			break;
 		if (*token == '}')
@@ -938,7 +938,7 @@ static void Com_ParseActors (char *title, char **text)
 				/* initialize list */
 				nc->models[i] = infoPos;
 				nc->numModels[i] = 0;
-				token = COM_EParse(text, errhead, title);
+				token = COM_EParse(text, errhead, name);
 				if (!*text)
 					break;
 				if (*token != '{')
@@ -947,7 +947,7 @@ static void Com_ParseActors (char *title, char **text)
 				do {
 					/* get the path, body, head and skin */
 					for (j = 0; j < 4; j++) {
-						token = COM_EParse(text, errhead, title);
+						token = COM_EParse(text, errhead, name);
 						if (!*text)
 							break;
 						if (*token == '}')
@@ -972,8 +972,7 @@ static void Com_ParseActors (char *title, char **text)
 			}
 
 		if (i == NAME_NUM_TYPES)
-			Com_Printf("Com_ParseNames: unknown token \"%s\" ignored (actors %s)\n", token, title);
-
+			Com_Printf("Com_ParseActors: unknown token \"%s\" ignored (actors %s)\n", token, name);
 	} while (*text);
 }
 
@@ -996,7 +995,7 @@ static const value_t teamDescValues[] = {
 /**
  * @brief Parse the team descriptions (teamdesc) in the teams*.ufo files.
  */
-static void Com_ParseTeamDesc (char *title, char **text)
+static void Com_ParseTeamDesc (const char *name, char **text)
 {
 	teamDesc_t *td;
 	const char *errhead = "Com_ParseTeamDesc: unexptected end of file (teamdesc ";
@@ -1006,12 +1005,12 @@ static void Com_ParseTeamDesc (char *title, char **text)
 
 	/* check whether team description already exists */
 	for (i = 0, td = teamDesc; i < numTeamDesc; i++, td++)
-		if (!Q_strncmp(td->id, title, MAX_VAR))
+		if (!Q_strncmp(td->id, name, MAX_VAR))
 			break;
 
 	/* reset new category */
 	if (i >= MAX_TEAMDEFS) {
-		Com_Printf("Too many team descriptions, '%s' ignored.\n", title);
+		Com_Printf("Too many team descriptions, '%s' ignored.\n", name);
 		return;
 	}
 
@@ -1022,14 +1021,14 @@ static void Com_ParseTeamDesc (char *title, char **text)
 
 	td = &teamDesc[numTeamDesc++];
 	memset(td, 0, sizeof(teamDesc_t));
-	Q_strncpyz(td->id, title, MAX_VAR);
+	Q_strncpyz(td->id, name, MAX_VAR);
 	td->armor = td->weapons = qtrue; /* default values */
 
 	/* get name list body body */
 	token = COM_Parse(text);
 
 	if (!*text || *token != '{') {
-		Com_Printf("Com_ParseTeamDesc: team desc \"%s\" without body ignored\n", title);
+		Com_Printf("Com_ParseTeamDesc: team desc \"%s\" without body ignored\n", name);
 		if (numTeamDesc - 1 == td - teamDesc)
 			numTeamDesc--;
 		return;
@@ -1037,7 +1036,7 @@ static void Com_ParseTeamDesc (char *title, char **text)
 
 	do {
 		/* get the name type */
-		token = COM_EParse(text, errhead, title);
+		token = COM_EParse(text, errhead, name);
 		if (!*text)
 			break;
 		if (*token == '}')
@@ -1046,7 +1045,7 @@ static void Com_ParseTeamDesc (char *title, char **text)
 		for (v = teamDescValues; v->string; v++)
 			if (!Q_strncmp(token, v->string, sizeof(v->string))) {
 				/* found a definition */
-				token = COM_EParse(text, errhead, title);
+				token = COM_EParse(text, errhead, name);
 				if (!*text)
 					return;
 
@@ -1055,14 +1054,14 @@ static void Com_ParseTeamDesc (char *title, char **text)
 			}
 
 		if (!v->string)
-			Com_Printf("Com_ParseTeamDesc: unknown token \"%s\" ignored (team %s)\n", token, title);
+			Com_Printf("Com_ParseTeamDesc: unknown token \"%s\" ignored (team %s)\n", token, name);
 	} while (*text);
 }
 
 /**
  * @brief
  */
-static void Com_ParseTeam (char *title, char **text)
+static void Com_ParseTeam (const char *name, char **text)
 {
 	nameCategory_t *nc;
 	teamDef_t *td;
@@ -1072,7 +1071,7 @@ static void Com_ParseTeam (char *title, char **text)
 
 	/* check for additions to existing name categories */
 	for (i = 0, td = teamDef; i < numTeamDefs; i++, td++)
-		if (!Q_strncmp(td->title, title, MAX_VAR))
+		if (!Q_strncmp(td->title, name, sizeof(td->title)))
 			break;
 
 	/* reset new category */
@@ -1081,17 +1080,17 @@ static void Com_ParseTeam (char *title, char **text)
 			memset(td, 0, sizeof(teamDef_t));
 			numTeamDefs++;
 		} else {
-			Com_Printf("Too many team definitions, '%s' ignored.\n", title);
+			Com_Printf("Too many team definitions, '%s' ignored.\n", name);
 			return;
 		}
 	}
-	Q_strncpyz(td->title, title, MAX_VAR);
+	Q_strncpyz(td->title, name, sizeof(td->title));
 
 	/* get name list body body */
 	token = COM_Parse(text);
 
 	if (!*text || *token != '{') {
-		Com_Printf("Com_ParseTeam: team def \"%s\" without body ignored\n", title);
+		Com_Printf("Com_ParseTeam: team def \"%s\" without body ignored\n", name);
 		if (numTeamDefs - 1 == td - teamDef)
 			numTeamDefs--;
 		return;
@@ -1103,7 +1102,7 @@ static void Com_ParseTeam (char *title, char **text)
 
 	do {
 		/* get the name type */
-		token = COM_EParse(text, errhead, title);
+		token = COM_EParse(text, errhead, name);
 		if (!*text)
 			break;
 		if (*token == '}')
@@ -1111,9 +1110,9 @@ static void Com_ParseTeam (char *title, char **text)
 
 		if (*token == '{') {
 			for (;;) {
-				token = COM_EParse(text, errhead, title);
+				token = COM_EParse(text, errhead, name);
 				if (*token == '}') {
-					token = COM_EParse(text, errhead, title);
+					token = COM_EParse(text, errhead, name);
 					break;
 				}
 				for (i = 0, nc = nameCat; i < numNameCats; i++, nc++)
@@ -1123,7 +1122,7 @@ static void Com_ParseTeam (char *title, char **text)
 						break;
 					}
 				if (i == numNameCats)
-					Com_Printf("Com_ParseTeam: unknown token \"%s\" ignored (team %s)\n", token, title);
+					Com_Printf("Com_ParseTeam: unknown token \"%s\" ignored (team %s)\n", token, name);
 			}
 			if (*token == '}')
 				break;
@@ -1147,7 +1146,7 @@ static const value_t gameTypeValues[] = {
 	{NULL, 0, 0}
 };
 
-static void Com_ParseGameTypes (char *name, char **text)
+static void Com_ParseGameTypes (const char *name, char **text)
 {
 	const char *errhead = "Com_ParseGameTypes: unexptected end of file (gametype ";
 	char *token;
@@ -1232,7 +1231,7 @@ DAMAGE TYPES INTERPRETER
 /**
  * @brief
  */
-static void Com_ParseDamageTypes (char *name, char **text)
+static void Com_ParseDamageTypes (const char *name, char **text)
 {
 	const char *errhead = "Com_ParseDamageTypes: unexptected end of file (damagetype ";
 	char *token;

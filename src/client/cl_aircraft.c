@@ -444,7 +444,7 @@ extern void CL_AircraftSelect_f (void)
  * @param[in] name Aircraft id
  * @return aircraft_t pointer or NULL if not found
  */
-extern aircraft_t *CL_GetAircraft (char *name)
+extern aircraft_t *CL_GetAircraft (const char *name)
 {
 	int i;
 
@@ -1016,7 +1016,7 @@ static const value_t aircraftitems_vals[] = {
  * @brief Parses all aircraft items that are defined in our UFO-scripts
  * @sa CL_ParseClientData
  */
-extern void CL_ParseAircraftItem (char *name, char **text)
+extern void CL_ParseAircraftItem (const char *name, char **text)
 {
 	const char *errhead = "CL_ParseAircraftItem: unexptected end of file (aircraft ";
 	aircraftItem_t *airItem;
@@ -1146,7 +1146,7 @@ static const value_t aircraft_vals[] = {
  * @sa CL_ParseClientData
  * @note parses the aircraft into our aircraft_sample array to use as reference
  */
-extern void CL_ParseAircraft (char *name, char **text)
+extern void CL_ParseAircraft (const char *name, char **text)
 {
 	const char *errhead = "CL_ParseAircraft: unexptected end of file (aircraft ";
 	aircraft_t *air_samp;

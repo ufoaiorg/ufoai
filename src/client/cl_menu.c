@@ -3598,7 +3598,7 @@ qboolean MN_ParseMenuBody (menu_t * menu, char **text)
 /**
  * @brief parses the models.ufo and all files where menu_models are defined
  */
-void MN_ParseMenuModel (char *name, char **text)
+void MN_ParseMenuModel (const char *name, char **text)
 {
 	menuModel_t *menuModel;
 	char *token;
@@ -3675,7 +3675,7 @@ void MN_ParseMenuModel (char *name, char **text)
 /**
  * @brief
  */
-void MN_ParseMenu (char *name, char **text)
+void MN_ParseMenu (const char *name, char **text)
 {
 	menu_t *menu;
 	menuNode_t *node;
@@ -4001,7 +4001,7 @@ void CL_GetFontData (const char *name, int *size, char *path)
 /**
  * @brief
  */
-void CL_ParseFont (char *name, char **text)
+void CL_ParseFont (const char *name, char **text)
 {
 	font_t *font;
 	const char *errhead = "CL_ParseFont: unexpected end of file (font";
@@ -4099,7 +4099,7 @@ static const value_t tutValues[] = {
 /**
  * @brief
  */
-extern void MN_ParseTutorials (char *title, char **text)
+extern void MN_ParseTutorials (const char *name, char **text)
 {
 	tutorial_t *t = NULL;
 	const char *errhead = "MN_ParseTutorials: unexptected end of file (tutorial ";
@@ -4110,13 +4110,13 @@ extern void MN_ParseTutorials (char *title, char **text)
 	token = COM_Parse(text);
 
 	if (!*text || *token != '{') {
-		Com_Printf("MN_ParseTutorials: tutorial \"%s\" without body ignored\n", title);
+		Com_Printf("MN_ParseTutorials: tutorial \"%s\" without body ignored\n", name);
 		return;
 	}
 
 	/* parse tutorials */
 	if (numTutorials >= MAX_TUTORIALS) {
-		Com_Printf("Too many tutorials, '%s' ignored.\n", title);
+		Com_Printf("Too many tutorials, '%s' ignored.\n", name);
 		numTutorials = MAX_TUTORIALS;
 		return;
 	}
@@ -4125,7 +4125,7 @@ extern void MN_ParseTutorials (char *title, char **text)
 	memset(t, 0, sizeof(tutorial_t));
 	do {
 		/* get the name type */
-		token = COM_EParse(text, errhead, title);
+		token = COM_EParse(text, errhead, name);
 		if (!*text)
 			break;
 		if (*token == '}')
@@ -4133,13 +4133,13 @@ extern void MN_ParseTutorials (char *title, char **text)
 		for (v = tutValues; v->string; v++)
 			if (!Q_strncmp(token, v->string, sizeof(v->string))) {
 				/* found a definition */
-				token = COM_EParse(text, errhead, title);
+				token = COM_EParse(text, errhead, name);
 				if (!*text)
 					return;
 				Com_ParseValue(t, token, v->type, v->ofs);
 				break;
 			}
 		if (!v->string)
-			Com_Printf("MN_ParseTutorials: unknown token \"%s\" ignored (tutorial %s)\n", token, title);
+			Com_Printf("MN_ParseTutorials: unknown token \"%s\" ignored (tutorial %s)\n", token, name);
 	} while (*text);
 }

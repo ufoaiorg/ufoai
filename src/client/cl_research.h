@@ -169,12 +169,12 @@ void RS_ResetResearch(void);
 void RS_ResetHash(void);
 void CL_CheckResearchStatus(void);
 void RS_UpdateData(void);
-void RS_ParseTechnologies(char *title, char **text);
-qboolean RS_ItemIsResearched(char *id_provided);
+void RS_ParseTechnologies(const char *name, char **text);
+qboolean RS_ItemIsResearched(const char *id_provided);
 qboolean RS_TechIsResearched(int tech_idx);
-qboolean RS_TechIsResearchable(technology_t * tech);
+qboolean RS_TechIsResearchable(technology_t *tech);
 qboolean RS_IsResearched_idx(int idx);
-qboolean RS_IsResearched_ptr(technology_t * tech);
+qboolean RS_IsResearched_ptr(technology_t *tech);
 int RS_Collected_(technology_t * tech);
 void RS_CheckAllCollected(void);
 

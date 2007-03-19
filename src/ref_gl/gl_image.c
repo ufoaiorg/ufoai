@@ -326,7 +326,7 @@ extern void GL_ImageList_f (void)
 
 		ri.Con_Printf(PRINT_ALL, " %3i %3i %s: %s - shader: %s\n",
 				image->upload_width, image->upload_height, palstrings[image->paletted], image->name,
-				(image->shader ? image->shader->title : "NONE"));
+				(image->shader ? image->shader->name : "NONE"));
 	}
 	ri.Con_Printf(PRINT_ALL, "Total textures: %i (max textures: %i)\n", numgltextures, MAX_GLTEXTURES);
 	ri.Con_Printf(PRINT_ALL, "Total texel count (not counting mipmaps): %i\n", texels);
@@ -1835,7 +1835,7 @@ static qboolean GL_Upload32 (unsigned *data, int width, int height, qboolean mip
 
 	/* emboss filter */
 	if (gl_imagefilter->value && image && image->shader) {
-		Com_DPrintf("Using image filter %s\n", image->shader->title);
+		Com_DPrintf("Using image filter %s\n", image->shader->name);
 		if (image->shader->emboss)
 			R_FilterTexture(EMBOSS_FILTER, data, width, height, 1, 128, qtrue, image->shader->glMode);
 		if (image->shader->emboss2)
