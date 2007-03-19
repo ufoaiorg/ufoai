@@ -306,6 +306,35 @@ tech rs_alien_oddbehaviour
 	time		1500
 }
 
+tech rs_alien_origins
+{
+	type		tech
+	name		"_Alien Origins"
+	up_chapter	threat
+	description	"_alien_origins_txt"
+	pre_description	"_alien_origins_pre_txt"
+
+	mail_pre
+	{
+		from	"_mail_from_col_falkland"
+		to	"_mail_to_base_commander"
+		subject	"_Alien Origins"
+	}
+
+	mail
+	{
+		from	"_mail_from_col_falkland"
+		to	"_mail_to_base_commander"
+		subject	"_Alien Origins"
+	}
+
+	require_AND
+	{
+		tech nothing
+	}
+	time		2700
+}
+
 //=================================
 // weapons and items
 //=================================
