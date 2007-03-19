@@ -1196,14 +1196,14 @@ void CL_ActorUpdateCVars (void)
 			/* or the movelength is 255 - not reachable e.g. */
 			if ((mouseSpace != MS_WORLD && cl.cmode < M_PEND_MOVE) || actorMoveLength == 0xFF) {
 				actorMoveLength = 0xFF;
-				Com_sprintf(infoText, sizeof(infoText), _("Armor  %i\tMorale  %i\n"), selActor->AP, selActor->morale);
+				Com_sprintf(infoText, sizeof(infoText), _("Armour  %i\tMorale  %i\n"), selActor->AP, selActor->morale);
 				menuText[TEXT_MOUSECURSOR_RIGHT] = NULL;
 			}
 			if ( cl.cmode != cl.oldcmode || refresh || lastHUDActor != selActor
 						|| lastMoveLength != actorMoveLength || lastTU != selActor->TU ) {
 				if (actorMoveLength != 0xFF) {
 					CL_RefreshWeaponButtons(selActor->TU - actorMoveLength);
-					Com_sprintf(infoText, sizeof(infoText), _("Armor  %i\tMorale  %i\nMove %i (%i TU left)\n"), selActor->AP, selActor->morale, actorMoveLength, selActor->TU - actorMoveLength);
+					Com_sprintf(infoText, sizeof(infoText), _("Armour  %i\tMorale  %i\nMove %i (%i TU left)\n"), selActor->AP, selActor->morale, actorMoveLength, selActor->TU - actorMoveLength);
 					if ( actorMoveLength <= selActor->TU )
 						Com_sprintf(mouseText, sizeof(mouseText), "%i (%i)\n", actorMoveLength, selActor->TU);
 					else

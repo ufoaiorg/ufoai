@@ -897,7 +897,7 @@ void G_InventoryToFloor (edict_t * ent)
 		/* skip floor - we want to drop to floor */
 		if (k == gi.csi->idFloor)
 			continue;
-		/* skip csi->idArmor, we will collect armours using idArmour container,
+		/* skip csi->idArmor, we will collect armours using idArmor container,
 		   not idFloor */
 		if (k == gi.csi->idArmor) {
 			if (ent->i.c[gi.csi->idArmor])

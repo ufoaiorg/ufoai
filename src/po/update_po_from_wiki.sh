@@ -14,7 +14,8 @@
 
 language=$1
 url="http://ufo.myexp.de/"
-wiki_url="wiki/index.php/"
+wiki_url="wiki/index.php/List_of_msgid/"
+chapters="Research Armour Equipment Buildings Aircraft Aircraft_Equipment Aliens Campaigns Story"
 index="List_of_msgid"
 input_file=$language".po"
 output_file=updated_${language}.po
@@ -383,12 +384,23 @@ printf "__________________________________________\n\n" >> $log_file
 
 
 # Generation of a file 'Language_List' which contains the available languages (and their position) for each array of the wiki index.
-wget -O ${index} "${url}${wiki_url}${index}"
-if [ $? -ne 0 ]
+for i in `echo $chapters`; do 
+	wget -O ${i} "${url}${wiki_url}${i}";
+	if [ $? -ne 0 ]
+	then
+		echo "Fatal error whith wget" | tee -a $log_file
+		exit
+	fi;
+done
+if [ -f $index ]
 then
-	echo "Fatal error whith wget" | tee -a $log_file
-	exit
+	rm ${index}
+	touch ${index}
 fi
+
+for i in `echo $chapters`; do
+	cat ${i} >> ${index};
+done
 
 $awk_soft ' BEGIN {FS="</th><th>"}
 	$0 ~ /^<th> msgid <\/th><th> status <\/th><th> en / {
