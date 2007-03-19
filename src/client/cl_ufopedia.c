@@ -55,13 +55,15 @@ enum {
 static int upDisplay = UFOPEDIA_CHAPTERS;
 
 /**
- * @brief Checks If a technology/up-entry will be displayed in the ufopedia.
+ * @brief Checks If a technology/up-entry will be displayed in the ufopedia (list).
  * @note This does not check for different display modes (only pre-research text, what stats, etc...).
  * @return qtrue if the tech gets displayed at all, otherwise qfalse.
  */
 static qboolean UP_TechGetsDisplayed (technology_t *tech)
 {
-	return RS_IsResearched_ptr(tech) || RS_Collected_(tech);
+	return RS_IsResearched_ptr(tech)	/* Is already researched OR ... */
+	|| RS_Collected_(tech)	/* ... has collected items OR ... */
+	|| ((tech->statusResearchable) && (*tech->pre_description));
 }
 
 /**
@@ -498,7 +500,8 @@ extern void UP_Article (technology_t* tech)
 				break;
 			}
 		}
-	} else if (RS_Collected_(tech)) {
+	} else if (RS_Collected_(tech) || ((tech->statusResearchable) && (*tech->pre_description))) {
+		/* This tech has something collected or has a research proposal. (i.e. pre-research text) */
 		day = tech->preResearchedDateDay;
 		month = tech->preResearchedDateMonth;
 		year = tech->preResearchedDateYear;

@@ -914,7 +914,12 @@ static void RS_ShowPedia_f (void)
 
 	/* get the currently selected research-item */
 	tech = researchList[researchListPos];
-	UP_OpenCopyWith(tech->id);
+	
+	if (*tech->pre_description) {
+		UP_OpenCopyWith(tech->id);
+	} else {
+		MN_Popup(_("Notice"), _("No research proposal available for this project."));
+	}
 }
 
 /**
