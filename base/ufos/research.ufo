@@ -3076,13 +3076,13 @@ tech rs_craft_el_fuelpod
 // Alien Technologies retrieved from crafts
 //========================
 
-tech rs_alienmaterials
+tech rs_alien_materials
 {
 	type		tech
 	up_chapter	equipment
 	name		"_Alien Materials"
-	description	"_alienmaterials_txt"
-	pre_description	"_alienmaterials_pre_txt"
+	description	"_alien_materials_txt"
+	pre_description	"_alien_materials_pre_txt"
 
 	require_AND
 	{
