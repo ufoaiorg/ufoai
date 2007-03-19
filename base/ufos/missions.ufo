@@ -563,7 +563,7 @@ mission lake
 	type		"_Terror Attack"
 	text		"_Protect inhabitants"
 	map		lake03
-	music		mission2
+	music		AlexForest
 	pos		"-77 67"
 	aliens		6
 	alienteam	alien
