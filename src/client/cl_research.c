@@ -695,7 +695,16 @@ void RS_AssignScientist (technology_t* tech)
 			/* Assign the tech to a lab&base. */
 			tech->scientists++;
 			tech->base_idx = building->base_idx;
+
+			/* Assign the sci to the lab and set number of used lab-space. */
 			employee->buildingID = building->idx;
+			base->usedLab++;
+
+#if DEBUG
+			if (baseCurrent->usedLab > B_GetAvailableLabSpace(baseCurrent))
+				Com_DPrintf("RS_AssignScientist: more lab-space used (%i) than available (%i) - please investigate.\n", baseCurrent->usedLab, B_GetAvailableLabSpace(baseCurrent));
+#endif
+			
 			/* TODO: use
 			E_AssignEmployeeToBuilding(employee, building);
 			instead. */
@@ -751,12 +760,17 @@ static void RS_RemoveScientist (technology_t* tech)
 	if (tech->scientists > 0) {
 		employee = E_GetAssignedEmployee(&gd.bases[tech->base_idx], EMPL_SCIENTIST);
 		if (employee) {
-			employee->buildingID = -1; /* See also E_RemoveEmployeeFromBuilding */
+			/* Remove the sci from the tech. */
 			tech->scientists--;
+
+			/* Remove the sci from the lab and set number of used lab-space. */
+			employee->buildingID = -1; /* See also E_RemoveEmployeeFromBuilding */
+			gd.bases[tech->base_idx].usedLab--;
 		}
 	}
 
 	if (tech->scientists == 0) {
+		/* Remove the tech rfomt he base if no scis are left to research it. */
 		tech->base_idx = -1;
 	}
 }
@@ -838,9 +852,14 @@ static void RS_ResearchStart_f (void)
 
 				/* Add as many scientists as possible to this tech. */
 				do {
-					employee = E_GetUnassignedEmployee(baseCurrent, EMPL_SCIENTIST);
-					if (employee)
-						RS_AssignScientist(tech);
+					if (baseCurrent->usedLab < B_GetAvailableLabSpace(baseCurrent)) {
+						employee = E_GetUnassignedEmployee(baseCurrent, EMPL_SCIENTIST);
+						if (employee)
+							RS_AssignScientist(tech);
+					} else {
+						/* No free lab-space left. */
+						break;
+					}
 				} while (employee);
 			}
 			tech->statusResearch = RS_RUNNING;
@@ -913,8 +932,8 @@ static void RS_ShowPedia_f (void)
 		return;
 
 	/* get the currently selected research-item */
+
 	tech = researchList[researchListPos];
-	
 	if (*tech->pre_description) {
 		UP_OpenCopyWith(tech->id);
 	} else {

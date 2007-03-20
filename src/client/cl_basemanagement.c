@@ -89,6 +89,8 @@ extern qboolean B_CheckBuildingTypeStatus (const base_t* const base, buildingTyp
 
 /**
  * @brief Sums up max_employees quarter values
+ * @param[in] base The base to count the free space in.
+ * @return int The total number of space in quarters.
  */
 extern int B_GetAvailableQuarterSpace (const base_t* const base)
 {
@@ -101,6 +103,26 @@ extern int B_GetAvailableQuarterSpace (const base_t* const base)
 				cnt += gd.buildings[base->idx][i].maxEmployees;
 		}
 	Com_DPrintf("B_GetAvailableQuarterSpace: %i\n", cnt);
+
+	return cnt;
+}
+
+/**
+ * @brief Sums up max_employees laboratories values
+ * @param[in] base The base to count the free space in.
+ * @return int The total number of  in the labs.
+ */
+extern int B_GetAvailableLabSpace (const base_t* const base)
+{
+	int cnt = 0, i;
+
+	if (base->hasLab)
+		for (i = 0; i < gd.numBuildings[base->idx]; i++) {
+			if (gd.buildings[base->idx][i].buildingType == B_LAB
+			&& gd.buildings[base->idx][i].buildingStatus != B_STATUS_NOT_SET)
+				cnt += gd.buildings[base->idx][i].maxEmployees;
+		}
+	Com_DPrintf("B_GetAvailableLabSpace: %i\n", cnt);
 
 	return cnt;
 }
