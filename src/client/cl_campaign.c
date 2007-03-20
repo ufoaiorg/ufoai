@@ -1563,6 +1563,7 @@ static void CL_MessageSave (sizebuf_t * sb, message_t * message)
 /**
  * @brief
  * @sa CL_GameLoad
+ * @sa HOS_GameSave
  */
 static qboolean CL_GameSave (const char *filename, const char *comment)
 {
@@ -1585,7 +1586,7 @@ static qboolean CL_GameSave (const char *filename, const char *comment)
 		return qfalse;
 	}
 
-	Com_sprintf(savegame, MAX_OSPATH, "%s/save/%s.sav", FS_Gamedir(), filename);
+	Com_sprintf(savegame, sizeof(savegame), "%s/save/%s.sav", FS_Gamedir(), filename);
 
 	buf = (byte *) malloc(sizeof(byte) * MAX_GAMESAVESIZE);
 	if (!buf) {
@@ -1697,6 +1698,8 @@ static qboolean CL_GameSave (const char *filename, const char *comment)
 	/* save all the stats */
 	SZ_Write(&sb, &stats, sizeof(stats_t));
 
+	HOS_GameSave(&sb);
+
 	/* compress data using zlib before writing */
 	bufLen = (uLongf) (24 + 1.02 * sb.cursize);
 	fbuf = (byte *) malloc(sizeof(byte) * (bufLen + MAX_VAR));
@@ -1738,7 +1741,7 @@ static qboolean CL_GameSave (const char *filename, const char *comment)
 static void CL_GameSave_f (void)
 {
 	char comment[MAX_COMMENTLENGTH] = "";
-	char *arg;
+	char *arg = NULL;
 	qboolean result;
 
 	/* get argument */
@@ -1755,12 +1758,13 @@ static void CL_GameSave_f (void)
 	/* get comment */
 	if (Cmd_Argc() > 2) {
 		arg = Cmd_Argv(2);
+		assert(arg);
 		/* comment from slot cvar (mn_slotX) */
 		if (arg[0] == '*')
-			Q_strncpyz(comment, Cvar_VariableString(arg + 1), MAX_COMMENTLENGTH);
+			Q_strncpyz(comment, Cvar_VariableString(arg + 1), sizeof(comment));
 		/* comment as parameter */
 		else
-			Q_strncpyz(comment, arg, MAX_COMMENTLENGTH);
+			Q_strncpyz(comment, arg, sizeof(comment));
 	}
 
 	/* save the game */
@@ -2134,6 +2138,9 @@ static int CL_GameLoad (const char *filename)
 	/* load the stats */
 	memcpy(&stats, sb.data + sb.readcount, sizeof(stats_t));
 	sb.readcount += sizeof(stats_t);
+
+	if (version >= 6)
+		HOS_GameLoad(&sb);
 
 	/* ensure research correctly initialised */
 	RS_UpdateData();

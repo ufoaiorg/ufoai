@@ -592,6 +592,7 @@ extern employee_t* E_CreateEmployee (employeeType_t type)
 	employee->hired = qfalse;
 	employee->baseIDHired = -1;
 	employee->buildingID = -1;
+	employee->type = type;
 
 	switch (type) {
 	case EMPL_SOLDIER:
