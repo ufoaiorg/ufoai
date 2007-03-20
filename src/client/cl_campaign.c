@@ -1748,7 +1748,7 @@ static qboolean CL_GameSave (const char *filename, const char *comment)
 static void CL_GameSave_f (void)
 {
 	char comment[MAX_COMMENTLENGTH] = "";
-	char *arg;
+	char *arg = NULL;
 	qboolean result;
 
 	/* get argument */
@@ -1765,12 +1765,13 @@ static void CL_GameSave_f (void)
 	/* get comment */
 	if (Cmd_Argc() > 2) {
 		arg = Cmd_Argv(2);
+		assert(arg);
 		/* comment from slot cvar (mn_slotX) */
 		if (arg[0] == '*')
-			Q_strncpyz(comment, Cvar_VariableString(arg + 1), MAX_COMMENTLENGTH);
+			Q_strncpyz(comment, Cvar_VariableString(arg + 1), sizeof(comment));
 		/* comment as parameter */
 		else
-			Q_strncpyz(comment, arg, MAX_COMMENTLENGTH);
+			Q_strncpyz(comment, arg, sizeof(comment));
 	}
 
 	/* save the game */
