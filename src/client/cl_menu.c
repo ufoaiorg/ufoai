@@ -810,7 +810,7 @@ static void MN_FindContainer (menuNode_t* const node)
  */
 static qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 {
-	int sx, sy, tx, ty;
+	int sx, sy, tx, ty, i;
 
 	/* don't hover nodes if we are executing an action on geoscape like rotating or moving */
 	if (mouseSpace >= MS_ROTATE && mouseSpace <= MS_SHIFT3DMAP)
@@ -899,6 +899,12 @@ static qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 
 	if (tx < 0 || ty < 0 || tx > sx || ty > sy)
 		return qfalse;
+
+	for (i = 0; i < node->excludeNum; i++) {
+		if (x >= node->exclude[i].pos[0] && x <= node->exclude[i].pos[0] + node->exclude[i].size[0]
+		 && y >= node->exclude[i].pos[1] && y <= node->exclude[i].pos[1] + node->exclude[i].size[1])
+			return qfalse;
+	}
 
 	/* on the node */
 	if (node->type == MN_TEXT) {
@@ -3415,6 +3421,36 @@ qboolean MN_ParseNodeBody (menuNode_t * node, char **text, char **token)
 		if (**token == '}') {
 			/* finished */
 			return qtrue;
+		} else if (!Q_strncmp(*token, "excluderect", 12)) {
+			/* get parameters */
+			*token = COM_EParse(text, errhead, node->name);
+			if (!*text)
+				return qfalse;
+			if (**token != '{') {
+				Com_Printf("MN_ParseNodeBody: node with bad excluderect ignored (node \"%s\")\n", node->name);
+				continue;
+			}
+
+			do {
+				*token = COM_EParse(text, errhead, node->name);
+				if (!*text)
+					return qfalse;
+				if (!Q_strcmp(*token, "pos")) {
+					*token = COM_EParse(text, errhead, node->name);
+					if (!*text)
+						return qfalse;
+					Com_ParseValue(&node->exclude[node->excludeNum], *token, V_POS, offsetof(excludeRect_t, pos));
+				} else if (!Q_strcmp(*token, "size")) {
+					*token = COM_EParse(text, errhead, node->name);
+					if (!*text)
+						return qfalse;
+					Com_ParseValue(&node->exclude[node->excludeNum], *token, V_POS, offsetof(excludeRect_t, size));
+				}
+			} while (**token != '}');
+			if (node->excludeNum < MAX_EXLUDERECTS - 1)
+				node->excludeNum++;
+			else
+				Com_Printf("MN_ParseNodeBody: exluderect limit exceeded (max: %i)\n", MAX_EXLUDERECTS);
 		} else {
 			/* unknown token, print message and continue */
 			Com_Printf("MN_ParseNodeBody: unknown token \"%s\" ignored (node \"%s\")\n", *token, node->name);
