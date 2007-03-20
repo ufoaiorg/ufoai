@@ -6,7 +6,7 @@ echo "pics and textures..."
 (find pics -type f -print; find textures -type f -print) | egrep -v '(\/\.svn\/)' | awk '/\.jpg$/||/\.tga$/||/\.pcx$/||/\.bmp$/||/\.png/ {print}' | xargs zip -u9@ 0pics.zip
 #zip -ru9 0pics.zip pics textures -i \*.jpg \*.tga \*.png \*.bmp \*.pcx
 echo "models..."
-find models -type f -print | egrep -v '(\/\.svn\/)' | egrep -v '(\/misc_source_files\/)' | awk '/\.md2$/||/\.jpg$/||/\.png$/||/\.tga$/||/\.anm$/||/\.txt$/||/\.tag/ {print}' | xargs zip -u9@ 0models.zip
+find models -type f -print | awk '{if ($0 !~ /\.svn/) {if ($0 !~ /\/misc_source_files\//) {print}}}' | awk '/\.md2$/||/\.jpg$/||/\.png$/||/\.tga$/||/\.anm$/||/\.txt$/||/\.tag/ {print}' | xargs zip -u9@ 0models.zip
 #zip -ru9 0models.zip models -i \*.md2 \*.jpg \*.tga \*.png \*.txt \*.anm \*.tag
 echo "sound and music..."
 (find music -type f -print; find sound -type f -print) | egrep -v '(\/\.svn\/)' | awk '/\.ogg$/||/\.txt$/||/\.wav/ {print}' | xargs zip -u9@ 0snd.zip

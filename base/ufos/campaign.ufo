@@ -37,7 +37,7 @@ stage intro
 		delay		"0 10 7"
 		frame		"0 15 0" // big missions, but less traffic
 		expire		"0 45 0" // three at geoscape, but lots of time to do them
-		missions	"bunker japan dam spedition stadium"
+		missions	"bunker japan dam spedition stadium industrial"
 		number		4 // no mission will get repeated
 		quota		4
 	}
