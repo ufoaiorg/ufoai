@@ -335,8 +335,9 @@ static int XLateKey (XKeyEvent *ev)
 	int key = 0;
 	char buf[64];
 	KeySym keysym;
+	int XLookupRet;
 
-	XLookupString(ev, buf, sizeof buf, &keysym, 0);
+	XLookupRet = XLookupString(ev, buf, sizeof(buf), &keysym, 0);
 
 	switch(keysym) {
 	case XK_KP_Page_Up:
@@ -485,12 +486,15 @@ static int XLateKey (XKeyEvent *ev)
 		break;
 
 	default:
-		key = *(unsigned char*)buf;
-		if (key >= 'A' && key <= 'Z')
-			key = key - 'A' + 'a';
-		if (key >= 1 && key <= 26) /* ctrl+alpha */
-			key = key + 'a' - 1;
-
+		if (XLookupRet == 0) {
+			ri.Con_Printf(PRINT_ALL, "Warning: XLookupString failed on KeySym %d\n", (int)keysym);
+		} else {
+			key = *(unsigned char*)buf;
+			if (key >= 'A' && key <= 'Z')
+				key = key - 'A' + 'a';
+			if (key >= 1 && key <= 26) /* ctrl+alpha */
+				key = key + 'a' - 1;
+		}
 		break;
 	}
 

@@ -1593,7 +1593,7 @@ static qboolean CL_GameSave (const char *filename, const char *comment)
 		return qfalse;
 	}
 
-	Com_sprintf(savegame, MAX_OSPATH, "%s/save/%s.sav", FS_Gamedir(), filename);
+	Com_sprintf(savegame, sizeof(savegame), "%s/save/%s.sav", FS_Gamedir(), filename);
 
 	buf = (byte *) malloc(sizeof(byte) * MAX_GAMESAVESIZE);
 	if (!buf) {
