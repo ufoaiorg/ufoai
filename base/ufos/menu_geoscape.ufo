@@ -31,6 +31,12 @@ menu map
 		size	"1024 672"
 		click mclick wheel
 		rclick { cmd "mn_mapaction_reset;" }
+		excluderect
+		{
+			// mission description
+			pos		"0 608"
+			size	"384 80"
+		}
 	}
 
 	text messagesystem
