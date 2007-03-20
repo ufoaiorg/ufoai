@@ -385,7 +385,7 @@ static void CL_ChangeSkinOnBoard_f (void)
 		newSkin = Cvar_VariableInteger("mn_skin");
 		if (newSkin >= NUM_TEAMSKINS || newSkin < 0)
 			newSkin = 0;
-		for (i = 0; p = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++) {
+		for (i = 0, p = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++) {
 			if (CL_IsInAircraftTeam(aircraft, i)) {
 				baseCurrent->curTeam[p]->skin = newSkin;
 				p++;
