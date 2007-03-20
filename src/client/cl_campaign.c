@@ -2806,7 +2806,7 @@ extern void CL_CollectingItems (int won)
 	/* Print all of collected items. */
 	for (i = 0; i < aircraft->itemtypes; i++) {
 		if (cargo[i].amount > 0)
-			Com_Printf("Collected items: idx: %i name: %s amount: %i\n", cargo[i].idx, csi.ods[cargo[i].idx].name, cargo[i].amount);
+			Com_DPrintf("Collected items: idx: %i name: %s amount: %i\n", cargo[i].idx, csi.ods[cargo[i].idx].name, cargo[i].amount);
 	}
 #endif
 }
