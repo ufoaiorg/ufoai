@@ -775,6 +775,36 @@ static void RS_RemoveScientist (technology_t* tech)
 	}
 }
 
+
+/**
+ * @brief Assign as many scientists to the research project as possible.
+ * @param[in] base The base the tech is researched in.
+ * @param[in] tech The technology you want to max out.
+ * @sa RS_AssignScientist
+ */
+static void RS_MaxOutResearch (base_t *base, technology_t* tech)
+{
+	employee_t *employee = NULL;
+
+	if (!base || !tech)
+		return;
+
+	if (tech->scientists <= 0)
+		tech->scientists = 0; /* Just in case it's negative. */
+	
+	/* Add as many scientists as possible to this tech. */
+	do {
+		if (base->usedLab < B_GetAvailableLabSpace(base)) {
+			employee = E_GetUnassignedEmployee(base, EMPL_SCIENTIST);
+			if (employee)
+				RS_AssignScientist(tech);
+		} else {
+			/* No free lab-space left. */
+			break;
+		}
+	} while (employee);
+}
+
 /**
  * @brief Script function to remove a scientist from the technology entry in the research-list.
  * @sa RS_AssignScientist_f
@@ -806,7 +836,6 @@ static void RS_RemoveScientist_f (void)
 static void RS_ResearchStart_f (void)
 {
 	technology_t *tech = NULL;
-	employee_t *employee = NULL;
 
 	/* We are not in base view. */
 	if (!baseCurrent)
@@ -837,32 +866,30 @@ static void RS_ResearchStart_f (void)
 	if (tech->statusResearchable) {
 		switch (tech->statusResearch) {
 		case RS_RUNNING:
-			MN_Popup(_("Notice"), _("This item is already under research by your scientists."));
-			break;
-		case RS_FINISH:
-			MN_Popup(_("Notice"), _("The research on this item is complete."));
+			if (tech->base_idx == baseCurrent->idx) {
+				/* Research already running in current base ... try to add max amount of scis. */
+				RS_MaxOutResearch(baseCurrent, tech);
+			}else {
+				/* Research already running in another base. */
+				MN_Popup(_("Notice"), _("This item is currently under research in another base."));
+			}
 			break;
 		case RS_PAUSED:
 		case RS_NONE:
 			if (tech->statusResearch == RS_PAUSED) {
-				MN_Popup(_("Notice"), _("The research on this item continues."));
+				/* MN_Popup(_("Notice"), _("The research on this item continues.")); Removed because it isn't really needed.*/
+				Com_Printf("RS_ResearchStart_f: The research on this item continues.\n");
 			}
-			if (tech->scientists <= 0) {
-				tech->scientists = 0; /* Just in case it's negative. */
+			/* Add as many scientists as possible to this tech. */
+			RS_MaxOutResearch(baseCurrent, tech);
 
-				/* Add as many scientists as possible to this tech. */
-				do {
-					if (baseCurrent->usedLab < B_GetAvailableLabSpace(baseCurrent)) {
-						employee = E_GetUnassignedEmployee(baseCurrent, EMPL_SCIENTIST);
-						if (employee)
-							RS_AssignScientist(tech);
-					} else {
-						/* No free lab-space left. */
-						break;
-					}
-				} while (employee);
+			if (tech->scientists > 0) {
+				tech->statusResearch = RS_RUNNING;
 			}
-			tech->statusResearch = RS_RUNNING;
+			break;
+		case RS_FINISH:
+			/* Should never be executed. */
+			MN_Popup(_("Notice"), _("The research on this item is complete."));
 			break;
 		default:
 			break;
