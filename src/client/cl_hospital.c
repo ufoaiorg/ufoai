@@ -91,11 +91,18 @@ void HOS_AddToEmployeeList (employee_t* employee)
  * @sa HOS_HealEmployee
  * @return true if soldiers becomes healed - false otherwise
  */
-extern qboolean HOS_HealCharacter (character_t* chr)
+extern qboolean HOS_HealCharacter (character_t* chr, qboolean hospital)
 {
+	int healing = 1;
+
+	if (hospital)
+		healing = GET_HP_HEALING(chr->skills[ABILITY_POWER]);
+
 	assert(chr);
 	if (chr->HP < MAX_HP) {
-		chr->HP++;
+		chr->HP = min(chr->HP + healing, MAX_HP);
+		if (chr->HP == MAX_HP)
+			return qfalse;
 		return qtrue;
 	} else
 		return qfalse;
@@ -104,18 +111,24 @@ extern qboolean HOS_HealCharacter (character_t* chr)
 /**
  * @brief Checks what the status of a soldier is
  * @sa CL_CampaignRun
+ * @note called every day
  */
 extern void HOS_HospitalRun (void)
 {
+	int type, i;
 	employee_t** employee;
 
 	employee = employeesInHospitalList;
 	/* loop until null is reached (end of list) */
 	while (*employee){
-		if (!HOS_HealCharacter(&(*employee)->chr))
+		if (!HOS_HealCharacter(&(*employee)->chr, qtrue))
 			HOS_CheckRemovalFromEmployeeList(*employee);
 		employee++;
 	}
+
+	for (type = 0; type < MAX_EMPL; type++)
+		for (i = 0; i < gd.numEmployees[type]; i++)
+			HOS_HealCharacter(&(gd.employees[type][i].chr), qfalse);
 }
 
 /**
@@ -127,7 +140,7 @@ extern void HOS_HospitalRun (void)
 extern qboolean HOS_HealEmployee (employee_t* employee)
 {
 	assert(employee);
-	return HOS_HealCharacter(&employee->chr);
+	return HOS_HealCharacter(&employee->chr, qtrue);
 }
 
 /**
