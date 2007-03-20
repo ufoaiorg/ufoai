@@ -128,8 +128,8 @@ item fraggrenade
 			projtl	fraggren
 			impact	frag_explosion
 			hitbody frag_explosion
-			impsnd	weapons/frag_grenade.wav
-			bodysnd	weapons/frag_grenade.wav
+			impsnd	weapons/grenade.wav
+			bodysnd	weapons/grenade.wav
 			bncsnd	misc/klonk03.wav
 			gravity	true
 			delay	1
@@ -152,8 +152,8 @@ item fraggrenade
 			projtl	fraggren
 			impact	frag_explosion
 			hitbody frag_explosion
-			impsnd	weapons/frag_grenade.wav
-			bodysnd	weapons/frag_grenade.wav
+			impsnd	weapons/grenade.wav
+			bodysnd	weapons/grenade.wav
 			bncsnd	misc/klonk03.wav
 			gravity	true
 			rolled true
@@ -271,8 +271,8 @@ item smokegrenade
 			projtl	smokegren
 			impact	smoke_explosion
 			hitbody smoke_explosion
-			impsnd	weapons/smoke_grenade.wav
-			bodysnd	weapons/smoke_grenade.wav
+			impsnd	weapons/smokeexplosion.wav
+			bodysnd	weapons/smokeexplosion.wav
 			bncsnd	misc/klonk03.wav
 			gravity	true
 			delay	1
@@ -295,8 +295,8 @@ item smokegrenade
 			projtl	smokegren
 			impact	smoke_explosion
 			hitbody smoke_explosion
-			impsnd	weapons/smoke_grenade.wav
-			bodysnd	weapons/smoke_grenade.wav
+			impsnd	weapons/smokeexplosion.wav
+			bodysnd	weapons/smokeexplosion.wav
 			bncsnd	misc/klonk03.wav
 			gravity	true
 			rolled true
@@ -342,8 +342,8 @@ item stungrenade
 			projtl	stungren
 			impact	coronaImpact
 			hitbody	coronaImpact
-			impsnd	weapons/stun_grenade.wav
-			bodysnd	weapons/stun_grenade.wav
+			impsnd	weapons/smokeexplosion.wav
+			bodysnd	weapons/smokeexplosion.wav
 			bncsnd	misc/klonk03.wav
 			gravity	true
 			delay	1
@@ -366,8 +366,8 @@ item stungrenade
 			projtl	stungren
 			impact	coronaImpact
 			hitbody	coronaImpact
-			impsnd	weapons/stun_grenade.wav
-			bodysnd	weapons/stun_grenade.wav
+			impsnd	weapons/smokeexplosion.wav
+			bodysnd	weapons/smokeexplosion.wav
 			bncsnd	misc/klonk03.wav
 			gravity	true
 			rolled true
@@ -414,8 +414,8 @@ item incgrenade
 			projtl	incgren
 			impact	fire_explosion
 			hitbody fire_explosion
-			impsnd	weapons/incendiary_grenade.wav
-			bodysnd	weapons/incendiary_grenade.wav
+			impsnd	weapons/fireexplosion.wav
+			bodysnd	weapons/fireexplosion.wav
 			bncsnd	misc/klonk03.wav
 			gravity	true
 			delay	1
@@ -438,8 +438,8 @@ item incgrenade
 			projtl	incgren
 			impact	fire_explosion
 			hitbody fire_explosion
-			impsnd	weapons/incendiary_grenade.wav
-			bodysnd	weapons/incendiary_grenade.wav
+			impsnd	weapons/fireexplosion.wav
+			bodysnd	weapons/fireexplosion.wav
 			bncsnd	misc/klonk03.wav
 			gravity	true
 			rolled true
