@@ -1155,6 +1155,7 @@ typedef struct csi_s {
 
 #define MAX_SKILL           100
 
+#define GET_HP_HEALING( ab ) (1 + (ab) * 10/MAX_SKILL)
 #define GET_HP( ab )        (80 + (ab) * 90/MAX_SKILL)
 #define GET_ACC( ab, sk )   ((1 - (float)(ab)/MAX_SKILL))
 #define GET_TU( ab )        (27 + (ab) * 20/MAX_SKILL)

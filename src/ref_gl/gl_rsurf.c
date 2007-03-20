@@ -449,7 +449,6 @@ void R_DrawAlphaSurfaces (void)
 #ifdef HAVE_SHADERS
 		if (s->texinfo->image->shader)
 			SH_UseShader(s->texinfo->image->shader, qfalse);
-		else
 #endif
 		GL_Bind(s->texinfo->image->texnum);
 		c_brush_polys++;

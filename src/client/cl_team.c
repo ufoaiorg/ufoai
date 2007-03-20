@@ -364,7 +364,7 @@ static void CL_ChangeSkin_f (void)
  */
 static void CL_ChangeSkinOnBoard_f (void)
 {
-	int i, sel, newSkin;
+	int i, sel, newSkin, p;
 	aircraft_t *aircraft = NULL;
 
 	if (!baseCurrent)
@@ -385,9 +385,11 @@ static void CL_ChangeSkinOnBoard_f (void)
 		newSkin = Cvar_VariableInteger("mn_skin");
 		if (newSkin >= NUM_TEAMSKINS || newSkin < 0)
 			newSkin = 0;
-		for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++) {
-			if (CL_IsInAircraftTeam(aircraft, i))
-				baseCurrent->curTeam[i]->skin = newSkin;
+		for (i = 0, p = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++) {
+			if (CL_IsInAircraftTeam(aircraft, i)) {
+				baseCurrent->curTeam[p]->skin = newSkin;
+				p++;
+			}
 		}
 	}
 }
@@ -1181,6 +1183,7 @@ static void CL_AssignSoldier_f (void)
 
 /**
  * @brief Saves a team
+ * @sa CL_SendTeamInfo
  */
 static qboolean CL_SaveTeam (const char *filename)
 {
@@ -1429,6 +1432,7 @@ extern void CL_ResetTeams (void)
  * @brief Stores the wholeTeam info to buffer (which might be a network buffer, too)
  *
  * Called by CL_SaveTeam to store the team info
+ * @sa CL_SendCurTeamInfo
  */
 static void CL_SendTeamInfo (sizebuf_t * buf, int baseID, int num)
 {
@@ -1480,9 +1484,9 @@ static void CL_SendTeamInfo (sizebuf_t * buf, int baseID, int num)
 }
 
 /**
- * @brief Stores the curTteam info to buffer (which might be a network buffer, too)
+ * @brief Stores the curTeam info to buffer (which might be a network buffer, too)
  * @sa G_ClientTeamInfo
- *
+ * @sa CL_SendTeamInfo
  * @note Called in cl_main.c CL_Precache_f to send the team info to server
  */
 extern void CL_SendCurTeamInfo (sizebuf_t * buf, character_t ** team, int num)
