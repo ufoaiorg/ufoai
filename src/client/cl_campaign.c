@@ -1570,6 +1570,7 @@ static void CL_MessageSave (sizebuf_t * sb, message_t * message)
 /**
  * @brief
  * @sa CL_GameLoad
+ * @sa HOS_GameSave
  */
 static qboolean CL_GameSave (const char *filename, const char *comment)
 {
@@ -1703,6 +1704,8 @@ static qboolean CL_GameSave (const char *filename, const char *comment)
 
 	/* save all the stats */
 	SZ_Write(&sb, &stats, sizeof(stats_t));
+
+	HOS_GameSave(&sb);
 
 	/* compress data using zlib before writing */
 	bufLen = (uLongf) (24 + 1.02 * sb.cursize);
@@ -2141,6 +2144,8 @@ static int CL_GameLoad (const char *filename)
 	/* load the stats */
 	memcpy(&stats, sb.data + sb.readcount, sizeof(stats_t));
 	sb.readcount += sizeof(stats_t);
+
+	HOS_GameLoad(&sb);
 
 	/* ensure research correctly initialised */
 	RS_UpdateData();

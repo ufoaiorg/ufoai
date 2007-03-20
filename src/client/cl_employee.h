@@ -52,6 +52,7 @@ typedef struct employee_s {
 
 	character_t chr;			/**< Soldier stats (scis/workers/etc... as well ... e.g. if the base is attacked) */
 	inventory_t inv;			/**< employee inventory */
+	employeeType_t type;		/**< back link to employee type in gd.employees */
 } employee_t;
 
 void E_ResetEmployees(void);

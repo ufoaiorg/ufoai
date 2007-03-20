@@ -346,3 +346,41 @@ extern void HOS_Reset (void)
 	memset(employeesInHospitalList, 0, sizeof(employeesInHospitalList));
 	mn_hosp_heal_limit = Cvar_Get("mn_hosp_heal_limit", "0", 0, "Current hospital capacity (for current base)");
 }
+
+/**
+ * @brief Saving function for hospital related data
+ * @sa HOS_GameLoad
+ * @sa CL_GameSave
+ */
+extern void HOS_GameSave (sizebuf_t *sb)
+{
+	int i;
+
+	/* how many employees */
+	MSG_WriteByte(sb, employeesInHospitalListCount);
+
+	/* now store the employee id for each patient */
+	for (i = 0; i < employeesInHospitalListCount; i++) {
+		MSG_WriteByte(sb, employeesInHospitalList[i]->baseIDHired);
+		MSG_WriteByte(sb, employeesInHospitalList[i]->type);
+		MSG_WriteShort(sb, employeesInHospitalList[i]->idx);
+	}
+}
+
+/**
+ * @brief Saving function for hospital related data
+ * @sa HOS_GameSave
+ * @sa CL_GameLoad
+ */
+extern void HOS_GameLoad (sizebuf_t *sb)
+{
+	int i, baseID, type;
+
+	employeesInHospitalListCount = MSG_ReadByte(sb);
+
+	for (i = 0; i < employeesInHospitalListCount; i++) {
+		baseID = MSG_ReadByte(sb);
+		type = MSG_ReadByte(sb);
+		employeesInHospitalList[i] = &(gd.employees[type][MSG_ReadShort(sb)]);
+	}
+}
