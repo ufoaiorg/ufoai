@@ -1731,7 +1731,7 @@ void CL_ActorShoot (le_t * le, pos3_t at)
 	if (!CL_CheckAction())
 		return;
 
-	Com_Printf("CL_ActorShoot: cl.firemode %i.\n",  cl.cfiremode);
+	Com_DPrintf("CL_ActorShoot: cl.firemode %i.\n",  cl.cfiremode);
 
 	/* TODO: Is there a better way to do this?
 	 * This type value will travel until it is checked in at least g_combat.c:G_GetShotFromType.

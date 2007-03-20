@@ -2004,14 +2004,13 @@ void G_ClientTeamInfo (player_t * player)
 			ent->head = gi.modelindex(Com_CharGetHead(&ent->chr));
 			ent->skin = ent->chr.skin;
 
-			/* set initial vital statistics
+			/* set initial vital statistics */
 			ent->HP = ent->chr.HP;
-			ent->morale = ent->chr.morale; */
-			/* for now, heal fully upon entering mission */
-			ent->HP = GET_HP(ent->chr.skills[ABILITY_POWER]);
+			ent->morale = ent->chr.morale;
+
+			/* FIXME: for now, heal fully upon entering mission */
 			ent->morale = GET_MORALE(ent->chr.skills[ABILITY_MIND]);
-			ent->AP = ent->i.c[gi.csi->idArmor] ? 100 : 0;
-			ent->STUN = 0;
+
 			ent->reaction_minhit = 30; /* TODO: allow later changes from GUI */
 		} else {
 			/* just do nothing with the info */

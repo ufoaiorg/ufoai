@@ -1181,6 +1181,7 @@ static void CL_AssignSoldier_f (void)
 
 /**
  * @brief Saves a team
+ * @sa CL_SendTeamInfo
  */
 static qboolean CL_SaveTeam (const char *filename)
 {
@@ -1429,6 +1430,7 @@ extern void CL_ResetTeams (void)
  * @brief Stores the wholeTeam info to buffer (which might be a network buffer, too)
  *
  * Called by CL_SaveTeam to store the team info
+ * @sa CL_SendCurTeamInfo
  */
 static void CL_SendTeamInfo (sizebuf_t * buf, int baseID, int num)
 {
@@ -1480,9 +1482,9 @@ static void CL_SendTeamInfo (sizebuf_t * buf, int baseID, int num)
 }
 
 /**
- * @brief Stores the curTteam info to buffer (which might be a network buffer, too)
+ * @brief Stores the curTeam info to buffer (which might be a network buffer, too)
  * @sa G_ClientTeamInfo
- *
+ * @sa CL_SendTeamInfo
  * @note Called in cl_main.c CL_Precache_f to send the team info to server
  */
 extern void CL_SendCurTeamInfo (sizebuf_t * buf, character_t ** team, int num)
