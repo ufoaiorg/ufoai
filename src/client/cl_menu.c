@@ -743,7 +743,7 @@ static void MN_Command_f (void)
 	name = Cmd_Argv(0);
 
 	/* first search all menus on the stack */
-	for (i = 0; i <= menuStackPos; i++)
+	for (i = 0; i < menuStackPos; i++)
 		for (node = menuStack[i]->firstNode; node; node = node->next)
 			if (node->type == MN_CONFUNC && !Q_strncmp(node->name, name, sizeof(node->name))) {
 				/* found the node */
