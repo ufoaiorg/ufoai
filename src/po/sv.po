@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-03-17 00:16+0100\n"
-"PO-Revision-Date: 2007-03-17 15:36+0100\n"
-"Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
+"POT-Creation-Date: 2007-03-20 09:19+0100\n"
+"PO-Revision-Date: 2007-03-20 11:06+0100\n"
+"Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -103,9 +103,9 @@ msgid "Saracen I"
 msgstr "Saracen I"
 
 #: ../base/ufos/aircraftmanagement.ufo:95
-#: ../base/ufos/research.ufo:2444
-#: ../base/ufos/research.ufo:2453
-#: ../base/ufos/research.ufo:2460
+#: ../base/ufos/research.ufo:2473
+#: ../base/ufos/research.ufo:2482
+#: ../base/ufos/research.ufo:2489
 msgid "UFO - Scout"
 msgstr "UFO - Spejare"
 
@@ -114,9 +114,9 @@ msgid "Scout U"
 msgstr "Spejare U"
 
 #: ../base/ufos/aircraftmanagement.ufo:114
-#: ../base/ufos/research.ufo:2485
-#: ../base/ufos/research.ufo:2494
-#: ../base/ufos/research.ufo:2501
+#: ../base/ufos/research.ufo:2514
+#: ../base/ufos/research.ufo:2523
+#: ../base/ufos/research.ufo:2530
 msgid "UFO - Fighter"
 msgstr "UFO - Stridsplan"
 
@@ -267,56 +267,56 @@ msgstr "Bas #7"
 msgid "Base #8"
 msgstr "Bas #8"
 
-#: ../base/ufos/campaign.ufo:144
+#: ../base/ufos/campaign.ufo:141
 msgid "Very Hard Campaign"
 msgstr "Mycket svår kampanj"
 
-#: ../base/ufos/campaign.ufo:145
+#: ../base/ufos/campaign.ufo:142
 msgid "txt_veryhard_campaign"
 msgstr "Mycket svår kampanj"
 
-#: ../base/ufos/campaign.ufo:165
+#: ../base/ufos/campaign.ufo:162
 msgid "Hard Campaign"
 msgstr "Svår kampanj"
 
-#: ../base/ufos/campaign.ufo:166
+#: ../base/ufos/campaign.ufo:163
 msgid "txt_hard_campaign"
 msgstr "Svår kampanj"
 
-#: ../base/ufos/campaign.ufo:195
+#: ../base/ufos/campaign.ufo:192
 msgid "Standard Campaign"
 msgstr "Medelsvår kampanj"
 
-#: ../base/ufos/campaign.ufo:196
-#: ../base/ufos/campaign.ufo:341
+#: ../base/ufos/campaign.ufo:193
+#: ../base/ufos/campaign.ufo:338
 msgid "txt_standard_campaign"
 msgstr "Medelsvår kampanj"
 
-#: ../base/ufos/campaign.ufo:244
+#: ../base/ufos/campaign.ufo:241
 msgid "Easy Campaign"
 msgstr "Lätt kampanj"
 
-#: ../base/ufos/campaign.ufo:245
+#: ../base/ufos/campaign.ufo:242
 msgid "txt_easy_campaign"
 msgstr "Lätt kampanj"
 
-#: ../base/ufos/campaign.ufo:274
+#: ../base/ufos/campaign.ufo:271
 msgid "Very Easy Campaign"
 msgstr "Mycket lätt kampanj"
 
-#: ../base/ufos/campaign.ufo:275
+#: ../base/ufos/campaign.ufo:272
 msgid "txt_veryeasy_campaign"
 msgstr "Mycket lätt kampanj"
 
-#: ../base/ufos/campaign.ufo:319
+#: ../base/ufos/campaign.ufo:316
 msgid "Play the aliens"
 msgstr "Spela utomjordingarna"
 
-#: ../base/ufos/campaign.ufo:320
+#: ../base/ufos/campaign.ufo:317
 msgid "txt_alien_campaign"
 msgstr ""
 
-#: ../base/ufos/campaign.ufo:340
+#: ../base/ufos/campaign.ufo:337
 msgid "Testing and Tweaking Campaign --- Please Ignore"
 msgstr "Testar och justerar kampanj --- Vänligen ignorera"
 
@@ -520,7 +520,7 @@ msgstr "SALDO"
 #: ../base/ufos/menu_buy.ufo:1101
 #: ../base/ufos/menu_hire.ufo:606
 #: ../base/ufos/menu_production.ufo:373
-#: ../base/ufos/menu_research.ufo:945
+#: ../base/ufos/menu_research.ufo:956
 #: ../base/ufos/menu_transfer.ufo:350
 msgid "Back to baseview"
 msgstr "Tillbaka till basen"
@@ -697,22 +697,22 @@ msgstr "Växla till högerhänt vapen"
 msgid "Switch to left hand weapon"
 msgstr "Växla till vänsterhänt vapen"
 
-#: ../base/ufos/menu_althud.ufo:1373
-#: ../base/ufos/menu_althud.ufo:1385
-#: ../base/ufos/menu_althud.ufo:1397
-#: ../base/ufos/menu_althud.ufo:1409
-#: ../base/ufos/menu_althud.ufo:1421
-#: ../base/ufos/menu_althud.ufo:1433
-#: ../base/ufos/menu_althud.ufo:1445
-#: ../base/ufos/menu_althud.ufo:1457
-#: ../base/ufos/menu_althud.ufo:1469
-#: ../base/ufos/menu_althud.ufo:1481
-#: ../base/ufos/menu_althud.ufo:1493
-#: ../base/ufos/menu_althud.ufo:1505
-#: ../base/ufos/menu_althud.ufo:1517
-#: ../base/ufos/menu_althud.ufo:1529
-#: ../base/ufos/menu_althud.ufo:1541
-#: ../base/ufos/menu_althud.ufo:1553
+#: ../base/ufos/menu_althud.ufo:1367
+#: ../base/ufos/menu_althud.ufo:1379
+#: ../base/ufos/menu_althud.ufo:1391
+#: ../base/ufos/menu_althud.ufo:1403
+#: ../base/ufos/menu_althud.ufo:1415
+#: ../base/ufos/menu_althud.ufo:1427
+#: ../base/ufos/menu_althud.ufo:1439
+#: ../base/ufos/menu_althud.ufo:1451
+#: ../base/ufos/menu_althud.ufo:1463
+#: ../base/ufos/menu_althud.ufo:1475
+#: ../base/ufos/menu_althud.ufo:1487
+#: ../base/ufos/menu_althud.ufo:1499
+#: ../base/ufos/menu_althud.ufo:1511
+#: ../base/ufos/menu_althud.ufo:1523
+#: ../base/ufos/menu_althud.ufo:1535
+#: ../base/ufos/menu_althud.ufo:1547
 #: ../base/ufos/menu_hud.ufo:1084
 #: ../base/ufos/menu_hud.ufo:1096
 #: ../base/ufos/menu_hud.ufo:1108
@@ -2222,6 +2222,11 @@ msgstr "Stoppa forskning"
 msgid "Start research"
 msgstr "Starta forskning"
 
+#: ../base/ufos/menu_research.ufo:942
+#, fuzzy
+msgid "Show research proposal"
+msgstr "Stoppa forskning"
+
 #: ../base/ufos/menu_singleplayer.ufo:69
 msgid "New game"
 msgstr "Nytt spel"
@@ -2429,7 +2434,7 @@ msgid "Show only aliens"
 msgstr "Visa endast utomjordingar"
 
 #: ../base/ufos/menu_transfer.ufo:285
-#: client/cl_campaign.c:4469
+#: client/cl_campaign.c:4476
 msgid "Aliens"
 msgstr "Utomjordingar"
 
@@ -2485,24 +2490,111 @@ msgstr "Datum:"
 msgid "Leave mailclient"
 msgstr "Stäng e-postklient"
 
-#: ../base/ufos/missions.ufo:5
-#: ../base/ufos/missions.ufo:305
+#: ../base/ufos/missions.ufo:4
+#: ../base/ufos/missions.ufo:304
 msgid "New York"
 msgstr "New York"
+
+#: ../base/ufos/missions.ufo:5
+#: ../base/ufos/missions.ufo:25
+#: ../base/ufos/missions.ufo:45
+#: ../base/ufos/missions.ufo:65
+#: ../base/ufos/missions.ufo:85
+#: ../base/ufos/missions.ufo:145
+#: ../base/ufos/missions.ufo:165
+#: ../base/ufos/missions.ufo:205
+#: ../base/ufos/missions.ufo:225
+#: ../base/ufos/missions.ufo:245
+#: ../base/ufos/missions.ufo:265
+#: ../base/ufos/missions.ufo:285
+#: ../base/ufos/missions.ufo:305
+#: ../base/ufos/missions.ufo:325
+#: ../base/ufos/missions.ufo:346
+#: ../base/ufos/missions.ufo:444
+#: ../base/ufos/missions.ufo:464
+#: ../base/ufos/missions.ufo:504
+#: ../base/ufos/missions.ufo:544
+#: ../base/ufos/missions.ufo:563
+#: ../base/ufos/missions.ufo:582
+#: ../base/ufos/missions.ufo:602
+#: ../base/ufos/missions.ufo:622
+#: ../base/ufos/missions.ufo:641
+#: ../base/ufos/missions.ufo:660
+#: ../base/ufos/missions.ufo:698
+#: ../base/ufos/missions.ufo:718
+#: ../base/ufos/missions.ufo:738
+#: ../base/ufos/missions.ufo:759
+#: ../base/ufos/missions.ufo:779
+#: ../base/ufos/missions.ufo:798
+#: ../base/ufos/missions.ufo:818
+msgid "Terror Attack"
+msgstr "Terroristattack"
 
 #: ../base/ufos/missions.ufo:6
 #: ../base/ufos/missions.ufo:26
 #: ../base/ufos/missions.ufo:46
 #: ../base/ufos/missions.ufo:66
+#: ../base/ufos/missions.ufo:306
+#: ../base/ufos/missions.ufo:699
+#: ../base/ufos/missions.ufo:739
+#: ../base/ufos/missions.ufo:760
+msgid "Damn it, you've let some of them get away again! Reequip your squad and get after them!"
+msgstr ""
+
+#: ../base/ufos/missions.ufo:24
+msgid "Altdorf"
+msgstr "Altdorf"
+
+#: ../base/ufos/missions.ufo:44
+msgid "Oslo"
+msgstr "Oslo"
+
+#: ../base/ufos/missions.ufo:64
+msgid "Antalya"
+msgstr "Antalya"
+
+#: ../base/ufos/missions.ufo:84
+msgid "Berlin"
+msgstr "Berlin"
+
 #: ../base/ufos/missions.ufo:86
+msgid "Protect civilians"
+msgstr "Skydda civilpersoner"
+
+#: ../base/ufos/missions.ufo:104
+msgid "Wajir"
+msgstr "Wajir"
+
+#: ../base/ufos/missions.ufo:105
+#: ../base/ufos/missions.ufo:125
+msgid "Crash Site"
+msgstr "Nedslagsplats"
+
+#: ../base/ufos/missions.ufo:106
+#: ../base/ufos/missions.ufo:126
+msgid "Secure Area"
+msgstr "Säkra området"
+
+#: ../base/ufos/missions.ufo:124
+msgid "Arnhem"
+msgstr ""
+
+#: ../base/ufos/missions.ufo:144
+msgid "Wellington"
+msgstr "Wellington"
+
 #: ../base/ufos/missions.ufo:146
+msgid "There are rumors of a mine being overrun by aliens. Although this source of information is doubtful, you'll need to investigate."
+msgstr ""
+
+#: ../base/ufos/missions.ufo:164
+msgid "Mackay"
+msgstr "Mackay"
+
 #: ../base/ufos/missions.ufo:166
-#: ../base/ufos/missions.ufo:206
 #: ../base/ufos/missions.ufo:226
 #: ../base/ufos/missions.ufo:246
-#: ../base/ufos/missions.ufo:266
 #: ../base/ufos/missions.ufo:286
-#: ../base/ufos/missions.ufo:306
 #: ../base/ufos/missions.ufo:326
 #: ../base/ufos/missions.ufo:347
 #: ../base/ufos/missions.ufo:445
@@ -2511,286 +2603,199 @@ msgstr "New York"
 #: ../base/ufos/missions.ufo:545
 #: ../base/ufos/missions.ufo:564
 #: ../base/ufos/missions.ufo:583
-#: ../base/ufos/missions.ufo:603
 #: ../base/ufos/missions.ufo:623
 #: ../base/ufos/missions.ufo:642
 #: ../base/ufos/missions.ufo:661
-#: ../base/ufos/missions.ufo:699
 #: ../base/ufos/missions.ufo:719
-#: ../base/ufos/missions.ufo:739
-#: ../base/ufos/missions.ufo:760
 #: ../base/ufos/missions.ufo:780
 #: ../base/ufos/missions.ufo:799
 #: ../base/ufos/missions.ufo:819
-msgid "Terror Attack"
-msgstr "Terroristattack"
-
-#: ../base/ufos/missions.ufo:7
-#: ../base/ufos/missions.ufo:27
-#: ../base/ufos/missions.ufo:47
-#: ../base/ufos/missions.ufo:67
-#: ../base/ufos/missions.ufo:307
-#: ../base/ufos/missions.ufo:700
-#: ../base/ufos/missions.ufo:740
-#: ../base/ufos/missions.ufo:761
-msgid "Damn it, you've let some of them get\\away again! Reequip your squad and\\get after them!"
-msgstr ""
-
-#: ../base/ufos/missions.ufo:25
-msgid "Altdorf"
-msgstr "Altdorf"
-
-#: ../base/ufos/missions.ufo:45
-msgid "Oslo"
-msgstr "Oslo"
-
-#: ../base/ufos/missions.ufo:65
-msgid "Antalya"
-msgstr "Antalya"
-
-#: ../base/ufos/missions.ufo:85
-msgid "Berlin"
-msgstr "Berlin"
-
-#: ../base/ufos/missions.ufo:87
-msgid "Protect civilians"
-msgstr "Skydda civilpersoner"
-
-#: ../base/ufos/missions.ufo:105
-msgid "Wajir"
-msgstr "Wajir"
-
-#: ../base/ufos/missions.ufo:106
-#: ../base/ufos/missions.ufo:126
-msgid "Crash Site"
-msgstr "Nedslagsplats"
-
-#: ../base/ufos/missions.ufo:107
-#: ../base/ufos/missions.ufo:127
-msgid "Secure Area"
-msgstr "Säkra området"
-
-#: ../base/ufos/missions.ufo:125
-msgid "FIXME"
-msgstr ""
-
-#: ../base/ufos/missions.ufo:145
-msgid "Wellington"
-msgstr "Wellington"
-
-#: ../base/ufos/missions.ufo:147
-msgid "There are rumors of a mine being\\overrun by aliens. Although this\\source of information is doubtful,\\you'll need to investigate."
-msgstr ""
-
-#: ../base/ufos/missions.ufo:165
-msgid "Mackay"
-msgstr "Mackay"
-
-#: ../base/ufos/missions.ufo:167
-#: ../base/ufos/missions.ufo:227
-#: ../base/ufos/missions.ufo:247
-#: ../base/ufos/missions.ufo:287
-#: ../base/ufos/missions.ufo:327
-#: ../base/ufos/missions.ufo:348
-#: ../base/ufos/missions.ufo:446
-#: ../base/ufos/missions.ufo:466
-#: ../base/ufos/missions.ufo:506
-#: ../base/ufos/missions.ufo:546
-#: ../base/ufos/missions.ufo:565
-#: ../base/ufos/missions.ufo:584
-#: ../base/ufos/missions.ufo:624
-#: ../base/ufos/missions.ufo:643
-#: ../base/ufos/missions.ufo:662
-#: ../base/ufos/missions.ufo:720
-#: ../base/ufos/missions.ufo:781
-#: ../base/ufos/missions.ufo:800
-#: ../base/ufos/missions.ufo:820
 msgid "Protect inhabitants"
 msgstr "Skydda invånarna"
 
-#: ../base/ufos/missions.ufo:185
+#: ../base/ufos/missions.ufo:184
 msgid "Dongola"
 msgstr "Dongola"
 
-#: ../base/ufos/missions.ufo:186
-#: ../base/ufos/missions.ufo:388
+#: ../base/ufos/missions.ufo:185
+#: ../base/ufos/missions.ufo:387
 msgid "Crashed Alien Ship"
 msgstr "Kraschad utomjordisk farkost"
 
-#: ../base/ufos/missions.ufo:187
+#: ../base/ufos/missions.ufo:186
 msgid "Secure area"
 msgstr "Säkra området"
 
-#: ../base/ufos/missions.ufo:205
+#: ../base/ufos/missions.ufo:204
 msgid "Bristol"
 msgstr "Bristol"
 
-#: ../base/ufos/missions.ufo:207
+#: ../base/ufos/missions.ufo:206
 msgid "Protect the military installation crew"
 msgstr "Skydda personalen på militärbasen"
 
-#: ../base/ufos/missions.ufo:225
+#: ../base/ufos/missions.ufo:224
 msgid "Veracruz"
 msgstr "Veracruz"
 
-#: ../base/ufos/missions.ufo:245
+#: ../base/ufos/missions.ufo:244
 msgid "Uppsala"
 msgstr "Uppsala"
 
-#: ../base/ufos/missions.ufo:265
+#: ../base/ufos/missions.ufo:264
 msgid "Gwanda"
 msgstr "Gwanda"
 
-#: ../base/ufos/missions.ufo:267
+#: ../base/ufos/missions.ufo:266
 msgid "Protect the excavation site at all cost."
 msgstr "Skydda utgrävningsplatsen med alla medel."
 
-#: ../base/ufos/missions.ufo:285
+#: ../base/ufos/missions.ufo:284
 msgid "Marina Serra"
 msgstr "Marina Serra"
 
-#: ../base/ufos/missions.ufo:325
+#: ../base/ufos/missions.ufo:324
 msgid "Lille"
 msgstr "Lille"
 
-#: ../base/ufos/missions.ufo:346
+#: ../base/ufos/missions.ufo:345
 msgid "Busan"
 msgstr "Busan"
 
-#: ../base/ufos/missions.ufo:366
+#: ../base/ufos/missions.ufo:365
 msgid "Morioka"
 msgstr "Morioka"
 
-#: ../base/ufos/missions.ufo:367
+#: ../base/ufos/missions.ufo:366
 msgid "Alien Hideout"
 msgstr ""
 
-#: ../base/ufos/missions.ufo:368
+#: ../base/ufos/missions.ufo:367
 msgid "Eliminate intruders"
 msgstr "Eliminera inkräktarna"
 
-#: ../base/ufos/missions.ufo:387
+#: ../base/ufos/missions.ufo:386
 msgid "Atacama Desert"
 msgstr ""
 
-#: ../base/ufos/missions.ufo:389
-#: ../base/ufos/missions.ufo:427
+#: ../base/ufos/missions.ufo:388
+#: ../base/ufos/missions.ufo:426
 msgid "Secure Alien Ship"
 msgstr "Säkra den utomjordiska farkosten"
 
-#: ../base/ufos/missions.ufo:406
-#: ../base/ufos/missions.ufo:425
-#: ../base/ufos/missions.ufo:464
+#: ../base/ufos/missions.ufo:405
+#: ../base/ufos/missions.ufo:424
+#: ../base/ufos/missions.ufo:463
 msgid "Revelstoke"
 msgstr ""
 
-#: ../base/ufos/missions.ufo:407
-#: ../base/ufos/missions.ufo:426
-#: ../base/ufos/missions.ufo:485
-#: ../base/ufos/missions.ufo:525
+#: ../base/ufos/missions.ufo:406
+#: ../base/ufos/missions.ufo:425
+#: ../base/ufos/missions.ufo:484
+#: ../base/ufos/missions.ufo:524
 msgid "Landed Alien Ship"
 msgstr "Landad utomjordisk farkost"
 
-#: ../base/ufos/missions.ufo:408
-#: ../base/ufos/missions.ufo:486
-#: ../base/ufos/missions.ufo:526
+#: ../base/ufos/missions.ufo:407
+#: ../base/ufos/missions.ufo:485
+#: ../base/ufos/missions.ufo:525
 msgid "Secure Alien Ship before Liftoff"
 msgstr "Säkra den utomjordisk farkosten innan den försvinner"
 
-#: ../base/ufos/missions.ufo:444
+#: ../base/ufos/missions.ufo:443
 msgid "Nuuk"
 msgstr "Nuuk"
 
-#: ../base/ufos/missions.ufo:484
+#: ../base/ufos/missions.ufo:483
 msgid "Antarctic"
 msgstr "Antarctisk"
 
-#: ../base/ufos/missions.ufo:504
+#: ../base/ufos/missions.ufo:503
 msgid "Agpat"
 msgstr "Agpat"
 
-#: ../base/ufos/missions.ufo:524
-msgid "Dunholm"
-msgstr "Dunholm"
+#: ../base/ufos/missions.ufo:523
+msgid "Somewhere in Antarctica"
+msgstr ""
 
-#: ../base/ufos/missions.ufo:544
+#: ../base/ufos/missions.ufo:543
 msgid "La Paz"
 msgstr "La Paz"
 
-#: ../base/ufos/missions.ufo:563
+#: ../base/ufos/missions.ufo:562
 msgid "Tazovskij"
 msgstr "Tazovskij"
 
-#: ../base/ufos/missions.ufo:582
+#: ../base/ufos/missions.ufo:581
 msgid "Gobabis"
 msgstr "Gobabis"
 
-#: ../base/ufos/missions.ufo:602
+#: ../base/ufos/missions.ufo:601
 msgid "Jiwani"
 msgstr "Jiwani"
 
-#: ../base/ufos/missions.ufo:604
+#: ../base/ufos/missions.ufo:603
 msgid "Secure Dam"
 msgstr "Säkra dammen"
 
-#: ../base/ufos/missions.ufo:622
+#: ../base/ufos/missions.ufo:621
 msgid "Wachau"
 msgstr "Wachau"
 
-#: ../base/ufos/missions.ufo:641
+#: ../base/ufos/missions.ufo:640
 msgid "Asyut"
 msgstr "Asyut"
 
-#: ../base/ufos/missions.ufo:660
+#: ../base/ufos/missions.ufo:659
 msgid "Tabelbala"
 msgstr "Tabelbala"
 
-#: ../base/ufos/missions.ufo:698
+#: ../base/ufos/missions.ufo:697
 msgid "San Francisco"
 msgstr "San Francisco"
 
-#: ../base/ufos/missions.ufo:718
+#: ../base/ufos/missions.ufo:717
 msgid "Greeneville"
 msgstr "Greeneville"
 
-#: ../base/ufos/missions.ufo:738
+#: ../base/ufos/missions.ufo:737
 msgid "Wiwili"
 msgstr "Wiwili"
 
-#: ../base/ufos/missions.ufo:759
+#: ../base/ufos/missions.ufo:758
 msgid "Linstead"
 msgstr "Linstead"
 
-#: ../base/ufos/missions.ufo:779
+#: ../base/ufos/missions.ufo:778
 msgid "Fargo"
 msgstr "Fargo"
 
-#: ../base/ufos/missions.ufo:798
+#: ../base/ufos/missions.ufo:797
 msgid "Grenchen"
 msgstr "Grenchen"
 
-#: ../base/ufos/missions.ufo:818
+#: ../base/ufos/missions.ufo:817
 msgid "Albany"
 msgstr "Albany"
 
-#: ../base/ufos/missions.ufo:838
+#: ../base/ufos/missions.ufo:837
 msgid "Shannon"
 msgstr "Shannon"
 
-#: ../base/ufos/missions.ufo:839
+#: ../base/ufos/missions.ufo:838
 msgid "Major Alien Intrusion"
 msgstr "Stor utomjordisk invadering"
 
-#: ../base/ufos/missions.ufo:840
+#: ../base/ufos/missions.ufo:839
 msgid "Stop them"
 msgstr "Stoppa dem"
 
-#: ../base/ufos/missions.ufo:859
+#: ../base/ufos/missions.ufo:858
 #: client/cl_campaign.c:766
 msgid "Base Attack"
 msgstr ""
 
-#: ../base/ufos/missions.ufo:860
+#: ../base/ufos/missions.ufo:859
 msgid "Aliens attacked one of our bases"
 msgstr "Utomjordingarna attackerade en av våra baser"
 
@@ -2862,72 +2867,72 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:103
 msgid "laser_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:107
 #: ../base/ufos/research.ufo:114
 #: ../base/ufos/research.ufo:135
 #: ../base/ufos/research.ufo:142
-#: ../base/ufos/research.ufo:355
-#: ../base/ufos/research.ufo:362
-#: ../base/ufos/research.ufo:385
-#: ../base/ufos/research.ufo:392
-#: ../base/ufos/research.ufo:433
-#: ../base/ufos/research.ufo:440
-#: ../base/ufos/research.ufo:616
-#: ../base/ufos/research.ufo:623
-#: ../base/ufos/research.ufo:650
-#: ../base/ufos/research.ufo:657
-#: ../base/ufos/research.ufo:680
-#: ../base/ufos/research.ufo:687
-#: ../base/ufos/research.ufo:746
-#: ../base/ufos/research.ufo:753
-#: ../base/ufos/research.ufo:778
-#: ../base/ufos/research.ufo:785
-#: ../base/ufos/research.ufo:827
-#: ../base/ufos/research.ufo:834
-#: ../base/ufos/research.ufo:963
-#: ../base/ufos/research.ufo:970
-#: ../base/ufos/research.ufo:996
-#: ../base/ufos/research.ufo:1003
-#: ../base/ufos/research.ufo:1027
-#: ../base/ufos/research.ufo:1034
-#: ../base/ufos/research.ufo:1059
-#: ../base/ufos/research.ufo:1066
-#: ../base/ufos/research.ufo:1090
-#: ../base/ufos/research.ufo:1097
-#: ../base/ufos/research.ufo:1122
-#: ../base/ufos/research.ufo:1129
-#: ../base/ufos/research.ufo:1154
-#: ../base/ufos/research.ufo:1161
-#: ../base/ufos/research.ufo:1187
-#: ../base/ufos/research.ufo:1194
-#: ../base/ufos/research.ufo:1524
-#: ../base/ufos/research.ufo:1531
-#: ../base/ufos/research.ufo:1562
-#: ../base/ufos/research.ufo:1569
-#: ../base/ufos/research.ufo:1595
-#: ../base/ufos/research.ufo:1602
-#: ../base/ufos/research.ufo:1627
-#: ../base/ufos/research.ufo:1634
-#: ../base/ufos/research.ufo:1659
-#: ../base/ufos/research.ufo:1666
-#: ../base/ufos/research.ufo:1692
-#: ../base/ufos/research.ufo:1699
-#: ../base/ufos/research.ufo:1724
-#: ../base/ufos/research.ufo:1731
-#: ../base/ufos/research.ufo:1756
-#: ../base/ufos/research.ufo:1763
-#: ../base/ufos/research.ufo:1789
-#: ../base/ufos/research.ufo:1796
-#: ../base/ufos/research.ufo:2451
-#: ../base/ufos/research.ufo:2458
-#: ../base/ufos/research.ufo:2492
-#: ../base/ufos/research.ufo:2499
-#: ../base/ufos/research.ufo:2534
-#: ../base/ufos/research.ufo:2541
-#: ../base/ufos/research.ufo:2988
-#: ../base/ufos/research.ufo:2995
+#: ../base/ufos/research.ufo:384
+#: ../base/ufos/research.ufo:391
+#: ../base/ufos/research.ufo:414
+#: ../base/ufos/research.ufo:421
+#: ../base/ufos/research.ufo:462
+#: ../base/ufos/research.ufo:469
+#: ../base/ufos/research.ufo:645
+#: ../base/ufos/research.ufo:652
+#: ../base/ufos/research.ufo:679
+#: ../base/ufos/research.ufo:686
+#: ../base/ufos/research.ufo:709
+#: ../base/ufos/research.ufo:716
+#: ../base/ufos/research.ufo:775
+#: ../base/ufos/research.ufo:782
+#: ../base/ufos/research.ufo:807
+#: ../base/ufos/research.ufo:814
+#: ../base/ufos/research.ufo:856
+#: ../base/ufos/research.ufo:863
+#: ../base/ufos/research.ufo:992
+#: ../base/ufos/research.ufo:999
+#: ../base/ufos/research.ufo:1025
+#: ../base/ufos/research.ufo:1032
+#: ../base/ufos/research.ufo:1056
+#: ../base/ufos/research.ufo:1063
+#: ../base/ufos/research.ufo:1088
+#: ../base/ufos/research.ufo:1095
+#: ../base/ufos/research.ufo:1119
+#: ../base/ufos/research.ufo:1126
+#: ../base/ufos/research.ufo:1151
+#: ../base/ufos/research.ufo:1158
+#: ../base/ufos/research.ufo:1183
+#: ../base/ufos/research.ufo:1190
+#: ../base/ufos/research.ufo:1216
+#: ../base/ufos/research.ufo:1223
+#: ../base/ufos/research.ufo:1553
+#: ../base/ufos/research.ufo:1560
+#: ../base/ufos/research.ufo:1591
+#: ../base/ufos/research.ufo:1598
+#: ../base/ufos/research.ufo:1624
+#: ../base/ufos/research.ufo:1631
+#: ../base/ufos/research.ufo:1656
+#: ../base/ufos/research.ufo:1663
+#: ../base/ufos/research.ufo:1688
+#: ../base/ufos/research.ufo:1695
+#: ../base/ufos/research.ufo:1721
+#: ../base/ufos/research.ufo:1728
+#: ../base/ufos/research.ufo:1753
+#: ../base/ufos/research.ufo:1760
+#: ../base/ufos/research.ufo:1785
+#: ../base/ufos/research.ufo:1792
+#: ../base/ufos/research.ufo:1818
+#: ../base/ufos/research.ufo:1825
+#: ../base/ufos/research.ufo:2480
+#: ../base/ufos/research.ufo:2487
+#: ../base/ufos/research.ufo:2521
+#: ../base/ufos/research.ufo:2528
+#: ../base/ufos/research.ufo:2563
+#: ../base/ufos/research.ufo:2570
+#: ../base/ufos/research.ufo:3017
+#: ../base/ufos/research.ufo:3024
 msgid "mail_from_paul_navarre"
 msgstr ""
 
@@ -2943,75 +2948,77 @@ msgstr ""
 #: ../base/ufos/research.ufo:267
 #: ../base/ufos/research.ufo:290
 #: ../base/ufos/research.ufo:297
-#: ../base/ufos/research.ufo:356
-#: ../base/ufos/research.ufo:363
-#: ../base/ufos/research.ufo:386
-#: ../base/ufos/research.ufo:393
-#: ../base/ufos/research.ufo:434
-#: ../base/ufos/research.ufo:441
-#: ../base/ufos/research.ufo:617
-#: ../base/ufos/research.ufo:624
-#: ../base/ufos/research.ufo:651
-#: ../base/ufos/research.ufo:658
-#: ../base/ufos/research.ufo:681
-#: ../base/ufos/research.ufo:688
-#: ../base/ufos/research.ufo:747
-#: ../base/ufos/research.ufo:754
-#: ../base/ufos/research.ufo:779
-#: ../base/ufos/research.ufo:786
-#: ../base/ufos/research.ufo:828
-#: ../base/ufos/research.ufo:835
-#: ../base/ufos/research.ufo:964
-#: ../base/ufos/research.ufo:971
-#: ../base/ufos/research.ufo:997
-#: ../base/ufos/research.ufo:1004
-#: ../base/ufos/research.ufo:1028
-#: ../base/ufos/research.ufo:1035
-#: ../base/ufos/research.ufo:1060
-#: ../base/ufos/research.ufo:1067
-#: ../base/ufos/research.ufo:1091
-#: ../base/ufos/research.ufo:1098
-#: ../base/ufos/research.ufo:1123
-#: ../base/ufos/research.ufo:1130
-#: ../base/ufos/research.ufo:1155
-#: ../base/ufos/research.ufo:1162
-#: ../base/ufos/research.ufo:1188
-#: ../base/ufos/research.ufo:1195
-#: ../base/ufos/research.ufo:1525
-#: ../base/ufos/research.ufo:1532
-#: ../base/ufos/research.ufo:1563
-#: ../base/ufos/research.ufo:1570
-#: ../base/ufos/research.ufo:1596
-#: ../base/ufos/research.ufo:1603
-#: ../base/ufos/research.ufo:1628
-#: ../base/ufos/research.ufo:1635
-#: ../base/ufos/research.ufo:1660
-#: ../base/ufos/research.ufo:1667
-#: ../base/ufos/research.ufo:1693
-#: ../base/ufos/research.ufo:1700
-#: ../base/ufos/research.ufo:1725
-#: ../base/ufos/research.ufo:1732
-#: ../base/ufos/research.ufo:1757
-#: ../base/ufos/research.ufo:1764
-#: ../base/ufos/research.ufo:1790
-#: ../base/ufos/research.ufo:1797
-#: ../base/ufos/research.ufo:2452
-#: ../base/ufos/research.ufo:2459
-#: ../base/ufos/research.ufo:2493
-#: ../base/ufos/research.ufo:2500
-#: ../base/ufos/research.ufo:2535
-#: ../base/ufos/research.ufo:2542
-#: ../base/ufos/research.ufo:2595
-#: ../base/ufos/research.ufo:2602
-#: ../base/ufos/research.ufo:2630
-#: ../base/ufos/research.ufo:2637
+#: ../base/ufos/research.ufo:320
+#: ../base/ufos/research.ufo:327
+#: ../base/ufos/research.ufo:385
+#: ../base/ufos/research.ufo:392
+#: ../base/ufos/research.ufo:415
+#: ../base/ufos/research.ufo:422
+#: ../base/ufos/research.ufo:463
+#: ../base/ufos/research.ufo:470
+#: ../base/ufos/research.ufo:646
+#: ../base/ufos/research.ufo:653
+#: ../base/ufos/research.ufo:680
+#: ../base/ufos/research.ufo:687
+#: ../base/ufos/research.ufo:710
+#: ../base/ufos/research.ufo:717
+#: ../base/ufos/research.ufo:776
+#: ../base/ufos/research.ufo:783
+#: ../base/ufos/research.ufo:808
+#: ../base/ufos/research.ufo:815
+#: ../base/ufos/research.ufo:857
+#: ../base/ufos/research.ufo:864
+#: ../base/ufos/research.ufo:993
+#: ../base/ufos/research.ufo:1000
+#: ../base/ufos/research.ufo:1026
+#: ../base/ufos/research.ufo:1033
+#: ../base/ufos/research.ufo:1057
+#: ../base/ufos/research.ufo:1064
+#: ../base/ufos/research.ufo:1089
+#: ../base/ufos/research.ufo:1096
+#: ../base/ufos/research.ufo:1120
+#: ../base/ufos/research.ufo:1127
+#: ../base/ufos/research.ufo:1152
+#: ../base/ufos/research.ufo:1159
+#: ../base/ufos/research.ufo:1184
+#: ../base/ufos/research.ufo:1191
+#: ../base/ufos/research.ufo:1217
+#: ../base/ufos/research.ufo:1224
+#: ../base/ufos/research.ufo:1554
+#: ../base/ufos/research.ufo:1561
+#: ../base/ufos/research.ufo:1592
+#: ../base/ufos/research.ufo:1599
+#: ../base/ufos/research.ufo:1625
+#: ../base/ufos/research.ufo:1632
+#: ../base/ufos/research.ufo:1657
+#: ../base/ufos/research.ufo:1664
+#: ../base/ufos/research.ufo:1689
+#: ../base/ufos/research.ufo:1696
+#: ../base/ufos/research.ufo:1722
+#: ../base/ufos/research.ufo:1729
+#: ../base/ufos/research.ufo:1754
+#: ../base/ufos/research.ufo:1761
+#: ../base/ufos/research.ufo:1786
+#: ../base/ufos/research.ufo:1793
+#: ../base/ufos/research.ufo:1819
+#: ../base/ufos/research.ufo:1826
+#: ../base/ufos/research.ufo:2481
+#: ../base/ufos/research.ufo:2488
+#: ../base/ufos/research.ufo:2522
+#: ../base/ufos/research.ufo:2529
+#: ../base/ufos/research.ufo:2564
+#: ../base/ufos/research.ufo:2571
+#: ../base/ufos/research.ufo:2624
+#: ../base/ufos/research.ufo:2631
+#: ../base/ufos/research.ufo:2659
 #: ../base/ufos/research.ufo:2666
-#: ../base/ufos/research.ufo:2673
-#: ../base/ufos/research.ufo:2700
-#: ../base/ufos/research.ufo:2707
-#: ../base/ufos/research.ufo:2989
-#: ../base/ufos/research.ufo:2996
-#: ../base/ufos/research.ufo:3116
+#: ../base/ufos/research.ufo:2695
+#: ../base/ufos/research.ufo:2702
+#: ../base/ufos/research.ufo:2729
+#: ../base/ufos/research.ufo:2736
+#: ../base/ufos/research.ufo:3018
+#: ../base/ufos/research.ufo:3025
+#: ../base/ufos/research.ufo:3145
 msgid "mail_to_base_commander"
 msgstr ""
 
@@ -3027,7 +3034,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:131
 msgid "antimatter_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:187
 #: ../base/ufos/research.ufo:196
@@ -3041,7 +3048,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:190
 msgid "alien_live_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:194
 #: ../base/ufos/research.ufo:201
@@ -3051,15 +3058,15 @@ msgstr ""
 #: ../base/ufos/research.ufo:266
 #: ../base/ufos/research.ufo:289
 #: ../base/ufos/research.ufo:296
-#: ../base/ufos/research.ufo:2594
-#: ../base/ufos/research.ufo:2601
-#: ../base/ufos/research.ufo:2629
-#: ../base/ufos/research.ufo:2636
+#: ../base/ufos/research.ufo:2623
+#: ../base/ufos/research.ufo:2630
+#: ../base/ufos/research.ufo:2658
 #: ../base/ufos/research.ufo:2665
-#: ../base/ufos/research.ufo:2672
-#: ../base/ufos/research.ufo:2699
-#: ../base/ufos/research.ufo:2706
-#: ../base/ufos/research.ufo:3115
+#: ../base/ufos/research.ufo:2694
+#: ../base/ufos/research.ufo:2701
+#: ../base/ufos/research.ufo:2728
+#: ../base/ufos/research.ufo:2735
+#: ../base/ufos/research.ufo:3144
 msgid "mail_from_dr_connor"
 msgstr ""
 
@@ -3075,7 +3082,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:222
 msgid "alien_breathing_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:252
 #: ../base/ufos/research.ufo:261
@@ -3089,887 +3096,1153 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:255
 msgid "alien_mind_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
 #: ../base/ufos/research.ufo:282
 #: ../base/ufos/research.ufo:291
 #: ../base/ufos/research.ufo:298
 msgid "Odd Behaviour"
-msgstr ""
+msgstr "Konstigt beteende"
 
 #: ../base/ufos/research.ufo:284
 msgid "alien_odd_behaviour_txt"
 msgstr ""
+"Commander,\n"
+"\n"
+"We have spent the past few weeks investigating these strange occurrences in our Containment unit, and we believe we've formulated a theory that may begin to explain the aliens' newfound intelligence.\n"
+"\n"
+"It seems that we were off in our preliminary appraisal of how the alien intellect works. We first believed them to be autonomously operating individuals, in the same way humans are, though with superior communications and team tactics. However, our lab experiments and an intense review of battlefield footage now seem to contradict that hypothesis.\n"
+"\n"
+"In our video records, we have often seen the aliens seeking cover, coordinating their fire, working as a team even though they carry no obvious communications equipment. However, when we captured a few live specimens in our Containment unit, they never displayed anything above the level of animal instinct. This seems incongruous with the evidence we have; large, well-developed brain structures and a proven knowledge of combat tactics.\n"
+"\n"
+"We sought to reconcile these ideas in a new hypothesis, and our experiments have begun to produce tangible results. The new specimens certainly are responsible for the strange behaviour we've observed, but we originally assumed that they were officers of some type under colour of authority. We now believe that theory to also be wrong. Our experiments prove that when the aliens are allowed to congregate, with or without the suspected 'officers', they become significantly more active and sophisticated. When they are separated from each other for a large enough distance, they revert back to their basic states. The conclusion is obvious. There is some kind of communal force binding these creatures together.\n"
+"\n"
+"A string of new theories has emerged. The most likely explanation is in the alien brain. There are several species of alien, all of which meet the physiological requirements for a sentient species, but they show little to no brainwave activity of their own. This implies the presence of some kind of shared or distributed thought between them, a hive mind that grows more intelligent as it grows in numbers. We're not sure how it's possible for this hive mind to cross species boundaries; it's obvious that the different alien races originated on different worlds, with vastly divergent evolutionary paths, and some species appear to have been around far longer than others. However, given the aliens' advanced technology, the 'how' is less of an enigma than the 'why'.\n"
+"\n"
+"These new findings also seem to suggest that specimens down on Earth are cut off from the source of their intelligence. While this may be an important advantage for PHALANX forces, it also brings up threats we had not yet considered. Our research into alien physiology has established that isolated specimens cannot survive very long in our environment, and behave with little enough intelligence while they're on the surface; but if a large enough number is allowed to escape and coordinate with each other -- or with alien sympathisers on Earth -- we could be looking at a serious infiltration risk.\n"
+"\n"
+"With several specimens on hand, their intelligence now seems to be approaching the human level. If we can create a suitable translation device or common language, we believe we may finally be able to establish communications with aliens in PHALANX captivity. Perhaps some of our linguists or psychology experts could form a dialogue. This is an avenue of inquiry that we cannot afford to ignore.\n"
+"\n"
+"Of course, if such experiments were to be approved by the Base Commander, I assure you that my team would take full precautions. Nothing is more important to us than the lives of our men and the security of our facilities.\n"
+"\n"
+"Sincerely,\n"
+"\n"
+"Dr. Connor"
 
 #: ../base/ufos/research.ufo:285
 msgid "alien_odd_behaviour_pre_txt"
 msgstr ""
+"Commander,\n"
+"\n"
+"The live aliens in our Containment unit have begun to display erratic behaviour since the last tactical mission.\n"
+"\n"
+"Before, the specimens were barely intelligent, operating solely on instinct despite their significantly-developed brain structures. Yet they now seem to be exercising some sort of intelligent control, clearly communicating through the soundproof cells and operating as a team, even going so far as to engineer coordinated escape attempts. Sedative darts were required to subdue the more active specimens.\n"
+"\n"
+"We believe the new specimens recently added to Containment are having some sort of effect on the group. They may be higher-ranking members of the alien hierarchy. If we have captured an alien officer, or if there is some entirely different cause for the new behaviour, we need to investigate the how and why of this right away. On behalf of DivBio, I would like your permission to start a new research project to look into the matter.\n"
+"\n"
+"Sincerely,\n"
+"\n"
+"Dr. Connor"
 
-#: ../base/ufos/research.ufo:317
+#: ../base/ufos/research.ufo:312
+#: ../base/ufos/research.ufo:321
+#: ../base/ufos/research.ufo:328
+#, fuzzy
+msgid "Alien Origins"
+msgstr "Utomjordingar"
+
+#: ../base/ufos/research.ufo:314
+msgid "alien_origins_txt"
+msgstr ""
+
+#: ../base/ufos/research.ufo:315
+msgid "alien_origins_pre_txt"
+msgstr "<TODO>"
+
+#: ../base/ufos/research.ufo:319
+#: ../base/ufos/research.ufo:326
+msgid "mail_from_col_falkland"
+msgstr ""
+
+#: ../base/ufos/research.ufo:346
 msgid "assault_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:333
+#: ../base/ufos/research.ufo:362
 msgid "assault_mag_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:350
-#: ../base/ufos/research.ufo:380
+#: ../base/ufos/research.ufo:379
+#: ../base/ufos/research.ufo:409
 msgid "bolterrifle_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:351
-#: ../base/ufos/research.ufo:381
+#: ../base/ufos/research.ufo:380
+#: ../base/ufos/research.ufo:410
 msgid "bolterrifle_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:357
-#: ../base/ufos/research.ufo:364
-#: ../base/ufos/research.ufo:387
-#: ../base/ufos/research.ufo:394
+#: ../base/ufos/research.ufo:386
+#: ../base/ufos/research.ufo:393
+#: ../base/ufos/research.ufo:416
+#: ../base/ufos/research.ufo:423
 msgid "Electromagnetic Rifle"
 msgstr "Elektromagnetiskt gevär"
 
-#: ../base/ufos/research.ufo:411
+#: ../base/ufos/research.ufo:440
 msgid "combatknife_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:428
+#: ../base/ufos/research.ufo:457
 msgid "monoknife_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:429
+#: ../base/ufos/research.ufo:458
 msgid "monoknife_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:435
-#: ../base/ufos/research.ufo:442
+#: ../base/ufos/research.ufo:464
+#: ../base/ufos/research.ufo:471
 msgid "Monomolecular Blades"
 msgstr ""
 
-#: ../base/ufos/research.ufo:461
+#: ../base/ufos/research.ufo:490
 msgid "flamer_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:477
+#: ../base/ufos/research.ufo:506
 msgid "flamer_mag_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:494
+#: ../base/ufos/research.ufo:523
 msgid "flashbang_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:510
+#: ../base/ufos/research.ufo:539
 msgid "fraggren_txt"
 msgstr ""
+"Technical Specifications: Fragmentation Grenade\n"
+"\n"
+"CLASSIFIED LEVEL YELLOW\n"
+"\n"
+"PHALANX Extraterrestrial Response Unit\n"
+"\n"
+"Technical Document, Delta Clearance\n"
+"\n"
+"Filed: 20 March 2084\n"
+"\n"
+"By: Cdr. Paul Navarre, R&D: Engineering Division, PHALANX, Atlantic Operations Command\n"
+"\n"
+"\n"
+"\n"
+"Overview\n"
+"\n"
+"The alien attack on Mumbai made our situation painfully clear. Their technology is far more advanced than ours. The complete inability of Commonwealth troops to make a dent in the Mumbai offensive revealed critical weaknesses in current military training and equipment. They lost three battalions just bringing the aliens to a standstill without inflicting significant casualties. PHALANX has to overcome these odds, and to do that we need the very best human technology has to offer.\n"
+"\n"
+"The Excalibur Program was created to find the most effective weapons on Earth by reviewing their manufacturing standards, durability, operational record, and their combat performance in the situations where we've managed to bring the aliens to battle.\n"
+"\n"
+"The concept of the fragmentation grenade has changed little since it was first conceived, when Chinese soldiers packed gunpowder into ceramic or metal containers. It only solidified further after the end of the 20th century. Improvements in explosive technology and casing materials have made them a little faster and a little deadlier, but the mechanics are the same: An explosive substance at the heart of the grenade causes the casing (and possibly additional payload such as a layer of wire or white phosphorus coiled around the explosive) to fragment into shrapnel and fly in all directions at high speed, killing or wounding targets in the area of effect. The delayed fuse is ignited by first pulling the pin and then releasing the handle, usually released as the grenade is thrown. It will detonate after a period of several seconds.\n"
+"\n"
+"For PHALANX purposes, we’ve selected the Australian HG15 as the best of the lot. This grenade is loaded with an extremely conventional charge of C8 solid chemical explosive, an inner layer of coiled wire, and an outer layer of thin plated steel. It's designed to maximise coverage by putting out more shrapnel than any other grenade on the market. The HG15's outer layer is smooth and unbroken, unlike the old 'pineapple' grenades of World War 2, to make it easier to roll across various surfaces. The C8 explosive at its core may be old in design, but it's both highly powerful and can be counted on to work right under harsh conditions. Reliability is an especially important attribute in any kind of hand-held bomb.\n"
+"\n"
+"\n"
+"Recommended Doctrine\n"
+"\n"
+"Though quite effective against enemy infantry, frag grenades are weapons of opportunity, not a replacement for firearms or portable artillery. Their range is highly limited and their casualty radius is small. However, if the situation calls for close-range indirect fire or something deadly thrown around a corner, the frag grenade is just the thing.\n"
+"\n"
+"Care should be taken that no friendlies (especially civilians) are caught in the area of effect. In such situations the use of lethal grenades is strongly discouraged; flashbangs should be given preference.\n"
+"\n"
+"It's recommended that all soldiers carrying non-heavy weapons should be equipped with at least one grenade of some variety -- be it a frag grenade, flashbang, incendiary grenade or other -- in case the need should arise. Two or more are strongly recommended.\n"
+"\n"
+"\n"
+"Addenda\n"
+"\n"
+"None."
 
-#: ../base/ufos/research.ufo:527
+#: ../base/ufos/research.ufo:556
 msgid "incgren_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:544
+#: ../base/ufos/research.ufo:573
 msgid "grenl_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:560
+#: ../base/ufos/research.ufo:589
 msgid "grenl_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:577
+#: ../base/ufos/research.ufo:606
 msgid "grenl_fle_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:594
+#: ../base/ufos/research.ufo:623
 msgid "grenl_incendiary_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:611
+#: ../base/ufos/research.ufo:640
 msgid "grenl_plasma_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:612
+#: ../base/ufos/research.ufo:641
 msgid "grenl_plasma_ammo_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:618
-#: ../base/ufos/research.ufo:625
+#: ../base/ufos/research.ufo:647
+#: ../base/ufos/research.ufo:654
 msgid "Plasma And The Grenade Launcher"
 msgstr "Plasma och granatkastaren"
 
-#: ../base/ufos/research.ufo:645
+#: ../base/ufos/research.ufo:674
 msgid "laser_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:646
+#: ../base/ufos/research.ufo:675
 msgid "laser_ammo_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:652
-#: ../base/ufos/research.ufo:659
+#: ../base/ufos/research.ufo:681
+#: ../base/ufos/research.ufo:688
 #: ../base/ufos/weapons_laser.ufo:175
 msgid "D-F Cartridge"
 msgstr ""
 
-#: ../base/ufos/research.ufo:675
+#: ../base/ufos/research.ufo:704
 msgid "heavylaser_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:676
+#: ../base/ufos/research.ufo:705
 msgid "heavylaser_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:682
-#: ../base/ufos/research.ufo:689
+#: ../base/ufos/research.ufo:711
+#: ../base/ufos/research.ufo:718
 #: ../base/ufos/weapons_laser.ufo:103
 msgid "Heavy Laser"
 msgstr ""
 
-#: ../base/ufos/research.ufo:725
+#: ../base/ufos/research.ufo:754
 msgid "irgoggles_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:741
+#: ../base/ufos/research.ufo:770
 msgid "kerrblade_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:742
+#: ../base/ufos/research.ufo:771
 msgid "kerrblade_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:748
-#: ../base/ufos/research.ufo:755
+#: ../base/ufos/research.ufo:777
+#: ../base/ufos/research.ufo:784
 msgid "Alien Artifact - Kerrblade"
 msgstr ""
 
-#: ../base/ufos/research.ufo:773
+#: ../base/ufos/research.ufo:802
 msgid "laserpistol_txt"
 msgstr ""
+"Commander, I apologise in advance if my typing isn't up to standard in this message. We've had a lot of sleepless nights down here in DivEngine working on the laser pistol project. It's been a gruelling amount of work, but I'm very proud to say that we've pulled it off. We have prototyped a working laser pistol.\n"
+"\n"
+"The system is essentially the same as the one I've outlined for you in my report on Continuous Wave Laser Operation. Excited molecules of deuterium fluoride are lased and focused through a series of intelligent lenses. Waste gases are put through our custom filtering system, which we've scaled down even further. However, the reduced capacity of the filtering system and the smaller optical resonator have demanded some tradeoffs.\n"
+"\n"
+"The laser pistol can only lase deuterium-fluoride at about half the rate as our old Continuous Wave Laser prototype. Naturally this produces only a half-strength beam, doing half the damage of a larger weapon. It requires a period of continuous exposure -- several seconds at least -- for the beam to inflict enough damage to kill an unarmoured target. Armour will complicate the issue even further, and it's impossible for lasers to shoot through clouds of smoke, gas or fire. Still, as long as the target isn't obscured or immune to highly-focused light or heat, the laser will burn through anything given enough time.\n"
+"\n"
+"All the usual advantages of laser weaponry are present in the pistol. It's very quick to fire, and if the soldier misses his target at first, he can adjust his aim without letting go of the trigger. And there's another bonus particular to our pistol design. Thanks to the extremely high accuracy inherent in laser weaponry, it will be easy for ambidextrous soldiers to use two laser pistols at once.\n"
+"\n"
+"We've designed the pistol to use the standard deuterium-fluoride cartridges which we've drawn up to power all of our laser weaponry. This means it uses the same amount of D-F as the larger designs, but uses it up at a much lower rate, effectively giving the laser pistol more ammunition than any of our other laser weapons.\n"
+"\n"
+"As with all handguns, the laser pistol is strictly a backup weapon. It isn't powerful enough to compete with rifles of any kind. On the other hand, the laser pistol completely eliminates the problems regarding range and accuracy that plague conventional handguns. Its range is quite impressive indeed for a handgun. It can shoot out to 60 metres with pinpoint accuracy thanks to the aim-correcting lenses, and it can fire continuously for minutes without reloading. This will make it particularly valuable in wide open terrain.\n"
+"\n"
+"We will need to have at least one D-F Cartridge on hand at all times in order to be able to load and use a laser pistol.\n"
+"\n"
+"--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:774
+#: ../base/ufos/research.ufo:803
 msgid "laserpistol_pre_txt"
 msgstr ""
+"This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.\n"
+"\n"
+"Our notes on Continuous Wave Laser Operation have produced a lot of designs, and this is possibly the most difficult one to bring into reality: a deuterium-fluoride laser weapon the size of an ordinary pistol.\n"
+"\n"
+"The difficulty in making this a reality will be to get the parts small enough and light enough so that they will:\n"
+"\n"
+"1) Fit into a pistol-sized package, and2) Be light enough to aim and fire one-handed.\n"
+"\n"
+"As always, it's going to be a tradeoff between size and power, but with enough work I believe we can indeed build a functioning laser pistol. We're just waiting for your authorisation, Commander.\n"
+"\n"
+"--Cdr. Navarre"
 
-#: ../base/ufos/research.ufo:780
-#: ../base/ufos/research.ufo:787
+#: ../base/ufos/research.ufo:809
+#: ../base/ufos/research.ufo:816
 #: ../base/ufos/weapons_laser.ufo:6
 msgid "Laser Pistol"
-msgstr ""
+msgstr "Laserpistol"
 
-#: ../base/ufos/research.ufo:822
+#: ../base/ufos/research.ufo:851
 msgid "laserrifle_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:823
+#: ../base/ufos/research.ufo:852
 msgid "laserrifle_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:829
-#: ../base/ufos/research.ufo:836
+#: ../base/ufos/research.ufo:858
+#: ../base/ufos/research.ufo:865
 #: ../base/ufos/weapons_laser.ufo:81
 msgid "Laser Rifle"
 msgstr ""
 
-#: ../base/ufos/research.ufo:872
+#: ../base/ufos/research.ufo:901
 msgid "medikit_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:888
+#: ../base/ufos/research.ufo:917
 msgid "pistol_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:905
+#: ../base/ufos/research.ufo:934
 msgid "pistol_mag_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:923
+#: ../base/ufos/research.ufo:952
 msgid "pistol2_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:940
+#: ../base/ufos/research.ufo:969
 msgid "pistol2_mag_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:958
-#: ../base/ufos/research.ufo:991
+#: ../base/ufos/research.ufo:987
+#: ../base/ufos/research.ufo:1020
 msgid "plasatomizer_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:959
-#: ../base/ufos/research.ufo:992
+#: ../base/ufos/research.ufo:988
+#: ../base/ufos/research.ufo:1021
 msgid "plasatomizer_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:965
-#: ../base/ufos/research.ufo:972
-#: ../base/ufos/research.ufo:998
-#: ../base/ufos/research.ufo:1005
+#: ../base/ufos/research.ufo:994
+#: ../base/ufos/research.ufo:1001
+#: ../base/ufos/research.ufo:1027
+#: ../base/ufos/research.ufo:1034
 msgid "Alien Artifact - Plasma Pistol"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1022
-#: ../base/ufos/research.ufo:1054
+#: ../base/ufos/research.ufo:1051
+#: ../base/ufos/research.ufo:1083
 msgid "plasblaster_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1023
-#: ../base/ufos/research.ufo:1055
+#: ../base/ufos/research.ufo:1052
+#: ../base/ufos/research.ufo:1084
 msgid "plasblaster_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1029
-#: ../base/ufos/research.ufo:1036
-#: ../base/ufos/research.ufo:1061
-#: ../base/ufos/research.ufo:1068
+#: ../base/ufos/research.ufo:1058
+#: ../base/ufos/research.ufo:1065
+#: ../base/ufos/research.ufo:1090
+#: ../base/ufos/research.ufo:1097
 msgid "Alien Artifact - Plasma Blaster"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1085
+#: ../base/ufos/research.ufo:1114
 msgid "plasblade_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1086
+#: ../base/ufos/research.ufo:1115
 msgid "plasblade_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1092
-#: ../base/ufos/research.ufo:1099
+#: ../base/ufos/research.ufo:1121
+#: ../base/ufos/research.ufo:1128
 msgid "Alien Artifact - Plasma Blade"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1117
+#: ../base/ufos/research.ufo:1146
 msgid "plasmagren_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1118
+#: ../base/ufos/research.ufo:1147
 msgid "plasmagren_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1124
-#: ../base/ufos/research.ufo:1131
+#: ../base/ufos/research.ufo:1153
+#: ../base/ufos/research.ufo:1160
 msgid "Alien Artifact - Plasma Grenade"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1149
-#: ../base/ufos/research.ufo:1182
+#: ../base/ufos/research.ufo:1178
+#: ../base/ufos/research.ufo:1211
 msgid "plasrifle_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1150
-#: ../base/ufos/research.ufo:1183
+#: ../base/ufos/research.ufo:1179
+#: ../base/ufos/research.ufo:1212
 msgid "plasrifle_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1156
-#: ../base/ufos/research.ufo:1163
-#: ../base/ufos/research.ufo:1189
-#: ../base/ufos/research.ufo:1196
+#: ../base/ufos/research.ufo:1185
+#: ../base/ufos/research.ufo:1192
+#: ../base/ufos/research.ufo:1218
+#: ../base/ufos/research.ufo:1225
 msgid "Alien Artifact - Plasma Rifle"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1213
+#: ../base/ufos/research.ufo:1242
 msgid "rpg_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1230
+#: ../base/ufos/research.ufo:1259
 msgid "rpg_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1248
+#: ../base/ufos/research.ufo:1277
 msgid "rpg_incendiary_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1267
+#: ../base/ufos/research.ufo:1296
 msgid "chaingun_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1268
+#: ../base/ufos/research.ufo:1297
 msgid "chaingun_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1285
+#: ../base/ufos/research.ufo:1314
 msgid "chaingun_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1286
+#: ../base/ufos/research.ufo:1315
 msgid "chaingun_ammo_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1304
+#: ../base/ufos/research.ufo:1333
 msgid "shotgun_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1323
+#: ../base/ufos/research.ufo:1352
 msgid "shotgun_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1342
+#: ../base/ufos/research.ufo:1371
 msgid "shotgun2_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1378
+#: ../base/ufos/research.ufo:1407
 msgid "shotgun2_slug_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1396
+#: ../base/ufos/research.ufo:1425
 msgid "shotgun_micro_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1413
+#: ../base/ufos/research.ufo:1442
 msgid "shotgun_micro_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1431
+#: ../base/ufos/research.ufo:1460
 msgid "smg_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1448
+#: ../base/ufos/research.ufo:1477
 msgid "smg_mag_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1466
+#: ../base/ufos/research.ufo:1495
 msgid "smokegren_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1483
+#: ../base/ufos/research.ufo:1512
 msgid "sniper_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1500
+#: ../base/ufos/research.ufo:1529
 msgid "sniper_mag_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1519
+#: ../base/ufos/research.ufo:1548
 msgid "stungren_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1520
+#: ../base/ufos/research.ufo:1549
 msgid "stungren_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1526
-#: ../base/ufos/research.ufo:1533
+#: ../base/ufos/research.ufo:1555
+#: ../base/ufos/research.ufo:1562
 msgid "Anti-Alien Gas"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1557
+#: ../base/ufos/research.ufo:1586
 msgid "stunrod_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1558
+#: ../base/ufos/research.ufo:1587
 msgid "stunrod_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1564
-#: ../base/ufos/research.ufo:1571
+#: ../base/ufos/research.ufo:1593
+#: ../base/ufos/research.ufo:1600
 #: ../base/ufos/weapons_melee.ufo:113
 msgid "Stun Rod"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1590
+#: ../base/ufos/research.ufo:1619
 msgid "pbeampistol_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1591
+#: ../base/ufos/research.ufo:1620
 msgid "pbeampistol_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1597
-#: ../base/ufos/research.ufo:1604
-#: ../base/ufos/research.ufo:1629
-#: ../base/ufos/research.ufo:1636
+#: ../base/ufos/research.ufo:1626
+#: ../base/ufos/research.ufo:1633
+#: ../base/ufos/research.ufo:1658
+#: ../base/ufos/research.ufo:1665
 msgid "Alien Artifact - Particle Beam Pistol"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1622
-#: ../base/ufos/research.ufo:1687
-#: ../base/ufos/research.ufo:1751
+#: ../base/ufos/research.ufo:1651
+#: ../base/ufos/research.ufo:1716
+#: ../base/ufos/research.ufo:1780
 msgid "pbeamammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1623
-#: ../base/ufos/research.ufo:1688
-#: ../base/ufos/research.ufo:1752
+#: ../base/ufos/research.ufo:1652
+#: ../base/ufos/research.ufo:1717
+#: ../base/ufos/research.ufo:1781
 msgid "pbeamammo_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1654
+#: ../base/ufos/research.ufo:1683
 msgid "pbeamcannon_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1655
+#: ../base/ufos/research.ufo:1684
 msgid "pbeamcannon_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1661
-#: ../base/ufos/research.ufo:1668
-#: ../base/ufos/research.ufo:1694
-#: ../base/ufos/research.ufo:1701
+#: ../base/ufos/research.ufo:1690
+#: ../base/ufos/research.ufo:1697
+#: ../base/ufos/research.ufo:1723
+#: ../base/ufos/research.ufo:1730
 msgid "Alien Artifact - Particle Beam Cannon"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1719
+#: ../base/ufos/research.ufo:1748
 msgid "pbeamrifle_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1720
+#: ../base/ufos/research.ufo:1749
 msgid "pbeamrifle_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1726
-#: ../base/ufos/research.ufo:1733
-#: ../base/ufos/research.ufo:1758
-#: ../base/ufos/research.ufo:1765
+#: ../base/ufos/research.ufo:1755
+#: ../base/ufos/research.ufo:1762
+#: ../base/ufos/research.ufo:1787
+#: ../base/ufos/research.ufo:1794
 msgid "Alien Artifact - Particle Beam Rifle"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1784
+#: ../base/ufos/research.ufo:1813
 msgid "pbeam_ammo_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1785
+#: ../base/ufos/research.ufo:1814
 msgid "pbeam_ammo_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1791
-#: ../base/ufos/research.ufo:1798
+#: ../base/ufos/research.ufo:1820
+#: ../base/ufos/research.ufo:1827
 msgid "Man-Portable Particle Beams"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1820
+#: ../base/ufos/research.ufo:1849
 msgid "combat_armor_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1834
+#: ../base/ufos/research.ufo:1863
 msgid "nano_armor_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1835
+#: ../base/ufos/research.ufo:1864
 msgid "nano_armor_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1850
+#: ../base/ufos/research.ufo:1879
 msgid "alien_body_armour_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1851
+#: ../base/ufos/research.ufo:1880
 msgid "alien_body_armour_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1866
+#: ../base/ufos/research.ufo:1895
 msgid "alien_medium_armour_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1867
+#: ../base/ufos/research.ufo:1896
 msgid "alien_medium_armour_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:1898
+#: ../base/ufos/research.ufo:1927
 msgid "Blast Damage Type"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1910
+#: ../base/ufos/research.ufo:1939
 msgid "Fire Damage Type"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1922
+#: ../base/ufos/research.ufo:1951
 msgid "Laser Damage Type"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1938
+#: ../base/ufos/research.ufo:1967
 msgid "Impact Damage Type"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1950
-#: ../base/ufos/research.ufo:1981
+#: ../base/ufos/research.ufo:1979
+#: ../base/ufos/research.ufo:2010
 msgid "Shock Damage Type"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1962
+#: ../base/ufos/research.ufo:1991
 msgid "Plasma Damage Type"
 msgstr ""
 
-#: ../base/ufos/research.ufo:1993
+#: ../base/ufos/research.ufo:2022
 msgid "Stun Damage Type"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2005
+#: ../base/ufos/research.ufo:2034
 msgid "Particle Beam Damage Type"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2022
+#: ../base/ufos/research.ufo:2051
 msgid "Accuracy Attribute"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2034
+#: ../base/ufos/research.ufo:2063
 msgid "Assault Guns Proficiency"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2046
+#: ../base/ufos/research.ufo:2075
 msgid "Close Combat Proficiency"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2058
+#: ../base/ufos/research.ufo:2087
 msgid "High-Explosives Proficiency"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2070
+#: ../base/ufos/research.ufo:2099
 msgid "Heavy Weapons Proficiency"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2082
+#: ../base/ufos/research.ufo:2111
 msgid "Mind Attribute"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2094
+#: ../base/ufos/research.ufo:2123
 msgid "Power Attribute"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2106
+#: ../base/ufos/research.ufo:2135
 msgid "Sniper Rifles Proficiency"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2118
+#: ../base/ufos/research.ufo:2147
 msgid "Speed Attribute"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2134
+#: ../base/ufos/research.ufo:2163
 msgid "b_aliencontainment_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2150
+#: ../base/ufos/research.ufo:2179
 msgid "b_command_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2166
+#: ../base/ufos/research.ufo:2195
 msgid "b_entrance_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2178
+#: ../base/ufos/research.ufo:2207
 msgid "b_large_hangar_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2194
+#: ../base/ufos/research.ufo:2223
 msgid "b_hospital_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2210
+#: ../base/ufos/research.ufo:2239
 msgid "b_small_hangar_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2226
+#: ../base/ufos/research.ufo:2255
 msgid "b_lab_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2242
+#: ../base/ufos/research.ufo:2271
 msgid "b_powerplant_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2258
+#: ../base/ufos/research.ufo:2287
 msgid "b_quarters_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2274
+#: ../base/ufos/research.ufo:2303
 msgid "b_radar_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2290
+#: ../base/ufos/research.ufo:2319
 msgid "b_storage_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2306
+#: ../base/ufos/research.ufo:2335
 msgid "b_teamroom_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2322
+#: ../base/ufos/research.ufo:2351
 msgid "b_small_ufo_hangar_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2338
+#: ../base/ufos/research.ufo:2367
 msgid "b_large_ufo_hangar_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2354
+#: ../base/ufos/research.ufo:2383
 msgid "b_workshop_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2373
+#: ../base/ufos/research.ufo:2402
 msgid "dropship_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2388
+#: ../base/ufos/research.ufo:2417
 msgid "interceptor_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2403
+#: ../base/ufos/research.ufo:2432
 msgid "saracen_interceptor_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2445
+#: ../base/ufos/research.ufo:2474
 msgid "ufo_scout_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2446
+#: ../base/ufos/research.ufo:2475
 msgid "ufo_scout_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2486
+#: ../base/ufos/research.ufo:2515
 msgid "ufo_fighter_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2487
+#: ../base/ufos/research.ufo:2516
 msgid "ufo_fighter_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2527
-#: ../base/ufos/research.ufo:2536
-#: ../base/ufos/research.ufo:2543
+#: ../base/ufos/research.ufo:2556
+#: ../base/ufos/research.ufo:2565
+#: ../base/ufos/research.ufo:2572
 msgid "UFO - Harvester"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2528
+#: ../base/ufos/research.ufo:2557
 msgid "ufo_harvester_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2529
+#: ../base/ufos/research.ufo:2558
 msgid "ufo_harvester_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2569
+#: ../base/ufos/research.ufo:2598
 msgid "Live Specimen - Bloodspider"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2570
+#: ../base/ufos/research.ufo:2599
 msgid "bloodspider_notes_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2571
+#: ../base/ufos/research.ufo:2600
 msgid "bloodspider_notes_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2587
-#: ../base/ufos/research.ufo:2596
-#: ../base/ufos/research.ufo:2603
+#: ../base/ufos/research.ufo:2616
+#: ../base/ufos/research.ufo:2625
+#: ../base/ufos/research.ufo:2632
 msgid "Alien Autopsy - Bloodspider"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2588
+#: ../base/ufos/research.ufo:2617
 msgid "bloodspider_autopsy_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2589
+#: ../base/ufos/research.ufo:2618
 msgid "bloodspider_autopsy_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2622
-#: ../base/ufos/research.ufo:2631
-#: ../base/ufos/research.ufo:2638
+#: ../base/ufos/research.ufo:2651
+#: ../base/ufos/research.ufo:2660
+#: ../base/ufos/research.ufo:2667
 msgid "Alien Autopsy - Ortnok"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2623
+#: ../base/ufos/research.ufo:2652
 msgid "ortnok_autopsy_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2624
+#: ../base/ufos/research.ufo:2653
 msgid "ortnok_autopsy_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2658
-#: ../base/ufos/research.ufo:2667
-#: ../base/ufos/research.ufo:2674
+#: ../base/ufos/research.ufo:2687
+#: ../base/ufos/research.ufo:2696
+#: ../base/ufos/research.ufo:2703
 msgid "Alien Autopsy - Taman"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2659
+#: ../base/ufos/research.ufo:2688
 msgid "taman_autopsy_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2660
+#: ../base/ufos/research.ufo:2689
 msgid "taman_autopsy_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2692
-#: ../base/ufos/research.ufo:2701
-#: ../base/ufos/research.ufo:2708
+#: ../base/ufos/research.ufo:2721
+#: ../base/ufos/research.ufo:2730
+#: ../base/ufos/research.ufo:2737
 msgid "Alien Autopsy - Shevaar"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2693
+#: ../base/ufos/research.ufo:2722
 msgid "shevaar_autopsy_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2694
+#: ../base/ufos/research.ufo:2723
 msgid "shevaar_autopsy_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2780
+#: ../base/ufos/research.ufo:2809
 msgid "Phoenix UGV"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2781
+#: ../base/ufos/research.ufo:2810
 msgid "ugv_phoenix_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2782
+#: ../base/ufos/research.ufo:2811
 msgid "ugv_phoenix_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2796
+#: ../base/ufos/research.ufo:2825
 msgid "Triax UGV"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2797
+#: ../base/ufos/research.ufo:2826
 msgid "ugv_triax_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2798
+#: ../base/ufos/research.ufo:2827
 msgid "ugv_triax_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2816
+#: ../base/ufos/research.ufo:2845
 msgid "'Raven' ECM Unit"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2818
+#: ../base/ufos/research.ufo:2847
 msgid "craft_electronics_raven_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2832
+#: ../base/ufos/research.ufo:2861
 msgid "Polymer Aircraft Armour"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2834
+#: ../base/ufos/research.ufo:2863
 msgid "craft_shield_light_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2848
+#: ../base/ufos/research.ufo:2877
 msgid "SHIVA Rotary Cannon"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2850
+#: ../base/ufos/research.ufo:2879
 msgid "craft_weapon_shiva_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2864
+#: ../base/ufos/research.ufo:2893
 msgid "SHIVA 20mm API Rounds"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2866
+#: ../base/ufos/research.ufo:2895
 msgid "craft_ammo_shiva_1_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2883
+#: ../base/ufos/research.ufo:2912
 msgid "SHIVA 20mm HEI Rounds"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2885
+#: ../base/ufos/research.ufo:2914
 msgid "craft_ammo_shiva_2_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2902
+#: ../base/ufos/research.ufo:2931
 msgid "'Sparrowhawk' AA Missile Rack"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2904
+#: ../base/ufos/research.ufo:2933
 msgid "craft_weapon_sparrowhawk_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2918
+#: ../base/ufos/research.ufo:2947
 msgid "'Sparrowhawk' Missile"
 msgstr "'Sparrowhawk'-missil"
 
-#: ../base/ufos/research.ufo:2920
+#: ../base/ufos/research.ufo:2949
 msgid "craft_ammo_sparrowhawk_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2937
+#: ../base/ufos/research.ufo:2966
 msgid "TR-20 Rocket Pod"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2939
+#: ../base/ufos/research.ufo:2968
 msgid "craft_weapon_tr20_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2953
+#: ../base/ufos/research.ufo:2982
 msgid "TR-20 Rocket"
 msgstr "TR-20-raket"
 
-#: ../base/ufos/research.ufo:2955
+#: ../base/ufos/research.ufo:2984
 msgid "craft_ammo_tr20_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2980
-#: ../base/ufos/research.ufo:2990
-#: ../base/ufos/research.ufo:2997
+#: ../base/ufos/research.ufo:3009
+#: ../base/ufos/research.ufo:3019
+#: ../base/ufos/research.ufo:3026
 msgid "Particle Beam Weapon"
 msgstr ""
 
-#: ../base/ufos/research.ufo:2981
+#: ../base/ufos/research.ufo:3010
 msgid "craft_weapon_particle_beam_pre_txt"
-msgstr ""
+msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:2982
+#: ../base/ufos/research.ufo:3011
 msgid "craft_weapon_particle_beam_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:3018
+#: ../base/ufos/research.ufo:3047
 msgid "Targeting Computer"
 msgstr "Målsökningsdator"
 
-#: ../base/ufos/research.ufo:3020
+#: ../base/ufos/research.ufo:3049
 msgid "craft_electronics_targeting_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:3034
+#: ../base/ufos/research.ufo:3063
 msgid "Fuel Pod"
 msgstr ""
 
-#: ../base/ufos/research.ufo:3036
+#: ../base/ufos/research.ufo:3065
 msgid "craft_electronics_fuelpod_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:3054
+#: ../base/ufos/research.ufo:3083
 msgid "Alien Materials"
 msgstr ""
 
-#: ../base/ufos/research.ufo:3055
-msgid "alienmaterials_txt"
+#: ../base/ufos/research.ufo:3084
+msgid "alien_materials_txt"
 msgstr ""
 
-#: ../base/ufos/research.ufo:3056
-msgid "alienmaterials_pre_txt"
-msgstr ""
+#: ../base/ufos/research.ufo:3085
+msgid "alien_materials_pre_txt"
+msgstr "<TODO>"
 
-#: ../base/ufos/research.ufo:3076
+#: ../base/ufos/research.ufo:3105
 msgid "Political Situation Before The Invasion"
 msgstr ""
 
-#: ../base/ufos/research.ufo:3077
+#: ../base/ufos/research.ufo:3106
 msgid "news_initial_political_situation_txt"
 msgstr ""
+"In the year 2084, Earth is in better shape than it has been for more than a century. Perhaps for the first time, peace and cooperation are the norm rather than the exception. The current state of affairs, however, can only be explained through the brutal history of the 21st century.\n"
+"\n"
+"In the first decade of the 21st, the Middle-East was the greatest concern of nations around the world. Tensions increased when Iran, Syria, Jordan and Afghanistan formed the Middle-Eastern alliance, a political body to unite the Islamic world. Soon after, democratic elections in Iraq caused the United States to lose control of the country, and Iraq joined the Middle-Eastern Alliance along with Pakistan and Lebanon later that year. In a panic, Israel threw in its lot with the expanding European Union, thus forcing itself to abide by increasingly strict EU laws on human rights and warfare. Its military presence in the region was significantly reduced over the years as a result.\n"
+"\n"
+"However, as 2009 turned into 2010, attentions turned away from the Middle-East as the increasingly bold power grabs by China started to make waves. The People's Republic had been nibbling away at its neighbours for several years, but in December of 2010, after decades of harsh words and grim promises, Taiwan was finally conquered by a full-scale Chinese military invasion. The UN gave several sternly-worded reprimands which were summarily ignored. The international community debated the issue at length, and did nothing.\n"
+"\n"
+"The Second Cold War between the old United States and China began when China annexed North and South Korea in 2012, after secret agents managed to disable North Korea's entire nuclear arsenal for the length of the three-day invasion. The well-trained and equipped People's Army vastly outnumbered the Korean divisions; they occupied both countries long before the Koreans could even begin to receive aid from overseas. The move drew even more ire from the UN and cooled diplomatic relations between China and Russia for decades to come.\n"
+"\n"
+"Tensions around the world remained high during the length of the Second Cold War, with rebellions the order of the day in the newly-subjugated Chinese territories, but ultimately neither China nor the US was ready to commit to nuclear annihilation.\n"
+"\n"
+"The war technically came to an end in 2031, as the US economy crumbled under a crushing military budget and deficit interest rates that exceeded the country's entire gross national product. Meanwhile, having become increasingly liberal during the Cold War years, China took on the mantle of world leader without knowing quite what to do with it. Its leaders perhaps became drunk with power, a little too hungry, a little too proud. Using the army to try and enforce their decision, they attempted to revert the country to the brutal Stalinist oppression of the 20th century. The people did not approve.\n"
+"\n"
+"The ensuing civil war was like nothing Earth had ever seen. Officers often referred to it as the bastard child of Vietnam and the First World War. It saw firebombing of entire populations, mass executions of prisoners of war, and tactical nuclear strikes on several cities -- including Shanghai, Seoul and New Delhi -- on 7 June 2034. Government loyalists dropped a total of six 50-kiloton devices on heavily-defended rebel positions, including the civilian populations the rebels were protecting.\n"
+"\n"
+"The loyalist army suffered massive desertions in the days that followed; it was the single event that eventually spelled doom for the government. More than six million lives were lost before the surrender of loyalist forces on 15 August 2036, having fought tooth and nail and employed large-scale scorched earth tactics as the rebels slowly drove them into the Indian Ocean. This is the official ending of the Second Cold War."
 
-#: ../base/ufos/research.ufo:3087
+#: ../base/ufos/research.ufo:3116
 msgid "After The War"
 msgstr "Efter kriget"
 
-#: ../base/ufos/research.ufo:3088
+#: ../base/ufos/research.ufo:3117
 msgid "news_after_the_war_txt"
 msgstr ""
+"Asiatiska republiken:\n"
+"\n"
+"In the years that followed, the reformed Republic of China -- taking up its old, pre-Communist name -- slowly relinquished its conquered territories, including those seized in centuries past, offering them a choice between independence or a seat on the new governmental council as an equal and respected part of the new Republic. Having fought on the rebel side throughout the civil war, Taiwan was the first to merge with the new Republic, reconciling its differences with the mainland after the Communist government surrendered. Taiwan quickly became a major player in the new council and was instrumental in sending the captured government leaders off to The Hague to face a war crimes tribunal. North Korea, another rebel nation, also elected to remain in the Republic, sensing opportunities for greater economic growth and freedom from dictatorship. They would not be disappointed.\n"
+"\n"
+"The resurgence of the Chinese economy was dubbed a miracle by contemporary historians. The first breakthroughs in nanotechnology were made by Chinese researchers, bringing in vast medical-industrial contracts from all over the world. Despite old hatreds and mistrust, other east-Asian nations slowly joined the Republic, which was soon redubbed the Asian Republic to honour its new members. Even Japan eventually joined to bolster its flagging economy and a population which had dwindled through the war years. The Republic continued mostly true to its principles with the civil war still fresh in mind. Over the years it made a reputation for dealing with all its member nations in good faith, and built enough trust and solidarity that it can now speak with a single voice for all the billions of people of south-east Asia.\n"
+"\n"
+"Today, the Asian Republic's economy has all but recovered due to the commercialisation of nanotech and holographics. It still possesses a strong and up-to-date military, trained to a higher standard than any other country.\n"
+"\n"
+"\n"
+"\n"
+"Revolutionärsländerna:\n"
+"\n"
+"With the successive fall of both the United States and China, Socialism in South-America waxed and waned during the post-war years. The US's economic death brought on a surge of revolutionary fervor, swaying several nations away from the influence of capitalism. However, with a democratic framework already halfway in place in most countries, the ideal of rule of the people could for the first time be realised without corruption. This new wave proposed to unite the principles of democracy with true Socialist ideals.\n"
+"\n"
+"The whole continent watched in horror at the nuking of Shanghai during the Second Cold War, televised all over the globe right up to the final second. The new wave suffered another major blow when China fell. In that, everyone could see a first-hand example of what might happen to the revolution if it went the way of dictatorship and totalitarianism. It didn't take long for the leaders to respond.\n"
+"\n"
+"Several dictator-led countries immediately tried to turn on the thumbscrews, trying to head off a rebellion before it began, which caused a huge backlash in the larger democratic nations, particularly Cuba, Brazil and Argentina. Suddenly, the last remaining kings of South-America were left with no friends at all.\n"
+"\n"
+"One by one, they caved to public and political pressure and were replaced by elected houses. The revolution picked up speed instead of losing it; they encouraged greater trade, closer integration, and eventually followed Europe's example of open borders. A new network of highways all over the continent strengthened economies and allowed far more efficient use of arable land. South-America's natural riches were tapped like never before, and they demanded fair prices for every bit of it.\n"
+"\n"
+"Today, the member nations have merged so closely that they are better known as a single body: the Revolutionary Countries. One joint government represents the entire continent, and they manage an economical juggernaut surpassed only by the Greater European Union. Their military is small but has state-of-the-art equipment. Their training is not exceptional.\n"
+"\n"
+"\n"
+"\n"
+"Förenade Amerika:\n"
+"\n"
+"As the US economy started to break down in the late 2020s, more and more people abandoned the country for the greener pastures of Canada and, ironically, Mexico. The value of the dollar plummeted to unprecedented depths, impoverishing millions until its price was fixed by the IMF and the international banking community. The country was then saddled with a brutal reform plan, requiring it to sell off or mothball over half of its military arsenal. To cope with the repayment on sixteen trillion dollars of debt, its interest rate was frozen and its exports shifted to technology and luxury goods. Successful restructuring of NASA, combined with a functional spaceplane prototype, also turned outer space into a money-maker for the post-collapse US. Cape Canaveral began offering the cheapest space launches anywhere on the planet, first with their prototype, later with fully-functional advanced spaceplane designs. This significantly helped the beleaguered country claw its way back towards the black.\n"
+"\n"
+"The cooperation between North-American nations began with financial aid from Canada and Mexico, which saw their exports to the US dipping dangerously and wanted to help fix their most important trading partner. The growing number of expatriates also served to create closer ties. Then, in the most unexpected political turnaround in 2042, Mexico elected the US expatriate Esteban Villa-Lobos Garcia to the office of president.\n"
+"\n"
+"The election was hotly contested. However, the decision held through two recounts, and the new president was inaugurated in July of 2042. Eventually, a combination of sound policies and personal charisma brought most of the country around on Garcia; and then he proposed the Tomorrow Plan.\n"
+"\n"
+"Under the plan, Mexico, Canada and the USA would unite into one country to reawaken the North American superpower. In a number of controversial public votes, the general population in all three countries gave majority support for the Tomorrow Plan; 52% in the United States, 64% in Canada, and 71% in Mexico. The merger was eventually finalised in 2050, creating a United America out of the dominant powers of the New World. The booming space industry quickly spread throughout the new country, and despite a few stumbles along the way, North America steamed headlong towards recovery.\n"
+"\n"
+"Today, UA's debt has decreased from sixteen trillion to two, and standards of living have nearly recovered to what they were before the crash. UA has the most advanced space industry on the planet; NASA performs almost 70% of commercial space launches around the globe. It exports vast quantities of goods to every other nation and is projected to return to solvency in less than three years. Militarily, the UA is the weakest of all the meganations. It has only a small volunteer army and a tiny defence budget as mandated by the IMF. However, what forces the UA does have are highly-trained and can turn on a dime, able to reach any place in the country within two hours.\n"
+"\n"
+"\n"
+"\n"
+"Storeuropeiska gemenskapen:\n"
+"\n"
+"Slowly but surely, the European Union has expanded borders further and further with every passing decade. It first moved into the Middle-East when it accepted Israel as an associate member in 2011, and then upgraded both Israel and Turkey to full membership in 2017. Several Atlantic islands were also accepted in the same resolution, making it the single greatest EU expansion of the 21st century.\n"
+"\n"
+"Following Israel's controversial entrance as an associate member, the EU passed stricter laws on human rights, freedom of religion and separation of church and state. It was also the first Western superpower to officially recognise the Middle-Eastern Alliance, and fostered close relations with the Alliance -- despite United States protests -- in the hope of reducing culture clash and the ongoing threat of terrorism. For the most part, they were successful.\n"
+"\n"
+"In 2028, Greenland -- having grown strong due to immigration from the United States -- formally declared its independence from Denmark. No battles were fought; the Danish government grudgingly recognised the independence due to political pressure from other European countries. In the following months, Greenland briefly considered joining the US as a protectorate, but reconsidered when the EU offered a full membership. This, along with the defection of several US island protectorates in the Atlantic, impelled the EU to rename itself the 'Greater European Union'.\n"
+"\n"
+"In the aftermath of the Second Cold War, the GEU has always been on the forefront of political development. It was the only Western nation to second the Middle-Eastern Alliance's vote of no confidence on the old United Nations, after the UN's complete failure to act during the Chinese expansion and eventual civil war. The GEU also strongly supported the Alliance's efforts to create a new UN, providing fair representation to all the world's nations, and with enough teeth to live up to the principles under which it was first created.\n"
+"\n"
+"Today, the GEU is the strongest economical and political force in the world. However, its vast bureaucracy and large number of members -- members who don't always see eye-to-eye -- make it slow to manoeuvre in every way. Its military is large and powerful but poorly-integrated, with each individual army sticking to the language and traditions of their country. Military cooperation is difficult to achieve and requires going through huge amounts of red tape. The GEU contributes a majority of UN troops, but they are only ever used as peacekepeers. Whether or not the GEU militaries have lost their 'edge' has been a subject of hot debate in Brussels for many years, and there appears to be no decision in sight.\n"
+"\n"
+"\n"
+"\n"
+"Mellanösternalliansen:\n"
+"\n"
+"The rise of the Middle-Eastern Alliance was a surprise to everyone, including the people involved. It was designed solely to weaken Western influence in the Middle-East. The principal designers and first members -- Iran, Syria, Jordan and Afghanistan -- never meant the Alliance to last more than a decade, by which time they expected it to fragment and disband under the weight of its own differences.\n"
+"\n"
+"The Second Cold War changed everything. The People's Republic of China was no longer a nearby ally against the West; it became an expanding threat with an appetite, casting hungry eyes on Nepal, chunks of India, and possibly even the sovereign states on China's western border. Pakistan, Tajikistan and Kyrgyzstan rushed into the arms of the Alliance in order to guard themselves against invasion. The Arabian subcontinent joined the Alliance not a year later, seeking to expand their political pull with the West. Without even realising it, they had formed a power block covering nearly the entire Middle-East. Their position was simply too good to allow it to crumble.\n"
+"\n"
+"The expanded Alliance, now recognised by the European Union, stepped onto the international stage with knife in hand. They had a stranglehold on most of the world's remaining oil supplies and the will to exploit it.\n"
+"\n"
+"The Alliance's economic power grew as outside oil reserves dwindled. Pharmaceutical manufacturers packed up in droves and moved to the Middle-East, the only place left in the world where oil was cheap and plentiful. This, along with the many other applications of crude oil, allowed the Middle-East to survive the Russian 'nuclear revolution' and the subsequent worldwide migration to nuclear power. It continued its expansion with Egypt, Uzbekistan, Turkmenistan, and disputed chunks of Africa around the Red Sea. The entire Red Sea region was quickly pacified when the Alliance moved in its military to assist the new African members.\n"
+"\n"
+"Today, the spread of prosperity has turned the Middle-East away from dogma and towards secular law and gender equality. It is still ruled by individuals -- Sultans, Emirs, Maliks, Presidents and Generals -- but their personal power is kept in check by the rest of the Alliance, rulers who do not want their colleagues stepping out of line. Political dissent is tolerated due to pressure from the EU and other nations, but even in 2084 few of the Alliance's member nations have a functioning democratic process.\n"
+"\n"
+"The Alliance military is large, fast and mean. It is one of the most elite and well-equipped forces in the world, and it uses more permissive rules of engagement than either United America or the Asian Republic. Their clause for 'acceptable civilian casualties' has been the source of huge amounts of criticism from across the world, but the Alliance has stubbornly maintained this clause throughout the four decades it has been in effect.\n"
+"\n"
+"\n"
+"\n"
+"Nya Afrika:\n"
+"\n"
+"Born out of violence and strife, New Africa found its unification in separation. It languished onwards for three decades into the 21st century, as it had done for far too long, with its civil wars and ethnic purges and atrocities beyond measure. That is, until several central-African nations undertook a massive project in 2039 to break the notorious diamond cartels and seize their revenue for long-term national improvement.\n"
+"\n"
+"It resulted in a military and economic bloodbath. The UN attempted various measures to stop the fighting but, even more toothless than ever before, it accomplished nothing. However, the league of nations was eventually joined by several others, tired of being pushed around by Western conglomerates, and after several years of bitter fighting they were successful in taking down the cartels one by one. This left them with some of the largest, most advanced diamond and gold mines in the world; it made their combined territory the largest single supplier of natural diamonds in the world. It also gave them a new sense of what they could accomplish together. The core of New Africa was born.\n"
+"\n"
+"All the African nations involved in the anti-cartel war, with the exception of territories loyal to the Commonwealth of Oceania and the Middle-Eastern Alliance, began to work much more closely together, taking cues from South-America in building a dependable road network to fuel trade and communication. It also allowed a much better distribution of food. Over the next thirty years, New Africa completely eliminated famine within its borders, which it changed completely to accomodate ethnicity and a desire for independence within its territories, and brought socialised public health-care to its people at near-ruinous cost. However, it also found new exports in the commercialised, sustainable growth of tropical hardwood and exotic fruit. The new cooperation made price agreements across the continent possible for the first time; like the Revolutionary Countries, New Africa forced the rest of the world to pay fairly for all goods and services.\n"
+"\n"
+"Today, New Africa is still the weakest of the great powers economically, but it is growing fast. It has a large, motivated standing army, but the troops are not well-equipped, armed mostly with former US antiques and even century-old Soviet equipment. They also have trouble getting to remote locations due to frequent equipment failures and the continent's difficult geography. Most of the time, the best the New Africans can do is spot UFOs as they land with one of thousands of scouts and small patrols out in the country to combat poaching and smuggling.\n"
+"\n"
+"\n"
+"\n"
+"Ryssland:\n"
+"\n"
+"Russia took decades to recover from the fall of the Soviet Union and the ravages of the Soviet system on the country's economy. It festered like an open wound for the first half of the 21st century, still trying to quash the constant rebellions in Chechnya, still trying to reform after 70 years of state domination, still trying to get back its lost position as a world superpower.\n"
+"\n"
+"Things finally started getting better for Russia when then-prime minister Yevgeny Karamazov granted complete independence to Chechnya in 2047. While the newly official Chechen Republic imploded in a storm of violence about who exactly should rule, Russia turned away and set itself to fixing its own problems, leaving Chechnya to itself -- and to the new and improved UN, which immediately took an interest in trying to stop the bloodshed. Unfortunately that wouldn't happen for a long time, and even then Chechnya could only return to Russia's sphere of influence, but for the first time it did so as a fully-recognised independent voice.\n"
+"\n"
+"Economic salvation for Russia -- especially with oil supplies from the Middle-East dwindling -- began with drilling the country's own oil in Siberia, with new techniques and equipment able to survive the harsh winter conditions, and later with the construction of a series of new nuclear power plants. Russia invested heavily in research to make the new plants smaller, safer and -- more importantly -- sustainable. This involved a switch from enriched uranium to thorium as the main nuclear fuel for all the new Russian plants, and advanced new designs based upon the 'energy amplifier', a new type of fission reactor first test-built near Rome from 2004 to 2011. Two of the new reactors even consumed plutonium from dismantled nuclear weapons and from the stored waste of older power plants.\n"
+"\n"
+"Then, eight years after the Chechen independence, Russia's 'nuclear revolution' really came into its own with the invention of the depleted element postprocessor, which could convert 90% of an energy amplifier's waste into radiation-free elements in weeks instead of centuries. The Russians ended the age-old energy crisis almost overnight; nuclear fission became safe, relatively clean, and global thorium supplies would see the world clear into the year 3000.\n"
+"\n"
+"Today, many of the ex-Soviet republics have rejoined Russia, following the example of the other great nations, eager to take advantage of the power generation and nuclear technology that are now Russia's main exports. The nuclear revolution continues even today with the gradual development and commercialisation of fusion power. Though its economy is still troubled, the country is now in better shape than it has been for centuries -- whether under the khans, the czars or the Soviets. Its military is somewhat antiquated but highly-trained, well-disciplined and professional, and it does not lack for manpower.\n"
+"\n"
+"\n"
+"\n"
+"Samfälligheten Oceanien:\n"
+"\n"
+"The Commonwealth of Nations, a political organisation made up of most of the countries of the old British Empire, lost a great deal of power going into the Second Cold War. First, Pakistan cut its ties to the Commonwealth when joining the Middle-Eastern Alliance. Then, as the United States crashed and burned, Britain and Canada became more and more concerned with their own parts of the world and let their participation dwindle to nothing. By 2030, they were members in name only.\n"
+"\n"
+"The growing power of China throughout the war caused a huge expansion in military budgets for India and Australia, budgets which their economies had trouble supporting. Then, in 2035, India became one more battlefield in the Chinese civil war. Veteran government troops easily defeated the Indian military in several short but bloody engagements and seized most of the country while the rebels pursued.\n"
+"\n"
+"Australia pledged a full-scale military intervention along with several South-African Commonwealth members. After weeks of brutal fighting, the Australian divisions managed to link up with Chinese rebel forces and the surviving regiments of the Indian army, and together they nearly annihilated the governmental army before the surrender in 2036.\n"
+"\n"
+"The cost was high. The conquered parts of India were a wasteland, the country had no government left after the nuking of New Delhi, and famines were already starting to grip the population. It began ceding worthless parts of land to other nations and gave independence to several small regions along its border. The remaining Commonwealth nations undertook the vast task of reconstructing India, though many abandoned the project and the Commonwealth in favour of the other growing superpowers.\n"
+"\n"
+"The reconstruction of India eventually united the Commonwealth into one great nation, taking advantage of their geographic location around the Indian Ocean and the South Pacific to charge strategic tariffs for ships passing through their waters. Commonwealth shipping, on the other hand, was free from tariffs and quickly rose to dominance in the competitive market. Later, with the breaking of the diamond cartels in Africa, the Commonwealth seized several leaderless mines inside its borders and used them to their full potential.\n"
+"\n"
+"Today, the Commonwealth of Nations is better known as the 'Commonwealth of Oceania' or just 'Oceania'. Since its inception it has accepted several non-Commonwealth countries into its midst, notably Madagascar, Zimbabwe and Indonesia, extending its control over the Oceanian waters. While it still can't compete economically with the richer nations, it has carved out its own niche, and is quite happy to go on prospering in it.\n"
+"\n"
+"Oceania's military consists mainly of a powerful navy. Its land army is minuscule compared to that of any nation except United America, and serves only in a defensive capacity, with average training and equipment. However, it can respond fairly quickly in emergency situations."
 
-#: ../base/ufos/research.ufo:3098
+#: ../base/ufos/research.ufo:3127
 msgid "PHALANX And The Mumbai Aftermath"
 msgstr ""
 
-#: ../base/ufos/research.ufo:3099
+#: ../base/ufos/research.ufo:3128
 msgid "news_phalanx_and_mumbai_aftermath_txt"
 msgstr ""
+"\"Project PHALANX\" was first conceived by the United States Department of Defense in 1955, after years of growing concern over increased numbers of UFO sightings all across the world. The possibility of an alien invasion plagued badly on the minds of politicians already unnerved by the nuclear power of the Soviet Union. The existence of hostile extraterrestrial life in the universe seemed a very remote possibility, even moreso that these hostiles might find Earth among all the vastness of space -- but could America afford to take that chance?\n"
+"\n"
+"The project's proponents spent two years building support among the highest levels of power. Finally, in 1957, PHALANX received its first funding allocation. A significant chunk of the year's 'black budget' went to the construction of an advanced underground complex in the Nevada desert somewhere in the territory of Nellis Air Force Base. The complex was named \"PHALANX Pacific Operations Command\", loaded with state-of-the-art equipment, and staffed with the best and brightest to hammer out how best to combat an extraterrestrial incursion into US soil.\n"
+"\n"
+"The project was a rousing success in its formative years, developing ground-breaking technologies and producing working prototypes of things the world had never seen before, all for a fraction of the costs that civilian contractors would run up. Due to its very nature, PHALANX was the subject of yearly budget battles, but its R&D successes always gave the project a reason to continue even for the most hardline practicalists.\n"
+"\n"
+"However, the world moved on while PHALANX kept preparing for something that never happened. The Vietnam war saw a tremendous upsurge in military spending, almost none of which was allocated to PHALANX or similar projects, who saw their own budgets slashed and burned in the face of war. Despite repeated requests for more funding, the Joint Chiefs dismissed the outlandish 1950s program as 'pie-in-the-sky' spending and let it continue only because of its research efforts. Most of the remaining funding went to keep old equipment serviced and the labs running, if only barely.\n"
+"\n"
+"PHALANX never quite recovered after the war. They would never again have the budgets they had in the '50s; the glory years were over. They supplied some new technology used in the Gulf War, and experienced brief uptick during the opening years of the 21st century due to soaring US military budgets, but after these brief spurts of creativity the project would again fade into obscurity.\n"
+"\n"
+"The Second Cold War drained away the last life left in the project. Its commanders struggled to keep it going without even the money to keep their aircraft in the sky, but even the invention of artificial spider silk couldn't save them from the United States' crashing economy. The country's slide into ruin necked every 'non-essential' military program in the country, one by one, and PHALANX was finally stricken from the budget in 2027. It was five months away from its 70th anniversary. The staff was dismissed, the base dismantled, the unique equipment mothballed and thrown into storage. The project was quickly forgotten.\n"
+"\n"
+"Until it was rediscovered on 9 March 2084 by an old man who remembered reading about it in a dusty file in his long-demolished office.\n"
+"\n"
+"The horror and enormity of the events in Mumbai shocked the world. The existence of intelligent alien life in the universe was no longer a matter of faith. Not only did it exist, it had made contact in the worst way. The massacres were too large and visible for Earth's governments to keep them secret. Video evidence of the smoking, blood-stained streets aired on television sets around the world. The aliens had left no other evidence of their visit; they diligently recovered their dead and collected every scrap of dropped technology before pulling out.\n"
+"\n"
+"Panic spread like wildfire in the wake of the Mumbai broadcasts, and things got worse as word reached the general public about the slaughter in Bonn, Johannesburg and Bangkok. The world knew it had been visited, and now it began to realise it was under attack.\n"
+"\n"
+"The quest for solutions was frantic. The United Nations remained in session continuously for over a week. Plans were drawn up and burnt down with lightning speed. The world was completely defenceless against an alien invasion, both militarily and psychologically. No one had prepared for this. It was one of the forgotten doomsday scenarios that sat crumbling to dust in the back closet of some strategic planning office, unread and unheeded. Now, however, the public demanded answers that no one knew, action that no one could provide.\n"
+"\n"
+"The UN could agree only on a few token gestures; at the order of the Security Council, NASA evacuated International Space Stations 1 and 2, as well as the permanent colony on the moon. The entire range of planned missions to Mars was stricken from the calendar. On all the matters that counted, the UN was deadlocked. Some nations wanted to build massive orbital defences while others insisted they should be permitted to use nuclear missiles for UFO interception. Still others had even more outlandish projects to push. The situation grew worse as the days wore on, until one aging diplomat remembered the PHALANX project.\n"
+"\n"
+"With full access to the old US files, the UN was shocked to find plans, designs, equipment and training manuals; a fully-detailed response to an invasion scenario. They immediately decided to revive PHALANX and equip it to defend Earth from the alien threat. However, everyone who was once a part of PHALANX was either dead or dying. They were going to need a new staff.\n"
+"\n"
+"By unanimous vote, it was decided to keep the project as secret as possible, known only to the highest-ranking politicians and military commanders in the world. The public was comforted with smokescreens and sweet lies while a hand-picked team of operatives from all over the world struggled to resurrect PHALANX and whip it back into fighting trim. Old equipment was tracked down and recovered from gutted warehouses, crumbling manuals were dusted off, and stockpiles of weapons were reassembled for use. With the secret backing of all eight great powers, the project had funding, support and the men it needed to go to war.\n"
+"\n"
+"All it lacked was a leader."
 
-#: ../base/ufos/research.ufo:3109
-#: ../base/ufos/research.ufo:3117
+#: ../base/ufos/research.ufo:3138
+#: ../base/ufos/research.ufo:3146
 msgid "A New Twist"
 msgstr ""
 
-#: ../base/ufos/research.ufo:3110
+#: ../base/ufos/research.ufo:3139
 msgid "news_newtwist_txt"
 msgstr ""
 
@@ -4142,75 +4415,75 @@ msgstr ""
 
 #: ../base/ufos/seq_intro.ufo:8
 msgid "intro_sentence1"
-msgstr ""
+msgstr "Året är 2084. Jorden, aldrig den mest stabila av platser, njuter av en fredlig tid. Den våldsamma början av 2000-talet är sedan länge över, gamla minnen men inte så länge sedan att den har glömts. För de flesta av jordens befolkning är det andra kalla kriget en mörk skugga från det förflutna, precis som världskrigen var för deras barn."
 
 #: ../base/ufos/seq_intro.ufo:16
 msgid "intro_sentence2"
-msgstr ""
+msgstr "Konflikter har blivit mindre vanliga nära slutet av århundradet sedan ny teknologi och hälsovård har blivit tillgänglig för den tredje världen. Även om terrorismen har lugnat ner sig efter det andra kalla kriget, med all dess fruktan och inhumana aktiviteter, finns den fortfarande i tankarna hos folket, från det gamla Amerika till den sargade indiska kontinenten. Klasskamper stiger nu upp mot politiska slagfältet när alla nationer har garanterats en lika representation i FN, och den globala levnadsstandarden stiger sakta även för de mest sargade hörnen av planeten. Länderna har stärkts och stabiliserats runt en omorganiserat Förenade Nationerna som lyckats ena världens regeringar. Fragment av mindre nationer, först skrämda av de kraftfulla nationerna Kina och Europeiska gemenskapen, har själva gått samman till politiskt kraftfulla gemenskaper -- och sedan upptäckt att de inte har några grannar som de kan strida mot. För första gången i människans historia råder lag och ordning över mer än tre fjärdedelar av världen."
 
 #: ../base/ufos/seq_intro.ufo:24
 msgid "intro_sentence3"
-msgstr ""
+msgstr "För många människor på jorden verkar det äntligen som allt är bra."
 
 #: ../base/ufos/seq_intro.ufo:32
 msgid "intro_sentence4"
-msgstr ""
+msgstr "Den första attacken sker mot staden Mumbai den 3: e mars 2084. Sex små UFO dyker upp från ingenstans och flyger skrikande ner mot Jorden utan att upptäckas av de stora radarinstallationerna som täcker skyarna över Mumbai och landar i den mest befolkade staden på Jorden. De lämnar inga varningar, ingen förklaring. Tjugotusen oskyldiga civila och tre bataljoner från elittrupperna blir totalt massakerade under tolv brutala timmar innan en stor styrka från samfälligheten får stopp på utomjordingarnas härjningar. Lika snabbt som de kom, retirerar de tillbaka till sina farkoster och försvinner tillbaka ut i rymden och lämnar endast de sargade gatorna i Mumbai som bevis för vad som hänt."
 
 #: ../base/ufos/seq_intro.ufo:40
 msgid "intro_sentence5"
-msgstr ""
+msgstr "Ett extrainkallat möte i FN leder inte någonstans. Attackerna fortsätter med kortare mellanrum, större och kraftfullare än tidigare, denna gång i Bonn, Johannesburg och Bangkok. Några nationer försöker med diplomati och skickar meddelanden på tusentals olika språk till utomjordingarna som härjar runt i länderna. Deras ord ignoreras. Inom ett par timmar är alla tre städerna tömda på mänskligt liv. Attacken är över precis när de olika militära styrkorna har fått bekräftelse på att slå tillbaka. Utomjordingarna lämnar ingenting kvar förutom betong och blod. Alla UFO försvinner utan ett spår -- men ingen tvivlar på att de kommer tillbaka."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence6"
-msgstr ""
+msgstr "87 timmar efter den första attacken på Mumbai förklarar Jorden krig mot utomjordingarna. I över två veckor kämpar de mänskliga styrkorna så gott de kan för att avvärja attackerna från de mystiska utomjordingarna. De förlorar oftare än de vinner."
 
 #: ../base/ufos/seq_intro.ufo:56
 msgid "intro_sentence7"
-msgstr ""
+msgstr "När endast ett alternativ kvarstår tar sig FN ton. Föråldrad utrustning dammas av, några av dem är äldre än ett decennium, och den länge sovande anti-utomjordiska byrån för tidigare Amerika -- PHALANX -- återuppstår under FN: s beskydd. Dess uppdrag är att kämpa mot det utomjordiska hotet och försäkra sig om att den mänskliga rasen överlever, till vilket pris som helst."
 
 #: ../base/ufos/seq_intro.ufo:64
 msgid "intro_sentence8"
-msgstr ""
+msgstr "Finansierade av alla åtta politiska krafter, och sammanslagningen av dess elitsoldater, är PHALANX det bästa av de bästa. Det är jordens första och enda försvarslinje. De kan inte misslyckas, för att om de gör det, kommer mänskligheten inte att ha en chans att överleva."
 
 #: ../base/ufos/seq_intro.ufo:100
 msgid "prolog_sentence1"
-msgstr ""
+msgstr "TILL: Base Commander, PHALANX, Atlantic Operations Command"
 
 #: ../base/ufos/seq_intro.ufo:110
 msgid "prolog_sentence2"
-msgstr ""
+msgstr "FRÅN: SecGen. Mahouf Serra, United Nations, New York City"
 
 #: ../base/ufos/seq_intro.ufo:119
 msgid "prolog_sentence3"
-msgstr ""
+msgstr "DATUM: 21 mars 2084"
 
 #: ../base/ufos/seq_intro.ufo:128
 msgid "prolog_sentence4"
-msgstr ""
+msgstr "ÄMNE: Lycka till"
 
 #: ../base/ufos/seq_intro.ufo:137
 msgid "prolog_sentence5"
-msgstr ""
+msgstr "Welcome to your new post, Commander. You now have full command over the PHALANX Extraterrestrial Response Unit. Your mission is to protect the citizens of Earth and stop the alien threat at all costs. How you accomplish this is up to you; our only requirement is that you succeed."
 
 #: ../base/ufos/seq_intro.ufo:146
 msgid "prolog_sentence6"
-msgstr ""
+msgstr "Your first order of business is to set up a headquarters. The UN has access to military bases all over the world, so you may consider any region for your base of operations. Choose the location wisely, because it will have great influence on the success of the PHALANX project."
 
 #: ../base/ufos/seq_intro.ufo:155
 msgid "prolog_sentence7"
-msgstr ""
+msgstr "A recent analysis of the attacks on Mumbai and Bonn reveal that UFO sightings and alien activity seems to focus on the most densely populated regions of Earth, including coastal North- and South-America, Europe, Eastasia, South and Mediterranean Africa, and Australia. You should consider including these territories in your field of operations."
 
 #: ../base/ufos/seq_intro.ufo:164
 msgid "prolog_sentence8"
-msgstr ""
+msgstr "Once you've established your first base, you must prepare your soldiers. The recruits we have assigned to PHALANX must be stationed on your dropship, then equipped for battle."
 
 #: ../base/ufos/seq_intro.ufo:173
 msgid "prolog_sentence9"
-msgstr ""
+msgstr "Take care of them, Commander. The rest of us are all counting on you, and praying for you."
 
 #: ../base/ufos/seq_intro.ufo:182
 msgid "prolog_sentence10"
-msgstr ""
+msgstr "That is all. Good luck and good hunting."
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"
@@ -4359,7 +4632,7 @@ msgstr ""
 #: ../base/ufos/weapons.ufo:35
 #: ../base/ufos/weapons.ufo:86
 #: ../base/ufos/weapons_melee.ufo:37
-#: ../base/ufos/weapons_melee.ufo:260
+#: ../base/ufos/weapons_melee.ufo:261
 msgid "Throw"
 msgstr "Kasta"
 
@@ -4373,7 +4646,7 @@ msgstr ""
 
 #: ../base/ufos/weapons.ufo:110
 msgid "Frag Grenade"
-msgstr "Splittergranat"
+msgstr "Spränggranat"
 
 #: ../base/ufos/weapons.ufo:126
 #: ../base/ufos/weapons.ufo:198
@@ -4692,7 +4965,7 @@ msgstr ""
 msgid "Plasma Blade"
 msgstr ""
 
-#: ../base/ufos/weapons_melee.ufo:244
+#: ../base/ufos/weapons_melee.ufo:245
 msgid "Lock"
 msgstr ""
 
@@ -4870,14 +5143,14 @@ msgid ""
 msgstr ""
 
 #: client/cl_actor.c:1199
-#, c-format
-msgid "Armor  %i\tMorale  %i\n"
+#, fuzzy, c-format
+msgid "Armour  %i\tMorale  %i\n"
 msgstr "Skydd  %i\tMoral  %i\n"
 
 #: client/cl_actor.c:1206
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"Armor  %i\tMorale  %i\n"
+"Armour  %i\tMorale  %i\n"
 "Move %i (%i TU left)\n"
 msgstr ""
 "Skydd  %i\tMoral  %i\n"
@@ -5004,20 +5277,21 @@ msgstr "Flygplanet startat"
 #: client/cl_campaign.c:1245
 #: client/cl_campaign.c:1252
 #: client/cl_campaign.c:1260
-#: client/cl_campaign.c:2535
-#: client/cl_campaign.c:2572
-#: client/cl_campaign.c:2574
-#: client/cl_campaign.c:3021
-#: client/cl_campaign.c:3233
+#: client/cl_campaign.c:2542
+#: client/cl_campaign.c:2579
+#: client/cl_campaign.c:2581
+#: client/cl_campaign.c:3028
+#: client/cl_campaign.c:3240
 #: client/cl_map.c:270
-#: client/cl_research.c:695
-#: client/cl_research.c:818
-#: client/cl_research.c:821
-#: client/cl_research.c:825
-#: client/cl_research.c:838
-#: client/cl_research.c:874
-#: client/cl_research.c:1023
-#: client/cl_research.c:1026
+#: client/cl_research.c:703
+#: client/cl_research.c:826
+#: client/cl_research.c:829
+#: client/cl_research.c:834
+#: client/cl_research.c:852
+#: client/cl_research.c:890
+#: client/cl_research.c:921
+#: client/cl_research.c:1063
+#: client/cl_research.c:1066
 #: client/cl_transfer.c:240
 #: client/cl_transfer.c:364
 #: client/cl_transfer.c:419
@@ -5080,7 +5354,7 @@ msgstr "På väg tillbaka till basen"
 
 #: client/cl_aircraft.c:417
 #: client/cl_map.c:882
-#: client/cl_ufopedia.c:321
+#: client/cl_ufopedia.c:344
 #, c-format
 msgid "Speed:\t%.0f\n"
 msgstr "Hastighet:\t%.0f\n"
@@ -5096,21 +5370,21 @@ msgstr "Bränsle:\t%i/%i\n"
 #: client/cl_aircraft.c:421
 #: client/cl_transfer.c:835
 #: client/cl_transfer.c:836
-#: client/cl_ufopedia.c:297
-#: client/cl_ufopedia.c:324
-#: client/cl_ufopedia.c:325
-#: client/cl_ufopedia.c:326
+#: client/cl_ufopedia.c:320
+#: client/cl_ufopedia.c:347
+#: client/cl_ufopedia.c:348
+#: client/cl_ufopedia.c:349
 msgid "None"
 msgstr "Ingen"
 
 #: client/cl_aircraft.c:419
-#: client/cl_ufopedia.c:324
+#: client/cl_ufopedia.c:347
 #, c-format
 msgid "Weapon:\t%s\n"
 msgstr "Vapen:\t%s\n"
 
 #: client/cl_aircraft.c:420
-#: client/cl_ufopedia.c:325
+#: client/cl_ufopedia.c:348
 #, c-format
 msgid "Shield:\t%s\n"
 msgstr "Sköld:\t%s\n"
@@ -5135,12 +5409,12 @@ msgid "Interception"
 msgstr ""
 
 #: client/cl_aircraft.c:700
-#: client/cl_campaign.c:2572
+#: client/cl_campaign.c:2579
 msgid "You've won the battle"
 msgstr "Du har vunnit slaget"
 
 #: client/cl_aircraft.c:707
-#: client/cl_campaign.c:2574
+#: client/cl_campaign.c:2581
 msgid "You've lost the battle"
 msgstr "Du har förlorat slaget"
 
@@ -5253,8 +5527,8 @@ msgstr ""
 
 #: client/cl_basemanagement.c:2212
 #: client/cl_basemanagement.c:2214
-#: client/cl_campaign.c:1781
-#: client/cl_campaign.c:2366
+#: client/cl_campaign.c:1785
+#: client/cl_campaign.c:2373
 #: client/cl_market.c:192
 #: client/cl_market.c:443
 #: client/cl_team.c:1246
@@ -5529,28 +5803,28 @@ msgstr[0] "peng"
 msgstr[1] "pengar"
 
 #: client/cl_campaign.c:1165
-#: client/cl_campaign.c:4474
+#: client/cl_campaign.c:4481
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "forskare"
 msgstr[1] "forskare"
 
 #: client/cl_campaign.c:1166
-#: client/cl_campaign.c:4476
+#: client/cl_campaign.c:4483
 msgid "medic"
 msgid_plural "medics"
 msgstr[0] "sjukvårdare"
 msgstr[1] "sjukvårdare"
 
 #: client/cl_campaign.c:1167
-#: client/cl_campaign.c:4473
+#: client/cl_campaign.c:4480
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "soldat"
 msgstr[1] "soldater"
 
 #: client/cl_campaign.c:1168
-#: client/cl_campaign.c:4475
+#: client/cl_campaign.c:4482
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] "arbetare"
@@ -5620,7 +5894,7 @@ msgstr ""
 #: client/cl_campaign.c:1461
 #, c-format
 msgid ""
-"Build:\t%i\n"
+"Built:\t%i\n"
 "Active:\t%i\n"
 "Attacked:\t%i\n"
 msgstr ""
@@ -5671,59 +5945,59 @@ msgstr ""
 "\t-------\n"
 "Summa:\t%i c\n"
 
-#: client/cl_campaign.c:1781
+#: client/cl_campaign.c:1785
 msgid "Error saving game. Check free disk space!"
 msgstr "Fel vid sparande av spel. Kontrollera ledigt diskutrymme!"
 
-#: client/cl_campaign.c:2366
+#: client/cl_campaign.c:2373
 msgid "Assemble or load a team"
 msgstr ""
 
-#: client/cl_campaign.c:2535
+#: client/cl_campaign.c:2542
 msgid "Your dropship is not near the landing zone"
 msgstr ""
 
-#: client/cl_campaign.c:3018
+#: client/cl_campaign.c:3025
 #, c-format
 msgid "By selling %s %s"
 msgstr ""
 
-#: client/cl_campaign.c:3019
+#: client/cl_campaign.c:3026
 #, c-format
 msgid "%i collected item"
 msgid_plural "%i collected items"
 msgstr[0] "%i insamlade objekt"
 msgstr[1] "%i insamlade objekt"
 
-#: client/cl_campaign.c:3020
+#: client/cl_campaign.c:3027
 #, c-format
 msgid "you gathered %i credits."
 msgstr "du samlade in %i pengar."
 
-#: client/cl_campaign.c:3076
+#: client/cl_campaign.c:3083
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr ""
 
-#: client/cl_campaign.c:3078
+#: client/cl_campaign.c:3085
 #, c-format
 msgid "%s has been awarded the posthumous rank of %s\\for inspirational gallantry in the face of overwhelming odds.\n"
 msgstr ""
 
-#: client/cl_campaign.c:3079
+#: client/cl_campaign.c:3086
 msgid "Soldier promoted"
 msgstr ""
 
-#: client/cl_campaign.c:3232
+#: client/cl_campaign.c:3239
 #, c-format
 msgid "Defense of base: %s successful!"
 msgstr ""
 
-#: client/cl_campaign.c:4469
+#: client/cl_campaign.c:4476
 msgid "Human"
 msgstr "Mänsklig"
 
-#: client/cl_campaign.c:4471
+#: client/cl_campaign.c:4478
 #, c-format
 msgid ""
 "Race: %s\n"
@@ -6087,12 +6361,12 @@ msgstr ""
 msgid "In: %i Out: %i"
 msgstr "In: %i Ut: %i"
 
-#: client/cl_menu.c:1708
+#: client/cl_menu.c:1723
 #, c-format
 msgid "Key: %s"
 msgstr "Tangent: %s"
 
-#: client/cl_menu.c:3062
+#: client/cl_menu.c:3077
 msgid "Hide the HUD (press ESC to reactivate HUD)"
 msgstr ""
 
@@ -6186,97 +6460,101 @@ msgid "New technology researched: %s. You should read this at UFOpedia.\n"
 msgstr "Ny teknologi har forskats fram: %s. Du bör läsa om den i UFOpedia.\n"
 
 #: client/cl_research.c:85
-#: client/cl_research.c:1110
+#: client/cl_research.c:1150
 msgid "Research finished"
 msgstr "Forskningen är färdig"
 
-#: client/cl_research.c:586
+#: client/cl_research.c:594
 #, c-format
 msgid "Available scientists in this base: %i"
 msgstr "Tillgängliga forskare i den här basen: %i"
 
-#: client/cl_research.c:587
+#: client/cl_research.c:595
 msgid "Not researched in any base."
 msgstr ""
 
-#: client/cl_research.c:593
+#: client/cl_research.c:601
 #, c-format
 msgid "Researched in %s"
 msgstr ""
 
-#: client/cl_research.c:595
+#: client/cl_research.c:603
 msgid "Researched in this base."
 msgstr ""
 
-#: client/cl_research.c:606
+#: client/cl_research.c:614
 #, c-format
 msgid "Progress: %.1f%%"
 msgstr "Förlopp: %.1f%%"
 
-#: client/cl_research.c:608
+#: client/cl_research.c:616
 msgid "Progress: Not available."
 msgstr "Förlopp: Inte tillgängligt."
 
-#: client/cl_research.c:612
+#: client/cl_research.c:620
 msgid "Status: Under research"
 msgstr "Status: Forskning pågår"
 
-#: client/cl_research.c:615
+#: client/cl_research.c:623
 msgid "Status: Research paused"
 msgstr "Status: Forskning pausad"
 
-#: client/cl_research.c:618
+#: client/cl_research.c:626
 msgid "Status: Research finished"
 msgstr "Status: Forskning färdig"
 
-#: client/cl_research.c:621
+#: client/cl_research.c:629
 msgid "Status: Unknown technology"
 msgstr "Status: Okänd technologi"
 
-#: client/cl_research.c:696
+#: client/cl_research.c:704
 msgid ""
 "There is no free lab available.\n"
 "You need to build one or free another\n"
 "in order to assign scientists to research this technology.\n"
 msgstr ""
 
-#: client/cl_research.c:818
+#: client/cl_research.c:826
 msgid "This item is already under research by your scientists."
 msgstr ""
 
-#: client/cl_research.c:821
-msgid "The research on this item continues."
-msgstr ""
-
-#: client/cl_research.c:825
-#: client/cl_research.c:874
+#: client/cl_research.c:829
+#: client/cl_research.c:890
 msgid "The research on this item is complete."
 msgstr ""
 
-#: client/cl_research.c:838
+#: client/cl_research.c:834
+msgid "The research on this item continues."
+msgstr ""
+
+#: client/cl_research.c:852
 msgid ""
 "The research on this item is not yet possible.\n"
 "You need to research the technologies it's based on first."
 msgstr ""
 
-#: client/cl_research.c:917
+#: client/cl_research.c:921
+msgid "No research proposal available for this project."
+msgstr ""
+
+#: client/cl_research.c:957
 msgid " [not yet researchable]"
 msgstr ""
 
-#: client/cl_research.c:1023
+#: client/cl_research.c:1063
 msgid "Nothing to research"
 msgstr "Ingenting att forska på"
 
-#: client/cl_research.c:1026
+#: client/cl_research.c:1066
 msgid "Build a laboratory first"
 msgstr "Bygg ett laboratorium först"
 
-#: client/cl_research.c:1109
+#: client/cl_research.c:1149
 #, c-format
 msgid "Research of %s finished\n"
 msgstr "Forskning av %s är färdig\n"
 
-#: client/cl_research.c:1431
+#: client/cl_research.c:1472
 msgid "No description available."
 msgstr "Ingen beskrivning tillgänglig."
 
@@ -6587,188 +6865,179 @@ msgstr ""
 msgid "UFO disappears on our radar"
 msgstr ""
 
-#: client/cl_ufopedia.c:115
+#: client/cl_ufopedia.c:138
 msgid "Close"
 msgstr ""
 
-#: client/cl_ufopedia.c:118
+#: client/cl_ufopedia.c:141
 msgid "Heavy"
 msgstr ""
 
-#: client/cl_ufopedia.c:121
+#: client/cl_ufopedia.c:144
 msgid "Assault"
 msgstr ""
 
-#: client/cl_ufopedia.c:124
+#: client/cl_ufopedia.c:147
 msgid "Sniper"
 msgstr ""
 
-#: client/cl_ufopedia.c:127
+#: client/cl_ufopedia.c:150
 msgid "Explosive"
 msgstr ""
 
-#: client/cl_ufopedia.c:130
+#: client/cl_ufopedia.c:153
 msgid "Unknown weapon skill"
 msgstr ""
 
-#: client/cl_ufopedia.c:151
+#: client/cl_ufopedia.c:174
 msgid "No requirements"
 msgstr "Inga krav"
 
-#: client/cl_ufopedia.c:201
-msgid "Armor\n"
-msgstr ""
-
-#: client/cl_ufopedia.c:206
-#, c-format
-msgid "%s weapon with\n"
-msgstr "%s vapen med\n"
-
-#: client/cl_ufopedia.c:206
-#: client/cl_ufopedia.c:209
-#: client/cl_ufopedia.c:215
-msgid "One-handed"
-msgstr "Enhands"
-
-#: client/cl_ufopedia.c:206
-#: client/cl_ufopedia.c:209
-#: client/cl_ufopedia.c:215
-msgid "Two-handed"
-msgstr "Tvåhands"
-
-#: client/cl_ufopedia.c:207
-#, c-format
-msgid "Max ammo:\t%i\n"
-msgstr ""
-
-#: client/cl_ufopedia.c:209
-#, c-format
-msgid "%s ammo-less weapon with\n"
-msgstr ""
-
-#: client/cl_ufopedia.c:215
-#, c-format
-msgid "%s auxiliary equipment with\n"
-msgstr ""
-
-#: client/cl_ufopedia.c:216
-#, c-format
-msgid "Action:\t%s\n"
-msgstr ""
-
-#: client/cl_ufopedia.c:217
-#, c-format
-msgid "Time units:\t%i\n"
-msgstr ""
-
-#: client/cl_ufopedia.c:218
-#, c-format
-msgid "Range:\t%g\n"
-msgstr "Räckvidd:\t%g\n"
-
-#: client/cl_ufopedia.c:223
-#, c-format
-msgid "Primary:\t%s\t(%s)\n"
-msgstr "Primär:\t%s\t(%s)\n"
-
 #: client/cl_ufopedia.c:224
-#, c-format
-msgid "Secondary:\t%s\t(%s)\n"
-msgstr "Sekondär:\t%s\t(%s)\n"
-
-#: client/cl_ufopedia.c:226
-#, c-format
-msgid "Damage:\t%i / %i\n"
-msgstr "Skada:\t%i / %i\n"
-
-#: client/cl_ufopedia.c:228
-#, c-format
-msgid "Time units:\t%i / %i\n"
+msgid "Armor\n"
 msgstr ""
 
 #: client/cl_ufopedia.c:229
 #, c-format
+msgid "%s weapon with\n"
+msgstr "%s vapen med\n"
+
+#: client/cl_ufopedia.c:229
+#: client/cl_ufopedia.c:232
+#: client/cl_ufopedia.c:238
+msgid "One-handed"
+msgstr "Enhands"
+
+#: client/cl_ufopedia.c:229
+#: client/cl_ufopedia.c:232
+#: client/cl_ufopedia.c:238
+msgid "Two-handed"
+msgstr "Tvåhands"
+
+#: client/cl_ufopedia.c:230
+#, c-format
+msgid "Max ammo:\t%i\n"
+msgstr ""
+
+#: client/cl_ufopedia.c:232
+#, c-format
+msgid "%s ammo-less weapon with\n"
+msgstr ""
+
+#: client/cl_ufopedia.c:238
+#, c-format
+msgid "%s auxiliary equipment with\n"
+msgstr ""
+
+#: client/cl_ufopedia.c:239
+#, c-format
+msgid "Action:\t%s\n"
+msgstr ""
+
+#: client/cl_ufopedia.c:240
+#, c-format
+msgid "Time units:\t%i\n"
+msgstr ""
+
+#: client/cl_ufopedia.c:241
+#, c-format
+msgid "Range:\t%g\n"
+msgstr "Räckvidd:\t%g\n"
+
+#: client/cl_ufopedia.c:246
+#, c-format
+msgid "Primary:\t%s\t(%s)\n"
+msgstr "Primär:\t%s\t(%s)\n"
+
+#: client/cl_ufopedia.c:247
+#, c-format
+msgid "Secondary:\t%s\t(%s)\n"
+msgstr "Sekondär:\t%s\t(%s)\n"
+
+#: client/cl_ufopedia.c:249
+#, c-format
+msgid "Damage:\t%i / %i\n"
+msgstr "Skada:\t%i / %i\n"
+
+#: client/cl_ufopedia.c:251
+#, c-format
+msgid "Time units:\t%i / %i\n"
+msgstr ""
+
+#: client/cl_ufopedia.c:252
+#, c-format
 msgid "Range:\t%g / %g\n"
 msgstr "Räckvidd:\t%g / %g\n"
 
-#: client/cl_ufopedia.c:231
+#: client/cl_ufopedia.c:254
 #, c-format
 msgid "Spreads:\t%g / %g\n"
 msgstr "Sprider:\t%g / %g\n"
 
-#: client/cl_ufopedia.c:236
-#: client/cl_ufopedia.c:335
+#: client/cl_ufopedia.c:259
+#: client/cl_ufopedia.c:358
 msgid "Unknown - need to research this"
 msgstr "Okänd - forskning behövs"
 
-#: client/cl_ufopedia.c:259
-msgid "Could not find armor definition"
-msgstr ""
-
-#: client/cl_ufopedia.c:261
-#, c-format
-msgid "Item %s is no armor but %s"
-msgstr ""
-
-#: client/cl_ufopedia.c:271
+#: client/cl_ufopedia.c:294
 #, c-format
 msgid "%s:\tProtection: %i\tHardness: %i\n"
 msgstr "%s:\tSkydd: %i\tHårdhet: %i\n"
 
-#: client/cl_ufopedia.c:295
+#: client/cl_ufopedia.c:318
 msgid "Error - could not find building"
 msgstr "Fel - kunde inte hitta byggnad"
 
-#: client/cl_ufopedia.c:297
+#: client/cl_ufopedia.c:320
 #, c-format
 msgid "Depends:\t%s\n"
 msgstr ""
 
-#: client/cl_ufopedia.c:298
+#: client/cl_ufopedia.c:321
 #, c-format
 msgid "Buildtime:\t%i day\n"
 msgid_plural "Buildtime:\t%i days\n"
 msgstr[0] "Byggtid:\t%i dag\n"
 msgstr[1] "Byggtid:\t%i dagar\n"
 
-#: client/cl_ufopedia.c:299
+#: client/cl_ufopedia.c:322
 #, c-format
 msgid "Fixcosts:\t%i c\n"
 msgstr ""
 
-#: client/cl_ufopedia.c:300
+#: client/cl_ufopedia.c:323
 #, c-format
 msgid "Running costs:\t%i c\n"
 msgstr "Löpande kostnader:\t%i c\n"
 
-#: client/cl_ufopedia.c:319
+#: client/cl_ufopedia.c:342
 msgid "Error - could not find aircraft"
 msgstr "Fel - kunde inte hitta flygplan"
 
-#: client/cl_ufopedia.c:322
+#: client/cl_ufopedia.c:345
 #, c-format
 msgid "Fuel:\t%i\n"
 msgstr "Bränsle:\t%i\n"
 
-#: client/cl_ufopedia.c:326
+#: client/cl_ufopedia.c:349
 #, c-format
 msgid "Equipment:\t%s\n"
 msgstr "Utrustning:\t%s\n"
 
-#: client/cl_ufopedia.c:395
+#: client/cl_ufopedia.c:418
 #, c-format
 msgid "%02i %s %i"
 msgstr "%02i %s %i"
 
-#: client/cl_ufopedia.c:410
+#: client/cl_ufopedia.c:433
 msgid "Proposal: "
 msgstr "Förslag: "
 
-#: client/cl_ufopedia.c:413
+#: client/cl_ufopedia.c:436
 msgid "Re: "
 msgstr "Sv: "
 
-#: client/cl_ufopedia.c:421
+#: client/cl_ufopedia.c:444
 #, c-format
 msgid ""
 "FROM: %s\n"
@@ -6781,47 +7050,47 @@ msgstr ""
 "DATUM: %s\n"
 "ÄMNE: %s%s\n"
 
-#: client/cl_ufopedia.c:507
+#: client/cl_ufopedia.c:531
 msgid "No pre-research description available."
 msgstr ""
 
-#: client/cl_ufopedia.c:670
+#: client/cl_ufopedia.c:685
 msgid "Ufopedia Content"
 msgstr ""
 
-#: client/cl_ufopedia.c:725
+#: client/cl_ufopedia.c:719
 #, c-format
 msgid "Ufopedia Index: %s"
 msgstr ""
 
-#: client/cl_ufopedia.c:1012
+#: client/cl_ufopedia.c:1026
 #, c-format
 msgid "^BProposal: %s (%s)\n"
 msgstr "^BFörslag: %s (%s)\n"
 
-#: client/cl_ufopedia.c:1014
+#: client/cl_ufopedia.c:1028
 #, c-format
 msgid "Proposal: %s (%s)\n"
 msgstr "Förslag: %s (%s)\n"
 
-#: client/cl_ufopedia.c:1022
+#: client/cl_ufopedia.c:1036
 #, c-format
 msgid "^BRe: %s (%s)\n"
 msgstr "^BSv: %s (%s)\n"
 
-#: client/cl_ufopedia.c:1024
+#: client/cl_ufopedia.c:1038
 #, c-format
 msgid "Re: %s (%s)\n"
 msgstr "Sv: %s (%s)\n"
 
-#: client/cl_ufopedia.c:1031
-#: client/cl_ufopedia.c:1037
+#: client/cl_ufopedia.c:1045
+#: client/cl_ufopedia.c:1051
 #, c-format
 msgid "^B%s (%s)\n"
 msgstr "^B%s (%s)\n"
 
-#: client/cl_ufopedia.c:1033
-#: client/cl_ufopedia.c:1039
+#: client/cl_ufopedia.c:1047
+#: client/cl_ufopedia.c:1053
 #, c-format
 msgid "%s (%s)\n"
 msgstr "%s (%s)\n"
@@ -6878,40 +7147,39 @@ msgstr ""
 msgid "Can't perform action - no control over allied actors!\n"
 msgstr ""
 
-#: game/g_client.c:645
-#: game/g_client.c:747
+#: game/g_client.c:746
 msgid "Can't perform action - not enough TUs!\n"
 msgstr ""
 
-#: game/g_client.c:750
+#: game/g_client.c:749
 msgid "Can't perform action - weapon already fully loaded with the same ammunition!\n"
 msgstr ""
 
-#: game/g_client.c:1252
+#: game/g_client.c:1251
 msgid "Currently shaken, won't let their guard down.\n"
 msgstr ""
 
-#: game/g_client.c:1327
+#: game/g_client.c:1326
 #, c-format
 msgid "%s panics!\n"
 msgstr "%s får panik!\n"
 
-#: game/g_client.c:1388
+#: game/g_client.c:1387
 #, c-format
 msgid "%s is on a rampage.\n"
 msgstr ""
 
-#: game/g_client.c:1390
+#: game/g_client.c:1389
 #, c-format
 msgid "%s is consumed by mad rage!\n"
 msgstr ""
 
-#: game/g_client.c:1451
+#: game/g_client.c:1450
 #, c-format
 msgid "%s is currently shaken.\n"
 msgstr ""
 
-#: game/g_client.c:1911
+#: game/g_client.c:1910
 #, c-format
 msgid "Team %i ( %s) will get the first turn.\n"
 msgstr ""
@@ -6952,4 +7220,7 @@ msgstr "1 dygn"
 #: po/OTHER_STRINGS:9
 msgid "5 days"
 msgstr "5 dygn"
+
+#~ msgid "Dunholm"
+#~ msgstr "Dunholm"
 

@@ -845,6 +845,8 @@ void TR_Reset (void);
 /* used to speed up buffer safe string copies */
 #define MAX_SMALLMENUTEXTLEN	1024
 
+#define MAX_EXLUDERECTS	4
+
 /** @brief Model that have more than one part (head, body) but may only use one menu node */
 typedef struct menuModel_s {
 	char id[MAX_VAR];
@@ -865,6 +867,10 @@ typedef struct menuAction_s {
 	void *data;
 	struct menuAction_s *next;
 } menuAction_t;
+
+typedef struct excludeRect_s {
+	vec2_t pos, size;
+} excludeRect_t;
 
 /** @brief menu node */
 typedef struct menuNode_s {
@@ -894,6 +900,8 @@ typedef struct menuNode_s {
 	vec4_t bgcolor;				/**< rgba */
 	vec4_t bordercolor;			/**< rgba - see border and padding */
 	menuAction_t *click, *rclick, *mclick, *wheel, *mouseIn, *mouseOut;
+	excludeRect_t exclude[MAX_EXLUDERECTS];	/**< exclude this for hover or click functions */
+	int excludeNum;				/**< how many exclude rects defined? */
 	menuDepends_t depends;
 	struct menuNode_s *next;
 } menuNode_t;

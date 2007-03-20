@@ -2485,7 +2485,7 @@ tech rs_craft_ufo_harvester
 	type	tech
 	name	"_UFO - Harvester"
 	description	"_ufo_harvester_txt"
-	description	"_ufo_harvester_pre_txt"
+	pre_description	"_ufo_harvester_pre_txt"
 	up_chapter	crafts
 
 	mail_pre

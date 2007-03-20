@@ -70,7 +70,7 @@ item fraggrenade
 
 	weapon_mod fraggrenade
 	{
-		firedef 
+		firedef
 		{
 			name	"_Lob"
 			skill	explosive
@@ -142,7 +142,7 @@ item flashbang
 
 	weapon_mod flashbang
 	{
-		firedef 
+		firedef
 		{
 			name	"_Lob"
 			skill	explosive
@@ -213,7 +213,7 @@ item smokegrenade
 
 	weapon_mod smokegrenade
 	{
-		firedef 
+		firedef
 		{
 			name	"_Lob"
 			skill	explosive
@@ -284,7 +284,7 @@ item stungrenade
 
 	weapon_mod stungrenade
 	{
-		firedef 
+		firedef
 		{
 			name	"_Lob"
 			skill	explosive
@@ -356,7 +356,7 @@ item incgrenade
 
 	weapon_mod incgrenade
 	{
-		firedef 
+		firedef
 		{
 			name	"_Lob"
 			skill	explosive
@@ -427,7 +427,7 @@ item plasmagrenade
 
 	weapon_mod plasmagrenade
 	{
-		firedef 
+		firedef
 		{
 			name	"_Lob"
 			skill	explosive
