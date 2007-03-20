@@ -137,7 +137,7 @@ static void SV_Map_f (void)
 	}
 
 	if (!Q_strncmp(Cmd_Argv(0), "devmap", 6)) {
-		Com_Printf("deactivate ai - make sure to reset sv_ai after maptesting");
+		Com_Printf("deactivate ai - make sure to reset sv_ai after maptesting\n");
 		Cvar_SetValue("sv_ai", 0);
 	}
 
