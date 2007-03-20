@@ -2146,7 +2146,8 @@ static int CL_GameLoad (const char *filename)
 	memcpy(&stats, sb.data + sb.readcount, sizeof(stats_t));
 	sb.readcount += sizeof(stats_t);
 
-	HOS_GameLoad(&sb);
+	if (version >= 6)
+		HOS_GameLoad(&sb);
 
 	/* ensure research correctly initialised */
 	RS_UpdateData();
