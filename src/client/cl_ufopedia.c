@@ -71,12 +71,29 @@ static qboolean UP_TechGetsDisplayed (technology_t *tech)
  */
 static void UP_ChangeDisplay (int newDisplay)
 {
+	/* for reseting the scrolling */
+	static menuNode_t *ufopedia = NULL, *ufopediaMail = NULL;
+
 	if (newDisplay < UFOPEDIA_DISPLAYEND && newDisplay >= 0)
 		upDisplay = newDisplay;
 	else
 		Com_Printf("Error in UP_ChangeDisplay (%i)\n", newDisplay);
 
 	Cvar_SetValue("mn_uppreavailable", 0);
+
+	/**
+	 * only fetch this once after ufopedia menu was on the stack (was the
+	 * current menu)
+	 */
+	if (!ufopedia || !ufopediaMail) {
+		ufopedia = MN_GetNodeFromCurrentMenu("ufopedia");
+		ufopediaMail = MN_GetNodeFromCurrentMenu("ufopedia_mail");
+	}
+
+	/* maybe we call this function and the ufopedia is not on the menu stack */
+	if (ufopedia && ufopediaMail) {
+		ufopedia->textScroll = ufopediaMail->textScroll = 0;
+	}
 
 	/* make sure, that we leave the mail header space */
 	menuText[TEXT_UFOPEDIA_MAILHEADER] = NULL;
@@ -517,11 +534,6 @@ extern void UP_Article (technology_t* tech)
 		Cvar_Set("mn_uptitle", _(tech->name));
 		menuText[TEXT_UFOPEDIA] = NULL;
 	}
-
-	/* and now set the dates */
-	/* FIXME: will this produce memory bugs if the description doesn't have  day month year placeholders? */
-/*	Com_sprintf(buf, sizeof(buf), menuText[TEXT_UFOPEDIA], day, month, year);
-	menuText[TEXT_UFOPEDIA] = buf;*/
 }
 
 /**
