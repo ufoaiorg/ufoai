@@ -5,11 +5,21 @@ Tracks contributed under GPL
 * dawn.ogg (author: Draikon)
 * space.ogg (author: Draikon)
 * dbsea.ogg (author: Draikon)
+* Alex Parker tracks: Alex*.ogg
 
 Tracks that are public domain
 =============================
 * greecei.ogg (taken from worldforge/Golgotha)
 * alBasrahM.ogg, turinItalyM.ogg (from Golgotha, modified)
+
+Additional info
+===============
+1. AlexForest.ogg contains sounds sourced from thefreesoundproject.com
+   and released under the creative commons sampling plus license (1.0).
+   These sounds and their authors are:
+   Odayam sounds (night time).wav - "genghis attenborough"
+   winter woods junkyard.wav - "offthesky (www.offthesky.com)"
+2.
 
 -----------------------------------------------------------------------
 
