@@ -38,9 +38,9 @@ typedef struct pediaChapter_s
 } pediaChapter_t;
 
 void UP_ResetUfopedia(void);
-void UP_ParseUpChapters(char *title, char **text);
-void UP_OpenWith(char *name);
-void UP_OpenCopyWith(char *name);
+void UP_ParseUpChapters(const char *name, char **text);
+void UP_OpenWith(const char *name);
+void UP_OpenCopyWith(const char *name);
 void CL_ItemDescription(int item);
 int UP_GetUnreadMails(void);
 

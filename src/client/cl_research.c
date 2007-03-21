@@ -81,7 +81,7 @@ void RS_PushNewsWhenResearched (int tech_idx)
 		return;
 
 	Com_sprintf(str, sizeof(str), _("Research project finished: %s. You should read this at UFOpedia.\n"), _(tech->name));
-	
+
 	if (tech->mailSent < MAILSENT_FINISHED) { /* No mail sent for finished research. */
 		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("A research project has been completed: %s\n"), _(tech->name));
 		MN_AddNewMessage(_("Research finished"), str, qfalse, MSG_RESEARCH_FINISHED, tech);
@@ -97,12 +97,12 @@ void RS_PushNewsWhenResearched (int tech_idx)
 void RS_MarkOneResearchable (technology_t* tech)
 {
 	if (!tech)
-		return;	
+		return;
 
 	Com_DPrintf("RS_MarkOneResearchable: \"%s\" marked as researchable.\n", tech->id);
-	
+
 	if (tech->mailSent < MAILSENT_PROPOSAL) { /* No mail sent for research proposal. */
-		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("New Research proposal: %s\n"), _(tech->name));
+		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("New research proposal: %s\n"), _(tech->name));
 		MN_AddNewMessage(_("Unknown Technology"), messageBuffer, qfalse, MSG_RESEARCH_PROPOSAL, tech);
 		tech->mailSent = MAILSENT_PROPOSAL;
 	}
@@ -219,7 +219,7 @@ void RS_MarkCollected (technology_t* tech)
 {
 	assert(tech);
 	if (tech->mailSent < MAILSENT_PROPOSAL) { /* No mail sent for research proposal. */
-		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("New Research proposal: %s\n"), _(tech->name));
+		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("New research proposal: %s\n"), _(tech->name));
 		MN_AddNewMessage(_("Unknown Technology"), messageBuffer, qfalse, MSG_RESEARCH_PROPOSAL, tech);
 		tech->mailSent = MAILSENT_PROPOSAL;
 	}

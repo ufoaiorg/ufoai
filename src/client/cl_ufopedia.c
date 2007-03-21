@@ -465,14 +465,11 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type)
  */
 extern void UP_Article (technology_t* tech)
 {
-	int i, day, month, year;
+	int i;
 
 	assert(tech);
 
 	if (RS_IsResearched_ptr(tech)) {
-		day = tech->researchedDateDay;
-		month = tech->researchedDateMonth;
-		year = tech->researchedDateYear;
 		Cvar_Set("mn_uptitle", va("%s *", _(tech->name)));
 		/* If researched -> display research text */
 		menuText[TEXT_UFOPEDIA] = _(tech->description);
@@ -523,9 +520,6 @@ extern void UP_Article (technology_t* tech)
 	/* see also UP_TechGetsDisplayed */
 	} else if (RS_Collected_(tech) || ((tech->statusResearchable) && (*tech->pre_description))) {
 		/* This tech has something collected or has a research proposal. (i.e. pre-research text) */
-		day = tech->preResearchedDateDay;
-		month = tech->preResearchedDateMonth;
-		year = tech->preResearchedDateYear;
 		Cvar_Set("mn_uptitle", _(tech->name));
 		/* Not researched but some items collected -> display pre-research text if available. */
 		if (*tech->pre_description) {
@@ -582,7 +576,7 @@ static void UP_DrawEntry (technology_t* tech)
  * @param name Ufopedia entry id
  * @sa UP_FindEntry_f
  */
-extern void UP_OpenWith (char *name)
+extern void UP_OpenWith (const char *name)
 {
 	Cbuf_AddText("mn_push ufopedia\n");
 	Cbuf_Execute();
@@ -594,7 +588,7 @@ extern void UP_OpenWith (char *name)
  * @param name Ufopedia entry id
  * @sa UP_FindEntry_f
  */
-extern void UP_OpenCopyWith (char *name)
+extern void UP_OpenCopyWith (const char *name)
 {
 	Cbuf_AddText("mn_push_copy ufopedia\n");
 	Cbuf_Execute();
@@ -1102,7 +1096,7 @@ extern void UP_ResetUfopedia (void)
  * @param text Text for chapter ID
  * @sa CL_ParseFirstScript
  */
-extern void UP_ParseUpChapters (char *id, char **text)
+extern void UP_ParseUpChapters (const char *name, char **text)
 {
 	const char *errhead = "UP_ParseUpChapters: unexptected end of file (names ";
 	char *token;
@@ -1111,13 +1105,13 @@ extern void UP_ParseUpChapters (char *id, char **text)
 	token = COM_Parse(text);
 
 	if (!*text || *token !='{') {
-		Com_Printf("UP_ParseUpChapters: chapter def \"%s\" without body ignored\n", id);
+		Com_Printf("UP_ParseUpChapters: chapter def \"%s\" without body ignored\n", name);
 		return;
 	}
 
 	do {
 		/* get the id */
-		token = COM_EParse(text, errhead, id);
+		token = COM_EParse(text, errhead, name);
 		if (!*text)
 			break;
 		if (*token == '}')
@@ -1133,7 +1127,7 @@ extern void UP_ParseUpChapters (char *id, char **text)
 		gd.upChapters[gd.numChapters].idx = gd.numChapters;	/* set self-link */
 
 		/* get the name */
-		token = COM_EParse(text, errhead, id);
+		token = COM_EParse(text, errhead, name);
 		if (!*text)
 			break;
 		if (*token == '}')
