@@ -4352,7 +4352,7 @@ static void CL_CampaignRunMarket(void);
 static void CL_GameNew (void)
 {
 	int i;
-	char val[32];
+	char val[8];
 
 	Cvar_Set("mn_main", "singleplayerInGame");
 	Cvar_Set("mn_active", "map");
@@ -4366,14 +4366,19 @@ static void CL_GameNew (void)
 	/* clear any old pending messages */
 	CL_InitMessageSystem();
 
-	memset(&gd, 0, sizeof(gd));
-	memset(&stats, 0, sizeof(stats));
-	CL_ReadSinglePlayerData();
-
-	/* get campaign */
+	/* get campaign - they are already parsed here */
 	curCampaign = CL_GetCampaign(Cvar_VariableString("campaign"));
 	if (!curCampaign)
 		return;
+
+	memset(&ccs, 0, sizeof(ccs_t));
+
+	ccs.angles[YAW] = GLOBE_ROTATE;
+	ccs.date = curCampaign->date;
+
+	memset(&gd, 0, sizeof(gd));
+	memset(&stats, 0, sizeof(stats));
+	CL_ReadSinglePlayerData();
 
 	Cvar_Set("team", curCampaign->team);
 
@@ -4398,11 +4403,6 @@ static void CL_GameNew (void)
 
 	/* reset, set time */
 	selMis = NULL;
-	memset(&ccs, 0, sizeof(ccs_t));
-
-	ccs.angles[YAW] = GLOBE_ROTATE;
-
-	ccs.date = curCampaign->date;
 
 	/* ensure ccs.singleplayer is set to true */
 	CL_StartSingleplayer(qtrue);
