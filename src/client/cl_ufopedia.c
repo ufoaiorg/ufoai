@@ -1020,10 +1020,8 @@ static void UP_OpenMail_f (void)
 	while (m) {
 		switch (m->type) {
 		case MSG_RESEARCH_PROPOSAL:
-#ifdef DEBUG
 			if (!m->pedia->mail[TECHMAIL_PRE].from[0])
-				Com_Printf("UP_OpenMail_f: No mail for '%s'\n", m->pedia->id);
-#endif
+				break;
 			if (m->pedia->mail[TECHMAIL_PRE].read == qfalse)
 				Com_sprintf(tempBuf, sizeof(tempBuf), _("^BProposal: %s (%s)\n"), _(m->pedia->mail[TECHMAIL_PRE].subject), _(m->pedia->mail[TECHMAIL_PRE].from));
 			else
@@ -1031,10 +1029,8 @@ static void UP_OpenMail_f (void)
 			Q_strcat(upText, tempBuf, sizeof(upText));
 			break;
 		case MSG_RESEARCH_FINISHED:
-#ifdef DEBUG
 			if (!m->pedia->mail[TECHMAIL_RESEARCHED].from[0])
-				Com_Printf("UP_OpenMail_f: No mail for '%s'\n", m->pedia->id);
-#endif
+				break;
 			if (m->pedia->mail[TECHMAIL_RESEARCHED].read == qfalse)
 				Com_sprintf(tempBuf, sizeof(tempBuf), _("^BRe: %s (%s)\n"), _(m->pedia->mail[TECHMAIL_RESEARCHED].subject), _(m->pedia->mail[TECHMAIL_RESEARCHED].from));
 			else
