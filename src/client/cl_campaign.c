@@ -1444,10 +1444,12 @@ static void CL_StatsUpdate_f (void)
 {
 	char *pos;
 	static char statsBuffer[MAX_STATS_BUFFER];
+	int hired[MAX_EMPL];
 	int i = 0, j, costs = 0, sum = 0;
 
 	/* delete buffer */
 	memset(statsBuffer, 0, sizeof(statsBuffer));
+	memset(hired, 0, sizeof(hired));
 
 	pos = statsBuffer;
 
@@ -1468,36 +1470,48 @@ static void CL_StatsUpdate_f (void)
 		Q_strcat(pos, va(_("%s\t%s\n"), gd.nations[i].name, CL_GetNationHappinessString(&gd.nations[i])), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 	}
 
-	/* employees */
+	/* costs */
+	for (i = 0; i < gd.numEmployees[EMPL_SCIENTIST]; i++) {
+		if (gd.employees[EMPL_SCIENTIST][i].hired) {
+			costs += SALARY_SCIENTIST_BASE + gd.employees[EMPL_SCIENTIST][i].chr.rank * SALARY_SCIENTIST_RANKBONUS;
+			hired[EMPL_SCIENTIST]++;
+		}
+	}
+	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++) {
+		if (gd.employees[EMPL_SOLDIER][i].hired) {
+			costs += SALARY_SOLDIER_BASE + gd.employees[EMPL_SOLDIER][i].chr.rank * SALARY_SOLDIER_RANKBONUS;
+			hired[EMPL_SOLDIER]++;
+		}
+	}
+	for (i = 0; i < gd.numEmployees[EMPL_WORKER]; i++) {
+		if (gd.employees[EMPL_WORKER][i].hired) {
+			costs += SALARY_WORKER_BASE + gd.employees[EMPL_WORKER][i].chr.rank * SALARY_WORKER_RANKBONUS;
+			hired[EMPL_WORKER]++;
+		}
+	}
+	for (i = 0; i < gd.numEmployees[EMPL_MEDIC]; i++) {
+		if (gd.employees[EMPL_MEDIC][i].hired) {
+			costs += SALARY_MEDIC_BASE + gd.employees[EMPL_MEDIC][i].chr.rank * SALARY_MEDIC_RANKBONUS;
+			hired[EMPL_MEDIC]++;
+		}
+	}
+	for (i = 0; i < gd.numEmployees[EMPL_ROBOT]; i++) {
+		if (gd.employees[EMPL_ROBOT][i].hired) {
+			costs += SALARY_ROBOT_BASE + gd.employees[EMPL_ROBOT][i].chr.rank * SALARY_ROBOT_RANKBONUS;
+			hired[EMPL_ROBOT]++;
+		}
+	}
+
+	/* employees - this is between the two costs parts to count the hired employees */
 	pos += (strlen(pos) + 1);
 	menuText[TEXT_STATS_4] = pos;
 	for (i = 0; i < MAX_EMPL; i++) {
-		Q_strcat(pos, va(_("%s\t%i\n"), E_GetEmployeeString(i), gd.numEmployees[i]), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
+		Q_strcat(pos, va(_("%s\t%i\n"), E_GetEmployeeString(i), hired[i]), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 	}
 
-	/* costs */
+	/* costs - second part */
 	pos += (strlen(pos) + 1);
 	menuText[TEXT_STATS_5] = pos;
-	for (i = 0; i < gd.numEmployees[EMPL_SCIENTIST]; i++) {
-		if (gd.employees[EMPL_SCIENTIST][i].hired)
-			costs += SALARY_SCIENTIST_BASE + gd.employees[EMPL_SCIENTIST][i].chr.rank * SALARY_SCIENTIST_RANKBONUS;
-	}
-	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++) {
-		if (gd.employees[EMPL_SOLDIER][i].hired)
-			costs += SALARY_SOLDIER_BASE + gd.employees[EMPL_SOLDIER][i].chr.rank * SALARY_SOLDIER_RANKBONUS;
-	}
-	for (i = 0; i < gd.numEmployees[EMPL_WORKER]; i++) {
-		if (gd.employees[EMPL_WORKER][i].hired)
-			costs += SALARY_WORKER_BASE + gd.employees[EMPL_WORKER][i].chr.rank * SALARY_WORKER_RANKBONUS;
-	}
-	for (i = 0; i < gd.numEmployees[EMPL_MEDIC]; i++) {
-		if (gd.employees[EMPL_MEDIC][i].hired)
-			costs += SALARY_MEDIC_BASE + gd.employees[EMPL_MEDIC][i].chr.rank * SALARY_MEDIC_RANKBONUS;
-	}
-	for (i = 0; i < gd.numEmployees[EMPL_ROBOT]; i++) {
-		if (gd.employees[EMPL_ROBOT][i].hired)
-			costs += SALARY_ROBOT_BASE + gd.employees[EMPL_ROBOT][i].chr.rank * SALARY_ROBOT_RANKBONUS;
-	}
 	Q_strcat(pos, va(_("Employees:\t%i c\n"), costs), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 	sum += costs;
 
