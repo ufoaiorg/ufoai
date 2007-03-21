@@ -1002,6 +1002,8 @@ static void UP_MailClientClick_f (void)
 	}
 }
 
+#define MAIL_LENGTH 128
+#define CHECK_MAIL_EOL if (tempBuf[MAIL_LENGTH-3] != '\n') tempBuf[MAIL_LENGTH-2] = '\n';
 /**
  * @brief Start the mailclient
  * @sa UP_MailClientClick_f
@@ -1010,7 +1012,7 @@ static void UP_MailClientClick_f (void)
  */
 static void UP_OpenMail_f (void)
 {
-	char tempBuf[256] = "";
+	char tempBuf[MAIL_LENGTH] = "";
 	message_t *m = messageStack;
 
 	*upText = '\0';
@@ -1024,6 +1026,7 @@ static void UP_OpenMail_f (void)
 				Com_sprintf(tempBuf, sizeof(tempBuf), _("^BProposal: %s (%s)\n"), _(m->pedia->mail[TECHMAIL_PRE].subject), _(m->pedia->mail[TECHMAIL_PRE].from));
 			else
 				Com_sprintf(tempBuf, sizeof(tempBuf), _("Proposal: %s (%s)\n"), _(m->pedia->mail[TECHMAIL_PRE].subject), _(m->pedia->mail[TECHMAIL_PRE].from));
+			CHECK_MAIL_EOL
 			Q_strcat(upText, tempBuf, sizeof(upText));
 			break;
 		case MSG_RESEARCH_FINISHED:
@@ -1033,6 +1036,7 @@ static void UP_OpenMail_f (void)
 				Com_sprintf(tempBuf, sizeof(tempBuf), _("^BRe: %s (%s)\n"), _(m->pedia->mail[TECHMAIL_RESEARCHED].subject), _(m->pedia->mail[TECHMAIL_RESEARCHED].from));
 			else
 				Com_sprintf(tempBuf, sizeof(tempBuf), _("Re: %s (%s)\n"), _(m->pedia->mail[TECHMAIL_RESEARCHED].subject), _(m->pedia->mail[TECHMAIL_RESEARCHED].from));
+			CHECK_MAIL_EOL
 			Q_strcat(upText, tempBuf, sizeof(upText));
 			break;
 		case MSG_NEWS:
@@ -1041,12 +1045,14 @@ static void UP_OpenMail_f (void)
 					Com_sprintf(tempBuf, sizeof(tempBuf), _("^B%s (%s)\n"), _(m->pedia->mail[TECHMAIL_PRE].subject), _(m->pedia->mail[TECHMAIL_PRE].from));
 				else
 					Com_sprintf(tempBuf, sizeof(tempBuf), _("%s (%s)\n"), _(m->pedia->mail[TECHMAIL_PRE].subject), _(m->pedia->mail[TECHMAIL_PRE].from));
+				CHECK_MAIL_EOL
 				Q_strcat(upText, tempBuf, sizeof(upText));
 			} else if (m->pedia->mail[TECHMAIL_RESEARCHED].from[0]) {
 				if (m->pedia->mail[TECHMAIL_RESEARCHED].read == qfalse)
 					Com_sprintf(tempBuf, sizeof(tempBuf), _("^B%s (%s)\n"), _(m->pedia->mail[TECHMAIL_RESEARCHED].subject), _(m->pedia->mail[TECHMAIL_RESEARCHED].from));
 				else
 					Com_sprintf(tempBuf, sizeof(tempBuf), _("%s (%s)\n"), _(m->pedia->mail[TECHMAIL_RESEARCHED].subject), _(m->pedia->mail[TECHMAIL_RESEARCHED].from));
+				CHECK_MAIL_EOL
 				Q_strcat(upText, tempBuf, sizeof(upText));
 			}
 			break;
