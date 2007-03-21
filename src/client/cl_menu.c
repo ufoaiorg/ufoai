@@ -743,7 +743,7 @@ static void MN_Command_f (void)
 	name = Cmd_Argv(0);
 
 	/* first search all menus on the stack */
-	for (i = 0; i <= menuStackPos; i++)
+	for (i = 0; i < menuStackPos; i++)
 		for (node = menuStack[i]->firstNode; node; node = node->next)
 			if (node->type == MN_CONFUNC && !Q_strncmp(node->name, name, sizeof(node->name))) {
 				/* found the node */
@@ -3912,6 +3912,8 @@ message_t *MN_AddNewMessage (const char *title, const char *text, qboolean popup
 {
 	message_t *mess;
 
+	assert(type < MSG_MAX);
+
 	/* allocate memory for new message */
 	mess = (message_t *) malloc(sizeof(message_t));
 
@@ -3943,7 +3945,8 @@ message_t *MN_AddNewMessage (const char *title, const char *text, qboolean popup
 	case MSG_PROMOTION:
 	case MSG_DEATH:
 		break;
-	case MSG_RESEARCH:
+	case MSG_RESEARCH_PROPOSAL:
+	case MSG_RESEARCH_FINISHED:
 		assert(pedia);
 	case MSG_NEWS:
 		/* reread the new mails in UP_GetUnreadMails */
@@ -3954,6 +3957,8 @@ message_t *MN_AddNewMessage (const char *title, const char *text, qboolean popup
 	case MSG_BASEATTACK:
 	case MSG_PRODUCTION:
 		/*TODO: S_StartLocalSound(); */
+		break;
+	case MSG_MAX:
 		break;
 	}
 

@@ -1437,10 +1437,12 @@ static void CL_StatsUpdate_f (void)
 {
 	char *pos;
 	static char statsBuffer[MAX_STATS_BUFFER];
+	int hired[MAX_EMPL];
 	int i = 0, j, costs = 0, sum = 0;
 
 	/* delete buffer */
 	memset(statsBuffer, 0, sizeof(statsBuffer));
+	memset(hired, 0, sizeof(hired));
 
 	pos = statsBuffer;
 
@@ -1461,36 +1463,48 @@ static void CL_StatsUpdate_f (void)
 		Q_strcat(pos, va(_("%s\t%s\n"), gd.nations[i].name, CL_GetNationHappinessString(&gd.nations[i])), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 	}
 
-	/* employees */
+	/* costs */
+	for (i = 0; i < gd.numEmployees[EMPL_SCIENTIST]; i++) {
+		if (gd.employees[EMPL_SCIENTIST][i].hired) {
+			costs += SALARY_SCIENTIST_BASE + gd.employees[EMPL_SCIENTIST][i].chr.rank * SALARY_SCIENTIST_RANKBONUS;
+			hired[EMPL_SCIENTIST]++;
+		}
+	}
+	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++) {
+		if (gd.employees[EMPL_SOLDIER][i].hired) {
+			costs += SALARY_SOLDIER_BASE + gd.employees[EMPL_SOLDIER][i].chr.rank * SALARY_SOLDIER_RANKBONUS;
+			hired[EMPL_SOLDIER]++;
+		}
+	}
+	for (i = 0; i < gd.numEmployees[EMPL_WORKER]; i++) {
+		if (gd.employees[EMPL_WORKER][i].hired) {
+			costs += SALARY_WORKER_BASE + gd.employees[EMPL_WORKER][i].chr.rank * SALARY_WORKER_RANKBONUS;
+			hired[EMPL_WORKER]++;
+		}
+	}
+	for (i = 0; i < gd.numEmployees[EMPL_MEDIC]; i++) {
+		if (gd.employees[EMPL_MEDIC][i].hired) {
+			costs += SALARY_MEDIC_BASE + gd.employees[EMPL_MEDIC][i].chr.rank * SALARY_MEDIC_RANKBONUS;
+			hired[EMPL_MEDIC]++;
+		}
+	}
+	for (i = 0; i < gd.numEmployees[EMPL_ROBOT]; i++) {
+		if (gd.employees[EMPL_ROBOT][i].hired) {
+			costs += SALARY_ROBOT_BASE + gd.employees[EMPL_ROBOT][i].chr.rank * SALARY_ROBOT_RANKBONUS;
+			hired[EMPL_ROBOT]++;
+		}
+	}
+
+	/* employees - this is between the two costs parts to count the hired employees */
 	pos += (strlen(pos) + 1);
 	menuText[TEXT_STATS_4] = pos;
 	for (i = 0; i < MAX_EMPL; i++) {
-		Q_strcat(pos, va(_("%s\t%i\n"), E_GetEmployeeString(i), gd.numEmployees[i]), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
+		Q_strcat(pos, va(_("%s\t%i\n"), E_GetEmployeeString(i), hired[i]), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 	}
 
-	/* costs */
+	/* costs - second part */
 	pos += (strlen(pos) + 1);
 	menuText[TEXT_STATS_5] = pos;
-	for (i = 0; i < gd.numEmployees[EMPL_SCIENTIST]; i++) {
-		if (gd.employees[EMPL_SCIENTIST][i].hired)
-			costs += SALARY_SCIENTIST_BASE + gd.employees[EMPL_SCIENTIST][i].chr.rank * SALARY_SCIENTIST_RANKBONUS;
-	}
-	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++) {
-		if (gd.employees[EMPL_SOLDIER][i].hired)
-			costs += SALARY_SOLDIER_BASE + gd.employees[EMPL_SOLDIER][i].chr.rank * SALARY_SOLDIER_RANKBONUS;
-	}
-	for (i = 0; i < gd.numEmployees[EMPL_WORKER]; i++) {
-		if (gd.employees[EMPL_WORKER][i].hired)
-			costs += SALARY_WORKER_BASE + gd.employees[EMPL_WORKER][i].chr.rank * SALARY_WORKER_RANKBONUS;
-	}
-	for (i = 0; i < gd.numEmployees[EMPL_MEDIC]; i++) {
-		if (gd.employees[EMPL_MEDIC][i].hired)
-			costs += SALARY_MEDIC_BASE + gd.employees[EMPL_MEDIC][i].chr.rank * SALARY_MEDIC_RANKBONUS;
-	}
-	for (i = 0; i < gd.numEmployees[EMPL_ROBOT]; i++) {
-		if (gd.employees[EMPL_ROBOT][i].hired)
-			costs += SALARY_ROBOT_BASE + gd.employees[EMPL_ROBOT][i].chr.rank * SALARY_ROBOT_RANKBONUS;
-	}
 	Q_strcat(pos, va(_("Employees:\t%i c\n"), costs), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 	sum += costs;
 
@@ -2427,7 +2441,7 @@ static void CP_AddItemAsCollected (void)
 			gd.bases[baseID].storage.num[i]++;
 			Com_DPrintf("add item: '%s'\n", item->id);
 			assert(item->tech);
-			((technology_t*)(item->tech))->statusCollected = qtrue;
+			RS_MarkCollected((technology_t*)(item->tech));
 		}
 	}
 }
@@ -2660,7 +2674,8 @@ static void CL_CarriedItems (le_t *soldier)
 			tech = csi.ods[item->item.t].tech;
 			if (!tech)
 				Sys_Error("CL_CarriedItems: No tech for %s / %s\n", csi.ods[item->item.t].id, csi.ods[item->item.t].name);
-			tech->statusCollected++;
+			RS_MarkCollected(tech);
+
 			if (!csi.ods[item->item.t].reload || item->item.a == 0)
 				continue;
 			ccs.eMission.num_loose[item->item.m] += item->item.a;
@@ -2850,7 +2865,8 @@ void CL_SellOrAddItems (void)
 		/* If the related technology is NOT researched, don't sell items. */
 		if (!RS_IsResearched_ptr(tech)) {
 			baseCurrent->storage.num[cargo[i].idx] += cargo[i].amount;
-			tech->statusCollected += cargo[i].amount;
+			if (cargo[i].amount > 0)
+				RS_MarkCollected(tech);
 			continue;
 		}
 		/* If the related technology is researched, check the autosell option. */
@@ -3297,6 +3313,7 @@ extern void CL_ParseResearchedCampaignItems (const char *name, char **text)
 
 		for (i = 0; i < gd.numTechnologies; i++)
 			if (!Q_strncmp(token, gd.technologies[i].id, MAX_VAR)) {
+				gd.technologies[i].mailSent = MAILSENT_FINISHED;
 				gd.technologies[i].markResearched.markOnly[gd.technologies[i].markResearched.numDefinitions] = qtrue;
 				Q_strncpyz(gd.technologies[i].markResearched.campaign[gd.technologies[i].markResearched.numDefinitions],
 					name, MAX_VAR);
@@ -3312,7 +3329,7 @@ extern void CL_ParseResearchedCampaignItems (const char *name, char **text)
 }
 
 /**
- * @brief This function parses a list of items that should be set to researched = true after campaign start
+ * @brief This function parses a list of items that should be set to researchable = true after campaign start
  * @param researchable Mark them researchable or not researchable
  */
 extern void CL_ParseResearchableCampaignStates (const char *name, char **text, qboolean researchable)
@@ -3349,9 +3366,10 @@ extern void CL_ParseResearchableCampaignStates (const char *name, char **text, q
 
 		for (i = 0; i < gd.numTechnologies; i++)
 			if (!Q_strncmp(token, gd.technologies[i].id, MAX_VAR)) {
-				if (researchable)
-					RS_MarkOneResearchable(gd.technologies[i].idx);
-				else
+				if (researchable) {
+					gd.technologies[i].mailSent = MAILSENT_PROPOSAL;
+					RS_MarkOneResearchable(&gd.technologies[i]);
+				} else
 					Com_Printf("TODO: Mark unresearchable");
 				Com_DPrintf("...tech %s\n", gd.technologies[i].id);
 				break;

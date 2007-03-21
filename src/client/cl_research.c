@@ -49,6 +49,17 @@ static int researchListPos;
 static stringlist_t curRequiredList;
 
 /**
+ * @brief Push a news about this tech when researched.
+ * @param[in] tech_idx Technology index in global data.
+ * @sa RS_ResearchFinish
+ */
+static void RS_PushNewsWhenResearched (technology_t* tech)
+{
+	assert(tech->pushnews);
+	/* TODO */
+}
+
+/**
  * @brief Sets a technology status to researched and updates the date.
  * @param[in] tech The technology that was researched.
  */
@@ -63,36 +74,34 @@ void RS_ResearchFinish (technology_t* tech)
 		tech->preResearchedDateYear = ccs.date.day / 365;
 	}
 	if (tech->pushnews)
-		RS_PushNewsWhenResearched(tech->idx);
-}
+		RS_PushNewsWhenResearched(tech);
 
-/**
- * @brief Push a news about this tech when researched.
- * @param[in] tech_idx Technology index in global data.
- * @sa RS_ResearchFinish
- */
-void RS_PushNewsWhenResearched (int tech_idx)
-{
-	char str[128];
-
-	technology_t *tech = &gd.technologies[tech_idx];
-
-	if (!tech->pushnews)
-		return;
-
-	Com_sprintf(str, sizeof(str), _("New technology researched: %s. You should read this at UFOpedia.\n"),
-	_(tech->name));
-	MN_AddNewMessage(_("Research finished"), str, qfalse, MSG_STANDARD, NULL);
+	/* send a new message and add it to the mailclient */
+	if (tech->mailSent < MAILSENT_FINISHED) { /* No mail sent for finished research. */
+		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("A research project has been completed: %s\n"), _(tech->name));
+		MN_AddNewMessage(_("Research finished"), messageBuffer, qfalse, MSG_RESEARCH_FINISHED, tech);
+		tech->mailSent = MAILSENT_FINISHED;
+	}
 }
 
 /**
  * @brief Marks one tech as researchable.
- * @param id unique id of a technology_t
+ * @param tech The technology to be marked.
+ * @sa RS_MarkCollected
  */
-void RS_MarkOneResearchable (int tech_idx)
+void RS_MarkOneResearchable (technology_t* tech)
 {
-	technology_t *tech = &gd.technologies[tech_idx];
+	if (!tech)
+		return;
+
 	Com_DPrintf("RS_MarkOneResearchable: \"%s\" marked as researchable.\n", tech->id);
+
+	if (tech->mailSent < MAILSENT_PROPOSAL) { /* No mail sent for research proposal. */
+		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("New research proposal: %s\n"), _(tech->name));
+		MN_AddNewMessage(_("Unknown Technology researchable"), messageBuffer, qfalse, MSG_RESEARCH_PROPOSAL, tech);
+		tech->mailSent = MAILSENT_PROPOSAL;
+	}
+
 	tech->statusResearchable = qtrue;
 	CL_DateConvert(&ccs.date, &tech->preResearchedDateDay, &tech->preResearchedDateMonth);
 	tech->preResearchedDateYear = ccs.date.day / 365;
@@ -200,6 +209,23 @@ static qboolean RS_RequirementsMet (requirements_t *required_AND, requirements_t
 }
 
 /**
+ * @brief Marks a give technology as collected
+ * @sa CP_AddItemAsCollected
+ * @sa MN_AddNewMessage
+ * @sa RS_MarkOneResearchable
+ */
+void RS_MarkCollected (technology_t* tech)
+{
+	assert(tech);
+	if (tech->mailSent < MAILSENT_PROPOSAL) { /* No mail sent for research proposal. */
+		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("New research proposal: %s\n"), _(tech->name));
+		MN_AddNewMessage(_("Unknown Technology found"), messageBuffer, qfalse, MSG_RESEARCH_PROPOSAL, tech);
+		tech->mailSent = MAILSENT_PROPOSAL;
+	}
+	tech->statusCollected = qtrue;
+}
+
+/**
  * @brief Checks if anything has been collected (in the current base) and correct the value for each requirement.
  * @note Does not check if the collected items satisfy the needed "amount". This is done in RS_RequirementsMet. tech->statusCollected is just needed so the item is at least displayed somewhere.
  * @return Returns qtrue if there are is ANYTHING collected for each entry otherwise qfalse.
@@ -237,7 +263,7 @@ qboolean RS_CheckCollected (requirements_t *required)
 					tech->statusCollected = qfalse;
 					something_collected_from_each = qfalse;
 				} else {
-					tech->statusCollected = qtrue;
+					RS_MarkCollected(tech);
 				}
 			}
 			break;
@@ -290,7 +316,7 @@ void RS_CheckAllCollected (void)
 		tech = &gd.technologies[i];
 
 		if (RS_CheckCollected(&tech->require_AND) || RS_CheckCollected(&tech->require_OR)) {
-			tech->statusCollected = qtrue;
+			RS_MarkCollected(tech);
 		}
 	}
 }
@@ -301,7 +327,7 @@ void RS_CheckAllCollected (void)
  * Should be called when a new item is researched (RS_MarkResearched) and after
  * the tree-initialisation (RS_InitTree)
  */
-void RS_MarkResearchable (void)
+void RS_MarkResearchable (qboolean init)
 {
 	int i;
 	technology_t *tech = NULL;
@@ -325,13 +351,17 @@ void RS_MarkResearchable (void)
 				/* All requirements are met. */
 				if (RS_RequirementsMet(&tech->require_AND, &tech->require_OR)) {
 					Com_DPrintf("RS_MarkResearchable: \"%s\" marked researchable. reason:requirements.\n", tech->id);
-					RS_MarkOneResearchable(tech->idx);
+					if (init && tech->time <= 0)
+						tech->mailSent = MAILSENT_PROPOSAL;
+					RS_MarkOneResearchable(tech);
 				}
 
 				/* If the tech is a 'free' one (such as ammo for a weapon),
 				   mark it as researched and loop back to see if it unlocks
 				   any other techs */
 				if (tech->statusResearchable && tech->time <= 0) {
+					if (init)
+						tech->mailSent = MAILSENT_FINISHED;
 					RS_ResearchFinish(tech);
 					Com_DPrintf("RS_MarkResearchable: automatically researched \"%s\"\n", tech->id);
 					/* Restart the loop as this may have unlocked new possibilities. */
@@ -405,6 +435,7 @@ void RS_RequiredIdxAssign (void)
  * research tree/inventory/etc... are initialised.
  * @todo Add a function to reset ALL research-stati to RS_NONE; -> to be called after start of a new game.
  * @todo Enhance ammo model display (see comment in code).
+ * @sa CL_GameInit
  */
 void RS_InitTree (void)
 {
@@ -536,12 +567,8 @@ void RS_InitTree (void)
 
 		} /* switch */
 	}
-	/*
-	for (i = 0; i < gd.numBases; i++)
-		if (gd.bases[i].founded)
-			RS_MarkCollected(&gd.bases[i].storage);
-	*/
-	RS_MarkResearchable();
+
+	RS_MarkResearchable(qtrue);
 
 	memset(&curRequiredList, 0, sizeof(stringlist_t));
 
@@ -699,7 +726,16 @@ void RS_AssignScientist (technology_t* tech)
 			/* Assign the tech to a lab&base. */
 			tech->scientists++;
 			tech->base_idx = building->base_idx;
+
+			/* Assign the sci to the lab and set number of used lab-space. */
 			employee->buildingID = building->idx;
+			base->usedLab++;
+
+#if DEBUG
+			if (baseCurrent->usedLab > B_GetAvailableLabSpace(baseCurrent))
+				Com_DPrintf("RS_AssignScientist: more lab-space used (%i) than available (%i) - please investigate.\n", baseCurrent->usedLab, B_GetAvailableLabSpace(baseCurrent));
+#endif
+
 			/* TODO: use
 			E_AssignEmployeeToBuilding(employee, building);
 			instead. */
@@ -755,14 +791,49 @@ static void RS_RemoveScientist (technology_t* tech)
 	if (tech->scientists > 0) {
 		employee = E_GetAssignedEmployee(&gd.bases[tech->base_idx], EMPL_SCIENTIST);
 		if (employee) {
-			employee->buildingID = -1; /* See also E_RemoveEmployeeFromBuilding */
+			/* Remove the sci from the tech. */
 			tech->scientists--;
+
+			/* Remove the sci from the lab and set number of used lab-space. */
+			employee->buildingID = -1; /* See also E_RemoveEmployeeFromBuilding */
+			gd.bases[tech->base_idx].usedLab--;
 		}
 	}
 
 	if (tech->scientists == 0) {
+		/* Remove the tech rfomt he base if no scis are left to research it. */
 		tech->base_idx = -1;
 	}
+}
+
+
+/**
+ * @brief Assign as many scientists to the research project as possible.
+ * @param[in] base The base the tech is researched in.
+ * @param[in] tech The technology you want to max out.
+ * @sa RS_AssignScientist
+ */
+static void RS_MaxOutResearch (base_t *base, technology_t* tech)
+{
+	employee_t *employee = NULL;
+
+	if (!base || !tech)
+		return;
+
+	if (tech->scientists <= 0)
+		tech->scientists = 0; /* Just in case it's negative. */
+
+	/* Add as many scientists as possible to this tech. */
+	do {
+		if (base->usedLab < B_GetAvailableLabSpace(base)) {
+			employee = E_GetUnassignedEmployee(base, EMPL_SCIENTIST);
+			if (employee)
+				RS_AssignScientist(tech);
+		} else {
+			/* No free lab-space left. */
+			break;
+		}
+	} while (employee);
 }
 
 /**
@@ -796,7 +867,6 @@ static void RS_RemoveScientist_f (void)
 static void RS_ResearchStart_f (void)
 {
 	technology_t *tech = NULL;
-	employee_t *employee = NULL;
 
 	/* We are not in base view. */
 	if (!baseCurrent)
@@ -819,35 +889,38 @@ static void RS_ResearchStart_f (void)
 	*/
 	if (!tech->statusResearchable) {
 		if (RS_CheckCollected(&tech->require_AND) && RS_CheckCollected(&tech->require_OR))
-			RS_MarkOneResearchable(tech->idx);
-		RS_MarkResearchable();
+			RS_MarkOneResearchable(tech);
+		RS_MarkResearchable(qfalse);
 	}
 	/************/
 
 	if (tech->statusResearchable) {
 		switch (tech->statusResearch) {
 		case RS_RUNNING:
-			MN_Popup(_("Notice"), _("This item is already under research by your scientists."));
-			break;
-		case RS_FINISH:
-			MN_Popup(_("Notice"), _("The research on this item is complete."));
+			if (tech->base_idx == baseCurrent->idx) {
+				/* Research already running in current base ... try to add max amount of scis. */
+				RS_MaxOutResearch(baseCurrent, tech);
+			}else {
+				/* Research already running in another base. */
+				MN_Popup(_("Notice"), _("This item is currently under research in another base."));
+			}
 			break;
 		case RS_PAUSED:
 		case RS_NONE:
 			if (tech->statusResearch == RS_PAUSED) {
-				MN_Popup(_("Notice"), _("The research on this item continues."));
+				/* MN_Popup(_("Notice"), _("The research on this item continues.")); Removed because it isn't really needed.*/
+				Com_Printf("RS_ResearchStart_f: The research on this item continues.\n");
 			}
-			if (tech->scientists <= 0) {
-				tech->scientists = 0; /* Just in case it's negative. */
+			/* Add as many scientists as possible to this tech. */
+			RS_MaxOutResearch(baseCurrent, tech);
 
-				/* Add as many scientists as possible to this tech. */
-				do {
-					employee = E_GetUnassignedEmployee(baseCurrent, EMPL_SCIENTIST);
-					if (employee)
-						RS_AssignScientist(tech);
-				} while (employee);
+			if (tech->scientists > 0) {
+				tech->statusResearch = RS_RUNNING;
 			}
-			tech->statusResearch = RS_RUNNING;
+			break;
+		case RS_FINISH:
+			/* Should never be executed. */
+			MN_Popup(_("Notice"), _("The research on this item is complete."));
 			break;
 		default:
 			break;
@@ -859,7 +932,7 @@ static void RS_ResearchStart_f (void)
 }
 
 /**
- * @brief Removes all scientists from teh selected research-list entry.
+ * @brief Removes all scientists from the selected research-list entry.
  */
 static void RS_ResearchStop_f (void)
 {
@@ -918,8 +991,8 @@ static void RS_ShowPedia_f (void)
 		return;
 
 	/* get the currently selected research-item */
-	tech = researchList[researchListPos];
 
+	tech = researchList[researchListPos];
 	if (*tech->pre_description) {
 		UP_OpenCopyWith(tech->id);
 	} else {
@@ -946,20 +1019,21 @@ void RS_UpdateData (void)
 		available[i] = E_CountUnassigned(&gd.bases[i], EMPL_SCIENTIST);
 	}
 	RS_CheckAllCollected();
-	RS_MarkResearchable();
+	RS_MarkResearchable(qfalse);
 	for (i = 0, j = 0; i < gd.numTechnologies; i++) {
 		tech = &gd.technologies[i];
-		Com_sprintf(name, MAX_VAR, tech->name);
-
-		/* TODO: add check for collected items */
 
 		/* Don't show technologies with time == 0 - those are NOT separate research topics. */
 		if (tech->time == 0)
 			continue;
 
+		Com_sprintf(name, sizeof(name), tech->name);
+
+		/* TODO: add check for collected items */
+
 		if (tech->statusCollected && !tech->statusResearchable && (tech->statusResearch != RS_FINISH)) {
 			/* An unresearched collected item that cannot yet be researched. */
-			Q_strcat(name, _(" [not yet researchable]"), MAX_VAR);
+			Q_strcat(name, _(" [not yet researchable]"), sizeof(name));
 			/* Color the item 'unresearchable' */
 			Cbuf_AddText(va("researchunresearchable%i\n", j));
 			/* Display the concated text in the correct list-entry. */
@@ -1008,7 +1082,7 @@ void RS_UpdateData (void)
 			/* Display the concated text in the correct list-entry.
 			 * But embed it in brackets if it isn't researched in the current base. */
 			if ((tech->scientists > 0) && (tech->base_idx != baseCurrent->idx)) {
-				Com_sprintf(name, MAX_VAR, "(%s)", name);
+				Com_sprintf(name, sizeof(name), "(%s)", name);
 			}
 			Cvar_Set(va("mn_researchitem%i", j), _(name));
 			/* Assign the current tech in the global list to the correct entry in the displayed list. */
@@ -1103,33 +1177,26 @@ static qboolean RS_DependsOn(char *id1, char *id2)
 /**
  * @brief Mark technologies as researched. This includes techs that depends in "id" and have time=0
  * @param[in] id Unique id of a technology_t
+ * @sa CL_CheckResearchStatus
  */
-void RS_MarkResearched (const char *id)
+static void RS_MarkResearched (technology_t *tech)
 {
-	unsigned hash;
-	technology_t *tech = NULL;
-
-	hash = Com_HashKey(id, TECH_HASH_SIZE);
-	for (tech = tech_hash[hash]; tech; tech = tech->hash_next) {
-		if (!Q_stricmp (id, tech->id)) {
-			RS_ResearchFinish(tech);
-			Com_DPrintf("Research of \"%s\" finished.\n", tech->id);
-			INV_EnableAutosell(tech);
-			break;
+	RS_ResearchFinish(tech);
+	Com_DPrintf("Research of \"%s\" finished.\n", tech->id);
+	INV_EnableAutosell(tech);
 #if 0
-		} else if (RS_DependsOn(tech->id, id) && (tech->time <= 0) && RS_TechIsResearchable(tech)) {
-			RS_ResearchFinish(tech);
-			Com_DPrintf("Depending tech \"%s\" has been researched as well.\n", tech->id);
-#endif
-		}
+	if (RS_DependsOn(tech->id, id) && (tech->time <= 0) && RS_TechIsResearchable(tech)) {
+		RS_ResearchFinish(tech);
+		Com_DPrintf("Depending tech \"%s\" has been researched as well.\n", tech->id);
 	}
-	RS_MarkResearchable();
+#endif
+	RS_MarkResearchable(qfalse);
 }
 
 /**
  * @brief Checks the research status
- * @todo Needs to check on the exact time that elapsed since the last check fo the status.
- *
+ * @todo Needs to check on the exact time that elapsed since the last check of the status.
+ * @sa RS_MarkResearched
  */
 void CL_CheckResearchStatus (void)
 {
@@ -1151,14 +1218,11 @@ void CL_CheckResearchStatus (void)
 				/* TODO include employee-skill in calculation. */
 				/* Will be a good thing (think of percentage-calculation) once non-integer values are used. */
 				if (tech->time <= 0) {
-					Com_sprintf(messageBuffer, MAX_MESSAGE_TEXT, _("Research of %s finished\n"), _(tech->name));
-					MN_AddNewMessage(_("Research finished"), messageBuffer, qfalse, MSG_RESEARCH, tech);
-
 					/* Remove all scientists from the technology. */
 					while (tech->scientists > 0)
 						RS_RemoveScientist(tech);
 
-					RS_MarkResearched(tech->id);
+					RS_MarkResearched(tech);
 					researchListLength = 0;
 					researchListPos = 0;
 					newResearch++;
@@ -1292,7 +1356,7 @@ void RS_MarkResearchedAll (void)
 
 	for (i = 0; i < gd.numTechnologies; i++) {
 		Com_DPrintf("...mark %s as researched\n", gd.technologies[i].id);
-		RS_MarkOneResearchable(i);
+		RS_MarkOneResearchable(&gd.technologies[i]);
 		RS_ResearchFinish(&gd.technologies[i]);
 		/* TODO: Set all "collected" entries in the requirements to the "amount" value. */
 	}
@@ -1312,7 +1376,7 @@ static void RS_DebugResearchAll (void)
 	} else {
 		tech= RS_GetTechByID(Cmd_Argv(1));
 		Com_DPrintf("...mark %s as researched\n", tech->id);
-		RS_MarkOneResearchable(tech->idx);
+		RS_MarkOneResearchable(tech);
 		RS_ResearchFinish(tech);
 	}
 }
@@ -1330,15 +1394,15 @@ static void RS_DebugResearchableAll (void)
 		for (i = 0; i < gd.numTechnologies; i++) {
 			tech = &gd.technologies[i];
 			Com_Printf("...mark %s as researchable\n", tech->id);
-			RS_MarkOneResearchable(i);
-			tech->statusCollected = qtrue;
+			RS_MarkOneResearchable(tech);
+			RS_MarkCollected(tech);
 		}
 	} else {
 		tech = RS_GetTechByID(Cmd_Argv(1));
 		if (tech) {
 			Com_Printf("...mark %s as researchable\n", tech->id);
-			RS_MarkOneResearchable(tech->idx);
-			tech->statusCollected = qtrue;
+			RS_MarkOneResearchable(tech);
+			RS_MarkCollected(tech);
 		}
 	}
 }
@@ -1949,7 +2013,7 @@ technology_t **RS_GetTechsByType (researchType_t type)
 
 
 /**
- * @brief Searches for the technology that has teh most scientists assigned in a given base.
+ * @brief Searches for the technology that has the most scientists assigned in a given base.
  * @param[in] base_idx In what base the tech shoudl be researched.
  * @sa E_RemoveEmployeeFromBuilding
  */

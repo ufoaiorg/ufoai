@@ -55,9 +55,10 @@ enum {
 static int upDisplay = UFOPEDIA_CHAPTERS;
 
 /**
- * @brief Checks If a technology/up-entry will be displayed in the ufopedia (list).
- * @note This does not check for different display modes (only pre-research text, what stats, etc...).
+ * @brief Checks If a technology/up-entry will be displayed in the ufopedia (-list).
+ * @note This does not check for different display modes (only pre-research text, what stats, etc...). The content is mostly checked in UP_Article
  * @return qtrue if the tech gets displayed at all, otherwise qfalse.
+ * @sa UP_Article
  */
 static qboolean UP_TechGetsDisplayed (technology_t *tech)
 {
@@ -378,9 +379,11 @@ extern int UP_GetUnreadMails (void)
 
 	while (m) {
 		switch (m->type) {
-		case MSG_RESEARCH:
+		case MSG_RESEARCH_PROPOSAL:
 			if (m->pedia->mail[TECHMAIL_PRE].read == qfalse)
 				gd.numUnreadMails++;
+			break;
+		case MSG_RESEARCH_FINISHED:
 			if (RS_IsResearched_ptr(m->pedia) && m->pedia->mail[TECHMAIL_RESEARCHED].read == qfalse)
 				gd.numUnreadMails++;
 			break;
@@ -462,14 +465,11 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type)
  */
 extern void UP_Article (technology_t* tech)
 {
-	int i, day, month, year;
+	int i;
 
 	assert(tech);
 
 	if (RS_IsResearched_ptr(tech)) {
-		day = tech->researchedDateDay;
-		month = tech->researchedDateMonth;
-		year = tech->researchedDateYear;
 		Cvar_Set("mn_uptitle", va("%s *", _(tech->name)));
 		/* If researched -> display research text */
 		menuText[TEXT_UFOPEDIA] = _(tech->description);
@@ -517,11 +517,9 @@ extern void UP_Article (technology_t* tech)
 				break;
 			}
 		}
+	/* see also UP_TechGetsDisplayed */
 	} else if (RS_Collected_(tech) || ((tech->statusResearchable) && (*tech->pre_description))) {
 		/* This tech has something collected or has a research proposal. (i.e. pre-research text) */
-		day = tech->preResearchedDateDay;
-		month = tech->preResearchedDateMonth;
-		year = tech->preResearchedDateYear;
 		Cvar_Set("mn_uptitle", _(tech->name));
 		/* Not researched but some items collected -> display pre-research text if available. */
 		if (*tech->pre_description) {
@@ -578,7 +576,7 @@ static void UP_DrawEntry (technology_t* tech)
  * @param name Ufopedia entry id
  * @sa UP_FindEntry_f
  */
-extern void UP_OpenWith (char *name)
+extern void UP_OpenWith (const char *name)
 {
 	Cbuf_AddText("mn_push ufopedia\n");
 	Cbuf_Execute();
@@ -590,7 +588,7 @@ extern void UP_OpenWith (char *name)
  * @param name Ufopedia entry id
  * @sa UP_FindEntry_f
  */
-extern void UP_OpenCopyWith (char *name)
+extern void UP_OpenCopyWith (const char *name)
 {
 	Cbuf_AddText("mn_push_copy ufopedia\n");
 	Cbuf_Execute();
@@ -968,21 +966,24 @@ static void UP_MailClientClick_f (void)
 
 	while (m) {
 		switch (m->type) {
-		/* research entries may have two mails - proposal and re */
-		case MSG_RESEARCH:
+		case MSG_RESEARCH_PROPOSAL:
+			if (!m->pedia->mail[TECHMAIL_PRE].from[0])
+				break;
 			cnt++;
-			/* pre is the first one - see UP_OpenMail_f */
 			if (cnt == num) {
 				Cvar_SetValue("mn_uppretext", 1);
 				UP_OpenWith(m->pedia->id);
 				return;
 			}
-			if (RS_IsResearched_ptr(m->pedia)) {
-				cnt++;
-				if (cnt == num) {
-					UP_OpenWith(m->pedia->id);
-					return;
-				}
+			break;
+		case MSG_RESEARCH_FINISHED:
+			if (!m->pedia->mail[TECHMAIL_RESEARCHED].from[0])
+				break;
+			cnt++;
+			if (cnt == num) {
+				Cvar_SetValue("mn_uppretext", 0);
+				UP_OpenWith(m->pedia->id);
+				return;
 			}
 			break;
 		case MSG_NEWS:
@@ -1001,6 +1002,8 @@ static void UP_MailClientClick_f (void)
 	}
 }
 
+#define MAIL_LENGTH 128
+#define CHECK_MAIL_EOL if (tempBuf[MAIL_LENGTH-3] != '\n') tempBuf[MAIL_LENGTH-2] = '\n';
 /**
  * @brief Start the mailclient
  * @sa UP_MailClientClick_f
@@ -1009,35 +1012,32 @@ static void UP_MailClientClick_f (void)
  */
 static void UP_OpenMail_f (void)
 {
-	char tempBuf[256] = "";
+	char tempBuf[MAIL_LENGTH] = "";
 	message_t *m = messageStack;
 
-	/* FIXME: not all MSG_RESEARCH appear in our 'mailclient' */
 	*upText = '\0';
 
 	while (m) {
 		switch (m->type) {
-		case MSG_RESEARCH:
-#ifdef DEBUG
+		case MSG_RESEARCH_PROPOSAL:
 			if (!m->pedia->mail[TECHMAIL_PRE].from[0])
-				Com_Printf("UP_OpenMail_f: No mail for '%s'\n", m->pedia->id);
-#endif
+				break;
 			if (m->pedia->mail[TECHMAIL_PRE].read == qfalse)
 				Com_sprintf(tempBuf, sizeof(tempBuf), _("^BProposal: %s (%s)\n"), _(m->pedia->mail[TECHMAIL_PRE].subject), _(m->pedia->mail[TECHMAIL_PRE].from));
 			else
 				Com_sprintf(tempBuf, sizeof(tempBuf), _("Proposal: %s (%s)\n"), _(m->pedia->mail[TECHMAIL_PRE].subject), _(m->pedia->mail[TECHMAIL_PRE].from));
+			CHECK_MAIL_EOL
 			Q_strcat(upText, tempBuf, sizeof(upText));
-			if (RS_IsResearched_ptr(m->pedia)) {
-#ifdef DEBUG
-				if (!m->pedia->mail[TECHMAIL_RESEARCHED].from[0])
-					Com_Printf("UP_OpenMail_f: No mail for '%s'\n", m->pedia->id);
-#endif
-				if (m->pedia->mail[TECHMAIL_RESEARCHED].read == qfalse)
-					Com_sprintf(tempBuf, sizeof(tempBuf), _("^BRe: %s (%s)\n"), _(m->pedia->mail[TECHMAIL_RESEARCHED].subject), _(m->pedia->mail[TECHMAIL_RESEARCHED].from));
-				else
-					Com_sprintf(tempBuf, sizeof(tempBuf), _("Re: %s (%s)\n"), _(m->pedia->mail[TECHMAIL_RESEARCHED].subject), _(m->pedia->mail[TECHMAIL_RESEARCHED].from));
-				Q_strcat(upText, tempBuf, sizeof(upText));
-			}
+			break;
+		case MSG_RESEARCH_FINISHED:
+			if (!m->pedia->mail[TECHMAIL_RESEARCHED].from[0])
+				break;
+			if (m->pedia->mail[TECHMAIL_RESEARCHED].read == qfalse)
+				Com_sprintf(tempBuf, sizeof(tempBuf), _("^BRe: %s (%s)\n"), _(m->pedia->mail[TECHMAIL_RESEARCHED].subject), _(m->pedia->mail[TECHMAIL_RESEARCHED].from));
+			else
+				Com_sprintf(tempBuf, sizeof(tempBuf), _("Re: %s (%s)\n"), _(m->pedia->mail[TECHMAIL_RESEARCHED].subject), _(m->pedia->mail[TECHMAIL_RESEARCHED].from));
+			CHECK_MAIL_EOL
+			Q_strcat(upText, tempBuf, sizeof(upText));
 			break;
 		case MSG_NEWS:
 			if (m->pedia->mail[TECHMAIL_PRE].from[0]) {
@@ -1045,12 +1045,14 @@ static void UP_OpenMail_f (void)
 					Com_sprintf(tempBuf, sizeof(tempBuf), _("^B%s (%s)\n"), _(m->pedia->mail[TECHMAIL_PRE].subject), _(m->pedia->mail[TECHMAIL_PRE].from));
 				else
 					Com_sprintf(tempBuf, sizeof(tempBuf), _("%s (%s)\n"), _(m->pedia->mail[TECHMAIL_PRE].subject), _(m->pedia->mail[TECHMAIL_PRE].from));
+				CHECK_MAIL_EOL
 				Q_strcat(upText, tempBuf, sizeof(upText));
 			} else if (m->pedia->mail[TECHMAIL_RESEARCHED].from[0]) {
 				if (m->pedia->mail[TECHMAIL_RESEARCHED].read == qfalse)
 					Com_sprintf(tempBuf, sizeof(tempBuf), _("^B%s (%s)\n"), _(m->pedia->mail[TECHMAIL_RESEARCHED].subject), _(m->pedia->mail[TECHMAIL_RESEARCHED].from));
 				else
 					Com_sprintf(tempBuf, sizeof(tempBuf), _("%s (%s)\n"), _(m->pedia->mail[TECHMAIL_RESEARCHED].subject), _(m->pedia->mail[TECHMAIL_RESEARCHED].from));
+				CHECK_MAIL_EOL
 				Q_strcat(upText, tempBuf, sizeof(upText));
 			}
 			break;
@@ -1100,7 +1102,7 @@ extern void UP_ResetUfopedia (void)
  * @param text Text for chapter ID
  * @sa CL_ParseFirstScript
  */
-extern void UP_ParseUpChapters (char *id, char **text)
+extern void UP_ParseUpChapters (const char *name, char **text)
 {
 	const char *errhead = "UP_ParseUpChapters: unexptected end of file (names ";
 	char *token;
@@ -1109,13 +1111,13 @@ extern void UP_ParseUpChapters (char *id, char **text)
 	token = COM_Parse(text);
 
 	if (!*text || *token !='{') {
-		Com_Printf("UP_ParseUpChapters: chapter def \"%s\" without body ignored\n", id);
+		Com_Printf("UP_ParseUpChapters: chapter def \"%s\" without body ignored\n", name);
 		return;
 	}
 
 	do {
 		/* get the id */
-		token = COM_EParse(text, errhead, id);
+		token = COM_EParse(text, errhead, name);
 		if (!*text)
 			break;
 		if (*token == '}')
@@ -1131,7 +1133,7 @@ extern void UP_ParseUpChapters (char *id, char **text)
 		gd.upChapters[gd.numChapters].idx = gd.numChapters;	/* set self-link */
 
 		/* get the name */
-		token = COM_EParse(text, errhead, id);
+		token = COM_EParse(text, errhead, name);
 		if (!*text)
 			break;
 		if (*token == '}')

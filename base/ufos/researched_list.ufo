@@ -72,13 +72,11 @@ researched rslist_human
 // mark these as researchable
 researchable rslist_human
 {
-	rs_laser
 	rs_damage_normal
 	rs_damage_blast
 	rs_damage_fire
 	rs_damage_shock
 	rs_damage_stun
-	rs_weapon_smokegren
 	rs_skill_power
 	rs_skill_speed
 	rs_skill_accuracy
@@ -88,14 +86,6 @@ researchable rslist_human
 	rs_skill_assault
 	rs_skill_sniper
 	rs_skill_explosive
-	rs_building_entrance
-	rs_craft_dropship
-	rs_craft_stiletto_interceptor
-	rs_ugv_phoenix
-	rs_ugv_triax
-	rs_craft_el_raven
-	rs_craft_weapon_shiva
-	rs_alien_body_armour
 }
 
 // mark these explicit as not researchable
