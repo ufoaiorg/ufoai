@@ -53,17 +53,10 @@ static stringlist_t curRequiredList;
  * @param[in] tech_idx Technology index in global data.
  * @sa RS_ResearchFinish
  */
-static void RS_PushNewsWhenResearched (int tech_idx)
+static void RS_PushNewsWhenResearched (technology_t* tech)
 {
-	technology_t *tech = &gd.technologies[tech_idx];
-
-/*	assert(tech->pushnews);*/
-
-	if (tech->mailSent < MAILSENT_FINISHED) { /* No mail sent for finished research. */
-		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("A research project has been completed: %s\n"), _(tech->name));
-		MN_AddNewMessage(_("Research finished"), messageBuffer, qfalse, MSG_RESEARCH_FINISHED, tech);
-		tech->mailSent = MAILSENT_FINISHED;
-	}
+	assert(tech->pushnews);
+	/* TODO */
 }
 
 /**
@@ -80,8 +73,15 @@ void RS_ResearchFinish (technology_t* tech)
 		CL_DateConvert(&ccs.date, &tech->preResearchedDateDay, &tech->preResearchedDateMonth);
 		tech->preResearchedDateYear = ccs.date.day / 365;
 	}
-/*	if (tech->pushnews)*/
-		RS_PushNewsWhenResearched(tech->idx);
+	if (tech->pushnews)
+		RS_PushNewsWhenResearched(tech);
+
+	/* send a new message and add it to the mailclient */
+	if (tech->mailSent < MAILSENT_FINISHED) { /* No mail sent for finished research. */
+		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("A research project has been completed: %s\n"), _(tech->name));
+		MN_AddNewMessage(_("Research finished"), messageBuffer, qfalse, MSG_RESEARCH_FINISHED, tech);
+		tech->mailSent = MAILSENT_FINISHED;
+	}
 }
 
 /**
@@ -98,7 +98,7 @@ void RS_MarkOneResearchable (technology_t* tech)
 
 	if (tech->mailSent < MAILSENT_PROPOSAL) { /* No mail sent for research proposal. */
 		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("New research proposal: %s\n"), _(tech->name));
-		MN_AddNewMessage(_("Unknown Technology"), messageBuffer, qfalse, MSG_RESEARCH_PROPOSAL, tech);
+		MN_AddNewMessage(_("Unknown Technology researchable"), messageBuffer, qfalse, MSG_RESEARCH_PROPOSAL, tech);
 		tech->mailSent = MAILSENT_PROPOSAL;
 	}
 
@@ -215,7 +215,7 @@ void RS_MarkCollected (technology_t* tech)
 	assert(tech);
 	if (tech->mailSent < MAILSENT_PROPOSAL) { /* No mail sent for research proposal. */
 		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("New research proposal: %s\n"), _(tech->name));
-		MN_AddNewMessage(_("Unknown Technology"), messageBuffer, qfalse, MSG_RESEARCH_PROPOSAL, tech);
+		MN_AddNewMessage(_("Unknown Technology found"), messageBuffer, qfalse, MSG_RESEARCH_PROPOSAL, tech);
 		tech->mailSent = MAILSENT_PROPOSAL;
 	}
 	tech->statusCollected = qtrue;
@@ -1171,33 +1171,26 @@ static qboolean RS_DependsOn(char *id1, char *id2)
 /**
  * @brief Mark technologies as researched. This includes techs that depends in "id" and have time=0
  * @param[in] id Unique id of a technology_t
+ * @sa CL_CheckResearchStatus
  */
-void RS_MarkResearched (const char *id)
+static void RS_MarkResearched (technology_t *tech)
 {
-	unsigned hash;
-	technology_t *tech = NULL;
-
-	hash = Com_HashKey(id, TECH_HASH_SIZE);
-	for (tech = tech_hash[hash]; tech; tech = tech->hash_next) {
-		if (!Q_stricmp (id, tech->id)) {
-			RS_ResearchFinish(tech);
-			Com_DPrintf("Research of \"%s\" finished.\n", tech->id);
-			INV_EnableAutosell(tech);
-			break;
+	RS_ResearchFinish(tech);
+	Com_DPrintf("Research of \"%s\" finished.\n", tech->id);
+	INV_EnableAutosell(tech);
 #if 0
-		} else if (RS_DependsOn(tech->id, id) && (tech->time <= 0) && RS_TechIsResearchable(tech)) {
-			RS_ResearchFinish(tech);
-			Com_DPrintf("Depending tech \"%s\" has been researched as well.\n", tech->id);
-#endif
-		}
+	if (RS_DependsOn(tech->id, id) && (tech->time <= 0) && RS_TechIsResearchable(tech)) {
+		RS_ResearchFinish(tech);
+		Com_DPrintf("Depending tech \"%s\" has been researched as well.\n", tech->id);
 	}
+#endif
 	RS_MarkResearchable(qfalse);
 }
 
 /**
  * @brief Checks the research status
  * @todo Needs to check on the exact time that elapsed since the last check of the status.
- *
+ * @sa RS_MarkResearched
  */
 void CL_CheckResearchStatus (void)
 {
@@ -1219,14 +1212,11 @@ void CL_CheckResearchStatus (void)
 				/* TODO include employee-skill in calculation. */
 				/* Will be a good thing (think of percentage-calculation) once non-integer values are used. */
 				if (tech->time <= 0) {
-					Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Research of %s finished\n"), _(tech->name));
-					MN_AddNewMessage(_("Research finished"), messageBuffer, qfalse, MSG_RESEARCH_FINISHED, tech);
-
 					/* Remove all scientists from the technology. */
 					while (tech->scientists > 0)
 						RS_RemoveScientist(tech);
 
-					RS_MarkResearched(tech->id);
+					RS_MarkResearched(tech);
 					researchListLength = 0;
 					researchListPos = 0;
 					newResearch++;

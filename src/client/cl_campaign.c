@@ -3482,7 +3482,7 @@ extern void CL_ParseResearchedCampaignItems (const char *name, char **text)
 }
 
 /**
- * @brief This function parses a list of items that should be set to researched = true after campaign start
+ * @brief This function parses a list of items that should be set to researchable = true after campaign start
  * @param researchable Mark them researchable or not researchable
  */
 extern void CL_ParseResearchableCampaignStates (const char *name, char **text, qboolean researchable)
