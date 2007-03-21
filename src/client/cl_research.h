@@ -68,18 +68,18 @@ typedef enum requirementType_s {
 } requirementType_t;
 
 typedef struct requirements_s {
-	int numLinks;			/* The number of requirements for this tech. */
-	requirementType_t type[MAX_TECHLINKS];	/* What type the requ. is: item (in store/quarantine), event, etc... */
-	char id[MAX_TECHLINKS][MAX_VAR];	/* dependency id (text-id) */
-	int idx[MAX_TECHLINKS];		/* Dependency index (index in relation to array depends on the type) */
-	int amount[MAX_TECHLINKS];	/* How many items are needed for research ... if any. (fix) */
-	int collected[MAX_TECHLINKS];	/* How many items have been collected. (varies) */
+	int numLinks;			/**< The number of requirements for this tech. */
+	requirementType_t type[MAX_TECHLINKS];	/**< What type the requ. is: item (in store/quarantine), event, etc... */
+	char id[MAX_TECHLINKS][MAX_VAR];	/**< dependency id (text-id) */
+	int idx[MAX_TECHLINKS];		/**< Dependency index (index in relation to array depends on the type) */
+	int amount[MAX_TECHLINKS];	/**< How many items are needed for research ... if any. (fix) */
+	int collected[MAX_TECHLINKS];	/**< How many items have been collected. (varies) */
 } requirements_t;
 
 typedef struct stringlist_s {
-	int numEntries;				/* The number of used strings/techs. */
-	char string[MAX_TECHLINKS][MAX_VAR];	/* A list of strings. */
-	int idx[MAX_TECHLINKS];		/* holds the indices of the tech for faster operation after finding it once */
+	int numEntries;				/**< The number of used strings/techs. */
+	char string[MAX_TECHLINKS][MAX_VAR];	/**< A list of strings. */
+	int idx[MAX_TECHLINKS];		/**< holds the indices of the tech for faster operation after finding it once */
 } stringlist_t;
 
 typedef struct markResearched_s {
@@ -88,13 +88,15 @@ typedef struct markResearched_s {
 	int numDefinitions;
 } markResearched_t;
 
+/** @brief Types for tech mail definitions - see tech->mail[] */
 typedef enum {
-	TECHMAIL_PRE,
-	TECHMAIL_RESEARCHED,
+	TECHMAIL_PRE,		/**< this is a mail_pre (proposal) definition */
+	TECHMAIL_RESEARCHED,	/**< this is the mail definition (after research was completed) */
 
 	TECHMAIL_MAX
 } techMailType_t;
 
+/** @brief available mails for a tech - mail and mail_pre in script files */
 typedef struct techMail_s {
 	char from[MAX_VAR];			/**< sender (_mail_from_paul_navarre, _mail_from_dr_connor) */
 	char to[MAX_VAR];			/**< recipient (_mail_to_base_commander) */
