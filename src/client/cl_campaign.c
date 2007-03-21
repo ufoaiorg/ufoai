@@ -2645,7 +2645,7 @@ static void CL_CollectItemAmmo (invList_t * weapon, int left_hand, qboolean mark
 
 	if (!tech)
 		Sys_Error("CL_CollectItemAmmo: No tech for %s / %s\n", csi.ods[weapon->item.t].id, csi.ods[weapon->item.t].name);
-	tech->statusCollected++;
+	RS_MarkCollected(tech);
 
 	if (!csi.ods[weapon->item.t].reload || weapon->item.a == 0)
 		return;
@@ -2824,7 +2824,8 @@ static void CL_CarriedItems (le_t *soldier)
 			tech = csi.ods[item->item.t].tech;
 			if (!tech)
 				Sys_Error("CL_CarriedItems: No tech for %s / %s\n", csi.ods[item->item.t].id, csi.ods[item->item.t].name);
-			tech->statusCollected++;
+			RS_MarkCollected(tech);
+
 			if (!csi.ods[item->item.t].reload || item->item.a == 0)
 				continue;
 			ccs.eMission.num_loose[item->item.m] += item->item.a;
@@ -3017,7 +3018,8 @@ void CL_SellOrAddItems (void)
 		/* If the related technology is NOT researched, don't sell items. */
 		if (!RS_IsResearched_ptr(tech)) {
 			baseCurrent->storage.num[cargo[i].idx] += cargo[i].amount;
-			tech->statusCollected += cargo[i].amount;
+			if (cargo[i].amount > 0)
+				RS_MarkCollected(tech);
 			continue;
 		}
 		/* If the related technology is researched, check the autosell option. */
@@ -3517,7 +3519,7 @@ extern void CL_ParseResearchableCampaignStates (const char *name, char **text, q
 		for (i = 0; i < gd.numTechnologies; i++)
 			if (!Q_strncmp(token, gd.technologies[i].id, MAX_VAR)) {
 				if (researchable)
-					RS_MarkOneResearchable(gd.technologies[i].idx);
+					RS_MarkOneResearchable(&gd.technologies[i]);
 				else
 					Com_Printf("TODO: Mark unresearchable");
 				Com_DPrintf("...tech %s\n", gd.technologies[i].id);

@@ -91,12 +91,22 @@ void RS_PushNewsWhenResearched (int tech_idx)
 
 /**
  * @brief Marks one tech as researchable.
- * @param id unique id of a technology_t
+ * @param tech The technology to be marked.
+ * @sa RS_MarkCollected
  */
-void RS_MarkOneResearchable (int tech_idx)
+void RS_MarkOneResearchable (technology_t* tech)
 {
-	technology_t *tech = &gd.technologies[tech_idx];
+	if (!tech)
+		return;	
+
 	Com_DPrintf("RS_MarkOneResearchable: \"%s\" marked as researchable.\n", tech->id);
+	
+	if (tech->mailSent < MAILSENT_PROPOSAL) { /* No mail sent for research proposal. */
+		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("New Research proposal: %s\n"), _(tech->name));
+		MN_AddNewMessage(_("Unknown Technology"), messageBuffer, qfalse, MSG_RESEARCH_PROPOSAL, tech);
+		tech->mailSent = MAILSENT_PROPOSAL;
+	}
+
 	tech->statusResearchable = qtrue;
 	CL_DateConvert(&ccs.date, &tech->preResearchedDateDay, &tech->preResearchedDateMonth);
 	tech->preResearchedDateYear = ccs.date.day / 365;
@@ -203,6 +213,7 @@ static qboolean RS_RequirementsMet (requirements_t *required_AND, requirements_t
  * @brief Marks a give technology as collected
  * @sa CP_AddItemAsCollected
  * @sa MN_AddNewMessage
+ * @sa RS_MarkOneResearchable
  */
 void RS_MarkCollected (technology_t* tech)
 {
@@ -341,7 +352,7 @@ void RS_MarkResearchable (void)
 				/* All requirements are met. */
 				if (RS_RequirementsMet(&tech->require_AND, &tech->require_OR)) {
 					Com_DPrintf("RS_MarkResearchable: \"%s\" marked researchable. reason:requirements.\n", tech->id);
-					RS_MarkOneResearchable(tech->idx);
+					RS_MarkOneResearchable(tech);
 				}
 
 				/* If the tech is a 'free' one (such as ammo for a weapon),
@@ -874,7 +885,7 @@ static void RS_ResearchStart_f (void)
 	*/
 	if (!tech->statusResearchable) {
 		if (RS_CheckCollected(&tech->require_AND) && RS_CheckCollected(&tech->require_OR))
-			RS_MarkOneResearchable(tech->idx);
+			RS_MarkOneResearchable(tech);
 		RS_MarkResearchable();
 	}
 	/************/
@@ -917,7 +928,7 @@ static void RS_ResearchStart_f (void)
 }
 
 /**
- * @brief Removes all scientists from teh selected research-list entry.
+ * @brief Removes all scientists from the selected research-list entry.
  */
 static void RS_ResearchStop_f (void)
 {
@@ -1350,7 +1361,7 @@ void RS_MarkResearchedAll (void)
 
 	for (i = 0; i < gd.numTechnologies; i++) {
 		Com_DPrintf("...mark %s as researched\n", gd.technologies[i].id);
-		RS_MarkOneResearchable(i);
+		RS_MarkOneResearchable(&gd.technologies[i]);
 		RS_ResearchFinish(&gd.technologies[i]);
 		/* TODO: Set all "collected" entries in the requirements to the "amount" value. */
 	}
@@ -1370,7 +1381,7 @@ static void RS_DebugResearchAll (void)
 	} else {
 		tech= RS_GetTechByID(Cmd_Argv(1));
 		Com_DPrintf("...mark %s as researched\n", tech->id);
-		RS_MarkOneResearchable(tech->idx);
+		RS_MarkOneResearchable(tech);
 		RS_ResearchFinish(tech);
 	}
 }
@@ -1388,14 +1399,14 @@ static void RS_DebugResearchableAll (void)
 		for (i = 0; i < gd.numTechnologies; i++) {
 			tech = &gd.technologies[i];
 			Com_Printf("...mark %s as researchable\n", tech->id);
-			RS_MarkOneResearchable(i);
+			RS_MarkOneResearchable(tech);
 			RS_MarkCollected(tech);
 		}
 	} else {
 		tech = RS_GetTechByID(Cmd_Argv(1));
 		if (tech) {
 			Com_Printf("...mark %s as researchable\n", tech->id);
-			RS_MarkOneResearchable(tech->idx);
+			RS_MarkOneResearchable(tech);
 			RS_MarkCollected(tech);
 		}
 	}
@@ -2008,7 +2019,7 @@ technology_t **RS_GetTechsByType (researchType_t type)
 
 
 /**
- * @brief Searches for the technology that has teh most scientists assigned in a given base.
+ * @brief Searches for the technology that has the most scientists assigned in a given base.
  * @param[in] base_idx In what base the tech shoudl be researched.
  * @sa E_RemoveEmployeeFromBuilding
  */
