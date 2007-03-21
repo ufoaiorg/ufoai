@@ -48,6 +48,9 @@ static int researchListPos;
 
 static stringlist_t curRequiredList;
 
+/* prototypes */
+static void RS_PushNewsWhenResearched(int tech_idx);
+
 /**
  * @brief Sets a technology status to researched and updates the date.
  * @param[in] tech The technology that was researched.
@@ -71,7 +74,7 @@ void RS_ResearchFinish (technology_t* tech)
  * @param[in] tech_idx Technology index in global data.
  * @sa RS_ResearchFinish
  */
-void RS_PushNewsWhenResearched (int tech_idx)
+static void RS_PushNewsWhenResearched (int tech_idx)
 {
 	technology_t *tech = &gd.technologies[tech_idx];
 

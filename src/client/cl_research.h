@@ -197,7 +197,6 @@ void RS_MarkResearchable(void);
 void RS_MarkOneResearchable(technology_t *tech);
 void RS_MarkResearchedAll(void);
 void RS_MarkResearched(const char *id);
-void RS_PushNewsWhenResearched (int tech_idx);
 void RS_AssignScientist(technology_t* tech);
 technology_t *RS_GetTechByID(const char *id);
 technology_t *RS_GetTechByProvided(const char *id_provided);
