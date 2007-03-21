@@ -973,6 +973,8 @@ static void UP_MailClientClick_f (void)
 	while (m) {
 		switch (m->type) {
 		case MSG_RESEARCH_PROPOSAL:
+			if (!m->pedia->mail[TECHMAIL_PRE].from[0])
+				break;
 			cnt++;
 			if (cnt == num) {
 				Cvar_SetValue("mn_uppretext", 1);
@@ -981,6 +983,8 @@ static void UP_MailClientClick_f (void)
 			}
 			break;
 		case MSG_RESEARCH_FINISHED:
+			if (!m->pedia->mail[TECHMAIL_RESEARCHED].from[0])
+				break;
 			cnt++;
 			if (cnt == num) {
 				Cvar_SetValue("mn_uppretext", 0);
