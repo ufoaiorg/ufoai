@@ -2551,6 +2551,7 @@ static void CL_GameAutoGo_f (void)
 	mis = selMis->def;
 	baseCurrent = aircraft->homebase;
 	assert(baseCurrent && mis && aircraft);
+	baseCurrent->aircraftCurrent = aircraft->idx; /* Might not be needed, but it's used later on in CL_AircraftReturnToBase_f */
 
 	if (!mis->active) {
 		MN_AddNewMessage(_("Notice"), _("Your dropship is not near the landing zone"), qfalse, MSG_STANDARD, NULL);
