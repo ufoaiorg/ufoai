@@ -402,9 +402,11 @@ extern int UP_GetUnreadMails (void)
 }
 
 /**
- * @brief Binds the mail header (if needed) to the menuText array
+ * @brief Binds the mail header (if needed) to the menuText array.
  * @note The cvar mn_up_mail is set to 1 (for activate mail nodes from menu_ufopedia.ufo)
- * if there is a mail header
+ * @note if there is a mail header.
+ * @param[in] tech The tech to generate a header for.
+ * @param[in] type The type of mail (research proposal or finished research)
  */
 static void UP_SetMailHeader (technology_t* tech, techMailType_t type)
 {
@@ -418,10 +420,22 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type)
 	if (tech->mail[type].date[0]) {
 		Q_strncpyz(dateBuf, tech->mail[type].date, sizeof(dateBuf));
 	} else {
-		Com_sprintf(dateBuf, sizeof(dateBuf), _("%02i %s %i"),
-			tech->researchedDateDay,
-			CL_DateGetMonthName(tech->researchedDateMonth),
-			tech->researchedDateYear);
+		switch (type) {
+		case TECHMAIL_PRE:
+			Com_sprintf(dateBuf, sizeof(dateBuf), _("%02i %s %i"),
+				tech->preResearchedDateDay,
+				CL_DateGetMonthName(tech->preResearchedDateMonth),
+				tech->preResearchedDateYear);
+			break;
+		case TECHMAIL_RESEARCHED:
+			Com_sprintf(dateBuf, sizeof(dateBuf), _("%02i %s %i"),
+				tech->researchedDateDay,
+				CL_DateGetMonthName(tech->researchedDateMonth),
+				tech->researchedDateYear);
+				break;
+		default:
+			Sys_Error("UP_SetMailHeader: unhandled techMailType_t %i for date.\n", type);
+		}
 	}
 	if (tech->mail[type].from[0]) {
 		if (!tech->mail[type].read) {
@@ -439,7 +453,7 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type)
 				subjectType = _("Re: ");
 				break;
 			default:
-				Sys_Error("unhandled techMailType_t %i\n", type);
+				Sys_Error("UP_SetMailHeader: unhandled techMailType_t %i for subject.\n", type);
 			}
 		} else {
 			subjectType = "";
