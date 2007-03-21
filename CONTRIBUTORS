@@ -24,7 +24,7 @@ Werner "hoehrer" HÃ¶hrer
 * aliens models: Bloodspider
 * aircraft equipment models and textures: shiva (modified model and texture
   of chaingun by kaeau), particle beam
-* map decorations models and textures: crane, pitchfork, parkbench, parktable,
+* map decoration models and textures: crane, pitchfork, parkbench, parktable,
   coffeemaker, fire extinguisher, "emergency exit", desklamp, dishware (plate,
   cup, knife, fork), radiator, flowerpot2, fireplace, curtains, watertower,
   desk, buxus (original texture by Jerzy Opio³a from
@@ -46,7 +46,7 @@ Ryan "Winter" Span
   model and kerrblade model), stunrod
 * aircrafts models: interceptor2
 
-"Yoshiboy"
+Daniel "Yoshiboy" Holden
 * equipment textures: plasmagren, pistol2
 * aircrafts textures: interceptor2
 
@@ -57,7 +57,8 @@ kaeau
 * equipment models and textures: chaingun, shotgun2
 
 Mateusz "velo|gfx" Górecki
-* plants models and textures: plant_v1, palm_v1, palm_v2, palm_v3, bench_l + bench_s, heapofgravel
+* plants models and textures: plant_v1, palm_v1, palm_v2, palm_v3
+* map decoration models and textures: bench_l, bench_s, heapofgravel
 
 Manuel "Vanethian" Marino (see base/music/license.txt)
 * music: credits.ogg, geoscape.ogg, mission.ogg, mission2.ogg,
