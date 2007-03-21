@@ -55,9 +55,10 @@ enum {
 static int upDisplay = UFOPEDIA_CHAPTERS;
 
 /**
- * @brief Checks If a technology/up-entry will be displayed in the ufopedia (list).
- * @note This does not check for different display modes (only pre-research text, what stats, etc...).
+ * @brief Checks If a technology/up-entry will be displayed in the ufopedia (-list).
+ * @note This does not check for different display modes (only pre-research text, what stats, etc...). The content is mostly checked in UP_Article
  * @return qtrue if the tech gets displayed at all, otherwise qfalse.
+ * @sa UP_Article
  */
 static qboolean UP_TechGetsDisplayed (technology_t *tech)
 {
