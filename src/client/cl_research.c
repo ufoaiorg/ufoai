@@ -214,8 +214,10 @@ void RS_MarkCollected (technology_t* tech)
 {
 	assert(tech);
 	if (tech->mailSent < MAILSENT_PROPOSAL) { /* No mail sent for research proposal. */
-		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("New research proposal: %s\n"), _(tech->name));
-		MN_AddNewMessage(_("Unknown Technology found"), messageBuffer, qfalse, MSG_RESEARCH_PROPOSAL, tech);
+		if (tech->statusResearch < RS_FINISH) {
+			Com_sprintf(messageBuffer, sizeof(messageBuffer), _("New research proposal: %s\n"), _(tech->name));
+			MN_AddNewMessage(_("Unknown Technology found"), messageBuffer, qfalse, MSG_RESEARCH_PROPOSAL, tech);
+		}
 		tech->mailSent = MAILSENT_PROPOSAL;
 	}
 	tech->statusCollected = qtrue;
