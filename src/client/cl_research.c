@@ -704,7 +704,7 @@ void RS_AssignScientist (technology_t* tech)
 			if (baseCurrent->usedLab > B_GetAvailableLabSpace(baseCurrent))
 				Com_DPrintf("RS_AssignScientist: more lab-space used (%i) than available (%i) - please investigate.\n", baseCurrent->usedLab, B_GetAvailableLabSpace(baseCurrent));
 #endif
-			
+
 			/* TODO: use
 			E_AssignEmployeeToBuilding(employee, building);
 			instead. */
@@ -791,7 +791,7 @@ static void RS_MaxOutResearch (base_t *base, technology_t* tech)
 
 	if (tech->scientists <= 0)
 		tech->scientists = 0; /* Just in case it's negative. */
-	
+
 	/* Add as many scientists as possible to this tech. */
 	do {
 		if (base->usedLab < B_GetAvailableLabSpace(base)) {
@@ -990,17 +990,18 @@ void RS_UpdateData (void)
 	RS_MarkResearchable();
 	for (i = 0, j = 0; i < gd.numTechnologies; i++) {
 		tech = &gd.technologies[i];
-		Com_sprintf(name, MAX_VAR, tech->name);
-
-		/* TODO: add check for collected items */
 
 		/* Don't show technologies with time == 0 - those are NOT separate research topics. */
 		if (tech->time == 0)
 			continue;
 
+		Com_sprintf(name, sizeof(name), tech->name);
+
+		/* TODO: add check for collected items */
+
 		if (tech->statusCollected && !tech->statusResearchable && (tech->statusResearch != RS_FINISH)) {
 			/* An unresearched collected item that cannot yet be researched. */
-			Q_strcat(name, _(" [not yet researchable]"), MAX_VAR);
+			Q_strcat(name, _(" [not yet researchable]"), sizeof(name));
 			/* Color the item 'unresearchable' */
 			Cbuf_AddText(va("researchunresearchable%i\n", j));
 			/* Display the concated text in the correct list-entry. */
@@ -1049,7 +1050,7 @@ void RS_UpdateData (void)
 			/* Display the concated text in the correct list-entry.
 			 * But embed it in brackets if it isn't researched in the current base. */
 			if ((tech->scientists > 0) && (tech->base_idx != baseCurrent->idx)) {
-				Com_sprintf(name, MAX_VAR, "(%s)", name);
+				Com_sprintf(name, sizeof(name), "(%s)", name);
 			}
 			Cvar_Set(va("mn_researchitem%i", j), _(name));
 			/* Assign the current tech in the global list to the correct entry in the displayed list. */
