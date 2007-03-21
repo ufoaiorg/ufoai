@@ -73,18 +73,14 @@ void RS_ResearchFinish (technology_t* tech)
  */
 void RS_PushNewsWhenResearched (int tech_idx)
 {
-	char str[128];
-
 	technology_t *tech = &gd.technologies[tech_idx];
 
 	if (!tech->pushnews)
 		return;
 
-	Com_sprintf(str, sizeof(str), _("Research project finished: %s. You should read this at UFOpedia.\n"), _(tech->name));
-
 	if (tech->mailSent < MAILSENT_FINISHED) { /* No mail sent for finished research. */
 		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("A research project has been completed: %s\n"), _(tech->name));
-		MN_AddNewMessage(_("Research finished"), str, qfalse, MSG_RESEARCH_FINISHED, tech);
+		MN_AddNewMessage(_("Research finished"), messageBuffer, qfalse, MSG_RESEARCH_FINISHED, tech);
 		tech->mailSent = MAILSENT_FINISHED;
 	}
 }
