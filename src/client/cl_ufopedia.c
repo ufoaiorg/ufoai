@@ -520,6 +520,7 @@ extern void UP_Article (technology_t* tech)
 				break;
 			}
 		}
+	/* see also UP_TechGetsDisplayed */
 	} else if (RS_Collected_(tech) || ((tech->statusResearchable) && (*tech->pre_description))) {
 		/* This tech has something collected or has a research proposal. (i.e. pre-research text) */
 		day = tech->preResearchedDateDay;
