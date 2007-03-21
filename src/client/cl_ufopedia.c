@@ -1016,7 +1016,9 @@ static void UP_MailClientClick_f (void)
 	}
 }
 
-#define MAIL_LENGTH 128
+#define MAIL_LENGTH 256
+#define MAIL_BUFFER_SIZE 0x4000
+static char mailBuffer[MAIL_BUFFER_SIZE];
 #define CHECK_MAIL_EOL if (tempBuf[MAIL_LENGTH-3] != '\n') tempBuf[MAIL_LENGTH-2] = '\n';
 /**
  * @brief Start the mailclient
@@ -1029,7 +1031,7 @@ static void UP_OpenMail_f (void)
 	char tempBuf[MAIL_LENGTH] = "";
 	message_t *m = messageStack;
 
-	*upText = '\0';
+	*mailBuffer = '\0';
 
 	while (m) {
 		switch (m->type) {
@@ -1041,7 +1043,7 @@ static void UP_OpenMail_f (void)
 			else
 				Com_sprintf(tempBuf, sizeof(tempBuf), _("Proposal: %s (%s)\n"), _(m->pedia->mail[TECHMAIL_PRE].subject), _(m->pedia->mail[TECHMAIL_PRE].from));
 			CHECK_MAIL_EOL
-			Q_strcat(upText, tempBuf, sizeof(upText));
+			Q_strcat(mailBuffer, tempBuf, sizeof(mailBuffer));
 			break;
 		case MSG_RESEARCH_FINISHED:
 			if (!m->pedia->mail[TECHMAIL_RESEARCHED].from[0])
@@ -1051,7 +1053,7 @@ static void UP_OpenMail_f (void)
 			else
 				Com_sprintf(tempBuf, sizeof(tempBuf), _("Re: %s (%s)\n"), _(m->pedia->mail[TECHMAIL_RESEARCHED].subject), _(m->pedia->mail[TECHMAIL_RESEARCHED].from));
 			CHECK_MAIL_EOL
-			Q_strcat(upText, tempBuf, sizeof(upText));
+			Q_strcat(mailBuffer, tempBuf, sizeof(mailBuffer));
 			break;
 		case MSG_NEWS:
 			if (m->pedia->mail[TECHMAIL_PRE].from[0]) {
@@ -1060,14 +1062,14 @@ static void UP_OpenMail_f (void)
 				else
 					Com_sprintf(tempBuf, sizeof(tempBuf), _("%s (%s)\n"), _(m->pedia->mail[TECHMAIL_PRE].subject), _(m->pedia->mail[TECHMAIL_PRE].from));
 				CHECK_MAIL_EOL
-				Q_strcat(upText, tempBuf, sizeof(upText));
+				Q_strcat(mailBuffer, tempBuf, sizeof(mailBuffer));
 			} else if (m->pedia->mail[TECHMAIL_RESEARCHED].from[0]) {
 				if (m->pedia->mail[TECHMAIL_RESEARCHED].read == qfalse)
 					Com_sprintf(tempBuf, sizeof(tempBuf), _("^B%s (%s)\n"), _(m->pedia->mail[TECHMAIL_RESEARCHED].subject), _(m->pedia->mail[TECHMAIL_RESEARCHED].from));
 				else
 					Com_sprintf(tempBuf, sizeof(tempBuf), _("%s (%s)\n"), _(m->pedia->mail[TECHMAIL_RESEARCHED].subject), _(m->pedia->mail[TECHMAIL_RESEARCHED].from));
 				CHECK_MAIL_EOL
-				Q_strcat(upText, tempBuf, sizeof(upText));
+				Q_strcat(mailBuffer, tempBuf, sizeof(mailBuffer));
 			}
 			break;
 		default:
@@ -1079,7 +1081,7 @@ static void UP_OpenMail_f (void)
 #endif
 		m = m->next;
 	}
-	menuText[TEXT_UFOPEDIA_MAIL] = upText;
+	menuText[TEXT_UFOPEDIA_MAIL] = mailBuffer;
 }
 
 /**
