@@ -2448,7 +2448,7 @@ static void CP_AddItemAsCollected (void)
 			gd.bases[baseID].storage.num[i]++;
 			Com_DPrintf("add item: '%s'\n", item->id);
 			assert(item->tech);
-			((technology_t*)(item->tech))->statusCollected = qtrue;
+			RS_MarkCollected((technology_t*)(item->tech));
 		}
 	}
 }
@@ -2745,7 +2745,6 @@ extern void CL_CollectItems (int won, int *item_counter, int *credits_gained)
 	/* work out the difference in credits before and after the sales */
 	*credits_gained = eTempCredits - ccs.credits;
 
-/*	RS_MarkCollected(&ccs.eMission); not needed due to statusCollected above */
 	/* TODO: make this reversible, like eTempMarket */
 	RS_MarkResearchable();
 }

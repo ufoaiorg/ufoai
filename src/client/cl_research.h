@@ -181,7 +181,7 @@ void RS_CheckAllCollected(void);
 void RS_AddObjectTechs(void);
 void RS_RequiredIdxAssign(void);
 void RS_InitTree(void);
-void RS_MarkCollected(equipDef_t *ed);
+void RS_MarkCollected(technology_t *tech);
 void RS_MarkResearchable(void);
 void RS_MarkOneResearchable(int tech_idx);
 void RS_MarkResearchedAll(void);

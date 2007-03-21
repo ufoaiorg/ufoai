@@ -379,9 +379,11 @@ extern int UP_GetUnreadMails (void)
 
 	while (m) {
 		switch (m->type) {
-		case MSG_RESEARCH:
+		case MSG_RESEARCH_PROPOSAL:
 			if (m->pedia->mail[TECHMAIL_PRE].read == qfalse)
 				gd.numUnreadMails++;
+			break;
+		case MSG_RESEARCH_FINISHED:
 			if (RS_IsResearched_ptr(m->pedia) && m->pedia->mail[TECHMAIL_RESEARCHED].read == qfalse)
 				gd.numUnreadMails++;
 			break;
@@ -969,21 +971,20 @@ static void UP_MailClientClick_f (void)
 
 	while (m) {
 		switch (m->type) {
-		/* research entries may have two mails - proposal and re */
-		case MSG_RESEARCH:
+		case MSG_RESEARCH_PROPOSAL:
 			cnt++;
-			/* pre is the first one - see UP_OpenMail_f */
 			if (cnt == num) {
 				Cvar_SetValue("mn_uppretext", 1);
 				UP_OpenWith(m->pedia->id);
 				return;
 			}
-			if (RS_IsResearched_ptr(m->pedia)) {
-				cnt++;
-				if (cnt == num) {
-					UP_OpenWith(m->pedia->id);
-					return;
-				}
+			break;
+		case MSG_RESEARCH_FINISHED:
+			cnt++;
+			if (cnt == num) {
+				Cvar_SetValue("mn_uppretext", 0);
+				UP_OpenWith(m->pedia->id);
+				return;
 			}
 			break;
 		case MSG_NEWS:
@@ -1013,12 +1014,11 @@ static void UP_OpenMail_f (void)
 	char tempBuf[256] = "";
 	message_t *m = messageStack;
 
-	/* FIXME: not all MSG_RESEARCH appear in our 'mailclient' */
 	*upText = '\0';
 
 	while (m) {
 		switch (m->type) {
-		case MSG_RESEARCH:
+		case MSG_RESEARCH_PROPOSAL:
 #ifdef DEBUG
 			if (!m->pedia->mail[TECHMAIL_PRE].from[0])
 				Com_Printf("UP_OpenMail_f: No mail for '%s'\n", m->pedia->id);
@@ -1028,17 +1028,17 @@ static void UP_OpenMail_f (void)
 			else
 				Com_sprintf(tempBuf, sizeof(tempBuf), _("Proposal: %s (%s)\n"), _(m->pedia->mail[TECHMAIL_PRE].subject), _(m->pedia->mail[TECHMAIL_PRE].from));
 			Q_strcat(upText, tempBuf, sizeof(upText));
-			if (RS_IsResearched_ptr(m->pedia)) {
+			break;
+		case MSG_RESEARCH_FINISHED:
 #ifdef DEBUG
-				if (!m->pedia->mail[TECHMAIL_RESEARCHED].from[0])
-					Com_Printf("UP_OpenMail_f: No mail for '%s'\n", m->pedia->id);
+			if (!m->pedia->mail[TECHMAIL_RESEARCHED].from[0])
+				Com_Printf("UP_OpenMail_f: No mail for '%s'\n", m->pedia->id);
 #endif
-				if (m->pedia->mail[TECHMAIL_RESEARCHED].read == qfalse)
-					Com_sprintf(tempBuf, sizeof(tempBuf), _("^BRe: %s (%s)\n"), _(m->pedia->mail[TECHMAIL_RESEARCHED].subject), _(m->pedia->mail[TECHMAIL_RESEARCHED].from));
-				else
-					Com_sprintf(tempBuf, sizeof(tempBuf), _("Re: %s (%s)\n"), _(m->pedia->mail[TECHMAIL_RESEARCHED].subject), _(m->pedia->mail[TECHMAIL_RESEARCHED].from));
-				Q_strcat(upText, tempBuf, sizeof(upText));
-			}
+			if (m->pedia->mail[TECHMAIL_RESEARCHED].read == qfalse)
+				Com_sprintf(tempBuf, sizeof(tempBuf), _("^BRe: %s (%s)\n"), _(m->pedia->mail[TECHMAIL_RESEARCHED].subject), _(m->pedia->mail[TECHMAIL_RESEARCHED].from));
+			else
+				Com_sprintf(tempBuf, sizeof(tempBuf), _("Re: %s (%s)\n"), _(m->pedia->mail[TECHMAIL_RESEARCHED].subject), _(m->pedia->mail[TECHMAIL_RESEARCHED].from));
+			Q_strcat(upText, tempBuf, sizeof(upText));
 			break;
 		case MSG_NEWS:
 			if (m->pedia->mail[TECHMAIL_PRE].from[0]) {

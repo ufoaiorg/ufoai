@@ -270,7 +270,8 @@ void AL_AddAliens (void)
 #endif
 		tech = RS_GetTechByIDX(tobase->alienscont[i].techIdx);
 		/* we need this to let RS_Collected_ return true */
-		tech->statusCollected = tobase->alienscont[i].amount_alive + tobase->alienscont[i].amount_dead;
+		if (tobase->alienscont[i].amount_alive + tobase->alienscont[i].amount_dead > 0)
+			RS_MarkCollected(tech);
 #ifdef DEBUG
 		/* print all of them */
 		if (tobase->alienscont[i].amount_alive > 0)

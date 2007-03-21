@@ -196,6 +196,21 @@ static qboolean RS_RequirementsMet (requirements_t *required_AND, requirements_t
 }
 
 /**
+ * @brief Marks a give technology as collected
+ * @sa CP_AddItemAsCollected
+ * @sa MN_AddNewMessage
+ */
+void RS_MarkCollected (technology_t* tech)
+{
+	assert(tech);
+	if (!tech->statusCollected) {
+		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("We've found a new technology and named it %s\n"), _(tech->name));
+		MN_AddNewMessage(_("Unknown Technology"), messageBuffer, qfalse, MSG_RESEARCH_PROPOSAL, tech);
+	}
+	tech->statusCollected = qtrue;
+}
+
+/**
  * @brief Checks if anything has been collected (in the current base) and correct the value for each requirement.
  * @note Does not check if the collected items satisfy the needed "amount". This is done in RS_RequirementsMet. tech->statusCollected is just needed so the item is at least displayed somewhere.
  * @return Returns qtrue if there are is ANYTHING collected for each entry otherwise qfalse.
@@ -233,7 +248,7 @@ qboolean RS_CheckCollected (requirements_t *required)
 					tech->statusCollected = qfalse;
 					something_collected_from_each = qfalse;
 				} else {
-					tech->statusCollected = qtrue;
+					RS_MarkCollected(tech);
 				}
 			}
 			break;
@@ -286,7 +301,7 @@ void RS_CheckAllCollected (void)
 		tech = &gd.technologies[i];
 
 		if (RS_CheckCollected(&tech->require_AND) || RS_CheckCollected(&tech->require_OR)) {
-			tech->statusCollected = qtrue;
+			RS_MarkCollected(tech);
 		}
 	}
 }
@@ -532,11 +547,7 @@ void RS_InitTree (void)
 
 		} /* switch */
 	}
-	/*
-	for (i = 0; i < gd.numBases; i++)
-		if (gd.bases[i].founded)
-			RS_MarkCollected(&gd.bases[i].storage);
-	*/
+
 	RS_MarkResearchable();
 
 	memset(&curRequiredList, 0, sizeof(stringlist_t));
@@ -1193,8 +1204,8 @@ void CL_CheckResearchStatus (void)
 				/* TODO include employee-skill in calculation. */
 				/* Will be a good thing (think of percentage-calculation) once non-integer values are used. */
 				if (tech->time <= 0) {
-					Com_sprintf(messageBuffer, MAX_MESSAGE_TEXT, _("Research of %s finished\n"), _(tech->name));
-					MN_AddNewMessage(_("Research finished"), messageBuffer, qfalse, MSG_RESEARCH, tech);
+					Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Research of %s finished\n"), _(tech->name));
+					MN_AddNewMessage(_("Research finished"), messageBuffer, qfalse, MSG_RESEARCH_FINISHED, tech);
 
 					/* Remove all scientists from the technology. */
 					while (tech->scientists > 0)
@@ -1373,14 +1384,14 @@ static void RS_DebugResearchableAll (void)
 			tech = &gd.technologies[i];
 			Com_Printf("...mark %s as researchable\n", tech->id);
 			RS_MarkOneResearchable(i);
-			tech->statusCollected = qtrue;
+			RS_MarkCollected(tech);
 		}
 	} else {
 		tech = RS_GetTechByID(Cmd_Argv(1));
 		if (tech) {
 			Com_Printf("...mark %s as researchable\n", tech->id);
 			RS_MarkOneResearchable(tech->idx);
-			tech->statusCollected = qtrue;
+			RS_MarkCollected(tech);
 		}
 	}
 }
