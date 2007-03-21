@@ -105,6 +105,14 @@ typedef struct techMail_s {
 	qboolean read;				/**< already read the mail? */
 } techMail_t;
 
+typedef enum {
+	MAILSENT_NONE,		/**< No mail sent yet. */
+	MAILSENT_PROPOSAL,	/**< Mail for research proposal already send. */
+	MAILSENT_FINISHED,	/**< Mail for finsihed research snet (and maybe the previous as well). */
+
+	MAILSENT_MAX
+} mailSentType_t;
+
 /** @brief This is the technology parsed from research.ufo */
 typedef struct technology_s {
 	char id[MAX_VAR];		/**< Short (unique) id/name. */
@@ -142,6 +150,7 @@ typedef struct technology_s {
 
 	int produceTime;			/**< How many days the production of this items runs. */
 	qboolean pushnews;			/**< Push news about this tech when researched. Note: usually you should use this only for tech with time = 0. */
+	mailSentType_t mailSent;		/**< Story if a Mail has been sent to the commander (player). */
 	requirements_t require_for_production;	/**< A list of items that are needed (and used up) on production of _this_ item.
 						 * Only "item"-type is allowed.
 						 * All requirements need to be fulfilled in order for _one_ item to be produced.

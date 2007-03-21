@@ -80,9 +80,13 @@ void RS_PushNewsWhenResearched (int tech_idx)
 	if (!tech->pushnews)
 		return;
 
-	Com_sprintf(str, sizeof(str), _("New technology researched: %s. You should read this at UFOpedia.\n"),
-	_(tech->name));
-	MN_AddNewMessage(_("Research finished"), str, qfalse, MSG_STANDARD, NULL);
+	Com_sprintf(str, sizeof(str), _("Research project finished: %s. You should read this at UFOpedia.\n"), _(tech->name));
+	
+	if (tech->mailSent < MAILSENT_FINISHED) { /* No mail sent for finished research. */
+		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("A research project has been completed: %s\n"), _(tech->name));
+		MN_AddNewMessage(_("Research finished"), str, qfalse, MSG_RESEARCH_FINISHED, tech);
+		tech->mailSent = MAILSENT_FINISHED;
+	}
 }
 
 /**
@@ -203,9 +207,10 @@ static qboolean RS_RequirementsMet (requirements_t *required_AND, requirements_t
 void RS_MarkCollected (technology_t* tech)
 {
 	assert(tech);
-	if (!tech->statusCollected) {
-		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("We've found a new technology and named it %s\n"), _(tech->name));
+	if (tech->mailSent < MAILSENT_PROPOSAL) { /* No mail sent for research proposal. */
+		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("New Research proposal: %s\n"), _(tech->name));
 		MN_AddNewMessage(_("Unknown Technology"), messageBuffer, qfalse, MSG_RESEARCH_PROPOSAL, tech);
+		tech->mailSent = MAILSENT_PROPOSAL;
 	}
 	tech->statusCollected = qtrue;
 }
@@ -1181,7 +1186,7 @@ void RS_MarkResearched (const char *id)
 
 /**
  * @brief Checks the research status
- * @todo Needs to check on the exact time that elapsed since the last check fo the status.
+ * @todo Needs to check on the exact time that elapsed since the last check of the status.
  *
  */
 void CL_CheckResearchStatus (void)
