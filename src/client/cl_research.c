@@ -431,6 +431,7 @@ void RS_RequiredIdxAssign (void)
  * research tree/inventory/etc... are initialised.
  * @todo Add a function to reset ALL research-stati to RS_NONE; -> to be called after start of a new game.
  * @todo Enhance ammo model display (see comment in code).
+ * @sa CL_GameInit
  */
 void RS_InitTree (void)
 {
