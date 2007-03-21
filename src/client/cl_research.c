@@ -48,8 +48,23 @@ static int researchListPos;
 
 static stringlist_t curRequiredList;
 
-/* prototypes */
-static void RS_PushNewsWhenResearched(int tech_idx);
+/**
+ * @brief Push a news about this tech when researched.
+ * @param[in] tech_idx Technology index in global data.
+ * @sa RS_ResearchFinish
+ */
+static void RS_PushNewsWhenResearched (int tech_idx)
+{
+	technology_t *tech = &gd.technologies[tech_idx];
+
+/*	assert(tech->pushnews);*/
+
+	if (tech->mailSent < MAILSENT_FINISHED) { /* No mail sent for finished research. */
+		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("A research project has been completed: %s\n"), _(tech->name));
+		MN_AddNewMessage(_("Research finished"), messageBuffer, qfalse, MSG_RESEARCH_FINISHED, tech);
+		tech->mailSent = MAILSENT_FINISHED;
+	}
+}
 
 /**
  * @brief Sets a technology status to researched and updates the date.
@@ -65,27 +80,8 @@ void RS_ResearchFinish (technology_t* tech)
 		CL_DateConvert(&ccs.date, &tech->preResearchedDateDay, &tech->preResearchedDateMonth);
 		tech->preResearchedDateYear = ccs.date.day / 365;
 	}
-	if (tech->pushnews)
+/*	if (tech->pushnews)*/
 		RS_PushNewsWhenResearched(tech->idx);
-}
-
-/**
- * @brief Push a news about this tech when researched.
- * @param[in] tech_idx Technology index in global data.
- * @sa RS_ResearchFinish
- */
-static void RS_PushNewsWhenResearched (int tech_idx)
-{
-	technology_t *tech = &gd.technologies[tech_idx];
-
-	if (!tech->pushnews)
-		return;
-
-	if (tech->mailSent < MAILSENT_FINISHED) { /* No mail sent for finished research. */
-		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("A research project has been completed: %s\n"), _(tech->name));
-		MN_AddNewMessage(_("Research finished"), messageBuffer, qfalse, MSG_RESEARCH_FINISHED, tech);
-		tech->mailSent = MAILSENT_FINISHED;
-	}
 }
 
 /**
@@ -327,7 +323,7 @@ void RS_CheckAllCollected (void)
  * Should be called when a new item is researched (RS_MarkResearched) and after
  * the tree-initialisation (RS_InitTree)
  */
-void RS_MarkResearchable (void)
+void RS_MarkResearchable (qboolean init)
 {
 	int i;
 	technology_t *tech = NULL;
@@ -351,6 +347,8 @@ void RS_MarkResearchable (void)
 				/* All requirements are met. */
 				if (RS_RequirementsMet(&tech->require_AND, &tech->require_OR)) {
 					Com_DPrintf("RS_MarkResearchable: \"%s\" marked researchable. reason:requirements.\n", tech->id);
+					if (init && tech->time <= 0)
+						tech->mailSent = MAILSENT_PROPOSAL;
 					RS_MarkOneResearchable(tech);
 				}
 
@@ -358,6 +356,8 @@ void RS_MarkResearchable (void)
 				   mark it as researched and loop back to see if it unlocks
 				   any other techs */
 				if (tech->statusResearchable && tech->time <= 0) {
+					if (init)
+						tech->mailSent = MAILSENT_FINISHED;
 					RS_ResearchFinish(tech);
 					Com_DPrintf("RS_MarkResearchable: automatically researched \"%s\"\n", tech->id);
 					/* Restart the loop as this may have unlocked new possibilities. */
@@ -563,7 +563,7 @@ void RS_InitTree (void)
 		} /* switch */
 	}
 
-	RS_MarkResearchable();
+	RS_MarkResearchable(qtrue);
 
 	memset(&curRequiredList, 0, sizeof(stringlist_t));
 
@@ -885,7 +885,7 @@ static void RS_ResearchStart_f (void)
 	if (!tech->statusResearchable) {
 		if (RS_CheckCollected(&tech->require_AND) && RS_CheckCollected(&tech->require_OR))
 			RS_MarkOneResearchable(tech);
-		RS_MarkResearchable();
+		RS_MarkResearchable(qfalse);
 	}
 	/************/
 
@@ -1013,7 +1013,7 @@ void RS_UpdateData (void)
 		available[i] = E_CountUnassigned(&gd.bases[i], EMPL_SCIENTIST);
 	}
 	RS_CheckAllCollected();
-	RS_MarkResearchable();
+	RS_MarkResearchable(qfalse);
 	for (i = 0, j = 0; i < gd.numTechnologies; i++) {
 		tech = &gd.technologies[i];
 
@@ -1191,7 +1191,7 @@ void RS_MarkResearched (const char *id)
 #endif
 		}
 	}
-	RS_MarkResearchable();
+	RS_MarkResearchable(qfalse);
 }
 
 /**

@@ -2746,7 +2746,7 @@ extern void CL_CollectItems (int won, int *item_counter, int *credits_gained)
 	*credits_gained = eTempCredits - ccs.credits;
 
 	/* TODO: make this reversible, like eTempMarket */
-	RS_MarkResearchable();
+	RS_MarkResearchable(qfalse);
 }
 #endif
 
@@ -3466,6 +3466,7 @@ extern void CL_ParseResearchedCampaignItems (const char *name, char **text)
 
 		for (i = 0; i < gd.numTechnologies; i++)
 			if (!Q_strncmp(token, gd.technologies[i].id, MAX_VAR)) {
+				gd.technologies[i].mailSent = MAILSENT_FINISHED;
 				gd.technologies[i].markResearched.markOnly[gd.technologies[i].markResearched.numDefinitions] = qtrue;
 				Q_strncpyz(gd.technologies[i].markResearched.campaign[gd.technologies[i].markResearched.numDefinitions],
 					name, MAX_VAR);
@@ -3518,9 +3519,10 @@ extern void CL_ParseResearchableCampaignStates (const char *name, char **text, q
 
 		for (i = 0; i < gd.numTechnologies; i++)
 			if (!Q_strncmp(token, gd.technologies[i].id, MAX_VAR)) {
-				if (researchable)
+				if (researchable) {
+					gd.technologies[i].mailSent = MAILSENT_PROPOSAL;
 					RS_MarkOneResearchable(&gd.technologies[i]);
-				else
+				} else
 					Com_Printf("TODO: Mark unresearchable");
 				Com_DPrintf("...tech %s\n", gd.technologies[i].id);
 				break;

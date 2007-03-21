@@ -2969,7 +2969,7 @@ void CL_DropshipReturned (base_t* base, aircraft_t* aircraft)
 	AL_AddAliens();		/**< Add aliens to Alien Containment. */
 	AL_CountAll();		/**< Count all alive aliens. */
 	CL_SellOrAddItems();	/**< Sell collected items or add them to storage. */
-	RS_MarkResearchable();	/**< Mark new technologies researchable. */
+	RS_MarkResearchable(qfalse);	/**< Mark new technologies researchable. */
 
 	/* Now empty alien/item cargo just in case. */
 	memset(aircraft->aliencargo, 0, sizeof(aircraft->aliencargo));
