@@ -3229,14 +3229,17 @@ static void CL_GameResults_f (void)
 	/* onwin and onlose triggers */
 	CP_ExecuteMissionTrigger(selMis->def, won, baseCurrent);
 
-	/* aircraftCurrent must be valid here */
-	if (!baseCurrent->aircraft[baseCurrent->aircraftCurrent].alientypes
-		|| (baseCurrent->hasAlienCont && baseCurrent->aircraft[baseCurrent->aircraftCurrent].alientypes)) {
-		/* send the dropship back to base */
-		baseCurrent->aircraft[baseCurrent->aircraftCurrent].homebase = baseCurrent;
-		CL_AircraftReturnToBase_f();
-	} else
+	/* Check for alien containment in aircraft homebase. */
+	if (baseCurrent->aircraft[baseCurrent->aircraftCurrent].alientypes && !baseCurrent->hasAlienCont) {
+		/* We have captured/killed aliens, but the homebase of this aircraft does not have alien containment. Popup aircraft transer dialog. */
 		TR_TransferAircraftMenu(&(baseCurrent->aircraft[baseCurrent->aircraftCurrent]));
+	} else {
+		/* The aircraft can be savely sent to its homebase without losing aliens */
+
+		/* TODO: Is this really needed? At the beginning of CL_GameResults_f we already have this status (if I read this correctly). */
+		baseCurrent->aircraft[baseCurrent->aircraftCurrent].homebase = baseCurrent;	
+		CL_AircraftReturnToBase_f();
+	}
 
 	/* campaign effects */
 	selMis->cause->done++;
