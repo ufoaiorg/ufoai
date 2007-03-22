@@ -327,6 +327,9 @@ Section "Game" SEC01
   SetOutPath "$INSTDIR\base\models\objects\city\arch"
   File "..\..\..\base\models\objects\city\arch\*.jpg"
   File "..\..\..\base\models\objects\city\arch\*.md2"
+  SetOutPath "$INSTDIR\base\models\objects\city\bench"
+  File "..\..\..\base\models\objects\city\bench\*.tga"
+  File "..\..\..\base\models\objects\city\bench\*.md2"
   SetOutPath "$INSTDIR\base\models\objects\city\light"
   File "..\..\..\base\models\objects\city\light\*.jpg"
   File "..\..\..\base\models\objects\city\light\*.md2"
@@ -363,6 +366,9 @@ Section "Game" SEC01
   File "..\..\..\base\models\objects\rubbish\*.jpg"
   File "..\..\..\base\models\objects\rubbish\*.tga"
   File "..\..\..\base\models\objects\rubbish\*.md2"
+  SetOutPath "$INSTDIR\base\models\objects\rubbish\gravel"
+  File "..\..\..\base\models\objects\rubbish\gravel\*.tga"
+  File "..\..\..\base\models\objects\rubbish\gravel\*.md2"
 
 ;======================================================================
 ; models/objects/tank

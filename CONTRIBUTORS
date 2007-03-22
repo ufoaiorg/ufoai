@@ -1,105 +1,82 @@
 CONTRIBUTORS
 
-This file lists all the contributors who provided their content to the UFO:Alien Invasion project.
-If you have provided content but you are not listed below please add yourself or contact a project member/developer so he can add you.
+This file lists all the contributors who provided their content to
+the UFO:Alien Invasion project. If you have provided content but you
+are not listed below please add yourself or contact a project member
+or developer so he can add you.
 
-Lukas "rastaman_bey"
-* "Bolterrifle" model
-* "Grenade Launcher" model
-* "Kerrblade" model
-* "Plasma Blade" model
-* "Plasma Blaster" model
-* "Tachyon Pistol" model
-* "Shevaar" model
+Lukas "rastaman_bey" Beyeler
+* equipment models and textures: Bolterrifle, Grenade Launcher, Kerrblade,
+  Plasma Blade (orig), Plasma Blaster, Tachyon Pistol
+* aliens models and textures: Shevaar
 
 Jake "ProtoArmor" Gustafson
-* "Phoenix UGV" model
-* "Ion Condenser" model
-* "Triax UGV" model
-* "Bloodspider" texture
-* "laserheavy" texture + GIMP source file
+* UGV models and textures: Phoenix, Triax
+* aliens textures: Bloodspider
+* equipment textures: laserheavy
+* ion_condenser model and texture (represesntation of energy from alien
+  aircraft drives)
 
 Werner "hoehrer" Höhrer
-* "IR Goggles" (the binocs-style) model + 1. texture.
-* "Laser tech" image/model
-* "Hovernet" model + basic texture.
-* "Crane" model (+ temp. texture)
-* "pitchfork" model + texture
-* "Bloodspider" model + animations
-* "parkbench" model + texture
-* "parktable" model + texture
-* "coffeemaker" model + texture
-* Fire extinguisher (fireext & fireext2) models + textures
-* "Emergency exit" model + texture
-* "desklamp" model + basic texture
-* Dishware (plate,cup,knife,fork) models + texture
-* "radiator" model + texture
-* "flowerpot2" model + texture
-* "fireplace" model + texture
-* "curtains" model + texture
-* "watertower" model + basic texture
-* "desk" model + texture
-* "goggles" (the swimming-goggle style) model + texture
-* "buxus" model + modified texture (original by Jerzy Opioła from http://commons.wikimedia.org/wiki/Image:Buxus_sempervirens_2.jpg)
-* "shiva" rotary gun model (modified model & textrue by kaeau)
-* "electrolaser" model&texture (this was the former stunrod model&texture)
+* equipment models and textures: binocs-style irgoggles, electrolaser,
+  swimming-style irgoggles
+* UGV models and textures: Hovernet
+* aliens models: Bloodspider
+* aircraft equipment models and textures: shiva (modified model and texture
+  of chaingun by kaeau), particle beam
+* map decoration models and textures: crane, pitchfork, parkbench, parktable,
+  coffeemaker, fire extinguisher, "emergency exit", desklamp, dishware (plate,
+  cup, knife, fork), radiator, flowerpot2, fireplace, curtains, watertower,
+  desk, buxus (original texture by Jerzy Opio�a from
+  http://commons.wikimedia.org/wiki/Image:Buxus_sempervirens_2.jpg)
+* technology images: rs_laser
 
 Denis "De_Nis"/"tdtv"/"Äåíèñ"
-* "Smoke Grenade" model
-* "Stun Gas Grenade" model
-* "Incendiary Grenade" model
-* "Flare" model
+* equipment models and textures: smokegren, stungasgren, incgren, flare
 
 Olivier "Kracken" Alloschery
-* "4x4" and tires model&texture
-* "heli2" reduced polycount + texture (see also the license.txt)
+* vehicles models and textures: 4x4 and tires, heli2 (polycount reduced, texture
+  added, see license.txt)
 
-Ryan "Winterslice" A. Span
-* "pistol2" model (aka. machinepistol)
-* "stungren" model + base texture
-* "shotgunmicro" model
-* "interceptor2" model
-* "plasmagren" model
-* "knifemono" model (texture is a mix from "knife" and "kerrblade")
-* new (actually rod-like) "stunrod" model&texture.
+Ryan "Winter" Span
+* writing & editing: game storyline, setting background, tech tree and research
+  descriptions, promotional fiction & advertising copy
+* equipment models: pistol2, shotgunmicro, plasmagren
+* equipment models and textures: stungren, knifemono (texture is a mix from knife
+  model and kerrblade model), stunrod
+* aircrafts models: interceptor2
 
-"Yoshiboy"
-* "interceptor2" texture
-* "plasmagren" texture
-* "pistol2" texture (aka. machinepistol)
+Daniel "Yoshiboy" Holden
+* equipment textures: plasmagren, pistol2
+* aircrafts textures: interceptor2
 
 "A M D G"
-* "tachyon rocket" texture (might get renamed later on)
+* equipment models and textures: tachyon rocket
 
 kaeau
-* "chaingun" model & texture
-* "shotgun" model & texture
+* equipment models and textures: chaingun, shotgun2
 
-Mateusz "velo|gfx" Gorecki
+Mateusz "velo|gfx" G�recki
 * plants models and textures: plant_v1, palm_v1, palm_v2, palm_v3
+* map decoration models and textures: bench_l, bench_s, heapofgravel
+
+Manuel "Vanethian" Marino (see base/music/license.txt)
+* music: credits.ogg, geoscape.ogg, mission.ogg, mission2.ogg,
+  mission3.ogg, mission4.ogg, theme.ogg
+
+Paul Bee, http://www.myspace.com/s2zpaulb
+* music: ufo1.ogg, ufo2.ogg
+
+"Draikon"
+* music: dawn.ogg, space.ogg, dbsea.ogg
+
+Simon "Psymong" Green, http://www.8hz.co.uk
+* mission tracks: The Psymong series (Psymong*.ogg)
 
 Alex Parker
-* weapon sounds: bolter2.wav, pistol2.wav, grenade.wav, deepexplosion.wav,
+* equipment sounds: bolter2.wav, pistol2.wav, grenade.wav, deepexplosion.wav,
   fireexplosion.wav, smokeexplosion.wav, machinepistol.wav
 * mission tracks: AlexFightmare.ogg AlexForest.ogg
-
-==========================
-
-Texture and general art resources
-
-Textures from http://www.mayang.com/textures/
-* "License: These textures are Copyright � Mayang Murni Adnin, 2001-2006. They have all been taken by our own cameras or created by ourselves."
-* "Use: They are free to use for all uses, whether commercial or non-commercial (you may incorporate them into your work with no requirement to pay us any licensing fee etc). It would be nice if you could credit us."
-* "Sell: You may not sell any of these textures."
-* "Redistribute: You may redistribute (give/send to somebody else/display on a web site) up to 30 of these textures together, but no more. You must credit this website as the original source (tell them about us)."
-
-Textures from http://www.cgtextures.com
-"License
-You may not sell or distribute any of these textures, use of these textures is only allowed under the following conditions:
-* Private or commercial use in 2D or 3D computer graphics and printed media.
-* Incorporation in computer games, 3D models.
-* Selling 3D models bundled with modified versions of the textures is allowed.
-It is not allowed to sell or distribute any of these textures (either separate or in the form of texture packs.)"
 
 ==========================
 

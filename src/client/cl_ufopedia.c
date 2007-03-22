@@ -402,9 +402,11 @@ extern int UP_GetUnreadMails (void)
 }
 
 /**
- * @brief Binds the mail header (if needed) to the menuText array
+ * @brief Binds the mail header (if needed) to the menuText array.
  * @note The cvar mn_up_mail is set to 1 (for activate mail nodes from menu_ufopedia.ufo)
- * if there is a mail header
+ * @note if there is a mail header.
+ * @param[in] tech The tech to generate a header for.
+ * @param[in] type The type of mail (research proposal or finished research)
  */
 static void UP_SetMailHeader (technology_t* tech, techMailType_t type)
 {
@@ -418,10 +420,22 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type)
 	if (tech->mail[type].date[0]) {
 		Q_strncpyz(dateBuf, tech->mail[type].date, sizeof(dateBuf));
 	} else {
-		Com_sprintf(dateBuf, sizeof(dateBuf), _("%02i %s %i"),
-			tech->researchedDateDay,
-			CL_DateGetMonthName(tech->researchedDateMonth),
-			tech->researchedDateYear);
+		switch (type) {
+		case TECHMAIL_PRE:
+			Com_sprintf(dateBuf, sizeof(dateBuf), _("%02i %s %i"),
+				tech->preResearchedDateDay,
+				CL_DateGetMonthName(tech->preResearchedDateMonth),
+				tech->preResearchedDateYear);
+			break;
+		case TECHMAIL_RESEARCHED:
+			Com_sprintf(dateBuf, sizeof(dateBuf), _("%02i %s %i"),
+				tech->researchedDateDay,
+				CL_DateGetMonthName(tech->researchedDateMonth),
+				tech->researchedDateYear);
+				break;
+		default:
+			Sys_Error("UP_SetMailHeader: unhandled techMailType_t %i for date.\n", type);
+		}
 	}
 	if (tech->mail[type].from[0]) {
 		if (!tech->mail[type].read) {
@@ -439,7 +453,7 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type)
 				subjectType = _("Re: ");
 				break;
 			default:
-				Sys_Error("unhandled techMailType_t %i\n", type);
+				Sys_Error("UP_SetMailHeader: unhandled techMailType_t %i for subject.\n", type);
 			}
 		} else {
 			subjectType = "";
@@ -1002,7 +1016,9 @@ static void UP_MailClientClick_f (void)
 	}
 }
 
-#define MAIL_LENGTH 128
+#define MAIL_LENGTH 256
+#define MAIL_BUFFER_SIZE 0x4000
+static char mailBuffer[MAIL_BUFFER_SIZE];
 #define CHECK_MAIL_EOL if (tempBuf[MAIL_LENGTH-3] != '\n') tempBuf[MAIL_LENGTH-2] = '\n';
 /**
  * @brief Start the mailclient
@@ -1015,7 +1031,7 @@ static void UP_OpenMail_f (void)
 	char tempBuf[MAIL_LENGTH] = "";
 	message_t *m = messageStack;
 
-	*upText = '\0';
+	*mailBuffer = '\0';
 
 	while (m) {
 		switch (m->type) {
@@ -1027,7 +1043,7 @@ static void UP_OpenMail_f (void)
 			else
 				Com_sprintf(tempBuf, sizeof(tempBuf), _("Proposal: %s (%s)\n"), _(m->pedia->mail[TECHMAIL_PRE].subject), _(m->pedia->mail[TECHMAIL_PRE].from));
 			CHECK_MAIL_EOL
-			Q_strcat(upText, tempBuf, sizeof(upText));
+			Q_strcat(mailBuffer, tempBuf, sizeof(mailBuffer));
 			break;
 		case MSG_RESEARCH_FINISHED:
 			if (!m->pedia->mail[TECHMAIL_RESEARCHED].from[0])
@@ -1037,7 +1053,7 @@ static void UP_OpenMail_f (void)
 			else
 				Com_sprintf(tempBuf, sizeof(tempBuf), _("Re: %s (%s)\n"), _(m->pedia->mail[TECHMAIL_RESEARCHED].subject), _(m->pedia->mail[TECHMAIL_RESEARCHED].from));
 			CHECK_MAIL_EOL
-			Q_strcat(upText, tempBuf, sizeof(upText));
+			Q_strcat(mailBuffer, tempBuf, sizeof(mailBuffer));
 			break;
 		case MSG_NEWS:
 			if (m->pedia->mail[TECHMAIL_PRE].from[0]) {
@@ -1046,14 +1062,14 @@ static void UP_OpenMail_f (void)
 				else
 					Com_sprintf(tempBuf, sizeof(tempBuf), _("%s (%s)\n"), _(m->pedia->mail[TECHMAIL_PRE].subject), _(m->pedia->mail[TECHMAIL_PRE].from));
 				CHECK_MAIL_EOL
-				Q_strcat(upText, tempBuf, sizeof(upText));
+				Q_strcat(mailBuffer, tempBuf, sizeof(mailBuffer));
 			} else if (m->pedia->mail[TECHMAIL_RESEARCHED].from[0]) {
 				if (m->pedia->mail[TECHMAIL_RESEARCHED].read == qfalse)
 					Com_sprintf(tempBuf, sizeof(tempBuf), _("^B%s (%s)\n"), _(m->pedia->mail[TECHMAIL_RESEARCHED].subject), _(m->pedia->mail[TECHMAIL_RESEARCHED].from));
 				else
 					Com_sprintf(tempBuf, sizeof(tempBuf), _("%s (%s)\n"), _(m->pedia->mail[TECHMAIL_RESEARCHED].subject), _(m->pedia->mail[TECHMAIL_RESEARCHED].from));
 				CHECK_MAIL_EOL
-				Q_strcat(upText, tempBuf, sizeof(upText));
+				Q_strcat(mailBuffer, tempBuf, sizeof(mailBuffer));
 			}
 			break;
 		default:
@@ -1065,7 +1081,7 @@ static void UP_OpenMail_f (void)
 #endif
 		m = m->next;
 	}
-	menuText[TEXT_UFOPEDIA_MAIL] = upText;
+	menuText[TEXT_UFOPEDIA_MAIL] = mailBuffer;
 }
 
 /**

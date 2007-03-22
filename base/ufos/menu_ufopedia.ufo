@@ -464,6 +464,6 @@ menu ufopedia_mail
 
 	func init
 	{
-		cmd "ufopedia_openmail"
+		cmd "ufopedia_openmail; mn_escpop 2;"
 	}
 }
