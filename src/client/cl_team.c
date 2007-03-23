@@ -239,7 +239,7 @@ extern void CL_GenerateCharacter (employee_t *employee, const char *team, employ
 		/* Create attributes. */
 		Com_CharGenAbilitySkills(chr, teamValue);
 		/* Get model and name. */
-		Com_sprintf(teamDefName, MAX_VAR, "%s_scientist", team);
+		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_scientist", team);
 		chr->fieldSize = ACTOR_SIZE_NORMAL;
 		chr->skin = Com_GetModelAndName(teamDefName, chr);
 		break;
@@ -248,7 +248,7 @@ extern void CL_GenerateCharacter (employee_t *employee, const char *team, employ
 		/* Create attributes. */
 		Com_CharGenAbilitySkills(chr, teamValue);
 		/* Get model and name. */
-		Com_sprintf(teamDefName, MAX_VAR, "%s_medic", team);
+		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_medic", team);
 		chr->fieldSize = ACTOR_SIZE_NORMAL;
 		chr->skin = Com_GetModelAndName(teamDefName, chr);
 		break;
@@ -257,7 +257,7 @@ extern void CL_GenerateCharacter (employee_t *employee, const char *team, employ
 		/* Create attributes. */
 		Com_CharGenAbilitySkills(chr, teamValue);
 		/* Get model and name. */
-		Com_sprintf(teamDefName, MAX_VAR, "%s_worker", team);
+		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_worker", team);
 		chr->fieldSize = ACTOR_SIZE_NORMAL;
 		chr->skin = Com_GetModelAndName(teamDefName, chr);
 		break;
@@ -267,7 +267,7 @@ extern void CL_GenerateCharacter (employee_t *employee, const char *team, employ
 		Com_CharGenAbilitySkills(chr, teamValue);
 		/* Get model and name. */
 		chr->fieldSize = ACTOR_SIZE_UGV;
-		Com_sprintf(teamDefName, MAX_VAR, "%s_ugv", team);
+		Com_sprintf(teamDefName, sizeof(teamDefName), "%s_ugv", team);
 		chr->skin = Com_GetModelAndName(teamDefName, chr);
 		break;
 	default:
@@ -307,7 +307,7 @@ extern void CL_ResetCharacters (base_t* const base)
 
 	for (i = 0; i < base->numAircraftInBase; i++) {
 		base->teamNum[i] = 0;
-		CL_ResetAircraftTeam(B_GetAircraftFromBaseByIndex(base,i));
+		CL_ResetAircraftTeam(B_GetAircraftFromBaseByIndex(base, i));
 	}
 }
 

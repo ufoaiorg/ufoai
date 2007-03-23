@@ -1040,7 +1040,7 @@ static void B_BuildingClick_f (void)
  * @param[in] text TODO: document this ... It appears to be the whole following text that is part of the "building" item definition in .ufo.
  * @param[in] link Bool value that decides whether to link the tech pointer in or not
  */
-extern void B_ParseBuildings (char *id, char **text, qboolean link)
+extern void B_ParseBuildings (const char *name, char **text, qboolean link)
 {
 	building_t *building = NULL;
 	building_t *dependsBuilding = NULL;
@@ -1056,7 +1056,7 @@ extern void B_ParseBuildings (char *id, char **text, qboolean link)
 	/* get id list body */
 	token = COM_Parse(text);
 	if (!*text || *token != '{') {
-		Com_Printf("B_ParseBuildings: building \"%s\" without body ignored\n", id);
+		Com_Printf("B_ParseBuildings: building \"%s\" without body ignored\n", name);
 		return;
 	}
 	if (gd.numBuildingTypes >= MAX_BUILDINGS) {
@@ -1069,7 +1069,7 @@ extern void B_ParseBuildings (char *id, char **text, qboolean link)
 		/* new entry */
 		building = &gd.buildingTypes[gd.numBuildingTypes];
 		memset(building, 0, sizeof(building_t));
-		Q_strncpyz(building->id, id, MAX_VAR);
+		Q_strncpyz(building->id, name, sizeof(building->id));
 
 		Com_DPrintf("...found building %s\n", building->id);
 
@@ -1084,7 +1084,7 @@ extern void B_ParseBuildings (char *id, char **text, qboolean link)
 		gd.numBuildingTypes++;
 		do {
 			/* get the name type */
-			token = COM_EParse(text, errhead, id);
+			token = COM_EParse(text, errhead, name);
 			if (!*text)
 				break;
 			if (*token == '}')
@@ -1092,7 +1092,7 @@ extern void B_ParseBuildings (char *id, char **text, qboolean link)
 
 			/* get values */
 			if (!Q_strncmp(token, "type", MAX_VAR)) {
-				token = COM_EParse(text, errhead, id);
+				token = COM_EParse(text, errhead, name);
 				if (!*text)
 					return;
 
@@ -1114,7 +1114,7 @@ extern void B_ParseBuildings (char *id, char **text, qboolean link)
 					building->buildingType = B_WORKSHOP;
 				}
 /*			} else if (!Q_strncmp(token, "max_employees", MAX_VAR)) {
-				token = COM_EParse(text, errhead, id);
+				token = COM_EParse(text, errhead, name);
 				if (!*text)
 					return;
 				employees_in_building = &building->assigned_employees;
@@ -1128,14 +1128,14 @@ extern void B_ParseBuildings (char *id, char **text, qboolean link)
 			} else
 				/* no linking yet */
 				if (!Q_strncmp(token, "depends", MAX_VAR)) {
-					token = COM_EParse(text, errhead, id);
+					token = COM_EParse(text, errhead, name);
 					if (!*text)
 						return;
 				} else {
 				for (edp = valid_vars; edp->string; edp++)
 					if (!Q_strncmp(token, edp->string, sizeof(edp->string))) {
 						/* found a definition */
-						token = COM_EParse(text, errhead, id);
+						token = COM_EParse(text, errhead, name);
 						if (!*text)
 							return;
 
@@ -1145,33 +1145,33 @@ extern void B_ParseBuildings (char *id, char **text, qboolean link)
 				}
 
 			if (!edp->string)
-				Com_Printf("B_ParseBuildings: unknown token \"%s\" ignored (building %s)\n", token, id);
+				Com_Printf("B_ParseBuildings: unknown token \"%s\" ignored (building %s)\n", token, name);
 
 		} while (*text);
 	} else {
-		building = B_GetBuildingType(id);
+		building = B_GetBuildingType(name);
 		if (!building)			/* i'm paranoid */
-			Sys_Error("B_ParseBuildings: Could not find building with id %s\n", id);
+			Sys_Error("B_ParseBuildings: Could not find building with id %s\n", name);
 
-		tech_link = RS_GetTechByProvided(id);
+		tech_link = RS_GetTechByProvided(name);
 		if (tech_link) {
 			building->tech = tech_link->idx;
 		} else {
 			if (building->visible)
 				/* TODO: are the techs already parsed? */
-				Com_DPrintf("B_ParseBuildings: Could not find tech that provides %s\n", id);
+				Com_DPrintf("B_ParseBuildings: Could not find tech that provides %s\n", name);
 		}
 
 		do {
 			/* get the name type */
-			token = COM_EParse(text, errhead, id);
+			token = COM_EParse(text, errhead, name);
 			if (!*text)
 				break;
 			if (*token == '}')
 				break;
 			/* get values */
 			if (!Q_strncmp(token, "depends", MAX_VAR)) {
-				dependsBuilding = B_GetBuildingType(COM_EParse(text, errhead, id));
+				dependsBuilding = B_GetBuildingType(COM_EParse(text, errhead, name));
 				if (!dependsBuilding)
 					Sys_Error("Could not find building depend of %s\n", building->id);
 				building->dependsBuilding = dependsBuilding->idx;
@@ -1309,7 +1309,7 @@ extern void B_ClearBase (base_t *const base)
  * @brief Reads information about bases.
  * @sa CL_ParseScriptFirst
  */
-extern void B_ParseBases (char *title, char **text)
+extern void B_ParseBases (const char *name, char **text)
 {
 	const char *errhead = "B_ParseBases: unexptected end of file (names ";
 	char *token;
@@ -1321,7 +1321,7 @@ extern void B_ParseBases (char *title, char **text)
 	token = COM_Parse(text);
 
 	if (!*text || *token != '{') {
-		Com_Printf("B_ParseBases: base \"%s\" without body ignored\n", title);
+		Com_Printf("B_ParseBases: base \"%s\" without body ignored\n", name);
 		return;
 	}
 	do {
@@ -1332,7 +1332,7 @@ extern void B_ParseBases (char *title, char **text)
 		}
 
 		/* get the name */
-		token = COM_EParse(text, errhead, title);
+		token = COM_EParse(text, errhead, name);
 		if (!*text)
 			break;
 		if (*token == '}')
@@ -1345,14 +1345,14 @@ extern void B_ParseBases (char *title, char **text)
 		memset(base->map, -1, sizeof(int) * BASE_SIZE * BASE_SIZE);
 
 		/* get the title */
-		token = COM_EParse(text, errhead, title);
+		token = COM_EParse(text, errhead, name);
 		if (!*text)
 			break;
 		if (*token == '}')
 			break;
 		if (*token == '_')
 			token++;
-		Q_strncpyz(base->name, _(token), MAX_VAR);
+		Q_strncpyz(base->name, _(token), sizeof(base->name));
 		Com_DPrintf("Found base %s\n", base->name);
 		B_ResetBuildingCurrent();
 		gd.numBaseNames++;
@@ -2246,7 +2246,8 @@ static void B_BuildingOpen_f (void)
 }
 
 /**
- * @brief
+ * @brief This function checks whether a user build the max allowed amount of bases
+ * if yes, the MN_PopMenu will pop the base build menu from the stack
  */
 static void B_CheckMaxBases_f (void)
 {
@@ -2254,541 +2255,6 @@ static void B_CheckMaxBases_f (void)
 		MN_PopMenu(qfalse);
 	}
 }
-
-#if 0
-/* 20070303 Zenerka: Transfer stuff moved to cl_transfer.c|h. */
-
-/**
- * Transfer menu functions
- */
-
-/** @brief current selected base for transfer */
-static base_t* transferBase = NULL;
-
-/** @brief current selected aircraft */
-static aircraft_t* transferAircraft = NULL;
-
-/** @brief current transfer type (item, employee, tech, ...) */
-static int transferType = -1;
-
-/**
- * @brief
- * @sa B_TransferStart_f
- * @sa B_TransferInit_f
- */
-static void B_TransferSelect_f (void)
-{
-	static char transferList[1024];
-	int type;
-	int i, cnt = 0;
-	char str[128];
-
-	if (!transferBase)
-		return;
-
-	if (Cmd_Argc() < 2)
-		type = transferType;
-	else
-		type = atoi(Cmd_Argv(1));
-
-	transferList[0] = '\0';
-
-	switch (type) {
-	/* items */
-	case 0:
-		if (transferBase->hasStorage) {
-			for (i = 0; i < csi.numODs; i++)
-				if (baseCurrent->storage.num[i]) {
-					if (transferAircraft && transferAircraft->num[i])
-						Com_sprintf(str, sizeof(str), "%s (%i on board, %i left)\n", csi.ods[i].name, transferAircraft->num[i], baseCurrent->storage.num[i]);
-					else
-						Com_sprintf(str, sizeof(str), "%s (%i available)\n", csi.ods[i].name, baseCurrent->storage.num[i]);
-					Q_strcat(transferList, str, sizeof(transferList));
-					cnt++;
-				}
-			if (!cnt)
-				Q_strncpyz(transferList, _("Storage is empty\n"), sizeof(transferList));
-		} else
-			Q_strcat(transferList, _("Transfer is not possible - the base doesn't have a storage building"), sizeof(transferList));
-		break;
-	/* humans */
-	case 1:
-		if (transferBase->hasQuarters)
-			Q_strcat(transferList, "TODO: employees", sizeof(transferList));
-		else
-			Q_strcat(transferList, _("Transfer is not possible - the base doesn't have quarters"), sizeof(transferList));
-		break;
-	/* techs */
-	case 2:
-		if (transferBase->hasLab)
-			Q_strcat(transferList, "TODO: techs", sizeof(transferList));
-		else
-			Q_strcat(transferList, _("Transfer is not possible - the base doesn't have a lab"), sizeof(transferList));
-		break;
-	/* aliens */
-	case 3:
-		if (transferBase->hasAlienCont) {
-			for (i = 0; i < numTeamDesc; i++) {
-				if (baseCurrent->alienscont[i].alientype && baseCurrent->alienscont[i].amount_dead > 0) {
-					if (transferAircraft && transferAircraft->num[i])
-						Com_sprintf(str, sizeof(str), "%s (corpse of %i on board, %i left)\n",
-						_(AL_AlienTypeToName(i)), transferAircraft->num[i],
-						baseCurrent->alienscont[i].amount_dead);
-					else
-						Com_sprintf(str, sizeof(str), "%s (corpse of %i available)\n",
-						_(AL_AlienTypeToName(i)), baseCurrent->alienscont[i].amount_dead);
-					Q_strcat(transferList, str, sizeof(transferList));
-					cnt++;
-				}
-			}
-		} else {
-			Q_strcat(transferList, _("Transfer is not possible - the base doesn't have an alien containment"), sizeof(transferList));
-		}
-		break;
-	default:
-		Com_Printf("B_TransferSelect_f: Unknown type id %i\n", type);
-		return;
-	}
-
-	transferType = type;
-	menuText[TEXT_TRANSFER_LIST] = transferList;
-}
-
-/**
- * @brief Unload everything from aircraft storage back to base storage
- */
-static void B_TransferEmptyAircraftStorage_f (void)
-{
-	if (!transferAircraft)
-		return;
-
-	/* we can't unload if we are not in our homebase */
-	if (transferAircraft->status != AIR_HOME) {
-		MN_Popup(_("Notice"), _("Can't unload while not at a base"));
-		return;
-	}
-
-	/* this is a transfer mission to the homebase (though we are still in the homebase) */
-	transferAircraft->transferBase = (void*)transferAircraft->homebase;
-	/* to pass the sanity check in B_TransferEnd */
-	transferAircraft->status = AIR_TRANSPORT;
-	B_TransferEnd(transferAircraft);
-	transferAircraft->status = AIR_HOME;
-
-	/* clear the command buffer
-	 * needed to erase all B_TransferListSelect_f
-	 * paramaters */
-	Cmd_BufClear();
-	B_TransferSelect_f();
-}
-
-/**
- * @brief Shows potential targets for aircraft on transfer mission
- */
-extern void B_TransferAircraftMenu (aircraft_t* aircraft)
-{
-	int i;
-	static char transferBaseSelectPopup[512];
-
-	transferBaseSelectPopup[0] = '\0';
-	transferAircraft = aircraft;
-
-	for (i = 0; i < gd.numBases; i++) {
-		if (!gd.bases[i].founded)
-			continue;
-		Q_strcat(transferBaseSelectPopup, gd.bases[i].name, sizeof(transferBaseSelectPopup));
-	}
-	menuText[TEXT_LIST] = transferBaseSelectPopup;
-	MN_PushMenu("popup_transferbaselist");
-}
-
-/**
- * @brief Ends the transfer and let the aircraft return to homebase
- */
-extern void B_TransferEnd (aircraft_t* aircraft)
-{
-	base_t* b;
-	base_t* homebase;
-	int i;
-
-	if (aircraft->status != AIR_TRANSPORT)
-		return;
-
-	b = (base_t*)aircraft->transferBase;
-	assert(b);
-
-	/* maybe it was invaded in the meantime */
-	if (!b->founded) {
-		MN_Popup(_("Notice"), _("The base doesn't exist anymore"));
-		return;
-	}
-
-	homebase = (base_t*)aircraft->homebase;
-	assert(homebase);
-
-	/* drop all equipment */
-	if (b->hasStorage) {
-		for (i = 0; i < csi.numODs; i++)
-			if (transferAircraft->num[i]) {
-				b->storage.num[i] += transferAircraft->num[i];
-				transferAircraft->num[i] = 0;
-			}
-	} else {
-		for (i = 0; i < csi.numODs; i++)
-			if (transferAircraft->num[i]) {
-				MN_Popup(_("Notice"), _("The base doesn't have a storage"));
-				break;
-			}
-	}
-
-	if (b->hasLab) {
-		/* don't handle alien techs here - see below for hasAlienCont check */
-		/* TODO unload the techs here */
-	} else {
-		/* TODO check whether we have techs on board */
-		MN_Popup(_("Notice"), _("The base doesn't have a lab - can't unload the technologies here"));
-	}
-
-	if (b->hasQuarters) {
-		/**
-		 * first unhire this employee (this will also unlink the inventory from current base
-		 * and remove him from any buildings he is currently assigned to) and then hire him
-		 * again in the new base
-		 */
-		/*E_UnhireEmployee(homebase, ...)*/
-		/*E_HireEmployee(b, ...)*/
-		/* TODO unload the employees here */
-	} else {
-		/* TODO check whether we have employees on board */
-		MN_Popup(_("Notice"), _("The base doesn't have quarters - can't unload the employees here"));
-	}
-
-	/* aliens are stored as techs - but seperatly checked for an alien containment is needed here */
-	if (b->hasAlienCont) {
-		/* TODO unload the alien techs here */
-	} else {
-		/* TODO check whether we have aliens on board */
-		MN_Popup(_("Notice"), _("The base doesn't have an alien containment - can't unload the aliens here"));
-	}
-
-	MN_AddNewMessage(_("Transport mission"), _("Transport mission ended, returning to homebase now"), qfalse, MSG_TRANSFERFINISHED, NULL);
-	CL_AircraftReturnToBase(aircraft);
-}
-
-/**
- * @brief
- * @sa B_TransferSelect_f
- * @sa B_TransferInit_f
- */
-static void B_TransferStart_f (void)
-{
-	if (!transferAircraft) {
-		Com_DPrintf("B_TransferStart_f: No aircraft selected\n");
-		return;
-	}
-
-	if (!transferBase) {
-		Com_DPrintf("B_TransferStart_f: No base selected\n");
-		return;
-	}
-
-	if (transferAircraft->status != AIR_HOME) {
-		MN_Popup(_("Notice"), _("Can't start a transport mission while not at base"));
-		return;
-	}
-
-	transferAircraft->status = AIR_TRANSPORT;
-	transferAircraft->transferBase = transferBase;
-
-	MAP_MapCalcLine(transferAircraft->pos, transferBase->pos, &transferAircraft->route);
-	/* leave to geoscape */
-	MN_PopMenu(qfalse);
-	MN_PopMenu(qfalse);
-}
-
-/**
- * @brief Adds a thing to aircraft for transfer by left mouseclick.
- * @sa B_TransferSelect_f
- * @sa B_TransferInit_f
- */
-static void B_TransferListSelect_f (void)
-{
-	int num, cnt = 0, i;
-
-	if (!baseCurrent)
-		return;
-
-	if (!transferBase) {
-		MN_Popup(_("No target base selected"), _("Please select the target base from the list"));
-		return;
-	}
-
-	if (!transferAircraft) {
-		MN_Popup(_("No aircraft selected"), _("Please select the aircraft to use from the list"));
-		return;
-	}
-
-	if (Cmd_Argc() < 2)
-		return;
-
-	num = atoi(Cmd_Argv(1));
-
-	switch (transferType) {
-	case -1:
-		/* no list was inited before you call this */
-		return;
-	/* items */
-	case 0:
-		for (i = 0; i < csi.numODs; i++)
-			if (baseCurrent->storage.num[i]) {
-				if (cnt == num) {
-					/* TODO: Check space */
-					transferAircraft->num[i]++;
-					/* remove it from base storage */
-					baseCurrent->storage.num[i]--;
-					break;
-				}
-				cnt++;
-			}
-		break;
-	/* humans */
-	case 1:
-		break;
-	/* techs */
-	case 2:
-		break;
-	/* aliens */
-	case 3:
-		for (i = 0; i < numTeamDesc; i++) {
-			if (baseCurrent->alienscont[i].alientype && baseCurrent->alienscont[i].amount_dead > 0) {
-				if (cnt == num) {
-					/* TODO: Check space */
-					transferAircraft->num[i]++;
-					/* Remove the corpse from Alien Containment. */
-					baseCurrent->alienscont[i].amount_dead--;
-					break;
-				}
-				cnt++;
-			}
-		}
-		break;
-	}
-
-	/* clear the command buffer
-	 * needed to erase all B_TransferListSelect_f
-	 * paramaters */
-	Cmd_BufClear();
-	B_TransferSelect_f();
-}
-
-/**
- * @brief Display current selected aircraft info in transfer menu
- */
-static void B_TransferDisplayAircraftInfo (void)
-{
-	if (!transferAircraft)
-		return;
-
-	/* TODO */
-}
-
-/**
- * @brief Callback for aircraft list click
- */
-static void B_TransferAircraftListClick_f (void)
-{
-	int i, j = -1, num;
-	aircraft_t* aircraft;
-
-	if (!baseCurrent)
-		return;
-
-	if (Cmd_Argc() < 2)
-		return;
-
-	num = atoi(Cmd_Argv(1));
-
-	for (i = 0; i < baseCurrent->numAircraftInBase; i++) {
-		aircraft = &baseCurrent->aircraft[i];
-		if (aircraft->status == AIR_HOME) {
-			j++;
-			if (j == num)
-				break;
-		}
-	}
-
-	if (j < 0)
-		return;
-
-	transferAircraft = aircraft;
-	Cvar_Set("mn_trans_aircraft_name", transferAircraft->shortname);
-
-	B_TransferDisplayAircraftInfo();
-}
-
-/**
- * @brief
- */
-static void B_TransferBaseSelectPopup_f (void)
-{
-	int i, j = -1, num;
-	base_t* base;
-
-	if (!baseCurrent)
-		return;
-
-	if (Cmd_Argc() < 2) {
-		Com_Printf("usage: trans_baselist_click <type>\n");
-		return;
-	}
-
-	num = atoi(Cmd_Argv(1));
-
-	for (i = 0, base = gd.bases; i < gd.numBases; i++, base++) {
-		if (base->founded == qfalse || base == baseCurrent)
-			continue;
-		j++;
-		if (j == num) {
-			break;
-		}
-	}
-
-	/* no base founded */
-	if (j < 0 || i == gd.numBases)
-		return;
-
-	transferBase = base;
-}
-
-/**
- * @brief Callback for base list click
- */
-static void B_TransferBaseSelect_f (void)
-{
-	static char baseInfo[1024];
-	/*char str[128];*/
-	int j = -1, num, i;
-	base_t* base;
-
-	if (!baseCurrent)
-		return;
-
-	if (Cmd_Argc() < 2) {
-		Com_Printf("usage: trans_bases_click <type>\n");
-		return;
-	}
-
-	num = atoi(Cmd_Argv(1));
-
-	for (i = 0, base = gd.bases; i < gd.numBases; i++, base++) {
-		if (base->founded == qfalse || base == baseCurrent)
-			continue;
-		j++;
-		if (j == num) {
-			break;
-		}
-	}
-
-	/* no base founded */
-	if (j < 0 || i == gd.numBases)
-		return;
-
-	Com_sprintf(baseInfo, sizeof(baseInfo), "%s\n\n", base->name);
-
-	if (base->hasStorage) {
-		/* TODO: Check whether they are free */
-		Q_strcat(baseInfo, _("You can transfer equipment - this base has a storage building\n"), sizeof(baseInfo));
-		/*Com_sprintf(str, sizeof(str), _(""), base->);*/
-	} else {
-		Q_strcat(baseInfo, _("No storage building in this base\n"), sizeof(baseInfo));
-	}
-	if (base->hasQuarters) {
-		/* TODO: Check whether they are free */
-		Q_strcat(baseInfo, _("You can transfer employees - this base has quarters\n"), sizeof(baseInfo));
-		/*Com_sprintf(str, sizeof(str), _(""), base->);*/
-	} else {
-		Q_strcat(baseInfo, _("No quarters in this base\n"), sizeof(baseInfo));
-	}
-	if (base->hasLab) {
-		Q_strcat(baseInfo, _("You can transfer techs - this base has a laboratory\n"), sizeof(baseInfo));
-	} else {
-		Q_strcat(baseInfo, _("No laboratory in this base\n"), sizeof(baseInfo));
-	}
-	if (base->hasAlienCont ) {
-		Q_strcat(baseInfo, _("You can transfer aliens - this base has alien containment\n"), sizeof(baseInfo));
-	} else {
-		Q_strcat(baseInfo, _("No alien containment in this base\n"), sizeof(baseInfo));
-	}
-
-	menuText[TEXT_BASE_INFO] = baseInfo;
-
-	/* set global pointer to current selected base */
-	transferBase = base;
-
-	Cvar_Set("mn_trans_base_name", transferBase->name);
-
-	/* update item list */
-	B_TransferSelect_f();
-}
-
-/**
- * @brief Callback for transfer menu init function
- * @sa B_TransferStart_f
- * @sa B_TransferSelect_f
- */
-static void B_TransferInit_f (void)
-{
-	static char baseList[1024];
-	static char aircraftList[1024];
-	int i;
-	base_t* base;
-	aircraft_t* aircraft;
-
-	if (!baseCurrent)
-		return;
-
-	transferAircraft = NULL;
-	transferBase = NULL;
-
-	baseList[0] = '\0';
-	aircraftList[0] = '\0';
-
-	if (Cmd_Argc() < 2)
-		Com_Printf("warning: you should call trans_init with parameter 0\n");
-
-	for (i = 0, base = gd.bases; i < gd.numBases; i++, base++) {
-		if (base->founded == qfalse || base == baseCurrent)
-			continue;
-		Q_strcat(baseList, base->name, sizeof(baseList));
-		Q_strcat(baseList, "\n", sizeof(baseList));
-	}
-
-	/* select the first base */
-	B_TransferBaseSelect_f();
-
-	/* select first item list */
-	B_TransferSelect_f();
-
-	for (i = 0; i < baseCurrent->numAircraftInBase; i++) {
-		aircraft = &baseCurrent->aircraft[i];
-		if (aircraft->status == AIR_HOME) {
-			/* first suitable aircraft will be default selection */
-			if (!transferAircraft)
-				transferAircraft = aircraft;
-			Q_strcat(aircraftList, aircraft->shortname, sizeof(aircraftList));
-			Q_strcat(aircraftList, "\n", sizeof(aircraftList));
-		}
-	}
-
-	if (transferAircraft)
-		Cvar_Set("mn_trans_aircraft_name", transferAircraft->shortname);
-	if (transferBase)
-		Cvar_Set("mn_trans_base_name", transferBase->name);
-
-	menuText[TEXT_BASE_LIST] = baseList;
-	menuText[TEXT_AIRCRAFT_LIST] = aircraftList;
-}
-#endif
 
 /**
  * @brief Resets console commands.
@@ -2825,17 +2291,6 @@ extern void B_ResetBaseManagement (void)
 	Cmd_AddCommand("pack_initial", B_PackInitialEquipment_f, NULL);
 	Cmd_AddCommand("assign_initial", B_AssignInitial_f, NULL);
 
-#if 0
-/* 20070303 Zenerka: Transfer stuff moved to cl_transfer.c|h. */
-	Cmd_AddCommand("trans_start", B_TransferStart_f, "Starts the tranfer");
-	Cmd_AddCommand("trans_select", B_TransferSelect_f, "Switch between transfer types (employees, techs, items)");
-	Cmd_AddCommand("trans_emptyairstorage", B_TransferEmptyAircraftStorage_f, "Unload everything from aircraft storage back to base storage");
-	Cmd_AddCommand("trans_init", B_TransferInit_f, "Init transfer menu");
-	Cmd_AddCommand("trans_baselist_click", B_TransferBaseSelectPopup_f, "Callback for transfer base list popup");
-	Cmd_AddCommand("trans_bases_click", B_TransferBaseSelect_f, "Callback for base list node click");
-	Cmd_AddCommand("trans_list_click", B_TransferListSelect_f, "Callback for transfer list node click");
-	Cmd_AddCommand("trans_aircraft_click", B_TransferAircraftListClick_f, "Callback for aircraft list node click");
-#endif
 	mn_base_count = Cvar_Get("mn_base_count", "0", 0, NULL);
 }
 
@@ -2915,6 +2370,7 @@ int B_CheckBuildingConstruction (building_t * building, int base_idx)
 
 /**
  * @brief Selects a base by its index.
+ * @param[in] idx Index of the base - see gd.bases array and gd.numBases
  */
 base_t *B_GetBase (int idx)
 {
@@ -2938,16 +2394,17 @@ int B_GetNumOnTeam (void)
 }
 
 /**
- * @brief
- * @param[in] base
- * @param[in] index
+ * @brief Returns the aircraft pointer from the given base and perform some sanity checks
+ * @param[in] base Base the to get the aircraft from - may not be null
+ * @param[in] index Base aircraft index
  */
-aircraft_t *B_GetAircraftFromBaseByIndex (base_t* base,int index)
+aircraft_t *B_GetAircraftFromBaseByIndex (base_t* base, int index)
 {
-	if (index<base->numAircraftInBase) {
+	assert(base);
+	if (index < base->numAircraftInBase) {
 		return &base->aircraft[index];
 	} else {
-		Com_DPrintf("B_GetAircraftFromBaseByIndex: error: index bigger then number of aircrafts\n");
+		Com_DPrintf("B_GetAircraftFromBaseByIndex: error: index bigger then number of aircrafts in this base\n");
 		return NULL;
 	}
 }

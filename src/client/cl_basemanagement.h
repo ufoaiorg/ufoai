@@ -150,7 +150,7 @@ typedef struct base_s {
 	qboolean hasStorage;		/**< does this base has a storage */
 	qboolean hasQuarters;		/**< does this base has quarters */
 	qboolean hasWorkshop;		/**< does this base has a workshop */
-	
+
 	int usedLab;				/**< How many space in the lab(s) has been used. */
 #if 0
 	int usedWorkshop;			/**< How many space in the workshop(s) has been used. */
@@ -210,8 +210,8 @@ int B_CheckBuildingConstruction(building_t *b, int baseID);
 int B_GetNumOnTeam(void);
 building_t *B_GetLab(int base_id);
 void B_ClearBuilding(building_t *building);
-void B_ParseBuildings(char *id, char **text, qboolean link);
-void B_ParseBases(char *title, char **text);
+void B_ParseBuildings(const char *name, char **text, qboolean link);
+void B_ParseBases(const char *name, char **text);
 void B_BaseAttack(base_t* const base);
 void B_BaseResetStatus (base_t* const base);
 building_t *B_GetBuildingByIdx(base_t* base, int idx);
