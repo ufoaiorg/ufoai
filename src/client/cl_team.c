@@ -1010,7 +1010,6 @@ extern qboolean CL_SoldierInAircraft (int employee_idx, int aircraft_idx)
 	}
 
 	aircraft = CL_AircraftGetFromIdx(aircraft_idx);
-	assert(aircraft->homebase == baseCurrent);
 	return CL_IsInAircraftTeam(aircraft, employee_idx);
 }
 
