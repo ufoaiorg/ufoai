@@ -191,7 +191,7 @@ static void CL_GiveName_f (void)
  * @todo fix the assignment of ucn??
  * @todo fix the WholeTeam stuff
  */
-extern void CL_GenerateCharacter (employee_t *employee, char *team, employeeType_t employeeType)
+extern void CL_GenerateCharacter (employee_t *employee, const char *team, employeeType_t employeeType)
 {
 	character_t *chr = NULL;
 	char teamDefName[MAX_VAR];
@@ -840,7 +840,7 @@ extern void CL_UpdateHireVar (void)
 		employee = E_GetHiredEmployee(baseCurrent, EMPL_SOLDIER, -(i+1));
 		if (!employee)
 			Sys_Error("CL_UpdateHireVar: Could not get employee %i\n", i);
-		
+
 		if (CL_SoldierInAircraft(employee->idx, aircraft->idx)) {
 			baseCurrent->curTeam[p] = &employee->chr;
 			p++;
@@ -1058,7 +1058,7 @@ extern void CL_RemoveSoldiersFromAircraft (int aircraft_idx, int base_idx)
 		return;
 
 	base = &gd.bases[base_idx];
-	
+
 	if (aircraft_idx < 0 || aircraft_idx >= base->numAircraftInBase)
 		return;
 

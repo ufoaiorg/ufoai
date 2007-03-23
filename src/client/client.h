@@ -754,7 +754,7 @@ void CL_UpdateHireVar(void);
 
 void CL_ResetCharacters(base_t* const base);
 void CL_ResetTeamInBase(void);
-void CL_GenerateCharacter(employee_t *employee, char *team, employeeType_t employeeType);
+void CL_GenerateCharacter(employee_t *employee, const char *team, employeeType_t employeeType);
 char* CL_GetTeamSkinName(int id);
 
 void MN_BuildNewBase(vec2_t pos);

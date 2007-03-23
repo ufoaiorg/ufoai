@@ -695,7 +695,7 @@ char *Com_GiveModel (int type, int gender, char *category)
  * @sa Com_GiveName
  * @sa Com_GiveModel
  */
-int Com_GetModelAndName (char *team, character_t * chr)
+int Com_GetModelAndName (const char *team, character_t * chr)
 {
 	teamDef_t *td;
 	char *str;

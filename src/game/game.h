@@ -224,7 +224,7 @@ typedef struct {
 	void (*ReadFormat) (const char *format, ...);
 
 	/* misc functions */
-	int (*GetModelAndName) (char *team, character_t *chr);
+	int (*GetModelAndName) (const char *team, character_t *chr);
 
 	/* managed memory allocation */
 	void *(*TagMalloc) (size_t size, int tag);
