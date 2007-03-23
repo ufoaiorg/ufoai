@@ -615,8 +615,7 @@ void CL_CampaignRunAircraft (int dt)
 						float *end;
 
 						end = aircraft->route.p[aircraft->route.n - 1];
-						aircraft->pos[0] = end[0];
-						aircraft->pos[1] = end[1];
+						Vector2Copy(end, aircraft->pos);
 
 						switch (aircraft->status) {
 						case AIR_MISSION:
