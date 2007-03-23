@@ -769,16 +769,16 @@ static void B_DrawBuilding (void)
 
 	B_BuildingStatus();
 
-	Com_sprintf(buildingText, MAX_LIST_CHAR, va("%s\n", building->name));
+	Com_sprintf(buildingText, sizeof(buildingText), va("%s\n", building->name));
 
 	if (building->buildingStatus < B_STATUS_UNDER_CONSTRUCTION && building->fixCosts)
-		Com_sprintf(buildingText, MAX_LIST_CHAR, _("Costs:\t%1.0f c\n"), building->fixCosts);
+		Com_sprintf(buildingText, sizeof(buildingText), _("Costs:\t%1.0f c\n"), building->fixCosts);
 
 	if (building->buildingStatus == B_STATUS_UNDER_CONSTRUCTION)
-		Q_strcat(buildingText, va(ngettext("%i Day to build\n", "%i Days to build\n", building->buildTime), building->buildTime), MAX_LIST_CHAR );
+		Q_strcat(buildingText, va(ngettext("%i Day to build\n", "%i Days to build\n", building->buildTime), building->buildTime), sizeof(buildingText));
 
 	if (building->varCosts)
-		Q_strcat(buildingText, va(_("Running Costs:\t%1.0f c\n"), building->varCosts), MAX_LIST_CHAR);
+		Q_strcat(buildingText, va(_("Running Costs:\t%1.0f c\n"), building->varCosts), sizeof(buildingText));
 
 /*	if (employees_in_building->numEmployees)
 		Q_strcat(menuText[TEXT_BUILDING_INFO], va(_("Employees:\t%i\n"), employees_in_building->numEmployees), MAX_LIST_CHAR);*/
@@ -1800,7 +1800,7 @@ static void B_PackInitialEquipment_f (void)
 	int i, price = 0;
 	equipDef_t *ed;
 	character_t *chr;
-	char *name = curCampaign ? cl_initial_equipment->string : Cvar_VariableString("equip");
+	const char *name = curCampaign ? cl_initial_equipment->string : Cvar_VariableString("equip");
 
 	/* check syntax */
 	if (Cmd_Argc() > 1) {
@@ -1879,7 +1879,7 @@ static void B_BuildBase_f (void)
 				if (cl_start_employees->value) {
 					Cbuf_AddText("assign_initial;");
 				} else {
-					char *name = cl_initial_equipment->string;
+					const char *name = cl_initial_equipment->string;
 
 					for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++)
 						if (!Q_strncmp(name, ed->name, MAX_VAR))
@@ -2066,9 +2066,9 @@ extern void B_NewBases (void)
 	char title[MAX_VAR];
 
 	for (i = 0; i < MAX_BASES; i++) {
-		Q_strncpyz(title, gd.bases[i].name, MAX_VAR);
+		Q_strncpyz(title, gd.bases[i].name, sizeof(title));
 		B_ClearBase(&gd.bases[i]);
-		Q_strncpyz(gd.bases[i].name, title, MAX_VAR);
+		Q_strncpyz(gd.bases[i].name, title, sizeof(title));
 	}
 }
 
@@ -2119,7 +2119,6 @@ static void B_BuildingList_f (void)
 		building = &gd.buildings[base->idx][i];
 		Com_Printf("\nBase id %i: %s\n", i, base->name);
 		for (j = 0; j < gd.numBuildings[base->idx]; j++) {
-
 			Com_Printf("...Building: %s #%i - id: %i\n", building->id, B_GetNumberOfBuildingsInBaseByTypeIDX(baseCurrent->idx, building->buildingType),
 				building->idx);
 			Com_Printf("...image: %s\n", building->image);
@@ -2370,14 +2369,14 @@ int B_CheckBuildingConstruction (building_t * building, int base_idx)
 
 /**
  * @brief Selects a base by its index.
- * @param[in] idx Index of the base - see gd.bases array and gd.numBases
+ * @param[in] base_idx Index of the base - see gd.bases array and gd.numBases
  */
-base_t *B_GetBase (int idx)
+base_t *B_GetBase (int base_idx)
 {
 	int i;
 
 	for (i = 0; i < MAX_BASES; i++) {
-		if (gd.bases[i].idx == idx)
+		if (gd.bases[i].idx == base_idx)
 			return &gd.bases[i];
 	}
 	return NULL;
@@ -2456,31 +2455,4 @@ int B_ItemInBase (int item_idx, base_t *base)
 
 	return ed->num[item_idx];
 }
-
-/* 20070315 Zenerka: fixed B_ItemInBase(), B_ItemInBase2() is not necessary anymore. */
-#if 0
-/**
- * @brief Check if the item has been collected (i.e it is in the storage) in the given base.
- * @param[in] item_idx The index of the item in the item-list.
- * @param[in] base The base to search in.
- * @return amount Number of available items in base
- * @note Duplicate of B_ItemInBase with the correct behaviour as the function name implies.
- * @sa B_ItemInBase
- * @todo Use this fucntion instead of B_ItemInBase everywhere.
- */
-int B_ItemInBase2 (int item_idx, base_t *base)
-{
-	equipDef_t *ed = NULL;
-
-	if (!base)
-		return -1;
-
-	ed = &base->storage;
-
-	if (!ed)
-		return -1;
-
-	return ed->num[item_idx];
-}
-#endif
 
