@@ -2750,7 +2750,7 @@ CHARACTER GENERATION AND HANDLING
  * @param[in] name The name of the equipment for debug messages
  * @sa INV_LoadableInWeapon
  */
-int Com_PackAmmoAndWeapon (inventory_t* const inv, const int weapon, const int equip[MAX_OBJDEFS], int missed_primary, char *name)
+int Com_PackAmmoAndWeapon (inventory_t* const inv, const int weapon, const int equip[MAX_OBJDEFS], int missed_primary, const char *name)
 {
 	int ammo = -1; /* this variable is never used before being set */
 	item_t item = {0,NONE,NONE};
@@ -2875,7 +2875,7 @@ int Com_PackAmmoAndWeapon (inventory_t* const inv, const int weapon, const int e
  * Beware: if two weapons in the same category have the same price,
  * only one will be considered for inventory.
  */
-void Com_EquipActor (inventory_t* const inv, const int equip[MAX_OBJDEFS], char *name, character_t* chr)
+void Com_EquipActor (inventory_t* const inv, const int equip[MAX_OBJDEFS], const char *name, character_t* chr)
 {
 	int weapon = -1; /* this variable is never used before being set */
 	int i, max_price, prev_price;

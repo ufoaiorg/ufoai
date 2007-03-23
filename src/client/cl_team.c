@@ -326,9 +326,7 @@ static void CL_GenerateNames_f (void)
  */
 static void CL_ChangeName_f (void)
 {
-	int sel;
-
-	sel = cl_selected->value;
+	int sel = cl_selected->integer;
 
 	/* maybe called without base initialized or active */
 	if (!baseCurrent)
@@ -346,7 +344,7 @@ static void CL_ChangeSkin_f (void)
 {
 	int sel, newSkin;
 
-	sel = cl_selected->value;
+	sel = cl_selected->integer;
 	if (sel >= 0 && sel < gd.numEmployees[EMPL_SOLDIER]) {
 		newSkin = Cvar_VariableInteger("mn_skin") + 1;
 		if (newSkin >= NUM_TEAMSKINS || newSkin < 0)
@@ -380,13 +378,14 @@ static void CL_ChangeSkinOnBoard_f (void)
 		return;
 	}
 
-	sel = cl_selected->value;
+	sel = cl_selected->integer;
 	if (sel >= 0 && sel < gd.numEmployees[EMPL_SOLDIER]) {
 		newSkin = Cvar_VariableInteger("mn_skin");
 		if (newSkin >= NUM_TEAMSKINS || newSkin < 0)
 			newSkin = 0;
 		for (i = 0, p = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++) {
 			if (CL_IsInAircraftTeam(aircraft, i)) {
+				assert(p < MAX_ACTIVETEAM);
 				baseCurrent->curTeam[p]->skin = newSkin;
 				p++;
 			}
@@ -641,15 +640,16 @@ static void CL_GenerateEquipment_f (void)
 	Cvar_ForceSet("cl_selected", "0");
 	for (i = 0, p = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++)
 		if (CL_SoldierInAircraft(i, aircraft->idx)) {
+			assert(p < MAX_ACTIVETEAM);
 			/* maybe we already have soldiers in this aircraft */
-			baseCurrent->curTeam[p] = E_GetCharacter(baseCurrent, EMPL_SOLDIER, i);
+			baseCurrent->curTeam[p] = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, i);
 			if (!baseCurrent->curTeam[p])
 				Sys_Error("CL_GenerateEquipment_f: Could not get employee character with idx: %i\n", p);
 			Com_DPrintf("add %s to curTeam (pos: %i)\n", baseCurrent->curTeam[p]->name, p);
 			Cvar_ForceSet(va("mn_name%i", p), baseCurrent->curTeam[p]->name);
 			p++;
-			if (p >= cl_numnames->integer)
-				break;
+/*			if (p >= cl_numnames->integer)
+				break;*/
 		}
 
 	if (p != baseCurrent->teamNum[baseCurrent->aircraftCurrent])
@@ -993,6 +993,7 @@ static void CL_MarkTeam_f (void)
 extern qboolean CL_SoldierInAircraft (int employee_idx, int aircraft_idx)
 {
 	int i;
+	aircraft_t* aircraft;
 
 	assert(baseCurrent);
 
@@ -1008,7 +1009,9 @@ extern qboolean CL_SoldierInAircraft (int employee_idx, int aircraft_idx)
 		return qfalse;
 	}
 
-	return CL_IsInAircraftTeam(CL_AircraftGetFromIdx(aircraft_idx), employee_idx);
+	aircraft = CL_AircraftGetFromIdx(aircraft_idx);
+	assert(aircraft->homebase == baseCurrent);
+	return CL_IsInAircraftTeam(aircraft, employee_idx);
 }
 
 /**

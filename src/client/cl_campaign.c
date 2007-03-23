@@ -2401,7 +2401,8 @@ static void CL_GameGo (void)
 	/* retrieve the correct team */
 	for (i = 0, p = 0; i < cl_numnames->integer; i++)
 		if (CL_SoldierInAircraft(i, aircraft->idx)) {
-			baseCurrent->curTeam[p] = E_GetCharacter(baseCurrent, EMPL_SOLDIER, i);
+			assert(p < MAX_ACTIVETEAM);
+			baseCurrent->curTeam[p] = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, i);
 			p++;
 		}
 

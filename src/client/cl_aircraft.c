@@ -463,7 +463,7 @@ extern aircraft_t *CL_GetAircraft (const char *name)
  * @param[in] name Name of the aircraft to add
  * @TODO: What about credits? maybe handle them in CL_NewAircraft_f?
  */
-extern void CL_NewAircraft (base_t *base, char *name)
+extern void CL_NewAircraft (base_t *base, const char *name)
 {
 	aircraft_t *aircraft;
 
@@ -559,6 +559,7 @@ extern void CP_GetRandomPosForAircraft (float *pos)
 
 /**
  * @brief Move the specified aircraft
+ * @param[in] dt
  * Return true if the aircraft reached its destination
  */
 extern qboolean CL_AircraftMakeMove (int dt, aircraft_t* aircraft)
@@ -588,7 +589,7 @@ extern qboolean CL_AircraftMakeMove (int dt, aircraft_t* aircraft)
 
 /**
  * @brief
- *
+ * @param[in] dt
  * TODO: Fuel
  */
 #define GROUND_MISSION 0.5
@@ -1285,7 +1286,7 @@ extern void CL_AircraftsUfoDisappear (const aircraft_t *const ufo)
 /**
  * @brief Make the specified aircraft purchasing an ufo
  */
-extern void CL_SendAircraftPurchasingUfo (aircraft_t* aircraft,aircraft_t* ufo)
+extern void CL_SendAircraftPurchasingUfo (aircraft_t* aircraft, aircraft_t* ufo)
 {
 	int num = ufo - gd.ufos;
 
@@ -1311,20 +1312,21 @@ void CL_ResetAircraftTeam (aircraft_t *aircraft)
 /**
  * @brief
  * @param[in] aircraft
- * @param[in] idx
+ * @param[in] employee_idx
  */
-extern void CL_AddToAircraftTeam (aircraft_t *aircraft,int idx)
+extern void CL_AddToAircraftTeam (aircraft_t *aircraft, int employee_idx)
 {
+	int i;
+
 	if (aircraft == NULL) {
 		Com_DPrintf("CL_AddToAircraftTeam: null aircraft \n");
 		return ;
 	}
 	if (*(aircraft->teamSize) < aircraft->size) {
-		int i;
 		for (i = 0; i < aircraft->size; i++)
 			if (aircraft->teamIdxs[i] == -1) {
-				aircraft->teamIdxs[i] = idx;
-				Com_DPrintf("CL_AddToAircraftTeam: added idx '%d'\n", idx);
+				aircraft->teamIdxs[i] = employee_idx;
+				Com_DPrintf("CL_AddToAircraftTeam: added idx '%d'\n", employee_idx);
 				break;
 			}
 		if (i >= aircraft->size)
@@ -1337,9 +1339,9 @@ extern void CL_AddToAircraftTeam (aircraft_t *aircraft,int idx)
 /**
  * @brief
  * @param[in] aircraft
- * @param[in] idx
+ * @param[in] employee_idx
  */
-void CL_RemoveFromAircraftTeam (aircraft_t *aircraft, int idx)
+void CL_RemoveFromAircraftTeam (aircraft_t *aircraft, int employee_idx)
 {
 	int i;
 
@@ -1348,20 +1350,20 @@ void CL_RemoveFromAircraftTeam (aircraft_t *aircraft, int idx)
 		return ;
 	}
 	for (i = 0; i < aircraft->size; i++)
-		if (aircraft->teamIdxs[i] == idx)	{
+		if (aircraft->teamIdxs[i] == employee_idx)	{
 			aircraft->teamIdxs[i] = -1;
-			Com_DPrintf("CL_RemoveFromAircraftTeam: removed idx '%d' \n", idx);
+			Com_DPrintf("CL_RemoveFromAircraftTeam: removed idx '%d' \n", employee_idx);
 			return;
 		}
-	Com_DPrintf("CL_RemoveFromAircraftTeam: error: idx '%d' not on aircraft\n", idx);
+	Com_DPrintf("CL_RemoveFromAircraftTeam: error: idx '%d' not on aircraft\n", employee_idx);
 }
 
 /**
  * @brief
  * @param[in] aircraft
- * @param[in] idx
+ * @param[in] employee_idx
  */
-void CL_DecreaseAircraftTeamIdxGreaterThan (aircraft_t *aircraft, int idx)
+void CL_DecreaseAircraftTeamIdxGreaterThan (aircraft_t *aircraft, int employee_idx)
 {
 	int i;
 
@@ -1369,7 +1371,7 @@ void CL_DecreaseAircraftTeamIdxGreaterThan (aircraft_t *aircraft, int idx)
 		return ;
 
 	for (i = 0; i < aircraft->size; i++)
-		if (aircraft->teamIdxs[i] > idx) {
+		if (aircraft->teamIdxs[i] > employee_idx) {
 			aircraft->teamIdxs[i]--;
 			Com_DPrintf("CL_DecreaseAircraftTeamIdxGreaterThan: decreased idx '%d' \n", aircraft->teamIdxs[i]+1);
 		}
@@ -1378,9 +1380,9 @@ void CL_DecreaseAircraftTeamIdxGreaterThan (aircraft_t *aircraft, int idx)
 /**
  * @brief
  * @param[in] aircraft
- * @param[in] idx
+ * @param[in] employee_idx
  */
-extern qboolean CL_IsInAircraftTeam (aircraft_t *aircraft, int idx)
+extern qboolean CL_IsInAircraftTeam (aircraft_t *aircraft, int employee_idx)
 {
 	int i;
 #if defined (DEBUG) || defined (PARANOID)
@@ -1399,13 +1401,13 @@ extern qboolean CL_IsInAircraftTeam (aircraft_t *aircraft, int idx)
 #endif
 
 	for (i = 0; i < aircraft->size; i++)
-		if (aircraft->teamIdxs[i] == idx) {
+		if (aircraft->teamIdxs[i] == employee_idx) {
 #ifdef DEBUG
 			base = (base_t*)(aircraft->homebase);
-			Com_DPrintf("CL_IsInAircraftTeam: found idx '%d' (homebase: '%s' - baseCurrent: '%s') \n", idx, base ? base->name : "", baseCurrent ? baseCurrent->name : "");
+			Com_DPrintf("CL_IsInAircraftTeam: found idx '%d' (homebase: '%s' - baseCurrent: '%s') \n", employee_idx, base ? base->name : "", baseCurrent ? baseCurrent->name : "");
 #endif
 			return qtrue;
 		}
-	Com_DPrintf("CL_IsInAircraftTeam:not found idx '%d' \n", idx);
+	Com_DPrintf("CL_IsInAircraftTeam:not found idx '%d' \n", employee_idx);
 	return qfalse;
 }

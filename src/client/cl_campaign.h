@@ -317,7 +317,7 @@ void CL_UpdateCredits(int credits);
 qboolean CL_OnBattlescape(void);
 void CL_GameInit (void);
 extern float CP_GetDistance(const vec2_t pos1, const vec2_t pos2);
-void CL_NewAircraft(base_t * base, char *name);
+void CL_NewAircraft(base_t * base, const char *name);
 void CL_ParseResearchedCampaignItems(const char *name, char **text);
 void CL_ParseResearchableCampaignStates(const char *name, char **text, qboolean researchable);
 

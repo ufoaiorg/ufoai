@@ -288,22 +288,6 @@ extern employee_t* E_GetEmployee (const base_t* const base, employeeType_t type,
 }
 
 /**
- * @brief Return a given character pointer of an employee in the given base of a given type
- * @param[in] base Which base the employee should be hired in
- * @param[in] type Which employee type do we search
- * @param[in] idx Which employee id (in global employee array)
- * @return character_t pointer or NULL
- */
-extern character_t* E_GetCharacter (const base_t* const base, employeeType_t type, int idx)
-{
-	employee_t* employee = E_GetEmployee(base, type, idx); /* Parameter sanity is checked here. */
-	if (employee)
-		return &(employee->chr);
-
-	return NULL;
-}
-
-/**
  * @brief Return a given "not hired" employee pointer in the given base of a given type.
  * @param[in] type Which employee type to search for.
  * @param[in] idx Which employee id (in global employee array). Use -1, -2, etc.. to return the first/ second, etc... "hired" employee.
