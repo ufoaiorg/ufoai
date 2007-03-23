@@ -726,9 +726,9 @@ static void CL_CampaignAddMission (setState_t * set)
 	/* set relevant info */
 	mis->def = misTemp;
 	mis->cause = set;
-	Q_strncpyz(gd.oldMis3, gd.oldMis2, MAX_VAR);
-	Q_strncpyz(gd.oldMis2, gd.oldMis1, MAX_VAR);
-	Q_strncpyz(gd.oldMis1, misTemp->name, MAX_VAR);
+	Q_strncpyz(gd.oldMis3, gd.oldMis2, sizeof(gd.oldMis3));
+	Q_strncpyz(gd.oldMis2, gd.oldMis1, sizeof(gd.oldMis2));
+	Q_strncpyz(gd.oldMis1, misTemp->name, sizeof(gd.oldMis1));
 
 	/* execute mission commands */
 	if (*mis->def->cmds)
@@ -755,14 +755,14 @@ static void CL_CampaignAddMission (setState_t * set)
 		B_BaseAttack(&gd.bases[i]);
 		mis->realPos[0] = gd.bases[i].pos[0];
 		mis->realPos[1] = gd.bases[i].pos[1];
-		Q_strncpyz(mis->def->location, gd.bases[i].name, MAX_VAR);
+		Q_strncpyz(mis->def->location, gd.bases[i].name, sizeof(mis->def->location));
 		/* set the mission type to base attack and store the base in data pointer */
 		/* this is useful if the mission expires and we want to know which base it was */
 		mis->def->missionType = MIS_BASEATTACK;
 		mis->def->data = (void*)&gd.bases[i];
 
 		/* Add message to message-system. */
-		Com_sprintf(messageBuffer, MAX_MESSAGE_TEXT, _("Your base %s is under attack."), gd.bases[i].name);
+		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Your base %s is under attack."), gd.bases[i].name);
 		MN_AddNewMessage(_("Base Attack"), messageBuffer, qfalse, MSG_BASEATTACK, NULL);
 		gd.mapAction = MA_BASEATTACK;
 	} else {
@@ -782,7 +782,7 @@ static void CL_CampaignAddMission (setState_t * set)
 		CL_MapMaskFind(mis->def->mask, mis->realPos);
 
 		/* Add message to message-system. */
-		Com_sprintf(messageBuffer, MAX_MESSAGE_TEXT, _("Alien activity has been reported: '%s'"), mis->def->location);
+		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Alien activity has been reported: '%s'"), mis->def->location);
 		MN_AddNewMessage(_("Alien activity"), messageBuffer, qfalse, MSG_TERRORSITE, NULL);
 		Com_DPrintf("Alien activity at long: %.0f lat: %0.f\n", mis->realPos[0], mis->realPos[1]);
 	}
@@ -1046,7 +1046,7 @@ extern void CL_DateConvert (date_t * date, int *day, int *month)
  * @param[in] month The month index - starts at 0 - ends at 11
  * @return month name as char*
  */
-extern char *CL_DateGetMonthName (int month)
+extern const char *CL_DateGetMonthName (int month)
 {
 	switch (month) {
 	case 0:
@@ -1083,7 +1083,7 @@ extern char *CL_DateGetMonthName (int month)
  * @param[in] nation
  * @return Translated happiness string
  */
-static char* CL_GetNationHappinessString (nation_t* nation)
+static const char* CL_GetNationHappinessString (nation_t* nation)
 {
 	if (nation->happiness < 0.015)
 		return _("Giving up");
@@ -1347,7 +1347,7 @@ extern void CL_CampaignRun (void)
 /* =========================================================== */
 
 typedef struct gameLapse_s {
-	char name[16];
+	const char name[16];
 	int scale;
 } gameLapse_t;
 
@@ -1762,7 +1762,7 @@ static qboolean CL_GameSave (const char *filename, const char *comment)
 static void CL_GameSave_f (void)
 {
 	char comment[MAX_COMMENTLENGTH] = "";
-	char *arg = NULL;
+	const char *arg = NULL;
 	qboolean result;
 
 	/* get argument */
@@ -1876,7 +1876,7 @@ static int CL_GameLoad (const char *filename)
 	sizebuf_t sb;
 	byte *buf, *cbuf;
 	qFILE f;
-	char *name, *title, *text;
+	const char *name, *title, *text;
 	int res, clen;
 	int version, dataSize, mtype, idx;
 	int i, j, num, type;
@@ -2431,7 +2431,7 @@ static void CP_AddItemAsCollected (void)
 {
 	int i, baseID;
 	objDef_t *item = NULL;
-	char* id = NULL;
+	const char* id = NULL;
 
 	/* baseid is appened in mission trigger function */
 	if (Cmd_Argc() < 3) {
@@ -2578,10 +2578,9 @@ static void CL_GameAutoGo_f (void)
 
 	/* campaign effects */
 	selMis->cause->done++;
-	if ( (selMis->cause->def->quota
-		  && selMis->cause->done >= selMis->cause->def->quota)
+	if ((selMis->cause->def->quota && selMis->cause->done >= selMis->cause->def->quota)
 		 || (selMis->cause->def->number
-			 && selMis->cause->num >= selMis->cause->def->number) ) {
+			 && selMis->cause->num >= selMis->cause->def->number)) {
 		selMis->cause->active = qfalse;
 		CL_CampaignExecute(selMis->cause);
 	}
@@ -2611,147 +2610,6 @@ static void CL_GameAbort_f (void)
 }
 
 /* =========================================================== */
-
-#if 0
-/* 20070228 Zenerka: new solution for collecting items from the battlefield
-   see CL_CollectingItems(), CL_SellorAddItems(), CL_CollectingAmmo(), CL_CarriedItems() */
-static equipDef_t eTempMarket; /* a terrible hack so that "abort;try again" works */
-static int eTempCredits;
-
-/**
- * @brief Do the real collection of the items
- *
- * @param[in] weapon Which weapon
- * @param[in] left_hand Determines whether the container is the left hand container
- * @param[in] market Add it to market or mission equipment
- *
- * Called from CL_CollectItems.
- * Put every item to the market inventory list
- */
-static void CL_CollectItemAmmo (invList_t * weapon, int left_hand, qboolean market)
-{
-	technology_t *tech = NULL;
-
-	/* fake item */
-	assert (weapon->item.t != NONE);
-	/* twohanded weapons and container is left hand container */
-	assert (!(left_hand && csi.ods[weapon->item.t].holdtwohanded));
-
-	if (market) {
-		eTempMarket.num[weapon->item.t]++;
-		eTempCredits += csi.ods[weapon->item.t].price;
-	} else {
-		ccs.eMission.num[weapon->item.t]++;
-	}
-
-	tech = csi.ods[weapon->item.t].tech;
-
-	if (!tech)
-		Sys_Error("CL_CollectItemAmmo: No tech for %s / %s\n", csi.ods[weapon->item.t].id, csi.ods[weapon->item.t].name);
-	RS_MarkCollected(tech);
-
-	if (!csi.ods[weapon->item.t].reload || weapon->item.a == 0)
-		return;
-	if (market) {
-		eTempMarket.num_loose[weapon->item.m] += weapon->item.a;
-		if (eTempMarket.num_loose[weapon->item.m] >= csi.ods[weapon->item.t].ammo) {
-			eTempMarket.num_loose[weapon->item.m] -= csi.ods[weapon->item.t].ammo;
-			eTempMarket.num[weapon->item.m]++;
-			eTempCredits += csi.ods[weapon->item.m].price;
-		}
-	} else {
-		ccs.eMission.num_loose[weapon->item.m] += weapon->item.a;
-		if (ccs.eMission.num_loose[weapon->item.m] >= csi.ods[weapon->item.t].ammo) {
-			ccs.eMission.num_loose[weapon->item.m] -= csi.ods[weapon->item.t].ammo;
-			ccs.eMission.num[weapon->item.m]++;
-		}
-		/* The guys keep their weapons (half-)loaded. Auto-reload
-		   will happen at equip screen or at the start of next mission,
-		   but fully loaded weapons will not be reloaded even then. */
-	}
-}
-
-/**
- * @brief Collect items from battlefield
- *
- * @param[in] won Determines whether we have won the match or not
- * @param[out] item_counter Returns count of items collected from battlefield
- * @param[out] credits_gained Return total credits gained from sale of items
- *
- * collects all items from battlefield (if we've won the match)
- * and put them back to inventory. Calls CL_CollectItemAmmo which
- * does the real collecting
- */
-extern void CL_CollectItems (int won, int *item_counter, int *credits_gained)
-{
-	int i;
-	le_t *le;
-	invList_t *item;
-	int container;
-
-	eTempMarket = ccs.eMarket;
-	eTempCredits = ccs.credits;
-
-	*item_counter = 0;
-
-	for (i = 0, le = LEs; i < numLEs; i++, le++) {
-		/* Winner collects everything on the floor, and everything carried */
-		/* by surviving actors.  Loser only gets what their living team */
-		/* members carry. */
-		if (!le->inuse)
-			continue;
-		switch (le->type) {
-		case ET_ITEM:
-			if (won)
-				for (item = FLOOR(le); item; item = item->next) {
-					/* TODO: Currently assumes that item.t is good to use. */
-					if ((item->item.a <= 0)		/* No ammo left and ..*/
-					&& csi.ods[item->item.t].oneshot	/* ... oneshot wepaon and ... */
-					&& csi.ods[item->item.t].deplete) { /* ... useless after ammo is gone. */
-						Com_DPrintf("CL_CollectItems: item not collected: %s\n", csi.ods[item->item.t].name);
-					} else {
-						*item_counter += 1;
-						CL_CollectItemAmmo(item, 0, MARKET_AUTOSELL);
-					}
-				}
-			break;
-		case ET_ACTOR:
-		case ET_UGV:
-			if (won) {
-				if ((le->HP <= 0 || le->state & STATE_STUN) && le->team == TEAM_ALIEN) {
-					if (le->i.c[csi.idArmor]) {
-						item = le->i.c[csi.idArmor];
-						eTempMarket.num[item->item.t]++;
-						eTempCredits += csi.ods[item->item.t].price;
-						Com_DPrintf("CL_CollectItems().. market: %s, amount: %i\n", csi.ods[item->item.t].name, eTempMarket.num[item->item.t]);
-					}
-					break;
-				}
-			}
-			/* TODO: Does a stunned actor lose his inventory, too? */
-			if (le->state & STATE_DEAD || le->team != cls.team)
-				/* the items are already dropped to floor and are available
-				   as ET_ITEM; or the actor is not ours */
-				break;
-			/* living actor */
-			for (container = 0; container < csi.numIDs; container++) {
-				if (csi.ids[container].temp) /* collected above */
-					break;
-				for (item = le->i.c[container]; item; item = item->next)
-					CL_CollectItemAmmo(item, (container == csi.idLeft), qfalse);
-			}
-			break;
-		default:
-			break;
-		}
-	}
-	/* work out the difference in credits before and after the sales */
-	*credits_gained = eTempCredits - ccs.credits;
-
-	/* TODO: make this reversible, like eTempMarket */
-	RS_MarkResearchable(qfalse);
-}
-#endif
 
 /**
  * Collecting items functions.
@@ -3590,7 +3448,7 @@ static void CL_ParseStageSet (const char *name, char **text)
 	/* initialize the stage */
 	sp = &stageSets[numStageSets++];
 	memset(sp, 0, sizeof(stageSet_t));
-	Q_strncpyz(sp->name, name, MAX_VAR);
+	Q_strncpyz(sp->name, name, sizeof(sp->name));
 
 	/* get it's body */
 	token = COM_Parse(text);
@@ -3694,7 +3552,7 @@ extern void CL_ParseStage (const char *name, char **text)
 	/* initialize the stage */
 	sp = &stages[numStages++];
 	memset(sp, 0, sizeof(stage_t));
-	Q_strncpyz(sp->name, name, MAX_VAR);
+	Q_strncpyz(sp->name, name, sizeof(sp->name));
 	sp->first = numStageSets;
 
 	Com_DPrintf("stage: %s\n", name);
@@ -4169,7 +4027,7 @@ extern qboolean CL_OnBattlescape (void)
 static void CL_StartMission_f (void)
 {
 	int i;
-	char *missionID;
+	const char *missionID;
 	mission_t* mission = NULL;
 
 	if (Cmd_Argc() < 2) {
@@ -4477,7 +4335,7 @@ static void CP_GetCampaigns_f (void)
 static void CP_CampaignsClick_f (void)
 {
 	int num;
-	char *racetype;
+	const char *racetype;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
@@ -4501,7 +4359,7 @@ static void CP_CampaignsClick_f (void)
 	racetype = campaigns[num].team;
 	(!Q_strncmp(racetype, "human", 5)) ? (racetype = _("Human")) : (racetype = _("Aliens"));
 
-	Com_sprintf(campaignDesc, MAXCAMPAIGNTEXT, _("Race: %s\nRecruits: %i %s, %i %s, %i %s, %i %s\nCredits: %ic\nDifficulty: %s\n%s\n"),
+	Com_sprintf(campaignDesc, sizeof(campaignDesc), _("Race: %s\nRecruits: %i %s, %i %s, %i %s, %i %s\nCredits: %ic\nDifficulty: %s\n%s\n"),
 			racetype,
 			campaigns[num].soldiers, ngettext("soldier", "soldiers", campaigns[num].soldiers),
 			campaigns[num].scientists, ngettext("scientist", "scientists", campaigns[num].scientists),
