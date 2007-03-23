@@ -517,11 +517,11 @@ extern void CL_DeleteAircraft (aircraft_t *aircraft)
 	if (aircraft) {
 		base = &gd.bases[aircraft->idxBase];
 		/* Remove all soldiers from the aircraft (the employees are still hired after this) */
-		CL_RemoveSoldiersFromAircraft(aircraft->idxInBase, aircraft->idxBase );
+		CL_RemoveSoldiersFromAircraft(aircraft->idx, aircraft->idxBase);
 
 		/* Remove aircraft and rearrange the aircraft-list (in base), */
 		base->numAircraftInBase--;
-		for ( i = aircraft->idxInBase; i < base->numAircraftInBase; i++) {
+		for (i = aircraft->idxInBase; i < base->numAircraftInBase; i++) {
 			aircraft_temp = &base->aircraft[i];
 			memcpy(aircraft_temp, &base->aircraft[i+1], sizeof(aircraft_t));
 			aircraft_temp->idxInBase = i;
@@ -941,8 +941,8 @@ extern aircraft_t* CL_AircraftGetFromIdx (int idx)
 	base_t*		base;
 	aircraft_t*	aircraft;
 
-	for (base = gd.bases + gd.numBases - 1 ; base >= gd.bases ; base--)
-		for (aircraft = base->aircraft + base->numAircraftInBase - 1; aircraft >= base->aircraft ; aircraft--)
+	for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--)
+		for (aircraft = base->aircraft + base->numAircraftInBase - 1; aircraft >= base->aircraft; aircraft--)
 			if (aircraft->idx == idx) {
 				Com_DPrintf("CL_AircraftGetFromIdx: aircraft idx: %i - base idx: %i (%s)\n", aircraft->idx, base->idx, base->name);
 				return aircraft;
@@ -1345,17 +1345,15 @@ void CL_RemoveFromAircraftTeam (aircraft_t *aircraft, int employee_idx)
 {
 	int i;
 
-	if (aircraft == NULL) {
-		Com_DPrintf("CL_RemoveFromAircraftTeam: null aircraft \n");
-		return ;
-	}
+	assert(aircraft);
+
 	for (i = 0; i < aircraft->size; i++)
 		if (aircraft->teamIdxs[i] == employee_idx)	{
 			aircraft->teamIdxs[i] = -1;
 			Com_DPrintf("CL_RemoveFromAircraftTeam: removed idx '%d' \n", employee_idx);
 			return;
 		}
-	Com_DPrintf("CL_RemoveFromAircraftTeam: error: idx '%d' not on aircraft\n", employee_idx);
+	Com_Printf("CL_RemoveFromAircraftTeam: error: idx '%d' not on aircraft %i (base: %i) in base %i\n", employee_idx, aircraft->idx, aircraft->idxInBase, baseCurrent->idx);
 }
 
 /**
@@ -1410,4 +1408,18 @@ extern qboolean CL_IsInAircraftTeam (aircraft_t *aircraft, int employee_idx)
 		}
 	Com_DPrintf("CL_IsInAircraftTeam:not found idx '%d' \n", employee_idx);
 	return qfalse;
+}
+
+
+/**
+ * @brief
+ */
+extern void CL_AircraftListDebug_f (void)
+{
+	base_t*		base;
+	aircraft_t*	aircraft;
+
+	for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--)
+		for (aircraft = base->aircraft + base->numAircraftInBase - 1; aircraft >= base->aircraft; aircraft--)
+			Com_Printf("aircraft idx: %i (in base [idx]: %i) - base idx: %i (%s)\n", aircraft->idx, aircraft->idxInBase, base->idx, base->name);
 }

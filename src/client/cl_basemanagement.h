@@ -241,7 +241,7 @@ int B_ItemInBase(int item_idx, base_t *base);
 int B_ItemInBase2(int item_idx, base_t *base);
 #endif
 
-aircraft_t *B_GetAircraftFromBaseByIndex(base_t* base,int index);
+aircraft_t *B_GetAircraftFromBaseByIndex(base_t* base, int index);
 void B_ReviveSoldiersInBase(base_t* base); /* TODO */
 
 #if 0

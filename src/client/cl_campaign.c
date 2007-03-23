@@ -836,7 +836,7 @@ static void CL_CampaignRemoveMission (actMis_t * mis)
 /**
  * @brief Builds the aircraft list for textfield with id
  */
-static void CL_BuildingAircraftList_f (void)
+static void CL_AircraftList_f (void)
 {
 	char *s;
 	int i, j;
@@ -977,7 +977,7 @@ static void CL_CampaignCheckEvents (void)
 						CL_CampaignAddMission(set);
 						if (gd.mapAction == MA_NONE) {
 							gd.mapAction = MA_INTERCEPT;
-							CL_BuildingAircraftList_f();
+							CL_AircraftList_f();
 						}
 					} else
 						CL_CampaignExecute(set);
@@ -4094,7 +4094,9 @@ static const cmdList_t game_commands[] = {
 	,
 	{"aircraft_return", CL_AircraftReturnToBase_f, NULL}
 	,
-	{"aircraft_list", CL_BuildingAircraftList_f, NULL}
+	{"aircraft_list", CL_AircraftList_f, "Generate the aircraft (interception) list"}
+	,
+	{"aircraft_list_debug", CL_AircraftListDebug_f, "Shows all aircraft in all bases"}
 	,
 	{"stats_update", CL_StatsUpdate_f, NULL}
 	,
