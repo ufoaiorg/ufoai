@@ -3042,17 +3042,11 @@ static void CL_GameResults_f (void)
 
 	/* add the looted goods to base storage and market */
 	baseCurrent->storage = ccs.eMission; /* copied, including the arrays! */
-#if 0
-/* 20070228 Zenerka: new solution for collecting items from the battlefield
-   see CL_CollectingItems(), CL_SellorAddItems(), CL_CollectingAmmo(), CL_CarriedItems() */
-	ccs.eMarket = eTempMarket; /* copied, including the arrays! */
-	CL_UpdateCredits(eTempCredits);
-#endif
 
 	civilians_killed = ccs.civiliansKilled;
 	aliens_killed = ccs.aliensKilled;
 	/* fprintf(stderr, "Won: %d   Civilians: %d/%d   Aliens: %d/%d\n", won, selMis->def->civilians - civilians_killed, civilians_killed, selMis->def->aliens - aliens_killed, aliens_killed); */
-  	CL_HandleNationData(!won, selMis->def->civilians - civilians_killed, civilians_killed, selMis->def->aliens - aliens_killed, aliens_killed, selMis);
+	CL_HandleNationData(!won, selMis->def->civilians - civilians_killed, civilians_killed, selMis->def->aliens - aliens_killed, aliens_killed, selMis);
 
 	/* update the character stats */
 	CL_ParseCharacterData(NULL, qtrue);
@@ -3074,12 +3068,10 @@ static void CL_GameResults_f (void)
 			assert(chr);
 			Com_DPrintf("CL_GameResults_f - idx %d hp %d\n",chr->ucn, chr->HP);
 			if (chr->HP <= 0) { /* TODO: <= -50, etc. */
-				Com_DPrintf("CL_GameResults_f - remove player %i - dead\n", i);
-
 				/* Delete the employee. */
 				/* sideeffect: gd.numEmployees[EMPL_SOLDIER] and teamNum[] are decremented by one here. */
+				Com_DPrintf("CL_GameResults_f: Delete this dead employee: %i (%s)\n", i, gd.employees[EMPL_SOLDIER][i].chr.name);
 				E_DeleteEmployee(employee, EMPL_SOLDIER);
-
 			} /* if dead */
 		} /* if employee != NULL */
 	} /* for */

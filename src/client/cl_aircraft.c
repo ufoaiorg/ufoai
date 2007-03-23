@@ -1357,11 +1357,15 @@ void CL_RemoveFromAircraftTeam (aircraft_t *aircraft, int employee_idx)
 }
 
 /**
- * @brief
- * @param[in] aircraft
- * @param[in] employee_idx
+ * @brief Called when an employee is going to be deleted - we have to modify the
+ * teamdIdxs array for the aircraft - because with the deleting of an employee
+ * these indices will change - so we are searching for every indices that is
+ * greater the the one we have deleted and decrease the following indices by one
+ * @param[in] aircraft change teamIdxs array in this aircraft
+ * @param[in] employee_idx deleted employee idx
+ * @sa E_DeleteEmployee
  */
-void CL_DecreaseAircraftTeamIdxGreaterThan (aircraft_t *aircraft, int employee_idx)
+extern void CL_DecreaseAircraftTeamIdxGreaterThan (aircraft_t *aircraft, int employee_idx)
 {
 	int i;
 
