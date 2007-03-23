@@ -2356,7 +2356,7 @@ static void CL_GameGo (void)
 	aircraft_t *aircraft;
 	int i, p;
 
-	if (!curCampaign || gd.interceptAircraft < 0) {
+	if (!curCampaign || gd.interceptAircraft < 0 || gd.interceptAircraft >= gd.numAircraft) {
 		Com_DPrintf("curCampaign: %p, selMis: %p, interceptAircraft: %i\n", curCampaign, selMis, gd.interceptAircraft);
 		return;
 	}
@@ -2511,7 +2511,7 @@ static void CP_ExecuteMissionTrigger (mission_t * m, int won, base_t* base)
  */
 static void CL_GameAutoCheck_f (void)
 {
-	if (!curCampaign || !selMis || gd.interceptAircraft < 0) {
+	if (!curCampaign || !selMis || gd.interceptAircraft < 0 || gd.interceptAircraft >= gd.numAircraft) {
 		Com_DPrintf("No update after automission\n");
 		return;
 	}
@@ -2540,7 +2540,7 @@ static void CL_GameAutoGo_f (void)
 	int won;
 	aircraft_t *aircraft;
 
-	if (!curCampaign || !selMis || gd.interceptAircraft < 0) {
+	if (!curCampaign || !selMis || gd.interceptAircraft < 0 || gd.interceptAircraft >= gd.numAircraft) {
 		Com_DPrintf("No update after automission\n");
 		return;
 	}
@@ -3066,7 +3066,8 @@ static void CL_UpdateCharacterStats (int won)
 
 	Com_DPrintf("CL_UpdateCharacterStats: numTeamList: %i\n", cl.numTeamList);
 
-	aircraft = &baseCurrent->aircraft[gd.interceptAircraft];
+	/* aircraft = &baseCurrent->aircraft[gd.interceptAircraft]; remove this TODO: check if baseCurrent has the currect aircraftCurrent.  */
+	aircraft = CL_AircraftGetFromIdx(gd.interceptAircraft);
 
 	Com_DPrintf("CL_UpdateCharacterStats: baseCurrent: %s\n", baseCurrent->name);
 
@@ -3175,7 +3176,7 @@ static void CL_GameResults_f (void)
 	}
 	won = atoi(Cmd_Argv(1));
 
-	assert(gd.interceptAircraft != -1);
+	assert(gd.interceptAircraft >= 0);
 
 	baseCurrent = CL_AircraftGetFromIdx(gd.interceptAircraft)->homebase;
 	baseCurrent->aircraftCurrent =  CL_AircraftGetFromIdx(gd.interceptAircraft)->idxInBase;

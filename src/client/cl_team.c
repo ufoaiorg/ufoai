@@ -986,7 +986,7 @@ static void CL_MarkTeam_f (void)
 /**
  * @brief Tells you if a soldier is assigned to an aircraft.
  * @param[in] employee_idx The index of the soldier in the global list.
- * @param[in] aircraft_idx The index of aircraft in the base. use -1 to check if the soldier is in _any_ aircraft.
+ * @param[in] aircraft_idx The global index of the aircraft. use -1 to check if the soldier is in _any_ aircraft.
  * @return qboolean qtrue if the soldier was found in the aircraft(s) else: qfalse.
  * @pre Needs baseCurrent set to the base the aircraft is located in.
  */

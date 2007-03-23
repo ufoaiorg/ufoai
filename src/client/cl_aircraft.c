@@ -932,7 +932,8 @@ void CL_AircraftEquipmenuMenuClick_f (void)
 }
 
 /**
- * @brief Return an aircraft from its idx
+ * @brief Return an aircraft from its global idx,
+ * @param[in] idx Global aircraft index.
  */
 extern aircraft_t* CL_AircraftGetFromIdx (int idx)
 {
