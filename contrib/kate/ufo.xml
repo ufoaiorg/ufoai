@@ -27,9 +27,53 @@
       <item> num </item>
       <item> format </item>
       <item> cmd </item>
+      <item> rem </item>
+      <item> wait </item>
+      <item> speed </item>
+      <item> relative </item>
+      <item> cmd </item>
+      <item> 2dobj </item>
+      <item> description </item>
+      <item> mdl_top </item>
+      <item> require_AND </item>
+      <item> require_OR </item>
+      <item> up_chapter </item>
+      <item> provides </item>
+      <item> mail_pre </item>
+      <item> mail </item>
+      <item> from </item>
+      <item> subject </item>
+      <item> to </item>
+      <item> time </item>
+      <item> weapon </item>
+      <item> producetime </item>
+      <item> image_top </item>
+      <item> pushnews </item>
+      <item> tag </item>
+      <item> parent </item>
+      <item> scale </item>
+      <item> origin </item>
+      <item> anim </item>
+      <item> need </item>
+      <item> shape </item>
+      <item> in </item>
+      <item> out </item>
+      <item> extension </item>
+      <item> single </item>
+      <item> temp </item>
+      <item> armor </item>
+      <item> all </item>
+      <item> headgear </item>
+      <item>  </item>
+      <item>  </item>
+      <item>  </item>
     </list>
     <list name="basefunc">
       <item> menu </item>
+      <item> sequence </item>
+      <item> item </item>
+      <item> actor </item>
+      <item> tech </item>
     </list>
     <list name="functions">
       <item> wheel </item>
@@ -53,7 +97,6 @@
         <RegExpr String="/([a-zA-Z]+|.)" attribute="Option" context="#stay"/>
         <DetectChar attribute="Symbol" context="#stay" char="{" beginRegion="Brace1" />
         <DetectChar attribute="Symbol" context="#stay" char="}" endRegion="Brace1" />
-        <RegExpr attribute="Normal Text" context="find_variable" String="(?:[$@]\S|%[\w{]|\*[^\d\*{\$@%=(])" lookAhead="true" />
       </context>
       <context attribute="Comment" lineEndContext="#pop" name="Comment">
         <RegExpr attribute="Alert" context="#stay" String="(FIXME|TODO)"/>
@@ -66,28 +109,12 @@
         <IncludeRules context="##Alerts" />
       </context>
       <!-- ====== Variables ====== -->
-      <context name="find_variable" attribute="Data Type" lineEndContext="#pop" fallthrough="true" fallthroughContext="#pop" >
-        <RegExpr attribute="Special Variable" context="var_detect" String="[\*]" />
-      </context>
-      <context name="var_detect" attribute="Data Type" lineEndContext="#pop#pop" fallthrough="true" fallthroughContext="#pop#pop">
-        <IncludeRules context="var_detect_rules" />
-      </context>
-      <context name="var_detect_rules" attribute="Data Type" lineEndContext="#pop#pop" >
-        <RegExpr attribute="Data Type" context="#stay" String="[\w_]+" />
-        <Detect2Chars attribute="Normal Text" context="#stay" char=":" char1=":" />
-        <DetectChar attribute="Operator" context="#stay" char="'" />
-        <Detect2Chars attribute="Normal Text" context="#stay" char="-" char1="&gt;" />
-        <!-- safe with operator / -->
-        <Detect2Chars attribute="Normal Text" context="#stay" char="+" char1="+" />
-        <Detect2Chars attribute="Normal Text" context="#stay" char="-" char1="-" />
-      </context>
     </contexts>
     <itemDatas>
       <itemData name="Normal Text" defStyleNum="dsNormal"/>
       <itemData name="Function" defStyleNum="dsNormal" color="#0000FF" selColor="#FFFFFF" bold="1" italic="0"/>
       <itemData name="Keyword" defStyleNum="dsKeyword"/>
       <itemData name="Data Type" defStyleNum="dsDataType"/>
-      <itemData name="Special Variable" defStyleNum="dsDataType" color="#C00000" selColor="#C00000" bold="0" italic="0"/>
       <itemData name="Comment" defStyleNum="dsComment"/>
       <itemData name="String" defStyleNum="dsString"/>
       <itemData name="Decimal" defStyleNum="dsDecVal"/>
