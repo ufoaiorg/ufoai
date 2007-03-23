@@ -637,7 +637,7 @@ static void PR_ProductionIncrease_f (void)
 		tech = (technology_t*)(od->tech);
 
 		if (tech)
-			produceable_amount = PR_RequirementsMet(amount,  &tech->require_for_production);
+			produceable_amount = PR_RequirementsMet(amount, &tech->require_for_production);
 		else
 			produceable_amount = amount;
 

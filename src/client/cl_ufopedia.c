@@ -63,8 +63,8 @@ static int upDisplay = UFOPEDIA_CHAPTERS;
 static qboolean UP_TechGetsDisplayed (technology_t *tech)
 {
 	return RS_IsResearched_ptr(tech)	/* Is already researched OR ... */
-	|| RS_Collected_(tech)	/* ... has collected items OR ... */
-	|| ((tech->statusResearchable) && (*tech->pre_description));
+	 || RS_Collected_(tech)	/* ... has collected items OR ... */
+	 || ((tech->statusResearchable) && (*tech->pre_description));
 }
 
 /**
@@ -168,10 +168,10 @@ static void UP_DisplayTechTree (technology_t* t)
 	technology_t *techRequired = NULL;
 	required = &t->require_AND;
 	up_techtree[0] = '\0';
-	for (; i<required->numLinks; i++) {
+	for (; i < required->numLinks; i++) {
 		if (required->type[i] == RS_LINK_TECH) {
 			if (!Q_strncmp(required->id[i], "nothing", MAX_VAR)
-			|| !Q_strncmp(required->id[i], "initial", MAX_VAR)) {
+			 || !Q_strncmp(required->id[i], "initial", MAX_VAR)) {
 				Q_strcat(up_techtree, _("No requirements"), sizeof(up_techtree));
 				continue;
 			} else {
@@ -272,8 +272,8 @@ static void UP_ArmorDescription (technology_t* t)
 	int	i;
 
 	/* select item */
-	for ( i = 0; i < csi.numODs; i++ )
-		if ( !Q_strncmp( t->provides, csi.ods[i].id, MAX_VAR ) ) {
+	for (i = 0; i < csi.numODs; i++)
+		if (!Q_strncmp(t->provides, csi.ods[i].id, MAX_VAR)) {
 			od = &csi.ods[i];
 			break;
 		}
@@ -412,7 +412,7 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type)
 {
 	static char mailHeader[8 * MAX_VAR] = ""; /* bigger as techMail_t (utf8) */
 	char dateBuf[MAX_VAR] = "";
-	char *subjectType = NULL;
+	const char *subjectType = NULL;
 
 	assert(tech);
 	assert(type < TECHMAIL_MAX);
@@ -618,7 +618,7 @@ extern void UP_OpenCopyWith (const char *name)
  */
 static void UP_FindEntry_f (void)
 {
-	char *id = NULL;
+	const char *id = NULL;
 	technology_t *tech = NULL;
 
 	if (Cmd_Argc() < 2) {
