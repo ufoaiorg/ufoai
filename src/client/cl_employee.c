@@ -489,10 +489,12 @@ extern qboolean E_HireEmployee (const base_t* const base, employeeType_t type, i
 
 /**
  * @brief Fires an employee.
+ * @note also remove him from the aircraft
  * @param[in] base Which base the employee was hired in
  * @param[in] type Which employee type do we search
  * @param[in] idx Which employee id (in global employee array) See E_GetHiredEmployee for usage.
  * @sa E_HireEmployee
+ * @sa CL_RemoveSoldierFromAircraft
  */
 extern qboolean E_UnhireEmployee (const base_t* const base, employeeType_t type, int idx)
 {
@@ -512,8 +514,9 @@ extern qboolean E_UnhireEmployee (const base_t* const base, employeeType_t type,
 		 */
 		if (type == EMPL_SOLDIER) {
 			/* Remove soldier from aircraft/team if he was assigned to one. */
-			if (CL_SoldierInAircraft(employee->idx, -1))
+			if (CL_SoldierInAircraft(employee->idx, -1)) {
 				CL_RemoveSoldierFromAircraft(employee->idx, -1);
+			}
 		}
 		/* Set all employee-tags to 'unhired'. */
 		employee->hired = qfalse;
@@ -604,6 +607,7 @@ extern employee_t* E_CreateEmployee (employeeType_t type)
  * @return True if the employee was removed sucessfully, otherwise false.
  * @sa E_CreateEmployee
  * @sa E_ResetEmployees
+ * @sa E_UnhireEmployee
  */
 extern qboolean E_DeleteEmployee (employee_t *employee, employeeType_t type)
 {
