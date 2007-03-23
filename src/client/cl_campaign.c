@@ -2551,7 +2551,7 @@ static void CL_GameAutoGo_f (void)
 	mis = selMis->def;
 	baseCurrent = aircraft->homebase;
 	assert(baseCurrent && mis && aircraft);
-	baseCurrent->aircraftCurrent = aircraft->idx; /* Might not be needed, but it's used later on in CL_AircraftReturnToBase_f */
+	baseCurrent->aircraftCurrent = aircraft->idxInBase; /* Might not be needed, but it's used later on in CL_AircraftReturnToBase_f */
 
 	if (!mis->active) {
 		MN_AddNewMessage(_("Notice"), _("Your dropship is not near the landing zone"), qfalse, MSG_STANDARD, NULL);
@@ -2596,6 +2596,7 @@ static void CL_GameAutoGo_f (void)
 		MN_AddNewMessage(_("Notice"), _("You've lost the battle"), qfalse, MSG_STANDARD, NULL);
 
 	MAP_ResetAction();
+
 	CL_AircraftReturnToBase_f();
 }
 
@@ -2868,7 +2869,7 @@ extern void CL_CollectingItems (int won)
 #endif
 		return;
 	}
-	if (baseCurrent->aircraftCurrent >= 0) {
+	if ((baseCurrent->aircraftCurrent >= 0) && (baseCurrent->aircraftCurrent < baseCurrent->numAircraftInBase)) {
 		aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
 	} else {
 #ifdef DEBUG
@@ -2999,7 +3000,7 @@ void CL_SellOrAddItems (void)
 #endif
 		return;
 	}
-	if (baseCurrent->aircraftCurrent >= 0) {
+	if ((baseCurrent->aircraftCurrent >= 0) && (baseCurrent->aircraftCurrent < baseCurrent->numAircraftInBase)) {
 		aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
 	} else {
 #ifdef DEBUG
@@ -3177,7 +3178,7 @@ static void CL_GameResults_f (void)
 	assert(gd.interceptAircraft != -1);
 
 	baseCurrent = CL_AircraftGetFromIdx(gd.interceptAircraft)->homebase;
-	baseCurrent->aircraftCurrent = gd.interceptAircraft;
+	baseCurrent->aircraftCurrent =  CL_AircraftGetFromIdx(gd.interceptAircraft)->idxInBase;
 
 	/* add the looted goods to base storage and market */
 	baseCurrent->storage = ccs.eMission; /* copied, including the arrays! */
@@ -3237,7 +3238,9 @@ static void CL_GameResults_f (void)
 		/* The aircraft can be savely sent to its homebase without losing aliens */
 
 		/* TODO: Is this really needed? At the beginning of CL_GameResults_f we already have this status (if I read this correctly). */
-		baseCurrent->aircraft[baseCurrent->aircraftCurrent].homebase = baseCurrent;	
+		baseCurrent->aircraft[baseCurrent->aircraftCurrent].homebase = baseCurrent;
+		baseCurrent->aircraft[baseCurrent->aircraftCurrent].idxBase = baseCurrent->idx;
+
 		CL_AircraftReturnToBase_f();
 	}
 

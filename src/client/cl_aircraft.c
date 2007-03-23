@@ -352,7 +352,7 @@ extern void CL_AircraftReturnToBase_f (void)
 {
 	aircraft_t *aircraft;
 
-	if (baseCurrent && baseCurrent->aircraftCurrent >= 0) {
+	if (baseCurrent && (baseCurrent->aircraftCurrent >= 0) && (baseCurrent->aircraftCurrent < baseCurrent->numAircraftInBase)) {
 		aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
 		CL_AircraftReturnToBase(aircraft);
 		CL_AircraftSelect(aircraft);
@@ -385,7 +385,7 @@ extern void CL_AircraftSelect (aircraft_t* aircraft)
 			aircraftID = 0;
 		aircraft = &baseCurrent->aircraft[aircraftID];
 	} else {
-		aircraftID = aircraft->idx;
+		aircraftID = aircraft->idxInBase;
 	}
 
 	/* we are not in the aircraft menu */
@@ -469,7 +469,7 @@ extern void CL_NewAircraft (base_t *base, char *name)
 
 	assert(base);
 
-	/* first aircraft is default aircraft */
+	/* First aircraft in base is default aircraft. */
 	base->aircraftCurrent = 0;
 
 	aircraft = CL_GetAircraft(name);
@@ -1229,15 +1229,19 @@ extern void CL_AircraftsNotifyMissionRemoved (const actMis_t *const mission)
 	aircraft_t*	aircraft;
 
 	/* Aircrafts currently moving to the mission will be redirect to base */
-	for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--)
+	for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--) {
 		for (aircraft = base->aircraft + base->numAircraftInBase - 1;
-			aircraft >= base->aircraft; aircraft--)
+			aircraft >= base->aircraft; aircraft--) {
+
 			if (aircraft->status == AIR_MISSION) {
-				if (aircraft->mission == mission)
+				if (aircraft->mission == mission) {
 					CL_AircraftReturnToBase(aircraft);
-				else if (aircraft->mission > mission)
+				} else if (aircraft->mission > mission) {
 					(aircraft->mission)--;
+				}
 			}
+		}
+	}
 }
 
 /**

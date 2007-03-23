@@ -115,7 +115,7 @@ void CL_CollectingAliens (void)
 		return;
 	}
 
-	if (baseCurrent->aircraftCurrent >= 0) {
+	if ((baseCurrent->aircraftCurrent >= 0) && (baseCurrent->aircraftCurrent < baseCurrent->numAircraftInBase)) {
 		aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
 	} else {
 #ifdef DEBUG
@@ -219,7 +219,7 @@ void AL_AddAliens (void)
 		return;
 	}
 
-	if (tobase->aircraftCurrent >= 0) {
+	if ((tobase->aircraftCurrent >= 0) && (tobase->aircraftCurrent < tobase->numAircraftInBase)) {
 		aircraft = &tobase->aircraft[tobase->aircraftCurrent];
 	} else {
 #ifdef DEBUG

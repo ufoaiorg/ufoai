@@ -370,7 +370,7 @@ static void CL_ChangeSkinOnBoard_f (void)
 	if (!baseCurrent)
 		return;
 
-	if (baseCurrent->aircraftCurrent >= 0) {
+	if ((baseCurrent->aircraftCurrent >= 0) && (baseCurrent->aircraftCurrent < baseCurrent->numAircraftInBase)) {
 		aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
 	} else {
 #ifdef DEBUG
@@ -428,7 +428,7 @@ extern void CL_AddCarriedToEq (equipDef_t * ed)
 	int p, container;
 
 	assert(baseCurrent);
-	assert(baseCurrent->aircraftCurrent != -1);
+	assert((baseCurrent->aircraftCurrent >= 0) && (baseCurrent->aircraftCurrent < baseCurrent->numAircraftInBase));
 
 	for (container = 0; container < csi.numIDs; container++) {
 		for (p = 0; p < baseCurrent->teamNum[baseCurrent->aircraftCurrent]; p++) {
@@ -567,7 +567,7 @@ extern void CL_ReloadAndRemoveCarried (equipDef_t * ed)
 	int p, container;
 
 	assert(baseCurrent);
-	assert(baseCurrent->aircraftCurrent != -1);
+	assert((baseCurrent->aircraftCurrent >= 0) && (baseCurrent->aircraftCurrent < baseCurrent->numAircraftInBase));
 
 	/* Iterate through in container order (right hand, left hand, belt, */
 	/* holster, backpack) at the top level, i.e. each squad member reloads */
@@ -626,7 +626,7 @@ static void CL_GenerateEquipment_f (void)
 	item_t item = {0,NONE,NONE};
 
 	assert(baseCurrent);
-	assert(baseCurrent->aircraftCurrent != -1);
+	assert((baseCurrent->aircraftCurrent >= 0) && (baseCurrent->aircraftCurrent < baseCurrent->numAircraftInBase));
 
 	/* Popup if no soldiers are assigned to the current aircraft. */
 	/* if ( !baseCurrent->numHired) { */
@@ -824,20 +824,23 @@ static void CL_NextSoldier_f (void)
 extern void CL_UpdateHireVar (void)
 {
 	int i, p;
+	int hired_in_base;
 	aircraft_t *aircraft = NULL;
 	employee_t *employee = NULL;
 
 	assert(baseCurrent);
-	assert(baseCurrent->aircraftCurrent != -1);
+	assert((baseCurrent->aircraftCurrent >= 0) && (baseCurrent->aircraftCurrent < baseCurrent->numAircraftInBase));
 
 	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
 	Cvar_Set("mn_hired", va(_("%i of %i"), baseCurrent->teamNum[baseCurrent->aircraftCurrent], aircraft->size));
 
+	hired_in_base = E_CountHired(baseCurrent, EMPL_SOLDIER);
 	/* update curTeam list */
-	for (i = 0, p = 0; i < E_CountHired(baseCurrent, EMPL_SOLDIER); i++) {
+	for (i = 0, p = 0; i < hired_in_base; i++) {
 		employee = E_GetHiredEmployee(baseCurrent, EMPL_SOLDIER, -(i+1));
 		if (!employee)
 			Sys_Error("CL_UpdateHireVar: Could not get employee %i\n", i);
+		
 		if (CL_SoldierInAircraft(employee->idx, aircraft->idx)) {
 			baseCurrent->curTeam[p] = &employee->chr;
 			p++;
@@ -845,7 +848,7 @@ extern void CL_UpdateHireVar (void)
 	}
 	if (p != baseCurrent->teamNum[baseCurrent->aircraftCurrent])
 		Sys_Error("CL_UpdateHireVar: SoldiersInBase: %i, teamNum[%i]: %i, p: %i\n",
-				E_CountHired(baseCurrent, EMPL_SOLDIER),
+				hired_in_base,
 				baseCurrent->aircraftCurrent,
 				baseCurrent->teamNum[baseCurrent->aircraftCurrent],
 				p);
@@ -926,7 +929,7 @@ static void CL_MarkTeam_f (void)
 		MN_PopMenu(qfalse);
 		return;
 	}
-	if (baseCurrent->aircraftCurrent == -1) {
+	if (baseCurrent->aircraftCurrent < 0) {
 		Com_Printf("No aircraft selected\n");
 		MN_PopMenu(qfalse);
 		return;
@@ -1051,10 +1054,13 @@ extern void CL_RemoveSoldiersFromAircraft (int aircraft_idx, int base_idx)
 	int i = 0;
 	base_t *base = NULL;
 
-	if (aircraft_idx < 0 || base_idx < 0)
+	if (base_idx < 0)
 		return;
 
 	base = &gd.bases[base_idx];
+	
+	if (aircraft_idx < 0 || aircraft_idx >= base->numAircraftInBase)
+		return;
 
 	/* Counting backwards because teamNum[aircraft->idx] is changed in CL_RemoveSoldierFromAircraft */
 	for (i = base->teamNum[aircraft_idx]-1; i >= 0; i--) {
@@ -1115,7 +1121,7 @@ static void CL_TeamListDebug_f (void)
 		return;
 	}
 
-	if (!baseCurrent->aircraftCurrent == -1) {
+	if (!baseCurrent->aircraftCurrent < 0) {
 		Com_Printf("Select an aircraft\n");
 		return;
 	}

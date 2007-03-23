@@ -135,8 +135,8 @@ typedef struct building_s {
 
 /** @brief A base with all it's data */
 typedef struct base_s {
-	int idx;					/**< self link */
-	char name[MAX_VAR];			/**< name of the base */
+	int idx;					/**< Self link. Index in the global base-list. */
+	char name[MAX_VAR];			/**< Name of the base */
 	int map[BASE_SIZE][BASE_SIZE];	/**< the base maps (holds building ids) */
 
 	qboolean founded;	/**< already founded? */
@@ -166,8 +166,8 @@ typedef struct base_s {
 	/** all aircraft in this base
 	  @todo: make me a linked list (see cl_market.c aircraft selling) */
 	aircraft_t aircraft[MAX_AIRCRAFT];
-	int numAircraftInBase;	/**< how many aircraft are in this base */
-	int aircraftCurrent;	/**< id of the current selected aircraft in this base */
+	int numAircraftInBase;	/**< How many aircraft are in this base. */
+	int aircraftCurrent;		/**< Index of the currently selected aircraft in this base (NOT a global one). Max is numAircraftInBase-1  */
 
 	int posX[BASE_SIZE][BASE_SIZE];	/**< the x coordinates for the basemap (see map[BASE_SIZE][BASE_SIZE]) */
 	int posY[BASE_SIZE][BASE_SIZE];	/**< the y coordinates for the basemap (see map[BASE_SIZE][BASE_SIZE]) */

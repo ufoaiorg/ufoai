@@ -1816,7 +1816,7 @@ static void B_PackInitialEquipment_f (void)
 			break;
 	if (i == csi.numEDs) {
 		Com_DPrintf("B_PackInitialEquipment_f: Initial Phalanx equipment %s not found.\n", name);
-	} else if (baseCurrent->aircraftCurrent >= 0) {
+	} else if ((baseCurrent->aircraftCurrent >= 0) && (baseCurrent->aircraftCurrent < baseCurrent->numAircraftInBase)) {
 		for (i = 0; i < baseCurrent->teamNum[baseCurrent->aircraftCurrent]; i++) {
 			chr = baseCurrent->curTeam[i];
 			/* pack equipment */
