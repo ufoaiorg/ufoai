@@ -1,11 +1,25 @@
-FreeSans: http://savannah.nongnu.org/projects/freefont/
+* FreeSans: http://savannah.nongnu.org/projects/freefont/
 
 This font is covered by the GPL.
 
+* 7th: 7th Service Truetype Font for Windows
 
-DejaVu: http://dejavu.sourceforge.net/
+2002 Iconian Fonts - Daniel Zadorozny
+
+http://www.iconian.com/
+
+This font comes with the following 10 versions: Regular, Italic, Leftalic, Outline, Outline Italic, Expanded, Extra Bold, Expanded Italic, Condensed, Semi-Condensed.
+This font has several alternate characters in the upper and lower cases.
+This font may be freely distributed and is free for all non-commercial uses.  This font is e-mailware; that is, if you like it, please e-mail the author at:
+iconian@aol.com
+
+* DejaVu: http://dejavu.sourceforge.net/
 
 Fonts are (c) Bitstream (see below). DejaVu changes are in public domain.
+
+
+
+
 
 Bitstream Vera Fonts Copyright
 ------------------------------
@@ -52,7 +66,7 @@ Foundation, and Bitstream Inc., shall not be used in advertising or
 otherwise to promote the sale, use or other dealings in this Font Software
 without prior written authorization from the Gnome Foundation or Bitstream
 Inc., respectively. For further information, contact: fonts at gnome dot
-org. 
+org.
 
 $Id: LICENSE,v 1.1 2004/08/14 15:50:46 src Exp $
 
