@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-03-24 20:50+0100\n"
-"PO-Revision-Date: 2007-03-24 20:51+0100\n"
+"PO-Revision-Date: 2007-03-24 21:56+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -5391,7 +5391,6 @@ msgid "Man-Portable Particle Beams"
 msgstr "Tragbare Partikelstrahlen"
 
 #: ../base/ufos/research.ufo:1849
-#, fuzzy
 msgid "combat_armour_txt"
 msgstr ""
 "Technische Spezifikationen: Gefechtsrüstung\n"
@@ -5433,7 +5432,6 @@ msgstr ""
 "Keiner."
 
 #: ../base/ufos/research.ufo:1863
-#, fuzzy
 msgid "nano_armour_txt"
 msgstr ""
 "Herr Kommandant, ich freue mich, ihnen mitteilen zu dürfen, dass unsere Forschung der Nanoverbundstoffproduktion erfolgreich war!\n"
@@ -5453,7 +5451,6 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1864
-#, fuzzy
 msgid "nano_armour_pre_txt"
 msgstr ""
 "Unsere Untersuchung der außerirdischen Rüstung führte uns zu vielen interessanten Erkenntnissen. Offensichtlich liegt der Schlüssel zur Herstellung einer effektiveren Rüstung, die auf der außerirdischen Rüstung basiert, in der Richtung von Nanoverbundstoffen. Und das benötigt große Mengen Kohlenstoffnanoröhren.\n"
