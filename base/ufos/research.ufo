@@ -1842,12 +1842,12 @@ tech rs_weapon_pbeam_ammo
 // Armor
 //========================
 
-tech rs_combat_armor
+tech rs_combat_armour
 {
 	type	armor
 	up_chapter	equipment
-	description	"_combat_armor_txt"
-	// pre_description	"_combat_armor_pre_txt"
+	description	"_combat_armour_txt"
+	// pre_description	"_combat_armour_pre_txt"
 
 	require_AND { tech nothing }
 
@@ -1856,12 +1856,12 @@ tech rs_combat_armor
 	producetime	10
 }
 
-tech rs_nano_armor
+tech rs_nano_armour
 {
 	type	armor
 	up_chapter	equipment
-	description	"_nano_armor_txt"
-	pre_description	"_nano_armor_pre_txt"
+	description	"_nano_armour_txt"
+	pre_description	"_nano_armour_pre_txt"
 
 	require_AND
 	{
@@ -1904,11 +1904,11 @@ tech rs_alien_medium_armour
 	producetime	-1
 }
 
-// tech rs_heavy_nano_armor
+// tech rs_heavy_nano_armour
 // {
 // 	type	armor
-// 	description	"_nano_heavy_armor_txt"
-// 	pre_description	"_nano_heavy_armor_pre_txt"
+// 	description	"_nano_heavy_armour_txt"
+// 	pre_description	"_nano_heavy_armour_pre_txt"
 //	up_chapter	equipment
 //
 // 	require_AND { tech rs_advanced_armor }

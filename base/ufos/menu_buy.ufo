@@ -1078,7 +1078,7 @@ menu buy
 
 	pic bt_armor
 	{
-		tooltip	"_Show armor"
+		tooltip	"_Show armour"
 		image	menu/button_blue
 		mousefx	true
 		pos		"765 655"

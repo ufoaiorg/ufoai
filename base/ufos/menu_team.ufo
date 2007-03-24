@@ -1272,7 +1272,7 @@ menu equipment
 
 	pic bt_armor
 	{
-		tooltip	"_Show armor in store"
+		tooltip	"_Show armour in store"
 		image	menu/button_blue
 		mousefx	true
 		pos		"374 290"
