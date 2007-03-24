@@ -1553,17 +1553,17 @@ extern void Qcommon_Init (int argc, char **argv)
 
 	Com_ParseScripts();
 
+	if (!dedicated->value)
+		Cbuf_AddText("init\n");
+	else
+		Cbuf_AddText("dedicated_start\n");
+	Cbuf_Execute();
+
 	/* add + commands from command line
 	   if the user didn't give any commands, run default action */
-	if (!Cbuf_AddLateCommands()) {
-		if (!dedicated->value)
-			Cbuf_AddText("init\n");
-		else
-			Cbuf_AddText("dedicated_start\n");
-		Cbuf_Execute();
-		/* the user asked for something explicit */
-	} else {
-		/* so drop the loading plaque */
+	if (Cbuf_AddLateCommands()) {
+		/* the user asked for something explicit
+		 * so drop the loading plaque */
 		SCR_EndLoadingPlaque();
 	}
 

@@ -2193,7 +2193,7 @@ void CL_ActorDie (sizebuf_t * sb)
 	if (le->entnum != number) {
 		Com_DPrintf("CL_ActorDie: Can't kill, LE doesn't exist\n");
 		return;
-	} else if ( le->type != ET_UGV && le->type != ET_ACTOR ) {
+	} else if (le->type != ET_UGV && le->type != ET_ACTOR) {
 		Com_Printf("CL_ActorDie: Can't kill, LE is not an actor\n");
 		return;
 	} else if (le->state & STATE_DEAD) {

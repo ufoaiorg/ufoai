@@ -1100,7 +1100,7 @@ actors chinese
 // japanese
 //==================
 // TODO: Japanese names are normally written as "Last name" "First name". It would be good to have a "lastnamefirst true" parameter.
-// See http://ufo.myexp.de/phpBB2/viewtopic.php?p=755#755
+// See http://ufoai.ninex.info/phpBB2/viewtopic.php?p=755#755
 //===================
 
 names japanese

@@ -62,7 +62,7 @@ static qboolean irc_connected = qfalse;
 static irc_socket_t irc_socket = -1;
 
 static const qboolean IRC_INVISIBLE = qtrue;
-static const char IRC_QUIT_MSG[] = "ufo.myexp.de";
+static const char IRC_QUIT_MSG[] = "ufoai.sf.net";
 
 static irc_channel_t *chan = NULL;
 

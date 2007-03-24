@@ -352,7 +352,7 @@ extern void CL_AircraftReturnToBase_f (void)
 {
 	aircraft_t *aircraft;
 
-	if (baseCurrent && baseCurrent->aircraftCurrent >= 0) {
+	if (baseCurrent && (baseCurrent->aircraftCurrent >= 0) && (baseCurrent->aircraftCurrent < baseCurrent->numAircraftInBase)) {
 		aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
 		CL_AircraftReturnToBase(aircraft);
 		CL_AircraftSelect(aircraft);
@@ -385,7 +385,7 @@ extern void CL_AircraftSelect (aircraft_t* aircraft)
 			aircraftID = 0;
 		aircraft = &baseCurrent->aircraft[aircraftID];
 	} else {
-		aircraftID = aircraft->idx;
+		aircraftID = aircraft->idxInBase;
 	}
 
 	/* we are not in the aircraft menu */
@@ -463,13 +463,13 @@ extern aircraft_t *CL_GetAircraft (const char *name)
  * @param[in] name Name of the aircraft to add
  * @TODO: What about credits? maybe handle them in CL_NewAircraft_f?
  */
-extern void CL_NewAircraft (base_t *base, char *name)
+extern void CL_NewAircraft (base_t *base, const char *name)
 {
 	aircraft_t *aircraft;
 
 	assert(base);
 
-	/* first aircraft is default aircraft */
+	/* First aircraft in base is default aircraft. */
 	base->aircraftCurrent = 0;
 
 	aircraft = CL_GetAircraft(name);
@@ -517,11 +517,11 @@ extern void CL_DeleteAircraft (aircraft_t *aircraft)
 	if (aircraft) {
 		base = &gd.bases[aircraft->idxBase];
 		/* Remove all soldiers from the aircraft (the employees are still hired after this) */
-		CL_RemoveSoldiersFromAircraft(aircraft->idxInBase, aircraft->idxBase );
+		CL_RemoveSoldiersFromAircraft(aircraft->idx, aircraft->idxBase);
 
 		/* Remove aircraft and rearrange the aircraft-list (in base), */
 		base->numAircraftInBase--;
-		for ( i = aircraft->idxInBase; i < base->numAircraftInBase; i++) {
+		for (i = aircraft->idxInBase; i < base->numAircraftInBase; i++) {
 			aircraft_temp = &base->aircraft[i];
 			memcpy(aircraft_temp, &base->aircraft[i+1], sizeof(aircraft_t));
 			aircraft_temp->idxInBase = i;
@@ -559,6 +559,7 @@ extern void CP_GetRandomPosForAircraft (float *pos)
 
 /**
  * @brief Move the specified aircraft
+ * @param[in] dt
  * Return true if the aircraft reached its destination
  */
 extern qboolean CL_AircraftMakeMove (int dt, aircraft_t* aircraft)
@@ -588,7 +589,7 @@ extern qboolean CL_AircraftMakeMove (int dt, aircraft_t* aircraft)
 
 /**
  * @brief
- *
+ * @param[in] dt
  * TODO: Fuel
  */
 #define GROUND_MISSION 0.5
@@ -614,8 +615,7 @@ void CL_CampaignRunAircraft (int dt)
 						float *end;
 
 						end = aircraft->route.p[aircraft->route.n - 1];
-						aircraft->pos[0] = end[0];
-						aircraft->pos[1] = end[1];
+						Vector2Copy(end, aircraft->pos);
 
 						switch (aircraft->status) {
 						case AIR_MISSION:
@@ -625,7 +625,8 @@ void CL_CampaignRunAircraft (int dt)
 							/* set baseCurrent information so the
 							 * correct team goes to the mission */
 							baseCurrent = (base_t*)aircraft->homebase;
-							baseCurrent->aircraftCurrent = i;
+							assert(i == aircraft->idxInBase); /* Just in case the index is out of sync. */
+							baseCurrent->aircraftCurrent = aircraft->idxInBase;
 							MAP_SelectMission(aircraft->mission);
 							gd.interceptAircraft = aircraft->idx;
 							Com_DPrintf("gd.interceptAircraft: %i\n", gd.interceptAircraft);
@@ -932,15 +933,16 @@ void CL_AircraftEquipmenuMenuClick_f (void)
 }
 
 /**
- * @brief Return an aircraft from its idx
+ * @brief Return an aircraft from its global idx,
+ * @param[in] idx Global aircraft index.
  */
 extern aircraft_t* CL_AircraftGetFromIdx (int idx)
 {
 	base_t*		base;
 	aircraft_t*	aircraft;
 
-	for (base = gd.bases + gd.numBases - 1 ; base >= gd.bases ; base--)
-		for (aircraft = base->aircraft + base->numAircraftInBase - 1; aircraft >= base->aircraft ; aircraft--)
+	for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--)
+		for (aircraft = base->aircraft + base->numAircraftInBase - 1; aircraft >= base->aircraft; aircraft--)
 			if (aircraft->idx == idx) {
 				Com_DPrintf("CL_AircraftGetFromIdx: aircraft idx: %i - base idx: %i (%s)\n", aircraft->idx, base->idx, base->name);
 				return aircraft;
@@ -1229,15 +1231,19 @@ extern void CL_AircraftsNotifyMissionRemoved (const actMis_t *const mission)
 	aircraft_t*	aircraft;
 
 	/* Aircrafts currently moving to the mission will be redirect to base */
-	for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--)
+	for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--) {
 		for (aircraft = base->aircraft + base->numAircraftInBase - 1;
-			aircraft >= base->aircraft; aircraft--)
+			aircraft >= base->aircraft; aircraft--) {
+
 			if (aircraft->status == AIR_MISSION) {
-				if (aircraft->mission == mission)
+				if (aircraft->mission == mission) {
 					CL_AircraftReturnToBase(aircraft);
-				else if (aircraft->mission > mission)
+				} else if (aircraft->mission > mission) {
 					(aircraft->mission)--;
+				}
 			}
+		}
+	}
 }
 
 /**
@@ -1280,7 +1286,7 @@ extern void CL_AircraftsUfoDisappear (const aircraft_t *const ufo)
 /**
  * @brief Make the specified aircraft purchasing an ufo
  */
-extern void CL_SendAircraftPurchasingUfo (aircraft_t* aircraft,aircraft_t* ufo)
+extern void CL_SendAircraftPurchasingUfo (aircraft_t* aircraft, aircraft_t* ufo)
 {
 	int num = ufo - gd.ufos;
 
@@ -1306,20 +1312,21 @@ void CL_ResetAircraftTeam (aircraft_t *aircraft)
 /**
  * @brief
  * @param[in] aircraft
- * @param[in] idx
+ * @param[in] employee_idx
  */
-extern void CL_AddToAircraftTeam (aircraft_t *aircraft,int idx)
+extern void CL_AddToAircraftTeam (aircraft_t *aircraft, int employee_idx)
 {
+	int i;
+
 	if (aircraft == NULL) {
 		Com_DPrintf("CL_AddToAircraftTeam: null aircraft \n");
 		return ;
 	}
 	if (*(aircraft->teamSize) < aircraft->size) {
-		int i;
 		for (i = 0; i < aircraft->size; i++)
 			if (aircraft->teamIdxs[i] == -1) {
-				aircraft->teamIdxs[i] = idx;
-				Com_DPrintf("CL_AddToAircraftTeam: added idx '%d'\n", idx);
+				aircraft->teamIdxs[i] = employee_idx;
+				Com_DPrintf("CL_AddToAircraftTeam: added idx '%d'\n", employee_idx);
 				break;
 			}
 		if (i >= aircraft->size)
@@ -1332,31 +1339,33 @@ extern void CL_AddToAircraftTeam (aircraft_t *aircraft,int idx)
 /**
  * @brief
  * @param[in] aircraft
- * @param[in] idx
+ * @param[in] employee_idx
  */
-void CL_RemoveFromAircraftTeam (aircraft_t *aircraft, int idx)
+void CL_RemoveFromAircraftTeam (aircraft_t *aircraft, int employee_idx)
 {
 	int i;
 
-	if (aircraft == NULL) {
-		Com_DPrintf("CL_RemoveFromAircraftTeam: null aircraft \n");
-		return ;
-	}
+	assert(aircraft);
+
 	for (i = 0; i < aircraft->size; i++)
-		if (aircraft->teamIdxs[i] == idx)	{
+		if (aircraft->teamIdxs[i] == employee_idx)	{
 			aircraft->teamIdxs[i] = -1;
-			Com_DPrintf("CL_RemoveFromAircraftTeam: removed idx '%d' \n", idx);
+			Com_DPrintf("CL_RemoveFromAircraftTeam: removed idx '%d' \n", employee_idx);
 			return;
 		}
-	Com_DPrintf("CL_RemoveFromAircraftTeam: error: idx '%d' not on aircraft\n", idx);
+	Com_Printf("CL_RemoveFromAircraftTeam: error: idx '%d' not on aircraft %i (base: %i) in base %i\n", employee_idx, aircraft->idx, aircraft->idxInBase, baseCurrent->idx);
 }
 
 /**
- * @brief
- * @param[in] aircraft
- * @param[in] idx
+ * @brief Called when an employee is going to be deleted - we have to modify the
+ * teamdIdxs array for the aircraft - because with the deleting of an employee
+ * these indices will change - so we are searching for every indices that is
+ * greater the the one we have deleted and decrease the following indices by one
+ * @param[in] aircraft change teamIdxs array in this aircraft
+ * @param[in] employee_idx deleted employee idx
+ * @sa E_DeleteEmployee
  */
-void CL_DecreaseAircraftTeamIdxGreaterThan (aircraft_t *aircraft, int idx)
+extern void CL_DecreaseAircraftTeamIdxGreaterThan (aircraft_t *aircraft, int employee_idx)
 {
 	int i;
 
@@ -1364,7 +1373,7 @@ void CL_DecreaseAircraftTeamIdxGreaterThan (aircraft_t *aircraft, int idx)
 		return ;
 
 	for (i = 0; i < aircraft->size; i++)
-		if (aircraft->teamIdxs[i] > idx) {
+		if (aircraft->teamIdxs[i] > employee_idx) {
 			aircraft->teamIdxs[i]--;
 			Com_DPrintf("CL_DecreaseAircraftTeamIdxGreaterThan: decreased idx '%d' \n", aircraft->teamIdxs[i]+1);
 		}
@@ -1373,9 +1382,9 @@ void CL_DecreaseAircraftTeamIdxGreaterThan (aircraft_t *aircraft, int idx)
 /**
  * @brief
  * @param[in] aircraft
- * @param[in] idx
+ * @param[in] employee_idx
  */
-extern qboolean CL_IsInAircraftTeam (aircraft_t *aircraft, int idx)
+extern qboolean CL_IsInAircraftTeam (aircraft_t *aircraft, int employee_idx)
 {
 	int i;
 #if defined (DEBUG) || defined (PARANOID)
@@ -1394,13 +1403,27 @@ extern qboolean CL_IsInAircraftTeam (aircraft_t *aircraft, int idx)
 #endif
 
 	for (i = 0; i < aircraft->size; i++)
-		if (aircraft->teamIdxs[i] == idx) {
+		if (aircraft->teamIdxs[i] == employee_idx) {
 #ifdef DEBUG
 			base = (base_t*)(aircraft->homebase);
-			Com_DPrintf("CL_IsInAircraftTeam: found idx '%d' (homebase: '%s' - baseCurrent: '%s') \n", idx, base ? base->name : "", baseCurrent ? baseCurrent->name : "");
+			Com_DPrintf("CL_IsInAircraftTeam: found idx '%d' (homebase: '%s' - baseCurrent: '%s') \n", employee_idx, base ? base->name : "", baseCurrent ? baseCurrent->name : "");
 #endif
 			return qtrue;
 		}
-	Com_DPrintf("CL_IsInAircraftTeam:not found idx '%d' \n", idx);
+	Com_DPrintf("CL_IsInAircraftTeam:not found idx '%d' \n", employee_idx);
 	return qfalse;
+}
+
+
+/**
+ * @brief
+ */
+extern void CL_AircraftListDebug_f (void)
+{
+	base_t*		base;
+	aircraft_t*	aircraft;
+
+	for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--)
+		for (aircraft = base->aircraft + base->numAircraftInBase - 1; aircraft >= base->aircraft; aircraft--)
+			Com_Printf("aircraft idx: %i (in base [idx]: %i) - base idx: %i (%s)\n", aircraft->idx, aircraft->idxInBase, base->idx, base->name);
 }

@@ -85,7 +85,7 @@ typedef struct itemsTmp_s {
 
 /** @brief An aircraft with all it's data */
 typedef struct aircraft_s {
-	int idx;					/**< unique id */
+	int idx;					/**< Global index of this aircraft. See also gd.numAircraft. TODO: is this updated when one aircraft is lost (it is checked agains gd.numAircraft sometimes)? We do not really have a global list of acs do we? */
 	int idx_sample;				/**< self-link in aircraft_sample list */
 	char id[MAX_VAR];			/**< internal id from script file */
 	char name[MAX_VAR];			/**< translateable name */
@@ -107,8 +107,8 @@ typedef struct aircraft_s {
 	vec2_t pos;					/**< actual pos on geoscape */
 	int point;
 	int time;
-	int idxInBase;				/**< id in base */
-	int idxBase;				/**< id of base */
+	int idxInBase;				/**< Index in base. See also base_t->numAircraftInBase. */
+	int idxBase;				/**< Index of base. Used to restore homebase from savegame. See also "homebase" below.*/
 	/* pointer to base->numOnTeam[AIRCRAFT_ID] */
 	int *teamSize;				/**< how many soldiers on board */
 	int teamIdxs[MAX_ACTIVETEAM];              /**< array of team members on board employee idx*/
@@ -131,8 +131,8 @@ typedef struct aircraft_s {
 	char item_string[MAX_VAR];
 	technology_t *item;
 	mapline_t route;
-	void *homebase;				/**< pointer to homebase */
-	void *transferBase;			/**< pointer to the base we are transfering equipment to */
+	void *homebase;				/**< Pointer to homebase for faster access. See also idxBase. */
+	void *transferBase;			/**< Pointer to the base we are transfering equipment to */
 	aliensTmp_t aliencargo[MAX_CARGO];	/**< Cargo of aliens. */
 	int alientypes;				/**< How many types of aliens we collected. */
 	itemsTmp_t itemcargo[MAX_CARGO];	/**< Cargo of items. */
@@ -148,6 +148,12 @@ typedef struct aircraft_s {
 
 	qboolean visible;		/**< The ufo is visible ? */
 } aircraft_t;
+
+/*
+TODO: for later, this is used quite a lot in the code.
+#define AIRCRAFTCURRENT_IS_SANE(base) (((base)->aircraftCurrent >= 0) && ((base)->aircraftCurrent < (base)->numAircraftInBase))
+*/
+
 
 extern aircraft_t aircraft_samples[MAX_AIRCRAFT]; /**< available aircraft types */
 extern int numAircraft_samples;
@@ -168,6 +174,7 @@ void CL_AircraftSelect(aircraft_t *aircraft);
 void CL_AircraftSelect_f(void);
 void CL_NewAircraft_f(void);
 void CL_DeleteAircraft(aircraft_t *aircraft);
+void CL_AircraftListDebug_f(void);
 
 void CL_ResetAircraftTeam(aircraft_t *aircraft);
 void CL_AddToAircraftTeam(aircraft_t *aircraft,int idx);

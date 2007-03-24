@@ -67,7 +67,6 @@ extern char* E_GetEmployeeString(employeeType_t type);
 int E_EmployeesInBase(const base_t* const base, employeeType_t type, qboolean free_only);
 
 employee_t* E_GetEmployee(const base_t* const base, employeeType_t type, int num);
-character_t* E_GetCharacter(const base_t* const base, employeeType_t type, int num);
 employee_t* E_GetHiredEmployee(const base_t* const base, employeeType_t type, int num);
 character_t* E_GetHiredCharacter(const base_t* const base, employeeType_t type, int num);
 employee_t* E_GetUnassignedEmployee(const base_t* const base, employeeType_t type);

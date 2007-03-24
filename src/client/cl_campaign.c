@@ -719,9 +719,9 @@ static void CL_CampaignAddMission (setState_t * set)
 	/* set relevant info */
 	mis->def = misTemp;
 	mis->cause = set;
-	Q_strncpyz(gd.oldMis3, gd.oldMis2, MAX_VAR);
-	Q_strncpyz(gd.oldMis2, gd.oldMis1, MAX_VAR);
-	Q_strncpyz(gd.oldMis1, misTemp->name, MAX_VAR);
+	Q_strncpyz(gd.oldMis3, gd.oldMis2, sizeof(gd.oldMis3));
+	Q_strncpyz(gd.oldMis2, gd.oldMis1, sizeof(gd.oldMis2));
+	Q_strncpyz(gd.oldMis1, misTemp->name, sizeof(gd.oldMis1));
 
 	/* execute mission commands */
 	if (*mis->def->cmds)
@@ -748,14 +748,14 @@ static void CL_CampaignAddMission (setState_t * set)
 		B_BaseAttack(&gd.bases[i]);
 		mis->realPos[0] = gd.bases[i].pos[0];
 		mis->realPos[1] = gd.bases[i].pos[1];
-		Q_strncpyz(mis->def->location, gd.bases[i].name, MAX_VAR);
+		Q_strncpyz(mis->def->location, gd.bases[i].name, sizeof(mis->def->location));
 		/* set the mission type to base attack and store the base in data pointer */
 		/* this is useful if the mission expires and we want to know which base it was */
 		mis->def->missionType = MIS_BASEATTACK;
 		mis->def->data = (void*)&gd.bases[i];
 
 		/* Add message to message-system. */
-		Com_sprintf(messageBuffer, MAX_MESSAGE_TEXT, _("Your base %s is under attack."), gd.bases[i].name);
+		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Your base %s is under attack."), gd.bases[i].name);
 		MN_AddNewMessage(_("Base Attack"), messageBuffer, qfalse, MSG_BASEATTACK, NULL);
 		gd.mapAction = MA_BASEATTACK;
 	} else {
@@ -775,7 +775,7 @@ static void CL_CampaignAddMission (setState_t * set)
 		CL_MapMaskFind(mis->def->mask, mis->realPos);
 
 		/* Add message to message-system. */
-		Com_sprintf(messageBuffer, MAX_MESSAGE_TEXT, _("Alien activity has been reported: '%s'"), mis->def->location);
+		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Alien activity has been reported: '%s'"), mis->def->location);
 		MN_AddNewMessage(_("Alien activity"), messageBuffer, qfalse, MSG_TERRORSITE, NULL);
 		Com_DPrintf("Alien activity at long: %.0f lat: %0.f\n", mis->realPos[0], mis->realPos[1]);
 	}
@@ -829,7 +829,7 @@ static void CL_CampaignRemoveMission (actMis_t * mis)
 /**
  * @brief Builds the aircraft list for textfield with id
  */
-static void CL_BuildingAircraftList_f (void)
+static void CL_AircraftList_f (void)
 {
 	char *s;
 	int i, j;
@@ -970,7 +970,7 @@ static void CL_CampaignCheckEvents (void)
 						CL_CampaignAddMission(set);
 						if (gd.mapAction == MA_NONE) {
 							gd.mapAction = MA_INTERCEPT;
-							CL_BuildingAircraftList_f();
+							CL_AircraftList_f();
 						}
 					} else
 						CL_CampaignExecute(set);
@@ -1039,7 +1039,7 @@ extern void CL_DateConvert (date_t * date, int *day, int *month)
  * @param[in] month The month index - starts at 0 - ends at 11
  * @return month name as char*
  */
-extern char *CL_DateGetMonthName (int month)
+extern const char *CL_DateGetMonthName (int month)
 {
 	switch (month) {
 	case 0:
@@ -1076,7 +1076,7 @@ extern char *CL_DateGetMonthName (int month)
  * @param[in] nation
  * @return Translated happiness string
  */
-static char* CL_GetNationHappinessString (nation_t* nation)
+static const char* CL_GetNationHappinessString (nation_t* nation)
 {
 	if (nation->happiness < 0.015)
 		return _("Giving up");
@@ -1340,7 +1340,7 @@ extern void CL_CampaignRun (void)
 /* =========================================================== */
 
 typedef struct gameLapse_s {
-	char name[16];
+	const char name[16];
 	int scale;
 } gameLapse_t;
 
@@ -1755,7 +1755,7 @@ static qboolean CL_GameSave (const char *filename, const char *comment)
 static void CL_GameSave_f (void)
 {
 	char comment[MAX_COMMENTLENGTH] = "";
-	char *arg = NULL;
+	const char *arg = NULL;
 	qboolean result;
 
 	/* get argument */
@@ -1869,7 +1869,7 @@ static int CL_GameLoad (const char *filename)
 	sizebuf_t sb;
 	byte *buf, *cbuf;
 	qFILE f;
-	char *name, *title, *text;
+	const char *name, *title, *text;
 	int res, clen;
 	int version, dataSize, mtype, idx;
 	int i, j, num, type;
@@ -2349,7 +2349,7 @@ static void CL_GameGo (void)
 	aircraft_t *aircraft;
 	int i, p;
 
-	if (!curCampaign || gd.interceptAircraft < 0) {
+	if (!curCampaign || gd.interceptAircraft < 0 || gd.interceptAircraft >= gd.numAircraft) {
 		Com_DPrintf("curCampaign: %p, selMis: %p, interceptAircraft: %i\n", curCampaign, selMis, gd.interceptAircraft);
 		return;
 	}
@@ -2394,7 +2394,8 @@ static void CL_GameGo (void)
 	/* retrieve the correct team */
 	for (i = 0, p = 0; i < cl_numnames->integer; i++)
 		if (CL_SoldierInAircraft(i, aircraft->idx)) {
-			baseCurrent->curTeam[p] = E_GetCharacter(baseCurrent, EMPL_SOLDIER, i);
+			assert(p < MAX_ACTIVETEAM);
+			baseCurrent->curTeam[p] = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, i);
 			p++;
 		}
 
@@ -2423,7 +2424,7 @@ static void CP_AddItemAsCollected (void)
 {
 	int i, baseID;
 	objDef_t *item = NULL;
-	char* id = NULL;
+	const char* id = NULL;
 
 	/* baseid is appened in mission trigger function */
 	if (Cmd_Argc() < 3) {
@@ -2504,7 +2505,7 @@ static void CP_ExecuteMissionTrigger (mission_t * m, int won, base_t* base)
  */
 static void CL_GameAutoCheck_f (void)
 {
-	if (!curCampaign || !selMis || gd.interceptAircraft < 0) {
+	if (!curCampaign || !selMis || gd.interceptAircraft < 0 || gd.interceptAircraft >= gd.numAircraft) {
 		Com_DPrintf("No update after automission\n");
 		return;
 	}
@@ -2533,7 +2534,7 @@ static void CL_GameAutoGo_f (void)
 	int won;
 	aircraft_t *aircraft;
 
-	if (!curCampaign || !selMis || gd.interceptAircraft < 0) {
+	if (!curCampaign || !selMis || gd.interceptAircraft < 0 || gd.interceptAircraft >= gd.numAircraft) {
 		Com_DPrintf("No update after automission\n");
 		return;
 	}
@@ -2544,7 +2545,7 @@ static void CL_GameAutoGo_f (void)
 	mis = selMis->def;
 	baseCurrent = aircraft->homebase;
 	assert(baseCurrent && mis && aircraft);
-	baseCurrent->aircraftCurrent = aircraft->idx; /* Might not be needed, but it's used later on in CL_AircraftReturnToBase_f */
+	baseCurrent->aircraftCurrent = aircraft->idxInBase; /* Might not be needed, but it's used later on in CL_AircraftReturnToBase_f */
 
 	if (!mis->active) {
 		MN_AddNewMessage(_("Notice"), _("Your dropship is not near the landing zone"), qfalse, MSG_STANDARD, NULL);
@@ -2570,10 +2571,9 @@ static void CL_GameAutoGo_f (void)
 
 	/* campaign effects */
 	selMis->cause->done++;
-	if ( (selMis->cause->def->quota
-		  && selMis->cause->done >= selMis->cause->def->quota)
+	if ((selMis->cause->def->quota && selMis->cause->done >= selMis->cause->def->quota)
 		 || (selMis->cause->def->number
-			 && selMis->cause->num >= selMis->cause->def->number) ) {
+			 && selMis->cause->num >= selMis->cause->def->number)) {
 		selMis->cause->active = qfalse;
 		CL_CampaignExecute(selMis->cause);
 	}
@@ -2589,6 +2589,7 @@ static void CL_GameAutoGo_f (void)
 		MN_AddNewMessage(_("Notice"), _("You've lost the battle"), qfalse, MSG_STANDARD, NULL);
 
 	MAP_ResetAction();
+
 	CL_AircraftReturnToBase_f();
 }
 
@@ -2718,7 +2719,7 @@ extern void CL_CollectingItems (int won)
 #endif
 		return;
 	}
-	if (baseCurrent->aircraftCurrent >= 0) {
+	if ((baseCurrent->aircraftCurrent >= 0) && (baseCurrent->aircraftCurrent < baseCurrent->numAircraftInBase)) {
 		aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
 	} else {
 #ifdef DEBUG
@@ -2846,7 +2847,7 @@ void CL_SellOrAddItems (void)
 #endif
 		return;
 	}
-	if (baseCurrent->aircraftCurrent >= 0) {
+	if ((baseCurrent->aircraftCurrent >= 0) && (baseCurrent->aircraftCurrent < baseCurrent->numAircraftInBase)) {
 		aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
 	} else {
 #ifdef DEBUG
@@ -2912,7 +2913,8 @@ static void CL_UpdateCharacterStats (int won)
 
 	Com_DPrintf("CL_UpdateCharacterStats: numTeamList: %i\n", cl.numTeamList);
 
-	aircraft = &baseCurrent->aircraft[gd.interceptAircraft];
+	/* aircraft = &baseCurrent->aircraft[gd.interceptAircraft]; remove this TODO: check if baseCurrent has the currect aircraftCurrent.  */
+	aircraft = CL_AircraftGetFromIdx(gd.interceptAircraft);
 
 	Com_DPrintf("CL_UpdateCharacterStats: baseCurrent: %s\n", baseCurrent->name);
 
@@ -3021,24 +3023,18 @@ static void CL_GameResults_f (void)
 	}
 	won = atoi(Cmd_Argv(1));
 
-	assert(gd.interceptAircraft != -1);
+	assert(gd.interceptAircraft >= 0);
 
 	baseCurrent = CL_AircraftGetFromIdx(gd.interceptAircraft)->homebase;
-	baseCurrent->aircraftCurrent = gd.interceptAircraft;
+	baseCurrent->aircraftCurrent =  CL_AircraftGetFromIdx(gd.interceptAircraft)->idxInBase;
 
 	/* add the looted goods to base storage and market */
 	baseCurrent->storage = ccs.eMission; /* copied, including the arrays! */
-#if 0
-/* 20070228 Zenerka: new solution for collecting items from the battlefield
-   see CL_CollectingItems(), CL_SellorAddItems(), CL_CollectingAmmo(), CL_CarriedItems() */
-	ccs.eMarket = eTempMarket; /* copied, including the arrays! */
-	CL_UpdateCredits(eTempCredits);
-#endif
 
 	civilians_killed = ccs.civiliansKilled;
 	aliens_killed = ccs.aliensKilled;
 	/* fprintf(stderr, "Won: %d   Civilians: %d/%d   Aliens: %d/%d\n", won, selMis->def->civilians - civilians_killed, civilians_killed, selMis->def->aliens - aliens_killed, aliens_killed); */
-  	CL_HandleNationData(!won, selMis->def->civilians - civilians_killed, civilians_killed, selMis->def->aliens - aliens_killed, aliens_killed, selMis);
+	CL_HandleNationData(!won, selMis->def->civilians - civilians_killed, civilians_killed, selMis->def->aliens - aliens_killed, aliens_killed, selMis);
 
 	/* update the character stats */
 	CL_ParseCharacterData(NULL, qtrue);
@@ -3060,12 +3056,10 @@ static void CL_GameResults_f (void)
 			assert(chr);
 			Com_DPrintf("CL_GameResults_f - idx %d hp %d\n",chr->ucn, chr->HP);
 			if (chr->HP <= 0) { /* TODO: <= -50, etc. */
-				Com_DPrintf("CL_GameResults_f - remove player %i - dead\n", i);
-
 				/* Delete the employee. */
 				/* sideeffect: gd.numEmployees[EMPL_SOLDIER] and teamNum[] are decremented by one here. */
+				Com_DPrintf("CL_GameResults_f: Delete this dead employee: %i (%s)\n", i, gd.employees[EMPL_SOLDIER][i].chr.name);
 				E_DeleteEmployee(employee, EMPL_SOLDIER);
-
 			} /* if dead */
 		} /* if employee != NULL */
 	} /* for */
@@ -3084,7 +3078,9 @@ static void CL_GameResults_f (void)
 		/* The aircraft can be savely sent to its homebase without losing aliens */
 
 		/* TODO: Is this really needed? At the beginning of CL_GameResults_f we already have this status (if I read this correctly). */
-		baseCurrent->aircraft[baseCurrent->aircraftCurrent].homebase = baseCurrent;	
+		baseCurrent->aircraft[baseCurrent->aircraftCurrent].homebase = baseCurrent;
+		baseCurrent->aircraft[baseCurrent->aircraftCurrent].idxBase = baseCurrent->idx;
+
 		CL_AircraftReturnToBase_f();
 	}
 
@@ -3432,7 +3428,7 @@ static void CL_ParseStageSet (const char *name, char **text)
 	/* initialize the stage */
 	sp = &stageSets[numStageSets++];
 	memset(sp, 0, sizeof(stageSet_t));
-	Q_strncpyz(sp->name, name, MAX_VAR);
+	Q_strncpyz(sp->name, name, sizeof(sp->name));
 
 	/* get it's body */
 	token = COM_Parse(text);
@@ -3536,7 +3532,7 @@ extern void CL_ParseStage (const char *name, char **text)
 	/* initialize the stage */
 	sp = &stages[numStages++];
 	memset(sp, 0, sizeof(stage_t));
-	Q_strncpyz(sp->name, name, MAX_VAR);
+	Q_strncpyz(sp->name, name, sizeof(sp->name));
 	sp->first = numStageSets;
 
 	Com_DPrintf("stage: %s\n", name);
@@ -4011,7 +4007,7 @@ extern qboolean CL_OnBattlescape (void)
 static void CL_StartMission_f (void)
 {
 	int i;
-	char *missionID;
+	const char *missionID;
 	mission_t* mission = NULL;
 
 	if (Cmd_Argc() < 2) {
@@ -4078,7 +4074,9 @@ static const cmdList_t game_commands[] = {
 	,
 	{"aircraft_return", CL_AircraftReturnToBase_f, NULL}
 	,
-	{"aircraft_list", CL_BuildingAircraftList_f, NULL}
+	{"aircraft_list", CL_AircraftList_f, "Generate the aircraft (interception) list"}
+	,
+	{"aircraft_list_debug", CL_AircraftListDebug_f, "Shows all aircraft in all bases"}
 	,
 	{"stats_update", CL_StatsUpdate_f, NULL}
 	,
@@ -4319,7 +4317,7 @@ static void CP_GetCampaigns_f (void)
 static void CP_CampaignsClick_f (void)
 {
 	int num;
-	char *racetype;
+	const char *racetype;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <arg>\n", Cmd_Argv(0));
@@ -4343,7 +4341,7 @@ static void CP_CampaignsClick_f (void)
 	racetype = campaigns[num].team;
 	(!Q_strncmp(racetype, "human", 5)) ? (racetype = _("Human")) : (racetype = _("Aliens"));
 
-	Com_sprintf(campaignDesc, MAXCAMPAIGNTEXT, _("Race: %s\nRecruits: %i %s, %i %s, %i %s, %i %s\nCredits: %ic\nDifficulty: %s\n%s\n"),
+	Com_sprintf(campaignDesc, sizeof(campaignDesc), _("Race: %s\nRecruits: %i %s, %i %s, %i %s, %i %s\nCredits: %ic\nDifficulty: %s\n%s\n"),
 			racetype,
 			campaigns[num].soldiers, ngettext("soldier", "soldiers", campaigns[num].soldiers),
 			campaigns[num].scientists, ngettext("scientist", "scientists", campaigns[num].scientists),

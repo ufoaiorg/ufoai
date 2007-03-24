@@ -665,7 +665,7 @@ tech rs_weapon_grenl_plasma_ammo
 }
 
 // Generic laser ammo
-// See http://ufo.myexp.de/wiki/index.php/Equipment/Ammunition/D-F_Cartridge for more.
+// See http://ufoai.ninex.info/wiki/index.php/Equipment/Ammunition/D-F_Cartridge for more.
 // TODO fix the "provides" info. Which model should we use? I currently set it to use the laserrifle ammo.
 tech rs_weapon_laserammo
 {

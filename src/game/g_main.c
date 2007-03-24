@@ -450,13 +450,15 @@ void G_EndGame (int team)
 	if (team == TEAM_ALIEN) {
 		level.num_alive[TEAM_PHALANX] = 0;
 		for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-			if ( ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV)
-				 && !(ent->state & STATE_DEAD) && ent->team == TEAM_PHALANX ) {
+			if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV)
+				 && !(ent->state & STATE_DEAD) && ent->team == TEAM_PHALANX) {
 				ent->state = STATE_DEAD;
 				ent->HP = 0;
 				gi.AddEvent(PM_ALL, EV_ACTOR_STATECHANGE);
 				gi.WriteShort(ent->number);
 				gi.WriteShort(STATE_DEAD);
+				level.num_alive[ent->team]--;
+				level.num_kills[team][ent->team]++;
 			}
 	}
 

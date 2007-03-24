@@ -769,16 +769,16 @@ static void B_DrawBuilding (void)
 
 	B_BuildingStatus();
 
-	Com_sprintf(buildingText, MAX_LIST_CHAR, va("%s\n", building->name));
+	Com_sprintf(buildingText, sizeof(buildingText), va("%s\n", building->name));
 
 	if (building->buildingStatus < B_STATUS_UNDER_CONSTRUCTION && building->fixCosts)
-		Com_sprintf(buildingText, MAX_LIST_CHAR, _("Costs:\t%1.0f c\n"), building->fixCosts);
+		Com_sprintf(buildingText, sizeof(buildingText), _("Costs:\t%1.0f c\n"), building->fixCosts);
 
 	if (building->buildingStatus == B_STATUS_UNDER_CONSTRUCTION)
-		Q_strcat(buildingText, va(ngettext("%i Day to build\n", "%i Days to build\n", building->buildTime), building->buildTime), MAX_LIST_CHAR );
+		Q_strcat(buildingText, va(ngettext("%i Day to build\n", "%i Days to build\n", building->buildTime), building->buildTime), sizeof(buildingText));
 
 	if (building->varCosts)
-		Q_strcat(buildingText, va(_("Running Costs:\t%1.0f c\n"), building->varCosts), MAX_LIST_CHAR);
+		Q_strcat(buildingText, va(_("Running Costs:\t%1.0f c\n"), building->varCosts), sizeof(buildingText));
 
 /*	if (employees_in_building->numEmployees)
 		Q_strcat(menuText[TEXT_BUILDING_INFO], va(_("Employees:\t%i\n"), employees_in_building->numEmployees), MAX_LIST_CHAR);*/
@@ -1040,7 +1040,7 @@ static void B_BuildingClick_f (void)
  * @param[in] text TODO: document this ... It appears to be the whole following text that is part of the "building" item definition in .ufo.
  * @param[in] link Bool value that decides whether to link the tech pointer in or not
  */
-extern void B_ParseBuildings (char *id, char **text, qboolean link)
+extern void B_ParseBuildings (const char *name, char **text, qboolean link)
 {
 	building_t *building = NULL;
 	building_t *dependsBuilding = NULL;
@@ -1056,7 +1056,7 @@ extern void B_ParseBuildings (char *id, char **text, qboolean link)
 	/* get id list body */
 	token = COM_Parse(text);
 	if (!*text || *token != '{') {
-		Com_Printf("B_ParseBuildings: building \"%s\" without body ignored\n", id);
+		Com_Printf("B_ParseBuildings: building \"%s\" without body ignored\n", name);
 		return;
 	}
 	if (gd.numBuildingTypes >= MAX_BUILDINGS) {
@@ -1069,7 +1069,7 @@ extern void B_ParseBuildings (char *id, char **text, qboolean link)
 		/* new entry */
 		building = &gd.buildingTypes[gd.numBuildingTypes];
 		memset(building, 0, sizeof(building_t));
-		Q_strncpyz(building->id, id, MAX_VAR);
+		Q_strncpyz(building->id, name, sizeof(building->id));
 
 		Com_DPrintf("...found building %s\n", building->id);
 
@@ -1084,7 +1084,7 @@ extern void B_ParseBuildings (char *id, char **text, qboolean link)
 		gd.numBuildingTypes++;
 		do {
 			/* get the name type */
-			token = COM_EParse(text, errhead, id);
+			token = COM_EParse(text, errhead, name);
 			if (!*text)
 				break;
 			if (*token == '}')
@@ -1092,7 +1092,7 @@ extern void B_ParseBuildings (char *id, char **text, qboolean link)
 
 			/* get values */
 			if (!Q_strncmp(token, "type", MAX_VAR)) {
-				token = COM_EParse(text, errhead, id);
+				token = COM_EParse(text, errhead, name);
 				if (!*text)
 					return;
 
@@ -1114,7 +1114,7 @@ extern void B_ParseBuildings (char *id, char **text, qboolean link)
 					building->buildingType = B_WORKSHOP;
 				}
 /*			} else if (!Q_strncmp(token, "max_employees", MAX_VAR)) {
-				token = COM_EParse(text, errhead, id);
+				token = COM_EParse(text, errhead, name);
 				if (!*text)
 					return;
 				employees_in_building = &building->assigned_employees;
@@ -1128,14 +1128,14 @@ extern void B_ParseBuildings (char *id, char **text, qboolean link)
 			} else
 				/* no linking yet */
 				if (!Q_strncmp(token, "depends", MAX_VAR)) {
-					token = COM_EParse(text, errhead, id);
+					token = COM_EParse(text, errhead, name);
 					if (!*text)
 						return;
 				} else {
 				for (edp = valid_vars; edp->string; edp++)
 					if (!Q_strncmp(token, edp->string, sizeof(edp->string))) {
 						/* found a definition */
-						token = COM_EParse(text, errhead, id);
+						token = COM_EParse(text, errhead, name);
 						if (!*text)
 							return;
 
@@ -1145,33 +1145,33 @@ extern void B_ParseBuildings (char *id, char **text, qboolean link)
 				}
 
 			if (!edp->string)
-				Com_Printf("B_ParseBuildings: unknown token \"%s\" ignored (building %s)\n", token, id);
+				Com_Printf("B_ParseBuildings: unknown token \"%s\" ignored (building %s)\n", token, name);
 
 		} while (*text);
 	} else {
-		building = B_GetBuildingType(id);
+		building = B_GetBuildingType(name);
 		if (!building)			/* i'm paranoid */
-			Sys_Error("B_ParseBuildings: Could not find building with id %s\n", id);
+			Sys_Error("B_ParseBuildings: Could not find building with id %s\n", name);
 
-		tech_link = RS_GetTechByProvided(id);
+		tech_link = RS_GetTechByProvided(name);
 		if (tech_link) {
 			building->tech = tech_link->idx;
 		} else {
 			if (building->visible)
 				/* TODO: are the techs already parsed? */
-				Com_DPrintf("B_ParseBuildings: Could not find tech that provides %s\n", id);
+				Com_DPrintf("B_ParseBuildings: Could not find tech that provides %s\n", name);
 		}
 
 		do {
 			/* get the name type */
-			token = COM_EParse(text, errhead, id);
+			token = COM_EParse(text, errhead, name);
 			if (!*text)
 				break;
 			if (*token == '}')
 				break;
 			/* get values */
 			if (!Q_strncmp(token, "depends", MAX_VAR)) {
-				dependsBuilding = B_GetBuildingType(COM_EParse(text, errhead, id));
+				dependsBuilding = B_GetBuildingType(COM_EParse(text, errhead, name));
 				if (!dependsBuilding)
 					Sys_Error("Could not find building depend of %s\n", building->id);
 				building->dependsBuilding = dependsBuilding->idx;
@@ -1309,7 +1309,7 @@ extern void B_ClearBase (base_t *const base)
  * @brief Reads information about bases.
  * @sa CL_ParseScriptFirst
  */
-extern void B_ParseBases (char *title, char **text)
+extern void B_ParseBases (const char *name, char **text)
 {
 	const char *errhead = "B_ParseBases: unexptected end of file (names ";
 	char *token;
@@ -1321,7 +1321,7 @@ extern void B_ParseBases (char *title, char **text)
 	token = COM_Parse(text);
 
 	if (!*text || *token != '{') {
-		Com_Printf("B_ParseBases: base \"%s\" without body ignored\n", title);
+		Com_Printf("B_ParseBases: base \"%s\" without body ignored\n", name);
 		return;
 	}
 	do {
@@ -1332,7 +1332,7 @@ extern void B_ParseBases (char *title, char **text)
 		}
 
 		/* get the name */
-		token = COM_EParse(text, errhead, title);
+		token = COM_EParse(text, errhead, name);
 		if (!*text)
 			break;
 		if (*token == '}')
@@ -1345,14 +1345,14 @@ extern void B_ParseBases (char *title, char **text)
 		memset(base->map, -1, sizeof(int) * BASE_SIZE * BASE_SIZE);
 
 		/* get the title */
-		token = COM_EParse(text, errhead, title);
+		token = COM_EParse(text, errhead, name);
 		if (!*text)
 			break;
 		if (*token == '}')
 			break;
 		if (*token == '_')
 			token++;
-		Q_strncpyz(base->name, _(token), MAX_VAR);
+		Q_strncpyz(base->name, _(token), sizeof(base->name));
 		Com_DPrintf("Found base %s\n", base->name);
 		B_ResetBuildingCurrent();
 		gd.numBaseNames++;
@@ -1800,7 +1800,7 @@ static void B_PackInitialEquipment_f (void)
 	int i, price = 0;
 	equipDef_t *ed;
 	character_t *chr;
-	char *name = curCampaign ? cl_initial_equipment->string : Cvar_VariableString("equip");
+	const char *name = curCampaign ? cl_initial_equipment->string : Cvar_VariableString("equip");
 
 	/* check syntax */
 	if (Cmd_Argc() > 1) {
@@ -1816,7 +1816,7 @@ static void B_PackInitialEquipment_f (void)
 			break;
 	if (i == csi.numEDs) {
 		Com_DPrintf("B_PackInitialEquipment_f: Initial Phalanx equipment %s not found.\n", name);
-	} else if (baseCurrent->aircraftCurrent >= 0) {
+	} else if ((baseCurrent->aircraftCurrent >= 0) && (baseCurrent->aircraftCurrent < baseCurrent->numAircraftInBase)) {
 		for (i = 0; i < baseCurrent->teamNum[baseCurrent->aircraftCurrent]; i++) {
 			chr = baseCurrent->curTeam[i];
 			/* pack equipment */
@@ -1879,7 +1879,7 @@ static void B_BuildBase_f (void)
 				if (cl_start_employees->value) {
 					Cbuf_AddText("assign_initial;");
 				} else {
-					char *name = cl_initial_equipment->string;
+					const char *name = cl_initial_equipment->string;
 
 					for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++)
 						if (!Q_strncmp(name, ed->name, MAX_VAR))
@@ -2066,9 +2066,9 @@ extern void B_NewBases (void)
 	char title[MAX_VAR];
 
 	for (i = 0; i < MAX_BASES; i++) {
-		Q_strncpyz(title, gd.bases[i].name, MAX_VAR);
+		Q_strncpyz(title, gd.bases[i].name, sizeof(title));
 		B_ClearBase(&gd.bases[i]);
-		Q_strncpyz(gd.bases[i].name, title, MAX_VAR);
+		Q_strncpyz(gd.bases[i].name, title, sizeof(title));
 	}
 }
 
@@ -2119,7 +2119,6 @@ static void B_BuildingList_f (void)
 		building = &gd.buildings[base->idx][i];
 		Com_Printf("\nBase id %i: %s\n", i, base->name);
 		for (j = 0; j < gd.numBuildings[base->idx]; j++) {
-
 			Com_Printf("...Building: %s #%i - id: %i\n", building->id, B_GetNumberOfBuildingsInBaseByTypeIDX(baseCurrent->idx, building->buildingType),
 				building->idx);
 			Com_Printf("...image: %s\n", building->image);
@@ -2246,7 +2245,8 @@ static void B_BuildingOpen_f (void)
 }
 
 /**
- * @brief
+ * @brief This function checks whether a user build the max allowed amount of bases
+ * if yes, the MN_PopMenu will pop the base build menu from the stack
  */
 static void B_CheckMaxBases_f (void)
 {
@@ -2369,13 +2369,14 @@ int B_CheckBuildingConstruction (building_t * building, int base_idx)
 
 /**
  * @brief Selects a base by its index.
+ * @param[in] base_idx Index of the base - see gd.bases array and gd.numBases
  */
-base_t *B_GetBase (int idx)
+base_t *B_GetBase (int base_idx)
 {
 	int i;
 
 	for (i = 0; i < MAX_BASES; i++) {
-		if (gd.bases[i].idx == idx)
+		if (gd.bases[i].idx == base_idx)
 			return &gd.bases[i];
 	}
 	return NULL;
@@ -2392,16 +2393,17 @@ int B_GetNumOnTeam (void)
 }
 
 /**
- * @brief
- * @param[in] base
- * @param[in] index
+ * @brief Returns the aircraft pointer from the given base and perform some sanity checks
+ * @param[in] base Base the to get the aircraft from - may not be null
+ * @param[in] index Base aircraft index
  */
-aircraft_t *B_GetAircraftFromBaseByIndex (base_t* base,int index)
+aircraft_t *B_GetAircraftFromBaseByIndex (base_t* base, int index)
 {
-	if (index<base->numAircraftInBase) {
+	assert(base);
+	if (index < base->numAircraftInBase) {
 		return &base->aircraft[index];
 	} else {
-		Com_DPrintf("B_GetAircraftFromBaseByIndex: error: index bigger then number of aircrafts\n");
+		Com_DPrintf("B_GetAircraftFromBaseByIndex: error: index bigger then number of aircrafts in this base\n");
 		return NULL;
 	}
 }
@@ -2453,5 +2455,4 @@ int B_ItemInBase (int item_idx, base_t *base)
 
 	return ed->num[item_idx];
 }
-
 
