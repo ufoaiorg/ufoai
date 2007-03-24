@@ -38,6 +38,26 @@ mission industrial
 	storyrelated	true
 }
 
+//Doha, Qatar
+mission qatar
+{
+	location	"_Doha"
+	type		"_Terror Attack"
+	text		"_Protect inhabitants"
+	map		oriental05
+	music		PsymongN3
+	pos		"-51 25"
+	aliens		7
+	alienteam	ortnok
+	alienequip	stage4_soldiers
+	civilians	5
+	civteam		oriental
+	nation		"middle"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
 // Switzerland
 mission terrain
 {
