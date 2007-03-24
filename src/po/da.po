@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion CVS\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-03-24 17:47+0100\n"
+"POT-Creation-Date: 2007-03-24 20:50+0100\n"
 "PO-Revision-Date: 2006-10-24 13:31+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
@@ -896,7 +896,7 @@ msgid "Misc"
 msgstr ""
 
 #: ../base/ufos/menu_buy.ufo:1081 ../base/ufos/menu_production.ufo:345
-msgid "Show armor"
+msgid "Show armour"
 msgstr ""
 
 #: ../base/ufos/menu_buy.ufo:1096 ../base/ufos/menu_production.ufo:360
@@ -2128,7 +2128,7 @@ msgid "Show miscellaneous equipment in store"
 msgstr ""
 
 #: ../base/ufos/menu_team.ufo:1275
-msgid "Show armor in store"
+msgid "Show armour in store"
 msgstr ""
 
 #: ../base/ufos/menu_team.ufo:1431
@@ -2244,35 +2244,35 @@ msgstr "Afstand"
 msgid "Leave mailclient"
 msgstr "Rumvæsen set"
 
-#: ../base/ufos/missions.ufo:4 ../base/ufos/missions.ufo:324
+#: ../base/ufos/missions.ufo:4 ../base/ufos/missions.ufo:344
 msgid "New York"
 msgstr ""
 
 #: ../base/ufos/missions.ufo:5 ../base/ufos/missions.ufo:25
 #: ../base/ufos/missions.ufo:45 ../base/ufos/missions.ufo:65
 #: ../base/ufos/missions.ufo:85 ../base/ufos/missions.ufo:105
-#: ../base/ufos/missions.ufo:165 ../base/ufos/missions.ufo:185
-#: ../base/ufos/missions.ufo:225 ../base/ufos/missions.ufo:245
+#: ../base/ufos/missions.ufo:125 ../base/ufos/missions.ufo:185
+#: ../base/ufos/missions.ufo:205 ../base/ufos/missions.ufo:245
 #: ../base/ufos/missions.ufo:265 ../base/ufos/missions.ufo:285
 #: ../base/ufos/missions.ufo:305 ../base/ufos/missions.ufo:325
-#: ../base/ufos/missions.ufo:345 ../base/ufos/missions.ufo:366
-#: ../base/ufos/missions.ufo:464 ../base/ufos/missions.ufo:484
-#: ../base/ufos/missions.ufo:524 ../base/ufos/missions.ufo:564
-#: ../base/ufos/missions.ufo:583 ../base/ufos/missions.ufo:602
+#: ../base/ufos/missions.ufo:345 ../base/ufos/missions.ufo:365
+#: ../base/ufos/missions.ufo:386 ../base/ufos/missions.ufo:484
+#: ../base/ufos/missions.ufo:504 ../base/ufos/missions.ufo:544
+#: ../base/ufos/missions.ufo:584 ../base/ufos/missions.ufo:603
 #: ../base/ufos/missions.ufo:622 ../base/ufos/missions.ufo:642
-#: ../base/ufos/missions.ufo:661 ../base/ufos/missions.ufo:680
-#: ../base/ufos/missions.ufo:718 ../base/ufos/missions.ufo:738
-#: ../base/ufos/missions.ufo:758 ../base/ufos/missions.ufo:779
-#: ../base/ufos/missions.ufo:799 ../base/ufos/missions.ufo:818
-#: ../base/ufos/missions.ufo:838
+#: ../base/ufos/missions.ufo:662 ../base/ufos/missions.ufo:681
+#: ../base/ufos/missions.ufo:700 ../base/ufos/missions.ufo:738
+#: ../base/ufos/missions.ufo:758 ../base/ufos/missions.ufo:778
+#: ../base/ufos/missions.ufo:799 ../base/ufos/missions.ufo:819
+#: ../base/ufos/missions.ufo:838 ../base/ufos/missions.ufo:858
 msgid "Terror Attack"
 msgstr ""
 
 #: ../base/ufos/missions.ufo:6 ../base/ufos/missions.ufo:26
-#: ../base/ufos/missions.ufo:46 ../base/ufos/missions.ufo:66
-#: ../base/ufos/missions.ufo:86 ../base/ufos/missions.ufo:326
-#: ../base/ufos/missions.ufo:719 ../base/ufos/missions.ufo:759
-#: ../base/ufos/missions.ufo:780
+#: ../base/ufos/missions.ufo:66 ../base/ufos/missions.ufo:86
+#: ../base/ufos/missions.ufo:106 ../base/ufos/missions.ufo:346
+#: ../base/ufos/missions.ufo:739 ../base/ufos/missions.ufo:779
+#: ../base/ufos/missions.ufo:800
 msgid ""
 "Damn it, you've let some of them get away again! Reequip your squad and get "
 "after them!"
@@ -2283,248 +2283,252 @@ msgid "Radisson"
 msgstr ""
 
 #: ../base/ufos/missions.ufo:44
-msgid "Altdorf"
+msgid "Doha"
+msgstr ""
+
+#: ../base/ufos/missions.ufo:46 ../base/ufos/missions.ufo:206
+#: ../base/ufos/missions.ufo:266 ../base/ufos/missions.ufo:286
+#: ../base/ufos/missions.ufo:326 ../base/ufos/missions.ufo:366
+#: ../base/ufos/missions.ufo:387 ../base/ufos/missions.ufo:485
+#: ../base/ufos/missions.ufo:505 ../base/ufos/missions.ufo:545
+#: ../base/ufos/missions.ufo:585 ../base/ufos/missions.ufo:604
+#: ../base/ufos/missions.ufo:623 ../base/ufos/missions.ufo:663
+#: ../base/ufos/missions.ufo:682 ../base/ufos/missions.ufo:701
+#: ../base/ufos/missions.ufo:759 ../base/ufos/missions.ufo:820
+#: ../base/ufos/missions.ufo:839 ../base/ufos/missions.ufo:859
+msgid "Protect inhabitants"
 msgstr ""
 
 #: ../base/ufos/missions.ufo:64
-msgid "Oslo"
+msgid "Altdorf"
 msgstr ""
 
 #: ../base/ufos/missions.ufo:84
-msgid "Antalya"
+msgid "Oslo"
 msgstr ""
 
 #: ../base/ufos/missions.ufo:104
-msgid "Berlin"
-msgstr ""
-
-#: ../base/ufos/missions.ufo:106
-msgid "Protect civilians"
+msgid "Antalya"
 msgstr ""
 
 #: ../base/ufos/missions.ufo:124
-msgid "Wajir"
+msgid "Berlin"
 msgstr ""
 
-#: ../base/ufos/missions.ufo:125 ../base/ufos/missions.ufo:145
-msgid "Crash Site"
-msgstr ""
-
-#: ../base/ufos/missions.ufo:126 ../base/ufos/missions.ufo:146
-msgid "Secure Area"
+#: ../base/ufos/missions.ufo:126
+msgid "Protect civilians"
 msgstr ""
 
 #: ../base/ufos/missions.ufo:144
-msgid "Arnhem"
+msgid "Wajir"
+msgstr ""
+
+#: ../base/ufos/missions.ufo:145 ../base/ufos/missions.ufo:165
+msgid "Crash Site"
+msgstr ""
+
+#: ../base/ufos/missions.ufo:146 ../base/ufos/missions.ufo:166
+msgid "Secure Area"
 msgstr ""
 
 #: ../base/ufos/missions.ufo:164
+msgid "Arnhem"
+msgstr ""
+
+#: ../base/ufos/missions.ufo:184
 msgid "Wellington"
 msgstr ""
 
-#: ../base/ufos/missions.ufo:166
+#: ../base/ufos/missions.ufo:186
 msgid ""
 "There are rumors of a mine being overrun by aliens. Although this source of "
 "information is doubtful, you'll need to investigate."
 msgstr ""
 
-#: ../base/ufos/missions.ufo:184
+#: ../base/ufos/missions.ufo:204
 msgid "Mackay"
 msgstr ""
 
-#: ../base/ufos/missions.ufo:186 ../base/ufos/missions.ufo:246
-#: ../base/ufos/missions.ufo:266 ../base/ufos/missions.ufo:306
-#: ../base/ufos/missions.ufo:346 ../base/ufos/missions.ufo:367
-#: ../base/ufos/missions.ufo:465 ../base/ufos/missions.ufo:485
-#: ../base/ufos/missions.ufo:525 ../base/ufos/missions.ufo:565
-#: ../base/ufos/missions.ufo:584 ../base/ufos/missions.ufo:603
-#: ../base/ufos/missions.ufo:643 ../base/ufos/missions.ufo:662
-#: ../base/ufos/missions.ufo:681 ../base/ufos/missions.ufo:739
-#: ../base/ufos/missions.ufo:800 ../base/ufos/missions.ufo:819
-#: ../base/ufos/missions.ufo:839
-msgid "Protect inhabitants"
-msgstr ""
-
-#: ../base/ufos/missions.ufo:204
+#: ../base/ufos/missions.ufo:224
 msgid "Dongola"
 msgstr ""
 
-#: ../base/ufos/missions.ufo:205 ../base/ufos/missions.ufo:407
+#: ../base/ufos/missions.ufo:225 ../base/ufos/missions.ufo:427
 msgid "Crashed Alien Ship"
 msgstr ""
 
-#: ../base/ufos/missions.ufo:206
+#: ../base/ufos/missions.ufo:226
 msgid "Secure area"
 msgstr ""
 
-#: ../base/ufos/missions.ufo:224
+#: ../base/ufos/missions.ufo:244
 msgid "Bristol"
 msgstr ""
 
-#: ../base/ufos/missions.ufo:226
+#: ../base/ufos/missions.ufo:246
 msgid "Protect the military installation crew"
 msgstr ""
 
-#: ../base/ufos/missions.ufo:244
+#: ../base/ufos/missions.ufo:264
 msgid "Veracruz"
 msgstr ""
 
-#: ../base/ufos/missions.ufo:264
+#: ../base/ufos/missions.ufo:284
 msgid "Uppsala"
 msgstr ""
 
-#: ../base/ufos/missions.ufo:284
+#: ../base/ufos/missions.ufo:304
 msgid "Gwanda"
 msgstr ""
 
-#: ../base/ufos/missions.ufo:286
+#: ../base/ufos/missions.ufo:306
 msgid "Protect the excavation site at all cost."
 msgstr ""
 
-#: ../base/ufos/missions.ufo:304
+#: ../base/ufos/missions.ufo:324
 msgid "Marina Serra"
 msgstr ""
 
-#: ../base/ufos/missions.ufo:344
+#: ../base/ufos/missions.ufo:364
 msgid "Lille"
 msgstr ""
 
-#: ../base/ufos/missions.ufo:365
+#: ../base/ufos/missions.ufo:385
 msgid "Busan"
 msgstr ""
 
-#: ../base/ufos/missions.ufo:385
+#: ../base/ufos/missions.ufo:405
 msgid "Morioka"
 msgstr ""
 
-#: ../base/ufos/missions.ufo:386
+#: ../base/ufos/missions.ufo:406
 #, fuzzy
 msgid "Alien Hideout"
 msgstr "Rumvæsen-arter"
 
-#: ../base/ufos/missions.ufo:387
+#: ../base/ufos/missions.ufo:407
 msgid "Eliminate intruders"
 msgstr ""
 
-#: ../base/ufos/missions.ufo:406
+#: ../base/ufos/missions.ufo:426
 msgid "Atacama Desert"
 msgstr ""
 
-#: ../base/ufos/missions.ufo:408 ../base/ufos/missions.ufo:446
+#: ../base/ufos/missions.ufo:428 ../base/ufos/missions.ufo:466
 msgid "Secure Alien Ship"
 msgstr ""
 
-#: ../base/ufos/missions.ufo:425 ../base/ufos/missions.ufo:444
-#: ../base/ufos/missions.ufo:483
+#: ../base/ufos/missions.ufo:445 ../base/ufos/missions.ufo:464
+#: ../base/ufos/missions.ufo:503
 msgid "Revelstoke"
 msgstr ""
 
-#: ../base/ufos/missions.ufo:426 ../base/ufos/missions.ufo:445
-#: ../base/ufos/missions.ufo:504 ../base/ufos/missions.ufo:544
+#: ../base/ufos/missions.ufo:446 ../base/ufos/missions.ufo:465
+#: ../base/ufos/missions.ufo:524 ../base/ufos/missions.ufo:564
 msgid "Landed Alien Ship"
 msgstr ""
 
-#: ../base/ufos/missions.ufo:427 ../base/ufos/missions.ufo:505
-#: ../base/ufos/missions.ufo:545
+#: ../base/ufos/missions.ufo:447 ../base/ufos/missions.ufo:525
+#: ../base/ufos/missions.ufo:565
 msgid "Secure Alien Ship before Liftoff"
 msgstr ""
 
-#: ../base/ufos/missions.ufo:463
+#: ../base/ufos/missions.ufo:483
 msgid "Nuuk"
 msgstr ""
 
-#: ../base/ufos/missions.ufo:503
+#: ../base/ufos/missions.ufo:523
 msgid "Antarctic"
 msgstr ""
 
-#: ../base/ufos/missions.ufo:523
+#: ../base/ufos/missions.ufo:543
 msgid "Agpat"
 msgstr ""
 
-#: ../base/ufos/missions.ufo:543
+#: ../base/ufos/missions.ufo:563
 msgid "Somewhere in Antarctica"
 msgstr ""
 
-#: ../base/ufos/missions.ufo:563
+#: ../base/ufos/missions.ufo:583
 msgid "La Paz"
 msgstr ""
 
-#: ../base/ufos/missions.ufo:582
+#: ../base/ufos/missions.ufo:602
 msgid "Tazovskij"
 msgstr ""
 
-#: ../base/ufos/missions.ufo:601
+#: ../base/ufos/missions.ufo:621
 msgid "Gobabis"
 msgstr ""
 
 # # cl_campaign.c
-#: ../base/ufos/missions.ufo:621
+#: ../base/ufos/missions.ufo:641
 #, fuzzy
 msgid "Jiwani"
 msgstr "Jan"
 
-#: ../base/ufos/missions.ufo:623
+#: ../base/ufos/missions.ufo:643
 msgid "Secure Dam"
 msgstr ""
 
-#: ../base/ufos/missions.ufo:641
+#: ../base/ufos/missions.ufo:661
 msgid "Wachau"
 msgstr ""
 
-#: ../base/ufos/missions.ufo:660
+#: ../base/ufos/missions.ufo:680
 msgid "Asyut"
 msgstr ""
 
-#: ../base/ufos/missions.ufo:679
+#: ../base/ufos/missions.ufo:699
 msgid "Tabelbala"
 msgstr ""
 
-#: ../base/ufos/missions.ufo:717
+#: ../base/ufos/missions.ufo:737
 msgid "San Francisco"
 msgstr ""
 
-#: ../base/ufos/missions.ufo:737
+#: ../base/ufos/missions.ufo:757
 msgid "Greeneville"
 msgstr ""
 
-#: ../base/ufos/missions.ufo:757
+#: ../base/ufos/missions.ufo:777
 msgid "Wiwili"
 msgstr ""
 
-#: ../base/ufos/missions.ufo:778
+#: ../base/ufos/missions.ufo:798
 msgid "Linstead"
 msgstr ""
 
-#: ../base/ufos/missions.ufo:798
+#: ../base/ufos/missions.ufo:818
 msgid "Fargo"
 msgstr ""
 
-#: ../base/ufos/missions.ufo:817
+#: ../base/ufos/missions.ufo:837
 #, fuzzy
 msgid "Grenchen"
 msgstr "Spreder"
 
-#: ../base/ufos/missions.ufo:837
+#: ../base/ufos/missions.ufo:857
 msgid "Albany"
 msgstr ""
 
-#: ../base/ufos/missions.ufo:857
+#: ../base/ufos/missions.ufo:877
 msgid "Shannon"
 msgstr ""
 
-#: ../base/ufos/missions.ufo:858
+#: ../base/ufos/missions.ufo:878
 msgid "Major Alien Intrusion"
 msgstr ""
 
-#: ../base/ufos/missions.ufo:859
+#: ../base/ufos/missions.ufo:879
 msgid "Stop them"
 msgstr ""
 
-#: ../base/ufos/missions.ufo:878 client/cl_campaign.c:766
+#: ../base/ufos/missions.ufo:898 client/cl_campaign.c:766
 msgid "Base Attack"
 msgstr ""
 
-#: ../base/ufos/missions.ufo:879
+#: ../base/ufos/missions.ufo:899
 msgid "Aliens attacked one of our bases"
 msgstr ""
 
@@ -3203,17 +3207,18 @@ msgid "Man-Portable Particle Beams"
 msgstr ""
 
 #: ../base/ufos/research.ufo:1849
-msgid "combat_armor_txt"
-msgstr ""
+#, fuzzy
+msgid "combat_armour_txt"
+msgstr "Rumvæsen-arter"
 
 #: ../base/ufos/research.ufo:1863
 #, fuzzy
-msgid "nano_armor_txt"
+msgid "nano_armour_txt"
 msgstr "Rumvæsen-arter"
 
 #: ../base/ufos/research.ufo:1864
 #, fuzzy
-msgid "nano_armor_pre_txt"
+msgid "nano_armour_pre_txt"
 msgstr "Rumvæsen-arter"
 
 #: ../base/ufos/research.ufo:1879
