@@ -1,3 +1,86 @@
+// Please don't mess with order here - the missions marked as 'used' are
+// sorted here by stages (see campaign.ufo).
+//
+// Valid definition of a mission should not only be valid but also self-explaining.
+// That's why please use given scheme:
+//
+// Put country name and city or region name at first (real-world names, not game ones)
+// Put additional info what artifacts we can find in this mission - if there is landed
+// alien aircraft - put this info; if there is crashed alien aircraft - put such info as well.
+// We need such information when gathering alien artifacts other than equipment.
+// mission missionname
+// {
+// 	location	"_City or region, mark as translatable"
+//	type		"_Type of mission - translatable, this will go into mission description node"
+//	text		"_Mission description - translatable"
+//	map		mapname from base/maps/ - without "d" or "n" marks
+//	music		track name from base/music/
+//	pos		position on the map - if you want new, use set cl_showcoords 1 and then click
+//	aliens		amount of aliens
+//	alienteam	name of alien team, see team_aliens.ufo
+//	alienequip	alien equip definition, see equipment_missions.ufo
+//	civilians	amount of civilians
+//	civteam		definition of civilian team - see team_civilians.ufo
+//	nation		definition of nation, should be proper for position, see nations.ufo
+//	onlose		"trigger to onlose action"
+//	onwin		"trigger to onwin action"
+//	storyrelated	boolean, true means no "automission" resolving
+// }
+
+//----------------------------
+// STAGE 1, SUBSTAGE 1 - first
+//----------------------------
+
+//Revelstoke, USA
+//artifacts: craft_ufo_scout
+mission farm
+{
+	location	"_Revelstoke"
+	type		"_Landed Alien Ship"
+	text		"_Secure Alien Ship before Liftoff"
+	map		farm08
+	music		PsymongN2
+	pos		"116 52"
+	aliens		4
+	alienteam	taman
+	alienequip	stage1_workers
+	civilians	3
+	civteam		european
+	nation		"states"
+	onlose		""
+	onwin		"cp_add_item craft_ufo_scout;"
+	storyrelated	true
+}
+
+//----------------------------------
+// STAGE 1, SUBSTAGE 2 - terror_only
+// missions        "africa_excavation transport mine mart italy estate frozen_alienlandingindustrial"
+//----------------------------------
+
+// South-Middle Africa
+mission africa_excavation
+{
+	location	"_Gwanda"
+	type		"_Terror Attack"
+	text		"_Protect the excavation site at all cost."
+	map		excavation06
+	music		PsymongN1
+	pos		"-29 -20"
+	aliens		5
+	alienteam	ortnok
+	alienequip	stage1_workers
+	civilians	6
+	civteam		oriental
+	nation		"africa"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+//
+// CLEANUP CURRENTLY FINISHED HERE - DON'T MESS (20070324 Zenerka)
+//
+
 // America
 mission stadium
 {
@@ -298,26 +381,6 @@ mission construction
 	storyrelated	true
 }
 
-// Africa (South)
-mission africa_excavation
-{
-	location	"_Gwanda"
-	type		"_Terror Attack"
-	text		"_Protect the excavation site at all cost."
-	map		excavation06
-	music		PsymongN1
-	pos		"-29 -20"
-	aliens		5
-	alienteam	ortnok
-	alienequip	stage1_workers
-	civilians	6
-	civteam		oriental
-	nation		"africa"
-	onlose		""
-	onwin		""
-	storyrelated	true
-}
-
 // Italy
 mission italy
 {
@@ -437,25 +500,6 @@ mission falconcrash
 	nation		"latin"
 	onlose		""
 	onwin		""
-	storyrelated	true
-}
-
-mission farm
-{
-	location	"_Revelstoke"
-	type		"_Landed Alien Ship"
-	text		"_Secure Alien Ship before Liftoff"
-	map		farm08
-	music		PsymongN2
-	pos		"116 52"
-	aliens  	4
-	alienteam	taman
-	alienequip	stage1_workers
-	civilians	3
-	civteam		european
-	nation		"states"
-	onlose		""
-	onwin		"cp_add_item craft_ufo_scout;"
 	storyrelated	true
 }
 
