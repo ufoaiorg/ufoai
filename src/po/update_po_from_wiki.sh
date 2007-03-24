@@ -13,7 +13,7 @@
 
 
 language=$1
-url="http://ufo.myexp.de/"
+url="http://ufoai.ninex.info/"
 wiki_url="wiki/index.php/List_of_msgid/"
 chapters="Research Armour Equipment Buildings Aircraft Aircraft_Equipment Aliens Campaigns Story"
 index="List_of_msgid"
