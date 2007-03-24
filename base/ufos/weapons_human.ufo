@@ -217,7 +217,7 @@ item sniper_ammo
 			projtl	bullet
 			impact	bulletImpact
 			hitbody blood
-			firesnd	weapons/sniper.wav
+			firesnd	weapons/sniperrifle.wav
 			speed	0
 			spread	"0.3 0.3"
 			modif	1.7
@@ -237,7 +237,7 @@ item sniper_ammo
 			projtl	bullet
 			impact	bulletImpact
 			hitbody blood
-			firesnd	weapons/sniper.wav
+			firesnd	weapons/sniperrifle.wav
 			speed	0
 			spread	"0.1 0.1"
 			modif	1.7
@@ -256,7 +256,7 @@ item sniper_ammo
 			projtl	bullet
 			impact	bulletImpact
 			hitbody blood
-			firesnd	weapons/sniper.wav
+			firesnd	weapons/sniperrifle.wav
 			speed	0
 			spread	"0.3 0.3"
 			modif	1.7
@@ -489,7 +489,7 @@ item smg_ammo
 			projtl	bullet
 			impact	bulletImpact
 			hitbody blood
-			firesnd	weapons/smg.wav
+			firesnd	weapons/smg2.wav
 			speed	0
 			spread	"2.5 2.5"
 			crouch	0.7
@@ -509,7 +509,7 @@ item smg_ammo
 			projtl	bullet
 			impact	bulletImpact
 			hitbody blood
-			firesnd	weapons/smg.wav
+			firesnd	weapons/smg2.wav
 			speed	0
 			spread	"3.0 3.0"
 			modif	0.1
@@ -626,7 +626,7 @@ item shotgun2_slug_ammo
 			projtl	bullet
 			impact	bulletImpact
 			hitbody blood
-			firesnd	weapons/shotgun.wav
+			firesnd	weapons/riotshotgun.wav
 			sndonce true
 			speed	0
 			spread	"1.6 1.6"
@@ -648,7 +648,7 @@ item shotgun2_slug_ammo
 			projtl	bullet
 			impact	bulletImpact
 			hitbody blood
-			firesnd	weapons/shotgun.wav
+			firesnd	weapons/riotshotgun.wav
 			sndonce false
 			speed	0
 			spread	"2.7 2.7"
@@ -670,7 +670,7 @@ item shotgun2_slug_ammo
 			projtl	bullet
 			impact	bulletImpact
 			hitbody blood
-			firesnd	weapons/shotgun.wav
+			firesnd	weapons/riotshotgun.wav
 			sndonce false
 			speed	0
 			spread	"3.5 3.5"
@@ -730,7 +730,7 @@ item shotgun_ammo
 			projtl	null
 			impact	bulletImpact
 			hitbody blood
-			firesnd	weapons/shotgun.wav
+			firesnd	weapons/riotshotgun.wav
 			sndonce true
 			speed	0
 			spread	"3.6 3.6"
@@ -752,7 +752,7 @@ item shotgun_ammo
 			projtl	null
 			impact	bulletImpact
 			hitbody blood
-			firesnd	weapons/shotgun.wav
+			firesnd	weapons/riotshotgun.wav
 			sndonce true
 			speed	0
 			spread	"5.5 5.5"
@@ -811,7 +811,7 @@ item shotgun_micro_ammo
 			projtl	bullet
 			impact	bulletImpact
 			hitbody blood
-			firesnd	weapons/shotgunmicro.wav
+			firesnd	weapons/microshotgun2.wav
 			sndonce true
 			speed	0
 			spread	"4 0"
@@ -833,7 +833,7 @@ item shotgun_micro_ammo
 			projtl	bullet
 			impact	bulletImpact
 			hitbody blood
-			firesnd	weapons/shotgun.wav
+			firesnd	weapons/microshotgun2.wav
 			sndonce false
 			speed	0
 			spread	"5.5 5.5"
@@ -858,7 +858,7 @@ item shotgun_micro_ammo
 			projtl	bullet
 			impact	bulletImpact
 			hitbody blood
-			firesnd	weapons/shotgun.wav
+			firesnd	weapons/riotshotgun.wav
 			sndonce true
 			speed	0
 			spread	"3.6 3.6"
@@ -880,7 +880,7 @@ item shotgun_micro_ammo
 			projtl	bullet
 			impact	bulletImpact
 			hitbody blood
-			firesnd	weapons/shotgun.wav
+			firesnd	weapons/riotshotgun.wav
 			sndonce false
 			speed	0
 			spread	"5.5 5.5"
@@ -902,7 +902,7 @@ item shotgun_micro_ammo
 			projtl	bullet
 			impact	bulletImpact
 			hitbody blood
-			firesnd	weapons/shotgun.wav
+			firesnd	weapons/riotshotgun.wav
 			sndonce false
 			speed	0
 			spread	"6.0 6.0"
