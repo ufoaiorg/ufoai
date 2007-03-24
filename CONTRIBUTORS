@@ -1,4 +1,4 @@
-CONTRIBUTORS
+﻿CONTRIBUTORS
 
 This file lists all the contributors who provided their content to
 the UFO:Alien Invasion project. If you have provided content but you
@@ -17,7 +17,7 @@ Jake "ProtoArmor" Gustafson
 * ion_condenser model and texture (represesntation of energy from alien
   aircraft drives)
 
-Werner "hoehrer" Höhrer
+Werner "hoehrer" Höhrer (http://sourceforge.net/users/hoehrer/)
 * equipment models and textures: binocs-style irgoggles, electrolaser,
   swimming-style irgoggles
 * UGV models and textures: Hovernet
@@ -80,16 +80,16 @@ Alex Parker
 
 ==========================
 
-The list of people from the original development team and freelancers (do not modify).
+The list of people from the original development team and freelancers (do not delete).
 
-* Herby (main coder)	<herby AT planetquake.com>
-* Rasta (models, animations, skins) <rastaman_bey AT planetquake.com>
-* SparX (maps, textures, models, skins) <sparxx AT gmx.ch>
-* Ww3 (website) <ww3 AT netlane.com>
-* Manuel Marino (music, sound) <vanethian AT tin.it>
+* David "Herby" Beyeler (main coder)	<herby AT planetquake.com>
+* Lukas "Rasta" Beyeler (models, animations, skins) <rastaman_bey AT planetquake.com>
+* <firstname?> "SparX" Beyeler (maps, textures, models, skins) <sparxx AT gmx.ch>
+* Attila "Ww3" Houtkooper (website) <ww3 AT netlane.com>
+* Manuel "vanethian" Marino (music, sound) <vanethian AT tin.it>
 * Hullbr3ach (freelancer, models) <hullbr3ach AT 3danim.de>
 * Niksu (freelancer, mapmodels) <nikolai.leppala AT interaktiivinenkuu.fi>
-* Sacrusha (freelancer, code) <sacrusha AT yahoo.com>
+* Peter "Sacrusha" Bänziger (freelancer, code) <sacrusha AT gmail.com>
 * The_Brain (freelancer, maps, code) <tlh2000 AT gmx.net>
 * Thrawn (freelancer, UFOPedia, story) <rioter98 AT hotmail.com>
 

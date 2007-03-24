@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-03-20 09:19+0100\n"
-"PO-Revision-Date: 2007-03-20 09:23+0100\n"
+"PO-Revision-Date: 2007-03-23 14:13+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -22,37 +22,37 @@ msgstr "Schnee"
 #: ../base/maps/frozend.ump:247
 #: ../base/maps/frozenn.ump:212
 msgid "Alien landing - Snow"
-msgstr ""
+msgstr "Alien-Landungsort - Schnee"
 
 #: ../base/maps/frozend.ump:264
 #: ../base/maps/frozenn.ump:229
 msgid "Industrial"
-msgstr "Industie"
+msgstr "Industrie"
 
 #: ../base/maps/frozend.ump:282
 #: ../base/maps/frozenn.ump:248
 msgid "Alien landing - Industrial"
-msgstr ""
+msgstr "Alien-Landungsort - Industrie"
 
 #: ../base/maps/orientald.ump:178
 #: ../base/maps/orientaln.ump:159
 msgid "Oriental small"
-msgstr "Orientalisch klein"
+msgstr "Orientalisch (klein)"
 
 #: ../base/maps/orientald.ump:198
 #: ../base/maps/orientaln.ump:179
 msgid "Oriental medium"
-msgstr "Orientalisch mittel"
+msgstr "Orientalisch (mittel)"
 
 #: ../base/maps/orientald.ump:217
 #: ../base/maps/orientaln.ump:139
 msgid "Oriental big"
-msgstr "Orientalisch groß"
+msgstr "Orientalisch (groß)"
 
 #: ../base/maps/tropicd.ump:220
 #: ../base/maps/tropicn.ump:220
 msgid "Tropical river"
-msgstr "Tropisch Fluss"
+msgstr "Tropisch, Fluss"
 
 #: ../base/maps/tropicd.ump:252
 #: ../base/maps/tropicn.ump:252
@@ -62,22 +62,22 @@ msgstr "Tropisch Drogen"
 #: ../base/maps/villaged.ump:385
 #: ../base/maps/villagen.ump:371
 msgid "Village residential"
-msgstr ""
+msgstr "Dorf, Wohngebiet"
 
 #: ../base/maps/villaged.ump:423
 #: ../base/maps/villagen.ump:447
 msgid "Village recreational"
-msgstr ""
+msgstr "Dorf, Erholungsgebiet"
 
 #: ../base/maps/villaged.ump:459
 #: ../base/maps/villagen.ump:409
 msgid "Village commercial"
-msgstr ""
+msgstr "Dorf, Gewerbegebiet"
 
 #: ../base/maps/villaged.ump:497
 #: ../base/maps/villagen.ump:483
 msgid "Village big"
-msgstr "Dorf groß"
+msgstr "Dorf (groß)"
 
 #: ../base/ufos/aircraftmanagement.ufo:33
 msgid "Firebird-class Dropship"
@@ -93,22 +93,22 @@ msgstr "Stiletto-Klasse Abfangjäger"
 
 #: ../base/ufos/aircraftmanagement.ufo:73
 msgid "Saracen-class Interceptor"
-msgstr "Sarazen-Klasse Abfangjäger"
+msgstr "Sarazenen-Klasse Abfangjäger"
 
 #: ../base/ufos/aircraftmanagement.ufo:74
 msgid "Saracen I"
-msgstr "Saracen I"
+msgstr "Sarazene I"
 
 #: ../base/ufos/aircraftmanagement.ufo:95
 #: ../base/ufos/research.ufo:2473
 #: ../base/ufos/research.ufo:2482
 #: ../base/ufos/research.ufo:2489
 msgid "UFO - Scout"
-msgstr "UFO - Kundschafter"
+msgstr "UFO - Aufklärer"
 
 #: ../base/ufos/aircraftmanagement.ufo:96
 msgid "Scout U"
-msgstr ""
+msgstr "UFO-Akl."
 
 #: ../base/ufos/aircraftmanagement.ufo:114
 #: ../base/ufos/research.ufo:2514
@@ -118,9 +118,8 @@ msgid "UFO - Fighter"
 msgstr "UFO - Jäger"
 
 #: ../base/ufos/aircraftmanagement.ufo:115
-#, fuzzy
 msgid "Fighter U"
-msgstr "UFO - Jäger"
+msgstr "UFO-Jgr."
 
 #: ../base/ufos/armor.ufo:3
 msgid "normal"
@@ -164,7 +163,7 @@ msgstr "Nanoverbundstoffrüstung"
 
 #: ../base/ufos/armor.ufo:129
 msgid "Alien Body Armour"
-msgstr "Rüstung eines Außerirdischen"
+msgstr "Alienrüstung"
 
 #: ../base/ufos/armor.ufo:167
 msgid "Medium Alien Armour"
@@ -205,12 +204,12 @@ msgstr "Kleiner Hangar"
 
 #: ../base/ufos/basemanagement.ufo:209
 msgid "Small UFO Hangar"
-msgstr "Kleiner Ufo Hangar"
+msgstr "Kleiner Ufo-Hangar"
 
 #: ../base/ufos/basemanagement.ufo:225
 #: ../base/ufos/basemanagement.ufo:242
 msgid "Large UFO Hangar"
-msgstr "Großer Ufo Hangar"
+msgstr "Großer Ufo-Hangar"
 
 #: ../base/ufos/basemanagement.ufo:251
 msgid "Team Room"
@@ -389,35 +388,35 @@ msgstr "Arbeiter"
 
 #: ../base/ufos/medals.ufo:58
 msgid "Rifleman"
-msgstr ""
+msgstr "Soldat"
 
 #: ../base/ufos/medals.ufo:59
 msgid "Rfn"
-msgstr ""
+msgstr "S"
 
 #: ../base/ufos/medals.ufo:66
 msgid "Corporal"
-msgstr ""
+msgstr "Gefreiter"
 
 #: ../base/ufos/medals.ufo:67
 msgid "Cpl"
-msgstr ""
+msgstr "Gefr"
 
 #: ../base/ufos/medals.ufo:77
 msgid "Sergeant"
-msgstr "Sergeant"
+msgstr "Unteroffizier"
 
 #: ../base/ufos/medals.ufo:78
 msgid "Sgt"
-msgstr ""
+msgstr "Ufz"
 
 #: ../base/ufos/medals.ufo:88
 msgid "Captain"
-msgstr "Hauptmann"
+msgstr "Leutnant"
 
 #: ../base/ufos/medals.ufo:89
 msgid "Cpt"
-msgstr ""
+msgstr "Lt"
 
 #: ../base/ufos/menu_aircraft.ufo:49
 msgid "Assign your squad"
@@ -425,7 +424,7 @@ msgstr "Besatzung zusammenstellen"
 
 #: ../base/ufos/menu_aircraft.ufo:65
 msgid "Hire your team first"
-msgstr "Zuerst ein Team zusammenstellen !"
+msgstr "Zuerst ein Team zusammenstellen"
 
 #: ../base/ufos/menu_aircraft.ufo:76
 msgid "Aircraft absent from base"
@@ -441,7 +440,7 @@ msgstr "NA"
 
 #: ../base/ufos/menu_aircraft.ufo:106
 msgid "Aircraft away"
-msgstr "Unterwegs"
+msgstr "Flugzeug unterwegs"
 
 #: ../base/ufos/menu_aircraft.ufo:118
 msgid "Buy/Sell aircraft"
@@ -449,11 +448,11 @@ msgstr "Flugzeuge Kaufen/Verkaufen"
 
 #: ../base/ufos/menu_aircraft.ufo:133
 msgid "Buy/Sell Aircraft"
-msgstr "Kaufen/Verkaufen"
+msgstr "Flugzeuge Kaufen/Verkaufen"
 
 #: ../base/ufos/menu_aircraft.ufo:146
 msgid "Start your aircraft"
-msgstr "Flugzeug starten"
+msgstr "Starten Sie ihr Flugzeug"
 
 #: ../base/ufos/menu_aircraft.ufo:162
 msgid "Start Aircraft"
@@ -496,7 +495,7 @@ msgstr "Zum nächsten Flugzeug"
 #: ../base/ufos/menu_aircraft.ufo:299
 #: ../base/ufos/menu_team.ufo:887
 msgid "Team Members:"
-msgstr "Teamstärke:"
+msgstr "Teammitglieder:"
 
 #: ../base/ufos/menu_aircraft.ufo:380
 msgid "Available equipment:"
@@ -645,7 +644,7 @@ msgstr "Gegner gesichtet"
 #: ../base/ufos/menu_althud.ufo:464
 #: ../base/ufos/menu_hud.ufo:237
 msgid "Click to cycle through spotted enemies"
-msgstr "Zum nächsten gesichteten Alien"
+msgstr "Zum nächsten gesichteten Gegner"
 
 #: ../base/ufos/menu_althud.ufo:474
 #: ../base/ufos/menu_hud.ufo:213
@@ -669,17 +668,17 @@ msgstr "Sekundärer Feuermodus"
 #: ../base/ufos/menu_althud.ufo:581
 #: ../base/ufos/menu_hud.ufo:526
 msgid "Multiple-shot reaction fire"
-msgstr "Dauerfeuer Reactionfire"
+msgstr "Mehrfachschuss-Reaktionsfeuer"
 
 #: ../base/ufos/menu_althud.ufo:586
 #: ../base/ufos/menu_hud.ufo:531
 msgid "One-shot reaction fire"
-msgstr "Ein-Schuss Reactionfire"
+msgstr "Einzelschuss-Reaktionsfeuer"
 
 #: ../base/ufos/menu_althud.ufo:591
 #: ../base/ufos/menu_hud.ufo:536
 msgid "No reaction fire"
-msgstr "Kein Reactionfire"
+msgstr "Kein Reaktionsfeuer"
 
 #: ../base/ufos/menu_althud.ufo:608
 msgid "Reload right hand weapon"
@@ -704,11 +703,11 @@ msgstr "Stockwerk runter"
 
 #: ../base/ufos/menu_althud.ufo:714
 msgid "Switch to right hand weapon"
-msgstr "Zur rechten Hand"
+msgstr "Zur rechtshändigen Waffe wechseln"
 
 #: ../base/ufos/menu_althud.ufo:723
 msgid "Switch to left hand weapon"
-msgstr "Zur linken Hand"
+msgstr "Zur linkshändigen Waffe wechseln"
 
 #: ../base/ufos/menu_althud.ufo:1367
 #: ../base/ufos/menu_althud.ufo:1379
@@ -1825,35 +1824,35 @@ msgstr "Erzwinge Start"
 
 #: ../base/ufos/menu_multiplayer.ufo:1539
 msgid "1on1"
-msgstr "1on1"
+msgstr "1 on 1"
 
 #: ../base/ufos/menu_multiplayer.ufo:1552
 msgid "1on1on1"
-msgstr "1on1on1"
+msgstr "1 on 1 on 1"
 
 #: ../base/ufos/menu_multiplayer.ufo:1565
 msgid "2on2"
-msgstr "2on2"
+msgstr "2 on 2"
 
 #: ../base/ufos/menu_multiplayer.ufo:1578
 msgid "2on2on2"
-msgstr "2on2on2"
+msgstr "2 on 2 on 2"
 
 #: ../base/ufos/menu_multiplayer.ufo:1591
 msgid "3on3"
-msgstr "3on3"
+msgstr "3 on 3"
 
 #: ../base/ufos/menu_multiplayer.ufo:1604
 msgid "3on3on3"
-msgstr "3on3on3"
+msgstr "3 on 3 on 3"
 
 #: ../base/ufos/menu_multiplayer.ufo:1617
 msgid "4on4"
-msgstr "4on4"
+msgstr "4 on 4"
 
 #: ../base/ufos/menu_multiplayer.ufo:1630
 msgid "4on4on4"
-msgstr "4on4on4"
+msgstr "4 on 4 on 4"
 
 #: ../base/ufos/menu_multiplayer.ufo:1643
 msgid "Coop 2 players"
@@ -1937,7 +1936,7 @@ msgstr "Auflösung:"
 
 #: ../base/ufos/menu_options.ufo:593
 msgid "Want To Maintain resolution"
-msgstr "Wollen sie diese Auflösung übernehmen?"
+msgstr "Wollen sie diese Auflösung beibehalten?"
 
 #: ../base/ufos/menu_options.ufo:610
 msgid "Change the resolution"
@@ -2142,7 +2141,7 @@ msgstr "Enlosschleife"
 
 #: ../base/ufos/menu_ptleditor.ufo:28
 msgid "Show the particle only once"
-msgstr "Zeige den Partikel nur einmal"
+msgstr "Zeige Partikel nur einmal"
 
 #: ../base/ufos/menu_ptleditor.ufo:38
 msgid "Loop the particle"
@@ -2257,25 +2256,25 @@ msgstr "Danke, dass Du UFO:Alien Invasion gespielt hast"
 
 #: ../base/ufos/menu_singleplayer.ufo:735
 msgid "Now after you have finished the single-player campaigns"
-msgstr ""
+msgstr "Nachdem Sie nun die Einzelspieler-Kampagnen beendet haben"
 
 #: ../base/ufos/menu_singleplayer.ufo:743
 msgid "you should try the multiplayer features"
-msgstr ""
+msgstr "sollten Sie die Multiplayer-Möglichkeiten ausprobieren"
 
 #: ../base/ufos/menu_singleplayer.ufo:752
 msgid "Visit http://www.ufoai.net"
-msgstr "Besuche http://www.ufoai.net"
+msgstr "Besuchen Sie http://www.ufoai.net"
 
 #: ../base/ufos/menu_singleplayer.ufo:761
 msgid "and join irc.freenode.org #ufo:ai"
-msgstr "und joine irc.freenode.org #ufo:ai"
+msgstr "und joinen Sie irc.freenode.org #ufo:ai"
 
 #: ../base/ufos/menu_singleplayer.ufo:770
 #: ../base/ufos/seq_intro.ufo:73
 #: ../base/ufos/seq_intro.ufo:192
 msgid "Click to continue"
-msgstr "Mauklick um fortzufahren"
+msgstr "Mausklick zum fortfahren"
 
 #: ../base/ufos/menu_stats.ufo:55
 msgid "Statistics"
@@ -2589,7 +2588,7 @@ msgstr "Gebiet absichern"
 
 #: ../base/ufos/missions.ufo:124
 msgid "Arnhem"
-msgstr ""
+msgstr "Arnheim"
 
 #: ../base/ufos/missions.ufo:144
 msgid "Wellington"
@@ -2728,7 +2727,7 @@ msgstr "Agpat"
 
 #: ../base/ufos/missions.ufo:523
 msgid "Somewhere in Antarctica"
-msgstr ""
+msgstr "Irgendwo in der Antarktis"
 
 #: ../base/ufos/missions.ufo:543
 msgid "La Paz"
@@ -6493,7 +6492,7 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:2598
 msgid "Live Specimen - Bloodspider"
-msgstr ""
+msgstr "Lebendes Exemplar - Blutspinne"
 
 #: ../base/ufos/research.ufo:2599
 #, fuzzy
@@ -7967,9 +7966,8 @@ msgstr "Schnellschuss"
 #: ../base/ufos/weapons_human.ufo:831
 #: ../base/ufos/weapons_human.ufo:878
 #: ../base/ufos/weapons_human.ufo:1543
-#, fuzzy
 msgid "3-Round Burst"
-msgstr "Hüftschuss"
+msgstr "3-Schuss-Salve"
 
 #: ../base/ufos/weapons_human.ufo:79
 #: ../base/ufos/weapons_human.ufo:428
@@ -8036,9 +8034,8 @@ msgid "SMG Magazine"
 msgstr "Schweres Maschinenpistolenmagazin"
 
 #: ../base/ufos/weapons_human.ufo:487
-#, fuzzy
 msgid "5-Round Burst"
-msgstr "Hüftschuss"
+msgstr "5-Schuss-Salve"
 
 #: ../base/ufos/weapons_human.ufo:534
 msgid "Riot Shotgun"
@@ -8117,14 +8114,12 @@ msgstr "25mm Thermische Granate"
 #: ../base/ufos/weapons_human.ufo:1179
 #: ../base/ufos/weapons_human.ufo:1351
 #: ../base/ufos/weapons_human.ufo:1577
-#, fuzzy
 msgid "Snap Shot - Airburst"
 msgstr "Schnellschuss"
 
 #: ../base/ufos/weapons_human.ufo:1204
 #: ../base/ufos/weapons_human.ufo:1377
 #: ../base/ufos/weapons_human.ufo:1602
-#, fuzzy
 msgid "Aimed Shot - Airburst"
 msgstr "Gezielter Schuss"
 
@@ -8132,7 +8127,7 @@ msgstr "Gezielter Schuss"
 #: ../base/ufos/weapons_human.ufo:1402
 #: ../base/ufos/weapons_human.ufo:1627
 msgid "3-Round Burst - Airburst"
-msgstr ""
+msgstr "3-Schuss-Salve"
 
 #: ../base/ufos/weapons_human.ufo:1254
 #: ../base/ufos/weapons_human.ufo:1427
@@ -8150,7 +8145,7 @@ msgstr "Gezielter Schuss - zeitverzögert"
 #: ../base/ufos/weapons_human.ufo:1481
 #: ../base/ufos/weapons_human.ufo:1706
 msgid "3-Round Burst - Timed"
-msgstr ""
+msgstr "Hüftschuss - Zeitverzögert"
 
 #: ../base/ufos/weapons_human.ufo:1337
 msgid "25mm IC Grenades"
@@ -8184,7 +8179,7 @@ msgstr "Präzisionsschuss"
 #: ../base/ufos/weapons_laser.ufo:231
 #: ../base/ufos/weapons_laser.ufo:273
 msgid "Pulse Fire"
-msgstr ""
+msgstr "Pulsfeuer"
 
 #: ../base/ufos/weapons_laser.ufo:209
 #: ../base/ufos/weapons_laser.ufo:250
@@ -8238,7 +8233,7 @@ msgstr "Partikelstrahlpistole"
 
 #: ../base/ufos/weapons_particle.ufo:24
 msgid "Pistol Particle Accelerator"
-msgstr ""
+msgstr "Partikelbeschlenuiger - Pistole"
 
 #: ../base/ufos/weapons_particle.ufo:57
 #: ../base/ufos/weapons_particle.ufo:136
@@ -8252,7 +8247,7 @@ msgstr "Partikelstrahlkanone"
 
 #: ../base/ufos/weapons_particle.ufo:101
 msgid "Cannon Particle Accelerator"
-msgstr ""
+msgstr "Partikelbeschlenuiger - Kanone"
 
 #: ../base/ufos/weapons_particle.ufo:115
 msgid "Charged Blast"
@@ -8264,7 +8259,7 @@ msgstr "Partikelstrahlgewehr"
 
 #: ../base/ufos/weapons_particle.ufo:181
 msgid "Rifle Particle Accelerator"
-msgstr ""
+msgstr "Partikelbeschlenuiger - Gewehr"
 
 #: ../base/ufos/weapons_plasma.ufo:6
 msgid "Plasma Pistol"
@@ -8278,13 +8273,13 @@ msgstr "Plasmapistolenmunition"
 #: ../base/ufos/weapons_plasma.ufo:117
 #: ../base/ufos/weapons_plasma.ufo:197
 msgid "Ball"
-msgstr ""
+msgstr "Kugel"
 
 #: ../base/ufos/weapons_plasma.ufo:58
 #: ../base/ufos/weapons_plasma.ufo:137
 #: ../base/ufos/weapons_plasma.ufo:220
 msgid "Spray"
-msgstr ""
+msgstr "Streuschuss"
 
 #: ../base/ufos/weapons_plasma.ufo:85
 msgid "Plasma Rifle"
@@ -8577,7 +8572,7 @@ msgstr "Hinweis"
 
 #: client/cl_aircraft.c:200
 msgid "ON RED ALERT"
-msgstr "Auf ROTEN ALARM SCHALTEN"
+msgstr "AUF ROTEN ALARM SCHALTEN"
 
 #: client/cl_aircraft.c:204
 msgid "Nothing - should not be displayed"
@@ -9234,7 +9229,7 @@ msgstr "Das Einsatzschiff ist nicht nahe einer Landungszone"
 #: client/cl_campaign.c:3025
 #, c-format
 msgid "By selling %s %s"
-msgstr ""
+msgstr "Durch den Verkauf von %s %s"
 
 #: client/cl_campaign.c:3026
 #, c-format
@@ -9246,7 +9241,7 @@ msgstr[1] "%i gesammelte Gegenstände"
 #: client/cl_campaign.c:3027
 #, c-format
 msgid "you gathered %i credits."
-msgstr ""
+msgstr "nahmen Sie %i Credits ein."
 
 #: client/cl_campaign.c:3083
 #, c-format
@@ -9256,7 +9251,7 @@ msgstr "%s wurde zum %s befördert\n"
 #: client/cl_campaign.c:3085
 #, c-format
 msgid "%s has been awarded the posthumous rank of %s\\for inspirational gallantry in the face of overwhelming odds.\n"
-msgstr ""
+msgstr "%s wurde angesichts der überwältigenden Chancenungleichheit posthum mit dem Rang '%s' ausgezeichnet.\n"
 
 #: client/cl_campaign.c:3086
 msgid "Soldier promoted"
@@ -9362,11 +9357,11 @@ msgstr "Herauszoomen"
 
 #: client/cl_input.c:720
 msgid "Select objects/Walk to a square/In fire mode, fire etc"
-msgstr ""
+msgstr "Objekte auswählen/Zu einem Feld gehen/Im Feuermodus, Feuer usw"
 
 #: client/cl_input.c:722
 msgid "Walk to a square/In fire mode, cancel action"
-msgstr ""
+msgstr "Zu einem Feld gehen/Im Feuermodus, Handlung abbrechen"
 
 #: client/cl_input.c:724
 msgid "Turn soldier toward mouse pointer"
@@ -9684,7 +9679,7 @@ msgstr "Mission\t%s (%s)\n"
 #: client/cl_produce.c:228
 #, c-format
 msgid "Production queue for base %s is empty"
-msgstr "Produktionswareteschalnge von Basis %s leer"
+msgstr "Produktionswarteeschlange von Basis %s leer"
 
 #: client/cl_produce.c:229
 msgid "Production queue empty"
@@ -10151,11 +10146,11 @@ msgstr "Transportmission beendet - Flugzeug bleibt in der Basis"
 #: client/cl_transfer.c:494
 #: client/cl_transfer.c:505
 msgid "You are transferring aircraft. You cannot use this aircraft to transfer things or employees."
-msgstr ""
+msgstr "Sie transferieren ein Flugzeug. Sie können dieses Flugzeug nicht zum Transfer von Objekten oder Angestellen verwenden."
 
 #: client/cl_transfer.c:537
 msgid "You are transferring stuff. You cannot use this aircraft to transfer itself."
-msgstr ""
+msgstr "Sie transferieren Objekte. Sie können dieses Flugzeug nicht benutzen, um es selbst zu transferieren."
 
 #: client/cl_ufo.c:194
 msgid "UFO appears from our radar"
@@ -10437,23 +10432,23 @@ msgstr "Soldat ist betäubt!\n"
 
 #: game/g_client.c:630
 msgid "Can't perform action - actor is dead!\n"
-msgstr "Spieler ist tod\n"
+msgstr "Spieler ist tot!\n"
 
 #: game/g_client.c:635
 msgid "Can't perform action - not on same team!\n"
-msgstr "Nicht im gleichen Team\n"
+msgstr "Nicht im gleichen Team!\n"
 
 #: game/g_client.c:640
 msgid "Can't perform action - no control over allied actors!\n"
-msgstr "Keine Kontrolle über verbündete Spieler\n"
+msgstr "Keine Kontrolle über verbündete Spieler!\n"
 
 #: game/g_client.c:746
 msgid "Can't perform action - not enough TUs!\n"
-msgstr "Nicht genug Zeiteinheiten\n"
+msgstr "Nicht genug Zeiteinheiten!\n"
 
 #: game/g_client.c:749
 msgid "Can't perform action - weapon already fully loaded with the same ammunition!\n"
-msgstr "Waffe ist bereits mit der gleichen Munition geladen\n"
+msgstr "Waffe ist bereits mit der gleichen Munition geladen!\n"
 
 #: game/g_client.c:1251
 msgid "Currently shaken, won't let their guard down.\n"
