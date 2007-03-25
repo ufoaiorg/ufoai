@@ -974,15 +974,6 @@ menu equipment
 		size "160 25"
 	}
 
-	string s_extension
-	{
-		pos "610 76"
-		align uc
-		string	"_Extension"
-		color "0 0.6 0 1"
-		size "160 25"
-	}
-
 	string s_holster
 	{
 		pos "932 245"
