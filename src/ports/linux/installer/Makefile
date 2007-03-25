@@ -15,6 +15,9 @@ VERSION_LC=$(shell echo $(VERSION_UC) | sed -e 'y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abc
 #get the size of the zip data archives
 SIZE=$(shell LANG=C; du -sch $(TEMPDIR)/base/*.zip $(BINARIES) | tail -1 | cut -f1;)
 
+#grab the gtkradiant 1.5 archive from this url
+GTKRADIANT_URL=http://mattn.ninex.info/download/gtkradiant.tar.bz2
+
 BINARIES = \
 	$(ROOTDIR)ufo \
 	$(ROOTDIR)ufoded \
@@ -46,6 +49,7 @@ packdata:
 	@cd $(ROOTDIR)base; ./archives.sh
 	@cp -u $(ROOTDIR)base/*.zip $(TEMPDIR)/base
 	@cd $(TEMPDIR); tar -cvp -f ../$(DATADIR)/data.tar base
+	@wget -nc $(GTKRADIANT_URL)
 
 update_installer_data:
 	@sed 's/@VERSION@/$(VERSION_UC)/g' setup.xml.in | sed 's/@SIZE@/$(SIZE)/g' > $(DATADIR)/setup.data/setup.xml
