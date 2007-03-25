@@ -60,7 +60,7 @@ RELEASE_CFLAGS=-ffast-math -funroll-loops -D_FORTIFY_SOURCE=2
 #	RELEASE_CFLAGS+=-fomit-frame-pointer -fexpensive-optimizations
 #endif
 
-ifeq ($(TARGET_CPU),ppc64)
+ifeq ($(TARGET_CPU),powerpc64)
 	RELEASE_CFLAGS+=-O2 -fomit-frame-pointer -fexpensive-optimizations
 	CFLAGS+=-DC_ONLY -DALIGN_BYTES=4
 endif
