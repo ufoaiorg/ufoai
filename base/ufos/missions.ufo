@@ -54,7 +54,6 @@ mission farm
 
 //----------------------------------
 // STAGE 1, SUBSTAGE 2 - terror_only
-// missions        "africa_excavation transport mine mart italy estate frozen_alienlandingindustrial"
 //----------------------------------
 
 // South-Middle Africa
@@ -77,9 +76,212 @@ mission africa_excavation
 	storyrelated	true
 }
 
-//
-// CLEANUP CURRENTLY FINISHED HERE - DON'T MESS (20070324 Zenerka)
-//
+// Wachau Valley, Austria
+mission estate
+{
+	location	"_Wachau"
+	type		"_Terror Attack"
+	text		"_Protect inhabitants"
+	map		estate01
+	music		PsymongO3
+	pos		"-15 48"
+	aliens		7
+	alienteam	alien		//FIXME: Shevaars should appear in STAGE1 SUBSTAGE3
+	alienequip	stage1_soldiers
+	civilians	3
+	civteam		european
+	nation		"europa"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+// Antarctica
+//artifacts: craft_ufo_scout
+mission frozen_alienlandingindustrial
+{
+	location	"_Somewhere in Antarctica"
+	type		"_Landed Alien Ship"
+	text		"_Secure Alien Ship before Liftoff"
+	map		"+frozen"
+	param		alienlandingindustrial
+	music		alBasrahM
+	pos		"22 -77"
+	aliens		7
+	alienteam	alien			//FIXME: Shevaars should appear in STAGE1 SUBSTAGE3
+	alienequip	stage4_soldiers		//FIXME: this is way too hard alien team for this stage
+	civilians	3
+	civteam		european
+	nation		"oceania"		//FIXME: does Antarctica belongs to Oceania?
+	onlose		""
+	onwin		""			//FIXME: craft_ufo_scout here (or harvester? check it)
+	storyrelated    false
+}
+
+// Italy
+mission italy
+{
+	location	"_Marina Serra"
+	type		"_Terror Attack"
+	text		"_Protect inhabitants"
+	map		italy05
+	music		PsymongO2
+	pos		"-18 40"
+	aliens		3
+	alienteam	taman
+	alienequip	stage1_soldiers
+	civilians	8
+	civteam		european
+	nation		"europa"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+// Germany
+mission mart
+{
+	location	"_Berlin"
+	type		"_Terror Attack"
+	text		"_Protect civilians"
+	map		mart05
+	music		PsymongO4
+	pos		"-13 52"
+	aliens		6
+	alienteam	taman
+	alienequip	stage1_workers
+	civilians	6
+	civteam		european
+	nation		"europa"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+// New Zealand
+mission mine
+{
+	location	"_Wellington"
+	type		"_Terror Attack"
+	text		"_There are rumors of a mine being overrun by aliens. Although this source of information is doubtful, you'll need to investigate."
+	map		mine01
+	music		alBasrahM
+	pos		"-174 -41"
+	aliens		7
+	alienteam	ortnok
+	alienequip	stage1_workers_explosive
+	civilians	6
+	civteam		european
+	nation		"oceania"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+// Tennessee, USA
+//FIXME - artifacts?
+mission transport
+{
+	location	"_Greeneville"
+	type		"_Terror Attack"
+	text		"_Protect inhabitants"
+	map		transport06
+	music		dbsea
+	pos		"83 36"
+	aliens		3
+	alienteam	alien			//FIXME: Shevaars should appear in STAGE1 SUBSTAGE3
+	alienequip	stage1_soldiers
+	civilians	6
+	civteam		european
+	nation		"states"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+//-------------------------------------
+// STAGE 1, SUBSTAGE 3 - soldier_terror
+//-------------------------------------
+
+// England
+mission bunker
+{
+	location	"_Bristol"
+	type		"_Terror Attack"
+	text		"_Protect the military installation crew"
+	map		bunker01
+	music		greecei
+	pos		"2 51"
+	aliens		8
+	alienteam	alien				//FIXME: ortnoks and tamans here only
+	alienequip	stage1_workers_explosive	//FIXME: stage1_workers_explosive is broken, fix it
+	civilians	7
+	civteam		scientist
+	nation		"europa"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+// Pakistan
+mission dam
+{
+	location	"_Jiwani"
+	type		"_Terror Attack"
+	text		"_Secure Dam"
+	map		dam01
+	music		PsymongO1
+	pos		"-62 25"
+	aliens		7
+	alienteam	alien
+	alienequip	stage1_soldiers
+	civilians	3
+	civteam		scientist
+	nation		"middle"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+// Japan
+mission japan
+{
+	location	"_Morioka"
+	type		"_Alien Hideout"
+	text		"_Eliminate intruders"
+	map		japan06
+	music		mission3
+	pos		"-141 39"
+	aliens		10
+	alienteam	taman
+	alienequip	stage2_soldiers_melee
+	civilians	3
+	civteam		european
+	nation		"asia"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+// Norway
+mission spedition
+{
+	location	"_Oslo"
+	type		"_Terror Attack"
+	text		"_Damn it, you've let some of them get away again! Reequip your squad and get after them!"
+	map		spedition06
+	music		geoscape
+	pos		"-10 60"
+	aliens		4
+	alienteam	alien
+	alienequip	stage4_soldiers
+	civilians	2
+	civteam		european
+	nation		"europa"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
 
 // America
 mission stadium
@@ -102,6 +304,7 @@ mission stadium
 }
 
 // Canada
+//FIXME - artifacts?
 mission industrial
 {
 	location	"_Radisson"
@@ -111,7 +314,7 @@ mission industrial
 	music		AlexFightmare
 	pos		"77 54"
 	aliens		8
-	alienteam	alien
+	alienteam	alien		//FIXME: put only Sheevars here
 	alienequip	stage4_soldiers
 	civilians	4
 	civteam		european
@@ -120,6 +323,140 @@ mission industrial
 	onwin		""
 	storyrelated	true
 }
+
+//--------------------------------------
+// STAGE 1, SUBSTAGE 4 - ultimate_terror
+// missions        "village"
+//--------------------------------------
+
+// Mexico
+//FIXME - artifacts?
+mission city
+{
+	location	"_Veracruz"
+	type		"_Terror Attack"
+	text		"_Protect inhabitants"
+	map		city04
+	music		ufo1
+	pos		"96 19"
+	aliens		6
+	alienteam	taman
+	alienequip	stage2_workers
+	civilians	3
+	civteam		americans
+	nation		"latin"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+//FIXME - where do we play now?
+//FIXME - artifacts?
+mission gasstation
+{
+	location	"_La Paz"
+	type		"_Terror Attack"
+	text		"_Protect inhabitants"
+	map		gasstation05
+	music		credits
+	pos		"-111 21"
+	aliens		4
+	alienteam	taman
+	alienequip	stage2_soldiers
+	civilians	6
+	civteam		european
+	nation		"latin"		//FIXME: wrong nation for given position
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+//FIXME - where we will play now?
+//FIXME - artifacts?
+mission oriental
+{
+	location	"_Gobabis"
+	type		"_Terror Attack"
+	text		"_Protect inhabitants"
+	map		oriental06
+	music		mission
+	pos		"-20 -23"
+	aliens		5
+	alienteam	ortnok
+	alienequip	stage2_soldiers
+	civilians	7
+	civteam		oriental
+	nation		"africa"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+// America
+mission subway
+{
+	location	"_New York"
+	type		"_Terror Attack"
+	text		"_Damn it, you've let some of them get away again! Reequip your squad and get after them!"
+	map		subway07
+	music		PsymongN4
+	pos		"74 40"
+	aliens		6
+	alienteam	alien
+	alienequip	stage2_workers
+	civilians	8
+	civteam		americans
+	nation		"states"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+// America
+//FIXME: artifacts?
+mission tower
+{
+	location	"_San Francisco"
+	type		"_Terror Attack"
+	text		"_Damn it, you've let some of them get away again! Reequip your squad and get after them!"
+	map		tower06
+	music           greecei		//FIXME: AlexSullencity here?
+	pos		"119 34"
+	aliens		6
+	alienteam	alien
+	alienequip	stage2_soldiers
+	civilians	8
+	civteam		european
+	nation		"states"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+//FIXME - where we will play now?
+//FIXME - artifacts?
+mission village
+{
+	location	"_Fargo"
+	type		"_Terror Attack"
+	text		"_Protect inhabitants"
+	map		village07
+	music		PsymongO3
+	pos		"97 47"
+	aliens		4
+	alienteam	ortnok
+	alienequip	stage4_soldiers
+	civilians	6
+	civteam		european
+	nation		"states"
+	onlose		""
+	onwin		""
+	storyrelated	true
+}
+
+//
+// CLEANUP CURRENTLY FINISHED HERE - DON'T MESS (20070324 Zenerka)
+//
 
 //Doha, Qatar
 mission qatar
@@ -161,25 +498,6 @@ mission terrain
 	storyrelated	true
 }
 
-// Norway
-mission spedition
-{
-	location	"_Oslo"
-	type		"_Terror Attack"
-	text		"_Damn it, you've let some of them get away again! Reequip your squad and get after them!"
-	map		spedition06
-	music		geoscape
-	pos		"-10 60"
-	aliens		4
-	alienteam	alien
-	alienequip	stage4_soldiers
-	civilians	2
-	civteam		european
-	nation		"europa"
-	onlose		""
-	onwin		""
-	storyrelated	true
-}
 
 // Turkey
 mission pdi
@@ -195,26 +513,6 @@ mission pdi
 	alienequip	stage3_workers_explosive
 	civilians	2
 	civteam		oriental
-	nation		"europa"
-	onlose		""
-	onwin		""
-	storyrelated	true
-}
-
-// Germany
-mission mart
-{
-	location	"_Berlin"
-	type		"_Terror Attack"
-	text		"_Protect civilians"
-	map		mart05
-	music		PsymongO4
-	pos		"-13 52"
-	aliens		6
-	alienteam	taman
-	alienequip	stage1_workers
-	civilians	6
-	civteam		european
 	nation		"europa"
 	onlose		""
 	onwin		""
@@ -261,26 +559,6 @@ mission bridge
 	storyrelated	true
 }
 
-// New Zealand
-mission mine
-{
-	location	"_Wellington"
-	type		"_Terror Attack"
-	text		"_There are rumors of a mine being overrun by aliens. Although this source of information is doubtful, you'll need to investigate."
-	map		mine01
-	music		alBasrahM
-	pos		"-174 -41"
-	aliens		7
-	alienteam	ortnok
-	alienequip	stage1_workers_explosive
-	civilians	6
-	civteam		european
-	nation		"oceania"
-	onlose		""
-	onwin		""
-	storyrelated	true
-}
-
 // Australia
 mission office
 {
@@ -321,46 +599,6 @@ mission africa
 	storyrelated	true
 }
 
-// England
-mission bunker
-{
-	location	"_Bristol"
-	type		"_Terror Attack"
-	text		"_Protect the military installation crew"
-	map		bunker01
-	music		greecei
-	pos		"2 51"
-	aliens		8
-	alienteam	alien
-	alienequip	stage1_workers_explosive
-	civilians	7
-	civteam		scientist
-	nation		"europa"
-	onlose		""
-	onwin		""
-	storyrelated	true
-}
-
-// Mexico
-mission city
-{
-	location	"_Veracruz"
-	type		"_Terror Attack"
-	text		"_Protect inhabitants"
-	map		city04
-	music		ufo1
-	pos		"96 19"
-	aliens		6
-	alienteam	taman
-	alienequip	stage2_workers
-	civilians	3
-	civteam		americans
-	nation		"latin"
-	onlose		""
-	onwin		""
-	storyrelated	true
-}
-
 // Sweden
 mission construction
 {
@@ -376,46 +614,6 @@ mission construction
 	civilians	6
 	civteam		european
 	nation		"europa"
-	onlose		""
-	onwin		""
-	storyrelated	true
-}
-
-// Italy
-mission italy
-{
-	location	"_Marina Serra"
-	type		"_Terror Attack"
-	text		"_Protect inhabitants"
-	map		italy05
-	music		PsymongO2
-	pos		"-18 40"
-	aliens		3
-	alienteam	taman
-	alienequip	stage1_soldiers
-	civilians	8
-	civteam		european
-	nation		"europa"
-	onlose		""
-	onwin		""
-	storyrelated	true
-}
-
-// America
-mission subway
-{
-	location	"_New York"
-	type		"_Terror Attack"
-	text		"_Damn it, you've let some of them get away again! Reequip your squad and get after them!"
-	map		subway07
-	music		PsymongN4
-	pos		"74 40"
-	aliens		6
-	alienteam	alien
-	alienequip	stage2_workers
-	civilians	8
-	civteam		americans
-	nation		"states"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -455,26 +653,6 @@ mission harbor
 	alienteam	ortnok
 	alienequip	stage3_workers
 	civilians	6
-	civteam		european
-	nation		"asia"
-	onlose		""
-	onwin		""
-	storyrelated	true
-}
-
-// Japan
-mission japan
-{
-	location	"_Morioka"
-	type		"_Alien Hideout"
-	text		"_Eliminate intruders"
-	map		japan06
-	music		mission3
-	pos		"-141 39"
-	aliens		10
-	alienteam	taman
-	alienequip	stage2_soldiers_melee
-	civilians	3
 	civteam		european
 	nation		"asia"
 	onlose		""
@@ -602,45 +780,6 @@ mission frozen_industrial
 	storyrelated	false
 }
 
-mission frozen_alienlandingindustrial
-{
-	location	"_Somewhere in Antarctica"
-	type		"_Landed Alien Ship"
-	text		"_Secure Alien Ship before Liftoff"
-	map		"+frozen"
-	param		alienlandingindustrial
-	music		alBasrahM
-	pos		"22 -77"
-	aliens		7
-	alienteam	alien
-	alienequip	stage4_soldiers
-	civilians	3
-	civteam		european
-	nation		"oceania"
-	onlose		""
-	onwin		""
-	storyrelated	false
-}
-
-mission gasstation
-{
-	location	"_La Paz"
-	type		"_Terror Attack"
-	text		"_Protect inhabitants"
-	map		gasstation05
-	music		credits
-	pos		"-111 21"
-	aliens		4
-	alienteam	taman
-	alienequip	stage2_soldiers
-	civilians	6
-	civteam		european
-	nation		"latin"
-	onlose		""
-	onwin		""
-	storyrelated	true
-}
-
 mission lake
 {
 	location	"_Tazovskij"
@@ -655,65 +794,6 @@ mission lake
 	civilians	5
 	civteam		european
 	nation		"russia"
-	onlose		""
-	onwin		""
-	storyrelated	true
-}
-
-mission oriental
-{
-	location	"_Gobabis"
-	type		"_Terror Attack"
-	text		"_Protect inhabitants"
-	map		oriental06
-	music		mission
-	pos		"-20 -23"
-	aliens		5
-	alienteam	ortnok
-	alienequip	stage2_soldiers
-	civilians	7
-	civteam		oriental
-	nation		"africa"
-	onlose		""
-	onwin		""
-	storyrelated	true
-}
-
-// Pakistan
-mission dam
-{
-	location	"_Jiwani"
-	type		"_Terror Attack"
-	text		"_Secure Dam"
-	map		dam01
-	music		PsymongO1
-	pos		"-62 25"
-	aliens		7
-	alienteam	alien
-	alienequip	stage1_soldiers
-	civilians	3
-	civteam		scientist
-	nation		"middle"
-	onlose		""
-	onwin		""
-	storyrelated	true
-}
-
-// Wachau Valley, Austria
-mission estate
-{
-	location	"_Wachau"
-	type		"_Terror Attack"
-	text		"_Protect inhabitants"
-	map		estate01
-	music		PsymongO3
-	pos		"-15 48"
-	aliens		7
-	alienteam	alien
-	alienequip	stage1_soldiers
-	civilians	3
-	civteam		european
-	nation		"europa"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -775,46 +855,6 @@ mission or_tabelbala
 //	storyrelated	true
 //}
 
-// America
-mission tower
-{
-	location	"_San Francisco"
-	type		"_Terror Attack"
-	text		"_Damn it, you've let some of them get away again! Reequip your squad and get after them!"
-	map		tower06
-	music		greecei
-	pos		"119 34"
-	aliens		6
-	alienteam	alien
-	alienequip	stage2_soldiers
-	civilians	8
-	civteam		european
-	nation		"states"
-	onlose		""
-	onwin		""
-	storyrelated	true
-}
-
-// Tennessee, USA
-mission transport
-{
-	location	"_Greeneville"
-	type		"_Terror Attack"
-	text		"_Protect inhabitants"
-	map		transport06
-	music		dbsea
-	pos		"83 36"
-	aliens		3
-	alienteam	alien
-	alienequip	stage1_soldiers
-	civilians	6
-	civteam		european
-	nation		"states"
-	onlose		""
-	onwin		""
-	storyrelated	true
-}
-
 // Jinotega, Nicaragua
 mission tropic_river
 {
@@ -855,25 +895,6 @@ mission tropic_drug
 	onlose		""
 	onwin		""
 	storyrelated	false
-}
-
-mission village
-{
-	location	"_Fargo"
-	type		"_Terror Attack"
-	text		"_Protect inhabitants"
-	map		village07
-	music		PsymongO3
-	pos		"97 47"
-	aliens		4
-	alienteam	ortnok
-	alienequip	stage4_soldiers
-	civilians	6
-	civteam		european
-	nation		"states"
-	onlose		""
-	onwin		""
-	storyrelated	true
 }
 
 mission vil_grenchen
