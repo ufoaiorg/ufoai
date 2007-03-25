@@ -2,12 +2,6 @@
 #
 # Product setup script
 #
-
-## patching utf-8 locales
-if test ! ${UTF8FIX} ; then
-LANG=`echo ${LANG} | sed 's/[\@\.].*$//'`
-fi
-
 # Go to the proper setup directory (if not already there)
 cd `dirname $0`
 
@@ -25,6 +19,12 @@ USE_XHOST=0
 # this is the message for su call, printf
 SU_MESSAGE="You need to run this installation as the super user.\nPlease enter the root password."
 
+if test -x /bin/su; then
+	SU_CMD=/bin/su
+else
+	SU_CMD=/usr/bin/su
+fi
+
 NULL=/dev/null
 # See if we have the XPG4 utilities (Solaris)
 if test -d /usr/xpg4/bin; then
@@ -37,7 +37,7 @@ DetectARCH()
 	status=1
 	case `uname -m` in
 	    amd64 | x86_64)
-		echo "amd64"
+		echo "x86_64"
 		status=0;;
 	    i?86 | i86*)
 		echo "x86"
@@ -75,13 +75,16 @@ DetectLIBC()
 		  return $status
 	  fi
       if [ -f `echo /lib/libc.so.6* | tail -n 1` ]; then
-	      if fgrep GLIBC_2.1 /lib/libc.so.6* 2> $NULL >> $NULL; then
+		  if fgrep GLIBC_2.1 /lib/libc.so.6* 2> $NULL >> $NULL; then
 	              echo "glibc-2.1"
 	              status=0
-	      else    
+		  elif fgrep GLIBC_2.2 /lib/libc.so.6* 2> $NULL >> $NULL; then
+	              echo "glibc-2.1"
+	              status=0
+	      else
 	              echo "glibc-2.0"
 	              status=0
-	      fi        
+	      fi
       elif [ -f /lib/libc.so.5 ]; then
 	      echo "libc5"
 	      status=0
@@ -245,7 +248,7 @@ then
       # if xsu actually ran and the auth was cancelled, $status is 2
       # try with su
       printf "$SU_MESSAGE\n"
-      try_run -absolute /bin/su root -c "export DISPLAY=$DISPLAY;sh `pwd`/setup.sh -auth"
+      try_run -absolute $SU_CMD root -c "export DISPLAY=$DISPLAY;sh `pwd`/setup.sh -auth"
       status="$?"
 	  if [ "$status" -eq 0 ]; then
 		# the auth command was properly executed
@@ -264,17 +267,21 @@ then
   fi
 fi
 
-# Try to run the setup program
-try_run setup.gtk $args $*
+# Try to run the setup program - first look for a GTK2 binary
+try_run setup.gtk2 $args $* 2> /dev/null
 status=$?
-if [ $status -eq 2 ] || [ $status -eq 127 ]; then  # setup.gtk couldn't connect to X11 server - ignore
-	try_run setup $args $* || {
-		if [ $status -ne 2 ]; then
+if [ $status -ne 0 ] && [ $status -ne 2 ] && [ $status -ne 3 ] ; then 
+	try_run setup.gtk $args $* 
+	status=$?
+	if [ $status -ne 0 ] && [ $status -ne 2 ] && [ $status -ne 3 ] ; then  # setup.gtk couldn't connect to X11 server - ignore
+		try_run setup $args $*
+		status=$?
+		if [ $status -ne 0 ] && [ $status -ne 2 ] && [ $status -ne 3 ] ; then
 			echo "The setup program seems to have failed on $arch/$libc"
 			echo
 			echo $FATAL_ERROR
 		fi
-		status=1
-	}
+	fi
 fi
+
 exit $status

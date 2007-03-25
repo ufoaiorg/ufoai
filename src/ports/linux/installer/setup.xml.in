@@ -6,6 +6,14 @@
  version="@VERSION@"
  promptbinaries="yes"
  express="no"
+ category="Games"
+ superuser="no"
+ reinstall="no"
+ reinstallnowarning="yes"
+ nopromptoverwrite="yes"
+ splashpos="top"
+ nomenuitems="no"
+ reinstallfast="yes"
  update_url="http://ufoai.ninex.info/updates/updates.txt"
 >
 
