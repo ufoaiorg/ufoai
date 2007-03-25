@@ -1,0 +1,19 @@
+To build the loki installer you have to prepare your installation:
+* 'make packdata' will copy all files and generate the archives
+* 'make' will then use this archives to create the loki installer
+
+NOTE: Make sure, that you have build the game before you generate the installer
+  with 'make'
+
+x86_64 - you have to create a directory with the x86_64 binaries in your ufo
+  root dir. This directory must have the name x64_64 and must contain the
+  following files:
+  * x86_64/ufo
+  * x86_64/ufoded
+  * x86_64/ufo2map
+  * x86_64/ref_glx.so
+  * x86_64/ref_sdl.so
+  * x86_64/snd_alsa.so
+  * x86_64/snd_oss.so
+  * x86_64/snd_sdl.so
+  * x86_64/base/game.so
