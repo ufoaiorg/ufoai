@@ -181,6 +181,9 @@ then
 elif test "$target_cpu" = "powerpc"
 then
 	AC_SUBST([TARGET_CPU],[powerpc])
+elif test "$target_cpu" = "ppc64"
+then
+	AC_SUBST([TARGET_CPU],[ppc64])
 else
 	AC_MSG_WARN([The target CPU '$target_cpu' is unknown, default options will be applied])
 	AC_MSG_WARN([Please contact the developers for assistance])

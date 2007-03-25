@@ -2318,6 +2318,10 @@ elif test "$target_cpu" = "powerpc"
 then
 	TARGET_CPU=powerpc
 
+elif test "$target_cpu" = "ppc64"
+then
+	TARGET_CPU=ppc64
+
 else
 	{ echo "$as_me:$LINENO: WARNING: The target CPU '$target_cpu' is unknown, default options will be applied" >&5
 echo "$as_me: WARNING: The target CPU '$target_cpu' is unknown, default options will be applied" >&2;}
