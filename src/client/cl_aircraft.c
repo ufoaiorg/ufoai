@@ -1212,14 +1212,17 @@ extern void CL_ParseAircraft (const char *name, char **text)
 	}
 
 	/* initialize the menu */
-	air_samp = &aircraft_samples[numAircraft_samples++];
+	air_samp = &aircraft_samples[numAircraft_samples];
 	memset(air_samp, 0, sizeof(aircraft_t));
 
 	Com_DPrintf("...found aircraft %s\n", name);
-	air_samp->idx = gd.numAircraft++;
-	air_samp->idx_sample = numAircraft_samples - 1;
+	air_samp->idx = gd.numAircraft;
+	air_samp->idx_sample = numAircraft_samples;
 	Q_strncpyz(air_samp->id, name, MAX_VAR);
 	air_samp->status = AIR_HOME;
+
+	numAircraft_samples++;
+	gd.numAircraft++;
 
 	/* get it's body */
 	token = COM_Parse(text);
@@ -1227,6 +1230,7 @@ extern void CL_ParseAircraft (const char *name, char **text)
 	if (!*text || *token != '{') {
 		Com_Printf("CL_ParseAircraft: aircraft def \"%s\" without body ignored\n", name);
 		gd.numAircraft--;
+		/* TODO: why no reduction of numAircraft_samples as well here? */
 		return;
 	}
 
