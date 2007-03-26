@@ -301,7 +301,7 @@ extern void MN_NextAircraft_f (void)
 	aircraftID = Cvar_VariableInteger("mn_aircraft_idx");
 
 	if ((aircraftID < 0) || (aircraftID >= baseCurrent->numAircraftInBase)) {
-		/* Bad aircraft idx found (no or no sane aricraft). Setting to first one (no matter if it exists). */
+		/* Bad aircraft idx found (no or no sane aricraft). Setting it to the frist aircraft since numAircraftInBase has been checked to be at least 1. */
 		Com_DPrintf("MN_NextAircraft_f: bad aircraft idx found.\n");
 		Cvar_SetValue("mn_aircraft_idx", 0);
 	}
@@ -329,7 +329,7 @@ extern void MN_PrevAircraft_f (void)
 	aircraftID = Cvar_VariableInteger("mn_aircraft_idx");
 
 	if ((aircraftID < 0) || (aircraftID >= baseCurrent->numAircraftInBase)) {
-		/* Bad aircraft idx found (no or no sane aricraft). Setting to first one (no matter if it exists). */
+		/* Bad aircraft idx found (no or no sane aricraft). Setting it to the frist aircraft since numAircraftInBase has been checked to be at least 1. */
 		Com_DPrintf("MN_PrevAircraft_f: bad aircraft idx found.\n");
 		Cvar_SetValue("mn_aircraft_idx", 0);
 	}
