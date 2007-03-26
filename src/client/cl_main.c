@@ -1710,6 +1710,8 @@ static void CL_ParseScriptFirst (char *type, char *name, char **text)
 		CL_ParseNations(name, text);
 	else if (!Q_strncmp(type, "rank", 4))
 		CL_ParseMedalsAndRanks(name, text, qtrue);
+	else if (!Q_strncmp(type, "mail", 4))
+		CL_ParseEventMails(name, text);
 #if 0
 	else if (!Q_strncmp(type, "medal", 5))
 		Com_ParseMedalsAndRanks( name, &text, qfalse );

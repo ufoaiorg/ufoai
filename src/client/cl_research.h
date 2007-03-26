@@ -96,7 +96,10 @@ typedef enum {
 	TECHMAIL_MAX
 } techMailType_t;
 
-/** @brief available mails for a tech - mail and mail_pre in script files */
+/**
+ * @brief available mails for a tech - mail and mail_pre in script files
+ * @sa eventMail_t
+ */
 typedef struct techMail_s {
 	char from[MAX_VAR];			/**< sender (_mail_from_paul_navarre, _mail_from_dr_connor) */
 	char to[MAX_VAR];			/**< recipient (_mail_to_base_commander) */

@@ -3908,7 +3908,7 @@ static const value_t nation_vals[] = {
  */
 extern void CL_ParseNations (const char *name, char **text)
 {
-	const char *errhead = "CL_ParseNations: unexptected end of file (aircraft ";
+	const char *errhead = "CL_ParseNations: unexptected end of file (nation ";
 	nation_t *nation;
 	const value_t *vp;
 	char *token;
@@ -4117,6 +4117,8 @@ static const cmdList_t game_commands[] = {
 	{"nationlist", CL_NationList_f, "List all nations on the game console"}
 	,
 	{"mission", CL_StartMission_f, NULL}
+	,
+	{"addeventmail", CL_EventAddMail_f, "Add a new mail (event trigger) - e.g. after a mission"}
 	,
 #ifdef DEBUG
 	{"debug_fullcredits", CL_DebugFullCredits_f, "Debug function to give the player full credits"}
