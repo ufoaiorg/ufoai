@@ -1054,7 +1054,7 @@ void Key_Event (int key, qboolean down, unsigned time)
 	}
 
 	if (!down)
-		return;					/* other systems only care about key down events */
+		return;	/* other systems only care about key down events */
 
 	if (shift_down)
 		key = keyshift[key];

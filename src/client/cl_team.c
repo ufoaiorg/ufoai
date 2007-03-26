@@ -1179,7 +1179,7 @@ static void CL_AssignSoldier_f (void)
 
 	Com_DPrintf("CL_AssignSoldier_f: employee with idx %i selected\n", employee->idx);
 	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
-	Com_Printf("aircraft->idx: %i - aircraft->idxInBase: %i\n", aircraft->idx, aircraft->idxInBase);
+	Com_DPrintf("aircraft->idx: %i - aircraft->idxInBase: %i\n", aircraft->idx, aircraft->idxInBase);
 	assert(aircraft->idxInBase == baseCurrent->aircraftCurrent);
 
 	if (CL_SoldierInAircraft(employee->idx, aircraft->idx)) {

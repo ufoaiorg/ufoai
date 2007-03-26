@@ -404,7 +404,7 @@ static qboolean CL_MapMaskFind (byte * color, vec2_t polar)
 /**
  * @brief Returns the color value from geoscape of maskPic at a given position.
  * @param[in] pos vec2_t Value of position on map to get the color value from.
- * @param[in] type
+ * @param[in] type determine the map to get the color from
  * @return Returns the color value at given position.
  */
 extern byte *CL_GetMapColor (const vec2_t pos, mapType_t type)

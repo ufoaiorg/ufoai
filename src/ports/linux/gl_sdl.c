@@ -326,16 +326,16 @@ static int SDLateKey (SDL_keysym *keysym, int *key)
 /**
  * @brief Debug function to print sdl key events
  */
-static void printkey (const SDL_Event* event)
+static void printkey (const SDL_Event* event, int down)
 {
-	if (sdl_debug->value) {
-		printf("key name: %s", SDL_GetKeyName(event->key.keysym.sym));
+	if (sdl_debug->integer) {
+		Com_Printf("key name: %s (down: %i)", SDL_GetKeyName(event->key.keysym.sym), down);
 		if(event->key.keysym.unicode) {
-			printf(" unicode: %hx", event->key.keysym.unicode);
+			Com_Printf(" unicode: %hx", event->key.keysym.unicode);
 			if (event->key.keysym.unicode >= '0' && event->key.keysym.unicode <= '~')  /* printable? */
-				printf(" (%c)", (unsigned char)(event->key.keysym.unicode));
+				Com_Printf(" (%c)", (unsigned char)(event->key.keysym.unicode));
 		}
-		puts("");
+		Com_Printf("\n");
 	}
 }
 
@@ -387,7 +387,7 @@ void GetEvent (SDL_Event *event)
 		}
 		break;
 	case SDL_KEYDOWN:
-		printkey(event);
+		printkey(event, 1);
 		if (event->key.keysym.mod & KMOD_ALT && event->key.keysym.sym == SDLK_RETURN) {
 			SDL_WM_ToggleFullScreen(surface);
 
@@ -411,8 +411,7 @@ void GetEvent (SDL_Event *event)
 			keyq[keyq_head].key = key;
 			keyq[keyq_head].down = qtrue;
 			keyq_head = (keyq_head + 1) & 63;
-		}
-		if (p) {
+		} else if (p) {
 			keyq[keyq_head].key = p;
 			keyq[keyq_head].down = qtrue;
 			keyq_head = (keyq_head + 1) & 63;
@@ -421,6 +420,7 @@ void GetEvent (SDL_Event *event)
 	case SDL_VIDEOEXPOSE:
 		break;
 	case SDL_KEYUP:
+		printkey(event, 0);
 		p = SDLateKey(&event->key.keysym, &key);
 		if (key) {
 			keyq[keyq_head].key = key;
