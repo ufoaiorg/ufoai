@@ -49,7 +49,7 @@ packdata:
 	@cd $(ROOTDIR)base; ./archives.sh
 	@cp -u $(ROOTDIR)base/*.zip $(TEMPDIR)/base
 	@cd $(TEMPDIR); tar -cvp -f ../$(DATADIR)/data.tar base
-	@wget -nc $(GTKRADIANT_URL)
+	@cd $(DATADIR); wget -nc $(GTKRADIANT_URL)
 
 update_installer_data:
 	@sed 's/@VERSION@/$(VERSION_UC)/g' setup.xml.in | sed 's/@SIZE@/$(SIZE)/g' > $(DATADIR)/setup.data/setup.xml

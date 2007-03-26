@@ -986,6 +986,25 @@ extern nation_t* MAP_GetNation (const vec2_t pos)
 }
 
 /**
+ * @brief Translate color value to zone type
+ * @sa CL_GetMapColor
+ * @param[in] byte the color value to the the zone type from
+ * @return returns the zone name - the first char is used for base assemble themes
+ * @note never may return a null pointer or an empty string
+ */
+extern const char* MAP_GetZoneType (byte* color)
+{
+	if (MapIsDesert(color))
+		return "desert";
+	else if (MapIsArctic(color))
+		return "arctic";
+	else if (MapIsWater(color))
+		return "water";
+	else
+		return "gras";
+}
+
+/**
  * @brief Notify that an ufo disappears on radars
  */
 extern void MAP_NotifyUfoDisappear (const aircraft_t* ufo)

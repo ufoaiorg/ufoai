@@ -441,6 +441,7 @@ extern byte *CL_GetMapColor (const vec2_t pos, mapType_t type)
 extern qboolean CL_NewBase (vec2_t pos)
 {
 	byte *color;
+	const char *zoneType = NULL;
 
 	assert(baseCurrent);
 
@@ -454,26 +455,20 @@ extern qboolean CL_NewBase (vec2_t pos)
 
 	color = CL_GetMapColor(pos, MAPTYPE_CLIMAZONE);
 
-	if (MapIsDesert(color)) {
-		Com_DPrintf("Desertbase\n");
-		baseCurrent->mapChar = 'd';
-	} else if (MapIsArctic(color)) {
-		Com_DPrintf("Articbase\n");
-		baseCurrent->mapChar = 'a';
-	} else if (MapIsWater(color)) {
+	if (MapIsWater(color)) {
 		/* This should already have been catched in MAP_MapClick (cl_menu.c), but just in case. */
 		MN_AddNewMessage(_("Notice"), _("Could not set up your base at this location"), qfalse, MSG_INFO, NULL);
 		return qfalse;
 	} else {
-		Com_DPrintf("Graslandbase\n");
-		baseCurrent->mapChar = 'g';
+		zoneType = MAP_GetZoneType(color);
+		Com_DPrintf("CL_NewBase: zoneType: '%s'\n", zoneType);
+		baseCurrent->mapChar = zoneType[0];
 	}
 
 	Com_DPrintf("Colorvalues for base: R:%i G:%i B:%i\n", color[0], color[1], color[2]);
 
 	/* build base */
-	baseCurrent->pos[0] = pos[0];
-	baseCurrent->pos[1] = pos[1];
+	Vector2Copy(pos, baseCurrent->pos);
 
 	gd.numBases++;
 
@@ -1553,6 +1548,12 @@ static void CL_MessageSave (sizebuf_t * sb, message_t * message)
 		return;
 	/* bottom up */
 	CL_MessageSave(sb, message->next);
+
+#ifndef DEBUG
+	/* don't save these message types */
+	if (message->type == MSG_DEBUG)
+		return;
+#endif
 
 	/* don't save these message types */
 	if (message->type == MSG_INFO)

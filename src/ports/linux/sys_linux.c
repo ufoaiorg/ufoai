@@ -202,7 +202,7 @@ static int dlcallback (struct dl_phdr_info *info, size_t size, void *data)
  * @brief Obtain a backtrace and print it to stderr.
  * @note Adapted from http://www.delorie.com/gnu/docs/glibc/libc_665.html
  */
-#ifdef __x86_64__
+#if defined(__x86_64__) || defined(__powerpc__)
 void Sys_Backtrace (int sig)
 #else
 void Sys_Backtrace (int sig, siginfo_t *siginfo, void *secret)
@@ -214,7 +214,9 @@ void Sys_Backtrace (int sig, siginfo_t *siginfo, void *secret)
 	size_t		i;
 	char		**strings;
 #ifndef __x86_64__
+#ifndef __powerpc__
 	ucontext_t 	*uc = (ucontext_t *)secret;
+#endif
 #endif
 
 	signal (SIGSEGV, SIG_DFL);
@@ -235,7 +237,9 @@ void Sys_Backtrace (int sig, siginfo_t *siginfo, void *secret)
 	size = backtrace (array, sizeof(array)/sizeof(void*));
 
 #ifndef __x86_64__
+#ifndef __powerpc__
 	array[1] = (void *) uc->uc_mcontext.gregs[REG_EIP];
+#endif
 #endif
 
 	strings = backtrace_symbols (array, size);

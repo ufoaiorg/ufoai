@@ -454,6 +454,7 @@ extern void WriteBSPFile (const char *filename)
 	fseek(wadfile, 0, SEEK_SET);
 	SafeWrite(wadfile, header, sizeof(dheader_t));
 	fclose(wadfile);
+	SwapBSPFile(qtrue);
 }
 
 /**
