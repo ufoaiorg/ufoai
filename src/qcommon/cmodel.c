@@ -1331,6 +1331,7 @@ extern int CM_HeadnodeForBox (int tile, vec3_t mins, vec3_t maxs)
 	curTile->box_planes[10].dist = mins[2];
 	curTile->box_planes[11].dist = -mins[2];
 
+	assert(curTile->box_headnode < MAX_MAP_NODES);
 	return curTile->box_headnode;
 }
 
