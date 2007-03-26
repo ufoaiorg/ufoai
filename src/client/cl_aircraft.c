@@ -1076,7 +1076,7 @@ extern void CL_ParseAircraftItem (const char *name, char **text)
 	const value_t *vp;
 	char *token;
 
-	if (numAircraft_samples >= MAX_AIRCRAFTITEMS) {
+	if (numAircraftItems >= MAX_AIRCRAFTITEMS) {
 		Com_Printf("CL_ParseAircraftItem: too many craftitem definitions; def \"%s\" ignored\n", name);
 		return;
 	}
