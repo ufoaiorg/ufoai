@@ -2,6 +2,7 @@ CLIENT_SRCS = \
 	client/cl_actor.c \
 	client/cl_aliencont.c \
 	client/cl_basemanagement.c \
+	client/cl_event.c \
 	client/cl_research.c \
 	client/cl_market.c \
 	client/cl_campaign.c \
