@@ -59,9 +59,11 @@ static qboolean AIR_Fight (aircraft_t* air, aircraft_t* ufo)
 }
 
 /**
- * @brief
+ * @brief Shows all aircraft in all bases on the game console (debug)
+ * @note use the command with a parameter (the baseid) to show only one specific
+ * base
  */
-void CL_ListAircraft_f (void)
+extern void CL_ListAircraft_f (void)
 {
 	int i, j, k, baseid = -1;
 	base_t *base;
@@ -292,19 +294,19 @@ extern void CL_NewAircraft_f (void)
 extern void MN_NextAircraft_f (void)
 {
 	int aircraftID;
-	
+
 	if (!baseCurrent || !baseCurrent->numAircraftInBase)
 		return;
 
 	aircraftID = Cvar_VariableInteger("mn_aircraft_idx");
-	
+
 	if ((aircraftID < 0) || (aircraftID >= baseCurrent->numAircraftInBase)) {
 		/* Bad aircraft idx found (no or no sane aricraft). Setting to first one (no matter if it exists). */
 		Com_DPrintf("MN_NextAircraft_f: bad aircraft idx found.\n");
 		Cvar_SetValue("mn_aircraft_idx", 0);
 	}
-		
-	
+
+
 	if (aircraftID < baseCurrent->numAircraftInBase - 1) {
 		Cvar_SetValue("mn_aircraft_idx", aircraftID + 1);
 		CL_AircraftSelect(NULL);
@@ -401,8 +403,11 @@ extern void CL_AircraftSelect (aircraft_t* aircraft)
 	node = MN_GetNodeFromCurrentMenu("aircraft");
 
 	if (!aircraft) {
-		/* Selecting the first aircraft in base (every base has at least one aircraft at this point) if a non-sane idx was found. */
-		/* TODO: Make sure that the above sentence is true and document _why_ that is the case --Höhrer */
+		/**
+		 * Selecting the first aircraft in base (every base has at least one
+		 * aircraft at this point because baseCurrent->numAircraftInBase was zero)
+		 * if a non-sane idx was found.
+		 */
 		if ((aircraftID < 0) || (aircraftID >= baseCurrent->numAircraftInBase)) {
 			Cvar_SetValue("mn_aircraft_idx", 0);
 			aircraftID = 0;
@@ -622,6 +627,8 @@ void CL_CampaignRunAircraft (int dt)
 	aircraft_t *aircraft;
 	base_t *base;
 	int i, j;
+	const char *zoneType = NULL;
+	char missionName[MAX_VAR];
 	byte *color;
 	qboolean battleStatus = qfalse;
 
@@ -702,17 +709,21 @@ void CL_CampaignRunAircraft (int dt)
 
 						if (battleStatus) {
 							color = CL_GetMapColor(ufo->pos, MAPTYPE_CLIMAZONE);
-							if (!MapIsWater(color) && frand() <= GROUND_MISSION ) {
+							if (!MapIsWater(color) && frand() <= GROUND_MISSION) {
 								/* spawn new mission */
 								/* some random data like alien race, alien count (also depends on ufo-size) */
 								/* TODO: We should have a ufo crash theme for random map assembly */
-								/* TODO: We should check for desert, and so on and call the map assembly theme */
-								/* with the right parameter, e.g.: +ufocrash [climazone] */
-								ms = CL_AddMission(va("ufocrash%.0f:%.0f", ufo->pos[0], ufo->pos[1]));
+								/* TODO: call the map assembly theme with the right parameter, e.g.: +ufocrash [climazone] */
+								zoneType = MAP_GetZoneType(color);
+								Com_sprintf(missionName, sizeof(missionName), "ufocrash%.0f:%.0f", ufo->pos[0], ufo->pos[1]);
+								ms = CL_AddMission(missionName);
+								/* the size if somewhat random, because not all map tiles would have
+								 * alien spawn points */
 								ms->aliens = ufo->size;
-								/* 0-4 civilians */
+								/* 1-4 civilians */
 								ms->civilians = (frand() * 10);
 								ms->civilians %= 4;
+								ms->civilians += 1;
 
 								/* FIXME: */
 								Q_strncpyz(ms->alienTeam, "ortnok", sizeof(ms->alienTeam));

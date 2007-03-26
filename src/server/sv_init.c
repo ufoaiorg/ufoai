@@ -315,7 +315,7 @@ static void SV_ParseAssembly (const char *filename, char **text)
 	/* init */
 	a = &mAssembly[numAssemblies++];
 	memset(a, 0, sizeof(mAssembly_t));
-	Q_strncpyz(a->name, token, MAX_VAR);
+	Q_strncpyz(a->name, token, sizeof(a->name));
 	a->w = 8;
 	a->h = 8;
 
@@ -629,7 +629,7 @@ static void SV_AssembleMap (const char *name, const char *assembly, char **map, 
 	qboolean ok;
 
 	/* load the map info */
-	Com_sprintf(filename, MAX_QPATH, "maps/%s.ump", name);
+	Com_sprintf(filename, sizeof(filename), "maps/%s.ump", name);
 	FS_LoadFile(filename, (void **) &buf);
 	if (!buf)
 		Com_Error(ERR_DROP, "SV_AssembleMap: Map assembly info '%s' not found\n", filename);
@@ -646,7 +646,7 @@ static void SV_AssembleMap (const char *name, const char *assembly, char **map, 
 
 		if (!Q_strcmp(token, "base")) {
 			token = COM_Parse(&text);
-			Q_strncpyz(basePath, token, MAX_QPATH);
+			Q_strncpyz(basePath, token, sizeof(basePath));
 		} else if (!Q_strcmp(token, "tile"))
 			SV_ParseMapTile(filename, &text);
 		else if (!Q_strcmp(token, "assembly"))
@@ -748,7 +748,7 @@ static void SV_AssembleMap (const char *name, const char *assembly, char **map, 
 	/* prepare map and pos strings */
 	if (basePath[0]) {
 		asmMap[0] = '-';
-		Q_strncpyz(&asmMap[1], basePath, MAX_QPATH);
+		Q_strncpyz(&asmMap[1], basePath, MAX_QPATH-1);
 		*map = asmMap;
 	} else {
 		asmMap[0] = 0;
@@ -827,7 +827,7 @@ static void SV_SpawnServer (char *server, char *param, server_state_t serverstat
 
 	SZ_Init(&sv.multicast, sv.multicast_buf, sizeof(sv.multicast_buf));
 
-	Q_strncpyz(sv.name, server, MAX_QPATH);
+	Q_strncpyz(sv.name, server, sizeof(sv.name));
 
 	/* leave slots at start for clients only */
 	for (i = 0; i < sv_maxclients->value; i++) {
@@ -975,7 +975,7 @@ extern void SV_Map (qboolean attractloop, char *levelstring, char *assembly)
 	if (sv.state == ss_dead)
 		SV_InitGame();			/* the game is just starting */
 
-	Q_strncpyz(level, levelstring, MAX_QPATH);
+	Q_strncpyz(level, levelstring, sizeof(level));
 
 	/* if there is a # in the map, set nextserver to the remainder */
 	ch = strstr(level, "#");
@@ -987,7 +987,7 @@ extern void SV_Map (qboolean attractloop, char *levelstring, char *assembly)
 
 	/* skip the end-of-unit flag if necessary */
 	if (level[0] == '*')
-		Q_strncpyz(level, level + 1, MAX_QPATH);
+		Q_strncpyz(level, level + 1, sizeof(level));
 
 	l = strlen(level);
 	if (l > 4 && !Q_strcmp(level + l - 4, ".dm2")) {

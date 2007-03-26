@@ -787,7 +787,7 @@ extern stats_t stats;
 
 /* message systems */
 typedef enum {
-	MSG_DEBUG,
+	MSG_DEBUG,			/**< only save them in debug mode */
 	MSG_INFO,			/**< don't save these messages */
 	MSG_STANDARD,
 	MSG_RESEARCH_PROPOSAL,
@@ -1091,6 +1091,7 @@ extern void MAP_NotifyMissionRemoved(const actMis_t* mission);
 extern void MAP_NotifyUfoRemoved(const aircraft_t* ufo);
 extern void MAP_NotifyUfoDisappear(const aircraft_t* ufo);
 extern void MAP_GameInit(void);
+extern const char* MAP_GetZoneType(byte* color);
 
 /* cl_ufo.c */
 extern void UFO_CampaignRunUfos(int dt);
