@@ -382,15 +382,11 @@ static void CL_BuyAircraft_f (void)
 
 
 /**
- * @brief
- *
- * FIXME: This needs work in reassigning the base aircraft array
- * or the other functions need to check whether the aircraft
- * at current arraypos is valid
- * FIXME: Remove all soldiers and put equipment back to base
+ * @brief This functions handles the selling of an aircraft and its equipment/crew/storage.
  * @sa CL_BuyAircraft_f
- * TODO: if we ever produce aircraft equipment or buy and sell the equipment,
- * make sure, that the equipment gets sold here, too
+ * @todo Fixme: Remove all soldiers and put equipment back to base
+ * @todo Fixme: If we ever produce aircraft equipment or buy and sell the equipment,
+ * make sure, that the equipment gets sold here, too.
  */
 static void CL_SellAircraft_f (void)
 {

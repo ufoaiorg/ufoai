@@ -529,7 +529,7 @@ extern void CL_NewAircraft (base_t *base, const char *name)
 		gd.numAircraft++;		/**< Increase the global number of aircraft. */
 		base->numAircraftInBase++;	/**< Increase the number of aircraft in the base. */
 		Com_DPrintf("Adding new aircraft %s with IDX %i for base %s\n", aircraft->name, aircraft->idx, base->name);
-		/* now update the aircraft list - maybe there is a popup active */
+		/* Now update the aircraft list - maybe there is a popup active */
 		Cbuf_ExecuteText(EXEC_NOW, "aircraft_list");
 	}
 }
@@ -538,58 +538,58 @@ extern void CL_NewAircraft (base_t *base, const char *name)
  * @brief Removes an aircraft from its base and the game.
  * @param[in] base Pointer to aircraft that should be removed.
  * @note The assigned soldiers are removed/unassinged from the aircraft ... not fired. If you want them fired/deleted do it before calling this function.
-*/
+ * @todo Return status of deletion for better error handling.
+ */
 extern void CL_DeleteAircraft (aircraft_t *aircraft)
 {
 	int i = 0;
 	base_t *base = NULL;
 	aircraft_t *aircraft_temp = NULL;
 
-	if (aircraft) {
-		base = &gd.bases[aircraft->idxBase];
-		/* Remove all soldiers from the aircraft (the employees are still hired after this) */
-		CL_RemoveSoldiersFromAircraft(aircraft->idx, aircraft->idxBase);
+	if (!aircraft) {
+		Com_DPrintf("CL_DeleteAircraft: no aircraft given (NULL)\n");
+		/* TODO: Return deletion status here. */
+		return;
+	}
 
-		/* Remove aircraft and rearrange the aircraft-list (in base), */
-		base->numAircraftInBase--;
-		for (i = aircraft->idxInBase; i < base->numAircraftInBase; i++) {
-			aircraft_temp = &base->aircraft[i];
-			memcpy(aircraft_temp, &base->aircraft[i+1], sizeof(aircraft_t));
-			aircraft_temp->idxInBase = i;
-		}
+	/* Check if this aircraft is currently transferred. */
+	if (&gd.alltransfers[aircraft->idx] || (aircraft->status == AIR_TRANSIT)) {
+		Com_DPrintf("CL_DeleteAircraft: this aircraft is currently transferred. We can not\n");
+		/* TODO: Return deletion status here. */
+		return;
+	}
+	
+	base = &gd.bases[aircraft->idxBase];
+	/* Remove all soldiers from the aircraft (the employees are still hired after this). */
+	CL_RemoveSoldiersFromAircraft(aircraft->idx, aircraft->idxBase);
 
-		/* Note: It is tempting here to reduce the number of total (global) aircraft: gd.numAircraft
-		 * BUT we can't do this currently since unique aircraft IDXs are tied to gd.numAircraft,
-		 * so if we add another aircraft we could end up with two aircrafts with identical IDXs. By not
-		 * decrementing gd.numAircraft we accept that the the global count is wrong but that should be ok
-		 * since functions that use aircraft IDXs will not be able to find any deleted aircrafts and so
-		 * should still work (albiet less efficiently). Of course this is all theoretical and needs to be
-		 * tested by buying/selling  aircraft and play-testing but ultimately the IDX assignment/lookup
-		 * method for aircrafts probably needs to be fixed */
+	/* Remove aircraft and rearrange the aircraft-list (in base), */
+	base->numAircraftInBase--;
+	for (i = aircraft->idxInBase; i < base->numAircraftInBase; i++) {
+		aircraft_temp = &base->aircraft[i];
+		memcpy(aircraft_temp, &base->aircraft[i+1], sizeof(aircraft_t));
+		aircraft_temp->idxInBase = i;	/**< Re-set the number of aircraft in the base. */
+	}
 
-#if 0
-		/* TODO: this should fix the idx/numAircraft-problem mentioned above.
-		 * Needs checking for missed usage of the global aircraft idx elsewehere.
-		 * Needs testing.
-		 */
-		/* Decrease the global index of aircrafts that have a higher index than the deleted one. */
-		for (i = aircraft->idx+1; i < base->numAircraftInBase; i++) {
-			aircraft_temp = CL_AircraftGetFromIdx(i);
-			aircraft_temp->idx--;
-		}
-
-		/* Decrease the global number of aircrafts. */
-		gd.numAircraft--;
+#if 1
+	/* TODO: this should fix the idx/numAircraft-problem mentioned above.
+	 * Needs checking for missed usage of the global aircraft idx elsewehere.
+	 * Needs testing.
+	 */
+	/* Decrease the global index of aircrafts that have a higher index than the deleted one. */
+	for (i = aircraft->idx+1; i < base->numAircraftInBase; i++) {
+		aircraft_temp = CL_AircraftGetFromIdx(i);
+		aircraft_temp->idx--;
+	}
+	
+	gd.numAircraft--;	/**< Decrease the global number of aircraft. */
 #endif
 
-		/* Q_strncpyz(messageBuffer, va(_("You've got a new aircraft (a %s) in base %s"), aircraft->name, base->name), MAX_MESSAGE_TEXT);
-		MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);*/
+	/* Q_strncpyz(messageBuffer, va(_("You've sold your aircraft (a %s) in base %s"), aircraft->name, base->name), MAX_MESSAGE_TEXT);
+	MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);*/
 
-		/* now update the aircraft list - maybe there is a popup active */
-		Cbuf_ExecuteText(EXEC_NOW, "aircraft_list");
-	} else {
-		Com_DPrintf("CL_DeleteAircraft: no aircraft given (NULL)\n");
-	}
+	/* Now update the aircraft list - maybe there is a popup active */
+	Cbuf_ExecuteText(EXEC_NOW, "aircraft_list");
 }
 
 /**
