@@ -301,8 +301,31 @@ team alien
 	taman
 	shevaar
 // 	hovernet
-// 	cyborg_ortnok
 	bloodspider
+	}
+}
+
+team TamOrt
+{
+	{
+	taman
+	ortnok
+	}
+}
+
+team TamShe
+{
+	{
+	taman
+	shevaar
+	}
+}
+
+team OrtShe
+{
+	{
+	ortnok
+	shevaar
 	}
 }
 
@@ -317,21 +340,6 @@ team ortnok
 {
 	{
 	ortnok
-	}
-}
-
-//team cyborg_ortnok
-//{
-//	{
-//	cyborg_ortnok
-//	}
-//}
-
-team ortnok_all
-{
-	{
-	ortnok
-//	cyborg_ortnok
 	}
 }
 
