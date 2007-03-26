@@ -508,7 +508,7 @@ extern void CL_NewAircraft (base_t *base, const char *name)
 		memcpy(&base->aircraft[base->numAircraftInBase], aircraft, sizeof(aircraft_t));
 		/* now lets use the aircraft array for the base to set some parameters */
 		aircraft = &base->aircraft[base->numAircraftInBase];
-		aircraft->idx = gd.numAircraft++;
+		aircraft->idx = gd.numAircraft;
 		aircraft->homebase = base;
 		/* for saving and loading a base */
 		aircraft->idxBase = base->idx;
@@ -525,7 +525,8 @@ extern void CL_NewAircraft (base_t *base, const char *name)
 		Vector2Copy(base->pos, aircraft->pos);
 		Radar_Initialise(&(aircraft->radar), AIRCRAFT_RADAR_RANGE);
 
-		base->numAircraftInBase++;
+		gd.numAircraft++;		/**< Increase the global number of aircraft. */
+		base->numAircraftInBase++;	/**< Increase the number of aircraft in the base. */
 		Com_DPrintf("Adding new aircraft %s with IDX %i for base %s\n", aircraft->name, aircraft->idx, base->name);
 		/* now update the aircraft list - maybe there is a popup active */
 		Cbuf_ExecuteText(EXEC_NOW, "aircraft_list");
@@ -535,7 +536,7 @@ extern void CL_NewAircraft (base_t *base, const char *name)
 /**
  * @brief Removes an aircraft from its base and the game.
  * @param[in] base Pointer to aircraft that should be removed.
- * @note The assigned soldiers are removed from the aircraft ... not fired. If you wan them fired/deleted do it before calling this function.
+ * @note The assigned soldiers are removed/unassinged from the aircraft ... not fired. If you want them fired/deleted do it before calling this function.
 */
 extern void CL_DeleteAircraft (aircraft_t *aircraft)
 {
@@ -564,6 +565,21 @@ extern void CL_DeleteAircraft (aircraft_t *aircraft)
 		 * should still work (albiet less efficiently). Of course this is all theoretical and needs to be
 		 * tested by buying/selling  aircraft and play-testing but ultimately the IDX assignment/lookup
 		 * method for aircrafts probably needs to be fixed */
+
+#if 0
+		/* TODO: this should fix the idx/numAircraft-problem mentioned above.
+		 * Needs checking for missed usage of the global aircraft idx elsewehere.
+		 * Needs testing.
+		 */
+		/* Decrease the global index of aircrafts that have a higher index than the deleted one. */
+		for (i = aircraft->idx+1; i < base->numAircraftInBase; i++) {
+			aircraft_temp = CL_AircraftGetFromIdx(i);
+			aircraft_temp->idx--;
+		}
+		
+		/* Decrease the global number of aircrafts. */
+		gd.numAircraft--;
+#endif
 
 		/* Q_strncpyz(messageBuffer, va(_("You've got a new aircraft (a %s) in base %s"), aircraft->name, base->name), MAX_MESSAGE_TEXT);
 		MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);*/
