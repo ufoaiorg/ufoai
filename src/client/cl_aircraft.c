@@ -291,14 +291,26 @@ extern void CL_NewAircraft_f (void)
  */
 extern void MN_NextAircraft_f (void)
 {
+	int aircraftID;
+	
 	if (!baseCurrent || !baseCurrent->numAircraftInBase)
 		return;
 
-	if (Cvar_VariableInteger("mn_aircraft_id") < baseCurrent->numAircraftInBase - 1) {
-		Cvar_SetValue("mn_aircraft_id", Cvar_VariableInteger("mn_aircraft_id") + 1);
+	aircraftID = Cvar_VariableInteger("mn_aircraft_idx");
+	
+	if ((aircraftID < 0) || (aircraftID >= baseCurrent->numAircraftInBase)) {
+		/* Bad aircraft idx found (no or no sane aricraft). Setting to first one (no matter if it exists). */
+		Com_DPrintf("MN_NextAircraft_f: bad aircraft idx found.\n");
+		Cvar_SetValue("mn_aircraft_idx", 0);
+	}
+		
+	
+	if (aircraftID < baseCurrent->numAircraftInBase - 1) {
+		Cvar_SetValue("mn_aircraft_idx", aircraftID + 1);
 		CL_AircraftSelect(NULL);
-	} else
-		Com_DPrintf("mn_aircraft_id: %i - numAircraftInBase: %i\n", Cvar_VariableInteger("mn_aircraft_id"), baseCurrent->numAircraftInBase);
+	} else {
+		Com_DPrintf("MN_NextAircraft_f: we are at the end of the list already -> mn_aircraft_idx: %i - numAircraftInBase: %i\n", aircraftID, baseCurrent->numAircraftInBase);
+	}
 }
 
 /**
@@ -312,10 +324,19 @@ extern void MN_PrevAircraft_f (void)
 	if (!baseCurrent || !baseCurrent->numAircraftInBase)
 		return;
 
-	aircraftID = Cvar_VariableInteger("mn_aircraft_id");
+	aircraftID = Cvar_VariableInteger("mn_aircraft_idx");
+
+	if ((aircraftID < 0) || (aircraftID >= baseCurrent->numAircraftInBase)) {
+		/* Bad aircraft idx found (no or no sane aricraft). Setting to first one (no matter if it exists). */
+		Com_DPrintf("MN_PrevAircraft_f: bad aircraft idx found.\n");
+		Cvar_SetValue("mn_aircraft_idx", 0);
+	}
+
 	if (aircraftID >= 1) {
-		Cvar_SetValue("mn_aircraft_id", aircraftID - 1);
+		Cvar_SetValue("mn_aircraft_idx", aircraftID - 1);
 		CL_AircraftSelect(NULL);
+	} else {
+		Com_DPrintf("MN_PrevAircraft_f: we are at the beginning of the list already -> mn_aircraft_idx: %i - numAircraftInBase: %i\n", aircraftID, baseCurrent->numAircraftInBase);
 	}
 }
 
@@ -361,16 +382,16 @@ extern void CL_AircraftReturnToBase_f (void)
 
 /**
  * @brief Sets aircraftCurrent and updates cvars
- * @note uses cvar mn_aircraft_id to determine which aircraft to select (if aircraft
+ * @note uses cvar mn_aircraft_idx to determine which aircraft to select (if aircraft
  * pointer is NULL)
- * @param[in] aircraft If this is NULL the cvar mn_aircraft_id will be used
+ * @param[in] aircraft If this is NULL the cvar mn_aircraft_idx will be used
  * to determine the aircraft which should be displayed - if this will fail, too,
  * the first aircraft in the base is taken (if there is one)
  */
 extern void CL_AircraftSelect (aircraft_t* aircraft)
 {
 	menuNode_t *node;
-	int aircraftID = Cvar_VariableInteger("mn_aircraft_id");
+	int aircraftID = Cvar_VariableInteger("mn_aircraft_idx");
 	static char aircraftInfo[256];
 
 	/* calling from console? with no baseCurrent? */
@@ -380,9 +401,12 @@ extern void CL_AircraftSelect (aircraft_t* aircraft)
 	node = MN_GetNodeFromCurrentMenu("aircraft");
 
 	if (!aircraft) {
-		/* selecting the first aircraft in base (every base has at least one aircraft at this point) */
-		if (aircraftID >= baseCurrent->numAircraftInBase || aircraftID < 0)
+		/* Selecting the first aircraft in base (every base has at least one aircraft at this point) if a non-sane idx was found. */
+		/* TODO: Make sure that the above sentence is true and document _why_ that is the case --Höhrer */
+		if ((aircraftID < 0) || (aircraftID >= baseCurrent->numAircraftInBase)) {
+			Cvar_SetValue("mn_aircraft_idx", 0);
 			aircraftID = 0;
+		}
 		aircraft = &baseCurrent->aircraft[aircraftID];
 	} else {
 		aircraftID = aircraft->idxInBase;
