@@ -595,7 +595,11 @@ extern void CL_ReloadAndRemoveCarried (equipDef_t * ed)
 }
 
 /**
- * @brief Clears all containers that are temp containers (see script definition)
+ * @brief Clears all containers that are temp containers (see script definition).
+ * @sa CL_GenerateEquipment_f
+ * @sa CL_ResetTeamInBase
+ * @sa CL_SendTeamInfo
+ * @sa CL_SendCurTeamInfo
  */
 extern void CL_CleanTempInventory (void)
 {
@@ -613,8 +617,8 @@ extern void CL_CleanTempInventory (void)
 }
 
 /**
- * @brief
- * @note This function is called everytime the equipment screen for the team pops up
+ * @brief Displays actor equipment and unused items in proper buytype category.
+ * @note This function is called everytime the equipment screen for the team pops up.
  * @sa CL_UpdatePointersInGlobalData
  */
 static void CL_GenerateEquipment_f (void)
@@ -698,7 +702,7 @@ static void CL_GenerateEquipment_f (void)
 }
 
 /**
- * @brief
+ * @brief Sets buytype category for equip menu.
  */
 static void CL_EquipType_f (void)
 {
@@ -859,12 +863,12 @@ extern void CL_UpdateHireVar (void)
 }
 
 /**
- * @brief only for multiplayer when setting up a new team
+ * @brief Multiplayer-only call to reset team and team inventory (when setting up new team).
  * @sa E_ResetEmployees
  * @sa CL_CleanTempInventory
- * @note We need baseCurrent to point to gd.bases[0] here
- * @note available via script command team_reset
- * @note called when initializing the multiplayer menu (for init node and new team button)
+ * @note We need baseCurrent to point to gd.bases[0] here.
+ * @note Available via script command team_reset.
+ * @note Called when initializing the multiplayer menu (for init node and new team button).
  */
 extern void CL_ResetTeamInBase (void)
 {
