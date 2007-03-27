@@ -1,3 +1,5 @@
+// useable parameter for amours defines which team can use it: 0 - human, 1 - alien
+
 damagetypes standard
 {
 	"_normal"

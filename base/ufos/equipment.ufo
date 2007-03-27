@@ -214,6 +214,8 @@ equipment multiplayer
 	plasblade			2
 	light				2
 	medium				2
+	light_alien			2
+	medium_alien			2
 //	heavy				1
 }
 
