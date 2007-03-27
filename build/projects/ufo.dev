@@ -1029,13 +1029,13 @@ BuildCmd=
 
 [Unit98]
 FileName=..\..\src\client\cl_event.c
-CompileCpp=1
+CompileCpp=0
 Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=
+BuildCmd=$(CC) -c cl_event.c -o ufo/cl_event.o $(CFLAGS)
 
 [Unit99]
 FileName=..\..\src\client\cl_event.h

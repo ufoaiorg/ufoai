@@ -902,7 +902,7 @@ void Key_Init (void)
 	for (i = 'a'; i <= 'z'; i++)
 		keyshift[i] = i - 'a' + 'A';
 
-#if _WIN32
+#ifdef _WIN32
 	keyshift['1'] = '!';
 	keyshift['2'] = '@';
 	keyshift['3'] = '#';

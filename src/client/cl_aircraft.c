@@ -392,15 +392,13 @@ extern void CL_AircraftReturnToBase_f (void)
  */
 extern void CL_AircraftSelect (aircraft_t* aircraft)
 {
-	menuNode_t *node;
+	static menuNode_t *node = NULL;
 	int aircraftID = Cvar_VariableInteger("mn_aircraft_idx");
 	static char aircraftInfo[256];
 
 	/* calling from console? with no baseCurrent? */
 	if (!baseCurrent || !baseCurrent->numAircraftInBase)
 		return;
-
-	node = MN_GetNodeFromCurrentMenu("aircraft");
 
 	if (!aircraft) {
 		/**
@@ -409,15 +407,18 @@ extern void CL_AircraftSelect (aircraft_t* aircraft)
 		 * if a non-sane idx was found.
 		 */
 		if ((aircraftID < 0) || (aircraftID >= baseCurrent->numAircraftInBase)) {
-			Cvar_SetValue("mn_aircraft_idx", 0);
 			aircraftID = 0;
+			Cvar_SetValue("mn_aircraft_idx", aircraftID);
 		}
 		aircraft = &baseCurrent->aircraft[aircraftID];
 	} else {
 		aircraftID = aircraft->idxInBase;
 	}
 
-	/* we are not in the aircraft menu */
+	if (!node)
+		node = MN_GetNodeFromCurrentMenu("aircraft");
+
+	/* we were not in the aircraft menu yet */
 	if (node) {
 		/* copy the menu align values */
 		VectorCopy(aircraft->scale, node->scale);
@@ -1060,7 +1061,7 @@ extern void CL_ParseAircraftItem (const char *name, char **text)
 	const value_t *vp;
 	char *token;
 
-	if (numAircraft_samples >= MAX_AIRCRAFTITEMS) {
+	if (numAircraftItems >= MAX_AIRCRAFTITEMS) {
 		Com_Printf("CL_ParseAircraftItem: too many craftitem definitions; def \"%s\" ignored\n", name);
 		return;
 	}
@@ -1196,13 +1197,13 @@ extern void CL_ParseAircraft (const char *name, char **text)
 	}
 
 	/* initialize the menu */
-	air_samp = &aircraft_samples[numAircraft_samples++];
+	air_samp = &aircraft_samples[numAircraft_samples];
 	memset(air_samp, 0, sizeof(aircraft_t));
 
 	Com_DPrintf("...found aircraft %s\n", name);
-	air_samp->idx = gd.numAircraft++;
-	air_samp->idx_sample = numAircraft_samples - 1;
-	Q_strncpyz(air_samp->id, name, MAX_VAR);
+	air_samp->idx = gd.numAircraft;
+	air_samp->idx_sample = numAircraft_samples;
+	Q_strncpyz(air_samp->id, name, sizeof(air_samp->id));
 	air_samp->status = AIR_HOME;
 
 	/* get it's body */
@@ -1210,9 +1211,11 @@ extern void CL_ParseAircraft (const char *name, char **text)
 
 	if (!*text || *token != '{') {
 		Com_Printf("CL_ParseAircraft: aircraft def \"%s\" without body ignored\n", name);
-		gd.numAircraft--;
 		return;
 	}
+
+	numAircraft_samples++;
+	gd.numAircraft++;
 
 	do {
 		token = COM_EParse(text, errhead, name);

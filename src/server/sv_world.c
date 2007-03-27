@@ -316,6 +316,7 @@ static int SV_HullForEntity (edict_t * ent, int *tile)
 			Com_Error(ERR_FATAL, "SOLID_BSP with a non bsp model");
 
 		*tile = model->tile;
+		assert(model->headnode < MAX_MAP_NODES);
 		return model->headnode;
 	}
 

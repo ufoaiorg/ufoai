@@ -60,11 +60,13 @@ static qboolean mouse_avail;
 
 static SDL_Surface *surface;
 
-struct
-{
+/* power of two please */
+#define MAX_KEYQ 64
+
+struct {
 	unsigned char key;
 	int down;
-} keyq[64];
+} keyq[MAX_KEYQ];
 
 static int keyq_head = 0;
 static int keyq_tail = 0;
@@ -318,7 +320,7 @@ static int SDLateKey (SDL_keysym *keysym, int *key)
 			*key = '~'; /* console HACK */
 	}
 	if (sdl_debug->value)
-		printf("unicode: %hx keycode: %i key: %c\n", keysym->unicode, *key, *key);
+		Com_Printf("unicode: %hx keycode: %i key: %hx\n", keysym->unicode, *key, *key);
 
 	return buf;
 }
@@ -378,7 +380,7 @@ void GetEvent (SDL_Event *event)
 		}
 		keyq[keyq_head].down = event->type == SDL_MOUSEBUTTONDOWN ? qtrue : qfalse;
 		keyq[keyq_head].key = mouse_buttonstate;
-		keyq_head = (keyq_head + 1) & 63;
+		keyq_head = (keyq_head + 1) & (MAX_KEYQ - 1);
 		break;
 	case SDL_MOUSEMOTION:
 		if (mouse_active) {
@@ -410,12 +412,12 @@ void GetEvent (SDL_Event *event)
 		if (key) {
 			keyq[keyq_head].key = key;
 			keyq[keyq_head].down = qtrue;
-			keyq_head = (keyq_head + 1) & 63;
+			keyq_head = (keyq_head + 1) & (MAX_KEYQ - 1);
 		}
 		if (p) {
 			keyq[keyq_head].key = p;
 			keyq[keyq_head].down = qtrue;
-			keyq_head = (keyq_head + 1) & 63;
+			keyq_head = (keyq_head + 1) & (MAX_KEYQ - 1);
 		}
 		break;
 	case SDL_VIDEOEXPOSE:
@@ -425,12 +427,11 @@ void GetEvent (SDL_Event *event)
 		if (key) {
 			keyq[keyq_head].key = key;
 			keyq[keyq_head].down = qfalse;
-			keyq_head = (keyq_head + 1) & 63;
-		}
-		if (p) {
+			keyq_head = (keyq_head + 1) & (MAX_KEYQ - 1);
+		} else if (p) {
 			keyq[keyq_head].key = p;
 			keyq[keyq_head].down = qfalse;
-			keyq_head = (keyq_head + 1) & 63;
+			keyq_head = (keyq_head + 1) & (MAX_KEYQ - 1);
 		}
 		break;
 	case SDL_QUIT:
@@ -746,7 +747,7 @@ void KBD_Update (void)
 		}
 		while (keyq_head != keyq_tail) {
 			in_state->Key_Event_fp(keyq[keyq_tail].key, keyq[keyq_tail].down);
-			keyq_tail = (keyq_tail + 1) & 63;
+			keyq_tail = (keyq_tail + 1) & (MAX_KEYQ - 1);
 		}
 	} else
 		ri.Con_Printf(PRINT_ALL, "SDL not active right now\n");

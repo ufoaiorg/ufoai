@@ -1331,6 +1331,7 @@ extern int CM_HeadnodeForBox (int tile, vec3_t mins, vec3_t maxs)
 	curTile->box_planes[10].dist = mins[2];
 	curTile->box_planes[11].dist = -mins[2];
 
+	assert(curTile->box_headnode < MAX_MAP_NODES);
 	return curTile->box_headnode;
 }
 
@@ -1422,7 +1423,7 @@ static void CM_BoxLeafnums_r (int nodenum)
 
 /**
  * @brief
- * @param
+ * @param[in] headnode if < 0 we are in a leaf node
  * @sa
  */
 static int CM_BoxLeafnums_headnode (vec3_t mins, vec3_t maxs, int *list, int listsize, int headnode, int *topnode)
@@ -1845,7 +1846,7 @@ static void CM_RecursiveHullCheck (int num, float p1f, float p2f, vec3_t p1, vec
  * @param[in] mins box mins
  * @param[in] max box maxs
  * @param[in] tile Tile to check (normally 0 - except in assembled maps)
- * @param[in] headnode
+ * @param[in] headnode if < 0 we are in a leaf node
  * @param[in] brushmask brushes the trace should stop at (see MASK_*)
  * @sa CM_TransformedBoxTrace
  * @sa CM_CompleteBoxTrace
