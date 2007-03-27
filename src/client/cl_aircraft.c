@@ -413,10 +413,11 @@ extern void CL_AircraftSelect (aircraft_t* aircraft)
 		aircraft = &baseCurrent->aircraft[aircraftID];
 	} else {
 		aircraftID = aircraft->idxInBase;
+		Cvar_SetValue("mn_aircraft_idx", aircraftID);
 	}
 
-	if (!node)
-		node = MN_GetNodeFromCurrentMenu("aircraft");
+	/* if (!node) TODO: WTF? why would this cause a problem here? ... side from the fact that it is unneeded, because "node" is initialised with NULL anyway. */
+	node = MN_GetNodeFromCurrentMenu("aircraft");
 
 	/* we were not in the aircraft menu yet */
 	if (node) {
