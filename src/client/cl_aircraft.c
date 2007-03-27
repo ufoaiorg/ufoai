@@ -545,6 +545,7 @@ extern void CL_DeleteAircraft (aircraft_t *aircraft)
 	int i = 0;
 	base_t *base = NULL;
 	aircraft_t *aircraft_temp = NULL;
+	transferlist_t *transferlist_temp = NULL;
 
 	if (!aircraft) {
 		Com_DPrintf("CL_DeleteAircraft: no aircraft given (NULL)\n");
@@ -560,30 +561,46 @@ extern void CL_DeleteAircraft (aircraft_t *aircraft)
 	}
 	
 	base = &gd.bases[aircraft->idxBase];
+	
+	if (!base) {
+		Com_DPrintf("CL_DeleteAircraft: No homebase found for aircraft.\n");
+		/* TODO: Return deletion status here. */
+		return;
+	}
+		
 	/* Remove all soldiers from the aircraft (the employees are still hired after this). */
 	CL_RemoveSoldiersFromAircraft(aircraft->idx, aircraft->idxBase);
 
-	/* Remove aircraft and rearrange the aircraft-list (in base), */
-	base->numAircraftInBase--;
-	for (i = aircraft->idxInBase; i < base->numAircraftInBase; i++) {
-		aircraft_temp = &base->aircraft[i];
-		memcpy(aircraft_temp, &base->aircraft[i+1], sizeof(aircraft_t));
-		aircraft_temp->idxInBase = i;	/**< Re-set the number of aircraft in the base. */
-	}
-
 #if 1
 	/* TODO: this should fix the idx/numAircraft-problem mentioned above.
-	 * Needs checking for missed usage of the global aircraft idx elsewehere.
 	 * Needs testing.
 	 */
-	/* Decrease the global index of aircrafts that have a higher index than the deleted one. */
-	for (i = aircraft->idx+1; i < base->numAircraftInBase; i++) {
+	for (i = aircraft->idx; i < gd.numAircraft-1; i++) {
+		/* Decrease the global index of aircrafts that have a higher index than the deleted one. */
 		aircraft_temp = CL_AircraftGetFromIdx(i);
 		aircraft_temp->idx--;
+		
+		/* Update transfer list (i.e. remove the one for the deleted aircraft). */
+		transferlist_temp = &gd.alltransfers[i];
+		memcpy(transferlist_temp, &gd.alltransfers[i+1], sizeof(transferlist_t));
 	}
 	
 	gd.numAircraft--;	/**< Decrease the global number of aircraft. */
 #endif
+
+	/* Finally remove the aircraf-struct itself from the various arrays and update the order. */
+	base->numAircraftInBase--;
+	for (i = aircraft->idxInBase; i < base->numAircraftInBase; i++) {
+		/* Remove aircraft and rearrange the aircraft-list (in base). */
+		aircraft_temp = &base->aircraft[i];
+		memcpy(aircraft_temp, &base->aircraft[i+1], sizeof(aircraft_t));
+		aircraft_temp->idxInBase = i;	/**< Re-set the number of aircraft in the base. */
+
+#if 1
+		/* Update number of team members for each aircraft.*/
+		base->teamNum[i] = base->teamNum[i+1];
+#endif
+	}
 
 	/* Q_strncpyz(messageBuffer, va(_("You've sold your aircraft (a %s) in base %s"), aircraft->name, base->name), MAX_MESSAGE_TEXT);
 	MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);*/
