@@ -14,7 +14,7 @@
 !define PRODUCT_NAME_DEDICATED "UFO:Alien Invasion Dedicated Server"
 !define PRODUCT_VERSION "2.2-dev"
 !define PRODUCT_PUBLISHER "UFO:AI Team"
-!define PRODUCT_WEB_SITE "http://www.ufoai.net"
+!define PRODUCT_WEB_SITE "http://ufoai.sf.net"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\ufo.exe"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"
