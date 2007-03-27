@@ -578,8 +578,13 @@ extern void CL_DeleteAircraft (aircraft_t *aircraft)
 	for (i = aircraft->idx; i < gd.numAircraft-1; i++) {
 		/* Decrease the global index of aircrafts that have a higher index than the deleted one. */
 		aircraft_temp = CL_AircraftGetFromIdx(i);
-		aircraft_temp->idx--;
-		
+		if (aircraft_temp) {
+			aircraft_temp->idx--;
+		} else {
+			/* For some reason there was no aircraft found for this index. */
+			Com_DPrintf("CL_DeleteAircraft: No aircraft found for this global index: %i\n", i);
+		}
+			
 		/* Update transfer list (i.e. remove the one for the deleted aircraft). */
 		transferlist_temp = &gd.alltransfers[i];
 		memcpy(transferlist_temp, &gd.alltransfers[i+1], sizeof(transferlist_t));
