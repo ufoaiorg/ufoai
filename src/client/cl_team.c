@@ -628,6 +628,7 @@ static void CL_GenerateEquipment_f (void)
 	aircraft_t *aircraft;
 	/* t value will be set below - a and m are not changed here */
 	item_t item = {0,NONE,NONE};
+	int team;
 
 	assert(baseCurrent);
 	assert((baseCurrent->aircraftCurrent >= 0) && (baseCurrent->aircraftCurrent < baseCurrent->numAircraftInBase));
@@ -637,6 +638,15 @@ static void CL_GenerateEquipment_f (void)
 	if (!baseCurrent->teamNum[baseCurrent->aircraftCurrent]) {
 		MN_PopMenu(qfalse);
 		return;
+	}
+
+	/* Get team. */
+	if (strstr(Cvar_VariableString("team"), "human")) {
+		team = 0; 
+		Com_DPrintf("CL_GenerateEquipment_f().. team human, id: %i\n", team);
+	} else if (strstr(Cvar_VariableString("team"), "alien")) {
+		team = 1;
+		Com_DPrintf("CL_GenerateEquipment_f().. team alien, id: %i\n", team);
 	}
 
 	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
@@ -691,7 +701,10 @@ static void CL_GenerateEquipment_f (void)
 	   it is valid only due to the following property: */
 	assert (MAX_CONTAINERS >= NUM_BUYTYPES);
 
-	for (i = 0; i < csi.numODs; i++)
+	for (i = 0; i < csi.numODs; i++) {
+		/* Don't allow to show armours for other teams in the menu. */
+		if ((Q_strncmp(csi.ods[i].type, "armor", MAX_VAR) == 0) && (csi.ods[i].useable != team))
+			continue;
 		while (unused.num[i]) {
 			item.t = i;
 
@@ -699,6 +712,7 @@ static void CL_GenerateEquipment_f (void)
 			if (!Com_TryAddToBuyType(&baseCurrent->equipByBuyType, CL_AddWeaponAmmo(&unused, item), csi.ods[i].buytype))
 				break; /* no space left in menu */
 		}
+	}
 }
 
 /**
