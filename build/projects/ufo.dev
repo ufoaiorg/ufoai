@@ -757,14 +757,14 @@ Build=2
 LanguageID=1033
 CharsetID=1252
 CompanyName=http://www.ufoai.net
-FileVersion=2.1-dev2
+FileVersion=2.1
 FileDescription=UFO:Alien Invasion
 InternalName=
 LegalCopyright=
 LegalTrademarks=
 OriginalFilename=ufo.exe
 ProductName=ufo
-ProductVersion=2.1-dev2
+ProductVersion=2.1
 AutoIncBuildNr=0
 
 [Unit78]
