@@ -1581,7 +1581,8 @@ static void CL_Precache_f (void)
 	S_StopAllSounds();
 
 	/* for singleplayer game this is already loaded in our local server */
-	if (!ccs.singleplayer) {
+	/* and if we are the server we don't have to reload the map here, too */
+	if (!ccs.singleplayer && !Com_ServerState()) {
 		/* activate the map loading screen for multiplayer, too */
 		SCR_BeginLoadingPlaque();
 		CM_LoadMap(cl.configstrings[CS_TILES], cl.configstrings[CS_POSITIONS], &map_checksum);
