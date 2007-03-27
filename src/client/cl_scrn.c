@@ -11,7 +11,7 @@
  */
 
 /*
-All original materal Copyright (C) 2002-2006 UFO: Alien Invasion team.
+All original materal Copyright (C) 2002-2007 UFO: Alien Invasion team.
 
 15/06/06, Eddy Cullen (ScreamingWithNoSound):
 	Reformatted to agreed style.
