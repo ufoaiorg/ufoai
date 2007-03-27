@@ -1,5 +1,6 @@
 all: update_installer_data makeself
 
+EXT=pk3
 ROOTDIR=../../../../
 #relative from root dir
 INSTDIR=src/ports/linux/installer/
@@ -13,7 +14,7 @@ TEMPDIR=tmp
 VERSION_UC=$(shell grep UFO_VERSION $(ROOTDIR)src/qcommon/qcommon.h | sed -e 's/.*UFO_VERSION\s*\(.*\)/\1/' | sed -e 's/\"//g')
 VERSION_LC=$(shell echo $(VERSION_UC) | sed -e 'y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/;')
 #get the size of the zip data archives
-SIZE=$(shell LANG=C; du -sch $(TEMPDIR)/base/*.zip $(BINARIES) | tail -1 | cut -f1;)
+SIZE=$(shell LANG=C; du -sch $(TEMPDIR)/base/*.$(EXT) $(BINARIES) | tail -1 | cut -f1;)
 
 #grab the gtkradiant 1.5 archive from this url
 GTKRADIANT_URL=http://mattn.ninex.info/download/gtkradiant.tar.bz2
@@ -46,8 +47,8 @@ packdata:
 	@tar -cvjp -f $(DATADIR)/ufo-x86_64.tar.bz2 $(BINARIES)
 	@cd $(ROOTDIR); tar -cvjp -f $(INSTDIR)$(DATADIR)/i18n.tar.bz2 base/i18n/ --exclude .svn --exclude updated*
 	cd $(ROOTDIR); tar -cvjp -f $(INSTDIR)$(DATADIR)/mapsource.tar.bz2 base/maps/ --exclude .svn --exclude *.bsp --exclude *.autosave* --exclude *.bak
-	@cd $(ROOTDIR)base; ./archives.sh
-	@cp -u $(ROOTDIR)base/*.zip $(TEMPDIR)/base
+	@cd $(ROOTDIR)base; ./archives.sh $(EXT)
+	@cp -u $(ROOTDIR)base/*.$(EXT) $(TEMPDIR)/base
 	@cd $(TEMPDIR); tar -cvp -f ../$(DATADIR)/data.tar base
 	@cd $(DATADIR); wget -nc $(GTKRADIANT_URL)
 
