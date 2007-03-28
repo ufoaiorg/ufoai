@@ -1469,6 +1469,9 @@ extern qboolean CL_ActorSelect (le_t * le)
 		(le->state & STATE_DEAD) || !le->inuse)
 		return qfalse;
 
+	if (blockEvents)
+		return qfalse;		
+
 	/* select him */
 	if (selActor)
 		selActor->selected = qfalse;
