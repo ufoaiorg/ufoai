@@ -811,6 +811,7 @@ static void MN_FindContainer (menuNode_t* const node)
 static qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 {
 	int sx, sy, tx, ty, i;
+	const char *cond;
 
 	/* don't hover nodes if we are executing an action on geoscape like rotating or moving */
 	if (mouseSpace >= MS_ROTATE && mouseSpace <= MS_SHIFT3DMAP)
@@ -841,6 +842,11 @@ static qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 			break;
 		case IF_NE:
 			if (Cvar_Get(node->depends.var, node->depends.value, 0, NULL)->value == atof(node->depends.value))
+				return qfalse;
+			break;
+		case IF_EXISTS:
+			cond = Cvar_VariableString(node->depends.var);
+			if (!*cond)
 				return qfalse;
 			break;
 		default:
@@ -1838,6 +1844,7 @@ void MN_DrawMenus (void)
 	menuModel_t *menuModel = NULL, *menuModelParent = NULL;
 	void *oldAnimState = NULL;
 	int width, height;
+	const char* cond;
 
 	/* render every menu on top of a menu with a render node */
 	pp = 0;
@@ -1893,6 +1900,11 @@ void MN_DrawMenus (void)
 						break;
 					case IF_NE:
 						if (Cvar_Get(node->depends.var, node->depends.value, 0, NULL)->value == atof(node->depends.value))
+							continue;
+						break;
+					case IF_EXISTS:
+						cond = Cvar_VariableString(node->depends.var);
+						if (!*cond)
 							continue;
 						break;
 					default:

@@ -34,16 +34,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 
-cvar_t *adr0;
-cvar_t *adr1;
-cvar_t *adr2;
-cvar_t *adr3;
-cvar_t *adr4;
-cvar_t *adr5;
-cvar_t *adr6;
-cvar_t *adr7;
-cvar_t *adr8;
-
 cvar_t *masterserver_ip;
 cvar_t *masterserver_port;
 
@@ -684,11 +674,11 @@ typedef enum {
 /**
  * @brief Adds a server to the serverlist cache
  * @return false if it is no valid address or server already exists
+ * @sa CL_ParseStatusMessage
  */
 static int CL_AddServerToList (netadr_t* adr, char *msg)
 {
 	int i;
-	char string[MAX_VAR];
 
 	/* check whether the port was set */
 	if (!adr || !adr->port)
@@ -723,12 +713,8 @@ static int CL_AddServerToList (netadr_t* adr, char *msg)
 		}
 	}
 
-	/* we only need this if serverListLength > 0 */
-	if (serverListLength > 0)
-		Q_strncpyz(string, NET_AdrToString(*adr), sizeof(string));
-
 	for (i = 0; i < serverListLength; i++) {
-		if (!Q_strcmp(string, NET_AdrToString(serverList[i].adr))) {
+		if (NET_CompareAdr(*adr, serverList[i].adr)) {
 			/* mark this server as pinged */
 			if (msg) {
 				if (!serverList[i].pinged) {
@@ -747,6 +733,7 @@ static int CL_AddServerToList (netadr_t* adr, char *msg)
 				/* we don't want to ping again - because msg is already the response */
 				return -1;
 			} else
+				/* already on the list */
 				return -1;
 		}
 	}
@@ -755,10 +742,10 @@ static int CL_AddServerToList (netadr_t* adr, char *msg)
 		Com_Printf("Warning: a response for a server that was not on the list before\n");
 
 	memset(&(serverList[serverListLength]), 0, sizeof(serverList_t));
-	memcpy(&(serverList[serverListLength].adr), adr, sizeof(netadr_t));
+	serverList[serverListLength].adr = *adr;
 	/* increase the number of servers in the list now */
-	serverListLength++;
 	CL_PingServer(adr);
+	serverListLength++;
 
 	return -1;
 }
@@ -776,6 +763,10 @@ static void CL_ParseStatusMessage (void)
 
 	Com_DPrintf("CL_ParseStatusMessage: %s\n", s);
 
+	/* do this even if the list is empty
+	 * or there are too many servers on the list */
+	menuText[TEXT_LIST] = serverText;
+
 	if (serverListLength >= MAX_SERVERLIST)
 		return;
 
@@ -790,7 +781,6 @@ static void CL_ParseStatusMessage (void)
 		serverList[serverID].serverListPos = serverListPos;
 		serverListPos++;
 		Q_strcat(serverText, string, sizeof(serverText));
-		menuText[TEXT_LIST] = serverText;
 	}
 }
 
@@ -907,7 +897,7 @@ static void CL_ParseServerInfoMessage (void)
 	Com_DPrintf("%s\n", s);
 	Cvar_Set("mn_mappic", "maps/shots/na.jpg");
 
-	Com_sprintf(serverInfoText, MAX_MESSAGE_TEXT, _("IP\t%s\n\n"), NET_AdrToString(net_from));
+	Com_sprintf(serverInfoText, sizeof(serverInfoText), _("IP\t%s\n\n"), NET_AdrToString(net_from));
 
 	/* first char is slash */
 	s++;
@@ -993,7 +983,7 @@ static void CL_ParseMasterServerResponse (void)
 		port = (*buffptr++)<<8;
 		port += *buffptr++;
 		Com_sprintf(adrstring, sizeof(adrstring), "%d.%d.%d.%d:%d", ip[0], ip[1], ip[2], ip[3], port);
-		if (!NET_StringToAdr (adrstring, &adr)) {
+		if (!NET_StringToAdr(adrstring, &adr)) {
 			Com_Printf("Invalid masterserver response '%s'\n", adrstring);
 			break;
 		}
@@ -1026,25 +1016,6 @@ static void CL_ServerConnect_f (void)
 		Com_DPrintf("CL_ServerConnect_f: connect to %s\n", ip);
 		Cbuf_AddText(va("connect %s\n", ip));
 	}
-}
-
-/**
- * @brief Print all bookmarks
- *
- * bookmarks are saved in cvar adr[0-15]
- */
-static char bookmarkText[MAX_MESSAGE_TEXT];
-static void CL_BookmarkPrint_f (void)
-{
-	int i;
-
-	/* clear list; */
-	bookmarkText[0] = '\0';
-
-	for (i = 0; i < 16; i++) {
-		Q_strcat(bookmarkText, va("%s\n", Cvar_VariableString(va("adr%i", i))), sizeof(bookmarkText));
-	}
-	menuText[TEXT_LIST] = bookmarkText;
 }
 
 /**
@@ -1081,7 +1052,7 @@ static void CL_BookmarkAdd_f (void)
 		}
 	}
 	/* bookmarks are full - overwrite the first entry */
-	Cvar_Set("adr0", newBookmark);
+	MN_Popup(_("Notice"), _("All bookmark slots are used - please removed unused entries and repeat this step"));
 }
 
 /**
@@ -1142,7 +1113,8 @@ static void CL_ServerInfo_f (void)
 }
 
 /**
- * @brief Callback for text node serverlist in multiplayer menu
+ * @brief Callback for bookmark nodes in multiplayer menu (mp_bookmarks)
+ * @sa CL_ParseServerInfoMessage
  */
 static void CL_ServerListClick_f (void)
 {
@@ -1157,9 +1129,11 @@ static void CL_ServerListClick_f (void)
 	menuText[TEXT_STANDARD] = serverInfoText;
 	if (num >= 0 && num < serverListLength)
 		for (i = 0; i < serverListLength; i++)
-			if (serverList[i].serverListPos == num) {
+			if (serverList[i].pinged && serverList[i].serverListPos == num) {
+				/* found the server - grab the infos for this server */
 				Netchan_OutOfBandPrint(NS_CLIENT, serverList[i].adr, "status %i", PROTOCOL_VERSION);
 				Cvar_Set("mn_server_ip", NET_AdrToString(serverList[i].adr));
+				return;
 			}
 }
 
@@ -1237,11 +1211,11 @@ static void CL_PingServers_f (void)
 
 	for (i = 0; i < 16; i++) {
 		Com_sprintf(name, sizeof(name), "adr%i", i);
-		adrstring = Cvar_VariableString (name);
+		adrstring = Cvar_VariableString(name);
 		if (!adrstring || !adrstring[0])
 			continue;
 
-		if (!NET_StringToAdr (adrstring, &adr)) {
+		if (!NET_StringToAdr(adrstring, &adr)) {
 			Com_Printf("Bad address: %s\n", adrstring);
 			continue;
 		}
@@ -1790,6 +1764,8 @@ static void CL_ShowIP_f (void)
  */
 static void CL_InitLocal (void)
 {
+	int i;
+
 	cls.state = ca_disconnected;
 	cls.realtime = Sys_Milliseconds();
 
@@ -1805,15 +1781,9 @@ static void CL_InitLocal (void)
 	CL_ResetSequences();
 	CL_ResetTeams();
 
-	adr0 = Cvar_Get("adr0", "", CVAR_ARCHIVE, "Bookmark for network ip");
-	adr1 = Cvar_Get("adr1", "", CVAR_ARCHIVE, "Bookmark for network ip");
-	adr2 = Cvar_Get("adr2", "", CVAR_ARCHIVE, "Bookmark for network ip");
-	adr3 = Cvar_Get("adr3", "", CVAR_ARCHIVE, "Bookmark for network ip");
-	adr4 = Cvar_Get("adr4", "", CVAR_ARCHIVE, "Bookmark for network ip");
-	adr5 = Cvar_Get("adr5", "", CVAR_ARCHIVE, "Bookmark for network ip");
-	adr6 = Cvar_Get("adr6", "", CVAR_ARCHIVE, "Bookmark for network ip");
-	adr7 = Cvar_Get("adr7", "", CVAR_ARCHIVE, "Bookmark for network ip");
-	adr8 = Cvar_Get("adr8", "", CVAR_ARCHIVE, "Bookmark for network ip");
+	for (i = 0; i < 16; i++)
+		Cvar_Get(va("adr%i", i), "", CVAR_ARCHIVE, "Bookmark for network ip");
+
 	map_dropship = Cvar_Get("map_dropship", "craft_dropship", 0, "The dropship that is to be used in the map");
 
 	/* register our variables */
@@ -1919,7 +1889,6 @@ static void CL_InitLocal (void)
 	Cmd_AddCommand("servers_click", CL_ServerListClick_f, NULL);
 	Cmd_AddCommand("server_connect", CL_ServerConnect_f, NULL);
 	Cmd_AddCommand("bookmarks_click", CL_BookmarkListClick_f, NULL);
-	Cmd_AddCommand("bookmarks_print", CL_BookmarkPrint_f, NULL);
 	Cmd_AddCommand("bookmark_add", CL_BookmarkAdd_f, "Add a new bookmark - see adrX cvars");
 
 	Cmd_AddCommand("userinfo", CL_Userinfo_f, NULL);

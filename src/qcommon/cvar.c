@@ -707,12 +707,30 @@ extern char *Cvar_Serverinfo (void)
 }
 
 /**
+ * @brief Delete a cvar - set [cvar] "" isn't working from within the scripts
+ * @sa Cvar_Set_f
+ */
+static void Cvar_Del_f (void)
+{
+	int c;
+
+	c = Cmd_Argc();
+	if (c != 2) {
+		Com_Printf("usage: del <variable>\n");
+		return;
+	}
+
+	Cbuf_ExecuteText(EXEC_NOW, va("set %s \"\"", Cmd_Argv(1)));
+}
+
+/**
  * @brief Reads in all archived cvars
  * @sa Qcommon_Init
  */
 extern void Cvar_Init (void)
 {
 	Cmd_AddCommand("setold", Cvar_SetOld_f, NULL);
+	Cmd_AddCommand("del", Cvar_Del_f, NULL);
 	Cmd_AddCommand("set", Cvar_Set_f, NULL);
 	Cmd_AddCommand("copy", Cvar_Copy_f, NULL);
 	Cmd_AddCommand("cvarlist", Cvar_List_f, NULL);
