@@ -1345,6 +1345,7 @@ void CL_ActorUpdateCVars (void)
 		case M_FIRE_R:
 		case M_PEND_FIRE_R:
 			/* TODO: Display current firemode better*/
+			break;
 		default:
 			ClearHighlights();
 		}
