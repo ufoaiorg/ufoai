@@ -497,16 +497,18 @@ invList_t* CL_GetLeftHandWeapon (le_t *actor)
 static void CL_ConfirmAction_f (void)
 {
 	extern pos3_t mousePos;
+	extern pos3_t mousePendPos;
 
 	if (!selActor)
 		return;
 
 	switch (cl.cmode) {
 	case M_PEND_MOVE:
-		CL_ActorStartMove(selActor, mousePos);
+		CL_ActorStartMove(selActor, mousePendPos);
 		break;
 	case M_PEND_FIRE_R:
 	case M_PEND_FIRE_L:
+		/* TODO: Why can we use mouspos (not mousePendPos) here? */
 		CL_ActorShoot(selActor, mousePos);
 		cl.cmode = M_MOVE;
 		break;
