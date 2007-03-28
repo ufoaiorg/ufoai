@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-03-24 20:50+0100\n"
+"POT-Creation-Date: 2007-03-28 19:13+0200\n"
 "PO-Revision-Date: 2006-12-23 20:30+0200\n"
 "Last-Translator: Игорь <zsx@ua.fm>\n"
 "Language-Team: \n"
@@ -107,52 +107,52 @@ msgstr "НЛО - Истребитель"
 msgid "Fighter U"
 msgstr "НЛО - Истребитель"
 
-#: ../base/ufos/armor.ufo:3
+#: ../base/ufos/armor.ufo:5
 msgid "normal"
 msgstr "нормальная"
 
-#: ../base/ufos/armor.ufo:4
+#: ../base/ufos/armor.ufo:6
 msgid "blast"
 msgstr "взрывчатка"
 
-#: ../base/ufos/armor.ufo:5
+#: ../base/ufos/armor.ufo:7
 msgid "fire"
 msgstr "огонь"
 
-#: ../base/ufos/armor.ufo:6
+#: ../base/ufos/armor.ufo:8
 msgid "shock"
 msgstr "шок"
 
-#: ../base/ufos/armor.ufo:7
+#: ../base/ufos/armor.ufo:9
 msgid "laser"
 msgstr "лазер"
 
-#: ../base/ufos/armor.ufo:8
+#: ../base/ufos/armor.ufo:10
 msgid "plasma"
 msgstr "плазма"
 
-#: ../base/ufos/armor.ufo:9
+#: ../base/ufos/armor.ufo:11
 #, fuzzy
 msgid "particlebeam"
 msgstr "Лучевое оружие"
 
-#: ../base/ufos/armor.ufo:10
+#: ../base/ufos/armor.ufo:12
 msgid "stun"
 msgstr "оглушение"
 
-#: ../base/ufos/armor.ufo:16
+#: ../base/ufos/armor.ufo:18
 msgid "Combat Armour"
 msgstr "Боевая броня"
 
-#: ../base/ufos/armor.ufo:54
+#: ../base/ufos/armor.ufo:57
 msgid "Nanocomposite Armour"
 msgstr "Фуллереновая броня"
 
-#: ../base/ufos/armor.ufo:129
+#: ../base/ufos/armor.ufo:133
 msgid "Alien Body Armour"
 msgstr "Нательная броня пришельцев"
 
-#: ../base/ufos/armor.ufo:167
+#: ../base/ufos/armor.ufo:172
 #, fuzzy
 msgid "Medium Alien Armour"
 msgstr "Средняя броня"
@@ -256,9 +256,13 @@ msgstr "Очень тяжёлая кампания"
 #: ../base/ufos/campaign.ufo:142
 msgid "txt_veryhard_campaign"
 msgstr ""
-"Чрезвычайно сложная версия Стандартной Кампании. В этом сценарии всё настроено против Вас. Вы получите лишь несколько рекрутов, правительства будут крайне требовательны, и не ждите снисхождения от пришельцев.\n"
+"Чрезвычайно сложная версия Стандартной Кампании. В этом сценарии всё "
+"настроено против Вас. Вы получите лишь несколько рекрутов, правительства "
+"будут крайне требовательны, и не ждите снисхождения от пришельцев.\n"
 "\n"
-"Пункт представляет собой Очень Тяжёлый уровень сложности, рекомендуется тем, кто осилил Тяжёлый уровень и испытывает необходимость в ещё более жёстких рамках."
+"Пункт представляет собой Очень Тяжёлый уровень сложности, рекомендуется тем, "
+"кто осилил Тяжёлый уровень и испытывает необходимость в ещё более жёстких "
+"рамках."
 
 #: ../base/ufos/campaign.ufo:162
 msgid "Hard Campaign"
@@ -267,9 +271,13 @@ msgstr "Тяжёлая кампания"
 #: ../base/ufos/campaign.ufo:163
 msgid "txt_hard_campaign"
 msgstr ""
-"Более сложная версия Стандартной Кампании. Вы получите меньше солдат, техников, и учёных. Будет труднее удовлетворить различные страны. Исследования будут продвигаться медленнее и требовать больше ресурсов. Пришельцы будут более опасны в бою.\n"
+"Более сложная версия Стандартной Кампании. Вы получите меньше солдат, "
+"техников, и учёных. Будет труднее удовлетворить различные страны. "
+"Исследования будут продвигаться медленнее и требовать больше ресурсов. "
+"Пришельцы будут более опасны в бою.\n"
 "\n"
-"Этот пункт соответствует Тяжёлому уровню сложности, и рекомендуется для опытных игроков."
+"Этот пункт соответствует Тяжёлому уровню сложности, и рекомендуется для "
+"опытных игроков."
 
 #: ../base/ufos/campaign.ufo:192
 msgid "Standard Campaign"
@@ -278,9 +286,15 @@ msgstr "Стандартная кампания"
 #: ../base/ufos/campaign.ufo:193 ../base/ufos/campaign.ufo:338
 msgid "txt_standard_campaign"
 msgstr ""
-"Однопользовательский сценарий военного противостояния вторжению. Игрок принимает на себя командование силами ФАЛАНКС, ответом инопланетной угрозе от лица всего человечества. Динамичная игра с присутствием большого количества случайных элементов и в то же время с всеобъемлющей сюжетной линией.\n"
+"Однопользовательский сценарий военного противостояния вторжению. Игрок "
+"принимает на себя командование силами ФАЛАНКС, ответом инопланетной угрозе "
+"от лица всего человечества. Динамичная игра с присутствием большого "
+"количества случайных элементов и в то же время с всеобъемлющей сюжетной "
+"линией.\n"
 "\n"
-"Кампания доступна с несколькими уровнями сложности. Данный пункт представляет Стандартный уровень, и рекомендуется для новичков, которые любят интересные задачи."
+"Кампания доступна с несколькими уровнями сложности. Данный пункт "
+"представляет Стандартный уровень, и рекомендуется для новичков, которые "
+"любят интересные задачи."
 
 #: ../base/ufos/campaign.ufo:241
 msgid "Easy Campaign"
@@ -289,9 +303,13 @@ msgstr "Лёгкая кампания"
 #: ../base/ufos/campaign.ufo:242
 msgid "txt_easy_campaign"
 msgstr ""
-"Более простая версия Стандартной Кампании. Пришельцы будут слабее, налёты НЛО случаться реже, а Вы получите больше новых рекрутов для восполнения боевых потерь.\n"
+"Более простая версия Стандартной Кампании. Пришельцы будут слабее, налёты "
+"НЛО случаться реже, а Вы получите больше новых рекрутов для восполнения "
+"боевых потерь.\n"
 "\n"
-"Кампания представляет собой Лёгкий уровень сложности для тех начинающих игроков, кто предпочитает более мягкое развитие событий по сравнению со Стандартной Кампанией."
+"Кампания представляет собой Лёгкий уровень сложности для тех начинающих "
+"игроков, кто предпочитает более мягкое развитие событий по сравнению со "
+"Стандартной Кампанией."
 
 #: ../base/ufos/campaign.ufo:271
 msgid "Very Easy Campaign"
@@ -300,9 +318,12 @@ msgstr "Очень лёгкая кампания"
 #: ../base/ufos/campaign.ufo:272
 msgid "txt_veryeasy_campaign"
 msgstr ""
-"Весьма упрощённый вариант Стандартной Кампании. Ваши силы будут более мощными, а пришельцы - заметно слабее. В результате, Ваши потери в течение кампании будут минимальны.\n"
+"Весьма упрощённый вариант Стандартной Кампании. Ваши силы будут более "
+"мощными, а пришельцы - заметно слабее. В результате, Ваши потери в течение "
+"кампании будут минимальны.\n"
 "\n"
-"Эта кампания представляет собой Очень Лёгкий уровень сложности, предназначенный для игроков, которые делают свои первые шаги в мире UFO: AI."
+"Эта кампания представляет собой Очень Лёгкий уровень сложности, "
+"предназначенный для игроков, которые делают свои первые шаги в мире UFO: AI."
 
 #: ../base/ufos/campaign.ufo:316
 msgid "Play the aliens"
@@ -429,7 +450,8 @@ msgid "Aircraft away"
 msgstr "Самолет отсутствует"
 
 #: ../base/ufos/menu_aircraft.ufo:118
-msgid "Buy/Sell aircraft"
+#, fuzzy
+msgid "Buy or sell aircraft"
 msgstr "Купить/продать самолет"
 
 #: ../base/ufos/menu_aircraft.ufo:133
@@ -1541,178 +1563,189 @@ msgstr "Обновить"
 msgid "Connect to IP"
 msgstr "Соединение с IP"
 
-#: ../base/ufos/menu_multiplayer.ufo:836
+#: ../base/ufos/menu_multiplayer.ufo:809 ../base/ufos/menu_multiplayer.ufo:812
+#: ../base/ufos/menu_multiplayer.ufo:815 ../base/ufos/menu_multiplayer.ufo:818
+#: ../base/ufos/menu_multiplayer.ufo:821 ../base/ufos/menu_multiplayer.ufo:824
+#: ../base/ufos/menu_multiplayer.ufo:827 ../base/ufos/menu_multiplayer.ufo:830
+#: ../base/ufos/menu_multiplayer.ufo:833 ../base/ufos/menu_multiplayer.ufo:836
+#: ../base/ufos/menu_multiplayer.ufo:839 ../base/ufos/menu_multiplayer.ufo:842
+#: ../base/ufos/menu_multiplayer.ufo:845 ../base/ufos/menu_multiplayer.ufo:848
+#: ../base/ufos/menu_multiplayer.ufo:851 ../base/ufos/menu_multiplayer.ufo:854
+msgid "Delete this bookmark"
+msgstr ""
+
+#: ../base/ufos/menu_multiplayer.ufo:869
 msgid "Make this server public:"
 msgstr "Сделать этот сервер общедоступным:"
 
-#: ../base/ufos/menu_multiplayer.ufo:847
+#: ../base/ufos/menu_multiplayer.ufo:880
 msgid "Don't make it public via masterserver"
 msgstr "Не делать его общедоступным через masterserver"
 
-#: ../base/ufos/menu_multiplayer.ufo:861
+#: ../base/ufos/menu_multiplayer.ufo:894
 msgid "Publish server address via masterserver"
 msgstr "Опубликовать адрес сервера через masterserver"
 
-#: ../base/ufos/menu_multiplayer.ufo:879
+#: ../base/ufos/menu_multiplayer.ufo:912
 msgid "Enable morale states:"
 msgstr "Включить мораль:"
 
-#: ../base/ufos/menu_multiplayer.ufo:920
+#: ../base/ufos/menu_multiplayer.ufo:953
 #, fuzzy
 msgid "Gametype:"
 msgstr "Игра"
 
-#: ../base/ufos/menu_multiplayer.ufo:959
+#: ../base/ufos/menu_multiplayer.ufo:992
 msgid "Teamplay:"
 msgstr "Командная игра:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1000
+#: ../base/ufos/menu_multiplayer.ufo:1033
 msgid "Max. clients:"
 msgstr "Максимум игроков:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1002
+#: ../base/ufos/menu_multiplayer.ufo:1035
 #, fuzzy
 msgid "Sets the max allowed clients to connect"
 msgstr "Устанавливает максимально допустимое кол-во клиентов"
 
-#: ../base/ufos/menu_multiplayer.ufo:1034
+#: ../base/ufos/menu_multiplayer.ufo:1067
 msgid "Max. soldiers per team:"
 msgstr "Максимум бойцов в отряде:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1036
+#: ../base/ufos/menu_multiplayer.ufo:1069
 msgid "Sets the max allowed soldiers per team"
 msgstr "Устанавливает максимальное число бойцов в команде"
 
-#: ../base/ufos/menu_multiplayer.ufo:1068
+#: ../base/ufos/menu_multiplayer.ufo:1101
 msgid "Max. soldiers per player:"
 msgstr "Максимум бойцов у игрока:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1070
+#: ../base/ufos/menu_multiplayer.ufo:1103
 msgid "Sets the max allowed soldiers per player when in teamplay"
 msgstr ""
 "Устанавливает максимальное число бойцов у игрока во время командной игры"
 
-#: ../base/ufos/menu_multiplayer.ufo:1103
+#: ../base/ufos/menu_multiplayer.ufo:1136
 msgid "Max. players per team:"
 msgstr "Максимум игроков в команде:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1136
+#: ../base/ufos/menu_multiplayer.ufo:1169
 msgid "Max. AI actors:"
 msgstr "Максимум АИ игроков:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1138
+#: ../base/ufos/menu_multiplayer.ufo:1171
 msgid "Max AI actors for teamplay mode"
 msgstr "Максимальное АИ персонажей для командного режима"
 
-#: ../base/ufos/menu_multiplayer.ufo:1170
+#: ../base/ufos/menu_multiplayer.ufo:1203
 msgid "Server-Password:"
 msgstr "Пароль Сервера:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1193
+#: ../base/ufos/menu_multiplayer.ufo:1226
 msgid "RCON-Password:"
 msgstr "RCON Пароль:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1216
+#: ../base/ufos/menu_multiplayer.ufo:1249
 msgid "Hostname:"
 msgstr "Имя сервера:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1239
+#: ../base/ufos/menu_multiplayer.ufo:1272
 msgid "Map"
 msgstr "Карта"
 
-#: ../base/ufos/menu_multiplayer.ufo:1319
+#: ../base/ufos/menu_multiplayer.ufo:1352
 msgid "Start server"
 msgstr "Старт сервера"
 
-#: ../base/ufos/menu_multiplayer.ufo:1372
+#: ../base/ufos/menu_multiplayer.ufo:1405
 #, fuzzy
 msgid "Team selection"
 msgstr "Выбор команды"
 
-#: ../base/ufos/menu_multiplayer.ufo:1399
+#: ../base/ufos/menu_multiplayer.ufo:1432
 #, fuzzy
 msgid "Max. players per team"
 msgstr "Максимум игроков в команде"
 
-#: ../base/ufos/menu_multiplayer.ufo:1411
+#: ../base/ufos/menu_multiplayer.ufo:1444
 msgid "Max. teams for this map"
 msgstr "Макс. кол-во команд на карте"
 
-#: ../base/ufos/menu_multiplayer.ufo:1423
+#: ../base/ufos/menu_multiplayer.ufo:1456
 msgid "Team preference:"
 msgstr "Команда:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1434
+#: ../base/ufos/menu_multiplayer.ufo:1467
 msgid "Next free team"
 msgstr "Следующая свободная команда"
 
-#: ../base/ufos/menu_multiplayer.ufo:1444
+#: ../base/ufos/menu_multiplayer.ufo:1477
 #, fuzzy
 msgid "Previous free team"
 msgstr "Предыдущая свободная команда"
 
-#: ../base/ufos/menu_multiplayer.ufo:1488
+#: ../base/ufos/menu_multiplayer.ufo:1521
 #, fuzzy
 msgid "Please wait"
 msgstr "Доброжелательное"
 
-#: ../base/ufos/menu_multiplayer.ufo:1494
+#: ../base/ufos/menu_multiplayer.ufo:1527
 msgid "Waiting for other players to join the game"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:1500
+#: ../base/ufos/menu_multiplayer.ufo:1533
 msgid "Players that must join before starting: "
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:1512
+#: ../base/ufos/menu_multiplayer.ufo:1545
 msgid "Start the game even if not all teams have joined"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:1525
+#: ../base/ufos/menu_multiplayer.ufo:1558
 msgid "Force start"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:1539
+#: ../base/ufos/menu_multiplayer.ufo:1572
 msgid "1on1"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:1552
+#: ../base/ufos/menu_multiplayer.ufo:1585
 msgid "1on1on1"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:1565
+#: ../base/ufos/menu_multiplayer.ufo:1598
 msgid "2on2"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:1578
+#: ../base/ufos/menu_multiplayer.ufo:1611
 msgid "2on2on2"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:1591
+#: ../base/ufos/menu_multiplayer.ufo:1624
 msgid "3on3"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:1604
+#: ../base/ufos/menu_multiplayer.ufo:1637
 msgid "3on3on3"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:1617
+#: ../base/ufos/menu_multiplayer.ufo:1650
 msgid "4on4"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:1630
+#: ../base/ufos/menu_multiplayer.ufo:1663
 msgid "4on4on4"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:1643
+#: ../base/ufos/menu_multiplayer.ufo:1676
 msgid "Coop 2 players"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:1656
+#: ../base/ufos/menu_multiplayer.ufo:1689
 msgid "Coop 3 players"
 msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:1669
+#: ../base/ufos/menu_multiplayer.ufo:1702
 msgid "Coop 4 players"
 msgstr ""
 
@@ -2020,7 +2053,7 @@ msgstr "Очень плохо"
 msgid "Slow"
 msgstr ""
 
-#: ../base/ufos/menu_ptleditor.ufo:74 client/cl_main.c:2135
+#: ../base/ufos/menu_ptleditor.ufo:74 client/cl_main.c:2107
 #, fuzzy
 msgid "Normal"
 msgstr "Нормальная"
@@ -2266,7 +2299,7 @@ msgstr "Показать только сотрудников"
 msgid "Show only aliens"
 msgstr "Показать только броню"
 
-#: ../base/ufos/menu_transfer.ufo:285 client/cl_campaign.c:4354
+#: ../base/ufos/menu_transfer.ufo:285 client/cl_campaign.c:4357
 #, fuzzy
 msgid "Aliens"
 msgstr "Пришелец"
@@ -2332,303 +2365,307 @@ msgstr "Имя:"
 msgid "Leave mailclient"
 msgstr "Пришелец"
 
-#: ../base/ufos/missions.ufo:4 ../base/ufos/missions.ufo:344
-msgid "New York"
-msgstr "Нью Йорк"
+#: ../base/ufos/missions.ufo:38 ../base/ufos/missions.ufo:530
+#: ../base/ufos/missions.ufo:794
+msgid "Revelstoke"
+msgstr ""
 
-#: ../base/ufos/missions.ufo:5 ../base/ufos/missions.ufo:25
-#: ../base/ufos/missions.ufo:45 ../base/ufos/missions.ufo:65
-#: ../base/ufos/missions.ufo:85 ../base/ufos/missions.ufo:105
-#: ../base/ufos/missions.ufo:125 ../base/ufos/missions.ufo:185
-#: ../base/ufos/missions.ufo:205 ../base/ufos/missions.ufo:245
-#: ../base/ufos/missions.ufo:265 ../base/ufos/missions.ufo:285
-#: ../base/ufos/missions.ufo:305 ../base/ufos/missions.ufo:325
-#: ../base/ufos/missions.ufo:345 ../base/ufos/missions.ufo:365
-#: ../base/ufos/missions.ufo:386 ../base/ufos/missions.ufo:484
-#: ../base/ufos/missions.ufo:504 ../base/ufos/missions.ufo:544
-#: ../base/ufos/missions.ufo:584 ../base/ufos/missions.ufo:603
-#: ../base/ufos/missions.ufo:622 ../base/ufos/missions.ufo:642
-#: ../base/ufos/missions.ufo:662 ../base/ufos/missions.ufo:681
-#: ../base/ufos/missions.ufo:700 ../base/ufos/missions.ufo:738
-#: ../base/ufos/missions.ufo:758 ../base/ufos/missions.ufo:778
-#: ../base/ufos/missions.ufo:799 ../base/ufos/missions.ufo:819
-#: ../base/ufos/missions.ufo:838 ../base/ufos/missions.ufo:858
+#: ../base/ufos/missions.ufo:39 ../base/ufos/missions.ufo:104
+#: ../base/ufos/missions.ufo:531 ../base/ufos/missions.ufo:815
+msgid "Landed Alien Ship"
+msgstr "Приземлившийся корабль пришельцев"
+
+#: ../base/ufos/missions.ufo:40 ../base/ufos/missions.ufo:105
+#: ../base/ufos/missions.ufo:816
+msgid "Secure Alien Ship before Liftoff"
+msgstr ""
+
+#: ../base/ufos/missions.ufo:62
+msgid "Gwanda"
+msgstr "Гванда"
+
+#: ../base/ufos/missions.ufo:63 ../base/ufos/missions.ufo:83
+#: ../base/ufos/missions.ufo:125 ../base/ufos/missions.ufo:145
+#: ../base/ufos/missions.ufo:165 ../base/ufos/missions.ufo:186
+#: ../base/ufos/missions.ufo:210 ../base/ufos/missions.ufo:230
+#: ../base/ufos/missions.ufo:270 ../base/ufos/missions.ufo:290
+#: ../base/ufos/missions.ufo:311 ../base/ufos/missions.ufo:336
+#: ../base/ufos/missions.ufo:357 ../base/ufos/missions.ufo:378
+#: ../base/ufos/missions.ufo:398 ../base/ufos/missions.ufo:419
+#: ../base/ufos/missions.ufo:440 ../base/ufos/missions.ufo:509
+#: ../base/ufos/missions.ufo:551 ../base/ufos/missions.ufo:572
+#: ../base/ufos/missions.ufo:593 ../base/ufos/missions.ufo:660
+#: ../base/ufos/missions.ufo:681 ../base/ufos/missions.ufo:702
+#: ../base/ufos/missions.ufo:755 ../base/ufos/missions.ufo:775
+#: ../base/ufos/missions.ufo:795 ../base/ufos/missions.ufo:835
+#: ../base/ufos/missions.ufo:855 ../base/ufos/missions.ufo:874
+#: ../base/ufos/missions.ufo:912 ../base/ufos/missions.ufo:933
+#: ../base/ufos/missions.ufo:953 ../base/ufos/missions.ufo:973
 #, fuzzy
 msgid "Terror Attack"
 msgstr "Террористическая атака"
 
-#: ../base/ufos/missions.ufo:6 ../base/ufos/missions.ufo:26
-#: ../base/ufos/missions.ufo:66 ../base/ufos/missions.ufo:86
-#: ../base/ufos/missions.ufo:106 ../base/ufos/missions.ufo:346
-#: ../base/ufos/missions.ufo:739 ../base/ufos/missions.ufo:779
-#: ../base/ufos/missions.ufo:800
-#, fuzzy
-msgid ""
-"Damn it, you've let some of them get away again! Reequip your squad and get after them!"
-msgstr ""
-"Чёрт побери, Вы дали некоторым из\\них снова сбежать! Перевооружите\\отряд и за ними!\\"
+#: ../base/ufos/missions.ufo:64
+msgid "Protect the excavation site at all cost."
+msgstr "Защита места раскопок любой ценой."
 
-#: ../base/ufos/missions.ufo:24
-#, fuzzy
-msgid "Radisson"
-msgstr "Миссии"
+#: ../base/ufos/missions.ufo:82
+msgid "Wachau"
+msgstr "Вачау"
 
-#: ../base/ufos/missions.ufo:44
-msgid "Doha"
-msgstr ""
-
-#: ../base/ufos/missions.ufo:46 ../base/ufos/missions.ufo:206
-#: ../base/ufos/missions.ufo:266 ../base/ufos/missions.ufo:286
-#: ../base/ufos/missions.ufo:326 ../base/ufos/missions.ufo:366
-#: ../base/ufos/missions.ufo:387 ../base/ufos/missions.ufo:485
-#: ../base/ufos/missions.ufo:505 ../base/ufos/missions.ufo:545
-#: ../base/ufos/missions.ufo:585 ../base/ufos/missions.ufo:604
-#: ../base/ufos/missions.ufo:623 ../base/ufos/missions.ufo:663
-#: ../base/ufos/missions.ufo:682 ../base/ufos/missions.ufo:701
-#: ../base/ufos/missions.ufo:759 ../base/ufos/missions.ufo:820
-#: ../base/ufos/missions.ufo:839 ../base/ufos/missions.ufo:859
+#: ../base/ufos/missions.ufo:84 ../base/ufos/missions.ufo:126
+#: ../base/ufos/missions.ufo:187 ../base/ufos/missions.ufo:337
+#: ../base/ufos/missions.ufo:358 ../base/ufos/missions.ufo:379
+#: ../base/ufos/missions.ufo:441 ../base/ufos/missions.ufo:510
+#: ../base/ufos/missions.ufo:552 ../base/ufos/missions.ufo:573
+#: ../base/ufos/missions.ufo:661 ../base/ufos/missions.ufo:682
+#: ../base/ufos/missions.ufo:756 ../base/ufos/missions.ufo:776
+#: ../base/ufos/missions.ufo:796 ../base/ufos/missions.ufo:836
+#: ../base/ufos/missions.ufo:856 ../base/ufos/missions.ufo:875
+#: ../base/ufos/missions.ufo:954 ../base/ufos/missions.ufo:974
 msgid "Protect inhabitants"
 msgstr "Защита жителей"
 
-#: ../base/ufos/missions.ufo:64
-msgid "Altdorf"
-msgstr "Альтдорф"
-
-#: ../base/ufos/missions.ufo:84
-msgid "Oslo"
-msgstr "Осло"
-
-#: ../base/ufos/missions.ufo:104
-msgid "Antalya"
-msgstr "Анталия"
+#: ../base/ufos/missions.ufo:103
+msgid "Somewhere in Antarctica"
+msgstr ""
 
 #: ../base/ufos/missions.ufo:124
+msgid "Marina Serra"
+msgstr "Марина Серра"
+
+#: ../base/ufos/missions.ufo:144
 msgid "Berlin"
 msgstr "Берлин"
 
-#: ../base/ufos/missions.ufo:126
+#: ../base/ufos/missions.ufo:146
 msgid "Protect civilians"
 msgstr "Защита граждан"
 
-#: ../base/ufos/missions.ufo:144
-msgid "Wajir"
-msgstr "Вайир"
-
-#: ../base/ufos/missions.ufo:145 ../base/ufos/missions.ufo:165
-msgid "Crash Site"
-msgstr "Место крушения"
-
-#: ../base/ufos/missions.ufo:146 ../base/ufos/missions.ufo:166
-msgid "Secure Area"
-msgstr "Безопасная зона"
-
 #: ../base/ufos/missions.ufo:164
-msgid "Arnhem"
-msgstr ""
-
-#: ../base/ufos/missions.ufo:184
 msgid "Wellington"
 msgstr "Веллингтон"
 
-#: ../base/ufos/missions.ufo:186
+#: ../base/ufos/missions.ufo:166
 #, fuzzy
 msgid ""
-"There are rumors of a mine being overrun by aliens. Although this source of information is doubtful, you'll need to investigate."
+"There are rumors of a mine being overrun by aliens. Although this source of "
+"information is doubtful, you'll need to investigate."
 msgstr ""
-"Появились слухи о шахте полной\\пришельцев. Хотя наш источник\\информации сомнителен,\\Вам необходимо её проверить.\\"
+"Появились слухи о шахте полной\\пришельцев. Хотя наш источник\\информации "
+"сомнителен,\\Вам необходимо её проверить.\\"
 
-#: ../base/ufos/missions.ufo:204
-#, fuzzy
-msgid "Mackay"
-msgstr "Маккай"
+#: ../base/ufos/missions.ufo:185
+msgid "Greeneville"
+msgstr "Гринвиль"
 
-#: ../base/ufos/missions.ufo:224
-msgid "Dongola"
-msgstr "Донгола"
-
-#: ../base/ufos/missions.ufo:225 ../base/ufos/missions.ufo:427
-msgid "Crashed Alien Ship"
-msgstr "Разбившийся корабль пришельцев"
-
-#: ../base/ufos/missions.ufo:226
-msgid "Secure area"
-msgstr "Безопасная зона"
-
-#: ../base/ufos/missions.ufo:244
+#: ../base/ufos/missions.ufo:209
 #, fuzzy
 msgid "Bristol"
 msgstr "Бристоль"
 
-#: ../base/ufos/missions.ufo:246
+#: ../base/ufos/missions.ufo:211
 msgid "Protect the military installation crew"
 msgstr "Защита военного укрепления команды"
 
-#: ../base/ufos/missions.ufo:264
-msgid "Veracruz"
-msgstr "Веракруз"
-
-#: ../base/ufos/missions.ufo:284
-msgid "Uppsala"
-msgstr "Упсала"
-
-#: ../base/ufos/missions.ufo:304
-msgid "Gwanda"
-msgstr "Гванда"
-
-#: ../base/ufos/missions.ufo:306
-msgid "Protect the excavation site at all cost."
-msgstr "Защита места раскопок любой ценой."
-
-#: ../base/ufos/missions.ufo:324
-msgid "Marina Serra"
-msgstr "Марина Серра"
-
-#: ../base/ufos/missions.ufo:364
-msgid "Lille"
-msgstr "Лилль"
-
-#: ../base/ufos/missions.ufo:385
-#, fuzzy
-msgid "Busan"
-msgstr "Пусан"
-
-#: ../base/ufos/missions.ufo:405
-msgid "Morioka"
-msgstr "Мориока"
-
-#: ../base/ufos/missions.ufo:406
-#, fuzzy
-msgid "Alien Hideout"
-msgstr "Укрытие пришельцев"
-
-#: ../base/ufos/missions.ufo:407
-msgid "Eliminate intruders"
-msgstr "Уничтожте захватчиков"
-
-#: ../base/ufos/missions.ufo:426
-msgid "Atacama Desert"
-msgstr "Пустыня Атакама"
-
-#: ../base/ufos/missions.ufo:428 ../base/ufos/missions.ufo:466
-msgid "Secure Alien Ship"
-msgstr ""
-
-#: ../base/ufos/missions.ufo:445 ../base/ufos/missions.ufo:464
-#: ../base/ufos/missions.ufo:503
-msgid "Revelstoke"
-msgstr ""
-
-#: ../base/ufos/missions.ufo:446 ../base/ufos/missions.ufo:465
-#: ../base/ufos/missions.ufo:524 ../base/ufos/missions.ufo:564
-msgid "Landed Alien Ship"
-msgstr "Приземлившийся корабль пришельцев"
-
-#: ../base/ufos/missions.ufo:447 ../base/ufos/missions.ufo:525
-#: ../base/ufos/missions.ufo:565
-msgid "Secure Alien Ship before Liftoff"
-msgstr ""
-
-#: ../base/ufos/missions.ufo:483
-msgid "Nuuk"
-msgstr ""
-
-#: ../base/ufos/missions.ufo:523
-msgid "Antarctic"
-msgstr "Антарктика"
-
-#: ../base/ufos/missions.ufo:543
-msgid "Agpat"
-msgstr "Агапат"
-
-#: ../base/ufos/missions.ufo:563
-msgid "Somewhere in Antarctica"
-msgstr ""
-
-#: ../base/ufos/missions.ufo:583
-msgid "La Paz"
-msgstr "Ла Паж"
-
-#: ../base/ufos/missions.ufo:602
-msgid "Tazovskij"
-msgstr "Тазовский"
-
-#: ../base/ufos/missions.ufo:621
-msgid "Gobabis"
-msgstr "Гобэбиз"
-
-#: ../base/ufos/missions.ufo:641
+#: ../base/ufos/missions.ufo:229
 #, fuzzy
 msgid "Jiwani"
 msgstr "Соединиться"
 
-#: ../base/ufos/missions.ufo:643
+#: ../base/ufos/missions.ufo:231
 msgid "Secure Dam"
 msgstr ""
 
-#: ../base/ufos/missions.ufo:661
-msgid "Wachau"
-msgstr "Вачау"
+#: ../base/ufos/missions.ufo:249
+msgid "Morioka"
+msgstr "Мориока"
 
-#: ../base/ufos/missions.ufo:680
+#: ../base/ufos/missions.ufo:250
 #, fuzzy
-msgid "Asyut"
-msgstr "Штурмовая Винтовка"
+msgid "Alien Hideout"
+msgstr "Укрытие пришельцев"
 
-#: ../base/ufos/missions.ufo:699
-msgid "Tabelbala"
-msgstr "Табелбала"
+#: ../base/ufos/missions.ufo:251
+msgid "Eliminate intruders"
+msgstr "Уничтожте захватчиков"
 
-#: ../base/ufos/missions.ufo:737
+#: ../base/ufos/missions.ufo:269
+msgid "Oslo"
+msgstr "Осло"
+
+#: ../base/ufos/missions.ufo:271 ../base/ufos/missions.ufo:291
+#: ../base/ufos/missions.ufo:312 ../base/ufos/missions.ufo:399
+#: ../base/ufos/missions.ufo:420 ../base/ufos/missions.ufo:594
+#: ../base/ufos/missions.ufo:703 ../base/ufos/missions.ufo:913
+#: ../base/ufos/missions.ufo:934
+#, fuzzy
+msgid ""
+"Damn it, you've let some of them get away again! Reequip your squad and get "
+"after them!"
+msgstr ""
+"Чёрт побери, Вы дали некоторым из\\них снова сбежать! Перевооружите\\отряд и "
+"за ними!\\"
+
+#: ../base/ufos/missions.ufo:289 ../base/ufos/missions.ufo:397
+msgid "New York"
+msgstr "Нью Йорк"
+
+#: ../base/ufos/missions.ufo:310
+#, fuzzy
+msgid "Radisson"
+msgstr "Миссии"
+
+#: ../base/ufos/missions.ufo:335
+msgid "Veracruz"
+msgstr "Веракруз"
+
+#: ../base/ufos/missions.ufo:356
+msgid "La Paz"
+msgstr "Ла Паж"
+
+#: ../base/ufos/missions.ufo:377
+msgid "Gobabis"
+msgstr "Гобэбиз"
+
+#: ../base/ufos/missions.ufo:418
 #, fuzzy
 msgid "San Francisco"
 msgstr "Сан-Франциско"
 
-#: ../base/ufos/missions.ufo:757
-msgid "Greeneville"
-msgstr "Гринвиль"
-
-#: ../base/ufos/missions.ufo:777
-msgid "Wiwili"
-msgstr ""
-
-#: ../base/ufos/missions.ufo:798
-msgid "Linstead"
-msgstr "Линстэд"
-
-#: ../base/ufos/missions.ufo:818
+#: ../base/ufos/missions.ufo:439
 msgid "Fargo"
 msgstr ""
 
-#: ../base/ufos/missions.ufo:837
+#: ../base/ufos/missions.ufo:464
+msgid "Wajir"
+msgstr "Вайир"
+
+#: ../base/ufos/missions.ufo:465 ../base/ufos/missions.ufo:489
+msgid "Crash Site"
+msgstr "Место крушения"
+
+#: ../base/ufos/missions.ufo:466 ../base/ufos/missions.ufo:490
+msgid "Secure Area"
+msgstr "Безопасная зона"
+
+#: ../base/ufos/missions.ufo:488
+msgid "Arnhem"
+msgstr ""
+
+#: ../base/ufos/missions.ufo:508
+msgid "Uppsala"
+msgstr "Упсала"
+
+#: ../base/ufos/missions.ufo:532 ../base/ufos/missions.ufo:640
+msgid "Secure Alien Ship"
+msgstr ""
+
+#: ../base/ufos/missions.ufo:550
 #, fuzzy
-msgid "Grenchen"
-msgstr "Гранаты"
+msgid "Busan"
+msgstr "Пусан"
 
-#: ../base/ufos/missions.ufo:857
-msgid "Albany"
-msgstr "Олбани"
+#: ../base/ufos/missions.ufo:571
+#, fuzzy
+msgid "Mackay"
+msgstr "Маккай"
 
-#: ../base/ufos/missions.ufo:877
-msgid "Shannon"
-msgstr "Шэннон"
+#: ../base/ufos/missions.ufo:592
+msgid "Antalya"
+msgstr "Анталия"
 
-#: ../base/ufos/missions.ufo:878
-msgid "Major Alien Intrusion"
-msgstr "Большое вторжение пришельцев"
+#: ../base/ufos/missions.ufo:617
+msgid "Dongola"
+msgstr "Донгола"
 
-#: ../base/ufos/missions.ufo:879
-msgid "Stop them"
-msgstr "Остановите их"
+#: ../base/ufos/missions.ufo:618 ../base/ufos/missions.ufo:639
+msgid "Crashed Alien Ship"
+msgstr "Разбившийся корабль пришельцев"
 
-#: ../base/ufos/missions.ufo:898 client/cl_campaign.c:766
+#: ../base/ufos/missions.ufo:619
+msgid "Secure area"
+msgstr "Безопасная зона"
+
+#: ../base/ufos/missions.ufo:638
+msgid "Atacama Desert"
+msgstr "Пустыня Атакама"
+
+#: ../base/ufos/missions.ufo:659
+msgid "Tazovskij"
+msgstr "Тазовский"
+
+#: ../base/ufos/missions.ufo:680
+msgid "Doha"
+msgstr ""
+
+#: ../base/ufos/missions.ufo:701
+msgid "Altdorf"
+msgstr "Альтдорф"
+
+#: ../base/ufos/missions.ufo:729 client/cl_campaign.c:761
 #, fuzzy
 msgid "Base Attack"
 msgstr "Атака базы"
 
-#: ../base/ufos/missions.ufo:899
+#: ../base/ufos/missions.ufo:730
 #, fuzzy
 msgid "Aliens attacked one of our bases"
 msgstr "Пришельцы атаковали одну из наших баз"
+
+#: ../base/ufos/missions.ufo:754
+msgid "Lille"
+msgstr "Лилль"
+
+#: ../base/ufos/missions.ufo:774
+msgid "Nuuk"
+msgstr ""
+
+#: ../base/ufos/missions.ufo:814
+msgid "Antarctic"
+msgstr "Антарктика"
+
+#: ../base/ufos/missions.ufo:834
+msgid "Agpat"
+msgstr "Агапат"
+
+#: ../base/ufos/missions.ufo:854
+#, fuzzy
+msgid "Asyut"
+msgstr "Штурмовая Винтовка"
+
+#: ../base/ufos/missions.ufo:873
+msgid "Tabelbala"
+msgstr "Табелбала"
+
+#: ../base/ufos/missions.ufo:911
+msgid "Wiwili"
+msgstr ""
+
+#: ../base/ufos/missions.ufo:932
+msgid "Linstead"
+msgstr "Линстэд"
+
+#: ../base/ufos/missions.ufo:952
+#, fuzzy
+msgid "Grenchen"
+msgstr "Гранаты"
+
+#: ../base/ufos/missions.ufo:972
+msgid "Albany"
+msgstr "Олбани"
+
+#: ../base/ufos/missions.ufo:992
+msgid "Shannon"
+msgstr "Шэннон"
+
+#: ../base/ufos/missions.ufo:993
+msgid "Major Alien Intrusion"
+msgstr "Большое вторжение пришельцев"
+
+#: ../base/ufos/missions.ufo:994
+msgid "Stop them"
+msgstr "Остановите их"
 
 #: ../base/ufos/nations.ufo:31
 msgid "The Revolutionary Countries"
@@ -2697,7 +2734,17 @@ msgstr "Непрерывное лазерное излучение"
 #: ../base/ufos/research.ufo:102
 msgid "laser_txt"
 msgstr ""
-"Лазер (в оригинале Laser расшифровывается как Light Amplification by Stimulated Emission of Radiation - Легкое Усиление Стимулируемой Эмиссией Радиации) технология долго известная человечеству, но технология называемая THEL (\"Mobile Tactical High-Energy Laser\" - \"Тактический Высокоэнергетический Лазер\") начала исследоваться лишь недавно. Хотя уже и существовали мобильные аналоги - MTHEL, эти системы оружия являлись слишком большими и неэффективными, чтобы иметь реальные преимущества перед обычным вооружением. Основная конструкция этого оружия, как правило, использует химический лазер (лазер фторида дейтерия), как сделать который в 5 раз более эффективным и компактным наши ученые недавно узнали. Это позволит разработать более лёгкое MTHEL оружие в ближайшем будущем."
+"Лазер (в оригинале Laser расшифровывается как Light Amplification by "
+"Stimulated Emission of Radiation - Легкое Усиление Стимулируемой Эмиссией "
+"Радиации) технология долго известная человечеству, но технология называемая "
+"THEL (\"Mobile Tactical High-Energy Laser\" - \"Тактический "
+"Высокоэнергетический Лазер\") начала исследоваться лишь недавно. Хотя уже и "
+"существовали мобильные аналоги - MTHEL, эти системы оружия являлись слишком "
+"большими и неэффективными, чтобы иметь реальные преимущества перед обычным "
+"вооружением. Основная конструкция этого оружия, как правило, использует "
+"химический лазер (лазер фторида дейтерия), как сделать который в 5 раз более "
+"эффективным и компактным наши ученые недавно узнали. Это позволит "
+"разработать более лёгкое MTHEL оружие в ближайшем будущем."
 
 #: ../base/ufos/research.ufo:103
 msgid "laser_pre_txt"
@@ -2792,7 +2839,13 @@ msgstr "Антиматерия"
 #, fuzzy
 msgid "antimatter_txt"
 msgstr ""
-"Антареане усовершенствовали технологию, используя фундаментальные концепции лежащие в основе понятия плазмы (ионизированного газа) для её использования в военных целях. Теперь они используют плазму не только при разработке вооружения, но и даже в производстве более мощных так называемых ионных двигателей, которые человечество даже не считало возможным создать. Наши учёные способны воспроизвести фундаментальные концепции усовершенствований пришельцев и, возможно, даже смогут произвести подобное снаряжение в будущем."
+"Антареане усовершенствовали технологию, используя фундаментальные концепции "
+"лежащие в основе понятия плазмы (ионизированного газа) для её использования "
+"в военных целях. Теперь они используют плазму не только при разработке "
+"вооружения, но и даже в производстве более мощных так называемых ионных "
+"двигателей, которые человечество даже не считало возможным создать. Наши "
+"учёные способны воспроизвести фундаментальные концепции усовершенствований "
+"пришельцев и, возможно, даже смогут произвести подобное снаряжение в будущем."
 
 #: ../base/ufos/research.ufo:131
 msgid "antimatter_pre_txt"
@@ -2808,7 +2861,13 @@ msgstr "Пришелец"
 #, fuzzy
 msgid "alien_live_txt"
 msgstr ""
-"Антареане усовершенствовали технологию, используя фундаментальные концепции лежащие в основе понятия плазмы (ионизированного газа) для её использования в военных целях. Теперь они используют плазму не только при разработке вооружения, но и даже в производстве более мощных так называемых ионных двигателей, которые человечество даже не считало возможным создать. Наши учёные способны воспроизвести фундаментальные концепции усовершенствований пришельцев и, возможно, даже смогут произвести подобное снаряжение в будущем."
+"Антареане усовершенствовали технологию, используя фундаментальные концепции "
+"лежащие в основе понятия плазмы (ионизированного газа) для её использования "
+"в военных целях. Теперь они используют плазму не только при разработке "
+"вооружения, но и даже в производстве более мощных так называемых ионных "
+"двигателей, которые человечество даже не считало возможным создать. Наши "
+"учёные способны воспроизвести фундаментальные концепции усовершенствований "
+"пришельцев и, возможно, даже смогут произвести подобное снаряжение в будущем."
 
 #: ../base/ufos/research.ufo:190
 msgid "alien_live_pre_txt"
@@ -2835,7 +2894,13 @@ msgstr "Дыхательный аппарат пришельцев"
 #, fuzzy
 msgid "alien_breathing_txt"
 msgstr ""
-"Антареане усовершенствовали технологию, используя фундаментальные концепции лежащие в основе понятия плазмы (ионизированного газа) для её использования в военных целях. Теперь они используют плазму не только при разработке вооружения, но и даже в производстве более мощных так называемых ионных двигателей, которые человечество даже не считало возможным создать. Наши учёные способны воспроизвести фундаментальные концепции усовершенствований пришельцев и, возможно, даже смогут произвести подобное снаряжение в будущем."
+"Антареане усовершенствовали технологию, используя фундаментальные концепции "
+"лежащие в основе понятия плазмы (ионизированного газа) для её использования "
+"в военных целях. Теперь они используют плазму не только при разработке "
+"вооружения, но и даже в производстве более мощных так называемых ионных "
+"двигателей, которые человечество даже не считало возможным создать. Наши "
+"учёные способны воспроизвести фундаментальные концепции усовершенствований "
+"пришельцев и, возможно, даже смогут произвести подобное снаряжение в будущем."
 
 #: ../base/ufos/research.ufo:222
 msgid "alien_breathing_pre_txt"
@@ -2851,7 +2916,13 @@ msgstr "Угроза пришельцев"
 #, fuzzy
 msgid "alien_mind_txt"
 msgstr ""
-"Антареане усовершенствовали технологию, используя фундаментальные концепции лежащие в основе понятия плазмы (ионизированного газа) для её использования в военных целях. Теперь они используют плазму не только при разработке вооружения, но и даже в производстве более мощных так называемых ионных двигателей, которые человечество даже не считало возможным создать. Наши учёные способны воспроизвести фундаментальные концепции усовершенствований пришельцев и, возможно, даже смогут произвести подобное снаряжение в будущем."
+"Антареане усовершенствовали технологию, используя фундаментальные концепции "
+"лежащие в основе понятия плазмы (ионизированного газа) для её использования "
+"в военных целях. Теперь они используют плазму не только при разработке "
+"вооружения, но и даже в производстве более мощных так называемых ионных "
+"двигателей, которые человечество даже не считало возможным создать. Наши "
+"учёные способны воспроизвести фундаментальные концепции усовершенствований "
+"пришельцев и, возможно, даже смогут произвести подобное снаряжение в будущем."
 
 #: ../base/ufos/research.ufo:255
 msgid "alien_mind_pre_txt"
@@ -2866,7 +2937,13 @@ msgstr ""
 #, fuzzy
 msgid "alien_odd_behaviour_txt"
 msgstr ""
-"Эта броня является практически неразрушаемой поскольку создана с использованием наилегчайшего материала сделанного из соединенных друг с другом фуллереновых колец как кольчуга в наномасштабе. Физические воздействия распределяются по окружающему пространству снижая общие повреждения нанесённые солдату. Энергетические атаки рассеиваются от точки контакта и распределяются по всей поверхности брони, а после постепенно отражается во внешнюю среду."
+"Эта броня является практически неразрушаемой поскольку создана с "
+"использованием наилегчайшего материала сделанного из соединенных друг с "
+"другом фуллереновых колец как кольчуга в наномасштабе. Физические "
+"воздействия распределяются по окружающему пространству снижая общие "
+"повреждения нанесённые солдату. Энергетические атаки рассеиваются от точки "
+"контакта и распределяются по всей поверхности брони, а после постепенно "
+"отражается во внешнюю среду."
 
 #: ../base/ufos/research.ufo:285
 msgid "alien_odd_behaviour_pre_txt"
@@ -2882,7 +2959,13 @@ msgstr "Артефакты пришельцев"
 #, fuzzy
 msgid "alien_origins_txt"
 msgstr ""
-"Антареане усовершенствовали технологию, используя фундаментальные концепции лежащие в основе понятия плазмы (ионизированного газа) для её использования в военных целях. Теперь они используют плазму не только при разработке вооружения, но и даже в производстве более мощных так называемых ионных двигателей, которые человечество даже не считало возможным создать. Наши учёные способны воспроизвести фундаментальные концепции усовершенствований пришельцев и, возможно, даже смогут произвести подобное снаряжение в будущем."
+"Антареане усовершенствовали технологию, используя фундаментальные концепции "
+"лежащие в основе понятия плазмы (ионизированного газа) для её использования "
+"в военных целях. Теперь они используют плазму не только при разработке "
+"вооружения, но и даже в производстве более мощных так называемых ионных "
+"двигателей, которые человечество даже не считало возможным создать. Наши "
+"учёные способны воспроизвести фундаментальные концепции усовершенствований "
+"пришельцев и, возможно, даже смогут произвести подобное снаряжение в будущем."
 
 #: ../base/ufos/research.ufo:315
 msgid "alien_origins_pre_txt"
@@ -2900,7 +2983,8 @@ msgstr ""
 #, fuzzy
 msgid "assault_mag_txt"
 msgstr ""
-"Небольшое судно посылаемое Антареанами для исследования ландшафта и идентификации возможных научных и военных целей."
+"Небольшое судно посылаемое Антареанами для исследования ландшафта и "
+"идентификации возможных научных и военных целей."
 
 #: ../base/ufos/research.ufo:379 ../base/ufos/research.ufo:409
 msgid "bolterrifle_txt"
@@ -2919,13 +3003,21 @@ msgstr ""
 #, fuzzy
 msgid "combatknife_txt"
 msgstr ""
-"Командный центр является сердцем баз ФАЛАНКС. Все проводимые операции планируются именно здесь, так же сюда поступает и обрабатывается все данные, собранные при помощи сенсоров, и информация с поля боя. Без командного центра ни одна база не сможет функционировать, именно по этой причине он должен быть построен в первую очередь."
+"Командный центр является сердцем баз ФАЛАНКС. Все проводимые операции "
+"планируются именно здесь, так же сюда поступает и обрабатывается все данные, "
+"собранные при помощи сенсоров, и информация с поля боя. Без командного "
+"центра ни одна база не сможет функционировать, именно по этой причине он "
+"должен быть построен в первую очередь."
 
 #: ../base/ufos/research.ufo:457
 #, fuzzy
 msgid "monoknife_txt"
 msgstr ""
-"Командный центр является сердцем баз ФАЛАНКС. Все проводимые операции планируются именно здесь, так же сюда поступает и обрабатывается все данные, собранные при помощи сенсоров, и информация с поля боя. Без командного центра ни одна база не сможет функционировать, именно по этой причине он должен быть построен в первую очередь."
+"Командный центр является сердцем баз ФАЛАНКС. Все проводимые операции "
+"планируются именно здесь, так же сюда поступает и обрабатывается все данные, "
+"собранные при помощи сенсоров, и информация с поля боя. Без командного "
+"центра ни одна база не сможет функционировать, именно по этой причине он "
+"должен быть построен в первую очередь."
 
 #: ../base/ufos/research.ufo:458
 msgid "monoknife_pre_txt"
@@ -2935,7 +3027,13 @@ msgstr "Нет предварительной информации"
 #, fuzzy
 msgid "Monomolecular Blades"
 msgstr ""
-"Антареане усовершенствовали технологию, используя фундаментальные концепции лежащие в основе понятия плазмы (ионизированного газа) для её использования в военных целях. Теперь они используют плазму не только при разработке вооружения, но и даже в производстве более мощных так называемых ионных двигателей, которые человечество даже не считало возможным создать. Наши учёные способны воспроизвести фундаментальные концепции усовершенствований пришельцев и, возможно, даже смогут произвести подобное снаряжение в будущем."
+"Антареане усовершенствовали технологию, используя фундаментальные концепции "
+"лежащие в основе понятия плазмы (ионизированного газа) для её использования "
+"в военных целях. Теперь они используют плазму не только при разработке "
+"вооружения, но и даже в производстве более мощных так называемых ионных "
+"двигателей, которые человечество даже не считало возможным создать. Наши "
+"учёные способны воспроизвести фундаментальные концепции усовершенствований "
+"пришельцев и, возможно, даже смогут произвести подобное снаряжение в будущем."
 
 #: ../base/ufos/research.ufo:490
 msgid "flamer_txt"
@@ -2945,13 +3043,25 @@ msgstr ""
 #, fuzzy
 msgid "flamer_mag_txt"
 msgstr ""
-"Антареане усовершенствовали технологию, используя фундаментальные концепции лежащие в основе понятия плазмы (ионизированного газа) для её использования в военных целях. Теперь они используют плазму не только при разработке вооружения, но и даже в производстве более мощных так называемых ионных двигателей, которые человечество даже не считало возможным создать. Наши учёные способны воспроизвести фундаментальные концепции усовершенствований пришельцев и, возможно, даже смогут произвести подобное снаряжение в будущем."
+"Антареане усовершенствовали технологию, используя фундаментальные концепции "
+"лежащие в основе понятия плазмы (ионизированного газа) для её использования "
+"в военных целях. Теперь они используют плазму не только при разработке "
+"вооружения, но и даже в производстве более мощных так называемых ионных "
+"двигателей, которые человечество даже не считало возможным создать. Наши "
+"учёные способны воспроизвести фундаментальные концепции усовершенствований "
+"пришельцев и, возможно, даже смогут произвести подобное снаряжение в будущем."
 
 #: ../base/ufos/research.ufo:523
 #, fuzzy
 msgid "flashbang_txt"
 msgstr ""
-"Антареане усовершенствовали технологию, используя фундаментальные концепции лежащие в основе понятия плазмы (ионизированного газа) для её использования в военных целях. Теперь они используют плазму не только при разработке вооружения, но и даже в производстве более мощных так называемых ионных двигателей, которые человечество даже не считало возможным создать. Наши учёные способны воспроизвести фундаментальные концепции усовершенствований пришельцев и, возможно, даже смогут произвести подобное снаряжение в будущем."
+"Антареане усовершенствовали технологию, используя фундаментальные концепции "
+"лежащие в основе понятия плазмы (ионизированного газа) для её использования "
+"в военных целях. Теперь они используют плазму не только при разработке "
+"вооружения, но и даже в производстве более мощных так называемых ионных "
+"двигателей, которые человечество даже не считало возможным создать. Наши "
+"учёные способны воспроизвести фундаментальные концепции усовершенствований "
+"пришельцев и, возможно, даже смогут произвести подобное снаряжение в будущем."
 
 #: ../base/ufos/research.ufo:539
 msgid "fraggren_txt"
@@ -2961,7 +3071,13 @@ msgstr ""
 #, fuzzy
 msgid "incgren_txt"
 msgstr ""
-"Антареане усовершенствовали технологию, используя фундаментальные концепции лежащие в основе понятия плазмы (ионизированного газа) для её использования в военных целях. Теперь они используют плазму не только при разработке вооружения, но и даже в производстве более мощных так называемых ионных двигателей, которые человечество даже не считало возможным создать. Наши учёные способны воспроизвести фундаментальные концепции усовершенствований пришельцев и, возможно, даже смогут произвести подобное снаряжение в будущем."
+"Антареане усовершенствовали технологию, используя фундаментальные концепции "
+"лежащие в основе понятия плазмы (ионизированного газа) для её использования "
+"в военных целях. Теперь они используют плазму не только при разработке "
+"вооружения, но и даже в производстве более мощных так называемых ионных "
+"двигателей, которые человечество даже не считало возможным создать. Наши "
+"учёные способны воспроизвести фундаментальные концепции усовершенствований "
+"пришельцев и, возможно, даже смогут произвести подобное снаряжение в будущем."
 
 #: ../base/ufos/research.ufo:573
 msgid "grenl_txt"
@@ -2975,19 +3091,37 @@ msgstr ""
 #, fuzzy
 msgid "grenl_fle_ammo_txt"
 msgstr ""
-"Антареане усовершенствовали технологию, используя фундаментальные концепции лежащие в основе понятия плазмы (ионизированного газа) для её использования в военных целях. Теперь они используют плазму не только при разработке вооружения, но и даже в производстве более мощных так называемых ионных двигателей, которые человечество даже не считало возможным создать. Наши учёные способны воспроизвести фундаментальные концепции усовершенствований пришельцев и, возможно, даже смогут произвести подобное снаряжение в будущем."
+"Антареане усовершенствовали технологию, используя фундаментальные концепции "
+"лежащие в основе понятия плазмы (ионизированного газа) для её использования "
+"в военных целях. Теперь они используют плазму не только при разработке "
+"вооружения, но и даже в производстве более мощных так называемых ионных "
+"двигателей, которые человечество даже не считало возможным создать. Наши "
+"учёные способны воспроизвести фундаментальные концепции усовершенствований "
+"пришельцев и, возможно, даже смогут произвести подобное снаряжение в будущем."
 
 #: ../base/ufos/research.ufo:623
 #, fuzzy
 msgid "grenl_incendiary_ammo_txt"
 msgstr ""
-"Антареане усовершенствовали технологию, используя фундаментальные концепции лежащие в основе понятия плазмы (ионизированного газа) для её использования в военных целях. Теперь они используют плазму не только при разработке вооружения, но и даже в производстве более мощных так называемых ионных двигателей, которые человечество даже не считало возможным создать. Наши учёные способны воспроизвести фундаментальные концепции усовершенствований пришельцев и, возможно, даже смогут произвести подобное снаряжение в будущем."
+"Антареане усовершенствовали технологию, используя фундаментальные концепции "
+"лежащие в основе понятия плазмы (ионизированного газа) для её использования "
+"в военных целях. Теперь они используют плазму не только при разработке "
+"вооружения, но и даже в производстве более мощных так называемых ионных "
+"двигателей, которые человечество даже не считало возможным создать. Наши "
+"учёные способны воспроизвести фундаментальные концепции усовершенствований "
+"пришельцев и, возможно, даже смогут произвести подобное снаряжение в будущем."
 
 #: ../base/ufos/research.ufo:640
 #, fuzzy
 msgid "grenl_plasma_ammo_txt"
 msgstr ""
-"Антареане усовершенствовали технологию, используя фундаментальные концепции лежащие в основе понятия плазмы (ионизированного газа) для её использования в военных целях. Теперь они используют плазму не только при разработке вооружения, но и даже в производстве более мощных так называемых ионных двигателей, которые человечество даже не считало возможным создать. Наши учёные способны воспроизвести фундаментальные концепции усовершенствований пришельцев и, возможно, даже смогут произвести подобное снаряжение в будущем."
+"Антареане усовершенствовали технологию, используя фундаментальные концепции "
+"лежащие в основе понятия плазмы (ионизированного газа) для её использования "
+"в военных целях. Теперь они используют плазму не только при разработке "
+"вооружения, но и даже в производстве более мощных так называемых ионных "
+"двигателей, которые человечество даже не считало возможным создать. Наши "
+"учёные способны воспроизвести фундаментальные концепции усовершенствований "
+"пришельцев и, возможно, даже смогут произвести подобное снаряжение в будущем."
 
 #: ../base/ufos/research.ufo:641
 msgid "grenl_plasma_ammo_pre_txt"
@@ -3002,7 +3136,17 @@ msgstr "Гранатомёт"
 #, fuzzy
 msgid "laser_ammo_txt"
 msgstr ""
-"Лазер (в оригинале Laser расшифровывается как Light Amplification by Stimulated Emission of Radiation - Легкое Усиление Стимулируемой Эмиссией Радиации) технология долго известная человечеству, но технология называемая THEL (\"Mobile Tactical High-Energy Laser\" - \"Тактический Высокоэнергетический Лазер\") начала исследоваться лишь недавно. Хотя уже и существовали мобильные аналоги - MTHEL, эти системы оружия являлись слишком большими и неэффективными, чтобы иметь реальные преимущества перед обычным вооружением. Основная конструкция этого оружия, как правило, использует химический лазер (лазер фторида дейтерия), как сделать который в 5 раз более эффективным и компактным наши ученые недавно узнали. Это позволит разработать более лёгкое MTHEL оружие в ближайшем будущем."
+"Лазер (в оригинале Laser расшифровывается как Light Amplification by "
+"Stimulated Emission of Radiation - Легкое Усиление Стимулируемой Эмиссией "
+"Радиации) технология долго известная человечеству, но технология называемая "
+"THEL (\"Mobile Tactical High-Energy Laser\" - \"Тактический "
+"Высокоэнергетический Лазер\") начала исследоваться лишь недавно. Хотя уже и "
+"существовали мобильные аналоги - MTHEL, эти системы оружия являлись слишком "
+"большими и неэффективными, чтобы иметь реальные преимущества перед обычным "
+"вооружением. Основная конструкция этого оружия, как правило, использует "
+"химический лазер (лазер фторида дейтерия), как сделать который в 5 раз более "
+"эффективным и компактным наши ученые недавно узнали. Это позволит "
+"разработать более лёгкое MTHEL оружие в ближайшем будущем."
 
 #: ../base/ufos/research.ufo:675
 msgid "laser_ammo_pre_txt"
@@ -3017,7 +3161,17 @@ msgstr ""
 #, fuzzy
 msgid "heavylaser_txt"
 msgstr ""
-"Лазер (в оригинале Laser расшифровывается как Light Amplification by Stimulated Emission of Radiation - Легкое Усиление Стимулируемой Эмиссией Радиации) технология долго известная человечеству, но технология называемая THEL (\"Mobile Tactical High-Energy Laser\" - \"Тактический Высокоэнергетический Лазер\") начала исследоваться лишь недавно. Хотя уже и существовали мобильные аналоги - MTHEL, эти системы оружия являлись слишком большими и неэффективными, чтобы иметь реальные преимущества перед обычным вооружением. Основная конструкция этого оружия, как правило, использует химический лазер (лазер фторида дейтерия), как сделать который в 5 раз более эффективным и компактным наши ученые недавно узнали. Это позволит разработать более лёгкое MTHEL оружие в ближайшем будущем."
+"Лазер (в оригинале Laser расшифровывается как Light Amplification by "
+"Stimulated Emission of Radiation - Легкое Усиление Стимулируемой Эмиссией "
+"Радиации) технология долго известная человечеству, но технология называемая "
+"THEL (\"Mobile Tactical High-Energy Laser\" - \"Тактический "
+"Высокоэнергетический Лазер\") начала исследоваться лишь недавно. Хотя уже и "
+"существовали мобильные аналоги - MTHEL, эти системы оружия являлись слишком "
+"большими и неэффективными, чтобы иметь реальные преимущества перед обычным "
+"вооружением. Основная конструкция этого оружия, как правило, использует "
+"химический лазер (лазер фторида дейтерия), как сделать который в 5 раз более "
+"эффективным и компактным наши ученые недавно узнали. Это позволит "
+"разработать более лёгкое MTHEL оружие в ближайшем будущем."
 
 #: ../base/ufos/research.ufo:705
 msgid "heavylaser_pre_txt"
@@ -3084,25 +3238,38 @@ msgstr ""
 #, fuzzy
 msgid "pistol_mag_txt"
 msgstr ""
-"Эта постройка используется для хранения снаряжения и запасных частей. Каждое складское помещение предоставляет место для пятидесяти мест снаряжения."
+"Эта постройка используется для хранения снаряжения и запасных частей. Каждое "
+"складское помещение предоставляет место для пятидесяти мест снаряжения."
 
 #: ../base/ufos/research.ufo:952
 #, fuzzy
 msgid "pistol2_txt"
 msgstr ""
-"Эта постройка используется для хранения снаряжения и запасных частей. Каждое складское помещение предоставляет место для пятидесяти мест снаряжения."
+"Эта постройка используется для хранения снаряжения и запасных частей. Каждое "
+"складское помещение предоставляет место для пятидесяти мест снаряжения."
 
 #: ../base/ufos/research.ufo:969
 #, fuzzy
 msgid "pistol2_mag_txt"
 msgstr ""
-"Эта постройка используется для хранения снаряжения и запасных частей. Каждое складское помещение предоставляет место для пятидесяти мест снаряжения."
+"Эта постройка используется для хранения снаряжения и запасных частей. Каждое "
+"складское помещение предоставляет место для пятидесяти мест снаряжения."
 
 #: ../base/ufos/research.ufo:987 ../base/ufos/research.ufo:1020
 #, fuzzy
 msgid "plasatomizer_txt"
 msgstr ""
-"Лазер (в оригинале Laser расшифровывается как Light Amplification by Stimulated Emission of Radiation - Легкое Усиление Стимулируемой Эмиссией Радиации) технология долго известная человечеству, но технология называемая THEL (\"Mobile Tactical High-Energy Laser\" - \"Тактический Высокоэнергетический Лазер\") начала исследоваться лишь недавно. Хотя уже и существовали мобильные аналоги - MTHEL, эти системы оружия являлись слишком большими и неэффективными, чтобы иметь реальные преимущества перед обычным вооружением. Основная конструкция этого оружия, как правило, использует химический лазер (лазер фторида дейтерия), как сделать который в 5 раз более эффективным и компактным наши ученые недавно узнали. Это позволит разработать более лёгкое MTHEL оружие в ближайшем будущем."
+"Лазер (в оригинале Laser расшифровывается как Light Amplification by "
+"Stimulated Emission of Radiation - Легкое Усиление Стимулируемой Эмиссией "
+"Радиации) технология долго известная человечеству, но технология называемая "
+"THEL (\"Mobile Tactical High-Energy Laser\" - \"Тактический "
+"Высокоэнергетический Лазер\") начала исследоваться лишь недавно. Хотя уже и "
+"существовали мобильные аналоги - MTHEL, эти системы оружия являлись слишком "
+"большими и неэффективными, чтобы иметь реальные преимущества перед обычным "
+"вооружением. Основная конструкция этого оружия, как правило, использует "
+"химический лазер (лазер фторида дейтерия), как сделать который в 5 раз более "
+"эффективным и компактным наши ученые недавно узнали. Это позволит "
+"разработать более лёгкое MTHEL оружие в ближайшем будущем."
 
 #: ../base/ufos/research.ufo:988 ../base/ufos/research.ufo:1021
 msgid "plasatomizer_pre_txt"
@@ -3145,7 +3312,13 @@ msgstr "Артефакты пришельцев"
 #, fuzzy
 msgid "plasmagren_txt"
 msgstr ""
-"Антареане усовершенствовали технологию, используя фундаментальные концепции лежащие в основе понятия плазмы (ионизированного газа) для её использования в военных целях. Теперь они используют плазму не только при разработке вооружения, но и даже в производстве более мощных так называемых ионных двигателей, которые человечество даже не считало возможным создать. Наши учёные способны воспроизвести фундаментальные концепции усовершенствований пришельцев и, возможно, даже смогут произвести подобное снаряжение в будущем."
+"Антареане усовершенствовали технологию, используя фундаментальные концепции "
+"лежащие в основе понятия плазмы (ионизированного газа) для её использования "
+"в военных целях. Теперь они используют плазму не только при разработке "
+"вооружения, но и даже в производстве более мощных так называемых ионных "
+"двигателей, которые человечество даже не считало возможным создать. Наши "
+"учёные способны воспроизвести фундаментальные концепции усовершенствований "
+"пришельцев и, возможно, даже смогут произвести подобное снаряжение в будущем."
 
 #: ../base/ufos/research.ufo:1147
 msgid "plasmagren_pre_txt"
@@ -3186,7 +3359,13 @@ msgstr ""
 #, fuzzy
 msgid "chaingun_txt"
 msgstr ""
-"Антареане усовершенствовали технологию, используя фундаментальные концепции лежащие в основе понятия плазмы (ионизированного газа) для её использования в военных целях. Теперь они используют плазму не только при разработке вооружения, но и даже в производстве более мощных так называемых ионных двигателей, которые человечество даже не считало возможным создать. Наши учёные способны воспроизвести фундаментальные концепции усовершенствований пришельцев и, возможно, даже смогут произвести подобное снаряжение в будущем."
+"Антареане усовершенствовали технологию, используя фундаментальные концепции "
+"лежащие в основе понятия плазмы (ионизированного газа) для её использования "
+"в военных целях. Теперь они используют плазму не только при разработке "
+"вооружения, но и даже в производстве более мощных так называемых ионных "
+"двигателей, которые человечество даже не считало возможным создать. Наши "
+"учёные способны воспроизвести фундаментальные концепции усовершенствований "
+"пришельцев и, возможно, даже смогут произвести подобное снаряжение в будущем."
 
 #: ../base/ufos/research.ufo:1297
 msgid "chaingun_pre_txt"
@@ -3196,7 +3375,8 @@ msgstr "Нет предварительной информации"
 #, fuzzy
 msgid "chaingun_ammo_txt"
 msgstr ""
-"Эта постройка используется для хранения снаряжения и запасных частей. Каждое складское помещение предоставляет место для пятидесяти мест снаряжения."
+"Эта постройка используется для хранения снаряжения и запасных частей. Каждое "
+"складское помещение предоставляет место для пятидесяти мест снаряжения."
 
 #: ../base/ufos/research.ufo:1315
 msgid "chaingun_ammo_pre_txt"
@@ -3210,31 +3390,41 @@ msgstr ""
 #, fuzzy
 msgid "shotgun_ammo_txt"
 msgstr ""
-"Эта постройка используется для хранения снаряжения и запасных частей. Каждое складское помещение предоставляет место для пятидесяти мест снаряжения."
+"Эта постройка используется для хранения снаряжения и запасных частей. Каждое "
+"складское помещение предоставляет место для пятидесяти мест снаряжения."
 
 #: ../base/ufos/research.ufo:1371
 #, fuzzy
 msgid "shotgun2_txt"
 msgstr ""
-"Эта постройка используется для хранения снаряжения и запасных частей. Каждое складское помещение предоставляет место для пятидесяти мест снаряжения."
+"Эта постройка используется для хранения снаряжения и запасных частей. Каждое "
+"складское помещение предоставляет место для пятидесяти мест снаряжения."
 
 #: ../base/ufos/research.ufo:1407
 #, fuzzy
 msgid "shotgun2_slug_ammo_txt"
 msgstr ""
-"Антареане усовершенствовали технологию, используя фундаментальные концепции лежащие в основе понятия плазмы (ионизированного газа) для её использования в военных целях. Теперь они используют плазму не только при разработке вооружения, но и даже в производстве более мощных так называемых ионных двигателей, которые человечество даже не считало возможным создать. Наши учёные способны воспроизвести фундаментальные концепции усовершенствований пришельцев и, возможно, даже смогут произвести подобное снаряжение в будущем."
+"Антареане усовершенствовали технологию, используя фундаментальные концепции "
+"лежащие в основе понятия плазмы (ионизированного газа) для её использования "
+"в военных целях. Теперь они используют плазму не только при разработке "
+"вооружения, но и даже в производстве более мощных так называемых ионных "
+"двигателей, которые человечество даже не считало возможным создать. Наши "
+"учёные способны воспроизвести фундаментальные концепции усовершенствований "
+"пришельцев и, возможно, даже смогут произвести подобное снаряжение в будущем."
 
 #: ../base/ufos/research.ufo:1425
 #, fuzzy
 msgid "shotgun_micro_txt"
 msgstr ""
-"Эта постройка используется для хранения снаряжения и запасных частей. Каждое складское помещение предоставляет место для пятидесяти мест снаряжения."
+"Эта постройка используется для хранения снаряжения и запасных частей. Каждое "
+"складское помещение предоставляет место для пятидесяти мест снаряжения."
 
 #: ../base/ufos/research.ufo:1442
 #, fuzzy
 msgid "shotgun_micro_ammo_txt"
 msgstr ""
-"Эта постройка используется для хранения снаряжения и запасных частей. Каждое складское помещение предоставляет место для пятидесяти мест снаряжения."
+"Эта постройка используется для хранения снаряжения и запасных частей. Каждое "
+"складское помещение предоставляет место для пятидесяти мест снаряжения."
 
 #: ../base/ufos/research.ufo:1460
 msgid "smg_txt"
@@ -3244,13 +3434,25 @@ msgstr ""
 #, fuzzy
 msgid "smg_mag_txt"
 msgstr ""
-"Антареане усовершенствовали технологию, используя фундаментальные концепции лежащие в основе понятия плазмы (ионизированного газа) для её использования в военных целях. Теперь они используют плазму не только при разработке вооружения, но и даже в производстве более мощных так называемых ионных двигателей, которые человечество даже не считало возможным создать. Наши учёные способны воспроизвести фундаментальные концепции усовершенствований пришельцев и, возможно, даже смогут произвести подобное снаряжение в будущем."
+"Антареане усовершенствовали технологию, используя фундаментальные концепции "
+"лежащие в основе понятия плазмы (ионизированного газа) для её использования "
+"в военных целях. Теперь они используют плазму не только при разработке "
+"вооружения, но и даже в производстве более мощных так называемых ионных "
+"двигателей, которые человечество даже не считало возможным создать. Наши "
+"учёные способны воспроизвести фундаментальные концепции усовершенствований "
+"пришельцев и, возможно, даже смогут произвести подобное снаряжение в будущем."
 
 #: ../base/ufos/research.ufo:1495
 #, fuzzy
 msgid "smokegren_txt"
 msgstr ""
-"Антареане усовершенствовали технологию, используя фундаментальные концепции лежащие в основе понятия плазмы (ионизированного газа) для её использования в военных целях. Теперь они используют плазму не только при разработке вооружения, но и даже в производстве более мощных так называемых ионных двигателей, которые человечество даже не считало возможным создать. Наши учёные способны воспроизвести фундаментальные концепции усовершенствований пришельцев и, возможно, даже смогут произвести подобное снаряжение в будущем."
+"Антареане усовершенствовали технологию, используя фундаментальные концепции "
+"лежащие в основе понятия плазмы (ионизированного газа) для её использования "
+"в военных целях. Теперь они используют плазму не только при разработке "
+"вооружения, но и даже в производстве более мощных так называемых ионных "
+"двигателей, которые человечество даже не считало возможным создать. Наши "
+"учёные способны воспроизвести фундаментальные концепции усовершенствований "
+"пришельцев и, возможно, даже смогут произвести подобное снаряжение в будущем."
 
 #: ../base/ufos/research.ufo:1512
 msgid "sniper_txt"
@@ -3260,7 +3462,10 @@ msgstr ""
 #, fuzzy
 msgid "sniper_mag_txt"
 msgstr ""
-"Электростанция снабжает базу энергией. Без энергии большинство построек базы не будут функционировать. По этой причине электростанция является одной из самых жизненно важных построек на базе и в случае атаки, скорее всего, будет одной из основных целей пришельцев."
+"Электростанция снабжает базу энергией. Без энергии большинство построек базы "
+"не будут функционировать. По этой причине электростанция является одной из "
+"самых жизненно важных построек на базе и в случае атаки, скорее всего, будет "
+"одной из основных целей пришельцев."
 
 #: ../base/ufos/research.ufo:1548
 msgid "stungren_txt"
@@ -3293,7 +3498,8 @@ msgstr "Парализатор"
 #, fuzzy
 msgid "pbeampistol_txt"
 msgstr ""
-"Эта постройка используется для хранения снаряжения и запасных частей. Каждое складское помещение предоставляет место для пятидесяти мест снаряжения."
+"Эта постройка используется для хранения снаряжения и запасных частей. Каждое "
+"складское помещение предоставляет место для пятидесяти мест снаряжения."
 
 #: ../base/ufos/research.ufo:1620
 msgid "pbeampistol_pre_txt"
@@ -3310,7 +3516,13 @@ msgstr "Лучевое оружие"
 #, fuzzy
 msgid "pbeamammo_txt"
 msgstr ""
-"Антареане усовершенствовали технологию, используя фундаментальные концепции лежащие в основе понятия плазмы (ионизированного газа) для её использования в военных целях. Теперь они используют плазму не только при разработке вооружения, но и даже в производстве более мощных так называемых ионных двигателей, которые человечество даже не считало возможным создать. Наши учёные способны воспроизвести фундаментальные концепции усовершенствований пришельцев и, возможно, даже смогут произвести подобное снаряжение в будущем."
+"Антареане усовершенствовали технологию, используя фундаментальные концепции "
+"лежащие в основе понятия плазмы (ионизированного газа) для её использования "
+"в военных целях. Теперь они используют плазму не только при разработке "
+"вооружения, но и даже в производстве более мощных так называемых ионных "
+"двигателей, которые человечество даже не считало возможным создать. Наши "
+"учёные способны воспроизвести фундаментальные концепции усовершенствований "
+"пришельцев и, возможно, даже смогут произвести подобное снаряжение в будущем."
 
 #: ../base/ufos/research.ufo:1652 ../base/ufos/research.ufo:1717
 #: ../base/ufos/research.ufo:1781
@@ -3321,7 +3533,13 @@ msgstr "Нет предварительной информации"
 #, fuzzy
 msgid "pbeamcannon_txt"
 msgstr ""
-"Антареане усовершенствовали технологию, используя фундаментальные концепции лежащие в основе понятия плазмы (ионизированного газа) для её использования в военных целях. Теперь они используют плазму не только при разработке вооружения, но и даже в производстве более мощных так называемых ионных двигателей, которые человечество даже не считало возможным создать. Наши учёные способны воспроизвести фундаментальные концепции усовершенствований пришельцев и, возможно, даже смогут произвести подобное снаряжение в будущем."
+"Антареане усовершенствовали технологию, используя фундаментальные концепции "
+"лежащие в основе понятия плазмы (ионизированного газа) для её использования "
+"в военных целях. Теперь они используют плазму не только при разработке "
+"вооружения, но и даже в производстве более мощных так называемых ионных "
+"двигателей, которые человечество даже не считало возможным создать. Наши "
+"учёные способны воспроизвести фундаментальные концепции усовершенствований "
+"пришельцев и, возможно, даже смогут произвести подобное снаряжение в будущем."
 
 #: ../base/ufos/research.ufo:1684
 msgid "pbeamcannon_pre_txt"
@@ -3337,7 +3555,13 @@ msgstr "Лучевое оружие"
 #, fuzzy
 msgid "pbeamrifle_txt"
 msgstr ""
-"Антареане усовершенствовали технологию, используя фундаментальные концепции лежащие в основе понятия плазмы (ионизированного газа) для её использования в военных целях. Теперь они используют плазму не только при разработке вооружения, но и даже в производстве более мощных так называемых ионных двигателей, которые человечество даже не считало возможным создать. Наши учёные способны воспроизвести фундаментальные концепции усовершенствований пришельцев и, возможно, даже смогут произвести подобное снаряжение в будущем."
+"Антареане усовершенствовали технологию, используя фундаментальные концепции "
+"лежащие в основе понятия плазмы (ионизированного газа) для её использования "
+"в военных целях. Теперь они используют плазму не только при разработке "
+"вооружения, но и даже в производстве более мощных так называемых ионных "
+"двигателей, которые человечество даже не считало возможным создать. Наши "
+"учёные способны воспроизвести фундаментальные концепции усовершенствований "
+"пришельцев и, возможно, даже смогут произвести подобное снаряжение в будущем."
 
 #: ../base/ufos/research.ufo:1749
 msgid "pbeamrifle_pre_txt"
@@ -3353,7 +3577,17 @@ msgstr "Лучевое оружие"
 #, fuzzy
 msgid "pbeam_ammo_txt"
 msgstr ""
-"Лазер (в оригинале Laser расшифровывается как Light Amplification by Stimulated Emission of Radiation - Легкое Усиление Стимулируемой Эмиссией Радиации) технология долго известная человечеству, но технология называемая THEL (\"Mobile Tactical High-Energy Laser\" - \"Тактический Высокоэнергетический Лазер\") начала исследоваться лишь недавно. Хотя уже и существовали мобильные аналоги - MTHEL, эти системы оружия являлись слишком большими и неэффективными, чтобы иметь реальные преимущества перед обычным вооружением. Основная конструкция этого оружия, как правило, использует химический лазер (лазер фторида дейтерия), как сделать который в 5 раз более эффективным и компактным наши ученые недавно узнали. Это позволит разработать более лёгкое MTHEL оружие в ближайшем будущем."
+"Лазер (в оригинале Laser расшифровывается как Light Amplification by "
+"Stimulated Emission of Radiation - Легкое Усиление Стимулируемой Эмиссией "
+"Радиации) технология долго известная человечеству, но технология называемая "
+"THEL (\"Mobile Tactical High-Energy Laser\" - \"Тактический "
+"Высокоэнергетический Лазер\") начала исследоваться лишь недавно. Хотя уже и "
+"существовали мобильные аналоги - MTHEL, эти системы оружия являлись слишком "
+"большими и неэффективными, чтобы иметь реальные преимущества перед обычным "
+"вооружением. Основная конструкция этого оружия, как правило, использует "
+"химический лазер (лазер фторида дейтерия), как сделать который в 5 раз более "
+"эффективным и компактным наши ученые недавно узнали. Это позволит "
+"разработать более лёгкое MTHEL оружие в ближайшем будущем."
 
 #: ../base/ufos/research.ufo:1814
 msgid "pbeam_ammo_pre_txt"
@@ -3368,13 +3602,25 @@ msgstr "Лучевое оружие"
 #, fuzzy
 msgid "combat_armour_txt"
 msgstr ""
-"Эта броня является практически неразрушаемой поскольку создана с использованием наилегчайшего материала сделанного из соединенных друг с другом фуллереновых колец как кольчуга в наномасштабе. Физические воздействия распределяются по окружающему пространству снижая общие повреждения нанесённые солдату. Энергетические атаки рассеиваются от точки контакта и распределяются по всей поверхности брони, а после постепенно отражается во внешнюю среду."
+"Эта броня является практически неразрушаемой поскольку создана с "
+"использованием наилегчайшего материала сделанного из соединенных друг с "
+"другом фуллереновых колец как кольчуга в наномасштабе. Физические "
+"воздействия распределяются по окружающему пространству снижая общие "
+"повреждения нанесённые солдату. Энергетические атаки рассеиваются от точки "
+"контакта и распределяются по всей поверхности брони, а после постепенно "
+"отражается во внешнюю среду."
 
 #: ../base/ufos/research.ufo:1863
 #, fuzzy
 msgid "nano_armour_txt"
 msgstr ""
-"Основана на фуллереновой броне, но толще, тяжелее и содержит активные наниты в материале используемом для изготовления. В нормальных условиях материал ведёт себя как толстая кожа, однако при физическом воздействии происходит реакция нанитов, которые немедленно придают материалу жёсткость сопоставимую с 10мм стальной платиной. Энергетические атаки рассеиваются по материи брони и после во внешнюю среду самому эффективному доступному пути - через землю или воздух."
+"Основана на фуллереновой броне, но толще, тяжелее и содержит активные наниты "
+"в материале используемом для изготовления. В нормальных условиях материал "
+"ведёт себя как толстая кожа, однако при физическом воздействии происходит "
+"реакция нанитов, которые немедленно придают материалу жёсткость сопоставимую "
+"с 10мм стальной платиной. Энергетические атаки рассеиваются по материи брони "
+"и после во внешнюю среду самому эффективному доступному пути - через землю "
+"или воздух."
 
 #: ../base/ufos/research.ufo:1864
 msgid "nano_armour_pre_txt"
@@ -3384,7 +3630,13 @@ msgstr "Нет предварительной информации"
 #, fuzzy
 msgid "alien_body_armour_txt"
 msgstr ""
-"Эта броня является практически неразрушаемой поскольку создана с использованием наилегчайшего материала сделанного из соединенных друг с другом фуллереновых колец как кольчуга в наномасштабе. Физические воздействия распределяются по окружающему пространству снижая общие повреждения нанесённые солдату. Энергетические атаки рассеиваются от точки контакта и распределяются по всей поверхности брони, а после постепенно отражается во внешнюю среду."
+"Эта броня является практически неразрушаемой поскольку создана с "
+"использованием наилегчайшего материала сделанного из соединенных друг с "
+"другом фуллереновых колец как кольчуга в наномасштабе. Физические "
+"воздействия распределяются по окружающему пространству снижая общие "
+"повреждения нанесённые солдату. Энергетические атаки рассеиваются от точки "
+"контакта и распределяются по всей поверхности брони, а после постепенно "
+"отражается во внешнюю среду."
 
 #: ../base/ufos/research.ufo:1880
 msgid "alien_body_armour_pre_txt"
@@ -3394,7 +3646,13 @@ msgstr "Нет предварительной информации"
 #, fuzzy
 msgid "alien_medium_armour_txt"
 msgstr ""
-"Эта броня является практически неразрушаемой поскольку создана с использованием наилегчайшего материала сделанного из соединенных друг с другом фуллереновых колец как кольчуга в наномасштабе. Физические воздействия распределяются по окружающему пространству снижая общие повреждения нанесённые солдату. Энергетические атаки рассеиваются от точки контакта и распределяются по всей поверхности брони, а после постепенно отражается во внешнюю среду."
+"Эта броня является практически неразрушаемой поскольку создана с "
+"использованием наилегчайшего материала сделанного из соединенных друг с "
+"другом фуллереновых колец как кольчуга в наномасштабе. Физические "
+"воздействия распределяются по окружающему пространству снижая общие "
+"повреждения нанесённые солдату. Энергетические атаки рассеиваются от точки "
+"контакта и распределяются по всей поверхности брони, а после постепенно "
+"отражается во внешнюю среду."
 
 #: ../base/ufos/research.ufo:1896
 msgid "alien_medium_armour_pre_txt"
@@ -3481,61 +3739,118 @@ msgstr "Скорость"
 #, fuzzy
 msgid "b_aliencontainment_txt"
 msgstr ""
-"Это вход для персонала баз ФАЛАНКС. По существу это лифт, передвигающийся от поверхности до подземного коридора ведущего на базу. Вход к лифту закамуфлирован и благодаря этому плохо виден с воздуха, что позволяет снизить шанс обнаружения базы пришельцами. Кабина лифта одновременно может вместить до четырёх человек. Это является мерой предосторожности, не позволяющей вражеским силам проникать на базу в больших количествах. Тем не менее, так как это одно из немногих сооружений соединяющих базу с поверхностью, вход является слабым местом в защите баз. Во время угрозы атаки, пришельцы, скорее всего, начнут её отсюда."
+"Это вход для персонала баз ФАЛАНКС. По существу это лифт, передвигающийся от "
+"поверхности до подземного коридора ведущего на базу. Вход к лифту "
+"закамуфлирован и благодаря этому плохо виден с воздуха, что позволяет "
+"снизить шанс обнаружения базы пришельцами. Кабина лифта одновременно может "
+"вместить до четырёх человек. Это является мерой предосторожности, не "
+"позволяющей вражеским силам проникать на базу в больших количествах. Тем не "
+"менее, так как это одно из немногих сооружений соединяющих базу с "
+"поверхностью, вход является слабым местом в защите баз. Во время угрозы "
+"атаки, пришельцы, скорее всего, начнут её отсюда."
 
 #: ../base/ufos/research.ufo:2179
 #, fuzzy
 msgid "b_command_txt"
 msgstr ""
-"Командный центр является сердцем баз ФАЛАНКС. Все проводимые операции планируются именно здесь, так же сюда поступает и обрабатывается все данные, собранные при помощи сенсоров, и информация с поля боя. Без командного центра ни одна база не сможет функционировать, именно по этой причине он должен быть построен в первую очередь."
+"Командный центр является сердцем баз ФАЛАНКС. Все проводимые операции "
+"планируются именно здесь, так же сюда поступает и обрабатывается все данные, "
+"собранные при помощи сенсоров, и информация с поля боя. Без командного "
+"центра ни одна база не сможет функционировать, именно по этой причине он "
+"должен быть построен в первую очередь."
 
 #: ../base/ufos/research.ufo:2195
 msgid "b_entrance_txt"
 msgstr ""
-"Это вход для персонала баз ФАЛАНКС. По существу это лифт, передвигающийся от поверхности до подземного коридора ведущего на базу. Вход к лифту закамуфлирован и благодаря этому плохо виден с воздуха, что позволяет снизить шанс обнаружения базы пришельцами. Кабина лифта одновременно может вместить до четырёх человек. Это является мерой предосторожности, не позволяющей вражеским силам проникать на базу в больших количествах. Тем не менее, так как это одно из немногих сооружений соединяющих базу с поверхностью, вход является слабым местом в защите баз. Во время угрозы атаки, пришельцы, скорее всего, начнут её отсюда."
+"Это вход для персонала баз ФАЛАНКС. По существу это лифт, передвигающийся от "
+"поверхности до подземного коридора ведущего на базу. Вход к лифту "
+"закамуфлирован и благодаря этому плохо виден с воздуха, что позволяет "
+"снизить шанс обнаружения базы пришельцами. Кабина лифта одновременно может "
+"вместить до четырёх человек. Это является мерой предосторожности, не "
+"позволяющей вражеским силам проникать на базу в больших количествах. Тем не "
+"менее, так как это одно из немногих сооружений соединяющих базу с "
+"поверхностью, вход является слабым местом в защите баз. Во время угрозы "
+"атаки, пришельцы, скорее всего, начнут её отсюда."
 
 #: ../base/ufos/research.ufo:2207
 #, fuzzy
 msgid "b_large_hangar_txt"
 msgstr ""
-"Ангар это место, где хранятся и обслуживаются боевые истребители сил ФАЛАНКС. Помещение ангара всегда наполнено всеми необходимыми инструментами для того, чтобы поддерживать истребители в наилучшем состоянии. Большая часть пола ангара представляет собой лифт. Когда истребитель готов к запуску, лифт транспортирует его на поверхность для взлёта. Двери ангара закамуфлированы и благодаря этому плохо виден с воздуха, что позволяет снизить шанс обнаружения базы пришельцами. Тем не менее, так как это одно из немногих сооружений соединяющих базу с поверхностью, ангар является слабым местом в защите баз. Во время угрозы атаки, пришельцы, скорее всего, начнут её отсюда."
+"Ангар это место, где хранятся и обслуживаются боевые истребители сил "
+"ФАЛАНКС. Помещение ангара всегда наполнено всеми необходимыми инструментами "
+"для того, чтобы поддерживать истребители в наилучшем состоянии. Большая "
+"часть пола ангара представляет собой лифт. Когда истребитель готов к "
+"запуску, лифт транспортирует его на поверхность для взлёта. Двери ангара "
+"закамуфлированы и благодаря этому плохо виден с воздуха, что позволяет "
+"снизить шанс обнаружения базы пришельцами. Тем не менее, так как это одно из "
+"немногих сооружений соединяющих базу с поверхностью, ангар является слабым "
+"местом в защите баз. Во время угрозы атаки, пришельцы, скорее всего, начнут "
+"её отсюда."
 
 #: ../base/ufos/research.ufo:2223
 #, fuzzy
 msgid "b_hospital_txt"
 msgstr ""
-"Эта постройка используется для хранения снаряжения и запасных частей. Каждое складское помещение предоставляет место для пятидесяти мест снаряжения."
+"Эта постройка используется для хранения снаряжения и запасных частей. Каждое "
+"складское помещение предоставляет место для пятидесяти мест снаряжения."
 
 #: ../base/ufos/research.ufo:2239
 #, fuzzy
 msgid "b_small_hangar_txt"
 msgstr ""
-"Ангар это место, где хранятся и обслуживаются боевые истребители сил ФАЛАНКС. Помещение ангара всегда наполнено всеми необходимыми инструментами для того, чтобы поддерживать истребители в наилучшем состоянии. Большая часть пола ангара представляет собой лифт. Когда истребитель готов к запуску, лифт транспортирует его на поверхность для взлёта. Двери ангара закамуфлированы и благодаря этому плохо виден с воздуха, что позволяет снизить шанс обнаружения базы пришельцами. Тем не менее, так как это одно из немногих сооружений соединяющих базу с поверхностью, ангар является слабым местом в защите баз. Во время угрозы атаки, пришельцы, скорее всего, начнут её отсюда."
+"Ангар это место, где хранятся и обслуживаются боевые истребители сил "
+"ФАЛАНКС. Помещение ангара всегда наполнено всеми необходимыми инструментами "
+"для того, чтобы поддерживать истребители в наилучшем состоянии. Большая "
+"часть пола ангара представляет собой лифт. Когда истребитель готов к "
+"запуску, лифт транспортирует его на поверхность для взлёта. Двери ангара "
+"закамуфлированы и благодаря этому плохо виден с воздуха, что позволяет "
+"снизить шанс обнаружения базы пришельцами. Тем не менее, так как это одно из "
+"немногих сооружений соединяющих базу с поверхностью, ангар является слабым "
+"местом в защите баз. Во время угрозы атаки, пришельцы, скорее всего, начнут "
+"её отсюда."
 
 #: ../base/ufos/research.ufo:2255
 msgid "b_lab_txt"
 msgstr ""
-"Лаборатория предоставляет место для проведения экспериментов, обсуждения теорий, запуска компьютерных симуляций и тестирования прототипов снаряжения нашими учёными. Хотя учёные могут пребывать на базе и без присутствия лаборатории, исследования могут проводиться только в ней. Каждая лаборатория предоставляет рабочую площадь для десяти учёных."
+"Лаборатория предоставляет место для проведения экспериментов, обсуждения "
+"теорий, запуска компьютерных симуляций и тестирования прототипов снаряжения "
+"нашими учёными. Хотя учёные могут пребывать на базе и без присутствия "
+"лаборатории, исследования могут проводиться только в ней. Каждая лаборатория "
+"предоставляет рабочую площадь для десяти учёных."
 
 #: ../base/ufos/research.ufo:2271
 msgid "b_powerplant_txt"
 msgstr ""
-"Электростанция снабжает базу энергией. Без энергии большинство построек базы не будут функционировать. По этой причине электростанция является одной из самых жизненно важных построек на базе и в случае атаки, скорее всего, будет одной из основных целей пришельцев."
+"Электростанция снабжает базу энергией. Без энергии большинство построек базы "
+"не будут функционировать. По этой причине электростанция является одной из "
+"самых жизненно важных построек на базе и в случае атаки, скорее всего, будет "
+"одной из основных целей пришельцев."
 
 #: ../base/ufos/research.ufo:2287
 msgid "b_quarters_txt"
 msgstr ""
-"Постройка казарм обеспечивает жилой площадью весь персонал, проживающий на базах ФАЛАНКС. Солдаты, учёные, а также руководящий персонал называют эту постройку домом. Каждому служащему выделяется его собственная секция, которая оснащена койкой, небольшим столиком и основными средствами гигиены. В дополнение, в казармах существует рекреация, где служащие могут расслабиться и пообщаться. Каждая казарма предоставляет жилую площадь для двадцати человек."
+"Постройка казарм обеспечивает жилой площадью весь персонал, проживающий на "
+"базах ФАЛАНКС. Солдаты, учёные, а также руководящий персонал называют эту "
+"постройку домом. Каждому служащему выделяется его собственная секция, "
+"которая оснащена койкой, небольшим столиком и основными средствами гигиены. "
+"В дополнение, в казармах существует рекреация, где служащие могут "
+"расслабиться и пообщаться. Каждая казарма предоставляет жилую площадь для "
+"двадцати человек."
 
 #: ../base/ufos/research.ufo:2303
 msgid "b_radar_txt"
 msgstr ""
-"Строение радара является управляющим центром радарной установки сооружённой на поверхности над базой. При помощи радарной установки становится возможным засечь НЛО на значительном расстоянии от базы, что позволяет осуществлять эффективную воздушную защиту и заранее предупреждает командный центр о возможных атаках НЛО непосредственно баз сил ФАЛАНКС."
+"Строение радара является управляющим центром радарной установки сооружённой "
+"на поверхности над базой. При помощи радарной установки становится возможным "
+"засечь НЛО на значительном расстоянии от базы, что позволяет осуществлять "
+"эффективную воздушную защиту и заранее предупреждает командный центр о "
+"возможных атаках НЛО непосредственно баз сил ФАЛАНКС."
 
 #: ../base/ufos/research.ufo:2319
 msgid "b_storage_txt"
 msgstr ""
-"Эта постройка используется для хранения снаряжения и запасных частей. Каждое складское помещение предоставляет место для пятидесяти мест снаряжения."
+"Эта постройка используется для хранения снаряжения и запасных частей. Каждое "
+"складское помещение предоставляет место для пятидесяти мест снаряжения."
 
 #: ../base/ufos/research.ufo:2335
 msgid "b_teamroom_txt"
@@ -3545,24 +3860,55 @@ msgstr ""
 #, fuzzy
 msgid "b_small_ufo_hangar_txt"
 msgstr ""
-"Ангар НЛО используется для парковки захваченных кораблей пришельцев. Это очевидно, что разбирать захваченные НЛО на месте опасно, так как может вызвать контратаку пришельцев. Вместо этого после захвата корабля он буксируется к ближайшей базе ФАЛАНКС со свободным ангаром НЛО. Данная операция осуществляется регулярными военными силами, и поэтому находятся вне компетенции командующего сил ФАЛАНКС. Ангар НЛО может вместить любой корабль пришельцев размерами не больше Транспорта."
+"Ангар НЛО используется для парковки захваченных кораблей пришельцев. Это "
+"очевидно, что разбирать захваченные НЛО на месте опасно, так как может "
+"вызвать контратаку пришельцев. Вместо этого после захвата корабля он "
+"буксируется к ближайшей базе ФАЛАНКС со свободным ангаром НЛО. Данная "
+"операция осуществляется регулярными военными силами, и поэтому находятся вне "
+"компетенции командующего сил ФАЛАНКС. Ангар НЛО может вместить любой корабль "
+"пришельцев размерами не больше Транспорта."
 
 #: ../base/ufos/research.ufo:2367
 #, fuzzy
 msgid "b_large_ufo_hangar_txt"
 msgstr ""
-"Ангар это место, где хранятся и обслуживаются боевые истребители сил ФАЛАНКС. Помещение ангара всегда наполнено всеми необходимыми инструментами для того, чтобы поддерживать истребители в наилучшем состоянии. Большая часть пола ангара представляет собой лифт. Когда истребитель готов к запуску, лифт транспортирует его на поверхность для взлёта. Двери ангара закамуфлированы и благодаря этому плохо виден с воздуха, что позволяет снизить шанс обнаружения базы пришельцами. Тем не менее, так как это одно из немногих сооружений соединяющих базу с поверхностью, ангар является слабым местом в защите баз. Во время угрозы атаки, пришельцы, скорее всего, начнут её отсюда."
+"Ангар это место, где хранятся и обслуживаются боевые истребители сил "
+"ФАЛАНКС. Помещение ангара всегда наполнено всеми необходимыми инструментами "
+"для того, чтобы поддерживать истребители в наилучшем состоянии. Большая "
+"часть пола ангара представляет собой лифт. Когда истребитель готов к "
+"запуску, лифт транспортирует его на поверхность для взлёта. Двери ангара "
+"закамуфлированы и благодаря этому плохо виден с воздуха, что позволяет "
+"снизить шанс обнаружения базы пришельцами. Тем не менее, так как это одно из "
+"немногих сооружений соединяющих базу с поверхностью, ангар является слабым "
+"местом в защите баз. Во время угрозы атаки, пришельцы, скорее всего, начнут "
+"её отсюда."
 
 #: ../base/ufos/research.ufo:2383
 #, fuzzy
 msgid "b_workshop_txt"
 msgstr ""
-"Транспорт H-92 является главным транспортировочным судном для сил быстрого реагирования ФАЛАНКС. Этот оснащённый турбо реактивными двигателями General Electrics HM-5600 транспорт может достигать скорости в 1.0 махов. Четыре двигателя обладают технологией управляемого вектора тяги, благодаря чему H-92 может вертикально взлётать и садиться. Эти технологические преимущества необходимы для наиболее быстрой доставки бойцов в любую точку мира и их мгновенной высадки. Слабой стороной H-92 является полное отсутствие боевых качеств, поэтому необходимо всегда иметь несколько перехватчиков для воздушного прикрытия H-92 в случае обнаружения НЛО."
+"Транспорт H-92 является главным транспортировочным судном для сил быстрого "
+"реагирования ФАЛАНКС. Этот оснащённый турбо реактивными двигателями General "
+"Electrics HM-5600 транспорт может достигать скорости в 1.0 махов. Четыре "
+"двигателя обладают технологией управляемого вектора тяги, благодаря чему H-"
+"92 может вертикально взлётать и садиться. Эти технологические преимущества "
+"необходимы для наиболее быстрой доставки бойцов в любую точку мира и их "
+"мгновенной высадки. Слабой стороной H-92 является полное отсутствие боевых "
+"качеств, поэтому необходимо всегда иметь несколько перехватчиков для "
+"воздушного прикрытия H-92 в случае обнаружения НЛО."
 
 #: ../base/ufos/research.ufo:2402
 msgid "dropship_txt"
 msgstr ""
-"Транспорт H-92 является главным транспортировочным судном для сил быстрого реагирования ФАЛАНКС. Этот оснащённый турбо реактивными двигателями General Electrics HM-5600 транспорт может достигать скорости в 1.0 махов. Четыре двигателя обладают технологией управляемого вектора тяги, благодаря чему H-92 может вертикально взлётать и садиться. Эти технологические преимущества необходимы для наиболее быстрой доставки бойцов в любую точку мира и их мгновенной высадки. Слабой стороной H-92 является полное отсутствие боевых качеств, поэтому необходимо всегда иметь несколько перехватчиков для воздушного прикрытия H-92 в случае обнаружения НЛО."
+"Транспорт H-92 является главным транспортировочным судном для сил быстрого "
+"реагирования ФАЛАНКС. Этот оснащённый турбо реактивными двигателями General "
+"Electrics HM-5600 транспорт может достигать скорости в 1.0 махов. Четыре "
+"двигателя обладают технологией управляемого вектора тяги, благодаря чему H-"
+"92 может вертикально взлётать и садиться. Эти технологические преимущества "
+"необходимы для наиболее быстрой доставки бойцов в любую точку мира и их "
+"мгновенной высадки. Слабой стороной H-92 является полное отсутствие боевых "
+"качеств, поэтому необходимо всегда иметь несколько перехватчиков для "
+"воздушного прикрытия H-92 в случае обнаружения НЛО."
 
 #: ../base/ufos/research.ufo:2417
 msgid "interceptor_txt"
@@ -3573,47 +3919,120 @@ msgstr ""
 "\n"
 "Элемент противодействия внеземной угрозе Проекта ФАЛАНКС\n"
 "\n"
-"Технический документ, Уровень допуска: Сигма -- Только для командного персонала --\n"
+"Технический документ, Уровень допуска: Сигма -- Только для командного "
+"персонала --\n"
 "\n"
 "Внесено в реестр: 04 ноября 2026\n"
 "\n"
-"Автор: доктор Ричард Строхм, Командующий базы, ФАЛАНКС, Тихоокеанская ударная группа\n"
+"Автор: доктор Ричард Строхм, Командующий базы, ФАЛАНКС, Тихоокеанская "
+"ударная группа\n"
 "\n"
 "\n"
 "\n"
 "Краткий обзор\n"
 "\n"
-"Я весьма рад сообщить, что первая промышленная модель нашего истребителя-перехватчика нового поколения была собрана в срок и блистательно прошла все лётные испытания. Рискую показаться чересчур восторженным, но возможно, это наилучший образец человеческих технологий из когда-либо выпускавшихся.\n"
+"Я весьма рад сообщить, что первая промышленная модель нашего истребителя-"
+"перехватчика нового поколения была собрана в срок и блистательно прошла все "
+"лётные испытания. Рискую показаться чересчур восторженным, но возможно, это "
+"наилучший образец человеческих технологий из когда-либо выпускавшихся.\n"
 "\n"
-"\"Стилет\" -- это одноместный внеатмосферный истребитель с технологией ВВП (вертикального взлёта и посадки), позволяющей ему приземляться на сверхмалых посадочных площадках, и, при необходимости, на голый грунт. Его мощные высокопроизводительные турбореактивные двигатели имеют угол поворота в 360 градусов, обеспечивая превосходную манёвренность даже при сверхзвуковых скоростях. Воздухозаборники этих огромных двигателей защищены сложной системой воздушных каналов, которая активно фильтрует воздух на входе в двигатель, и не дает любому твёрдому предмету попасть внутрь и повредить лопасти турбин. Эти двигатели имеют более чем достаточную мощь, чтобы поднять в воздух эту хорошо бронированную машину, и обеспечить до двух часов свободного полёта без дозаправки.\n"
+"\"Стилет\" -- это одноместный внеатмосферный истребитель с технологией ВВП "
+"(вертикального взлёта и посадки), позволяющей ему приземляться на сверхмалых "
+"посадочных площадках, и, при необходимости, на голый грунт. Его мощные "
+"высокопроизводительные турбореактивные двигатели имеют угол поворота в 360 "
+"градусов, обеспечивая превосходную манёвренность даже при сверхзвуковых "
+"скоростях. Воздухозаборники этих огромных двигателей защищены сложной "
+"системой воздушных каналов, которая активно фильтрует воздух на входе в "
+"двигатель, и не дает любому твёрдому предмету попасть внутрь и повредить "
+"лопасти турбин. Эти двигатели имеют более чем достаточную мощь, чтобы "
+"поднять в воздух эту хорошо бронированную машину, и обеспечить до двух часов "
+"свободного полёта без дозаправки.\n"
 "\n"
-"Вертолётоподобный контур фюзеляжа может и не выглядит приспособленным к высоким скоростям, но внешний вид бывает обманчив. Компактный внешний корпус истребителя способен в течение короткого времени выдерживать скорость до 2 Махов. Его крейсерская скорость составляет 1.3 Маха, а скорость на форсаже -- 2.1 Маха. Столь высокие значения ставят \"Стилет\" далеко впереди большинства военных реактивных истребителей, которые не имеют режима полёта на сверхкрейсерских скоростях.\n"
+"Вертолётоподобный контур фюзеляжа может и не выглядит приспособленным к "
+"высоким скоростям, но внешний вид бывает обманчив. Компактный внешний корпус "
+"истребителя способен в течение короткого времени выдерживать скорость до 2 "
+"Махов. Его крейсерская скорость составляет 1.3 Маха, а скорость на форсаже "
+"-- 2.1 Маха. Столь высокие значения ставят \"Стилет\" далеко впереди "
+"большинства военных реактивных истребителей, которые не имеют режима полёта "
+"на сверхкрейсерских скоростях.\n"
 "\n"
-"Поднявшись в воздух, он способен двигаться скачками как заяц, и абсолютно беспощаден в руках опытного пилота. Он способен облететь ангарный комплекс по периметру за шесть секунд, всё время удерживая заданную цель в прицеле носового пулемёта. Так же, он способен выполнить мёртвую петлю за три секунды, и произвести захват самолёта-невидимки системой целенаведения ракеты ещё до окончания полного оборота.\n"
+"Поднявшись в воздух, он способен двигаться скачками как заяц, и абсолютно "
+"беспощаден в руках опытного пилота. Он способен облететь ангарный комплекс "
+"по периметру за шесть секунд, всё время удерживая заданную цель в прицеле "
+"носового пулемёта. Так же, он способен выполнить мёртвую петлю за три "
+"секунды, и произвести захват самолёта-невидимки системой целенаведения "
+"ракеты ещё до окончания полного оборота.\n"
 "\n"
-"Ракеты установлены на орудийных подвесках, смонтированных прямо у внешних окончаний крыльев. \"Стилет\" так же имеет мощные системы РЭБ с набором современнейших сенсоров, установленных на носу аппарата, и включающих, в частности, несколько лазеров системы наведения, сложную радарную систему, и систему оптического формирования изображений, столь же мощную, как на любом разведывательном спутнике. Небольшие излучатели системы РЭБ установленные в стратегически важных точках по всему фюзеляжу, будут сбивать наведение ракет противника, и могут активно блокировать обнаружение самолёта радаром. На орудийные подвески можно установить широкий диапазон вооружения, и их электроника полностью модульная, что позволит проводить её дальнейшую замену и усовершенствование. Однако помните, что свободное место в этом аппарате - в большой цене.\n"
+"Ракеты установлены на орудийных подвесках, смонтированных прямо у внешних "
+"окончаний крыльев. \"Стилет\" так же имеет мощные системы РЭБ с набором "
+"современнейших сенсоров, установленных на носу аппарата, и включающих, в "
+"частности, несколько лазеров системы наведения, сложную радарную систему, и "
+"систему оптического формирования изображений, столь же мощную, как на любом "
+"разведывательном спутнике. Небольшие излучатели системы РЭБ установленные в "
+"стратегически важных точках по всему фюзеляжу, будут сбивать наведение ракет "
+"противника, и могут активно блокировать обнаружение самолёта радаром. На "
+"орудийные подвески можно установить широкий диапазон вооружения, и их "
+"электроника полностью модульная, что позволит проводить её дальнейшую замену "
+"и усовершенствование. Однако помните, что свободное место в этом аппарате - "
+"в большой цене.\n"
 "\n"
-"Мощные двигатели Volkot VO-36 потребляют огромное количество топлива, а вместимость баков Стилета не столь высока. С учётом запаса топлива, необходимого на манёвры перехвата, максимальная практическая дальность не превышает 2000 километров. Однако, в рамках этой дальности, самолёт является хозяином воздушного пространства.\n"
+"Мощные двигатели Volkot VO-36 потребляют огромное количество топлива, а "
+"вместимость баков Стилета не столь высока. С учётом запаса топлива, "
+"необходимого на манёвры перехвата, максимальная практическая дальность не "
+"превышает 2000 километров. Однако, в рамках этой дальности, самолёт является "
+"хозяином воздушного пространства.\n"
 "\n"
-"Пожалуйста, обратите внимание, что, в силу исключительных характеристик этого летательного аппарата, крайне не рекомендуется его пилотирование неопытными пилотами. Его управление на низких скоростях характеризовалось нашими пилотами-испытателями как 'коварное'.\n"
+"Пожалуйста, обратите внимание, что, в силу исключительных характеристик "
+"этого летательного аппарата, крайне не рекомендуется его пилотирование "
+"неопытными пилотами. Его управление на низких скоростях характеризовалось "
+"нашими пилотами-испытателями как 'коварное'.\n"
 "\n"
-"\"Стилет\" нуждается в одном малом ангаре для хранения, техобслуживания и базовой эксплуатации. Он имеет 3 орудийных подвески; малая смонтирована в носовом узле, и две средних -- на крыльях, по одной с каждой стороны.\n"
+"\"Стилет\" нуждается в одном малом ангаре для хранения, техобслуживания и "
+"базовой эксплуатации. Он имеет 3 орудийных подвески; малая смонтирована в "
+"носовом узле, и две средних -- на крыльях, по одной с каждой стороны.\n"
 "\n"
 "\n"
 "Предложенная доктрина\n"
 "\n"
-"\"Стилет\" -- это идеальный перехватчик малого радиуса действия, способный уничтожать цели, угрожающие непосредственно базам проекта ФАЛАНКС, или расположенным поблизости от них объектам мирного назначения. Он способен сойтись один на один с любым летательным аппаратом на Земле и выйти из него победителем. Однако, Стилет неприменим для атаки целей, удалённых от точки базирования более чем на 2000 километров, т.к. не имеет достаточного резерва топлива для манёвренного воздушного боя и последующего возвращения на базу. Для расширения радиуса его боевого применения может использоваться дозаправка в воздухе, но эта концепция требует дополнительной проработки.\n"
+"\"Стилет\" -- это идеальный перехватчик малого радиуса действия, способный "
+"уничтожать цели, угрожающие непосредственно базам проекта ФАЛАНКС, или "
+"расположенным поблизости от них объектам мирного назначения. Он способен "
+"сойтись один на один с любым летательным аппаратом на Земле и выйти из него "
+"победителем. Однако, Стилет неприменим для атаки целей, удалённых от точки "
+"базирования более чем на 2000 километров, т.к. не имеет достаточного резерва "
+"топлива для манёвренного воздушного боя и последующего возвращения на базу. "
+"Для расширения радиуса его боевого применения может использоваться "
+"дозаправка в воздухе, но эта концепция требует дополнительной проработки.\n"
 "\n"
-"Эффективность против кораблей пришельцев, конечно же, не может быть оценена до реального боевого столкновения, но это лучшее, что мы можем противопоставить им. Если реальная инопланетная угроза возникнет в течение нашей жизни, и Стилет не будет способен выполнить его функции, Человечество столкнётся с большими трудностями.\n"
+"Эффективность против кораблей пришельцев, конечно же, не может быть оценена "
+"до реального боевого столкновения, но это лучшее, что мы можем "
+"противопоставить им. Если реальная инопланетная угроза возникнет в течение "
+"нашей жизни, и Стилет не будет способен выполнить его функции, Человечество "
+"столкнётся с большими трудностями.\n"
 "\n"
 "\n"
 "Приложения\n"
 "\n"
 "Приложение от 18 марта 2084, коммандер Поль Наварре:\n"
 "\n"
-"Командующий, я всесторонне рассмотрел эти корабли класса \"Стилет\" на бумаге и вживую, и они потрясли моё воображение. Трудно поверить, что мы создали эти малые штучки ещё в 2026 году, -- и что никто так и не понял, какое сокровище в его руках. А это так, даже сейчас. То, что мы имеем здесь, вероятно, самый манёвренный летательный аппарат из тех, что когда-либо создавался; он затмевает боевые вертолёты, и способен нарезать круги вокруг современных реактивных самолетов. Он делает вещи, о которых более современный самолёт может только мечтать.\n"
+"Командующий, я всесторонне рассмотрел эти корабли класса \"Стилет\" на "
+"бумаге и вживую, и они потрясли моё воображение. Трудно поверить, что мы "
+"создали эти малые штучки ещё в 2026 году, -- и что никто так и не понял, "
+"какое сокровище в его руках. А это так, даже сейчас. То, что мы имеем здесь, "
+"вероятно, самый манёвренный летательный аппарат из тех, что когда-либо "
+"создавался; он затмевает боевые вертолёты, и способен нарезать круги вокруг "
+"современных реактивных самолетов. Он делает вещи, о которых более "
+"современный самолёт может только мечтать.\n"
 "\n"
-"На нём всё так же кошмарно летать в силу его врождённой неустойчивости в воздухе, особенно на большой скорости. В первоначальных файлах крайне преуменьшен этот аспект технической оценки аппарата. Однако, наши пилоты сообщили мне, что они способны справиться с этим. Более того, мы управляли процессом поиска неповреждённого образца, и прямо сейчас его можно приобрести на рынке, восстановленный и готовый к операциям. Я отдал приказ на начало полного переоборудования и лётных испытаний под моим руководством. Это просто наилучший самолёт-истребитель ближнего боя, который я когда-либо видел. Он нам действительно необходим!\n"
+"На нём всё так же кошмарно летать в силу его врождённой неустойчивости в "
+"воздухе, особенно на большой скорости. В первоначальных файлах крайне "
+"преуменьшен этот аспект технической оценки аппарата. Однако, наши пилоты "
+"сообщили мне, что они способны справиться с этим. Более того, мы управляли "
+"процессом поиска неповреждённого образца, и прямо сейчас его можно "
+"приобрести на рынке, восстановленный и готовый к операциям. Я отдал приказ "
+"на начало полного переоборудования и лётных испытаний под моим руководством. "
+"Это просто наилучший самолёт-истребитель ближнего боя, который я когда-либо "
+"видел. Он нам действительно необходим!\n"
 "\n"
 "Характеристики летательного аппарата:\n"
 "\n"
@@ -3627,19 +4046,33 @@ msgstr ""
 "\n"
 "Экипаж: 1 чел\n"
 "\n"
-"Вооружение: 1 малая орудийная подвеска (нос), 2 средних орудийных подвески (крылья)"
+"Вооружение: 1 малая орудийная подвеска (нос), 2 средних орудийных подвески "
+"(крылья)"
 
 #: ../base/ufos/research.ufo:2432
 #, fuzzy
 msgid "saracen_interceptor_txt"
 msgstr ""
-"Истребитель F-48 является главной опорой воздушных сил ФАЛАНКС. Эта оснащённая двумя реактивными двигателями Volkot VO-36 машина может достигать скорости в 1.4 махов. Это значительно меньше, чем скорость большинства НЛО пришельцев, но в отношении маневренности F-48 может с лёгкостью соперничать почти со всеми своими противниками. Как и транспорт H-92, истребитель F-48 обладает технологией вертикального взлёта и посадки. Поэтому все базы ФАЛАНКС оснащены вертикальными шахтами, ведущими с поверхности в подземные ангары. Этот технология взлёта-посадки позволяет сделать базу практически полностью необнаружаемой."
+"Истребитель F-48 является главной опорой воздушных сил ФАЛАНКС. Эта "
+"оснащённая двумя реактивными двигателями Volkot VO-36 машина может достигать "
+"скорости в 1.4 махов. Это значительно меньше, чем скорость большинства НЛО "
+"пришельцев, но в отношении маневренности F-48 может с лёгкостью соперничать "
+"почти со всеми своими противниками. Как и транспорт H-92, истребитель F-48 "
+"обладает технологией вертикального взлёта и посадки. Поэтому все базы "
+"ФАЛАНКС оснащены вертикальными шахтами, ведущими с поверхности в подземные "
+"ангары. Этот технология взлёта-посадки позволяет сделать базу практически "
+"полностью необнаружаемой."
 
 #: ../base/ufos/research.ufo:2474
 #, fuzzy
 msgid "ufo_scout_txt"
 msgstr ""
-"НЛО пришельцев черпают свою энергию прямо из самой материи мироздания, используя для этого технологию, которую мы не можем самостоятельно в данный момент воспроизвести. Управление осуществляется через прямой нейронный интерфейс основанный на псионической технологии. Принцип работы двигателей заключается в искривлении пространства и последующем полёте на созданной четырехмерной волне."
+"НЛО пришельцев черпают свою энергию прямо из самой материи мироздания, "
+"используя для этого технологию, которую мы не можем самостоятельно в данный "
+"момент воспроизвести. Управление осуществляется через прямой нейронный "
+"интерфейс основанный на псионической технологии. Принцип работы двигателей "
+"заключается в искривлении пространства и последующем полёте на созданной "
+"четырехмерной волне."
 
 #: ../base/ufos/research.ufo:2475
 msgid "ufo_scout_pre_txt"
@@ -3649,7 +4082,10 @@ msgstr "Нет предварительной информации"
 #, fuzzy
 msgid "ufo_fighter_txt"
 msgstr ""
-"Флагманы это крупные летательные аппараты, которые обладают большей боевой мощью, чем Крейсера и перевозят столько же пехоты противника, как и Транспорты. Эти суда несут большую опасность даже в одиночку, поэтому подлежат уничтожению с большой осторожностью."
+"Флагманы это крупные летательные аппараты, которые обладают большей боевой "
+"мощью, чем Крейсера и перевозят столько же пехоты противника, как и "
+"Транспорты. Эти суда несут большую опасность даже в одиночку, поэтому "
+"подлежат уничтожению с большой осторожностью."
 
 #: ../base/ufos/research.ufo:2516
 msgid "ufo_fighter_pre_txt"
@@ -3664,7 +4100,10 @@ msgstr "НЛО - Охотник"
 #, fuzzy
 msgid "ufo_harvester_txt"
 msgstr ""
-"Флагманы это крупные летательные аппараты, которые обладают большей боевой мощью, чем Крейсера и перевозят столько же пехоты противника, как и Транспорты. Эти суда несут большую опасность даже в одиночку, поэтому подлежат уничтожению с большой осторожностью."
+"Флагманы это крупные летательные аппараты, которые обладают большей боевой "
+"мощью, чем Крейсера и перевозят столько же пехоты противника, как и "
+"Транспорты. Эти суда несут большую опасность даже в одиночку, поэтому "
+"подлежат уничтожению с большой осторожностью."
 
 #: ../base/ufos/research.ufo:2558
 msgid "ufo_harvester_pre_txt"
@@ -3770,7 +4209,13 @@ msgstr "Модуль ECM \"Ворон\""
 #, fuzzy
 msgid "craft_electronics_raven_txt"
 msgstr ""
-"Эта броня является практически неразрушаемой поскольку создана с использованием наилегчайшего материала сделанного из соединенных друг с другом фуллереновых колец как кольчуга в наномасштабе. Физические воздействия распределяются по окружающему пространству снижая общие повреждения нанесённые солдату. Энергетические атаки рассеиваются от точки контакта и распределяются по всей поверхности брони, а после постепенно отражается во внешнюю среду."
+"Эта броня является практически неразрушаемой поскольку создана с "
+"использованием наилегчайшего материала сделанного из соединенных друг с "
+"другом фуллереновых колец как кольчуга в наномасштабе. Физические "
+"воздействия распределяются по окружающему пространству снижая общие "
+"повреждения нанесённые солдату. Энергетические атаки рассеиваются от точки "
+"контакта и распределяются по всей поверхности брони, а после постепенно "
+"отражается во внешнюю среду."
 
 #: ../base/ufos/research.ufo:2861
 msgid "Polymer Aircraft Armour"
@@ -3788,7 +4233,13 @@ msgstr "Вращающаяся пушка \"SHIVA\""
 #, fuzzy
 msgid "craft_weapon_shiva_txt"
 msgstr ""
-"Эта броня является практически неразрушаемой поскольку создана с использованием наилегчайшего материала сделанного из соединенных друг с другом фуллереновых колец как кольчуга в наномасштабе. Физические воздействия распределяются по окружающему пространству снижая общие повреждения нанесённые солдату. Энергетические атаки рассеиваются от точки контакта и распределяются по всей поверхности брони, а после постепенно отражается во внешнюю среду."
+"Эта броня является практически неразрушаемой поскольку создана с "
+"использованием наилегчайшего материала сделанного из соединенных друг с "
+"другом фуллереновых колец как кольчуга в наномасштабе. Физические "
+"воздействия распределяются по окружающему пространству снижая общие "
+"повреждения нанесённые солдату. Энергетические атаки рассеиваются от точки "
+"контакта и распределяются по всей поверхности брони, а после постепенно "
+"отражается во внешнюю среду."
 
 #: ../base/ufos/research.ufo:2893
 msgid "SHIVA 20mm API Rounds"
@@ -3798,7 +4249,13 @@ msgstr ""
 #, fuzzy
 msgid "craft_ammo_shiva_1_txt"
 msgstr ""
-"Эта броня является практически неразрушаемой поскольку создана с использованием наилегчайшего материала сделанного из соединенных друг с другом фуллереновых колец как кольчуга в наномасштабе. Физические воздействия распределяются по окружающему пространству снижая общие повреждения нанесённые солдату. Энергетические атаки рассеиваются от точки контакта и распределяются по всей поверхности брони, а после постепенно отражается во внешнюю среду."
+"Эта броня является практически неразрушаемой поскольку создана с "
+"использованием наилегчайшего материала сделанного из соединенных друг с "
+"другом фуллереновых колец как кольчуга в наномасштабе. Физические "
+"воздействия распределяются по окружающему пространству снижая общие "
+"повреждения нанесённые солдату. Энергетические атаки рассеиваются от точки "
+"контакта и распределяются по всей поверхности брони, а после постепенно "
+"отражается во внешнюю среду."
 
 #: ../base/ufos/research.ufo:2912
 msgid "SHIVA 20mm HEI Rounds"
@@ -3808,7 +4265,13 @@ msgstr ""
 #, fuzzy
 msgid "craft_ammo_shiva_2_txt"
 msgstr ""
-"Эта броня является практически неразрушаемой поскольку создана с использованием наилегчайшего материала сделанного из соединенных друг с другом фуллереновых колец как кольчуга в наномасштабе. Физические воздействия распределяются по окружающему пространству снижая общие повреждения нанесённые солдату. Энергетические атаки рассеиваются от точки контакта и распределяются по всей поверхности брони, а после постепенно отражается во внешнюю среду."
+"Эта броня является практически неразрушаемой поскольку создана с "
+"использованием наилегчайшего материала сделанного из соединенных друг с "
+"другом фуллереновых колец как кольчуга в наномасштабе. Физические "
+"воздействия распределяются по окружающему пространству снижая общие "
+"повреждения нанесённые солдату. Энергетические атаки рассеиваются от точки "
+"контакта и распределяются по всей поверхности брони, а после постепенно "
+"отражается во внешнюю среду."
 
 #: ../base/ufos/research.ufo:2931
 #, fuzzy
@@ -3828,7 +4291,13 @@ msgstr "Подвес ракет \"Sparrowhawk\""
 #, fuzzy
 msgid "craft_ammo_sparrowhawk_txt"
 msgstr ""
-"Эта броня является практически неразрушаемой поскольку создана с использованием наилегчайшего материала сделанного из соединенных друг с другом фуллереновых колец как кольчуга в наномасштабе. Физические воздействия распределяются по окружающему пространству снижая общие повреждения нанесённые солдату. Энергетические атаки рассеиваются от точки контакта и распределяются по всей поверхности брони, а после постепенно отражается во внешнюю среду."
+"Эта броня является практически неразрушаемой поскольку создана с "
+"использованием наилегчайшего материала сделанного из соединенных друг с "
+"другом фуллереновых колец как кольчуга в наномасштабе. Физические "
+"воздействия распределяются по окружающему пространству снижая общие "
+"повреждения нанесённые солдату. Энергетические атаки рассеиваются от точки "
+"контакта и распределяются по всей поверхности брони, а после постепенно "
+"отражается во внешнюю среду."
 
 #: ../base/ufos/research.ufo:2966
 msgid "TR-20 Rocket Pod"
@@ -3847,7 +4316,13 @@ msgstr "Ракетная установка \"TR-20\""
 #, fuzzy
 msgid "craft_ammo_tr20_txt"
 msgstr ""
-"Эта броня является практически неразрушаемой поскольку создана с использованием наилегчайшего материала сделанного из соединенных друг с другом фуллереновых колец как кольчуга в наномасштабе. Физические воздействия распределяются по окружающему пространству снижая общие повреждения нанесённые солдату. Энергетические атаки рассеиваются от точки контакта и распределяются по всей поверхности брони, а после постепенно отражается во внешнюю среду."
+"Эта броня является практически неразрушаемой поскольку создана с "
+"использованием наилегчайшего материала сделанного из соединенных друг с "
+"другом фуллереновых колец как кольчуга в наномасштабе. Физические "
+"воздействия распределяются по окружающему пространству снижая общие "
+"повреждения нанесённые солдату. Энергетические атаки рассеиваются от точки "
+"контакта и распределяются по всей поверхности брони, а после постепенно "
+"отражается во внешнюю среду."
 
 #: ../base/ufos/research.ufo:3009 ../base/ufos/research.ufo:3019
 #: ../base/ufos/research.ufo:3026
@@ -3870,7 +4345,13 @@ msgstr ""
 #, fuzzy
 msgid "craft_electronics_targeting_txt"
 msgstr ""
-"Эта броня является практически неразрушаемой поскольку создана с использованием наилегчайшего материала сделанного из соединенных друг с другом фуллереновых колец как кольчуга в наномасштабе. Физические воздействия распределяются по окружающему пространству снижая общие повреждения нанесённые солдату. Энергетические атаки рассеиваются от точки контакта и распределяются по всей поверхности брони, а после постепенно отражается во внешнюю среду."
+"Эта броня является практически неразрушаемой поскольку создана с "
+"использованием наилегчайшего материала сделанного из соединенных друг с "
+"другом фуллереновых колец как кольчуга в наномасштабе. Физические "
+"воздействия распределяются по окружающему пространству снижая общие "
+"повреждения нанесённые солдату. Энергетические атаки рассеиваются от точки "
+"контакта и распределяются по всей поверхности брони, а после постепенно "
+"отражается во внешнюю среду."
 
 #: ../base/ufos/research.ufo:3063
 msgid "Fuel Pod"
@@ -3888,7 +4369,13 @@ msgstr "Материалы пришельцев"
 #, fuzzy
 msgid "alien_materials_txt"
 msgstr ""
-"Антареане усовершенствовали технологию, используя фундаментальные концепции лежащие в основе понятия плазмы (ионизированного газа) для её использования в военных целях. Теперь они используют плазму не только при разработке вооружения, но и даже в производстве более мощных так называемых ионных двигателей, которые человечество даже не считало возможным создать. Наши учёные способны воспроизвести фундаментальные концепции усовершенствований пришельцев и, возможно, даже смогут произвести подобное снаряжение в будущем."
+"Антареане усовершенствовали технологию, используя фундаментальные концепции "
+"лежащие в основе понятия плазмы (ионизированного газа) для её использования "
+"в военных целях. Теперь они используют плазму не только при разработке "
+"вооружения, но и даже в производстве более мощных так называемых ионных "
+"двигателей, которые человечество даже не считало возможным создать. Наши "
+"учёные способны воспроизвести фундаментальные концепции усовершенствований "
+"пришельцев и, возможно, даже смогут произвести подобное снаряжение в будущем."
 
 #: ../base/ufos/research.ufo:3085
 msgid "alien_materials_pre_txt"
@@ -4096,7 +4583,13 @@ msgstr "И наконец - атакуйте их базу ..."
 #: ../base/ufos/seq_intro.ufo:8
 msgid "intro_sentence1"
 msgstr ""
-"2084 – На Земле, наконец, наступает время относительного мира и спокойствия. Войны завершились, споры разрешены, а новые границы признаны правительствами вовлечённых в конфликты стран. Старые государства и супер-державы интегрируются в мощные политические коалиции, либо организуют союзы. Достаток и богатство перестают быть экзотикой, как это было когда-то в 20м веке, люди начинают доверять своим лидерам, аккуратно поддерживающим мировой баланс сил и ведущим их в стабильный, интригующий 22ой век."
+"2084 – На Земле, наконец, наступает время относительного мира и спокойствия. "
+"Войны завершились, споры разрешены, а новые границы признаны правительствами "
+"вовлечённых в конфликты стран. Старые государства и супер-державы "
+"интегрируются в мощные политические коалиции, либо организуют союзы. "
+"Достаток и богатство перестают быть экзотикой, как это было когда-то в 20м "
+"веке, люди начинают доверять своим лидерам, аккуратно поддерживающим мировой "
+"баланс сил и ведущим их в стабильный, интригующий 22ой век."
 
 #: ../base/ufos/seq_intro.ufo:16
 msgid "intro_sentence2"
@@ -4105,35 +4598,65 @@ msgstr "... начинается вторжение ..."
 #: ../base/ufos/seq_intro.ufo:24
 msgid "intro_sentence3"
 msgstr ""
-"Именно в этот период пришельцы вторгаются на Землю. Они начинают своё наступление с атаки на город Бомбей – самую густонаселённую точку Земли. Сотни тысяч невинных граждан умирают, пока, наконец, пришельцы не вытесняются силами Содружества."
+"Именно в этот период пришельцы вторгаются на Землю. Они начинают своё "
+"наступление с атаки на город Бомбей – самую густонаселённую точку Земли. "
+"Сотни тысяч невинных граждан умирают, пока, наконец, пришельцы не "
+"вытесняются силами Содружества."
 
 #: ../base/ufos/seq_intro.ufo:32
 msgid "intro_sentence4"
 msgstr ""
-"Никто не знает, откуда они пришли. Попытка установить дипломатический контакт встречается агрессией. В течении сорока восьми часов все семь политических блоков переходят на военное положение. На протяжении двух недель армии Земли отражают атаки пришельцев, но неподготовленная к подобным боям армия практически неэффективна. Большие потери вынуждают все семь блоков в сотрудничестве с ООН создать специализированное боевое подразделение под названием ФАЛАНКС."
+"Никто не знает, откуда они пришли. Попытка установить дипломатический "
+"контакт встречается агрессией. В течении сорока восьми часов все семь "
+"политических блоков переходят на военное положение. На протяжении двух "
+"недель армии Земли отражают атаки пришельцев, но неподготовленная к подобным "
+"боям армия практически неэффективна. Большие потери вынуждают все семь "
+"блоков в сотрудничестве с ООН создать специализированное боевое "
+"подразделение под названием ФАЛАНКС."
 
 #: ../base/ufos/seq_intro.ufo:40
 msgid "intro_sentence5"
 msgstr ""
-"Обязанное противостоять внеземной угрозе, это подразделение финансируется всеми семи политическими силами и получает в свои ряды только лучших бойцов из их национальных армий. Сможет ли ФАЛАНКС противостоять новой угрозе будет ясно совсем скоро..."
+"Обязанное противостоять внеземной угрозе, это подразделение финансируется "
+"всеми семи политическими силами и получает в свои ряды только лучших бойцов "
+"из их национальных армий. Сможет ли ФАЛАНКС противостоять новой угрозе будет "
+"ясно совсем скоро..."
 
 #: ../base/ufos/seq_intro.ufo:48
 #, fuzzy
 msgid "intro_sentence6"
 msgstr ""
-"2084 – На Земле, наконец, наступает время относительного мира и спокойствия. Войны завершились, споры разрешены, а новые границы признаны правительствами вовлечённых в конфликты стран. Старые государства и супер-державы интегрируются в мощные политические коалиции, либо организуют союзы. Достаток и богатство перестают быть экзотикой, как это было когда-то в 20м веке, люди начинают доверять своим лидерам, аккуратно поддерживающим мировой баланс сил и ведущим их в стабильный, интригующий 22ой век."
+"2084 – На Земле, наконец, наступает время относительного мира и спокойствия. "
+"Войны завершились, споры разрешены, а новые границы признаны правительствами "
+"вовлечённых в конфликты стран. Старые государства и супер-державы "
+"интегрируются в мощные политические коалиции, либо организуют союзы. "
+"Достаток и богатство перестают быть экзотикой, как это было когда-то в 20м "
+"веке, люди начинают доверять своим лидерам, аккуратно поддерживающим мировой "
+"баланс сил и ведущим их в стабильный, интригующий 22ой век."
 
 #: ../base/ufos/seq_intro.ufo:56
 #, fuzzy
 msgid "intro_sentence7"
 msgstr ""
-"2084 – На Земле, наконец, наступает время относительного мира и спокойствия. Войны завершились, споры разрешены, а новые границы признаны правительствами вовлечённых в конфликты стран. Старые государства и супер-державы интегрируются в мощные политические коалиции, либо организуют союзы. Достаток и богатство перестают быть экзотикой, как это было когда-то в 20м веке, люди начинают доверять своим лидерам, аккуратно поддерживающим мировой баланс сил и ведущим их в стабильный, интригующий 22ой век."
+"2084 – На Земле, наконец, наступает время относительного мира и спокойствия. "
+"Войны завершились, споры разрешены, а новые границы признаны правительствами "
+"вовлечённых в конфликты стран. Старые государства и супер-державы "
+"интегрируются в мощные политические коалиции, либо организуют союзы. "
+"Достаток и богатство перестают быть экзотикой, как это было когда-то в 20м "
+"веке, люди начинают доверять своим лидерам, аккуратно поддерживающим мировой "
+"баланс сил и ведущим их в стабильный, интригующий 22ой век."
 
 #: ../base/ufos/seq_intro.ufo:64
 #, fuzzy
 msgid "intro_sentence8"
 msgstr ""
-"2084 – На Земле, наконец, наступает время относительного мира и спокойствия. Войны завершились, споры разрешены, а новые границы признаны правительствами вовлечённых в конфликты стран. Старые государства и супер-державы интегрируются в мощные политические коалиции, либо организуют союзы. Достаток и богатство перестают быть экзотикой, как это было когда-то в 20м веке, люди начинают доверять своим лидерам, аккуратно поддерживающим мировой баланс сил и ведущим их в стабильный, интригующий 22ой век."
+"2084 – На Земле, наконец, наступает время относительного мира и спокойствия. "
+"Войны завершились, споры разрешены, а новые границы признаны правительствами "
+"вовлечённых в конфликты стран. Старые государства и супер-державы "
+"интегрируются в мощные политические коалиции, либо организуют союзы. "
+"Достаток и богатство перестают быть экзотикой, как это было когда-то в 20м "
+"веке, люди начинают доверять своим лидерам, аккуратно поддерживающим мировой "
+"баланс сил и ведущим их в стабильный, интригующий 22ой век."
 
 #: ../base/ufos/seq_intro.ufo:100
 msgid "prolog_sentence1"
@@ -4142,27 +4665,37 @@ msgstr "Входящее Сообщение:"
 #: ../base/ufos/seq_intro.ufo:110
 msgid "prolog_sentence2"
 msgstr ""
-"Добро пожаловать, Командор. Вам поручено командовать подразделением ФАЛАНКС. Ваша миссия: противостоять захватчикам и обеспечивать защиту населения. Как это выполнить – Ваше лично дело, но знайте, провал недопустим."
+"Добро пожаловать, Командор. Вам поручено командовать подразделением ФАЛАНКС. "
+"Ваша миссия: противостоять захватчикам и обеспечивать защиту населения. Как "
+"это выполнить – Ваше лично дело, но знайте, провал недопустим."
 
 #: ../base/ufos/seq_intro.ufo:119
 msgid "prolog_sentence3"
 msgstr ""
-"Первое, что необходимо сделать, это построить Вашу основную базу. Место для нее выбирайте обдуманно, так как её расположение будет оказывать огромное влияние на результат проекта ФАЛАНКС."
+"Первое, что необходимо сделать, это построить Вашу основную базу. Место для "
+"нее выбирайте обдуманно, так как её расположение будет оказывать огромное "
+"влияние на результат проекта ФАЛАНКС."
 
 #: ../base/ufos/seq_intro.ufo:128
 msgid "prolog_sentence4"
 msgstr ""
-"Недавний анализ атаки на Бомбей показал, что как раз в это время активность пришельцев возросла в наиболее плотно населённых районах Центральной Америки, Европы, Азии, Африки и Австралии. Расширяя территорию проводимых операций Вам необходимо учитывать и эту информацию."
+"Недавний анализ атаки на Бомбей показал, что как раз в это время активность "
+"пришельцев возросла в наиболее плотно населённых районах Центральной "
+"Америки, Европы, Азии, Африки и Австралии. Расширяя территорию проводимых "
+"операций Вам необходимо учитывать и эту информацию."
 
 #: ../base/ufos/seq_intro.ufo:137
 msgid "prolog_sentence5"
 msgstr ""
-"После того, как Вы построите первую базу, будет необходимо подготовить боевой отряд. Рекруты, направленные в ФАЛАНКС, должны быть назначены на перехватчики и соответственно экипированы."
+"После того, как Вы построите первую базу, будет необходимо подготовить "
+"боевой отряд. Рекруты, направленные в ФАЛАНКС, должны быть назначены на "
+"перехватчики и соответственно экипированы."
 
 #: ../base/ufos/seq_intro.ufo:146
 msgid "prolog_sentence6"
 msgstr ""
-"И не забудьте обеспечить им хорошую защиту. Живой солдат, как правило, может убить больше пришельцев, чем мёртвый."
+"И не забудьте обеспечить им хорошую защиту. Живой солдат, как правило, может "
+"убить больше пришельцев, чем мёртвый."
 
 #: ../base/ufos/seq_intro.ufo:155
 msgid "prolog_sentence7"
@@ -4900,15 +5433,15 @@ msgstr ""
 msgid "Currently panics!\n"
 msgstr "В панике!\n"
 
-#: client/cl_actor.c:1642
+#: client/cl_actor.c:1646
 msgid "Nobody selected\n"
 msgstr "Никто не выбран\n"
 
-#: client/cl_actor.c:1653
+#: client/cl_actor.c:1657
 msgid "This isn't your round\n"
 msgstr "Сейчас не Ваш ход\n"
 
-#: client/cl_actor.c:1786
+#: client/cl_actor.c:1790
 #, fuzzy
 msgid ""
 "You cannot reload this unknown item.\n"
@@ -4917,217 +5450,217 @@ msgstr ""
 "Невозможно перезарядить предмет.\n"
 "Необходимо сначала исследовать.\n"
 
-#: client/cl_actor.c:2230
+#: client/cl_actor.c:2244
 msgid "was stunned.\n"
 msgstr ""
 
-#: client/cl_actor.c:2235
+#: client/cl_actor.c:2249
 #, fuzzy
 msgid "was killed.\n"
 msgstr "Пришельцец убит!\n"
 
-#: client/cl_actor.c:2242
+#: client/cl_actor.c:2256
 #, fuzzy
 msgid "A civilian was stunned.\n"
 msgstr "Мирный житель убит!\n"
 
-#: client/cl_actor.c:2244
+#: client/cl_actor.c:2258
 #, fuzzy
 msgid "A civilian was killed.\n"
 msgstr "Мирный житель убит!\n"
 
-#: client/cl_actor.c:2252
+#: client/cl_actor.c:2266
 #, fuzzy
 msgid "An alien was stunned:"
 msgstr "Пришельцец убит!\n"
 
-#: client/cl_actor.c:2256
+#: client/cl_actor.c:2270
 #, fuzzy
 msgid "An alien was killed:"
 msgstr "Пришельцец убит!\n"
 
-#: client/cl_actor.c:2261 client/cl_actor.c:2267
+#: client/cl_actor.c:2275 client/cl_actor.c:2281
 #, fuzzy
 msgid "An alien was stunned.\n"
 msgstr "Пришельцец убит!\n"
 
-#: client/cl_actor.c:2263 client/cl_actor.c:2269
+#: client/cl_actor.c:2277 client/cl_actor.c:2283
 #, fuzzy
 msgid "An alien was killed.\n"
 msgstr "Пришельцец убит!\n"
 
-#: client/cl_actor.c:2274
+#: client/cl_actor.c:2288
 #, fuzzy
 msgid "A soldier was stunned.\n"
 msgstr "Боец убит\n"
 
-#: client/cl_actor.c:2276
+#: client/cl_actor.c:2290
 #, fuzzy
 msgid "A soldier was killed.\n"
 msgstr "Боец убит\n"
 
-#: client/cl_actor.c:2280
+#: client/cl_actor.c:2294
 #, fuzzy, c-format
 msgid "A member of team %i was stunned.\n"
 msgstr "Член команды %i убит!\n"
 
-#: client/cl_actor.c:2282
+#: client/cl_actor.c:2296
 #, fuzzy, c-format
 msgid "A member of team %i was killed.\n"
 msgstr "Член команды %i убит!\n"
 
-#: client/cl_actor.c:2433
+#: client/cl_actor.c:2468
 msgid "Your round started!\n"
 msgstr "Ваш ход начался!\n"
 
-#: client/cl_aircraft.c:124
+#: client/cl_aircraft.c:126
 msgid "Aircraft started"
 msgstr "Самолет запущен"
 
-#: client/cl_aircraft.c:124 client/cl_aircraft.c:494 client/cl_aircraft.c:662
-#: client/cl_aircraft.c:963 client/cl_basemanagement.c:638
-#: client/cl_basemanagement.c:2182 client/cl_campaign.c:472
-#: client/cl_campaign.c:949 client/cl_campaign.c:1005
-#: client/cl_campaign.c:1170 client/cl_campaign.c:1181
-#: client/cl_campaign.c:1191 client/cl_campaign.c:1201
-#: client/cl_campaign.c:1211 client/cl_campaign.c:1222
-#: client/cl_campaign.c:1235 client/cl_campaign.c:1245
-#: client/cl_campaign.c:1252 client/cl_campaign.c:1260
-#: client/cl_campaign.c:2558 client/cl_campaign.c:2594
-#: client/cl_campaign.c:2596 client/cl_campaign.c:2904
-#: client/cl_campaign.c:3114 client/cl_map.c:270 client/cl_research.c:741
-#: client/cl_research.c:903 client/cl_research.c:921 client/cl_research.c:927
-#: client/cl_research.c:965 client/cl_research.c:996 client/cl_research.c:1139
-#: client/cl_research.c:1142 client/cl_transfer.c:240 client/cl_transfer.c:364
-#: client/cl_transfer.c:420 client/cl_transfer.c:473 client/cl_transfer.c:494
-#: client/cl_transfer.c:505 client/cl_transfer.c:537 client/cl_ufo.c:194
-#: client/cl_ufo.c:199
+#: client/cl_aircraft.c:126 client/cl_aircraft.c:532 client/cl_aircraft.c:740
+#: client/cl_aircraft.c:1045 client/cl_basemanagement.c:638
+#: client/cl_basemanagement.c:2182 client/cl_campaign.c:467
+#: client/cl_campaign.c:944 client/cl_campaign.c:1000
+#: client/cl_campaign.c:1165 client/cl_campaign.c:1176
+#: client/cl_campaign.c:1186 client/cl_campaign.c:1196
+#: client/cl_campaign.c:1206 client/cl_campaign.c:1217
+#: client/cl_campaign.c:1230 client/cl_campaign.c:1240
+#: client/cl_campaign.c:1247 client/cl_campaign.c:1255
+#: client/cl_campaign.c:2559 client/cl_campaign.c:2595
+#: client/cl_campaign.c:2597 client/cl_campaign.c:2905
+#: client/cl_campaign.c:3115 client/cl_main.c:1055 client/cl_map.c:270
+#: client/cl_research.c:741 client/cl_research.c:903 client/cl_research.c:921
+#: client/cl_research.c:927 client/cl_research.c:965 client/cl_research.c:996
+#: client/cl_research.c:1139 client/cl_research.c:1142
+#: client/cl_transfer.c:240 client/cl_transfer.c:364 client/cl_transfer.c:420
+#: client/cl_transfer.c:473 client/cl_transfer.c:494 client/cl_transfer.c:505
+#: client/cl_transfer.c:537 client/cl_ufo.c:194 client/cl_ufo.c:199
 msgid "Notice"
 msgstr "Предупреждение"
 
-#: client/cl_aircraft.c:200
+#: client/cl_aircraft.c:202
 msgid "ON RED ALERT"
 msgstr "ПО БОЕВОЙ ТРЕВОГЕ"
 
-#: client/cl_aircraft.c:204
+#: client/cl_aircraft.c:206
 msgid "Nothing - should not be displayed"
 msgstr "Ничего - не должно отображаться"
 
-#: client/cl_aircraft.c:206
+#: client/cl_aircraft.c:208
 msgid "At homebase"
 msgstr "На базе"
 
-#: client/cl_aircraft.c:208
+#: client/cl_aircraft.c:210
 msgid "Refuel"
 msgstr "Заправить"
 
-#: client/cl_aircraft.c:210
+#: client/cl_aircraft.c:212
 msgid "Idle"
 msgstr "Ожидает"
 
-#: client/cl_aircraft.c:212
+#: client/cl_aircraft.c:214
 msgid "On transit"
 msgstr "В полете"
 
-#: client/cl_aircraft.c:214
+#: client/cl_aircraft.c:216
 #, fuzzy
 msgid "Moving to mission"
 msgstr "Направляется к миссии"
 
-#: client/cl_aircraft.c:216
+#: client/cl_aircraft.c:218
 msgid "Pursuing a UFO"
 msgstr "Преследует НЛО"
 
-#: client/cl_aircraft.c:218
+#: client/cl_aircraft.c:220
 msgid "Ready for drop down"
 msgstr "Готов к высадке"
 
-#: client/cl_aircraft.c:220
+#: client/cl_aircraft.c:222
 msgid "On interception"
 msgstr "На перехвате"
 
-#: client/cl_aircraft.c:222
+#: client/cl_aircraft.c:224
 msgid "Transportmission"
 msgstr "Перевозит груз"
 
-#: client/cl_aircraft.c:224
+#: client/cl_aircraft.c:226
 #, fuzzy
 msgid "Back to base"
 msgstr "Обратно к обзору базы"
 
-#: client/cl_aircraft.c:417 client/cl_map.c:882 client/cl_ufopedia.c:345
+#: client/cl_aircraft.c:455 client/cl_map.c:882 client/cl_ufopedia.c:345
 #, c-format
 msgid "Speed:\t%.0f\n"
 msgstr "Скорость:\t%.0f\n"
 
-#: client/cl_aircraft.c:418 client/cl_map.c:883
+#: client/cl_aircraft.c:456 client/cl_map.c:883
 #, c-format
 msgid "Fuel:\t%i/%i\n"
 msgstr "Топливо:\t%i/%i\n"
 
-#: client/cl_aircraft.c:419 client/cl_aircraft.c:420 client/cl_aircraft.c:421
+#: client/cl_aircraft.c:457 client/cl_aircraft.c:458 client/cl_aircraft.c:459
 #: client/cl_transfer.c:836 client/cl_transfer.c:837 client/cl_ufopedia.c:321
 #: client/cl_ufopedia.c:348 client/cl_ufopedia.c:349 client/cl_ufopedia.c:350
 msgid "None"
 msgstr "Нет"
 
-#: client/cl_aircraft.c:419 client/cl_ufopedia.c:348
+#: client/cl_aircraft.c:457 client/cl_ufopedia.c:348
 #, c-format
 msgid "Weapon:\t%s\n"
 msgstr "Оружие:\t%s\n"
 
-#: client/cl_aircraft.c:420 client/cl_ufopedia.c:349
+#: client/cl_aircraft.c:458 client/cl_ufopedia.c:349
 #, c-format
 msgid "Shield:\t%s\n"
 msgstr "Защита:\t%s\n"
 
-#: client/cl_aircraft.c:421
+#: client/cl_aircraft.c:459
 #, fuzzy, c-format
 msgid "Equipment:\t%s"
 msgstr "Снаряжение"
 
-#: client/cl_aircraft.c:493
+#: client/cl_aircraft.c:531
 #, c-format
 msgid "You've got a new aircraft (a %s) in base %s"
 msgstr "Прибыл новый самолет \"%s\" на базу %s"
 
-#: client/cl_aircraft.c:662
+#: client/cl_aircraft.c:740
 #, fuzzy
 msgid "Your dropship is low on fuel and returns to base"
 msgstr "У транспорта заканчивается топливо, и он возвращается на базу"
 
-#: client/cl_aircraft.c:701 client/cl_aircraft.c:708
+#: client/cl_aircraft.c:783 client/cl_aircraft.c:790
 #, fuzzy
 msgid "Interception"
 msgstr "Перехват"
 
-#: client/cl_aircraft.c:701 client/cl_campaign.c:2594
+#: client/cl_aircraft.c:783 client/cl_campaign.c:2595
 msgid "You've won the battle"
 msgstr "Вы победили в бою"
 
-#: client/cl_aircraft.c:708 client/cl_campaign.c:2596
+#: client/cl_aircraft.c:790 client/cl_campaign.c:2597
 msgid "You've lost the battle"
 msgstr "Вы проиграли бой"
 
-#: client/cl_aircraft.c:826
+#: client/cl_aircraft.c:908
 #, fuzzy
 msgid "None\n"
 msgstr "Нет\n"
 
-#: client/cl_aircraft.c:882
+#: client/cl_aircraft.c:964
 msgid "No weapon assigned"
 msgstr "Оружие не установлено"
 
-#: client/cl_aircraft.c:886
+#: client/cl_aircraft.c:968
 #, fuzzy
 msgid "No item assigned"
 msgstr "Броня не установлена"
 
-#: client/cl_aircraft.c:890
+#: client/cl_aircraft.c:972
 msgid "No shield assigned"
 msgstr "Броня не установлена"
 
-#: client/cl_aircraft.c:963
+#: client/cl_aircraft.c:1045
 msgid "Assign a team to aircraft"
 msgstr "Назначить отряд на самолет"
 
@@ -5182,7 +5715,7 @@ msgstr[0] "%i дней осталось"
 msgstr[1] "%i день осталcя"
 msgstr[2] "%i дня осталось"
 
-#: client/cl_basemanagement.c:1467 client/cl_campaign.c:1435
+#: client/cl_basemanagement.c:1467 client/cl_campaign.c:1430
 #, c-format
 msgid "%i c"
 msgstr "%i кр."
@@ -5192,7 +5725,7 @@ msgstr "%i кр."
 msgid "Base is under attack"
 msgstr "База атакована"
 
-#: client/cl_basemanagement.c:1782 client/cl_team.c:1223 client/cl_team.c:1416
+#: client/cl_basemanagement.c:1782 client/cl_team.c:1241 client/cl_team.c:1434
 msgid "NewTeam"
 msgstr "НовыйОтряд"
 
@@ -5215,12 +5748,13 @@ msgstr "Вы построили максимальное количество б
 
 #: client/cl_basemanagement.c:2233
 msgid ""
-"No aircraft in this base - You first have to purchase or transfer an aircraft\n"
+"No aircraft in this base - You first have to purchase or transfer an "
+"aircraft\n"
 msgstr ""
 
 #: client/cl_basemanagement.c:2233 client/cl_basemanagement.c:2235
-#: client/cl_campaign.c:1799 client/cl_campaign.c:2387 client/cl_market.c:192
-#: client/cl_market.c:443 client/cl_team.c:1268
+#: client/cl_campaign.c:1800 client/cl_campaign.c:2388 client/cl_market.c:192
+#: client/cl_market.c:439 client/cl_team.c:1286
 msgid "Note"
 msgstr "Замечание"
 
@@ -5237,32 +5771,33 @@ msgstr "Завершено строительство %s на базе %s."
 msgid "Building finished"
 msgstr "Завершено строительство"
 
-#: client/cl_campaign.c:472 client/cl_map.c:270
+#: client/cl_campaign.c:467 client/cl_map.c:270
 msgid "Could not set up your base at this location"
 msgstr "В этом месте невозможно построить базу."
 
-#: client/cl_campaign.c:765
+#: client/cl_campaign.c:760
 #, c-format
 msgid "Your base %s is under attack."
 msgstr "Ваша база %s атакуется."
 
-#: client/cl_campaign.c:785
+#: client/cl_campaign.c:780
 #, fuzzy, c-format
 msgid "Alien activity has been reported: '%s'"
 msgstr "Обнаружена активность пришельцев: '%s'"
 
-#: client/cl_campaign.c:786
+#: client/cl_campaign.c:781
 msgid "Alien activity"
 msgstr "Активность пришельцев"
 
-#: client/cl_campaign.c:948
+#: client/cl_campaign.c:943
 #, c-format
 msgid ""
-"Your base: %s has been ransacked! All employees killed and all equipment destroyed."
+"Your base: %s has been ransacked! All employees killed and all equipment "
+"destroyed."
 msgstr ""
 "Ваша база %s разграблена! Все служащие убиты и оборудование уничтожено."
 
-#: client/cl_campaign.c:1004
+#: client/cl_campaign.c:999
 #, c-format
 msgid "The mission expired and %i civilian died."
 msgid_plural "The mission expired and %i civilians died."
@@ -5270,112 +5805,112 @@ msgstr[0] "Миссия не была вовремя выполнена и %i м
 msgstr[1] "Миссия не была вовремя выполнена и %i мирный житель погиб."
 msgstr[2] "Миссия не была вовремя выполнена и %i мирных жителя погибло."
 
-#: client/cl_campaign.c:1053
+#: client/cl_campaign.c:1048
 msgid "Jan"
 msgstr "Янв"
 
-#: client/cl_campaign.c:1055
+#: client/cl_campaign.c:1050
 msgid "Feb"
 msgstr "Фев"
 
-#: client/cl_campaign.c:1057
+#: client/cl_campaign.c:1052
 #, fuzzy
 msgid "Mar"
 msgstr "Мар"
 
-#: client/cl_campaign.c:1059
+#: client/cl_campaign.c:1054
 msgid "Apr"
 msgstr "Апр"
 
-#: client/cl_campaign.c:1061
+#: client/cl_campaign.c:1056
 #, fuzzy
 msgid "May"
 msgstr "Май"
 
-#: client/cl_campaign.c:1063
+#: client/cl_campaign.c:1058
 msgid "Jun"
 msgstr "Июн"
 
-#: client/cl_campaign.c:1065
+#: client/cl_campaign.c:1060
 msgid "Jul"
 msgstr "Июл"
 
-#: client/cl_campaign.c:1067
+#: client/cl_campaign.c:1062
 msgid "Aug"
 msgstr "Авг"
 
-#: client/cl_campaign.c:1069
+#: client/cl_campaign.c:1064
 msgid "Sep"
 msgstr "Сен"
 
-#: client/cl_campaign.c:1071
+#: client/cl_campaign.c:1066
 msgid "Oct"
 msgstr "Окт"
 
-#: client/cl_campaign.c:1073
+#: client/cl_campaign.c:1068
 #, fuzzy
 msgid "Nov"
 msgstr "Ноя"
 
-#: client/cl_campaign.c:1075
+#: client/cl_campaign.c:1070
 msgid "Dec"
 msgstr "Дек"
 
-#: client/cl_campaign.c:1089
+#: client/cl_campaign.c:1084
 msgid "Giving up"
 msgstr "Разорвано"
 
-#: client/cl_campaign.c:1091
+#: client/cl_campaign.c:1086
 msgid "Furious"
 msgstr "Яростное"
 
-#: client/cl_campaign.c:1093
+#: client/cl_campaign.c:1088
 msgid "Angry"
 msgstr "Разгневанное"
 
-#: client/cl_campaign.c:1095
+#: client/cl_campaign.c:1090
 msgid "Mad"
 msgstr "Обеспокоенное"
 
-#: client/cl_campaign.c:1097
+#: client/cl_campaign.c:1092
 msgid "Upset"
 msgstr "Огорченное"
 
-#: client/cl_campaign.c:1099
+#: client/cl_campaign.c:1094
 #, fuzzy
 msgid "Tolerant"
 msgstr "Спокойное"
 
-#: client/cl_campaign.c:1101
+#: client/cl_campaign.c:1096
 #, fuzzy
 msgid "Neutral"
 msgstr "Нейтральное"
 
-#: client/cl_campaign.c:1103
+#: client/cl_campaign.c:1098
 #, fuzzy
 msgid "Content"
 msgstr "Удолетворительное"
 
-#: client/cl_campaign.c:1105
+#: client/cl_campaign.c:1100
 #, fuzzy
 msgid "Pleased"
 msgstr "Доброжелательное"
 
-#: client/cl_campaign.c:1107
+#: client/cl_campaign.c:1102
 #, fuzzy
 msgid "Happy"
 msgstr "Довольное"
 
-#: client/cl_campaign.c:1109
+#: client/cl_campaign.c:1104
 msgid "Exuberant"
 msgstr "Отличное"
 
-#: client/cl_campaign.c:1163
+#: client/cl_campaign.c:1158
 #, fuzzy, c-format
 msgid "Gained %i %s, %i %s, %i %s, %i %s, and %i %s from nation %s (%s)"
 msgstr "Получено %i %s, %i %s, %i %s, %i %s, и %i %s от нации %s (%s)"
 
-#: client/cl_campaign.c:1164
+#: client/cl_campaign.c:1159
 #, fuzzy
 msgid "credit"
 msgid_plural "credits"
@@ -5383,7 +5918,7 @@ msgstr[0] "кредит"
 msgstr[1] "кредит"
 msgstr[2] "кредита"
 
-#: client/cl_campaign.c:1165 client/cl_campaign.c:4359
+#: client/cl_campaign.c:1160 client/cl_campaign.c:4362
 #, fuzzy
 msgid "scientist"
 msgid_plural "scientists"
@@ -5391,7 +5926,7 @@ msgstr[0] "ученых"
 msgstr[1] "ученый"
 msgstr[2] "ученых"
 
-#: client/cl_campaign.c:1166 client/cl_campaign.c:4361
+#: client/cl_campaign.c:1161 client/cl_campaign.c:4364
 #, fuzzy
 msgid "medic"
 msgid_plural "medics"
@@ -5399,7 +5934,7 @@ msgstr[0] "врач"
 msgstr[1] "врач"
 msgstr[2] "врача"
 
-#: client/cl_campaign.c:1167 client/cl_campaign.c:4358
+#: client/cl_campaign.c:1162 client/cl_campaign.c:4361
 #, fuzzy
 msgid "soldier"
 msgid_plural "soldiers"
@@ -5407,7 +5942,7 @@ msgstr[0] "боецов"
 msgstr[1] "боец"
 msgstr[2] "боеца"
 
-#: client/cl_campaign.c:1168 client/cl_campaign.c:4360
+#: client/cl_campaign.c:1163 client/cl_campaign.c:4363
 #, fuzzy
 msgid "worker"
 msgid_plural "workers"
@@ -5415,57 +5950,57 @@ msgstr[0] "рабочих"
 msgstr[1] "рабочий"
 msgstr[2] "рабочих"
 
-#: client/cl_campaign.c:1179
+#: client/cl_campaign.c:1174
 #, fuzzy, c-format
 msgid "Paid %i credits to soldiers"
 msgstr "Заплачено %i кредитов бойцам"
 
-#: client/cl_campaign.c:1189
+#: client/cl_campaign.c:1184
 #, fuzzy, c-format
 msgid "Paid %i credits to workers"
 msgstr "Заплачено %i кредитов рабочим"
 
-#: client/cl_campaign.c:1199
+#: client/cl_campaign.c:1194
 #, fuzzy, c-format
 msgid "Paid %i credits to scientists"
 msgstr "Заплачено %i кредитов ученым"
 
-#: client/cl_campaign.c:1209
+#: client/cl_campaign.c:1204
 #, fuzzy, c-format
 msgid "Paid %i credits to medics"
 msgstr "Заплачено %i кредитов врачам"
 
-#: client/cl_campaign.c:1220
+#: client/cl_campaign.c:1215
 #, fuzzy, c-format
 msgid "Paid %i credits for robots"
 msgstr "Заплачено %i кредитов за роботов"
 
-#: client/cl_campaign.c:1233
+#: client/cl_campaign.c:1228
 #, fuzzy, c-format
 msgid "Paid %i credits for aircraft"
 msgstr "Заплачено %i кредитов за самолеты"
 
-#: client/cl_campaign.c:1244
+#: client/cl_campaign.c:1239
 #, fuzzy, c-format
 msgid "Paid %i credits for upkeep of base %s"
 msgstr "Заплачено %i кредитов за содержание базы %s"
 
-#: client/cl_campaign.c:1250
+#: client/cl_campaign.c:1245
 #, fuzzy, c-format
 msgid "Paid %i credits for administrative overhead."
 msgstr "Заплачено %i административных издержек. "
 
-#: client/cl_campaign.c:1258
+#: client/cl_campaign.c:1253
 #, c-format
 msgid "Paid %i credits in interest on your debt."
 msgstr "Заплачено %i кредитов по долговым процентам."
 
-#: client/cl_campaign.c:1341
+#: client/cl_campaign.c:1336
 #, c-format
 msgid "%02i:%02i"
 msgstr ""
 
-#: client/cl_campaign.c:1458
+#: client/cl_campaign.c:1453
 #, c-format
 msgid ""
 "Won:\t%i\n"
@@ -5476,7 +6011,7 @@ msgstr ""
 "Проиграно:\t%i\n"
 "\n"
 
-#: client/cl_campaign.c:1463
+#: client/cl_campaign.c:1458
 #, fuzzy, c-format
 msgid ""
 "Built:\t%i\n"
@@ -5487,42 +6022,42 @@ msgstr ""
 "Активно:\t%i\n"
 "Атаковано:\t%i\n"
 
-#: client/cl_campaign.c:1470
+#: client/cl_campaign.c:1465
 #, fuzzy, c-format
 msgid "%s\t%s\n"
 msgstr "Карта:\t%s\n"
 
-#: client/cl_campaign.c:1509
+#: client/cl_campaign.c:1504
 #, c-format
 msgid "%s\t%i\n"
 msgstr ""
 
-#: client/cl_campaign.c:1515
+#: client/cl_campaign.c:1510
 #, c-format
 msgid "Employees:\t%i c\n"
 msgstr "Служащие:\t%i кр.\n"
 
-#: client/cl_campaign.c:1524
+#: client/cl_campaign.c:1519
 #, fuzzy, c-format
 msgid "Aircrafts:\t%i c\n"
 msgstr "Самолеты:\t%i кр.\n"
 
-#: client/cl_campaign.c:1532
+#: client/cl_campaign.c:1527
 #, c-format
 msgid "Base (%s):\t%i c\n"
 msgstr "База (%s):\t%i кр.\n"
 
-#: client/cl_campaign.c:1537
+#: client/cl_campaign.c:1532
 #, fuzzy, c-format
 msgid "Administrative costs:\t%i c\n"
 msgstr "Административные издержки:\t%i кр\n"
 
-#: client/cl_campaign.c:1544
+#: client/cl_campaign.c:1539
 #, fuzzy, c-format
 msgid "Debt:\t%i c\n"
 msgstr "Долг:\t%i кр\n"
 
-#: client/cl_campaign.c:1547
+#: client/cl_campaign.c:1542
 #, c-format
 msgid ""
 "\n"
@@ -5533,63 +6068,65 @@ msgstr ""
 "\t--------\n"
 "Всего:\t%i кр.\n"
 
-#: client/cl_campaign.c:1799
+#: client/cl_campaign.c:1800
 msgid "Error saving game. Check free disk space!"
 msgstr "Ошибка сохранения игры. Проверьте свободное место."
 
-#: client/cl_campaign.c:2387
+#: client/cl_campaign.c:2388
 msgid "Assemble or load a team"
 msgstr "Создайте или загрузите отряд"
 
-#: client/cl_campaign.c:2558
+#: client/cl_campaign.c:2559
 #, fuzzy
 msgid "Your dropship is not near the landing zone"
 msgstr "Ваш транспорт далеко от зоны приземления"
 
-#: client/cl_campaign.c:2901
+#: client/cl_campaign.c:2902
 #, c-format
 msgid "By selling %s %s"
 msgstr ""
 
-#: client/cl_campaign.c:2902
+#: client/cl_campaign.c:2903
 #, fuzzy, c-format
 msgid "%i collected item"
 msgid_plural "%i collected items"
 msgstr[0] "Выбрать предмет"
 msgstr[1] "Выбрать предмет"
 
-#: client/cl_campaign.c:2903
+#: client/cl_campaign.c:2904
 #, c-format
 msgid "you gathered %i credits."
 msgstr ""
 
-#: client/cl_campaign.c:2960
+#: client/cl_campaign.c:2961
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s был повышел до звания %s.\n"
 
-#: client/cl_campaign.c:2962
+#: client/cl_campaign.c:2963
 #, c-format
 msgid ""
-"%s has been awarded the posthumous rank of %s\\for inspirational gallantry in the face of overwhelming odds.\n"
+"%s has been awarded the posthumous rank of %s\\for inspirational gallantry "
+"in the face of overwhelming odds.\n"
 msgstr ""
-"%s был награжден посмертно званием %s\\за отважную борьбу с превосходящими силами противника.\n"
+"%s был награжден посмертно званием %s\\за отважную борьбу с превосходящими "
+"силами противника.\n"
 
-#: client/cl_campaign.c:2963
+#: client/cl_campaign.c:2964
 msgid "Soldier promoted"
 msgstr "Солдат повышен"
 
-#: client/cl_campaign.c:3113
+#: client/cl_campaign.c:3114
 #, c-format
 msgid "Defense of base: %s successful!"
 msgstr "Защита базы: %s успешно!"
 
-#: client/cl_campaign.c:4354
+#: client/cl_campaign.c:4357
 #, fuzzy
 msgid "Human"
 msgstr "Короткая Очередь"
 
-#: client/cl_campaign.c:4356
+#: client/cl_campaign.c:4359
 #, c-format
 msgid ""
 "Race: %s\n"
@@ -5616,7 +6153,8 @@ msgstr ""
 #: client/cl_employee.c:472
 #, c-format
 msgid ""
-"You don't have enough living quarters to house all of your personnel. You need to fire %i personnel until more living space becomes available."
+"You don't have enough living quarters to house all of your personnel. You "
+"need to fire %i personnel until more living space becomes available."
 msgstr ""
 
 #: client/cl_employee.c:476
@@ -5637,115 +6175,115 @@ msgstr "Лечение закончено"
 msgid "%s\t%s\t(%i/%i)\n"
 msgstr "Урон:\t%i / %i\n"
 
-#: client/cl_input.c:699
+#: client/cl_input.c:707
 msgid "Rotate battlescape camera anti-clockwise"
 msgstr "Вращать камеру поля боя против часовой стрелки"
 
-#: client/cl_input.c:701
+#: client/cl_input.c:709
 msgid "Rotate battlescape camera clockwise"
 msgstr "Вращать камеру поля боя по часовой стрелке"
 
-#: client/cl_input.c:703
+#: client/cl_input.c:711
 msgid "Tilt battlescape camera up"
 msgstr "Наклонить камеру поля боя вверх"
 
-#: client/cl_input.c:705
+#: client/cl_input.c:713
 msgid "Tilt battlescape camera down"
 msgstr "Наклонить камеру поля боя вниз"
 
-#: client/cl_input.c:707
+#: client/cl_input.c:715
 msgid "Move battlescape camera left"
 msgstr "Переместить камеру поля боя влево"
 
-#: client/cl_input.c:709
+#: client/cl_input.c:717
 msgid "Move battlescape camera right"
 msgstr "Переместить камеру поля боя вправо"
 
-#: client/cl_input.c:711
+#: client/cl_input.c:719
 msgid "Move battlescape camera forward"
 msgstr "Переместить камеру поля боя вперед"
 
-#: client/cl_input.c:713
+#: client/cl_input.c:721
 msgid "Move battlescape camera backward"
 msgstr "Переместить камеру поля боя назад"
 
-#: client/cl_input.c:715 client/cl_input.c:739
+#: client/cl_input.c:723 client/cl_input.c:747
 msgid "Zoom in"
 msgstr "Увеличить масштаб"
 
-#: client/cl_input.c:717 client/cl_input.c:740
+#: client/cl_input.c:725 client/cl_input.c:748
 msgid "Zoom out"
 msgstr "Уменьшить масштаб"
 
-#: client/cl_input.c:720
+#: client/cl_input.c:728
 msgid "Select objects/Walk to a square/In fire mode, fire etc"
 msgstr "Выбрать объекты/Идти в квадрат/В режиме огня, огонь и.т.д."
 
-#: client/cl_input.c:722
+#: client/cl_input.c:730
 msgid "Walk to a square/In fire mode, cancel action"
 msgstr "Идти в квадрат/В режиме огня, отменить действие"
 
-#: client/cl_input.c:724
+#: client/cl_input.c:732
 msgid "Turn soldier toward mouse pointer"
 msgstr "Повернуть солдата к указателю мыши"
 
-#: client/cl_input.c:726
+#: client/cl_input.c:734
 msgid "Toggle stand/crounch"
 msgstr "Присесть/встать"
 
-#: client/cl_input.c:727
+#: client/cl_input.c:735
 #, fuzzy
 msgid "Toggle reaction fire"
 msgstr "Активация ответного огня"
 
-#: client/cl_input.c:728
+#: client/cl_input.c:736
 msgid "Toogle to next alien"
 msgstr "Переключится на следующего пришельца"
 
-#: client/cl_input.c:734
+#: client/cl_input.c:742
 msgid "Reload the weapon in the soldiers left hand"
 msgstr ""
 
-#: client/cl_input.c:735
+#: client/cl_input.c:743
 msgid "Reload the weapon in the soldiers right hand"
 msgstr ""
 
-#: client/cl_input.c:736
+#: client/cl_input.c:744
 #, fuzzy
 msgid "Ends current round"
 msgstr "Закончить ход"
 
-#: client/cl_input.c:737
+#: client/cl_input.c:745
 msgid "Slice through terrain at a higher level"
 msgstr ""
 
-#: client/cl_input.c:738
+#: client/cl_input.c:746
 msgid "Slice through terrain at a lower level"
 msgstr ""
 
-#: client/cl_input.c:741
+#: client/cl_input.c:749
 #, fuzzy
 msgid "Confirm the current action"
 msgstr "Подтвердить текущее действие"
 
-#: client/cl_input.c:749
+#: client/cl_input.c:757
 msgid "Toggle first-person/third-person camera mode"
 msgstr "Переключится с вида отпервого лица к виду от третьего лица"
 
-#: client/cl_main.c:375 client/cl_main.c:1021
+#: client/cl_main.c:365 client/cl_main.c:1011
 msgid "Assemble a team first"
 msgstr "Сначала соберите отряд"
 
-#: client/cl_main.c:375 client/cl_main.c:1021 client/cl_main.c:1590
-#: client/cl_main.c:1595 client/cl_main.c:1601 client/cl_main.c:1607
+#: client/cl_main.c:365 client/cl_main.c:1011 client/cl_main.c:1565
+#: client/cl_main.c:1570 client/cl_main.c:1576 client/cl_main.c:1582
 msgid "Error"
 msgstr "Ошибка"
 
-#: client/cl_main.c:872
+#: client/cl_main.c:862
 msgid "No player connected\n"
 msgstr "Нет подключенных игроков\n"
 
-#: client/cl_main.c:910
+#: client/cl_main.c:900
 #, c-format
 msgid ""
 "IP\t%s\n"
@@ -5754,129 +6292,136 @@ msgstr ""
 "IP\t%s\n"
 "\n"
 
-#: client/cl_main.c:931
+#: client/cl_main.c:921
 #, c-format
 msgid "Map:\t%s\n"
 msgstr "Карта:\t%s\n"
 
-#: client/cl_main.c:942
+#: client/cl_main.c:932
 #, c-format
 msgid "Version:\t%s\n"
 msgstr "Версия:\t%s\n"
 
-#: client/cl_main.c:944
+#: client/cl_main.c:934
 #, c-format
 msgid "Servername:\t%s\n"
 msgstr "Имя сервера:\t%s\n"
 
-#: client/cl_main.c:946
+#: client/cl_main.c:936
 #, c-format
 msgid "Moralestates:\t%s\n"
 msgstr "Мораль:\t%s\n"
 
-#: client/cl_main.c:948
+#: client/cl_main.c:938
 #, c-format
 msgid "Teamplay:\t%s\n"
 msgstr "Командная игра:\t%s\n"
 
-#: client/cl_main.c:950
+#: client/cl_main.c:940
 #, c-format
 msgid "Max. players per team:\t%s\n"
 msgstr "Максимум игроков в команде:\t%s\n"
 
-#: client/cl_main.c:952
+#: client/cl_main.c:942
 #, c-format
 msgid "Max. teams allowed in this map:\t%s\n"
 msgstr "Макс. количество команд на этой карте:\t%s\n"
 
-#: client/cl_main.c:954
+#: client/cl_main.c:944
 #, c-format
 msgid "Max. clients:\t%s\n"
 msgstr "Максимум игроков:\t%s\n"
 
-#: client/cl_main.c:956
+#: client/cl_main.c:946
 #, c-format
 msgid "Max. soldiers per player:\t%s\n"
 msgstr "Максимум бойцов у игрока:\t%s\n"
 
-#: client/cl_main.c:958
+#: client/cl_main.c:948
 #, c-format
 msgid "Max. soldiers per team:\t%s\n"
 msgstr "Максимум бойцов в отряде:\t%s\n"
 
-#: client/cl_main.c:1185
+#: client/cl_main.c:1055
+msgid ""
+"All bookmark slots are used - please removed unused entries and repeat this "
+"step"
+msgstr ""
+
+#: client/cl_main.c:1159
 msgid "Select a free team or your coop team"
 msgstr "Выберите свободную команду или присоединяйтесь к команде"
 
-#: client/cl_main.c:1430
+#: client/cl_main.c:1404
 msgid "Connection timed out - server is no longer reachable"
 msgstr ""
 
-#: client/cl_main.c:1430
+#: client/cl_main.c:1404
 #, fuzzy
 msgid "Network error"
 msgstr "рабочих"
 
-#: client/cl_main.c:1490 client/cl_main.c:1504
+#: client/cl_main.c:1464 client/cl_main.c:1478
 #, fuzzy, c-format
 msgid "Current team: %i"
 msgstr "Текущий отряд: %i"
 
-#: client/cl_main.c:1494 client/cl_main.c:1508
+#: client/cl_main.c:1468 client/cl_main.c:1482
 #, fuzzy
 msgid "Team is already in use"
 msgstr "Команда уже используется"
 
-#: client/cl_main.c:1518 client/cl_main.c:1544
+#: client/cl_main.c:1492 client/cl_main.c:1518
 msgid "Invalid or full team"
 msgstr "Неправильная или укомплектованная команда"
 
-#: client/cl_main.c:1589
+#: client/cl_main.c:1564
 #, c-format
 msgid "Local game version (%s) differs from the servers"
 msgstr ""
 
-#: client/cl_main.c:1595
+#: client/cl_main.c:1570
 msgid "Local map version differs from server"
 msgstr ""
 
-#: client/cl_main.c:1601
+#: client/cl_main.c:1576
 msgid ""
-"You are using modified ufo script files - you won't be able to connect to the server"
+"You are using modified ufo script files - you won't be able to connect to "
+"the server"
 msgstr ""
 
-#: client/cl_main.c:1606
+#: client/cl_main.c:1581
 #, c-format
 msgid "Local game version (%s) differs from the servers (%s)"
 msgstr ""
 
-#: client/cl_main.c:1893
+#: client/cl_main.c:1866
 #, fuzzy
 msgid "Unnamed"
 msgstr "Без имени"
 
-#: client/cl_main.c:2128
+#: client/cl_main.c:2100
 msgid "Chicken-hearted"
 msgstr "Уязвимый, как цыпленок"
 
-#: client/cl_main.c:2130
+#: client/cl_main.c:2102
 msgid "Very Easy"
 msgstr "Очень легкая"
 
-#: client/cl_main.c:2133
+#: client/cl_main.c:2105
 msgid "Easy"
 msgstr "Легкая"
 
-#: client/cl_main.c:2138
+#: client/cl_main.c:2110
 #, fuzzy
 msgid "Hard"
 msgstr "Тежелая"
 
-#: client/cl_main.c:2140
+#: client/cl_main.c:2112
 msgid "Very Hard"
 msgstr "Очень тяжелая"
 
-#: client/cl_main.c:2142
+#: client/cl_main.c:2114
 #, fuzzy
 msgid "Insane"
 msgstr "Безумная"
@@ -5942,7 +6487,7 @@ msgstr "Статус:\t%s\n"
 msgid "Build a hangar first"
 msgstr "Сначала постройте лабораторию."
 
-#: client/cl_market.c:443
+#: client/cl_market.c:439
 msgid "You can't sell an aircraft if it still has a team assigned"
 msgstr ""
 
@@ -5959,12 +6504,12 @@ msgstr "Установки не имеют смысла"
 msgid "In: %i Out: %i"
 msgstr ""
 
-#: client/cl_menu.c:1729
+#: client/cl_menu.c:1735
 #, c-format
 msgid "Key: %s"
 msgstr "Клавиша: %s"
 
-#: client/cl_menu.c:3083
+#: client/cl_menu.c:3104
 msgid "Hide the HUD (press ESC to reactivate HUD)"
 msgstr "Скрыть HUD (нажмите ESC чтобы отобразить HUD)"
 
@@ -6195,34 +6740,34 @@ msgstr "Пустыня"
 msgid "Arctic"
 msgstr "Арктика"
 
-#: client/cl_team.c:836
+#: client/cl_team.c:854
 #, c-format
 msgid "%i of %i"
 msgstr "%i из %i"
 
-#: client/cl_team.c:1268
+#: client/cl_team.c:1286
 msgid "Error saving team. Check free disk space!"
 msgstr "Ошибка при записи на диск. Проверьте свободное место!"
 
-#: client/cl_team.c:1440
+#: client/cl_team.c:1458
 msgid "Select a soldier from list"
 msgstr "Выбрать бойца из списка"
 
-#: client/cl_team.c:1441
+#: client/cl_team.c:1459
 msgid "Toggle to next soldier"
 msgstr "Переключится к следующему солдату"
 
-#: client/cl_team.c:1783 client/cl_team.c:1833
+#: client/cl_team.c:1801 client/cl_team.c:1851
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "Пришельцев убито\t%i\n"
 
-#: client/cl_team.c:1786
+#: client/cl_team.c:1804
 #, c-format
 msgid "Enemies killed\t%i\n"
 msgstr "Противников убито\t%i\n"
 
-#: client/cl_team.c:1791
+#: client/cl_team.c:1809
 #, fuzzy, c-format
 msgid ""
 "Aliens captured\t%i\n"
@@ -6231,7 +6776,7 @@ msgstr ""
 "Пришельцев захвачено\t%i\n"
 "\n"
 
-#: client/cl_team.c:1792 client/cl_team.c:1837
+#: client/cl_team.c:1810 client/cl_team.c:1855
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -6240,14 +6785,14 @@ msgstr ""
 "Пришельцев уцелело\t%i\n"
 "\n"
 
-#: client/cl_team.c:1794
+#: client/cl_team.c:1812
 #, fuzzy, c-format
 msgid ""
 "Enemies captured\t%i\n"
 "\n"
 msgstr "Противников захвачено\t%i\n"
 
-#: client/cl_team.c:1795
+#: client/cl_team.c:1813
 #, fuzzy, c-format
 msgid ""
 "Enemy survivors\t%i\n"
@@ -6256,22 +6801,22 @@ msgstr ""
 "Противников уцелело\t%i\n"
 "\n"
 
-#: client/cl_team.c:1799
+#: client/cl_team.c:1817
 #, c-format
 msgid "Team losses\t%i\n"
 msgstr "Отряд потерял\t%i\n"
 
-#: client/cl_team.c:1800
+#: client/cl_team.c:1818
 #, c-format
 msgid "Team missing in action\t%i\n"
 msgstr "Отряд потерял на задании\t%i\n"
 
-#: client/cl_team.c:1801
+#: client/cl_team.c:1819
 #, c-format
 msgid "Friendly fire losses\t%i\n"
 msgstr "Убито в отряде своими\t%i\n"
 
-#: client/cl_team.c:1802
+#: client/cl_team.c:1820
 #, c-format
 msgid ""
 "Team survivors\t%i\n"
@@ -6280,22 +6825,22 @@ msgstr ""
 "Уцелело в отряде\t%i\n"
 "\n"
 
-#: client/cl_team.c:1805
+#: client/cl_team.c:1823
 #, c-format
 msgid "Civilians killed by the Aliens\t%i\n"
 msgstr "Мирных жителей убито пришельцами\t%i\n"
 
-#: client/cl_team.c:1807
+#: client/cl_team.c:1825
 #, c-format
 msgid "Civilians killed by the Enemies\t%i\n"
 msgstr "Мирных жителей убито противниками\t%i\n"
 
-#: client/cl_team.c:1809
+#: client/cl_team.c:1827
 #, c-format
 msgid "Civilians killed by your Team\t%i\n"
 msgstr "Мирных жителей убито отрядом\t%i\n"
 
-#: client/cl_team.c:1810
+#: client/cl_team.c:1828
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -6306,27 +6851,27 @@ msgstr ""
 "\n"
 "\n"
 
-#: client/cl_team.c:1836
+#: client/cl_team.c:1854
 #, fuzzy, c-format
 msgid "Aliens captured\t%i\n"
 msgstr "Пришельцев захвачено\t%i\n"
 
-#: client/cl_team.c:1840
+#: client/cl_team.c:1858
 #, fuzzy, c-format
 msgid "PHALANX soldiers killed by Aliens\t%i\n"
 msgstr "Бойцов ФАЛАНКС убито пришельцами\t%i\n"
 
-#: client/cl_team.c:1841
+#: client/cl_team.c:1859
 #, fuzzy, c-format
 msgid "PHALANX soldiers missing in action\t%i\n"
 msgstr "Бойцов ФАЛАНКС потерено в задании\t%i\n"
 
-#: client/cl_team.c:1842
+#: client/cl_team.c:1860
 #, fuzzy, c-format
 msgid "PHALANX friendly fire losses\t%i\n"
 msgstr "Убито в отряде своими\t%i\n"
 
-#: client/cl_team.c:1843
+#: client/cl_team.c:1861
 #, fuzzy, c-format
 msgid ""
 "PHALANX survivors\t%i\n"
@@ -6335,17 +6880,17 @@ msgstr ""
 "Пришельцев уцелело\t%i\n"
 "\n"
 
-#: client/cl_team.c:1845
+#: client/cl_team.c:1863
 #, c-format
 msgid "Civilians killed by Aliens\t%i\n"
 msgstr "Мирных жителей убито пришельцами\t%i\n"
 
-#: client/cl_team.c:1846
+#: client/cl_team.c:1864
 #, c-format
 msgid "Civilians killed by friendly fire\t%i\n"
 msgstr "Мирных жителей убито своими\t%i\n"
 
-#: client/cl_team.c:1847
+#: client/cl_team.c:1865
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -6355,12 +6900,12 @@ msgstr ""
 "\n"
 "\n"
 
-#: client/cl_team.c:1854
+#: client/cl_team.c:1872
 #, c-format
 msgid "Items salvaged and sold\t%i\n"
 msgstr "Захвачено и продано трофеев\t%i\n"
 
-#: client/cl_team.c:1855
+#: client/cl_team.c:1873
 #, c-format
 msgid ""
 "Total item sale value\t%i\n"
@@ -6369,7 +6914,7 @@ msgstr ""
 "Всего выручено\t%i\n"
 "\n"
 
-#: client/cl_team.c:1872
+#: client/cl_team.c:1890
 #, c-format
 msgid ""
 "\n"
@@ -6382,16 +6927,16 @@ msgstr ""
 "Врагов убито:  %i\n"
 "Выжило в команде:  %i"
 
-#: client/cl_team.c:1874
+#: client/cl_team.c:1892
 #, fuzzy
 msgid "You won the game!"
 msgstr "Вы победили в бою"
 
-#: client/cl_team.c:1876
+#: client/cl_team.c:1894
 msgid "Congratulations"
 msgstr "Поздравления"
 
-#: client/cl_team.c:1878
+#: client/cl_team.c:1896
 msgid ""
 "The game was a draw!\n"
 "\n"
@@ -6401,16 +6946,16 @@ msgstr ""
 "\n"
 "Нет выживших ни на одной стороне."
 
-#: client/cl_team.c:1879
+#: client/cl_team.c:1897
 msgid "Game Drawn!"
 msgstr "Ничья!"
 
-#: client/cl_team.c:1881
+#: client/cl_team.c:1899
 #, fuzzy
 msgid "You lost the game"
 msgstr "Вы проиграли бой"
 
-#: client/cl_team.c:1883
+#: client/cl_team.c:1901
 msgid "Better luck next time"
 msgstr "Удачи в следующий раз"
 
@@ -6524,7 +7069,8 @@ msgstr ""
 
 #: client/cl_transfer.c:474 client/cl_transfer.c:495 client/cl_transfer.c:506
 msgid ""
-"You are transferring aircraft. You cannot use this aircraft to transfer things or employees."
+"You are transferring aircraft. You cannot use this aircraft to transfer "
+"things or employees."
 msgstr ""
 
 #: client/cl_transfer.c:538
@@ -6851,7 +7397,8 @@ msgstr "Невозможно выполнить действие - в друго
 #: game/g_client.c:640
 msgid "Can't perform action - no control over allied actors!\n"
 msgstr ""
-"Невозможно выполнить действие - нет контроля над дружественными персонажами!\n"
+"Невозможно выполнить действие - нет контроля над дружественными "
+"персонажами!\n"
 
 #: game/g_client.c:746
 msgid "Can't perform action - not enough TUs!\n"
@@ -6860,35 +7407,36 @@ msgstr "Невозможно выполнить действие - не хват
 #: game/g_client.c:749
 #, fuzzy
 msgid ""
-"Can't perform action - weapon already fully loaded with the same ammunition!\n"
+"Can't perform action - weapon already fully loaded with the same "
+"ammunition!\n"
 msgstr "Невозможно выполнить действие - оружие полностью заряжено!\n"
 
-#: game/g_client.c:1251
+#: game/g_client.c:1253
 #, fuzzy
 msgid "Currently shaken, won't let their guard down.\n"
 msgstr "Испуган, отказывается исполнять приказ.\n"
 
-#: game/g_client.c:1326
+#: game/g_client.c:1328
 #, c-format
 msgid "%s panics!\n"
 msgstr "%s паникует!\n"
 
-#: game/g_client.c:1387
+#: game/g_client.c:1389
 #, c-format
 msgid "%s is on a rampage.\n"
 msgstr "%s буйствует.\n"
 
-#: game/g_client.c:1389
+#: game/g_client.c:1391
 #, fuzzy, c-format
 msgid "%s is consumed by mad rage!\n"
 msgstr "%s разъярён!\n"
 
-#: game/g_client.c:1450
+#: game/g_client.c:1452
 #, c-format
 msgid "%s is currently shaken.\n"
 msgstr "%s испуган.\n"
 
-#: game/g_client.c:1910
+#: game/g_client.c:1912
 #, c-format
 msgid "Team %i ( %s) will get the first turn.\n"
 msgstr ""
