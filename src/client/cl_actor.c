@@ -2032,13 +2032,15 @@ void CL_ActorDoShoot (sizebuf_t * sb)
 	if (le->team == cls.team)
 		CL_SetLastMoving(le);
 
-	/* animate - we have to check if it is right or left weapon usage */
-	if (IS_MODE_FIRE_LEFT(cl.cmode) && LEFT(le)) {
+	/* Animate - we have to check if it is right or left weapon usage. */
+	if (IS_MODE_FIRE_RIGHT(cl.cmode) && RIGHT(le)) {
+		re.AnimChange(&le->as, le->model1, LE_GetAnim("shoot", le->right, le->left, le->state));
+		re.AnimAppend(&le->as, le->model1, LE_GetAnim("stand", le->right, le->left, le->state));
+	} else if (IS_MODE_FIRE_LEFT(cl.cmode) && LEFT(le)) {
 		re.AnimChange(&le->as, le->model1, LE_GetAnim("shoot", le->left, le->right, le->state));
 		re.AnimAppend(&le->as, le->model1, LE_GetAnim("stand", le->left, le->right, le->state));
 	} else {
-		re.AnimChange(&le->as, le->model1, LE_GetAnim("shoot", le->right, le->left, le->state));
-		re.AnimAppend(&le->as, le->model1, LE_GetAnim("stand", le->right, le->left, le->state));
+		Com_Printf("CL_ActorDoShoot: Something really bad happened. Left/right-info not in sync.\n");
 	}
 }
 
