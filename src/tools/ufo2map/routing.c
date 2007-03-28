@@ -91,6 +91,7 @@ static void CheckUnit_Thread (unsigned int unitnum)
 	start[2] -= UH/2-4;
 	end[2]   -= UH/2+4;
 
+	/* FIXME: Don't allow falling over more than 1 level (z-direction) */
 	/* test for fall down */
 	if (TestLineMask(start, end, 2)) {
 		PosToVec(pos, end);
@@ -206,25 +207,25 @@ static void CheckConnections_Thread (unsigned int unitnum)
 	/* test connections in all 4 directions */
 	for ( i = 0; i < 4; i++ ) {
 		/* range check and test height */
-		if ( i == 0 && (x >= 255 || (filled[y][x+1] & (1<<sz)) || (area[sz][y][x+1]&0x0F) > h) )
+		if (i == 0 && (x >= 0xFF || (filled[y][x+1] & (1<<sz)) || (area[sz][y][x+1]&0x0F) > h))
 			continue;
-		if ( i == 1 && (x <=   0 || (filled[y][x-1] & (1<<sz)) || (area[sz][y][x-1]&0x0F) > h) )
+		if (i == 1 && (x <=   0 || (filled[y][x-1] & (1<<sz)) || (area[sz][y][x-1]&0x0F) > h))
 			continue;
-		if ( i == 2 && (y >= 255 || (filled[y+1][x] & (1<<sz)) || (area[sz][y+1][x]&0x0F) > h) )
+		if (i == 2 && (y >= 0xFF || (filled[y+1][x] & (1<<sz)) || (area[sz][y+1][x]&0x0F) > h))
 			continue;
-		if ( i == 3 && (y <=   0 || (filled[y-1][x] & (1<<sz)) || (area[sz][y-1][x]&0x0F) > h) )
+		if (i == 3 && (y <=   0 || (filled[y-1][x] & (1<<sz)) || (area[sz][y-1][x]&0x0F) > h))
 			continue;
 
 		/* test for walls */
-		VectorAdd( start, move_vec[i], te );
+		VectorAdd(start, move_vec[i], te);
 
 		/* center check */
-		if ( TestLineMask( start, te, 2 ) )
+		if (TestLineMask(start, te, 2))
 			continue;
 
 		/* lower check */
 		ts[2] = te[2] -= UH/2 - sh*QUANT - 2;
-		if ( TestLineMask( ts, te, 2 ) )
+		if (TestLineMask(ts, te, 2))
 			continue;
 
 		area[z][y][x] |= 1 << (i+4);
@@ -259,41 +260,41 @@ extern void DoRouting (void)
 	nummodels -= 1;
 
 	/* reset */
-	for ( y = 0; y < WIDTH; y++ )
-		for ( x = 0; x < WIDTH; x++ ) {
+	for (y = 0; y < WIDTH; y++)
+		for (x = 0; x < WIDTH; x++) {
 			fall[y][x] = 0;
 			filled[y][x] = 0;
 		}
 
 	/* get world bounds for optimizing */
-	VecToPos( worldMins, wpMins );
-	VectorSubtract( wpMins, v_epsilon, wpMins );
+	VecToPos(worldMins, wpMins);
+	VectorSubtract(wpMins, v_epsilon, wpMins);
 
-	VecToPos( worldMaxs, wpMaxs );
-	VectorAdd( wpMaxs, v_epsilon, wpMaxs );
+	VecToPos(worldMaxs, wpMaxs);
+	VectorAdd(wpMaxs, v_epsilon, wpMaxs);
 
 	for (i = 0; i < 3; i++) {
-		if ( wpMins[i] <   0 )
+		if (wpMins[i] < 0)
 			wpMins[i] = 0;
-		if ( wpMaxs[i] > 255 )
-			wpMaxs[i] = 255;
+		if (wpMaxs[i] > 0xFF)
+			wpMaxs[i] = 0xFF;
 	}
 
 /*	Sys_Printf( "(%i %i %i) (%i %i %i)\n", wpMins[0], wpMins[1], wpMins[2], wpMaxs[0], wpMaxs[1], wpMaxs[2] ); */
 
 	/* scan area heights */
-	RunThreadsOnIndividual ( HEIGHT*WIDTH*WIDTH, !verbose, CheckUnit_Thread);
+	RunThreadsOnIndividual(HEIGHT * WIDTH * WIDTH, !verbose, CheckUnit_Thread);
 
 	/* scan connections */
-	RunThreadsOnIndividual ( HEIGHT*WIDTH*WIDTH, !verbose, CheckConnections_Thread);
+	RunThreadsOnIndividual(HEIGHT * WIDTH * WIDTH, !verbose, CheckConnections_Thread);
 
 	/* store the data */
 	data = droutedata;
 	*data++ = SH_LOW;
 	*data++ = SH_BIG;
-	data = CompressRouting( &(area[0][0][0]), data, WIDTH*WIDTH*HEIGHT );
-	data = CompressRouting( &(fall[0][0]), data, WIDTH*WIDTH );
-	data = CompressRouting( &(step[0][0]), data, WIDTH*WIDTH );
+	data = CompressRouting(&(area[0][0][0]), data, WIDTH * WIDTH * HEIGHT);
+	data = CompressRouting(&(fall[0][0]), data, WIDTH * WIDTH);
+	data = CompressRouting(&(step[0][0]), data, WIDTH * WIDTH);
 
 	routedatasize = data - droutedata;
 

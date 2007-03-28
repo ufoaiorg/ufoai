@@ -847,12 +847,13 @@ static void CMod_GetMapSize (routing_t * map)
 	pos3_t min, max;
 	int x, y;
 
-	VectorSet(min, 255, 255, 0);
+	VectorSet(min, WIDTH - 1, WIDTH - 1, 0);
 	VectorSet(max, 0, 0, 0);
 
 	/* get border */
-	for (y = 0; y < 256; y++)
-		for (x = 0; x < 256; x++)
+	for (y = 0; y < WIDTH; y++)
+		for (x = 0; x < WIDTH; x++)
+			/* 0xFF means that we can't walk there */
 			if (map->fall[y][x] != 0xFF) {
 				if (x < min[0])
 					min[0] = x;
@@ -884,9 +885,9 @@ static void CMod_GetMapSize (routing_t * map)
  */
 static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
 {
-	static byte temp_route[8][256][256];
-	static byte temp_fall[256][256];
-	static byte temp_step[256][256];
+	static byte temp_route[HEIGHT][WIDTH][WIDTH];
+	static byte temp_fall[WIDTH][WIDTH];
+	static byte temp_step[WIDTH][WIDTH];
 	byte *source;
 	int length;
 	int x, y, z;
@@ -906,13 +907,14 @@ static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
 	length += Cmod_DeCompressRouting(&source, &temp_fall[0][0]);
 	length += Cmod_DeCompressRouting(&source, &temp_step[0][0]);
 
-	if (length != 256 * 256 * 10)
+	/* 10 => HEIGHT (8), level 257 (1), level 258 (1) */
+	if (length != WIDTH * WIDTH * 10)
 		Com_Error(ERR_DROP, "Map has BAD routing lump");
 
 	/* shift and merge the routing information
 	 * in case of map assemble (random maps) */
-	maxX = sX > 0 ? 256 - sX : 256;
-	maxY = sY > 0 ? 256 - sY : 256;
+	maxX = sX > 0 ? WIDTH - sX : WIDTH;
+	maxY = sY > 0 ? WIDTH - sY : WIDTH;
 	/* no z movement */
 	sZ = 0;
 
@@ -1137,9 +1139,10 @@ extern void CM_LoadMap (char *tiles, char *pos, unsigned *mapchecksum)
 	c_pointcontents = c_traces = c_brush_traces = numInline = numTiles = 0;
 	map_entitystring[0] = base[0] = 0;
 
-	memset(&(clMap.fall[0][0]), 0xFF, 256 * 256);
-	memset(&(clMap.step[0][0]), 0, 256 * 256);
-	memset(&(clMap.route[0][0][0]), 0, 256 * 256 * 8);
+	/* 0xFF means, not reachable */
+	memset(&(clMap.fall[0][0]), 0xFF, WIDTH * WIDTH);
+	memset(&(clMap.step[0][0]), 0, WIDTH * WIDTH);
+	memset(&(clMap.route[0][0][0]), 0, WIDTH * WIDTH * HEIGHT);
 
 	/* load tiles */
 	while (tiles) {
@@ -1150,16 +1153,16 @@ extern void CM_LoadMap (char *tiles, char *pos, unsigned *mapchecksum)
 
 		/* get base path */
 		if (token[0] == '-') {
-			Q_strncpyz(base, token + 1, MAX_QPATH);
+			Q_strncpyz(base, token + 1, sizeof(base));
 			continue;
 		}
 
 		/* get tile name */
 		Com_DPrintf("CM_AddMapTile: token: %s\n", token);
 		if (token[0] == '+')
-			Com_sprintf(name, MAX_VAR, "%s%s", base, token + 1);
+			Com_sprintf(name, sizeof(name), "%s%s", base, token + 1);
 		else
-			Q_strncpyz(name, token, MAX_VAR);
+			Q_strncpyz(name, token, sizeof(name));
 
 		if (pos && pos[0]) {
 			/* get position and add a tile */
@@ -1276,6 +1279,7 @@ static void CM_InitBoxHull (void)
 
 	curTile->leafbrushes[curTile->numleafbrushes] = curTile->numbrushes;
 
+	/* each side */
 	for (i = 0; i < 6; i++) {
 		side = i & 1;
 
@@ -2384,9 +2388,13 @@ int CM_TestLineDM (vec3_t start, vec3_t stop, vec3_t end)
 */
 
 /**
- * @brief
- * @param
+ * @brief Checks a field on the grid of the given routing data
+ * @param[in] map Routing data
+ * @param[in] x Field in x direction
+ * @param[in] y Field in x direction
+ * @param[in] z Field in x direction
  * @sa Grid_MoveMark
+ * @return true if the field is in the forbidden list and one can't walk there
  */
 qboolean Grid_CheckForbidden (struct routing_s * map, int x, int y, int z)
 {
@@ -2497,6 +2505,7 @@ void Grid_MoveCalc (struct routing_s *map, pos3_t from, int distance, byte ** fb
 	int i;
 
 	/* reset move data */
+	/* 0xFF means, not reachable */
 	memset(map->area, 0xFF, WIDTH * WIDTH * HEIGHT);
 	memset(tfList, 0, WIDTH * WIDTH * HEIGHT);
 	map->fblist = fb_list;
@@ -2536,7 +2545,7 @@ void Grid_MoveCalc (struct routing_s *map, pos3_t from, int distance, byte ** fb
 
 /**
  * @brief Caches the calculated move
- * @param
+ * @param[in] map Routing data
  * @sa AI_ActorThink
  */
 void Grid_MoveStore (struct routing_s *map)
@@ -2546,12 +2555,12 @@ void Grid_MoveStore (struct routing_s *map)
 
 
 /**
- * @brief
- * @param[in] map
- * @param[in] to
- * @param[in] stored
+ * @brief Return the needed TUs to walk to a given position
+ * @param[in] map Routing data
+ * @param[in] to Position to walk to
+ * @param[in] stored Use the stored mask (the cached move) of the routing data
  * @return 0xFF if the move isn't possible
- * @return length of move otherwise
+ * @return length of move otherwise (TUs)
  */
 int Grid_MoveLength (struct routing_s *map, pos3_t to, qboolean stored)
 {
@@ -2571,7 +2580,7 @@ int Grid_MoveLength (struct routing_s *map, pos3_t to, qboolean stored)
 
 /**
  * @brief
- * @param[in] map
+ * @param[in] map Routing data
  * @param[in] pos
  * @param[in] sz
  * @param[in] l
@@ -2583,7 +2592,7 @@ int Grid_MoveCheck (struct routing_s *map, pos3_t pos, int sz, int l)
 	int dv, dx, dy;
 	int z;
 
-	for (dv = 0; dv < 8; dv++) {
+	for (dv = 0; dv < DIRECTIONS; dv++) {
 		dx = -dvecs[dv][0];
 		dy = -dvecs[dv][1];
 
@@ -2636,8 +2645,8 @@ int Grid_MoveCheck (struct routing_s *map, pos3_t pos, int sz, int l)
 
 
 /**
- * @brief
- * @param[in] map
+ * @brief The next stored move direction
+ * @param[in] map Routing data
  * @param[in] from
  * @sa Grid_MoveCheck
  */
@@ -2648,8 +2657,10 @@ int Grid_MoveNext (struct routing_s *map, pos3_t from)
 	l = map->area[from[2]][from[1]][from[0]];
 
 	/* finished */
-	if (!l)
+	if (!l) {
+		/* 0xFF means, not possible/reachable */
 		return 0xFF;
+	}
 
 	/* initialize tests */
 	x = from[0];
@@ -2659,12 +2670,13 @@ int Grid_MoveNext (struct routing_s *map, pos3_t from)
 	for (z = 0; z < HEIGHT; z++) {
 		/* suppose it's possible at that height */
 		dv = Grid_MoveCheck(map, from, z, l);
-		if (dv < 8)
+		if (dv < DIRECTIONS)
 			return dv | (z << 3);
 	}
 
 	/* shouldn't happen */
 	Com_Printf("failed...\n");
+	/* 0xFF means, not possible/reachable */
 	return 0xFF;
 }
 

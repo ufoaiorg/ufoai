@@ -75,8 +75,6 @@ typedef struct {
 	int fly_stoptime;
 } centity_t;
 
-#define MAX_CLIENTWEAPONMODELS		20	/* PGM -- upped from 16 to fit the chainfist vwep */
-
 typedef struct {
 	char name[MAX_QPATH];
 	char cinfo[MAX_QPATH];
@@ -107,14 +105,13 @@ typedef enum { CAMERA_MODE_REMOTE, CAMERA_MODE_FIRSTPERSON } camera_mode_t;
 
 camera_mode_t camera_mode;
 
-/** @brief don't mess with the order!!! */
 typedef enum {
-	M_MOVE,
-	M_FIRE_R,
-	M_FIRE_L,
-	M_PEND_MOVE,
-	M_PEND_FIRE_R,
-	M_PEND_FIRE_L,
+	M_MOVE,		/**< We are currently in move-mode (destination selection). */
+	M_FIRE_R,	/**< We are currently in fire-mode for the right weapon (target selection). */
+	M_FIRE_L,	/**< We are currently in fire-mode for the left weapon (target selection). */
+	M_PEND_MOVE,	/**< A move target has been selected, we are waiting for player-confirmation. */
+	M_PEND_FIRE_R,	/**< A fire target (right weapon) has been selected, we are waiting for player-confirmation. */
+	M_PEND_FIRE_L	/**< A fire target (left weapon) has been selected, we are waiting for player-confirmation. */
 } cmodes_t;
 
 #define IS_MODE_FIRE_RIGHT(x)	((x) == M_FIRE_R || (x) == M_PEND_FIRE_R)
@@ -147,9 +144,9 @@ typedef struct {
 
 	refdef_t refdef;
 
-	int cmode;
-	byte cfiremode;
-	int oldcmode;
+	cmodes_t cmode;
+	int cfiremode;
+	cmodes_t oldcmode;
 	int oldstate;
 
 	int msgTime;

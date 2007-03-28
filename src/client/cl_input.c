@@ -491,7 +491,8 @@ invList_t* CL_GetLeftHandWeapon (le_t *actor)
 }
 
 /**
- * @brief
+ * @brief Executes "pending" actions such as walking and firing.
+ * @note Manually triggered by the player when hitting the "confirm" button.
  */
 static void CL_ConfirmAction_f (void)
 {
@@ -499,11 +500,18 @@ static void CL_ConfirmAction_f (void)
 
 	if (!selActor)
 		return;
-	if (cl.cmode == M_PEND_MOVE)
+
+	switch (cl.cmode) {
+	case M_PEND_MOVE:
 		CL_ActorStartMove(selActor, mousePos);
-	else if (cl.cmode > M_PEND_MOVE) {
+		break;
+	case M_PEND_FIRE_R:
+	case M_PEND_FIRE_L:
 		CL_ActorShoot(selActor, mousePos);
 		cl.cmode = M_MOVE;
+		break;
+	default:
+		break;
 	}
 }
 

@@ -115,7 +115,7 @@ menu aircraft
 	// ===============
 	pic button_buysell
 	{
-		tooltip	"_Buy/Sell aircraft"
+		tooltip	"_Buy or sell aircraft"
 		image	menu/button
 		pos	"45 170"
 		texl	"0 0"

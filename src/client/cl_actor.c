@@ -1345,6 +1345,7 @@ void CL_ActorUpdateCVars (void)
 		case M_FIRE_R:
 		case M_PEND_FIRE_R:
 			/* TODO: Display current firemode better*/
+			break;
 		default:
 			ClearHighlights();
 		}
@@ -1620,6 +1621,9 @@ static void CL_BuildForbiddenList (void)
 /**
  * @brief Recalculate forbidden list, available moves and actor's move length
  * if given le is the selected Actor.
+ * @param[in] map Routing data
+ * @param[in] le Calculate the move for this actor (if he's the selected actor)
+ * @param[in] distance
  */
 extern void CL_ConditionalMoveCalc (struct routing_s *map, le_t *le, int distance)
 {
@@ -1978,6 +1982,7 @@ static qboolean firstShot = qfalse;
  * @brief Shoot with weapon.
  * @sa CL_ActorShoot
  * @sa CL_ActorShootHidden
+ * @todo Improve detection of left- or right animation.
  */
 void CL_ActorDoShoot (sizebuf_t * sb)
 {
@@ -2031,13 +2036,17 @@ void CL_ActorDoShoot (sizebuf_t * sb)
 	if (le->team == cls.team)
 		CL_SetLastMoving(le);
 
-	/* animate - we have to check if it is right or left weapon usage */
-	if (IS_MODE_FIRE_LEFT(cl.cmode) && LEFT(le)) {
+	/* Animate - we have to check if it is right or left weapon usage. */
+	if (RIGHT(le) && ((&RIGHT(le)->item)->m == obj_idx)) { /* previoulsy: (IS_MODE_FIRE_RIGHT(cl.cmode) && RIGHT(le) */
+		/* TODO: the check with obj_idx is no good solution, because we could have the same type of ammo in teh weapons in both hands. 
+		 * Maybe MSG_ReadFormat could get the hand(or type) as well on EV_ACTOR_SHOOT? */
+		re.AnimChange(&le->as, le->model1, LE_GetAnim("shoot", le->right, le->left, le->state));
+		re.AnimAppend(&le->as, le->model1, LE_GetAnim("stand", le->right, le->left, le->state));
+	} else if (LEFT(le) && ((&LEFT(le)->item)->m == obj_idx)) {
 		re.AnimChange(&le->as, le->model1, LE_GetAnim("shoot", le->left, le->right, le->state));
 		re.AnimAppend(&le->as, le->model1, LE_GetAnim("stand", le->left, le->right, le->state));
 	} else {
-		re.AnimChange(&le->as, le->model1, LE_GetAnim("shoot", le->right, le->left, le->state));
-		re.AnimAppend(&le->as, le->model1, LE_GetAnim("stand", le->right, le->left, le->state));
+		Com_Printf("CL_ActorDoShoot: Something really bad happened. Left/right-info not in sync.\n");
 	}
 }
 
@@ -2116,6 +2125,7 @@ void CL_ActorDoThrow (sizebuf_t * sb)
  * @sa CL_ActorShootHidden
  * @sa CL_ActorShoot
  * @sa CL_ActorDoShoot
+ * @todo Improve detection of left- or right animation.
  */
 void CL_ActorStartShoot (sizebuf_t * sb)
 {
@@ -2163,11 +2173,15 @@ void CL_ActorStartShoot (sizebuf_t * sb)
 			ccs.eMission.num[type]--;
 	} */
 
-	/* animate - we have to check if it is right or left weapon usage */
-	if (IS_MODE_FIRE_LEFT(cl.cmode) && LEFT(le)) {
+	/* Animate - we have to check if it is right or left weapon usage. */
+	if (RIGHT(le) && ((&RIGHT(le)->item)->m == obj_idx)) { /* previoulsy: (IS_MODE_FIRE_RIGHT(cl.cmode) && RIGHT(le) */
+		/* TODO: the check with obj_idx is no good solution, because we could have the same type of ammo in the weapons in both hands. 
+		 * Maybe MSG_ReadFormat could get the hand(or type) as well on EV_ACTOR_START_SHOOT? */
+		re.AnimChange(&le->as, le->model1, LE_GetAnim("move", le->right, le->left, le->state));
+	} else if (LEFT(le) && ((&LEFT(le)->item)->m == obj_idx)) {
 		re.AnimChange(&le->as, le->model1, LE_GetAnim("move", le->left, le->right, le->state));
 	} else {
-		re.AnimChange(&le->as, le->model1, LE_GetAnim("move", le->right, le->left, le->state));
+		Com_Printf("CL_ActorStartShoot: Something really bad happened. Left/right-info not in sync.\n");
 	}
 }
 
@@ -2333,7 +2347,9 @@ void CL_ActorSelectMouse (void)
 	if (mouseSpace != MS_WORLD)
 		return;
 
-	if (M_MOVE == cl.cmode || M_PEND_MOVE == cl.cmode) {
+	switch (cl.cmode) {
+	case M_MOVE:
+	case M_PEND_MOVE:
 		/* Try and select another team member */
 		if (CL_ActorSelect(mouseActor)) {
 			/* succeeded so go back into move mode */
@@ -2341,14 +2357,33 @@ void CL_ActorSelectMouse (void)
 		} else {
 			CL_ActorMoveMouse();
 		}
-	} else if (cl.cmode > M_PEND_MOVE) {
-		/* TODO: Comments on what this _does_ would be nice. */
-		cl.cmode -= M_PEND_FIRE_R - M_FIRE_R;
-	} else if (confirm_actions->value) {
-		/* TODO: Comments on what this _does_ would be nice. */
-		cl.cmode += M_PEND_FIRE_R - M_FIRE_R;
-	} else {
-		CL_ActorShoot(selActor, mousePos);
+		break;
+	case M_PEND_FIRE_R:
+		/* We switch back to aming mode. */
+		cl.cmode = M_FIRE_R;
+		break;
+	case M_PEND_FIRE_L:
+		/* We switch back to aming mode. */
+		cl.cmode = M_FIRE_L;
+		break;
+	case M_FIRE_R:
+		/* We either switch to "pending" fire-mode or fire the gun. */
+		if (confirm_actions->value) {
+			cl.cmode = M_PEND_FIRE_R;
+		} else {
+			CL_ActorShoot(selActor, mousePos);
+		}
+		break;
+	case M_FIRE_L:
+		/* We either switch to "pending" fire-mode or fire the gun. */
+		if (confirm_actions->value) {
+			cl.cmode = M_PEND_FIRE_L ;
+		} else {
+			CL_ActorShoot(selActor, mousePos);
+		}
+		break;
+	default:
+		break;
 	}
 }
 
