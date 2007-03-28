@@ -2333,7 +2333,9 @@ void CL_ActorSelectMouse (void)
 	if (mouseSpace != MS_WORLD)
 		return;
 
-	if (M_MOVE == cl.cmode || M_PEND_MOVE == cl.cmode) {
+	switch (cl.cmode) {
+	case M_MOVE:
+	case M_PEND_MOVE:
 		/* Try and select another team member */
 		if (CL_ActorSelect(mouseActor)) {
 			/* succeeded so go back into move mode */
@@ -2341,14 +2343,33 @@ void CL_ActorSelectMouse (void)
 		} else {
 			CL_ActorMoveMouse();
 		}
-	} else if (cl.cmode > M_PEND_MOVE) {
-		/* TODO: Comments on what this _does_ would be nice. */
-		cl.cmode -= M_PEND_FIRE_R - M_FIRE_R;
-	} else if (confirm_actions->value) {
-		/* TODO: Comments on what this _does_ would be nice. */
-		cl.cmode += M_PEND_FIRE_R - M_FIRE_R;
-	} else {
-		CL_ActorShoot(selActor, mousePos);
+		break;
+	case M_PEND_FIRE_R:
+		/* We switch back to aming mode. */
+		cl.cmode = M_FIRE_R;
+		break;
+	case M_PEND_FIRE_L:
+		/* We switch back to aming mode. */
+		cl.cmode = M_FIRE_L;
+		break;
+	case M_FIRE_R:
+		/* We either switch to "pending" fire-mode or fire the gun. */
+		if (confirm_actions->value) {
+			cl.cmode = M_PEND_FIRE_R;
+		} else {
+			CL_ActorShoot(selActor, mousePos);
+		}
+		break;
+	case M_FIRE_L:
+		/* We either switch to "pending" fire-mode or fire the gun. */
+		if (confirm_actions->value) {
+			cl.cmode = M_PEND_FIRE_L ;
+		} else {
+			CL_ActorShoot(selActor, mousePos);
+		}
+		break;
+	default:
+		break;
 	}
 }
 
