@@ -720,7 +720,6 @@ static void Cvar_Del_f (void)
 		return;
 	}
 
-	Com_Printf("set %s\n", Cmd_Argv(1));
 	Cbuf_ExecuteText(EXEC_NOW, va("set %s \"\"", Cmd_Argv(1)));
 }
 
