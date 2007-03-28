@@ -3451,7 +3451,8 @@ const static char *if_strings[IF_SIZE] = {
 	">=",
 	">",
 	"<",
-	"!="
+	"!=",
+	""
 };
 
 /**
@@ -3461,7 +3462,7 @@ const static char *if_strings[IF_SIZE] = {
  * @return enum value for condition string
  * @note Produces a Sys_Error if conditionString was not found in if_strings array
  */
-int Com_ParseConditionType (const char* conditionString, const char *token)
+static int Com_ParseConditionType (const char* conditionString, const char *token)
 {
 	int i = IF_SIZE;
 	for (; i--;) {
@@ -3653,13 +3654,19 @@ int Com_ParseValue (void *base, char *token, int type, int ofs)
 		return ALIGN(sizeof(date_t));
 
 	case V_IF:
-		if (strstr(strstr(token, " "), " ") == NULL)
-			Sys_Error("Com_ParseValue: Illegal if statement '%s'\n", token);
-		sscanf(token, "%s %s %s", string, condition, string2);
+		if (!strstr(token, " ")) {
+			/* cvar exists? (not null) */
+			Q_strncpyz(((menuDepends_t *) b)->var, token, MAX_VAR);
+			((menuDepends_t *) b)->cond = IF_EXISTS;
+		} else if (strstr(strstr(token, " "), " ")) {
+			sscanf(token, "%s %s %s", string, condition, string2);
 
-		Q_strncpyz(((menuDepends_t *) b)->var, string, MAX_VAR);
-		Q_strncpyz(((menuDepends_t *) b)->value, string2, MAX_VAR);
-		((menuDepends_t *) b)->cond = Com_ParseConditionType(condition, token);
+			Q_strncpyz(((menuDepends_t *) b)->var, string, MAX_VAR);
+			Q_strncpyz(((menuDepends_t *) b)->value, string2, MAX_VAR);
+			((menuDepends_t *) b)->cond = Com_ParseConditionType(condition, token);
+		} else
+			Sys_Error("Com_ParseValue: Illegal if statement '%s'\n", token);
+
 		return ALIGN(sizeof(menuDepends_t));
 
 	case V_RELABS:

@@ -736,6 +736,7 @@ typedef enum menuIfCondition_s {
 	IF_GT, /**< > */
 	IF_LT, /**< < */
 	IF_NE, /**< != */
+	IF_EXISTS, /**< only cvar give - check for existence */
 
 	IF_SIZE
 } menuIfCondition_t;
