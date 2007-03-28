@@ -392,7 +392,7 @@ extern void CL_AircraftReturnToBase_f (void)
  */
 extern void CL_AircraftSelect (aircraft_t* aircraft)
 {
-	static menuNode_t *node = NULL;
+	menuNode_t *node = NULL;
 	int aircraftID = Cvar_VariableInteger("mn_aircraft_idx");
 	static char aircraftInfo[256];
 
@@ -416,7 +416,6 @@ extern void CL_AircraftSelect (aircraft_t* aircraft)
 		Cvar_SetValue("mn_aircraft_idx", aircraftID);
 	}
 
-	/* if (!node) TODO: WTF? why would this cause a problem here? ... side from the fact that it is unneeded, because "node" is initialised with NULL anyway. */
 	node = MN_GetNodeFromCurrentMenu("aircraft");
 
 	/* we were not in the aircraft menu yet */
@@ -560,15 +559,15 @@ extern void CL_DeleteAircraft (aircraft_t *aircraft)
 		/* TODO: Return deletion status here. */
 		return;
 	}
-	
+
 	base = &gd.bases[aircraft->idxBase];
-	
+
 	if (!base) {
 		Com_DPrintf("CL_DeleteAircraft: No homebase found for aircraft.\n");
 		/* TODO: Return deletion status here. */
 		return;
 	}
-		
+
 	/* Remove all soldiers from the aircraft (the employees are still hired after this). */
 	CL_RemoveSoldiersFromAircraft(aircraft->idx, aircraft->idxBase);
 
@@ -585,12 +584,12 @@ extern void CL_DeleteAircraft (aircraft_t *aircraft)
 			/* For some reason there was no aircraft found for this index. */
 			Com_DPrintf("CL_DeleteAircraft: No aircraft found for this global index: %i\n", i);
 		}
-			
+
 		/* Update transfer list (i.e. remove the one for the deleted aircraft). */
 		transferlist_temp = &gd.alltransfers[i];
 		memcpy(transferlist_temp, &gd.alltransfers[i+1], sizeof(transferlist_t));
 	}
-	
+
 	gd.numAircraft--;	/**< Decrease the global number of aircraft. */
 #endif
 
