@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2006 UFO: Alien Invasion team.
+Copyright (C) 2002-2007 UFO: Alien Invasion team.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -392,7 +392,7 @@ extern void CL_AircraftReturnToBase_f (void)
  */
 extern void CL_AircraftSelect (aircraft_t* aircraft)
 {
-	static menuNode_t *node = NULL;
+	menuNode_t *node = NULL;
 	int aircraftID = Cvar_VariableInteger("mn_aircraft_idx");
 	static char aircraftInfo[256];
 
@@ -413,10 +413,10 @@ extern void CL_AircraftSelect (aircraft_t* aircraft)
 		aircraft = &baseCurrent->aircraft[aircraftID];
 	} else {
 		aircraftID = aircraft->idxInBase;
+		Cvar_SetValue("mn_aircraft_idx", aircraftID);
 	}
 
-	if (!node)
-		node = MN_GetNodeFromCurrentMenu("aircraft");
+	node = MN_GetNodeFromCurrentMenu("aircraft");
 
 	/* we were not in the aircraft menu yet */
 	if (node) {

@@ -70,6 +70,7 @@ static const value_t od_vals[] = {
 	{"reload", V_INT, offsetof(objDef_t, reload)},
 	{"price", V_INT, offsetof(objDef_t, price)},
 	{"buytype", V_INT, offsetof(objDef_t, buytype)},
+	{"useable", V_INT, offsetof(objDef_t, useable)},
 	{NULL, V_NULL, 0}
 };
 

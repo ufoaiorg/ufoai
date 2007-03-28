@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2006 UFO: Alien Invasion team.
+Copyright (C) 2002-2007 UFO: Alien Invasion team.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -1732,7 +1732,9 @@ static void MN_Tooltip (menu_t *menu, menuNode_t *node, int x, int y)
 }
 
 /**
- * @brief
+ * @brief Load all menu images at startup
+ * @TODO Rename and move this function and preload all character models and
+ * the models from models.ufo, too
  */
 void MN_PrecacheMenus (void)
 {
@@ -1747,7 +1749,7 @@ void MN_PrecacheMenus (void)
 	for (i = 0; i < numMenus; i++) {
 		menu = &menus[i];
 		for (node = menu->firstNode; node; node = node->next) {
-			if (!node->invis && node->data[0]) {
+			if (!node->invis && node->data[0] && (node->type == MN_PIC || node->type == MN_MODEL)) {
 				ref = MN_GetReferenceString(menu, node->data[0]);
 				if (!ref) {
 					/* bad reference */
@@ -1755,7 +1757,12 @@ void MN_PrecacheMenus (void)
 					Com_Printf("MN_PrecacheMenus: node \"%s\" bad reference \"%s\"\n", node->name, (char*)node->data);
 					continue;
 				}
-				Q_strncpyz(source, ref, MAX_VAR);
+				/* e.g. cvar image with empty cvar */
+				if (!*ref) {
+					Com_DPrintf("MN_PrecacheMenus: node \"%s\" empty ref string (cvar value)\n", node->name);
+					continue;
+				}
+				Q_strncpyz(source, ref, sizeof(source));
 				switch (node->type) {
 				case MN_PIC:
 					re.RegisterPic(ref);
@@ -2081,7 +2088,6 @@ void MN_DrawMenus (void)
 
 							/* now set cur to the next char after the \n (see above) */
 							cur = end;
-
 						} while (cur);
 					} else if (node->num == TEXT_MESSAGESYSTEM) {
 						if (node->data[1])

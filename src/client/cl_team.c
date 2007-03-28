@@ -4,7 +4,7 @@
  */
 
 /*
-Copyright (C) 2002-2006 UFO: Alien Invasion team.
+Copyright (C) 2002-2007 UFO: Alien Invasion team.
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -595,7 +595,11 @@ extern void CL_ReloadAndRemoveCarried (equipDef_t * ed)
 }
 
 /**
- * @brief Clears all containers that are temp containers (see script definition)
+ * @brief Clears all containers that are temp containers (see script definition).
+ * @sa CL_GenerateEquipment_f
+ * @sa CL_ResetTeamInBase
+ * @sa CL_SendTeamInfo
+ * @sa CL_SendCurTeamInfo
  */
 extern void CL_CleanTempInventory (void)
 {
@@ -613,8 +617,8 @@ extern void CL_CleanTempInventory (void)
 }
 
 /**
- * @brief
- * @note This function is called everytime the equipment screen for the team pops up
+ * @brief Displays actor equipment and unused items in proper buytype category.
+ * @note This function is called everytime the equipment screen for the team pops up.
  * @sa CL_UpdatePointersInGlobalData
  */
 static void CL_GenerateEquipment_f (void)
@@ -624,6 +628,7 @@ static void CL_GenerateEquipment_f (void)
 	aircraft_t *aircraft;
 	/* t value will be set below - a and m are not changed here */
 	item_t item = {0,NONE,NONE};
+	int team;
 
 	assert(baseCurrent);
 	assert((baseCurrent->aircraftCurrent >= 0) && (baseCurrent->aircraftCurrent < baseCurrent->numAircraftInBase));
@@ -633,6 +638,15 @@ static void CL_GenerateEquipment_f (void)
 	if (!baseCurrent->teamNum[baseCurrent->aircraftCurrent]) {
 		MN_PopMenu(qfalse);
 		return;
+	}
+
+	/* Get team. */
+	if (strstr(Cvar_VariableString("team"), "human")) {
+		team = 0;
+		Com_DPrintf("CL_GenerateEquipment_f().. team human, id: %i\n", team);
+	} else if (strstr(Cvar_VariableString("team"), "alien")) {
+		team = 1;
+		Com_DPrintf("CL_GenerateEquipment_f().. team alien, id: %i\n", team);
 	}
 
 	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
@@ -687,7 +701,10 @@ static void CL_GenerateEquipment_f (void)
 	   it is valid only due to the following property: */
 	assert (MAX_CONTAINERS >= NUM_BUYTYPES);
 
-	for (i = 0; i < csi.numODs; i++)
+	for (i = 0; i < csi.numODs; i++) {
+		/* Don't allow to show armours for other teams in the menu. */
+		if ((Q_strncmp(csi.ods[i].type, "armor", MAX_VAR) == 0) && (csi.ods[i].useable != team))
+			continue;
 		while (unused.num[i]) {
 			item.t = i;
 
@@ -695,10 +712,11 @@ static void CL_GenerateEquipment_f (void)
 			if (!Com_TryAddToBuyType(&baseCurrent->equipByBuyType, CL_AddWeaponAmmo(&unused, item), csi.ods[i].buytype))
 				break; /* no space left in menu */
 		}
+	}
 }
 
 /**
- * @brief
+ * @brief Sets buytype category for equip menu.
  */
 static void CL_EquipType_f (void)
 {
@@ -859,12 +877,12 @@ extern void CL_UpdateHireVar (void)
 }
 
 /**
- * @brief only for multiplayer when setting up a new team
+ * @brief Multiplayer-only call to reset team and team inventory (when setting up new team).
  * @sa E_ResetEmployees
  * @sa CL_CleanTempInventory
- * @note We need baseCurrent to point to gd.bases[0] here
- * @note available via script command team_reset
- * @note called when initializing the multiplayer menu (for init node and new team button)
+ * @note We need baseCurrent to point to gd.bases[0] here.
+ * @note available via script command team_reset.
+ * @note called when initializing the multiplayer menu (for init node and new team button),
  */
 extern void CL_ResetTeamInBase (void)
 {

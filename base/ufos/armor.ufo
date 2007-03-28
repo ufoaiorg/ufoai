@@ -1,3 +1,4 @@
+// useable parameter for amours defines which team can use it: 0 - human, 1 - alien
 damagetypes standard
 {
 	"_normal"
@@ -23,6 +24,7 @@ item light
 	scale		0.7
 	price		1400
 	buytype		3
+	useable		0
 
 	protection
 	{
@@ -61,6 +63,7 @@ item medium
 	scale		0.7
 	price		7500
 	buytype		3
+	useable		0
 
 	protection
 	{
@@ -136,6 +139,7 @@ item light_alien
 	scale		0.7
 	price		1400
 	buytype		3
+	useable		1
 
 	protection
 	{
@@ -174,6 +178,7 @@ item medium_alien
 	scale		0.7
 	price		7500
 	buytype		3
+	useable		1
 
 	protection
 	{
