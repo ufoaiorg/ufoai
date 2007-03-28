@@ -1024,7 +1024,7 @@ static qboolean G_CheckMoveBlock (pos3_t from, int dv)
 	return qfalse;
 }
 
-
+#define MAX_DVTAB 32
 /**
  * @brief
  * @sa CL_ActorStartMove
@@ -1033,7 +1033,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 {
 	edict_t *ent;
 	int length, status, initTU;
-	byte dvtab[32];
+	byte dvtab[MAX_DVTAB];
 	byte dv, numdv, steps;
 	pos3_t pos;
 	float div, tu;
@@ -1048,6 +1048,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 	G_MoveCalc(visTeam, ent->pos, MAX_ROUTE);
 	length = gi.MoveLength(gi.map, to, qfalse);
 
+	/* length of 0xFF means not reachable */
 	if (length && length < 0xFF) {
 		/* start move */
 		gi.AddEvent(G_TeamToPM(ent->team), EV_ACTOR_START_MOVE);
@@ -1064,6 +1065,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 			/* (invert by flipping the first bit and add the old height) */
 			dvtab[numdv++] = ((dv ^ 1) & (DIRECTIONS - 1)) | (pos[2] << 3);
 			PosAddDV(pos, dv);
+			assert(numdv < MAX_DVTAB);
 		}
 
 		if (VectorCompare(pos, ent->pos)) {

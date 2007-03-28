@@ -1621,6 +1621,9 @@ static void CL_BuildForbiddenList (void)
 /**
  * @brief Recalculate forbidden list, available moves and actor's move length
  * if given le is the selected Actor.
+ * @param[in] map Routing data
+ * @param[in] le Calculate the move for this actor (if he's the selected actor)
+ * @param[in] distance
  */
 extern void CL_ConditionalMoveCalc (struct routing_s *map, le_t *le, int distance)
 {
