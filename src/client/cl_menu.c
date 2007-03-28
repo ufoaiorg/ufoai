@@ -2244,8 +2244,10 @@ void MN_DrawMenus (void)
 						Q_strncpyz(oldSource, source, MAX_VAR);
 					} else {
 						/* check whether the cvar value changed */
-						if (Q_strncmp(oldSource, source, MAX_VAR))
+						if (Q_strncmp(oldSource, source, MAX_VAR)) {
 							node->menuModel = MN_GetMenuModel(source);
+							Q_strncpyz(oldSource, source, MAX_VAR);
+						}
 					}
 
 					/* direct model name - no menumodel definition */
@@ -2259,8 +2261,10 @@ void MN_DrawMenus (void)
 							Com_Printf("Could not find '%s'\n", source);
 							break;
 						}
-					} else
+					} else {
 						menuModel = node->menuModel;
+						node->noMenuModel = qfalse;
+					}
 
 					mi.origin = node->origin;
 					mi.angles = node->angles;
