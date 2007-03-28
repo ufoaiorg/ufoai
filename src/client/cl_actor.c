@@ -1979,6 +1979,7 @@ static qboolean firstShot = qfalse;
  * @brief Shoot with weapon.
  * @sa CL_ActorShoot
  * @sa CL_ActorShootHidden
+ * @todo Improve detection of left- or right animation.
  */
 void CL_ActorDoShoot (sizebuf_t * sb)
 {
@@ -2033,10 +2034,12 @@ void CL_ActorDoShoot (sizebuf_t * sb)
 		CL_SetLastMoving(le);
 
 	/* Animate - we have to check if it is right or left weapon usage. */
-	if (IS_MODE_FIRE_RIGHT(cl.cmode) && RIGHT(le)) {
+	if (RIGHT(le) && ((&RIGHT(le)->item)->m == obj_idx)) { /* previoulsy: (IS_MODE_FIRE_RIGHT(cl.cmode) && RIGHT(le) */
+		/* TODO: the check with obj_idx is no good solution, because we could have the same type of ammo in teh weapons in both hands. 
+		 * Maybe MSG_ReadFormat could get the hand(or type) as well on EV_ACTOR_SHOOT? */
 		re.AnimChange(&le->as, le->model1, LE_GetAnim("shoot", le->right, le->left, le->state));
 		re.AnimAppend(&le->as, le->model1, LE_GetAnim("stand", le->right, le->left, le->state));
-	} else if (IS_MODE_FIRE_LEFT(cl.cmode) && LEFT(le)) {
+	} else if (LEFT(le) && ((&LEFT(le)->item)->m == obj_idx)) {
 		re.AnimChange(&le->as, le->model1, LE_GetAnim("shoot", le->left, le->right, le->state));
 		re.AnimAppend(&le->as, le->model1, LE_GetAnim("stand", le->left, le->right, le->state));
 	} else {
@@ -2119,6 +2122,7 @@ void CL_ActorDoThrow (sizebuf_t * sb)
  * @sa CL_ActorShootHidden
  * @sa CL_ActorShoot
  * @sa CL_ActorDoShoot
+ * @todo Improve detection of left- or right animation.
  */
 void CL_ActorStartShoot (sizebuf_t * sb)
 {
@@ -2166,10 +2170,12 @@ void CL_ActorStartShoot (sizebuf_t * sb)
 			ccs.eMission.num[type]--;
 	} */
 
-	/* animate - we have to check if it is right or left weapon usage */
-	if (IS_MODE_FIRE_RIGHT(cl.cmode) && RIGHT(le)) {
+	/* Animate - we have to check if it is right or left weapon usage. */
+	if (RIGHT(le) && ((&RIGHT(le)->item)->m == obj_idx)) { /* previoulsy: (IS_MODE_FIRE_RIGHT(cl.cmode) && RIGHT(le) */
+		/* TODO: the check with obj_idx is no good solution, because we could have the same type of ammo in the weapons in both hands. 
+		 * Maybe MSG_ReadFormat could get the hand(or type) as well on EV_ACTOR_START_SHOOT? */
 		re.AnimChange(&le->as, le->model1, LE_GetAnim("move", le->right, le->left, le->state));
-	} else if (IS_MODE_FIRE_LEFT(cl.cmode) && LEFT(le)) {
+	} else if (LEFT(le) && ((&LEFT(le)->item)->m == obj_idx)) {
 		re.AnimChange(&le->as, le->model1, LE_GetAnim("move", le->left, le->right, le->state));
 	} else {
 		Com_Printf("CL_ActorStartShoot: Something really bad happened. Left/right-info not in sync.\n");
