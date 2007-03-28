@@ -2167,10 +2167,12 @@ void CL_ActorStartShoot (sizebuf_t * sb)
 	} */
 
 	/* animate - we have to check if it is right or left weapon usage */
-	if (IS_MODE_FIRE_LEFT(cl.cmode) && LEFT(le)) {
+	if (IS_MODE_FIRE_RIGHT(cl.cmode) && RIGHT(le)) {
+		re.AnimChange(&le->as, le->model1, LE_GetAnim("move", le->right, le->left, le->state));
+	} else if (IS_MODE_FIRE_LEFT(cl.cmode) && LEFT(le)) {
 		re.AnimChange(&le->as, le->model1, LE_GetAnim("move", le->left, le->right, le->state));
 	} else {
-		re.AnimChange(&le->as, le->model1, LE_GetAnim("move", le->right, le->left, le->state));
+		Com_Printf("CL_ActorStartShoot: Something really bad happened. Left/right-info not in sync.\n");
 	}
 }
 
