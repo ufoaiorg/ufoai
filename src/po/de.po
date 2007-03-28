@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-03-24 20:50+0100\n"
-"PO-Revision-Date: 2007-03-24 21:56+0100\n"
+"PO-Revision-Date: 2007-03-28 19:05+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1984,23 +1984,23 @@ msgstr "Aktionen bestätigten:"
 
 #: ../base/ufos/menu_options.ufo:881
 msgid "No confirmation before walking and shooting"
-msgstr "Keine Rückfrage vor Bewegung und Schießen"
+msgstr "Keine Rückfrage vor Bewegungen und Schießen"
 
 #: ../base/ufos/menu_options.ufo:895
 msgid "Confirmation needed before walking and shooting"
-msgstr "Bewegungen und Schüsse bestätigen"
+msgstr "Bewegungen und Schüsse müssen bestätigt werden"
 
 #: ../base/ufos/menu_options.ufo:908
 msgid "Confirm Movement:"
-msgstr "Aktionen bestätigten:"
+msgstr "Bewegungen bestätigten:"
 
 #: ../base/ufos/menu_options.ufo:924
 msgid "No confirmation before walking"
-msgstr "Keine Rückfrage vorm Bewegung und Schießen"
+msgstr "Keine Rückfrage vor Bewegungen"
 
 #: ../base/ufos/menu_options.ufo:938
 msgid "Confirmation needed before walking"
-msgstr "Bewegungen und Schüsse bestätigen"
+msgstr "Bewegungen müssen bestätigt werden"
 
 #: ../base/ufos/menu_options.ufo:951
 msgid "HUD Design:"
