@@ -537,7 +537,7 @@ static void PngReadFunc (png_struct *Png, png_bytep buf, png_size_t size)
 static int LoadPNG (const char *name, byte **pic, int *width, int *height)
 {
 	int				rowptr;
-	int				samples;
+	int				samples, color_type, bit_depth;
 	png_structp		png_ptr;
 	png_infop		info_ptr;
 	png_infop		end_info;
@@ -587,11 +587,36 @@ static int LoadPNG (const char *name, byte **pic, int *width, int *height)
 		return 0;
 	}
 
-	png_set_read_fn (png_ptr, (png_voidp)&PngFileBuffer, (png_rw_ptr)PngReadFunc);
+	/* get some usefull information from header */
+	bit_depth = png_get_bit_depth (png_ptr, info_ptr);
+	color_type = png_get_color_type (png_ptr, info_ptr);
 
-	png_read_png (png_ptr, info_ptr, PNG_TRANSFORM_IDENTITY, NULL);
+	/**
+	 * we want to treat all images the same way
+	 * The following code transforms grayscale images of less than 8 to 8 bits,
+	 * changes paletted images to RGB, and adds a full alpha channel if there is
+	 * transparency information in a tRNS chunk.
+	 */
 
-	row_pointers = png_get_rows (png_ptr, info_ptr);
+	/* convert index color images to RGB images */
+	if (color_type == PNG_COLOR_TYPE_PALETTE)
+		png_set_palette_to_rgb(png_ptr);
+	/* convert 1-2-4 bits grayscale images to 8 bits grayscale */
+	if (color_type == PNG_COLOR_TYPE_GRAY && bit_depth < 8)
+		png_set_gray_1_2_4_to_8(png_ptr);
+	if (png_get_valid(png_ptr, info_ptr, PNG_INFO_tRNS))
+		png_set_tRNS_to_alpha(png_ptr);
+
+	if (bit_depth == 16)
+		png_set_strip_16(png_ptr);
+	else if (bit_depth < 8)
+		png_set_packing(png_ptr);
+
+	png_set_read_fn(png_ptr, (png_voidp)&PngFileBuffer, (png_rw_ptr)PngReadFunc);
+
+	png_read_png(png_ptr, info_ptr, PNG_TRANSFORM_IDENTITY, NULL);
+
+	row_pointers = png_get_rows(png_ptr, info_ptr);
 
 	rowptr = 0;
 
