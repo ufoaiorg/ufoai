@@ -3338,14 +3338,14 @@ char *Com_CharGetBody (character_t * const chr)
 /*		Com_Printf("Com_CharGetBody: Use '%s' as armor\n", CSI->ods[chr->inv->c[CSI->idArmor]->item.t].id);*/
 
 		/* check for the underline */
-		Q_strncpyz(id, CSI->ods[chr->inv->c[CSI->idArmor]->item.t].id, MAX_VAR);
+		Q_strncpyz(id, CSI->ods[chr->inv->c[CSI->idArmor]->item.t].id, sizeof(id));
 		underline = strchr(id, '_');
 		if (underline)
 			*underline = '\0';
 
-		Com_sprintf(returnModel, MAX_VAR, "%s%s/%s", chr->path, id, chr->body);
+		Com_sprintf(returnModel, sizeof(returnModel), "%s%s/%s", chr->path, id, chr->body);
 	} else
-		Com_sprintf(returnModel, MAX_VAR, "%s/%s", chr->path, chr->body);
+		Com_sprintf(returnModel, sizeof(returnModel), "%s/%s", chr->path, chr->body);
 	return returnModel;
 }
 
@@ -3377,14 +3377,14 @@ char *Com_CharGetHead (character_t * const chr)
 /*		Com_Printf("Com_CharGetHead: Use '%s' as armor\n", CSI->ods[chr->inv->c[CSI->idArmor]->item.t].id);*/
 
 		/* check for the underline */
-		Q_strncpyz(id, CSI->ods[chr->inv->c[CSI->idArmor]->item.t].id, MAX_VAR);
+		Q_strncpyz(id, CSI->ods[chr->inv->c[CSI->idArmor]->item.t].id, sizeof(id));
 		underline = strchr(id, '_');
 		if (underline)
 			*underline = '\0';
 
-		Com_sprintf(returnModel, MAX_VAR, "%s%s/%s", chr->path, id, chr->head);
+		Com_sprintf(returnModel, sizeof(returnModel), "%s%s/%s", chr->path, id, chr->head);
 	} else
-		Com_sprintf(returnModel, MAX_VAR, "%s/%s", chr->path, chr->head);
+		Com_sprintf(returnModel, sizeof(returnModel), "%s/%s", chr->path, chr->head);
 	return returnModel;
 }
 

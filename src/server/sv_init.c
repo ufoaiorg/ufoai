@@ -234,7 +234,7 @@ static void SV_ParseMapTile (const char *filename, char **text)
 	}
 	t = &mTile[numTiles];
 	memset(t, 0, sizeof(mTile_t));
-	Q_strncpyz(t->name, token, MAX_VAR);
+	Q_strncpyz(t->name, token, sizeof(t->name));
 
 	/* start parsing the block */
 	token = COM_EParse(text, errhead, filename);

@@ -79,7 +79,7 @@ font_t *Font_Analyze (const char *name, const char *path, int renderStyle, int s
 	memset(f, 0, sizeof(f));
 
 	/* copy fontname */
-	Q_strncpyz(f->name, name, MAX_VAR);
+	Q_strncpyz(f->name, name, sizeof(f->name));
 
 	ttfSize = ri.FS_LoadFile(path, &f->buffer);
 
@@ -365,8 +365,10 @@ static char *Font_GetLineWrap (font_t * f, char *buffer, int maxWidth, int *widt
 		*newlineTest = '\0';
 		TTF_SizeUTF8(f->font, buffer, &w, &h);
 		*width = w;
+		/* fine, the hole line (up to \n) has a length smaller than maxwidth */
 		if (w < maxWidth)
 			return newlineTest + 1;
+		/* ok, doesn't fit - revert the change */
 		*newlineTest = '\n';
 	}
 

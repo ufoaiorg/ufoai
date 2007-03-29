@@ -205,7 +205,7 @@ static int FS_FOpenFileSingle (const char *filename, qFILE * file)
 
 	file->z = file->f = NULL;
 
-	Q_strncpyz(file->name, filename, MAX_OSPATH);
+	Q_strncpyz(file->name, filename, sizeof(file->name));
 
 	/* check for links first */
 	for (link = fs_links; link; link = link->next)
@@ -543,7 +543,7 @@ pack_t *FS_LoadPackFile (const char *packfile)
 		}
 
 		pack = Mem_Alloc(sizeof(pack_t));
-		Q_strncpyz(pack->filename, packfile, MAX_QPATH);
+		Q_strncpyz(pack->filename, packfile, sizeof(pack->filename));
 		pack->handle.z = uf;
 		pack->handle.f = NULL;
 		pack->numfiles = gi.number_entry;
@@ -559,7 +559,7 @@ pack_t *FS_LoadPackFile (const char *packfile)
 			Q_strlwr(filename_inzip);
 
 			unzGetCurrentFileInfoPosition(uf, &newfiles[i].filepos);
-			Q_strncpyz(newfiles[i].name, filename_inzip, MAX_QPATH);
+			Q_strncpyz(newfiles[i].name, filename_inzip, sizeof(newfiles[i].name));
 			newfiles[i].filelen = file_info.compressed_size;
 			unzGoToNextFile(uf);
 		}
@@ -597,8 +597,7 @@ void FS_AddGameDirectory (const char *dir)
 
 	/* add the directory to the search path */
 	search = Mem_Alloc(sizeof(searchpath_t));
-	Q_strncpyz(search->filename, dir, sizeof(search->filename) - 1);
-	search->filename[sizeof(search->filename) - 1] = 0;
+	Q_strncpyz(search->filename, dir, sizeof(search->filename));
 	search->next = fs_searchpaths;
 	fs_searchpaths = search;
 
@@ -606,7 +605,7 @@ void FS_AddGameDirectory (const char *dir)
 	if ((dirnames = FS_ListFiles(pattern, &ndirs, 0, SFF_SUBDIR | SFF_HIDDEN | SFF_SYSTEM)) != 0) {
 		for (i = 0; i < ndirs - 1; i++) {
 			if (strrchr(dirnames[i], '/')) {
-				Q_strncpyz(pakfile_list[pakfile_count], dirnames[i], MAX_OSPATH);
+				Q_strncpyz(pakfile_list[pakfile_count], dirnames[i], sizeof(pakfile_list[pakfile_count]));
 				pakfile_count++;
 				if (pakfile_count >= MAX_PACKFILES) {
 					Com_Printf("Warning: Max allowed pakfiles reached (%i) - skipping the rest\n", MAX_PACKFILES);
@@ -622,7 +621,7 @@ void FS_AddGameDirectory (const char *dir)
 	if ((dirnames = FS_ListFiles(pattern, &ndirs, 0, 0)) != 0) {
 		for (i = 0; i < ndirs - 1; i++) {
 			if (strrchr(dirnames[i], '/')) {
-				Q_strncpyz(pakfile_list[pakfile_count], dirnames[i], MAX_OSPATH);
+				Q_strncpyz(pakfile_list[pakfile_count], dirnames[i], sizeof(pakfile_list[pakfile_count]));
 				pakfile_count++;
 				if (pakfile_count >= MAX_PACKFILES) {
 					Com_Printf("Warning: Max allowed pakfiles reached (%i) - skipping the rest\n", MAX_PACKFILES);
@@ -660,7 +659,7 @@ void FS_AddHomeAsGameDirectory (const char *dir)
 	char *homedir = Sys_GetHomeDirectory();
 
 	if (homedir) {
-		Com_sprintf(gdir, MAX_OSPATH, "%s/.ufoai/%s", homedir, dir);
+		Com_sprintf(gdir, sizeof(gdir), "%s/.ufoai/%s", homedir, dir);
 		Com_Printf("using %s for writing\n", gdir);
 		FS_CreatePath(va("%s/", gdir));
 
@@ -807,7 +806,7 @@ char **FS_ListFiles (const char *findname, int *numfiles, unsigned musthave, uns
 	nfiles = 0;
 	while (s) {
 		if (s[strlen(s) - 1] != '.') {
-			Q_strncpyz(tempList[nfiles], s, MAX_OSPATH);
+			Q_strncpyz(tempList[nfiles], s, sizeof(tempList[nfiles]));
 #ifdef _WIN32
 			Q_strlwr(tempList[nfiles]);
 #endif
@@ -1009,7 +1008,7 @@ static void _AddToListBlock (char** fl, listBlock_t* block, listBlock_t* tblock,
 			tblock->next = block->next;
 			block->next = tblock;
 
-			Q_strncpyz(tblock->path, block->path, MAX_QPATH);
+			Q_strncpyz(tblock->path, block->path, sizeof(tblock->path));
 			*fl = tblock->files;
 			block = tblock;
 		}
@@ -1037,7 +1036,7 @@ void FS_BuildFileList (char *fileList)
 	pack_t *pak;
 
 	/* bring it into normal form */
-	Q_strncpyz(files, fileList, MAX_QPATH);
+	Q_strncpyz(files, fileList, sizeof(files));
 	FS_NormPath(files);
 
 	/* check the blocklist for older searches */
@@ -1069,7 +1068,7 @@ void FS_BuildFileList (char *fileList)
 	fs_blocklist = block;
 
 	/* store the search string */
-	Q_strncpyz(block->path, files, MAX_QPATH);
+	Q_strncpyz(block->path, files, sizeof(block->path));
 
 	/* search for the files */
 	fl = block->files;
@@ -1160,7 +1159,7 @@ char *FS_NextScriptHeader (const char *files, char **name, char **text)
 
 	if (Q_strncmp(files, lastList, MAX_QPATH)) {
 		/* search for file lists */
-		Q_strncpyz(lastList, files, MAX_QPATH);
+		Q_strncpyz(lastList, files, sizeof(lastList));
 
 		for (block = fs_blocklist; block; block = block->next)
 			if (!Q_strncmp(files, block->path, MAX_QPATH))
@@ -1215,7 +1214,7 @@ char *FS_NextScriptHeader (const char *files, char **name, char **text)
 			}
 
 			/* load a new file */
-			Q_strncpyz(filename, lBlock->path, MAX_QPATH);
+			Q_strncpyz(filename, lBlock->path, sizeof(filename));
 			strcpy(strrchr(filename, '/') + 1, lFile);
 
 			FS_LoadFile(filename, (void **) &lBuffer);
@@ -1301,7 +1300,7 @@ void FS_GetMaps (qboolean reset)
 					FS_NormPath(findname);
 					baseMapName = COM_SkipPath(findname);
 					COM_StripExtension(baseMapName, filename);
-					Q_strncpyz(maps[numInstalledMaps+1], filename, MAX_QPATH);
+					Q_strncpyz(maps[numInstalledMaps+1], filename, sizeof(maps[numInstalledMaps+1]));
 					numInstalledMaps++;
 				}
 			}
@@ -1326,7 +1325,7 @@ void FS_GetMaps (qboolean reset)
 							free(dirnames[i]);
 							continue;
 						}
-						Q_strncpyz(maps[numInstalledMaps+1], filename, MAX_QPATH);
+						Q_strncpyz(maps[numInstalledMaps+1], filename, sizeof(maps[numInstalledMaps+1]));
 						numInstalledMaps++;
 					} else
 						Com_Printf("invalid mapstatus: %i (%s)\n", status, dirnames[i]);
@@ -1474,7 +1473,7 @@ void FS_Shutdown (void)
 
 	/* free malloc'ed space for maplist */
 	if (mapsInstalledInit) {
-		for (i=0; i<=numInstalledMaps;i++)
+		for (i = 0; i <= numInstalledMaps; i++)
 			free(maps[i]);
 	}
 }

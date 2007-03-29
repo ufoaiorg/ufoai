@@ -1960,10 +1960,10 @@ void G_ClientTeamInfo (player_t * player)
 
 			/* model */
 			ent->chr.ucn = gi.ReadShort();
-			Q_strncpyz(ent->chr.name, gi.ReadString(), MAX_VAR);
-			Q_strncpyz(ent->chr.path, gi.ReadString(), MAX_VAR);
-			Q_strncpyz(ent->chr.body, gi.ReadString(), MAX_VAR);
-			Q_strncpyz(ent->chr.head, gi.ReadString(), MAX_VAR);
+			Q_strncpyz(ent->chr.name, gi.ReadString(), sizeof(ent->chr.name));
+			Q_strncpyz(ent->chr.path, gi.ReadString(), sizeof(ent->chr.path));
+			Q_strncpyz(ent->chr.body, gi.ReadString(), sizeof(ent->chr.body));
+			Q_strncpyz(ent->chr.head, gi.ReadString(), sizeof(ent->chr.head));
 			ent->chr.skin = gi.ReadByte();
 #if 0
 			gi.dprintf("G_ClientTeamInfo: name: %s\n", ent->chr.name);

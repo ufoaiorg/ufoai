@@ -284,8 +284,8 @@ lm_t *CL_AddLocalModel (char *model, char *particle, vec3_t origin, vec3_t angle
 		Sys_Error("Too many local models\n");
 
 	memset(lm, 0, sizeof(lm_t));
-	Q_strncpyz(lm->name, model, MAX_VAR);
-	Q_strncpyz(lm->particle, particle, MAX_VAR);
+	Q_strncpyz(lm->name, model, sizeof(lm->name));
+	Q_strncpyz(lm->particle, particle, sizeof(lm->particle));
 	VectorCopy(origin, lm->origin);
 	VectorCopy(angles, lm->angles);
 	lm->num = num;
@@ -329,7 +329,12 @@ void LE_Think (void)
 static char retAnim[MAX_VAR];
 
 /**
- * @brief
+ * @brief Get the correct animation for the given actor state and weapons
+ * @param[in] right ods index to determine the weapon in the actors right hand
+ * @param[in] left ods index to determine the weapon in the actors left hand
+ * @param[in] state the actors state - e.g. STATE_CROUCHED (crounched animations)
+ * have a 'c' in front of their animation definitions (see *.anm files for
+ * characters)
  */
 char *LE_GetAnim (char *anim, int right, int left, int state)
 {
@@ -366,17 +371,17 @@ char *LE_GetAnim (char *anim, int right, int left, int state)
 	}
 
 	if (!Q_strncmp(anim, "stand", 5) || !Q_strncmp(anim, "walk", 4)) {
-		Q_strncpyz(mod, anim, MAX_VAR);
+		Q_strncpyz(mod, anim, sizeof(mod));
 		mod += strlen(anim);
 		*mod++ = category;
 		*mod++ = 0;
 	} else {
-		Q_strncpyz(mod, anim, MAX_VAR);
-		Q_strcat(mod, "_", MAX_VAR);
+		Q_strncpyz(mod, anim, sizeof(mod));
+		Q_strcat(mod, "_", sizeof(mod));
 		if (akimbo)
-			Q_strcat(mod, "pistol_d", MAX_VAR);
+			Q_strcat(mod, "pistol_d", sizeof(mod));
 		else
-			Q_strcat(mod, type, MAX_VAR);
+			Q_strcat(mod, type, sizeof(mod));
 	}
 
 	return retAnim;

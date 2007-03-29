@@ -118,7 +118,7 @@ static const value_t fdps[] = {
 static void Com_ParseFire (const char *name, char **text, fireDef_t * fd)
 {
 	const value_t *fdp;
-	const char *errhead = "Com_ParseFire: unexptected end of file";
+	const char *errhead = "Com_ParseFire: unexpected end of file";
 	char *token;
 
 	/* get its body */
@@ -181,10 +181,11 @@ static void Com_ParseFire (const char *name, char **text, fireDef_t * fd)
 
 /**
  * @brief
+ * @sa Com_ParseItem
  */
 static void Com_ParseArmor (const char *name, char **text, short *ad)
 {
-	const char *errhead = "Com_ParseFire: unexptected end of file";
+	const char *errhead = "Com_ParseArmor: unexpected end of file";
 	char *token;
 	int i;
 
@@ -209,6 +210,7 @@ static void Com_ParseArmor (const char *name, char **text, short *ad)
 				if (!*text)
 					return;
 
+				/* protection or damage type values */
 				ad[i] = atoi(token);
 				break;
 			}
@@ -224,7 +226,7 @@ static void Com_ParseArmor (const char *name, char **text, short *ad)
  */
 static void Com_ParseItem (const char *name, char **text)
 {
-	const char *errhead = "Com_ParseItem: unexptected end of file (weapon ";
+	const char *errhead = "Com_ParseItem: unexpected end of file (weapon ";
 	const value_t *val;
 	objDef_t *od;
 	char *token;
@@ -282,7 +284,7 @@ static void Com_ParseItem (const char *name, char **text)
 					case OD_WEAPON:
 						/* Save the weapon id. */
 						token = COM_Parse(text);
-						Q_strncpyz(od->weap_id[od->numWeapons], token, MAX_VAR);
+						Q_strncpyz(od->weap_id[od->numWeapons], token, sizeof(od->weap_id[od->numWeapons]));
 
 						/* get it's body */
 						token = COM_Parse(text);
@@ -309,7 +311,7 @@ static void Com_ParseItem (const char *name, char **text)
 										Com_ParseFire(name, text, &od->fd[weap_fds_idx][fd_idx]);
 										/* Self-link fd */
 										od->fd[weap_fds_idx][fd_idx].fd_idx = fd_idx;
-										/* Self-link weapn_mod */
+										/* Self-link weapon_mod */
 										od->fd[weap_fds_idx][fd_idx].weap_fds_idx = weap_fds_idx;
 										od->numFiredefs[od->numWeapons]++;
 									} else {
@@ -398,7 +400,7 @@ static const value_t idps[] = {
  */
 static void Com_ParseInventory (const char *name, char **text)
 {
-	const char *errhead = "Com_ParseInventory: unexptected end of file (inventory ";
+	const char *errhead = "Com_ParseInventory: unexpected end of file (inventory ";
 	invDef_t *id;
 	const value_t *idp;
 	char *token;
@@ -536,9 +538,9 @@ const char *name_strings[NAME_NUM_TYPES] = {
 /**
  * @brief
  */
-static void Com_ParseEquipment (char *name, char **text)
+static void Com_ParseEquipment (const char *name, char **text)
 {
-	const char *errhead = "Com_ParseEquipment: unexptected end of file (equipment ";
+	const char *errhead = "Com_ParseEquipment: unexpected end of file (equipment ";
 	equipDef_t *ed;
 	char *token;
 	int i, n;
@@ -557,7 +559,7 @@ static void Com_ParseEquipment (char *name, char **text)
 	ed = &csi.eds[csi.numEDs++];
 	memset(ed, 0, sizeof(equipDef_t));
 
-	Q_strncpyz(ed->name, name, MAX_VAR);
+	Q_strncpyz(ed->name, name, sizeof(ed->name));
 
 	/* get it's body */
 	token = COM_Parse(text);
@@ -636,7 +638,7 @@ char *Com_GiveName (int gender, char *category)
 				pos += strlen(pos) + 1;
 
 			/* store the name */
-			Q_strncpyz(returnName, pos, MAX_VAR);
+			Q_strncpyz(returnName, pos, sizeof(returnName));
 			return returnName;
 		}
 
@@ -756,28 +758,28 @@ int Com_GetModelAndName (const char *team, character_t * chr)
 		str = Com_GiveName(gender, nameCat[category].title);
 		if (!str)
 			continue;
-		Q_strncpyz(chr->name, str, MAX_VAR);
-		Q_strcat(chr->name, " ", MAX_VAR);
+		Q_strncpyz(chr->name, str, sizeof(chr->name));
+		Q_strcat(chr->name, " ", sizeof(chr->name));
 		str = Com_GiveName(gender + LASTNAME, nameCat[category].title);
 		if (!str)
 			continue;
-		Q_strcat(chr->name, str, MAX_VAR);
+		Q_strcat(chr->name, str, sizeof(chr->name));
 
 		/* get model */
 		str = Com_GiveModel(MODEL_PATH, gender, nameCat[category].title);
 		if (!str)
 			continue;
-		Q_strncpyz(chr->path, str, MAX_VAR);
+		Q_strncpyz(chr->path, str, sizeof(chr->path));
 
 		str = Com_GiveModel(MODEL_BODY, gender, nameCat[category].title);
 		if (!str)
 			continue;
-		Q_strncpyz(chr->body, str, MAX_VAR);
+		Q_strncpyz(chr->body, str, sizeof(chr->body));
 
 		str = Com_GiveModel(MODEL_HEAD, gender, nameCat[category].title);
 		if (!str)
 			continue;
-		Q_strncpyz(chr->head, str, MAX_VAR);
+		Q_strncpyz(chr->head, str, sizeof(chr->head));
 
 		str = Com_GiveModel(MODEL_SKIN, gender, nameCat[category].title);
 		if (!str)
@@ -798,7 +800,7 @@ int Com_GetModelAndName (const char *team, character_t * chr)
 static void Com_ParseNames (const char *name, char **text)
 {
 	nameCategory_t *nc;
-	const char *errhead = "Com_ParseNames: unexptected end of file (names ";
+	const char *errhead = "Com_ParseNames: unexpected end of file (names ";
 	char *token;
 	int i;
 
@@ -895,7 +897,7 @@ static void Com_ParseNames (const char *name, char **text)
 static void Com_ParseActors (const char *name, char **text)
 {
 	nameCategory_t *nc;
-	const char *errhead = "Com_ParseActors: unexptected end of file (actors ";
+	const char *errhead = "Com_ParseActors: unexpected end of file (actors ";
 	char *token;
 	int i, j;
 
@@ -999,7 +1001,7 @@ static const value_t teamDescValues[] = {
 static void Com_ParseTeamDesc (const char *name, char **text)
 {
 	teamDesc_t *td;
-	const char *errhead = "Com_ParseTeamDesc: unexptected end of file (teamdesc ";
+	const char *errhead = "Com_ParseTeamDesc: unexpected end of file (teamdesc ";
 	char *token;
 	int i;
 	const value_t *v;
@@ -1066,7 +1068,7 @@ static void Com_ParseTeam (const char *name, char **text)
 {
 	nameCategory_t *nc;
 	teamDef_t *td;
-	const char *errhead = "Com_ParseTeam: unexptected end of file (team ";
+	const char *errhead = "Com_ParseTeam: unexpected end of file (team ";
 	char *token;
 	int i;
 
@@ -1149,7 +1151,7 @@ static const value_t gameTypeValues[] = {
 
 static void Com_ParseGameTypes (const char *name, char **text)
 {
-	const char *errhead = "Com_ParseGameTypes: unexptected end of file (gametype ";
+	const char *errhead = "Com_ParseGameTypes: unexpected end of file (gametype ";
 	char *token;
 	int i;
 	const value_t *v;
@@ -1234,7 +1236,7 @@ DAMAGE TYPES INTERPRETER
  */
 static void Com_ParseDamageTypes (const char *name, char **text)
 {
-	const char *errhead = "Com_ParseDamageTypes: unexptected end of file (damagetype ";
+	const char *errhead = "Com_ParseDamageTypes: unexpected end of file (damagetype ";
 	char *token;
 	int i;
 

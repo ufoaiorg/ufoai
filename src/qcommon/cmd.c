@@ -455,7 +455,7 @@ static void Cmd_Alias_f (void)
 		cmd_alias_hash[hash] = a;
 		cmd_alias = a;
 	}
-	Q_strncpyz(a->name, s, MAX_ALIAS_NAME);
+	Q_strncpyz(a->name, s, sizeof(a->name));
 
 	/* copy the rest of the command line */
 	cmd[0] = 0;					/* start out with a null string */

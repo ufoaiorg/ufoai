@@ -1051,7 +1051,8 @@ static void Mod_LoadAliasModel (model_t * mod, void *buffer)
 	mod->maxs[2] = 32;
 
 	/* load the tags */
-	Q_strncpyz(mod->tagname, mod->name, MAX_QPATH);
+	Q_strncpyz(mod->tagname, mod->name, sizeof(mod->tagname));
+	/* strip model extension and set the extension to tag */
 	l = strlen(mod->tagname) - 4;
 	strcpy(&(mod->tagname[l]), ".tag");
 
@@ -1064,7 +1065,7 @@ static void Mod_LoadAliasModel (model_t * mod, void *buffer)
 	}
 
 	/* load the animations */
-	Q_strncpyz(mod->animname, mod->name, MAX_QPATH);
+	Q_strncpyz(mod->animname, mod->name, sizeof(mod->animname));
 	l = strlen(mod->animname) - 4;
 	strcpy(&(mod->animname[l]), ".anm");
 
@@ -1359,7 +1360,7 @@ void R_BeginRegistration (char *tiles, char *pos)
 
 		/* get base path */
 		if (token[0] == '-') {
-			Q_strncpyz(base, token + 1, MAX_QPATH);
+			Q_strncpyz(base, token + 1, sizeof(base));
 			continue;
 		}
 
@@ -1367,7 +1368,7 @@ void R_BeginRegistration (char *tiles, char *pos)
 		if (token[0] == '+')
 			Com_sprintf(name, MAX_VAR, "%s%s", base, token + 1);
 		else
-			Q_strncpyz(name, token, MAX_VAR);
+			Q_strncpyz(name, token, sizeof(name));
 
 		if (pos && pos[0]) {
 			/* get position and add a tile */
@@ -1476,7 +1477,7 @@ struct model_s *R_RegisterModel (const char *name)
 				if (skin[0] != '.')
 					mod->skins[i] = GL_FindImage(skin, it_skin);
 				else {
-					Q_strncpyz(path, mod->name, MAX_QPATH);
+					Q_strncpyz(path, mod->name, sizeof(path));
 					end = path;
 					while ((slash = strchr(end, '/')) != 0)
 						end = slash + 1;

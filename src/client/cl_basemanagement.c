@@ -1046,7 +1046,7 @@ extern void B_ParseBuildings (const char *name, char **text, qboolean link)
 	building_t *dependsBuilding = NULL;
 	technology_t *tech_link = NULL;
 	const value_t *edp = NULL;
-	const char *errhead = "B_ParseBuildings: unexptected end of file (names ";
+	const char *errhead = "B_ParseBuildings: unexpected end of file (names ";
 	char *token = NULL;
 #if 0
 	char *split = NULL;
@@ -1311,7 +1311,7 @@ extern void B_ClearBase (base_t *const base)
  */
 extern void B_ParseBases (const char *name, char **text)
 {
-	const char *errhead = "B_ParseBases: unexptected end of file (names ";
+	const char *errhead = "B_ParseBases: unexpected end of file (names ";
 	char *token;
 	base_t *base;
 
@@ -1402,7 +1402,7 @@ extern void B_DrawBase (menuNode_t * node)
 					if (*building->needs)
 						building->used = 1;
 					if (*building->image) {	/* TODO:DEBUG */
-						Q_strncpyz(image, building->image, MAX_QPATH);
+						Q_strncpyz(image, building->image, sizeof(image));
 					} else {
 						/*Com_DPrintf( "B_DrawBase: no image found for building %s / %i\n",building->id ,building->idx ); */
 					}
@@ -1410,12 +1410,12 @@ extern void B_DrawBase (menuNode_t * node)
 					secondBuilding = B_GetBuildingType(building->needs);
 					if (!secondBuilding)
 						Sys_Error("Error in ufo-scriptfile - could not find the needed building\n");
-					Q_strncpyz(image, secondBuilding->image, MAX_QPATH);
+					Q_strncpyz(image, secondBuilding->image, sizeof(image));
 					building->used = 0;
 				}
 			} else {
 				building = NULL;
-				Q_strncpyz(image, "base/grid", MAX_QPATH);
+				Q_strncpyz(image, "base/grid", sizeof(image));
 			}
 
 			if (mx > x && mx < x + width && my > y && my < y + height - 20) {
@@ -1478,7 +1478,7 @@ static void B_RenameBase_f (void)
 	}
 
 	if (baseCurrent)
-		Q_strncpyz(baseCurrent->name, Cmd_Argv(1), MAX_VAR);
+		Q_strncpyz(baseCurrent->name, Cmd_Argv(1), sizeof(baseCurrent->name));
 }
 
 /**
@@ -1859,7 +1859,7 @@ static void B_BuildBase_f (void)
 			gd.mapAction = MA_NONE;
 			CL_UpdateCredits(ccs.credits - BASE_COSTS);
 			Q_strncpyz(baseCurrent->name, mn_base_title->string, sizeof(baseCurrent->name));
-			Q_strncpyz(messageBuffer, va(_("A new base has been built: %s."), mn_base_title->string), MAX_MESSAGE_TEXT);
+			Q_strncpyz(messageBuffer, va(_("A new base has been built: %s."), mn_base_title->string), sizeof(messageBuffer));
 			MN_AddNewMessage(_("Base built"), messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
 			Radar_Initialise(&(baseCurrent->radar), 0);
 			AL_FillInContainment();
@@ -1870,7 +1870,7 @@ static void B_BuildBase_f (void)
 				equipDef_t *ed;
 
 				for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++)
-					if (!Q_strncmp(curCampaign->equipment, ed->name, MAX_VAR))
+					if (!Q_strncmp(curCampaign->equipment, ed->name, sizeof(curCampaign->equipment)))
 						break;
 				if (i != csi.numEDs)
 					baseCurrent->storage = *ed; /* copied, including arrays! */
@@ -1903,7 +1903,7 @@ static void B_BuildBase_f (void)
 			return;
 		}
 	} else {
-		Q_strncpyz(messageBuffer, _("Not enough credits to set up a new base."), MAX_MESSAGE_TEXT);
+		Q_strncpyz(messageBuffer, _("Not enough credits to set up a new base."), sizeof(messageBuffer));
 		MN_AddNewMessage(_("Base built"), messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
 	}
 }
@@ -2195,7 +2195,7 @@ static void B_ChangeBaseName_f (void)
 	if (!baseCurrent)
 		return;
 
-	Q_strncpyz(baseCurrent->name, Cvar_VariableString("mn_base_title"), MAX_VAR);
+	Q_strncpyz(baseCurrent->name, Cvar_VariableString("mn_base_title"), sizeof(baseCurrent->name));
 }
 
 /**

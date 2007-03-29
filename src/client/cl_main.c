@@ -1627,7 +1627,7 @@ extern void CL_InitAfter (void)
  * but e.g. techs would need those parsed items - thus we have to parse e.g. techs
  * at a later stage)
  */
-extern void CL_ParseClientData (char *type, const char *name, char **text)
+extern void CL_ParseClientData (const char *type, const char *name, char **text)
 {
 	if (!Q_strncmp(type, "shader", 6))
 		CL_ParseShaders(name, text);
@@ -1662,7 +1662,7 @@ extern void CL_ParseClientData (char *type, const char *name, char **text)
  * @sa Com_ParseScripts
  * @sa CL_ParseScriptSecond
  */
-static void CL_ParseScriptFirst (char *type, char *name, char **text)
+static void CL_ParseScriptFirst (const char *type, char *name, char **text)
 {
 	/* check for client interpretable scripts */
 	if (!Q_strncmp(type, "mission", 7))
@@ -1701,7 +1701,7 @@ static void CL_ParseScriptFirst (char *type, char *name, char **text)
  * @sa Com_ParseScripts
  * @sa CL_ParseScriptFirst
  */
-static void CL_ParseScriptSecond (char *type, char *name, char **text)
+static void CL_ParseScriptSecond (const char *type, char *name, char **text)
 {
 	/* check for client interpretable scripts */
 	if (!Q_strncmp(type, "stage", 5))
@@ -1756,6 +1756,24 @@ static void CL_ShowIP_f (void)
 	Sys_ShowIP();
 }
 
+/**
+ * @brief Writes key bindings and archived cvars to config.cfg
+ */
+static void CL_WriteConfiguration (void)
+{
+	char path[MAX_OSPATH];
+
+	if (cls.state == ca_uninitialized)
+		return;
+
+	if (strlen(FS_Gamedir()) >= MAX_OSPATH) {
+		Com_Printf("Error: Can't save. Write path exceeded MAX_OSPATH\n");
+		return;
+	}
+	Com_sprintf(path, sizeof(path), "%s/config.cfg", FS_Gamedir());
+	Com_Printf("Save user settings to %s\n", path);
+	Cvar_WriteVariables(path);
+}
 
 /**
  * @brief Calls all reset functions for all subsystems like production and research
@@ -1881,6 +1899,8 @@ static void CL_InitLocal (void)
 	Cmd_AddCommand("pause", CL_Pause_f, "Pause the current server (singleplayer and multiplayer when you are server)");
 	Cmd_AddCommand("pingservers", CL_PingServers_f, "Ping all servers in local network to get the serverlist");
 
+	Cmd_AddCommand("saveconfig", CL_WriteConfiguration, "Save the configuration");
+
 	Cmd_AddCommand("showip", CL_ShowIP_f, "Command to show your ip");
 
 	/* text id is servers in menu_multiplayer.ufo */
@@ -1938,23 +1958,6 @@ static void CL_InitLocal (void)
 	Cmd_AddCommand("playerlist", NULL, NULL);
 	Cmd_AddCommand("players", NULL, NULL);
 }
-
-
-
-/**
- * @brief Writes key bindings and archived cvars to config.cfg
- */
-static void CL_WriteConfiguration (void)
-{
-	char path[MAX_QPATH];
-
-	if (cls.state == ca_uninitialized)
-		return;
-
-	Com_sprintf(path, sizeof(path), "%s/config.cfg", FS_Gamedir());
-	Cvar_WriteVariables(path);
-}
-
 
 typedef struct {
 	const char *name;

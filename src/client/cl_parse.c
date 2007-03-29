@@ -300,7 +300,7 @@ static void CL_ParseServerData (void)
 
 	/* game directory */
 	str = MSG_ReadString (&net_message);
-	Q_strncpyz (cl.gamedir, str, MAX_QPATH);
+	Q_strncpyz (cl.gamedir, str, sizeof(cl.gamedir));
 
 	/* set gamedir */
 	if ((*str && (!fs_gamedirvar->string || !*fs_gamedirvar->string || strcmp(fs_gamedirvar->string, str))) || (!*str && (fs_gamedirvar->string || *fs_gamedirvar->string)))

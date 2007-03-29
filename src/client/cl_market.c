@@ -154,16 +154,16 @@ static void BS_BuyType_f (void)
 			tech = (technology_t *) od->tech;
 			/* Check whether the proper buytype, storage in current base and market. */
 			if (tech && od->buytype == num && (baseCurrent->storage.num[i] || ccs.eMarket.num[i])) {
-				Q_strncpyz(str, va("mn_item%i", j), MAX_VAR);
+				Q_strncpyz(str, va("mn_item%i", j), sizeof(str));
 				Cvar_Set(str, _(od->name));
 
-				Q_strncpyz(str, va("mn_storage%i", j), MAX_VAR);
+				Q_strncpyz(str, va("mn_storage%i", j), sizeof(str));
 				Cvar_SetValue(str, baseCurrent->storage.num[i]);
 
-				Q_strncpyz(str, va("mn_supply%i", j), MAX_VAR);
+				Q_strncpyz(str, va("mn_supply%i", j), sizeof(str));
 				Cvar_SetValue(str, ccs.eMarket.num[i]);
 
-				Q_strncpyz(str, va("mn_price%i", j), MAX_VAR);
+				Q_strncpyz(str, va("mn_price%i", j), sizeof(str));
 				Cvar_Set(str, va("%i c", od->price));
 
 				/* Set state of Autosell button. */
@@ -198,16 +198,16 @@ static void BS_BuyType_f (void)
 			if (RS_Collected_(tech) || RS_IsResearched_ptr(tech)) {
 				storage = supply = 0;
 				AIR_GetStorageSupplyCount(air_samp->id, &storage, &supply);
-				Q_strncpyz(str, va("mn_item%i", j), MAX_VAR);
+				Q_strncpyz(str, va("mn_item%i", j), sizeof(str));
 				Cvar_Set(str, _(air_samp->name));
 
-				Q_strncpyz(str, va("mn_storage%i", j), MAX_VAR);
+				Q_strncpyz(str, va("mn_storage%i", j), sizeof(str));
 				Cvar_SetValue(str, storage);
 
-				Q_strncpyz(str, va("mn_supply%i", j), MAX_VAR);
+				Q_strncpyz(str, va("mn_supply%i", j), sizeof(str));
 				Cvar_SetValue(str, supply);
 
-				Q_strncpyz(str, va("mn_price%i", j), MAX_VAR);
+				Q_strncpyz(str, va("mn_price%i", j), sizeof(str));
 				Cvar_Set(str, va("%i c", air_samp->price));
 
 				buyList[j] = i;
