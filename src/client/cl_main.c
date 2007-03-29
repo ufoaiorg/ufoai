@@ -1763,11 +1763,15 @@ static void CL_ShowIP_f (void)
  */
 static void CL_WriteConfiguration (void)
 {
-	char path[MAX_QPATH];
+	char path[MAX_OSPATH];
 
 	if (cls.state == ca_uninitialized)
 		return;
 
+	if (strlen(FS_Gamedir()) >= MAX_OSPATH) {
+		Com_Printf("Error: Can't save. Write path exceeded MAX_OSPATH\n");
+		return;
+	}
 	Com_sprintf(path, sizeof(path), "%s/config.cfg", FS_Gamedir());
 	Com_Printf("Save user settings to %s\n", path);
 	Cvar_WriteVariables(path);

@@ -610,7 +610,7 @@ extern void Cvar_WriteVariables (const char *path)
 
 	f = fopen(path, "w");
 	if (!f) {
-		Com_Printf("Could not open '%s' to to store the user settings\n", path);
+		Com_Printf("Could not open '%s' to store the user settings\n", path);
 		return;
 	}
 
