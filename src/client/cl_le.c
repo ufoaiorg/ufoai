@@ -371,17 +371,17 @@ char *LE_GetAnim (char *anim, int right, int left, int state)
 	}
 
 	if (!Q_strncmp(anim, "stand", 5) || !Q_strncmp(anim, "walk", 4)) {
-		Q_strncpyz(mod, anim, sizeof(mod));
+		Q_strncpyz(mod, anim, MAX_VAR);
 		mod += strlen(anim);
 		*mod++ = category;
 		*mod++ = 0;
 	} else {
-		Q_strncpyz(mod, anim, sizeof(mod));
-		Q_strcat(mod, "_", sizeof(mod));
+		Q_strncpyz(mod, anim, MAX_VAR);
+		Q_strcat(mod, "_", MAX_VAR);
 		if (akimbo)
-			Q_strcat(mod, "pistol_d", sizeof(mod));
+			Q_strcat(mod, "pistol_d", MAX_VAR);
 		else
-			Q_strcat(mod, type, sizeof(mod));
+			Q_strcat(mod, type, MAX_VAR);
 	}
 
 	return retAnim;
