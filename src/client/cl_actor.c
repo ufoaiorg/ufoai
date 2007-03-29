@@ -2040,12 +2040,10 @@ void CL_ActorDoShoot (sizebuf_t * sb)
 		CL_SetLastMoving(le);
 
 	/* Animate - we have to check if it is right or left weapon usage. */
-	if (RIGHT(le) && ((&RIGHT(le)->item)->m == obj_idx)) { /* previoulsy: (IS_MODE_FIRE_RIGHT(cl.cmode) && RIGHT(le) */
-		/* TODO: the check with obj_idx is no good solution, because we could have the same type of ammo in teh weapons in both hands. 
-		 * Maybe MSG_ReadFormat could get the hand(or type) as well on EV_ACTOR_SHOOT? */
+	if (RIGHT(le) && IS_MODE_FIRE_RIGHT(cl.cmode)) {
 		re.AnimChange(&le->as, le->model1, LE_GetAnim("shoot", le->right, le->left, le->state));
 		re.AnimAppend(&le->as, le->model1, LE_GetAnim("stand", le->right, le->left, le->state));
-	} else if (LEFT(le) && ((&LEFT(le)->item)->m == obj_idx)) {
+	} else if (LEFT(le) && IS_MODE_FIRE_LEFT(cl.cmode)) {
 		re.AnimChange(&le->as, le->model1, LE_GetAnim("shoot", le->left, le->right, le->state));
 		re.AnimAppend(&le->as, le->model1, LE_GetAnim("stand", le->left, le->right, le->state));
 	} else {
@@ -2177,11 +2175,9 @@ void CL_ActorStartShoot (sizebuf_t * sb)
 	} */
 
 	/* Animate - we have to check if it is right or left weapon usage. */
-	if (RIGHT(le) && ((&RIGHT(le)->item)->m == obj_idx)) { /* previoulsy: (IS_MODE_FIRE_RIGHT(cl.cmode) && RIGHT(le) */
-		/* TODO: the check with obj_idx is no good solution, because we could have the same type of ammo in the weapons in both hands. 
-		 * Maybe MSG_ReadFormat could get the hand(or type) as well on EV_ACTOR_START_SHOOT? */
+	if (RIGHT(le) && IS_MODE_FIRE_RIGHT(cl.cmode)) {
 		re.AnimChange(&le->as, le->model1, LE_GetAnim("move", le->right, le->left, le->state));
-	} else if (LEFT(le) && ((&LEFT(le)->item)->m == obj_idx)) {
+	} else if (LEFT(le) && IS_MODE_FIRE_LEFT(cl.cmode)) {
 		re.AnimChange(&le->as, le->model1, LE_GetAnim("move", le->left, le->right, le->state));
 	} else {
 		Com_Printf("CL_ActorStartShoot: Something really bad happened. Left/right-info not in sync.\n");

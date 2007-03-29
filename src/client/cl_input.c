@@ -510,7 +510,7 @@ static void CL_ConfirmAction_f (void)
 	case M_PEND_FIRE_L:
 		/* TODO: Why can we use mouspos (not mousePendPos) here? */
 		CL_ActorShoot(selActor, mousePos);
-		cl.cmode = M_MOVE;
+		/* cl.cmode = M_MOVE; TODO: this might've broken animation choosing in cl_actor:CL_ActorDoShoot and CL_ActorStartShoot. */
 		break;
 	default:
 		break;
