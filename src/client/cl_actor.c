@@ -50,7 +50,7 @@ int REACTION_FIREMODE[MAX_EDICTS][3];	/* Per actor: Stores the firemode to be us
 
 static le_t *mouseActor;
 static pos3_t mouseLastPos;
-static pos3_t mousePendPos; /* for double-click movement ... */
+pos3_t mousePendPos; /* for double-click movement and confirmations ... */
 reactionmode_t selActorReactionState; /* keep track of reaction toggle */
 reactionmode_t selActorOldReactionState = R_FIRE_OFF; /* and another to help set buttons! */
 
@@ -1468,6 +1468,9 @@ extern qboolean CL_ActorSelect (le_t * le)
 	if (!le || le->team != cls.team ||
 		(le->state & STATE_DEAD) || !le->inuse)
 		return qfalse;
+
+	if (blockEvents)
+		return qfalse;		
 
 	/* select him */
 	if (selActor)
