@@ -35,7 +35,7 @@ menu map
 		{
 			// mission description
 			pos		"0 608"
-			size	"384 80"
+			size	"384 192"
 		}
 	}
 
