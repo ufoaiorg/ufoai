@@ -2246,7 +2246,6 @@ void MN_DrawMenus (void)
 						/* check whether the cvar value changed */
 						if (Q_strncmp(oldSource, source, MAX_VAR)) {
 							node->menuModel = MN_GetMenuModel(source);
-							Q_strncpyz(oldSource, source, MAX_VAR);
 						}
 					}
 
@@ -2263,6 +2262,9 @@ void MN_DrawMenus (void)
 						}
 					} else {
 						menuModel = node->menuModel;
+						/* check whether the cvar value changed */
+						if (Q_strncmp(oldSource, source, MAX_VAR))
+							Q_strncpyz(oldSource, source, MAX_VAR);
 						node->noMenuModel = qfalse;
 					}
 
