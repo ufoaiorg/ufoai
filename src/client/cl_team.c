@@ -642,7 +642,7 @@ static void CL_GenerateEquipment_f (void)
 
 	/* Get team. */
 	if (strstr(Cvar_VariableString("team"), "human")) {
-		team = 0; 
+		team = 0;
 		Com_DPrintf("CL_GenerateEquipment_f().. team human, id: %i\n", team);
 	} else if (strstr(Cvar_VariableString("team"), "alien")) {
 		team = 1;
@@ -762,7 +762,7 @@ static void CL_Select_f (void)
 	arg = Cmd_Argv(0);
 	/* there must be a _ in the console command */
 	*strchr(arg, '_') = 0;
-	Q_strncpyz(command, arg, MAX_VAR);
+	Q_strncpyz(command, arg, sizeof(command));
 
 	if (!Q_strncmp(command, "soldier", 7)) {
 		/* check whether we are connected (tactical mission) */
@@ -771,7 +771,7 @@ static void CL_Select_f (void)
 			return;
 		/* we are still in the menu */
 		} else
-			Q_strncpyz(command, "equip", MAX_VAR);
+			Q_strncpyz(command, "equip", sizeof(command));
 	}
 
 	if (!Q_strncmp(command, "equip", 5)) {
@@ -1301,10 +1301,10 @@ static void CL_LoadTeamMember (sizebuf_t * sb, character_t * chr)
 		gd.nextUCN = chr->ucn + 1;
 
 	/* name and model */
-	Q_strncpyz(chr->name, MSG_ReadString(sb), MAX_VAR);
-	Q_strncpyz(chr->path, MSG_ReadString(sb), MAX_VAR);
-	Q_strncpyz(chr->body, MSG_ReadString(sb), MAX_VAR);
-	Q_strncpyz(chr->head, MSG_ReadString(sb), MAX_VAR);
+	Q_strncpyz(chr->name, MSG_ReadString(sb), sizeof(chr->name));
+	Q_strncpyz(chr->path, MSG_ReadString(sb), sizeof(chr->path));
+	Q_strncpyz(chr->body, MSG_ReadString(sb), sizeof(chr->body));
+	Q_strncpyz(chr->head, MSG_ReadString(sb), sizeof(chr->head));
 	chr->skin = MSG_ReadByte(sb);
 
 	chr->HP = MSG_ReadShort(sb);
@@ -1889,14 +1889,14 @@ extern void CL_ParseResults (sizebuf_t * buf)
 
 		Com_sprintf(resultText, sizeof(resultText), _("\n\nEnemies killed:  %i\nTeam survivors:  %i"), thier_killed + thier_stunned, our_surviviurs);
 		if (winner == we) {
-			Q_strncpyz(popupText, _("You won the game!"), MAX_VAR);
+			Q_strncpyz(popupText, _("You won the game!"), sizeof(popupText));
 			Q_strcat(popupText, resultText, sizeof(popupText));
 			MN_Popup(_("Congratulations"), popupText);
 		} else if (winner == 0) {
-			Q_strncpyz(popupText, _("The game was a draw!\n\nNo survivors left on any side."), MAX_VAR);
+			Q_strncpyz(popupText, _("The game was a draw!\n\nNo survivors left on any side."), sizeof(popupText));
 			MN_Popup(_("Game Drawn!"), popupText);
 		} else {
-			Q_strncpyz(popupText, _("You lost the game"), MAX_VAR);
+			Q_strncpyz(popupText, _("You lost the game"), sizeof(popupText));
 			Q_strcat(popupText, resultText, sizeof(popupText));
 			MN_Popup(_("Better luck next time"), popupText);
 		}
@@ -1949,7 +1949,7 @@ static const value_t rankValues[] =
 extern void CL_ParseMedalsAndRanks (const char *name, char **text, byte parserank)
 {
 	rank_t *rank = NULL;
-	const char *errhead = "Com_ParseMedalsAndRanks: unexptected end of file (medal/rank ";
+	const char *errhead = "Com_ParseMedalsAndRanks: unexpected end of file (medal/rank ";
 	char *token;
 	const value_t	*v;
 
@@ -1971,7 +1971,7 @@ extern void CL_ParseMedalsAndRanks (const char *name, char **text, byte parseran
 
 		rank = &gd.ranks[gd.numRanks++];
 		memset(rank, 0, sizeof(rank_t));
-		Q_strncpyz(rank->id, name, MAX_VAR);
+		Q_strncpyz(rank->id, name, sizeof(rank->id));
 
 		do {
 			/* get the name type */
@@ -2019,7 +2019,7 @@ static const value_t ugvValues[] =
  */
 extern void CL_ParseUGVs (const char *name, char **text)
 {
-	const char *errhead = "Com_ParseUGVs: unexptected end of file (ugv ";
+	const char *errhead = "Com_ParseUGVs: unexpected end of file (ugv ";
 	char	*token;
 	const value_t	*v;
 	ugv_t*	ugv;

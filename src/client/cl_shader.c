@@ -69,7 +69,7 @@ void CL_ParseShaders (const char *name, char **text)
 {
 	shader_t *entry;
 	const value_t *v;
-	const char *errhead = "CL_ParseShaders: unexptected end of file (names ";
+	const char *errhead = "CL_ParseShaders: unexpected end of file (names ";
 	char *token;
 
 	/* get name list body body */

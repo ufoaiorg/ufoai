@@ -3683,7 +3683,7 @@ void MN_ParseMenuModel (const char *name, char **text)
 	char *token;
 	int i;
 	const value_t *v = NULL;
-	const char *errhead = "MN_ParseMenuModel: unexptected end of file (names ";
+	const char *errhead = "MN_ParseMenuModel: unexpected end of file (names ";
 
 	/* search for menumodels with same name */
 	for (i = 0; i < numMenuModels; i++)
@@ -4186,7 +4186,7 @@ static const value_t tutValues[] = {
 extern void MN_ParseTutorials (const char *name, char **text)
 {
 	tutorial_t *t = NULL;
-	const char *errhead = "MN_ParseTutorials: unexptected end of file (tutorial ";
+	const char *errhead = "MN_ParseTutorials: unexpected end of file (tutorial ";
 	char *token;
 	const value_t *v;
 

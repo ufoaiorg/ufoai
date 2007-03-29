@@ -64,7 +64,7 @@ static const value_t eventMail_vals[] = {
  */
 extern void CL_ParseEventMails (const char *name, char **text)
 {
-	const char *errhead = "CL_ParseEventMails: unexptected end of file (mail ";
+	const char *errhead = "CL_ParseEventMails: unexpected end of file (mail ";
 	eventMail_t *eventMail;
 	const value_t *vp;
 	char *token;

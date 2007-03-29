@@ -1088,7 +1088,7 @@ static unsigned CM_AddMapTile (char *name, int sX, int sY, int sZ)
 	curTile = &mapTiles[numTiles++];
 	memset(curTile, 0, sizeof(mapTile_t));
 	curTile->extraData = Hunk_Begin(0x400000);
-	Q_strncpyz(curTile->name, name, MAX_QPATH);
+	Q_strncpyz(curTile->name, name, sizeof(curTile->name));
 
 	VectorSet(shift, sX * UNIT_SIZE, sY * UNIT_SIZE, sZ * UNIT_SIZE);
 

@@ -504,7 +504,7 @@ static int SV_CompleteMapCommand (const char *partial, const char **match)
 					break;
 
 				/* j must be bigger than 0 here */
-				Q_strncpyz(matchString, localMatch[0], i+1);
+				Q_strncpyz(matchString, localMatch[0], i + 1);
 				*match = matchString;
 				matches = 1;
 			}

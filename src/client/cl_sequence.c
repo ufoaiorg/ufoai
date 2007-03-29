@@ -648,8 +648,8 @@ int SEQ_2Dobj (const char *name, char *data)
 		for (i = 0; i < 4; i++)
 			s2d->color[i] = 1.0f;
 		s2d->inuse = qtrue;
-		Q_strncpyz(s2d->font, "f_big", MAX_VAR);	/* default font */
-		Q_strncpyz(s2d->name, name, MAX_VAR);
+		Q_strncpyz(s2d->font, "f_big", sizeof(s2d->font));	/* default font */
+		Q_strncpyz(s2d->name, name, sizeof(s2d->name));
 	}
 
 	/* get values */
@@ -709,7 +709,7 @@ int SEQ_Command (const char *name, char *data)
  */
 void CL_ParseSequence (const char *name, char **text)
 {
-	const char *errhead = "CL_ParseSequence: unexptected end of file (sequence ";
+	const char *errhead = "CL_ParseSequence: unexpected end of file (sequence ";
 	sequence_t *sp;
 	seqCmd_t *sc;
 	char *token, *data;

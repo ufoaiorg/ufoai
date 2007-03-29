@@ -854,7 +854,7 @@ static void SP_worldspawn (edict_t * ent)
 	ent->inuse = qtrue;
 
 	if (st.nextmap)
-		Q_strncpyz(level.nextmap, st.nextmap, MAX_QPATH);
+		Q_strncpyz(level.nextmap, st.nextmap, sizeof(level.nextmap));
 
 	/* default value */
 	if (st.maxteams < 2)
@@ -863,9 +863,9 @@ static void SP_worldspawn (edict_t * ent)
 	/* make some data visible to the server */
 	if (ent->message && ent->message[0]) {
 		gi.configstring(CS_NAME, ent->message);
-		Q_strncpyz(level.level_name, ent->message, MAX_QPATH);
+		Q_strncpyz(level.level_name, ent->message, sizeof(level.level_name));
 	} else
-		Q_strncpyz(level.level_name, level.mapname, MAX_QPATH);
+		Q_strncpyz(level.level_name, level.mapname, sizeof(level.level_name));
 
 	gi.configstring(CS_CDTRACK, va("%i", ent->sounds));
 

@@ -341,7 +341,6 @@ static void SVCmd_StartGame_f (void)
 	}
 	Com_DPrintf("SVCmd_StartGame_f: Players in game: %i, Unique teams in game: %i\n", playerCount, teamCount);
 
-	Q_strncpyz(buffer, "", MAX_VAR);
 	level.activeTeam = knownTeams[(int)(frand() * (teamCount - 1) + 0.5)];
 	turnTeam = level.activeTeam;
 	for (i = 0, p = game.players; i < game.maxplayers; i++, p++) {

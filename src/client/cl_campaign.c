@@ -3198,7 +3198,7 @@ extern mission_t *CL_AddMission (const char *name)
 	/* initialize the mission */
 	ms = &missions[numMissions++];
 	memset(ms, 0, sizeof(mission_t));
-	Q_strncpyz(ms->name, name, MAX_VAR);
+	Q_strncpyz(ms->name, name, sizeof(ms->name));
 	Com_DPrintf("CL_AddMission: mission name: '%s'\n", name);
 
 	return ms;
@@ -3209,7 +3209,7 @@ extern mission_t *CL_AddMission (const char *name)
  */
 extern void CL_ParseMission (const char *name, char **text)
 {
-	const char *errhead = "CL_ParseMission: unexptected end of file (mission ";
+	const char *errhead = "CL_ParseMission: unexpected end of file (mission ";
 	mission_t *ms;
 	const value_t *vp;
 	char *token;
@@ -3234,7 +3234,7 @@ extern void CL_ParseMission (const char *name, char **text)
 	ms = &missions[numMissions++];
 	memset(ms, 0, sizeof(mission_t));
 
-	Q_strncpyz(ms->name, name, MAX_VAR);
+	Q_strncpyz(ms->name, name, sizeof(ms->name));
 
 	/* get it's body */
 	token = COM_Parse(text);
@@ -3299,7 +3299,7 @@ extern void CL_ParseMission (const char *name, char **text)
  */
 extern void CL_ParseResearchedCampaignItems (const char *name, char **text)
 {
-	const char *errhead = "CL_ParseResearchedCampaignItems: unexptected end of file (equipment ";
+	const char *errhead = "CL_ParseResearchedCampaignItems: unexpected end of file (equipment ";
 	char *token;
 	int i;
 	campaign_t* campaign = NULL;
@@ -3347,7 +3347,7 @@ extern void CL_ParseResearchedCampaignItems (const char *name, char **text)
  */
 extern void CL_ParseResearchableCampaignStates (const char *name, char **text, qboolean researchable)
 {
-	const char *errhead = "CL_ParseResearchableCampaignStates: unexptected end of file (equipment ";
+	const char *errhead = "CL_ParseResearchableCampaignStates: unexpected end of file (equipment ";
 	char *token;
 	int i;
 	campaign_t* campaign = NULL;
@@ -3426,7 +3426,7 @@ static const value_t stageset_vals[] = {
  */
 static void CL_ParseStageSet (const char *name, char **text)
 {
-	const char *errhead = "CL_ParseStageSet: unexptected end of file (stageset ";
+	const char *errhead = "CL_ParseStageSet: unexpected end of file (stageset ";
 	stageSet_t *sp;
 	const value_t *vp;
 	char missionstr[256];
@@ -3517,7 +3517,7 @@ static void CL_ParseStageSet (const char *name, char **text)
  */
 extern void CL_ParseStage (const char *name, char **text)
 {
-	const char *errhead = "CL_ParseStage: unexptected end of file (stage ";
+	const char *errhead = "CL_ParseStage: unexpected end of file (stage ";
 	stage_t *sp;
 	char *token;
 	int i;
@@ -3627,7 +3627,7 @@ static const value_t salary_vals[] = {
  */
 extern void CL_ParseSalary (const char *name, char **text, int campaignID)
 {
-	const char *errhead = "CL_ParseSalary: unexptected end of file ";
+	const char *errhead = "CL_ParseSalary: unexpected end of file ";
 	salary_t *s;
 	const value_t *vp;
 	char *token;
@@ -3683,7 +3683,7 @@ extern void CL_ParseSalary (const char *name, char **text, int campaignID)
  */
 extern void CL_ParseCharacterValues (const char *name, char **text, int campaignID)
 {
-	const char *errhead = "CL_ParseCharacterValues: unexptected end of file (aircraft ";
+	const char *errhead = "CL_ParseCharacterValues: unexpected end of file (character_data ";
 	char *token;
 	int team = 0, i, empl_type = 0;
 
@@ -3710,19 +3710,23 @@ extern void CL_ParseCharacterValues (const char *name, char **text, int campaign
 			Sys_Error("CL_ParseCharacterValues: Unknown teamString\n");
 		/* now let's check whether we want parse skill or abilitie values */
 		token = COM_EParse(text, errhead, name);
+		if (!*text)
+			Sys_Error("CL_ParseCharacterValues: invalid character_data entry for team %i\n", team);
 		empl_type = E_GetEmployeeType(token);
 		token = COM_EParse(text, errhead, name);
+		if (!*text)
+			Sys_Error("CL_ParseCharacterValues: invalid character_data entry for team %i\n", team);
 
 		/* found a definition */
 		if (!Q_strcmp(token, "skill")) {
-			for (i=0; i<2; i++) {
+			for (i = 0; i < 2; i++) {
 				token = COM_EParse(text, errhead, name);
 				if (!*text)
 					Sys_Error("CL_ParseCharacterValues: invalid skill entry for team %i\n", team);
 				skillValues[campaignID][team][empl_type][i] = atoi(token);
 			}
 		} else if (!Q_strcmp(token, "ability")) {
-			for (i=0; i<2; i++) {
+			for (i = 0; i < 2; i++) {
 				token = COM_EParse(text, errhead, name);
 				if (!*text)
 					Sys_Error("CL_ParseCharacterValues: invalid ability entry for team %i\n", team);
@@ -3778,7 +3782,7 @@ static const value_t campaign_vals[] = {
  */
 extern void CL_ParseCampaign (const char *name, char **text)
 {
-	const char *errhead = "CL_ParseCampaign: unexptected end of file (campaign ";
+	const char *errhead = "CL_ParseCampaign: unexpected end of file (campaign ";
 	campaign_t *cp;
 	const value_t *vp;
 	char *token;
@@ -3909,7 +3913,7 @@ static const value_t nation_vals[] = {
  */
 extern void CL_ParseNations (const char *name, char **text)
 {
-	const char *errhead = "CL_ParseNations: unexptected end of file (nation ";
+	const char *errhead = "CL_ParseNations: unexpected end of file (nation ";
 	nation_t *nation;
 	const value_t *vp;
 	char *token;

@@ -228,16 +228,16 @@ char *Sys_FindFirst (const char *path, unsigned musthave, unsigned canhave)
 		Sys_Error("Sys_BeginFind without close");
 
 /*	COM_FilePath (path, findbase); */
-	Q_strncpyz(findbase, path, MAX_OSPATH);
+	Q_strncpyz(findbase, path, sizeof(findbase));
 
 	if ((p = strrchr(findbase, '/')) != NULL) {
 		*p = 0;
-		Q_strncpyz(findpattern, p + 1, MAX_OSPATH);
+		Q_strncpyz(findpattern, p + 1, sizeof(findpattern));
 	} else
-		Q_strncpyz(findpattern, "*", MAX_OSPATH);
+		Q_strncpyz(findpattern, "*", sizeof(findpattern));
 
 	if (Q_strcmp(findpattern, "*.*") == 0)
-		Q_strncpyz(findpattern, "*", MAX_OSPATH);
+		Q_strncpyz(findpattern, "*", sizeof(findpattern));
 
 	if ((fdir = opendir(findbase)) == NULL)
 		return NULL;
@@ -247,7 +247,7 @@ char *Sys_FindFirst (const char *path, unsigned musthave, unsigned canhave)
 /*			if (*findpattern) */
 /*				printf("%s matched %s\n", findpattern, d->d_name); */
 			if (CompareAttributes(findbase, d->d_name, musthave, canhave)) {
-				Com_sprintf(findpath, MAX_OSPATH, "%s/%s", findbase, d->d_name);
+				Com_sprintf(findpath, sizeof(findpath), "%s/%s", findbase, d->d_name);
 				return findpath;
 			}
 		}
@@ -272,7 +272,7 @@ char *Sys_FindNext (unsigned musthave, unsigned canhave)
 /*			if (*findpattern) */
 /*				printf("%s matched %s\n", findpattern, d->d_name); */
 			if (CompareAttributes(findbase, d->d_name, musthave, canhave)) {
-				Com_sprintf(findpath, MAX_OSPATH, "%s/%s", findbase, d->d_name);
+				Com_sprintf(findpath, sizeof(findpath), "%s/%s", findbase, d->d_name);
 				return findpath;
 			}
 		}

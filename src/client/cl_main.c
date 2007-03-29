@@ -1627,7 +1627,7 @@ extern void CL_InitAfter (void)
  * but e.g. techs would need those parsed items - thus we have to parse e.g. techs
  * at a later stage)
  */
-extern void CL_ParseClientData (char *type, const char *name, char **text)
+extern void CL_ParseClientData (const char *type, const char *name, char **text)
 {
 	if (!Q_strncmp(type, "shader", 6))
 		CL_ParseShaders(name, text);
@@ -1662,7 +1662,7 @@ extern void CL_ParseClientData (char *type, const char *name, char **text)
  * @sa Com_ParseScripts
  * @sa CL_ParseScriptSecond
  */
-static void CL_ParseScriptFirst (char *type, char *name, char **text)
+static void CL_ParseScriptFirst (const char *type, char *name, char **text)
 {
 	/* check for client interpretable scripts */
 	if (!Q_strncmp(type, "mission", 7))
@@ -1703,7 +1703,7 @@ static void CL_ParseScriptFirst (char *type, char *name, char **text)
  * @sa Com_ParseScripts
  * @sa CL_ParseScriptFirst
  */
-static void CL_ParseScriptSecond (char *type, char *name, char **text)
+static void CL_ParseScriptSecond (const char *type, char *name, char **text)
 {
 	/* check for client interpretable scripts */
 	if (!Q_strncmp(type, "stage", 5))
@@ -1954,6 +1954,7 @@ static void CL_WriteConfiguration (void)
 		return;
 
 	Com_sprintf(path, sizeof(path), "%s/config.cfg", FS_Gamedir());
+	Com_Printf("Save user settings to %s\n", path);
 	Cvar_WriteVariables(path);
 }
 
