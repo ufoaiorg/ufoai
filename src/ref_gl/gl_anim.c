@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief
  */
-manim_t *Anim_Get(model_t * mod, char *name)
+static manim_t *Anim_Get (model_t * mod, char *name)
 {
 	manim_t *anim;
 	int i;
@@ -49,7 +49,7 @@ manim_t *Anim_Get(model_t * mod, char *name)
 /**
  * @brief
  */
-void Anim_Append(animState_t * as, model_t * mod, char *name)
+void Anim_Append (animState_t * as, model_t * mod, char *name)
 {
 	manim_t *anim;
 
@@ -93,7 +93,7 @@ void Anim_Append(animState_t * as, model_t * mod, char *name)
 /**
  * @brief
  */
-void Anim_Change(animState_t * as, model_t * mod, char *name)
+void Anim_Change (animState_t * as, model_t * mod, char *name)
 {
 	manim_t *anim;
 
@@ -146,7 +146,7 @@ void Anim_Change(animState_t * as, model_t * mod, char *name)
 /**
  * @brief
  */
-void Anim_Run(animState_t * as, model_t * mod, int msec)
+void Anim_Run (animState_t * as, model_t * mod, int msec)
 {
 	manim_t *anim;
 
@@ -196,7 +196,7 @@ void Anim_Run(animState_t * as, model_t * mod, int msec)
 /**
  * @brief
  */
-char *Anim_GetName(animState_t * as, model_t * mod)
+char *Anim_GetName (animState_t * as, model_t * mod)
 {
 	manim_t *anim;
 
