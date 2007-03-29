@@ -1758,6 +1758,20 @@ static void CL_ShowIP_f (void)
 	Sys_ShowIP();
 }
 
+/**
+ * @brief Writes key bindings and archived cvars to config.cfg
+ */
+static void CL_WriteConfiguration (void)
+{
+	char path[MAX_QPATH];
+
+	if (cls.state == ca_uninitialized)
+		return;
+
+	Com_sprintf(path, sizeof(path), "%s/config.cfg", FS_Gamedir());
+	Com_Printf("Save user settings to %s\n", path);
+	Cvar_WriteVariables(path);
+}
 
 /**
  * @brief Calls all reset functions for all subsystems like production and research
@@ -1883,6 +1897,8 @@ static void CL_InitLocal (void)
 	Cmd_AddCommand("pause", CL_Pause_f, "Pause the current server (singleplayer and multiplayer when you are server)");
 	Cmd_AddCommand("pingservers", CL_PingServers_f, "Ping all servers in local network to get the serverlist");
 
+	Cmd_AddCommand("saveconfig", CL_WriteConfiguration, "Save the configuration");
+
 	Cmd_AddCommand("showip", CL_ShowIP_f, "Command to show your ip");
 
 	/* text id is servers in menu_multiplayer.ufo */
@@ -1940,24 +1956,6 @@ static void CL_InitLocal (void)
 	Cmd_AddCommand("playerlist", NULL, NULL);
 	Cmd_AddCommand("players", NULL, NULL);
 }
-
-
-
-/**
- * @brief Writes key bindings and archived cvars to config.cfg
- */
-static void CL_WriteConfiguration (void)
-{
-	char path[MAX_QPATH];
-
-	if (cls.state == ca_uninitialized)
-		return;
-
-	Com_sprintf(path, sizeof(path), "%s/config.cfg", FS_Gamedir());
-	Com_Printf("Save user settings to %s\n", path);
-	Cvar_WriteVariables(path);
-}
-
 
 typedef struct {
 	const char *name;
