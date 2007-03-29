@@ -2040,6 +2040,7 @@ void CL_ActorDoShoot (sizebuf_t * sb)
 		CL_SetLastMoving(le);
 
 	/* Animate - we have to check if it is right or left weapon usage. */
+	/* TODO: FIXME the left/right info for actors in the enemy team/turn has to come from somewhere. */
 	if (RIGHT(le) && IS_MODE_FIRE_RIGHT(cl.cmode)) {
 		re.AnimChange(&le->as, le->model1, LE_GetAnim("shoot", le->right, le->left, le->state));
 		re.AnimAppend(&le->as, le->model1, LE_GetAnim("stand", le->right, le->left, le->state));
@@ -2047,7 +2048,10 @@ void CL_ActorDoShoot (sizebuf_t * sb)
 		re.AnimChange(&le->as, le->model1, LE_GetAnim("shoot", le->left, le->right, le->state));
 		re.AnimAppend(&le->as, le->model1, LE_GetAnim("stand", le->left, le->right, le->state));
 	} else {
-		Com_Printf("CL_ActorDoShoot: Something really bad happened. Left/right-info not in sync.\n");
+		Com_DPrintf("CL_ActorDoShoot: No information about weapon hand found or left/right info out of sync somehow.\n");
+		/* We use the default (right) animation now. */
+		re.AnimChange(&le->as, le->model1, LE_GetAnim("shoot", le->right, le->left, le->state));
+		re.AnimAppend(&le->as, le->model1, LE_GetAnim("stand", le->right, le->left, le->state));
 	}
 }
 
@@ -2175,12 +2179,15 @@ void CL_ActorStartShoot (sizebuf_t * sb)
 	} */
 
 	/* Animate - we have to check if it is right or left weapon usage. */
+	/* TODO: FIXME the left/right info for actors in the enemy team/turn has to come from somewhere. */
 	if (RIGHT(le) && IS_MODE_FIRE_RIGHT(cl.cmode)) {
 		re.AnimChange(&le->as, le->model1, LE_GetAnim("move", le->right, le->left, le->state));
 	} else if (LEFT(le) && IS_MODE_FIRE_LEFT(cl.cmode)) {
 		re.AnimChange(&le->as, le->model1, LE_GetAnim("move", le->left, le->right, le->state));
 	} else {
-		Com_Printf("CL_ActorStartShoot: Something really bad happened. Left/right-info not in sync.\n");
+		Com_DPrintf("CL_ActorStartShoot: No information about weapon hand found or left/right info out of sync somehow.\n");
+		/* We use the default (right) animation now. */
+		re.AnimChange(&le->as, le->model1, LE_GetAnim("move", le->right, le->left, le->state));
 	}
 }
 
