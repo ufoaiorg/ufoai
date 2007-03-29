@@ -1812,15 +1812,15 @@ static void CL_InitLocal (void)
 	cl_show_tooltips = Cvar_Get("cl_show_tooltips", "1", CVAR_ARCHIVE, "Show tooltips in menus and hud");
 	cl_show_cursor_tooltips = Cvar_Get("cl_show_cursor_tooltips", "1", CVAR_ARCHIVE, "Show cursor tooltips in tactical game mode");
 
-	cl_camrotspeed = Cvar_Get("cl_camrotspeed", "250", 0, NULL);
-	cl_camrotaccel = Cvar_Get("cl_camrotaccel", "400", 0, NULL);
-	cl_cammovespeed = Cvar_Get("cl_cammovespeed", "750", 0, NULL);
-	cl_cammoveaccel = Cvar_Get("cl_cammoveaccel", "1250", 0, NULL);
-	cl_camyawspeed = Cvar_Get("cl_camyawspeed", "160", 0, NULL);
+	cl_camrotspeed = Cvar_Get("cl_camrotspeed", "250", CVAR_ARCHIVE, NULL);
+	cl_camrotaccel = Cvar_Get("cl_camrotaccel", "400", CVAR_ARCHIVE, NULL);
+	cl_cammovespeed = Cvar_Get("cl_cammovespeed", "750", CVAR_ARCHIVE, NULL);
+	cl_cammoveaccel = Cvar_Get("cl_cammoveaccel", "1250", CVAR_ARCHIVE, NULL);
+	cl_camyawspeed = Cvar_Get("cl_camyawspeed", "160", CVAR_ARCHIVE, NULL);
 	cl_campitchmax = Cvar_Get("cl_campitchmax", "90", 0, "Max camera pitch - over 90 presents apparent mouse inversion");
 	cl_campitchmin = Cvar_Get("cl_campitchmin", "35", 0, "Min camera pitch - under 35 presents difficulty positioning cursor");
-	cl_campitchspeed = Cvar_Get("cl_campitchspeed", "0.5", 0, NULL);
-	cl_camzoomquant = Cvar_Get("cl_camzoomquant", "0.16", 0, NULL);
+	cl_campitchspeed = Cvar_Get("cl_campitchspeed", "0.5", CVAR_ARCHIVE, NULL);
+	cl_camzoomquant = Cvar_Get("cl_camzoomquant", "0.16", CVAR_ARCHIVE, NULL);
 	cl_camzoommin = Cvar_Get("cl_camzoommin", "0.7", 0, "Minimum zoom value for tactical missions");
 	cl_camzoommax = Cvar_Get("cl_camzoommax", "3.4", 0, "Maximum zoom value for tactical missions");
 	cl_centerview = Cvar_Get("cl_centerview", "1", CVAR_ARCHIVE, "Center the view when selecting a new soldier");
