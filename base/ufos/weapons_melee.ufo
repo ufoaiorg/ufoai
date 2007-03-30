@@ -54,58 +54,6 @@ item knife
 }
 
 // =======================
-// MONOMOLECULAR KNIFE
-// =======================
-item knifemono
-{
-	name		"_Monomolecular Knife"
-	model		weapons/knifemono/knifemono
-	weapon		true
-	type		melee
-	category	2
-	shape		"0 0 1 3"	// TODO: This seriously needs to be changed to "0 0 3 1" as soon as we have "rotation" suppor tin the inventory.
-	center		"-1 0 5"
-	scale		1.0
-	price		210
-	buytype		1
-	thrown		true
-
-	weapon_mod knifemono
-	{
-		firedef 
-		{
-			name	"_Stab"
-			skill	close
-			projtl	null
-			impact	null
-			hitbody blood
-			firesnd	misc/klonk03.wav
-			speed	0
-			range	1.5
-			shots	1
-			time	6
-			damage	"50 20"
-			dmgtype normal
-		}
-		firedef
-		{
-			name	"_Slash"
-			skill	close
-			projtl	null
-			impact	null
-			hitbody blood
-			firesnd	misc/klonk03.wav
-			speed	0
-			range	1.5
-			shots	1
-			time	10
-			damage	"70 20"
-			dmgtype normal
-		}
-	}
-}
-
-// =======================
 // STUN ROD
 // =======================
 item stunrod

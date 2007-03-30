@@ -450,39 +450,6 @@ tech rs_weapon_combatknife
 	producetime	2
 }
 
-tech rs_weapon_monoknife
-{
-	type	weapon
-	up_chapter	equipment
-	description	"_monoknife_txt"
-	pre_description	"_monoknife_pre_txt"
-
-	mail_pre
-	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
-		subject	"_Monomolecular Blades"
-	}
-
-	mail
-	{
-		from	"_mail_from_paul_navarre"
-		to		"_mail_to_base_commander"
-		subject	"_Monomolecular Blades"
-	}
-
-	require_AND
-	{
-		tech rs_weapon_kerrblade
-		tech rs_alien_bloodspider_autopsy
-		tech rs_skill_close
-		tech rs_damage_normal
-	}
-	provides	knifemono
-	time	100
-	producetime	5
-}
-
 tech rs_weapon_flamer
 {
 	type	weapon
