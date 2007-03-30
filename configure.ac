@@ -56,9 +56,13 @@ AC_ARG_WITH(ipv6,
 	[AS_HELP_STRING([--with-ipv6], [compile with ipv6 support @<:@default=no@:>@])],
 	[], [with_ipv6=no])
 
-AC_ARG_WITH(openal_framework,
-	[AS_HELP_STRING([--with-openal-framework], [compile with given openal framework @<:@default=/System/Library/Frameworks/OpenAL.framework@:>@])],
-	[], [with_openal_framework=/System/Library/Frameworks/OpenAL.framework])
+AC_ARG_WITH(openal,
+	[AS_HELP_STRING([--with-openal], [build openal sound support @<:@default=check@:>@])],
+	[], [with_openal=check])
+
+AC_ARG_WITH(openal_config,
+	[AC_HELP_STRING([--with-openal-config=FILE], [using the given openal-config @<:@default=openal-config@:>@])],
+	[], [with_openal_config=openal-config])
 
 AC_ARG_WITH(opengl_framework,
 	[AS_HELP_STRING([--with-opengl-framework], [compile with given opengl framework @<:@default=/System/Library/Frameworks/OpenGL.framework@:>@])],
@@ -72,13 +76,9 @@ AC_ARG_WITH(sdl_ttf_framework,
 	[AS_HELP_STRING([--with-sdl-ttf-framework], [compile with given sdl-ttf framework @<:@default=/Library/Frameworks/SDL_ttf.framework@:>@])],
 	[], [with_sdl_ttf_framework=/Library/Frameworks/SDL_ttf.framework])
 
-AC_ARG_ENABLE(openal,
-	[AS_HELP_STRING([--disable-openal], [build openal sound support @<:@default=enabled@:>@])],
-	[], [with_openal=check])
-
-AC_ARG_WITH(openal_config,
-	[AC_HELP_STRING([--with-openal-config=FILE], [using the given openal-config @<:@default=openal-config@:>@])],
-	[], [with_openal_config=openal-config])
+AC_ARG_WITH(openal_framework,
+	[AS_HELP_STRING([--with-openal-framework], [compile with given openal framework @<:@default=/System/Library/Frameworks/OpenAL.framework@:>@])],
+	[], [with_openal_framework=/System/Library/Frameworks/OpenAL.framework])
 
 AC_ARG_ENABLE(dedicated,
 	[AS_HELP_STRING([--disable-dedicated], [build dedicated server @<:@default=enabled@:>@])],
@@ -403,6 +403,8 @@ then
         AC_SUBST([HAVE_OPENAL], 0)
      fi
    fi
+else
+	AC_MSG_NOTICE([Without OpenAL])
 fi
 
 #---------------------------------------------------------------------------------------------
@@ -493,6 +495,7 @@ if test "$with_sdl" = "check" || test "$with_sdl" = "yes" || \
 then
 	AC_SUBST([HAVE_SDL],1)
 else
+	AC_MSG_NOTICE([Without SDL])
 	AC_SUBST([HAVE_SDL],0)
 fi
 
@@ -500,6 +503,7 @@ if test "$with_snd_sdl" = "check" || test "$with_snd_sdl" = "yes"
 then
 	AC_SUBST([HAVE_SND_SDL],1)
 else
+	AC_MSG_NOTICE([Without SDL sound])
 	AC_SUBST([HAVE_SND_SDL],0)
 fi
 
@@ -652,6 +656,8 @@ then
 	then
 		AC_MSG_ERROR([--with-vid-glx specified but failed find GLX header])
 	fi
+else
+	AC_MSG_NOTICE([Without GLX])
 fi
 
 #---------------------------------------------------------------------------------------------
@@ -716,6 +722,8 @@ then
 			fi
 		fi
 	fi
+else
+	AC_MSG_NOTICE([Without shader support])
 fi
 
 #---------------------------------------------------------------------------------------------
@@ -739,6 +747,8 @@ then
 	then
 		AC_MSG_ERROR([specified --with-snd-jack specified but cannot find jack/jack.h!])
 	fi
+else
+	AC_MSG_NOTICE([Without JACK sound])
 fi
 
 #---------------------------------------------------------------------------------------------
@@ -762,6 +772,8 @@ then
 	then
 		AC_MSG_ERROR([specified --with-snd-alsa specified but cannot find alsa/asoundlib.h!])
 	fi
+else
+	AC_MSG_NOTICE([Without ALSA sound])
 fi
 
 #---------------------------------------------------------------------------------------------
@@ -784,6 +796,8 @@ then
    then
      AC_SUBST([HAVE_SND_OSS],1)
    fi
+else
+	AC_MSG_NOTICE([Without OSS sound])
 fi
 
 #---------------------------------------------------------------------------------------------
@@ -799,6 +813,8 @@ then
 		AC_SUBST([ARTS_CFLAGS], `artsc-config --cflags`)
 		AC_SUBST([ARTS_LIBS], `artsc-config --libs`)
 	fi
+else
+	AC_MSG_NOTICE([Without ARTS sound])
 fi
 
 #---------------------------------------------------------------------------------------------
@@ -815,6 +831,8 @@ then
    then
 		AC_MSG_ERROR([specified --with-snd-wapi specified but cannot find windows.h!])
    fi
+else
+	AC_MSG_NOTICE([Without WAPI sound])
 fi
 
 #---------------------------------------------------------------------------------------------
@@ -831,6 +849,8 @@ then
    then
 		AC_MSG_ERROR([specified --with-snd-dx specified but cannot find dsound.h!])
    fi
+else
+	AC_MSG_NOTICE([Without DX sound])
 fi
 
 #---------------------------------------------------------------------------------------------
@@ -870,7 +890,8 @@ then
 		AC_SUBST([HAVE_DGA1], 1)
 		AC_DEFINE([HAVE_DGA1],1)
 	fi
-
+else
+	AC_MSG_NOTICE([Without DGA])
 fi
 
 #---------------------------------------------------------------------------------------------
@@ -903,6 +924,8 @@ then
 	then
 		AC_MSG_ERROR([--with-vid-vidmode specified but couldn't find X11/extensions/xf86vmode.h])
 	fi
+else
+	AC_MSG_NOTICE([Without VIDMODE])
 fi
 
 
@@ -916,6 +939,8 @@ then
 	AC_MSG_NOTICE([Enabling ipv6 support])
 	AC_SUBST([HAVE_IPV6],1)
 	AC_DEFINE([HAVE_IPV6],1)
+else
+	AC_MSG_NOTICE([Without IPv6])
 fi
 
 #---------------------------------------------------------------------------------------------
