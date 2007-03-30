@@ -658,6 +658,7 @@ tech rs_weapon_grenl_plasma_ammo
 	{
 		tech rs_damage_plasma
 		tech rs_weapon_grenl
+		tech rs_weapon_plasmagren
 	}
 	provides	grenl_plasma_ammo
 	time	1250
