@@ -1300,7 +1300,7 @@ void FS_GetMaps (qboolean reset)
 					FS_NormPath(findname);
 					baseMapName = COM_SkipPath(findname);
 					COM_StripExtension(baseMapName, filename);
-					Q_strncpyz(maps[numInstalledMaps+1], filename, sizeof(maps[numInstalledMaps+1]));
+					Q_strncpyz(maps[numInstalledMaps+1], filename, MAX_QPATH);
 					numInstalledMaps++;
 				}
 			}
@@ -1325,7 +1325,7 @@ void FS_GetMaps (qboolean reset)
 							free(dirnames[i]);
 							continue;
 						}
-						Q_strncpyz(maps[numInstalledMaps+1], filename, sizeof(maps[numInstalledMaps+1]));
+						Q_strncpyz(maps[numInstalledMaps+1], filename, MAX_QPATH);
 						numInstalledMaps++;
 					} else
 						Com_Printf("invalid mapstatus: %i (%s)\n", status, dirnames[i]);
