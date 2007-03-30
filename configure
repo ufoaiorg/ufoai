@@ -1283,7 +1283,6 @@ if test -n "$ac_init_help"; then
 Optional Features:
   --disable-FEATURE       do not include FEATURE (same as --enable-FEATURE=no)
   --enable-FEATURE[=ARG]  include FEATURE [ARG=yes]
-  --disable-openal        build openal sound support [default=enabled]
   --disable-dedicated     build dedicated server [default=enabled]
   --disable-client        build client [default=enabled]
   --enable-master         build masterserver [default=enabled]
@@ -1312,8 +1311,10 @@ Optional Packages:
   --with-vid-dga          compile with DGA support [default=check]
   --with-vid-vidmode      compile with vidmode support [default=check]
   --with-ipv6             compile with ipv6 support [default=no]
-  --with-openal-framework compile with given openal framework
-                          [default=/System/Library/Frameworks/OpenAL.framework]
+  --with-openal           build openal sound support [default=check]
+  --with-openal-config=FILE
+                          using the given openal-config
+                          [default=openal-config]
   --with-opengl-framework compile with given opengl framework
                           [default=/System/Library/Frameworks/OpenGL.framework]
   --with-sdl-framework    compile with given sdl framework
@@ -1321,9 +1322,8 @@ Optional Packages:
   --with-sdl-ttf-framework
                           compile with given sdl-ttf framework
                           [default=/Library/Frameworks/SDL_ttf.framework]
-  --with-openal-config=FILE
-                          using the given openal-config
-                          [default=openal-config]
+  --with-openal-framework compile with given openal framework
+                          [default=/System/Library/Frameworks/OpenAL.framework]
 
 Some influential environment variables:
   CC          C compiler command
@@ -2040,11 +2040,20 @@ fi
 
 
 
-# Check whether --with-openal_framework was given.
-if test "${with_openal_framework+set}" = set; then
-  withval=$with_openal_framework;
+# Check whether --with-openal was given.
+if test "${with_openal+set}" = set; then
+  withval=$with_openal;
 else
-  with_openal_framework=/System/Library/Frameworks/OpenAL.framework
+  with_openal=check
+fi
+
+
+
+# Check whether --with-openal_config was given.
+if test "${with_openal_config+set}" = set; then
+  withval=$with_openal_config;
+else
+  with_openal_config=openal-config
 fi
 
 
@@ -2075,20 +2084,12 @@ else
 fi
 
 
-# Check whether --enable-openal was given.
-if test "${enable_openal+set}" = set; then
-  enableval=$enable_openal;
+
+# Check whether --with-openal_framework was given.
+if test "${with_openal_framework+set}" = set; then
+  withval=$with_openal_framework;
 else
-  with_openal=check
-fi
-
-
-
-# Check whether --with-openal_config was given.
-if test "${with_openal_config+set}" = set; then
-  withval=$with_openal_config;
-else
-  with_openal_config=openal-config
+  with_openal_framework=/System/Library/Frameworks/OpenAL.framework
 fi
 
 
@@ -6119,6 +6120,9 @@ echo "$as_me: WARNING: couldn't find OpenAL utility library!" >&2;}
 
      fi
    fi
+else
+	{ echo "$as_me:$LINENO: Without OpenAL" >&5
+echo "$as_me: Without OpenAL" >&6;}
 fi
 
 #---------------------------------------------------------------------------------------------
@@ -6915,6 +6919,8 @@ then
 	HAVE_SDL=1
 
 else
+	{ echo "$as_me:$LINENO: Without SDL" >&5
+echo "$as_me: Without SDL" >&6;}
 	HAVE_SDL=0
 
 fi
@@ -6924,6 +6930,8 @@ then
 	HAVE_SND_SDL=1
 
 else
+	{ echo "$as_me:$LINENO: Without SDL sound" >&5
+echo "$as_me: Without SDL sound" >&6;}
 	HAVE_SND_SDL=0
 
 fi
@@ -8469,6 +8477,9 @@ echo "$as_me: WARNING: found GLX headers but couldn't find GLX libraries, GLX wi
 echo "$as_me: error: --with-vid-glx specified but failed find GLX header" >&2;}
    { (exit 1); exit 1; }; }
 	fi
+else
+	{ echo "$as_me:$LINENO: Without GLX" >&5
+echo "$as_me: Without GLX" >&6;}
 fi
 
 #---------------------------------------------------------------------------------------------
@@ -9004,6 +9015,9 @@ echo "$as_me: error: --with-shaders specified but couldn't use OpenGL shaders!" 
 			fi
 		fi
 	fi
+else
+	{ echo "$as_me:$LINENO: Without shader support" >&5
+echo "$as_me: Without shader support" >&6;}
 fi
 
 #---------------------------------------------------------------------------------------------
@@ -9296,6 +9310,9 @@ echo "$as_me: error: found jack header but couldn't locate jack library!" >&2;}
 echo "$as_me: error: specified --with-snd-jack specified but cannot find jack/jack.h!" >&2;}
    { (exit 1); exit 1; }; }
 	fi
+else
+	{ echo "$as_me:$LINENO: Without JACK sound" >&5
+echo "$as_me: Without JACK sound" >&6;}
 fi
 
 #---------------------------------------------------------------------------------------------
@@ -9588,6 +9605,9 @@ echo "$as_me: error: found alsa header but couldn't locate alsa library!" >&2;}
 echo "$as_me: error: specified --with-snd-alsa specified but cannot find alsa/asoundlib.h!" >&2;}
    { (exit 1); exit 1; }; }
 	fi
+else
+	{ echo "$as_me:$LINENO: Without ALSA sound" >&5
+echo "$as_me: Without ALSA sound" >&6;}
 fi
 
 #---------------------------------------------------------------------------------------------
@@ -9940,6 +9960,9 @@ _ACEOF
      HAVE_SND_OSS=1
 
    fi
+else
+	{ echo "$as_me:$LINENO: Without OSS sound" >&5
+echo "$as_me: Without OSS sound" >&6;}
 fi
 
 #---------------------------------------------------------------------------------------------
@@ -9994,6 +10017,9 @@ fi
 		ARTS_LIBS=`artsc-config --libs`
 
 	fi
+else
+	{ echo "$as_me:$LINENO: Without ARTS sound" >&5
+echo "$as_me: Without ARTS sound" >&6;}
 fi
 
 #---------------------------------------------------------------------------------------------
@@ -10176,6 +10202,9 @@ done
 echo "$as_me: error: specified --with-snd-wapi specified but cannot find windows.h!" >&2;}
    { (exit 1); exit 1; }; }
    fi
+else
+	{ echo "$as_me:$LINENO: Without WAPI sound" >&5
+echo "$as_me: Without WAPI sound" >&6;}
 fi
 
 #---------------------------------------------------------------------------------------------
@@ -10358,6 +10387,9 @@ done
 echo "$as_me: error: specified --with-snd-dx specified but cannot find dsound.h!" >&2;}
    { (exit 1); exit 1; }; }
    fi
+else
+	{ echo "$as_me:$LINENO: Without DX sound" >&5
+echo "$as_me: Without DX sound" >&6;}
 fi
 
 #---------------------------------------------------------------------------------------------
@@ -10555,7 +10587,9 @@ echo "$as_me: error: --with-vid-dga specified but couldn't find X11/extensions/x
 _ACEOF
 
 	fi
-
+else
+	{ echo "$as_me:$LINENO: Without DGA" >&5
+echo "$as_me: Without DGA" >&6;}
 fi
 
 #---------------------------------------------------------------------------------------------
@@ -10768,6 +10802,9 @@ echo "$as_me: error: --with-vid-vidmode specified but couldn't find XF86VidModeQ
 echo "$as_me: error: --with-vid-vidmode specified but couldn't find X11/extensions/xf86vmode.h" >&2;}
    { (exit 1); exit 1; }; }
 	fi
+else
+	{ echo "$as_me:$LINENO: Without VIDMODE" >&5
+echo "$as_me: Without VIDMODE" >&6;}
 fi
 
 
@@ -10787,6 +10824,9 @@ echo "$as_me: Enabling ipv6 support" >&6;}
 #define HAVE_IPV6 1
 _ACEOF
 
+else
+	{ echo "$as_me:$LINENO: Without IPv6" >&5
+echo "$as_me: Without IPv6" >&6;}
 fi
 
 #---------------------------------------------------------------------------------------------
