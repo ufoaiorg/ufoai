@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-03-30 20:49+0200\n"
-"PO-Revision-Date: 2007-03-30 22:11+0100\n"
+"PO-Revision-Date: 2007-03-31 00:05+0100\n"
 "Last-Translator: Lubomír Bláha <tritol@trilogic.cz>\n"
 "Language-Team: čeština <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -332,7 +332,9 @@ msgstr "Hrát za cizáky"
 
 #: ../base/ufos/campaign.ufo:317
 msgid "txt_alien_campaign"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/campaign.ufo:337
 msgid "Testing and Tweaking Campaign --- Please Ignore"
@@ -430,7 +432,7 @@ msgstr "Přiřadit vojáky"
 
 #: ../base/ufos/menu_aircraft.ufo:65
 msgid "Hire your team first"
-msgstr "Nejprve sestav tým"
+msgstr "Nejprve sestavte tým"
 
 #: ../base/ufos/menu_aircraft.ufo:76
 msgid "Aircraft absent from base"
@@ -553,7 +555,7 @@ msgstr "Klikni pro pitvu"
 
 #: ../base/ufos/menu_aliencont.ufo:108
 msgid "Check UFOpedia entry"
-msgstr "Podívat se do Ufopedie"
+msgstr "Podívat se do UFOpedie"
 
 #: ../base/ufos/menu_aliencont.ufo:121
 msgid "Kill all aliens in this base"
@@ -650,7 +652,7 @@ msgstr "Spatřen nepřítel"
 #: ../base/ufos/menu_althud.ufo:464
 #: ../base/ufos/menu_hud.ufo:237
 msgid "Click to cycle through spotted enemies"
-msgstr "Klikni pro procházení spatřených nepřátel"
+msgstr "Klik pro procházení spatřených nepřátel"
 
 #: ../base/ufos/menu_althud.ufo:474
 #: ../base/ufos/menu_hud.ufo:213
@@ -797,7 +799,7 @@ msgstr "Přeprava vybavení nebo osob"
 
 #: ../base/ufos/menu_bases.ufo:204
 msgid "Can't transfer - only one base"
-msgstr "Nelze přepravovat - máš jen jednu základnu"
+msgstr "Nelze přepravovat - máte jen jednu základnu"
 
 #: ../base/ufos/menu_bases.ufo:213
 #: ../base/ufos/menu_geoscape.ufo:484
@@ -859,7 +861,7 @@ msgstr "Zbourat budovu"
 
 #: ../base/ufos/menu_bases.ufo:493
 msgid "Are you sure you want to destroy this building?"
-msgstr "Jsi si jistý že chceš zbourat tuto budovu?"
+msgstr "Jste si jistý že chcete zbourat tuto budovu?"
 
 #: ../base/ufos/menu_bases.ufo:500
 #: ../base/ufos/menu_geoscape.ufo:348
@@ -1200,7 +1202,7 @@ msgstr "Automise"
 
 #: ../base/ufos/menu_geoscape.ufo:431
 msgid "Select base to transfer to"
-msgstr "Vyber základnu kam přepravit"
+msgstr "Vyberte základnu kam přepravit"
 
 #: ../base/ufos/menu_geoscape.ufo:471
 #: ../base/ufos/menu_transfer.ufo:330
@@ -1570,7 +1572,7 @@ msgstr "Opakovat tuto misi"
 #: ../base/ufos/menu_lostwon.ufo:76
 #: ../base/ufos/menu_lostwon.ufo:205
 msgid "Try again"
-msgstr "Zkusit znovu"
+msgstr "Znovu"
 
 #: ../base/ufos/menu_lostwon.ufo:101
 #: ../base/ufos/menu_lostwon.ufo:116
@@ -2301,7 +2303,7 @@ msgstr "Navštivte http://www.ufoai.net"
 
 #: ../base/ufos/menu_singleplayer.ufo:761
 msgid "and join irc.freenode.org #ufo:ai"
-msgstr "a navštívit irc.freenode.org #ufo:ai"
+msgstr "a připojte se k irc.freenode.org #ufo:ai"
 
 #: ../base/ufos/menu_singleplayer.ufo:770
 #: ../base/ufos/seq_intro.ufo:73
@@ -2521,7 +2523,7 @@ msgstr "Opustit UFOpedii"
 
 #: ../base/ufos/menu_ufopedia.ufo:398
 msgid "Mailclient"
-msgstr "Čtení pošty"
+msgstr "E-mailový klient"
 
 #: ../base/ufos/menu_ufopedia.ufo:407
 msgid "Time:"
@@ -2848,13 +2850,14 @@ msgstr "Albany"
 msgid "Shannon"
 msgstr "Shannon"
 
+# tohle není dobré :(
 #: ../base/ufos/missions.ufo:993
 msgid "Major Alien Intrusion"
 msgstr "Významné cizácké obtěžování"
 
 #: ../base/ufos/missions.ufo:994
 msgid "Stop them"
-msgstr "Zastav je"
+msgstr "Zastavte je"
 
 #: ../base/ufos/nations.ufo:31
 msgid "The Revolutionary Countries"
@@ -2920,7 +2923,9 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:102
 msgid "laser_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:103
 msgid "laser_pre_txt"
@@ -3087,7 +3092,9 @@ msgstr "Antihmota"
 
 #: ../base/ufos/research.ufo:130
 msgid "antimatter_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:131
 msgid "antimatter_pre_txt"
@@ -3101,7 +3108,9 @@ msgstr "Živý cizák"
 
 #: ../base/ufos/research.ufo:189
 msgid "alien_live_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:190
 msgid "alien_live_pre_txt"
@@ -3135,7 +3144,9 @@ msgstr "Dýchací přístroj pro cizáky"
 
 #: ../base/ufos/research.ufo:221
 msgid "alien_breathing_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:222
 msgid "alien_breathing_pre_txt"
@@ -3149,7 +3160,9 @@ msgstr "Cizácká mysl"
 
 #: ../base/ufos/research.ufo:254
 msgid "alien_mind_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:255
 msgid "alien_mind_pre_txt"
@@ -3163,7 +3176,9 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:284
 msgid "alien_odd_behaviour_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:285
 msgid "alien_odd_behaviour_pre_txt"
@@ -3177,7 +3192,9 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:314
 msgid "alien_origins_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:315
 msgid "alien_origins_pre_txt"
@@ -3190,16 +3207,22 @@ msgstr "plk. Ingrid Falkland, zpravodajská služba, PHALANX, Velení tichomořs
 
 #: ../base/ufos/research.ufo:346
 msgid "assault_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:362
 msgid "assault_mag_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:379
 #: ../base/ufos/research.ufo:409
 msgid "bolterrifle_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:380
 #: ../base/ufos/research.ufo:410
@@ -3215,11 +3238,15 @@ msgstr "Elektromagnetická puška"
 
 #: ../base/ufos/research.ufo:440
 msgid "combatknife_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:457
 msgid "monoknife_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:458
 msgid "monoknife_pre_txt"
@@ -3232,43 +3259,63 @@ msgstr "Monomolekulární čepele"
 
 #: ../base/ufos/research.ufo:490
 msgid "flamer_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:506
 msgid "flamer_mag_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:523
 msgid "flashbang_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:539
 msgid "fraggren_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:556
 msgid "incgren_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:573
 msgid "grenl_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:589
 msgid "grenl_ammo_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:606
 msgid "grenl_fle_ammo_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:623
 msgid "grenl_incendiary_ammo_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:640
 msgid "grenl_plasma_ammo_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:641
 msgid "grenl_plasma_ammo_pre_txt"
@@ -3281,7 +3328,9 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:674
 msgid "laser_ammo_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:675
 msgid "laser_ammo_pre_txt"
@@ -3295,7 +3344,9 @@ msgstr "D-F náplň"
 
 #: ../base/ufos/research.ufo:704
 msgid "heavylaser_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:705
 msgid "heavylaser_pre_txt"
@@ -3309,11 +3360,15 @@ msgstr "Výkonný laser"
 
 #: ../base/ufos/research.ufo:754
 msgid "irgoggles_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:770
 msgid "kerrblade_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:771
 msgid "kerrblade_pre_txt"
@@ -3326,7 +3381,9 @@ msgstr "Cizácký artefakt - Rrrozparovač"
 
 #: ../base/ufos/research.ufo:802
 msgid "laserpistol_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:803
 msgid "laserpistol_pre_txt"
@@ -3340,7 +3397,9 @@ msgstr "Laserová pistole"
 
 #: ../base/ufos/research.ufo:851
 msgid "laserrifle_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:852
 msgid "laserrifle_pre_txt"
@@ -3354,28 +3413,40 @@ msgstr "Laserová puška"
 
 #: ../base/ufos/research.ufo:901
 msgid "medikit_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:917
 msgid "pistol_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:934
 msgid "pistol_mag_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:952
 msgid "pistol2_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:969
 msgid "pistol2_mag_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:987
 #: ../base/ufos/research.ufo:1020
 msgid "plasatomizer_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:988
 #: ../base/ufos/research.ufo:1021
@@ -3392,7 +3463,9 @@ msgstr "Cizácký artefakt - Plasmová pistole"
 #: ../base/ufos/research.ufo:1051
 #: ../base/ufos/research.ufo:1083
 msgid "plasblaster_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:1052
 #: ../base/ufos/research.ufo:1084
@@ -3408,7 +3481,9 @@ msgstr "Cizácký artefakt - Plasmový spalovač"
 
 #: ../base/ufos/research.ufo:1114
 msgid "plasblade_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:1115
 msgid "plasblade_pre_txt"
@@ -3417,11 +3492,13 @@ msgstr "Před výzkumem nejsou dostupné žádné informace."
 #: ../base/ufos/research.ufo:1121
 #: ../base/ufos/research.ufo:1128
 msgid "Alien Artifact - Plasma Blade"
-msgstr ">Cizácký artefakt - Plasmová"
+msgstr "Cizácký artefakt - Plasmová dýka"
 
 #: ../base/ufos/research.ufo:1146
 msgid "plasmagren_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:1147
 msgid "plasmagren_pre_txt"
@@ -3435,7 +3512,9 @@ msgstr "Cizácký artefakt - Plasmový granát"
 #: ../base/ufos/research.ufo:1178
 #: ../base/ufos/research.ufo:1211
 msgid "plasrifle_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:1179
 #: ../base/ufos/research.ufo:1212
@@ -3451,19 +3530,27 @@ msgstr "Cizácký artefakt - Plasmová puška"
 
 #: ../base/ufos/research.ufo:1242
 msgid "rpg_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:1259
 msgid "rpg_ammo_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:1277
 msgid "rpg_incendiary_ammo_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:1296
 msgid "chaingun_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:1297
 msgid "chaingun_pre_txt"
@@ -3471,7 +3558,9 @@ msgstr "Před výzkumem nejsou dostupné žádné informace."
 
 #: ../base/ufos/research.ufo:1314
 msgid "chaingun_ammo_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:1315
 msgid "chaingun_ammo_pre_txt"
@@ -3479,51 +3568,75 @@ msgstr "Před výzkumem nejsou dostupné žádné informace."
 
 #: ../base/ufos/research.ufo:1333
 msgid "shotgun_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:1352
 msgid "shotgun_ammo_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:1371
 msgid "shotgun2_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:1407
 msgid "shotgun2_slug_ammo_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:1425
 msgid "shotgun_micro_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:1442
 msgid "shotgun_micro_ammo_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:1460
 msgid "smg_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:1477
 msgid "smg_mag_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:1495
 msgid "smokegren_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:1512
 msgid "sniper_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:1529
 msgid "sniper_mag_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:1548
 msgid "stungren_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:1549
 msgid "stungren_pre_txt"
@@ -3536,7 +3649,9 @@ msgstr "Plyn na cizáky"
 
 #: ../base/ufos/research.ufo:1586
 msgid "stunrod_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:1587
 msgid "stunrod_pre_txt"
@@ -3550,7 +3665,9 @@ msgstr "Paralyzátor"
 
 #: ../base/ufos/research.ufo:1619
 msgid "pbeampistol_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:1620
 msgid "pbeampistol_pre_txt"
@@ -3567,7 +3684,9 @@ msgstr "Cizácký artefakt - Částicová pistole"
 #: ../base/ufos/research.ufo:1716
 #: ../base/ufos/research.ufo:1780
 msgid "pbeamammo_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:1652
 #: ../base/ufos/research.ufo:1717
@@ -3577,7 +3696,9 @@ msgstr "Před výzkumem nejsou dostupné žádné informace."
 
 #: ../base/ufos/research.ufo:1683
 msgid "pbeamcannon_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:1684
 msgid "pbeamcannon_pre_txt"
@@ -3592,7 +3713,9 @@ msgstr "Cizácký artefakt - Částicové dělo"
 
 #: ../base/ufos/research.ufo:1748
 msgid "pbeamrifle_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:1749
 msgid "pbeamrifle_pre_txt"
@@ -3607,7 +3730,9 @@ msgstr "Cizácký artefakt - Částicová puška"
 
 #: ../base/ufos/research.ufo:1813
 msgid "pbeam_ammo_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:1814
 msgid "pbeam_ammo_pre_txt"
@@ -3620,11 +3745,15 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:1849
 msgid "combat_armour_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:1863
 msgid "nano_armour_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:1864
 msgid "nano_armour_pre_txt"
@@ -3632,7 +3761,9 @@ msgstr "Před výzkumem nejsou dostupné žádné informace."
 
 #: ../base/ufos/research.ufo:1879
 msgid "alien_body_armour_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:1880
 msgid "alien_body_armour_pre_txt"
@@ -3640,7 +3771,9 @@ msgstr "Před výzkumem nejsou dostupné žádné informace."
 
 #: ../base/ufos/research.ufo:1895
 msgid "alien_medium_armour_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:1896
 msgid "alien_medium_armour_pre_txt"
@@ -3756,15 +3889,21 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:2179
 msgid "b_command_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:2195
 msgid "b_entrance_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:2207
 msgid "b_large_hangar_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:2223
 msgid "b_hospital_txt"
@@ -3811,59 +3950,87 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:2239
 msgid "b_small_hangar_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:2255
 msgid "b_lab_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:2271
 msgid "b_powerplant_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:2287
 msgid "b_quarters_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:2303
 msgid "b_radar_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:2319
 msgid "b_storage_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:2335
 msgid "b_teamroom_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:2351
 msgid "b_small_ufo_hangar_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:2367
 msgid "b_large_ufo_hangar_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:2383
 msgid "b_workshop_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:2402
 msgid "dropship_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:2417
 msgid "interceptor_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:2432
 msgid "saracen_interceptor_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:2474
 msgid "ufo_scout_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:2475
 msgid "ufo_scout_pre_txt"
@@ -3871,7 +4038,9 @@ msgstr "Před výzkumem nejsou dostupné žádné informace."
 
 #: ../base/ufos/research.ufo:2515
 msgid "ufo_fighter_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:2516
 msgid "ufo_fighter_pre_txt"
@@ -3885,7 +4054,9 @@ msgstr "UFO - Sklízeč"
 
 #: ../base/ufos/research.ufo:2557
 msgid "ufo_harvester_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:2558
 msgid "ufo_harvester_pre_txt"
@@ -3897,7 +4068,9 @@ msgstr "Živý jedinec - Bloodspider"
 
 #: ../base/ufos/research.ufo:2599
 msgid "bloodspider_notes_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:2600
 msgid "bloodspider_notes_pre_txt"
@@ -3911,7 +4084,9 @@ msgstr "Pitva cizáka - Bloodspider"
 
 #: ../base/ufos/research.ufo:2617
 msgid "bloodspider_autopsy_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:2618
 msgid "bloodspider_autopsy_pre_txt"
@@ -3925,7 +4100,9 @@ msgstr "Pitva cizáka - Ortnok"
 
 #: ../base/ufos/research.ufo:2652
 msgid "ortnok_autopsy_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:2653
 msgid "ortnok_autopsy_pre_txt"
@@ -3939,7 +4116,9 @@ msgstr "Pitva cizáka - Taman"
 
 #: ../base/ufos/research.ufo:2688
 msgid "taman_autopsy_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:2689
 msgid "taman_autopsy_pre_txt"
@@ -3953,7 +4132,9 @@ msgstr "Pitva cizáka - Shevaar"
 
 #: ../base/ufos/research.ufo:2722
 msgid "shevaar_autopsy_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:2723
 msgid "shevaar_autopsy_pre_txt"
@@ -3965,7 +4146,9 @@ msgstr "PVBO Phoenix"
 
 #: ../base/ufos/research.ufo:2810
 msgid "ugv_phoenix_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:2811
 msgid "ugv_phoenix_pre_txt"
@@ -3977,7 +4160,9 @@ msgstr "PVBO Triax"
 
 #: ../base/ufos/research.ufo:2826
 msgid "ugv_triax_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:2827
 msgid "ugv_triax_pre_txt"
@@ -3990,7 +4175,9 @@ msgstr "Jednotka EPO 'Raven'"
 
 #: ../base/ufos/research.ufo:2847
 msgid "craft_electronics_raven_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:2861
 msgid "Polymer Aircraft Armour"
@@ -3998,7 +4185,9 @@ msgstr "Polymerové pancéřování letounu"
 
 #: ../base/ufos/research.ufo:2863
 msgid "craft_shield_light_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:2877
 msgid "SHIVA Rotary Cannon"
@@ -4006,7 +4195,9 @@ msgstr "Rotační dělo SHIVA"
 
 #: ../base/ufos/research.ufo:2879
 msgid "craft_weapon_shiva_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 # PZ=Průbojná Zápalná
 # RDS=Rotační Dělo Shiva
@@ -4016,7 +4207,9 @@ msgstr "20mm PZ munice pro RDS"
 
 #: ../base/ufos/research.ufo:2895
 msgid "craft_ammo_shiva_1_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 # TZ=Tříštivá Zápalná
 # RDS=Rotační Dělo Shiva
@@ -4026,7 +4219,9 @@ msgstr "20mm TZ munice pro RDS"
 
 #: ../base/ufos/research.ufo:2914
 msgid "craft_ammo_shiva_2_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 # VV = Vzduch-Vzduch
 #: ../base/ufos/research.ufo:2931
@@ -4035,7 +4230,9 @@ msgstr "Nosič střel VV 'Sparrowhawk'"
 
 #: ../base/ufos/research.ufo:2933
 msgid "craft_weapon_sparrowhawk_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:2947
 msgid "'Sparrowhawk' Missile"
@@ -4043,7 +4240,9 @@ msgstr "Střela 'Sparrowhawk'"
 
 #: ../base/ufos/research.ufo:2949
 msgid "craft_ammo_sparrowhawk_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:2966
 msgid "TR-20 Rocket Pod"
@@ -4051,7 +4250,9 @@ msgstr "Baterie raket TR-20"
 
 #: ../base/ufos/research.ufo:2968
 msgid "craft_weapon_tr20_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:2982
 msgid "TR-20 Rocket"
@@ -4059,7 +4260,9 @@ msgstr "Raketa TR-20"
 
 #: ../base/ufos/research.ufo:2984
 msgid "craft_ammo_tr20_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:3009
 #: ../base/ufos/research.ufo:3019
@@ -4073,7 +4276,9 @@ msgstr "Před výzkumem nejsou dostupné žádné informace."
 
 #: ../base/ufos/research.ufo:3011
 msgid "craft_weapon_particle_beam_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:3047
 msgid "Targeting Computer"
@@ -4081,7 +4286,9 @@ msgstr "Zaměřovací počítač"
 
 #: ../base/ufos/research.ufo:3049
 msgid "craft_electronics_targeting_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:3063
 msgid "Fuel Pod"
@@ -4089,7 +4296,9 @@ msgstr "Palivová nádrž"
 
 #: ../base/ufos/research.ufo:3065
 msgid "craft_electronics_fuelpod_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:3083
 msgid "Alien Materials"
@@ -4097,7 +4306,9 @@ msgstr "Cizácké materiály"
 
 #: ../base/ufos/research.ufo:3084
 msgid "alien_materials_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/research.ufo:3085
 msgid "alien_materials_pre_txt"
@@ -4285,7 +4496,9 @@ msgstr ""
 
 #: ../base/ufos/research.ufo:3139
 msgid "news_newtwist_txt"
-msgstr "Na překladu se pracuje. Více informací na\nhttp://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+msgstr ""
+"Na překladu se pracuje. Více informací na\n"
+"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
 
 #: ../base/ufos/seq_credits.ufo:54
 #: ../base/ufos/seq_credits.ufo:100
@@ -4449,7 +4662,7 @@ msgstr "Na obloze celého světa se objevují neidentifikované létající obje
 
 #: ../base/ufos/seq_ingame.ufo:42
 msgid "(Catch them with your Interceptor to shoot them down.)"
-msgstr "(Dohoň je svou Stíhačkou a sestřel je.)"
+msgstr "(Dohoňte je svou Stíhačkou a sestřelte je.)"
 
 #: ../base/ufos/seq_ingame.ufo:62
 msgid "Finally: The attack on the alien base ..."
@@ -4537,43 +4750,43 @@ msgstr "Několik poznámek ke hře"
 
 #: ../base/ufos/seq_tutorials.ufo:44
 msgid "Click to exit"
-msgstr "Klikni pro konec"
+msgstr "Klik pro konec"
 
 #: ../base/ufos/seq_tutorials.ufo:57
 msgid "Set up a base"
-msgstr "Postav základnu"
+msgstr "Postavte základnu"
 
 #: ../base/ufos/seq_tutorials.ufo:95
 msgid "Hire employees: scientists, soldiers"
-msgstr "Najmi zaměstnance: vědce, vojáky"
+msgstr "Najměte zaměstnance: vědce, vojáky"
 
 #: ../base/ufos/seq_tutorials.ufo:132
 msgid "Start some research"
-msgstr "Zahaj nějaký výzkum"
+msgstr "Zahajte nějaký výzkum"
 
 #: ../base/ufos/seq_tutorials.ufo:151
 msgid "Buy weapons and equipment"
-msgstr "Nakup zbraně a vybavení"
+msgstr "Nakupte zbraně a vybavení"
 
 #: ../base/ufos/seq_tutorials.ufo:188
 msgid "Equip your aircraft with soldiers and weapons"
-msgstr "Vybav svůj letoun vojáky a zbraněmi"
+msgstr "Vybavte svůj letoun vojáky a zbraněmi"
 
 #: ../base/ufos/seq_tutorials.ufo:226
 msgid "Speed up time on geoscape until the first alien mission appears"
-msgstr "Zrychli čas na mapě světa dokud se neobjeví první cizácká aktivita"
+msgstr "Zrychlete čas na mapě světa dokud se neobjeví první cizácká aktivita"
 
 #: ../base/ufos/seq_tutorials.ufo:254
 msgid "Select the mission (doubleclick) and choose aircraft from list"
-msgstr "Zvol misi (dvojklik) a vyber letoun ze seznamu"
+msgstr "Zvolte misi (dvojklik) a vyberte letoun ze seznamu"
 
 #: ../base/ufos/seq_tutorials.ufo:273
 msgid "Hit the start or auto-mission button to fight the aliens"
-msgstr "Stiskni \"Na ně!!!\" nebo \"Automise\" pro boj s cizáky"
+msgstr "Stiskněte \"Na ně!!!\" nebo \"Automise\" pro boj s cizáky"
 
 #: ../base/ufos/seq_tutorials.ufo:298
 msgid "For further instructions watch the tactical mission tutorial"
-msgstr "Pro další informace shlédni návod k bojové misi"
+msgstr "Pro další informace shlédněte návod k bojové misi"
 
 #: ../base/ufos/seq_tutorials.ufo:325
 msgid "Tactical mission"
@@ -4928,7 +5141,7 @@ msgstr "Od boku - časovaný"
 #: ../base/ufos/weapons_human.ufo:1454
 #: ../base/ufos/weapons_human.ufo:1679
 msgid "Aimed Shot - Timed"
-msgstr "Od boku - časovaný"
+msgstr "Cílený - časovaný"
 
 #: ../base/ufos/weapons_human.ufo:1308
 #: ../base/ufos/weapons_human.ufo:1481
@@ -5010,7 +5223,7 @@ msgstr "Rrrozparovač"
 
 #: ../base/ufos/weapons_melee.ufo:225
 msgid "Plasma Blade"
-msgstr "Plasmová"
+msgstr "Plasmová dýka"
 
 #: ../base/ufos/weapons_melee.ufo:245
 msgid "Lock"
@@ -5240,7 +5453,7 @@ msgstr "Nikdo nevybrán\n"
 
 #: client/cl_actor.c:1660
 msgid "This isn't your round\n"
-msgstr "Nejsi na tahu\n"
+msgstr "Nejste na tahu\n"
 
 #: client/cl_actor.c:1793
 msgid ""
@@ -5304,11 +5517,11 @@ msgstr "Byl zabit člen týmu %i.\n"
 
 #: client/cl_actor.c:2474
 msgid "Your round started!\n"
-msgstr "Začal tvůj tah!\n"
+msgstr "Začal váš tah!\n"
 
 #: client/cl_aircraft.c:126
 msgid "Aircraft started"
-msgstr "Letoun odstartován"
+msgstr "Letoun odstartoval"
 
 #: client/cl_aircraft.c:126
 #: client/cl_aircraft.c:532
@@ -5464,12 +5677,12 @@ msgstr "Stíhání"
 #: client/cl_aircraft.c:783
 #: client/cl_campaign.c:2595
 msgid "You've won the battle"
-msgstr "Vyhrál jsi bitvu"
+msgstr "Vyhrál jste bitvu"
 
 #: client/cl_aircraft.c:790
 #: client/cl_campaign.c:2597
 msgid "You've lost the battle"
-msgstr "Prohrál jsi bitvu"
+msgstr "Prohrál jste bitvu"
 
 #: client/cl_aircraft.c:908
 msgid "None\n"
@@ -5489,7 +5702,7 @@ msgstr "Bez štítu"
 
 #: client/cl_aircraft.c:1045
 msgid "Assign a team to aircraft"
-msgstr "Přiděl k letounu tým"
+msgstr "Přidělit tým k letounu"
 
 #: client/cl_basemanagement.c:339
 msgid "Not set"
@@ -5578,7 +5791,7 @@ msgstr "Bylo dosaženo maximum počtu základen."
 
 #: client/cl_basemanagement.c:2233
 msgid "No aircraft in this base - You first have to purchase or transfer an aircraft\n"
-msgstr "Na této základně není letoun - Musíš nejdříve nějaký koupit nebo přepravit\n"
+msgstr "Na této základně není letoun - Musíte nejdříve nějaký koupit nebo přepravit\n"
 
 #: client/cl_basemanagement.c:2233
 #: client/cl_basemanagement.c:2235
@@ -5592,7 +5805,7 @@ msgstr "Poznámka"
 
 #: client/cl_basemanagement.c:2235
 msgid "No aircraft in this base - You first have to purchase an aircraft\n"
-msgstr "Na této základně není letoun - Musíš nejdříve nějaký koupit\n"
+msgstr "Na této základně není letoun - Musíte nejdříve nějaký koupit\n"
 
 #: client/cl_basemanagement.c:2334
 #, c-format
@@ -5625,7 +5838,7 @@ msgstr "Cizácká činnost"
 #: client/cl_campaign.c:943
 #, c-format
 msgid "Your base: %s has been ransacked! All employees killed and all equipment destroyed."
-msgstr "Tvoje základna %s byla vypleněna! Všichni zaměstnanci byli zabiti a veškeré vybavení zničeno."
+msgstr "Vaše základna %s byla vypleněna! Všichni zaměstnanci byli zabiti a veškeré vybavení zničeno."
 
 #: client/cl_campaign.c:999
 #, c-format
@@ -5891,11 +6104,11 @@ msgstr ""
 
 #: client/cl_campaign.c:1800
 msgid "Error saving game. Check free disk space!"
-msgstr "Chyba při ukládání hry. Zkontroluj zda je na disku dostatek volného místa!"
+msgstr "Chyba při ukládání hry. Zkontrolujte zda je na disku dostatek volného místa!"
 
 #: client/cl_campaign.c:2388
 msgid "Assemble or load a team"
-msgstr "Sestav nebo načti tým"
+msgstr "Sestavit nebo načíst tým"
 
 #: client/cl_campaign.c:2559
 msgid "Your dropship is not near the landing zone"
@@ -5917,17 +6130,17 @@ msgstr[2] "%i shromážděných předmětů"
 #: client/cl_campaign.c:2904
 #, c-format
 msgid "you gathered %i credits."
-msgstr "si získal %i kreditů."
+msgstr "jste získal %i kreditů."
 
 #: client/cl_campaign.c:2961
 #, c-format
 msgid "%s has been promoted to %s.\n"
-msgstr "%s byl povýšen na %s.\n"
+msgstr "%s byl(a) povýšen(a) na %s.\n"
 
 #: client/cl_campaign.c:2963
 #, c-format
 msgid "%s has been awarded the posthumous rank of %s\\for inspirational gallantry in the face of overwhelming odds.\n"
-msgstr "%s byl posmrtně povýšen do hodnosti %s\\za příkladnou statečnost tváří v tvář drtivé převaze.\n"
+msgstr "%s byl(a) posmrtně povýšen(a) do hodnosti %s\\za příkladnou statečnost tváří v tvář drtivé převaze.\n"
 
 #: client/cl_campaign.c:2964
 msgid "Soldier promoted"
@@ -5969,11 +6182,11 @@ msgstr "Nedostatek ubikací"
 #: client/cl_employee.c:472
 #, c-format
 msgid "You don't have enough living quarters to house all of your personnel. You need to fire %i personnel until more living space becomes available."
-msgstr "Nemáš dostatek ubikací k ubytování všech svých zaměstnanců. Musíš propustit %i zaměstnanců dokud nebude k dispozici více životního prostoru."
+msgstr "Nemáte dostatek ubikací k ubytování všech svých zaměstnanců. Musíte propustit %i zaměstnanců dokud nebude k dispozici více životního prostoru."
 
 #: client/cl_employee.c:476
 msgid "You don't have enough quarters for your employees."
-msgstr "Nemáš dostatek ubytovacích prostor pro zaměstnance."
+msgstr "Nemáte dostatek ubytovacích prostor pro zaměstnance."
 
 #: client/cl_hospital.c:57
 #, c-format
@@ -6086,7 +6299,7 @@ msgstr "Přepnout režim pohledu mezi první a třetí osobou"
 #: client/cl_main.c:365
 #: client/cl_main.c:1011
 msgid "Assemble a team first"
-msgstr "Nejprve sestav tým"
+msgstr "Nejprve sestavte tým"
 
 #: client/cl_main.c:365
 #: client/cl_main.c:1011
@@ -6163,7 +6376,7 @@ msgstr "Maximum vojáků na tým:\t%s\n"
 # doladit
 #: client/cl_main.c:1055
 msgid "All bookmark slots are used - please removed unused entries and repeat this step"
-msgstr "Není místo pro další oblíbeneé - smažte prosím nepoužívané položky a zkuste to znovu"
+msgstr "Není místo pro další oblíbené - smažte prosím nepoužívané položky a zkuste to znovu"
 
 #: client/cl_main.c:1159
 msgid "Select a free team or your coop team"
@@ -6196,20 +6409,20 @@ msgstr "Neplatný nebo plný tým"
 #: client/cl_main.c:1564
 #, c-format
 msgid "Local game version (%s) differs from the servers"
-msgstr "Tvoje verze hry (%s) se liší od té na serveru"
+msgstr "Vaše verze hry (%s) se liší od té na serveru"
 
 #: client/cl_main.c:1570
 msgid "Local map version differs from server"
-msgstr "Tvoje verze mapy se liší od té na serveru"
+msgstr "Vaše verze mapy se liší od té na serveru"
 
 #: client/cl_main.c:1576
 msgid "You are using modified ufo script files - you won't be able to connect to the server"
-msgstr "Používáš upravené soubory s ufo skripty - nebudeš se moci připojit k serveru"
+msgstr "Používáte upravené soubory s ufo skripty - nebudete se moci připojit k serveru"
 
 #: client/cl_main.c:1581
 #, c-format
 msgid "Local game version (%s) differs from the servers (%s)"
-msgstr "Tvoje verze hry (%s) se liší od té na serveru (%s)"
+msgstr "Vaše verze hry (%s) se liší od té na serveru (%s)"
 
 #: client/cl_main.c:1884
 msgid "Unnamed"
@@ -6255,7 +6468,7 @@ msgstr "Noc"
 
 #: client/cl_map.c:850
 msgid "Select the desired location of the new base on the map.\n"
-msgstr "Vyber na mapě umístění nové základny.\n"
+msgstr "Vyberte na mapě umístění nové základny.\n"
 
 #: client/cl_map.c:855
 msgid "Aliens are attacking our base at this very moment.\n"
@@ -6263,7 +6476,7 @@ msgstr "Cizáci právě teď útočí na naši základnu.\n"
 
 #: client/cl_map.c:860
 msgid "Select ufo or mission on map\n"
-msgstr "Vyber na mapě ufo nebo misi\n"
+msgstr "Vyberte na mapě UFO nebo misi\n"
 
 #: client/cl_map.c:865
 msgid "UFO in radar range\n"
@@ -6292,15 +6505,15 @@ msgstr "Stav:\t%s\n"
 
 #: client/cl_market.c:192
 msgid "Build a hangar first"
-msgstr "Nejprve vybuduj hangár"
+msgstr "Nejprve vybudujte hangár"
 
 #: client/cl_market.c:439
 msgid "You can't sell an aircraft if it still has a team assigned"
-msgstr "Nemůžeš prodat letoun dokud má posádku"
+msgstr "Nemůžete prodat letoun dokud má posádku"
 
 #: client/cl_menu.c:536
 msgid "Set playersoldiers lower than teamsoldiers"
-msgstr "Nastav počet vojáků hráče na nižší hodnotu než je vojáků v týmu."
+msgstr "Nastavte počet vojáků hráče na nižší hodnotu než je vojáků v týmu."
 
 #: client/cl_menu.c:536
 msgid "Settings doesn't make sense"
@@ -6318,7 +6531,7 @@ msgstr "Klávesa: %s"
 
 #: client/cl_menu.c:3108
 msgid "Hide the HUD (press ESC to reactivate HUD)"
-msgstr "Skryje HUD (stiskni ESC pro zobrazení HUDu)"
+msgstr "Skryje HUD (stisk ESC zobrazí HUD)"
 
 #: client/cl_parse.c:839
 msgid "Alien spotted:"
@@ -6402,7 +6615,7 @@ msgstr "Fronta je plná!"
 
 #: client/cl_produce.c:665
 msgid "You cannot queue any more items!"
-msgstr "Nemůžeš do fronty přidat další položku!"
+msgstr "Nemůžete do fronty přidat další položku!"
 
 #: client/cl_research.c:81
 #, c-format
@@ -6511,7 +6724,7 @@ msgstr "Nic ke zkoumání"
 
 #: client/cl_research.c:1142
 msgid "Build a laboratory first"
-msgstr "Nejprve vybuduj laboratoř"
+msgstr "Nejprve vybudujte laboratoř"
 
 #: client/cl_research.c:1538
 msgid "No description available."
@@ -6545,11 +6758,11 @@ msgstr "%i z %i"
 
 #: client/cl_team.c:1286
 msgid "Error saving team. Check free disk space!"
-msgstr "Chyba při ukládání týmu. Zkontroluj zda je na disku dostatek volného místa!"
+msgstr "Chyba při ukládání týmu. Zkontrolujte zda je na disku dostatek volného místa!"
 
 #: client/cl_team.c:1458
 msgid "Select a soldier from list"
-msgstr "Zvol vojáka ze seznamu"
+msgstr "Zvolte vojáka ze seznamu"
 
 #: client/cl_team.c:1459
 msgid "Toggle to next soldier"
@@ -6730,7 +6943,7 @@ msgstr ""
 
 #: client/cl_team.c:1892
 msgid "You won the game!"
-msgstr "Vyhrál jsi hru!"
+msgstr "Vyhrál jste hru!"
 
 #: client/cl_team.c:1894
 msgid "Congratulations"
@@ -6752,7 +6965,7 @@ msgstr "Nerozhodně!"
 
 #: client/cl_team.c:1899
 msgid "You lost the game"
-msgstr "Prohrál jsi hru"
+msgstr "Prohrál jste hru"
 
 #: client/cl_team.c:1901
 msgid "Better luck next time"
@@ -6854,7 +7067,7 @@ msgstr "Není vybrána cílová základna"
 
 #: client/cl_transfer.c:449
 msgid "Please select the target base from the list"
-msgstr "Ze seznamnu prosím vyber cílovou základnu"
+msgstr "Ze seznamu prosím vyberte cílovou základnu"
 
 #: client/cl_transfer.c:454
 msgid "No aircraft selected"
@@ -6862,21 +7075,21 @@ msgstr "Není vybrán letoun"
 
 #: client/cl_transfer.c:454
 msgid "Please select the aircraft to use from the list"
-msgstr "Ze seznamu prosím vyber letoun který použít"
+msgstr "Ze seznamu prosím vyberte letoun který použít"
 
 #: client/cl_transfer.c:474
 #: client/cl_transfer.c:495
 #: client/cl_transfer.c:506
 msgid "You are transferring aircraft. You cannot use this aircraft to transfer things or employees."
-msgstr "Probíhá přeprava letounu. Nemužeš ho použít k přepravě věcí nebo osob."
+msgstr "Probíhá přeprava letounu. Nemužete ho použít k přepravě věcí nebo osob."
 
 #: client/cl_transfer.c:538
 msgid "You are transferring stuff. You cannot use this aircraft to transfer itself."
-msgstr "Probíhá přeprava vybavení. Nemužeš tento letoun použít k přepravě sebe sama."
+msgstr "Probíhá přeprava vybavení. Nemužete tento letoun použít k přepravě sebe sama."
 
 #: client/cl_transfer.c:672
 msgid "You can transfer equipment - this base has a storage building\n"
-msgstr "Můžeš přepravit vybavení - tato základna má sklady\n"
+msgstr "Můžete přepravit vybavení - tato základna má sklady\n"
 
 #: client/cl_transfer.c:675
 msgid "No storage building in this base\n"
@@ -6884,7 +7097,7 @@ msgstr "Na této základně nejsou sklady\n"
 
 #: client/cl_transfer.c:679
 msgid "You can transfer employees - this base has quarters\n"
-msgstr "Můžeš přepravit zaměstnance - tato základna má ubikace\n"
+msgstr "Můžete přepravit zaměstnance - tato základna má ubikace\n"
 
 #: client/cl_transfer.c:682
 msgid "No quarters in this base\n"
@@ -6892,7 +7105,7 @@ msgstr "Na této základně nejsou obytné místnosti\n"
 
 #: client/cl_transfer.c:686
 msgid "You can transfer aliens - this base has alien containment\n"
-msgstr "Můžeš přepravit cizáky - tato základna má cizáckou celu\n"
+msgstr "Můžete přepravit cizáky - tato základna má cizáckou celu\n"
 
 #: client/cl_transfer.c:688
 msgid "No alien containment in this base\n"
@@ -7099,12 +7312,12 @@ msgstr "Popis není před výzkumem dostupný."
 
 #: client/cl_ufopedia.c:697
 msgid "Ufopedia Content"
-msgstr "Obsah Ufopedie"
+msgstr "Obsah UFOpedie"
 
 #: client/cl_ufopedia.c:731
 #, c-format
 msgid "Ufopedia Index: %s"
-msgstr "Oddíl Ufopedie: %s"
+msgstr "Oddíl UFOpedie: %s"
 
 #: client/cl_ufopedia.c:1042
 #, c-format
@@ -7164,7 +7377,7 @@ msgstr "Pošle zprávu členům spojeneckého týmu"
 
 #: game/g_client.c:608
 msgid "Can't perform action - this isn't your round!\n"
-msgstr "Nelze provést - nejsi na tahu!\n"
+msgstr "Nelze provést - nejste na tahu!\n"
 
 #: game/g_client.c:615
 msgid "Can't perform action - object not present!\n"
@@ -7188,7 +7401,7 @@ msgstr "Nelze provést - není ve stejném týmu!\n"
 
 #: game/g_client.c:640
 msgid "Can't perform action - no control over allied actors!\n"
-msgstr "Nelze provést - neovládáš spojenecké osoby!\n"
+msgstr "Nelze provést - neovládáte spojenecké osoby!\n"
 
 #: game/g_client.c:746
 msgid "Can't perform action - not enough TUs!\n"
@@ -7201,7 +7414,7 @@ msgstr "Nelze provést - zbraň je již plně nabita stejnou municí!\n"
 # Asi takhle?
 #: game/g_client.c:1253
 msgid "Currently shaken, won't let their guard down.\n"
-msgstr "Je právě v šoku, nepouštěj ho z dohlehu.\n"
+msgstr "Je právě v šoku, nepouštějte ho z dohlehu.\n"
 
 #: game/g_client.c:1328
 #, c-format
