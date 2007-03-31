@@ -1544,7 +1544,7 @@ tech rs_weapon_sniper_ammo
 // Just for searching: uses "anti alien gas"
 tech rs_weapon_stungren
 {
-	type	weapon
+	type		weapon
 	up_chapter	equipment
 	description	"_stungren_txt"
 	pre_description	"_stungren_pre_txt"
@@ -1576,7 +1576,7 @@ tech rs_weapon_stungren
 	}
 
 	provides	stungrenade
-	time	0
+	time		2100
 	producetime	1
 }
 
