@@ -33,4 +33,5 @@
 ./client/cl_ufo.c
 ./client/cl_ufopedia.c
 ./client/cl_view.c
+./client/cl_aliencont.c
 ./po/OTHER_STRINGS
