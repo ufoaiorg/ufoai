@@ -308,8 +308,8 @@ menu hospital_employee
 		{
 			cmd ""
 		}
-		out		{ *txt_hosp_heal_start color "0 0.8 0 1" *button_hosp_heal_start texl "0 0" *button_hosp_heal_start texh "230 64" }
-		in		{ *txt_hosp_heal_start color "1 1 1 1" *button_hosp_heal_start texl "230 0" *button_hosp_heal_start texh "460 64" }
+		out		{ *txt_hosp_bionic_start color "0 0.8 0 1" *button_hosp_bionic_start texl "0 0" *button_hosp_bionic_start texh "230 64" }
+		in		{ *txt_hosp_bionic_start color "1 1 1 1" *button_hosp_bionic_start texl "230 0" *button_hosp_bionic_start texh "460 64" }
 	}
 
 	string txt_hosp_bionic_start
