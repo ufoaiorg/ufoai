@@ -23,7 +23,7 @@ item medikit
 			projtl	null
 			impact	null
 			hitbody null
-			firesnd	misc/klonk01.wav
+			firesnd	weapons/medikit.wav
 			speed	0
 			range	1.5
 			shots	1
