@@ -3,9 +3,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-03-28 19:13+0200\n"
-"PO-Revision-Date: 2007-03-28 19:15+0100\n"
-"Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
+"POT-Creation-Date: 2007-03-29 16:56+0200\n"
+"PO-Revision-Date: 2007-03-30 19:12+0100\n"
+"Last-Translator: Xaver Wurzenberger <xaver.xn@web.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -93,7 +93,7 @@ msgstr "Stiletto-Klasse Abfangjäger"
 
 #: ../base/ufos/aircraftmanagement.ufo:73
 msgid "Saracen-class Interceptor"
-msgstr "Sarazen-Klasse Abfangjäger"
+msgstr "Sarazenen-Klasse Abfangjäger"
 
 #: ../base/ufos/aircraftmanagement.ufo:74
 msgid "Saracen I"
@@ -104,7 +104,7 @@ msgstr "Sarazene I"
 #: ../base/ufos/research.ufo:2482
 #: ../base/ufos/research.ufo:2489
 msgid "UFO - Scout"
-msgstr "UFO - Kundschafter"
+msgstr "UFO - Aufklärer"
 
 #: ../base/ufos/aircraftmanagement.ufo:96
 msgid "Scout U"
@@ -392,7 +392,7 @@ msgstr "Soldat"
 
 #: ../base/ufos/medals.ufo:59
 msgid "Rfn"
-msgstr "S"
+msgstr "S."
 
 #: ../base/ufos/medals.ufo:66
 msgid "Corporal"
@@ -400,7 +400,7 @@ msgstr "Gefreiter"
 
 #: ../base/ufos/medals.ufo:67
 msgid "Cpl"
-msgstr "Gefr"
+msgstr "Gefr."
 
 #: ../base/ufos/medals.ufo:77
 msgid "Sergeant"
@@ -408,7 +408,7 @@ msgstr "Unteroffizier"
 
 #: ../base/ufos/medals.ufo:78
 msgid "Sgt"
-msgstr "Ufz"
+msgstr "Ufz."
 
 #: ../base/ufos/medals.ufo:88
 msgid "Captain"
@@ -416,7 +416,7 @@ msgstr "Leutnant"
 
 #: ../base/ufos/medals.ufo:89
 msgid "Cpt"
-msgstr "Lt"
+msgstr "Lt."
 
 #: ../base/ufos/menu_aircraft.ufo:49
 msgid "Assign your squad"
@@ -2175,7 +2175,7 @@ msgid "Slow"
 msgstr "Langsam"
 
 #: ../base/ufos/menu_ptleditor.ufo:74
-#: client/cl_main.c:2107
+#: client/cl_main.c:2110
 msgid "Normal"
 msgstr "Normal"
 
@@ -2464,7 +2464,7 @@ msgid "Show only aliens"
 msgstr "Nur Aliens anzeigen"
 
 #: ../base/ufos/menu_transfer.ufo:285
-#: client/cl_campaign.c:4357
+#: client/cl_campaign.c:4361
 msgid "Aliens"
 msgstr "Aliens"
 
@@ -2775,7 +2775,7 @@ msgstr "Tazovskij"
 
 #: ../base/ufos/missions.ufo:680
 msgid "Doha"
-msgstr ""
+msgstr "Doha"
 
 #: ../base/ufos/missions.ufo:701
 msgid "Altdorf"
@@ -2870,9 +2870,10 @@ msgstr "Neues Afrika"
 msgid "Russia"
 msgstr "Russland"
 
+# In "Die Nationengemeinschaft von Ozeanien" zurückübersetzen wenn es wieder hinpaßt/der font-code geändert wurde
 #: ../base/ufos/nations.ufo:132
 msgid "The Commonwealth of Oceania"
-msgstr "Die Nationengemeinschaft von Ozeanien"
+msgstr "Nationengemeinschaft Ozeanien"
 
 #: ../base/ufos/research.ufo:83
 msgid "Background"
@@ -8179,19 +8180,19 @@ msgstr "3-Schuss-Salve"
 #: ../base/ufos/weapons_human.ufo:1427
 #: ../base/ufos/weapons_human.ufo:1652
 msgid "Snap Shot - Timed"
-msgstr "Schnapschuss - zeitverzögert"
+msgstr "Schnellschuss - zeitvzgt."
 
 #: ../base/ufos/weapons_human.ufo:1281
 #: ../base/ufos/weapons_human.ufo:1454
 #: ../base/ufos/weapons_human.ufo:1679
 msgid "Aimed Shot - Timed"
-msgstr "Gezielter Schuss - zeitverzögert"
+msgstr "Gezielter Schuss - zeitvz."
 
 #: ../base/ufos/weapons_human.ufo:1308
 #: ../base/ufos/weapons_human.ufo:1481
 #: ../base/ufos/weapons_human.ufo:1706
 msgid "3-Round Burst - Timed"
-msgstr "Hüftschuss - Zeitverzögert"
+msgstr "3-Schuss-Salve - zeitvzgt."
 
 #: ../base/ufos/weapons_human.ufo:1337
 msgid "25mm IC Grenades"
@@ -8211,7 +8212,7 @@ msgstr "Bolter"
 
 #: ../base/ufos/weapons_human.ufo:1757
 msgid "Bolter Rifle Magazine"
-msgstr "Bolter"
+msgstr "Bolter-Magazin"
 
 #: ../base/ufos/weapons_human.ufo:1791
 msgid "Cannonade"
@@ -8487,15 +8488,15 @@ msgstr ""
 msgid "Currently panics!\n"
 msgstr "In Panik!\n"
 
-#: client/cl_actor.c:1646
+#: client/cl_actor.c:1649
 msgid "Nobody selected\n"
 msgstr "Niemand ausgewählt\n"
 
-#: client/cl_actor.c:1657
+#: client/cl_actor.c:1660
 msgid "This isn't your round\n"
 msgstr "Du bist nicht dran\n"
 
-#: client/cl_actor.c:1790
+#: client/cl_actor.c:1793
 msgid ""
 "You cannot reload this unknown item.\n"
 "You need to research it and its ammunition first.\n"
@@ -8503,59 +8504,59 @@ msgstr ""
 "Dieser unbekannte Gegenstand kann nicht geladen werden.\n"
 "Er muss erst erforscht werden.\n"
 
-#: client/cl_actor.c:2244
+#: client/cl_actor.c:2243
 msgid "was stunned.\n"
 msgstr "wurde betäubt.\n"
 
-#: client/cl_actor.c:2249
+#: client/cl_actor.c:2248
 msgid "was killed.\n"
 msgstr "wurde getötet\n"
 
-#: client/cl_actor.c:2256
+#: client/cl_actor.c:2255
 msgid "A civilian was stunned.\n"
 msgstr "Ein Zivilist wurde betäubt\n"
 
-#: client/cl_actor.c:2258
+#: client/cl_actor.c:2257
 msgid "A civilian was killed.\n"
 msgstr "Ein Zivilist wurde getötet\n"
 
-#: client/cl_actor.c:2266
+#: client/cl_actor.c:2265
 msgid "An alien was stunned:"
 msgstr "Ein Alien wurde betäubt:"
 
-#: client/cl_actor.c:2270
+#: client/cl_actor.c:2269
 msgid "An alien was killed:"
 msgstr "Ein Alien wurde getötet:"
 
-#: client/cl_actor.c:2275
-#: client/cl_actor.c:2281
+#: client/cl_actor.c:2274
+#: client/cl_actor.c:2280
 msgid "An alien was stunned.\n"
 msgstr "Ein Alien wurde betäubt\n"
 
-#: client/cl_actor.c:2277
-#: client/cl_actor.c:2283
+#: client/cl_actor.c:2276
+#: client/cl_actor.c:2282
 msgid "An alien was killed.\n"
 msgstr "Ein Alien wurde getötet\n"
 
-#: client/cl_actor.c:2288
+#: client/cl_actor.c:2287
 msgid "A soldier was stunned.\n"
 msgstr "Ein Soldat wurde betäubt\n"
 
-#: client/cl_actor.c:2290
+#: client/cl_actor.c:2289
 msgid "A soldier was killed.\n"
 msgstr "Ein Soldat wurde getötet\n"
 
-#: client/cl_actor.c:2294
+#: client/cl_actor.c:2293
 #, c-format
 msgid "A member of team %i was stunned.\n"
 msgstr "Ein Mitglied im Team %i wurde betäubt!\n"
 
-#: client/cl_actor.c:2296
+#: client/cl_actor.c:2295
 #, c-format
 msgid "A member of team %i was killed.\n"
 msgstr "Ein Mitglied im Team %i wurde getötet!\n"
 
-#: client/cl_actor.c:2468
+#: client/cl_actor.c:2467
 msgid "Your round started!\n"
 msgstr "Du bist an der Reihe!\n"
 
@@ -8988,28 +8989,28 @@ msgstr[0] "credit"
 msgstr[1] "credits"
 
 #: client/cl_campaign.c:1160
-#: client/cl_campaign.c:4362
+#: client/cl_campaign.c:4366
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "Forscher"
 msgstr[1] "Forscher"
 
 #: client/cl_campaign.c:1161
-#: client/cl_campaign.c:4364
+#: client/cl_campaign.c:4368
 msgid "medic"
 msgid_plural "medics"
 msgstr[0] "Arzt"
 msgstr[1] "Ärzte"
 
 #: client/cl_campaign.c:1162
-#: client/cl_campaign.c:4361
+#: client/cl_campaign.c:4365
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "Soldat"
 msgstr[1] "Soldaten"
 
 #: client/cl_campaign.c:1163
-#: client/cl_campaign.c:4363
+#: client/cl_campaign.c:4367
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] "Arbeiter"
@@ -9181,11 +9182,11 @@ msgstr "Soldat wurde befördert"
 msgid "Defense of base: %s successful!"
 msgstr "Verteidigung der Basis: %s erfolgreich"
 
-#: client/cl_campaign.c:4357
+#: client/cl_campaign.c:4361
 msgid "Human"
 msgstr "Mensch"
 
-#: client/cl_campaign.c:4359
+#: client/cl_campaign.c:4363
 #, c-format
 msgid ""
 "Race: %s\n"
@@ -9232,97 +9233,97 @@ msgstr "Heilung abgeschlossen"
 msgid "%s\t%s\t(%i/%i)\n"
 msgstr "%s\t%s\t(%i/%i)\n"
 
-#: client/cl_input.c:707
+#: client/cl_input.c:709
 msgid "Rotate battlescape camera anti-clockwise"
 msgstr "Rotiere Kamera gegen den Uhrzeigersinn"
 
-#: client/cl_input.c:709
+#: client/cl_input.c:711
 msgid "Rotate battlescape camera clockwise"
 msgstr "Rotiere Kameramit den Uhrzeigersinn"
 
-#: client/cl_input.c:711
+#: client/cl_input.c:713
 msgid "Tilt battlescape camera up"
 msgstr "Neige die Kamera nach oben"
 
-#: client/cl_input.c:713
+#: client/cl_input.c:715
 msgid "Tilt battlescape camera down"
 msgstr "Neige die Kamera nach unten"
 
-#: client/cl_input.c:715
+#: client/cl_input.c:717
 msgid "Move battlescape camera left"
 msgstr "Bewegen der Einsatzkamera nach links"
 
-#: client/cl_input.c:717
+#: client/cl_input.c:719
 msgid "Move battlescape camera right"
 msgstr "Bewegen der Einsatzkamera nach rechts"
 
-#: client/cl_input.c:719
+#: client/cl_input.c:721
 msgid "Move battlescape camera forward"
 msgstr "Bewegen der Einsatzkamera nach vorne"
 
-#: client/cl_input.c:721
+#: client/cl_input.c:723
 msgid "Move battlescape camera backward"
 msgstr "Bewegen der Einsatzkamera nach hinten"
 
-#: client/cl_input.c:723
-#: client/cl_input.c:747
+#: client/cl_input.c:725
+#: client/cl_input.c:749
 msgid "Zoom in"
 msgstr "Hereinzoomen"
 
-#: client/cl_input.c:725
-#: client/cl_input.c:748
+#: client/cl_input.c:727
+#: client/cl_input.c:750
 msgid "Zoom out"
 msgstr "Herauszoomen"
 
-#: client/cl_input.c:728
+#: client/cl_input.c:730
 msgid "Select objects/Walk to a square/In fire mode, fire etc"
 msgstr "Objekte auswählen/Zu einem Feld gehen/Im Feuermodus, Feuer usw"
 
-#: client/cl_input.c:730
+#: client/cl_input.c:732
 msgid "Walk to a square/In fire mode, cancel action"
 msgstr "Zu einem Feld gehen/Im Feuermodus, Handlung abbrechen"
 
-#: client/cl_input.c:732
+#: client/cl_input.c:734
 msgid "Turn soldier toward mouse pointer"
 msgstr "Soldat zum Mauszeiger drehen"
 
-#: client/cl_input.c:734
+#: client/cl_input.c:736
 msgid "Toggle stand/crounch"
 msgstr "Umschalten zwischen stehend/kniend"
 
-#: client/cl_input.c:735
+#: client/cl_input.c:737
 msgid "Toggle reaction fire"
 msgstr "Reactionfire ein/ausschalten"
 
-#: client/cl_input.c:736
+#: client/cl_input.c:738
 msgid "Toogle to next alien"
 msgstr "Zum nächsten Alien"
 
-#: client/cl_input.c:742
+#: client/cl_input.c:744
 msgid "Reload the weapon in the soldiers left hand"
 msgstr "Lade die Waffe in der linken Hand nach"
 
-#: client/cl_input.c:743
+#: client/cl_input.c:745
 msgid "Reload the weapon in the soldiers right hand"
 msgstr "Lade die Waffe in der rechten Hand nach"
 
-#: client/cl_input.c:744
+#: client/cl_input.c:746
 msgid "Ends current round"
 msgstr "Runde beenden"
 
-#: client/cl_input.c:745
+#: client/cl_input.c:747
 msgid "Slice through terrain at a higher level"
 msgstr "Wechsele in das nächst höhere Level"
 
-#: client/cl_input.c:746
+#: client/cl_input.c:748
 msgid "Slice through terrain at a lower level"
 msgstr "Wechsele in das nächst niedrigere Level"
 
-#: client/cl_input.c:749
+#: client/cl_input.c:751
 msgid "Confirm the current action"
 msgstr "Aktuelle Aktion bestätigten"
 
-#: client/cl_input.c:757
+#: client/cl_input.c:759
 msgid "Toggle first-person/third-person camera mode"
 msgstr "Wechsele zwischen Ich-Perspektive und Vogelansicht"
 
@@ -9453,31 +9454,31 @@ msgstr "Du benutzt modifizierte UFO-Script Dateien - daher ist das Spielen auf d
 msgid "Local game version (%s) differs from the servers (%s)"
 msgstr "Deine Spielversion (%s) unterscheidet sich von der auf dem Server (%s)"
 
-#: client/cl_main.c:1866
+#: client/cl_main.c:1884
 msgid "Unnamed"
 msgstr "Unbekannt"
 
-#: client/cl_main.c:2100
+#: client/cl_main.c:2103
 msgid "Chicken-hearted"
 msgstr "Extrem einfach"
 
-#: client/cl_main.c:2102
+#: client/cl_main.c:2105
 msgid "Very Easy"
 msgstr "Sehr einfach"
 
-#: client/cl_main.c:2105
+#: client/cl_main.c:2108
 msgid "Easy"
 msgstr "Einfach"
 
-#: client/cl_main.c:2110
+#: client/cl_main.c:2113
 msgid "Hard"
 msgstr "Schwer"
 
-#: client/cl_main.c:2112
+#: client/cl_main.c:2115
 msgid "Very Hard"
 msgstr "Sehr schwer"
 
-#: client/cl_main.c:2114
+#: client/cl_main.c:2117
 msgid "Insane"
 msgstr "Wahnsinnig schwer"
 
@@ -9560,7 +9561,7 @@ msgstr "Rein: %i Raus: %i"
 msgid "Key: %s"
 msgstr "Taste: %s"
 
-#: client/cl_menu.c:3104
+#: client/cl_menu.c:3106
 msgid "Hide the HUD (press ESC to reactivate HUD)"
 msgstr "Verstecke das HUD (ESC drücken um es zu reaktivieren)"
 
@@ -9908,7 +9909,7 @@ msgstr "Durch Aliens getötete PHALANX Soldaten\t%i\n"
 #: client/cl_team.c:1859
 #, c-format
 msgid "PHALANX soldiers missing in action\t%i\n"
-msgstr "Durch Aliens getötete PHALANX Soldaten\t%i\n"
+msgstr "Im Kampf vermisste PHALANX Soldaten\t%i\n"
 
 #: client/cl_team.c:1860
 #, c-format
@@ -10170,7 +10171,7 @@ msgstr "Granaten"
 
 #: client/cl_ufopedia.c:154
 msgid "Unknown weapon skill"
-msgstr "Waffengeschick unbekannt"
+msgstr "Waffengattung unbekannt"
 
 #: client/cl_ufopedia.c:175
 msgid "No requirements"
@@ -10468,7 +10469,7 @@ msgstr "%s ist verwirrt\n"
 msgid "Team %i ( %s) will get the first turn.\n"
 msgstr "Team %i ( %s) hat den ersten Zug.\n"
 
-#: game/g_svcmds.c:356
+#: game/g_svcmds.c:355
 #, c-format
 msgid "Team %i (%s) will get the first turn.\n"
 msgstr "Team %i ( %s) hat den ersten Zug.\n"
