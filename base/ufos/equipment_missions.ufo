@@ -418,7 +418,6 @@ equipment multiplayer_initial
 	pbeamrifle_ammo	13
 	fraggrenade			50
 	knife				5
-	knifemono			5
 	medikit				5
 	plasmagrenade		50
 	kerrblade           25 // bulky, will rarely get into the backpack
