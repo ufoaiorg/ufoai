@@ -1674,7 +1674,6 @@ extern void CL_ParseCharacterData (sizebuf_t *buf, qboolean updateCharacter)
 		for (i = 0; i < num; i++) {
 			updateCharacterArray[i].ucn = MSG_ReadShort(buf);
 			updateCharacterArray[i].HP = MSG_ReadShort(buf);
-			MSG_ReadShort(buf); /* don't use the maxHP value */
 			updateCharacterArray[i].STUN = MSG_ReadByte(buf);
 			updateCharacterArray[i].AP = MSG_ReadByte(buf);
 			updateCharacterArray[i].morale = MSG_ReadByte(buf);
