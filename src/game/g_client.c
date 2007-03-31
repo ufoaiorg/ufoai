@@ -203,6 +203,7 @@ void G_SendInventory (int player_mask, edict_t * ent)
 
 /**
  * @brief
+ * @sa CL_ActorAppear
  */
 extern void G_AppearPerishEvent (int player_mask, int appear, edict_t * check)
 {
@@ -1974,6 +1975,7 @@ void G_ClientTeamInfo (player_t * player)
 #endif
 
 			ent->chr.HP = gi.ReadShort();
+			ent->chr.maxHP = gi.ReadShort();
 			ent->chr.STUN = gi.ReadByte();
 			ent->chr.AP = gi.ReadByte();
 			ent->chr.morale = gi.ReadByte();
@@ -2022,6 +2024,7 @@ void G_ClientTeamInfo (player_t * player)
 				gi.ReadString(); /* name, path, body, head */
 			gi.ReadByte(); /* skin */
 			gi.ReadShort(); /* HP */
+			gi.ReadShort(); /* maxHP */
 			gi.ReadByte(); /* STUN */
 			gi.ReadByte(); /* AP */
 			gi.ReadByte(); /* morale */

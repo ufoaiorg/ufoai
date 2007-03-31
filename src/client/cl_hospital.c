@@ -50,7 +50,8 @@ void HOS_CheckRemovalFromEmployeeList (employee_t* employee)
 	if (!employeesInHospitalListCount)
 		return;
 
-	if (employee->chr.HP >= MAX_HP) {
+	if (employee->chr.HP >= employee->chr.maxHP) {
+		employee->chr.HP = employee->chr.maxHP;
 		for (; i < employeesInHospitalListCount; i++, j++) {
 			if (employeesInHospitalList[i] == employee) {
 				j++;
@@ -99,9 +100,9 @@ extern qboolean HOS_HealCharacter (character_t* chr, qboolean hospital)
 		healing = GET_HP_HEALING(chr->skills[ABILITY_POWER]);
 
 	assert(chr);
-	if (chr->HP < MAX_HP) {
-		chr->HP = min(chr->HP + healing, MAX_HP);
-		if (chr->HP == MAX_HP)
+	if (chr->HP < chr->maxHP) {
+		chr->HP = min(chr->HP + healing, chr->maxHP);
+		if (chr->HP == chr->maxHP)
 			return qfalse;
 		return qtrue;
 	} else
@@ -207,8 +208,8 @@ static void HOS_Init_f (void)
 			/* only show those employees, that are in the current base */
 			if (!E_IsInBase(employee, baseCurrent))
 				continue;
-			if (employee->chr.HP < MAX_HP)
-				Q_strcat(hospitalText, va(_("%s\t%s\t(%i/%i)\n"), employee->chr.name, E_GetEmployeeString(type), employee->chr.HP, MAX_HP), sizeof(hospitalText));
+			if (employee->chr.HP < employee->chr.maxHP)
+				Q_strcat(hospitalText, va(_("%s\t%s\t(%i/%i)\n"), employee->chr.name, E_GetEmployeeString(type), employee->chr.HP, employee->chr.maxHP), sizeof(hospitalText));
 		}
 
 	Cvar_SetValue("mn_hosp_medics", E_CountHired(baseCurrent, EMPL_MEDIC));
@@ -218,7 +219,7 @@ static void HOS_Init_f (void)
 
 #ifdef DEBUG
 /**
- * @brief Set the character HP field to MAX_HP
+ * @brief Set the character HP field to maxHP
  */
 static void HOS_HealAll_f (void)
 {
@@ -234,7 +235,7 @@ static void HOS_HealAll_f (void)
 			/* only those employees, that are in the current base */
 			if (!E_IsInBase(employee, baseCurrent))
 				continue;
-			employee->chr.HP = MAX_HP;
+			employee->chr.HP = employee->chr.maxHP;
 		}
 }
 
@@ -288,7 +289,7 @@ static void HOS_ListClick_f (void)
 		for (i = 0; i < gd.numEmployees[type]; i++) {
 			employee = &gd.employees[type][i];
 			/* only those employees, that are in the current base */
-			if (!E_IsInBase(employee, baseCurrent) || employee->chr.HP >= MAX_HP)
+			if (!E_IsInBase(employee, baseCurrent) || employee->chr.HP >= employee->chr.maxHP)
 				continue;
 			if (!num) {
 				currentEmployeeInHospital = employee;
@@ -328,7 +329,7 @@ static void HOS_EmployeeInit_f (void)
 	CL_CharacterCvars(c);
 
 	Cvar_SetValue("mn_hp", c->HP);
-	Cvar_SetValue("mn_hpmax", MAX_HP);
+	Cvar_SetValue("mn_hpmax", c->maxHP);
 }
 
 /**

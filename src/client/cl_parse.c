@@ -750,6 +750,7 @@ static void CL_ActorDoStartMove (sizebuf_t *sb)
 
 /**
  * @brief
+ * @sa G_AppearPerishEvent
  */
 static void CL_ActorAppear (sizebuf_t *sb)
 {

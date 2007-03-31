@@ -276,6 +276,7 @@ extern void CL_GenerateCharacter (employee_t *employee, const char *team, employ
 	}
 
 	chr->HP = GET_HP(chr->skills[ABILITY_POWER]);
+	chr->maxHP = chr->HP;
 	chr->morale = GET_MORALE(chr->skills[ABILITY_MIND]);
 	if (chr->morale >= MAX_SKILL)
 		chr->morale = MAX_SKILL;
@@ -1292,6 +1293,7 @@ static void CL_SaveTeamSlot_f (void)
 /**
  * @brief Load a team member for multiplayer
  * @sa CL_LoadTeam
+ * @sa CL_SendTeamInfo
  */
 static void CL_LoadTeamMember (sizebuf_t * sb, character_t * chr)
 {
@@ -1311,6 +1313,7 @@ static void CL_LoadTeamMember (sizebuf_t * sb, character_t * chr)
 	chr->skin = MSG_ReadByte(sb);
 
 	chr->HP = MSG_ReadShort(sb);
+	chr->maxHP = MSG_ReadShort(sb);
 	chr->STUN = MSG_ReadByte(sb);
 	chr->AP = MSG_ReadByte(sb);
 	chr->morale = MSG_ReadByte(sb);
@@ -1505,6 +1508,7 @@ static void CL_SendTeamInfo (sizebuf_t * buf, int baseID, int num)
 		MSG_WriteByte(buf, chr->skin);
 
 		MSG_WriteShort(buf, chr->HP);
+		MSG_WriteShort(buf, chr->maxHP);
 		MSG_WriteByte(buf, chr->STUN);
 		MSG_WriteByte(buf, chr->AP);
 		MSG_WriteByte(buf, chr->morale);
@@ -1559,6 +1563,7 @@ extern void CL_SendCurTeamInfo (sizebuf_t * buf, character_t ** team, int num)
 		MSG_WriteByte(buf, chr->skin);
 
 		MSG_WriteShort(buf, chr->HP);
+		MSG_WriteShort(buf, chr->maxHP);
 		MSG_WriteByte(buf, chr->STUN);
 		MSG_WriteByte(buf, chr->AP);
 		MSG_WriteByte(buf, chr->morale);
@@ -1669,6 +1674,7 @@ extern void CL_ParseCharacterData (sizebuf_t *buf, qboolean updateCharacter)
 		for (i = 0; i < num; i++) {
 			updateCharacterArray[i].ucn = MSG_ReadShort(buf);
 			updateCharacterArray[i].HP = MSG_ReadShort(buf);
+			MSG_ReadShort(buf); /* don't use the maxHP value */
 			updateCharacterArray[i].STUN = MSG_ReadByte(buf);
 			updateCharacterArray[i].AP = MSG_ReadByte(buf);
 			updateCharacterArray[i].morale = MSG_ReadByte(buf);
