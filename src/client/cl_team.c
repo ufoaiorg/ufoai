@@ -706,7 +706,7 @@ static void CL_GenerateEquipment_f (void)
 		if ((Q_strncmp(csi.ods[i].type, "armor", MAX_VAR) == 0) && (csi.ods[i].useable != team))
 			continue;
 		/* Don't allow to show unresearched items. */
-		if (RS_IsResearched_ptr(csi.ods[i].tech))
+		if (!RS_IsResearched_ptr(csi.ods[i].tech))
 			continue;
 		while (unused.num[i]) {
 			item.t = i;
