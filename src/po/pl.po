@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-03-31 16:14+0200\n"
-"PO-Revision-Date: 2007-03-31 19:17+0100\n"
+"PO-Revision-Date: 2007-03-31 23:48+0100\n"
 "Last-Translator: Maciej Wierzbicki <voovoos@killfile.pl>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -6054,11 +6054,11 @@ msgstr "Obcy rozpoczynają inwazję ..."
 
 #: ../base/ufos/seq_ingame.ufo:33
 msgid "UFOs appear in the sky around the world ..."
-msgstr "Pojazdy UFO pojawiają się na niebie na całej planecie ..."
+msgstr "Pojazdy UFO pojawiają się na niebie ..."
 
 #: ../base/ufos/seq_ingame.ufo:42
 msgid "(Catch them with your Interceptor to shoot them down.)"
-msgstr "(Użyj samolotów przechwytujących aby ich strącić.)"
+msgstr "(Użyj samolotów przechwytujących aby je strącić.)"
 
 #: ../base/ufos/seq_ingame.ufo:62
 msgid "Finally: The attack on the alien base ..."
@@ -6602,11 +6602,11 @@ msgstr "Z zamachem"
 
 #: ../base/ufos/weapons_melee.ufo:131
 msgid "Stun Charge"
-msgstr ""
+msgstr "Ogłusz"
 
 #: ../base/ufos/weapons_melee.ufo:148
 msgid "Double Charge"
-msgstr ""
+msgstr "Podwójny atak"
 
 #: ../base/ufos/weapons_melee.ufo:172
 msgid "Kerrblade"
@@ -6626,7 +6626,7 @@ msgstr "Pistolet cząsteczkowy"
 
 #: ../base/ufos/weapons_particle.ufo:24
 msgid "Pistol Particle Accelerator"
-msgstr ""
+msgstr "Ładunek do pistoletu cząsteczkowego"
 
 #: ../base/ufos/weapons_particle.ufo:57
 #: ../base/ufos/weapons_particle.ufo:136
@@ -6640,7 +6640,7 @@ msgstr "Ręczne działo cząsteczkowe"
 
 #: ../base/ufos/weapons_particle.ufo:101
 msgid "Cannon Particle Accelerator"
-msgstr ""
+msgstr "Ładunek do działa cząsteczkowego"
 
 #: ../base/ufos/weapons_particle.ufo:115
 msgid "Charged Blast"
@@ -6652,7 +6652,7 @@ msgstr "Karabin cząsteczkowy"
 
 #: ../base/ufos/weapons_particle.ufo:181
 msgid "Rifle Particle Accelerator"
-msgstr ""
+msgstr "Ładunek do karabinu cząsteczkowego"
 
 #: ../base/ufos/weapons_plasma.ufo:6
 msgid "Plasma Pistol"
@@ -7071,12 +7071,12 @@ msgstr ""
 #: client/cl_aircraft.c:783
 #: client/cl_campaign.c:2595
 msgid "You've won the battle"
-msgstr "Bitwa wygrana"
+msgstr "Potyczka wygrana."
 
 #: client/cl_aircraft.c:790
 #: client/cl_campaign.c:2597
 msgid "You've lost the battle"
-msgstr "Bitwa przegrana"
+msgstr "Potyczka przegrana."
 
 #: client/cl_aircraft.c:908
 msgid "None\n"
