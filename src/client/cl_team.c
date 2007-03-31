@@ -276,6 +276,7 @@ extern void CL_GenerateCharacter (employee_t *employee, const char *team, employ
 	}
 
 	chr->HP = GET_HP(chr->skills[ABILITY_POWER]);
+	chr->maxHP = chr->HP;
 	chr->morale = GET_MORALE(chr->skills[ABILITY_MIND]);
 	if (chr->morale >= MAX_SKILL)
 		chr->morale = MAX_SKILL;
@@ -704,6 +705,9 @@ static void CL_GenerateEquipment_f (void)
 	for (i = 0; i < csi.numODs; i++) {
 		/* Don't allow to show armours for other teams in the menu. */
 		if ((Q_strncmp(csi.ods[i].type, "armor", MAX_VAR) == 0) && (csi.ods[i].useable != team))
+			continue;
+		/* Don't allow to show unresearched items. */
+		if (!RS_IsResearched_ptr(csi.ods[i].tech))
 			continue;
 		while (unused.num[i]) {
 			item.t = i;
@@ -1289,6 +1293,7 @@ static void CL_SaveTeamSlot_f (void)
 /**
  * @brief Load a team member for multiplayer
  * @sa CL_LoadTeam
+ * @sa CL_SendTeamInfo
  */
 static void CL_LoadTeamMember (sizebuf_t * sb, character_t * chr)
 {
@@ -1308,6 +1313,7 @@ static void CL_LoadTeamMember (sizebuf_t * sb, character_t * chr)
 	chr->skin = MSG_ReadByte(sb);
 
 	chr->HP = MSG_ReadShort(sb);
+	chr->maxHP = MSG_ReadShort(sb);
 	chr->STUN = MSG_ReadByte(sb);
 	chr->AP = MSG_ReadByte(sb);
 	chr->morale = MSG_ReadByte(sb);
@@ -1502,6 +1508,7 @@ static void CL_SendTeamInfo (sizebuf_t * buf, int baseID, int num)
 		MSG_WriteByte(buf, chr->skin);
 
 		MSG_WriteShort(buf, chr->HP);
+		MSG_WriteShort(buf, chr->maxHP);
 		MSG_WriteByte(buf, chr->STUN);
 		MSG_WriteByte(buf, chr->AP);
 		MSG_WriteByte(buf, chr->morale);
@@ -1556,6 +1563,7 @@ extern void CL_SendCurTeamInfo (sizebuf_t * buf, character_t ** team, int num)
 		MSG_WriteByte(buf, chr->skin);
 
 		MSG_WriteShort(buf, chr->HP);
+		MSG_WriteShort(buf, chr->maxHP);
 		MSG_WriteByte(buf, chr->STUN);
 		MSG_WriteByte(buf, chr->AP);
 		MSG_WriteByte(buf, chr->morale);

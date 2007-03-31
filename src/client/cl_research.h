@@ -152,7 +152,7 @@ typedef struct technology_s {
 
 	int produceTime;			/**< How many days the production of this items runs. */
 	qboolean pushnews;			/**< Push news about this tech when researched. Note: usually you should use this only for tech with time = 0. */
-	mailSentType_t mailSent;		/**< Story if a Mail has been sent to the commander (player). */
+	mailSentType_t mailSent;		/**< Store if a Mail has been sent to the commander (player). */
 	requirements_t require_for_production;	/**< A list of items that are needed (and used up) on production of _this_ item.
 						 * Only "item"-type is allowed.
 						 * All requirements need to be fulfilled in order for _one_ item to be produced.

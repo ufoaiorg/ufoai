@@ -204,6 +204,7 @@ typedef uint8_t byte;
 #define MAX_ITEMS           256
 #define MAX_GENERAL         (MAX_CLIENTS*2) /* general config strings */
 
+/* not really max hp - but an initial value */
 #define MAX_HP 100
 
 /* game print flags */
@@ -1264,6 +1265,7 @@ typedef struct character_s {
 	int skills[SKILL_NUM_TYPES];
 
 	int HP, STUN, AP, morale;
+	int maxHP;	/**< to be restored in hospital */
 
 	/** score */
 	chrScore_t chrscore;

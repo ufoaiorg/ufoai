@@ -77,7 +77,7 @@ void RS_ResearchFinish (technology_t* tech)
 		RS_PushNewsWhenResearched(tech);
 
 	/* send a new message and add it to the mailclient */
-	if (tech->mailSent < MAILSENT_FINISHED) { /* No mail sent for finished research. */
+	if ((tech->mailSent < MAILSENT_FINISHED) && (tech->time != 0)) { /* No mail sent for finished research. */
 		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("A research project has been completed: %s\n"), _(tech->name));
 		MN_AddNewMessage(_("Research finished"), messageBuffer, qfalse, MSG_RESEARCH_FINISHED, tech);
 		tech->mailSent = MAILSENT_FINISHED;
@@ -96,7 +96,7 @@ void RS_MarkOneResearchable (technology_t* tech)
 
 	Com_DPrintf("RS_MarkOneResearchable: \"%s\" marked as researchable.\n", tech->id);
 
-	if (tech->mailSent < MAILSENT_PROPOSAL) { /* No mail sent for research proposal. */
+	if ((tech->mailSent < MAILSENT_PROPOSAL) && (tech->time != 0)) { /* No mail sent for research proposal. */
 		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("New research proposal: %s\n"), _(tech->name));
 		MN_AddNewMessage(_("Unknown Technology researchable"), messageBuffer, qfalse, MSG_RESEARCH_PROPOSAL, tech);
 		tech->mailSent = MAILSENT_PROPOSAL;
@@ -217,7 +217,7 @@ static qboolean RS_RequirementsMet (requirements_t *required_AND, requirements_t
 void RS_MarkCollected (technology_t* tech)
 {
 	assert(tech);
-	if (tech->mailSent < MAILSENT_PROPOSAL) { /* No mail sent for research proposal. */
+	if ((tech->mailSent < MAILSENT_PROPOSAL) && (tech->time != 0)) { /* No mail sent for research proposal. */
 		Com_sprintf(messageBuffer, sizeof(messageBuffer), _("New research proposal: %s\n"), _(tech->name));
 		MN_AddNewMessage(_("Unknown Technology found"), messageBuffer, qfalse, MSG_RESEARCH_PROPOSAL, tech);
 		tech->mailSent = MAILSENT_PROPOSAL;
