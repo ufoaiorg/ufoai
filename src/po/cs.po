@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-03-31 16:14+0200\n"
-"PO-Revision-Date: 2007-03-31 00:05+0100\n"
+"POT-Creation-Date: 2007-03-31 16:52+0200\n"
+"PO-Revision-Date: 2007-03-31 16:51+0100\n"
 "Last-Translator: Lubomír Bláha <tritol@trilogic.cz>\n"
 "Language-Team: čeština <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -5308,7 +5308,7 @@ msgstr "Plasmový spalovač"
 
 #: ../base/ufos/weapons_plasma.ufo:183
 msgid "Plasma Blaster Charge"
-msgstr "Zásobník plasmového spalovače"
+msgstr "Nabíječka plasmového spalovače"
 
 #: client/cl_actor.c:113
 msgid "Poor"
@@ -5674,19 +5674,20 @@ msgstr "Přidělit tým k letounu"
 msgid ""
 "You cannot process aliens yet. Alien Containment not ready in this base."
 msgstr ""
+"Zatím nemůžete pracovat na cizácích. Na této základně není k dispozici "
+"cizácká cela."
 
 #: client/cl_aliencont.c:249
 msgid "You cannot hold alive aliens yet. Aliens died."
-msgstr ""
+msgstr "Zatím nejste schopen udržet cizáky naživu. Cizáci zemřeli."
 
 #: client/cl_aliencont.c:256
 msgid "You've captured new aliens."
-msgstr ""
+msgstr "Pochytal jste nové cizáky."
 
 #: client/cl_aliencont.c:865
-#, fuzzy
 msgid "Needs autopsy!"
-msgstr "vyžaduje pitvu"
+msgstr "Vyžaduje pitvu!"
 
 #: client/cl_aliencont.c:865 po/OTHER_STRINGS:2
 msgid "Yes"
@@ -5752,7 +5753,7 @@ msgstr "%i k"
 msgid "Base is under attack"
 msgstr "Probíhá útok na základnu"
 
-#: client/cl_basemanagement.c:1782 client/cl_team.c:1245 client/cl_team.c:1440
+#: client/cl_basemanagement.c:1782 client/cl_team.c:1244 client/cl_team.c:1437
 msgid "NewTeam"
 msgstr "Nový tým"
 
@@ -5782,7 +5783,7 @@ msgstr ""
 
 #: client/cl_basemanagement.c:2233 client/cl_basemanagement.c:2235
 #: client/cl_campaign.c:1800 client/cl_campaign.c:2388 client/cl_market.c:192
-#: client/cl_market.c:439 client/cl_team.c:1290
+#: client/cl_market.c:439 client/cl_team.c:1289
 msgid "Note"
 msgstr "Poznámka"
 
@@ -6178,16 +6179,16 @@ msgstr ""
 msgid "You don't have enough quarters for your employees."
 msgstr "Nemáte dostatek ubytovacích prostor pro zaměstnance."
 
-#: client/cl_hospital.c:58
+#: client/cl_hospital.c:57
 #, c-format
 msgid "Healing of %s completed - %i active healings left\n"
 msgstr "%s je vyléčen - ještě zbývá %i léčených\n"
 
-#: client/cl_hospital.c:60
+#: client/cl_hospital.c:59
 msgid "Healing complete"
 msgstr "Léčení dokončeno"
 
-#: client/cl_hospital.c:212
+#: client/cl_hospital.c:211
 #, c-format
 msgid "%s\t%s\t(%i/%i)\n"
 msgstr "%s\t%s\t(%i/%i)\n"
@@ -6734,35 +6735,35 @@ msgstr "Pouštní"
 msgid "Arctic"
 msgstr "Polární"
 
-#: client/cl_team.c:858
+#: client/cl_team.c:857
 #, c-format
 msgid "%i of %i"
 msgstr "%i z %i"
 
-#: client/cl_team.c:1290
+#: client/cl_team.c:1289
 msgid "Error saving team. Check free disk space!"
 msgstr ""
 "Chyba při ukládání týmu. Zkontrolujte zda je na disku dostatek volného místa!"
 
-#: client/cl_team.c:1464
+#: client/cl_team.c:1461
 msgid "Select a soldier from list"
 msgstr "Zvolte vojáka ze seznamu"
 
-#: client/cl_team.c:1465
+#: client/cl_team.c:1462
 msgid "Toggle to next soldier"
 msgstr "Na dalšího vojáka"
 
-#: client/cl_team.c:1810 client/cl_team.c:1860
+#: client/cl_team.c:1804 client/cl_team.c:1854
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "Zabitých cizáků\t%i\n"
 
-#: client/cl_team.c:1813
+#: client/cl_team.c:1807
 #, c-format
 msgid "Enemies killed\t%i\n"
 msgstr "Zabitých nepřátel\t%i\n"
 
-#: client/cl_team.c:1818
+#: client/cl_team.c:1812
 #, c-format
 msgid ""
 "Aliens captured\t%i\n"
@@ -6771,7 +6772,7 @@ msgstr ""
 "Zajatých cizáků\t%i\n"
 "\n"
 
-#: client/cl_team.c:1819 client/cl_team.c:1864
+#: client/cl_team.c:1813 client/cl_team.c:1858
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -6780,7 +6781,7 @@ msgstr ""
 "Přeživší cizáci\t%i\n"
 "\n"
 
-#: client/cl_team.c:1821
+#: client/cl_team.c:1815
 #, c-format
 msgid ""
 "Enemies captured\t%i\n"
@@ -6789,7 +6790,7 @@ msgstr ""
 "Zajatých nepřátel\t%i\n"
 "\n"
 
-#: client/cl_team.c:1822
+#: client/cl_team.c:1816
 #, c-format
 msgid ""
 "Enemy survivors\t%i\n"
@@ -6798,22 +6799,22 @@ msgstr ""
 "Přeživších nepřátel\t%i\n"
 "\n"
 
-#: client/cl_team.c:1826
+#: client/cl_team.c:1820
 #, c-format
 msgid "Team losses\t%i\n"
 msgstr "Tým - ztráty\t%i\n"
 
-#: client/cl_team.c:1827
+#: client/cl_team.c:1821
 #, c-format
 msgid "Team missing in action\t%i\n"
 msgstr "Tým - pohřešováno\t%i\n"
 
-#: client/cl_team.c:1828
+#: client/cl_team.c:1822
 #, c-format
 msgid "Friendly fire losses\t%i\n"
 msgstr "Zabito spojeneckou palbou\t%i\n"
 
-#: client/cl_team.c:1829
+#: client/cl_team.c:1823
 #, c-format
 msgid ""
 "Team survivors\t%i\n"
@@ -6822,22 +6823,22 @@ msgstr ""
 "Tým - přeživší\t%i\n"
 "\n"
 
-#: client/cl_team.c:1832
+#: client/cl_team.c:1826
 #, c-format
 msgid "Civilians killed by the Aliens\t%i\n"
 msgstr "Civilistů zabitých cizáky\t%i\n"
 
-#: client/cl_team.c:1834
+#: client/cl_team.c:1828
 #, c-format
 msgid "Civilians killed by the Enemies\t%i\n"
 msgstr "Civilistů zabitých nepřáteli\t%i\n"
 
-#: client/cl_team.c:1836
+#: client/cl_team.c:1830
 #, c-format
 msgid "Civilians killed by your Team\t%i\n"
 msgstr "Civilistů zabitých tvým týmem\t%i\n"
 
-#: client/cl_team.c:1837
+#: client/cl_team.c:1831
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -6848,27 +6849,27 @@ msgstr ""
 "\n"
 "\n"
 
-#: client/cl_team.c:1863
+#: client/cl_team.c:1857
 #, c-format
 msgid "Aliens captured\t%i\n"
 msgstr "Zajatých cizáků\t%i\n"
 
-#: client/cl_team.c:1867
+#: client/cl_team.c:1861
 #, c-format
 msgid "PHALANX soldiers killed by Aliens\t%i\n"
 msgstr "Členů PHALANXu zabitých cizáky\t%i\n"
 
-#: client/cl_team.c:1868
+#: client/cl_team.c:1862
 #, c-format
 msgid "PHALANX soldiers missing in action\t%i\n"
 msgstr "Členů PHALANXu pohřešovaných v boji\t%i\n"
 
-#: client/cl_team.c:1869
+#: client/cl_team.c:1863
 #, c-format
 msgid "PHALANX friendly fire losses\t%i\n"
 msgstr "Členů PHALANXu zabitých spojeneckou palbou\t%i\n"
 
-#: client/cl_team.c:1870
+#: client/cl_team.c:1864
 #, c-format
 msgid ""
 "PHALANX survivors\t%i\n"
@@ -6877,17 +6878,17 @@ msgstr ""
 "Členů PHALANXu přeživších\t%i\n"
 "\n"
 
-#: client/cl_team.c:1872
+#: client/cl_team.c:1866
 #, c-format
 msgid "Civilians killed by Aliens\t%i\n"
 msgstr "Civilistů zabitých cizáky\t%i\n"
 
-#: client/cl_team.c:1873
+#: client/cl_team.c:1867
 #, c-format
 msgid "Civilians killed by friendly fire\t%i\n"
 msgstr "Civilistů zabitých spojeneckou palbou\t%i\n"
 
-#: client/cl_team.c:1874
+#: client/cl_team.c:1868
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -6896,12 +6897,12 @@ msgstr ""
 "Zachráněných civilistů\t%i\n"
 "\n"
 
-#: client/cl_team.c:1881
+#: client/cl_team.c:1875
 #, c-format
 msgid "Items salvaged and sold\t%i\n"
 msgstr "Zachráněné a prodané předměty\t%i\n"
 
-#: client/cl_team.c:1882
+#: client/cl_team.c:1876
 #, c-format
 msgid ""
 "Total item sale value\t%i\n"
@@ -6910,7 +6911,7 @@ msgstr ""
 "V celkové hodnotě\t%i\n"
 "\n"
 
-#: client/cl_team.c:1899
+#: client/cl_team.c:1893
 #, c-format
 msgid ""
 "\n"
@@ -6923,15 +6924,15 @@ msgstr ""
 "Zabito nepřátel:  %i\n"
 "Tým - přeživší:  %i"
 
-#: client/cl_team.c:1901
+#: client/cl_team.c:1895
 msgid "You won the game!"
 msgstr "Vyhrál jste hru!"
 
-#: client/cl_team.c:1903
+#: client/cl_team.c:1897
 msgid "Congratulations"
 msgstr "Blahopřejeme"
 
-#: client/cl_team.c:1905
+#: client/cl_team.c:1899
 msgid ""
 "The game was a draw!\n"
 "\n"
@@ -6941,15 +6942,15 @@ msgstr ""
 "\n"
 "Na žádné straně nikdo nepřežil."
 
-#: client/cl_team.c:1906
+#: client/cl_team.c:1900
 msgid "Game Drawn!"
 msgstr "Nerozhodně!"
 
-#: client/cl_team.c:1908
+#: client/cl_team.c:1902
 msgid "You lost the game"
 msgstr "Prohrál jste hru"
 
-#: client/cl_team.c:1910
+#: client/cl_team.c:1904
 msgid "Better luck next time"
 msgstr "Příště více štestí"
 
