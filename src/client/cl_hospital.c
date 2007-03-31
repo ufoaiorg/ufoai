@@ -243,11 +243,14 @@ static void HOS_HealAll_f (void)
  */
 static void HOS_HurtAll_f (void)
 {
-	int i, type;
+	int i, type, amount = 1;
 	employee_t* employee = NULL;
 
 	if (!baseCurrent)
 		return;
+
+	if (Cmd_Argc() == 2)
+		amount = atoi(Cmd_Argv(1));
 
 	for (type = 0; type < MAX_EMPL; type++)
 		for (i = 0; i < gd.numEmployees[type]; i++) {
@@ -255,7 +258,7 @@ static void HOS_HurtAll_f (void)
 			/* only those employees, that are in the current base */
 			if (!E_IsInBase(employee, baseCurrent))
 				continue;
-			employee->chr.HP--;
+			employee->chr.HP = max(0, employee->chr.HP - amount);
 		}
 }
 #endif
