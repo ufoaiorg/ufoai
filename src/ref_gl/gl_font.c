@@ -356,11 +356,13 @@ static char *Font_GetLineWrap (font_t * f, char *buffer, int maxWidth, int *widt
 	*width = w;
 	*height = h;
 
-	if (w < maxWidth)
+	/* string fits */
+	if (w <= maxWidth)
 		return NULL;
 
 	space = buffer;
 	newlineTest = strstr(space, "\n");
+	/* try to break at a newline */
 	if (newlineTest) {
 		*newlineTest = '\0';
 		TTF_SizeUTF8(f->font, buffer, &w, &h);
@@ -373,17 +375,18 @@ static char *Font_GetLineWrap (font_t * f, char *buffer, int maxWidth, int *widt
 	}
 
 	/* uh - this line is getting longer than allowed... */
-	newlineTest = space;
+	space = newlineTest = buffer;
 	while ((space = strstr(space, " ")) != NULL) {
 		*space = '\0';
 		TTF_SizeUTF8(f->font, buffer, &w, &h);
 		*width = w;
-		if (maxWidth - w < 0) {
+		/* otherwise even the first work would be too long */
+		if (w > maxWidth) {
 			*width = oldW;
 			*space = ' ';
 			*newlineTest = '\0';
 			return newlineTest + 1;
-		} else if (maxWidth - w == 0)
+		} else if (maxWidth == w)
 			return space + 1;
 		newlineTest = space;
 		oldW = w;
@@ -391,6 +394,12 @@ static char *Font_GetLineWrap (font_t * f, char *buffer, int maxWidth, int *widt
 		/* maybe there is space for one more word? */
 	};
 
+	TTF_SizeUTF8(f->font, buffer, &w, &h);
+	if (w > maxWidth) {
+		/* last word - no more spaces but still to long? */
+		*newlineTest = '\0';
+		return newlineTest + 1;
+	}
 	return NULL;
 }
 
