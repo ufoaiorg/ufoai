@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-03-31 16:14+0200\n"
-"PO-Revision-Date: 2007-04-01 10:14+0100\n"
+"PO-Revision-Date: 2007-04-01 12:56+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -8749,7 +8749,7 @@ msgstr "Weise dem Flugzeug zuerst ein Team zu"
 
 #: client/cl_aliencont.c:218
 msgid "You cannot process aliens yet. Alien Containment not ready in this base."
-msgstr ""
+msgstr "Untersuchungen an Außerirdischen nicht möglich - Quarantänestation noch nicht fertig gestellt."
 
 #: client/cl_aliencont.c:249
 msgid "You cannot hold alive aliens yet. Aliens died."
