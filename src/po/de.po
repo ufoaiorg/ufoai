@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-03-31 16:14+0200\n"
-"PO-Revision-Date: 2007-04-01 08:27+0100\n"
+"PO-Revision-Date: 2007-04-01 08:34+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -9349,7 +9349,7 @@ msgstr "Aktuelle Aktion bestätigten"
 
 #: client/cl_input.c:759
 msgid "Toggle first-person/third-person camera mode"
-msgstr "Wechsele zwischen Ich-Perspektive und Vogelansicht"
+msgstr "Wechsele zwischen Ich- und Vogelperspektive"
 
 #: client/cl_main.c:365
 #: client/cl_main.c:1011
@@ -9587,7 +9587,7 @@ msgstr "Taste: %s"
 
 #: client/cl_menu.c:3108
 msgid "Hide the HUD (press ESC to reactivate HUD)"
-msgstr "Verstecke das HUD (ESC drücken um es zu reaktivieren)"
+msgstr "Verstecke das HUD (ESC reaktiviert es)"
 
 #: client/cl_parse.c:839
 msgid "Alien spotted:"
