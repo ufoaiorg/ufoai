@@ -198,20 +198,20 @@ menu ufopedia
 	text ufopedia_mail
 	{
 		if "mn_up_mail == 1"
-		pos		"50 180"
-		size	"660 290"
+		pos		"50 208"
+		size	"660 262"
 		num		2
 		format	"24 0"
 		click rclick wheel
 //		bgcolor " 0.5 1 0.5 0.3"
-		height	"17"
+		height	"16"
 	}
 
 	text ufopedia_mail_header
 	{
 		if "mn_up_mail == 1"
 		pos		"50 80"
-		size	"660 98"
+		size	"660 134"
 		num		32
 		format	"24 0"
 		font	"f_small_bold"
