@@ -1,0 +1,18 @@
+Known bugs in UFO: Alien Invasion 2.1
+=====================================
+
+1. Reaction fire settings are not being remembered from mission to mission.
+   You can select reaction fire with a desired firemode in one mission, and
+   your selection will be displayed in following missions as if the
+   selection were active, but the game will instead use the weapon's default
+   reaction firemode.
+   To make sure your desired reaction firemode is active, you will need to
+   reselect that firemode beginning of a mission.
+2. Plasma Blade weapon is not removed from the hand after throwing it.
+3. In certain circumstances, newly-researched equipment won't be shown in
+   the Buy/Sell menu. The workaround for this is to go back to geoscape,
+   enter the base again and reopen the Buy/Sell menu.
+4. Alien Shevaar model is clipping slightly into the ground when killed.
+
+We apologize for any inconvenience.
+					UFO:AI Team
