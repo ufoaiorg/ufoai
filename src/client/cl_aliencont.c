@@ -734,8 +734,25 @@ static void AC_OpenUFOpedia_f (void)
  */
 static void AC_KillAll_f (void)
 {
+	int i;
+	qboolean aliens = qfalse;
+
 	/* Can be called from everywhere. */
 	if (!baseCurrent ||!curCampaign || !aliencontCurrent)
+		return;
+
+	/* Are there aliens here at all? */
+	for (i = 0; i < numTeamDesc; i++) {
+		if (!teamDesc[i].alien)
+			continue;
+		if (aliencontCurrent[i].amount_alive > 0) {
+			aliens = qtrue;
+			break;
+		}
+	}
+
+	/* No aliens, return. */
+	if (!aliens)
 		return;
 
 	AL_RemoveAliens(NULL, 0, AL_KILL);
