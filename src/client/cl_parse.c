@@ -277,7 +277,7 @@ SERVER CONNECTING MESSAGES
  */
 static void CL_ParseServerData (void)
 {
-	extern cvar_t	*fs_gamedirvar;
+	extern cvar_t	*fs_gamedir;
 	char	*str;
 	int		i;
 
@@ -303,8 +303,8 @@ static void CL_ParseServerData (void)
 	Q_strncpyz (cl.gamedir, str, sizeof(cl.gamedir));
 
 	/* set gamedir */
-	if ((*str && (!fs_gamedirvar->string || !*fs_gamedirvar->string || strcmp(fs_gamedirvar->string, str))) || (!*str && (fs_gamedirvar->string || *fs_gamedirvar->string)))
-		Cvar_Set("game", str);
+	if ((*str && (!fs_gamedir->string || !*fs_gamedir->string || strcmp(fs_gamedir->string, str))) || (!*str && (fs_gamedir->string || *fs_gamedir->string)))
+		Cvar_Set("fs_gamedir", str);
 
 	/* parse player entity number */
 	cl.pnum = MSG_ReadShort (&net_message);

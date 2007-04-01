@@ -231,7 +231,7 @@ static void SVCmd_WriteIP_f (void)
 	int i;
 	cvar_t *game;
 
-	game = gi.cvar("game", "", 0, NULL);
+	game = gi.cvar("fs_gamedir", "", 0, NULL);
 
 	if (!*game->string)
 		Com_sprintf(name, MAX_OSPATH, "%s/listip.cfg", GAMEVERSION);

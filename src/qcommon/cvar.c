@@ -367,7 +367,7 @@ static cvar_t *Cvar_Set2 (const char *var_name, const char *value, qboolean forc
 				var->string = CopyString(value);
 				var->value = atof(var->string);
 				var->integer = atoi(var->string);
-				if (!Q_strncmp(var->name, "game", MAX_VAR)) {
+				if (!Q_strncmp(var->name, "fs_gamedir", MAX_VAR)) {
 					FS_SetGamedir(var->string);
 					FS_ExecAutoexec();
 				}
@@ -489,7 +489,7 @@ extern void Cvar_GetLatchedVars (void)
 		var->latched_string = NULL;
 		var->value = atof(var->string);
 		var->integer = atoi(var->string);
-		if (!Q_strncmp(var->name, "game", MAX_VAR)) {
+		if (!Q_strncmp(var->name, "fs_gamedir", MAX_VAR)) {
 			FS_SetGamedir(var->string);
 			FS_ExecAutoexec();
 		}
