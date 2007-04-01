@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-03-31 16:14+0200\n"
-"PO-Revision-Date: 2007-04-01 08:34+0100\n"
+"PO-Revision-Date: 2007-04-01 10:14+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -9411,7 +9411,7 @@ msgstr "Max. Soldaten pro Team:\t%s\n"
 #: client/cl_main.c:942
 #, c-format
 msgid "Max. teams allowed in this map:\t%s\n"
-msgstr "Max. erlaubte Teams für diese Map:\t%s\n"
+msgstr "Max. Teams für diese Map:\t%s\n"
 
 #: client/cl_main.c:944
 #, c-format
