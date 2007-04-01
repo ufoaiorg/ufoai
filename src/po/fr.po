@@ -3007,7 +3007,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:3019
 #: ../base/ufos/research.ufo:3026
 msgid "mail_from_paul_navarre"
-msgstr "Cdt Paul Navarre, R&D: Division Ingénierie, PHALANX, Commandement des Opérations Atlantique"
+msgstr ""
+"Cdt Paul Navarre, R&D: Division Ingénierie, PHALANX, Commandement des Opérations Atlantique"
 
 #: ../base/ufos/research.ufo:108
 #: ../base/ufos/research.ufo:115
@@ -3093,7 +3094,8 @@ msgstr "Cdt Paul Navarre, R&D: Division Ingénierie, PHALANX, Commandement des O
 #: ../base/ufos/research.ufo:3027
 #: ../base/ufos/research.ufo:3147
 msgid "mail_to_base_commander"
-msgstr "Commandant de Base, PHALANX, Commandement des Opérations Atlantique"
+msgstr ""
+"Commandant de Base, PHALANX, Commandement des Opérations Atlantique"
 
 #: ../base/ufos/research.ufo:128
 #: ../base/ufos/research.ufo:137
@@ -3183,7 +3185,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:2737
 #: ../base/ufos/research.ufo:3146
 msgid "mail_from_dr_connor"
-msgstr "Dr Connor, R&D: Division Biologie et Confinement, PHALANX, Commandement des Opérations Atlantique"
+msgstr ""
+"Dr Connor, R&D: Division Biologie et Confinement, PHALANX, Commandement des Opérations Atlantique"
 
 #: ../base/ufos/research.ufo:219
 #: ../base/ufos/research.ufo:228
@@ -3321,7 +3324,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:321
 #: ../base/ufos/research.ufo:328
 msgid "Alien Origins"
-msgstr "Les origines aliennes"
+msgstr "Les Origines Aliennes"
 
 #: ../base/ufos/research.ufo:314
 msgid "alien_origins_txt"
@@ -3357,24 +3360,25 @@ msgstr ""
 #: ../base/ufos/research.ufo:315
 msgid "alien_origins_pre_txt"
 msgstr ""
-"Good morning, Sir.\n"
+"Bonjour Commandant,\n"
 "\n"
-"Though we are still struggling to get operational, one of our first orders of business must be to find out where the aliens are coming from. The only thing we know right now is that they enter the atmosphere from space, do what they came to do, and then race into orbit again before disappearing from our screens. We need to find out what happens before and after these points. Where do they come from, how do they get here, and where do they go?\n"
+"Bien que nous ne soyons pas encore totalement opérationnels, l'une de nos premières priorités doit être de trouver d'où viennent les aliens. La seule chose que nous sachions pour l'instant, c'est qu'ils sont arrivés de l'espace, ont fait ce pour quoi ils étaient venus, et sont partis aussitôt hors de portée de nos détecteurs. Nous devons savoir ce qui s'est passé avant et après ces évènements. D'où viennent-ils, comment sont-ils arrivés ici, et où vont-ils ?\n"
 "\n"
-"We've seen no evidence of ships holding in Earth orbit or basing facilities anywhere in the solar system, but that doesn't mean they aren't there. The region of the asteroid belt and the outer planets -- the space between Mars and Neptune -- has been poorly monitored in a military sense and, given the stealth capabilities demonstrated by attacking UFOs, an alien fleet may have been misidentified or simply failed to register on civilian equipment. There has been no comprehensive effort at all to scan the surface of the various base-viable celestial objects in our solar system.\n"
+"Nous n'avons détecté aucun indice nous permettant de penser que leurs vaisseaux se réfugient en orbite terrestre, ou dans un base du système solaire. Cela n'exclut pas pour autant ces possibilités. La ceinture d'astéroïdes ou les régions au delà de la planète Mars ont été faiblement surveillées d'un point de vue militaire. Étant donnée la furtivité des appareils qui nous ont attaqués, il est possible que les équipements civils ne puissent repérer une flotte alienne. Aucun effort réel pour surveiller tout surface potentiellement viable du système solaire n'a été jusqu'à présent entrepris.\n"
 "\n"
-"Therefore, I propose a new research program aimed at scouring the solar system with probes and powerful optical- and radiotelescopes to detect alien activity anywhere in our space. Our scientists will also review the data we have of past incursions to try and form some kind of picture of alien movements to and from Earth orbit. Even if there's a fleet hiding behind Mars or one of the outer planets, they must eventually reveal themselves if they continue sending UFOs down to the surface of Earth. If we put enough eyes on the problem, even these aliens can't hide for long.\n"
+"Ainsi, je propose un nouveau programme de recherche, destiné à placer des sondes dans tout le système solaire, ainsi que de puissants télescopes optiques et radios. Nous pourrons ainsi détecter toute activité alienne dans cet espace. Nos scientifiques reprendront également les données acquises lors des dernières excursions, pour essayer de comprendre les mouvements aliens vers et depuis l'orbite terrestre. Même si une flotte se cache derrière Mars ou une planète plus lointaine, ils devront se découvrir s'ils veulent continuer à nous envoyer des OVNI. Si nous plaçons suffisamment de systèmes espions, même les aliens ne pourront se cacher longtemps.\n"
 "\n"
-"This project will take a significant amount of funding and lab-time, Commander, so it requires your authorisation before work can begin.\n"
+"Ce projet sera coûteux, aussi bien temporellement que financièrement, Commandant. Nous devons donc obtenir votre autorisation avant de pouvoir commencer ce travail.\n"
 "\n"
-"With kind regards,\n"
+"Amicalement,\n"
 "\n"
 "Col. Falkland"
 
 #: ../base/ufos/research.ufo:319
 #: ../base/ufos/research.ufo:326
 msgid "mail_from_col_falkland"
-msgstr "Col. Ingrid Falkland, Division Renseignements, PHALANX, Commandement des Opérations Atlantique"
+msgstr ""
+"Col. Ingrid Falkland, Division Renseignements, PHALANX, Commandement des Opérations Atlantique"
 
 #: ../base/ufos/research.ufo:346
 msgid "assault_txt"
@@ -7599,75 +7603,93 @@ msgstr "Finalement : L'attaque de la base aliens..."
 
 #: ../base/ufos/seq_intro.ufo:8
 msgid "intro_sentence1"
-msgstr "Nous sommes en 2084. Pour la première fois depuis longtemps, la Terre connaît une période de paix. Les violences du début du XXIème siècle sont passées, mais restent encore ancrées dans la mémoire de chacun. Pour la plupart des habitants de la Terre, la Seconde Guerre Froide est une ombre du passé, comme le furent les guerres mondiales pour les enfants de la fin du XXème siècle."
+msgstr ""
+"Nous sommes en 2084. Pour la première fois depuis longtemps, la Terre connaît une période de paix. Les violences du début du XXIème siècle sont passées, mais restent encore ancrées dans la mémoire de chacun. Pour la plupart des habitants de la Terre, la Seconde Guerre Froide est une ombre du passé, comme le furent les guerres mondiales pour les enfants de la fin du XXème siècle."
 
 #: ../base/ufos/seq_intro.ufo:16
 msgid "intro_sentence2"
-msgstr "La fin du siècle a vu les conflits se raréfier avec l'avènement des nouvelles technologies et l'amélioration considérable des conditions de santé dans le tiers monde. Même les violentes actions terroristes ont disparu avec le début de la Deuxième Guerre Froide, laissant un souvenir macabre aux habitants du nord de l'Amérique et à ceux des terres ravagées du continent Indien... La lutte des classes passe désormais au coeur des débats politiques, depuis que chaque nation est équitablement représentée à l'ONU. Partout dans le monde, la qualité de vie s'améliore. Les états se sont renforcés et stabilisés autour des Nations Unies, qui sont parvenues à s'imposer sur les gouvernements du monde entier depuis leur restructuration. Des groupes de petits états, tout d'abord intimidés par la puissance des blocs chinois et européens, se sont réunis pour former une puissante coalition politique. Pour la première fois dans l'histoire de l'humanité, la loi et l'ordre règnent sur plus des trois quarts du globe."
+msgstr ""
+"La fin du siècle a vu les conflits se raréfier avec l'avènement des nouvelles technologies et l'amélioration considérable des conditions de santé dans le tiers monde. Même les violentes actions terroristes ont disparu avec le début de la Deuxième Guerre Froide, laissant un souvenir macabre aux habitants du nord de l'Amérique et à ceux des terres ravagées du continent Indien... La lutte des classes passe désormais au coeur des débats politiques, depuis que chaque nation est équitablement représentée à l'ONU. Partout dans le monde, la qualité de vie s'améliore. Les états se sont renforcés et stabilisés autour des Nations Unies, qui sont parvenues à s'imposer sur les gouvernements du monde entier depuis leur restructuration. Des groupes de petits états, tout d'abord intimidés par la puissance des blocs chinois et européens, se sont réunis pour former une puissante coalition politique. Pour la première fois dans l'histoire de l'humanité, la loi et l'ordre règnent sur plus des trois quarts du globe."
 
 #: ../base/ufos/seq_intro.ufo:24
 msgid "intro_sentence3"
-msgstr "Pour la plupart des gens, la vie semble avoir repris son cours."
+msgstr ""
+"Pour la plupart des gens, la vie semble avoir repris son cours."
 
 #: ../base/ufos/seq_intro.ufo:32
 msgid "intro_sentence4"
-msgstr "La première attaque touche la ville de Mumbai le 3 mai 2084. Six petits OVNIs sortent du néant et déferlent sur la ville, sans qu'aucune des énormes installations radar couvrant le ciel de Mumbai ne les détecte. Il n'y a ni avertissements, ni explications. Les pertes de la ville la plus peuplée du monde sont colossales : vingt mille civils innocents, et trois bataillons de troupes d'élite sont massacrés en moins d'une douzaine d'heures. C'est à ce prix que les soldats du Commonwealth parviennent à repousser l'avancée des aliens. Puis, aussi soudainement qu'ils étaient apparus, ils retournent à leurs vaisseaux qui s'évanouissent dans le ciel, laissant derrière eux les rues ravagées de Mumbai."
+msgstr ""
+"La première attaque touche la ville de Mumbai le 3 mai 2084. Six petits OVNIs sortent du néant et déferlent sur la ville, sans qu'aucune des énormes installations radar couvrant le ciel de Mumbai ne les détecte. Il n'y a ni avertissements, ni explications. Les pertes de la ville la plus peuplée du monde sont colossales : vingt mille civils innocents, et trois bataillons de troupes d'élite sont massacrés en moins d'une douzaine d'heures. C'est à ce prix que les soldats du Commonwealth parviennent à repousser l'avancée des aliens. Puis, aussi soudainement qu'ils étaient apparus, ils retournent à leurs vaisseaux qui s'évanouissent dans le ciel, laissant derrière eux les rues ravagées de Mumbai."
 
 #: ../base/ufos/seq_intro.ufo:40
 msgid "intro_sentence5"
-msgstr "Une réunion d'urgence des Nations Unies ne parvient à aucune conclusion. Les attaquent s'enchaînent rapidement, plus importantes et mortelles encore, touchant Bonn, Johannesburg et Bangkok. Quelques nations tentent la voie diplomatique, envoyant des messages en un millier de langues différentes aux aliens qui ravagent le globe. Leurs tentatives sont ignorées. En quelques heures, toute vie humaine est anéantie dans les trois villes. L'attaque est terminée avant que les armées terriennes ne reçoivent l'autorisation de contre-attaquer. Les aliens ne laissent derrière eux que du béton et du sang. Une fois encore, ils disparaissent sans laisser de trace... Mais nul ne doute qu'ils reviendront."
+msgstr ""
+"Une réunion d'urgence des Nations Unies ne parvient à aucune conclusion. Les attaquent s'enchaînent rapidement, plus importantes et mortelles encore, touchant Bonn, Johannesburg et Bangkok. Quelques nations tentent la voie diplomatique, envoyant des messages en un millier de langues différentes aux aliens qui ravagent le globe. Leurs tentatives sont ignorées. En quelques heures, toute vie humaine est anéantie dans les trois villes. L'attaque est terminée avant que les armées terriennes ne reçoivent l'autorisation de contre-attaquer. Les aliens ne laissent derrière eux que du béton et du sang. Une fois encore, ils disparaissent sans laisser de trace... Mais nul ne doute qu'ils reviendront."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence6"
-msgstr "Quatre vingt sept heures après la première attaque sur Mumbai, la Terre entre en guerre. Pendant deux semaines, toutes les armées de l'humanité tentent de repousser les mystérieux assaillants aliens au mieux de leur possibilité. Les succès sont peu nombreux."
+msgstr ""
+"Quatre vingt sept heures après la première attaque sur Mumbai, la Terre entre en guerre. Pendant deux semaines, toutes les armées de l'humanité tentent de repousser les mystérieux assaillants aliens au mieux de leur possibilité. Les succès sont peu nombreux."
 
 #: ../base/ufos/seq_intro.ufo:56
 msgid "intro_sentence7"
-msgstr "Sans autre alternative, les Nations Unies prennent les choses en main. La défunte agence anti-extraterrestre \"PHALANX\" des anciens États Unis est ressuscitée sous la bannière de l'ONU. Son ancien équipement est remis en service, certains éléments datant de plus d'un siècle. Sa mission : combattre la menace extraterrestre et garantir la survie de l'espèce humaine à tout prix."
+msgstr ""
+"Sans autre alternative, les Nations Unies prennent les choses en main. La défunte agence anti-extraterrestre \"PHALANX\" des anciens États Unis est ressuscitée sous la bannière de l'ONU. Son ancien équipement est remis en service, certains éléments datant de plus d'un siècle. Sa mission : combattre la menace extraterrestre et garantir la survie de l'espèce humaine à tout prix."
 
 #: ../base/ufos/seq_intro.ufo:64
 msgid "intro_sentence8"
-msgstr "Financée par les huit puissances politiques mondiales, et recrutant ses soldats parmi les meilleurs de leurs armées, PHALANX est la crème de l'élite. Elle est la première et unique ligne de défense de la Terre. Elle ne peut échouer, car si tel était le cas, l'humanité n'aurait plus aucun espoir."
+msgstr ""
+"Financée par les huit puissances politiques mondiales, et recrutant ses soldats parmi les meilleurs de leurs armées, PHALANX est la crème de l'élite. Elle est la première et unique ligne de défense de la Terre. Elle ne peut échouer, car si tel était le cas, l'humanité n'aurait plus aucun espoir."
 
 #: ../base/ufos/seq_intro.ufo:100
 msgid "prolog_sentence1"
-msgstr "POUR: Commandant de la Base, PHALANX, Commandement des Opérations Atlantique"
+msgstr ""
+"POUR: Commandant de la Base, PHALANX, Commandement des Opérations Atlantique"
 
 #: ../base/ufos/seq_intro.ufo:110
 msgid "prolog_sentence2"
-msgstr "DE: Secrétaire Général Mahouf Serra, Nations Unies, New York"
+msgstr ""
+"DE: Secrétaire Général Mahouf Serra, Nations Unies, New York"
 
 #: ../base/ufos/seq_intro.ufo:119
 msgid "prolog_sentence3"
-msgstr "DATE: 21 Mars 2084"
+msgstr ""
+"DATE: 21 Mars 2084"
 
 #: ../base/ufos/seq_intro.ufo:128
 msgid "prolog_sentence4"
-msgstr "SUJET: Bonne Chance"
+msgstr ""
+"SUJET: Bonne Chance"
 
 #: ../base/ufos/seq_intro.ufo:137
 msgid "prolog_sentence5"
-msgstr "Bienvenu dans vos nouvelles fonctions, Commandant. Vous avez dès maintenant les pleins pouvoirs sur l'Unité de Réaction Extraterrestre PHALANX. Votre mission est de protéger les citoyens de la Terre et de stopper la menace alienne à tout prix. La façon dont vous procéderez nous importe peu, notre seule exigence est votre réussite."
+msgstr ""
+"Bienvenu dans vos nouvelles fonctions, Commandant. Vous avez dès maintenant les pleins pouvoirs sur l'Unité de Réaction Extraterrestre PHALANX. Votre mission est de protéger les citoyens de la Terre et de stopper la menace alienne à tout prix. La façon dont vous procéderez nous importe peu, notre seule exigence est votre réussite."
 
 #: ../base/ufos/seq_intro.ufo:146
 msgid "prolog_sentence6"
-msgstr "Votre première mission est d'aménager votre quartier général. Les Nations Unies ont accès à n'importe quelle base à travers le monde, et vous pouvez par conséquent envisager la totalité du globe pour l'installation de votre centre d'opération. Choisissez cet endroit judicieusement, car il aura beaucoup d'influence sur les chances de succès du projet PHALANX."
+msgstr ""
+"Votre première mission est d'aménager votre quartier général. Les Nations Unies ont accès à n'importe quelle base à travers le monde, et vous pouvez par conséquent envisager la totalité du globe pour l'installation de votre centre d'opération. Choisissez cet endroit judicieusement, car il aura beaucoup d'influence sur les chances de succès du projet PHALANX."
 
 #: ../base/ufos/seq_intro.ufo:155
 msgid "prolog_sentence7"
-msgstr "Une analyse récente des attaques sur Mumbai et Bonn révèle que les observations d'OVNI et d'activités aliennes semblent se concentrer dans les régions les plus densément peuplées du monde. Ceci inclus les zones côtières d'Amérique du nord et du sud, l'Europe, l'Asie de l'est, l'Afrique du sud et l'Afrique méditerranéenne, ainsi que l'Australie. Vous devriez envisager d'inclure ces terres dans votre rayon d'action."
+msgstr ""
+"Une analyse récente des attaques sur Mumbai et Bonn révèle que les observations d'OVNI et d'activités aliennes semblent se concentrer dans les régions les plus densément peuplées du monde. Ceci inclus les zones côtières d'Amérique du nord et du sud, l'Europe, l'Asie de l'est, l'Afrique du sud et l'Afrique méditerranéenne, ainsi que l'Australie. Vous devriez envisager d'inclure ces terres dans votre rayon d'action."
 
 #: ../base/ufos/seq_intro.ufo:164
 msgid "prolog_sentence8"
-msgstr "Une fois votre première base établie, vous devez préparer vos soldats à l'action. Les recrues que nous avons assignées à PHALANX doivent être affectées à un appareil de transport, puis équipées pour le combat."
+msgstr ""
+"Une fois votre première base établie, vous devez préparer vos soldats à l'action. Les recrues que nous avons assignées à PHALANX doivent être affectées à un appareil de transport, puis équipées pour le combat."
 
 #: ../base/ufos/seq_intro.ufo:173
 msgid "prolog_sentence9"
-msgstr "Prenez soin d'elles, Commandant. Nous comptons tous sur vous, et prions pour vous."
+msgstr ""
+"Prenez soin d'elles, Commandant. Nous comptons tous sur vous, et prions pour vous."
 
 #: ../base/ufos/seq_intro.ufo:182
 msgid "prolog_sentence10"
-msgstr "Ce sera tout. Bonne chance, et bonne chasse."
+msgstr ""
+"Ce sera tout. Bonne chance, et bonne chasse."
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"
