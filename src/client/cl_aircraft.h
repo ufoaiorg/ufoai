@@ -162,6 +162,7 @@ extern int numAircraft_samples;
 void CL_ListAircraft_f(void);
 void CL_AircraftStart_f(void);
 void CL_NewAircraft_f(void);
+void CL_ResetAircraftCvars_f (void);
 void MN_NextAircraft_f(void);
 void MN_PrevAircraft_f(void);
 void CL_AircraftReturnToBase_f(void);

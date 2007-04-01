@@ -288,6 +288,16 @@ extern void CL_NewAircraft_f (void)
 }
 
 /**
+ * @brief Restores aircraft cvars after going back from aircraft buy menu.
+ * @sa CL_MarketAircraftDescription()
+ */
+extern void CL_ResetAircraftCvars_f (void)
+{
+	Cvar_Set("mn_aircraftname", Cvar_VariableString("mn_aircraftname_before"));
+	Cvar_Set("mn_aircraft_model", Cvar_VariableString("mn_aircraftmodel_before"));
+}
+
+/**
  * @brief Switch to next aircraft in base
  * @sa CL_AircraftSelect
  */
