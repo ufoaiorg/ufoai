@@ -941,7 +941,7 @@ void FS_InitFilesystem (void)
 
 	/* basedir <path> */
 	/* allows the game to run from outside the data tree */
-	fs_basedir = Cvar_Get("basedir", ".", CVAR_NOSET, NULL);
+	fs_basedir = Cvar_Get("fs_basedir", ".", CVAR_NOSET, NULL);
 
 	/* start up with base by default */
 	FS_AddGameDirectory(va("%s/" BASEDIRNAME, fs_basedir->string));
