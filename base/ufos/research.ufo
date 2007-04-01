@@ -2501,7 +2501,7 @@ tech rs_craft_ufo_scout
 	time	2500
 
 	// TODO should come from craft-definition:
-	mdl_top		ufo1
+	mdl_top		ufo_scout
 }
 
 item craft_ufo_fighter
@@ -2543,7 +2543,7 @@ tech rs_craft_ufo_fighter
 	time	2500
 
 	// TODO should come from craft-definition:
-	mdl_top		ufobig
+	mdl_top		ufo1
 }
 
 item craft_ufo_harvester

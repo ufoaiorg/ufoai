@@ -216,6 +216,27 @@ menu_model ufo1
 	need	"ufo1_wings"
 }
 
+// ============== UFO ==============================
+menu_model ufoscout_upper
+{
+	model	"models/aircraft/ufo_small/alienship1_upper.md2"
+}
+menu_model ufoscout_engines_1
+{
+	model	"models/aircraft/ufo_small/alienship1_engines_1.md2"
+	need	"ufoscout_upper"
+}
+menu_model ufoscout_hull
+{
+	model	"models/aircraft/ufo_small/alienship1_hull.md2"
+	need	"ufoscout_engines_1"
+}
+menu_model ufoscout
+{
+	model	"models/aircraft/ufo_small/alienship1_engines.md2"
+	need	"ufoscout_hull"
+}
+
 // ============== UFO BIG ==========================
 menu_model ufobig_body
 {
