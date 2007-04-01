@@ -96,7 +96,7 @@ static void SV_New_f (void)
 
 	/* serverdata needs to go over for all types of servers */
 	/* to make sure the protocol is right, and to set the gamedir */
-	gamedir = Cvar_VariableString("gamedir");
+	gamedir = Cvar_VariableString("fs_gamedir");
 
 	/* send the serverdata */
 	MSG_WriteByte(&sv_client->netchan.message, svc_serverdata);

@@ -6,21 +6,24 @@
 #   the updated .po file. 
 # It also generates a log file which allows to check the differences.
 #
-# For each translation found on the wiki, a file 'sed_commands_${language}' containing all the sed
+# For each translation found on the wiki, a file 'sed_commands_${language0}' containing all the sed
 #   commands to update this entry is generated, and applied.
 # The variable 'debug' should be set to 1 if you encounter a problem : it makes the log
 #   far more verbose, and will help for debbugging.
+# The varaible 'elseenglish' should be set to 1 if you want to replace all untranslated msgstr with the english version
 
 
 language=$1
 url="http://ufoai.ninex.info/"
 wiki_url="wiki/index.php/List_of_msgid/"
 chapters="Research Armour Equipment Buildings Aircraft Aircraft_Equipment Aliens Campaigns Story Mail_Headers"
+headers="mail_to_base_commander mail_from_paul_navarre mail_from_col_falkland mail_from_dr_connor mail_from_air_cdr mail_from_xo mail_from_surgeon"
 index="List_of_msgid_"${language}
 input_file=$language".po"
 output_file=updated_${language}.po
 log_file=updated_${language}.log
 debug=0
+elseenglish=1
 
 if [ -z $language ]
 then
@@ -33,6 +36,8 @@ if [ ! -e $input_file ]
 then
 	echo "Could not find the file "$input_file" in this directory."
 fi
+
+language0=$language
 
 # we use gnu sed and gnu awk a lot of times in this script. For linux, those programs are called 'sed' and 'awk', but on other system (fresbsd), they are called gsed and gawk. We set sed_soft and awk_soft to the name of those programs.
 sed_soft="sed"
@@ -76,7 +81,7 @@ find_line()
 				echo "   there are no translation available for this language in this section"
 			return 255
 		fi
-	done < Language_List_${language}
+	done < Language_List_${language0}
 	return 255
 }
 
@@ -88,18 +93,18 @@ apply_sed()
 	then
 		printf "___________________\n" >> $log_file
 
-		echo "*** sed_commands_${language} of $english contains :"  >> $log_file
-		cat sed_commands_${language} >> $log_file
+		echo "*** sed_commands_${language0} of $english contains :"  >> $log_file
+		cat sed_commands_${language0} >> $log_file
 		printf "\n\n" >> $log_file
 	fi
 
 	test=`$awk_soft ' BEGIN {FS="\""}
-		NR == 2 {print $2}' sed_commands_${language}`
+		NR == 2 {print $2}' sed_commands_${language0}`
 	test=${#test}
 	if [ $test -eq 0 ]
 	then
-		#test=`wc -l sed_commands_${language} | $sed_soft 's/^[ \t]*//g' | cut -d " " -f 1`
-		test=`$awk_soft 'NR == 3 {print $0}' sed_commands_${language}`
+		#test=`wc -l sed_commands_${language0} | $sed_soft 's/^[ \t]*//g' | cut -d " " -f 1`
+		test=`$awk_soft 'NR == 3 {print $0}' sed_commands_${language0}`
 		test=${#test}
 	fi
 
@@ -117,7 +122,7 @@ apply_sed()
 
 	if [ $test -gt 0 ]
 	then
-		$sed_soft -f "sed_commands_${language}" $output_file > $output_file.tmp
+		$sed_soft -f "sed_commands_${language0}" $output_file > $output_file.tmp
 		BEGIN=$BEGIN-2
 		test=`$awk_soft 'NR == '$BEGIN' {print $0}' $output_file.tmp`
 		if [ "$test" = "#, fuzzy" ]
@@ -129,13 +134,13 @@ apply_sed()
 		test=`diff $output_file $output_file.tmp | $awk_soft 'NR==1 {print $0}'`
 		if [ ${#test} -gt 0 ]
 		then
-			echo "   $language.po file updated"
+			echo "   $input_file file updated"
 			echo "***  $*  ***" >> $log_file
 			diff $output_file $output_file.tmp >> $log_file
 			mv -f $output_file.tmp $output_file
 			printf "__________________________________________\n\n" >> $log_file
 		else 
-			echo "   found same translation in wiki than in $language.po"
+			echo "   found same translation in wiki than in $input_file"
 			fi
 		return 1
 	else
@@ -149,15 +154,15 @@ clean_html()
 # Procedure to clean up the download file of useless html tag. We keep the <p> tags to separate the different paragraphs.
 # Warning : Never use clean_html after set_BEGIN_END or it will change the values of BEGIN and END
 
-	BEGIN=`grep -n "<!-- start content -->" downloaded_page_${language} | cut -d : -f 1`
-	$sed_soft '1,'$BEGIN'd' downloaded_page_${language} > downloaded_page_${language}.tmp
+	BEGIN=`grep -n "<!-- start content -->" downloaded_page_${language0} | cut -d : -f 1`
+	$sed_soft '1,'$BEGIN'd' downloaded_page_${language0} > downloaded_page_${language0}.tmp
 
-	BEGIN=`grep -n "<div class=\"printfooter\">" downloaded_page_${language}.tmp | cut -d : -f 1`
-	END=`wc -l downloaded_page_${language}.tmp | $sed_soft 's/^[ \t]*//g' | cut -d " " -f 1`
-	$sed_soft $BEGIN','$END'd' downloaded_page_${language}.tmp |
+	BEGIN=`grep -n "<div class=\"printfooter\">" downloaded_page_${language0}.tmp | cut -d : -f 1`
+	END=`wc -l downloaded_page_${language0}.tmp | $sed_soft 's/^[ \t]*//g' | cut -d " " -f 1`
+	$sed_soft $BEGIN','$END'd' downloaded_page_${language0}.tmp |
 	$sed_soft 's/(Extra:.*researched)[ \t]*//g;s/[ \t]*(End Extra)//g' |
-	$sed_soft ':a;N;$!ba;s/\n//g;s/^[ \t]*//g;s/[ \t]*$//g;s/&amp;/\&/g;s/&nbsp;/ /g;s/\s\+$//;s/<br \/>//g;s/<b>//g;s/<\/b>//g;s/<hr \/>//g;s/<\/p>/<p>/g;s/<i>//g;s/<\/i>//g;s/<\/h1>/<p>/g;s/<\/h2>/<p>/g;s/<\/h3>/<p>/g;s/<\/h4>/<p>/g;s/<dd>/<p>/g;s/<dl>/<p>/g;s/<\/dd>/<p>/g;s/<\/dl>/<p>/g;s/[ \t]*<p>[ \t]*/<p>/g;s/:/: /g;s/[ \t][ \t]*/ /g;s/class=\"image\"/><p></g' > downloaded_page_${language}
-	rm -f downloaded_page_${language}.tmp
+	$sed_soft ':a;N;$!ba;s/\n//g;s/^[ \t]*//g;s/[ \t]*$//g;s/&amp;/\&/g;s/&nbsp;/ /g;s/\s\+$//;s/<br \/>//g;s/<b>//g;s/<\/b>//g;s/<hr \/>//g;s/<\/p>/<p>/g;s/<i>//g;s/<\/i>//g;s/<\/h1>/<p>/g;s/<\/h2>/<p>/g;s/<\/h3>/<p>/g;s/<\/h4>/<p>/g;s/<dd>/<p>/g;s/<dl>/<p>/g;s/<\/dd>/<p>/g;s/<\/dl>/<p>/g;s/[ \t]*<p>[ \t]*/<p>/g;s/:/: /g;s/[ \t][ \t]*/ /g;s/class=\"image\"/><p></g' > downloaded_page_${language0}
+	rm -f downloaded_page_${language0}.tmp
 
 }
 
@@ -171,13 +176,13 @@ set_BEGIN_END()
 	BEGIN=$BEGIN+1    
 	END=$END-2
 	 
-	echo "${BEGIN},${END}d" > sed_commands_${language}
+	echo "${BEGIN},${END}d" > sed_commands_${language0}
 	END=$END+1
-	echo -n "${END}imsgstr " >> sed_commands_${language}
+	echo -n "${END}imsgstr " >> sed_commands_${language0}
 
 	if [ $1 = "1" ]
 	then
-		echo "\"\"" >> sed_commands_${language}
+		echo "\"\"" >> sed_commands_${language0}
 	fi
 }
 
@@ -210,7 +215,7 @@ download_description()
 			if [ ${#content} -gt 0 ]
 			then
 				echo "   downloading description..."
-				wget -nv -O downloaded_page_${language} ${url}${content}
+				wget -nv -O downloaded_page_${language0} ${url}${content}
 				if [ $? -ne 0 ]
 				then
 					echo "Error whith wget" > $log_file
@@ -249,8 +254,9 @@ update_sentences()
 
 update_one_sentence()
 {
-# Procedure to update all the sentences. It takes the base name as input (intro_sentence or prolog_sentence) 
-
+# Procedure to update all the sentences. $1 is 1 for long descriptions, 0 for short ones.
+# WARNING : for some reasons, it does not seem to work when $1 is set to 0.
+# The name of the msgid to update is read in $english
 	set_BEGIN_END $1
 
     if [ ${BEGIN} -gt 1 ]
@@ -260,8 +266,7 @@ update_one_sentence()
 			option=$END"i"
 		else
 			option=""
-	fi
-
+		fi
 	$awk_soft 'BEGIN {FS="]";RS="<p>"}
 		$0 ~ /^[ \t]*$/ {next}
 		test && ($0 ~ /^\[/ || $0 ~ /<.*>/) {exit}
@@ -275,13 +280,12 @@ update_one_sentence()
 			if (length($0)>0) {test2=1}
 			printf "%s",$0
 			test=1}
-		' downloaded_page_${language} |
-	$sed_soft 's/^\['$english'\][ \t]*//g;s/\"/\\\"/g;s/\\/\\\\/g;/^[ \t]*$/d;s/^[ \t]*/'$option'\"/g;s/[ \t]*$/\"/g;s/[ \t][ \t]*/ /g' >> sed_commands_${language}
+		' downloaded_page_${language0} |
+	$sed_soft 's/^\['$english'\][ \t]*//g;s/\"/\\\"/g;s/\\/\\\\/g;/^[ \t]*$/d;s/^[ \t]*/'$option'\"/g;s/[ \t]*$/\"/g;s/[ \t][ \t]*/ /g' >> sed_commands_${language0}
 	printf "\n"
 	echo "Found sentence msgid : " $english
 	apply_sed $english
     fi
-
 }
 
 update_news()
@@ -309,10 +313,10 @@ update_news()
 				printf "%s",$0
 				test=1}
 			END {printf "\n"}  
-		' downloaded_page_${language} | 
+		' downloaded_page_${language0} | 
 		$sed_soft 's/^[ \t]*//g;/^[ \t]*$/d;s/\"/\\\"/g;s/\\/\\\\/g' |
 		$awk_soft '$0 !~ /^[ \t]*$/ {
-			printf "'$END'i\"%s\"\n",$0}' >> sed_commands_${language}
+			printf "'$END'i\"%s\"\n",$0}' >> sed_commands_${language0}
 		printf "\n"
 		echo "Found news msgid : " $english
 		apply_sed $english
@@ -321,7 +325,7 @@ update_news()
 
 update_txt()
 {
-# we scan the file to fill the sed_commands_${language} file.
+# we scan the file to fill the sed_commands_${language0} file.
 # $1 contains sur h1 section we want to get text from
 # $2 is 1 if we want to display h2 titles, 0 otherwise
 # $3 is the number of h3 title you want to read before stopping
@@ -364,10 +368,10 @@ update_txt()
 			line++
 			already_written_test=1;
 			exit_test=0}
-	' downloaded_page_${language} | 
+	' downloaded_page_${language0} | 
 	$sed_soft 's/[[:space:]]*<.*>[[:space:]]*//g;/^[[:space:]]*$/d;s/^[ \t]*//g;s/\"/\\\"/g' | 
 	$awk_soft '{printf "'$END'i\"%s\"\n",$0}' |	
-	$sed_soft 's/\\/\\\\/g'>> sed_commands_${language}
+	$sed_soft 's/\\/\\\\/g'>> sed_commands_${language0}
 	apply_sed $english
 	return $?
 }
@@ -383,7 +387,7 @@ printf "__________________________________________\n\n" >> $log_file
 
 
 
-# Generation of a file 'Language_List_${language}' which contains the available languages (and their position) for each array of the wiki index.
+# Generation of a file '$index' which contains the chapters pages on the wiki.
 for i in `echo $chapters`; do 
 	wget -O ${i}"_"${language} "${url}${wiki_url}${i}";
 	if [ $? -ne 0 ]
@@ -403,6 +407,7 @@ for i in `echo $chapters`; do
 	rm ${i}"_"${language}
 done
 
+# Generation of a file 'Language_List_${language0}' which contains the available languages (and their position) for each array of the wiki index.
 $awk_soft ' BEGIN {FS="</th><th>"}
 	$0 ~ /^<th> msgid <\/th><th> status <\/th><th> en / {
 		if (begin > 0) {print begin" "NR-1" en"language}
@@ -412,13 +417,13 @@ $awk_soft ' BEGIN {FS="</th><th>"}
 		gsub (/[ \t][ \t]*/," ",language)
 		}
 	END {print begin" "NR" en"language}
-' ${index} > Language_List_${language}
-echo "Creating Language_List_${language} : done." >> $log_file
+' ${index} > Language_List_${language0}
+echo "Creating Language_List_${language0} : done." >> $log_file
 if [[ "$debug" = "1" ]]
 then
 	printf "__________________________________________\n\n" >> $log_file
-	echo "Language_List_${language} contains :" >> $log_file
-	cat Language_List_${language} >> $log_file
+	echo "Language_List_${language0} contains :" >> $log_file
+	cat Language_List_${language0} >> $log_file
 	printf "__________________________________________\n\n" >> $log_file
 fi
 
@@ -439,9 +444,9 @@ declare -i FIRST_LINE  # Contains the first interesting line of the wiki index. 
 # Copy of $input_file to $output_file. 
 # $output_file is converted from dos to unix if needed
 # Each input of msgstr (i.e. the part before any \n) is put on only 1 line
-BEGIN=`grep -nm 1 "#: " $language.po | cut -d : -f 1`
-END=`wc -l $language.po | $sed_soft 's/^[ \t]*//g' | cut -d " " -f 1`
-$sed_soft $BEGIN','$END's/^\"\(.*\)\"$/\1/g;s/\r//g' $language.po | 
+BEGIN=`grep -nm 1 "#: " $input_file | cut -d : -f 1`
+END=`wc -l $input_file | $sed_soft 's/^[ \t]*//g' | cut -d " " -f 1`
+$sed_soft $BEGIN','$END's/^\"\(.*\)\"$/\1/g;s/\r//g' $input_file | 
 $awk_soft 'BEGIN {FS=" ";test=0}
 	$0 ~ /^[ \t]*$/ {if (test) {printf "\"\n";}; printf "\n"; test=0; next}
     $0 ~ /^#/ || $0 ~ /^\"/ || $0 ~ /^msgid/ || $0 ~ /^msgstr/ {
@@ -456,13 +461,13 @@ $awk_soft 'BEGIN {FS=" ";test=0}
 			{printf "\"\n";test=0;}
 		}
 ' > $output_file
-echo "Converted $language.po to $output_file : done." >> $log_file
+echo "Converted $input_file to $output_file : done." >> $log_file
 
-test=`diff $language.po $output_file | $sed_soft '/^</!d;/^<[ \t]*\"/d'`
+test=`diff $input_file $output_file | $sed_soft '/^</!d;/^<[ \t]*\"/d'`
 if [[ ${#test} -gt 0 ]]
 then
 	echo $test
-	echo "Security stop : the previous line(s) has been removed from $language.po and shouldn't have" | tee -a $log_file
+	echo "Security stop : the previous line(s) has been removed from $input_file and shouldn't have" | tee -a $log_file
 	exit
 fi
 
@@ -477,32 +482,32 @@ fi
 
 
 
-# Generation of a file 'po_file_${language}.tmp' which contains the list of the english msgid
+# Generation of a file 'po_file_${language0}.tmp' which contains the list of the english msgid
 # present in the language .po file.
 
-$sed_soft '/^msgid \"/!d;s/^msgid[ \t]*\"\(.*\)[ \t]*\"/\1/g;s/^[ \t]*//g;s/[ \t]*$//g;/^[ \t]*$/d' $language.po > po_file_${language}.tmp
+$sed_soft '/^msgid \"/!d;s/^msgid[ \t]*\"\(.*\)[ \t]*\"/\1/g;s/^[ \t]*//g;s/[ \t]*$//g;/^[ \t]*$/d' $input_file > po_file_${language0}.tmp
 
-echo "Creating po_file_${language}.tmp : done." >> $log_file
+echo "Creating po_file_${language0}.tmp : done." >> $log_file
 if [[ "$debug" = "1" ]]
 then
 	printf "__________________________________________\n\n" >> $log_file
-	echo "po_file_${language}.tmp 50 first lines are :" >> $log_file
-	$awk_soft 'NR <=50 {print $0}' po_file_${language}.tmp >> $log_file
+	echo "po_file_${language0}.tmp 50 first lines are :" >> $log_file
+	$awk_soft 'NR <=50 {print $0}' po_file_${language0}.tmp >> $log_file
 	printf "__________________________________________\n\n" >> $log_file
 fi
 
 
 
 
-# Initialisation of the file unfound_msgid_${language}.tmp which will contain the list of unfound msgids
-rm -rf unfound_msgid_${language}.tmp
-touch unfound_msgid_${language}.tmp
+# Initialisation of the file unfound_msgid_${language0}.tmp which will contain the list of unfound msgids
+rm -rf unfound_msgid_${language0}.tmp
+touch unfound_msgid_${language0}.tmp
 
 #
 # MAIN PART OF THE PROGRAM
 #
 # We first begin to update the intro and prolog sentences, news and campaign descriptions, as they are on only 2 wiki page (it avoids useless downloading)
-FIRST_LINE=`$awk_soft 'BEGIN {FS=" "};NR==1 {print $1}' Language_List_${language}`
+FIRST_LINE=`$awk_soft 'BEGIN {FS=" "};NR==1 {print $1}' Language_List_${language0}`
 FIRST_LINE=$FIRST_LINE-4
 if [[ "$debug" = "1" ]]
 then
@@ -573,6 +578,22 @@ then
 	fi
 fi
 
+english=`echo $headers | cut -d " " -f 1`
+echo $english
+download_description $english
+if [[ $? -eq 0 ]]
+then
+	clean_html
+
+	for english in `echo $headers`; do 
+		update_one_sentence "1"
+	done
+	if [[ "$debug" = "1" ]]
+	then
+		echo "Checking headers descriptions : done." >> $log_file
+	fi
+fi
+
 # We set the variable default_pre_txt to the text to write for *_pre_txt if not on the wiki.
 english="default_pre_txt"
 download_description $english
@@ -582,7 +603,7 @@ then
 	default_pre_txt=`$awk_soft 'BEGIN {RS="<p>"}
 		$0 ~ /</ {exit}
 		$0 !~ /^[ \t]*$/ {printf "%s",$0}
-    ' downloaded_page_${language} |
+    ' downloaded_page_${language0} |
 	$sed_soft 's/[[:space:]]*<.*>[[:space:]]*//g;s/^[ \t]*//g;s/\"/\\\"/g'`
 fi
 if [ "$default_pre_txt" = "" ]
@@ -606,7 +627,7 @@ fi
 
 while read english
 do
-	if [[ "$english" != "intro_sentence"* ]] && [[ "$english" != "prolog_sentence"* ]] && [[ "$english" != "news_"*"_txt" ]] && [[ "$english" != "txt_"*"_campaign" ]] && [[ "$english" != "Aliens" ]]
+	if [[ "$english" != "intro_sentence"* ]] && [[ "$english" != "prolog_sentence"* ]] && [[ "$english" != "news_"*"_txt" ]] && [[ "$english" != "txt_"*"_campaign" ]] && [[ "$english" != "Aliens" ]] && [[ "$english" != "mail_"* ]]
 	then
 		printf "."
 		if [[ "$debug" = "1" ]]
@@ -621,14 +642,14 @@ do
 			echo "Found section title msgid : " $english
 			set_BEGIN_END "0"
 			grep -iwm 1 ">$english</a> (en), <a href" ${index} |
-			$sed_soft 's/<\/a>//g;/ ('$language')/!d;s/.*>\(.*\) ('$language').*/\1/;s/\"/\\\"/g;s/^[ \t]*/"/g;s/[ \t]*$/"/g;s/[ \t][ \t]*/ /g;s/\\/\\\\/g' >> sed_commands_${language}
+			$sed_soft 's/<\/a>//g;/ ('$language')/!d;s/.*>\(.*\) ('$language').*/\1/;s/\"/\\\"/g;s/^[ \t]*/"/g;s/[ \t]*$/"/g;s/[ \t][ \t]*/ /g;s/\\/\\\\/g' >> sed_commands_${language0}
 			apply_sed $english
 		else
 			pre_txt=0
 			if [[ ${english} = *"_txt" ]]
 			then
 				test=${english:0:${#english}-4}_pre_txt
-				test=`grep -iwm 1 "$test" po_file_${language}.tmp`
+				test=`grep -iwm 1 "$test" po_file_${language0}.tmp`
 				if [[ ${#test} -gt 0 ]]
 				then
 					pre_txt=1
@@ -639,12 +660,10 @@ do
 			if [[ "$test" -eq 0 ]]
 			then
 			# This is case 3. (_txt entry)
-			# There are (for now...) 2 types of descriptions : the autopsy and the others.
-			# For autopsy we want the second part of the wiki page
-			# For other descriptions, we want the first part.
-			# We distinguish between both with the variable 'working_section'
+			# There are (for now...) 2 types of descriptions : the email-type and the others.
+			# For email type texts, we want to download 2 sections.
+			# For other descriptions, we want only 1 section.
 				clean_html
-#				if [[ ${english} = "ufo_"*"_txt" ]] || [[ ${english} = *"_autopsy_txt"* ]] || [[ ${english} = "kerrblade_txt" ]] || [[ ${english} = "plas"*"_txt" ]] || [[ ${english} = "bolterrifle"*"_txt" ]] || [[ ${english} = "nano_armor_txt" ]]
 				if [[ $pre_txt -eq 1 ]]
 				then
 				# Case of Research with proposal part: only the second part of the text has to be taken
@@ -655,13 +674,37 @@ do
 					if [[ $? -eq 0 ]]
 					then
 						set_BEGIN_END 0
-						printf "\"$default_pre_txt\"" >> sed_commands_${language}
+						printf "\"$default_pre_txt\"" >> sed_commands_${language0}
 						apply_sed $english
 						pre_txt=0
 					fi
 				else
 					update_txt 2 1 3
 				fi
+			elif [[ "$test" -eq 2 ]] && [[ "$elseenglish" -eq 1 ]]
+			then
+			# This is the case when the english text exists, but not the desired translation
+				language0=$language
+				language="en"
+				download_description
+				clean_html
+				if [[ $pre_txt -eq 1 ]]
+				then
+				update_txt 3 0 0
+
+				english=${english:0:${#english}-4}_pre_txt
+				update_txt 2 0 0
+					if [[ $? -eq 0 ]]
+					then
+						set_BEGIN_END 0
+						printf "\"$default_pre_txt\"" >> sed_commands_${language0}
+						apply_sed $english
+						pre_txt=0
+					fi
+				else
+					update_txt 2 1 3
+				fi
+				language=$language0
 			elif [[ "$test" -eq 1 ]]
 			then
 				test_artifact="0"
@@ -704,11 +747,11 @@ do
 						$awk_soft ' 
 							'$test_artifact' == 1 {gsub(/^.* -/,"")}
 							{print $0}' |
-						$sed_soft 's/\"/\\\"/g;s/\\/\\\\/g;s/^[ \t]*/"/g;s/[ \t]*$/"/g;s/[ \t][ \t]*/ /g' >> sed_commands_${language}
+						$sed_soft 's/\"/\\\"/g;s/\\/\\\\/g;s/^[ \t]*/"/g;s/[ \t]*$/"/g;s/[ \t][ \t]*/ /g' >> sed_commands_${language0}
 						apply_sed $english
 					fi
 				else
-					printf "%s\n" "$english" >> unfound_msgid_${language}.tmp
+					printf "%s\n" "$english" >> unfound_msgid_${language0}.tmp
 				fi
 			fi
 		fi
@@ -718,12 +761,12 @@ do
 			set_BEGIN_END 0
 			if [ $BEGIN -gt 1 ]
 			then
-				printf "\"$default_pre_txt\"" >> sed_commands_${language}
+				printf "\"$default_pre_txt\"" >> sed_commands_${language0}
 				apply_sed $english
 			fi
 		fi
 	fi
-done < po_file_${language}.tmp
+done < po_file_${language0}.tmp
 
 printf "\n"
 #Copying all unfound msgids to log file
@@ -731,7 +774,7 @@ if [[ "$debug" = "1" ]]
 then
 	printf "__________________________________________\n\n" >> $log_file
 	printf "List of unfound msgids in the wiki page :\n" >> $log_file
-	cat unfound_msgid_${language}.tmp >> $log_file
+	cat unfound_msgid_${language0}.tmp >> $log_file
 fi
 printf "__________________________________________\n\n" | tee -a $log_file
 
@@ -745,12 +788,12 @@ printf "\nNew file %s created.\n" $output_file
 printf "The file %s contains the list of the modifications.\n" $log_file
 printf "You should CAREFULLY look at this log before uploading the updated file.\n"
 
-rm -f Language_List_${language}
-rm -f po_file_${language}.tmp
-rm -f unfound_msgid_${language}.tmp
+rm -f Language_List_${language0}
+rm -f po_file_${language0}.tmp
+rm -f unfound_msgid_${language0}.tmp
 rm -f $output_file.tmp
-rm -f downloaded_page_${language}
+rm -f downloaded_page_${language0}
 rm -f ${index}
-rm -f sed_commands_${language}
+rm -f sed_commands_${language0}
 echo "Deleting files : done." >> $log_file
 

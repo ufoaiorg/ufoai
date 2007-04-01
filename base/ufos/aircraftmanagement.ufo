@@ -50,6 +50,7 @@ aircraft craft_interceptor
 {
 	speed		30.0
 	name		"_Stiletto-class Interceptor"
+	shortname	"_Stiletto I"
 	type		interceptor
 	model		"interceptor"
 	fuel		60000

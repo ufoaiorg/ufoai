@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-03-31 16:14+0200\n"
-"PO-Revision-Date: 2007-03-31 16:17+0100\n"
+"PO-Revision-Date: 2007-04-01 10:14+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -5454,19 +5454,19 @@ msgstr ""
 #: ../base/ufos/research.ufo:1864
 msgid "nano_armour_txt"
 msgstr ""
-"Herr Kommandant, ich freue mich, ihnen mitteilen zu dürfen, dass unsere Forschung der Nanoverbundstoffproduktion erfolgreich war!\n"
+"Herr Kommandant, ich freue mich, Ihnen mitteilen zu dürfen, dass unsere Forschung der Nanoverbundstoffproduktion erfolgreich war!\n"
 "\n"
-"Ich werde sie nicht mit den Feinheiten der KNR Produktion langweilen; es reicht zu sagen, dass wir aufgrund der Spuren der außerirdischen Produktionsarten fähig waren, ein paar ihrer Prozesse zu identifizieren. Sie scheinen eine Art Plasmahochofen zu benutzen, um die Nanoröhren in ihre Gitterform zu bringen. Wir waren in der Lage, einen Prototyp dieses Ofens für uns zu bauen und haben ein paar Veränderungen an unseren Herstellungsmethoden anhand des Beispieles der Außerirdischen vorgenommen. Das Ergebnis ist eine erkennbare Steigerung der Effizienz und Herstellungsmengen.\n"
+"Ich werde Sie nicht mit den Feinheiten der KNR Produktion langweilen; es reicht zu sagen, dass wir aufgrund der Spuren der außerirdischen Produktionsarten fähig waren, ein paar ihrer Prozesse zu identifizieren. Sie scheinen eine Art Plasmahochofen zu benutzen, um die Nanoröhren in ihre Gitterform zu bringen. Wir waren in der Lage, einen Prototyp dieses Ofens für uns zu bauen und haben ein paar Veränderungen an unseren Herstellungsmethoden anhand des Beispieles der Außerirdischen vorgenommen. Das Ergebnis ist eine erkennbare Steigerung der Effizienz und der Herstellungsmengen.\n"
 "\n"
-"Von nun an werde ich meine Zusammenfassung aber auf die Fähigkeiten und taktischen Anwendungsmöglichkeiten beschränken, und ich glaube, sie werden sie faszinierend und ermutigend finden.\n"
+"Von nun an werde ich meine Zusammenfassung aber auf die Fähigkeiten und taktischen Anwendungsmöglichkeiten beschränken, und ich glaube, Sie werden sie faszinierend und ermutigend finden.\n"
 "\n"
 "Wir waren in der Lage, fast die gesamte Funktionsweise der Rüstung zu duplizieren, von den Nanoverbundplatten zu der servo-unterstützten Bewegung. Sie ist für ihre Masse unglaublich leicht, obwohl immer noch erkennbar schwerer als unsere Gefechtsrüstung. Sie ist fast so schützend wie die außerirdische Variante und bietet dem Träger die gleiche Schnelligkeit in der Bewegung und besseres Zielen.\n"
 "\n"
-"Jedoch sind da immer noch Grenzen, die wir nicht überwinden können. Es ist ein Fakt, das die Außerirdischen mit diesem Material viel mehr Erfahrung haben und es besser bearbeiten können als wir. Unsere Rüstung ist klobiger und schwerer, steifer konstruiert und ihre Elektronik funktioniert nicht so gut. Das könnte die Feuergeschwindigkeit und Reaktionszeit negativ beeinflussen. Unsere Art Plastik ist ebenfalls nicht so gut wie ihre und sie neigt eher zum zerbrechen. Besonders unsere Servomotoren sind groß und unhandlich im Vergleich mit denen der Außerirdischen. Es gibt bisher keinen Weg, sie noch weiter zu verkleinern.\n"
+"Jedoch sind da immer noch Grenzen, die wir nicht überwinden können. Es ist ein Fakt, dass die Außerirdischen mit diesem Material viel mehr Erfahrung haben und es besser bearbeiten können als wir. Unsere Rüstung ist klobiger und schwerer, steifer konstruiert und ihre Elektronik funktioniert nicht so gut. Das könnte die Feuergeschwindigkeit und die Reaktionszeit negativ beeinflussen. Unsere Art Plastik ist ebenfalls nicht so gut wie ihre und sie neigt eher zum Zerbrechen. Besonders unsere Servomotoren sind groß und unhandlich im Vergleich mit denen der Außerirdischen. Es gibt bisher keinen Weg, sie noch weiter zu verkleinern.\n"
 "\n"
-"Wir sind wegen der Stiefel besonders beschämt, aber wir haben ehrlich das beste getan, was wir konnten. Wir haben einfach nicht die erforderlichen Präzisionswerkzeuge, um die Servomotoren der Außerirdischen zu kopieren. Dennoch haben wir das beste getan, um die Stiefel sicher und leicht zu machen, mit einer kräftigen Federung in den Sohlen, damit sie elastisch genug für schnelle Bewegung sind.\n"
+"Wir sind wegen der Stiefel besonders beschämt, aber wir haben ehrlich das beste getan, was wir konnten. Uns fehlen einfach die erforderlichen Präzisionswerkzeuge, um die Servomotoren der Außerirdischen zu kopieren. Dennoch haben wir das Beste getan, um die Stiefel sicher und leicht zu machen, mit einer kräftigen Federung in den Sohlen, damit sie elastisch genug für schnelle Bewegung sind.\n"
 "\n"
-"Die taktischen Anwendungsmöglichkeiten der neuen Rüstung sind weit reichend. Sie ist leicht genug, um von der Vorhut unserer taktischen Teams getragen zu werden, und stabil genug, um schwerem Feuer zu widerstehen. Sie wird für unsere Sturmstruppen am besten funktionieren, da diese sowohl Geschwindigkeit als auch Rüstung brauchen.\n"
+"Die taktischen Anwendungsmöglichkeiten der neuen Rüstung sind weitreichend. Sie ist leicht genug, um von der Vorhut unserer taktischen Teams getragen zu werden, und stabil genug, um schwerem Feuer zu widerstehen. Sie wird für unsere Sturmstruppen am besten funktionieren, da diese sowohl Geschwindigkeit als auch Schutz brauchen.\n"
 "\n"
 "--Cdr. Navarre"
 
@@ -5475,9 +5475,9 @@ msgid "nano_armour_pre_txt"
 msgstr ""
 "Unsere Untersuchung der außerirdischen Rüstung führte uns zu vielen interessanten Erkenntnissen. Offensichtlich liegt der Schlüssel zur Herstellung einer effektiveren Rüstung, die auf der außerirdischen Rüstung basiert, in der Richtung von Nanoverbundstoffen. Und das benötigt große Mengen Kohlenstoffnanoröhren.\n"
 "\n"
-"In der Vergangenheit waren Kohlenstoffnanoröhren schwer und teuer zu produzieren und sie in die passende Form zu arbeiten war sogar noch schlimmer. Darum wurden Nanoverbundstoffrüstungen nur in extrem teuren Fahrzeugen wie Flugzeugen und Panzern benutzt und selbst dann nur als Platten, die man unter die Uniform legte und die nur sehr wenig Formung benötigte. Die außerirdische Rüstung benutzt Kohlenstoffnanoröhren im Überfluss und es ist unser Herstellungsprozess, der uns aufhält.\n"
+"In der Vergangenheit waren Kohlenstoffnanoröhren schwer und teuer zu produzieren und sie in die passende Form zu arbeiten war sogar noch schwieriger. Darum wurden Nanoverbundstoffrüstungen nur in extrem teuren Fahrzeugen wie Flugzeugen und Panzern benutzt und selbst dann nur als Platten, die man unter die Uniform legte und die nur sehr wenig Formung benötigte. Die außerirdische Rüstung benutzt Kohlenstoffnanoröhren im Überfluss und es ist unser Herstellungsprozess, der uns aufhält.\n"
 "\n"
-"Mit der Rüstung und genug Ressourcen zu unserer Verfügung glaube ich, dass wir neue Herstellungsmethoden und Formungsprozesse entwickeln können, so dass wir geformte Nanoverbundplatten in Massen herstellen können, was uns diese Technologie endlich zur Verfügung stellen würde.\n"
+"Mit der Rüstung und genug Ressourcen zu unserer Verfügung, glaube ich, dass wir neue Herstellungsmethoden und Formungsprozesse entwickeln können, so dass wir geformte Nanoverbundplatten in Massen herstellen können, was uns diese Technologie endlich zur Verfügung stellen würde.\n"
 "\n"
 "Dieses Projekt benötigt einen ordentlichen Anteil Laborzeit und Mittel. Wir beginnen die Arbeit, sobald wir ihre Erlaubnis erhalten, Herr Kommandant.\n"
 "\n"
@@ -9349,7 +9349,7 @@ msgstr "Aktuelle Aktion bestätigten"
 
 #: client/cl_input.c:759
 msgid "Toggle first-person/third-person camera mode"
-msgstr "Wechsele zwischen Ich-Perspektive und Vogelansicht"
+msgstr "Wechsele zwischen Ich- und Vogelperspektive"
 
 #: client/cl_main.c:365
 #: client/cl_main.c:1011
@@ -9411,7 +9411,7 @@ msgstr "Max. Soldaten pro Team:\t%s\n"
 #: client/cl_main.c:942
 #, c-format
 msgid "Max. teams allowed in this map:\t%s\n"
-msgstr "Max. erlaubte Teams für diese Map:\t%s\n"
+msgstr "Max. Teams für diese Map:\t%s\n"
 
 #: client/cl_main.c:944
 #, c-format
@@ -9587,7 +9587,7 @@ msgstr "Taste: %s"
 
 #: client/cl_menu.c:3108
 msgid "Hide the HUD (press ESC to reactivate HUD)"
-msgstr "Verstecke das HUD (ESC drücken um es zu reaktivieren)"
+msgstr "Verstecke das HUD (ESC reaktiviert es)"
 
 #: client/cl_parse.c:839
 msgid "Alien spotted:"

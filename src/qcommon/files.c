@@ -45,7 +45,7 @@ typedef struct pack_s {
 } pack_t;
 
 static cvar_t *fs_basedir;
-cvar_t *fs_gamedirvar;
+cvar_t *fs_gamedir;
 
 typedef struct filelink_s {
 	struct filelink_s *next;
@@ -677,7 +677,7 @@ void FS_ExecAutoexec (void)
 	char *dir;
 	char name[MAX_QPATH];
 
-	dir = Cvar_VariableString("gamedir");
+	dir = Cvar_VariableString("fs_gamedir");
 	if (*dir)
 		Com_sprintf(name, sizeof(name), "%s/%s/autoexec.cfg", fs_basedir->string, dir);
 	else
@@ -719,10 +719,8 @@ void FS_SetGamedir (const char *dir)
 		Cbuf_AddText("vid_restart\nsnd_restart\n");
 
 	if (!Q_strncmp(dir, BASEDIRNAME, strlen(BASEDIRNAME)) || (*dir == 0)) {
-		Cvar_FullSet("gamedir", "", CVAR_SERVERINFO | CVAR_NOSET);
-		Cvar_FullSet("game", "", CVAR_LATCH | CVAR_SERVERINFO);
+		Cvar_FullSet("fs_gamedir", "", CVAR_LATCH | CVAR_SERVERINFO);
 	} else {
-		Cvar_FullSet("gamedir", dir, CVAR_SERVERINFO | CVAR_NOSET);
 		FS_AddGameDirectory(va("%s/%s", fs_basedir->string, dir));
 		FS_AddHomeAsGameDirectory(dir);
 	}
@@ -941,7 +939,7 @@ void FS_InitFilesystem (void)
 
 	/* basedir <path> */
 	/* allows the game to run from outside the data tree */
-	fs_basedir = Cvar_Get("basedir", ".", CVAR_NOSET, NULL);
+	fs_basedir = Cvar_Get("fs_basedir", ".", CVAR_NOSET, NULL);
 
 	/* start up with base by default */
 	FS_AddGameDirectory(va("%s/" BASEDIRNAME, fs_basedir->string));
@@ -954,9 +952,9 @@ void FS_InitFilesystem (void)
 	fs_base_searchpaths = fs_searchpaths;
 
 	/* check for game override */
-	fs_gamedirvar = Cvar_Get("game", "", CVAR_LATCH | CVAR_SERVERINFO, NULL);
-	if (fs_gamedirvar->string[0])
-		FS_SetGamedir(fs_gamedirvar->string);
+	fs_gamedir = Cvar_Get("fs_gamedir", "", CVAR_LATCH | CVAR_SERVERINFO, NULL);
+	if (fs_gamedir->string[0])
+		FS_SetGamedir(fs_gamedir->string);
 }
 
 

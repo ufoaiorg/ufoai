@@ -1441,7 +1441,7 @@ tech rs_weapon_sniper_ammo
 // Just for searching: uses "anti alien gas"
 tech rs_weapon_stungren
 {
-	type	weapon
+	type		weapon
 	up_chapter	equipment
 	description	"_stungren_txt"
 	pre_description	"_stungren_pre_txt"
@@ -1473,7 +1473,7 @@ tech rs_weapon_stungren
 	}
 
 	provides	stungrenade
-	time	0
+	time		2100
 	producetime	1
 }
 
@@ -1707,6 +1707,7 @@ tech rs_weapon_pbeam_ammo
 {
 	//Note: this is type: tech because it provides three other technologies for ammo, not ammo itself
 	type		tech
+	name		"_Man-Portable Particle Beams"
 	up_chapter	artifacts
 	description	"_pbeam_ammo_txt"
 	pre_description	"_pbeam_ammo_pre_txt"
