@@ -1194,10 +1194,10 @@ tech rs_weapon_chaingun
 	description	"_chaingun_txt"
 	pre_description	"_chaingun_pre_txt"
 
-	require_AND
-	{
-		tech rs_skill_heavy
-	}
+//	require_AND
+//	{
+//		tech rs_skill_heavy
+//	}
 
 	provides	chaingun
 	time	0
