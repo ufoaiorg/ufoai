@@ -739,7 +739,7 @@ static int CL_AddServerToList (netadr_t* adr, char *msg)
 	}
 
 	if (msg)
-		Com_Printf("Warning: a response for a server that was not on the list before\n");
+		Com_DPrintf("Warning: a response for a server that was not on the list before (normal for broadcast scans)\n");
 
 	memset(&(serverList[serverListLength]), 0, sizeof(serverList_t));
 	serverList[serverListLength].adr = *adr;
