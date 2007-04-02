@@ -152,6 +152,7 @@ building building_quarters
 	type		quarters
 	max_employees	32
 	onclick		"building_open"
+	capacity	25
 }
 
 building building_hangar
@@ -275,6 +276,7 @@ building building_workshop
 	max_employees	10
 	needs		building_workshop2
 	onclick		"building_open"
+	capacity	10
 }
 
 building building_workshop2
@@ -319,6 +321,7 @@ building building_lab
 	type		lab
 	max_employees	10
 	onclick		"building_open"
+	capacity	10
 }
 
 building building_hospital
