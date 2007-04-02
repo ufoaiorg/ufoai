@@ -19,60 +19,6 @@ item laserpistol
 	buytype		1
 }
 
-// Commented out since all laser wepaons will use the common D-F Cartridge from now on.
-// TODO: We still need to correct the different stats for each weapon though.
-//item laserpistol_ammo
-//{
-//	name		"_Laser Pistol Charge"
-//	model		weapons/laserpistol/laserpistol_clip
-//	type		ammo
-//	category	0
-//	shape		"0 0 1 2"
-//	center		"0 0 0"
-//	scale		1.6
-//	price		130
-//	buytype		1
-//
-//	primary
-//	{
-//		name	"_Single Pulse"
-//		skill 	close
-//		projtl	laserPulse
-//		impact	laserImpact
-//		hitbody	laserImpact
-//		firesnd	weapons/laser.wav
-//		speed	0
-//		spread	"0 1"
-//		crouch	0.8
-//		range	64
-//		shots	1
-//		ammo	1
-//		time	5
-//		damage	"32 6"
-//		dmgtype laser
-//	}
-//	secondary
-//	{
-//		name	"_Multiple Pulses"
-//		skill 	close
-//		projtl	laserPulse
-//		impact	laserImpact
-//		hitbody	laserImpact
-//		firesnd	weapons/laser.wav
-//		speed	0
-//		spread	"0 2"
-//		crouch	1.0
-//		range	56
-//		shots	4
-//		ammo	4
-//		rof		6
-//		time	8
-//		damage	"28 5"
-//		dmgtype laser
-//	}
-//}
-
-
 // =======================
 // LASER RIFLE
 // =======================
@@ -116,60 +62,6 @@ item heavylaser
 	buytype		0
 }
 
-// Commented out since all laser wepaons will use the common D-F Cartridge from now on.
-// TODO: We still need to correct the different stats for each weapon though.
-//item heavylaser_ammo
-//{
-//	name		"_Heavy Laser Charge"
-//	model		weapons/laserrifle/laserrifle_clip
-////	model		weapons/laserheavy/laserheavy_clip
-//	type		ammo
-//	category	0
-//	shape		"0 0 1 2"
-//	center		"0 0 0"
-//	scale		1.8
-//	price		700
-//	buytype		0
-//
-//	primary
-//	{
-//		name	"_Rapid Pulses"
-//		skill	heavy
-//		projtl	laserPulse
-//		impact	laserImpact
-//		hitbody	laserImpact
-//		firesnd	weapons/laser.wav
-//		speed	0
-//		spread	"0 2"
-//		crouch	0.7
-//		range	90
-//		shots	5
-//		ammo	1
-//		rof		10
-//		time	10
-//		damage	"72 6"
-//		dmgtype laser
-//	}
-//	secondary
-//	{
-//		name	"_Overload"
-//		skill	heavy
-//		projtl	laserOverload
-//		impact	laserImpact
-//		hitbody	laserImpact
-//		firesnd	weapons/heavy_laser.wav
-//		speed	0
-//		spread	"0 0.2"
-//		crouch	0.7
-//		range	250
-//		shots	1
-//		ammo	1
-//		time	14
-//		damage	"245 70"
-//		dmgtype laser
-//	}
-//}
-
 item laserrifle_ammo
 {
 	name		"_D-F Cartridge"
@@ -186,7 +78,7 @@ item laserrifle_ammo
 	{
 		firedef 
 		{
-			name	"_Pulse Fire"
+			name	"_Short Wave"
 			skill 	close
 			projtl	laserPulse
 			impact	laserImpact
@@ -196,7 +88,7 @@ item laserrifle_ammo
 			spread	"0 1"
 			crouch	0.8
 			range	30
-			shots	3
+			shots	1
 			ammo	1
 			rof		6
 			time	6
@@ -206,7 +98,7 @@ item laserrifle_ammo
 		}
 		firedef
 		{
-			name	"_Wave Fire"
+			name	"_Long Wave"
 			skill 	close
 			projtl	laserPulse
 			impact	laserImpact
@@ -218,8 +110,8 @@ item laserrifle_ammo
 			range	30
 			shots	1
 			ammo	3
-			time	12
-			damage	"32 6"
+			time	8
+			damage	"35 6"
 			dmgtype laser
 		}
 	}
@@ -228,7 +120,7 @@ item laserrifle_ammo
 	{
 		firedef 
 		{
-			name	"_Pulse Fire"
+			name	"_Short Wave"
 			skill 	assault
 			projtl	laserPulse
 			impact	laserImpact
@@ -238,7 +130,7 @@ item laserrifle_ammo
 			spread	"0 0.2"
 			crouch	0.7
 			range	60
-			shots	3
+			shots	1
 			ammo	1
 			time	8
 			damage	"34 6"
@@ -247,7 +139,7 @@ item laserrifle_ammo
 		}
 		firedef
 		{
-			name	"_Wave Fire"
+			name	"_Long Wave"
 			skill 	assault
 			projtl	laserPulse
 			impact	laserImpact
@@ -261,7 +153,7 @@ item laserrifle_ammo
 			ammo	3
 			rof		6
 			time	14
-			damage	"42 6"
+			damage	"49 6"
 			dmgtype laser
 		}
 	}
@@ -270,7 +162,7 @@ item laserrifle_ammo
 	{
 		firedef 
 		{
-			name	"_Pulse Fire"
+			name	"_Short Wave"
 			skill	heavy
 			projtl	laserPulse
 			impact	laserImpact
@@ -280,17 +172,17 @@ item laserrifle_ammo
 			spread	"0 2"
 			crouch	0.7
 			range	90
-			shots	5
+			shots	1
 			ammo	1
 			rof		10
 			time	10
-			damage	"72 6"
+			damage	"46 6"
 			dmgtype laser
 			reaction	true
 		}
 		firedef
 		{
-			name	"_Wave Fire"
+			name	"_Long Wave"
 			skill	heavy
 			projtl	laserOverload
 			impact	laserImpact
@@ -299,11 +191,11 @@ item laserrifle_ammo
 			speed	0
 			spread	"0 0.2"
 			crouch	0.7
-			range	250
+			range	90
 			shots	1
 			ammo	3
 			time	18
-			damage	"245 70"
+			damage	"65 6"
 			dmgtype laser
 		}
 	}
