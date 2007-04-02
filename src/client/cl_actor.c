@@ -1931,7 +1931,7 @@ extern void CL_ActorStandCrouch_f (void)
 /**
  * @brief Stuns an actor.
  *
- * Stunning is handled as a dead actor but afterwards in CL_CollectingAliens we only collect aliens with STATE_STUN
+ * Stunning is handled as a dead actor but afterwards in AL_CollectingAliens we only collect aliens with STATE_STUN
  * @note: we can do this because STATE_STUN is 0x43 and STATE_DEAD is 0x03 (checking for STATE_DEAD is also true when STATE_STUN was set)
  * @note: Do we really need this as a script command? Currently there is no binding - but who knows?
  *

@@ -2,6 +2,8 @@
 /**
  * @file cl_aliencont.c
  * @brief Deals with the Alien Containment stuff.
+ * @note Collecting and managing aliens functions prefix: AL_
+ * @note Alien Containment menu functions prefix: AC_
  */
 
 /*
@@ -98,7 +100,7 @@ char *AL_AlienTypeToName (int teamDescIdx)
  * @brief Collecting stunned aliens and alien bodies after the mission.
  * @sa CL_ParseResults
  */
-void CL_CollectingAliens (void)
+void AL_CollectingAliens (void)
 {
 	int i, j;
 	int teamDescID = -1;
@@ -110,7 +112,7 @@ void CL_CollectingAliens (void)
 	if (!baseCurrent) {
 #ifdef DEBUG
 		/* should never happen */
-		Com_Printf("CL_CollectingAliens()... No base selected!\n");
+		Com_Printf("AL_CollectingAliens()... No base selected!\n");
 #endif
 		return;
 	}
@@ -120,7 +122,7 @@ void CL_CollectingAliens (void)
 	} else {
 #ifdef DEBUG
 		/* should never happen */
-		Com_Printf("CL_CollectingAliens()... No aircraft selected!\n");
+		Com_Printf("AL_CollectingAliens()... No aircraft selected!\n");
 #endif
 		return;
 	}
@@ -139,7 +141,7 @@ void CL_CollectingAliens (void)
 				/* -1: see Com_GetModelAndName */
 				teamDescID = le->teamDesc - 1;
 			else {
-				Com_Printf("CL_CollectingAliens: Can't collect alien with no teamDescID\n");
+				Com_Printf("AL_CollectingAliens: Can't collect alien with no teamDescID\n");
 				continue;
 			}
 
@@ -196,13 +198,14 @@ void CL_CollectingAliens (void)
  */
 void AL_AddAliens (void)
 {
-	int i, j;
+	int i, j, k;
 	base_t *tobase = NULL;
 	aliensTmp_t *cargo = NULL;
 	aircraft_t *aircraft = NULL;
 	qboolean messageAlreadySet = qfalse;
 	qboolean alienBreathing = qfalse;
 	technology_t *tech;
+	qboolean limit = qfalse;
 
 	if (baseCurrent) {
 		tobase = baseCurrent;
@@ -250,7 +253,23 @@ void AL_AddAliens (void)
 						messageAlreadySet = qtrue;
 					}
 				} else {
-					tobase->alienscont[j].amount_alive += cargo[i].amount_alive;
+					for (k = 0; k < cargo[i].amount_alive; k++) {
+						/* Check base capacity. */
+						if (tobase->capacities[CAP_ALIENS][0] > AL_CountInBase()) {
+							tobase->alienscont[j].amount_alive++;
+						} else {
+							if (!limit) {
+								/* Limit is hit. Set the amount of currently stored in capacities. */
+								tobase->capacities[CAP_ALIENS][1] = tobase->capacities[CAP_ALIENS][0];
+								MN_AddNewMessage(_("Notice"), _("You don't have enough space in Alien Containment. Some aliens got killed."), qfalse, MSG_STANDARD, NULL);
+								limit = qtrue;
+								tobase->alienscont[j].amount_dead++;
+							} else {
+								/* Just kill aliens which don't fit the limit. */
+								tobase->alienscont[j].amount_dead++;
+							}
+						}
+					}
 					/* only once */
 					if (!messageAlreadySet) {
 						MN_AddNewMessage(_("Notice"), _("You've captured new aliens."), qfalse, MSG_STANDARD, NULL);
@@ -260,6 +279,8 @@ void AL_AddAliens (void)
 			}
 		}
 	}
+	/* Set the amount of currently stored in capacities. */
+	tobase->capacities[CAP_ALIENS][1] = AL_CountInBase();
 
 	for (i = 0; i < numTeamDesc; i++ ) {
 		if (!teamDesc[i].alien)

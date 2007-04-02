@@ -374,7 +374,7 @@ static void CL_ChangeSkinOnBoard_f (void)
 	} else {
 #ifdef DEBUG
 		/* should never happen */
-		Com_Printf("CL_CollectingAliens()... No aircraft selected!\n");
+		Com_Printf("CL_ChangeSkinOnBoard_f()... No aircraft selected!\n");
 #endif
 		return;
 	}
@@ -1850,7 +1850,7 @@ extern void CL_ParseResults (sizebuf_t * buf)
 #endif
 		CL_CollectingItems(winner == we);	/**< Collect items from the battlefield. */
 		if (winner == we)
-			CL_CollectingAliens();		/**< Collect aliens from the battlefield. */
+			AL_CollectingAliens();		/**< Collect aliens from the battlefield. */
 
 		/* clear unused LE inventories */
 		LE_Cleanup();
