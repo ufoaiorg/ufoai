@@ -320,7 +320,14 @@ int G_VisToPM(int vis_mask);
 void G_SendInventory(int player_mask, edict_t * ent);
 int G_TeamToPM(int team);
 
-extern int TU_REACTIONS[MAX_EDICTS][2];
+typedef enum {
+	REACT_TUS,	/**< Stores the used TUs for Reaction fire for each edict. */
+	REACT_FIRED,	/**< Stores if the edict has fired in reaction. */
+	
+	REACT_MAX
+} g_reaction_storage_type_t;
+
+extern int reactionTUs[MAX_EDICTS][REACT_MAX];	/**< Per actor: */
 
 typedef enum {
 	RF_HAND,	/**< Stores the used hand (0=right, 1=left, -1 undefined) */

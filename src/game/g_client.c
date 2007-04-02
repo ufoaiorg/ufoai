@@ -1256,14 +1256,14 @@ static void G_ClientStateChange (player_t * player, int num, int reqState)
 				/* Turn off reaction fire and give the soldier back his TUs if it used some. */
 				ent->state &= ~STATE_REACTION;
 
-				if (TU_REACTIONS[ent->number][0] > 0) {
+				if (reactionTUs[ent->number][REACT_TUS] > 0) {
 					/* TUs where used for activation. */
-					ent->TU += TU_REACTIONS[ent->number][0];
-				} else if (TU_REACTIONS[ent->number][0] < 0) {
+					ent->TU += reactionTUs[ent->number][0];
+				} else if (reactionTUs[ent->number][REACT_TUS] < 0) {
 					/* No TUs where used for activation. */
 					/* Don't give TUs back because none where used up (reaction fire was already active from previous turn) */
 				} else {
-					/* TU_REACTIONS[ent->number] == 0) */
+					/* reactionTUs[ent->number][REACT_TUS] == 0) */
 					/* This should never be the case.  */
 					Com_DPrintf("G_ClientStateChange: 0 value saved for reaction while reaction is activated.\n");
 				}
@@ -1281,15 +1281,15 @@ static void G_ClientStateChange (player_t * player, int num, int reqState)
 			/* Turn on reaction fire and save the used TUs to the list. */
 			ent->state |= STATE_REACTION_ONCE;
 
-			if (TU_REACTIONS[ent->number][0] > 0) {
+			if (reactionTUs[ent->number][REACT_TUS] > 0) {
 				/* TUs where saved for this turn (either the full TU_REACTION or some remaining TUs from the shot. This was done either in the last turn or this one. */
-				ent->TU -= TU_REACTIONS[ent->number][0];
-			} else if (TU_REACTIONS[ent->number][0] == 0) {
+				ent->TU -= reactionTUs[ent->number][REACT_TUS];
+			} else if (reactionTUs[ent->number][REACT_TUS] == 0) {
 				/* Reaction fire was not triggered in the last turn. */
 				ent->TU -= TU_REACTION;
-				TU_REACTIONS[ent->number][0] = TU_REACTION;
+				reactionTUs[ent->number][REACT_TUS] = TU_REACTION;
 			}  else {
-				/* TU_REACTIONS[ent->number][0] < 0 */
+				/* reactionTUs[ent->number][REACT_TUS] < 0 */
 				/* Reaction fire was triggered in the last turn,
 				   and has used 0 TU from this one.
 				   Can be activated without TU-loss. */
