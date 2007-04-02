@@ -38,15 +38,19 @@ qboolean visible_firemode_list_left = qfalse;
 qboolean visible_firemode_list_right = qfalse;
 qboolean firemodes_change_display = qtrue; /* If this set to qfalse so CL_DisplayFiremodes_f will not attempt to hide the list */
 
-int REACTION_FIREMODE[MAX_EDICTS][3];	/* Per actor: Stores the firemode to be used for reaction fire (if the fireDef allows that)
-					 * 1. sub-array
-					 *	0 ... Stores the used hand (0=right,1=left)
-					 *	1 ... Stores the firemode. Max. number is MAX_FIREDEFS_PER_WEAPON
-					 *			1 left hand
-					 *	2 ... Stores the weapon idx in ods. (for faster access)
-					 */
-#define THIS_REACTION( actoridx, hand, fd_idx )	( REACTION_FIREMODE[actoridx][0] == hand && REACTION_FIREMODE[actoridx][1] == fd_idx )
-#define SANE_REACTION( actoridx )	(( (REACTION_FIREMODE[actoridx ][0] >= 0) && (REACTION_FIREMODE[actoridx ][1] >=0 && REACTION_FIREMODE[actoridx ][1] < MAX_FIREDEFS_PER_WEAPON) && (REACTION_FIREMODE[actoridx ][1] >= 0) ))
+typedef enum {
+	RF_HAND,	/**< Stores the used hand (0=right,1=left) */
+	RF_FM,		/**< Stores the used firemode index. Max. number is MAX_FIREDEFS_PER_WEAPON */
+	RF_WPIDX, 	/**< Stores the weapon idx in ods. (for faster access and checks) */
+
+	RF_MAX
+} cl_reaction_firemode_type_t;
+
+static int reactionFiremode[MAX_EDICTS][RF_MAX]; /** < Per actor: Stores the firemode to be used for reaction fire (if the fireDef allows that) See also reaction_firemode_type_t */
+ 
+
+#define THIS_REACTION( actoridx, hand, fd_idx )	( reactionFiremode[actoridx][RF_HAND] == hand && reactionFiremode[actoridx][RF_FM] == fd_idx )
+#define SANE_REACTION( actoridx )	(( (reactionFiremode[actoridx ][RF_HAND] >= 0) && (reactionFiremode[actoridx ][RF_FM] >=0 && reactionFiremode[actoridx ][RF_FM] < MAX_FIREDEFS_PER_WEAPON) && (reactionFiremode[actoridx ][RF_FM] >= 0) ))
 
 static le_t *mouseActor;
 static pos3_t mouseLastPos;
@@ -461,10 +465,10 @@ static void CL_SetReactionFiremode (int actor_idx, int handidx, int obj_idx, int
 	le = cl.teamList[actor_idx];
 	Com_DPrintf("CL_SetReactionFiremode: actor:%i entnum:%i hand:%i fd:%i\n", actor_idx,le->entnum, handidx, fd_idx);
 
-	REACTION_FIREMODE[actor_idx][0] = handidx;	/* Store the given hand. */
-	REACTION_FIREMODE[actor_idx][1] = fd_idx;	/* Store the given firemode for this hand. */
+	reactionFiremode[actor_idx][RF_HAND] = handidx;	/* Store the given hand. */
+	reactionFiremode[actor_idx][RF_FM] = fd_idx;	/* Store the given firemode for this hand. */
 	MSG_Write_PA(PA_REACT_SELECT, le->entnum, handidx, fd_idx); /* Send hand and firemode to server-side storage as well. See g_local.h for more. */
-	REACTION_FIREMODE[actor_idx][2] = obj_idx;	/* Store the weapon-idx of the object in the hand (for faster access). */
+	reactionFiremode[actor_idx][RF_WPIDX] = obj_idx;	/* Store the weapon-idx of the object in the hand (for faster access). */
 }
 
 /**
@@ -559,7 +563,7 @@ static void CL_GetWeaponAndAmmo (char hand, objDef_t **weapon, objDef_t **ammo, 
 }
 
 /**
- * @brief Updates the information in REACTION_FIREMODE for the selected actor with the given data from the parameters.
+ * @brief Updates the information in reactionFiremode for the selected actor with the given data from the parameters.
  * @param[in] hand Which weapon(-hand) to use (l|r).
  * @param[in] active_firemode Set this to the firemode index you want to activate or set it to -1 if the default one (currently the first one found) should be used.
  */
@@ -602,10 +606,10 @@ static void CL_UpdateReactionFiremodes (char hand, int actor_idx, int active_fir
 		return;
 
 	Com_DPrintf("CL_UpdateReactionFiremodes: act%i handidx%i weapfdidx%i\n", actor_idx, handidx, weap_fd_idx);
-	if (REACTION_FIREMODE[actor_idx][2] == ammo->weap_idx[weap_fd_idx]
-	&&  REACTION_FIREMODE[actor_idx][0] == handidx) {
+	if (reactionFiremode[actor_idx][RF_WPIDX] == ammo->weap_idx[weap_fd_idx]
+	&&  reactionFiremode[actor_idx][RF_HAND] == handidx) {
 		if (ammo->fd[weap_fd_idx][active_firemode].reaction) {
-			if (REACTION_FIREMODE[actor_idx][1] == active_firemode)
+			if (reactionFiremode[actor_idx][RF_FM] == active_firemode)
 				/* Weapon is the same, firemode is already selected and reaction-usable. Nothing to do. */
 				return;
 		} else {
@@ -700,15 +704,15 @@ void CL_DisplayFiremodes_f (void)
 			CL_UpdateReactionFiremodes('l', actor_idx, -1);
 		}
 	} else {
-		if (REACTION_FIREMODE[actor_idx][2] != ammo->weap_idx[weap_fd_idx]) {
-			if ((hand[0] == 'r') && (REACTION_FIREMODE[actor_idx][0] == 0)) {
+		if (reactionFiremode[actor_idx][RF_WPIDX] != ammo->weap_idx[weap_fd_idx]) {
+			if ((hand[0] == 'r') && (reactionFiremode[actor_idx][RF_HAND] == 0)) {
 				/* Set default firemode (try right hand first, then left hand). */
 				CL_UpdateReactionFiremodes('r', actor_idx, -1);
 				if (!SANE_REACTION(actor_idx)) {
 					CL_UpdateReactionFiremodes('l', actor_idx, -1);
 				}
 			}
-			if ((hand[0] == 'l') && (REACTION_FIREMODE[actor_idx][0] == 1)) {
+			if ((hand[0] == 'l') && (reactionFiremode[actor_idx][RF_HAND] == 1)) {
 				/* Set default firemode (try left hand first, then right hand). */
 				CL_UpdateReactionFiremodes('l', actor_idx, -1);
 				if (!SANE_REACTION(actor_idx)) {
@@ -727,7 +731,7 @@ void CL_DisplayFiremodes_f (void)
 				CL_DisplayFiremodeEntry(&ammo->fd[weap_fd_idx][i], hand[0], qfalse);
 			}
 
-			/* Display checkbox for reaction firemode (this needs a sane REACTION_FIREMODE array) */
+			/* Display checkbox for reaction firemode (this needs a sane reactionFiremode array) */
 			if (ammo->fd[weap_fd_idx][i].reaction) {
 				Com_DPrintf("CL_DisplayFiremodes_f: This is a reaction firemode: %i\n", i);
 				if (hand[0] == 'r') {
