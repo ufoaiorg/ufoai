@@ -51,7 +51,7 @@ typedef enum {
 	BASE_WORKING		/**< nothing special */
 } baseStatus_t;
 
-/** @brief All possible building status */
+/** @brief All possible building status. */
 typedef enum {
 	B_STATUS_NOT_SET,			/**< not build yet */
 	B_STATUS_UNDER_CONSTRUCTION,	/**< right now under construction */
@@ -61,7 +61,7 @@ typedef enum {
 	B_STATUS_DOWN				/**< totally damaged */
 } buildingStatus_t;
 
-/** @brief All different building types */
+/** @brief All different building types. */
 typedef enum {
 	B_MISC,			/**< this building is nothing with a special function */
 	B_LAB,			/**< this building is a lab */
@@ -72,6 +72,20 @@ typedef enum {
 	B_HANGAR,		/**< this building is a hangar */
 	B_ALIEN_CONTAINMENT	/**< this building is an alien containment */
 } buildingType_t;
+
+/** @brief All possible capacities in base. */
+typedef enum {
+	CAP_ALIENS,		/**< Alive aliens stored in base. */
+	CAP_AIRCRAFTS_SMALL,	/**< Small aircrafts in base. */
+	CAP_AIRCRAFTS_BIG,	/**< Big aircrafts in base. */
+	CAP_EMPLOYEES,		/**< Personel in base. */
+	CAP_ITEMS,		/**< Items in base. */
+	CAP_LABSPACE,		/**< Space for scientists in laboratory. */
+	CAP_WORKSPACE,		/**< Space for workers in workshop. */
+	CAP_HOSPSPACE,		/**< Space for hurted people in hospital. */
+
+	MAX_CAP
+} baseCapacities_t;
 
 /** @brief A building with all it's data */
 typedef struct building_s {
@@ -184,6 +198,10 @@ typedef struct base_s {
 
 	aliensCont_t alienscont[MAX_ALIENCONT_CAP];	/**< alien containment capacity */
 
+	baseCapacities_t capacities[MAX_BUILDINGS][1]; /**< Capacities. [MAX_BUILDINGS][0] - max, [1] - currently
+ in use. */
+
+
 	equipDef_t storage;	/**< weapons, etc. stored in base */
 
 	inventory_t equipByBuyType;	/**< idEquip sorted by buytype; needen't be saved;
@@ -258,5 +276,7 @@ qboolean B_CheckBuildingTypeStatus(const base_t* const base, buildingType_t type
 
 void B_BuildingDestroy(building_t* building, base_t* base);
 void CL_DropshipReturned(base_t* base, aircraft_t* aircraft);
+
+void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base);
 
 #endif /* CLIENT_CL_BASEMANGEMENT_H */
