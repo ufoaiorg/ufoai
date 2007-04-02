@@ -392,6 +392,8 @@ void AL_RemoveAliens (const char *name, int amount, alienCalcType_t action)
 	default:
 		break;
 	}
+	/* Set the amount of currently stored in capacities. */
+	baseCurrent->capacities[CAP_ALIENS][1] = AL_CountInBase();
 	return;
 }
 
