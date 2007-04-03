@@ -1613,6 +1613,9 @@ extern void CL_InitAfter (void)
 
 	/* init some production menu nodes */
 	PR_Init();
+
+	/* link for faster access */
+	MN_LinkMenuModels();
 }
 
 /**

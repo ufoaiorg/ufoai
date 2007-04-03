@@ -147,6 +147,7 @@ static const value_t nps[] = {
 static const value_t menuModelValues[] = {
 	{"model", V_STRING, offsetof(menuModel_t, model)},
 	{"need", V_NULL, 0},
+	{"menuscale", V_NULL, 0},
 	{"anim", V_STRING, offsetof(menuModel_t, anim)},
 	{"skin", V_INT, offsetof(menuModel_t, skin)},
 	{"origin", V_VECTOR, offsetof(menuModel_t, origin)},
@@ -2301,6 +2302,7 @@ void MN_DrawMenus (void)
 							/* set mi pointers to menuModel */
 							mi.origin = menuModel->origin;
 							mi.angles = menuModel->angles;
+							/* TODO: menuScale stuff */
 							mi.scale = menuModel->scale;
 							mi.center = menuModel->center;
 							mi.color = menuModel->color;
@@ -3677,6 +3679,22 @@ qboolean MN_ParseMenuBody (menu_t * menu, char **text)
 }
 
 /**
+ * @brief Add a menu link to menumodel definition for faster access
+ * @note Called after all menus are parsed of course
+ */
+void MN_LinkMenuModels (void)
+{
+	int i, j;
+	for (i = 0; i < numMenuModels; i++) {
+		for (j = 0; j < menuModels[i].menuScaleCnt; j++) {
+			menuModels[i].menuScaleMenusPtr[j] = MN_GetMenu(menuModels[i].menuScale[j]);
+			if (menuModels[i].menuScaleMenusPtr[j] == NULL)
+				Com_Printf("Could not find menu '%s' as requested by menumodel '%s'", menuModels[i].menuScale[j], menuModels[i].id);
+		}
+	}
+}
+
+/**
  * @brief parses the models.ufo and all files where menu_models are defined
  */
 void MN_ParseMenuModel (const char *name, char **text)
@@ -3689,7 +3707,7 @@ void MN_ParseMenuModel (const char *name, char **text)
 
 	/* search for menumodels with same name */
 	for (i = 0; i < numMenuModels; i++)
-		if (!Q_strncmp(menuModels[i].id, name, MAX_VAR)) {
+		if (!Q_strncmp(menuModels[i].id, name, sizeof(menuModels[i].id))) {
 			Com_Printf("MN_ParseMenuModel: menu_model \"%s\" with same name found, second ignored\n", name);
 			return;
 		}
@@ -3705,7 +3723,7 @@ void MN_ParseMenuModel (const char *name, char **text)
 
 	Vector4Set(menuModel->color, 0.5, 0.5, 0.5, 1.0);
 
-	Q_strncpyz(menuModel->id, name, MAX_VAR);
+	Q_strncpyz(menuModel->id, name, sizeof(menuModel->id));
 	Com_DPrintf("Found menu model %s (%i)\n", menuModel->id, numMenuModels);
 
 	/* get it's body */
@@ -3736,7 +3754,36 @@ void MN_ParseMenuModel (const char *name, char **text)
 					menuModel->next = MN_GetMenuModel(token);
 					if (!menuModel->next)
 						Com_Printf("Could not find menumodel %s", token);
-					Q_strncpyz(menuModel->need, token, MAX_QPATH);
+					Q_strncpyz(menuModel->need, token, sizeof(menuModel->need));
+				} else if (!Q_strncmp(v->string, "menuscale", 9)) {
+					token = COM_EParse(text, errhead, name);
+					if (!*text)
+						return;
+					if (*token != '{') {
+						Com_Printf("Error in menumodel '%s' menuscale definition\n", name);
+						break;
+					}
+					do {
+						token = COM_EParse(text, errhead, name);
+						if (!*text)
+							return;
+						if (*token == '}')
+							break;
+						Q_strncpyz(menuModel->menuScale[menuModel->menuScaleCnt], token, sizeof(menuModel->menuScale[menuModel->menuScaleCnt]));
+						token = COM_EParse(text, errhead, name);
+						if (!*text)
+							return;
+						if (*token == '}') {
+							Com_Printf("Error in menumodel '%s' menuscale definition - missing scale float value\n", name);
+							break;
+						}
+						menuModel->menuScaleValue[menuModel->menuScaleCnt] = atof(token);
+						menuModel->menuScaleCnt++;
+					} while (*token != '}'); /* dummy condition - break is earlier here */
+					menuModel->next = MN_GetMenuModel(token);
+					if (!menuModel->next)
+						Com_Printf("Could not find menumodel %s", token);
+					Q_strncpyz(menuModel->need, token, sizeof(menuModel->need));
 				} else {
 					token = COM_EParse(text, errhead, name);
 					if (!*text)

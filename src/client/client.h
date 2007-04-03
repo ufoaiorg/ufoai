@@ -848,6 +848,9 @@ void TR_Reset (void);
 
 #define MAX_EXLUDERECTS	4
 
+/* max menuscale values */
+#define MAX_MENUMODELS_SCALEMENUS 8
+
 /** @brief Model that have more than one part (head, body) but may only use one menu node */
 typedef struct menuModel_s {
 	char id[MAX_VAR];
@@ -857,6 +860,10 @@ typedef struct menuModel_s {
 	char tag[MAX_VAR];
 	int skin;
 	char model[MAX_QPATH];
+	char menuScale[MAX_MENUMODELS_SCALEMENUS][MAX_VAR];	/**< the menu id to scale this model for */
+	void *menuScaleMenusPtr[MAX_MENUMODELS_SCALEMENUS];	/**< linked after parsing for faster access */
+	float menuScaleValue[MAX_MENUMODELS_SCALEMENUS];	/**< the scale values for the specific menu */
+	int menuScaleCnt;			/**< parsed menuscale menus */
 	animState_t animState;
 	vec3_t origin, scale, angles, center;
 	vec4_t color;				/**< rgba */
@@ -974,6 +981,7 @@ menu_t *MN_GetMenu(const char *name);
 const char *MN_GetFont(const menu_t *m, const menuNode_t *const n);
 void MN_TextScrollBottom(const char* nodeName);
 void MN_ExecuteActions(const menu_t* const menu, menuAction_t* const first);
+void MN_LinkMenuModels(void);
 
 void MN_ResetMenus(void);
 void MN_Shutdown(void);
