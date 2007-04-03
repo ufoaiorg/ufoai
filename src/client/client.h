@@ -862,7 +862,7 @@ typedef struct menuModel_s {
 	char model[MAX_QPATH];
 	char menuScale[MAX_MENUMODELS_SCALEMENUS][MAX_VAR];	/**< the menu id to scale this model for */
 	void *menuScaleMenusPtr[MAX_MENUMODELS_SCALEMENUS];	/**< linked after parsing for faster access */
-	float menuScaleValue[MAX_MENUMODELS_SCALEMENUS];	/**< the scale values for the specific menu */
+	vec3_t menuScaleValue[MAX_MENUMODELS_SCALEMENUS];	/**< the scale values for the specific menu */
 	int menuScaleCnt;			/**< parsed menuscale menus */
 	animState_t animState;
 	vec3_t origin, scale, angles, center;

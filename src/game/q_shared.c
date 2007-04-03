@@ -3529,7 +3529,7 @@ int Com_ParseValue (void *base, char *token, int type, int ofs)
 		return ALIGN(2 * sizeof(float));
 
 	case V_VECTOR:
-		if (strstr(strstr(token, " "), " ") == NULL)
+		if (strstr(token, " ") == NULL || strstr(strstr(token, " "), " ") == NULL)
 			Sys_Error("Com_ParseValue: Illegal vector statement '%s'\n", token);
 		sscanf(token, "%f %f %f", &((float *) b)[0], &((float *) b)[1], &((float *) b)[2]);
 		return ALIGN(3 * sizeof(float));

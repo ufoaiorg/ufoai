@@ -3777,7 +3777,7 @@ void MN_ParseMenuModel (const char *name, char **text)
 							Com_Printf("Error in menumodel '%s' menuscale definition - missing scale float value\n", name);
 							break;
 						}
-						menuModel->menuScaleValue[menuModel->menuScaleCnt] = atof(token);
+						Com_ParseValue(&menuModel->menuScaleValue[menuModel->menuScaleCnt], token, V_VECTOR, 0);
 						menuModel->menuScaleCnt++;
 					} while (*token != '}'); /* dummy condition - break is earlier here */
 					menuModel->next = MN_GetMenuModel(token);
