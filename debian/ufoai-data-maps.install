@@ -3,6 +3,9 @@ base/maps/*.bsp /usr/lib/games/ufoai/base/maps
 base/maps/villaged/*.bsp /usr/lib/games/ufoai/base/maps/villaged
 base/maps/villagen/*.bsp /usr/lib/games/ufoai/base/maps/villagen
 
+base/maps/countryd/*.bsp /usr/lib/games/ufoai/base/maps/countryd
+base/maps/countryn/*.bsp /usr/lib/games/ufoai/base/maps/countryn
+
 base/maps/frozend/*.bsp /usr/lib/games/ufoai/base/maps/frozend
 base/maps/frozenn/*.bsp /usr/lib/games/ufoai/base/maps/frozenn
 

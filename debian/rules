@@ -75,12 +75,12 @@ clean:
 	  mv debian/cl2 debian/changelog ;\
 	fi
 
-	dh_clean 
+	dh_clean
 
 install-arch: stamps/build-arch
 	dh_testdir
 	dh_testroot
-	dh_clean -k 
+	dh_clean -k
 	dh_installdirs
 
 	dh_install
@@ -90,7 +90,7 @@ install-arch: stamps/build-arch
 install-indep: stamps/build-indep
 	dh_testdir
 	dh_testroot
-	dh_clean -k 
+	dh_clean -k
 	dh_installdirs
 
 	dh_install
@@ -135,7 +135,7 @@ binary-arch: versionconfig install-arch
 	dh_installexamples
 #	dh_install
 	dh_installmenu
-#	dh_installdebconf	
+#	dh_installdebconf
 #	dh_installman
 	dh_strip
 	dh_compress
