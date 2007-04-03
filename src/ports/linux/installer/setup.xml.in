@@ -32,6 +32,7 @@
     Required for play
    </help>
    <files>
+    BUGS
     data.tar
     i18n.tar.bz2
    </files>
