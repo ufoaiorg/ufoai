@@ -1841,7 +1841,7 @@ void MN_DrawMenus (void)
 	vec4_t color;
 	int mouseOver = 0;
 	char *cur, *tab, *end;
-	int y, x;
+	int y, x, i;
 	message_t *message;
 	menuModel_t *menuModel = NULL, *menuModelParent = NULL;
 	void *oldAnimState = NULL;
@@ -2303,7 +2303,19 @@ void MN_DrawMenus (void)
 							mi.origin = menuModel->origin;
 							mi.angles = menuModel->angles;
 							/* TODO: menuScale stuff */
-							mi.scale = menuModel->scale;
+							if (menuModel->menuScaleCnt) {
+								for (i = 0; i < menuModel->menuScaleCnt; i++) {
+									if (menu == menuModel->menuScaleMenusPtr[i]) {
+										mi.scale = menuModel->menuScaleValue[i];
+										break;
+									}
+								}
+								/* not for this menu */
+								if (i == menuModel->menuScaleCnt)
+									mi.scale = menuModel->scale;
+							} else {
+								mi.scale = menuModel->scale;
+							}
 							mi.center = menuModel->center;
 							mi.color = menuModel->color;
 
