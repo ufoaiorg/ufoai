@@ -1453,6 +1453,7 @@ extern void Qcommon_Init (int argc, char **argv)
 #ifdef HAVE_GETTEXT
 	/* i18n through gettext */
 	char languagePath[MAX_OSPATH];
+	cvar_t *fs_i18ndir;
 #endif /* HAVE_GETTEXT */
 #endif /* DEDICATED_ONLY */
 
@@ -1532,11 +1533,15 @@ extern void Qcommon_Init (int argc, char **argv)
 
 #ifndef DEDICATED_ONLY /* no gettext support for dedicated servers please */
 #ifdef HAVE_GETTEXT
+	fs_i18ndir = Cvar_Get("fs_i18ndir", "", 0, "System path to language files");
 	/* i18n through gettext */
 	setlocale(LC_ALL, "C");
 	setlocale(LC_MESSAGES, "");
 	/* use system locale dir if we can't find in gamedir */
-	Com_sprintf(languagePath, MAX_OSPATH, "%s/base/i18n/", FS_GetCwd());
+	if (*fs_i18ndir->string)
+		Q_strncpyz(languagePath, fs_i18ndir->string, sizeof(languagePath));
+	else
+		Com_sprintf(languagePath, sizeof(languagePath), "%s/base/i18n/", FS_GetCwd());
 	Com_DPrintf("...using mo files from %s\n", languagePath);
 	bindtextdomain(TEXT_DOMAIN, languagePath);
 	bind_textdomain_codeset(TEXT_DOMAIN, "UTF-8");
