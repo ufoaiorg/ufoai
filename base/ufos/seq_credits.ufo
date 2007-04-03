@@ -902,13 +902,13 @@ sequence credits
 	2dobj ufoai { speed "0 0" }
 	2dobj www
 	{
-		text	"_http://www.ufoai.net"
+		text	"_http://ufoai.sf.net"
 		pos		"512 710"	align	uc
 		color	"0 1 0 0"	fade	"0 0 0 1"
 	}
 	2dobj copyright
 	{
-		text	"_Copyright 2004-2006 by UFO: AI Team"
+		text	"_Copyright 2004-2007 by UFO: AI Team"
 		pos		"512 736"	align	uc
 		color	"1 1 1 0"	fade	"0 0 0 1"
 	}
