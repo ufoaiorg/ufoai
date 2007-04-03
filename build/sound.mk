@@ -17,8 +17,8 @@ endif
 
 # Say about to build the target
 $(SND_SDL_TARGET) : $(SND_SDL_OBJS) $(BUILDDIR)/.dirs
-	@echo " * [SDL] ... linking"; \
-		$(CC) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(SND_SDL_OBJS) $(LIBS) $(LNKFLAGS) $(SDL_LIBS)
+	@echo " * [SDL] ... linking $(LNKFLAGS) ($(SND_SDL_LIBS))"; \
+		$(CC) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(SND_SDL_OBJS) $(SND_LIBS_LIBS) $(LNKFLAGS)
 
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/snd-sdl/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
@@ -48,8 +48,8 @@ endif
 
 # Say about to build the target
 $(SND_ALSA_TARGET) : $(SND_ALSA_OBJS) $(BUILDDIR)/.dirs
-	@echo " * [ALSA] ... linking"; \
-		$(CC) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(SND_ALSA_OBJS) $(LIBS) $(LNKFLAGS)
+	@echo " * [ALSA] ... linking $(LNKFLAGS) ($(SND_ALSA_LIBS))"; \
+		$(CC) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(SND_ALSA_OBJS) $(SND_ALSA_LIBS) $(LNKFLAGS)
 
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/snd-alsa/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
@@ -79,8 +79,8 @@ endif
 
 # Say about to build the target
 $(SND_JACK_TARGET) : $(SND_JACK_OBJS) $(BUILDDIR)/.dirs
-	@echo " * [JACK] ... linking"; \
-		$(CC) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(SND_JACK_OBJS) $(LIBS) $(LNKFLAGS)
+	@echo " * [JACK] ... linking $(LNKFLAGS) ($(SND_JACK_LIBS))"; \
+		$(CC) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(SND_JACK_OBJS) $(SND_JACK_LIBS) $(LNKFLAGS)
 
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/snd-jack/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
@@ -110,8 +110,8 @@ endif
 
 # Say about to build the target
 $(SND_OSS_TARGET) : $(SND_OSS_OBJS) $(BUILDDIR)/.dirs
-	@echo " * [OSS] ... linking"; \
-		$(CC) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(SND_OSS_OBJS) $(LIBS) $(LNKFLAGS)
+	@echo " * [OSS] ... linking $(LNKFLAGS) ($(SND_OSS_LIBS))"; \
+		$(CC) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(SND_OSS_OBJS) $(SND_OSS_LIBS) $(LNKFLAGS)
 
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/snd-oss/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
@@ -141,17 +141,17 @@ endif
 
 # Say about to build the target
 $(SND_ARTS_TARGET) : $(SND_ARTS_OBJS) $(BUILDDIR)/.dirs
-	@echo " * [ARTS] ... linking"; \
-		$(CC) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(SND_ARTS_OBJS) $(LIBS) $(LNKFLAGS) $(ARTS_LIBS)
+	@echo " * [ARTS] ... linking $(LNKFLAGS) ($(SND_ARTS_LIBS))"; \
+		$(CC) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(SND_ARTS_OBJS) $(LNKFLAGS) $(SND_ARTS_LIBS)
 
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/snd-arts/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 	@echo " * [ARTS] $<"; \
-		$(CC) $(CFLAGS) $(SHARED_CFLAGS) $(ARTS_CFLAGS) -o $@ -c $<
+		$(CC) $(CFLAGS) $(SHARED_CFLAGS) $(SND_ARTS_CFLAGS) -o $@ -c $<
 
 # Say how to build the dependencies
 $(BUILDDIR)/snd-arts/%.d: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
-	@echo " * [DEP] $<"; $(DEP) $(SHARED_CFLAGS) $(ARTS_CFLAGS)
+	@echo " * [DEP] $<"; $(DEP) $(SHARED_CFLAGS) $(SND_ARTS_CFLAGS)
 
 
 ###################################################################################################
@@ -173,8 +173,8 @@ endif
 
 # Say about to build the target
 $(SND_WAPI_TARGET) : $(SND_WAPI_OBJS) $(BUILDDIR)/.dirs
-	@echo " * [WAPI] ... linking"; \
-		$(CC) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(SND_WAPI_OBJS) $(LIBS) $(LNKFLAGS)
+	@echo " * [WAPI] ... linking $(LNKFLAGS) ($(SND_WAPI_LIBS))"; \
+		$(CC) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(SND_WAPI_OBJS) $(SND_WAPI_LIBS) $(LNKFLAGS)
 
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/snd-wapi/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
@@ -204,8 +204,8 @@ endif
 
 # Say about to build the target
 $(SND_DX_TARGET) : $(SND_DX_OBJS) $(BUILDDIR)/.dirs
-	@echo " * [DX] ... linking"; \
-		$(CC) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(SND_DX_OBJS) $(LIBS) $(LNKFLAGS)
+	@echo " * [DX] ... linking $(LNKFLAGS) ($(SND_DX_LIBS))"; \
+		$(CC) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(SND_DX_OBJS) $(SND_DX_LIBS) $(LNKFLAGS)
 
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/snd-dx/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs

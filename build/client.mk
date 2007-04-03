@@ -177,8 +177,8 @@ endif
 
 # Say how to link the exe
 $(CLIENT_TARGET): $(CLIENT_OBJS) $(BUILDDIR)/.dirs
-	@echo " * [UFO] ... linking $(LNKFLAGS)"; \
-		$(CC) $(LDFLAGS) -o $@ $(CLIENT_OBJS) $(LIBS) $(LNKFLAGS) $(CLIENT_LIBS)
+	@echo " * [UFO] ... linking $(LNKFLAGS) ($(CLIENT_LIBS))"; \
+		$(CC) $(LDFLAGS) -o $@ $(CLIENT_OBJS) $(LNKFLAGS) $(CLIENT_LIBS)
 
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/client/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs

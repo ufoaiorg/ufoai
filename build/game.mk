@@ -19,12 +19,10 @@ ALL_OBJS += $(GAME_OBJS)
 ALL_DEPS += $(GAME_DEPS)
 TARGETS +=$(GAME_TARGET)
 
-GAMELIBS+=-lm
-
 # Say how about to build the target
 $(GAME_TARGET) : $(GAME_OBJS) $(BUILDDIR)/.dirs
-	@echo " * [GAM] ... linking"; \
-		$(CC) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(GAME_OBJS) $(GAMELIBS) $(LNKFLAGS)
+	@echo " * [GAM] ... linking $(LNKFLAGS) ($(GAME_LIBS))"; \
+		$(CC) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(GAME_OBJS) $(GAME_LIBS) $(LNKFLAGS)
 
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/game/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs

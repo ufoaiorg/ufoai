@@ -95,12 +95,10 @@ endif
 
 DEDICATED_CFLAGS=-DDEDICATED_ONLY
 
-SERVERLIBS+=-lz -lm
-
 # Say how to link the exe
 $(SERVER_TARGET): $(SERVER_OBJS) $(BUILDDIR)/.dirs
-	@echo " * [DED] ... linking"; \
-		$(CC) $(LDFLAGS) -o $@ $(SERVER_OBJS) $(SERVERLIBS) $(LIBS)
+	@echo " * [DED] ... linking $(LNKFLAGS) ($(SERVER_LIBS))"; \
+		$(CC) $(LDFLAGS) -o $@ $(SERVER_OBJS) $(SERVER_LIBS)
 
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/server/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
