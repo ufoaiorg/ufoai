@@ -17,7 +17,7 @@ AC_ARG_WITH(shaders,
 	[], [with_shaders=check])
 
 AC_ARG_WITH(snd_sdl,
-    [AS_HELP_STRING([--with-snd-sdl], [with SDL sound support @<:@default=check@:>@])],
+	[AS_HELP_STRING([--with-snd-sdl], [with SDL sound support @<:@default=check@:>@])],
 	[], [with_snd_sdl=check])
 
 AC_ARG_WITH(snd_alsa,
@@ -33,15 +33,15 @@ AC_ARG_WITH(snd_oss,
 	[], [with_snd_oss=check])
 
 AC_ARG_WITH(snd_arts,
-    [AS_HELP_STRING([--with-snd-arts], [with arts sound support @<:@default=check@:>@])],
+	[AS_HELP_STRING([--with-snd-arts], [with arts sound support @<:@default=check@:>@])],
 	[], [with_snd_arts=check])
 
 AC_ARG_WITH(snd_wapi,
-    [AS_HELP_STRING([--with-snd-wapi], [with wapi sound support @<:@default=check@:>@])],
+	[AS_HELP_STRING([--with-snd-wapi], [with wapi sound support @<:@default=check@:>@])],
 	[], [with_snd_wapi=check])
 
 AC_ARG_WITH(snd_dx,
-    [AS_HELP_STRING([--with-snd-dx], [with directX sound support @<:@default=check@:>@])],
+	[AS_HELP_STRING([--with-snd-dx], [with directX sound support @<:@default=check@:>@])],
 	[], [with_snd_dx=check])
 
 AC_ARG_WITH(vid_dga,
@@ -329,9 +329,9 @@ then
 	AC_SEARCH_LIBS([strcasecmp], [])
 	if test "$ac_cv_search_strcasecmp" = "no"
 	then
-	   AC_MSG_ERROR([could find neither stricmp nor strcasecmp!])
+		AC_MSG_ERROR([could find neither stricmp nor strcasecmp!])
 	else
-	   AC_DEFINE([stricmp],[strcasecmp])
+		AC_DEFINE([stricmp],[strcasecmp])
 	fi
 fi
 
@@ -370,39 +370,39 @@ fi
 
 if test "$with_openal" = "check" || test "$with_openal" = "yes"
 then
-   AC_CHECK_HEADERS([AL/al.h AL/alc.h])
-   if test "$ac_cv_header_AL_al_h" != "yes" || \
-      test "$ac_cv_header_AL_alc_h" != "yes"
-   then
-      AC_CHECK_HEADERS([OpenAL/al.h OpenAL/alc.h])
-      if test "$ac_cv_header_OpenAL_al_h" != "yes" || \
-        test "$ac_cv_header_OpenAL_alc_h" != "yes"
-      then
-        if test "$with_openal" = "yes"
-        then
-          AC_MSG_ERROR([specified --with-openal specified but cannot find OpenAL header!])
-        fi
-      else
-        AC_SUBST([HAVE_OPENAL],1)
-      fi
-   elif test "$with_openal" = "yes"
-   then
-     AC_MSG_ERROR([specified --with-openal specified but cannot find OpenAL header!])
-   else
-     AC_SUBST([HAVE_OPENAL], 1)
-     AC_SEARCH_LIBS([alSourcePlay],[openal openal32])
-     if test "$ac_cv_search_alSourcePlay" = "no"
-     then
-        AC_MSG_WARN([couldn't find OpenAL library!])
-        AC_SUBST([HAVE_OPENAL], 0)
-     fi
-     AC_SEARCH_LIBS([alutLoadWAVFile],[alut])
-     if test "$ac_cv_search_alutLoadWAVFile" = "no"
-     then
-        AC_MSG_WARN([couldn't find OpenAL utility library!])
-        AC_SUBST([HAVE_OPENAL], 0)
-     fi
-   fi
+	AC_CHECK_HEADERS([AL/al.h AL/alc.h])
+	if test "$ac_cv_header_AL_al_h" != "yes" || \
+		test "$ac_cv_header_AL_alc_h" != "yes"
+	then
+		AC_CHECK_HEADERS([OpenAL/al.h OpenAL/alc.h])
+		if test "$ac_cv_header_OpenAL_al_h" != "yes" || \
+			test "$ac_cv_header_OpenAL_alc_h" != "yes"
+		then
+			if test "$with_openal" = "yes"
+			then
+			AC_MSG_ERROR([specified --with-openal specified but cannot find OpenAL header!])
+			fi
+		else
+			AC_SUBST([HAVE_OPENAL],1)
+		fi
+	elif test "$with_openal" = "yes"
+	then
+		AC_MSG_ERROR([specified --with-openal specified but cannot find OpenAL header!])
+	else
+		AC_SUBST([HAVE_OPENAL], 1)
+		AC_SEARCH_LIBS([alSourcePlay],[openal openal32])
+		if test "$ac_cv_search_alSourcePlay" = "no"
+		then
+			AC_MSG_WARN([couldn't find OpenAL library!])
+			AC_SUBST([HAVE_OPENAL], 0)
+		fi
+		AC_SEARCH_LIBS([alutLoadWAVFile],[alut])
+		if test "$ac_cv_search_alutLoadWAVFile" = "no"
+		then
+			AC_MSG_WARN([couldn't find OpenAL utility library!])
+			AC_SUBST([HAVE_OPENAL], 0)
+		fi
+	fi
 else
 	AC_MSG_NOTICE([Without OpenAL])
 fi
@@ -491,7 +491,7 @@ else
 fi
 
 if test "$with_sdl" = "check" || test "$with_sdl" = "yes" || \
-   test "$with_snd_sdl" = "check" || test "$with_snd_sdl" = "yes"
+	test "$with_snd_sdl" = "check" || test "$with_snd_sdl" = "yes"
 then
 	AC_SUBST([HAVE_SDL],1)
 else
@@ -648,9 +648,9 @@ then
 		AC_SEARCH_LIBS([glXCreateContext],[GL MesaGL])
 		if test "$ac_cv_search_glXCreateContext" = "no"
 		then
-		   AC_MSG_WARN([found GLX headers but couldn't find GLX libraries, GLX will be disabled!])
+			AC_MSG_WARN([found GLX headers but couldn't find GLX libraries, GLX will be disabled!])
 		else
-		   AC_SUBST([HAVE_VID_GLX],1)
+			AC_SUBST([HAVE_VID_GLX],1)
 		fi
 	elif test "$with_vid_glx" = "yes"
 	then
@@ -667,11 +667,11 @@ fi
 AC_CHECK_HEADERS([GL/gl.h GL/glu.h])
 
 if test "$ac_cv_header_GL_gl_h" != "yes" || \
-   test "$ac_cv_header_GL_glu_h" != "yes"
+	test "$ac_cv_header_GL_glu_h" != "yes"
 then
 	AC_CHECK_HEADERS([OpenGL/gl.h OpenGL/glu.h])
 	if test "$ac_cv_header_OpenGL_gl_h" != "yes" || \
-   	   test "$ac_cv_header_OpenGL_glu_h" != "yes"
+		test "$ac_cv_header_OpenGL_glu_h" != "yes"
 	then
 		if test "$enable_client" = "yes"
 		then
@@ -739,7 +739,6 @@ then
 		if test "$ac_cv_search_jack_client_open" != "no"
 		then
 			AC_SUBST([HAVE_SND_JACK],1)
-			AC_DEFINE([USE_JACK],1)
 		else
 			AC_MSG_ERROR([found jack header but couldn't locate jack library!])
 		fi
@@ -764,7 +763,6 @@ then
 		if test "$ac_cv_search_snd_pcm_open" != "no"
 		then
 			AC_SUBST([HAVE_SND_ALSA],1)
-			AC_DEFINE([USE_ALSA],1)
 		else
 			AC_MSG_ERROR([found alsa header but couldn't locate alsa library!])
 		fi
@@ -782,20 +780,20 @@ fi
 
 if test "$with_snd_alsa" = "check" || test "$with_snd_alsa" = "yes"
 then
-   AC_CHECK_HEADERS([linux/soundcard.h])
-   if test "$ac_cv_header_linux_soundcard_h" != "yes"
-   then
-	 AC_CHECK_HEADERS([sys/soundcard.h])
-     if test "$ac_cv_header_sys_soundcard_h" = "yes"
-	 then
-	 	AC_DEFINE([OSS_HEADER_SYS],[1])
-	 fi
-   fi
-   if test "$ac_cv_header_linux_soundcard_h" = "yes" || \
-	  test "$ac_cv_header_sys_soundcard_h" = "yes"
-   then
-     AC_SUBST([HAVE_SND_OSS],1)
-   fi
+	AC_CHECK_HEADERS([linux/soundcard.h])
+	if test "$ac_cv_header_linux_soundcard_h" != "yes"
+	then
+		AC_CHECK_HEADERS([sys/soundcard.h])
+		if test "$ac_cv_header_sys_soundcard_h" = "yes"
+		then
+			AC_DEFINE([OSS_HEADER_SYS],[1])
+		fi
+	fi
+	if test "$ac_cv_header_linux_soundcard_h" = "yes" || \
+		test "$ac_cv_header_sys_soundcard_h" = "yes"
+	then
+		AC_SUBST([HAVE_SND_OSS],1)
+	fi
 else
 	AC_MSG_NOTICE([Without OSS sound])
 fi
@@ -823,14 +821,14 @@ fi
 
 if test "$with_snd_wapi" = "check" || test "$with_snd_wapi" = "yes"
 then
-   AC_CHECK_HEADERS([windows.h])
-   if test "$ac_cv_header_windows_h" = "yes"
-   then
-     AC_SUBST([HAVE_SND_WAPI],1)
-   elif test "$with_snd_wapi" = "yes"
-   then
+	AC_CHECK_HEADERS([windows.h])
+	if test "$ac_cv_header_windows_h" = "yes"
+	then
+		AC_SUBST([HAVE_SND_WAPI],1)
+	elif test "$with_snd_wapi" = "yes"
+	then
 		AC_MSG_ERROR([specified --with-snd-wapi specified but cannot find windows.h!])
-   fi
+	fi
 else
 	AC_MSG_NOTICE([Without WAPI sound])
 fi
@@ -841,14 +839,14 @@ fi
 
 if test "$with_snd_dx" = "check" || test "$with_snd_dx" = "yes"
 then
-   AC_CHECK_HEADERS([dsound.h])
-   if test "$ac_cv_header_dsound_h" = "yes"
-   then
-     AC_SUBST([HAVE_SND_DX],1)
-   elif test "$with_snd_dx" = "yes"
-   then
+	AC_CHECK_HEADERS([dsound.h])
+	if test "$ac_cv_header_dsound_h" = "yes"
+	then
+		AC_SUBST([HAVE_SND_DX],1)
+	elif test "$with_snd_dx" = "yes"
+	then
 		AC_MSG_ERROR([specified --with-snd-dx specified but cannot find dsound.h!])
-   fi
+	fi
 else
 	AC_MSG_NOTICE([Without DX sound])
 fi
@@ -1046,6 +1044,9 @@ fi
 #---------------------------------------------------------------------------------------------
 
 AC_SUBST([EXE_EXT],"$ac_exe_ext")
+
+#AC_MSG_NOTICE(Compiler flags: $CFLAGS)
+#AC_MSG_NOTICE(Link against:   $LIBS)
 
 AC_CONFIG_HEADERS([config.h:config.h.in])
 AC_OUTPUT(Makefile)

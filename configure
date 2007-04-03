@@ -5203,11 +5203,11 @@ fi
 
 	if test "$ac_cv_search_strcasecmp" = "no"
 	then
-	   { { echo "$as_me:$LINENO: error: could find neither stricmp nor strcasecmp!" >&5
+		{ { echo "$as_me:$LINENO: error: could find neither stricmp nor strcasecmp!" >&5
 echo "$as_me: error: could find neither stricmp nor strcasecmp!" >&2;}
    { (exit 1); exit 1; }; }
 	else
-	   cat >>confdefs.h <<\_ACEOF
+		cat >>confdefs.h <<\_ACEOF
 #define stricmp strcasecmp
 _ACEOF
 
@@ -5718,9 +5718,9 @@ fi
 
 done
 
-   if test "$ac_cv_header_AL_al_h" != "yes" || \
-      test "$ac_cv_header_AL_alc_h" != "yes"
-   then
+	if test "$ac_cv_header_AL_al_h" != "yes" || \
+		test "$ac_cv_header_AL_alc_h" != "yes"
+	then
 
 
 for ac_header in OpenAL/al.h OpenAL/alc.h
@@ -5886,28 +5886,28 @@ fi
 
 done
 
-      if test "$ac_cv_header_OpenAL_al_h" != "yes" || \
-        test "$ac_cv_header_OpenAL_alc_h" != "yes"
-      then
-        if test "$with_openal" = "yes"
-        then
-          { { echo "$as_me:$LINENO: error: specified --with-openal specified but cannot find OpenAL header!" >&5
+		if test "$ac_cv_header_OpenAL_al_h" != "yes" || \
+			test "$ac_cv_header_OpenAL_alc_h" != "yes"
+		then
+			if test "$with_openal" = "yes"
+			then
+			{ { echo "$as_me:$LINENO: error: specified --with-openal specified but cannot find OpenAL header!" >&5
 echo "$as_me: error: specified --with-openal specified but cannot find OpenAL header!" >&2;}
    { (exit 1); exit 1; }; }
-        fi
-      else
-        HAVE_OPENAL=1
+			fi
+		else
+			HAVE_OPENAL=1
 
-      fi
-   elif test "$with_openal" = "yes"
-   then
-     { { echo "$as_me:$LINENO: error: specified --with-openal specified but cannot find OpenAL header!" >&5
+		fi
+	elif test "$with_openal" = "yes"
+	then
+		{ { echo "$as_me:$LINENO: error: specified --with-openal specified but cannot find OpenAL header!" >&5
 echo "$as_me: error: specified --with-openal specified but cannot find OpenAL header!" >&2;}
    { (exit 1); exit 1; }; }
-   else
-     HAVE_OPENAL=1
+	else
+		HAVE_OPENAL=1
 
-     { echo "$as_me:$LINENO: checking for library containing alSourcePlay" >&5
+		{ echo "$as_me:$LINENO: checking for library containing alSourcePlay" >&5
 echo $ECHO_N "checking for library containing alSourcePlay... $ECHO_C" >&6; }
 if test "${ac_cv_search_alSourcePlay+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
@@ -6006,14 +6006,14 @@ if test "$ac_res" != no; then
 
 fi
 
-     if test "$ac_cv_search_alSourcePlay" = "no"
-     then
-        { echo "$as_me:$LINENO: WARNING: couldn't find OpenAL library!" >&5
+		if test "$ac_cv_search_alSourcePlay" = "no"
+		then
+			{ echo "$as_me:$LINENO: WARNING: couldn't find OpenAL library!" >&5
 echo "$as_me: WARNING: couldn't find OpenAL library!" >&2;}
-        HAVE_OPENAL=0
+			HAVE_OPENAL=0
 
-     fi
-     { echo "$as_me:$LINENO: checking for library containing alutLoadWAVFile" >&5
+		fi
+		{ echo "$as_me:$LINENO: checking for library containing alutLoadWAVFile" >&5
 echo $ECHO_N "checking for library containing alutLoadWAVFile... $ECHO_C" >&6; }
 if test "${ac_cv_search_alutLoadWAVFile+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
@@ -6112,14 +6112,14 @@ if test "$ac_res" != no; then
 
 fi
 
-     if test "$ac_cv_search_alutLoadWAVFile" = "no"
-     then
-        { echo "$as_me:$LINENO: WARNING: couldn't find OpenAL utility library!" >&5
+		if test "$ac_cv_search_alutLoadWAVFile" = "no"
+		then
+			{ echo "$as_me:$LINENO: WARNING: couldn't find OpenAL utility library!" >&5
 echo "$as_me: WARNING: couldn't find OpenAL utility library!" >&2;}
-        HAVE_OPENAL=0
+			HAVE_OPENAL=0
 
-     fi
-   fi
+		fi
+	fi
 else
 	{ echo "$as_me:$LINENO: Without OpenAL" >&5
 echo "$as_me: Without OpenAL" >&6;}
@@ -6914,7 +6914,7 @@ echo "$as_me: WARNING: cannot find $sdl_config might fail to find SDL!" >&2;}
 fi
 
 if test "$with_sdl" = "check" || test "$with_sdl" = "yes" || \
-   test "$with_snd_sdl" = "check" || test "$with_snd_sdl" = "yes"
+	test "$with_snd_sdl" = "check" || test "$with_snd_sdl" = "yes"
 then
 	HAVE_SDL=1
 
@@ -8465,10 +8465,10 @@ fi
 
 		if test "$ac_cv_search_glXCreateContext" = "no"
 		then
-		   { echo "$as_me:$LINENO: WARNING: found GLX headers but couldn't find GLX libraries, GLX will be disabled!" >&5
+			{ echo "$as_me:$LINENO: WARNING: found GLX headers but couldn't find GLX libraries, GLX will be disabled!" >&5
 echo "$as_me: WARNING: found GLX headers but couldn't find GLX libraries, GLX will be disabled!" >&2;}
 		else
-		   HAVE_VID_GLX=1
+			HAVE_VID_GLX=1
 
 		fi
 	elif test "$with_vid_glx" = "yes"
@@ -8653,7 +8653,7 @@ done
 
 
 if test "$ac_cv_header_GL_gl_h" != "yes" || \
-   test "$ac_cv_header_GL_glu_h" != "yes"
+	test "$ac_cv_header_GL_glu_h" != "yes"
 then
 
 
@@ -8821,7 +8821,7 @@ fi
 done
 
 	if test "$ac_cv_header_OpenGL_gl_h" != "yes" || \
-   	   test "$ac_cv_header_OpenGL_glu_h" != "yes"
+		test "$ac_cv_header_OpenGL_glu_h" != "yes"
 	then
 		if test "$enable_client" = "yes"
 		then
@@ -9295,10 +9295,6 @@ fi
 		then
 			HAVE_SND_JACK=1
 
-			cat >>confdefs.h <<\_ACEOF
-#define USE_JACK 1
-_ACEOF
-
 		else
 			{ { echo "$as_me:$LINENO: error: found jack header but couldn't locate jack library!" >&5
 echo "$as_me: error: found jack header but couldn't locate jack library!" >&2;}
@@ -9590,10 +9586,6 @@ fi
 		then
 			HAVE_SND_ALSA=1
 
-			cat >>confdefs.h <<\_ACEOF
-#define USE_ALSA 1
-_ACEOF
-
 		else
 			{ { echo "$as_me:$LINENO: error: found alsa header but couldn't locate alsa library!" >&5
 echo "$as_me: error: found alsa header but couldn't locate alsa library!" >&2;}
@@ -9780,8 +9772,8 @@ fi
 
 done
 
-   if test "$ac_cv_header_linux_soundcard_h" != "yes"
-   then
+	if test "$ac_cv_header_linux_soundcard_h" != "yes"
+	then
 
 for ac_header in sys/soundcard.h
 do
@@ -9946,20 +9938,20 @@ fi
 
 done
 
-     if test "$ac_cv_header_sys_soundcard_h" = "yes"
-	 then
-	 	cat >>confdefs.h <<\_ACEOF
+		if test "$ac_cv_header_sys_soundcard_h" = "yes"
+		then
+			cat >>confdefs.h <<\_ACEOF
 #define OSS_HEADER_SYS 1
 _ACEOF
 
-	 fi
-   fi
-   if test "$ac_cv_header_linux_soundcard_h" = "yes" || \
-	  test "$ac_cv_header_sys_soundcard_h" = "yes"
-   then
-     HAVE_SND_OSS=1
+		fi
+	fi
+	if test "$ac_cv_header_linux_soundcard_h" = "yes" || \
+		test "$ac_cv_header_sys_soundcard_h" = "yes"
+	then
+		HAVE_SND_OSS=1
 
-   fi
+	fi
 else
 	{ echo "$as_me:$LINENO: Without OSS sound" >&5
 echo "$as_me: Without OSS sound" >&6;}
@@ -10192,16 +10184,16 @@ fi
 
 done
 
-   if test "$ac_cv_header_windows_h" = "yes"
-   then
-     HAVE_SND_WAPI=1
+	if test "$ac_cv_header_windows_h" = "yes"
+	then
+		HAVE_SND_WAPI=1
 
-   elif test "$with_snd_wapi" = "yes"
-   then
+	elif test "$with_snd_wapi" = "yes"
+	then
 		{ { echo "$as_me:$LINENO: error: specified --with-snd-wapi specified but cannot find windows.h!" >&5
 echo "$as_me: error: specified --with-snd-wapi specified but cannot find windows.h!" >&2;}
    { (exit 1); exit 1; }; }
-   fi
+	fi
 else
 	{ echo "$as_me:$LINENO: Without WAPI sound" >&5
 echo "$as_me: Without WAPI sound" >&6;}
@@ -10377,16 +10369,16 @@ fi
 
 done
 
-   if test "$ac_cv_header_dsound_h" = "yes"
-   then
-     HAVE_SND_DX=1
+	if test "$ac_cv_header_dsound_h" = "yes"
+	then
+		HAVE_SND_DX=1
 
-   elif test "$with_snd_dx" = "yes"
-   then
+	elif test "$with_snd_dx" = "yes"
+	then
 		{ { echo "$as_me:$LINENO: error: specified --with-snd-dx specified but cannot find dsound.h!" >&5
 echo "$as_me: error: specified --with-snd-dx specified but cannot find dsound.h!" >&2;}
    { (exit 1); exit 1; }; }
-   fi
+	fi
 else
 	{ echo "$as_me:$LINENO: Without DX sound" >&5
 echo "$as_me: Without DX sound" >&6;}
@@ -10961,6 +10953,9 @@ fi
 
 EXE_EXT="$ac_exe_ext"
 
+
+#AC_MSG_NOTICE(Compiler flags: $CFLAGS)
+#AC_MSG_NOTICE(Link against:   $LIBS)
 
 ac_config_headers="$ac_config_headers config.h:config.h.in"
 
