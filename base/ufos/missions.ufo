@@ -250,7 +250,7 @@ mission japan
 	type		"_Alien Hideout"
 	text		"_Eliminate intruders"
 	map		japan06
-	music		mission3
+	music		PsymongR5
 	pos		"-141 39"
 	aliens		10
 	alienteam	taman
@@ -270,7 +270,7 @@ mission spedition
 	type		"_Terror Attack"
 	text		"_Damn it, you've let some of them get away again! Reequip your squad and get after them!"
 	map		spedition06
-	music		geoscape
+	music		AlexForest
 	pos		"-10 60"
 	aliens		4
 	alienteam	alien
@@ -290,7 +290,7 @@ mission stadium
 	type		"_Terror Attack"
 	text		"_Damn it, you've let some of them get away again! Reequip your squad and get after them!"
 	map		stadium06
-	music		mission4
+	music		PsymongR4
 	pos		"74 41"
 	aliens		4
 	alienteam	alien
@@ -357,7 +357,7 @@ mission gasstation
 	type		"_Terror Attack"
 	text		"_Protect inhabitants"
 	map		gasstation05
-	music		credits
+	music		AlexFightmare
 	pos		"-111 21"
 	aliens		4
 	alienteam	taman
@@ -378,7 +378,7 @@ mission oriental
 	type		"_Terror Attack"
 	text		"_Protect inhabitants"
 	map		oriental06
-	music		mission
+	music		PsymongO4
 	pos		"-20 -23"
 	aliens		5
 	alienteam	ortnok
@@ -531,7 +531,7 @@ mission farm2
 	type		"_Landed Alien Ship"
 	text		"_Secure Alien Ship"
 	map		farm08
-	music		mission
+	music		PsymongO4
 	pos		"116 52"
 	aliens		5
 	alienteam	alien
@@ -551,7 +551,7 @@ mission harbor
 	type		"_Terror Attack"
 	text		"_Protect inhabitants"
 	map		harbor07
-	music		theme
+	music		AlexFightmare
 	pos		"-129 35"
 	aliens		8
 	alienteam	ortnok
@@ -618,7 +618,7 @@ mission africa
 	type		"_Crashed Alien Ship"
 	text		"_Secure area"
 	map		africa04
-	music		mission4
+	music		PsymongR4
 	pos		"-30 18"
 	aliens		10
 	alienteam	alien
@@ -702,7 +702,7 @@ mission terrain
 	type		"_Terror Attack"
 	text		"_Damn it, you've let some of them get away again! Reequip your squad and get after them!"
 	map		terrain08
-	music		mission2
+	music		PsymongO6
 	pos		"-9 46"
 	aliens		4
 	alienteam	alien
@@ -776,7 +776,7 @@ mission frozen_groenland
 	text		"_Protect inhabitants"
 	map		"+frozen"
 	param		small
-	music		theme
+	music		AlexFightmare
 	pos		"47 -42"
 	aliens		6
 	alienteam	alien
@@ -796,7 +796,7 @@ mission frozen_small
 	text		"_Protect inhabitants"
 	map		"+frozen"
 	param		small
-	music		mission2
+	music		PsymongO6
 	pos		"116 52"
 	aliens		7
 	alienteam	alien
@@ -816,7 +816,7 @@ mission frozen_landingnature
 	text		"_Secure Alien Ship before Liftoff"
 	map		"+frozen"
 	param		alienlandingnature
-	music		mission3
+	music		PsymongR5
 	pos		"32 -66"
 	aliens		7
 	alienteam	alien
@@ -836,7 +836,7 @@ mission frozen_industrial
 	text		"_Protect inhabitants"
 	map		"+frozen"
 	param		industrial
-	music		mission4
+	music		PsymongR4
 	pos		"54 75"
 	aliens		7
 	alienteam	alien
@@ -855,7 +855,7 @@ mission or_asyut
 	type		"_Terror Attack"
 	text		"_Protect inhabitants"
 	map		"+oriental"
-	music		mission2
+	music		PsymongO6
 	pos		"-31 27"
 	aliens		7
 	alienteam	alien
@@ -874,7 +874,7 @@ mission or_tabelbala
 	type		"_Terror Attack"
 	text		"_Protect inhabitants"
 	map		"+oriental"
-	music		mission
+	music		PsymongO4
 	pos		"3 28"
 	aliens		7
 	alienteam	alien
@@ -894,7 +894,7 @@ mission or_tabelbala
 //	type		"_Terror Attack"
 //	text		"_The Aliens have taken over a rocket silo. Go and capture it again."
 //	map			rocketsilo06
-//	music		mission3
+//	music		PsymongR5
 //	pos			"308 412"
 //	aliens		4
 //	civilians	2
@@ -913,7 +913,7 @@ mission tropic_river
 	text		"_Damn it, you've let some of them get away again! Reequip your squad and get after them!"
 	map		"+tropic"
 	param		river
-	music		mission3
+	music		PsymongR5
 	pos			"86 14"
 	aliens		4
 	alienteam	alien
@@ -934,7 +934,7 @@ mission tropic_drug
 	text		"_Damn it, you've let some of them get away again! Reequip your squad and get after them!"
 	map		"+tropic"
 	param		drug
-	music		mission3
+	music		PsymongR5
 	pos		"77 18"
 	aliens		4
 	alienteam	alien
@@ -954,7 +954,7 @@ mission vil_grenchen
 	text		"_Protect inhabitants"
 	map		"+village"
 	param		residential
-	music		mission2
+	music		PsymongO6
 	pos		"-7 47"
 	aliens		3
 	alienteam	alien
@@ -974,7 +974,7 @@ mission vil_albany
 	text		"_Protect inhabitants"
 	map		"+village"
 	param		commercial
-	music		mission
+	music		PsymongO4
 	pos		"84 32"
 	aliens		8
 	alienteam	alien
@@ -994,7 +994,7 @@ mission vil_shannon
 	text		"_Stop them"
 	map		"+village"
 	param		big
-	music		mission3
+	music		PsymongR5
 	pos		"9 52"
 	aliens		18
 	alienteam	alien
