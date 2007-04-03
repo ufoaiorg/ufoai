@@ -244,6 +244,7 @@ static void MN_NextMap_f(void);
 static void MN_PrevMap_f(void);
 static int MN_DrawTooltip(char *font, char *string, int x, int y, int maxWidth);
 static void CL_ShowMessagesOnStack_f(void);
+static void MN_TimestampedText(char *text, message_t *message);
 
 /*
 ==============================================================
@@ -3836,7 +3837,7 @@ void MN_ParseMenu (const char *name, char **text)
 	menu = &menus[numMenus++];
 	memset(menu, 0, sizeof(menu_t));
 
-	Q_strncpyz(menu->name, name, MAX_VAR);
+	Q_strncpyz(menu->name, name, sizeof(menu->name));
 
 	/* get it's body */
 	token = COM_Parse(text);
@@ -3848,7 +3849,7 @@ void MN_ParseMenu (const char *name, char **text)
 		Com_DPrintf("MN_ParseMenus: menu \"%s\" inheriting menu \"%s\"\n", name, token);
 		superMenu = MN_GetMenu(token);
 		memcpy(menu, superMenu, sizeof(menu_t));
-		Q_strncpyz(menu->name, name, MAX_VAR);
+		Q_strncpyz(menu->name, name, sizeof(menu->name));
 		token = COM_Parse(text);
 	}
 
@@ -3893,7 +3894,7 @@ static void MN_MapInfo (void)
 		return;
 
 	/* remove the day and night char */
-	Q_strncpyz(normalizedName, maps[mapInstalledIndex], MAX_VAR);
+	Q_strncpyz(normalizedName, maps[mapInstalledIndex], sizeof(normalizedName));
 	length = strlen(normalizedName);
 	if (normalizedName[length - 1] == 'n' || normalizedName[length - 1] == 'd') {
 		normalizedName[length - 1] = '\0';
@@ -4014,7 +4015,7 @@ message_t *MN_AddNewMessage (const char *title, const char *text, qboolean popup
 	mess->min = ((ccs.date.sec % 3600) / 60);
 	mess->s = (ccs.date.sec % 3600) / 60 / 60;
 
-	Q_strncpyz(mess->title, title, MAX_VAR);
+	Q_strncpyz(mess->title, title, sizeof(mess->title));
 	Q_strncpyz(mess->text, text, sizeof(mess->text));
 
 	/* they need to be translated already */
@@ -4054,7 +4055,7 @@ message_t *MN_AddNewMessage (const char *title, const char *text, qboolean popup
  * @param[in] text Buffer to hold the final result
  * @param[in] message The message to convert into text
  */
-void MN_TimestampedText (char *text, message_t *message)
+static void MN_TimestampedText (char *text, message_t *message)
 {
 	Q_strncpyz(text, va(TIMESTAMP_FORMAT, message->d, CL_DateGetMonthName(message->m), message->y, message->h, message->min), TIMESTAMP_TEXT);
 }
@@ -4170,7 +4171,7 @@ void CL_ParseFont (const char *name, char **text)
 	font = &fonts[numFonts];
 	memset(font, 0, sizeof(font_t));
 
-	Q_strncpyz(font->name, name, MAX_VAR);
+	Q_strncpyz(font->name, name, sizeof(font->name));
 
 	if (!Q_strncmp(font->name, "f_small", MAX_VAR))
 		fontSmall = font;

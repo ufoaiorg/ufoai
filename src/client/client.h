@@ -819,7 +819,6 @@ char messageBuffer[MAX_MESSAGE_TEXT];
 message_t *messageStack;
 
 message_t *MN_AddNewMessage(const char *title, const char *text, qboolean popup, messagetype_t type, technology_t * pedia);
-void MN_TimestampedText(char *text, message_t *message);
 void MN_RemoveMessage(char *title);
 void CL_InitMessageSystem(void);
 
