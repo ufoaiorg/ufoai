@@ -82,7 +82,7 @@ endif
 
 # Say about to build the target
 $(REF_SDL_TARGET) : $(REF_SDL_OBJS) $(REF_GL_OBJS) $(BUILDDIR)/.dirs
-	@echo " * [SDL] ... linking $(LNKFLAGS) ($(REF_SDL_LIBS) $(SDL_LIBS)"; \
+	@echo " * [SDL] ... linking $(LNKFLAGS) ($(REF_SDL_LIBS) $(SDL_LIBS))"; \
 		$(CC) $(LDFLAGS) $(LNKFLAGS) $(SHARED_LDFLAGS) -o $@ $(REF_SDL_OBJS) $(REF_GL_OBJS) $(REF_SDL_LIBS) $(SDL_LIBS) $(LNKFLAGS)
 
 #---------------------------------------------------------------------------------------------------------------------
