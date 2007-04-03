@@ -16,9 +16,9 @@ ifeq ($(TARGET_OS),mingw32)
 	SHARED_CFLAGS=-shared
 	JPEG_CFLAGS=-DDONT_TYPEDEF_INT32
 	CFLAGS+=-DGETTEXT_STATIC
-	SERVERLIBS+=-lintl
-	GAMELIBS+=-lintl
-#	TOOLSLIBS=
+	SERVER_LIBS+=-lintl
+	GAME_LIBS+=-lintl
+#	TOOLS_LIBS=
 endif
 
 # Linux like
@@ -33,8 +33,8 @@ endif
 
 ifeq ($(TARGET_OS),netbsd)
 	CFLAGS +=-I/usr/X11R6/include -D_BSD_SOURCE -D_NETBSD_SOURCE -std=c89
-	SERVERLIBS +=-lintl
-	GAMELIBS +=-lintl
+	SERVER_LIBS +=-lintl
+	GAME_LIBS +=-lintl
 endif
 
 # Darwin

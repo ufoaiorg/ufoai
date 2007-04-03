@@ -669,7 +669,6 @@ HAVE_OPENAL_CONFIG
 OPENAL_CFLAGS
 OPENAL_LIBS
 HAVE_OPENAL
-HAVE_PTHREAD
 HAVE_SDL_CONFIG
 SDL_CFLAGS
 SDL_LIBS
@@ -682,8 +681,8 @@ HAVE_SND_ALSA
 HAVE_SND_OSS
 HAVE_ARTSC_CONFIG
 HAVE_SND_ARTS
-ARTS_CFLAGS
-ARTS_LIBS
+SND_ARTS_CFLAGS
+SND_ARTS_LIBS
 HAVE_SND_WAPI
 HAVE_SND_DX
 HAVE_DGA
@@ -699,6 +698,20 @@ BUILD_DEBUG
 PARANOID
 PROFILING
 EXE_EXT
+REF_GL_LIBS
+REF_GLX_LIBS
+REF_SDL_LIBS
+CLIENT_LIBS
+SERVER_LIBS
+GAME_LIBS
+TOOLS_LIBS
+MASTER_LIBS
+SND_SDL_LIBS
+SND_JACK_LIBS
+SND_OSS_LIBS
+SND_WAPI_LIBS
+SND_DX_LIBS
+SND_ALSA_LIBS
 LIBOBJS
 LTLIBOBJS'
 ac_subst_files=''
@@ -4502,6 +4515,7 @@ fi
 # Check for X11/Xlib.h
 #---------------------------------------------------------------------------------------------
 
+LIBS=
 
 for ac_header in X11/Xlib.h
 do
@@ -4773,11 +4787,13 @@ fi
 echo "$as_me: WARNING: found X11 header but couldn't find library!" >&2;}
 	fi
 fi
+REF_GLX_LIBS="$REF_GLX_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
 # Check how to open a dynamic library ...
 #---------------------------------------------------------------------------------------------
 
+LIBS=
 if test "$TARGET_OS" != "mingw32"
 then
 	{ echo "$as_me:$LINENO: checking for library containing dlopen" >&5
@@ -4886,11 +4902,14 @@ echo "$as_me: error: could not decide how to open a dynamic link library!" >&2;}
    { (exit 1); exit 1; }; }
 	fi
 fi
+CLIENT_LIBS="$CLIENT_LIBS $LIBS"
+SERVER_LIBS="$SERVER_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
 # Check how to do maths
 #---------------------------------------------------------------------------------------------
 
+LIBS=
 { echo "$as_me:$LINENO: checking for library containing cos" >&5
 echo $ECHO_N "checking for library containing cos... $ECHO_C" >&6; }
 if test "${ac_cv_search_cos+set}" = set; then
@@ -4996,11 +5015,16 @@ then
 echo "$as_me: error: could not determine how to link to maths library" >&2;}
    { (exit 1); exit 1; }; }
 fi
+CLIENT_LIBS="$CLIENT_LIBS $LIBS"
+SERVER_LIBS="$SERVER_LIBS $LIBS"
+GAME_LIBS="$GAME_LIBS $LIBS"
+TOOLS_LIBS="$TOOLS_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
 # Check how to do stricmp
 #---------------------------------------------------------------------------------------------
 
+LIBS=
 { echo "$as_me:$LINENO: checking for library containing stricmp" >&5
 echo $ECHO_N "checking for library containing stricmp... $ECHO_C" >&6; }
 if test "${ac_cv_search_stricmp+set}" = set; then
@@ -5213,11 +5237,16 @@ _ACEOF
 
 	fi
 fi
+CLIENT_LIBS="$CLIENT_LIBS $LIBS"
+SERVER_LIBS="$SERVER_LIBS $LIBS"
+GAME_LIBS="$GAME_LIBS $LIBS"
+TOOLS_LIBS="$TOOLS_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
 # Check for zlib
 #---------------------------------------------------------------------------------------------
 
+LIBS=
 
 for ac_header in zlib.h
 do
@@ -5493,6 +5522,10 @@ then
 echo "$as_me: error: couldn't find zlib!" >&2;}
    { (exit 1); exit 1; }; }
 fi
+CLIENT_LIBS="$CLIENT_LIBS $LIBS"
+SERVER_LIBS="$SERVER_LIBS $LIBS"
+#TODO - they must be able to read pk3 in the future, too
+TOOLS_LIBS="$TOOLS_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
 # Check for openal-config
@@ -5551,6 +5584,7 @@ fi
 # Check for OpenAL headers and libraries
 #---------------------------------------------------------------------------------------------
 
+LIBS=
 if test "$with_openal" = "check" || test "$with_openal" = "yes"
 then
 
@@ -6124,11 +6158,13 @@ else
 	{ echo "$as_me:$LINENO: Without OpenAL" >&5
 echo "$as_me: Without OpenAL" >&6;}
 fi
+CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
 # Check for libogg
 #---------------------------------------------------------------------------------------------
 
+LIBS=
 { echo "$as_me:$LINENO: checking for library containing ogg_stream_init" >&5
 echo $ECHO_N "checking for library containing ogg_stream_init... $ECHO_C" >&6; }
 if test "${ac_cv_search_ogg_stream_init+set}" = set; then
@@ -6237,11 +6273,13 @@ echo "$as_me: error: couldn't find libogg!" >&2;}
    { (exit 1); exit 1; }; }
 	fi
 fi
+CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
 # Check for libvorbis
 #---------------------------------------------------------------------------------------------
 
+LIBS=
 { echo "$as_me:$LINENO: checking for library containing vorbis_info_init" >&5
 echo $ECHO_N "checking for library containing vorbis_info_init... $ECHO_C" >&6; }
 if test "${ac_cv_search_vorbis_info_init+set}" = set; then
@@ -6350,11 +6388,13 @@ echo "$as_me: error: couldn't find libvorbis!" >&2;}
    { (exit 1); exit 1; }; }
 	fi
 fi
+CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
 # Check for libvorbis file
 #---------------------------------------------------------------------------------------------
 
+LIBS=
 { echo "$as_me:$LINENO: checking for library containing ov_open" >&5
 echo $ECHO_N "checking for library containing ov_open... $ECHO_C" >&6; }
 if test "${ac_cv_search_ov_open+set}" = set; then
@@ -6463,11 +6503,13 @@ echo "$as_me: error: couldn't find libvorbisfile!" >&2;}
    { (exit 1); exit 1; }; }
 	fi
 fi
+CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
 # Check for pthreads
 #---------------------------------------------------------------------------------------------
 
+LIBS=
 { echo "$as_me:$LINENO: checking for library containing pthread_create" >&5
 echo $ECHO_N "checking for library containing pthread_create... $ECHO_C" >&6; }
 if test "${ac_cv_search_pthread_create+set}" = set; then
@@ -6567,16 +6609,7 @@ if test "$ac_res" != no; then
 
 fi
 
-if test "$ac_cv_search_pthread_create" = "no"
-then
-	HAVE_PTHREAD=0
-
-	{ echo "$as_me:$LINENO: WARNING: couldn't find pthread!" >&5
-echo "$as_me: WARNING: couldn't find pthread!" >&2;}
-else
-	HAVE_PTHREAD=1
-
-fi
+TOOLS_LIBS="$TOOLS_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
 # Check for gettext
@@ -6753,6 +6786,7 @@ echo "$as_me: error: Couldn't find libintl.h!" >&2;}
    { (exit 1); exit 1; }; }
 fi
 
+LIBS=
 { echo "$as_me:$LINENO: checking for library containing gettext" >&5
 echo $ECHO_N "checking for library containing gettext... $ECHO_C" >&6; }
 if test "${ac_cv_search_gettext+set}" = set; then
@@ -6858,6 +6892,8 @@ then
 echo "$as_me: error: couldn't find internationalization library with gettext in it" >&2;}
    { (exit 1); exit 1; }; }
 fi
+CLIENT_LIBS="$CLIENT_LIBS $LIBS"
+GAME_LIBS="$GAME_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
 # Check SDL
@@ -6918,6 +6954,7 @@ if test "$with_sdl" = "check" || test "$with_sdl" = "yes" || \
 then
 	HAVE_SDL=1
 
+	SND_SDL_LIBS=$SDL_LIBS
 else
 	{ echo "$as_me:$LINENO: Without SDL" >&5
 echo "$as_me: Without SDL" >&6;}
@@ -7588,6 +7625,7 @@ _ACEOF
 fi
 CFLAGS=$OLD_CFLAGS
 
+LIBS=
 { echo "$as_me:$LINENO: checking for library containing TTF_Init" >&5
 echo $ECHO_N "checking for library containing TTF_Init... $ECHO_C" >&6; }
 if test "${ac_cv_search_TTF_Init+set}" = set; then
@@ -7696,6 +7734,9 @@ echo "$as_me: error: You must have the SDL_ttf development libraries" >&2;}
    { (exit 1); exit 1; }; }
 	fi
 fi
+REF_GL_LIBS="$REF_GL_LIBS $LIBS"
+REF_GLX_LIBS="$REF_GLX_LIBS $LIBS"
+REF_SDL_LIBS="$REF_SDL_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
 # Check JPEG
@@ -7875,6 +7916,7 @@ echo "$as_me: error: You must have the JPEG development headers" >&2;}
 	fi
 fi
 
+LIBS=
 { echo "$as_me:$LINENO: checking for library containing jpeg_CreateDecompress" >&5
 echo $ECHO_N "checking for library containing jpeg_CreateDecompress... $ECHO_C" >&6; }
 if test "${ac_cv_search_jpeg_CreateDecompress+set}" = set; then
@@ -7983,6 +8025,9 @@ echo "$as_me: error: You must have the JPEG development libraries" >&2;}
    { (exit 1); exit 1; }; }
 	fi
 fi
+REF_GL_LIBS="$REF_GL_LIBS $LIBS"
+REF_GLX_LIBS="$REF_GLX_LIBS $LIBS"
+REF_SDL_LIBS="$REF_SDL_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
 # Check PNG
@@ -8162,6 +8207,7 @@ echo "$as_me: error: You must have the PNG development headers" >&2;}
 	fi
 fi
 
+LIBS=
 { echo "$as_me:$LINENO: checking for library containing png_create_info_struct" >&5
 echo $ECHO_N "checking for library containing png_create_info_struct... $ECHO_C" >&6; }
 if test "${ac_cv_search_png_create_info_struct+set}" = set; then
@@ -8270,11 +8316,15 @@ echo "$as_me: error: You must have the PNG development libraries" >&2;}
    { (exit 1); exit 1; }; }
 	fi
 fi
+REF_GL_LIBS="$REF_GL_LIBS $LIBS"
+REF_GLX_LIBS="$REF_GLX_LIBS $LIBS"
+REF_SDL_LIBS="$REF_SDL_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
 # Check GLX
 #---------------------------------------------------------------------------------------------
 
+LIBS=
 HAVE_VID_GLX=0
 
 if test "$with_vid_glx" = "check" || test "$with_vid_glx" = "yes"
@@ -8481,6 +8531,7 @@ else
 	{ echo "$as_me:$LINENO: Without GLX" >&5
 echo "$as_me: Without GLX" >&6;}
 fi
+REF_GLX_LIBS="$REF_GLX_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
 # Check for opengl headers
@@ -9024,6 +9075,7 @@ fi
 # Check JACK
 #---------------------------------------------------------------------------------------------
 
+LIBS=
 if test "$with_snd_jack" = "check" || test "$with_snd_jack" = "yes"
 then
 
@@ -9310,11 +9362,14 @@ else
 	{ echo "$as_me:$LINENO: Without JACK sound" >&5
 echo "$as_me: Without JACK sound" >&6;}
 fi
+SND_JACK_LIBS="$SND_JACK_LIBS $LIBS"
+
 
 #---------------------------------------------------------------------------------------------
 # Check ALSA
 #---------------------------------------------------------------------------------------------
 
+LIBS=
 if test "$with_snd_alsa" = "check" || test "$with_snd_alsa" = "yes"
 then
 
@@ -9601,11 +9656,13 @@ else
 	{ echo "$as_me:$LINENO: Without ALSA sound" >&5
 echo "$as_me: Without ALSA sound" >&6;}
 fi
+SND_ALSA_LIBS="$SND_ALSA_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
 # Check OSS
 #---------------------------------------------------------------------------------------------
 
+LIBS=
 if test "$with_snd_alsa" = "check" || test "$with_snd_alsa" = "yes"
 then
 
@@ -9956,6 +10013,7 @@ else
 	{ echo "$as_me:$LINENO: Without OSS sound" >&5
 echo "$as_me: Without OSS sound" >&6;}
 fi
+SND_OSS_LIBS="$SND_OSS_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
 # Check ARTS
@@ -10004,9 +10062,9 @@ fi
 	then
 		HAVE_SND_ARTS=1
 
-		ARTS_CFLAGS=`artsc-config --cflags`
+		SND_ARTS_CFLAGS=`artsc-config --cflags`
 
-		ARTS_LIBS=`artsc-config --libs`
+		SND_ARTS_LIBS=`artsc-config --libs`
 
 	fi
 else
@@ -10018,6 +10076,7 @@ fi
 # Check WAPI
 #---------------------------------------------------------------------------------------------
 
+LIBS=
 if test "$with_snd_wapi" = "check" || test "$with_snd_wapi" = "yes"
 then
 
@@ -10198,11 +10257,14 @@ else
 	{ echo "$as_me:$LINENO: Without WAPI sound" >&5
 echo "$as_me: Without WAPI sound" >&6;}
 fi
+SND_WAPI_LIBS="$SND_WAPI_LIBS $LIBS"
+
 
 #---------------------------------------------------------------------------------------------
 # Check DX
 #---------------------------------------------------------------------------------------------
 
+LIBS=
 if test "$with_snd_dx" = "check" || test "$with_snd_dx" = "yes"
 then
 
@@ -10383,11 +10445,13 @@ else
 	{ echo "$as_me:$LINENO: Without DX sound" >&5
 echo "$as_me: Without DX sound" >&6;}
 fi
+SND_DX_LIBS="$SND_DX_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
 # Check for DGA
 #---------------------------------------------------------------------------------------------
 
+LIBS=
 if test "$with_vid_dga" = "check" || test "$with_vid_dga" = "yes"
 then
 	if test "$ac_cv_header_X11_Xlib_h" = "yes"
@@ -10583,11 +10647,13 @@ else
 	{ echo "$as_me:$LINENO: Without DGA" >&5
 echo "$as_me: Without DGA" >&6;}
 fi
+REF_GLX_LIBS="$REF_GLX_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
 # Check for vidmode
 #---------------------------------------------------------------------------------------------
 
+LIBS=
 if test "$with_vid_vidmode" = "check" || test "$with_vid_vidmode" = "yes"
 then
 	if test "$ac_cv_header_X11_Xlib_h" = "yes"
@@ -10798,6 +10864,7 @@ else
 	{ echo "$as_me:$LINENO: Without VIDMODE" >&5
 echo "$as_me: Without VIDMODE" >&6;}
 fi
+REF_GLX_LIBS="$REF_GLX_LIBS $LIBS"
 
 
 #---------------------------------------------------------------------------------------------
@@ -10954,8 +11021,39 @@ fi
 EXE_EXT="$ac_exe_ext"
 
 
+REF_GL_LIBS="$REF_GL_LIBS"
+
+REF_GLX_LIBS="$REF_GLX_LIBS"
+
+REF_SDL_LIBS="$REF_SDL_LIBS"
+
+CLIENT_LIBS="$CLIENT_LIBS"
+
+SERVER_LIBS="$SERVER_LIBS"
+
+GAME_LIBS="$GAME_LIBS"
+
+TOOLS_LIBS="$TOOLS_LIBS"
+
+MASTER_LIBS="$MASTER_LIBS"
+
+SND_ARTS_LIBS="$SND_ARTS_LIBS"
+
+SND_SDL_LIBS="$SND_SDL_LIBS"
+
+SND_JACK_LIBS="$SND_JACK_LIBS"
+
+SND_OSS_LIBS="$SND_OSS_LIBS"
+
+SND_WAPI_LIBS="$SND_WAPI_LIBS"
+
+SND_DX_LIBS="$SND_DX_LIBS"
+
+SND_ALSA_LIBS="$SND_ALSA_LIBS"
+
+
 #AC_MSG_NOTICE(Compiler flags: $CFLAGS)
-#AC_MSG_NOTICE(Link against:   $LIBS)
+#AC_MSG_NOTICE(Link against:   $LIBS")
 
 ac_config_headers="$ac_config_headers config.h:config.h.in"
 
@@ -11634,7 +11732,6 @@ HAVE_OPENAL_CONFIG!$HAVE_OPENAL_CONFIG$ac_delim
 OPENAL_CFLAGS!$OPENAL_CFLAGS$ac_delim
 OPENAL_LIBS!$OPENAL_LIBS$ac_delim
 HAVE_OPENAL!$HAVE_OPENAL$ac_delim
-HAVE_PTHREAD!$HAVE_PTHREAD$ac_delim
 HAVE_SDL_CONFIG!$HAVE_SDL_CONFIG$ac_delim
 SDL_CFLAGS!$SDL_CFLAGS$ac_delim
 SDL_LIBS!$SDL_LIBS$ac_delim
@@ -11647,8 +11744,8 @@ HAVE_SND_ALSA!$HAVE_SND_ALSA$ac_delim
 HAVE_SND_OSS!$HAVE_SND_OSS$ac_delim
 HAVE_ARTSC_CONFIG!$HAVE_ARTSC_CONFIG$ac_delim
 HAVE_SND_ARTS!$HAVE_SND_ARTS$ac_delim
-ARTS_CFLAGS!$ARTS_CFLAGS$ac_delim
-ARTS_LIBS!$ARTS_LIBS$ac_delim
+SND_ARTS_CFLAGS!$SND_ARTS_CFLAGS$ac_delim
+SND_ARTS_LIBS!$SND_ARTS_LIBS$ac_delim
 HAVE_SND_WAPI!$HAVE_SND_WAPI$ac_delim
 HAVE_SND_DX!$HAVE_SND_DX$ac_delim
 HAVE_DGA!$HAVE_DGA$ac_delim
@@ -11660,6 +11757,7 @@ BUILD_DEDICATED!$BUILD_DEDICATED$ac_delim
 BUILD_MASTER!$BUILD_MASTER$ac_delim
 BUILD_UFO2MAP!$BUILD_UFO2MAP$ac_delim
 BUILD_QDATA!$BUILD_QDATA$ac_delim
+BUILD_DEBUG!$BUILD_DEBUG$ac_delim
 _ACEOF
 
   if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 97; then
@@ -11701,15 +11799,28 @@ _ACEOF
 ac_delim='%!_!# '
 for ac_last_try in false false false false false :; do
   cat >conf$$subs.sed <<_ACEOF
-BUILD_DEBUG!$BUILD_DEBUG$ac_delim
 PARANOID!$PARANOID$ac_delim
 PROFILING!$PROFILING$ac_delim
 EXE_EXT!$EXE_EXT$ac_delim
+REF_GL_LIBS!$REF_GL_LIBS$ac_delim
+REF_GLX_LIBS!$REF_GLX_LIBS$ac_delim
+REF_SDL_LIBS!$REF_SDL_LIBS$ac_delim
+CLIENT_LIBS!$CLIENT_LIBS$ac_delim
+SERVER_LIBS!$SERVER_LIBS$ac_delim
+GAME_LIBS!$GAME_LIBS$ac_delim
+TOOLS_LIBS!$TOOLS_LIBS$ac_delim
+MASTER_LIBS!$MASTER_LIBS$ac_delim
+SND_SDL_LIBS!$SND_SDL_LIBS$ac_delim
+SND_JACK_LIBS!$SND_JACK_LIBS$ac_delim
+SND_OSS_LIBS!$SND_OSS_LIBS$ac_delim
+SND_WAPI_LIBS!$SND_WAPI_LIBS$ac_delim
+SND_DX_LIBS!$SND_DX_LIBS$ac_delim
+SND_ALSA_LIBS!$SND_ALSA_LIBS$ac_delim
 LIBOBJS!$LIBOBJS$ac_delim
 LTLIBOBJS!$LTLIBOBJS$ac_delim
 _ACEOF
 
-  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 6; then
+  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 19; then
     break
   elif $ac_last_try; then
     { { echo "$as_me:$LINENO: error: could not make $CONFIG_STATUS" >&5

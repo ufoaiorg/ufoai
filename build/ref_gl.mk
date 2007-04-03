@@ -64,8 +64,8 @@ endif
 
 # Say about to build the target
 $(REF_GLX_TARGET) : $(REF_GLX_OBJS) $(REF_GL_OBJS) $(BUILDDIR)/.dirs
-	@echo " * [GLX] ... linking"; \
-		$(CC) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(REF_GLX_OBJS) $(REF_GL_OBJS) $(LIBS) $(LNKFLAGS) $(SDL_LIBS)
+	@echo " * [GLX] ... linking $(LNKFLAGS) ($(REF_GLX_LIBS))"; \
+		$(CC) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(REF_GLX_OBJS) $(REF_GL_OBJS) $(REF_GLX_LIBS) $(LNKFLAGS)
 
 #---------------------------------------------------------------------------------------------------------------------
 
@@ -82,8 +82,8 @@ endif
 
 # Say about to build the target
 $(REF_SDL_TARGET) : $(REF_SDL_OBJS) $(REF_GL_OBJS) $(BUILDDIR)/.dirs
-	@echo " * [SDL] ... linking"; \
-		$(CC) $(LDFLAGS) $(LNKFLAGS) $(SHARED_LDFLAGS) -o $@ $(REF_SDL_OBJS) $(REF_GL_OBJS) $(LIBS) $(LNKFLAGS) $(SDL_LIBS)
+	@echo " * [SDL] ... linking $(LNKFLAGS) ($(REF_SDL_LIBS) $(SDL_LIBS)"; \
+		$(CC) $(LDFLAGS) $(LNKFLAGS) $(SHARED_LDFLAGS) -o $@ $(REF_SDL_OBJS) $(REF_GL_OBJS) $(REF_SDL_LIBS) $(SDL_LIBS) $(LNKFLAGS)
 
 #---------------------------------------------------------------------------------------------------------------------
 

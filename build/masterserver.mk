@@ -19,8 +19,8 @@ MASTER_CFLAGS=
 
 # Say how to like the exe
 $(MASTERSERVER_TARGET): $(MASTERSERVER_OBJS) $(BUILDDIR)/.dirs
-	@echo " * [MST] ... linking"; \
-		$(CC) $(LDFLAGS) -o $@ $(MASTERSERVER_OBJS) $(LIBS) $(LNKFLAGS)
+	@echo " * [MST] ... linking $(LNKFLAGS) ($(MASTER_LIBS))"; \
+		$(CC) $(LDFLAGS) -o $@ $(MASTERSERVER_OBJS) $(MASTER_LIBS) $(LNKFLAGS)
 
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/masterserver/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
