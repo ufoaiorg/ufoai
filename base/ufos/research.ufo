@@ -2698,42 +2698,6 @@ tech rs_alien_shevaar_autopsy
 //}
 
 //========================
-// UGVs
-//========================
-
-tech rs_ugv_phoenix
-{
-	type	ugv
-	up_chapter	equipment
-	name	"_Phoenix UGV"
-	description	"_ugv_phoenix_txt"
-	pre_description	"_ugv_phoenix_pre_txt"
-
-	provides	ugv_phoenix
-	require_AND { tech nothing }
-	time	0
-	producetime	800
-
-	mdl_top	"soldiers/ugv_phoenix/phoenix"
-}
-
-tech rs_ugv_triax
-{
-	type	ugv
-	up_chapter	equipment
-	name	"_Triax UGV"
-	description	"_ugv_triax_txt"
-	pre_description	"_ugv_triax_pre_txt"
-
-	provides	ugv_triax
-	require_AND { tech nothing }
-	time	0
-	producetime	800
-
-	mdl_top	"soldiers/ugv_triax/triax"
-}
-
-//========================
 // Craft Stuff
 //========================
 
