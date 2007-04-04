@@ -1189,7 +1189,7 @@ static void CL_PingServers_f (void)
 		memset(serverList, 0, sizeof(serverList_t) * MAX_SERVERLIST);
 	}
 
-	menuText[TEXT_STANDARD] = NULL;
+/*	menuText[TEXT_STANDARD] = NULL;*/
 	menuText[TEXT_LIST] = serverText;
 
 	NET_Config(qtrue);			/* allow remote */
