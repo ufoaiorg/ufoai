@@ -721,22 +721,29 @@ void RS_AssignScientist (technology_t* tech)
 		/* Get a free lab from the base. */
 		building = B_GetLab(base->idx);
 		if (building) {
-			/* Assign the tech to a lab&base. */
-			tech->scientists++;
-			tech->base_idx = building->base_idx;
+			/* Check the capacity. */
+			if (base->capacities[CAP_LABSPACE].max > base->capacities[CAP_LABSPACE].cur) {
+				tech->scientists++;			/* Assign a scientist to this tech. */
+				tech->base_idx = building->base_idx;	/* Make sure this tech has proper base_idx. */
+				base->capacities[CAP_LABSPACE].cur++;	/* Set the amount of currently assigned in capacities. */
 
-			/* Assign the sci to the lab and set number of used lab-space. */
-			employee->buildingID = building->idx;
-			base->usedLab++;
+				/* Assign the sci to the lab and set number of used lab-space. */
+				employee->buildingID = building->idx;
+				base->usedLab++;			/* TODO: remove me after testing  baseCurrent->capacities[CAP_LABSPACE] */
 
 #if DEBUG
-			if (baseCurrent->usedLab > B_GetAvailableLabSpace(baseCurrent))
+				/* FIXME: shouldn't be base->usedLab here instead of baseCurrent? (same for param in B_GetAvailableLabSpace) */
+				if (baseCurrent->usedLab > B_GetAvailableLabSpace(baseCurrent))
 				Com_DPrintf("RS_AssignScientist: more lab-space used (%i) than available (%i) - please investigate.\n", baseCurrent->usedLab, B_GetAvailableLabSpace(baseCurrent));
 #endif
 
-			/* TODO: use
-			E_AssignEmployeeToBuilding(employee, building);
-			instead. */
+				/* TODO: use
+				E_AssignEmployeeToBuilding(employee, building);
+				instead. */
+			} else {
+				MN_Popup(_("Notice"), _("No free space in laboratories left.\nBuild more laboratories.\n"));
+				return;
+			}
 		} else {
 			MN_Popup(_("Notice"),
 				_("There is no free lab available.\nYou need to build one or free another\nin order to assign scientists to research this technology.\n"));
@@ -791,15 +798,17 @@ static void RS_RemoveScientist (technology_t* tech)
 		if (employee) {
 			/* Remove the sci from the tech. */
 			tech->scientists--;
+			/* Update capacity. */
+			gd.bases[tech->base_idx].capacities[CAP_LABSPACE].cur--;
 
 			/* Remove the sci from the lab and set number of used lab-space. */
 			employee->buildingID = -1; /* See also E_RemoveEmployeeFromBuilding */
-			gd.bases[tech->base_idx].usedLab--;
+			gd.bases[tech->base_idx].usedLab--;	/* TODO: remove me after testing  baseCurrent->capacities[CAP_LABSPACE] */
 		}
 	}
 
 	if (tech->scientists == 0) {
-		/* Remove the tech rfomt he base if no scis are left to research it. */
+		/* Remove the tech from the base if no scis are left to research it. */
 		tech->base_idx = -1;
 	}
 }
@@ -823,7 +832,10 @@ static void RS_MaxOutResearch (base_t *base, technology_t* tech)
 
 	/* Add as many scientists as possible to this tech. */
 	do {
+		if (base->capacities[CAP_LABSPACE].cur < base->capacities[CAP_LABSPACE].max) {
+		/* TODO: remove me after testing  baseCurrent->capacities[CAP_LABSPACE]
 		if (base->usedLab < B_GetAvailableLabSpace(base)) {
+		*/
 			employee = E_GetUnassignedEmployee(base, EMPL_SCIENTIST);
 			if (employee)
 				RS_AssignScientist(tech);

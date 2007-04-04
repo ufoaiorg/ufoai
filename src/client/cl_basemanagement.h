@@ -87,6 +87,12 @@ typedef enum {
 	MAX_CAP
 } baseCapacities_t;
 
+/** @brief Store capacities in base. */
+typedef struct cap_maxcur_s {
+	int max;		/**< Maximum capacity. */
+	int cur;		/**< Currently used capacity. */
+} capacities_t;
+
 /** @brief A building with all it's data */
 typedef struct building_s {
 	int idx;					/**< self link in "buildings" list. */
@@ -198,9 +204,7 @@ typedef struct base_s {
 
 	aliensCont_t alienscont[MAX_ALIENCONT_CAP];	/**< alien containment capacity */
 
-	baseCapacities_t capacities[MAX_BUILDINGS][1]; /**< Capacities. [MAX_BUILDINGS][0] - max, [1] - currently
- in use. */
-
+	capacities_t capacities[MAX_CAP];		/**< Capacities. */
 
 	equipDef_t storage;	/**< weapons, etc. stored in base */
 

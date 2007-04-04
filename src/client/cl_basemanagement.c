@@ -2530,7 +2530,7 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 	case CAP_HOSPSPACE:	/**< Update hospital space capacity in base. */
 	case CAP_ITEMS:		/**< Update items capacity in base. */
 		/* Reset given capacity in current base. */
-		base->capacities[cap][0] = 0;
+		base->capacities[cap].max = 0;
 		/* Get building capacity. */
 		for (i = 0; i < gd.numBuildingTypes; i++) {
 			if (gd.buildingTypes[i].buildingType == building) {
@@ -2544,21 +2544,21 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 		for (j = 0; j < gd.numBuildings[base->idx]; j++) {
 			if ((gd.buildings[base->idx][j].buildingType == building)
 			&& (gd.buildings[base->idx][j].buildingStatus != B_STATUS_NOT_SET)) {
-				base->capacities[cap][0] += capacity;
+				base->capacities[cap].max += capacity;
 			}
 		}
 		Com_DPrintf("B_UpdateBaseCapacities()... updated capacity of %s: %i\n", 
-		gd.buildingTypes[b_idx].id, base->capacities[cap][0]);
+		gd.buildingTypes[b_idx].id, base->capacities[cap].max);
 		break;
 	case CAP_AIRCRAFTS_SMALL:	/**< Update aircrafts capacity in base. */
 		/* TODO */
 		Com_DPrintf("B_UpdateBaseCapacities()... updated CAP_AIRCRAFTS_SMALL: %i\n", 
-		base->capacities[cap][0]);
+		base->capacities[cap].max);
 		break;
 	case CAP_AIRCRAFTS_BIG:		/**< Update aircrafts capacity in base. */
 		/* TODO */
 		Com_DPrintf("B_UpdateBaseCapacities()... updated CAP_AIRCRAFTS_BIG: %i\n", 
-		base->capacities[cap][0]);
+		base->capacities[cap].max);
 		break;    
 	case MAX_CAP:			/**< Update all capacities in base. */
 		Com_DPrintf("B_UpdateBaseCapacities()... going to update ALL capacities.\n");

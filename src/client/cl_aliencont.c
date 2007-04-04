@@ -255,12 +255,12 @@ void AL_AddAliens (void)
 				} else {
 					for (k = 0; k < cargo[i].amount_alive; k++) {
 						/* Check base capacity. */
-						if (tobase->capacities[CAP_ALIENS][0] > AL_CountInBase()) {
+						if (tobase->capacities[CAP_ALIENS].max > AL_CountInBase()) {
 							tobase->alienscont[j].amount_alive++;
 						} else {
 							if (!limit) {
 								/* Limit is hit. Set the amount of currently stored in capacities. */
-								tobase->capacities[CAP_ALIENS][1] = tobase->capacities[CAP_ALIENS][0];
+								tobase->capacities[CAP_ALIENS].cur = tobase->capacities[CAP_ALIENS].max;
 								MN_AddNewMessage(_("Notice"), _("You don't have enough space in Alien Containment. Some aliens got killed."), qfalse, MSG_STANDARD, NULL);
 								limit = qtrue;
 								tobase->alienscont[j].amount_dead++;
@@ -280,7 +280,7 @@ void AL_AddAliens (void)
 		}
 	}
 	/* Set the amount of currently stored in capacities. */
-	tobase->capacities[CAP_ALIENS][1] = AL_CountInBase();
+	tobase->capacities[CAP_ALIENS].cur = AL_CountInBase();
 
 	for (i = 0; i < numTeamDesc; i++ ) {
 		if (!teamDesc[i].alien)
