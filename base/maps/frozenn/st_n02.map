@@ -512,6 +512,7 @@
 "spawnflags" "255"
 "classname" "misc_model"
 "model" "models/objects/vegi/tree02/tree2_a.md2"
+"skin" "1"
 "origin" "272 208 24"
 "angles" "0 310 0"
 }
@@ -527,6 +528,7 @@
 "spawnflags" "255"
 "origin" "432 112 36"
 "model" "models/objects/vegi/tree02/tree2_a.md2"
+"skin" "1"
 "classname" "misc_model"
 "angles" "0 120 0"
 }
@@ -542,6 +544,7 @@
 "angles" "0 20 0"
 "origin" "80 400 6"
 "model" "models/objects/vegi/tree02/tree2_a.md2"
+"skin" "1"
 "classname" "misc_model"
 "spawnflags" "255"
 }
@@ -557,6 +560,7 @@
 "spawnflags" "255"
 "classname" "misc_model"
 "model" "models/objects/vegi/tree02/tree2_a.md2"
+"skin" "1"
 "origin" "176 464 6"
 "angles" "0 310 0"
 }
@@ -572,6 +576,7 @@
 "spawnflags" "255"
 "classname" "misc_model"
 "model" "models/objects/vegi/tree02/tree2_a.md2"
+"skin" "1"
 "origin" "176 340 10"
 "angles" "0 80 0"
 }
@@ -587,6 +592,7 @@
 "angles" "0 310 0"
 "origin" "48 80 18"
 "model" "models/objects/vegi/tree02/tree2_a.md2"
+"skin" "1"
 "classname" "misc_model"
 "spawnflags" "255"
 }
