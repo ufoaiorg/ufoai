@@ -448,6 +448,20 @@ menu aliencont
 		color "0 .78 0 1"
 	}
 
+	string txt_alc_limit
+	{
+		string "_Base Capacity:"
+		pos "645 600"
+		color "0 .78 0 1"
+	}
+
+	string txt_alc_limit_v
+	{
+		string "*cvar mn_al_capacity"
+		pos "800 600"
+		color "0 .78 0 1"
+	}
+
 	// ==================
 	// init
 	// ==================

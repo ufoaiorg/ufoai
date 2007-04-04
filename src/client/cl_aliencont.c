@@ -518,7 +518,7 @@ int AL_CountInBase (void)
 }
 
 /**
- * @brief Counts killed aliens of given type in all bases.
+ * @brief Counts killed or captured aliens of given type in all bases.
  * @param[in] alientype
  * @param[in] alive boolean whether the alien is alive or already dead
  * @return amount of killed aliens of given type
@@ -946,7 +946,8 @@ static void AC_Init (void)
 		Cbuf_AddText("aliencont_prevbg\n");
 
 	Cvar_SetValue("mn_al_globalamount", AL_CountAll());
-	Cvar_SetValue("mn_al_localamount", AL_CountInBase());
+	Cvar_SetValue("mn_al_localamount", baseCurrent->capacities[CAP_ALIENS].cur);
+	Cvar_SetValue("mn_al_capacity", baseCurrent->capacities[CAP_ALIENS].max);
 	Cvar_Set("mn_al_base", baseCurrent->name);
 
 	menuText[TEXT_STANDARD] = aliencontText;
