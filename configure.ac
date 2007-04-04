@@ -250,6 +250,17 @@ AC_SUBST([WINDRES],$WINDRES)
 #fi
 
 #---------------------------------------------------------------------------------------------
+# Darwin (fink)
+#---------------------------------------------------------------------------------------------
+
+if test -f "/sw/etc/fink.conf"; then
+  : ${CFLAGS="-I/sw/include -I/usr/local/include"}
+  : ${CPPFLAGS="-I/sw/include -I/usr/local/include"}
+  : ${LDFLAGS="-L/sw/lib -L/usr/local/lib"}
+	AC_MSG_NOTICE([added fink lib and include dir])
+fi
+
+#---------------------------------------------------------------------------------------------
 # Check for stdint.h
 #---------------------------------------------------------------------------------------------
 
@@ -434,7 +445,7 @@ CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 #---------------------------------------------------------------------------------------------
 
 LIBS=
-AC_SEARCH_LIBS([ogg_stream_init],[ogg])
+	AC_SEARCH_LIBS([ogg_stream_init],[ogg])
 if test "$ac_cv_search_ogg_stream_init" = "no"
 then
 	if test "$enable_client" = "yes"

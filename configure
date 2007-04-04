@@ -3556,6 +3556,18 @@ WINDRES=$WINDRES
 #fi
 
 #---------------------------------------------------------------------------------------------
+# Darwin (fink)
+#---------------------------------------------------------------------------------------------
+
+if test -f "/sw/etc/fink.conf"; then
+  : ${CFLAGS="-I/sw/include -I/usr/local/include"}
+  : ${CPPFLAGS="-I/sw/include -I/usr/local/include"}
+  : ${LDFLAGS="-L/sw/lib -L/usr/local/lib"}
+	{ echo "$as_me:$LINENO: added fink lib and include dir" >&5
+echo "$as_me: added fink lib and include dir" >&6;}
+fi
+
+#---------------------------------------------------------------------------------------------
 # Check for stdint.h
 #---------------------------------------------------------------------------------------------
 
@@ -6165,7 +6177,7 @@ CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 #---------------------------------------------------------------------------------------------
 
 LIBS=
-{ echo "$as_me:$LINENO: checking for library containing ogg_stream_init" >&5
+	{ echo "$as_me:$LINENO: checking for library containing ogg_stream_init" >&5
 echo $ECHO_N "checking for library containing ogg_stream_init... $ECHO_C" >&6; }
 if test "${ac_cv_search_ogg_stream_init+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
