@@ -49,9 +49,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define IRC_API_VERSION 0
 
+typedef struct irc_user_s {
+	char key[MAX_VAR];
+	struct irc_user_s *next;
+} irc_user_t;
+
 typedef struct irc_channel_s {
-	char *name;
-	char *topic;
+	char name[MAX_VAR];
+	char topic[256];
+	int users;
+	irc_user_t *user;
 } irc_channel_t;
 
 /* numeric commands as specified by RFC 1459 - Internet Relay Chat Protocol */
