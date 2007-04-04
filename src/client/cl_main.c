@@ -1881,6 +1881,9 @@ static void CL_InitLocal (void)
 
 	mn_serverlist = Cvar_Get("mn_serverlist", "0", CVAR_ARCHIVE, "0=show all, 1=hide full - servers on the serverlist");
 
+	mn_inputlength = Cvar_Get("mn_inputlength", "32", 0, "Limit the input length for messagemenu input");
+	mn_inputlength->modified = qfalse;
+
 	/* userinfo */
 	info_password = Cvar_Get("password", "", CVAR_USERINFO, NULL);
 	info_spectator = Cvar_Get("spectator", "0", CVAR_USERINFO, NULL);
@@ -2158,6 +2161,11 @@ static void CL_CvarCheck (void)
 	if (s_language->modified)
 		Qcommon_LocaleInit();
 #endif
+
+	if (mn_inputlength->modified) {
+		if (mn_inputlength->integer >= MAX_CVAR_EDITING_LENGTH)
+			Cvar_SetValue("mn_inputlength", MAX_CVAR_EDITING_LENGTH);
+	}
 
 	/* gl_mode and fullscreen */
 	v = Cvar_VariableInteger("mn_glmode");

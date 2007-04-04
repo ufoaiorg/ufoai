@@ -56,6 +56,7 @@ static cvar_t *irc_logConsole = NULL;
 /* menu cvar */
 static cvar_t *irc_send_buffer = NULL;
 
+static int inputLengthBackup;
 
 static qboolean irc_connected = qfalse;
 
@@ -1607,13 +1608,11 @@ static void Irc_Client_Msg_f (void)
 			Irc_Proto_Msg(channel, msg);
 			/* local echo */
 			Irc_AppendToBuffer(va("<%s> %s", irc_nick->string, msg));
-			if (*irc_send_buffer->string)
-				Cvar_ForceSet("irc_send_buffer", "");
+			Cvar_ForceSet("irc_send_buffer", "");
 /*			Irc_Input_Activate();*/
 		} else
 			Com_Printf("Join a channel first.\n");
-	} else
-		Com_Printf("usage: irc_chanmsg {<msg>}\n");
+	}
 }
 
 /**
@@ -1824,9 +1823,12 @@ extern void Irc_Input_Activate (void)
 	menuText[TEXT_STANDARD] = irc_buffer;
 	menuText[TEXT_LIST] = irc_names_buffer;
 	if (irc_connected && *irc_defaultChannel->string) {
-		cls.key_dest = key_irc;
+		cls.key_dest = key_input;
 	} else
 		Com_DPrintf("Irc_Input_Activate: Warning - IRC not connected\n");
+	/* store this value to be able to reset if in Irc_Input_Deactivate */
+	inputLengthBackup = Cvar_VariableValue("mn_inputlength");
+	Cvar_SetValue("mn_inputlength", 128);
 }
 
 /**
@@ -1835,10 +1837,17 @@ extern void Irc_Input_Activate (void)
  */
 extern void Irc_Input_Deactivate (void)
 {
-	if (cls.key_dest == key_irc)
+	if (cls.key_dest == key_input) {
 		cls.key_dest = key_game;
-	else
+	} else
 		Com_DPrintf("Note: Not in irc input mode - thus we can not leave it\n");
+	/* if this is set - the command is called after Irc_Input_Activate call */
+	if (inputLengthBackup) {
+		Cvar_SetValue("mn_inputlength", inputLengthBackup);
+		inputLengthBackup = 0;
+		menuText[TEXT_STANDARD] = NULL;
+		menuText[TEXT_LIST] = NULL;
+	}
 }
 
 /**

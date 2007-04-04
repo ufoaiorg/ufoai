@@ -566,7 +566,7 @@ static void Key_Message (int key)
 		return;					/* all full */
 
 	/* limit the length for cvar inline editing */
-	if (msg_mode != MSG_MENU || msg_bufferlen < MAX_CVAR_EDITING_LENGTH) {
+	if (msg_mode != MSG_MENU || msg_bufferlen < mn_inputlength->integer) {
 		msg_buffer[msg_bufferlen++] = key;
 		msg_buffer[msg_bufferlen] = 0;
 	}
@@ -987,10 +987,10 @@ void Key_Event (int key, qboolean down, unsigned time)
 			return;
 
 		switch (cls.key_dest) {
+		case key_input:
 		case key_message:
 			Key_Message(key);
 			break;
-		case key_irc:
 		case key_game:
 			Cbuf_AddText("mn_pop esc;");
 			break;
@@ -1036,7 +1036,8 @@ void Key_Event (int key, qboolean down, unsigned time)
 	}
 
 	/* if not a consolekey, send to the interpreter no matter what mode is */
-	if (cls.key_dest == key_game) {	/*&& !consolekeys[key] ) */
+	if (cls.key_dest == key_game ||
+		(cls.key_dest == key_input && key >= K_MOUSE1 && key <= K_MWHEELUP)) {
 		if (mouseSpace == MS_MENU)
 			kb = menukeybindings[key];
 		if (!kb)
@@ -1049,8 +1050,9 @@ void Key_Event (int key, qboolean down, unsigned time)
 				Cbuf_AddText(kb);
 				Cbuf_AddText("\n");
 			}
+			if (cls.key_dest == key_game)
+				return;
 		}
-		return;
 	}
 
 	if (!down)
@@ -1062,7 +1064,7 @@ void Key_Event (int key, qboolean down, unsigned time)
 	Irc_Input_KeyEvent(key);
 
 	switch (cls.key_dest) {
-	case key_irc:
+	case key_input:
 	case key_message:
 		Key_Message(key);
 		break;

@@ -57,7 +57,7 @@ static void DisplayString(int x, int y, char *s)
 /**
  * @brief
  */
-static void Key_ClearTyping(void)
+static void Key_ClearTyping (void)
 {
 	key_lines[edit_line][1] = 0;	/* clear any typing */
 	key_linepos = 1;
@@ -66,7 +66,7 @@ static void Key_ClearTyping(void)
 /**
  * @brief
  */
-void Con_ToggleConsole_f(void)
+void Con_ToggleConsole_f (void)
 {
 	int maxclients;
 
@@ -85,7 +85,9 @@ void Con_ToggleConsole_f(void)
 			Cvar_Set("paused", "0");
 	} else {
 		cls.key_dest = key_console;
-
+		/* make sure that we end all input buffers when opening the console */
+		if (msg_mode == MSG_MENU)
+			Cbuf_AddText("msgmenu !");
 		if (maxclients == 1 && Com_ServerState())
 			Cvar_Set("paused", "1");
 	}
@@ -210,7 +212,7 @@ static void Con_MessageModeSayTeam_f (void)
 static void Con_MessageModeMenu_f (void)
 {
 	msg_mode = MSG_MENU;
-	cls.key_dest = key_message;
+	cls.key_dest = key_input;
 }
 
 /**
@@ -500,7 +502,7 @@ DRAWING
 /**
  * @brief The input line scrolls horizontally if typing goes beyond the right edge
  */
-static void Con_DrawInput(void)
+static void Con_DrawInput (void)
 {
 	int y;
 	int i;
@@ -540,7 +542,7 @@ static void Con_DrawInput(void)
  * @brief Draws the last few lines of output transparently over the game top
  * @sa SCR_DrawConsole
  */
-void Con_DrawNotify(void)
+void Con_DrawNotify (void)
 {
 	int x, l, v;
 	char *text, *s;
