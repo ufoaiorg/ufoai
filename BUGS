@@ -13,6 +13,8 @@ Known bugs in UFO: Alien Invasion 2.1
    the Buy/Sell menu. The workaround for this is to go back to geoscape,
    enter the base again and reopen the Buy/Sell menu.
 4. Alien Shevaar model is clipping slightly into the ground when killed.
+5. Living Quarters base facility provides space up to 32 employees while
+   the description says 20.
 
 We apologize for any inconvenience.
 					UFO:AI Team
