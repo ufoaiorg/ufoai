@@ -1707,22 +1707,15 @@ extern void CL_ParseCharacterData (sizebuf_t *buf, qboolean updateCharacter)
 extern void CL_ParseResults (sizebuf_t * buf)
 {
 	static char resultText[MAX_SMALLMENUTEXTLEN];
-	byte num_spawned[MAX_TEAMS];
-	byte num_alive[MAX_TEAMS];
-	byte num_kills[MAX_TEAMS][MAX_TEAMS];
-	byte num_stuns[MAX_TEAMS][MAX_TEAMS];
-	byte winner, we;
-
-#if 0
-/* 20070228 Zenerka: new solution for collecting items from the battlefield
-   see CL_CollectingItems(), CL_SellorAddItems(), CL_CollectingAmmo(), CL_CarriedItems() */
-	int i, j, num, number_items, credits_gained;
-#endif
-
+	int num_spawned[MAX_TEAMS];
+	int num_alive[MAX_TEAMS];
+	int num_kills[MAX_TEAMS][MAX_TEAMS];
+	int num_stuns[MAX_TEAMS][MAX_TEAMS];
+	int winner, we;
 	int i, j, num;
-	int our_surviviurs,our_killed,our_stunned;
-	int thier_surviviurs,thier_killed,thier_stunned;
-	int civilian_surviviurs,civilian_killed,civilian_stunned;
+	int our_surviviurs, our_killed, our_stunned;
+	int thier_surviviurs, thier_killed, thier_stunned;
+	int civilian_surviviurs, civilian_killed, civilian_stunned;
 
 	/* get number of teams */
 	num = MSG_ReadByte(buf);
