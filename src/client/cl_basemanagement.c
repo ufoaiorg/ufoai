@@ -2274,7 +2274,7 @@ extern void B_ResetBaseManagement (void)
 	Cmd_AddCommand("bases_check_max", B_CheckMaxBases_f, NULL);
 	Cmd_AddCommand("rename_base", B_RenameBase_f, NULL);
 	Cmd_AddCommand("base_attack", B_BaseAttack_f, NULL);
-	Cmd_AddCommand("base_changename", B_ChangeBaseName_f, NULL);
+	Cmd_AddCommand("base_changename", B_ChangeBaseName_f, "Called after editing the cvar base name");
 	Cmd_AddCommand("base_init", B_BaseInit_f, NULL);
 	Cmd_AddCommand("base_assemble", B_AssembleMap_f, "Called to assemble the current selected base");
 	Cmd_AddCommand("base_assemble_rand", B_AssembleRandomBase_f, NULL);
@@ -2455,4 +2455,3 @@ int B_ItemInBase (int item_idx, base_t *base)
 
 	return ed->num[item_idx];
 }
-

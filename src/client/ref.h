@@ -180,7 +180,7 @@ typedef struct {
 	vec3_t origin;
 	vec3_t color;
 	float intensity;
-    vec3_t direction;   /**< used by MD3 */
+	vec3_t direction;   /**< used by MD3 */
 } dlight_t;
 
 typedef struct {

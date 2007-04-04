@@ -189,7 +189,7 @@ typedef enum {
 	ca_active					/**< game views should be displayed */
 } connstate_t;
 
-typedef enum { key_game, key_irc, key_console, key_message } keydest_t;
+typedef enum { key_game, key_input, key_console, key_message } keydest_t;
 
 typedef struct {
 	connstate_t state;
@@ -306,8 +306,10 @@ extern cvar_t *confirm_movement;
 
 extern cvar_t *cl_precachemenus;
 
+extern cvar_t *mn_inputlength;
+
 /** limit the input for cvar editing (base name, save slots and so on) */
-#define MAX_CVAR_EDITING_LENGTH 32
+#define MAX_CVAR_EDITING_LENGTH 256 /* MAXCMDLINE */
 
 typedef struct {
 	int key;					/**< so entities can reuse same entry */
