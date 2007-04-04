@@ -2297,7 +2297,7 @@ extern void B_ResetBaseManagement (void)
 	Cmd_AddCommand("bases_check_max", B_CheckMaxBases_f, NULL);
 	Cmd_AddCommand("rename_base", B_RenameBase_f, NULL);
 	Cmd_AddCommand("base_attack", B_BaseAttack_f, NULL);
-	Cmd_AddCommand("base_changename", B_ChangeBaseName_f, NULL);
+	Cmd_AddCommand("base_changename", B_ChangeBaseName_f, "Called after editing the cvar base name");
 	Cmd_AddCommand("base_init", B_BaseInit_f, NULL);
 	Cmd_AddCommand("base_assemble", B_AssembleMap_f, "Called to assemble the current selected base");
 	Cmd_AddCommand("base_assemble_rand", B_AssembleRandomBase_f, NULL);
@@ -2504,7 +2504,7 @@ static buildingType_t B_GetBuildingTypeByCapacity (baseCapacities_t cap)
 	case CAP_HOSPSPACE:
 		return B_HOSPITAL;
 	default:
-		return B_MISC;           
+		return B_MISC;
 	}
 }
 
@@ -2547,19 +2547,19 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 				base->capacities[cap].max += capacity;
 			}
 		}
-		Com_DPrintf("B_UpdateBaseCapacities()... updated capacity of %s: %i\n", 
+		Com_DPrintf("B_UpdateBaseCapacities()... updated capacity of %s: %i\n",
 		gd.buildingTypes[b_idx].id, base->capacities[cap].max);
 		break;
 	case CAP_AIRCRAFTS_SMALL:	/**< Update aircrafts capacity in base. */
 		/* TODO */
-		Com_DPrintf("B_UpdateBaseCapacities()... updated CAP_AIRCRAFTS_SMALL: %i\n", 
+		Com_DPrintf("B_UpdateBaseCapacities()... updated CAP_AIRCRAFTS_SMALL: %i\n",
 		base->capacities[cap].max);
 		break;
 	case CAP_AIRCRAFTS_BIG:		/**< Update aircrafts capacity in base. */
 		/* TODO */
-		Com_DPrintf("B_UpdateBaseCapacities()... updated CAP_AIRCRAFTS_BIG: %i\n", 
+		Com_DPrintf("B_UpdateBaseCapacities()... updated CAP_AIRCRAFTS_BIG: %i\n",
 		base->capacities[cap].max);
-		break;    
+		break;
 	case MAX_CAP:			/**< Update all capacities in base. */
 		Com_DPrintf("B_UpdateBaseCapacities()... going to update ALL capacities.\n");
 		/* Loop through all capacities and update them. */

@@ -1288,23 +1288,30 @@ static void CL_MessageMenu_f (void)
 		msg_bufferlen = strlen(nameBackup);
 		break;
 	case '!':
+		if (!*cvarName)
+			break;
 		/* cancel */
 		Cvar_ForceSet(cvarName, nameBackup);
 		Cvar_ForceSet(va("%s%i", cvarName, cl_selected->integer), nameBackup);
 		/* don't restore this the next time */
-		nameBackup[0] = '\0';
+		nameBackup[0] = cvarName[0] = '\0';
 		/* call trigger function */
 		Cbuf_AddText(va("%s_changed\n", cvarName));
 		break;
 	case ':':
+		if (!*cvarName)
+			break;
 		/* end */
 		Cvar_ForceSet(cvarName, msg + 1);
 		/* employee name */
 		Cvar_ForceSet(va("%s%i", cvarName, cl_selected->integer), msg + 1);
 		/* call trigger function */
 		Cbuf_AddText(va("%s_changed\n", cvarName));
+		nameBackup[0] = cvarName[0] = '\0';
 		break;
 	default:
+		if (!*cvarName)
+			break;
 		/* continue */
 		Cvar_ForceSet(cvarName, msg);
 		Cvar_ForceSet(va("%s%i", cvarName, cl_selected->integer), msg);

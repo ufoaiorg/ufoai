@@ -201,10 +201,10 @@ static void TR_TransferSelect_f (void)
 		/* TODO: check building status here as well as limits. */
 		if (transferBase->hasHangar) {
 			Q_strcat(transferList, "TODO: aircrafts", sizeof(transferList));
-        } else {
+		} else {
 			/* TODO: print proper info if base has hangar but not operational or limits are not sufficient. */
 			Q_strcat(transferList, _("Transfer is not possible - the base doesn't have hangar"), sizeof(transferList));
-        }
+		}
 		break;
 	default:
 		Com_Printf("TR_TransferSelect_f: Unknown type id %i\n", type);
@@ -298,12 +298,12 @@ void TR_EmptyTransferCargo (aircraft_t *aircraft)
 		/* TODO: add a personel to destinationbase. */
 		/* TODO: unhire personel in transfercargo and destroy it's inventory. */
 		/**
-		      * first unhire this employee (this will also unlink the inventory from current base
-		      * and remove him from any buildings he is currently assigned to) and then hire him
-		      * again in the new base
-		      */
-		      /*E_UnhireEmployee(homebase, ...)*/
-		      /*E_HireEmployee(b, ...)*/
+		* first unhire this employee (this will also unlink the inventory from current base
+		* and remove him from any buildings he is currently assigned to) and then hire him
+		* again in the new base
+		*/
+		/*E_UnhireEmployee(homebase, ...)*/
+		/*E_HireEmployee(b, ...)*/
 	}
 	/* Unload aliens. TODO: check building status and limits. */
 	if (!destination->hasAlienCont) {
@@ -682,7 +682,7 @@ static void TR_TransferBaseSelect_f (void)
 		Q_strcat(baseInfo, _("No quarters in this base\n"), sizeof(baseInfo));
 	}
 	if (base->hasAlienCont) {
-        /* TODO: Check building status and whether it is free */
+		/* TODO: Check building status and whether it is free */
 		Q_strcat(baseInfo, _("You can transfer aliens - this base has alien containment\n"), sizeof(baseInfo));
 	} else {
 		Q_strcat(baseInfo, _("No alien containment in this base\n"), sizeof(baseInfo));

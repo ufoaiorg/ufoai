@@ -111,7 +111,7 @@ typedef struct aircraft_s {
 	int idxBase;				/**< Index of base. Used to restore homebase from savegame. See also "homebase" below.*/
 	/* pointer to base->numOnTeam[AIRCRAFT_ID] */
 	int *teamSize;				/**< how many soldiers on board */
-	int teamIdxs[MAX_ACTIVETEAM];              /**< array of team members on board employee idx*/
+	int teamIdxs[MAX_ACTIVETEAM];	/**< array of team members on board employee idx*/
 
 #if 0
 /* 20070303 Zenerka: Transfer stuff moved to cl_transfer.c|h. */

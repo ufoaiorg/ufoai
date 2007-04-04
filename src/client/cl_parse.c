@@ -96,7 +96,7 @@ const char *ev_format[] =
 	"ssbbbpp",			/* EV_ACTOR_THROW */
 
 	"ss",				/* EV_ACTOR_DIE */
-	"!sbsbbb",		    /* EV_ACTOR_STATS; beware of the '!' */
+	"!sbsbbb",			/* EV_ACTOR_STATS; beware of the '!' */
 	"ss",				/* EV_ACTOR_STATECHANGE */
 
 	"s*",				/* EV_INV_ADD */
@@ -1017,7 +1017,7 @@ static void CL_InvAdd (sizebuf_t *sb)
 
 	for (i = 0, le = LEs; i < numLEs; i++, le++)
 		if (le->entnum == number)
-           	break;
+			break;
 
 	if (le->entnum != number) {
 		nr = MSG_ReadShort(sb) / 6;
