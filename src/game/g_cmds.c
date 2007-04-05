@@ -157,6 +157,7 @@ static void Cmd_PlayerList_f (player_t * player)
 
 	/* team, ping, name */
 	*text = 0;
+	/* list all human controlled players here */
 	for (i = 0, e2 = game.players; i < game.maxplayers; i++, e2++) {
 		if (!e2->inuse)
 			continue;
