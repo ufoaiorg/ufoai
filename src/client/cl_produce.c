@@ -142,7 +142,11 @@ static production_t *PR_QueueNew (production_queue_t *queue, signed int objID, s
 
 	prod->objID = objID;
 	prod->amount = amount;
-	prod->timeLeft = t->produceTime;
+	/* Don't try to add to queue an item which is not produceable. */
+	if (t->produceTime < 0)
+		return NULL;
+	else
+		prod->timeLeft = t->produceTime;
 
 	queue->numItems++;
 	return prod;
@@ -307,12 +311,18 @@ static void PR_ProductionInfo (void)
 	if (objID >= 0) {
 		od = &csi.ods[objID];
 		t = (technology_t*)(od->tech);
-		Com_sprintf(productionInfo, sizeof(productionInfo), "%s\n", od->name);
-		Q_strcat(productionInfo, va(_("Costs per item\t%i c\n"), (od->price*PRODUCE_FACTOR/PRODUCE_DIVISOR)),
+		/* Don't try to display the item which is not produceable. */
+		if (t->produceTime < 0) {
+			Com_sprintf(productionInfo, sizeof(productionInfo), _("No item selected"));
+			Cvar_Set("mn_item", "");
+		} else {
+			Com_sprintf(productionInfo, sizeof(productionInfo), "%s\n", od->name);
+			Q_strcat(productionInfo, va(_("Costs per item\t%i c\n"), (od->price*PRODUCE_FACTOR/PRODUCE_DIVISOR)),
 				sizeof(productionInfo) );
-		Q_strcat(productionInfo, va(_("Productiontime\t%ih\n"), (t->produceTime)),
+			Q_strcat(productionInfo, va(_("Productiontime\t%ih\n"), (t->produceTime)),
 				sizeof(productionInfo) );
-		CL_ItemDescription(objID);
+			CL_ItemDescription(objID);
+		}
 	} else {
 		Com_sprintf(productionInfo, sizeof(productionInfo), _("No item selected"));
 		Cvar_Set("mn_item", "");
@@ -491,7 +501,7 @@ static void PR_UpdateProductionList (void)
 
 		/* we can produce what was researched before */
 		if (od->buytype == produceCategory && RS_IsResearched_ptr(od->tech)
-		&& *od->name && tech && (tech->produceTime != -1)) {
+		&& *od->name && tech && (tech->produceTime > 0)) {
 			Q_strcat(productionList, va("%s\n", od->name), sizeof(productionList));
 			Q_strcat(productionAmount, va("%i\n", baseCurrent->storage.num[i]), sizeof(productionAmount));
 			Q_strcat(productionQueued, "\n", sizeof(productionQueued));
