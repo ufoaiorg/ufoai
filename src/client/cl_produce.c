@@ -501,7 +501,7 @@ static void PR_UpdateProductionList (void)
 
 		/* we can produce what was researched before */
 		if (od->buytype == produceCategory && RS_IsResearched_ptr(od->tech)
-		&& *od->name && tech && (tech->produceTime < 0)) {
+		&& *od->name && tech && (tech->produceTime > 0)) {
 			Q_strcat(productionList, va("%s\n", od->name), sizeof(productionList));
 			Q_strcat(productionAmount, va("%i\n", baseCurrent->storage.num[i]), sizeof(productionAmount));
 			Q_strcat(productionQueued, "\n", sizeof(productionQueued));
