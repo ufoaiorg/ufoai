@@ -1502,6 +1502,7 @@ static int spawnCountFromServer = -1;
 static void CL_SpawnSoldiers_f (void)
 {
 	int n = teamnum->integer;
+	int amount = 0;
 
 	if (!ccs.singleplayer && baseCurrent && !teamData.parsed) {
 		Com_Printf("CL_SpawnSoldiers_f: teaminfo unparsed\n");
@@ -1522,9 +1523,15 @@ static void CL_SpawnSoldiers_f (void)
 	}
 
 	/* maybe we start the map directly from commandline for testing */
-	if (baseCurrent)
-		/* send team info */
-		CL_SendCurTeamInfo(&cls.netchan.message, baseCurrent->curTeam, B_GetNumOnTeam());
+	if (baseCurrent) {
+		amount = B_GetNumOnTeam();
+		if (amount <= 0) {
+			Com_DPrintf("CL_SpawnSoldiers_f: Error - B_GetNumOnTeam returned value smaller than zero - %i\n", amount);
+		} else {
+			/* send team info */
+			CL_SendCurTeamInfo(&cls.netchan.message, baseCurrent->curTeam, amount);
+		}
+	}
 
 	MSG_WriteByte(&cls.netchan.message, clc_stringcmd);
 	MSG_WriteString(&cls.netchan.message, va("spawn %i\n", spawnCountFromServer));
