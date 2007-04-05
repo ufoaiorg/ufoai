@@ -137,8 +137,9 @@ menu irc
 
 	confunc irc_send_buffer_changed
 	{
-		*irc_send_buffer mousefx false
-		cmd	"irc_chanmsg;"
+		/* don't change the command order */
+		cmd "irc_chanmsg;msgmenu ?irc_send_buffer;"
+		*irc_send_buffer mousefx true
 	}
 
 	pic irc_scrollup

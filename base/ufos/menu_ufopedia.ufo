@@ -204,7 +204,7 @@ menu ufopedia
 		format	"24 0"
 		click rclick wheel
 //		bgcolor " 0.5 1 0.5 0.3"
-		height	"16"
+		height	"11"
 	}
 
 	text ufopedia_mail_header

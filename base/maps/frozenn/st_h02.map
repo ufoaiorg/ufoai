@@ -1007,6 +1007,7 @@
 "angles" "0 190 0"
 "classname" "misc_model"
 "model" "models/objects/vegi/tree02/tree2_a.md2"
+"skin" "1"
 "origin" "688 368 8"
 "spawnflags" "255"
 }
@@ -1166,6 +1167,7 @@
 "spawnflags" "255"
 "origin" "80 112 8"
 "model" "models/objects/vegi/tree02/tree2_a.md2"
+"skin" "1"
 "classname" "misc_model"
 "angles" "0 50 0"
 }
@@ -1182,6 +1184,7 @@
 "classname" "misc_model"
 "model" "models/objects/vegi/tree02/tree2_a.md2"
 "origin" "176 80 8"
+"skin" "1"
 "spawnflags" "255"
 }
 // entity 13
@@ -1196,6 +1199,7 @@
 "spawnflags" "255"
 "origin" "688 112 8"
 "model" "models/objects/vegi/tree02/tree2_a.md2"
+"skin" "1"
 "classname" "misc_model"
 "angles" "0 300 0"
 }
