@@ -1781,12 +1781,7 @@ static void CL_GameSave_f (void)
 	if (Cmd_Argc() > 2) {
 		arg = Cmd_Argv(2);
 		assert(arg);
-		/* comment from slot cvar (mn_slotX) */
-		if (arg[0] == '*')
-			Q_strncpyz(comment, Cvar_VariableString(arg + 1), sizeof(comment));
-		/* comment as parameter */
-		else
-			Q_strncpyz(comment, arg, sizeof(comment));
+		Q_strncpyz(comment, arg, sizeof(comment));
 	}
 
 	/* save the game */
