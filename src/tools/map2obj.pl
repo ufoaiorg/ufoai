@@ -49,7 +49,7 @@ sub brush_init ($) {
 
 	$brush->{polygons} = [];
 	$brush->{textures} = [];
-	$brush->{polycount} = 0;
+	$brush->{polycount} = 0;	# Used to count polygons and textures (it's the same for both)
 	
 	$brush->{data} = {};
 	return $brush;
@@ -64,6 +64,35 @@ sub entity_init ($) {
 	$entity->{brushcount} = 0;
 	$entity->{data} = {};
 	return $entity;
+}
+
+sub str2coord ($) {
+	my ($string) = @_;
+
+	$string =~ s/^\s+//;
+	my @coord = split(/\s+/, $string);
+	
+	return @coord;
+}
+
+sub obj_write($$) {
+	my ($map, $filename) = @_;
+
+	foreach my $entity  (@{$map->{entities}}) {
+		if ((exists $entity->{data}->{classname}) && $entity->{data}->{classname} eq "worldspawn") {
+			# TODO: Write brush data data.
+		}
+
+	}	
+}
+
+sub mtl_write($$) {
+	my ($map, $filename) = @_;
+
+
+	foreach my $mat  (keys %{$map->{materials}}) {
+		# TODO: Write material data
+	}
 }
 
 ############################
@@ -132,22 +161,19 @@ sub map_parse ($$) {
 			my ($v1, $v2, $v3) = ($1, $2, $3);
 			my $tex = $4;
 			my $the_others = $5;
-			$v1 =~ s/^\s+//;
-			$v2 =~ s/^\s+//;
-			$v3 =~ s/^\s+//;
+
 			$tex =~ s/^\s+//;
-			my @vert1 = split(/\s+/, $v1);
-			my @vert2 = split(/\s+/, $v2);
-			my @vert3 = split(/\s+/, $v3);
+			my @vert1 = str2coord($v1);
+			my @vert2 = str2coord($v2);
+			my @vert3 = str2coord($v3);
 			
-			#my $polygon = [${@vert1}, $#{@vert2}, $#{@vert3}];
 			my $polygon = [[@vert1],[@vert2], [@vert3]];
-			push (@{$brush->{polygons}}, $polygon);
-			#print "'",$tex,"'\n"; # debug
-			push (@{$brush->{textures}}, $tex); # store texture
+
+			push (@{$brush->{polygons}}, $polygon);	# Store polygon.
+			push (@{$brush->{textures}}, $tex);		# Store texture path.
 
 			if (!exists($map->{materials}->{$tex})) {
-				$map->{materials}->{$tex} = 1;
+				$map->{materials}->{$tex} = "mat".$map->{materialcount};		# Store info about all used textures (info only).
 				$map->{materialcount}++;
 			}
 
@@ -177,6 +203,10 @@ sub map_parse ($$) {
 						$map->{classes}->{$entity->{data}->{$1} } = 1;
 						$map->{classcount}++;
 					}
+				} elsif  (($1 eq  'origin') || ($1 eq  'color') || ($1 eq  '_color') || ($1 eq  'angles')){ 
+					my @threes = str2coord($2);
+					$entity->{data}->{$1} = @threes;
+					
 				}
 				next;
 			}
@@ -235,17 +265,18 @@ $map = map_init($map);
 # Open + parse map file
 map_parse($map, $map_filename);
 
-#debug
+#Debug
 #use Data::Dumper;
 #print Dumper($map);
 
 print "materials:\n";
 foreach my $mat  (keys %{$map->{materials}}) {
-	print "- ",$mat,"\n";
+	print " ",$mat," \t generated name:", $map->{materials}->{$mat},"\n";
 }
+
 print "classes:\n";
 foreach my $class  (keys %{$map->{classes}}) {
-print "- ",$class,"\n";
+	print "- ",$class,"\n";
 }
 
 # TODO: write obj (only types of "classname" that are supported by obj)
