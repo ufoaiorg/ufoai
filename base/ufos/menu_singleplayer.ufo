@@ -570,6 +570,7 @@ menu save
 	{
 		image	menu/save_slot
 		pos		"640 200"
+		size	"256 32"
 		out		{ *slot0 image menu/save_slot }
 		in		{ *slot0 image menu/save_slota }
 		click	{ cmd "msgmenu ?mn_slot0" *txt_slot0 color "1 1 1 1" *txt_slot0 mousefx true }
@@ -578,6 +579,7 @@ menu save
 	{
 		image	menu/save_slot
 		pos		"640 235"
+		size	"256 32"
 		out		{ *slot1 image menu/save_slot }
 		in		{ *slot1 image menu/save_slota }
 		click	{ cmd "msgmenu ?mn_slot1" *txt_slot1 color "1 1 1 1" *txt_slot1 mousefx true }
@@ -586,6 +588,7 @@ menu save
 	{
 		image	menu/save_slot
 		pos		"640 270"
+		size	"256 32"
 		out		{ *slot2 image menu/save_slot }
 		in		{ *slot2 image menu/save_slota }
 		click	{ cmd "msgmenu ?mn_slot2" *txt_slot2 color "1 1 1 1" *txt_slot2 mousefx true }
@@ -594,6 +597,7 @@ menu save
 	{
 		image	menu/save_slot
 		pos		"640 305"
+		size	"256 32"
 		out		{ *slot3 image menu/save_slot }
 		in		{ *slot3 image menu/save_slota }
 		click	{ cmd "msgmenu ?mn_slot3" *txt_slot3 color "1 1 1 1" *txt_slot3 mousefx true }
@@ -602,6 +606,7 @@ menu save
 	{
 		image	menu/save_slot
 		pos		"640 340"
+		size	"256 32"
 		out		{ *slot4 image menu/save_slot }
 		in		{ *slot4 image menu/save_slota }
 		click	{ cmd "msgmenu ?mn_slot4" *txt_slot4 color "1 1 1 1" *txt_slot4 mousefx true }
@@ -610,6 +615,7 @@ menu save
 	{
 		image	menu/save_slot
 		pos		"640 375"
+		size	"256 32"
 		out		{ *slot5 image menu/save_slot }
 		in		{ *slot5 image menu/save_slota }
 		click	{ cmd "msgmenu ?mn_slot5" *txt_slot5 color "1 1 1 1" *txt_slot5 mousefx true }
@@ -618,6 +624,7 @@ menu save
 	{
 		image	menu/save_slot
 		pos		"640 410"
+		size	"256 32"
 		out		{ *slot6 image menu/save_slot }
 		in		{ *slot6 image menu/save_slota }
 		click	{ cmd "msgmenu ?mn_slot6" *txt_slot6 color "1 1 1 1" *txt_slot6 mousefx true }
@@ -626,19 +633,20 @@ menu save
 	{
 		image	menu/save_slot
 		pos		"640 445"
+		size	"256 32"
 		out		{ *slot7 image menu/save_slot }
 		in		{ *slot7 image menu/save_slota }
 		click	{ cmd "msgmenu ?mn_slot7" *txt_slot7 color "1 1 1 1" *txt_slot7 mousefx true }
 	}
 
-	string txt_slot0 { font "f_verysmall" string "*cvar mn_slot0" pos "650 210" size "240 11" color "0 .78 0 1" }
-	string txt_slot1 { font "f_verysmall" string "*cvar mn_slot1" pos "650 245" size "240 11" color "0 .78 0 1" }
-	string txt_slot2 { font "f_verysmall" string "*cvar mn_slot2" pos "650 280" size "240 11" color "0 .78 0 1" }
-	string txt_slot3 { font "f_verysmall" string "*cvar mn_slot3" pos "650 315" size "240 11" color "0 .78 0 1" }
-	string txt_slot4 { font "f_verysmall" string "*cvar mn_slot4" pos "650 350" size "240 11" color "0 .78 0 1" }
-	string txt_slot5 { font "f_verysmall" string "*cvar mn_slot5" pos "650 385" size "240 11" color "0 .78 0 1" }
-	string txt_slot6 { font "f_verysmall" string "*cvar mn_slot6" pos "650 420" size "240 11" color "0 .78 0 1" }
-	string txt_slot7 { font "f_verysmall" string "*cvar mn_slot7" pos "650 455" size "240 11" color "0 .78 0 1" }
+	string txt_slot0 { font "f_verysmall" string "*cvar mn_slot0" pos "650 210" color "0 .78 0 1" }
+	string txt_slot1 { font "f_verysmall" string "*cvar mn_slot1" pos "650 245" color "0 .78 0 1" }
+	string txt_slot2 { font "f_verysmall" string "*cvar mn_slot2" pos "650 280" color "0 .78 0 1" }
+	string txt_slot3 { font "f_verysmall" string "*cvar mn_slot3" pos "650 315" color "0 .78 0 1" }
+	string txt_slot4 { font "f_verysmall" string "*cvar mn_slot4" pos "650 350" color "0 .78 0 1" }
+	string txt_slot5 { font "f_verysmall" string "*cvar mn_slot5" pos "650 385" color "0 .78 0 1" }
+	string txt_slot6 { font "f_verysmall" string "*cvar mn_slot6" pos "650 420" color "0 .78 0 1" }
+	string txt_slot7 { font "f_verysmall" string "*cvar mn_slot7" pos "650 455" color "0 .78 0 1" }
 
 	confunc mn_slot0_changed { *txt_slot0 color "0 .78 0 1" *txt_slot0 mousefx false cmd "game_save slot0 *mn_slot0" }
 	confunc mn_slot1_changed { *txt_slot1 color "0 .78 0 1" *txt_slot1 mousefx false cmd "game_save slot1 *mn_slot1" }
