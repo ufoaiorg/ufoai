@@ -1291,10 +1291,10 @@ static void CL_MessageMenu_f (void)
 		/* cancel */
 		Cvar_ForceSet(cvarName, nameBackup);
 		Cvar_ForceSet(va("%s%i", cvarName, cl_selected->integer), nameBackup);
-		/* don't restore this the next time */
-		nameBackup[0] = cvarName[0] = '\0';
 		/* call trigger function */
 		Cbuf_AddText(va("%s_changed\n", cvarName));
+		/* don't restore this the next time */
+		nameBackup[0] = cvarName[0] = '\0';
 		break;
 	case ':':
 		if (!*cvarName)
@@ -2021,6 +2021,7 @@ void MN_DrawMenus (void)
 				case MN_STRING:
 					font = MN_GetFont(menu, node);
 					ref += node->horizontalScroll;
+					/* blinking */
 					if (!node->mousefx || cl.time % 1000 < 500)
 						re.FontDrawString(font, node->align, node->pos[0], node->pos[1], node->pos[0], node->pos[1], node->size[0], 0, node->texh[0], ref, 0, 0, NULL, qfalse);
 					else
