@@ -9,21 +9,15 @@
 #	http://www.gnu.org/licenses/gpl.txt
 #
 # Changelog:
-#	2007-04-05	Basic parser	-- Werner 'hoehrer' Höhrer
+#	2007-04-05	0.0.1	Basic parser	-- Werner 'hoehrer' Höhrer
 #####################################################################
-# usage: TODO
+# usage: map2obj.pl <file.map>
 #####################################################################
 
 use strict;
 use warnings;
 
-my $entity_open = 0;
-my $brush_open = 0;
-
-my $map_filename = 'condor04.map'; # Dummy, never used
-my $obj_filename;
-my $map = {};
-
+my $version = "0.0.1";
 
 ############################
 # Initialize the map data.
@@ -35,6 +29,9 @@ sub map_init ($) {
 	$map->{materials} = {};
 	$map->{materialcount} = 0;
 
+	$map->{classes} = {};
+	$map->{classcount} = 0;
+	
 	$map->{entities} = [];
 	$map->{entitycount} = 0;
 	
@@ -72,10 +69,11 @@ sub entity_init ($) {
 ############################
 # Parse the text from the map file.
 ############################
-my @lines;
-sub map_parse ($) {
-	my ($filename) = @_;
-
+sub map_parse ($$) {
+	my ($map, $filename) = @_;
+	my $entity_open = 0;
+	my $brush_open = 0;
+	
 	open(MAP_INPUT, "< ".$filename) ||
 		die "Failed to open mapfile '", $filename, "' .\n";
 
@@ -85,13 +83,12 @@ sub map_parse ($) {
 	$map->{map_filename} = $filename;
 	my $line;
 	
-	if ($map->{entitycount} >2) { return };
 	while(<MAP_INPUT>) {
 		next if /^\s*\/\//;	# Skip comments
-		next if /^$/;	# Skip newlines
+		next if /^$/;		# Skip newlines
 		next if /^\s*$/;	# Skip line with only whitespaces
+
 		chomp;	# Remove trailing whitespaces
-		
 
 		if (!$brush_open) {	# just in case
 			$brush = {};
@@ -101,10 +98,9 @@ sub map_parse ($) {
 		}
 
 		$line = $_;
-		#print $line,"\n";
+
 		if ($line =~ m/^\s*{\s*$/) {
 			# Opening curly bracket found.
-			#print "open bracket\n"; #debug
 			if ($entity_open) {
 				if (!$brush_open) {
 					# Brush opening curly-bracket found.
@@ -129,12 +125,10 @@ sub map_parse ($) {
 			}
 			next;
 		} 
-		
-		if (($line =~ m/^\s*\(([^)]*)\)\s*\(([^)]*)\)\s*\(([^)]*)\)\s*([^\s]*)\s*(\d+\s*\d+\s*\d+\s*\d+\s*\d+\s*\d+\s*\d+\s*\d+)\s*$/) && $brush_open) {
-			print "New brush.\n"; #debug
+	
+		if (($line =~ m/^\s*\(([^)]*)\)\s*\(([^)]*)\)\s*\(([^)]*)\)\s*([^\s]*)\s*([\d.\s]*)\s*$/) && $brush_open) {
 			# Found a polygon with texture.
-			print "Parsing brush:", $map->{brushcount}-1,"\n";
-			print "      Polygon:", $brush->{polycount},"\n";
+			#print "Parsing brush:", $map->{brushcount}-1," Polygon:", $brush->{polycount},"\n";
 			my ($v1, $v2, $v3) = ($1, $2, $3);
 			my $tex = $4;
 			my $the_others = $5;
@@ -149,17 +143,18 @@ sub map_parse ($) {
 			#my $polygon = [${@vert1}, $#{@vert2}, $#{@vert3}];
 			my $polygon = [[@vert1],[@vert2], [@vert3]];
 			push (@{$brush->{polygons}}, $polygon);
+			#print "'",$tex,"'\n"; # debug
 			push (@{$brush->{textures}}, $tex); # store texture
 
-			if (!exists($map->{materials}->{$brush->{textures}->[$brush->{polycount}]})) {
-				$map->{materials}->{$brush->{textures}->[$brush->{polycount}]} = 1;
+			if (!exists($map->{materials}->{$tex})) {
+				$map->{materials}->{$tex} = 1;
 				$map->{materialcount}++;
 			}
 
 			$brush->{polycount}++;
 			next;
 		}
-		if ($line =~ m/^\s*"(.*)"\s*"(.*)"\s*$/) {
+		if ($line =~ m/^\s*"([^"]*)"\s*"([^"]*)"\s*$/) {
 			if ($brush_open) {
 				# Found brush data
 				# example: "origin" "416 -620 76"
@@ -177,7 +172,11 @@ sub map_parse ($) {
 				$entity->{data}->{$1} = $2;
 				#TODO: parse special cases for later export (like position and rotation).
 				if ($1 eq  'classname') {
-					print "Entityclass: ",$entity->{data}->{$1}, "\n";
+					# print "Entityclass: ",$entity->{data}->{$1}, "\n"; Debug
+					if (!exists($map->{classes}->{$entity->{data}->{$1} })) {
+						$map->{classes}->{$entity->{data}->{$1} } = 1;
+						$map->{classcount}++;
+					}
 				}
 				next;
 			}
@@ -212,7 +211,10 @@ sub map_parse ($) {
 ########################
 # MAIN
 ########################
-
+my $map_filename = 'condor04.map'; # Dummy, never used
+my $obj_filename;
+my $map = {};
+	
 # parse commandline paarameters (md2-filenames)
 if ( $#ARGV < 0 ) {
 	die "Usage:\tmap2obj.pl <file.map>\n";
@@ -231,15 +233,20 @@ if ($map_filename =~ m/.*\.map$/) {
 $map = map_init($map);
 
 # Open + parse map file
-map_parse($map_filename);
+map_parse($map, $map_filename);
 
-use Data::Dumper;
-print Dumper($map);
+#debug
+#use Data::Dumper;
+#print Dumper($map);
 
+print "materials:\n";
 foreach my $mat  (keys %{$map->{materials}}) {
-	print $mat,"\n";
+	print "- ",$mat,"\n";
 }
-
+print "classes:\n";
+foreach my $class  (keys %{$map->{classes}}) {
+print "- ",$class,"\n";
+}
 
 # TODO: write obj (only types of "classname" that are supported by obj)
 # TODO: write mtl
