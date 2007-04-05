@@ -327,7 +327,7 @@ static void SVCmd_StartGame_f (void)
 	if (level.activeTeam != -1 || sv_maxclients->integer == 1)
 		return;
 
-	/* count number of currently connected unique teams and players */
+	/* count number of currently connected unique teams and players (only human controlled players) */
 	for (i = 0, p = game.players; i < game.maxplayers; i++, p++) {
 		if (p->inuse && !p->pers.spectator && p->pers.team > 0) {
 			playerCount++;
@@ -343,6 +343,7 @@ static void SVCmd_StartGame_f (void)
 
 	level.activeTeam = knownTeams[(int)(frand() * (teamCount - 1) + 0.5)];
 	turnTeam = level.activeTeam;
+	/* spawn the player (only human controlled players) */
 	for (i = 0, p = game.players; i < game.maxplayers; i++, p++) {
 		if (!p->inuse || p->pers.spectator)
 			continue;

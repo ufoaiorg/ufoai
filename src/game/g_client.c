@@ -44,6 +44,7 @@ int G_TeamToPM (int team)
 
 	player_mask = 0;
 
+	/* don't handle the ai players, here */
 	for (i = 0, player = game.players; i < game.maxplayers; i++, player++)
 		if (player->inuse && team == player->pers.team)
 			player_mask |= (1 << i);
@@ -62,6 +63,7 @@ int G_VisToPM (int vis_mask)
 
 	player_mask = 0;
 
+	/* don't handle the ai players, here */
 	for (i = 0, player = game.players; i < game.maxplayers; i++, player++)
 		if (player->inuse && (vis_mask & (1 << player->pers.team)))
 			player_mask |= (1 << i);
@@ -1761,7 +1763,7 @@ void G_GetTeam (player_t * player)
 	int i, j;
 	int playersInGame = 0;
 
-	/* number of currently connected players */
+	/* number of currently connected players (no ai players) */
 	for (j = 0, p = game.players; j < game.maxplayers; j++, p++)
 		if (p->inuse && !p->pers.spectator)
 			playersInGame++;
@@ -1815,7 +1817,7 @@ void G_GetTeam (player_t * player)
 		for (i = 1; i < MAX_TEAMS; i++) {
 			if (level.num_spawnpoints[i]) {
 				teamAvailable = qtrue;
-				/* check if team is in use */
+				/* check if team is in use (only human controlled players) */
 				/* FIXME: If someone left the game and rejoins he should get his "old" team back */
 				/*        maybe we could identify such a situation */
 				for (j = 0, p = game.players; j < game.maxplayers; j++, p++)
@@ -1884,7 +1886,7 @@ void G_ClientTeamAssign (player_t * player)
 	if (level.activeTeam != -1 || sv_maxclients->integer == 1)
 		return;
 
-	/* count number of currently connected unique teams and players */
+	/* count number of currently connected unique teams and players (human controlled players only) */
 	for (i = 0, p = game.players; i < game.maxplayers; i++, p++) {
 		if (p->inuse && !p->pers.spectator && p->pers.team > 0) {
 			playerCount++;
@@ -1906,8 +1908,8 @@ void G_ClientTeamAssign (player_t * player)
 		turnTeam = level.activeTeam;
 		for (i = 0, p = game.players; i < game.maxplayers; i++, p++) {
 			if (p->inuse && !p->pers.spectator && p->pers.team == level.activeTeam) {
-				Q_strcat(buffer, p->pers.netname, MAX_VAR);
-				Q_strcat(buffer, " ", MAX_VAR);
+				Q_strcat(buffer, p->pers.netname, sizeof(buffer));
+				Q_strcat(buffer, " ", sizeof(buffer));
 			}
 		}
 		gi.bprintf(PRINT_HIGH, _("Team %i ( %s) will get the first turn.\n"), turnTeam, buffer);
@@ -2082,7 +2084,7 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 		return;
 	level.nextEndRound = level.framenum + 20;
 
-	/* check if all team members are ready */
+	/* check if all team members are ready (even ai players) */
 	player->ready = qtrue;
 	for (i = 0, p = game.players; i < game.maxplayers * 2; i++, p++)
 		if (p->inuse && p->pers.team == level.activeTeam
@@ -2131,7 +2133,7 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 			return;
 		}
 
-		/* search corresponding player */
+		/* search corresponding player (even ai players) */
 		for (i = 0, p = game.players; i < game.maxplayers * 2; i++, p++)
 			if (p->inuse && p->pers.team == nextTeam) {
 				/* found next player */
@@ -2165,7 +2167,7 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 	/* finish off events */
 	gi.EndEvents();
 
-	/* reset ready flag */
+	/* reset ready flag (even ai players) */
 	for (i = 0, p = game.players; i < game.maxplayers * 2; i++, p++)
 		if (p->inuse && p->pers.team == level.activeTeam)
 			p->ready = qfalse;

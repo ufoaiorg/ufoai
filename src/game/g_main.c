@@ -236,6 +236,8 @@ void InitGame (void)
 	globals.num_edicts = game.maxplayers;
 
 	/* initialize all players for this game */
+	/* game.maxplayers for human controlled players */
+	/* + game.maxplayer for ai */
 	game.players = gi.TagMalloc(game.maxplayers * 2 * sizeof(game.players[0]), TAG_GAME);
 	globals.players = game.players;
 	globals.max_players = game.maxplayers;
