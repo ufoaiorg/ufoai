@@ -16966,3 +16966,51 @@
 "_color" "0 1 0.1"
 "light" "80"
 }
+// entity 311
+{
+"classname" "info_player_start"
+"origin" "-272 368 28"
+"team" "1"
+}
+// entity 312
+{
+"classname" "info_civilian_start"
+"origin" "-80 432 28"
+}
+// entity 313
+{
+"classname" "info_human_start"
+"origin" "-400 400 28"
+}
+// entity 314
+{
+"classname" "info_player_start"
+"origin" "48 432 28"
+"team" "1"
+}
+// entity 315
+{
+"classname" "info_player_start"
+"origin" "16 368 28"
+"team" "1"
+}
+// entity 316
+{
+"classname" "info_human_start"
+"origin" "144 400 28"
+}
+// entity 317
+{
+"classname" "info_human_start"
+"origin" "-176 400 28"
+}
+// entity 318
+{
+"classname" "info_human_start"
+"origin" "112 368 28"
+}
+// entity 319
+{
+"classname" "info_human_start"
+"origin" "-16 464 28"
+}
