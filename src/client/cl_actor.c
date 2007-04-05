@@ -909,7 +909,7 @@ static void CL_RefreshWeaponButtons (int time)
 
 	/* reaction-fire button */
 	if (CL_GetReactionState(selActor) == R_FIRE_OFF) {
-		if (time < TU_REACTION)
+		if (time < TU_REACTION_SINGLE)
 			SetWeaponButton(BT_RIGHT_PRIMARY_REACTION, qfalse);
 		else
 			SetWeaponButton(BT_RIGHT_PRIMARY_REACTION, qtrue);

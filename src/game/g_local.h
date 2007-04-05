@@ -277,7 +277,9 @@ void G_RecalcRouting(edict_t * ent);
 /* Timeunits for the various actions. */
 #define TU_CROUCH		1
 #define TU_TURN		1
-#define TU_REACTION		7
+/* Reaction-fire timeuntis Must match defines in client/client.h */
+#define TU_REACTION_SINGLE		7
+#define TU_REACTION_MULTI		14
 
 #define MORALE_RANDOM( mod )	( (mod) * (1.0 + 0.3*crand()) )
 

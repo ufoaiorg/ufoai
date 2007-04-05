@@ -586,8 +586,9 @@ void CL_ParticleFree(ptl_t *p);
 /* distance from vertical center of grid-point to head when crouched */
 #define EYE_HT_CROUCH UNIT_HEIGHT * 0.06
 /* time-unit costs to reserve reaction fire and crouch/stand. Must match defines in game/g_local.h */
-#define TU_REACTION			7
 #define TU_CROUCH			1
+#define TU_REACTION_SINGLE		7
+#define TU_REACTION_MULTI		14
 
 /* reaction fire toggle state, don't mess with the order!!! */
 typedef enum {

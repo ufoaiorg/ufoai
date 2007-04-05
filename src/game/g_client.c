@@ -1248,8 +1248,8 @@ static void G_ClientStateChange (player_t * player, int num, int reqState)
 			gi.linkentity(ent);
 		}
 		break;
-	case ~STATE_REACTION: /* request to turn off reactio fire */
-		if (ent->state & STATE_REACTION_MANY) {
+	case ~STATE_REACTION: /* request to turn off reaction fire */
+		if ((ent->state & STATE_REACTION_MANY) || (ent->state & STATE_REACTION_ONCE)){
 			if (ent->state & STATE_SHAKEN)
 				gi.cprintf(player, PRINT_HIGH, _("Currently shaken, won't let their guard down.\n"));
 			else {
@@ -1271,29 +1271,57 @@ static void G_ClientStateChange (player_t * player, int num, int reqState)
 		}
 		break;
 	case STATE_REACTION_MANY: /* request to turn on multi-reaction fire mode */
-		if (ent->state & STATE_REACTION_ONCE) {
-			ent->state &= ~STATE_REACTION;
-			ent->state |= STATE_REACTION_MANY;
+		/* We can assume that the previous mode is STATE_REACTION_ONCE here.
+		 * If the gui behaviour ever changes we need to check for the previosu state in a better way here.
+		 */
+		if ((ent->TU >= (TU_REACTION_MULTI - reactionTUs[ent->number][REACT_TUS]))
+			&& (ent->state & STATE_REACTION_ONCE)) {
+			/* We have enough TUs for switching to multi-rf and the previous state is STATE_REACTION_ONCE */
+
+			/* Disable single reaction fire and remove saved TUs. */
+ 			ent->state &= ~STATE_REACTION;
+			if (reactionTUs[ent->number][REACT_TUS] > 0) {
+				ent->TU += reactionTUs[ent->number][REACT_TUS];
+				reactionTUs[ent->number][REACT_TUS] = 0;
+			}
+			
+			/* enable multi reaction fire */
+ 			ent->state |= STATE_REACTION_MANY;
+			ent->TU -= TU_REACTION_MULTI;
+			reactionTUs[ent->number][REACT_TUS] = TU_REACTION_MULTI;
+		} else {
+			/* TODO: this is a workaround for now.
+			the multi-rf button was clicked (i.e. single-rf is activated right now), but there are not enough TUs left for it.
+			so the only sane action if the button is clicked is to disable everything in order to make it work at all.
+			TODO: dsiplay correct "disable" button and directly call this function with "disable rf" parameters
+			*/
+			 G_ClientStateChange (player, num, ~STATE_REACTION); /**< Turn off RF */
 		}
 		break;
 	case STATE_REACTION_ONCE: /* request to turn on single-reaction fire mode */
-		if (G_ActionCheck(player, ent, TU_REACTION, NOISY)) {
+		if (G_ActionCheck(player, ent, TU_REACTION_SINGLE, NOISY)) {
 			/* Turn on reaction fire and save the used TUs to the list. */
 			ent->state |= STATE_REACTION_ONCE;
 
+#if 0 /* TODO: do we really want to enable this? i don't think we can get soemthing useable out of it .. the whole "save TUs until nex round" needs a cleanup. */
 			if (reactionTUs[ent->number][REACT_TUS] > 0) {
 				/* TUs where saved for this turn (either the full TU_REACTION or some remaining TUs from the shot. This was done either in the last turn or this one. */
 				ent->TU -= reactionTUs[ent->number][REACT_TUS];
-			} else if (reactionTUs[ent->number][REACT_TUS] == 0) {
+			} else
+
+			if (reactionTUs[ent->number][REACT_TUS] == 0) {
+#endif
 				/* Reaction fire was not triggered in the last turn. */
-				ent->TU -= TU_REACTION;
-				reactionTUs[ent->number][REACT_TUS] = TU_REACTION;
+				ent->TU -= TU_REACTION_SINGLE;
+				reactionTUs[ent->number][REACT_TUS] = TU_REACTION_SINGLE;
+#if 0	/* TODO: Same here */
 			}  else {
 				/* reactionTUs[ent->number][REACT_TUS] < 0 */
 				/* Reaction fire was triggered in the last turn,
 				   and has used 0 TU from this one.
 				   Can be activated without TU-loss. */
 			}
+#endif
 		}
 		break;
 	default:
@@ -1446,7 +1474,7 @@ static void G_MoraleBehaviour (int team, qboolean quiet)
 						G_MoraleRage(ent, sanity);
 					/* if shaken, well .. be shaken; */
 				} else if (ent->morale <= mor_shaken->value && !(ent->state & STATE_PANIC) && !(ent->state & STATE_RAGE)) {
-					ent->TU -= TU_REACTION;
+					ent->TU -= TU_REACTION_SINGLE; /* TODO: Comment-me: Why do we modify reaction stuff here? */
 					/* shaken is later reset along with reaction fire */
 					ent->state |= STATE_SHAKEN | STATE_REACTION_MANY;
 					G_SendState(G_VisToPM(ent->visflags), ent);
