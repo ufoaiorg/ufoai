@@ -8,6 +8,12 @@
 #	The content of this file is under the GNU/GPL license v2.
 #	http://www.gnu.org/licenses/gpl.txt
 #
+# Links:
+#	OBJ Specs
+#	http://www.fileformat.info/format/wavefrontobj/egff.htm
+#	Quake MAP Specs
+#	http://www.gamers.org/dEngine/quake/QDP/qmapspec.html
+#
 # Changelog:
 #	2007-04-06	0.0.4	Basic pasing+export of verts and faces now works. Still some bugs to kill. -- Werner 'hoehrer' Höhrer
 #	2007-04-06	0.0.3	Parsing of UV data seems to work (->check if it is correct)	-- Werner 'hoehrer' Höhrer
@@ -264,6 +270,18 @@ sub map_parse ($$) {
 			#print Dumper(@uv1); # Debug
 			#print Dumper(@vert1); # Debug
 			my $polygon = [[@vert1],[@vert2], [@vert3]];
+			
+			# TODO: correctly transform face+uv info here .... dammit, these are _plane_ coordinates :(
+
+#{ Brush Begin
+#( 128 0 0 ) ( 128 1 0 ) ( 128 0 1 ) GROUND1_6 0 0 0 1.0 1.0
+#( PLANE1 ) ( PLANE2 ) ( PLANE3 ) SHADER TEXOFFSETX TEXOFFSETY TEXROTATE TEXSCALEX TEXSCALEY
+#} Brush End
+# TEXOFFSETX	- Texture x-offset (must be multiple of 16)
+# TEXOFFSETY	- Texture y-offset (must be multiple of 16)
+# TEXROTATE	- floating point value indicating texture rotation
+# TEXSCALEX	- scales x-dimension of texture (negative value to flip)
+# TEXSCALEY	- scales y-dimension of texture (negative value to flip)
 
 			
 			push (@{$brush->{polygons}}, $polygon);	# Store polygon. ... better always use the "vertices" later on (as soon as it works)
