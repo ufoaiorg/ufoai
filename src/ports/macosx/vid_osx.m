@@ -97,6 +97,7 @@ static CGDisplayCount	gVIDGammaCount = 0;
 
 extern void	IN_ShowCursor (qboolean theState);
 
+
 void 		VID_Printf (int thePrintLevel, const char *theFormat, ...);
 void 		VID_Error (int theErrorLevel, const char *theFormat, ...);
 void 		VID_NewWindow (int theWidth, int theHeight);

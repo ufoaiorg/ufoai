@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define __QAL_OSX_H__
 
 
-#ifndef __MAXOSX__
+#ifndef __APPLE__
 #error "You should not be including this file on this platform"
 #endif
 
