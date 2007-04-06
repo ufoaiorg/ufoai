@@ -1830,3 +1830,19 @@ char *Sys_GetHomeDirectory (void)
 void Sys_NormPath(char* path)
 {
 }
+
+/* fix for linking */
+void Sys_DisableTray(void)
+{
+
+}
+
+void Sys_EnableTray(void)
+{
+
+}
+
+void Sys_Minimize(void)
+{
+
+}

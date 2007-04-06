@@ -31,15 +31,26 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #error "You should not be including this file on this platform"
 #endif
 
-
 #include <OpenAL/al.h>
 #include <OpenAL/alc.h>
+/* openal utility lib */
+//#include </Library/Frameworks/OpenAL.framework/Versions/A/Headers/alut.h>
+#include <dlfcn.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <GLUT/glut.h>
+#include <OpenAL/alut.h>
+
 
 #define GPA(a)			dlsym(oalState.hInstOpenAL, a);
+#define GPA2(a)	dlsym(oalState.hInstALUT, a);
+
+#define AL_DRIVER_OPENAL	"???"
+#define AL_DRIVER_ALUT		"???"
 
 typedef struct {
 	HINSTANCE	hInstOpenAL;
-
+	HINSTANCE	hInstALUT;
 	ALCdevice	*device;
 	ALCcontext	*context;
 } oalState_t;

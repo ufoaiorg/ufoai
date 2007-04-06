@@ -145,7 +145,9 @@ ifeq ($(TARGET_OS),darwin)
 		ports/unix/glob.c \
 		ports/unix/sys_unix.c \
 		ports/unix/$(NET_UDP).c \
-		ports/macosx/q_shosx.c
+		ports/macosx/q_shosx.c \
+		ports/macosx/qal_osx.c
+
 		# FIXME Add more objects
    CLIENT_CD+=ports/macosx/cd_osx.m
 endif
