@@ -287,7 +287,6 @@ extern qboolean	SNDDMA_ReserveBufferSize (void);
 // extern	void	VID_SetPaused (BOOL theState); // FIXME Re-enable after finding the function :)
 
 int		Sys_CheckSpecialKeys (int theKey);
-void		Sys_Sleep (void);
 
 static	void	Sys_HideApplication_f (void);
 static	void	Sys_CheckForIDDirectory (void);

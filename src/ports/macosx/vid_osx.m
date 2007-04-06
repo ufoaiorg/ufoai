@@ -96,7 +96,6 @@ static CGDisplayCount	gVIDGammaCount = 0;
 #pragma mark =Function Prototypes=
 
 extern void	IN_ShowCursor (qboolean theState);
-extern void	Sys_Sleep (void);
 
 void 		VID_Printf (int thePrintLevel, const char *theFormat, ...);
 void 		VID_Error (int theErrorLevel, const char *theFormat, ...);
