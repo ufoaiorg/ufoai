@@ -301,7 +301,7 @@ static	BOOL	Sys_OpenGameAPI (const char *theGameName, char *thePath, char *theCu
 /**
  * @brief
  */
-void Sys_Error (char *theError, ...)
+void Sys_Error (const char *theError, ...)
 {
 	va_list     myArgPtr;
 	char        myString[SYS_STRING_SIZE];
