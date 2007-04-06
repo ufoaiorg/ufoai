@@ -9,6 +9,7 @@
 #	http://www.gnu.org/licenses/gpl.txt
 #
 # Changelog:
+#	2007-04-06	0.0.3	Parsing of UV data seems to work (->check if it is correct)	-- Werner 'hoehrer' Höhrer
 #	2007-04-06	0.0.2	Export of vertex- and face- data. UV data to come.	-- Werner 'hoehrer' Höhrer
 #	2007-04-05	0.0.1	Basic parser	-- Werner 'hoehrer' Höhrer
 #####################################################################
@@ -18,7 +19,7 @@
 use strict;
 use warnings;
 
-my $version = "0.0.2";
+my $version = "0.0.3";
 
 ############################
 # Initialize the map data.
@@ -43,6 +44,10 @@ sub map_init ($) {
 	$map->{vertices} = [];
 	$map->{vertexcount} = 0;
 	
+	$map->{uv} = [];
+	$map->{uvcount} = [];
+	
+	
 	# Init map filename (just for info)
 	$map->{map_filename} = '';
 	return $map;
@@ -54,6 +59,7 @@ sub brush_init ($) {
 	$brush->{polygons} = [];
 	$brush->{textures} = [];
 	$brush->{vertices} = [];
+	$brush->{uv} = [];
 	$brush->{polycount} = 0;	# Used to count polygons/vertices and textures (it's the same for both)
 
 	$brush->{data} = {};
@@ -71,13 +77,13 @@ sub entity_init ($) {
 	return $entity;
 }
 
-sub str2coord ($) {
+sub str2array ($) {
 	my ($string) = @_;
 
 	$string =~ s/^\s+//;
-	my @coord = split(/\s+/, $string);
+	my @array = split(/\s+/, $string);
 	
-	return @coord;
+	return @array;
 }
 
 sub obj_write($$) {
@@ -100,7 +106,17 @@ sub obj_write($$) {
 	}
 	printf OBJ "# %i vertices written\n", $counter;
 	
-	# TODO: Write uv list (needs to be generated first)
+	# Write uv list
+	$counter =0;
+	foreach my $uv (@{$map->{uv}}) {
+		#print $uv->[0]; # Debug
+		printf OBJ "# ??? %f %f\n",
+			$uv->[0],
+			$uv->[1];
+		$counter++;
+	}
+	printf OBJ "# %i uv coords written\n", $counter;
+	
 	my $current_material = '';
 	my $temp_string;
 	my $brushcount;
@@ -126,7 +142,7 @@ sub obj_write($$) {
 						$current_material = $brush->{textures}->[$polycount];
 						$temp_string = $map->{materials}->{$current_material};
 						# Write material link.
-						printf OBJ "usemtl %s\n", $temp_string;
+						#printf OBJ "usemtl %s\n", $temp_string;
 					}
 					
 					# Write face/polygon data.
@@ -144,6 +160,7 @@ sub obj_write($$) {
 		}
 		$entitycount++;
 	}
+	printf OBJ "\n";
 	printf OBJ "# EOF\n\n";
 	close(OBJ);
 }
@@ -217,19 +234,27 @@ sub map_parse ($$) {
 			next;
 		} 
 	
+		# (1) (2) (3) 4 5
 		if (($line =~ m/^\s*\(([^)]*)\)\s*\(([^)]*)\)\s*\(([^)]*)\)\s*([^\s]*)\s*([-\d.\s]*)\s*$/) && $brush_open) {
 			# Found a polygon with texture.
 			#print "Parsing brush:", $map->{brushcount}-1," Polygon:", $brush->{polycount},"\n";
 			my ($v1, $v2, $v3) = ($1, $2, $3);
 			my $tex = $4;
 			my $the_others = $5;
-			
 
 			$tex =~ s/^\s+//;
-			my @vert1 = str2coord($v1);
-			my @vert2 = str2coord($v2);
-			my @vert3 = str2coord($v3);
-			
+			my @vert1 = str2array($v1);
+			my @vert2 = str2array($v2);
+			my @vert3 = str2array($v3);
+			my @uv_info = str2array($the_others);
+			#print Dumper([@uv_info]); # Debug
+			my @uv1 = ($uv_info[0], $uv_info[1]);
+			my @uv2 = ($uv_info[2], $uv_info[3]);
+			my @uv3 = ($uv_info[4], $uv_info[5]);
+			my @uv_unknown = ($uv_info[6], $uv_info[7]);
+
+			#print Dumper(@uv1); # Debug
+			#print Dumper(@vert1); # Debug
 			my $polygon = [[@vert1],[@vert2], [@vert3]];
 
 			
@@ -237,8 +262,12 @@ sub map_parse ($$) {
 			push (@{$brush->{textures}}, $tex);		# Store texture path.
 
 			push (@{$brush->{vertices}}, [$map->{vertexcount}, $map->{vertexcount}+1, $map->{vertexcount}+2]);	# Store pointer to vertex data
-			push (@{$map->{vertices}}, [@vert1], [@vert2], [@vert3]);	# Store pointer to vertex data
+			push (@{$map->{vertices}}, [@vert1], [@vert2], [@vert3]);				# Store vertex data
 			$map->{vertexcount} += 3;
+
+			push (@{$brush->{uv}}, [$map->{uvcount}, $map->{uvcount}+1, $map->{uvcount}+2]);	# Store pointer to uv data
+			push (@{$map->{uv}}, [@uv1], [@uv2], [@uv2]);						# Store uv data
+			$map->{uvcount} += 3;
 
 			if (!exists($map->{materials}->{$tex})) {
 				$map->{materials}->{$tex} = "mat".$map->{materialcount};		# Store info about all used textures (info only).
@@ -272,7 +301,7 @@ sub map_parse ($$) {
 						$map->{classcount}++;
 					}
 				} elsif  (($1 eq  'origin') || ($1 eq  'color') || ($1 eq  '_color') || ($1 eq  'angles')){ 
-					my @threes = str2coord($2);
+					my @threes = str2array($2);
 					$entity->{data}->{$1} = @threes;
 					
 				}
@@ -328,6 +357,7 @@ if ($map_filename =~ m/.*\.map$/) {
 } else {
 	$obj_filename = $map_filename.".obj";
 }
+print "OBJfile= \"". $obj_filename, "\"\n";
 
 $map = map_init($map);
 
@@ -338,6 +368,7 @@ map_parse($map, $map_filename);
 use Data::Dumper;
 #print Dumper($map);
 
+# Print Info about parsed file
 print "materials:\n";
 foreach my $mat  (keys %{$map->{materials}}) {
 	print "\t",$mat," \t generated name:", $map->{materials}->{$mat},"\n";
@@ -347,8 +378,10 @@ print "classes:\n";
 foreach my $class  (keys %{$map->{classes}}) {
 	print "\t",$class,"\n";
 }
+
+# write obj (only types of "classname" that are supported by obj)
 obj_write($map, $obj_filename);
-# TODO: write obj (only types of "classname" that are supported by obj)
+
 # TODO: write mtl
 
 ########################
