@@ -447,7 +447,7 @@ int	CDAudio_Init (void)
 		Cmd_AddCommand("mp4", CD_f);
 	}
 #endif
-	Cmd_AddCommand("cd", CD_f);
+	Cmd_AddCommand("cd", CD_f,NULL);
 
 	gCurCDTrack = 0;
 

@@ -1041,7 +1041,7 @@ void Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
 	IN_SetKeyboardRepeatEnabled (NO);
 	IN_SetF12EjectEnabled (NO);
 	gSysIsDeactivated = NO;
-	CDAudio_Enable (YES);
+	//CDAudio_Enable (YES);
 	// VID_SetPaused (NO);
 	gSysHidden = NO;
 
@@ -1066,7 +1066,7 @@ void Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
 	IN_ShowCursor (YES);
 	IN_SetKeyboardRepeatEnabled (YES);
 	IN_SetF12EjectEnabled (YES);
-	CDAudio_Enable (NO);
+	//CDAudio_Enable (NO);
 	gSysHidden = YES;
 	gSysIsDeactivated = YES;
 	// VID_SetPaused (YES);
@@ -1383,7 +1383,7 @@ void Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
 	SYS_UFO_DURING
 	{
 		// scan for media files:
-		CDAudio_GetTrackList ();
+		//CDAudio_GetTrackList ();
 
 		// post a notification to the main thread:
 		[[NSDistributedNotificationCenter defaultCenter] postNotificationName: @"Fire Frame Timer" object: NULL];
@@ -1500,7 +1500,7 @@ void Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
 		[startupWindow close];
 
 		// scan for medias, show a dialog since this can take a while:
-	SNDDMA_ReserveBufferSize ();
+	//SNDDMA_ReserveBufferSize ();
 		[mediascanWindow center];
 		[mediascanWindow makeKeyAndOrderFront: nil];
 		[mediascanProgressIndicator startAnimation: self];

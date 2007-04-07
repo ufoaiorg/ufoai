@@ -113,7 +113,7 @@ $(BUILDDIR)/server/%.o: $(SRCDIR)/%.rc $(BUILDDIR)/.dirs
 endif
 
 # Say how to build .o files from .m files for this module
-$(BUILDDIR)/server/%.m: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
+$(BUILDDIR)/server/%.o: $(SRCDIR)/%.m $(BUILDDIR)/.dirs
 	@echo " * [DED] $<"; \
 		$(CC) $(CFLAGS) $(DEDICATED_CFLAGS) -o $@ -c $<
 
