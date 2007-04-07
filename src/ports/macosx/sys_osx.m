@@ -308,7 +308,7 @@ void Sys_Error (const char *error, ...)
 
 	fcntl(0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
 
-	va_start(myArgPtr, theError);
+	va_start(myArgPtr, error);
 	Q_vsnprintf(myString, SYS_STRING_SIZE, error, myArgPtr);
 	va_end(myArgPtr);
 
