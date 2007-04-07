@@ -25,12 +25,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "gl_local.h"
 
-#if defined (__linux__) || defined (__FreeBSD__) || defined (__NetBSD__)
-#include "../ports/linux/glw_linux.h"
+#if defined (__linux__) || defined (__FreeBSD__) || defined (__NetBSD__) || defined (__APPLE__)
+#include "../ports/unix/qgl_unix.h"
 #elif defined _WIN32
 #include "../ports/win32/glw_win.h"
-#elif defined __MACOSX__
-/* TODO */
 #endif
 
 void ( APIENTRY * qglAccum )(GLenum op, GLfloat value);

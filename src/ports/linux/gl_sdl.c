@@ -40,7 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../client/cl_keys.h"
 #include "rw_linux.h"
-#include "glw_linux.h"
+#include "../unix/qgl_unix.h"
 
 glwstate_t glw_state;
 
