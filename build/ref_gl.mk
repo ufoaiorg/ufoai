@@ -90,7 +90,7 @@ $(REF_SDL_TARGET) : $(REF_SDL_OBJS) $(REF_GL_OBJS) $(BUILDDIR)/.dirs
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/ref_gl/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 	@echo " * [RGL] $<"; \
-		$(CC) $(CFLAGS) $(SHARED_CFLAGS) $(SDL_CFLAGS) $(JPEG_CFLAGS) -o $@ -c $<
+		$(CC) $(CFLAGS) $(SHARED_CFLAGS) $(SDL_CFLAGS) $(JPEG_CFLAGS) $(REF_GLX_CFLAGS) -o $@ -c $<
 
 # Say how to build the dependencies
 $(BUILDDIR)/ref_gl/%.d: $(SRCDIR)/%.c $(BUILDDIR)/.dirs

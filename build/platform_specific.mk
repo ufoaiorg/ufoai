@@ -16,8 +16,8 @@ ifeq ($(TARGET_OS),mingw32)
 	SHARED_CFLAGS=-shared
 	JPEG_CFLAGS=-DDONT_TYPEDEF_INT32
 	CFLAGS+=-DGETTEXT_STATIC
-	SERVER_LIBS+=-lintl
-	GAME_LIBS+=-lintl
+#	SERVER_LIBS+=-lintl
+#	GAME_LIBS+=-lintl
 #	TOOLS_LIBS=
 endif
 
@@ -33,17 +33,19 @@ endif
 
 ifeq ($(TARGET_OS),netbsd)
 	CFLAGS +=-I/usr/X11R6/include -D_BSD_SOURCE -D_NETBSD_SOURCE -std=c89
-	SERVER_LIBS +=-lintl
-	GAME_LIBS +=-lintl
 endif
 
 # Darwin
 ifeq ($(TARGET_OS),darwin)
+	#FIXME
+	HAVE_SND_OSX=1
 	SHARED_EXT=dylib
 	SHARED_CFLAGS=-fPIC -fno-common
 	SHARED_LDFLAGS=-dynamiclib
 	LDFLAGS += -framework SDL -framework SDL_ttf -framework OpenGL
 	CFLAGS += -D_BSD_SOURCE -D_XOPEN_SOURCE
+	#FIXME
+	CLIENT_LIBS+=-lintl
 endif
 
 #########################################################################################################################

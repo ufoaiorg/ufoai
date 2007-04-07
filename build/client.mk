@@ -141,7 +141,6 @@ ifeq ($(TARGET_OS),darwin)
 		ports/macosx/sys_osx.m \
 		ports/macosx/vid_osx.m \
 		ports/macosx/in_osx.m \
-		ports/macosx/snddma_osx.m \
 		ports/unix/glob.c \
 		ports/unix/sys_unix.c \
 		ports/unix/$(NET_UDP).c \
@@ -149,7 +148,10 @@ ifeq ($(TARGET_OS),darwin)
 		ports/macosx/qal_osx.c
 
 		# FIXME Add more objects
-   CLIENT_CD+=ports/macosx/cd_osx.m
+
+#	FIXME: cd_sdl.c is used below - remove cd_osx.m
+#	(at least it is used if HAVE_SDL is true - which should be the case)
+	CLIENT_CD+=ports/macosx/cd_osx.m
 endif
 
 ifeq ($(TARGET_OS),mingw32)
