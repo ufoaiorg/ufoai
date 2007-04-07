@@ -93,9 +93,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SYS_BASEUFO_PATH			@"base"
 #define	SYS_VALIDATION_FILE1		@"GamePPC.ufoplug/Contents/MacOS/GamePPC"
 #define	SYS_VALIDATION_FILE2		@"GamePPC.bundle/Contents/MacOS/GamePPC"
-#define SYS_UFOAI_HP		@"http://www.ufoai.net/"
+#define SYS_UFOAI_HP		@"http://ufoai.sf.net/"
 #define	SYS_SET_COMMAND			"+set"
-#define	SYS_GAME_COMMAND		"game"
+#define	SYS_GAME_COMMAND		"fs_gamedir"
 #define	SYS_CDDIR_COMMAND		"cddir"
 #define SYS_COMMAND_BUFFER_SIZE		1024
 
