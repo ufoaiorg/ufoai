@@ -496,7 +496,6 @@ invList_t* CL_GetLeftHandWeapon (le_t *actor)
  */
 static void CL_ConfirmAction_f (void)
 {
-	extern pos3_t mousePos;
 	extern pos3_t mousePendPos;
 
 	if (!selActor)
@@ -508,8 +507,7 @@ static void CL_ConfirmAction_f (void)
 		break;
 	case M_PEND_FIRE_R:
 	case M_PEND_FIRE_L:
-		/* TODO: Why can we use mouspos (not mousePendPos) here? */
-		CL_ActorShoot(selActor, mousePos);
+		CL_ActorShoot(selActor, mousePendPos);
 		/* cl.cmode = M_MOVE; TODO: this might've broken animation choosing in cl_actor:CL_ActorDoShoot and CL_ActorStartShoot. */
 		break;
 	default:
@@ -1171,10 +1169,10 @@ void CL_ParseInput (void)
 		if (!scr_vrect.width || !scr_vrect.height)
 			return;
 
-		if (cl.cmode <= M_PEND_MOVE)
-			CL_ActorMouseTrace();
-		else
-			mouseSpace = MS_WORLD;
+		CL_ActorMouseTrace();
+		if (cl.cmode > M_PEND_MOVE)	
+			mouseSpace = MS_WORLD;	/* TODO: DEBUGME .. why is this needed? I just left it in because i do not know whe it's supposed to do */
+			
 		return;
 	}
 }

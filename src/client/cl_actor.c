@@ -47,7 +47,6 @@ typedef enum {
 } cl_reaction_firemode_type_t;
 
 static int reactionFiremode[MAX_EDICTS][RF_MAX]; /** < Per actor: Stores the firemode to be used for reaction fire (if the fireDef allows that) See also reaction_firemode_type_t */
- 
 
 #define THIS_REACTION( actoridx, hand, fd_idx )	( reactionFiremode[actoridx][RF_HAND] == hand && reactionFiremode[actoridx][RF_FM] == fd_idx )
 #define SANE_REACTION( actoridx )	(( (reactionFiremode[actoridx ][RF_HAND] >= 0) && (reactionFiremode[actoridx ][RF_FM] >=0 && reactionFiremode[actoridx ][RF_FM] < MAX_FIREDEFS_PER_WEAPON) && (reactionFiremode[actoridx ][RF_FM] >= 0) ))
@@ -1199,6 +1198,7 @@ void CL_ActorUpdateCVars (void)
 			/* If the mouse is outside the world, blank move */
 			/* or the movelength is 255 - not reachable e.g. */
 			if ((mouseSpace != MS_WORLD && cl.cmode < M_PEND_MOVE) || actorMoveLength == 0xFF) {
+				/* TODO: CHECKME Why do we check for (cl.cmode < M_PEND_MOVE) here? */
 				actorMoveLength = 0xFF;
 				Com_sprintf(infoText, sizeof(infoText), _("Armour  %i\tMorale  %i\n"), selActor->AP, selActor->morale);
 				menuText[TEXT_MOUSECURSOR_RIGHT] = NULL;
@@ -2330,19 +2330,19 @@ void CL_ActorMoveMouse (void)
 {
 	if (cl.cmode == M_PEND_MOVE) {
 		if (VectorCompare(mousePos, mousePendPos)) {
-			/* pend move and clicked the same spot */
+			/* Pending move and clicked the same spot (i.e. 2 clicks on the same place) */
 			CL_ActorStartMove(selActor, mousePos);
 		} else {
-			/* clicked different spot */
+			/* Clicked different spot. */
 			VectorCopy(mousePos, mousePendPos);
 		}
 	} else {
 		if (confirm_movement->value || confirm_actions->value) {
-			/* set our mode to pending move */
+			/* Set our mode to pending move. */
 			VectorCopy(mousePos, mousePendPos);
 			cl.cmode = M_PEND_MOVE;
 		} else {
-			/* just move there */
+			/* Just move there. */
 			CL_ActorStartMove(selActor, mousePos);
 		}
 	}
@@ -2362,24 +2362,33 @@ void CL_ActorSelectMouse (void)
 	case M_PEND_MOVE:
 		/* Try and select another team member */
 		if (CL_ActorSelect(mouseActor)) {
-			/* succeeded so go back into move mode */
+			/* Succeeded so go back into move mode. */
 			cl.cmode = M_MOVE;
 		} else {
 			CL_ActorMoveMouse();
 		}
 		break;
 	case M_PEND_FIRE_R:
-		/* We switch back to aming mode. */
-		cl.cmode = M_FIRE_R;
-		break;
 	case M_PEND_FIRE_L:
-		/* We switch back to aming mode. */
-		cl.cmode = M_FIRE_L;
+		if (VectorCompare(mousePos, mousePendPos)) {
+			/* Pending shot and clicked the same spot (i.e. 2 clicks on the same place) */
+			CL_ActorShoot(selActor, mousePos);
+
+			/* We switch back to aiming mode. */
+			if (cl.cmode == M_PEND_FIRE_R)
+				cl.cmode = M_FIRE_R;
+			else
+				cl.cmode = M_FIRE_L;
+		} else {
+			/* Clicked different spot. */
+			VectorCopy(mousePos, mousePendPos);
+		}
 		break;
 	case M_FIRE_R:
 		/* We either switch to "pending" fire-mode or fire the gun. */
 		if (confirm_actions->value) {
 			cl.cmode = M_PEND_FIRE_R;
+			VectorCopy(mousePos, mousePendPos);
 		} else {
 			CL_ActorShoot(selActor, mousePos);
 		}
@@ -2388,6 +2397,7 @@ void CL_ActorSelectMouse (void)
 		/* We either switch to "pending" fire-mode or fire the gun. */
 		if (confirm_actions->value) {
 			cl.cmode = M_PEND_FIRE_L ;
+			VectorCopy(mousePos, mousePendPos);
 		} else {
 			CL_ActorShoot(selActor, mousePos);
 		}
@@ -3192,18 +3202,24 @@ void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
  */
 extern void CL_AddTargeting (void)
 {
-	if (mouseSpace != MS_WORLD && cl.cmode < M_PEND_MOVE)
+	if (mouseSpace != MS_WORLD)
 		return;
 
-	if (cl.cmode == M_MOVE || cl.cmode == M_PEND_MOVE) {
+	switch (cl.cmode) {
+	case M_MOVE:
+	case M_PEND_MOVE:
+		/* Display Move-cursor. */
 		CL_AddTargetingBox(mousePos, qfalse);
-		if (cl.cmode == M_PEND_MOVE){
-			/* also display a box for the pending move if we have one */
+
+		if (cl.cmode == M_PEND_MOVE) {
+			/* Also display a box for the pending move if we have one. */
 			CL_AddTargetingBox(mousePendPos, qtrue);
 			if (!CL_TraceMove(mousePendPos))
 				cl.cmode = M_MOVE;
 		}
-	} else {
+		break;
+	case M_FIRE_R:
+	case M_FIRE_L:
 		if (!selActor || !selFD)
 			return;
 
@@ -3211,5 +3227,24 @@ extern void CL_AddTargeting (void)
 			CL_TargetingStraight(selActor->pos, mousePos);
 		else
 			CL_TargetingGrenade(selActor->pos, mousePos);
+		break;
+	case M_PEND_FIRE_R:
+	case M_PEND_FIRE_L:
+		if (!selActor || !selFD)
+			return;
+
+		/* Draw cursor at mousepointer */
+		CL_AddTargetingBox(mousePos, qfalse);
+
+		/* Draw (pending) Cursor at target */
+		CL_AddTargetingBox(mousePendPos, qtrue); 
+
+		if (!selFD->gravity)
+			CL_TargetingStraight(selActor->pos, mousePendPos);
+		else
+			CL_TargetingGrenade(selActor->pos, mousePendPos);
+		break;
+	default:
+		break;
 	}
 }
