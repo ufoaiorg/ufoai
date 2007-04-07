@@ -66,7 +66,7 @@ void CDAudio_Pause(void);
 /**
  * @brief
  */
-static void CDAudio_Eject(void)
+static void CDAudio_Eject (void)
 {
 	if (cdfile == -1 || !enabled)
 		return; /* no cd init'd */
@@ -83,7 +83,7 @@ static void CDAudio_Eject(void)
 /**
  * @brief
  */
-static void CDAudio_CloseDoor(void)
+static void CDAudio_CloseDoor (void)
 {
 	if (cdfile == -1 || !enabled)
 		return; /* no cd init'd */
@@ -100,7 +100,7 @@ static void CDAudio_CloseDoor(void)
 /**
  * @brief
  */
-static int CDAudio_GetAudioDiskInfo(void)
+static int CDAudio_GetAudioDiskInfo (void)
 {
 #if defined(__FreeBSD__) || defined(__NetBSD__)
 	struct ioc_toc_header tochdr;
@@ -146,7 +146,7 @@ static int CDAudio_GetAudioDiskInfo(void)
 /**
  * @brief
  */
-void CDAudio_Play(int track, qboolean looping)
+void CDAudio_Play (int track, qboolean looping)
 {
 #if defined(__FreeBSD__) || defined(__NetBSD__)
 	struct ioc_read_toc_entry entry;
@@ -249,7 +249,7 @@ void CDAudio_Play(int track, qboolean looping)
 /**
  * @brief
  */
-void CDAudio_RandomPlay(void)
+void CDAudio_RandomPlay (void)
 {
 	int track, i = 0, free_tracks = 0, remap_track;
 	float f;
@@ -354,7 +354,7 @@ void CDAudio_RandomPlay(void)
 /**
  * @brief
  */
-void CDAudio_Stop(void)
+void CDAudio_Stop (void)
 {
 	if (cdfile == -1 || !enabled)
 		return;
@@ -378,7 +378,7 @@ void CDAudio_Stop(void)
 /**
  * @brief
  */
-void CDAudio_Pause(void)
+void CDAudio_Pause (void)
 {
 	if (cdfile == -1 || !enabled)
 		return;
@@ -402,7 +402,7 @@ void CDAudio_Pause(void)
 /**
  * @brief
  */
-void CDAudio_Resume(void)
+void CDAudio_Resume (void)
 {
 	if (cdfile == -1 || !enabled)
 		return;
@@ -533,7 +533,7 @@ static void CD_f (void)
 /**
  * @brief
  */
-void CDAudio_Update(void)
+void CDAudio_Update (void)
 {
 #if defined(__FreeBSD__) || defined(__NetBSD__)
 	struct ioc_read_subchannel subchnl;
@@ -599,7 +599,7 @@ void CDAudio_Update(void)
 /**
  * @brief
  */
-int CDAudio_Init(void)
+int CDAudio_Init (void)
 {
 	int	i;
 	cvar_t	*cv;
