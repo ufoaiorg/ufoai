@@ -42,7 +42,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_input.h"
 #include "cl_keys.h"
 #include "console.h"
-#include "cdaudio.h"
 #include "cl_market.h"
 #include "cl_event.h"
 #ifdef HAVE_OPENAL
@@ -709,6 +708,15 @@ extern void RADAR_ChangeRange(radar_t* radar, int change);
 extern void Radar_Initialise(radar_t* radar, int range);
 extern qboolean RADAR_CheckUfoSensored(radar_t* radar, vec2_t posRadar,
 const struct aircraft_s* ufo, qboolean wasUfoSensored);
+
+/* audio cd headers */
+int CDAudio_Init(void);
+void CDAudio_Shutdown(void);
+void CDAudio_Play(int track, qboolean looping);
+void CDAudio_Stop(void);
+void CDAudio_Update(void);
+void CDAudio_Activate (qboolean active);
+void CDAudio_RandomPlay(void);
 
 /* cl_research.c */
 #include "cl_research.h"

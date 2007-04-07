@@ -101,7 +101,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #pragma mark -
 
-//________________________________________________________________________________________________________vARIABLES
+/* Variables */
 
 #pragma mark =Variables=
 
@@ -301,33 +301,33 @@ static	BOOL	Sys_OpenGameAPI (const char *theGameName, char *thePath, char *theCu
 /**
  * @brief
  */
-void Sys_Error (const char *theError, ...)
+void Sys_Error (const char *error, ...)
 {
-	va_list     myArgPtr;
-	char        myString[SYS_STRING_SIZE];
+	va_list myArgPtr;
+	char myString[SYS_STRING_SIZE];
 
-	fcntl (0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
+	fcntl(0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
 
-	va_start (myArgPtr, theError);
-	Q_vsnprintf (myString, SYS_STRING_SIZE, theError, myArgPtr);
-	va_end (myArgPtr);
+	va_start(myArgPtr, theError);
+	Q_vsnprintf(myString, SYS_STRING_SIZE, error, myArgPtr);
+	va_end(myArgPtr);
 
 #ifdef DEDICATED_ONLY
-	fprintf (stderr, "Error: %s\n", myString);
-	exit (1);
+	fprintf(stderr, "Error: %s\n", myString);
+	exit(1);
 #else
-	NSLog (@"An error has occured: %@\n", [NSString stringWithCString: myString]);
-	CL_Shutdown ();
-	Qcommon_Shutdown ();
+	NSLog(@"An error has occured: %@\n", [NSString stringWithCString: myString]);
+	CL_Shutdown();
+	Qcommon_Shutdown();
 	gSysHostInitialized = NO;
 
-	IN_SetKeyboardRepeatEnabled (YES);
-	IN_SetF12EjectEnabled (YES);
+	IN_SetKeyboardRepeatEnabled(YES);
+	IN_SetF12EjectEnabled(YES);
 
-	NSRunCriticalAlertPanel (@"An error has occured:", [NSString stringWithCString: myString],
+	NSRunCriticalAlertPanel(@"An error has occured:", [NSString stringWithCString: myString],
 							NULL, NULL, NULL);
 
-	exit (1);
+	exit(1);
 #endif /* DEDICATED_ONLY */
 }
 
@@ -336,16 +336,16 @@ void Sys_Error (const char *theError, ...)
  */
 void Sys_Quit (void)
 {
-	CL_Shutdown ();
-	Qcommon_Shutdown ();
+	CL_Shutdown();
+	Qcommon_Shutdown();
 
 #ifndef DEDICATED_ONLY
 	gSysHostInitialized = NO;
 
-	IN_SetKeyboardRepeatEnabled (YES);
-	IN_SetF12EjectEnabled (YES);
+	IN_SetKeyboardRepeatEnabled(YES);
+	IN_SetF12EjectEnabled(YES);
 #endif /* DEDICATED_ONLY */
-	exit (0);
+	exit(0);
 }
 
 /**
@@ -354,7 +354,7 @@ void Sys_Quit (void)
 void Sys_UnloadGame (void)
 {
 	if (gSysGameLibrary != NULL) {
-		dlclose (gSysGameLibrary);
+		dlclose(gSysGameLibrary);
 	}
 	gSysGameLibrary = NULL;
 }
@@ -362,9 +362,9 @@ void Sys_UnloadGame (void)
 /**
  * @brief
  */
-BOOL Sys_OpenGameAPI (const char *theGameName, char *thePath, char *theCurPath)
+static BOOL Sys_OpenGameAPI (const char *theGameName, char *thePath, char *theCurPath)
 {
-	char	myName[MAXPATHLEN];
+	char myName[MAXPATHLEN];
 
 	snprintf(myName, MAXPATHLEN, "%s/%s/%s", theCurPath, thePath, theGameName);
 	Com_Printf("Trying to load library (%s)\n", myName);
@@ -476,14 +476,14 @@ void Sys_ConsoleOutput (const char *theString)
 	}
 
 	for (myChar = (unsigned char *) theString; *myChar != 0x00; myChar++) {
-		*myChar &= 0x7f;
+		*myChar &= SCHAR_MAX;
 		if ((*myChar > 128 || *myChar < 32) && *myChar != 10 && *myChar != 13 && *myChar != 9) {
-			fprintf (stdout, "[%02x]", *myChar);
+			fprintf(stdout, "[%02x]", *myChar);
 		} else {
-			putc (*myChar, stdout);
+			putc(*myChar, stdout);
 		}
 	}
-	fflush (stdout);
+	fflush(stdout);
 #else
 	return;
 #endif /* DEDICATED_ONLY */
@@ -494,7 +494,7 @@ void Sys_ConsoleOutput (const char *theString)
  */
 void Sys_SendKeyEvents (void)
 {
-	sys_frame_time = Sys_Milliseconds ();
+	sys_frame_time = Sys_Milliseconds();
 }
 
 /**
@@ -502,7 +502,7 @@ void Sys_SendKeyEvents (void)
  */
 void Sys_AppActivate (void)
 {
-	// not used!
+	/* not used! */
 }
 
 /**
@@ -524,8 +524,8 @@ void Sys_Init (void)
  */
 char *Sys_GetClipboardData (void)
 {
-	NSPasteboard	*myPasteboard = NULL;
-	NSArray 		*myPasteboardTypes = NULL;
+	NSPasteboard *myPasteboard = NULL;
+	NSArray *myPasteboardTypes = NULL;
 
 	myPasteboard = [NSPasteboard generalPasteboard];
 	myPasteboardTypes = [myPasteboard types];
@@ -534,7 +534,7 @@ char *Sys_GetClipboardData (void)
 
 		myClipboardString = [myPasteboard stringForType: NSStringPboardType];
 		if (myClipboardString != NULL && [myClipboardString length] > 0) {
-			return (strdup ([myClipboardString cString]));
+			return (strdup([myClipboardString cString]));
 		}
 	}
 	return (NULL);
@@ -559,9 +559,9 @@ void Sys_HideApplication_f (void)
  */
 int	Sys_CheckSpecialKeys (int theKey)
 {
-	extern cvar_t	*vid_fullscreen;
+	extern cvar_t *vid_fullscreen;
 	extern qboolean	keydown[];
-	int			myKey;
+	int myKey;
 
 	/* do a fast evaluation: */
 	if (keydown[K_COMMAND] == false) {
@@ -574,14 +574,14 @@ int	Sys_CheckSpecialKeys (int theKey)
 	switch (myKey) {
 	case K_TAB:
 	case 'H':
-		// CMD-TAB is handled by the system if windowed:
+		/* CMD-TAB is handled by the system if windowed: */
 		if (myKey == 'H' || (vid_fullscreen != NULL && vid_fullscreen->value != 0.0f)) {
 			Sys_HideApplication_f();
 			return (1);
 		}
 		break;
 	case 'M':
-		// minimize window [CMD-M]:
+		/* minimize window [CMD-M]: */
 		if (vid_fullscreen != NULL && vid_fullscreen->value == 0.0f && gSysIsMinimized->value == 0.0f) {
 			NSWindow	*myWindow = NULL;
 
@@ -594,9 +594,7 @@ int	Sys_CheckSpecialKeys (int theKey)
 		}
 		break;
 	case 'Q':
-		// application quit [CMD-Q]:
-		//M_Menu_Quit_f();
-
+		/* application quit [CMD-Q]: */
 		return (1);
 	case '?':
 		if (vid_fullscreen != NULL && vid_fullscreen->value == 0.0f) {
@@ -606,7 +604,7 @@ int	Sys_CheckSpecialKeys (int theKey)
 		break;
 	}
 
-	// paste [CMD-V] already checked inside "keys.c"!
+	/* paste [CMD-V] already checked inside "keys.c"! */
 	return (0);
 }
 
@@ -623,44 +621,44 @@ void Sys_CheckForIDDirectory (void)
 	NSArray		*myFolder;
 	NSString	*myValidatePath = nil, *myBasePath = nil;
 
-	// get the user defaults:
+	/* get the user defaults: */
 	myDefaults = [NSUserDefaults standardUserDefaults];
 
-	// prepare the open panel for requesting the "baseq2" folder:
+	/* prepare the open panel for requesting the "baseq2" folder: */
 	myOpenPanel = [NSOpenPanel openPanel];
 	[myOpenPanel setAllowsMultipleSelection: NO];
 	[myOpenPanel setCanChooseFiles: NO];
 	[myOpenPanel setCanChooseDirectories: YES];
 	[myOpenPanel setTitle: @"Please locate the \"base\" folder:"];
 
-	// get the "baseq2" path from the prefs:
+	/* get the "base" path from the prefs: */
 	myBasePath = [myDefaults stringForKey: SYS_DEFAULT_BASE_PATH];
 
 	while (1) {
 		if (myBasePath) {
-			// check if the path exists:
+			/* check if the path exists: */
 			myValidatePath = [myBasePath stringByAppendingPathComponent: SYS_VALIDATION_FILE1];
 			myFileExists = [[NSFileManager defaultManager] fileExistsAtPath: myValidatePath];
-			if (true || myFileExists == NO) { // Matthijs FIXME
+			if (true || myFileExists == NO) { /* Matthijs FIXME */
 				myValidatePath = [myBasePath stringByAppendingPathComponent: SYS_VALIDATION_FILE2];
 				myFileExists = [[NSFileManager defaultManager] fileExistsAtPath: myValidatePath];
 			}
-			if (true || myFileExists == YES) {// Matthijs FIXME
-				// get a POSIX version of the path:
+			if (true || myFileExists == YES) { /* Matthijs FIXME */
+				/* get a POSIX version of the path: */
 				myBaseDir = (char *) [myBasePath fileSystemRepresentation];
 				myPathLength = strlen (myBaseDir);
 
-				// check if the last component was "baseq2":
+				/* check if the last component was "base": */
 				if (myPathLength >= 6) {
-					// FIXME Matthijs really needs to fix this :)
+					/* FIXME Matthijs really needs to fix this :) */
 					if ((myBaseDir[myPathLength - 4] == 'b' || myBaseDir[myPathLength - 4] == 'B') &&
 						(myBaseDir[myPathLength - 3] == 'a' || myBaseDir[myPathLength - 3] == 'A') &&
 						(myBaseDir[myPathLength - 2] == 's' || myBaseDir[myPathLength - 2] == 'S') &&
 						(myBaseDir[myPathLength - 1] == 'e' || myBaseDir[myPathLength - 1] == 'E')) {
-						// remove "baseq2":
+						/* remove "base": */
 						myBaseDir[myPathLength - 4] = 0x00;
 
-						// change working directory to the selected path:
+						/* change working directory to the selected path: */
 						if (!chdir (myBaseDir)) {
 							if (myPathChanged) {
 								[myDefaults setObject: myBasePath forKey: SYS_DEFAULT_BASE_PATH];
@@ -668,7 +666,7 @@ void Sys_CheckForIDDirectory (void)
 							}
 							break;
 						} else {
-							NSRunCriticalAlertPanel (@"Can\'t change to the selected path!",
+							NSRunCriticalAlertPanel(@"Can\'t change to the selected path!",
 													@"The selection was: \"%@\"", NULL, NULL, NULL,
 													myBasePath);
 						}
@@ -677,16 +675,16 @@ void Sys_CheckForIDDirectory (void)
 			}
 		}
 
-		// if the path from the user defaults is bad, look if the baseq2 folder is located at the same folder
-		// as our Quake 2 application:
+		/* if the path from the user defaults is bad, look if the baseq2 folder is located at the same folder */
+		/* as our UFO application: */
 		if (myDefaultPath == YES) {
 			myBasePath = [[[[NSBundle mainBundle] bundlePath] stringByDeletingLastPathComponent]
-															stringByAppendingPathComponent: SYS_BASEUFO_PATH];
+				stringByAppendingPathComponent: SYS_BASEUFO_PATH];
 			myPathChanged = YES;
 			myDefaultPath = NO;
 			continue;
 		} else {
-			// if we run for the first time or the location of the "baseq2" folder changed, show an info dialog:
+			/* if we run for the first time or the location of the "baseq2" folder changed, show an info dialog: */
 			if (myFirstRun == YES) {
 				NSRunInformationalAlertPanel (@"You will now be asked to locate the \"baseq2\" folder.",
 											@"This folder is part of the standard installation of "
@@ -697,14 +695,14 @@ void Sys_CheckForIDDirectory (void)
 			}
 		}
 
-		// request the "baseq2" folder:
+		/* request the "base" folder: */
 		myResult = [myOpenPanel runModalForDirectory: nil file: nil types: nil];
 
-		// if the user selected "Cancel", quit the game:
+		/* if the user selected "Cancel", quit the game: */
 		if (myResult == NSCancelButton)
 			[NSApp terminate: nil];
 
-		// get the selected path:
+		/* get the selected path: */
 		myFolder = [myOpenPanel filenames];
 		if (![myFolder count])
 			continue;
@@ -725,20 +723,20 @@ void Sys_CheckForIDDirectory (void)
  */
 void Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
 {
-	extern cvar_t		*vid_fullscreen, *_windowed_mouse, *in_mouse;
+	extern cvar_t *vid_fullscreen, *_windowed_mouse, *in_mouse;
 
-	static NSString		*myKeyboardBuffer;
-	static unichar		myCharacter;
-	static CGMouseDelta		myMouseDeltaX, myMouseDeltaY, myMouseWheel;
-	static UInt8		i;
-	static UInt16		myKeyPad;
-	static UInt32	 	myKeyboardBufferSize, myFilteredFlags, myFlags, myLastFlags = 0,
-								myFilteredMouseButtons, myMouseButtons, myLastMouseButtons = 0;
+	static NSString *myKeyboardBuffer;
+	static unichar myCharacter;
+	static CGMouseDelta myMouseDeltaX, myMouseDeltaY, myMouseWheel;
+	static UInt8 i;
+	static UInt16 myKeyPad;
+	static UInt32 myKeyboardBufferSize, myFilteredFlags, myFlags, myLastFlags = 0,
+					myFilteredMouseButtons, myMouseButtons, myLastMouseButtons = 0;
 
-	// we check here for events:
+	/* we check here for events: */
 	switch (myType) {
 		case NSSystemDefined:
-			SYS_CHECK_MOUSE_ENABLED ();
+			SYS_CHECK_MOUSE_ENABLED();
 
 			if ([myEvent subtype] == 7) {
 				myMouseButtons = [myEvent data2];
@@ -757,22 +755,22 @@ void Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
 
 			break;
 
-		// scroll wheel:
+		/* scroll wheel: */
 		case NSScrollWheel:
-			SYS_CHECK_MOUSE_ENABLED ();
+			SYS_CHECK_MOUSE_ENABLED();
 
 			myMouseWheel = [myEvent deltaY];
 
 			if(myMouseWheel > 0) {
-				Key_Event (K_MWHEELUP, true, gSysMsgTime);
-				Key_Event (K_MWHEELUP, false, gSysMsgTime);
+				Key_Event(K_MWHEELUP, true, gSysMsgTime);
+				Key_Event(K_MWHEELUP, false, gSysMsgTime);
 			} else {
-				Key_Event (K_MWHEELDOWN, true, gSysMsgTime);
-				Key_Event (K_MWHEELDOWN, false, gSysMsgTime);
+				Key_Event(K_MWHEELDOWN, true, gSysMsgTime);
+				Key_Event(K_MWHEELDOWN, false, gSysMsgTime);
 			}
 			break;
 
-		// mouse movement:
+		/* mouse movement: */
 		case NSMouseMoved:
 		case NSLeftMouseDragged:
 		case NSRightMouseDragged:
@@ -784,7 +782,7 @@ void Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
 
 			break;
 
-		// key up and down:
+		/* key up and down: */
 		case NSKeyDown:
 		case NSKeyUp:
 			myKeyboardBuffer = [myEvent charactersIgnoringModifiers];
@@ -802,7 +800,7 @@ void Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
 						}
 					}
 				}
-//                else
+				/* else */
 				{
 					myFlags = [myEvent modifierFlags];
 
@@ -824,7 +822,7 @@ void Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
 
 			break;
 
-		// special keys:
+		/* special keys: */
 		case NSFlagsChanged:
 			myFlags = [myEvent modifierFlags];
 			myFilteredFlags = myFlags ^ myLastFlags;
@@ -851,7 +849,7 @@ void Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
 
 			break;
 
-		// process other events:
+		/* process other events: */
 		default:
 			[NSApp sendSuperEvent: myEvent];
 			break;
@@ -873,10 +871,10 @@ void Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
 
 	gSysRequestedCommand[0] = 0x0;
 
-	// required for event handling:
+	/* required for event handling: */
 	gSysDistantPast = [[NSDate distantPast] retain];
 
-	// set the default path:
+	/* set the default path: */
 	[myDefaults registerDefaults: [NSDictionary dictionaryWithObjects:
 			[NSArray arrayWithObjects: myDefaultPath,
 									SYS_INITIAL_OPTION_KEY,
@@ -911,9 +909,9 @@ void Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
  */
 - (BOOL) application: (NSApplication *) theSender openFile: (NSString *) theFilePath
 {
-	// allow only dragging one time as command line parameter:
+	/* allow only dragging one time as command line parameter: */
 	if (gSysDenyDrag == YES) {
-		// insert the dragged item as console command:
+		/* insert the dragged item as console command: */
 		if (gSysHostInitialized == YES) {
 			BOOL		myDirectory;
 
@@ -950,7 +948,7 @@ void Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
 		return (NO);
 	}
 
-	// we have received a filepath:
+	/* we have received a filepath: */
 	if (theFilePath != NULL) {
 		char 		*myMod  = (char *) [[theFilePath lastPathComponent] fileSystemRepresentation];
 		char 		*myPath = (char *) [theFilePath fileSystemRepresentation];
@@ -958,7 +956,7 @@ void Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
 		BOOL		myDirectory;
 		SInt32		i;
 
-		// is the filepath a folder?
+		/* is the filepath a folder? */
 		if (![[NSFileManager defaultManager] fileExistsAtPath: theFilePath isDirectory: &myDirectory]) {
 			Sys_Error ("The dragged item is not a valid file!");
 		}
@@ -966,7 +964,7 @@ void Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
 			Sys_Error ("The dragged item is not a folder!");
 		}
 
-		// prepare the new command line options:
+		/* prepare the new command line options: */
 		myNewArgValues = malloc (sizeof(char *) * 4);
 		SYS_CHECK_MALLOC (myNewArgValues);
 		gSysArgCount = 4;
@@ -978,12 +976,12 @@ void Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
 		SYS_CHECK_MALLOC (gSysArgValues[3]);
 		strcpy (gSysArgValues[3], myMod);
 
-		// get the path of the mod [compare it with the id1 path later]:
+		/* get the path of the mod [compare it with the id1 path later]: */
 		gSysModDir = malloc (strlen (myPath) + 1);
 		SYS_CHECK_MALLOC (gSysModDir);
 		strcpy (gSysModDir, myPath);
 
-		// dispose the foldername of the mod:
+		/* dispose the foldername of the mod: */
 		i = strlen (gSysModDir) - 1;
 		while (i > 1) {
 			if (gSysModDir[i - 1] == '/') {
@@ -1007,10 +1005,10 @@ void Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
 		return;
 	}
 
-	IN_ShowCursor (YES);
-	IN_SetKeyboardRepeatEnabled (YES);
-	IN_SetF12EjectEnabled (YES);
-//    VID_SetPaused (YES);
+	IN_ShowCursor(YES);
+	IN_SetKeyboardRepeatEnabled(YES);
+	IN_SetF12EjectEnabled(YES);
+/*	VID_SetPaused(YES); */
 	gSysIsDeactivated = YES;
 }
 
@@ -1020,9 +1018,7 @@ void Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
 - (void) applicationDidBecomeActive: (NSNotification *) theNote
 {
 	extern qboolean	keydown[];
-	extern cvar_t	*_windowed_mouse,
-						*in_mouse,
-						*vid_fullscreen;
+	extern cvar_t *_windowed_mouse, *in_mouse, *vid_fullscreen;
 
 	if (gSysHostInitialized == NO) {
 		return;
@@ -1031,7 +1027,7 @@ void Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
 	if ((vid_fullscreen != NULL && vid_fullscreen->value != 0.0f) ||
 		((in_mouse == NULL || ((in_mouse != NULL && in_mouse->value == 0.0f) &&
 		(_windowed_mouse != NULL && _windowed_mouse->value != 0.0f))))) {
-		IN_ShowCursor (NO);
+		IN_ShowCursor(NO);
 	}
 
 	keydown[K_COMMAND] = NO;
@@ -1041,13 +1037,13 @@ void Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
 	IN_SetKeyboardRepeatEnabled (NO);
 	IN_SetF12EjectEnabled (NO);
 	gSysIsDeactivated = NO;
-	//CDAudio_Enable (YES);
-	// VID_SetPaused (NO);
+	/*CDAudio_Enable(YES);*/
+	/*VID_SetPaused(NO);*/
 	gSysHidden = NO;
 
-	CGPostKeyboardEvent ((CGCharCode) 0, (CGKeyCode) 55, NO);	// CMD
-	CGPostKeyboardEvent ((CGCharCode) 0, (CGKeyCode) 48, NO);	// TAB
-	CGPostKeyboardEvent ((CGCharCode) 0, (CGKeyCode) 4, NO);	// H
+	CGPostKeyboardEvent((CGCharCode) 0, (CGKeyCode) 55, NO);	// CMD
+	CGPostKeyboardEvent((CGCharCode) 0, (CGKeyCode) 48, NO);	// TAB
+	CGPostKeyboardEvent((CGCharCode) 0, (CGKeyCode) 4, NO);	// H
 
 	if (gFrameTimer == NULL) {
 		[self installFrameTimer];
@@ -1066,10 +1062,10 @@ void Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
 	IN_ShowCursor (YES);
 	IN_SetKeyboardRepeatEnabled (YES);
 	IN_SetF12EjectEnabled (YES);
-	//CDAudio_Enable (NO);
+	/*CDAudio_Enable (NO);*/
 	gSysHidden = YES;
 	gSysIsDeactivated = YES;
-	// VID_SetPaused (YES);
+	/*VID_SetPaused (YES);*/
 
 	if (gFrameTimer != NULL) {
 		[gFrameTimer invalidate];
@@ -1088,17 +1084,17 @@ void Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
 
 		gSysDenyDrag = YES;
 
-		Sys_CheckForIDDirectory ();
+		Sys_CheckForIDDirectory();
 
-		// check if the user has pressed the Option key on startup:
+		/* check if the user has pressed the Option key on startup: */
 		[self checkForOptionKey];
 
-		// show the settings dialog after 0.5s (required to recognize the "run" AppleScript command):
+		/* show the settings dialog after 0.5s (required to recognize the "run" AppleScript command): */
 		myTimer = [NSTimer scheduledTimerWithTimeInterval: 0.5f
-												target: self
-												selector: @selector (setupDialog:)
-												userInfo: NULL
-												repeats: NO];
+					target: self
+					selector: @selector (setupDialog:)
+					userInfo: NULL
+					repeats: NO];
 
 		if (myTimer == NULL) {
 			[self setupDialog: NULL];
@@ -1138,7 +1134,6 @@ void Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
 			}
 		}
 
-		//M_Menu_Quit_f ();
 		return (NSTerminateCancel);
 	}
 
@@ -1153,23 +1148,23 @@ void Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
 	NSEvent		*myEvent;
 	NSAutoreleasePool	*myPool;
 
-	// raise shift down/up events [from somewhere deep inside CoreGraphics]:
+	/* raise shift down/up events [from somewhere deep inside CoreGraphics]: */
 	CGPostKeyboardEvent ((CGCharCode) 0, (CGKeyCode) 56, YES);
 	CGPostKeyboardEvent ((CGCharCode) 0, (CGKeyCode) 56, NO);
 
 	myPool = [[NSAutoreleasePool alloc] init];
 	while (1) {
 		myEvent = [NSApp nextEventMatchingMask: NSFlagsChangedMask
-							untilDate: gSysDistantPast
-							inMode: NSDefaultRunLoopMode
-							dequeue: YES];
+					untilDate: gSysDistantPast
+					inMode: NSDefaultRunLoopMode
+					dequeue: YES];
 
-		// we are finished when no events are left:
+		/* we are finished when no events are left: */
 		if (!myEvent) {
 			break;
 		}
 
-		// see if our shift down event has the option/alt key flag set:
+		/* see if our shift down event has the option/alt key flag set: */
 		if ([myEvent modifierFlags] & NSAlternateKeyMask) {
 			gOptionPressed = YES;
 			break;
@@ -1185,41 +1180,41 @@ void Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
  */
 - (void) setupParameterUI:  (NSUserDefaults *) theDefaults
 {
-	// check if the user passed parameters from the command line or by dragging a mod:
+	/* check if the user passed parameters from the command line or by dragging a mod: */
 	if (gSysArgCount > 1) {
 		NSString	*myParameters;
 
-		// someone passed command line parameters:
+		/* someone passed command line parameters: */
 		myParameters = [[[NSString alloc] init] autorelease];
 
 		if (myParameters != NULL) {
 			SInt	i;
 
 			for (i = 1; i < gSysArgCount; i++) {
-				// surround the string by ", if it contains spaces:
+				/* surround the string by ", if it contains spaces: */
 				if (strchr (gSysArgValues[i], ' ')) {
 					myParameters = [myParameters stringByAppendingFormat: @"\"%s\" ", gSysArgValues[i]];
 				} else {
 					myParameters = [myParameters stringByAppendingFormat: @"%s", gSysArgValues[i]];
 				}
 
-				// add a space if this was not the last parameter:
+				/* add a space if this was not the last parameter: */
 				if (i != gSysArgCount - 1) {
 					myParameters = [myParameters stringByAppendingString: @" "];
 				}
 			}
 
-			// display the current parameters:
+			/* display the current parameters: */
 			[parameterTextField setStringValue: myParameters];
 		}
 
-		//don't allow changes:
+		/* don't allow changes: */
 		[parameterCheckBox setEnabled: NO];
 		[parameterTextField setEnabled: NO];
 	} else {
 		BOOL	myParametersEnabled;
 
-		// get the default command line parameters:
+		/* get the default command line parameters: */
 		myParametersEnabled = [theDefaults boolForKey: SYS_DEFAULT_USE_PARAMETERS];
 		[parameterTextField setStringValue: [theDefaults stringForKey: SYS_DEFAULT_PARAMETERS]];
 		[parameterCheckBox setState: myParametersEnabled];
