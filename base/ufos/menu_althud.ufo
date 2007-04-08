@@ -1181,7 +1181,7 @@ menu althud
 	pic bt_left_fm0
 	{
 		image	hud/firemode
-		pos		"622 576"
+		pos		"647 500"
 		texl	"0 0"
 		texh	"255  63"
 		mousefx	false
@@ -1192,7 +1192,7 @@ menu althud
 	pic bt_left_fm1
 	{
 		image	hud/firemode
-		pos		"622 512"
+		pos		"647 436"
 		texl	"0 0"
 		texh	"255 63"
 		mousefx	false
@@ -1203,7 +1203,7 @@ menu althud
 	pic bt_left_fm2
 	{
 		image	hud/firemode
-		pos		"622 448"
+		pos		"647 372"
 		texl	"0 0"
 		texh	"255 63"
 		mousefx	false
@@ -1214,7 +1214,7 @@ menu althud
 	pic bt_left_fm3
 	{
 		image	hud/firemode
-		pos		"622 384"
+		pos		"647 308"
 		texl	"0 0"
 		texh	"255 63"
 		mousefx	false
@@ -1225,7 +1225,7 @@ menu althud
 	pic bt_left_fm4
 	{
 		image	hud/firemode
-		pos		"622 320"
+		pos		"647 244"
 		texl	"0 0"
 		texh	"255  63"
 		mousefx	false
@@ -1236,7 +1236,7 @@ menu althud
 	pic bt_left_fm5
 	{
 		image	hud/firemode
-		pos		"622 256"
+		pos		"647 180"
 		texl	"0 0"
 		texh	"255 63"
 		mousefx	false
@@ -1247,7 +1247,7 @@ menu althud
 	pic bt_left_fm6
 	{
 		image	hud/firemode
-		pos		"622 192"
+		pos		"647 116"
 		texl	"0 0"
 		texh	"255 63"
 		mousefx	false
@@ -1258,7 +1258,7 @@ menu althud
 	pic bt_left_fm7
 	{
 		image	hud/firemode
-		pos		"622 128"
+		pos		"647 52"
 		texl	"0 0"
 		texh	"255 63"
 		mousefx	false
@@ -1269,7 +1269,7 @@ menu althud
 	pic bt_right_fm0
 	{
 		image	hud/firemode
-		pos		"164 576"
+		pos		"647 500"
 		texl	"0 0"
 		texh	"255 63"
 		mousefx	false
@@ -1280,7 +1280,7 @@ menu althud
 	pic bt_right_fm1
 	{
 		image	hud/firemode
-		pos		"164 512"
+		pos		"647 436"
 		texl	"0 0"
 		texh	"255 63"
 		mousefx	false
@@ -1291,7 +1291,7 @@ menu althud
 	pic bt_right_fm2
 	{
 		image	hud/firemode
-		pos		"164 448"
+		pos		"647 372"
 		texl	"0 0"
 		texh	"255 63"
 		mousefx	false
@@ -1302,7 +1302,7 @@ menu althud
 	pic bt_right_fm3
 	{
 		image	hud/firemode
-		pos		"164 384"
+		pos		"647 308"
 		texl	"0 0"
 		texh	"255 63"
 		mousefx	false
@@ -1313,7 +1313,7 @@ menu althud
 	pic bt_right_fm4
 	{
 		image	hud/firemode
-		pos		"164 320"
+		pos		"647 244"
 		texl	"0 0"
 		texh	"255 63"
 		mousefx	false
@@ -1324,7 +1324,7 @@ menu althud
 	pic bt_right_fm5
 	{
 		image	hud/firemode
-		pos		"164 256"
+		pos		"647 180"
 		texl	"0 0"
 		texh	"255 63"
 		mousefx	false
@@ -1335,7 +1335,7 @@ menu althud
 	pic bt_right_fm6
 	{
 		image	hud/firemode
-		pos		"164 192"
+		pos		"647 116"
 		texl	"0 0"
 		texh	"255 63"
 		mousefx	false
@@ -1346,7 +1346,7 @@ menu althud
 	pic bt_right_fm7
 	{
 		image	hud/firemode
-		pos		"164 128"
+		pos		"647 52"
 		texl	"0 0"
 		texh	"255 63"
 		mousefx	false
@@ -1365,7 +1365,7 @@ menu althud
 	{
 		image	hud/checkbox
 		tooltip	"_Check to use this firemode for reaction fire."
-		pos		"622 608"
+		pos		"647 532"
 		texl	"0 0"
 		texh	"31 31"
 		mousefx	false
@@ -1377,7 +1377,7 @@ menu althud
 	{
 		image	hud/checkbox
 		tooltip	"_Check to use this firemode for reaction fire."
-		pos		"622 544"
+		pos		"647 468"
 		texl	"0 0"
 		texh	"31 31"
 		mousefx	false
@@ -1389,7 +1389,7 @@ menu althud
 	{
 		image	hud/checkbox
 		tooltip	"_Check to use this firemode for reaction fire."
-		pos		"622 480"
+		pos		"647 404"
 		texl	"0 0"
 		texh	"31 31"
 		mousefx	false
@@ -1401,7 +1401,7 @@ menu althud
 	{
 		image	hud/checkbox
 		tooltip	"_Check to use this firemode for reaction fire."
-		pos		"622 416"
+		pos		"647 340"
 		texl	"0 0"
 		texh	"31 31"
 		mousefx	false
@@ -1413,7 +1413,7 @@ menu althud
 	{
 		image	hud/checkbox
 		tooltip	"_Check to use this firemode for reaction fire."
-		pos		"622 352"
+		pos		"647 276"
 		texl	"0 0"
 		texh	"31 31"
 		mousefx	false
@@ -1425,7 +1425,7 @@ menu althud
 	{
 		image	hud/checkbox
 		tooltip	"_Check to use this firemode for reaction fire."
-		pos		"622 288"
+		pos		"647 212"
 		texl	"0 0"
 		texh	"31 31"
 		mousefx	false
@@ -1437,7 +1437,7 @@ menu althud
 	{
 		image	hud/checkbox
 		tooltip	"_Check to use this firemode for reaction fire."
-		pos		"622 224"
+		pos		"647 148"
 		texl	"0 0"
 		texh	"31 31"
 		mousefx	false
@@ -1449,7 +1449,7 @@ menu althud
 	{
 		image	hud/checkbox
 		tooltip	"_Check to use this firemode for reaction fire."
-		pos		"622 160"
+		pos		"647 84"
 		texl	"0 0"
 		texh	"31 31"
 		mousefx	false
@@ -1461,7 +1461,7 @@ menu althud
 	{
 		image	hud/checkbox
 		tooltip	"_Check to use this firemode for reaction fire."
-		pos		"164 608"
+		pos		"647 532"
 		texl	"0 0"
 		texh	"31 31"
 		mousefx	false
@@ -1473,7 +1473,7 @@ menu althud
 	{
 		image	hud/checkbox
 		tooltip	"_Check to use this firemode for reaction fire."
-		pos		"164 544"
+		pos		"647 468"
 		texl	"0 0"
 		texh	"31 31"
 		mousefx	false
@@ -1485,7 +1485,7 @@ menu althud
 	{
 		image	hud/checkbox
 		tooltip	"_Check to use this firemode for reaction fire."
-		pos		"164 480"
+		pos		"647 404"
 		texl	"0 0"
 		texh	"31 31"
 		mousefx	false
@@ -1497,7 +1497,7 @@ menu althud
 	{
 		image	hud/checkbox
 		tooltip	"_Check to use this firemode for reaction fire."
-		pos		"164 416"
+		pos		"647 340"
 		texl	"0 0"
 		texh	"31 31"
 		mousefx	false
@@ -1509,7 +1509,7 @@ menu althud
 	{
 		image	hud/checkbox
 		tooltip	"_Check to use this firemode for reaction fire."
-		pos		"164 352"
+		pos		"647 276"
 		texl	"0 0"
 		texh	"31 31"
 		mousefx	false
@@ -1521,7 +1521,7 @@ menu althud
 	{
 		image	hud/checkbox
 		tooltip	"_Check to use this firemode for reaction fire."
-		pos		"164 288"
+		pos		"647 212"
 		texl	"0 0"
 		texh	"31 31"
 		mousefx	false
@@ -1533,7 +1533,7 @@ menu althud
 	{
 		image	hud/checkbox
 		tooltip	"_Check to use this firemode for reaction fire."
-		pos		"164 224"
+		pos		"647 148"
 		texl	"0 0"
 		texh	"31 31"
 		mousefx	false
@@ -1545,7 +1545,7 @@ menu althud
 	{
 		image	hud/checkbox
 		tooltip	"_Check to use this firemode for reaction fire."
-		pos		"164 160"
+		pos		"647 84"
 		texl	"0 0"
 		texh	"31 31"
 		mousefx	false
@@ -1554,54 +1554,54 @@ menu althud
 	}
 
 	/* Firemode text ===================================*/
-	string left_fm_name0 { string "*cvar mn_l_fm_name0"	pos "654 582"	invis true }
-	string left_fm_name1 { string "*cvar mn_l_fm_name1"	pos "654 518"	invis true }
-	string left_fm_name2 { string "*cvar mn_l_fm_name2"	pos "654 454"	invis true }
-	string left_fm_name3 { string "*cvar mn_l_fm_name3"	pos "654 390"	invis true }
-	string left_fm_name4 { string "*cvar mn_l_fm_name4"	pos "654 326"	invis true }
-	string left_fm_name5 { string "*cvar mn_l_fm_name5"	pos "654 262"	invis true }
-	string left_fm_name6 { string "*cvar mn_l_fm_name6"	pos "654 198"	invis true }
-	string left_fm_name7 { string "*cvar mn_l_fm_name7"	pos "654 134"	invis true }
-	string right_fm_name0 { string "*cvar mn_r_fm_name0"	pos "196 582"	invis true }
-	string right_fm_name1 { string "*cvar mn_r_fm_name1"	pos "196 518"	invis true }
-	string right_fm_name2 { string "*cvar mn_r_fm_name2"	pos "196 454"	invis true }
-	string right_fm_name3 { string "*cvar mn_r_fm_name3"	pos "196 390"	invis true }
-	string right_fm_name4 { string "*cvar mn_r_fm_name4"	pos "196 326"	invis true }
-	string right_fm_name5 { string "*cvar mn_r_fm_name5"	pos "196 262"	invis true }
-	string right_fm_name6 { string "*cvar mn_r_fm_name6"	pos "196 198"	invis true }
-	string right_fm_name7 { string "*cvar mn_r_fm_name7"	pos "196 134"	invis true }
+	string left_fm_name0 { string "*cvar mn_l_fm_name0"	pos "679 506"	invis true }
+	string left_fm_name1 { string "*cvar mn_l_fm_name1"	pos "679 442"	invis true }
+	string left_fm_name2 { string "*cvar mn_l_fm_name2"	pos "679 378"	invis true }
+	string left_fm_name3 { string "*cvar mn_l_fm_name3"	pos "679 314"	invis true }
+	string left_fm_name4 { string "*cvar mn_l_fm_name4"	pos "679 250"	invis true }
+	string left_fm_name5 { string "*cvar mn_l_fm_name5"	pos "679 186"	invis true }
+	string left_fm_name6 { string "*cvar mn_l_fm_name6"	pos "679 122"	invis true }
+	string left_fm_name7 { string "*cvar mn_l_fm_name7"	pos "679 58"	invis true }
+	string right_fm_name0 { string "*cvar mn_r_fm_name0"	pos "679 506"	invis true }
+	string right_fm_name1 { string "*cvar mn_r_fm_name1"	pos "679 442"	invis true }
+	string right_fm_name2 { string "*cvar mn_r_fm_name2"	pos "679 378"	invis true }
+	string right_fm_name3 { string "*cvar mn_r_fm_name3"	pos "679 315"	invis true }
+	string right_fm_name4 { string "*cvar mn_r_fm_name4"	pos "679 250"	invis true }
+	string right_fm_name5 { string "*cvar mn_r_fm_name5"	pos "679 186"	invis true }
+	string right_fm_name6 { string "*cvar mn_r_fm_name6"	pos "679 122"	invis true }
+	string right_fm_name7 { string "*cvar mn_r_fm_name7"	pos "679 58"	invis true }
 
-	string left_fm_tu0 { string "*cvar mn_l_fm_tu0"	pos "654 614"	invis true	tooltip "*cvar mn_l_fm_tt_tu0" size "50 16" click }
-	string left_fm_tu1 { string "*cvar mn_l_fm_tu1"	pos "654 550"	invis true	tooltip "*cvar mn_l_fm_tt_tu1" size "50 16" click }
-	string left_fm_tu2 { string "*cvar mn_l_fm_tu2"	pos "654 486"	invis true	tooltip "*cvar mn_l_fm_tt_tu2" size "50 16" click }
-	string left_fm_tu3 { string "*cvar mn_l_fm_tu3"	pos "654 422"	invis true	tooltip "*cvar mn_l_fm_tt_tu3" size "50 16" click }
-	string left_fm_tu4 { string "*cvar mn_l_fm_tu4"	pos "654 358"	invis true	tooltip "*cvar mn_l_fm_tt_tu4" size "50 16" click }
-	string left_fm_tu5 { string "*cvar mn_l_fm_tu5"	pos "654 294"	invis true	tooltip "*cvar mn_l_fm_tt_tu5" size "50 16" click }
-	string left_fm_tu6 { string "*cvar mn_l_fm_tu6"	pos "654 230"	invis true	tooltip "*cvar mn_l_fm_tt_tu6" size "50 16" click }
-	string left_fm_tu7 { string "*cvar mn_l_fm_tu7"	pos "654 166"	invis true	tooltip "*cvar mn_l_fm_tt_tu7" size "50 16" click }
-	string right_fm_tu0 { string "*cvar mn_r_fm_tu0"	pos "196 614"	invis true	tooltip "*cvar mn_r_fm_tt_tu0" size "50 16" click }
-	string right_fm_tu1 { string "*cvar mn_r_fm_tu1"	pos "196 550"	invis true	tooltip "*cvar mn_r_fm_tt_tu1" size "50 16" click }
-	string right_fm_tu2 { string "*cvar mn_r_fm_tu2"	pos "196 486"	invis true	tooltip "*cvar mn_r_fm_tt_tu2" size "50 16" click }
-	string right_fm_tu3 { string "*cvar mn_r_fm_tu3"	pos "196 422"	invis true	tooltip "*cvar mn_r_fm_tt_tu3" size "50 16" click }
-	string right_fm_tu4 { string "*cvar mn_r_fm_tu4"	pos "196 358"	invis true	tooltip "*cvar mn_r_fm_tt_tu4" size "50 16" click }
-	string right_fm_tu5 { string "*cvar mn_r_fm_tu5"	pos "196 294"	invis true	tooltip "*cvar mn_r_fm_tt_tu5" size "50 16" click }
-	string right_fm_tu6 { string "*cvar mn_r_fm_tu6"	pos "196 230"	invis true	tooltip "*cvar mn_r_fm_tt_tu6" size "50 16" click }
-	string right_fm_tu7 { string "*cvar mn_r_fm_tu7"	pos "196 166"	invis true	tooltip "*cvar mn_r_fm_tt_tu7" size "50 16" click }
+	string left_fm_tu0 { string "*cvar mn_l_fm_tu0"	pos "679 538"	invis true	tooltip "*cvar mn_l_fm_tt_tu0" size "50 16" click }
+	string left_fm_tu1 { string "*cvar mn_l_fm_tu1"	pos "679 474"	invis true	tooltip "*cvar mn_l_fm_tt_tu1" size "50 16" click }
+	string left_fm_tu2 { string "*cvar mn_l_fm_tu2"	pos "679 410"	invis true	tooltip "*cvar mn_l_fm_tt_tu2" size "50 16" click }
+	string left_fm_tu3 { string "*cvar mn_l_fm_tu3"	pos "679 346"	invis true	tooltip "*cvar mn_l_fm_tt_tu3" size "50 16" click }
+	string left_fm_tu4 { string "*cvar mn_l_fm_tu4"	pos "679 282"	invis true	tooltip "*cvar mn_l_fm_tt_tu4" size "50 16" click }
+	string left_fm_tu5 { string "*cvar mn_l_fm_tu5"	pos "679 218"	invis true	tooltip "*cvar mn_l_fm_tt_tu5" size "50 16" click }
+	string left_fm_tu6 { string "*cvar mn_l_fm_tu6"	pos "679 154"	invis true	tooltip "*cvar mn_l_fm_tt_tu6" size "50 16" click }
+	string left_fm_tu7 { string "*cvar mn_l_fm_tu7"	pos "679 90"	invis true	tooltip "*cvar mn_l_fm_tt_tu7" size "50 16" click }
+	string right_fm_tu0 { string "*cvar mn_r_fm_tu0"	pos "679 538"	invis true	tooltip "*cvar mn_r_fm_tt_tu0" size "50 16" click }
+	string right_fm_tu1 { string "*cvar mn_r_fm_tu1"	pos "679 474"	invis true	tooltip "*cvar mn_r_fm_tt_tu1" size "50 16" click }
+	string right_fm_tu2 { string "*cvar mn_r_fm_tu2"	pos "679 410"	invis true	tooltip "*cvar mn_r_fm_tt_tu2" size "50 16" click }
+	string right_fm_tu3 { string "*cvar mn_r_fm_tu3"	pos "679 346"	invis true	tooltip "*cvar mn_r_fm_tt_tu3" size "50 16" click }
+	string right_fm_tu4 { string "*cvar mn_r_fm_tu4"	pos "679 282"	invis true	tooltip "*cvar mn_r_fm_tt_tu4" size "50 16" click }
+	string right_fm_tu5 { string "*cvar mn_r_fm_tu5"	pos "679 218"	invis true	tooltip "*cvar mn_r_fm_tt_tu5" size "50 16" click }
+	string right_fm_tu6 { string "*cvar mn_r_fm_tu6"	pos "679 154"	invis true	tooltip "*cvar mn_r_fm_tt_tu6" size "50 16" click }
+	string right_fm_tu7 { string "*cvar mn_r_fm_tu7"	pos "679 90"	invis true	tooltip "*cvar mn_r_fm_tt_tu7" size "50 16" click }
 
-	string left_fm_shot0 { string "*cvar mn_l_fm_shot0"	pos "728 614"	invis true }
-	string left_fm_shot1 { string "*cvar mn_l_fm_shot1"	pos "728 550"	invis true }
-	string left_fm_shot2 { string "*cvar mn_l_fm_shot2"	pos "728 486"	invis true }
-	string left_fm_shot3 { string "*cvar mn_l_fm_shot3"	pos "728 422"	invis true }
-	string left_fm_shot4 { string "*cvar mn_l_fm_shot4"	pos "728 358"	invis true }
-	string left_fm_shot5 { string "*cvar mn_l_fm_shot5"	pos "728 294"	invis true }
-	string left_fm_shot6 { string "*cvar mn_l_fm_shot6"	pos "728 230"	invis true }
-	string left_fm_shot7 { string "*cvar mn_l_fm_shot7"	pos "728 166"	invis true }
-	string right_fm_shot0 { string "*cvar mn_r_fm_shot0"	pos "270 614"	invis true }
-	string right_fm_shot1 { string "*cvar mn_r_fm_shot1"	pos "270 550"	invis true }
-	string right_fm_shot2 { string "*cvar mn_r_fm_shot2"	pos "270 486"	invis true }
-	string right_fm_shot3 { string "*cvar mn_r_fm_shot3"	pos "270 422"	invis true }
-	string right_fm_shot4 { string "*cvar mn_r_fm_shot4"	pos "270 358"	invis true }
-	string right_fm_shot5 { string "*cvar mn_r_fm_shot5"	pos "270 294"	invis true }
-	string right_fm_shot6 { string "*cvar mn_r_fm_shot6"	pos "270 230"	invis true }
-	string right_fm_shot7 { string "*cvar mn_r_fm_shot7"	pos "270 166"	invis true }
+	string left_fm_shot0 { string "*cvar mn_l_fm_shot0"	pos "753 538"	invis true }
+	string left_fm_shot1 { string "*cvar mn_l_fm_shot1"	pos "753 474"	invis true }
+	string left_fm_shot2 { string "*cvar mn_l_fm_shot2"	pos "753 410"	invis true }
+	string left_fm_shot3 { string "*cvar mn_l_fm_shot3"	pos "753 346"	invis true }
+	string left_fm_shot4 { string "*cvar mn_l_fm_shot4"	pos "753 282"	invis true }
+	string left_fm_shot5 { string "*cvar mn_l_fm_shot5"	pos "753 218"	invis true }
+	string left_fm_shot6 { string "*cvar mn_l_fm_shot6"	pos "753 154"	invis true }
+	string left_fm_shot7 { string "*cvar mn_l_fm_shot7"	pos "753 90"	invis true }
+	string right_fm_shot0 { string "*cvar mn_r_fm_shot0"	pos "753 538"	invis true }
+	string right_fm_shot1 { string "*cvar mn_r_fm_shot1"	pos "753 474"	invis true }
+	string right_fm_shot2 { string "*cvar mn_r_fm_shot2"	pos "753 410"	invis true }
+	string right_fm_shot3 { string "*cvar mn_r_fm_shot3"	pos "753 346"	invis true }
+	string right_fm_shot4 { string "*cvar mn_r_fm_shot4"	pos "753 282"	invis true }
+	string right_fm_shot5 { string "*cvar mn_r_fm_shot5"	pos "753 218"	invis true }
+	string right_fm_shot6 { string "*cvar mn_r_fm_shot6"	pos "753 154"	invis true }
+	string right_fm_shot7 { string "*cvar mn_r_fm_shot7"	pos "753 90"	invis true }
 }
