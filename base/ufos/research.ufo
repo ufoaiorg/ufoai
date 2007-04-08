@@ -395,6 +395,7 @@ tech rs_weapon_bolterrifle
 
 	require_AND
 	{
+		tech rs_skill_sniper
 		tech rs_skill_assault
 	}
 	provides	bolterrifle
@@ -722,7 +723,7 @@ tech rs_weapon_heavylaser
 	require_AND
 	{
 		tech rs_laser
-		tech rs_skill_sniper
+	//	tech rs_skill_sniper
 		tech rs_skill_heavy
 	}
 	provides	heavylaser
@@ -869,7 +870,7 @@ tech rs_weapon_laserrifle
 	require_AND
 	{
 		tech rs_laser
-		tech rs_skill_sniper
+	//	tech rs_skill_sniper
 		tech rs_skill_assault
 	}
 	provides	laserrifle
@@ -1004,8 +1005,9 @@ tech rs_weapon_plasatomizer
 
 	require_AND
 	{
-		tech rs_skill_assault
-		tech rs_skill_heavy
+		tech rs_skill_close
+	//	tech rs_skill_assault
+	//	tech rs_skill_heavy
 		item plaspistol 1
 	}
 

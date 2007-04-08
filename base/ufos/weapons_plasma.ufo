@@ -56,7 +56,7 @@ item plaspistol_ammo
 		firedef 
 		{
 			name	"_Spray"
-			skill 	assault
+			skill 	close
 			projtl	plasmaContinuous
 			impact	plasmaImpact
 			hitbody	plasmaImpact
@@ -135,7 +135,7 @@ item plasrifle_ammo
 		firedef
 		{
 			name	"_Spray"
-			skill 	assault
+			skill 	heavy
 			projtl	plasmaContinuous
 			impact	plasmaImpact
 			hitbody	plasmaImpact
@@ -195,7 +195,7 @@ item plasblaster_ammo
 		firedef 
 		{
 			name	"_Ball"
-			skill 	heavy
+			skill 	explosive
 			projtl	plasmaBigBall
 			impact	plasmaBigImpact
 			hitbody	plasmaBigImpact
@@ -218,7 +218,7 @@ item plasblaster_ammo
 		firedef
 		{
 			name	"_Spray"
-			skill 	assault
+			skill 	heavy
 			projtl	plasmaContinuous
 			impact	plasmaImpact
 			hitbody	plasmaImpact
