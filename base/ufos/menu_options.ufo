@@ -599,7 +599,7 @@ menu popup_maintain_resolution
 		tooltip	"_Close this dialogue"
 		image	menu/multi_buttons3
 		texh	"256 64"
-		texl	"0 33"
+		texl	"0 32"
 		pos	"34 194"
 		out	{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
 		in	{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
@@ -610,7 +610,7 @@ menu popup_maintain_resolution
 		tooltip	"_Change the resolution"
 		image	menu/multi_buttons3
 		texh	"256 64"
-		texl	"0 33"
+		texl	"0 32"
 		pos	"304 194"
 		out	{ *string_accept color "0 0.5 0 1" *bt_change image menu/multi_buttons3 }
 		in	{ *string_accept color "1 1 1 1" *bt_change image menu/multi_buttons3a }
@@ -621,16 +621,16 @@ menu popup_maintain_resolution
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Cancel"
-		pos	"124 192"
-		align	uc
+		pos	"122 210"
+		align	cc
 	}
 	string string_accept
 	{
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Accept"
-		pos	"394 192"
-		align	uc
+		pos	"392 210"
+		align	cc
 	}
 
 	func init
