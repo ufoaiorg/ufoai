@@ -1715,9 +1715,9 @@ static int MN_DrawTooltip (char *font, char *string, int x, int y, int maxWidth)
 
 	x += 5;
 	y += 5;
-	if (x + maxWidth > VID_NORM_WIDTH)
+	if (x + maxWidth +3 > VID_NORM_WIDTH)
 		x -= (maxWidth + 10);
-	re.DrawFill(x - 1, y - 1, maxWidth, height, 0, tooltipBG);
+	re.DrawFill(x - 1, y - 1, maxWidth + 4, height, 0, tooltipBG);
 	re.DrawColor(tooltipColor);
 	re.FontDrawString(font, 0, x + 1, y + 1, x + 1, y + 1, maxWidth, 0, height, string, 0, 0, NULL, qfalse);
 	re.DrawColor(NULL);
