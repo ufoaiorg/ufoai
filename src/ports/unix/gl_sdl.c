@@ -39,8 +39,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /*#include <SDL_opengl.h>*/
 
 #include "../../client/cl_keys.h"
-#include "rw_linux.h"
-#include "../unix/qgl_unix.h"
+#include "../linux/rw_linux.h"
+#include "qgl_unix.h"
 
 glwstate_t glw_state;
 
@@ -511,7 +511,7 @@ qboolean GLimp_Init (void *hInstance, void *wndProc)
  */
 static void SetSDLIcon (void)
 {
-#include "ufoicon.xbm"
+#include "../linux/ufoicon.xbm"
 	SDL_Surface *icon;
 	SDL_Color color;
 	Uint8 *ptr;
