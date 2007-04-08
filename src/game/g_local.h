@@ -320,16 +320,28 @@ int G_VisToPM(int vis_mask);
 void G_SendInventory(int player_mask, edict_t * ent);
 int G_TeamToPM(int team);
 
-extern int TU_REACTIONS[MAX_EDICTS][2];
-extern int REACTION_FIREMODE[MAX_EDICTS][2];
-	/* Per actor: Stores the firemode to be used for reaction fire (if the fireDef allows that)
-	 * Used in g_combat.c for choosing correct reaction fire. It is filled with data from cl_actor.c
-	 * The CLIENT has to make sure that any default firemodes (and unusable firemodes) are transferred correctly.
-	 * Otherwise reaction fire will not work at all.
-	 * 1. sub-array	The actor in the global list (all temas)
-	 * 2. sub-array	0 ... stores the used hand (0=right, 1=left, -1 undefined)
-	 *		1 ... stores the used firemode Max. number is MAX_FIREDEFS_PER_WEAPON. -1 = undefined
-	 */
+typedef enum {
+	REACT_TUS,	/**< Stores the used TUs for Reaction fire for each edict. */
+	REACT_FIRED,	/**< Stores if the edict has fired in reaction. */
+	
+	REACT_MAX
+} g_reaction_storage_type_t;
+
+extern int reactionTUs[MAX_EDICTS][REACT_MAX];	/**< Per actor: */
+
+typedef enum {
+	RF_HAND,	/**< Stores the used hand (0=right, 1=left, -1 undefined) */
+	RF_FM,		/**< Stores the used firemode index. Max. number is MAX_FIREDEFS_PER_WEAPON. -1 = undefined */
+	
+	RF_MAX
+} g_reaction_firemode_type_t;
+
+extern int reactionFiremode[MAX_EDICTS][RF_MAX];
+	/**< Per actor: Stores the firemode to be used for reaction fire (if the fireDef allows that)
+	  * Used in g_combat.c for choosing correct reaction fire. It is (must be) filled with data from cl_actor.c
+	  * The CLIENT has to make sure that any default firemodes (and unusable firemodes) are transferred correctly to this one.
+	  * Otherwise reaction fire will not work at all.
+	  */
 
 extern int turnTeam;
 
@@ -415,8 +427,9 @@ typedef struct {
 	int			flood_whenhead;		/**< head pointer for when said */
 } client_persistant_t;
 
-/* this structure is cleared on each PutClientInServer(), */
-/* except for 'client->pers' */
+/* this structure is cleared on each PutClientInServer(),
+ * except for 'client->pers'
+ */
 struct player_s {
 	/* known to server */
 	qboolean inuse;
@@ -439,14 +452,14 @@ struct edict_s {
 	vec3_t angles;
 
 	/* FIXME: move these fields to a server private sv_entity_t */
-	link_t area;				/* linked to a division node or leaf */
-	int headnode;				/* unused if num_clusters != -1 */
+	link_t area;				/**< linked to a division node or leaf */
+	int headnode;				/**< unused if num_clusters != -1 */
 
 	/* tracing info */
 	solid_t solid;
 
-	vec3_t mins, maxs; /* position of min and max points - relative to origin */
-	vec3_t absmin, absmax; /* position of min and max points - relative to world's origin */
+	vec3_t mins, maxs; /**< position of min and max points - relative to origin */
+	vec3_t absmin, absmax; /**< position of min and max points - relative to world's origin */
 	vec3_t size;
 
 	/*

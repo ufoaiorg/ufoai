@@ -34,11 +34,7 @@ qboolean G_ResolveReactionFire(edict_t *target, qboolean force, qboolean endTurn
 static void G_ReactToPreFire(edict_t *target);
 static void G_ReactToPostFire(edict_t *target);
 
-/*
- * 0: Stores the used TUs for Reaction fire for each edict.
- * 1: Stores if the edict has fired in reaction.
-*/
-int TU_REACTIONS[MAX_EDICTS][2];
+int reactionTUs[MAX_EDICTS][REACT_MAX];	/* Defined in g_local.h. See there for more. */
 
 typedef enum {
 	ML_WOUND,
@@ -162,22 +158,22 @@ extern void G_ResetReactionFire (int team)
 
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
 		if (ent->inuse && !(ent->state & STATE_DEAD) && (ent->type == ET_ACTOR || ent->type == ET_UGV) && ent->team == team) {
-			TU_REACTIONS[ent->number][1] = 0;	/* reset 'RF used' flag */
+			reactionTUs[ent->number][REACT_FIRED] = 0;	/* reset 'RF used' flag */
 			if (ent->state & STATE_REACTION) {
 				if (ent->TU >= TU_REACTION) {
 					/* Enough TUs for reaction fire available. */
 					ent->TU -= TU_REACTION;
-					TU_REACTIONS[ent->number][0] = TU_REACTION;	/* Save the used TUs for possible later re-adding. */
+					reactionTUs[ent->number][REACT_TUS] = TU_REACTION;	/* Save the used TUs for possible later re-adding. */
 				} else if (ent->TU > 0) {
 					/* Not enough TUs for reaction fire available. */
-					TU_REACTIONS[ent->number][0] = ent->TU;	/* Save the used TUs for possible later re-adding. */
+					reactionTUs[ent->number][REACT_TUS] = ent->TU;	/* Save the used TUs for possible later re-adding. */
 					ent->TU = 0;
 				} else {
 					/* No TUs at all available. */
-					TU_REACTIONS[ent->number][0] = -1;
+					reactionTUs[ent->number][REACT_TUS] = -1;
 				}
 			} else {
-				TU_REACTIONS[ent->number][0] = 0;	/* Reset saved TUs. */
+				reactionTUs[ent->number][REACT_TUS] = 0;	/* Reset saved TUs. */
 			}
 			ent->state &= ~STATE_SHAKEN;
 			gi.AddEvent(G_TeamToPM(ent->team), EV_ACTOR_STATECHANGE);
@@ -1244,7 +1240,7 @@ static qboolean G_CanReactionFire (edict_t *ent, edict_t *target, char *reason)
 
 	/* check ent has reaction fire enabled */
 	if (!(ent->state & STATE_SHAKEN) && !(ent->state & STATE_REACTION_MANY) &&
-			(!(ent->state & STATE_REACTION_ONCE) || TU_REACTIONS[ent->number][1])) {
+			(!(ent->state & STATE_REACTION_ONCE) || reactionTUs[ent->number][REACT_FIRED])) {
 #ifdef DEBUG_REACTION
 		if (reason)
 			Com_sprintf(reason, sizeof(reason), "Shooter does not have reaction fire enabled, or has already fired too often");
@@ -1321,10 +1317,10 @@ static int G_GetFiringTUs (edict_t *ent, edict_t *target, int *fire_hand_type, i
 		weapon_fd_idx = INV_FiredefsIDXForWeapon(&gi.csi->ods[RIGHT(ent)->item.m], RIGHT(ent)->item.t);
 		assert(weapon_fd_idx >= 0);
 
-		if (REACTION_FIREMODE[ent->number][0] == 0
-		 && REACTION_FIREMODE[ent->number][1] >= 0
-		 && REACTION_FIREMODE[ent->number][1] < MAX_FIREDEFS_PER_WEAPON) { /* If a RIGHT-hand firemode is selected and sane. */
-			*firemode = REACTION_FIREMODE[ent->number][1]; /* Get selected (if any) firemode for the weapon in the right hand. */
+		if (reactionFiremode[ent->number][RF_HAND] == 0
+		 && reactionFiremode[ent->number][RF_FM] >= 0
+		 && reactionFiremode[ent->number][RF_FM] < MAX_FIREDEFS_PER_WEAPON) { /* If a RIGHT-hand firemode is selected and sane. */
+			*firemode = reactionFiremode[ent->number][RF_FM]; /* Get selected (if any) firemode for the weapon in the right hand. */
 
 			if (gi.csi->ods[RIGHT(ent)->item.m].fd[weapon_fd_idx][*firemode].time + sv_reaction_leftover->integer <= ent->TU
 			 && gi.csi->ods[RIGHT(ent)->item.m].fd[weapon_fd_idx][*firemode].range > VectorDist(ent->origin, target->origin) ) {
@@ -1345,10 +1341,10 @@ static int G_GetFiringTUs (edict_t *ent, edict_t *target, int *fire_hand_type, i
 		weapon_fd_idx = INV_FiredefsIDXForWeapon(&gi.csi->ods[LEFT(ent)->item.m], LEFT(ent)->item.t);
 		assert(weapon_fd_idx >= 0);
 
-		if (REACTION_FIREMODE[ent->number][0] == 1
-		 && REACTION_FIREMODE[ent->number][1] >= 0
-		 && REACTION_FIREMODE[ent->number][1] < MAX_FIREDEFS_PER_WEAPON) { /* If a LEFT-hand firemode is selected and sane. */
-			*firemode = REACTION_FIREMODE[ent->number][1]; /* Get selected firemode for the weapon in the left hand. */
+		if (reactionFiremode[ent->number][RF_HAND] == 1
+		 && reactionFiremode[ent->number][RF_FM] >= 0
+		 && reactionFiremode[ent->number][RF_FM] < MAX_FIREDEFS_PER_WEAPON) { /* If a LEFT-hand firemode is selected and sane. */
+			*firemode = reactionFiremode[ent->number][RF_FM]; /* Get selected firemode for the weapon in the left hand. */
 
 			if (gi.csi->ods[LEFT(ent)->item.m].fd[weapon_fd_idx][*firemode].time + sv_reaction_leftover->integer <= ent->TU
 			 && gi.csi->ods[LEFT(ent)->item.m].fd[weapon_fd_idx][*firemode].range > VectorDist(ent->origin, target->origin)) {
@@ -1487,7 +1483,7 @@ static qboolean G_ResolveRF (edict_t *ent, qboolean mock)
 	/* clear any shakenness */
 	if (tookShot) {
 		ent->state &= ~STATE_SHAKEN;
-		TU_REACTIONS[ent->number][1] += 1; /* Save the fact that the ent has fired. */
+		reactionTUs[ent->number][REACT_FIRED] += 1; /* Save the fact that the ent has fired. */
 	} else {
 #ifdef DEBUG_REACTION
 		Com_Printf("Cancelling resolution because %s judged it unwise to fire\n", ent->chr.name);

@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 int turnTeam;	/* Defined in g_local.h Stores level.activeTeam while G_CanReactionFire() is abusing it. */
 
-int REACTION_FIREMODE[MAX_EDICTS][2]; /* Defined in g_local.h See there for full info. */
+int reactionFiremode[MAX_EDICTS][RF_MAX]; /* Defined in g_local.h See there for full info. */
 
 static qboolean sentAppearPerishEvent;
 
@@ -1258,14 +1258,14 @@ static void G_ClientStateChange (player_t * player, int num, int reqState)
 				/* Turn off reaction fire and give the soldier back his TUs if it used some. */
 				ent->state &= ~STATE_REACTION;
 
-				if (TU_REACTIONS[ent->number][0] > 0) {
+				if (reactionTUs[ent->number][REACT_TUS] > 0) {
 					/* TUs where used for activation. */
-					ent->TU += TU_REACTIONS[ent->number][0];
-				} else if (TU_REACTIONS[ent->number][0] < 0) {
+					ent->TU += reactionTUs[ent->number][0];
+				} else if (reactionTUs[ent->number][REACT_TUS] < 0) {
 					/* No TUs where used for activation. */
 					/* Don't give TUs back because none where used up (reaction fire was already active from previous turn) */
 				} else {
-					/* TU_REACTIONS[ent->number] == 0) */
+					/* reactionTUs[ent->number][REACT_TUS] == 0) */
 					/* This should never be the case.  */
 					Com_DPrintf("G_ClientStateChange: 0 value saved for reaction while reaction is activated.\n");
 				}
@@ -1283,15 +1283,15 @@ static void G_ClientStateChange (player_t * player, int num, int reqState)
 			/* Turn on reaction fire and save the used TUs to the list. */
 			ent->state |= STATE_REACTION_ONCE;
 
-			if (TU_REACTIONS[ent->number][0] > 0) {
+			if (reactionTUs[ent->number][REACT_TUS] > 0) {
 				/* TUs where saved for this turn (either the full TU_REACTION or some remaining TUs from the shot. This was done either in the last turn or this one. */
-				ent->TU -= TU_REACTIONS[ent->number][0];
-			} else if (TU_REACTIONS[ent->number][0] == 0) {
+				ent->TU -= reactionTUs[ent->number][REACT_TUS];
+			} else if (reactionTUs[ent->number][REACT_TUS] == 0) {
 				/* Reaction fire was not triggered in the last turn. */
 				ent->TU -= TU_REACTION;
-				TU_REACTIONS[ent->number][0] = TU_REACTION;
+				reactionTUs[ent->number][REACT_TUS] = TU_REACTION;
 			}  else {
-				/* TU_REACTIONS[ent->number][0] < 0 */
+				/* reactionTUs[ent->number][REACT_TUS] < 0 */
 				/* Reaction fire was triggered in the last turn,
 				   and has used 0 TU from this one.
 				   Can be activated without TU-loss. */
@@ -1741,8 +1741,8 @@ void G_ClientAction (player_t * player)
 		fd_idx = -1;
 		gi.ReadFormat(pa_format[PA_REACT_SELECT], &hand, &fd_idx);
 		Com_DPrintf("G_ClientAction: entnum:%i hand:%i fd:%i\n", num, hand, fd_idx);
-		REACTION_FIREMODE[num][0] = hand;
-		REACTION_FIREMODE[num][1] = fd_idx;
+		reactionFiremode[num][RF_HAND] = hand;
+		reactionFiremode[num][RF_FM] = fd_idx;
 		break;
 
 	default:

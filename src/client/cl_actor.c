@@ -38,15 +38,18 @@ qboolean visible_firemode_list_left = qfalse;
 qboolean visible_firemode_list_right = qfalse;
 qboolean firemodes_change_display = qtrue; /* If this set to qfalse so CL_DisplayFiremodes_f will not attempt to hide the list */
 
-int REACTION_FIREMODE[MAX_EDICTS][3];	/* Per actor: Stores the firemode to be used for reaction fire (if the fireDef allows that)
-					 * 1. sub-array
-					 *	0 ... Stores the used hand (0=right,1=left)
-					 *	1 ... Stores the firemode. Max. number is MAX_FIREDEFS_PER_WEAPON
-					 *			1 left hand
-					 *	2 ... Stores the weapon idx in ods. (for faster access)
-					 */
-#define THIS_REACTION( actoridx, hand, fd_idx )	( REACTION_FIREMODE[actoridx][0] == hand && REACTION_FIREMODE[actoridx][1] == fd_idx )
-#define SANE_REACTION( actoridx )	(( (REACTION_FIREMODE[actoridx ][0] >= 0) && (REACTION_FIREMODE[actoridx ][1] >=0 && REACTION_FIREMODE[actoridx ][1] < MAX_FIREDEFS_PER_WEAPON) && (REACTION_FIREMODE[actoridx ][1] >= 0) ))
+typedef enum {
+	RF_HAND,	/**< Stores the used hand (0=right,1=left) */
+	RF_FM,		/**< Stores the used firemode index. Max. number is MAX_FIREDEFS_PER_WEAPON */
+	RF_WPIDX, 	/**< Stores the weapon idx in ods. (for faster access and checks) */
+
+	RF_MAX
+} cl_reaction_firemode_type_t;
+
+static int reactionFiremode[MAX_EDICTS][RF_MAX]; /** < Per actor: Stores the firemode to be used for reaction fire (if the fireDef allows that) See also reaction_firemode_type_t */
+
+#define THIS_REACTION( actoridx, hand, fd_idx )	( reactionFiremode[actoridx][RF_HAND] == hand && reactionFiremode[actoridx][RF_FM] == fd_idx )
+#define SANE_REACTION( actoridx )	(( (reactionFiremode[actoridx ][RF_HAND] >= 0) && (reactionFiremode[actoridx ][RF_FM] >=0 && reactionFiremode[actoridx ][RF_FM] < MAX_FIREDEFS_PER_WEAPON) && (reactionFiremode[actoridx ][RF_FM] >= 0) ))
 
 static le_t *mouseActor;
 static pos3_t mouseLastPos;
@@ -461,10 +464,10 @@ static void CL_SetReactionFiremode (int actor_idx, int handidx, int obj_idx, int
 	le = cl.teamList[actor_idx];
 	Com_DPrintf("CL_SetReactionFiremode: actor:%i entnum:%i hand:%i fd:%i\n", actor_idx,le->entnum, handidx, fd_idx);
 
-	REACTION_FIREMODE[actor_idx][0] = handidx;	/* Store the given hand. */
-	REACTION_FIREMODE[actor_idx][1] = fd_idx;	/* Store the given firemode for this hand. */
+	reactionFiremode[actor_idx][RF_HAND] = handidx;	/* Store the given hand. */
+	reactionFiremode[actor_idx][RF_FM] = fd_idx;	/* Store the given firemode for this hand. */
 	MSG_Write_PA(PA_REACT_SELECT, le->entnum, handidx, fd_idx); /* Send hand and firemode to server-side storage as well. See g_local.h for more. */
-	REACTION_FIREMODE[actor_idx][2] = obj_idx;	/* Store the weapon-idx of the object in the hand (for faster access). */
+	reactionFiremode[actor_idx][RF_WPIDX] = obj_idx;	/* Store the weapon-idx of the object in the hand (for faster access). */
 }
 
 /**
@@ -559,7 +562,7 @@ static void CL_GetWeaponAndAmmo (char hand, objDef_t **weapon, objDef_t **ammo, 
 }
 
 /**
- * @brief Updates the information in REACTION_FIREMODE for the selected actor with the given data from the parameters.
+ * @brief Updates the information in reactionFiremode for the selected actor with the given data from the parameters.
  * @param[in] hand Which weapon(-hand) to use (l|r).
  * @param[in] active_firemode Set this to the firemode index you want to activate or set it to -1 if the default one (currently the first one found) should be used.
  */
@@ -602,10 +605,10 @@ static void CL_UpdateReactionFiremodes (char hand, int actor_idx, int active_fir
 		return;
 
 	Com_DPrintf("CL_UpdateReactionFiremodes: act%i handidx%i weapfdidx%i\n", actor_idx, handidx, weap_fd_idx);
-	if (REACTION_FIREMODE[actor_idx][2] == ammo->weap_idx[weap_fd_idx]
-	&&  REACTION_FIREMODE[actor_idx][0] == handidx) {
+	if (reactionFiremode[actor_idx][RF_WPIDX] == ammo->weap_idx[weap_fd_idx]
+	&&  reactionFiremode[actor_idx][RF_HAND] == handidx) {
 		if (ammo->fd[weap_fd_idx][active_firemode].reaction) {
-			if (REACTION_FIREMODE[actor_idx][1] == active_firemode)
+			if (reactionFiremode[actor_idx][RF_FM] == active_firemode)
 				/* Weapon is the same, firemode is already selected and reaction-usable. Nothing to do. */
 				return;
 		} else {
@@ -700,15 +703,15 @@ void CL_DisplayFiremodes_f (void)
 			CL_UpdateReactionFiremodes('l', actor_idx, -1);
 		}
 	} else {
-		if (REACTION_FIREMODE[actor_idx][2] != ammo->weap_idx[weap_fd_idx]) {
-			if ((hand[0] == 'r') && (REACTION_FIREMODE[actor_idx][0] == 0)) {
+		if (reactionFiremode[actor_idx][RF_WPIDX] != ammo->weap_idx[weap_fd_idx]) {
+			if ((hand[0] == 'r') && (reactionFiremode[actor_idx][RF_HAND] == 0)) {
 				/* Set default firemode (try right hand first, then left hand). */
 				CL_UpdateReactionFiremodes('r', actor_idx, -1);
 				if (!SANE_REACTION(actor_idx)) {
 					CL_UpdateReactionFiremodes('l', actor_idx, -1);
 				}
 			}
-			if ((hand[0] == 'l') && (REACTION_FIREMODE[actor_idx][0] == 1)) {
+			if ((hand[0] == 'l') && (reactionFiremode[actor_idx][RF_HAND] == 1)) {
 				/* Set default firemode (try left hand first, then right hand). */
 				CL_UpdateReactionFiremodes('l', actor_idx, -1);
 				if (!SANE_REACTION(actor_idx)) {
@@ -727,7 +730,7 @@ void CL_DisplayFiremodes_f (void)
 				CL_DisplayFiremodeEntry(&ammo->fd[weap_fd_idx][i], hand[0], qfalse);
 			}
 
-			/* Display checkbox for reaction firemode (this needs a sane REACTION_FIREMODE array) */
+			/* Display checkbox for reaction firemode (this needs a sane reactionFiremode array) */
 			if (ammo->fd[weap_fd_idx][i].reaction) {
 				Com_DPrintf("CL_DisplayFiremodes_f: This is a reaction firemode: %i\n", i);
 				if (hand[0] == 'r') {
@@ -1195,6 +1198,7 @@ void CL_ActorUpdateCVars (void)
 			/* If the mouse is outside the world, blank move */
 			/* or the movelength is 255 - not reachable e.g. */
 			if ((mouseSpace != MS_WORLD && cl.cmode < M_PEND_MOVE) || actorMoveLength == 0xFF) {
+				/* TODO: CHECKME Why do we check for (cl.cmode < M_PEND_MOVE) here? */
 				actorMoveLength = 0xFF;
 				Com_sprintf(infoText, sizeof(infoText), _("Armour  %i\tMorale  %i\n"), selActor->AP, selActor->morale);
 				menuText[TEXT_MOUSECURSOR_RIGHT] = NULL;
@@ -2326,19 +2330,19 @@ void CL_ActorMoveMouse (void)
 {
 	if (cl.cmode == M_PEND_MOVE) {
 		if (VectorCompare(mousePos, mousePendPos)) {
-			/* pend move and clicked the same spot */
+			/* Pending move and clicked the same spot (i.e. 2 clicks on the same place) */
 			CL_ActorStartMove(selActor, mousePos);
 		} else {
-			/* clicked different spot */
+			/* Clicked different spot. */
 			VectorCopy(mousePos, mousePendPos);
 		}
 	} else {
 		if (confirm_movement->value || confirm_actions->value) {
-			/* set our mode to pending move */
+			/* Set our mode to pending move. */
 			VectorCopy(mousePos, mousePendPos);
 			cl.cmode = M_PEND_MOVE;
 		} else {
-			/* just move there */
+			/* Just move there. */
 			CL_ActorStartMove(selActor, mousePos);
 		}
 	}
@@ -2358,24 +2362,33 @@ void CL_ActorSelectMouse (void)
 	case M_PEND_MOVE:
 		/* Try and select another team member */
 		if (CL_ActorSelect(mouseActor)) {
-			/* succeeded so go back into move mode */
+			/* Succeeded so go back into move mode. */
 			cl.cmode = M_MOVE;
 		} else {
 			CL_ActorMoveMouse();
 		}
 		break;
 	case M_PEND_FIRE_R:
-		/* We switch back to aming mode. */
-		cl.cmode = M_FIRE_R;
-		break;
 	case M_PEND_FIRE_L:
-		/* We switch back to aming mode. */
-		cl.cmode = M_FIRE_L;
+		if (VectorCompare(mousePos, mousePendPos)) {
+			/* Pending shot and clicked the same spot (i.e. 2 clicks on the same place) */
+			CL_ActorShoot(selActor, mousePos);
+
+			/* We switch back to aiming mode. */
+			if (cl.cmode == M_PEND_FIRE_R)
+				cl.cmode = M_FIRE_R;
+			else
+				cl.cmode = M_FIRE_L;
+		} else {
+			/* Clicked different spot. */
+			VectorCopy(mousePos, mousePendPos);
+		}
 		break;
 	case M_FIRE_R:
 		/* We either switch to "pending" fire-mode or fire the gun. */
 		if (confirm_actions->value) {
 			cl.cmode = M_PEND_FIRE_R;
+			VectorCopy(mousePos, mousePendPos);
 		} else {
 			CL_ActorShoot(selActor, mousePos);
 		}
@@ -2384,6 +2397,7 @@ void CL_ActorSelectMouse (void)
 		/* We either switch to "pending" fire-mode or fire the gun. */
 		if (confirm_actions->value) {
 			cl.cmode = M_PEND_FIRE_L ;
+			VectorCopy(mousePos, mousePendPos);
 		} else {
 			CL_ActorShoot(selActor, mousePos);
 		}
@@ -3188,18 +3202,24 @@ void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
  */
 extern void CL_AddTargeting (void)
 {
-	if (mouseSpace != MS_WORLD && cl.cmode < M_PEND_MOVE)
+	if (mouseSpace != MS_WORLD)
 		return;
 
-	if (cl.cmode == M_MOVE || cl.cmode == M_PEND_MOVE) {
+	switch (cl.cmode) {
+	case M_MOVE:
+	case M_PEND_MOVE:
+		/* Display Move-cursor. */
 		CL_AddTargetingBox(mousePos, qfalse);
-		if (cl.cmode == M_PEND_MOVE){
-			/* also display a box for the pending move if we have one */
+
+		if (cl.cmode == M_PEND_MOVE) {
+			/* Also display a box for the pending move if we have one. */
 			CL_AddTargetingBox(mousePendPos, qtrue);
 			if (!CL_TraceMove(mousePendPos))
 				cl.cmode = M_MOVE;
 		}
-	} else {
+		break;
+	case M_FIRE_R:
+	case M_FIRE_L:
 		if (!selActor || !selFD)
 			return;
 
@@ -3207,5 +3227,24 @@ extern void CL_AddTargeting (void)
 			CL_TargetingStraight(selActor->pos, mousePos);
 		else
 			CL_TargetingGrenade(selActor->pos, mousePos);
+		break;
+	case M_PEND_FIRE_R:
+	case M_PEND_FIRE_L:
+		if (!selActor || !selFD)
+			return;
+
+		/* Draw cursor at mousepointer */
+		CL_AddTargetingBox(mousePos, qfalse);
+
+		/* Draw (pending) Cursor at target */
+		CL_AddTargetingBox(mousePendPos, qtrue); 
+
+		if (!selFD->gravity)
+			CL_TargetingStraight(selActor->pos, mousePendPos);
+		else
+			CL_TargetingGrenade(selActor->pos, mousePendPos);
+		break;
+	default:
+		break;
 	}
 }
