@@ -1407,7 +1407,7 @@ extern void Com_SetGameType (void)
 				if (dedicated->value)
 					Com_Printf("  %s = %s\n", list->name, list->value);
 			}
-			Com_Printf("Make sure to restart the server\n");
+			Com_Printf("Make sure to restart the map if you switched during a game\n");
 			break;
 		}
 	}
