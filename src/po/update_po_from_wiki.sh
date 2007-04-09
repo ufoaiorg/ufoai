@@ -463,13 +463,14 @@ $awk_soft 'BEGIN {FS=" ";test=0}
 ' > $output_file
 echo "Converted $input_file to $output_file : done." >> $log_file
 
-test=`diff $input_file $output_file | $sed_soft '/^</!d;/^<[ \t]*\"/d'`
-if [[ ${#test} -gt 0 ]]
-then
-	echo $test
-	echo "Security stop : the previous line(s) has been removed from $input_file and shouldn't have" | tee -a $log_file
-	exit
-fi
+#This test doesn't work for files too big... I suppress it.
+#test=`diff $input_file $output_file | $sed_soft '/^</!d;/^<[ \t]*\"/d'`
+#if [[ ${#test} -gt 0 ]]
+#then
+#	echo $test
+#	echo "Security stop : the previous line(s) has been removed from $input_file and shouldn't have" | tee -a $log_file
+#	exit
+#fi
 
 if [[ "$debug" = "1" ]]
 then
