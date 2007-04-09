@@ -17,7 +17,6 @@ typedef struct font_s {
 } font_t;
 
 /* font definitions */
-font_t fonts[MAX_FONTS];
 typedef struct fontCache_s {
 	char string[MAX_HASH_STRING];	/** hash id */
 	struct fontCache_s *next;	/**< next hash entry in case of collision */

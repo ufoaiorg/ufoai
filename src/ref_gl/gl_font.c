@@ -32,6 +32,9 @@ static int numFonts = 0;
 static fontCache_t fontCache[MAX_FONT_CACHE];
 static fontCache_t *hash[MAX_FONT_CACHE];
 
+static font_t fonts[MAX_FONTS];
+
+
 /* holds the gettext string */
 static char buf[BUF_SIZE];
 static int numInCache = 0;
