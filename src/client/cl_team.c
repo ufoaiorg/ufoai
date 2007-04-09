@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 
-static int CL_GetRank(char* rankID);
+static int CL_GetRank(const char* rankID);
 static void CL_SendTeamInfo(sizebuf_t * buf, int baseID, int num);
 
 /**
@@ -1867,13 +1867,6 @@ extern void CL_ParseResults (sizebuf_t * buf)
 
 		ccs.civiliansKilled += civilian_killed;
 
-#if 0
-/* 20070228 Zenerka: new solution for collecting items from the battlefield
-   see CL_CollectingItems(), CL_SellorAddItems(), CL_CollectingAmmo(), CL_CarriedItems() */
-		Q_strcat(resultText, va(_("Items salvaged and sold\t%i\n"), number_items),sizeof(resultText));
-		Q_strcat(resultText, va(_("Total item sale value\t%i\n\n"), credits_gained),sizeof(resultText));
-#endif
-
 		MN_PopMenu(qtrue);
 		Cvar_Set("mn_main", "singleplayerInGame");
 		Cvar_Set("mn_active", "map");
@@ -1885,6 +1878,14 @@ extern void CL_ParseResults (sizebuf_t * buf)
 			MN_PushMenu("won");
 		else
 			MN_PushMenu("lost");
+		/* on singleplayer we disconnect the game */
+		/* we can safely wipe all mission data now */
+		/* TODO: I don't understand how this works
+		 * and why, when I move this to CL_GameResults_f,
+		 * the "won" menu get's garbled at "killteam 7"
+		 */
+		Cbuf_AddText("disconnect\n");
+		Cbuf_Execute();
 	} else {
 		static char popupText[MAX_SMALLMENUTEXTLEN];
 
@@ -1902,14 +1903,6 @@ extern void CL_ParseResults (sizebuf_t * buf)
 			MN_Popup(_("Better luck next time"), popupText);
 		}
 	}
-
-	/* we can safely wipe all mission data now */
-	/* TODO: I don't understand how this works
-	   and why, when I move this to CL_GameResults_f,
-	   the "won" menu get's garbled at "killteam 7" */
-	/* FIXME: For multiplayer there should be a map reload now */
-	Cbuf_AddText("disconnect\n");
-	Cbuf_Execute();
 }
 
 /* ======= RANKS & MEDALS =========*/
@@ -1917,7 +1910,7 @@ extern void CL_ParseResults (sizebuf_t * buf)
 /**
  * @brief Get the index number of the given rankID
  */
-static int CL_GetRank (char* rankID)
+static int CL_GetRank (const char* rankID)
 {
 	int i;
 

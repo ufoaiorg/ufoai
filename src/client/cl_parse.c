@@ -1541,7 +1541,7 @@ void CL_ParseServerMessage (void)
 			break;
 
 		case svc_serverdata:
-			Cbuf_Execute ();		/* make sure any stuffed commands are done */
+			Cbuf_Execute();		/* make sure any stuffed commands are done */
 			CL_ParseServerData();
 			break;
 
