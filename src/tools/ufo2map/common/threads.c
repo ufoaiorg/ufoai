@@ -407,7 +407,7 @@ Linux pthreads
 =======================================================================
 */
 
-#if defined( __linux__ ) || defined( __APPLE__ )
+#if defined( __linux__ )
 #define USED
 
 /* Setting default Threads to 1 */

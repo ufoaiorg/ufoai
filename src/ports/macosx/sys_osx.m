@@ -93,9 +93,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SYS_BASEUFO_PATH			@"base"
 #define	SYS_VALIDATION_FILE1		@"GamePPC.ufoplug/Contents/MacOS/GamePPC"
 #define	SYS_VALIDATION_FILE2		@"GamePPC.bundle/Contents/MacOS/GamePPC"
-#define SYS_UFOAI_HP		@"http://www.ufoai.net/"
+#define SYS_UFOAI_HP		@"http://ufoai.sf.net/"
 #define	SYS_SET_COMMAND			"+set"
-#define	SYS_GAME_COMMAND		"game"
+#define	SYS_GAME_COMMAND		"fs_gamedir"
 #define	SYS_CDDIR_COMMAND		"cddir"
 #define SYS_COMMAND_BUFFER_SIZE		1024
 
@@ -308,9 +308,9 @@ void Sys_Error (const char *theError, ...)
 
 	fcntl (0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
 
-	va_start (myArgPtr, theError);
-	Q_vsnprintf (myString, SYS_STRING_SIZE, theError, myArgPtr);
-	va_end (myArgPtr);
+	va_start(myArgPtr, error);
+	Q_vsnprintf(myString, SYS_STRING_SIZE, error, myArgPtr);
+	va_end(myArgPtr);
 
 #ifdef DEDICATED_ONLY
 	fprintf (stderr, "Error: %s\n", myString);
@@ -1041,7 +1041,7 @@ void Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
 	IN_SetKeyboardRepeatEnabled (NO);
 	IN_SetF12EjectEnabled (NO);
 	gSysIsDeactivated = NO;
-	CDAudio_Enable (YES);
+	//CDAudio_Enable (YES);
 	// VID_SetPaused (NO);
 	gSysHidden = NO;
 
@@ -1066,7 +1066,7 @@ void Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
 	IN_ShowCursor (YES);
 	IN_SetKeyboardRepeatEnabled (YES);
 	IN_SetF12EjectEnabled (YES);
-	CDAudio_Enable (NO);
+	//CDAudio_Enable (NO);
 	gSysHidden = YES;
 	gSysIsDeactivated = YES;
 	// VID_SetPaused (YES);
@@ -1383,7 +1383,7 @@ void Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
 	SYS_UFO_DURING
 	{
 		// scan for media files:
-		CDAudio_GetTrackList ();
+		//CDAudio_GetTrackList ();
 
 		// post a notification to the main thread:
 		[[NSDistributedNotificationCenter defaultCenter] postNotificationName: @"Fire Frame Timer" object: NULL];
@@ -1500,7 +1500,7 @@ void Sys_DoEvents (NSEvent *myEvent, NSEventType myType)
 		[startupWindow close];
 
 		// scan for medias, show a dialog since this can take a while:
-	SNDDMA_ReserveBufferSize ();
+	//SNDDMA_ReserveBufferSize ();
 		[mediascanWindow center];
 		[mediascanWindow makeKeyAndOrderFront: nil];
 		[mediascanProgressIndicator startAnimation: self];

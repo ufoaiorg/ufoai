@@ -42,10 +42,24 @@ ifeq ($(TARGET_OS),darwin)
 	SHARED_EXT=dylib
 	SHARED_CFLAGS=-fPIC -fno-common
 	SHARED_LDFLAGS=-dynamiclib
-	LDFLAGS += -framework SDL -framework SDL_ttf -framework OpenGL
+	LDFLAGS +=  -framework SDL \
+				-framework SDL_ttf \
+				-framework OpenGL \
+				-L/sw/lib \
+				-L/opt/local/lib \
+				#-Wl,-syslibroot,/Developer/SDKs/MacOSX10.3.9.sdk,-m \
+				#(für intel)-Wl,-syslibroot,/Developer/SDKs/MacOSX10.4u.sdk \
+				-F/Developer/SDKs/MacOSX10.3.9.sdk/System/Library/Frameworks \
+      			-arch ppc \
+      			-framework Carbon \
+      			-framework Cocoa \
+      			-framework OpenGL \
+      			-framework IOKit      			
+  
 	CFLAGS += -D_BSD_SOURCE -D_XOPEN_SOURCE
 	#FIXME
 	CLIENT_LIBS+=-lintl
+	SERVER_LIBS+=-lintl 
 endif
 
 #########################################################################################################################
