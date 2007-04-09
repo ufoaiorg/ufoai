@@ -204,7 +204,7 @@ endif
 # Say how to build .o files from .m files for this module
 $(BUILDDIR)/client/%.m: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 	@echo " * [UFO] $<"; \
-		$(CC) $(CFLAGS) -o $@ -c $<
+		$(CC) $(CFLAGS) -DHAVE_GETTEXT -o $@ -c $<
 
 # Say how to build the dependencies
 ifdef BUILDDIR
