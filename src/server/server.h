@@ -184,6 +184,16 @@ typedef struct {
 
 /*============================================================================= */
 
+typedef struct mapcycle_s {
+	char *map, *type;
+	struct mapcycle_s* next;
+} mapcycle_t;
+
+extern mapcycle_t *mapcycleList;
+extern int mapcycleCount;
+
+/*============================================================================= */
+
 extern netadr_t net_from;
 
 /*extern	sizebuf_t	net_message; */
@@ -223,6 +233,8 @@ void SV_UserinfoChanged(client_t *cl);
 
 void Master_Heartbeat(void);
 void Master_Packet(void);
+
+void SV_NextMapcycle(void);
 
 /* sv_init.c */
 void SV_Map(qboolean attractloop, char *levelstring, char *assembly);

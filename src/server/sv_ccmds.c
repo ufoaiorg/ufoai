@@ -258,6 +258,7 @@ static void SV_Status_f (void)
 	Com_Printf("\n");
 }
 
+#ifdef DEDICATED_ONLY
 /**
  * @brief
  */
@@ -271,7 +272,12 @@ static void SV_ConSay_f (void)
 	if (Cmd_Argc() < 2)
 		return;
 
-	Q_strncpyz(text, "console: ", 1024);
+	if (!Com_ServerState()) {
+		Com_Printf("no server is running\n");
+		return;
+	}
+
+	Q_strncpyz(text, "console: ", sizeof(text));
 	p = Cmd_Args();
 
 	if (*p == '"') {
@@ -287,7 +293,7 @@ static void SV_ConSay_f (void)
 		SV_ClientPrintf(client, PRINT_CHAT, "%s\n", text);
 	}
 }
-
+#endif
 
 /**
  * @brief
@@ -556,6 +562,33 @@ static void SV_Minimize_f (void)
 /**
  * @brief
  */
+static void SV_MapcycleList_f (void)
+{
+	int i;
+	mapcycle_t* mapcycle;
+
+	mapcycle = mapcycleList;
+	Com_Printf("current mapcycle:\n");
+	for (i = 0; i < mapcycleCount; i++) {
+		Com_Printf(" %s (%s)\n", mapcycle->map, mapcycle->type);
+		mapcycle = mapcycle->next;
+	}
+}
+
+/**
+ * @brief
+ */
+static void SV_MapcycleNext_f (void)
+{
+	if (mapcycleCount > 0)
+		SV_NextMapcycle();
+	else
+		Com_Printf("no mapcycle.txt\n");
+}
+
+/**
+ * @brief
+ */
 extern void SV_InitOperatorCommands (void)
 {
 	Cmd_AddCommand("heartbeat", SV_Heartbeat_f, NULL);
@@ -574,9 +607,12 @@ extern void SV_InitOperatorCommands (void)
 	Cmd_AddCommand("setmaster", SV_SetMaster_f, NULL);
 	Cmd_AddCommand("tray", SV_Trayicon_f, "Enable or disable minimize to notifcation area");
 	Cmd_AddCommand("minimize", SV_Minimize_f, "Minimize");
+	Cmd_AddCommand("mapcyclelist", SV_MapcycleList_f, "Print the current mapcycle");
+	Cmd_AddCommand("mapcyclenext", SV_MapcycleNext_f, "Start the next map from the cycle");
 
-	if (dedicated->value)
-		Cmd_AddCommand("say", SV_ConSay_f, "Broadcasts server messages to all connected players");
+#ifdef DEDICATED_ONLY
+	Cmd_AddCommand("say", SV_ConSay_f, "Broadcasts server messages to all connected players");
+#endif
 
 	Cmd_AddCommand("serverrecord", SV_ServerRecord_f, NULL);
 	Cmd_AddCommand("serverstop", SV_ServerStop_f, NULL);
