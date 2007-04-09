@@ -86,9 +86,9 @@ menu aircraft
 		if "mn_equipsoldierstate == 3"
 		string	"_Assign Soldiers"
 		color	"0 0.8 0 1"
-		pos	"160 116"
+		pos	"164 133"
 		font	f_menu
-		align	uc
+		align	cc
 	}
 	string txt_no_squad
 	{
@@ -96,18 +96,18 @@ menu aircraft
 		if "mn_equipsoldierstate == 2"
 		string	"_NA"
 		color	"0.5 0.5 0.5 1"
-		pos	"160 116"
+		pos	"164 133"
 		font	f_menu
-		align	uc
+		align	cc
 	}
 	string txt_aircraft_away
 	{
 		if "mn_equipsoldierstate == 1"
 		string	"_Aircraft away"
 		color	"0.5 0.5 0.5 1"
-		pos	"160 116"
+		pos	"164 133"
 		font	f_menu
-		align	uc
+		align	cc
 	}
 
 	// ===============
@@ -132,9 +132,9 @@ menu aircraft
 	{
 		string	"_Buy/Sell Aircraft"
 		color	"0 0.8 0 1"
-		pos	"160 186"
+		pos	"164 203"
 		font	f_menu
-		align	uc
+		align	cc
 	}
 
 	// ===============
@@ -161,9 +161,9 @@ menu aircraft
 		if "mn_aircraftinbase > 0"
 		string	"_Start Aircraft"
 		color	"0 0.8 0 1"
-		pos	"160 256"
+		pos	"164 273"
 		font	f_menu
-		align	uc
+		align	cc
 	}
 	pic button_recall
 	{
@@ -186,9 +186,9 @@ menu aircraft
 		if "mn_aircraftinbase <= 0"
 		string	"_Call back"
 		color	"0 0.8 0 1"
-		pos	"160 256"
+		pos	"164 273"
 		font	f_menu
-		align	uc
+		align	cc
 	}
 
 	// ===============
@@ -215,9 +215,9 @@ menu aircraft
 		if "mn_aircraftinbase > 0"
 		string	"_Equip"
 		color	"0 0.8 0 1"
-		pos	"160 396"
+		pos	"164 413"
 		font	f_menu
-		align	uc
+		align	cc
 	}
 
 	// ==================
