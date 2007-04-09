@@ -6,6 +6,7 @@ Tracks contributed under GPL
 * space.ogg (author: Draikon)
 * dbsea.ogg (author: Draikon)
 * Alex Parker tracks: Alex*.ogg
+* David Reeves' track: David*.ogg
 
 Tracks that are public domain
 =============================
