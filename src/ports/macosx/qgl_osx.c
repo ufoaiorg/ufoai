@@ -115,12 +115,3 @@ qboolean QGL_Init (const char *dllname)
 	qglPNTrianglesfATIX          = NULL;
 	return (qtrue);
 }
-
-/**
- * @brief
- */
-void GLimp_SetGamma(void)
-{
-	/* Let's see what happens if we do nothing >:) */
-	/* Matthijs FIXME */
-}
