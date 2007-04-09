@@ -667,7 +667,7 @@ void GLimp_SetGamma (void)
 {
 	float g;
 
-	g = Cvar_Get("vid_gamma", "1.0", 0, NULL)->value;
+	g = ri.Cvar_Get("vid_gamma", "1.0", 0, NULL)->value;
 	SDL_SetGamma(g, g, g);
 }
 

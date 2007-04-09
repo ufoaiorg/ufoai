@@ -30,9 +30,10 @@ else
 	ifeq ($(TARGET_OS),darwin)
 		REF_GL_SRCS += \
 				ports/macosx/qgl_osx.c \
-				ports/macosx/q_shosx.c
+				ports/macosx/q_shosx.c \
+				ports/unix/glob.c
 		REF_SDL_SRCS = ports/unix/gl_sdl.c
-		REF_SDL_TARGET=ref_gl.$(SHARED_EXT)
+		REF_SDL_TARGET=ref_sdl.$(SHARED_EXT)
 	else
 		REF_GL_SRCS += \
 				ports/linux/qgl_linux.c \
@@ -43,7 +44,7 @@ else
 	endif
 endif
 
-REF_GLX_SRCS = 	ports/linux/gl_glx.c
+REF_GLX_SRCS = ports/linux/gl_glx.c
 
 #---------------------------------------------------------------------------------------------------------------------
 
