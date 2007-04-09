@@ -250,6 +250,7 @@ void Com_Drop (void)
 void Com_Quit (void)
 {
 	SV_Shutdown("Server quit\n", qfalse);
+	SV_Clear();
 #ifndef DEDICATED_ONLY
 	CL_Shutdown();
 #else
