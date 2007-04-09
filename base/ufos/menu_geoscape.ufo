@@ -348,7 +348,7 @@ menu popup_intercept_ready
 		tooltip	"_Close this dialogue"
 		image	menu/multi_buttons3
 		texh	"180 64"
-		texl	"0 33"
+		texl	"0 32"
 		pos	"310 450"
 		out	{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
 		in	{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
@@ -359,8 +359,8 @@ menu popup_intercept_ready
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Cancel"
-		pos	"400 448"
-		align	uc
+		pos	"398 466"
+		align	cc
 	}
 
 	pic bt_go
@@ -369,7 +369,7 @@ menu popup_intercept_ready
 		image	menu/multi_buttons3
 		pos	"530 450"
 		texh	"180 64"
-		texl	"0 33"
+		texl	"0 32"
 		out	{ *bt_go image menu/multi_buttons3 *string_go color "0 0.5 0 1" }
 		in	{ *bt_go image menu/multi_buttons3a *string_go color "1 1 1 1" }
 		click	{ cmd "game_go;" }
@@ -379,8 +379,8 @@ menu popup_intercept_ready
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Enter"
-		pos	"620 448"
-		align	uc
+		pos	"618 466"
+		align	cc
 	}
 
 	pic bt_auto_go
@@ -390,7 +390,7 @@ menu popup_intercept_ready
 		image	menu/multi_buttons3
 		pos	"530 410"
 		texh	"180 64"
-		texl	"0 33"
+		texl	"0 32"
 		out	{ *bt_auto_go image menu/multi_buttons3 *string_auto_go color "0 0.5 0 1" }
 		in	{ *bt_auto_go image menu/multi_buttons3a *string_auto_go color "1 1 1 1" }
 		click	{ cmd "game_auto_go;" }
@@ -401,8 +401,8 @@ menu popup_intercept_ready
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Auto mission"
-		pos	"620 408"
-		align	uc
+		pos	"618 426"
+		align	cc
 	}
 
 	func init
@@ -451,7 +451,7 @@ menu popup_transferbaselist
 		tooltip	"_Close this dialogue"
 		image	menu/multi_buttons3
 		texh	"180 64"
-		texl	"0 33"
+		texl	"0 32"
 		pos	"310 450"
 		out	{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
 		in	{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
@@ -462,8 +462,8 @@ menu popup_transferbaselist
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Cancel"
-		pos	"400 448"
-		align	uc
+		pos	"398 466"
+		align	cc
 	}
 
 	pic bt_go
@@ -472,7 +472,7 @@ menu popup_transferbaselist
 		image	menu/multi_buttons3
 		pos	"530 450"
 		texh	"180 64"
-		texl	"0 33"
+		texl	"0 32"
 		out	{ *bt_go image menu/multi_buttons3 *string_go color "0 0.5 0 1" }
 		in	{ *bt_go image menu/multi_buttons3a *string_go color "1 1 1 1" }
 		click	{ cmd "mn_pop; trans_start;" }
@@ -482,8 +482,8 @@ menu popup_transferbaselist
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Transfer"
-		pos	"620 448"
-		align	uc
+		pos	"618 466"
+		align	cc
 	}
 }
 
@@ -539,7 +539,7 @@ menu popup_newbase
 		tooltip	"_Close this dialogue"
 		image	menu/multi_buttons3
 		texh	"256 64"
-		texl	"0 33"
+		texl	"0 32"
 		pos	"290 450"
 		out	{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
 		in	{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
@@ -550,7 +550,7 @@ menu popup_newbase
 		tooltip	"_Build the base"
 		image	menu/multi_buttons3
 		texh	"256 64"
-		texl	"0 33"
+		texl	"0 32"
 		pos	"560 450"
 		out	{ *string_build color "0 0.5 0 1" *bt_build image menu/multi_buttons3 }
 		in	{ *string_build color "1 1 1 1" *bt_build image menu/multi_buttons3a }
@@ -561,16 +561,16 @@ menu popup_newbase
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Cancel"
-		pos	"380 448"
-		align	uc
+		pos	"378 466"
+		align	cc
 	}
 	string string_build
 	{
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Build"
-		pos	"650 448"
-		align	uc
+		pos	"648 466"
+		align	cc
 	}
 
 	func init
@@ -639,7 +639,7 @@ menu popup_intercept
 		tooltip	"_Close this dialogue"
 		image	menu/multi_buttons3
 		texh	"256 64"
-		texl	"0 33"
+		texl	"0 32"
 		pos	"690 530"
 		out	{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
 		in	{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
@@ -650,8 +650,8 @@ menu popup_intercept
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Cancel"
-		pos	"780 528"
-		align	uc
+		pos	"778 546"
+		align	cc
 	}
 }
 
@@ -689,7 +689,7 @@ menu popup_baseattack
 		tooltip	"_Close this dialogue"
 		image	menu/multi_buttons3
 		texh	"180 64"
-		texl	"0 33"
+		texl	"0 32"
 		pos	"310 450"
 		out	{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
 		in	{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
@@ -700,8 +700,8 @@ menu popup_baseattack
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Cancel"
-		pos	"400 448"
-		align	uc
+		pos	"398 466"
+		align	cc
 	}
 
 	pic bt_go
@@ -710,7 +710,7 @@ menu popup_baseattack
 		image	menu/multi_buttons3
 		pos	"530 450"
 		texh	"180 64"
-		texl	"0 33"
+		texl	"0 32"
 		out	{ *bt_go image menu/multi_buttons3 *string_go color "0 0.5 0 1" }
 		in	{ *bt_go image menu/multi_buttons3a *string_go color "1 1 1 1" }
 		click	{ cmd "game_go;" }
@@ -720,8 +720,8 @@ menu popup_baseattack
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Enter"
-		pos	"620 448"
-		align	uc
+		pos	"618 466"
+		align	cc
 	}
 
 	func init
@@ -781,7 +781,7 @@ menu popup_multi_selection
 		tooltip	"_Close this dialogue"
 		image	menu/multi_buttons3
 		texh	"256 64"
-		texl	"0 33"
+		texl	"0 32"
 		pos	"290 450"
 		out	{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
 		in	{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
@@ -792,8 +792,8 @@ menu popup_multi_selection
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Cancel"
-		pos	"380 448"
-		align	uc
+		pos	"378 466"
+		align	cc
 	}
 
 }
@@ -849,7 +849,7 @@ menu popup_aircraft
 		tooltip	"_Close this dialogue"
 		image	menu/multi_buttons3
 		texh	"256 64"
-		texl	"0 33"
+		texl	"0 32"
 		pos	"290 450"
 		out	{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
 		in	{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
@@ -860,8 +860,8 @@ menu popup_aircraft
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Cancel"
-		pos	"380 448"
-		align	uc
+		pos	"378 466"
+		align	cc
 	}
 
 }
@@ -907,7 +907,7 @@ menu popup
 		tooltip	"_Close this dialogue"
 		image	menu/multi_buttons3
 		texh	"256 64"
-		texl	"0 33"
+		texl	"0 32"
 		pos	"560 454"
 		out	{ *string_ok color "0 0.5 0 1" *bt_ok image menu/multi_buttons3 }
 		in	{ *string_ok color "1 1 1 1" *bt_ok image menu/multi_buttons3a }
@@ -918,8 +918,8 @@ menu popup
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_OK"
-		pos	"650 450"
-		align	uc
+		pos	"648 470"
+		align	cc
 	}
 	func leave
 	{

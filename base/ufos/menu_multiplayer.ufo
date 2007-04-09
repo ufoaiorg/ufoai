@@ -593,7 +593,7 @@ menu mp_serverbrowser
 	{
 		image	menu/multi_buttons3a
 		texh	"256 64"
-		texl	"0 33"
+		texl	"0 32"
 		pos	"500 130"
 	}
 
@@ -602,8 +602,8 @@ menu mp_serverbrowser
 		font	f_menu
 		color	"1 1 1 1"
 		string	"_Serverbrowser"
-		pos	"590 128"
-		align	uc
+		pos	"588 146"
+		align	cc
 	}
 
 	pic button_bookmarks
@@ -617,7 +617,7 @@ menu mp_serverbrowser
 			cmd "mn_escpop 3;"
 		}
 		texh	"256 64"
-		texl	"0 33"
+		texl	"0 32"
 		pos	"726 130"
 		out	{ *string_bookmarks color "0 0.5 0 1" *button_bookmarks image menu/multi_buttons3 }
 		in	{ *string_bookmarks color "1 1 1 1" *button_bookmarks image menu/multi_buttons3a }
@@ -628,8 +628,8 @@ menu mp_serverbrowser
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Bookmarks"
-		pos	"816 128"
-		align	uc
+		pos	"814 146"
+		align	cc
 	}
 
 	// servers_click is CL_ServerListClick_f in cl_main.c
@@ -659,7 +659,7 @@ menu mp_serverbrowser
 		image	menu/multi_buttons3
 		click	{ cmd "pingservers refresh;" }
 		texh	"176 64"
-		texl	"0 33"
+		texl	"0 32"
 		pos	"726 650"
 		out	{ *string_refresh color "0 0.5 0 1" *button_serverbrowser_refresh image menu/multi_buttons3 }
 		in	{ *string_refresh color "1 1 1 1" *button_serverbrowser_refresh image menu/multi_buttons3a }
@@ -669,8 +669,8 @@ menu mp_serverbrowser
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Refresh"
-		pos	"816 648"
-		align	uc
+		pos	"814 666"
+		align	cc
 	}
 
 	// ====================
@@ -681,7 +681,7 @@ menu mp_serverbrowser
 		image	menu/multi_buttons3
 		click	{ cmd "irc_connect; mn_push irc;" }
 		texh	"176 64"
-		texl	"0 33"
+		texl	"0 32"
 		pos		"500 650"
 		out		{ *string_bookmarks_lobby color "0 0.5 0 1" *button_inet_lobby image menu/multi_buttons3 }
 		in		{ *string_bookmarks_lobby color "1 1 1 1" *button_inet_lobby image menu/multi_buttons3a }
@@ -689,10 +689,10 @@ menu mp_serverbrowser
 	string string_bookmarks_lobby
 	{
 		string	"_Lobby"
-		pos		"590 648"
+		pos		"588 666"
 		font	f_menu
 		color	"0 0.5 0 1"
-		align	uc
+		align	cc
 	}
 
 	// ====================
@@ -711,10 +711,10 @@ menu mp_serverbrowser
 	string string_bookmarks_connect_to_ip
 	{
 		string	"_Connect"
-		pos	"628 614"
+		pos	"628 631"
 		font	f_menu
 		color	"0 0.5 0 1"
-		align	uc
+		align	cc
 	}
 
 	// ===================
@@ -766,7 +766,7 @@ menu mp_bookmarks
 	{
 		image	menu/multi_buttons3
 		texh	"256 64"
-		texl	"0 33"
+		texl	"0 32"
 		pos	"500 130"
 		out	{ *string_serverbrowser color "0 0.5 0 1" *button_lan_lan image menu/multi_buttons3 }
 		in	{ *string_serverbrowser color "1 1 1 1" *button_lan_lan image menu/multi_buttons3a }
@@ -776,7 +776,7 @@ menu mp_bookmarks
 	{
 		image	menu/multi_buttons3a
 		texh	"256 64"
-		texl	"0 33"
+		texl	"0 32"
 		pos	"726 130"
 	}
 	string string_serverbrowser
@@ -784,16 +784,16 @@ menu mp_bookmarks
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Serverbrowser"
-		pos	"590 128"
-		align	uc
+		pos	"588 146"
+		align	cc
 	}
 	string string_bookmarks
 	{
 		font	f_menu
 		color	"1 1 1 1"
 		string	"_Bookmarks"
-		pos	"816 128"
-		align	uc
+		pos	"814 146"
+		align	cc
 	}
 
 	string inet_bookmarks
@@ -1346,11 +1346,11 @@ menu mp_create_server
 	}
 	string string_server
 	{
-		pos	"690 640"
+		pos	"698 662"
 		font	f_menubig
 		color	"0 0.5 0 1"
 		string	"_Start server"
-		align	uc
+		align	cc
 	}
 
 	confunc mn_servercreate_update
@@ -1545,7 +1545,7 @@ menu multiplayer_wait
 		tooltip	"_Start the game even if not all teams have joined"
 		image	menu/multi_buttons3
 		texh	"256 64"
-		texl	"0 33"
+		texl	"0 32"
 		pos	"560 454"
 		out	{ *string_force color "0 0.5 0 1" *bt_force image menu/multi_buttons3 }
 		in	{ *string_force color "1 1 1 1" *bt_force image menu/multi_buttons3a }
@@ -1556,8 +1556,8 @@ menu multiplayer_wait
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Force start"
-		pos	"650 450"
-		align	uc
+		pos	"648 470"
+		align	cc
 	}
 
 	func event
