@@ -68,8 +68,8 @@ menu main
 		font	f_menubig
 		color	"0 0.5 0 1"
 		string	"_Single-player"
-		pos	"768 180"
-		align	uc
+		pos	"768 202"
+		align	cc
 	}
 
 	pic button_multiplayer
@@ -88,8 +88,8 @@ menu main
 		font	f_menubig
 		color	"0 0.5 0 1"
 		string	"_Multiplayer"
-		pos	"768 250"
-		align	uc
+		pos	"768 272"
+		align	cc
 	}
 
 	pic button_options
@@ -108,8 +108,8 @@ menu main
 		font	f_menubig
 		color	"0 0.5 0 1"
 		string	"_Options"
-		pos	"768 320"
-		align	uc
+		pos	"768 342"
+		align	cc
 	}
 
 	pic button_tut
@@ -128,8 +128,8 @@ menu main
 		font	f_menubig
 		color	"0 0.5 0 1"
 		string	"_Tutorials"
-		pos	"768 390"
-		align	uc
+		pos	"768 412"
+		align	cc
 	}
 
 	pic button_credits
@@ -148,8 +148,8 @@ menu main
 		font	f_menubig
 		color	"0 0.5 0 1"
 		string	"_Credits"
-		pos	"768 460"
-		align	uc
+		pos	"768 482"
+		align	cc
 	}
 
 	pic button_exit
@@ -168,8 +168,8 @@ menu main
 		font	f_menubig
 		color	"0 0.5 0 1"
 		string	"_Exit"
-		pos	"768 530"
-		align	uc
+		pos	"768 552"
+		align	cc
 	}
 
 	func init

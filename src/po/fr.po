@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-04-08 22:35+0200\n"
+"POT-Creation-Date: 2007-04-09 13:08+0200\n"
 "PO-Revision-Date: 2007-04-08 16:11+0100\n"
 "Last-Translator: Kracken <kracken@users.sourceforge.net>\n"
 "Language-Team: \n"
@@ -13758,21 +13758,7 @@ msgstr ""
 "Civils sauvés\t%i\n"
 "\n"
 
-#: client/cl_team.c:1873
-#, c-format
-msgid "Items salvaged and sold\t%i\n"
-msgstr "Objets récoltés et vendus\t%i\n"
-
-#: client/cl_team.c:1874
-#, c-format
-msgid ""
-"Total item sale value\t%i\n"
-"\n"
-msgstr ""
-"Valeur totale des objets vendus\t%i\n"
-"\n"
-
-#: client/cl_team.c:1891
+#: client/cl_team.c:1892
 #, c-format
 msgid ""
 "\n"
@@ -13785,15 +13771,15 @@ msgstr ""
 "Ennemis tués:  %i\n"
 "Survivants de l'équipe:  %i"
 
-#: client/cl_team.c:1893
+#: client/cl_team.c:1894
 msgid "You won the game!"
 msgstr "Vous avez gagné la partie!"
 
-#: client/cl_team.c:1895
+#: client/cl_team.c:1896
 msgid "Congratulations"
 msgstr "Félicitations"
 
-#: client/cl_team.c:1897
+#: client/cl_team.c:1898
 msgid ""
 "The game was a draw!\n"
 "\n"
@@ -13803,15 +13789,15 @@ msgstr ""
 "\n"
 "Aucun survivant dans toutes les équipes."
 
-#: client/cl_team.c:1898
+#: client/cl_team.c:1899
 msgid "Game Drawn!"
 msgstr "Match Nul!"
 
-#: client/cl_team.c:1900
+#: client/cl_team.c:1901
 msgid "You lost the game"
 msgstr "Vous avez perdu la partie"
 
-#: client/cl_team.c:1902
+#: client/cl_team.c:1903
 msgid "Better luck next time"
 msgstr "La prochaine sera plus chanceuse"
 
@@ -14323,6 +14309,16 @@ msgstr "1 jour"
 #: po/OTHER_STRINGS:9
 msgid "5 days"
 msgstr "5 jours"
+
+#~ msgid "Items salvaged and sold\t%i\n"
+#~ msgstr "Objets récoltés et vendus\t%i\n"
+
+#~ msgid ""
+#~ "Total item sale value\t%i\n"
+#~ "\n"
+#~ msgstr ""
+#~ "Valeur totale des objets vendus\t%i\n"
+#~ "\n"
 
 #~ msgid "Pulse Fire"
 #~ msgstr "Un Seul Tir"

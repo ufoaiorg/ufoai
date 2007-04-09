@@ -67,8 +67,8 @@ menu multiplayerInGame
 		font	f_menubig
 		color	"0 0.5 0 1"
 		string	"_Continue"
-		pos	"768 180"
-		align	uc
+		pos	"768 202"
+		align	cc
 	}
 
 	pic button_options
@@ -87,8 +87,8 @@ menu multiplayerInGame
 		font	f_menubig
 		color	"0 0.5 0 1"
 		string	"_Options"
-		pos	"768 250"
-		align	uc
+		pos	"768 272"
+		align	cc
 	}
 
 	pic button_abort
@@ -107,7 +107,7 @@ menu multiplayerInGame
 		font	f_menubig
 		color	"0 0.5 0 1"
 		string	"_Abort Game"
-		pos	"768 530"
-		align	uc
+		pos	"768 552"
+		align	cc
 	}
 }

@@ -1029,8 +1029,8 @@ menu buy
 
 	string s_primary
 	{
-		pos	"679 595"
-		align	uc
+		pos	"679 611"
+		align	cc
 		color "1 1 1 0.6"
 		font	"f_big"
 		string	"_Primary"
@@ -1049,8 +1049,8 @@ menu buy
 
 	string s_secondary
 	{
-		pos	"679 665"
-		align	uc
+		pos	"679 681"
+		align	cc
 		color "1 1 1 0.6"
 		font	"f_big"
 		string	"_Secondary"
@@ -1069,8 +1069,8 @@ menu buy
 
 	string s_misc
 	{
-		pos	"829 595"
-		align	uc
+		pos	"829 611"
+		align	cc
 		color "1 1 1 0.6"
 		font	"f_big"
 		string	"_Misc"
@@ -1089,8 +1089,8 @@ menu buy
 
 	string s_armor
 	{
-		pos	"829 665"
-		align	uc
+		pos	"829 681"
+		align	cc
 		color "1 1 1 0.6"
 		font	"f_big"
 		string	"_Armor"

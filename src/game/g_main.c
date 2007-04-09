@@ -122,7 +122,7 @@ cvar_t *flood_waitdelay;
 cvar_t *difficulty;
 
 extern void SpawnEntities(char *mapname, char *entities);
-extern void G_RunFrame(void);
+extern qboolean G_RunFrame(void);
 
 invList_t invChain[MAX_INVLIST];
 
@@ -584,8 +584,9 @@ void G_CheckEndGame (void)
  * @sa SV_RunGameFrame
  * @sa G_EndGame
  * @sa AI_Run
+ * @return true if game reaches its end - false otherwise
  */
-void G_RunFrame (void)
+qboolean G_RunFrame (void)
 {
 	level.framenum++;
 	level.time = level.framenum * FRAMETIME;
@@ -612,10 +613,13 @@ void G_RunFrame (void)
 		level.intermissionTime = level.time + 10.0;
 #endif
 		level.intermissionTime = 0.0;
-		return;
+		/* end this game */
+		return qtrue;
 	}
 
 	/* run ai */
 	AI_Run();
 	G_PhysicsRun();
+
+	return qfalse;
 }

@@ -68,6 +68,9 @@ void Master_Shutdown(void);
 qboolean abandon = qfalse;		/* shutdown server when all clients disconnect and don't accept new connections */
 qboolean killserver = qfalse;	/* will initiate shutdown once abandon is set */
 
+mapcycle_t *mapcycleList = NULL;
+int mapcycleCount = 0;
+
 /*============================================================================ */
 
 
@@ -746,12 +749,143 @@ void SV_CheckTimeouts (void)
 }
 
 /**
+ * @brief Start the next map in the cycle
+ */
+extern void SV_NextMapcycle (void)
+{
+	int i;
+	const char *map = NULL, *gameType = NULL;
+	char expanded[MAX_QPATH];
+	char cmd[MAX_QPATH];
+	mapcycle_t *mapcycle;
+
+	mapcycle = mapcycleList;
+	for (i = 0; i < mapcycleCount; i++) {
+		/* get current position */
+		if (!Q_strcmp(sv.name, mapcycle->map)) {
+			/* next map in cycle */
+			if (mapcycle->next) {
+				map = mapcycle->next->map;
+				gameType = mapcycle->next->type;
+				Com_DPrintf("SV_NextMapcycle: next one: '%s'\n", map);
+			/* switch back to first list on cycle - if there is one */
+			} else if (mapcycleList) {
+				map = mapcycleList->map;
+				gameType = mapcycle->next->type;
+				Com_DPrintf("SV_NextMapcycle: first one: '%s'\n", map);
+			}
+			break;
+		}
+	}
+	if (!map) {
+		if (*sv.name) {
+			Com_Printf("No mapcycle - restart the current map\n");
+			map = sv.name;
+		} else if (mapcycleCount > 0) {
+			map = mapcycleList->map;
+		}
+	}
+
+	Com_sprintf(expanded, sizeof(expanded), "maps/%s.bsp", map);
+
+	/* check for bsp file */
+	if (FS_CheckFile(expanded) < 0) {
+		Com_Printf("SV_NextMapcycle: Can't find '%s' - mapcycle error\n"
+			"Use the 'maplist' command to get a list of valid maps\n", expanded);
+		return;
+	}
+	/* check whether we want to change the gametype, too */
+	if (gameType) {
+		Com_sprintf(cmd, sizeof(cmd), "gametype %s", gameType);
+		Cbuf_AddText(cmd);
+	}
+	Com_sprintf(cmd, sizeof(cmd), "map %s", map);
+	Cbuf_AddText(cmd);
+	Cbuf_Execute();
+}
+
+/**
+ * @brief Append a new mapname to the list of maps for the cycle
+ * @todo check for maps and valid gametypes here
+ */
+void SV_MapcycleAdd (const char* mapName, const char* gameType)
+{
+	mapcycle_t *mapcycle;
+
+	if (!mapcycleList) {
+		mapcycleList = malloc(sizeof(mapcycleList));
+		mapcycle = mapcycleList; /* first one */
+	} else {
+		/* go the the last entry */
+		mapcycle = mapcycleList;
+		while (mapcycle->next)
+			mapcycle = mapcycle->next;
+		mapcycle->next = malloc(sizeof(mapcycleList));
+		mapcycle = mapcycle->next;
+	}
+	mapcycle->map = (char*)malloc(sizeof(char) * (strlen(mapName) + 1));
+	Q_strncpyz(mapcycle->map, mapName, strlen(mapName) + 1);
+	mapcycle->type = (char*)malloc(sizeof(char) * (strlen(gameType) + 1));
+	Q_strncpyz(mapcycle->type, gameType, strlen(gameType) + 1);
+	Com_Printf("mapcycle add: '%s' type '%s'\n", mapcycle->map, mapcycle->type);
+	mapcycle->next = NULL;
+	mapcycleCount++;
+}
+
+/**
+ * @brief Parses the server mapcycle
+ */
+static void SV_ParseMapcycle (void)
+{
+	qFILE file;
+	int length = 0;
+	char *buffer, *tokenMap, *tokenGameType, *freeMe;
+	char **buf;
+	char map[MAX_VAR], gameType[MAX_VAR];
+
+	assert(mapcycleCount == 0);
+
+	length = FS_FOpenFile("mapcycle.txt", &file);
+	if (!file.f && !file.z)
+		return;
+
+	if (file.z)
+		Com_Printf("Using mapcycle from pakfile\n");
+
+	if (length != -1) {
+		/* sizeof(char) is one by definition - but nevermind */
+		buffer = (char*)malloc(sizeof(char)*(length + 1));
+		buf = &buffer;
+		freeMe = buffer;
+		FS_Read(buffer, length, &file);
+
+		do {
+			tokenMap = COM_Parse(buf);
+			if (!*buf)
+				break;
+			Q_strncpyz(map, tokenMap, sizeof(map));
+			tokenGameType = COM_Parse(buf);
+			if (!*buf)
+				break;
+			Q_strncpyz(gameType, tokenGameType, sizeof(gameType));
+			SV_MapcycleAdd(map, gameType);
+		} while (buf);
+
+		Com_Printf("..added %i maps to the mapcycle\n", mapcycleCount);
+		/* now we can close that file */
+		FS_FCloseFile(&file);
+		free(freeMe);
+	}
+}
+
+/**
  * @brief Calls the G_RunFrame function from game api
  * @sa G_RunFrame
  * @sa SV_Frame
  */
-void SV_RunGameFrame (void)
+qboolean SV_RunGameFrame (void)
 {
+	qboolean gameEnd = qfalse;
 	if (host_speeds->value)
 		time_before_game = Sys_Milliseconds();
 
@@ -762,10 +896,17 @@ void SV_RunGameFrame (void)
 	sv.framenum++;
 	sv.time = sv.framenum * 100;
 
-	ge->RunFrame();
+	gameEnd = ge->RunFrame();
 
 	if (host_speeds->value)
 		time_after_game = Sys_Milliseconds();
+
+	/* next map in the cycle */
+	if (gameEnd) {
+		SV_NextMapcycle();
+	}
+
+	return gameEnd;
 }
 
 /**
@@ -919,9 +1060,6 @@ void SV_UserinfoChanged (client_t * cl)
 		cl->messagelevel = atoi(val);
 }
 
-
-/*============================================================================ */
-
 /**
  * @brief Only called at ufo.exe startup, not for each game
  */
@@ -959,6 +1097,11 @@ extern void SV_Init (void)
 	sv_maxclients->modified = qfalse;
 
 	SZ_Init(&net_message, net_message_buffer, sizeof(net_message_buffer));
+
+	mapcycleCount = 0;
+	mapcycleList = NULL;
+
+	SV_ParseMapcycle();
 }
 
 /**
@@ -1000,6 +1143,9 @@ void SV_FinalMessage (const char *message, qboolean reconnect)
  */
 void SV_Shutdown (const char *finalmsg, qboolean reconnect)
 {
+	int i;
+	mapcycle_t *mapcycle, *oldMapcycle;
+
 	if (svs.clients)
 		SV_FinalMessage(finalmsg, reconnect);
 
@@ -1022,6 +1168,15 @@ void SV_Shutdown (const char *finalmsg, qboolean reconnect)
 	/* maybe we shut down before we init - e.g. in case of an error */
 	if (sv_maxclients)
 		sv_maxclients->flags &= ~CVAR_LATCH;
+
+	mapcycle = mapcycleList;
+	for (i = 0; i < mapcycleCount; i++) {
+		oldMapcycle = mapcycle;
+		mapcycle = mapcycle->next;
+		free(oldMapcycle->type);
+		free(oldMapcycle->map);
+		free(oldMapcycle);
+	}
 }
 
 /**

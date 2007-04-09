@@ -17,7 +17,6 @@ typedef struct font_s {
 } font_t;
 
 /* font definitions */
-font_t fonts[MAX_FONTS];
 typedef struct fontCache_s {
 	char string[MAX_HASH_STRING];	/** hash id */
 	struct fontCache_s *next;	/**< next hash entry in case of collision */
@@ -25,9 +24,6 @@ typedef struct fontCache_s {
 	vec2_t texsize;				/**< texture width and height */
 	GLuint texPos;				/**< the bound texture number/identifier*/
 } fontCache_t;
-
-fontCache_t fontCache[MAX_FONT_CACHE];
-fontCache_t *hash[MAX_FONT_CACHE];
 
 typedef struct {
 	char *name;

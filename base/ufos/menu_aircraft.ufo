@@ -86,9 +86,9 @@ menu aircraft
 		if "mn_equipsoldierstate == 3"
 		string	"_Assign Soldiers"
 		color	"0 0.8 0 1"
-		pos	"160 116"
+		pos	"164 133"
 		font	f_menu
-		align	uc
+		align	cc
 	}
 	string txt_no_squad
 	{
@@ -96,18 +96,18 @@ menu aircraft
 		if "mn_equipsoldierstate == 2"
 		string	"_NA"
 		color	"0.5 0.5 0.5 1"
-		pos	"160 116"
+		pos	"164 133"
 		font	f_menu
-		align	uc
+		align	cc
 	}
 	string txt_aircraft_away
 	{
 		if "mn_equipsoldierstate == 1"
 		string	"_Aircraft away"
 		color	"0.5 0.5 0.5 1"
-		pos	"160 116"
+		pos	"164 133"
 		font	f_menu
-		align	uc
+		align	cc
 	}
 
 	// ===============
@@ -132,9 +132,9 @@ menu aircraft
 	{
 		string	"_Buy/Sell Aircraft"
 		color	"0 0.8 0 1"
-		pos	"160 186"
+		pos	"164 203"
 		font	f_menu
-		align	uc
+		align	cc
 	}
 
 	// ===============
@@ -161,9 +161,9 @@ menu aircraft
 		if "mn_aircraftinbase > 0"
 		string	"_Start Aircraft"
 		color	"0 0.8 0 1"
-		pos	"160 256"
+		pos	"164 273"
 		font	f_menu
-		align	uc
+		align	cc
 	}
 	pic button_recall
 	{
@@ -186,9 +186,9 @@ menu aircraft
 		if "mn_aircraftinbase <= 0"
 		string	"_Call back"
 		color	"0 0.8 0 1"
-		pos	"160 256"
+		pos	"164 273"
 		font	f_menu
-		align	uc
+		align	cc
 	}
 
 	// ===============
@@ -215,9 +215,9 @@ menu aircraft
 		if "mn_aircraftinbase > 0"
 		string	"_Equip"
 		color	"0 0.8 0 1"
-		pos	"160 396"
+		pos	"164 413"
 		font	f_menu
-		align	uc
+		align	cc
 	}
 
 	// ==================
@@ -366,6 +366,16 @@ menu aircraft_equip
 	// aircraft model
 	// ==================
 
+	confunc airequip_reset
+	{
+		*airequip_button_weapons_str		color "1 1 1 0.6"
+		*airequip_button_shields_str		color "1 1 1 0.6"
+		*airequip_button_items_str			color "1 1 1 0.6"
+	}
+	confunc airequip_weapons		{ cmd "airequip_init 0;" airequip_reset *airequip_button_weapons_str	color "1 1 1 1" }
+	confunc airequip_shields	{ cmd "airequip_init 1;" airequip_reset *airequip_button_shields_str	color "1 1 1 1" }
+	confunc airequip_items		{ cmd "airequip_init 2;" airequip_reset *airequip_button_items_str color "1 1 1 1" }
+	
 	model aircraftequip
 	{
 		md2		"*cvar mn_aircraft_model"
@@ -399,13 +409,13 @@ menu aircraft_equip
 		image	menu/button_blue
 		texl	"0 0"
 		texh	"128 52"
-		click	{ cmd "airequip_init 0;"  }
+		click	{ airequip_weapons }
 	}
 	string airequip_button_weapons_str
 	{
 		string "_Weapons"
-		pos		"554 20"
-		align	uc
+		pos		"554 30"
+		align	cc
 	}
 
 	pic airequip_button_shields
@@ -416,13 +426,13 @@ menu aircraft_equip
 		image	menu/button_blue
 		texl	"0 0"
 		texh	"128 52"
-		click	{ cmd "airequip_init 1;"  }
+		click	{ airequip_shields }
 	}
 	string airequip_button_shields_str
 	{
 		string "_Armour"
-		pos		"734 20"
-		align	uc
+		pos		"734 30"
+		align	cc
 	}
 
 	pic airequip_button_items
@@ -433,13 +443,13 @@ menu aircraft_equip
 		image	menu/button_blue
 		texl	"0 0"
 		texh	"128 52"
-		click	{ cmd "airequip_init 2;"  }
+		click	{ airequip_items }
 	}
 	string airequip_button_items_str
 	{
 		string "_Items"
-		pos		"914 20"
-		align	uc
+		pos		"914 30"
+		align	cc
 	}
 
 	text airequip_list
@@ -481,6 +491,6 @@ menu aircraft_equip
 
 	func init
 	{
-		cmd "airequip_init 0"
+		airequip_weapons		
 	}
 }

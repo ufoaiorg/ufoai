@@ -285,7 +285,7 @@ extern vec4_t vec4_origin;
 /* microsoft's fabs seems to be ungodly slow... */
 /*float Q_fabs (float f); */
 /*#define   fabs(f) Q_fabs(f) */
-#if !defined C_ONLY && !defined __linux__ && !defined __sgi && !defined __MINGW32__ && !defined __FreeBSD__ && !defined __NetBSD__
+#if defined _M_IX86 && !defined C_ONLY
 extern long Q_ftol(float f);
 #else
 #define Q_ftol( f ) ( long ) (f)

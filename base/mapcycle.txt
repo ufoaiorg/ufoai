@@ -1,0 +1,10 @@
+/*
+ * mapcycle for UFO:AI server
+ * format:
+ * ---------------
+ * [mapname] [gametype]
+ */
+
+industrial06n coop2
+italy05d 1on1
+farm08n coop3

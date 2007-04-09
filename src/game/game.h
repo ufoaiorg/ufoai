@@ -274,7 +274,7 @@ typedef struct {
 	int (*ClientGetTeamNum) (player_t * client);
 	int (*ClientGetTeamNumPref) (player_t * client);
 
-	void (*RunFrame) (void);
+	qboolean (*RunFrame) (void);
 
 	/* ServerCommand will be called when an "sv <command>" command is issued on the */
 	/* server console. */

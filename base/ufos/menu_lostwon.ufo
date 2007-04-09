@@ -69,8 +69,8 @@ menu won
 
 	string s_tryagain
 	{
-		pos	"544 710"
-		align	uc
+		pos	"544 726"
+		align	cc
 		color "1 1 1 0.6"
 		font	"f_big"
 		string	"_Try again"
@@ -89,8 +89,8 @@ menu won
 
 //	string s_replay
 //	{
-//		pos	"690 710"
-//		align	uc
+//		pos	"690 726"
+//		align	cc
 //		color "1 1 1 0.6"
 //		font	"f_big"
 //		string	"_Replay"
@@ -109,8 +109,8 @@ menu won
 
 	string s_continue
 	{
-		pos	"929 710"
-		align	uc
+		pos	"929 726"
+		align	cc
 		color "1 1 1 0.6"
 		font	"f_big"
 		string	"_Continue"
@@ -198,8 +198,8 @@ menu lost
 
 	string s_tryagain
 	{
-		pos	"544 710"
-		align	uc
+		pos	"544 726"
+		align	cc
 		color "1 1 1 0.6"
 		font	"f_big"
 		string	"_Try again"
@@ -218,8 +218,8 @@ menu lost
 
 //	string s_replay
 //	{
-//		pos	"690 710"
-//		align	uc
+//		pos	"690 726"
+//		align	cc
 //		color "1 1 1 0.6"
 //		font	"f_big"
 //		string	"_Replay"
@@ -238,8 +238,8 @@ menu lost
 
 	string s_continue
 	{
-		pos	"929 710"
-		align	uc
+		pos	"929 726"
+		align	cc
 		color "1 1 1 0.6"
 		font	"f_big"
 		string	"_Continue"

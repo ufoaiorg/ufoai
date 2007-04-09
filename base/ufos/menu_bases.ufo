@@ -98,9 +98,9 @@ menu bases
 	{
 		string	"_Buildings"
 		color	"0 0.8 0 1"
-		pos	"870 146"
+		pos	"874 163"
 		font	f_menu
-		align	uc
+		align	cc
 	}
 
 	pic aircraft
@@ -141,9 +141,9 @@ menu bases
 	{
 		string	"_Aircraft"
 		color	"0 0.8 0 1"
-		pos	"870 216"
+		pos	"874 233"
 		font	f_menu
-		align	uc
+		align	cc
 	}
 
 	pic buysell
@@ -177,9 +177,9 @@ menu bases
 	{
 		string	"_Buy/Sell Equipment"
 		color	"0 0.8 0 1"
-		pos	"870 286"
+		pos	"874 303"
 		font	f_menu
-		align	uc
+		align	cc
 	}
 
 	pic transfer
@@ -212,9 +212,9 @@ menu bases
 	{
 		string	"_Transfer"
 		color	"0 0.8 0 1"
-		pos	"870 356"
+		pos	"874 373"
 		font	f_menu
-		align	uc
+		align	cc
 	}
 
 	pic research
@@ -248,9 +248,9 @@ menu bases
 	{
 		string	"_Research"
 		color	"0 0.8 0 1"
-		pos	"870 426"
+		pos	"874 443"
 		font	f_menu
-		align	uc
+		align	cc
 	}
 
 	pic production
@@ -285,9 +285,9 @@ menu bases
 	{
 		string	"_Production"
 		color	"0 0.8 0 1"
-		pos	"870 496"
+		pos	"874 513"
 		font	f_menu
-		align	uc
+		align	cc
 	}
 
 	pic hire
@@ -321,9 +321,9 @@ menu bases
 	{
 		string	"_Hire employees"
 		color	"0 0.8 0 1"
-		pos	"870 566"
+		pos	"874 583"
 		font	f_menu
-		align	uc
+		align	cc
 	}
 
 	// ==================

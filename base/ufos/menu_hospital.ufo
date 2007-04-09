@@ -291,9 +291,9 @@ menu hospital_employee
 	{
 		string	"_Heal"
 		color	"0 0.8 0 1"
-		pos	"160 116"
+		pos	"164 133"
 		font	f_menu
-		align	uc
+		align	cc
 	}
 /*
 	pic button_hosp_bionic_start
@@ -316,9 +316,9 @@ menu hospital_employee
 	{
 		string	"_Implants"
 		color	"0 0.8 0 1"
-		pos	"160 186"
+		pos	"164 203"
 		font	f_menu
-		align	uc
+		align	cc
 	}
 */
 
