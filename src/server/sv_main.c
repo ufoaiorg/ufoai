@@ -68,8 +68,8 @@ void Master_Shutdown(void);
 qboolean abandon = qfalse;		/* shutdown server when all clients disconnect and don't accept new connections */
 qboolean killserver = qfalse;	/* will initiate shutdown once abandon is set */
 
-mapcycle_t *mapcycleList = NULL;
-int mapcycleCount = 0;
+mapcycle_t *mapcycleList;
+int mapcycleCount;
 
 /*============================================================================ */
 
@@ -769,20 +769,24 @@ extern void SV_NextMapcycle (void)
 				gameType = mapcycle->next->type;
 				Com_DPrintf("SV_NextMapcycle: next one: '%s'\n", map);
 			/* switch back to first list on cycle - if there is one */
-			} else if (mapcycleList) {
+			} else {
 				map = mapcycleList->map;
-				gameType = mapcycle->next->type;
+				gameType = mapcycleList->type;
 				Com_DPrintf("SV_NextMapcycle: first one: '%s'\n", map);
 			}
 			break;
 		}
+		mapcycle = mapcycle->next;
 	}
 	if (!map) {
-		if (*sv.name) {
-			Com_Printf("No mapcycle - restart the current map\n");
-			map = sv.name;
-		} else if (mapcycleCount > 0) {
+		if (mapcycleCount > 0) {
 			map = mapcycleList->map;
+		} else if (*sv.name) {
+			Com_Printf("No mapcycle - restart the current map (%s)\n", sv.name);
+			map = sv.name;
+		} else {
+			Com_Printf("No mapcycle and no running map\n");
+			return;
 		}
 	}
 
@@ -796,7 +800,7 @@ extern void SV_NextMapcycle (void)
 	}
 	/* check whether we want to change the gametype, too */
 	if (gameType) {
-		Com_sprintf(cmd, sizeof(cmd), "gametype %s", gameType);
+		Com_sprintf(cmd, sizeof(cmd), "gametype %s;", gameType);
 		Cbuf_AddText(cmd);
 	}
 	Com_sprintf(cmd, sizeof(cmd), "map %s", map);
@@ -827,7 +831,7 @@ void SV_MapcycleAdd (const char* mapName, const char* gameType)
 	Q_strncpyz(mapcycle->map, mapName, strlen(mapName) + 1);
 	mapcycle->type = (char*)malloc(sizeof(char) * (strlen(gameType) + 1));
 	Q_strncpyz(mapcycle->type, gameType, strlen(gameType) + 1);
-	Com_Printf("mapcycle add: '%s' type '%s'\n", mapcycle->map, mapcycle->type);
+	Com_DPrintf("mapcycle add: '%s' type '%s'\n", mapcycle->map, mapcycle->type);
 	mapcycle->next = NULL;
 	mapcycleCount++;
 }
@@ -843,7 +847,8 @@ static void SV_ParseMapcycle (void)
 	char **buf;
 	char map[MAX_VAR], gameType[MAX_VAR];
 
-	assert(mapcycleCount == 0);
+	mapcycleCount = 0;
+	mapcycleList = NULL;
 
 	length = FS_FOpenFile("mapcycle.txt", &file);
 	if (!file.f && !file.z)
@@ -1098,9 +1103,6 @@ extern void SV_Init (void)
 
 	SZ_Init(&net_message, net_message_buffer, sizeof(net_message_buffer));
 
-	mapcycleCount = 0;
-	mapcycleList = NULL;
-
 	SV_ParseMapcycle();
 }
 
@@ -1139,13 +1141,29 @@ void SV_FinalMessage (const char *message, qboolean reconnect)
 }
 
 /**
+ * @brief Cleanup on game shutdown
+ * @sa SV_Shutdown
+ * @sa Com_Quit
+ */
+void SV_Clear (void)
+{
+	int i;
+	mapcycle_t *mapcycle, *oldMapcycle;
+	mapcycle = mapcycleList;
+	for (i = 0; i < mapcycleCount; i++) {
+		oldMapcycle = mapcycle;
+		mapcycle = mapcycle->next;
+		free(oldMapcycle->type);
+		free(oldMapcycle->map);
+		free(oldMapcycle);
+	}
+}
+
+/**
  * @brief Called when each game quits, before Sys_Quit or Sys_Error
  */
 void SV_Shutdown (const char *finalmsg, qboolean reconnect)
 {
-	int i;
-	mapcycle_t *mapcycle, *oldMapcycle;
-
 	if (svs.clients)
 		SV_FinalMessage(finalmsg, reconnect);
 
@@ -1168,15 +1186,6 @@ void SV_Shutdown (const char *finalmsg, qboolean reconnect)
 	/* maybe we shut down before we init - e.g. in case of an error */
 	if (sv_maxclients)
 		sv_maxclients->flags &= ~CVAR_LATCH;
-
-	mapcycle = mapcycleList;
-	for (i = 0; i < mapcycleCount; i++) {
-		oldMapcycle = mapcycle;
-		mapcycle = mapcycle->next;
-		free(oldMapcycle->type);
-		free(oldMapcycle->map);
-		free(oldMapcycle);
-	}
 }
 
 /**

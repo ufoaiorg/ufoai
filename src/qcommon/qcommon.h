@@ -365,6 +365,7 @@ void MN_PrecacheMenus(void);
 void CL_InitAfter(void);
 
 void SV_Init(void);
+void SV_Clear(void);
 void SV_Shutdown(const char *finalmsg, qboolean reconnect);
 void SV_ShutdownWhenEmpty(void);
 void SV_Frame(int msec);
