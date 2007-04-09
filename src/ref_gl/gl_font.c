@@ -35,7 +35,7 @@ static fontCache_t *hash[MAX_FONT_CACHE];
 /* holds the gettext string */
 static char buf[BUF_SIZE];
 static int numInCache = 0;
-fontRenderStyle_t fontStyle[] = {
+static const fontRenderStyle_t fontStyle[] = {
 	{"TTF_STYLE_NORMAL", TTF_STYLE_NORMAL},
 	{"TTF_STYLE_BOLD", TTF_STYLE_BOLD},
 	{"TTF_STYLE_ITALIC", TTF_STYLE_ITALIC},
