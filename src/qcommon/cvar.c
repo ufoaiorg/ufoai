@@ -731,9 +731,9 @@ static void Cvar_Del_f (void)
  */
 extern void Cvar_Init (void)
 {
-	Cmd_AddCommand("setold", Cvar_SetOld_f, NULL);
-	Cmd_AddCommand("del", Cvar_Del_f, NULL);
-	Cmd_AddCommand("set", Cvar_Set_f, NULL);
-	Cmd_AddCommand("copy", Cvar_Copy_f, NULL);
-	Cmd_AddCommand("cvarlist", Cvar_List_f, NULL);
+	Cmd_AddCommand("setold", Cvar_SetOld_f, "Restore the cvar old value");
+	Cmd_AddCommand("del", Cvar_Del_f, "Delete a cvar");
+	Cmd_AddCommand("set", Cvar_Set_f, "Set a cvar value");
+	Cmd_AddCommand("copy", Cvar_Copy_f, "Copy cvar target to source");
+	Cmd_AddCommand("cvarlist", Cvar_List_f, "Show all cvars");
 }
