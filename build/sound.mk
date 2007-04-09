@@ -158,60 +158,96 @@ $(BUILDDIR)/snd-arts/%.d: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 # WAPI
 ###################################################################################################
 
-SND_WAPI_SRCS=ports/win32/snd_wapi.c
-SND_WAPI_OBJS=$(SND_WAPI_SRCS:%.c=$(BUILDDIR)/snd-wapi/%.o)
-SND_WAPI_DEPS=$(SND_WAPI_OBJS:%.o=%.d)
-SND_WAPI_TARGET=snd_wapi.$(SHARED_EXT)
+ifeq ($(TARGET_OS),mingw32)
+	SND_WAPI_SRCS=ports/win32/snd_wapi.c
+	SND_WAPI_OBJS=$(SND_WAPI_SRCS:%.c=$(BUILDDIR)/snd-wapi/%.o)
+	SND_WAPI_DEPS=$(SND_WAPI_OBJS:%.o=%.d)
+	SND_WAPI_TARGET=snd_wapi.$(SHARED_EXT)
 
-ifeq ($(BUILD_CLIENT), 1)
-ifeq ($(HAVE_SND_WAPI),1)
-	TARGETS += $(SND_WAPI_TARGET)
-	ALL_DEPS += $(SND_WAPI_DEPS)
-	ALL_OBJS += $(SND_WAPI_OBJS)
+	ifeq ($(BUILD_CLIENT), 1)
+	ifeq ($(HAVE_SND_WAPI),1)
+		TARGETS += $(SND_WAPI_TARGET)
+		ALL_DEPS += $(SND_WAPI_DEPS)
+		ALL_OBJS += $(SND_WAPI_OBJS)
+	endif
+	endif
+
+	# Say about to build the target
+	$(SND_WAPI_TARGET) : $(SND_WAPI_OBJS) $(BUILDDIR)/.dirs
+		@echo " * [WAPI] ... linking $(LNKFLAGS) ($(SND_WAPI_LIBS))"; \
+			$(CC) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(SND_WAPI_OBJS) $(SND_WAPI_LIBS) $(LNKFLAGS)
+
+	# Say how to build .o files from .c files for this module
+	$(BUILDDIR)/snd-wapi/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
+		@echo " * [WAPI] $<"; \
+			$(CC) $(CFLAGS) $(SHARED_CFLAGS) -o $@ -c $<
+
+	# Say how to build the dependencies
+	$(BUILDDIR)/snd-wapi/%.d: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
+		@echo " * [DEP] $<"; $(DEP) $(SHARED_CFLAGS)
 endif
-endif
-
-# Say about to build the target
-$(SND_WAPI_TARGET) : $(SND_WAPI_OBJS) $(BUILDDIR)/.dirs
-	@echo " * [WAPI] ... linking $(LNKFLAGS) ($(SND_WAPI_LIBS))"; \
-		$(CC) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(SND_WAPI_OBJS) $(SND_WAPI_LIBS) $(LNKFLAGS)
-
-# Say how to build .o files from .c files for this module
-$(BUILDDIR)/snd-wapi/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
-	@echo " * [WAPI] $<"; \
-		$(CC) $(CFLAGS) $(SHARED_CFLAGS) -o $@ -c $<
-
-# Say how to build the dependencies
-$(BUILDDIR)/snd-wapi/%.d: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
-	@echo " * [DEP] $<"; $(DEP) $(SHARED_CFLAGS)
 
 ###################################################################################################
 # DirectX
 ###################################################################################################
 
-SND_DX_SRCS=ports/win32/snd_dx.c
-SND_DX_OBJS=$(SND_DX_SRCS:%.c=$(BUILDDIR)/snd-dx/%.o)
-SND_DX_DEPS=$(SND_DX_OBJS:%.o=%.d)
-SND_DX_TARGET=snd_dx.$(SHARED_EXT)
+ifeq ($(TARGET_OS),mingw32)
+	SND_DX_SRCS=ports/win32/snd_dx.c
+	SND_DX_OBJS=$(SND_DX_SRCS:%.c=$(BUILDDIR)/snd-dx/%.o)
+	SND_DX_DEPS=$(SND_DX_OBJS:%.o=%.d)
+	SND_DX_TARGET=snd_dx.$(SHARED_EXT)
 
-ifeq ($(BUILD_CLIENT), 1)
-ifeq ($(HAVE_SND_DX),1)
-	TARGETS += $(SND_DX_TARGET)
-	ALL_DEPS += $(SND_DX_DEPS)
-	ALL_OBJS += $(SND_DX_OBJS)
+	ifeq ($(BUILD_CLIENT), 1)
+	ifeq ($(HAVE_SND_DX),1)
+		TARGETS += $(SND_DX_TARGET)
+		ALL_DEPS += $(SND_DX_DEPS)
+		ALL_OBJS += $(SND_DX_OBJS)
+	endif
+	endif
+
+	# Say about to build the target
+	$(SND_DX_TARGET) : $(SND_DX_OBJS) $(BUILDDIR)/.dirs
+		@echo " * [DX] ... linking $(LNKFLAGS) ($(SND_DX_LIBS))"; \
+			$(CC) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(SND_DX_OBJS) $(SND_DX_LIBS) $(LNKFLAGS)
+
+	# Say how to build .o files from .c files for this module
+	$(BUILDDIR)/snd-dx/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
+		@echo " * [DX] $<"; \
+			$(CC) $(CFLAGS) $(SHARED_CFLAGS) -o $@ -c $<
+
+	# Say how to build the dependencies
+	$(BUILDDIR)/snd-dx/%.d: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
+		@echo " * [DEP] $<"; $(DEP) $(SHARED_CFLAGS)
 endif
+
+###################################################################################################
+# OSX sound driver
+###################################################################################################
+ifeq ($(TARGET_OS),darwin)
+	SND_OSX_SRCS=ports/macosx/snd_osx.c
+	SND_OSX_OBJS=$(SND_OSX_SRCS:%.c=$(BUILDDIR)/snd-osx/%.o)
+	SND_OSX_DEPS=$(SND_OSX_OBJS:%.o=%.d)
+	SND_OSX_TARGET=snd_osx.$(SHARED_EXT)
+
+	ifeq ($(BUILD_CLIENT), 1)
+	ifeq ($(HAVE_SND_OSX),1)
+		TARGETS += $(SND_OSX_TARGET)
+		ALL_DEPS += $(SND_OSX_DEPS)
+		ALL_OBJS += $(SND_OSX_OBJS)
+	endif
+	endif
+
+	# Say about to build the target
+	$(SND_OSX_TARGET) : $(SND_OSX_OBJS) $(BUILDDIR)/.dirs
+		@echo " * [OSX] ... linking $(LNKFLAGS) ($(SND_OSX_LIBS))"; \
+			$(CC) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(SND_OSX_OBJS) $(SND_OSX_LIBS) $(LNKFLAGS)
+
+	# Say how to build .o files from .c files for this module
+	$(BUILDDIR)/snd-osx/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
+		@echo " * [OSX] $<"; \
+			$(CC) $(CFLAGS) $(SHARED_CFLAGS) -o $@ -c $<
+
+	# Say how to build the dependencies
+	$(BUILDDIR)/snd-osx/%.d: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
+		@echo " * [DEP] $<"; $(DEP) $(SHARED_CFLAGS)
 endif
-
-# Say about to build the target
-$(SND_DX_TARGET) : $(SND_DX_OBJS) $(BUILDDIR)/.dirs
-	@echo " * [DX] ... linking $(LNKFLAGS) ($(SND_DX_LIBS))"; \
-		$(CC) $(LDFLAGS) $(SHARED_LDFLAGS) -o $@ $(SND_DX_OBJS) $(SND_DX_LIBS) $(LNKFLAGS)
-
-# Say how to build .o files from .c files for this module
-$(BUILDDIR)/snd-dx/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
-	@echo " * [DX] $<"; \
-		$(CC) $(CFLAGS) $(SHARED_CFLAGS) -o $@ -c $<
-
-# Say how to build the dependencies
-$(BUILDDIR)/snd-dx/%.d: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
-	@echo " * [DEP] $<"; $(DEP) $(SHARED_CFLAGS)

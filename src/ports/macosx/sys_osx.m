@@ -287,7 +287,6 @@ extern qboolean	SNDDMA_ReserveBufferSize (void);
 // extern	void	VID_SetPaused (BOOL theState); // FIXME Re-enable after finding the function :)
 
 int		Sys_CheckSpecialKeys (int theKey);
-void		Sys_Sleep (void);
 
 static	void	Sys_HideApplication_f (void);
 static	void	Sys_CheckForIDDirectory (void);
@@ -302,7 +301,7 @@ static	BOOL	Sys_OpenGameAPI (const char *theGameName, char *thePath, char *theCu
 /**
  * @brief
  */
-void Sys_Error (char *theError, ...)
+void Sys_Error (const char *theError, ...)
 {
 	va_list     myArgPtr;
 	char        myString[SYS_STRING_SIZE];
@@ -1830,4 +1829,20 @@ char *Sys_GetHomeDirectory (void)
  */
 void Sys_NormPath(char* path)
 {
+}
+
+/* fix for linking */
+void Sys_DisableTray(void)
+{
+
+}
+
+void Sys_EnableTray(void)
+{
+
+}
+
+void Sys_Minimize(void)
+{
+
 }

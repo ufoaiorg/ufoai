@@ -32,6 +32,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 	#include "../ports/linux/qal_linux.h"
 #endif
 
+#ifdef __APPLE__
+	#include "../ports/macosx/qal_osx.h"
+#endif
+
 #ifndef ALCAPIENTRY
 #  define ALCAPIENTRY
 #endif

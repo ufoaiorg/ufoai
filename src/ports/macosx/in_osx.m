@@ -317,10 +317,10 @@ void	IN_CenterCursor (void)
 
 void	IN_Init (void)
 {
-    m_filter		= Cvar_Get ("m_filter", "0", 0);
-    in_mouse		= Cvar_Get ("in_mouse", "1", CVAR_ARCHIVE);
-    in_joystick		= Cvar_Get ("in_joystick", "0", CVAR_ARCHIVE);
-    gInSensitivity	= Cvar_Get ("sensitivity", "3", 0);
+    m_filter		= Cvar_Get ("m_filter", "0", 0,NULL);
+    in_mouse		= Cvar_Get ("in_mouse", "1", CVAR_ARCHIVE,NULL);
+    in_joystick		= Cvar_Get ("in_joystick", "0", CVAR_ARCHIVE,NULL);
+    gInSensitivity	= Cvar_Get ("sensitivity", "3", 0,NULL);
 
 //    Cmd_AddCommand ("+mlook", IN_MLookDown_f);
 //    Cmd_AddCommand ("-mlook", IN_MLookUp_f);

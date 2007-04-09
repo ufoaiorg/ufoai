@@ -49,12 +49,12 @@ cvar_t	*cd_volume;
 cvar_t	*cd_nocd;
 cvar_t	*cd_dev;
 
-static void CD_f( void );
+static void CD_f (void);
 
 /**
  * @brief Ejects the CD
  */
-static void CDAudio_Eject( void )
+static void CDAudio_Eject (void)
 {
 	if (!cd_id || !enabled)
 		return;
@@ -173,7 +173,7 @@ void CDAudio_RandomPlay(void)
 /**
  * @brief
  */
-void CDAudio_Stop( void )
+void CDAudio_Stop (void)
 {
 	int cdstate;
 	if (!cd_id || !enabled)
@@ -192,7 +192,7 @@ void CDAudio_Stop( void )
 /**
  * @brief
  */
-void CDAudio_Pause( void )
+void CDAudio_Pause (void)
 {
 	if (!cd_id || !enabled)
 		return;
@@ -206,7 +206,7 @@ void CDAudio_Pause( void )
 /**
  * @brief
  */
-void CDAudio_Resume( void )
+void CDAudio_Resume (void)
 {
 	if (!cd_id || !enabled)
 		return;
@@ -221,7 +221,7 @@ void CDAudio_Resume( void )
 /**
  * @brief
  */
-void CDAudio_Update( void )
+void CDAudio_Update (void)
 {
 	if (!cd_id || !enabled)
 		return;
@@ -253,7 +253,7 @@ void CDAudio_Update( void )
 /**
  * @brief
  */
-int CDAudio_Init( void )
+int CDAudio_Init (void)
 {
 	cvar_t *cv;
 
@@ -309,7 +309,7 @@ int CDAudio_Init( void )
 /**
  * @brief
  */
-void CDAudio_Shutdown( void )
+void CDAudio_Shutdown (void)
 {
 	if(!cd_id)
 		return;
@@ -329,7 +329,7 @@ void CDAudio_Shutdown( void )
 /**
  * @brief
  */
-static void CD_f( void )
+static void CD_f (void)
 {
 	char	*command;
 	int	cdstate;

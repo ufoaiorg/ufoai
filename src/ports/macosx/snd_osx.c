@@ -62,7 +62,7 @@ static Boolean gSNDDMAIOProcIsInstalled = NO;
 static unsigned char gSNDDMABuffer[TOTAL_BUFFER_SIZE];
 static UInt32 gSNDDMABufferPosition, gSNDDMABufferByteCount;
 static AudioStreamBasicDescription	gSNDDMABasicDescription;
-static OSStatus (*SNDDMA_AudioIOProc)(AudioDeviceID, const AudioTimeStamp *,
+static OSStatus (*SND_AudioIOProc)(AudioDeviceID, const AudioTimeStamp *,
 	const AudioBufferList *, const AudioTimeStamp *, AudioBufferList *, const AudioTimeStamp *, void *);
 
 #pragma mark -
@@ -70,9 +70,9 @@ static OSStatus (*SNDDMA_AudioIOProc)(AudioDeviceID, const AudioTimeStamp *,
 
 #pragma mark =Function Prototypes=
 
-static OSStatus SNDDMA_Audio8BitIOProc (AudioDeviceID, const AudioTimeStamp *, const AudioBufferList *,
+static OSStatus SND_Audio8BitIOProc (AudioDeviceID, const AudioTimeStamp *, const AudioBufferList *,
 		const AudioTimeStamp *, AudioBufferList *, const AudioTimeStamp *, void *);
-static OSStatus SNDDMA_Audio16BitIOProc (AudioDeviceID, const AudioTimeStamp *, const AudioBufferList *,
+static OSStatus SND_Audio16BitIOProc (AudioDeviceID, const AudioTimeStamp *, const AudioBufferList *,
 		const AudioTimeStamp *, AudioBufferList *, const AudioTimeStamp *, void *);
 
 #pragma mark -
@@ -80,7 +80,7 @@ static OSStatus SNDDMA_Audio16BitIOProc (AudioDeviceID, const AudioTimeStamp *, 
 /**
  * @brief
  */
-static OSStatus SNDDMA_Audio8BitIOProc (AudioDeviceID inDevice,	const AudioTimeStamp *inNow,
+static OSStatus SND_Audio8BitIOProc (AudioDeviceID inDevice,	const AudioTimeStamp *inNow,
 	const AudioBufferList *inInputData, const AudioTimeStamp *inInputTime, AudioBufferList *outOutputData,
 	const AudioTimeStamp *inOutputTime, void *inClientData)
 {
@@ -106,7 +106,7 @@ static OSStatus SNDDMA_Audio8BitIOProc (AudioDeviceID inDevice,	const AudioTimeS
 /**
  * @brief
  */
-static OSStatus SNDDMA_Audio16BitIOProc (AudioDeviceID inDevice,
+static OSStatus SND_Audio16BitIOProc (AudioDeviceID inDevice,
 	const AudioTimeStamp *inNow, const AudioBufferList *inInputData, const AudioTimeStamp *inInputTime,
 	AudioBufferList *outOutputData, const AudioTimeStamp *inOutputTime, void *inClientData)
 {
@@ -132,7 +132,7 @@ static OSStatus SNDDMA_Audio16BitIOProc (AudioDeviceID inDevice,
 /**
  * @brief
  */
-qboolean SNDDMA_ReserveBufferSize (void)
+qboolean SND_ReserveBufferSize (void)
 {
 	OSStatus		myError;
 	AudioDeviceID	myAudioDevice;
@@ -164,7 +164,7 @@ qboolean SNDDMA_ReserveBufferSize (void)
  * @brief
  * FIXME: Change to dynamic sound lib
  */
-qboolean SNDDMA_Init (struct sndinfo *si__) /* argument ignored */
+qboolean SND_Init (struct sndinfo *si__) /* argument ignored */
 {
 	UInt32	myPropertySize;
 
@@ -172,10 +172,10 @@ qboolean SNDDMA_Init (struct sndinfo *si__) /* argument ignored */
 	cvar_t* s_loadas8bit = Cvar_Get("s_loadas8bit", "16", CVAR_ARCHIVE, NULL);
 	if (s_loadas8bit->integer) {
 		dma.samplebits = 8;
-		SNDDMA_AudioIOProc = SNDDMA_Audio8BitIOProc;
+		SND_AudioIOProc = SND_Audio8BitIOProc;
 	} else {
 		dma.samplebits = 16;
-		SNDDMA_AudioIOProc = SNDDMA_Audio16BitIOProc;
+		SND_AudioIOProc = SND_Audio16BitIOProc;
 	}
 
 	myPropertySize = sizeof (gSNDDMASoundDeviceID);
@@ -192,7 +192,7 @@ qboolean SNDDMA_Init (struct sndinfo *si__) /* argument ignored */
 		return (0);
 	}
 
-	/* get the buffersize of the audio device [must previously be set via "SNDDMA_ReserveBufferSize ()"]: */
+	/* get the buffersize of the audio device [must previously be set via "SND_ReserveBufferSize ()"]: */
 	myPropertySize = sizeof (gSNDDMABufferByteCount);
 	if (AudioDeviceGetProperty (gSNDDMASoundDeviceID, 0, NO, kAudioDevicePropertyBufferSize,
 								&myPropertySize, &gSNDDMABufferByteCount) || gSNDDMABufferByteCount == 0) {
@@ -228,13 +228,13 @@ qboolean SNDDMA_Init (struct sndinfo *si__) /* argument ignored */
 	/* is sound ouput suppressed? */
 	if (!COM_CheckParm("-nosound")) {
 		/* add the sound FX IO: */
-		if (AudioDeviceAddIOProc(gSNDDMASoundDeviceID, SNDDMA_AudioIOProc, NULL)) {
+		if (AudioDeviceAddIOProc(gSNDDMASoundDeviceID, SND_AudioIOProc, NULL)) {
 			Com_Printf("Audio init fails: Can\'t install IOProc.\n");
 			return (0);
 		}
 
 		/* start the sound FX: */
-		if (AudioDeviceStart(gSNDDMASoundDeviceID, SNDDMA_AudioIOProc)) {
+		if (AudioDeviceStart(gSNDDMASoundDeviceID, SND_AudioIOProc)) {
 			Com_Printf("Audio init fails: Can\'t start audio.\n");
 			return (0);
 		}
@@ -258,19 +258,19 @@ qboolean SNDDMA_Init (struct sndinfo *si__) /* argument ignored */
 /**
  * @brief
  */
-void SNDDMA_Shutdown (void)
+void SND_Shutdown (void)
 {
 	/* shut everything down: */
 	if (gSNDDMAIOProcIsInstalled == YES) {
-		AudioDeviceStop (gSNDDMASoundDeviceID, SNDDMA_AudioIOProc);
-		AudioDeviceRemoveIOProc (gSNDDMASoundDeviceID, SNDDMA_AudioIOProc);
+		AudioDeviceStop (gSNDDMASoundDeviceID, SND_AudioIOProc);
+		AudioDeviceRemoveIOProc (gSNDDMASoundDeviceID, SND_AudioIOProc);
 	}
 }
 
 /**
  * @brief
  */
-int	SNDDMA_GetDMAPos (void)
+int	SND_GetDMAPos (void)
 {
 	if (gSNDDMAIOProcIsInstalled == NO) {
 		return (0);
@@ -279,17 +279,15 @@ int	SNDDMA_GetDMAPos (void)
 }
 
 /**
- * @brief
+ * @brief Callback provided by the engine in case we need it.  We don't.
  */
-void SNDDMA_Submit (void)
+void SND_BeginPainting (void)
 {
-    /* not required! */
 }
 
 /**
  * @brief
  */
-void SNDDMA_BeginPainting (void)
+void SND_Activate (qboolean active)
 {
-    /* not required! */
 }

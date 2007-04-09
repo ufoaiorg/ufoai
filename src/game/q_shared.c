@@ -1801,7 +1801,7 @@ char *Q_strdup (const char *str)
 int Q_putenv (const char *var, const char *value)
 {
 #ifdef __APPLE__
-	return setenv(var, value, 1) == -1)
+	return setenv(var, value, 1);
 #else
 	char str[32];
 
