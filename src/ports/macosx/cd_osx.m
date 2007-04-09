@@ -1,371 +1,402 @@
-//______________________________________________________________________________________________________________nFO
-// "cd_osx.m" - MacOS X audio CD driver.
-//
-// Written by:	awe				[mailto:awe@fruitz-of-dojo.de].
-//		2001-2002 Fruitz Of Dojo 	[http://www.fruitz-of-dojo.de].
-//
-// Quake II is copyrighted by id software	[http://www.idsoftware.com].
-//
-// Version History:
-// v1.0.8: Rewritten. Uses now QuickTime for playback.
-//	   Added support for MP3 and MP4 [AAC] playback.
-// v1.0.3: Fixed an issue with requesting a track number greater than the max number.
-// v1.0.1: Added "cdda" as extension for detection of audio-tracks [required by MacOS X v10.1 or later]
-// v1.0.0: Initial release.
-//_________________________________________________________________________________________________________iNCLUDES
+/**
+ * @file cd_linux.c
+ * @brief Audio CD function for linux
+ */
 
-#pragma mark =Includes=
+/*
+Copyright (C) 1997-2001 Id Software, Inc.
 
-#import <AppKit/AppKit.h>
-#import <Foundation/Foundation.h>
-#import <CoreAudio/AudioHardware.h>
-#import <QuickTime/QuickTime.h>
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
 
-#include <sys/mount.h>
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+*/
+
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <sys/ioctl.h>
+#include <sys/file.h>
+#include <sys/types.h>
+#include <fcntl.h>
+#include <string.h>
+#include <time.h>
+#include <errno.h>
+
+#if defined(__FreeBSD__) || defined(__NetBSD__)
+  #include <sys/cdio.h>
+#else
+  #include <linux/cdrom.h>
+#endif
 
 #include "../../client/client.h"
 
-#pragma mark -
+static qboolean cdValid = qfalse;
+static qboolean	playing = qfalse;
+static qboolean	wasPlaying = qfalse;
+static qboolean	initialized = qfalse;
+static qboolean	enabled = qtrue;
+static qboolean playLooping = qfalse;
+static float	cdvolume;
+static byte 	remap[100];
+static byte		playTrack;
+static byte		maxTrack;
 
-/* typedefs */
+static int cdfile = -1;
 
-#pragma mark =TypeDefs=
+/*static char cd_dev[64] = "/dev/cdrom"; */
 
-typedef enum
-{
-	CDERR_ALLOC_TRACK = 1,
-	CDERR_MOVIE_DATA,
-	CDERR_AUDIO_DATA,
-	CDERR_QUICKTIME_ERROR,
-	CDERR_NO_MEDIA_FOUND,
-	CDERR_MEDIA_TRACK,
-	CDERR_MEDIA_TRACK_CONTROLLER,
-	CDERR_EJECT,
-	CDERR_NO_FILES_FOUND
-} cderror_t;
+cvar_t	*cd_volume;
+cvar_t	*cd_nocd;
+cvar_t	*cd_dev;
 
-#pragma mark -
-
-/* Variables */
-
-#pragma mark =Variables=
-
-extern NSString *gSysMP3Folder; /* FIXME: Remove this */
-extern BOOL gSysAbortMediaScan;
-
-cvar_t *cd_volume;
-
-static UInt16 gCDTrackCount, gCurCDTrack;
-static NSMutableArray *gCDTrackList;
-static char gCDDevice[MAX_OSPATH];
-static BOOL gCDLoop, gCDNextTrack;
-
-static Movie gCDController = NULL;
-
-#pragma mark -
-
-/* function prototypes */
-#pragma mark =Function Prototypes=
-
-BOOL CDAudio_GetTrackList(void);
-void CDAudio_Enable(BOOL theState);
-
-static void CDAudio_Error(cderror_t theErrorNumber);
-static SInt32 CDAudio_StripVideoTracks(Movie theMovie);
-static void CDAudio_SafePath(const char *thePath);
-static void CDAudio_AddTracks2List(NSString *theMountPath, NSArray *theExtensions);
-static void CD_f(void);
-
-#pragma mark -
+void CDAudio_Pause(void);
 
 /**
  * @brief
  */
-void CDAudio_Error (cderror_t theErrorNumber)
+static void CDAudio_Eject (void)
 {
-	if (gSysMP3Folder == NULL) {
-		Com_Printf("Audio-CD driver: ");
-	} else {
-		Com_Printf("MP3/MP4 driver: ");
-	}
+	if (cdfile == -1 || !enabled)
+		return; /* no cd init'd */
 
-	switch (theErrorNumber) {
-	case CDERR_ALLOC_TRACK:
-		Com_Printf("Failed to allocate track!\n");
-		break;
-	case CDERR_MOVIE_DATA:
-		Com_Printf("Failed to retrieve track data!\n");
-		break;
-	case CDERR_AUDIO_DATA:
-		Com_Printf("File without audio data!\n");
-		break;
-	case CDERR_QUICKTIME_ERROR:
-		Com_Printf("QuickTime error!\n");
-		break;
-	case CDERR_NO_MEDIA_FOUND:
-		Com_Printf("No Audio-CD found.\n");
-		break;
-	case CDERR_MEDIA_TRACK:
-		Com_Printf("Failed to retrieve media track!\n");
-		break;
-	case CDERR_MEDIA_TRACK_CONTROLLER:
-		Com_Printf("Failed to retrieve track controller!\n");
-		break;
-	case CDERR_EJECT:
-		Com_Printf("Can\'t eject Audio-CD!\n");
-		break;
-	case CDERR_NO_FILES_FOUND:
-		if (gSysMP3Folder == NULL) {
-			Com_Printf("No audio tracks found.\n");
-		} else {
-			Com_Printf("No files found with the extension \'.mp3\'!\n");
-		}
-		break;
-	}
+#if defined(__FreeBSD__) || defined(__NetBSD__)
+	if ( ioctl(cdfile, CDIOCEJECT) == -1 )
+		Com_DPrintf("ioctl cdioeject failed\n");
+#else
+	if ( ioctl(cdfile, CDROMEJECT) == -1 )
+		Com_DPrintf("ioctl cdromeject failed\n");
+#endif
 }
 
 /**
  * @brief
  */
-SInt32	CDAudio_StripVideoTracks (Movie theMovie)
+static void CDAudio_CloseDoor (void)
 {
-	SInt64 	myTrackCount, i;
-	Track 	myCurTrack;
-	OSType 	myMediaType;
+	if (cdfile == -1 || !enabled)
+		return; /* no cd init'd */
 
-	myTrackCount = GetMovieTrackCount (theMovie);
-
-	for (i = myTrackCount; i >= 1; i--) {
-		myCurTrack = GetMovieIndTrack (theMovie, i);
-		GetMediaHandlerDescription (GetTrackMedia (myCurTrack), &myMediaType, NULL, NULL);
-		if (myMediaType != SoundMediaType && myMediaType != MusicMediaType) {
-			DisposeMovieTrack (myCurTrack);
-		}
-	}
-
-	return (GetMovieTrackCount (theMovie));
+#if defined(__FreeBSD__) || defined(__NetBSD__)
+	if ( ioctl(cdfile, CDIOCCLOSE) == -1 )
+		Com_DPrintf("ioctl cdiocclose failed\n");
+#else
+	if ( ioctl(cdfile, CDROMCLOSETRAY) == -1 )
+		Com_DPrintf("ioctl cdromclosetray failed\n");
+#endif
 }
 
 /**
  * @brief
  */
-void CDAudio_AddTracks2List (NSString *theMountPath, NSArray *theExtensions)
+static int CDAudio_GetAudioDiskInfo (void)
 {
-	NSFileManager		*myFileManager = [NSFileManager defaultManager];
+#if defined(__FreeBSD__) || defined(__NetBSD__)
+	struct ioc_toc_header tochdr;
+#endif
+#ifdef __linux__
+	struct cdrom_tochdr tochdr;
+#endif
 
-	if (myFileManager != NULL) {
-		NSDirectoryEnumerator	*myDirEnum = [myFileManager enumeratorAtPath: theMountPath];
+	cdValid = qfalse;
 
-		if (myDirEnum != NULL) {
-			NSString	*myFilePath;
-			SInt32	myIndex, myExtensionCount;
+#if defined(__FreeBSD__) || defined(__NetBSD__)
+	if ( ioctl(cdfile, CDIOREADTOCHEADER, &tochdr) == -1 ) {
+		Com_DPrintf("ioctl cdioreadtocheader failed\n");
+#endif
+#ifdef __linux__
+	if ( ioctl(cdfile, CDROMREADTOCHDR, &tochdr) == -1 ) {
+		Com_DPrintf("ioctl cdromreadtochdr failed\n");
+#endif
+		return -1;
+	}
 
-			myExtensionCount = [theExtensions count];
+#if defined(__FreeBSD__) || defined(__NetBSD__)
+	if (tochdr.starting_track < 1) {
+#endif
+#ifdef __linux__
+	if (tochdr.cdth_trk0 < 1) {
+#endif
+		Com_DPrintf("CDAudio: no music tracks\n");
+		return -1;
+	}
 
-			/* get all audio tracks: */
-			while ((myFilePath = [myDirEnum nextObject])) {
-				if (gSysAbortMediaScan == YES) {
-					break;
-				}
+	cdValid = qtrue;
+#if defined(__FreeBSD__) || defined(__NetBSD__)
+	maxTrack = tochdr.ending_track;
+#endif
+#ifdef __linux__
+	maxTrack = tochdr.cdth_trk1;
+#endif
 
-				for (myIndex = 0; myIndex < myExtensionCount; myIndex++) {
-					if ([[myFilePath pathExtension] isEqualToString: [theExtensions objectAtIndex: myIndex]]) {
-						NSString	*myFullPath = [theMountPath stringByAppendingPathComponent: myFilePath];
-						NSURL		*myMoviePath = [NSURL fileURLWithPath: myFullPath];
-						NSMovie		*myMovie = NULL;
+	return 0;
+}
 
-						myMovie = [[NSMovie alloc] initWithURL: myMoviePath byReference: YES];
-						if (myMovie != NULL) {
-							Movie	myQTMovie = [myMovie QTMovie];
+/**
+ * @brief
+ */
+void CDAudio_Play (int track, qboolean looping)
+{
+#if defined(__FreeBSD__) || defined(__NetBSD__)
+	struct ioc_read_toc_entry entry;
+	struct cd_toc_entry toc_buffer;
+	struct ioc_play_track ti;
+#endif
+#if defined(__linux__)
+	struct cdrom_tocentry entry;
+	struct cdrom_ti ti;
+#endif
 
-							if (myQTMovie != NULL) {
-								/* add only movies with audiotacks and use only the audio track: */
-								if (CDAudio_StripVideoTracks (myQTMovie) > 0) {
-									[gCDTrackList addObject: myMovie];
-								} else {
-									CDAudio_Error (CDERR_AUDIO_DATA);
-								}
-							} else {
-								CDAudio_Error (CDERR_MOVIE_DATA);
-							}
-						} else {
-							CDAudio_Error (CDERR_ALLOC_TRACK);
-						}
-					}
-				}
+	if (cdfile == -1 || !enabled)
+		return;
+
+	if (!cdValid) {
+		CDAudio_GetAudioDiskInfo();
+		if (!cdValid)
+			return;
+	}
+
+	track = remap[track];
+
+	if (track < 1 || track > maxTrack) {
+		Com_DPrintf("CDAudio: Bad track number %u.\n", track);
+		return;
+	}
+
+#if defined(__FreeBSD__) || defined(__NetBSD__)
+	#define CDROM_DATA_TRACK 4
+	bzero((char *)&toc_buffer, sizeof(toc_buffer));
+	entry.data_len = sizeof(toc_buffer);
+	entry.data = &toc_buffer;
+	/* don't try to play a non-audio track */
+	entry.starting_track = track;
+	entry.address_format = CD_MSF_FORMAT;
+	if ( ioctl(cdfile, CDIOREADTOCENTRYS, &entry) == -1 ) {
+		Com_DPrintf("ioctl cdromreadtocentry failed\n");
+		return;
+	}
+	if (toc_buffer.control == CDROM_DATA_TRACK) {
+#endif
+#if defined(__linux__)
+	/* don't try to play a non-audio track */
+	entry.cdte_track = track;
+	entry.cdte_format = CDROM_MSF;
+	if ( ioctl(cdfile, CDROMREADTOCENTRY, &entry) == -1 ) {
+		Com_DPrintf("ioctl cdromreadtocentry failed\n");
+		return;
+	}
+	if (entry.cdte_ctrl == CDROM_DATA_TRACK) {
+#endif
+		Com_Printf("CDAudio: track %i is not audio\n", track);
+		return;
+	}
+
+	if (playing) {
+		if (playTrack == track)
+			return;
+		CDAudio_Stop();
+	}
+#if defined(__FreeBSD__) || defined(__NetBSD__)
+	ti.start_track = track;
+	ti.end_track = track;
+	ti.start_index = 1;
+	ti.end_index = 99;
+#endif
+#if defined(__linux__)
+	ti.cdti_trk0 = track;
+	ti.cdti_trk1 = track;
+	ti.cdti_ind0 = 0;
+	ti.cdti_ind1 = 0;
+#endif
+
+#if defined(__FreeBSD__) || defined(__NetBSD__)
+	if ( ioctl(cdfile, CDIOCPLAYTRACKS, &ti) == -1 ) {
+#endif
+#if defined(__linux__)
+	if ( ioctl(cdfile, CDROMPLAYTRKIND, &ti) == -1 ) {
+#endif
+		Com_DPrintf("ioctl cdromplaytrkind failed\n");
+		return;
+	}
+
+#if defined(__FreeBSD__) || defined(__NetBSD__)
+	if ( ioctl(cdfile, CDIOCRESUME) == -1 )
+#endif
+#if defined(__linux__)
+	if ( ioctl(cdfile, CDROMRESUME) == -1 )
+#endif
+		Com_DPrintf("ioctl cdromresume failed\n");
+
+	playLooping = looping;
+	playTrack = track;
+	playing = qtrue;
+
+	if (cd_volume->value == 0.0)
+		CDAudio_Pause ();
+}
+
+/**
+ * @brief
+ */
+void CDAudio_RandomPlay (void)
+{
+	int track, i = 0, free_tracks = 0, remap_track;
+	float f;
+	byte* track_bools;
+#if defined(__FreeBSD__) || defined(__NetBSD__)
+	struct ioc_read_toc_entry entry;
+	struct cd_toc_entry toc_buffer;
+	struct ioc_play_track ti;
+#endif
+#if defined(__linux__)
+	struct cdrom_tocentry entry;
+	struct cdrom_ti ti;
+#endif
+
+	if (cdfile == -1 || !enabled)
+		return;
+
+	track_bools = (byte*)malloc(maxTrack * sizeof(byte));
+
+	if (track_bools == 0)
+		return;
+
+	/*create array of available audio tracknumbers */
+	for (; i < maxTrack; i++) {
+#if defined(__FreeBSD__) || defined(__NetBSD__)
+		#define CDROM_DATA_TRACK 4
+		bzero((char *)&toc_buffer, sizeof(toc_buffer));
+		entry.data_len = sizeof(toc_buffer);
+		entry.data = &toc_buffer;
+
+		entry.starting_track = remap[i];
+		entry.address_format = CD_LBA_FORMAT;
+		if ( ioctl(cdfile, CDIOREADTOCENTRYS, &entry) == -1 ) {
+			track_bools[i] = 0;
+		} else
+			track_bools[i] = (entry.data->control != CDROM_DATA_TRACK);
+#endif
+#if defined(__linux__)
+		entry.cdte_track = remap[i];
+		entry.cdte_format = CDROM_LBA;
+		if ( ioctl(cdfile, CDROMREADTOCENTRY, &entry) == -1 ) {
+			track_bools[i] = 0;
+		} else
+			track_bools[i] = (entry.cdte_ctrl != CDROM_DATA_TRACK);
+#endif
+
+		free_tracks += track_bools[i];
+	}
+
+	if (!free_tracks) {
+		Com_DPrintf("CDAudio_RandomPlay: Unable to find and play a random audio track, insert an audio cd please");
+		goto free_end;
+	}
+
+	/*choose random audio track */
+	do {
+		do {
+			f = ((float)rand()) / ((float)RAND_MAX + 1.0);
+			track = (int)(maxTrack  * f);
+		}
+		while ( ! track_bools[track] );
+
+		remap_track = remap[track];
+
+		if (playing) {
+			if (playTrack == remap_track) {
+				goto free_end;
 			}
-		}
-	}
-	gCDTrackCount = [gCDTrackList count];
-}
-
-/**
- * @brief
- */
-void CDAudio_SafePath (const char *thePath)
-{
-	SInt32	myStrLength = 0;
-
-	if (thePath != NULL) {
-		SInt32		i;
-
-		myStrLength = strlen (thePath);
-		if (myStrLength > MAX_OSPATH - 1) {
-			myStrLength = MAX_OSPATH - 1;
-		}
-		for (i = 0; i < myStrLength; i++) {
-			gCDDevice[i] = thePath[i];
-		}
-	}
-	gCDDevice[myStrLength] = 0x00;
-}
-
-/**
- * @brief
- */
-BOOL CDAudio_GetTrackList (void)
-{
-	NSAutoreleasePool 		*myPool;
-
-	/* release previously allocated memory: */
-	CDAudio_Shutdown ();
-
-	/* get memory for the new tracklisting: */
-	gCDTrackList = [[NSMutableArray alloc] init];
-	myPool = [[NSAutoreleasePool alloc] init];
-	gCDTrackCount = 0;
-
-	/* Get the current MP3 listing or retrieve the TOC of the AudioCD: */
-	if (gSysMP3Folder != NULL) {
-		CDAudio_SafePath ([gSysMP3Folder fileSystemRepresentation]);
-		Com_Printf("Scanning for audio tracks. Be patient!\n");
-		CDAudio_AddTracks2List (gSysMP3Folder, [NSArray arrayWithObjects: @"mp3", @"mp4", NULL]);
-	} else {
-		NSString		*myMountPath;
-		struct statfs  		*myMountList;
-		UInt32			myMountCount;
-
-		/* get number of mounted devices: */
-		myMountCount = getmntinfo (&myMountList, MNT_NOWAIT);
-
-		/* zero devices? return.*/
-		if (myMountCount <= 0)
-		{
-			[gCDTrackList release];
-			gCDTrackList = NULL;
-			gCDTrackCount = 0;
-			CDAudio_Error (CDERR_NO_MEDIA_FOUND);
-			return (0);
+			CDAudio_Stop();
 		}
 
-		while (myMountCount--) {
-			/* is the device read only? */
-			if ((myMountList[myMountCount].f_flags & MNT_RDONLY) != MNT_RDONLY) continue;
+#if defined(__FreeBSD__) || defined(__NetBSD__)
+		#define CDROMPLAYTRKIND 0x5304
 
-			/* is the device local? */
-			if ((myMountList[myMountCount].f_flags & MNT_LOCAL) != MNT_LOCAL) continue;
+		ti.start_track = remap_track;
+		ti.end_track = remap_track;
+		ti.start_index = 0;
+		ti.end_index = 0;
+#endif
+#if defined(__linux__)
+		ti.cdti_trk0 = remap_track;
+		ti.cdti_trk1 = remap_track;
+		ti.cdti_ind0 = 0;
+		ti.cdti_ind1 = 0;
+#endif
 
-			/* is the device "cdda"? */
-			if (strcmp (myMountList[myMountCount].f_fstypename, "cddafs")) continue;
-
-			/* is the device a directory? */
-			if (strrchr (myMountList[myMountCount].f_mntonname, '/') == NULL) continue;
-
-			/* we have found a Audio-CD! */
-			Com_Printf("Found Audio-CD at mount entry: \"%s\".\n", myMountList[myMountCount].f_mntonname);
-
-			/* preserve the device name: */
-			CDAudio_SafePath (myMountList[myMountCount].f_mntonname);
-			myMountPath = [NSString stringWithCString: myMountList[myMountCount].f_mntonname];
-
-			Com_Print("Scanning for audio tracks. Be patient!\n");
-			CDAudio_AddTracks2List (gSysMP3Folder, [NSArray arrayWithObjects: @"aiff", @"cdda", NULL]);
-
+		if ( ioctl(cdfile, CDROMPLAYTRKIND, &ti) == -1 ) {
+			track_bools[track] = 0;
+			free_tracks--;
+		} else {
+			playLooping = qtrue;
+			playTrack = remap_track;
+			playing = qtrue;
 			break;
 		}
-	}
+	} while (free_tracks > 0);
 
-	/* release the pool: */
-	[myPool release];
-
-	/* just security: */
-	if (![gCDTrackList count]) {
-		[gCDTrackList release];
-		gCDTrackList = NULL;
-		gCDTrackCount = 0;
-		CDAudio_Error (CDERR_NO_FILES_FOUND);
-		return (0);
-	}
-
-	return (1);
+	free_end:
+	free((void*)track_bools);
 }
 
 /**
  * @brief
  */
-void CDAudio_Play (int theTrack, qboolean theLoop)
+void CDAudio_Stop (void)
 {
-	gCDNextTrack = NO;
+	if (cdfile == -1 || !enabled)
+		return;
 
-	if (gCDTrackList != NULL && gCDTrackCount != 0) {
-		NSMovie		*myMovie;
+	if (!playing)
+		return;
 
-		/* check for mismatching CD track number: */
-		if (theTrack > gCDTrackCount || theTrack <= 0) {
-			theTrack = 1;
-		}
-		gCurCDTrack = 0;
+#if defined(__FreeBSD__) || defined(__NetBSD__)
+	if ( ioctl(cdfile, CDIOCSTOP) == -1 )
+		Com_DPrintf("ioctl cdiocstop failed (%d)\n", errno);
+#endif
+#if defined(__linux__)
+	if ( ioctl(cdfile, CDROMSTOP) == -1 )
+#endif
+		Com_DPrintf("ioctl cdromstop failed (%d)\n", errno);
 
-		if (gCDController != NULL && IsMovieDone (gCDController) == NO) {
-			StopMovie(gCDController);
-			gCDController = NULL;
-		}
-
-		myMovie = [gCDTrackList objectAtIndex: theTrack - 1];
-
-		if (myMovie != NULL) {
-			gCDController = [myMovie QTMovie];
-
-			if (gCDController != NULL) {
-				gCurCDTrack = theTrack;
-				gCDLoop = theLoop;
-				GoToBeginningOfMovie (gCDController);
-				SetMovieActive (gCDController, YES);
-				StartMovie (gCDController);
-				if (GetMoviesError () != noErr) {
-							CDAudio_Error (CDERR_QUICKTIME_ERROR);
-				}
-			} else {
-				CDAudio_Error (CDERR_MEDIA_TRACK);
-			}
-		} else {
-			CDAudio_Error (CDERR_MEDIA_TRACK_CONTROLLER);
-		}
-	}
+	wasPlaying = qfalse;
+	playing = qfalse;
 }
 
 /**
  * @brief
  */
-void	CDAudio_Stop (void)
+void CDAudio_Pause (void)
 {
-	/* just stop the audio IO: */
-	if (gCDController != NULL && IsMovieDone (gCDController) == NO) {
-		StopMovie (gCDController);
-		GoToBeginningOfMovie (gCDController);
-		SetMovieActive (gCDController, NO);
-	}
-}
+	if (cdfile == -1 || !enabled)
+		return;
 
-/**
- * @brief
- */
-void	CDAudio_Pause (void)
-{
-	if (gCDController != NULL && GetMovieActive (gCDController) == YES && IsMovieDone (gCDController) == NO) {
-		StopMovie (gCDController);
-		SetMovieActive (gCDController, NO);
-	}
+	if (!playing)
+		return;
+
+#if defined(__FreeBSD__) || defined(__NetBSD__)
+	if ( ioctl(cdfile, CDIOCPAUSE) == -1 )
+		Com_DPrintf("ioctl cdiocpause failed\n");
+#endif
+#if defined(__linux__)
+	if ( ioctl(cdfile, CDROMPAUSE) == -1 )
+		Com_DPrintf("ioctl cdrompause failed\n");
+#endif
+
+	wasPlaying = playing;
+	playing = qfalse;
 }
 
 /**
@@ -373,9 +404,129 @@ void	CDAudio_Pause (void)
  */
 void CDAudio_Resume (void)
 {
-	if (gCDController != NULL && GetMovieActive (gCDController) == NO && IsMovieDone (gCDController) == NO) {
-		SetMovieActive (gCDController, YES);
-		StartMovie (gCDController);
+	if (cdfile == -1 || !enabled)
+		return;
+
+	if (!cdValid)
+		return;
+
+	if (!wasPlaying)
+		return;
+
+#if defined(__FreeBSD__) || defined(__NetBSD__)
+	if ( ioctl(cdfile, CDIOCRESUME) == -1 )
+		Com_DPrintf("ioctl cdiocresume failed\n");
+#endif
+#if defined(__linux__)
+	if ( ioctl(cdfile, CDROMRESUME) == -1 )
+		Com_DPrintf("ioctl cdromresume failed\n");
+#endif
+	playing = qtrue;
+}
+
+/**
+ * @brief
+ */
+static void CD_f (void)
+{
+	char	*command;
+	int		ret;
+	int		n;
+
+	if (Cmd_Argc() < 2)
+		return;
+
+	command = Cmd_Argv (1);
+
+	if (Q_strcasecmp(command, "on") == 0) {
+		enabled = qtrue;
+		return;
+	}
+
+	if (Q_strcasecmp(command, "off") == 0) {
+		if (playing)
+			CDAudio_Stop();
+		enabled = qfalse;
+		return;
+	}
+
+	if (Q_strcasecmp(command, "reset") == 0) {
+		enabled = qtrue;
+		if (playing)
+			CDAudio_Stop();
+		for (n = 0; n < 100; n++)
+			remap[n] = n;
+		CDAudio_GetAudioDiskInfo();
+		return;
+	}
+
+	if (Q_strcasecmp(command, "remap") == 0) {
+		ret = Cmd_Argc() - 2;
+		if (ret <= 0) {
+			for (n = 1; n < 100; n++)
+				if (remap[n] != n)
+					Com_Printf("  %u -> %u\n", n, remap[n]);
+			return;
+		}
+		for (n = 1; n <= ret; n++)
+			remap[n] = atoi(Cmd_Argv (n+1));
+		return;
+	}
+
+	if (Q_strcasecmp(command, "close") == 0) {
+		CDAudio_CloseDoor();
+		return;
+	}
+
+	if (!cdValid) {
+		CDAudio_GetAudioDiskInfo();
+		if (!cdValid) {
+			Com_Printf("No CD in player.\n");
+			return;
+		}
+	}
+
+	if (Q_strcasecmp(command, "play") == 0) {
+		CDAudio_Play((byte)atoi(Cmd_Argv (2)), qfalse);
+		return;
+	}
+
+	if (Q_strcasecmp(command, "loop") == 0) {
+		CDAudio_Play((byte)atoi(Cmd_Argv (2)), qtrue);
+		return;
+	}
+
+	if (Q_strcasecmp(command, "stop") == 0) {
+		CDAudio_Stop();
+		return;
+	}
+
+	if (Q_strcasecmp(command, "pause") == 0) {
+		CDAudio_Pause();
+		return;
+	}
+
+	if (Q_strcasecmp(command, "resume") == 0) {
+		CDAudio_Resume();
+		return;
+	}
+
+	if (Q_strcasecmp(command, "eject") == 0) {
+		if (playing)
+			CDAudio_Stop();
+		CDAudio_Eject();
+		cdValid = qfalse;
+		return;
+	}
+
+	if (Q_strcasecmp(command, "info") == 0) {
+		Com_Printf("%u tracks\n", maxTrack);
+		if (playing)
+			Com_Printf("Currently %s track %u\n", playLooping ? "looping" : "playing", playTrack);
+		else if (wasPlaying)
+			Com_Printf("Paused %s track %u\n", playLooping ? "looping" : "playing", playTrack);
+		Com_Printf("Volume is %f\n", cdvolume);
+		return;
 	}
 }
 
@@ -384,236 +535,141 @@ void CDAudio_Resume (void)
  */
 void CDAudio_Update (void)
 {
-	/* update volume settings: */
-	if (gCDController != NULL) {
-		SetMovieVolume (gCDController, kFullVolume * cd_volume->value);
-
-		if (GetMovieActive (gCDController) == YES) {
-			if (IsMovieDone (gCDController) == NO) {
-				MoviesTask (gCDController, 0);
-			} else {
-				if (gCDLoop == YES) {
-					GoToBeginningOfMovie (gCDController);
-					StartMovie (gCDController);
-				} else {
-					gCurCDTrack++;
-					CDAudio_Play (gCurCDTrack, NO);
-				}
-			}
-		}
-	}
-}
-
-/**
- * @brief
- */
-void CDAudio_Enable (BOOL theState)
-{
-	static BOOL myCDIsEnabled = YES;
-
-	if (myCDIsEnabled != theState) {
-		static BOOL	myCDWasPlaying = NO;
-
-		if (theState == NO) {
-			if (gCDController != NULL &&
-				GetMovieActive (gCDController) == YES &&
-				IsMovieDone (gCDController) == NO) {
-				CDAudio_Pause ();
-				myCDWasPlaying = YES;
-			} else {
-				myCDWasPlaying = NO;
-			}
-		} else {
-			if (myCDWasPlaying == YES) {
-				CDAudio_Resume ();
-			}
-		}
-		myCDIsEnabled = theState;
-	}
-}
-
-/**
- * @brief
- */
-int	CDAudio_Init (void)
-{
-	/* register the volume var: */
-	cd_volume = Cvar_Get("cd_volume", "1", CVAR_ARCHIVE, NULL);
-
-#if 0 /* gSysMP3Folder is not used in ufo */
-	/* add "cd" and "mp3" console command: */
-	if (gSysMP3Folder != NULL) {
-		Cmd_AddCommand("mp3", CD_f);
-		Cmd_AddCommand("mp4", CD_f);
-	}
+#if defined(__FreeBSD__) || defined(__NetBSD__)
+	struct ioc_read_subchannel subchnl;
+	struct cd_sub_channel_info data;
 #endif
-	Cmd_AddCommand("cd", CD_f,NULL);
+#if defined(__linux__)
+	struct cdrom_subchnl subchnl;
+#endif
+	static time_t lastchk;
 
-	gCurCDTrack = 0;
+	if (cdfile == -1 || !enabled)
+		return;
 
-	/* required because of our GUI prescan: */
-	if (gCDTrackList == NULL && gSysAbortMediaScan == YES) {
-		CDAudio_GetTrackList ();
-	}
-
-	/* init SNDDMA, if "-nosound" was used: */
-	if (gCDTrackList == NULL) {
-		if (gSysMP3Folder == NULL) {
-			Com_Printf("QuickTime CD driver initialized...\n");
+	if (cd_volume && cd_volume->value != cdvolume) {
+		if (cdvolume) {
+			Cvar_SetValue ("cd_volume", 0.0);
+			cdvolume = cd_volume->value;
+			CDAudio_Pause ();
 		} else {
-			Com_Printf("QuickTime MP3/MP4 driver initialized...\n");
+			Cvar_SetValue ("cd_volume", 1.0);
+			cdvolume = cd_volume->value;
+			CDAudio_Resume ();
 		}
-
-		return (1);
 	}
 
-	/* failure. return 0. */
-	if (gSysMP3Folder == NULL) {
-		Com_Printf("QuickTime CD driver failed.\n");
-	} else {
-		Com_Printf("QuickTime MP3/MP4 driver failed.\n");
-	}
-
-	return (0);
-}
-
-/**
- * @brief
- */
-void CDAudio_Shutdown (void)
-{
-	/* shutdown the audio IO: */
-	CDAudio_Stop ();
-
-	gCDController = NULL;
-	gCDDevice[0] = 0x00;
-	gCurCDTrack = 0;
-
-	if (gCDTrackList != NULL) {
-		while ([gCDTrackList count]) {
-			NSMovie 	*myMovie = [gCDTrackList objectAtIndex: 0];
-
-			[gCDTrackList removeObjectAtIndex: 0];
-			[myMovie release];
-		}
-		[gCDTrackList release];
-		gCDTrackList = NULL;
-		gCDTrackCount = 0;
-	}
-}
-
-/**
- * @brief
- */
-void CD_f (void)
-{
-	char *myCommandOption;
-
-	/* this command requires options! */
-	if (Cmd_Argc () < 2)
-		return;
-
-	/* get the option: */
-	myCommandOption = Cmd_Argv(1);
-
-	/* turn CD playback on: */
-	if (Q_strcasecmp(myCommandOption, "on") == 0) {
-		if (gCDTrackList == NULL)
-			CDAudio_GetTrackList();
-		CDAudio_Play(1, 0);
-		return;
-	}
-
-	/* turn CD playback off: */
-	if (Q_strcasecmp(myCommandOption, "off") == 0) {
-		CDAudio_Shutdown();
-		return;
-	}
-
-	/* just for compatibility: */
-	if (Q_strcasecmp(myCommandOption, "remap") == 0)
-		return;
-
-	/* reset the current CD: */
-	if (Q_strcasecmp (myCommandOption, "reset") == 0) {
-		CDAudio_Stop();
-		if (CDAudio_GetTrackList())
-			Com_Print("CD found. %d tracks (\"%s\").\n", gCDTrackCount, gCDDevice);
-		else
-			CDAudio_Error(CDERR_NO_FILES_FOUND);
-		return;
-	}
-
-	/* the following commands require a valid track array, so build it, if not present: */
-	if (gCDTrackCount == 0) {
-		CDAudio_GetTrackList ();
-		if (gCDTrackCount == 0) {
-			CDAudio_Error (CDERR_NO_FILES_FOUND);
+	if (playing && lastchk < time(NULL)) {
+		lastchk = time(NULL) + 2; /*two seconds between chks */
+#if defined(__FreeBSD__) || defined(__NetBSD__)
+		subchnl.address_format = CD_MSF_FORMAT;
+		subchnl.data_format = CD_CURRENT_POSITION;
+		subchnl.data_len = sizeof(data);
+		subchnl.track = playTrack;
+		subchnl.data = &data;
+		if (ioctl(cdfile, CDIOCREADSUBCHANNEL, &subchnl) == -1 ) {
+			Com_DPrintf("ioctl cdiocreadsubchannel failed\n");
+			playing = qfalse;
 			return;
 		}
-	}
-
-	/* play the selected track: */
-	if (Q_strcasecmp (myCommandOption, "play") == 0) {
-		CDAudio_Play (atoi (Cmd_Argv (2)), 0);
-		return;
-	}
-
-	/* loop the selected track: */
-	if (Q_strcasecmp (myCommandOption, "loop") == 0) {
-		CDAudio_Play (atoi (Cmd_Argv (2)), 1);
-		return;
-	}
-
-	/* stop the current track: */
-	if (Q_strcasecmp (myCommandOption, "stop") == 0) {
-		CDAudio_Stop ();
-		return;
-	}
-
-	/* pause the current track: */
-	if (Q_strcasecmp(myCommandOption, "pause") == 0) {
-		CDAudio_Pause();
-		return;
-	}
-
-	/* resume the current track: */
-	if (Q_strcasecmp(myCommandOption, "resume") == 0) {
-		CDAudio_Resume();
-		return;
-	}
-
-	/* eject the CD: */
-	if (gSysMP3Folder == NULL && Q_strcasecmp(myCommandOption, "eject") == 0) {
-		/* eject the CD: */
-		if (gCDDevice[0] != 0x00) {
-			NSString	*myDevicePath = [NSString stringWithCString: gCDDevice];
-
-			if (myDevicePath != NULL) {
-				CDAudio_Shutdown ();
-
-				if (![[NSWorkspace sharedWorkspace] unmountAndEjectDeviceAtPath: myDevicePath])
-					CDAudio_Error(CDERR_EJECT);
-			} else
-				CDAudio_Error(CDERR_EJECT);
-		} else
-			CDAudio_Error(CDERR_NO_MEDIA_FOUND);
-
-		return;
-	}
-
-	/* output CD info: */
-	if (Q_strcasecmp(myCommandOption, "info") == 0) {
-		if (gCDTrackCount == 0) {
-			CDAudio_Error(CDERR_NO_FILES_FOUND);
-		} else {
-			if (gCDController != NULL && GetMovieActive (gCDController) == YES)
-				Com_Printf("Playing track %d of %d (\"%s\").\n", gCurCDTrack, gCDTrackCount, gCDDevice);
-			else
-				Com_Printf("Not playing. Tracks: %d (\"%s\").\n", gCDTrackCount, gCDDevice);
-			Com_Printf("Volume is: %.2f.\n", cd_volume->value);
+		if (subchnl.data->header.audio_status != CD_AS_PLAY_IN_PROGRESS &&
+			subchnl.data->header.audio_status != CD_AS_PLAY_PAUSED) {
+			playing = qfalse;
+			if (playLooping)
+				CDAudio_Play(playTrack, qtrue);
 		}
-
-		return;
+#endif
+#if defined(__linux__)
+		subchnl.cdsc_format = CDROM_MSF;
+		if (ioctl(cdfile, CDROMSUBCHNL, &subchnl) == -1 ) {
+			Com_DPrintf("ioctl cdromsubchnl failed\n");
+			playing = qfalse;
+			return;
+		}
+		if (subchnl.cdsc_audiostatus != CDROM_AUDIO_PLAY &&
+			subchnl.cdsc_audiostatus != CDROM_AUDIO_PAUSED) {
+			playing = qfalse;
+			if (playLooping)
+				CDAudio_Play(playTrack, qtrue);
+		}
+#endif
 	}
+}
+
+/**
+ * @brief
+ */
+int CDAudio_Init (void)
+{
+	int	i;
+	cvar_t	*cv;
+	extern uid_t saved_euid;
+
+	if (initialized)
+		return 0;
+
+	cv = Cvar_Get ("nocdaudio", "0", CVAR_NOSET, NULL);
+	if (cv->value)
+		return -1;
+
+	cd_nocd = Cvar_Get ("cd_nocd", "0", CVAR_ARCHIVE, NULL);
+	if ( cd_nocd->value)
+		return -1;
+
+	cd_volume = Cvar_Get ("cd_volume", "1", CVAR_ARCHIVE, NULL);
+
+	cd_dev = Cvar_Get("cd_dev", "/dev/cdrom", CVAR_ARCHIVE, NULL);
+
+	seteuid(saved_euid);
+
+	cdfile = open(cd_dev->string, O_RDONLY | O_NONBLOCK | O_EXCL);
+
+	seteuid(getuid());
+
+	if (cdfile == -1) {
+		Com_Printf("CDAudio_Init: open of \"%s\" failed (%i)\n", cd_dev->string, errno);
+		cdfile = -1;
+		return -1;
+	}
+
+	for (i = 0; i < 100; i++)
+		remap[i] = i;
+
+	initialized = qtrue;
+	enabled = qtrue;
+
+	if (CDAudio_GetAudioDiskInfo()) {
+		Com_Printf("CDAudio_Init: No CD in player.\n");
+		cdValid = qfalse;
+	}
+
+	Cmd_AddCommand ("cd", CD_f, NULL);
+
+	Com_Printf("CD Audio Initialized\n");
+
+	return 0;
+}
+
+/**
+ * @brief
+ */
+void CDAudio_Activate (qboolean active)
+{
+	if (active)
+		CDAudio_Resume ();
+	else
+		CDAudio_Pause ();
+}
+
+/**
+ * @brief
+ */
+void CDAudio_Shutdown(void)
+{
+	if (!initialized)
+		return;
+	CDAudio_Stop();
+	close(cdfile);
+	cdfile = -1;
+	initialized = qfalse;
 }

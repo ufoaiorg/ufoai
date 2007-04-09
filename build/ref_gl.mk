@@ -43,9 +43,9 @@ else
 		REF_SDL_TARGET=ref_sdl.$(SHARED_EXT)
 	endif
 endif
-
+ifneq ($(TARGET_OS),darwin)
 REF_GLX_SRCS = ports/linux/gl_glx.c
-
+endif
 #---------------------------------------------------------------------------------------------------------------------
 
 REF_GL_OBJS=$(REF_GL_SRCS:%.c=$(BUILDDIR)/ref_gl/%.o)
