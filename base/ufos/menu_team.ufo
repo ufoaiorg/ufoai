@@ -1223,8 +1223,8 @@ menu equipment
 
 	string s_primary
 	{
-		pos	"438 135"
-		align	uc
+		pos	"438 151"
+		align	cc
 		color "1 1 1 0.6"
 		font	"f_big"
 		string	"_Primary"
@@ -1243,8 +1243,8 @@ menu equipment
 
 	string s_secondary
 	{
-		pos	"438 190"
-		align	uc
+		pos	"438 206"
+		align	cc
 		color "1 1 1 0.6"
 		font	"f_big"
 		string	"_Secondary"
@@ -1263,8 +1263,8 @@ menu equipment
 
 	string s_misc
 	{
-		pos	"438 245"
-		align	uc
+		pos	"438 261"
+		align	cc
 		color "1 1 1 0.6"
 		font	"f_big"
 		string	"_Misc"
@@ -1283,8 +1283,8 @@ menu equipment
 
 	string s_armor
 	{
-		pos	"438 300"
-		align	uc
+		pos	"438 316"
+		align	cc
 		color "1 1 1 0.6"
 		font	"f_big"
 		string	"_Armor"

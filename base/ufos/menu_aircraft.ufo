@@ -404,8 +404,8 @@ menu aircraft_equip
 	string airequip_button_weapons_str
 	{
 		string "_Weapons"
-		pos		"554 20"
-		align	uc
+		pos		"554 30"
+		align	cc
 	}
 
 	pic airequip_button_shields
@@ -421,8 +421,8 @@ menu aircraft_equip
 	string airequip_button_shields_str
 	{
 		string "_Armour"
-		pos		"734 20"
-		align	uc
+		pos		"734 30"
+		align	cc
 	}
 
 	pic airequip_button_items
@@ -438,8 +438,8 @@ menu aircraft_equip
 	string airequip_button_items_str
 	{
 		string "_Items"
-		pos		"914 20"
-		align	uc
+		pos		"914 30"
+		align	cc
 	}
 
 	text airequip_list

@@ -238,8 +238,8 @@ menu transfer
 
 	string s_items
 	{
-		pos	"699 605"
-		align	uc
+		pos	"699 616"
+		align	cc
 		color "1 1 1 0.6"
 		font	"f_normal"
 		string	"_Equipment"
@@ -258,8 +258,8 @@ menu transfer
 
 	string s_humans
 	{
-		pos	"699 665"
-		align	uc
+		pos	"699 676"
+		align	cc
 		color "1 1 1 0.6"
 		font	"f_normal"
 		string	"_Employees"
@@ -278,8 +278,8 @@ menu transfer
 
 	string s_aliens
 	{
-		pos	"884 605"
-		align	uc
+		pos	"884 616"
+		align	cc
 		color "1 1 1 0.6"
 		font	"f_normal"
 		string	"_Aliens"
@@ -298,8 +298,8 @@ menu transfer
 
 	string s_crafts
 	{
-		pos	"884 665"
-		align	uc
+		pos	"884 676"
+		align	cc
 		color "1 1 1 0.6"
 		font	"f_normal"
 		string	"_Aircraft"
@@ -318,8 +318,8 @@ menu transfer
 
 	string s_emptycraftstorage
 	{
-		pos	"719 730"
-		align	uc
+		pos	"719 741"
+		align	cc
 		color "1 1 1 0.6"
 		font	"f_normal"
 		string	"_Unload"
@@ -338,8 +338,8 @@ menu transfer
 
 	string s_starttrans
 	{
-		pos	"864 730"
-		align	uc
+		pos	"864 741"
+		align	cc
 		color "1 1 1 0.6"
 		font	"f_normal"
 		string	"_Transfer"

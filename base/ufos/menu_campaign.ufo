@@ -74,8 +74,8 @@ menu campaigns
 		font	f_menubig
 		color	"0 0.5 0 1"
 		string	"_Start campaign"
-		pos	"208 330"
-		align	uc
+		pos	"208 352"
+		align	cc
 	}
 
 	pic c_button_exit
@@ -94,8 +94,8 @@ menu campaigns
 		font	f_menubig
 		color	"0 0.5 0 1"
 		string	"_Back"
-		pos	"208 460"
-		align	uc
+		pos	"208 482"
+		align	cc
 	}
 
 	text campaignlist

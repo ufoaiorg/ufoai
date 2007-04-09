@@ -534,8 +534,8 @@ menu employees
 
 	string s_soldiers
 	{
-		pos	"679 595"
-		align	uc
+		pos	"679 611"
+		align	cc
 		color "1 1 1 0.6"
 		font	"f_big"
 		string	"_Soldiers"
@@ -554,8 +554,8 @@ menu employees
 
 	string s_scientists
 	{
-		pos	"679 665"
-		align	uc
+		pos	"679 681"
+		align	cc
 		color "1 1 1 0.6"
 		font	"f_big"
 		string	"_Scientists"
@@ -574,8 +574,8 @@ menu employees
 
 	string s_workers
 	{
-		pos	"829 595"
-		align	uc
+		pos	"829 611"
+		align	cc
 		color "1 1 1 0.6"
 		font	"f_big"
 		string	"_Workers"
@@ -594,8 +594,8 @@ menu employees
 
 	string s_medics
 	{
-		pos	"829 665"
-		align	uc
+		pos	"829 681"
+		align	cc
 		color "1 1 1 0.6"
 		font	"f_big"
 		string	"_Medics"

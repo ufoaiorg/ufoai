@@ -64,8 +64,8 @@ menu tutorials
 		font	f_menubig
 		color	"0 0.5 0 1"
 		string	"_Back"
-		pos	"768 530"
-		align	uc
+		pos	"768 552"
+		align	cc
 	}
 
 	text tutoriallist

@@ -61,8 +61,8 @@ menu multiplayer
 		font	f_menubig
 		color	"0 0.5 0 1"
 		string	"_Join"
-		pos	"208 230"
-		align	uc
+		pos	"208 252"
+		align	cc
 	}
 
 	pic button_create
@@ -81,8 +81,8 @@ menu multiplayer
 		font	f_menubig
 		color	"0 0.5 0 1"
 		string	"_Create"
-		pos	"208 300"
-		align	uc
+		pos	"208 322"
+		align	cc
 	}
 
 	pic button_team
@@ -101,8 +101,8 @@ menu multiplayer
 		font	f_menubig
 		color	"0 0.5 0 1"
 		string	"_Team"
-		pos	"208 370"
-		align	uc
+		pos	"208 392"
+		align	cc
 	}
 
 	pic button_exit
@@ -121,8 +121,8 @@ menu multiplayer
 		font	f_menubig
 		color	"0 0.5 0 1"
 		string	"_Back"
-		pos	"208 460"
-		align	uc
+		pos	"208 482"
+		align	cc
 	}
 
 	func init
@@ -486,8 +486,8 @@ menu serverinfo
 		font	f_menubig
 		color	"0 0.5 0 1"
 		string	"_Bookmark"
-		pos	"208 280"
-		align	uc
+		pos	"208 302"
+		align	cc
 	}
 
 	pic button_connect
@@ -506,8 +506,8 @@ menu serverinfo
 		font	f_menubig
 		color	"0 0.5 0 1"
 		string	"_Connect"
-		pos	"208 370"
-		align	uc
+		pos	"208 392"
+		align	cc
 	}
 
 	pic button_back
@@ -526,8 +526,8 @@ menu serverinfo
 		font	f_menubig
 		color	"0 0.5 0 1"
 		string	"_Back"
-		pos	"208 460"
-		align	uc
+		pos	"208 482"
+		align	cc
 	}
 
 	func init

@@ -67,8 +67,8 @@ menu singleplayer
 		font	f_menubig
 		color	"0 0.5 0 1"
 		string	"_New game"
-		pos	"768 180"
-		align	uc
+		pos	"768 202"
+		align	cc
 	}
 
 	pic button_load
@@ -87,8 +87,8 @@ menu singleplayer
 		font	f_menubig
 		color	"0 0.5 0 1"
 		string	"_Load"
-		pos	"768 250"
-		align	uc
+		pos	"768 272"
+		align	cc
 	}
 
 	pic button_save
@@ -107,8 +107,8 @@ menu singleplayer
 		font	f_menubig
 		color	"0 0.5 0 1"
 		string	"_Save"
-		pos	"768 320"
-		align	uc
+		pos	"768 342"
+		align	cc
 	}
 
 	pic button_back
@@ -127,8 +127,8 @@ menu singleplayer
 		font	f_menubig
 		color	"0 0.5 0 1"
 		string	"_Back"
-		pos	"768 530"
-		align	uc
+		pos	"768 552"
+		align	cc
 	}
 }
 
@@ -151,8 +151,8 @@ menu singleplayerInGame extends singleplayer
 		font	f_menubig
 		color	"0 0.5 0 1"
 		string	"_Continue"
-		pos	"768 180"
-		align	uc
+		pos	"768 202"
+		align	cc
 	}
 
 	pic button_options
@@ -171,16 +171,16 @@ menu singleplayerInGame extends singleplayer
 		font	f_menubig
 		color	"0 0.5 0 1"
 		string	"_Options"
-		pos	"768 390"
-		align	uc
+		pos	"768 412"
+		align	cc
 	}
 	string string_back
 	{
 		font	f_menubig
 		color	"0 0.5 0 1"
 		string	"_Exit"
-		pos	"768 530"
-		align	uc
+		pos	"768 552"
+		align	cc
 	}
 }
 
@@ -253,8 +253,8 @@ menu singleplayermission
 		font	f_menubig
 		color	"0 0.5 0 1"
 		string	"_Continue"
-		pos	"768 180"
-		align	uc
+		pos	"768 202"
+		align	cc
 	}
 
 	pic button_abort
@@ -273,8 +273,8 @@ menu singleplayermission
 		font	f_menubig
 		color	"0 0.5 0 1"
 		string	"_Abort"
-		pos	"768 250"
-		align	uc
+		pos	"768 272"
+		align	cc
 	}
 
 	pic button_retry
@@ -293,8 +293,8 @@ menu singleplayermission
 		font	f_menubig
 		color	"0 0.5 0 1"
 		string	"_Retry"
-		pos	"768 320"
-		align	uc
+		pos	"768 342"
+		align	cc
 	}
 
 	pic button_options
@@ -313,8 +313,8 @@ menu singleplayermission
 		font	f_menubig
 		color	"0 0.5 0 1"
 		string	"_Options"
-		pos	"768 390"
-		align	uc
+		pos	"768 412"
+		align	cc
 	}
 
 	pic button_exit
@@ -333,8 +333,8 @@ menu singleplayermission
 		font	f_menubig
 		color	"0 0.5 0 1"
 		string	"_Exit"
-		pos	"768 530"
-		align	uc
+		pos	"768 552"
+		align	cc
 	}
 }
 
@@ -494,8 +494,8 @@ menu load
 		font	f_menubig
 		color	"0 0.5 0 1"
 		string	"_Back"
-		pos	"768 530"
-		align	uc
+		pos	"768 552"
+		align	cc
 	}
 
 	func init
@@ -677,8 +677,8 @@ menu save
 		font	f_menubig
 		color	"0 0.5 0 1"
 		string	"_Back"
-		pos	"768 530"
-		align	uc
+		pos	"768 552"
+		align	cc
 	}
 
 	func init
