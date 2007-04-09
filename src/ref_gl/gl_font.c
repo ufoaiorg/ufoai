@@ -29,6 +29,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static const SDL_Color color = { 255, 255, 255, 0 };	/* The 4. value is unused */
 static int numFonts = 0;
 
+static fontCache_t fontCache[MAX_FONT_CACHE];
+static fontCache_t *hash[MAX_FONT_CACHE];
+
 /* holds the gettext string */
 static char buf[BUF_SIZE];
 static int numInCache = 0;

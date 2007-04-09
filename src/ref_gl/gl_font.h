@@ -26,9 +26,6 @@ typedef struct fontCache_s {
 	GLuint texPos;				/**< the bound texture number/identifier*/
 } fontCache_t;
 
-fontCache_t fontCache[MAX_FONT_CACHE];
-fontCache_t *hash[MAX_FONT_CACHE];
-
 typedef struct {
 	char *name;
 	int renderStyle;

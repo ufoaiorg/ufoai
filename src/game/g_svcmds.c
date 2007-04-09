@@ -363,7 +363,7 @@ static void SVCmd_StartGame_f (void)
  */
 extern void ServerCommand (void)
 {
-	char *cmd;
+	const char *cmd;
 
 	cmd = gi.argv(1);
 	if (Q_stricmp(cmd, "test") == 0)

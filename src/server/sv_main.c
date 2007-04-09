@@ -750,8 +750,9 @@ void SV_CheckTimeouts (void)
  * @sa G_RunFrame
  * @sa SV_Frame
  */
-void SV_RunGameFrame (void)
+qboolean SV_RunGameFrame (void)
 {
+	qboolean gameEnd = qfalse;
 	if (host_speeds->value)
 		time_before_game = Sys_Milliseconds();
 
@@ -762,10 +763,12 @@ void SV_RunGameFrame (void)
 	sv.framenum++;
 	sv.time = sv.framenum * 100;
 
-	ge->RunFrame();
+	gameEnd = ge->RunFrame();
 
 	if (host_speeds->value)
 		time_after_game = Sys_Milliseconds();
+
+	return gameEnd;
 }
 
 /**

@@ -179,7 +179,7 @@ extern void G_PrintStats (edict_t* victim, edict_t* attacker, fireDef_t* fd)
  * @note Searches beginning at the edict after from, or the beginning if NULL
  * @return NULL will be returned if the end of the list is reached.
  */
-edict_t *G_Find(edict_t * from, int fieldofs, char *match)
+edict_t *G_Find (edict_t * from, int fieldofs, char *match)
 {
 	char *s;
 
@@ -208,7 +208,7 @@ edict_t *G_Find(edict_t * from, int fieldofs, char *match)
  * @param[in] org origin
  * @param[in] rad radius to search an edict in
  */
-edict_t *G_FindRadius(edict_t * from, vec3_t org, float rad, entity_type_t type)
+edict_t *G_FindRadius (edict_t * from, vec3_t org, float rad, entity_type_t type)
 {
 	vec3_t eorg;
 	int j;
@@ -243,7 +243,7 @@ edict_t *G_FindRadius(edict_t * from, vec3_t org, float rad, entity_type_t type)
  */
 #define MAXCHOICES	8
 
-edict_t *G_PickTarget(char *targetname)
+edict_t *G_PickTarget (char *targetname)
 {
 	edict_t *ent = NULL;
 	int num_choices = 0;
@@ -282,7 +282,7 @@ void Think_Delay(edict_t * ent)
 /**
  * @brief This is just a convenience function for making temporary vectors for function calls
  */
-float *tv(float x, float y, float z)
+float *tv (float x, float y, float z)
 {
 	static int index;
 	static vec3_t vecs[8];
@@ -304,7 +304,7 @@ float *tv(float x, float y, float z)
 /**
  * @brief This is just a convenience function for printing vectors
  */
-char *vtos(vec3_t v)
+char *vtos (vec3_t v)
 {
 	static int index;
 	static char str[8][32];
