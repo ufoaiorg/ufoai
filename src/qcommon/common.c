@@ -1403,10 +1403,11 @@ extern void Com_SetGameType (void)
 			if (dedicated->value)
 				Com_Printf("set gametype to: %s\n", gt->id);
 			for (j = 0, list = gt->cvars; j < gt->num_cvars; j++, list++) {
-				Cvar_Set(list->name, list->value);
+				Cvar_ForceSet(list->name, list->value);
 				if (dedicated->value)
 					Com_Printf("  %s = %s\n", list->name, list->value);
 			}
+			Com_Printf("Make sure to restart the map if you switched during a game\n");
 			break;
 		}
 	}
