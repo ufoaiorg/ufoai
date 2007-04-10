@@ -652,7 +652,7 @@ extern qboolean E_DeleteEmployee (employee_t *employee, employeeType_t type)
 
 		if (type == EMPL_SOLDIER) {
 			for (i = 0; i < gd.numAircraft; i++)
-				AIR_DecreaseAircraftTeamIdxGreaterThan(CL_AircraftGetFromIdx(i),idx);
+				AIR_DecreaseAircraftTeamIdxGreaterThan(AIR_AircraftGetFromIdx(i),idx);
 		}
 	} else {
 		Com_DPrintf("E_DeleteEmployee: Employee wasn't in the global list.\n");

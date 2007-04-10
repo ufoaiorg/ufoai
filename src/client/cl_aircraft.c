@@ -579,7 +579,7 @@ extern void AIR_AircraftSelect (aircraft_t* aircraft)
 /**
  * @brief Console command binding for AIR_AircraftSelect().
  */
-extern void CL_AircraftSelect_f (void)
+extern void AIR_AircraftSelect_f (void)
 {
 	/* calling from console? with no baseCurrent? */
 	if (!baseCurrent || !baseCurrent->numAircraftInBase || !baseCurrent->hasHangar) {
@@ -1140,7 +1140,7 @@ void AIM_AircraftEquipmenuClick_f (void)
 				Com_sprintf(desc, sizeof(desc), _((*list)->name));
 				AIR_AircraftSelect(aircraft);
 				noparams = qtrue; /* used for AIM_AircraftEquipmenuMenuInit_f */
-				AIM_AircraftEquipmenuMenuInit_f();
+				AIM_AircraftEquipmenuInit_f();
 				break;
 			}
 			/* next item in the tech pointer list */
