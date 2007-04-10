@@ -450,7 +450,7 @@ extern employee_t* E_GetUnassignedEmployee (const base_t* const base, employeeTy
 }
 
 /**
- * @brief Hires an employee
+ * @brief Hires an employee.
  * @param[in] base Which base the employee should be hired in
  * @param[in] type Which employee type do we search
  * @param[in] idx Which employee id (in global employee array) See E_GetUnhiredEmployee for usage.
@@ -482,6 +482,9 @@ extern qboolean E_HireEmployee (const base_t* const base, employeeType_t type, i
 		/* Now uses quarter space. */
 		employee->hired = qtrue;
 		employee->baseIDHired = base->idx;
+		/* If we hired EMPL_WORKER update production times in production queue. */
+		if (type == EMPL_WORKER)
+			PR_UpdateProductionTime(base->idx);
 		return qtrue;
 	}
 	return qfalse;
@@ -525,6 +528,9 @@ extern qboolean E_UnhireEmployee (const base_t* const base, employeeType_t type,
 		Com_DestroyInventory(&employee->inv);
 		/* unneeded, Com_DestroyInventory does this (more or less)
 		memset(&employee->inv, 0, sizeof(inventory_t)); */
+		/* If we fired EMPL_WORKER update production times in production queue. */
+		if (type == EMPL_WORKER)
+			PR_UpdateProductionTime(base->idx);
 		return qtrue;
 	} else
 		Com_Printf("Could not get hired employee '%i' from base '%i'\n", idx, base->idx);

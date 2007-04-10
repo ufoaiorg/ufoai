@@ -171,11 +171,6 @@ typedef struct base_s {
 	qboolean hasQuarters;		/**< does this base has quarters */
 	qboolean hasWorkshop;		/**< does this base has a workshop */
 
-	int usedLab;				/**< How many space in the lab(s) has been used. */
-#if 0
-	int usedWorkshop;			/**< How many space in the workshop(s) has been used. */
-#endif
-
 	/** this is here to allocate the needed memory for the buildinglist */
 	char allBuildingsList[MAX_LIST_CHAR];
 
@@ -258,22 +253,16 @@ int B_GetNumberOfBuildingsInBaseByType(int base_idx, buildingType_t type);
 
 int B_ItemInBase(int item_idx, base_t *base);
 
-/* 20070315 Zenerka: fixed B_ItemInBase(), B_ItemInBase2() is not necessary anymore. */
-#if 0
-int B_ItemInBase2(int item_idx, base_t *base);
-#endif
-
 aircraft_t *B_GetAircraftFromBaseByIndex(base_t* base, int index);
 void B_ReviveSoldiersInBase(base_t* base); /* TODO */
 
-#if 0
-/* 20070303 Zenerka: Transfer stuff moved to cl_transfer.c|h. */
-void B_TransferAircraftMenu(aircraft_t* aircraft);
-void B_TransferEnd(aircraft_t* aircraft);
-#endif
-
 int B_GetAvailableQuarterSpace(const base_t* const base);
+#if 0
+/*
+@10042007 Zenerka - not needed/used anymore.
+*/
 int B_GetAvailableLabSpace(const base_t* const base);
+#endif
 int B_GetEmployeeCount(const base_t* const base);
 
 qboolean B_CheckBuildingTypeStatus(const base_t* const base, buildingType_t type, buildingStatus_t status, int *cnt);

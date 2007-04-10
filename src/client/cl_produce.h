@@ -42,6 +42,7 @@ typedef struct production_s
 	signed int objID;	/**< Object id from global csi.ods struct. (i.e. item-idx) */
 	signed int amount;	/**< How much are we producing. */
 	int timeLeft;		/**< Get this from tech. */
+	int workers;		/**< Amount of workers assigned to the production. */
 	qboolean items_cached;	/**< If true the items required for production (of _one_ objID item) have been removed from production.
 				 * They need to be added to the storage again if this queue is stopped or removed.
 				 * The item-numbers from the requirement need to be multipled with 'amount' in order to get the overall number of cached items. */
@@ -62,5 +63,6 @@ void PR_ProductionRun(void);
 void PR_ProductionInit(void);
 qboolean PR_ProductionAllowed(void);
 void PR_Init(void);
+void PR_UpdateProductionTime(int base_idx);
 
 #endif /* CLIENT_CL_PROOUCE */

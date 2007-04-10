@@ -1,6 +1,7 @@
 /**
  * @file cl_basemanagement.c
  * @brief Handles everything that is located in or accessed trough a base.
+ * @note Basemanagement functions prefix: B_
  *
  * See "base/ufos/basemanagement.ufo", "base/ufos/menu_bases.ufo" and "base/ufos/menu_buildings.ufo" for the underlying content.
  * @todo New game does not reset basemangagement
@@ -107,11 +108,15 @@ extern int B_GetAvailableQuarterSpace (const base_t* const base)
 	return cnt;
 }
 
+#if 0
 /**
  * @brief Sums up max_employees laboratories values
  * @param[in] base The base to count the free space in.
  * @return int The total number of  in the labs.
  */
+/*
+@10042007 Zenerka - not needed/used anymore.
+*/
 extern int B_GetAvailableLabSpace (const base_t* const base)
 {
 	int cnt = 0, i;
@@ -126,6 +131,7 @@ extern int B_GetAvailableLabSpace (const base_t* const base)
 
 	return cnt;
 }
+#endif
 
 /**
  * @brief
@@ -311,6 +317,11 @@ static void B_BuildingDestroy_f (void)
 
 	/* Update capacities. */
 	B_UpdateBaseCapacities (cap, baseCurrent);
+
+	/* Update production times in queue if we destroyed B_WORKSHOP. */
+	if (b1->buildingType == B_WORKSHOP) {
+		PR_UpdateProductionTime(baseCurrent->idx);
+	}
 }
 
 /**
@@ -462,6 +473,8 @@ static void B_UpdateBaseBuildingStatus (building_t* building, base_t* base, buil
 		if (building->buildingStatus == B_STATUS_WORKING)
 			base->hasWorkshop = qtrue;
 		B_UpdateBaseCapacities (CAP_WORKSPACE, base);
+		/* Update production times in queue. */
+		PR_UpdateProductionTime(base->idx);
 		break;
 	case B_HOSPITAL:
 		if (building->buildingStatus == B_STATUS_WORKING)
@@ -488,6 +501,10 @@ extern void B_SetUpBase (void)
 	building_t *building = NULL;
 
 	assert(baseCurrent);
+	/* Resent current capacities. */
+	for (i = 0; i < MAX_CAP; i++)
+		baseCurrent->capacities[i].cur = 0;
+
 	/* update the building-list */
 	B_BuildingInit();
 	Com_DPrintf("Set up for %i\n", baseCurrent->idx);
@@ -2279,6 +2296,71 @@ static void B_CheckMaxBases_f (void)
 }
 
 /**
+ * @brief Get building type by base capacity.
+ * @param[in] cap Enum type of baseCapacities_t.
+ * @return Enum type of buildingType_t.
+ * @sa B_UpdateBaseCapacities
+ * @sa B_PrintCapacities_f
+ */
+static buildingType_t B_GetBuildingTypeByCapacity (baseCapacities_t cap)
+{
+	switch (cap) {
+	case CAP_ALIENS:
+		return B_ALIEN_CONTAINMENT;
+/*	case CAP_AIRCRAFTS_SMALL:
+		return B_SMALL_HANGAR;
+*/
+	case CAP_AIRCRAFTS_BIG:
+		return B_HANGAR;
+	case CAP_EMPLOYEES:
+		return B_QUARTERS;
+	case CAP_ITEMS:
+		return B_STORAGE;
+	case CAP_LABSPACE:
+		return B_LAB;
+	case CAP_WORKSPACE:
+		return B_WORKSHOP;
+	case CAP_HOSPSPACE:
+		return B_HOSPITAL;
+	default:
+		return B_MISC;
+	}
+}
+
+#ifdef DEBUG
+/**
+ * @brief Debug function for printing all capacities in given base.
+ */
+static void B_PrintCapacities_f (void)
+{
+	int i, j;
+	base_t *base = NULL;
+	buildingType_t building;
+	
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <baseID>\n", Cmd_Argv(0));
+		return;
+	}
+
+	i = atoi(Cmd_Argv(1));
+	if (i >= gd.numBases) {
+		Com_Printf("invalid baseID (%s)\n", Cmd_Argv(1));
+		return;
+	}
+	base = gd.bases + i;
+	for (i = 0; i < MAX_CAP; i++) {
+		building = B_GetBuildingTypeByCapacity(i);
+		for (j = 0; j < gd.numBuildingTypes; j++) {
+			if (gd.buildingTypes[j].buildingType == building)
+				break;
+		}
+		Com_Printf("Building: %s, capacity max: %i, capacity cur: %i\n",
+		gd.buildingTypes[j].id, base->capacities[i].max, base->capacities[i].cur);
+	}
+}
+#endif
+
+/**
  * @brief Resets console commands.
  * @sa MN_ResetMenus
  */
@@ -2312,6 +2394,9 @@ extern void B_ResetBaseManagement (void)
 	Cmd_AddCommand("buildinglist", B_BuildingList_f, NULL);
 	Cmd_AddCommand("pack_initial", B_PackInitialEquipment_f, NULL);
 	Cmd_AddCommand("assign_initial", B_AssignInitial_f, NULL);
+#ifdef DEBUG
+	Cmd_AddCommand("debug_capacities", B_PrintCapacities_f, "Debug function to show all capacities in given base");
+#endif
 
 	mn_base_count = Cvar_Get("mn_base_count", "0", 0, NULL);
 }
@@ -2480,39 +2565,11 @@ int B_ItemInBase (int item_idx, base_t *base)
 }
 
 /**
- * @brief Get building type by base capacity.
- * @param[in] cap Enum type of baseCapacities_t.
- * @return Enum type of buildingType_t.
- * @sa B_UpdateBaseCapacities
- */
-static buildingType_t B_GetBuildingTypeByCapacity (baseCapacities_t cap)
-{
-	switch (cap) {
-	case CAP_ALIENS:
-		return B_ALIEN_CONTAINMENT;
-	case CAP_AIRCRAFTS_SMALL:
-	case CAP_AIRCRAFTS_BIG:
-		return B_HANGAR;
-	case CAP_EMPLOYEES:
-		return B_QUARTERS;
-	case CAP_ITEMS:
-		return B_STORAGE;
-	case CAP_LABSPACE:
-		return B_LAB;
-	case CAP_WORKSPACE:
-		return B_WORKSHOP;
-	case CAP_HOSPSPACE:
-		return B_HOSPITAL;
-	default:
-		return B_MISC;
-	}
-}
-
-/**
  * @brief Updates base capacities.
  * @param[in] cap Enum type of baseCapacities_t.
  * @param[in] *base Pointer to the base.
  * @sa B_UpdateBaseBuildingStatus
+ * @sa B_BuildingDestroy_f
  */
 void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 {

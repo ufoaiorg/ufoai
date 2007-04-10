@@ -1,6 +1,7 @@
 /**
  * @file cl_produce.c
  * @brief Single player production stuff
+ * @note Production stuff functions prefix: PR_
  */
 
 /*
@@ -33,26 +34,110 @@ static int produceCategory = 0;
 static qboolean selectedQueueItem 	= qfalse;
 static int selectedIndex 			= -1;
 
-/**
- * @TODO: Now that we have the Workshop in basemanagement.ufo
- * we need to check whether the player has already set this building up
- * otherwise he won't be allowed to produce more equipment stuff
- */
-
 /* 20060921 LordHavoc: added PRODUCE_DIVISOR to allow reducing prices below 1x */
 static const int PRODUCE_FACTOR = 1;
 static const int PRODUCE_DIVISOR = 2;
 
-static cvar_t* mn_production_limit;
-static cvar_t* mn_production_workers;
+/** @brief Default amount of workers, the produceTime for technologies is defined. */
+/** @note producetime for technology entries is the time for PRODUCE_WORKERS amount of workers. */
+static const int PRODUCE_WORKERS = 10;
+
+/** @brief Number of blank lines between queued items and tech list. */
+static const int QUEUE_SPACERS = 2;
+
+static cvar_t* mn_production_limit;		/**< Maximum items in queue. */
+static cvar_t* mn_production_workers;		/**< Amount of hired workers in base. */
 
 static menuNode_t *node1, *node2, *prodlist;
 
-/** @brief number of blank lines between queued items and tech list */
-#define QUEUE_SPACERS 2
+/**
+ * @brief Calculates production time.
+ * @param[in] *base Pointer to the base with given production.
+ * @param[in] *tech Pointer to the technology for given production.
+ * @sa PR_UpdateProductionTime
+ * @sa PR_QueueNew
+ */
+static int PR_CalculateProductionTime (base_t *base, technology_t *tech)
+{
+	signed int allworkers = 0, maxworkers = 0;
+	signed int timeDefault = 0, time = 0;
+	float timeTemp = 0;
+	assert (base);
+	assert (tech);
+
+	/* Check how many workers hired in this base. */
+	allworkers = E_CountHired(base, EMPL_WORKER);
+	/* We will not use more workers than base capacity. */
+	if (allworkers > base->capacities[CAP_WORKSPACE].max) {
+		maxworkers = base->capacities[CAP_WORKSPACE].max;
+	} else {
+		maxworkers = allworkers;
+	}
+	
+	timeDefault = tech->produceTime; /* This is the default production time for 10 workers. */
+	if (maxworkers == 10) {
+		/* Return default time because we can use only 10 workers. */ 
+		Com_DPrintf("PR_CalculateProductionTime()... workers: %i, tech: %s, time: %i\n",
+		maxworkers, tech->id, timeDefault);
+		return timeDefault;
+	} else {
+		/* Calculate the real time used for our amount of workers. */
+		/* NOTE: If somebody does not understand such algorithm here
+		   (which is 100% realistic :>), ask me. Zenerka. */
+		timeTemp = (maxworkers - PRODUCE_WORKERS);
+		timeTemp = timeTemp / PRODUCE_WORKERS;
+		timeTemp = timeTemp * timeDefault;
+		time = timeDefault - (int)timeTemp;
+		Com_DPrintf("PR_CalculateProductionTime()... workers: %i, tech: %s, time: %i\n",
+		maxworkers, tech->id, time);
+		/* Don't allow to return less time than 1 hour. */
+		if (time < 1)
+			return 1;
+		else
+			return time;
+	}
+}
+ 
+/**
+ * @brief Updates production time for all items in current queue.
+ * @param[in] base_idx Index of base in global array.
+ * @note This should be called whenever workers amount is going to
+ * @note change (or base capacity going to update).
+ * @sa B_BuildingDestroy_f
+ * @sa B_UpdateBaseBuildingStatus
+ */
+void PR_UpdateProductionTime (int base_idx)
+{
+	technology_t *tech = NULL;
+	base_t *base = NULL;
+	int i, time = 0, timeTemp = 0;
+	
+	base = &gd.bases[base_idx];
+	
+	if (!base) {
+#ifdef DEBUG
+		Com_Printf("PR_UpdateProductionTime()... baseCurrent does not exist!\n");
+#endif
+		return;
+	}
+	assert (base);
+	
+	/* Loop through all productions in queue and adjust production time. */
+	if (gd.productions[base_idx].numItems > 0) {
+		/* Don't change anything for first (current) item in queue. (that's why i = 1)*/
+		for (i = 1; i < gd.productions[base_idx].numItems; i++) {
+			timeTemp = gd.productions[base_idx].items[i].timeLeft;
+			tech = RS_GetTechByProvided(csi.ods[gd.productions[base_idx].items[i].objID].id);
+			time = PR_CalculateProductionTime(base, tech);
+			gd.productions[base_idx].items[i].timeLeft = time;
+			Com_DPrintf("PR_UpdateProductionTime()... updating production time for %s. Original time: %i, new time: %i\n", 
+			csi.ods[gd.productions[base_idx].items[i].objID].id, timeTemp, gd.productions[base_idx].items[i].timeLeft);
+		}
+	}
+}
 
 /**
- * @brief Check if the production requirements are met for a defined amount.
+ * @brief Checks if the production requirements are met for a defined amount.
  * @param[in] amount How many items are planned to be produced.
  * @param[in] req The production requirements of the item that is to be produced.
  * @return 0: If nothing can be produced. 1+: If anything can be produced. 'amount': Maximum.
@@ -83,7 +168,7 @@ static int PR_RequirementsMet (int amount, requirements_t *req)
 }
 
 /**
- * @brief Remove or add the requried items from/to the current base.
+ * @brief Remove or add the required items from/to the current base.
  * @param[in] amount How many items are planned to be added (positive number) or removed (negative number).
  * @param[in] req The production requirements of the item that is to be produced. Thes included numbers are multiplied with 'amount')
  * @todo This doesn't check yet if there are more items removed than are in the base-storage (might be fixed if we used a storage-fuction with checks, otherwise we can make it a 'contition' in order to run this function.
@@ -117,7 +202,11 @@ static void PR_UpdateRequiredItemsInBasestorage (int amount, requirements_t *req
 }
 
 /**
- * @brief add a new item to the bottom of the production queue
+ * @brief Add a new item to the bottom of the production queue.
+ * @param[in] *queue
+ * @param[in] objID
+ * @param[in] amount
+ * @return
  */
 static production_t *PR_QueueNew (production_queue_t *queue, signed int objID, signed int amount)
 {
@@ -131,7 +220,7 @@ static production_t *PR_QueueNew (production_queue_t *queue, signed int objID, s
 	numWorkshops = B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, B_WORKSHOP);
 
 	if (queue->numItems >= numWorkshops * MAX_PRODUCTIONS_PER_WORKSHOP) {
-		Com_Printf("PR_QueueNew: Max number of productions reached in %i workshops - build more workshops\n", numWorkshops);
+		MN_Popup(_("Notice"), _("You cannot queue more items.\nBuild more workshops.\n"));
 		return NULL;
 	}
 
@@ -146,7 +235,7 @@ static production_t *PR_QueueNew (production_queue_t *queue, signed int objID, s
 	if (t->produceTime < 0)
 		return NULL;
 	else
-		prod->timeLeft = t->produceTime;
+		prod->timeLeft = PR_CalculateProductionTime(baseCurrent, t);
 
 	queue->numItems++;
 	return prod;
@@ -189,7 +278,10 @@ static void PR_QueueDelete (production_queue_t *queue, int index)
 }
 
 /**
- * @brief move the given queue item in the given direction
+ * @brief Moves the given queue item in the given direction.
+ * @param[in] *queue
+ * @param[in] index
+ * @param[in] dir
  */
 static void PR_QueueMove (production_queue_t *queue, int index, int dir)
 {
@@ -217,8 +309,8 @@ static void PR_QueueMove (production_queue_t *queue, int index, int dir)
 }
 
 /**
- * @brief queue the next production in the queue
- * @param base the index of the base
+ * @brief Queues the next production in the queue.
+ * @param[in] base The index of the base
  */
 static void PR_QueueNext (int base)
 {
@@ -239,7 +331,7 @@ static void PR_QueueNext (int base)
 }
 
 /**
- * @brief Checks whether an item is finished
+ * @brief Checks whether an item is finished.
  * @sa CL_CampaignRun
  */
 void PR_ProductionRun (void)
@@ -248,6 +340,10 @@ void PR_ProductionRun (void)
 	objDef_t *od;
 	technology_t *t;
 	production_t *prod;
+
+	/* Loop through all founded bases. Then check productions
+	   in global data array. Then decrease timeLeft and check
+	   wheter an item is produced. Then add to base storage. */
 
 	for (i = 0; i < MAX_BASES; i++) {
 		if (!gd.bases[i].founded)
@@ -280,7 +376,7 @@ void PR_ProductionRun (void)
 			gd.bases[i].storage.num[prod->objID]++;
 
 			/* queue the next production */
-			if (prod->amount<=0) {
+			if (prod->amount <= 0) {
 				Com_sprintf(messageBuffer, sizeof(messageBuffer), _("The production of %s has finished."),od->name);
 				MN_AddNewMessage(_("Production finished"), messageBuffer, qfalse, MSG_PRODUCTION, od->tech);
 				PR_QueueNext(i);
@@ -290,8 +386,8 @@ void PR_ProductionRun (void)
 }
 
 /**
- * @brief Prints information about the selected item in production
- * @note -1 for objID means that there ic no production in this base
+ * @brief Prints information about the selected item in production.
+ * @note -1 for objID means that there is no production in this base.
  */
 static void PR_ProductionInfo (void)
 {
@@ -299,6 +395,7 @@ static void PR_ProductionInfo (void)
 	technology_t *t;
 	objDef_t *od;
 	int objID;
+	int time;
 
 	assert(baseCurrent);
 
@@ -316,10 +413,15 @@ static void PR_ProductionInfo (void)
 			Com_sprintf(productionInfo, sizeof(productionInfo), _("No item selected"));
 			Cvar_Set("mn_item", "");
 		} else {
+			/* If item is first in queue, use timeLeft as time, otherwise calculate. */
+			if (objID == gd.productions[baseCurrent->idx].items[0].objID)
+				time = gd.productions[baseCurrent->idx].items[0].timeLeft;
+			else
+				time = PR_CalculateProductionTime(baseCurrent, t);
 			Com_sprintf(productionInfo, sizeof(productionInfo), "%s\n", od->name);
 			Q_strcat(productionInfo, va(_("Costs per item\t%i c\n"), (od->price*PRODUCE_FACTOR/PRODUCE_DIVISOR)),
 				sizeof(productionInfo) );
-			Q_strcat(productionInfo, va(_("Productiontime\t%ih\n"), (t->produceTime)),
+			Q_strcat(productionInfo, va(_("Productiontime\t%ih\n"), time),
 				sizeof(productionInfo) );
 			CL_ItemDescription(objID);
 		}
@@ -542,10 +644,13 @@ static void PR_ProductionSelect_f (void)
 }
 
 /**
- * @brief Will fill the list of produceable items
+ * @brief Will fill the list of produceable items.
+ * @note Some of Production Menu related cvars are being set here.
  */
 static void PR_ProductionList_f (void)
 {
+	char tmpbuf[64];
+
 	/* can be called from everywhere without a started game */
 	if (!baseCurrent ||!curCampaign)
 		return;
@@ -553,7 +658,15 @@ static void PR_ProductionList_f (void)
 	PR_ProductionSelect_f();
 	PR_ProductionInfo();
 	Cvar_SetValue("mn_production_limit", MAX_PRODUCTIONS_PER_WORKSHOP * B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, B_WORKSHOP));
-	Cvar_SetValue("mn_production_workers", E_CountHired(baseCurrent, EMPL_WORKER));
+	Cvar_SetValue("mn_production_basecap", baseCurrent->capacities[CAP_WORKSPACE].max);
+	/* Set amount of workers - all/ready to work (determined by base capacity. */
+	if (baseCurrent->capacities[CAP_WORKSPACE].max >= E_CountHired(baseCurrent, EMPL_WORKER))
+		baseCurrent->capacities[CAP_WORKSPACE].cur = E_CountHired(baseCurrent, EMPL_WORKER);
+	else
+		baseCurrent->capacities[CAP_WORKSPACE].cur = baseCurrent->capacities[CAP_WORKSPACE].max;
+	Com_sprintf(tmpbuf, sizeof(tmpbuf), "%i/%i", E_CountHired(baseCurrent, EMPL_WORKER),
+	baseCurrent->capacities[CAP_WORKSPACE].cur);
+	Cvar_Set("mn_production_workers", tmpbuf);
 }
 
 /**
@@ -611,7 +724,7 @@ extern void PR_Init (void)
 }
 
 /**
- * @brief Increase the production amount by given parameter
+ * @brief Increases the production amount by given parameter.
  */
 static void PR_ProductionIncrease_f (void)
 {

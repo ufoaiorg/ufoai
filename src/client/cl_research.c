@@ -729,17 +729,11 @@ void RS_AssignScientist (technology_t* tech)
 
 				/* Assign the sci to the lab and set number of used lab-space. */
 				employee->buildingID = building->idx;
-				base->usedLab++;			/* TODO: remove me after testing  baseCurrent->capacities[CAP_LABSPACE] */
-
-#if DEBUG
-				/* FIXME: shouldn't be base->usedLab here instead of baseCurrent? (same for param in B_GetAvailableLabSpace) */
-				if (baseCurrent->usedLab > B_GetAvailableLabSpace(baseCurrent))
-				Com_DPrintf("RS_AssignScientist: more lab-space used (%i) than available (%i) - please investigate.\n", baseCurrent->usedLab, B_GetAvailableLabSpace(baseCurrent));
+#ifdef DEBUG
+				if (base->capacities[CAP_LABSPACE].cur > base->capacities[CAP_LABSPACE].max)
+					Com_DPrintf("RS_AssignScientist: more lab-space used (%i) than available (%i) - please investigate.\n", base->capacities[CAP_LABSPACE].cur, base->capacities[CAP_LABSPACE].max);
 #endif
 
-				/* TODO: use
-				E_AssignEmployeeToBuilding(employee, building);
-				instead. */
 			} else {
 				MN_Popup(_("Notice"), _("No free space in laboratories left.\nBuild more laboratories.\n"));
 				return;
@@ -800,10 +794,8 @@ static void RS_RemoveScientist (technology_t* tech)
 			tech->scientists--;
 			/* Update capacity. */
 			gd.bases[tech->base_idx].capacities[CAP_LABSPACE].cur--;
-
 			/* Remove the sci from the lab and set number of used lab-space. */
 			employee->buildingID = -1; /* See also E_RemoveEmployeeFromBuilding */
-			gd.bases[tech->base_idx].usedLab--;	/* TODO: remove me after testing  baseCurrent->capacities[CAP_LABSPACE] */
 		}
 	}
 
@@ -833,9 +825,6 @@ static void RS_MaxOutResearch (base_t *base, technology_t* tech)
 	/* Add as many scientists as possible to this tech. */
 	do {
 		if (base->capacities[CAP_LABSPACE].cur < base->capacities[CAP_LABSPACE].max) {
-		/* TODO: remove me after testing  baseCurrent->capacities[CAP_LABSPACE]
-		if (base->usedLab < B_GetAvailableLabSpace(base)) {
-		*/
 			employee = E_GetUnassignedEmployee(base, EMPL_SCIENTIST);
 			if (employee)
 				RS_AssignScientist(tech);
