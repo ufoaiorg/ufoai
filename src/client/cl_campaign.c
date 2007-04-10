@@ -3720,6 +3720,8 @@ extern void CL_ParseCharacterValues (const char *name, char **text, int campaign
 				token = COM_EParse(text, errhead, name);
 				if (!*text)
 					Sys_Error("CL_ParseCharacterValues: invalid skill entry for team %i\n", team);
+				if (!isdigit(*token))
+					Sys_Error("CL_ParseCharacterValues: invalid skill entry for team %i\n", team);
 				skillValues[campaignID][team][empl_type][i] = atoi(token);
 			}
 		} else if (!Q_strcmp(token, "ability")) {
@@ -3727,6 +3729,8 @@ extern void CL_ParseCharacterValues (const char *name, char **text, int campaign
 				token = COM_EParse(text, errhead, name);
 				if (!*text)
 					Sys_Error("CL_ParseCharacterValues: invalid ability entry for team %i\n", team);
+				if (!isdigit(*token))
+					Sys_Error("CL_ParseCharacterValues: invalid skill entry for team %i\n", team);
 				abilityValues[campaignID][team][empl_type][i] = atoi(token);
 			}
 		}
