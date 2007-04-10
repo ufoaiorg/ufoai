@@ -101,10 +101,11 @@ typedef struct aircraft_s {
 	vec3_t scaleEquip;			/**< menu values for scaling - aircraft_equip menu */
 	vec3_t centerEquip;			/**< menu values for shifting - aircraft_equip menu */
 	int price;
-	int fuel;					/**< actual fuel */
+	int fuel;				/**< actual fuel */
 	int fuelSize;				/**< max fuel */
-	int size;					/**< how many soldiers max */
-	vec2_t pos;					/**< actual pos on geoscape */
+	int size;				/**< how many soldiers max */
+	int weight;				/**< "Size" of the aircraft used in capacity calculations. */
+	vec2_t pos;				/**< actual pos on geoscape */
 	int point;
 	int time;
 	int idxInBase;				/**< Index in base. See also base_t->numAircraftInBase. */

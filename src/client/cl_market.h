@@ -26,6 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_MARKET_H
 #define CLIENT_CL_MARKET_H
 
-void CL_ResetMarket(void);
+void BS_ResetMarket(void);
 
 #endif /* CLIENT_CL_MARKET_H */

@@ -42,9 +42,72 @@ static const int MARKET_SELL_DIVISOR = 1;
 void UP_AircraftDescription(technology_t* t);
 
 /**
- * @brief Prints general information about aircraft for buy/sell menu
+ * @brief Calculates free space in hangars in given base.
+ * @param[in] aircraftID aircraftID Index of aircraft type in aircraft_samples.
+ * @param[in] base_idx Index of base in global array.
+ * @return Amount of free space in hangars suitable for given aircraft type.
+ * @note Returns -1 in case of error. Returns 0 if no error but no free space.
+ * @todo add ufo hangars space check here
  */
-static void CL_MarketAircraftDescription (int aircraftID)
+static int BS_CalculateHangarStorage (int aircraftID, int base_idx)
+{
+	int aircraftSize = 0, freespace = 0;
+	base_t *base = NULL;
+	
+	aircraftSize = aircraft_samples[aircraftID].weight;
+	base = &gd.bases[base_idx];
+	
+	if (aircraftSize < 1) {
+#ifdef DEBUG
+		Com_Printf("BS_CalculateHangarStorage()... aircraft weight is wrong!\n");
+#endif
+		return -1;
+	}
+	if (!base) {
+#ifdef DEBUG
+		Com_Printf("BS_CalculateHangarStorage()... base does not exist!\n");
+#endif
+		return -1;
+	}
+	assert (base);
+	
+	/* If the aircraft size is less than 8, we will check space in small hangar. */
+	if (aircraftSize < 8) {
+		freespace = base->capacities[CAP_AIRCRAFTS_SMALL].max - base->capacities[CAP_AIRCRAFTS_SMALL].cur;
+		Com_DPrintf("BS_CalculateHangarStorage()... freespace: %i aircraft weight: %i\n", freespace, aircraftSize);
+		if (aircraftSize <= freespace) {
+			return freespace;
+		} else {
+			/* Small aircrafts (size < 8) can be stored in big hangars as well. */
+			freespace = base->capacities[CAP_AIRCRAFTS_BIG].max - base->capacities[CAP_AIRCRAFTS_BIG].cur;
+			Com_DPrintf("BS_CalculateHangarStorage()... freespace: %i aircraft weight: %i\n", freespace, aircraftSize);
+			if (aircraftSize <= freespace) {
+				return freespace;
+			} else {
+				/* No free space for this aircraft. */
+				return 0;
+			}
+		}
+	}
+	/* If the aircraft size is more or equal to 8, we will check space in big hangar. */
+	if (aircraftSize >= 8) {
+		freespace = base->capacities[CAP_AIRCRAFTS_BIG].max - base->capacities[CAP_AIRCRAFTS_BIG].cur;
+		if (aircraftSize <= freespace) {
+			return freespace;
+		} else {
+			/* No free space for this aircraft. */
+			return 0;
+		}
+	}
+	return -1;
+	/* TODO: introduce capacities for UFO hangars and do space checks for them here. */
+}
+
+/**
+ * @brief Prints general information about aircraft for Buy/Sell menu.
+ * @param[in] aircraftID Index of aircraft type in aircraft_samples.
+ */
+static void BS_MarketAircraftDescription (int aircraftID)
 {
 	technology_t *tech;
 	aircraft_t *aircraft;
@@ -52,7 +115,7 @@ static void CL_MarketAircraftDescription (int aircraftID)
 	if (aircraftID >= numAircraft_samples)
 		return;
 
-	/* Remember previous settings and restore them in CL_ResetAircraftCvars_f(). */
+	/* Remember previous settings and restore them in AIM_ResetAircraftCvars_f(). */
 	Cvar_Set("mn_aircraftname_before", Cvar_VariableString("mn_aircraftname"));
 	Cvar_Set("mn_aircraftmodel_before", Cvar_VariableString("mn_aircraft_model"));
 
@@ -82,16 +145,17 @@ static void BS_BuySelect_f (void)
 
 	Cbuf_AddText(va("buyselect%i\n", num));
 	if (buyCategory == NUM_BUYTYPES)
-		CL_MarketAircraftDescription(buyList[num]);
+		BS_MarketAircraftDescription(buyList[num]);
 	else
 		CL_ItemDescription(buyList[num]);
 }
 
-#define MAX_AIRCRAFT_STORAGE 8
+#define MAX_AIRCRAFT_STORAGE 8		/* FIXME: what's that and what for? Zenerka */
 /**
  * @brief set storage and supply to the values of aircraft
  * in use - and the value of aircraft available for buying
  *
+ * WHAT EXACTLY IS THE PURPOSE OF THIS FUNCTION? Zenerka
  * @param aircraft Aircraft ID from scriptfile
  * @param storage Pointer to int value which will hold the amount of aircraft
  *        given by aircraft parameter in all of your bases
@@ -191,7 +255,7 @@ static void BS_BuyType_f (void)
 	/* aircraft */
 	else if (buyCategory == NUM_BUYTYPES) {
 		/* we can't buy aircraft without a hangar */
-		if (!baseCurrent->hasHangar) {
+		if (!baseCurrent->hasHangar !baseCurrent->hasHangarSmall) {
 			MN_PopMenu(qfalse);
 			MN_Popup(_("Note"), _("Build a hangar first"));
 			return;
@@ -231,7 +295,7 @@ static void BS_BuyType_f (void)
 	if (buyListLength) {
 		Cbuf_AddText("buyselect0\n");
 		if (buyCategory == NUM_BUYTYPES)
-			CL_MarketAircraftDescription(buyList[0]);
+			BS_MarketAircraftDescription(buyList[0]);
 		else
 			CL_ItemDescription(buyList[0]);
 	} else {
@@ -268,7 +332,7 @@ static void BS_BuyItem_f (void)
 	item = buyList[num];
 	Cbuf_AddText(va("buyselect%i\n", num));
 	if (buyCategory == NUM_BUYTYPES) {
-		CL_MarketAircraftDescription(item);
+		BS_MarketAircraftDescription(item);
 		Com_DPrintf("BS_BuyItem_f: aircraft %i\n", item);
 		/* TODO: Buy aircraft */
 	} else {
@@ -305,7 +369,7 @@ static void BS_SellItem_f (void)
 	item = buyList[num];
 	Cbuf_AddText(va("buyselect%i\n", num));
 	if (buyCategory == NUM_BUYTYPES) {
-		CL_MarketAircraftDescription(item);
+		BS_MarketAircraftDescription(item);
 		/* TODO: Sell aircraft */
 	} else {
 		CL_ItemDescription(item);
@@ -358,9 +422,9 @@ static void BS_Autosell_f (void)
 
 /**
  * @brief
- * @sa CL_SellAircraft_f
+ * @sa BS_SellAircraft_f
  */
-static void CL_BuyAircraft_f (void)
+static void BS_BuyAircraft_f (void)
 {
 	int num, aircraftID;
 
@@ -378,21 +442,39 @@ static void CL_BuyAircraft_f (void)
 
 	aircraftID = buyList[num];
 	Cbuf_AddText(va("buyselect%i\n;", num));
-	if (ccs.credits >= aircraft_samples[aircraftID].price) {
-		CL_UpdateCredits(ccs.credits-aircraft_samples[aircraftID].price);
-		Cbuf_AddText(va("aircraft_new %s %i;buy_type 4;", aircraft_samples[aircraftID].id, baseCurrent->idx));
+	
+	/* Check free space in hangars. */
+	if (BS_CalculateHangarStorage(aircraftID, baseCurrent->idx) < 0) {
+#ifdef DEBUG
+		Com_Printf("BS_BuyAircraft_f()... something bad happened, BS_CalculateHangarStorage returned -1!\n");
+#endif
+		return;
+	}
+
+	if (aircraft_samples[aircraftID].weight > BS_CalculateHangarStorage(aircraftID, baseCurrent->idx)) {
+		MN_Popup(_("Notice"), _("You cannot buy this aircraft.\nNot enough space in hangars.\n"));
+		return;
+	} else {
+		if (ccs.credits < aircraft_samples[aircraftID].price) {
+			MN_Popup(_("Notice"), _("You cannot buy this aircraft.\nNot enough credits.\n"));
+			return;
+		} else {
+			/* Hangar capacities are being updated in AIR_NewAircraft().*/
+			CL_UpdateCredits(ccs.credits-aircraft_samples[aircraftID].price);
+			Cbuf_AddText(va("aircraft_new %s %i;buy_type 4;", aircraft_samples[aircraftID].id, baseCurrent->idx));
+		}
 	}
 }
 
 
 /**
  * @brief This functions handles the selling of an aircraft and its equipment/crew/storage.
- * @sa CL_BuyAircraft_f
+ * @sa BS_BuyAircraft_f
  * @todo Fixme: Remove all soldiers and put equipment back to base
  * @todo Fixme: If we ever produce aircraft equipment or buy and sell the equipment,
  * make sure, that the equipment gets sold here, too.
  */
-static void CL_SellAircraft_f (void)
+static void BS_SellAircraft_f (void)
 {
 	int num, aircraftID, i, j;
 	base_t *base;
@@ -429,12 +511,15 @@ static void CL_SellAircraft_f (void)
 		/* ok, we've found an empty aircraft (no team) in a base
 		   so now we can sell it */
 		if (found) {
-			Com_DPrintf("CL_SellAircraft_f: Selling aircraft with IDX %i\n", aircraft->idx);
+			Com_DPrintf("BS_SellAircraft_f: Selling aircraft with IDX %i\n", aircraft->idx);
 			CL_DeleteAircraft(aircraft);
 
 			Cbuf_AddText(va("buyselect%i\n;", num));
 			CL_UpdateCredits(ccs.credits + aircraft_samples[aircraftID].price);
 			Cbuf_AddText("buy_type 4;");
+			/* Update hangar capacities after selling an aircraft. */
+/*			AIR_UpdateHangarCapForAll(base->idx); (WIP)*/
+
 			return;
 		}
 	}
@@ -442,21 +527,21 @@ static void CL_SellAircraft_f (void)
 		if (teamNote)
 			MN_Popup(_("Note"), _("You can't sell an aircraft if it still has a team assigned"));
 		else
-			Com_DPrintf("CL_SellAircraft_f: There are no aircraft available (with no team assigned) for selling\n");
+			Com_DPrintf("BS_SellAircraft_f: There are no aircraft available (with no team assigned) for selling\n");
 	}
 }
 
 /**
- * @brief
+ * @brief Activates commands for Market Menu.
  */
-extern void CL_ResetMarket (void)
+extern void BS_ResetMarket (void)
 {
 	Cmd_AddCommand("buy_type", BS_BuyType_f, NULL);
 	Cmd_AddCommand("buy_select", BS_BuySelect_f, NULL);
 	Cmd_AddCommand("mn_buy", BS_BuyItem_f, NULL);
 	Cmd_AddCommand("mn_sell", BS_SellItem_f, NULL);
-	Cmd_AddCommand("mn_buy_aircraft", CL_BuyAircraft_f, NULL);
-	Cmd_AddCommand("mn_sell_aircraft", CL_SellAircraft_f, NULL);
+	Cmd_AddCommand("mn_buy_aircraft", BS_BuyAircraft_f, NULL);
+	Cmd_AddCommand("mn_sell_aircraft", BS_SellAircraft_f, NULL);
 	Cmd_AddCommand("buy_autosell", BS_Autosell_f, "Enable or disable autosell option for given item.");
 	buyListLength = -1;
 }

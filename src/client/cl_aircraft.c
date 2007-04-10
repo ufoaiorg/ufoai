@@ -1195,6 +1195,8 @@ static const value_t aircraft_vals[] = {
 	,
 	{"size", V_INT, offsetof(aircraft_t, size)}
 	,
+	{"weight", V_INT, offsetof(aircraft_t, weight)}
+	,
 	{"fuel", V_INT, offsetof(aircraft_t, fuel)}
 	,
 	{"fuelsize", V_INT, offsetof(aircraft_t, fuelSize)}

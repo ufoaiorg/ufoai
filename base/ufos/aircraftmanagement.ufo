@@ -37,6 +37,7 @@ aircraft craft_dropship
 	price		3500000
 	building	building_hangar
 	size		8
+	weight		8
 	fuel		100000
 	fuelsize	100000
 	image		air_dropship
@@ -56,6 +57,7 @@ aircraft craft_interceptor
 	fuel		60000
 	fuelsize	60000
 	size		1
+	weight		4
 	price		2000000
 	building	building_intercept
 	image		air_interceptor
@@ -78,6 +80,7 @@ aircraft craft_saracen_interceptor
 	fuel		60000
 	fuelsize	60000
 	size		1
+	weight		4
 	price		2000000
 	building	building_intercept
 	image		air_saracen_interceptor
