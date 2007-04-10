@@ -659,7 +659,11 @@ void FS_AddHomeAsGameDirectory (const char *dir)
 	char *homedir = Sys_GetHomeDirectory();
 
 	if (homedir) {
-		Com_sprintf(gdir, sizeof(gdir), "%s/.ufoai/%s", homedir, dir);
+#ifdef _WIN32
+		Com_sprintf(gdir, sizeof(gdir), "%s/"UFO_VERSION"/%s", homedir, dir);
+#else
+		Com_sprintf(gdir, sizeof(gdir), "%s/.ufoai/"UFO_VERSION"/%s", homedir, dir);
+#endif
 		Com_Printf("using %s for writing\n", gdir);
 		FS_CreatePath(va("%s/", gdir));
 
