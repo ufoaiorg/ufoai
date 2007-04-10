@@ -1203,8 +1203,8 @@ void CL_ActorUpdateCVars (void)
 				Com_sprintf(infoText, sizeof(infoText), _("Armour  %i\tMorale  %i\n"), selActor->AP, selActor->morale);
 				menuText[TEXT_MOUSECURSOR_RIGHT] = NULL;
 			}
-			if ( cl.cmode != cl.oldcmode || refresh || lastHUDActor != selActor
-						|| lastMoveLength != actorMoveLength || lastTU != selActor->TU ) {
+			if (cl.cmode != cl.oldcmode || refresh || lastHUDActor != selActor
+						|| lastMoveLength != actorMoveLength || lastTU != selActor->TU) {
 				if (actorMoveLength != 0xFF) {
 					CL_RefreshWeaponButtons(selActor->TU - actorMoveLength);
 					Com_sprintf(infoText, sizeof(infoText), _("Armour  %i\tMorale  %i\nMove %i (%i TU left)\n"), selActor->AP, selActor->morale, actorMoveLength, selActor->TU - actorMoveLength);
@@ -1474,7 +1474,7 @@ extern qboolean CL_ActorSelect (le_t * le)
 		return qfalse;
 
 	if (blockEvents)
-		return qfalse;		
+		return qfalse;
 
 	/* select him */
 	if (selActor)
@@ -3155,19 +3155,30 @@ void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 		ent.alpha = 0.4 + 0.2 * sin((float) cl.time / 80);
 		/* paint the box red if the soldiers under the cursor is */
 		/* not in our team and no civilian, too */
-		if (mouseActor->team != cls.team)
+		if (mouseActor->team != cls.team) {
 			switch (mouseActor->team) {
 			case TEAM_CIVILIAN:
 				/* civilians are yellow */
 				VectorSet(ent.angles, 1, 1, 0);
 				break;
 			default:
+				if (mouseActor->team == TEAM_ALIEN) {
+					/* TODO: print alien team */
+				} else {
+					/* multiplayer names */
+					menuText[TEXT_MOUSECURSOR_PLAYERNAMES] = cl.configstrings[CS_PLAYERNAMES + mouseActor->pnum];
+				}
 				/* aliens (and players not in our team [multiplayer]) are red */
 				VectorSet(ent.angles, 1, 0, 0);
 				break;
 			}
-		else /* paint a light blue box if on our team */
+		} else {
+			/* coop multiplayer games */
+			if (mouseActor->pnum != cl.pnum)
+				menuText[TEXT_MOUSECURSOR_PLAYERNAMES] = cl.configstrings[CS_PLAYERNAMES + mouseActor->pnum];
+			/* paint a light blue box if on our team */
 			VectorSet(ent.angles, 0.2, 0.3, 1);
+		}
 		BoxSize(mouseActor->fieldSize, boxSize, realBoxSize);
 		VectorSubtract(ent.origin, realBoxSize, ent.origin);
 	} else {
@@ -3237,7 +3248,7 @@ extern void CL_AddTargeting (void)
 		CL_AddTargetingBox(mousePos, qfalse);
 
 		/* Draw (pending) Cursor at target */
-		CL_AddTargetingBox(mousePendPos, qtrue); 
+		CL_AddTargetingBox(mousePendPos, qtrue);
 
 		if (!selFD->gravity)
 			CL_TargetingStraight(selActor->pos, mousePendPos);

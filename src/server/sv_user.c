@@ -92,7 +92,7 @@ static void SV_New_f (void)
 
 	/* fix for old clients that don't respond to stufftext due to pending cmd buffer */
 	MSG_WriteByte(&sv_client->netchan.message, svc_stufftext);
-	MSG_WriteString (&sv_client->netchan.message, "\n");
+	MSG_WriteString(&sv_client->netchan.message, "\n");
 
 	/* serverdata needs to go over for all types of servers */
 	/* to make sure the protocol is right, and to set the gamedir */
