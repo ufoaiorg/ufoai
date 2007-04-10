@@ -552,14 +552,17 @@ static qboolean GLimp_InitGraphics (qboolean fullscreen)
 	int width = 0;
 	int height = 0;
 
+#ifndef __APPLE__
 	SDL_SysWMinfo info;
+#endif
 	SDL_VERSION(&info.version);
 	Com_Printf("SDL version: %i.%i.%i\n", info.version.major, info.version.minor, info.version.patch);
+	have_stencil = qfalse;
 
+#ifndef __APPLE__
 	/* turn off DGA mouse support: leaving it makes cursor _slow_ in fullscreen under X11 at least */
 	setenv("SDL_VIDEO_X11_DGAMOUSE", "0", 1);
 
-	have_stencil = qfalse;
 	if (SDL_GetWMInfo(&info) > 0 ) {
 		if (info.subsystem == SDL_SYSWM_X11) {
 			info.info.x11.lock_func();
@@ -569,6 +572,7 @@ static qboolean GLimp_InitGraphics (qboolean fullscreen)
 			Com_Printf("Desktop resolution: %i:%i\n", width, height);
 		}
 	}
+#endif
 
 	/* Just toggle fullscreen if that's all that has been changed */
 	if (surface && (surface->w == vid.width) && (surface->h == vid.height)) {
