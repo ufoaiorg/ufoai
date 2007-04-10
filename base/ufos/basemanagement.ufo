@@ -170,7 +170,7 @@ building building_hangar
 	more_than_one	true
 	type		hangar
 	needs		building_hangar2
-	onconstruct "aircraft_new craft_dropship"
+	onconstruct 	""
 	max_employees	8
 	onclick		"building_open"
 	capacity	3
@@ -198,7 +198,7 @@ building building_intercept
 	firstbase	true
 	pos			"1 3"
 	more_than_one	true
-	onconstruct	"aircraft_new craft_interceptor"
+	onconstruct	""
 //	ondestroy	???
 	capacity	2
 	type		smallhangar

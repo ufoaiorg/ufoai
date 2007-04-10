@@ -542,6 +542,11 @@ extern void B_SetUpBase (void)
 			/* fake a click to basemap */
 			B_SetBuildingByClick((int) building->pos[0], (int) building->pos[1]);
 			B_UpdateBaseBuildingStatus(building, baseCurrent, B_STATUS_WORKING);
+			/* Now buy two first aircrafts if it is our first base. */
+			if (gd.numBases == 1 && building->buildingType == B_HANGAR)
+				Cbuf_AddText("aircraft_new craft_dropship\n"); 
+			if (gd.numBases == 1 && building->buildingType == B_SMALL_HANGAR)
+				Cbuf_AddText("aircraft_new craft_interceptor\n");
 
 			/* now call the onconstruct trigger */
 			if (*building->onConstruct) {
