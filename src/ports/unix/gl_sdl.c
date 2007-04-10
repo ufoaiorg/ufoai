@@ -548,12 +548,12 @@ static qboolean GLimp_InitGraphics (qboolean fullscreen)
 {
 	int flags;
 	int stencil_bits;
+#ifndef __APPLE__
 	int width = 0;
 	int height = 0;
-
-#ifndef __APPLE__
-	SDL_SysWMinfo info;
 #endif
+
+	SDL_SysWMinfo info;
 	SDL_VERSION(&info.version);
 	Com_Printf("SDL version: %i.%i.%i\n", info.version.major, info.version.minor, info.version.patch);
 	have_stencil = qfalse;
