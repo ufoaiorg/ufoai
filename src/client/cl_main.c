@@ -437,7 +437,7 @@ static void CL_Rcon_f (void)
 		to = cls.netchan.remote_address;
 	else {
 		if (!strlen(rcon_address->string)) {
-			Com_Printf("You must either be connected, or set the 'rcon_address' cvar\nto issue rcon commands\n");
+			Com_Printf("You must either be connected, or set the 'rcon_address' cvar to issue rcon commands\n");
 			return;
 		}
 		if (!NET_StringToAdr(rcon_address->string, &to)) {
@@ -1856,7 +1856,7 @@ static void CL_InitLocal (void)
 	cl_timedemo = Cvar_Get("timedemo", "0", 0, NULL);
 
 	rcon_client_password = Cvar_Get("rcon_password", "", 0, "Remote console password");
-	rcon_address = Cvar_Get("rcon_address", "", 0, "Remote console adress");
+	rcon_address = Cvar_Get("rcon_address", "", 0, "Remote console address - set this if you aren't connected to a server");
 
 	cl_logevents = Cvar_Get("cl_logevents", "0", 0, "Log all events to events.log");
 
