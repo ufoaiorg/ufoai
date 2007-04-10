@@ -86,7 +86,7 @@ menu production
 
 	string txt_prod_workers_caption
 	{
-		string	"_Workers"
+		string	"_Workers (all/ready)"
 		pos	"610 110"
 		font	f_normal
 		align	ul
@@ -97,6 +97,26 @@ menu production
 		font	f_normal
 		string	"*cvar mn_production_workers"
 		pos		"975 110"
+		align	ur
+	}
+
+	// ==================
+	// base capacity
+	// ==================
+
+	string txt_prod_basecap_caption
+	{
+		string	"_Base capacity"
+		pos	"610 140"
+		font	f_normal
+		align	ul
+	}
+
+	string txt_prod_basecap
+	{
+		font	f_normal
+		string	"*cvar mn_production_basecap"
+		pos	"975 140"
 		align	ur
 	}
 
