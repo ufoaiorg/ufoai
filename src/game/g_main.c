@@ -186,7 +186,7 @@ void InitGame (void)
 	/* aliens in multiplayer */
 	ai_numactors = gi.cvar("ai_numactors", "8", CVAR_ARCHIVE, "How many (ai controlled) actors in this battle (multiplayer)");
 	/* autojoin aliens */
-	ai_autojoin = gi.cvar("ai_autojoin", "0", 0, NULL);
+	ai_autojoin = gi.cvar("ai_autojoin", "0", 0, "Auto join ai players if no human player was found for a team");
 
 	/* FIXME: Apply CVAR_NOSET after balancing */
 	mob_death = gi.cvar("mob_death", "10", CVAR_LATCH, NULL);
