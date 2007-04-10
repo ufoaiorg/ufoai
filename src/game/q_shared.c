@@ -3268,11 +3268,9 @@ void Com_CharGenAbilitySkills (character_t * chr, int team)
 		else
 			min = max - rand_avg;
 		for (i = 0; i < ABILITY_NUM_TYPES; i++) {
-			/* Don't allow to generate skill > 70 */
-			if ((((randomArray[i] - rand_avg) / min * (maxAbility - minAbility) + minAbility + maxAbility) / 2 + frand() * 3) > 70)
-				chr->skills[i] = 70;
-			else
-				chr->skills[i] = ((randomArray[i] - rand_avg) / min * (maxAbility - minAbility) + minAbility + maxAbility) / 2 + frand() * 3;
+			chr->skills[i] = (((randomArray[i] - rand_avg) / min * (maxAbility - minAbility) + minAbility + maxAbility) / 2 + frand() * 3);
+			if (chr->skills[i] > maxAbility)
+				chr->skills[i] = maxAbility;
 		}
 
 		/* Skills */
@@ -3293,11 +3291,9 @@ void Com_CharGenAbilitySkills (character_t * chr, int team)
 		else
 			min = max - rand_avg;
 		for (i = 0; i < SKILL_NUM_TYPES - ABILITY_NUM_TYPES; i++) {
-			/* Don't allow to generate skill > 70 */
-			if ((((randomArray[i] - rand_avg) / min * (maxSkill - minSkill) + minSkill + maxSkill) / 2 + frand() * 3) > 70)
-				chr->skills[ABILITY_NUM_TYPES + i] = 70;
-			else
-				chr->skills[ABILITY_NUM_TYPES + i] = ((randomArray[i] - rand_avg) / min * (maxSkill - minSkill) + minSkill + maxSkill) / 2 + frand() * 3;
+			chr->skills[ABILITY_NUM_TYPES + i] = (((randomArray[i] - rand_avg) / min * (maxSkill - minSkill) + minSkill + maxSkill) / 2 + frand() * 3);
+			if (chr->skills[ABILITY_NUM_TYPES + i] > maxSkill)
+				chr->skills[ABILITY_NUM_TYPES + i] = maxSkill;
 		}
 
 		/* Check if it makes sense */
