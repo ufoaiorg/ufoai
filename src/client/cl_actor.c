@@ -399,11 +399,11 @@ static void SetWeaponButton (int button, int state)
 		return;
 
 	if (state == 1)
-		Q_strncpyz(cbufText, "desel", MAX_VAR);
+		Q_strncpyz(cbufText, "desel", sizeof(cbufText));
 	else
-		Q_strncpyz(cbufText, "dis", MAX_VAR);
+		Q_strncpyz(cbufText, "dis", sizeof(cbufText));
 
-	Q_strcat(cbufText, shoot_type_strings[button], MAX_VAR);
+	Q_strcat(cbufText, shoot_type_strings[button], sizeof(cbufText));
 
 	Cbuf_AddText(cbufText);
 	weaponButtonState[button] = state;
@@ -606,7 +606,7 @@ static void CL_UpdateReactionFiremodes (char hand, int actor_idx, int active_fir
 
 	Com_DPrintf("CL_UpdateReactionFiremodes: act%i handidx%i weapfdidx%i\n", actor_idx, handidx, weap_fd_idx);
 	if (reactionFiremode[actor_idx][RF_WPIDX] == ammo->weap_idx[weap_fd_idx]
-	&&  reactionFiremode[actor_idx][RF_HAND] == handidx) {
+	 && reactionFiremode[actor_idx][RF_HAND] == handidx) {
 		if (ammo->fd[weap_fd_idx][active_firemode].reaction) {
 			if (reactionFiremode[actor_idx][RF_FM] == active_firemode)
 				/* Weapon is the same, firemode is already selected and reaction-usable. Nothing to do. */
@@ -3129,8 +3129,8 @@ static const vec3_t boxSize = { BOX_DELTA_WIDTH, BOX_DELTA_LENGTH, BOX_DELTA_HEI
 #define BoxSize(i,source,target) (target[0]=i*source[0],target[1]=i*source[1],target[2]=source[2])
 
 /**
-  * @brief create a targeting box at the given position
-  */
+ * @brief create a targeting box at the given position
+ */
 void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 {
 	entity_t ent;
