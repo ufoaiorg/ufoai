@@ -2340,6 +2340,9 @@ void G_ClientUserinfoChanged (player_t * player, char *userinfo)
 		player->pers.spectator = qfalse;
 
 	Q_strncpyz(player->pers.userinfo, userinfo, sizeof(player->pers.userinfo));
+
+	/* send the updated config string */
+	gi.configstring(CS_PLAYERNAMES + player->num, player->pers.netname);
 }
 
 
@@ -2365,7 +2368,7 @@ qboolean G_ClientConnect (player_t * player, char *userinfo)
 
 	/* reset persistant data */
 	memset(&player->pers, 0, sizeof(client_persistant_t));
-	Q_strncpyz(player->pers.userinfo, userinfo, sizeof(player->pers.userinfo));
+	G_ClientUserinfoChanged(player, userinfo);
 
 	gi.bprintf(PRINT_HIGH, "%s is connecting...\n", Info_ValueForKey(userinfo, "name"));
 	return qtrue;

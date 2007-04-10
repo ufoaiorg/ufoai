@@ -396,8 +396,7 @@ static void CL_ParseConfigString (void)
 		if (cl.refresh_prepped)
 			cl.image_precache[i-CS_IMAGES] = re.RegisterPic(cl.configstrings[i]);
 	} else if (i >= CS_PLAYERNAMES && i < CS_PLAYERNAMES + MAX_CLIENTS) {
-		if (cl.refresh_prepped)
-			CL_ParseClientinfo(i-CS_PLAYERNAMES);
+		CL_ParseClientinfo(i-CS_PLAYERNAMES);
 	}
 }
 
