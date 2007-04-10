@@ -440,8 +440,10 @@ static void SCR_DrawCursor (void)
 				/* Display weaponmode (text) here. */
 				if (menuText[TEXT_MOUSECURSOR_RIGHT] && cl_show_cursor_tooltips->value)
 					SCR_DrawString(mx + icon_offset_x,my - 16, menuText[TEXT_MOUSECURSOR_RIGHT], qfalse);
+			}
+
 			/* playernames */
-			} else if (menuText[TEXT_MOUSECURSOR_PLAYERNAMES] && cl_show_cursor_tooltips->value) {
+			if (menuText[TEXT_MOUSECURSOR_PLAYERNAMES] && cl_show_cursor_tooltips->value) {
 				SCR_DrawString(mx + icon_offset_x,my - 16, menuText[TEXT_MOUSECURSOR_PLAYERNAMES], qfalse);
 				menuText[TEXT_MOUSECURSOR_PLAYERNAMES] = NULL;
 			}

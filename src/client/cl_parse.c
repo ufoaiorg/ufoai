@@ -329,7 +329,6 @@ static void CL_LoadClientinfo (clientinfo_t *ci, char *s)
 
 	/* isolate the player's name */
 	Q_strncpyz(ci->name, s, sizeof(ci->name));
-	Com_Printf("name: %s\n", ci->name);
 }
 
 /**
