@@ -3825,7 +3825,7 @@ extern void CL_ParseCampaign (const char *name, char **text)
 	}
 
 	/* some default values */
-	s = &salaries[numCampaigns-1];
+	s = &salaries[cp->idx];
 	memset(s, 0, sizeof(salary_t));
 	s->soldier_base = 3000;
 	s->soldier_rankbonus = 500;
@@ -3867,9 +3867,9 @@ extern void CL_ParseCampaign (const char *name, char **text)
 				break;
 			}
 		if (!Q_strncmp(token, "character_data", MAX_VAR)) {
-			CL_ParseCharacterValues(token, text, numCampaigns-1);
+			CL_ParseCharacterValues(token, text, cp->idx);
 		} else if (!Q_strncmp(token, "salary", MAX_VAR)) {
-			CL_ParseSalary(token, text, numCampaigns-1);
+			CL_ParseSalary(token, text, cp->idx);
 		} else if (!vp->string) {
 			Com_Printf("CL_ParseCampaign: unknown token \"%s\" ignored (campaign %s)\n", token, name);
 			COM_EParse(text, errhead, name);
