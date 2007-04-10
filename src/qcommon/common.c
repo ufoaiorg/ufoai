@@ -132,7 +132,7 @@ void Com_Printf (const char *fmt, ...)
 			rd_flush(rd_target, rd_buffer);
 			*rd_buffer = 0;
 		}
-		Q_strcat(rd_buffer, msg, sizeof(rd_buffer));
+		Q_strcat(rd_buffer, msg, sizeof(char) * rd_buffersize);
 		return;
 	}
 
