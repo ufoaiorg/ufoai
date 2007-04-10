@@ -47,7 +47,6 @@ Ryan "Winter" Span
 * aircrafts models: interceptor2
 * models: ufo_carrier, Some changes to the powersuit character models
 
-
 Daniel "Yoshiboy" Holden
 * equipment textures: plasmagren, pistol2
 * aircrafts textures: interceptor2
@@ -64,11 +63,12 @@ Mateusz "velo|gfx" Gócki
 
 Willem "sitters"
 * vehicles models and textures: carcrashed/car1, carcrashed/car2, lorry,
-  transporter
+  transporter, car4, van3
 * furnitures models and textures: comptable, fireext3
-* plants models and textures: tree03
+* plants models and textures: tree03, fir
 * map decoration models and textures: city/mailbox, city/lantern,
-  city/statues/(dragon, woman, statue), gascylinder, city/trafficsign
+  city/statues/(dragon, woman, statue), gascylinder, city/trafficsign,
+  aircraft/fighter
 
 David "PikkaBird" Dallaston
 * powersuit character models
@@ -91,6 +91,9 @@ Alex Parker
   fireexplosion.wav, smokeexplosion.wav, machinepistol.wav, smg2.wav, riotshotgun.wav,
   microshotgun2.wav, sniperrifle.wav, kerrblade_swip.wav, knife.wav, medikit.wav
 * mission tracks: AlexFightmare.ogg, AlexForest.ogg, AlexSullencity.ogg
+
+David Reeves
+* music tracks: David01.ogg
 
 ==========================
 
