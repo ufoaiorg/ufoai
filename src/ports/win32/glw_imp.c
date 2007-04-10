@@ -251,7 +251,7 @@ rserr_t GLimp_SetMode (unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 			ri.Con_Printf(PRINT_ALL, "...using desktop frequency: %d hz\n", displayref);
 		}
 
-		if ( gl_bitdepth->value != 0 ) {
+		if (gl_bitdepth->value != 0) {
 			dm.dmBitsPerPel = gl_bitdepth->value;
 			dm.dmFields |= DM_BITSPERPEL;
 			ri.Con_Printf(PRINT_ALL, "...using gl_bitdepth of %d\n", gl_bitdepth->integer);
@@ -371,7 +371,7 @@ void GLimp_Shutdown (void)
 	UnregisterClass(GAME_TITLE, glw_state.hInstance);
 
 	if (gl_state.fullscreen) {
-		ChangeDisplaySettings( 0, 0 );
+		ChangeDisplaySettings(0, 0);
 		gl_state.fullscreen = qfalse;
 	}
 }

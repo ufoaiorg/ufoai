@@ -215,7 +215,7 @@ void VID_FreeReflib (void)
 /**
  * @brief
  */
-qboolean VID_LoadRefresh (char *name)
+qboolean VID_LoadRefresh (const char *name)
 {
 	refimport_t	ri;
 #ifndef REF_HARD_LINKED
@@ -372,7 +372,7 @@ qboolean VID_LoadRefresh (char *name)
  */
 void VID_CheckChanges (void)
 {
-	char name[100];
+	char name[MAX_VAR];
 	cvar_t *sw_mode;
 
 	if (vid_ref->modified)
@@ -385,7 +385,7 @@ void VID_CheckChanges (void)
 		cl.refresh_prepped = qfalse;
 		cls.disable_screen = qtrue;
 
-		sprintf( name, "ref_%s.so", vid_ref->string );
+		Com_sprintf(name, sizeof(name), "ref_%s.so", vid_ref->string);
 		if (!VID_LoadRefresh(name)) {
 			Cmd_ExecuteString("condump gl_debug");
 			Com_Error(ERR_FATAL, "Couldn't initialize OpenGL renderer!\nConsult gl_debug.txt for further information.");

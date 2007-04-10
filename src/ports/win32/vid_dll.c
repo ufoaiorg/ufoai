@@ -529,7 +529,7 @@ qboolean VID_LoadRefresh (const char *name)
  */
 void VID_CheckChanges (void)
 {
-	char name[100];
+	char name[MAX_VAR];
 
 	if (win_noalttab->modified) {
 		if (win_noalttab->value)

@@ -188,7 +188,7 @@ void VID_Init (void)
 void VID_Shutdown (void)
 {
 	if (re.Shutdown)
-		re.Shutdown ();
+		re.Shutdown();
 }
 
 /**

@@ -175,7 +175,7 @@ qboolean VID_GetModeInfo( int *width, int *height, int mode )
 /**
  * @brief
  */
-void VID_NewWindow ( int width, int height)
+void VID_NewWindow (int width, int height)
 {
 	viddef.width  = width;
 	viddef.height = height;
@@ -358,7 +358,7 @@ qboolean VID_LoadRefresh (const char *name)
  */
 void VID_CheckChanges (void)
 {
-	char name[100];
+	char name[MAX_VAR];
 
 	if (vid_ref->modified)
 		S_StopAllSounds();
@@ -372,9 +372,9 @@ void VID_CheckChanges (void)
 
 		Com_sprintf(name, sizeof(name), "ref_%s.so", vid_ref->string);
 		if (!VID_LoadRefresh(name)) {
-			Cmd_ExecuteString( "condump gl_debug" );
+			Cmd_ExecuteString("condump gl_debug");
 
-			Com_Error (ERR_FATAL, "Couldn't initialize OpenGL renderer!\nConsult gl_debug.txt for further information.");
+			Com_Error(ERR_FATAL, "Couldn't initialize OpenGL renderer!\nConsult gl_debug.txt for further information.");
 		}
 		cls.disable_screen = qfalse;
 	}
