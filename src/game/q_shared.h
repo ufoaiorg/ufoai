@@ -1441,4 +1441,27 @@ typedef enum {
 	ACTOR_SIZE_UGV
 } actorSizeEnum_t;
 
+/* #define NUM_BUYTYPES	4 <-- (from client.h - TODO: will be replaced by MAX_BUYTYPES.*/
+/** @brief Buytype categories in the various equipment screens (buy/seel, equip, etc...)
+ ** Do not mess with the order (especially BUY_AIRCRAFT and BUY_MULTI_AMMO is/will be used for max-check in normal equipment screens)
+ ** @sa scripts.c:buytypeNames
+ **/
+typedef enum {
+	BUY_WEAP_PRI,	/**< All 'Primary' weapons and their ammo for soldiers. */
+	BUY_WEAP_SEC,	/**< All 'Secondary' weapons and their ammo for soldiers. */
+	BUY_MISC,	/**< Misc sodldier equipment. */
+	BUY_ARMOUR,	/**< Armour for soldiers. */
+	BUY_MULTI_AMMO, /**< Ammo (and other stuff) that is used in both Pri/Sec weapons. */
+	/* MAX_SOLDIER_EQU_BUYTYPES ... possible better solution? */
+	BUY_AIRCRAFT,	/**< Aircraft and craft-equipment. */
+	MAX_BUYTYPES
+} equipment_buytypes_t;
+
+#define BUY_PRI(type)	( (((type) == BUY_WEAP_PRI) || ((type) == BUY_MULTI_AMMO)) ) /** < Checks if "type" is displayable/usable in the primary category. */
+#define BUY_SEC(type)	( (((type) == BUY_WEAP_SEC) || ((type) == BUY_MULTI_AMMO)) ) /** < Checks if "type" is displayable/usable in the secondary category. */
+#define BUYTYPE_MATCH(type1,type2) \
+	(  ((((type1) == BUY_WEAP_PRI) || ((type1) == BUY_WEAP_SEC)) && ((type2) == BUY_MULTI_AMMO)) \
+	|| ((((type2) == BUY_WEAP_PRI) || ((type2) == BUY_WEAP_SEC)) && ((type1) == BUY_MULTI_AMMO)) \
+	|| ((type1) == (type2)) ) /**< Check if the 2 buytypes (type1 and type2) are compatible) */
+
 #endif /* GAME_Q_SHARED_H */

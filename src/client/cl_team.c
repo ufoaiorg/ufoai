@@ -700,7 +700,7 @@ static void CL_GenerateEquipment_f (void)
 	/* a 'tiny hack' to add the remaining equipment (not carried)
 	   correctly into buy categories, reloading at the same time;
 	   it is valid only due to the following property: */
-	assert (MAX_CONTAINERS >= NUM_BUYTYPES);
+	assert (MAX_CONTAINERS >= BUY_AIRCRAFT);
 
 	for (i = 0; i < csi.numODs; i++) {
 		/* Don't allow to show armours for other teams in the menu. */
@@ -733,7 +733,7 @@ static void CL_EquipType_f (void)
 
 	/* read and range check */
 	num = atoi(Cmd_Argv(1));
-	if (num < 0 && num >= NUM_BUYTYPES)
+	if (num < 0 && num >= BUY_MULTI_AMMO)
 		return;
 
 	/* display new items */

@@ -1007,12 +1007,13 @@ static void MN_Drag (const menuNode_t* const node, int x, int y)
 			if (node->mousefx == csi.idEquip) {
 				/* a hack to add the equipment correctly into buy categories;
 				   it is valid only due to the following property: */
-				assert (MAX_CONTAINERS >= NUM_BUYTYPES);
+				assert (MAX_CONTAINERS >= BUY_AIRCRAFT);
 
 				i = Com_SearchInInventory(menuInventory, dragFrom, dragFromX, dragFromY);
 				if (i) {
 					et = csi.ods[i->item.t].buytype;
-					if (et != baseCurrent->equipType) {
+					if (!BUYTYPE_MATCH(et,baseCurrent->equipType)) {
+						/* TODO: Check this stuff for BUY_MULTI_AMMO .. this is probably broken now.*/
 						menuInventory->c[csi.idEquip] = baseCurrent->equipByBuyType.c[et];
 						Com_FindSpace(menuInventory, i->item.t, csi.idEquip, &px, &py);
 						if (px >= 32 && py >= 16) {
@@ -1027,11 +1028,14 @@ static void MN_Drag (const menuNode_t* const node, int x, int y)
 			Com_MoveInInventory(menuInventory, dragFrom, dragFromX, dragFromY, node->mousefx, px, py, NULL, NULL);
 
 			/* end of hack */
-			if (i && et != baseCurrent->equipType) {
+			if (i && !BUYTYPE_MATCH(et,baseCurrent->equipType)) {
+				/* TODO: Check this stuff for BUY_MULTI_AMMO .. this is probably broken now.*/
 				baseCurrent->equipByBuyType.c[et] = menuInventory->c[csi.idEquip];
 				menuInventory->c[csi.idEquip] = baseCurrent->equipByBuyType.c[baseCurrent->equipType];
-			} else
+			} else {
+				/* TODO: Check this stuff for BUY_MULTI_AMMO .. this is probably broken now.*/
 				baseCurrent->equipByBuyType.c[baseCurrent->equipType] = menuInventory->c[csi.idEquip];
+			}
 
 			/* update character info (for armor changes) */
 			sel = cl_selected->value;

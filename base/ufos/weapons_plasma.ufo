@@ -16,7 +16,7 @@ item plaspistol
 	ammo		6
 	reload		12
 	price		34000
-	buytype		1
+	buytype	weap_sec
 }
 
 item plaspistol_ammo
@@ -29,7 +29,7 @@ item plaspistol_ammo
 	center		"0 0 -0.2"
 	scale		1.1
 	price		1700
-	buytype		1
+	buytype	weap_sec
 
 	weapon_mod plaspistol
 	{
@@ -95,7 +95,7 @@ item plasrifle
 	ammo		9
 	reload		14
 	price		40000
-	buytype		0
+	buytype	weap_pri
 }
 
 item plasrifle_ammo
@@ -108,7 +108,7 @@ item plasrifle_ammo
 	center		"0 0 -0.1"
 	scale		1.25
 	price		2000
-	buytype		0
+	buytype	weap_pri
 
 	weapon_mod plasrifle
 	{
@@ -175,7 +175,7 @@ item plasblaster
 	ammo		4
 	reload		18
 	price		58000
-	buytype		0
+	buytype	weap_pri
 }
 
 item plasblaster_ammo
@@ -188,7 +188,7 @@ item plasblaster_ammo
 	center		"0 0 0"
 	scale		1.4
 	price		4000
-	buytype		0
+	buytype	weap_pri
 
 	weapon_mod plasblaster
 	{

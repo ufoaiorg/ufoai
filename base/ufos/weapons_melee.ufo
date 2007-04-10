@@ -12,7 +12,7 @@ item knife
 	center		"-1 0 3"
 	scale		1.0
 	price		210
-	buytype		1
+	buytype	weap_sec
 	thrown		true
 
 	weapon_mod knife
@@ -67,7 +67,7 @@ item knifemono
 	center		"-1 0 5"
 	scale		1.0
 	price		210
-	buytype		1
+	buytype	weap_sec
 	thrown		true
 
 	weapon_mod knifemono
@@ -119,7 +119,7 @@ item stunrod
 	center	"3.2 0 2"
 	scale		1.22
 	price		2400
-	buytype	1
+	buytype	weap_sec
 	thrown	false
 	oneshot true
 	ammo 4
@@ -178,7 +178,7 @@ item kerrblade
 	center		"6.3 0 3"
 	scale		1.0
 	price		840
-	buytype		1
+	buytype	weap_sec
 	thrown		true
 
 	weapon_mod kerrblade
@@ -231,7 +231,7 @@ item plasblade
 	center		"1 4.5 0"
 	scale  		1.5
 	price		3710
-	buytype		1
+	buytype	weap_sec
 	thrown		true
 	reload		1
 	oneshot true

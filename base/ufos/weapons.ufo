@@ -12,7 +12,7 @@ item medikit
 	center		"1 0 2"
 	scale		1.1
 	price		170
-	buytype		2
+	buytype	misc
 	thrown		true
 
 	weapon_mod medikit
@@ -65,7 +65,7 @@ item irgoggles
 	center		"0 0 0"
 	scale		1.5
 	price		200
-	buytype		2
+	buytype	misc
 	thrown		true
 	headgear		true
 
@@ -116,7 +116,7 @@ item fraggrenade
 	center		"0 0 0"
 	scale		1.3
 	price		70
-	buytype		2
+	buytype	misc
 	thrown		true
 
 	weapon_mod fraggrenade
@@ -188,7 +188,7 @@ item flashbang
 	center		"0 1.5 0"
 	scale		2.4
 	price		170
-	buytype		2
+	buytype	misc
 	thrown		true
 
 	weapon_mod flashbang
@@ -259,7 +259,7 @@ item smokegrenade
 	center		"0 0 -0.25"
 	scale		1.5
 	price		50
-	buytype		2
+	buytype	misc
 	thrown		true
 
 	weapon_mod smokegrenade
@@ -330,7 +330,7 @@ item stungrenade
 	center		"-0.7 0 0"
 	scale		2.2
 	price		90
-	buytype		2
+	buytype	misc
 	thrown		true
 
 	weapon_mod stungrenade
@@ -402,7 +402,7 @@ item incgrenade
 	center		"0 0 -0.3"
 	scale		1.4
 	price		350
-	buytype		2
+	buytype	misc
 	thrown		true
 
 	weapon_mod incgrenade
@@ -473,7 +473,7 @@ item plasmagrenade
 	center		"0 0 -0.25"
 	scale		1.5
 	price		550
-	buytype		2
+	buytype	misc
 	thrown		true
 
 	weapon_mod plasmagrenade

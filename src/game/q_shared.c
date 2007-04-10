@@ -2893,7 +2893,7 @@ void Com_EquipActor (inventory_t* const inv, const int equip[MAX_OBJDEFS], const
 			max_price = 0;
 			for (i = lastPos; i >= 0; i--) {
 				obj = CSI->ods[i];
-				if ( equip[i] && obj.weapon && obj.buytype == 0 && obj.firetwohanded ) {
+				if ( equip[i] && obj.weapon && BUY_PRI(obj.buytype) && obj.firetwohanded ) {
 					if (frand() < 0.15) { /* small chance to pick any weapon */
 						weapon = i;
 						max_price = obj.price;
@@ -2954,7 +2954,7 @@ void Com_EquipActor (inventory_t* const inv, const int equip[MAX_OBJDEFS], const
 				for (i = 0; i < CSI->numODs; i++) {
 					obj = CSI->ods[i];
 					if ( equip[i] && obj.weapon
-						&& obj.buytype == 1 && obj.reload ) {
+						&& BUY_SEC(obj.buytype) && obj.reload ) {
 						if ( primary
 							? obj.price > max_price && obj.price < prev_price
 							: obj.price < max_price && obj.price > prev_price ) {
@@ -2994,8 +2994,8 @@ void Com_EquipActor (inventory_t* const inv, const int equip[MAX_OBJDEFS], const
 				for (i = 0; i < CSI->numODs; i++) {
 					obj = CSI->ods[i];
 					if ( equip[i]
-						&& ((obj.weapon && obj.buytype == 1 && !obj.reload)
-							|| obj.buytype == 2) ) {
+						&& ((obj.weapon && BUY_SEC(obj.buytype) && !obj.reload)
+							|| obj.buytype == BUY_MISC) ) {
 						if ( obj.price > max_price && obj.price < prev_price ) {
 							max_price = obj.price;
 							weapon = i;
@@ -3021,7 +3021,7 @@ void Com_EquipActor (inventory_t* const inv, const int equip[MAX_OBJDEFS], const
 			for (i = 0; i < CSI->numODs; i++) {
 				obj = CSI->ods[i];
 				if ( equip[i]
-					&& obj.weapon && obj.buytype == 1 && !obj.reload ) {
+					&& obj.weapon && BUY_SEC(obj.buytype) && !obj.reload ) {
 					if ( obj.price > max_price && obj.price < prev_price ) {
 						max_price = obj.price;
 						weapon = i;
@@ -3054,7 +3054,7 @@ void Com_EquipActor (inventory_t* const inv, const int equip[MAX_OBJDEFS], const
 			max_price = 0;
 			for (i = 0; i < CSI->numODs; i++) {
 				obj = CSI->ods[i];
-				if ( equip[i] && obj.buytype == 3 ) {
+				if ( equip[i] && obj.buytype == BUY_ARMOUR ) {
 					if ( obj.price > max_price && obj.price < prev_price ) {
 						max_price = obj.price;
 						weapon = i;

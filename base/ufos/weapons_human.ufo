@@ -16,7 +16,7 @@ item assault
 	ammo		30
 	reload		12
 	price		8400
-	buytype		0
+	buytype	weap_pri
 }
 
 item assault_ammo
@@ -29,7 +29,7 @@ item assault_ammo
 	center		"0 0 0"
 	scale		1.25
 	price		130
-	buytype		0
+	buytype	weap_pri
 
 	weapon_mod assault
 	{
@@ -117,7 +117,7 @@ item chaingun
 	ammo		30
 	reload		12
 	price		18400
-	buytype		0
+	buytype	weap_pri
 }
 
 item chaingun_ammo
@@ -130,7 +130,7 @@ item chaingun_ammo
 	center		"-3 -6 0"
 	scale		1.6
 	price		300
-	buytype		0
+	buytype	weap_pri
 
 	weapon_mod chaingun
 	{
@@ -193,7 +193,7 @@ item sniper
 	ammo		5
 	reload		10
 	price		5920
-	buytype		0
+	buytype	weap_pri
 }
 
 item sniper_ammo
@@ -206,7 +206,7 @@ item sniper_ammo
 	center		"0 0 0"
 	scale		1.15
 	price		190
-	buytype		0
+	buytype	weap_pri
 
 	weapon_mod sniper
 	{
@@ -290,7 +290,7 @@ item pistol
 	ammo		12
 	reload		12
 	price		900
-	buytype		1
+	buytype	weap_sec
 }
 
 item pistol_ammo
@@ -303,7 +303,7 @@ item pistol_ammo
 	center		"0 0 -0.21"
 	scale		1.57
 	price		20
-	buytype		1
+	buytype	weap_sec
 
 	weapon_mod pistol
 	{
@@ -367,7 +367,7 @@ item pistol2
 	ammo		30
 	reload		12
 	price		900
-	buytype		1
+	buytype	weap_sec
 }
 
 item pistol2_ammo
@@ -380,7 +380,7 @@ item pistol2_ammo
 	center		"0 0 -0.21"
 	scale		2.5
 	price		20
-	buytype		1
+	buytype	weap_sec
 
 	weapon_mod pistol2
 	{
@@ -465,7 +465,7 @@ item smg
 	ammo		50
 	reload		12
 	price		3500
-	buytype		1
+	buytype	weap_sec
 }
 
 item smg_ammo
@@ -478,7 +478,7 @@ item smg_ammo
 	center		"0 0 0"
 	scale		1.4
 	price		40
-	buytype		1
+	buytype	weap_sec
 
 	weapon_mod smg
 	{
@@ -544,7 +544,7 @@ item shotgun2
 	ammo		7
 	reload		20
 	price		3500
-	buytype		0
+	buytype	weap_pri
 }
 
 // shotgun2 uses the "shotgun_micro_ammo" flechett magazine as well.
@@ -560,7 +560,7 @@ item shotgun2
 //	center		"0 0 0"
 //	scale		1.5
 //	price		35
-//	buytype		0
+//	buytype	weap_pri
 //
 //	primary
 //	{
@@ -615,7 +615,7 @@ item shotgun2_slug_ammo
 	center		"0 0 0"
 	scale		2.0
 	price		35
-	buytype		0
+	buytype	weap_pri
 
 	weapon_mod shotgun2
 	{
@@ -706,7 +706,7 @@ item shotgun
 	ammo		7
 	reload		20
 	price		3500
-	buytype		0
+	buytype	weap_pri
 }
 
 item shotgun_ammo
@@ -719,7 +719,7 @@ item shotgun_ammo
 	center		"0 0 0"
 	scale		1.5
 	price		35
-	buytype		0
+	buytype	weap_pri
 
 	weapon_mod shotgun
 	{
@@ -787,7 +787,7 @@ item shotgun_micro
 	ammo		7
 	reload		20
 	price		3500
-	buytype		1
+	buytype	weap_sec
 }
 
 item shotgun_micro_ammo
@@ -800,7 +800,8 @@ item shotgun_micro_ammo
 	center		"0 0 0"
 	scale		2.0
 	price		35
-	buytype		1
+//	buytype	multi_ammo
+	buytype	weap_pri
 
 	weapon_mod shotgun_micro	// weap_fds_idx=0
 	{
@@ -937,7 +938,7 @@ item flamer
 	ammo		6
 	reload		14
 	price		6050
-	buytype		0
+	buytype	weap_pri
 }
 
 item flamer_ammo
@@ -950,7 +951,7 @@ item flamer_ammo
 	center		"0 0 0"
 	scale		1.1
 	price		270
-	buytype		0
+	buytype	weap_pri
 
 	weapon_mod flamer
 	{
@@ -1017,7 +1018,7 @@ item rpg
 	ammo		1
 	reload		12
 	price		9130
-	buytype		0
+	buytype	weap_pri
 }
 
 item rpg_ammo
@@ -1030,7 +1031,7 @@ item rpg_ammo
 	center		"0 0 0"
 	scale		1.1
 	price		430
-	buytype		0
+	buytype	weap_pri
 
 	weapon_mod rpg
 	{
@@ -1069,7 +1070,7 @@ item rpg_incendiary_ammo
 	center		"0 0 0"
 	scale		1.1
 	price		630
-	buytype		0
+	buytype	weap_pri
 
 	weapon_mod rpg
 	{
@@ -1109,7 +1110,7 @@ item rpg_particle_ammo
 	center	"0 0 0"
 	scale	1.1
 	price	2740
-	buytype	0
+	buytype	weap_pri
 
 	weapon_mod rpg
 	{
@@ -1157,7 +1158,7 @@ item grenl
 	ammo		9
 	reload		14
 	price		2450
-	buytype		0
+	buytype	weap_pri
 }
 
 item grenl_ammo
@@ -1170,7 +1171,7 @@ item grenl_ammo
 	center		"0 0 0"
 	scale		0.7
 	price		135
-	buytype		0
+	buytype	weap_pri
 
 	weapon_mod grenl
 	{
@@ -1342,7 +1343,7 @@ item grenl_incendiary_ammo
 	center		"0 0 0"
 	scale		0.7
 	price		135
-	buytype		0
+	buytype	weap_pri
 
 	weapon_mod grenl
 	{
@@ -1515,7 +1516,7 @@ item grenl_fle_ammo
 	center		"0 0 0"
 	scale		0.7
 	price		135
-	buytype		0
+	buytype	weap_pri
 
 	weapon_mod grenl
 	{
@@ -1568,7 +1569,7 @@ item grenl_plasma_ammo
 	center		"0 0 0"
 	scale		0.7
 	price		530
-	buytype		0
+	buytype	weap_pri
 
 	weapon_mod grenl
 	{
@@ -1749,7 +1750,7 @@ item bolterrifle
 	ammo            12
 	reload          15
 	price           13240
-	buytype         0
+	buytype	weap_pri
 }
 
 item bolterrifle_ammo
@@ -1762,7 +1763,7 @@ item bolterrifle_ammo
 	center          "0 0 0"
 	scale           1.2
 	price           930
-	buytype         0
+	buytype	weap_pri
 
 	weapon_mod bolterrifle
 	{
