@@ -2259,6 +2259,9 @@ void G_ClientBegin (player_t* player)
 	/* send events */
 	gi.EndEvents();
 
+	/* set the net name */
+	gi.configstring(CS_PLAYERNAMES + player->num, player->pers.netname);
+
 	/* inform all clients */
 	gi.bprintf(PRINT_HIGH, "%s has joined\n", player->pers.netname);
 }

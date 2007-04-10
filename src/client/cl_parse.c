@@ -277,9 +277,9 @@ SERVER CONNECTING MESSAGES
  */
 static void CL_ParseServerData (void)
 {
-	extern cvar_t	*fs_gamedir;
-	char	*str;
-	int		i;
+	extern cvar_t *fs_gamedir;
+	char *str;
+	int i;
 
 	Com_DPrintf("Serverdata packet received.\n");
 
@@ -321,21 +321,14 @@ static void CL_ParseServerData (void)
 }
 
 /**
- * @brief
+ * @brief Stores the client name
  */
 static void CL_LoadClientinfo (clientinfo_t *ci, char *s)
 {
-	char		*t;
-
 	Q_strncpyz(ci->cinfo, s, sizeof(ci->cinfo));
 
 	/* isolate the player's name */
 	Q_strncpyz(ci->name, s, sizeof(ci->name));
-	t = strstr(s, "\\");
-	if (t) {
-		ci->name[t-s] = 0;
-		s = t+1;
-	}
 	Com_Printf("name: %s\n", ci->name);
 }
 
@@ -344,10 +337,10 @@ static void CL_LoadClientinfo (clientinfo_t *ci, char *s)
  */
 static void CL_ParseClientinfo (int player)
 {
-	char			*s;
-	clientinfo_t	*ci;
+	char *s;
+	clientinfo_t *ci;
 
-	s = cl.configstrings[player+CS_PLAYERSKINS];
+	s = cl.configstrings[player+CS_PLAYERNAMES];
 
 	ci = &cl.clientinfo[player];
 
@@ -402,9 +395,9 @@ static void CL_ParseConfigString (void)
 	} else if (i >= CS_IMAGES && i < CS_IMAGES + MAX_MODELS) {
 		if (cl.refresh_prepped)
 			cl.image_precache[i-CS_IMAGES] = re.RegisterPic(cl.configstrings[i]);
-	} else if (i >= CS_PLAYERSKINS && i < CS_PLAYERSKINS + MAX_CLIENTS) {
+	} else if (i >= CS_PLAYERNAMES && i < CS_PLAYERNAMES + MAX_CLIENTS) {
 		if (cl.refresh_prepped)
-			CL_ParseClientinfo(i-CS_PLAYERSKINS);
+			CL_ParseClientinfo(i-CS_PLAYERNAMES);
 	}
 }
 
