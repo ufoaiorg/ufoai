@@ -546,7 +546,6 @@ static void SetSDLIcon (void)
  */
 static qboolean GLimp_InitGraphics (qboolean fullscreen)
 {
-#ifndef __APPLE__
 	int flags;
 	int stencil_bits;
 	int width = 0;
@@ -626,7 +625,6 @@ static qboolean GLimp_InitGraphics (qboolean fullscreen)
 	SDL_active = qtrue;
 
 	return qtrue;
-#endif
 }
 
 /**
