@@ -991,7 +991,7 @@ static technology_t **AII_GetCraftitemTechsByType (int type, qboolean usetypedef
  * @sa CL_AircraftEquipmenuMenuWeaponsClick_f
  * @sa CL_AircraftEquipmenuMenuShieldsClick_f
  */
-void AIM_AircraftEquipmenuMenuInit_f (void)
+void AIM_AircraftEquipmenuInit_f (void)
 {
 	static char buffer[1024];
 	technology_t **list;
@@ -1026,7 +1026,7 @@ void AIM_AircraftEquipmenuMenuInit_f (void)
 
 	/* we are not in the aircraft menu */
 	if (!node) {
-		Com_DPrintf("AIM_AircraftEquipmenuMenuInit_f: Error - node aircraftequip not found\n");
+		Com_DPrintf("AIM_AircraftEquipmenuInit_f: Error - node aircraftequip not found\n");
 		return;
 	}
 
@@ -1073,9 +1073,9 @@ void AIM_AircraftEquipmenuMenuInit_f (void)
 
 /**
  * @brief Assigns the weapon to current selected aircraft when clicked on the list.
- * @sa AIM_AircraftEquipmenuMenuInit_f
+ * @sa AIM_AircraftEquipmenuInit_f
  */
-void AIM_AircraftEquipmenuMenuClick_f (void)
+void AIM_AircraftEquipmenuClick_f (void)
 {
 	aircraft_t *aircraft;
 	int num;

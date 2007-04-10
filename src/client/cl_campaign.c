@@ -4068,7 +4068,7 @@ static void CL_NationList_f (void)
 
 /* these commands are only available in singleplayer */
 static const cmdList_t game_commands[] = {
-	{"aircraft_start", AIR_AircraftStart_f, NULL}
+	{"aircraft_start", AIM_AircraftStart_f, NULL}
 	,
 	{"aircraftlist", AIR_ListAircraft_f, NULL}
 	,
@@ -4076,9 +4076,9 @@ static const cmdList_t game_commands[] = {
 	,
 	{"aircraft_init", AIR_AircraftInit, NULL}
 	,
-	{"airequip_init", AIM_AircraftEquipmenuMenuInit_f, NULL}
+	{"airequip_init", AIM_AircraftEquipmenuInit_f, NULL}
 	,
-	{"airequip_list_click", AIM_AircraftEquipmenuMenuClick_f, NULL}
+	{"airequip_list_click", AIM_AircraftEquipmenuClick_f, NULL}
 	,
 	{"mn_next_aircraft", AIM_NextAircraft_f, NULL}
 	,
@@ -4086,9 +4086,9 @@ static const cmdList_t game_commands[] = {
 	,
 	{"aircraft_new", AIR_NewAircraft_f, NULL}
 	,
-	{"mn_reset_air", AIR_ResetAircraftCvars_f, NULL}
+	{"mn_reset_air", AIM_ResetAircraftCvars_f, NULL}
 	,
-	{"aircraft_return", CL_AircraftReturnToBase_f, NULL}
+	{"aircraft_return", AIR_AircraftReturnToBase_f, NULL}
 	,
 	{"aircraft_list", CL_AircraftList_f, "Generate the aircraft (interception) list"}
 	,
