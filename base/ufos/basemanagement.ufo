@@ -201,7 +201,7 @@ building building_intercept
 	onconstruct	"aircraft_new craft_interceptor"
 //	ondestroy	???
 	capacity	2
-	type		hangar
+	type		smallhangar
 	onclick		"building_open"
 }
 

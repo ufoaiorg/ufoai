@@ -299,6 +299,11 @@ static void B_BuildingDestroy_f (void)
 		if (!B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, b1->buildingType))
 			baseCurrent->hasQuarters = qfalse;
 		break;
+	case B_SMALL_HANGAR:
+		cap = CAP_AIRCRAFTS_SMALL;
+		if (!B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, b1->buildingType))
+			baseCurrent->hasHangarSmall = qfalse;
+		break;
 	case B_MISC:
 		break;
 	default:
@@ -452,43 +457,50 @@ static void B_UpdateBaseBuildingStatus (building_t* building, base_t* base, buil
 	case B_ALIEN_CONTAINMENT:
 		if (building->buildingStatus == B_STATUS_WORKING)
 			base->hasAlienCont = qtrue;
-		B_UpdateBaseCapacities (CAP_ALIENS, base);
+		B_UpdateBaseCapacities(CAP_ALIENS, base);
 		break;
 	case B_QUARTERS:
 		if (building->buildingStatus == B_STATUS_WORKING)
 			base->hasQuarters = qtrue;
-		B_UpdateBaseCapacities (CAP_EMPLOYEES, base);
+		B_UpdateBaseCapacities(CAP_EMPLOYEES, base);
 		break;
 	case B_STORAGE:
 		if (building->buildingStatus == B_STATUS_WORKING)
 			base->hasStorage = qtrue;
-		B_UpdateBaseCapacities (CAP_ITEMS, base);
+		B_UpdateBaseCapacities(CAP_ITEMS, base);
 		break;
 	case B_LAB:
 		if (building->buildingStatus == B_STATUS_WORKING)
 			base->hasLab = qtrue;
-		B_UpdateBaseCapacities (CAP_LABSPACE, base);
+		B_UpdateBaseCapacities(CAP_LABSPACE, base);
 		break;
 	case B_WORKSHOP:
 		if (building->buildingStatus == B_STATUS_WORKING)
 			base->hasWorkshop = qtrue;
-		B_UpdateBaseCapacities (CAP_WORKSPACE, base);
+		B_UpdateBaseCapacities(CAP_WORKSPACE, base);
 		/* Update production times in queue. */
 		PR_UpdateProductionTime(base->idx);
 		break;
 	case B_HOSPITAL:
 		if (building->buildingStatus == B_STATUS_WORKING)
 			base->hasHospital = qtrue;
-		B_UpdateBaseCapacities (CAP_HOSPSPACE, base);
+		B_UpdateBaseCapacities(CAP_HOSPSPACE, base);
 		break;
 	case B_HANGAR:
 		if (building->buildingStatus == B_STATUS_WORKING)
 			base->hasHangar = qtrue;
-		B_UpdateBaseCapacities (CAP_AIRCRAFTS_BIG, base);
+		B_UpdateBaseCapacities(CAP_AIRCRAFTS_BIG, base);
+		break;
+	case B_SMALL_HANGAR:
+		if (building->buildingStatus == B_STATUS_WORKING)
+			base->hasHangarSmall = qtrue;
+		B_UpdateBaseCapacities(CAP_AIRCRAFTS_SMALL, base);
 		break;
 	default:
 		break;
 	}
+	/* TODO: this should be an user option defined in Game Options. */
+	CL_GameTimeStop();
 }
 
 /**
@@ -1148,6 +1160,8 @@ extern void B_ParseBuildings (const char *name, char **text, qboolean link)
 					building->buildingType = B_STORAGE;
 				} else if (!Q_strncmp(token, "hangar", MAX_VAR)) {
 					building->buildingType = B_HANGAR;
+				} else if (!Q_strncmp(token, "smallhangar", MAX_VAR)) {
+					building->buildingType = B_SMALL_HANGAR;
 				} else if (!Q_strncmp(token, "quarters", MAX_VAR)) {
 					building->buildingType = B_QUARTERS;
 				} else if (!Q_strncmp(token, "workshop", MAX_VAR)) {
@@ -2264,6 +2278,7 @@ static void B_BuildingOpen_f (void)
 				MN_PushMenu("production");
 				break;
 			case B_HANGAR:
+			case B_SMALL_HANGAR:
 				if (baseCurrent->numAircraftInBase)
 					MN_PushMenu("aircraft");
 				else {
@@ -2580,12 +2595,14 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 	building = B_GetBuildingTypeByCapacity(cap);
 
 	switch (cap) {
-	case CAP_ALIENS:	/**< Update Aliens capacity in base. */
-	case CAP_EMPLOYEES:	/**< Update employees capacity in base. */
-	case CAP_LABSPACE:	/**< Update laboratory space capacity in base. */
-	case CAP_WORKSPACE:	/**< Update workshop space capacity in base. */
-	case CAP_HOSPSPACE:	/**< Update hospital space capacity in base. */
-	case CAP_ITEMS:		/**< Update items capacity in base. */
+	case CAP_ALIENS:		/**< Update Aliens capacity in base. */
+	case CAP_EMPLOYEES:		/**< Update employees capacity in base. */
+	case CAP_LABSPACE:		/**< Update laboratory space capacity in base. */
+	case CAP_WORKSPACE:		/**< Update workshop space capacity in base. */
+	case CAP_HOSPSPACE:		/**< Update hospital space capacity in base. */
+	case CAP_ITEMS:			/**< Update items capacity in base. */
+	case CAP_AIRCRAFTS_SMALL:	/**< Update aircrafts capacity in base. */
+	case CAP_AIRCRAFTS_BIG:		/**< Update aircrafts capacity in base. */
 		/* Reset given capacity in current base. */
 		base->capacities[cap].max = 0;
 		/* Get building capacity. */
@@ -2606,16 +2623,6 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 		}
 		Com_DPrintf("B_UpdateBaseCapacities()... updated capacity of %s: %i\n",
 		gd.buildingTypes[b_idx].id, base->capacities[cap].max);
-		break;
-	case CAP_AIRCRAFTS_SMALL:	/**< Update aircrafts capacity in base. */
-		/* TODO */
-		Com_DPrintf("B_UpdateBaseCapacities()... updated CAP_AIRCRAFTS_SMALL: %i\n",
-		base->capacities[cap].max);
-		break;
-	case CAP_AIRCRAFTS_BIG:		/**< Update aircrafts capacity in base. */
-		/* TODO */
-		Com_DPrintf("B_UpdateBaseCapacities()... updated CAP_AIRCRAFTS_BIG: %i\n",
-		base->capacities[cap].max);
 		break;
 	case MAX_CAP:			/**< Update all capacities in base. */
 		Com_DPrintf("B_UpdateBaseCapacities()... going to update ALL capacities.\n");
