@@ -1133,7 +1133,7 @@ menu mp_create_server
 	// ===================
 	string server_maxplayerperteam_str
 	{
-		string	"_Max. players per team:"
+		string	"_Max. human players per team:"
 		pos	"500 260"
 	}
 	string server_maxplayerperteam_value
@@ -1193,6 +1193,48 @@ menu mp_create_server
 		texh	"32 16"
 		mousefx	true
 		click	{ cmd "mn_modify ai_numactors +1 0 8;" }
+	}
+
+	// ===================
+	// AI_AUTOJOIN
+	// ===================
+	string ai_autojoin_str
+	{
+		string	"_AI autojoin:"
+		pos	"500 300"
+		tooltip	"_AI autojoin on free teams"
+	}
+	string ai_autojoin_value
+	{
+		string	"*cvar mn_autojoin"
+		pos	"840 300"
+		align	ur
+	}
+	pic ai_autojoin_dec
+	{
+		image	menu/buttons_small
+		pos	"868 302"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx	true
+		click
+		{
+			cmd "mn_modify ai_autojoin -1 0 1;"
+			cmd "mn_translate ai_autojoin mn_autojoin 0:No,1:Yes;"
+		}
+	}
+	pic ai_autojoin_inc
+	{
+		image	menu/buttons_small
+		pos	"884 302"
+		texl	"16 0"
+		texh	"32 16"
+		mousefx	true
+		click
+		{
+			cmd "mn_modify ai_autojoin +1 0 1;"
+			cmd "mn_translate ai_autojoin mn_autojoin 0:No,1:Yes;"
+		}
 	}
 
 	// ===================
@@ -1357,6 +1399,7 @@ menu mp_create_server
 	{
 		cmd "mn_translate public mn_public 0:No,1:Yes;"
 		cmd "mn_translate sv_teamplay mn_teamplay 0:No,1:Yes;"
+		cmd "mn_translate ai_autojoin mn_autojoin 0:No,1:Yes;"
 		cmd "mn_translate sv_enablemorale mn_enablemorale 0:No,1:Yes;"
 	}
 
@@ -1366,9 +1409,9 @@ menu mp_create_server
 	func init
 	{
 		cmd "killserver"
-		cmd "set maxclients 2"
+		cmd "gametype 2on2; gametype 1on1"
 		cmd "getmaps"
-		cmd "set maxplayers 8; set ai_numactors 0"
+		cmd "mn_modify ai_autojoin -1 0 1"
 		cmd "mn_modify sv_teamplay -1 0 1"
 		cmd "mn_servercreate_update"
 	}
@@ -1578,6 +1621,7 @@ gametype 1on1
 		ai_numactors 0
 		sv_ai 0
 		ai_autojoin 0
+		maxplayers 1
 	}
 }
 gametype 1on1on1
@@ -1591,6 +1635,7 @@ gametype 1on1on1
 		ai_numactors 0
 		sv_ai 0
 		ai_autojoin 0
+		maxplayers 1
 	}
 }
 gametype 2on2
@@ -1604,6 +1649,7 @@ gametype 2on2
 		ai_numactors 0
 		sv_ai 0
 		ai_autojoin 0
+		maxplayers 2
 	}
 }
 gametype 2on2on2
@@ -1617,6 +1663,7 @@ gametype 2on2on2
 		ai_numactors 0
 		sv_ai 0
 		ai_autojoin 0
+		maxplayers 2
 	}
 }
 gametype 3on3
@@ -1630,6 +1677,7 @@ gametype 3on3
 		ai_numactors 0
 		sv_ai 0
 		ai_autojoin 0
+		maxplayers 3
 	}
 }
 gametype 3on3on3
@@ -1643,6 +1691,7 @@ gametype 3on3on3
 		ai_numactors 0
 		sv_ai 0
 		ai_autojoin 0
+		maxplayers 3
 	}
 }
 gametype 4on4
@@ -1656,6 +1705,7 @@ gametype 4on4
 		ai_numactors 0
 		sv_ai 0
 		ai_autojoin 0
+		maxplayers 4
 	}
 }
 gametype 4on4on4
@@ -1669,6 +1719,7 @@ gametype 4on4on4
 		ai_numactors 0
 		sv_ai 0
 		ai_autojoin 0
+		maxplayers 4
 	}
 }
 gametype coop2
@@ -1681,7 +1732,8 @@ gametype coop2
 		maxsoldiers 8
 		ai_numactors 8
 		sv_ai 1
-		ai_autojoin 1
+		ai_autojoin 0
+		maxplayers 2
 	}
 }
 gametype coop3
@@ -1694,7 +1746,8 @@ gametype coop3
 		maxsoldiers 6
 		ai_numactors 6
 		sv_ai 1
-		ai_autojoin 1
+		ai_autojoin 0
+		maxplayers 3
 	}
 }
 gametype coop4
@@ -1707,6 +1760,7 @@ gametype coop4
 		maxsoldiers 8
 		ai_numactors 8
 		sv_ai 1
-		ai_autojoin 1
+		ai_autojoin 0
+		maxplayers 4
 	}
 }
