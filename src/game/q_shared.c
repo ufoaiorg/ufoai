@@ -3237,9 +3237,16 @@ void Com_CharGenAbilitySkills (character_t * chr, int team)
 	if (!chr)
 		return;	/* never reached. need for code analyst. */
 #endif
-
+/* 10042007 Zenerka
+   For some reason globalCampaignID is not being cleared after campaing restart.
+   That was the reason of superhuman soldiers at second attempt to start
+   campaign game. I just setting that to static value to fix the bug, but
+   that is a workaround only, not real fix, I believe.
 	Com_GetAbility(chr, team, &minAbility, &maxAbility, globalCampaignID);
 	Com_GetSkill(chr, team, &minSkill, &maxSkill, globalCampaignID);
+*/
+	Com_GetAbility(chr, team, &minAbility, &maxAbility, -1);
+	Com_GetSkill(chr, team, &minSkill, &maxSkill, -1);
 	retry = MAX_GENCHARRETRIES;
 	do {
 		/* Abilities */
@@ -3261,9 +3268,9 @@ void Com_CharGenAbilitySkills (character_t * chr, int team)
 		else
 			min = max - rand_avg;
 		for (i = 0; i < ABILITY_NUM_TYPES; i++) {
-			/* Don't allow to generate skill > 100 - more than 100 only with implants. */
-			if ((((randomArray[i] - rand_avg) / min * (maxAbility - minAbility) + minAbility + maxAbility) / 2 + frand() * 3) > 100)
-				chr->skills[i] = 100;
+			/* Don't allow to generate skill > 70 */
+			if ((((randomArray[i] - rand_avg) / min * (maxAbility - minAbility) + minAbility + maxAbility) / 2 + frand() * 3) > 70)
+				chr->skills[i] = 70;
 			else
 				chr->skills[i] = ((randomArray[i] - rand_avg) / min * (maxAbility - minAbility) + minAbility + maxAbility) / 2 + frand() * 3;
 		}
@@ -3286,9 +3293,9 @@ void Com_CharGenAbilitySkills (character_t * chr, int team)
 		else
 			min = max - rand_avg;
 		for (i = 0; i < SKILL_NUM_TYPES - ABILITY_NUM_TYPES; i++) {
-			/* Don't allow to generate skill > 100 - more than 100 only with implants. */
-			if ((((randomArray[i] - rand_avg) / min * (maxSkill - minSkill) + minSkill + maxSkill) / 2 + frand() * 3) > 100)
-				chr->skills[ABILITY_NUM_TYPES + i] = 100;
+			/* Don't allow to generate skill > 70 */
+			if ((((randomArray[i] - rand_avg) / min * (maxSkill - minSkill) + minSkill + maxSkill) / 2 + frand() * 3) > 70)
+				chr->skills[ABILITY_NUM_TYPES + i] = 70;
 			else
 				chr->skills[ABILITY_NUM_TYPES + i] = ((randomArray[i] - rand_avg) / min * (maxSkill - minSkill) + minSkill + maxSkill) / 2 + frand() * 3;
 		}
