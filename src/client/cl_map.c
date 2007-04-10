@@ -152,7 +152,7 @@ static void MAP_MultiSelectExecuteAction_f (void)
 		break;
 
 	case MULTISELECT_TYPE_AIRCRAFT: /* Selection of an aircraft */
-		aircraft = CL_AircraftGetFromIdx(id);
+		aircraft = AIR_AircraftGetFromIdx(id);
 		if (aircraft == NULL) {
 			Com_DPrintf("MAP_MultiSelectExecuteAction: selection of an unknow aircraft idx %i\n", id);
 			return;
@@ -878,7 +878,7 @@ extern void MAP_DrawMap (const menuNode_t* node, qboolean map3D)
 			MAP_ResetAction();
 		else {
 			Com_sprintf(text_standard, sizeof(text_standard), va(_("Name:\t%s (%i/%i)\n"), selectedAircraft->name, *selectedAircraft->teamSize, selectedAircraft->size));
-			Q_strcat(text_standard, va(_("Status:\t%s\n"), CL_AircraftStatusToName(selectedAircraft)), sizeof(text_standard));
+			Q_strcat(text_standard, va(_("Status:\t%s\n"), AIR_AircraftStatusToName(selectedAircraft)), sizeof(text_standard));
 			Q_strcat(text_standard, va(_("Speed:\t%.0f\n"), selectedAircraft->speed), sizeof(text_standard));
 			Q_strcat(text_standard, va(_("Fuel:\t%i/%i\n"), selectedAircraft->fuel / 1000, selectedAircraft->fuelSize / 1000), sizeof(text_standard));
 			menuText[TEXT_STANDARD] = text_standard;

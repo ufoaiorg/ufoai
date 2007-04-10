@@ -281,14 +281,14 @@ static void CL_PopupAircraftClick_f (void)
 	MN_PopMenu(qfalse); /* Close popup */
 
 	/* Get aircraft associated with the popup_aircraft */
-	aircraft = CL_AircraftGetFromIdx(popupAircraft.aircraft_idx);
+	aircraft = AIR_AircraftGetFromIdx(popupAircraft.aircraft_idx);
 	if (aircraft == NULL)
 		return;
 
 	/* Execute action corresponding to item selected */
 	switch (popupAircraft.itemsAction[num]) {
 	case POPUP_AIRCRAFT_ACTION_BACKTOBASE:	/* Aircraft back to base */
-		CL_AircraftReturnToBase(aircraft);
+		AIR_AircraftReturnToBase(aircraft);
 		break;
 	case POPUP_AIRCRAFT_ACTION_STOP:		/* Aircraft stop */
 		aircraft->status = AIR_IDLE;
@@ -297,7 +297,7 @@ static void CL_PopupAircraftClick_f (void)
 		/* Get mission */
 		id = popupAircraft.itemsId[num];
 		if (id >= 0 && id < ccs.numMissions)
-			CL_SendAircraftToMission(aircraft, ccs.mission + id);
+			AIR_SendAircraftToMission(aircraft, ccs.mission + id);
 		break;
 	case POPUP_AIRCRAFT_ACTION_NONE:
 		break;
@@ -358,7 +358,7 @@ extern void CL_DisplayPopupIntercept (actMis_t* mission, aircraft_t* ufo)
 			if (mission && *air->teamSize <= 0)
 				continue;
 
-			s = va("%s (%i/%i)\t%s\t%s\n", air->shortname, *air->teamSize, air->size, CL_AircraftStatusToName(air), gd.bases[j].name);
+			s = va("%s (%i/%i)\t%s\t%s\n", air->shortname, *air->teamSize, air->size, AIR_AircraftStatusToName(air), gd.bases[j].name);
 			Q_strcat(aircraftListText, s, sizeof(aircraftListText));
 			popupIntercept.idBaseAircraft[popupIntercept.numAircraft] = j;
 			popupIntercept.idInBaseAircraft[popupIntercept.numAircraft] = i;
@@ -414,9 +414,9 @@ static void CL_PopupInterceptClick_f (void)
 
 	/* Set action to aircraft */
 	if (popupIntercept.mission)
-		CL_SendAircraftToMission(aircraft, popupIntercept.mission);	/* Aircraft move to mission */
+		AIR_SendAircraftToMission(aircraft, popupIntercept.mission);	/* Aircraft move to mission */
 	else if (popupIntercept.ufo)
-		CL_SendAircraftPurchasingUfo(aircraft, popupIntercept.ufo);	/* Aircraft purchase ufo */
+		AIR_SendAircraftPurchasingUfo(aircraft, popupIntercept.ufo);	/* Aircraft purchase ufo */
 }
 
 /**
@@ -435,7 +435,7 @@ static void CL_PopupInterceptRClick_f (void)
 	/* Display aircraft menu */
 	baseCurrent = gd.bases + aircraft->idxBase;
 	baseCurrent->aircraftCurrent = aircraft->idxInBase;
-	CL_AircraftSelect(aircraft);
+	AIR_AircraftSelect(aircraft);
 	MAP_ResetAction();
 	Cbuf_ExecuteText(EXEC_NOW, va("mn_select_base %i\n", baseCurrent->idx));
 	MN_PushMenu("aircraft");

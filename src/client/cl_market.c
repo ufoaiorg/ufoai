@@ -512,14 +512,13 @@ static void BS_SellAircraft_f (void)
 		   so now we can sell it */
 		if (found) {
 			Com_DPrintf("BS_SellAircraft_f: Selling aircraft with IDX %i\n", aircraft->idx);
-			CL_DeleteAircraft(aircraft);
+			AIR_DeleteAircraft(aircraft);
 
 			Cbuf_AddText(va("buyselect%i\n;", num));
 			CL_UpdateCredits(ccs.credits + aircraft_samples[aircraftID].price);
 			Cbuf_AddText("buy_type 4;");
 			/* Update hangar capacities after selling an aircraft. */
-/*			AIR_UpdateHangarCapForAll(base->idx); (WIP)*/
-
+			AIR_UpdateHangarCapForAll(base->idx);
 			return;
 		}
 	}

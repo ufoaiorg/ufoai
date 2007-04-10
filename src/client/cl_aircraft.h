@@ -160,41 +160,56 @@ extern aircraft_t aircraft_samples[MAX_AIRCRAFT]; /**< available aircraft types 
 extern int numAircraft_samples;
 
 /* script functions */
-void CL_ListAircraft_f(void);
-void CL_AircraftStart_f(void);
-void CL_NewAircraft_f(void);
-void CL_ResetAircraftCvars_f (void);
-void MN_NextAircraft_f(void);
-void MN_PrevAircraft_f(void);
-void CL_AircraftReturnToBase_f(void);
-void CL_AircraftEquipmenuMenuInit_f(void);
-void CL_AircraftEquipmenuMenuClick_f(void);
-char *CL_AircraftStatusToName(aircraft_t *aircraft);
-qboolean CL_IsAircraftInBase(aircraft_t *aircraft);
-void CL_AircraftInit(void);
-void CL_AircraftSelect(aircraft_t *aircraft);
-void CL_AircraftSelect_f(void);
-void CL_NewAircraft_f(void);
-void CL_DeleteAircraft(aircraft_t *aircraft);
-void CL_AircraftListDebug_f(void);
 
-void CL_ResetAircraftTeam(aircraft_t *aircraft);
-void CL_AddToAircraftTeam(aircraft_t *aircraft,int idx);
-void CL_RemoveFromAircraftTeam(aircraft_t *aircraft,int idx);
-void CL_DecreaseAircraftTeamIdxGreaterThan(aircraft_t *aircraft,int idx);
-qboolean CL_IsInAircraftTeam(aircraft_t *aircraft,int idx);
+#ifdef DEBUG
+void AIR_ListAircraft_f(void);
+#endif
+
+void AIM_AircraftStart_f(void);
+void AIR_NewAircraft_f(void);
+void AIM_ResetAircraftCvars_f (void);
+void AIM_NextAircraft_f(void);
+void AIM_PrevAircraft_f(void);
+void AIR_AircraftReturnToBase_f(void);
+void AIM_AircraftEquipmenuInit_f(void);
+void AIM_AircraftEquipmenuClick_f(void);
+char *AIR_AircraftStatusToName(aircraft_t *aircraft);
+qboolean AIR_IsAircraftInBase(aircraft_t *aircraft);
+void AIR_AircraftInit(void);
+void AIR_AircraftSelect(aircraft_t *aircraft);
+void AIR_AircraftSelect_f(void);
+
+#if 0
+/* Double definition. 10042007 Zenerka */
+void AIR_NewAircraft_f(void);
+#endif
+
+void AIR_DeleteAircraft(aircraft_t *aircraft);
+
+#if 0
+/* This function is a copy of more detailed AIR_ListAircraft_f().
+    10042007 Zenerka. */
+void CL_AircraftListDebug_f(void);
+#endif
+
+void AIR_ResetAircraftTeam(aircraft_t *aircraft);
+void AIR_AddToAircraftTeam(aircraft_t *aircraft,int idx);
+void AIR_RemoveFromAircraftTeam(aircraft_t *aircraft,int idx);
+void AIR_DecreaseAircraftTeamIdxGreaterThan(aircraft_t *aircraft,int idx);
+qboolean AIR_IsInAircraftTeam(aircraft_t *aircraft,int idx);
 
 void CL_CampaignRunAircraft(int dt);
-aircraft_t *CL_GetAircraft(const char *name);
-extern aircraft_t* CL_AircraftGetFromIdx(int idx);
+aircraft_t *AIR_GetAircraft(const char *name);
+extern aircraft_t* AIR_AircraftGetFromIdx(int idx);
 extern void CP_GetRandomPosForAircraft(float *pos);
-extern qboolean CL_AircraftMakeMove(int dt, aircraft_t* aircraft);
-void CL_ParseAircraft(const char *name, char **text);
-void CL_ParseAircraftItem(const char *name, char **text);
-extern void CL_AircraftReturnToBase(aircraft_t *aircraft);
-extern qboolean CL_SendAircraftToMission(aircraft_t* aircraft, struct actMis_s* mission);
-extern void CL_SendAircraftPurchasingUfo(aircraft_t* aircraft, aircraft_t* ufo);
-extern void CL_AircraftsNotifyUfoRemoved(const aircraft_t *const ufo);
-extern void CL_AircraftsUfoDisappear(const aircraft_t *const ufo);
+extern qboolean AIR_AircraftMakeMove(int dt, aircraft_t* aircraft);
+void AIR_ParseAircraft(const char *name, char **text);
+void AII_ParseAircraftItem(const char *name, char **text);
+extern void AIR_AircraftReturnToBase(aircraft_t *aircraft);
+extern qboolean AIR_SendAircraftToMission(aircraft_t* aircraft, struct actMis_s* mission);
+extern void AIR_SendAircraftPurchasingUfo(aircraft_t* aircraft, aircraft_t* ufo);
+extern void AIR_AircraftsNotifyUfoRemoved(const aircraft_t *const ufo);
+extern void AIR_AircraftsUfoDisappear(const aircraft_t *const ufo);
+void AIR_UpdateHangarCapForAll (int base_idx);
 
 #endif

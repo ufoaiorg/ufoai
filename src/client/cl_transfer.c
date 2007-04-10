@@ -371,7 +371,7 @@ extern void TR_TransferEnd (aircraft_t* aircraft)
 		if (transferidx->destBase != baseCurrent->idx)
 			MN_AddNewMessage(_("Transport mission"),
 			_("Transport mission ended, returning to homebase now."), qfalse, MSG_TRANSFERFINISHED, NULL);
-		CL_AircraftReturnToBase(aircraft);
+		AIR_AircraftReturnToBase(aircraft);
 	} else {
 		/* Otherwise this is an aircraft transfer. */
 		/* TODO: check hangar status and limits. */

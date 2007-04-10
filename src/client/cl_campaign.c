@@ -61,8 +61,11 @@ static int ever4hours;
 /* extern in client.h */
 stats_t stats;					/**< Document me. */
 
-extern qboolean CL_SendAircraftToMission(aircraft_t * aircraft, actMis_t * mission);
-extern void CL_AircraftsNotifyMissionRemoved(const actMis_t * mission);
+/* FIXME: why AIR_SendAircraftToMission is here? extern definition in in this file below,
+   function declaration is in cl_aircraft.h. 10042007 Zenerka. */
+
+extern qboolean AIR_SendAircraftToMission(aircraft_t * aircraft, actMis_t * mission);
+extern void AIR_AircraftsNotifyMissionRemoved(const actMis_t * mission);
 static void CL_GameExit(void);
 
 #if 0
@@ -819,7 +822,7 @@ static void CL_CampaignRemoveMission (actMis_t * mis)
 
 	/* Notifications */
 	MAP_NotifyMissionRemoved(mis);
-	CL_AircraftsNotifyMissionRemoved(mis);
+	AIR_AircraftsNotifyMissionRemoved(mis);
 	CL_PopupNotifyMIssionRemoved(mis);
 
 	ccs.numMissions--;
@@ -845,7 +848,7 @@ static void CL_AircraftList_f (void)
 
 		for (i = 0; i < gd.bases[j].numAircraftInBase; i++) {
 			aircraft = &gd.bases[j].aircraft[i];
-			s = va("%s (%i/%i)\t%s\t%s\n", aircraft->name, *aircraft->teamSize, aircraft->size, CL_AircraftStatusToName(aircraft), gd.bases[j].name);
+			s = va("%s (%i/%i)\t%s\t%s\n", aircraft->name, *aircraft->teamSize, aircraft->size, AIR_AircraftStatusToName(aircraft), gd.bases[j].name);
 			Q_strcat(aircraftListText, s, sizeof(aircraftListText));
 		}
 	}
@@ -933,7 +936,7 @@ void CL_BaseRansacked (base_t *base)
 
 	/* Remove all aircrafts from the base. */
 	for (ac = base->numAircraftInBase-1; ac >= 0; ac--)
-		CL_DeleteAircraft(&base->aircraft[ac]);
+		AIR_DeleteAircraft(&base->aircraft[ac]);
 
 	/* TODO: Maybe reset research in progress. ... needs playbalance
 	 *       need another value in technology_t to remember researched
@@ -2147,7 +2150,7 @@ static int CL_GameLoad (const char *filename)
 				if (selMis)
 					base->aircraft[j].mission = selMis;
 				else
-					CL_AircraftReturnToBase(&(base->aircraft[j]));
+					AIR_AircraftReturnToBase(&(base->aircraft[j]));
 			}
 		}
 	}
@@ -2357,7 +2360,7 @@ static void CL_GameGo (void)
 		return;
 	}
 
-	aircraft = CL_AircraftGetFromIdx(gd.interceptAircraft);
+	aircraft = AIR_AircraftGetFromIdx(gd.interceptAircraft);
 	/* update mission-status (active?) for the selected aircraft */
 	/* Check what this was supposed to do ? */
 	/* CL_CheckAircraft(aircraft); */
@@ -2542,13 +2545,13 @@ static void CL_GameAutoGo_f (void)
 		return;
 	}
 
-	aircraft = CL_AircraftGetFromIdx(gd.interceptAircraft);
+	aircraft = AIR_AircraftGetFromIdx(gd.interceptAircraft);
 
 	/* start the map */
 	mis = selMis->def;
 	baseCurrent = aircraft->homebase;
 	assert(baseCurrent && mis && aircraft);
-	baseCurrent->aircraftCurrent = aircraft->idxInBase; /* Might not be needed, but it's used later on in CL_AircraftReturnToBase_f */
+	baseCurrent->aircraftCurrent = aircraft->idxInBase; /* Might not be needed, but it's used later on in AIR_AircraftReturnToBase_f */
 
 	if (!mis->active) {
 		MN_AddNewMessage(_("Notice"), _("Your dropship is not near the landing zone"), qfalse, MSG_STANDARD, NULL);
@@ -2593,7 +2596,7 @@ static void CL_GameAutoGo_f (void)
 
 	MAP_ResetAction();
 
-	CL_AircraftReturnToBase_f();
+	AIR_AircraftReturnToBase_f();
 }
 
 /**
@@ -2902,7 +2905,6 @@ void CL_SellOrAddItems (void)
 	CL_UpdateCredits(ccs.credits + gained);
 }
 
-
 /**
  * @brief Update employeer stats after mission.
  * @param[in] won Determines whether we won the mission or not.
@@ -2922,7 +2924,7 @@ static void CL_UpdateCharacterStats (int won)
 	Com_DPrintf("CL_UpdateCharacterStats: numTeamList: %i\n", cl.numTeamList);
 
 	/* aircraft = &baseCurrent->aircraft[gd.interceptAircraft]; remove this TODO: check if baseCurrent has the currect aircraftCurrent.  */
-	aircraft = CL_AircraftGetFromIdx(gd.interceptAircraft);
+	aircraft = AIR_AircraftGetFromIdx(gd.interceptAircraft);
 
 	Com_DPrintf("CL_UpdateCharacterStats: baseCurrent: %s\n", baseCurrent->name);
 
@@ -3033,8 +3035,8 @@ static void CL_GameResults_f (void)
 
 	assert(gd.interceptAircraft >= 0);
 
-	baseCurrent = CL_AircraftGetFromIdx(gd.interceptAircraft)->homebase;
-	baseCurrent->aircraftCurrent =  CL_AircraftGetFromIdx(gd.interceptAircraft)->idxInBase;
+	baseCurrent = AIR_AircraftGetFromIdx(gd.interceptAircraft)->homebase;
+	baseCurrent->aircraftCurrent =  AIR_AircraftGetFromIdx(gd.interceptAircraft)->idxInBase;
 
 	/* add the looted goods to base storage and market */
 	baseCurrent->storage = ccs.eMission; /* copied, including the arrays! */
@@ -3089,7 +3091,7 @@ static void CL_GameResults_f (void)
 		baseCurrent->aircraft[baseCurrent->aircraftCurrent].homebase = baseCurrent;
 		baseCurrent->aircraft[baseCurrent->aircraftCurrent].idxBase = baseCurrent->idx;
 
-		CL_AircraftReturnToBase_f();
+		AIR_AircraftReturnToBase_f();
 	}
 
 	/* campaign effects */
@@ -4066,32 +4068,36 @@ static void CL_NationList_f (void)
 
 /* these commands are only available in singleplayer */
 static const cmdList_t game_commands[] = {
-	{"aircraft_start", CL_AircraftStart_f, NULL}
+	{"aircraft_start", AIR_AircraftStart_f, NULL}
 	,
-	{"aircraftlist", CL_ListAircraft_f, NULL}
+	{"aircraftlist", AIR_ListAircraft_f, NULL}
 	,
-	{"aircraft_select", CL_AircraftSelect_f, NULL}
+	{"aircraft_select", AIR_AircraftSelect_f, NULL}
 	,
-	{"aircraft_init", CL_AircraftInit, NULL}
+	{"aircraft_init", AIR_AircraftInit, NULL}
 	,
-	{"airequip_init", CL_AircraftEquipmenuMenuInit_f, NULL}
+	{"airequip_init", AIM_AircraftEquipmenuMenuInit_f, NULL}
 	,
-	{"airequip_list_click", CL_AircraftEquipmenuMenuClick_f, NULL}
+	{"airequip_list_click", AIM_AircraftEquipmenuMenuClick_f, NULL}
 	,
-	{"mn_next_aircraft", MN_NextAircraft_f, NULL}
+	{"mn_next_aircraft", AIM_NextAircraft_f, NULL}
 	,
-	{"mn_prev_aircraft", MN_PrevAircraft_f, NULL}
+	{"mn_prev_aircraft", AIM_PrevAircraft_f, NULL}
 	,
-	{"aircraft_new", CL_NewAircraft_f, NULL}
+	{"aircraft_new", AIR_NewAircraft_f, NULL}
 	,
-	{"mn_reset_air", CL_ResetAircraftCvars_f, NULL}
+	{"mn_reset_air", AIR_ResetAircraftCvars_f, NULL}
 	,
 	{"aircraft_return", CL_AircraftReturnToBase_f, NULL}
 	,
 	{"aircraft_list", CL_AircraftList_f, "Generate the aircraft (interception) list"}
 	,
+#if 0
+	/* This function is a copy of more detailed AIR_ListAircraft_f().
+	   10042007 Zenerka. */
 	{"aircraft_list_debug", CL_AircraftListDebug_f, "Shows all aircraft in all bases"}
 	,
+#endif
 	{"stats_update", CL_StatsUpdate_f, NULL}
 	,
 	{"game_go", CL_GameGo, NULL}
@@ -4178,7 +4184,7 @@ void CL_GameInit (void)
 
 	/* After inited the techtree we can assign the weapons
 	 * and shields to aircrafts. */
-	CL_AircraftInit();
+	AIR_AircraftInit();
 
 	/* Init popup and map/geoscape */
 	CL_PopupInit();

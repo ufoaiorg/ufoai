@@ -1626,7 +1626,7 @@ static void B_SelectBase_f (void)
 		if (baseCurrent->founded) {
 			gd.mapAction = MA_NONE;
 			MN_PushMenu("bases");
-			CL_AircraftSelect(NULL);
+			AIR_AircraftSelect(NULL);
 			switch (baseCurrent->baseStatus) {
 			case BASE_UNDER_ATTACK:
 				Cvar_Set("mn_base_status_name", _("Base is under attack"));

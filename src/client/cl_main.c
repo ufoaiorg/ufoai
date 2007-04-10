@@ -1654,9 +1654,9 @@ extern void CL_ParseClientData (const char *type, const char *name, char **text)
 	else if (!Q_strncmp(type, "sequence", 8))
 		CL_ParseSequence(name, text);
 	else if (!Q_strncmp(type, "aircraft", 8))
-		CL_ParseAircraft(name, text);
+		AIR_ParseAircraft(name, text);
 	else if (!Q_strncmp(type, "craftitem", 8))
-		CL_ParseAircraftItem(name, text);
+		AII_ParseAircraftItem(name, text);
 	else if (!Q_strncmp(type, "campaign", 8))
 		CL_ParseCampaign(name, text);
 	else if (!Q_strncmp(type, "ugv", 3))
@@ -2208,7 +2208,7 @@ extern void CL_Frame (int msec)
 			gd.numAircraft = 0;
 
 			/* now add a dropship where we can place our soldiers in */
-			CL_NewAircraft(baseCurrent, "craft_dropship");
+			AIR_NewAircraft(baseCurrent, "craft_dropship");
 
 			Com_Printf("Changing to Multiplayer\n");
 			/* no campaign equipment but for multiplayer */

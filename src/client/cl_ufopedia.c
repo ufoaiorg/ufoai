@@ -338,7 +338,7 @@ extern void UP_AircraftDescription (technology_t* t)
 	aircraft_t* aircraft;
 
 	if (RS_IsResearched_ptr(t)) {
-		aircraft = CL_GetAircraft(t->provides);
+		aircraft = AIR_GetAircraft(t->provides);
 		if (!aircraft) {
 			Com_sprintf(upBuffer, MAX_UPTEXT, _("Error - could not find aircraft") );
 		} else {

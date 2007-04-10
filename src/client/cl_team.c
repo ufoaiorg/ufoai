@@ -308,7 +308,7 @@ extern void CL_ResetCharacters (base_t* const base)
 
 	for (i = 0; i < base->numAircraftInBase; i++) {
 		base->teamNum[i] = 0;
-		CL_ResetAircraftTeam(B_GetAircraftFromBaseByIndex(base, i));
+		AIR_ResetAircraftTeam(B_GetAircraftFromBaseByIndex(base, i));
 	}
 }
 
@@ -385,7 +385,7 @@ static void CL_ChangeSkinOnBoard_f (void)
 		if (newSkin >= NUM_TEAMSKINS || newSkin < 0)
 			newSkin = 0;
 		for (i = 0, p = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++) {
-			if (CL_IsInAircraftTeam(aircraft, i)) {
+			if (AIR_IsInAircraftTeam(aircraft, i)) {
 				assert(p < MAX_ACTIVETEAM);
 				baseCurrent->curTeam[p]->skin = newSkin;
 				p++;
@@ -904,7 +904,7 @@ extern void CL_ResetTeamInBase (void)
 	CL_CleanTempInventory();
 
 	baseCurrent->teamNum[0] = 0;
-	CL_ResetAircraftTeam(B_GetAircraftFromBaseByIndex(baseCurrent,0));
+	AIR_ResetAircraftTeam(B_GetAircraftFromBaseByIndex(baseCurrent,0));
 
 	E_ResetEmployees();
 	while (gd.numEmployees[EMPL_SOLDIER] < cl_numnames->value) {
@@ -1032,8 +1032,8 @@ extern qboolean CL_SoldierInAircraft (int employee_idx, int aircraft_idx)
 		return qfalse;
 	}
 
-	aircraft = CL_AircraftGetFromIdx(aircraft_idx);
-	return CL_IsInAircraftTeam(aircraft, employee_idx);
+	aircraft = AIR_AircraftGetFromIdx(aircraft_idx);
+	return AIR_IsInAircraftTeam(aircraft, employee_idx);
 }
 
 /**
@@ -1062,14 +1062,14 @@ extern void CL_RemoveSoldierFromAircraft (int employee_idx, int aircraft_idx)
 			return;
 	}
 
-	aircraft = CL_AircraftGetFromIdx(aircraft_idx);
+	aircraft = AIR_AircraftGetFromIdx(aircraft_idx);
 
 	assert(baseCurrent == aircraft->homebase);
 
 	Com_DPrintf("CL_RemoveSoldierFromAircraft: baseCurrent: %i - aircraftID: %i - aircraft_idx: %i\n", baseCurrent->idx, aircraft->idx, aircraft_idx);
 
 	Com_DestroyInventory(&gd.employees[EMPL_SOLDIER][employee_idx].inv);
-	CL_RemoveFromAircraftTeam(aircraft, employee_idx);
+	AIR_RemoveFromAircraftTeam(aircraft, employee_idx);
 	baseCurrent->teamNum[aircraft->idxInBase]--;
 }
 
@@ -1087,7 +1087,7 @@ extern void CL_RemoveSoldiersFromAircraft (int aircraft_idx, int base_idx)
 	if (base_idx < 0)
 		return;
 
-	aircraft = CL_AircraftGetFromIdx(aircraft_idx);
+	aircraft = AIR_AircraftGetFromIdx(aircraft_idx);
 	base = &gd.bases[base_idx];
 
 	if (aircraft->idxInBase < 0 || aircraft->idxInBase >= base->numAircraftInBase)
@@ -1125,7 +1125,7 @@ static qboolean CL_AssignSoldierToAircraft (int employee_idx, int aircraft_idx)
 		/* Assign the soldier to the aircraft. */
 		if (aircraft->size > baseCurrent->teamNum[aircraft_idx]) {
 			Com_DPrintf("CL_AssignSoldierToAircraft: attemting to add idx '%d' \n",employee_idx);
-			CL_AddToAircraftTeam(aircraft, employee_idx);
+			AIR_AddToAircraftTeam(aircraft, employee_idx);
 			baseCurrent->teamNum[aircraft_idx]++;
 			return qtrue;
 		}

@@ -1,6 +1,9 @@
 /**
  * @file cl_aircraft.c
- * @brief Most of the aircraft related stuff
+ * @brief Most of the aircraft related stuff.
+ * @note Aircraft management functions prefix: AIR_
+ * @note Aircraft menu(s) functions prefix: AIM_
+ * @note Aircraft equipement handling functions prefix: AII_
  */
 
 /*
@@ -26,25 +29,120 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 
-aircraft_t aircraft_samples[MAX_AIRCRAFT]; /* available aircraft types */
+aircraft_t aircraft_samples[MAX_AIRCRAFT];		/**< Available aircraft types. */
 int numAircraft_samples = 0; /* TODO: should be reset to 0 each time scripts are read anew; also aircraft_samples memory should be freed at that time, or old memory used for new records */
-static int airequipID = -1;
-static qboolean noparams = qfalse;
-static int numAircraftItems = 0;
-aircraftItem_t aircraftItems[MAX_AIRCRAFTITEMS];
+static int airequipID = -1;				/**< FIXME: document me. */
+static qboolean noparams = qfalse;			/**< FIXME: document me. */
+static int numAircraftItems = 0;			/**< FIXME: document me. */
+aircraftItem_t aircraftItems[MAX_AIRCRAFTITEMS];	/**< FIXME: document me. */
 
-#define AIRCRAFT_RADAR_RANGE	20
+#define AIRCRAFT_RADAR_RANGE	20			/* FIXME: const */
 
 /* =========================================================== */
-#define DISTANCE 1
+#define DISTANCE 1					/* FIXME: const */
 
 /**
- * @brief Calculates the fight between aircraft and ufo
- * @param[in] aircraft the aircraft we attack with
- * @param[in] the ufo we attack
+ * @brief Updates base capacities after buying new aircraft.
+ * @param[in] aircraftID aircraftID Index of aircraft type in aircraft_samples.
+ * @param[in] base_idx Index of base in global array.
+ * @sa AIR_NewAircraft
+ * @sa AIR_UpdateHangarCapForAll
+ */
+static void AIR_UpdateHangarCapForOne (int aircraftID, int base_idx)
+{
+	int aircraftSize = 0, freespace = 0;
+	base_t *base = NULL;
+	
+	aircraftSize = aircraft_samples[aircraftID].weight;
+	base = &gd.bases[base_idx];
+	
+	if (aircraftSize < 1) {
+#ifdef DEBUG
+		Com_Printf("AIR_UpdateHangarCapForOne()... aircraft weight is wrong!\n");
+#endif
+		return;
+	}
+	if (!base) {
+#ifdef DEBUG
+		Com_Printf("AIR_UpdateHangarCapForOne()... base does not exist!\n");
+#endif
+		return;
+	}
+	assert (base);
+	
+	freespace = base->capacities[CAP_AIRCRAFTS_SMALL].max - base->capacities[CAP_AIRCRAFTS_SMALL].cur;
+	Com_DPrintf("AIR_UpdateHangarCapForOne()... freespace: %i aircraft weight: %i\n", freespace, aircraftSize);
+	/* If the aircraft size is less than 8, we will try to update CAP_AIRCRAFTS_SMALL. */
+	if (aircraftSize < 8) {
+		if (freespace >= aircraftSize) {
+			base->capacities[CAP_AIRCRAFTS_SMALL].cur += aircraftSize;
+		} else {
+			/* Not enough space in small hangar. Aircraft will go to big hangar. */
+			freespace = base->capacities[CAP_AIRCRAFTS_BIG].max - base->capacities[CAP_AIRCRAFTS_BIG].cur;
+			Com_DPrintf("AIR_UpdateHangarCapForOne()... freespace: %i aircraft weight: %i\n", freespace, aircraftSize);	
+			if (freespace >= aircraftSize) {
+				base->capacities[CAP_AIRCRAFTS_BIG].cur += aircraftSize;
+			} else {
+				/* No free space for this aircraft. This should never happen here. */
+				Com_Printf("AIR_UpdateHangarCapForOne()... no free space!\n");
+			}
+		}
+	} else {
+		/* The aircraft is too big for small hangar. Update big hangar capacities. */
+		freespace = base->capacities[CAP_AIRCRAFTS_BIG].max - base->capacities[CAP_AIRCRAFTS_BIG].cur;
+		Com_DPrintf("AIR_UpdateHangarCapForOne()... freespace: %i aircraft weight: %i\n", freespace, aircraftSize);
+		if (freespace >= aircraftSize) {
+			base->capacities[CAP_AIRCRAFTS_BIG].cur += aircraftSize;
+		} else {
+			/* No free space for this aircraft. This should never happen here. */
+			Com_Printf("AIR_UpdateHangarCapForOne()... no free space!\n");
+		}
+	}
+	/* TODO: introduce capacities for UFO hangars and do space checks for them here. */
+	Com_DPrintf("AIR_UpdateHangarCapForOne()... base capacities.cur: small: %i big: %i\n", base->capacities[CAP_AIRCRAFTS_SMALL].cur, base->capacities[CAP_AIRCRAFTS_BIG].cur);
+}
+
+/**
+ * @brief Updates current capacities for hangars in given base.
+ * @param[in] base_idx Index of base in global array.
+ * @note Call this function whenever you sell/loss aircraft in given base.
+ * @todo Remember to call this function when you lost aircraft in air fight.
+ * @sa BS_SellAircraft_f
+ */
+void AIR_UpdateHangarCapForAll (int base_idx)
+{
+	int i;
+	base_t *base = NULL;
+	aircraft_t *aircraft = NULL;
+	
+	base = &gd.bases[base_idx];
+	
+	if (!base) {
+#ifdef DEBUG
+		Com_Printf("AIR_UpdateHangarCapForAll()... base does not exist!\n");
+#endif
+		return;
+	}
+	assert (base);
+	/* Reset current capacities for hangar. */
+	base->capacities[CAP_AIRCRAFTS_BIG].cur = 0;
+	base->capacities[CAP_AIRCRAFTS_SMALL].cur = 0;
+	
+	for (i = 0; i < base->numAircraftInBase; i++) {
+		aircraft = &base->aircraft[i];
+		Com_DPrintf("AIR_UpdateHangarCapForAll()... base: %s, aircraft: %s\n", base->name, aircraft->id);
+		AIR_UpdateHangarCapForOne(aircraft->idx_sample, base->idx);
+	}
+	Com_DPrintf("AIR_UpdateHangarCapForAll()... base capacities.cur: small: %i big: %i\n", base->capacities[CAP_AIRCRAFTS_SMALL].cur, base->capacities[CAP_AIRCRAFTS_BIG].cur);
+}
+
+/**
+ * @brief Calculates the fight between aircraft and ufo.
+ * @param[in] aircraft The aircraft we attack with.
+ * @param[in] ufo The ufo we are going to attack.
  * @return qtrue When aircraft hits ufo.
  * @return qfalse When ufo hits aircraft.
- * TODO : display an attack popup
+ * @todo Implement me and display an attack popup.
  */
 static qboolean AIR_Fight (aircraft_t* air, aircraft_t* ufo)
 {
@@ -58,12 +156,12 @@ static qboolean AIR_Fight (aircraft_t* air, aircraft_t* ufo)
 	return qtrue;
 }
 
+#ifdef DEBUG
 /**
- * @brief Shows all aircraft in all bases on the game console (debug)
- * @note use the command with a parameter (the baseid) to show only one specific
- * base
+ * @brief Debug function which lists all aircrafts in all bases.
+ * @note Use with baseID as a parameter to display aircrafts in given base.
  */
-extern void CL_ListAircraft_f (void)
+extern void AIR_ListAircraft_f (void)
 {
 	int i, j, k, baseid = -1;
 	base_t *base;
@@ -88,7 +186,7 @@ extern void CL_ListAircraft_f (void)
 			Com_Printf("...speed %0.2f\n", aircraft->speed);
 			Com_Printf("...type %i\n", aircraft->type);
 			Com_Printf("...size %i\n", aircraft->size);
-			Com_Printf("...status %s\n", CL_AircraftStatusToName(aircraft));
+			Com_Printf("...status %s\n", AIR_AircraftStatusToName(aircraft));
 			Com_Printf("...pos %.0f:%.0f\n", aircraft->pos[0], aircraft->pos[1]);
 			Com_Printf("...team: (%i/%i)\n", *aircraft->teamSize, aircraft->size);
 			for (k = 0; k < aircraft->size; k++)
@@ -103,18 +201,21 @@ extern void CL_ListAircraft_f (void)
 		}
 	}
 }
+#endif
 
 /**
- * @brief Start an aircraft or stops the current mission and let the aircraft idle around
+ * @brief Starts an aircraft or stops the current mission and let the aircraft idle around.
  */
-void CL_AircraftStart_f (void)
+void AIM_AircraftStart_f (void)
 {
 	aircraft_t *aircraft;
 
 	assert(baseCurrent);
 
 	if (baseCurrent->aircraftCurrent < 0 || baseCurrent->aircraftCurrent >= baseCurrent->numAircraftInBase) {
-		Com_DPrintf("Error - there is no aircraftCurrent in this base\n");
+#ifdef DEBUG
+		Com_Printf("Error - there is no aircraftCurrent in this base\n");
+#endif
 		return;
 	}
 
@@ -127,22 +228,22 @@ void CL_AircraftStart_f (void)
 	aircraft->status = AIR_IDLE;
 
 	MAP_SelectAircraft(aircraft);
-	/* return to geoscape */
+	/* Return to geoscape. */
 	MN_PopMenu(qfalse);
 	MN_PopMenu(qfalse);
 }
 
 /**
- * @brief Assigns the tech pointers, homebase and teamsize pointers to all aircraft
+ * @brief Assigns the tech pointers, homebase and teamsize pointers to all aircrafts.
  */
-void CL_AircraftInit (void)
+void AIR_AircraftInit (void)
 {
 	aircraft_t *air_samp;
 	int i = 0;
 	technology_t *tech = NULL;
 	aircraftItem_t *aircraftitem = NULL;
 
-	Com_Printf("Initializing aircraft and aircraft-items ...\n");
+	Com_Printf("Initializing aircrafts and aircraft-items ...\n");
 
 	for (i = 0; i < numAircraft_samples; i++) {
 		air_samp = &aircraft_samples[i];
@@ -181,7 +282,7 @@ void CL_AircraftInit (void)
 			if (tech)
 				aircraftitem->tech_idx = tech->idx;
 			else
-				Com_Printf("CL_AircraftInit: No tech with the name '%s' found for craftitem '%s'.\n",  aircraftitem->tech, aircraftitem->id);
+				Com_Printf("AIR_AircraftInit: No tech with the name '%s' found for craftitem '%s'.\n",  aircraftitem->tech, aircraftitem->id);
 		}
 	}
 
@@ -191,14 +292,17 @@ void CL_AircraftInit (void)
 /**
  * @brief Translates the aircraft status id to a translateable string
  * @param[in] aircraft Aircraft to translate the status of
+ * @return Translation string of given status.
+ * @note Called in: CL_AircraftList_f(), AIR_ListAircraft_f(), AIR_AircraftSelect(),
+ * @note MAP_DrawMap(), CL_DisplayPopupIntercept()
  */
-char *CL_AircraftStatusToName (aircraft_t * aircraft)
+char *AIR_AircraftStatusToName (aircraft_t * aircraft)
 {
 	assert(aircraft);
 
 	/* display special status if base-attack affects aircraft */
 	if ( gd.bases[aircraft->idxBase].baseStatus == BASE_UNDER_ATTACK &&
-		CL_IsAircraftInBase(aircraft) )
+		AIR_IsAircraftInBase(aircraft) )
 		return _("ON RED ALERT");
 
 	switch (aircraft->status) {
@@ -231,9 +335,13 @@ char *CL_AircraftStatusToName (aircraft_t * aircraft)
 }
 
 /**
- * @brief Returns true if aircraft is parked in its base
+ * @brief Checks whether given aircraft is in its homebase.
+ * @param[in] *aircraft Pointer to an aircraft.
+ * @return qtrue if given aircraft is in its homebase.
+ * @return qfalse if given aircraft is not in its homebase.
+ * @todo Add check for AIR_REARM when aircraft items will be implemented.
  */
-qboolean CL_IsAircraftInBase (aircraft_t * aircraft)
+qboolean AIR_IsAircraftInBase (aircraft_t * aircraft)
 {
 	if (aircraft->status == AIR_HOME || aircraft->status == AIR_REFUEL)
 		return qtrue;
@@ -247,7 +355,7 @@ qboolean CL_IsAircraftInBase (aircraft_t * aircraft)
  */
 int CL_EquipSoldierState (aircraft_t * aircraft)
 {
-	if (!CL_IsAircraftInBase(aircraft)) {
+	if (!AIR_IsAircraftInBase(aircraft)) {
 		return 1;
 	} else {
 		if (E_CountHired(baseCurrent, EMPL_SOLDIER) <= 0)
@@ -258,10 +366,10 @@ int CL_EquipSoldierState (aircraft_t * aircraft)
 }
 
 /**
- * @brief Calls CL_NewAircraft for given base with given aircraft type
- * @sa CL_NewAircraft
+ * @brief Calls AIR_NewAircraft for given base with given aircraft type.
+ * @sa AIR_NewAircraft
  */
-extern void CL_NewAircraft_f (void)
+extern void AIR_NewAircraft_f (void)
 {
 	int i = -1;
 	base_t *b = NULL;
@@ -284,24 +392,24 @@ extern void CL_NewAircraft_f (void)
 		b = baseCurrent;
 
 	if (b)
-		CL_NewAircraft(b, Cmd_Argv(1));
+		AIR_NewAircraft(b, Cmd_Argv(1));
 }
 
 /**
  * @brief Restores aircraft cvars after going back from aircraft buy menu.
- * @sa CL_MarketAircraftDescription()
+ * @sa BS_MarketAircraftDescription()
  */
-extern void CL_ResetAircraftCvars_f (void)
+extern void AIM_ResetAircraftCvars_f (void)
 {
 	Cvar_Set("mn_aircraftname", Cvar_VariableString("mn_aircraftname_before"));
 	Cvar_Set("mn_aircraft_model", Cvar_VariableString("mn_aircraftmodel_before"));
 }
 
 /**
- * @brief Switch to next aircraft in base
- * @sa CL_AircraftSelect
+ * @brief Switch to next aircraft in base.
+ * @sa AIR_AircraftSelect
  */
-extern void MN_NextAircraft_f (void)
+extern void AIM_NextAircraft_f (void)
 {
 	int aircraftID;
 
@@ -313,27 +421,27 @@ extern void MN_NextAircraft_f (void)
 	if ((aircraftID < 0) || (aircraftID >= baseCurrent->numAircraftInBase)) {
 		/* Bad aircraft idx found (no or no sane aircraft).
 		 * Setting it to the first aircraft since numAircraftInBase has been checked to be at least 1. */
-		Com_DPrintf("MN_NextAircraft_f: bad aircraft idx found.\n");
+		Com_DPrintf("AIM_NextAircraft_f: bad aircraft idx found.\n");
 		aircraftID = 0;
 		Cvar_SetValue("mn_aircraft_idx", aircraftID);
-		CL_AircraftSelect(NULL);
+		AIR_AircraftSelect(NULL);
 		return;
 	}
 
 
 	if (aircraftID < baseCurrent->numAircraftInBase - 1) {
 		Cvar_SetValue("mn_aircraft_idx", aircraftID + 1);
-		CL_AircraftSelect(NULL);
+		AIR_AircraftSelect(NULL);
 	} else {
-		Com_DPrintf("MN_NextAircraft_f: we are at the end of the list already -> mn_aircraft_idx: %i - numAircraftInBase: %i\n", aircraftID, baseCurrent->numAircraftInBase);
+		Com_DPrintf("AIM_NextAircraft_f: we are at the end of the list already -> mn_aircraft_idx: %i - numAircraftInBase: %i\n", aircraftID, baseCurrent->numAircraftInBase);
 	}
 }
 
 /**
- * @brief Switch to previous aircraft in base
- * @sa CL_AircraftSelect
+ * @brief Switch to previous aircraft in base.
+ * @sa AIR_AircraftSelect
  */
-extern void MN_PrevAircraft_f (void)
+extern void AIM_PrevAircraft_f (void)
 {
 	int aircraftID;
 
@@ -345,34 +453,33 @@ extern void MN_PrevAircraft_f (void)
 	if ((aircraftID < 0) || (aircraftID >= baseCurrent->numAircraftInBase)) {
 		/* Bad aircraft idx found (no or no sane aircraft).
 		 * Setting it to the first aircraft since numAircraftInBase has been checked to be at least 1. */
-		Com_DPrintf("MN_PrevAircraft_f: bad aircraft idx found.\n");
+		Com_DPrintf("AIM_PrevAircraft_f: bad aircraft idx found.\n");
 		aircraftID = 0;
 		Cvar_SetValue("mn_aircraft_idx", aircraftID);
-		CL_AircraftSelect(NULL);
+		AIR_AircraftSelect(NULL);
 		return;
 	}
 
 	if (aircraftID >= 1) {
 		Cvar_SetValue("mn_aircraft_idx", aircraftID - 1);
-		CL_AircraftSelect(NULL);
+		AIR_AircraftSelect(NULL);
 	} else {
-		Com_DPrintf("MN_PrevAircraft_f: we are at the beginning of the list already -> mn_aircraft_idx: %i - numAircraftInBase: %i\n", aircraftID, baseCurrent->numAircraftInBase);
+		Com_DPrintf("AIM_PrevAircraft_f: we are at the beginning of the list already -> mn_aircraft_idx: %i - numAircraftInBase: %i\n", aircraftID, baseCurrent->numAircraftInBase);
 	}
 }
 
 /**
- * @brief Returns the given aircraft back to homebase
- *
- * call this from baseview via "aircraft_return"
- * calculates the way back to homebase
+ * @brief Calculates the way back to homebase for given aircraft and returns it.
+ * @param[in] *aircraft Pointer to aircraft, which should return to base.
+ * @note Command to call this: "aircraft_return".
  */
-extern void CL_AircraftReturnToBase (aircraft_t *aircraft)
+extern void AIR_AircraftReturnToBase (aircraft_t *aircraft)
 {
 	base_t *base;
 
 	if (aircraft && aircraft->status != AIR_HOME) {
 		base = (base_t *) aircraft->homebase;
-		Com_DPrintf("return '%s' (%i) to base ('%s')\n", aircraft->name, aircraft->idx, base->name);
+		Com_DPrintf("return '%s' (%i) to base ('%s').\n", aircraft->name, aircraft->idx, base->name);
 		MAP_MapCalcLine(aircraft->pos, base->pos, &aircraft->route);
 		aircraft->status = AIR_RETURNING;
 		aircraft->time = 0;
@@ -382,33 +489,31 @@ extern void CL_AircraftReturnToBase (aircraft_t *aircraft)
 }
 
 /**
- * @brief Script function for CL_AircraftReturnToBase
- *
- * Sends the current aircraft back to homebase and updates
- * the cvars
+ * @brief Script function for AIR_AircraftReturnToBase
+ * @note Sends the current aircraft back to homebase.
+ * @note This function updates some cvars for current aircraft.
  * @sa CL_GameAutoGo_f
  * @sa CL_GameResults_f
  */
-extern void CL_AircraftReturnToBase_f (void)
+extern void AIR_AircraftReturnToBase_f (void)
 {
 	aircraft_t *aircraft;
 
 	if (baseCurrent && (baseCurrent->aircraftCurrent >= 0) && (baseCurrent->aircraftCurrent < baseCurrent->numAircraftInBase)) {
 		aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
-		CL_AircraftReturnToBase(aircraft);
-		CL_AircraftSelect(aircraft);
+		AIR_AircraftReturnToBase(aircraft);
+		AIR_AircraftSelect(aircraft);
 	}
 }
 
 /**
- * @brief Sets aircraftCurrent and updates cvars
- * @note uses cvar mn_aircraft_idx to determine which aircraft to select (if aircraft
- * pointer is NULL)
- * @param[in] aircraft If this is NULL the cvar mn_aircraft_idx will be used
- * to determine the aircraft which should be displayed - if this will fail, too,
- * the first aircraft in the base is taken (if there is one)
+ * @brief Sets aircraftCurrent and updates related cvars.
+ * @param[in] *aircraft Pointer to given aircraft.
+ * @note If param[in] is NULL, it uses mn_aircraft_idx to determine aircraft.
+ * @note If either pointer is NULL or no aircraft in mn_aircraft_idx, it takes
+ * @note first aircraft in base (if there is any).
  */
-extern void CL_AircraftSelect (aircraft_t* aircraft)
+extern void AIR_AircraftSelect (aircraft_t* aircraft)
 {
 	menuNode_t *node = NULL;
 	int aircraftID = Cvar_VariableInteger("mn_aircraft_idx");
@@ -451,8 +556,8 @@ extern void CL_AircraftSelect (aircraft_t* aircraft)
 
 	Cvar_SetValue("mn_equipsoldierstate", CL_EquipSoldierState(aircraft));
 	Cvar_SetValue("mn_scientists_in_base", E_CountHired(baseCurrent, EMPL_SCIENTIST));
-	Cvar_Set("mn_aircraftstatus", CL_AircraftStatusToName(aircraft));
-	Cvar_Set("mn_aircraftinbase", CL_IsAircraftInBase(aircraft) ? "1" : "0");
+	Cvar_Set("mn_aircraftstatus", AIR_AircraftStatusToName(aircraft));
+	Cvar_Set("mn_aircraftinbase", AIR_IsAircraftInBase(aircraft) ? "1" : "0");
 	Cvar_Set("mn_aircraftname", va("%s (%i/%i)", aircraft->name, (aircraftID + 1), baseCurrent->numAircraftInBase));
 	Cvar_Set("mn_aircraft_model", aircraft->model);
 	Cvar_Set("mn_aircraft_weapon", aircraft->weapon ? aircraft->weapon->name : "");
@@ -462,6 +567,7 @@ extern void CL_AircraftSelect (aircraft_t* aircraft)
 	Cvar_Set("mn_aircraft_item_img", aircraft->item ? aircraft->item->image_top : "menu/airequip_no_item");
 
 	/* generate aircraft info text */
+	/* TODO: reimplement me when aircraft equipment will be implemented. */
 	Com_sprintf(aircraftInfo, sizeof(aircraftInfo), _("Speed:\t%.0f\n"), aircraft->speed);
 	Q_strcat(aircraftInfo, va(_("Fuel:\t%i/%i\n"), aircraft->fuel / 1000, aircraft->fuelSize / 1000), sizeof(aircraftInfo));
 	Q_strcat(aircraftInfo, va(_("Weapon:\t%s\n"), aircraft->weapon ? _(aircraft->weapon->name) : _("None")), sizeof(aircraftInfo));
@@ -471,7 +577,7 @@ extern void CL_AircraftSelect (aircraft_t* aircraft)
 }
 
 /**
- * @brief Console command binding
+ * @brief Console command binding for AIR_AircraftSelect().
  */
 extern void CL_AircraftSelect_f (void)
 {
@@ -482,17 +588,17 @@ extern void CL_AircraftSelect_f (void)
 	}
 
 	baseCurrent->aircraftCurrent = -1;
-	CL_AircraftSelect(NULL);
+	AIR_AircraftSelect(NULL);
 	if (baseCurrent->aircraftCurrent == -1)
 		MN_PopMenu(qfalse);
 }
 
 /**
- * @brief Searches the global array of aircraft types for a given aircraft
- * @param[in] name Aircraft id
- * @return aircraft_t pointer or NULL if not found
+ * @brief Searches the global array of aircraft types for a given aircraft.
+ * @param[in] *name Aircraft id.
+ * @return aircraft_t pointer or NULL if not found.
  */
-extern aircraft_t *CL_GetAircraft (const char *name)
+extern aircraft_t *AIR_GetAircraft (const char *name)
 {
 	int i;
 
@@ -501,17 +607,16 @@ extern aircraft_t *CL_GetAircraft (const char *name)
 			return &aircraft_samples[i];
 	}
 
-	Com_Printf("Aircraft %s not found (%i)\n", name, numAircraft_samples);
+	Com_Printf("Aircraft %s not found (%i).\n", name, numAircraft_samples);
 	return NULL;
 }
 
 /**
- * @brief Places a new aircraft in the given base
- * @param[in] base Pointer to base where aircraft should be added
- * @param[in] name Name of the aircraft to add
- * @TODO: What about credits? maybe handle them in CL_NewAircraft_f?
+ * @brief Places a new aircraft in the given base.
+ * @param[in] base Pointer to base where aircraft should be added.
+ * @param[in] name Type of the aircraft to add.
  */
-extern void CL_NewAircraft (base_t *base, const char *name)
+extern void AIR_NewAircraft (base_t *base, const char *name)
 {
 	aircraft_t *aircraft;
 
@@ -520,7 +625,7 @@ extern void CL_NewAircraft (base_t *base, const char *name)
 	/* First aircraft in base is default aircraft. */
 	base->aircraftCurrent = 0;
 
-	aircraft = CL_GetAircraft(name);
+	aircraft = AIR_GetAircraft(name);
 	if (aircraft && base->numAircraftInBase < MAX_AIRCRAFT) {
 		/* copy from global aircraft list to base aircraft list */
 		/* we do this because every aircraft can have its own parameters */
@@ -536,7 +641,7 @@ extern void CL_NewAircraft (base_t *base, const char *name)
 		aircraft->idxInBase = base->numAircraftInBase;
 		/* link the teamSize pointer in */
 		aircraft->teamSize = &base->teamNum[base->numAircraftInBase];
-		CL_ResetAircraftTeam(aircraft);
+		AIR_ResetAircraftTeam(aircraft);
 
 		Q_strncpyz(messageBuffer, va(_("You've got a new aircraft (a %s) in base %s"), aircraft->name, base->name), MAX_MESSAGE_TEXT);
 		MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);
@@ -546,6 +651,9 @@ extern void CL_NewAircraft (base_t *base, const char *name)
 
 		gd.numAircraft++;		/**< Increase the global number of aircraft. */
 		base->numAircraftInBase++;	/**< Increase the number of aircraft in the base. */
+		/* Update base capacities. */
+		Com_DPrintf("idx_sample: %i name: %s weight: %i\n", aircraft->idx_sample, aircraft->id, aircraft->weight);
+		AIR_UpdateHangarCapForOne(aircraft->idx_sample, base->idx);
 		Com_DPrintf("Adding new aircraft %s with IDX %i for base %s\n", aircraft->name, aircraft->idx, base->name);
 		/* Now update the aircraft list - maybe there is a popup active */
 		Cbuf_ExecuteText(EXEC_NOW, "aircraft_list");
@@ -555,21 +663,27 @@ extern void CL_NewAircraft (base_t *base, const char *name)
 /**
  * @brief Removes an aircraft from its base and the game.
  * @param[in] base Pointer to aircraft that should be removed.
- * @note The assigned soldiers are removed/unassinged from the aircraft ... not fired. If you want them fired/deleted do it before calling this function.
+ * @note The assigned soldiers are removed/unassinged from the aircraft - not fired.
  * @todo Return status of deletion for better error handling.
  */
-extern void CL_DeleteAircraft (aircraft_t *aircraft)
+extern void AIR_DeleteAircraft (aircraft_t *aircraft)
 {
 	int i = 0;
 	base_t *base = NULL;
 	aircraft_t *aircraft_temp = NULL;
+#if 0
 	transferlist_t *transferlist_temp = NULL;
+#endif
 
 	if (!aircraft) {
-		Com_DPrintf("CL_DeleteAircraft: no aircraft given (NULL)\n");
+		Com_DPrintf("AIR_DeleteAircraft: no aircraft given (NULL)\n");
 		/* TODO: Return deletion status here. */
 		return;
 	}
+#if 0
+	/* FIXME: 10042007 Zenerka
+	   this doesn't work. This condition is always true. The idea of such condition
+	   is correct, though. Let me think about clean way to implement this. */
 
 	/* Check if this aircraft is currently transferred. */
 	if (&gd.alltransfers[aircraft->idx] || (aircraft->status == AIR_TRANSIT)) {
@@ -577,11 +691,12 @@ extern void CL_DeleteAircraft (aircraft_t *aircraft)
 		/* TODO: Return deletion status here. */
 		return;
 	}
+#endif
 
 	base = &gd.bases[aircraft->idxBase];
 
 	if (!base) {
-		Com_DPrintf("CL_DeleteAircraft: No homebase found for aircraft.\n");
+		Com_DPrintf("AIR_DeleteAircraft: No homebase found for aircraft.\n");
 		/* TODO: Return deletion status here. */
 		return;
 	}
@@ -595,17 +710,23 @@ extern void CL_DeleteAircraft (aircraft_t *aircraft)
 	 */
 	for (i = aircraft->idx; i < gd.numAircraft-1; i++) {
 		/* Decrease the global index of aircrafts that have a higher index than the deleted one. */
-		aircraft_temp = CL_AircraftGetFromIdx(i);
+		aircraft_temp = AIR_AircraftGetFromIdx(i);
 		if (aircraft_temp) {
 			aircraft_temp->idx--;
 		} else {
 			/* For some reason there was no aircraft found for this index. */
-			Com_DPrintf("CL_DeleteAircraft: No aircraft found for this global index: %i\n", i);
+			Com_DPrintf("AIR_DeleteAircraft: No aircraft found for this global index: %i\n", i);
 		}
+#if 0
+		/* 10042007 Zenerka.
+		   Don't do this like that. The gd.alltransfers is set for all aircrafts, not
+		   only bought ones. The gd.alltransfers for every aircraft should be already
+		   zeroed when transfer is finished. */
 
 		/* Update transfer list (i.e. remove the one for the deleted aircraft). */
 		transferlist_temp = &gd.alltransfers[i];
 		memcpy(transferlist_temp, &gd.alltransfers[i+1], sizeof(transferlist_t));
+#endif
 	}
 
 	gd.numAircraft--;	/**< Decrease the global number of aircraft. */
@@ -621,6 +742,7 @@ extern void CL_DeleteAircraft (aircraft_t *aircraft)
 
 #if 1
 		/* Update number of team members for each aircraft.*/
+		/* FIXME: what for? 10042007 Zenerka. */
 		base->teamNum[i] = base->teamNum[i+1];
 #endif
 	}
@@ -628,7 +750,7 @@ extern void CL_DeleteAircraft (aircraft_t *aircraft)
 	/* Q_strncpyz(messageBuffer, va(_("You've sold your aircraft (a %s) in base %s"), aircraft->name, base->name), MAX_MESSAGE_TEXT);
 	MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);*/
 
-	/* Now update the aircraft list - maybe there is a popup active */
+	/* Now update the aircraft list - maybe there is a popup active. */
 	Cbuf_ExecuteText(EXEC_NOW, "aircraft_list");
 }
 
@@ -636,6 +758,7 @@ extern void CL_DeleteAircraft (aircraft_t *aircraft)
  * @brief Set pos to a random position on geoscape
  * @param[in] pos Pointer to vec2_t for aircraft position
  * @note Used to place UFOs on geoscape
+ * @todo move this to cl_ufo.c - only ufos will get "random position"
  */
 extern void CP_GetRandomPosForAircraft (float *pos)
 {
@@ -644,11 +767,12 @@ extern void CP_GetRandomPosForAircraft (float *pos)
 }
 
 /**
- * @brief Move the specified aircraft
+ * @brief Moves given aircraft.
  * @param[in] dt
- * Return true if the aircraft reached its destination
+ * @param[in] *aircraft Pointer to aircraft on its way.
+ * @return true if the aircraft reached its destination.
  */
-extern qboolean CL_AircraftMakeMove (int dt, aircraft_t* aircraft)
+extern qboolean AIR_AircraftMakeMove (int dt, aircraft_t* aircraft)
 {
 	float dist, frac;
 	int p;
@@ -678,7 +802,7 @@ extern qboolean CL_AircraftMakeMove (int dt, aircraft_t* aircraft)
  * @param[in] dt
  * TODO: Fuel
  */
-#define GROUND_MISSION 0.5
+#define GROUND_MISSION 0.5		/* TODO: what is that? Zenerka. */ /* FIXME: const. */
 void CL_CampaignRunAircraft (int dt)
 {
 	aircraft_t *aircraft;
@@ -698,7 +822,7 @@ void CL_CampaignRunAircraft (int dt)
 			if (aircraft->homebase) {
 				if (aircraft->status > AIR_IDLE) {
 					/* Aircraft is moving */
-					if (CL_AircraftMakeMove(dt, aircraft)) {
+					if (AIR_AircraftMakeMove(dt, aircraft)) {
 						/* aircraft reach its destination */
 						float *end;
 
@@ -748,7 +872,7 @@ void CL_CampaignRunAircraft (int dt)
 				/* Check aircraft low fuel */
 				if (aircraft->fuel <= 0 && aircraft->status >= AIR_IDLE && aircraft->status != AIR_RETURNING) {
 					MN_AddNewMessage(_("Notice"), _("Your dropship is low on fuel and returns to base"), qfalse, MSG_STANDARD, NULL);
-					CL_AircraftReturnToBase(aircraft);
+					AIR_AircraftReturnToBase(aircraft);
 				}
 
 				/* Aircraft purchasing ufo */
@@ -765,7 +889,9 @@ void CL_CampaignRunAircraft (int dt)
 						battleStatus = AIR_Fight(aircraft, ufo);
 
 						if (battleStatus) {
+							/* TODO: What is that? Zenerka. */
 							color = CL_GetMapColor(ufo->pos, MAPTYPE_CLIMAZONE);
+							/* TODO: What is that? Zenerka. */
 							if (!MapIsWater(color) && frand() <= GROUND_MISSION) {
 								/* spawn new mission */
 								/* some random data like alien race, alien count (also depends on ufo-size) */
@@ -789,19 +915,19 @@ void CL_CampaignRunAircraft (int dt)
 							/* now remove the ufo from geoscape */
 							UFO_RemoveUfoFromGeoscape(ufo);
 							/* and send our aircraft back to base */
-							CL_AircraftReturnToBase(aircraft);
+							AIR_AircraftReturnToBase(aircraft);
 							MN_AddNewMessage(_("Interception"), _("You've won the battle"), qfalse, MSG_STANDARD, NULL);
 						} else {
 							/* TODO: destroy the aircraft and all soldiers in it */
 							/* TODO: maybe rescue some of the soldiers */
 							/* FIXME: remove this */
-							CL_AircraftReturnToBase(aircraft);
+							AIR_AircraftReturnToBase(aircraft);
 
 							MN_AddNewMessage(_("Interception"), _("You've lost the battle"), qfalse, MSG_STANDARD, NULL);
 						}
 					} else {
 						/* TODO : Find better system to make the aircraft purchasing ufo */
-						CL_SendAircraftPurchasingUfo(aircraft, ufo);
+						AIR_SendAircraftPurchasingUfo(aircraft, ufo);
 					}
 				}
 			}
@@ -810,11 +936,11 @@ void CL_CampaignRunAircraft (int dt)
 
 /**
  * @brief Returns a list of craftitem technologies for the given type.
- * @note this list is terminated by a NULL pointer
+ * @note This list is terminated by a NULL pointer.
  * @param[in] type Type of the craft-items to return.
  * @param[in] usetypedef Defines if the type param should be handled as a aircraftItemType_t (qtrue) or not (qfalse - See the code).
  */
-static technology_t **AC_GetCraftitemTechsByType (int type, qboolean usetypedef)
+static technology_t **AII_GetCraftitemTechsByType (int type, qboolean usetypedef)
 {
 	static technology_t *techList[MAX_TECHNOLOGIES];
 	aircraftItem_t *aircraftitem = NULL;
@@ -851,7 +977,7 @@ static technology_t **AC_GetCraftitemTechsByType (int type, qboolean usetypedef)
 		}
 		/* j+1 because last item have to be NULL */
 		if (j + 1 >= MAX_TECHNOLOGIES) {
-			Com_Printf("AC_GetCraftitemTechsByType: MAX_TECHNOLOGIES limit hit.\n");
+			Com_Printf("AII_GetCraftitemTechsByType: MAX_TECHNOLOGIES limit hit.\n");
 			break;
 		}
 	}
@@ -865,7 +991,7 @@ static technology_t **AC_GetCraftitemTechsByType (int type, qboolean usetypedef)
  * @sa CL_AircraftEquipmenuMenuWeaponsClick_f
  * @sa CL_AircraftEquipmenuMenuShieldsClick_f
  */
-void CL_AircraftEquipmenuMenuInit_f (void)
+void AIM_AircraftEquipmenuMenuInit_f (void)
 {
 	static char buffer[1024];
 	technology_t **list;
@@ -900,7 +1026,7 @@ void CL_AircraftEquipmenuMenuInit_f (void)
 
 	/* we are not in the aircraft menu */
 	if (!node) {
-		Com_DPrintf("CL_AircraftEquipmenuMenuInit_f: Error - node aircraftequip not found\n");
+		Com_DPrintf("AIM_AircraftEquipmenuMenuInit_f: Error - node aircraftequip not found\n");
 		return;
 	}
 
@@ -919,15 +1045,15 @@ void CL_AircraftEquipmenuMenuInit_f (void)
 
 	switch (type) {
 	case 1: /* armour */
-		list = AC_GetCraftitemTechsByType(type, qfalse);
+		list = AII_GetCraftitemTechsByType(type, qfalse);
 		airequipID = AC_ITEM_ARMOUR;
 		break;
 	case 2:	/* items */
-		list = AC_GetCraftitemTechsByType(type, qfalse);
+		list = AII_GetCraftitemTechsByType(type, qfalse);
 		airequipID = AC_ITEM_ELECTRONICS;
 		break;
 	default:
-		list = AC_GetCraftitemTechsByType(type, qfalse);
+		list = AII_GetCraftitemTechsByType(type, qfalse);
 		airequipID = AC_ITEM_WEAPON;
 		break;
 	}
@@ -946,10 +1072,10 @@ void CL_AircraftEquipmenuMenuInit_f (void)
 }
 
 /**
- * @brief Assigns the weapon to current selected aircraft when clicked on the list
- * @sa CL_AircraftEquipmenuMenuInit_f
+ * @brief Assigns the weapon to current selected aircraft when clicked on the list.
+ * @sa AIM_AircraftEquipmenuMenuInit_f
  */
-void CL_AircraftEquipmenuMenuClick_f (void)
+void AIM_AircraftEquipmenuMenuClick_f (void)
 {
 	aircraft_t *aircraft;
 	int num;
@@ -983,10 +1109,10 @@ void CL_AircraftEquipmenuMenuClick_f (void)
 			aircraft->shield = NULL;
 			break;
 		}
-		CL_AircraftSelect(aircraft);
+		AIR_AircraftSelect(aircraft);
 	} else {
 		/* build the list of all aircraft items of type airequipID - null terminated */
-		list = AC_GetCraftitemTechsByType(airequipID, qtrue);
+		list = AII_GetCraftitemTechsByType(airequipID, qtrue);
 		/* to prevent overflows we go through the list instead of address it directly */
 		while (*list) {
 			if (RS_IsResearched_ptr(*list))
@@ -1009,12 +1135,12 @@ void CL_AircraftEquipmenuMenuClick_f (void)
 					Q_strncpyz(aircraft->shield_string, (*list)->id, MAX_VAR);
 					break;
 				default:
-					Com_Printf("CL_AircraftEquipmenuMenuClick_f: Unknown airequipID: %i\n", airequipID);
+					Com_Printf("AIM_AircraftEquipmenuMenuClick_f: Unknown airequipID: %i\n", airequipID);
 				}
 				Com_sprintf(desc, sizeof(desc), _((*list)->name));
-				CL_AircraftSelect(aircraft);
-				noparams = qtrue; /* used for CL_AircraftEquipmenuMenuInit_f */
-				CL_AircraftEquipmenuMenuInit_f();
+				AIR_AircraftSelect(aircraft);
+				noparams = qtrue; /* used for AIM_AircraftEquipmenuMenuInit_f */
+				AIM_AircraftEquipmenuMenuInit_f();
 				break;
 			}
 			/* next item in the tech pointer list */
@@ -1025,10 +1151,11 @@ void CL_AircraftEquipmenuMenuClick_f (void)
 }
 
 /**
- * @brief Return an aircraft from its global idx,
+ * @brief Returns aircraft for given index.
  * @param[in] idx Global aircraft index.
+ * @return An aircraft with given index in global array.
  */
-extern aircraft_t* CL_AircraftGetFromIdx (int idx)
+extern aircraft_t* AIR_AircraftGetFromIdx (int idx)
 {
 	base_t*		base;
 	aircraft_t*	aircraft;
@@ -1036,7 +1163,7 @@ extern aircraft_t* CL_AircraftGetFromIdx (int idx)
 	for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--)
 		for (aircraft = base->aircraft + base->numAircraftInBase - 1; aircraft >= base->aircraft; aircraft--)
 			if (aircraft->idx == idx) {
-				Com_DPrintf("CL_AircraftGetFromIdx: aircraft idx: %i - base idx: %i (%s)\n", aircraft->idx, base->idx, base->name);
+				Com_DPrintf("AIR_AircraftGetFromIdx: aircraft idx: %i - base idx: %i (%s)\n", aircraft->idx, base->idx, base->name);
 				return aircraft;
 			}
 
@@ -1044,9 +1171,12 @@ extern aircraft_t* CL_AircraftGetFromIdx (int idx)
 }
 
 /**
- * @brief Sends the specified aircraft to specified mission
+ * @brief Sends the specified aircraft to specified mission.
+ * @param[in] *aircraft Pointer to aircraft to send to mission.
+ * @param[in] *mission Pointer to given mission.
+ * @return qtrue if sending an aircraft to specified mission is possible.
  */
-extern qboolean CL_SendAircraftToMission (aircraft_t* aircraft, actMis_t* mission)
+extern qboolean AIR_SendAircraftToMission (aircraft_t* aircraft, actMis_t* mission)
 {
 	if (!aircraft || !mission)
 		return qfalse;
@@ -1062,7 +1192,7 @@ extern qboolean CL_SendAircraftToMission (aircraft_t* aircraft, actMis_t* missio
 	/* if mission is a base-attack and aircraft already in base, launch
 	 * mission immediately */
 	if (gd.bases[aircraft->idxBase].baseStatus == BASE_UNDER_ATTACK &&
-		CL_IsAircraftInBase(aircraft)) {
+		AIR_IsAircraftInBase(aircraft)) {
 		aircraft->mission = mission;
 		mission->def->active = qtrue;
 		MN_PushMenu("popup_baseattack");
@@ -1078,7 +1208,7 @@ extern qboolean CL_SendAircraftToMission (aircraft_t* aircraft, actMis_t* missio
 	return qtrue;
 }
 
-/** @brief valid aircraft items (craftitem) definition values from script files */
+/** @brief Valid aircraft items (craftitem) definition values from script files. */
 static const value_t aircraftitems_vals[] = {
 	{"tech", V_TRANSLATION_STRING, offsetof(aircraftItem_t, tech)}
 	,
@@ -1107,18 +1237,18 @@ static const value_t aircraftitems_vals[] = {
 };
 
 /**
- * @brief Parses all aircraft items that are defined in our UFO-scripts
+ * @brief Parses all aircraft items that are defined in our UFO-scripts.
  * @sa CL_ParseClientData
  */
-extern void CL_ParseAircraftItem (const char *name, char **text)
+extern void AII_ParseAircraftItem (const char *name, char **text)
 {
-	const char *errhead = "CL_ParseAircraftItem: unexpected end of file (aircraft ";
+	const char *errhead = "AII_ParseAircraftItem: unexpected end of file (aircraft ";
 	aircraftItem_t *airItem;
 	const value_t *vp;
 	char *token;
 
 	if (numAircraftItems >= MAX_AIRCRAFTITEMS) {
-		Com_Printf("CL_ParseAircraftItem: too many craftitem definitions; def \"%s\" ignored\n", name);
+		Com_Printf("AII_ParseAircraftItem: too many craftitem definitions; def \"%s\" ignored\n", name);
 		return;
 	}
 
@@ -1135,7 +1265,7 @@ extern void CL_ParseAircraftItem (const char *name, char **text)
 	token = COM_Parse(text);
 
 	if (!*text || *token != '{') {
-		Com_Printf("CL_ParseAircraftItem: craftitem def \"%s\" without body ignored\n", name);
+		Com_Printf("AII_ParseAircraftItem: craftitem def \"%s\" without body ignored\n", name);
 		numAircraftItems--;
 		return;
 	}
@@ -1163,7 +1293,7 @@ extern void CL_ParseAircraftItem (const char *name, char **text)
 			else if (!Q_strncmp(token, "electronics", MAX_VAR))
 				airItem->type = AC_ITEM_ELECTRONICS;
 			else
-				Com_Printf("CL_ParseAircraftItem: \"%s\" unknown craftitem type: \"%s\" - ignored.\n", name, token);
+				Com_Printf("AII_ParseAircraftItem: \"%s\" unknown craftitem type: \"%s\" - ignored.\n", name, token);
 		} else {
 			/* Check for some standard values. */
 			for (vp = aircraftitems_vals; vp->string; vp++) {
@@ -1178,14 +1308,14 @@ extern void CL_ParseAircraftItem (const char *name, char **text)
 				}
 			}
 			if (!vp->string) {
-				Com_Printf("CL_ParseAircraftItem: unknown token \"%s\" ignored (craftitem %s)\n", token, name);
+				Com_Printf("AII_ParseAircraftItem: unknown token \"%s\" ignored (craftitem %s)\n", token, name);
 				COM_EParse(text, errhead, name);
 			}
 		}
 	} while (*text);
 }
 
-/** @brief valid aircraft definition values from script files */
+/** @brief Valid aircraft definition values from script files. */
 static const value_t aircraft_vals[] = {
 	{"name", V_TRANSLATION_STRING, offsetof(aircraft_t, name)}
 	,
@@ -1238,19 +1368,19 @@ static const value_t aircraft_vals[] = {
 };
 
 /**
- * @brief Parses all aircraft that are defined in our UFO-scripts
+ * @brief Parses all aircraft that are defined in our UFO-scripts.
  * @sa CL_ParseClientData
  * @note parses the aircraft into our aircraft_sample array to use as reference
  */
-extern void CL_ParseAircraft (const char *name, char **text)
+extern void AIR_ParseAircraft (const char *name, char **text)
 {
-	const char *errhead = "CL_ParseAircraft: unexpected end of file (aircraft ";
+	const char *errhead = "AIR_ParseAircraft: unexpected end of file (aircraft ";
 	aircraft_t *air_samp;
 	const value_t *vp;
 	char *token;
 
 	if (numAircraft_samples >= MAX_AIRCRAFT) {
-		Com_Printf("CL_ParseAircraft: too many aircraft definitions; def \"%s\" ignored\n", name);
+		Com_Printf("AIR_ParseAircraft: too many aircraft definitions; def \"%s\" ignored\n", name);
 		return;
 	}
 
@@ -1268,7 +1398,7 @@ extern void CL_ParseAircraft (const char *name, char **text)
 	token = COM_Parse(text);
 
 	if (!*text || *token != '{') {
-		Com_Printf("CL_ParseAircraft: aircraft def \"%s\" without body ignored\n", name);
+		Com_Printf("AIR_ParseAircraft: aircraft def \"%s\" without body ignored\n", name);
 		return;
 	}
 
@@ -1312,16 +1442,23 @@ extern void CL_ParseAircraft (const char *name, char **text)
 			else if (!Q_strncmp(token, "ufo", 3))
 				air_samp->type = AIRCRAFT_UFO;
 		} else if (!vp->string) {
-			Com_Printf("CL_ParseAircraft: unknown token \"%s\" ignored (aircraft %s)\n", token, name);
+			Com_Printf("AIR_ParseAircraft: unknown token \"%s\" ignored (aircraft %s)\n", token, name);
 			COM_EParse(text, errhead, name);
 		}
 	} while (*text);
 }
 
+/*
+	===============================================
+	Aircraft functions related to UFOs or missions.
+	===============================================
+*/
+
 /**
- * @brief Notify that a mission has been removed
+ * @brief Notify that a mission has been removed.
+ * @param[in] *mission Pointer to the mission that has been removed.
  */
-extern void CL_AircraftsNotifyMissionRemoved (const actMis_t *const mission)
+extern void AIR_AircraftsNotifyMissionRemoved (const actMis_t *const mission)
 {
 	base_t*		base;
 	aircraft_t*	aircraft;
@@ -1333,7 +1470,7 @@ extern void CL_AircraftsNotifyMissionRemoved (const actMis_t *const mission)
 
 			if (aircraft->status == AIR_MISSION) {
 				if (aircraft->mission == mission) {
-					CL_AircraftReturnToBase(aircraft);
+					AIR_AircraftReturnToBase(aircraft);
 				} else if (aircraft->mission > mission) {
 					(aircraft->mission)--;
 				}
@@ -1343,9 +1480,10 @@ extern void CL_AircraftsNotifyMissionRemoved (const actMis_t *const mission)
 }
 
 /**
- * @brief Notify that an ufo has been removed
+ * @brief Notify that an UFO has been removed.
+ * @param[in] *ufo Pointer to UFO that has been removed.
  */
-extern void CL_AircraftsNotifyUfoRemoved (const aircraft_t *const ufo)
+extern void AIR_AircraftsNotifyUfoRemoved (const aircraft_t *const ufo)
 {
 	base_t*		base;
 	aircraft_t*	aircraft;
@@ -1356,16 +1494,17 @@ extern void CL_AircraftsNotifyUfoRemoved (const aircraft_t *const ufo)
 			aircraft >= base->aircraft; aircraft--)
 			if (aircraft->status == AIR_UFO) {
 				if (ufo - gd.ufos == aircraft->ufo)
-					CL_AircraftReturnToBase(aircraft);
+					AIR_AircraftReturnToBase(aircraft);
 				else if (ufo - gd.ufos < aircraft->ufo)
 					aircraft->ufo--;
 			}
 }
 
 /**
- * @brief Notify that an ufo disappear from radars
+ * @brief Notify that an ufo disappear from radars.
+ * @param[in] *ufo Pointer to an UFO that has disappeared.
  */
-extern void CL_AircraftsUfoDisappear (const aircraft_t *const ufo)
+extern void AIR_AircraftsUfoDisappear (const aircraft_t *const ufo)
 {
 	base_t*		base;
 	aircraft_t*	aircraft;
@@ -1376,13 +1515,15 @@ extern void CL_AircraftsUfoDisappear (const aircraft_t *const ufo)
 			aircraft >= base->aircraft; aircraft--)
 			if (aircraft->status == AIR_UFO)
 				if (ufo - gd.ufos == aircraft->ufo)
-					CL_AircraftReturnToBase(aircraft);
+					AIR_AircraftReturnToBase(aircraft);
 }
 
 /**
- * @brief Make the specified aircraft purchasing an ufo
+ * @brief Make the specified aircraft purchasing an UFO.
+ * @param[in] *aircraft Pointer to an aircraft which will hunt for an UFO.
+ * @param[in] *ufo Pointer to an UFO.
  */
-extern void CL_SendAircraftPurchasingUfo (aircraft_t* aircraft, aircraft_t* ufo)
+extern void AIR_SendAircraftPurchasingUfo (aircraft_t* aircraft, aircraft_t* ufo)
 {
 	int num = ufo - gd.ufos;
 
@@ -1396,48 +1537,56 @@ extern void CL_SendAircraftPurchasingUfo (aircraft_t* aircraft, aircraft_t* ufo)
 	aircraft->ufo = num;
 }
 
+/*
+	============================================
+	Aircraft functions related to team handling.
+	============================================
+*/
+
 /**
- * @brief
- * @param[in] aircraft
+ * @brief Resets team in given aircraft.
+ * @param[in] *aircraft Pointer to an aircraft, where the team will be reset.
  */
-void CL_ResetAircraftTeam (aircraft_t *aircraft)
+void AIR_ResetAircraftTeam (aircraft_t *aircraft)
 {
 	memset(aircraft->teamIdxs, -1, aircraft->size * sizeof(int));
 }
 
 /**
- * @brief
- * @param[in] aircraft
- * @param[in] employee_idx
+ * @brief Adds given employee to given aircraft.
+ * @param[in] *aircraft Pointer to an aircraft, to which we will add employee.
+ * @param[in] employee_idx Index of an employee in global array (?)
+ * FIXME: is this responsible for adding soldiers to a team in dropship?
  */
-extern void CL_AddToAircraftTeam (aircraft_t *aircraft, int employee_idx)
+extern void AIR_AddToAircraftTeam (aircraft_t *aircraft, int employee_idx)
 {
 	int i;
 
 	if (aircraft == NULL) {
-		Com_DPrintf("CL_AddToAircraftTeam: null aircraft \n");
+		Com_DPrintf("AIR_AddToAircraftTeam: null aircraft \n");
 		return ;
 	}
 	if (*(aircraft->teamSize) < aircraft->size) {
 		for (i = 0; i < aircraft->size; i++)
 			if (aircraft->teamIdxs[i] == -1) {
 				aircraft->teamIdxs[i] = employee_idx;
-				Com_DPrintf("CL_AddToAircraftTeam: added idx '%d'\n", employee_idx);
+				Com_DPrintf("AIR_AddToAircraftTeam: added idx '%d'\n", employee_idx);
 				break;
 			}
 		if (i >= aircraft->size)
-			Com_DPrintf("CL_AddToAircraftTeam: couldnt find space\n");
+			Com_DPrintf("AIR_AddToAircraftTeam: couldnt find space\n");
 	} else {
-		Com_DPrintf("CL_AddToAircraftTeam: error: no space in aircraft\n");
+		Com_DPrintf("AIR_AddToAircraftTeam: error: no space in aircraft\n");
 	}
 }
 
 /**
- * @brief
- * @param[in] aircraft
- * @param[in] employee_idx
+ * @brief Removes given employee to given aircraft.
+ * @param[in] *aircraft Pointer to an aircraft, from which we will remove employee.
+ * @param[in] employee_idx Index of an employee in global array (?)
+ * FIXME: is this responsible for removing soldiers from a team in dropship?
  */
-void CL_RemoveFromAircraftTeam (aircraft_t *aircraft, int employee_idx)
+void AIR_RemoveFromAircraftTeam (aircraft_t *aircraft, int employee_idx)
 {
 	int i;
 
@@ -1446,10 +1595,10 @@ void CL_RemoveFromAircraftTeam (aircraft_t *aircraft, int employee_idx)
 	for (i = 0; i < aircraft->size; i++)
 		if (aircraft->teamIdxs[i] == employee_idx)	{
 			aircraft->teamIdxs[i] = -1;
-			Com_DPrintf("CL_RemoveFromAircraftTeam: removed idx '%d' \n", employee_idx);
+			Com_DPrintf("AIR_RemoveFromAircraftTeam: removed idx '%d' \n", employee_idx);
 			return;
 		}
-	Com_Printf("CL_RemoveFromAircraftTeam: error: idx '%d' not on aircraft %i (base: %i) in base %i\n", employee_idx, aircraft->idx, aircraft->idxInBase, baseCurrent->idx);
+	Com_Printf("AIR_RemoveFromAircraftTeam: error: idx '%d' not on aircraft %i (base: %i) in base %i\n", employee_idx, aircraft->idx, aircraft->idxInBase, baseCurrent->idx);
 }
 
 /**
@@ -1461,7 +1610,7 @@ void CL_RemoveFromAircraftTeam (aircraft_t *aircraft, int employee_idx)
  * @param[in] employee_idx deleted employee idx
  * @sa E_DeleteEmployee
  */
-extern void CL_DecreaseAircraftTeamIdxGreaterThan (aircraft_t *aircraft, int employee_idx)
+extern void AIR_DecreaseAircraftTeamIdxGreaterThan (aircraft_t *aircraft, int employee_idx)
 {
 	int i;
 
@@ -1471,16 +1620,17 @@ extern void CL_DecreaseAircraftTeamIdxGreaterThan (aircraft_t *aircraft, int emp
 	for (i = 0; i < aircraft->size; i++)
 		if (aircraft->teamIdxs[i] > employee_idx) {
 			aircraft->teamIdxs[i]--;
-			Com_DPrintf("CL_DecreaseAircraftTeamIdxGreaterThan: decreased idx '%d' \n", aircraft->teamIdxs[i]+1);
+			Com_DPrintf("AIR_DecreaseAircraftTeamIdxGreaterThan: decreased idx '%d' \n", aircraft->teamIdxs[i]+1);
 		}
 }
 
 /**
- * @brief
- * @param[in] aircraft
- * @param[in] employee_idx
+ * @brief Checks whether given employee is in given aircraft (onboard).
+ * @param[in] *aircraft Pointer to an aircraft.
+ * @param[in] employee_idx Employee index in global array.
+ * @return qtrue if an employee with given index is assigned to given aircraft.
  */
-extern qboolean CL_IsInAircraftTeam (aircraft_t *aircraft, int employee_idx)
+extern qboolean AIR_IsInAircraftTeam (aircraft_t *aircraft, int employee_idx)
 {
 	int i;
 #if defined (DEBUG) || defined (PARANOID)
@@ -1488,13 +1638,13 @@ extern qboolean CL_IsInAircraftTeam (aircraft_t *aircraft, int employee_idx)
 #endif
 
 	if (aircraft == NULL) {
-		Com_DPrintf("CL_IsInAircraftTeam: No aircraft given\n");
+		Com_DPrintf("AIR_IsInAircraftTeam: No aircraft given\n");
 		return qfalse;
 	}
 #ifdef PARANOID
 	else {
 		base = aircraft->homebase;
-		Com_DPrintf("CL_IsInAircraftTeam: aircraft: '%s' (base: '%s')\n", aircraft->name, base->name);
+		Com_DPrintf("AIR_IsInAircraftTeam: aircraft: '%s' (base: '%s')\n", aircraft->name, base->name);
 	}
 #endif
 
@@ -1502,14 +1652,17 @@ extern qboolean CL_IsInAircraftTeam (aircraft_t *aircraft, int employee_idx)
 		if (aircraft->teamIdxs[i] == employee_idx) {
 #ifdef DEBUG
 			base = (base_t*)(aircraft->homebase);
-			Com_DPrintf("CL_IsInAircraftTeam: found idx '%d' (homebase: '%s' - baseCurrent: '%s') \n", employee_idx, base ? base->name : "", baseCurrent ? baseCurrent->name : "");
+			Com_DPrintf("AIR_IsInAircraftTeam: found idx '%d' (homebase: '%s' - baseCurrent: '%s') \n", employee_idx, base ? base->name : "", baseCurrent ? baseCurrent->name : "");
 #endif
 			return qtrue;
 		}
-	Com_DPrintf("CL_IsInAircraftTeam:not found idx '%d' \n", employee_idx);
+	Com_DPrintf("AIR_IsInAircraftTeam:not found idx '%d' \n", employee_idx);
 	return qfalse;
 }
 
+#if 0
+/* This function is a copy of more detailed AIR_ListAircraft_f().
+   10042007 Zenerka. */
 
 /**
  * @brief
@@ -1523,3 +1676,5 @@ extern void CL_AircraftListDebug_f (void)
 		for (aircraft = base->aircraft + base->numAircraftInBase - 1; aircraft >= base->aircraft; aircraft--)
 			Com_Printf("aircraft idx: %i (in base [idx]: %i) - base idx: %i (%s)\n", aircraft->idx, aircraft->idxInBase, base->idx, base->name);
 }
+#endif
+

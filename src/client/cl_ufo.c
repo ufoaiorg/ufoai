@@ -56,7 +56,7 @@ extern void UFO_CampaignRunUfos (int dt)
 
 	/* now the ufos are flying around, too */
 	for (ufo = gd.ufos + gd.numUfos - 1; ufo >= gd.ufos; ufo--) {
-		if (CL_AircraftMakeMove(dt, ufo))
+		if (AIR_AircraftMakeMove(dt, ufo))
 			UFO_SetUfoRandomDest(ufo);
 
 		/* TODO: Crash */
@@ -151,7 +151,7 @@ extern void UFO_RemoveUfoFromGeoscape (aircraft_t* ufo)
 
 	/* Notications */
 	CL_PopupNotifyUfoRemoved(ufo);
-	CL_AircraftsNotifyUfoRemoved(ufo);
+	AIR_AircraftsNotifyUfoRemoved(ufo);
 	MAP_NotifyUfoRemoved(ufo);
 }
 
@@ -199,7 +199,7 @@ extern void UFO_CampaignCheckEvents (void)
 				MN_AddNewMessage(_("Notice"), _("UFO disappears on our radar"), qfalse, MSG_STANDARD, NULL);
 
 				/* Notify that ufo disappeared */
-				CL_AircraftsUfoDisappear(ufo);
+				AIR_AircraftsUfoDisappear(ufo);
 				CL_PopupNotifyUfoDisappeared(ufo);
 				MAP_NotifyUfoDisappear(ufo);
 			}
