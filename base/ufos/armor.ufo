@@ -24,7 +24,7 @@ item light
 	center		"0 0 -5"
 	scale		0.7
 	price		1400
-	buytype		3
+	buytype		armour
 	useable		0
 
 	protection
@@ -63,7 +63,7 @@ item medium
 	center		"0 0 -5"
 	scale		0.7
 	price		7500
-	buytype		3
+	buytype		armour
 	useable		0
 
 	protection
@@ -139,7 +139,7 @@ item light_alien
 	center		"0 0 -5"
 	scale		0.7
 	price		1400
-	buytype		3
+	buytype		armour
 	useable		1
 
 	protection
@@ -178,7 +178,7 @@ item medium_alien
 	center		"0 0 -5"
 	scale		0.7
 	price		7500
-	buytype		3
+	buytype		armour
 	useable		1
 
 	protection
