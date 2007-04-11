@@ -166,7 +166,7 @@ static void BS_BuyClick_f (void)
 	}
 
 	num = atoi(Cmd_Argv(1));
-	if (num + buyListScrollPos >= buyListLength)
+	if (num >= buyListLength)
 		return;
 
 	if (buyCategory == BUY_AIRCRAFT)
@@ -249,12 +249,15 @@ static void BS_BuyType_f (void)
 	int i, j = 0, num, storage = 0, supply;
 	menuNode_t* node;
 
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: buy_type <category>\n");
-		return;
+	if (Cmd_Argc() == 2) {
+		buyListScrollPos = 0;
+		node = MN_GetNodeFromCurrentMenu("market");
+		if (node)
+			node->textScroll = 0;
+		BS_BuyScroll_f();
+		num = atoi(Cmd_Argv(1));
+		buyCategory = num;
 	}
-	num = atoi(Cmd_Argv(1));
-	buyCategory = num;
 
 	if (!baseCurrent)
 		return;
@@ -264,11 +267,6 @@ static void BS_BuyType_f (void)
 	CL_UpdateCredits(ccs.credits);
 
 	*bsMarketNames = *bsMarketStorage = *bsMarketMarket = *bsMarketPrices = '\0';
-	buyListScrollPos = 0;
-	node = MN_GetNodeFromCurrentMenu("market");
-	if (node)
-		node->textScroll = 0;
-
 	menuText[TEXT_MARKET_NAMES] = bsMarketNames;
 	menuText[TEXT_MARKET_STORAGE] = bsMarketStorage;
 	menuText[TEXT_MARKET_MARKET] = bsMarketMarket;
@@ -287,10 +285,12 @@ static void BS_BuyType_f (void)
 				BS_AddToList(od->name, baseCurrent->storage.num[i], ccs.eMarket.num[i], od->price);
 
 				/* Set state of Autosell button. */
-				if (gd.autosell[i])
-					Cbuf_AddText(va("buy_autoselle%i\n", j));
-				else
-					Cbuf_AddText(va("buy_autoselld%i\n", j));
+				if (j < 28) {
+					if (gd.autosell[i])
+						Cbuf_AddText(va("buy_autoselle%i\n", j));
+					else
+						Cbuf_AddText(va("buy_autoselld%i\n", j));
+				}
 
 				buyList[j] = i;
 				j++;
@@ -355,11 +355,10 @@ static void BS_BuyItem_f (void)
 		return;
 
 	num = atoi(Cmd_Argv(1));
-	if (num < 0 || num + buyListScrollPos >= buyListLength)
+	if (num < 0 || num >= buyListLength)
 		return;
 
 	item = buyList[num];
-	Cbuf_AddText(va("buyselect%i\n", num));
 	if (buyCategory == BUY_AIRCRAFT) {
 		BS_MarketAircraftDescription(item);
 		Com_DPrintf("BS_BuyItem_f: aircraft %i\n", item);
@@ -368,8 +367,9 @@ static void BS_BuyItem_f (void)
 		CL_ItemDescription(item);
 		Com_DPrintf("BS_BuyItem_f: item %i\n", item);
 		if (ccs.credits >= csi.ods[item].price * MARKET_BUY_FACTOR / MARKET_BUY_DIVISOR && ccs.eMarket.num[item]) {
-			Cvar_SetValue(va("mn_storage%i", num), ++baseCurrent->storage.num[item]);
-			Cvar_SetValue(va("mn_supply%i", num), --ccs.eMarket.num[item]);
+			/* reinit the menu */
+			Cmd_BufClear();
+			BS_BuyType_f();
 			CL_UpdateCredits(ccs.credits - csi.ods[item].price * MARKET_BUY_FACTOR / MARKET_BUY_DIVISOR);
 		}
 	}
@@ -392,19 +392,19 @@ static void BS_SellItem_f (void)
 		return;
 
 	num = atoi(Cmd_Argv(1));
-	if (num < 0 || num + buyListScrollPos >= buyListLength)
+	if (num < 0 || num >= buyListLength)
 		return;
 
 	item = buyList[num];
-	Cbuf_AddText(va("buyselect%i\n", num));
 	if (buyCategory == BUY_AIRCRAFT) {
 		BS_MarketAircraftDescription(item);
 		/* TODO: Sell aircraft */
 	} else {
 		CL_ItemDescription(item);
 		if (baseCurrent->storage.num[item]) {
-			Cvar_SetValue(va("mn_storage%i", num), --baseCurrent->storage.num[item]);
-			Cvar_SetValue(va("mn_supply%i", num), ++ccs.eMarket.num[item]);
+			/* reinit the menu */
+			Cmd_BufClear();
+			BS_BuyType_f();
 			CL_UpdateCredits(ccs.credits + csi.ods[item].price * MARKET_SELL_FACTOR / MARKET_SELL_DIVISOR);
 		}
 	}
@@ -429,7 +429,7 @@ static void BS_Autosell_f (void)
 
 	num = atoi(Cmd_Argv(1));
 	Com_DPrintf("BS_Autosell_f: listnumber %i\n", num);
-	if (num < 0 || num + buyListScrollPos >= buyListLength)
+	if (num < 0 || num >= buyListLength)
 		return;
 	item = buyList[num];
 
@@ -446,7 +446,8 @@ static void BS_Autosell_f (void)
 	}
 
 	/* Reinit the menu. */
-	Cbuf_AddText(va("buy_type %i\n", buyCategory));
+	Cmd_BufClear();
+	BS_BuyType_f();
 }
 
 /**
@@ -466,11 +467,10 @@ static void BS_BuyAircraft_f (void)
 		return;
 
 	num = atoi(Cmd_Argv(1));
-	if (num < 0 || num + buyListScrollPos >= buyListLength)
+	if (num < 0 || num >= buyListLength)
 		return;
 
 	aircraftID = buyList[num];
-	Cbuf_AddText(va("buyselect%i\n;", num));
 
 	/* Check free space in hangars. */
 	if (BS_CalculateHangarStorage(aircraftID, baseCurrent->idx) < 0) {
@@ -517,7 +517,7 @@ static void BS_SellAircraft_f (void)
 	}
 
 	num = atoi(Cmd_Argv(1));
-	if (num < 0 || num + buyListScrollPos >= buyListLength)
+	if (num < 0 || num >= buyListLength)
 		return;
 
 	aircraftID = buyList[num];
@@ -543,9 +543,10 @@ static void BS_SellAircraft_f (void)
 			Com_DPrintf("BS_SellAircraft_f: Selling aircraft with IDX %i\n", aircraft->idx);
 			AIR_DeleteAircraft(aircraft);
 
-			Cbuf_AddText(va("buyselect%i\n;", num));
 			CL_UpdateCredits(ccs.credits + aircraft_samples[aircraftID].price);
-			Cbuf_AddText("buy_type 4;");
+			/* reinit the menu */
+			Cmd_BufClear();
+			BS_BuyType_f();
 			/* Update hangar capacities after selling an aircraft. */
 			AIR_UpdateHangarCapForAll(base->idx);
 			return;
