@@ -71,7 +71,7 @@ void (*RW_IN_Commands_fp)(void);
 void (*RW_IN_GetMousePos_fp)(int *mx, int *my);
 void (*RW_IN_Frame_fp)(void);
 
-void Real_IN_Init (void);
+void Real_IN_Init(void);
 
 /*
 ==========================================================================
@@ -88,9 +88,9 @@ void VID_Printf (int print_level, const char *fmt, ...)
 	va_list		argptr;
 	char		msg[MAXPRINTMSG];
 
-	va_start (argptr, fmt);
-	Q_vsnprintf (msg, sizeof(msg), fmt, argptr);
-	va_end (argptr);
+	va_start(argptr, fmt);
+	Q_vsnprintf(msg, sizeof(msg), fmt, argptr);
+	va_end(argptr);
 
 	msg[sizeof(msg)-1] = 0;
 
@@ -109,13 +109,13 @@ void VID_Error (int err_level, const char *fmt, ...)
 	va_list		argptr;
 	char		msg[MAXPRINTMSG];
 
-	va_start (argptr,fmt);
-	Q_vsnprintf (msg, sizeof(msg), fmt, argptr);
-	va_end (argptr);
+	va_start(argptr,fmt);
+	Q_vsnprintf(msg, sizeof(msg), fmt, argptr);
+	va_end(argptr);
 
 	msg[sizeof(msg)-1] = 0;
 
-	Com_Error (err_level, "%s", msg);
+	Com_Error(err_level, "%s", msg);
 }
 
 /**
@@ -161,9 +161,9 @@ const vidmode_t vid_modes[] =
 /**
  * @brief
  */
-qboolean VID_GetModeInfo( int *width, int *height, int mode )
+qboolean VID_GetModeInfo (int *width, int *height, int mode)
 {
-	if ( mode < 0 || mode >= VID_NUM_MODES )
+	if (mode < 0 || mode >= VID_NUM_MODES)
 		return qfalse;
 
 	*width  = vid_modes[mode].width;
@@ -175,7 +175,7 @@ qboolean VID_GetModeInfo( int *width, int *height, int mode )
 /**
  * @brief
  */
-void VID_NewWindow ( int width, int height)
+void VID_NewWindow (int width, int height)
 {
 	viddef.width  = width;
 	viddef.height = height;
@@ -252,12 +252,12 @@ qboolean VID_LoadRefresh (const char *name)
 	Q_strcat(libPath, name, sizeof(libPath));
 
 	if (stat(libPath, &st) == -1) {
-		Com_Printf("LoadLibrary (\"%s\") failed: %s\n", name, strerror(errno));
+		Com_Printf("LoadLibrary(\"%s\") failed: %s\n", name, strerror(errno));
 		return qfalse;
 	}
 
 	if ((reflib_library = dlopen(libPath, RTLD_LAZY|RTLD_GLOBAL)) == 0) {
-		Com_Printf("LoadLibrary (\"%s\") failed: %s\n", name , dlerror());
+		Com_Printf("LoadLibrary(\"%s\") failed: %s\n", name , dlerror());
 		return qfalse;
 	}
 
@@ -290,10 +290,10 @@ qboolean VID_LoadRefresh (const char *name)
 	if ((GetRefAPI = (void *) dlsym(reflib_library, "GetRefAPI")) == 0)
 		Com_Error(ERR_FATAL, "dlsym failed on %s", name);
 
-	re = GetRefAPI( ri );
+	re = GetRefAPI(ri);
 
 	if (re.api_version != API_VERSION) {
-		VID_FreeReflib ();
+		VID_FreeReflib();
 		Com_Error(ERR_FATAL, "%s has incompatible api_version", name);
 	}
 
@@ -372,9 +372,9 @@ void VID_CheckChanges (void)
 
 		Com_sprintf(name, sizeof(name), "ref_%s.so", vid_ref->string);
 		if (!VID_LoadRefresh(name)) {
-			Cmd_ExecuteString( "condump gl_debug" );
+			Cmd_ExecuteString("condump gl_debug");
 
-			Com_Error (ERR_FATAL, "Couldn't initialize OpenGL renderer!\nConsult gl_debug.txt for further information.");
+			Com_Error(ERR_FATAL, "Couldn't initialize OpenGL renderer!\nConsult gl_debug.txt for further information.");
 		}
 		cls.disable_screen = qfalse;
 	}
@@ -427,7 +427,7 @@ void VID_Shutdown (void)
  * @brief
  */
 /*
-void IN_Init ( void )
+void IN_Init (void)
 {
 }
 */
@@ -463,7 +463,7 @@ void IN_Commands (void)
 /**
  * @brief
  */
- 
+
 void IN_GetMousePos (int *mx, int *my)
 {
 	if (RW_IN_GetMousePos_fp)
@@ -473,7 +473,7 @@ void IN_GetMousePos (int *mx, int *my)
 /**
  * @brief
  */
- 
+
 void IN_Frame (void)
 {
 	if (RW_IN_Activate_fp) {
@@ -494,6 +494,7 @@ void IN_Frame (void)
 void IN_Activate (qboolean active)
 {
 }
+
 */
 /**
  * @brief
@@ -502,4 +503,3 @@ void Do_Key_Event (int key, qboolean down)
 {
 	Key_Event(key, down, Sys_Milliseconds());
 }
-
