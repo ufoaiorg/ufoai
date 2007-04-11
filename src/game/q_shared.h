@@ -1459,9 +1459,10 @@ typedef enum {
 
 #define BUY_PRI(type)	( (((type) == BUY_WEAP_PRI) || ((type) == BUY_MULTI_AMMO)) ) /** < Checks if "type" is displayable/usable in the primary category. */
 #define BUY_SEC(type)	( (((type) == BUY_WEAP_SEC) || ((type) == BUY_MULTI_AMMO)) ) /** < Checks if "type" is displayable/usable in the secondary category. */
-#define BUYTYPE_MATCH(type1,type2) \
+#define BUYTYPE_MATCH(type1,type2) (\
 	(  ((((type1) == BUY_WEAP_PRI) || ((type1) == BUY_WEAP_SEC)) && ((type2) == BUY_MULTI_AMMO)) \
 	|| ((((type2) == BUY_WEAP_PRI) || ((type2) == BUY_WEAP_SEC)) && ((type1) == BUY_MULTI_AMMO)) \
-	|| ((type1) == (type2)) ) /**< Check if the 2 buytypes (type1 and type2) are compatible) */
+	|| ((type1) == (type2)) ) \
+	) /**< Check if the 2 buytypes (type1 and type2) are compatible) */
 
 #endif /* GAME_Q_SHARED_H */
