@@ -633,12 +633,12 @@ mission africa
 
 //FIXME: where will we play now?
 //FIXME: artifacts? harvester crashsite?
-mission falconcrash
+mission harvestercrash
 {
 	location	"_Atacama Desert"
 	type		"_Crashed Alien Ship"
 	text		"_Secure Alien Ship"
-	map		falcon_crash04
+	map		harvestercrash04
 	music		PsymongR3
 	pos		"70 -27"
 	aliens		7

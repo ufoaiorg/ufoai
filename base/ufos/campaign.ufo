@@ -104,7 +104,7 @@ stage invasion
 //		frame		"0 10 0"
 		frame		"0 30 0"
 		expire		"0 7 0"
-		missions	"africa terrain baseattack lake falconcrash qatar"
+		missions	"africa terrain baseattack lake harvestercrash qatar"
 		quota		6
 		nextstage	alienbase
 	}
