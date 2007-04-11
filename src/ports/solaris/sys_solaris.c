@@ -214,23 +214,22 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 	char	name[MAX_OSPATH];
 	char	curpath[MAX_OSPATH];
 	char	*path;
-	const char *gamename = "game.so";
 
 	if (game_library)
 		Com_Error(ERR_FATAL, "Sys_GetGameAPI without Sys_UnloadingGame");
 
 	getcwd(curpath, sizeof(curpath));
 
-	Com_Printf("------- Loading %s -------", gamename);
+	Com_Printf("------- Loading game.so -------");
 
 	/* now run through the search paths */
 	path = NULL;
 	while (1) {
-		path = FS_NextPath (path);
+		path = FS_NextPath(path);
 		if (!path)
 			return NULL;		/* couldn't find one anywhere */
-		sprintf(name, "%s/%s/%s", curpath, path, gamename);
-		game_library = dlopen(name, RTLD_NOW );
+		Com_sprintf(name, sizeof(name), "%s/game.so", path);
+		game_library = dlopen(name, RTLD_NOW);
 		if (game_library) {
 			Com_DPrintf("LoadLibrary (%s)\n",name);
 			break;
@@ -238,7 +237,7 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 			Com_Printf("error: %s\n", dlerror());
 	}
 
-	GetGameAPI = (void *)dlsym (game_library, "GetGameAPI");
+	GetGameAPI = (void *)dlsym(game_library, "GetGameAPI");
 	if (!GetGameAPI) {
 		Sys_UnloadGame();
 		return NULL;
