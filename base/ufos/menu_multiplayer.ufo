@@ -1621,7 +1621,7 @@ gametype 1on1
 		ai_numactors 0
 		sv_ai 0
 		ai_autojoin 0
-		maxplayers 1
+//		maxplayers 1
 	}
 }
 gametype 1on1on1
@@ -1635,7 +1635,7 @@ gametype 1on1on1
 		ai_numactors 0
 		sv_ai 0
 		ai_autojoin 0
-		maxplayers 1
+//		maxplayers 1
 	}
 }
 gametype 2on2
@@ -1649,7 +1649,7 @@ gametype 2on2
 		ai_numactors 0
 		sv_ai 0
 		ai_autojoin 0
-		maxplayers 2
+//		maxplayers 2
 	}
 }
 gametype 2on2on2
@@ -1663,7 +1663,7 @@ gametype 2on2on2
 		ai_numactors 0
 		sv_ai 0
 		ai_autojoin 0
-		maxplayers 2
+//		maxplayers 2
 	}
 }
 gametype 3on3
@@ -1677,7 +1677,7 @@ gametype 3on3
 		ai_numactors 0
 		sv_ai 0
 		ai_autojoin 0
-		maxplayers 3
+//		maxplayers 3
 	}
 }
 gametype 3on3on3
@@ -1691,7 +1691,7 @@ gametype 3on3on3
 		ai_numactors 0
 		sv_ai 0
 		ai_autojoin 0
-		maxplayers 3
+//		maxplayers 3
 	}
 }
 gametype 4on4
@@ -1719,7 +1719,7 @@ gametype 4on4on4
 		ai_numactors 0
 		sv_ai 0
 		ai_autojoin 0
-		maxplayers 4
+//		maxplayers 4
 	}
 }
 gametype coop2
@@ -1733,7 +1733,7 @@ gametype coop2
 		ai_numactors 8
 		sv_ai 1
 		ai_autojoin 0
-		maxplayers 2
+//		maxplayers 2
 	}
 }
 gametype coop3
@@ -1747,7 +1747,7 @@ gametype coop3
 		ai_numactors 6
 		sv_ai 1
 		ai_autojoin 0
-		maxplayers 3
+//		maxplayers 3
 	}
 }
 gametype coop4
@@ -1761,6 +1761,6 @@ gametype coop4
 		ai_numactors 8
 		sv_ai 1
 		ai_autojoin 0
-		maxplayers 4
+//		maxplayers 4
 	}
 }
