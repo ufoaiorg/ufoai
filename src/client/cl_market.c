@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static byte buyList[MAX_BUYLIST];	/**< Current entry on the list. */
 static int buyListLength;		/**< Amount of entries on the list. */
 static int buyCategory;			/**< Category of items in the menu. */
+static int buyListScrollPos;	/**< start of the buylist index - due to scrolling */
 
 /* 20060921 LordHavoc: added market buy/sell factors */
 static const int MARKET_BUY_FACTOR = 1;
@@ -132,7 +133,24 @@ static void BS_MarketAircraftDescription (int aircraftID)
  */
 static void BS_BuyScroll_f (void)
 {
+	menuNode_t* node;
 
+	node = MN_GetNodeFromCurrentMenu("market");
+	if (node)
+		buyListScrollPos = node->textScroll;
+	else
+		return;
+
+	/* the following nodes must exist */
+	node = MN_GetNodeFromCurrentMenu("market_market");
+	assert(node);
+	node->textScroll = buyListScrollPos;
+	node = MN_GetNodeFromCurrentMenu("market_storage");
+	assert(node);
+	node->textScroll = buyListScrollPos;
+	node = MN_GetNodeFromCurrentMenu("market_prices");
+	assert(node);
+	node->textScroll = buyListScrollPos;
 }
 
 /**
@@ -148,7 +166,7 @@ static void BS_BuyClick_f (void)
 	}
 
 	num = atoi(Cmd_Argv(1));
-	if (num >= buyListLength)
+	if (num + buyListScrollPos >= buyListLength)
 		return;
 
 	if (buyCategory == BUY_AIRCRAFT)
@@ -229,6 +247,7 @@ static void BS_BuyType_f (void)
 	aircraft_t *air_samp;
 	technology_t *tech;
 	int i, j = 0, num, storage = 0, supply;
+	menuNode_t* node;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: buy_type <category>\n");
@@ -245,6 +264,10 @@ static void BS_BuyType_f (void)
 	CL_UpdateCredits(ccs.credits);
 
 	*bsMarketNames = *bsMarketStorage = *bsMarketMarket = *bsMarketPrices = '\0';
+	buyListScrollPos = 0;
+	node = MN_GetNodeFromCurrentMenu("market");
+	if (node)
+		node->textScroll = 0;
 
 	menuText[TEXT_MARKET_NAMES] = bsMarketNames;
 	menuText[TEXT_MARKET_STORAGE] = bsMarketStorage;
@@ -332,7 +355,7 @@ static void BS_BuyItem_f (void)
 		return;
 
 	num = atoi(Cmd_Argv(1));
-	if (num < 0 || num >= buyListLength)
+	if (num < 0 || num + buyListScrollPos >= buyListLength)
 		return;
 
 	item = buyList[num];
@@ -369,7 +392,7 @@ static void BS_SellItem_f (void)
 		return;
 
 	num = atoi(Cmd_Argv(1));
-	if (num < 0 || num >= buyListLength)
+	if (num < 0 || num + buyListScrollPos >= buyListLength)
 		return;
 
 	item = buyList[num];
@@ -406,7 +429,7 @@ static void BS_Autosell_f (void)
 
 	num = atoi(Cmd_Argv(1));
 	Com_DPrintf("BS_Autosell_f: listnumber %i\n", num);
-	if (num < 0 || num >= buyListLength)
+	if (num < 0 || num + buyListScrollPos >= buyListLength)
 		return;
 	item = buyList[num];
 
@@ -443,7 +466,7 @@ static void BS_BuyAircraft_f (void)
 		return;
 
 	num = atoi(Cmd_Argv(1));
-	if (num < 0 || num >= buyListLength)
+	if (num < 0 || num + buyListScrollPos >= buyListLength)
 		return;
 
 	aircraftID = buyList[num];
@@ -494,7 +517,7 @@ static void BS_SellAircraft_f (void)
 	}
 
 	num = atoi(Cmd_Argv(1));
-	if (num < 0 || num >= buyListLength)
+	if (num < 0 || num + buyListScrollPos >= buyListLength)
 		return;
 
 	aircraftID = buyList[num];
@@ -550,4 +573,5 @@ extern void BS_ResetMarket (void)
 	Cmd_AddCommand("mn_sell_aircraft", BS_SellAircraft_f, NULL);
 	Cmd_AddCommand("buy_autosell", BS_Autosell_f, "Enable or disable autosell option for given item.");
 	buyListLength = -1;
+	buyListScrollPos = 0;
 }
