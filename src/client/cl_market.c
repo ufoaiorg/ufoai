@@ -53,10 +53,10 @@ static int BS_CalculateHangarStorage (int aircraftID, int base_idx)
 {
 	int aircraftSize = 0, freespace = 0;
 	base_t *base = NULL;
-	
+
 	aircraftSize = aircraft_samples[aircraftID].weight;
 	base = &gd.bases[base_idx];
-	
+
 	if (aircraftSize < 1) {
 #ifdef DEBUG
 		Com_Printf("BS_CalculateHangarStorage()... aircraft weight is wrong!\n");
@@ -70,7 +70,7 @@ static int BS_CalculateHangarStorage (int aircraftID, int base_idx)
 		return -1;
 	}
 	assert (base);
-	
+
 	/* If the aircraft size is less than 8, we will check space in small hangar. */
 	if (aircraftSize < 8) {
 		freespace = base->capacities[CAP_AIRCRAFTS_SMALL].max - base->capacities[CAP_AIRCRAFTS_SMALL].cur;
@@ -128,14 +128,22 @@ static void BS_MarketAircraftDescription (int aircraftID)
 }
 
 /**
+ * @brief
+ */
+static void BS_BuyScroll_f (void)
+{
+
+}
+
+/**
  * @brief Select one entry on the list.
  */
-static void BS_BuySelect_f (void)
+static void BS_BuyClick_f (void)
 {
 	int num;
 
 	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: buy_select <num>\n");
+		Com_Printf("Usage: market_click <num>\n");
 		return;
 	}
 
@@ -143,7 +151,6 @@ static void BS_BuySelect_f (void)
 	if (num >= buyListLength)
 		return;
 
-	Cbuf_AddText(va("buyselect%i\n", num));
 	if (buyCategory == BUY_AIRCRAFT)
 		BS_MarketAircraftDescription(buyList[num]);
 	else
@@ -187,6 +194,32 @@ static void AIR_GetStorageSupplyCount (char *airCharId, int *const storage, int 
 		*supply = 0;
 }
 
+static char bsMarketNames[1024];
+static char bsMarketStorage[256];
+static char bsMarketMarket[256];
+static char bsMarketPrices[256];
+
+/**
+ * @brief
+ */
+static void BS_AddToList (const char *name, int storage, int market, int price)
+{
+	/* 28 items in the list (of length 1024) */
+	char shortName[36];
+
+	Com_sprintf(shortName, sizeof(shortName), "%s\n", _(name));
+	Q_strcat(bsMarketNames, shortName, sizeof(bsMarketNames));
+
+	Com_sprintf(shortName, sizeof(shortName), "%i\n", storage);
+	Q_strcat(bsMarketStorage, shortName, sizeof(bsMarketStorage));
+
+	Com_sprintf(shortName, sizeof(shortName), "%i\n", market);
+	Q_strcat(bsMarketMarket, shortName, sizeof(bsMarketMarket));
+
+	Com_sprintf(shortName, sizeof(shortName), "%i c\n", price);
+	Q_strcat(bsMarketPrices, shortName, sizeof(bsMarketPrices));
+}
+
 /**
  * @brief Init function for Buy/Sell menu. Updates the Buy/Sell menu list.
  */
@@ -196,7 +229,6 @@ static void BS_BuyType_f (void)
 	aircraft_t *air_samp;
 	technology_t *tech;
 	int i, j = 0, num, storage = 0, supply;
-	char str[MAX_VAR];
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: buy_type <category>\n");
@@ -212,6 +244,13 @@ static void BS_BuyType_f (void)
 
 	CL_UpdateCredits(ccs.credits);
 
+	*bsMarketNames = *bsMarketStorage = *bsMarketMarket = *bsMarketPrices = '\0';
+
+	menuText[TEXT_MARKET_NAMES] = bsMarketNames;
+	menuText[TEXT_MARKET_STORAGE] = bsMarketStorage;
+	menuText[TEXT_MARKET_MARKET] = bsMarketMarket;
+	menuText[TEXT_MARKET_PRICES] = bsMarketPrices;
+
 	/* 'normal' items */
 	if (buyCategory < BUY_AIRCRAFT) {
 		/* Add autosell button for every entry. */
@@ -222,17 +261,7 @@ static void BS_BuyType_f (void)
 			tech = (technology_t *) od->tech;
 			/* Check whether the proper buytype, storage in current base and market. */
 			if (tech && BUYTYPE_MATCH(od->buytype,num) && (baseCurrent->storage.num[i] || ccs.eMarket.num[i])) {
-				Q_strncpyz(str, va("mn_item%i", j), sizeof(str));
-				Cvar_Set(str, _(od->name));
-
-				Q_strncpyz(str, va("mn_storage%i", j), sizeof(str));
-				Cvar_SetValue(str, baseCurrent->storage.num[i]);
-
-				Q_strncpyz(str, va("mn_supply%i", j), sizeof(str));
-				Cvar_SetValue(str, ccs.eMarket.num[i]);
-
-				Q_strncpyz(str, va("mn_price%i", j), sizeof(str));
-				Cvar_Set(str, va("%i c", od->price));
+				BS_AddToList(od->name, baseCurrent->storage.num[i], ccs.eMarket.num[i], od->price);
 
 				/* Set state of Autosell button. */
 				if (gd.autosell[i])
@@ -245,12 +274,6 @@ static void BS_BuyType_f (void)
 			}
 		}
 		buyListLength = j;
-		for (; j < 28; j++) {
-			Cvar_Set(va("mn_item%i", j), "");
-			Cvar_Set(va("mn_storage%i", j), "");
-			Cvar_Set(va("mn_supply%i", j), "");
-			Cvar_Set(va("mn_price%i", j), "");
-		}
 	}
 	/* aircraft */
 	else if (buyCategory == BUY_AIRCRAFT) {
@@ -266,34 +289,17 @@ static void BS_BuyType_f (void)
 			if (RS_Collected_(tech) || RS_IsResearched_ptr(tech)) {
 				storage = supply = 0;
 				AIR_GetStorageSupplyCount(air_samp->id, &storage, &supply);
-				Q_strncpyz(str, va("mn_item%i", j), sizeof(str));
-				Cvar_Set(str, _(air_samp->name));
-
-				Q_strncpyz(str, va("mn_storage%i", j), sizeof(str));
-				Cvar_SetValue(str, storage);
-
-				Q_strncpyz(str, va("mn_supply%i", j), sizeof(str));
-				Cvar_SetValue(str, supply);
-
-				Q_strncpyz(str, va("mn_price%i", j), sizeof(str));
-				Cvar_Set(str, va("%i c", air_samp->price));
+				BS_AddToList(air_samp->name, storage, supply, air_samp->price);
 
 				buyList[j] = i;
 				j++;
 			}
 		}
 		buyListLength = j;
-		for (; j < 10; j++) {
-			Cvar_Set(va("mn_item%i", j), "-");
-			Cvar_Set(va("mn_storage%i", j), "-");
-			Cvar_Set(va("mn_supply%i", j), "-");
-			Cvar_Set(va("mn_price%i", j), "-");
-		}
 	}
 
 	/* select first item */
 	if (buyListLength) {
-		Cbuf_AddText("buyselect0\n");
 		if (buyCategory == BUY_AIRCRAFT)
 			BS_MarketAircraftDescription(buyList[0]);
 		else
@@ -442,7 +448,7 @@ static void BS_BuyAircraft_f (void)
 
 	aircraftID = buyList[num];
 	Cbuf_AddText(va("buyselect%i\n;", num));
-	
+
 	/* Check free space in hangars. */
 	if (BS_CalculateHangarStorage(aircraftID, baseCurrent->idx) < 0) {
 #ifdef DEBUG
@@ -536,7 +542,8 @@ static void BS_SellAircraft_f (void)
 extern void BS_ResetMarket (void)
 {
 	Cmd_AddCommand("buy_type", BS_BuyType_f, NULL);
-	Cmd_AddCommand("buy_select", BS_BuySelect_f, NULL);
+	Cmd_AddCommand("market_click", BS_BuyClick_f, "Click function for buy menu text node");
+	Cmd_AddCommand("market_scroll", BS_BuyScroll_f, "Scroll function for buy menu");
 	Cmd_AddCommand("mn_buy", BS_BuyItem_f, NULL);
 	Cmd_AddCommand("mn_sell", BS_SellItem_f, NULL);
 	Cmd_AddCommand("mn_buy_aircraft", BS_BuyAircraft_f, NULL);
