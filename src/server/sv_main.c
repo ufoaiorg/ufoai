@@ -907,9 +907,8 @@ qboolean SV_RunGameFrame (void)
 		time_after_game = Sys_Milliseconds();
 
 	/* next map in the cycle */
-	if (gameEnd) {
+	if (gameEnd && sv_maxclients->integer > 1)
 		SV_NextMapcycle();
-	}
 
 	return gameEnd;
 }
