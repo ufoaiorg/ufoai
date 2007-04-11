@@ -1802,7 +1802,8 @@ void G_GetTeam (player_t * player)
 		return;
 	}
 
-	if (playersInGame <= 1 && sv_maxclients->integer > 1) {
+	/* randomly assign a teamnumber in deathmatch games */
+	if (playersInGame <= 1 && sv_maxclients->integer > 1 && !sv_teamplay->integer) {
 		int spawnCheck[MAX_TEAMS];
 		int spawnSpots = 0;
 		int randomSpot = -1;
@@ -1817,7 +1818,7 @@ void G_GetTeam (player_t * player)
 		/* assign random valid team number */
 		randomSpot = (int)(frand() * (spawnSpots - 1) + 0.5);
 		player->pers.team = spawnCheck[randomSpot];
-		/*gi.dprintf("You have been randomly assigned to team %i\n", player->pers.team);*/
+		gi.dprintf("You have been randomly assigned to team %i\n", player->pers.team);
 		return;
 	}
 
