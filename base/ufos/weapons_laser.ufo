@@ -16,6 +16,7 @@ item laserpistol
 	ammo		26
 	reload		12
 	price		5400
+	size		10
 	buytype	weap_sec
 }
 
@@ -37,6 +38,7 @@ item laserrifle
 	ammo		16
 	reload		12
 	price		9570
+	size		35
 	buytype	weap_pri
 }
 
@@ -59,6 +61,7 @@ item heavylaser
 	ammo		6
 	reload		16
 	price		22540
+	size		50
 	buytype	weap_pri
 }
 
@@ -72,6 +75,7 @@ item laserrifle_ammo
 	center		"0 0 0"
 	scale		1.8
 	price		210
+	size		7
 //	buytype	multi_ammo
 	buytype	weap_pri
 

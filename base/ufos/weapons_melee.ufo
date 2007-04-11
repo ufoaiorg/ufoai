@@ -12,6 +12,7 @@ item knife
 	center		"-1 0 3"
 	scale		1.0
 	price		210
+	size		6
 	buytype	weap_sec
 	thrown		true
 
@@ -66,7 +67,8 @@ item knifemono
 	shape		"0 0 1 3"	// TODO: This seriously needs to be changed to "0 0 3 1" as soon as we have "rotation" suppor tin the inventory.
 	center		"-1 0 5"
 	scale		1.0
-	price		210
+	price		2100
+	size		12
 	buytype	weap_sec
 	thrown		true
 
@@ -119,6 +121,7 @@ item stunrod
 	center	"3.2 0 2"
 	scale		1.22
 	price		2400
+	size		15
 	buytype	weap_sec
 	thrown	false
 	oneshot true
@@ -178,6 +181,7 @@ item kerrblade
 	center		"6.3 0 3"
 	scale		1.0
 	price		840
+	size		20
 	buytype	weap_sec
 	thrown		true
 
@@ -231,6 +235,7 @@ item plasblade
 	center		"1 4.5 0"
 	scale  		1.5
 	price		3710
+	size		10
 	buytype	weap_sec
 	thrown		true
 	reload		1

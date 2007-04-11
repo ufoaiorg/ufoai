@@ -1,5 +1,5 @@
 // ================
-// PLASMA ATOMIZER
+// PLASMA PISTOL
 // ================
 item plaspistol
 {
@@ -16,6 +16,7 @@ item plaspistol
 	ammo		6
 	reload		12
 	price		34000
+	size		20
 	buytype	weap_sec
 }
 
@@ -29,6 +30,7 @@ item plaspistol_ammo
 	center		"0 0 -0.2"
 	scale		1.1
 	price		1700
+	size		3
 	buytype	weap_sec
 
 	weapon_mod plaspistol
@@ -95,6 +97,7 @@ item plasrifle
 	ammo		9
 	reload		14
 	price		40000
+	size		40
 	buytype	weap_pri
 }
 
@@ -108,6 +111,7 @@ item plasrifle_ammo
 	center		"0 0 -0.1"
 	scale		1.25
 	price		2000
+	size		4
 	buytype	weap_pri
 
 	weapon_mod plasrifle
@@ -175,6 +179,7 @@ item plasblaster
 	ammo		4
 	reload		18
 	price		58000
+	size		80
 	buytype	weap_pri
 }
 
@@ -188,6 +193,7 @@ item plasblaster_ammo
 	center		"0 0 0"
 	scale		1.4
 	price		4000
+	size		7
 	buytype	weap_pri
 
 	weapon_mod plasblaster

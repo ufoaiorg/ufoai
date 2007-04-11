@@ -16,6 +16,7 @@ item assault
 	ammo		30
 	reload		12
 	price		8400
+	size		20
 	buytype	weap_pri
 }
 
@@ -29,6 +30,7 @@ item assault_ammo
 	center		"0 0 0"
 	scale		1.25
 	price		130
+	size		3
 	buytype	weap_pri
 
 	weapon_mod assault
@@ -193,6 +195,7 @@ item sniper
 	ammo		5
 	reload		10
 	price		5920
+	size		30
 	buytype	weap_pri
 }
 
@@ -206,6 +209,7 @@ item sniper_ammo
 	center		"0 0 0"
 	scale		1.15
 	price		190
+	size		5
 	buytype	weap_pri
 
 	weapon_mod sniper
@@ -290,6 +294,7 @@ item pistol
 	ammo		12
 	reload		12
 	price		900
+	size		7
 	buytype	weap_sec
 }
 
@@ -303,6 +308,7 @@ item pistol_ammo
 	center		"0 0 -0.21"
 	scale		1.57
 	price		20
+	size		1
 	buytype	weap_sec
 
 	weapon_mod pistol
@@ -367,6 +373,7 @@ item pistol2
 	ammo		30
 	reload		12
 	price		900
+	size		7
 	buytype	weap_sec
 }
 
@@ -380,6 +387,7 @@ item pistol2_ammo
 	center		"0 0 -0.21"
 	scale		2.5
 	price		20
+	size		2
 	buytype	weap_sec
 
 	weapon_mod pistol2
@@ -465,6 +473,7 @@ item smg
 	ammo		50
 	reload		12
 	price		3500
+	size		8
 	buytype	weap_sec
 }
 
@@ -478,6 +487,7 @@ item smg_ammo
 	center		"0 0 0"
 	scale		1.4
 	price		40
+	size		3
 	buytype	weap_sec
 
 	weapon_mod smg
@@ -544,6 +554,7 @@ item shotgun2
 	ammo		7
 	reload		20
 	price		3500
+	size		25
 	buytype	weap_pri
 }
 
@@ -615,6 +626,7 @@ item shotgun2_slug_ammo
 	center		"0 0 0"
 	scale		2.0
 	price		35
+	size		5
 	buytype	weap_pri
 
 	weapon_mod shotgun2
@@ -706,6 +718,7 @@ item shotgun
 	ammo		7
 	reload		20
 	price		3500
+	size		25
 	buytype	weap_pri
 }
 
@@ -719,6 +732,7 @@ item shotgun_ammo
 	center		"0 0 0"
 	scale		1.5
 	price		35
+	size		4
 	buytype	weap_pri
 
 	weapon_mod shotgun
@@ -787,6 +801,7 @@ item shotgun_micro
 	ammo		7
 	reload		20
 	price		3500
+	size		10
 	buytype	weap_sec
 }
 
@@ -938,6 +953,7 @@ item flamer
 	ammo		6
 	reload		14
 	price		6050
+	size		55
 	buytype	weap_pri
 }
 
@@ -951,6 +967,7 @@ item flamer_ammo
 	center		"0 0 0"
 	scale		1.1
 	price		270
+	size		10
 	buytype	weap_pri
 
 	weapon_mod flamer
@@ -1018,6 +1035,7 @@ item rpg
 	ammo		1
 	reload		12
 	price		9130
+	size		70
 	buytype	weap_pri
 }
 
@@ -1031,6 +1049,7 @@ item rpg_ammo
 	center		"0 0 0"
 	scale		1.1
 	price		430
+	size		6
 	buytype	weap_pri
 
 	weapon_mod rpg
@@ -1070,6 +1089,7 @@ item rpg_incendiary_ammo
 	center		"0 0 0"
 	scale		1.1
 	price		630
+	size		6
 	buytype	weap_pri
 
 	weapon_mod rpg
@@ -1158,6 +1178,7 @@ item grenl
 	ammo		9
 	reload		14
 	price		2450
+	size		60
 	buytype	weap_pri
 }
 
@@ -1171,6 +1192,7 @@ item grenl_ammo
 	center		"0 0 0"
 	scale		0.7
 	price		135
+	size		6
 	buytype	weap_pri
 
 	weapon_mod grenl
@@ -1343,6 +1365,7 @@ item grenl_incendiary_ammo
 	center		"0 0 0"
 	scale		0.7
 	price		135
+	size		6
 	buytype	weap_pri
 
 	weapon_mod grenl
@@ -1516,6 +1539,7 @@ item grenl_fle_ammo
 	center		"0 0 0"
 	scale		0.7
 	price		135
+	size		6
 	buytype	weap_pri
 
 	weapon_mod grenl
@@ -1569,6 +1593,7 @@ item grenl_plasma_ammo
 	center		"0 0 0"
 	scale		0.7
 	price		530
+	size		6
 	buytype	weap_pri
 
 	weapon_mod grenl
@@ -1750,6 +1775,7 @@ item bolterrifle
 	ammo            12
 	reload          15
 	price           13240
+	size		45
 	buytype	weap_pri
 }
 
@@ -1763,6 +1789,7 @@ item bolterrifle_ammo
 	center          "0 0 0"
 	scale           1.2
 	price           930
+	size		9
 	buytype	weap_pri
 
 	weapon_mod bolterrifle
