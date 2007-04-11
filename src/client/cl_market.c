@@ -27,7 +27,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 
-#define MAX_BUYLIST		32
+#define MAX_BUYLIST		64
+
+#define MAX_MARKET_MENU_ENTRIES 28
 
 static byte buyList[MAX_BUYLIST];	/**< Current entry on the list. */
 static int buyListLength;		/**< Amount of entries on the list. */
@@ -222,7 +224,7 @@ static char bsMarketPrices[256];
  */
 static void BS_AddToList (const char *name, int storage, int market, int price)
 {
-	/* 28 items in the list (of length 1024) */
+	/* MAX_MARKET_MENU_ENTRIES items in the list (of length 1024) */
 	char shortName[36];
 
 	Com_sprintf(shortName, sizeof(shortName), "%s\n", _(name));
@@ -275,7 +277,7 @@ static void BS_BuyType_f (void)
 	/* 'normal' items */
 	if (buyCategory < BUY_AIRCRAFT) {
 		/* Add autosell button for every entry. */
-		for (j = 0; j < 28; j++)
+		for (j = 0; j < MAX_MARKET_MENU_ENTRIES; j++)
 			Cbuf_AddText(va("buy_autoselld%i\n", j));
 		/* get item list */
 		for (i = 0, j = 0, od = csi.ods; i < csi.numODs; i++, od++) {
@@ -285,13 +287,15 @@ static void BS_BuyType_f (void)
 				BS_AddToList(od->name, baseCurrent->storage.num[i], ccs.eMarket.num[i], od->price);
 
 				/* Set state of Autosell button. */
-				if (j < 28) {
+				if (j < MAX_MARKET_MENU_ENTRIES) {
 					if (gd.autosell[i])
 						Cbuf_AddText(va("buy_autoselle%i\n", j));
 					else
 						Cbuf_AddText(va("buy_autoselld%i\n", j));
 				}
 
+				if (j >= MAX_BUYLIST)
+					Sys_Error("Increase the MAX_BUYLIST value to handle that much items\n");
 				buyList[j] = i;
 				j++;
 			}
