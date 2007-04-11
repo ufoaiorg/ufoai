@@ -179,6 +179,7 @@ menu ufopedia
 		in		{ *button_scrolldown_mail texl "48 48" *button_scrolldown_mail texh "64 64" }
 	}
 
+
 	// ==================
 	// text and info
 	// ==================
@@ -334,6 +335,45 @@ menu ufopedia
 		scale	"6 6 6"
 		click
 //		bgcolor "1 1 0.5 0.3"
+	}
+
+	pic firemode_dec
+	{
+		if "mn_upchangefiremode == 1"
+		tooltip "_Previous firemode"
+		image	menu/buttons_small
+		pos		"175 714"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx	true
+		click
+		{
+			cmd mn_decreasefiremode
+		}
+	}
+
+	pic firemode_inc
+	{
+		if "mn_upchangefiremode == 1"
+		tooltip "_Next firemode"
+		image	menu/buttons_small
+		pos		"435 714"
+		texl	"16 0"
+		texh	"32 16"
+		mousefx	true
+		click
+		{
+			cmd mn_increasefiremode
+		}
+	}
+
+	string firemode_name
+	{
+		if "mn_upchangefiremode == 1"
+		string	"*cvar mn_upfiremodename"
+		pos		"310 722"
+		align	cc
+		font	f_small
 	}
 
 	// FIXME: new position - still needed?
