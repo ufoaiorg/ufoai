@@ -1672,7 +1672,7 @@ gametype 3on3
 	{
 		sv_teamplay 1
 		maxclients 6
-		maxsoldiersperplayer 3
+		maxsoldiersperplayer 2
 		maxsoldiers 6
 		ai_numactors 0
 		sv_ai 0
@@ -1686,7 +1686,7 @@ gametype 3on3on3
 	{
 		sv_teamplay 1
 		maxclients 9
-		maxsoldiersperplayer 3
+		maxsoldiersperplayer 2
 		maxsoldiers 6
 		ai_numactors 0
 		sv_ai 0
