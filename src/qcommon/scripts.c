@@ -79,6 +79,7 @@ static const value_t od_vals[] = {
 	{"oneshot", V_BOOL, offsetof(objDef_t, oneshot)},
 	{"deplete", V_BOOL, offsetof(objDef_t, deplete)},
 	{"reload", V_INT, offsetof(objDef_t, reload)},
+	{"size", V_INT, offsetof(objDef_t, size)},
 	{"price", V_INT, offsetof(objDef_t, price)},
 	{"buytype", V_INT, offsetof(objDef_t, buytype)},	/** Not parsed automatically anymore, this enrty is just there for overview. */
 	{"useable", V_INT, offsetof(objDef_t, useable)},

@@ -1052,6 +1052,7 @@ typedef struct objDef_s {
 	byte headgear;		/**< Boolean: Is a headgear. */
 	byte thrown;		/**< This item is thrown. */
 	int price;		/**< the price for this item */
+	int size;		/**< Size of an item, used in storage capacities. */
 	int buytype;		/**< In which category of the buy menu is this item listed. */
 
 	/* Weapon specific */
