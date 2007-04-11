@@ -1,5 +1,5 @@
 /**
- * @file snddma_osx
+ * @file snd_osx.c
  * @brief MacOS X Sound driver
  * Written by:	awe				[mailto:awe@fruitz-of-dojo.de]
  * 2001-2002 Fruitz Of Dojo 	[http://www.fruitz-of-dojo.de]

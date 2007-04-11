@@ -1,5 +1,5 @@
 /**
- * @file sys_linux.c
+ * @file sys_osx.c
  * @brief main function and system functions
  */
 

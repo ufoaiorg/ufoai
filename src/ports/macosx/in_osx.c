@@ -1,5 +1,5 @@
 /**
- * @file in_linux.c
+ * @file in_osx.c
  * @brief
  */
 
@@ -53,7 +53,6 @@ void IN_Activate (qboolean active)
 {
 }
 
-void IN_ShowCursor(void)
+void IN_ShowCursor (void)
 {
-
 }
