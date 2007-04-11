@@ -720,7 +720,43 @@ static void CL_GenerateEquipment_f (void)
 }
 
 /**
+ * @brief Moves all  items marked with "buytype multi_ammo" to the currently used equipment-container (pri or sec)
+ * @note This is a WORKAROUND, it is by no means efecient or sane, but currently the only way to display these items in the (multiple) correct categories.
+ * Should be executed on a change of the equipemnt-category to either PRI or SEC items .. and only there.
+ * @param[in|out] inv This is always the used equipByBuyType in the base.
+ * @param[in] buytype_container The container we just switched to (where all the items should be moved to).
+ * @sa CL_GenerateEquipment_f
+ */
+static void CL_MoveMultiEquipment (inventory_t* const inv, int buytype_container)
+{
+	int container;
+	invList_t *ic = NULL;
+	
+	if (!inv)
+		return;
+
+	/* Do nothing if no pri/sec category is shown. */
+	if ((buytype_container != BUY_WEAP_PRI) && (buytype_container != BUY_WEAP_SEC))
+		return;
+	
+	for (container = 0; container < BUY_AIRCRAFT; container++) {
+		if (((container == BUY_WEAP_PRI) || (container == BUY_WEAP_SEC) || (container == BUY_MULTI_AMMO))
+		&&  (container != buytype_container))  {
+			/* This is a container that might hold some of the affected items.
+			 * Move'em to the target (buytype_container) container (if there are any)
+			 */
+			for (ic = inv->c[container]; ic; ic = ic->next) {
+				if (ic && (csi.ods[ic->item.t].buytype == BUY_MULTI_AMMO)) {
+					Com_MoveInInventory(inv, container, 0, 0, buytype_container, NONE, NONE, NULL, &ic); /**< @todo Does the function  this work like this? */
+				}
+			}
+		}
+	}
+}
+
+/**
  * @brief Sets buytype category for equip menu.
+ * @note num = buytype/equipment category.
  */
 static void CL_EquipType_f (void)
 {
@@ -736,10 +772,13 @@ static void CL_EquipType_f (void)
 	if (num < 0 && num >= BUY_MULTI_AMMO)
 		return;
 
+	
 	/* display new items */
 	baseCurrent->equipType = num;
-	if (menuInventory)
+	if (menuInventory) {
+		CL_MoveMultiEquipment (&baseCurrent->equipByBuyType, num); /**< Move all multi-ammo items to the current container. */
 		menuInventory->c[csi.idEquip] = baseCurrent->equipByBuyType.c[num];
+	}	
 }
 
 /**
