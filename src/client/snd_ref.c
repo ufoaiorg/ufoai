@@ -1011,7 +1011,9 @@ void S_StopAllSounds(void)
 
 	/* clear all the channels */
 	memset(channels, 0, sizeof(channels));
-	music.ovPlaying[0] = 0;
+
+	/* stop music, if playing */
+	OGG_Stop();
 
 	S_ClearBuffer();
 
@@ -1510,7 +1512,7 @@ static const ov_callbacks S_OGG_Callbacks = {
  * @brief Opens the given ogg file
  * @sa OGG_Stop
  */
-qboolean OGG_Open (char *filename)
+qboolean OGG_Open (const char *filename)
 {
 	int length;
 	vorbis_info *vi;
@@ -1566,6 +1568,7 @@ qboolean OGG_Open (char *filename)
 	/* open ogg vorbis file */
 	if (ov_open_callbacks(stream, &music.ovFile, NULL, 0, S_OGG_Callbacks) != 0) {
 		Com_Printf("'music/%s.ogg' isn't a valid ogg vorbis file (error %i)\n", filename, errno);
+		FS_FCloseFile(&stream->file);
 		return qfalse;
 	}
 

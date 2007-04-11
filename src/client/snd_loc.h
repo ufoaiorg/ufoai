@@ -160,7 +160,7 @@ SYSTEM SPECIFIC FUNCTIONS
 ====================================================================
 */
 
-qboolean OGG_Open(char *filename);
+qboolean OGG_Open(const char *filename);
 void OGG_Stop(void);
 int OGG_Read(void);
 
