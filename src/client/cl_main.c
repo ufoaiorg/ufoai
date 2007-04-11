@@ -810,8 +810,11 @@ static void CL_ParseTeamInfoMessage (void)
 	char *value = NULL;
 	int cnt = 0, n;
 
-	if (!s)
+	if (!s) {
+		menuText[TEXT_LIST] = NULL;
+		Com_DPrintf("CL_ParseTeamInfoMessage: No teaminfo string\n");
 		return;
+	}
 
 	memset(&teamData, 0, sizeof(teamData_t));
 
@@ -1515,9 +1518,12 @@ static void CL_SpawnSoldiers_f (void)
 	}
 
 	if (!ccs.singleplayer && baseCurrent) {
-		if (n <= TEAM_CIVILIAN || teamData.maxplayersperteam <= teamData.teamCount[n]) {
+		/* we are already connected and in this list */
+		if (n <= TEAM_CIVILIAN || teamData.maxplayersperteam < teamData.teamCount[n]) {
 			menuText[TEXT_STANDARD] = _("Invalid or full team");
-			Com_DPrintf("CL_SpawnSoldiers_f: Invalid or full team\n");
+			Com_Printf("CL_SpawnSoldiers_f: Invalid or full team %i\n"
+				"  maxplayers per team: %i - players on team: %i",
+				n, teamData.maxplayersperteam, teamData.teamCount[n]);
 			return;
 		}
 	}

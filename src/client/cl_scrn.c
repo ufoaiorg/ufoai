@@ -444,7 +444,7 @@ static void SCR_DrawCursor (void)
 
 			/* playernames */
 			if (menuText[TEXT_MOUSECURSOR_PLAYERNAMES] && cl_show_cursor_tooltips->value) {
-				SCR_DrawString(mx + icon_offset_x,my - 16, menuText[TEXT_MOUSECURSOR_PLAYERNAMES], qfalse);
+				SCR_DrawString(mx + icon_offset_x,my - 32, menuText[TEXT_MOUSECURSOR_PLAYERNAMES], qfalse);
 				menuText[TEXT_MOUSECURSOR_PLAYERNAMES] = NULL;
 			}
 		}
