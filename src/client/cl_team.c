@@ -1976,8 +1976,11 @@ static int CL_GetRank (const char* rankID)
 	int i;
 
 	/* only check in singleplayer */
+/* For some reason this is always true, thus no ranks.
+   13042007 Zenerka
 	if (!ccs.singleplayer)
 		return -1;
+*/
 
 	for (i = 0; i < gd.numRanks; i++) {
 		if (!Q_strncmp(gd.ranks[i].id, rankID, MAX_VAR))
