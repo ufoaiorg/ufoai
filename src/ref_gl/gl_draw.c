@@ -252,7 +252,7 @@ image_t *Draw_FindPic (const char *name)
  * @param[in] pic The name of the pic to get the values for
  * @sa Draw_FindPic
  */
-void Draw_GetPicSize (int *w, int *h, char *pic)
+void Draw_GetPicSize (int *w, int *h, const char *pic)
 {
 	image_t *gl;
 
@@ -268,7 +268,7 @@ void Draw_GetPicSize (int *w, int *h, char *pic)
 /**
  * @brief
  */
-void Draw_StretchPic (int x, int y, int w, int h, char *pic)
+void Draw_StretchPic (int x, int y, int w, int h, const char *pic)
 {
 	image_t *gl;
 
@@ -308,7 +308,7 @@ void Draw_StretchPic (int x, int y, int w, int h, char *pic)
 /**
  * @brief
  */
-void Draw_NormPic (float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, qboolean blend, char *name)
+void Draw_NormPic (float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, qboolean blend, const char *name)
 {
 	float nx, ny, nw = 0.0, nh = 0.0;
 	image_t *gl;
@@ -404,7 +404,7 @@ void Draw_NormPic (float x, float y, float w, float h, float sh, float th, float
 /**
  * @brief
  */
-void Draw_Pic (int x, int y, char *pic)
+void Draw_Pic (int x, int y, const char *pic)
 {
 	image_t *gl;
 
@@ -441,7 +441,7 @@ void Draw_Pic (int x, int y, char *pic)
 /**
  * @brief This repeats a 64*64 tile graphic to fill the screen around a sized down refresh window.
  */
-void Draw_TileClear (int x, int y, int w, int h, char *name)
+void Draw_TileClear (int x, int y, int w, int h, const char *name)
 {
 	image_t *image;
 
@@ -548,7 +548,7 @@ static float lastQ;
  * @brief Draw the day and night images of a flat geoscape - multitexture feature is used to blend the images
  * @note If no multitexture is available only the day map is drawn
  */
-void Draw_DayAndNight (int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, char *map)
+void Draw_DayAndNight (int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, const char *map)
 {
 	image_t *gl;
 	float nx, ny, nw, nh;
@@ -651,7 +651,7 @@ void Draw_DayAndNight (int x, int y, int w, int h, float p, float q, float cx, f
 /**
  * @brief Draw the clouds for flat geoscape
  */
-void Draw_Clouds (int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, char *map)
+void Draw_Clouds (int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, const char *map)
 {
 	image_t *gl;
 	float nx, ny, nw, nh;
@@ -863,7 +863,7 @@ void Draw_Polygon (int points, int *verts)
  * @brief
  * @todo implement me
  */
-void Draw_3DMapMarkers (vec3_t angles, float zoom, float latitude, float longitude, char *model)
+void Draw_3DMapMarkers (vec3_t angles, float zoom, float latitude, float longitude, const char *model)
 {
 	modelInfo_t mi;
 	float factor;
@@ -934,7 +934,7 @@ void Draw_3DMapLine (vec3_t angles, float zoom, int n, float dist, vec2_t * path
 /**
  * @brief responsible for drawing the 3d globe on geoscape
  */
-void Draw_3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate, float zoom, char *map)
+void Draw_3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate, float zoom, const char *map)
 {
 	/* globe scaling */
 	float fullscale = zoom / 4.0f;

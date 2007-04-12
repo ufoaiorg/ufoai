@@ -371,7 +371,7 @@ struct model_s *R_RegisterModelShort(const char *name);
 
 void GL_ScreenShot_f(void);
 void R_InterpolateTransform(animState_t * as, int numframes, float *tag, float *interpolated);
-void R_DrawModelDirect(modelInfo_t * mi, modelInfo_t * pmi, char *tag);
+void R_DrawModelDirect(modelInfo_t * mi, modelInfo_t * pmi, const char *tag);
 void R_DrawModelParticle(modelInfo_t * mi);
 void R_DrawAliasModel(entity_t * e);
 void R_DrawBrushModel(entity_t * e);
@@ -396,17 +396,17 @@ void R_EnableLights(qboolean fixed, float *matrix, float *lightparam, float *lig
 
 #include "gl_font.h"
 
-void Draw_GetPicSize(int *w, int *h, char *name);
-void Draw_Pic(int x, int y, char *name);
-void Draw_NormPic(float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, qboolean blend, char *name);
-void Draw_StretchPic(int x, int y, int w, int h, char *name);
+void Draw_GetPicSize(int *w, int *h, const char *name);
+void Draw_Pic(int x, int y, const char *name);
+void Draw_NormPic(float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, qboolean blend, const char *name);
+void Draw_StretchPic(int x, int y, int w, int h, const char *name);
 void Draw_Char(int x, int y, int c);
-void Draw_TileClear(int x, int y, int w, int h, char *name);
+void Draw_TileClear(int x, int y, int w, int h, const char *name);
 void Draw_Fill(int x, int y, int w, int h, int style, const vec4_t color);
 void Draw_Color(const float *rgba);
 void Draw_FadeScreen(void);
-void Draw_DayAndNight(int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, char *map);
-void Draw_Clouds(int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, char *map);
+void Draw_DayAndNight(int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, const char *map);
+void Draw_Clouds(int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, const char *map);
 void Draw_LineStrip(int points, int *verts);
 void Draw_LineLoop(int points, int *verts);
 void Draw_Circle (vec3_t mid, float radius, const vec4_t color, int thickness);
@@ -421,8 +421,8 @@ void R_EndRegistration(void);
 struct image_s *Draw_FindPic(const char *name);
 void LoadTGA(const char *name, byte ** pic, int *width, int *height);
 
-void Anim_Append(animState_t * as, model_t * mod, char *name);
-void Anim_Change(animState_t * as, model_t * mod, char *name);
+void Anim_Append(animState_t * as, model_t * mod, const char *name);
+void Anim_Change(animState_t * as, model_t * mod, const char *name);
 void Anim_Run(animState_t * as, model_t * mod, int msec);
 char *Anim_GetName(animState_t * as, model_t * mod);
 
@@ -581,9 +581,9 @@ void GLimp_SetGamma(void);
 #define PHYSICAL_EARTH_CIRC (2.0 * M_PI * PHYSICAL_EARTH_RADIUS)
 #define NOT_SELECTABLE ~0U				/* For picking reasons, see which_site() */
 
-void Draw_3DGlobe(int x, int y, int w, int h, float p, float q, vec3_t rotate, float zoom, char *map);
+void Draw_3DGlobe(int x, int y, int w, int h, float p, float q, vec3_t rotate, float zoom, const char *map);
 void Draw_3DMapLine(vec3_t angles, float zoom, int n, float dist, vec2_t * path);
-void Draw_3DMapMarkers(vec3_t angles, float zoom, float latitude, float longitude, char *model);
+void Draw_3DMapMarkers(vec3_t angles, float zoom, float latitude, float longitude, const char *model);
 
 /* end of 3d globe */
 

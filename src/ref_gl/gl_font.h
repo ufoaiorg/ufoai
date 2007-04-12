@@ -34,7 +34,7 @@ typedef struct {
 
 /* public */
 int Font_DrawString(const char *fontID, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight, const int lineHeight, const char *c, int box_height, int scroll_pos, int *cur_line, qboolean increaseLine);
-void Font_Length(const char *font, char *c, int *width, int *height);
+void Font_Length(const char *font, const char *c, int *width, int *height);
 void Font_CleanCache(void);
 void Font_Shutdown(void);
 void Font_Init(void);
