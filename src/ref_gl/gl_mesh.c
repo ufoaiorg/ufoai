@@ -586,7 +586,7 @@ static void R_TransformModelDirect (modelInfo_t * mi)
  * @brief
  * @sa R_DrawAliasModel
  */
-void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, char *tagname)
+void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname)
 {
 	int i;
 	dmdl_t *paliashdr;

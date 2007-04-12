@@ -309,30 +309,30 @@ typedef struct {
 	void (*SetRefDef) (refdef_t * fd);
 
 	void (*DrawPtls) (void);
-	void (*DrawModelDirect) (modelInfo_t * mi, modelInfo_t * pmi, char *tag);
-	void (*DrawGetPicSize) (int *w, int *h, char *name);	/* will return 0 0 if not found */
-	void (*DrawPic) (int x, int y, char *name);
-	void (*DrawNormPic) (float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, qboolean blend, char *name);
-	void (*DrawStretchPic) (int x, int y, int w, int h, char *name);
+	void (*DrawModelDirect) (modelInfo_t * mi, modelInfo_t * pmi, const char *tag);
+	void (*DrawGetPicSize) (int *w, int *h, const char *name);	/* will return 0 0 if not found */
+	void (*DrawPic) (int x, int y, const char *name);
+	void (*DrawNormPic) (float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, qboolean blend, const char *name);
+	void (*DrawStretchPic) (int x, int y, int w, int h, const char *name);
 	void (*DrawChar) (int x, int y, int c);
 	void (*FontRegister) (const char *name, int size, char *path, char *style);
-	void (*FontLength) (const char *font, char *c, int *width, int *height);
+	void (*FontLength) (const char *font, const char *c, int *width, int *height);
 	int (*FontDrawString) (const char *font, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight, const int lineHeight, const char *c, int box_height, int scroll_pos, int *cur_line, qboolean increaseLine);
-	void (*DrawTileClear) (int x, int y, int w, int h, char *name);
+	void (*DrawTileClear) (int x, int y, int w, int h, const char *name);
 	void (*DrawFill) (int x, int y, int w, int h, int style, const vec4_t color);
 	void (*DrawColor) (const float *rgba);
 	void (*DrawFadeScreen) (void);
-	void (*DrawDayAndNight) (int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, char *map);
+	void (*DrawDayAndNight) (int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, const char *map);
 	void (*DrawLineStrip) (int points, int *verts);
 	void (*DrawLineLoop) (int points, int *verts);
 	void (*DrawPolygon) (int points, int *verts);
 	void (*DrawCircle) (vec3_t mid, float radius, const vec4_t color, int thickness);
-	void (*Draw3DGlobe) (int x, int y, int w, int h, float p, float q, vec3_t rotate, float zoom, char *map);
-	void (*Draw3DMapMarkers) (vec3_t angles, float zoom, float latitude, float longitude, char *image);
+	void (*Draw3DGlobe) (int x, int y, int w, int h, float p, float q, vec3_t rotate, float zoom, const char *map);
+	void (*Draw3DMapMarkers) (vec3_t angles, float zoom, float latitude, float longitude, const char *image);
 	void (*Draw3DMapLine) (vec3_t angles, float zoom, int n, float dist, vec2_t * v);
 
-	void (*AnimAppend) (animState_t * as, struct model_s * mod, char *name);
-	void (*AnimChange) (animState_t * as, struct model_s * mod, char *name);
+	void (*AnimAppend) (animState_t * as, struct model_s * mod, const char *name);
+	void (*AnimChange) (animState_t * as, struct model_s * mod, const char *name);
 	void (*AnimRun) (animState_t * as, struct model_s * mod, int msec);
 	char *(*AnimGetName) (animState_t * as, struct model_s * mod);
 

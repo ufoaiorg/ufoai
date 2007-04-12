@@ -242,7 +242,7 @@ static tutorial_t tutorials[MAX_TUTORIALS];
 static void MN_GetMaps_f(void);
 static void MN_NextMap_f(void);
 static void MN_PrevMap_f(void);
-static int MN_DrawTooltip(char *font, char *string, int x, int y, int maxWidth);
+static int MN_DrawTooltip(const char *font, const char *string, int x, int y, int maxWidth);
 static void CL_ShowMessagesOnStack_f(void);
 
 /*
@@ -1699,7 +1699,7 @@ void MN_DrawItem (vec3_t org, item_t item, int sx, int sy, int x, int y, vec3_t 
 /**
  * @brief Generic tooltip function
  */
-static int MN_DrawTooltip (char *font, char *string, int x, int y, int maxWidth)
+static int MN_DrawTooltip (const char *font, const char *string, int x, int y, int maxWidth)
 {
 	int height = 0, width = 0;
 

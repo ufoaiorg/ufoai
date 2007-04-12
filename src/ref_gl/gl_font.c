@@ -131,7 +131,7 @@ static font_t *Font_GetFont (const char *name)
  * @brief
  * @sa Font_GetFont
  */
-void Font_Length (const char *font, char *c, int *width, int *height)
+void Font_Length (const char *font, const char *c, int *width, int *height)
 {
 	font_t *f = NULL;
 
