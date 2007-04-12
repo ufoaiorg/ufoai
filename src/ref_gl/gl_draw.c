@@ -148,11 +148,15 @@ image_t *draw_chars;
  */
 void Draw_InitLocal (void)
 {
-	shadow = GL_FindImage("pics/sfx/shadow.tga", it_pic);
+	shadow = GL_FindImage("pics/sfx/shadow", it_pic);
+	if (!shadow)
+		ri.Con_Printf(PRINT_ALL, "Could not find shadow image in game pics/sfx directory!\n");
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	/* load console characters (don't bilerp characters) */
-	draw_chars = GL_FindImage("pics/conchars.pcx", it_pic);
+	draw_chars = GL_FindImage("pics/conchars", it_pic);
+	if (!draw_chars)
+		ri.Sys_Error(ERR_FATAL, "Could not find conchars image in game pics directory!\n");
 	GL_Bind(draw_chars->texnum);
 
 	Font_Init();
