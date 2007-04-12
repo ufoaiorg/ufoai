@@ -42,7 +42,7 @@ item assault_ammo
 			projtl	bullet
 			impact	bulletImpact
 			hitbody blood
-			firesnd	weapons/assault.wav
+			firesnd	weapons/assaultrifle.wav
 			speed	0
 			spread	"1.0 1.0"
 			modif	0.7
@@ -62,7 +62,7 @@ item assault_ammo
 			projtl	bullet
 			impact	bulletImpact
 			hitbody blood
-			firesnd	weapons/assault.wav
+			firesnd	weapons/assaultrifle.wav
 			speed	0
 			spread	"1.4 1.4"
 			modif	0.7
@@ -83,7 +83,7 @@ item assault_ammo
 			projtl	bullet
 			impact	bulletImpact
 			hitbody blood
-			firesnd	weapons/assault.wav
+			firesnd	weapons/assaultrifle.wav
 			speed	0
 			spread	"1.8 1.8"
 			modif	0.7
