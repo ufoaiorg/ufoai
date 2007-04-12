@@ -51,6 +51,7 @@ cvar_t *maxplayers;
 cvar_t *maxsoldiers;
 cvar_t *maxsoldiersperplayer;
 cvar_t *sv_enablemorale;
+cvar_t *sv_roundtimelimit;
 cvar_t *maxspectators;
 cvar_t *maxentities;
 cvar_t *dedicated;
@@ -156,6 +157,7 @@ void InitGame (void)
 	maxsoldiersperplayer = gi.cvar("maxsoldiersperplayer", "8", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, "How many soldiers one player is able to control in a given team");
 	/* enable moralestates in multiplayer */
 	sv_enablemorale = gi.cvar("sv_enablemorale", "1", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, "Enable morale behaviour for actors");
+	sv_roundtimelimit = gi.cvar("sv_roundtimelimit", "0", CVAR_SERVERINFO, "Timelimit for multiplayer rounds");
 	maxspectators = gi.cvar("maxspectators", "8", CVAR_SERVERINFO | CVAR_LATCH, NULL);
 	maxentities = gi.cvar("maxentities", "1024", CVAR_LATCH, NULL);
 
@@ -601,6 +603,8 @@ qboolean G_RunFrame (void)
 			sv_maxteams->modified = qfalse;
 		}
 	}
+
+	G_ForceEndRound();
 
 	/* check for intermission */
 	if (level.intermissionTime && level.time > level.intermissionTime) {

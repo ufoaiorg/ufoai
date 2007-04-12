@@ -93,6 +93,7 @@ typedef struct {
 	/* intermission state */
 	float intermissionTime;
 	int winningTeam;
+	float roundstartTime;		/**< the time the team started the round */
 
 	/* round statistics */
 	int numplayers;
@@ -175,6 +176,7 @@ extern cvar_t *maxplayers;
 extern cvar_t *maxsoldiers;
 extern cvar_t *maxsoldiersperplayer;
 extern cvar_t *sv_enablemorale;
+extern cvar_t *sv_roundtimelimit;
 extern cvar_t *maxspectators;
 
 extern cvar_t *sv_maxteams;
@@ -290,6 +292,7 @@ void G_SendStats(edict_t * ent);
 edict_t *G_SpawnFloor(pos3_t pos);
 int G_CheckVisTeam(int team, edict_t * check, qboolean perish);
 
+void G_ForceEndRound(void);
 
 void G_ActorDie(edict_t * ent, int state);
 void G_ClientAction(player_t * player);

@@ -1408,7 +1408,7 @@ menu mp_create_server
 	// ===================
 	func init
 	{
-		cmd "killserver"
+		cmd "killserver; set maxplayers 8; set sv_roundtimelimit 0"
 		cmd "gametype 2on2; gametype 1on1"
 		cmd "getmaps"
 		cmd "mn_modify ai_autojoin -1 0 1"

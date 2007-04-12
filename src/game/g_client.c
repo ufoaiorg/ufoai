@@ -2095,6 +2095,43 @@ static int G_PlayerSoldiersCount (player_t* player)
 }
 
 /**
+ * @brief Check whether a forced round end should be executed
+ */
+void G_ForceEndRound (void)
+{
+	player_t *p;
+	int i, diff;
+
+	/* check for roundlimits in multiplayer only */
+	if (!sv_roundtimelimit->integer || sv_maxclients->integer == 1)
+		return;
+
+	diff = level.time - level.roundstartTime;
+	switch (diff) {
+	case 20:
+		gi.bprintf(PRINT_HIGH, "20 seconds left\n");
+		return;
+	case 10:
+		gi.bprintf(PRINT_HIGH, "10 seconds left\n");
+		return;
+	case 5:
+		gi.bprintf(PRINT_HIGH, "5 seconds left\n");
+		return;
+	}
+
+	/* active team still has time left */
+	if (level.time < level.roundstartTime + sv_roundtimelimit->integer)
+		return;
+
+	gi.bprintf(PRINT_HIGH, "Team %i hit the max round time\n", level.activeTeam);
+
+	/* set all team members to ready */
+	for (i = 0, p = game.players; i < game.maxplayers * 2; i++, p++)
+		if (p->inuse && p->pers.team == level.activeTeam)
+			G_ClientEndRound(p, NOISY);
+}
+
+/**
  * @brief
  * @sa G_PlayerSoldiersCount
  */
@@ -2184,6 +2221,9 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 	/* communicate next player in row to clients */
 	gi.AddEvent(PM_ALL, EV_ENDROUND);
 	gi.WriteByte(level.activeTeam);
+
+	/* store the round start time to be able to abort the round after a give time */
+	level.roundstartTime = level.time;
 
 	/* apply morale behaviour, reset reaction fire */
 	G_ResetReactionFire(level.activeTeam);
