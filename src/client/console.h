@@ -35,7 +35,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CONSOLE_H
 #define CLIENT_CONSOLE_H
 
-#define	NUM_CON_TIMES 4
+#define	NUM_CON_TIMES 8
+
+#define COLORED_TEXT_MASK 128
 
 #define		CON_TEXTSIZE	32768
 typedef struct {
@@ -67,7 +69,7 @@ void Con_CheckResize(void);
 void Con_Init(void);
 void Con_DrawConsole(float frac);
 void Con_Print(const char *txt);
-void Con_CenteredPrint(char *text);
+void Con_CenteredPrint(const char *text);
 void Con_DrawNotify(void);
 void Con_ClearNotify(void);
 void Con_ToggleConsole_f(void);
