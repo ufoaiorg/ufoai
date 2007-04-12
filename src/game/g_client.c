@@ -2111,6 +2111,13 @@ void G_ForceEndRound (void)
 
 	diff = level.roundstartTime + sv_roundtimelimit->integer - level.time;
 	switch (diff) {
+	case 240:
+	case 180:
+	case 120:
+	case 60:
+		gi.bprintf(PRINT_HUD, ngettext("%i min left until forced round end\n",
+				"%i minutes left until forced round end\n", diff / 60), diff / 60);
+		return;
 	case 30:
 	case 20:
 	case 10:
