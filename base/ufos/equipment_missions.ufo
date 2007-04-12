@@ -85,12 +85,12 @@ equipment stage1_workers
 
 equipment stage1_workers_explosive
 {
-	plaspistol			7
-	plaspistol_ammo		10
-	plasblaster			2
-	plasblaster_ammo	3
+	plaspistol			12
+	plaspistol_ammo			16
+	plasblaster			14
+	plasblaster_ammo		20
 	kerrblade			10
-	plasmagrenade		20
+	plasmagrenade			10
 	light_alien         3
 	medium_alien        1
 }
