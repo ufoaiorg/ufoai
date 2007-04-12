@@ -424,6 +424,8 @@ void Con_Print (const char *txt)
 	if (con.ormask & HUD_TEXT_MASK) {
 		CL_DisplayHudMessage(txt, 2000);
 		con.ormask = 0;
+		/* this is utf-8 - so no console print please */
+		return;
 	}
 
 	while ((c = *txt) != 0) {

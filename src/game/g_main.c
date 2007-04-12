@@ -605,17 +605,19 @@ qboolean G_RunFrame (void)
 		}
 	}
 
-	if (sv_roundtimelimit->modified) {
-		/* some played around here - restart the count down */
-		level.roundstartTime = level.time;
-		/* don't allow smaller values here */
-		if (sv_roundtimelimit->integer < 30 && sv_roundtimelimit->integer > 0) {
-			Com_Printf("The minimum value for sv_roundtimelimit is 30\n");
-			gi.cvar_set("sv_roundtimelimit", "30");
+	if (sv_maxclients->integer > 1) {
+		if (sv_roundtimelimit->modified) {
+			/* some played around here - restart the count down */
+			level.roundstartTime = level.time;
+			/* don't allow smaller values here */
+			if (sv_roundtimelimit->integer < 30 && sv_roundtimelimit->integer > 0) {
+				Com_Printf("The minimum value for sv_roundtimelimit is 30\n");
+				gi.cvar_set("sv_roundtimelimit", "30");
+			}
+			sv_roundtimelimit->modified = qfalse;
 		}
-		sv_roundtimelimit->modified = qfalse;
+		G_ForceEndRound();
 	}
-	G_ForceEndRound();
 
 	/* check for intermission */
 	if (level.intermissionTime && level.time > level.intermissionTime) {

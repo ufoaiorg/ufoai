@@ -2125,10 +2125,12 @@ void G_ForceEndRound (void)
 
 	gi.bprintf(PRINT_HUD, _("Team %i hit the max round time\n"), level.activeTeam);
 
-	/* set all team members to ready */
-	for (i = 0, p = game.players; i < game.maxplayers * 2; i++, p++)
+	/* set all team members to ready (only human players) */
+	for (i = 0, p = game.players; i < game.maxplayers; i++, p++)
 		if (p->inuse && p->pers.team == level.activeTeam)
 			G_ClientEndRound(p, NOISY);
+
+	level.roundstartTime = level.time;
 }
 
 /**
