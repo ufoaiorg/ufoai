@@ -158,6 +158,7 @@ void InitGame (void)
 	/* enable moralestates in multiplayer */
 	sv_enablemorale = gi.cvar("sv_enablemorale", "1", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, "Enable morale behaviour for actors");
 	sv_roundtimelimit = gi.cvar("sv_roundtimelimit", "0", CVAR_SERVERINFO, "Timelimit for multiplayer rounds");
+	sv_roundtimelimit->modified = qfalse;
 	maxspectators = gi.cvar("maxspectators", "8", CVAR_SERVERINFO | CVAR_LATCH, NULL);
 	maxentities = gi.cvar("maxentities", "1024", CVAR_LATCH, NULL);
 
@@ -604,6 +605,16 @@ qboolean G_RunFrame (void)
 		}
 	}
 
+	if (sv_roundtimelimit->modified) {
+		/* some played around here - restart the count down */
+		level.roundstartTime = level.time;
+		/* don't allow smaller values here */
+		if (sv_roundtimelimit->integer < 30 && sv_roundtimelimit->integer > 0) {
+			Com_Printf("The minimum value for sv_roundtimelimit is 30\n");
+			gi.cvar_set("sv_roundtimelimit", "30");
+		}
+		sv_roundtimelimit->modified = qfalse;
+	}
 	G_ForceEndRound();
 
 	/* check for intermission */

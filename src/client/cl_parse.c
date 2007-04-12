@@ -1516,6 +1516,8 @@ void CL_ParseServerMessage (void)
 			if (i == PRINT_CHAT) {
 				S_StartLocalSound("misc/talk.wav");
 				con.ormask = COLORED_TEXT_MASK;
+			} else if (i == PRINT_HUD) {
+				con.ormask = HUD_TEXT_MASK;
 			}
 			Com_Printf("%s", MSG_ReadString(&net_message));
 			con.ormask = 0;

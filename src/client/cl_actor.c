@@ -449,13 +449,13 @@ static void HideFiremodes (void)
 static void CL_SetReactionFiremode (int actor_idx, int handidx, int obj_idx, int fd_idx)
 {
 	le_t *le;
-	
+
 	if (cls.team != cl.actTeam) {	/**< Not our turn */
 		/* This check is just here (additional to the one in CL_DisplayFiremodes_f) in case a possible situation was missed. */
 		Com_Printf("Error (CL_SetReactionFiremode): Function called on enemy/other turn, please report this and what you did to get there.\n");
 		return;
 	}
-	
+
 	if (actor_idx < 0 || actor_idx >= MAX_EDICTS) {
 		Com_DPrintf("CL_SetReactionFiremode: Actor index is negative or out of bounds. Abort.\n");
 		return;
@@ -1675,7 +1675,7 @@ static int CL_CheckAction (void)
 */
 	if (cls.team != cl.actTeam) {
 		Com_Printf("This isn't your round.\n");
-		Com_sprintf(infoText, sizeof(infoText), _("This isn't your round\n"));
+		CL_DisplayHudMessage(_("This isn't your round\n"), 2000);
 		return qfalse;
 	}
 
@@ -2471,7 +2471,7 @@ extern void CL_NextRound_f (void)
  * @param[in] time is a ms values
  * @param[in] text text is already translated here
  */
-void CL_DisplayHudMessage (char *text, int time)
+void CL_DisplayHudMessage (const char *text, int time)
 {
 	cl.msgTime = cl.time + time;
 	Q_strncpyz(cl.msgText, text, sizeof(cl.msgText));

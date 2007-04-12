@@ -45,7 +45,7 @@ char sv_outputbuf[SV_OUTPUTBUF_LENGTH]; /**< redirect buffer */
  * @brief
  * @sa Com_BeginRedirect
  */
-void SV_FlushRedirect(int sv_redirected, char *outputbuf)
+void SV_FlushRedirect (int sv_redirected, char *outputbuf)
 {
 	if (sv_redirected == RD_PACKET)
 		Netchan_OutOfBandPrint(NS_SERVER, net_from, "print\n%s", outputbuf);
@@ -69,7 +69,7 @@ EVENT MESSAGES
 /**
  * @brief Sends text across to be displayed if the level passes
  */
-void SV_ClientPrintf(client_t * cl, int level, const char *fmt, ...)
+void SV_ClientPrintf (client_t * cl, int level, const char *fmt, ...)
 {
 	va_list argptr;
 	char string[1024];
