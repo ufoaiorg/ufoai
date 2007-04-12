@@ -1445,10 +1445,10 @@ typedef enum {
 	ACTOR_SIZE_UGV
 } actorSizeEnum_t;
 
-/* #define NUM_BUYTYPES	4 <-- (from client.h - TODO: will be replaced by MAX_BUYTYPES.*/
 /** @brief Buytype categories in the various equipment screens (buy/seel, equip, etc...)
  ** Do not mess with the order (especially BUY_AIRCRAFT and BUY_MULTI_AMMO is/will be used for max-check in normal equipment screens)
  ** @sa scripts.c:buytypeNames
+ ** @note Be sure to also update all usages of the buy_type" console function (defined in cl_market.c and mostly used there and in menu_buy.ufo) when changing this.
  **/
 typedef enum {
 	BUY_WEAP_PRI,	/**< All 'Primary' weapons and their ammo for soldiers. */

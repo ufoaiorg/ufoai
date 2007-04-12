@@ -488,7 +488,7 @@ static void BS_BuyAircraft_f (void)
 		} else {
 			/* Hangar capacities are being updated in AIR_NewAircraft().*/
 			CL_UpdateCredits(ccs.credits-aircraft_samples[aircraftID].price);
-			Cbuf_AddText(va("aircraft_new %s %i;buy_type 4;", aircraft_samples[aircraftID].id, baseCurrent->idx));
+			Cbuf_AddText(va("aircraft_new %s %i;buy_type 5;", aircraft_samples[aircraftID].id, baseCurrent->idx));
 		}
 	}
 }
