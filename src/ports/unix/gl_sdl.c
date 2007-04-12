@@ -605,7 +605,12 @@ static qboolean GLimp_InitGraphics (qboolean fullscreen)
 		flags |= SDL_FULLSCREEN;
 
 	SetSDLIcon(); /* currently uses ufoicon.xbm data */
-
+#if 0
+	if (!SDL_VideoModeOK(vid.width, vid.height, 0, flags)) {
+		Sys_Error("(SDLGL) SDL_VideoModeOK failed (%ix%i): %s\n", vid.width, vid.height, SDL_GetError());
+		return qfalse;
+	}
+#endif
 	if ((surface = SDL_SetVideoMode(vid.width, vid.height, 0, flags)) == NULL) {
 		Sys_Error("(SDLGL) SDL SetVideoMode failed: %s\n", SDL_GetError());
 		return qfalse;
