@@ -663,7 +663,7 @@ char* Key_GetBinding (const char *binding, keyBindSpace_t space)
  * @sa Key_Bind_f
  * @sa Key_StringToKeynum
  */
-static void Key_SetBinding (int keynum, char *binding, keyBindSpace_t space)
+static void Key_SetBinding (int keynum, const char *binding, keyBindSpace_t space)
 {
 	char *new;
 	char **keySpace = NULL;
@@ -671,6 +671,8 @@ static void Key_SetBinding (int keynum, char *binding, keyBindSpace_t space)
 
 	if (keynum == -1)
 		return;
+
+	assert(keynum < K_LAST_KEY);
 
 	Com_DPrintf("Binding for '%s' for space ", binding);
 	switch (space) {

@@ -45,7 +45,7 @@ extern int key_linepos;
 /**
  * @brief
  */
-static void DisplayString(int x, int y, char *s)
+static void DisplayString (int x, int y, char *s)
 {
 	while (*s) {
 		re.DrawChar(x, y, *s);
@@ -96,7 +96,7 @@ void Con_ToggleConsole_f (void)
 /**
  * @brief
  */
-void Con_ToggleChat_f(void)
+static void Con_ToggleChat_f (void)
 {
 	Key_ClearTyping();
 
@@ -369,7 +369,7 @@ extern void Con_Init (void)
 	Com_Printf("Console initialized.\n");
 
 	/* register our commands and cvars */
-	con_notifytime = Cvar_Get("con_notifytime", "3", 0, NULL);
+	con_notifytime = Cvar_Get("con_notifytime", "10", CVAR_ARCHIVE, "How many seconds console messages should be shown before they fade away");
 	con_history = Cvar_Get("con_history", "1", CVAR_ARCHIVE, "Permanent console history");
 
 	Cmd_AddCommand("toggleconsole", Con_ToggleConsole_f, _("Bring up the in-game console"));
@@ -416,7 +416,7 @@ void Con_Print (const char *txt)
 		return;
 
 	if (txt[0] == 1 || txt[0] == 2) {
-		mask = 128; /* go to colored text */
+		mask = COLORED_TEXT_MASK; /* go to colored text */
 		txt++;
 	} else
 		mask = 0;
@@ -476,8 +476,9 @@ void Con_Print (const char *txt)
  * @brief Centers the text to print on console
  * @param[in] text
  * @sa Con_Print
+ * @note not used atm
  */
-void Con_CenteredPrint(char *text)
+void Con_CenteredPrint (const char *text)
 {
 	int l;
 	char buffer[MAX_STRING_CHARS];
@@ -557,12 +558,15 @@ void Con_DrawNotify (void)
 		if (time == 0)
 			continue;
 		time = cls.realtime - time;
-		if (time > con_notifytime->value * 1000)
+		if (time > con_notifytime->integer * 1000)
 			continue;
 		text = con.text + (i % con.totallines) * con.linewidth;
 
-		for (x = 0; x < con.linewidth; x++)
-			re.DrawChar(l + (x << 3), v, text[x]);
+		for (x = 0; x < con.linewidth; x++) {
+			/* only draw chat or check for developer mode */
+			if (developer->integer || text[x] & COLORED_TEXT_MASK)
+				re.DrawChar(l + (x << 3), v, text[x]);
+		}
 
 		v += 8;
 	}
@@ -598,7 +602,7 @@ void Con_DrawNotify (void)
  * @brief Draws the console with the solid background
  * @param[in] frac
  */
-void Con_DrawConsole(float frac)
+void Con_DrawConsole (float frac)
 {
 	int i, x, y;
 	int rows, row, lines;
@@ -619,7 +623,7 @@ void Con_DrawConsole(float frac)
 
 	Com_sprintf(version, sizeof(version), "v%s", UFO_VERSION);
 	for (x = 0; x < strlen(version); x++)
-		re.DrawChar(viddef.width - (strlen(version) * 8) + x * 8, lines - 12, 128 + version[x]);
+		re.DrawChar(viddef.width - (strlen(version) * 8) + x * 8, lines - 12, version[x] | COLORED_TEXT_MASK);
 
 	/* draw the text */
 	con.vislines = lines;
