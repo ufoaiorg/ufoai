@@ -1821,7 +1821,7 @@ item bolterrifle_ammo
 			projtl  bullet
 			impact  bulletImpact
 			hitbody blood
-			firesnd weapons/bolter2.wav
+			firesnd weapons/boltercannonade.wav
 			speed   0
 			spread  "3 2"
 			crouch  0.8
