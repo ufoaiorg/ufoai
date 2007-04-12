@@ -2502,15 +2502,15 @@ void CL_DoEndRound (sizebuf_t * sb)
 		CL_DisplayHudMessage(_("Your round started!\n"), 2000);
 		S_StartLocalSound("misc/roundstart.wav");
 		CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE);
-	}
-
-	for (actor_idx = 0; actor_idx < cl.numTeamList; actor_idx++) {
-		if (cl.teamList[actor_idx]) {
-			/* Check if any default firemode is defined and search for one if not. */
-			if (!SANE_REACTION(actor_idx)) {
-				CL_UpdateReactionFiremodes('r', actor_idx, -1);
-				if (!SANE_REACTION(actor_idx))
-					CL_UpdateReactionFiremodes('l', actor_idx, -1);
+		
+		for (actor_idx = 0; actor_idx < cl.numTeamList; actor_idx++) {
+			if (cl.teamList[actor_idx]) {
+				/* Check if any default firemode is defined and search for one if not. */
+				if (!SANE_REACTION(actor_idx)) {
+					CL_UpdateReactionFiremodes('r', actor_idx, -1);
+					if (!SANE_REACTION(actor_idx))
+						CL_UpdateReactionFiremodes('l', actor_idx, -1);
+				}
 			}
 		}
 	}
