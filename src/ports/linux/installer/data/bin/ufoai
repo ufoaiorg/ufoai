@@ -50,7 +50,7 @@ SDL_AUDIODRIVER="alsa"
 ###############################################################################
 ## DO NOT EDIT BELOW THIS LINE
 ###############################################################################
-export LANG="POSIX"
+#export LANG=""
 
 test -n "${SDL_AUDIODRIVER}" && export SDL_AUDIODRIVER
 if [ -n "${XSERVER_DISPLAY}" ]; then
