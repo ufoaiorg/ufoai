@@ -39,9 +39,9 @@ qboolean visible_firemode_list_right = qfalse;
 qboolean firemodes_change_display = qtrue; /* If this set to qfalse so CL_DisplayFiremodes_f will not attempt to hide the list */
 
 typedef enum {
-	RF_HAND,	/**< Stores the used hand (0=right,1=left) */
-	RF_FM,		/**< Stores the used firemode index. Max. number is MAX_FIREDEFS_PER_WEAPON */
-	RF_WPIDX, 	/**< Stores the weapon idx in ods. (for faster access and checks) */
+	RF_HAND,	/**< Stores the used hand (0=right, 1=left, -1=undef) */
+	RF_FM,		/**< Stores the used firemode index. Max. number is MAX_FIREDEFS_PER_WEAPON -1=undef*/
+	RF_WPIDX, 	/**< Stores the weapon idx in ods. (for faster access and checks) -1=undef */
 
 	RF_MAX
 } cl_reaction_firemode_type_t;
@@ -443,7 +443,7 @@ static void HideFiremodes (void)
 /**
  * @brief Stores the given firedef index and object index for reaction fire and sends in over the network as well.
  * @param[in] actor_idx Index of an actor.
- * @param[in] handidx Index of hand with item, which will be used for reactionfire.
+ * @param[in] handidx Index of hand with item, which will be used for reactionfire. Possible hand indices: 0=right, 1=right, -1=undef
  * @param[in] fd_idx Index of firedefinition for an item in given hand.
  */
 static void CL_SetReactionFiremode (int actor_idx, int handidx, int obj_idx, int fd_idx)
@@ -456,12 +456,12 @@ static void CL_SetReactionFiremode (int actor_idx, int handidx, int obj_idx, int
 		return;
 	}
 	
-	if (actor_idx < 0) {
-		Com_DPrintf("CL_SetReactionFiremode: Actor index is negative. Abort.\n");
+	if (actor_idx < 0 || actor_idx >= MAX_EDICTS) {
+		Com_DPrintf("CL_SetReactionFiremode: Actor index is negative or out of bounds. Abort.\n");
 		return;
 	}
 
-	if (handidx < 0 || handidx > 1) {
+	if (handidx < -1 || handidx > 1) {
 		Com_DPrintf("CL_SetReactionFiremode: Bad hand index given. Abort.\n");
 		return;
 	}
