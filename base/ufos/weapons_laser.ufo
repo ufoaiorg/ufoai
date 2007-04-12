@@ -76,8 +76,8 @@ item laserrifle_ammo
 	scale		1.8
 	price		210
 	size		7
-//	buytype	multi_ammo
-	buytype	weap_pri
+	buytype	multi_ammo
+//	buytype	weap_pri
 
 	weapon_mod laserpistol	// weap_fds_idx=0
 	{

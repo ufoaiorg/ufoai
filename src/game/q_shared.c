@@ -2378,13 +2378,31 @@ invList_t *Com_AddToInventory(inventory_t * const i, item_t item, int container,
 
 /**
  * @brief
- * @param[in] i
- * @param[in] container
- * @param[in] x
- * @param[in] y
- * @sa
+ * @param[in] i The inventory the container is in.
+ * @param[in] container The container where the item should be removed.
+ * @param[in] x The x position of the item (container?) to be removed. TODO: is this correct?
+ * @param[in] y The y position of the item (container?) to be removed. TODO: is this correct?
+ * @return qtrue If removal was successful.
+ * @return qfalse If nothing was removed or an error occured.
+ * @sa Com_RemoveFromInventoryIgnore
  */
 qboolean Com_RemoveFromInventory (inventory_t* const i, int container, int x, int y)
+{
+	return Com_RemoveFromInventoryIgnore(i, container, x, y, qfalse);
+}
+
+/**
+ * @brief
+ * @param[in] i The inventory the container is in.
+ * @param[in] container The container where the item should be removed.
+ * @param[in] x The x position of the item (container?) to be removed. TODO: is this correct?
+ * @param[in] y The y position of the item (container?) to be removed. TODO: is this correct?
+ * @param[in] ignore_type Ignroes teh type of container (only used for a workaround in the base-equipemnt see CL_MoveMultiEquipment) HACKHACK
+ * @return qtrue If removal was successful.
+ * @return qfalse If nothing was removed or an error occured.
+ * @sa Com_RemoveFromInventory
+ */
+qboolean Com_RemoveFromInventoryIgnore (inventory_t* const i, int container, int x, int y, byte ignore_type)
 {
 	invList_t *ic, *old;
 
@@ -2404,7 +2422,7 @@ qboolean Com_RemoveFromInventory (inventory_t* const i, int container, int x, in
 		return qfalse;
 	}
 
-	if (CSI->ids[container].single || (ic->x == x && ic->y == y)) {
+	if ((CSI->ids[container].single || (ic->x == x && ic->y == y)) && !ignore_type) {
 		old = invUnused;
 		invUnused = ic;
 		cacheItem = ic->item;
@@ -2426,7 +2444,6 @@ qboolean Com_RemoveFromInventory (inventory_t* const i, int container, int x, in
 			invUnused->next = old;
 			return qtrue;
 		}
-
 	return qfalse;
 }
 
@@ -2451,6 +2468,32 @@ qboolean Com_RemoveFromInventory (inventory_t* const i, int container, int x, in
  * @sa
  */
 int Com_MoveInInventory (inventory_t* const i, int from, int fx, int fy, int to, int tx, int ty, int *TU, invList_t ** icp)
+{
+	return Com_MoveInInventoryIgnore(i, from, fx, fy, to, tx, ty, TU, icp, qfalse);
+}
+	
+/**
+ * @brief Conditions for moving items between containers.
+ * @param[in] i an item
+ * @param[in] from source container
+ * @param[in] fx x for source container
+ * @param[in] fy y for source container
+ * @param[in] to destination container
+ * @param[in] tx x for destination container
+ * @param[in] ty y for destination container
+ * @param[in] TU amount of TU needed to move an item
+ * @param[in] icp
+ * @param[in] ignore_type Ignroes teh type of container (only used for a workaround in the base-equipemnt see CL_MoveMultiEquipment) HACKHACK
+ * @return IA_NOTIME when not enough TU
+ * @return IA_NONE if no action possible
+ * @return IA_NORELOAD if you cannot reload a weapon
+ * @return IA_RELOAD_SWAP in case of exchange of ammo in a weapon
+ * @return IA_RELOAD when reloading
+ * @return IA_ARMOR when placing an armour on the actor
+ * @return IA_MOVE when just moving an item
+ * @sa
+ */
+int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, int to, int tx, int ty, int *TU, invList_t ** icp, byte ignore_type)
 {
 	invList_t *ic;
 	int time;
@@ -2477,13 +2520,24 @@ int Com_MoveInInventory (inventory_t* const i, int from, int fx, int fy, int to,
 	assert(i);
 
 	/* break if source item is not removeable */
-	if (!Com_RemoveFromInventory(i, from, fx, fy))
+
+	if (!Com_RemoveFromInventoryIgnore(i, from, fx, fy, ignore_type))
 		return IA_NONE;
 
 	if (cacheItem.t == NONE)
 		return IA_NONE;
 
 	assert(cacheItem.t < MAX_OBJDEFS);
+
+	/* We are in base-equip screen (multi-ammo workaround) and can skip a lot of checks. */
+	if (ignore_type) {
+		Com_TryAddToBuyType(i, cacheItem, to); /* get target coordinates */
+		/* ic = Com_AddToInventory(i, cacheItem, to, tx, ty);*/
+		/* return data */
+		/*if (icp)
+			*icp = ic;*/
+		return IA_NONE;
+	}
 
 	/* if weapon is twohanded and is moved from hand to hand do nothing. */
 	/* twohanded weapon are only in CSI->idRight */

@@ -815,8 +815,8 @@ item shotgun_micro_ammo
 	center		"0 0 0"
 	scale		2.0
 	price		35
-//	buytype	multi_ammo
-	buytype	weap_pri
+	buytype	multi_ammo
+//	buytype	weap_pri
 
 	weapon_mod shotgun_micro	// weap_fds_idx=0
 	{
