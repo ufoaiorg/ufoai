@@ -589,6 +589,7 @@ void G_CheckEndGame (void)
 qboolean G_RunFrame (void)
 {
 	level.framenum++;
+	/* server is running at 10 fps */
 	level.time = level.framenum * FRAMETIME;
 /*	Com_Printf( "frame: %i   time: %f\n", level.framenum, level.time ); */
 
