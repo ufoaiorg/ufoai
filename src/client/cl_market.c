@@ -189,9 +189,12 @@ static void BS_BuyClick_f (void)
  */
 static void AIR_GetStorageSupplyCount (char *airCharId, int *const storage, int *const supply)
 {
+#if 0
 	base_t *base;
+	int i;
+#endif
 	aircraft_t *aircraft;
-	int i, j;
+	int j;
 
 	*supply = MAX_AIRCRAFT_STORAGE;
 #if 0
