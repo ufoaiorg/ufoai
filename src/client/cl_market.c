@@ -36,12 +36,6 @@ static int buyListLength;		/**< Amount of entries on the list. */
 static int buyCategory;			/**< Category of items in the menu. */
 static int buyListScrollPos;	/**< start of the buylist index - due to scrolling */
 
-/* 20060921 LordHavoc: added market buy/sell factors */
-static const int MARKET_BUY_FACTOR = 1;
-static const int MARKET_BUY_DIVISOR = 1;
-static const int MARKET_SELL_FACTOR = 1;
-static const int MARKET_SELL_DIVISOR = 1;
-
 void UP_AircraftDescription(technology_t* t);
 
 /**
@@ -284,7 +278,7 @@ static void BS_BuyType_f (void)
 			tech = (technology_t *) od->tech;
 			/* Check whether the proper buytype, storage in current base and market. */
 			if (tech && BUYTYPE_MATCH(od->buytype,num) && (baseCurrent->storage.num[i] || ccs.eMarket.num[i])) {
-				BS_AddToList(od->name, baseCurrent->storage.num[i], ccs.eMarket.num[i], od->price);
+				BS_AddToList(od->name, baseCurrent->storage.num[i], ccs.eMarket.num[i], ccs.eMarket.ask[i]);
 
 				/* Set state of Autosell button. */
 				if (j < MAX_MARKET_MENU_ENTRIES) {
@@ -370,11 +364,11 @@ static void BS_BuyItem_f (void)
 	} else {
 		CL_ItemDescription(item);
 		Com_DPrintf("BS_BuyItem_f: item %i\n", item);
-		if (ccs.credits >= csi.ods[item].price * MARKET_BUY_FACTOR / MARKET_BUY_DIVISOR && ccs.eMarket.num[item]) {
+		if (ccs.credits >= ccs.eMarket.ask[item] && ccs.eMarket.num[item]) {
 			/* reinit the menu */
 			Cmd_BufClear();
 			BS_BuyType_f();
-			CL_UpdateCredits(ccs.credits - csi.ods[item].price * MARKET_BUY_FACTOR / MARKET_BUY_DIVISOR);
+			CL_UpdateCredits(ccs.credits - ccs.eMarket.ask[item]);
 		}
 	}
 }
@@ -409,7 +403,7 @@ static void BS_SellItem_f (void)
 			/* reinit the menu */
 			Cmd_BufClear();
 			BS_BuyType_f();
-			CL_UpdateCredits(ccs.credits + csi.ods[item].price * MARKET_SELL_FACTOR / MARKET_SELL_DIVISOR);
+			CL_UpdateCredits(ccs.credits + ccs.eMarket.bid[item]);
 		}
 	}
 }
