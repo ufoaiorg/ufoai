@@ -884,6 +884,38 @@ void CL_FireWeapon_f (void)
 }
 
 /**
+ * @brief Checks if a there is a weapon in hte hand that can be used for reaction fire.
+ * @param[in] hand Which hand to check: 'l' for left hand, 'r' for right hand.
+ */
+static qboolean CL_WeaponWithReaction (char hand)
+{
+	objDef_t *ammo = NULL;
+	objDef_t *weapon = NULL;
+	int weap_fd_idx;
+	int i;
+	
+	/* Get ammo and weapon-index in ammo. */
+	CL_GetWeaponAndAmmo(hand, &weapon, &ammo, &weap_fd_idx);
+	
+	if (weap_fd_idx == -1) {
+		Com_DPrintf("CL_WeaponWithReaction: No weapondefinition in ammo found\n");
+		return qfalse;
+	}
+	
+	if (!weapon || !ammo)
+		return qfalse;
+	
+	/* check ammo for reaction-enabled firemodes */
+	for (i = 0; i < ammo->numFiredefs[weap_fd_idx]; i++) {
+		if (ammo->fd[weap_fd_idx][i].reaction) {
+			return qtrue;
+		}
+	}
+	
+	return qfalse;
+}
+
+/**
  * @brief Refreshes the weapon/reload buttons on the HUD.
  * @param[in] time The amount of TU (of an actor) left in case of action.
  * @sa CL_ActorUpdateCVars
@@ -922,10 +954,12 @@ static void CL_RefreshWeaponButtons (int time)
 
 	/* reaction-fire button */
 	if (CL_GetReactionState(selActor) == R_FIRE_OFF) {
-		if (time < TU_REACTION_SINGLE)
-			SetWeaponButton(BT_RIGHT_PRIMARY_REACTION, qfalse);
-		else
+		if ((time >= TU_REACTION_SINGLE)
+		&& (CL_WeaponWithReaction('r') || CL_WeaponWithReaction('l')))
 			SetWeaponButton(BT_RIGHT_PRIMARY_REACTION, qtrue);
+		else
+			SetWeaponButton(BT_RIGHT_PRIMARY_REACTION, qfalse);
+			
 	}
 
 	/* reload buttons */
@@ -1963,35 +1997,61 @@ void CL_ActorStun (void)
 #endif
 
 /**
- * @brief Toggles reaction fire.
+ * @brief Toggles reaction fire between the states off/single/multi.
  */
 extern void CL_ActorToggleReaction_f (void)
 {
 	int state = 0;
+	int actor_idx = -1;
 
 	if (!CL_CheckAction())
 		return;
 
-	selActorReactionState++;
-	if (selActorReactionState > R_FIRE_MANY)
-		selActorReactionState = R_FIRE_OFF;
+	actor_idx = CL_GetActorNumber(selActor);
 
-	switch (selActorReactionState) {
-	case R_FIRE_OFF:
+	/* Check all hands for reaction-enabled ammo-firemodes. */
+	if (CL_WeaponWithReaction('r') || CL_WeaponWithReaction('l')) { 
+		selActorReactionState++;
+		if (selActorReactionState > R_FIRE_MANY)
+			selActorReactionState = R_FIRE_OFF;
+
+		switch (selActorReactionState) {
+		case R_FIRE_OFF:
+			state = ~STATE_REACTION;
+			break;
+		case R_FIRE_ONCE:
+			state = STATE_REACTION_ONCE;
+			/* TODO: Check if stored info for RF is up-to-date and set it to default if not. */
+			/* Set default rf-mode. */
+			if (!SANE_REACTION(actor_idx)) {
+				CL_UpdateReactionFiremodes('r', actor_idx, -1);
+				if (!SANE_REACTION(actor_idx))
+					CL_UpdateReactionFiremodes('l', actor_idx, -1);
+			}
+			break;
+		case R_FIRE_MANY:
+			state = STATE_REACTION_MANY;
+			/* TODO: Check if stored info for RF is up-to-date and set it to default if not. */
+			/* Set default rf-mode. */
+			if (!SANE_REACTION(actor_idx)) {
+				CL_UpdateReactionFiremodes('r', actor_idx, -1);
+				if (!SANE_REACTION(actor_idx))
+					CL_UpdateReactionFiremodes('l', actor_idx, -1);
+			}
+			break;
+		default:
+			return;
+		}
+
+		/* send request to update actor's reaction state to the server */
+		MSG_Write_PA(PA_STATE, selActor->entnum, state);
+	} else {
+		/* Send the "turn rf off" message just in case */
 		state = ~STATE_REACTION;
-		break;
-	case R_FIRE_ONCE:
-		state = STATE_REACTION_ONCE;
-		break;
-	case R_FIRE_MANY:
-		state = STATE_REACTION_MANY;
-		break;
-	default:
-		return;
+		MSG_Write_PA(PA_STATE, selActor->entnum, state);
+		/* Set RF-mode info to undef */
+		CL_SetReactionFiremode(actor_idx, -1, -1, -1);
 	}
-
-	/* send request to update actor's reaction state to the server */
-	MSG_Write_PA(PA_STATE, selActor->entnum, state);
 }
 
 /**
