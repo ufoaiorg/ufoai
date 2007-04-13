@@ -91,10 +91,6 @@ font_t *Font_Analyze (const char *name, const char *path, int renderStyle, int s
 
 	f->rw = SDL_RWFromMem(f->buffer, ttfSize);
 
-	/* norm size is 1024x768 (1.0) */
-	/* scale the fontsize */
-	size *= vid.rx;
-
 	f->font = TTF_OpenFontRW(f->rw, 0, size);
 	if (!f->font)
 		ri.Sys_Error(ERR_FATAL, "...could not load font file %s\n", path);
@@ -352,7 +348,7 @@ static char *Font_GetLineWrap (font_t * f, char *buffer, int maxWidth, int *widt
 	assert (strlen(buffer));
 
 	if (!maxWidth)
-		maxWidth = VID_NORM_WIDTH * vid.rx;
+		maxWidth = VID_NORM_WIDTH;
 
 	/* no line wrap needed? */
 	TTF_SizeUTF8(f->font, buffer, &w, &h);
@@ -441,13 +437,13 @@ static int Font_GenerateGLSurface (fontCache_t *cache, int x, int y, int absX, i
 
 	qglBegin(GL_TRIANGLE_STRIP);
 	qglTexCoord2f(start[0], start[1]);
-	qglVertex2f(x, y);
+	qglVertex2f(x * vid.rx, y * vid.ry);
 	qglTexCoord2f(end[0], start[1]);
-	qglVertex2f(x + tw, y);
-	qglTexCoord2f(start[0], end[1]);
-	qglVertex2f(x, y + th);
+	qglVertex2f((x + tw) * vid.rx, y * vid.ry);
+	qglTexCoord2f(start[0] * vid.rx, end[1]);
+	qglVertex2f(x * vid.rx, (y + th) * vid.ry);
 	qglTexCoord2f(end[0], end[1]);
-	qglVertex2f(x + tw, y + th);
+	qglVertex2f((x + tw) * vid.rx, (y + th) * vid.ry);
 	qglEnd();
 
 	GLSTATE_DISABLE_BLEND
@@ -515,14 +511,8 @@ int Font_DrawString (const char *fontID, int align, int x, int y, int absX, int 
 	float texh0, fh, fy; /* rounding errors break mouse-text corelation */
 	qboolean skipline = qfalse;
 
-	/* transform from 1024x768 coordinates for drawing */
-	absX = (float) absX *vid.rx;
-	absY = (float) absY *vid.ry;
-	x = (float) x *vid.rx;
-	fy = (float) y *vid.ry;
-	maxWidth = (float) maxWidth *vid.rx;
-	maxHeight = (float) maxHeight *vid.ry;
-	texh0 = (float) lineHeight *vid.ry;
+	fy = y;
+	texh0 = lineHeight * vid.ry;
 
 	/* get the font */
 	f = Font_GetFont(fontID);
