@@ -103,6 +103,7 @@ const char *ev_format[] =
 	"sbbb",				/* EV_INV_DEL */
 	"sbbbbb",			/* EV_INV_AMMO */
 	"sbbbbb",			/* EV_INV_RELOAD */
+	"ss",					/* EV_INV_HANDS_CHANGED */
 
 	"s",				/* EV_MODEL_PERISH */
 	"ss",				/* EV_MODEL_EXPLODE */
@@ -141,6 +142,7 @@ static const char *ev_names[] =
 	"EV_INV_DEL",
 	"EV_INV_AMMO",
 	"EV_INV_RELOAD",
+	"EV_INV_HANDS_CHANGED",
 
 	"EV_MODEL_PERISH",
 	"EV_MODEL_EXPLODE",
@@ -195,6 +197,7 @@ static void (*ev_func[])( sizebuf_t *sb ) =
 	CL_InvDel,
 	CL_InvAmmo,
 	CL_InvReload,
+	CL_InvCheckHands,
 
 	LM_Perish,
 	LM_Explode,

@@ -646,6 +646,7 @@ void CL_ActorStandCrouch_f(void);
 void CL_ActorToggleReaction_f(void);
 void CL_ActorStartMove(le_t * le, pos3_t to);
 void CL_ActorShoot(le_t * le, pos3_t at);
+void CL_InvCheckHands(sizebuf_t * sb);
 void CL_ActorDoMove(sizebuf_t * sb);
 void CL_ActorDoShoot(sizebuf_t * sb);
 void CL_ActorShootHidden(sizebuf_t *sb);

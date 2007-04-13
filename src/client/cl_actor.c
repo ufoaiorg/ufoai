@@ -1871,6 +1871,38 @@ void CL_ActorReload (int hand)
 		Com_Printf("No (researched) clip left.\n");
 }
 
+/**
+ * @brief The client changed something in his hand-containers. This fucntion updates the reactionfire info.
+ * @param[in] sb
+ */
+void CL_InvCheckHands (sizebuf_t * sb)
+{
+	int entnum;
+	le_t *le;
+	int actor_idx = -1;
+	int hand = -1;	/**< 0=right, 1=left */
+	
+	MSG_ReadFormat(sb, ev_format[EV_INV_HANDS_CHANGED], &entnum, &hand);
+	
+	if ((entnum < 0) || (hand < 0)) {
+		Com_Printf("CL_InvCheckHands: entnum or hand not sent/received correctly.\n");
+	}
+
+	le = LE_Get(entnum);
+	if (!le) {
+		Com_Printf("CL_InvCheckHands: LE doesn't exist.\n");
+		return;
+	}
+	
+	actor_idx = CL_GetActorNumber(le);
+	
+	/* Update the cahnged hand with default firemode. */
+	if (hand == 0)
+		CL_UpdateReactionFiremodes('r', actor_idx, -1);
+	else
+		CL_UpdateReactionFiremodes('l', actor_idx, -1);
+	HideFiremodes();
+}
 
 /**
  * @brief Moves actor.
