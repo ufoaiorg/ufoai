@@ -716,7 +716,7 @@ extern void AIR_DeleteAircraft (aircraft_t *aircraft)
 
 	gd.numAircraft--;	/**< Decrease the global number of aircraft. */
 
-	/* Finally remove the aircraf-struct itself from the various arrays and update the order. */
+	/* Finally remove the aircraft-struct itself from the base-array and update the order. */
 	base->numAircraftInBase--;
 	for (i = aircraft->idxInBase; i < base->numAircraftInBase; i++) {
 		/* Remove aircraft and rearrange the aircraft-list (in base). */
@@ -727,10 +727,19 @@ extern void AIR_DeleteAircraft (aircraft_t *aircraft)
 		/* Update number of team members for each aircraft.*/
 		base->teamNum[i] = base->teamNum[i+1];
 		
-		/* Update index of aircraftCurrent if it is affected by the index-change. */
+		/* Update index of aircraftCurrent in base if it is affected by the index-change. */
 		if (i == previous_aircraftCurrent)
 			baseCurrent->aircraftCurrent--;
 	}
+
+	if (base->numAircraftInBase < 1) {
+		Cvar_SetValue("mn_equipsoldierstate", 0);
+		Cvar_Set("mn_aircraftstatus", "");
+		Cvar_Set("mn_aircraftinbase", "0");
+		Cvar_Set("mn_aircraftname", "");
+		Cvar_Set("mn_aircraft_model", "");
+		baseCurrent->aircraftCurrent = -1;
+	} 
 
 	/* Q_strncpyz(messageBuffer, va(_("You've sold your aircraft (a %s) in base %s"), aircraft->name, base->name), MAX_MESSAGE_TEXT);
 	MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);*/
