@@ -36,6 +36,9 @@ static int buyListLength;		/**< Amount of entries on the list. */
 static int buyCategory = -1;			/**< Category of items in the menu. */
 static int buyListScrollPos;	/**< start of the buylist index - due to scrolling */
 
+/** @brief Max amount of aircraft type calculated for the market. */
+static int MAX_AIRCRAFT_SUPPLY = 8;
+
 void UP_AircraftDescription(technology_t* t);
 
 /**
@@ -171,50 +174,44 @@ static void BS_MarketClick_f (void)
 		CL_ItemDescription(buyList[num]);
 }
 
-#define MAX_AIRCRAFT_STORAGE 8		/* FIXME: what's that and what for? Zenerka */
 /**
- * @brief set storage and supply to the values of aircraft
- * in use - and the value of aircraft available for buying
- *
- * WHAT EXACTLY IS THE PURPOSE OF THIS FUNCTION? Zenerka
- * @param aircraft Aircraft ID from scriptfile
- * @param storage Pointer to int value which will hold the amount of aircraft
- *        given by aircraft parameter in all of your bases
- * @param supply Pointer to int which will hold the amount of buyable aircraft
- * @code
- * for (i = 0, j = 0, air_samp = aircraft_samples; i < numAircraft_samples; i++, air_samp++)
- *   AIR_GetStorageSupplyCount(air_samp->id, &storage, &supply);
- * @endcode
- * @sa BS_BuyType_f
+ * @brief Calculates amount of aircrafts in base and on the market.
+ * @param[in] *airCharId Aircraft id (type).
+ * @param[in] inbase True if function has to return storage, false - when supply (market).
+ * @return Amount of aircrafts in base or amount of aircrafts on the market.
  */
-static void AIR_GetStorageSupplyCount (char *airCharId, int *const storage, int *const supply)
+static int AIR_GetStorageSupply (char *airCharId, qboolean inbase)
 {
-#if 0
-	base_t *base;
-	int i;
-#endif
-	aircraft_t *aircraft;
-	int j;
+	base_t *base = NULL;
+	aircraft_t *aircraft = NULL;
+	int i, j;
+	int amount = 0, storage = 0, supply = 0;
 
-	*supply = MAX_AIRCRAFT_STORAGE;
-#if 0
-/* Commenting that out. We should display only the amounts of aircrafts in current base.
-   12042007 Zenerka
-*/
-	for (i = 0, base = gd.bases; i < gd.numBases; i++, base++) {
+	assert(baseCurrent);
+
+	/* Get storage amount in baseCurrent. */
+	for (j = 0, aircraft = baseCurrent->aircraft; j < baseCurrent->numAircraftInBase; j++, aircraft++) {
+			if (!Q_strncmp(aircraft->id, airCharId, MAX_VAR))
+				storage++;
+	}
+	/* Get supply amount (global). */
+	for (j = 0, base = gd.bases; j < gd.numBases; j++, base++) {
 		if (!base->founded)
 			continue;
-#endif
-		for (j = 0, aircraft = baseCurrent->aircraft; j < baseCurrent->numAircraftInBase; j++, aircraft++)
+		for (i = 0, aircraft = base->aircraft; i < base->numAircraftInBase; i++, aircraft++) {
 			if (!Q_strncmp(aircraft->id, airCharId, MAX_VAR))
-				(*storage)++;
-#if 0
+				amount++;
+		}
 	}
-#endif
-	if (*storage < MAX_AIRCRAFT_STORAGE)
-		*supply -= *storage;
+	if (amount < MAX_AIRCRAFT_SUPPLY)
+		supply = MAX_AIRCRAFT_SUPPLY - amount;
 	else
-		*supply = 0;
+		supply = 0;
+
+	if (inbase)
+		return storage;
+	else
+		return supply;
 }
 
 static char bsMarketNames[1024];
@@ -251,7 +248,7 @@ static void BS_BuyType_f (void)
 	objDef_t *od;
 	aircraft_t *air_samp;
 	technology_t *tech;
-	int i, j = 0, storage = 0, supply;
+	int i, j = 0;
 	menuNode_t* node;
 
 	if (Cmd_Argc() == 2) {
@@ -316,9 +313,7 @@ static void BS_BuyType_f (void)
 			tech = RS_GetTechByProvided(air_samp->id);
 			assert(tech);
 			if (RS_Collected_(tech) || RS_IsResearched_ptr(tech)) {
-				storage = supply = 0;
-				AIR_GetStorageSupplyCount(air_samp->id, &storage, &supply);
-				BS_AddToList(air_samp->name, storage, supply, air_samp->price);
+				BS_AddToList(air_samp->name, AIR_GetStorageSupply(air_samp->id, qtrue), AIR_GetStorageSupply(air_samp->id, qfalse), air_samp->price);
 
 				buyList[j] = i;
 				j++;
