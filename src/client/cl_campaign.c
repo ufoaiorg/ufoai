@@ -1271,7 +1271,7 @@ static void CL_CampaignRunMarket (void)
 	equipDef_t *ed;
 	double m_supp_rs, m_supp_pr, curr_supp_diff;
 	/* supply and demand */
-	const double mrs1 = 1, mrs2 = 1, mrs3 = 0.1, mpr1 = 900, mrg1 = 0.01,
+	const double mrs1 = 1, mrs2 = 1, mrs3 = 0.1, mpr1 = 900, mrg1 = 0.002,
 		mrg2 = 0.02, bid_factor = 0.90;
 
 	/* find the relevant market */
@@ -1282,15 +1282,14 @@ static void CL_CampaignRunMarket (void)
 
 
 	/* TODO: Save eMarket into savefiles */
-	/* TODO: Take starting date from compaign description instead of using fixed '760439' */
-	/* TODO: Find out why there is a 58 days discrepancy in reasearched_date*/
+	/* TODO: Find out why there is a 2 days discrepancy in reasearched_date*/
 
 	for (i = 0; i < csi.numODs; i++) {
 		if (RS_ItemIsResearched(csi.ods[i].id)) {
 			/* supply balance */
 			technology_t *tech = RS_GetTechByProvided(csi.ods[i].id);
-			int reasearched_date = tech->researchedDateDay + tech->researchedDateMonth/12.0*DAYS_PER_YEAR +  tech->researchedDateYear*DAYS_PER_YEAR - 2;
-			if (reasearched_date <= 760739)
+			int reasearched_date = tech->researchedDateDay + tech->researchedDateMonth*30 +  tech->researchedDateYear*DAYS_PER_YEAR - 2;
+			if (reasearched_date <= curCampaign->date.sec/86400 + curCampaign->date.day)
 				reasearched_date -= 300;
 			m_supp_rs = mrs3 * sqrt(mrs1*ccs.date.day - mrs2*reasearched_date);
 			m_supp_pr = mpr1/sqrt(csi.ods[i].price+1);
@@ -1303,7 +1302,7 @@ static void CL_CampaignRunMarket (void)
 
 			/* set item price based on supply imbalance */
 			if(m_supp_rs*m_supp_pr >= 1)
-				ccs.eMarket.ask[i] = floor( csi.ods[i].price*(1-(1-bid_factor)*(1/(1+exp(curr_supp_diff/(m_supp_rs*m_supp_pr)))*2-1)) );
+				ccs.eMarket.ask[i] = floor( csi.ods[i].price*(1-(1-bid_factor)/2*(1/(1+exp(curr_supp_diff/(m_supp_rs*m_supp_pr)))*2-1)) );
 			else
 				ccs.eMarket.ask[i] = csi.ods[i].price;
 			ccs.eMarket.bid[i] = floor(ccs.eMarket.ask[i]*bid_factor);
