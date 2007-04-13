@@ -608,11 +608,11 @@ qboolean G_ActionCheck (player_t * player, edict_t * ent, int TU, qboolean quiet
 
 	/* a generic tester if an action could be possible */
 	if (level.activeTeam != player->pers.team) {
-		gi.cprintf(player, PRINT_HIGH, _("Can't perform action - this isn't your round!\n"));
+		gi.cprintf(player, PRINT_HUD, _("Can't perform action - this isn't your round!\n"));
 		return qfalse;
 	}
 
-	msglevel = quiet ? PRINT_NONE : PRINT_HIGH;
+	msglevel = quiet ? PRINT_NONE : PRINT_HUD;
 
 	if (!ent || !ent->inuse) {
 		gi.cprintf(player, msglevel, _("Can't perform action - object not present!\n"));
@@ -2067,6 +2067,55 @@ static int G_PlayerSoldiersCount (player_t* player)
 }
 
 /**
+ * @brief Check whether a forced round end should be executed
+ */
+void G_ForceEndRound (void)
+{
+	player_t *p;
+	int i, diff;
+
+	/* check for roundlimits in multiplayer only */
+	if (!sv_roundtimelimit->integer || sv_maxclients->integer == 1)
+		return;
+
+	if (level.time != ceil(level.time))
+		return;
+
+	diff = level.roundstartTime + sv_roundtimelimit->integer - level.time;
+	switch (diff) {
+	case 240:
+	case 180:
+	case 120:
+	case 60:
+		gi.bprintf(PRINT_HUD, ngettext("%i min left until forced round end\n",
+				"%i minutes left until forced round end\n", diff / 60), diff / 60);
+		return;
+	case 30:
+	case 20:
+	case 10:
+	case 5:
+		gi.bprintf(PRINT_HUD, _("%i seconds left until forced round end\n"), diff);
+		return;
+	}
+
+	/* active team still has time left */
+	if (level.time < level.roundstartTime + sv_roundtimelimit->integer)
+		return;
+
+	gi.bprintf(PRINT_HUD, _("Team %i hit the max round time\n"), level.activeTeam);
+
+
+	/* set all team members to ready (only human players) */
+	for (i = 0, p = game.players; i < game.maxplayers; i++, p++)
+		if (p->inuse && p->pers.team == level.activeTeam) {
+			G_ClientEndRound(p, NOISY);
+			level.nextEndRound = level.framenum;
+		}
+
+	level.roundstartTime = level.time;
+}
+
+/**
  * @brief
  * @sa G_PlayerSoldiersCount
  */
@@ -2156,6 +2205,9 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 	/* communicate next player in row to clients */
 	gi.AddEvent(PM_ALL, EV_ENDROUND);
 	gi.WriteByte(level.activeTeam);
+
+	/* store the round start time to be able to abort the round after a give time */
+	level.roundstartTime = level.time;
 
 	/* apply morale behaviour, reset reaction fire */
 	G_ResetReactionFire(level.activeTeam);

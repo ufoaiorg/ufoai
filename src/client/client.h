@@ -625,7 +625,7 @@ void CL_UGVCvars(character_t *chr);
 void CL_ActorUpdateCVars(void);
 qboolean CL_CheckMenuAction(int time, invList_t *weapon, int mode);
 
-void CL_DisplayHudMessage(char *text, int time);
+void CL_DisplayHudMessage(const char *text, int time);
 void CL_ResetWeaponButtons(void);
 void CL_DisplayFiremodes_f(void);
 void CL_FireWeapon_f(void);

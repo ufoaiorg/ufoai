@@ -53,6 +53,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define P_MASK(p)		(p->num < game.maxplayers ? 1<<(p->num) : 0)
 #define PM_ALL			0xFFFFFFFF
 
+/* server is running at 10 fps */
 #define	FRAMETIME		0.1
 
 /* memory tags to allow dynamic memory to be cleaned up */
@@ -79,8 +80,9 @@ typedef struct {
 /* this structure is cleared as each map is entered */
 /* it is read/written to the level.sav file for savegames */
 typedef struct {
-	int framenum;
-	float time;
+	int framenum;		/**< the current frame (10fps) */
+	float time;			/**< seconds the game is running already
+		calculated through framenum * FRAMETIME */
 
 	char level_name[MAX_QPATH];	/**< the descriptive name (Outer Base, etc) */
 	char mapname[MAX_QPATH];	/**< the server name (base1, etc) */
@@ -91,6 +93,7 @@ typedef struct {
 	/* intermission state */
 	float intermissionTime;
 	int winningTeam;
+	float roundstartTime;		/**< the time the team started the round */
 
 	/* round statistics */
 	int numplayers;
@@ -173,6 +176,7 @@ extern cvar_t *maxplayers;
 extern cvar_t *maxsoldiers;
 extern cvar_t *maxsoldiersperplayer;
 extern cvar_t *sv_enablemorale;
+extern cvar_t *sv_roundtimelimit;
 extern cvar_t *maxspectators;
 
 extern cvar_t *sv_maxteams;
@@ -286,6 +290,7 @@ void G_SendStats(edict_t * ent);
 edict_t *G_SpawnFloor(pos3_t pos);
 int G_CheckVisTeam(int team, edict_t * check, qboolean perish);
 
+void G_ForceEndRound(void);
 
 void G_ActorDie(edict_t * ent, int state);
 void G_ClientAction(player_t * player);
@@ -323,7 +328,7 @@ int G_TeamToPM(int team);
 typedef enum {
 	REACT_TUS,	/**< Stores the used TUs for Reaction fire for each edict. */
 	REACT_FIRED,	/**< Stores if the edict has fired in reaction. */
-	
+
 	REACT_MAX
 } g_reaction_storage_type_t;
 
@@ -332,7 +337,7 @@ extern int reactionTUs[MAX_EDICTS][REACT_MAX];	/**< Per actor: */
 typedef enum {
 	RF_HAND,	/**< Stores the used hand (0=right, 1=left, -1 undefined) */
 	RF_FM,		/**< Stores the used firemode index. Max. number is MAX_FIREDEFS_PER_WEAPON. -1 = undefined */
-	
+
 	RF_MAX
 } g_reaction_firemode_type_t;
 

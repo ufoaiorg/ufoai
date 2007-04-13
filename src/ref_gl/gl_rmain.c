@@ -1124,20 +1124,20 @@ static qboolean R_SetMode (void)
 	rserr_t err;
 	qboolean fullscreen;
 
-	fullscreen = vid_fullscreen->value;
+	fullscreen = vid_fullscreen->integer;
 
 	vid_fullscreen->modified = qfalse;
 	gl_mode->modified = qfalse;
 	gl_ext_texture_compression->modified = qfalse;
 
-	if ((err = GLimp_SetMode(&vid.width, &vid.height, gl_mode->value, fullscreen)) == rserr_ok)
+	if ((err = GLimp_SetMode(&vid.width, &vid.height, gl_mode->integer, fullscreen)) == rserr_ok)
 		gl_state.prev_mode = gl_mode->value;
 	else {
 		if (err == rserr_invalid_fullscreen) {
 			ri.Cvar_SetValue("vid_fullscreen", 0);
 			vid_fullscreen->modified = qfalse;
 			ri.Con_Printf(PRINT_ALL, "ref_gl::R_SetMode() - fullscreen unavailable in this mode\n");
-			if ((err = GLimp_SetMode(&vid.width, &vid.height, gl_mode->value, qfalse)) == rserr_ok)
+			if ((err = GLimp_SetMode(&vid.width, &vid.height, gl_mode->integer, qfalse)) == rserr_ok)
 				return qtrue;
 		} else if (err == rserr_invalid_mode) {
 			ri.Cvar_SetValue("gl_mode", gl_state.prev_mode);
