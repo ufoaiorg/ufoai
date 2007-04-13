@@ -884,6 +884,38 @@ void CL_FireWeapon_f (void)
 }
 
 /**
+ * @brief Checks if a there is a weapon in hte hand that can be used for reaction fire.
+ * @param[in] hand Which hand to check: 'l' for left hand, 'r' for right hand.
+ */
+static qboolean CL_WeaponWithReaction (char hand)
+{
+	objDef_t *ammo = NULL;
+	objDef_t *weapon = NULL;
+	int weap_fd_idx;
+	int i;
+	
+	/* Get ammo and weapon-index in ammo. */
+	CL_GetWeaponAndAmmo(hand, &weapon, &ammo, &weap_fd_idx);
+	
+	if (weap_fd_idx == -1) {
+		Com_DPrintf("CL_WeaponWithReaction: No weapondefinition in ammo found\n");
+		return qfalse;
+	}
+	
+	if (!weapon || !ammo)
+		return qfalse;
+	
+	/* check ammo for reaction-enabled firemodes */
+	for (i = 0; i < ammo->numFiredefs[weap_fd_idx]; i++) {
+		if (ammo->fd[weap_fd_idx][i].reaction) {
+			return qtrue;
+		}
+	}
+	
+	return qfalse;
+}
+
+/**
  * @brief Refreshes the weapon/reload buttons on the HUD.
  * @param[in] time The amount of TU (of an actor) left in case of action.
  * @sa CL_ActorUpdateCVars
@@ -922,10 +954,12 @@ static void CL_RefreshWeaponButtons (int time)
 
 	/* reaction-fire button */
 	if (CL_GetReactionState(selActor) == R_FIRE_OFF) {
-		if (time < TU_REACTION_SINGLE)
-			SetWeaponButton(BT_RIGHT_PRIMARY_REACTION, qfalse);
-		else
+		if ((time >= TU_REACTION_SINGLE)
+		&& (CL_WeaponWithReaction('r') || CL_WeaponWithReaction('l')))
 			SetWeaponButton(BT_RIGHT_PRIMARY_REACTION, qtrue);
+		else
+			SetWeaponButton(BT_RIGHT_PRIMARY_REACTION, qfalse);
+			
 	}
 
 	/* reload buttons */
@@ -1961,38 +1995,6 @@ void CL_ActorStun (void)
 	MSG_Write_PA(PA_STATE, selActor->entnum, STATE_STUN);
 }
 #endif
-
-/**
- * @brief Checks if a there is a weapon in hte hand that can be used for reaction fire.
- * @param[in] hand Which hand to check: 'l' for left hand, 'r' for right hand.
- */
-static qboolean CL_WeaponWithReaction (char hand)
-{
-	objDef_t *ammo = NULL;
-	objDef_t *weapon = NULL;
-	int weap_fd_idx;
-	int i;
-	
-	/* Get ammo and weapon-index in ammo. */
-	CL_GetWeaponAndAmmo(hand, &weapon, &ammo, &weap_fd_idx);
-	
-	if (weap_fd_idx == -1) {
-		Com_DPrintf("CL_WeaponWithReaction: No weapondefinition in ammo found\n");
-		return qfalse;
-	}
-	
-	if (!weapon || !ammo)
-		return qfalse;
-	
-	/* check ammo for reaction-enabled firemodes */
-	for (i = 0; i < ammo->numFiredefs[weap_fd_idx]; i++) {
-		if (ammo->fd[weap_fd_idx][i].reaction) {
-			return qtrue;
-		}
-	}
-	
-	return qfalse;
-}
 
 /**
  * @brief Toggles reaction fire between the states off/single/multi.
