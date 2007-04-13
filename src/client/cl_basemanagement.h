@@ -206,7 +206,7 @@ typedef struct base_s {
 	equipDef_t storage;	/**< weapons, etc. stored in base */
 
 	inventory_t equipByBuyType;	/**< idEquip sorted by buytype; needen't be saved;
-	   a hack based on assertion (MAX_CONTAINERS >= NUM_BUYTYPES) */
+		a hack based on assertion (MAX_CONTAINERS >= BUY_AIRCRAFT) ... see e.g. CL_GenerateEquipment_f */
 
 	int equipType;	/**< the current selected category in equip menu */
 
