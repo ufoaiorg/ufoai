@@ -662,8 +662,9 @@ extern void AIR_NewAircraft (base_t *base, const char *name)
 
 /**
  * @brief Removes an aircraft from its base and the game.
- * @param[in] base Pointer to aircraft that should be removed.
- * @note The assigned soldiers are removed/unassinged from the aircraft - not fired.
+ * @param[in] aircraft Pointer to aircraft that should be removed.
+ * @note The assigned soldiers (if any) are removed/unassinged from the aircraft - not fired.
+ * @note If you want to do something different (kill, fire, etc...) do it before calling this function.
  * @todo Return status of deletion for better error handling.
  */
 extern void AIR_DeleteAircraft (aircraft_t *aircraft)
@@ -671,27 +672,21 @@ extern void AIR_DeleteAircraft (aircraft_t *aircraft)
 	int i = 0;
 	base_t *base = NULL;
 	aircraft_t *aircraft_temp = NULL;
-#if 0
 	transferlist_t *transferlist_temp = NULL;
-#endif
-
+	int previous_aircraftCurrent = baseCurrent->aircraftCurrent;
+	
 	if (!aircraft) {
 		Com_DPrintf("AIR_DeleteAircraft: no aircraft given (NULL)\n");
 		/* TODO: Return deletion status here. */
 		return;
 	}
-#if 0
-	/* FIXME: 10042007 Zenerka
-	   this doesn't work. This condition is always true. The idea of such condition
-	   is correct, though. Let me think about clean way to implement this. */
 
 	/* Check if this aircraft is currently transferred. */
-	if (&gd.alltransfers[aircraft->idx] || (aircraft->status == AIR_TRANSIT)) {
-		Com_DPrintf("CL_DeleteAircraft: this aircraft is currently transferred. We can not\n");
+	if (aircraft->status == AIR_TRANSIT) {
+		Com_DPrintf("CL_DeleteAircraft: this aircraft is currently transferred. We can not remove it.\n");
 		/* TODO: Return deletion status here. */
 		return;
 	}
-#endif
 
 	base = &gd.bases[aircraft->idxBase];
 
@@ -704,10 +699,6 @@ extern void AIR_DeleteAircraft (aircraft_t *aircraft)
 	/* Remove all soldiers from the aircraft (the employees are still hired after this). */
 	CL_RemoveSoldiersFromAircraft(aircraft->idx, aircraft->idxBase);
 
-#if 1
-	/* TODO: this should fix the idx/numAircraft-problem mentioned above.
-	 * Needs testing.
-	 */
 	for (i = aircraft->idx; i < gd.numAircraft-1; i++) {
 		/* Decrease the global index of aircrafts that have a higher index than the deleted one. */
 		aircraft_temp = AIR_AircraftGetFromIdx(i);
@@ -717,20 +708,13 @@ extern void AIR_DeleteAircraft (aircraft_t *aircraft)
 			/* For some reason there was no aircraft found for this index. */
 			Com_DPrintf("AIR_DeleteAircraft: No aircraft found for this global index: %i\n", i);
 		}
-#if 0
-		/* 10042007 Zenerka.
-		   Don't do this like that. The gd.alltransfers is set for all aircrafts, not
-		   only bought ones. The gd.alltransfers for every aircraft should be already
-		   zeroed when transfer is finished. */
 
 		/* Update transfer list (i.e. remove the one for the deleted aircraft). */
 		transferlist_temp = &gd.alltransfers[i];
 		memcpy(transferlist_temp, &gd.alltransfers[i+1], sizeof(transferlist_t));
-#endif
 	}
 
 	gd.numAircraft--;	/**< Decrease the global number of aircraft. */
-#endif
 
 	/* Finally remove the aircraf-struct itself from the various arrays and update the order. */
 	base->numAircraftInBase--;
@@ -740,20 +724,12 @@ extern void AIR_DeleteAircraft (aircraft_t *aircraft)
 		memcpy(aircraft_temp, &base->aircraft[i+1], sizeof(aircraft_t));
 		aircraft_temp->idxInBase = i;	/**< Re-set the number of aircraft in the base. */
 
-#if 1
 		/* Update number of team members for each aircraft.*/
-		/* FIXME: what for? 10042007 Zenerka. */
 		base->teamNum[i] = base->teamNum[i+1];
-#endif
-	}
-
-	/* reset cvars if there is no more aircrafts in current base */
-	if (base->numAircraftInBase < 1) {
-		Cvar_SetValue("mn_equipsoldierstate", 0);
-		Cvar_Set("mn_aircraftstatus", "");
-		Cvar_Set("mn_aircraftinbase", "0");
-		Cvar_Set("mn_aircraftname", "");
-		Cvar_Set("mn_aircraft_model", "");
+		
+		/* Update index of aircraftCurrent if it is affected by the index-change. */
+		if (i == previous_aircraftCurrent)
+			baseCurrent->aircraftCurrent--;
 	}
 
 	/* Q_strncpyz(messageBuffer, va(_("You've sold your aircraft (a %s) in base %s"), aircraft->name, base->name), MAX_MESSAGE_TEXT);
@@ -761,6 +737,8 @@ extern void AIR_DeleteAircraft (aircraft_t *aircraft)
 
 	/* Now update the aircraft list - maybe there is a popup active. */
 	Cbuf_ExecuteText(EXEC_NOW, "aircraft_list");
+	
+	/* TODO: Return successful deletion status here. */
 }
 
 /**
