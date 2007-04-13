@@ -33,7 +33,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static byte buyList[MAX_BUYLIST];	/**< Current entry on the list. */
 static int buyListLength;		/**< Amount of entries on the list. */
-static int buyCategory;			/**< Category of items in the menu. */
+static int buyCategory = -1;			/**< Category of items in the menu. */
 static int buyListScrollPos;	/**< start of the buylist index - due to scrolling */
 
 void UP_AircraftDescription(technology_t* t);
@@ -127,7 +127,7 @@ static void BS_MarketAircraftDescription (int aircraftID)
 /**
  * @brief
  */
-static void BS_BuyScroll_f (void)
+static void BS_MarketScroll_f (void)
 {
 	menuNode_t* node;
 
@@ -152,7 +152,7 @@ static void BS_BuyScroll_f (void)
 /**
  * @brief Select one entry on the list.
  */
-static void BS_BuyClick_f (void)
+static void BS_MarketClick_f (void)
 {
 	int num;
 
@@ -167,7 +167,7 @@ static void BS_BuyClick_f (void)
 
 	if (buyCategory == BUY_AIRCRAFT)
 		BS_MarketAircraftDescription(buyList[num]);
-	else
+	else if (buyCategory != -1)
 		CL_ItemDescription(buyList[num]);
 }
 
@@ -251,7 +251,7 @@ static void BS_BuyType_f (void)
 	objDef_t *od;
 	aircraft_t *air_samp;
 	technology_t *tech;
-	int i, j = 0, num, storage = 0, supply;
+	int i, j = 0, storage = 0, supply;
 	menuNode_t* node;
 
 	if (Cmd_Argc() == 2) {
@@ -259,12 +259,11 @@ static void BS_BuyType_f (void)
 		node = MN_GetNodeFromCurrentMenu("market");
 		if (node)
 			node->textScroll = 0;
-		BS_BuyScroll_f();
-		num = atoi(Cmd_Argv(1));
-		buyCategory = num;
+		BS_MarketScroll_f();
+		buyCategory = atoi(Cmd_Argv(1));
 	}
 
-	if (!baseCurrent)
+	if (!baseCurrent || buyCategory == -1)
 		return;
 
 	RS_CheckAllCollected(); /* TODO: needed? */
@@ -286,7 +285,7 @@ static void BS_BuyType_f (void)
 		for (i = 0, j = 0, od = csi.ods; i < csi.numODs; i++, od++) {
 			tech = (technology_t *) od->tech;
 			/* Check whether the proper buytype, storage in current base and market. */
-			if (tech && BUYTYPE_MATCH(od->buytype,num) && (baseCurrent->storage.num[i] || ccs.eMarket.num[i])) {
+			if (tech && BUYTYPE_MATCH(od->buytype, buyCategory) && (baseCurrent->storage.num[i] || ccs.eMarket.num[i])) {
 				BS_AddToList(od->name, baseCurrent->storage.num[i], ccs.eMarket.num[i], ccs.eMarket.ask[i]);
 
 				/* Set state of Autosell button. */
@@ -348,6 +347,8 @@ static void BS_BuyType_f (void)
 /**
  * @brief Buy one item of a given type.
  * @sa BS_SellItem_f
+ * @sa BS_SellAircraft_f
+ * @sa BS_BuyAircraft_f
  */
 static void BS_BuyItem_f (void)
 {
@@ -361,30 +362,30 @@ static void BS_BuyItem_f (void)
 	if (!baseCurrent)
 		return;
 
+	assert(buyCategory != BUY_AIRCRAFT);
+
 	num = atoi(Cmd_Argv(1));
 	if (num < 0 || num >= buyListLength)
 		return;
 
 	item = buyList[num];
-	if (buyCategory == BUY_AIRCRAFT) {
-		BS_MarketAircraftDescription(item);
-		Com_DPrintf("BS_BuyItem_f: aircraft %i\n", item);
-		/* TODO: Buy aircraft */
-	} else {
-		CL_ItemDescription(item);
-		Com_DPrintf("BS_BuyItem_f: item %i\n", item);
-		if (ccs.credits >= ccs.eMarket.ask[item] && ccs.eMarket.num[item]) {
-			/* reinit the menu */
-			Cmd_BufClear();
-			BS_BuyType_f();
-			CL_UpdateCredits(ccs.credits - ccs.eMarket.ask[item]);
-		}
+	CL_ItemDescription(item);
+	Com_DPrintf("BS_BuyItem_f: item %i\n", item);
+	if (ccs.credits >= ccs.eMarket.ask[item] && ccs.eMarket.num[item]) {
+		/* reinit the menu */
+		baseCurrent->storage.num[item]++;
+		ccs.eMarket.num[item]--;
+		Cmd_BufClear();
+		BS_BuyType_f();
+		CL_UpdateCredits(ccs.credits - ccs.eMarket.ask[item]);
 	}
 }
 
 /**
  * @brief Sell one item of a given type.
  * @sa BS_BuyItem_f
+ * @sa BS_SellAircraft_f
+ * @sa BS_BuyAircraft_f
  */
 static void BS_SellItem_f (void)
 {
@@ -398,22 +399,21 @@ static void BS_SellItem_f (void)
 	if (!baseCurrent)
 		return;
 
+	assert(buyCategory != BUY_AIRCRAFT);
+
 	num = atoi(Cmd_Argv(1));
 	if (num < 0 || num >= buyListLength)
 		return;
 
 	item = buyList[num];
-	if (buyCategory == BUY_AIRCRAFT) {
-		BS_MarketAircraftDescription(item);
-		/* TODO: Sell aircraft */
-	} else {
-		CL_ItemDescription(item);
-		if (baseCurrent->storage.num[item]) {
-			/* reinit the menu */
-			Cmd_BufClear();
-			BS_BuyType_f();
-			CL_UpdateCredits(ccs.credits + ccs.eMarket.bid[item]);
-		}
+	CL_ItemDescription(item);
+	if (baseCurrent->storage.num[item]) {
+		/* reinit the menu */
+		baseCurrent->storage.num[item]--;
+		ccs.eMarket.num[item]++;
+		Cmd_BufClear();
+		BS_BuyType_f();
+		CL_UpdateCredits(ccs.credits + ccs.eMarket.bid[item]);
 	}
 }
 
@@ -573,8 +573,8 @@ static void BS_SellAircraft_f (void)
 extern void BS_ResetMarket (void)
 {
 	Cmd_AddCommand("buy_type", BS_BuyType_f, NULL);
-	Cmd_AddCommand("market_click", BS_BuyClick_f, "Click function for buy menu text node");
-	Cmd_AddCommand("market_scroll", BS_BuyScroll_f, "Scroll function for buy menu");
+	Cmd_AddCommand("market_click", BS_MarketClick_f, "Click function for buy menu text node");
+	Cmd_AddCommand("market_scroll", BS_MarketScroll_f, "Scroll function for buy menu");
 	Cmd_AddCommand("mn_buy", BS_BuyItem_f, NULL);
 	Cmd_AddCommand("mn_sell", BS_SellItem_f, NULL);
 	Cmd_AddCommand("mn_buy_aircraft", BS_BuyAircraft_f, NULL);
