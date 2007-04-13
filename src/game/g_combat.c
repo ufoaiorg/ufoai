@@ -160,14 +160,21 @@ extern void G_ResetReactionFire (int team)
 		if (ent->inuse && !(ent->state & STATE_DEAD) && (ent->type == ET_ACTOR || ent->type == ET_UGV) && ent->team == team) {
 			reactionTUs[ent->number][REACT_FIRED] = 0;	/* reset 'RF used' flag */
 			if (ent->state & STATE_REACTION) {
-				if (ent->TU >= TU_REACTION) {
-					/* Enough TUs for reaction fire available. */
-					ent->TU -= TU_REACTION;
-					reactionTUs[ent->number][REACT_TUS] = TU_REACTION;	/* Save the used TUs for possible later re-adding. */
+				if ((ent->state & STATE_REACTION_ONCE) && (ent->TU >= TU_REACTION_SINGLE)) {
+					/* Enough TUs for single reaction fire available. */
+					ent->TU -= TU_REACTION_SINGLE;
+					reactionTUs[ent->number][REACT_TUS] = TU_REACTION_SINGLE;	/* Save the used TUs for possible later re-adding. */
+				} else if ((ent->state & STATE_REACTION_MANY) && (ent->TU >= TU_REACTION_MULTI)) {
+					/* Enough TUs for multi reaction fire available. */
+					ent->TU -= TU_REACTION_MULTI;
+					reactionTUs[ent->number][REACT_TUS] = TU_REACTION_MULTI;	/* Save the used TUs for possible later re-adding. */
+#if 0
+/* TODO: this saving might be too powerful with multi-RF. (i.e. mutli-rf is too cheap in a lot of cases) */
 				} else if (ent->TU > 0) {
 					/* Not enough TUs for reaction fire available. */
 					reactionTUs[ent->number][REACT_TUS] = ent->TU;	/* Save the used TUs for possible later re-adding. */
 					ent->TU = 0;
+#endif
 				} else {
 					/* No TUs at all available. */
 					reactionTUs[ent->number][REACT_TUS] = -1;
