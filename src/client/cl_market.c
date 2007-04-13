@@ -81,7 +81,7 @@ static void BS_BuySelect_f (void)
 		return;
 
 	Cbuf_AddText(va("buyselect%i\n", num));
-	if (buyCategory == NUM_BUYTYPES)
+	if (buyCategory == BUY_AIRCRAFT)
 		CL_MarketAircraftDescription(buyList[num]);
 	else
 		CL_ItemDescription(buyList[num]);
@@ -149,7 +149,7 @@ static void BS_BuyType_f (void)
 	CL_UpdateCredits(ccs.credits);
 
 	/* 'normal' items */
-	if (buyCategory < NUM_BUYTYPES) {
+	if (buyCategory < BUY_AIRCRAFT) {
 		/* Add autosell button for every entry. */
 		for (j = 0; j < 28; j++)
 			Cbuf_AddText(va("buy_autoselld%i\n", j));
@@ -157,7 +157,7 @@ static void BS_BuyType_f (void)
 		for (i = 0, j = 0, od = csi.ods; i < csi.numODs; i++, od++) {
 			tech = (technology_t *) od->tech;
 			/* Check whether the proper buytype, storage in current base and market. */
-			if (tech && od->buytype == num && (baseCurrent->storage.num[i] || ccs.eMarket.num[i])) {
+			if (tech && BUYTYPE_MATCH(od->buytype,num) && (baseCurrent->storage.num[i] || ccs.eMarket.num[i])) {
 				Q_strncpyz(str, va("mn_item%i", j), sizeof(str));
 				Cvar_Set(str, _(od->name));
 
@@ -189,7 +189,7 @@ static void BS_BuyType_f (void)
 		}
 	}
 	/* aircraft */
-	else if (buyCategory == NUM_BUYTYPES) {
+	else if (buyCategory == BUY_AIRCRAFT) {
 		/* we can't buy aircraft without a hangar */
 		if (!baseCurrent->hasHangar) {
 			MN_PopMenu(qfalse);
@@ -230,7 +230,7 @@ static void BS_BuyType_f (void)
 	/* select first item */
 	if (buyListLength) {
 		Cbuf_AddText("buyselect0\n");
-		if (buyCategory == NUM_BUYTYPES)
+		if (buyCategory == BUY_AIRCRAFT)
 			CL_MarketAircraftDescription(buyList[0]);
 		else
 			CL_ItemDescription(buyList[0]);
@@ -267,7 +267,7 @@ static void BS_BuyItem_f (void)
 
 	item = buyList[num];
 	Cbuf_AddText(va("buyselect%i\n", num));
-	if (buyCategory == NUM_BUYTYPES) {
+	if (buyCategory == BUY_AIRCRAFT) {
 		CL_MarketAircraftDescription(item);
 		Com_DPrintf("BS_BuyItem_f: aircraft %i\n", item);
 		/* TODO: Buy aircraft */
@@ -304,7 +304,7 @@ static void BS_SellItem_f (void)
 
 	item = buyList[num];
 	Cbuf_AddText(va("buyselect%i\n", num));
-	if (buyCategory == NUM_BUYTYPES) {
+	if (buyCategory == BUY_AIRCRAFT) {
 		CL_MarketAircraftDescription(item);
 		/* TODO: Sell aircraft */
 	} else {

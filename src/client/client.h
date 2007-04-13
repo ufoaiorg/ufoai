@@ -670,7 +670,6 @@ void CL_AddTargeting(void);
 #define MAX_ACTIVETEAM	8
 #define MAX_WHOLETEAM	32
 /* if you increase this, you also have to change the aircraft buy/sell menu scripts */
-#define NUM_BUYTYPES	4
 #define NUM_TEAMSKINS	4
 
 void CL_SendItem(sizebuf_t * buf, item_t item, int container, int x, int y);

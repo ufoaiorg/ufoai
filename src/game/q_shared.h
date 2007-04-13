@@ -1327,7 +1327,9 @@ qboolean Com_CheckToInventory(const inventory_t* const i, const int item, const 
 invList_t *Com_SearchInInventory(const inventory_t* const i, int container, int x, int y) __attribute__((nonnull(1)));
 invList_t *Com_AddToInventory(inventory_t* const i, item_t item, int container, int x, int y) __attribute__((nonnull(1)));
 qboolean Com_RemoveFromInventory(inventory_t* const i, int container, int x, int y) __attribute__((nonnull(1)));
+qboolean Com_RemoveFromInventoryIgnore(inventory_t* const i, int container, int x, int y, byte ignore_type) __attribute__((nonnull(1)));
 int Com_MoveInInventory(inventory_t* const i, int from, int fx, int fy, int to, int tx, int ty, int *TU, invList_t ** icp) __attribute__((nonnull(1)));
+int Com_MoveInInventoryIgnore(inventory_t* const i, int from, int fx, int fy, int to, int tx, int ty, int *TU, invList_t ** icp, byte ignore_type) __attribute__((nonnull(1)));
 void Com_EmptyContainer(inventory_t* const i, const int container) __attribute__((nonnull(1)));
 void Com_DestroyInventory(inventory_t* const i) __attribute__((nonnull(1)));
 void Com_FindSpace(const inventory_t* const inv, const int item, const int container, int * const px, int * const py) __attribute__((nonnull(1)));
@@ -1441,5 +1443,29 @@ typedef enum {
 	ACTOR_SIZE_NORMAL = 1,
 	ACTOR_SIZE_UGV
 } actorSizeEnum_t;
+
+/** @brief Buytype categories in the various equipment screens (buy/seel, equip, etc...)
+ ** Do not mess with the order (especially BUY_AIRCRAFT and BUY_MULTI_AMMO is/will be used for max-check in normal equipment screens)
+ ** @sa scripts.c:buytypeNames
+ ** @note Be sure to also update all usages of the buy_type" console function (defined in cl_market.c and mostly used there and in menu_buy.ufo) when changing this.
+ **/
+typedef enum {
+	BUY_WEAP_PRI,	/**< All 'Primary' weapons and their ammo for soldiers. */
+	BUY_WEAP_SEC,	/**< All 'Secondary' weapons and their ammo for soldiers. */
+	BUY_MISC,	/**< Misc sodldier equipment. */
+	BUY_ARMOUR,	/**< Armour for soldiers. */
+	BUY_MULTI_AMMO, /**< Ammo (and other stuff) that is used in both Pri/Sec weapons. */
+	/* MAX_SOLDIER_EQU_BUYTYPES ... possible better solution? */
+	BUY_AIRCRAFT,	/**< Aircraft and craft-equipment. */
+	MAX_BUYTYPES
+} equipment_buytypes_t;
+
+#define BUY_PRI(type)	( (((type) == BUY_WEAP_PRI) || ((type) == BUY_MULTI_AMMO)) ) /** < Checks if "type" is displayable/usable in the primary category. */
+#define BUY_SEC(type)	( (((type) == BUY_WEAP_SEC) || ((type) == BUY_MULTI_AMMO)) ) /** < Checks if "type" is displayable/usable in the secondary category. */
+#define BUYTYPE_MATCH(type1,type2) (\
+	(  ((((type1) == BUY_WEAP_PRI) || ((type1) == BUY_WEAP_SEC)) && ((type2) == BUY_MULTI_AMMO)) \
+	|| ((((type2) == BUY_WEAP_PRI) || ((type2) == BUY_WEAP_SEC)) && ((type1) == BUY_MULTI_AMMO)) \
+	|| ((type1) == (type2)) ) \
+	) /**< Check if the 2 buytypes (type1 and type2) are compatible) */
 
 #endif /* GAME_Q_SHARED_H */

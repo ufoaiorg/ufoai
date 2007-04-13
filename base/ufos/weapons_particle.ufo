@@ -16,7 +16,7 @@ item pbeampistol
 	ammo		16
 	reload		14
 	price		38000
-	buytype		1
+	buytype	weap_sec
 }
 
 item pbeampistol_ammo
@@ -29,7 +29,7 @@ item pbeampistol_ammo
 	center		"0 0 0"
 	scale		0.97
 	price		2500
-	buytype		1
+	buytype	weap_sec
 
 	weapon_mod pbeampistol
 	{
@@ -93,7 +93,7 @@ item pbeamcannon
 	ammo		8
 	reload		16
 	price		44000
-	buytype		0
+	buytype	weap_pri
 }
 
 item pbeamcannon_ammo
@@ -106,7 +106,7 @@ item pbeamcannon_ammo
 	center		"0 0 -0.2"
 	scale		1.0
 	price		3000
-	buytype		0
+	buytype	weap_pri
 
 	weapon_mod pbeamcannon
 	{
@@ -173,7 +173,7 @@ item pbeamrifle
 	ammo		12
 	reload		14
 	price		59000
-	buytype		0
+	buytype	weap_pri
 }
 
 item pbeamrifle_ammo
@@ -186,7 +186,7 @@ item pbeamrifle_ammo
 	center		"0 0 -0.3"
 	scale		1.1
 	price		3500
-	buytype		0
+	buytype	weap_pri
 
 	weapon_mod pbeamrifle
 	{

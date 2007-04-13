@@ -700,7 +700,7 @@ static void CL_GenerateEquipment_f (void)
 	/* a 'tiny hack' to add the remaining equipment (not carried)
 	   correctly into buy categories, reloading at the same time;
 	   it is valid only due to the following property: */
-	assert (MAX_CONTAINERS >= NUM_BUYTYPES);
+	assert (MAX_CONTAINERS >= BUY_AIRCRAFT);
 
 	for (i = 0; i < csi.numODs; i++) {
 		/* Don't allow to show armours for other teams in the menu. */
@@ -713,14 +713,72 @@ static void CL_GenerateEquipment_f (void)
 			item.t = i;
 
 			assert (unused.num[i] > 0);
-			if (!Com_TryAddToBuyType(&baseCurrent->equipByBuyType, CL_AddWeaponAmmo(&unused, item), csi.ods[i].buytype))
-				break; /* no space left in menu */
+			
+			/* Check if there are any "multi_ammo" items and move them to the PRI container (along with PRI items of course).
+			 * Otherwise just use the container-buytype of the item.
+			 * HACKHACK
+			 */
+			if (BUY_PRI(csi.ods[i].buytype)) { 
+				if (!Com_TryAddToBuyType(&baseCurrent->equipByBuyType, CL_AddWeaponAmmo(&unused, item), BUY_WEAP_PRI))
+					break; /* no space left in menu */
+			} else {
+				if (!Com_TryAddToBuyType(&baseCurrent->equipByBuyType, CL_AddWeaponAmmo(&unused, item), csi.ods[i].buytype))
+					break; /* no space left in menu */
+			}
+		}
+	}
+}
+
+/**
+ * @brief Moves all  items marked with "buytype multi_ammo" to the currently used equipment-container (pri or sec)
+ * @note This is a WORKAROUND, it is by no means efficient or sane, but currently the only way to display these items in the (multiple) correct categories.
+ * Should be executed on a change of the equipemnt-category to either PRI or SEC items .. and only there.
+ * @param[in|out] inv This is always the used equipByBuyType in the base.
+ * @param[in] buytype_container The container we just switched to (where all the items should be moved to).
+ * @sa CL_GenerateEquipment_f
+ * @sa Com_MoveInInventoryIgnore
+ * @note Some ic->next and ic will be modivied by Com_MoveInInventoryIgnore.
+ * @note HACKHACK
+ */
+static void CL_MoveMultiEquipment (inventory_t* const inv, int buytype_container)
+{
+	int container;
+	invList_t *ic = NULL;
+	invList_t *ic_temp = NULL;
+	int x,y;
+	
+	if (!inv)
+		return;
+
+	/* Do nothing if no pri/sec category is shown. */
+	if ((buytype_container != BUY_WEAP_PRI) && (buytype_container != BUY_WEAP_SEC))
+		return;
+	
+	/* Set source conteiner to the one that is not the destination container. */
+	container = (buytype_container == BUY_WEAP_PRI)
+		? BUY_WEAP_SEC
+		: BUY_WEAP_PRI;
+
+	/* This is a container that might hold some of the affected items.
+	 * Move'em to the target (buytype_container) container (if there are any)
+	 */
+	Com_DPrintf("CL_MoveMultiEquipment: buytype_container:%i\n", buytype_container);
+	Com_DPrintf("CL_MoveMultiEquipment: container:%i\n", container);
+	ic = inv->c[container];
+	while (ic) {
+		if (csi.ods[ic->item.t].buytype == BUY_MULTI_AMMO) {
+			ic_temp = ic->next;
+			Com_MoveInInventoryIgnore(inv, container, ic->x, ic->y, buytype_container, x, y, NULL, &ic, qtrue); /**< @todo Does the function work like this? */
+			ic = ic_temp;
+		} else {
+			ic = ic->next;
 		}
 	}
 }
 
 /**
  * @brief Sets buytype category for equip menu.
+ * @note num = buytype/equipment category.
  */
 static void CL_EquipType_f (void)
 {
@@ -733,13 +791,16 @@ static void CL_EquipType_f (void)
 
 	/* read and range check */
 	num = atoi(Cmd_Argv(1));
-	if (num < 0 && num >= NUM_BUYTYPES)
+	if (num < 0 && num >= BUY_MULTI_AMMO)
 		return;
 
+	
 	/* display new items */
 	baseCurrent->equipType = num;
-	if (menuInventory)
+	if (menuInventory) {
+		CL_MoveMultiEquipment (&baseCurrent->equipByBuyType, num); /**< Move all multi-ammo items to the current container. */
 		menuInventory->c[csi.idEquip] = baseCurrent->equipByBuyType.c[num];
+	}	
 }
 
 /**

@@ -370,7 +370,7 @@ static void PR_ProductionListRightClick_f (void)
 				Sys_Error("PR_ProductionListRightClick_f: No tech pointer for object id %i ('%s')\n", i, od->id);
 #endif
 			/* Open up ufopedia for this entry. */
-			if (od->buytype == produceCategory && RS_IsResearched_ptr(t)) {
+			if (BUYTYPE_MATCH(od->buytype,produceCategory) && RS_IsResearched_ptr(t)) {
 				if (j==idx) {
 					UP_OpenWith(t->id);
 					return;
@@ -434,7 +434,7 @@ static void PR_ProductionListClick_f (void)
 				Sys_Error("PR_ProductionListClick_f: No tech pointer for object id %i ('%s')\n", i, od->id);
 #endif
 			/* We can only produce items that fulfill the following conditions... */
-			if (od->buytype == produceCategory	/* Item is in the current inventory-category */
+			if (BUYTYPE_MATCH(od->buytype, produceCategory)	/* Item is in the current inventory-category */
 				&& RS_IsResearched_ptr(t)		/* Tech is researched */
 				&& *od->name				/* Item has a name defined. TODO: produce error if this is not true? */
 				&& t->produceTime >= 0		/* Item is produceable */
@@ -500,7 +500,7 @@ static void PR_UpdateProductionList (void)
 			tech = RS_GetTechByProvided(od->id);
 
 		/* we can produce what was researched before */
-		if (od->buytype == produceCategory && RS_IsResearched_ptr(od->tech)
+		if (BUYTYPE_MATCH(od->buytype, produceCategory) && RS_IsResearched_ptr(od->tech)
 		&& *od->name && tech && (tech->produceTime > 0)) {
 			Q_strcat(productionList, va("%s\n", od->name), sizeof(productionList));
 			Q_strcat(productionAmount, va("%i\n", baseCurrent->storage.num[i]), sizeof(productionAmount));

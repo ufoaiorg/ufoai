@@ -44,6 +44,17 @@ typedef enum objdefs {
 	OD_HARDNESS
 } objdef_t;
 
+
+/** @sa cl_basemanagement.h:equipment_buytypes_t */
+static const char *buytypeNames[MAX_BUYTYPES] = {
+	"weap_pri",
+	"weap_sec",
+	"misc",
+	"armour",
+	"multi_ammo",
+	"aircraft"
+};
+
 static const value_t od_vals[] = {
 	{"weapon_mod", V_NULL, 0},
 	{"protection", V_NULL, 0},
@@ -69,7 +80,7 @@ static const value_t od_vals[] = {
 	{"deplete", V_BOOL, offsetof(objDef_t, deplete)},
 	{"reload", V_INT, offsetof(objDef_t, reload)},
 	{"price", V_INT, offsetof(objDef_t, price)},
-	{"buytype", V_INT, offsetof(objDef_t, buytype)},
+	{"buytype", V_INT, offsetof(objDef_t, buytype)},	/** Not parsed automatically anymore, this enrty is just there for overview. */
 	{"useable", V_INT, offsetof(objDef_t, useable)},
 	{NULL, V_NULL, 0}
 };
@@ -220,7 +231,6 @@ static void Com_ParseArmor (const char *name, char **text, short *ad)
 	} while (*text);
 }
 
-
 /**
  * @brief
  */
@@ -230,7 +240,7 @@ static void Com_ParseItem (const char *name, char **text)
 	const value_t *val;
 	objDef_t *od;
 	char *token;
-	int i;
+	int i,j;
 	int weap_fds_idx, fd_idx;
 
 	/* search for menus with same name */
@@ -268,8 +278,21 @@ static void Com_ParseItem (const char *name, char **text)
 		if (*token == '}')
 			break;
 
-		for (val = od_vals, i = 0; val->string; val++, i++)
-			if (!Q_stricmp(token, val->string)) {
+		for (val = od_vals, i = 0; val->string; val++, i++) {
+			if (!Q_stricmp(token, "buytype")) {
+				/* Found a buytype option ... checking for the correct string */
+
+				/* parse a value */
+				token = COM_EParse(text, errhead, name);
+				/* TODO: maybe we couidl add a check for hte old numbers as well here */
+				for (j = 0; j < MAX_BUYTYPES; j++) {
+					if (!Q_stricmp(token, buytypeNames[j])) {
+						od->buytype = j;
+						break;
+					}
+				}
+				break;
+			} else if (!Q_stricmp(token, val->string)) {
 				/* found a definition */
 				if (val->type != V_NULL) {
 					/* parse a value */
@@ -341,6 +364,7 @@ static void Com_ParseItem (const char *name, char **text)
 				}
 				break;
 			}
+		}
 		if (!val->string)
 			Com_Printf("Com_ParseItem: unknown token \"%s\" ignored (weapon %s)\n", token, name);
 
