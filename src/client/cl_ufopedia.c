@@ -44,6 +44,9 @@ static char	upBuffer[MAX_UPTEXT];
 /* this variable contains the current firemode number for ammos and weapons */
 static int upfiremode;
 
+/* this variable contains the current weapon to display (for an ammo) */
+static int up_researchedlink;
+
 /**
  * don't change the order or you have to change the if statements about mn_updisplay cvar
  * in menu_ufopedia.ufo, too
@@ -84,7 +87,10 @@ static void UP_ChangeDisplay (int newDisplay)
 		Com_Printf("Error in UP_ChangeDisplay (%i)\n", newDisplay);
 
 	Cvar_SetValue("mn_uppreavailable", 0);
-	Cvar_Set("mn_upchangefiremode", "0"); /* Do not display pre/next button for firemode a priori */
+	Cvar_Set("mn_updisplayweapon", "0"); /* use strings here - no int */
+	Cvar_Set("mn_updisplayfiremode", "0"); /* use strings here - no int */
+	Cvar_Set("mn_upchangeweapon", "0"); /* use strings here - no int */
+	Cvar_Set("mn_upchangefiremode", "0"); /* use strings here - no int */
 
 	/**
 	 * only fetch this once after ufopedia menu was on the stack (was the
@@ -210,11 +216,11 @@ extern void CL_ItemDescription (int item)
 
 	/* select item */
 	od = &csi.ods[item];
-	Cvar_Set("mn_itemname", _(od->name));	/* I think this is not used anymore */
+	Cvar_Set("mn_itemname", _(od->name));
 
-	Cvar_Set("mn_item", od->id);			/* I think this is not used anymore */
-	Cvar_Set("mn_weapon", "");				/* I think this is not used anymore */
-	Cvar_Set("mn_ammo", "");				/* I think this is not used anymore */
+	Cvar_Set("mn_item", od->id);
+	Cvar_Set("mn_weapon", "");
+	Cvar_Set("mn_ammo", "");
 
 #ifdef DEBUG
 	if (!od->tech && ccs.singleplayer) {
@@ -224,9 +230,9 @@ extern void CL_ItemDescription (int item)
 #endif
 	/* set description text */
 	if (RS_IsResearched_ptr(od->tech)) {
-		if (!Q_strncmp(od->type, "armor", 5)) {							/* I think this is not used anymore */
-			/* TODO: Print protection */								/* I think this is not used anymore */
-			Com_sprintf(itemText, sizeof(itemText), _("Armor\n") );		/* I think this is not used anymore */
+		if (!Q_strncmp(od->type, "armor", 5)) {	
+			/* TODO: Print protection */
+			Com_sprintf(itemText, sizeof(itemText), _("Armor\n") );
 		} else if (!Q_strncmp(od->type, "ammo", 4)) {
 			*itemText = '\0';
 			/* more will be written below */
@@ -309,9 +315,7 @@ static void UP_WeaponDescription (technology_t* t)
 {
 	objDef_t	*od = NULL;
 	int i;
-	int	weapon;
-
-	weapon=0;
+	int up_numresearchedlink=0;
 
 	/* select item */
 	for (i = 0; i < csi.numODs; i++)
@@ -347,44 +351,52 @@ static void UP_WeaponDescription (technology_t* t)
 				Q_strcat(upBuffer, va(_("Range:\t%g\n"), od->fd[0][0].range / UNIT_SIZE), sizeof(upBuffer));
 			}
 
-			if (!Q_strncmp(od->type, "ammo", MAX_VAR)) {
-				/* First we check if the firemode is in the range for this weapon. */
-				if (upfiremode > od->numFiredefs[weapon]-1)
-					upfiremode = od->numFiredefs[weapon]-1;
+			if (!Q_strncmp(od->type, "ammo", MAX_VAR) || (od->weapon && !od->reload)) {
+
+				/* We check if the wanted firemode to display exists. */
+				if (upfiremode > od->numFiredefs[up_researchedlink]-1)
+					upfiremode = od->numFiredefs[up_researchedlink]-1;
 				if (upfiremode < 0)
 					upfiremode = 0;
 
-				/* We display the pre/next buttons for changing firemode if needed */
-				if (od->numFiredefs[weapon] > 1)
+				/* We always display the name of the firemode for an ammo */
+				Cvar_Set("mn_updisplayfiremode", "1"); /* use strings here - no int */
+				Cvar_Set("mn_upfiremodename", od->fd[up_researchedlink][upfiremode].name); 
+				/* We display the pre/next buttons for changing firemode only if there are more than one */
+				if (od->numFiredefs[up_researchedlink] > 1)
 					Cvar_Set("mn_upchangefiremode", "1"); /* use strings here - no int */ 
 				else
 					Cvar_Set("mn_upchangefiremode", "0"); /* use strings here - no int */
 
-				/* We display the caracteristics of this firemode */
-				Q_strcat(upBuffer, va(_("Skill:\t%s\n"), CL_WeaponSkillToName(od->fd[weapon][upfiremode].weaponSkill)), sizeof(upBuffer));
+				/* We only display the name of the associated weapon for an ammo (and not for thrown weapons) */
+				if (!(od->weapon && !od->reload)) {
+					Cvar_Set("mn_updisplayweapon", "1"); /* use strings here - no int */
+					Cvar_Set("mn_up_researchedlinkname", csi.ods[od->weap_idx[up_researchedlink]].name);
+				}
+
+				/* We display the pre/next buttons for changing weapon only if there are at least 2 researched weapons */
+				/* up_numresearchedlink contains the number of researched weapons useable with this ammo */ 
+				if (!(od->weapon && !od->reload)) {
+					for (i=0; i<od->numWeapons; i++) {
+						if (RS_IsResearched_ptr(csi.ods[od->weap_idx[i]].tech)) 
+							up_numresearchedlink++;
+					}
+				}
+				if (up_numresearchedlink > 1)
+					Cvar_Set("mn_upchangeweapon", "1"); /* use strings here - no int */ 
+				else
+					Cvar_Set("mn_upchangeweapon", "0"); /* use strings here - no int */
+
+				/* We display the characteristics of this firemode */
+				Q_strcat(upBuffer, va(_("Skill:\t%s\n"), CL_WeaponSkillToName(od->fd[up_researchedlink][upfiremode].weaponSkill)), sizeof(upBuffer));
 				Q_strcat(upBuffer, va(_("Damage:\t%i\n"),
-					(int) ((od->fd[weapon][upfiremode].damage[0] + od->fd[weapon][upfiremode].spldmg[0]) * od->fd[weapon][upfiremode].shots)),
+					(int) ((od->fd[up_researchedlink][upfiremode].damage[0] + od->fd[up_researchedlink][upfiremode].spldmg[0]) * od->fd[up_researchedlink][upfiremode].shots)),
 					  		sizeof(upBuffer));
-				Q_strcat(upBuffer, va(_("Time units:\t%i\n"), od->fd[weapon][upfiremode].time),  sizeof(upBuffer));
-				Q_strcat(upBuffer, va(_("Range:\t%g\n"), od->fd[weapon][upfiremode].range),  sizeof(upBuffer));
+				Q_strcat(upBuffer, va(_("Time units:\t%i\n"), od->fd[up_researchedlink][upfiremode].time),  sizeof(upBuffer));
+				Q_strcat(upBuffer, va(_("Range:\t%g\n"), od->fd[up_researchedlink][upfiremode].range / UNIT_SIZE),  sizeof(upBuffer));
 				Q_strcat(upBuffer, va(_("Spreads:\t%g\n"),
-					(od->fd[weapon][upfiremode].spread[0] + od->fd[weapon][upfiremode].spread[1]) / 2),  sizeof(upBuffer));
-			} else if (od->weapon && !od->reload) {
-				/* TODO: We use the default firemodes here. We might need some change the "fd[0]" below to INV_FiredefsIDXForWeapon(od,weapon_idx) on future changes. */
-
-				Q_strcat(upBuffer, va(_("Primary:\t%s\t(%s)\n"), od->fd[0][0].name, CL_WeaponSkillToName(od->fd[0][0].weaponSkill)), sizeof(upBuffer));
-				Q_strcat(upBuffer, va(_("Secondary:\t%s\t(%s)\n"), od->fd[0][1].name, CL_WeaponSkillToName(od->fd[0][1].weaponSkill)), sizeof(upBuffer));
-				Q_strcat(upBuffer,
-						va(_("Damage:\t%i / %i\n"), (int) ((od->fd[0][0].damage[0] + od->fd[0][0].spldmg[0]) * od->fd[0][0].shots),
-							(int) ((od->fd[0][1].damage[0] + od->fd[0][1].spldmg[0]) * od->fd[0][1].shots)), sizeof(upBuffer));
-				Q_strcat(upBuffer, va(_("Time units:\t%i / %i\n"), od->fd[0][0].time, od->fd[0][1].time), sizeof(upBuffer));
-				Q_strcat(upBuffer, va(_("Range:\t%g / %g\n"), od->fd[0][0].range / UNIT_SIZE, od->fd[0][1].range / 32.0), sizeof(upBuffer));
-				Q_strcat(upBuffer,
-						va(_("Spreads:\t%g / %g\n"), (od->fd[0][0].spread[0] + od->fd[0][0].spread[1]) / 2, (od->fd[0][1].spread[0] + od->fd[0][1].spread[1]) / 2), sizeof(upBuffer));
+					(od->fd[up_researchedlink][upfiremode].spread[0] + od->fd[up_researchedlink][upfiremode].spread[1]) / 2),  sizeof(upBuffer));
 			}
-
-			Cvar_Set("mn_upfiremodename", od->fd[0][upfiremode].name); 
-
 			menuText[TEXT_STANDARD] = upBuffer;
 			UP_DisplayTechTree(t);
 		} else { /* includes if (RS_Collected_(tech)) AFAIK*/
@@ -575,10 +587,6 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type)
  */
 extern void UP_Article (technology_t* tech)
 {
-	/* int i; -- This has to be removed, I just keep it until the firemode display is over */
-
-	upfiremode=0;
-
 	assert(tech);
 
 	if (RS_IsResearched_ptr(tech)) {
@@ -608,15 +616,7 @@ extern void UP_Article (technology_t* tech)
 				UP_ArmorDescription(tech);
 				break;
 			case RS_WEAPON:
-				UP_WeaponDescription(tech);
-			/* This has to be removed, I just keep it until the firemode display is over */	
-			/*	for (i = 0; i < csi.numODs; i++) {
-					if (!Q_strncmp(tech->provides, csi.ods[i].id, MAX_VAR)) {
-						CL_ItemDescription(i);
-						UP_DisplayTechTree(tech);
-						break;
-					}
-				}*/
+				UP_WeaponDescription(tech); 
 				break;
 			case RS_TECH:
 				UP_TechDescription(tech);
@@ -677,6 +677,13 @@ static void UP_DrawEntry (technology_t* tech)
 		Cvar_Set("mn_upimage_top", tech->image_top);
 	if (!*tech->mdl_bottom && *tech->mdl_bottom)
 		Cvar_Set("mn_upimage_bottom", tech->image_bottom);
+	upfiremode=0;
+	up_researchedlink=0;	/*TODO: if the first weapon of the firemode of an ammo is unresearched, its dommages,... will still be displayed*/
+	Cvar_Set("mn_updisplayweapon", "0"); /* use strings here - no int */
+	Cvar_Set("mn_updisplayfiremode", "0"); /* use strings here - no int */
+	Cvar_Set("mn_upchangeweapon", "0"); /* use strings here - no int */
+	Cvar_Set("mn_upchangefiremode", "0"); /* use strings here - no int */
+
 
 	currentChapter = tech->up_chapter;
 
@@ -1185,6 +1192,82 @@ static void UP_OpenMail_f (void)
 }
 
 /**
+ * @brief Increases the number of the weapon to display (for ammo)
+ */
+static void UP_IncreaseWeapon_f (void)
+{
+	technology_t *t = NULL;
+	int up_researchedlink_temp;
+	int i;
+
+	if (!upCurrent) /* if called from console */
+		return;
+
+	t = upCurrent;
+
+	/* select item */
+	for (i = 0; i < csi.numODs; i++)
+		if (!Q_strncmp(t->provides, csi.ods[i].id, MAX_VAR)) {
+			break;
+		}
+
+	/* We only try to change the value of up_researchedlink if this is possible */
+	if (up_researchedlink < csi.ods[i].numWeapons-1) {
+		up_researchedlink_temp=up_researchedlink;
+		up_researchedlink_temp++;
+
+		while (!RS_IsResearched_ptr(csi.ods[csi.ods[i].weap_idx[up_researchedlink_temp]].tech)) {
+			up_researchedlink_temp++;
+			if (up_researchedlink_temp > csi.ods[i].numWeapons)
+				break;
+		}
+
+		if (up_researchedlink_temp < csi.ods[i].numWeapons)
+			up_researchedlink=up_researchedlink_temp;
+
+	UP_WeaponDescription (t);
+	}
+}
+
+/**
+ * @brief Decreases the number of the firemode to display (for ammo)
+ */
+static void UP_DecreaseWeapon_f (void)
+{
+	technology_t *t = NULL;
+	int up_researchedlink_temp;
+	int i;
+
+	if (!upCurrent) /* if called from console */
+		return;
+
+	t = upCurrent;
+
+	/* select item */
+	for (i = 0; i < csi.numODs; i++)
+		if (!Q_strncmp(t->provides, csi.ods[i].id, MAX_VAR)) {
+			break;
+		}
+
+	/* We only try to change the value of up_researchedlink if this is possible */
+	if (up_researchedlink > 0) {
+		up_researchedlink_temp=up_researchedlink;
+		up_researchedlink_temp--;
+
+		while (!RS_IsResearched_ptr(csi.ods[csi.ods[i].weap_idx[up_researchedlink_temp]].tech)) {
+			up_researchedlink_temp--;
+			if (up_researchedlink_temp < 0)
+				break;
+		}
+
+		if (up_researchedlink_temp >= 0)
+			up_researchedlink=up_researchedlink_temp;
+
+	UP_WeaponDescription (t);
+	}
+}
+
+/**
  * @brief Increases the number of the firemode to display
  */
 static void UP_IncreaseFiremode_f (void)
@@ -1243,6 +1326,8 @@ extern void UP_ResetUfopedia (void)
 	Cmd_AddCommand("techtree_click", UP_TechTreeClick_f, NULL);
 	Cmd_AddCommand("mn_increasefiremode", UP_IncreaseFiremode_f, NULL);
 	Cmd_AddCommand("mn_decreasefiremode", UP_DecreaseFiremode_f, NULL);
+	Cmd_AddCommand("mn_increaseweapon", UP_IncreaseWeapon_f, NULL);
+	Cmd_AddCommand("mn_decreaseweapon", UP_DecreaseWeapon_f, NULL);
 
 	mn_uppretext = Cvar_Get("mn_uppretext", "0", 0, NULL);
 	mn_uppreavailable = Cvar_Get("mn_uppreavailable", "0", 0, NULL);
