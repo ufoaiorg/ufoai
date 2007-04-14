@@ -124,7 +124,7 @@ static model_t *Mod_ForName (const char *name, qboolean crash)
 	}
 
 	memset(mod, 0, sizeof(model_t));
-	Q_strncpyz(mod->name, name, MAX_QPATH);
+	Q_strncpyz(mod->name, name, sizeof(mod->name));
 /*	Com_Printf( "name: %s\n", name ); */
 
 	/* load the file */
@@ -1526,7 +1526,7 @@ struct model_s *R_RegisterModelShort (const char *name)
 	if (name[0] != '*' && (strlen(name) < 4 || name[strlen(name) - 4] != '.')) {
 		char filename[MAX_QPATH];
 
-		Com_sprintf(filename, MAX_QPATH, "models/%s.md2", name);
+		Com_sprintf(filename, sizeof(filename), "models/%s.md2", name);
 		return R_RegisterModel(filename);
 	} else
 		return R_RegisterModel(name);
