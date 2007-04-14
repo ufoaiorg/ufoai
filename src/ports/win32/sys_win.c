@@ -37,7 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "conproc.h"
 #include <process.h>
 
-#ifdef _MSC_VER
+#if _MSC_VER >= 1300 /* >= MSVC 7.0 */
 #include <dbghelp.h>
 #endif
 
@@ -177,6 +177,7 @@ rebox:;
 	if (ret == IDYES) {
 		ret = MessageBox(NULL, "Please attach your debugger now to prevent the built in exception handler from catching the breakpoint. When ready, press Yes to cause a breakpoint or No to cancel.", "UFO:AI Fatal Error", MB_ICONEXCLAMATION | MB_YESNO | MB_DEFBUTTON2);
 		if (ret == IDYES) {
+#if _MSC_VER >= 1300 /* >= MSVC 7.0 */
 #ifndef DEBUG
 			if (!IsDebuggerPresent())
 				ExitProcess(0x1d107);
