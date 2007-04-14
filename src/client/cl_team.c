@@ -713,12 +713,12 @@ static void CL_GenerateEquipment_f (void)
 			item.t = i;
 
 			assert (unused.num[i] > 0);
-			
+
 			/* Check if there are any "multi_ammo" items and move them to the PRI container (along with PRI items of course).
 			 * Otherwise just use the container-buytype of the item.
 			 * HACKHACK
 			 */
-			if (BUY_PRI(csi.ods[i].buytype)) { 
+			if (BUY_PRI(csi.ods[i].buytype)) {
 				if (!Com_TryAddToBuyType(&baseCurrent->equipByBuyType, CL_AddWeaponAmmo(&unused, item), BUY_WEAP_PRI))
 					break; /* no space left in menu */
 			} else {
@@ -745,15 +745,15 @@ static void CL_MoveMultiEquipment (inventory_t* const inv, int buytype_container
 	int container;
 	invList_t *ic = NULL;
 	invList_t *ic_temp = NULL;
-	int x,y;
-	
+	int x = 0, y = 0; /* FIXME - they were used uninitialized - but what is this about? --mattn */
+
 	if (!inv)
 		return;
 
 	/* Do nothing if no pri/sec category is shown. */
 	if ((buytype_container != BUY_WEAP_PRI) && (buytype_container != BUY_WEAP_SEC))
 		return;
-	
+
 	/* Set source conteiner to the one that is not the destination container. */
 	container = (buytype_container == BUY_WEAP_PRI)
 		? BUY_WEAP_SEC
@@ -794,13 +794,13 @@ static void CL_EquipType_f (void)
 	if (num < 0 && num >= BUY_MULTI_AMMO)
 		return;
 
-	
+
 	/* display new items */
 	baseCurrent->equipType = num;
 	if (menuInventory) {
 		CL_MoveMultiEquipment (&baseCurrent->equipByBuyType, num); /**< Move all multi-ammo items to the current container. */
 		menuInventory->c[csi.idEquip] = baseCurrent->equipByBuyType.c[num];
-	}	
+	}
 }
 
 /**
