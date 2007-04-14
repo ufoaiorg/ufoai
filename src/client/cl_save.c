@@ -49,7 +49,6 @@ static qboolean SAV_GameLoad (const char *filename)
 	byte *buf, *cbuf;
 	int res, clen, i;
 	sizebuf_t sb;
-	int version;
 	saveFileHeader_t header;
 
 	/* open file */
@@ -96,11 +95,11 @@ static qboolean SAV_GameLoad (const char *filename)
 
 	/* check current version */
 	if (header.version > SAVE_FILE_VERSION) {
-		Com_Printf("File '%s' is a more recent version (%d) than is supported.\n", filename, version);
+		Com_Printf("File '%s' is a more recent version (%d) than is supported.\n", filename, header.version);
 		free(buf);
 		return 1;
 	} else if (header.version < SAVE_FILE_VERSION) {
-		Com_Printf("Savefileformat has changed ('%s' is version %d) - you may experience problems.\n", filename, version);
+		Com_Printf("Savefileformat has changed ('%s' is version %d) - you may experience problems.\n", filename, header.version);
 	}
 
 	/* exit running game */
