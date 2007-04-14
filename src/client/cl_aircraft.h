@@ -114,15 +114,6 @@ typedef struct aircraft_s {
 	int *teamSize;				/**< how many soldiers on board */
 	int teamIdxs[MAX_ACTIVETEAM];	/**< array of team members on board employee idx*/
 
-#if 0
-/* 20070303 Zenerka: Transfer stuff moved to cl_transfer.c|h. */
-	/** equipment on board
-	  * only indexes from global array */
-	int num[MAX_OBJDEFS];
-	int techs[MAX_TECHNOLOGIES];
-	int employees[MAX_EMPLOYEES];
-#endif
-
 	char model[MAX_QPATH];
 	char weapon_string[MAX_VAR];
 	/* NOTE: these pointers needs reinit after loading a saved game */
@@ -179,18 +170,7 @@ void AIR_AircraftInit(void);
 void AIR_AircraftSelect(aircraft_t *aircraft);
 void AIR_AircraftSelect_f(void);
 
-#if 0
-/* Double definition. 10042007 Zenerka */
-void AIR_NewAircraft_f(void);
-#endif
-
 void AIR_DeleteAircraft(aircraft_t *aircraft);
-
-#if 0
-/* This function is a copy of more detailed AIR_ListAircraft_f().
-    10042007 Zenerka. */
-void CL_AircraftListDebug_f(void);
-#endif
 
 void AIR_ResetAircraftTeam(aircraft_t *aircraft);
 void AIR_AddToAircraftTeam(aircraft_t *aircraft,int idx);

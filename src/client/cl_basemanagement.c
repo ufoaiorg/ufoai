@@ -2651,6 +2651,7 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
 {
 	int i, k, l;
 	base_t *b;
+	aircraft_t *aircraft;
 
 	MSG_WriteByte(sb, gd.numBases);
 	for (i = 0; i < gd.numBases; i++) {
@@ -2679,8 +2680,8 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
 		MSG_WriteByte(sb, b->aircraftCurrent);
 		MSG_WriteByte(sb, b->numAircraftInBase);
 		for (k = 0; k < b->numAircraftInBase; k++) {
-			/* TODO store aircraft */
-			/*aircraft_t aircraft[MAX_AIRCRAFT];*/
+			aircraft = &b->aircraft[k];
+
 		}
 		MSG_WriteLong(sb, MAX_AIRCRAFT);
 		for (k = 0; k < MAX_AIRCRAFT; k++)
@@ -2713,8 +2714,9 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
  */
 extern qboolean B_Load (sizebuf_t* sb, void* data)
 {
-	int i, bases, k, l;
+	int i, bases, k, l, p;
 	base_t *b;
+	aircraft_t *aircraft;
 
 	bases = MSG_ReadByte(sb);
 	for (i = 0; i < bases; i++) {
@@ -2742,6 +2744,7 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 		b->aircraftCurrent = MSG_ReadByte(sb);
 		b->numAircraftInBase = MSG_ReadByte(sb);
 		for (k = 0; k < b->numAircraftInBase; k++) {
+			aircraft = &b->aircraft[k];
 			/* TODO aircraft loading */
 		}
 
@@ -2757,6 +2760,43 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 		}
 
 		/* TODO: read the missing ones */
+
+		/* clear the mess of stray loaded pointers */
+		memset(&b->equipByBuyType, 0, sizeof(inventory_t));
+
+		/* some functions needs the baseCurrent pointer set */
+		baseCurrent = b;
+
+		/* fix aircraft homebase and teamsize pointers */
+		/* the mission pointer in updated in SAV_GameLoad */
+		for (i = 0, aircraft = b->aircraft; i < b->numAircraftInBase; i++, aircraft++) {
+			aircraft->teamSize = &b->teamNum[aircraft->idxInBase];
+			aircraft->homebase = &gd.bases[aircraft->idxBase];
+			aircraft->shield = RS_GetTechByID(aircraft->shield_string);
+			aircraft->weapon = RS_GetTechByID(aircraft->weapon_string);
+			aircraft->item = RS_GetTechByID(aircraft->item_string);
+		}
+
+		/* initalize team to null */
+		for (p = 0; p < MAX_ACTIVETEAM; p++)
+			b->curTeam[p] = NULL;
+
+		/* if there are no aircraft in base, a team can't be assigned */
+		if (b->numAircraftInBase <= 0)
+			continue;
+
+		/* now fix the curTeam pointers */
+		/* FIXME: EMPL_ROBOTS => ugvs */
+		aircraft = &b->aircraft[b->aircraftCurrent];
+
+		for (i = 0, p = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++)
+			if (CL_SoldierInAircraft(i, aircraft->idx)) {
+				/* maybe we already have soldiers in this base */
+				b->curTeam[p] = E_GetHiredCharacter(b, EMPL_SOLDIER, i);
+				assert(b->curTeam[p]);
+				p++;
+			}
 	}
+
 	return qtrue;
 }

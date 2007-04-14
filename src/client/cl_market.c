@@ -589,8 +589,14 @@ extern qboolean BS_Save (sizebuf_t* sb, void* data)
 	int i;
 
 	/* store market */
-	for (i = 0; i < MAX_OBJDEFS; i++)
+	for (i = 0; i < MAX_OBJDEFS; i++) {
 		MSG_WriteLong(sb, ccs.eMarket.num[i]);
+		MSG_WriteLong(sb, ccs.eMarket.bid[i]);
+		MSG_WriteLong(sb, ccs.eMarket.ask[i]);
+		MSG_WriteFloat(sb, ccs.eMarket.cumm_supp_diff[i]);
+	}
+
+	return qtrue;
 }
 
 /**
@@ -603,6 +609,12 @@ extern qboolean BS_Load (sizebuf_t* sb, void* data)
 	int i;
 
 	/* read market */
-	for (i = 0; i < MAX_OBJDEFS; i++)
+	for (i = 0; i < MAX_OBJDEFS; i++) {
 		ccs.eMarket.num[i] = MSG_ReadLong(sb);
+		ccs.eMarket.bid[i] = MSG_ReadLong(sb);
+		ccs.eMarket.ask[i] = MSG_ReadLong(sb);
+		ccs.eMarket.cumm_supp_diff[i] = MSG_ReadFloat(sb);
+	}
+
+	return qtrue;
 }

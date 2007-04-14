@@ -973,12 +973,15 @@ extern qboolean E_Load (sizebuf_t* sb, void* data)
 	int i, j;
 
 	/* load inventories */
-	for (j = 0; j < MAX_EMPL; j++)
+	for (j = 0; j < MAX_EMPL; j++) {
 		for (i = 0; i < gd.numEmployees[j]; i++) {
 			/* clear the mess of stray loaded pointers */
 			memset(&gd.employees[j][i].inv, 0, sizeof(inventory_t));
 			CL_ReceiveInventory(sb, &gd.employees[j][i].inv);
 		}
+		for (i = 0; i < gd.numEmployees[j]; i++)
+			gd.employees[j][i].chr.inv = &gd.employees[j][i].inv;
+	}
 
 	return qtrue;
 }

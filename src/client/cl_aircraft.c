@@ -34,7 +34,7 @@ int numAircraft_samples = 0; /* TODO: should be reset to 0 each time scripts are
 static int airequipID = -1;				/**< FIXME: document me. */
 static qboolean noparams = qfalse;			/**< FIXME: document me. */
 static int numAircraftItems = 0;			/**< FIXME: document me. */
-aircraftItem_t aircraftItems[MAX_AIRCRAFTITEMS];	/**< FIXME: document me. */
+static aircraftItem_t aircraftItems[MAX_AIRCRAFTITEMS];	/**< FIXME: document me. */
 
 #define AIRCRAFT_RADAR_RANGE	20			/* FIXME: const */
 
@@ -1255,7 +1255,7 @@ extern void AII_ParseAircraftItem (const char *name, char **text)
 	Com_DPrintf("...found craftitem %s\n", name);
 	airItem->idx = numAircraftItems;
 	numAircraftItems++;
-	Q_strncpyz(airItem->id, name, MAX_VAR);
+	Q_strncpyz(airItem->id, name, sizeof(airItem->id));
 
 	/* get it's body */
 	token = COM_Parse(text);
@@ -1444,11 +1444,9 @@ extern void AIR_ParseAircraft (const char *name, char **text)
 	} while (*text);
 }
 
-/*
-	===============================================
-	Aircraft functions related to UFOs or missions.
-	===============================================
-*/
+/*===============================================
+Aircraft functions related to UFOs or missions.
+===============================================*/
 
 /**
  * @brief Notify that a mission has been removed.
@@ -1533,11 +1531,9 @@ extern void AIR_SendAircraftPurchasingUfo (aircraft_t* aircraft, aircraft_t* ufo
 	aircraft->ufo = num;
 }
 
-/*
-	============================================
-	Aircraft functions related to team handling.
-	============================================
-*/
+/*============================================
+Aircraft functions related to team handling.
+============================================*/
 
 /**
  * @brief Resets team in given aircraft.
@@ -1656,36 +1652,26 @@ extern qboolean AIR_IsInAircraftTeam (aircraft_t *aircraft, int employee_idx)
 	return qfalse;
 }
 
-#if 0
-/* This function is a copy of more detailed AIR_ListAircraft_f().
-   10042007 Zenerka. */
-
 /**
- * @brief
- */
-extern void CL_AircraftListDebug_f (void)
-{
-	base_t*		base;
-	aircraft_t*	aircraft;
-
-	for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--)
-		for (aircraft = base->aircraft + base->numAircraftInBase - 1; aircraft >= base->aircraft; aircraft--)
-			Com_Printf("aircraft idx: %i (in base [idx]: %i) - base idx: %i (%s)\n", aircraft->idx, aircraft->idxInBase, base->idx, base->name);
-}
-#endif
-
-/**
- * @brief
+ * @brief Save callback for savegames
+ * @note Nothing to save here at the moment
+ * @sa AIR_Load
+ * @sa B_Save
+ * @sa SAV_GameSave
  */
 extern qboolean AIR_Save (sizebuf_t* sb, void* data)
 {
-
+	return qfalse;
 }
 
 /**
- * @brief
+ * @brief Load callback for savegames
+ * @note Nothing to load here at the moment
+ * @sa AIR_Save
+ * @sa B_Load
+ * @sa SAV_GameLoad
  */
 extern qboolean AIR_Load (sizebuf_t* sb, void* data)
 {
-
+	return qfalse;
 }

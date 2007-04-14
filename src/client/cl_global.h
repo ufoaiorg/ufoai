@@ -128,7 +128,6 @@ typedef struct globalData_s
 
 	/* All transfers. */
 	transferlist_t alltransfers[MAX_AIRCRAFT];
-
 } globalData_t;
 
 

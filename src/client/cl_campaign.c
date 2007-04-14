@@ -1833,7 +1833,7 @@ extern qboolean CP_Save (sizebuf_t *sb, void *data)
 	stageState_t *state;
 	actMis_t *mis;
 	message_t *message;
-	int i, j, type;
+	int i, j;
 	base_t *base;
 
 	/* store campaign name */

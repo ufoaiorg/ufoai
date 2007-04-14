@@ -31,61 +31,6 @@ saveSubsystems_t saveSubsystems[MAX_SAVESUBSYSTEMS];
 int saveSubsystemsAmount;
 
 /**
- * @brief Will fix the pointers in gd after loading
- */
-static void SAV_UpdatePointersInGlobalData (void)
-{
-	int i, j, p, type;
-	base_t *base;
-	aircraft_t *aircraft;
-
-	for (type = 0; type < MAX_EMPL; type++)
-		for (i = 0; i < gd.numEmployees[type]; i++)
-			gd.employees[type][i].chr.inv = &gd.employees[type][i].inv;
-
-	for (j = 0, base = gd.bases; j < gd.numBases; j++, base++) {
-		if (!base->founded)
-			continue;
-
-		/* clear the mess of stray loaded pointers */
-		memset(&base->equipByBuyType, 0, sizeof(inventory_t));
-
-		/* some functions needs the baseCurrent pointer set */
-		baseCurrent = base;
-
-		/* fix aircraft homebase and teamsize pointers */
-		/* the mission pointer in updated in SAV_GameLoad */
-		for (i = 0, aircraft = (aircraft_t *) base->aircraft; i < base->numAircraftInBase; i++, aircraft++) {
-			aircraft->teamSize = &base->teamNum[aircraft->idxInBase];
-			aircraft->homebase = &gd.bases[aircraft->idxBase];
-			aircraft->shield = RS_GetTechByID(aircraft->shield_string);
-			aircraft->weapon = RS_GetTechByID(aircraft->weapon_string);
-			aircraft->item = RS_GetTechByID(aircraft->item_string);
-		}
-
-		/* initalize team to null */
-		for (p = 0; p < MAX_ACTIVETEAM; p++)
-			base->curTeam[p] = NULL;
-
-		/* if there are no aircraft in base, a team can't be assigned */
-		if (baseCurrent->numAircraftInBase <= 0)
-			continue;
-
-		/* now fix the curTeam pointers */
-		/* FIXME: EMPL_ROBOTS => ugvs */
-		aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
-
-		for (i = 0, p = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++)
-			if (CL_SoldierInAircraft(i, aircraft->idx)) {
-				/* maybe we already have soldiers in this base */
-				base->curTeam[p] = E_GetHiredCharacter(base, EMPL_SOLDIER, i);
-				assert(base->curTeam[p]);
-				p++;
-			}
-	}
-}
-
-/**
  * @brief Loads a savegame from file
  *
  * @param filename Savegame to load (relative to writepath/save)
