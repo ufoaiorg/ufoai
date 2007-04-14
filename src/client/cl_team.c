@@ -745,7 +745,6 @@ static void CL_MoveMultiEquipment (inventory_t* const inv, int buytype_container
 	int container;
 	invList_t *ic = NULL;
 	invList_t *ic_temp = NULL;
-	int x = 0, y = 0; /* FIXME - they were used uninitialized - but what is this about? --mattn */
 
 	if (!inv)
 		return;
@@ -754,7 +753,7 @@ static void CL_MoveMultiEquipment (inventory_t* const inv, int buytype_container
 	if ((buytype_container != BUY_WEAP_PRI) && (buytype_container != BUY_WEAP_SEC))
 		return;
 
-	/* Set source conteiner to the one that is not the destination container. */
+	/* Set source container to the one that is not the destination container. */
 	container = (buytype_container == BUY_WEAP_PRI)
 		? BUY_WEAP_SEC
 		: BUY_WEAP_PRI;
@@ -768,7 +767,7 @@ static void CL_MoveMultiEquipment (inventory_t* const inv, int buytype_container
 	while (ic) {
 		if (csi.ods[ic->item.t].buytype == BUY_MULTI_AMMO) {
 			ic_temp = ic->next;
-			Com_MoveInInventoryIgnore(inv, container, ic->x, ic->y, buytype_container, x, y, NULL, &ic, qtrue); /**< @todo Does the function work like this? */
+			Com_MoveInInventoryIgnore(inv, container, ic->x, ic->y, buytype_container, NONE, NONE, NULL, &ic, qtrue); /**< @todo Does the function work like this? */
 			ic = ic_temp;
 		} else {
 			ic = ic->next;
