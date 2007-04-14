@@ -52,10 +52,10 @@ static void AIR_UpdateHangarCapForOne (int aircraftID, int base_idx)
 {
 	int aircraftSize = 0, freespace = 0;
 	base_t *base = NULL;
-	
+
 	aircraftSize = aircraft_samples[aircraftID].weight;
 	base = &gd.bases[base_idx];
-	
+
 	if (aircraftSize < 1) {
 #ifdef DEBUG
 		Com_Printf("AIR_UpdateHangarCapForOne()... aircraft weight is wrong!\n");
@@ -69,7 +69,7 @@ static void AIR_UpdateHangarCapForOne (int aircraftID, int base_idx)
 		return;
 	}
 	assert (base);
-	
+
 	freespace = base->capacities[CAP_AIRCRAFTS_SMALL].max - base->capacities[CAP_AIRCRAFTS_SMALL].cur;
 	Com_DPrintf("AIR_UpdateHangarCapForOne()... freespace: %i aircraft weight: %i\n", freespace, aircraftSize);
 	/* If the aircraft size is less than 8, we will try to update CAP_AIRCRAFTS_SMALL. */
@@ -79,7 +79,7 @@ static void AIR_UpdateHangarCapForOne (int aircraftID, int base_idx)
 		} else {
 			/* Not enough space in small hangar. Aircraft will go to big hangar. */
 			freespace = base->capacities[CAP_AIRCRAFTS_BIG].max - base->capacities[CAP_AIRCRAFTS_BIG].cur;
-			Com_DPrintf("AIR_UpdateHangarCapForOne()... freespace: %i aircraft weight: %i\n", freespace, aircraftSize);	
+			Com_DPrintf("AIR_UpdateHangarCapForOne()... freespace: %i aircraft weight: %i\n", freespace, aircraftSize);
 			if (freespace >= aircraftSize) {
 				base->capacities[CAP_AIRCRAFTS_BIG].cur += aircraftSize;
 			} else {
@@ -114,9 +114,9 @@ void AIR_UpdateHangarCapForAll (int base_idx)
 	int i;
 	base_t *base = NULL;
 	aircraft_t *aircraft = NULL;
-	
+
 	base = &gd.bases[base_idx];
-	
+
 	if (!base) {
 #ifdef DEBUG
 		Com_Printf("AIR_UpdateHangarCapForAll()... base does not exist!\n");
@@ -127,7 +127,7 @@ void AIR_UpdateHangarCapForAll (int base_idx)
 	/* Reset current capacities for hangar. */
 	base->capacities[CAP_AIRCRAFTS_BIG].cur = 0;
 	base->capacities[CAP_AIRCRAFTS_SMALL].cur = 0;
-	
+
 	for (i = 0; i < base->numAircraftInBase; i++) {
 		aircraft = &base->aircraft[i];
 		Com_DPrintf("AIR_UpdateHangarCapForAll()... base: %s, aircraft: %s\n", base->name, aircraft->id);
@@ -674,7 +674,7 @@ extern void AIR_DeleteAircraft (aircraft_t *aircraft)
 	aircraft_t *aircraft_temp = NULL;
 	transferlist_t *transferlist_temp = NULL;
 	int previous_aircraftCurrent = baseCurrent->aircraftCurrent;
-	
+
 	if (!aircraft) {
 		Com_DPrintf("AIR_DeleteAircraft: no aircraft given (NULL)\n");
 		/* TODO: Return deletion status here. */
@@ -726,7 +726,7 @@ extern void AIR_DeleteAircraft (aircraft_t *aircraft)
 
 		/* Update number of team members for each aircraft.*/
 		base->teamNum[i] = base->teamNum[i+1];
-		
+
 		/* Update index of aircraftCurrent in base if it is affected by the index-change. */
 		if (i == previous_aircraftCurrent)
 			baseCurrent->aircraftCurrent--;
@@ -739,14 +739,14 @@ extern void AIR_DeleteAircraft (aircraft_t *aircraft)
 		Cvar_Set("mn_aircraftname", "");
 		Cvar_Set("mn_aircraft_model", "");
 		baseCurrent->aircraftCurrent = -1;
-	} 
+	}
 
 	/* Q_strncpyz(messageBuffer, va(_("You've sold your aircraft (a %s) in base %s"), aircraft->name, base->name), MAX_MESSAGE_TEXT);
 	MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);*/
 
 	/* Now update the aircraft list - maybe there is a popup active. */
 	Cbuf_ExecuteText(EXEC_NOW, "aircraft_list");
-	
+
 	/* TODO: Return successful deletion status here. */
 }
 
@@ -1674,3 +1674,18 @@ extern void CL_AircraftListDebug_f (void)
 }
 #endif
 
+/**
+ * @brief
+ */
+extern qboolean AIR_Save (sizebuf_t* sb, void* data)
+{
+
+}
+
+/**
+ * @brief
+ */
+extern qboolean AIR_Load (sizebuf_t* sb, void* data)
+{
+
+}

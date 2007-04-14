@@ -1018,3 +1018,19 @@ extern void AC_Reset (void)
 	memset(aliencontText, 0, sizeof(aliencontText));
 	aliencontCurrent = NULL;
 }
+
+/**
+ * @brief
+ */
+extern qboolean AC_Save (sizebuf_t* sb, void* data)
+{
+
+}
+
+/**
+ * @brief
+ */
+extern qboolean AC_Load (sizebuf_t* sb, void* data)
+{
+
+}

@@ -151,7 +151,7 @@ typedef struct technology_s {
 	char mdl_top[MAX_QPATH];
 	char mdl_bottom[MAX_QPATH];
 
-	byte statusResearchable;		/**< Is this item researchable? */
+	int statusResearchable;		/**< Is this item researchable? */
 
 	int produceTime;			/**< How many days the production of this items runs. */
 	qboolean pushnews;			/**< Push news about this tech when researched. Note: usually you should use this only for tech with time = 0. */

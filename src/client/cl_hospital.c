@@ -366,10 +366,10 @@ extern void HOS_Reset (void)
 
 /**
  * @brief Saving function for hospital related data
- * @sa HOS_GameLoad
- * @sa CL_GameSave
+ * @sa HOS_Load
+ * @sa SAV_GameSave
  */
-extern void HOS_GameSave (sizebuf_t *sb)
+extern qboolean HOS_Save (sizebuf_t *sb, void* data)
 {
 	int i;
 
@@ -382,14 +382,15 @@ extern void HOS_GameSave (sizebuf_t *sb)
 		MSG_WriteByte(sb, employeesInHospitalList[i]->type);
 		MSG_WriteShort(sb, employeesInHospitalList[i]->idx);
 	}
+	return qtrue;
 }
 
 /**
  * @brief Saving function for hospital related data
- * @sa HOS_GameSave
- * @sa CL_GameLoad
+ * @sa HOS_Save
+ * @sa SAV_GameLoad
  */
-extern void HOS_GameLoad (sizebuf_t *sb)
+extern qboolean HOS_Load (sizebuf_t *sb, void* data)
 {
 	int i, baseID, type;
 
@@ -400,4 +401,5 @@ extern void HOS_GameLoad (sizebuf_t *sb)
 		type = MSG_ReadByte(sb);
 		employeesInHospitalList[i] = &(gd.employees[type][MSG_ReadShort(sb)]);
 	}
+	return qtrue;
 }

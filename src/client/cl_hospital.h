@@ -28,5 +28,5 @@ extern qboolean HOS_HealCharacter(character_t* chr, qboolean hospital);
 extern qboolean HOS_HealEmployee(employee_t* employee);
 extern void HOS_HealAll(const base_t* const base);
 extern void HOS_HospitalRun(void);
-extern void HOS_GameSave(sizebuf_t *sb);
-extern void HOS_GameLoad(sizebuf_t *sb);
+extern qboolean HOS_Save(sizebuf_t *sb, void* data);
+extern qboolean HOS_Load(sizebuf_t *sb, void* data);

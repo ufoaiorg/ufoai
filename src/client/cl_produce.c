@@ -73,10 +73,10 @@ static int PR_CalculateProductionTime (base_t *base, technology_t *tech)
 	} else {
 		maxworkers = allworkers;
 	}
-	
+
 	timeDefault = tech->produceTime; /* This is the default production time for 10 workers. */
 	if (maxworkers == 10) {
-		/* Return default time because we can use only 10 workers. */ 
+		/* Return default time because we can use only 10 workers. */
 		Com_DPrintf("PR_CalculateProductionTime()... workers: %i, tech: %s, time: %i\n",
 		maxworkers, tech->id, timeDefault);
 		return timeDefault;
@@ -97,7 +97,7 @@ static int PR_CalculateProductionTime (base_t *base, technology_t *tech)
 			return time;
 	}
 }
- 
+
 /**
  * @brief Updates production time for all items in current queue.
  * @param[in] base_idx Index of base in global array.
@@ -111,9 +111,9 @@ void PR_UpdateProductionTime (int base_idx)
 	technology_t *tech = NULL;
 	base_t *base = NULL;
 	int i, time = 0, timeTemp = 0;
-	
+
 	base = &gd.bases[base_idx];
-	
+
 	if (!base) {
 #ifdef DEBUG
 		Com_Printf("PR_UpdateProductionTime()... baseCurrent does not exist!\n");
@@ -121,7 +121,7 @@ void PR_UpdateProductionTime (int base_idx)
 		return;
 	}
 	assert (base);
-	
+
 	/* Loop through all productions in queue and adjust production time. */
 	if (gd.productions[base_idx].numItems > 0) {
 		/* Don't change anything for first (current) item in queue. (that's why i = 1)*/
@@ -130,7 +130,7 @@ void PR_UpdateProductionTime (int base_idx)
 			tech = RS_GetTechByProvided(csi.ods[gd.productions[base_idx].items[i].objID].id);
 			time = PR_CalculateProductionTime(base, tech);
 			gd.productions[base_idx].items[i].timeLeft = time;
-			Com_DPrintf("PR_UpdateProductionTime()... updating production time for %s. Original time: %i, new time: %i\n", 
+			Com_DPrintf("PR_UpdateProductionTime()... updating production time for %s. Original time: %i, new time: %i\n",
 			csi.ods[gd.productions[base_idx].items[i].objID].id, timeTemp, gd.productions[base_idx].items[i].timeLeft);
 		}
 	}
@@ -912,4 +912,54 @@ extern void PR_ResetProduction (void)
 	Cmd_AddCommand("prod_stop", PR_ProductionStop_f, NULL);
 	Cmd_AddCommand("prod_up", PR_ProductionUp_f, NULL);
 	Cmd_AddCommand("prod_down", PR_ProductionDown_f, NULL);
+}
+
+/**
+ * @brief Save callback for savegames
+ * @sa PR_Load
+ * @sa SAV_GameSave
+ */
+extern qboolean PR_Save (sizebuf_t* sb, void* data)
+{
+	int i, j;
+	production_queue_t *pq;
+
+	MSG_WriteByte(sb, MAX_BASES);
+	for (i = 0; i < MAX_BASES; i++) {
+		pq = &gd.productions[i];
+		MSG_WriteByte(sb, pq->numItems);
+		MSG_WriteLong(sb, MAX_PRODUCTIONS);
+		for (j = 0; j < MAX_PRODUCTIONS; j++) {
+			MSG_WriteLong(sb, pq->items[j].objID);
+			MSG_WriteLong(sb, pq->items[j].amount);
+			MSG_WriteLong(sb, pq->items[j].timeLeft);
+			MSG_WriteLong(sb, pq->items[j].workers);
+			MSG_WriteByte(sb, pq->items[j].items_cached);
+		}
+	}
+	return qtrue;
+}
+
+/**
+ * @brief Load callback for savegames
+ * @sa PR_Save
+ * @sa SAV_GameLoad
+ */
+extern qboolean PR_Load (sizebuf_t* sb, void* data)
+{
+	int i, j;
+	production_queue_t *pq;
+
+	for (i = 0; i < MSG_ReadByte(sb); i++) {
+		pq = &gd.productions[i];
+		pq->numItems = MSG_ReadByte(sb);
+		for (j = 0; j < MSG_ReadLong(sb); j++) {
+			pq->items[j].objID = MSG_ReadLong(sb);
+			pq->items[j].amount = MSG_ReadLong(sb);
+			pq->items[j].timeLeft = MSG_ReadLong(sb);
+			pq->items[j].workers = MSG_ReadLong(sb);
+			pq->items[j].items_cached = MSG_ReadByte(sb);
+		}
+	}
+	return qtrue;
 }

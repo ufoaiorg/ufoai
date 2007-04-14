@@ -544,7 +544,7 @@ extern void B_SetUpBase (void)
 			B_UpdateBaseBuildingStatus(building, baseCurrent, B_STATUS_WORKING);
 			/* Now buy two first aircrafts if it is our first base. */
 			if (gd.numBases == 1 && building->buildingType == B_HANGAR)
-				Cbuf_AddText("aircraft_new craft_dropship\n"); 
+				Cbuf_AddText("aircraft_new craft_dropship\n");
 			if (gd.numBases == 1 && building->buildingType == B_SMALL_HANGAR)
 				Cbuf_AddText("aircraft_new craft_interceptor\n");
 
@@ -2356,7 +2356,7 @@ static void B_PrintCapacities_f (void)
 	int i, j;
 	base_t *base = NULL;
 	buildingType_t building;
-	
+
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <baseID>\n", Cmd_Argv(0));
 		return;
@@ -2642,4 +2642,121 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 	}
 }
 
+/**
+ * @brief Save callback for savegames
+ * @sa B_Load
+ * @sa SAV_GameSave
+ */
+extern qboolean B_Save (sizebuf_t* sb, void* data)
+{
+	int i, k, l;
+	base_t *b;
 
+	MSG_WriteByte(sb, gd.numBases);
+	for (i = 0; i < gd.numBases; i++) {
+		b = &gd.bases[i];
+		MSG_WriteString(sb, b->name);
+		MSG_WriteChar(sb, b->mapChar);
+		MSG_WritePos(sb, b->pos);
+		MSG_WriteByte(sb, b->founded);
+		MSG_WriteByte(sb, b->hasHangar);
+		MSG_WriteByte(sb, b->hasLab);
+		MSG_WriteByte(sb, b->hasHospital);
+		MSG_WriteByte(sb, b->hasAlienCont);
+		MSG_WriteByte(sb, b->hasStorage);
+		MSG_WriteByte(sb, b->hasQuarters);
+		MSG_WriteByte(sb, b->hasWorkshop);
+		MSG_WriteByte(sb, b->hasHangarSmall);
+		for (k = 0; k < BASE_SIZE; k++)
+			for (l = 0; l < BASE_SIZE; l++) {
+				MSG_WriteByte(sb, b->map[k][l]);
+				MSG_WriteByte(sb, b->posX[k][l]);
+				MSG_WriteByte(sb, b->posY[k][l]);
+			}
+		MSG_WriteByte(sb, b->condition);
+		MSG_WriteByte(sb, b->baseStatus);
+
+		MSG_WriteByte(sb, b->aircraftCurrent);
+		MSG_WriteByte(sb, b->numAircraftInBase);
+		for (k = 0; k < b->numAircraftInBase; k++) {
+			/* TODO store aircraft */
+			/*aircraft_t aircraft[MAX_AIRCRAFT];*/
+		}
+		MSG_WriteLong(sb, MAX_AIRCRAFT);
+		for (k = 0; k < MAX_AIRCRAFT; k++)
+			MSG_WriteByte(sb, b->teamNum[k]);
+
+		MSG_WriteByte(sb, b->equipType);
+
+		/* store equipment */
+		for (k = 0; k < MAX_OBJDEFS; k++) {
+			MSG_WriteLong(sb, b->storage.num[k]);
+			MSG_WriteByte(sb, b->storage.num_loose[k]);
+		}
+		/* TODO: add those */
+#if 0
+		radar_t	radar;	/**< the onconstruct value of the buliding building_radar increases the sensor width */
+		aliensCont_t alienscont[MAX_ALIENCONT_CAP];	/**< alien containment capacity */
+		capacities_t capacities[MAX_CAP];		/**< Capacities. */
+		inventory_t equipByBuyType;	/**< idEquip sorted by buytype; needen't be saved;
+			a hack based on assertion (MAX_CONTAINERS >= BUY_AIRCRAFT) ... see e.g. CL_GenerateEquipment_f */
+		character_t *curTeam[MAX_ACTIVETEAM];	/**< set in CL_GenerateEquipment_f and CL_LoadTeam */
+#endif
+	}
+	return qtrue;
+}
+
+/**
+ * @brief Load callback for savegames
+ * @sa B_Save
+ * @sa SAV_GameLoad
+ */
+extern qboolean B_Load (sizebuf_t* sb, void* data)
+{
+	int i, bases, k, l;
+	base_t *b;
+
+	bases = MSG_ReadByte(sb);
+	for (i = 0; i < bases; i++) {
+		b = &gd.bases[i];
+		Q_strncpyz(b->name, MSG_ReadString(sb), sizeof(b->name));
+		b->mapChar = MSG_ReadChar(sb);
+		MSG_ReadPos(sb, b->pos);
+		b->founded = MSG_ReadByte(sb);
+		b->hasHangar = MSG_ReadByte(sb);
+		b->hasLab = MSG_ReadByte(sb);
+		b->hasHospital = MSG_ReadByte(sb);
+		b->hasAlienCont = MSG_ReadByte(sb);
+		b->hasStorage = MSG_ReadByte(sb);
+		b->hasQuarters = MSG_ReadByte(sb);
+		b->hasWorkshop = MSG_ReadByte(sb);
+		b->hasHangarSmall = MSG_ReadByte(sb);
+		for (k = 0; k < BASE_SIZE; k++)
+			for (l = 0; l < BASE_SIZE; l++) {
+				b->map[k][l] = MSG_ReadByte(sb);
+				b->posX[k][l] = MSG_ReadByte(sb);
+				b->posY[k][l] = MSG_ReadByte(sb);
+			}
+		b->condition = MSG_ReadByte(sb);
+		b->baseStatus = MSG_ReadByte(sb);
+		b->aircraftCurrent = MSG_ReadByte(sb);
+		b->numAircraftInBase = MSG_ReadByte(sb);
+		for (k = 0; k < b->numAircraftInBase; k++) {
+			/* TODO aircraft loading */
+		}
+
+		for (k = 0; k < MSG_ReadLong(sb); k++)
+			b->teamNum[k] = MSG_ReadByte(sb);
+
+		b->equipType = MSG_ReadByte(sb);
+
+		/* read equipment */
+		for (k = 0; k < MAX_OBJDEFS; k++) {
+			b->storage.num[k] = MSG_ReadLong(sb);
+			b->storage.num_loose[k] = MSG_ReadByte(sb);
+		}
+
+		/* TODO: read the missing ones */
+	}
+	return qtrue;
+}

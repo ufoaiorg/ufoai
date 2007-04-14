@@ -1730,7 +1730,7 @@ static void CL_ParseScriptSecond (const char *type, char *name, char **text)
 
 /**
  * @brief Read the data into gd for singleplayer campaigns
- * @sa CL_GameLoad
+ * @sa SAV_GameLoad
  * @sa CL_GameNew
  */
 extern void CL_ReadSinglePlayerData (void)
@@ -1810,6 +1810,7 @@ static void CL_InitLocal (void)
 	CL_InitInput();
 	CL_InitMessageSystem();
 
+	SAV_Init();
 	MN_ResetMenus();
 	CL_ResetParticles();
 	CL_ResetCampaign();
