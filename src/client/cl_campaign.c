@@ -3841,6 +3841,8 @@ void CL_GameInit (void)
 	 * and shields to aircrafts. */
 	AIR_AircraftInit();
 
+	CL_CampaignRunMarket();
+
 	/* Init popup and map/geoscape */
 	CL_PopupInit();
 	MAP_GameInit();
