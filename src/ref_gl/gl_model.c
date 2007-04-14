@@ -1540,6 +1540,9 @@ static void Mod_Free (model_t * mod)
 {
 	if (mod->extradatasize)
 		Hunk_Free(mod->extradata);
+	if (mod->neighbors)
+		free(mod->neighbors);
+
 	memset(mod, 0, sizeof(*mod));
 }
 
