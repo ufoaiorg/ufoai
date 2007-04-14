@@ -240,8 +240,9 @@ qboolean VID_LoadRefresh (const char *name)
 	Com_Printf( "------- Loading %s -------\n", name );
 
 	/*regain root */
+#ifndef __APPLE
 	seteuid(saved_euid);
-
+#endif
 	/* try path given via cvar */
 	if (strlen(s_libdir->string))
 		Q_strncpyz(libPath, s_libdir->string, sizeof(libPath));
@@ -296,7 +297,13 @@ qboolean VID_LoadRefresh (const char *name)
 		VID_FreeReflib();
 		Com_Error(ERR_FATAL, "%s has incompatible api_version", name);
 	}
-
+	
+		if (re.Init(0, 0) == -1) {
+		re.Shutdown();
+		//VID_FreeReflib ();
+		//return qfalse; 
+	}
+	
 	/* Init IN (Mouse) */
 	in_state.Key_Event_fp = Do_Key_Event;
 
@@ -310,11 +317,7 @@ qboolean VID_LoadRefresh (const char *name)
 
 	Real_IN_Init();
 
-	if (re.Init(0, 0) == -1) {
-		re.Shutdown();
-		VID_FreeReflib ();
-		return qfalse;
-	}
+
 
 	/* Init KBD */
 #if 1
@@ -336,9 +339,11 @@ qboolean VID_LoadRefresh (const char *name)
 #endif
 	KBD_Init_fp(Do_Key_Event);
 
+#ifndef __APPLE__
 	/* give up root now */
 	setreuid(getuid(), getuid());
 	setegid(getgid());
+#endif
 
 	/* vid_restart */
 	if (restart)
@@ -370,7 +375,7 @@ void VID_CheckChanges (void)
 		cl.refresh_prepped = qfalse;
 		cls.disable_screen = qtrue;
 
-		Com_sprintf(name, sizeof(name), "ref_%s.so", vid_ref->string);
+		Com_sprintf(name, sizeof(name), "ref_%s.dylib", vid_ref->string);
 		if (!VID_LoadRefresh(name)) {
 			Cmd_ExecuteString("condump gl_debug");
 

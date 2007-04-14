@@ -49,7 +49,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <dlfcn.h>
 
 #include "../../qcommon/qcommon.h"
-
+#include <Carbon/Carbon.h>
+#include <Cocoa/Cocoa.h>
 cvar_t *nostdout;
 
 unsigned	sys_frame_time;
@@ -476,6 +477,8 @@ char *Sys_GetClipboardData (void)
  */
 int main (int argc, char **argv)
 {
+	/* create Autorelease Pool, to avoid Error Messages under MacOSX */
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	int time, oldtime, newtime;
 	float timescale = 1.0;
 
@@ -493,6 +496,7 @@ int main (int argc, char **argv)
 	}
 
 	newtime = Sys_Milliseconds();
+
 	for (;;) {
 		/* find time spent rendering last frame */
 		oldtime = newtime;
@@ -500,6 +504,9 @@ int main (int argc, char **argv)
 		time = timescale * (newtime - oldtime);
 		timescale = Qcommon_Frame(time);
 	}
+	
+	/* Free the Release Pool resources */
+	[pool release];
 	return 0;
 }
 
