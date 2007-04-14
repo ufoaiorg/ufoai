@@ -208,6 +208,14 @@ typedef struct salary_s {
 
 extern salary_t salaries[MAX_CAMPAIGNS];
 
+/** market structure */
+typedef struct market_s {
+	int num[MAX_OBJDEFS];
+	int bid[MAX_OBJDEFS];
+	int ask[MAX_OBJDEFS];
+	double cumm_supp_diff[MAX_OBJDEFS];
+} market_t;
+
 #define MAX_NATION_BORDERS 64
 
 /** nation definition */
@@ -233,7 +241,8 @@ typedef struct nation_s {
 
 /** client structure */
 typedef struct ccs_s {
-	equipDef_t eMission, eMarket;
+	equipDef_t eMission;
+	market_t eMarket;
 
 	stageState_t stage[MAX_STAGES];
 	setState_t set[MAX_STAGESETS];
