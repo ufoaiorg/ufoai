@@ -321,7 +321,8 @@ static void B_BuildingDestroy_f (void)
 	B_BuildingStatus();
 
 	/* Update capacities. */
-	B_UpdateBaseCapacities (cap, baseCurrent);
+	if (b1->buildingType != B_MISC)
+		B_UpdateBaseCapacities (cap, baseCurrent);
 
 	/* Update production times in queue if we destroyed B_WORKSHOP. */
 	if (b1->buildingType == B_WORKSHOP) {
