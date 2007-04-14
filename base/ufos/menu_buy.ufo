@@ -148,6 +148,68 @@ menu buy
 	confunc buy_autoselle27 { *bt_autosell27 image menu/button_autosell1	*bt_autosell27 tooltip "_Item autosell enabled."  }
 	confunc buy_autoselld27 { *bt_autosell27 image menu/button_autosell2	*bt_autosell27 tooltip "_Item autosell disabled." }
 
+	// =========================
+	// hide/show functions for the buy/sell entries in the list
+	// =========================
+
+	confunc buy_hide0 { *bt_autosell0 invis true	*bt_buy0 invis true	*bt_sell0 invis true  }
+	confunc buy_hide1 { *bt_autosell1 invis true	*bt_buy1 invis true	*bt_sell1 invis true  }
+	confunc buy_hide2 { *bt_autosell2 invis true	*bt_buy2 invis true	*bt_sell2 invis true  }
+	confunc buy_hide3 { *bt_autosell3 invis true	*bt_buy3 invis true	*bt_sell3 invis true  }
+	confunc buy_hide4 { *bt_autosell4 invis true	*bt_buy4 invis true	*bt_sell4 invis true  }
+	confunc buy_hide5 { *bt_autosell5 invis true	*bt_buy5 invis true	*bt_sell5 invis true  }
+	confunc buy_hide6 { *bt_autosell6 invis true	*bt_buy6 invis true	*bt_sell6 invis true  }
+	confunc buy_hide7 { *bt_autosell7 invis true	*bt_buy7 invis true	*bt_sell7 invis true  }
+	confunc buy_hide8 { *bt_autosell8 invis true	*bt_buy8 invis true	*bt_sell8 invis true  }
+	confunc buy_hide9 { *bt_autosell9 invis true	*bt_buy9 invis true	*bt_sell9 invis true  }
+	confunc buy_hide10 { *bt_autosell10 invis true	*bt_buy10 invis true	*bt_sell10 invis true  }
+	confunc buy_hide11 { *bt_autosell11 invis true	*bt_buy11 invis true	*bt_sell11 invis true  }
+	confunc buy_hide12 { *bt_autosell12 invis true	*bt_buy12 invis true	*bt_sell12 invis true  }
+	confunc buy_hide13 { *bt_autosell13 invis true	*bt_buy13 invis true	*bt_sell13 invis true  }
+	confunc buy_hide14 { *bt_autosell14 invis true	*bt_buy14 invis true	*bt_sell14 invis true  }
+	confunc buy_hide15 { *bt_autosell15 invis true	*bt_buy15 invis true	*bt_sell15 invis true  }
+	confunc buy_hide16 { *bt_autosell16 invis true	*bt_buy16 invis true	*bt_sell16 invis true  }
+	confunc buy_hide17 { *bt_autosell17 invis true	*bt_buy17 invis true	*bt_sell17 invis true  }
+	confunc buy_hide18 { *bt_autosell18 invis true	*bt_buy18 invis true	*bt_sell18 invis true  }
+	confunc buy_hide19 { *bt_autosell19 invis true	*bt_buy19 invis true	*bt_sell19 invis true  }
+	confunc buy_hide20 { *bt_autosell20 invis true	*bt_buy20 invis true	*bt_sell20 invis true  }
+	confunc buy_hide21 { *bt_autosell21 invis true	*bt_buy21 invis true	*bt_sell21 invis true  }
+	confunc buy_hide22 { *bt_autosell22 invis true	*bt_buy22 invis true	*bt_sell22 invis true  }
+	confunc buy_hide23 { *bt_autosell23 invis true	*bt_buy23 invis true	*bt_sell23 invis true  }
+	confunc buy_hide24 { *bt_autosell24 invis true	*bt_buy24 invis true	*bt_sell24 invis true  }
+	confunc buy_hide25 { *bt_autosell25 invis true	*bt_buy25 invis true	*bt_sell25 invis true  }
+	confunc buy_hide26 { *bt_autosell26 invis true	*bt_buy26 invis true	*bt_sell26 invis true  }
+	confunc buy_hide27 { *bt_autosell27 invis true	*bt_buy27 invis true	*bt_sell27 invis true  }
+
+	confunc buy_show0 { *bt_autosell0 invis false	*bt_buy0 invis false	*bt_sell0 invis false  }
+	confunc buy_show1 { *bt_autosell1 invis false	*bt_buy1 invis false	*bt_sell1 invis false  }
+	confunc buy_show2 { *bt_autosell2 invis false	*bt_buy2 invis false	*bt_sell2 invis false  }
+	confunc buy_show3 { *bt_autosell3 invis false	*bt_buy3 invis false	*bt_sell3 invis false  }
+	confunc buy_show4 { *bt_autosell4 invis false	*bt_buy4 invis false	*bt_sell4 invis false  }
+	confunc buy_show5 { *bt_autosell5 invis false	*bt_buy5 invis false	*bt_sell5 invis false  }
+	confunc buy_show6 { *bt_autosell6 invis false	*bt_buy6 invis false	*bt_sell6 invis false  }
+	confunc buy_show7 { *bt_autosell7 invis false	*bt_buy7 invis false	*bt_sell7 invis false  }
+	confunc buy_show8 { *bt_autosell8 invis false	*bt_buy8 invis false	*bt_sell8 invis false  }
+	confunc buy_show9 { *bt_autosell9 invis false	*bt_buy9 invis false	*bt_sell9 invis false  }
+	confunc buy_show10 { *bt_autosell10 invis false	*bt_buy10 invis false	*bt_sell10 invis false  }
+	confunc buy_show11 { *bt_autosell11 invis false	*bt_buy11 invis false	*bt_sell11 invis false  }
+	confunc buy_show12 { *bt_autosell12 invis false	*bt_buy12 invis false	*bt_sell12 invis false  }
+	confunc buy_show13 { *bt_autosell13 invis false	*bt_buy13 invis false	*bt_sell13 invis false  }
+	confunc buy_show14 { *bt_autosell14 invis false	*bt_buy14 invis false	*bt_sell14 invis false  }
+	confunc buy_show15 { *bt_autosell15 invis false	*bt_buy15 invis false	*bt_sell15 invis false  }
+	confunc buy_show16 { *bt_autosell16 invis false	*bt_buy16 invis false	*bt_sell16 invis false  }
+	confunc buy_show17 { *bt_autosell17 invis false	*bt_buy17 invis false	*bt_sell17 invis false  }
+	confunc buy_show18 { *bt_autosell18 invis false	*bt_buy18 invis false	*bt_sell18 invis false  }
+	confunc buy_show19 { *bt_autosell19 invis false	*bt_buy19 invis false	*bt_sell19 invis false  }
+	confunc buy_show20 { *bt_autosell20 invis false	*bt_buy20 invis false	*bt_sell20 invis false  }
+	confunc buy_show21 { *bt_autosell21 invis false	*bt_buy21 invis false	*bt_sell21 invis false  }
+	confunc buy_show22 { *bt_autosell22 invis false	*bt_buy22 invis false	*bt_sell22 invis false  }
+	confunc buy_show23 { *bt_autosell23 invis false	*bt_buy23 invis false	*bt_sell23 invis false  }
+	confunc buy_show24 { *bt_autosell24 invis false	*bt_buy24 invis false	*bt_sell24 invis false  }
+	confunc buy_show25 { *bt_autosell25 invis false	*bt_buy25 invis false	*bt_sell25 invis false  }
+	confunc buy_show26 { *bt_autosell26 invis false	*bt_buy26 invis false	*bt_sell26 invis false  }
+	confunc buy_show27 { *bt_autosell27 invis false	*bt_buy27 invis false	*bt_sell27 invis false  }
+
 
 	pic bt_buy0
 	{
@@ -1087,6 +1149,33 @@ menu buyaircraft
 		format	"25 0"
 		pos		"542 40"
 	}
+
+	// =========================
+	// hide/show functions for the buy/sell entries in the list
+	// =========================
+
+	confunc buy_hide0 { *bt_buy0 invis true	*bt_sell0 invis true  }
+	confunc buy_hide1 { *bt_buy1 invis true	*bt_sell1 invis true  }
+	confunc buy_hide2 { *bt_buy2 invis true	*bt_sell2 invis true  }
+	confunc buy_hide3 { *bt_buy3 invis true	*bt_sell3 invis true  }
+	confunc buy_hide4 { *bt_buy4 invis true	*bt_sell4 invis true  }
+	confunc buy_hide5 { *bt_buy5 invis true	*bt_sell5 invis true  }
+	confunc buy_hide6 { *bt_buy6 invis true	*bt_sell6 invis true  }
+	confunc buy_hide7 { *bt_buy7 invis true	*bt_sell7 invis true  }
+	confunc buy_hide8 { *bt_buy8 invis true	*bt_sell8 invis true  }
+	confunc buy_hide9 { *bt_buy9 invis true	*bt_sell9 invis true  }
+
+	confunc buy_show0 { *bt_buy0 invis false	*bt_sell0 invis false  }
+	confunc buy_show1 { *bt_buy1 invis false	*bt_sell1 invis false  }
+	confunc buy_show2 { *bt_buy2 invis false	*bt_sell2 invis false  }
+	confunc buy_show3 { *bt_buy3 invis false	*bt_sell3 invis false  }
+	confunc buy_show4 { *bt_buy4 invis false	*bt_sell4 invis false  }
+	confunc buy_show5 { *bt_buy5 invis false	*bt_sell5 invis false  }
+	confunc buy_show6 { *bt_buy6 invis false	*bt_sell6 invis false  }
+	confunc buy_show7 { *bt_buy7 invis false	*bt_sell7 invis false  }
+	confunc buy_show8 { *bt_buy8 invis false	*bt_sell8 invis false  }
+	confunc buy_show9 { *bt_buy9 invis false	*bt_sell9 invis false  }
+
 
 	// ==================
 	// buy/sell buttons

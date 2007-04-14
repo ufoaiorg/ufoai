@@ -284,7 +284,7 @@ static void BS_BuyType_f (void)
 			/* Check whether the proper buytype, storage in current base and market. */
 			if (tech && BUYTYPE_MATCH(od->buytype, buyCategory) && (baseCurrent->storage.num[i] || ccs.eMarket.num[i])) {
 				BS_AddToList(od->name, baseCurrent->storage.num[i], ccs.eMarket.num[i], ccs.eMarket.ask[i]);
-
+				Cbuf_AddText(va("buy_show%i\n", j));
 				/* Set state of Autosell button. */
 				if (j < MAX_MARKET_MENU_ENTRIES) {
 					if (gd.autosell[i])
@@ -313,6 +313,7 @@ static void BS_BuyType_f (void)
 			tech = RS_GetTechByProvided(air_samp->id);
 			assert(tech);
 			if (RS_Collected_(tech) || RS_IsResearched_ptr(tech)) {
+				Cbuf_AddText(va("buy_show%i\n", j));
 				BS_AddToList(air_samp->name, AIR_GetStorageSupply(air_samp->id, qtrue), AIR_GetStorageSupply(air_samp->id, qfalse), air_samp->price);
 
 				buyList[j] = i;
@@ -320,6 +321,11 @@ static void BS_BuyType_f (void)
 			}
 		}
 		buyListLength = j;
+	}
+
+	for (; j < MAX_MARKET_MENU_ENTRIES; j++) {
+		/* hide the rest of the entries. */
+		Cbuf_AddText(va("buy_hide%i\n", j));
 	}
 
 	/* select first item */
