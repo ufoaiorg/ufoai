@@ -799,6 +799,21 @@ SOURCE=..\..\src\qcommon\ioapi.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\qcommon\irc.c
+
+!IF  "$(CFG)" == "ufo - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\qcommon\md4.c
 
 !IF  "$(CFG)" == "ufo - Win32 Release"
