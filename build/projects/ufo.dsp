@@ -86,7 +86,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /debug /machine:I386
-# ADD LINK32 winmm.lib wsock32.lib gdi32.lib kernel32.lib /nologo /subsystem:windows /incremental:no /map /debug /machine:I386 /out:"..\..\ufo.exe"
+# ADD LINK32 winmm.lib wsock32.lib gdi32.lib kernel32.lib user32.lib /nologo /subsystem:windows /incremental:no /map /debug /machine:I386 /out:"..\..\ufo.exe"
 # SUBTRACT LINK32 /nodefaultlib
 
 !ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
@@ -1225,7 +1225,55 @@ SOURCE=..\..\src\client\client.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\qcommon\cmd.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\qcommon\cmodel.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\qcommon\common.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\ports\win32\conproc.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\client\console.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\qcommon\cvar.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\qcommon\filesys.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\game\game.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\qcommon\ioapi.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\qcommon\md4.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\qcommon\mem.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\qcommon\net_chan.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\ports\win32\ogg.h
 # End Source File
 # Begin Source File
 
@@ -1233,7 +1281,23 @@ SOURCE=..\..\src\client\os_types.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\ports\win32\os_types.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\game\q_shared.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\client\qal.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\qcommon\qcommon.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\qcommon\qfiles.h
 # End Source File
 # Begin Source File
 
@@ -1242,6 +1306,14 @@ SOURCE=..\..\src\client\ref.h
 # Begin Source File
 
 SOURCE=..\..\src\client\screen.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\qcommon\scripts.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\server\server.h
 # End Source File
 # Begin Source File
 
@@ -1257,7 +1329,31 @@ SOURCE=..\..\src\client\sound.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\qcommon\ufotypes.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\qcommon\unzip.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\client\vid.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\ports\win32\vorbisfile.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\ports\win32\winquake.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\ports\win32\zconf.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\ports\win32\zlib.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"
