@@ -588,6 +588,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\client\cl_save.c"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\client\cl_scrn.c"
 				>
 			</File>
@@ -782,6 +786,10 @@
 			</File>
 			<File
 				RelativePath="..\..\src\client\cl_research.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\client\cl_save.h"
 				>
 			</File>
 			<File
