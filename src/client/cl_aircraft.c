@@ -293,7 +293,7 @@ void AIR_AircraftInit (void)
  * @brief Translates the aircraft status id to a translateable string
  * @param[in] aircraft Aircraft to translate the status of
  * @return Translation string of given status.
- * @note Called in: AIR_ListAircraft_f(), AIR_AircraftSelect(),
+ * @note Called in: CL_AircraftList_f(), AIR_ListAircraft_f(), AIR_AircraftSelect(),
  * @note MAP_DrawMap(), CL_DisplayPopupIntercept()
  */
 char *AIR_AircraftStatusToName (aircraft_t * aircraft)
