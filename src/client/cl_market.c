@@ -103,7 +103,7 @@ static void BS_MarketClick_f (void)
 
 	if (buyCategory == BUY_AIRCRAFT)
 		CL_MarketAircraftDescription(buyList[num]);
-	else
+	else if (buyCategory != -1)
 		CL_ItemDescription(buyList[num]);
 }
 
@@ -195,6 +195,7 @@ static void BS_BuyType_f (void)
 	RS_CheckAllCollected(); /* TODO: needed? */
 
 	CL_UpdateCredits(ccs.credits);
+
 	*bsMarketNames = *bsMarketStorage = *bsMarketMarket = *bsMarketPrices = '\0';
 
 	menuText[TEXT_MARKET_NAMES] = bsMarketNames;
@@ -462,7 +463,6 @@ static void CL_SellAircraft_f (void)
 			Com_DPrintf("CL_SellAircraft_f: Selling aircraft with IDX %i\n", aircraft->idx);
 			CL_DeleteAircraft(aircraft);
 
-			Cbuf_AddText(va("buyselect%i\n;", num));
 			CL_UpdateCredits(ccs.credits + aircraft_samples[aircraftID].price);
 			/* reinit the menu */
 			Cmd_BufClear();
