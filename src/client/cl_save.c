@@ -66,6 +66,12 @@ static qboolean SAV_GameLoad (const char *filename)
 		Com_Printf("Warning: Could not read %i bytes from savefile\n", clen);
 	fclose(f.f);
 
+	memcpy(&header, cbuf, sizeof(saveFileHeader_t));
+	Com_Printf("Loading savegame\n"
+		"version: %i\n"
+		"game version: %s\n"
+		, header.version, header.gameVersion);
+
 	buf = (byte *) malloc(sizeof(byte) * MAX_GAMESAVESIZE);
 	SZ_Init(&sb, buf, MAX_GAMESAVESIZE);
 
@@ -152,13 +158,18 @@ extern qboolean SAV_GameSave (const char *filename, const char *comment)
 	}
 	/* create data */
 	SZ_Init(&sb, buf, MAX_GAMESAVESIZE);
+
+	/* step 3 - serialzer */
+	for (i = 0; i < saveSubsystemsAmount; i++)
+		saveSubsystems->save(&sb, NULL);
+
 	/* compress data using zlib before writing */
 	bufLen = (uLongf) (24 + 1.02 * sb.cursize);
-	fbuf = (byte *) malloc(sizeof(byte) * (bufLen + sizeof(saveFileHeader_t)));
-	/* write an uncompressed header containing the comment and a timestamp */
-	memset(fbuf, 0, sizeof(byte) * sizeof(saveFileHeader_t));
+	fbuf = (byte *) malloc(sizeof(byte) * bufLen + sizeof(saveFileHeader_t));
+	/* write an uncompressed header */
+	memset(fbuf, 0, sizeof(saveFileHeader_t));
 
-	/* step 3 - write the header */
+	/* step 4 - write the header */
 	memset(&header, 0, sizeof(saveFileHeader_t));
 	header.compressed = 1; /* TODO: switchable if zlib is not available */
 	header.version = SAVE_FILE_VERSION;
@@ -167,12 +178,8 @@ extern qboolean SAV_GameSave (const char *filename, const char *comment)
 	CL_DateConvert(&ccs.date, &day, &month);
 	Com_sprintf(header.gameDate, sizeof(header.gameDate), "%02i %s %i",
 		day, CL_DateGetMonthName(month), ccs.date.day / 365);
-	memcpy(fbuf, &header, sizeof(saveFileHeader_t));
 	/* TODO fill real date string */
-
-	/* step 4 - serialzer */
-	for (i = 0; i < saveSubsystemsAmount; i++)
-		saveSubsystems->save(&sb, NULL);
+	memcpy(fbuf, &header, sizeof(saveFileHeader_t));
 
 	/* step 5 - compress */
 	if (header.compressed) {
@@ -181,7 +188,7 @@ extern qboolean SAV_GameSave (const char *filename, const char *comment)
 
 		if (res != Z_OK) {
 			free(fbuf);
-			Com_Printf("Memory error compressing save-game data (%s)!", comment);
+			Com_Printf("Memory error compressing save-game data (%s) (Error: %i)!\n", comment, res);
 			return qfalse;
 		}
 	} else {
