@@ -182,6 +182,7 @@ rebox:;
 			if (!IsDebuggerPresent())
 				ExitProcess(0x1d107);
 #endif
+#endif
 			Sys_DebugBreak();
 		} else
 			goto rebox;
