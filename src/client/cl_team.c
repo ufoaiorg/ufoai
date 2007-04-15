@@ -713,12 +713,12 @@ static void CL_GenerateEquipment_f (void)
 			item.t = i;
 
 			assert (unused.num[i] > 0);
-			
+
 			/* Check if there are any "multi_ammo" items and move them to the PRI container (along with PRI items of course).
 			 * Otherwise just use the container-buytype of the item.
 			 * HACKHACK
 			 */
-			if (BUY_PRI(csi.ods[i].buytype)) { 
+			if (BUY_PRI(csi.ods[i].buytype)) {
 				if (!Com_TryAddToBuyType(&baseCurrent->equipByBuyType, CL_AddWeaponAmmo(&unused, item), BUY_WEAP_PRI))
 					break; /* no space left in menu */
 			} else {
@@ -745,16 +745,15 @@ static void CL_MoveMultiEquipment (inventory_t* const inv, int buytype_container
 	int container;
 	invList_t *ic = NULL;
 	invList_t *ic_temp = NULL;
-	int x,y;
-	
+
 	if (!inv)
 		return;
 
 	/* Do nothing if no pri/sec category is shown. */
 	if ((buytype_container != BUY_WEAP_PRI) && (buytype_container != BUY_WEAP_SEC))
 		return;
-	
-	/* Set source conteiner to the one that is not the destination container. */
+
+	/* Set source container to the one that is not the destination container. */
 	container = (buytype_container == BUY_WEAP_PRI)
 		? BUY_WEAP_SEC
 		: BUY_WEAP_PRI;
@@ -768,7 +767,7 @@ static void CL_MoveMultiEquipment (inventory_t* const inv, int buytype_container
 	while (ic) {
 		if (csi.ods[ic->item.t].buytype == BUY_MULTI_AMMO) {
 			ic_temp = ic->next;
-			Com_MoveInInventoryIgnore(inv, container, ic->x, ic->y, buytype_container, x, y, NULL, &ic, qtrue); /**< @todo Does the function work like this? */
+			Com_MoveInInventoryIgnore(inv, container, ic->x, ic->y, buytype_container, NONE, NONE, NULL, &ic, qtrue); /**< @todo Does the function work like this? */
 			ic = ic_temp;
 		} else {
 			ic = ic->next;
@@ -794,13 +793,13 @@ static void CL_EquipType_f (void)
 	if (num < 0 && num >= BUY_MULTI_AMMO)
 		return;
 
-	
+
 	/* display new items */
 	baseCurrent->equipType = num;
 	if (menuInventory) {
 		CL_MoveMultiEquipment (&baseCurrent->equipByBuyType, num); /**< Move all multi-ammo items to the current container. */
 		menuInventory->c[csi.idEquip] = baseCurrent->equipByBuyType.c[num];
-	}	
+	}
 }
 
 /**

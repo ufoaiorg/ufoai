@@ -2532,7 +2532,6 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 	/* We are in base-equip screen (multi-ammo workaround) and can skip a lot of checks. */
 	if (ignore_type) {
 		Com_TryAddToBuyType(i, cacheItem, to); /* get target coordinates */
-		/* ic = Com_AddToInventory(i, cacheItem, to, tx, ty);*/
 		/* return data */
 		/*if (icp)
 			*icp = ic;*/

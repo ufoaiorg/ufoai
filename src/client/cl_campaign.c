@@ -4085,8 +4085,10 @@ static void CL_NationList_f (void)
 /* these commands are only available in singleplayer */
 static const cmdList_t game_commands[] = {
 	{"aircraft_start", CL_AircraftStart_f, NULL}
+#ifdef DEBUG
 	,
 	{"aircraftlist", CL_ListAircraft_f, NULL}
+#endif
 	,
 	{"aircraft_select", CL_AircraftSelect_f, NULL}
 	,
