@@ -1180,7 +1180,7 @@ static void MN_TextRightClick (menuNode_t * node, int mouseOver)
 }
 
 /**
- * @brief
+ * @brief Is called everytime one clickes on a menu/screen. Then checks if anything needs to be executed in the earea of the click (e.g. button-commands, inventory-handling, geoscape-stuff, etc...)
  * @sa MN_ModelClick
  * @sa MN_TextRightClick
  * @sa MN_TextClick
@@ -1201,11 +1201,13 @@ void MN_Click (int x, int y)
 	menu_t *menu;
 	int sp, mouseOver;
 	qboolean clickedInside = qfalse;
+	menuAction_t *execute_action = NULL;
 
 	sp = menuStackPos;
 
 	while (sp > 0) {
 		menu = menuStack[--sp];
+		execute_action = NULL;
 		for (node = menu->firstNode; node; node = node->next) {
 			if (node->type != MN_CONTAINER && !node->click)
 				continue;
@@ -1243,11 +1245,20 @@ void MN_Click (int x, int y)
 				MN_TextClick(node, mouseOver);
 				break;
 			default:
-				MN_ExecuteActions(menu, node->click);
+				/* Save the action for later execution. */
+				if (node->click && (node->click->type != EA_NULL))
+					execute_action = node->click;
 				break;
 			}
 		}
-
+		
+		/* Only execute the last-found (i.e. from the top-most displayed node) action found.
+		 * Especially needed for button-nodes that are (partially) overlayed and all have actions defined.
+		 * e.g. the firemode checkboxes.
+		 */
+		if (execute_action)
+			MN_ExecuteActions(menu, execute_action);
+		
 		/* TODO: maybe we should also check sp == menuStackPos here */
 		if (!clickedInside && menu->leaveNode)
 			MN_ExecuteActions(menu, menu->leaveNode->click);
