@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define DAYS_PER_YEAR 365
 #define DAYS_PER_YEAR_AVG 365.25
 #define MONTHS_PER_YEAR 12
+#define BID_FACTOR 0.9
 
 /* public vars */
 static mission_t missions[MAX_MISSIONS];	/**< Document me. */
@@ -1260,7 +1261,25 @@ static void CL_HandleBudget (void)
 }
 
 /**
- * @brief simulates one day of supply and demand on the market (adds items)
+ * @brief sets item prices at start of the game
+ * @sa CL_GameInit
+ */
+static void CL_CampaignInitMarket (void)
+{
+	int i;
+	for (i = 0; i < csi.numODs; i++) {
+		if (RS_ItemIsResearched(csi.ods[i].id)) {
+			if(ccs.eMarket.ask[i] == 0)
+			{
+				ccs.eMarket.ask[i] = csi.ods[i].price;
+				ccs.eMarket.bid[i] = floor(ccs.eMarket.ask[i]*BID_FACTOR);
+			}
+		}
+	}
+}
+
+/**
+ * @brief simulates one hour of supply and demand on the market (adds items and sets prices)
  * @sa CL_CampaignRun
  * @sa CL_GameNew
  */
@@ -1270,8 +1289,8 @@ static void CL_CampaignRunMarket (void)
 	equipDef_t *ed;
 	double m_supp_rs, m_supp_pr, curr_supp_diff;
 	/* supply and demand */
-	const double mrs1 = 1, mrs2 = 1, mrs3 = 0.1, mpr1 = 900, mrg1 = 0.002,
-		mrg2 = 0.02, bid_factor = 0.90;
+	const double mrs1 = 1, mrs2 = 1, mrs3 = 0.1, mpr1 = 400, mrg1 = 0.002,
+		mrg2 = 0.03;
 
 	/* find the relevant market */
 	for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++)
@@ -1289,11 +1308,14 @@ static void CL_CampaignRunMarket (void)
 			technology_t *tech = RS_GetTechByProvided(csi.ods[i].id);
 			int reasearched_date = tech->researchedDateDay + tech->researchedDateMonth*30 +  tech->researchedDateYear*DAYS_PER_YEAR - 2;
 			if (reasearched_date <= curCampaign->date.sec/86400 + curCampaign->date.day)
-				reasearched_date -= 300;
+				reasearched_date -= 100;
 			m_supp_rs = mrs3 * sqrt(mrs1*ccs.date.day - mrs2*reasearched_date);
 			m_supp_pr = mpr1/sqrt(csi.ods[i].price+1);
-			curr_supp_diff = m_supp_rs*m_supp_pr - ccs.eMarket.num[i];
-			ccs.eMarket.cumm_supp_diff[i] += curr_supp_diff;
+			curr_supp_diff = floor(m_supp_rs*m_supp_pr - ccs.eMarket.num[i]);
+			if(curr_supp_diff != 0)
+				ccs.eMarket.cumm_supp_diff[i] += curr_supp_diff;
+			else
+				ccs.eMarket.cumm_supp_diff[i] *= 0.9;
 			market_action = floor(mrg1*ccs.eMarket.cumm_supp_diff[i] + mrg2*curr_supp_diff);
 			ccs.eMarket.num[i] += market_action;
 			if (ccs.eMarket.num[i]<0)
@@ -1301,10 +1323,10 @@ static void CL_CampaignRunMarket (void)
 
 			/* set item price based on supply imbalance */
 			if(m_supp_rs*m_supp_pr >= 1)
-				ccs.eMarket.ask[i] = floor( csi.ods[i].price*(1-(1-bid_factor)/2*(1/(1+exp(curr_supp_diff/(m_supp_rs*m_supp_pr)))*2-1)) );
+				ccs.eMarket.ask[i] = floor( csi.ods[i].price*(1-(1-BID_FACTOR)/2*(1/(1+exp(curr_supp_diff/(m_supp_rs*m_supp_pr)))*2-1)) );
 			else
 				ccs.eMarket.ask[i] = csi.ods[i].price;
-			ccs.eMarket.bid[i] = floor(ccs.eMarket.ask[i]*bid_factor);
+			ccs.eMarket.bid[i] = floor(ccs.eMarket.ask[i]*BID_FACTOR);
 		}
 	}
 }
@@ -3841,8 +3863,8 @@ void CL_GameInit (void)
 	 * and shields to aircrafts. */
 	AIR_AircraftInit();
 
-	CL_CampaignRunMarket();
-
+	CL_CampaignInitMarket();
+	
 	/* Init popup and map/geoscape */
 	CL_PopupInit();
 	MAP_GameInit();
