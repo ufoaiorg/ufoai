@@ -2658,6 +2658,7 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
 	MSG_WriteByte(sb, gd.numBases);
 	for (i = 0; i < gd.numBases; i++) {
 		b = &gd.bases[i];
+		/* FIXME. No utf-8 support for b->name. */
 		MSG_WriteString(sb, b->name);
 		MSG_WriteChar(sb, b->mapChar);
 		MSG_WritePos(sb, b->pos);
@@ -2698,6 +2699,25 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
 		}
 
 		MSG_WriteShort(sb, b->radar.range);
+
+		/* Alien Containment. */
+		MSG_WriteByte(sb, numTeamDesc);
+		for (k = 0; k < numTeamDesc; k++) {
+			if (!teamDesc[k].alien)
+				continue;
+			MSG_WriteByte(sb, b->alienscont[k].idx);
+			MSG_WriteString(sb, b->alienscont[k].alientype);
+			/* Zenerka. WriteByte here? */
+			MSG_WriteByte(sb, b->alienscont[k].amount_alive);
+			MSG_WriteByte(sb, b->alienscont[k].amount_dead);
+			MSG_WriteByte(sb, b->alienscont[k].techIdx);
+		}
+
+		/* Base capacities. */
+		for (k = 0; k < MAX_CAP; k++) {
+			MSG_WriteByte(sb, b->capacities[k].cur);
+			MSG_WriteByte(sb, b->capacities[k].max);
+		}            
 
 #if 0
 		aliensCont_t alienscont[MAX_ALIENCONT_CAP];	/**< alien containment capacity */
@@ -2763,6 +2783,23 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 		}
 
 		b->radar.range = MSG_ReadShort(sb);
+
+		/* Alien Containment. */
+		l = MSG_ReadByte(sb);
+		for (k = 0; k < l; k++) {
+			b->alienscont[k].idx = MSG_ReadByte(sb);
+			/* Zenerka. There should NOT be MAX_VAR here, don't it? */
+			Q_strncpyz(b->alienscont[k].alientype, MSG_ReadString(sb), MAX_VAR);
+			b->alienscont[k].amount_alive = MSG_ReadByte(sb);
+			b->alienscont[k].amount_dead = MSG_ReadByte(sb);
+			b->alienscont[k].techIdx = MSG_ReadByte(sb);
+		}
+
+		/* Base capacities. */
+		for (k = 0; k < MAX_CAP; k++) {
+			b->capacities[k].cur = MSG_ReadByte(sb);
+			b->capacities[k].max = MSG_ReadByte(sb);
+		}
 
 		/* TODO: read the missing ones */
 
