@@ -47,9 +47,9 @@ ifeq ($(TARGET_OS),darwin)
 				-framework OpenGL \
 				-L/sw/lib \
 				-L/opt/local/lib \
-				#-Wl,-syslibroot,/Developer/SDKs/MacOSX10.3.9.sdk,-m \
+				#-Wl,-syslibroot,/Developer/SDKs/MacOSX10.4u.sdk,-m \
 				#(für intel)-Wl,-syslibroot,/Developer/SDKs/MacOSX10.4u.sdk \
-				-F/Developer/SDKs/MacOSX10.3.9.sdk/System/Library/Frameworks \
+				-F/Developer/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks \
       			-arch ppc \
       			-framework Carbon \
       			-framework Cocoa \
