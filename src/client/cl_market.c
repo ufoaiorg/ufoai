@@ -246,7 +246,7 @@ static void BS_BuyType_f (void)
 				Cbuf_AddText(va("buy_show%i\n", j));
 				storage = supply = 0;
 				AIR_GetStorageSupplyCount(air_samp->id, &storage, &supply);
-				BS_AddToList(air_samp->name, AIR_GetStorageSupply(air_samp->id, qtrue), AIR_GetStorageSupply(air_samp->id, qfalse), air_samp->price);
+				BS_AddToList(air_samp->name, storage, supply, air_samp->price);
 
 				buyList[j] = i;
 				j++;
