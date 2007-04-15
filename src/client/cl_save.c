@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 saveSubsystems_t saveSubsystems[MAX_SAVESUBSYSTEMS];
 int saveSubsystemsAmount;
+static cvar_t* save_compressed;
 
 /**
  * @brief Loads a savegame from file
@@ -188,7 +189,7 @@ extern qboolean SAV_GameSave (const char *filename, const char *comment)
 
 	/* step 4 - write the header */
 	memset(&header, 0, sizeof(saveFileHeader_t));
-	header.compressed = 1; /* TODO: switchable if zlib is not available */
+	header.compressed = save_compressed->integer;
 	header.version = SAVE_FILE_VERSION;
 	Q_strncpyz(header.name, comment, sizeof(header.name));
 	Q_strncpyz(header.gameVersion, UFO_VERSION, sizeof(header.gameVersion));
@@ -399,4 +400,6 @@ extern void SAV_Init (void)
 	Cmd_AddCommand("game_load", SAV_GameLoad_f, "Loads a given filename");
 	Cmd_AddCommand("game_comments", SAV_GameSaveNames_f, "Loads the savegame names");
 	Cmd_AddCommand("game_continue", SAV_GameContinue_f, "Continue with the last saved game");
+
+	save_compressed = Cvar_Get("save_compressed", "1", CVAR_ARCHIVE, "Save the savefiles compressed if set to 1");
 }

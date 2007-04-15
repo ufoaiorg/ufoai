@@ -2124,7 +2124,7 @@ extern qboolean RS_Save (sizebuf_t* sb, void* data)
 		MSG_WriteShort(sb, t->researchedDateYear);
 		for (j = 0; j < TECHMAIL_MAX; j++) {
 			/* only save the already read mails */
-			MSG_WriteString(sb, t->mail[j].subject);
+			MSG_WriteByte(sb, j);
 			MSG_WriteByte(sb, t->mail[j].read);
 		}
 	}
@@ -2137,10 +2137,10 @@ extern qboolean RS_Save (sizebuf_t* sb, void* data)
  */
 extern qboolean RS_Load (sizebuf_t* sb, void* data)
 {
-	int i, j, k, l;
+	int i, j, k;
 	technology_t *t;
 	const char *techString;
-	const char *mailSubject;
+	techMailType_t mailType;
 
 	j = MSG_ReadLong(sb);
 	if (j != gd.numTechnologies)
@@ -2181,17 +2181,8 @@ extern qboolean RS_Load (sizebuf_t* sb, void* data)
 		t->researchedDateMonth = MSG_ReadShort(sb);
 		t->researchedDateYear = MSG_ReadShort(sb);
 		for (k = 0; k < TECHMAIL_MAX; k++) {
-			mailSubject = MSG_ReadString(sb);
-			for (l = 0; l < TECHMAIL_MAX; l++) {
-				if (!Q_strncmp(t->mail[l].subject, mailSubject, sizeof(t->mail[l].subject))) {
-					t->mail[k].read = MSG_ReadByte(sb);
-					break;
-				}
-			}
-			if (l == t->numTechMails) {
-				Com_Printf("Could not find techmail '%s'\n", mailSubject);
-				MSG_ReadByte(sb);
-			}
+			mailType = MSG_ReadByte(sb);
+			t->mail[mailType].read = MSG_ReadByte(sb);
 		}
 	}
 
