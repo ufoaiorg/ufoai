@@ -1,6 +1,7 @@
 /**
  * @file polylib.c
  * @brief
+ * @note Winding = Polyon representation of brushes
  */
 
 /*

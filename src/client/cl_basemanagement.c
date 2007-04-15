@@ -2685,7 +2685,7 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
 			aircraft = &b->aircraft[k];
 
 		}
-		MSG_WriteLong(sb, MAX_AIRCRAFT);
+		MSG_WriteShort(sb, MAX_AIRCRAFT);
 		for (k = 0; k < MAX_AIRCRAFT; k++)
 			MSG_WriteByte(sb, b->teamNum[k]);
 
@@ -2693,11 +2693,11 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
 
 		/* store equipment */
 		for (k = 0; k < MAX_OBJDEFS; k++) {
-			MSG_WriteLong(sb, b->storage.num[k]);
+			MSG_WriteShort(sb, b->storage.num[k]);
 			MSG_WriteByte(sb, b->storage.num_loose[k]);
 		}
 
-		MSG_WriteLong(sb, b->radar.range);
+		MSG_WriteShort(sb, b->radar.range);
 
 #if 0
 		aliensCont_t alienscont[MAX_ALIENCONT_CAP];	/**< alien containment capacity */
@@ -2750,18 +2750,18 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 			/* TODO aircraft loading */
 		}
 
-		for (k = 0; k < MSG_ReadLong(sb); k++)
+		for (k = 0; k < MSG_ReadShort(sb); k++)
 			b->teamNum[k] = MSG_ReadByte(sb);
 
 		b->equipType = MSG_ReadByte(sb);
 
 		/* read equipment */
 		for (k = 0; k < MAX_OBJDEFS; k++) {
-			b->storage.num[k] = MSG_ReadLong(sb);
+			b->storage.num[k] = MSG_ReadShort(sb);
 			b->storage.num_loose[k] = MSG_ReadByte(sb);
 		}
 
-		b->radar.range = MSG_ReadLong(sb);
+		b->radar.range = MSG_ReadShort(sb);
 
 		/* TODO: read the missing ones */
 
@@ -2773,7 +2773,7 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 
 		/* fix aircraft homebase and teamsize pointers */
 		/* the mission pointer in updated in SAV_GameLoad */
-		for (i = 0, aircraft = b->aircraft; i < b->numAircraftInBase; i++, aircraft++) {
+		for (k = 0, aircraft = b->aircraft; k < b->numAircraftInBase; k++, aircraft++) {
 			aircraft->teamSize = &b->teamNum[aircraft->idxInBase];
 			aircraft->homebase = &gd.bases[aircraft->idxBase];
 			aircraft->shield = RS_GetTechByID(aircraft->shield_string);
@@ -2793,10 +2793,10 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 		/* FIXME: EMPL_ROBOTS => ugvs */
 		aircraft = &b->aircraft[b->aircraftCurrent];
 
-		for (i = 0, p = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++)
-			if (CL_SoldierInAircraft(i, aircraft->idx)) {
+		for (k = 0, p = 0; k < gd.numEmployees[EMPL_SOLDIER]; k++)
+			if (CL_SoldierInAircraft(k, aircraft->idx)) {
 				/* maybe we already have soldiers in this base */
-				b->curTeam[p] = E_GetHiredCharacter(b, EMPL_SOLDIER, i);
+				b->curTeam[p] = E_GetHiredCharacter(b, EMPL_SOLDIER, k);
 				assert(b->curTeam[p]);
 				p++;
 			}
