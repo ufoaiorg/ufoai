@@ -2630,6 +2630,7 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 		*TU -= time;
 
 	ic = Com_AddToInventory(i, cacheItem, to, tx, ty);
+	Com_RemoveFromInventory(i, from, fx, fy);
 
 	/* return data */
 	if (icp)
