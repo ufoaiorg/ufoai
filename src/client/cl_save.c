@@ -142,7 +142,7 @@ static qboolean SAV_GameLoad (const char *filename)
 extern qboolean SAV_GameSave (const char *filename, const char *comment)
 {
 	sizebuf_t sb;
-	int i;
+	int i, diff;
 	int res;
 	char savegame[MAX_OSPATH];
 	byte *buf, *fbuf;
@@ -175,9 +175,11 @@ extern qboolean SAV_GameSave (const char *filename, const char *comment)
 	Com_Printf("Save '%s'\n", filename);
 	/* step 3 - serialzer */
 	for (i = 0; i < saveSubsystemsAmount; i++) {
-		Com_Printf("...subsystem '%s'\n", saveSubsystems[i].name);
+		diff = sb.cursize;
 		if (!saveSubsystems[i].save(&sb, NULL))
 			Com_Printf("...subsystem '%s' failed to save the data\n", saveSubsystems[i].name);
+		else
+			Com_Printf("...subsystem '%s' - saved %i bytes\n", saveSubsystems[i].name, sb.cursize - diff);
 		MSG_WriteByte(&sb, 0);
 	}
 
