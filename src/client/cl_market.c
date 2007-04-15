@@ -371,7 +371,7 @@ static void BS_BuyItem_f (void)
 
 	/* Select the item. TODO: maybe better done in ufo file?*/
 	Cbuf_AddText(va("market_click %i\n",num));
-	
+
 	item = buyList[num];
 	CL_ItemDescription(item);
 	Com_DPrintf("BS_BuyItem_f: item %i\n", item);
@@ -411,7 +411,7 @@ static void BS_SellItem_f (void)
 
 	/* Select the item. TODO: maybe better done in ufo file?*/
 	Cbuf_AddText(va("market_click %i\n",num));
-	
+
 	item = buyList[num];
 	CL_ItemDescription(item);
 	if (baseCurrent->storage.num[item]) {
