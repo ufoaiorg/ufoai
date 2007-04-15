@@ -220,7 +220,7 @@ static production_t *PR_QueueNew (production_queue_t *queue, signed int objID, s
 	numWorkshops = B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, B_WORKSHOP);
 
 	if (queue->numItems >= numWorkshops * MAX_PRODUCTIONS_PER_WORKSHOP) {
-		MN_Popup(_("Notice"), _("You cannot queue more items.\nBuild more workshops.\n"));
+		MN_Popup(_("Not enough workshops"), _("You cannot queue more items.\nBuild more workshops.\n"));
 		return NULL;
 	}
 

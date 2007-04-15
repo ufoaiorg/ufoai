@@ -454,12 +454,13 @@ extern employee_t* E_GetUnassignedEmployee (const base_t* const base, employeeTy
  * @param[in] base Which base the employee should be hired in
  * @param[in] type Which employee type do we search
  * @param[in] idx Which employee id (in global employee array) See E_GetUnhiredEmployee for usage.
- * @todo Check for quarter space
  * @sa E_UnhireEmployee
  */
-extern qboolean E_HireEmployee (const base_t* const base, employeeType_t type, int idx)
+extern qboolean E_HireEmployee (base_t* base, employeeType_t type, int idx)
 {
 	employee_t* employee = NULL;
+#if 0
+/* Introducing capacity for quarters. 15042007 Zenerka */
 	int spaceTotal = 0;
 	int employeesTotal = 0;
 	int diff;
@@ -476,6 +477,11 @@ extern qboolean E_HireEmployee (const base_t* const base, employeeType_t type, i
 		MN_Popup(_("Not enough quarters"), _("You don't have enough quarters for your employees."));
 		return qfalse;
 	}
+#endif
+	if (base->capacities[CAP_EMPLOYEES].cur >= base->capacities[CAP_EMPLOYEES].max) {
+		MN_Popup(_("Not enough quarters"), _("You don't have enough quarters for your employees.\nBuild more quarters."));
+		return qfalse;
+	}
 
 	employee = E_GetUnhiredEmployee(type, idx);
 	if (employee) {
@@ -485,6 +491,8 @@ extern qboolean E_HireEmployee (const base_t* const base, employeeType_t type, i
 		/* If we hired EMPL_WORKER update production times in production queue. */
 		if (type == EMPL_WORKER)
 			PR_UpdateProductionTime(base->idx);
+		/* Update capacity. */
+		base->capacities[CAP_EMPLOYEES].cur++;
 		return qtrue;
 	}
 	return qfalse;
@@ -499,7 +507,7 @@ extern qboolean E_HireEmployee (const base_t* const base, employeeType_t type, i
  * @sa E_HireEmployee
  * @sa CL_RemoveSoldierFromAircraft
  */
-extern qboolean E_UnhireEmployee (const base_t* const base, employeeType_t type, int idx)
+extern qboolean E_UnhireEmployee (base_t* base, employeeType_t type, int idx)
 {
 	employee_t* employee = NULL;
 	employee = E_GetHiredEmployee(base, type, idx);
@@ -531,6 +539,8 @@ extern qboolean E_UnhireEmployee (const base_t* const base, employeeType_t type,
 		/* If we fired EMPL_WORKER update production times in production queue. */
 		if (type == EMPL_WORKER)
 			PR_UpdateProductionTime(base->idx);
+		/* Update capacity. */
+		base->capacities[CAP_EMPLOYEES].cur--;
 		return qtrue;
 	} else
 		Com_Printf("Could not get hired employee '%i' from base '%i'\n", idx, base->idx);
@@ -542,7 +552,7 @@ extern qboolean E_UnhireEmployee (const base_t* const base, employeeType_t type,
  * @param[in] base Which base the employee should be fired from.
  * @param[in] type Which employee type do we search.
  */
-extern void E_UnhireAllEmployees (const base_t* const base, employeeType_t type)
+extern void E_UnhireAllEmployees (base_t* base, employeeType_t type)
 {
 	int i;
 	employee_t *employee = NULL;
@@ -667,7 +677,7 @@ extern qboolean E_DeleteEmployee (employee_t *employee, employeeType_t type)
  * @note Used if the base e.g is destroyed by the aliens.
  * @param[in] base Which base the employee should be fired from.
  */
-extern void E_DeleteAllEmployees (const base_t* const base)
+extern void E_DeleteAllEmployees (base_t* base)
 {
 	int i;
 	employeeType_t type;
