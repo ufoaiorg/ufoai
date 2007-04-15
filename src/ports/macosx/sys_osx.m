@@ -468,6 +468,15 @@ char *Sys_GetClipboardData (void)
 #endif
 }
 
+void InitCocoa(void)
+{
+	void* cocoa_lib; 
+	cocoa_lib = dlopen( "/System/Library/Frameworks/Cocoa.framework/Cocoa", RTLD_LAZY ); 
+	void (*nsappload)(void); 
+	nsappload = (void(*)()) dlsym( cocoa_lib, "NSApplicationLoad"); 
+	nsappload(); 
+}
+
 /**
  * @brief The entry point for linux server and client.
  *
@@ -482,6 +491,7 @@ int main (int argc, char **argv)
 	int time, oldtime, newtime;
 	float timescale = 1.0;
 
+	InitCocoa();
 	/* go back to real user for config loads */
 	saved_euid = geteuid();
 	seteuid(getuid());
