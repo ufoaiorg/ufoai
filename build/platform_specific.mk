@@ -48,18 +48,18 @@ ifeq ($(TARGET_OS),darwin)
 				-L/sw/lib \
 				-L/opt/local/lib \
 				#-Wl,-syslibroot,/Developer/SDKs/MacOSX10.4u.sdk,-m \
-				#(für intel)-Wl,-syslibroot,/Developer/SDKs/MacOSX10.4u.sdk \
+				#(fr intel)-Wl,-syslibroot,/Developer/SDKs/MacOSX10.4u.sdk \
 				-F/Developer/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks \
       			-arch ppc \
       			-framework Carbon \
       			-framework Cocoa \
       			-framework OpenGL \
-      			-framework IOKit      			
-  
+      			-framework IOKit
+
 	CFLAGS += -D_BSD_SOURCE -D_XOPEN_SOURCE
 	#FIXME
 	CLIENT_LIBS+=-lintl
-	SERVER_LIBS+=-lintl 
+	SERVER_LIBS+=-lintl
 endif
 
 #########################################################################################################################

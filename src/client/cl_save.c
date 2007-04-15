@@ -48,7 +48,7 @@ static qboolean SAV_GameLoad (const char *filename)
 	uLongf len = MAX_GAMESAVESIZE;
 	qFILE f;
 	byte *buf, *cbuf;
-	int res, clen, i;
+	int res, clen, i, diff;
 	sizebuf_t sb;
 	saveFileHeader_t header;
 
@@ -109,11 +109,14 @@ static qboolean SAV_GameLoad (const char *filename)
 	memset(&gd, 0, sizeof(gd));
 	CL_ReadSinglePlayerData();
 
+	Com_Printf("Load '%s'\n", filename);
 	for (i = 0; i < saveSubsystemsAmount; i++) {
+		diff = sb->readcount;
 		if (!saveSubsystems[i].load(&sb, &header)) {
 			Com_Printf("Subsystem '%s' returned false - savegame could not be loaded\n", saveSubsystems[i].name);
 			return qfalse;
-		}
+		} else
+			Com_Printf("")
 		if (MSG_ReadByte(&sb) != 0)
 			Com_Printf("Subsystem '%s' could not be loaded correctly - savegame might be broken\n", saveSubsystems[i].name);
 	}
@@ -139,7 +142,7 @@ static qboolean SAV_GameLoad (const char *filename)
 /**
  * @brief
  */
-extern qboolean SAV_GameSave (const char *filename, const char *comment)
+static qboolean SAV_GameSave (const char *filename, const char *comment, char **error)
 {
 	sizebuf_t sb;
 	int i, diff;
@@ -151,12 +154,14 @@ extern qboolean SAV_GameSave (const char *filename, const char *comment)
 	saveFileHeader_t header;
 
 	if (!curCampaign) {
-		Com_Printf("No campaign active.\n");
+		*error = "No campaign active.";
+		Com_Printf("%s\n", *error);
 		return qfalse;
 	}
 
 	if (!gd.numBases) {
-		Com_Printf("Nothing to save yet.\n");
+		*error = "Nothing to save yet.";
+		Com_Printf("%s\n", *error);
 		return qfalse;
 	}
 
@@ -166,7 +171,8 @@ extern qboolean SAV_GameSave (const char *filename, const char *comment)
 	/* step 2 - allocate the buffers */
 	buf = (byte *) malloc(sizeof(byte) * MAX_GAMESAVESIZE);
 	if (!buf) {
-		Com_Printf("Error: Could not allocate enough memory to save this game\n");
+		*error = "Error: Could not allocate enough memory to save this game";
+		Com_Printf("%s\n", *error);
 		return qfalse;
 	}
 	/* create data */
@@ -208,6 +214,7 @@ extern qboolean SAV_GameSave (const char *filename, const char *comment)
 
 		if (res != Z_OK) {
 			free(fbuf);
+			*error = "Memory error compressing save-game data - set save_compressed cvar to 0";
 			Com_Printf("Memory error compressing save-game data (%s) (Error: %i)!\n", comment, res);
 			return qfalse;
 		}
@@ -228,6 +235,7 @@ extern qboolean SAV_GameSave (const char *filename, const char *comment)
 		return qtrue;
 	} else {
 		Com_Printf("Failed to save campaign '%s' !!!\n", comment);
+		*error = "Size mismatch - failed to save the campaign";
 		return qfalse;
 	}
 }
@@ -239,6 +247,7 @@ extern qboolean SAV_GameSave (const char *filename, const char *comment)
 static void SAV_GameSave_f (void)
 {
 	char comment[MAX_COMMENTLENGTH] = "";
+	char *error = NULL;
 	const char *arg = NULL;
 	qboolean result;
 
@@ -261,14 +270,18 @@ static void SAV_GameSave_f (void)
 	}
 
 	/* save the game */
-	result = SAV_GameSave(Cmd_Argv(1), comment);
+	result = SAV_GameSave(Cmd_Argv(1), comment, &error);
 
 	Cbuf_ExecuteText(EXEC_NOW, "mn_pop");
 
 	/* if save failed refresh the SaveGame menu and popup error message */
 	if (!result) {
 		MN_PushMenu("save");
-		MN_Popup(_("Note"), _("Error saving game. Check free disk space!"));
+		if (error)
+			Com_sprintf(popupText, sizeof(popupText), "%s\n%s", _("Error saving game."), error);
+		else
+			Com_sprintf(popupText, sizeof(popupText), "%s\n", _("Error saving game."));
+		MN_Popup(_("Note"), popupText);
 	}
 }
 

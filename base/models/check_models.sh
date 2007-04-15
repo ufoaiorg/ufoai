@@ -73,48 +73,63 @@ convert_png_to_tga()
 	done
 }
 
+# Try to fix texture names
+fix_textures()
+{
+	md2name=`ls | egrep '(.*\.md2$)' | awk -F\. '{print $1}'`
+	texname=`ls | awk -F\. '(($0~/\.png/)||($0~/\.tga/)||($0~/\.pcx/)) {print $1}'`
+	texfull=`ls | awk '(($0~/\.png/)||($0~/\.tga/)||($0~/\.pcx/)) {print}'`
+
+	if [ "$md2name" = "$texname" ]
+	then
+		echo "fix_textures()... texture file name matches md2 file name, doing nothing" >> $logfile
+	else
+		ext=`echo $texfull | awk -F\. '{print $2}'`
+		$svnsoft move $texfull $md2name.$ext
+		echo "fix_textures()... moved $texfull to $md2name.$ext" >> $logfile
+		touch changed.log
+	fi
+}
+
 # Check whether only one md2 and only one tga in current dir, then fix names
 fix_md2_and_tga()
 {
 	howmanymd2=`ls | egrep -c '(.*\.md2$)'`
-	howmanytga=`ls | egrep -c '(.*\.tga$)'`
-	if [ "$howmanymd2" -lt 1 ] || [ "$howmanytga" -lt 1 ]
+	howmanytex=`ls | awk '(($0~/\.png/)||($0~/\.tga/)||($0~/\.pcx/)) {print}'|wc -l`
+	if [ "$howmanymd2" -lt 1 ] || [ "$howmanytex" -lt 1 ]
 	then
 		echo "fix_md2_and_tga()... no md2 models or no tga files in this directory, i cannot proceed" >> $logfile
 	fi
 
-	if [ "$howmanymd2" -gt 1 ] || [ "$howmanytga" -gt 1 ]
+	if [ "$howmanymd2" -gt 1 ] || [ "$howmanytex" -gt 1 ]
 	then
 		echo "fix_md2_and_tga()... Too many models or tga files in this directory, i cannot proceed" >> $logfile
 	fi
 
-	if [ "$howmanymd2" -eq 1 ] && [ "$howmanytga" -eq 1 ]
+	if [ "$howmanymd2" -eq 1 ] && [ "$howmanytex" -eq 1 ]
 	then
+		fix_textures
 		name=`ls | egrep '(.*\.md2$)' | awk -F\. '{print $1}'`
 		md2name=`echo -n $name; echo ".md2"`
-		tganame=`echo -n $name; echo ".tga"`
-		if [ -f "$tganame" ]
-		then
-			echo "fix_md2_and_tga()... Only one model but tga file has the same name, doing nothing" >> $logfile
-		else
-			realtga=`ls | egrep '(.*\.tga$)'`
-			cp $realtga $tganame
-			echo "fix_md2_and_tga()... Renamed $realtga to $tganame" >> $logfile
-			if [ -f "$tganame" ]
+		texname=`ls | awk '(($0~/\.png/)||($0~/\.tga/)||($0~/\.pcx/)) {print}'`
+
+#		if [ -f changed.log ]
+#		then
+			if [ -f "$texname" ]
 			then
 				$md2soft $md2name $md2name .$name
 				echo "fix_md2_and_tga()... fixed md2 model: $md2name" >> $logfile
-				$svnsoft del $realtga
-				echo "fix_md2_and_tga()... removed $realtga" >> $logfile
 			else
-				echo "fix_md2_and_tga()... something bad happened, tga file not present" >> $logfile
+				echo "fix_md2_and_tga()... something bad happened, tex file not present" >> $logfile
 			fi
-		fi
+#		else
+#			 echo "fix_md2_and_tga()... Only one model but tex file has the same name, doing nothing" >> $logfile
+#		fi
 	fi
 }
 
 # M A I N
-for i in `cat subdir.list`; do
+for i in `cat $subdirfile`; do
 	cd $i
 	echo "current path: $i" >> $logfile
 	remove_pcx_if_png
