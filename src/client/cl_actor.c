@@ -452,7 +452,7 @@ static void CL_SetReactionFiremode (int actor_idx, int handidx, int obj_idx, int
 
 	if (cls.team != cl.actTeam) {	/**< Not our turn */
 		/* This check is just here (additional to the one in CL_DisplayFiremodes_f) in case a possible situation was missed. */
-		Com_Printf("Error (CL_SetReactionFiremode): Function called on enemy/other turn, please report this and what you did to get there.\n");
+		Com_DPrintf("CL_SetReactionFiremode: Function called on enemy/other turn.\n");
 		return;
 	}
 
