@@ -2750,7 +2750,8 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 			/* TODO aircraft loading */
 		}
 
-		for (k = 0; k < MSG_ReadShort(sb); k++)
+		l = MSG_ReadShort(sb);
+		for (k = 0; k < l; k++)
 			b->teamNum[k] = MSG_ReadByte(sb);
 
 		b->equipType = MSG_ReadByte(sb);
