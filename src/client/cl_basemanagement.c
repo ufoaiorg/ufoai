@@ -2336,9 +2336,8 @@ static buildingType_t B_GetBuildingTypeByCapacity (baseCapacities_t cap)
 	switch (cap) {
 	case CAP_ALIENS:
 		return B_ALIEN_CONTAINMENT;
-/*	case CAP_AIRCRAFTS_SMALL:
+	case CAP_AIRCRAFTS_SMALL:
 		return B_SMALL_HANGAR;
-*/
 	case CAP_AIRCRAFTS_BIG:
 		return B_HANGAR;
 	case CAP_EMPLOYEES:
