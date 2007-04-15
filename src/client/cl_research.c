@@ -735,12 +735,11 @@ void RS_AssignScientist (technology_t* tech)
 #endif
 
 			} else {
-				MN_Popup(_("Notice"), _("No free space in laboratories left.\nBuild more laboratories.\n"));
+				MN_Popup(_("Not enough laboratories"), _("No free space in laboratories left.\nBuild more laboratories.\n"));
 				return;
 			}
 		} else {
-			MN_Popup(_("Notice"),
-				_("There is no free lab available.\nYou need to build one or free another\nin order to assign scientists to research this technology.\n"));
+			MN_Popup(_("Not enough laboratories"), _("No free space in laboratories left.\nBuild more laboratories.\n"));
 			return;
 		}
 
