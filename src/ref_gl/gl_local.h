@@ -37,7 +37,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../client/ref.h"
 
-#if !defined __linux__ && !defined __FreeBSD__ && !defined __NetBSD__ && !defined _MSC_VER
+#if !defined __linux__ && !defined __FreeBSD__ && !defined __NetBSD__ && !defined _MSC_VER && !defined __APPLE__
 #ifndef GL_COLOR_INDEX8_EXT
 #define GL_COLOR_INDEX8_EXT GL_COLOR_INDEX
 #endif
@@ -60,7 +60,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #	ifdef USE_SDL_FRAMEWORK
 #		include <SDL/SDL.h>
 #	else
+#       ifndef __APPLE__
 #		include <SDL.h>
+#       endif
 #	endif
 
 #	ifdef USE_SDL_TTF_FRAMEWORK
@@ -69,6 +71,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #		include <SDL_ttf.h>
 #	endif
 #else
+#   ifdef __APPLE__
+#   include <SDL.h>
+#   include <SDL/SDL_ttf.h"
+#   endif
 #	include <SDL/SDL.h>
 #	include <SDL/SDL_ttf.h>
 #endif
