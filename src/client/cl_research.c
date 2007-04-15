@@ -1736,7 +1736,7 @@ extern void RS_ParseTechnologies (const char *name, char **text)
 				/* how many mails found for this technology
 				 * used in ufopedia to check which article to display */
 				tech->numTechMails++;
-				
+
 				if (tech->numTechMails > TECHMAIL_MAX)
 					Com_Printf("RS_ParseTechnologies: more techmail-entries found than supported. \"%s\"\n",  name);
 
@@ -2113,17 +2113,16 @@ extern qboolean RS_Save (sizebuf_t* sb, void* data)
 		MSG_WriteByte(sb, t->statusCollected);
 		MSG_WriteFloat(sb, t->time);
 		MSG_WriteByte(sb, t->statusResearch);
-		MSG_WriteByte(sb, t->base_idx);
+		MSG_WriteShort(sb, t->base_idx); /* may be -1 */
 		MSG_WriteByte(sb, t->scientists);
 		MSG_WriteByte(sb, t->statusResearchable);
-		MSG_WriteByte(sb, t->preResearchedDateDay);
-		MSG_WriteByte(sb, t->preResearchedDateMonth);
-		MSG_WriteByte(sb, t->preResearchedDateYear);
-		MSG_WriteByte(sb, t->researchedDateDay);
-		MSG_WriteByte(sb, t->researchedDateMonth);
-		MSG_WriteByte(sb, t->researchedDateYear);
-		MSG_WriteLong(sb, t->numTechMails);
-		for (j = 0; i < t->numTechMails; j++) {
+		MSG_WriteShort(sb, t->preResearchedDateDay);
+		MSG_WriteShort(sb, t->preResearchedDateMonth);
+		MSG_WriteShort(sb, t->preResearchedDateYear);
+		MSG_WriteShort(sb, t->researchedDateDay);
+		MSG_WriteShort(sb, t->researchedDateMonth);
+		MSG_WriteShort(sb, t->researchedDateYear);
+		for (j = 0; j < TECHMAIL_MAX; j++) {
 			/* only save the already read mails */
 			MSG_WriteString(sb, t->mail[j].subject);
 			MSG_WriteByte(sb, t->mail[j].read);
@@ -2154,17 +2153,16 @@ extern qboolean RS_Load (sizebuf_t* sb, void* data)
 			MSG_ReadByte(sb);
 			MSG_ReadFloat(sb);
 			MSG_ReadByte(sb);
+			MSG_ReadShort(sb);
 			MSG_ReadByte(sb);
 			MSG_ReadByte(sb);
-			MSG_ReadByte(sb);
-			MSG_ReadByte(sb);
-			MSG_ReadByte(sb);
-			MSG_ReadByte(sb);
-			MSG_ReadByte(sb);
-			MSG_ReadByte(sb);
-			MSG_ReadByte(sb);
-			MSG_ReadByte(sb);
-			for (k = 0; k < MSG_ReadLong(sb); k++) {
+			MSG_ReadShort(sb);
+			MSG_ReadShort(sb);
+			MSG_ReadShort(sb);
+			MSG_ReadShort(sb);
+			MSG_ReadShort(sb);
+			MSG_ReadShort(sb);
+			for (k = 0; k < TECHMAIL_MAX; k++) {
 				MSG_ReadString(sb);
 				MSG_ReadByte(sb);
 			}
@@ -2173,18 +2171,18 @@ extern qboolean RS_Load (sizebuf_t* sb, void* data)
 		t->statusCollected = MSG_ReadByte(sb);
 		t->time = MSG_ReadFloat(sb);
 		t->statusResearch = MSG_ReadByte(sb);
-		t->base_idx = MSG_ReadByte(sb);
+		t->base_idx = MSG_ReadShort(sb);
 		t->scientists = MSG_ReadByte(sb);
 		t->statusResearchable = MSG_ReadByte(sb);
-		t->preResearchedDateDay = MSG_ReadByte(sb);
-		t->preResearchedDateMonth = MSG_ReadByte(sb);
-		t->preResearchedDateYear = MSG_ReadByte(sb);
-		t->researchedDateDay = MSG_ReadByte(sb);
-		t->researchedDateMonth = MSG_ReadByte(sb);
-		t->researchedDateYear = MSG_ReadByte(sb);
-		for (k = 0; k < MSG_ReadLong(sb); k++) {
+		t->preResearchedDateDay = MSG_ReadShort(sb);
+		t->preResearchedDateMonth = MSG_ReadShort(sb);
+		t->preResearchedDateYear = MSG_ReadShort(sb);
+		t->researchedDateDay = MSG_ReadShort(sb);
+		t->researchedDateMonth = MSG_ReadShort(sb);
+		t->researchedDateYear = MSG_ReadShort(sb);
+		for (k = 0; k < TECHMAIL_MAX; k++) {
 			mailSubject = MSG_ReadString(sb);
-			for (l = 0; l < t->numTechMails; l++) {
+			for (l = 0; l < TECHMAIL_MAX; l++) {
 				if (!Q_strncmp(t->mail[l].subject, mailSubject, sizeof(t->mail[l].subject))) {
 					t->mail[k].read = MSG_ReadByte(sb);
 					break;

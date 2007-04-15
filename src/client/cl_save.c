@@ -67,8 +67,8 @@ static qboolean SAV_GameLoad (const char *filename)
 
 	memcpy(&header, cbuf, sizeof(saveFileHeader_t));
 	Com_Printf("Loading savegame\n"
-		"version: %i\n"
-		"game version: %s\n"
+		"...version: %i\n"
+		"...game version: %s\n"
 		, header.version, header.gameVersion);
 
 	buf = (byte *) malloc(sizeof(byte) * MAX_GAMESAVESIZE);
@@ -90,9 +90,6 @@ static qboolean SAV_GameLoad (const char *filename)
 		sb.cursize = clen - sizeof(saveFileHeader_t);
 	}
 
-	/* read data */
-	Com_Printf("Savefile version %d detected\n", header.version);
-
 	/* check current version */
 	if (header.version > SAVE_FILE_VERSION) {
 		Com_Printf("File '%s' is a more recent version (%d) than is supported.\n", filename, header.version);
@@ -111,8 +108,19 @@ static qboolean SAV_GameLoad (const char *filename)
 	memset(&gd, 0, sizeof(gd));
 	CL_ReadSinglePlayerData();
 
-	for (i = 0; i < saveSubsystemsAmount; i++)
-		saveSubsystems[i].load(&sb, &header);
+	for (i = 0; i < saveSubsystemsAmount; i++) {
+		if (!saveSubsystems[i].load(&sb, &header)) {
+			Com_Printf("Subsystem '%s' returned false - savegame could not be loaded\n", saveSubsystems[i].name);
+			return qfalse;
+		}
+		if (MSG_ReadByte(&sb) != 0)
+			Com_Printf("Subsystem '%s' could not be loaded correctly - savegame might be broken\n", saveSubsystems[i].name);
+	}
+
+	/* ensure research correctly initialised */
+	RS_UpdateData();
+
+	CL_GameInit();
 
 	Cvar_Set("mn_main", "singleplayerInGame");
 	Cvar_Set("mn_active", "map");
@@ -146,6 +154,11 @@ extern qboolean SAV_GameSave (const char *filename, const char *comment)
 		return qfalse;
 	}
 
+	if (!gd.numBases) {
+		Com_Printf("Nothing to save yet.\n");
+		return qfalse;
+	}
+
 	/* step 1 - get the filename */
 	Com_sprintf(savegame, sizeof(savegame), "%s/save/%s.sav", FS_Gamedir(), filename);
 
@@ -158,9 +171,14 @@ extern qboolean SAV_GameSave (const char *filename, const char *comment)
 	/* create data */
 	SZ_Init(&sb, buf, MAX_GAMESAVESIZE);
 
+	Com_Printf("Save '%s'\n", filename);
 	/* step 3 - serialzer */
-	for (i = 0; i < saveSubsystemsAmount; i++)
-		saveSubsystems->save(&sb, NULL);
+	for (i = 0; i < saveSubsystemsAmount; i++) {
+		Com_Printf("...subsystem '%s'\n", saveSubsystems[i].name);
+		if (!saveSubsystems[i].save(&sb, NULL))
+			Com_Printf("...subsystem '%s' failed to save the data\n", saveSubsystems[i].name);
+		MSG_WriteByte(&sb, 0);
+	}
 
 	/* compress data using zlib before writing */
 	bufLen = (uLongf) (24 + 1.02 * sb.cursize);
@@ -338,6 +356,7 @@ extern qboolean SAV_AddSubsystem (saveSubsystems_t *subsystem)
 	if (saveSubsystemsAmount >= MAX_SAVESUBSYSTEMS)
 		return qfalse;
 
+	saveSubsystems[saveSubsystemsAmount].name = subsystem->name;
 	saveSubsystems[saveSubsystemsAmount].load = subsystem->load;
 	saveSubsystems[saveSubsystemsAmount].save = subsystem->save;
 	saveSubsystemsAmount++;
@@ -351,10 +370,10 @@ extern qboolean SAV_AddSubsystem (saveSubsystems_t *subsystem)
  */
 extern void SAV_Init (void)
 {
-	static saveSubsystems_t cp_subsystem = {"campaign", CP_Save, CP_Load};
-	static saveSubsystems_t hos_subsystem = {"hospital", HOS_Save, HOS_Load};
 	static saveSubsystems_t b_subsystem = {"base", B_Save, B_Load};
+	static saveSubsystems_t cp_subsystem = {"campaign", CP_Save, CP_Load};
 	static saveSubsystems_t air_subsystem = {"aircraft", AIR_Save, AIR_Load};
+	static saveSubsystems_t hos_subsystem = {"hospital", HOS_Save, HOS_Load};
 	static saveSubsystems_t bs_subsystem = {"market", BS_Save, BS_Load};
 	static saveSubsystems_t rs_subsystem = {"research", RS_Save, RS_Load};
 	static saveSubsystems_t e_subsystem = {"employee", E_Save, E_Load};
@@ -366,8 +385,8 @@ extern void SAV_Init (void)
 
 	Com_Printf("Init saving subsystems\n");
 	/* don't mess with the order */
-	SAV_AddSubsystem(&cp_subsystem);
 	SAV_AddSubsystem(&b_subsystem);
+	SAV_AddSubsystem(&cp_subsystem);
 	SAV_AddSubsystem(&air_subsystem);
 	SAV_AddSubsystem(&hos_subsystem);
 	SAV_AddSubsystem(&bs_subsystem);

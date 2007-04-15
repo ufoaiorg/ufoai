@@ -374,7 +374,7 @@ extern qboolean HOS_Save (sizebuf_t *sb, void* data)
 	int i;
 
 	/* how many employees */
-	MSG_WriteByte(sb, employeesInHospitalListCount);
+	MSG_WriteShort(sb, employeesInHospitalListCount);
 
 	/* now store the employee id for each patient */
 	for (i = 0; i < employeesInHospitalListCount; i++) {
@@ -394,7 +394,7 @@ extern qboolean HOS_Load (sizebuf_t *sb, void* data)
 {
 	int i, baseID, type;
 
-	employeesInHospitalListCount = MSG_ReadByte(sb);
+	employeesInHospitalListCount = MSG_ReadShort(sb);
 
 	for (i = 0; i < employeesInHospitalListCount; i++) {
 		baseID = MSG_ReadByte(sb);

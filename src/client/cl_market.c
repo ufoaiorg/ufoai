@@ -332,7 +332,7 @@ static void BS_BuyType_f (void)
 	if (buyListLength) {
 		if (buyCategory == BUY_AIRCRAFT)
 			BS_MarketAircraftDescription(buyList[0]);
-		else
+		else if (buyCategory != -1)
 			CL_ItemDescription(buyList[0]);
 	} else {
 		/* reset description */

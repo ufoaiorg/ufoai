@@ -1683,9 +1683,6 @@ extern qboolean CP_Load (sizebuf_t *sb, void *data)
 
 	memset(&ccs, 0, sizeof(ccs_t));
 
-	/* set ccs.singleplayer to true (gameloading is singleplayer only) */
-	CL_StartSingleplayer(qtrue);
-
 	ccs.angles[YAW] = GLOBE_ROTATE;
 
 	/* read date */
@@ -1836,11 +1833,6 @@ extern qboolean CP_Load (sizebuf_t *sb, void *data)
 			}
 		}
 	}
-
-	/* ensure research correctly initialised */
-	RS_UpdateData();
-
-	CL_GameInit();
 
 	return qtrue;
 }
@@ -3864,7 +3856,7 @@ void CL_GameInit (void)
 	AIR_AircraftInit();
 
 	CL_CampaignInitMarket();
-	
+
 	/* Init popup and map/geoscape */
 	CL_PopupInit();
 	MAP_GameInit();

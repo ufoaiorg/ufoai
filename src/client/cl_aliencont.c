@@ -1027,7 +1027,7 @@ extern void AC_Reset (void)
  */
 extern qboolean AC_Save (sizebuf_t* sb, void* data)
 {
-	return qfalse;
+	return qtrue;
 }
 
 /**
@@ -1038,5 +1038,5 @@ extern qboolean AC_Save (sizebuf_t* sb, void* data)
  */
 extern qboolean AC_Load (sizebuf_t* sb, void* data)
 {
-	return qfalse;
+	return qtrue;
 }
