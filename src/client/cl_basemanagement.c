@@ -228,7 +228,10 @@ extern void B_SetSensor_f (void)
  */
 static void B_BuildingDestroy_f (void)
 {
-	building_t *b1, *b2 = NULL;
+	building_t *b1 = NULL;
+#if 0
+	building_t *b2 = NULL;
+#endif
 	baseCapacities_t cap;
 
 	if (!baseCurrent || !baseCurrent->buildingCurrent)
@@ -238,16 +241,21 @@ static void B_BuildingDestroy_f (void)
 
 	if (baseCurrent->map[(int)b1->pos[0]][(int)b1->pos[1]] >= 0) {
 		if (*b1->needs) {
+#if 0
 			b2 = B_GetBuildingType(b1->needs);
 			assert(b2);
-			baseCurrent->map[(int)b2->pos[0]][(int)b2->pos[1]] = -1;
+#endif
+			/* "Child" building is always right to the "parent" building". */
+			baseCurrent->map[(int)b1->pos[0]][((int)b1->pos[1])+1] = -1;
 		}
 
 		baseCurrent->map[(int)b1->pos[0]][(int)b1->pos[1]] = -1;
 	}
 	b1->buildingStatus = B_STATUS_NOT_SET;
+#if 0
 	if (b2)
 		b2->buildingStatus = B_STATUS_NOT_SET;
+#endif
 
 #if 0 /* this would be a clean approach - but we have to fix all the linkage */
 	gd.numBuildings[baseCurrent->idx]--;
