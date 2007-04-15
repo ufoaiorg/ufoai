@@ -111,14 +111,14 @@ static qboolean SAV_GameLoad (const char *filename)
 
 	Com_Printf("Load '%s'\n", filename);
 	for (i = 0; i < saveSubsystemsAmount; i++) {
-		diff = sb->readcount;
+		diff = sb.readcount;
 		if (!saveSubsystems[i].load(&sb, &header)) {
-			Com_Printf("Subsystem '%s' returned false - savegame could not be loaded\n", saveSubsystems[i].name);
+			Com_Printf("...subsystem '%s' returned false - savegame could not be loaded\n", saveSubsystems[i].name);
 			return qfalse;
 		} else
-			Com_Printf("")
+			Com_Printf("...subsystem '%s' - loaded %i bytes\n", saveSubsystems[i].name, sb.readcount - diff);
 		if (MSG_ReadByte(&sb) != 0)
-			Com_Printf("Subsystem '%s' could not be loaded correctly - savegame might be broken\n", saveSubsystems[i].name);
+			Com_Printf("...subsystem '%s' could not be loaded correctly - savegame might be broken\n", saveSubsystems[i].name);
 	}
 
 	/* ensure research correctly initialised */
