@@ -615,6 +615,7 @@ extern aircraft_t *AIR_GetAircraft (const char *name)
  * @brief Places a new aircraft in the given base.
  * @param[in] base Pointer to base where aircraft should be added.
  * @param[in] name Type of the aircraft to add.
+ * @sa B_Load
  */
 extern void AIR_NewAircraft (base_t *base, const char *name)
 {
@@ -1673,5 +1674,25 @@ extern qboolean AIR_Save (sizebuf_t* sb, void* data)
  */
 extern qboolean AIR_Load (sizebuf_t* sb, void* data)
 {
+#if 0
+	base_t* base;
+	aircraft_t* aircraft;
+
+	/* now fix the curTeam pointers */
+	/* this needs already loaded bases and employees */
+	for (i = 0; i < gd.numBases; i++) {
+		base = &gd.bases[i];
+		/* FIXME: EMPL_ROBOTS => ugvs */
+		aircraft = &base->aircraft[base->aircraftCurrent];
+
+		for (j = 0, p = 0; j < gd.numEmployees[EMPL_SOLDIER]; j++)
+			if (CL_SoldierInAircraft(j, aircraft->idx)) {
+				/* maybe we already have soldiers in this base */
+				base->curTeam[p] = E_GetHiredCharacter(base, EMPL_SOLDIER, j);
+				assert(base->curTeam[p]);
+				p++;
+			}
+	}
+#endif
 	return qtrue;
 }

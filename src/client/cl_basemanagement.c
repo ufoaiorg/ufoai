@@ -2658,7 +2658,7 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 extern qboolean B_Save (sizebuf_t* sb, void* data)
 {
 	int i, k, l;
-	base_t *b;
+	base_t *b, *transferBase;
 	aircraft_t *aircraft;
 
 	MSG_WriteShort(sb, gd.numAircraft);
@@ -2691,7 +2691,23 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
 		MSG_WriteByte(sb, b->numAircraftInBase);
 		for (k = 0; k < b->numAircraftInBase; k++) {
 			aircraft = &b->aircraft[k];
-
+			MSG_WriteString(sb, aircraft->id);
+			MSG_WriteByte(sb, aircraft->status);
+			MSG_WriteFloat(sb, aircraft->speed);
+			MSG_WriteShort(sb, aircraft->fuel);
+			MSG_WriteShort(sb, aircraft->fuelSize);
+			transferBase = (base_t*)aircraft->transferBase;
+			MSG_WriteShort(sb, transferBase ? transferBase->idx : -1);
+			MSG_WriteShort(sb, aircraft->time);
+			MSG_WriteShort(sb, aircraft->point);
+			MSG_WriteString(sb, aircraft->weapon_string);
+			MSG_WriteString(sb, aircraft->shield_string);
+			MSG_WriteString(sb, aircraft->item_string);
+			for (l = 0; l < MAX_ACTIVETEAM; l++)
+				MSG_WriteShort(sb, aircraft->teamIdxs[l]);
+			MSG_WriteShort(sb, aircraft->alientypes);
+			MSG_WriteShort(sb, aircraft->itemtypes);
+			MSG_WriteShort(sb, aircraft->numUpgrades);
 		}
 		MSG_WriteShort(sb, MAX_AIRCRAFT);
 		for (k = 0; k < MAX_AIRCRAFT; k++)
@@ -2724,12 +2740,6 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
 			MSG_WriteByte(sb, b->capacities[k].cur);
 			MSG_WriteByte(sb, b->capacities[k].max);
 		}
-
-#if 0
-		aliensCont_t alienscont[MAX_ALIENCONT_CAP];	/**< alien containment capacity */
-		capacities_t capacities[MAX_CAP];		/**< Capacities. */
-		character_t *curTeam[MAX_ACTIVETEAM];	/**< set in CL_GenerateEquipment_f and CL_LoadTeam */
-#endif
 	}
 	return qtrue;
 }
@@ -2772,8 +2782,41 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 		b->aircraftCurrent = MSG_ReadByte(sb);
 		b->numAircraftInBase = MSG_ReadByte(sb);
 		for (k = 0; k < b->numAircraftInBase; k++) {
+			aircraft = AIR_GetAircraft(MSG_ReadString(sb));
+			memcpy(&b->aircraft[k], aircraft, sizeof(aircraft_t));
 			aircraft = &b->aircraft[k];
-			/* TODO aircraft loading */
+			aircraft->homebase = b;
+			/* for saving and loading a base */
+			aircraft->idxBase = b->idx;
+			/* this is the aircraft array id in current base */
+			aircraft->idxInBase = k;
+			/* link the teamSize pointer in */
+			aircraft->teamSize = &b->teamNum[k];
+			aircraft->status = MSG_ReadByte(sb);
+			aircraft->speed = MSG_ReadFloat(sb);
+			aircraft->fuel = MSG_ReadShort(sb);
+			aircraft->fuelSize = MSG_ReadShort(sb);
+			p = MSG_ReadShort(sb);
+			if (p >= 0)
+				aircraft->transferBase = &gd.bases[p];
+			aircraft->time = MSG_ReadShort(sb);
+			aircraft->point = MSG_ReadShort(sb);
+			Q_strncpyz(aircraft->weapon_string, MSG_ReadString(sb), sizeof(aircraft->weapon_string));
+			Q_strncpyz(aircraft->shield_string, MSG_ReadString(sb), sizeof(aircraft->shield_string));
+			Q_strncpyz(aircraft->item_string, MSG_ReadString(sb), sizeof(aircraft->item_string));
+			for (l = 0; l < MAX_ACTIVETEAM; l++)
+				aircraft->teamIdxs[l] = MSG_ReadShort(sb);
+			aircraft->alientypes = MSG_ReadShort(sb);
+			aircraft->itemtypes = MSG_ReadShort(sb);
+			aircraft->numUpgrades = MSG_ReadShort(sb);
+#if 0
+			vec2_t pos;				/**< actual pos on geoscape */
+			mapline_t route;
+			aliensTmp_t aliencargo[MAX_CARGO];	/**< Cargo of aliens. */
+			itemsTmp_t itemcargo[MAX_CARGO];	/**< Cargo of items. */
+			struct actMis_s* mission;	/**< The mission the aircraft is moving to */
+			radar_t	radar;			/**< Radar to track ufos */
+#endif
 		}
 
 		l = MSG_ReadShort(sb);
@@ -2806,19 +2849,14 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 			b->capacities[k].max = MSG_ReadByte(sb);
 		}
 
-		/* TODO: read the missing ones */
-
 		/* clear the mess of stray loaded pointers */
 		memset(&b->equipByBuyType, 0, sizeof(inventory_t));
 
 		/* some functions needs the baseCurrent pointer set */
 		baseCurrent = b;
 
-		/* fix aircraft homebase and teamsize pointers */
-		/* the mission pointer in updated in SAV_GameLoad */
+		/* fix aircraft tech pointers */
 		for (k = 0, aircraft = b->aircraft; k < b->numAircraftInBase; k++, aircraft++) {
-			aircraft->teamSize = &b->teamNum[aircraft->idxInBase];
-			aircraft->homebase = &gd.bases[aircraft->idxBase];
 			aircraft->shield = RS_GetTechByID(aircraft->shield_string);
 			aircraft->weapon = RS_GetTechByID(aircraft->weapon_string);
 			aircraft->item = RS_GetTechByID(aircraft->item_string);
@@ -2827,22 +2865,6 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 		/* initalize team to null */
 		for (p = 0; p < MAX_ACTIVETEAM; p++)
 			b->curTeam[p] = NULL;
-
-		/* if there are no aircraft in base, a team can't be assigned */
-		if (b->numAircraftInBase <= 0)
-			continue;
-
-		/* now fix the curTeam pointers */
-		/* FIXME: EMPL_ROBOTS => ugvs */
-		aircraft = &b->aircraft[b->aircraftCurrent];
-
-		for (k = 0, p = 0; k < gd.numEmployees[EMPL_SOLDIER]; k++)
-			if (CL_SoldierInAircraft(k, aircraft->idx)) {
-				/* maybe we already have soldiers in this base */
-				b->curTeam[p] = E_GetHiredCharacter(b, EMPL_SOLDIER, k);
-				assert(b->curTeam[p]);
-				p++;
-			}
 	}
 	gd.numBases = bases;
 
