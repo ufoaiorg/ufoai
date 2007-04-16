@@ -720,7 +720,7 @@ const struct aircraft_s* ufo, qboolean wasUfoSensored);
 
 /* SAVEGAMES */
 #ifndef SAVE_FILE_VERSION
-#define SAVE_FILE_VERSION 6
+#define SAVE_FILE_VERSION 1
 #endif							/* SAVE_FILE_VERSION */
 
 /* cl_aliencont.c */
