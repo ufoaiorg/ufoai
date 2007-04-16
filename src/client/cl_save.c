@@ -401,6 +401,7 @@ extern void SAV_Init (void)
 	static saveSubsystems_t air_subsystem = {"aircraft", AIR_Save, AIR_Load, 0x8};
 	static saveSubsystems_t ms_subsystem = {"messagesystem", MS_Save, MS_Load, 0x9};
 	static saveSubsystems_t stats_subsystem = {"stats", STATS_Save, STATS_Load, 0xA};
+	static saveSubsystems_t na_subsystem = {"nations", NA_Save, NA_Load, 0xB};
 
 	saveSubsystemsAmount = 0;
 	memset(&saveSubsystems, 0, sizeof(saveSubsystems));
@@ -418,6 +419,7 @@ extern void SAV_Init (void)
 	SAV_AddSubsystem(&air_subsystem);
 	SAV_AddSubsystem(&ms_subsystem);
 	SAV_AddSubsystem(&stats_subsystem);
+	SAV_AddSubsystem(&na_subsystem);
 
 	Cmd_AddCommand("game_save", SAV_GameSave_f, "Saves to a given filename");
 	Cmd_AddCommand("game_load", SAV_GameLoad_f, "Loads a given filename");

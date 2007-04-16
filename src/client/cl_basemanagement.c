@@ -225,6 +225,7 @@ extern void B_SetSensor_f (void)
 /**
  * @brief We are doing the real destroy of a buliding here
  * @sa B_BuildingDestroy
+ * @sa B_NewBuilding
  */
 static void B_BuildingDestroy_f (void)
 {
@@ -622,11 +623,11 @@ static qboolean B_CheckCredits (int costs)
 
 /**
  * @brief Builds new building.
- *
+ * @sa B_BuildingDestroy
  * @sa B_CheckCredits
  * @sa CL_UpdateCredits
  * @return qboolean
- *
+ * @sa B_NewBuilding
  * Checks whether the player has enough credits to construct the current selected
  * building before starting construction.
  */
@@ -666,6 +667,8 @@ static qboolean B_ConstructBuilding (void)
 
 /**
  * @brief Build new building.
+ * @sa B_BuildingDestroy
+ * @sa B_ConstructBuilding
  */
 static void B_NewBuilding (void)
 {
@@ -2660,6 +2663,7 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
 	int i, k, l;
 	base_t *b, *transferBase;
 	aircraft_t *aircraft;
+	building_t *building;
 
 	MSG_WriteShort(sb, gd.numAircraft);
 	MSG_WriteByte(sb, gd.numBases);
@@ -2684,6 +2688,15 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
 				MSG_WriteShort(sb, b->posX[k][l]);
 				MSG_WriteShort(sb, b->posY[k][l]);
 			}
+		for (k = 0; k < MAX_BUILDINGS; k++) {
+			building = &gd.buildings[i][k];
+			MSG_WriteByte(sb, building->type_idx);
+			MSG_WriteByte(sb, building->buildingStatus);
+			MSG_WriteLong(sb, building->timeStart);
+			MSG_WriteLong(sb, building->buildTime);
+			MSG_Write2Pos(sb, building->pos);
+		}
+		MSG_WriteShort(sb, gd.numBuildings[i]);
 		MSG_WriteByte(sb, b->condition);
 		MSG_WriteByte(sb, b->baseStatus);
 
@@ -2760,6 +2773,7 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 	int i, bases, k, l;
 	base_t *b;
 	aircraft_t *aircraft;
+	building_t *building;
 
 	gd.numAircraft = MSG_ReadShort(sb);
 	bases = MSG_ReadByte(sb);
@@ -2783,6 +2797,17 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 				b->posX[k][l] = MSG_ReadShort(sb);
 				b->posY[k][l] = MSG_ReadShort(sb);
 			}
+		for (k = 0; k < MAX_BUILDINGS; k++) {
+			building = &gd.buildings[i][k];
+			memcpy(building, &gd.buildingTypes[MSG_ReadByte(sb)], sizeof(building_t));
+			building->idx = k;
+			building->base_idx = i;
+			building->buildingStatus = MSG_ReadByte(sb);
+			building->timeStart = MSG_ReadLong(sb);
+			building->buildTime = MSG_ReadLong(sb);
+			MSG_Read2Pos(sb, building->pos);
+		}
+		gd.numBuildings[i] = MSG_ReadShort(sb);
 		b->condition = MSG_ReadByte(sb);
 		b->baseStatus = MSG_ReadByte(sb);
 		b->aircraftCurrent = MSG_ReadByte(sb);

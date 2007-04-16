@@ -1900,6 +1900,31 @@ extern qboolean STATS_Load (sizebuf_t* sb, void* data)
 }
 
 /**
+ * @brief Nation saving callback
+ */
+extern qboolean NA_Save (sizebuf_t* sb, void* data)
+{
+	int i;
+	for (i = 0; i < gd.numNations; i++) {
+		MSG_WriteFloat(sb, gd.nations[i].happiness);
+	}
+	return qtrue;
+}
+
+/**
+ * @brief Nation loading callback
+ */
+extern qboolean NA_Load (sizebuf_t* sb, void* data)
+{
+	int i;
+
+	for (i = 0; i < gd.numNations; i++) {
+		gd.nations[i].happiness = MSG_ReadFloat(sb);
+	}
+	return qtrue;
+}
+
+/**
  * @brief Set some needed cvars from mission definition
  * @param[in] mission mission definition pointer with the needed data to set the cvars to
  * @sa CL_StartMission_f

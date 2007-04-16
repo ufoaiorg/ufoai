@@ -69,5 +69,7 @@ qboolean MS_Save(sizebuf_t* sb, void* data);
 qboolean MS_Load(sizebuf_t* sb, void* data);
 qboolean STATS_Save(sizebuf_t* sb, void* data);
 qboolean STATS_Load(sizebuf_t* sb, void* data);
+qboolean NA_Save(sizebuf_t* sb, void* data);
+qboolean NA_Load(sizebuf_t* sb, void* data);
 
 #endif /* CLIENT_CL_SAVE_H */
