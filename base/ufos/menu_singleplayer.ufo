@@ -111,6 +111,27 @@ menu singleplayer
 		align	cc
 	}
 
+	pic button_continue
+	{
+		click	{ cmd game_continue }
+		pos	"640 380"
+		image	menu/button_big
+		texl	"0 0"
+		texh	"256 64"
+		mousefx	true
+		tooltip	"_Load last saved game or continue playing"
+		out	{ *string_continue color "0 0.5 0 1" *button_continue texl "0 0"  *button_continue texh "256 64" }
+		in	{ *string_continue color "1 1 1 1" *button_continue texl "0 64" *button_continue texh "256 128" }
+	}
+	string string_continue
+	{
+		font	f_menubig
+		color	"0 0.5 0 1"
+		string	"_Continue"
+		pos	"768 412"
+		align	cc
+	}
+
 	pic button_back
 	{
 		pos	"640 520"
@@ -153,6 +174,24 @@ menu singleplayerInGame extends singleplayer
 		string	"_Continue"
 		pos	"768 202"
 		align	cc
+	}
+
+	// over-ride button_continue with a continue button
+	pic button_continue
+	{
+		pos	"640 170"
+		image	menu/button_big
+		texl	"0 0"
+		texh	"256 64"
+		invis	true
+	}
+	string string_continue
+	{
+		color	"0 0.5 0 1"
+		string	"_Continue"
+		pos	"768 202"
+		align	cc
+		invis	true
 	}
 
 	pic button_options
