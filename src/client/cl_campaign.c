@@ -3898,7 +3898,6 @@ static void CL_GameNew (void)
 	Cvar_SetValue("maxclients", 1.0f);
 
 	/* exit running game */
-	CL_StartSingleplayer(qtrue);
 	if (curCampaign)
 		CL_GameExit();
 
@@ -3911,6 +3910,7 @@ static void CL_GameNew (void)
 		return;
 
 	memset(&ccs, 0, sizeof(ccs_t));
+	CL_StartSingleplayer(qtrue);
 
 	ccs.angles[YAW] = GLOBE_ROTATE;
 	ccs.date = curCampaign->date;
