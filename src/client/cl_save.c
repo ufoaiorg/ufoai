@@ -51,6 +51,7 @@ static qboolean SAV_GameLoad (const char *filename)
 	int res, clen, i, diff;
 	sizebuf_t sb;
 	saveFileHeader_t header;
+	int check;
 
 	/* open file */
 	f.f = fopen(va("%s/save/%s.sav", FS_Gamedir(), filename), "rb");
@@ -118,8 +119,9 @@ static qboolean SAV_GameLoad (const char *filename)
 			return qfalse;
 		} else
 			Com_Printf("...subsystem '%s' - loaded %i bytes\n", saveSubsystems[i].name, sb.readcount - diff);
-		if (MSG_ReadByte(&sb) != 0)
-			Com_Printf("...subsystem '%s' could not be loaded correctly - savegame might be broken\n", saveSubsystems[i].name);
+		check = MSG_ReadByte(&sb);
+		if (check != saveSubsystems[i].check)
+			Com_Printf("...subsystem '%s' could not be loaded correctly - savegame might be broken (%x)\n", saveSubsystems[i].name, check);
 	}
 
 	/* ensure research correctly initialised */
@@ -187,7 +189,7 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 			Com_Printf("...subsystem '%s' failed to save the data\n", saveSubsystems[i].name);
 		else
 			Com_Printf("...subsystem '%s' - saved %i bytes\n", saveSubsystems[i].name, sb.cursize - diff);
-		MSG_WriteByte(&sb, 0);
+		MSG_WriteByte(&sb, saveSubsystems[i].check);
 	}
 
 	/* compress data using zlib before writing */
@@ -376,9 +378,10 @@ extern qboolean SAV_AddSubsystem (saveSubsystems_t *subsystem)
 	saveSubsystems[saveSubsystemsAmount].name = subsystem->name;
 	saveSubsystems[saveSubsystemsAmount].load = subsystem->load;
 	saveSubsystems[saveSubsystemsAmount].save = subsystem->save;
+	saveSubsystems[saveSubsystemsAmount].check = subsystem->check;
 	saveSubsystemsAmount++;
 
-	Com_Printf("...added %s subsystem\n", subsystem->name);
+	Com_Printf("...added %s subsystem (check %x)\n", subsystem->name, subsystem->check);
 	return qtrue;
 }
 
@@ -387,15 +390,17 @@ extern qboolean SAV_AddSubsystem (saveSubsystems_t *subsystem)
  */
 extern void SAV_Init (void)
 {
-	static saveSubsystems_t b_subsystem = {"base", B_Save, B_Load};
-	static saveSubsystems_t cp_subsystem = {"campaign", CP_Save, CP_Load};
-	static saveSubsystems_t hos_subsystem = {"hospital", HOS_Save, HOS_Load};
-	static saveSubsystems_t bs_subsystem = {"market", BS_Save, BS_Load};
-	static saveSubsystems_t rs_subsystem = {"research", RS_Save, RS_Load};
-	static saveSubsystems_t e_subsystem = {"employee", E_Save, E_Load};
-	static saveSubsystems_t ac_subsystem = {"aliencont", AC_Save, AC_Load};
-	static saveSubsystems_t pr_subsystem = {"production", PR_Save, PR_Load};
-	static saveSubsystems_t air_subsystem = {"aircraft", AIR_Save, AIR_Load};
+	static saveSubsystems_t b_subsystem = {"base", B_Save, B_Load, 0x0};
+	static saveSubsystems_t cp_subsystem = {"campaign", CP_Save, CP_Load, 0x1};
+	static saveSubsystems_t hos_subsystem = {"hospital", HOS_Save, HOS_Load, 0x2};
+	static saveSubsystems_t bs_subsystem = {"market", BS_Save, BS_Load, 0x3};
+	static saveSubsystems_t rs_subsystem = {"research", RS_Save, RS_Load, 0x4};
+	static saveSubsystems_t e_subsystem = {"employee", E_Save, E_Load, 0x5};
+	static saveSubsystems_t ac_subsystem = {"aliencont", AC_Save, AC_Load, 0x6};
+	static saveSubsystems_t pr_subsystem = {"production", PR_Save, PR_Load, 0x7};
+	static saveSubsystems_t air_subsystem = {"aircraft", AIR_Save, AIR_Load, 0x8};
+	static saveSubsystems_t ms_subsystem = {"messagesystem", MS_Save, MS_Load, 0x9};
+	static saveSubsystems_t stats_subsystem = {"stats", STATS_Save, STATS_Load, 0xA};
 
 	saveSubsystemsAmount = 0;
 	memset(&saveSubsystems, 0, sizeof(saveSubsystems));
@@ -411,6 +416,8 @@ extern void SAV_Init (void)
 	SAV_AddSubsystem(&ac_subsystem);
 	SAV_AddSubsystem(&pr_subsystem);
 	SAV_AddSubsystem(&air_subsystem);
+	SAV_AddSubsystem(&ms_subsystem);
+	SAV_AddSubsystem(&stats_subsystem);
 
 	Cmd_AddCommand("game_save", SAV_GameSave_f, "Saves to a given filename");
 	Cmd_AddCommand("game_load", SAV_GameLoad_f, "Loads a given filename");

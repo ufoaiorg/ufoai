@@ -2694,8 +2694,8 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
 			MSG_WriteString(sb, aircraft->id);
 			MSG_WriteByte(sb, aircraft->status);
 			MSG_WriteFloat(sb, aircraft->speed);
-			MSG_WriteShort(sb, aircraft->fuel);
-			MSG_WriteShort(sb, aircraft->fuelSize);
+			MSG_WriteLong(sb, aircraft->fuel);
+			MSG_WriteLong(sb, aircraft->fuelSize);
 			transferBase = (base_t*)aircraft->transferBase;
 			MSG_WriteShort(sb, transferBase ? transferBase->idx : -1);
 			MSG_WritePos(sb, aircraft->pos);
@@ -2800,8 +2800,8 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 			aircraft->teamSize = &b->teamNum[k];
 			aircraft->status = MSG_ReadByte(sb);
 			aircraft->speed = MSG_ReadFloat(sb);
-			aircraft->fuel = MSG_ReadShort(sb);
-			aircraft->fuelSize = MSG_ReadShort(sb);
+			aircraft->fuel = MSG_ReadLong(sb);
+			aircraft->fuelSize = MSG_ReadLong(sb);
 			l = MSG_ReadShort(sb);
 			if (l >= 0)
 				aircraft->transferBase = &gd.bases[l];

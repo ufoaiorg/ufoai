@@ -1034,6 +1034,8 @@ extern qboolean E_Load (sizebuf_t* sb, void* data)
 		for (i = 0; i < gd.numEmployees[j]; i++) {
 			e = &gd.employees[j][i];
 			e->type = MSG_ReadByte(sb);
+			if (e->type != j)
+				Com_Printf("......error in loading employee - type values doesn't match\n");
 			e->hired = MSG_ReadByte(sb);
 			e->baseIDHired = MSG_ReadShort(sb);
 			e->buildingID = MSG_ReadShort(sb);
