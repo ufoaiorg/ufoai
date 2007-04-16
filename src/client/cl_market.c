@@ -124,19 +124,28 @@ static void BS_MarketClick_f (void)
  */
 static void AIR_GetStorageSupplyCount (char *airCharId, int *const storage, int *const supply)
 {
+#if 0
 	base_t *base;
+	int i;
+#endif
 	aircraft_t *aircraft;
-	int i, j;
+	int j;
 
 	*supply = MAX_AIRCRAFT_STORAGE;
-
+#if 0
+/* Commenting that out. We should display only the amounts of aircrafts in current base.
+   12042007 Zenerka
+*/
 	for (i = 0, base = gd.bases; i < gd.numBases; i++, base++) {
 		if (!base->founded)
 			continue;
-		for (j = 0, aircraft = base->aircraft; j < base->numAircraftInBase; j++, aircraft++)
+#endif
+		for (j = 0, aircraft = baseCurrent->aircraft; j < baseCurrent->numAircraftInBase; j++, aircraft++)
 			if (!Q_strncmp(aircraft->id, airCharId, MAX_VAR))
 				(*storage)++;
+#if 0
 	}
+#endif
 	if (*storage < MAX_AIRCRAFT_STORAGE)
 		*supply -= *storage;
 	else

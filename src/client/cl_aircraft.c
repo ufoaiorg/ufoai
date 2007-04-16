@@ -592,6 +592,18 @@ extern void CL_DeleteAircraft (aircraft_t *aircraft)
 	} else {
 		Com_DPrintf("CL_DeleteAircraft: no aircraft given (NULL)\n");
 	}
+
+	/* reset cvars if there is no more aircrafts in current base */
+	if (base->numAircraftInBase < 1) {
+		Cvar_SetValue("mn_equipsoldierstate", 0);
+		Cvar_Set("mn_aircraftstatus", "");
+		Cvar_Set("mn_aircraftinbase", "0");
+		Cvar_Set("mn_aircraftname", "");
+		Cvar_Set("mn_aircraft_model", "");
+	}
+
+	/* Q_strncpyz(messageBuffer, va(_("You've sold your aircraft (a %s) in base %s"), aircraft->name, base->name), MAX_MESSAGE_TEXT);
+	MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);*/
 }
 
 /**
