@@ -960,15 +960,60 @@ extern employee_t* E_GetEmployeeFromChrUCN (int ucn)
  * @brief Save callback for savegames
  * @sa E_Load
  * @sa SAV_GameSave
+ * @sa G_SendCharacterData
+ * @sa CL_ParseCharacterData
  */
 extern qboolean E_Save (sizebuf_t* sb, void* data)
 {
-	int i, j;
+	int i, j, k;
+	employee_t* e;
 
 	/* store inventories */
-	for (j= 0; j < MAX_EMPL; j++)
-		for (i = 0; i < gd.numEmployees[j]; i++)
-			CL_SendInventory(sb, &gd.employees[j][i].inv);
+	for (j = 0; j < MAX_EMPL; j++) {
+		MSG_WriteShort(sb, gd.numEmployees[j]);
+		for (i = 0; i < gd.numEmployees[j]; i++) {
+			e = &gd.employees[j][i];
+			MSG_WriteByte(sb, e->type);
+			MSG_WriteByte(sb, e->hired);
+			MSG_WriteByte(sb, e->baseIDHired);
+			MSG_WriteShort(sb, e->buildingID);
+			MSG_WriteString(sb, e->chr.name);
+			MSG_WriteString(sb, e->chr.body);
+			MSG_WriteString(sb, e->chr.path);
+			MSG_WriteString(sb, e->chr.head);
+			MSG_WriteByte(sb, e->chr.skin);
+			MSG_WriteByte(sb, e->chr.armor);
+			MSG_WriteByte(sb, e->chr.weapons);
+			MSG_WriteByte(sb, e->chr.teamDesc);
+			MSG_WriteShort(sb, e->chr.ucn);
+			MSG_WriteShort(sb, e->chr.maxHP);
+			MSG_WriteShort(sb, e->chr.HP);
+			MSG_WriteByte(sb, e->chr.STUN);
+			MSG_WriteByte(sb, e->chr.AP);
+			MSG_WriteByte(sb, e->chr.morale);
+
+			MSG_WriteShort(sb, e->chr.assigned_missions);
+
+			for (k = 0; k < KILLED_NUM_TYPES; k++)
+				MSG_WriteShort(sb, e->chr.kills[k]);
+
+			MSG_WriteByte(sb, e->chr.chrscore.alienskilled);
+			MSG_WriteByte(sb, e->chr.chrscore.aliensstunned);
+			MSG_WriteByte(sb, e->chr.chrscore.civilianskilled);
+			MSG_WriteByte(sb, e->chr.chrscore.civiliansstunned);
+			MSG_WriteByte(sb, e->chr.chrscore.teamkilled);
+			MSG_WriteByte(sb, e->chr.chrscore.teamstunned);
+			MSG_WriteByte(sb, e->chr.chrscore.closekills);
+			MSG_WriteByte(sb, e->chr.chrscore.heavykills);
+			MSG_WriteByte(sb, e->chr.chrscore.assaultkills);
+			MSG_WriteByte(sb, e->chr.chrscore.sniperkills);
+			MSG_WriteByte(sb, e->chr.chrscore.explosivekills);
+			MSG_WriteByte(sb, e->chr.chrscore.accuracystat);
+			MSG_WriteByte(sb, e->chr.chrscore.powerstat);
+
+			CL_SendInventory(sb, &e->inv);
+		}
+	}
 
 	return qtrue;
 }
@@ -981,13 +1026,56 @@ extern qboolean E_Save (sizebuf_t* sb, void* data)
 extern qboolean E_Load (sizebuf_t* sb, void* data)
 {
 	int i, j;
+	employee_t* e;
 
 	/* load inventories */
 	for (j = 0; j < MAX_EMPL; j++) {
+		gd.numEmployees[j] = MSG_ReadShort(sb);
 		for (i = 0; i < gd.numEmployees[j]; i++) {
+			e = &gd.employees[j][i];
+			e->type = MSG_ReadByte(sb);
+			e->hired = MSG_ReadByte(sb);
+			e->baseIDHired = MSG_ReadByte(sb);
+			e->buildingID = MSG_ReadShort(sb);
+			Q_strncpyz(e->chr.name, MSG_ReadString(sb), sizeof(e->chr.name));
+			Q_strncpyz(e->chr.body, MSG_ReadString(sb), sizeof(e->chr.body));
+			Q_strncpyz(e->chr.path, MSG_ReadString(sb), sizeof(e->chr.path));
+			Q_strncpyz(e->chr.head, MSG_ReadString(sb), sizeof(e->chr.head));
+			e->chr.skin = MSG_ReadByte(sb);
+			e->chr.empl_idx = i;
+			e->chr.empl_type = j;
+			e->chr.armor = MSG_ReadByte(sb);
+			e->chr.weapons = MSG_ReadByte(sb);
+			e->chr.teamDesc = MSG_ReadByte(sb);
+			e->chr.ucn = MSG_ReadShort(sb);
+			e->chr.maxHP = MSG_ReadShort(sb);
+			e->chr.HP = MSG_ReadShort(sb);
+			e->chr.STUN = MSG_ReadByte(sb);
+			e->chr.AP = MSG_ReadByte(sb);
+			e->chr.morale = MSG_ReadByte(sb);
+
+			e->chr.assigned_missions = MSG_ReadShort(sb);
+
+			for (j = 0; j < KILLED_NUM_TYPES; j++)
+				e->chr.kills[j] = MSG_ReadShort(sb);
+
+			e->chr.chrscore.alienskilled = MSG_ReadByte(sb);
+			e->chr.chrscore.aliensstunned = MSG_ReadByte(sb);
+			e->chr.chrscore.civilianskilled = MSG_ReadByte(sb);
+			e->chr.chrscore.civiliansstunned = MSG_ReadByte(sb);
+			e->chr.chrscore.teamkilled = MSG_ReadByte(sb);
+			e->chr.chrscore.teamstunned = MSG_ReadByte(sb);
+			e->chr.chrscore.closekills = MSG_ReadByte(sb);
+			e->chr.chrscore.heavykills = MSG_ReadByte(sb);
+			e->chr.chrscore.assaultkills = MSG_ReadByte(sb);
+			e->chr.chrscore.sniperkills = MSG_ReadByte(sb);
+			e->chr.chrscore.explosivekills = MSG_ReadByte(sb);
+			e->chr.chrscore.accuracystat = MSG_ReadByte(sb);
+			e->chr.chrscore.powerstat = MSG_ReadByte(sb);
+
 			/* clear the mess of stray loaded pointers */
 			memset(&gd.employees[j][i].inv, 0, sizeof(inventory_t));
-			CL_ReceiveInventory(sb, &gd.employees[j][i].inv);
+			CL_ReceiveInventory(sb, &e->inv);
 		}
 		for (i = 0; i < gd.numEmployees[j]; i++)
 			gd.employees[j][i].chr.inv = &gd.employees[j][i].inv;

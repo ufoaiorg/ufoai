@@ -1670,6 +1670,7 @@ typedef struct updateCharacter_s {
  * @brief Parses the character data which was send by G_EndGame using G_SendCharacterData
  * @sa G_SendCharacterData
  * @sa G_EndGame
+ * @sa E_Save
  * @note you also have to update the pascal string size in G_EndGame if you change the buffer here
  */
 extern void CL_ParseCharacterData (sizebuf_t *buf, qboolean updateCharacter)

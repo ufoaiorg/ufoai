@@ -2710,6 +2710,10 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
 			MSG_WriteShort(sb, aircraft->itemtypes);
 			MSG_WriteShort(sb, aircraft->numUpgrades);
 			MSG_WriteShort(sb, aircraft->radar.range);
+			MSG_WriteShort(sb, aircraft->route.n);
+			MSG_WriteFloat(sb, aircraft->route.dist);
+			for (l = 0; l < aircraft->route.n; l++)
+				MSG_WritePos(sb, aircraft->route.p[l]);
 		}
 		MSG_WriteShort(sb, MAX_AIRCRAFT);
 		for (k = 0; k < MAX_AIRCRAFT; k++)
@@ -2813,12 +2817,14 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 			aircraft->itemtypes = MSG_ReadShort(sb);
 			aircraft->numUpgrades = MSG_ReadShort(sb);
 			aircraft->radar.range = MSG_ReadShort(sb);
+			aircraft->route.n = MSG_ReadShort(sb);
+			aircraft->route.dist = MSG_ReadFloat(sb);
+			for (l = 0; l < aircraft->route.n; l++)
+				MSG_ReadPos(sb, aircraft->route.p[l]);
 #if 0
-			mapline_t route;
 			aliensTmp_t aliencargo[MAX_CARGO];	/**< Cargo of aliens. */
 			itemsTmp_t itemcargo[MAX_CARGO];	/**< Cargo of items. */
 			struct actMis_s* mission;	/**< The mission the aircraft is moving to */
-			radar_t	radar;			/**< Radar to track ufos */
 #endif
 		}
 
