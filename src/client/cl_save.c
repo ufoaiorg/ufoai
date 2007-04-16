@@ -39,7 +39,7 @@ static cvar_t* save_compressed;
  * @sa SAV_GameLoad_f
  * @sa SAV_GameSave
  * @sa CL_GameInit
- * @sa CL_MessageSave
+ * @sa MS_MessageSave
  * @sa CL_ReadSinglePlayerData
  * @sa CL_UpdatePointersInGlobalData
  */

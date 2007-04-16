@@ -968,7 +968,6 @@ extern qboolean E_Save (sizebuf_t* sb, void* data)
 	int i, j, k;
 	employee_t* e;
 
-	/* store inventories */
 	for (j = 0; j < MAX_EMPL; j++) {
 		MSG_WriteShort(sb, gd.numEmployees[j]);
 		for (i = 0; i < gd.numEmployees[j]; i++) {
@@ -1011,6 +1010,7 @@ extern qboolean E_Save (sizebuf_t* sb, void* data)
 			MSG_WriteByte(sb, e->chr.chrscore.accuracystat);
 			MSG_WriteByte(sb, e->chr.chrscore.powerstat);
 
+			/* store inventories */
 			CL_SendInventory(sb, &e->inv);
 		}
 	}
@@ -1025,7 +1025,7 @@ extern qboolean E_Save (sizebuf_t* sb, void* data)
  */
 extern qboolean E_Load (sizebuf_t* sb, void* data)
 {
-	int i, j;
+	int i, j, k;
 	employee_t* e;
 
 	/* load inventories */
@@ -1058,8 +1058,8 @@ extern qboolean E_Load (sizebuf_t* sb, void* data)
 
 			e->chr.assigned_missions = MSG_ReadShort(sb);
 
-			for (j = 0; j < KILLED_NUM_TYPES; j++)
-				e->chr.kills[j] = MSG_ReadShort(sb);
+			for (k = 0; k < KILLED_NUM_TYPES; k++)
+				e->chr.kills[k] = MSG_ReadShort(sb);
 
 			e->chr.chrscore.alienskilled = MSG_ReadByte(sb);
 			e->chr.chrscore.aliensstunned = MSG_ReadByte(sb);
@@ -1078,9 +1078,8 @@ extern qboolean E_Load (sizebuf_t* sb, void* data)
 			/* clear the mess of stray loaded pointers */
 			memset(&gd.employees[j][i].inv, 0, sizeof(inventory_t));
 			CL_ReceiveInventory(sb, &e->inv);
-		}
-		for (i = 0; i < gd.numEmployees[j]; i++)
 			gd.employees[j][i].chr.inv = &gd.employees[j][i].inv;
+		}
 	}
 
 	return qtrue;

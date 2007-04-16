@@ -4355,7 +4355,7 @@ static void MS_MessageSave (sizebuf_t * sb, message_t * message)
 	if (message->pedia)
 		idx = message->pedia->idx;
 
-	Com_DPrintf("CL_MessageSave: Save '%s' - '%s'; type = %i; idx = %i\n", message->title, message->text, message->type, idx);
+	Com_DPrintf("MS_MessageSave: Save '%s' - '%s'; type = %i; idx = %i\n", message->title, message->text, message->type, idx);
 	MSG_WriteString(sb, message->title);
 	MSG_WriteString(sb, message->text);
 	MSG_WriteByte(sb, message->type);
