@@ -168,7 +168,6 @@ void CL_AircraftSelect(aircraft_t *aircraft);
 void CL_AircraftSelect_f(void);
 void CL_NewAircraft_f(void);
 void CL_DeleteAircraft(aircraft_t *aircraft);
-void CL_AircraftListDebug_f(void);
 
 void CL_ResetAircraftTeam(aircraft_t *aircraft);
 void CL_AddToAircraftTeam(aircraft_t *aircraft,int idx);

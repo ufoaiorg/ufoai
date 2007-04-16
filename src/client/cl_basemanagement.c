@@ -2467,6 +2467,7 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
 	base_t *b;
 	aircraft_t *aircraft;
 
+	MSG_WriteShort(sb, gd.numAircraft);
 	MSG_WriteByte(sb, gd.numBases);
 	for (i = 0; i < gd.numBases; i++) {
 		b = &gd.bases[i];
@@ -2483,9 +2484,9 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
 		MSG_WriteByte(sb, b->hasWorkshop);
 		for (k = 0; k < BASE_SIZE; k++)
 			for (l = 0; l < BASE_SIZE; l++) {
-				MSG_WriteByte(sb, b->map[k][l]);
-				MSG_WriteByte(sb, b->posX[k][l]);
-				MSG_WriteByte(sb, b->posY[k][l]);
+				MSG_WriteShort(sb, b->map[k][l]);
+				MSG_WriteShort(sb, b->posX[k][l]);
+				MSG_WriteShort(sb, b->posY[k][l]);
 			}
 		MSG_WriteByte(sb, b->condition);
 		MSG_WriteByte(sb, b->baseStatus);
@@ -2507,13 +2508,12 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
 			MSG_WriteLong(sb, b->storage.num[k]);
 			MSG_WriteByte(sb, b->storage.num_loose[k]);
 		}
-		/* TODO: add those */
+
+		MSG_WriteLong(sb, b->radar.range);
+
 #if 0
-		radar_t	radar;	/**< the onconstruct value of the buliding building_radar increases the sensor width */
 		aliensCont_t alienscont[MAX_ALIENCONT_CAP];	/**< alien containment capacity */
 		capacities_t capacities[MAX_CAP];		/**< Capacities. */
-		inventory_t equipByBuyType;	/**< idEquip sorted by buytype; needen't be saved;
-			a hack based on assertion (MAX_CONTAINERS >= BUY_AIRCRAFT) ... see e.g. CL_GenerateEquipment_f */
 		character_t *curTeam[MAX_ACTIVETEAM];	/**< set in CL_GenerateEquipment_f and CL_LoadTeam */
 #endif
 	}
@@ -2531,6 +2531,7 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 	base_t *b;
 	aircraft_t *aircraft;
 
+	gd.numAircraft = MSG_ReadShort(sb);
 	bases = MSG_ReadByte(sb);
 	for (i = 0; i < bases; i++) {
 		b = &gd.bases[i];
@@ -2547,9 +2548,9 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 		b->hasWorkshop = MSG_ReadByte(sb);
 		for (k = 0; k < BASE_SIZE; k++)
 			for (l = 0; l < BASE_SIZE; l++) {
-				b->map[k][l] = MSG_ReadByte(sb);
-				b->posX[k][l] = MSG_ReadByte(sb);
-				b->posY[k][l] = MSG_ReadByte(sb);
+				b->map[k][l] = MSG_ReadShort(sb);
+				b->posX[k][l] = MSG_ReadShort(sb);
+				b->posY[k][l] = MSG_ReadShort(sb);
 			}
 		b->condition = MSG_ReadByte(sb);
 		b->baseStatus = MSG_ReadByte(sb);
@@ -2570,6 +2571,8 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 			b->storage.num[k] = MSG_ReadLong(sb);
 			b->storage.num_loose[k] = MSG_ReadByte(sb);
 		}
+
+		b->radar.range = MSG_ReadLong(sb);
 
 		/* TODO: read the missing ones */
 
@@ -2609,6 +2612,7 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 				p++;
 			}
 	}
+	gd.numBases = bases;
 
 	return qtrue;
 }

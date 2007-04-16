@@ -1297,8 +1297,8 @@ static void CL_CampaignRunMarket (void)
 		if (RS_ItemIsResearched(csi.ods[i].id)) {
 			/* supply balance */
 			technology_t *tech = RS_GetTechByProvided(csi.ods[i].id);
-			int reasearched_date = tech->researchedDateDay + tech->researchedDateMonth/12.0*DAYS_PER_YEAR +  tech->researchedDateYear*DAYS_PER_YEAR - 2;
-			if (reasearched_date <= 760739)
+			int reasearched_date = tech->researchedDateDay + tech->researchedDateMonth*30 +  tech->researchedDateYear*DAYS_PER_YEAR - 2;
+			if (reasearched_date <= curCampaign->date.sec/86400 + curCampaign->date.day)
 				reasearched_date -= 100;
 			m_supp_rs = mrs3 * sqrt(mrs1*ccs.date.day - mrs2*reasearched_date);
 			m_supp_pr = mpr1/sqrt(csi.ods[i].price+1);
@@ -1674,9 +1674,6 @@ extern qboolean CP_Load (sizebuf_t *sb, void *data)
 
 	memset(&ccs, 0, sizeof(ccs_t));
 
-	/* set ccs.singleplayer to true (gameloading is singleplayer only) */
-	CL_StartSingleplayer(qtrue);
-
 	ccs.angles[YAW] = GLOBE_ROTATE;
 
 	/* read date */
@@ -1827,11 +1824,6 @@ extern qboolean CP_Load (sizebuf_t *sb, void *data)
 			}
 		}
 	}
-
-	/* ensure research correctly initialised */
-	RS_UpdateData();
-
-	CL_GameInit();
 
 	return qtrue;
 }
@@ -3751,8 +3743,6 @@ static const cmdList_t game_commands[] = {
 	{"aircraft_return", CL_AircraftReturnToBase_f, NULL}
 	,
 	{"aircraft_list", CL_AircraftList_f, "Generate the aircraft (interception) list"}
-	,
-	{"aircraft_list_debug", CL_AircraftListDebug_f, "Shows all aircraft in all bases"}
 	,
 	{"stats_update", CL_StatsUpdate_f, NULL}
 	,

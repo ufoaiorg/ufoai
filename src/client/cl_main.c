@@ -1562,7 +1562,6 @@ static void CL_SpawnSoldiers_f (void)
 static void CL_Precache_f (void)
 {
 	unsigned map_checksum = 0;
-	char str[MAX_VAR] = "";
 	unsigned ufoScript_checksum = 0;
 	/* stop sound */
 	S_StopAllSounds();
@@ -1574,8 +1573,8 @@ static void CL_Precache_f (void)
 		SCR_BeginLoadingPlaque();
 		CM_LoadMap(cl.configstrings[CS_TILES], cl.configstrings[CS_POSITIONS], &map_checksum);
 		if (!*cl.configstrings[CS_VERSION] || !*cl.configstrings[CS_MAPCHECKSUM] || !*cl.configstrings[CS_UFOCHECKSUM]) {
-			Com_sprintf(str, sizeof(str), _("Local game version (%s) differs from the servers"), UFO_VERSION);
-			MN_Popup(_("Error"), str);
+			Com_sprintf(popupText, sizeof(popupText), _("Local game version (%s) differs from the servers"), UFO_VERSION);
+			MN_Popup(_("Error"), popupText);
 			Com_Error(ERR_DROP, "Local game version (%s) differs from the servers", UFO_VERSION);
 			return;
 		/* checksum doesn't match with the one the server gave us via configstring */
@@ -1591,8 +1590,8 @@ static void CL_Precache_f (void)
 				ufoScript_checksum, cl.configstrings[CS_UFOCHECKSUM]);
 			return;
 		} else if (Q_strncmp(UFO_VERSION, cl.configstrings[CS_VERSION], sizeof(UFO_VERSION))) {
-			Com_sprintf(str, sizeof(str), _("Local game version (%s) differs from the servers (%s)"), UFO_VERSION, cl.configstrings[CS_VERSION]);
-			MN_Popup(_("Error"), str);
+			Com_sprintf(popupText, sizeof(popupText), _("Local game version (%s) differs from the servers (%s)"), UFO_VERSION, cl.configstrings[CS_VERSION]);
+			MN_Popup(_("Error"), popupText);
 			Com_Error(ERR_DROP, "Local game version (%s) differs from the servers (%s)", UFO_VERSION, cl.configstrings[CS_VERSION]);
 			return;
 		}

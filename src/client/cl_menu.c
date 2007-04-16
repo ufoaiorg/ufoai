@@ -230,6 +230,8 @@ static cvar_t *mn_escpop;
 static cvar_t *mn_debugmenu;
 cvar_t *mn_inputlength;
 
+char popupText[MAX_SMALLMENUTEXTLEN];
+
 typedef struct tutorial_s {
 	char name[MAX_VAR];
 	char sequence[MAX_VAR];
@@ -1251,14 +1253,14 @@ void MN_Click (int x, int y)
 				break;
 			}
 		}
-		
+
 		/* Only execute the last-found (i.e. from the top-most displayed node) action found.
 		 * Especially needed for button-nodes that are (partially) overlayed and all have actions defined.
 		 * e.g. the firemode checkboxes.
 		 */
 		if (execute_action)
 			MN_ExecuteActions(menu, execute_action);
-		
+
 		/* TODO: maybe we should also check sp == menuStackPos here */
 		if (!clickedInside && menu->leaveNode)
 			MN_ExecuteActions(menu, menu->leaveNode->click);

@@ -1531,7 +1531,7 @@ extern qboolean CL_IsInAircraftTeam (aircraft_t *aircraft, int employee_idx)
  */
 extern qboolean AIR_Save (sizebuf_t* sb, void* data)
 {
-	return qfalse;
+	return qtrue;
 }
 
 /**
@@ -1543,5 +1543,5 @@ extern qboolean AIR_Save (sizebuf_t* sb, void* data)
  */
 extern qboolean AIR_Load (sizebuf_t* sb, void* data)
 {
-	return qfalse;
+	return qtrue;
 }

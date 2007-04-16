@@ -1946,8 +1946,6 @@ extern void CL_ParseResults (sizebuf_t * buf)
 		else
 			MN_PushMenu("lost");
 	} else {
-		static char popupText[MAX_SMALLMENUTEXTLEN];
-
 		Com_sprintf(resultText, sizeof(resultText), _("\n\nEnemies killed:  %i\nTeam survivors:  %i"), thier_killed + thier_stunned, our_surviviurs);
 		if (winner == we) {
 			Q_strncpyz(popupText, _("You won the game!"), sizeof(popupText));
