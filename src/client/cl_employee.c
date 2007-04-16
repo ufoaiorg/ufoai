@@ -975,7 +975,7 @@ extern qboolean E_Save (sizebuf_t* sb, void* data)
 			e = &gd.employees[j][i];
 			MSG_WriteByte(sb, e->type);
 			MSG_WriteByte(sb, e->hired);
-			MSG_WriteByte(sb, e->baseIDHired);
+			MSG_WriteShort(sb, e->baseIDHired);
 			MSG_WriteShort(sb, e->buildingID);
 			MSG_WriteString(sb, e->chr.name);
 			MSG_WriteString(sb, e->chr.body);
@@ -1035,7 +1035,7 @@ extern qboolean E_Load (sizebuf_t* sb, void* data)
 			e = &gd.employees[j][i];
 			e->type = MSG_ReadByte(sb);
 			e->hired = MSG_ReadByte(sb);
-			e->baseIDHired = MSG_ReadByte(sb);
+			e->baseIDHired = MSG_ReadShort(sb);
 			e->buildingID = MSG_ReadShort(sb);
 			Q_strncpyz(e->chr.name, MSG_ReadString(sb), sizeof(e->chr.name));
 			Q_strncpyz(e->chr.body, MSG_ReadString(sb), sizeof(e->chr.body));

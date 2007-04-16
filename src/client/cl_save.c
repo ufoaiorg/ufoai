@@ -389,13 +389,13 @@ extern void SAV_Init (void)
 {
 	static saveSubsystems_t b_subsystem = {"base", B_Save, B_Load};
 	static saveSubsystems_t cp_subsystem = {"campaign", CP_Save, CP_Load};
-	static saveSubsystems_t air_subsystem = {"aircraft", AIR_Save, AIR_Load};
 	static saveSubsystems_t hos_subsystem = {"hospital", HOS_Save, HOS_Load};
 	static saveSubsystems_t bs_subsystem = {"market", BS_Save, BS_Load};
 	static saveSubsystems_t rs_subsystem = {"research", RS_Save, RS_Load};
 	static saveSubsystems_t e_subsystem = {"employee", E_Save, E_Load};
 	static saveSubsystems_t ac_subsystem = {"aliencont", AC_Save, AC_Load};
 	static saveSubsystems_t pr_subsystem = {"production", PR_Save, PR_Load};
+	static saveSubsystems_t air_subsystem = {"aircraft", AIR_Save, AIR_Load};
 
 	saveSubsystemsAmount = 0;
 	memset(&saveSubsystems, 0, sizeof(saveSubsystems));
@@ -404,13 +404,13 @@ extern void SAV_Init (void)
 	/* don't mess with the order */
 	SAV_AddSubsystem(&b_subsystem);
 	SAV_AddSubsystem(&cp_subsystem);
-	SAV_AddSubsystem(&air_subsystem);
 	SAV_AddSubsystem(&hos_subsystem);
 	SAV_AddSubsystem(&bs_subsystem);
 	SAV_AddSubsystem(&rs_subsystem);
 	SAV_AddSubsystem(&e_subsystem);
 	SAV_AddSubsystem(&ac_subsystem);
 	SAV_AddSubsystem(&pr_subsystem);
+	SAV_AddSubsystem(&air_subsystem);
 
 	Cmd_AddCommand("game_save", SAV_GameSave_f, "Saves to a given filename");
 	Cmd_AddCommand("game_load", SAV_GameLoad_f, "Loads a given filename");
