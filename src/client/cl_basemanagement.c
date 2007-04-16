@@ -2602,7 +2602,7 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 	bases = MSG_ReadByte(sb);
 	for (i = 0; i < bases; i++) {
 		b = &gd.bases[i];
-		Q_strncpyz(b->name, MSG_ReadString(sb), sizeof(b->name));
+		Q_strncpyz(b->name, MSG_ReadStringRaw(sb), sizeof(b->name));
 		b->mapChar = MSG_ReadChar(sb);
 		MSG_ReadPos(sb, b->pos);
 		b->founded = MSG_ReadByte(sb);

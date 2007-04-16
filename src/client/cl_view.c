@@ -702,7 +702,7 @@ void V_Init(void)
 	Cmd_AddCommand("viewpos", V_Viewpos_f, NULL);
 	Cmd_AddCommand("shaderlist", CL_ShaderList_f, NULL);
 
-	cursor = Cvar_Get("cursor", "1", CVAR_ARCHIVE, NULL);
+	cursor = Cvar_Get("cursor", "1", CVAR_ARCHIVE, "Which cursor should be shown - 0-9");
 
 	cl_drawgrid = Cvar_Get("drawgrid", "0", 0, NULL);
 
