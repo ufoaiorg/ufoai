@@ -1622,6 +1622,8 @@ extern qboolean CP_Load (sizebuf_t *sb, void *data)
 		return qfalse;
 	}
 
+	CL_GameInit();
+
 	Com_sprintf(val, sizeof(val), "%i", curCampaign->difficulty);
 	Cvar_ForceSet("difficulty", val);
 

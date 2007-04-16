@@ -124,11 +124,6 @@ static qboolean SAV_GameLoad (const char *filename)
 			Com_Printf("...subsystem '%s' could not be loaded correctly - savegame might be broken (%x)\n", saveSubsystems[i].name, check);
 	}
 
-	/* ensure research correctly initialised */
-	RS_UpdateData();
-
-	CL_GameInit();
-
 	Cvar_Set("mn_main", "singleplayerInGame");
 	Cvar_Set("mn_active", "map");
 	Cbuf_AddText("disconnect\n");
