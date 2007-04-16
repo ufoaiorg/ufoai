@@ -628,15 +628,17 @@ void SCR_DirtyScreen (void)
  */
 void SCR_TouchPics (void)
 {
-	if (cursor->value) {
-		if (cursor->value > 9 || cursor->value < 0)
-			cursor->value = 1;
+	if (cursor->integer) {
+		if (cursor->integer > 9 || cursor->integer < 0)
+			Cvar_SetValue("cursor", 1);
 
 		re.RegisterPic("wait");
 		re.RegisterPic("ducked");
 		Com_sprintf(cursor_pic, sizeof(cursor_pic), "cursor%i", cursor->integer);
-		if (!re.RegisterPic(cursor_pic))
+		if (!re.RegisterPic(cursor_pic)) {
+			Com_Printf("SCR_TouchPics: Could not register cursor: %s\n", cursor_pic);
 			cursor_pic[0] = 0;
+		}
 	}
 }
 
