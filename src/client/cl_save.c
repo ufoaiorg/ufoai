@@ -89,6 +89,7 @@ static qboolean SAV_GameLoad (const char *filename)
 	} else {
 		memcpy(buf, cbuf + sizeof(saveFileHeader_t), clen - sizeof(saveFileHeader_t));
 		sb.cursize = clen - sizeof(saveFileHeader_t);
+		free(cbuf);
 	}
 
 	/* check current version */
