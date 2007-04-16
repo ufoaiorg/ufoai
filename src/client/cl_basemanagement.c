@@ -2698,6 +2698,7 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
 			MSG_WriteShort(sb, aircraft->fuelSize);
 			transferBase = (base_t*)aircraft->transferBase;
 			MSG_WriteShort(sb, transferBase ? transferBase->idx : -1);
+			MSG_WritePos(sb, aircraft->pos);
 			MSG_WriteShort(sb, aircraft->time);
 			MSG_WriteShort(sb, aircraft->point);
 			MSG_WriteString(sb, aircraft->weapon_string);
@@ -2708,6 +2709,7 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
 			MSG_WriteShort(sb, aircraft->alientypes);
 			MSG_WriteShort(sb, aircraft->itemtypes);
 			MSG_WriteShort(sb, aircraft->numUpgrades);
+			MSG_WriteShort(sb, aircraft->radar.range);
 		}
 		MSG_WriteShort(sb, MAX_AIRCRAFT);
 		for (k = 0; k < MAX_AIRCRAFT; k++)
@@ -2751,7 +2753,7 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
  */
 extern qboolean B_Load (sizebuf_t* sb, void* data)
 {
-	int i, bases, k, l, p;
+	int i, bases, k, l;
 	base_t *b;
 	aircraft_t *aircraft;
 
@@ -2796,9 +2798,10 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 			aircraft->speed = MSG_ReadFloat(sb);
 			aircraft->fuel = MSG_ReadShort(sb);
 			aircraft->fuelSize = MSG_ReadShort(sb);
-			p = MSG_ReadShort(sb);
-			if (p >= 0)
-				aircraft->transferBase = &gd.bases[p];
+			l = MSG_ReadShort(sb);
+			if (l >= 0)
+				aircraft->transferBase = &gd.bases[l];
+			MSG_ReadPos(sb, aircraft->pos);
 			aircraft->time = MSG_ReadShort(sb);
 			aircraft->point = MSG_ReadShort(sb);
 			Q_strncpyz(aircraft->weapon_string, MSG_ReadString(sb), sizeof(aircraft->weapon_string));
@@ -2809,8 +2812,8 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 			aircraft->alientypes = MSG_ReadShort(sb);
 			aircraft->itemtypes = MSG_ReadShort(sb);
 			aircraft->numUpgrades = MSG_ReadShort(sb);
+			aircraft->radar.range = MSG_ReadShort(sb);
 #if 0
-			vec2_t pos;				/**< actual pos on geoscape */
 			mapline_t route;
 			aliensTmp_t aliencargo[MAX_CARGO];	/**< Cargo of aliens. */
 			itemsTmp_t itemcargo[MAX_CARGO];	/**< Cargo of items. */
@@ -2863,8 +2866,8 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 		}
 
 		/* initalize team to null */
-		for (p = 0; p < MAX_ACTIVETEAM; p++)
-			b->curTeam[p] = NULL;
+		for (k = 0; k < MAX_ACTIVETEAM; k++)
+			b->curTeam[k] = NULL;
 	}
 	gd.numBases = bases;
 
