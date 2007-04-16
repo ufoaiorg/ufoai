@@ -2525,12 +2525,6 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
 			MSG_WriteByte(sb, b->alienscont[k].techIdx);
 		}
 
-		/* Base capacities. */
-		for (k = 0; k < MAX_CAP; k++) {
-			MSG_WriteByte(sb, b->capacities[k].cur);
-			MSG_WriteByte(sb, b->capacities[k].max);
-		}            
-
 #if 0
 		aliensCont_t alienscont[MAX_ALIENCONT_CAP];	/**< alien containment capacity */
 		capacities_t capacities[MAX_CAP];		/**< Capacities. */
@@ -2604,12 +2598,6 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 			b->alienscont[k].amount_alive = MSG_ReadByte(sb);
 			b->alienscont[k].amount_dead = MSG_ReadByte(sb);
 			b->alienscont[k].techIdx = MSG_ReadByte(sb);
-		}
-
-		/* Base capacities. */
-		for (k = 0; k < MAX_CAP; k++) {
-			b->capacities[k].cur = MSG_ReadByte(sb);
-			b->capacities[k].max = MSG_ReadByte(sb);
 		}
 
 		/* TODO: read the missing ones */
