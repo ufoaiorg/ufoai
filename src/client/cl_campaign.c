@@ -1584,46 +1584,6 @@ static void CL_StatsUpdate_f (void)
 }
 
 /**
- * @brief Saved the complete message stack
- * @sa SAV_GameSave
- * @sa MN_AddNewMessage
- */
-static void CL_MessageSave (sizebuf_t * sb, message_t * message)
-{
-	int idx = -1;
-
-	if (!message)
-		return;
-	/* bottom up */
-	CL_MessageSave(sb, message->next);
-
-#ifndef DEBUG
-	/* don't save these message types */
-	if (message->type == MSG_DEBUG)
-		return;
-#endif
-
-	/* don't save these message types */
-	if (message->type == MSG_INFO)
-		return;
-
-	if (message->pedia)
-		idx = message->pedia->idx;
-
-	Com_DPrintf("CL_MessageSave: Save '%s' - '%s'; type = %i; idx = %i\n", message->title, message->text, message->type, idx);
-	MSG_WriteString(sb, message->title);
-	MSG_WriteString(sb, message->text);
-	MSG_WriteByte(sb, message->type);
-	MSG_WriteLong(sb, idx);
-	MSG_WriteLong(sb, message->d);
-	MSG_WriteLong(sb, message->m);
-	MSG_WriteLong(sb, message->y);
-	MSG_WriteLong(sb, message->h);
-	MSG_WriteLong(sb, message->min);
-	MSG_WriteLong(sb, message->s);
-}
-
-/**
  * @brief Load callback for campaign data
  * @sa CP_Save
  * @sa SAV_GameSave
@@ -1634,11 +1594,9 @@ extern qboolean CP_Load (sizebuf_t *sb, void *data)
 	stageState_t *state;
 	setState_t *set;
 	setState_t dummy;
-	const char *name, *title, *text;
-	int mtype, idx;
+	const char *name;
 	int i, j, num;
 	char val[32];
-	message_t *mess;
 	base_t *base;
 	int selectedMission;
 
@@ -1681,25 +1639,6 @@ extern qboolean CP_Load (sizebuf_t *sb, void *data)
 	ccs.center[0] = MSG_ReadFloat(sb);
 	ccs.center[1] = MSG_ReadFloat(sb);
 	ccs.zoom = MSG_ReadFloat(sb);
-
-	CL_InitMessageSystem();
-
-	/* how many message items */
-	i = MSG_ReadLong(sb);
-	for (; i--;) {
-		/* can contain high bits due to utf8 */
-		title = MSG_ReadStringRaw(sb);
-		text = MSG_ReadStringRaw(sb);
-		mtype = MSG_ReadByte(sb);
-		idx = MSG_ReadLong(sb);
-		mess = MN_AddNewMessage(title, text, qfalse, mtype, RS_GetTechByIDX(idx));
-		mess->d = MSG_ReadLong(sb);
-		mess->m = MSG_ReadLong(sb);
-		mess->y = MSG_ReadLong(sb);
-		mess->h = MSG_ReadLong(sb);
-		mess->min = MSG_ReadLong(sb);
-		mess->s = MSG_ReadLong(sb);
-	}
 
 	/* read credits */
 	CL_UpdateCredits(MSG_ReadLong(sb));
@@ -1834,7 +1773,6 @@ extern qboolean CP_Save (sizebuf_t *sb, void *data)
 {
 	stageState_t *state;
 	actMis_t *mis;
-	message_t *message;
 	int i, j;
 	base_t *base;
 
@@ -1849,11 +1787,6 @@ extern qboolean CP_Save (sizebuf_t *sb, void *data)
 	MSG_WriteFloat(sb, ccs.center[0]);
 	MSG_WriteFloat(sb, ccs.center[1]);
 	MSG_WriteFloat(sb, ccs.zoom);
-
-	/* store message system items */
-	for (i = 0, message = messageStack; message; i++, message = message->next);
-	MSG_WriteLong(sb, i);
-	CL_MessageSave(sb, messageStack);
 
 	/* store credits */
 	MSG_WriteLong(sb, ccs.credits);
@@ -1909,9 +1842,76 @@ extern qboolean CP_Save (sizebuf_t *sb, void *data)
 	else
 		MSG_WriteLong(sb, -1);
 
-	/* save all the stats */
-	SZ_Write(sb, &stats, sizeof(stats_t));
+	return qtrue;
+}
 
+
+/**
+ * @brief
+ */
+extern qboolean STATS_Save (sizebuf_t* sb, void* data)
+{
+	MSG_WriteShort(sb, stats.missionsWon);
+	MSG_WriteShort(sb, stats.missionsLost);
+	MSG_WriteShort(sb, stats.basesBuild);
+	MSG_WriteShort(sb, stats.basesAttacked);
+	MSG_WriteShort(sb, stats.interceptions);
+	MSG_WriteShort(sb, stats.soldiersLost);
+	MSG_WriteShort(sb, stats.soldiersNew);
+	MSG_WriteShort(sb, stats.killedAliens);
+	MSG_WriteShort(sb, stats.rescuedCivilians);
+	MSG_WriteShort(sb, stats.researchedTechnologies);
+	MSG_WriteShort(sb, stats.moneyInterceptions);
+	MSG_WriteShort(sb, stats.moneyBases);
+	MSG_WriteShort(sb, stats.moneyResearch);
+	MSG_WriteShort(sb, stats.moneyWeapons);
+	return qtrue;
+}
+
+/**
+ * @brief
+ */
+extern qboolean STATS_Load (sizebuf_t* sb, void* data)
+{
+	stats.missionsWon = MSG_ReadShort(sb);
+	stats.missionsLost = MSG_ReadShort(sb);
+	stats.basesBuild = MSG_ReadShort(sb);
+	stats.basesAttacked = MSG_ReadShort(sb);
+	stats.interceptions = MSG_ReadShort(sb);
+	stats.soldiersLost = MSG_ReadShort(sb);
+	stats.soldiersNew = MSG_ReadShort(sb);
+	stats.killedAliens = MSG_ReadShort(sb);
+	stats.rescuedCivilians = MSG_ReadShort(sb);
+	stats.researchedTechnologies = MSG_ReadShort(sb);
+	stats.moneyInterceptions = MSG_ReadShort(sb);
+	stats.moneyBases = MSG_ReadShort(sb);
+	stats.moneyResearch = MSG_ReadShort(sb);
+	stats.moneyWeapons = MSG_ReadShort(sb);
+	return qtrue;
+}
+
+/**
+ * @brief Nation saving callback
+ */
+extern qboolean NA_Save (sizebuf_t* sb, void* data)
+{
+	int i;
+	for (i = 0; i < gd.numNations; i++) {
+		MSG_WriteFloat(sb, gd.nations[i].happiness);
+	}
+	return qtrue;
+}
+
+/**
+ * @brief Nation loading callback
+ */
+extern qboolean NA_Load (sizebuf_t* sb, void* data)
+{
+	int i;
+
+	for (i = 0; i < gd.numNations; i++) {
+		gd.nations[i].happiness = MSG_ReadFloat(sb);
+	}
 	return qtrue;
 }
 

@@ -510,6 +510,7 @@ extern aircraft_t *CL_GetAircraft (const char *name)
  * @param[in] base Pointer to base where aircraft should be added
  * @param[in] name Name of the aircraft to add
  * @TODO: What about credits? maybe handle them in CL_NewAircraft_f?
+ * @sa B_Load
  */
 extern void CL_NewAircraft (base_t *base, const char *name)
 {
@@ -1537,11 +1538,33 @@ extern qboolean AIR_Save (sizebuf_t* sb, void* data)
 /**
  * @brief Load callback for savegames
  * @note Nothing to load here at the moment
+ * @note employees and bases must have been loaded already
  * @sa AIR_Save
  * @sa B_Load
  * @sa SAV_GameLoad
  */
 extern qboolean AIR_Load (sizebuf_t* sb, void* data)
 {
+	base_t* base;
+	aircraft_t* aircraft;
+	int i, j, p;
+
+	/* now fix the curTeam pointers */
+	/* this needs already loaded bases and employees */
+	for (i = 0; i < gd.numBases; i++) {
+		if (!gd.bases[i].numAircraftInBase)
+			continue;
+		base = &gd.bases[i];
+		/* FIXME: EMPL_ROBOTS => ugvs */
+		aircraft = &base->aircraft[base->aircraftCurrent];
+
+		for (j = 0, p = 0; j < gd.numEmployees[EMPL_SOLDIER]; j++)
+			if (CL_SoldierInAircraft(j, aircraft->idx)) {
+				/* maybe we already have soldiers in this base */
+				base->curTeam[p] = E_GetHiredCharacter(base, EMPL_SOLDIER, j);
+				assert(base->curTeam[p]);
+				p++;
+			}
+	}
 	return qtrue;
 }

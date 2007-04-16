@@ -410,6 +410,15 @@ void MSG_WriteCoord (sizebuf_t * sb, float f)
 /**
  * @brief
  */
+void MSG_Write2Pos (sizebuf_t * sb, vec2_t pos)
+{
+	MSG_WriteLong(sb, (long) (pos[0] * 32.));
+	MSG_WriteLong(sb, (long) (pos[1] * 32.));
+}
+
+/**
+ * @brief
+ */
 void MSG_WritePos (sizebuf_t * sb, vec3_t pos)
 {
 	MSG_WriteLong(sb, (long) (pos[0] * 32.));
@@ -749,6 +758,15 @@ char *MSG_ReadStringLine (sizebuf_t * msg_read)
 float MSG_ReadCoord (sizebuf_t * msg_read)
 {
 	return (float) MSG_ReadLong(msg_read) * (1.0 / 32);
+}
+
+/**
+ * @brief
+ */
+void MSG_Read2Pos (sizebuf_t * msg_read, vec2_t pos)
+{
+	pos[0] = MSG_ReadLong(msg_read) / 32.;
+	pos[1] = MSG_ReadLong(msg_read) / 32.;
 }
 
 /**

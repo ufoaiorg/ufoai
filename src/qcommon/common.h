@@ -40,6 +40,7 @@ void MSG_WriteFloat(sizebuf_t * sb, float f);
 void MSG_WriteString(sizebuf_t * sb, const char *s);
 void MSG_WriteCoord(sizebuf_t * sb, float f);
 void MSG_WritePos(sizebuf_t * sb, vec3_t pos);
+void MSG_Write2Pos(sizebuf_t * sb, vec2_t pos);
 void MSG_WriteGPos(sizebuf_t * sb, pos3_t pos);
 void MSG_WriteAngle(sizebuf_t * sb, float f);
 void MSG_WriteAngle16(sizebuf_t * sb, float f);
@@ -60,6 +61,7 @@ char *MSG_ReadStringRaw(sizebuf_t * msg_read);
 
 float MSG_ReadCoord(sizebuf_t * sb);
 void MSG_ReadPos(sizebuf_t * sb, vec3_t pos);
+void MSG_Read2Pos(sizebuf_t * sb, vec2_t pos);
 void MSG_ReadGPos(sizebuf_t * sb, pos3_t pos);
 float MSG_ReadAngle(sizebuf_t * sb);
 float MSG_ReadAngle16(sizebuf_t * sb);

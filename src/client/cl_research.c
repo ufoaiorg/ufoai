@@ -2107,7 +2107,7 @@ extern qboolean RS_Save (sizebuf_t* sb, void* data)
 	int i, j;
 	technology_t *t;
 
-	MSG_WriteLong(sb, gd.numTechnologies);
+	MSG_WriteShort(sb, gd.numTechnologies);
 	for (i = 0; i < gd.numTechnologies; i++) {
 		t = &gd.technologies[i];
 		MSG_WriteString(sb, t->id);
@@ -2143,14 +2143,14 @@ extern qboolean RS_Load (sizebuf_t* sb, void* data)
 	const char *techString;
 	techMailType_t mailType;
 
-	j = MSG_ReadLong(sb);
+	j = MSG_ReadShort(sb);
 	if (j != gd.numTechnologies)
-		Com_Printf("Differnet amount of technologies found - resave this game");
+		Com_Printf("......different amount of technologies found - resave this game %i, %i\n", j, gd.numTechnologies);
 	for (i = 0; i < j; i++) {
 		techString = MSG_ReadString(sb);
 		t = RS_GetTechByID(techString);
 		if (!t) {
-			Com_Printf("Your game doesn't know anything about tech '%s'\n", techString);
+			Com_Printf("......your game doesn't know anything about tech '%s'\n", techString);
 			MSG_ReadByte(sb);
 			MSG_ReadFloat(sb);
 			MSG_ReadByte(sb);
@@ -2164,7 +2164,7 @@ extern qboolean RS_Load (sizebuf_t* sb, void* data)
 			MSG_ReadShort(sb);
 			MSG_ReadShort(sb);
 			for (k = 0; k < TECHMAIL_MAX; k++) {
-				MSG_ReadString(sb);
+				MSG_ReadByte(sb);
 				MSG_ReadByte(sb);
 			}
 			continue;

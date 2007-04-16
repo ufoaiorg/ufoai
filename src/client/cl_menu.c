@@ -4266,3 +4266,88 @@ extern void MN_ParseTutorials (const char *name, char **text)
 			Com_Printf("MN_ParseTutorials: unknown token \"%s\" ignored (tutorial %s)\n", token, name);
 	} while (*text);
 }
+
+/**
+ * @brief Saved the complete message stack
+ * @sa SAV_GameSave
+ * @sa MN_AddNewMessage
+ */
+static void MS_MessageSave (sizebuf_t * sb, message_t * message)
+{
+	int idx = -1;
+
+	if (!message)
+		return;
+	/* bottom up */
+	MS_MessageSave(sb, message->next);
+
+#ifndef DEBUG
+	/* don't save these message types */
+	if (message->type == MSG_DEBUG)
+		return;
+#endif
+
+	/* don't save these message types */
+	if (message->type == MSG_INFO)
+		return;
+
+	if (message->pedia)
+		idx = message->pedia->idx;
+
+	Com_DPrintf("MS_MessageSave: Save '%s' - '%s'; type = %i; idx = %i\n", message->title, message->text, message->type, idx);
+	MSG_WriteString(sb, message->title);
+	MSG_WriteString(sb, message->text);
+	MSG_WriteByte(sb, message->type);
+	MSG_WriteLong(sb, idx);
+	MSG_WriteLong(sb, message->d);
+	MSG_WriteLong(sb, message->m);
+	MSG_WriteLong(sb, message->y);
+	MSG_WriteLong(sb, message->h);
+	MSG_WriteLong(sb, message->min);
+	MSG_WriteLong(sb, message->s);
+}
+
+/**
+ * @brief
+ */
+extern qboolean MS_Save (sizebuf_t* sb, void* data)
+{
+	int i;
+	message_t* message;
+
+	/* store message system items */
+	for (i = 0, message = messageStack; message; i++, message = message->next);
+	MSG_WriteLong(sb, i);
+	MS_MessageSave(sb, messageStack);
+	return qtrue;
+}
+
+/**
+ * @brief
+ */
+extern qboolean MS_Load (sizebuf_t* sb, void* data)
+{
+	int i, mtype, idx;
+	const char *title, *text;
+	message_t *mess;
+
+	CL_InitMessageSystem();
+
+	/* how many message items */
+	i = MSG_ReadLong(sb);
+	for (; i--;) {
+		/* can contain high bits due to utf8 */
+		title = MSG_ReadStringRaw(sb);
+		text = MSG_ReadStringRaw(sb);
+		mtype = MSG_ReadByte(sb);
+		idx = MSG_ReadLong(sb);
+		mess = MN_AddNewMessage(title, text, qfalse, mtype, RS_GetTechByIDX(idx));
+		mess->d = MSG_ReadLong(sb);
+		mess->m = MSG_ReadLong(sb);
+		mess->y = MSG_ReadLong(sb);
+		mess->h = MSG_ReadLong(sb);
+		mess->min = MSG_ReadLong(sb);
+		mess->s = MSG_ReadLong(sb);
+	}
+	return qtrue;
+}

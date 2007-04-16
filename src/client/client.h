@@ -766,8 +766,6 @@ void MN_BuildNewBase(vec2_t pos);
 
 /* stats */
 
-/* beware - if you add new stuff to stats_t */
-/* the loading of an older savegame will not work */
 typedef struct stats_s {
 	int missionsWon;
 	int missionsLost;

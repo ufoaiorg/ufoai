@@ -42,6 +42,7 @@ typedef struct saveSubsystems_s {
 	char *name;
 	qboolean (*save) (sizebuf_t *sb, void *data);	/**< return false if saving failed */
 	qboolean (*load) (sizebuf_t *sb, void *data);	/**< return false if loading failed */
+	int check;
 } saveSubsystems_t;
 
 extern saveSubsystems_t saveSubsystems[MAX_SAVESUBSYSTEMS];
@@ -64,5 +65,11 @@ qboolean RS_Save(sizebuf_t* sb, void* data);
 qboolean RS_Load(sizebuf_t* sb, void* data);
 qboolean PR_Save(sizebuf_t* sb, void* data);
 qboolean PR_Load(sizebuf_t* sb, void* data);
+qboolean MS_Save(sizebuf_t* sb, void* data);
+qboolean MS_Load(sizebuf_t* sb, void* data);
+qboolean STATS_Save(sizebuf_t* sb, void* data);
+qboolean STATS_Load(sizebuf_t* sb, void* data);
+qboolean NA_Save(sizebuf_t* sb, void* data);
+qboolean NA_Load(sizebuf_t* sb, void* data);
 
 #endif /* CLIENT_CL_SAVE_H */

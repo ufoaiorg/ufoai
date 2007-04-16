@@ -219,6 +219,7 @@ extern void B_SetSensor_f (void)
 /**
  * @brief We are doing the real destroy of a buliding here
  * @sa B_BuildingDestroy
+ * @sa B_NewBuilding
  */
 static void B_BuildingDestroy_f (void)
 {
@@ -556,11 +557,11 @@ static qboolean B_CheckCredits (int costs)
 
 /**
  * @brief Builds new building.
- *
+ * @sa B_BuildingDestroy
  * @sa B_CheckCredits
  * @sa CL_UpdateCredits
  * @return qboolean
- *
+ * @sa B_NewBuilding
  * Checks whether the player has enough credits to construct the current selected
  * building before starting construction.
  */
@@ -600,6 +601,8 @@ static qboolean B_ConstructBuilding (void)
 
 /**
  * @brief Build new building.
+ * @sa B_BuildingDestroy
+ * @sa B_ConstructBuilding
  */
 static void B_NewBuilding (void)
 {
@@ -2464,8 +2467,9 @@ int B_ItemInBase (int item_idx, base_t *base)
 extern qboolean B_Save (sizebuf_t* sb, void* data)
 {
 	int i, k, l;
-	base_t *b;
+	base_t *b, *transferBase;
 	aircraft_t *aircraft;
+	building_t *building;
 
 	MSG_WriteShort(sb, gd.numAircraft);
 	MSG_WriteByte(sb, gd.numBases);
@@ -2489,6 +2493,15 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
 				MSG_WriteShort(sb, b->posX[k][l]);
 				MSG_WriteShort(sb, b->posY[k][l]);
 			}
+		for (k = 0; k < MAX_BUILDINGS; k++) {
+			building = &gd.buildings[i][k];
+			MSG_WriteByte(sb, building->type_idx);
+			MSG_WriteByte(sb, building->buildingStatus);
+			MSG_WriteLong(sb, building->timeStart);
+			MSG_WriteLong(sb, building->buildTime);
+			MSG_Write2Pos(sb, building->pos);
+		}
+		MSG_WriteShort(sb, gd.numBuildings[i]);
 		MSG_WriteByte(sb, b->condition);
 		MSG_WriteByte(sb, b->baseStatus);
 
@@ -2496,7 +2509,45 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
 		MSG_WriteByte(sb, b->numAircraftInBase);
 		for (k = 0; k < b->numAircraftInBase; k++) {
 			aircraft = &b->aircraft[k];
-
+			MSG_WriteString(sb, aircraft->id);
+			MSG_WriteByte(sb, aircraft->status);
+			MSG_WriteFloat(sb, aircraft->speed);
+			MSG_WriteLong(sb, aircraft->fuel);
+			MSG_WriteLong(sb, aircraft->fuelSize);
+			transferBase = (base_t*)aircraft->transferBase;
+			MSG_WriteShort(sb, transferBase ? transferBase->idx : -1);
+			MSG_WritePos(sb, aircraft->pos);
+			MSG_WriteShort(sb, aircraft->time);
+			MSG_WriteShort(sb, aircraft->point);
+			MSG_WriteString(sb, aircraft->weapon_string);
+			MSG_WriteString(sb, aircraft->shield_string);
+			MSG_WriteString(sb, aircraft->item_string);
+			for (l = 0; l < MAX_ACTIVETEAM; l++)
+				MSG_WriteShort(sb, aircraft->teamIdxs[l]);
+			MSG_WriteShort(sb, aircraft->alientypes);
+			MSG_WriteShort(sb, aircraft->itemtypes);
+			MSG_WriteShort(sb, aircraft->numUpgrades);
+			MSG_WriteShort(sb, aircraft->radar.range);
+			MSG_WriteShort(sb, aircraft->route.n);
+			MSG_WriteFloat(sb, aircraft->route.dist);
+			for (l = 0; l < aircraft->route.n; l++)
+				MSG_Write2Pos(sb, aircraft->route.p[l]);
+			/* Save only needed if aircraft returns from a mission. */
+			if (aircraft->status == AIR_RETURNING) {
+				/* aliencargo */
+				MSG_WriteShort(sb, aircraft->alientypes);
+				for (l = 0; l < aircraft->alientypes; l++) {
+					MSG_WriteString(sb, aircraft->aliencargo[l].alientype);
+					MSG_WriteShort(sb, aircraft->aliencargo[l].amount_alive);
+					MSG_WriteShort(sb, aircraft->aliencargo[l].amount_dead);
+				}
+				/* itemcargo */
+				MSG_WriteShort(sb, aircraft->itemtypes);
+				for (l = 0; l < aircraft->itemtypes; l++) {
+					MSG_WriteShort(sb, aircraft->itemcargo[l].idx);
+					MSG_WriteShort(sb, aircraft->itemcargo[l].amount);
+				}
+			}
 		}
 		MSG_WriteShort(sb, MAX_AIRCRAFT);
 		for (k = 0; k < MAX_AIRCRAFT; k++)
@@ -2519,17 +2570,10 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
 				continue;
 			MSG_WriteByte(sb, b->alienscont[k].idx);
 			MSG_WriteString(sb, b->alienscont[k].alientype);
-			/* Zenerka. WriteByte here? */
-			MSG_WriteByte(sb, b->alienscont[k].amount_alive);
-			MSG_WriteByte(sb, b->alienscont[k].amount_dead);
-			MSG_WriteByte(sb, b->alienscont[k].techIdx);
+			MSG_WriteShort(sb, b->alienscont[k].amount_alive);
+			MSG_WriteShort(sb, b->alienscont[k].amount_dead);
+			MSG_WriteShort(sb, b->alienscont[k].techIdx);
 		}
-
-#if 0
-		aliensCont_t alienscont[MAX_ALIENCONT_CAP];	/**< alien containment capacity */
-		capacities_t capacities[MAX_CAP];		/**< Capacities. */
-		character_t *curTeam[MAX_ACTIVETEAM];	/**< set in CL_GenerateEquipment_f and CL_LoadTeam */
-#endif
 	}
 	return qtrue;
 }
@@ -2541,9 +2585,10 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
  */
 extern qboolean B_Load (sizebuf_t* sb, void* data)
 {
-	int i, bases, k, l, p;
+	int i, bases, k, l;
 	base_t *b;
 	aircraft_t *aircraft;
+	building_t *building;
 
 	gd.numAircraft = MSG_ReadShort(sb);
 	bases = MSG_ReadByte(sb);
@@ -2566,13 +2611,74 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 				b->posX[k][l] = MSG_ReadShort(sb);
 				b->posY[k][l] = MSG_ReadShort(sb);
 			}
+		for (k = 0; k < MAX_BUILDINGS; k++) {
+			building = &gd.buildings[i][k];
+			memcpy(building, &gd.buildingTypes[MSG_ReadByte(sb)], sizeof(building_t));
+			building->idx = k;
+			building->base_idx = i;
+			building->buildingStatus = MSG_ReadByte(sb);
+			building->timeStart = MSG_ReadLong(sb);
+			building->buildTime = MSG_ReadLong(sb);
+			MSG_Read2Pos(sb, building->pos);
+		}
+		gd.numBuildings[i] = MSG_ReadShort(sb);
 		b->condition = MSG_ReadByte(sb);
 		b->baseStatus = MSG_ReadByte(sb);
 		b->aircraftCurrent = MSG_ReadByte(sb);
 		b->numAircraftInBase = MSG_ReadByte(sb);
 		for (k = 0; k < b->numAircraftInBase; k++) {
+			aircraft = CL_GetAircraft(MSG_ReadString(sb));
+			memcpy(&b->aircraft[k], aircraft, sizeof(aircraft_t));
 			aircraft = &b->aircraft[k];
-			/* TODO aircraft loading */
+			aircraft->homebase = b;
+			/* for saving and loading a base */
+			aircraft->idxBase = b->idx;
+			/* this is the aircraft array id in current base */
+			aircraft->idxInBase = k;
+			/* link the teamSize pointer in */
+			aircraft->teamSize = &b->teamNum[k];
+			aircraft->status = MSG_ReadByte(sb);
+			aircraft->speed = MSG_ReadFloat(sb);
+			aircraft->fuel = MSG_ReadLong(sb);
+			aircraft->fuelSize = MSG_ReadLong(sb);
+			l = MSG_ReadShort(sb);
+			if (l >= 0)
+				aircraft->transferBase = &gd.bases[l];
+			MSG_ReadPos(sb, aircraft->pos);
+			aircraft->time = MSG_ReadShort(sb);
+			aircraft->point = MSG_ReadShort(sb);
+			Q_strncpyz(aircraft->weapon_string, MSG_ReadString(sb), sizeof(aircraft->weapon_string));
+			Q_strncpyz(aircraft->shield_string, MSG_ReadString(sb), sizeof(aircraft->shield_string));
+			Q_strncpyz(aircraft->item_string, MSG_ReadString(sb), sizeof(aircraft->item_string));
+			for (l = 0; l < MAX_ACTIVETEAM; l++)
+				aircraft->teamIdxs[l] = MSG_ReadShort(sb);
+			aircraft->alientypes = MSG_ReadShort(sb);
+			aircraft->itemtypes = MSG_ReadShort(sb);
+			aircraft->numUpgrades = MSG_ReadShort(sb);
+			aircraft->radar.range = MSG_ReadShort(sb);
+			aircraft->route.n = MSG_ReadShort(sb);
+			aircraft->route.dist = MSG_ReadFloat(sb);
+			for (l = 0; l < aircraft->route.n; l++)
+				MSG_Read2Pos(sb, aircraft->route.p[l]);
+			/* Load only needed if aircraft returns from a mission. */
+			if (aircraft->status == AIR_RETURNING) {
+				/* aliencargo */
+				l = MSG_ReadShort(sb);
+				for (k = 0; k < l; k++) {
+					Q_strncpyz(aircraft->aliencargo[k].alientype, MSG_ReadString(sb), sizeof(aircraft->aliencargo[k].alientype));
+					aircraft->aliencargo[k].amount_alive = MSG_ReadShort(sb);
+					aircraft->aliencargo[k].amount_dead = MSG_ReadShort(sb);
+				}
+				/* itemcargo */
+				l = MSG_ReadShort(sb);
+				for (k = 0; k < l; k++) {
+					aircraft->itemcargo[k].idx = MSG_ReadShort(sb);
+					aircraft->itemcargo[k].amount = MSG_ReadShort(sb);
+				}
+			}
+#if 0
+			struct actMis_s* mission;	/**< The mission the aircraft is moving to */
+#endif
 		}
 
 		l = MSG_ReadShort(sb);
@@ -2593,14 +2699,11 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 		l = MSG_ReadByte(sb);
 		for (k = 0; k < l; k++) {
 			b->alienscont[k].idx = MSG_ReadByte(sb);
-			/* Zenerka. There should NOT be MAX_VAR here, don't it? */
-			Q_strncpyz(b->alienscont[k].alientype, MSG_ReadString(sb), MAX_VAR);
-			b->alienscont[k].amount_alive = MSG_ReadByte(sb);
-			b->alienscont[k].amount_dead = MSG_ReadByte(sb);
-			b->alienscont[k].techIdx = MSG_ReadByte(sb);
+			Q_strncpyz(b->alienscont[k].alientype, MSG_ReadString(sb), sizeof(b->alienscont[k].alientype));
+			b->alienscont[k].amount_alive = MSG_ReadShort(sb);
+			b->alienscont[k].amount_dead = MSG_ReadShort(sb);
+			b->alienscont[k].techIdx = MSG_ReadShort(sb);
 		}
-
-		/* TODO: read the missing ones */
 
 		/* clear the mess of stray loaded pointers */
 		memset(&b->equipByBuyType, 0, sizeof(inventory_t));
@@ -2608,35 +2711,16 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 		/* some functions needs the baseCurrent pointer set */
 		baseCurrent = b;
 
-		/* fix aircraft homebase and teamsize pointers */
-		/* the mission pointer in updated in SAV_GameLoad */
+		/* fix aircraft tech pointers */
 		for (k = 0, aircraft = b->aircraft; k < b->numAircraftInBase; k++, aircraft++) {
-			aircraft->teamSize = &b->teamNum[aircraft->idxInBase];
-			aircraft->homebase = &gd.bases[aircraft->idxBase];
 			aircraft->shield = RS_GetTechByID(aircraft->shield_string);
 			aircraft->weapon = RS_GetTechByID(aircraft->weapon_string);
 			aircraft->item = RS_GetTechByID(aircraft->item_string);
 		}
 
 		/* initalize team to null */
-		for (p = 0; p < MAX_ACTIVETEAM; p++)
-			b->curTeam[p] = NULL;
-
-		/* if there are no aircraft in base, a team can't be assigned */
-		if (b->numAircraftInBase <= 0)
-			continue;
-
-		/* now fix the curTeam pointers */
-		/* FIXME: EMPL_ROBOTS => ugvs */
-		aircraft = &b->aircraft[b->aircraftCurrent];
-
-		for (k = 0, p = 0; k < gd.numEmployees[EMPL_SOLDIER]; k++)
-			if (CL_SoldierInAircraft(k, aircraft->idx)) {
-				/* maybe we already have soldiers in this base */
-				b->curTeam[p] = E_GetHiredCharacter(b, EMPL_SOLDIER, k);
-				assert(b->curTeam[p]);
-				p++;
-			}
+		for (k = 0; k < MAX_ACTIVETEAM; k++)
+			b->curTeam[k] = NULL;
 	}
 	gd.numBases = bases;
 
