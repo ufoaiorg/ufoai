@@ -111,8 +111,6 @@ static qboolean SAV_GameLoad (const char *filename)
 	memset(&gd, 0, sizeof(gd));
 	CL_ReadSinglePlayerData();
 
-	CL_GameInit();
-
 	Com_Printf("Load '%s'\n", filename);
 	for (i = 0; i < saveSubsystemsAmount; i++) {
 		diff = sb.readcount;
