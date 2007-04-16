@@ -2806,7 +2806,8 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 		b->hasStorage = MSG_ReadByte(sb);
 		b->hasQuarters = MSG_ReadByte(sb);
 		b->hasWorkshop = MSG_ReadByte(sb);
-		b->hasHangarSmall = MSG_ReadByte(sb);
+		if (*(int*)data >= 2)
+			b->hasHangarSmall = MSG_ReadByte(sb);
 		for (k = 0; k < BASE_SIZE; k++)
 			for (l = 0; l < BASE_SIZE; l++) {
 				b->map[k][l] = MSG_ReadShort(sb);
@@ -2876,8 +2877,8 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 				for (k = 0; k < l; k++) {
 					aircraft->itemcargo[k].idx = MSG_ReadShort(sb);
 					aircraft->itemcargo[k].amount = MSG_ReadShort(sb);
-				}     
-			}     
+				}
+			}
 #if 0
 			struct actMis_s* mission;	/**< The mission the aircraft is moving to */
 #endif
@@ -2907,10 +2908,12 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 			b->alienscont[k].techIdx = MSG_ReadShort(sb);
 		}
 
-		/* Base capacities. */
-		for (k = 0; k < MAX_CAP; k++) {
-			b->capacities[k].cur = MSG_ReadByte(sb);
-			b->capacities[k].max = MSG_ReadByte(sb);
+		if (*(int*)data >= 2) {
+			/* Base capacities. */
+			for (k = 0; k < MAX_CAP; k++) {
+				b->capacities[k].cur = MSG_ReadByte(sb);
+				b->capacities[k].max = MSG_ReadByte(sb);
+			}
 		}
 
 		/* clear the mess of stray loaded pointers */
