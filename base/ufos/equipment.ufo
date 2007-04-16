@@ -181,6 +181,7 @@ equipment multiplayer
 //	rpg_particle_ammo	3
 	grenl				1
 	grenl_ammo			5
+	grenl_fle_ammo			4
 	grenl_plasma_ammo	3
 	bolterrifle			1
 	bolterrifle_ammo	3
