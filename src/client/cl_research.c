@@ -335,7 +335,9 @@ void RS_MarkResearchable (qboolean init)
 		tech = &gd.technologies[i];
 		tech->statusResearchable = qfalse;
 	}
-	RS_CheckAllCollected();
+	
+	/* Update the "amount" and statusCollected values in the requirement-trees. */
+	RS_CheckAllCollected(); 
 
 	for (i = 0; i < gd.numTechnologies; i++) {	/* i = tech-index */
 		tech = &gd.technologies[i];

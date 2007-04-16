@@ -3056,8 +3056,9 @@ static void CL_Targeting_Radius (vec3_t center)
 
 /**
  * @brief Draws line to target.
- * @param[in] fromPos
- * @param[in] toPos
+ * @param[in] fromPos The (grid-) position of the aiming actor.
+ * @param[in] toPos The (grid-) position of the target.
+ * @sa CL_TargetingGrenade
  * @sa CL_AddTargeting
  * @sa CL_Trace
  */
@@ -3096,10 +3097,6 @@ static void CL_TargetingStraight (pos3_t fromPos, pos3_t toPos)
 	oldLevel = cl_worldlevel->value;
 	cl_worldlevel->value = map_maxlevel-1;
 
-	/* check for obstacles */
-	VectorSet(mins, 0, 0, 0);
-	VectorSet(maxs, 0, 0, 0);
-
 	/* search for an actor at target */
 	for (i = 0, le = LEs; i < numLEs; i++, le++)
 		if (le->inuse && !(le->state & STATE_DEAD) && (le->type == ET_ACTOR || le->type == ET_UGV) && VectorCompare(le->pos, toPos)) {
@@ -3107,7 +3104,11 @@ static void CL_TargetingStraight (pos3_t fromPos, pos3_t toPos)
 			break;
 		}
 
+	/* trace for obstacles */
+	VectorSet(mins, 0, 0, 0);
+	VectorSet(maxs, 0, 0, 0);
 	tr = CL_Trace(start, mid, mins, maxs, selActor, target, MASK_SHOT);
+
 	if (tr.fraction < 1.0) {
 		d = VectorDist(start, mid);
 		VectorMA(start, tr.fraction * d, dir, mid);
@@ -3134,8 +3135,12 @@ static void CL_TargetingStraight (pos3_t fromPos, pos3_t toPos)
 
 /**
  * @brief Shows targetting for a grenade.
- * @param[in] fromPos
- * @param[in] toPos
+ * @param[in] fromPos The (grid-) position of the aiming actor.
+ * @param[in] toPos The (grid-) position of the target.
+ * @todo Find out why the ceiling is not checked against the parabola when calculating obstacles.
+ * i.e. the line is drawn green even if a ceiling prevents the shot.
+ * https://sourceforge.net/tracker/index.php?func=detail&aid=1701263&group_id=157793&atid=805242
+ * @sa CL_TargetingStraight
  */
 static void CL_TargetingGrenade (pos3_t fromPos, pos3_t toPos)
 {
@@ -3188,6 +3193,11 @@ static void CL_TargetingGrenade (pos3_t fromPos, pos3_t toPos)
 
 	/* paint */
 	vz = v0[2];
+
+	/* mins/maxs: Used for obstacle-tracing later on (CL_Trace) */
+	VectorSet(mins, 0, 0, 0);
+	VectorSet(maxs, 0, 0, 0);
+
 	for (i = 0; i < GRENADE_PARTITIONS; i++) {
 		VectorAdd(from, ds, next);
 		next[2] += dt * (vz - 0.5 * GRAVITY * dt);
@@ -3195,8 +3205,6 @@ static void CL_TargetingGrenade (pos3_t fromPos, pos3_t toPos)
 		VectorScale(v0, (i + 1.0) / GRENADE_PARTITIONS, at);
 
 		/* trace for obstacles */
-		VectorSet(mins, 0, 0, 0);
-		VectorSet(maxs, 0, 0, 0);
 		tr = CL_Trace(from, next, mins, maxs, selActor, target, MASK_SHOT);
 
 		if (tr.fraction < 1.0) {
