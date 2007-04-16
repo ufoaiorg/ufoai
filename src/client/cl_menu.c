@@ -4112,6 +4112,7 @@ void MN_ShutdownMessageSystem (void)
 		m = m->next;
 		free(d);
 	}
+	messageStack = NULL;
 }
 
 /**
@@ -4392,7 +4393,7 @@ extern qboolean MS_Load (sizebuf_t* sb, void* data)
 	const char *title, *text;
 	message_t *mess;
 
-	CL_InitMessageSystem();
+	MN_ShutdownMessageSystem();
 
 	/* how many message items */
 	i = MSG_ReadLong(sb);
