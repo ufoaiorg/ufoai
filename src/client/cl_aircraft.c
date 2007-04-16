@@ -93,8 +93,8 @@ extern void CL_ListAircraft_f (void)
 			Com_Printf("...team: (%i/%i)\n", *aircraft->teamSize, aircraft->size);
 			for (k = 0; k < aircraft->size; k++)
 				if (aircraft->teamIdxs[k] != -1) {
-					Com_Printf("......idx: %i\n", k);
-					chr = E_GetHiredCharacter(base, EMPL_SOLDIER, k);
+					Com_Printf("......idx (in global array): %i\n", aircraft->teamIdxs[k]);
+					chr = E_GetHiredCharacter(base, EMPL_SOLDIER, aircraft->teamIdxs[k]);
 					if (chr)
 						Com_Printf(".........name: %s\n", chr->name);
 					else

@@ -168,10 +168,8 @@ typedef struct technology_s {
 	int prev;			/**< Previous tech in pedia. */
 	int next;			/**< Next tech in pedia. */
 
-	/** mail[0] == pre header
-	 * mail[1] == normal header */
-	techMail_t mail[TECHMAIL_MAX];	/**< ufopedia mails */
-	int numTechMails;
+	techMail_t mail[TECHMAIL_MAX];	/**< Ufopedia mails. See techMailType_t for the different array-entries. */
+	int numTechMails;				/**< Used to store which "mail" entry to display in pedia. if It's equalt to TECHMAIL_MAX both mailtypes are available. */
 
 	struct technology_s *hash_next;
 } technology_t;

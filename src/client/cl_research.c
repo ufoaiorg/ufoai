@@ -1737,6 +1737,9 @@ extern void RS_ParseTechnologies (const char *name, char **text)
 				/* how many mails found for this technology
 				 * used in ufopedia to check which article to display */
 				tech->numTechMails++;
+				
+				if (tech->numTechMails > TECHMAIL_MAX)
+					Com_Printf("RS_ParseTechnologies: more techmail-entries found than supported. \"%s\"\n",  name);
 
 				if (!Q_strncmp(token, "mail_pre", 8)) {
 					mail = &tech->mail[TECHMAIL_PRE];
