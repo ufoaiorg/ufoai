@@ -832,10 +832,11 @@ extern qboolean PR_Save (sizebuf_t* sb, void* data)
  */
 extern qboolean PR_Load (sizebuf_t* sb, void* data)
 {
-	int i, j;
+	int i, j, cnt;
 	production_queue_t *pq;
 
-	for (i = 0; i < MSG_ReadByte(sb); i++) {
+	cnt = MSG_ReadByte(sb);
+	for (i = 0; i < cnt; i++) {
 		pq = &gd.productions[i];
 		pq->numItems = MSG_ReadByte(sb);
 		for (j = 0; j < pq->numItems; j++) {

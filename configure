@@ -700,6 +700,7 @@ PROFILING
 EXE_EXT
 REF_GL_LIBS
 REF_GLX_LIBS
+REF_GLX_CFLAGS
 REF_SDL_LIBS
 CLIENT_LIBS
 SERVER_LIBS
@@ -11025,6 +11026,10 @@ REF_GL_LIBS="$REF_GL_LIBS"
 
 REF_GLX_LIBS="$REF_GLX_LIBS"
 
+REF_GLX_CFLAGS="$REF_GLX_CFLAGS"
+
+REF_GLX_CFLAGS="$REF_GLX_CFLAGS"
+
 REF_SDL_LIBS="$REF_SDL_LIBS"
 
 CLIENT_LIBS="$CLIENT_LIBS"
@@ -11804,6 +11809,7 @@ PROFILING!$PROFILING$ac_delim
 EXE_EXT!$EXE_EXT$ac_delim
 REF_GL_LIBS!$REF_GL_LIBS$ac_delim
 REF_GLX_LIBS!$REF_GLX_LIBS$ac_delim
+REF_GLX_CFLAGS!$REF_GLX_CFLAGS$ac_delim
 REF_SDL_LIBS!$REF_SDL_LIBS$ac_delim
 CLIENT_LIBS!$CLIENT_LIBS$ac_delim
 SERVER_LIBS!$SERVER_LIBS$ac_delim
@@ -11820,7 +11826,7 @@ LIBOBJS!$LIBOBJS$ac_delim
 LTLIBOBJS!$LTLIBOBJS$ac_delim
 _ACEOF
 
-  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 19; then
+  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 20; then
     break
   elif $ac_last_try; then
     { { echo "$as_me:$LINENO: error: could not make $CONFIG_STATUS" >&5
