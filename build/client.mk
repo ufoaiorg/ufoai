@@ -9,6 +9,7 @@ CLIENT_SRCS = \
 	client/cl_hospital.c \
 	client/cl_ufo.c \
 	client/cl_radar.c \
+	client/cl_save.c \
 	client/cl_popup.c \
 	client/cl_produce.c \
 	client/cl_employee.c \

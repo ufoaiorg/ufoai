@@ -64,7 +64,6 @@ stats_t stats;					/**< Document me. */
 
 extern qboolean CL_SendAircraftToMission(aircraft_t * aircraft, actMis_t * mission);
 extern void CL_AircraftsNotifyMissionRemoved(const actMis_t * mission);
-static void CL_GameExit(void);
 
 /*
 ============================================================================
@@ -1589,7 +1588,7 @@ static void CL_StatsUpdate_f (void)
 
 /**
  * @brief Saved the complete message stack
- * @sa CL_GameSave
+ * @sa SAV_GameSave
  * @sa MN_AddNewMessage
  */
 static void CL_MessageSave (sizebuf_t * sb, message_t * message)
@@ -1628,373 +1627,35 @@ static void CL_MessageSave (sizebuf_t * sb, message_t * message)
 }
 
 /**
- * @brief
- * @sa CL_GameLoad
- * @sa HOS_GameSave
+ * @brief Load callback for campaign data
+ * @sa CP_Save
+ * @sa SAV_GameSave
  */
-static qboolean CL_GameSave (const char *filename, const char *comment)
-{
-	stageState_t *state;
-	actMis_t *mis;
-	sizebuf_t sb;
-	char savegame[MAX_OSPATH];
-	message_t *message;
-	byte *buf, *fbuf;
-	uLongf bufLen;
-	int res;
-	int i, j, type;
-	base_t *base;
-	/* if you change MAX_VAR here - change it below, too */
-	char description[MAX_VAR];
-	int day, month;
-
-	if (!curCampaign) {
-		Com_Printf("No campaign active.\n");
-		return qfalse;
-	}
-
-	Com_sprintf(savegame, sizeof(savegame), "%s/save/%s.sav", FS_Gamedir(), filename);
-
-	buf = (byte *) malloc(sizeof(byte) * MAX_GAMESAVESIZE);
-	if (!buf) {
-		Com_Printf("Error: Could not allocate enough memory to save this game\n");
-		return qfalse;
-	}
-
-	/* create data */
-	SZ_Init(&sb, buf, MAX_GAMESAVESIZE);
-
-	/* write prefix and version */
-	MSG_WriteLong(&sb, SAVE_FILE_VERSION);
-
-	MSG_WriteLong(&sb, MAX_GAMESAVESIZE);
-
-	/* store campaign name */
-	MSG_WriteString(&sb, curCampaign->id);
-
-	/* store date */
-	MSG_WriteLong(&sb, ccs.date.day);
-	MSG_WriteLong(&sb, ccs.date.sec);
-
-	/* store map view */
-	MSG_WriteFloat(&sb, ccs.center[0]);
-	MSG_WriteFloat(&sb, ccs.center[1]);
-	MSG_WriteFloat(&sb, ccs.zoom);
-
-	/* no more version included - we are using the sizeof(globalData_t) as info */
-	/* when size of globalData_t in savegame differs from actual size of globalData_t we won't even load the game */
-	Com_DPrintf("CL_GameSave: sizeof globalData_t: %Zu max.gamedatasize: %Zu\n", sizeof(globalData_t), MAX_GAMESAVESIZE);
-	SZ_Write(&sb, &gd, sizeof(globalData_t));
-
-	/* store inventories */
-	for (type = 0; type < MAX_EMPL; type++)
-		for (i = 0; i < gd.numEmployees[type]; i++)
-			CL_SendInventory(&sb, &gd.employees[type][i].inv);
-
-	/* store message system items */
-	for (i = 0, message = messageStack; message; i++, message = message->next);
-	Com_DPrintf("CL_GameSave: Saving %i messages from message stack\n", i);
-	MSG_WriteLong(&sb, i);
-	CL_MessageSave(&sb, messageStack);
-
-	/* store credits */
-	MSG_WriteLong(&sb, ccs.credits);
-
-	/* store equipment */
-	for (i = 0, base = gd.bases; i < gd.numBases; i++, base++)
-		for (j = 0; j < MAX_OBJDEFS; j++) {
-			MSG_WriteLong(&sb, base->storage.num[j]);
-			MSG_WriteByte(&sb, base->storage.num_loose[j]);
-		}
-
-	/* store market */
-	for (i = 0; i < MAX_OBJDEFS; i++)
-		MSG_WriteLong(&sb, ccs.eMarket.num[i]);
-
-	/* store campaign data */
-	for (i = 0, state = ccs.stage; i < numStages; i++, state++)
-		if (state->active) {
-			/* write head */
-			setState_t *set;
-
-			MSG_WriteString(&sb, state->def->name);
-			MSG_WriteLong(&sb, state->start.day);
-			MSG_WriteLong(&sb, state->start.sec);
-			MSG_WriteByte(&sb, state->def->num);
-
-			/* write all sets */
-			for (j = 0, set = &ccs.set[state->def->first]; j < state->def->num; j++, set++) {
-				MSG_WriteString(&sb, set->def->name);
-				MSG_WriteByte(&sb, set->active);
-				MSG_WriteShort(&sb, set->num);
-				MSG_WriteShort(&sb, set->done);
-				MSG_WriteLong(&sb, set->start.day);
-				MSG_WriteLong(&sb, set->start.sec);
-				MSG_WriteLong(&sb, set->event.day);
-				MSG_WriteLong(&sb, set->event.sec);
-			}
-		}
-	/* terminate list */
-	MSG_WriteByte(&sb, 0);
-
-	/* store active missions */
-	MSG_WriteByte(&sb, ccs.numMissions);
-	for (i = 0, mis = ccs.mission; i < ccs.numMissions; i++, mis++) {
-		MSG_WriteString(&sb, mis->def->name);
-		MSG_WriteByte(&sb, mis->def->missionType);
-		MSG_WriteString(&sb, mis->def->location);
-		MSG_WriteString(&sb, mis->cause->def->name);
-
-		MSG_WriteFloat(&sb, mis->realPos[0]);
-		MSG_WriteFloat(&sb, mis->realPos[1]);
-		MSG_WriteLong(&sb, mis->expire.day);
-		MSG_WriteLong(&sb, mis->expire.sec);
-		/* save IDX of base under attack if required */
-		if (mis->def->missionType == MIS_BASEATTACK) {
-			base = (base_t*)mis->def->data;
-			MSG_WriteByte(&sb, base->idx);
-		}
-	}
-
-	/* stores the select mission on geoscape */
-	if (selMis)
-		MSG_WriteLong(&sb, selMis - ccs.mission);
-	else
-		MSG_WriteLong(&sb, -1);
-
-	/* save all the stats */
-	SZ_Write(&sb, &stats, sizeof(stats_t));
-
-	HOS_GameSave(&sb);
-
-	/* compress data using zlib before writing */
-	bufLen = (uLongf) (24 + 1.02 * sb.cursize);
-	fbuf = (byte *) malloc(sizeof(byte) * (bufLen + MAX_VAR));
-
-	/* write an uncompressed header containing the comment and a timestamp */
-	memset(fbuf, 0, sizeof(byte) * MAX_VAR);
-	CL_DateConvert(&ccs.date, &day, &month);
-	Com_sprintf(description, sizeof(description), "%s - %02i %s %i", comment,
-		day, CL_DateGetMonthName(month), ccs.date.day / 365);
-	memcpy(fbuf, description, strlen(description));
-
-	res = compress(fbuf + MAX_VAR, &bufLen, buf, sb.cursize);
-	free(buf);
-
-	if (res != Z_OK) {
-		free(fbuf);
-		Com_Printf("Memory error compressing save-game data (%s)!", comment);
-		return qfalse;
-	}
-
-	/* write data */
-	res = FS_WriteFile(fbuf, bufLen + MAX_VAR, savegame);
-	free(fbuf);
-
-	if (res == bufLen + MAX_VAR) {
-		Cvar_Set("mn_lastsave", filename);
-		Com_Printf("Campaign '%s' saved.\n", comment);
-		return qtrue;
-	} else {
-		Com_Printf("Failed to save campaign '%s' !!!\n", comment);
-		return qfalse;
-	}
-}
-
-
-/**
- * @brief
- */
-static void CL_GameSave_f (void)
-{
-	char comment[MAX_COMMENTLENGTH] = "";
-	const char *arg = NULL;
-	qboolean result;
-
-	/* get argument */
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: game_save <filename> <comment|*cvar>\n");
-		return;
-	}
-
-	if (!curCampaign) {
-		Com_Printf("No running game - no saving...\n");
-		return;
-	}
-
-	/* get comment */
-	if (Cmd_Argc() > 2) {
-		arg = Cmd_Argv(2);
-		assert(arg);
-		Q_strncpyz(comment, arg, sizeof(comment));
-	}
-
-	/* save the game */
-	result = CL_GameSave(Cmd_Argv(1), comment);
-
-	Cbuf_ExecuteText(EXEC_NOW, "mn_pop");
-
-	/* if save failed refresh the SaveGame menu and popup error message */
-	if (!result) {
-		MN_PushMenu("save");
-		MN_Popup(_("Note"), _("Error saving game. Check free disk space!"));
-	}
-}
-
-/**
- * @brief Will fix the pointers in gd after loading
- */
-static void CL_UpdatePointersInGlobalData (void)
-{
-	int i, j, p, type;
-	base_t *base;
-	aircraft_t *aircraft;
-
-	for (type = 0; type < MAX_EMPL; type++)
-		for (i = 0; i < gd.numEmployees[type]; i++)
-			gd.employees[type][i].chr.inv = &gd.employees[type][i].inv;
-
-	for (j = 0, base = gd.bases; j < gd.numBases; j++, base++) {
-		if (!base->founded)
-			continue;
-
-		/* clear the mess of stray loaded pointers */
-		memset(&base->equipByBuyType, 0, sizeof(inventory_t));
-
-		/* some functions needs the baseCurrent pointer set */
-		baseCurrent = base;
-
-		/* fix aircraft homebase and teamsize pointers */
-		/* the mission pointer in updated in CL_GameLoad */
-		for (i = 0, aircraft = (aircraft_t *) base->aircraft; i < base->numAircraftInBase; i++, aircraft++) {
-			aircraft->teamSize = &base->teamNum[aircraft->idxInBase];
-			aircraft->homebase = &gd.bases[aircraft->idxBase];
-			aircraft->shield = RS_GetTechByID(aircraft->shield_string);
-			aircraft->weapon = RS_GetTechByID(aircraft->weapon_string);
-			aircraft->item = RS_GetTechByID(aircraft->item_string);
-		}
-
-		/* initalize team to null */
-		for (p = 0; p < MAX_ACTIVETEAM; p++)
-			base->curTeam[p] = NULL;
-
-		/* if there are no aircraft in base, a team can't be assigned */
-		if (baseCurrent->numAircraftInBase <= 0)
-			continue;
-
-		/* now fix the curTeam pointers */
-		/* FIXME: EMPL_ROBOTS => ugvs */
-		aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
-
-		for (i = 0, p = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++)
-			if (CL_SoldierInAircraft(i, aircraft->idx)) {
-				/* maybe we already have soldiers in this base */
-				base->curTeam[p] = E_GetHiredCharacter(base, EMPL_SOLDIER, i);
-				assert(base->curTeam[p]);
-				p++;
-			}
-	}
-}
-
-/**
- * @brief Loads a savegame from file
- *
- * @param filename Savegame to load (relative to writepath/save)
- *
- * @sa CL_GameLoad_f
- * @sa CL_GameSave
- * @sa CL_GameInit
- * @sa CL_MessageSave
- * @sa CL_ReadSinglePlayerData
- * @sa CL_UpdatePointersInGlobalData
- */
-static int CL_GameLoad (const char *filename)
+extern qboolean CP_Load (sizebuf_t *sb, void *data)
 {
 	actMis_t *mis;
 	stageState_t *state;
 	setState_t *set;
 	setState_t dummy;
-	sizebuf_t sb;
-	byte *buf, *cbuf;
-	qFILE f;
 	const char *name, *title, *text;
-	int res, clen;
-	int version, dataSize, mtype, idx;
-	int i, j, num, type;
+	int mtype, idx;
+	int i, j, num;
 	char val[32];
 	message_t *mess;
 	base_t *base;
 	int selectedMission;
-	uLongf len = MAX_GAMESAVESIZE;
-
-	/* open file */
-	f.f = fopen(va("%s/save/%s.sav", FS_Gamedir(), filename), "rb");
-	if (!f.f) {
-		Com_Printf("Couldn't open file '%s'.\n", filename);
-		return 1;
-	}
-
-	/* read compressed data into cbuf buffer */
-	clen = FS_FileLength(&f);
-	cbuf = (byte *) malloc(sizeof(byte) * clen);
-	if (fread(cbuf, 1, clen, f.f) != clen)
-		Com_Printf("Warning: Could not read %i bytes from savefile\n", clen);
-	fclose(f.f);
-
-	/* uncompress data, skipping comment header */
-	buf = (byte *) malloc(sizeof(byte) * MAX_GAMESAVESIZE);
-	SZ_Init(&sb, buf, MAX_GAMESAVESIZE);
-	res = uncompress(buf, &len, cbuf + MAX_VAR, clen - MAX_VAR);
-	free(cbuf);
-
-	if (res != Z_OK) {
-		Com_Printf("Error decompressing data in '%s'.\n", filename);
-		return 1;
-	}
-
-	sb.cursize = len;
-
-	/* read data */
-	version = MSG_ReadLong(&sb);
-	Com_Printf("Savefile version %d detected\n", version);
-	dataSize = MSG_ReadLong(&sb);
-
-	if (dataSize != MAX_GAMESAVESIZE) {
-		Com_Printf("File '%s' is incompatible to current version\n", filename);
-		free(buf);
-		return 1;
-	}
-
-	/* check current version */
-	if (version > SAVE_FILE_VERSION) {
-		Com_Printf("File '%s' is a more recent version (%d) than is supported.\n", filename, version);
-		free(buf);
-		return 1;
-	} else if (version < SAVE_FILE_VERSION) {
-		Com_Printf("Savefileformat has changed ('%s' is version %d) - you may experience problems.\n", filename, version);
-	}
-
-	/* exit running game */
-	if (curCampaign)
-		CL_GameExit();
-
-	CL_StartSingleplayer(qtrue);
-
-	memset(&gd, 0, sizeof(gd));
-	CL_ReadSinglePlayerData();
 
 	/* read campaign name */
-	name = MSG_ReadString(&sb);
+	name = MSG_ReadString(sb);
 
 	for (i = 0, curCampaign = campaigns; i < numCampaigns; i++, curCampaign++)
 		if (!Q_strncmp(name, curCampaign->id, MAX_VAR))
 			break;
 
 	if (i == numCampaigns) {
-		Com_Printf("CL_GameLoad: Campaign \"%s\" doesn't exist.\n", name);
+		Com_Printf("SAV_GameLoad: Campaign \"%s\" doesn't exist.\n", name);
 		curCampaign = NULL;
-		free(buf);
-		return 1;
+		return qfalse;
 	}
 
 	Com_sprintf(val, sizeof(val), "%i", curCampaign->difficulty);
@@ -2019,128 +1680,98 @@ static int CL_GameLoad (const char *filename)
 	ccs.angles[YAW] = GLOBE_ROTATE;
 
 	/* read date */
-	ccs.date.day = MSG_ReadLong(&sb);
-	ccs.date.sec = MSG_ReadLong(&sb);
+	ccs.date.day = MSG_ReadLong(sb);
+	ccs.date.sec = MSG_ReadLong(sb);
 
 	/* read map view */
-	ccs.center[0] = MSG_ReadFloat(&sb);
-	ccs.center[1] = MSG_ReadFloat(&sb);
-	ccs.zoom = MSG_ReadFloat(&sb);
-
-	/* Recently it was loaded from disk. Attention, bad pointers!!! */
-	memcpy(&gd, sb.data + sb.readcount, sizeof(globalData_t));
-	sb.readcount += sizeof(globalData_t);
-
-	CL_UpdatePointersInGlobalData();
-	/* lots of inventory pointers if gd, so we have to do the hack below;
-	   some serialization library would be much better for gd, though */
-
-	/* load inventories */
-	for (type = 0; type < MAX_EMPL; type++)
-		for (i = 0; i < gd.numEmployees[type]; i++) {
-			/* clear the mess of stray loaded pointers */
-			memset(&gd.employees[type][i].inv, 0, sizeof(inventory_t));
-
-			CL_ReceiveInventory(&sb, &gd.employees[type][i].inv);
-		}
+	ccs.center[0] = MSG_ReadFloat(sb);
+	ccs.center[1] = MSG_ReadFloat(sb);
+	ccs.zoom = MSG_ReadFloat(sb);
 
 	CL_InitMessageSystem();
+
 	/* how many message items */
-	i = MSG_ReadLong(&sb);
-	Com_DPrintf("CL_GameLoad: %i messages on messagestack.\n", i);
+	i = MSG_ReadLong(sb);
 	for (; i--;) {
 		/* can contain high bits due to utf8 */
-		title = MSG_ReadStringRaw(&sb);
-		text = MSG_ReadStringRaw(&sb);
-		mtype = MSG_ReadByte(&sb);
-		idx = MSG_ReadLong(&sb);
-		Com_DPrintf("Load message '%s' - '%s'; type = %i; idx = %i\n", title, text, mtype, idx);
+		title = MSG_ReadStringRaw(sb);
+		text = MSG_ReadStringRaw(sb);
+		mtype = MSG_ReadByte(sb);
+		idx = MSG_ReadLong(sb);
 		mess = MN_AddNewMessage(title, text, qfalse, mtype, RS_GetTechByIDX(idx));
-		mess->d = MSG_ReadLong(&sb);
-		mess->m = MSG_ReadLong(&sb);
-		mess->y = MSG_ReadLong(&sb);
-		mess->h = MSG_ReadLong(&sb);
-		mess->min = MSG_ReadLong(&sb);
-		mess->s = MSG_ReadLong(&sb);
+		mess->d = MSG_ReadLong(sb);
+		mess->m = MSG_ReadLong(sb);
+		mess->y = MSG_ReadLong(sb);
+		mess->h = MSG_ReadLong(sb);
+		mess->min = MSG_ReadLong(sb);
+		mess->s = MSG_ReadLong(sb);
 	}
 
 	/* read credits */
-	CL_UpdateCredits(MSG_ReadLong(&sb));
-
-	/* read equipment */
-	for (i = 0, base = gd.bases; i < gd.numBases; i++, base++)
-		for (j = 0; j < MAX_OBJDEFS; j++) {
-			base->storage.num[j] = MSG_ReadLong(&sb);
-			base->storage.num_loose[j] = MSG_ReadByte(&sb);
-		}
-
-	/* read market */
-	for (i = 0; i < MAX_OBJDEFS; i++)
-		ccs.eMarket.num[i] = MSG_ReadLong(&sb);
+	CL_UpdateCredits(MSG_ReadLong(sb));
 
 	/* read campaign data */
-	name = MSG_ReadString(&sb);
+	name = MSG_ReadString(sb);
 	while (*name) {
 		state = CL_CampaignActivateStage(name, qfalse);
 		if (!state) {
-			Com_Printf("Unable to load campaign '%s', unknown stage '%s'\n", filename, name);
+			Com_Printf("CP_Load: Unable to load campaign, unknown stage '%s'\n", name);
 			curCampaign = NULL;
 			Cbuf_AddText("mn_pop\n");
-			free(buf);
-			return 1;
+			return qfalse;
 		}
 
-		state->start.day = MSG_ReadLong(&sb);
-		state->start.sec = MSG_ReadLong(&sb);
-		num = MSG_ReadByte(&sb);
+		state->start.day = MSG_ReadLong(sb);
+		state->start.sec = MSG_ReadLong(sb);
+		num = MSG_ReadByte(sb);
 		assert (num == state->def->num);
 		for (i = 0; i < num; i++) {
-			name = MSG_ReadString(&sb);
+			name = MSG_ReadString(sb);
 			for (j = 0, set = &ccs.set[state->def->first]; j < state->def->num; j++, set++)
 				if (!Q_strncmp(name, set->def->name, MAX_VAR))
 					break;
 			/* write on dummy set, if it's unknown */
 			if (j >= state->def->num) {
-				Com_Printf("Warning: Set '%s' not found\n", name);
+				Com_Printf("CP_Load: Warning: Set '%s' not found\n", name);
 				set = &dummy;
 			}
 
-			set->active = MSG_ReadByte(&sb);
-			set->num = MSG_ReadShort(&sb);
-			set->done = MSG_ReadShort(&sb);
-			set->start.day = MSG_ReadLong(&sb);
-			set->start.sec = MSG_ReadLong(&sb);
-			set->event.day = MSG_ReadLong(&sb);
-			set->event.sec = MSG_ReadLong(&sb);
+			set->active = MSG_ReadByte(sb);
+			set->num = MSG_ReadShort(sb);
+			set->done = MSG_ReadShort(sb);
+			set->start.day = MSG_ReadLong(sb);
+			set->start.sec = MSG_ReadLong(sb);
+			set->event.day = MSG_ReadLong(sb);
+			set->event.sec = MSG_ReadLong(sb);
 		}
 
 		/* read next stage name */
-		name = MSG_ReadString(&sb);
+		name = MSG_ReadString(sb);
 	}
 
 	/* reset team */
 	Cvar_Set("team", curCampaign->team);
 
 	/* store active missions */
-	ccs.numMissions = MSG_ReadByte(&sb);
+	ccs.numMissions = MSG_ReadByte(sb);
 	for (i = 0, mis = ccs.mission; i < ccs.numMissions; i++, mis++) {
 		/* get mission definition */
-		name = MSG_ReadString(&sb);
+		name = MSG_ReadString(sb);
 		for (j = 0; j < numMissions; j++)
 			if (!Q_strncmp(name, missions[j].name, MAX_VAR)) {
 				mis->def = &missions[j];
 				break;
 			}
 		if (j >= numMissions)
-			Com_Printf("Warning: Mission '%s' not found\n", name);
+			Com_Printf("CP_Load: Warning: Mission '%s' not found\n", name);
 
 		/* get mission type and location */
-		mis->def->missionType = MSG_ReadByte(&sb);
-		name = MSG_ReadString(&sb);
+		mis->def->missionType = MSG_ReadByte(sb);
+		name = MSG_ReadString(sb);
 		Q_strncpyz(mis->def->location, name, MAX_VAR);
 
 		/* get mission cause */
-		name = MSG_ReadString(&sb);
+		name = MSG_ReadString(sb);
 
 		for (j = 0; j < numStageSets; j++)
 			if (!Q_strncmp(name, stageSets[j].name, MAX_VAR)) {
@@ -2148,13 +1779,13 @@ static int CL_GameLoad (const char *filename)
 				break;
 			}
 		if (j >= numStageSets)
-			Com_Printf("Warning: Stage set '%s' not found\n", name);
+			Com_Printf("CP_Load: Warning: Stage set '%s' not found\n", name);
 
 		/* read position and time */
-		mis->realPos[0] = MSG_ReadFloat(&sb);
-		mis->realPos[1] = MSG_ReadFloat(&sb);
-		mis->expire.day = MSG_ReadLong(&sb);
-		mis->expire.sec = MSG_ReadLong(&sb);
+		mis->realPos[0] = MSG_ReadFloat(sb);
+		mis->realPos[1] = MSG_ReadFloat(sb);
+		mis->expire.day = MSG_ReadLong(sb);
+		mis->expire.sec = MSG_ReadLong(sb);
 		mis->def->onGeoscape = qtrue;
 
 		/* ignore incomplete info */
@@ -2167,18 +1798,18 @@ static int CL_GameLoad (const char *filename)
 		/* manually set mission data for a base-attack */
 		if (mis->def->missionType == MIS_BASEATTACK) {
 			/* Load IDX of base under attack */
-			int baseidx = (int)MSG_ReadByte(&sb);
+			int baseidx = (int)MSG_ReadByte(sb);
 			base = &gd.bases[baseidx];
 			if (base->baseStatus == BASE_UNDER_ATTACK && !Q_strncmp(mis->def->location, base->name, MAX_VAR))
-				Com_DPrintf("CL_GameLoad: Base %i (%s) is under attack\n", j, base->name);
+				Com_DPrintf("CP_Load: Base %i (%s) is under attack\n", j, base->name);
 			else
-				Com_Printf("CL_GameLoad: Warning: base %i (%s) is supposedly under attack but base status or mission location (%s) doesn't match!\n", j, base->name, selMis->def->location);
+				Com_Printf("CP_Load: Warning: base %i (%s) is supposedly under attack but base status or mission location (%s) doesn't match!\n", j, base->name, selMis->def->location);
 			mis->def->data = (void*)base;
 		}
 	}
 
 	/* stores the select mission on geoscape */
-	selectedMission = MSG_ReadLong(&sb);
+	selectedMission = MSG_ReadLong(sb);
 	if (selectedMission >= 0)
 		selMis = ccs.mission + selectedMission;
 	else
@@ -2197,113 +1828,102 @@ static int CL_GameLoad (const char *filename)
 		}
 	}
 
-	/* load the stats */
-	memcpy(&stats, sb.data + sb.readcount, sizeof(stats_t));
-	sb.readcount += sizeof(stats_t);
-
-	if (version >= 6)
-		HOS_GameLoad(&sb);
-
 	/* ensure research correctly initialised */
 	RS_UpdateData();
 
-	Com_Printf("Campaign '%s' loaded.\n", filename);
-
 	CL_GameInit();
 
-	Cvar_Set("mn_main", "singleplayerInGame");
-	Cvar_Set("mn_active", "map");
-	Cbuf_AddText("disconnect\n");
-
-	MN_PopMenu(qtrue);
-	MN_PushMenu("map");
-	free(buf);
-
-	return 0;
+	return qtrue;
 }
 
-
 /**
- * @brief Console command to load a savegame
- *
- * @sa CL_GameLoad
+ * @brief Save callback for campaign data
+ * @sa CP_Load
+ * @sa SAV_GameSave
  */
-static void CL_GameLoad_f (void)
+extern qboolean CP_Save (sizebuf_t *sb, void *data)
 {
-	/* get argument */
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: game_load <filename>\n");
-		return;
-	}
+	stageState_t *state;
+	actMis_t *mis;
+	message_t *message;
+	int i, j;
+	base_t *base;
 
-	Com_DPrintf("load file '%s'\n", Cmd_Argv(1));
+	/* store campaign name */
+	MSG_WriteString(sb, curCampaign->id);
 
-	/* load and go to map */
-	CL_GameLoad(Cmd_Argv(1));
-}
+	/* store date */
+	MSG_WriteLong(sb, ccs.date.day);
+	MSG_WriteLong(sb, ccs.date.sec);
 
+	/* store map view */
+	MSG_WriteFloat(sb, ccs.center[0]);
+	MSG_WriteFloat(sb, ccs.center[1]);
+	MSG_WriteFloat(sb, ccs.zoom);
 
-/**
- * @brief Console commands to read the comments from savegames
- *
- * The comment is the part of the savegame that you type in at saving
- * for reidentifying the savegame
- *
- * @sa CL_GameLoad_f
- * @sa CL_GameLoad
- */
-static void CL_GameComments_f (void)
-{
-	char comment[MAX_VAR];
-	FILE *f;
-	int i;
+	/* store message system items */
+	for (i = 0, message = messageStack; message; i++, message = message->next);
+	MSG_WriteLong(sb, i);
+	CL_MessageSave(sb, messageStack);
 
-	if (Cmd_Argc() == 2) {
-		/* checks whether we plan to save without a running game */
-		if (!Q_strncmp(Cmd_Argv(1), "save", 4) && !curCampaign) {
-			Cbuf_ExecuteText(EXEC_NOW, "mn_pop");
-			return;
+	/* store credits */
+	MSG_WriteLong(sb, ccs.credits);
+
+	/* store campaign data */
+	for (i = 0, state = ccs.stage; i < numStages; i++, state++)
+		if (state->active) {
+			/* write head */
+			setState_t *set;
+
+			MSG_WriteString(sb, state->def->name);
+			MSG_WriteLong(sb, state->start.day);
+			MSG_WriteLong(sb, state->start.sec);
+			MSG_WriteByte(sb, state->def->num);
+
+			/* write all sets */
+			for (j = 0, set = &ccs.set[state->def->first]; j < state->def->num; j++, set++) {
+				MSG_WriteString(sb, set->def->name);
+				MSG_WriteByte(sb, set->active);
+				MSG_WriteShort(sb, set->num);
+				MSG_WriteShort(sb, set->done);
+				MSG_WriteLong(sb, set->start.day);
+				MSG_WriteLong(sb, set->start.sec);
+				MSG_WriteLong(sb, set->event.day);
+				MSG_WriteLong(sb, set->event.sec);
+			}
+		}
+	/* terminate list */
+	MSG_WriteByte(sb, 0);
+
+	/* store active missions */
+	MSG_WriteByte(sb, ccs.numMissions);
+	for (i = 0, mis = ccs.mission; i < ccs.numMissions; i++, mis++) {
+		MSG_WriteString(sb, mis->def->name);
+		MSG_WriteByte(sb, mis->def->missionType);
+		MSG_WriteString(sb, mis->def->location);
+		MSG_WriteString(sb, mis->cause->def->name);
+
+		MSG_WriteFloat(sb, mis->realPos[0]);
+		MSG_WriteFloat(sb, mis->realPos[1]);
+		MSG_WriteLong(sb, mis->expire.day);
+		MSG_WriteLong(sb, mis->expire.sec);
+		/* save IDX of base under attack if required */
+		if (mis->def->missionType == MIS_BASEATTACK) {
+			base = (base_t*)mis->def->data;
+			MSG_WriteByte(sb, base->idx);
 		}
 	}
 
-	for (i = 0; i < 8; i++) {
-		/* open file */
-		f = fopen(va("%s/save/slot%i.sav", FS_Gamedir(), i), "rb");
-		if (!f) {
-			Cvar_Set(va("mn_slot%i", i), "");
-			continue;
-		}
+	/* stores the select mission on geoscape */
+	if (selMis)
+		MSG_WriteLong(sb, selMis - ccs.mission);
+	else
+		MSG_WriteLong(sb, -1);
 
-		/* read the comment */
-		if (fread(comment, 1, MAX_VAR, f) != MAX_VAR)
-			Com_Printf("Warning: Savefile comment may be corrupted\n");
-		Cvar_Set(va("mn_slot%i", i), comment);
-		fclose(f);
-	}
-}
+	/* save all the stats */
+	SZ_Write(sb, &stats, sizeof(stats_t));
 
-
-/**
- * @brief Loads the last saved game
- *
- * @note At saving the archive cvar mn_lastsave was set to the latest savegame
- * @sa CL_GameLoad
- */
-static void CL_GameContinue_f (void)
-{
-	if (cls.state == ca_active) {
-		MN_PopMenu(qfalse);
-		return;
-	}
-
-	if (!curCampaign) {
-		/* try to load the current campaign */
-		CL_GameLoad(mn_lastsave->string);
-		if (!curCampaign)
-			return;
-	} else {
-		MN_PopMenu(qfalse);
-	}
+	return qtrue;
 }
 
 /**
@@ -4172,9 +3792,9 @@ static const cmdList_t game_commands[] = {
 /**
  * @brief
  * @sa CL_GameNew
- * @sa CL_GameLoad
+ * @sa SAV_GameLoad
  */
-static void CL_GameExit (void)
+extern void CL_GameExit (void)
 {
 	const cmdList_t *commands;
 
@@ -4196,7 +3816,7 @@ static void CL_GameExit (void)
 
 /**
  * @brief Called at new game and load game
- * @sa CL_GameLoad
+ * @sa SAV_GameLoad
  * @sa CL_GameNew
  */
 void CL_GameInit (void)
@@ -4493,12 +4113,7 @@ extern void CL_ResetCampaign (void)
 	Cmd_AddCommand("campaignlist_click", CP_CampaignsClick_f, NULL);
 	Cmd_AddCommand("getcampaigns", CP_GetCampaigns_f, NULL);
 	Cmd_AddCommand("missionlist", CP_MissionList_f, "Shows all missions from the script files");
-	Cmd_AddCommand("game_new", CL_GameNew, NULL);
-	Cmd_AddCommand("game_continue", CL_GameContinue_f, NULL);
-	Cmd_AddCommand("game_exit", CL_GameExit, NULL);
-	Cmd_AddCommand("game_save", CL_GameSave_f, NULL);
-	Cmd_AddCommand("game_load", CL_GameLoad_f, NULL);
-	Cmd_AddCommand("game_comments", CL_GameComments_f, NULL);
+	Cmd_AddCommand("game_new", CL_GameNew, NULL);	Cmd_AddCommand("game_exit", CL_GameExit, NULL);
 #ifdef DEBUG
 	Cmd_AddCommand("debug_statsupdate", CL_DebugChangeCharacterStats_f, NULL);
 #endif

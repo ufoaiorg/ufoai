@@ -359,6 +359,9 @@ void CL_RegisterLocalModels(void);
 
 void IN_Accumulate(void);
 
+/* cl_save.c */
+void SAV_Init(void);
+
 /* cl_sequence.c (avi stuff) */
 qboolean CL_OpenAVIForWriting(const char *filename);
 void CL_TakeVideoFrame(void);

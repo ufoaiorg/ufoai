@@ -940,3 +940,42 @@ extern employee_t* E_GetEmployeeFromChrUCN (int ucn)
 	return NULL;
 }
 
+/**
+ * @brief Save callback for savegames
+ * @sa E_Load
+ * @sa SAV_GameSave
+ */
+extern qboolean E_Save (sizebuf_t* sb, void* data)
+{
+	int i, j;
+
+	/* store inventories */
+	for (j= 0; j < MAX_EMPL; j++)
+		for (i = 0; i < gd.numEmployees[j]; i++)
+			CL_SendInventory(sb, &gd.employees[j][i].inv);
+
+	return qtrue;
+}
+
+/**
+ * @brief Load callback for savegames
+ * @sa E_Save
+ * @sa SAV_GameLoad
+ */
+extern qboolean E_Load (sizebuf_t* sb, void* data)
+{
+	int i, j;
+
+	/* load inventories */
+	for (j = 0; j < MAX_EMPL; j++) {
+		for (i = 0; i < gd.numEmployees[j]; i++) {
+			/* clear the mess of stray loaded pointers */
+			memset(&gd.employees[j][i].inv, 0, sizeof(inventory_t));
+			CL_ReceiveInventory(sb, &gd.employees[j][i].inv);
+		}
+		for (i = 0; i < gd.numEmployees[j]; i++)
+			gd.employees[j][i].chr.inv = &gd.employees[j][i].inv;
+	}
+
+	return qtrue;
+}

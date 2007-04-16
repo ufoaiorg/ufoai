@@ -27,7 +27,7 @@ $(GAME_TARGET) : $(GAME_OBJS) $(BUILDDIR)/.dirs
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/game/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 	@echo " * [GAM] $<"; \
-		$(CC) $(CFLAGS) $(SHARED_CFLAGS) -o $@ -c $<
+		$(CC) $(CFLAGS) $(SHARED_CFLAGS) -DHAVE_GETTEXT -o $@ -c $<
 
 # Say how to build the dependencies
 ifdef BUILDDIR

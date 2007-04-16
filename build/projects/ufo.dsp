@@ -529,6 +529,21 @@ SOURCE=..\..\src\client\cl_research.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\client\cl_save.c
+
+!IF  "$(CFG)" == "ufo - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\client\cl_scrn.c
 
 !IF  "$(CFG)" == "ufo - Win32 Release"
@@ -1191,6 +1206,10 @@ SOURCE=..\..\src\client\cl_produce.h
 # Begin Source File
 
 SOURCE=..\..\src\client\cl_research.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\cl_save.h
 # End Source File
 # Begin Source File
 

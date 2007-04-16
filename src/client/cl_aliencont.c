@@ -994,3 +994,25 @@ extern void AC_Reset (void)
 	memset(aliencontText, 0, sizeof(aliencontText));
 	aliencontCurrent = NULL;
 }
+
+/**
+ * @brief Save callback for savegames
+ * @sa AC_Load
+ * @sa B_Save
+ * @sa SAV_GameSave
+ */
+extern qboolean AC_Save (sizebuf_t* sb, void* data)
+{
+	return qfalse;
+}
+
+/**
+ * @brief Load callback for savegames
+ * @sa AC_Save
+ * @sa B_Load
+ * @sa SAV_GameLoad
+ */
+extern qboolean AC_Load (sizebuf_t* sb, void* data)
+{
+	return qfalse;
+}

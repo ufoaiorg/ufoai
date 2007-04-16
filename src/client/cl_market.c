@@ -511,3 +511,43 @@ extern void CL_ResetMarket (void)
 	buyListLength = -1;
 	buyListScrollPos = 0;
 }
+
+/**
+ * @brief Save callback for savegames
+ * @sa BS_Load
+ * @sa SAV_GameSave
+ */
+extern qboolean BS_Save (sizebuf_t* sb, void* data)
+{
+	int i;
+
+	/* store market */
+	for (i = 0; i < MAX_OBJDEFS; i++) {
+		MSG_WriteLong(sb, ccs.eMarket.num[i]);
+		MSG_WriteLong(sb, ccs.eMarket.bid[i]);
+		MSG_WriteLong(sb, ccs.eMarket.ask[i]);
+		MSG_WriteFloat(sb, ccs.eMarket.cumm_supp_diff[i]);
+	}
+
+	return qtrue;
+}
+
+/**
+ * @brief Load callback for savegames
+ * @sa BS_Save
+ * @sa SAV_GameLoad
+ */
+extern qboolean BS_Load (sizebuf_t* sb, void* data)
+{
+	int i;
+
+	/* read market */
+	for (i = 0; i < MAX_OBJDEFS; i++) {
+		ccs.eMarket.num[i] = MSG_ReadLong(sb);
+		ccs.eMarket.bid[i] = MSG_ReadLong(sb);
+		ccs.eMarket.ask[i] = MSG_ReadLong(sb);
+		ccs.eMarket.cumm_supp_diff[i] = MSG_ReadFloat(sb);
+	}
+
+	return qtrue;
+}

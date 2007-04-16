@@ -331,5 +331,6 @@ void CL_ParseResearchedCampaignItems(const char *name, char **text);
 void CL_ParseResearchableCampaignStates(const char *name, char **text, qboolean researchable);
 
 campaign_t* CL_GetCampaign(const char* name);
+void CL_GameExit(void);
 
 #endif /* CLIENT_CL_CAMPAIGN_H */

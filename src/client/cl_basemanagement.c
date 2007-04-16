@@ -2455,3 +2455,160 @@ int B_ItemInBase (int item_idx, base_t *base)
 
 	return ed->num[item_idx];
 }
+
+/**
+ * @brief Save callback for savegames
+ * @sa B_Load
+ * @sa SAV_GameSave
+ */
+extern qboolean B_Save (sizebuf_t* sb, void* data)
+{
+	int i, k, l;
+	base_t *b;
+	aircraft_t *aircraft;
+
+	MSG_WriteByte(sb, gd.numBases);
+	for (i = 0; i < gd.numBases; i++) {
+		b = &gd.bases[i];
+		MSG_WriteString(sb, b->name);
+		MSG_WriteChar(sb, b->mapChar);
+		MSG_WritePos(sb, b->pos);
+		MSG_WriteByte(sb, b->founded);
+		MSG_WriteByte(sb, b->hasHangar);
+		MSG_WriteByte(sb, b->hasLab);
+		MSG_WriteByte(sb, b->hasHospital);
+		MSG_WriteByte(sb, b->hasAlienCont);
+		MSG_WriteByte(sb, b->hasStorage);
+		MSG_WriteByte(sb, b->hasQuarters);
+		MSG_WriteByte(sb, b->hasWorkshop);
+		for (k = 0; k < BASE_SIZE; k++)
+			for (l = 0; l < BASE_SIZE; l++) {
+				MSG_WriteByte(sb, b->map[k][l]);
+				MSG_WriteByte(sb, b->posX[k][l]);
+				MSG_WriteByte(sb, b->posY[k][l]);
+			}
+		MSG_WriteByte(sb, b->condition);
+		MSG_WriteByte(sb, b->baseStatus);
+
+		MSG_WriteByte(sb, b->aircraftCurrent);
+		MSG_WriteByte(sb, b->numAircraftInBase);
+		for (k = 0; k < b->numAircraftInBase; k++) {
+			aircraft = &b->aircraft[k];
+
+		}
+		MSG_WriteLong(sb, MAX_AIRCRAFT);
+		for (k = 0; k < MAX_AIRCRAFT; k++)
+			MSG_WriteByte(sb, b->teamNum[k]);
+
+		MSG_WriteByte(sb, b->equipType);
+
+		/* store equipment */
+		for (k = 0; k < MAX_OBJDEFS; k++) {
+			MSG_WriteLong(sb, b->storage.num[k]);
+			MSG_WriteByte(sb, b->storage.num_loose[k]);
+		}
+		/* TODO: add those */
+#if 0
+		radar_t	radar;	/**< the onconstruct value of the buliding building_radar increases the sensor width */
+		aliensCont_t alienscont[MAX_ALIENCONT_CAP];	/**< alien containment capacity */
+		capacities_t capacities[MAX_CAP];		/**< Capacities. */
+		inventory_t equipByBuyType;	/**< idEquip sorted by buytype; needen't be saved;
+			a hack based on assertion (MAX_CONTAINERS >= BUY_AIRCRAFT) ... see e.g. CL_GenerateEquipment_f */
+		character_t *curTeam[MAX_ACTIVETEAM];	/**< set in CL_GenerateEquipment_f and CL_LoadTeam */
+#endif
+	}
+	return qtrue;
+}
+
+/**
+ * @brief Load callback for savegames
+ * @sa B_Save
+ * @sa SAV_GameLoad
+ */
+extern qboolean B_Load (sizebuf_t* sb, void* data)
+{
+	int i, bases, k, l, p;
+	base_t *b;
+	aircraft_t *aircraft;
+
+	bases = MSG_ReadByte(sb);
+	for (i = 0; i < bases; i++) {
+		b = &gd.bases[i];
+		Q_strncpyz(b->name, MSG_ReadString(sb), sizeof(b->name));
+		b->mapChar = MSG_ReadChar(sb);
+		MSG_ReadPos(sb, b->pos);
+		b->founded = MSG_ReadByte(sb);
+		b->hasHangar = MSG_ReadByte(sb);
+		b->hasLab = MSG_ReadByte(sb);
+		b->hasHospital = MSG_ReadByte(sb);
+		b->hasAlienCont = MSG_ReadByte(sb);
+		b->hasStorage = MSG_ReadByte(sb);
+		b->hasQuarters = MSG_ReadByte(sb);
+		b->hasWorkshop = MSG_ReadByte(sb);
+		for (k = 0; k < BASE_SIZE; k++)
+			for (l = 0; l < BASE_SIZE; l++) {
+				b->map[k][l] = MSG_ReadByte(sb);
+				b->posX[k][l] = MSG_ReadByte(sb);
+				b->posY[k][l] = MSG_ReadByte(sb);
+			}
+		b->condition = MSG_ReadByte(sb);
+		b->baseStatus = MSG_ReadByte(sb);
+		b->aircraftCurrent = MSG_ReadByte(sb);
+		b->numAircraftInBase = MSG_ReadByte(sb);
+		for (k = 0; k < b->numAircraftInBase; k++) {
+			aircraft = &b->aircraft[k];
+			/* TODO aircraft loading */
+		}
+
+		for (k = 0; k < MSG_ReadLong(sb); k++)
+			b->teamNum[k] = MSG_ReadByte(sb);
+
+		b->equipType = MSG_ReadByte(sb);
+
+		/* read equipment */
+		for (k = 0; k < MAX_OBJDEFS; k++) {
+			b->storage.num[k] = MSG_ReadLong(sb);
+			b->storage.num_loose[k] = MSG_ReadByte(sb);
+		}
+
+		/* TODO: read the missing ones */
+
+		/* clear the mess of stray loaded pointers */
+		memset(&b->equipByBuyType, 0, sizeof(inventory_t));
+
+		/* some functions needs the baseCurrent pointer set */
+		baseCurrent = b;
+
+		/* fix aircraft homebase and teamsize pointers */
+		/* the mission pointer in updated in SAV_GameLoad */
+		for (i = 0, aircraft = b->aircraft; i < b->numAircraftInBase; i++, aircraft++) {
+			aircraft->teamSize = &b->teamNum[aircraft->idxInBase];
+			aircraft->homebase = &gd.bases[aircraft->idxBase];
+			aircraft->shield = RS_GetTechByID(aircraft->shield_string);
+			aircraft->weapon = RS_GetTechByID(aircraft->weapon_string);
+			aircraft->item = RS_GetTechByID(aircraft->item_string);
+		}
+
+		/* initalize team to null */
+		for (p = 0; p < MAX_ACTIVETEAM; p++)
+			b->curTeam[p] = NULL;
+
+		/* if there are no aircraft in base, a team can't be assigned */
+		if (b->numAircraftInBase <= 0)
+			continue;
+
+		/* now fix the curTeam pointers */
+		/* FIXME: EMPL_ROBOTS => ugvs */
+		aircraft = &b->aircraft[b->aircraftCurrent];
+
+		for (i = 0, p = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++)
+			if (CL_SoldierInAircraft(i, aircraft->idx)) {
+				/* maybe we already have soldiers in this base */
+				b->curTeam[p] = E_GetHiredCharacter(b, EMPL_SOLDIER, i);
+				assert(b->curTeam[p]);
+				p++;
+			}
+	}
+
+	return qtrue;
+}

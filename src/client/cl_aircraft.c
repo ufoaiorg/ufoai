@@ -28,10 +28,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 aircraft_t aircraft_samples[MAX_AIRCRAFT]; /* available aircraft types */
 int numAircraft_samples = 0; /* TODO: should be reset to 0 each time scripts are read anew; also aircraft_samples memory should be freed at that time, or old memory used for new records */
-static int airequipID = -1;
-static qboolean noparams = qfalse;
-static int numAircraftItems = 0;
-aircraftItem_t aircraftItems[MAX_AIRCRAFTITEMS];
+static int airequipID = -1;				/**< FIXME: document me. */
+static qboolean noparams = qfalse;			/**< FIXME: document me. */
+static int numAircraftItems = 0;			/**< FIXME: document me. */
+static aircraftItem_t aircraftItems[MAX_AIRCRAFTITEMS];	/**< FIXME: document me. */
 
 #define AIRCRAFT_RADAR_RANGE	20
 
@@ -627,10 +627,13 @@ extern void CL_DeleteAircraft (aircraft_t *aircraft)
 		Cvar_Set("mn_aircraftname", "");
 		Cvar_Set("mn_aircraft_model", "");
 		baseCurrent->aircraftCurrent = -1;
-	} 
+	}
 
 	/* Q_strncpyz(messageBuffer, va(_("You've sold your aircraft (a %s) in base %s"), aircraft->name, base->name), MAX_MESSAGE_TEXT);
 	MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);*/
+
+	/* Now update the aircraft list - maybe there is a popup active. */
+	Cbuf_ExecuteText(EXEC_NOW, "aircraft_list");
 
 	/* TODO: Return successful deletion status here. */
 }
@@ -1132,7 +1135,7 @@ extern void CL_ParseAircraftItem (const char *name, char **text)
 	Com_DPrintf("...found craftitem %s\n", name);
 	airItem->idx = numAircraftItems;
 	numAircraftItems++;
-	Q_strncpyz(airItem->id, name, MAX_VAR);
+	Q_strncpyz(airItem->id, name, sizeof(airItem->id));
 
 	/* get it's body */
 	token = COM_Parse(text);
@@ -1319,6 +1322,10 @@ extern void CL_ParseAircraft (const char *name, char **text)
 	} while (*text);
 }
 
+/*===============================================
+Aircraft functions related to UFOs or missions.
+===============================================*/
+
 /**
  * @brief Notify that a mission has been removed
  */
@@ -1396,6 +1403,10 @@ extern void CL_SendAircraftPurchasingUfo (aircraft_t* aircraft, aircraft_t* ufo)
 	aircraft->point = 0;
 	aircraft->ufo = num;
 }
+
+/*============================================
+Aircraft functions related to team handling.
+============================================*/
 
 /**
  * @brief
@@ -1511,16 +1522,26 @@ extern qboolean CL_IsInAircraftTeam (aircraft_t *aircraft, int employee_idx)
 	return qfalse;
 }
 
+/**
+ * @brief Save callback for savegames
+ * @note Nothing to save here at the moment
+ * @sa AIR_Load
+ * @sa B_Save
+ * @sa SAV_GameSave
+ */
+extern qboolean AIR_Save (sizebuf_t* sb, void* data)
+{
+	return qfalse;
+}
 
 /**
- * @brief
+ * @brief Load callback for savegames
+ * @note Nothing to load here at the moment
+ * @sa AIR_Save
+ * @sa B_Load
+ * @sa SAV_GameLoad
  */
-extern void CL_AircraftListDebug_f (void)
+extern qboolean AIR_Load (sizebuf_t* sb, void* data)
 {
-	base_t*		base;
-	aircraft_t*	aircraft;
-
-	for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--)
-		for (aircraft = base->aircraft + base->numAircraftInBase - 1; aircraft >= base->aircraft; aircraft--)
-			Com_Printf("aircraft idx: %i (in base [idx]: %i) - base idx: %i (%s)\n", aircraft->idx, aircraft->idxInBase, base->idx, base->name);
+	return qfalse;
 }

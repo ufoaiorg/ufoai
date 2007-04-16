@@ -800,3 +800,51 @@ extern void PR_ResetProduction (void)
 	Cmd_AddCommand("prod_up", PR_ProductionUp_f, NULL);
 	Cmd_AddCommand("prod_down", PR_ProductionDown_f, NULL);
 }
+
+/**
+ * @brief Save callback for savegames
+ * @sa PR_Load
+ * @sa SAV_GameSave
+ */
+extern qboolean PR_Save (sizebuf_t* sb, void* data)
+{
+	int i, j;
+	production_queue_t *pq;
+
+	MSG_WriteByte(sb, MAX_BASES);
+	for (i = 0; i < MAX_BASES; i++) {
+		pq = &gd.productions[i];
+		MSG_WriteByte(sb, pq->numItems);
+		MSG_WriteLong(sb, MAX_PRODUCTIONS);
+		for (j = 0; j < MAX_PRODUCTIONS; j++) {
+			MSG_WriteLong(sb, pq->items[j].objID);
+			MSG_WriteLong(sb, pq->items[j].amount);
+			MSG_WriteLong(sb, pq->items[j].timeLeft);
+			MSG_WriteByte(sb, pq->items[j].items_cached);
+		}
+	}
+	return qtrue;
+}
+
+/**
+ * @brief Load callback for savegames
+ * @sa PR_Save
+ * @sa SAV_GameLoad
+ */
+extern qboolean PR_Load (sizebuf_t* sb, void* data)
+{
+	int i, j;
+	production_queue_t *pq;
+
+	for (i = 0; i < MSG_ReadByte(sb); i++) {
+		pq = &gd.productions[i];
+		pq->numItems = MSG_ReadByte(sb);
+		for (j = 0; j < MSG_ReadLong(sb); j++) {
+			pq->items[j].objID = MSG_ReadLong(sb);
+			pq->items[j].amount = MSG_ReadLong(sb);
+			pq->items[j].timeLeft = MSG_ReadLong(sb);
+			pq->items[j].items_cached = MSG_ReadByte(sb);
+		}
+	}
+	return qtrue;
+}
