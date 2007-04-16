@@ -990,6 +990,7 @@ extern qboolean E_Save (sizebuf_t* sb, void* data)
 			MSG_WriteByte(sb, e->chr.STUN);
 			MSG_WriteByte(sb, e->chr.AP);
 			MSG_WriteByte(sb, e->chr.morale);
+			MSG_WriteByte(sb, e->chr.fieldSize);
 
 			MSG_WriteShort(sb, e->chr.assigned_missions);
 
@@ -1055,6 +1056,7 @@ extern qboolean E_Load (sizebuf_t* sb, void* data)
 			e->chr.STUN = MSG_ReadByte(sb);
 			e->chr.AP = MSG_ReadByte(sb);
 			e->chr.morale = MSG_ReadByte(sb);
+			e->chr.fieldSize = MSG_ReadByte(sb);
 
 			e->chr.assigned_missions = MSG_ReadShort(sb);
 
