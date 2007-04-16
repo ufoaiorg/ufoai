@@ -957,7 +957,8 @@ extern qboolean PR_Load (sizebuf_t* sb, void* data)
 			pq->items[j].objID = MSG_ReadLong(sb);
 			pq->items[j].amount = MSG_ReadLong(sb);
 			pq->items[j].timeLeft = MSG_ReadLong(sb);
-			pq->items[j].workers = MSG_ReadLong(sb);
+			if (*(int*)data >= 2)
+				pq->items[j].workers = MSG_ReadLong(sb);
 			pq->items[j].items_cached = MSG_ReadByte(sb);
 		}
 	}
