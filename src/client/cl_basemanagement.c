@@ -2727,6 +2727,22 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
 			MSG_WriteFloat(sb, aircraft->route.dist);
 			for (l = 0; l < aircraft->route.n; l++)
 				MSG_Write2Pos(sb, aircraft->route.p[l]);
+			/* Save only needed if aircraft returns from a mission. */
+			if (aircraft->status == AIR_RETURNING) {
+				/* aliencargo */
+				MSG_WriteShort(sb, aircraft->alientypes);
+				for (l = 0; l < aircraft->alientypes; l++) {
+					MSG_WriteString(sb, aircraft->aliencargo[l].alientype);
+					MSG_WriteShort(sb, aircraft->aliencargo[l].amount_alive);
+					MSG_WriteShort(sb, aircraft->aliencargo[l].amount_dead);
+				}
+				/* itemcargo */
+				MSG_WriteShort(sb, aircraft->itemtypes);
+				for (l = 0; l < aircraft->itemtypes; l++) {
+					MSG_WriteShort(sb, aircraft->itemcargo[l].idx);
+					MSG_WriteShort(sb, aircraft->itemcargo[l].amount);
+				}
+			}
 		}
 		MSG_WriteShort(sb, MAX_AIRCRAFT);
 		for (k = 0; k < MAX_AIRCRAFT; k++)
@@ -2846,9 +2862,23 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 			aircraft->route.dist = MSG_ReadFloat(sb);
 			for (l = 0; l < aircraft->route.n; l++)
 				MSG_Read2Pos(sb, aircraft->route.p[l]);
+			/* Load only needed if aircraft returns from a mission. */
+			if (aircraft->status == AIR_RETURNING) {
+				/* aliencargo */
+				l = MSG_ReadShort(sb);
+				for (k = 0; k < l; k++) {
+					Q_strncpyz(aircraft->aliencargo[k].alientype, MSG_ReadString(sb), sizeof(aircraft->aliencargo[k].alientype));
+					aircraft->aliencargo[k].amount_alive = MSG_ReadShort(sb);
+					aircraft->aliencargo[k].amount_dead = MSG_ReadShort(sb);
+				}
+				/* itemcargo */
+				l = MSG_ReadShort(sb);
+				for (k = 0; k < l; k++) {
+					aircraft->itemcargo[k].idx = MSG_ReadShort(sb);
+					aircraft->itemcargo[k].amount = MSG_ReadShort(sb);
+				}     
+			}     
 #if 0
-			aliensTmp_t aliencargo[MAX_CARGO];	/**< Cargo of aliens. */
-			itemsTmp_t itemcargo[MAX_CARGO];	/**< Cargo of items. */
 			struct actMis_s* mission;	/**< The mission the aircraft is moving to */
 #endif
 		}
