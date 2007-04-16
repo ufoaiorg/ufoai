@@ -111,6 +111,8 @@ static qboolean SAV_GameLoad (const char *filename)
 	memset(&gd, 0, sizeof(gd));
 	CL_ReadSinglePlayerData();
 
+	CL_GameInit();
+
 	Com_Printf("Load '%s'\n", filename);
 	for (i = 0; i < saveSubsystemsAmount; i++) {
 		diff = sb.readcount;
@@ -123,11 +125,6 @@ static qboolean SAV_GameLoad (const char *filename)
 		if (check != saveSubsystems[i].check)
 			Com_Printf("...subsystem '%s' could not be loaded correctly - savegame might be broken (%x)\n", saveSubsystems[i].name, check);
 	}
-
-	/* ensure research correctly initialised */
-	RS_UpdateData();
-
-	CL_GameInit();
 
 	Cvar_Set("mn_main", "singleplayerInGame");
 	Cvar_Set("mn_active", "map");
