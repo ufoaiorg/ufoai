@@ -729,7 +729,7 @@ void CDAudio_RandomPlay(void);
 
 /* SAVEGAMES */
 #ifndef SAVE_FILE_VERSION
-#define SAVE_FILE_VERSION 6
+#define SAVE_FILE_VERSION 2
 #endif							/* SAVE_FILE_VERSION */
 
 /* cl_aliencont.c */
