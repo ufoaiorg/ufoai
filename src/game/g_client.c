@@ -843,6 +843,19 @@ void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int 
 			G_WriteItem(item, to, tx, ty);
 		}
 
+		/* Update reaction firemode when something is moved from/to a hand. */
+		if ((from==gi.csi->idRight) || (to==gi.csi->idRight)) {
+			Com_DPrintf("G_ClientInvMove: Something moved in/out of Right hand.\n");
+			gi.AddEvent(G_TeamToPM(ent->team), EV_INV_HANDS_CHANGED);
+			gi.WriteShort(num);
+			gi.WriteShort(0);	/**< hand=right */
+		} else if ((from==gi.csi->idLeft) || (to==gi.csi->idLeft)) {
+			Com_DPrintf("G_ClientInvMove:  Something moved in/out of Left hand.\n");
+			gi.AddEvent(G_TeamToPM(ent->team), EV_INV_HANDS_CHANGED);
+			gi.WriteShort(num);
+			gi.WriteShort(1);	/**< hand=left */
+		}
+
 		/* other players receive weapon info only */
 		mask = G_VisToPM(ent->visflags) & ~G_TeamToPM(ent->team);
 		if (mask) {

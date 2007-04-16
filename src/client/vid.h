@@ -11,6 +11,8 @@ All original materal Copyright (C) 2002-2007 UFO: Alien Invasion team.
 	Added doxygen file comment.
 	Updated copyright notice.
 	Added inclusion guard.
+12/04/07, Michael Ploujnikov (Plouj):
+	Improved viddef_t documentation.
 
 Original file from Quake 2 v3.21: quake2-2.31/client/vid.h
 Copyright (C) 1997-2001 Id Software, Inc.
@@ -51,19 +53,25 @@ typedef struct vrect_s {
 	int x, y, width, height;
 } vrect_t;
 
-/*    viddef_t
-
-Another structure used to rationalize the menu system rendering box with the actual screen.
-The width and height are the dimensions of the actual screen, not just the rendering box.
-The rx, ry positions are the width and height divided by VID_NORM_WIDTH and VID_NORM_HEIGHT
-respectively. This allows the menu system to use a "normalized" coordinate system of
-1024x768 texels.
-
+/**
+ * @brief Contains the game screen size and drawing scale
+ *
+ * This is used to rationalize the GUI system rendering box
+ * with the actual screen.
+ * The width and height are the dimensions of the actual screen,
+ * not just the rendering box.
+ * The rx, ry positions are the width and height divided by
+ * VID_NORM_WIDTH and VID_NORM_HEIGHT respectively.
+ * This allows the GUI system to use a "normalized" coordinate
+ * system of 1024x768 texels.
+ *
+ * this struct is also defined in src/ref_gl/gl_local.h
 */
-
 typedef struct {
-	unsigned width, height;		/* coordinates from main game */
-	float rx, ry;
+	unsigned width;		/**< game screen/window width */
+	unsigned height;	/**< game screen/window height */
+	float rx;		/**< horizontal screen scale factor */
+	float ry;		/**< vertical screen scale factor */
 } viddef_t;
 
 typedef struct vidmode_s {

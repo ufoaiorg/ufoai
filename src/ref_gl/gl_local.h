@@ -1,4 +1,18 @@
+/**
+ * @file gl_local.h
+ * @brief local graphics definitions
+ */
+
 /*
+All original materal Copyright (C) 2002-2007 UFO: Alien Invasion team.
+
+12/04/07, Michael Ploujnikov (Plouj):
+	Documented viddef_t.
+	Added doxygen file comment.
+	Updated copyright notice.
+	Changed some image_s struct comments.
+
+Original file from Quake 2 v3.21: quake2-2.31/ref_gl/gl_local.h
 Copyright (C) 1997-2001 Id Software, Inc.
 
 This program is free software; you can redistribute it and/or
@@ -77,10 +91,24 @@ void GL_ShutdownSDLFonts(void);	/* gl_draw.c */
 
 #ifndef __VIDDEF_T
 #define __VIDDEF_T
-
+/**
+ * @brief Contains the game screen size and drawing scale
+ *
+ * This is used to rationalize the GUI system rendering box
+ * with the actual screen.
+ * The width and height are the dimensions of the actual screen,
+ * not just the rendering box.
+ * The rx, ry positions are the width and height divided by
+ * VID_NORM_WIDTH and VID_NORM_HEIGHT respectively.
+ * This allows the GUI system to use a "normalized" coordinate system of
+ * system of 1024x768 texels.
+ *
+*/
 typedef struct {
-	unsigned width, height;		/* coordinates from main game */
-	float rx, ry;
+	unsigned width;		/**< game screen/window width */
+	unsigned height;	/**< game screen/window height */
+	float rx;		/**< horizontal screen scale factor */
+	float ry;		/**< vertical screen scale factor */
 } viddef_t;
 #endif
 
@@ -131,8 +159,8 @@ typedef enum {
 typedef struct image_s {
 	char name[MAX_QPATH];		/* game path, including extension, must be first */
 	imagetype_t type;
-	int width, height;			/* source image */
-	int upload_width, upload_height;	/* after power of two and picmip */
+	int width, height;			/* source image dimensions */
+	int upload_width, upload_height;	/* dimensions after power of two and picmip */
 	int registration_sequence;	/* 0 = free */
 	struct msurface_s *texturechain;	/* for sort-by-texture world drawing */
 	int texnum;					/* gl texture binding */
