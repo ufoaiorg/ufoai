@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 typedef struct mapline_s {
 	int n;
 	float dist;
-	vec3_t p[LINE_MAXPTS];
+	vec2_t p[LINE_MAXPTS];
 } mapline_t;
 
 /** @brief All different types of aircraft. */
