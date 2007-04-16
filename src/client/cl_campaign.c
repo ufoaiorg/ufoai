@@ -1702,8 +1702,8 @@ extern qboolean CP_Load (sizebuf_t *sb, void *data)
 
 		/* get mission type and location */
 		mis->def->missionType = MSG_ReadByte(sb);
-		name = MSG_ReadString(sb);
-		Q_strncpyz(mis->def->location, name, MAX_VAR);
+		mis->def->storyRelated = MSG_ReadByte(sb);
+		Q_strncpyz(mis->def->location, MSG_ReadString(sb), sizeof(mis->def->location));
 
 		/* get mission cause */
 		name = MSG_ReadString(sb);
@@ -1824,6 +1824,7 @@ extern qboolean CP_Save (sizebuf_t *sb, void *data)
 	for (i = 0, mis = ccs.mission; i < ccs.numMissions; i++, mis++) {
 		MSG_WriteString(sb, mis->def->name);
 		MSG_WriteByte(sb, mis->def->missionType);
+		MSG_WriteByte(sb, mis->def->storyRelated);
 		MSG_WriteString(sb, mis->def->location);
 		MSG_WriteString(sb, mis->cause->def->name);
 
