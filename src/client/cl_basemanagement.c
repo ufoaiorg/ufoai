@@ -2714,17 +2714,16 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
 				continue;
 			MSG_WriteByte(sb, b->alienscont[k].idx);
 			MSG_WriteString(sb, b->alienscont[k].alientype);
-			/* Zenerka. WriteByte here? */
-			MSG_WriteByte(sb, b->alienscont[k].amount_alive);
-			MSG_WriteByte(sb, b->alienscont[k].amount_dead);
-			MSG_WriteByte(sb, b->alienscont[k].techIdx);
+			MSG_WriteShort(sb, b->alienscont[k].amount_alive);
+			MSG_WriteShort(sb, b->alienscont[k].amount_dead);
+			MSG_WriteShort(sb, b->alienscont[k].techIdx);
 		}
 
 		/* Base capacities. */
 		for (k = 0; k < MAX_CAP; k++) {
 			MSG_WriteByte(sb, b->capacities[k].cur);
 			MSG_WriteByte(sb, b->capacities[k].max);
-		}            
+		}
 
 #if 0
 		aliensCont_t alienscont[MAX_ALIENCONT_CAP];	/**< alien containment capacity */
@@ -2795,11 +2794,10 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 		l = MSG_ReadByte(sb);
 		for (k = 0; k < l; k++) {
 			b->alienscont[k].idx = MSG_ReadByte(sb);
-			/* Zenerka. There should NOT be MAX_VAR here, don't it? */
-			Q_strncpyz(b->alienscont[k].alientype, MSG_ReadString(sb), MAX_VAR);
-			b->alienscont[k].amount_alive = MSG_ReadByte(sb);
-			b->alienscont[k].amount_dead = MSG_ReadByte(sb);
-			b->alienscont[k].techIdx = MSG_ReadByte(sb);
+			Q_strncpyz(b->alienscont[k].alientype, MSG_ReadString(sb), sizeof(b->alienscont[k].alientype));
+			b->alienscont[k].amount_alive = MSG_ReadShort(sb);
+			b->alienscont[k].amount_dead = MSG_ReadShort(sb);
+			b->alienscont[k].techIdx = MSG_ReadShort(sb);
 		}
 
 		/* Base capacities. */
