@@ -629,7 +629,7 @@ static void CL_GenerateEquipment_f (void)
 	aircraft_t *aircraft;
 	/* t value will be set below - a and m are not changed here */
 	item_t item = {0,NONE,NONE};
-	int team;
+	int team = 0;
 
 	assert(baseCurrent);
 	assert((baseCurrent->aircraftCurrent >= 0) && (baseCurrent->aircraftCurrent < baseCurrent->numAircraftInBase));

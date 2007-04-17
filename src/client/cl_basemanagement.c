@@ -233,7 +233,7 @@ static void B_BuildingDestroy_f (void)
 #if 0
 	building_t *b2 = NULL;
 #endif
-	baseCapacities_t cap;
+	baseCapacities_t cap = MAX_CAP; /* init but don't set to first value of enum */
 
 	if (!baseCurrent || !baseCurrent->buildingCurrent)
 		return;
@@ -329,9 +329,9 @@ static void B_BuildingDestroy_f (void)
 	B_ResetBuildingCurrent();
 	B_BuildingStatus();
 
-	/* Update capacities. */
-	if (b1->buildingType != B_MISC)
-		B_UpdateBaseCapacities (cap, baseCurrent);
+	/* Update capacities - but don't update all */
+	if (cap != MAX_CAP)
+		B_UpdateBaseCapacities(cap, baseCurrent);
 
 	/* Update production times in queue if we destroyed B_WORKSHOP. */
 	if (b1->buildingType == B_WORKSHOP) {
@@ -2604,7 +2604,7 @@ int B_ItemInBase (int item_idx, base_t *base)
  */
 void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 {
-	int i, j, capacity = 0, b_idx;
+	int i, j, capacity = 0, b_idx = -1;
 	buildingType_t building;
 
 	/* Get building type. */
@@ -2637,8 +2637,9 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 				base->capacities[cap].max += capacity;
 			}
 		}
-		Com_DPrintf("B_UpdateBaseCapacities()... updated capacity of %s: %i\n",
-		gd.buildingTypes[b_idx].id, base->capacities[cap].max);
+		if (b_idx != -1)
+			Com_DPrintf("B_UpdateBaseCapacities()... updated capacity of %s: %i\n",
+				gd.buildingTypes[b_idx].id, base->capacities[cap].max);
 		break;
 	case MAX_CAP:			/**< Update all capacities in base. */
 		Com_DPrintf("B_UpdateBaseCapacities()... going to update ALL capacities.\n");

@@ -335,9 +335,9 @@ void RS_MarkResearchable (qboolean init)
 		tech = &gd.technologies[i];
 		tech->statusResearchable = qfalse;
 	}
-	
+
 	/* Update the "amount" and statusCollected values in the requirement-trees. */
-	RS_CheckAllCollected(); 
+	RS_CheckAllCollected();
 
 	for (i = 0; i < gd.numTechnologies; i++) {	/* i = tech-index */
 		tech = &gd.technologies[i];
@@ -1237,6 +1237,7 @@ void CL_CheckResearchStatus (void)
 	}
 }
 
+#ifdef DEBUG
 /**
  * @brief Returns a list of technologies for the given type
  * @note this list is terminated by a NULL pointer
@@ -1269,7 +1270,6 @@ static char *RS_TechTypeToName (researchType_t type)
 	}
 }
 
-#ifdef DEBUG
 /**
  * @brief List all parsed technologies and their attributes in commandline/console.
  * Command to call this: techlist
@@ -2071,7 +2071,7 @@ int RS_GetTechIdxByName (const char *name)
  */
 void INV_EnableAutosell (technology_t *tech)
 {
-	int i, j;
+	int i = 0, j;
 	technology_t *ammotech = NULL;
 
 	/* If the tech leads to weapon or armour, find related item and enable autosell. */
@@ -2082,6 +2082,8 @@ void INV_EnableAutosell (technology_t *tech)
 				break;
 			}
 		}
+		if (i == csi.numODs)
+			return;
 	}
 
 	/* If the weapon has ammo, enable autosell for proper ammo as well. */

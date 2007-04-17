@@ -691,7 +691,7 @@ extern void WritePNG (FILE *f, byte *buffer, int width, int height)
 	png_write_info (png_ptr, info_ptr);
 
 	row_pointers = malloc (height * sizeof (png_bytep));
-	for (i=0 ; i<height ; i++)
+	for (i = 0; i < height; i++)
 		row_pointers[i] = buffer + (height - 1 - i) * 3 * width;
 
 	png_write_image (png_ptr, row_pointers);
@@ -943,7 +943,8 @@ extern void WriteTGA (FILE *f, byte *buffer, int width, int height)
 		out[i+2] = temp;
 	}
 
-	fwrite (out, 1, size, f);
+	if (fwrite (out, 1, size, f) != size)
+		Com_Printf("Failed to write the tga file\n");
 
 	free (out);
 }

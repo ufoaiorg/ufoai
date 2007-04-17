@@ -588,7 +588,7 @@ static side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 	int			bsplits;
 	int			bestsplits;
 	int			epsilonbrush;
-	qboolean	hintsplit;
+	qboolean	hintsplit = qfalse;
 
 	bestside = NULL;
 	bestvalue = -99999;

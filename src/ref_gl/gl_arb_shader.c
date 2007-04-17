@@ -308,7 +308,7 @@ void SH_UseProgram_ARB_VP (unsigned int vpid)
  */
 void SH_UseShader (shader_t * shader, qboolean deactivate)
 {
-	image_t *gl, *normal, *distort;
+	image_t *gl = NULL, *normal, *distort;
 
 	/* no shaders supported */
 	if (gl_state.arb_fragment_program == qfalse)

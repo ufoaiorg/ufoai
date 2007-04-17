@@ -865,7 +865,7 @@ static void CL_ActorAppear (sizebuf_t *sb)
 static void CL_ActorStats (sizebuf_t *sb)
 {
 	le_t	*le;
-	int		number, selActorTU;
+	int		number, selActorTU = 0;
 
 	number = MSG_ReadShort(sb);
 	le = LE_Get(number);
