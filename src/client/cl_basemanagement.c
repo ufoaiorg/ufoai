@@ -2754,6 +2754,7 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
 					MSG_WriteShort(sb, gd.alltransfers[aircraft->idx].alienBodyAmount[l]);
 				for (l = 0; l < MAX_EMPLOYEES; l++)
 					MSG_WriteShort(sb, gd.alltransfers[aircraft->idx].employees[l]);
+			}
 		}
 		MSG_WriteShort(sb, MAX_AIRCRAFT);
 		for (k = 0; k < MAX_AIRCRAFT; k++)
