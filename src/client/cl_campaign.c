@@ -1197,7 +1197,7 @@ static void CL_HandleBudget (void)
 	Com_sprintf(message, sizeof(message), _("Paid %i credits to medics"), cost);
 	CL_UpdateCredits(ccs.credits - cost);
 	MN_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
-
+#if 0
 	cost = 0;
 	for (i = 0; i < gd.numEmployees[EMPL_ROBOT]; i++) {
 		if (gd.employees[EMPL_ROBOT][i].hired)
@@ -1209,6 +1209,7 @@ static void CL_HandleBudget (void)
 		CL_UpdateCredits(ccs.credits - cost);
 		MN_AddNewMessage(_("Notice"), message, qfalse, MSG_STANDARD, NULL);
 	}
+#endif
 
 	cost = 0;
 	for (i = 0; i < gd.numBases; i++) {
@@ -1531,17 +1532,21 @@ static void CL_StatsUpdate_f (void)
 			hired[EMPL_MEDIC]++;
 		}
 	}
+#if 0
 	for (i = 0; i < gd.numEmployees[EMPL_ROBOT]; i++) {
 		if (gd.employees[EMPL_ROBOT][i].hired) {
 			costs += SALARY_ROBOT_BASE + gd.employees[EMPL_ROBOT][i].chr.rank * SALARY_ROBOT_RANKBONUS;
 			hired[EMPL_ROBOT]++;
 		}
 	}
+#endif
 
 	/* employees - this is between the two costs parts to count the hired employees */
 	pos += (strlen(pos) + 1);
 	menuText[TEXT_STATS_4] = pos;
 	for (i = 0; i < MAX_EMPL; i++) {
+		if (i == EMPL_ROBOT)
+			continue;
 		Q_strcat(pos, va(_("%s\t%i\n"), E_GetEmployeeString(i), hired[i]), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 	}
 
@@ -1569,7 +1574,7 @@ static void CL_StatsUpdate_f (void)
 		sum += costs;
 	}
 
-	costs = SALARY_ADMIN_INITIAL + gd.numEmployees[EMPL_SOLDIER] * SALARY_ADMIN_SOLDIER + gd.numEmployees[EMPL_WORKER] * SALARY_ADMIN_WORKER + gd.numEmployees[EMPL_SCIENTIST] * SALARY_ADMIN_SCIENTIST + gd.numEmployees[EMPL_MEDIC] * SALARY_ADMIN_MEDIC + gd.numEmployees[EMPL_ROBOT] * SALARY_ADMIN_ROBOT;
+	costs = SALARY_ADMIN_INITIAL + gd.numEmployees[EMPL_SOLDIER] * SALARY_ADMIN_SOLDIER + gd.numEmployees[EMPL_WORKER] * SALARY_ADMIN_WORKER + gd.numEmployees[EMPL_SCIENTIST] * SALARY_ADMIN_SCIENTIST + gd.numEmployees[EMPL_MEDIC] * SALARY_ADMIN_MEDIC;
 	Q_strcat(pos, va(_("Administrative costs:\t%i c\n"), costs), (ptrdiff_t)(&statsBuffer[MAX_STATS_BUFFER] - pos));
 	sum += costs;
 
