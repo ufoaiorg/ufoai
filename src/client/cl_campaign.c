@@ -1610,7 +1610,7 @@ extern qboolean CP_Load (sizebuf_t *sb, void *data)
 			break;
 
 	if (i == numCampaigns) {
-		Com_Printf("SAV_GameLoad: Campaign \"%s\" doesn't exist.\n", name);
+		Com_Printf("......campaign \"%s\" doesn't exist.\n", name);
 		curCampaign = NULL;
 		return qfalse;
 	}
@@ -1658,7 +1658,7 @@ extern qboolean CP_Load (sizebuf_t *sb, void *data)
 	while (*name) {
 		state = CL_CampaignActivateStage(name, qfalse);
 		if (!state) {
-			Com_Printf("CP_Load: Unable to load campaign, unknown stage '%s'\n", name);
+			Com_Printf("......unable to load campaign, unknown stage '%s'\n", name);
 			curCampaign = NULL;
 			Cbuf_AddText("mn_pop\n");
 			return qfalse;
@@ -1675,7 +1675,7 @@ extern qboolean CP_Load (sizebuf_t *sb, void *data)
 					break;
 			/* write on dummy set, if it's unknown */
 			if (j >= state->def->num) {
-				Com_Printf("CP_Load: Warning: Set '%s' not found\n", name);
+				Com_Printf("......warning: Set '%s' not found\n", name);
 				set = &dummy;
 			}
 
@@ -1706,7 +1706,7 @@ extern qboolean CP_Load (sizebuf_t *sb, void *data)
 				break;
 			}
 		if (j >= numMissions)
-			Com_Printf("CP_Load: Warning: Mission '%s' not found\n", name);
+			Com_Printf("......warning: Mission '%s' not found\n", name);
 
 		/* get mission type and location */
 		mis->def->missionType = MSG_ReadByte(sb);
@@ -1722,7 +1722,7 @@ extern qboolean CP_Load (sizebuf_t *sb, void *data)
 				break;
 			}
 		if (j >= numStageSets)
-			Com_Printf("CP_Load: Warning: Stage set '%s' not found\n", name);
+			Com_Printf("......warning: Stage set '%s' not found\n", name);
 
 		/* read position and time */
 		mis->realPos[0] = MSG_ReadFloat(sb);
@@ -1737,6 +1737,7 @@ extern qboolean CP_Load (sizebuf_t *sb, void *data)
 			mis--;
 			i--;
 			ccs.numMissions--;
+			Com_Printf("......ignore incomplete mission info\n");
 		}
 		/* manually set mission data for a base-attack */
 		if (mis->def->missionType == MIS_BASEATTACK) {
@@ -1744,9 +1745,9 @@ extern qboolean CP_Load (sizebuf_t *sb, void *data)
 			int baseidx = (int)MSG_ReadByte(sb);
 			base = &gd.bases[baseidx];
 			if (base->baseStatus == BASE_UNDER_ATTACK && !Q_strncmp(mis->def->location, base->name, MAX_VAR))
-				Com_DPrintf("CP_Load: Base %i (%s) is under attack\n", j, base->name);
+				Com_DPrintf("......base %i (%s) is under attack\n", j, base->name);
 			else
-				Com_Printf("CP_Load: Warning: base %i (%s) is supposedly under attack but base status or mission location (%s) doesn't match!\n", j, base->name, selMis->def->location);
+				Com_Printf("......warning: base %i (%s) is supposedly under attack but base status or mission location (%s) doesn't match!\n", j, base->name, selMis->def->location);
 			mis->def->data = (void*)base;
 		}
 	}

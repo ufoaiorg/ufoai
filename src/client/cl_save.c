@@ -43,7 +43,7 @@ static cvar_t* save_compressed;
  * @sa CL_ReadSinglePlayerData
  * @sa CL_UpdatePointersInGlobalData
  */
-static qboolean SAV_GameLoad (const char *filename)
+static qboolean SAV_GameLoad (const char *filename, char **error)
 {
 	uLongf len = MAX_GAMESAVESIZE;
 	qFILE f;
@@ -56,8 +56,9 @@ static qboolean SAV_GameLoad (const char *filename)
 	/* open file */
 	f.f = fopen(va("%s/save/%s.sav", FS_Gamedir(), filename), "rb");
 	if (!f.f) {
-		Com_Printf("Couldn't open file '%s'.\n", filename);
-		return 1;
+		*error = "Couldn't open file";
+		Com_Printf("%s %s\n", *error, filename);
+		return qfalse;
 	}
 
 	/* read compressed data into cbuf buffer */
@@ -83,8 +84,9 @@ static qboolean SAV_GameLoad (const char *filename)
 
 		if (res != Z_OK) {
 			free(buf);
+			*error = "Error decompressing data";
 			Com_Printf("Error decompressing data in '%s'.\n", filename);
-			return 1;
+			return qfalse;
 		}
 		sb.cursize = len;
 	} else {
@@ -95,9 +97,10 @@ static qboolean SAV_GameLoad (const char *filename)
 
 	/* check current version */
 	if (header.version > SAVE_FILE_VERSION) {
+		*error = "The file is a more recent version than is supported";
 		Com_Printf("File '%s' is a more recent version (%d) than is supported.\n", filename, header.version);
 		free(buf);
-		return 1;
+		return qfalse;
 	} else if (header.version < SAVE_FILE_VERSION) {
 		Com_Printf("Savefileformat has changed ('%s' is version %d) - you may experience problems.\n", filename, header.version);
 	}
@@ -115,13 +118,17 @@ static qboolean SAV_GameLoad (const char *filename)
 	for (i = 0; i < saveSubsystemsAmount; i++) {
 		diff = sb.readcount;
 		if (!saveSubsystems[i].load(&sb, &header)) {
+			*error = "Error in loading a subsystem - see game console for more information";
 			Com_Printf("...subsystem '%s' returned false - savegame could not be loaded\n", saveSubsystems[i].name);
 			return qfalse;
 		} else
 			Com_Printf("...subsystem '%s' - loaded %i bytes\n", saveSubsystems[i].name, sb.readcount - diff);
 		check = MSG_ReadByte(&sb);
-		if (check != saveSubsystems[i].check)
+		if (check != saveSubsystems[i].check) {
+			*error = "Error in loading a subsystem - see game console for more information";
 			Com_Printf("...subsystem '%s' could not be loaded correctly - savegame might be broken (%x)\n", saveSubsystems[i].name, check);
+			return qfalse;
+		}
 	}
 
 	Cvar_Set("mn_main", "singleplayerInGame");
@@ -328,6 +335,8 @@ static void SAV_GameSaveNames_f (void)
  */
 static void SAV_GameLoad_f (void)
 {
+	char *error = NULL;
+
 	/* get argument */
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: game_load <filename>\n");
@@ -337,7 +346,14 @@ static void SAV_GameLoad_f (void)
 	Com_DPrintf("load file '%s'\n", Cmd_Argv(1));
 
 	/* load and go to map */
-	SAV_GameLoad(Cmd_Argv(1));
+	if (!SAV_GameLoad(Cmd_Argv(1), &error)) {
+		Cbuf_Execute(); /* wipe outstanding campaign commands */
+		if (error)
+			Com_sprintf(popupText, sizeof(popupText), "%s\n%s", _("Error loading game."), error);
+		else
+			Com_sprintf(popupText, sizeof(popupText), "%s\n", _("Error loading game."));
+		MN_Popup(_("Error"), popupText);
+	}
 }
 
 /**
@@ -347,17 +363,27 @@ static void SAV_GameLoad_f (void)
  */
 static void SAV_GameContinue_f (void)
 {
+	char *error = NULL;
+
 	if (cls.state == ca_active) {
 		MN_PopMenu(qfalse);
 		return;
 	}
 
 	if (!curCampaign) {
-		/* try to load the current campaign */
-		SAV_GameLoad(mn_lastsave->string);
+		/* try to load the last saved campaign */
+		if (!SAV_GameLoad(mn_lastsave->string, &error)) {
+			Cbuf_Execute(); /* wipe outstanding campaign commands */
+			if (error)
+				Com_sprintf(popupText, sizeof(popupText), "%s\n%s", _("Error loading game."), error);
+			else
+				Com_sprintf(popupText, sizeof(popupText), "%s\n", _("Error loading game."));
+			MN_Popup(_("Error"), popupText);
+		}
 		if (!curCampaign)
 			return;
 	} else {
+		/* just continue the current running game */
 		MN_PopMenu(qfalse);
 	}
 }

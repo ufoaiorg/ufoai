@@ -2483,7 +2483,6 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
 	MSG_WriteByte(sb, gd.numBases);
 	for (i = 0; i < gd.numBases; i++) {
 		b = &gd.bases[i];
-		/* FIXME. No utf-8 support for b->name. */
 		MSG_WriteString(sb, b->name);
 		MSG_WriteChar(sb, b->mapChar);
 		MSG_WritePos(sb, b->pos);
