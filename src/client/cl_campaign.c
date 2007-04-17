@@ -1642,6 +1642,8 @@ extern qboolean CP_Load (sizebuf_t *sb, void *data)
 
 	ccs.angles[YAW] = GLOBE_ROTATE;
 
+	gd.fund = MSG_ReadByte(sb);
+
 	/* read date */
 	ccs.date.day = MSG_ReadLong(sb);
 	ccs.date.sec = MSG_ReadLong(sb);
@@ -1789,6 +1791,8 @@ extern qboolean CP_Save (sizebuf_t *sb, void *data)
 
 	/* store campaign name */
 	MSG_WriteString(sb, curCampaign->id);
+
+	MSG_WriteByte(sb, gd.fund);
 
 	/* store date */
 	MSG_WriteLong(sb, ccs.date.day);
