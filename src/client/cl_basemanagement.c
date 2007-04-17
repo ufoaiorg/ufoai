@@ -2743,7 +2743,17 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
 					MSG_WriteShort(sb, aircraft->itemcargo[l].idx);
 					MSG_WriteShort(sb, aircraft->itemcargo[l].amount);
 				}
-			}
+			} else if (aircraft->status == AIR_TRANSPORT) {
+				MSG_WriteByte(sb, gd.alltransfers[aircraft->idx].type);
+				MSG_WriteByte(sb, gd.alltransfers[aircraft->idx].destBase);
+				for (l = 0; l < MAX_OBJDEFS; l++)
+					MSG_WriteShort(sb, gd.alltransfers[aircraft->idx].itemAmount[l]);
+				for (l = 0; l < MAX_CARGO; l++)
+					MSG_WriteShort(sb, gd.alltransfers[aircraft->idx].alienLiveAmount[l]);
+				for (l = 0; l < MAX_CARGO; l++)
+					MSG_WriteShort(sb, gd.alltransfers[aircraft->idx].alienBodyAmount[l]);
+				for (l = 0; l < MAX_EMPLOYEES; l++)
+					MSG_WriteShort(sb, gd.alltransfers[aircraft->idx].employees[l]);
 		}
 		MSG_WriteShort(sb, MAX_AIRCRAFT);
 		for (k = 0; k < MAX_AIRCRAFT; k++)
@@ -2879,6 +2889,17 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 					aircraft->itemcargo[k].idx = MSG_ReadShort(sb);
 					aircraft->itemcargo[k].amount = MSG_ReadShort(sb);
 				}
+			} else if (aircraft->status == AIR_TRANSPORT) {
+				gd.alltransfers[aircraft->idx].type = MSG_ReadByte(sb);
+				gd.alltransfers[aircraft->idx].destBase = MSG_ReadByte(sb);
+				for (l = 0; l < MAX_OBJDEFS; l++)
+					gd.alltransfers[aircraft->idx].itemAmount[l] = MSG_ReadShort(sb);
+				for (l = 0; l < MAX_CARGO; l++)
+					gd.alltransfers[aircraft->idx].alienLiveAmount[l] = MSG_ReadShort(sb);
+				for (l = 0; l < MAX_CARGO; l++)
+					gd.alltransfers[aircraft->idx].alienBodyAmount[l] = MSG_ReadShort(sb);
+				for (l = 0; l < MAX_EMPLOYEES; l++)
+					gd.alltransfers[aircraft->idx].employees[l] = MSG_ReadShort(sb);
 			}
 #if 0
 			struct actMis_s* mission;	/**< The mission the aircraft is moving to */
