@@ -294,6 +294,7 @@ static void SVCmd_Win_f (void)
 		Com_Printf("Bad team number.\n");
 }
 
+#ifdef DEBUG
 /**
  * @brief
  */
@@ -310,6 +311,7 @@ static void SVCmd_ShowAll_f (void)
 		}
 	Com_Printf("All items and creatures revealed to all sides\n");
 }
+#endif
 
 /**
  * @brief Start the game even if not all players are connected

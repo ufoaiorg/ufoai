@@ -471,7 +471,7 @@ static void PR_UpdateProductionList (void)
 	objDef_t *od;
 	production_queue_t *queue;
 	production_t *prod;
-	technology_t *tech;
+	technology_t *tech = NULL;
 
 	productionAmount[0] = productionList[0] = productionQueued[0] = '\0';
 	queue = &gd.productions[baseCurrent->idx];

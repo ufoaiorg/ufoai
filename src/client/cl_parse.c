@@ -34,8 +34,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "snd_loc.h"
 
-/** @brief see also svc_ops_e in qcommon.h */
-static const char *svc_strings[256] =
+/** @brief see also svc_ops_e in qcommon.h
+ * @note don't change the array size - a MSG_ReadByte can
+ * return values between 0 and UCHAR_MAX (-1 is not handled here) */
+static const char *svc_strings[UCHAR_MAX+1] =
 {
 	"svc_bad",
 
@@ -863,7 +865,7 @@ static void CL_ActorAppear (sizebuf_t *sb)
 static void CL_ActorStats (sizebuf_t *sb)
 {
 	le_t	*le;
-	int		number, selActorTU;
+	int		number, selActorTU = 0;
 
 	number = MSG_ReadShort(sb);
 	le = LE_Get(number);
