@@ -893,25 +893,25 @@ static qboolean CL_WeaponWithReaction (char hand)
 	objDef_t *weapon = NULL;
 	int weap_fd_idx;
 	int i;
-	
+
 	/* Get ammo and weapon-index in ammo. */
 	CL_GetWeaponAndAmmo(hand, &weapon, &ammo, &weap_fd_idx);
-	
+
 	if (weap_fd_idx == -1) {
 		Com_DPrintf("CL_WeaponWithReaction: No weapondefinition in ammo found\n");
 		return qfalse;
 	}
-	
+
 	if (!weapon || !ammo)
 		return qfalse;
-	
+
 	/* check ammo for reaction-enabled firemodes */
 	for (i = 0; i < ammo->numFiredefs[weap_fd_idx]; i++) {
 		if (ammo->fd[weap_fd_idx][i].reaction) {
 			return qtrue;
 		}
 	}
-	
+
 	return qfalse;
 }
 
@@ -959,7 +959,7 @@ static void CL_RefreshWeaponButtons (int time)
 			SetWeaponButton(BT_RIGHT_PRIMARY_REACTION, qtrue);
 		else
 			SetWeaponButton(BT_RIGHT_PRIMARY_REACTION, qfalse);
-			
+
 	}
 
 	/* reload buttons */
@@ -1881,9 +1881,9 @@ void CL_InvCheckHands (sizebuf_t * sb)
 	le_t *le;
 	int actor_idx = -1;
 	int hand = -1;	/**< 0=right, 1=left */
-	
+
 	MSG_ReadFormat(sb, ev_format[EV_INV_HANDS_CHANGED], &entnum, &hand);
-	
+
 	if ((entnum < 0) || (hand < 0)) {
 		Com_Printf("CL_InvCheckHands: entnum or hand not sent/received correctly.\n");
 	}
@@ -1893,9 +1893,9 @@ void CL_InvCheckHands (sizebuf_t * sb)
 		Com_Printf("CL_InvCheckHands: LE doesn't exist.\n");
 		return;
 	}
-	
+
 	actor_idx = CL_GetActorNumber(le);
-	
+
 	/* Update the cahnged hand with default firemode. */
 	if (hand == 0)
 		CL_UpdateReactionFiremodes('r', actor_idx, -1);
@@ -2042,7 +2042,7 @@ extern void CL_ActorToggleReaction_f (void)
 	actor_idx = CL_GetActorNumber(selActor);
 
 	/* Check all hands for reaction-enabled ammo-firemodes. */
-	if (CL_WeaponWithReaction('r') || CL_WeaponWithReaction('l')) { 
+	if (CL_WeaponWithReaction('r') || CL_WeaponWithReaction('l')) {
 		selActorReactionState++;
 		if (selActorReactionState > R_FIRE_MANY)
 			selActorReactionState = R_FIRE_OFF;
@@ -2594,7 +2594,7 @@ void CL_DoEndRound (sizebuf_t * sb)
 		CL_DisplayHudMessage(_("Your round started!\n"), 2000);
 		S_StartLocalSound("misc/roundstart.wav");
 		CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE);
-		
+
 		for (actor_idx = 0; actor_idx < cl.numTeamList; actor_idx++) {
 			if (cl.teamList[actor_idx]) {
 				/* Check if any default firemode is defined and search for one if not. */
@@ -3094,8 +3094,8 @@ static void CL_TargetingStraight (pos3_t fromPos, pos3_t toPos)
 	}
 
 	/* switch up to top level, this is a bit of a hack to make sure our trace doesn't go through ceilings ... */
-	oldLevel = cl_worldlevel->value;
-	cl_worldlevel->value = map_maxlevel-1;
+	oldLevel = cl_worldlevel->integer;
+	cl_worldlevel->integer = map_maxlevel-1;
 
 	/* search for an actor at target */
 	for (i = 0, le = LEs; i < numLEs; i++, le++)
@@ -3116,7 +3116,7 @@ static void CL_TargetingStraight (pos3_t fromPos, pos3_t toPos)
 	}
 
 	/* switch level back to where it was again */
-	cl_worldlevel->value = oldLevel;
+	cl_worldlevel->integer = oldLevel;
 
 	/* spawn particles */
 	CL_ParticleSpawn("inRangeTracer", 0, start, mid, NULL);
@@ -3188,8 +3188,8 @@ static void CL_TargetingGrenade (pos3_t fromPos, pos3_t toPos)
 	ds[2] = 0;
 
 	/* switch up to top level, this is a bit of a hack to make sure our trace doesn't go through ceilings ... */
-	oldLevel = cl_worldlevel->value;
-	cl_worldlevel->value = map_maxlevel-1;
+	oldLevel = cl_worldlevel->integer;
+	cl_worldlevel->integer = map_maxlevel-1;
 
 	/* paint */
 	vz = v0[2];
@@ -3212,6 +3212,8 @@ static void CL_TargetingGrenade (pos3_t fromPos, pos3_t toPos)
 		}
 
 		/* draw particles */
+		/* TODO: character strength should be used here, too
+		 * the stronger the character, the further the throw */
 		if (obstructed || VectorLength(at) > selFD->range)
 			CL_ParticleSpawn("longRangeTracer", 0, from, next, NULL);
 		else
@@ -3232,7 +3234,7 @@ static void CL_TargetingGrenade (pos3_t fromPos, pos3_t toPos)
 	selToHit = 100 * CL_TargetingToHit(toPos);
 
 	/* switch level back to where it was again */
-	cl_worldlevel->value = oldLevel;
+	cl_worldlevel->integer = oldLevel;
 }
 
 
