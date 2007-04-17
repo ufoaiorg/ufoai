@@ -1431,6 +1431,14 @@ static qboolean G_ResolveRF (edict_t *ent, qboolean mock)
 		return qfalse;
 	}
 
+	/* ent can't use RF if is in STATE_DAZED (flashbang impact) */
+	if (ent->state & STATE_DAZED) {
+#ifdef DEBUG
+		Com_Printf("This entity is in STATE_DAZED, will not use reaction fire.\n");
+#endif
+		return qfalse;
+	}
+
 	/* ent can't take a reaction shot if it's not possible */
 	if (!G_CanReactionFire(ent, ent->reactionTarget, reason)) {
 		ent->reactionTarget = NULL;
