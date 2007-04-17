@@ -1310,7 +1310,7 @@ static void G_ClientStateChange (player_t * player, int num, int reqState)
 			so the only sane action if the button is clicked is to disable everything in order to make it work at all.
 			TODO: dsiplay correct "disable" button and directly call this function with "disable rf" parameters
 			*/
-			 G_ClientStateChange (player, num, ~STATE_REACTION); /**< Turn off RF */
+			G_ClientStateChange (player, num, ~STATE_REACTION); /**< Turn off RF */
 		}
 		break;
 	case STATE_REACTION_ONCE: /* request to turn on single-reaction fire mode */
