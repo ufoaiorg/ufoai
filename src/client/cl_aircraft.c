@@ -1532,6 +1532,26 @@ extern qboolean CL_IsInAircraftTeam (aircraft_t *aircraft, int employee_idx)
  */
 extern qboolean AIR_Save (sizebuf_t* sb, void* data)
 {
+	int i, j;
+
+	/* save the ufos on geoscape */
+	MSG_WriteByte(sb, gd.numUfos);
+	for (i = 0; i < gd.numUfos; i++) {
+		MSG_WriteString(sb, gd.ufos[i].id);
+		MSG_WriteByte(sb, gd.ufos[i].visible);
+		MSG_WritePos(sb, gd.ufos[i].pos);
+		MSG_WriteByte(sb, gd.ufos[i].status);
+		MSG_WriteFloat(sb, gd.ufos[i].speed);
+		MSG_WriteLong(sb, gd.ufos[i].fuel);
+		MSG_WriteLong(sb, gd.ufos[i].fuelSize);
+		MSG_WriteShort(sb, gd.ufos[i].time);
+		MSG_WriteShort(sb, gd.ufos[i].point);
+		MSG_WriteShort(sb, gd.ufos[i].route.n);
+		MSG_WriteFloat(sb, gd.ufos[i].route.dist);
+		for (j = 0; j < gd.ufos[i].route.n; j++)
+			MSG_Write2Pos(sb, gd.ufos[i].route.p[j]);
+		/* TODO more? */
+	}
 	return qtrue;
 }
 
@@ -1548,6 +1568,27 @@ extern qboolean AIR_Load (sizebuf_t* sb, void* data)
 	base_t* base;
 	aircraft_t* aircraft;
 	int i, j, p;
+
+	/* load the ufos on geoscape */
+	gd.numUfos = MSG_ReadByte(sb);
+	for (i = 0; i < gd.numUfos; i++) {
+		aircraft = AIR_GetAircraft(MSG_ReadString(sb));
+		memcpy(&gd.ufos[i], aircraft, sizeof(aircraft_t));
+		aircraft = &gd.ufos[i];
+		aircraft->visible = MSG_ReadByte(sb);
+		MSG_ReadPos(sb, aircraft->pos);
+		aircraft->status = MSG_ReadByte(sb);
+		aircraft->speed = MSG_ReadFloat(sb);
+		aircraft->fuel = MSG_ReadLong(sb);
+		aircraft->fuelSize = MSG_ReadLong(sb);
+		aircraft->time = MSG_ReadShort(sb);
+		aircraft->point = MSG_ReadShort(sb);
+		aircraft->route.n = MSG_ReadShort(sb);
+		aircraft->route.dist = MSG_ReadFloat(sb);
+		for (j = 0; j < aircraft->route.n; j++)
+			MSG_Read2Pos(sb, aircraft->route.p[j]);
+		/* TODO more? */
+	}
 
 	/* now fix the curTeam pointers */
 	/* this needs already loaded bases and employees */
