@@ -1209,7 +1209,7 @@ typedef enum {
 
 #define MAX_MEDALTEXT       256
 #define MAX_MEDALTITLE      32
-#define MAX_RANKS           8
+#define MAX_RANKS           32
 typedef struct medals_s {
 	char id[MAX_MEDALTITLE];
 	char name[MAX_MEDALTITLE];

@@ -227,7 +227,7 @@ extern void CL_GenerateCharacter (employee_t *employee, const char *team, employ
 	/* Generate character stats, moels & names. */
 	switch (employeeType) {
 	case EMPL_SOLDIER:
-		chr->rank = CL_GetRank("rookie");
+		chr->rank = CL_GetRank("rifleman");
 		/* Create attributes. */
 		Com_CharGenAbilitySkills(chr, teamValue);
 		/* Get model and name. */
