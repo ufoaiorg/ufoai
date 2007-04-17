@@ -28,47 +28,58 @@ medal coin
 rank scientist
 {
 	name "_Scientist"
-	image "hud/rank_scientist"
+	image "rank/scientist"
 	type EMPL_SCIENTIST
 }
 
 rank medic
 {
 	name "_Medic"
-	image "hud/rank_medic"
+	image "ranks/medic"
 	type EMPL_MEDIC
 }
 
 rank ugv
 {
 	name "_UGV"
-	image "hud/rank_ugv"
+	image "ranks/ugv"
 	type EMPL_ROBOT
 }
 
 rank worker
 {
 	name "_Worker"
-	image "hud/rank_worker"
+	image "ranks/worker"
 	type EMPL_WORKER
 }
 
-rank rookie
+rank rifleman
 {
 	name		"_Rifleman"
 	shortname	"_Rfn"
-	image		"hud/rank_01"
+	image		"ranks/rank_01"
 	type		EMPL_SOLDIER
 }
 
-rank squadleader
+rank lancecorp
+{
+	name		"_Lance-Corporal"
+	shortname	"_LCpl"
+	image		"ranks/rank_02"
+	mind		75
+	killed_enemies	3
+	killed_others	3
+	type		EMPL_SOLDIER
+}
+
+rank corporal
 {
 	name		"_Corporal"
 	shortname	"_Cpl"
-	image		"hud/rank_02"
-	mind		75
+	image		"ranks/rank_03"
+	mind		80
 	killed_enemies	5
-	killed_others	3
+	killed_others	5
 	type		EMPL_SOLDIER
 }
 
@@ -76,21 +87,91 @@ rank sergeant
 {
 	name		"_Sergeant"
 	shortname	"_Sgt"
-	image		"hud/rank_03"
+	image		"ranks/rank_04"
 	mind		80
-	killed_enemies	20
-	killed_others	5
+	killed_enemies	10
+	killed_others	7
+	type		EMPL_SOLDIER
+}
+
+rank warrant
+{
+	name		"_Warrant Officer"
+	shortname	"_WO"
+	image		"ranks/rank_05"
+	mind		80
+	killed_enemies	18
+	killed_others	7
+	type		EMPL_SOLDIER
+}
+
+rank senwarrant
+{
+	name		"_Senior Warrant Officer"
+	shortname	"_SWO"
+	image		"ranks/rank_06"
+	mind		80
+	killed_enemies	25
+	type		EMPL_SOLDIER
+}
+
+rank seclieut
+{
+	name		"_Second Lieutenant"
+	shortname	"_2Lt"
+	image		"ranks/rank_07"
+	mind		80
+	killed_enemies	32
+	type		EMPL_SOLDIER
+}
+
+rank lieut
+{
+	name		"_Lieutenant"
+	shortname	"_Lt"
+	image		"ranks/rank_08"
+	mind		80
+	killed_enemies	38
 	type		EMPL_SOLDIER
 }
 
 rank captain
 {
 	name		"_Captain"
-	shortname	"_Cpt"
-	image		"hud/rank_04"
+	shortname	"_Capt"
+	image		"ranks/rank_09"
 	mind		80
-	killed_enemie	30
-	killed_others	7
+	killed_enemies	45
+	type		EMPL_SOLDIER
+}
+
+rank major
+{
+	name		"_Major"
+	shortname	"_Maj"
+	image		"ranks/rank_10"
+	mind		80
+	killed_enemies	55
+	type		EMPL_SOLDIER
+}
+
+rank ltcol
+{
+	name		"_Lieutenant-Colonel"
+	shortname	"_Lt Col"
+	image		"ranks/rank_11"
+	mind		80
+	killed_enemies	60
+	type		EMPL_SOLDIER
+}
+
+rank col
+{
+	name		"_Colonel"
+	shortname	"_Col"
+	image		"ranks/rank_12"
+	mind		80
+	killed_enemies	70
 	type		EMPL_SOLDIER
 }
 
