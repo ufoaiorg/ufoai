@@ -1286,11 +1286,8 @@ static void CL_CampaignRunMarket (void)
 			break;
 	assert (i != csi.numEDs);
 
-
-	/* TODO: Save eMarket into savefiles */
 	/* TODO: Take starting date from compaign description instead of using fixed '760439' */
 	/* TODO: Find out why there is a 58 days discrepancy in reasearched_date*/
-
 	for (i = 0; i < csi.numODs; i++) {
 		if (RS_ItemIsResearched(csi.ods[i].id)) {
 			/* supply balance */
@@ -1617,6 +1614,9 @@ extern qboolean CP_Load (sizebuf_t *sb, void *data)
 		curCampaign = NULL;
 		return qfalse;
 	}
+
+	/* ensure research correctly initialised */
+	RS_UpdateData();
 
 	CL_GameInit();
 
@@ -3885,6 +3885,7 @@ static void CL_GameNew (void)
 		CL_GameExit();
 
 	/* clear any old pending messages */
+	MN_ShutdownMessageSystem();
 	CL_InitMessageSystem();
 
 	/* get campaign - they are already parsed here */
