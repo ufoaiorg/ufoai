@@ -1572,7 +1572,7 @@ extern qboolean AIR_Load (sizebuf_t* sb, void* data)
 	/* load the ufos on geoscape */
 	gd.numUfos = MSG_ReadByte(sb);
 	for (i = 0; i < gd.numUfos; i++) {
-		aircraft = AIR_GetAircraft(MSG_ReadString(sb));
+		aircraft = CL_GetAircraft(MSG_ReadString(sb));
 		memcpy(&gd.ufos[i], aircraft, sizeof(aircraft_t));
 		aircraft = &gd.ufos[i];
 		aircraft->visible = MSG_ReadByte(sb);
