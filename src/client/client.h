@@ -762,7 +762,7 @@ void CDAudio_RandomPlay(void);
 #define MAX_COMMENTLENGTH	32
 
 void CL_LoadTeam(sizebuf_t *sb, base_t *base, int version);
-void CL_UpdateHireVar(void);
+void CL_UpdateHireVar(aircraft_t *aircraft);
 
 void CL_ResetCharacters(base_t* const base);
 void CL_ResetTeamInBase(void);

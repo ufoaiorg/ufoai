@@ -552,7 +552,7 @@ extern void AIR_AircraftSelect (aircraft_t* aircraft)
 
 	baseCurrent->aircraftCurrent = aircraftID;
 
-	CL_UpdateHireVar();
+	CL_UpdateHireVar(aircraft);
 
 	Cvar_SetValue("mn_equipsoldierstate", CL_EquipSoldierState(aircraft));
 	Cvar_SetValue("mn_scientists_in_base", E_CountHired(baseCurrent, EMPL_SCIENTIST));
