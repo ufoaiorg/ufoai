@@ -545,7 +545,7 @@ static void Key_Message (int key)
 		msg_buffer[0] = 0;
 		/* cancel the inline cvar editing */
 		if (msg_mode == MSG_MENU)
-			Cbuf_AddText("msgmenu !");
+			Cbuf_AddText("msgmenu !\n");
 		return;
 	}
 
