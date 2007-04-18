@@ -468,13 +468,19 @@ char *Sys_GetClipboardData (void)
 #endif
 }
 
-void InitCocoa(void)
+/**
+ * @brief
+ */
+static void InitCocoa (void)
 {
-	void* cocoa_lib; 
-	cocoa_lib = dlopen( "/System/Library/Frameworks/Cocoa.framework/Cocoa", RTLD_LAZY ); 
-	void (*nsappload)(void); 
-	nsappload = (void(*)()) dlsym( cocoa_lib, "NSApplicationLoad"); 
-	nsappload(); 
+	void* cocoa_lib;
+	/* TODO: Don't hardcode the path - let configure decide */
+	cocoa_lib = dlopen("/System/Library/Frameworks/Cocoa.framework/Cocoa", RTLD_LAZY);
+	void (*nsappload)(void);
+	if (!cocoa_lib)
+		Sys_Error("InitCocoa: Could not load cocoa framework\n");
+	nsappload = (void(*)()) dlsym(cocoa_lib, "NSApplicationLoad");
+	nsappload();
 }
 
 /**
@@ -514,7 +520,7 @@ int main (int argc, char **argv)
 		time = timescale * (newtime - oldtime);
 		timescale = Qcommon_Frame(time);
 	}
-	
+
 	/* Free the Release Pool resources */
 	[pool release];
 	return 0;
