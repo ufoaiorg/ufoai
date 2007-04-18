@@ -438,15 +438,15 @@ extern byte *CL_GetMapColor (const vec2_t pos, mapType_t type)
  * @return True if the base has been build.
  * @sa B_BuildBase
  */
-extern qboolean CL_NewBase (vec2_t pos)
+extern qboolean CL_NewBase (base_t* base, vec2_t pos)
 {
 	byte *color;
 	const char *zoneType = NULL;
 
-	assert(baseCurrent);
+	assert(base);
 
-	if (baseCurrent->founded) {
-		Com_DPrintf("CL_NewBase: base already founded: %i\n", baseCurrent->idx);
+	if (base->founded) {
+		Com_DPrintf("CL_NewBase: base already founded: %i\n", base->idx);
 		return qfalse;
 	} else if (gd.numBases == MAX_BASES) {
 		Com_DPrintf("CL_NewBase: max base limit hit\n");
@@ -462,18 +462,18 @@ extern qboolean CL_NewBase (vec2_t pos)
 	} else {
 		zoneType = MAP_GetZoneType(color);
 		Com_DPrintf("CL_NewBase: zoneType: '%s'\n", zoneType);
-		baseCurrent->mapChar = zoneType[0];
+		base->mapChar = zoneType[0];
 	}
 
 	Com_DPrintf("Colorvalues for base: R:%i G:%i B:%i\n", color[0], color[1], color[2]);
 
 	/* build base */
-	Vector2Copy(pos, baseCurrent->pos);
+	Vector2Copy(pos, base->pos);
 
 	gd.numBases++;
 
 	/* set up the base with buildings that have the autobuild flag set */
-	B_SetUpBase();
+	B_SetUpBase(base);
 
 	return qtrue;
 }
@@ -615,8 +615,12 @@ static void CL_CampaignExecute (setState_t * set)
 	if (*set->def->endstage)
 		CL_CampaignEndStage(set->def->endstage);
 
-	if (*set->def->cmds)
+	if (*set->def->cmds) {
+		if (set->def->cmds[strlen(set->def->cmds)-1] != '\n'
+		 && set->def->cmds[strlen(set->def->cmds)-1] != ';')
+			Com_Printf("CL_CampaignExecute: missing command seperator for commands: '%s'\n", set->def->cmds);
 		Cbuf_AddText(set->def->cmds);
+	}
 
 	/* activate new sets in old stage */
 	CL_CampaignActivateStageSets(set->stage);
@@ -2073,7 +2077,7 @@ static void CL_GameGo (void)
 
 	/* manage inventory */
 	ccs.eMission = baseCurrent->storage; /* copied, including arrays inside! */
-	CL_CleanTempInventory();
+	CL_CleanTempInventory(baseCurrent);
 	CL_ReloadAndRemoveCarried(&ccs.eMission);
 	/* remove inventory of any old temporary LEs */
 	LE_Cleanup();

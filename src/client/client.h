@@ -685,7 +685,6 @@ void CL_ResetTeams(void);
 void CL_ParseResults(sizebuf_t * buf);
 void CL_SendCurTeamInfo(sizebuf_t * buf, character_t ** team, int num);
 void CL_ReloadAndRemoveCarried(equipDef_t * equip);
-void CL_CleanTempInventory(void);
 void CL_AddCarriedToEq(equipDef_t * equip);
 void CL_ParseCharacterData(sizebuf_t *buf, qboolean updateCharacter);
 qboolean CL_SoldierInAircraft(int employee_idx, int aircraft_idx);
@@ -753,7 +752,8 @@ const struct aircraft_s* ufo, qboolean wasUfoSensored);
 #define MAX_COMMENTLENGTH	32
 
 void CL_LoadTeam(sizebuf_t *sb, base_t *base, int version);
-void CL_UpdateHireVar(void);
+void CL_UpdateHireVar(aircraft_t *aircraft);
+void CL_CleanTempInventory(base_t* base);
 
 void CL_ResetCharacters(base_t* const base);
 void CL_ResetTeamInBase(void);

@@ -165,15 +165,14 @@ extern void HOS_HealAll (const base_t* const base)
 /**
  * @brief Count all employees in hospital of baseCurrent
  */
-static int HOS_CountHealing (void)
+static int HOS_CountHealing (base_t* base)
 {
 	int i, cnt = 0;
 
-	/* should not be called when no baseCurrent was set */
-	assert(baseCurrent);
+	assert(base);
 
 	for (i = 0; i < employeesInHospitalListCount; i++) {
-		if (!E_IsInBase(employeesInHospitalList[i], baseCurrent))
+		if (!E_IsInBase(employeesInHospitalList[i], base))
 			continue;
 		cnt++;
 	}
@@ -214,7 +213,7 @@ static void HOS_Init_f (void)
 
 	Cvar_SetValue("mn_hosp_medics", E_CountHired(baseCurrent, EMPL_MEDIC));
 	Cvar_SetValue("mn_hosp_heal_limit", MAX_EMPLOYEES_PER_HOSPITAL * B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, B_HOSPITAL));
-	Cvar_SetValue("mn_hosp_healing", HOS_CountHealing());
+	Cvar_SetValue("mn_hosp_healing", HOS_CountHealing(baseCurrent));
 }
 
 #ifdef DEBUG

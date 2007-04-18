@@ -116,7 +116,7 @@ static void BS_MarketClick_f (void)
  * @param[in] inbase True if function has to return storage, false - when supply (market).
  * @return Amount of aircrafts in base or amount of aircrafts on the market.
  */
-static int AIR_GetStorageSupply (char *airCharId, qboolean inbase)
+static int AIR_GetStorageSupply (const char *airCharId, qboolean inbase)
 {
 	base_t *base = NULL;
 	aircraft_t *aircraft = NULL;

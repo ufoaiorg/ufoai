@@ -602,14 +602,14 @@ extern void CL_ReloadAndRemoveCarried (equipDef_t * ed)
  * @sa CL_SendTeamInfo
  * @sa CL_SendCurTeamInfo
  */
-extern void CL_CleanTempInventory (void)
+extern void CL_CleanTempInventory (base_t* base)
 {
 	int i, k;
 
-	if (!baseCurrent)
+	if (!base)
 		return;
 
-	Com_DestroyInventory(&baseCurrent->equipByBuyType);
+	Com_DestroyInventory(&base->equipByBuyType);
 	for (i = 0; i < MAX_EMPLOYEES; i++)
 		for (k = 0; k < csi.numIDs; k++)
 			if (csi.ids[k].temp)
@@ -694,7 +694,7 @@ static void CL_GenerateEquipment_f (void)
 	/* manage inventory */
 	unused = baseCurrent->storage; /* copied, including arrays inside! */
 
-	CL_CleanTempInventory();
+	CL_CleanTempInventory(baseCurrent);
 	CL_ReloadAndRemoveCarried(&unused);
 
 	/* a 'tiny hack' to add the remaining equipment (not carried)
@@ -902,42 +902,44 @@ static void CL_NextSoldier_f (void)
 
 
 /**
- * @brief
+ * @brief Updates data about teams in aircrafts.
+ * @param[in] *aircraft Pointer to an aircraft for a desired team.
  */
-extern void CL_UpdateHireVar (void)
+extern void CL_UpdateHireVar (aircraft_t *aircraft)
 {
 	int i, p;
 	int hired_in_base;
-	aircraft_t *aircraft = NULL;
 	employee_t *employee = NULL;
+	base_t *base = NULL;
 
-	assert(baseCurrent);
-	assert((baseCurrent->aircraftCurrent >= 0) && (baseCurrent->aircraftCurrent < baseCurrent->numAircraftInBase));
+	assert (aircraft);
+	base = aircraft->homebase;
+	assert (base);
 
-	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
-	Cvar_Set("mn_hired", va(_("%i of %i"), baseCurrent->teamNum[baseCurrent->aircraftCurrent], aircraft->size));
-
-	hired_in_base = E_CountHired(baseCurrent, EMPL_SOLDIER);
+	Cvar_Set("mn_hired", va(_("%i of %i"), base->teamNum[aircraft->idxInBase], aircraft->size));
+	hired_in_base = E_CountHired(base, EMPL_SOLDIER);
+	/* Leave this Com_Printf here for better output in case of problems for a moment. */
+	Com_Printf("CL_UpdateHireVar()... aircraft idx: %i, homebase: %s\n", aircraft->idx, base->name);
 	/* update curTeam list */
 	for (i = 0, p = 0; i < hired_in_base; i++) {
-		employee = E_GetHiredEmployee(baseCurrent, EMPL_SOLDIER, -(i+1));
+		employee = E_GetHiredEmployee(base, EMPL_SOLDIER, -(i+1));
 		if (!employee)
 			Sys_Error("CL_UpdateHireVar: Could not get employee %i\n", i);
 
 		if (CL_SoldierInAircraft(employee->idx, aircraft->idx)) {
-			baseCurrent->curTeam[p] = &employee->chr;
+			base->curTeam[p] = &employee->chr;
 			p++;
 		}
 	}
-	if (p != baseCurrent->teamNum[baseCurrent->aircraftCurrent])
+	if (p != base->teamNum[aircraft->idxInBase])
 		Sys_Error("CL_UpdateHireVar: SoldiersInBase: %i, teamNum[%i]: %i, p: %i\n",
 				hired_in_base,
-				baseCurrent->aircraftCurrent,
-				baseCurrent->teamNum[baseCurrent->aircraftCurrent],
+				aircraft->idxInBase,
+				base->teamNum[aircraft->idxInBase],
 				p);
 
 	for (; p < MAX_ACTIVETEAM; p++)
-		baseCurrent->curTeam[p] = NULL;
+		base->curTeam[p] = NULL;
 }
 
 /**
@@ -961,7 +963,7 @@ extern void CL_ResetTeamInBase (void)
 		return;
 	}
 
-	CL_CleanTempInventory();
+	CL_CleanTempInventory(baseCurrent);
 
 	baseCurrent->teamNum[0] = 0;
 	CL_ResetAircraftTeam(B_GetAircraftFromBaseByIndex(baseCurrent,0));
@@ -1018,8 +1020,8 @@ static void CL_MarkTeam_f (void)
 		return;
 	}
 
-	CL_UpdateHireVar();
 	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
+	CL_UpdateHireVar(aircraft);
 
 	for (i = 0; i < gd.numEmployees[EMPL_SOLDIER]; i++) {
 		alreadyInOtherShip = qfalse;
@@ -1278,7 +1280,7 @@ static void CL_AssignSoldier_f (void)
 			Cbuf_AddText(va("listadd%i\n", num));
 	}
 	/* Select the desired one anyways. */
-	CL_UpdateHireVar();
+	CL_UpdateHireVar(aircraft);
 	Cbuf_AddText(va("team_select %i\n", num));
 }
 
@@ -1542,8 +1544,10 @@ static void CL_SendTeamInfo (sizebuf_t * buf, int baseID, int num)
 	character_t *chr;
 	int i, j;
 
+	assert(baseID < gd.numBases);
+
 	/* clean temp inventory */
-	CL_CleanTempInventory();
+	CL_CleanTempInventory(&gd.bases[baseID]);
 
 	/* header */
 	MSG_WriteByte(buf, clc_teaminfo);
@@ -1599,7 +1603,7 @@ extern void CL_SendCurTeamInfo (sizebuf_t * buf, character_t ** team, int num)
 	int i, j;
 
 	/* clean temp inventory */
-	CL_CleanTempInventory();
+	CL_CleanTempInventory(baseCurrent);
 
 	/* header */
 	MSG_WriteByte(buf, clc_teaminfo);
