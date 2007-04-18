@@ -84,6 +84,7 @@ extern void CL_ListAircraft_f (void)
 		for (i = 0; i < base->numAircraftInBase; i++) {
 			aircraft = &base->aircraft[i];
 			Com_Printf("Aircraft %s\n", aircraft->name);
+			Com_Printf("...idx cur=base/global %i=%i/%i\n", i, aircraft->idxInBase, aircraft->idx);
 			Com_Printf("...name %s\n", aircraft->id);
 			Com_Printf("...speed %0.2f\n", aircraft->speed);
 			Com_Printf("...type %i\n", aircraft->type);
@@ -1032,20 +1033,35 @@ void CL_AircraftEquipmenuMenuClick_f (void)
 }
 
 /**
- * @brief Return an aircraft from its global idx,
+ * @brief Returns aircraft for a given global index.
  * @param[in] idx Global aircraft index.
+ * @return An aircraft pointer (to a struct in a base) that has the given index.
  */
 extern aircraft_t* CL_AircraftGetFromIdx (int idx)
 {
 	base_t*		base;
 	aircraft_t*	aircraft;
 
-	for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--)
-		for (aircraft = base->aircraft + base->numAircraftInBase - 1; aircraft >= base->aircraft; aircraft--)
+	if (idx < 0) {
+		Com_DPrintf("AIR_AircraftGetFromIdx: bad aircraft index: %i\n", idx);
+		return NULL;
+	}
+
+#ifdef PARANOID
+	if (gd.numBases < 1) {
+		Com_DPrintf("AIR_AircraftGetFromIdx: no base(s) found!\n");
+	}
+#endif
+
+	for (base = gd.bases; base < (gd.bases + gd.numBases); base++) {
+		for (aircraft = base->aircraft; aircraft < (base->aircraft + base->numAircraftInBase); aircraft++) {
 			if (aircraft->idx == idx) {
 				Com_DPrintf("CL_AircraftGetFromIdx: aircraft idx: %i - base idx: %i (%s)\n", aircraft->idx, base->idx, base->name);
 				return aircraft;
 			}
+		}
+	}
+	Sys_Error("AIR_AircraftGetFromIdx: No aircraft with given global index found!\n");
 
 	return NULL;
 }
