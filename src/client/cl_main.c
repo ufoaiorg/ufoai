@@ -1677,6 +1677,7 @@ extern void CL_ParseClientData (const char *type, const char *name, char **text)
  * see CL_ParseScriptSecond for more details about parsing stages
  * @sa Com_ParseScripts
  * @sa CL_ParseScriptSecond
+ * @note make sure that the client hunk was cleared - otherwise it may overflow
  */
 static void CL_ParseScriptFirst (const char *type, char *name, char **text)
 {
@@ -1718,6 +1719,7 @@ static void CL_ParseScriptFirst (const char *type, char *name, char **text)
  * techs are already parsed - so now we can link them
  * @sa Com_ParseScripts
  * @sa CL_ParseScriptFirst
+ * @note make sure that the client hunk was cleared - otherwise it may overflow
  */
 static void CL_ParseScriptSecond (const char *type, char *name, char **text)
 {
@@ -1741,8 +1743,6 @@ extern void CL_ReadSinglePlayerData (void)
 	FS_BuildFileList("ufos/*.ufo");
 	FS_NextScriptHeader(NULL, NULL, NULL);
 	text = NULL;
-
-	CL_ClientHunkClear();
 
 	CL_ResetSinglePlayerData();
 	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != 0)
@@ -2366,6 +2366,7 @@ static char *clHunkPointerPos;
  * @brief Inits some client hunk mem to store parsed data
  * @sa CL_ClientHunkShutdown
  * @sa CL_ClientHunkUse
+ * @sa CL_Init
  */
 static void CL_ClientHunkInit (void)
 {
@@ -2379,9 +2380,10 @@ static void CL_ClientHunkInit (void)
 }
 
 /**
- * @brief
+ * @brief Clears the client hunk and reset the hunk to zero
  * @sa CL_ClientHunkInit
  * @sa CL_ClientHunkUse
+ * @sa CL_ResetSinglePlayerData
  */
 extern void CL_ClientHunkClear (void)
 {
@@ -2390,9 +2392,10 @@ extern void CL_ClientHunkClear (void)
 }
 
 /**
- * @brief
+ * @brief Frees the client hunk
  * @sa CL_ClientHunkInit
  * @sa CL_ClientHunkUse
+ * @sa CL_Shutdown
  */
 static void CL_ClientHunkShutdown (void)
 {
@@ -2403,6 +2406,11 @@ static void CL_ClientHunkShutdown (void)
  * @brief
  * @sa CL_ClientHunkInit
  * @sa CL_ClientHunkShutdown
+ * @sa CL_ParseScriptFirst
+ * @sa CL_ParseScriptSecond
+ * @note Everything that gets parsed in CL_ParseScriptFirst or
+ * CL_ParseScriptSecond may use the hunk - it's cleared on every restart or
+ * reload of a singleplayer game
  */
 extern char *CL_ClientHunkUse (const char *token, size_t size)
 {

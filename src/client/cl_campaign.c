@@ -4053,6 +4053,7 @@ static void CP_CampaignsClick_f (void)
 /**
  * @brief Will clear most of the parsed singleplayer data
  * @sa Com_InitInventory
+ * @sa CL_ClientHunkClear
  */
 extern void CL_ResetSinglePlayerData (void)
 {
@@ -4066,6 +4067,8 @@ extern void CL_ResetSinglePlayerData (void)
 	RS_ResetHash();
 	E_ResetEmployees();
 	Com_InitInventory(invList);
+	/* clear the hunk with all parsed static data */
+	CL_ClientHunkClear();
 }
 
 /**
