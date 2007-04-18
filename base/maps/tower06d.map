@@ -22351,7 +22351,7 @@
 {
 "classname" "misc_model"
 "model" "models/objects/vegi/chestnut/chestnut_blaetter3.md2"
-"spawnflags" "255"
+"spawnflags" "254"
 "origin" "236 204 64"
 "light" "1"
 "lightambient" "0.6 0.6 0.6"
@@ -22391,7 +22391,7 @@
 {
 "classname" "misc_model"
 "model" "models/objects/vegi/chestnut/chestnut_blaetter3.md2"
-"spawnflags" "255"
+"spawnflags" "254"
 "origin" "-52 236 64"
 "light" "1"
 "lightambient" "0.6 0.6 0.6"
@@ -22431,7 +22431,7 @@
 {
 "classname" "misc_model"
 "model" "models/objects/vegi/chestnut/chestnut_blaetter3.md2"
-"spawnflags" "255"
+"spawnflags" "254"
 "origin" "76 268 64"
 "light" "1"
 "lightambient" "0.6 0.6 0.6"
