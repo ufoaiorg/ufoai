@@ -2611,7 +2611,7 @@ menu_t* MN_PushMenu (const char *name)
 {
 	/* make sure that we end all input buffers */
 	if (msg_mode == MSG_MENU)
-		Cbuf_AddText("msgmenu !");
+		Cbuf_AddText("msgmenu !\n");
 	return MN_PushMenuDelete(name, qtrue);
 }
 
@@ -2665,7 +2665,7 @@ void MN_PopMenu (qboolean all)
 {
 	/* make sure that we end all input buffers */
 	if (msg_mode == MSG_MENU)
-		Cbuf_AddText("msgmenu !");
+		Cbuf_AddText("msgmenu !\n");
 
 	if (all)
 		while (menuStackPos > 0) {

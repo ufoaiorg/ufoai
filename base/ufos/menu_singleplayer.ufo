@@ -113,6 +113,7 @@ menu singleplayer
 
 	pic button_continue
 	{
+		if "mn_lastsave"
 		click	{ cmd game_continue }
 		pos	"640 380"
 		image	menu/button_big
@@ -125,6 +126,7 @@ menu singleplayer
 	}
 	string string_continue
 	{
+		if "mn_lastsave"
 		font	f_menubig
 		color	"0 0.5 0 1"
 		string	"_Continue"

@@ -4055,7 +4055,7 @@ extern void CL_ResetSinglePlayerData (void)
  *
  * call this function via campaign_stats
  */
-static void CP_CampaignStats (void)
+static void CP_CampaignStats_f (void)
 {
 	setState_t *set;
 	int i;
@@ -4112,7 +4112,7 @@ extern void CL_ResetCampaign (void)
 	menuText[TEXT_CAMPAIGN_LIST] = campaignText;
 
 	/* commands */
-	Cmd_AddCommand("campaign_stats", CP_CampaignStats, NULL);
+	Cmd_AddCommand("campaign_stats", CP_CampaignStats_f, NULL);
 	Cmd_AddCommand("campaignlist_click", CP_CampaignsClick_f, NULL);
 	Cmd_AddCommand("getcampaigns", CP_GetCampaigns_f, NULL);
 	Cmd_AddCommand("missionlist", CP_MissionList_f, "Shows all missions from the script files");
