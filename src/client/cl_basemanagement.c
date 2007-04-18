@@ -405,11 +405,11 @@ extern void B_BuildingStatus (void)
  *
  * @sa B_SetUpBase
  */
-static void B_HireForBuilding (building_t * building, int num)
+static void B_HireForBuilding (base_t* base, building_t * building, int num)
 {
 	employeeType_t employeeType;
 
-	assert(baseCurrent);
+	assert(base);
 
 	if (num < 0)
 		num = building->maxEmployees;
@@ -441,7 +441,7 @@ static void B_HireForBuilding (building_t * building, int num)
 		if (num > gd.numEmployees[employeeType])
 			num = gd.numEmployees[employeeType];
 		for (;num--;)
-			if (!E_HireEmployee(baseCurrent, employeeType, -1)) {
+			if (!E_HireEmployee(base, employeeType, -1)) {
 				Com_DPrintf("B_HireForBuilding: Hiring %i employee(s) of type %i failed.\n", num, employeeType);
 				return;
 			}
@@ -517,19 +517,19 @@ static void B_UpdateBaseBuildingStatus (building_t* building, base_t* base, buil
  * @brief Setup new base
  * @sa CL_NewBase
  */
-extern void B_SetUpBase (void)
+extern void B_SetUpBase (base_t* base)
 {
 	int i;
 	building_t *building = NULL;
 
-	assert(baseCurrent);
+	assert(base);
 	/* Resent current capacities. */
 	for (i = 0; i < MAX_CAP; i++)
-		baseCurrent->capacities[i].cur = 0;
+		base->capacities[i].cur = 0;
 
 	/* update the building-list */
 	B_BuildingInit();
-	Com_DPrintf("Set up for %i\n", baseCurrent->idx);
+	Com_DPrintf("Set up for %i\n", base->idx);
 
 	/* this cvar is used for disabling the base build button on geoscape if MAX_BASES (8) was reached */
 	Cvar_SetValue("mn_base_count", mn_base_count->value + 1.0f);
@@ -540,18 +540,18 @@ extern void B_SetUpBase (void)
 				&& gd.buildingTypes[i].firstbase
 				&& cl_start_buildings->value)) {
 			/* TODO: implement check for moreThanOne */
-			building = &gd.buildings[baseCurrent->idx][gd.numBuildings[baseCurrent->idx]];
+			building = &gd.buildings[base->idx][gd.numBuildings[base->idx]];
 			memcpy(building, &gd.buildingTypes[i], sizeof(building_t));
 			/* self-link to building-list in base */
-			building->idx = gd.numBuildings[baseCurrent->idx];
-			gd.numBuildings[baseCurrent->idx]++;
+			building->idx = gd.numBuildings[base->idx];
+			gd.numBuildings[base->idx]++;
 			/* Link to the base. */
-			building->base_idx = baseCurrent->idx;
-			Com_DPrintf("Base %i new building:%s (%i) at (%.0f:%.0f)\n", baseCurrent->idx, building->id, i, building->pos[0], building->pos[1]);
-			baseCurrent->buildingCurrent = building;
+			building->base_idx = base->idx;
+			Com_DPrintf("Base %i new building:%s (%i) at (%.0f:%.0f)\n", base->idx, building->id, i, building->pos[0], building->pos[1]);
+			base->buildingCurrent = building;
 			/* fake a click to basemap */
 			B_SetBuildingByClick((int) building->pos[0], (int) building->pos[1]);
-			B_UpdateBaseBuildingStatus(building, baseCurrent, B_STATUS_WORKING);
+			B_UpdateBaseBuildingStatus(building, base, B_STATUS_WORKING);
 			/* Now buy two first aircrafts if it is our first base. */
 			if (gd.numBases == 1 && building->buildingType == B_HANGAR)
 				Cbuf_AddText("aircraft_new craft_dropship\n");
@@ -560,9 +560,9 @@ extern void B_SetUpBase (void)
 
 			/* now call the onconstruct trigger */
 			if (*building->onConstruct) {
-				baseCurrent->buildingCurrent = building;
-				Com_DPrintf("B_SetUpBase: %s %i;\n", building->onConstruct, baseCurrent->idx);
-				Cbuf_AddText(va("%s %i;", building->onConstruct, baseCurrent->idx));
+				base->buildingCurrent = building;
+				Com_DPrintf("B_SetUpBase: %s %i;\n", building->onConstruct, base->idx);
+				Cbuf_AddText(va("%s %i;", building->onConstruct, base->idx));
 			}
 			/*
 			   if ( building->moreThanOne
@@ -574,7 +574,7 @@ extern void B_SetUpBase (void)
 			B_BuildingInit();
 
 			if (cl_start_employees->value)
-				B_HireForBuilding(building, -1);
+				B_HireForBuilding(base, building, -1);
 		}
 	}
 	/* if no autobuild, set up zero build time for the first base */
@@ -1916,12 +1916,11 @@ static void B_PackInitialEquipment_f (void)
 static void B_BuildBase_f (void)
 {
 	assert(baseCurrent);
-
-	/* FIXME: This should not be here - but we only build bases in singleplayer */
-	ccs.singleplayer = qtrue;
+	assert(!baseCurrent->founded);
+	assert(ccs.singleplayer);
 
 	if (ccs.credits - BASE_COSTS > 0) {
-		if (CL_NewBase(newBasePos)) {
+		if (CL_NewBase(baseCurrent, newBasePos)) {
 			Com_DPrintf("B_BuildBase_f: numBases: %i\n", gd.numBases);
 			baseCurrent->idx = gd.numBases - 1;
 			baseCurrent->founded = qtrue;

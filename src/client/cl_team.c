@@ -903,7 +903,7 @@ static void CL_NextSoldier_f (void)
 
 /**
  * @brief Updates data about teams in aircrafts.
- * @param[in] *aircraft Pointer to an aircraft for a desired team. 
+ * @param[in] *aircraft Pointer to an aircraft for a desired team.
  */
 extern void CL_UpdateHireVar (aircraft_t *aircraft)
 {

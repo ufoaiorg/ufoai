@@ -241,7 +241,7 @@ building_t *B_GetBuildingType(const char *buildingName);
 extern vec3_t newBasePos;
 
 int B_GetCount(void);
-void B_SetUpBase(void);
+void B_SetUpBase(base_t* base);
 
 void B_SetBuildingByClick(int row, int col);
 void B_ResetBaseManagement(void);
