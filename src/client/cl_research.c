@@ -885,13 +885,14 @@ static void RS_ResearchStart_f (void)
 
 	/************
 		TODO:
-		Check for collected items that are needed by the tech to be researchable.
-		If there are enough items add them to the tech, otherwise pop an errormessage telling the palyer what is missing.
+		If there are enough items add them to the tech (i.e. block them from selling or for other research), otherwise pop an errormessage telling the palyer what is missing.
 	*/
 	if (!tech->statusResearchable) {
-		if (RS_CheckCollected(&tech->require_AND) && RS_CheckCollected(&tech->require_OR))
+		Com_DPrintf("RS_ResearchStart_f: %s was not researchable yet. re-checking\n",tech->id);
+		/* If all requiremnts are met (includes a check for "enough-collected") mark this tech as researchable.*/
+		if (RS_RequirementsMet(&tech->require_AND, &tech->require_OR))
 			RS_MarkOneResearchable(tech);
-		RS_MarkResearchable(qfalse);
+		RS_MarkResearchable(qfalse);	/* Re-check all other techs in case they depend on the marked one. */
 	}
 	/************/
 
