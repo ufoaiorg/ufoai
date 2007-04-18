@@ -997,6 +997,8 @@ extern qboolean E_Save (sizebuf_t* sb, void* data)
 
 			for (k = 0; k < KILLED_NUM_TYPES; k++)
 				MSG_WriteShort(sb, e->chr.kills[k]);
+			for (k = 0; k < SKILL_NUM_TYPES; k++)
+				MSG_WriteShort(sb, e->chr.skills[k]);
 
 			MSG_WriteByte(sb, e->chr.chrscore.alienskilled);
 			MSG_WriteByte(sb, e->chr.chrscore.aliensstunned);
@@ -1064,6 +1066,8 @@ extern qboolean E_Load (sizebuf_t* sb, void* data)
 
 			for (k = 0; k < KILLED_NUM_TYPES; k++)
 				e->chr.kills[k] = MSG_ReadShort(sb);
+			for (k = 0; k < SKILL_NUM_TYPES; k++)
+				e->chr.skills[k] = MSG_ReadShort(sb);
 
 			e->chr.chrscore.alienskilled = MSG_ReadByte(sb);
 			e->chr.chrscore.aliensstunned = MSG_ReadByte(sb);
