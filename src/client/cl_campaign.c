@@ -2081,7 +2081,7 @@ static void CL_GameGo (void)
 
 	/* manage inventory */
 	ccs.eMission = baseCurrent->storage; /* copied, including arrays inside! */
-	CL_CleanTempInventory();
+	CL_CleanTempInventory(baseCurrent);
 	CL_ReloadAndRemoveCarried(&ccs.eMission);
 	/* remove inventory of any old temporary LEs */
 	LE_Cleanup();

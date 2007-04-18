@@ -602,14 +602,14 @@ extern void CL_ReloadAndRemoveCarried (equipDef_t * ed)
  * @sa CL_SendTeamInfo
  * @sa CL_SendCurTeamInfo
  */
-extern void CL_CleanTempInventory (void)
+extern void CL_CleanTempInventory (base_t* base)
 {
 	int i, k;
 
-	if (!baseCurrent)
+	if (!base)
 		return;
 
-	Com_DestroyInventory(&baseCurrent->equipByBuyType);
+	Com_DestroyInventory(&base->equipByBuyType);
 	for (i = 0; i < MAX_EMPLOYEES; i++)
 		for (k = 0; k < csi.numIDs; k++)
 			if (csi.ids[k].temp)
@@ -694,7 +694,7 @@ static void CL_GenerateEquipment_f (void)
 	/* manage inventory */
 	unused = baseCurrent->storage; /* copied, including arrays inside! */
 
-	CL_CleanTempInventory();
+	CL_CleanTempInventory(baseCurrent);
 	CL_ReloadAndRemoveCarried(&unused);
 
 	/* a 'tiny hack' to add the remaining equipment (not carried)
@@ -963,7 +963,7 @@ extern void CL_ResetTeamInBase (void)
 		return;
 	}
 
-	CL_CleanTempInventory();
+	CL_CleanTempInventory(baseCurrent);
 
 	baseCurrent->teamNum[0] = 0;
 	AIR_ResetAircraftTeam(B_GetAircraftFromBaseByIndex(baseCurrent,0));
@@ -1544,8 +1544,10 @@ static void CL_SendTeamInfo (sizebuf_t * buf, int baseID, int num)
 	character_t *chr;
 	int i, j;
 
+	assert(baseID < gd.numBases);
+
 	/* clean temp inventory */
-	CL_CleanTempInventory();
+	CL_CleanTempInventory(&gd.bases[baseID]);
 
 	/* header */
 	MSG_WriteByte(buf, clc_teaminfo);
@@ -1601,7 +1603,7 @@ extern void CL_SendCurTeamInfo (sizebuf_t * buf, character_t ** team, int num)
 	int i, j;
 
 	/* clean temp inventory */
-	CL_CleanTempInventory();
+	CL_CleanTempInventory(baseCurrent);
 
 	/* header */
 	MSG_WriteByte(buf, clc_teaminfo);
