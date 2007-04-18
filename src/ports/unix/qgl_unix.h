@@ -43,7 +43,14 @@ extern glwstate_t glw_state;
 
 void InitSig(void);
 
+#ifndef __APPLE__
 #define GPA( a ) dlsym( glw_state.OpenGLLib, a )
+#endif
+
 #define SIG( x ) fprintf( glw_state.log_fp, x "\n" )
+
+#ifdef __APPLE__
+#define GPA qwglGetProcAddress
+#endif
 
 #endif
