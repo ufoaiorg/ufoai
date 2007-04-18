@@ -1148,22 +1148,36 @@ void AIM_AircraftEquipmenuClick_f (void)
 }
 
 /**
- * @brief Returns aircraft for given index.
+ * @brief Returns aircraft for a given global index.
  * @param[in] idx Global aircraft index.
- * @return An aircraft with given index in global array.
+ * @return An aircraft pointer (to a struct in a base) that has the given index.
  */
 extern aircraft_t* AIR_AircraftGetFromIdx (int idx)
 {
 	base_t*		base;
 	aircraft_t*	aircraft;
 
-	for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--)
-		for (aircraft = base->aircraft + base->numAircraftInBase - 1; aircraft >= base->aircraft; aircraft--)
+	if (idx < 0) {
+		Com_DPrintf("AIR_AircraftGetFromIdx: bad aircraft index: %i\n", idx);
+		return NULL;
+	}
+
+#ifdef PARANOID
+	if (gd.numBases < 1) {
+		Com_DPrintf("AIR_AircraftGetFromIdx: no base(s) found!\n");
+	}
+#endif
+	
+	for (base = gd.bases; base < (gd.bases + gd.numBases); base++) {
+		for (aircraft = base->aircraft; aircraft < (base->aircraft + base->numAircraftInBase); aircraft++) {
 			if (aircraft->idx == idx) {
 				Com_DPrintf("AIR_AircraftGetFromIdx: aircraft idx: %i - base idx: %i (%s)\n", aircraft->idx, base->idx, base->name);
 				return aircraft;
 			}
-
+		}
+	}
+	Sys_Error("AIR_AircraftGetFromIdx: No aircraft with given global index found!\n");
+	
 	return NULL;
 }
 
