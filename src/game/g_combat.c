@@ -290,6 +290,7 @@ static void G_UpdateCharacterScore (edict_t *attacker, fireDef_t *fd, edict_t *t
  */
 static void G_Damage (edict_t * ent, fireDef_t *fd, int damage, edict_t * attacker, shot_mock_t *mock)
 {
+	player_t *player = NULL;
 	qboolean stun = (fd->dmgtype == gi.csi->damStun);
 	qboolean shock = (fd->dmgtype == gi.csi->damShock);
 
@@ -385,8 +386,10 @@ static void G_Damage (edict_t * ent, fireDef_t *fd, int damage, edict_t * attack
 		} else if (shock) {
 			/* Only do this if it's not one from our own team ... they should known that there is a flashbang coming. */
 			if (ent->team != attacker->team) {
+				player = game.players + ent->pnum;
 				ent->TU = 0; /* flashbangs kill TUs */
 				ent->state |= STATE_DAZED; /* entity is dazed */
+				gi.cprintf(player, PRINT_HUD, "Soldier is dazed!\nEnemy used flashbang!\n");
 				return;
 			}
 		} else {
