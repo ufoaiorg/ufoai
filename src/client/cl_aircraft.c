@@ -182,6 +182,7 @@ extern void AIR_ListAircraft_f (void)
 		for (i = 0; i < base->numAircraftInBase; i++) {
 			aircraft = &base->aircraft[i];
 			Com_Printf("Aircraft %s\n", aircraft->name);
+			Com_Printf("...idx cur=base/global %i=%i/%i\n", i, aircraft->idxInBase, aircraft->idx);
 			Com_Printf("...name %s\n", aircraft->id);
 			Com_Printf("...speed %0.2f\n", aircraft->speed);
 			Com_Printf("...type %i\n", aircraft->type);
