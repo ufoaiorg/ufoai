@@ -43,6 +43,7 @@ cvar_t *noipx;
 cvar_t *cl_isometric;
 cvar_t *cl_stereo_separation;
 cvar_t *cl_stereo;
+cvar_t* cl_hunkmegs;
 
 cvar_t *rcon_client_password;
 cvar_t *rcon_address;
@@ -2355,6 +2356,51 @@ extern void CL_Frame (int msec)
 	}
 }
 
+/** @brief don't allow external access to this hunk */
+static char *clHunkData;
+static char *clHunkPointerPos;
+
+/**
+ * @brief Inits some client hunk mem to store parsed data
+ * @sa CL_ClientHunkShutdown
+ * @sa CL_ClientHunkUse
+ */
+static void CL_ClientHunkInit (void)
+{
+	cl_hunkmegs = Cvar_Get("cl_hunkmegs", "16", CVAR_ARCHIVE, "Hunk megabytes for client parsed static data");
+
+	clHunkData = malloc(cl_hunkmegs->integer * 1024 * sizeof(char));
+	if (!clHunkData)
+		Sys_Error("Could not allocate client hunk with %i megabytes\n", cl_hunkmegs->integer);
+	clHunkPointerPos = clHunkData;
+	Com_Printf("inited client hunk data with %i megabytes\n", cl_hunkmegs->integer);
+}
+
+/**
+ * @brief
+ * @sa CL_ClientHunkInit
+ * @sa CL_ClientHunkUse
+ */
+static void CL_ClientHunkShutdown (void)
+{
+	free(clHunkData);
+}
+
+/**
+ * @brief
+ * @sa CL_ClientHunkInit
+ * @sa CL_ClientHunkShutdown
+ */
+extern char *CL_ClientHunkUse (const char *token, size_t size)
+{
+	char *tokenPos = clHunkPointerPos;
+	if (clHunkPointerPos + size > clHunkData + (cl_hunkmegs->integer * 1024))
+		Sys_Error("Increase the cl_hunkmegs value\n");
+	Q_strncpyz(clHunkPointerPos, token, size);
+	clHunkPointerPos = clHunkPointerPos + strlen(clHunkPointerPos) + 1;
+	return tokenPos;
+}
+
 /**
  * @brief
  * @sa CL_Shutdown
@@ -2364,6 +2410,8 @@ extern void CL_Init (void)
 {
 	if (dedicated->value)
 		return;					/* nothing running on the client */
+
+	CL_ClientHunkInit();
 
 	/* all archived variables will now be loaded */
 	Con_Init();
@@ -2428,4 +2476,5 @@ extern void CL_Shutdown (void)
 	VID_Shutdown();
 	MN_Shutdown();
 	FS_Shutdown();
+	CL_ClientHunkShutdown();
 }

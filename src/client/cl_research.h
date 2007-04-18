@@ -70,7 +70,7 @@ typedef enum requirementType_s {
 typedef struct requirements_s {
 	int numLinks;			/**< The number of requirements for this tech. */
 	requirementType_t type[MAX_TECHLINKS];	/**< What type the requ. is: item (in store/quarantine), event, etc... */
-	char id[MAX_TECHLINKS][MAX_VAR];	/**< dependency id (text-id) */
+	char *id[MAX_TECHLINKS];	/**< dependency id (text-id) */
 	int idx[MAX_TECHLINKS];		/**< Dependency index (index in relation to array depends on the type) */
 	int amount[MAX_TECHLINKS];	/**< How many items are needed for research ... if any. (fix) */
 	int collected[MAX_TECHLINKS];	/**< How many items have been collected. (varies) */
@@ -84,7 +84,7 @@ typedef struct stringlist_s {
 
 typedef struct markResearched_s {
 	qboolean markOnly[MAX_CAMPAIGNS];
-	char campaign[MAX_CAMPAIGNS][MAX_VAR];
+	char *campaign[MAX_CAMPAIGNS];
 	int numDefinitions;
 } markResearched_t;
 

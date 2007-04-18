@@ -1134,4 +1134,6 @@ extern char *keybindings[K_LAST_KEY];
 /* os specific video functions */
 void VID_Error(int err_level, const char *fmt, ...) __attribute__((noreturn));
 
+char *CL_ClientHunkUse(const char *token, size_t size);
+
 #endif /* CLIENT_CLIENT_H */
