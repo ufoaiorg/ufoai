@@ -1042,7 +1042,7 @@ extern qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type, 
 	/* Don't allow to use medikit on itself. */
 	if (Q_strncmp(gi.csi->ods[weapon->t].id, "medikit", MAX_VAR) == 0) {
 		if (VectorCompare(ent->pos, at)) {
-			gi.bprintf(PRINT_HUD, _("You cannot use medikit on yourself."));
+			gi.cprintf(player, PRINT_HUD, "You cannot use medikit on yourself.\n");
 			return qfalse;
 		}
 	}
