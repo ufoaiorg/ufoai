@@ -2162,7 +2162,7 @@ static void B_AssembleRandomBase_f (void)
 		return;
 	}
 
-	Cbuf_AddText(va("base_assemble %i %i", randomBase, setUnderAttack));
+	Cbuf_AddText(va("base_assemble %i %i\n", randomBase, setUnderAttack));
 }
 
 /**

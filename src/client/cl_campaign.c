@@ -625,8 +625,12 @@ static void CL_CampaignExecute (setState_t * set)
 	if (*set->def->endstage)
 		CL_CampaignEndStage(set->def->endstage);
 
-	if (*set->def->cmds)
+	if (*set->def->cmds) {
+		if (set->def->cmds[strlen(set->def->cmds)-1] != '\n'
+		 && set->def->cmds[strlen(set->def->cmds)-1] != ';')
+			Com_Printf("CL_CampaignExecute: missing command seperator for commands: '%s'\n", set->def->cmds);
 		Cbuf_AddText(set->def->cmds);
+	}
 
 	/* activate new sets in old stage */
 	CL_CampaignActivateStageSets(set->stage);
