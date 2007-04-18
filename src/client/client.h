@@ -1135,5 +1135,6 @@ extern char *keybindings[K_LAST_KEY];
 void VID_Error(int err_level, const char *fmt, ...) __attribute__((noreturn));
 
 char *CL_ClientHunkUse(const char *token, size_t size);
+void CL_ClientHunkClear(void);
 
 #endif /* CLIENT_CLIENT_H */

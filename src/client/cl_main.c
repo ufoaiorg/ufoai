@@ -1742,6 +1742,8 @@ extern void CL_ReadSinglePlayerData (void)
 	FS_NextScriptHeader(NULL, NULL, NULL);
 	text = NULL;
 
+	CL_ClientHunkClear();
+
 	CL_ResetSinglePlayerData();
 	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != 0)
 		CL_ParseScriptFirst(type, name, &text);
@@ -2367,13 +2369,24 @@ static char *clHunkPointerPos;
  */
 static void CL_ClientHunkInit (void)
 {
-	cl_hunkmegs = Cvar_Get("cl_hunkmegs", "16", CVAR_ARCHIVE, "Hunk megabytes for client parsed static data");
+	cl_hunkmegs = Cvar_Get("cl_hunkmegs", "1", 0, "Hunk megabytes for client parsed static data");
 
-	clHunkData = malloc(cl_hunkmegs->integer * 1024 * sizeof(char));
+	clHunkData = malloc(cl_hunkmegs->integer * 1024 * 1024 * sizeof(char));
 	if (!clHunkData)
 		Sys_Error("Could not allocate client hunk with %i megabytes\n", cl_hunkmegs->integer);
 	clHunkPointerPos = clHunkData;
 	Com_Printf("inited client hunk data with %i megabytes\n", cl_hunkmegs->integer);
+}
+
+/**
+ * @brief
+ * @sa CL_ClientHunkInit
+ * @sa CL_ClientHunkUse
+ */
+extern void CL_ClientHunkClear (void)
+{
+	memset(clHunkData, 0, cl_hunkmegs->integer * 1024 * 1024 * sizeof(char));
+	clHunkPointerPos = clHunkData;
 }
 
 /**
@@ -2394,7 +2407,7 @@ static void CL_ClientHunkShutdown (void)
 extern char *CL_ClientHunkUse (const char *token, size_t size)
 {
 	char *tokenPos = clHunkPointerPos;
-	if (clHunkPointerPos + size > clHunkData + (cl_hunkmegs->integer * 1024))
+	if (clHunkPointerPos + size > clHunkData + (cl_hunkmegs->integer * 1024 * 1024))
 		Sys_Error("Increase the cl_hunkmegs value\n");
 	Q_strncpyz(clHunkPointerPos, token, size);
 	clHunkPointerPos = clHunkPointerPos + strlen(clHunkPointerPos) + 1;
