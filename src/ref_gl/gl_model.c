@@ -244,6 +244,7 @@ static float RadiusFromBounds (vec3_t mins, vec3_t maxs)
 
 /**
  * @brief
+ * @sa CMod_LoadSubmodels
  */
 static void Mod_LoadSubmodels (lump_t * l)
 {

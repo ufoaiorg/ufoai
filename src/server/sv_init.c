@@ -129,26 +129,30 @@ typedef struct mAssembly_s {
 	int w, h;
 } mAssembly_t;
 
+/** @brief Defines a placed tile
+  * @sa mTile_t
+  */
 typedef struct mPlaced_s {
-	mTile_t *tile;
-	int x, y;
+	mTile_t *tile;	/**< The tile that was/is placed. */
+	int x, y;		/**< The position in the map the tile was/is placed in. */
 } mPlaced_t;
 
-static mTile_t mTile[MAX_TILETYPES];
-static mAssembly_t mAssembly[MAX_MAPASSEMBLIES];
+static mTile_t mTile[MAX_TILETYPES];					 /**< @todo document me */
+static mAssembly_t mAssembly[MAX_MAPASSEMBLIES];		 /**< @todo document me */
 
-static int numTiles;
-static int numAssemblies;
+static int numTiles;		 /**< @todo document me */
+static int numAssemblies;	 /**< @todo document me */
 
-static mPlaced_t mPlaced[MAX_MAPTILES];
-static int numPlaced;
+static mPlaced_t mPlaced[MAX_MAPTILES];	 /**< @todo Holds all tiles that have been placed ont he current map. */
+static int numPlaced;				/**< @todo The number of tiles in mPlaced. */
 
-static short prList[32 * 32];
-static short trList[MAX_TILETYPES];
+static short prList[32 * 32];			/**< @todo document me */
+static short trList[MAX_TILETYPES];	/**< @todo document me */
 
-static mAssembly_t *mAsm;
-static int mapSize;
-static int mapX, mapY, mapW, mapH;
+static mAssembly_t *mAsm;	/**< @todo document me (current map?) */
+static int mapSize;			/**< @todo document me */
+static int mapX, mapY;		/**< @todo document me (current position in the map?) */
+static int mapW, mapH;		/**< @todo document me (width and heigth of the curent map?) */
 
 /**
  * @brief
@@ -438,7 +442,14 @@ static void SV_AddTile (byte map[32][32][MAX_TILEALTS], mTile_t * tile, int x, i
 
 
 /**
- * @brief
+ * @brief Checks if a given map-tile fits into the empty space (in a given location) of a map.
+ * @param[in] map The map to check agains the tile.
+ * @param[in] tile The tile definition that should be fitted into the map.
+ * @param[in] x The x position in the map where the tile is supposed to be placed/checked.
+ * @param[in] y The y position in the map where the tile is supposed to be placed/checked.
+ * @param[in] force
+ * @return qtrue if the tile fits.
+ * @return qfalse if the tile does not fit or an error was encountered.
  * @sa SV_AddMandatoryParts
  * @sa SV_AddRegion
  */
@@ -447,9 +458,15 @@ static qboolean SV_FitTile (byte map[32][32][MAX_TILEALTS], mTile_t * tile, int 
 	qboolean touch;
 	int tx, ty;
 	int a, b;
-	byte *spec;
-	byte *m;
+	byte *spec = NULL;
+	byte *m = NULL;
 
+	if (x < 0 || y < 0)
+		return qfalse;
+
+	if (!tile)
+		return qfalse;
+	
 	/* check for map border */
 	if (x + tile->w > mapX + mapW + 2 || y + tile->h > mapY + mapH + 2)
 		return qfalse;
@@ -497,15 +514,22 @@ static qboolean SV_FitTile (byte map[32][32][MAX_TILEALTS], mTile_t * tile, int 
 
 
 /**
- * @brief
+ * @brief Adds a new part to an assembled map.
+ * @param[in] map The map array the regions hould be added to.
+ * @param[in] num TODO: writeme
+ * @return qtrue if the region could be added.
+ * @return qtrue if the region does not fit or an error was encountered.
  * @sa SV_FitTile
  */
 static qboolean SV_AddRegion (byte map[32][32][MAX_TILEALTS], byte * num)
 {
-	mTile_t *tile;
+	mTile_t *tile = NULL;
 	int i, j, x, y;
 	int toFill, oldToFill, oldNumPlaced;
 	int pos, lastPos;
+
+	if (!num)
+		return qfalse;
 
 	/* store old values */
 	oldNumPlaced = numPlaced;

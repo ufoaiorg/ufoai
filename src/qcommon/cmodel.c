@@ -1,6 +1,7 @@
 /**
  * @file cmodels.c
  * @brief model loading and grid oriented movement and scanning
+ * @note collision detection code (server side)
  */
 
 /*
@@ -189,9 +190,10 @@ MAP LOADING
 
 
 /**
- * @brief
+ * @brief Loads brush entities like doors and func_breakable
  * @param[in] l
  * @sa CM_AddMapTile
+ * @sa Mod_LoadSubmodels
  */
 static void CMod_LoadSubmodels (lump_t * l)
 {
@@ -220,9 +222,10 @@ static void CMod_LoadSubmodels (lump_t * l)
 		for (j = 0; j < 3; j++) {
 			out->mins[j] = LittleFloat(in->mins[j]) - 1 + shift[j];
 			out->maxs[j] = LittleFloat(in->maxs[j]) + 1 + shift[j];
-			/* FIXME: why don't we shift the origin, too? It is relative to the
-			 * global origin, too - or am I wrong? */
-			out->origin[j] = LittleFloat(in->origin[j]);
+			/* TODO: why don't we shift the origin, too? It is relative to the
+			 * global origin, too - or am I wrong? - i added the shifting here, too
+			 * it's in the gl_model.c code, too */
+			out->origin[j] = LittleFloat(in->origin[j]) + shift[j];
 		}
 		out->headnode = LittleLong(in->headnode);
 		out->tile = curTile - mapTiles;

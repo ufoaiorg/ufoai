@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_global.h"
 
 static int CL_GetRank(char* rankID);
-static void CL_SendTeamInfo(sizebuf_t * buf, int baseID, int num);
+static void CL_SaveTeamInfo(sizebuf_t * buf, int baseID, int num);
 
 /**
  * @brief Translate the skin id to skin name
@@ -599,7 +599,7 @@ extern void CL_ReloadAndRemoveCarried (equipDef_t * ed)
  * @brief Clears all containers that are temp containers (see script definition).
  * @sa CL_GenerateEquipment_f
  * @sa CL_ResetTeamInBase
- * @sa CL_SendTeamInfo
+ * @sa CL_SaveTeamInfo
  * @sa CL_SendCurTeamInfo
  */
 extern void CL_CleanTempInventory (base_t* base)
@@ -1286,9 +1286,9 @@ static void CL_AssignSoldier_f (void)
 
 /**
  * @brief Saves a team
- * @sa CL_SendTeamInfo
+ * @sa CL_SaveTeamInfo
  */
-static qboolean CL_SaveTeam (const char *filename)
+static qboolean CL_SaveTeamMultiplayer (const char *filename)
 {
 	sizebuf_t sb;
 	byte buf[MAX_TEAMDATASIZE];
@@ -1309,7 +1309,7 @@ static qboolean CL_SaveTeam (const char *filename)
 	MSG_WriteString(&sb, name);
 
 	/* store team */
-	CL_SendTeamInfo(&sb, baseCurrent->idx, E_CountHired(baseCurrent, EMPL_SOLDIER));
+	CL_SaveTeamInfo(&sb, baseCurrent->idx, E_CountHired(baseCurrent, EMPL_SOLDIER));
 
 	/* store assignment */
 	MSG_WriteByte(&sb, baseCurrent->teamNum[0]);
@@ -1323,6 +1323,7 @@ static qboolean CL_SaveTeam (const char *filename)
 
 	/* store equipment in baseCurrent so soldiers can be properly equipped */
 	for (i = 0; i < MAX_OBJDEFS; i++) {
+		MSG_WriteString(&sb, csi.ods[i].name);
 		MSG_WriteLong(&sb, baseCurrent->storage.num[i]);
 		MSG_WriteByte(&sb, baseCurrent->storage.num_loose[i]);
 	}
@@ -1342,22 +1343,22 @@ static qboolean CL_SaveTeam (const char *filename)
 /**
  * @brief Stores a team in a specified teamslot (multiplayer)
  */
-static void CL_SaveTeamSlot_f (void)
+static void CL_SaveTeamMultiplayerSlot_f (void)
 {
 	char filename[MAX_OSPATH];
 
 	/* save */
 	Com_sprintf(filename, sizeof(filename), "%s/save/team%s.mpt", FS_Gamedir(), Cvar_VariableString("mn_slot"));
-	if (!CL_SaveTeam(filename))
+	if (!CL_SaveTeamMultiplayer(filename))
 		MN_Popup(_("Note"), _("Error saving team. Check free disk space!"));
 }
 
 /**
  * @brief Load a team member for multiplayer
- * @sa CL_LoadTeam
- * @sa CL_SendTeamInfo
+ * @sa CL_LoadTeamMultiplayer
+ * @sa CL_SaveTeamInfo
  */
-static void CL_LoadTeamMember (sizebuf_t * sb, character_t * chr)
+static void CL_LoadTeamMultiplayerMember (sizebuf_t * sb, character_t * chr)
 {
 	int i;
 
@@ -1396,8 +1397,8 @@ static void CL_LoadTeamMember (sizebuf_t * sb, character_t * chr)
 
 /**
  * @brief Load a multiplayer team
- * @sa CL_LoadTeam
- * @sa CL_SaveTeam
+ * @sa CL_LoadTeamMultiplayer
+ * @sa CL_SaveTeamMultiplayer
  */
 static void CL_LoadTeamMultiplayer (const char *filename)
 {
@@ -1439,7 +1440,7 @@ static void CL_LoadTeamMultiplayer (const char *filename)
 		employee->hired = qtrue;
 		employee->baseIDHired = gd.bases[0].idx;
 		chr = &employee->chr;
-		CL_LoadTeamMember(&sb, chr);
+		CL_LoadTeamMultiplayerMember(&sb, chr);
 	}
 
 	/* get assignment */
@@ -1477,7 +1478,7 @@ static void CL_LoadTeamMultiplayer (const char *filename)
 /**
  * @brief Loads the selected teamslot
  */
-static void CL_LoadTeamSlot_f (void)
+static void CL_LoadTeamMultiplayerSlot_f (void)
 {
 	char filename[MAX_OSPATH];
 
@@ -1525,8 +1526,8 @@ extern void CL_ResetTeams (void)
 	Cmd_AddCommand("equip_select", CL_Select_f, NULL);
 	Cmd_AddCommand("soldier_select", CL_Select_f, _("Select a soldier from list"));
 	Cmd_AddCommand("nextsoldier", CL_NextSoldier_f, _("Toggle to next soldier"));
-	Cmd_AddCommand("saveteamslot", CL_SaveTeamSlot_f, NULL);
-	Cmd_AddCommand("loadteamslot", CL_LoadTeamSlot_f, NULL);
+	Cmd_AddCommand("saveteamslot", CL_SaveTeamMultiplayerSlot_f, NULL);
+	Cmd_AddCommand("loadteamslot", CL_LoadTeamMultiplayerSlot_f, NULL);
 #ifdef DEBUG
 	Cmd_AddCommand("teamlist", CL_TeamListDebug_f, "Debug function to show all hired and assigned teammembers");
 #endif
@@ -1536,10 +1537,10 @@ extern void CL_ResetTeams (void)
 /**
  * @brief Stores the wholeTeam info to buffer (which might be a network buffer, too)
  *
- * Called by CL_SaveTeam to store the team info
+ * Called by CL_SaveTeamMultiplayer to store the team info
  * @sa CL_SendCurTeamInfo
  */
-static void CL_SendTeamInfo (sizebuf_t * buf, int baseID, int num)
+static void CL_SaveTeamInfo (sizebuf_t * buf, int baseID, int num)
 {
 	character_t *chr;
 	int i, j;
@@ -1594,7 +1595,7 @@ static void CL_SendTeamInfo (sizebuf_t * buf, int baseID, int num)
 /**
  * @brief Stores the curTeam info to buffer (which might be a network buffer, too)
  * @sa G_ClientTeamInfo
- * @sa CL_SendTeamInfo
+ * @sa CL_SaveTeamInfo
  * @note Called in cl_main.c CL_Precache_f to send the team info to server
  */
 extern void CL_SendCurTeamInfo (sizebuf_t * buf, character_t ** team, int num)

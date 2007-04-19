@@ -5,7 +5,7 @@ CMODEL
 */
 #include "../qcommon/qfiles.h"
 
-#define MAX_MAPTILES	512
+#define MAX_MAPTILES	256
 
 extern vec3_t map_min, map_max;
 

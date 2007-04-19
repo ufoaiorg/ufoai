@@ -191,7 +191,7 @@ typedef struct base_s {
 
 	int equipType;	/**< the current selected category in equip menu */
 
-	character_t *curTeam[MAX_ACTIVETEAM];	/**< set in CL_GenerateEquipment_f and CL_LoadTeam */
+	character_t *curTeam[MAX_ACTIVETEAM];	/**< set in CL_GenerateEquipment_f and CL_LoadTeamMultiplayer */
 	character_t *curChr;	/**< needn't be saved */
 
 	int buildingToBuild;	/**< needed if there is another buildingpart to build (link to gd.buildingTypes) */
