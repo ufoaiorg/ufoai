@@ -115,22 +115,25 @@ int SV_ImageIndex (const char *name)
 
 /** @brief Stores the parsed data fo a map tile. (See *.ump files) */
 typedef struct mTile_s {
-	char name[MAX_VAR];	/**< The name of the tile as defined in the ump file. */
+	char id[MAX_VAR];	/**< The id (string) of the tile as defined in the ump file (next to "tile"). */
 	byte spec[MAX_TILESIZE][MAX_TILESIZE][MAX_TILEALTS];	/** @todo  document me */
-	int w, h;	/**< The width and height of the tile */
+	int w, h;	/**< The width and height of the tile. */
 } mTile_t;
 
-/** @brief Stores the parsed data of an assembly definition.  (See *.ump files) */
+/**
+ * @brief Stores the parsed data of an assembly definition.  (See *.ump files) 
+ * @todo: Please have a look if the comments are correct.
+ */
 typedef struct mAssembly_s {
-	char name[MAX_VAR];
-	char title[MAX_VAR];
-	byte min[MAX_TILETYPES];
-	byte max[MAX_TILETYPES];
-	byte fT[MAX_FIXEDTILES];
-	byte fX[MAX_FIXEDTILES];
-	byte fY[MAX_FIXEDTILES];
-	int numFixed;
-	int w, h;
+	char id[MAX_VAR];		/**< The id (string) of the assembly as defined in the ump file (next to "assembly"). */
+	char title[MAX_VAR];		/**< The full title fo this assembly. */
+	byte min[MAX_TILETYPES];	/**< Minimum tile number for each used tile-type. */
+	byte max[MAX_TILETYPES];	/**< Maximum tile number for each used tile-type. */
+	byte fT[MAX_FIXEDTILES];	/** Index of used (fix) tile in mTile[] array */
+	byte fX[MAX_FIXEDTILES];	/** x position of the used  (fix) tile in fT */
+	byte fY[MAX_FIXEDTILES];	/** y position of the used  (fix) tile in fT */
+	int numFixed;	/** Number of fixed tiles. Counts entries of fX, fY and fT */
+	int w, h;	/**< The width and height of the assembly. (size "<w> <h>") */
 } mAssembly_t;
 
 /**
@@ -243,14 +246,14 @@ static void SV_ParseMapTile (const char *filename, char **text)
 	}
 	t = &mTile[numTiles];
 	memset(t, 0, sizeof(mTile_t));
-	Q_strncpyz(t->name, token, sizeof(t->name));
+	Q_strncpyz(t->id, token, sizeof(t->id));
 
 	/* start parsing the block */
 	token = COM_EParse(text, errhead, filename);
 	if (!*text)
 		return;
 	if (*token != '{') {
-		Com_Printf("SV_ParseMapTile: Expected '{' for tile '%s' (%s)\n", t->name, filename);
+		Com_Printf("SV_ParseMapTile: Expected '{' for tile '%s' (%s)\n", t->id, filename);
 		return;
 	}
 
@@ -276,7 +279,7 @@ static void SV_ParseMapTile (const char *filename, char **text)
 		for (x = 0; x < t->w; x++) {
 			token = COM_EParse(text, errhead, filename);
 			if (!*text || *token == '}') {
-				Com_Printf("SV_ParseMapTile: Bad tile desc in '%s' - not enough entries for size\n", t->name);
+				Com_Printf("SV_ParseMapTile: Bad tile desc in '%s' - not enough entries for size\n", t->id);
 				*text = strchr(*text, '}') + 1;
 				return;
 			}
@@ -290,7 +293,7 @@ static void SV_ParseMapTile (const char *filename, char **text)
 
 	/* get connections */
 	if (*token != '}')
-		Com_Printf("SV_ParseMapTile: Bad tile desc in '%s' - too many entries for size\n", t->name);
+		Com_Printf("SV_ParseMapTile: Bad tile desc in '%s' - too many entries for size\n", t->id);
 
 	/* successfully parsed - this tile counts */
 	numTiles++;
@@ -324,7 +327,7 @@ static void SV_ParseAssembly (const char *filename, char **text)
 	/* init */
 	a = &mAssembly[numAssemblies++];
 	memset(a, 0, sizeof(mAssembly_t));
-	Q_strncpyz(a->name, token, sizeof(a->name));
+	Q_strncpyz(a->id, token, sizeof(a->id));
 	a->w = 8;
 	a->h = 8;
 
@@ -359,7 +362,7 @@ static void SV_ParseAssembly (const char *filename, char **text)
 				break;
 
 			for (i = 0; i < numTiles; i++)
-				if (!Q_strncmp(token, mTile[i].name, MAX_VAR)) {
+				if (!Q_strncmp(token, mTile[i].id, MAX_VAR)) {
 					if (a->numFixed >= MAX_FIXEDTILES) {
 						Com_Printf("SV_ParseAssembly: Too many fixed tiles\n");
 						break;
@@ -379,7 +382,7 @@ static void SV_ParseAssembly (const char *filename, char **text)
 		}
 
 		for (i = 0; i < numTiles; i++)
-			if (!Q_strncmp(token, mTile[i].name, MAX_VAR)) {
+			if (!Q_strncmp(token, mTile[i].id, MAX_VAR)) {
 				/* get min and max tile number */
 				token = COM_EParse(text, errhead, filename);
 				if (!text)
@@ -608,13 +611,14 @@ static qboolean SV_AddRegion (byte map[32][32][MAX_TILEALTS], byte * num)
 
 
 /**
- * @brief Add those part to the map that are mandatory for this assembly
+ * @param[in] map The map parts should be added to.
+ * @param[out] num TODO
  * @sa SV_FitTile
  * @sa SV_AddTile
  */
 static qboolean SV_AddMandatoryParts (byte map[32][32][MAX_TILEALTS], byte * num)
 {
-	mTile_t *tile;
+	mTile_t *tile = NULL;
 	int i, j, n, x, y;
 
 	for (i = 0, tile = mTile; i < numTiles; i++, tile++) {
@@ -631,7 +635,7 @@ static qboolean SV_AddMandatoryParts (byte map[32][32][MAX_TILEALTS], byte * num
 			}
 			/* no tile fit */
 			if (n >= mapSize) {
-				Com_Printf("SV_AddMandatoryParts: Could not find a tile that fits for '%s'\n", tile->name);
+				Com_Printf("SV_AddMandatoryParts: Could not find a tile that fits for '%s'\n", tile->id);
 				return qfalse;
 			}
 		}
@@ -721,7 +725,7 @@ static void SV_AssembleMap (const char *name, const char *assembly, char **map, 
 	/* get assembly */
 	if (assembly && assembly[0]) {
 		for (i = 0, mAsm = mAssembly; i < numAssemblies; i++, mAsm++)
-			if (!Q_strcmp(assembly, mAsm->name))
+			if (!Q_strcmp(assembly, mAsm->id))
 				break;
 		if (i >= numAssemblies) {
 			Com_Printf("SV_AssembleMap: Map assembly '%s' not found\n", assembly);
@@ -733,7 +737,7 @@ static void SV_AssembleMap (const char *name, const char *assembly, char **map, 
 	/* use random assembly, if no valid one has been specified */
 	if (!mAsm) {
 		mAsm = &mAssembly[rand() % numAssemblies];
-		Com_DPrintf("Use random assembly: '%s'\n", mAsm->name);
+		Com_DPrintf("Use random assembly: '%s'\n", mAsm->id);
 	}
 
 	/* calculate regions */
@@ -798,7 +802,7 @@ static void SV_AssembleMap (const char *name, const char *assembly, char **map, 
 
 	/* generate the strings */
 	for (i = 0, pl = mPlaced; i < numPlaced; i++, pl++) {
-		Q_strcat(asmMap, va(" %s", pl->tile->name), MAX_TOKEN_CHARS * MAX_TILESTRINGS);
+		Q_strcat(asmMap, va(" %s", pl->tile->id), MAX_TOKEN_CHARS * MAX_TILESTRINGS);
 		Q_strcat(asmPos, va(" %i %i", (pl->x - mAsm->w / 2) * 8, (pl->y - mAsm->h / 2) * 8), MAX_TOKEN_CHARS * MAX_TILESTRINGS);
 	}
 
