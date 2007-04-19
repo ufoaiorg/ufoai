@@ -805,6 +805,7 @@ static void RS_RemoveScientist (technology_t* tech)
 	if (tech->scientists == 0) {
 		/* Remove the tech rfomt he base if no scis are left to research it. */
 		tech->base_idx = -1;
+		tech->statusResearch = RS_PAUSED;
 	}
 }
 
@@ -960,7 +961,7 @@ static void RS_ResearchStop_f (void)
 		   differnet from a RS_NONE since it may have a little bit of progress already). */
 		while (tech->scientists > 0)
 			RS_RemoveScientist(tech);
-		tech->statusResearch = RS_PAUSED;
+		tech->statusResearch = RS_PAUSED; /* This is redundant since it's done in RS_RemoveScientist aready. But just in case :) */
 		break;
 	case RS_PAUSED:
 		/* TODO: remove? Popup info how much is already researched? */
