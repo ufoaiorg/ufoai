@@ -760,7 +760,6 @@ void CDAudio_RandomPlay(void);
 #define MAX_GAMESAVESIZE	MAX_TEAMDATASIZE + sizeof(globalData_t) + 3145728
 #define MAX_COMMENTLENGTH	32
 
-void CL_LoadTeam(sizebuf_t *sb, base_t *base, int version);
 void CL_UpdateHireVar(aircraft_t *aircraft);
 void CL_CleanTempInventory(base_t* base);
 
