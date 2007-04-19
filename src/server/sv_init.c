@@ -129,9 +129,12 @@ typedef struct mAssembly_s {
 	int w, h;
 } mAssembly_t;
 
+/** @brief Defines a placed tile
+  * @sa mTile_t
+  */
 typedef struct mPlaced_s {
-	mTile_t *tile;
-	int x, y;
+	mTile_t *tile;	/**< The tile that was/is placed. */
+	int x, y;		/**< The position in the map the tile was/is placed in. */
 } mPlaced_t;
 
 static mTile_t mTile[MAX_TILETYPES];					 /**< @todo document me */
@@ -140,8 +143,8 @@ static mAssembly_t mAssembly[MAX_MAPASSEMBLIES];		 /**< @todo document me */
 static int numTiles;		 /**< @todo document me */
 static int numAssemblies;	 /**< @todo document me */
 
-static mPlaced_t mPlaced[MAX_MAPTILES];	 /**< @todo document me */
-static int numPlaced;				/**< @todo document me */
+static mPlaced_t mPlaced[MAX_MAPTILES];	 /**< @todo Holds all tiles that have been placed ont he current map. */
+static int numPlaced;				/**< @todo The number of tiles in mPlaced. */
 
 static short prList[32 * 32];			/**< @todo document me */
 static short trList[MAX_TILETYPES];	/**< @todo document me */
