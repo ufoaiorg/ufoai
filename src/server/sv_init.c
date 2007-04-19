@@ -97,10 +97,12 @@ int SV_ImageIndex (const char *name)
 
 
 /*
-================
-MAP ASSEMBLY
-================
-*/
+ * ================
+ * MAP ASSEMBLY
+ * ================
+ * More info on map-assembly can be found at:
+ * http://ufoai.ninex.info/wiki/index.php/Mapping/Random_map_assembly
+ */
 #define MAX_MAPASSEMBLIES 32
 #define MAX_TILETYPES 64
 #define MAX_TILESIZE 10
@@ -111,12 +113,14 @@ MAP ASSEMBLY
 #define MAX_ASSEMBLYRETRIES 8000
 #define MAX_REGIONRETRIES 1
 
+/** @brief Stores the parsed data fo a map tile. (See *.ump files) */
 typedef struct mTile_s {
-	char name[MAX_VAR];
-	byte spec[MAX_TILESIZE][MAX_TILESIZE][MAX_TILEALTS];
-	int w, h;
+	char name[MAX_VAR];	/**< The name of the tile as defined in the ump file. */
+	byte spec[MAX_TILESIZE][MAX_TILESIZE][MAX_TILEALTS];	/** @todo  document me */
+	int w, h;	/**< The width and height of the tile */
 } mTile_t;
 
+/** @brief Stores the parsed data of an assembly definition.  (See *.ump files) */
 typedef struct mAssembly_s {
 	char name[MAX_VAR];
 	char title[MAX_VAR];
@@ -129,19 +133,20 @@ typedef struct mAssembly_s {
 	int w, h;
 } mAssembly_t;
 
-/** @brief Defines a placed tile
-  * @sa mTile_t
-  */
+/**
+ * @brief Defines a placed tile
+ * @sa mTile_t
+ */
 typedef struct mPlaced_s {
 	mTile_t *tile;	/**< The tile that was/is placed. */
 	int x, y;		/**< The position in the map the tile was/is placed in. */
 } mPlaced_t;
 
-static mTile_t mTile[MAX_TILETYPES];					 /**< @todo document me */
-static mAssembly_t mAssembly[MAX_MAPASSEMBLIES];		 /**< @todo document me */
+static mTile_t mTile[MAX_TILETYPES];					 /**< @todo A list of parsed map-tiles. */
+static mAssembly_t mAssembly[MAX_MAPASSEMBLIES];		 /**< @todo A list of parsed assembly definitions. */
 
-static int numTiles;		 /**< @todo document me */
-static int numAssemblies;	 /**< @todo document me */
+static int numTiles;		 /**< @todo The number of tiles in mTile. */
+static int numAssemblies;	 /**< @todo The number of assemblies in mAssembly. */
 
 static mPlaced_t mPlaced[MAX_MAPTILES];	 /**< @todo Holds all tiles that have been placed ont he current map. */
 static int numPlaced;				/**< @todo The number of tiles in mPlaced. */
@@ -391,8 +396,17 @@ static void SV_ParseAssembly (const char *filename, char **text)
 
 
 /**
- * @brief
+ * @brief Adds a new map-tile to an assembled map. Also adds the tile to the placed-tiles list.
+ * @param[in] map The map array the tile should be added to.
+ * @param[in] tile The tile to add to the map.
+ * @param[in] x The x position in the map where the tile should be placed.
+ * @param[in] y The y position in the map where the tile should be placed.
+ * @param[in|out] toFill This is the amount of tiles (tile-positions) in the map that are still to fill. It is updated on success here.
+ * @return qtrue if the tile could be added.
+ * @return qtrue if the tile does not fit or an error was encountered.
  * @sa SV_AssembleMap
+ * @sa SV_AddRegion
+ * @sa SV_FitTile
  */
 static void SV_AddTile (byte map[32][32][MAX_TILEALTS], mTile_t * tile, int x, int y, int *toFill)
 {
@@ -514,12 +528,13 @@ static qboolean SV_FitTile (byte map[32][32][MAX_TILEALTS], mTile_t * tile, int 
 
 
 /**
- * @brief Adds a new part to an assembled map.
- * @param[in] map The map array the regions hould be added to.
+ * @brief Adds a new region-part to an assembled map.
+ * @param[in] map The map array the region should be added to.
  * @param[in] num TODO: writeme
  * @return qtrue if the region could be added.
  * @return qtrue if the region does not fit or an error was encountered.
  * @sa SV_FitTile
+ * @sa SV_AddTile
  */
 static qboolean SV_AddRegion (byte map[32][32][MAX_TILEALTS], byte * num)
 {

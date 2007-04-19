@@ -2471,7 +2471,7 @@ int Com_MoveInInventory (inventory_t* const i, int from, int fx, int fy, int to,
 {
 	return Com_MoveInInventoryIgnore(i, from, fx, fy, to, tx, ty, TU, icp, qfalse);
 }
-	
+
 /**
  * @brief Conditions for moving items between containers.
  * @param[in] i an item
@@ -2629,8 +2629,8 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 	if (TU)
 		*TU -= time;
 
-	ic = Com_AddToInventory(i, cacheItem, to, tx, ty);
 	Com_RemoveFromInventory(i, from, fx, fy);
+	ic = Com_AddToInventory(i, cacheItem, to, tx, ty);
 
 	/* return data */
 	if (icp)
