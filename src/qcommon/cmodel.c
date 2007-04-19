@@ -939,9 +939,9 @@ static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
 	if (!l->filelen)
 		Com_Error(ERR_DROP, "CMod_LoadRouting: Map has NO routing lump");
 
- 	assert((sX >= 0) && (sX < WIDTH));
-	assert((sY >= 0) && (sX < WIDTH));
-	assert((sZ >= 0) && (sX < HEIGHT));
+ 	assert((sX > -WIDTH) && (sX < WIDTH));
+	assert((sY > -WIDTH) && (sY < WIDTH));
+	assert((sZ > -HEIGHT) && (sZ < HEIGHT));
 
 	source = cmod_base + l->fileofs;
 	sh_low = *source++;
@@ -1118,9 +1118,9 @@ static unsigned CM_AddMapTile (char *name, int sX, int sY, int sZ)
 		return 0;
 	}
 
-	assert((sX >= 0) && (sX < WIDTH));
-	assert((sY >= 0) && (sX < WIDTH));
-	assert((sZ >= 0) && (sX < HEIGHT));
+	assert((sX > -WIDTH) && (sX < WIDTH));
+	assert((sY > -WIDTH) && (sY < WIDTH));
+	assert((sZ > -HEIGHT) && (sZ < HEIGHT));
 
 	/* load the file */
 	Com_sprintf(filename, MAX_QPATH, "maps/%s.bsp", name);
