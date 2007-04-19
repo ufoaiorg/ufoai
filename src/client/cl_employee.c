@@ -1015,7 +1015,7 @@ extern qboolean E_Save (sizebuf_t* sb, void* data)
 			MSG_WriteByte(sb, e->chr.chrscore.powerstat);
 
 			/* store inventories */
-			CL_SendInventory(sb, &e->inv);
+			CL_SendInventory(sb, &e->inv, qtrue);
 		}
 	}
 
@@ -1085,7 +1085,7 @@ extern qboolean E_Load (sizebuf_t* sb, void* data)
 
 			/* clear the mess of stray loaded pointers */
 			memset(&gd.employees[j][i].inv, 0, sizeof(inventory_t));
-			CL_ReceiveInventory(sb, &e->inv);
+			CL_ReceiveInventory(sb, &e->inv, qtrue);
 			gd.employees[j][i].chr.inv = &gd.employees[j][i].inv;
 		}
 	}

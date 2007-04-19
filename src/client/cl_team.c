@@ -63,11 +63,16 @@ extern char* CL_GetTeamSkinName (int id)
  * @sa G_WriteItem
  * @sa G_ReadItem
  */
-extern void CL_SendItem (sizebuf_t *buf, item_t item, int container, int x, int y)
+extern void CL_SendItem (sizebuf_t *buf, item_t item, int container, int x, int y, qboolean save)
 {
 	assert (item.t != NONE);
 /*	Com_Printf("Add item %s to container %i (t=%i:a=%i:m=%i) (x=%i:y=%i)\n", csi.ods[item.t].id, container, item.t, item.a, item.m, x, y);*/
-	MSG_WriteFormat(buf, "bbbbbb", item.t, item.a, item.m, container, x, y);
+	if (save) {
+		MSG_WriteString(buf, csi.ods[item.t].id);
+		MSG_WriteString(buf, csi.ods[item.m].id);
+		MSG_WriteFormat(buf, "bbbb", item.a, container, x, y);
+	} else
+		MSG_WriteFormat(buf, "bbbbbb", item.t, item.a, item.m, container, x, y);
 }
 
 /**
@@ -76,7 +81,7 @@ extern void CL_SendItem (sizebuf_t *buf, item_t item, int container, int x, int 
  * @sa CL_ReceiveInventory
  * @sa G_SendInventory
  */
-extern void CL_SendInventory (sizebuf_t *buf, inventory_t *i)
+extern void CL_SendInventory (sizebuf_t *buf, inventory_t *i, qboolean save)
 {
 	int j, nr = 0;
 	invList_t *ic;
@@ -88,7 +93,7 @@ extern void CL_SendInventory (sizebuf_t *buf, inventory_t *i)
 	MSG_WriteShort(buf, nr * 6);
 	for (j = 0; j < csi.numIDs; j++)
 		for (ic = i->c[j]; ic; ic = ic->next)
-			CL_SendItem(buf, ic->item, j, ic->x, ic->y);
+			CL_SendItem(buf, ic->item, j, ic->x, ic->y, save);
 }
 
 /**
@@ -97,9 +102,15 @@ extern void CL_SendInventory (sizebuf_t *buf, inventory_t *i)
  * @sa G_WriteItem
  * @sa G_ReadItem
  */
-extern void CL_ReceiveItem (sizebuf_t *buf, item_t *item, int *container, int *x, int *y)
+extern void CL_ReceiveItem (sizebuf_t *buf, item_t *item, int *container, int *x, int *y, qboolean save)
 {
-	MSG_ReadFormat(buf, "bbbbbb", &item->t, &item->a, &item->m, container, x, y);
+	if (save) {
+		item->t = Com_GetItemByID(MSG_ReadString(buf));
+		item->m = Com_GetItemByID(MSG_ReadString(buf));
+		MSG_ReadFormat(buf, "bbbb", &item->a, container, x, y);
+	} else
+		/* network */
+		MSG_ReadFormat(buf, "bbbbbb", &item->t, &item->a, &item->m, container, x, y);
 }
 
 /**
@@ -109,14 +120,14 @@ extern void CL_ReceiveItem (sizebuf_t *buf, item_t *item, int *container, int *x
  * @sa Com_AddToInventory
  * @sa G_SendInventory
  */
-extern void CL_ReceiveInventory (sizebuf_t *buf, inventory_t *i)
+extern void CL_ReceiveInventory (sizebuf_t *buf, inventory_t *i, qboolean save)
 {
 	item_t item;
 	int container, x, y;
 	int nr = MSG_ReadShort(buf) / 6;
 
 	for (; nr-- > 0;) {
-		CL_ReceiveItem(buf, &item, &container, &x, &y);
+		CL_ReceiveItem(buf, &item, &container, &x, &y, save);
 
 		Com_AddToInventory(i, item, container, x, y);
 	}
@@ -1322,8 +1333,9 @@ static qboolean CL_SaveTeamMultiplayer (const char *filename)
 	}
 
 	/* store equipment in baseCurrent so soldiers can be properly equipped */
-	for (i = 0; i < MAX_OBJDEFS; i++) {
-		MSG_WriteString(&sb, csi.ods[i].name);
+	MSG_WriteShort(&sb, csi.numODs);
+	for (i = 0; i < csi.numODs; i++) {
+		MSG_WriteString(&sb, csi.ods[i].id);
 		MSG_WriteLong(&sb, baseCurrent->storage.num[i]);
 		MSG_WriteByte(&sb, baseCurrent->storage.num_loose[i]);
 	}
@@ -1392,7 +1404,7 @@ static void CL_LoadTeamMultiplayerMember (sizebuf_t * sb, character_t * chr)
 
 	/* inventory */
 	Com_DestroyInventory(chr->inv);
-	CL_ReceiveInventory(sb, chr->inv);
+	CL_ReceiveInventory(sb, chr->inv, qtrue);
 }
 
 /**
@@ -1458,9 +1470,16 @@ static void CL_LoadTeamMultiplayer (const char *filename)
 	}
 
 	/* read equipment */
-	for (i = 0; i < MAX_OBJDEFS; i++) {
-		gd.bases[0].storage.num[i] = MSG_ReadLong(&sb);
-		gd.bases[0].storage.num_loose[i] = MSG_ReadByte(&sb);
+	p = MSG_ReadShort(&sb);
+	for (i = 0; i < p; i++) {
+		num = Com_GetItemByID(MSG_ReadString(&sb));
+		if (num == -1) {
+			MSG_ReadLong(&sb);
+			MSG_ReadByte(&sb);
+		} else {
+			gd.bases[0].storage.num[num] = MSG_ReadLong(&sb);
+			gd.bases[0].storage.num_loose[num] = MSG_ReadByte(&sb);
+		}
 	}
 
 	for (i = 0, p = 0; i < num; i++)
@@ -1588,7 +1607,7 @@ static void CL_SaveTeamInfo (sizebuf_t * buf, int baseID, int num)
 		MSG_WriteShort(buf, chr->assigned_missions);
 
 		/* inventory */
-		CL_SendInventory(buf, chr->inv);
+		CL_SendInventory(buf, chr->inv, qtrue);
 	}
 }
 
@@ -1643,7 +1662,7 @@ extern void CL_SendCurTeamInfo (sizebuf_t * buf, character_t ** team, int num)
 		MSG_WriteShort(buf, chr->assigned_missions);
 
 		/* inventory */
-		CL_SendInventory(buf, chr->inv);
+		CL_SendInventory(buf, chr->inv, qfalse);
 	}
 }
 

@@ -1019,7 +1019,7 @@ static void CL_InvAdd (sizebuf_t *sb)
 		nr = MSG_ReadShort(sb) / 6;
 		Com_Printf("InvAdd: message ignored... LE %i not found (type: %i)\n", number, le->type);
 		for (; nr-- > 0;) {
-			CL_ReceiveItem(sb, &item, &container, &x, &y);
+			CL_ReceiveItem(sb, &item, &container, &x, &y, qfalse);
 			Com_Printf("InvAdd: ignoring:\n");
 			Com_PrintItemDescription(item.t);
 		}
@@ -1031,7 +1031,7 @@ static void CL_InvAdd (sizebuf_t *sb)
 	nr = MSG_ReadShort(sb) / 6;
 
 	for (; nr-- > 0;) {
-		CL_ReceiveItem(sb, &item, &container, &x, &y);
+		CL_ReceiveItem(sb, &item, &container, &x, &y, qfalse);
 
 		Com_AddToInventory(&le->i, item, container, x, y);
 
