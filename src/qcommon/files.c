@@ -358,6 +358,24 @@ int FS_FOpenFileRead (const char *filename, qFILE * f)
 	return l;
 }
 
+/**
+ * @brief
+ * @returns file size or -1 on error
+ */
+extern int FS_FOpenFileAppend (qFILE *f)
+{
+	char path[MAX_OSPATH];
+
+	FS_CreatePath(f->name);
+
+	Com_sprintf(path, sizeof(path), "%s/%s", FS_Gamedir(), f->name);
+
+	f->f = fopen(path, "ab");
+	if (f->f)
+		return FS_FileLength(f);
+
+	return -1;
+}
 
 /**
  * @brief
@@ -368,6 +386,8 @@ void FS_FOpenFileWrite (const char *filename, qFILE * f)
 		return;
 
 	f->f = fopen(filename, "wb");
+	if (!f->f)
+		Com_DPrintf("Could not open %s for writing\n", filename);
 }
 
 
