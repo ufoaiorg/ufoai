@@ -121,9 +121,9 @@ typedef struct {
 } mapTile_t;
 
 typedef struct routing_s {
-	byte route[8][256][256];
-	byte fall[256][256];
-	byte step[256][256];
+	byte route[HEIGHT][WIDTH][WIDTH];
+	byte fall[WIDTH][WIDTH];
+	byte step[WIDTH][WIDTH];
 
 	byte area[HEIGHT][WIDTH][WIDTH];
 	byte areaStored[HEIGHT][WIDTH][WIDTH];
@@ -209,7 +209,7 @@ static void CMod_LoadSubmodels (lump_t * l)
 	if (count > MAX_MAP_MODELS)
 		Com_Error(ERR_DROP, "Map has too many models");
 
-	out = Hunk_Alloc(count * sizeof(cmodel_t));
+	out = Hunk_Alloc((count + 6)* sizeof(cmodel_t));
 	curTile->cmodels = out;
 	curTile->numcmodels = count;
 
@@ -220,9 +220,10 @@ static void CMod_LoadSubmodels (lump_t * l)
 		for (j = 0; j < 3; j++) {
 			out->mins[j] = LittleFloat(in->mins[j]) - 1 + shift[j];
 			out->maxs[j] = LittleFloat(in->maxs[j]) + 1 + shift[j];
-			/* FIXME: why don't we shift the origin, too? It is relative to the
-			 * global origin, too - or am I wrong? */
-			out->origin[j] = LittleFloat(in->origin[j]);
+			/* TODO: why don't we shift the origin, too? It is relative to the
+			 * global origin, too - or am I wrong? - i added the shifting here, too
+			 * it's in the gl_model.c code, too */
+			out->origin[j] = LittleFloat(in->origin[j] + shift[j]);
 		}
 		out->headnode = LittleLong(in->headnode);
 		out->tile = curTile - mapTiles;
@@ -611,7 +612,7 @@ static int CM_EntTestLine (vec3_t start, vec3_t stop)
 		if (**name != '*')
 			continue;
 		model = CM_InlineModel(*name);
-		if (!model)
+		if (!model || model->headnode >= curTile->numnodes + 6)
 			continue;
 /*		Com_Printf("CM_EntTestLine call function\n"); */
 		assert(model->headnode < curTile->numnodes + 6); /* +6 => bbox */
@@ -652,7 +653,7 @@ static int CM_EntTestLineDM (vec3_t start, vec3_t stop, vec3_t end)
 		if (**name != '*')
 			continue;
 		model = CM_InlineModel(*name);
-		if (!model)
+		if (!model || model->headnode >= curTile->numnodes + 6)
 			continue;
 /*		Com_Printf("CM_EntTestLineDM call function\n"); */
 		assert(model->headnode < curTile->numnodes + 6); /* +6 => bbox */
@@ -1201,10 +1202,11 @@ extern cmodel_t *CM_InlineModel (const char *name)
 		Com_Error(ERR_DROP, "CM_InlineModel: bad number");
 
 	for (i = 0; i < numTiles; i++)
-		if (num >= mapTiles[i].numcmodels - 258)
+		if (num >= mapTiles[i].numcmodels - 258) {
 			num -= mapTiles[i].numcmodels - 258;
-		else
+		} else {
 			return &mapTiles[i].cmodels[258 + num];
+		}
 
 	Com_Error(ERR_DROP, "CM_InlineModel: impossible error ;)");
 	return NULL;
@@ -1396,8 +1398,6 @@ static void CM_BoxLeafnums_r (int nodenum)
 	cnode_t *node;
 	int s;
 
-	assert(nodenum < curTile->numnodes + 6); /* +6 => bbox */
-
 	while (1) {
 		if (nodenum < 0) {
 			if (leaf_count >= leaf_maxcount) {
@@ -1408,6 +1408,7 @@ static void CM_BoxLeafnums_r (int nodenum)
 			return;
 		}
 
+		assert(nodenum < curTile->numnodes + 6); /* +6 => bbox */
 		node = &curTile->nodes[nodenum];
 		plane = node->plane;
 /*		s = BoxOnPlaneSide(leaf_mins, leaf_maxs, plane); */
