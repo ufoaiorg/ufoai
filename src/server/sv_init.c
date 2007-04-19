@@ -97,10 +97,12 @@ int SV_ImageIndex (const char *name)
 
 
 /*
-================
-MAP ASSEMBLY
-================
-*/
+ * ================
+ * MAP ASSEMBLY
+ * ================
+ * More info on map-assembly can be found at:
+ * http://ufoai.ninex.info/wiki/index.php/Mapping/Random_map_assembly
+ */
 #define MAX_MAPASSEMBLIES 32
 #define MAX_TILETYPES 64
 #define MAX_TILESIZE 10
@@ -111,12 +113,14 @@ MAP ASSEMBLY
 #define MAX_ASSEMBLYRETRIES 8000
 #define MAX_REGIONRETRIES 1
 
+/** @brief Stores the parsed data fo a map tile. (See *.ump files) */
 typedef struct mTile_s {
-	char name[MAX_VAR];
-	byte spec[MAX_TILESIZE][MAX_TILESIZE][MAX_TILEALTS];
-	int w, h;
+	char name[MAX_VAR];	/**< The name of the tile as defined in the ump file. */
+	byte spec[MAX_TILESIZE][MAX_TILESIZE][MAX_TILEALTS];	/** @todo  document me */
+	int w, h;	/**< The width and height of the tile */
 } mTile_t;
 
+/** @brief Stores the parsed data of an assembly definition.  (See *.ump files) */
 typedef struct mAssembly_s {
 	char name[MAX_VAR];
 	char title[MAX_VAR];
@@ -129,19 +133,20 @@ typedef struct mAssembly_s {
 	int w, h;
 } mAssembly_t;
 
-/** @brief Defines a placed tile
-  * @sa mTile_t
-  */
+/**
+ * @brief Defines a placed tile
+ * @sa mTile_t
+ */
 typedef struct mPlaced_s {
 	mTile_t *tile;	/**< The tile that was/is placed. */
 	int x, y;		/**< The position in the map the tile was/is placed in. */
 } mPlaced_t;
 
-static mTile_t mTile[MAX_TILETYPES];					 /**< @todo document me */
-static mAssembly_t mAssembly[MAX_MAPASSEMBLIES];		 /**< @todo document me */
+static mTile_t mTile[MAX_TILETYPES];					 /**< @todo A list of parsed map-tiles. */
+static mAssembly_t mAssembly[MAX_MAPASSEMBLIES];		 /**< @todo A list of parsed assembly definitions. */
 
-static int numTiles;		 /**< @todo document me */
-static int numAssemblies;	 /**< @todo document me */
+static int numTiles;		 /**< @todo The number of tiles in mTile. */
+static int numAssemblies;	 /**< @todo The number of assemblies in mAssembly. */
 
 static mPlaced_t mPlaced[MAX_MAPTILES];	 /**< @todo Holds all tiles that have been placed ont he current map. */
 static int numPlaced;				/**< @todo The number of tiles in mPlaced. */
