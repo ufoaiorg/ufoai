@@ -90,6 +90,7 @@ extern void CL_SendInventory (sizebuf_t *buf, inventory_t *i, qboolean save)
 		for (ic = i->c[j]; ic; ic = ic->next)
 			nr++;
 
+	Com_DPrintf("CL_SendInventory: Send %i items\n", nr);
 	MSG_WriteShort(buf, nr * 6);
 	for (j = 0; j < csi.numIDs; j++)
 		for (ic = i->c[j]; ic; ic = ic->next)
@@ -104,9 +105,19 @@ extern void CL_SendInventory (sizebuf_t *buf, inventory_t *i, qboolean save)
  */
 extern void CL_ReceiveItem (sizebuf_t *buf, item_t *item, int *container, int *x, int *y, qboolean save)
 {
+	const char *itemID;
+
+	/* reset */
+	item->t = item->m = NONE;
+	item->a = 0;
+
 	if (save) {
-		item->t = Com_GetItemByID(MSG_ReadString(buf));
-		item->m = Com_GetItemByID(MSG_ReadString(buf));
+		itemID = MSG_ReadString(buf);
+		if (*itemID)
+			item->t = Com_GetItemByID(itemID);
+		itemID = MSG_ReadString(buf);
+		if (*itemID)
+			item->m = Com_GetItemByID(itemID);
 		MSG_ReadFormat(buf, "bbbb", &item->a, container, x, y);
 	} else
 		/* network */
@@ -126,9 +137,9 @@ extern void CL_ReceiveInventory (sizebuf_t *buf, inventory_t *i, qboolean save)
 	int container, x, y;
 	int nr = MSG_ReadShort(buf) / 6;
 
+	Com_DPrintf("CL_ReceiveInventory: Read %i items\n", nr);
 	for (; nr-- > 0;) {
 		CL_ReceiveItem(buf, &item, &container, &x, &y, save);
-
 		Com_AddToInventory(i, item, container, x, y);
 	}
 }
@@ -1442,7 +1453,6 @@ static void CL_LoadTeamMultiplayer (const char *filename)
 	CL_ResetCharacters(&gd.bases[0]);
 
 	/* read whole team list */
-	MSG_ReadByte(&sb);
 	num = MSG_ReadByte(&sb);
 	Com_DPrintf("load %i teammembers\n", num);
 	E_ResetEmployees();
@@ -1570,9 +1580,7 @@ static void CL_SaveTeamInfo (sizebuf_t * buf, int baseID, int num)
 	CL_CleanTempInventory(&gd.bases[baseID]);
 
 	/* header */
-	MSG_WriteByte(buf, clc_teaminfo);
 	MSG_WriteByte(buf, num);
-
 	for (i = 0; i < num; i++) {
 		chr = E_GetHiredCharacter(&gd.bases[baseID], EMPL_SOLDIER, -(i+1));
 		assert(chr);
