@@ -1216,7 +1216,7 @@ extern void CM_LoadMap (char *tiles, char *pos, unsigned *mapchecksum)
 		}
 
 		/* get tile name */
-		Com_DPrintf("CM_AddMapTile: token: %s\n", token);
+		Com_DPrintf("CM_LoadMap: token: %s\n", token);
 		if (token[0] == '+')
 			Com_sprintf(name, sizeof(name), "%s%s", base, token + 1);
 		else
