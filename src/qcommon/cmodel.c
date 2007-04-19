@@ -201,6 +201,9 @@ static void CMod_LoadSubmodels (lump_t * l)
 	cmodel_t *out;
 	int i, j, count;
 
+	if (!l)
+		Com_Error(ERR_DROP, "CMod_LoadSubmodels: No lump given");
+		
 	in = (void *) (cmod_base + l->fileofs);
 	if (l->filelen % sizeof(dmodel_t))
 		Com_Error(ERR_DROP, "CMod_LoadSubmodels: funny lump size (%i => %Zu", l->filelen, sizeof(dmodel_t));
@@ -244,6 +247,9 @@ static void CMod_LoadSurfaces (lump_t * l)
 	mapsurface_t *out;
 	int i, count;
 
+	if (!l)
+		Com_Error(ERR_DROP, "CMod_LoadSurfaces: No lump given");
+
 	in = (void *) (cmod_base + l->fileofs);
 	if (l->filelen % sizeof(texinfo_t))
 		Com_Error(ERR_DROP, "CMod_LoadSurfaces: funny lump size: %i", l->filelen);
@@ -279,6 +285,9 @@ static void CMod_LoadNodes (lump_t * l)
 	int child;
 	cnode_t *out;
 	int i, j, count;
+
+	if (!l)
+		Com_Error(ERR_DROP, "CMod_LoadNodes: No lump given");
 
 	in = (void *) (cmod_base + l->fileofs);
 	if (l->filelen % sizeof(dnode_t))
@@ -323,6 +332,9 @@ static void CMod_LoadBrushes (lump_t * l)
 	cbrush_t *out;
 	int i, count;
 
+	if (!l)
+		Com_Error(ERR_DROP, "CMod_LoadBrushes: No lump given");
+
 	in = (void *) (cmod_base + l->fileofs);
 	if (l->filelen % sizeof(dbrush_t))
 		Com_Error(ERR_DROP, "CMod_LoadBrushes: funny lump size: %i", l->filelen);
@@ -355,6 +367,9 @@ static void CMod_LoadLeafs (lump_t * l)
 	cleaf_t *out;
 	dleaf_t *in;
 	int count;
+
+	if (!l)
+		Com_Error(ERR_DROP, "CMod_LoadLeafs: No lump given");
 
 	in = (void *) (cmod_base + l->fileofs);
 	if (l->filelen % sizeof(dleaf_t))
@@ -406,6 +421,9 @@ static void CMod_LoadPlanes (lump_t * l)
 	int count;
 	int bits;
 
+	if (!l)
+		Com_Error(ERR_DROP, "CMod_LoadPlanes: No lump given");
+
 	in = (void *) (cmod_base + l->fileofs);
 	if (l->filelen % sizeof(dplane_t))
 		Com_Error(ERR_DROP, "CMod_LoadPlanes: funny lump size: %i", l->filelen);
@@ -453,6 +471,9 @@ static void CMod_LoadLeafBrushes (lump_t * l)
 	unsigned short *in;
 	int count;
 
+	if (!l)
+		Com_Error(ERR_DROP, "CMod_LoadLeafBrushes: No lump given");
+
 	in = (void *) (cmod_base + l->fileofs);
 	if (l->filelen % sizeof(unsigned short))
 		Com_Error(ERR_DROP, "CMod_LoadLeafBrushes: funny lump size: %i", l->filelen);
@@ -486,6 +507,9 @@ static void CMod_LoadBrushSides (lump_t * l)
 	dbrushside_t *in;
 	int count;
 	int num;
+
+	if (!l)
+		Com_Error(ERR_DROP, "CMod_LoadBrushSides: No lump given");
 
 	in = (void *) (cmod_base + l->fileofs);
 	if (l->filelen % sizeof(dbrushside_t))
@@ -589,12 +613,13 @@ extern int CheckBSPFile (const char *filename)
 
 /**
  * @brief Checks traces against all inline models
- * @param[in] start
- * @param[in] stop
+ * @param[in] start The position to start the trace.
+ * @param[in] stop The position where the trace ends.
  * @sa CM_TestLine
  * @sa CM_InlineModel
  * @sa CM_TransformedBoxTrace
- * @return 1 - hit something; 0 - hit nothing
+ * @return 1 - hit something
+ * @return 0 - hit nothing
  */
 static int CM_EntTestLine (vec3_t start, vec3_t stop)
 {
@@ -692,6 +717,11 @@ static qboolean CM_TestConnection (routing_t * map, int x, int y, int z, unsigne
 	pos3_t pos;
 	int h, sh, ax, ay, az;
 
+	assert(map);
+	assert((x >= 0) && (x < WIDTH));
+	assert((y >= 0) && (y < WIDTH));
+	assert((z >= 0) && (z < HEIGHT));
+
 	/* totally blocked unit */
 	if ((fill && (filled[y][x] & (1 << z))) || (map->fall[y][x] == 0xFF))
 		return qfalse;
@@ -752,9 +782,10 @@ static void CM_CheckUnit (routing_t * map, int x, int y, int z)
 	float height;
 	int i;
 
-	assert(x < WIDTH);
-	assert(y < WIDTH);
-	assert(z < HEIGHT);
+	assert(map);
+	assert((x >= 0) && (x < WIDTH));
+	assert((y >= 0) && (y < WIDTH));
+	assert((z >= 0) && (z < HEIGHT));
 
 	/* reset flags */
 	filled[y][x] &= ~(1 << z);
@@ -850,6 +881,8 @@ static void CMod_GetMapSize (routing_t * map)
 	pos3_t min, max;
 	int x, y;
 
+	assert(map);
+
 	VectorSet(min, WIDTH - 1, WIDTH - 1, 0);
 	VectorSet(max, 0, 0, 0);
 
@@ -900,8 +933,15 @@ static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
 
 	inlineList = NULL;
 
+	if (!l)
+		Com_Error(ERR_DROP, "CMod_LoadRouting: No lump given");
+
 	if (!l->filelen)
-		Com_Error(ERR_DROP, "Map has NO routing lump");
+		Com_Error(ERR_DROP, "CMod_LoadRouting: Map has NO routing lump");
+
+ 	assert((sX >= 0) && (sX < WIDTH));
+	assert((sY >= 0) && (sX < WIDTH));
+	assert((sZ >= 0) && (sX < HEIGHT));
 
 	source = cmod_base + l->fileofs;
 	sh_low = *source++;
@@ -969,8 +1009,14 @@ static void CMod_LoadEntityString (lump_t * l)
 	vec3_t v;
 	int num;
 
+	if (!l)
+		Com_Error(ERR_DROP, "CMod_LoadEntityString: No lump given");
+		
+	if (!l->filelen)
+		Com_Error(ERR_DROP, "CMod_LoadEntityString: Map has NO routing lump");
+
 	if (l->filelen + 1 > MAX_MAP_ENTSTRING)
-		Com_Error(ERR_DROP, "Map has too large entity lump");
+		Com_Error(ERR_DROP, "CMod_LoadEntityString: Map has too large entity lump");
 
 	/* marge entitystring information */
 	es = (char *) (cmod_base + l->fileofs);
@@ -1041,6 +1087,11 @@ static void CMod_LoadEntityString (lump_t * l)
  */
 static void CM_FreeTile (mapTile_t * tile)
 {
+	if (!tile) {
+		Com_DPrintf("CM_FreeTile: no tile given\n");
+		return;
+	}
+
 	if (tile->extraData) {
 		Hunk_Free(tile->extraData);
 		tile->extraData = NULL;
@@ -1066,6 +1117,10 @@ static unsigned CM_AddMapTile (char *name, int sX, int sY, int sZ)
 		/* cinematic servers won't have anything at all */
 		return 0;
 	}
+
+	assert((sX >= 0) && (sX < WIDTH));
+	assert((sY >= 0) && (sX < WIDTH));
+	assert((sZ >= 0) && (sX < HEIGHT));
 
 	/* load the file */
 	Com_sprintf(filename, MAX_QPATH, "maps/%s.bsp", name);
@@ -1323,7 +1378,7 @@ static void CM_InitBoxHull (void)
  */
 extern int CM_HeadnodeForBox (int tile, vec3_t mins, vec3_t maxs)
 {
-	assert(tile < numTiles);
+	assert((tile < numTiles) && (tile >= 0));
 	curTile = &mapTiles[tile];
 
 	curTile->box_planes[0].dist = maxs[0];
@@ -1543,7 +1598,7 @@ static void CM_ClipBoxToBrush (vec3_t mins, vec3_t maxs, vec3_t p1, vec3_t p2, t
 	leavefrac = 1;
 	clipplane = NULL;
 
-	if (!brush->numsides)
+	if (!brush || !brush->numsides)
 		return;
 
 	c_brush_traces++;
@@ -1601,7 +1656,10 @@ static void CM_ClipBoxToBrush (vec3_t mins, vec3_t maxs, vec3_t p1, vec3_t p2, t
 				leavefrac = f;
 		}
 	}
-
+	
+	if (!trace)
+		return;
+	
 	if (!startout) {			/* original point was inside brush */
 		trace->startsolid = qtrue;
 		if (!getout)
@@ -1634,7 +1692,7 @@ static void CM_TestBoxInBrush (vec3_t mins, vec3_t maxs, vec3_t p1, trace_t * tr
 	float d1;
 	cbrushside_t *side;
 
-	if (!brush->numsides)
+	if (!brush || !brush->numsides)
 		return;
 
 	for (i = 0; i < brush->numsides; i++) {
@@ -1662,6 +1720,9 @@ static void CM_TestBoxInBrush (vec3_t mins, vec3_t maxs, vec3_t p1, trace_t * tr
 
 	}
 
+	if (!trace)
+		return;
+		
 	/* inside this brush */
 	trace->startsolid = trace->allsolid = qtrue;
 	trace->fraction = 0;
@@ -1681,6 +1742,8 @@ static void CM_TraceToLeaf (int leafnum)
 	cleaf_t *leaf;
 	cbrush_t *b;
 
+	assert(leafnum >= 0);
+		
 	leaf = &curTile->leafs[leafnum];
 	if (!(leaf->contents & trace_contents))
 		return;
@@ -1713,6 +1776,8 @@ void CM_TestInLeaf (int leafnum)
 	int brushnum;
 	cleaf_t *leaf;
 	cbrush_t *b;
+
+	assert(leafnum >= 0);
 
 	leaf = &curTile->leafs[leafnum];
 	if (!(leaf->contents & trace_contents))
