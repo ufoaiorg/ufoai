@@ -172,6 +172,8 @@ Section "MappingTools" SEC02
   File "..\..\..\base\maps\villaged\*.map"
   SetOutPath "$INSTDIR\base\maps\villagen"
   File "..\..\..\base\maps\villagen\*.map"
+  SetOutPath "$INSTDIR\base\pics"
+  File "..\..\..\base\pics\colormap.pcx"
   SetOutPath "$INSTDIR\tools"
   File "..\..\tools\*.ms"
   File "..\..\tools\*.qe4"
