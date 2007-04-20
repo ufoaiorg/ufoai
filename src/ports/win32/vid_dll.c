@@ -461,7 +461,7 @@ qboolean VID_LoadRefresh (const char *name)
 
 	if (reflib_active) {
 		re.Shutdown();
-		VID_FreeReflib ();
+		VID_FreeReflib();
 		restart = qtrue;
 	}
 
