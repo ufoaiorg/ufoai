@@ -43,12 +43,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../linux/rw_linux.h"
 
-cvar_t *nostdout;
+extern cvar_t *nostdout;
 
 unsigned	sys_frame_time;
 
 uid_t saved_euid;
-qboolean stdin_active = qtrue;
 
 /* ======================================================================= */
 /* General routines */

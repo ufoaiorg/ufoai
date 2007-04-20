@@ -51,12 +51,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../qcommon/qcommon.h"
 #include <Carbon/Carbon.h>
 #include <Cocoa/Cocoa.h>
-cvar_t *nostdout;
+
+extern cvar_t *nostdout;
 
 unsigned	sys_frame_time;
 
 uid_t saved_euid;
-qboolean stdin_active = qtrue;
 
 static void *game_library;
 
