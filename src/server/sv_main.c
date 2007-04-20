@@ -809,10 +809,32 @@ extern void SV_NextMapcycle (void)
 }
 
 /**
+ * @brief
+ * @sa SV_MapcycleAdd
+ */
+extern void SV_MapcycleClear (void)
+{
+	int i;
+	mapcycle_t *mapcycle, *oldMapcycle;
+	mapcycle = mapcycleList;
+	for (i = 0; i < mapcycleCount; i++) {
+		oldMapcycle = mapcycle;
+		mapcycle = mapcycle->next;
+		free(oldMapcycle->type);
+		free(oldMapcycle->map);
+		free(oldMapcycle);
+	}
+	/* reset the mapcycle data */
+	mapcycleList = NULL;
+	mapcycleCount = 0;
+}
+
+/**
  * @brief Append a new mapname to the list of maps for the cycle
  * @todo check for maps and valid gametypes here
+ * @sa SV_MapcycleClear
  */
-void SV_MapcycleAdd (const char* mapName, const char* gameType)
+extern void SV_MapcycleAdd (const char* mapName, const char* gameType)
 {
 	mapcycle_t *mapcycle;
 
@@ -838,6 +860,8 @@ void SV_MapcycleAdd (const char* mapName, const char* gameType)
 
 /**
  * @brief Parses the server mapcycle
+ * @sa SV_MapcycleAdd
+ * @sa SV_MapcycleClear
  */
 static void SV_ParseMapcycle (void)
 {
@@ -1146,16 +1170,7 @@ void SV_FinalMessage (const char *message, qboolean reconnect)
  */
 void SV_Clear (void)
 {
-	int i;
-	mapcycle_t *mapcycle, *oldMapcycle;
-	mapcycle = mapcycleList;
-	for (i = 0; i < mapcycleCount; i++) {
-		oldMapcycle = mapcycle;
-		mapcycle = mapcycle->next;
-		free(oldMapcycle->type);
-		free(oldMapcycle->map);
-		free(oldMapcycle);
-	}
+	SV_MapcycleClear();
 }
 
 /**
