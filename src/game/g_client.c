@@ -1737,7 +1737,8 @@ void G_KillTeam (void)
 
 
 /**
- * @brief
+ * @brief The client sent us a message that he did something. We now execute the related fucntion(s) adn notify him if neccessary.
+ * @param[in] player The player that sent us the message (TODO: is this correct?)
  */
 void G_ClientAction (player_t * player)
 {
@@ -1787,6 +1788,7 @@ void G_ClientAction (player_t * player)
 		fd_idx = -1;
 		gi.ReadFormat(pa_format[PA_REACT_SELECT], &hand, &fd_idx);
 		Com_DPrintf("G_ClientAction: entnum:%i hand:%i fd:%i\n", num, hand, fd_idx);
+		/* TODO: Add check for correct player here (player==g_edicts[num]->team ???) */
 		reactionFiremode[num][RF_HAND] = hand;
 		reactionFiremode[num][RF_FM] = fd_idx;
 		break;
