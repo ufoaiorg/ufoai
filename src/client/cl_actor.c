@@ -440,6 +440,7 @@ static void HideFiremodes (void)
 
 }
 
+
 /**
  * @brief Stores the given firedef index and object index for reaction fire and sends in over the network as well.
  * @param[in] actor_idx Index of an actor.
@@ -637,6 +638,49 @@ static void CL_UpdateReactionFiremodes (char hand, int actor_idx, int active_fir
 }
 
 /**
+ * @brief Sets the reaction-firemdoe of an actor/soldier to it's default value on client- and server-side.
+ * @param[in] actor_idx Index of the actor to set the firemdoe for.
+ * @param[in] hand Which weapon(-hand) to try first for reaction-firemdoe (r|l).
+ */
+void CL_SetDefaultReactionFiremode (int actor_idx, char hand)
+{
+	if (actor_idx < 0 || actor_idx >= MAX_EDICTS) {
+		Com_DPrintf("CL_SetDefaultReactionFiremode: Actor index is negative or out of bounds. Abort.\n");
+		return;
+	}
+
+	if (hand == 'r') {
+		/* Set default firemode (try right hand first, then left hand). */
+		/* Try to set right hand */
+		CL_UpdateReactionFiremodes('r', actor_idx, -1);
+		if (!SANE_REACTION(actor_idx)) {
+			/* If that failed try to set left hand. */
+			CL_UpdateReactionFiremodes('l', actor_idx, -1);
+#if 0
+			if (!SANE_REACTION(actor_idx)) {
+				/* If that fails as well set firemode to undef. */
+				CL_SetReactionFiremode (actor_idx, -1, -1, -1);
+			}
+#endif
+		}
+	} else {
+		/* Set default firemode (try left hand first, then right hand). */
+		/* Try to set left hand. */
+		CL_UpdateReactionFiremodes('l', actor_idx, -1);
+		if (!SANE_REACTION(actor_idx)) {
+			/* If that failed try to set right hand. */
+			CL_UpdateReactionFiremodes('r', actor_idx, -1);
+#if 0
+			if (!SANE_REACTION(actor_idx)) {
+				/* If that fails as well set firemode to undef. */
+				CL_SetReactionFiremode (actor_idx, -1, -1, -1);
+			}
+#endif
+		}
+	}
+}
+
+/**
  * @brief Displays the firemodes for the given hand.
  */
 void CL_DisplayFiremodes_f (void)
@@ -712,25 +756,16 @@ void CL_DisplayFiremodes_f (void)
 	/* Set default firemode if the currenttly seleced one is not sane or for another weapon. */
 	if (!SANE_REACTION(actor_idx)) {	/* No sane firemode selected. */
 		/* Set default firemode (try right hand first, then left hand). */
-		CL_UpdateReactionFiremodes('r', actor_idx, -1);
-		if (!SANE_REACTION(actor_idx)) {
-			CL_UpdateReactionFiremodes('l', actor_idx, -1);
-		}
+		CL_SetDefaultReactionFiremode(actor_idx, 'r');
 	} else {
 		if (reactionFiremode[actor_idx][RF_WPIDX] != ammo->weap_idx[weap_fd_idx]) {
 			if ((hand[0] == 'r') && (reactionFiremode[actor_idx][RF_HAND] == 0)) {
 				/* Set default firemode (try right hand first, then left hand). */
-				CL_UpdateReactionFiremodes('r', actor_idx, -1);
-				if (!SANE_REACTION(actor_idx)) {
-					CL_UpdateReactionFiremodes('l', actor_idx, -1);
-				}
+				CL_SetDefaultReactionFiremode(actor_idx, 'r');
 			}
 			if ((hand[0] == 'l') && (reactionFiremode[actor_idx][RF_HAND] == 1)) {
 				/* Set default firemode (try left hand first, then right hand). */
-				CL_UpdateReactionFiremodes('l', actor_idx, -1);
-				if (!SANE_REACTION(actor_idx)) {
-					CL_UpdateReactionFiremodes('r', actor_idx, -1);
-				}
+				CL_SetDefaultReactionFiremode(actor_idx, 'l');
 			}
 		}
 	}
@@ -1459,8 +1494,12 @@ void CL_AddActorToTeamList (le_t * le)
 		if (cl.numTeamList == 1)
 			CL_ActorSelectList(0);
 
+		CL_SetDefaultReactionFiremode(i, 'r');	/**< Set default reaction firemode for this soldier. */
+#if 0
+		/* TODO: remove this if the above works (this should fix the wrong setting of the default firemode on re-try or next mission) */
 		/* Initialize reactionmode (with undefined firemode) ... this will be checked for in CL_DoEndRound. */
 		CL_SetReactionFiremode( i, -1, -1, -1);
+#endif
 	}
 }
 
@@ -1897,7 +1936,7 @@ void CL_InvCheckHands (sizebuf_t * sb)
 
 	actor_idx = CL_GetActorNumber(le);
 
-	/* Update the cahnged hand with default firemode. */
+	/* Update the changed hand with default firemode. */
 	if (hand == 0)
 		CL_UpdateReactionFiremodes('r', actor_idx, -1);
 	else
@@ -2057,9 +2096,7 @@ extern void CL_ActorToggleReaction_f (void)
 			/* TODO: Check if stored info for RF is up-to-date and set it to default if not. */
 			/* Set default rf-mode. */
 			if (!SANE_REACTION(actor_idx)) {
-				CL_UpdateReactionFiremodes('r', actor_idx, -1);
-				if (!SANE_REACTION(actor_idx))
-					CL_UpdateReactionFiremodes('l', actor_idx, -1);
+				CL_SetDefaultReactionFiremode(actor_idx, 'r');
 			}
 			break;
 		case R_FIRE_MANY:
@@ -2067,9 +2104,7 @@ extern void CL_ActorToggleReaction_f (void)
 			/* TODO: Check if stored info for RF is up-to-date and set it to default if not. */
 			/* Set default rf-mode. */
 			if (!SANE_REACTION(actor_idx)) {
-				CL_UpdateReactionFiremodes('r', actor_idx, -1);
-				if (!SANE_REACTION(actor_idx))
-					CL_UpdateReactionFiremodes('l', actor_idx, -1);
+				CL_SetDefaultReactionFiremode(actor_idx, 'r');
 			}
 			break;
 		default:
@@ -2600,9 +2635,7 @@ void CL_DoEndRound (sizebuf_t * sb)
 			if (cl.teamList[actor_idx]) {
 				/* Check if any default firemode is defined and search for one if not. */
 				if (!SANE_REACTION(actor_idx)) {
-					CL_UpdateReactionFiremodes('r', actor_idx, -1);
-					if (!SANE_REACTION(actor_idx))
-						CL_UpdateReactionFiremodes('l', actor_idx, -1);
+					CL_SetDefaultReactionFiremode(actor_idx, 'r');
 				}
 			}
 		}
