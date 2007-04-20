@@ -277,11 +277,8 @@ static void SAV_GameSave_f (void)
 	/* save the game */
 	result = SAV_GameSave(Cmd_Argv(1), comment, &error);
 
-	Cbuf_ExecuteText(EXEC_NOW, "mn_pop");
-
 	/* if save failed refresh the SaveGame menu and popup error message */
 	if (!result) {
-		MN_PushMenu("save");
 		if (error)
 			Com_sprintf(popupText, sizeof(popupText), "%s\n%s", _("Error saving game."), error);
 		else
