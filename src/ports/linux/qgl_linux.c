@@ -109,14 +109,16 @@ qboolean QGL_Init (const char *dllname)
 
 		/* try path given via cvar */
 		if (strlen(s_libdir->string))
-			Com_sprintf(libPath, sizeof(libPath), "%s/%s", s_libdir->string, name);
+			Com_sprintf(libPath, sizeof(libPath), "%s/%s", s_libdir->string, dllname);
 		else
-			Com_sprintf(libPath, sizeof(libPath), "./%s", name);
+			Com_sprintf(libPath, sizeof(libPath), "./%s", dllname);
 
 		if ((glw_state.OpenGLLib = dlopen(libPath, RTLD_LAZY)) == 0) {
 			ri.Con_Printf(PRINT_ALL, "LoadLibrary (\"%s\") failed: %s\n", libPath, dlerror());
 			return qfalse;
 		}
+	} else {
+		ri.Con_Printf(PRINT_ALL, "LoadLibrary (\"%s\")\n", dllname);
 	}
 
 	/* general qgl bindings */
