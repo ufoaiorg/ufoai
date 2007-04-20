@@ -913,10 +913,10 @@ static void CMod_GetMapSize (routing_t * map)
 
 /**
  * @brief
- * @param[in] l
- * @param[in] sX
- * @param[in] sY
- * @param[in] sZ
+ * @param[in] l Routing lump ... TODO whatsit?
+ * @param[in] sX TODO: See comments in CM_AddMapTile
+ * @param[in] sY TODO: --""--
+ * @param[in] sZ TODO: --""--
  * @sa CM_AddMapTile
  */
 static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
@@ -941,7 +941,7 @@ static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
 
  	assert((sX > -WIDTH) && (sX < WIDTH));
 	assert((sY > -WIDTH) && (sY < WIDTH));
-	assert((sZ > -HEIGHT) && (sZ < HEIGHT));
+	assert((sZ >= 0) && (sZ < HEIGHT));
 
 	source = cmod_base + l->fileofs;
 	sh_low = *source++;
@@ -1101,8 +1101,17 @@ static void CM_FreeTile (mapTile_t * tile)
 
 /**
  * @brief Adds in a single map tile
+ * @param[in] name The (file-)name of the tile to add.
+ * @param[in] sX TODO: How it is supposed to look and why can it be negative?
+ * And is the "WIDTH" value really correct, not WIDTH/2?
+ * The values are created in SV_AssembleMap (**pos)
+ * @param[in] sY TODO: --""--
+ * @param[in] sZ TODO: --""--
+ * @return A checksum (TODO: which one exactly?)
+ * @return 0 on error
  * @sa CM_LoadMap
- * FIXME: here might be the map memory leak - every new map eats more and more memory
+ * @todo Fix asserts & comments  for sX, sY and sZ
+ * @todo FIXME: here might be the map memory leak - every new map eats more and more memory
  */
 static unsigned CM_AddMapTile (char *name, int sX, int sY, int sZ)
 {
@@ -1120,7 +1129,7 @@ static unsigned CM_AddMapTile (char *name, int sX, int sY, int sZ)
 
 	assert((sX > -WIDTH) && (sX < WIDTH));
 	assert((sY > -WIDTH) && (sY < WIDTH));
-	assert((sZ > -HEIGHT) && (sZ < HEIGHT));
+	assert((sZ >= 0) && (sZ < HEIGHT));
 
 	/* load the file */
 	Com_sprintf(filename, MAX_QPATH, "maps/%s.bsp", name);
