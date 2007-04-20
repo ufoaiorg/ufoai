@@ -2562,7 +2562,8 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 		cacheItem2 = cacheItem;
 		/* move the destination item to the source */
 		Com_MoveInInventory(i, to, tx, ty, from, fx, fy, TU, icp);
-		/* reset the cached item (source) */
+		/* reset the cached item (source) and move it to the container emptied by destination item */
+		Com_AddToInventory(i, cacheItem2, from, fx, fy);
 		cacheItem = cacheItem2;
 	} else if (!Com_CheckToInventory(i, cacheItem.t, to, tx, ty)) {
 		ic = Com_SearchInInventory(i, to, tx, ty);
