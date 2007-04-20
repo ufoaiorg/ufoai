@@ -99,6 +99,10 @@ endif
 
 DEDICATED_CFLAGS=-DDEDICATED_ONLY
 
+ifeq ($(HAVE_CURSES),1)
+	DEDICATED_CFLAGS+=-DHAVE_CURSES
+endif
+
 # Say how to link the exe
 $(SERVER_TARGET): $(SERVER_OBJS) $(BUILDDIR)/.dirs
 	@echo " * [DED] ... linking $(LNKFLAGS) ($(SERVER_LIBS))"; \

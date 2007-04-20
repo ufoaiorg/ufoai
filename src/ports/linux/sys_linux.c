@@ -75,16 +75,19 @@ unsigned	sys_frame_time;
 
 uid_t saved_euid;
 
+extern void Sys_ConsoleInputInit(void);
+extern void Sys_ConsoleInputShutdown(void);
+
 static void *game_library;
 extern cvar_t *nostdout;
 /**
  * @brief
  */
-char *Sys_GetCurrentUser( void )
+char *Sys_GetCurrentUser (void)
 {
 	struct passwd *p;
 
-	if ( (p = getpwuid( getuid() )) == NULL ) {
+	if ((p = getpwuid(getuid())) == NULL) {
 		return "player";
 	}
 	return p->pw_name;
@@ -94,7 +97,7 @@ char *Sys_GetCurrentUser( void )
  * @brief
  * @return NULL if getcwd failed
  */
-char *Sys_Cwd( void )
+char *Sys_Cwd (void)
 {
 	static char cwd[MAX_OSPATH];
 
@@ -108,7 +111,7 @@ char *Sys_Cwd( void )
 /**
  * @brief
  */
-void Sys_NormPath(char* path)
+void Sys_NormPath (char* path)
 {
 }
 
@@ -119,7 +122,7 @@ void Sys_NormPath(char* path)
  * This way you can make a link in /usr/bin and the data-files are still
  * found in e.g. /usr/local/games/ufoai
  */
-char *Sys_BinName( const char *arg0 )
+char *Sys_BinName (const char *arg0)
 {
 #ifndef DEBUG
 	int	n;
@@ -132,7 +135,7 @@ char *Sys_BinName( const char *arg0 )
 	Com_sprintf(dst, MAX_OSPATH, (char*)arg0);
 
 #ifndef DEBUG
-	while((n = readlink(dst, src, MAX_OSPATH)) >= 0) {
+	while ((n = readlink(dst, src, MAX_OSPATH)) >= 0) {
 		src[n] = '\0';
 		Com_sprintf(dir, MAX_OSPATH, dirname(dst));
 		Com_sprintf(dst, MAX_OSPATH, dir);
@@ -285,8 +288,10 @@ int Sys_FileLength (const char *path)
  */
 void Sys_Quit (void)
 {
-	CL_Shutdown ();
-	Qcommon_Shutdown ();
+	CL_Shutdown();
+	Qcommon_Shutdown();
+	Sys_ConsoleInputShutdown();
+
 	fcntl (0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
 	exit(0);
 }
@@ -297,6 +302,7 @@ void Sys_Quit (void)
 void Sys_Init (void)
 {
 	Cvar_Get("sys_os", "linux", CVAR_SERVERINFO, NULL);
+	Sys_ConsoleInputInit();
 #if id386
 /*	Sys_SetFPCW(); */
 #endif
@@ -357,9 +363,9 @@ void Sys_Error (const char *error, ...)
 	fcntl(0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
 
 #ifndef DEDICATED_ONLY
-	CL_Shutdown ();
+	CL_Shutdown();
 #endif
-	Qcommon_Shutdown ();
+	Qcommon_Shutdown();
 
 	va_start(argptr,error);
 	Q_vsnprintf(string, sizeof(string), error, argptr);
