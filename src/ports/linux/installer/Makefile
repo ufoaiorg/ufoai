@@ -26,6 +26,8 @@ BINARIES = \
 	$(ROOTDIR)ref_glx.so \
 	$(ROOTDIR)ref_sdl.so \
 	$(ROOTDIR)snd_alsa.so \
+#	$(ROOTDIR)snd_arts.so \
+#	$(ROOTDIR)snd_jack.so \
 	$(ROOTDIR)snd_oss.so \
 	$(ROOTDIR)snd_sdl.so \
 	$(ROOTDIR)base/game.so
@@ -36,6 +38,8 @@ BINARIES_64 = \
 	$(ROOTDIR)x86_64/ufo2map \
 	$(ROOTDIR)x86_64/ref_glx.so \
 	$(ROOTDIR)x86_64/ref_sdl.so \
+#	$(ROOTDIR)x86_64/snd_arts.so \
+#	$(ROOTDIR)x86_64/snd_jack.so \
 	$(ROOTDIR)x86_64/snd_alsa.so \
 	$(ROOTDIR)x86_64/snd_oss.so \
 	$(ROOTDIR)x86_64/snd_sdl.so \
@@ -44,7 +48,7 @@ BINARIES_64 = \
 packdata:
 	@mkdir -p $(TEMPDIR)/base
 	@tar -cvjp -f $(DATADIR)/ufo-x86.tar.bz2 $(BINARIES)
-	@tar -cvjp -f $(DATADIR)/ufo-x86_64.tar.bz2 $(BINARIES)
+	@tar -cvjp -f $(DATADIR)/ufo-x86_64.tar.bz2 $(BINARIES_64)
 	@cd $(ROOTDIR); tar -cvjp -f $(INSTDIR)$(DATADIR)/i18n.tar.bz2 base/i18n/ --exclude .svn --exclude updated*
 	cd $(ROOTDIR); tar -cvjp -f $(INSTDIR)$(DATADIR)/mapsource.tar.bz2 base/maps/ --exclude .svn --exclude *.bsp --exclude *.autosave* --exclude *.bak
 	@cd $(ROOTDIR)base; ./archives.sh $(EXT)
