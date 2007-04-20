@@ -235,6 +235,8 @@ void Master_Heartbeat(void);
 void Master_Packet(void);
 
 void SV_NextMapcycle(void);
+void SV_MapcycleClear(void);
+void SV_MapcycleAdd(const char* mapName, const char* gameType);
 
 /* sv_init.c */
 void SV_Map(qboolean attractloop, char *levelstring, char *assembly);

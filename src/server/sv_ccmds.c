@@ -121,6 +121,37 @@ static void SV_Demo_f (void)
 }
 
 /**
+ * @brief Checks wether a map exists
+ */
+static qboolean SV_CheckMap (const char *map, const char *assembly)
+{
+	char	expanded[MAX_QPATH];
+
+	/* base attacks starts with . and random maps with + */
+	/* also check the . to determine whether a pcx or demo should be loaded */
+	if (!strstr(map, ".")) {
+		if (map[0] == '+') {
+			Com_sprintf(expanded, sizeof(expanded), "maps/%s.ump", map+1);
+
+			/* check for ump file */
+			if (FS_CheckFile(expanded) < 0) {
+				Com_Printf("Can't find %s\n", expanded);
+				return qfalse;
+			}
+		} else if (!assembly) {
+			Com_sprintf(expanded, sizeof(expanded), "maps/%s.bsp", map);
+
+			/* check for bsp file */
+			if (FS_CheckFile(expanded) < 0) {
+				Com_Printf("Can't find %s\n", expanded);
+				return qfalse;
+			}
+		}
+	}
+	return qtrue;
+}
+
+/**
  * @brief Goes directly to a given map
  * @sa SV_InitGame
  * @sa SV_SpawnServer
@@ -128,7 +159,6 @@ static void SV_Demo_f (void)
 static void SV_Map_f (void)
 {
 	char	*map, *assembly = NULL;
-	char	expanded[MAX_QPATH];
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <mapname>\n", Cmd_Argv(0));
@@ -149,27 +179,8 @@ static void SV_Map_f (void)
 		Com_DPrintf("SV_Map_f: assembly: '%s'\n", assembly);
 	}
 
-	/* base attacks starts with . and random maps with + */
-	/* also check the . to determine whether a pcx or demo should be loaded */
-	if (!strstr(map, ".")) {
-		if (map[0] == '+') {
-			Com_sprintf(expanded, sizeof(expanded), "maps/%s.ump", map+1);
-
-			/* check for ump file */
-			if (FS_CheckFile(expanded) < 0) {
-				Com_Printf("Can't find %s\n", expanded);
-				return;
-			}
-		} else if (!assembly) {
-			Com_sprintf(expanded, sizeof(expanded), "maps/%s.bsp", map);
-
-			/* check for bsp file */
-			if (FS_CheckFile(expanded) < 0) {
-				Com_Printf("Can't find %s\n", expanded);
-				return;
-			}
-		}
-	}
+	if (!SV_CheckMap(map, assembly))
+		return;
 
 	sv.state = ss_dead;		/* don't save current level when changing */
 	SV_Map(qfalse, map, assembly);
@@ -568,10 +579,34 @@ static void SV_MapcycleList_f (void)
 	mapcycle_t* mapcycle;
 
 	mapcycle = mapcycleList;
-	Com_Printf("current mapcycle:\n");
+	Com_Printf("current mapcycle has %i entries\n", mapcycleCount);
 	for (i = 0; i < mapcycleCount; i++) {
 		Com_Printf(" %s (%s)\n", mapcycle->map, mapcycle->type);
 		mapcycle = mapcycle->next;
+	}
+}
+
+/**
+ * @brief
+ */
+static void SV_MapcycleAdd_f (void)
+{
+	const char *map;
+	const char *gametype;
+
+	if (Cmd_Argc() == 3) {
+		map = Cmd_Argv(1);
+		gametype = Cmd_Argv(2);
+		if (!SV_CheckMap(map, NULL)) {
+			Com_Printf("map '%s' isn't a valid map\n", map);
+			return;
+		}
+		Com_Printf("adding map '%s' with gametype '%s' to mapcycle (to add this permanently edit your mapcycle.txt)\n", map, gametype);
+		SV_MapcycleAdd(map, gametype);
+	} else {
+		Com_Printf("usage: %s <mapname> <gametype>\n", Cmd_Argv(0));
+		Com_Printf(" ...to get a list of valid maps type 'maplist'\n"
+			" ...to get a list of valid gametypes 'gametypelist'\n");
 	}
 }
 
@@ -609,6 +644,8 @@ extern void SV_InitOperatorCommands (void)
 	Cmd_AddCommand("minimize", SV_Minimize_f, "Minimize");
 	Cmd_AddCommand("mapcyclelist", SV_MapcycleList_f, "Print the current mapcycle");
 	Cmd_AddCommand("mapcyclenext", SV_MapcycleNext_f, "Start the next map from the cycle");
+	Cmd_AddCommand("mapcycleclear", SV_MapcycleClear, "Delete the current mapcycle");
+	Cmd_AddCommand("mapcycleadd", SV_MapcycleAdd_f, "Add new maps to the mapcycle");
 
 #ifdef DEDICATED_ONLY
 	Cmd_AddCommand("say", SV_ConSay_f, "Broadcasts server messages to all connected players");
