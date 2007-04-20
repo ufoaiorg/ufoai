@@ -296,6 +296,7 @@ static void SAV_GameSave_f (void)
  * for reidentifying the savegame
  * @sa SAV_GameLoad_f
  * @sa SAV_GameLoad
+ * @sa SAV_GameSaveNameCleanup_f
  */
 static void SAV_GameSaveNames_f (void)
 {
@@ -407,6 +408,41 @@ extern qboolean SAV_AddSubsystem (saveSubsystems_t *subsystem)
 }
 
 /**
+ * @brief Set the mn_slotX cvar to the comment (remove the date string) for clean
+ * editing of the save comment
+ * @sa SAV_GameSaveNames_f
+ */
+static void SAV_GameSaveNameCleanup_f (void)
+{
+	int slotID;
+	char cvar[16];
+	FILE *f;
+	saveFileHeader_t header;
+
+	/* get argument */
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <[0-7]>\n", Cmd_Argv(0));
+		return;
+	}
+
+	slotID = atoi(Cmd_Argv(1));
+	if (slotID < 0 || slotID > 7)
+		return;
+
+	Com_sprintf(cvar, sizeof(cvar), "mn_slot%i", slotID);
+
+	f = fopen(va("%s/save/slot%i.sav", FS_Gamedir(), slotID), "rb");
+	if (!f)
+		return;
+
+	/* read the comment */
+	if (fread(&header, 1, sizeof(saveFileHeader_t), f) != sizeof(saveFileHeader_t))
+		Com_Printf("Warning: Savefile header may be corrupted\n");
+	Cvar_Set(cvar, header.name);
+	fclose(f);
+}
+
+/**
  * @brief
  */
 extern void SAV_Init (void)
@@ -446,6 +482,6 @@ extern void SAV_Init (void)
 	Cmd_AddCommand("game_load", SAV_GameLoad_f, "Loads a given filename");
 	Cmd_AddCommand("game_comments", SAV_GameSaveNames_f, "Loads the savegame names");
 	Cmd_AddCommand("game_continue", SAV_GameContinue_f, "Continue with the last saved game");
-
+	Cmd_AddCommand("game_savenamecleanup", SAV_GameSaveNameCleanup_f, "Remove the date string from mn_slotX cvars");
 	save_compressed = Cvar_Get("save_compressed", "1", CVAR_ARCHIVE, "Save the savefiles compressed if set to 1");
 }
