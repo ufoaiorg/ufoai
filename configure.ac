@@ -162,7 +162,7 @@ elif test `echo $target_os | sed "s/\(darwin\).*/\1/"` = "darwin"
 then
 	AC_SUBST([TARGET_OS],[darwin])
 	CFLAGS="$CFLAGS -F$with_opengl_framework -F$with_openal_framework -F$with_sdl_framework -F$with_sdl_ttf_framework"
-	LDFLAGS="$LDFLAGS -framework SDL -framework SDL_ttf -framework OpenGL -framework OpenAL"
+	LDFLAGS="$LDFLAGS -framework IOKit -framework Foundation -framework SDL -framework SDL_ttf -framework OpenGL -framework OpenAL"
 else
 	AC_MSG_ERROR([The target operating system '$target_os' is unknown, please contact the developers])
 fi
@@ -244,6 +244,24 @@ fi
 AC_SUBST([WINDRES],$WINDRES)
 
 #---------------------------------------------------------------------------------------------
+# macos linker flags
+#---------------------------------------------------------------------------------------------
+if test $TARGET_OS = "darwin"
+then
+	#---------------------------------------------------------------------------------------------
+	# Darwin (fink) FIXME
+	#---------------------------------------------------------------------------------------------
+	CFLAGS+="-I/sw/include"
+	CFLAGS+="-I/Developer/SDKs/MacOSX10.4u.sdk/usr/X11R6/include/"
+#	if test -f "/sw/etc/fink.conf"; then
+#	  : ${CFLAGS="-I/sw/include -I/usr/local/include"}
+#	  : ${CPPFLAGS="-I/sw/include -I/usr/local/include"}
+#	  : ${LDFLAGS="-L/sw/lib -L/usr/local/lib"}
+#		AC_MSG_NOTICE([added fink lib and include dir])
+#	fi
+fi
+
+#---------------------------------------------------------------------------------------------
 # CHECK LIBTOOL
 #---------------------------------------------------------------------------------------------
 
@@ -252,17 +270,6 @@ AC_SUBST([WINDRES],$WINDRES)
 #then
 #	AC_MSG_ERROR([You must have libtool installed])
 #fi
-
-#---------------------------------------------------------------------------------------------
-# Darwin (fink)
-#---------------------------------------------------------------------------------------------
-
-if test -f "/sw/etc/fink.conf"; then
-  : ${CFLAGS="-I/sw/include -I/usr/local/include"}
-  : ${CPPFLAGS="-I/sw/include -I/usr/local/include"}
-  : ${LDFLAGS="-L/sw/lib -L/usr/local/lib"}
-	AC_MSG_NOTICE([added fink lib and include dir])
-fi
 
 #---------------------------------------------------------------------------------------------
 # Check for stdint.h

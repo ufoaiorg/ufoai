@@ -2314,7 +2314,7 @@ then
 	TARGET_OS=darwin
 
 	CFLAGS="$CFLAGS -F$with_opengl_framework -F$with_openal_framework -F$with_sdl_framework -F$with_sdl_ttf_framework"
-	LDFLAGS="$LDFLAGS -framework SDL -framework SDL_ttf -framework OpenGL -framework OpenAL"
+	LDFLAGS="$LDFLAGS -framework IOKit -framework Foundation -framework SDL -framework SDL_ttf -framework OpenGL -framework OpenAL"
 else
 	{ { echo "$as_me:$LINENO: error: The target operating system '$target_os' is unknown, please contact the developers" >&5
 echo "$as_me: error: The target operating system '$target_os' is unknown, please contact the developers" >&2;}
@@ -3558,6 +3558,24 @@ WINDRES=$WINDRES
 
 
 #---------------------------------------------------------------------------------------------
+# macos linker flags
+#---------------------------------------------------------------------------------------------
+if test $TARGET_OS = "darwin"
+then
+	#---------------------------------------------------------------------------------------------
+	# Darwin (fink) FIXME
+	#---------------------------------------------------------------------------------------------
+	CFLAGS+="-I/sw/include"
+	CFLAGS+="-I/Developer/SDKs/MacOSX10.4u.sdk/usr/X11R6/include/"
+#	if test -f "/sw/etc/fink.conf"; then
+#	  : ${CFLAGS="-I/sw/include -I/usr/local/include"}
+#	  : ${CPPFLAGS="-I/sw/include -I/usr/local/include"}
+#	  : ${LDFLAGS="-L/sw/lib -L/usr/local/lib"}
+#		AC_MSG_NOTICE([added fink lib and include dir])
+#	fi
+fi
+
+#---------------------------------------------------------------------------------------------
 # CHECK LIBTOOL
 #---------------------------------------------------------------------------------------------
 
@@ -3566,18 +3584,6 @@ WINDRES=$WINDRES
 #then
 #	AC_MSG_ERROR([You must have libtool installed])
 #fi
-
-#---------------------------------------------------------------------------------------------
-# Darwin (fink)
-#---------------------------------------------------------------------------------------------
-
-if test -f "/sw/etc/fink.conf"; then
-  : ${CFLAGS="-I/sw/include -I/usr/local/include"}
-  : ${CPPFLAGS="-I/sw/include -I/usr/local/include"}
-  : ${LDFLAGS="-L/sw/lib -L/usr/local/lib"}
-	{ echo "$as_me:$LINENO: added fink lib and include dir" >&5
-echo "$as_me: added fink lib and include dir" >&6;}
-fi
 
 #---------------------------------------------------------------------------------------------
 # Check for stdint.h
