@@ -614,7 +614,7 @@ menu save
 		size	"256 32"
 		out		{ *slot0 image menu/save_slot }
 		in		{ *slot0 image menu/save_slota }
-		click	{ cmd "msgmenu ?mn_slot0" *txt_slot0 color "1 1 1 1" *txt_slot0 mousefx true }
+		click	{ cmd "game_savenamecleanup 0;msgmenu ?mn_slot0" *txt_slot0 color "1 1 1 1" *txt_slot0 mousefx true }
 	}
 	pic slot1
 	{
@@ -623,7 +623,7 @@ menu save
 		size	"256 32"
 		out		{ *slot1 image menu/save_slot }
 		in		{ *slot1 image menu/save_slota }
-		click	{ cmd "msgmenu ?mn_slot1" *txt_slot1 color "1 1 1 1" *txt_slot1 mousefx true }
+		click	{ cmd "game_savenamecleanup 1;msgmenu ?mn_slot1" *txt_slot1 color "1 1 1 1" *txt_slot1 mousefx true }
 	}
 	pic slot2
 	{
@@ -632,7 +632,7 @@ menu save
 		size	"256 32"
 		out		{ *slot2 image menu/save_slot }
 		in		{ *slot2 image menu/save_slota }
-		click	{ cmd "msgmenu ?mn_slot2" *txt_slot2 color "1 1 1 1" *txt_slot2 mousefx true }
+		click	{ cmd "game_savenamecleanup 2;msgmenu ?mn_slot2" *txt_slot2 color "1 1 1 1" *txt_slot2 mousefx true }
 	}
 	pic slot3
 	{
@@ -641,7 +641,7 @@ menu save
 		size	"256 32"
 		out		{ *slot3 image menu/save_slot }
 		in		{ *slot3 image menu/save_slota }
-		click	{ cmd "msgmenu ?mn_slot3" *txt_slot3 color "1 1 1 1" *txt_slot3 mousefx true }
+		click	{ cmd "game_savenamecleanup 3;msgmenu ?mn_slot3" *txt_slot3 color "1 1 1 1" *txt_slot3 mousefx true }
 	}
 	pic slot4
 	{
@@ -650,7 +650,7 @@ menu save
 		size	"256 32"
 		out		{ *slot4 image menu/save_slot }
 		in		{ *slot4 image menu/save_slota }
-		click	{ cmd "msgmenu ?mn_slot4" *txt_slot4 color "1 1 1 1" *txt_slot4 mousefx true }
+		click	{ cmd "game_savenamecleanup 4;msgmenu ?mn_slot4" *txt_slot4 color "1 1 1 1" *txt_slot4 mousefx true }
 	}
 	pic slot5
 	{
@@ -659,7 +659,7 @@ menu save
 		size	"256 32"
 		out		{ *slot5 image menu/save_slot }
 		in		{ *slot5 image menu/save_slota }
-		click	{ cmd "msgmenu ?mn_slot5" *txt_slot5 color "1 1 1 1" *txt_slot5 mousefx true }
+		click	{ cmd "game_savenamecleanup 5;msgmenu ?mn_slot5" *txt_slot5 color "1 1 1 1" *txt_slot5 mousefx true }
 	}
 	pic slot6
 	{
@@ -668,7 +668,7 @@ menu save
 		size	"256 32"
 		out		{ *slot6 image menu/save_slot }
 		in		{ *slot6 image menu/save_slota }
-		click	{ cmd "msgmenu ?mn_slot6" *txt_slot6 color "1 1 1 1" *txt_slot6 mousefx true }
+		click	{ cmd "game_savenamecleanup 6;msgmenu ?mn_slot6" *txt_slot6 color "1 1 1 1" *txt_slot6 mousefx true }
 	}
 	pic slot7
 	{
@@ -677,7 +677,7 @@ menu save
 		size	"256 32"
 		out		{ *slot7 image menu/save_slot }
 		in		{ *slot7 image menu/save_slota }
-		click	{ cmd "msgmenu ?mn_slot7" *txt_slot7 color "1 1 1 1" *txt_slot7 mousefx true }
+		click	{ cmd "game_savenamecleanup 7;msgmenu ?mn_slot7" *txt_slot7 color "1 1 1 1" *txt_slot7 mousefx true }
 	}
 
 	string txt_slot0 { font "f_verysmall" string "*cvar mn_slot0" pos "650 210" color "0 .78 0 1" }
@@ -689,14 +689,14 @@ menu save
 	string txt_slot6 { font "f_verysmall" string "*cvar mn_slot6" pos "650 420" color "0 .78 0 1" }
 	string txt_slot7 { font "f_verysmall" string "*cvar mn_slot7" pos "650 455" color "0 .78 0 1" }
 
-	confunc mn_slot0_changed { *txt_slot0 color "0 .78 0 1" *txt_slot0 mousefx false cmd "game_save slot0 *mn_slot0" }
-	confunc mn_slot1_changed { *txt_slot1 color "0 .78 0 1" *txt_slot1 mousefx false cmd "game_save slot1 *mn_slot1" }
-	confunc mn_slot2_changed { *txt_slot2 color "0 .78 0 1" *txt_slot2 mousefx false cmd "game_save slot2 *mn_slot2" }
-	confunc mn_slot3_changed { *txt_slot3 color "0 .78 0 1" *txt_slot3 mousefx false cmd "game_save slot3 *mn_slot3" }
-	confunc mn_slot4_changed { *txt_slot4 color "0 .78 0 1" *txt_slot4 mousefx false cmd "game_save slot4 *mn_slot4" }
-	confunc mn_slot5_changed { *txt_slot5 color "0 .78 0 1" *txt_slot5 mousefx false cmd "game_save slot5 *mn_slot5" }
-	confunc mn_slot6_changed { *txt_slot6 color "0 .78 0 1" *txt_slot6 mousefx false cmd "game_save slot6 *mn_slot6" }
-	confunc mn_slot7_changed { *txt_slot7 color "0 .78 0 1" *txt_slot7 mousefx false cmd "game_save slot7 *mn_slot7" }
+	confunc mn_slot0_changed { *txt_slot0 color "0 .78 0 1" *txt_slot0 mousefx false cmd "game_save slot0 *mn_slot0; game_comments" }
+	confunc mn_slot1_changed { *txt_slot1 color "0 .78 0 1" *txt_slot1 mousefx false cmd "game_save slot1 *mn_slot1; game_comments" }
+	confunc mn_slot2_changed { *txt_slot2 color "0 .78 0 1" *txt_slot2 mousefx false cmd "game_save slot2 *mn_slot2; game_comments" }
+	confunc mn_slot3_changed { *txt_slot3 color "0 .78 0 1" *txt_slot3 mousefx false cmd "game_save slot3 *mn_slot3; game_comments" }
+	confunc mn_slot4_changed { *txt_slot4 color "0 .78 0 1" *txt_slot4 mousefx false cmd "game_save slot4 *mn_slot4; game_comments" }
+	confunc mn_slot5_changed { *txt_slot5 color "0 .78 0 1" *txt_slot5 mousefx false cmd "game_save slot5 *mn_slot5; game_comments" }
+	confunc mn_slot6_changed { *txt_slot6 color "0 .78 0 1" *txt_slot6 mousefx false cmd "game_save slot6 *mn_slot6; game_comments" }
+	confunc mn_slot7_changed { *txt_slot7 color "0 .78 0 1" *txt_slot7 mousefx false cmd "game_save slot7 *mn_slot7; game_comments" }
 
 	// ==================
 	// buttons
