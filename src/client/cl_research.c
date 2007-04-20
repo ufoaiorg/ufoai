@@ -2128,6 +2128,7 @@ extern qboolean RS_Save (sizebuf_t* sb, void* data)
 		MSG_WriteShort(sb, t->researchedDateDay);
 		MSG_WriteShort(sb, t->researchedDateMonth);
 		MSG_WriteShort(sb, t->researchedDateYear);
+		MSG_WriteByte(sb, t->mailSent);
 		for (j = 0; j < TECHMAIL_MAX; j++) {
 			/* only save the already read mails */
 			MSG_WriteByte(sb, j);
@@ -2156,21 +2157,23 @@ extern qboolean RS_Load (sizebuf_t* sb, void* data)
 		t = RS_GetTechByID(techString);
 		if (!t) {
 			Com_Printf("......your game doesn't know anything about tech '%s'\n", techString);
-			MSG_ReadByte(sb);
-			MSG_ReadFloat(sb);
-			MSG_ReadByte(sb);
-			MSG_ReadShort(sb);
-			MSG_ReadByte(sb);
-			MSG_ReadByte(sb);
-			MSG_ReadShort(sb);
-			MSG_ReadShort(sb);
-			MSG_ReadShort(sb);
-			MSG_ReadShort(sb);
-			MSG_ReadShort(sb);
-			MSG_ReadShort(sb);
+			/* We now read dummy data to skip the unknown tech. */
+			MSG_ReadByte(sb);	/* statusCollected */
+			MSG_ReadFloat(sb);	/* time */
+			MSG_ReadByte(sb);	/* statusResearch */
+			MSG_ReadShort(sb);	/* base_idx */
+			MSG_ReadByte(sb);	/* scientists */
+			MSG_ReadByte(sb);	/* statusResearchable */
+			MSG_ReadShort(sb);	/* preResearchedDateDay */
+			MSG_ReadShort(sb);	/* preResearchedDateMonth */
+			MSG_ReadShort(sb);	/* preResearchedDateYear */
+			MSG_ReadShort(sb);	/* researchedDateDay */
+			MSG_ReadShort(sb);	/* researchedDateMonth */
+			MSG_ReadShort(sb);	/* researchedDateYear */
+			MSG_ReadByte(sb);	/* mailSent */
 			for (k = 0; k < TECHMAIL_MAX; k++) {
-				MSG_ReadByte(sb);
-				MSG_ReadByte(sb);
+				MSG_ReadByte(sb);	/* mailType */
+				MSG_ReadByte(sb);	/* t->mail[mailType].read */
 			}
 			continue;
 		}
@@ -2186,6 +2189,7 @@ extern qboolean RS_Load (sizebuf_t* sb, void* data)
 		t->researchedDateDay = MSG_ReadShort(sb);
 		t->researchedDateMonth = MSG_ReadShort(sb);
 		t->researchedDateYear = MSG_ReadShort(sb);
+		t->mailSent = MSG_ReadByte(sb);
 		for (k = 0; k < TECHMAIL_MAX; k++) {
 			mailType = MSG_ReadByte(sb);
 			t->mail[mailType].read = MSG_ReadByte(sb);
