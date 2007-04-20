@@ -958,6 +958,7 @@ extern qboolean E_Save (sizebuf_t* sb, void* data)
 			e = &gd.employees[j][i];
 			MSG_WriteByte(sb, e->type);
 			MSG_WriteByte(sb, e->hired);
+			MSG_WriteShort(sb, e->idx);
 			MSG_WriteShort(sb, e->baseIDHired);
 			MSG_WriteShort(sb, e->buildingID);
 			MSG_WriteString(sb, e->chr.name);
@@ -1025,6 +1026,7 @@ extern qboolean E_Load (sizebuf_t* sb, void* data)
 			if (e->type != j)
 				Com_Printf("......error in loading employee - type values doesn't match\n");
 			e->hired = MSG_ReadByte(sb);
+			e->idx = MSG_ReadShort(sb);
 			e->baseIDHired = MSG_ReadShort(sb);
 			e->buildingID = MSG_ReadShort(sb);
 			Q_strncpyz(e->chr.name, MSG_ReadString(sb), sizeof(e->chr.name));

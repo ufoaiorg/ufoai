@@ -972,15 +972,17 @@ byte *fb_list[MAX_EDICTS];
 int fb_length;
 
 /**
- * @brief Build the forbidden list for the pathfinding
- * @note The forbidden list is a list of entity positions that are
- * occupied by an entity. This list is checked everytime an actor wants to
- * walk there
+ * @brief Build the forbidden list for the pathfinding.
+ * @param[in] team The team number if the list should be calculated from the eyes of that team. Use 0 to ignore team.
+ * @note The forbidden list (fb_list and fb_length) is a
+ * list of entity positions that are occupied by an entity.
+ * This list is checked everytime an actor wants to walk there.
  * @sa G_MoveCalc
+ * @sa cl_actor.c:CL_BuildForbiddenList <- shares quite some code
  */
 void G_BuildForbiddenList (int team)
 {
-	edict_t *ent;
+	edict_t *ent = NULL;
 	int vis_mask;
 	int i;
 
@@ -1004,7 +1006,10 @@ void G_BuildForbiddenList (int team)
 }
 
 /**
- * @brief
+ * @brief TODO: writeme
+ * @param[in] team The current team (see G_BuildForbiddenList)
+ * @param[in] from Position in the map to start the move-calculation from.
+ * @param[in] distance The distance to calculate the move for.
  * @sa G_BuildForbiddenList
  */
 void G_MoveCalc (int team, pos3_t from, int distance)

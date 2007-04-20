@@ -1648,8 +1648,9 @@ int fb_length;
 
 /**
  * @brief Builds a list of locations that cannot be moved to.
+ * @sa g_client:G_BuildForbiddenList <- shares quite some code
  *
- * TODO: This probably belongs in the core logic.
+ * @todo This probably belongs in the core logic.
  * This is used for pathfinding.
  * It is a list of where the selected unit can not move to because others are standing there already.
  */
