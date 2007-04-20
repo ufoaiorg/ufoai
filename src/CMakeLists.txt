@@ -55,11 +55,14 @@ ENDIF(HAVE_IPV6)
 
 SET(UFOSOURCEFILES
 	client/cl_actor.c
+	client/cl_aliencont.c
 	client/cl_aircraft.c
 	client/cl_basemanagement.c
 	client/cl_campaign.c
 	client/cl_employee.c
+	client/cl_event.c
 	client/cl_fx.c
+	client/cl_hospital.c
 	client/cl_input.c
 	client/cl_inventory.c
 	client/cl_le.c
@@ -81,7 +84,7 @@ SET(UFOSOURCEFILES
 	client/cl_ufopedia.c
 	client/cl_view.c
 	client/console.c
-	client/keys.c
+	client/cl_keys.c
 	client/snd_mem.c
 	client/snd_mix.c
 	client/snd_ref.c
@@ -95,8 +98,11 @@ SET(UFOSOURCEFILES
 	qcommon/cvar.c
 	qcommon/files.c
 	qcommon/md4.c
+	qcommon/md5.c
 	qcommon/net_chan.c
 	qcommon/scripts.c
+	qcommon/unzip.c
+	qcommon/ioapi.c
 
 	server/sv_ccmds.c
 	server/sv_game.c
@@ -117,6 +123,7 @@ SET(GAMESOURCEFILES
 	game/g_client.c
 	game/g_cmds.c
 	game/g_main.c
+	game/g_phys.c
 	game/g_spawn.c
 	game/g_svcmds.c
 	game/g_utils.c
@@ -162,8 +169,11 @@ SET(UFODED_SOURCEFILES
 	qcommon/cvar.c
 	qcommon/files.c
 	qcommon/md4.c
+	qcommon/md5.c
 	qcommon/net_chan.c
 	qcommon/scripts.c
+	qcommon/unzip.c
+	qcommon/ioapi.c
 
 	server/sv_ccmds.c
 	server/sv_game.c
