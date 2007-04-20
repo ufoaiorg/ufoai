@@ -54,41 +54,6 @@ qboolean stdin_active = qtrue;
 /* General routines */
 /* ======================================================================= */
 
-void Sys_ConsoleOutput (const char *string)
-{
-	if (nostdout && nostdout->value)
-		return;
-
-	fputs(string, stdout);
-}
-
-void Sys_Printf (const char *fmt, ...)
-{
-	va_list		argptr;
-	char		text[1024];
-	unsigned char		*p;
-
-	va_start (argptr,fmt);
-	Q_vsnprintf(msg, sizeof(msg), fmt, argptr);
-	va_end(argptr);
-
-	msg[sizeof(msg)-1] = 0;
-
-	if (strlen(text) > sizeof(text))
-		Sys_Error("memory overwrite in Sys_Printf");
-
-	if (nostdout && nostdout->value)
-		return;
-
-	for (p = (unsigned char *)text; *p; p++) {
-		*p &= SCHAR_MAX;
-		if ((*p > 128 || *p < 32) && *p != 10 && *p != 13 && *p != 9)
-			printf("[%02x]", *p);
-		else
-			putc(*p, stdout);
-	}
-}
-
 void Sys_Quit (void)
 {
 	CL_Shutdown ();
@@ -146,42 +111,6 @@ int	Sys_FileTime (char *path)
 void floating_point_exception_handler (int whatever)
 {
 	signal(SIGFPE, floating_point_exception_handler);
-}
-
-/**
- * @brief
- */
-char *Sys_ConsoleInput (void)
-{
-	static char text[256];
-	int     len;
-	fd_set	fdset;
-	struct timeval timeout;
-
-	if (!dedicated || !dedicated->value)
-		return NULL;
-
-	if (!stdin_active)
-		return NULL;
-
-	FD_ZERO(&fdset);
-	FD_SET(0, &fdset); /* stdin */
-	timeout.tv_sec = 0;
-	timeout.tv_usec = 0;
-	if (select(1, &fdset, NULL, NULL, &timeout) == -1 || !FD_ISSET(0, &fdset))
-		return NULL;
-
-	len = read(0, text, sizeof(text));
-	if (len == 0) { /* eof! */
-		stdin_active = qfalse;
-		return NULL;
-	}
-
-	if (len < 1)
-		return NULL;
-	text[len-1] = 0;    /* rip off the /n and terminate */
-
-	return text;
 }
 
 /*****************************************************************************/

@@ -71,15 +71,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "rw_linux.h"
 
-cvar_t *nostdout;
-
 unsigned	sys_frame_time;
 
 uid_t saved_euid;
-qboolean stdin_active = qtrue;
 
 static void *game_library;
-
+extern cvar_t *nostdout;
 /**
  * @brief
  */
@@ -273,39 +270,6 @@ void Sys_Backtrace (int sig, siginfo_t *siginfo, void *secret)
 /**
  * @brief
  */
-void Sys_ConsoleOutput (const char *string)
-{
-	char text[2048];
-	int i, j;
-
-	if (nostdout && nostdout->value)
-		return;
-
-	i = j = 0;
-
-	/* strip high bits */
-	while (string[j]) {
-		text[i] = string[j] & SCHAR_MAX;
-
-		/* strip low bits */
-		if (text[i] >= 32 || text[i] == '\n' || text[i] == '\t')
-			i++;
-
-		j++;
-
-		if (i == sizeof(text) - 2) {
-			text[i++] = '\n';
-			break;
-		}
-	}
-	text[i] = 0;
-
-	fputs(string, stdout);
-}
-
-/**
- * @brief
- */
 int Sys_FileLength (const char *path)
 {
 	struct stat st;
@@ -314,36 +278,6 @@ int Sys_FileLength (const char *path)
 		return -1;
 
 	return st.st_size;
-}
-
-/**
- * @brief
- */
-void Sys_Printf (const char *fmt, ...)
-{
-	va_list		argptr;
-	char		text[1024];
-	unsigned char		*p;
-
-	if (nostdout && nostdout->value)
-		return;
-
-	va_start (argptr,fmt);
-	Q_vsnprintf (text, sizeof(text), fmt, argptr);
-	va_end (argptr);
-
-	text[sizeof(text)-1] = 0;
-
-	if (strlen(text) > sizeof(text))
-		Sys_Error("memory overwrite in Sys_Printf");
-
-	for (p = (unsigned char *)text; *p; p++) {
-		*p &= SCHAR_MAX;
-		if ((*p > 128 || *p < 32) && *p != 10 && *p != 13 && *p != 9)
-			printf("[%02x]", *p);
-		else
-			putc(*p, stdout);
-	}
 }
 
 /**
@@ -460,42 +394,6 @@ int Sys_FileTime (const char *path)
 void floating_point_exception_handler (int whatever)
 {
 	signal(SIGFPE, floating_point_exception_handler);
-}
-
-/**
- * @brief
- */
-char *Sys_ConsoleInput (void)
-{
-	static char text[256];
-	int     len;
-	fd_set	fdset;
-	struct timeval timeout;
-
-	if (!dedicated || !dedicated->value)
-		return NULL;
-
-	if (!stdin_active)
-		return NULL;
-
-	FD_ZERO(&fdset);
-	FD_SET(0, &fdset); /* stdin */
-	timeout.tv_sec = 0;
-	timeout.tv_usec = 0;
-	if (select (1, &fdset, NULL, NULL, &timeout) == -1 || !FD_ISSET(0, &fdset))
-		return NULL;
-
-	len = read (0, text, sizeof(text));
-	if (len == 0) { /* eof! */
-		stdin_active = qfalse;
-		return NULL;
-	}
-
-	if (len < 1)
-		return NULL;
-	text[len-1] = 0;    /* rip off the /n and terminate */
-
-	return text;
 }
 
 /**
