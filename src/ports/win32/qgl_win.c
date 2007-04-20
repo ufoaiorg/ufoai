@@ -52,9 +52,8 @@ BOOL (WINAPI * qwglSetDeviceGammaRampEXT) (const unsigned char *pRed, const unsi
  */
 void QGL_Shutdown (void)
 {
-	if ( glw_state.hinstOpenGL ) {
-		FreeLibrary( glw_state.hinstOpenGL );
-		glw_state.hinstOpenGL = NULL;
+	if (glw_state.hinstOpenGL) {
+		FreeLibrary(glw_state.hinstOpenGL);
 	}
 
 	glw_state.hinstOpenGL = NULL;
@@ -120,6 +119,8 @@ qboolean QGL_Init (const char *dllname)
 	qwglSetPixelFormat           = GPA("wglSetPixelFormat");
 	qwglSwapBuffers              = GPA("wglSwapBuffers");
 	qwglSwapIntervalEXT          = NULL;
+	qwglGetDeviceGammaRampEXT    = NULL;
+	qwglSetDeviceGammaRampEXT    = NULL;
 
 	return qtrue;
 }
