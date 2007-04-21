@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-04-21 00:43+0200\n"
-"PO-Revision-Date: 2007-04-21 00:39+0100\n"
+"POT-Creation-Date: 2007-04-21 19:54+0200\n"
+"PO-Revision-Date: 2007-04-21 19:52+0100\n"
 "Last-Translator: Lubomír Bláha <tritol@trilogic.cz>\n"
 "Language-Team: čeština <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -12242,7 +12242,7 @@ msgstr ""
 
 #: client/cl_basemanagement.c:2304 client/cl_basemanagement.c:2306
 #: client/cl_campaign.c:2060 client/cl_market.c:309 client/cl_market.c:571
-#: client/cl_team.c:1376
+#: client/cl_save.c:286 client/cl_team.c:1376
 msgid "Note"
 msgstr "Poznámka"
 
@@ -12753,6 +12753,7 @@ msgstr "Nejprve sestavte tým"
 
 #: client/cl_main.c:366 client/cl_main.c:1015 client/cl_main.c:1578
 #: client/cl_main.c:1583 client/cl_main.c:1589 client/cl_main.c:1595
+#: client/cl_save.c:353 client/cl_save.c:379
 msgid "Error"
 msgstr "Chyba"
 
@@ -12878,6 +12879,13 @@ msgstr "Vaše verze hry (%s) se liší od té na serveru (%s)"
 #: client/cl_main.c:1906
 msgid "Unnamed"
 msgstr "Bezejmenný"
+
+#: client/cl_main.c:1923
+msgid ""
+"Pause the current server (singleplayer and multiplayer when you are server)"
+msgstr ""
+"Pozastavit aktuální server (v režimu jednoho hráče a když jste server i v "
+"režimu více hráčů)"
 
 #: client/cl_main.c:2125
 msgid "Chicken-hearted"
@@ -13205,6 +13213,55 @@ msgstr "Nejprve vybudujte laboratoř"
 #: client/cl_research.c:1542
 msgid "No description available."
 msgstr "Popis není dostupný."
+
+#: client/cl_save.c:59
+msgid "Couldn't open file"
+msgstr "Nemohu otevřít soubor"
+
+#: client/cl_save.c:87
+msgid "Error decompressing data"
+msgstr "Chyba při dekompresi dat"
+
+#: client/cl_save.c:100
+msgid "The file is a more recent version than is supported"
+msgstr "Verze souboru je novější než která je podporována"
+
+#: client/cl_save.c:121 client/cl_save.c:128
+msgid "Error in loading a subsystem - see game console for more information"
+msgstr ""
+"Chyba při načítání subsystému - pro více informací se podívejte do herní "
+"konzoly"
+
+#: client/cl_save.c:162
+msgid "No campaign active."
+msgstr "Neprobíhá kampaň."
+
+#: client/cl_save.c:168
+msgid "Nothing to save yet."
+msgstr "Zatím není co ukládat."
+
+#: client/cl_save.c:179
+msgid "Could not allocate enough memory to save this game"
+msgstr "Nemohu získat dostatek paměti pro uložení této hry"
+
+#: client/cl_save.c:222
+msgid "Memory error compressing save-game data - set save_compressed cvar to 0"
+msgstr ""
+"Neúspěšná komprese herních dat - nastavte proměnnou konfigurace "
+"save_compressed na 0"
+
+#: client/cl_save.c:243
+msgid "Size mismatch - failed to save the campaign"
+msgstr "Nesprávná velikost - uložení kampaně nebylo úspěšné"
+
+#: client/cl_save.c:283 client/cl_save.c:285
+msgid "Error saving game."
+msgstr "Chyba při ukládání hry."
+
+#: client/cl_save.c:350 client/cl_save.c:352 client/cl_save.c:376
+#: client/cl_save.c:378
+msgid "Error loading game."
+msgstr "Chyba při načítání hry."
 
 #: client/cl_scrn.c:383
 #, c-format
@@ -13976,6 +14033,10 @@ msgstr ""
 msgid "You cannot use medikit on yourself.\n"
 msgstr "Nemůžete použít lékárničku sám na sebe.\n"
 
+#: po/OTHER_STRINGS:12
+msgid "Take a screenshot"
+msgstr "Udělat snímek obrazovky"
+
 #~ msgid ""
 #~ "There is no free lab available.\n"
 #~ "You need to build one or free another\n"
@@ -13990,11 +14051,6 @@ msgstr "Nemůžete použít lékárničku sám na sebe.\n"
 
 #~ msgid "Wave Fire"
 #~ msgstr "Vlnová střelba"
-
-#~ msgid "Error saving game. Check free disk space!"
-#~ msgstr ""
-#~ "Chyba při ukládání hry. Zkontrolujte zda je na disku dostatek volného "
-#~ "místa!"
 
 #~ msgid "Items salvaged and sold\t%i\n"
 #~ msgstr "Zachráněné a prodané předměty\t%i\n"
