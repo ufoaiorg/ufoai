@@ -36,12 +36,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../qcommon/qcommon.h"
 #ifdef HAVE_CURSES
-#include <curses.h>
-
+#include <ncurses.h>
+#define MAXKEYLINES 32
 static WINDOW *win_log, *win_cmd;
+int history_line = 0;
+int edit_line = 0;
 
 #define BUF_LEN 256
-static char cmdbuf[BUF_LEN];
+static char cmdbuf[MAXKEYLINES][BUF_LEN];
 static int cmdbuf_pos = 0;
 #define COLOR_MAX 7
 #define COLOR_DEFAULT 7
@@ -109,6 +111,7 @@ void Sys_ConsoleInputInit (void)
 	noecho();
 	keypad(win_cmd, TRUE);
 	Sys_ConsoleInputReset();
+	Com_Printf("use curses\n");
 #endif /* HAVE_CURSES */
 }
 
@@ -124,12 +127,100 @@ static void Sys_ConsoleRefresh (void)
 #endif /* HAVE_CURSES */
 
 #ifdef HAVE_CURSES
+
+/**
+ * @brief
+ */
+void Sys_ConsoleAddHistory (int line)
+{
+	Sys_ConsoleInputReset();
+	Q_strncpyz(cmdbuf[edit_line], cmdbuf[history_line], BUF_LEN);
+	cmdbuf_pos = 0;
+	while (cmdbuf[edit_line][cmdbuf_pos] != '\0') {
+		waddch(win_cmd, cmdbuf[edit_line][cmdbuf_pos]);
+		cmdbuf_pos++;
+	}
+	wrefresh(win_cmd);
+}
+
+/**
+ * @brief Console completion for command and variables
+ * @sa Key_CompleteCommand
+ * @sa Cmd_CompleteCommand
+ * @sa Cvar_CompleteVariable
+ */
+static void Sys_ConsoleCompleteCommand (void)
+{
+	const char *cmd = NULL, *cvar = NULL, *use = NULL, *s;
+	int cntCmd = 0, cntCvar = 0, cntParams = 0;
+	char cmdLine[BUF_LEN] = "";
+	qboolean append = qtrue;
+	char *tmp;
+
+	s = cmdbuf[edit_line];
+	if (!*s || *s == ' ')
+		return;
+
+	/* don't try to search a command or cvar if we are already in the
+	 * parameter stage */
+	if (strstr(s, " ")) {
+		tmp = cmdLine;
+		while (*s != ' ')
+			*tmp++ = *s++;
+		/* terminate the string at whitespace position to seperate the cmd */
+		*tmp++ = '\0';
+		/* get rid of the whitespace */
+		s++;
+		cntParams = Cmd_CompleteCommandParameters(cmdLine, s, &cmd);
+		if (cntParams == 1) {
+			/* append the found parameter */
+			Q_strcat(cmdLine, " ", sizeof(cmdLine));
+			Q_strcat(cmdLine, cmd, sizeof(cmdLine));
+			append = qfalse;
+			use = cmdLine;
+		} else if (cntParams > 1) {
+			Com_Printf("\n");
+		} else
+			return;
+	} else {
+		cntCmd = Cmd_CompleteCommand(s, &cmd);
+		cntCvar = Cvar_CompleteVariable(s, &cvar);
+
+		if (cntCmd == 1 && !cntCvar)
+			use = cmd;
+		else if (!cntCmd && cntCvar == 1)
+			use = cvar;
+		else
+			Com_Printf("\n");
+	}
+
+	if (use) {
+		Sys_ConsoleInputReset();
+		Q_strncpyz(cmdbuf[edit_line], use, BUF_LEN);
+		cmdbuf_pos = strlen(use);
+		if (append) {
+			cmdbuf[edit_line][cmdbuf_pos] = ' ';
+			cmdbuf_pos++;
+		}
+		cmdbuf[edit_line][cmdbuf_pos] = 0;
+		/* and now add this to the curses command line */
+		cmdbuf_pos = 0;
+		while (cmdbuf[edit_line][cmdbuf_pos] != '\0') {
+			waddch(win_cmd, cmdbuf[edit_line][cmdbuf_pos]);
+			cmdbuf_pos++;
+		}
+		wrefresh(win_cmd);
+		return;
+	}
+}
+
 /**
  * @brief check for console input and return a command when a newline is detected
  */
 char *Sys_ConsoleInput (void)
 {
 	int key = wgetch(win_cmd);
+	int line;
 
 	/* No input */
 	if (key == ERR)
@@ -137,41 +228,69 @@ char *Sys_ConsoleInput (void)
 
 	/* Basic character input */
 	if ((key >= ' ') && (key <= '~') && (cmdbuf_pos < BUF_LEN - 1)) {
-		cmdbuf[cmdbuf_pos++] = key;
+		cmdbuf[edit_line][cmdbuf_pos++] = key;
 		waddch(win_cmd, key);
 		return NULL;
 	}
+
+	wnoutrefresh(win_log);
+	wnoutrefresh(win_cmd);
 
 	switch (key) {
 	/* Return - flush command buffer */
 	case '\n':
 		/* Mark the end of our input */
-		cmdbuf[cmdbuf_pos] = '\0';
+		cmdbuf[edit_line][cmdbuf_pos] = '\0';
 
 		/* Reset our prompt */
 		Sys_ConsoleInputReset();
 
 		/* Flush the command */
 		cmdbuf_pos = 0;
-		return cmdbuf;
+		line = edit_line;
+		edit_line = (edit_line + 1) & (MAXKEYLINES-1);
+		history_line = edit_line;
 
-#if 0
+		return cmdbuf[line];
+
+	case '\t':
+		Com_Printf("Complete\n");
+		Sys_ConsoleCompleteCommand();
+		break;
+
 	/* Page Down and Page Up - scrolling */
 	case KEY_NPAGE:
-		wscrl(win_log, 10);
-		Sys_ConsoleRefresh();
+		wscrl(win_log, 4);
+		wrefresh(win_log);
 		break;
+
 	case KEY_PPAGE:
-		wscrl(win_log, -10);
-		Sys_ConsoleRefresh();
+		wscrl(win_log, -4);
+		wrefresh(win_log);
 		break;
-#endif
 
 	case KEY_HOME:
 		break;
 
 	case KEY_UP:
+		do {
+			history_line = (history_line - 1) & (MAXKEYLINES-1);
+		} while (history_line != edit_line && !cmdbuf[history_line][1]);
+
+		if (history_line == edit_line)
+			history_line = (edit_line + 1) & (MAXKEYLINES-1);
+
+		Sys_ConsoleAddHistory(history_line);
+		break;
+
 	case KEY_DOWN:
+		if (history_line == edit_line)
+			break;
+		do {
+			history_line = (history_line + 1) & (MAXKEYLINES-1);
+		} while (history_line != edit_line && !cmdbuf[history_line][0]);
+
+		Sys_ConsoleAddHistory(history_line);
 		break;
 
 	case KEY_LEFT:
@@ -183,6 +302,7 @@ char *Sys_ConsoleInput (void)
 	case KEY_BACKSPACE:
 		if (cmdbuf_pos) {
 			cmdbuf_pos--;
+			cmdbuf[edit_line][cmdbuf_pos] = '\0';
 			waddstr(win_cmd, "\b \b");
 		}
 		break;
