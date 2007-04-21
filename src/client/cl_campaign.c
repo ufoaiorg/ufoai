@@ -2645,6 +2645,39 @@ static void CL_UpdateCharacterStats (int won)
 
 #ifdef DEBUG
 /**
+ * @brief Debug function to add one item of every type to base storage and mark them collected.
+ * @note Command to call this: debug_additems
+ */
+static void CL_DebugAllItems_f (void)
+{
+	int i;
+	base_t *base;
+	technology_t *tech;
+	
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <baseID>\n", Cmd_Argv(0));
+		return;
+	}
+
+	i = atoi(Cmd_Argv(1));
+	if (i >= gd.numBases) {
+		Com_Printf("invalid baseID (%s)\n", Cmd_Argv(1));
+		return;
+	}
+	base = gd.bases + i;
+	assert(base);
+	
+	for (i = 0; i < csi.numODs; i++) {
+		tech = csi.ods[i].tech;
+		if (!tech)
+			Sys_Error("CL_DebugAllItems_f: No tech for %s / %s\n", csi.ods[i].id, csi.ods[i].name);
+		base->storage.num[i]++;
+		if (base->storage.num[i] > 0)
+			RS_MarkCollected(tech);
+	}
+}
+
+/**
  * @brief Debug function to set the credits to max
  */
 static void CL_DebugFullCredits_f (void)
@@ -3804,6 +3837,8 @@ static const cmdList_t game_commands[] = {
 	,
 #ifdef DEBUG
 	{"debug_fullcredits", CL_DebugFullCredits_f, "Debug function to give the player full credits"}
+	,
+	{"debug_additems", CL_DebugAllItems_f, "Debug function to add one item of every type to base storage and mark related tech collected"}
 	,
 #endif
 	{NULL, NULL, NULL}
