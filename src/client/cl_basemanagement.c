@@ -2718,8 +2718,6 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
 			MSG_WriteString(sb, aircraft->item_string);
 			for (l = 0; l < MAX_ACTIVETEAM; l++)
 				MSG_WriteShort(sb, aircraft->teamIdxs[l]);
-			MSG_WriteShort(sb, aircraft->alientypes);
-			MSG_WriteShort(sb, aircraft->itemtypes);
 			MSG_WriteShort(sb, aircraft->numUpgrades);
 			MSG_WriteShort(sb, aircraft->radar.range);
 			MSG_WriteShort(sb, aircraft->route.n);
@@ -2865,8 +2863,6 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 			Q_strncpyz(aircraft->item_string, MSG_ReadString(sb), sizeof(aircraft->item_string));
 			for (l = 0; l < MAX_ACTIVETEAM; l++)
 				aircraft->teamIdxs[l] = MSG_ReadShort(sb);
-			aircraft->alientypes = MSG_ReadShort(sb);
-			aircraft->itemtypes = MSG_ReadShort(sb);
 			aircraft->numUpgrades = MSG_ReadShort(sb);
 			aircraft->radar.range = MSG_ReadShort(sb);
 			aircraft->route.n = MSG_ReadShort(sb);
