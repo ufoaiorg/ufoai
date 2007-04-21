@@ -1912,7 +1912,7 @@ static void CL_InitLocal (void)
 
 	/* register our commands */
 	Cmd_AddCommand("cmd", CL_ForwardToServer_f, "Forward to server");
-	Cmd_AddCommand("pause", CL_Pause_f, "Pause the current server (singleplayer and multiplayer when you are server)");
+	Cmd_AddCommand("pause", CL_Pause_f, _("Pause the current server (singleplayer and multiplayer when you are server)"));
 	Cmd_AddCommand("pingservers", CL_PingServers_f, "Ping all servers in local network to get the serverlist");
 
 	Cmd_AddCommand("saveconfig", CL_WriteConfiguration, "Save the configuration");
