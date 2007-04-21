@@ -2704,6 +2704,7 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
 		for (k = 0; k < b->numAircraftInBase; k++) {
 			aircraft = &b->aircraft[k];
 			MSG_WriteString(sb, aircraft->id);
+			MSG_WriteShort(sb, aircraft->idx);
 			MSG_WriteByte(sb, aircraft->status);
 			MSG_WriteFloat(sb, aircraft->speed);
 			MSG_WriteLong(sb, aircraft->fuel);
@@ -2841,6 +2842,7 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 			aircraft = AIR_GetAircraft(MSG_ReadString(sb));
 			memcpy(&b->aircraft[k], aircraft, sizeof(aircraft_t));
 			aircraft = &b->aircraft[k];
+			aircraft->idx = MSG_ReadShort(sb);
 			aircraft->homebase = b;
 			/* for saving and loading a base */
 			aircraft->idxBase = b->idx;
