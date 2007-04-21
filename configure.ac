@@ -61,8 +61,8 @@ AC_ARG_WITH(curses,
 	[], [with_curses=no])
 
 AC_ARG_WITH(openal,
-	[AS_HELP_STRING([--with-openal], [build openal sound support @<:@default=check@:>@])],
-	[], [with_openal=check])
+	[AS_HELP_STRING([--with-openal], [build openal sound support @<:@default=no@:>@])],
+	[], [with_openal=no])
 
 AC_ARG_WITH(openal_config,
 	[AC_HELP_STRING([--with-openal-config=FILE], [using the given openal-config @<:@default=openal-config@:>@])],

@@ -1327,7 +1327,7 @@ Optional Packages:
   --with-vid-vidmode      compile with vidmode support [default=check]
   --with-ipv6             compile with ipv6 support [default=no]
   --with-curses           compile with curses console support [default=no]
-  --with-openal           build openal sound support [default=check]
+  --with-openal           build openal sound support [default=no]
   --with-openal-config=FILE
                           using the given openal-config
                           [default=openal-config]
@@ -2069,7 +2069,7 @@ fi
 if test "${with_openal+set}" = set; then
   withval=$with_openal;
 else
-  with_openal=check
+  with_openal=no
 fi
 
 
