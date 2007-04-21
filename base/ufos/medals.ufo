@@ -28,14 +28,14 @@ medal coin
 rank scientist
 {
 	name "_Scientist"
-	image "rank/scientist"
+	image "rank/rank_scientist"
 	type EMPL_SCIENTIST
 }
 
 rank medic
 {
 	name "_Medic"
-	image "ranks/medic"
+	image "ranks/rank_medic"
 	type EMPL_MEDIC
 }
 
@@ -49,7 +49,7 @@ rank ugv
 rank worker
 {
 	name "_Worker"
-	image "ranks/worker"
+	image "ranks/rank_worker"
 	type EMPL_WORKER
 }
 
