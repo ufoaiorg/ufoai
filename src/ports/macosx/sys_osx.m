@@ -47,8 +47,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <libgen.h> /* dirname */
 
 #include <dlfcn.h>
-
 #include "../../qcommon/qcommon.h"
+#include "../linux/rw_linux.h"
 #include <Carbon/Carbon.h>
 #include <Cocoa/Cocoa.h>
 
@@ -287,7 +287,7 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 		path = FS_NextPath(path);
 		if (!path)
 			return NULL;		/* couldn't find one anywhere */
-		Com_sprintf(name, sizeof(name), "%s/game.so", path);
+		Com_sprintf(name, sizeof(name), "%s/game.dylib", path);
 		game_library = dlopen(name, RTLD_LAZY);
 		if (game_library) {
 			Com_Printf("LoadLibrary (%s)\n", name);
@@ -320,8 +320,8 @@ void Sys_AppActivate (void)
 void Sys_SendKeyEvents (void)
 {
 #ifndef DEDICATED_ONLY
-	//if (KBD_Update_fp)
-	//	KBD_Update_fp();
+	if (KBD_Update_fp)
+		KBD_Update_fp();
 #endif
 
 	/* grab frame time */
@@ -400,8 +400,8 @@ int main (int argc, char **argv)
 
 	InitCocoa();
 	/* go back to real user for config loads */
-	saved_euid = geteuid();
-	seteuid(getuid());
+	//saved_euid = geteuid();
+	//seteuid(getuid());
 
 	Qcommon_Init(argc, argv);
 

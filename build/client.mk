@@ -143,7 +143,7 @@ endif
 ifeq ($(TARGET_OS),darwin)
 	CLIENT_SRCS+= \
 		ports/macosx/sys_osx.m \
-		ports/macosx/vid_osx.m \
+		ports/linux/vid_so.c \
 		ports/macosx/in_osx.m \
 		ports/unix/glob.c \
 		ports/unix/sys_console.c \

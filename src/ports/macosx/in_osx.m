@@ -314,7 +314,7 @@ void	IN_CenterCursor (void)
 
 //________________________________________________________________________________________________________IN_Init()
 
-
+/*
 void	IN_Init (void)
 {
     m_filter		= Cvar_Get ("m_filter", "0", 0,NULL);
@@ -327,18 +327,18 @@ void	IN_Init (void)
 
 //    IN_SetMouseScalingEnabled (NO);
 }
-
+*/
 
 
 
 
 //____________________________________________________________________________________________________IN_Shutdown()
-
+/*
 void	IN_Shutdown (void)
 {
 //    IN_SetMouseScalingEnabled (YES);
 }
-
+*/
 
 //_________________________________________________________________________________________________IN_MLookDown_f()
 
@@ -359,7 +359,7 @@ void	IN_MLookUp_f (void)
 
 
 //_______________________________________________________________________________________________________IN_Frame()
-
+/*
 void	IN_Frame (void)
 {
     // set the cursor visibility by respecting the display mode:
@@ -381,7 +381,7 @@ void	IN_Frame (void)
         }
     }
 }
-
+*/
 
 //____________________________________________________________________________________________IN_ReceiveMouseMove()
 
@@ -437,23 +437,23 @@ void	IN_Move (usercmd_t *cmd)
 }
 */
 
-
+/*
 //____________________________________________________________________________________________________IN_Commands()
 
 void	IN_Commands (void)
 {
     // already handled in "sys_osx.m"!
 }
-
+*/
 
 
 //____________________________________________________________________________________________________IN_Activate()
-
+/*
 void	IN_Activate (qboolean active)
 {
     // not required!
 }
-
+*/
 
 //_______________________________________________________________________________________________IN_ActivateMouse()
 
@@ -469,11 +469,11 @@ void	IN_DeactivateMouse (void)
     // not required!
 }
 
-
+/*
 // Matthijs' IN_GetMousePos stub
 void IN_GetMousePos (int *mx, int *my)
 {
 	*mx = 0; *my = 0; // It doesn't get any more stubby than this :)
 }
-
+*/
 //______________________________________________________________________________________________________________eOF

@@ -300,15 +300,16 @@ static fontCache_t *Font_GenerateCache (const char *s, const char *fontString, f
 	fontCache_t *result;
 
 	textSurface = TTF_RenderUTF8_Blended(f->font, s, color);
+
 	if (!textSurface) {
 		ri.Con_Printf(PRINT_ALL, "%s (%s)\n", TTF_GetError(), fontString);
 		return NULL;
 	}
 
 	/* convert to power of two */
-	for (w = 1; w < textSurface->w; w <<= 1);
-	for (h = 1; h < textSurface->h; h <<= 1);
-
+	for (w = 2; w < textSurface->w; w <<= 1);
+	for (h = 2; h < textSurface->h; h <<= 1);
+	
 	openGLSurface = SDL_CreateRGBSurface(SDL_SWSURFACE,
 		w, h, 32, textSurface->format->Rmask, textSurface->format->Gmask,
 		textSurface->format->Bmask, textSurface->format->Amask);

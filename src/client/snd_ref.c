@@ -418,7 +418,11 @@ void S_Init (void)
 		Com_Printf("...library search path: '%s'\n", libPath);
 
 		/* first try system wide */
+#ifndef __APPLE__
 		Com_sprintf(libName, sizeof(libName), "snd_%s.so", snd_ref->string);
+#else
+		Com_sprintf(libName, sizeof(libName), "snd_%s.dylib", snd_ref->string);
+#endif
 		if ((snd_ref_lib = dlopen(libName, RTLD_LAZY|RTLD_GLOBAL)) == 0) {
 			/* then use s_libdir cvar */
 			Com_sprintf(libPath, sizeof(libPath), "%s/%s", libPath, libName);

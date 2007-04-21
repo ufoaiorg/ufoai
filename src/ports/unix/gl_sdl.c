@@ -474,7 +474,7 @@ void InitSig (void)
 	signal(SIGIOT, signal_handler);
 	signal(SIGBUS, signal_handler);
 	signal(SIGFPE, signal_handler);
-#ifdef __linux__
+#ifdef __linux__ || __APPLE__
 	/* linux has it's own backtrace handler in sys_linux.c */
 	signal(SIGSEGV, signal_handler);
 #endif
@@ -819,6 +819,7 @@ void RW_IN_Commands (void)
  */
 void RW_IN_GetMousePos (int *x, int *y)
 {
+	
 	*x = mx / vid.rx;
 	*y = my / vid.ry;
 }
