@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-04-19 20:39+0200\n"
-"PO-Revision-Date: 2007-04-19 21:44+0100\n"
+"PO-Revision-Date: 2007-04-21 20:23+0100\n"
 "Last-Translator: Kracken <kracken@users.sourceforge.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -8460,7 +8460,7 @@ msgid ""
 "Move %i (%i TU left)\n"
 msgstr ""
 "Armure  %i\tMoral  %i\n"
-"Déplacement %i (%i UT restante)\n"
+"Déplacement %i (%i UT restantes)\n"
 
 #: client/cl_actor.c:1277
 msgid ""
@@ -9597,7 +9597,7 @@ msgstr "Les réglages ne sont pas cohérents"
 #: client/cl_menu.c:612
 #, c-format
 msgid "In: %i Out: %i"
-msgstr "À l'intérieur: %i À l'extérieur: %i"
+msgstr "Mettre: %i Enlever: %i"
 
 #: client/cl_menu.c:1767
 #, c-format
