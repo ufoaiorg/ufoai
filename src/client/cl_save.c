@@ -56,8 +56,8 @@ static qboolean SAV_GameLoad (const char *filename, char **error)
 	/* open file */
 	f.f = fopen(va("%s/save/%s.sav", FS_Gamedir(), filename), "rb");
 	if (!f.f) {
-		*error = "Couldn't open file";
-		Com_Printf("%s %s\n", *error, filename);
+		*error = _("Couldn't open file");
+		Com_Printf("Couldn't open file '%s'\n", filename);
 		return qfalse;
 	}
 
@@ -84,7 +84,7 @@ static qboolean SAV_GameLoad (const char *filename, char **error)
 
 		if (res != Z_OK) {
 			free(buf);
-			*error = "Error decompressing data";
+			*error = _("Error decompressing data");
 			Com_Printf("Error decompressing data in '%s'.\n", filename);
 			return qfalse;
 		}
@@ -97,7 +97,7 @@ static qboolean SAV_GameLoad (const char *filename, char **error)
 
 	/* check current version */
 	if (header.version > SAVE_FILE_VERSION) {
-		*error = "The file is a more recent version than is supported";
+		*error = _("The file is a more recent version than is supported");
 		Com_Printf("File '%s' is a more recent version (%d) than is supported.\n", filename, header.version);
 		free(buf);
 		return qfalse;
@@ -118,14 +118,14 @@ static qboolean SAV_GameLoad (const char *filename, char **error)
 	for (i = 0; i < saveSubsystemsAmount; i++) {
 		diff = sb.readcount;
 		if (!saveSubsystems[i].load(&sb, &header)) {
-			*error = "Error in loading a subsystem - see game console for more information";
+			*error = _("Error in loading a subsystem - see game console for more information");
 			Com_Printf("...subsystem '%s' returned false - savegame could not be loaded\n", saveSubsystems[i].name);
 			return qfalse;
 		} else
 			Com_Printf("...subsystem '%s' - loaded %i bytes\n", saveSubsystems[i].name, sb.readcount - diff);
 		check = MSG_ReadByte(&sb);
 		if (check != saveSubsystems[i].check) {
-			*error = "Error in loading a subsystem - see game console for more information";
+			*error = _("Error in loading a subsystem - see game console for more information");
 			Com_Printf("...subsystem '%s' could not be loaded correctly - savegame might be broken (%x)\n", saveSubsystems[i].name, check);
 			return qfalse;
 		}
@@ -159,14 +159,14 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 	saveFileHeader_t header;
 
 	if (!curCampaign) {
-		*error = "No campaign active.";
-		Com_Printf("%s\n", *error);
+		*error = _("No campaign active.");
+		Com_Printf("Error: No campaign active.\n");
 		return qfalse;
 	}
 
 	if (!gd.numBases) {
-		*error = "Nothing to save yet.";
-		Com_Printf("%s\n", *error);
+		*error = _("Nothing to save yet.");
+		Com_Printf("Error: Nothing to save yet.\n");
 		return qfalse;
 	}
 
@@ -176,8 +176,8 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 	/* step 2 - allocate the buffers */
 	buf = (byte *) malloc(sizeof(byte) * MAX_GAMESAVESIZE);
 	if (!buf) {
-		*error = "Error: Could not allocate enough memory to save this game";
-		Com_Printf("%s\n", *error);
+		*error = _("Could not allocate enough memory to save this game");
+		Com_Printf("Error: Could not allocate enough memory to save this game\n");
 		return qfalse;
 	}
 	/* create data */
@@ -219,7 +219,7 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 
 		if (res != Z_OK) {
 			free(fbuf);
-			*error = "Memory error compressing save-game data - set save_compressed cvar to 0";
+			*error = _("Memory error compressing save-game data - set save_compressed cvar to 0");
 			Com_Printf("Memory error compressing save-game data (%s) (Error: %i)!\n", comment, res);
 			return qfalse;
 		}
@@ -240,7 +240,7 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 		return qtrue;
 	} else {
 		Com_Printf("Failed to save campaign '%s' !!!\n", comment);
-		*error = "Size mismatch - failed to save the campaign";
+		*error = _("Size mismatch - failed to save the campaign");
 		return qfalse;
 	}
 }
