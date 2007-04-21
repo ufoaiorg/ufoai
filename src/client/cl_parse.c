@@ -1011,13 +1011,10 @@ static void CL_InvAdd (sizebuf_t *sb)
 
 	number = MSG_ReadShort( sb );
 
-	for (i = 0, le = LEs; i < numLEs; i++, le++)
-		if (le->entnum == number)
-			break;
-
-	if (le->entnum != number) {
+	le = LE_Get(number);
+	if (!le) {
 		nr = MSG_ReadShort(sb) / 6;
-		Com_Printf("InvAdd: message ignored... LE %i not found (type: %i)\n", number, le->type);
+		Com_Printf("InvAdd: message ignored... LE %i not found\n", number);
 		for (; nr-- > 0;) {
 			CL_ReceiveItem(sb, &item, &container, &x, &y, qfalse);
 			Com_Printf("InvAdd: ignoring:\n");
