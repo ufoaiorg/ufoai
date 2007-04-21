@@ -1584,7 +1584,8 @@ extern qboolean AIR_Load (sizebuf_t* sb, void* data)
 {
 	base_t* base;
 	aircraft_t* aircraft;
-	int i, j, p;
+	employee_t *employee;
+	int i, j, p, hired;
 
 	/* load the ufos on geoscape */
 	gd.numUfos = MSG_ReadByte(sb);
@@ -1615,14 +1616,22 @@ extern qboolean AIR_Load (sizebuf_t* sb, void* data)
 		base = &gd.bases[i];
 		/* FIXME: EMPL_ROBOTS => ugvs */
 		aircraft = &base->aircraft[base->aircraftCurrent];
+		hired = E_CountHired(base, EMPL_SOLDIER);
 
-		for (j = 0, p = 0; j < gd.numEmployees[EMPL_SOLDIER]; j++)
-			if (CL_SoldierInAircraft(j, aircraft->idx)) {
-				/* maybe we already have soldiers in this base */
-				base->curTeam[p] = E_GetHiredCharacter(base, EMPL_SOLDIER, j);
-				assert(base->curTeam[p]);
+		for (j = 0, p = 0; j < hired; j++) {
+			employee = E_GetHiredEmployee(base, EMPL_SOLDIER, -(j+1));
+			/* If employee was incorrectly saved, no point in further updating. */
+			if (!employee)
+				Sys_Error("AIR_Load()... Could not get employee %i\n", i);
+
+			if (CL_SoldierInAircraft(employee->idx, aircraft->idx)) {
+				base->curTeam[p] = &employee->chr;
 				p++;
 			}
+		}
+
+		for (; p < MAX_ACTIVETEAM; p++)
+			base->curTeam[p] = NULL;
 	}
 	return qtrue;
 }
