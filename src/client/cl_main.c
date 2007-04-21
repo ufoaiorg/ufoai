@@ -628,9 +628,11 @@ typedef struct serverList_s
 {
 	netadr_t adr;
 	qboolean pinged;
-	char hostname[MAX_VAR];
-	char mapname[MAX_VAR];
-	char version[MAX_VAR];
+	char hostname[16];
+	char mapname[16];
+	char version[8];
+	char gametype[8];
+	qboolean dedicated;
 	int maxclients;
 	int clients;
 	int serverListPos;
@@ -693,7 +695,7 @@ static int CL_AddServerToList (netadr_t* adr, char *msg)
 		}
 		if (Q_strcmp(UFO_VERSION, Info_ValueForKey(msg, "version"))) {
 			Com_DPrintf("CL_AddServerToList: Version mismatch\n");
-			return -1;
+			/*return -1;*/
 		}
 		/* hide full servers */
 		switch (mn_serverlist->integer) {
@@ -723,9 +725,16 @@ static int CL_AddServerToList (netadr_t* adr, char *msg)
 					Q_strncpyz(serverList[i].hostname,
 						Info_ValueForKey(msg, "hostname"),
 						sizeof(serverList[i].hostname));
+					Q_strncpyz(serverList[i].version,
+						Info_ValueForKey(msg, "version"),
+						sizeof(serverList[i].version));
 					Q_strncpyz(serverList[i].mapname,
 						Info_ValueForKey(msg, "mapname"),
 						sizeof(serverList[i].mapname));
+					Q_strncpyz(serverList[i].gametype,
+						Info_ValueForKey(msg, "gametype"),
+						sizeof(serverList[i].gametype));
+					serverList[i].dedicated = atoi(Info_ValueForKey(msg, "dedicated"));
 					serverList[i].clients = atoi(Info_ValueForKey(msg, "clients"));
 					serverList[i].maxclients = atoi(Info_ValueForKey(msg, "maxclients"));
 					/* first time response - add it to the list */
@@ -774,9 +783,11 @@ static void CL_ParseStatusMessage (void)
 	/* update the server string */
 	serverID = CL_AddServerToList(&net_from, s);
 	if (serverID != -1) {
-		Com_sprintf(string, sizeof(string), "%s\t%s\t%i/%i\n",
+		Com_sprintf(string, sizeof(string), "%s\t%s %s (%s)\t%i/%i\n",
 			serverList[serverID].hostname,
 			serverList[serverID].mapname,
+			serverList[serverID].gametype,
+			serverList[serverID].version,
 			serverList[serverID].clients,
 			serverList[serverID].maxclients);
 		serverList[serverID].serverListPos = serverListPos;
@@ -938,6 +949,10 @@ static void CL_ParseServerInfoMessage (void)
 			Q_strcat(serverInfoText, va(_("Servername:\t%s\n"), value), sizeof(serverInfoText));
 		else if (!Q_strncmp(var, "sv_enablemorale", 15))
 			Q_strcat(serverInfoText, va(_("Moralestates:\t%s\n"), value), sizeof(serverInfoText));
+		else if (!Q_strncmp(var, "gametype", 8))
+			Q_strcat(serverInfoText, va(_("Gametype:\t%s\n"), value), sizeof(serverInfoText));
+		else if (!Q_strncmp(var, "sv_roundtimelimit", 17))
+			Q_strcat(serverInfoText, va(_("Roundtime:\t%s\n"), value), sizeof(serverInfoText));
 		else if (!Q_strncmp(var, "sv_teamplay", 11))
 			Q_strcat(serverInfoText, va(_("Teamplay:\t%s\n"), value), sizeof(serverInfoText));
 		else if (!Q_strncmp(var, "maxplayers", 10))
