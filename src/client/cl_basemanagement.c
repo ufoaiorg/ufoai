@@ -2724,17 +2724,17 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
 			MSG_WriteFloat(sb, aircraft->route.dist);
 			for (l = 0; l < aircraft->route.n; l++)
 				MSG_Write2Pos(sb, aircraft->route.p[l]);
+			MSG_WriteShort(sb, aircraft->alientypes);
+			MSG_WriteShort(sb, aircraft->itemtypes);
 			/* Save only needed if aircraft returns from a mission. */
 			if (aircraft->status == AIR_RETURNING) {
 				/* aliencargo */
-				MSG_WriteShort(sb, aircraft->alientypes);
 				for (l = 0; l < aircraft->alientypes; l++) {
 					MSG_WriteString(sb, aircraft->aliencargo[l].alientype);
 					MSG_WriteShort(sb, aircraft->aliencargo[l].amount_alive);
 					MSG_WriteShort(sb, aircraft->aliencargo[l].amount_dead);
 				}
 				/* itemcargo */
-				MSG_WriteShort(sb, aircraft->itemtypes);
 				for (l = 0; l < aircraft->itemtypes; l++) {
 					MSG_WriteShort(sb, aircraft->itemcargo[l].idx);
 					MSG_WriteShort(sb, aircraft->itemcargo[l].amount);
@@ -2870,19 +2870,19 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 			for (l = 0; l < aircraft->route.n; l++)
 				MSG_Read2Pos(sb, aircraft->route.p[l]);
 			/* Load only needed if aircraft returns from a mission. */
+			aircraft->alientypes = MSG_ReadShort(sb);
+			aircraft->itemtypes = MSG_ReadShort(sb);
 			if (aircraft->status == AIR_RETURNING) {
 				/* aliencargo */
-				l = MSG_ReadShort(sb);
-				for (k = 0; k < l; k++) {
-					Q_strncpyz(aircraft->aliencargo[k].alientype, MSG_ReadString(sb), sizeof(aircraft->aliencargo[k].alientype));
-					aircraft->aliencargo[k].amount_alive = MSG_ReadShort(sb);
-					aircraft->aliencargo[k].amount_dead = MSG_ReadShort(sb);
+				for (l = 0; l < aircraft->alientypes; l++) {
+					Q_strncpyz(aircraft->aliencargo[l].alientype, MSG_ReadString(sb), sizeof(aircraft->aliencargo[l].alientype));
+					aircraft->aliencargo[l].amount_alive = MSG_ReadShort(sb);
+					aircraft->aliencargo[l].amount_dead = MSG_ReadShort(sb);
 				}
 				/* itemcargo */
-				l = MSG_ReadShort(sb);
-				for (k = 0; k < l; k++) {
-					aircraft->itemcargo[k].idx = MSG_ReadShort(sb);
-					aircraft->itemcargo[k].amount = MSG_ReadShort(sb);
+				for (l = 0; l < aircraft->itemtypes; l++) {
+					aircraft->itemcargo[l].idx = MSG_ReadShort(sb);
+					aircraft->itemcargo[l].amount = MSG_ReadShort(sb);
 				}
 			} else if (aircraft->status == AIR_TRANSPORT) {
 				gd.alltransfers[aircraft->idx].type = MSG_ReadByte(sb);
