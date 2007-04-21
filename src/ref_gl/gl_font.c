@@ -298,6 +298,17 @@ static fontCache_t *Font_GenerateCache (const char *s, const char *fontString, f
 	SDL_Surface *openGLSurface = NULL;
 	SDL_Rect rect = { 0, 0, 0, 0 };
 	fontCache_t *result;
+#if SDL_BYTEORDER == SDL_BIG_ENDIAN
+	Uint32 rmask = 0xff000000;
+	Uint32 gmask = 0x00ff0000;
+	Uint32 bmask = 0x0000ff00;
+	Uint32 amask = 0x000000ff;
+#else
+	Uint32 rmask = 0x000000ff;
+	Uint32 gmask = 0x0000ff00;
+	Uint32 bmask = 0x00ff0000;
+	Uint32 amask = 0xff000000;
+#endif
 
 	textSurface = TTF_RenderUTF8_Blended(f->font, s, color);
 
@@ -310,9 +321,7 @@ static fontCache_t *Font_GenerateCache (const char *s, const char *fontString, f
 	for (w = 2; w < textSurface->w; w <<= 1);
 	for (h = 2; h < textSurface->h; h <<= 1);
 	
-	openGLSurface = SDL_CreateRGBSurface(SDL_SWSURFACE,
-		w, h, 32, textSurface->format->Rmask, textSurface->format->Gmask,
-		textSurface->format->Bmask, textSurface->format->Amask);
+	openGLSurface = SDL_CreateRGBSurface(SDL_SWSURFACE, w, h, 32, rmask, gmask, bmask, amask);
 
 	rect.x = rect.y = 0;
 	rect.w = textSurface->w;
