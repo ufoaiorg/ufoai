@@ -613,7 +613,7 @@ void Con_DrawNotify (void)
  */
 void Con_DrawConsole (float frac)
 {
-	int i, x, y;
+	int i, x, y, len;
 	int rows, row, lines;
 	char *text;
 	char version[MAX_VAR];
@@ -631,8 +631,9 @@ void Con_DrawConsole (float frac)
 	SCR_AddDirtyPoint(viddef.width - 1, lines - 1);
 
 	Com_sprintf(version, sizeof(version), "v%s", UFO_VERSION);
-	for (x = 0; x < strlen(version); x++)
-		re.DrawChar(viddef.width - (strlen(version) * 8) + x * 8, lines - 12, version[x] | COLORED_TEXT_MASK);
+	len = strlen(version);
+	for (x = 0; x < len; x++)
+		re.DrawChar(viddef.width - (len * 8) + x * 8, lines - 12, version[x] | COLORED_TEXT_MASK);
 
 	/* draw the text */
 	con.vislines = lines;

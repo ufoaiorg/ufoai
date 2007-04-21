@@ -395,6 +395,7 @@ static void SCR_DrawLoading (void)
 	SCR_DrawLoadingBar((int)(VID_NORM_WIDTH / 2) - 300, VID_NORM_HEIGHT - 30, 600, 20, (int)loadingPercent);
 }
 
+static const vec4_t cursorBG = { 0.0f, 0.0f, 0.0f, 0.7f };
 /**
  * @brief Draws the 3D-cursor in battlemode and the icons/info next to it.
  */
@@ -444,7 +445,11 @@ static void SCR_DrawCursor (void)
 
 			/* playernames */
 			if (menuText[TEXT_MOUSECURSOR_PLAYERNAMES] && cl_show_cursor_tooltips->value) {
-				SCR_DrawString(mx + icon_offset_x,my - 32, menuText[TEXT_MOUSECURSOR_PLAYERNAMES], qfalse);
+				/*TODO: activate this:
+				re.DrawFill(mx + icon_offset_x - 1, my - 33, 20, 128, 0, cursorBG);
+				re.DrawColor(NULL);
+				*/
+				SCR_DrawString(mx + icon_offset_x, my - 32, menuText[TEXT_MOUSECURSOR_PLAYERNAMES], qfalse);
 				menuText[TEXT_MOUSECURSOR_PLAYERNAMES] = NULL;
 			}
 		}

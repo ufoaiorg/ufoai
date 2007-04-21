@@ -263,6 +263,8 @@ static void SVC_Info (void)
 
 		Info_SetValueForKey(infostring, "protocol", va("%i", PROTOCOL_VERSION));
 		Info_SetValueForKey(infostring, "hostname", hostname->string);
+		Info_SetValueForKey(infostring, "dedicated", dedicated->string);
+		Info_SetValueForKey(infostring, "gametype", gametype->string);
 		Info_SetValueForKey(infostring, "mapname", sv.name);
 		Info_SetValueForKey(infostring, "clients", va("%i", count));
 		Info_SetValueForKey(infostring, "maxclients", sv_maxclients->string);
