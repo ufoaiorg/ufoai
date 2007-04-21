@@ -688,6 +688,7 @@ HAVE_SND_DX
 HAVE_DGA
 HAVE_DGA1
 HAVE_VID_VIDMODE
+HAVE_CURSES
 HAVE_IPV6
 BUILD_CLIENT
 BUILD_DEDICATED
@@ -1325,6 +1326,7 @@ Optional Packages:
   --with-vid-dga          compile with DGA support [default=check]
   --with-vid-vidmode      compile with vidmode support [default=check]
   --with-ipv6             compile with ipv6 support [default=no]
+  --with-curses           compile with curses console support [default=no]
   --with-openal           build openal sound support [default=check]
   --with-openal-config=FILE
                           using the given openal-config
@@ -2050,6 +2052,15 @@ if test "${with_ipv6+set}" = set; then
   withval=$with_ipv6;
 else
   with_ipv6=no
+fi
+
+
+
+# Check whether --with-curses was given.
+if test "${with_curses+set}" = set; then
+  withval=$with_curses;
+else
+  with_curses=no
 fi
 
 
@@ -10867,6 +10878,131 @@ echo "$as_me: Without VIDMODE" >&6;}
 fi
 REF_GLX_LIBS="$REF_GLX_LIBS $LIBS"
 
+#---------------------------------------------------------------------------------------------
+# Check for curses
+#---------------------------------------------------------------------------------------------
+
+LIBS=
+if test "$with_curses" = "check" || test "$with_curses" = "yes"
+then
+	{ echo "$as_me:$LINENO: checking for library containing newwin" >&5
+echo $ECHO_N "checking for library containing newwin... $ECHO_C" >&6; }
+if test "${ac_cv_search_newwin+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  ac_func_search_save_LIBS=$LIBS
+cat >conftest.$ac_ext <<_ACEOF
+/* confdefs.h.  */
+_ACEOF
+cat confdefs.h >>conftest.$ac_ext
+cat >>conftest.$ac_ext <<_ACEOF
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+char newwin ();
+int
+main ()
+{
+return newwin ();
+  ;
+  return 0;
+}
+_ACEOF
+for ac_lib in '' curses; do
+  if test -z "$ac_lib"; then
+    ac_res="none required"
+  else
+    ac_res=-l$ac_lib
+    LIBS="-l$ac_lib  $ac_func_search_save_LIBS"
+  fi
+  rm -f conftest.$ac_objext conftest$ac_exeext
+if { (ac_try="$ac_link"
+case "(($ac_try" in
+  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
+  *) ac_try_echo=$ac_try;;
+esac
+eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
+  (eval "$ac_link") 2>conftest.er1
+  ac_status=$?
+  grep -v '^ *+' conftest.er1 >conftest.err
+  rm -f conftest.er1
+  cat conftest.err >&5
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); } &&
+	 { ac_try='test -z "$ac_c_werror_flag" || test ! -s conftest.err'
+  { (case "(($ac_try" in
+  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
+  *) ac_try_echo=$ac_try;;
+esac
+eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
+  (eval "$ac_try") 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; } &&
+	 { ac_try='test -s conftest$ac_exeext'
+  { (case "(($ac_try" in
+  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
+  *) ac_try_echo=$ac_try;;
+esac
+eval "echo \"\$as_me:$LINENO: $ac_try_echo\"") >&5
+  (eval "$ac_try") 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; }; then
+  ac_cv_search_newwin=$ac_res
+else
+  echo "$as_me: failed program was:" >&5
+sed 's/^/| /' conftest.$ac_ext >&5
+
+
+fi
+
+rm -f core conftest.err conftest.$ac_objext \
+      conftest$ac_exeext
+  if test "${ac_cv_search_newwin+set}" = set; then
+  break
+fi
+done
+if test "${ac_cv_search_newwin+set}" = set; then
+  :
+else
+  ac_cv_search_newwin=no
+fi
+rm conftest.$ac_ext
+LIBS=$ac_func_search_save_LIBS
+fi
+{ echo "$as_me:$LINENO: result: $ac_cv_search_newwin" >&5
+echo "${ECHO_T}$ac_cv_search_newwin" >&6; }
+ac_res=$ac_cv_search_newwin
+if test "$ac_res" != no; then
+  test "$ac_res" = "none required" || LIBS="$ac_res $LIBS"
+
+fi
+
+	if test "$ac_cv_search_newwin" != "no"
+	then
+		HAVE_CURSES=1
+
+		cat >>confdefs.h <<\_ACEOF
+#define HAVE_CURSES 1
+_ACEOF
+
+	elif test "$with_curses" = "yes"
+	then
+		{ { echo "$as_me:$LINENO: error: --with-curses specified but couldn't find newwin" >&5
+echo "$as_me: error: --with-curses specified but couldn't find newwin" >&2;}
+   { (exit 1); exit 1; }; }
+	fi
+else
+	{ echo "$as_me:$LINENO: Without curses" >&5
+echo "$as_me: Without curses" >&6;}
+fi
+SERVER_LIBS="$SERVER_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
 # Check for ipv6
@@ -11756,13 +11892,13 @@ HAVE_SND_DX!$HAVE_SND_DX$ac_delim
 HAVE_DGA!$HAVE_DGA$ac_delim
 HAVE_DGA1!$HAVE_DGA1$ac_delim
 HAVE_VID_VIDMODE!$HAVE_VID_VIDMODE$ac_delim
+HAVE_CURSES!$HAVE_CURSES$ac_delim
 HAVE_IPV6!$HAVE_IPV6$ac_delim
 BUILD_CLIENT!$BUILD_CLIENT$ac_delim
 BUILD_DEDICATED!$BUILD_DEDICATED$ac_delim
 BUILD_MASTER!$BUILD_MASTER$ac_delim
 BUILD_UFO2MAP!$BUILD_UFO2MAP$ac_delim
 BUILD_QDATA!$BUILD_QDATA$ac_delim
-BUILD_DEBUG!$BUILD_DEBUG$ac_delim
 _ACEOF
 
   if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 97; then
@@ -11804,6 +11940,7 @@ _ACEOF
 ac_delim='%!_!# '
 for ac_last_try in false false false false false :; do
   cat >conf$$subs.sed <<_ACEOF
+BUILD_DEBUG!$BUILD_DEBUG$ac_delim
 PARANOID!$PARANOID$ac_delim
 PROFILING!$PROFILING$ac_delim
 EXE_EXT!$EXE_EXT$ac_delim
@@ -11826,7 +11963,7 @@ LIBOBJS!$LIBOBJS$ac_delim
 LTLIBOBJS!$LTLIBOBJS$ac_delim
 _ACEOF
 
-  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 20; then
+  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 21; then
     break
   elif $ac_last_try; then
     { { echo "$as_me:$LINENO: error: could not make $CONFIG_STATUS" >&5

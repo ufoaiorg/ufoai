@@ -38,6 +38,7 @@ ifeq ($(TARGET_OS),linux-gnu)
 	SERVER_SRCS += \
 		ports/linux/q_shlinux.c \
 		ports/linux/sys_linux.c \
+		ports/unix/sys_console.c \
 		ports/unix/sys_unix.c \
 		ports/unix/glob.c \
 		ports/unix/$(NET_UDP).c
@@ -47,6 +48,7 @@ ifeq ($(TARGET_OS),freebsd)
 	SERVER_SRCS += \
 		ports/linux/q_shlinux.c \
 		ports/linux/sys_linux.c \
+		ports/unix/sys_console.c \
 		ports/unix/sys_unix.c \
 		ports/unix/glob.c \
 		ports/unix/$(NET_UDP).c
@@ -56,6 +58,7 @@ ifeq ($(TARGET_OS),netbsd)
 	SERVER_SRCS += \
 		ports/linux/q_shlinux.c \
 		ports/linux/sys_linux.c \
+		ports/unix/sys_console.c \
 		ports/unix/sys_unix.c \
 		ports/unix/glob.c \
 		ports/unix/$(NET_UDP).c
@@ -74,6 +77,7 @@ ifeq ($(TARGET_OS),darwin)
 	SERVER_SRCS+=\
 		ports/macosx/sys_osx.m \
 		ports/unix/glob.c \
+		ports/unix/sys_console.c \
 		ports/unix/sys_unix.c \
 		ports/unix/$(NET_UDP).c \
 		ports/macosx/q_shosx.c
@@ -94,6 +98,10 @@ ifeq ($(BUILD_DEDICATED),1)
 endif
 
 DEDICATED_CFLAGS=-DDEDICATED_ONLY
+
+ifeq ($(HAVE_CURSES),1)
+	DEDICATED_CFLAGS+=-DHAVE_CURSES
+endif
 
 # Say how to link the exe
 $(SERVER_TARGET): $(SERVER_OBJS) $(BUILDDIR)/.dirs

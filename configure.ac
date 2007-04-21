@@ -56,6 +56,10 @@ AC_ARG_WITH(ipv6,
 	[AS_HELP_STRING([--with-ipv6], [compile with ipv6 support @<:@default=no@:>@])],
 	[], [with_ipv6=no])
 
+AC_ARG_WITH(curses,
+	[AS_HELP_STRING([--with-curses], [compile with curses console support @<:@default=no@:>@])],
+	[], [with_curses=no])
+
 AC_ARG_WITH(openal,
 	[AS_HELP_STRING([--with-openal], [build openal sound support @<:@default=check@:>@])],
 	[], [with_openal=check])
@@ -983,6 +987,26 @@ else
 fi
 REF_GLX_LIBS="$REF_GLX_LIBS $LIBS"
 
+#---------------------------------------------------------------------------------------------
+# Check for curses
+#---------------------------------------------------------------------------------------------
+
+LIBS=
+if test "$with_curses" = "check" || test "$with_curses" = "yes"
+then
+	AC_SEARCH_LIBS([newwin], [curses])
+	if test "$ac_cv_search_newwin" != "no"
+	then
+		AC_SUBST([HAVE_CURSES],1)
+		AC_DEFINE([HAVE_CURSES],1)
+	elif test "$with_curses" = "yes"
+	then
+		AC_MSG_ERROR([--with-curses specified but couldn't find newwin])
+	fi
+else
+	AC_MSG_NOTICE([Without curses])
+fi
+SERVER_LIBS="$SERVER_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
 # Check for ipv6

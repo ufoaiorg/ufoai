@@ -77,6 +77,7 @@ ifeq ($(TARGET_OS),linux-gnu)
 		ports/linux/q_shlinux.c \
 		ports/linux/vid_so.c \
 		ports/linux/sys_linux.c \
+		ports/unix/sys_console.c \
 		ports/unix/sys_unix.c \
 		ports/unix/glob.c \
 		ports/unix/$(NET_UDP).c
@@ -93,6 +94,7 @@ ifeq ($(TARGET_OS),freebsd)
 		ports/linux/q_shlinux.c \
 		ports/linux/vid_so.c \
 		ports/linux/sys_linux.c \
+		ports/unix/sys_console.c \
 		ports/unix/sys_unix.c \
 		ports/unix/glob.c \
 		ports/unix/$(NET_UDP).c
@@ -109,6 +111,7 @@ ifeq ($(TARGET_OS),netbsd)
 		ports/linux/q_shlinux.c \
 		ports/linux/vid_so.c \
 		ports/linux/sys_linux.c \
+		ports/unix/sys_console.c \
 		ports/unix/sys_unix.c \
 		ports/unix/glob.c \
 		ports/unix/$(NET_UDP).c
@@ -143,6 +146,7 @@ ifeq ($(TARGET_OS),darwin)
 		ports/macosx/vid_osx.m \
 		ports/macosx/in_osx.m \
 		ports/unix/glob.c \
+		ports/unix/sys_console.c \
 		ports/unix/sys_unix.c \
 		ports/unix/$(NET_UDP).c \
 		ports/macosx/q_shosx.c \
