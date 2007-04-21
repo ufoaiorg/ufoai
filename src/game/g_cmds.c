@@ -162,7 +162,8 @@ static void Cmd_PlayerList_f (player_t * player)
 		if (!e2->inuse)
 			continue;
 
-		Com_sprintf(st, sizeof(st), "(%i) Team %i %s\n", e2->num, e2->pers.team, e2->pers.netname);
+		Com_sprintf(st, sizeof(st), "(%i) Team %i %s status: %s\n", e2->num,
+				e2->pers.team, e2->pers.netname, (e2->ready ? "waiting" : "playing"));
 		if (strlen(text) + strlen(st) > sizeof(text) - 50) {
 			Q_strcat(text, "And more...\n", sizeof(text));
 			gi.cprintf(player, PRINT_HIGH, "%s", text);
