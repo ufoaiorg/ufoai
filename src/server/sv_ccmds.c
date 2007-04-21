@@ -233,7 +233,7 @@ static void SV_Status_f (void)
 	}
 	Com_Printf("map              : %s\n", sv.name);
 
-	Com_Printf("num ping name            lastmsg address               qport \n");
+	Com_Printf("num ping name            lastmsg address               qport\n");
 	Com_Printf("--- ---- --------------- ------- --------------------- ------\n");
 	for (i = 0, cl = svs.clients; i < sv_maxclients->value; i++, cl++) {
 		if (!cl->state)

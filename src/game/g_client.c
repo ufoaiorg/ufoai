@@ -1850,7 +1850,7 @@ void G_GetTeam (player_t * player)
 		player->pers.spectator = qtrue;
 	} else if (sv_teamplay->integer) {
 		/* set the team specified in the userinfo */
-		gi.dprintf("Get a team for teamplay\n");
+		gi.dprintf("Get a team for teamplay for %s\n", player->pers.netname);
 		i = atoi(Info_ValueForKey(player->pers.userinfo, "teamnum"));
 		/* civilians are at team zero */
 		if (i > 0 && sv_maxteams->integer >= i)
@@ -1862,7 +1862,7 @@ void G_GetTeam (player_t * player)
 	} else {
 		qboolean teamAvailable;
 		/* search team */
-		gi.dprintf("Getting a team for multiplayer\n");
+		gi.dprintf("Getting a multiplayer team for %s\n", player->pers.netname);
 		for (i = 1; i < MAX_TEAMS; i++) {
 			if (level.num_spawnpoints[i]) {
 				teamAvailable = qtrue;
