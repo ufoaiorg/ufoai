@@ -95,6 +95,10 @@ install-indep: stamps/build-indep
 
 	dh_install
 
+	mkdir -p debian/ufoai-data-maps/usr/lib/games/ufoai
+	find base/maps -name '*.bsp' -o -name '*.ump' | tar -T - -cf - | \
+		tar -C debian/ufoai-data-maps/usr/lib/games/ufoai -xf -
+
   # remove unwanted stuff: svn metadata and source files
 	find debian/ufoai-data -name .svn | xargs rm -rf
 	find debian/ufoai-data -name '*.map' | xargs --no-run-if-empty rm
