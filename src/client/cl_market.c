@@ -162,7 +162,7 @@ static void BS_MarketScroll_f (void)
 		Cbuf_AddText(va("buy_autoselld%i\n", i));
 	/* get item list */
 	for (i = buyListScrollPos; i < buyListLength - buyListScrollPos; i++) {
-		if (i >= MAX_MARKET_MENU_ENTRIES || i > buyListLength)
+		if (i >= MAX_MARKET_MENU_ENTRIES)
 			break;
 		od = &csi.ods[buyList[i]];
 		tech = (technology_t *) od->tech;
