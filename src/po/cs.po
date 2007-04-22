@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-04-22 10:15+0200\n"
-"PO-Revision-Date: 2007-04-21 19:52+0100\n"
+"POT-Creation-Date: 2007-04-22 16:57+0200\n"
+"PO-Revision-Date: 2007-04-22 16:54+0100\n"
 "Last-Translator: Lubomír Bláha <tritol@trilogic.cz>\n"
 "Language-Team: čeština <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2269,7 +2269,7 @@ msgid "Show only aliens"
 msgstr "Ukázat jen cizáky"
 
 # Alien = cizák - tradice českého překladu UFO: Enemy Unknown
-#: ../base/ufos/menu_transfer.ufo:285 client/cl_campaign.c:4076
+#: ../base/ufos/menu_transfer.ufo:285 client/cl_campaign.c:4078
 msgid "Aliens"
 msgstr "Cizáci"
 
@@ -11504,7 +11504,7 @@ msgstr "Automatická pistole"
 
 #: ../base/ufos/weapons_human.ufo:382
 msgid "4.2mm MP Magazine"
-msgstr "Zásobník automatické pistole 4.2 mm"
+msgstr "Zásobník automatické pistole"
 
 #: ../base/ufos/weapons_human.ufo:463
 msgid "Submachine Gun"
@@ -11701,7 +11701,7 @@ msgstr "Částicová pistole"
 
 #: ../base/ufos/weapons_particle.ufo:25
 msgid "Pistol Particle Accelerator"
-msgstr "Urychlovač pro částicovou pistoli"
+msgstr "Urychlovač pro částic. pistoli"
 
 #: ../base/ufos/weapons_particle.ufo:59 ../base/ufos/weapons_particle.ufo:140
 #: ../base/ufos/weapons_particle.ufo:220
@@ -11714,7 +11714,7 @@ msgstr "Částicové dělo"
 
 #: ../base/ufos/weapons_particle.ufo:104
 msgid "Cannon Particle Accelerator"
-msgstr "Urychlovač pro částicové dělo"
+msgstr "Urychlovač pro částic. dělo"
 
 #: ../base/ufos/weapons_particle.ufo:119
 msgid "Charged Blast"
@@ -11726,7 +11726,7 @@ msgstr "Částicová puška"
 
 #: ../base/ufos/weapons_particle.ufo:186
 msgid "Rifle Particle Accelerator"
-msgstr "Urychlovač pro částicovou pušku"
+msgstr "Urychlovač pro částic. pušku"
 
 #: ../base/ufos/weapons_plasma.ufo:6
 msgid "Plasma Pistol"
@@ -11992,8 +11992,8 @@ msgstr "Letoun odstartoval"
 #: client/cl_campaign.c:1254 client/cl_campaign.c:1262
 #: client/cl_campaign.c:2231 client/cl_campaign.c:2267
 #: client/cl_campaign.c:2269 client/cl_campaign.c:2577
-#: client/cl_campaign.c:2819 client/cl_main.c:1074 client/cl_map.c:270
-#: client/cl_market.c:498 client/cl_market.c:502 client/cl_research.c:907
+#: client/cl_campaign.c:2821 client/cl_main.c:1074 client/cl_map.c:270
+#: client/cl_market.c:520 client/cl_market.c:524 client/cl_research.c:907
 #: client/cl_research.c:925 client/cl_research.c:931 client/cl_research.c:969
 #: client/cl_research.c:1000 client/cl_research.c:1143
 #: client/cl_research.c:1146 client/cl_transfer.c:240 client/cl_transfer.c:364
@@ -12241,7 +12241,7 @@ msgstr ""
 "Na této základně není letoun - Musíte nejdříve nějaký koupit nebo přepravit\n"
 
 #: client/cl_basemanagement.c:2304 client/cl_basemanagement.c:2306
-#: client/cl_campaign.c:2060 client/cl_market.c:309 client/cl_market.c:571
+#: client/cl_campaign.c:2060 client/cl_market.c:332 client/cl_market.c:593
 #: client/cl_save.c:286 client/cl_team.c:1376
 msgid "Note"
 msgstr "Poznámka"
@@ -12398,28 +12398,28 @@ msgstr[0] "kredit"
 msgstr[1] "kredity"
 msgstr[2] "kreditů"
 
-#: client/cl_campaign.c:1167 client/cl_campaign.c:4081
+#: client/cl_campaign.c:1167 client/cl_campaign.c:4083
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "vědec"
 msgstr[1] "vědci"
 msgstr[2] "vědců"
 
-#: client/cl_campaign.c:1168 client/cl_campaign.c:4083
+#: client/cl_campaign.c:1168 client/cl_campaign.c:4085
 msgid "medic"
 msgid_plural "medics"
 msgstr[0] "lékař"
 msgstr[1] "lékaři"
 msgstr[2] "lékařů"
 
-#: client/cl_campaign.c:1169 client/cl_campaign.c:4080
+#: client/cl_campaign.c:1169 client/cl_campaign.c:4082
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "voják"
 msgstr[1] "vojáci"
 msgstr[2] "vojáků"
 
-#: client/cl_campaign.c:1170 client/cl_campaign.c:4082
+#: client/cl_campaign.c:1170 client/cl_campaign.c:4084
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] "dělník"
@@ -12588,16 +12588,16 @@ msgstr ""
 msgid "Soldier promoted"
 msgstr "Voják povýšen"
 
-#: client/cl_campaign.c:2818
+#: client/cl_campaign.c:2820
 #, c-format
 msgid "Defense of base: %s successful!"
 msgstr "Obrana základny %s byla úspěšná!"
 
-#: client/cl_campaign.c:4076
+#: client/cl_campaign.c:4078
 msgid "Human"
 msgstr "Lidé"
 
-#: client/cl_campaign.c:4078
+#: client/cl_campaign.c:4080
 #, c-format
 msgid ""
 "Race: %s\n"
@@ -12791,14 +12791,14 @@ msgid "Moralestates:\t%s\n"
 msgstr "Stavy morálky:\t%s\n"
 
 #: client/cl_main.c:953
-#, fuzzy, c-format
+#, c-format
 msgid "Gametype:\t%s\n"
-msgstr "Typ hry:"
+msgstr "Typ hry:\t%s\n"
 
 #: client/cl_main.c:955
-#, fuzzy, c-format
+#, c-format
 msgid "Roundtime:\t%s\n"
-msgstr "Vybavení:\t%s\n"
+msgstr "Délka tahu:\t%s\n"
 
 #: client/cl_main.c:957
 #, c-format
@@ -12970,11 +12970,11 @@ msgstr "Jméno:\t%s (%i/%i)\n"
 msgid "Status:\t%s\n"
 msgstr "Stav:\t%s\n"
 
-#: client/cl_market.c:309
+#: client/cl_market.c:332
 msgid "Build a hangar first"
 msgstr "Nejprve vybudujte hangár"
 
-#: client/cl_market.c:498
+#: client/cl_market.c:520
 msgid ""
 "You cannot buy this aircraft.\n"
 "Not enough space in hangars.\n"
@@ -12982,7 +12982,7 @@ msgstr ""
 "Nemůžete koupit tento letoun.\n"
 "Není dostatek místa v hangárech.\n"
 
-#: client/cl_market.c:502
+#: client/cl_market.c:524
 msgid ""
 "You cannot buy this aircraft.\n"
 "Not enough credits.\n"
@@ -12990,7 +12990,7 @@ msgstr ""
 "Nemůžete koupit tento letoun.\n"
 "Nemáte dostatek peněz.\n"
 
-#: client/cl_market.c:571
+#: client/cl_market.c:593
 msgid "You can't sell an aircraft if it still has a team assigned"
 msgstr "Nemůžete prodat letoun dokud má posádku"
 
