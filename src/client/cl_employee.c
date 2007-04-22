@@ -519,15 +519,33 @@ extern qboolean E_UnhireEmployee (base_t* base, employeeType_t type, int idx)
 			E_AssignEmployee(employee, building_rom_unhired_employee);
 			*/
 		}
-		/**
-		 * TODO: why not merge it with E_RemoveEmployeeFromBuilding, where the building is Dropship Hangar
-		 * (unless hangar can hold more than one aircraft...)?
-		 */
-		if (type == EMPL_SOLDIER) {
+		/* TODO: this switch should be moved to E_RemoveEmployeeFromBuilding() when I will
+		   finish implementing capacities. 22042007 Zenerka */
+		switch (employee->type) {
+		case EMPL_SOLDIER:
 			/* Remove soldier from aircraft/team if he was assigned to one. */
 			if (CL_SoldierInAircraft(employee->idx, -1)) {
 				CL_RemoveSoldierFromAircraft(employee->idx, -1);
 			}
+			break;
+		case EMPL_WORKER:
+			/* Update current capacity and production times if worker is being counted there. */
+			if (E_CountHired(base, EMPL_WORKER) == base->capacities[CAP_WORKSPACE].cur) {
+				base->capacities[CAP_WORKSPACE].cur--;
+				PR_UpdateProductionTime(base->idx);
+			}
+			break;
+		case EMPL_SCIENTIST:
+			/* Update current capacity for lab if scientist is being counter there. */
+			if (E_CountHired(base, EMPL_SCIENTIST) == base->capacities[CAP_LABSPACE].cur) {
+				base->capacities[CAP_LABSPACE].cur--;
+			}
+			break;
+		case EMPL_MEDIC:
+			/* TODO: implement me. */
+			break;	 
+		default:
+			break;
 		}
 		/* Set all employee-tags to 'unhired'. */
 		employee->hired = qfalse;
@@ -536,10 +554,7 @@ extern qboolean E_UnhireEmployee (base_t* base, employeeType_t type, int idx)
 		Com_DestroyInventory(&employee->inv);
 		/* unneeded, Com_DestroyInventory does this (more or less)
 		memset(&employee->inv, 0, sizeof(inventory_t)); */
-		/* If we fired EMPL_WORKER update production times in production queue. */
-		if (type == EMPL_WORKER)
-			PR_UpdateProductionTime(base->idx);
-		/* Update capacity. */
+		/* Update capacity of Living Quarters. */
 		base->capacities[CAP_EMPLOYEES].cur--;
 		return qtrue;
 	} else
