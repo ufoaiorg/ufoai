@@ -154,9 +154,6 @@ void SV_BroadcastCommand (const char *fmt, ...)
 
 /**
  * @brief Sends the contents of sv.multicast to a subset of the clients,then clears sv.multicast.
- * @note MULTICAST_ALL same as broadcast (origin can be NULL)
- * @note MULTICAST_PVS send to clients potentially visible from org
- * @note MULTICAST_PHS send to clients potentially hearable from org
  */
 void SV_Multicast (int mask)
 {
