@@ -423,15 +423,13 @@ then
 		then
 			if test "$with_openal" = "yes"
 			then
-			AC_MSG_ERROR([specified --with-openal specified but cannot find OpenAL header!])
+				AC_MSG_ERROR([--with-openal specified but cannot find OpenAL header!])
 			fi
 		else
 			AC_SUBST([HAVE_OPENAL],1)
 		fi
 	elif test "$with_openal" = "yes"
 	then
-		AC_MSG_ERROR([specified --with-openal specified but cannot find OpenAL header!])
-	else
 		AC_SUBST([HAVE_OPENAL], 1)
 		AC_SEARCH_LIBS([alSourcePlay],[openal openal32])
 		if test "$ac_cv_search_alSourcePlay" = "no"
