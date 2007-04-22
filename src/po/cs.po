@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-04-22 16:57+0200\n"
-"PO-Revision-Date: 2007-04-22 16:54+0100\n"
+"POT-Creation-Date: 2007-04-22 22:35+0200\n"
+"PO-Revision-Date: 2007-04-22 22:28+0100\n"
 "Last-Translator: Lubomír Bláha <tritol@trilogic.cz>\n"
 "Language-Team: čeština <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -11993,7 +11993,7 @@ msgstr "Letoun odstartoval"
 #: client/cl_campaign.c:2231 client/cl_campaign.c:2267
 #: client/cl_campaign.c:2269 client/cl_campaign.c:2577
 #: client/cl_campaign.c:2821 client/cl_main.c:1074 client/cl_map.c:270
-#: client/cl_market.c:520 client/cl_market.c:524 client/cl_research.c:907
+#: client/cl_market.c:526 client/cl_market.c:530 client/cl_research.c:907
 #: client/cl_research.c:925 client/cl_research.c:931 client/cl_research.c:969
 #: client/cl_research.c:1000 client/cl_research.c:1143
 #: client/cl_research.c:1146 client/cl_transfer.c:240 client/cl_transfer.c:364
@@ -12241,7 +12241,7 @@ msgstr ""
 "Na této základně není letoun - Musíte nejdříve nějaký koupit nebo přepravit\n"
 
 #: client/cl_basemanagement.c:2304 client/cl_basemanagement.c:2306
-#: client/cl_campaign.c:2060 client/cl_market.c:332 client/cl_market.c:593
+#: client/cl_campaign.c:2060 client/cl_market.c:338 client/cl_market.c:599
 #: client/cl_save.c:286 client/cl_team.c:1376
 msgid "Note"
 msgstr "Poznámka"
@@ -12643,8 +12643,11 @@ msgstr ""
 
 #: client/cl_hospital.c:58
 #, c-format
-msgid "Healing of %s completed - %i active healings left\n"
-msgstr "%s je vyléčen - ještě zbývá %i léčených\n"
+msgid "Healing of %s completed - %i active healing left\n"
+msgid_plural "Healing of %s completed - %i active healings left\n"
+msgstr[0] "%s je vyléčen - ještě zbývá %i léčený\n"
+msgstr[1] "%s je vyléčen - ještě zbývají %i léčení\n"
+msgstr[2] "%s je vyléčen - ještě zbývá %i léčených\n"
 
 #: client/cl_hospital.c:60
 msgid "Healing complete"
@@ -12970,11 +12973,11 @@ msgstr "Jméno:\t%s (%i/%i)\n"
 msgid "Status:\t%s\n"
 msgstr "Stav:\t%s\n"
 
-#: client/cl_market.c:332
+#: client/cl_market.c:338
 msgid "Build a hangar first"
 msgstr "Nejprve vybudujte hangár"
 
-#: client/cl_market.c:520
+#: client/cl_market.c:526
 msgid ""
 "You cannot buy this aircraft.\n"
 "Not enough space in hangars.\n"
@@ -12982,7 +12985,7 @@ msgstr ""
 "Nemůžete koupit tento letoun.\n"
 "Není dostatek místa v hangárech.\n"
 
-#: client/cl_market.c:524
+#: client/cl_market.c:530
 msgid ""
 "You cannot buy this aircraft.\n"
 "Not enough credits.\n"
@@ -12990,7 +12993,7 @@ msgstr ""
 "Nemůžete koupit tento letoun.\n"
 "Nemáte dostatek peněz.\n"
 
-#: client/cl_market.c:593
+#: client/cl_market.c:599
 msgid "You can't sell an aircraft if it still has a team assigned"
 msgstr "Nemůžete prodat letoun dokud má posádku"
 
