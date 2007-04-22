@@ -203,7 +203,7 @@ static void CMod_LoadSubmodels (lump_t * l)
 
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadSubmodels: No lump given");
-		
+
 	in = (void *) (cmod_base + l->fileofs);
 	if (l->filelen % sizeof(dmodel_t))
 		Com_Error(ERR_DROP, "CMod_LoadSubmodels: funny lump size (%i => %Zu", l->filelen, sizeof(dmodel_t));
@@ -485,7 +485,7 @@ static void CMod_LoadLeafBrushes (lump_t * l)
 	if (count < 1)
 		Com_Error(ERR_DROP, "Map with no planes");
 	/* need to save space for box planes */
-	if (count > MAX_MAP_LEAFBRUSHES)
+	if (count >= MAX_MAP_LEAFBRUSHES)
 		Com_Error(ERR_DROP, "Map has too many leafbrushes");
 
 	curTile->numleafbrushes = count;
@@ -1011,7 +1011,7 @@ static void CMod_LoadEntityString (lump_t * l)
 
 	if (!l)
 		Com_Error(ERR_DROP, "CMod_LoadEntityString: No lump given");
-		
+
 	if (!l->filelen)
 		Com_Error(ERR_DROP, "CMod_LoadEntityString: Map has NO routing lump");
 
@@ -1665,10 +1665,10 @@ static void CM_ClipBoxToBrush (vec3_t mins, vec3_t maxs, vec3_t p1, vec3_t p2, t
 				leavefrac = f;
 		}
 	}
-	
+
 	if (!trace)
 		return;
-	
+
 	if (!startout) {			/* original point was inside brush */
 		trace->startsolid = qtrue;
 		if (!getout)
@@ -1731,7 +1731,7 @@ static void CM_TestBoxInBrush (vec3_t mins, vec3_t maxs, vec3_t p1, trace_t * tr
 
 	if (!trace)
 		return;
-		
+
 	/* inside this brush */
 	trace->startsolid = trace->allsolid = qtrue;
 	trace->fraction = 0;
@@ -1752,7 +1752,7 @@ static void CM_TraceToLeaf (int leafnum)
 	cbrush_t *b;
 
 	assert(leafnum >= 0);
-		
+
 	leaf = &curTile->leafs[leafnum];
 	if (!(leaf->contents & trace_contents))
 		return;
