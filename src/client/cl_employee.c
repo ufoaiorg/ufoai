@@ -1,6 +1,7 @@
 /**
  * @file cl_employee.c
- * @brief Single player employee stuff
+ * @brief Single player employee stuff.
+ * @note Employee related functions prefix: E_
  */
 
 /*

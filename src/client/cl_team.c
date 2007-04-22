@@ -581,6 +581,7 @@ static item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
 /**
  * @brief
  * @sa CL_AddWeaponAmmo
+ * @todo remove baseCurrent from here - base->curTeam[] pointers goes mad
  */
 extern void CL_ReloadAndRemoveCarried (equipDef_t * ed)
 {
@@ -1096,6 +1097,7 @@ static void CL_MarkTeam_f (void)
  * @param[in] aircraft_idx The global index of the aircraft. use -1 to check if the soldier is in _any_ aircraft.
  * @return qboolean qtrue if the soldier was found in the aircraft(s) else: qfalse.
  * @pre Needs baseCurrent set to the base the aircraft is located in.
+ * @todo params should be employee_t* and aircraft_t*
  */
 extern qboolean CL_SoldierInAircraft (int employee_idx, int aircraft_idx)
 {
