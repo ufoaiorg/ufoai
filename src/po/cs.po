@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-04-21 19:54+0200\n"
+"POT-Creation-Date: 2007-04-22 10:15+0200\n"
 "PO-Revision-Date: 2007-04-21 19:52+0100\n"
 "Last-Translator: Lubomír Bláha <tritol@trilogic.cz>\n"
 "Language-Team: čeština <cs@li.org>\n"
@@ -1675,67 +1675,67 @@ msgstr "Další volný tým"
 msgid "Previous free team"
 msgstr "Předchozí volný tým"
 
-#: ../base/ufos/menu_multiplayer.ufo:1564
+#: ../base/ufos/menu_multiplayer.ufo:1571
 msgid "Please wait"
 msgstr "Čekejte prosím"
 
-#: ../base/ufos/menu_multiplayer.ufo:1570
+#: ../base/ufos/menu_multiplayer.ufo:1577
 msgid "Waiting for other players to join the game"
 msgstr "Čekám až se ke hře připojí ostatní hráči"
 
-#: ../base/ufos/menu_multiplayer.ufo:1576
+#: ../base/ufos/menu_multiplayer.ufo:1583
 msgid "Players that must join before starting: "
 msgstr "Hráči kteří se před zahájením musí připojit:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1588
+#: ../base/ufos/menu_multiplayer.ufo:1595
 msgid "Start the game even if not all teams have joined"
 msgstr "Zahájí hru i přesto, že se nepřipojily všechny týmy"
 
-#: ../base/ufos/menu_multiplayer.ufo:1601
+#: ../base/ufos/menu_multiplayer.ufo:1608
 msgid "Force start"
 msgstr "Vynutit zahájení"
 
-#: ../base/ufos/menu_multiplayer.ufo:1615
+#: ../base/ufos/menu_multiplayer.ufo:1622
 msgid "1on1"
 msgstr "1vs.1"
 
-#: ../base/ufos/menu_multiplayer.ufo:1629
+#: ../base/ufos/menu_multiplayer.ufo:1636
 msgid "1on1on1"
 msgstr "1vs.1vs.1"
 
-#: ../base/ufos/menu_multiplayer.ufo:1643
+#: ../base/ufos/menu_multiplayer.ufo:1650
 msgid "2on2"
 msgstr "2vs.2"
 
-#: ../base/ufos/menu_multiplayer.ufo:1657
+#: ../base/ufos/menu_multiplayer.ufo:1664
 msgid "2on2on2"
 msgstr "2vs.2vs.2"
 
-#: ../base/ufos/menu_multiplayer.ufo:1671
+#: ../base/ufos/menu_multiplayer.ufo:1678
 msgid "3on3"
 msgstr "3vs.3"
 
-#: ../base/ufos/menu_multiplayer.ufo:1685
+#: ../base/ufos/menu_multiplayer.ufo:1692
 msgid "3on3on3"
 msgstr "3vs.3vs.3"
 
-#: ../base/ufos/menu_multiplayer.ufo:1699
+#: ../base/ufos/menu_multiplayer.ufo:1706
 msgid "4on4"
 msgstr "4vs.4"
 
-#: ../base/ufos/menu_multiplayer.ufo:1713
+#: ../base/ufos/menu_multiplayer.ufo:1720
 msgid "4on4on4"
 msgstr "4vs.4"
 
-#: ../base/ufos/menu_multiplayer.ufo:1727
+#: ../base/ufos/menu_multiplayer.ufo:1734
 msgid "Coop 2 players"
 msgstr "Spolupráce 2 hráčů"
 
-#: ../base/ufos/menu_multiplayer.ufo:1741
+#: ../base/ufos/menu_multiplayer.ufo:1748
 msgid "Coop 3 players"
 msgstr "Spolupráce 3 hráčů"
 
-#: ../base/ufos/menu_multiplayer.ufo:1755
+#: ../base/ufos/menu_multiplayer.ufo:1762
 msgid "Coop 4 players"
 msgstr "Spolupráce 4 hráčů"
 
@@ -2039,7 +2039,7 @@ msgstr "Velice pomalu"
 msgid "Slow"
 msgstr "Pomalu"
 
-#: ../base/ufos/menu_ptleditor.ufo:74 client/cl_main.c:2132
+#: ../base/ufos/menu_ptleditor.ufo:74 client/cl_main.c:2147
 msgid "Normal"
 msgstr "Normální"
 
@@ -2269,7 +2269,7 @@ msgid "Show only aliens"
 msgstr "Ukázat jen cizáky"
 
 # Alien = cizák - tradice českého překladu UFO: Enemy Unknown
-#: ../base/ufos/menu_transfer.ufo:285 client/cl_campaign.c:4041
+#: ../base/ufos/menu_transfer.ufo:285 client/cl_campaign.c:4076
 msgid "Aliens"
 msgstr "Cizáci"
 
@@ -11992,7 +11992,7 @@ msgstr "Letoun odstartoval"
 #: client/cl_campaign.c:1254 client/cl_campaign.c:1262
 #: client/cl_campaign.c:2231 client/cl_campaign.c:2267
 #: client/cl_campaign.c:2269 client/cl_campaign.c:2577
-#: client/cl_campaign.c:2786 client/cl_main.c:1059 client/cl_map.c:270
+#: client/cl_campaign.c:2819 client/cl_main.c:1074 client/cl_map.c:270
 #: client/cl_market.c:498 client/cl_market.c:502 client/cl_research.c:907
 #: client/cl_research.c:925 client/cl_research.c:931 client/cl_research.c:969
 #: client/cl_research.c:1000 client/cl_research.c:1143
@@ -12398,28 +12398,28 @@ msgstr[0] "kredit"
 msgstr[1] "kredity"
 msgstr[2] "kreditů"
 
-#: client/cl_campaign.c:1167 client/cl_campaign.c:4046
+#: client/cl_campaign.c:1167 client/cl_campaign.c:4081
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "vědec"
 msgstr[1] "vědci"
 msgstr[2] "vědců"
 
-#: client/cl_campaign.c:1168 client/cl_campaign.c:4048
+#: client/cl_campaign.c:1168 client/cl_campaign.c:4083
 msgid "medic"
 msgid_plural "medics"
 msgstr[0] "lékař"
 msgstr[1] "lékaři"
 msgstr[2] "lékařů"
 
-#: client/cl_campaign.c:1169 client/cl_campaign.c:4045
+#: client/cl_campaign.c:1169 client/cl_campaign.c:4080
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "voják"
 msgstr[1] "vojáci"
 msgstr[2] "vojáků"
 
-#: client/cl_campaign.c:1170 client/cl_campaign.c:4047
+#: client/cl_campaign.c:1170 client/cl_campaign.c:4082
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] "dělník"
@@ -12588,16 +12588,16 @@ msgstr ""
 msgid "Soldier promoted"
 msgstr "Voják povýšen"
 
-#: client/cl_campaign.c:2785
+#: client/cl_campaign.c:2818
 #, c-format
 msgid "Defense of base: %s successful!"
 msgstr "Obrana základny %s byla úspěšná!"
 
-#: client/cl_campaign.c:4041
+#: client/cl_campaign.c:4076
 msgid "Human"
 msgstr "Lidé"
 
-#: client/cl_campaign.c:4043
+#: client/cl_campaign.c:4078
 #, c-format
 msgid ""
 "Race: %s\n"
@@ -12747,21 +12747,21 @@ msgstr "Potvrdit aktuální akci"
 msgid "Toggle first-person/third-person camera mode"
 msgstr "Přepnout režim pohledu mezi první a třetí osobou"
 
-#: client/cl_main.c:366 client/cl_main.c:1015
+#: client/cl_main.c:366 client/cl_main.c:1030
 msgid "Assemble a team first"
 msgstr "Nejprve sestavte tým"
 
-#: client/cl_main.c:366 client/cl_main.c:1015 client/cl_main.c:1578
-#: client/cl_main.c:1583 client/cl_main.c:1589 client/cl_main.c:1595
+#: client/cl_main.c:366 client/cl_main.c:1030 client/cl_main.c:1593
+#: client/cl_main.c:1598 client/cl_main.c:1604 client/cl_main.c:1610
 #: client/cl_save.c:353 client/cl_save.c:379
 msgid "Error"
 msgstr "Chyba"
 
-#: client/cl_main.c:866
+#: client/cl_main.c:877
 msgid "No player connected\n"
 msgstr "Žádný hráč není připojen\n"
 
-#: client/cl_main.c:904
+#: client/cl_main.c:915
 #, c-format
 msgid ""
 "IP\t%s\n"
@@ -12770,58 +12770,68 @@ msgstr ""
 "IP\t%s\n"
 "\n"
 
-#: client/cl_main.c:925
+#: client/cl_main.c:936
 #, c-format
 msgid "Map:\t%s\n"
 msgstr "Mapa:\t%s\n"
 
-#: client/cl_main.c:936
+#: client/cl_main.c:947
 #, c-format
 msgid "Version:\t%s\n"
 msgstr "Verze:\t%s\n"
 
-#: client/cl_main.c:938
+#: client/cl_main.c:949
 #, c-format
 msgid "Servername:\t%s\n"
 msgstr "Jméno serveru:\t%s\n"
 
-#: client/cl_main.c:940
+#: client/cl_main.c:951
 #, c-format
 msgid "Moralestates:\t%s\n"
 msgstr "Stavy morálky:\t%s\n"
 
-#: client/cl_main.c:942
+#: client/cl_main.c:953
+#, fuzzy, c-format
+msgid "Gametype:\t%s\n"
+msgstr "Typ hry:"
+
+#: client/cl_main.c:955
+#, fuzzy, c-format
+msgid "Roundtime:\t%s\n"
+msgstr "Vybavení:\t%s\n"
+
+#: client/cl_main.c:957
 #, c-format
 msgid "Teamplay:\t%s\n"
 msgstr "Týmová hra:\t%s\n"
 
-#: client/cl_main.c:944
+#: client/cl_main.c:959
 #, c-format
 msgid "Max. players per team:\t%s\n"
 msgstr "Maximum hráčů na tým:\t%s\n"
 
-#: client/cl_main.c:946
+#: client/cl_main.c:961
 #, c-format
 msgid "Max. teams allowed in this map:\t%s\n"
 msgstr "Maximum týmů povolených v této mapě:\t%s\n"
 
-#: client/cl_main.c:948
+#: client/cl_main.c:963
 #, c-format
 msgid "Max. clients:\t%s\n"
 msgstr "Maximum klientů:\t%s\n"
 
-#: client/cl_main.c:950
+#: client/cl_main.c:965
 #, c-format
 msgid "Max. soldiers per player:\t%s\n"
 msgstr "Maximum vojáků na hráče:\t%s\n"
 
-#: client/cl_main.c:952
+#: client/cl_main.c:967
 #, c-format
 msgid "Max. soldiers per team:\t%s\n"
 msgstr "Maximum vojáků na tým:\t%s\n"
 
 # doladit
-#: client/cl_main.c:1059
+#: client/cl_main.c:1074
 msgid ""
 "All bookmark slots are used - please removed unused entries and repeat this "
 "step"
@@ -12829,41 +12839,41 @@ msgstr ""
 "Není místo pro další oblíbené - smažte prosím nepoužívané položky a zkuste "
 "to znovu"
 
-#: client/cl_main.c:1163
+#: client/cl_main.c:1178
 msgid "Select a free team or your coop team"
 msgstr "Zvolte volný tým nebo tým pro spolupráci"
 
-#: client/cl_main.c:1408
+#: client/cl_main.c:1423
 msgid "Connection timed out - server is no longer reachable"
 msgstr "Spojení se nezdařilo - server není nadále k dispozici"
 
-#: client/cl_main.c:1408
+#: client/cl_main.c:1423
 msgid "Network error"
 msgstr "Chyba sítě"
 
-#: client/cl_main.c:1468 client/cl_main.c:1482
+#: client/cl_main.c:1483 client/cl_main.c:1497
 #, c-format
 msgid "Current team: %i"
 msgstr "Současný tým: %i"
 
-#: client/cl_main.c:1472 client/cl_main.c:1486
+#: client/cl_main.c:1487 client/cl_main.c:1501
 msgid "Team is already in use"
 msgstr "Tým je již používán"
 
-#: client/cl_main.c:1496 client/cl_main.c:1524
+#: client/cl_main.c:1511 client/cl_main.c:1539
 msgid "Invalid or full team"
 msgstr "Neplatný nebo plný tým"
 
-#: client/cl_main.c:1577
+#: client/cl_main.c:1592
 #, c-format
 msgid "Local game version (%s) differs from the servers"
 msgstr "Vaše verze hry (%s) se liší od té na serveru"
 
-#: client/cl_main.c:1583
+#: client/cl_main.c:1598
 msgid "Local map version differs from server"
 msgstr "Vaše verze mapy se liší od té na serveru"
 
-#: client/cl_main.c:1589
+#: client/cl_main.c:1604
 msgid ""
 "You are using modified ufo script files - you won't be able to connect to "
 "the server"
@@ -12871,43 +12881,43 @@ msgstr ""
 "Používáte upravené soubory s ufo skripty - nebudete se moci připojit k "
 "serveru"
 
-#: client/cl_main.c:1594
+#: client/cl_main.c:1609
 #, c-format
 msgid "Local game version (%s) differs from the servers (%s)"
 msgstr "Vaše verze hry (%s) se liší od té na serveru (%s)"
 
-#: client/cl_main.c:1906
+#: client/cl_main.c:1921
 msgid "Unnamed"
 msgstr "Bezejmenný"
 
-#: client/cl_main.c:1923
+#: client/cl_main.c:1938
 msgid ""
 "Pause the current server (singleplayer and multiplayer when you are server)"
 msgstr ""
 "Pozastavit aktuální server (v režimu jednoho hráče a když jste server i v "
 "režimu více hráčů)"
 
-#: client/cl_main.c:2125
+#: client/cl_main.c:2140
 msgid "Chicken-hearted"
 msgstr "Pro sraby"
 
-#: client/cl_main.c:2127
+#: client/cl_main.c:2142
 msgid "Very Easy"
 msgstr "Velice snadné"
 
-#: client/cl_main.c:2130
+#: client/cl_main.c:2145
 msgid "Easy"
 msgstr "Snadné"
 
-#: client/cl_main.c:2135
+#: client/cl_main.c:2150
 msgid "Hard"
 msgstr "Těžké"
 
-#: client/cl_main.c:2137
+#: client/cl_main.c:2152
 msgid "Very Hard"
 msgstr "Velice těžké"
 
-#: client/cl_main.c:2139
+#: client/cl_main.c:2154
 msgid "Insane"
 msgstr "Nemožné"
 
