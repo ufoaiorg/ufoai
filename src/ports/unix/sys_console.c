@@ -304,6 +304,7 @@ char *Sys_ConsoleInput (void)
 			cmdbuf_pos--;
 			cmdbuf[edit_line][cmdbuf_pos] = '\0';
 			waddstr(win_cmd, "\b \b");
+			wrefresh(win_cmd);
 		}
 		break;
 	}
