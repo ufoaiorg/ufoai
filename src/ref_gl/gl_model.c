@@ -151,7 +151,7 @@ static model_t *Mod_ForName (const char *name, qboolean crash)
 
 	case IDMD3HEADER:
 		/* MD3 header */
-		loadmodel->extradata = Hunk_Begin (0x800000);
+		loadmodel->extradata = Hunk_Begin(0x800000);
 		Mod_LoadAliasMD3Model (mod, buf);
 		break;
 
@@ -1495,8 +1495,8 @@ struct model_s *R_RegisterModel (const char *name)
 
 			pheader3 = (maliasmodel_t *)mod->extradata;
 
-			for (i=0; i<pheader3->num_meshes; i++) {
-				for (k=0; k<pheader3->meshes[i].num_skins; k++)
+			for (i = 0; i < pheader3->num_meshes; i++) {
+				for (k = 0; k < pheader3->meshes[i].num_skins; k++)
 					mod->skins[i] = GL_FindImage(pheader3->meshes[i].skins[k].name, it_skin);
 			}
 			mod->numframes = pheader3->num_frames;
