@@ -1,11 +1,12 @@
-ufoai (2.2~~svn) unstable; urgency=low
+ufoai (2.2~~svn7798) unstable; urgency=low
 
-  * Added build-dependency on openal-dev and libalut-dev.
+  * Explicitely disable openal support as advised by dev-team.
   * Build in ./BUILD/, not ./build/ which is already used for something
     else.
   * Made installation of maps more robust and more portable.
+  * Enable curses console for the server.
 
- -- Yann Dirson <dirson@debian.org>  Sun, 22 Apr 2007 00:10:33 +0200
+ -- Yann Dirson <dirson@debian.org>  Sun, 22 Apr 2007 11:48:51 +0200
 
 ufoai (2.1~~svn) unstable; urgency=low
 
