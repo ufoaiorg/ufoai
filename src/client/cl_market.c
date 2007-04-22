@@ -146,6 +146,11 @@ static void BS_MarketScroll_f (void)
 	else
 		return;
 
+	if (buyListLength > MAX_MARKET_MENU_ENTRIES && buyListScrollPos >= buyListLength - MAX_MARKET_MENU_ENTRIES) {
+		buyListScrollPos = buyListLength - MAX_MARKET_MENU_ENTRIES;
+		node->textScroll = buyListScrollPos;
+	}
+
 	/* the following nodes must exist */
 	node = MN_GetNodeFromCurrentMenu("market_market");
 	assert(node);
@@ -164,6 +169,7 @@ static void BS_MarketScroll_f (void)
 	for (i = buyListScrollPos; i < buyListLength - buyListScrollPos; i++) {
 		if (i >= MAX_MARKET_MENU_ENTRIES)
 			break;
+		assert(i >= 0);
 		od = &csi.ods[buyList[i]];
 		tech = (technology_t *) od->tech;
 		/* Check whether the proper buytype, storage in current base and market. */
@@ -275,12 +281,12 @@ static void BS_BuyType_f (void)
 	menuNode_t* node;
 
 	if (Cmd_Argc() == 2) {
+		buyCategory = atoi(Cmd_Argv(1));
 		buyListScrollPos = 0;
 		node = MN_GetNodeFromCurrentMenu("market");
 		if (node)
 			node->textScroll = 0;
 		BS_MarketScroll_f();
-		buyCategory = atoi(Cmd_Argv(1));
 	}
 
 	if (!baseCurrent || buyCategory == -1)
