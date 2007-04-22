@@ -2653,7 +2653,7 @@ static void CL_DebugAllItems_f (void)
 	int i;
 	base_t *base;
 	technology_t *tech;
-	
+
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <baseID>\n", Cmd_Argv(0));
 		return;
@@ -2666,8 +2666,10 @@ static void CL_DebugAllItems_f (void)
 	}
 	base = gd.bases + i;
 	assert(base);
-	
+
 	for (i = 0; i < csi.numODs; i++) {
+		if (!csi.ods[i].weapon && !csi.ods[i].numWeapons)
+			continue;
 		tech = csi.ods[i].tech;
 		if (!tech)
 			Sys_Error("CL_DebugAllItems_f: No tech for %s / %s\n", csi.ods[i].id, csi.ods[i].name);
