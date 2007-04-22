@@ -7,8 +7,8 @@ Standards-Version: 3.6.1
 
 Package: ufoai
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, ufoai-data (>= 0.0.svn), ufoai-data-maps (>= 0.0.svn)
-Suggests: ufoai-data-music
+Depends: ${shlibs:Depends}, ${misc:Depends}, ufoai-data (>= 0.0.svn), ufoai-data-maps (>= 0.0.svn), ufoai-vid-glx | ufoai-vid
+Suggests: ufoai-data-music, ufoai-vid
 Description: UFO: Alien Invasion - build your team and stop the aliens
  "UFO: Alien Invasion" is a game inspired by the XCOM "UFO" series.
  .
@@ -18,6 +18,28 @@ Description: UFO: Alien Invasion - build your team and stop the aliens
  .
  The tactical part of the game uses OpenGL, and is based on the Quake2
  engine.  A multiplayer mode is also available.
+
+Package: ufoai-vid-glx
+Architecture: any
+Provides: ufoai-vid
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: UFO: Alien Invasion - GLX video module
+ "UFO: Alien Invasion" is a game inspired by the XCOM "UFO" series.
+ .
+ UFO:AI comes with several video rendering engines. This is the
+ default one, which uses GLX.  Note that not installing the default
+ engine will require users to select an alternative manually.
+
+Package: ufoai-vid-sdl
+Architecture: any
+Provides: ufoai-vid
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: UFO: Alien Invasion - SDL video module
+ "UFO: Alien Invasion" is a game inspired by the XCOM "UFO" series.
+ .
+ UFO:AI comes with several video rendering engines.  This is the
+ an alternative one, which uses SDL.  Note that using an alternative
+ engine requires manual configuration.
 
 Package: ufoai-tools
 Architecture: any
