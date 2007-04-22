@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-04-22 10:15+0200\n"
-"PO-Revision-Date: 2007-04-22 10:30+0100\n"
+"PO-Revision-Date: 2007-04-22 18:37+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -396,25 +396,23 @@ msgstr "Soldat"
 
 #: ../base/ufos/medals.ufo:59
 msgid "Rfn"
-msgstr "S."
+msgstr "S"
 
 #: ../base/ufos/medals.ufo:66
-#, fuzzy
 msgid "Lance-Corporal"
-msgstr "Gefreiter"
+msgstr "Hauptgefreiter"
 
 #: ../base/ufos/medals.ufo:67
-#, fuzzy
 msgid "LCpl"
-msgstr "Gefr."
+msgstr "HG"
 
 #: ../base/ufos/medals.ufo:77
 msgid "Corporal"
-msgstr "Gefreiter"
+msgstr "Oberstabsgefreiter"
 
 #: ../base/ufos/medals.ufo:78
 msgid "Cpl"
-msgstr "Gefr."
+msgstr "OSG"
 
 #: ../base/ufos/medals.ufo:88
 msgid "Sergeant"
@@ -426,72 +424,67 @@ msgstr "Ufz."
 
 #: ../base/ufos/medals.ufo:99
 msgid "Warrant Officer"
-msgstr ""
+msgstr "Hauptfeldwebel"
 
 #: ../base/ufos/medals.ufo:100
 msgid "WO"
-msgstr ""
+msgstr "HF"
 
 #: ../base/ufos/medals.ufo:110
 msgid "Senior Warrant Officer"
-msgstr ""
+msgstr "Oberstabsfeldwebel"
 
 #: ../base/ufos/medals.ufo:111
 msgid "SWO"
-msgstr ""
+msgstr "OSF"
 
 #: ../base/ufos/medals.ufo:120
 msgid "Second Lieutenant"
-msgstr ""
+msgstr "Leutnant"
 
 #: ../base/ufos/medals.ufo:121
 msgid "2Lt"
-msgstr ""
+msgstr "Lt"
 
 #: ../base/ufos/medals.ufo:130
 msgid "Lieutenant"
-msgstr ""
+msgstr "Oberleutnant"
 
 #: ../base/ufos/medals.ufo:131
 msgid "Lt"
-msgstr ""
+msgstr "OLt"
 
 #: ../base/ufos/medals.ufo:140
 msgid "Captain"
-msgstr "Leutnant"
+msgstr "Hauptmann"
 
 #: ../base/ufos/medals.ufo:141
-#, fuzzy
 msgid "Capt"
-msgstr "Lt."
+msgstr "H"
 
 #: ../base/ufos/medals.ufo:150
-#, fuzzy
 msgid "Major"
-msgstr "Mär"
+msgstr "Major"
 
 #: ../base/ufos/medals.ufo:151
-#, fuzzy
 msgid "Maj"
-msgstr "Tobend"
+msgstr "M"
 
 #: ../base/ufos/medals.ufo:160
 msgid "Lieutenant-Colonel"
-msgstr ""
+msgstr "Oberstleutnant"
 
 #: ../base/ufos/medals.ufo:161
 msgid "Lt Col"
-msgstr ""
+msgstr "OTL"
 
 #: ../base/ufos/medals.ufo:170
-#, fuzzy
 msgid "Colonel"
-msgstr "Nahkampf"
+msgstr "Oberst"
 
 #: ../base/ufos/medals.ufo:171
-#, fuzzy
 msgid "Col"
-msgstr "Gefr."
+msgstr "O"
 
 #: ../base/ufos/menu_aircraft.ufo:49
 msgid "Assign your squad"
@@ -8884,7 +8877,7 @@ msgstr "Es können noch keine lebenden Außerirdischen gehalten werden - sie sta
 
 #: client/cl_aliencont.c:264
 msgid "You don't have enough space in Alien Containment. Some aliens got killed."
-msgstr ""
+msgstr "Nicht genügend Kapazität in der Quarantänestation. Einige Außerirdische wurden getötet."
 
 #: client/cl_aliencont.c:275
 msgid "You've captured new aliens."
@@ -9720,6 +9713,8 @@ msgid ""
 "You cannot buy this aircraft.\n"
 "Not enough space in hangars.\n"
 msgstr ""
+"Sie können dieses Flugzeug nicht kaufen.\n"
+"Nicht genügen Platz in den Hangars.\n"
 
 #: client/cl_market.c:502
 msgid ""
@@ -10793,6 +10788,8 @@ msgid ""
 "Soldier is dazed!\n"
 "Enemy used flashbang!\n"
 msgstr ""
+"Soldat ist benommen!\n"
+"Gegner benutze Blendgranate!\n"
 
 #: po/OTHER_STRINGS:11
 msgid "You cannot use medikit on yourself.\n"
