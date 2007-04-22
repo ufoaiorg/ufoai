@@ -254,7 +254,6 @@ char *Sys_ConsoleInput (void)
 		return cmdbuf[line];
 
 	case '\t':
-		Com_Printf("Complete\n");
 		Sys_ConsoleCompleteCommand();
 		break;
 
@@ -299,6 +298,7 @@ char *Sys_ConsoleInput (void)
 
 	/* Backspace - remove character */
 	case '\b':
+	case 127:
 	case KEY_BACKSPACE:
 		if (cmdbuf_pos) {
 			cmdbuf_pos--;
@@ -307,6 +307,13 @@ char *Sys_ConsoleInput (void)
 			wrefresh(win_cmd);
 		}
 		break;
+
+#if 0
+	default:
+		if ((key < ' ') || (key > '~')) {
+			Com_Printf("key: %i\n", key);
+		}
+#endif
 	}
 
 	/* Return nothing by default */
