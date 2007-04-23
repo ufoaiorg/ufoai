@@ -1339,6 +1339,7 @@ void Com_FindSpace(const inventory_t* const inv, const int item, const int conta
 int Com_TryAddToInventory(inventory_t* const inv, item_t item, int container) __attribute__((nonnull(1)));
 int Com_TryAddToBuyType(inventory_t* const inv, item_t item, int container) __attribute__((nonnull(1)));
 void Com_EquipActor(inventory_t* const inv, const int equip[MAX_OBJDEFS], const char *name, character_t* chr) __attribute__((nonnull(1)));
+void INV_PrintToConsole(inventory_t* const i);
 
 /* =========================================================== */
 

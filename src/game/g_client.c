@@ -710,6 +710,22 @@ edict_t *G_GetFloorItems (edict_t * ent)
 	return NULL;
 }
 
+#if DEBUG
+/**
+ * @brief Debug functions that prints the content of a floor (container) at a given position in the map.
+ * @param[in] Position of the floor in the map.
+ */
+static void G_PrintFloorToConsole (pos3_t pos)
+{
+	edict_t *floor = G_GetFloorItemsFromPos(pos);
+	Com_DPrintf("G_PrintFloorToConsole: Printing containers from floor at %i,%i,%i.\n",pos[0],pos[1],pos[2]);
+	if (floor) {
+		INV_PrintToConsole(&floor->i);
+	} else {
+		Com_DPrintf("G_PrintFloorToConsole: No Floor items found.\n");
+	}
+}
+#endif
 
 /**
  * @brief
