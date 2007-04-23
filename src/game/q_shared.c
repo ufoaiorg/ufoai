@@ -2402,7 +2402,7 @@ qboolean Com_RemoveFromInventory (inventory_t* const i, int container, int x, in
  * @return qfalse If nothing was removed or an error occured.
  * @sa Com_RemoveFromInventory
  */
-qboolean Com_RemoveFromInventoryIgnore (inventory_t* const i, int container, int x, int y, byte ignore_type)
+qboolean Com_RemoveFromInventoryIgnore (inventory_t* const i, int container, int x, int y, qboolean ignore_type)
 {
 	invList_t *ic, *old;
 
@@ -2417,19 +2417,19 @@ qboolean Com_RemoveFromInventoryIgnore (inventory_t* const i, int container, int
 	ic = i->c[container];
 	if (!ic) {
 #ifdef PARANOID
-		Com_DPrintf("Com_RemoveFromInventory - empty container %s\n", CSI->ids[container].name);
+		Com_DPrintf("Com_RemoveFromInventoryIgnore - empty container %s\n", CSI->ids[container].name);
 #endif
 		return qfalse;
 	}
 
-	if ((CSI->ids[container].single || (ic->x == x && ic->y == y)) && !ignore_type) {
+	if (!ignore_type && (CSI->ids[container].single || (ic->x == x && ic->y == y))) {
 		old = invUnused;
 		invUnused = ic;
 		cacheItem = ic->item;
 		i->c[container] = ic->next;
 
 		if (CSI->ids[container].single && ic->next)
-			Com_Printf("Com_RemoveFromInventory: Error: single container %s has many items.\n", CSI->ids[container].name);
+			Com_Printf("Com_RemoveFromInventoryIgnore: Error: single container %s has many items.\n", CSI->ids[container].name);
 
 		invUnused->next = old;
 		return qtrue;
@@ -2493,7 +2493,7 @@ int Com_MoveInInventory (inventory_t* const i, int from, int fx, int fy, int to,
  * @return IA_MOVE when just moving an item
  * @sa
  */
-int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, int to, int tx, int ty, int *TU, invList_t ** icp, byte ignore_type)
+int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, int to, int tx, int ty, int *TU, invList_t ** icp, qboolean ignore_type)
 {
 	invList_t *ic;
 	int time;
@@ -2690,7 +2690,7 @@ void Com_EmptyContainer (inventory_t* const i, const int container)
  * @param i The invetory which should be erased
  * @sa Com_EmptyContainer
  */
-void Com_DestroyInventory(inventory_t* const i)
+void Com_DestroyInventory (inventory_t* const i)
 {
 	int k;
 
@@ -2713,7 +2713,7 @@ void Com_DestroyInventory(inventory_t* const i)
  * @param[in] py
  * @sa Com_CheckToInventory
  */
-void Com_FindSpace(const inventory_t* const inv, const int item, const int container, int* const px, int* const py)
+void Com_FindSpace (const inventory_t* const inv, const int item, const int container, int* const px, int* const py)
 {
 	int x, y;
 
@@ -2746,7 +2746,7 @@ void Com_FindSpace(const inventory_t* const inv, const int item, const int conta
  * @sa Com_FindSpace
  * @sa Com_AddToInventory
  */
-int Com_TryAddToInventory(inventory_t* const inv, item_t item, int container)
+int Com_TryAddToInventory (inventory_t* const inv, item_t item, int container)
 {
 	int x, y;
 

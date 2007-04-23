@@ -148,7 +148,13 @@ static void E_EmployeeList_f (void)
 		Cvar_ForceSet(va("mn_name%i", i), "");
 		Cbuf_AddText(va("employeedisable%i\n", i));
 	}
-	Cbuf_AddText("employee_select 0\n");
+	/* Select the current employee if name was changed or first one. */
+	if (Cvar_VariableInteger("mn_employee_namechange") == 0)
+		Cbuf_AddText("employee_select 0\n");
+	else
+		Cbuf_AddText(va("employee_select %i;", Cvar_VariableInteger("mn_employee_idx")));
+	/* And finally reset mn_employee_namechange. */
+	Cvar_SetValue("mn_employee_namechange", 0);
 
 	/* bind to menu text array */
 	menuText[TEXT_LIST] = hirelist;
@@ -905,6 +911,12 @@ static void E_EmployeeSelect_f (void)
 
 	if (num >= gd.numEmployees[employeeCategory])
 		return;
+
+	/* mn_employee_hired is needed to allow renaming */
+	if (!gd.employees[employeeCategory][num].hired)
+		Cvar_SetValue("mn_employee_hired", 0);
+	else
+		Cvar_SetValue("mn_employee_hired", 1);
 
 	/* set info cvars */
 	CL_CharacterCvars(&(gd.employees[employeeCategory][num].chr));

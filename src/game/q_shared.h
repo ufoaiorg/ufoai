@@ -884,17 +884,18 @@ typedef enum {
 	EV_NULL = 0,
 	EV_RESET,
 	EV_START,
-	EV_ENDROUND,
+	EV_ENDROUND,	/**< ends the current team's round CL_DoEndRound */
 	EV_RESULTS,
 	EV_CENTERVIEW = 5,
 
 	EV_ENT_APPEAR,
-	EV_ENT_PERISH,
+	EV_ENT_PERISH,	/**< empty container or destroy inventory - set le inuse to qfalse
+		* see CL_EntPerish */
 	EV_ENT_EDICT,
 
 	EV_ACTOR_APPEAR,
 	EV_ACTOR_START_MOVE = 10,
-	EV_ACTOR_TURN,
+	EV_ACTOR_TURN,			/**< turn an actor around */
 	EV_ACTOR_MOVE,
 	EV_ACTOR_START_SHOOT,
 	EV_ACTOR_SHOOT,
@@ -902,7 +903,7 @@ typedef enum {
 	EV_ACTOR_THROW,
 	EV_ACTOR_DIE,
 	EV_ACTOR_STATS,
-	EV_ACTOR_STATECHANGE,
+	EV_ACTOR_STATECHANGE,	/**< set an actor to crounched or reaction fire */
 
 	EV_INV_ADD = 20,
 	EV_INV_DEL,
@@ -1328,9 +1329,9 @@ qboolean Com_CheckToInventory(const inventory_t* const i, const int item, const 
 invList_t *Com_SearchInInventory(const inventory_t* const i, int container, int x, int y) __attribute__((nonnull(1)));
 invList_t *Com_AddToInventory(inventory_t* const i, item_t item, int container, int x, int y) __attribute__((nonnull(1)));
 qboolean Com_RemoveFromInventory(inventory_t* const i, int container, int x, int y) __attribute__((nonnull(1)));
-qboolean Com_RemoveFromInventoryIgnore(inventory_t* const i, int container, int x, int y, byte ignore_type) __attribute__((nonnull(1)));
+qboolean Com_RemoveFromInventoryIgnore(inventory_t* const i, int container, int x, int y, qboolean ignore_type) __attribute__((nonnull(1)));
 int Com_MoveInInventory(inventory_t* const i, int from, int fx, int fy, int to, int tx, int ty, int *TU, invList_t ** icp) __attribute__((nonnull(1)));
-int Com_MoveInInventoryIgnore(inventory_t* const i, int from, int fx, int fy, int to, int tx, int ty, int *TU, invList_t ** icp, byte ignore_type) __attribute__((nonnull(1)));
+int Com_MoveInInventoryIgnore(inventory_t* const i, int from, int fx, int fy, int to, int tx, int ty, int *TU, invList_t ** icp, qboolean ignore_type) __attribute__((nonnull(1)));
 void Com_EmptyContainer(inventory_t* const i, const int container) __attribute__((nonnull(1)));
 void Com_DestroyInventory(inventory_t* const i) __attribute__((nonnull(1)));
 void Com_FindSpace(const inventory_t* const inv, const int item, const int container, int * const px, int * const py) __attribute__((nonnull(1)));
