@@ -252,6 +252,8 @@ static void S_ModifyKhz_f (void)
 		Cbuf_AddText("snd_restart\n");
 }
 
+static int musicTrackCount = 0;
+
 /**
  * @brief Sets the music cvar to a random track
  * @note You have to start the music track afterwards
@@ -259,42 +261,72 @@ static void S_ModifyKhz_f (void)
 static void S_RandomTrack_f (void)
 {
 	char findname[MAX_OSPATH];
-	int i, ndirs, randomID, count = 0;
-	char **dirnames, *musicTrack = NULL;
-	char *path = NULL;
+	int i, randomID;
+	char **dirnames, *musicTrack;
+	int ndirs;
+	searchpath_t *search;
+	pack_t *pak;
+	int count = 0;
 
-	while ((path = FS_NextPath(path)) != NULL) {
-		Com_sprintf(findname, sizeof(findname), "%s/music/*.ogg", path);
-		FS_NormPath(findname);
+	if (musicTrackCount == 0) {
+		/* search through the path, one element at a time */
+		for (search = fs_searchpaths; search; search = search->next) {
+			/* is the element a pak file? */
+			if (search->pack) {
+				/* look through all the pak file elements */
+				pak = search->pack;
+				for (i = 0; i < pak->numfiles; i++)
+					if (strstr(pak->files[i].name, ".ogg"))
+						musicTrackCount++;
+			} else {
+				Com_sprintf(findname, sizeof(findname), "%s/maps/*.bsp", search->filename);
+				FS_NormPath(findname);
 
-		if ((dirnames = FS_ListFiles(findname, &ndirs, 0, 0)) != 0) {
-			for (i = 0; i < ndirs - 1; i++) {
-				count++;
-				free(dirnames[i]);
+				if ((dirnames = FS_ListFiles(findname, &ndirs, 0, SFF_HIDDEN | SFF_SYSTEM)) != 0) {
+					for (i = 0; i < ndirs - 1; i++) {
+						musicTrackCount++;
+						free(dirnames[i]);
+					}
+					free(dirnames);
+				}
 			}
-			free(dirnames);
 		}
 	}
 
-	randomID = rand() & count;
-	Com_DPrintf("S_RandomTrack_f: random track id: %i/%i\n", randomID, count);
+	randomID = rand() & musicTrackCount;
+	Com_DPrintf("S_RandomTrack_f: random track id: %i/%i\n", randomID, musicTrackCount);
 
-	count = 0;
-	while ((path = FS_NextPath(path)) != NULL) {
-		Com_sprintf(findname, sizeof(findname), "%s/music/*.ogg", path);
-		FS_NormPath(findname);
-
-		if ((dirnames = FS_ListFiles(findname, &ndirs, 0, 0)) != 0) {
-			for (i = 0; i < ndirs - 1; i++) {
-				count++;
-				if (randomID == count) {
-					musicTrack = COM_SkipPath(dirnames[i]);
-					Com_Printf("..playing next: '%s'\n", musicTrack);
-					Cvar_Set("music", musicTrack);
+	/* search through the path, one element at a time */
+	for (search = fs_searchpaths; search; search = search->next) {
+		/* is the element a pak file? */
+		if (search->pack) {
+			/* look through all the pak file elements */
+			pak = search->pack;
+			for (i = 0; i < pak->numfiles; i++)
+				if (strstr(pak->files[i].name, ".ogg")) {
+					count++;
+					if (randomID == count) {
+						musicTrack = COM_SkipPath(dirnames[i]);
+						Com_Printf("..playing next: '%s'\n", musicTrack);
+						Cvar_Set("music", musicTrack);
+					}
 				}
-				free(dirnames[i]);
+		} else {
+			Com_sprintf(findname, sizeof(findname), "%s/maps/*.bsp", search->filename);
+			FS_NormPath(findname);
+
+			if ((dirnames = FS_ListFiles(findname, &ndirs, 0, SFF_HIDDEN | SFF_SYSTEM)) != 0) {
+				for (i = 0; i < ndirs - 1; i++) {
+					count++;
+					if (randomID == count) {
+						musicTrack = COM_SkipPath(dirnames[i]);
+						Com_Printf("..playing next: '%s'\n", musicTrack);
+						Cvar_Set("music", musicTrack);
+					}
+					free(dirnames[i]);
+				}
+				free(dirnames);
 			}
-			free(dirnames);
 		}
 	}
 }
@@ -305,22 +337,34 @@ static void S_RandomTrack_f (void)
 static void S_MusicList_f (void)
 {
 	char findname[MAX_OSPATH];
-	int i, ndirs;
+	int i;
 	char **dirnames;
-	char *path = NULL;
+	int ndirs;
+	searchpath_t *search;
+	pack_t *pak;
 
 	Com_Printf("music tracks\n");
-	while ((path = FS_NextPath(path)) != NULL) {
-		Com_Printf("..searchpath: %s\n", path);
-		Com_sprintf(findname, sizeof(findname), "%s/music/*.ogg", path);
-		FS_NormPath(findname);
+	/* search through the path, one element at a time */
+	for (search = fs_searchpaths; search; search = search->next) {
+		Com_Printf("..searchpath: %s\n", search->filename);
+		/* is the element a pak file? */
+		if (search->pack) {
+			/* look through all the pak file elements */
+			pak = search->pack;
+			for (i = 0; i < pak->numfiles; i++)
+				if (strstr(pak->files[i].name, ".ogg"))
+					Com_Printf("...%s\n", pak->files[i].name);
+		} else {
+			Com_sprintf(findname, sizeof(findname), "%s/maps/*.bsp", search->filename);
+			FS_NormPath(findname);
 
-		if ((dirnames = FS_ListFiles(findname, &ndirs, 0, 0)) != 0) {
-			for (i = 0; i < ndirs - 1; i++) {
-				Com_Printf("...%s\n", dirnames[i]);
-				free(dirnames[i]);
+			if ((dirnames = FS_ListFiles(findname, &ndirs, 0, SFF_HIDDEN | SFF_SYSTEM)) != 0) {
+				for (i = 0; i < ndirs - 1; i++) {
+					Com_Printf("...%s\n", dirnames[i]);
+					free(dirnames[i]);
+				}
+				free(dirnames);
 			}
-			free(dirnames);
 		}
 	}
 }
