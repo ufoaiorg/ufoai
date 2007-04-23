@@ -48,8 +48,9 @@ void G_ProjectSource(vec3_t point, vec3_t distance, vec3_t forward, vec3_t right
 
 /**
  * @brief Marks the edict as free
+ * @sa G_Spawn
  */
-void G_FreeEdict(edict_t * ed)
+void G_FreeEdict (edict_t * ed)
 {
 	/* unlink from world */
 	gi.unlinkentity(ed);
@@ -437,6 +438,7 @@ static void G_InitEdict (edict_t * e)
  * instead of being removed and recreated, which can cause interpolated
  * angles and bad trails.
  * @sa G_InitEdict
+ * @sa G_FreeEdict
  */
 edict_t *G_Spawn (void)
 {
