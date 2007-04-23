@@ -1329,7 +1329,7 @@ qboolean Com_CheckToInventory(const inventory_t* const i, const int item, const 
 invList_t *Com_SearchInInventory(const inventory_t* const i, int container, int x, int y) __attribute__((nonnull(1)));
 invList_t *Com_AddToInventory(inventory_t* const i, item_t item, int container, int x, int y) __attribute__((nonnull(1)));
 qboolean Com_RemoveFromInventory(inventory_t* const i, int container, int x, int y) __attribute__((nonnull(1)));
-qboolean Com_RemoveFromInventoryIgnore(inventory_t* const i, int container, int x, int y, byte ignore_type) __attribute__((nonnull(1)));
+qboolean Com_RemoveFromInventoryIgnore(inventory_t* const i, int container, int x, int y, qboolean ignore_type) __attribute__((nonnull(1)));
 int Com_MoveInInventory(inventory_t* const i, int from, int fx, int fy, int to, int tx, int ty, int *TU, invList_t ** icp) __attribute__((nonnull(1)));
 int Com_MoveInInventoryIgnore(inventory_t* const i, int from, int fx, int fy, int to, int tx, int ty, int *TU, invList_t ** icp, byte ignore_type) __attribute__((nonnull(1)));
 void Com_EmptyContainer(inventory_t* const i, const int container) __attribute__((nonnull(1)));
