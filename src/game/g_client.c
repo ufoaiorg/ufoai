@@ -950,6 +950,7 @@ void G_InventoryToFloor (edict_t * ent)
 #ifdef ADJACENT
 				Vector2Copy(ent->pos, oldPos);
 				for (i = 0; i < DIRECTIONS; i++) {
+					/* TODO: Check whether movement is possible here - otherwise don't use this field */
 					/* extend pos with the direction vectors */
 					Vector2Set(ent->pos, ent->pos[0] + dvecs[i][0], ent->pos[0] + dvecs[i][1]);
 					/* now try to get a floor entity for that new location */
