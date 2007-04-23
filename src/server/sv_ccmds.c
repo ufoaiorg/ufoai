@@ -272,6 +272,7 @@ static void SV_Status_f (void)
 #ifdef DEDICATED_ONLY
 /**
  * @brief
+ * @sa SV_ClientPrintf
  */
 static void SV_ConSay_f (void)
 {
@@ -298,8 +299,8 @@ static void SV_ConSay_f (void)
 
 	Q_strcat(text, p, sizeof(text));
 
-	for (j = 0, client = svs.clients; j < sv_maxclients->value; j++, client++) {
-		if (client->state != cs_spawned)
+	for (j = 0, client = svs.clients; j < sv_maxclients->integer; j++, client++) {
+		if (client->state < cs_spawning)
 			continue;
 		SV_ClientPrintf(client, PRINT_CHAT, "%s\n", text);
 	}
@@ -341,7 +342,6 @@ static void SV_DumpUser_f (void)
 	Com_Printf("userinfo\n");
 	Com_Printf("--------\n");
 	Info_Print(sv_client->userinfo);
-
 }
 
 

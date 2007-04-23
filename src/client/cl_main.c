@@ -1996,6 +1996,11 @@ static void CL_InitLocal (void)
 	Cmd_AddCommand("info", NULL, NULL);
 	Cmd_AddCommand("playerlist", NULL, NULL);
 	Cmd_AddCommand("players", NULL, NULL);
+#ifdef DEBUG
+	Cmd_AddCommand("actorinvlist", NULL, "Shows the inventory list of all actors");
+	Cmd_AddCommand("killteam", NULL, NULL);
+	Cmd_AddCommand("stunteam", NULL, NULL);
+#endif
 }
 
 typedef struct {

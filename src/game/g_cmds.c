@@ -177,6 +177,23 @@ static void Cmd_PlayerList_f (player_t * player)
 #ifdef DEBUG
 void G_KillTeam(void);
 void G_StunTeam(void);
+
+/**
+ * @brief Debug function to print a player's inventory
+ */
+static void Cmd_InvList (player_t *player)
+{
+	edict_t *ent;
+	int i;
+
+	Com_Printf("Print inventory for '%s'\n", player->pers.netname);
+	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
+		if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV) && ent->team == player->pers.team) {
+			Com_Printf("actor: '%s'\n", ent->chr.name);
+			INV_PrintToConsole(&ent->i);
+		}
+}
+
 #endif
 
 /**
@@ -200,6 +217,8 @@ void G_ClientCommand (player_t * player)
 	else if (Q_stricmp(cmd, "say_team") == 0)
 		Cmd_Say_f(player, qfalse, qtrue);
 #ifdef DEBUG
+	else if (Q_stricmp(cmd, "actorinvlist") == 0)
+		Cmd_InvList(player);
 	else if (Q_stricmp(cmd, "killteam") == 0)
 		G_KillTeam();
 	else if (Q_stricmp(cmd, "stunteam") == 0)
