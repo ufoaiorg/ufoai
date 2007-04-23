@@ -600,7 +600,7 @@ int G_DoTurn (edict_t * ent, byte toDV)
  * @param[in] player Which player (human player) is trying to do the action
  * @param[in] ent And which of his soldiers (or entities) he is trying to do
  * the action with
- * @todo: Integrate into hud - don´t use cprintf
+ * @todo: Integrate into hud - don't use cprintf
  */
 qboolean G_ActionCheck (player_t * player, edict_t * ent, int TU, qboolean quiet)
 {
