@@ -676,9 +676,6 @@ static void CL_EntPerish (sizebuf_t *sb)
 
 	if (!(le->team && le->state && le->team == cls.team && !(le->state & STATE_DEAD)))
 		le->inuse = qfalse;
-
-/*	le->startTime = cl.time; */
-/*	le->think = LET_Perish; */
 }
 
 /**

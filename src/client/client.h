@@ -558,7 +558,6 @@ void LE_AddGrenade(fireDef_t * fd, int flags, vec3_t muzzle, vec3_t v0, int dt);
 
 void LET_StartIdle(le_t * le);
 void LET_Appear(le_t * le);
-void LET_Perish(le_t * le);
 void LET_StartPathMove(le_t * le);
 
 void LM_Perish(sizebuf_t * sb);
