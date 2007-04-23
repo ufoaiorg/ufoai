@@ -1,4 +1,4 @@
-ufoai (2.2~~svn) unstable; urgency=low
+ufoai (2.2~~svn7850) unstable; urgency=low
 
   * Explicitely disable openal support as advised by dev-team.
   * Build in ./BUILD/, not ./build/ which is already used for something

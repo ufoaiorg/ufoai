@@ -7,8 +7,8 @@ Standards-Version: 3.6.1
 
 Package: ufoai
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, ufoai-data (>= 0.0.svn), ufoai-data-maps (>= 0.0.svn), ufoai-vid-glx | ufoai-vid
-Suggests: ufoai-data-music, ufoai-vid
+Depends: ${shlibs:Depends}, ${misc:Depends}, ufoai-data (>= 0.0.svn), ufoai-data-maps (>= 0.0.svn), ufoai-vid-glx | ufoai-vid, ufoai-snd-sdl | ufoai-snd
+Suggests: ufoai-data-music, ufoai-vid, ufoai-snd
 Description: UFO: Alien Invasion - build your team and stop the aliens
  "UFO: Alien Invasion" is a game inspired by the XCOM "UFO" series.
  .
@@ -40,6 +40,62 @@ Description: UFO: Alien Invasion - SDL video module
  UFO:AI comes with several video rendering engines.  This is the
  an alternative one, which uses SDL.  Note that using an alternative
  engine requires manual configuration.
+
+Package: ufoai-snd-sdl
+Architecture: any
+Provides: ufoai-snd
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: UFO: Alien Invasion - SDL sound support
+ "UFO: Alien Invasion" is a game inspired by the XCOM "UFO" series.
+ .
+ UFO:AI comes with support for several sound systems. This is the
+ default sound-support package, which uses SDL.  Note that not
+ installing the default engine will require users to select an
+ alternative manually using "+set snd_ref <alternative>".
+
+Package: ufoai-snd-alsa
+Architecture: any
+Provides: ufoai-snd
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: UFO: Alien Invasion - ALSA sound support
+ "UFO: Alien Invasion" is a game inspired by the XCOM "UFO" series.
+ .
+ UFO:AI comes with support for several sound systems.  This is an
+ alternative sound-support package, which uses ALSA.  Note that using
+ an alternative engine requires manual configuration.
+
+Package: ufoai-snd-arts
+Architecture: any
+Provides: ufoai-snd
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: UFO: Alien Invasion - ARTS sound support
+ "UFO: Alien Invasion" is a game inspired by the XCOM "UFO" series.
+ .
+ UFO:AI comes with support for several sound systems.  This is an
+ alternative sound-support package, which uses ARTS.  Note that using
+ an alternative engine requires manual configuration.
+
+Package: ufoai-snd-jack
+Architecture: any
+Provides: ufoai-snd
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: UFO: Alien Invasion - JACK sound support
+ "UFO: Alien Invasion" is a game inspired by the XCOM "UFO" series.
+ .
+ UFO:AI comes with support for several sound systems.  This is an
+ alternative sound-support package, which uses JACK.  Note that using
+ an alternative engine requires manual configuration.
+
+Package: ufoai-snd-oss
+Architecture: any
+Provides: ufoai-snd
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: UFO: Alien Invasion - OSS sound support
+ "UFO: Alien Invasion" is a game inspired by the XCOM "UFO" series.
+ .
+ UFO:AI comes with support for several sound systems.  This is an
+ alternative sound-support package, which uses OSS.  Note that using
+ an alternative engine requires manual configuration.
 
 Package: ufoai-tools
 Architecture: any
