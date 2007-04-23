@@ -153,6 +153,7 @@ extern qboolean SV_FilterPacket (char *from)
 
 /**
  * @brief
+ * @sa SVCmd_RemoveIP_f
  */
 static void SVCmd_AddIP_f (void)
 {
@@ -180,6 +181,7 @@ static void SVCmd_AddIP_f (void)
 
 /**
  * @brief
+ * @sa SVCmd_AddIP_f
  */
 static void SVCmd_RemoveIP_f (void)
 {
@@ -311,6 +313,22 @@ static void SVCmd_ShowAll_f (void)
 		}
 	Com_Printf("All items and creatures revealed to all sides\n");
 }
+
+/**
+ * @brief Debug function to show the hole inventory of all connected clients on the server
+ */
+static void SVCmd_ActorInvList_f (void)
+{
+	player_t* player;
+	int i;
+
+	/* show inventory off all players around - include even the ai players */
+	for (i = 0, player = game.players; i < game.maxplayers * 2; i++, player++) {
+		if (!player->inuse)
+			continue;
+		Cmd_InvList(player);
+	}
+}
 #endif
 
 /**
@@ -387,6 +405,8 @@ extern void ServerCommand (void)
 #ifdef DEBUG
 	else if (Q_stricmp(cmd, "showall") == 0)
 		SVCmd_ShowAll_f();
+	else if (Q_stricmp(cmd, "actorinvlist") == 0)
+		SVCmd_ActorInvList_f();
 #endif
 	else
 		gi.cprintf(NULL, PRINT_HIGH, "Unknown server command \"%s\"\n", cmd);

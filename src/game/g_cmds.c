@@ -181,7 +181,7 @@ void G_StunTeam(void);
 /**
  * @brief Debug function to print a player's inventory
  */
-static void Cmd_InvList (player_t *player)
+extern void Cmd_InvList (player_t *player)
 {
 	edict_t *ent;
 	int i;
@@ -193,7 +193,6 @@ static void Cmd_InvList (player_t *player)
 			INV_PrintToConsole(&ent->i);
 		}
 }
-
 #endif
 
 /**

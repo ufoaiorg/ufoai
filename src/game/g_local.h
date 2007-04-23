@@ -327,6 +327,10 @@ int G_VisToPM(int vis_mask);
 void G_SendInventory(int player_mask, edict_t * ent);
 int G_TeamToPM(int team);
 
+#ifdef DEBUG
+void Cmd_InvList(player_t *player);
+#endif
+
 typedef enum {
 	REACT_TUS,	/**< Stores the used TUs for Reaction fire for each edict. */
 	REACT_FIRED,	/**< Stores if the edict has fired in reaction. */
