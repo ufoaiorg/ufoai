@@ -31,19 +31,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /* in memory */
 
-typedef struct {
-	char name[MAX_QPATH];
-	unsigned long filepos;
-	unsigned long filelen;
-} packfile_t;
-
-typedef struct pack_s {
-	char filename[MAX_OSPATH];
-	qFILE handle;
-	int numfiles;
-	packfile_t *files;
-} pack_t;
-
 static cvar_t *fs_basedir;
 cvar_t *fs_gamedir;
 
@@ -55,12 +42,6 @@ typedef struct filelink_s {
 } filelink_t;
 
 filelink_t *fs_links;
-
-typedef struct searchpath_s {
-	char filename[MAX_OSPATH];
-	pack_t *pack;				/* only one of filename / pack will be used */
-	struct searchpath_s *next;
-} searchpath_t;
 
 searchpath_t *fs_searchpaths;
 searchpath_t *fs_base_searchpaths;	/* without gamedirs */
@@ -909,6 +890,7 @@ static void FS_Path_f (void)
 
 /**
  * @brief Allows enumerating all of the directories in the search path
+ * @note ignore pk3 here
  */
 char *FS_NextPath (const char *prevpath)
 {

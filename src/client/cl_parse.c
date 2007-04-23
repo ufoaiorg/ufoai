@@ -625,7 +625,7 @@ static void CL_EntAppear (sizebuf_t *sb)
 	le->type = type;
 
 	VectorCopy(pos, le->pos);
-	Grid_PosToVec( &clMap, le->pos, le->origin );
+	Grid_PosToVec(&clMap, le->pos, le->origin);
 }
 
 
@@ -1221,7 +1221,7 @@ static void CL_ParseEvent (void)
 			Com_Error(ERR_DROP, "CL_ParseEvent: no handling function for event %i\n", eType);
 
 		oldCount = net_message.readcount;
-		length = MSG_LengthFormat( &net_message, ev_format[eType] );
+		length = MSG_LengthFormat(&net_message, ev_format[eType]);
 
 		if (now) {
 			/* log and call function */
@@ -1322,7 +1322,7 @@ static void CL_ParseEvent (void)
 					if (!(flags & SF_BOUNCED)) {
 						/* shooting */
 						if (fd->speed)
-							impactTime = shootTime + 1000 * VectorDist( muzzle, impact ) / fd->speed;
+							impactTime = shootTime + 1000 * VectorDist(muzzle, impact) / fd->speed;
 						else
 							impactTime = shootTime;
 						if (cl.actTeam != cls.team)
@@ -1335,7 +1335,7 @@ static void CL_ParseEvent (void)
 						/* only a bounced shot */
 						time = impactTime;
 						if (fd->speed) {
-							impactTime += 1000 * VectorDist( muzzle, impact ) / fd->speed;
+							impactTime += 1000 * VectorDist(muzzle, impact) / fd->speed;
 							nextTime = impactTime;
 						}
 					}
