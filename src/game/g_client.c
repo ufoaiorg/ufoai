@@ -746,7 +746,7 @@ void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int 
 		return;
 	}
 
-	if ( ( ia = Com_MoveInInventory(&ent->i, from, fx, fy, to, tx, ty, &ent->TU, &ic) ) != 0 ) {
+	if ((ia = Com_MoveInInventory(&ent->i, from, fx, fy, to, tx, ty, &ent->TU, &ic)) != 0) {
 		switch (ia) {
 		case IA_NOTIME:
 			gi.cprintf(player, msglevel, _("Can't perform action - not enough TUs!\n"));
@@ -766,7 +766,7 @@ void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int 
 		/* successful inventory change; remove the item in clients */
 		if (from == gi.csi->idFloor) {
 			assert (!newFloor);
-			if ( FLOOR(ent) ) { /* floor not totally emptied */
+			if (FLOOR(ent)) { /* floor not totally emptied */
 				FLOOR(floor) = FLOOR(ent);
 				gi.AddEvent(G_VisToPM(floor->visflags), EV_INV_DEL);
 				gi.WriteShort(floor->number);
@@ -791,7 +791,7 @@ void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int 
 
 		item = ic->item;
 
-		if (ia == IA_RELOAD || ia == IA_RELOAD_SWAP ) {
+		if (ia == IA_RELOAD || ia == IA_RELOAD_SWAP) {
 			/* reload */
 			if (to == gi.csi->idFloor) {
 				assert (!newFloor);
@@ -817,7 +817,7 @@ void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int 
 		if (ia == IA_RELOAD) {
 			gi.EndEvents();
 			return;
-		} else if (ia == IA_RELOAD_SWAP ) {
+		} else if (ia == IA_RELOAD_SWAP) {
 			to = from;
 			tx = fx;
 			ty = fy;
@@ -827,7 +827,7 @@ void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int 
 		/* add it */
 		if (to == gi.csi->idFloor) {
 			if (newFloor) {
-				assert (FLOOR(ent));
+				assert(FLOOR(ent));
 				FLOOR(floor) = FLOOR(ent);
 				/* send item info to the clients */
 				G_CheckVis(floor, qtrue);
@@ -847,12 +847,12 @@ void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int 
 		}
 
 		/* Update reaction firemode when something is moved from/to a hand. */
-		if ((from==gi.csi->idRight) || (to==gi.csi->idRight)) {
+		if ((from == gi.csi->idRight) || (to == gi.csi->idRight)) {
 			Com_DPrintf("G_ClientInvMove: Something moved in/out of Right hand.\n");
 			gi.AddEvent(G_TeamToPM(ent->team), EV_INV_HANDS_CHANGED);
 			gi.WriteShort(num);
 			gi.WriteShort(0);	/**< hand=right */
-		} else if ((from==gi.csi->idLeft) || (to==gi.csi->idLeft)) {
+		} else if ((from == gi.csi->idLeft) || (to == gi.csi->idLeft)) {
 			Com_DPrintf("G_ClientInvMove:  Something moved in/out of Left hand.\n");
 			gi.AddEvent(G_TeamToPM(ent->team), EV_INV_HANDS_CHANGED);
 			gi.WriteShort(num);
@@ -881,6 +881,7 @@ void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int 
 }
 
 
+/*#define ADJACENT*/
 /**
  * @brief Move the whole given inventory to the floor and destroy the items that do not fit there.
  * @param[in] *ent Pointer to an edict_t being an actor.
@@ -889,8 +890,12 @@ void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int 
 void G_InventoryToFloor (edict_t * ent)
 {
 	invList_t *ic, *next;
-	edict_t *floor;
 	int k;
+	edict_t *floor;
+#ifdef ADJACENT
+	edict_t *floorAdjacent = NULL;
+	int i;
+#endif
 
 	/* check for items */
 	for (k = 0; k < gi.csi->numIDs; k++)
@@ -906,6 +911,7 @@ void G_InventoryToFloor (edict_t * ent)
 	if (!floor) {
 		floor = G_SpawnFloor(ent->pos);
 	} else {
+		/* destroy this edict (send this event to all clients that see the edict) */
 		gi.AddEvent(G_VisToPM(floor->visflags), EV_ENT_PERISH);
 		gi.WriteShort(floor->number);
 		floor->visflags = 0;
@@ -927,7 +933,9 @@ void G_InventoryToFloor (edict_t * ent)
 		/* now cycle through all items for the container of the character (or the entity) */
 		for (ic = ent->i.c[k]; ic; ic = next) {
 			int x, y;
-
+#ifdef ADJACENT
+			vec2_t oldPos; /**< if we have to place it to adjacent  */
+#endif
 			/* Save the next inv-list before it gets overwritten below.
 			   Do not put this in the "for" statement,
 			   unless you want an endless loop. ;) */
@@ -937,9 +945,42 @@ void G_InventoryToFloor (edict_t * ent)
 			if (x == NONE) {
 				assert (y == NONE);
 				/* Run out of space on the floor or the item is armor
-				   --- destroy the offending item.
-				   TODO: for items other than armor we should really
-				   just spill into adjacent locations */
+				   destroy the offending item if no adjacent places are free */
+				/* store pos for later restoring the original value */
+#ifdef ADJACENT
+				Vector2Copy(ent->pos, oldPos);
+				for (i = 0; i < DIRECTIONS; i++) {
+					/* extend pos with the direction vectors */
+					Vector2Set(ent->pos, ent->pos[0] + dvecs[i][0], ent->pos[0] + dvecs[i][1]);
+					/* now try to get a floor entity for that new location */
+					floorAdjacent = G_GetFloorItems(ent);
+					if (!floorAdjacent) {
+						floorAdjacent = G_SpawnFloor(ent->pos);
+					} else {
+						/* destroy this edict (send this event to all clients that see the edict) */
+						gi.AddEvent(G_VisToPM(floorAdjacent->visflags), EV_ENT_PERISH);
+						gi.WriteShort(floorAdjacent->number);
+						floorAdjacent->visflags = 0;
+					}
+					Com_FindSpace(&floorAdjacent->i, ic->item.t, gi.csi->idFloor, &x, &y);
+					if (x != NONE) {
+						ic->x = x;
+						ic->y = y;
+						ic->next = FLOOR(floorAdjacent);
+						FLOOR(floorAdjacent) = ic;
+						break;
+					}
+					/* restore original pos */
+					Vector2Copy(oldPos, ent->pos);
+				}
+				/* added to adjacent pos? */
+				if (i < DIRECTIONS) {
+					/* restore original pos - if no free space, this was done
+					 * already in the for loop */
+					Vector2Copy(oldPos, ent->pos);
+					continue;
+				}
+#endif
 				if (Q_strncmp(gi.csi->ods[ic->item.t].type, "armor", MAX_VAR))
 					gi.dprintf("G_InventoryToFloor: Warning: could not drop item to floor: %s\n", gi.csi->ods[ic->item.t].id);
 				if (!Com_RemoveFromInventory(&ent->i, k, ic->x, ic->y))
@@ -957,7 +998,6 @@ void G_InventoryToFloor (edict_t * ent)
 
 		/* destroy link */
 		ent->i.c[k] = NULL;
-
 	}
 
 	FLOOR(ent) = FLOOR(floor);
@@ -969,6 +1009,10 @@ void G_InventoryToFloor (edict_t * ent)
 
 	/* send item info to the clients */
 	G_CheckVis(floor, qtrue);
+#ifdef ADJACENT
+	if (floorAdjacent)
+		G_CheckVis(floorAdjacent, qtrue);
+#endif
 }
 
 
