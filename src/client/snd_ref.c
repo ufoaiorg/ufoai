@@ -306,13 +306,14 @@ static void S_RandomTrack_f (void)
 				if (strstr(pak->files[i].name, ".ogg")) {
 					count++;
 					if (randomID == count) {
-						musicTrack = COM_SkipPath(dirnames[i]);
+						Com_sprintf(findname, sizeof(findname), "%s", pak->files[i].name);
+						musicTrack = COM_SkipPath(findname);
 						Com_Printf("..playing next: '%s'\n", musicTrack);
 						Cvar_Set("music", musicTrack);
 					}
 				}
 		} else {
-			Com_sprintf(findname, sizeof(findname), "%s/maps/*.bsp", search->filename);
+			Com_sprintf(findname, sizeof(findname), "%s/music/*.ogg", search->filename);
 			FS_NormPath(findname);
 
 			if ((dirnames = FS_ListFiles(findname, &ndirs, 0, SFF_HIDDEN | SFF_SYSTEM)) != 0) {
