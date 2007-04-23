@@ -69,12 +69,23 @@ static void CL_MarketAircraftDescription (int aircraftID)
 static void BS_MarketScroll_f (void)
 {
 	menuNode_t* node;
+	objDef_t *od;
+	int i;
+	technology_t *tech;
+
+	if (!baseCurrent)
+		return;
 
 	node = MN_GetNodeFromCurrentMenu("market");
 	if (node)
 		buyListScrollPos = node->textScroll;
 	else
 		return;
+
+	if (buyListLength > MAX_MARKET_MENU_ENTRIES && buyListScrollPos >= buyListLength - MAX_MARKET_MENU_ENTRIES) {
+		buyListScrollPos = buyListLength - MAX_MARKET_MENU_ENTRIES;
+		node->textScroll = buyListScrollPos;
+	}
 
 	/* the following nodes must exist */
 	node = MN_GetNodeFromCurrentMenu("market_market");
@@ -86,6 +97,24 @@ static void BS_MarketScroll_f (void)
 	node = MN_GetNodeFromCurrentMenu("market_prices");
 	assert(node);
 	node->textScroll = buyListScrollPos;
+
+	/* now update the menu pics */
+	for (i = 0; i < MAX_MARKET_MENU_ENTRIES; i++)
+		Cbuf_AddText(va("buy_autoselld%i\n", i));
+	/* get item list */
+	for (i = buyListScrollPos; i < buyListLength - buyListScrollPos; i++) {
+		if (i >= MAX_MARKET_MENU_ENTRIES)
+			break;
+		assert(i >= 0);
+		od = &csi.ods[buyList[i]];
+		tech = (technology_t *) od->tech;
+		/* Check whether the proper buytype, storage in current base and market. */
+		if (tech && BUYTYPE_MATCH(od->buytype, buyCategory) && (baseCurrent->storage.num[buyList[i]] || ccs.eMarket.num[buyList[i]])) {
+			Cbuf_AddText(va("buy_show%i\n", i - buyListScrollPos));
+			if (gd.autosell[buyList[i]])
+				Cbuf_AddText(va("buy_autoselle%i\n", i - buyListScrollPos));
+		}
+	}
 }
 
 /**
@@ -188,12 +217,12 @@ static void BS_BuyType_f (void)
 	menuNode_t* node;
 
 	if (Cmd_Argc() == 2) {
+		buyCategory = atoi(Cmd_Argv(1));
 		buyListScrollPos = 0;
 		node = MN_GetNodeFromCurrentMenu("market");
 		if (node)
 			node->textScroll = 0;
 		BS_MarketScroll_f();
-		buyCategory = atoi(Cmd_Argv(1));
 	}
 
 	if (!baseCurrent || buyCategory == -1)
@@ -221,13 +250,13 @@ static void BS_BuyType_f (void)
 			/* Check whether the proper buytype, storage in current base and market. */
 			if (tech && BUYTYPE_MATCH(od->buytype, buyCategory) && (baseCurrent->storage.num[i] || ccs.eMarket.num[i])) {
 				BS_AddToList(od->name, baseCurrent->storage.num[i], ccs.eMarket.num[i], ccs.eMarket.ask[i]);
-				Cbuf_AddText(va("buy_show%i\n", j));
 				/* Set state of Autosell button. */
-				if (j < MAX_MARKET_MENU_ENTRIES) {
+				if (j >= buyListScrollPos && j < MAX_MARKET_MENU_ENTRIES) {
+					Cbuf_AddText(va("buy_show%i\n", j - buyListScrollPos));
 					if (gd.autosell[i])
-						Cbuf_AddText(va("buy_autoselle%i\n", j));
+						Cbuf_AddText(va("buy_autoselle%i\n", j - buyListScrollPos));
 					else
-						Cbuf_AddText(va("buy_autoselld%i\n", j));
+						Cbuf_AddText(va("buy_autoselld%i\n", j - buyListScrollPos));
 				}
 
 				if (j >= MAX_BUYLIST)
@@ -250,7 +279,8 @@ static void BS_BuyType_f (void)
 			tech = RS_GetTechByProvided(air_samp->id);
 			assert(tech);
 			if (RS_Collected_(tech) || RS_IsResearched_ptr(tech)) {
-				Cbuf_AddText(va("buy_show%i\n", j));
+				if (j >= buyListScrollPos && j < MAX_MARKET_MENU_ENTRIES)
+					Cbuf_AddText(va("buy_show%i\n", j - buyListScrollPos));
 				BS_AddToList(air_samp->name, AIR_GetStorageSupply(air_samp->id, qtrue), AIR_GetStorageSupply(air_samp->id, qfalse), air_samp->price);
 
 				buyList[j] = i;
@@ -306,10 +336,9 @@ static void BS_BuyItem_f (void)
 	if (num < 0 || num >= buyListLength)
 		return;
 
-	/* Select the item. TODO: maybe better done in ufo file?*/
-	Cbuf_AddText(va("market_click %i\n",num));
+	Cbuf_AddText(va("market_click %i\n", num + buyListScrollPos));
 
-	item = buyList[num];
+	item = buyList[num + buyListScrollPos];
 	CL_ItemDescription(item);
 	Com_DPrintf("BS_BuyItem_f: item %i\n", item);
 	if (ccs.credits >= ccs.eMarket.ask[item] && ccs.eMarket.num[item]) {
@@ -346,10 +375,9 @@ static void BS_SellItem_f (void)
 	if (num < 0 || num >= buyListLength)
 		return;
 
-	/* Select the item. TODO: maybe better done in ufo file?*/
-	Cbuf_AddText(va("market_click %i\n",num));
+	Cbuf_AddText(va("market_click %i\n", num + buyListScrollPos));
 
-	item = buyList[num];
+	item = buyList[num + buyListScrollPos];
 	CL_ItemDescription(item);
 	if (baseCurrent->storage.num[item]) {
 		/* reinit the menu */
@@ -382,7 +410,7 @@ static void BS_Autosell_f (void)
 	Com_DPrintf("BS_Autosell_f: listnumber %i\n", num);
 	if (num < 0 || num >= buyListLength)
 		return;
-	item = buyList[num];
+	item = buyList[num + buyListScrollPos];
 
 	if (gd.autosell[item]) {
 		gd.autosell[item] = qfalse;
