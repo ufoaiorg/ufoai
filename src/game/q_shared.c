@@ -4005,7 +4005,7 @@ void Com_PrintItemDescription (int i)
 	objDef_t *ods_temp;
 
 	ods_temp = &CSI->ods[i];
-	Com_Printf("Item: %s\n", ods_temp->id);
+	Com_Printf("Item: %i %s\n", i, ods_temp->id);
 	Com_Printf("... name          -> %s\n", ods_temp->name);
 	Com_Printf("... type          -> %s\n", ods_temp->type);
 	Com_Printf("... category      -> %i\n", ods_temp->category);
