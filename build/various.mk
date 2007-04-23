@@ -10,9 +10,10 @@ docs:
 # debian packages
 # build this first - install ufoai-tools and then build debdata
 debbinary:
-	cd src; debuild binary
+	debuild binary-arch
 
 debdata:
-	cd base; debuild binary
+	debuild binary-indep
 
-deb: debbinary debdata
+deb:
+	debuild binary
