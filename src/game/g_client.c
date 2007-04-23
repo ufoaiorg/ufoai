@@ -670,6 +670,25 @@ edict_t *G_SpawnFloor (pos3_t pos)
 	return floor;
 }
 
+/**
+ * @brief
+ * @sa G_GetFloorItems
+ */
+edict_t *G_GetFloorItemsFromPos (pos3_t pos)
+{
+	edict_t *floor;
+
+	for (floor = g_edicts; floor < &g_edicts[globals.num_edicts]; floor++) {
+		if (!floor->inuse || floor->type != ET_ITEM)
+			continue;
+		if (!VectorCompare(pos, floor->pos))
+			continue;
+
+		return floor;
+	}
+	/* nothing found at this pos */
+	return NULL;
+}
 
 /**
  * @brief Prepares a list of items on the floor at given entity position.
@@ -679,15 +698,9 @@ edict_t *G_SpawnFloor (pos3_t pos)
  */
 edict_t *G_GetFloorItems (edict_t * ent)
 {
-	edict_t *floor;
-
-	for (floor = g_edicts; floor < &g_edicts[globals.num_edicts]; floor++) {
-		if (!floor->inuse || floor->type != ET_ITEM)
-			continue;
-		if (!VectorCompare(ent->pos, floor->pos))
-			continue;
-
-		/* found items */
+	edict_t *floor = G_GetFloorItemsFromPos(ent->pos);
+	/* found items */
+	if (floor) {
 		FLOOR(ent) = FLOOR(floor);
 		return floor;
 	}
