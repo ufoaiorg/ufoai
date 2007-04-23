@@ -66,7 +66,7 @@ rank lancecorp
 	name		"_Lance-Corporal"
 	shortname	"_LCpl"
 	image		"ranks/rank_02"
-	mind		75
+	mind		50
 	killed_enemies	3
 	killed_others	3
 	type		EMPL_SOLDIER
@@ -77,7 +77,7 @@ rank corporal
 	name		"_Corporal"
 	shortname	"_Cpl"
 	image		"ranks/rank_03"
-	mind		80
+	mind		55
 	killed_enemies	5
 	killed_others	5
 	type		EMPL_SOLDIER
@@ -88,7 +88,7 @@ rank sergeant
 	name		"_Sergeant"
 	shortname	"_Sgt"
 	image		"ranks/rank_04"
-	mind		80
+	mind		60
 	killed_enemies	10
 	killed_others	7
 	type		EMPL_SOLDIER
@@ -99,7 +99,7 @@ rank warrant
 	name		"_Warrant Officer"
 	shortname	"_WO"
 	image		"ranks/rank_05"
-	mind		80
+	mind		65
 	killed_enemies	18
 	killed_others	7
 	type		EMPL_SOLDIER
@@ -110,7 +110,7 @@ rank senwarrant
 	name		"_Senior Warrant Officer"
 	shortname	"_SWO"
 	image		"ranks/rank_06"
-	mind		80
+	mind		70
 	killed_enemies	25
 	type		EMPL_SOLDIER
 }
@@ -120,7 +120,7 @@ rank seclieut
 	name		"_Second Lieutenant"
 	shortname	"_2Lt"
 	image		"ranks/rank_07"
-	mind		80
+	mind		75
 	killed_enemies	32
 	type		EMPL_SOLDIER
 }
@@ -140,7 +140,7 @@ rank captain
 	name		"_Captain"
 	shortname	"_Capt"
 	image		"ranks/rank_09"
-	mind		80
+	mind		85
 	killed_enemies	45
 	type		EMPL_SOLDIER
 }
@@ -150,7 +150,7 @@ rank major
 	name		"_Major"
 	shortname	"_Maj"
 	image		"ranks/rank_10"
-	mind		80
+	mind		90
 	killed_enemies	55
 	type		EMPL_SOLDIER
 }
@@ -160,7 +160,7 @@ rank ltcol
 	name		"_Lieutenant-Colonel"
 	shortname	"_Lt Col"
 	image		"ranks/rank_11"
-	mind		80
+	mind		95
 	killed_enemies	60
 	type		EMPL_SOLDIER
 }
@@ -170,7 +170,7 @@ rank col
 	name		"_Colonel"
 	shortname	"_Col"
 	image		"ranks/rank_12"
-	mind		80
+	mind		100
 	killed_enemies	70
 	type		EMPL_SOLDIER
 }
