@@ -356,7 +356,7 @@ static void S_MusicList_f (void)
 				if (strstr(pak->files[i].name, ".ogg"))
 					Com_Printf("...%s\n", pak->files[i].name);
 		} else {
-			Com_sprintf(findname, sizeof(findname), "%s/maps/*.bsp", search->filename);
+			Com_sprintf(findname, sizeof(findname), "%s/music/*.ogg", search->filename);
 			FS_NormPath(findname);
 
 			if ((dirnames = FS_ListFiles(findname, &ndirs, 0, SFF_HIDDEN | SFF_SYSTEM)) != 0) {
