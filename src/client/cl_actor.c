@@ -187,6 +187,8 @@ extern void CL_CharacterCvars (character_t *chr)
 	Cvar_Set("mn_vass", va("%i", chr->skills[SKILL_ASSAULT]));
 	Cvar_Set("mn_vsnp", va("%i", chr->skills[SKILL_SNIPER]));
 	Cvar_Set("mn_vexp", va("%i", chr->skills[SKILL_EXPLOSIVE]));
+	Cvar_Set("mn_vhp", va("%i", chr->HP));
+	Cvar_Set("mn_vhpmax", va("%i", chr->maxHP));
 
 	Cvar_Set("mn_tpwr", va("%s (%i)", CL_GetSkillString(chr->skills[ABILITY_POWER]), chr->skills[ABILITY_POWER]));
 	Cvar_Set("mn_tspd", va("%s (%i)", CL_GetSkillString(chr->skills[ABILITY_SPEED]), chr->skills[ABILITY_SPEED]));
@@ -197,6 +199,7 @@ extern void CL_CharacterCvars (character_t *chr)
 	Cvar_Set("mn_tass", va("%s (%i)", CL_GetSkillString(chr->skills[SKILL_ASSAULT]), chr->skills[SKILL_ASSAULT]));
 	Cvar_Set("mn_tsnp", va("%s (%i)", CL_GetSkillString(chr->skills[SKILL_SNIPER]), chr->skills[SKILL_SNIPER]));
 	Cvar_Set("mn_texp", va("%s (%i)", CL_GetSkillString(chr->skills[SKILL_EXPLOSIVE]), chr->skills[SKILL_EXPLOSIVE]));
+	Cvar_Set("mn_thp", va("%i (%i)", chr->HP, chr->maxHP));
 }
 
 /**
