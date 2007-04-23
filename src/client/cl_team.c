@@ -1398,7 +1398,7 @@ static void CL_LoadTeamMultiplayerMember (sizebuf_t * sb, character_t * chr)
 		gd.nextUCN = chr->ucn + 1;
 
 	/* name and model */
-	Q_strncpyz(chr->name, MSG_ReadString(sb), sizeof(chr->name));
+	Q_strncpyz(chr->name, MSG_ReadStringRaw(sb), sizeof(chr->name));
 	Q_strncpyz(chr->path, MSG_ReadString(sb), sizeof(chr->path));
 	Q_strncpyz(chr->body, MSG_ReadString(sb), sizeof(chr->body));
 	Q_strncpyz(chr->head, MSG_ReadString(sb), sizeof(chr->head));
