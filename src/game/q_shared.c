@@ -2787,6 +2787,31 @@ int Com_TryAddToBuyType (inventory_t* const inv, item_t item, int container)
 	}
 }
 
+/**
+ * @brief Debug function to print the inventory items for a given inventory_t pointer
+ * @param[in] i The inventory you want to see on the game console
+ */
+void INV_PrintToConsole (inventory_t* const i)
+{
+	int container;
+	invList_t *ic;
+
+	assert(i);
+
+	for (container = 0; container < CSI->numIDs; container++) {
+		ic = i->c[container];
+		Com_Printf("Container: %i\n", container);
+		while (ic) {
+			Com_Printf(".. item.t: %i, item.m: %i, item.a: %i, x: %i, y: %i\n", ic->item.t, ic->item.m, ic->item.a, ic->x, ic->y);
+			if (ic->item.t != NONE)
+				Com_Printf(".... weapon: %s\n", CSI->ods[ic->item.t].id);
+			if (ic->item.m != NONE)
+				Com_Printf(".... ammo:   %s (%i)\n", CSI->ods[ic->item.m].id, ic->item.a);
+			ic = ic->next;
+		}
+	}
+}
+
 /*
 ==============================================================================
 CHARACTER GENERATION AND HANDLING
@@ -2881,7 +2906,7 @@ int Com_PackAmmoAndWeapon (inventory_t* const inv, const int weapon, const int e
 		max_price = 0;
 		for (i = 0; i < CSI->numODs; i++) {
 			obj = CSI->ods[i];
-			if (equip[i] && INV_LoadableInWeapon(&obj, weapon) ) {
+			if (equip[i] && INV_LoadableInWeapon(&obj, weapon)) {
 				if (obj.price > max_price && obj.price < prev_price) {
 					max_price = obj.price;
 					ammo = i;
@@ -2903,7 +2928,7 @@ int Com_PackAmmoAndWeapon (inventory_t* const inv, const int weapon, const int e
 			assert (num >= 0);
 			/* pack some more ammo */
 			while (num--) {
-				item_t mun = {0,NONE,NONE};
+				item_t mun = {0, NONE, NONE};
 
 				mun.t = ammo;
 				/* ammo to backpack; belt is for knives and grenades */
@@ -2948,13 +2973,13 @@ void Com_EquipActor (inventory_t* const inv, const int equip[MAX_OBJDEFS], const
 			max_price = 0;
 			for (i = lastPos; i >= 0; i--) {
 				obj = CSI->ods[i];
-				if ( equip[i] && obj.weapon && BUY_PRI(obj.buytype) && obj.firetwohanded ) {
+				if (equip[i] && obj.weapon && BUY_PRI(obj.buytype) && obj.firetwohanded) {
 					if (frand() < 0.15) { /* small chance to pick any weapon */
 						weapon = i;
 						max_price = obj.price;
 						lastPos = i - 1;
 						break;
-					} else if ( obj.price > max_price && obj.price < prev_price ) {
+					} else if (obj.price > max_price && obj.price < prev_price) {
 						max_price = obj.price;
 						weapon = i;
 						lastPos = i - 1;
@@ -2964,7 +2989,7 @@ void Com_EquipActor (inventory_t* const inv, const int equip[MAX_OBJDEFS], const
 			/* see if there is any */
 			if (max_price) {
 				/* see if the actor picks it */
-				if ( equip[weapon] >= (28 - PROB_COMPENSATION) * frand() ) {
+				if (equip[weapon] >= (28 - PROB_COMPENSATION) * frand()) {
 					/* not decrementing equip[weapon]
 					* so that we get more possible squads */
 					has_weapon += Com_PackAmmoAndWeapon(inv, weapon, equip, 0, name);
@@ -2973,8 +2998,8 @@ void Com_EquipActor (inventory_t* const inv, const int equip[MAX_OBJDEFS], const
 
 						/* find the first possible ammo to check damage type */
 						for (ammo = 0; ammo < CSI->numODs; ammo++)
-							if ( equip[ammo]
-							&& INV_LoadableInWeapon(&CSI->ods[ammo], weapon) )
+							if (equip[ammo]
+							&& INV_LoadableInWeapon(&CSI->ods[ammo], weapon))
 								break;
 						if (ammo < CSI->numODs) {
 							primary =
@@ -2996,7 +3021,7 @@ void Com_EquipActor (inventory_t* const inv, const int equip[MAX_OBJDEFS], const
 
 		/* sidearms (secondary weapons with reload) */
 		if (!has_weapon)
-			repeat = WEAPONLESS_BONUS > frand ();
+			repeat = WEAPONLESS_BONUS > frand();
 		else
 			repeat = 0;
 		do {
@@ -3008,24 +3033,24 @@ void Com_EquipActor (inventory_t* const inv, const int equip[MAX_OBJDEFS], const
 				max_price = primary ? 0 : INT_MAX;
 				for (i = 0; i < CSI->numODs; i++) {
 					obj = CSI->ods[i];
-					if ( equip[i] && obj.weapon
-						&& BUY_SEC(obj.buytype) && obj.reload ) {
-						if ( primary
+					if (equip[i] && obj.weapon
+						&& BUY_SEC(obj.buytype) && obj.reload) {
+						if (primary
 							? obj.price > max_price && obj.price < prev_price
-							: obj.price < max_price && obj.price > prev_price ) {
+							: obj.price < max_price && obj.price > prev_price) {
 							max_price = obj.price;
 							weapon = i;
 						}
 					}
 				}
-				if ( !(max_price == (primary ? 0 : INT_MAX)) ) {
-					if ( equip[weapon] >= 40 * frand() ) {
+				if (!(max_price == (primary ? 0 : INT_MAX))) {
+					if (equip[weapon] >= 40 * frand()) {
 						has_weapon += Com_PackAmmoAndWeapon(inv, weapon, equip, missed_primary, name);
 						if (has_weapon) {
 							/* try to get the second akimbo pistol */
-							if ( primary == 2
+							if (primary == 2
 								&& !CSI->ods[weapon].firetwohanded
-								&& frand() < AKIMBO_CHANCE ) {
+								&& frand() < AKIMBO_CHANCE) {
 								Com_PackAmmoAndWeapon(inv, weapon, equip, 0, name);
 							}
 							/* enough sidearms */
@@ -3033,12 +3058,12 @@ void Com_EquipActor (inventory_t* const inv, const int equip[MAX_OBJDEFS], const
 						}
 					}
 				}
-			} while ( !(max_price == (primary ? 0 : INT_MAX)) );
+			} while (!(max_price == (primary ? 0 : INT_MAX)));
 		} while (!has_weapon && repeat--);
 
 		/* misc items and secondary weapons without reload */
 		if (!has_weapon)
-			repeat = WEAPONLESS_BONUS > frand ();
+			repeat = WEAPONLESS_BONUS > frand();
 		else
 			repeat = 0;
 		do {
@@ -3048,10 +3073,9 @@ void Com_EquipActor (inventory_t* const inv, const int equip[MAX_OBJDEFS], const
 				max_price = 0;
 				for (i = 0; i < CSI->numODs; i++) {
 					obj = CSI->ods[i];
-					if ( equip[i]
-						&& ((obj.weapon && BUY_SEC(obj.buytype) && !obj.reload)
+					if (equip[i] && ((obj.weapon && BUY_SEC(obj.buytype) && !obj.reload)
 							|| obj.buytype == BUY_MISC) ) {
-						if ( obj.price > max_price && obj.price < prev_price ) {
+						if (obj.price > max_price && obj.price < prev_price) {
 							max_price = obj.price;
 							weapon = i;
 						}
@@ -3060,9 +3084,7 @@ void Com_EquipActor (inventory_t* const inv, const int equip[MAX_OBJDEFS], const
 				if (max_price) {
 					int num;
 
-					num =
-						equip[weapon] / 40
-						+ (equip[weapon] % 40 >= 40 * frand());
+					num = equip[weapon] / 40 + (equip[weapon] % 40 >= 40 * frand());
 					while (num--)
 						has_weapon += Com_PackAmmoAndWeapon(inv, weapon, equip, 0, name);
 				}
@@ -3075,9 +3097,8 @@ void Com_EquipActor (inventory_t* const inv, const int equip[MAX_OBJDEFS], const
 			max_price = 0;
 			for (i = 0; i < CSI->numODs; i++) {
 				obj = CSI->ods[i];
-				if ( equip[i]
-					&& obj.weapon && BUY_SEC(obj.buytype) && !obj.reload ) {
-					if ( obj.price > max_price && obj.price < prev_price ) {
+				if (equip[i] && obj.weapon && BUY_SEC(obj.buytype) && !obj.reload) {
+					if (obj.price > max_price && obj.price < prev_price) {
 						max_price = obj.price;
 						weapon = i;
 					}
@@ -3109,15 +3130,15 @@ void Com_EquipActor (inventory_t* const inv, const int equip[MAX_OBJDEFS], const
 			max_price = 0;
 			for (i = 0; i < CSI->numODs; i++) {
 				obj = CSI->ods[i];
-				if ( equip[i] && obj.buytype == BUY_ARMOUR ) {
-					if ( obj.price > max_price && obj.price < prev_price ) {
+				if (equip[i] && obj.buytype == BUY_ARMOUR) {
+					if (obj.price > max_price && obj.price < prev_price) {
 						max_price = obj.price;
 						weapon = i;
 					}
 				}
 			}
 			if (max_price) {
-				if ( equip[weapon] >= 40 * frand() ) {
+				if (equip[weapon] >= 40 * frand()) {
 					item_t item = {0,NONE,NONE};
 
 					item.t = weapon;
