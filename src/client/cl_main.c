@@ -1925,7 +1925,7 @@ static void CL_InitLocal (void)
 	teamnum = Cvar_Get("teamnum", "1", CVAR_USERINFO | CVAR_ARCHIVE, "Teamnum for multiplayer teamplay games");
 	campaign = Cvar_Get("campaign", "main", 0, "Which is the current selected campaign id");
 	rate = Cvar_Get("rate", "25000", CVAR_USERINFO | CVAR_ARCHIVE, NULL);	/* FIXME */
-	msg = Cvar_Get("msg", "1", CVAR_USERINFO | CVAR_ARCHIVE, NULL);
+	msg = Cvar_Get("msg", "1", CVAR_USERINFO | CVAR_ARCHIVE, "Sets the message level for server messages the client receives");
 	sv_maxclients = Cvar_Get("maxclients", "1", CVAR_SERVERINFO, "If maxclients is 1 we are in singleplayer - otherwise we are mutliplayer mode (see sv_teamplay)");
 
 	noudp = Cvar_Get("noudp", "0", CVAR_NOSET, "Don't use UDP as network protocol'");
