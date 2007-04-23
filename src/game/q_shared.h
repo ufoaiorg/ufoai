@@ -884,17 +884,18 @@ typedef enum {
 	EV_NULL = 0,
 	EV_RESET,
 	EV_START,
-	EV_ENDROUND,
+	EV_ENDROUND,	/**< ends the current team's round CL_DoEndRound */
 	EV_RESULTS,
 	EV_CENTERVIEW = 5,
 
 	EV_ENT_APPEAR,
-	EV_ENT_PERISH,
+	EV_ENT_PERISH,	/**< empty container or destroy inventory - set le inuse to qfalse
+		* see CL_EntPerish */
 	EV_ENT_EDICT,
 
 	EV_ACTOR_APPEAR,
 	EV_ACTOR_START_MOVE = 10,
-	EV_ACTOR_TURN,
+	EV_ACTOR_TURN,			/**< turn an actor around */
 	EV_ACTOR_MOVE,
 	EV_ACTOR_START_SHOOT,
 	EV_ACTOR_SHOOT,
@@ -902,7 +903,7 @@ typedef enum {
 	EV_ACTOR_THROW,
 	EV_ACTOR_DIE,
 	EV_ACTOR_STATS,
-	EV_ACTOR_STATECHANGE,
+	EV_ACTOR_STATECHANGE,	/**< set an actor to crounched or reaction fire */
 
 	EV_INV_ADD = 20,
 	EV_INV_DEL,
