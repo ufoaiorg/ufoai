@@ -646,6 +646,7 @@ extern void SV_InitOperatorCommands (void)
 	Cmd_AddCommand("mapcyclenext", SV_MapcycleNext_f, "Start the next map from the cycle");
 	Cmd_AddCommand("mapcycleclear", SV_MapcycleClear, "Delete the current mapcycle");
 	Cmd_AddCommand("mapcycleadd", SV_MapcycleAdd_f, "Add new maps to the mapcycle");
+	Cmd_AddParamCompleteFunction("mapcycleadd", SV_CompleteMapCommand);
 
 #ifdef DEDICATED_ONLY
 	Cmd_AddCommand("say", SV_ConSay_f, "Broadcasts server messages to all connected players");
