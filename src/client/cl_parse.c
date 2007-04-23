@@ -1004,7 +1004,7 @@ static void CL_PlaceItem (le_t *le)
  */
 static void CL_InvAdd (sizebuf_t *sb)
 {
-	int		number, nr, i;
+	int		number, nr;
 	int 	container, x, y;
 	le_t	*le;
 	item_t 	item;
