@@ -2493,7 +2493,7 @@ int Com_MoveInInventory (inventory_t* const i, int from, int fx, int fy, int to,
  * @return IA_MOVE when just moving an item
  * @sa
  */
-int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, int to, int tx, int ty, int *TU, invList_t ** icp, byte ignore_type)
+int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, int to, int tx, int ty, int *TU, invList_t ** icp, qboolean ignore_type)
 {
 	invList_t *ic;
 	int time;
