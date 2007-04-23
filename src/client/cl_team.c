@@ -359,6 +359,8 @@ static void CL_ChangeName_f (void)
 	if (sel >= 0 && sel < gd.numEmployees[type])
 		Q_strncpyz(gd.employees[type][sel].chr.name, Cvar_VariableString("mn_name"), MAX_VAR);
 
+	/* Update mn_employee_namechange so refreshing the list will select current employee. */
+	Cvar_SetValue("mn_employee_namechange", 1);
 	/* Now refresh the list. */
 	Cbuf_AddText(va("employee_init %i;", type));
 }
