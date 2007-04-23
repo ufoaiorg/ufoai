@@ -550,7 +550,7 @@ extern qboolean E_UnhireEmployee (base_t* base, employeeType_t type, int idx)
 			break;
 		case EMPL_MEDIC:
 			/* TODO: implement me. */
-			break;	 
+			break;
 		default:
 			break;
 		}
@@ -1073,7 +1073,7 @@ extern qboolean E_Load (sizebuf_t* sb, void* data)
 			e->idx = MSG_ReadShort(sb);
 			e->baseIDHired = MSG_ReadShort(sb);
 			e->buildingID = MSG_ReadShort(sb);
-			Q_strncpyz(e->chr.name, MSG_ReadString(sb), sizeof(e->chr.name));
+			Q_strncpyz(e->chr.name, MSG_ReadStringRaw(sb), sizeof(e->chr.name));
 			Q_strncpyz(e->chr.body, MSG_ReadString(sb), sizeof(e->chr.body));
 			Q_strncpyz(e->chr.path, MSG_ReadString(sb), sizeof(e->chr.path));
 			Q_strncpyz(e->chr.head, MSG_ReadString(sb), sizeof(e->chr.head));
