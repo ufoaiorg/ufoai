@@ -317,11 +317,32 @@ menu employees
 	// actor info
 	// ==================
 
-	string txt_name
+	string name
 	{
 		if "mn_show_employee == 1"
 		string	"*cvar mn_name"
 		pos		"475 17"
+	}
+
+	confunc mn_name_changed
+	{
+		*name mousefx false
+		cmd	"team_changename"
+	}
+
+	pic bt_edit
+	{
+		if "mn_employee_hired == 1"
+		tooltip	"_Rename your employee"
+		image	menu/buttons_small
+		pos	"875 17"
+		texl	"0 48"
+		texh	"16 64"
+		click
+		{
+			cmd "msgmenu ?mn_name"
+			*name mousefx true
+		}
 	}
 
 	model body

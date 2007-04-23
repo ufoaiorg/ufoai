@@ -345,18 +345,22 @@ static void CL_GenerateNames_f (void)
 
 
 /**
- * @brief Change the name of the selected actor
+ * @brief Change the name of the selected actor.
  */
 static void CL_ChangeName_f (void)
 {
-	int sel = cl_selected->integer;
+	int sel = Cvar_VariableInteger("mn_employee_idx");
+	int type = Cvar_VariableInteger("mn_employee_type");
 
-	/* maybe called without base initialized or active */
+	/* Maybe called without base initialized or active. */
 	if (!baseCurrent)
 		return;
 
-	if (sel >= 0 && sel < gd.numEmployees[EMPL_SOLDIER])
-		Q_strncpyz(gd.employees[EMPL_SOLDIER][sel].chr.name, Cvar_VariableString("mn_name"), MAX_VAR);
+	if (sel >= 0 && sel < gd.numEmployees[type])
+		Q_strncpyz(gd.employees[type][sel].chr.name, Cvar_VariableString("mn_name"), MAX_VAR);
+
+	/* Now refresh the list. */
+	Cbuf_AddText(va("employee_init %i;", type));
 }
 
 
