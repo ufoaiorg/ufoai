@@ -867,6 +867,27 @@ particle grenl_ammo
 	{
 		model  weapons/grenl/grenl_clip2
 		color  ".5 .5 .5 1"
+		skin	"0"
+	}
+}
+
+particle grenl_fle_ammo
+{
+	init
+	{
+		model  weapons/grenl/grenl_clip2
+		skin	"1"
+		color  ".5 .5 .5 1"
+	}
+}
+
+particle grenl_ic_ammo
+{
+	init
+	{
+		model  weapons/grenl/grenl_clip2
+		skin	"2"
+		color  ".5 .5 .5 1"
 	}
 }
 
@@ -875,11 +896,10 @@ particle grenl_plasma_ammo
 	init
 	{
 		model  weapons/grenl/grenl_clip2
-///		model  weapons/grenl/grenl_plasma_clip2
+		skin	"3"
 		color  ".5 .5 .5 1"
 	}
 }
-
 
 // ==================
 // GRENADE EFFECTS
@@ -917,6 +937,15 @@ particle incgren
 	init
 	{
 		model  weapons/incgren/incgren
+		color  ".5 .5 .5 1"
+	}
+}
+
+particle flashgren
+{
+	init
+	{
+		model  weapons/flashgren/flashgren
 		color  ".5 .5 .5 1"
 	}
 }

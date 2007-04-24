@@ -146,7 +146,7 @@ item flashbang
 		{
 			name	"_Lob"
 			skill	explosive
-			projtl	smokegren
+			projtl	flashgren
 			impact	flash_explosion
 			hitbody flash_explosion
 			impsnd	weapons/flashbang.wav
@@ -170,7 +170,7 @@ item flashbang
 		{
 			name	"_Roll"
 			skill	explosive
-			projtl	smokegren
+			projtl	flashgren
 			impact	flash_explosion
 			hitbody flash_explosion
 			impsnd	weapons/flashbang.wav

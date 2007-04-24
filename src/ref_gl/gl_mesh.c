@@ -735,7 +735,12 @@ void R_DrawModelParticle (modelInfo_t * mi)
 		mi->backlerp = 0;
 
 	/* select skin */
-	skin = mi->model->skins[0];
+	if (mi->skin >= paliashdr->num_skins) {
+		ri.Con_Printf(PRINT_ALL, "R_DrawModelParticle %s: no such skin %i (found %i skins)\n",
+			mi->model->name, mi->skin, paliashdr->num_skins);
+		mi->skin = 0;
+	}
+	skin = mi->model->skins[mi->skin];
 	if (!skin)
 		skin = r_notexture;		/* fallback... */
 

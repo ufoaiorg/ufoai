@@ -718,11 +718,6 @@ const struct aircraft_s* ufo, qboolean wasUfoSensored);
 /* cl_produce.c */
 #include "cl_produce.h"
 
-/* SAVEGAMES */
-#ifndef SAVE_FILE_VERSION
-#define SAVE_FILE_VERSION 1
-#endif							/* SAVE_FILE_VERSION */
-
 /* cl_aliencont.c */
 #include "cl_aliencont.h"
 
@@ -748,9 +743,6 @@ const struct aircraft_s* ufo, qboolean wasUfoSensored);
 /* MISC */
 /* TODO: needs to be sorted (e.g what file is it defined?) */
 #define MAX_TEAMDATASIZE	32768
-/* MAX_GAMESAVESIZE has room for 3MB for dynamic data, eg geoscape messages */
-#define MAX_GAMESAVESIZE	MAX_TEAMDATASIZE + sizeof(globalData_t) + 3145728
-#define MAX_COMMENTLENGTH	32
 
 void CL_UpdateHireVar(aircraft_t *aircraft);
 void CL_CleanTempInventory(base_t* base);

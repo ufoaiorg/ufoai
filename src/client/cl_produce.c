@@ -360,10 +360,10 @@ static void PR_ProductionListRightClick_f (void)
 		od = &csi.ods[queue->items[num].objID];
 		t = (technology_t*)(od->tech);
 		UP_OpenWith(t->id);
-	}else if (num >= queue->numItems + QUEUE_SPACERS) {
+	} else if (num >= queue->numItems + QUEUE_SPACERS) {
 		/* Clicked in the item list. */
 		idx = num - queue->numItems - QUEUE_SPACERS;
-		for (j=0, i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
+		for (j = 0, i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
 			t = (technology_t*)(od->tech);
 #ifdef DEBUG
 			if (!t)
@@ -371,7 +371,7 @@ static void PR_ProductionListRightClick_f (void)
 #endif
 			/* Open up ufopedia for this entry. */
 			if (BUYTYPE_MATCH(od->buytype,produceCategory) && RS_IsResearched_ptr(t)) {
-				if (j==idx) {
+				if (j == idx) {
 					UP_OpenWith(t->id);
 					return;
 				}
@@ -397,7 +397,7 @@ static void PR_ProductionListClick_f (void)
 	production_t *prod = NULL;
 
 	/* can be called from everywhere without a started game */
-	if (!baseCurrent ||!curCampaign)
+	if (!baseCurrent || !curCampaign)
 		return;
 	queue = &gd.productions[baseCurrent->idx];
 
@@ -436,9 +436,9 @@ static void PR_ProductionListClick_f (void)
 			/* We can only produce items that fulfill the following conditions... */
 			if (BUYTYPE_MATCH(od->buytype, produceCategory)	/* Item is in the current inventory-category */
 				&& RS_IsResearched_ptr(t)		/* Tech is researched */
-				&& *od->name				/* Item has a name defined. TODO: produce error if this is not true? */
 				&& t->produceTime >= 0		/* Item is produceable */
 			) {
+				assert(*od->name);
 				if (j == idx) {
 #if 0
 					/* FIXME: don't start production yet .. */

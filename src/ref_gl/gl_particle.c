@@ -149,6 +149,7 @@ static void R_DrawPtlModel (ptl_t * p)
 	mi.origin = p->s;
 	mi.angles = p->angles;
 	mi.model = (model_t *) r_newrefdef.ptl_art[p->model].art;
+	mi.skin = p->skin;
 
 	/* draw it */
 	R_DrawModelParticle(&mi);
