@@ -3,4 +3,13 @@
 /ufoai
 /ufoai-tools
 /ufoai-server
+/ufoai-snd-oss
+/ufoai-snd-arts
+/ufoai-snd-alsa
+/ufoai-snd-sdl
+/ufoai-snd-jack
+/ufoai-vid-glx
+/ufoai-vid-sdl
+/ufoai-data
+/ufoai-data-music
 /files
