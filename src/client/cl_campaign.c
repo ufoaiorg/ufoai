@@ -1658,6 +1658,10 @@ extern qboolean CP_Load (sizebuf_t *sb, void *data)
 	ccs.center[1] = MSG_ReadFloat(sb);
 	ccs.zoom = MSG_ReadFloat(sb);
 
+	Q_strncpyz(gd.oldMis1, MSG_ReadString(sb), sizeof(gd.oldMis1));
+	Q_strncpyz(gd.oldMis2, MSG_ReadString(sb), sizeof(gd.oldMis2));
+	Q_strncpyz(gd.oldMis3, MSG_ReadString(sb), sizeof(gd.oldMis3));
+
 	/* read credits */
 	CL_UpdateCredits(MSG_ReadLong(sb));
 
@@ -1809,6 +1813,10 @@ extern qboolean CP_Save (sizebuf_t *sb, void *data)
 	MSG_WriteFloat(sb, ccs.center[0]);
 	MSG_WriteFloat(sb, ccs.center[1]);
 	MSG_WriteFloat(sb, ccs.zoom);
+
+	MSG_WriteString(sb, gd.oldMis1);
+	MSG_WriteString(sb, gd.oldMis2);
+	MSG_WriteString(sb, gd.oldMis3);
 
 	/* store credits */
 	MSG_WriteLong(sb, ccs.credits);
