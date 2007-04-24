@@ -1374,7 +1374,7 @@ item grenl_incendiary_ammo
 		{
 			name	"_Snap Shot - Airburst"
 			skill	explosive
-			projtl	grenl_ammo
+			projtl	grenl_ic_ammo
 			impact	frag_explosion
 			hitbody frag_explosion
 			firesnd	weapons/grenade_launcher.wav
@@ -1400,7 +1400,7 @@ item grenl_incendiary_ammo
 		{
 			name	"_Aimed Shot - Airburst"
 			skill	explosive
-			projtl	grenl_ammo
+			projtl	grenl_ic_ammo
 			impact	frag_explosion
 			hitbody frag_explosion
 			firesnd	weapons/grenade_launcher.wav
@@ -1425,7 +1425,7 @@ item grenl_incendiary_ammo
 		{
 			name	"_3-Round Burst - Airburst"
 			skill	explosive
-			projtl	grenl_ammo
+			projtl	grenl_ic_ammo
 			impact	frag_explosion
 			hitbody frag_explosion
 			firesnd	weapons/grenade_launcher.wav
@@ -1450,7 +1450,7 @@ item grenl_incendiary_ammo
 		{
 			name	"_Snap Shot - Timed"
 			skill	explosive
-			projtl	grenl_ammo
+			projtl	grenl_ic_ammo
 			impact	frag_explosion
 			hitbody frag_explosion
 			firesnd	weapons/grenade_launcher.wav
@@ -1477,7 +1477,7 @@ item grenl_incendiary_ammo
 		{
 			name	"_Aimed Shot - Timed"
 			skill	explosive
-			projtl	grenl_ammo
+			projtl	grenl_ic_ammo
 			impact	frag_explosion
 			hitbody frag_explosion
 			firesnd	weapons/grenade_launcher.wav
@@ -1504,7 +1504,7 @@ item grenl_incendiary_ammo
 		{
 			name	"_3-Round Burst - Timed"
 			skill	explosive
-			projtl	grenl_ammo
+			projtl	grenl_ic_ammo
 			impact	frag_explosion
 			hitbody frag_explosion
 			firesnd	weapons/grenade_launcher.wav
@@ -1548,7 +1548,7 @@ item grenl_fle_ammo
 		{
 			name	"_Single Shot"
 			skill	explosive
-			projtl	bullet
+			projtl	grenl_fle_ammo
 			impact	bulletImpact
 			hitbody blood
 			firesnd	weapons/shotgun.wav
@@ -1567,7 +1567,7 @@ item grenl_fle_ammo
 		{
 			name	"_3-Round Burst"
 			skill	explosive
-			projtl	bullet
+			projtl	grenl_fle_ammo
 			impact	bulletImpact
 			hitbody blood
 			firesnd	weapons/shotgun.wav
