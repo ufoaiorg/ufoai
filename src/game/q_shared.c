@@ -2509,7 +2509,7 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 		*icp = NULL;
 
 	if (from == to && fx == tx && fy == ty)
-		return 0;
+		return IA_NONE;
 
 	time = CSI->ids[from].out + CSI->ids[to].in;
 	if (from == to)

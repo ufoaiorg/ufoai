@@ -749,7 +749,7 @@ void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int 
 	qboolean newFloor;
 	item_t item;
 	int mask;
-	int ia;
+	inventory_action_t ia;
 	int msglevel;
 
 	ent = g_edicts + num;
@@ -791,138 +791,154 @@ void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int 
 		return;
 	}
 
-	if ((ia = Com_MoveInInventory(&ent->i, from, fx, fy, to, tx, ty, &ent->TU, &ic)) != 0) {
-		switch (ia) {
-		case IA_NOTIME:
-			gi.cprintf(player, msglevel, _("Can't perform action - not enough TUs!\n"));
-			return;
-		case IA_NORELOAD:
-			gi.cprintf(player, msglevel, _("Can't perform action - weapon already fully loaded with the same ammunition!\n")); /* TODO: "or not researched" */
-			return;
-		}
+	/* Try to actually move the item and check the return value */
+	ia = Com_MoveInInventory(&ent->i, from, fx, fy, to, tx, ty, &ent->TU, &ic);
+	switch (ia) {
+	case IA_NONE:
+		/* No action possible - abort */
+		return;
+	case IA_NOTIME:
+		gi.cprintf(player, msglevel, _("Can't perform action - not enough TUs!\n"));
+		return;
+	case IA_NORELOAD:
+		gi.cprintf(player, msglevel, _("Can't perform action - weapon already fully loaded with the same ammunition!\n")); /* TODO: "or not researched" */
+		return;
+	default:
+		/* Continue below. */
+		break;
+	}
 
-		/* FIXME: This is impossible - if not we should check MAX_INVDEFS*/
-		assert((gi.csi->idFloor >= 0) && (gi.csi->idFloor < MAX_CONTAINERS));
+	/* FIXME: This is impossible - if not we should check MAX_INVDEFS*/
+	assert((gi.csi->idFloor >= 0) && (gi.csi->idFloor < MAX_CONTAINERS));
 #ifdef DEBUG
-		if ((gi.csi->idFloor < 0) || (gi.csi->idFloor >= MAX_CONTAINERS))
-			return;	/* never reached. need for code analyst. */
+	if ((gi.csi->idFloor < 0) || (gi.csi->idFloor >= MAX_CONTAINERS))
+		return;	/* never reached. need for code analyst. */
 #endif
 
-		/* successful inventory change; remove the item in clients */
-		if (from == gi.csi->idFloor) {
-			assert (!newFloor);
-			if (FLOOR(ent)) { /* floor not totally emptied */
-				FLOOR(floor) = FLOOR(ent);
-				gi.AddEvent(G_VisToPM(floor->visflags), EV_INV_DEL);
-				gi.WriteShort(floor->number);
-				gi.WriteByte(from);
-				gi.WriteByte(fx);
-				gi.WriteByte(fy);
-			} else {
-				gi.AddEvent(G_VisToPM(floor->visflags), EV_ENT_PERISH);
-				gi.WriteShort(floor->number);
-				G_FreeEdict(floor);
-			}
-		} else {
-			gi.AddEvent(G_TeamToPM(ent->team), EV_INV_DEL);
-			gi.WriteShort(num);
+	/* successful inventory change; remove the item in clients */
+	if (from == gi.csi->idFloor) {
+		/* We removed an item from a floor - check how the client needs to be updated. */
+		assert (!newFloor);
+		if (FLOOR(ent)) {
+			/* There is still something on the floor. */
+			FLOOR(floor) = FLOOR(ent); /* TODO: _why_ do we do this here exactly? Shouldn't they be the same already at this point? */
+			/* Tell the client to remove the item from the container */
+			gi.AddEvent(G_VisToPM(floor->visflags), EV_INV_DEL);
+			gi.WriteShort(floor->number);
 			gi.WriteByte(from);
 			gi.WriteByte(fx);
 			gi.WriteByte(fy);
+		} else {
+			/* Floor is empty */
+			gi.AddEvent(G_VisToPM(floor->visflags), EV_ENT_PERISH);
+			gi.WriteShort(floor->number);
+			G_FreeEdict(floor);
+		}
+	} else {
+		/* Tell the client to remove the item from the container */
+		gi.AddEvent(G_TeamToPM(ent->team), EV_INV_DEL);
+		gi.WriteShort(num);
+		gi.WriteByte(from);
+		gi.WriteByte(fx);
+		gi.WriteByte(fy);
+	}
+
+	/* send tu's */
+	G_SendStats(ent);
+
+	item = ic->item;
+
+	if (ia == IA_RELOAD || ia == IA_RELOAD_SWAP) {
+		/* reload */
+		if (to == gi.csi->idFloor) {
+			assert (!newFloor);
+			assert (FLOOR(floor) == FLOOR(ent));
+			mask = G_VisToPM(floor->visflags);
+		} else {
+			mask = G_TeamToPM(ent->team);
 		}
 
-		/* send tu's */
-		G_SendStats(ent);
-
-		item = ic->item;
-
-		if (ia == IA_RELOAD || ia == IA_RELOAD_SWAP) {
-			/* reload */
-			if (to == gi.csi->idFloor) {
-				assert (!newFloor);
-				assert (FLOOR(floor) == FLOOR(ent));
-				mask = G_VisToPM(floor->visflags);
-			} else {
-				mask = G_TeamToPM(ent->team);
-			}
-
-			/* send ammo message to all --- it's fun to hear that sound */
-			gi.AddEvent(PM_ALL, EV_INV_RELOAD);
-			/* is this condition below needed? or is 'num' enough?
-			   probably needed so that red rifle on the floor changes color,
-			   but this needs testing. */
-			gi.WriteShort(to == gi.csi->idFloor ? floor->number : num);
-			gi.WriteByte(gi.csi->ods[item.t].ammo);
-			gi.WriteByte(item.m);
-			gi.WriteByte(to);
-			gi.WriteByte(ic->x);
-			gi.WriteByte(ic->y);
-		}
-
+		/* send ammo message to all --- it's fun to hear that sound */
+		gi.AddEvent(PM_ALL, EV_INV_RELOAD);
+		/* is this condition below needed? or is 'num' enough?
+		   probably needed so that red rifle on the floor changes color,
+		   but this needs testing. */
+		gi.WriteShort(to == gi.csi->idFloor ? floor->number : num);
+		gi.WriteByte(gi.csi->ods[item.t].ammo);
+		gi.WriteByte(item.m);
+		gi.WriteByte(to);
+		gi.WriteByte(ic->x);
+		gi.WriteByte(ic->y);
+		
 		if (ia == IA_RELOAD) {
 			gi.EndEvents();
 			return;
-		} else if (ia == IA_RELOAD_SWAP) {
+		} else { /* ia == IA_RELOAD_SWAP */
 			to = from;
 			tx = fx;
 			ty = fy;
 			item = Com_SearchInInventory(&ent->i, from, fx, fy)->item;
 		}
+	}
 
-		/* add it */
-		if (to == gi.csi->idFloor) {
-			if (newFloor) {
-				assert(FLOOR(ent));
-				FLOOR(floor) = FLOOR(ent);
-				/* send item info to the clients */
-				G_CheckVis(floor, qtrue);
-			} else {
-				/* add the item; update floor, because we add at beginning */
-				FLOOR(floor) = FLOOR(ent);
-				gi.AddEvent(G_VisToPM(floor->visflags), EV_INV_ADD);
-				gi.WriteShort(floor->number);
-				gi.WriteShort(6);
-				G_WriteItem(item, to, tx, ty);
-			}
+
+	/* add it */
+	if (to == gi.csi->idFloor) {
+		/* We moved an item to the floor - check how the client needs to be updated. */
+		if (newFloor) {
+			/* A new container was created for the floor. */
+			assert(FLOOR(ent));
+			FLOOR(floor) = FLOOR(ent); /* TODO: _why_ do we do this here exactly? Shouldn't they be the same already at this point? */
+			/* Send item info to the clients */
+			G_CheckVis(floor, qtrue);
 		} else {
-			gi.AddEvent(G_TeamToPM(ent->team), EV_INV_ADD);
+			/* Add the item; update floor, because we add at beginning */
+			FLOOR(floor) = FLOOR(ent); /* TODO: _why_ do we do this here exactly? Shouldn't they be the same already at this point? */
+			/* Tell the client to add the item to the container. */
+			gi.AddEvent(G_VisToPM(floor->visflags), EV_INV_ADD);
+			gi.WriteShort(floor->number);
+			gi.WriteShort(6);
+			G_WriteItem(item, to, tx, ty);
+		}
+	} else {
+		/* Tell the client to add the item to the container. */
+		gi.AddEvent(G_TeamToPM(ent->team), EV_INV_ADD);
+		gi.WriteShort(num);
+		gi.WriteShort(6);
+		G_WriteItem(item, to, tx, ty);
+	}
+
+	/* Update reaction firemode when something is moved from/to a hand. */
+	if ((from == gi.csi->idRight) || (to == gi.csi->idRight)) {
+		Com_DPrintf("G_ClientInvMove: Something moved in/out of Right hand.\n");
+		gi.AddEvent(G_TeamToPM(ent->team), EV_INV_HANDS_CHANGED);
+		gi.WriteShort(num);
+		gi.WriteShort(0);	/**< hand=right */
+	} else if ((from == gi.csi->idLeft) || (to == gi.csi->idLeft)) {
+		Com_DPrintf("G_ClientInvMove:  Something moved in/out of Left hand.\n");
+		gi.AddEvent(G_TeamToPM(ent->team), EV_INV_HANDS_CHANGED);
+		gi.WriteShort(num);
+		gi.WriteShort(1);	/**< hand=left */
+	}
+
+	/* Other players receive weapon info only. */
+	mask = G_VisToPM(ent->visflags) & ~G_TeamToPM(ent->team);
+	if (mask) {
+		if (from == gi.csi->idRight || from == gi.csi->idLeft) {
+			gi.AddEvent(mask, EV_INV_DEL);
+			gi.WriteShort(num);
+			gi.WriteByte(from);
+			gi.WriteByte(fx);
+			gi.WriteByte(fy);
+		}
+		if (to == gi.csi->idRight || to == gi.csi->idLeft) {
+			gi.AddEvent(mask, EV_INV_ADD);
 			gi.WriteShort(num);
 			gi.WriteShort(6);
 			G_WriteItem(item, to, tx, ty);
 		}
-
-		/* Update reaction firemode when something is moved from/to a hand. */
-		if ((from == gi.csi->idRight) || (to == gi.csi->idRight)) {
-			Com_DPrintf("G_ClientInvMove: Something moved in/out of Right hand.\n");
-			gi.AddEvent(G_TeamToPM(ent->team), EV_INV_HANDS_CHANGED);
-			gi.WriteShort(num);
-			gi.WriteShort(0);	/**< hand=right */
-		} else if ((from == gi.csi->idLeft) || (to == gi.csi->idLeft)) {
-			Com_DPrintf("G_ClientInvMove:  Something moved in/out of Left hand.\n");
-			gi.AddEvent(G_TeamToPM(ent->team), EV_INV_HANDS_CHANGED);
-			gi.WriteShort(num);
-			gi.WriteShort(1);	/**< hand=left */
-		}
-
-		/* other players receive weapon info only */
-		mask = G_VisToPM(ent->visflags) & ~G_TeamToPM(ent->team);
-		if (mask) {
-			if (from == gi.csi->idRight || from == gi.csi->idLeft) {
-				gi.AddEvent(mask, EV_INV_DEL);
-				gi.WriteShort(num);
-				gi.WriteByte(from);
-				gi.WriteByte(fx);
-				gi.WriteByte(fy);
-			}
-			if (to == gi.csi->idRight || to == gi.csi->idLeft) {
-				gi.AddEvent(mask, EV_INV_ADD);
-				gi.WriteShort(num);
-				gi.WriteShort(6);
-				G_WriteItem(item, to, tx, ty);
-			}
-		}
-		gi.EndEvents();
 	}
+	gi.EndEvents();
 }
 
 
