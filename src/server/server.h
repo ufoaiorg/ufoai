@@ -6,12 +6,6 @@
 /*
 All original materal Copyright (C) 2002-2007 UFO: Alien Invasion team.
 
-26/06/06, Eddy Cullen (ScreamingWithNoSound):
-	Reformatted to agreed style.
-	Added doxygen file comment.
-	Updated copyright notice.
-	Added inclusion guard.
-
 Original file from Quake 2 v3.21: quake2-2.31/server/server.h
 Copyright (C) 1997-2001 Id Software, Inc.
 
@@ -182,15 +176,17 @@ typedef struct {
 	byte demo_multicast_buf[MAX_MSGLEN];
 } server_static_t;
 
-/*============================================================================= */
-
+/**
+ * @brief map cycle list element
+*/
 typedef struct mapcycle_s {
-	char *map, *type;
-	struct mapcycle_s* next;
+	char *map;			/**< map name */
+	char *type;			/**< gametype to play on this map */
+	struct mapcycle_s* next;	/**< pointer to the next map in cycle */
 } mapcycle_t;
 
-extern mapcycle_t *mapcycleList;
-extern int mapcycleCount;
+extern mapcycle_t *mapcycleList;	/**< map cycle linked list */
+extern int mapcycleCount;		/**< number of maps in the cycle */
 
 /*============================================================================= */
 
