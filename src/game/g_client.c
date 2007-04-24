@@ -761,10 +761,14 @@ void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int 
 
 	/* "get floor ready" - searching for existing floor-edict*/
 	floor = G_GetFloorItems(ent); /* Also sets FLOOR(ent) to correct value. */
-	if ((to == gi.csi->idFloor || from == gi.csi->idFloor) && !floor) {
-		/* We are moving from/to the floor, but no existing edict for this floor-tile found -> create new one */
+	if (to == gi.csi->idFloor && !floor) {
+		/* We are moving to the floor, but no existing edict for this floor-tile found -> create new one */
 		floor = G_SpawnFloor(ent->pos);
 		newFloor = qtrue;
+	} else if (from == gi.csi->idFloor && !floor) {
+		/* We are moving from the floor, but no existing edict for this floor-tile found -> thi should never be the case. */
+		Com_Printf("G_ClientInvMove: No source-floor found.\n");
+		return;
 	} else {
 		/* There already exists an edict for this floor-tile. */
 		newFloor = qfalse;
