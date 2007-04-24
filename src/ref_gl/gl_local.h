@@ -6,12 +6,6 @@
 /*
 All original materal Copyright (C) 2002-2007 UFO: Alien Invasion team.
 
-12/04/07, Michael Ploujnikov (Plouj):
-    Documented viddef_t.
-    Added doxygen file comment.
-    Updated copyright notice.
-    Changed some image_s struct comments.
-
 Original file from Quake 2 v3.21: quake2-2.31/ref_gl/gl_local.h
 Copyright (C) 1997-2001 Id Software, Inc.
 

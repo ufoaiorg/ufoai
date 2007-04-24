@@ -1,4 +1,3 @@
-
 /**
  * @file cl_aliencont.c
  * @brief Deals with the Alien Containment stuff.

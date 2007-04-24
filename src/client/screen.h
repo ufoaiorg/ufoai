@@ -6,12 +6,6 @@
 /*
 All original materal Copyright (C) 2002-2007 UFO: Alien Invasion team.
 
-15/06/06, Eddy Cullen (ScreamingWithNoSound):
-	Reformatted to agreed style.
-	Added doxygen file comment.
-	Updated copyright notice.
-	Added inclusion guard.
-
 Original file from Quake 2 v3.21: quake2-2.31/client/screen.h
 Copyright (C) 1997-2001 Id Software, Inc.
 
