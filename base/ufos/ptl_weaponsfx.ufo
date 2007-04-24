@@ -921,6 +921,15 @@ particle incgren
 	}
 }
 
+particle flashgren
+{
+	init
+	{
+		model  weapons/flashgren/flashgren
+		color  ".5 .5 .5 1"
+	}
+}
+
 particle smokegren
 {
 	init
