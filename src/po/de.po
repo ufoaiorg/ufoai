@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-04-22 10:15+0200\n"
-"PO-Revision-Date: 2007-04-22 18:37+0100\n"
+"PO-Revision-Date: 2007-04-25 00:01+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1916,7 +1916,7 @@ msgstr "Benötigte Spieler bis zum automatischen Start:"
 
 #: ../base/ufos/menu_multiplayer.ufo:1595
 msgid "Start the game even if not all teams have joined"
-msgstr "Start das Spiel - auch wenn noch nicht alle Teams verbunden sind"
+msgstr "Starte das Spiel - auch wenn noch nicht alle Teams verbunden sind"
 
 #: ../base/ufos/menu_multiplayer.ufo:1608
 msgid "Force start"
