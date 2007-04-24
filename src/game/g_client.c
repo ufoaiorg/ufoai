@@ -729,16 +729,16 @@ static void G_PrintFloorToConsole (pos3_t pos)
 
 /**
  * @brief Moves an item inside an inventory. Floors are handled special.
- * @input[in] player
- * @input[in] num
+ * @input[in] player The player the edict/soldier belongs to.
+ * @input[in] num The edict number of the selected/used edict/soldier.
  * @input[in] from The container (-id) the item should be moved from.
  * @input[in] fx
  * @input[in] fy
  * @input[in] to The container (-id) the item should be moved to.
  * @input[in] tx
  * @input[in] ty
- * @input[in] checkaction
- * @input[in] quiet
+ * @input[in] checkaction Set this to qtrue if you want to check for TUs, otherwise qfalse.
+ * @input[in] quiet Set this to qfalse to prevent message-flooding.
  * @sa event PA_INVMOVE
  * @sa AI_ActorThink
  */
@@ -760,7 +760,7 @@ void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int 
 		return;
 
 	/* "get floor ready" - searching for existing floor-edict*/
-	floor = G_GetFloorItems(ent);
+	floor = G_GetFloorItems(ent); /* Also sets FLOOR(ent) to correct value. */
 	if ((to == gi.csi->idFloor || from == gi.csi->idFloor) && !floor) {
 		/* We are moving from/to the floor, but no existing edict for this floor-tile found -> create new one */
 		floor = G_SpawnFloor(ent->pos);
@@ -769,8 +769,6 @@ void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int 
 		/* There already exists an edict for this floor-tile. */
 		newFloor = qfalse;
 	}
-
-	/* TODO: Shouldn't we set ent->i[gi.csi->idFloor] to "floor" at this point? */
 
 	/* search for space */
 	if (tx == NONE) {
