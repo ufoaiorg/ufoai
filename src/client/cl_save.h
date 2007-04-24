@@ -28,6 +28,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_SAVESUBSYSTEMS 32
 
+#define SAVE_FILE_VERSION 2
+/* MAX_GAMESAVESIZE has room for 3MB for dynamic data, eg geoscape messages */
+#define MAX_GAMESAVESIZE	3145728
+#define MAX_COMMENTLENGTH	32
 typedef struct saveFileHeader_s {
 	int version; /**< which savegame version */
 	int compressed; /**< is this file compressed via zlib */
