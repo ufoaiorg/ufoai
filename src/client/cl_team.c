@@ -585,18 +585,17 @@ static item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
 }
 
 /**
- * @brief
+ * @brief Reloads weapons and removes "not assigned" ones from containers.
+ * @param[in] *aircraft	Pointer to an aircraft for given team.
+ * @param[in] *ed equipDef_t pointer to equipment of given character in a team.
  * @sa CL_AddWeaponAmmo
- * @todo remove baseCurrent from here - base->curTeam[] pointers goes mad
  */
-extern void CL_ReloadAndRemoveCarried (equipDef_t * ed)
+extern void CL_ReloadAndRemoveCarried (aircraft_t *aircraft, equipDef_t * ed)
 {
+	base_t *base;
 	character_t *cp;
 	invList_t *ic, *next;
 	int p, container;
-
-	assert(baseCurrent);
-	assert((baseCurrent->aircraftCurrent >= 0) && (baseCurrent->aircraftCurrent < baseCurrent->numAircraftInBase));
 
 	/* Iterate through in container order (right hand, left hand, belt, */
 	/* holster, backpack) at the top level, i.e. each squad member reloads */
@@ -606,17 +605,24 @@ extern void CL_ReloadAndRemoveCarried (equipDef_t * ed)
 	/* to keep her spares in the backpack or on the floor. We don't want */
 	/* the first person in the squad filling their backpack with spare ammo */
 	/* leaving others with unloaded guns in their hands... */
-	Com_DPrintf("teamNum in aircraft %i: %i\n", baseCurrent->aircraftCurrent, baseCurrent->teamNum[baseCurrent->aircraftCurrent] );
+
+	assert (aircraft);
+	base = aircraft->homebase;
+	assert (base);
+	
+	Com_Printf("CL_ReloadAndRemoveCarried()...aircraft idx: %i, teamNum: %i\n",
+	aircraft->idx, base->teamNum[aircraft->idx]);
+	
 	for (container = 0; container < csi.numIDs; container++) {
-		for (p = 0; p < baseCurrent->teamNum[baseCurrent->aircraftCurrent]; p++) {
-			cp = baseCurrent->curTeam[p];
+		for (p = 0; p < base->teamNum[aircraft->idx]; p++) {
+			cp = base->curTeam[p];
 			assert(cp);
 			for (ic = cp->inv->c[container]; ic; ic = next) {
 				next = ic->next;
 				if (ed->num[ic->item.t] > 0) {
 					ic->item = CL_AddWeaponAmmo(ed, ic->item);
 				} else {
-					/* drop ammo used for reloading and sold carried weapons */
+					/* Drop ammo used for reloading and sold carried weapons. */
 					Com_RemoveFromInventory(cp->inv, container, ic->x, ic->y);
 				}
 			}
@@ -724,7 +730,7 @@ static void CL_GenerateEquipment_f (void)
 	unused = baseCurrent->storage; /* copied, including arrays inside! */
 
 	CL_CleanTempInventory(baseCurrent);
-	CL_ReloadAndRemoveCarried(&unused);
+	CL_ReloadAndRemoveCarried(aircraft, &unused);
 
 	/* a 'tiny hack' to add the remaining equipment (not carried)
 	   correctly into buy categories, reloading at the same time;

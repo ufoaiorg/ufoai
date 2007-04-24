@@ -2082,7 +2082,7 @@ static void CL_GameGo (void)
 	/* manage inventory */
 	ccs.eMission = baseCurrent->storage; /* copied, including arrays inside! */
 	CL_CleanTempInventory(baseCurrent);
-	CL_ReloadAndRemoveCarried(&ccs.eMission);
+	CL_ReloadAndRemoveCarried(aircraft, &ccs.eMission);
 	/* remove inventory of any old temporary LEs */
 	LE_Cleanup();
 
