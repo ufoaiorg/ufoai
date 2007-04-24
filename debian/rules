@@ -56,7 +56,7 @@ build-indep: stamps/build-indep
 stamps/build-indep: config.status
 	dh_testdir
 
-	$(MAKE) lang maps
+	$(MAKE) BUILDDIR=$(CURDIR)/BUILD lang maps
 	cd base && ./archives.sh
 
 	mkdir -p stamps
@@ -67,7 +67,7 @@ clean:
 	dh_testroot
 	rm -rf stamps
 
-	$(MAKE) distclean
+	$(MAKE) BUILDDIR=$(CURDIR)/BUILD distclean
 	find maps -name '*.bsp' | xargs --no-run-if-empty rm
 
 	set -e; if [ -d .svn ]; then \
