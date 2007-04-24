@@ -2645,6 +2645,8 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 		b->numAircraftInBase = MSG_ReadByte(sb);
 		for (k = 0; k < b->numAircraftInBase; k++) {
 			aircraft = CL_GetAircraft(MSG_ReadString(sb));
+			if (!aircraft)
+				return qfalse;
 			memcpy(&b->aircraft[k], aircraft, sizeof(aircraft_t));
 			aircraft = &b->aircraft[k];
 			aircraft->idx = MSG_ReadShort(sb);
