@@ -228,23 +228,6 @@ void CL_ParticleRegisterArt (void)
 }
 
 /**
- * @brief Searches the global particle art list and set the model skin
- * @param[in] index The index of the model in the ptlArt array
- * @param[in] skin The skin the particle should be shown with
- */
-static void CL_ParticleSetSkin (int index, int skin)
-{
-	ptlArt_t *a;
-
-	/* search for the pic in the list */
-	a = &ptlArt[index];
-	if (a->type != ART_MODEL)
-		Sys_Error("Could not set the skin for a none model particle\n");
-
-	a->skin = skin;
-}
-
-/**
  * @brief Register art (pics, models) for each particle
  * @note searches the global particle art list and checks whether the pic or model was already loaded
  * @return index of global art array
