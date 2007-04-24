@@ -497,6 +497,7 @@ tech rs_weapon_flashbang
 	}
 	provides	flashbang
 	time	0
+	producetime	1
 }
 
 tech rs_weapon_fraggren
