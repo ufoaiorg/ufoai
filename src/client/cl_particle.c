@@ -126,6 +126,7 @@ static const int pc_types[PC_NUM_PTLCMDS] = {
 static const value_t pps[] = {
 	{"image", V_STRING, offsetof(ptl_t, pic)},
 	{"model", V_STRING, offsetof(ptl_t, model)},
+	{"skin", V_INT, offsetof(ptl_t, skin)},
 	{"blend", V_BLEND, offsetof(ptl_t, blend)},
 	{"style", V_STYLE, offsetof(ptl_t, style)},
 	{"tfade", V_FADE, offsetof(ptl_t, thinkFade)},
@@ -226,6 +227,22 @@ void CL_ParticleRegisterArt (void)
 	}
 }
 
+/**
+ * @brief Searches the global particle art list and set the model skin
+ * @param[in] index The index of the model in the ptlArt array
+ * @param[in] skin The skin the particle should be shown with
+ */
+static void CL_ParticleSetSkin (int index, int skin)
+{
+	ptlArt_t *a;
+
+	/* search for the pic in the list */
+	a = &ptlArt[index];
+	if (a->type != ART_MODEL)
+		Sys_Error("Could not set the skin for a none model particle\n");
+
+	a->skin = skin;
+}
 
 /**
  * @brief Register art (pics, models) for each particle
@@ -267,9 +284,10 @@ static int CL_ParticleGetArt (char *name, int frame, char type)
 	if (!a->art)
 		return -1;
 
+	a->skin = 0;
 	a->type = type;
 	a->frame = (type == ART_PIC) ? frame : 0;
-	Q_strncpyz(a->name, name, MAX_VAR);
+	Q_strncpyz(a->name, name, sizeof(a->name));
 	numPtlArt++;
 
 	return numPtlArt - 1;

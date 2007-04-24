@@ -213,6 +213,8 @@ typedef struct ptl_s {
 	vec3_t angles;
 	int levelFlags;
 
+	int skin;		/**< model skin to use for this particle */
+
 	struct ptl_s* children;	/**< list of children */
 	struct ptl_s* next;		/**< next peer in list */
 	struct ptl_s* parent;   /**< pointer to parent */
@@ -234,6 +236,7 @@ typedef struct ptlArt_s {
 	byte type;
 	byte frame;
 	char name[MAX_VAR];
+	int skin;
 	char *art;
 } ptlArt_t;
 
