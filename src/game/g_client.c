@@ -728,7 +728,17 @@ static void G_PrintFloorToConsole (pos3_t pos)
 #endif
 
 /**
- * @brief
+ * @brief Moves an item inside an inventory. Floors are handled special.
+ * @input[in] player
+ * @input[in] num
+ * @input[in] from The container (-id) the item should be moved from.
+ * @input[in] fx
+ * @input[in] fy
+ * @input[in] to The container (-id) the item should be moved to.
+ * @input[in] tx
+ * @input[in] ty
+ * @input[in] checkaction
+ * @input[in] quiet
  * @sa event PA_INVMOVE
  * @sa AI_ActorThink
  */
@@ -749,14 +759,18 @@ void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int 
 	if (checkaction && !G_ActionCheck(player, ent, 1, quiet))
 		return;
 
-	/* "get floor ready" */
+	/* "get floor ready" - searching for existing floor-edict*/
 	floor = G_GetFloorItems(ent);
-	if (to == gi.csi->idFloor && !floor) {
+	if ((to == gi.csi->idFloor || from == gi.csi->idFloor) && !floor) {
+		/* We are moving from/to the floor, but no existing edict for this floor-tile found -> create new one */
 		floor = G_SpawnFloor(ent->pos);
 		newFloor = qtrue;
 	} else {
+		/* There already exists an edict for this floor-tile. */
 		newFloor = qfalse;
 	}
+
+	/* TODO: Shouldn't we set ent->i[gi.csi->idFloor] to "floor" at this point? */
 
 	/* search for space */
 	if (tx == NONE) {
