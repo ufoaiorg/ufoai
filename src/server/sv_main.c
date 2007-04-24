@@ -841,14 +841,14 @@ extern void SV_MapcycleAdd (const char* mapName, const char* gameType)
 	mapcycle_t *mapcycle;
 
 	if (!mapcycleList) {
-		mapcycleList = malloc(sizeof(mapcycleList));
+		mapcycleList = malloc(sizeof(mapcycle_t));
 		mapcycle = mapcycleList; /* first one */
 	} else {
 		/* go the the last entry */
 		mapcycle = mapcycleList;
 		while (mapcycle->next)
 			mapcycle = mapcycle->next;
-		mapcycle->next = malloc(sizeof(mapcycleList));
+		mapcycle->next = malloc(sizeof(mapcycle_t));
 		mapcycle = mapcycle->next;
 	}
 	mapcycle->map = (char*)malloc(sizeof(char) * (strlen(mapName) + 1));
