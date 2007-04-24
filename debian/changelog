@@ -1,4 +1,4 @@
-ufoai (2.2~~svn7850) unstable; urgency=low
+ufoai (2.2~~svn) unstable; urgency=low
 
   * Explicitely disable openal support as advised by dev-team.
   * Build in ./BUILD/, not ./build/ which is already used for something
@@ -7,9 +7,12 @@ ufoai (2.2~~svn7850) unstable; urgency=low
   * Enable curses console for the server.
   * Include ufomaster in package ufoai-server.
   * Include qdata and md2tag_export.py in package ufoai-tools.
-  * Moved video modules into their own binary packages.
+  * Moved sound and video modules into their own binary packages.
+  * Ship packed data files (except fonts, since we use the system ones,
+    and shaders, which are packed with them upstream, and are not worth a
+    pack).
 
- -- Yann Dirson <dirson@debian.org>  Sun, 22 Apr 2007 18:25:33 +0200
+ -- Yann Dirson <dirson@debian.org>  Tue, 24 Apr 2007 23:09:34 +0200
 
 ufoai (2.1~~svn) unstable; urgency=low
 
