@@ -103,7 +103,7 @@ static void Cmd_Say_f (player_t *player, qboolean arg0, qboolean team)
 	if (!team)
 		Com_sprintf(text, sizeof(text), "%s: ", player->pers.netname);
 	else
-		Com_sprintf(text, sizeof(text), "%s (team): ", player->pers.netname);
+		Com_sprintf(text, sizeof(text), "^B%s (team): ", player->pers.netname);
 
 	if (arg0) {
 		Q_strcat(text, gi.argv(0), sizeof(text));
