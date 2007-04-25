@@ -806,7 +806,7 @@ extern void SV_NextMapcycle (void)
 }
 
 /**
- * @brief
+ * @brief Empty the mapcycle list
  * @sa SV_MapcycleAdd
  */
 extern void SV_MapcycleClear (void)
