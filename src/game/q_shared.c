@@ -1617,10 +1617,12 @@ char *va (char *format, ...)
 
 /**
  * @brief Parse a token out of a string
- * @param
+ * @param data_p Pointer to a string which is to be parsed
+ * @pre @c data_p is expected to be null-terminated
+ * @return The string result of parsing in a string.
  * @sa COM_EParse
  */
-char *COM_Parse (char **data_p)
+char *COM_Parse (char *data_p[])
 {
 	static char com_token[4096];
 	int c;
