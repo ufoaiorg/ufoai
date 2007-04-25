@@ -666,6 +666,10 @@ menu hud
 		num	"38"
 		height	"3"
 		format	"16 0"
+		padding	5
+		bordercolor	"0.5 0.5 0.5 1"
+		border	2
+		bgcolor	"0 0.1 0 0.8"
 	}
 
 	func event
