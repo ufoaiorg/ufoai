@@ -74,10 +74,10 @@ static void SV_New_f (void)
 		if (sv_client->state == cs_spawning) {
 			/* client typed 'reconnect/new' while connecting. */
 			MSG_WriteByte(&sv_client->netchan.message, svc_stufftext);
-			MSG_WriteString (&sv_client->netchan.message, "\ndisconnect\nreconnect\n");
-			SV_DropClient (sv_client);
+			MSG_WriteString(&sv_client->netchan.message, "\ndisconnect\nreconnect\n");
+			SV_DropClient(sv_client);
 		} else
-			Com_DPrintf ("WARNING: Illegal 'new' from %s, client state %d. This shouldn't happen...\n", sv_client->name, sv_client->state);
+			Com_DPrintf("WARNING: Illegal 'new' from %s, client state %d. This shouldn't happen...\n", sv_client->name, sv_client->state);
 		return;
 	}
 

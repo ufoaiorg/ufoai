@@ -272,11 +272,10 @@ static void SV_Status_f (void)
 #ifdef DEDICATED_ONLY
 /**
  * @brief
+ * @sa SV_BroadcastPrintf
  */
 static void SV_ConSay_f (void)
 {
-	client_t *client;
-	int j;
 	char *p;
 	char text[1024];
 
@@ -288,7 +287,7 @@ static void SV_ConSay_f (void)
 		return;
 	}
 
-	Q_strncpyz(text, "console: ", sizeof(text));
+	Q_strncpyz(text, "serverconsole: ", sizeof(text));
 	p = Cmd_Args();
 
 	if (*p == '"') {
@@ -297,12 +296,7 @@ static void SV_ConSay_f (void)
 	}
 
 	Q_strcat(text, p, sizeof(text));
-
-	for (j = 0, client = svs.clients; j < sv_maxclients->value; j++, client++) {
-		if (client->state != cs_spawned)
-			continue;
-		SV_ClientPrintf(client, PRINT_CHAT, "%s\n", text);
-	}
+	SV_BroadcastPrintf(PRINT_CHAT, "%s\n", text);
 }
 #endif
 

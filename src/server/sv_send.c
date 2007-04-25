@@ -119,7 +119,7 @@ void SV_BroadcastPrintf (int level, const char *fmt, ...)
 	for (i = 0, cl = svs.clients; i < sv_maxclients->value; i++, cl++) {
 		if (level < cl->messagelevel)
 			continue;
-		if (cl->state != cs_spawned)
+		if (cl->state < cs_connected)
 			continue;
 		MSG_WriteByte(&cl->netchan.message, svc_print);
 		MSG_WriteByte(&cl->netchan.message, level);
