@@ -7,7 +7,7 @@ Standards-Version: 3.6.1
 
 Package: ufoai
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, ufoai-data (>= 0.0.svn), ufoai-data-maps (>= 0.0.svn), ufoai-vid-glx | ufoai-vid, ufoai-snd-sdl | ufoai-snd
+Depends: ${shlibs:Depends}, ${misc:Depends}, ufoai-data (>= 2.2~~svn), ufoai-vid-glx | ufoai-vid, ufoai-snd-sdl | ufoai-snd
 Suggests: ufoai-data-music, ufoai-vid, ufoai-snd
 Description: UFO: Alien Invasion - build your team and stop the aliens
  "UFO: Alien Invasion" is a game inspired by the XCOM "UFO" series.
@@ -108,30 +108,26 @@ Description: UFO: Alien Invasion - data-building tool
 Package: ufoai-server
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Suggests: ufoai-data-maps (>= 0.0.svn)
+Suggests: ufoai-data (>= 2.2~~svn)
 Description: UFO: Alien Invasion - standalone game server
  "UFO: Alien Invasion" is a game inspired by the XCOM "UFO" series.
  .
- This package includes the standalone game server.  It is only needed
- if you want to setup a permanent game server.
+ This package includes the standalone game server and the master
+ server.  It is only needed if you want to setup a permanent game
+ server.
 
 Package: ufoai-data
 Architecture: all
 Depends: ${misc:Depends}, ttf-freefont, ttf-dejavu
 Recommends: ufoai
 Description: Data for UFO: Alien Invasion
- Models, units, sound effects, etc.
-
-Package: ufoai-data-maps
-Architecture: all
-Depends: ${misc:Depends}
-Recommends: ufoai
-Description: Data for UFO: Alien Invasion
- Maps.
+ This package contains all the non-optional game data for UFO:AI:
+ maps, models, units, sound effects, etc.
 
 Package: ufoai-data-music
 Architecture: all
 Depends: ${misc:Depends}
 Recommends: ufoai
 Description: Data for UFO: Alien Invasion
- Music.
+ This package contains the music for UFO:AI.  It is recommended to
+ fully experience the game, but not required.

@@ -11,8 +11,9 @@ ufoai (2.2~~svn) unstable; urgency=low
   * Ship packed data files (except fonts, since we use the system ones,
     and shaders, which are packed with them upstream, and are not worth a
     pack).
+  * Merge ufoai-data-maps into ufoai-data.
 
- -- Yann Dirson <dirson@debian.org>  Tue, 24 Apr 2007 23:09:34 +0200
+ -- Yann Dirson <dirson@debian.org>  Wed, 25 Apr 2007 00:44:13 +0200
 
 ufoai (2.1~~svn) unstable; urgency=low
 
