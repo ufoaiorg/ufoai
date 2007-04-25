@@ -1438,7 +1438,7 @@ menu multiplayer_selectteam
 	pic back_ul
 	{
 		image	menu/multiplayer_teamsel
-		pos	"256 128"
+		pos	"256 28"
 	}
 
 	string teamselection
@@ -1446,13 +1446,13 @@ menu multiplayer_selectteam
 		font	f_big
 		color	"1 1 1 1"
 		string	"_Team selection"
-		pos	"512 156"
+		pos	"512 56"
 		align	uc
 	}
 
 	text team_info
 	{
-		pos		"300 200"
+		pos		"300 100"
 		size	"422 320"
 		format	"16 60"
 //		bgcolor	"1 1 1 0.5"
@@ -1462,7 +1462,7 @@ menu multiplayer_selectteam
 
 	text teamnum_status
 	{
-		pos		"300 530"
+		pos		"300 430"
 		size	"422 16"
 		format	"16 60"
 //		bgcolor	"1 1 1 0.5"
@@ -1473,43 +1473,43 @@ menu multiplayer_selectteam
 	string maxplayersperteams_str
 	{
 		string	"_Max. players per team"
-		pos		"300 560"
+		pos		"300 460"
 	}
 
 	string maxplayersperteams_value
 	{
 		string	"*cvar mn_maxplayersperteam"
-		pos	"550 560"
+		pos	"550 460"
 	}
 
 	string maxteams_str
 	{
 		string	"_Max. teams for this map"
-		pos		"300 580"
+		pos		"300 480"
 	}
 
 	string maxteams_value
 	{
 		string	"*cvar mn_maxteams"
-		pos	"550 580"
+		pos	"550 480"
 	}
 
 	string teamnum_str
 	{
 		string	"_Team preference:"
-		pos		"400 600"
+		pos		"400 500"
 	}
 	string teamnum_value
 	{
 		string	"*cvar teamnum"
-		pos		"550 600"
+		pos		"550 500"
 		align	ur
 	}
 	pic teamnum_inc
 	{
 		tooltip	"_Next free team"
 		image	menu/buttons_small
-		pos		"568 602"
+		pos		"568 502"
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
@@ -1519,7 +1519,7 @@ menu multiplayer_selectteam
 	{
 		tooltip	"_Previous free team"
 		image	menu/buttons_small
-		pos		"584 602"
+		pos		"584 502"
 		texl	"16 0"
 		texh	"32 16"
 		mousefx	true
@@ -1530,7 +1530,7 @@ menu multiplayer_selectteam
 	{
 		image	hud/buttons2
 		mousefx	true
-		pos		"684 594"
+		pos		"684 494"
 		texl	"0 0"
 		texh	"64 37"
 		click	{ cmd "spawnsoldiers;" }
@@ -1541,6 +1541,21 @@ menu multiplayer_selectteam
 	{
 		timeout 2000
 		cmd "mp_selectteam_init;"
+	}
+
+	text chatscreen
+	{
+		pos		"167 580"
+		size	"690 160"
+		font	"f_verysmall"
+		wheel
+		num	"38"
+		height	"10"
+		format	"16 0"
+		padding	5
+		bordercolor	"0.5 0.5 0.5 1"
+		border	2
+		bgcolor	"0 0.1 0 1"
 	}
 
 	// ===================
