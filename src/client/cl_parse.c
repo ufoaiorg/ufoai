@@ -1529,6 +1529,9 @@ void CL_ParseServerMessage (void)
 			case PRINT_CHAT:
 				S_StartLocalSound("misc/talk.wav");
 				MN_AddChatMessage(s);
+				/* skip format strings */
+				if (*s == '^')
+					s += 2;
 				/* also print to console */
 				break;
 			case PRINT_HUD:
