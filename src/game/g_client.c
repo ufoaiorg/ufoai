@@ -1320,7 +1320,7 @@ static void G_ClientStateChange (player_t * player, int num, int reqState)
 				ent->TU += reactionTUs[ent->number][REACT_TUS];
 				reactionTUs[ent->number][REACT_TUS] = 0;
 			}
-			
+
 			/* enable multi reaction fire */
  			ent->state |= STATE_REACTION_MANY;
 			ent->TU -= TU_REACTION_MULTI;
@@ -1869,9 +1869,10 @@ void G_GetTeam (player_t * player)
 		gi.dprintf("Get a team for teamplay for %s\n", player->pers.netname);
 		i = atoi(Info_ValueForKey(player->pers.userinfo, "teamnum"));
 		/* civilians are at team zero */
-		if (i > 0 && sv_maxteams->integer >= i)
+		if (i > 0 && sv_maxteams->integer >= i) {
 			player->pers.team = i;
-		else {
+			gi.bprintf(PRINT_CHAT, "serverconsole: %s has chosen team %i\n", player->pers.netname, i);
+		} else {
 			gi.dprintf("Team %i is not valid - choose a team between 1 and %i\n", i, sv_maxteams->integer);
 			player->pers.team = DEFAULT_TEAMNUM;
 		}
