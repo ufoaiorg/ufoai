@@ -1388,6 +1388,7 @@ static qboolean G_CheckRFTrigger (edict_t *target)
 	edict_t *ent;
 	int i, tus;
 	qboolean queued = qfalse;
+	int firemode = -3;
 
 	/* check all possible shooters */
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++) {
@@ -1400,8 +1401,12 @@ static qboolean G_CheckRFTrigger (edict_t *target)
 			continue;
 
 		/* see how quickly ent can fire (if it can fire at all) */
-		tus = G_GetFiringTUs(ent, target, NULL, NULL);
+		tus = G_GetFiringTUs(ent, target, NULL, &firemode);
 		if (tus < 0)
+			continue;
+
+		/* Check if a firemode has been set by the client. */
+		if (firemode < 0)
 			continue;
 
 		/* queue a reaction fire to take place */
@@ -1477,6 +1482,13 @@ static qboolean G_ResolveRF (edict_t *ent, qboolean mock)
 		if (!mock)
 			Com_Printf("Cancelling resolution because %s cannot fire\n", ent->chr.name);
 #endif
+		return qfalse;
+	}
+
+	/* Check if a firemode has been set by the client. */
+	if (firemode < 0) {
+		if (!mock)
+			Com_DPrintf("G_ResolveRF: Cancelling resolution because %s has not set a reaction-firemode (%i).\n", ent->chr.name, firemode);
 		return qfalse;
 	}
 
@@ -1592,6 +1604,7 @@ static void G_ReactToPreFire (edict_t *target)
 {
 	edict_t *ent;
 	int i, entTUs, targTUs;
+	int firemode = -4;
 
 	/* check all ents to see who wins and who loses a draw */
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++) {
@@ -1607,9 +1620,9 @@ static void G_ReactToPreFire (edict_t *target)
 			continue;
 
 		/* draw!! */
-		entTUs = G_GetFiringTUs(ent, target, NULL, NULL);
+		entTUs = G_GetFiringTUs(ent, target, NULL, &firemode);
 		targTUs = G_GetFiringTUs(target, ent, NULL, NULL);
-		if (entTUs < 0) {
+		if ((entTUs < 0) || (firemode < 0)) {
 			/* can't reaction fire if no TUs to fire */
 			ent->reactionTarget = NULL;
 			continue;
