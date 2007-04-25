@@ -389,7 +389,7 @@ static void G_Damage (edict_t * ent, fireDef_t *fd, int damage, edict_t * attack
 				player = game.players + ent->pnum;
 				ent->TU = 0; /* flashbangs kill TUs */
 				ent->state |= STATE_DAZED; /* entity is dazed */
-				gi.cprintf(player, PRINT_HUD, "Soldier is dazed!\nEnemy used flashbang!\n");
+				gi.cprintf(player, PRINT_HUD, _("Soldier is dazed!\nEnemy used flashbang!\n"));
 				return;
 			}
 		} else {
@@ -1042,7 +1042,7 @@ extern qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type, 
 	/* Don't allow to use medikit on itself. */
 	if (Q_strncmp(gi.csi->ods[weapon->t].id, "medikit", MAX_VAR) == 0) {
 		if (VectorCompare(ent->pos, at)) {
-			gi.cprintf(player, PRINT_HUD, "You cannot use medikit on yourself.\n");
+			gi.cprintf(player, PRINT_HUD, _("You cannot use medikit on yourself.\n"));
 			return qfalse;
 		}
 	}

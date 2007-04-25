@@ -2148,17 +2148,22 @@ void G_ForceEndRound (void)
 	diff = level.roundstartTime + sv_roundtimelimit->integer - level.time;
 	switch (diff) {
 	case 240:
+		gi.bprintf(PRINT_HUD, _("4 minutes left until forced round end\n"));
+		return;
 	case 180:
+		gi.bprintf(PRINT_HUD, _("3 minutes left until forced round end\n"));
+		return;
 	case 120:
+		gi.bprintf(PRINT_HUD, _("2 minutes left until forced round end\n"));
+		return;
 	case 60:
-		gi.bprintf(PRINT_HUD, ngettext("%i min left until forced round end\n",
-				"%i minutes left until forced round end\n", diff / 60), diff / 60);
+		gi.bprintf(PRINT_HUD, _("1 minute left until forced round end\n"));
 		return;
 	case 30:
-	case 20:
-	case 10:
-	case 5:
-		gi.bprintf(PRINT_HUD, _("%i seconds left until forced round end\n"), diff);
+		gi.bprintf(PRINT_HUD, _("30 seconds left until forced round end\n"));
+		return;
+	case 15:
+		gi.bprintf(PRINT_HUD, _("15 seconds left until forced round end\n"));
 		return;
 	}
 
@@ -2166,8 +2171,7 @@ void G_ForceEndRound (void)
 	if (level.time < level.roundstartTime + sv_roundtimelimit->integer)
 		return;
 
-	gi.bprintf(PRINT_HUD, _("Team %i hit the max round time\n"), level.activeTeam);
-
+	gi.bprintf(PRINT_HUD, _("Current active team hit the max round time\n"));
 
 	/* set all team members to ready (only human players) */
 	for (i = 0, p = game.players; i < game.maxplayers; i++, p++)

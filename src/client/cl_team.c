@@ -2238,6 +2238,11 @@ extern void CL_UpdateCharacterSkills (character_t *chr)
 		}
 	}
 
+	/* Update ABILITY_MIND just to make ranks work.
+	TODO: ABILITY_MIND should be improved other way. FIXME. */
+	if (!changed)
+		chr->skills[ABILITY_MIND]++;
+
 	/* Repeat to make sure we update skills with huge amount of chrscore->*kills. */
 	if (changed)
 		CL_UpdateCharacterSkills(chr);
