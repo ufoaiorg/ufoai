@@ -34,7 +34,7 @@ game_export_t *ge;
  * @brief Sends the contents of the mutlicast buffer to a single client
  * @note This message will be send reliable
  */
-static void PF_Unicast(player_t * player)
+static void PF_Unicast (player_t * player)
 {
 	client_t *client;
 
@@ -74,6 +74,7 @@ static void PF_dprintf (const char *fmt, ...)
 
 /**
  * @brief Print to a single client
+ * @sa SV_BroadcastPrintf
  */
 static void PF_cprintf (player_t * player, int level, const char *fmt, ...)
 {
