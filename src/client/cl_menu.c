@@ -26,6 +26,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 
+message_t *messageStack;
+
+/** @brief Stores all chat messages from a multiplayer game */
+typedef struct chatMessage_s {
+	char *text;
+	struct chatMessage_s *next;
+} chatMessage_t;
+
+static chatMessage_t *chatMessageStack = NULL;
+
+static void MN_ShutdownChatMessageSystem(void);
+static void CL_ShowChatMessagesOnStack_f(void);
+
 static const vec4_t tooltipBG = { 0.0f, 0.0f, 0.0f, 0.7f };
 static const vec4_t tooltipColor = { 0.0f, 0.8f, 0.0f, 1.0f };
 
@@ -1895,7 +1908,7 @@ void MN_DrawMenus (void)
 		menu = menuStack[sp++];
 		/* event node */
 		if (menu->eventNode) {
-			if (menu->eventNode->timeOut == 1 || (!menu->eventTime || (menu->eventTime + menu->eventNode->timeOut < cls.realtime))) {
+			if (menu->eventNode->timeOut > 0 && (menu->eventNode->timeOut == 1 || (!menu->eventTime || (menu->eventTime + menu->eventNode->timeOut < cls.realtime)))) {
 				menu->eventTime = cls.realtime;
 				MN_ExecuteActions(menu, menu->eventNode->click);
 #ifdef DEBUG
@@ -3101,6 +3114,52 @@ static void MN_PrintMenu_f (void)
 }
 
 /**
+ * @brief Hides a given menu node
+ * @note Sanity check whether node is null included
+ */
+void MN_HideNode (menuNode_t* node)
+{
+	if (node && node->invis == qfalse)
+		node->invis = qtrue;
+	if (!node)
+		Com_Printf("MN_HideNode: No node given\n");
+}
+
+/**
+ * @brief Script command to hide a given menu node
+ */
+static void MN_HideNode_f (void)
+{
+	if (Cmd_Argc() == 2)
+		MN_HideNode(MN_GetNodeFromCurrentMenu(Cmd_Argv(1)));
+	else
+		Com_Printf("usage: %s <node>\n", Cmd_Argv(0));
+}
+
+/**
+ * @brief Unhides a given menu node
+ * @note Sanity check whether node is null included
+ */
+void MN_UnHideNode (menuNode_t* node)
+{
+	if (node && node->invis == qtrue)
+		node->invis = qfalse;
+	if (!node)
+		Com_Printf("MN_UnHideNode: No node given\n");
+}
+
+/**
+ * @brief Script command to unhide a given menu node
+ */
+static void MN_UnHideNode_f (void)
+{
+	if (Cmd_Argc() == 2)
+		MN_UnHideNode(MN_GetNodeFromCurrentMenu(Cmd_Argv(1)));
+	else
+		Com_Printf("usage: %s <node>\n", Cmd_Argv(0));
+}
+
+/**
  * @brief Initialize the menu data hunk, add cvars and commands
  * @note Also calls the 'reset' functions for production, basemanagement,
  * aliencontainmenu, employee, hospital and a lot more subfunctions
@@ -3131,6 +3190,9 @@ void MN_ResetMenus (void)
 	Cmd_AddCommand("mn_textscroll", MN_TextScroll_f, NULL);
 	Cmd_AddCommand("msgmenu", CL_MessageMenu_f, "Activates the inline cvar editing");
 
+	Cmd_AddCommand("mn_hidenode", MN_HideNode_f, "Hides a given menu node");
+	Cmd_AddCommand("mn_unhidenode", MN_UnHideNode_f, "Unhides a given menu node");
+
 	/* print the keybindings to menuText */
 	Cmd_AddCommand("mn_init_keylist", MN_InitKeyList_f, NULL);
 
@@ -3140,6 +3202,7 @@ void MN_ResetMenus (void)
 	Cmd_AddCommand("listtutorials", MN_ListTutorials_f, "Show all tutorials");
 	Cmd_AddCommand("gettutorials", MN_GetTutorials_f, NULL);
 	Cmd_AddCommand("tutoriallist_click", MN_TutorialListClick_f, NULL);
+	Cmd_AddCommand("chatlist", CL_ShowChatMessagesOnStack_f, "Print all chat messages to the game console");
 	Cmd_AddCommand("messagelist", CL_ShowMessagesOnStack_f, "Print all messages to the game console");
 	Cmd_AddCommand("getmaps", MN_GetMaps_f, "Get the list of available maps");
 	Cmd_AddCommand("mn_startserver", MN_StartServer_f, NULL);
@@ -3194,6 +3257,8 @@ void MN_ResetMenus (void)
  * before CL_InitLocal (and thus MN_ResetMenus) was called
  * @sa CL_Shutdown
  * @sa MN_ResetMenus
+ * @sa MN_ShutdownChatMessageSystem
+ * @sa MN_ShutdownMessageSystem
  */
 void MN_Shutdown (void)
 {
@@ -3201,6 +3266,8 @@ void MN_Shutdown (void)
 		free(adata);
 	adata = NULL;
 	adataize = 0;
+	MN_ShutdownChatMessageSystem();
+	MN_ShutdownMessageSystem();
 }
 
 /*
@@ -3536,26 +3603,6 @@ qboolean MN_ParseNodeBody (menuNode_t * node, char **text, char **token)
 	} while (*text);
 
 	return qfalse;
-}
-
-/**
- * @brief Hides a given menu node
- * @note Sanity check whether node is null included
- */
-void MN_HideNode (menuNode_t* node)
-{
-	if (node && node->invis == qtrue)
-		node->invis = qfalse;
-}
-
-/**
- * @brief Unhides a given menu node
- * @note Sanity check whether node is null included
- */
-void MN_UnHideNode (menuNode_t* node)
-{
-	if (node && node->invis == qfalse)
-		node->invis = qtrue;
 }
 
 /**
@@ -4054,7 +4101,8 @@ message_t *MN_AddNewMessage (const char *title, const char *text, qboolean popup
 	mess->s = (ccs.date.sec % 3600) / 60 / 60;
 
 	Q_strncpyz(mess->title, title, sizeof(mess->title));
-	Q_strncpyz(mess->text, text, sizeof(mess->text));
+	mess->text = (char*)malloc(strlen(text) + 1);
+	Q_strncpyz(mess->text, text, strlen(text) + 1);
 
 	/* they need to be translated already */
 	if (popup)
@@ -4100,9 +4148,8 @@ static void MN_TimestampedText (char *text, message_t *message)
 
 /**
  * @brief
- * FIXME: This needs to be called at shutdown
  */
-void MN_ShutdownMessageSystem (void)
+extern void MN_ShutdownMessageSystem (void)
 {
 	message_t *m = messageStack;
 	message_t *d;
@@ -4110,6 +4157,7 @@ void MN_ShutdownMessageSystem (void)
 	while (m) {
 		d = m;
 		m = m->next;
+		free(d->text);
 		free(d);
 	}
 	messageStack = NULL;
@@ -4127,6 +4175,7 @@ void MN_RemoveMessage (char *title)
 		if (!Q_strncmp(m->title, title, MAX_VAR)) {
 			if (prev)
 				prev->next = m->next;
+			free(m->text);
 			free(m);
 			return;
 		}
@@ -4147,6 +4196,97 @@ void CL_InitMessageSystem (void)
 	/* we will use the messages on the stack in this textfield */
 	/* so be sure that this is null - don't change this */
 	menuText[TEXT_MESSAGESYSTEM] = NULL;
+}
+
+/**< @brief buffer that hold all printed chat messages for menu display */
+static char *chatBuffer = NULL;
+static menuNode_t* chatBufferNode = NULL;
+
+/**
+ * @brief Displays a chat on the hud and add it to the chat buffer
+ * @sa MN_ShutdownChatMessageSystem
+ */
+void MN_AddChatMessage (const char *text)
+{
+	/* allocate memory for new chat message */
+	chatMessage_t *chat = (chatMessage_t *) malloc(sizeof(chatMessage_t));
+
+	/* push the new chat message at the beginning of the stack */
+	chat->next = chatMessageStack;
+	chatMessageStack = chat;
+	chat->text = (char*)malloc(strlen(text) + 1);
+	Q_strncpyz(chat->text, text, strlen(text) + 1);
+
+	if (!chatBuffer) {
+		chatBuffer = (char*)malloc(sizeof(char) * MAX_MESSAGE_TEXT);
+		if (!chatBuffer) {
+			Com_Printf("Could not allocate chat buffer\n");
+			return;
+		}
+		/* only link this once */
+		menuText[TEXT_CHAT_WINDOW] = chatBuffer;
+	}
+	if (!chatBufferNode)
+		chatBufferNode = MN_GetNodeFromCurrentMenu("chatscreen");
+
+	*chatBuffer = '\0'; /* clear buffer */
+	do {
+		if (strlen(chatBuffer) + strlen(chat->text) >= MAX_MESSAGE_TEXT)
+			break;
+		Q_strcat(chatBuffer, chat->text, MAX_MESSAGE_TEXT); /* fill buffer */
+		chat = chat->next;
+	} while (chat);
+
+	/* maybe the hud doesn't have a chatscreen node - or we don't have a hud */
+	if (chatBufferNode) {
+		MN_UnHideNode(chatBufferNode);
+		menuStack[menuStackPos]->eventTime = cls.realtime;
+	}
+}
+
+/**
+ * @brief Script command to show all chat messages on the stack
+ */
+static void CL_ShowChatMessagesOnStack_f (void)
+{
+	chatMessage_t *m = chatMessageStack;
+
+	while (m) {
+		Com_Printf("%s", m->text);
+		m = m->next;
+	}
+}
+
+/**
+ * @brief
+ * @sa MN_AddChatMessage
+ */
+static void MN_ShutdownChatMessageSystem (void)
+{
+	chatMessage_t *m = chatMessageStack;
+	chatMessage_t *d;
+
+	while (m) {
+		d = m;
+		m = m->next;
+		free(d->text);
+		free(d);
+	}
+	chatMessageStack = NULL;
+	if (chatBuffer)
+		free(chatBuffer);
+}
+
+/**
+ * @brief Displays a message on the hud.
+ *
+ * @param[in] time is a ms values
+ * @param[in] text text is already translated here
+ */
+void CL_DisplayHudMessage (const char *text, int time)
+{
+	cl.msgTime = cl.time + time;
+	Q_strncpyz(cl.msgText, text, sizeof(cl.msgText));
 }
 
 /* ==================== USE_SDL_TTF stuff ===================== */

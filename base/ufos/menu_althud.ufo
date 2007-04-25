@@ -49,7 +49,6 @@ menu althud
 		rclick	{ cmd "mn_push ahudphysdat" }
 	}
 
-
 	// ==================
 	// CHAT BUTTONS
 	// ==================
@@ -66,7 +65,7 @@ menu althud
 			}
 		in	{
 				*bar_chat image hud/bar_chat_choice
-				*bar_chat size "128 64"
+				*bar_chat size "256 64"
 				cmd "mn_showchatbuttons 1"
 			}
 	}
@@ -96,6 +95,28 @@ menu althud
 				cmd	"messagesayteam"
 			}
 	}
+	pic bar_chat_show
+	{
+		if	"mn_showchatbuttons == 1"
+		tooltip	"_Show chat history"
+		image	hud/button_chat
+		pos		"900 592"
+		align	"ur"
+		texl	"64 0"
+		texh	"96 32"
+		mousefx false
+		out	{
+				*chatscreen size "690 48"
+				*chatscreen height "3"
+				*event timeout 10000
+			}
+		in	{
+				*chatscreen size "690 400"
+				*chatscreen height "25"
+				*event timeout 0
+				cmd "mn_unhidenode chatscreen"
+			}
+	}
 
 	pic button_chat
 	{
@@ -107,6 +128,24 @@ menu althud
 		pos	"985 590"
 		mousefx false
 		in
+	}
+
+	// the name must be the same in all huds
+	text chatscreen
+	{
+		pos		"130 2"
+		size	"690 48"
+		font	"f_verysmall"
+		wheel
+		num	"38"
+		height	"3"
+		format	"16 0"
+	}
+
+	func event
+	{
+		timeout	10000
+		cmd "mn_hidenode chatscreen;"
 	}
 
 	pic bar_floor

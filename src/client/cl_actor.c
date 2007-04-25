@@ -1297,7 +1297,7 @@ void CL_ActorUpdateCVars (void)
 				if (actorMoveLength != 0xFF) {
 					CL_RefreshWeaponButtons(selActor->TU - actorMoveLength);
 					Com_sprintf(infoText, sizeof(infoText), _("Armour  %i\tMorale  %i\nMove %i (%i TU left)\n"), selActor->AP, selActor->morale, actorMoveLength, selActor->TU - actorMoveLength);
-					if ( actorMoveLength <= selActor->TU )
+					if (actorMoveLength <= selActor->TU)
 						Com_sprintf(mouseText, sizeof(mouseText), "%i (%i)\n", actorMoveLength, selActor->TU);
 					else
 						Com_sprintf(mouseText, sizeof(mouseText), "- (-)\n" );
@@ -2600,18 +2600,6 @@ extern void CL_NextRound_f (void)
 }
 
 /**
- * @brief Displays a message on the hud.
- *
- * @param[in] time is a ms values
- * @param[in] text text is already translated here
- */
-void CL_DisplayHudMessage (const char *text, int time)
-{
-	cl.msgTime = cl.time + time;
-	Q_strncpyz(cl.msgText, text, sizeof(cl.msgText));
-}
-
-/**
  * @brief Performs end-of-turn processing.
  * @param[in] sb
  */
@@ -3286,6 +3274,7 @@ static const vec3_t boxSize = { BOX_DELTA_WIDTH, BOX_DELTA_LENGTH, BOX_DELTA_HEI
 
 /**
  * @brief create a targeting box at the given position
+ * @sa CL_ParseClientinfo
  */
 void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 {
@@ -3322,6 +3311,7 @@ void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 					/* TODO: print alien team */
 				} else {
 					/* multiplayer names */
+					/* see CL_ParseClientinfo */
 					menuText[TEXT_MOUSECURSOR_PLAYERNAMES] = cl.configstrings[CS_PLAYERNAMES + mouseActor->pnum];
 				}
 				/* aliens (and players not in our team [multiplayer]) are red */

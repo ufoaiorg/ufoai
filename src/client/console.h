@@ -32,7 +32,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	NUM_CON_TIMES 8
 
 #define COLORED_TEXT_MASK 128
-#define HUD_TEXT_MASK 256
 
 #define		CON_TEXTSIZE	32768
 typedef struct {

@@ -416,16 +416,6 @@ void Con_Print (const char *txt)
 	} else
 		mask = 0;
 
-	if (con.ormask & HUD_TEXT_MASK) {
-		/* all game lib messages or server messages should be printed
-		 * untranslated with bprintf or cprintf */
-		/* see src/po/OTHER_STRINGS */
-		CL_DisplayHudMessage(_(txt), 2000);
-		con.ormask = 0;
-		/* this is utf-8 - so no console print please */
-		return;
-	}
-
 	while ((c = *txt) != 0) {
 		/* count word length */
 		for (l = 0; l < con.linewidth; l++)

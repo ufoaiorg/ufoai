@@ -801,12 +801,13 @@ typedef enum {
 	MSG_MAX
 } messagetype_t;
 
+/** @brief also used for chat message buffer */
 #define MAX_MESSAGE_TEXT 1024
 #define TIMESTAMP_FORMAT "%02i %s %04i, %02i:%02i: "
 #define TIMESTAMP_TEXT 21
 typedef struct message_s {
 	char title[MAX_VAR];
-	char text[MAX_MESSAGE_TEXT];
+	char *text;
 	messagetype_t type;
 	technology_t *pedia;		/**< link to ufopedia if a research has finished. */
 	struct message_s *next;
@@ -815,11 +816,13 @@ typedef struct message_s {
 
 char messageBuffer[MAX_MESSAGE_TEXT];
 
-message_t *messageStack;
+extern message_t *messageStack;
 
 message_t *MN_AddNewMessage(const char *title, const char *text, qboolean popup, messagetype_t type, technology_t * pedia);
 void MN_RemoveMessage(char *title);
 void CL_InitMessageSystem(void);
+
+void MN_AddChatMessage(const char *text);
 
 #include "cl_campaign.h"
 
@@ -960,6 +963,7 @@ typedef enum {
 	TEXT_MARKET_STORAGE = 35,
 	TEXT_MARKET_MARKET,
 	TEXT_MARKET_PRICES,
+	TEXT_CHAT_WINDOW,
 
 	MAX_MENUTEXTS
 } texts_t;

@@ -322,6 +322,7 @@ static void CL_ParseServerData (void)
 
 /**
  * @brief Stores the client name
+ * @sa CL_ParseClientinfo
  */
 static void CL_LoadClientinfo (clientinfo_t *ci, char *s)
 {
@@ -332,7 +333,9 @@ static void CL_LoadClientinfo (clientinfo_t *ci, char *s)
 }
 
 /**
- * @brief
+ * @brief Parses client names that are displayed on the targeting box for
+ * multiplayer games
+ * @sa CL_AddTargetingBoX
  */
 static void CL_ParseClientinfo (int player)
 {
@@ -1339,6 +1342,9 @@ static void CL_ParseEvent (void)
 				impactTime = shootTime = nextTime;
 				parsedDeath = qfalse;
 				break;
+			default:
+/*				nextTime += 300;*/ /* mattn - for testing */
+				break;
 			}
 
 			/* add to timetable */
@@ -1367,7 +1373,7 @@ static void CL_ParseEvent (void)
 
 			/* copy data */
 			*evWp++ = eType;
-			memcpy( evWp, net_message.data + oldCount, length );
+			memcpy(evWp, net_message.data + oldCount, length);
 			evWp += length;
 		}
 		if (net_message.readcount - oldCount != length) {
@@ -1389,7 +1395,7 @@ static void CL_ParseEvent (void)
 				}
 			}
 			if (!correct)
-				Com_Printf("Warning: message for event %s has wrong lenght %i, should be %i.\n", ev_names[eType], net_message.readcount - oldCount, length);
+				Com_Printf("Warning: message for event %s has wrong length %i, should be %i.\n", ev_names[eType], net_message.readcount - oldCount, length);
 			net_message.readcount = oldCount + length;
 		}
 	}
@@ -1507,13 +1513,24 @@ void CL_ParseServerMessage (void)
 
 		case svc_print:
 			i = MSG_ReadByte(&net_message);
-			if (i == PRINT_CHAT) {
+			s = MSG_ReadString(&net_message);
+			switch (i) {
+			case PRINT_CHAT:
 				S_StartLocalSound("misc/talk.wav");
-				con.ormask = COLORED_TEXT_MASK;
-			} else if (i == PRINT_HUD) {
-				con.ormask = HUD_TEXT_MASK;
+				MN_AddChatMessage(s);
+				/* also print to console */
+				break;
+			case PRINT_HUD:
+				/* all game lib messages or server messages should be printed
+				 * untranslated with bprintf or cprintf */
+				/* see src/po/OTHER_STRINGS */
+				CL_DisplayHudMessage(_(s), 2000);
+				/* this is utf-8 - so no console print please */
+				return;
+			default:
+				break;
 			}
-			Com_Printf("%s", MSG_ReadString(&net_message));
+			Com_Printf("%s", s);
 			con.ormask = 0;
 			break;
 
