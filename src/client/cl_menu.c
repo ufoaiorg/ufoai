@@ -4530,7 +4530,7 @@ extern qboolean MS_Save (sizebuf_t* sb, void* data)
 extern qboolean MS_Load (sizebuf_t* sb, void* data)
 {
 	int i, mtype, idx;
-	const char *title, *text;
+	char title[MAX_VAR], text[MAX_MESSAGE_TEXT];
 	message_t *mess;
 
 	MN_ShutdownMessageSystem();
@@ -4539,8 +4539,8 @@ extern qboolean MS_Load (sizebuf_t* sb, void* data)
 	i = MSG_ReadLong(sb);
 	for (; i--;) {
 		/* can contain high bits due to utf8 */
-		title = MSG_ReadStringRaw(sb);
-		text = MSG_ReadStringRaw(sb);
+		Q_strncpyz(title, MSG_ReadStringRaw(sb), sizeof(title));
+		Q_strncpyz(text, MSG_ReadStringRaw(sb), sizeof(text));
 		mtype = MSG_ReadByte(sb);
 		idx = MSG_ReadLong(sb);
 		mess = MN_AddNewMessage(title, text, qfalse, mtype, RS_GetTechByIDX(idx));
