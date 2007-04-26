@@ -1024,7 +1024,7 @@ static void CL_RefreshWeaponButtons (int time)
 		/* Check whether this item use ammo. */
 		if (weaponr->item.m == NONE) {
 			/* This item does not use ammo, check for existing firedefs in this item. */
-			if (csi.ods[weaponr->item.t].numFiredefs > 0) {
+			if (csi.ods[weaponr->item.t].numWeapons > 0) {
 				/* Get firedef from the weapon entry instead. */
 				weaponr_fds_idx = INV_FiredefsIDXForWeapon(&csi.ods[weaponr->item.t], weaponr->item.t);
 			} else {
@@ -1067,7 +1067,7 @@ static void CL_RefreshWeaponButtons (int time)
 		/* Check whether this item use ammo. */
 		if (weaponl->item.m == NONE) {
 			/* This item does not use ammo, check for existing firedefs in this item. */
-			if (csi.ods[weaponl->item.t].numFiredefs > 0) {
+			if (csi.ods[weaponl->item.t].numWeapons > 0) {
 				/* Get firedef from the weapon entry instead. */
 				weaponl_fds_idx = INV_FiredefsIDXForWeapon(&csi.ods[weaponl->item.t], weaponl->item.t);
 			} else {
@@ -1251,7 +1251,7 @@ void CL_ActorUpdateCVars (void)
 				/* Check whether this item uses/has ammo. */
 				if (selWeapon->item.m == NONE) {
 					/* This item does not use ammo, check for existing firedefs in this item. */
-					if (csi.ods[selWeapon->item.t].numFiredefs > 0) {
+					if (csi.ods[selWeapon->item.t].numWeapons > 0) {
 						/* Get firedef from the weapon entry instead. */
 						selFD = GET_FIREDEF(
 							selWeapon->item.t,
