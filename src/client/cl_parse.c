@@ -548,6 +548,9 @@ static void CL_Reset (sizebuf_t *sb)
 static void CL_StartGame (sizebuf_t *sb)
 {
 	int team_play = MSG_ReadByte(sb);
+	char loadingPic[MAX_QPATH];
+	char tmpPicName[MAX_VAR];
+	const char *mapname;
 
 	/* init camera position and angles */
 	memset(&cl.cam, 0, sizeof(camera_t));
@@ -556,6 +559,20 @@ static void CL_StartGame (sizebuf_t *sb)
 	cl.cam.zoom = 1.25;
 	CalcFovX();
 	camera_mode = CAMERA_MODE_REMOTE;
+
+	mapname = Cvar_VariableString("mapname");
+	if (*mapname != '+') {
+		Q_strncpyz(tmpPicName, mapname, sizeof(tmpPicName));
+		tmpPicName[strlen(tmpPicName)-1] = '\0';
+		if (FS_CheckFile(va("maps/loading/%s.jpg", tmpPicName)))
+			Com_sprintf(loadingPic, sizeof(loadingPic), "maps/loading/%s.jpg", tmpPicName);
+		else
+			Q_strncpyz(loadingPic, "maps/loading/default.jpg", sizeof(loadingPic));
+		Cvar_Set("mn_mappicbig", loadingPic);
+	} else {
+		Q_strncpyz(loadingPic, "maps/loading/default.jpg", sizeof(loadingPic));
+		Cvar_Set("mn_mappicbig", loadingPic);
+	}
 
 	Com_Printf("Starting the game...\n");
 
