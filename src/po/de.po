@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-04-25 15:31+0200\n"
-"PO-Revision-Date: 2007-04-26 17:44+0100\n"
+"PO-Revision-Date: 2007-04-26 19:35+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -705,9 +705,8 @@ msgstr "Teamchat"
 
 #: ../base/ufos/menu_althud.ufo:101
 #: ../base/ufos/menu_hud.ufo:627
-#, fuzzy
 msgid "Show chat history"
-msgstr "Rüstungen anzeigen"
+msgstr "Zeige Chatlog an."
 
 #: ../base/ufos/menu_althud.ufo:124
 #: ../base/ufos/menu_hud.ufo:650
@@ -1368,9 +1367,8 @@ msgid "Hire/Unhire"
 msgstr "Rekrutieren/Entlassen"
 
 #: ../base/ufos/menu_hire.ufo:336
-#, fuzzy
 msgid "Rename your employee"
-msgstr "Basis umbenennen"
+msgstr "Angestellten umbenennen"
 
 #: ../base/ufos/menu_hire.ufo:382
 #: ../base/ufos/menu_hospital.ufo:219
@@ -2493,9 +2491,8 @@ msgid "Add/remove this soldier"
 msgstr "Füge hinzu/Entferne diesen Soldaten"
 
 #: ../base/ufos/menu_team.ufo:786
-#, fuzzy
 msgid "Rename your soldier"
-msgstr "Basis umbenennen"
+msgstr "Soldaten umbenennen"
 
 #: ../base/ufos/menu_team.ufo:1110
 #: ../base/ufos/menu_team.ufo:1119
@@ -9391,10 +9388,10 @@ msgstr ""
 "Baue weitere Quartiere."
 
 #: client/cl_hospital.c:58
-#, fuzzy, c-format
+#, c-format
 msgid "Healing of %s completed - %i active healing left\n"
 msgid_plural "Healing of %s completed - %i active healings left\n"
-msgstr[0] "Die Behandlung von %s wurde abgeschlossen. Noch %i Behandlungen ausstehend\n"
+msgstr[0] "Die Behandlung von %s wurde abgeschlossen. Noch %i Behandlung ausstehend\n"
 msgstr[1] "Die Behandlung von %s wurde abgeschlossen. Noch %i Behandlungen ausstehend\n"
 
 #: client/cl_hospital.c:60
@@ -10754,39 +10751,32 @@ msgid "Team %i ( %s) will get the first turn.\n"
 msgstr "Team %i ( %s) hat den ersten Zug.\n"
 
 #: game/g_client.c:2245
-#, fuzzy
 msgid "4 minutes left until forced round end\n"
-msgstr "%i Minute bis die Runde zwangsbeendet wird\n"
+msgstr "4 Minuten bis die Runde zwangsbeendet wird\n"
 
 #: game/g_client.c:2248
-#, fuzzy
 msgid "3 minutes left until forced round end\n"
-msgstr "%i Minute bis die Runde zwangsbeendet wird\n"
+msgstr "3 Minuten bis die Runde zwangsbeendet wird\n"
 
 #: game/g_client.c:2251
-#, fuzzy
 msgid "2 minutes left until forced round end\n"
-msgstr "%i Minute bis die Runde zwangsbeendet wird\n"
+msgstr "2 Minuten bis die Runde zwangsbeendet wird\n"
 
 #: game/g_client.c:2254
-#, fuzzy
 msgid "1 minute left until forced round end\n"
-msgstr "%i Minute bis die Runde zwangsbeendet wird\n"
+msgstr "1 Minute bis die Runde zwangsbeendet wird\n"
 
 #: game/g_client.c:2257
-#, fuzzy
 msgid "30 seconds left until forced round end\n"
-msgstr "%i Sekunden bis die Runde zwangsbeendet wird\n"
+msgstr "30 Sekunden bis die Runde zwangsbeendet wird\n"
 
 #: game/g_client.c:2260
-#, fuzzy
 msgid "15 seconds left until forced round end\n"
-msgstr "%i Sekunden bis die Runde zwangsbeendet wird\n"
+msgstr "15 Sekunden bis die Runde zwangsbeendet wird\n"
 
 #: game/g_client.c:2268
-#, fuzzy
 msgid "Current active team hit the max round time\n"
-msgstr "Team %i hat die max. Rundenzeit erreicht.\n"
+msgstr "Die maximale Rundenzeit wurde erreicht.\n"
 
 #: game/g_svcmds.c:371
 #, c-format
