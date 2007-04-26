@@ -1,4 +1,6 @@
 /* we can use this file to put in string here that are not found in the source via direct translations */
+_("human")
+_("alien")
 _("Yes")
 _("No")
 _("5 sec")
