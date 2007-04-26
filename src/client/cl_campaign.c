@@ -1708,6 +1708,8 @@ extern qboolean CP_Load (sizebuf_t *sb, void *data)
 	for (i = 0, mis = ccs.mission; i < ccs.numMissions; i++, mis++) {
 		/* get mission definition */
 		name = MSG_ReadString(sb);
+		mis->def = NULL;
+		mis->cause = NULL;
 		for (j = 0; j < numMissions; j++)
 			if (!Q_strncmp(name, missions[j].name, MAX_VAR)) {
 				mis->def = &missions[j];
@@ -1715,6 +1717,12 @@ extern qboolean CP_Load (sizebuf_t *sb, void *data)
 			}
 		if (j >= numMissions)
 			Com_Printf("......warning: Mission '%s' not found\n", name);
+
+		/* ignore incomplete info */
+		if (!mis->def) {
+			Com_Printf("......warning: Incomplete mission info\n");
+			return qfalse;
+		}
 
 		/* get mission type and location */
 		mis->def->missionType = MSG_ReadByte(sb);
@@ -1732,21 +1740,19 @@ extern qboolean CP_Load (sizebuf_t *sb, void *data)
 		if (j >= numStageSets)
 			Com_Printf("......warning: Stage set '%s' not found\n", name);
 
+		/* ignore incomplete info */
+		if (!mis->cause) {
+			Com_Printf("......warning: Incomplete mission info\n");
+			return qfalse;
+		}
+
 		/* read position and time */
 		mis->realPos[0] = MSG_ReadFloat(sb);
 		mis->realPos[1] = MSG_ReadFloat(sb);
 		mis->expire.day = MSG_ReadLong(sb);
 		mis->expire.sec = MSG_ReadLong(sb);
-		mis->def->onGeoscape = qtrue;
 
-		/* ignore incomplete info */
-		if (!mis->def || !mis->cause) {
-			memset(mis, 0, sizeof(actMis_t));
-			mis--;
-			i--;
-			ccs.numMissions--;
-			Com_Printf("......ignore incomplete mission info\n");
-		}
+		mis->def->onGeoscape = qtrue;
 		/* manually set mission data for a base-attack */
 		if (mis->def->missionType == MIS_BASEATTACK) {
 			/* Load IDX of base under attack */
@@ -1762,9 +1768,13 @@ extern qboolean CP_Load (sizebuf_t *sb, void *data)
 
 	/* stores the select mission on geoscape */
 	selectedMission = MSG_ReadLong(sb);
-	if (selectedMission >= 0)
+	if (selectedMission >= 0 && selectedMission < ccs.numMissions) {
 		selMis = ccs.mission + selectedMission;
-	else
+		if (!selMis->def) {
+			Com_Printf("......warning: incomplete mission data\n");
+			return qfalse;
+		}
+	} else
 		selMis = NULL;
 
 	/* and now fix the mission pointers or let the aircraft return to base */

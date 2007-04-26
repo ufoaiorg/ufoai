@@ -55,7 +55,7 @@ extern unsigned sys_frame_time;
 int mouseSpace;
 int mx, my;
 int dragFrom, dragFromX, dragFromY;
-item_t dragItem = {NONE,NONE,NONE}; /* to crash as soon as possible */
+item_t dragItem = {NONE_AMMO, NONE, NONE}; /* to crash as soon as possible */
 /**
  * rotate angles for menu models - pointer to menu node angles vec3_t
  * modify the node->angles values to rotate a model
@@ -1170,9 +1170,9 @@ void CL_ParseInput (void)
 			return;
 
 		CL_ActorMouseTrace();
-		if (cl.cmode > M_PEND_MOVE)	
+		if (cl.cmode > M_PEND_MOVE)
 			mouseSpace = MS_WORLD;	/* TODO: DEBUGME .. why is this needed? I just left it in because i do not know whe it's supposed to do */
-			
+
 		return;
 	}
 }

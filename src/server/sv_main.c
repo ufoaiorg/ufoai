@@ -872,6 +872,7 @@ static void SV_ParseMapcycle (void)
 	char *buffer, *tokenMap, *tokenGameType, *freeMe;
 	char **buf;
 	char map[MAX_VAR], gameType[MAX_VAR];
+	int readsize;
 
 	mapcycleCount = 0;
 	mapcycleList = NULL;
@@ -888,7 +889,13 @@ static void SV_ParseMapcycle (void)
 		buffer = (char*)malloc(sizeof(char)*(length + 1));
 		buf = &buffer;
 		freeMe = buffer;
-		FS_Read(buffer, length, &file);
+		readsize = FS_Read(buffer, length, &file);
+		/* TODO: check that readsize = length */
+
+		/* COM_Parse expects a null-terminated string.
+		 * Since FS_Read doesn't do that we null-terminate
+		 * the string outselves: */
+		buffer[readsize] = '\0';
 
 		do {
 			tokenMap = COM_Parse(buf);

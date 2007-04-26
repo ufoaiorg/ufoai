@@ -392,7 +392,16 @@ void CDAudio_Stop (void);
 
 #define	MAX_READ	0x10000		/* read in blocks of 64k */
 /**
- * @brief Properly handles partial reads
+ * @brief Read a file into a given buffer in memory.
+ * @param[out] buffer Pointer to memory where file contents are written to.
+ * @param[in] len The length of the supplied memory area.
+ * @param[in] f The file which is to be read into the memory area.
+ * @return The length of the file contents successfully read and written to
+ * memory.
+ * @note @c buffer is not null-terminated at the end of file reading
+ * @note This function properly handles partial reads so check that the
+ * returned length matches @c len.
+ * @note Reads in blocks of 64k.
  */
 #ifdef DEBUG
 int FS_ReadDebug (void *buffer, int len, qFILE * f, char* file, int line)

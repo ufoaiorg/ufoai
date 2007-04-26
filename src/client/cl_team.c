@@ -68,9 +68,10 @@ extern void CL_SendItem (sizebuf_t *buf, item_t item, int container, int x, int 
 	assert (item.t != NONE);
 /*	Com_Printf("Add item %s to container %i (t=%i:a=%i:m=%i) (x=%i:y=%i)\n", csi.ods[item.t].id, container, item.t, item.a, item.m, x, y);*/
 	if (save) {
-		MSG_WriteString(buf, csi.ods[item.t].id);
-		MSG_WriteString(buf, csi.ods[item.m].id);
 		MSG_WriteFormat(buf, "bbbb", item.a, container, x, y);
+		MSG_WriteString(buf, csi.ods[item.t].id);
+		if (item.a > NONE_AMMO)
+			MSG_WriteString(buf, csi.ods[item.m].id);
 	} else
 		MSG_WriteFormat(buf, "bbbbbb", item.t, item.a, item.m, container, x, y);
 }
@@ -109,16 +110,16 @@ extern void CL_ReceiveItem (sizebuf_t *buf, item_t *item, int *container, int *x
 
 	/* reset */
 	item->t = item->m = NONE;
-	item->a = 0;
+	item->a = NONE_AMMO;
 
 	if (save) {
-		itemID = MSG_ReadString(buf);
-		if (*itemID)
-			item->t = Com_GetItemByID(itemID);
-		itemID = MSG_ReadString(buf);
-		if (*itemID)
-			item->m = Com_GetItemByID(itemID);
 		MSG_ReadFormat(buf, "bbbb", &item->a, container, x, y);
+		itemID = MSG_ReadString(buf);
+		item->t = Com_GetItemByID(itemID);
+		if (item->a > NONE_AMMO) {
+			itemID = MSG_ReadString(buf);
+			item->m = Com_GetItemByID(itemID);
+		}
 	} else
 		/* network */
 		MSG_ReadFormat(buf, "bbbbbb", &item->t, &item->a, &item->m, container, x, y);
@@ -521,7 +522,7 @@ static item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
 				return item;
 			} else {
 				/* Your clip has been sold; give it back. */
-				item.a = 0;
+				item.a = NONE_AMMO;
 				return item;
 			}
 		}
@@ -561,7 +562,7 @@ static item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
 	}
 
 	/* See if there's any loose ammo */
-	item.a = 0;
+	item.a = NONE_AMMO;
 	for (i = 0; i < csi.numODs; i++) {
 		if (INV_LoadableInWeapon(&csi.ods[i], type)
 		&& (ed->num_loose[i] > item.a) ) {
@@ -656,7 +657,7 @@ static void CL_GenerateEquipment_f (void)
 	int i, p;
 	aircraft_t *aircraft;
 	/* t value will be set below - a and m are not changed here */
-	item_t item = {0,NONE,NONE};
+	item_t item = {NONE_AMMO, NONE, NONE};
 	int team = 0;
 
 	assert(baseCurrent);
