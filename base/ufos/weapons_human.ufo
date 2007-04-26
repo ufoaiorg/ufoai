@@ -503,11 +503,11 @@ item smg_ammo
 			speed	0
 			spread	"2.5 2.5"
 			crouch	0.7
-			range	60
+			range	45
 			shots	5
 			ammo	5
 			rof		10
-			time	9
+			time	14
 			damage	"25 0"
 			dmgtype normal
 			reaction	true
@@ -524,11 +524,11 @@ item smg_ammo
 			spread	"3.0 3.0"
 			modif	0.1
 			crouch	0.7
-			range	60
+			range	45
 			shots	15
 			ammo	15
 			rof		20
-			time	16
+			time	20
 			damage	"25 0"
 			dmgtype normal
 			reaction	true
