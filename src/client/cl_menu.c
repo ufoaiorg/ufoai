@@ -3119,7 +3119,7 @@ static void MN_PrintMenu_f (void)
  */
 void MN_HideNode (menuNode_t* node)
 {
-	if (node && node->invis == qfalse)
+	if (node)
 		node->invis = qtrue;
 	if (!node)
 		Com_Printf("MN_HideNode: No node given\n");
@@ -3142,7 +3142,7 @@ static void MN_HideNode_f (void)
  */
 void MN_UnHideNode (menuNode_t* node)
 {
-	if (node && node->invis == qtrue)
+	if (node)
 		node->invis = qfalse;
 	if (!node)
 		Com_Printf("MN_UnHideNode: No node given\n");
@@ -4239,6 +4239,9 @@ void MN_AddChatMessage (const char *text)
 
 	/* maybe the hud doesn't have a chatscreen node - or we don't have a hud */
 	if (chatBufferNode) {
+#ifdef DEBUG
+		Com_Printf("Unhide the node\n");
+#endif
 		MN_UnHideNode(chatBufferNode);
 		menuStack[menuStackPos]->eventTime = cls.realtime;
 #ifdef DEBUG

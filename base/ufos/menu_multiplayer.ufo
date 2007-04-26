@@ -1435,11 +1435,12 @@ menu multiplayer_selectteam
 	// background
 	// ==================
 
-/*	pic background
+	pic background
 	{
 		image	"*cvar mn_mappicbig"
-		pos	"112 84"
-	}*/
+		pos	"0 0"
+		size	"1024 768"
+	}
 
 	pic back_ul
 	{
@@ -1591,7 +1592,7 @@ menu multiplayer_selectteam
 		padding	5
 		bordercolor	"0.5 0.5 0.5 1"
 		border	2
-		bgcolor	"0 0.1 0 1"
+		bgcolor	"0 0.1 0 0.7"
 	}
 
 	// ===================
@@ -1611,6 +1612,20 @@ menu multiplayer_wait
 	zone popup
 	{
 		invis true
+	}
+	pic background
+	{
+		image	"*cvar mn_mappicbig"
+		pos	"0 0"
+		size	"1024 768"
+	}
+	string mapname
+	{
+		font	f_small
+		color	"1 1 1 1"
+		string	"*cvar mapname"
+		pos	"512 72"
+		align	uc
 	}
 	pic back
 	{
