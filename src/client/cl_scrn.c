@@ -507,6 +507,9 @@ static void SCR_DrawConsole (void)
 		/* draw the console like in game */
 		if (scr_con_current)
 			Con_DrawConsole(scr_con_current);
+		/* allow chat in waiting dialoges */
+		if (cls.key_dest == key_message)
+			Con_DrawNotify(); /* only draw notify in game */
 		return;
 	}
 

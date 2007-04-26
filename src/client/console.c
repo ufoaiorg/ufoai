@@ -547,10 +547,12 @@ void Con_DrawNotify (void)
 	int x, l, v;
 	char *text, *s;
 	int i, time, skip;
+	qboolean draw;
 
 	v = 60 * viddef.rx;
 	l = 120 * viddef.ry;
 	for (i = con.current - NUM_CON_TIMES + 1; i <= con.current; i++) {
+		draw = qfalse;
 		if (i < 0)
 			continue;
 		time = con.times[i % NUM_CON_TIMES];
@@ -563,11 +565,13 @@ void Con_DrawNotify (void)
 
 		for (x = 0; x < con.linewidth; x++) {
 			/* only draw chat or check for developer mode */
-			if (developer->integer || text[x] & COLORED_TEXT_MASK)
+			if (developer->integer || text[x] & COLORED_TEXT_MASK) {
 				re.DrawChar(l + (x << 3), v, text[x]);
+				draw = qtrue;
+			}
 		}
-
-		v += 8;
+		if (draw)
+			v += 8;
 	}
 
 	if (cls.key_dest == key_message && (msg_mode == MSG_SAY_TEAM || msg_mode == MSG_SAY)) {

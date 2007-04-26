@@ -1435,6 +1435,12 @@ menu multiplayer_selectteam
 	// background
 	// ==================
 
+/*	pic background
+	{
+		image	"*cvar mn_mappicbig"
+		pos	"112 84"
+	}*/
+
 	pic back_ul
 	{
 		image	menu/multiplayer_teamsel
@@ -1446,7 +1452,25 @@ menu multiplayer_selectteam
 		font	f_big
 		color	"1 1 1 1"
 		string	"_Team selection"
-		pos	"512 56"
+		pos	"512 50"
+		align	uc
+	}
+
+	string info
+	{
+		font	f_small
+		color	"1 1 1 1"
+		string	"_Hit the lower right button to finish the teamselection"
+		pos	"512 10"
+		align	uc
+	}
+
+	string mapname
+	{
+		font	f_small
+		color	"1 1 1 1"
+		string	"*cvar mapname"
+		pos	"512 72"
 		align	uc
 	}
 
@@ -1528,6 +1552,7 @@ menu multiplayer_selectteam
 
 	pic button_exit
 	{
+		tooltip	"_Finish the teamselection and start the game"
 		image	hud/buttons2
 		mousefx	true
 		pos		"684 494"
@@ -1541,6 +1566,17 @@ menu multiplayer_selectteam
 	{
 		timeout 2000
 		cmd "mp_selectteam_init;"
+	}
+
+	pic chat_button
+	{
+		tooltip	"_Activate chat"
+		image	hud/button_chat2
+		mousefx	true
+		pos		"96 580"
+		texl	"0 0"
+		texh	"64 64"
+		click	{ cmd "messagesay;" }
 	}
 
 	text chatscreen
