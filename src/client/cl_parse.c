@@ -1003,8 +1003,12 @@ static void CL_PlaceItem (le_t *le)
 		le->angles[ROLL] = 90;
 /*		le->angles[YAW] = 10*(int)(le->origin[0] + le->origin[1] + le->origin[2]) % 360; */
 	} else {
-		/* if no items in floor inventory, don't draw this le */
-		le->inuse = qfalse;
+		/* If no items in floor inventory, don't draw this le */
+		/* DEBUG
+		 * This is disabled for now because it'll prevent LE_Add to get a floor-edict when in mid-move.
+		 * See g_client.c:G_ClientInvMove
+		 */
+		/* le->inuse = qfalse; */ 
 	}
 }
 
