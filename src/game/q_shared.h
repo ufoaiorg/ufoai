@@ -166,8 +166,8 @@ typedef uint8_t byte;
 /*#define offsetof(TYPE, MEMBER) ((size_t) &((TYPE *)0)->MEMBER)*/
 /*#endif*/
 
-#define NONE                0xFF
-#define FULL                0xFFFFFF00
+#define NONE		0xFF
+#define NONE_AMMO	0
 
 #define WIDTH       256         /* absolute max */
 #define HEIGHT      8           /* 15 max */
@@ -1099,9 +1099,9 @@ typedef struct invDef_s {
 
 /** item definition */
 typedef struct item_s {
-	int a;	/**< number of ammo rounds left */
-	int m;	/**< unique index of ammo type on csi->ods */
-	int t;	/**< unique index of weapon in csi.ods array */
+	int a;	/**< number of ammo rounds left - see NONE_AMMO */
+	int m;	/**< unique index of ammo type on csi->ods - see NONE */
+	int t;	/**< unique index of weapon in csi.ods array - see NONE */
 } item_t;
 
 /** container/inventory list (linked list) with items */

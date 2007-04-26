@@ -2584,7 +2584,7 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 					*TU -= time;
 				if (ic->item.a >= CSI->ods[ic->item.t].ammo) {
 					/* exchange ammo */
-					item_t item = {0, NONE, ic->item.m};
+					item_t item = {NONE_AMMO, NONE, ic->item.m};
 
 					Com_AddToInventory(i, item, from, fx, fy);
 
@@ -2830,7 +2830,7 @@ CHARACTER GENERATION AND HANDLING
 int Com_PackAmmoAndWeapon (inventory_t* const inv, const int weapon, const int equip[MAX_OBJDEFS], int missed_primary, const char *name)
 {
 	int ammo = -1; /* this variable is never used before being set */
-	item_t item = {0,NONE,NONE};
+	item_t item = {NONE_AMMO, NONE, NONE};
 	int i, max_price, prev_price;
 	objDef_t obj;
 	qboolean allowLeft;
@@ -2925,7 +2925,7 @@ int Com_PackAmmoAndWeapon (inventory_t* const inv, const int weapon, const int e
 			assert (num >= 0);
 			/* pack some more ammo */
 			while (num--) {
-				item_t mun = {0, NONE, NONE};
+				item_t mun = {NONE_AMMO, NONE, NONE};
 
 				mun.t = ammo;
 				/* ammo to backpack; belt is for knives and grenades */
@@ -3136,7 +3136,7 @@ void Com_EquipActor (inventory_t* const inv, const int equip[MAX_OBJDEFS], const
 			}
 			if (max_price) {
 				if (equip[weapon] >= 40 * frand()) {
-					item_t item = {0,NONE,NONE};
+					item_t item = {NONE_AMMO, NONE, NONE};
 
 					item.t = weapon;
 					if (Com_TryAddToInventory(inv, item, CSI->idArmor)) {
