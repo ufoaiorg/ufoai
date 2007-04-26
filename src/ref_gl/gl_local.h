@@ -105,10 +105,10 @@ void GL_ShutdownSDLFonts(void); /* gl_draw.c */
  *
 */
 typedef struct {
-    unsigned width;     /**< game screen/window width */
-    unsigned height;    /**< game screen/window height */
-    float rx;       /**< horizontal screen scale factor */
-    float ry;       /**< vertical screen scale factor */
+	unsigned width;     /**< game screen/window width */
+	unsigned height;    /**< game screen/window height */
+	float rx;       /**< horizontal screen scale factor */
+	float ry;       /**< vertical screen scale factor */
 } viddef_t;
 #endif
 
@@ -117,21 +117,21 @@ extern viddef_t vid;
 #ifdef DEBUG
 # ifdef _MSC_VER
 #  define GL_CHECK_ERROR \
-    do { \
-        GLenum error = qglGetError(); \
-        if (error != GL_NO_ERROR) \
-            ri.Con_Printf(PRINT_ALL, "OpenGL err: %s (%d) 0x%X\n", \
-                    __FILE__, __LINE__, error); \
-    } while(0);
+	do { \
+		GLenum error = qglGetError(); \
+		if (error != GL_NO_ERROR) \
+			ri.Con_Printf(PRINT_ALL, "OpenGL err: %s (%d) 0x%X\n", \
+					__FILE__, __LINE__, error); \
+	} while(0);
 # else
 #  define GL_CHECK_ERROR \
-    do { \
-        GLenum error = qglGetError(); \
-        if (error != GL_NO_ERROR) \
-            ri.Con_Printf(PRINT_ALL, "OpenGL err: %s (%d): %s 0x%X\n", \
-                    __FILE__, __LINE__, \
-                    __PRETTY_FUNCTION__, error); \
-    } while(0);
+	do { \
+		GLenum error = qglGetError(); \
+		if (error != GL_NO_ERROR) \
+			ri.Con_Printf(PRINT_ALL, "OpenGL err: %s (%d): %s 0x%X\n", \
+					__FILE__, __LINE__, \
+					__PRETTY_FUNCTION__, error); \
+	} while(0);
 # endif
 #else
 # define GL_CHECK_ERROR
@@ -149,26 +149,26 @@ pic
 */
 
 typedef enum {
-    it_skin,
-    it_sprite,
-    it_wall,
-    it_pic,
-    it_wrappic
+	it_skin,
+	it_sprite,
+	it_wall,
+	it_pic,
+	it_wrappic
 } imagetype_t;
 
 typedef struct image_s {
-    char name[MAX_QPATH];       /* game path, including extension, must be first */
-    imagetype_t type;
-    int width, height;          /* source image dimensions */
-    int upload_width, upload_height;    /* dimensions after power of two and picmip */
-    int registration_sequence;  /* 0 = free */
-    struct msurface_s *texturechain;    /* for sort-by-texture world drawing */
-    int texnum;                 /* gl texture binding */
-    float sl, tl, sh, th;       /* 0,0 - 1,1 unless part of the scrap */
-    qboolean scrap;
-    qboolean has_alpha;
-    shader_t *shader;           /* pointer to shader from refdef_t */
-    qboolean paletted;
+	char name[MAX_QPATH];       /* game path, including extension, must be first */
+	imagetype_t type;
+	int width, height;          /* source image dimensions */
+	int upload_width, upload_height;    /* dimensions after power of two and picmip */
+	int registration_sequence;  /* 0 = free */
+	struct msurface_s *texturechain;    /* for sort-by-texture world drawing */
+	int texnum;                 /* gl texture binding */
+	float sl, tl, sh, th;       /* 0,0 - 1,1 unless part of the scrap */
+	qboolean scrap;
+	qboolean has_alpha;
+	shader_t *shader;           /* pointer to shader from refdef_t */
+	qboolean paletted;
 } image_t;
 
 #define TEXNUM_LIGHTMAPS    1024
@@ -184,11 +184,11 @@ typedef struct image_s {
 /*=================================================================== */
 
 typedef struct {
-    int width;
-    int height;
-    byte *captureBuffer;
-    byte *encodeBuffer;
-    qboolean motionJpeg;
+	int width;
+	int height;
+	byte *captureBuffer;
+	byte *encodeBuffer;
+	qboolean motionJpeg;
 } videoFrameCommand_t;
 
 size_t SaveJPGToBuffer(byte * buffer, int quality, int image_width, int image_height, byte * image_buffer);
@@ -204,12 +204,12 @@ void WriteTGA(FILE *f, byte *buffer, int width, int height);
 /*=================================================================== */
 
 typedef enum {
-    rserr_ok,
+	rserr_ok,
 
-    rserr_invalid_fullscreen,
-    rserr_invalid_mode,
+	rserr_invalid_fullscreen,
+	rserr_invalid_mode,
 
-    rserr_unknown
+	rserr_unknown
 } rserr_t;
 
 #include "gl_model.h"
@@ -226,9 +226,9 @@ void GL_UpdateSwapInterval(void);
 extern float gldepthmin, gldepthmax;
 
 typedef struct {
-    float x, y, z;
-    float s, t;
-    float r, g, b;
+	float x, y, z;
+	float s, t;
+	float r, g, b;
 } glvert_t;
 
 
@@ -240,9 +240,9 @@ typedef struct {
 
 /* entity transform */
 typedef struct {
-    qboolean done;
-    qboolean processing;
-    float matrix[16];
+	qboolean done;
+	qboolean processing;
+	float matrix[16];
 } transform_t;
 
 extern transform_t trafo[MAX_ENTITIES];
@@ -521,51 +521,51 @@ void R_DrawPtls(void);
 #define GL_RENDERER_OTHER       0x80000000
 
 typedef struct {
-    int renderer;
-    const char *renderer_string;
-    const char *vendor_string;
-    const char *version_string;
-    const char *extensions_string;
-    int maxTextureSize;
+	int renderer;
+	const char *renderer_string;
+	const char *vendor_string;
+	const char *version_string;
+	const char *extensions_string;
+	int maxTextureSize;
 } glconfig_t;
 
 typedef struct {
-    float inverse_intensity;
-    int displayrefresh;
-    qboolean fullscreen;
+	float inverse_intensity;
+	int displayrefresh;
+	qboolean fullscreen;
 
-    int prev_mode;
+	int prev_mode;
 
-    unsigned char *d_16to8table;
+	unsigned char *d_16to8table;
 
-    int lightmap_textures;
+	int lightmap_textures;
 
-    int currenttextures[2];
-    int currenttmu;
+	int currenttextures[2];
+	int currenttmu;
 
-    qboolean hwgamma;
+	qboolean hwgamma;
 
-    float camera_separation;
-    qboolean stereo_enabled;
+	float camera_separation;
+	qboolean stereo_enabled;
 
-    qboolean stencil_two_side;
-    qboolean ati_separate_stencil;
+	qboolean stencil_two_side;
+	qboolean ati_separate_stencil;
 
-    int max_lod;
+	int max_lod;
 
-    qboolean blend;
-    qboolean alpha_test;
-    qboolean fog_coord;
+	qboolean blend;
+	qboolean alpha_test;
+	qboolean fog_coord;
 
-    qboolean stencil_wrap;
-    qboolean anisotropic;
-    qboolean lod_bias;
-    qboolean arb_fragment_program;
-    qboolean glsl_program;
+	qboolean stencil_wrap;
+	qboolean anisotropic;
+	qboolean lod_bias;
+	qboolean arb_fragment_program;
+	qboolean glsl_program;
 
-    unsigned char originalRedGammaTable[256];
-    unsigned char originalGreenGammaTable[256];
-    unsigned char originalBlueGammaTable[256];
+	unsigned char originalRedGammaTable[256];
+	unsigned char originalGreenGammaTable[256];
+	unsigned char originalBlueGammaTable[256];
 } glstate_t;
 
 extern glconfig_t gl_config;
