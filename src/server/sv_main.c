@@ -752,53 +752,104 @@ extern void SV_NextMapcycle (void)
 {
 	int i;
 	const char *map = NULL, *gameType = NULL;
+	char *base;
+	char assembly[MAX_QPATH];
 	char expanded[MAX_QPATH];
 	char cmd[MAX_QPATH];
 	mapcycle_t *mapcycle;
 
 	mapcycle = mapcycleList;
-	for (i = 0; i < mapcycleCount; i++) {
-		/* get current position */
-		if (!Q_strcmp(sv.name, mapcycle->map)) {
-			/* next map in cycle */
-			if (mapcycle->next) {
-				map = mapcycle->next->map;
-				gameType = mapcycle->next->type;
-				Com_DPrintf("SV_NextMapcycle: next one: '%s'\n", map);
-			/* switch back to first list on cycle - if there is one */
+	if (*sv.name) {
+		Com_Printf("current map: %s\n", sv.name);
+		for (i = 0; i < mapcycleCount; i++) {
+			/* random maps may have a theme - but that's not stored in sv.name
+			* but in sv.assembly */
+			if (*mapcycle->map == '+') {
+				Q_strncpyz(expanded, mapcycle->map, sizeof(expanded));
+				base = strstr(expanded, " ");
+				if (base) {
+					*base = '\0'; /* split the strings */
+					Q_strncpyz(assembly, base+1, sizeof(assembly));
+					/* get current position */
+					if (!Q_strcmp(sv.name, expanded) && !Q_strcmp(sv.assembly, assembly)) {
+						/* next map in cycle */
+						if (mapcycle->next) {
+							map = mapcycle->next->map;
+							gameType = mapcycle->next->type;
+							Com_DPrintf("SV_NextMapcycle: next one: '%s' (gametype: %s)\n", map, gameType);
+						/* switch back to first list on cycle - if there is one */
+						} else {
+							map = mapcycleList->map;
+							gameType = mapcycleList->type;
+							Com_DPrintf("SV_NextMapcycle: first one: '%s' (gametype: %s)\n", map, gameType);
+						}
+						break;
+					}
+				} else {
+					Com_Printf("ignore mapcycle entry for random map (%s) with"
+						" no assembly given\n", mapcycle->map);
+				}
 			} else {
-				map = mapcycleList->map;
-				gameType = mapcycleList->type;
-				Com_DPrintf("SV_NextMapcycle: first one: '%s'\n", map);
+				/* get current position */
+				if (!Q_strcmp(sv.name, mapcycle->map)) {
+					/* next map in cycle */
+					if (mapcycle->next) {
+						map = mapcycle->next->map;
+						gameType = mapcycle->next->type;
+						Com_DPrintf("SV_NextMapcycle: next one: '%s' (gametype: %s)\n", map, gameType);
+					/* switch back to first list on cycle - if there is one */
+					} else {
+						map = mapcycleList->map;
+						gameType = mapcycleList->type;
+						Com_DPrintf("SV_NextMapcycle: first one: '%s' (gametype: %s)\n", map, gameType);
+					}
+					Com_sprintf(expanded, sizeof(expanded), "maps/%s.bsp", map);
+
+					/* check for bsp file */
+					if (FS_CheckFile(expanded) < 0) {
+						Com_Printf("SV_NextMapcycle: Can't find '%s' - mapcycle error\n"
+							"Use the 'maplist' command to get a list of valid maps\n", expanded);
+						map = NULL;
+						gameType = NULL;
+					} else
+						break;
+				}
 			}
-			break;
+			mapcycle = mapcycle->next;
 		}
-		mapcycle = mapcycle->next;
 	}
+
 	if (!map) {
 		if (mapcycleCount > 0) {
 			map = mapcycleList->map;
+			gameType = mapcycleList->type;
+			if (*map != '+') {
+				Com_sprintf(expanded, sizeof(expanded), "maps/%s.bsp", map);
+
+				/* check for bsp file */
+				if (FS_CheckFile(expanded) < 0) {
+					Com_Printf("SV_NextMapcycle: Can't find '%s' - mapcycle error\n"
+						"Use the 'maplist' command to get a list of valid maps\n", expanded);
+					return;
+				}
+			}
 		} else if (*sv.name) {
 			Com_Printf("No mapcycle - restart the current map (%s)\n", sv.name);
 			map = sv.name;
+			gameType = NULL;
 		} else {
 			Com_Printf("No mapcycle and no running map\n");
 			return;
 		}
+		/* still not set? */
+		if (!map)
+			return;
 	}
 
-	Com_sprintf(expanded, sizeof(expanded), "maps/%s.bsp", map);
-
-	/* check for bsp file */
-	if (FS_CheckFile(expanded) < 0) {
-		Com_Printf("SV_NextMapcycle: Can't find '%s' - mapcycle error\n"
-			"Use the 'maplist' command to get a list of valid maps\n", expanded);
-		return;
-	}
 	/* check whether we want to change the gametype, too */
 	if (gameType) {
 		Com_sprintf(cmd, sizeof(cmd), "gametype %s;", gameType);
-		Cbuf_AddText(cmd);
+		Cbuf_ExecuteText(EXEC_NOW, cmd);
 	}
 	Com_sprintf(cmd, sizeof(cmd), "map %s", map);
 	Cbuf_AddText(cmd);
@@ -889,7 +940,7 @@ static void SV_ParseMapcycle (void)
 
 		/* COM_Parse expects a null-terminated string.
 		 * Since FS_Read doesn't do that we null-terminate
-		 * the string outselves: */
+		 * the string ourselves: */
 		buffer[readsize] = '\0';
 
 		do {

@@ -116,7 +116,7 @@ typedef struct mTile_s {
 } mTile_t;
 
 /**
- * @brief Stores the parsed data of an assembly definition.  (See *.ump files) 
+ * @brief Stores the parsed data of an assembly definition.  (See *.ump files)
  * @todo: Please have a look if the comments are correct.
  */
 typedef struct mAssembly_s {
@@ -478,7 +478,7 @@ static qboolean SV_FitTile (byte map[32][32][MAX_TILEALTS], mTile_t * tile, int 
 
 	if (!tile)
 		return qfalse;
-	
+
 	/* check for map border */
 	if (x + tile->w > mapX + mapW + 2 || y + tile->h > mapY + mapH + 2)
 		return qfalse;
@@ -866,6 +866,10 @@ static void SV_SpawnServer (char *server, char *param, server_state_t serverstat
 	SZ_Init(&sv.multicast, sv.multicast_buf, sizeof(sv.multicast_buf));
 
 	Q_strncpyz(sv.name, server, sizeof(sv.name));
+	if (param)
+		Q_strncpyz(sv.assembly, param, sizeof(sv.assembly));
+	else
+		*sv.assembly = '\0';
 
 	/* leave slots at start for clients only */
 	for (i = 0; i < sv_maxclients->value; i++) {

@@ -1679,7 +1679,7 @@ extern qboolean CP_Load (sizebuf_t *sb, void *data)
 		state->start.day = MSG_ReadLong(sb);
 		state->start.sec = MSG_ReadLong(sb);
 		num = MSG_ReadByte(sb);
-		assert (num == state->def->num);
+		assert(num == state->def->num);
 		for (i = 0; i < num; i++) {
 			name = MSG_ReadString(sb);
 			for (j = 0, set = &ccs.set[state->def->first]; j < state->def->num; j++, set++)

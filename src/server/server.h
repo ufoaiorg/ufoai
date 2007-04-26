@@ -55,6 +55,7 @@ typedef struct {
 	int framenum;
 
 	char name[MAX_QPATH];		/**< map name, or cinematic name */
+	char assembly[MAX_QPATH];		/**< random map assembly name */
 	struct cmodel_s *models[MAX_MODELS];
 
 	char configstrings[MAX_CONFIGSTRINGS][MAX_TOKEN_CHARS];
