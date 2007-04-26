@@ -683,6 +683,7 @@ float MSG_ReadFloat (sizebuf_t * msg_read)
  * The second reading uses the same data buffer for the string - so
  * s is no longer the first - but the second string
  * @sa MSG_ReadString
+ * @sa MSG_ReadStringLine
  */
 char *MSG_ReadStringRaw (sizebuf_t * msg_read)
 {
@@ -713,6 +714,7 @@ char *MSG_ReadStringRaw (sizebuf_t * msg_read)
  * s is no longer the first - but the second string
  * @note strip high bits - don't use this for utf-8 strings
  * @sa MSG_ReadStringRaw
+ * @sa MSG_ReadStringLine
  */
 char *MSG_ReadString (sizebuf_t * msg_read)
 {
@@ -740,6 +742,8 @@ char *MSG_ReadString (sizebuf_t * msg_read)
 
 /**
  * @brief
+ * @sa MSG_ReadString
+ * @sa MSG_ReadStringRaw
  */
 char *MSG_ReadStringLine (sizebuf_t * msg_read)
 {
