@@ -656,6 +656,15 @@ menu hud
 		in
 	}
 
+	confunc unhide_chatscreen
+	{
+		*chatscreen invis qfalse
+	}
+	confunc hide_chatscreen
+	{
+		*chatscreen invis qtrue
+	}
+
 	// the name must be the same in all huds
 	text chatscreen
 	{
@@ -675,7 +684,7 @@ menu hud
 	func event
 	{
 		timeout	10000
-		cmd "mn_hidenode chatscreen;"
+		cmd "hide_chatscreen;"
 	}
 
 	pic bt_game

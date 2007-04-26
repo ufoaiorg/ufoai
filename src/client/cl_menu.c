@@ -4178,15 +4178,8 @@ void MN_AddChatMessage (const char *text)
 
 	/* maybe the hud doesn't have a chatscreen node - or we don't have a hud */
 	if (chatBufferNode) {
-#ifdef DEBUG
-		Com_Printf("Unhide the node\n");
-#endif
-		MN_UnHideNode(chatBufferNode);
+		Cbuf_ExecuteText(EXEC_NOW, "unhide_chatscreen");
 		menuStack[menuStackPos]->eventTime = cls.realtime;
-#ifdef DEBUG
-	} else {
-		Com_Printf("Could not get the chatscreen node from current menu\n");
-#endif
 	}
 }
 

@@ -149,7 +149,7 @@ menu althud
 	func event
 	{
 		timeout	10000
-		cmd "mn_hidenode chatscreen;"
+		cmd "hide_chatscreen;"
 	}
 
 	pic bar_floor
