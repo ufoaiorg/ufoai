@@ -676,7 +676,13 @@ float MSG_ReadFloat (sizebuf_t * msg_read)
 }
 
 /**
- * @brief
+ * @brief Don't strip high bits - use this for utf-8 strings
+ * @note Don't use this function in a way like
+ * <code> char *s = MSG_ReadStringRaw(sb);
+ * char *t = MSG_ReadStringRaw(sb);</code>
+ * The second reading uses the same data buffer for the string - so
+ * s is no longer the first - but the second string
+ * @sa MSG_ReadString
  */
 char *MSG_ReadStringRaw (sizebuf_t * msg_read)
 {
@@ -700,6 +706,13 @@ char *MSG_ReadStringRaw (sizebuf_t * msg_read)
 
 /**
  * @brief
+ * @note Don't use this function in a way like
+ * <code> char *s = MSG_ReadStringRaw(sb);
+ * char *t = MSG_ReadStringRaw(sb);</code>
+ * The second reading uses the same data buffer for the string - so
+ * s is no longer the first - but the second string
+ * @note strip high bits - don't use this for utf-8 strings
+ * @sa MSG_ReadStringRaw
  */
 char *MSG_ReadString (sizebuf_t * msg_read)
 {
