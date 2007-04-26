@@ -829,10 +829,12 @@ void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int 
 			gi.WriteByte(fx);
 			gi.WriteByte(fy);
 		} else {
-			/* Floor is empty */
-			gi.AddEvent(G_VisToPM(floor->visflags), EV_ENT_PERISH);
-			gi.WriteShort(floor->number);
-			G_FreeEdict(floor);
+			/* Floor is empty, remove the edict (from server+client) if we are not moving to it. */
+			if (to != gi.csi->idFloor) {
+				gi.AddEvent(G_VisToPM(floor->visflags), EV_ENT_PERISH);
+				gi.WriteShort(floor->number);
+				G_FreeEdict(floor);
+			}
 		}
 	} else {
 		/* Tell the client to remove the item from the container */
