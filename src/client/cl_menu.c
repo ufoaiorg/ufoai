@@ -4241,6 +4241,10 @@ void MN_AddChatMessage (const char *text)
 	if (chatBufferNode) {
 		MN_UnHideNode(chatBufferNode);
 		menuStack[menuStackPos]->eventTime = cls.realtime;
+#ifdef DEBUG
+	} else {
+		Com_Printf("Could not get the chatscreen node from current menu\n");
+#endif
 	}
 }
 
