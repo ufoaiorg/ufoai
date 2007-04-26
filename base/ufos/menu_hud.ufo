@@ -658,11 +658,11 @@ menu hud
 
 	confunc unhide_chatscreen
 	{
-		*chatscreen invis qfalse
+		*chatscreen invis false
 	}
 	confunc hide_chatscreen
 	{
-		*chatscreen invis qtrue
+		*chatscreen invis true
 	}
 
 	// the name must be the same in all huds
