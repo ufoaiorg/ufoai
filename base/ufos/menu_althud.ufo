@@ -144,6 +144,9 @@ menu althud
 		bordercolor	"0.5 0.5 0.5 1"
 		border	2
 		bgcolor	"0 0.1 0 0.8"
+		in	{
+			cmd "unhide_chatscreen;"
+		}
 	}
 
 	func event
