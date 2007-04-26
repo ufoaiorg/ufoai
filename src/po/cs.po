@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-04-25 15:31+0200\n"
+"POT-Creation-Date: 2007-04-26 19:39+0200\n"
 "PO-Revision-Date: 2007-04-22 22:28+0100\n"
 "Last-Translator: Lubomír Bláha <tritol@trilogic.cz>\n"
 "Language-Team: čeština <cs@li.org>\n"
@@ -20,21 +20,31 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
-#: ../base/maps/frozend.ump:231 ../base/maps/frozenn.ump:196
+#: ../base/maps/frozend.ump:245 ../base/maps/frozenn.ump:211
 msgid "Snow"
 msgstr "Sníh"
 
-#: ../base/maps/frozend.ump:247 ../base/maps/frozenn.ump:212
+#: ../base/maps/frozend.ump:261 ../base/maps/frozenn.ump:227
 msgid "Alien landing - Snow"
 msgstr "Místo přistání - Sníh"
 
-#: ../base/maps/frozend.ump:264 ../base/maps/frozenn.ump:229
+#: ../base/maps/frozend.ump:278 ../base/maps/frozenn.ump:244
 msgid "Industrial"
 msgstr "Průmyslová"
 
-#: ../base/maps/frozend.ump:282 ../base/maps/frozenn.ump:248
+#: ../base/maps/frozend.ump:296 ../base/maps/frozenn.ump:263
 msgid "Alien landing - Industrial"
 msgstr "Místo přistání - Průmyslová"
+
+#: ../base/maps/frozend.ump:316 ../base/maps/frozenn.ump:283
+#, fuzzy
+msgid "Multiplayer Coop"
+msgstr "Více hráčů"
+
+#: ../base/maps/frozend.ump:336 ../base/maps/frozenn.ump:303
+#, fuzzy
+msgid "Multiplayer Deathmatch"
+msgstr "Více hráčů"
 
 #: ../base/maps/orientald.ump:178 ../base/maps/orientaln.ump:159
 msgid "Oriental small"
@@ -679,84 +689,84 @@ msgstr "Ukázat zbroj na skladě"
 msgid "Chat messages"
 msgstr "Zprávy z pokecu"
 
-#: ../base/ufos/menu_althud.ufo:495 ../base/ufos/menu_hud.ufo:225
+#: ../base/ufos/menu_althud.ufo:499 ../base/ufos/menu_hud.ufo:225
 msgid "Enemy spotted"
 msgstr "Spatřen nepřítel"
 
-#: ../base/ufos/menu_althud.ufo:503 ../base/ufos/menu_hud.ufo:237
+#: ../base/ufos/menu_althud.ufo:507 ../base/ufos/menu_hud.ufo:237
 msgid "Click to cycle through spotted enemies"
 msgstr "Klik pro procházení spatřených nepřátel"
 
-#: ../base/ufos/menu_althud.ufo:513 ../base/ufos/menu_hud.ufo:213
+#: ../base/ufos/menu_althud.ufo:517 ../base/ufos/menu_hud.ufo:213
 msgid "Finish round"
 msgstr "Ukončit tah"
 
-#: ../base/ufos/menu_althud.ufo:574 ../base/ufos/menu_althud.ufo:596
+#: ../base/ufos/menu_althud.ufo:578 ../base/ufos/menu_althud.ufo:600
 #: ../base/ufos/menu_hud.ufo:416 ../base/ufos/menu_hud.ufo:426
 msgid "Primary fire mode"
 msgstr "Hlavní režim střelby"
 
-#: ../base/ufos/menu_althud.ufo:585 ../base/ufos/menu_althud.ufo:607
+#: ../base/ufos/menu_althud.ufo:589 ../base/ufos/menu_althud.ufo:611
 #: ../base/ufos/menu_hud.ufo:436 ../base/ufos/menu_hud.ufo:446
 msgid "Secondary fire mode"
 msgstr "Dopňkový režim střelby"
 
-#: ../base/ufos/menu_althud.ufo:620 ../base/ufos/menu_hud.ufo:526
+#: ../base/ufos/menu_althud.ufo:624 ../base/ufos/menu_hud.ufo:526
 msgid "Multiple-shot reaction fire"
 msgstr "Několik výstřelů při zpětné palbě"
 
-#: ../base/ufos/menu_althud.ufo:625 ../base/ufos/menu_hud.ufo:531
+#: ../base/ufos/menu_althud.ufo:629 ../base/ufos/menu_hud.ufo:531
 msgid "One-shot reaction fire"
 msgstr "Jeden výstřel při zpětné palbě"
 
-#: ../base/ufos/menu_althud.ufo:630 ../base/ufos/menu_hud.ufo:536
+#: ../base/ufos/menu_althud.ufo:634 ../base/ufos/menu_hud.ufo:536
 msgid "No reaction fire"
 msgstr "Bez zpětné palby"
 
-#: ../base/ufos/menu_althud.ufo:647
+#: ../base/ufos/menu_althud.ufo:651
 msgid "Reload right hand weapon"
 msgstr "Nabít zbraň v pravé ruce"
 
-#: ../base/ufos/menu_althud.ufo:658
+#: ../base/ufos/menu_althud.ufo:662
 msgid "Reload left hand weapon"
 msgstr "Nabít zbraň v levé ruce"
 
-#: ../base/ufos/menu_althud.ufo:675 ../base/ufos/menu_hud.ufo:515
+#: ../base/ufos/menu_althud.ufo:679 ../base/ufos/menu_hud.ufo:515
 msgid "Crouch/Stand up"
 msgstr "Zakleknout/postavit se"
 
-#: ../base/ufos/menu_althud.ufo:687
+#: ../base/ufos/menu_althud.ufo:691
 msgid "Level up"
 msgstr "O úroveň výš"
 
-#: ../base/ufos/menu_althud.ufo:698
+#: ../base/ufos/menu_althud.ufo:702
 msgid "Level down"
 msgstr "O úroveň níž"
 
-#: ../base/ufos/menu_althud.ufo:753
+#: ../base/ufos/menu_althud.ufo:757
 msgid "Switch to right hand weapon"
 msgstr "Přepnout na zbraň v pravé ruce"
 
-#: ../base/ufos/menu_althud.ufo:762
+#: ../base/ufos/menu_althud.ufo:766
 msgid "Switch to left hand weapon"
 msgstr "Přepnout na zbraň v levé ruce"
 
-#: ../base/ufos/menu_althud.ufo:1406 ../base/ufos/menu_althud.ufo:1418
-#: ../base/ufos/menu_althud.ufo:1430 ../base/ufos/menu_althud.ufo:1442
-#: ../base/ufos/menu_althud.ufo:1454 ../base/ufos/menu_althud.ufo:1466
-#: ../base/ufos/menu_althud.ufo:1478 ../base/ufos/menu_althud.ufo:1490
-#: ../base/ufos/menu_althud.ufo:1502 ../base/ufos/menu_althud.ufo:1514
-#: ../base/ufos/menu_althud.ufo:1526 ../base/ufos/menu_althud.ufo:1538
-#: ../base/ufos/menu_althud.ufo:1550 ../base/ufos/menu_althud.ufo:1562
-#: ../base/ufos/menu_althud.ufo:1574 ../base/ufos/menu_althud.ufo:1586
-#: ../base/ufos/menu_hud.ufo:1125 ../base/ufos/menu_hud.ufo:1137
-#: ../base/ufos/menu_hud.ufo:1149 ../base/ufos/menu_hud.ufo:1161
-#: ../base/ufos/menu_hud.ufo:1173 ../base/ufos/menu_hud.ufo:1185
-#: ../base/ufos/menu_hud.ufo:1197 ../base/ufos/menu_hud.ufo:1209
-#: ../base/ufos/menu_hud.ufo:1221 ../base/ufos/menu_hud.ufo:1233
-#: ../base/ufos/menu_hud.ufo:1245 ../base/ufos/menu_hud.ufo:1257
-#: ../base/ufos/menu_hud.ufo:1269 ../base/ufos/menu_hud.ufo:1281
-#: ../base/ufos/menu_hud.ufo:1293 ../base/ufos/menu_hud.ufo:1305
+#: ../base/ufos/menu_althud.ufo:1410 ../base/ufos/menu_althud.ufo:1422
+#: ../base/ufos/menu_althud.ufo:1434 ../base/ufos/menu_althud.ufo:1446
+#: ../base/ufos/menu_althud.ufo:1458 ../base/ufos/menu_althud.ufo:1470
+#: ../base/ufos/menu_althud.ufo:1482 ../base/ufos/menu_althud.ufo:1494
+#: ../base/ufos/menu_althud.ufo:1506 ../base/ufos/menu_althud.ufo:1518
+#: ../base/ufos/menu_althud.ufo:1530 ../base/ufos/menu_althud.ufo:1542
+#: ../base/ufos/menu_althud.ufo:1554 ../base/ufos/menu_althud.ufo:1566
+#: ../base/ufos/menu_althud.ufo:1578 ../base/ufos/menu_althud.ufo:1590
+#: ../base/ufos/menu_hud.ufo:1137 ../base/ufos/menu_hud.ufo:1149
+#: ../base/ufos/menu_hud.ufo:1161 ../base/ufos/menu_hud.ufo:1173
+#: ../base/ufos/menu_hud.ufo:1185 ../base/ufos/menu_hud.ufo:1197
+#: ../base/ufos/menu_hud.ufo:1209 ../base/ufos/menu_hud.ufo:1221
+#: ../base/ufos/menu_hud.ufo:1233 ../base/ufos/menu_hud.ufo:1245
+#: ../base/ufos/menu_hud.ufo:1257 ../base/ufos/menu_hud.ufo:1269
+#: ../base/ufos/menu_hud.ufo:1281 ../base/ufos/menu_hud.ufo:1293
+#: ../base/ufos/menu_hud.ufo:1305 ../base/ufos/menu_hud.ufo:1317
 msgid "Check to use this firemode for reaction fire."
 msgstr "Nastavit jako režim pro zpětnou palbu."
 
@@ -1068,7 +1078,7 @@ msgstr "UFOpedie"
 msgid "Create base"
 msgstr "Vybudovat základnu"
 
-#: ../base/ufos/menu_geoscape.ufo:253 ../base/ufos/menu_hud.ufo:680
+#: ../base/ufos/menu_geoscape.ufo:253 ../base/ufos/menu_hud.ufo:692
 #: ../base/ufos/menu_main.ufo:110 ../base/ufos/menu_multiplayeringame.ufo:89
 #: ../base/ufos/menu_singleplayer.ufo:214
 #: ../base/ufos/menu_singleplayer.ufo:356
@@ -1382,11 +1392,11 @@ msgstr "Voják 8"
 msgid "Reload weapon"
 msgstr "Nabít zbraň"
 
-#: ../base/ufos/menu_hud.ufo:691
+#: ../base/ufos/menu_hud.ufo:703
 msgid "Physical stats of this soldier"
 msgstr "Stav vojáka"
 
-#: ../base/ufos/menu_hud.ufo:702 ../base/ufos/seq_tutorials.ufo:518
+#: ../base/ufos/menu_hud.ufo:714 ../base/ufos/seq_tutorials.ufo:518
 msgid "Inventory"
 msgstr "Inventář"
 
@@ -1661,92 +1671,106 @@ msgstr "Mapa"
 msgid "Start server"
 msgstr "Spustit server"
 
-#: ../base/ufos/menu_multiplayer.ufo:1448
+#: ../base/ufos/menu_multiplayer.ufo:1455
 msgid "Team selection"
 msgstr "Výběr týmu"
 
-#: ../base/ufos/menu_multiplayer.ufo:1475
+#: ../base/ufos/menu_multiplayer.ufo:1464
+#, fuzzy
+msgid "Hit the lower right button to finish the teamselection"
+msgstr "Stiskněte \"Na ně!!!\" nebo \"Automise\" pro boj s cizáky"
+
+#: ../base/ufos/menu_multiplayer.ufo:1500
 msgid "Max. players per team"
 msgstr "Maximum hráčů na tým"
 
-#: ../base/ufos/menu_multiplayer.ufo:1487
+#: ../base/ufos/menu_multiplayer.ufo:1512
 msgid "Max. teams for this map"
 msgstr "Maximum týmů pro tuto mapu"
 
 # kde je tenhle text?
-#: ../base/ufos/menu_multiplayer.ufo:1499
+#: ../base/ufos/menu_multiplayer.ufo:1524
 msgid "Team preference:"
 msgstr "Priorita týmu:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1510
+#: ../base/ufos/menu_multiplayer.ufo:1535
 msgid "Next free team"
 msgstr "Další volný tým"
 
-#: ../base/ufos/menu_multiplayer.ufo:1520
+#: ../base/ufos/menu_multiplayer.ufo:1545
 msgid "Previous free team"
 msgstr "Předchozí volný tým"
 
-#: ../base/ufos/menu_multiplayer.ufo:1571
+#: ../base/ufos/menu_multiplayer.ufo:1556
+msgid "Finish the teamselection and start the game"
+msgstr ""
+
+#: ../base/ufos/menu_multiplayer.ufo:1574
+#, fuzzy
+msgid "Activate chat"
+msgstr "Aktivovat nápovědu"
+
+#: ../base/ufos/menu_multiplayer.ufo:1637
 msgid "Please wait"
 msgstr "Čekejte prosím"
 
-#: ../base/ufos/menu_multiplayer.ufo:1577
+#: ../base/ufos/menu_multiplayer.ufo:1643
 msgid "Waiting for other players to join the game"
 msgstr "Čekám až se ke hře připojí ostatní hráči"
 
-#: ../base/ufos/menu_multiplayer.ufo:1583
+#: ../base/ufos/menu_multiplayer.ufo:1649
 msgid "Players that must join before starting: "
 msgstr "Hráči kteří se před zahájením musí připojit:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1595
+#: ../base/ufos/menu_multiplayer.ufo:1661
 msgid "Start the game even if not all teams have joined"
 msgstr "Zahájí hru i přesto, že se nepřipojily všechny týmy"
 
-#: ../base/ufos/menu_multiplayer.ufo:1608
+#: ../base/ufos/menu_multiplayer.ufo:1674
 msgid "Force start"
 msgstr "Vynutit zahájení"
 
-#: ../base/ufos/menu_multiplayer.ufo:1622
+#: ../base/ufos/menu_multiplayer.ufo:1688
 msgid "1on1"
 msgstr "1vs.1"
 
-#: ../base/ufos/menu_multiplayer.ufo:1636
+#: ../base/ufos/menu_multiplayer.ufo:1702
 msgid "1on1on1"
 msgstr "1vs.1vs.1"
 
-#: ../base/ufos/menu_multiplayer.ufo:1650
+#: ../base/ufos/menu_multiplayer.ufo:1716
 msgid "2on2"
 msgstr "2vs.2"
 
-#: ../base/ufos/menu_multiplayer.ufo:1664
+#: ../base/ufos/menu_multiplayer.ufo:1730
 msgid "2on2on2"
 msgstr "2vs.2vs.2"
 
-#: ../base/ufos/menu_multiplayer.ufo:1678
+#: ../base/ufos/menu_multiplayer.ufo:1744
 msgid "3on3"
 msgstr "3vs.3"
 
-#: ../base/ufos/menu_multiplayer.ufo:1692
+#: ../base/ufos/menu_multiplayer.ufo:1758
 msgid "3on3on3"
 msgstr "3vs.3vs.3"
 
-#: ../base/ufos/menu_multiplayer.ufo:1706
+#: ../base/ufos/menu_multiplayer.ufo:1772
 msgid "4on4"
 msgstr "4vs.4"
 
-#: ../base/ufos/menu_multiplayer.ufo:1720
+#: ../base/ufos/menu_multiplayer.ufo:1786
 msgid "4on4on4"
 msgstr "4vs.4"
 
-#: ../base/ufos/menu_multiplayer.ufo:1734
+#: ../base/ufos/menu_multiplayer.ufo:1800
 msgid "Coop 2 players"
 msgstr "Spolupráce 2 hráčů"
 
-#: ../base/ufos/menu_multiplayer.ufo:1748
+#: ../base/ufos/menu_multiplayer.ufo:1814
 msgid "Coop 3 players"
 msgstr "Spolupráce 3 hráčů"
 
-#: ../base/ufos/menu_multiplayer.ufo:1762
+#: ../base/ufos/menu_multiplayer.ufo:1828
 msgid "Coop 4 players"
 msgstr "Spolupráce 4 hráčů"
 
@@ -2285,7 +2309,7 @@ msgid "Show only aliens"
 msgstr "Ukázat jen cizáky"
 
 # Alien = cizák - tradice českého překladu UFO: Enemy Unknown
-#: ../base/ufos/menu_transfer.ufo:285 client/cl_campaign.c:4086
+#: ../base/ufos/menu_transfer.ufo:285 client/cl_campaign.c:4096
 msgid "Aliens"
 msgstr "Cizáci"
 
@@ -12006,9 +12030,9 @@ msgstr "Letoun odstartoval"
 #: client/cl_campaign.c:1213 client/cl_campaign.c:1224
 #: client/cl_campaign.c:1237 client/cl_campaign.c:1247
 #: client/cl_campaign.c:1254 client/cl_campaign.c:1262
-#: client/cl_campaign.c:2239 client/cl_campaign.c:2275
-#: client/cl_campaign.c:2277 client/cl_campaign.c:2585
-#: client/cl_campaign.c:2829 client/cl_main.c:1069 client/cl_map.c:270
+#: client/cl_campaign.c:2249 client/cl_campaign.c:2285
+#: client/cl_campaign.c:2287 client/cl_campaign.c:2595
+#: client/cl_campaign.c:2839 client/cl_main.c:1069 client/cl_map.c:270
 #: client/cl_market.c:526 client/cl_market.c:530 client/cl_research.c:907
 #: client/cl_research.c:925 client/cl_research.c:931 client/cl_research.c:969
 #: client/cl_research.c:1000 client/cl_research.c:1143
@@ -12112,11 +12136,11 @@ msgstr "Transportér má málo paliva a vrací se na základnu"
 msgid "Interception"
 msgstr "Stíhání"
 
-#: client/cl_aircraft.c:918 client/cl_campaign.c:2275
+#: client/cl_aircraft.c:918 client/cl_campaign.c:2285
 msgid "You've won the battle"
 msgstr "Vyhrál jste bitvu"
 
-#: client/cl_aircraft.c:925 client/cl_campaign.c:2277
+#: client/cl_aircraft.c:925 client/cl_campaign.c:2287
 msgid "You've lost the battle"
 msgstr "Prohrál jste bitvu"
 
@@ -12164,7 +12188,7 @@ msgstr "Pochytal jste nové cizáky."
 msgid "Needs autopsy!"
 msgstr "Vyžaduje pitvu!"
 
-#: client/cl_aliencont.c:904 po/OTHER_STRINGS:2
+#: client/cl_aliencont.c:904 po/OTHER_STRINGS:4
 msgid "Yes"
 msgstr "Ano"
 
@@ -12228,7 +12252,7 @@ msgstr "%i k"
 msgid "Base is under attack"
 msgstr "Probíhá útok na základnu"
 
-#: client/cl_basemanagement.c:1853 client/cl_team.c:1343 client/cl_team.c:1546
+#: client/cl_basemanagement.c:1853 client/cl_team.c:1344 client/cl_team.c:1547
 msgid "NewTeam"
 msgstr "Nový tým"
 
@@ -12257,8 +12281,8 @@ msgstr ""
 "Na této základně není letoun - Musíte nejdříve nějaký koupit nebo přepravit\n"
 
 #: client/cl_basemanagement.c:2304 client/cl_basemanagement.c:2306
-#: client/cl_campaign.c:2068 client/cl_market.c:338 client/cl_market.c:599
-#: client/cl_save.c:286 client/cl_team.c:1390
+#: client/cl_campaign.c:2078 client/cl_market.c:338 client/cl_market.c:599
+#: client/cl_save.c:286 client/cl_team.c:1391
 msgid "Note"
 msgstr "Poznámka"
 
@@ -12414,28 +12438,28 @@ msgstr[0] "kredit"
 msgstr[1] "kredity"
 msgstr[2] "kreditů"
 
-#: client/cl_campaign.c:1167 client/cl_campaign.c:4091
+#: client/cl_campaign.c:1167 client/cl_campaign.c:4101
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "vědec"
 msgstr[1] "vědci"
 msgstr[2] "vědců"
 
-#: client/cl_campaign.c:1168 client/cl_campaign.c:4093
+#: client/cl_campaign.c:1168 client/cl_campaign.c:4103
 msgid "medic"
 msgid_plural "medics"
 msgstr[0] "lékař"
 msgstr[1] "lékaři"
 msgstr[2] "lékařů"
 
-#: client/cl_campaign.c:1169 client/cl_campaign.c:4090
+#: client/cl_campaign.c:1169 client/cl_campaign.c:4100
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "voják"
 msgstr[1] "vojáci"
 msgstr[2] "vojáků"
 
-#: client/cl_campaign.c:1170 client/cl_campaign.c:4092
+#: client/cl_campaign.c:1170 client/cl_campaign.c:4102
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] "dělník"
@@ -12560,20 +12584,20 @@ msgstr ""
 "\t-------\n"
 "Celkem:\t%i k\n"
 
-#: client/cl_campaign.c:2068
+#: client/cl_campaign.c:2078
 msgid "Assemble or load a team"
 msgstr "Sestavit nebo načíst tým"
 
-#: client/cl_campaign.c:2239
+#: client/cl_campaign.c:2249
 msgid "Your dropship is not near the landing zone"
 msgstr "Transportér není v blízkosti přistávacího prostoru"
 
-#: client/cl_campaign.c:2582
+#: client/cl_campaign.c:2592
 #, c-format
 msgid "By selling %s %s"
 msgstr "Prodáním %s %s"
 
-#: client/cl_campaign.c:2583
+#: client/cl_campaign.c:2593
 #, c-format
 msgid "%i collected item"
 msgid_plural "%i collected items"
@@ -12581,17 +12605,17 @@ msgstr[0] "%i shromážděného předmětu"
 msgstr[1] "%i shromážděných předmětů"
 msgstr[2] "%i shromážděných předmětů"
 
-#: client/cl_campaign.c:2584
+#: client/cl_campaign.c:2594
 #, c-format
 msgid "you gathered %i credits."
 msgstr "jste získal %i kreditů."
 
-#: client/cl_campaign.c:2640
+#: client/cl_campaign.c:2650
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s byl(a) povýšen(a) na %s.\n"
 
-#: client/cl_campaign.c:2642
+#: client/cl_campaign.c:2652
 #, c-format
 msgid ""
 "%s has been awarded the posthumous rank of %s\\for inspirational gallantry "
@@ -12600,20 +12624,20 @@ msgstr ""
 "%s byl(a) posmrtně povýšen(a) do hodnosti %s\\za příkladnou statečnost tváří "
 "v tvář drtivé převaze.\n"
 
-#: client/cl_campaign.c:2643
+#: client/cl_campaign.c:2653
 msgid "Soldier promoted"
 msgstr "Voják povýšen"
 
-#: client/cl_campaign.c:2828
+#: client/cl_campaign.c:2838
 #, c-format
 msgid "Defense of base: %s successful!"
 msgstr "Obrana základny %s byla úspěšná!"
 
-#: client/cl_campaign.c:4086
+#: client/cl_campaign.c:4096
 msgid "Human"
 msgstr "Lidé"
 
-#: client/cl_campaign.c:4088
+#: client/cl_campaign.c:4098
 #, c-format
 msgid ""
 "Race: %s\n"
@@ -13035,19 +13059,19 @@ msgstr "Klávesa: %s"
 msgid "Hide the HUD (press ESC to reactivate HUD)"
 msgstr "Skrýt HUD (stisk ESC znovu zobrazí HUD)"
 
-#: client/cl_parse.c:831
+#: client/cl_parse.c:848
 msgid "Alien spotted:"
 msgstr "Spatřen cizák:"
 
-#: client/cl_parse.c:834 client/cl_parse.c:836
+#: client/cl_parse.c:851 client/cl_parse.c:853
 msgid "Alien spotted!\n"
 msgstr "Spatřen cizák!\n"
 
-#: client/cl_parse.c:838
+#: client/cl_parse.c:855
 msgid "Enemy spotted!\n"
 msgstr "Spatřen nepřítel!\n"
 
-#: client/cl_parse.c:840
+#: client/cl_parse.c:857
 msgid "Civilian spotted!\n"
 msgstr "Spatřen civilista!\n"
 
@@ -13313,35 +13337,35 @@ msgstr "Pouštní"
 msgid "Arctic"
 msgstr "Polární"
 
-#: client/cl_team.c:954
+#: client/cl_team.c:955
 #, c-format
 msgid "%i of %i"
 msgstr "%i z %i"
 
-#: client/cl_team.c:1390
+#: client/cl_team.c:1391
 msgid "Error saving team. Check free disk space!"
 msgstr ""
 "Chyba při ukládání týmu. Zkontrolujte zda je na disku dostatek volného místa!"
 
-#: client/cl_team.c:1570
+#: client/cl_team.c:1571
 msgid "Select a soldier from list"
 msgstr "Zvolit vojáka ze seznamu"
 
-#: client/cl_team.c:1571
+#: client/cl_team.c:1572
 msgid "Toggle to next soldier"
 msgstr "Přepnout na dalšího vojáka"
 
-#: client/cl_team.c:1909 client/cl_team.c:1959
+#: client/cl_team.c:1910 client/cl_team.c:1960
 #, c-format
 msgid "Aliens killed\t%i\n"
 msgstr "Zabitých cizáků\t%i\n"
 
-#: client/cl_team.c:1912
+#: client/cl_team.c:1913
 #, c-format
 msgid "Enemies killed\t%i\n"
 msgstr "Zabitých nepřátel\t%i\n"
 
-#: client/cl_team.c:1917
+#: client/cl_team.c:1918
 #, c-format
 msgid ""
 "Aliens captured\t%i\n"
@@ -13350,7 +13374,7 @@ msgstr ""
 "Zajatých cizáků\t%i\n"
 "\n"
 
-#: client/cl_team.c:1918 client/cl_team.c:1963
+#: client/cl_team.c:1919 client/cl_team.c:1964
 #, c-format
 msgid ""
 "Alien survivors\t%i\n"
@@ -13359,7 +13383,7 @@ msgstr ""
 "Přeživší cizáci\t%i\n"
 "\n"
 
-#: client/cl_team.c:1920
+#: client/cl_team.c:1921
 #, c-format
 msgid ""
 "Enemies captured\t%i\n"
@@ -13368,7 +13392,7 @@ msgstr ""
 "Zajatých nepřátel\t%i\n"
 "\n"
 
-#: client/cl_team.c:1921
+#: client/cl_team.c:1922
 #, c-format
 msgid ""
 "Enemy survivors\t%i\n"
@@ -13377,22 +13401,22 @@ msgstr ""
 "Přeživších nepřátel\t%i\n"
 "\n"
 
-#: client/cl_team.c:1925
+#: client/cl_team.c:1926
 #, c-format
 msgid "Team losses\t%i\n"
 msgstr "Tým - ztráty\t%i\n"
 
-#: client/cl_team.c:1926
+#: client/cl_team.c:1927
 #, c-format
 msgid "Team missing in action\t%i\n"
 msgstr "Tým - pohřešováno\t%i\n"
 
-#: client/cl_team.c:1927
+#: client/cl_team.c:1928
 #, c-format
 msgid "Friendly fire losses\t%i\n"
 msgstr "Zabito spojeneckou palbou\t%i\n"
 
-#: client/cl_team.c:1928
+#: client/cl_team.c:1929
 #, c-format
 msgid ""
 "Team survivors\t%i\n"
@@ -13401,22 +13425,22 @@ msgstr ""
 "Tým - přeživší\t%i\n"
 "\n"
 
-#: client/cl_team.c:1931
+#: client/cl_team.c:1932
 #, c-format
 msgid "Civilians killed by the Aliens\t%i\n"
 msgstr "Civilistů zabitých cizáky\t%i\n"
 
-#: client/cl_team.c:1933
+#: client/cl_team.c:1934
 #, c-format
 msgid "Civilians killed by the Enemies\t%i\n"
 msgstr "Civilistů zabitých nepřáteli\t%i\n"
 
-#: client/cl_team.c:1935
+#: client/cl_team.c:1936
 #, c-format
 msgid "Civilians killed by your Team\t%i\n"
 msgstr "Civilistů zabitých tvým týmem\t%i\n"
 
-#: client/cl_team.c:1936
+#: client/cl_team.c:1937
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -13427,27 +13451,27 @@ msgstr ""
 "\n"
 "\n"
 
-#: client/cl_team.c:1962
+#: client/cl_team.c:1963
 #, c-format
 msgid "Aliens captured\t%i\n"
 msgstr "Zajatých cizáků\t%i\n"
 
-#: client/cl_team.c:1966
+#: client/cl_team.c:1967
 #, c-format
 msgid "PHALANX soldiers killed by Aliens\t%i\n"
 msgstr "Členů PHALANXu zabitých cizáky\t%i\n"
 
-#: client/cl_team.c:1967
+#: client/cl_team.c:1968
 #, c-format
 msgid "PHALANX soldiers missing in action\t%i\n"
 msgstr "Členů PHALANXu pohřešovaných v boji\t%i\n"
 
-#: client/cl_team.c:1968
+#: client/cl_team.c:1969
 #, c-format
 msgid "PHALANX friendly fire losses\t%i\n"
 msgstr "Členů PHALANXu zabitých spojeneckou palbou\t%i\n"
 
-#: client/cl_team.c:1969
+#: client/cl_team.c:1970
 #, c-format
 msgid ""
 "PHALANX survivors\t%i\n"
@@ -13456,17 +13480,17 @@ msgstr ""
 "Členů PHALANXu přeživších\t%i\n"
 "\n"
 
-#: client/cl_team.c:1971
+#: client/cl_team.c:1972
 #, c-format
 msgid "Civilians killed by Aliens\t%i\n"
 msgstr "Civilistů zabitých cizáky\t%i\n"
 
-#: client/cl_team.c:1972
+#: client/cl_team.c:1973
 #, c-format
 msgid "Civilians killed by friendly fire\t%i\n"
 msgstr "Civilistů zabitých spojeneckou palbou\t%i\n"
 
-#: client/cl_team.c:1973
+#: client/cl_team.c:1974
 #, c-format
 msgid ""
 "Civilians saved\t%i\n"
@@ -13475,7 +13499,7 @@ msgstr ""
 "Zachráněných civilistů\t%i\n"
 "\n"
 
-#: client/cl_team.c:1997
+#: client/cl_team.c:1998
 #, c-format
 msgid ""
 "\n"
@@ -13488,15 +13512,15 @@ msgstr ""
 "Zabito nepřátel:  %i\n"
 "Tým - přeživší:  %i"
 
-#: client/cl_team.c:1999
+#: client/cl_team.c:2000
 msgid "You won the game!"
 msgstr "Vyhrál jste hru!"
 
-#: client/cl_team.c:2001
+#: client/cl_team.c:2002
 msgid "Congratulations"
 msgstr "Blahopřejeme"
 
-#: client/cl_team.c:2003
+#: client/cl_team.c:2004
 msgid ""
 "The game was a draw!\n"
 "\n"
@@ -13506,15 +13530,15 @@ msgstr ""
 "\n"
 "Na žádné straně nikdo nepřežil."
 
-#: client/cl_team.c:2004
+#: client/cl_team.c:2005
 msgid "Game Drawn!"
 msgstr "Nerozhodně!"
 
-#: client/cl_team.c:2006
+#: client/cl_team.c:2007
 msgid "You lost the game"
 msgstr "Prohrál jste hru"
 
-#: client/cl_team.c:2008
+#: client/cl_team.c:2009
 msgid "Better luck next time"
 msgstr "Příště více štestí"
 
@@ -13969,66 +13993,66 @@ msgid ""
 msgstr "Nelze provést - zbraň je již plně nabita stejnou municí!\n"
 
 # Asi takhle?
-#: game/g_client.c:1384
+#: game/g_client.c:1386
 msgid "Currently shaken, won't let their guard down.\n"
 msgstr "Je právě v šoku, nepouštějte ho z dohlehu.\n"
 
-#: game/g_client.c:1487
+#: game/g_client.c:1489
 #, c-format
 msgid "%s panics!\n"
 msgstr "%s zpanikařil!\n"
 
-#: game/g_client.c:1548
+#: game/g_client.c:1550
 #, c-format
 msgid "%s is on a rampage.\n"
 msgstr "%s běsní.\n"
 
-#: game/g_client.c:1550
+#: game/g_client.c:1552
 #, c-format
 msgid "%s is consumed by mad rage!\n"
 msgstr "%s je spotřebováno záchvatem amoku!\n"
 
-#: game/g_client.c:1611
+#: game/g_client.c:1613
 #, c-format
 msgid "%s is currently shaken.\n"
 msgstr "%s je právě v šoku.\n"
 
-#: game/g_client.c:2074
+#: game/g_client.c:2077
 #, c-format
 msgid "Team %i ( %s) will get the first turn.\n"
 msgstr "Tým %i (%s) bude na tahu jako první.\n"
 
-#: game/g_client.c:2245
+#: game/g_client.c:2248
 #, fuzzy
 msgid "4 minutes left until forced round end\n"
 msgstr "Zbývá %i minuta do vynuceného konce kola\n"
 
-#: game/g_client.c:2248
+#: game/g_client.c:2251
 #, fuzzy
 msgid "3 minutes left until forced round end\n"
 msgstr "Zbývá %i minuta do vynuceného konce kola\n"
 
-#: game/g_client.c:2251
+#: game/g_client.c:2254
 #, fuzzy
 msgid "2 minutes left until forced round end\n"
 msgstr "Zbývá %i minuta do vynuceného konce kola\n"
 
-#: game/g_client.c:2254
+#: game/g_client.c:2257
 #, fuzzy
 msgid "1 minute left until forced round end\n"
 msgstr "Zbývá %i minuta do vynuceného konce kola\n"
 
-#: game/g_client.c:2257
+#: game/g_client.c:2260
 #, fuzzy
 msgid "30 seconds left until forced round end\n"
 msgstr "Zbývá %i sekund do vynuceného konce kola\n"
 
-#: game/g_client.c:2260
+#: game/g_client.c:2263
 #, fuzzy
 msgid "15 seconds left until forced round end\n"
 msgstr "Zbývá %i sekund do vynuceného konce kola\n"
 
-#: game/g_client.c:2268
+#: game/g_client.c:2271
 #, fuzzy
 msgid "Current active team hit the max round time\n"
 msgstr "Tým %i dosáhl maximálního času na kolo\n"
@@ -14038,36 +14062,47 @@ msgstr "Tým %i dosáhl maximálního času na kolo\n"
 msgid "Team %i (%s) will get the first turn.\n"
 msgstr "Tým %i (%s) bude na tahu jako první.\n"
 
+#: po/OTHER_STRINGS:2
+#, fuzzy
+msgid "human"
+msgstr "Lidé"
+
+# Alien = cizák - tradice českého překladu UFO: Enemy Unknown
 #: po/OTHER_STRINGS:3
+#, fuzzy
+msgid "alien"
+msgstr "Cizáci"
+
+#: po/OTHER_STRINGS:5
 msgid "No"
 msgstr "Ne"
 
 # "sekund" je příliš dlouhé
-#: po/OTHER_STRINGS:4
+#: po/OTHER_STRINGS:6
 msgid "5 sec"
 msgstr "5 sek."
 
-#: po/OTHER_STRINGS:5
+#: po/OTHER_STRINGS:7
 msgid "5 mins"
 msgstr "5 minut"
 
-#: po/OTHER_STRINGS:6
+#: po/OTHER_STRINGS:8
 msgid "1 hour"
 msgstr "1 hodina"
 
-#: po/OTHER_STRINGS:7
+#: po/OTHER_STRINGS:9
 msgid "12 hour"
 msgstr "12 hodin"
 
-#: po/OTHER_STRINGS:8
+#: po/OTHER_STRINGS:10
 msgid "1 day"
 msgstr "1 den"
 
-#: po/OTHER_STRINGS:9
+#: po/OTHER_STRINGS:11
 msgid "5 days"
 msgstr "5 dnů"
 
-#: po/OTHER_STRINGS:10
+#: po/OTHER_STRINGS:12
 msgid "Take a screenshot"
 msgstr "Udělat snímek obrazovky"
 
