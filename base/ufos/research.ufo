@@ -352,7 +352,7 @@ tech rs_weapon_assault
 	}
 	provides	assault
 	time	0
-	producetime	60
+	producetime	90
 }
 
 tech rs_weapon_assault_ammo
@@ -369,7 +369,7 @@ tech rs_weapon_assault_ammo
 	}
 	provides	assault_ammo
 	time	0
-	producetime	4
+	producetime	12
 }
 
 tech rs_weapon_bolterrifle
@@ -400,7 +400,7 @@ tech rs_weapon_bolterrifle
 	}
 	provides	bolterrifle
 	time	500
-	producetime	70
+	producetime	120
 }
 
 tech rs_weapon_bolterrifle_ammo
@@ -431,7 +431,7 @@ tech rs_weapon_bolterrifle_ammo
 	}
 	provides	bolterrifle_ammo
 	time	0
-	producetime	2
+	producetime	24
 }
 
 tech rs_weapon_combatknife
@@ -448,7 +448,7 @@ tech rs_weapon_combatknife
 	}
 	provides	knife
 	time	0
-	producetime	2
+	producetime	12
 }
 
 tech rs_weapon_monoknife
@@ -481,7 +481,7 @@ tech rs_weapon_monoknife
 	}
 	provides	knifemono
 	time	100
-	producetime	5
+	producetime	100
 }
 
 tech rs_weapon_flamer
@@ -497,7 +497,7 @@ tech rs_weapon_flamer
 	}
 	provides	flamer
 	time	0
-	producetime	45
+	producetime	120
 }
 
 tech rs_weapon_flamer_ammo
@@ -514,7 +514,7 @@ tech rs_weapon_flamer_ammo
 	}
 	provides	flamer_ammo
 	time	0
-	producetime	1
+	producetime	24
 }
 
 tech rs_weapon_flashbang
@@ -531,7 +531,7 @@ tech rs_weapon_flashbang
 	}
 	provides	flashbang
 	time	0
-	producetime	1
+	producetime	12
 }
 
 tech rs_weapon_fraggren
@@ -548,7 +548,7 @@ tech rs_weapon_fraggren
 	}
 	provides	fraggrenade
 	time	0
-	producetime	1
+	producetime	12
 }
 
 tech rs_weapon_incgren
@@ -565,7 +565,7 @@ tech rs_weapon_incgren
 	}
 	provides	incgrenade
 	time	0
-	producetime	2
+	producetime	20
 }
 
 tech rs_weapon_grenl
@@ -581,7 +581,7 @@ tech rs_weapon_grenl
 	}
 	provides	grenl
 	time	0
-	producetime	40
+	producetime	120
 }
 
 tech rs_weapon_grenl_ammo
@@ -598,7 +598,7 @@ tech rs_weapon_grenl_ammo
 	}
 	provides	grenl_ammo
 	time	0
-	producetime	1
+	producetime	20
 }
 
 tech rs_weapon_grenl_fle_ammo
@@ -615,7 +615,7 @@ tech rs_weapon_grenl_fle_ammo
 	}
 	provides	grenl_fle_ammo
 	time	0
-	producetime	1
+	producetime	14
 }
 
 tech rs_weapon_grenl_incendiary_ammo
@@ -632,7 +632,7 @@ tech rs_weapon_grenl_incendiary_ammo
 	}
 	provides	grenl_incendiary_ammo
 	time	0
-	producetime	1
+	producetime	30
 }
 
 tech rs_weapon_grenl_plasma_ammo
@@ -664,7 +664,7 @@ tech rs_weapon_grenl_plasma_ammo
 	}
 	provides	grenl_plasma_ammo
 	time	1250
-	producetime	1
+	producetime	128
 }
 
 // Generic laser ammo
@@ -697,7 +697,7 @@ tech rs_weapon_laserammo
 	}
 	provides	laserrifle_ammo
 	time		1200
-	producetime	3
+	producetime	20
 }
 
 tech rs_weapon_heavylaser
@@ -729,7 +729,7 @@ tech rs_weapon_heavylaser
 	}
 	provides	heavylaser
 	time	1500
-	producetime	80
+	producetime	140
 }
 
 //tech rs_weapon_heavylaser_ammo
@@ -763,7 +763,7 @@ tech rs_irgoggles
 	}
 	provides	irgoggles
 	time	0
-	producetime	15
+	producetime	80
 }
 
 tech rs_weapon_kerrblade
@@ -826,7 +826,7 @@ tech rs_weapon_laserpistol
 	}
 	provides	laserpistol
 	time	1000
-	producetime	50
+	producetime	120
 }
 
 //tech rs_weapon_laserpistol_ammo
@@ -876,7 +876,7 @@ tech rs_weapon_laserrifle
 	}
 	provides	laserrifle
 	time	1750
-	producetime	70
+	producetime	140
 }
 
 //tech rs_weapon_laserrifle_ammo
@@ -910,7 +910,7 @@ tech rs_medikit
 	}
 	provides	medikit
 	time	0
-	producetime	10
+	producetime	60
 }
 
 tech rs_weapon_pistol
@@ -927,7 +927,7 @@ tech rs_weapon_pistol
 
 	provides	pistol
 	time	0
-	producetime	20
+	producetime	40
 }
 
 tech rs_weapon_pistol_ammo
@@ -945,7 +945,7 @@ tech rs_weapon_pistol_ammo
 
 	provides	pistol_ammo
 	time	0
-	producetime	1
+	producetime	12
 }
 
 tech rs_weapon_pistol2
@@ -962,7 +962,7 @@ tech rs_weapon_pistol2
 
 	provides	pistol2
 	time	0
-	producetime	20
+	producetime	60
 }
 
 tech rs_weapon_pistol2_ammo
@@ -980,7 +980,7 @@ tech rs_weapon_pistol2_ammo
 
 	provides	pistol2_ammo
 	time	0
-	producetime	1
+	producetime	12
 }
 
 tech rs_weapon_plasatomizer
@@ -1014,7 +1014,7 @@ tech rs_weapon_plasatomizer
 
 	provides	plaspistol
 	time	2000
-	producetime	60
+	producetime	160
 }
 
 tech rs_weapon_plasatomizer_ammo
@@ -1045,7 +1045,7 @@ tech rs_weapon_plasatomizer_ammo
 	}
 	provides	plaspistol_ammo
 	time	0
-	producetime	2
+	producetime	24
 }
 
 tech rs_weapon_plasblaster
@@ -1077,7 +1077,7 @@ tech rs_weapon_plasblaster
 	}
 	provides	plasblaster
 	time	5500
-	producetime	90
+	producetime	240
 }
 
 tech rs_weapon_plasblaster_ammo
@@ -1108,7 +1108,7 @@ tech rs_weapon_plasblaster_ammo
 	}
 	provides	plasblaster_ammo
 	time	0
-	producetime	3
+	producetime	30
 }
 
 tech rs_weapon_plasblade
@@ -1140,7 +1140,7 @@ tech rs_weapon_plasblade
 	}
 	provides	plasblade
 	time	1000
-	producetime	15
+	producetime	150
 }
 
 tech rs_weapon_plasmagren
@@ -1172,7 +1172,7 @@ tech rs_weapon_plasmagren
 
 	provides	plasmagrenade
 	time	1500
-	producetime	2
+	producetime	72
 }
 
 tech rs_weapon_plasrifle
@@ -1206,7 +1206,7 @@ tech rs_weapon_plasrifle
 
 	provides	plasrifle
 	time	3250
-	producetime	90
+	producetime	200
 }
 
 tech rs_weapon_plasrifle_ammo
@@ -1237,7 +1237,7 @@ tech rs_weapon_plasrifle_ammo
 	}
 	provides	plasrifle_ammo
 	time	0
-	producetime	2
+	producetime	40
 }
 
 tech rs_weapon_rpg
@@ -1254,7 +1254,7 @@ tech rs_weapon_rpg
 
 	provides	rpg
 	time	0
-	producetime	60
+	producetime	120
 }
 
 tech rs_weapon_rpg_ammo
@@ -1272,7 +1272,7 @@ tech rs_weapon_rpg_ammo
 
 	provides	rpg_ammo
 	time	0
-	producetime	1
+	producetime	24
 }
 
 tech rs_weapon_rpg_incendiary_ammo
@@ -1290,7 +1290,7 @@ tech rs_weapon_rpg_incendiary_ammo
 
 	provides	rpg_incendiary_ammo
 	time	0
-	producetime	1
+	producetime	30
 }
 
 tech rs_weapon_chaingun
@@ -1383,7 +1383,7 @@ tech rs_weapon_shotgun2
 
 	provides	shotgun2
 	time	0
-	producetime	40
+	producetime	140
 }
 
 //tech rs_weapon_shotgun2_ammo
@@ -1420,7 +1420,7 @@ tech rs_weapon_shotgun2_slug_ammo
 
 	provides	shotgun2_slug_ammo
 	time	0
-	producetime	1
+	producetime	18
 }
 
 tech rs_weapon_shotgun_micro
@@ -1437,7 +1437,7 @@ tech rs_weapon_shotgun_micro
 
 	provides	shotgun_micro
 	time	0
-	producetime	40
+	producetime	80
 }
 
 tech rs_weapon_shotgun_micro_ammo
@@ -1455,7 +1455,7 @@ tech rs_weapon_shotgun_micro_ammo
 
 	provides	shotgun_micro_ammo
 	time	0
-	producetime	1
+	producetime	12
 }
 
 tech rs_weapon_smg
@@ -1472,7 +1472,7 @@ tech rs_weapon_smg
 
 	provides	smg
 	time	0
-	producetime	45
+	producetime	120
 }
 
 tech rs_weapon_smg_ammo
@@ -1490,7 +1490,7 @@ tech rs_weapon_smg_ammo
 
 	provides	smg_ammo
 	time	0
-	producetime	1
+	producetime	12
 }
 
 tech rs_weapon_smokegren
@@ -1507,7 +1507,7 @@ tech rs_weapon_smokegren
 
 	provides	smokegrenade
 	time	0
-	producetime	1
+	producetime	20
 }
 
 tech rs_weapon_sniper
@@ -1524,7 +1524,7 @@ tech rs_weapon_sniper
 
 	provides	sniper
 	time	0
-	producetime	60
+	producetime	120
 }
 
 tech rs_weapon_sniper_ammo
@@ -1542,7 +1542,7 @@ tech rs_weapon_sniper_ammo
 
 	provides	sniper_ammo
 	time	0
-	producetime	1
+	producetime	12
 }
 
 // Just for searching: uses "anti alien gas"
@@ -1581,7 +1581,7 @@ tech rs_weapon_stungren
 
 	provides	stungrenade
 	time		2100
-	producetime	1
+	producetime	24
 }
 
 tech rs_weapon_stunrod
@@ -1614,7 +1614,7 @@ tech rs_weapon_stunrod
 
 	provides	stunrod
 	time	500
-	producetime	10
+	producetime	70
 }
 
 tech rs_weapon_pbeampistol
@@ -1646,7 +1646,7 @@ tech rs_weapon_pbeampistol
 
 	provides	pbeampistol
 	time	3750
-	producetime	60
+	producetime	160
 }
 
 tech rs_weapon_pbeampistol_ammo
@@ -1711,7 +1711,7 @@ tech rs_weapon_pbeamcannon
 
 	provides	pbeamcannon
 	time	6000
-	producetime	80
+	producetime	220
 }
 
 tech rs_weapon_pbeamcannon_ammo
@@ -1775,7 +1775,7 @@ tech rs_weapon_pbeamrifle
 
 	provides	pbeamrifle
 	time	7750
-	producetime	90
+	producetime	200
 }
 
 tech rs_weapon_pbeamrifle_ammo
@@ -1859,7 +1859,7 @@ tech rs_combat_armour
 
 	provides	light
 	time	0
-	producetime	10
+	producetime	72
 }
 
 tech rs_nano_armour
@@ -1875,7 +1875,7 @@ tech rs_nano_armour
 	}
 	provides	medium
 	time	2000
-	producetime	100
+	producetime	168
 }
 
 tech rs_alien_body_armour
@@ -2008,18 +2008,6 @@ tech rs_damage_plasma
 
 	time	0
 //	image_top	techs/plasma_damage
-}
-
-tech rs_damage_shock
-{
-	type	tech
-	name "_Shock Damage Type"
-	up_chapter	damage
-	description	"none"
-	require_AND { tech nothing }
-
-	time	0
-//	image_top	techs/shock_damage
 }
 
 tech rs_damage_stun
