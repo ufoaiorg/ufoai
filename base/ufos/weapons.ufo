@@ -144,8 +144,8 @@ item fraggrenade
 			ammo	1
 			rof		1
 			time	8
-			spldmg	"300 90"
-			splrad	6
+			spldmg	"200 90"
+			splrad	4
 			dmgtype blast
 		}
 		firedef
@@ -169,8 +169,8 @@ item fraggrenade
 			ammo	1
 			rof		1
 			time	8
-			spldmg	"300 90"
-			splrad	6
+			spldmg	"200 90"
+			splrad	4
 			dmgtype blast
 		}
 	}
@@ -218,7 +218,7 @@ item flashbang
 			rof		1
 			time	12
 			spldmg	"999 0"	// TODO: needed at all?
-			splrad	5
+			splrad	4
 			dmgtype shock
 		}
 		firedef
@@ -243,7 +243,7 @@ item flashbang
 			rof		1
 			time	12
 			spldmg	"999 0"	// TODO: needed at all?
-			splrad	5
+			splrad	4
 			dmgtype shock
 		}
 	}
@@ -434,7 +434,7 @@ item incgrenade
 			ammo	1
 			rof		1
 			time	8
-			spldmg	"210 60"
+			spldmg	"160 60"
 			splrad	3
 			dmgtype "fire"
 		}
@@ -459,7 +459,7 @@ item incgrenade
 			ammo	1
 			rof		1
 			time	8
-			spldmg	"210 60"
+			spldmg	"160 60"
 			splrad	3
 			dmgtype "fire"
 		}
@@ -506,8 +506,8 @@ item plasmagrenade
 			ammo	1
 			rof		1
 			time	8
-			spldmg	"420 60"
-			splrad	7
+			spldmg	"320 60"
+			splrad	6
 			dmgtype "plasma"
 		}
 		firedef
@@ -531,8 +531,8 @@ item plasmagrenade
 			ammo	1
 			rof		1
 			time	8
-			spldmg	"420 60"
-			splrad	7
+			spldmg	"320 60"
+			splrad	6
 			dmgtype "plasma"
 		}
 	}
