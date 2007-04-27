@@ -119,8 +119,7 @@ sub md2_save ($$) {
 sub md2_skins_list ($) {
 	my ($md2_file) = @_;
 
-
-	for (my $i=0; $i < $md2_file->{NumSkins}; $i++ ) {
+	for (my $i=0; $i < $md2_file->NumSkins; $i++ ) {
 		print "Skin ",$i," \"", $md2_file->Path->[$i][0],"\"\n";
 	}
 }
@@ -129,7 +128,7 @@ sub md2_skins_list ($) {
 # MAIN
 #######################################
 
-if (1) {
+if (0) {
 	# We are changing skin-paths
 
 	my @TextureString = ('');
@@ -228,7 +227,7 @@ if (1) {
 
 	# DEBUG
 	#use Data::Dumper;
-	#print Dumper($md2_file->Path);
+	#print Dumper($md2_file);
 	
 	# Print Skins
 	md2_skins_list($md2_file);
@@ -272,21 +271,23 @@ if (1) {
 		
 		# Update following offsets (after skin data) correctly.
 		my $data_offset_delta = ($NumSkins_new-$md2_file->NumSkins) * 64;
-		$md2_file->{OffsetST} += $data_offset_delta;		# update offset to s-t texture coordinates
-		$md2_file->{OffsetTris} += $data_offset_delta;		# update offset to triangles
-		$md2_file->{OffsetFrames} += $data_offset_delta;	# update offset to frame data
-		$md2_file->{OffsetGLcmds} += $data_offset_delta;	# update offset to opengl commands
-		$md2_file->{OffsetEnd} += $data_offset_delta;		# update offset to end of file
+		$md2_file->struct->{OffsetST} += $data_offset_delta;		# update offset to s-t texture coordinates
+		$md2_file->struct->{OffsetTris} += $data_offset_delta;		# update offset to triangles
+		$md2_file->struct->{OffsetFrames} += $data_offset_delta;	# update offset to frame data
+		$md2_file->struct->{OffsetGLcmds} += $data_offset_delta;	# update offset to opengl commands
+		$md2_file->struct->{OffsetEnd} += $data_offset_delta;		# update offset to end of file
 		
-		$md2_file->{NumSkins} = $NumSkins_new;
+		$md2_file->struct->{NumSkins} = $NumSkins_new;
 	} else {
 		# TODO: do the magic (remove skins and update offsets correctly)
 		print "Removing skins and updating offsets ...\n";
+		print "Not implemented yet, aborting!\n";
 	}
-	
+
 	# Print Skins
 	md2_skins_list($md2_file);
-	
+	#print Dumper($md2_file);
+
 	# save as another .md2 file
 	md2_save($md2_file, $MD2OUT);
 }
