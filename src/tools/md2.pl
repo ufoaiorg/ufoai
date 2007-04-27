@@ -128,7 +128,7 @@ sub md2_skins_list ($) {
 # MAIN
 #######################################
 
-if (0) {
+if (1) {
 	# We are changing skin-paths
 
 	my @TextureString = ('');
