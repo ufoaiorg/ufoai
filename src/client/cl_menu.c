@@ -2052,6 +2052,10 @@ void MN_DrawMenus (void)
 					font = MN_GetFont(menu, node);
 					ref += node->horizontalScroll;
 					/* blinking */
+					#if SDL_BYTEORDER == SDL_BIG_ENDIAN
+					/* if we have big endian, fix the missalignment */
+					node->align = ( ((node->align & 0xFF000000) >> 24) | ((node->align & 0x00FF0000) >> 16) | ((node->align & 0x0000FF00) >> 8) | (node->align & 0x000000FF));
+					#endif
 					if (!node->mousefx || cl.time % 1000 < 500)
 						re.FontDrawString(font, node->align, node->pos[0], node->pos[1], node->pos[0], node->pos[1], node->size[0], 0, node->texh[0], ref, 0, 0, NULL, qfalse);
 					else
@@ -2068,7 +2072,6 @@ void MN_DrawMenus (void)
 						font = MN_GetFont(menu, node);
 
 						Q_strncpyz(textCopy, menuText[node->num], MAX_MENUTEXTLEN);
-
 						cur = textCopy;
 						y = node->pos[1];
 						/*Com_Printf("\n\n\nnode->textLines: %i \n", node->textLines);*/
