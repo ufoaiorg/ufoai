@@ -762,15 +762,18 @@ void CL_DisplayFiremodes_f (void)
 	/* Set default firemode if the currenttly seleced one is not sane or for another weapon. */
 	if (!SANE_REACTION(actor_idx)) {	/* No sane firemode selected. */
 		/* Set default firemode (try right hand first, then left hand). */
+		Com_Printf("CL_DisplayFiremodes_f(1)... CL_SetDefaultReactionFiremode() will be called now\n");
 		CL_SetDefaultReactionFiremode(actor_idx, 'r');
 	} else {
 		if (reactionFiremode[actor_idx][RF_WPIDX] != ammo->weap_idx[weap_fd_idx]) {
 			if ((hand[0] == 'r') && (reactionFiremode[actor_idx][RF_HAND] == 0)) {
 				/* Set default firemode (try right hand first, then left hand). */
+				Com_Printf("CL_DisplayFiremodes_f(2)... CL_SetDefaultReactionFiremode() will be called now\n");
 				CL_SetDefaultReactionFiremode(actor_idx, 'r');
 			}
 			if ((hand[0] == 'l') && (reactionFiremode[actor_idx][RF_HAND] == 1)) {
 				/* Set default firemode (try left hand first, then right hand). */
+				Com_Printf("CL_DisplayFiremodes_f(3)... CL_SetDefaultReactionFiremode() will be called now\n");
 				CL_SetDefaultReactionFiremode(actor_idx, 'l');
 			}
 		}
@@ -1499,7 +1502,7 @@ void CL_AddActorToTeamList (le_t * le)
 		Cbuf_AddText(va("huddeselect%i\n", i));
 		if (cl.numTeamList == 1)
 			CL_ActorSelectList(0);
-
+		Com_Printf("CL_AddActorToTeamList()... CL_SetDefaultReactionFiremode() will be called now\n");
 		CL_SetDefaultReactionFiremode(i, 'r');	/**< Set default reaction firemode for this soldier. */
 #if 0
 		/* TODO: remove this if the above works (this should fix the wrong setting of the default firemode on re-try or next mission) */
@@ -2102,6 +2105,7 @@ extern void CL_ActorToggleReaction_f (void)
 			/* TODO: Check if stored info for RF is up-to-date and set it to default if not. */
 			/* Set default rf-mode. */
 			if (!SANE_REACTION(actor_idx)) {
+				Com_Printf("CL_ActorToggleReaction_f(1)... CL_SetDefaultReactionFiremode() will be called now\n");
 				CL_SetDefaultReactionFiremode(actor_idx, 'r');
 			}
 			break;
@@ -2110,6 +2114,7 @@ extern void CL_ActorToggleReaction_f (void)
 			/* TODO: Check if stored info for RF is up-to-date and set it to default if not. */
 			/* Set default rf-mode. */
 			if (!SANE_REACTION(actor_idx)) {
+				Com_Printf("CL_ActorToggleReaction_f(2)... CL_SetDefaultReactionFiremode() will be called now\n");
 				CL_SetDefaultReactionFiremode(actor_idx, 'r');
 			}
 			break;
@@ -2629,6 +2634,7 @@ void CL_DoEndRound (sizebuf_t * sb)
 			if (cl.teamList[actor_idx]) {
 				/* Check if any default firemode is defined and search for one if not. */
 				if (!SANE_REACTION(actor_idx)) {
+					Com_Printf("CL_DoEndRound()... CL_SetDefaultReactionFiremode() will be called now\n");
 					CL_SetDefaultReactionFiremode(actor_idx, 'r');
 				}
 			}
