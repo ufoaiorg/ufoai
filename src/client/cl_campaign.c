@@ -2044,7 +2044,7 @@ static void CL_GameGo (void)
 	int i, p;
 
 	if (!curCampaign || gd.interceptAircraft < 0 || gd.interceptAircraft >= gd.numAircraft) {
-		Com_DPrintf("curCampaign: %p, selMis: %p, interceptAircraft: %i\n", curCampaign, selMis, gd.interceptAircraft);
+		Com_DPrintf("curCampaign: %p, selMis: %p, interceptAircraft: %i\n", (void*)curCampaign, (void*)selMis, gd.interceptAircraft);
 		return;
 	}
 

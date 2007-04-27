@@ -925,7 +925,7 @@ static void SafeFS_Write (const void *buffer, int len, qFILE * f)
 	int write = FS_Write(buffer, len, f);
 
 	if (write < len)
-		Com_Printf("Failed to write avi file %p - %i:%i\n", f->f, write, len);
+		Com_Printf("Failed to write avi file %p - %i:%i\n", (void*)f->f, write, len);
 }
 
 /**
