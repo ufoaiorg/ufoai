@@ -35,13 +35,14 @@
 # Description
 #	The script currently just replaces the texture-path from an md2 file with new ones.
 # Usage
-#	md2.pl [in.md2 [out.md2 [texturefile(s)]]]
+#	md2.pl skinedit [in.md2 [out.md2 [texturefile(s)]]]
+#	md2.pl skinnum [in.md2 [out.md2]]
 #
 #	If [in.md2] is given it will also be used as outputfile.
 #	Right now providing a texture file is only possible if three or more arguments are given.
 #	You can provide multiple texture-files seperated by spaces.
 #	To not re-type the output-file if the name is the same as the input file just use - instead.
-#		e.g.: md2.pl model.md2 - texurefile
+#		e.g.: md2.pl skinedit model.md2 - texurefile
 #######################################
 use strict;
 use warnings;
@@ -128,29 +129,42 @@ sub md2_skins_list ($) {
 # MAIN
 #######################################
 
-if (1) {
+my $param_action;
+# parse commandline parameters (md2-filenames)
+if ( $#ARGV < 0 ) {
+	die "Usage:\tmd2.pl [skinedit|skinnum] [options...]\n";
+} elsif ( $#ARGV >= 0 ) {
+	$param_action = $ARGV[0];
+	unless (
+		($param_action eq 'skinedit') ||
+		($param_action eq 'skinnum')
+		) {
+		print "Unknown action: '", $param_action, "'\n";
+		die "Usage:\tmd2.pl [skinedit|skinnum] [options...]\n";
+	}
+}
+
+if ($param_action eq 'skinedit') {
 	# We are changing skin-paths
 
 	my @TextureString = ('');
 
 	# parse commandline parameters (md2-filenames)
-	if ( $#ARGV < 0 ) {
-		die "Usage:\tmd2.pl [in.md2 [out.md2 [texturefile(s)]]]\n";
-	} elsif ( $#ARGV == 0 ) {
-		$MD2IN = $MD2OUT = $ARGV[0];
+	if ( $#ARGV == 1 ) {
+		$MD2IN = $MD2OUT = $ARGV[1];
 		print "IN=OUT= \"$MD2IN\"\n";
-	} elsif  ( $#ARGV == 1 ) {
-		$MD2IN	= $ARGV[0];
-		$MD2OUT	= $ARGV[1];
+	} elsif  ( $#ARGV == 2 ) {
+		$MD2IN	= $ARGV[1];
+		$MD2OUT	= $ARGV[2];
 		if ($MD2OUT eq '-') {
 			$MD2OUT = $MD2IN;
 		}
 		print "IN = \"$MD2IN\"\n";
 		print "OUT= \"$MD2OUT\"\n";
-	} elsif  ( $#ARGV >= 2 ) {
-		$MD2IN	= $ARGV[0];
-		$MD2OUT	= $ARGV[1];
-		for ( my $i = 0; $i <= $#ARGV - 2; $i++ ) {
+	} elsif  ( $#ARGV >= 3 ) {
+		$MD2IN	= $ARGV[1];
+		$MD2OUT	= $ARGV[2];
+		for ( my $i = 1; $i <= $#ARGV - 2; $i++ ) {
 			$TextureString[$i] = $ARGV[$i+2];
 		}
 		print "IN = \"$MD2IN\"\n";
@@ -199,20 +213,20 @@ if (1) {
 
 	# save as another .md2 file
 	md2_save($md2_file, $MD2OUT);
-} else {
+} elsif ($param_action eq 'skinnum') {
 	# we are adding/removing skins
 	# TODO: this is undocumented and untested right now
 	# TODO: add proper commandline handling (maybe use extra file?)
 	
 	# parse commandline parameters (md2-filenames)
-	if ( $#ARGV < 0 || $#ARGV > 1) {
-		die "Usage:\tmd2.pl [in.md2 [out.md2]]\n";
-	} elsif ( $#ARGV == 0 ) {
-		$MD2IN = $MD2OUT = $ARGV[0];
+	if ( $#ARGV < 1 || $#ARGV > 2) {
+		die "Usage:\tmd2.pl skinnum [in.md2 [out.md2]]\n";
+	} elsif ( $#ARGV == 1 ) {
+		$MD2IN = $MD2OUT = $ARGV[1];
 		print "IN=OUT= \"$MD2IN\"\n";
-	} elsif  ( $#ARGV == 1 ) {
-		$MD2IN	= $ARGV[0];
-		$MD2OUT	= $ARGV[1];
+	} elsif  ( $#ARGV == 2 ) {
+		$MD2IN	= $ARGV[1];
+		$MD2OUT	= $ARGV[2];
 		if ($MD2OUT eq '-') {
 			$MD2OUT = $MD2IN;
 		}
@@ -227,7 +241,7 @@ if (1) {
 
 	# DEBUG
 	#use Data::Dumper;
-	#print Dumper($md2_file);
+	#print Dumper($md2_file->struct);
 	
 	# Print Skins
 	md2_skins_list($md2_file);
@@ -290,6 +304,8 @@ if (1) {
 
 	# save as another .md2 file
 	md2_save($md2_file, $MD2OUT);
+} else {
+	print "Unknown action: '", $param_action, "'\n";
 }
 
 
