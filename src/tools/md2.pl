@@ -116,6 +116,14 @@ sub md2_save ($$) {
 	$md2_file->write($filename);
 }
 
+sub md2_skins_list ($) {
+	my ($md2_file) = @_;
+
+
+	for (my $i=0; $i < $md2_file->{NumSkins}; $i++ ) {
+		print "Skin ",$i," \"", $md2_file->Path->[$i][0],"\"\n";
+	}
+}
 
 #######################################
 # MAIN
@@ -219,8 +227,11 @@ if (1) {
 	print $md2_file->NumSkins, " Skin(s) found\n";
 
 	# DEBUG
-	use Data::Dumper;
-	print Dumper($md2_file->Path);
+	#use Data::Dumper;
+	#print Dumper($md2_file->Path);
+	
+	# Print Skins
+	md2_skins_list($md2_file);
 	
 	# Ask for new skin-number
 	#use Scalar::Util::Numeric qw(isint);
@@ -273,7 +284,8 @@ if (1) {
 		print "Removing skins and updating offsets ...\n";
 	}
 	
-	print Dumper($md2_file->Path);
+	# Print Skins
+	md2_skins_list($md2_file);
 	
 	# save as another .md2 file
 	md2_save($md2_file, $MD2OUT);
