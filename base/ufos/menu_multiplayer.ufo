@@ -1461,7 +1461,7 @@ menu multiplayer_selectteam
 	{
 		font	f_small
 		color	"1 1 1 1"
-		string	"_Hit the lower right button to finish the teamselection"
+		string	"_Click the big button in the lower right corner when ready"
 		pos	"512 10"
 		align	uc
 	}
