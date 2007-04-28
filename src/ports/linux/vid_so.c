@@ -175,7 +175,7 @@ qboolean VID_GetModeInfo( int *width, int *height, int mode )
 /**
  * @brief
  */
-void VID_NewWindow ( int width, int height)
+void VID_NewWindow (int width, int height)
 {
 	viddef.width  = width;
 	viddef.height = height;
@@ -207,9 +207,9 @@ void VID_FreeReflib (void)
 	RW_IN_GetMousePos_fp = NULL;
 	RW_IN_Frame_fp = NULL;
 
-	memset (&re, 0, sizeof(re));
+	memset(&re, 0, sizeof(re));
 	reflib_library = NULL;
-	reflib_active  = qfalse;
+	reflib_active = qfalse;
 }
 
 /**
@@ -222,42 +222,41 @@ qboolean VID_LoadRefresh (const char *name)
 	qboolean restart = qfalse;
 	struct stat st;
 	extern uid_t saved_euid;
-	char libPath[MAX_OSPATH];
+	char libPath[MAX_OSPATH] = "";
 	cvar_t* s_libdir = Cvar_Get("s_libdir", "", CVAR_ARCHIVE, "lib dir for graphic and sound renderer - no game libs");
 
 	if (reflib_active) {
+#if 0
 		if (KBD_Close_fp)
 			KBD_Close_fp();
 		if (RW_IN_Shutdown_fp)
 			RW_IN_Shutdown_fp();
 		KBD_Close_fp = NULL;
 		RW_IN_Shutdown_fp = NULL;
+#endif
 		re.Shutdown();
 		VID_FreeReflib();
 		restart = qtrue;
 	}
 
-	Com_Printf( "------- Loading %s -------\n", name );
+	Com_Printf("------- Loading %s -------\n", name);
 
 	/*regain root */
 	seteuid(saved_euid);
 
 	/* try path given via cvar */
 	if (strlen(s_libdir->string))
-		Q_strncpyz(libPath, s_libdir->string, sizeof(libPath));
+		Com_sprintf(libPath, sizeof(libPath), "%s/%s", s_libdir->string, name);
 	else
-		strcpy(libPath, ".");
-
-	Q_strcat(libPath, "/", sizeof(libPath));
-	Q_strcat(libPath, name, sizeof(libPath));
+		Com_sprintf(libPath, sizeof(libPath), "./%s", name);
 
 	if (stat(libPath, &st) == -1) {
-		Com_Printf("LoadLibrary (\"%s\") failed: %s\n", name, strerror(errno));
+		Com_Printf("LoadLibrary (\"%s\") failed: %s\n", libPath, strerror(errno));
 		return qfalse;
 	}
 
 	if ((reflib_library = dlopen(libPath, RTLD_LAZY|RTLD_GLOBAL)) == 0) {
-		Com_Printf("LoadLibrary (\"%s\") failed: %s\n", name , dlerror());
+		Com_Printf("LoadLibrary (\"%s\") failed: %s\n", libPath , dlerror());
 		return qfalse;
 	}
 
@@ -293,7 +292,7 @@ qboolean VID_LoadRefresh (const char *name)
 	re = GetRefAPI( ri );
 
 	if (re.api_version != API_VERSION) {
-		VID_FreeReflib ();
+		VID_FreeReflib();
 		Com_Error(ERR_FATAL, "%s has incompatible api_version", name);
 	}
 
@@ -312,7 +311,7 @@ qboolean VID_LoadRefresh (const char *name)
 
 	if (re.Init(0, 0) == -1) {
 		re.Shutdown();
-		VID_FreeReflib ();
+		VID_FreeReflib();
 		return qfalse;
 	}
 
@@ -358,7 +357,7 @@ qboolean VID_LoadRefresh (const char *name)
  */
 void VID_CheckChanges (void)
 {
-	char name[100];
+	char name[MAX_VAR];
 
 	if (vid_ref->modified)
 		S_StopAllSounds();
@@ -369,12 +368,16 @@ void VID_CheckChanges (void)
 		vid_fullscreen->modified = qtrue;
 		cl.refresh_prepped = qfalse;
 		cls.disable_screen = qtrue;
-
+#ifdef __APPLE__
+		Com_sprintf(name, sizeof(name), "ref_%s.dylib", vid_ref->string);
+#else
 		Com_sprintf(name, sizeof(name), "ref_%s.so", vid_ref->string);
+#endif
+		
 		if (!VID_LoadRefresh(name)) {
-			Cmd_ExecuteString( "condump gl_debug" );
+			Cmd_ExecuteString("condump gl_debug");
 
-			Com_Error (ERR_FATAL, "Couldn't initialize OpenGL renderer!\nConsult gl_debug.txt for further information.");
+			Com_Error(ERR_FATAL, "Couldn't initialize OpenGL renderer!\nConsult gl_debug.txt for further information.");
 		}
 		cls.disable_screen = qfalse;
 	}

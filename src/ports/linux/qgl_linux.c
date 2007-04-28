@@ -53,10 +53,8 @@ int (*qglXGetConfig) (Display *dpy, XVisualInfo *vis, int attrib, int *value);
  */
 void QGL_Shutdown (void)
 {
-	if (glw_state.OpenGLLib) {
-		dlclose ( glw_state.OpenGLLib );
-		glw_state.OpenGLLib = NULL;
-	}
+	if (glw_state.OpenGLLib)
+		dlclose(glw_state.OpenGLLib);
 
 	glw_state.OpenGLLib = NULL;
 	/* general links */
@@ -111,17 +109,16 @@ qboolean QGL_Init (const char *dllname)
 
 		/* try path given via cvar */
 		if (strlen(s_libdir->string))
-			Q_strncpyz(libPath, s_libdir->string, sizeof(libPath));
+			Com_sprintf(libPath, sizeof(libPath), "%s/%s", s_libdir->string, dllname);
 		else
-			strcpy(libPath, ".");
-
-		Q_strcat(libPath, "/", sizeof(libPath));
-		Q_strcat(libPath, dllname, sizeof(libPath));
+			Com_sprintf(libPath, sizeof(libPath), "./%s", dllname);
 
 		if ((glw_state.OpenGLLib = dlopen(libPath, RTLD_LAZY)) == 0) {
-			ri.Con_Printf(PRINT_ALL, "%s\n", dlerror());
+			ri.Con_Printf(PRINT_ALL, "LoadLibrary (\"%s\") failed: %s\n", libPath, dlerror());
 			return qfalse;
 		}
+	} else {
+		ri.Con_Printf(PRINT_ALL, "LoadLibrary (\"%s\")\n", dllname);
 	}
 
 	/* general qgl bindings */
