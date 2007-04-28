@@ -339,7 +339,7 @@ menu ufopedia
 
 	pic weapon_dec
 	{
-		if "mn_upchangeweapon == 1"
+		if "mn_changeweapon == 1"
 		tooltip "_Previous weapon using this ammo"
 		image	menu/buttons_small
 		pos		"270 704"
@@ -354,7 +354,7 @@ menu ufopedia
 
 	pic weapon_inc
 	{
-		if "mn_upchangeweapon == 1"
+		if "mn_changeweapon == 1"
 		tooltip "_Next weapon using this ammo"
 		image	menu/buttons_small
 		pos		"510 704"
@@ -367,9 +367,9 @@ menu ufopedia
 		}
 	}
 
-	string header_name
+	string header_weapon
 	{
-		if "mn_updisplayweapon == 1"
+		if "mn_displayweapon == 1"
 		string	"_Associated weapon:"
 		pos		"115 712"
 		align	cl
@@ -378,8 +378,8 @@ menu ufopedia
 
 	string weapon_name
 	{
-		if "mn_updisplayweapon == 1"
-		string	"*cvar mn_up_researchedlinkname"
+		if "mn_displayweapon == 1"
+		string	"*cvar mn_researchedlinkname"
 		pos		"395 712"
 		align	cc
 		font	f_small
@@ -387,7 +387,7 @@ menu ufopedia
 
 	pic firemode_dec
 	{
-		if "mn_upchangefiremode == 1"
+		if "mn_changefiremode == 1"
 		tooltip "_Previous firemode"
 		image	menu/buttons_small
 		pos		"270 724"
@@ -402,7 +402,7 @@ menu ufopedia
 
 	pic firemode_inc
 	{
-		if "mn_upchangefiremode == 1"
+		if "mn_changefiremode == 1"
 		tooltip "_Next firemode"
 		image	menu/buttons_small
 		pos		"510 724"
@@ -417,7 +417,7 @@ menu ufopedia
 
 	string header_firemode
 	{
-		if "mn_updisplayfiremode == 1"
+		if "mn_displayfiremode == 1"
 		string	"_Firemode:"
 		pos		"115 732"
 		align	cl
@@ -426,8 +426,8 @@ menu ufopedia
 
 	string firemode_name
 	{
-		if "mn_updisplayfiremode == 1"
-		string	"*cvar mn_upfiremodename"
+		if "mn_displayfiremode == 1"
+		string	"*cvar mn_firemodename"
 		pos		"395 732"
 		align	cc
 		font	f_small

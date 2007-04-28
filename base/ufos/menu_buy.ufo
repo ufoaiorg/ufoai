@@ -1048,8 +1048,106 @@ menu buy
 		pos		"620 357"
 		size	"336 155"
 		format	"20 0"
+		texh	"16 168"
 		font	"f_verysmall"
 	}
+
+		pic weapon_dec
+	{
+		if "mn_changeweapon == 1"
+		tooltip "_Previous weapon using this ammo"
+		image	menu/buttons_small
+		pos		"745 466"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx	true
+		click
+		{
+			cmd mn_decreaseweapon
+		}
+	}
+
+	pic weapon_inc
+	{
+		if "mn_changeweapon == 1"
+		tooltip "_Next weapon using this ammo"
+		image	menu/buttons_small
+		pos		"955 466"
+		texl	"16 0"
+		texh	"32 16"
+		mousefx	true
+		click
+		{
+			cmd mn_increaseweapon
+		}
+	}
+
+	string header_weapon
+	{
+		if "mn_displayweapon == 1"
+		string	"_Associated weapon:"
+		pos		"620 474"
+		align	cl
+		font	f_verysmall
+	}
+
+	string weapon_name
+	{
+		if "mn_displayweapon == 1"
+		string	"*cvar mn_researchedlinkname"
+		pos		"855 474"
+		align	cc
+		font	f_verysmall
+	}
+
+	pic firemode_dec
+	{
+		if "mn_changefiremode == 1"
+		tooltip "_Previous firemode"
+		image	menu/buttons_small
+		pos		"745 486"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx	true
+		click
+		{
+			cmd mn_decreasefiremode
+		}
+	}
+
+	pic firemode_inc
+	{
+		if "mn_changefiremode == 1"
+		tooltip "_Next firemode"
+		image	menu/buttons_small
+		pos		"955 486"
+		texl	"16 0"
+		texh	"32 16"
+		mousefx	true
+		click
+		{
+			cmd mn_increasefiremode
+		}
+	}
+
+	string header_firemode
+	{
+		if "mn_displayfiremode == 1"
+		string	"_Firemode:"
+		pos		"620 494"
+		align	cl
+		font	f_verysmall
+	}
+
+	string firemode_name
+	{
+		if "mn_displayfiremode == 1"
+		string	"*cvar mn_firemodename"
+		pos		"855 494"
+		align	cc
+		font	f_verysmall
+	}
+
 
 	// ==================
 	// init
