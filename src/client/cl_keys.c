@@ -1,5 +1,5 @@
 /**
- * @file keys.c
+ * @file cl_keys.c
  * @brief Keyboard handling routines.
  *
  * Note: Key up events are sent even if in console mode

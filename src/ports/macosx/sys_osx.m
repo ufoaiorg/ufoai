@@ -1,5 +1,5 @@
 /**
- * @file sys_osx.c
+ * @file sys_osx.m
  * @brief main function and system functions
  */
 

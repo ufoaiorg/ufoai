@@ -1,5 +1,5 @@
 /**
- * @file os_types.h
+ * @file client/os_types.h
  * @brief Types file imported from Ogg Vorbis codec.
  */
 

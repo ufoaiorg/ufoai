@@ -1,5 +1,5 @@
 /**
- * @file scriptlib.c
+ * @file scriplib.c
  * @brief
  */
 

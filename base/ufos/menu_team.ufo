@@ -1359,6 +1359,102 @@ menu equipment
 		pos		"40 550"
 		size	"326 200"
 		format	"20 0"
+		texh	"18 153"
+	}
+	pic weapon_dec
+	{
+		if "mn_changeweapon == 1"
+		tooltip "_Previous weapon using this ammo"
+		image	menu/buttons_small
+		pos		"180 669"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx	true
+		click
+		{
+			cmd mn_decreaseweapon
+		}
+	}
+
+	pic weapon_inc
+	{
+		if "mn_changeweapon == 1"
+		tooltip "_Next weapon using this ammo"
+		image	menu/buttons_small
+		pos		"368 669"
+		texl	"16 0"
+		texh	"32 16"
+		mousefx	true
+		click
+		{
+			cmd mn_increaseweapon
+		}
+	}
+
+	string header_weapon
+	{
+		if "mn_displayweapon == 1"
+		string	"_Associated weapon:"
+		pos		"30 677"
+		align	cl
+		font	f_small
+	}
+
+	string weapon_name
+	{
+		if "mn_displayweapon == 1"
+		string	"*cvar mn_researchedlinkname"
+		pos		"279 677"
+		align	cc
+		font	f_small
+	}
+
+	pic firemode_dec
+	{
+		if "mn_changefiremode == 1"
+		tooltip "_Previous firemode"
+		image	menu/buttons_small
+		pos		"180 689"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx	true
+		click
+		{
+			cmd mn_decreasefiremode
+		}
+	}
+
+	pic firemode_inc
+	{
+		if "mn_changefiremode == 1"
+		tooltip "_Next firemode"
+		image	menu/buttons_small
+		pos		"368 689"
+		texl	"16 0"
+		texh	"32 16"
+		mousefx	true
+		click
+		{
+			cmd mn_increasefiremode
+		}
+	}
+
+	string header_firemode
+	{
+		if "mn_displayfiremode == 1"
+		string	"_Firemode:"
+		pos		"30 697"
+		align	cl
+		font	f_small
+	}
+
+	string firemode_name
+	{
+		if "mn_displayfiremode == 1"
+		string	"*cvar mn_firemodename"
+		pos		"279 697"
+		align	cc
+		font	f_small
 	}
 
 	// ==================
@@ -1421,6 +1517,14 @@ menu equipment
 		*weaponmodel invis false
 		*ammomodel invis false
 		*description invis false
+		*weapon_dec invis false
+		*weapon_inc invis false
+		*header_weapon invis false
+		*weapon_name invis false
+		*firemode_dec invis false
+		*firemode_inc invis false
+		*header_firemode invis false
+		*firemode_name invis false
 
 		*pwr_lbl invis true *pwr_val invis true *pwr_rahmen invis true *pwr_bar invis true
 		*spd_lbl invis true *spd_val invis true *spd_rahmen invis true *spd_bar invis true
@@ -1443,6 +1547,14 @@ menu equipment
 		*weaponmodel invis true
 		*ammomodel invis true
 		*description invis true
+		*weapon_dec invis true
+		*weapon_inc invis true
+		*header_weapon invis true
+		*weapon_name invis true
+		*firemode_dec invis true
+		*firemode_inc invis true
+		*header_firemode invis true
+		*firemode_name invis true
 
 		*pwr_lbl invis false *pwr_val invis false *pwr_rahmen invis false *pwr_bar invis false
 		*spd_lbl invis false *spd_val invis false *spd_rahmen invis false *spd_bar invis false

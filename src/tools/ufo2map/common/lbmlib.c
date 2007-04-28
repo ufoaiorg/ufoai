@@ -1,5 +1,5 @@
 /**
- * @file lmblib.c
+ * @file lbmlib.c
  * @brief
  */
 
