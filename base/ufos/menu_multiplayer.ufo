@@ -549,18 +549,18 @@ menu mp_serverbrowser
 	string status_str
 	{
 		string	"_Serverfilter:"
-		pos		"620 170"
+		pos		"620 169"
 	}
 	string status_value
 	{
 		string	"*cvar mn_serverliststr"
-		pos		"840 170"
+		pos		"840 169"
 		align	ur
 	}
 	pic status_dec
 	{
 		image	menu/buttons_small
-		pos		"868 174"
+		pos		"868 169"
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
@@ -574,7 +574,7 @@ menu mp_serverbrowser
 	pic status_inc
 	{
 		image	menu/buttons_small
-		pos		"884 174"
+		pos		"884 169"
 		texl	"16 0"
 		texh	"32 16"
 		mousefx	true
