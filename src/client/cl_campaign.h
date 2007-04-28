@@ -237,7 +237,9 @@ typedef struct nation_s {
 
 #define MAX_NATIONS 8
 
-/** client structure */
+/**
+ * @brief client structure
+ */
 typedef struct ccs_s {
 	equipDef_t eMission;
 	market_t eMarket;
