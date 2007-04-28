@@ -891,7 +891,7 @@ typedef struct menuNode_s {
 	qboolean noMenuModel;		/**< if this is a model name and no menumodel definition we don't have
 								 * to query this again and again */
 	byte state;
-	int align;
+	byte align;
 	int border;					/**< border for this node - thickness in pixel - default 0 - also see bgcolor */
 	int padding;				/**< padding for this node - default 3 - see bgcolor */
 	byte invis, blend;

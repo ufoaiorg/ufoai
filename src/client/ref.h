@@ -152,7 +152,7 @@ typedef struct shader_s {
 	qboolean blur;
 	qboolean light;
 	qboolean edge;
-	int glMode;
+	byte glMode;
 	/* TODO: */
 
 	/* vpid and fpid are vertexpid and fragmentpid for binding */
