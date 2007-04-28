@@ -1,137 +1,170 @@
-/**
- * @file vid_so.c
- * @brief Main windowed and fullscreen graphics interface module.
- * @note This module is used for the OpenGL rendering versions of the UFO refresh engine.
- */
+//______________________________________________________________________________________________________________nFO
+// "vid_osx.c" - Main windowed and fullscreen graphics interface module. This module is used for
+//               the OpenGL rendering versions of the Quake refresh engine.
+//
+// Written by:	awe				[mailto:awe@fruitz-of-dojo.de].
+//		2001-2002 Fruitz Of Dojo 	[http://www.fruitz-of-dojo.de].
+//
 
-/*
-Copyright (C) 1997-2001 Id Software, Inc.
+#pragma mark =Includes=
 
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
-See the GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
-*/
-
-#include <assert.h>
-#include <dlfcn.h> /* ELF dl loader */
-#include <sys/stat.h>
+#include <AppKit/AppKit.h>
+#include <sys/param.h>
 #include <unistd.h>
-#include <errno.h>
-#include <string.h>
-/* #include <uuid/uuid.h> */
+#include <dlfcn.h>
+#include <stdio.h>
 
 #include "../../client/client.h"
 
-#include "../linux/rw_linux.h"
+#pragma mark -
 
-/* Structure containing functions exported from refresh DLL */
-refexport_t	re;
+//___________________________________________________________________________________________________________mACROS
 
-/* Console variables that we need to access from this module */
-cvar_t		*vid_gamma;
-cvar_t		*vid_ref;			/* Name of Refresh DLL loaded */
-cvar_t		*vid_xpos;			/* X coordinate of window position */
-cvar_t		*vid_ypos;			/* Y coordinate of window position */
-cvar_t		*vid_fullscreen;
-cvar_t		*vid_grabmouse;
+#pragma mark =Macros=
 
-/* Global variables used internally by this module */
-viddef_t	viddef;				/* global video state; used by other modules */
-void		*reflib_library;		/* Handle to refresh DLL */
-qboolean	reflib_active = qfalse;
+// We could iterate through active displays and capture them each, to avoid the CGReleaseAllDisplays() bug,
+// but this would result in awfully switches between renderer selections, since we would have to clean-up the
+// captured device list each time...
 
-/** KEYBOARD **************************************************************/
+#ifdef CAPTURE_ALL_DISPLAYS
 
-void Do_Key_Event(int key, qboolean down);
+#define VID_FADE_ALL_SCREENS	YES
+#define VID_CAPTURE_DISPLAYS()	CGCaptureAllDisplays ()
+#define VID_RELEASE_DISPLAYS()	CGReleaseAllDisplays ()
 
-void (*KBD_Update_fp)(void);
-void (*KBD_Init_fp)(Key_Event_fp_t fp);
-void (*KBD_Close_fp)(void);
+#else
 
-/** MOUSE *****************************************************************/
+#define VID_FADE_ALL_SCREENS	NO
+#define VID_CAPTURE_DISPLAYS()	CGDisplayCapture (kCGDirectMainDisplay)
+#define VID_RELEASE_DISPLAYS()	CGDisplayRelease (kCGDirectMainDisplay)
 
-in_state_t in_state;
+#endif /* CAPTURE_ALL_DISPLAYS */
 
-void (*RW_IN_Init_fp)(in_state_t *in_state_p);
-void (*RW_IN_Shutdown_fp)(void);
-void (*RW_IN_Activate_fp)(qboolean active);
-void (*RW_IN_Commands_fp)(void);
-void (*RW_IN_GetMousePos_fp)(int *mx, int *my);
-void (*RW_IN_Frame_fp)(void);
+#pragma mark -
 
-void Real_IN_Init (void);
+//__________________________________________________________________________________________________________dEFINES
 
-/*
-==========================================================================
-DLL GLUE
-==========================================================================
-*/
+#pragma mark =Defines=
 
-#define	MAXPRINTMSG	4096
-/**
- * @brief
- */
-void VID_Printf (int print_level, const char *fmt, ...)
+#define	VID_MAX_PRINT_MSG	4096
+#define VID_MAX_REF_NAME	256
+#define VID_MAX_DISPLAYS	100
+#define	VID_FADE_DURATION	1.0f
+
+
+#pragma mark -
+
+//_________________________________________________________________________________________________________tYPEDEFS
+
+#pragma mark =Typedefs=
+
+typedef struct vidgamma_s	{
+                                    CGDirectDisplayID	displayID;
+                                    CGGammaValue	component[9];
+                                } vidgamma_t;
+
+#pragma mark -
+
+//________________________________________________________________________________________________________vARIABLES
+
+#pragma mark =Variables=
+
+extern cvar_t		*vid_grabmouse;
+
+viddef_t		viddef;				// global video state
+
+refexport_t		re;				// function wrapper to the current refresh bundle.
+void			*reflib_library = NULL;		// Handle to refresh bundle.
+qboolean		reflib_active = qfalse;
+
+cvar_t			*vid_gamma = NULL,		// Video gamma value.
+                        *vid_ref = NULL,		// Name of refresh bundle loaded.
+                        *vid_xpos = NULL,		// X coordinate of window position.
+                        *vid_ypos = NULL,		// Y coordinate of window position.
+                        *vid_fullscreen = NULL,		// Video fullscreen.
+                        *vid_minrefresh = NULL,		// Video min. refresh rate.
+                        *vid_maxrefresh = NULL;		// Video max. refresh rate [-1 = infinite].
+
+static vidgamma_t	*gVIDOriginalGamma = NULL;
+static UInt16		gVIDModeCount = 22;
+static CGDisplayCount	gVIDGammaCount = 0;
+
+#pragma mark -
+
+//______________________________________________________________________________________________fUNCTION_pROTOTYPES
+
+#pragma mark =Function Prototypes=
+
+extern void	IN_ShowCursor (qboolean theState);
+
+
+void 		VID_Printf (int thePrintLevel, const char *theFormat, ...);
+void 		VID_Error (int theErrorLevel, const char *theFormat, ...);
+void 		VID_NewWindow (int theWidth, int theHeight);
+qboolean 	VID_GetModeInfo (int *theWidth, int *theHeight, int theMode);
+void		VID_Init (void);
+qboolean 	VID_LoadRefresh (char *theName);
+void		VID_FreeReflib (void);
+void		VID_CheckChanges (void);
+void		VID_Restart_f (void);
+
+static qboolean	VID_FadeGammaInit (qboolean theFadeOnAllDisplays);
+static void	VID_FadeGammaOut (qboolean theFadeOnAllDisplays, float theDuration);
+static void	VID_FadeGammaIn (qboolean theFadeOnAllDisplays, float theDuration);
+
+#pragma mark -
+
+/*=======================
+VID_Printf
+=======================*/
+void VID_Printf (int thePrintLevel, const char *theFormat, ...)
 {
-	va_list		argptr;
-	char		msg[MAXPRINTMSG];
+	va_list		myArgPtr;
+	char		myMessage[VID_MAX_PRINT_MSG];
 
-	va_start (argptr, fmt);
-	Q_vsnprintf (msg, sizeof(msg), fmt, argptr);
-	va_end (argptr);
+	/* formatted output conversion: */
+	va_start (myArgPtr, theFormat);
+	Q_vsnprintf (myMessage, VID_MAX_PRINT_MSG, theFormat, myArgPtr);
+	va_end (myArgPtr);
 
-	msg[sizeof(msg)-1] = 0;
-
-	if (print_level == PRINT_ALL)
-		Com_Printf("%s", msg);
+	/* print according to the print level: */
+	if (thePrintLevel == PRINT_ALL)
+		Com_Printf("%s", myMessage);
 	else
-		Com_DPrintf("%s", msg);
+		Com_DPrintf("%s", myMessage);
 }
 
-/**
- * @brief Calls Com_Error with err_level
- * @sa Com_Error
- */
-void VID_Error (int err_level, const char *fmt, ...)
+/*=======================
+VID_Error
+=======================*/
+void VID_Error (int theErrorLevel, const char *theFormat, ...)
 {
-	va_list		argptr;
-	char		msg[MAXPRINTMSG];
+	va_list		myArgPtr;
+	char		myMessage[VID_MAX_PRINT_MSG];
 
-	va_start (argptr,fmt);
-	Q_vsnprintf (msg, sizeof(msg), fmt, argptr);
-	va_end (argptr);
+	/* formatted output conversion: */
+	va_start(myArgPtr, theFormat);
+	Q_vsnprintf(myMessage, VID_MAX_PRINT_MSG, theFormat, myArgPtr);
+	va_end(myArgPtr);
 
-	msg[sizeof(msg)-1] = 0;
-
-	Com_Error (err_level, "%s", msg);
+	/* submitt the error string: */
+	Com_Error(theErrorLevel, "%s", myMessage);
 }
 
-/**
- * @brief Console command to re-start the video mode and refresh DLL. We do this
- * simply by setting the modified flag for the vid_ref variable, which will
- * cause the entire video mode and refresh DLL to be reset on the next frame.
- */
-void VID_Restart_f (void)
+/*=======================
+VID_NewWindow
+=======================*/
+void VID_NewWindow (int theWidth, int theHeight)
 {
-	vid_ref->modified = qtrue;
+	viddef.width = theWidth;
+	viddef.height = theHeight;
 }
 
 int maxVidModes;
-/**
- * @brief
- */
+
+/*=======================
+VID_GetModeInfo
+=======================*/
 const vidmode_t vid_modes[] =
 {
 	{ 320, 240,   0 },
@@ -154,114 +187,138 @@ const vidmode_t vid_modes[] =
 	{ 1280,  800, 17 },
 	{ 1680, 1050, 18 },
 	{ 1920, 1200, 19 },
-	{ 1400, 1050, 20 }, /* samsung x20 */
+	{ 1400, 1050, 20 },
 	{ 1440, 900, 21 }
 };
 
-/**
- * @brief
- */
-qboolean VID_GetModeInfo( int *width, int *height, int mode )
+qboolean VID_GetModeInfo (int *theWidth, int *theHeight, int theMode)
 {
-	if ( mode < 0 || mode >= VID_NUM_MODES )
-		return qfalse;
-
-	*width  = vid_modes[mode].width;
-	*height = vid_modes[mode].height;
-
-	return qtrue;
-}
-
-/**
- * @brief
- */
-void VID_NewWindow ( int width, int height)
-{
-	viddef.width  = width;
-	viddef.height = height;
-
-	viddef.rx = (float)width  / VID_NORM_WIDTH;
-	viddef.ry = (float)height / VID_NORM_HEIGHT;
-}
-
-/**
- * @brief
- */
-void VID_FreeReflib (void)
-{
-	if (reflib_library) {
-		if (KBD_Close_fp)
-			KBD_Close_fp();
-		if (RW_IN_Shutdown_fp)
-			RW_IN_Shutdown_fp();
-		dlclose(reflib_library);
+	//printf("Debugmessage : Selected Mode : %d , Res : %dx%d ",theMode,*theWidth,*theHeight);
+	// just return the current video size, false if the mode is not available:
+	if (theMode < 0 || theMode >= gVIDModeCount)
+	{
+		*theWidth  = vid_modes[0].width;
+		*theHeight = vid_modes[0].height;
+		return (qfalse);
 	}
 
-	KBD_Init_fp = NULL;
-	KBD_Update_fp = NULL;
-	KBD_Close_fp = NULL;
-	RW_IN_Init_fp = NULL;
-	RW_IN_Shutdown_fp = NULL;
-	RW_IN_Activate_fp = NULL;
-	RW_IN_Commands_fp = NULL;
-	RW_IN_GetMousePos_fp = NULL;
-	RW_IN_Frame_fp = NULL;
+	*theWidth  = vid_modes[theMode].width;
+	*theHeight = vid_modes[theMode].height;
 
-	memset (&re, 0, sizeof(re));
-	reflib_library = NULL;
-	reflib_active  = qfalse;
+	return (qtrue);
 }
 
-/**
- * @brief
- */
-qboolean VID_LoadRefresh (const char *name)
+/*=======================
+VID_Init
+=======================*/
+void VID_Init (void)
 {
-	refimport_t ri;
-	GetRefAPI_t GetRefAPI;
-	qboolean restart = qfalse;
-	struct stat st;
-	extern uid_t saved_euid;
-	char libPath[MAX_OSPATH];
-	cvar_t* s_libdir = Cvar_Get("s_libdir", "", CVAR_ARCHIVE, "lib dir for graphic and sound renderer - no game libs");
+	/* Create the video variables so we know how to start the graphics drivers */
+	vid_ref = Cvar_Get("vid_ref", "glx", CVAR_ARCHIVE,NULL);
+	vid_xpos = Cvar_Get("vid_xpos", "3", CVAR_ARCHIVE,NULL);
+	vid_ypos = Cvar_Get("vid_ypos", "22", CVAR_ARCHIVE,NULL);
+	vid_fullscreen = Cvar_Get("vid_fullscreen", "1", CVAR_ARCHIVE,NULL);
+	vid_gamma = Cvar_Get("vid_gamma", "1", CVAR_ARCHIVE,NULL);
 
+	/* Add some console commands that we want to handle */
+	Cmd_AddCommand("vid_restart", VID_Restart_f,NULL);
+
+	/* Hide the cursor */
+	if (vid_fullscreen->value)
+		IN_ShowCursor(qfalse);
+
+	/* Capture the screen(s): */
+	if (vid_fullscreen->value) {
+		VID_FadeGammaOut (VID_FADE_ALL_SCREENS, VID_FADE_DURATION);
+		VID_CAPTURE_DISPLAYS ();
+		VID_FadeGammaIn (VID_FADE_ALL_SCREENS, 0.0f);
+	}
+
+	/* Start the graphics mode and load refresh DLL */
+	VID_CheckChanges();
+	maxVidModes = VID_NUM_MODES;
+}
+
+/*=======================
+VID_Shutdown
+=======================*/
+void VID_Shutdown (void)
+{
+	/* shutdown the ref library: */
 	if (reflib_active) {
-		if (KBD_Close_fp)
-			KBD_Close_fp();
-		if (RW_IN_Shutdown_fp)
-			RW_IN_Shutdown_fp();
-		KBD_Close_fp = NULL;
-		RW_IN_Shutdown_fp = NULL;
-		re.Shutdown();
-		VID_FreeReflib();
-		restart = qtrue;
+		re.Shutdown ();
+		VID_FreeReflib ();
 	}
 
-	Com_Printf( "------- Loading %s -------\n", name );
-
-	/*regain root */
-	seteuid(saved_euid);
-
-	/* try path given via cvar */
-	if (strlen(s_libdir->string))
-		Q_strncpyz(libPath, s_libdir->string, sizeof(libPath));
-	else
-		strcpy(libPath, ".");
-
-	Q_strcat(libPath, "/", sizeof(libPath));
-	Q_strcat(libPath, name, sizeof(libPath));
-
-	if (stat(libPath, &st) == -1) {
-		Com_Printf("LoadLibrary (\"%s\") failed: %s\n", name, strerror(errno));
-		return qfalse;
+	/* release the screen(s): */
+	if (vid_fullscreen->value != 0.0f) {
+		VID_FadeGammaOut (VID_FADE_ALL_SCREENS, 0.0f);
+		if (CGDisplayIsCaptured (kCGDirectMainDisplay) == true) {
+			VID_RELEASE_DISPLAYS ();
+		}
+		VID_FadeGammaIn (VID_FADE_ALL_SCREENS, VID_FADE_DURATION);
 	}
 
-	if ((reflib_library = dlopen(libPath, RTLD_LAZY|RTLD_GLOBAL)) == 0) {
-		Com_Printf("LoadLibrary (\"%s\") failed: %s\n", name , dlerror());
-		return qfalse;
+	/* show the cursor: */
+	IN_ShowCursor (YES);
+}
+
+/*=======================
+VID_LoadRefresh
+=======================*/
+qboolean VID_LoadRefresh (char *theName)
+{
+	refimport_t	ri;
+	GetRefAPI_t	myGetRefAPIProc;
+	NSBundle	*myAppBundle = NULL;
+	char		*myBundlePath = NULL,
+			myCurrentPath[MAXPATHLEN],
+			myFileName[MAXPATHLEN];
+
+	/* get current game directory: */
+	getcwd (myCurrentPath, sizeof (myCurrentPath));
+
+	/* get the plugin dir of the application: */
+	myAppBundle = [NSBundle mainBundle];
+	if (myAppBundle == NULL) {
+		Sys_Error("Error while loading the renderer plug-in (invalid application bundle)!\n");
 	}
 
-	Com_Printf("LoadLibrary (\"%s\")\n", libPath);
+	myBundlePath = (char *) [[myAppBundle builtInPlugInsPath] fileSystemRepresentation];
+	if (myBundlePath == NULL) {
+		Sys_Error("Error while loading the renderer plug-in (invalid plug-in path)!\n");
+	}
+
+	chdir (myBundlePath);
+	[myAppBundle release];
+
+	/* prepare the bundle name: */
+	snprintf (myFileName, MAXPATHLEN, "./ref_sdl.dylib","", "");
+
+	if (reflib_active == true) {
+		re.Shutdown ();
+		VID_FreeReflib ();
+		reflib_active = qfalse;
+	}
+
+	Com_Printf("------- Loading %s -------\n", theName);
+
+	reflib_library = dlopen (myFileName, RTLD_LAZY | RTLD_GLOBAL);
+
+	/* return to the game directory: */
+	chdir (myCurrentPath);
+
+	if (reflib_library == NULL) {
+		Com_Printf("LoadLibrary(\"%s\") failed: %s\n", theName , dlerror());
+
+		return (qfalse);
+	}
+
+	Com_Printf("LoadLibrary(\"%s\")\n", myFileName);
+
+	if ((myGetRefAPIProc = (void *) dlsym (reflib_library, "GetRefAPI")) == NULL) {
+		Com_Error(ERR_FATAL, "dlsym failed on %s", theName);
+	}
 
 	ri.Cmd_AddCommand = Cmd_AddCommand;
 	ri.Cmd_RemoveCommand = Cmd_RemoveCommand;
@@ -270,7 +327,6 @@ qboolean VID_LoadRefresh (const char *name)
 	ri.Cmd_ExecuteText = Cbuf_ExecuteText;
 	ri.Con_Printf = VID_Printf;
 	ri.Sys_Error = VID_Error;
-	ri.FS_CreatePath = FS_CreatePath;
 	ri.FS_LoadFile = FS_LoadFile;
 	ri.FS_WriteFile = FS_WriteFile;
 	ri.FS_FreeFile = FS_FreeFile;
@@ -287,219 +343,227 @@ qboolean VID_LoadRefresh (const char *name)
 	ri.CL_GetFontData = CL_GetFontData;
 	ri.RenderTrace = SV_RenderTrace;
 
-	if ((GetRefAPI = (void *) dlsym(reflib_library, "GetRefAPI")) == 0)
-		Com_Error(ERR_FATAL, "dlsym failed on %s", name);
-
-	re = GetRefAPI( ri );
+	re = myGetRefAPIProc(ri);
 
 	if (re.api_version != API_VERSION) {
-		VID_FreeReflib ();
-		Com_Error(ERR_FATAL, "%s has incompatible api_version", name);
+		VID_FreeReflib();
+		Com_Error(ERR_FATAL, "%s has incompatible api_version!", theName);
 	}
 
-	/* Init IN (Mouse) */
-	in_state.Key_Event_fp = Do_Key_Event;
-
-	if ((RW_IN_Init_fp = dlsym(reflib_library, "RW_IN_Init")) == NULL ||
-		(RW_IN_Shutdown_fp = dlsym(reflib_library, "RW_IN_Shutdown")) == NULL ||
-		(RW_IN_Activate_fp = dlsym(reflib_library, "RW_IN_Activate")) == NULL ||
-		(RW_IN_Commands_fp = dlsym(reflib_library, "RW_IN_Commands")) == NULL ||
-		(RW_IN_GetMousePos_fp = dlsym(reflib_library, "RW_IN_GetMousePos")) == NULL ||
-		(RW_IN_Frame_fp = dlsym(reflib_library, "RW_IN_Frame")) == NULL)
-		Sys_Error("No RW_IN functions in REF.\n");
-
-	Real_IN_Init();
-
-	if (re.Init(0, 0) == -1) {
+	if (re.Init (0, 0) == -1) {
 		re.Shutdown();
-		VID_FreeReflib ();
+		VID_FreeReflib();
 		return qfalse;
 	}
 
-	/* Init KBD */
-#if 1
-	if ((KBD_Init_fp = dlsym(reflib_library, "KBD_Init")) == NULL ||
-		(KBD_Update_fp = dlsym(reflib_library, "KBD_Update")) == NULL ||
-		(KBD_Close_fp = dlsym(reflib_library, "KBD_Close")) == NULL)
-		Sys_Error("No KBD functions in REF.\n");
-#else
-	{
-
-		void KBD_Init(void);
-		void KBD_Update(void);
-		void KBD_Close(void);
-
-		KBD_Init_fp = KBD_Init;
-		KBD_Update_fp = KBD_Update;
-		KBD_Close_fp = KBD_Close;
-	}
-#endif
-	KBD_Init_fp(Do_Key_Event);
-
-	/* give up root now */
-	setreuid(getuid(), getuid());
-	setegid(getgid());
-
-	/* vid_restart */
-	if (restart)
-		CL_InitFonts();
-
 	Com_Printf("------------------------------------\n");
-
 	reflib_active = qtrue;
-
 	return qtrue;
 }
 
-/**
- * @brief This function gets called once just before drawing each frame, and it's sole purpose in life
- * is to check to see if any of the video mode parameters have changed, and if they have to
- * update the rendering DLL and/or video mode to match.
- */
+/*=======================
+VID_FreeReflib
+=======================*/
+void VID_FreeReflib (void)
+{
+	memset (&re, 0, sizeof (re));
+	reflib_library = NULL;
+	reflib_active  = qfalse;
+}
+
+/*=======================
+VID_CheckChanges
+=======================*/
 void VID_CheckChanges (void)
 {
-	char name[100];
+	char 	myName[VID_MAX_REF_NAME];
 
 	if (vid_ref->modified)
-		S_StopAllSounds();
+		S_StopAllSounds ();
 
 	while (vid_ref->modified) {
-		/* refresh has changed */
 		vid_ref->modified = qfalse;
 		vid_fullscreen->modified = qtrue;
 		cl.refresh_prepped = qfalse;
 		cls.disable_screen = qtrue;
 
-		Com_sprintf(name, sizeof(name), "ref_%s.so", vid_ref->string);
-		if (!VID_LoadRefresh(name)) {
-			Cmd_ExecuteString( "condump gl_debug" );
-
-			Com_Error (ERR_FATAL, "Couldn't initialize OpenGL renderer!\nConsult gl_debug.txt for further information.");
+		Com_sprintf(myName, VID_MAX_REF_NAME, "ref_%s", vid_ref->string);
+		if (VID_LoadRefresh (myName) == qfalse) {
+			if (cls.key_dest != key_console)
+				Con_ToggleConsole_f ();
 		}
 		cls.disable_screen = qfalse;
 	}
-
 }
 
-/**
- * @brief
- */
-void VID_Init (void)
+/*=======================
+VID_Restart_f
+=======================*/
+void VID_Restart_f (void)
 {
-	/* Create the video variables so we know how to start the graphics drivers */
-	vid_ref = Cvar_Get("vid_ref", "glx", CVAR_ARCHIVE, NULL);
-	vid_xpos = Cvar_Get("vid_xpos", "3", CVAR_ARCHIVE, NULL);
-	vid_ypos = Cvar_Get("vid_ypos", "22", CVAR_ARCHIVE, NULL);
-	vid_fullscreen = Cvar_Get("vid_fullscreen", "1", CVAR_ARCHIVE, NULL);
-	vid_gamma = Cvar_Get("vid_gamma", "1", CVAR_ARCHIVE, NULL);
-
-	/* Add some console commands that we want to handle */
-	Cmd_AddCommand("vid_restart", VID_Restart_f, NULL);
-
-	/* Start the graphics mode and load refresh DLL */
-	VID_CheckChanges();
-	maxVidModes = VID_NUM_MODES;
+	vid_ref->modified = qtrue;
 }
 
-/**
- * @brief
- */
-void VID_Shutdown (void)
+/*=======================
+VID_FadeGammaInit
+=======================*/
+qboolean VID_FadeGammaInit (qboolean theFadeOnAllDisplays)
 {
-	if (reflib_active) {
-		if (KBD_Close_fp)
-			KBD_Close_fp();
-		if (RW_IN_Shutdown_fp)
-			RW_IN_Shutdown_fp();
-		KBD_Close_fp = NULL;
-		RW_IN_Shutdown_fp = NULL;
-		re.Shutdown();
-		VID_FreeReflib();
+	static qboolean		myFadeOnAllDisplays = qfalse;
+	CGDirectDisplayID  	myDisplayList[VID_MAX_DISPLAYS];
+	CGDisplayErr	myError;
+	UInt32		i;
+
+	/* if init fails, no gamma fading will be used! */
+	if (gVIDOriginalGamma != NULL) {
+		// initialized, but did we change the number of displays?
+		if (theFadeOnAllDisplays == myFadeOnAllDisplays)
+			return qtrue; // FIXME Should this be qfalse? It was just qboolean, but that can't be right...
+		free (gVIDOriginalGamma);
+		gVIDOriginalGamma = NULL;
 	}
-}
 
+	/* get the list of displays: */
+	if (CGGetActiveDisplayList (VID_MAX_DISPLAYS, myDisplayList, &gVIDGammaCount) != CGDisplayNoErr)
+		return qfalse;
 
-/*****************************************************************************/
-/* INPUT                                                                     */
-/*****************************************************************************/
+	if (gVIDGammaCount == 0)
+		return qfalse;
 
-/**
- * @brief
- */
-/*
-void IN_Init ( void )
-{
-}
-*/
-/**
- * @brief
- */
-void Real_IN_Init (void)
-{
-	if (RW_IN_Init_fp)
-		RW_IN_Init_fp(&in_state);
-}
+	if (theFadeOnAllDisplays == qfalse)
+		gVIDGammaCount = 1;
 
-/**
- * @brief
- */
-/*
-void IN_Shutdown (void)
-{
-	if (RW_IN_Shutdown_fp)
-		RW_IN_Shutdown_fp();
-}
-*/
-/**
- * @brief
- */
- /*
-void IN_Commands (void)
-{
-	if (RW_IN_Commands_fp)
-		RW_IN_Commands_fp();
-}
-*/
-/**
- * @brief
- */
- 
-void IN_GetMousePos (int *mx, int *my)
-{
-	if (RW_IN_GetMousePos_fp)
-		RW_IN_GetMousePos_fp(mx, my);
-}
+	// get memory for our original gamma table(s):
+	gVIDOriginalGamma = malloc (sizeof (vidgamma_t) * gVIDGammaCount);
+	if (gVIDOriginalGamma == NULL)
+		return qfalse;
 
-/**
- * @brief
- */
- 
-void IN_Frame (void)
-{
-	if (RW_IN_Activate_fp) {
-		if (cls.key_dest == key_console)
-			RW_IN_Activate_fp(qfalse);
+	// store the original gamma values within this table(s):
+	for (i = 0; i < gVIDGammaCount; i++) {
+		if (gVIDGammaCount == 1)
+			gVIDOriginalGamma[i].displayID = kCGDirectMainDisplay;
 		else
-			RW_IN_Activate_fp(qtrue);
+			gVIDOriginalGamma[i].displayID = myDisplayList[i];
+
+		myError = CGGetDisplayTransferByFormula (gVIDOriginalGamma[i].displayID,
+							&gVIDOriginalGamma[i].component[0],
+							&gVIDOriginalGamma[i].component[1],
+							&gVIDOriginalGamma[i].component[2],
+							&gVIDOriginalGamma[i].component[3],
+							&gVIDOriginalGamma[i].component[4],
+							&gVIDOriginalGamma[i].component[5],
+							&gVIDOriginalGamma[i].component[6],
+							&gVIDOriginalGamma[i].component[7],
+							&gVIDOriginalGamma[i].component[8]);
+		if (myError != CGDisplayNoErr) {
+			free (gVIDOriginalGamma);
+			gVIDOriginalGamma = NULL;
+			return qfalse;
+		}
 	}
+	myFadeOnAllDisplays = theFadeOnAllDisplays;
 
-	if (RW_IN_Frame_fp)
-		RW_IN_Frame_fp();
+	return qtrue;
 }
 
-/**
- * @brief
- */
- /*
-void IN_Activate (qboolean active)
+/*=======================
+VID_FadeGammaOut
+=======================*/
+void VID_FadeGammaOut (qboolean theFadeOnAllDisplays, float theDuration)
 {
-}
-*/
-/**
- * @brief
- */
-void Do_Key_Event (int key, qboolean down)
-{
-	Key_Event(key, down, Sys_Milliseconds());
+	vidgamma_t		myCurGamma;
+	float		myStartTime = 0.0f, myCurScale = 0.0f;
+	UInt32		i, j;
+
+	// check if initialized:
+	if (VID_FadeGammaInit (theFadeOnAllDisplays) == qfalse)
+		return;
+
+	// get the time of the fade start:
+	myStartTime = Sys_Milliseconds ();
+	theDuration *= 1000.0f;
+
+	// fade for the choosen duration:
+	while (1) {
+		// calculate the current scale and clamp it:
+		if (theDuration > 0.0f) {
+			myCurScale = 1.0f - (Sys_Milliseconds () - myStartTime) / theDuration;
+			if (myCurScale < 0.0f)
+				myCurScale = 0.0f;
+		}
+
+		// fade the gamma for each display:
+		for (i = 0; i < gVIDGammaCount; i++) {
+			// calculate the current intensity for each color component:
+			for (j = 1; j < 9; j += 3)
+				myCurGamma.component[j] = myCurScale * gVIDOriginalGamma[i].component[j];
+
+			// set the current gamma:
+			CGSetDisplayTransferByFormula (gVIDOriginalGamma[i].displayID,
+						gVIDOriginalGamma[i].component[0],
+						myCurGamma.component[1],
+						gVIDOriginalGamma[i].component[2],
+						gVIDOriginalGamma[i].component[3],
+						myCurGamma.component[4],
+						gVIDOriginalGamma[i].component[5],
+						gVIDOriginalGamma[i].component[6],
+						myCurGamma.component[7],
+						gVIDOriginalGamma[i].component[8]);
+		}
+
+		// are we finished?
+		if(myCurScale <= 0.0f)
+			break;
+	}
 }
 
+/*=======================
+VID_FadeGammaInit
+=======================*/
+void VID_FadeGammaIn (qboolean theFadeOnAllDisplays, float theDuration)
+{
+	vidgamma_t	myCurGamma;
+	float		myStartTime = 0.0f, myCurScale = 1.0f;
+	UInt32		i, j;
+
+	// check if initialized:
+	if (gVIDOriginalGamma == NULL)
+		return;
+
+	// get the time of the fade start:
+	myStartTime = Sys_Milliseconds ();
+	theDuration *= 1000.0f;
+
+	// fade for the choosen duration:
+	while (1) {
+		// calculate the current scale and clamp it:
+		if (theDuration > 0.0f) {
+			myCurScale = (Sys_Milliseconds () - myStartTime) / theDuration;
+			if (myCurScale > 1.0f)
+				myCurScale = 1.0f;
+		}
+
+		// fade the gamma for each display:
+		for (i = 0; i < gVIDGammaCount; i++) {
+			// calculate the current intensity for each color component:
+			for (j = 1; j < 9; j += 3)
+				myCurGamma.component[j] = myCurScale * gVIDOriginalGamma[i].component[j];
+
+			// set the current gamma:
+			CGSetDisplayTransferByFormula (gVIDOriginalGamma[i].displayID,
+						gVIDOriginalGamma[i].component[0],
+						myCurGamma.component[1],
+						gVIDOriginalGamma[i].component[2],
+						gVIDOriginalGamma[i].component[3],
+						myCurGamma.component[4],
+						gVIDOriginalGamma[i].component[5],
+						gVIDOriginalGamma[i].component[6],
+						myCurGamma.component[7],
+						gVIDOriginalGamma[i].component[8]);
+		}
+
+		// are we finished?
+		if(myCurScale >= 1.0f)
+			break;
+	}
+}

@@ -1,5 +1,5 @@
 /**
- * @file sys_linux.c
+ * @file sys_osx.c
  * @brief main function and system functions
  */
 
@@ -42,35 +42,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <sys/mman.h>
 #include <errno.h>
 
-#ifdef __linux__
-# include <execinfo.h>
-# include <sys/utsname.h>
-# include <link.h>
-# include <sys/ucontext.h>
-
-/* for old headers */
-# ifndef REG_EIP
-#  ifndef EIP
-#   define EIP 12 /* aiee */
-#  endif
-#  define REG_EIP EIP
-# endif
-#endif /* __linux__ */
-
-#if defined(__FreeBSD__) || defined(__NetBSD__)
-#else
-//#include <mntent.h>
-#endif
 #include <pwd.h>
 #include <dirent.h>
 #include <libgen.h> /* dirname */
 
 #include <dlfcn.h>
-
 #include "../../qcommon/qcommon.h"
-
-//#include "rw_linux.h"
-
+#include "../linux/rw_linux.h"
+#include <Carbon/Carbon.h>
+#include <Cocoa/Cocoa.h>
 
 extern cvar_t *nostdout;
 
@@ -83,11 +63,11 @@ static void *game_library;
 /**
  * @brief
  */
-char *Sys_GetCurrentUser( void )
+char *Sys_GetCurrentUser (void)
 {
 	struct passwd *p;
 
-	if ( (p = getpwuid( getuid() )) == NULL ) {
+	if ((p = getpwuid(getuid())) == NULL) {
 		return "player";
 	}
 	return p->pw_name;
@@ -97,7 +77,7 @@ char *Sys_GetCurrentUser( void )
  * @brief
  * @return NULL if getcwd failed
  */
-char *Sys_Cwd( void )
+char *Sys_Cwd (void)
 {
 	static char cwd[MAX_OSPATH];
 
@@ -111,7 +91,7 @@ char *Sys_Cwd( void )
 /**
  * @brief
  */
-void Sys_NormPath(char* path)
+void Sys_NormPath (char* path)
 {
 }
 
@@ -122,7 +102,7 @@ void Sys_NormPath(char* path)
  * This way you can make a link in /usr/bin and the data-files are still
  * found in e.g. /usr/local/games/ufoai
  */
-char *Sys_BinName( const char *arg0 )
+char *Sys_BinName (const char *arg0)
 {
 #ifndef DEBUG
 	int	n;
@@ -163,109 +143,6 @@ char *Sys_GetHomeDirectory (void)
 	return getenv("HOME");
 }
 
-#ifdef __linux__
-
-/* gcc 2.7.2 has trouble understanding this unfortunately at compile time */
-/* and 2.95.3 won't find it at link time. blah. */
-#define GCC_VERSION (__GNUC__ * 10000 \
-	+ __GNUC_MINOR__ * 100 \
-	+ __GNUC_PATCHLEVEL__)
-#if GCC_VERSION > 30000
-/**
- * @brief
- */
-static int dlcallback (struct dl_phdr_info *info, size_t size, void *data)
-{
-	int j;
-	int end;
-
-	end = 0;
-
-	if (!info->dlpi_name || !info->dlpi_name[0])
-		return 0;
-
-	for (j = 0; j < info->dlpi_phnum; j++) {
-		end += info->dlpi_phdr[j].p_memsz;
-	}
-
-	/* this is terrible. */
-#if __WORDSIZE == 64
-	fprintf (stderr, "[0x%lux-0x%lux] %s\n", info->dlpi_addr, info->dlpi_addr + end, info->dlpi_name);
-#else
-	fprintf (stderr, "[0x%ux-0x%ux] %s\n", info->dlpi_addr, info->dlpi_addr + end, info->dlpi_name);
-#endif
-	return 0;
-}
-#endif
-
-/**
- * @brief Obtain a backtrace and print it to stderr.
- * @note Adapted from http://www.delorie.com/gnu/docs/glibc/libc_665.html
- */
-#if defined(__x86_64__) || defined(__powerpc__)
-void Sys_Backtrace (int sig)
-#else
-void Sys_Backtrace (int sig, siginfo_t *siginfo, void *secret)
-#endif
-{
-	void		*array[32];
-	struct utsname	info;
-	size_t		size;
-	size_t		i;
-	char		**strings;
-#ifndef __x86_64__
-#ifndef __powerpc__
-	ucontext_t 	*uc = (ucontext_t *)secret;
-#endif
-#endif
-
-	signal (SIGSEGV, SIG_DFL);
-
-	fprintf (stderr, "=====================================================\n"
-		"Segmentation Fault\n"
-		"=====================================================\n"
-		"A crash has occured within UFO:AI or the Game library\n"
-		"that you are running.\n"
-		"\n"
-		"If possible, re-building UFO:AI to ensure it is not a\n"
-		"compile problem. If the crash still persists,  please\n"
-		"put the following debug info on the UFO:AI forum with\n"
-		"details including the version, Linux distribution and\n"
-		"any other pertinent information.\n"
-		"\n");
-
-	size = backtrace (array, sizeof(array)/sizeof(void*));
-
-#ifndef __x86_64__
-#ifndef __powerpc__
-	array[1] = (void *) uc->uc_mcontext.gregs[REG_EIP];
-#endif
-#endif
-
-	strings = backtrace_symbols (array, size);
-
-	fprintf (stderr, "Stack dump (%zd frames):\n", size);
-
-	for (i = 0; i < size; i++)
-		fprintf (stderr, "%.2zd: %s\n", i, strings[i]);
-
-	fprintf (stderr, "\nVersion: " UFO_VERSION " (" BUILDSTRING " " CPUSTRING ")\n");
-
-	uname (&info);
-	fprintf (stderr, "OS Info: %s %s %s %s %s\n\n", info.sysname, info.nodename, info.release, info.version, info.machine);
-
-#if GCC_VERSION > 30000
-	fprintf (stderr, "Loaded libraries:\n");
-	dl_iterate_phdr(dlcallback, NULL);
-#endif
-
-	free (strings);
-
-	raise (SIGSEGV);
-}
-
-#endif /* __linux__ */
-
 /* ======================================================================= */
 /* General routines */
 /* ======================================================================= */
@@ -288,9 +165,9 @@ int Sys_FileLength (const char *path)
  */
 void Sys_Quit (void)
 {
-	CL_Shutdown ();
-	Qcommon_Shutdown ();
-	fcntl (0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
+	CL_Shutdown();
+	Qcommon_Shutdown();
+	fcntl(0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
 	exit(0);
 }
 
@@ -299,30 +176,7 @@ void Sys_Quit (void)
  */
 void Sys_Init (void)
 {
-	Cvar_Get("sys_os", "linux", CVAR_SERVERINFO, NULL);
-#if id386
-/*	Sys_SetFPCW(); */
-#endif
-#ifdef __linux__
-# ifndef __x86_64__
-	struct sigaction sa;
-
-	if (sizeof(uint32_t) != 4)
-		Sys_Error("uint32 != 32 bits");
-	else if (sizeof(uint64_t) != 8)
-		Sys_Error("uint64 != 64 bits");
-	else if (sizeof(uint16_t) != 2)
-		Sys_Error("uint16 != 16 bits");
-
-	sa.sa_handler = (void *)Sys_Backtrace;
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = SA_RESTART | SA_SIGINFO;
-
-	sigaction(SIGSEGV, &sa, NULL);
-# else
-	signal(SIGSEGV, Sys_Backtrace);
-# endif
-#endif /* __linux__ */
+	Cvar_Get("sys_os", "macosx", CVAR_SERVERINFO, NULL);
 }
 
 /**
@@ -360,9 +214,9 @@ void Sys_Error (const char *error, ...)
 	fcntl(0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
 
 #ifndef DEDICATED_ONLY
-	CL_Shutdown ();
+	CL_Shutdown();
 #endif
-	Qcommon_Shutdown ();
+	Qcommon_Shutdown();
 
 	va_start(argptr,error);
 	Q_vsnprintf(string, sizeof(string), error, argptr);
@@ -433,7 +287,7 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 		path = FS_NextPath(path);
 		if (!path)
 			return NULL;		/* couldn't find one anywhere */
-		Com_sprintf(name, MAX_OSPATH, "%s/game.so", path);
+		Com_sprintf(name, sizeof(name), "%s/game.dylib", path);
 		game_library = dlopen(name, RTLD_LAZY);
 		if (game_library) {
 			Com_Printf("LoadLibrary (%s)\n", name);
@@ -466,8 +320,8 @@ void Sys_AppActivate (void)
 void Sys_SendKeyEvents (void)
 {
 #ifndef DEDICATED_ONLY
-	//if (KBD_Update_fp)
-	//	KBD_Update_fp();
+	if (KBD_Update_fp)
+		KBD_Update_fp();
 #endif
 
 	/* grab frame time */
@@ -516,6 +370,21 @@ char *Sys_GetClipboardData (void)
 }
 
 /**
+ * @brief
+ */
+static void InitCocoa (void)
+{
+	void* cocoa_lib;
+	/* TODO: Don't hardcode the path - let configure decide */
+	cocoa_lib = dlopen("/System/Library/Frameworks/Cocoa.framework/Cocoa", RTLD_LAZY);
+	void (*nsappload)(void);
+	if (!cocoa_lib)
+		Sys_Error("InitCocoa: Could not load cocoa framework\n");
+	nsappload = (void(*)()) dlsym(cocoa_lib, "NSApplicationLoad");
+	nsappload();
+}
+
+/**
  * @brief The entry point for linux server and client.
  *
  * Inits the the program and calls Qcommon in an infinite loop.
@@ -524,12 +393,15 @@ char *Sys_GetClipboardData (void)
  */
 int main (int argc, char **argv)
 {
+	/* create Autorelease Pool, to avoid Error Messages under MacOSX */
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	int time, oldtime, newtime;
 	float timescale = 1.0;
 
+	InitCocoa();
 	/* go back to real user for config loads */
-	saved_euid = geteuid();
-	seteuid(getuid());
+	//saved_euid = geteuid();
+	//seteuid(getuid());
 
 	Qcommon_Init(argc, argv);
 
@@ -541,6 +413,7 @@ int main (int argc, char **argv)
 	}
 
 	newtime = Sys_Milliseconds();
+
 	for (;;) {
 		/* find time spent rendering last frame */
 		oldtime = newtime;
@@ -548,6 +421,9 @@ int main (int argc, char **argv)
 		time = timescale * (newtime - oldtime);
 		timescale = Qcommon_Frame(time);
 	}
+
+	/* Free the Release Pool resources */
+	[pool release];
 	return 0;
 }
 
