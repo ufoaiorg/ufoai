@@ -388,13 +388,17 @@ extern qboolean MAP_3DMapToScreen (const menuNode_t* node, const vec2_t pos, int
 }
 
 /**
- * @brief
- * @param[out] x normalized (shiften and scaled) x value of mouseclick
- * @param[out] y normalized (shiften and scaled) y value of mouseclick
- * @param[in] pos vector that holds longitude and latitude
+ * @brief Transform a 2D position on the map to screen coordinates.
+ * @param[in] node Menu node
+ * @param[in] pos Position on the map described by longitude and latitude
+ * @param[out] x X coordinate on the screen
+ * @param[out] y Y coordinate on the screen
+ * @returns qtrue if the screen position is within the boundaries of the menu
+ * node. Otherwise returns qfalse.
  * @sa MAP_3DMapToScreen
  */
-extern qboolean MAP_MapToScreen (const menuNode_t* node, const vec2_t pos, int *x, int *y)
+extern qboolean MAP_MapToScreen (const menuNode_t* node, const vec2_t pos,
+		int *x, int *y)
 {
 	float sx;
 
@@ -408,9 +412,13 @@ extern qboolean MAP_MapToScreen (const menuNode_t* node, const vec2_t pos, int *
 		sx -= 1.0;
 
 	*x = node->pos[0] + 0.5 * node->size[0] - sx * node->size[0] * ccs.zoom;
-	*y = node->pos[1] + 0.5 * node->size[1] - (pos[1] / 180 + ccs.center[1] - 0.5) * node->size[1] * ccs.zoom;
+	*y = node->pos[1] + 0.5 * node->size[1] -
+		(pos[1] / 180 + ccs.center[1] - 0.5) * node->size[1] * ccs.zoom;
 
-	if (*x < node->pos[0] && *y < node->pos[1] && *x > node->pos[0] + node->size[0] && *y > node->pos[1] + node->size[1])
+	if (*x < node->pos[0] &&
+			*y < node->pos[1] &&
+			*x > node->pos[0] + node->size[0] &&
+			*y > node->pos[1] + node->size[1])
 		return qfalse;
 	return qtrue;
 }
