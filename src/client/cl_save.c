@@ -205,8 +205,8 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 
 	/* step 4 - write the header */
 	memset(&header, 0, sizeof(saveFileHeader_t));
-	header.compressed = save_compressed->integer;
-	header.version = SAVE_FILE_VERSION;
+	header.compressed = LittleLong(save_compressed->integer);
+	header.version = LittleLong(SAVE_FILE_VERSION);
 	Q_strncpyz(header.name, comment, sizeof(header.name));
 	Q_strncpyz(header.gameVersion, UFO_VERSION, sizeof(header.gameVersion));
 	CL_DateConvert(&ccs.date, &day, &month);
