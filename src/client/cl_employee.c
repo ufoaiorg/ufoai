@@ -180,7 +180,7 @@ extern qboolean E_IsInBase (employee_t* empl, const base_t* const base)
  * @param type employeeType_t value
  * @return translated employee string
  */
-extern char* E_GetEmployeeString (employeeType_t type)
+extern const char* E_GetEmployeeString (employeeType_t type)
 {
 	switch (type) {
 	case EMPL_SOLDIER:

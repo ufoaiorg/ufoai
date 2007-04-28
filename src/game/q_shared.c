@@ -3640,9 +3640,9 @@ int Com_ParseValue (void *base, char *token, int type, int ofs)
 			if (!Q_strcmp(token, align_names[w]))
 				break;
 		if (w == ALIGN_LAST)
-			*b = 0;
+			*b = (byte)0;
 		else
-			*b = w;
+			*b = (byte)w;
 		return ALIGN(1);
 
 	case V_BLEND:
@@ -3650,9 +3650,9 @@ int Com_ParseValue (void *base, char *token, int type, int ofs)
 			if (!Q_strcmp(token, blend_names[w]))
 				break;
 		if (w == BLEND_LAST)
-			*b = 0;
+			*b = (byte)0;
 		else
-			*b = w;
+			*b = (byte)w;
 		return ALIGN(1);
 
 	case V_STYLE:
@@ -3660,9 +3660,9 @@ int Com_ParseValue (void *base, char *token, int type, int ofs)
 			if (!Q_strcmp(token, style_names[w]))
 				break;
 		if (w == STYLE_LAST)
-			*b = 0;
+			*b = (byte)0;
 		else
-			*b = w;
+			*b = (byte)w;
 		return ALIGN(1);
 
 	case V_FADE:
@@ -3670,9 +3670,9 @@ int Com_ParseValue (void *base, char *token, int type, int ofs)
 			if (!Q_strcmp(token, fade_names[w]))
 				break;
 		if (w == FADE_LAST)
-			*b = 0;
+			*b = (byte)0;
 		else
-			*b = w;
+			*b = (byte)w;
 		return ALIGN(1);
 
 	case V_SHAPE_SMALL:
@@ -3697,9 +3697,9 @@ int Com_ParseValue (void *base, char *token, int type, int ofs)
 			if (!Q_strcmp(token, CSI->dts[w]))
 				break;
 		if (w == CSI->numDTs)
-			*b = 0;
+			*b = (byte)0;
 		else
-			*b = w;
+			*b = (byte)w;
 		return ALIGN(1);
 
 	case V_DATE:

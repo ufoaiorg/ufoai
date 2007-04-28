@@ -27,16 +27,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /* public */
 le_t *selActor;
-fireDef_t *selFD;
-character_t *selChr;
-int selToHit;
-pos3_t mousePos;
+static fireDef_t *selFD;
+static character_t *selChr;
+static int selToHit;
+static pos3_t mousePos;
 
 int actorMoveLength;
 invList_t invList[MAX_INVLIST];
-qboolean visible_firemode_list_left = qfalse;
-qboolean visible_firemode_list_right = qfalse;
-qboolean firemodes_change_display = qtrue; /* If this set to qfalse so CL_DisplayFiremodes_f will not attempt to hide the list */
+static qboolean visible_firemode_list_left = qfalse;
+static qboolean visible_firemode_list_right = qfalse;
+static qboolean firemodes_change_display = qtrue; /* If this set to qfalse so CL_DisplayFiremodes_f will not attempt to hide the list */
 
 typedef enum {
 	RF_HAND,	/**< Stores the used hand (0=right, 1=left, -1=undef) */
@@ -54,13 +54,13 @@ static int reactionFiremode[MAX_EDICTS][RF_MAX]; /** < Per actor: Stores the fir
 static le_t *mouseActor;
 static pos3_t mouseLastPos;
 pos3_t mousePendPos; /* for double-click movement and confirmations ... */
-reactionmode_t selActorReactionState; /* keep track of reaction toggle */
-reactionmode_t selActorOldReactionState = R_FIRE_OFF; /* and another to help set buttons! */
+static reactionmode_t selActorReactionState; /* keep track of reaction toggle */
+static reactionmode_t selActorOldReactionState = R_FIRE_OFF; /* and another to help set buttons! */
 
 /* to optimise painting of HUD in move-mode, keep track of some globals: */
-le_t *lastHUDActor; /* keeps track of selActor */
-int lastMoveLength; /* keeps track of actorMoveLength */
-int lastTU; /* keeps track of selActor->TU */
+static le_t *lastHUDActor; /* keeps track of selActor */
+static int lastMoveLength; /* keeps track of actorMoveLength */
+static int lastTU; /* keeps track of selActor->TU */
 
 /* a cbuf string for each button_types_t */
 static const char *shoot_type_strings[BT_NUM_TYPES] = {
@@ -104,7 +104,7 @@ ACTOR MENU UPDATING
  * @return skill string
  * @param[in] skill a skill value between 0 and MAX_SKILL (TODO: 0? never reached?)
  */
-static char *CL_GetSkillString (const int skill)
+static const char *CL_GetSkillString (const int skill)
 {
 #ifdef DEBUG
 	if (skill > MAX_SKILL) {
@@ -598,6 +598,8 @@ static void CL_UpdateReactionFiremodes (char hand, int actor_idx, int active_fir
 		return;
 	}
 
+	/* ammo is definitly set here - otherwise the both checks above would have
+	 * left this function already */
 	if (!RS_ItemIsResearched(csi.ods[ammo->weap_idx[weap_fd_idx]].id)) {
 		Com_DPrintf("CL_UpdateReactionFiremodes: Weapon '%s' not researched, can't use for reaction fire.\n", csi.ods[ammo->weap_idx[weap_fd_idx]].id);
 		return;
@@ -1769,7 +1771,7 @@ static int CL_CheckAction (void)
  * @brief Draws the way to walk when confirm actions is activated.
  * @param[in] to
  */
-static int CL_TraceMove (pos3_t to)
+static qboolean CL_TraceMove (pos3_t to)
 {
 	int length;
 	vec3_t vec, oldVec;
@@ -1779,7 +1781,7 @@ static int CL_TraceMove (pos3_t to)
 	length = Grid_MoveLength(&clMap, to, qfalse);
 
 	if (!selActor || !length || length >= 0x3F)
-		return 0;
+		return qfalse;
 
 	Grid_PosToVec(&clMap, to, oldVec);
 	VectorCopy(to, pos);
@@ -1796,7 +1798,7 @@ static int CL_TraceMove (pos3_t to)
 			CL_ParticleSpawn("moveTracer", 0, vec, oldVec, NULL);
 		VectorCopy(vec, oldVec);
 	}
-	return 1;
+	return qtrue;
 }
 
 /**
@@ -2479,7 +2481,7 @@ MOUSE INPUT
  * @sa CL_ActorSelectMouse
  * @sa CL_ActorActionMouse
  */
-void CL_ActorMoveMouse (void)
+static void CL_ActorMoveMouse (void)
 {
 	if (cl.cmode == M_PEND_MOVE) {
 		if (VectorCompare(mousePos, mousePendPos)) {
@@ -2955,7 +2957,7 @@ TARGETING GRAPHICS
  * @brief Calculates chance to hit.
  * @param[in] toPos
  */
-float CL_TargetingToHit (pos3_t toPos)
+static float CL_TargetingToHit (pos3_t toPos)
 {
 	vec3_t shooter, target;
 	float distance, pseudosin, width, height, acc, perpX, perpY, hitchance;
@@ -3073,18 +3075,18 @@ float CL_TargetingToHit (pos3_t toPos)
 static void CL_Targeting_Radius (vec3_t center)
 {
 	const vec4_t color = {0, 1, 0, 0.3};
-	ptl_t *ptl = NULL;
+	ptl_t *particle = NULL;
 
 	assert(selFD);
 
-	ptl = CL_ParticleSpawn("*circle", 0, center, NULL, NULL);
-	ptl->size[0] = selFD->splrad; /* misuse size vector as radius */
-	ptl->size[1] = 1; /* thickness */
-	ptl->style = STYLE_CIRCLE;
-	ptl->blend = BLEND_BLEND;
+	particle = CL_ParticleSpawn("*circle", 0, center, NULL, NULL);
+	particle->size[0] = selFD->splrad; /* misuse size vector as radius */
+	particle->size[1] = 1; /* thickness */
+	particle->style = STYLE_CIRCLE;
+	particle->blend = BLEND_BLEND;
 	/* free the particle every frame */
-	ptl->life = 0.0001;
-	Vector4Copy(color, ptl->color);
+	particle->life = 0.0001;
+	Vector4Copy(color, particle->color);
 }
 
 
@@ -3274,7 +3276,7 @@ static const vec3_t boxSize = { BOX_DELTA_WIDTH, BOX_DELTA_LENGTH, BOX_DELTA_HEI
  * @brief create a targeting box at the given position
  * @sa CL_ParseClientinfo
  */
-void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
+static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 {
 	entity_t ent;
 	vec3_t realBoxSize;

@@ -547,8 +547,6 @@ extern int numLEs;
 static const vec3_t player_mins = { -PLAYER_WIDTH, -PLAYER_WIDTH, PLAYER_MIN };
 static const vec3_t player_maxs = { PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND };
 static const vec3_t player_dead_maxs = { PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_DEAD };
-/*extern vec3_t player_mins;
-extern vec3_t player_maxs;*/
 
 void LE_Think(void);
 char *LE_GetAnim(char *anim, int right, int left, int state);
@@ -883,7 +881,7 @@ typedef struct menuNode_s {
 	qboolean noMenuModel;		/**< if this is a model name and no menumodel definition we don't have
 								 * to query this again and again */
 	byte state;
-	int align;
+	byte align;
 	int border;					/**< border for this node - thickness in pixel - default 0 - also see bgcolor */
 	int padding;				/**< padding for this node - default 3 - see bgcolor */
 	byte invis, blend;

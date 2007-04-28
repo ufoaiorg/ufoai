@@ -69,6 +69,9 @@ static qboolean SAV_GameLoad (const char *filename, char **error)
 	fclose(f.f);
 
 	memcpy(&header, cbuf, sizeof(saveFileHeader_t));
+	/* swap all int values if needed */
+	header.compressed = LittleLong(header.compressed);
+	header.version = LittleLong(header.version);
 	Com_Printf("Loading savegame\n"
 		"...version: %i\n"
 		"...game version: %s\n"
@@ -202,12 +205,12 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 
 	/* step 4 - write the header */
 	memset(&header, 0, sizeof(saveFileHeader_t));
-	header.compressed = save_compressed->integer;
-	header.version = SAVE_FILE_VERSION;
+	header.compressed = LittleLong(save_compressed->integer);
+	header.version = LittleLong(SAVE_FILE_VERSION);
 	Q_strncpyz(header.name, comment, sizeof(header.name));
 	Q_strncpyz(header.gameVersion, UFO_VERSION, sizeof(header.gameVersion));
 	CL_DateConvert(&ccs.date, &day, &month);
-	Com_sprintf(header.gameDate, sizeof(header.gameDate), "%02i %s %i",
+	Com_sprintf(header.gameDate, sizeof(header.gameDate), _("%02i %s %i"),
 		day, CL_DateGetMonthName(month), ccs.date.day / 365);
 	/* TODO fill real date string */
 	memcpy(fbuf, &header, sizeof(saveFileHeader_t));
