@@ -107,6 +107,8 @@ Section "Game" SEC01
   File "..\..\..\base\i18n\es_ES\LC_MESSAGES\*.mo"
   SetOutPath "$INSTDIR\base\i18n\est\LC_MESSAGES"
   File "..\..\..\base\i18n\est\LC_MESSAGES\*.mo"
+  SetOutPath "$INSTDIR\base\i18n\fi\LC_MESSAGES"
+  File "..\..\..\base\i18n\fi\LC_MESSAGES\*.mo"
   SetOutPath "$INSTDIR\base\i18n\fr\LC_MESSAGES"
   File "..\..\..\base\i18n\fr\LC_MESSAGES\*.mo"
   SetOutPath "$INSTDIR\base\i18n\it\LC_MESSAGES"
