@@ -2294,7 +2294,6 @@ int TestLine_r (int node, vec3_t start, vec3_t stop)
 		if (r)
 			return r;
 		return TestLine_r(tnode->children[1], start, stop);
-		break;
 	default:
 		front = (start[0] * tnode->normal[0] + start[1] * tnode->normal[1] + start[2] * tnode->normal[2]) - tnode->dist;
 		back = (stop[0] * tnode->normal[0] + stop[1] * tnode->normal[1] + stop[2] * tnode->normal[2]) - tnode->dist;
