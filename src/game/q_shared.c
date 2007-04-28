@@ -3661,7 +3661,7 @@ int Com_ParseValue (void *base, char *token, int type, int ofs)
 		if (w == ALIGN_LAST)
 			*b = 0;
 		else
-			*b = w;
+			*b = LittleLong(w);
 		return ALIGN(1);
 
 	case V_BLEND:
@@ -3671,7 +3671,7 @@ int Com_ParseValue (void *base, char *token, int type, int ofs)
 		if (w == BLEND_LAST)
 			*b = 0;
 		else
-			*b = w;
+			*b = LittleLong(w);
 		return ALIGN(1);
 
 	case V_STYLE:
@@ -3681,7 +3681,7 @@ int Com_ParseValue (void *base, char *token, int type, int ofs)
 		if (w == STYLE_LAST)
 			*b = 0;
 		else
-			*b = w;
+			*b = LittleLong(w);
 		return ALIGN(1);
 
 	case V_FADE:
@@ -3691,7 +3691,7 @@ int Com_ParseValue (void *base, char *token, int type, int ofs)
 		if (w == FADE_LAST)
 			*b = 0;
 		else
-			*b = w;
+			*b = LittleLong(w);
 		return ALIGN(1);
 
 	case V_SHAPE_SMALL:
@@ -3718,7 +3718,7 @@ int Com_ParseValue (void *base, char *token, int type, int ofs)
 		if (w == CSI->numDTs)
 			*b = 0;
 		else
-			*b = w;
+			*b = LittleLong(w);
 		return ALIGN(1);
 
 	case V_DATE:

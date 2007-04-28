@@ -69,6 +69,9 @@ static qboolean SAV_GameLoad (const char *filename, char **error)
 	fclose(f.f);
 
 	memcpy(&header, cbuf, sizeof(saveFileHeader_t));
+	/* swap all int values if needed */
+	header.compressed = LittleLong(header.compressed);
+	header.version = LittleLong(header.version);
 	Com_Printf("Loading savegame\n"
 		"...version: %i\n"
 		"...game version: %s\n"
