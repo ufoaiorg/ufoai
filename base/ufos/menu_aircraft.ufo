@@ -194,7 +194,7 @@ menu aircraft
 	// ===============
 	// equip
 	// ===============
-	pic button_equip
+/*	pic button_equip
 	{
 		if "mn_aircraftinbase > 0"
 		tooltip	"TODO: this function will be available in future versions"
@@ -218,7 +218,7 @@ menu aircraft
 		pos	"164 413"
 		font	f_menu
 		align	cc
-	}
+	}*/
 
 	// ==================
 	// aircraft
@@ -375,7 +375,7 @@ menu aircraft_equip
 	confunc airequip_weapons		{ cmd "airequip_init 0;" airequip_reset *airequip_button_weapons_str	color "1 1 1 1" }
 	confunc airequip_shields	{ cmd "airequip_init 1;" airequip_reset *airequip_button_shields_str	color "1 1 1 1" }
 	confunc airequip_items		{ cmd "airequip_init 2;" airequip_reset *airequip_button_items_str color "1 1 1 1" }
-	
+
 	model aircraftequip
 	{
 		md2		"*cvar mn_aircraft_model"
@@ -491,6 +491,6 @@ menu aircraft_equip
 
 	func init
 	{
-		airequip_weapons		
+		airequip_weapons
 	}
 }
