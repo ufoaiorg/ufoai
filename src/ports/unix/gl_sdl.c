@@ -474,7 +474,7 @@ void InitSig (void)
 	signal(SIGIOT, signal_handler);
 	signal(SIGBUS, signal_handler);
 	signal(SIGFPE, signal_handler);
-#ifdef __linux__
+#if defined __linux__ || defined __APPLE__
 	/* linux has it's own backtrace handler in sys_linux.c */
 	signal(SIGSEGV, signal_handler);
 #endif
@@ -546,20 +546,22 @@ static void SetSDLIcon (void)
  */
 static qboolean GLimp_InitGraphics (qboolean fullscreen)
 {
-#ifndef __APPLE__
 	int flags;
 	int stencil_bits;
+#ifndef __APPLE__
 	int width = 0;
 	int height = 0;
+#endif
 
 	SDL_SysWMinfo info;
 	SDL_VERSION(&info.version);
 	Com_Printf("SDL version: %i.%i.%i\n", info.version.major, info.version.minor, info.version.patch);
+	have_stencil = qfalse;
 
+#ifndef __APPLE__
 	/* turn off DGA mouse support: leaving it makes cursor _slow_ in fullscreen under X11 at least */
 	setenv("SDL_VIDEO_X11_DGAMOUSE", "0", 1);
 
-	have_stencil = qfalse;
 	if (SDL_GetWMInfo(&info) > 0 ) {
 		if (info.subsystem == SDL_SYSWM_X11) {
 			info.info.x11.lock_func();
@@ -569,6 +571,7 @@ static qboolean GLimp_InitGraphics (qboolean fullscreen)
 			Com_Printf("Desktop resolution: %i:%i\n", width, height);
 		}
 	}
+#endif
 
 	/* Just toggle fullscreen if that's all that has been changed */
 	if (surface && (surface->w == vid.width) && (surface->h == vid.height)) {
@@ -627,7 +630,6 @@ static qboolean GLimp_InitGraphics (qboolean fullscreen)
 	SDL_active = qtrue;
 
 	return qtrue;
-#endif
 }
 
 /**
