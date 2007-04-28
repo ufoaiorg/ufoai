@@ -1,5 +1,5 @@
-Known bugs in UFO: Alien Invasion 2.1
-=====================================
+Known bugs in UFO: Alien Invasion 2.1.1
+=======================================
 
 1. Reaction fire settings are not being remembered from mission to mission.
    You can select reaction fire with a desired firemode in one mission, and
@@ -8,13 +8,27 @@ Known bugs in UFO: Alien Invasion 2.1
    reaction firemode.
    To make sure your desired reaction firemode is active, you will need to
    reselect that firemode beginning of a mission.
-2. Plasma Blade weapon is not removed from the hand after throwing it.
-3. In certain circumstances, newly-researched equipment won't be shown in
-   the Buy/Sell menu. The workaround for this is to go back to geoscape,
-   enter the base again and reopen the Buy/Sell menu.
-4. Alien Shevaar model is clipping slightly into the ground when killed.
-5. Living Quarters base facility provides space up to 32 employees while
+2. Under unknown circumstances a soldier may use default firemode for
+   reaction fire instead of desired and selected one. This bug is very rare.
+3. Plasma Blade weapon is not removed from the hand after throwing it.
+4. The Alien Shevaar model is clipping slightly into the ground when killed.
+5. The Alien Shevaar model is not able to use armour in multiplayer - 
+   putting armour on the actor will make it disappear.
+6. Living Quarters base facility provides space up to 32 employees while
    the description says 20.
+7. The amount of workers being used in production process is not being taken
+   into account.
+8. In rare cases, no message or mail will appear when a research project is
+   finished. However, the time on the geoscape will stop.
+9. Inventory bugs in multiplayer gaming - under certain circumstances,
+   moving an item between containers (including hands) may result in leaving
+   a duplicate (but unuseable) item in the source container. This may result
+   in blocking that container for the remainder of the game.
+
+If you have problems with UFOpedia texts please make sure you have correct
+language settings in your system as well as in the game. Take a look at our
+forum at http://ufoai.ninex.info/phpBB2/ for various ways of resolving this
+problem.
 
 We apologize for any inconvenience.
 					UFO:AI Team
