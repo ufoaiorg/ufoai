@@ -387,7 +387,11 @@ void VID_CheckChanges (void)
 void VID_Init (void)
 {
 	/* Create the video variables so we know how to start the graphics drivers */
+#ifndef __APPLE__
 	vid_ref = Cvar_Get("vid_ref", "glx", CVAR_ARCHIVE, NULL);
+#else
+	vid_ref = Cvar_Get("vid_ref", "sdl", CVAR_ARCHIVE, NULL);
+#endif
 	vid_xpos = Cvar_Get("vid_xpos", "3", CVAR_ARCHIVE, NULL);
 	vid_ypos = Cvar_Get("vid_ypos", "22", CVAR_ARCHIVE, NULL);
 	vid_fullscreen = Cvar_Get("vid_fullscreen", "1", CVAR_ARCHIVE, NULL);
