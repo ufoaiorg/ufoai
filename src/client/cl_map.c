@@ -565,7 +565,7 @@ extern void MAP_MapCalcLine (const vec2_t start, const vec2_t end, mapline_t* li
  */
 static void MAP_MapDrawLine (const menuNode_t* node, const mapline_t* line)
 {
-	vec4_t color = {1, 0.5, 0.5, 1};
+	const vec4_t color = {1, 0.5, 0.5, 1};
 	int pts[LINE_MAXPTS * 2];
 	int *p;
 	int i, start, old;
