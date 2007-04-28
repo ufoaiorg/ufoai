@@ -206,8 +206,6 @@ typedef struct salary_s {
 #define SALARY_ADMIN_ROBOT salaries[curCampaign->idx].admin_robot
 #define SALARY_DEBT_INTEREST salaries[curCampaign->idx].debt_interest
 
-extern salary_t salaries[MAX_CAMPAIGNS];
-
 /** market structure */
 typedef struct market_s {
 	int num[MAX_OBJDEFS];

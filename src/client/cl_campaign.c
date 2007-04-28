@@ -55,6 +55,8 @@ static int maskWidth, maskHeight;		/**< Document me. */
 static byte *nationsPic;			/**< Document me. */
 static int nationsWidth, nationsHeight;		/**< Document me. */
 
+static salary_t salaries[MAX_CAMPAIGNS];
+
 #if 0
 static int ever4hours;
 #endif
@@ -360,9 +362,16 @@ static date_t Date_Random_Middle (date_t frame)
 	return frame;
 }
 
-
-/* =========================================================== */
-
+/**
+ * @brief Returns the current campaign index in global campaign array
+ * @sa Com_CharGenAbilitySkills
+ */
+extern int CL_GetCampaignID (void)
+{
+	if (curCampaign)
+		return curCampaign->idx;
+	return -1;
+}
 
 /**
  * @brief
@@ -922,7 +931,7 @@ static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civil
  * Called when invading forces overrun a base after a base-attack mission
  * @param[in] *base base_t base to be ransacked
  */
-void CL_BaseRansacked (base_t *base)
+static void CL_BaseRansacked (base_t *base)
 {
 	int item, ac;
 
@@ -1962,7 +1971,7 @@ extern qboolean NA_Load (sizebuf_t* sb, void* data)
  * @sa CL_StartMission_f
  * @sa CL_GameGo
  */
-void CL_SetMissionCvars (mission_t* mission)
+static void CL_SetMissionCvars (mission_t* mission)
 {
 	/* start the map */
 	Cvar_SetValue("ai_numaliens", (float) mission->aliens);
@@ -1988,7 +1997,7 @@ void CL_SetMissionCvars (mission_t* mission)
  * @sa CL_GameGo
  * @sa CL_StartMission_f
  */
-void CL_StartMissionMap (mission_t* mission)
+static void CL_StartMissionMap (mission_t* mission)
 {
 	char expanded[MAX_QPATH];
 	char timeChar;
@@ -3287,8 +3296,6 @@ extern void CL_ParseStage (const char *name, char **text)
 
 /* =========================================================== */
 
-salary_t salaries[MAX_CAMPAIGNS];
-
 static const value_t salary_vals[] = {
 	{"soldier_base", V_INT, offsetof(salary_t, soldier_base)}
 	,
@@ -3343,7 +3350,7 @@ static const value_t salary_vals[] = {
  *  soldier_base 3000
  * }</code>
  */
-extern void CL_ParseSalary (const char *name, char **text, int campaignID)
+static void CL_ParseSalary (const char *name, char **text, int campaignID)
 {
 	const char *errhead = "CL_ParseSalary: unexpected end of file ";
 	salary_t *s;
@@ -3399,7 +3406,7 @@ extern void CL_ParseSalary (const char *name, char **text, int campaignID)
  *  TEAM_ALIEN ability 15 95
  * }</code>
  */
-extern void CL_ParseCharacterValues (const char *name, char **text, int campaignID)
+static void CL_ParseCharacterValues (const char *name, char **text, int campaignID)
 {
 	const char *errhead = "CL_ParseCharacterValues: unexpected end of file (character_data ";
 	char *token;
