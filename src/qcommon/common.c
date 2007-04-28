@@ -1398,9 +1398,9 @@ extern void Qcommon_LocaleInit (void)
 	unsetenv("LANGUAGE");
 # endif /* SOLARIS */
 # ifdef __APPLE__
-	if (Q_putenv("LANGUAGE", s_language->string) == -1)
+	if (*s_language->string && Q_putenv("LANGUAGE", s_language->string) == -1)
 		Com_Printf("...setenv for LANGUAGE failed: %s\n", s_language->string);
-	if (Q_putenv("LC_ALL", s_language->string) == -1)
+	if (*s_language->string && Q_putenv("LC_ALL", s_language->string) == -1)
 		Com_Printf("...setenv for LC_ALL failed: %s\n", s_language->string);
 # endif /* __APPLE__ */
 #endif /* _WIN32 */
