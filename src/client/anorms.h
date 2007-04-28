@@ -1,5 +1,5 @@
 /**
- * @file anorms.h
+ * @file client/anorms.h
  * @brief Contains vertex normals lookup table.
  */
 

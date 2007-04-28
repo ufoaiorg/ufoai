@@ -1,5 +1,5 @@
 /**
- * @file scripts.c
+ * @file qcommon/scripts.c
  * @brief Ufo scripts used in client and server
  * @note interpreters for: object, inventory, equipment, name and team, damage
  */

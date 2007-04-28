@@ -1,5 +1,5 @@
 /**
- * @file net_udp.c
+ * @file solaris/net_udp.c
  * @brief Solaris network udp functions
  */
 

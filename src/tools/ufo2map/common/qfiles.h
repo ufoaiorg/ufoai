@@ -1,5 +1,5 @@
 /**
- * @file qfiles.h
+ * @file tools/ufo2map/common/qfiles.h
  * @brief quake file formats
  * @note This file must be identical in the quake and utils directories
  */

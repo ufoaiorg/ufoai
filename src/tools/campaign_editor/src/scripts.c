@@ -1,5 +1,5 @@
 /**
- * @file scripts.c
+ * @file tools/campaign_editor/src/scripts.c
  * @brief Parses the ufo scripts as needed for campaign editor
  */
 

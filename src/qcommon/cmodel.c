@@ -1,5 +1,5 @@
 /**
- * @file cmodels.c
+ * @file cmodel.c
  * @brief model loading and grid oriented movement and scanning
  * @note collision detection code (server side)
  */
