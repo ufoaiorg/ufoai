@@ -560,7 +560,10 @@ extern void MAP_MapCalcLine (const vec2_t start, const vec2_t end, mapline_t* li
 }
 
 /**
- * @brief
+ * @brief Draw a path on a menu node (usually the geoscape map)
+ * @param[in] node The menu node which will be used for drawing dimensions.
+ * This is usually the geoscape menu node.
+ * @param[in] line The path which is to be drawn
  * @sa MAP_MapCalcLine
  */
 static void MAP_MapDrawLine (const menuNode_t* node, const mapline_t* line)
