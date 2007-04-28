@@ -2721,10 +2721,10 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
 				MSG_WriteShort(sb, aircraft->teamIdxs[l]);
 			MSG_WriteShort(sb, aircraft->numUpgrades);
 			MSG_WriteShort(sb, aircraft->radar.range);
-			MSG_WriteShort(sb, aircraft->route.n);
-			MSG_WriteFloat(sb, aircraft->route.dist);
-			for (l = 0; l < aircraft->route.n; l++)
-				MSG_Write2Pos(sb, aircraft->route.p[l]);
+			MSG_WriteShort(sb, aircraft->route.numPoints);
+			MSG_WriteFloat(sb, aircraft->route.distance);
+			for (l = 0; l < aircraft->route.numPoints; l++)
+				MSG_Write2Pos(sb, aircraft->route.point[l]);
 			MSG_WriteShort(sb, aircraft->alientypes);
 			MSG_WriteShort(sb, aircraft->itemtypes);
 			/* Save only needed if aircraft returns from a mission. */
@@ -2869,10 +2869,10 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 				aircraft->teamIdxs[l] = MSG_ReadShort(sb);
 			aircraft->numUpgrades = MSG_ReadShort(sb);
 			aircraft->radar.range = MSG_ReadShort(sb);
-			aircraft->route.n = MSG_ReadShort(sb);
-			aircraft->route.dist = MSG_ReadFloat(sb);
-			for (l = 0; l < aircraft->route.n; l++)
-				MSG_Read2Pos(sb, aircraft->route.p[l]);
+			aircraft->route.numPoints = MSG_ReadShort(sb);
+			aircraft->route.distance = MSG_ReadFloat(sb);
+			for (l = 0; l < aircraft->route.numPoints; l++)
+				MSG_Read2Pos(sb, aircraft->route.point[l]);
 			/* Load only needed if aircraft returns from a mission. */
 			aircraft->alientypes = MSG_ReadShort(sb);
 			aircraft->itemtypes = MSG_ReadShort(sb);

@@ -32,10 +32,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define LINE_MAXPTS (LINE_MAXSEG+2)
 #define LINE_DPHI	(M_PI/LINE_MAXSEG)
 
+/** @brief A path on the map described by 2D points */
 typedef struct mapline_s {
-	int n;
-	float dist;
-	vec2_t p[LINE_MAXPTS];
+	int numPoints; /**< number of points that make up this path */
+	float distance; /**< the total distance of the path */
+	vec2_t point[LINE_MAXPTS]; /**< array of 2D points that make up this path */
 } mapline_t;
 
 /** @brief All different types of aircraft. */

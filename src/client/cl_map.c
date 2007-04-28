@@ -526,13 +526,13 @@ extern void MAP_MapCalcLine (const vec2_t start, const vec2_t end, mapline_t* li
 
 /*	Com_Printf( "#(%3.1f %3.1f) -> (%3.1f %3.1f)\n", start[0], start[1], end[0], end[1] ); */
 
-	line->dist = fabs(phiEnd - phiStart) / n * todeg;
-	line->n = n + 1;
+	line->distance = fabs(phiEnd - phiStart) / n * todeg;
+	line->numPoints = n + 1;
 	dPhi = (phiEnd - phiStart) / n;
 	p = NULL;
 	for (phi = phiStart, i = 0; i <= n; phi += dPhi, i++) {
 		last = p;
-		p = line->p[i];
+		p = line->point[i];
 		VectorSet(v, -sinTrafo * cos(phi), sin(phi), cosTrafo * cos(phi));
 		VecToPolar(v, p);
 		p[0] += trafo[0];
@@ -566,8 +566,8 @@ static void MAP_MapDrawLine (const menuNode_t* node, const mapline_t* line)
 	re.DrawColor(color);
 	start = 0;
 	old = 512;
-	for (i = 0, p = pts; i < line->n; i++, p += 2) {
-		MAP_MapToScreen(node, line->p[i], p, p + 1);
+	for (i = 0, p = pts; i < line->numPoints; i++, p += 2) {
+		MAP_MapToScreen(node, line->point[i], p, p + 1);
 
 		if (i > start && abs(p[0] - old) > 512) {
 			/* shift last point */
@@ -645,10 +645,10 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 					if (aircraft->status >= AIR_TRANSIT) {
 						mapline_t path;
 
-						path.n = aircraft->route.n - aircraft->point;
-						memcpy(path.p + 1, aircraft->route.p + aircraft->point + 1, (path.n - 1) * sizeof(vec2_t));
-						memcpy(path.p, aircraft->pos, sizeof(vec2_t));
-						re.Draw3DMapLine(ccs.angles, ccs.zoom, path.n, path.dist, path.p);
+						path.numPoints = aircraft->route.numPoints - aircraft->point;
+						memcpy(path.point + 1, aircraft->route.point + aircraft->point + 1, (path.numPoints - 1) * sizeof(vec2_t));
+						memcpy(path.point, aircraft->pos, sizeof(vec2_t));
+						re.Draw3DMapLine(ccs.angles, ccs.zoom, path.numPoints, path.distance, path.point);
 					}
 				}
 		}
@@ -735,11 +735,11 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 				if (aircraft->status >= AIR_TRANSIT) {
 					mapline_t path;
 
-					path.n = aircraft->route.n - aircraft->point;
-					/* TODO : check why path.n can be sometime equal to -1 */
-					if (path.n > 1) {
-						memcpy(path.p, aircraft->pos, sizeof(vec2_t));
-							memcpy(path.p + 1, aircraft->route.p + aircraft->point + 1, (path.n - 1) * sizeof(vec2_t));
+					path.numPoints = aircraft->route.numPoints - aircraft->point;
+					/* TODO : check why path.numPoints can be sometime equal to -1 */
+					if (path.numPoints > 1) {
+						memcpy(path.point, aircraft->pos, sizeof(vec2_t));
+							memcpy(path.point + 1, aircraft->route.point + aircraft->point + 1, (path.numPoints - 1) * sizeof(vec2_t));
 						MAP_MapDrawLine(node, &path);
 					}
 				}

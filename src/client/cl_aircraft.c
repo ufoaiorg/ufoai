@@ -782,16 +782,16 @@ extern qboolean AIR_AircraftMakeMove (int dt, aircraft_t* aircraft)
 	dist = aircraft->speed * aircraft->time / 3600;
 
 	/* Check if destination reached */
-	if (dist >= aircraft->route.dist * (aircraft->route.n - 1))
+	if (dist >= aircraft->route.distance * (aircraft->route.numPoints - 1))
 		return qtrue;
 
 	/* calc new position */
-	frac = dist / aircraft->route.dist;
+	frac = dist / aircraft->route.distance;
 	p = (int) frac;
 	frac -= p;
 	aircraft->point = p;
-	aircraft->pos[0] = (1 - frac) * aircraft->route.p[p][0] + frac * aircraft->route.p[p + 1][0];
-	aircraft->pos[1] = (1 - frac) * aircraft->route.p[p][1] + frac * aircraft->route.p[p + 1][1];
+	aircraft->pos[0] = (1 - frac) * aircraft->route.point[p][0] + frac * aircraft->route.point[p + 1][0];
+	aircraft->pos[1] = (1 - frac) * aircraft->route.point[p][1] + frac * aircraft->route.point[p + 1][1];
 
 	return qfalse;
 }
@@ -825,7 +825,7 @@ void CL_CampaignRunAircraft (int dt)
 						/* aircraft reach its destination */
 						float *end;
 
-						end = aircraft->route.p[aircraft->route.n - 1];
+						end = aircraft->route.point[aircraft->route.numPoints - 1];
 						Vector2Copy(end, aircraft->pos);
 
 						switch (aircraft->status) {
@@ -1692,10 +1692,10 @@ extern qboolean AIR_Save (sizebuf_t* sb, void* data)
 		MSG_WriteLong(sb, gd.ufos[i].fuelSize);
 		MSG_WriteShort(sb, gd.ufos[i].time);
 		MSG_WriteShort(sb, gd.ufos[i].point);
-		MSG_WriteShort(sb, gd.ufos[i].route.n);
-		MSG_WriteFloat(sb, gd.ufos[i].route.dist);
-		for (j = 0; j < gd.ufos[i].route.n; j++)
-			MSG_Write2Pos(sb, gd.ufos[i].route.p[j]);
+		MSG_WriteShort(sb, gd.ufos[i].route.numPoints);
+		MSG_WriteFloat(sb, gd.ufos[i].route.distance);
+		for (j = 0; j < gd.ufos[i].route.numPoints; j++)
+			MSG_Write2Pos(sb, gd.ufos[i].route.point[j]);
 		/* TODO more? */
 	}
 	return qtrue;
@@ -1730,10 +1730,10 @@ extern qboolean AIR_Load (sizebuf_t* sb, void* data)
 		aircraft->fuelSize = MSG_ReadLong(sb);
 		aircraft->time = MSG_ReadShort(sb);
 		aircraft->point = MSG_ReadShort(sb);
-		aircraft->route.n = MSG_ReadShort(sb);
-		aircraft->route.dist = MSG_ReadFloat(sb);
-		for (j = 0; j < aircraft->route.n; j++)
-			MSG_Read2Pos(sb, aircraft->route.p[j]);
+		aircraft->route.numPoints = MSG_ReadShort(sb);
+		aircraft->route.distance = MSG_ReadFloat(sb);
+		for (j = 0; j < aircraft->route.numPoints; j++)
+			MSG_Read2Pos(sb, aircraft->route.point[j]);
 		/* TODO more? */
 	}
 
