@@ -255,7 +255,7 @@ qboolean VID_LoadRefresh (const char *name)
 		return qfalse;
 	}
 
-	if ((reflib_library = dlopen(libPath, RTLD_LAZY|RTLD_GLOBAL)) == 0) {
+	if ((reflib_library = dlopen(libPath, RTLD_LAZY|RTLD_GLOBAL|RTLD_NODELETE)) == 0) {
 		Com_Printf("LoadLibrary (\"%s\") failed: %s\n", libPath , dlerror());
 		return qfalse;
 	}
