@@ -4,8 +4,7 @@ rsync:
 	export RSYNC_PROXY=rsync-svn.sourceforge.net:80; rsync -a rsync-svn-u::svn/ufoai/* $(LOCAL_SVN_DIR)
 
 # generate doxygen docs
-.PHONY: docs
-docs:
+doxygen-docs:
 	doxygen src/docs/doxyall
 
 # debian packages
@@ -18,3 +17,6 @@ debdata:
 
 deb:
 	debuild binary
+
+pdf-manual:
+	$(MAKE) -C src/docs/tex
