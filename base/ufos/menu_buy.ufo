@@ -1048,16 +1048,16 @@ menu buy
 		pos		"620 357"
 		size	"336 155"
 		format	"20 0"
-		texh	"16 168"
+		texh	"15 168"
 		font	"f_verysmall"
 	}
 
-		pic weapon_dec
+	pic weapon_dec
 	{
 		if "mn_changeweapon == 1"
-		tooltip "_Previous weapon using this ammo"
+		tooltip "_Previous weapon chambered for this ammunition"
 		image	menu/buttons_small
-		pos		"745 466"
+		pos		"745 468"
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
@@ -1067,12 +1067,28 @@ menu buy
 		}
 	}
 
+	pic ammo_dec
+	{
+		if "mn_changeweapon == 2"
+		tooltip "_Previous ammunition compatible with this weapon"
+		image	menu/buttons_small
+		pos		"745 468"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx	true
+		click
+		{
+			cmd mn_decreaseweapon
+		}
+	}
+
+
 	pic weapon_inc
 	{
 		if "mn_changeweapon == 1"
-		tooltip "_Next weapon using this ammo"
+		tooltip "_Next weapon chambered for this ammunition"
 		image	menu/buttons_small
-		pos		"955 466"
+		pos		"955 468"
 		texl	"16 0"
 		texh	"32 16"
 		mousefx	true
@@ -1082,20 +1098,44 @@ menu buy
 		}
 	}
 
+	pic ammo_inc
+	{
+		if "mn_changeweapon == 2"
+		tooltip "_Next ammunition compatible with this weapon"
+		image	menu/buttons_small
+		pos		"955 468"
+		texl	"16 0"
+		texh	"32 16"
+		mousefx	true
+		click
+		{
+			cmd mn_increaseweapon
+		}
+	}
+
+
 	string header_weapon
 	{
 		if "mn_displayweapon == 1"
-		string	"_Associated weapon:"
-		pos		"620 474"
+		string	"_With weapon:"
+		pos		"620 476"
+		align	cl
+		font	f_verysmall
+	}
+	
+	string header_ammo
+	{
+		if "mn_displayweapon == 2"
+		string	"_With ammo:"
+		pos		"620 476"
 		align	cl
 		font	f_verysmall
 	}
 
 	string weapon_name
 	{
-		if "mn_displayweapon == 1"
 		string	"*cvar mn_researchedlinkname"
-		pos		"855 474"
+		pos		"855 476"
 		align	cc
 		font	f_verysmall
 	}
