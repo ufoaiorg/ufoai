@@ -122,9 +122,9 @@ typedef struct {
 } mapTile_t;
 
 typedef struct routing_s {
-	byte route[8][256][256];
-	byte fall[256][256];
-	byte step[256][256];
+	byte route[HEIGHT][WIDTH][WIDTH];
+	byte fall[WIDTH][WIDTH];
+	byte step[WIDTH][WIDTH];
 
 	byte area[HEIGHT][WIDTH][WIDTH];
 	byte areaStored[HEIGHT][WIDTH][WIDTH];
@@ -214,7 +214,7 @@ static void CMod_LoadSubmodels (lump_t * l)
 	if (count > MAX_MAP_MODELS)
 		Com_Error(ERR_DROP, "Map has too many models");
 
-	out = Hunk_Alloc(count * sizeof(cmodel_t));
+	out = Hunk_Alloc((count + 6)* sizeof(cmodel_t));
 	curTile->cmodels = out;
 	curTile->numcmodels = count;
 
@@ -617,7 +617,7 @@ static int CM_EntTestLine (vec3_t start, vec3_t stop)
 		if (**name != '*')
 			continue;
 		model = CM_InlineModel(*name);
-		if (!model)
+		if (!model || model->headnode >= curTile->numnodes + 6)
 			continue;
 /*		Com_Printf("CM_EntTestLine call function\n"); */
 		assert(model->headnode < curTile->numnodes + 6); /* +6 => bbox */
@@ -658,7 +658,7 @@ static int CM_EntTestLineDM (vec3_t start, vec3_t stop, vec3_t end)
 		if (**name != '*')
 			continue;
 		model = CM_InlineModel(*name);
-		if (!model)
+		if (!model || model->headnode >= curTile->numnodes + 6)
 			continue;
 /*		Com_Printf("CM_EntTestLineDM call function\n"); */
 		assert(model->headnode < curTile->numnodes + 6); /* +6 => bbox */
@@ -1408,8 +1408,6 @@ static void CM_BoxLeafnums_r (int nodenum)
 	cnode_t *node;
 	int s;
 
-	assert(nodenum < curTile->numnodes + 6); /* +6 => bbox */
-
 	while (1) {
 		if (nodenum < 0) {
 			if (leaf_count >= leaf_maxcount) {
@@ -1419,6 +1417,8 @@ static void CM_BoxLeafnums_r (int nodenum)
 			leaf_list[leaf_count++] = -1 - nodenum;
 			return;
 		}
+
+		assert(nodenum < curTile->numnodes + 6); /* +6 => bbox */
 
 		node = &curTile->nodes[nodenum];
 		plane = node->plane;
