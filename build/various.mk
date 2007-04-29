@@ -4,6 +4,7 @@ rsync:
 	export RSYNC_PROXY=rsync-svn.sourceforge.net:80; rsync -a rsync-svn-u::svn/ufoai/* $(LOCAL_SVN_DIR)
 
 # generate doxygen docs
+.PHONY: docs
 docs:
 	doxygen src/docs/doxyall
 
