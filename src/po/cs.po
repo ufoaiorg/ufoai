@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-04-29 15:10+0200\n"
-"PO-Revision-Date: 2007-04-29 13:36+0100\n"
+"POT-Creation-Date: 2007-04-29 18:48+0200\n"
+"PO-Revision-Date: 2007-04-29 18:36+0100\n"
 "Last-Translator: Lubomír Bláha <tritol@trilogic.cz>\n"
 "Language-Team: čeština <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -543,7 +543,7 @@ msgstr "Vybavit"
 
 #: ../base/ufos/menu_aircraft.ufo:253 ../base/ufos/menu_aircraft.ufo:470
 #: ../base/ufos/menu_hospital.ufo:125 ../base/ufos/menu_hospital.ufo:330
-#: ../base/ufos/menu_team.ufo:944 ../base/ufos/menu_team.ufo:1678
+#: ../base/ufos/menu_team.ufo:944 ../base/ufos/menu_team.ufo:1724
 msgid "Done"
 msgstr "Hotovo"
 
@@ -577,7 +577,7 @@ msgstr "Vybavení"
 
 #: ../base/ufos/menu_aliencont.ufo:48 ../base/ufos/menu_bases.ufo:335
 #: ../base/ufos/menu_buildings.ufo:76 ../base/ufos/menu_buy.ufo:893
-#: ../base/ufos/menu_buy.ufo:1449 ../base/ufos/menu_geoscape.ufo:101
+#: ../base/ufos/menu_buy.ufo:1489 ../base/ufos/menu_geoscape.ufo:101
 #: ../base/ufos/menu_production.ufo:49 ../base/ufos/menu_research.ufo:900
 msgid "CREDIT"
 msgstr "ZŮSTATEK"
@@ -999,51 +999,66 @@ msgstr "Zbroj"
 
 #: ../base/ufos/menu_buy.ufo:1058 ../base/ufos/menu_team.ufo:1376
 #: ../base/ufos/menu_ufopedia.ufo:343
-msgid "Previous weapon using this ammo"
-msgstr "Předchozí zbraň používající tuto munici"
+msgid "Previous weapon chambered for this ammunition"
+msgstr "Předchozí zbraň vhodná pro tuto munici"
 
 #: ../base/ufos/menu_buy.ufo:1073 ../base/ufos/menu_team.ufo:1391
 #: ../base/ufos/menu_ufopedia.ufo:358
-msgid "Next weapon using this ammo"
-msgstr "Další zbraň používající tuto munici"
+msgid "Previous ammunition compatible with this weapon"
+msgstr "Předchozí munice použitelná v této zbrani"
 
-#: ../base/ufos/menu_buy.ufo:1088 ../base/ufos/menu_team.ufo:1406
+#: ../base/ufos/menu_buy.ufo:1089 ../base/ufos/menu_team.ufo:1407
 #: ../base/ufos/menu_ufopedia.ufo:373
-msgid "Associated weapon:"
-msgstr "Přiřazená zbraň:"
+msgid "Next weapon chambered for this ammunition"
+msgstr "Další zbraň vhodná pro tuto munici"
 
-#: ../base/ufos/menu_buy.ufo:1106 ../base/ufos/menu_team.ufo:1424
-#: ../base/ufos/menu_ufopedia.ufo:391
+#: ../base/ufos/menu_buy.ufo:1104 ../base/ufos/menu_team.ufo:1422
+#: ../base/ufos/menu_ufopedia.ufo:388
+msgid "Next ammunition compatible with this weapon"
+msgstr "Další munice použitelná v této zbrani"
+
+#: ../base/ufos/menu_buy.ufo:1120 ../base/ufos/menu_team.ufo:1438
+#: ../base/ufos/menu_ufopedia.ufo:403
+msgid "With weapon:"
+msgstr "Ve zbrani:"
+
+#: ../base/ufos/menu_buy.ufo:1129 ../base/ufos/menu_team.ufo:1447
+#: ../base/ufos/menu_ufopedia.ufo:412
+msgid "With ammo:"
+msgstr "S municí:"
+
+#: ../base/ufos/menu_buy.ufo:1146 ../base/ufos/menu_team.ufo:1464
+#: ../base/ufos/menu_ufopedia.ufo:430
 msgid "Previous firemode"
 msgstr "Předchozí režim"
 
-#: ../base/ufos/menu_buy.ufo:1121 ../base/ufos/menu_team.ufo:1439
-#: ../base/ufos/menu_ufopedia.ufo:406
+#: ../base/ufos/menu_buy.ufo:1161 ../base/ufos/menu_team.ufo:1479
+#: ../base/ufos/menu_ufopedia.ufo:445
 msgid "Next firemode"
 msgstr "Další režim"
 
-#: ../base/ufos/menu_buy.ufo:1136 ../base/ufos/menu_team.ufo:1454
-#: ../base/ufos/menu_ufopedia.ufo:421
+#: ../base/ufos/menu_buy.ufo:1176 ../base/ufos/menu_team.ufo:1494
+#: ../base/ufos/menu_ufopedia.ufo:460
 msgid "Firemode:"
 msgstr "Režim střelby:"
 
-#: ../base/ufos/menu_buy.ufo:1284 ../base/ufos/menu_buy.ufo:1300
-#: ../base/ufos/menu_buy.ufo:1316 ../base/ufos/menu_buy.ufo:1332
-#: ../base/ufos/menu_buy.ufo:1348 ../base/ufos/menu_buy.ufo:1364
-#: ../base/ufos/menu_buy.ufo:1380 ../base/ufos/menu_buy.ufo:1396
-#: ../base/ufos/menu_buy.ufo:1412 ../base/ufos/menu_buy.ufo:1428
-msgid "Buy aircraft"
-msgstr "Koupit letoun"
-
-#: ../base/ufos/menu_buy.ufo:1292 ../base/ufos/menu_buy.ufo:1308
 #: ../base/ufos/menu_buy.ufo:1324 ../base/ufos/menu_buy.ufo:1340
 #: ../base/ufos/menu_buy.ufo:1356 ../base/ufos/menu_buy.ufo:1372
 #: ../base/ufos/menu_buy.ufo:1388 ../base/ufos/menu_buy.ufo:1404
 #: ../base/ufos/menu_buy.ufo:1420 ../base/ufos/menu_buy.ufo:1436
+#: ../base/ufos/menu_buy.ufo:1452 ../base/ufos/menu_buy.ufo:1468
+msgid "Buy aircraft"
+msgstr "Koupit letoun"
+
+#: ../base/ufos/menu_buy.ufo:1332 ../base/ufos/menu_buy.ufo:1348
+#: ../base/ufos/menu_buy.ufo:1364 ../base/ufos/menu_buy.ufo:1380
+#: ../base/ufos/menu_buy.ufo:1396 ../base/ufos/menu_buy.ufo:1412
+#: ../base/ufos/menu_buy.ufo:1428 ../base/ufos/menu_buy.ufo:1444
+#: ../base/ufos/menu_buy.ufo:1460 ../base/ufos/menu_buy.ufo:1476
 msgid "Sell aircraft"
 msgstr "Prodat letoun"
 
-#: ../base/ufos/menu_buy.ufo:1469
+#: ../base/ufos/menu_buy.ufo:1509
 msgid "Back to hangar"
 msgstr "Zpět do hangáru"
 
@@ -1233,55 +1248,55 @@ msgstr "Přejmenovat vašeho zaměstnance"
 
 #: ../base/ufos/menu_hire.ufo:382 ../base/ufos/menu_hospital.ufo:219
 #: ../base/ufos/menu_physdat.ufo:52 ../base/ufos/menu_team.ufo:821
-#: ../base/ufos/menu_team.ufo:1473
+#: ../base/ufos/menu_team.ufo:1513
 msgid "Strength:"
 msgstr "Síla:"
 
 #: ../base/ufos/menu_hire.ufo:395 ../base/ufos/menu_hospital.ufo:224
 #: ../base/ufos/menu_physdat.ufo:57 ../base/ufos/menu_ptleditor.ufo:48
-#: ../base/ufos/menu_team.ufo:826 ../base/ufos/menu_team.ufo:1478
+#: ../base/ufos/menu_team.ufo:826 ../base/ufos/menu_team.ufo:1518
 msgid "Speed:"
 msgstr "Rychlost:"
 
 #: ../base/ufos/menu_hire.ufo:409 ../base/ufos/menu_hospital.ufo:229
 #: ../base/ufos/menu_physdat.ufo:62 ../base/ufos/menu_team.ufo:831
-#: ../base/ufos/menu_team.ufo:1483
+#: ../base/ufos/menu_team.ufo:1523
 msgid "Accuracy:"
 msgstr "Přesnost:"
 
 #: ../base/ufos/menu_hire.ufo:423 ../base/ufos/menu_hospital.ufo:234
 #: ../base/ufos/menu_physdat.ufo:67 ../base/ufos/menu_team.ufo:836
-#: ../base/ufos/menu_team.ufo:1488
+#: ../base/ufos/menu_team.ufo:1528
 msgid "Mind:"
 msgstr "Intelekt:"
 
 #: ../base/ufos/menu_hire.ufo:436 ../base/ufos/menu_hospital.ufo:239
 #: ../base/ufos/menu_physdat.ufo:72 ../base/ufos/menu_team.ufo:841
-#: ../base/ufos/menu_team.ufo:1493
+#: ../base/ufos/menu_team.ufo:1533
 msgid "Close Combat:"
 msgstr "Boj zblízka:"
 
 #: ../base/ufos/menu_hire.ufo:449 ../base/ufos/menu_hospital.ufo:244
 #: ../base/ufos/menu_physdat.ufo:77 ../base/ufos/menu_team.ufo:846
-#: ../base/ufos/menu_team.ufo:1498
+#: ../base/ufos/menu_team.ufo:1538
 msgid "Heavy Weapons:"
 msgstr "Těžké zbraně:"
 
 #: ../base/ufos/menu_hire.ufo:462 ../base/ufos/menu_hospital.ufo:249
 #: ../base/ufos/menu_physdat.ufo:82 ../base/ufos/menu_team.ufo:851
-#: ../base/ufos/menu_team.ufo:1503
+#: ../base/ufos/menu_team.ufo:1543
 msgid "Assault Weapons:"
 msgstr "Útočné zbraně:"
 
 #: ../base/ufos/menu_hire.ufo:475 ../base/ufos/menu_hospital.ufo:254
 #: ../base/ufos/menu_physdat.ufo:87 ../base/ufos/menu_team.ufo:856
-#: ../base/ufos/menu_team.ufo:1508
+#: ../base/ufos/menu_team.ufo:1548
 msgid "Sniper Rifles:"
 msgstr "Ostřelovačské pušky:"
 
 #: ../base/ufos/menu_hire.ufo:488 ../base/ufos/menu_hospital.ufo:259
 #: ../base/ufos/menu_physdat.ufo:92 ../base/ufos/menu_team.ufo:861
-#: ../base/ufos/menu_team.ufo:1513
+#: ../base/ufos/menu_team.ufo:1553
 msgid "High-Explosives:"
 msgstr "Výbušniny:"
 
@@ -2284,15 +2299,15 @@ msgstr "Ukázat ostatní vybavení na skladě"
 msgid "Show armour in store"
 msgstr "Ukázat zbroj na skladě"
 
-#: ../base/ufos/menu_team.ufo:1584
+#: ../base/ufos/menu_team.ufo:1630
 msgid "Object Info"
 msgstr "Informace o předmětu"
 
-#: ../base/ufos/menu_team.ufo:1596
+#: ../base/ufos/menu_team.ufo:1642
 msgid "Actor Abilities"
 msgstr "Schopnosti vojáka"
 
-#: ../base/ufos/menu_team.ufo:1640
+#: ../base/ufos/menu_team.ufo:1686
 msgid "Use current skin with every soldier aboard."
 msgstr "Použít tento vzhled pro všechny vojáky na palubě."
 
@@ -2373,19 +2388,19 @@ msgstr "Výsledky výzkumu"
 msgid "Leave UFOpaedia"
 msgstr "Opustit UFOpedii"
 
-#: ../base/ufos/menu_ufopedia.ufo:495
+#: ../base/ufos/menu_ufopedia.ufo:534
 msgid "Mailclient"
 msgstr "E-mailový klient"
 
-#: ../base/ufos/menu_ufopedia.ufo:504
+#: ../base/ufos/menu_ufopedia.ufo:543
 msgid "Time:"
 msgstr "Čas:"
 
-#: ../base/ufos/menu_ufopedia.ufo:521
+#: ../base/ufos/menu_ufopedia.ufo:560
 msgid "Date:"
 msgstr "Datum:"
 
-#: ../base/ufos/menu_ufopedia.ufo:551
+#: ../base/ufos/menu_ufopedia.ufo:590
 msgid "Leave mailclient"
 msgstr "Opustit čtení pošty"
 
@@ -12023,7 +12038,7 @@ msgid "Aircraft started"
 msgstr "Letoun odstartoval"
 
 #: client/cl_aircraft.c:228 client/cl_aircraft.c:650 client/cl_aircraft.c:873
-#: client/cl_aircraft.c:1198 client/cl_aliencont.c:220
+#: client/cl_aircraft.c:1197 client/cl_aliencont.c:220
 #: client/cl_aliencont.c:251 client/cl_aliencont.c:263
 #: client/cl_aliencont.c:274 client/cl_basemanagement.c:707
 #: client/cl_basemanagement.c:2252 client/cl_campaign.c:479
@@ -12095,7 +12110,7 @@ msgstr "Přepravní mise"
 msgid "Back to base"
 msgstr "Vrací se na základnu"
 
-#: client/cl_aircraft.c:573 client/cl_map.c:893 client/cl_ufopedia.c:398
+#: client/cl_aircraft.c:573 client/cl_map.c:893 client/cl_ufopedia.c:434
 #, c-format
 msgid "Speed:\t%.0f\n"
 msgstr "Rychlost:\t%.0f\n"
@@ -12106,17 +12121,17 @@ msgid "Fuel:\t%i/%i\n"
 msgstr "Palivo:\t%i/%i\n"
 
 #: client/cl_aircraft.c:575 client/cl_aircraft.c:576 client/cl_aircraft.c:577
-#: client/cl_transfer.c:836 client/cl_transfer.c:837 client/cl_ufopedia.c:374
-#: client/cl_ufopedia.c:401 client/cl_ufopedia.c:402 client/cl_ufopedia.c:403
+#: client/cl_transfer.c:836 client/cl_transfer.c:837 client/cl_ufopedia.c:410
+#: client/cl_ufopedia.c:437 client/cl_ufopedia.c:438 client/cl_ufopedia.c:439
 msgid "None"
 msgstr "Žádný"
 
-#: client/cl_aircraft.c:575 client/cl_ufopedia.c:401
+#: client/cl_aircraft.c:575 client/cl_ufopedia.c:437
 #, c-format
 msgid "Weapon:\t%s\n"
 msgstr "Zbraň:\t%s\n"
 
-#: client/cl_aircraft.c:576 client/cl_ufopedia.c:402
+#: client/cl_aircraft.c:576 client/cl_ufopedia.c:438
 #, c-format
 msgid "Shield:\t%s\n"
 msgstr "Štít:\t%s\n"
@@ -12163,7 +12178,7 @@ msgstr "Bez vybavení"
 msgid "No shield assigned"
 msgstr "Bez štítu"
 
-#: client/cl_aircraft.c:1198
+#: client/cl_aircraft.c:1197
 msgid "Assign a team to aircraft"
 msgstr "Přidělit tým k letounu"
 
@@ -12514,8 +12529,8 @@ msgstr "Zaplaceno %i kreditů za administrativní náklady."
 msgid "Paid %i credits in interest on your debt."
 msgstr "Zaplaceno %i kreditů za úroky z dluhu."
 
-#: client/cl_campaign.c:1395 client/cl_save.c:213 client/cl_ufopedia.c:478
-#: client/cl_ufopedia.c:484
+#: client/cl_campaign.c:1395 client/cl_save.c:213 client/cl_ufopedia.c:514
+#: client/cl_ufopedia.c:520
 #, c-format
 msgid "%i %s %02i"
 msgstr "%3$02i. %2$s %1$i"
@@ -13705,115 +13720,115 @@ msgstr "Na našem radaru se objevilo UFO"
 msgid "UFO disappears on our radar"
 msgstr "UFO zmizelo z našeho radaru"
 
-#: client/cl_ufopedia.c:149
+#: client/cl_ufopedia.c:150
 msgid "Close"
 msgstr "Pro boj zblízka"
 
-#: client/cl_ufopedia.c:152
+#: client/cl_ufopedia.c:153
 msgid "Heavy"
 msgstr "Těžká"
 
-#: client/cl_ufopedia.c:155
+#: client/cl_ufopedia.c:156
 msgid "Assault"
 msgstr "Útočná"
 
-#: client/cl_ufopedia.c:158
+#: client/cl_ufopedia.c:159
 msgid "Sniper"
 msgstr "Ostřelovačská"
 
-#: client/cl_ufopedia.c:161
+#: client/cl_ufopedia.c:162
 msgid "Explosive"
 msgstr "Výbušnina"
 
-#: client/cl_ufopedia.c:164
+#: client/cl_ufopedia.c:165
 msgid "Unknown weapon skill"
 msgstr "Neznámé zařazení zbraně"
 
-#: client/cl_ufopedia.c:185
+#: client/cl_ufopedia.c:186
 msgid "No requirements"
 msgstr "Bez závislostí"
 
-#: client/cl_ufopedia.c:241
+#: client/cl_ufopedia.c:244
 msgid "Armor\n"
 msgstr "Zbroj\n"
 
-#: client/cl_ufopedia.c:247
+#: client/cl_ufopedia.c:250
 #, c-format
 msgid "%s weapon with\n"
 msgstr "%s zbraň\n"
 
-#: client/cl_ufopedia.c:247 client/cl_ufopedia.c:250 client/cl_ufopedia.c:256
+#: client/cl_ufopedia.c:250 client/cl_ufopedia.c:253 client/cl_ufopedia.c:259
 msgid "One-handed"
 msgstr "Jednoruční"
 
-#: client/cl_ufopedia.c:247 client/cl_ufopedia.c:250 client/cl_ufopedia.c:256
+#: client/cl_ufopedia.c:250 client/cl_ufopedia.c:253 client/cl_ufopedia.c:259
 msgid "Two-handed"
 msgstr "Obouruční"
 
-#: client/cl_ufopedia.c:248
+#: client/cl_ufopedia.c:251
 #, c-format
 msgid "Max ammo:\t%i\n"
 msgstr "Munice:\t%i\n"
 
-#: client/cl_ufopedia.c:250
+#: client/cl_ufopedia.c:253
 #, c-format
 msgid "%s ammo-less weapon with\n"
 msgstr "%s zbraň nevyžadující munici\n"
 
-#: client/cl_ufopedia.c:256
+#: client/cl_ufopedia.c:259
 #, c-format
 msgid "%s auxiliary equipment with\n"
 msgstr "%s pomocné vybavení\n"
 
-#: client/cl_ufopedia.c:257
+#: client/cl_ufopedia.c:260
 #, c-format
 msgid "Action:\t%s\n"
 msgstr "Činnost:\t%s\n"
 
-#: client/cl_ufopedia.c:258 client/cl_ufopedia.c:305
+#: client/cl_ufopedia.c:261 client/cl_ufopedia.c:341
 #, c-format
 msgid "Time units:\t%i\n"
 msgstr "Čas:\t%i\n"
 
-#: client/cl_ufopedia.c:259 client/cl_ufopedia.c:306
+#: client/cl_ufopedia.c:262 client/cl_ufopedia.c:342
 #, c-format
 msgid "Range:\t%g\n"
 msgstr "Dostřel:\t%g\n"
 
-#: client/cl_ufopedia.c:301
+#: client/cl_ufopedia.c:337
 #, c-format
 msgid "Skill:\t%s\n"
 msgstr "Zařazení:\t%s\n"
 
-#: client/cl_ufopedia.c:302
+#: client/cl_ufopedia.c:338
 #, c-format
 msgid "Damage:\t%i\n"
 msgstr "Poškození:\t%i\n"
 
-#: client/cl_ufopedia.c:307
+#: client/cl_ufopedia.c:343
 #, c-format
 msgid "Spreads:\t%g\n"
 msgstr "Rozptyl:\t%g\n"
 
-#: client/cl_ufopedia.c:313 client/cl_ufopedia.c:412
+#: client/cl_ufopedia.c:349 client/cl_ufopedia.c:448
 msgid "Unknown - need to research this"
 msgstr "Neznámo - nutno vyzkoumat"
 
-#: client/cl_ufopedia.c:348
+#: client/cl_ufopedia.c:384
 #, c-format
 msgid "%s:\tProtection: %i\tHardness: %i\n"
 msgstr "%s:\tOchrana: %i\tOdolnost: %i\n"
 
-#: client/cl_ufopedia.c:372
+#: client/cl_ufopedia.c:408
 msgid "Error - could not find building"
 msgstr "Chyba - budovu nelze najít"
 
-#: client/cl_ufopedia.c:374
+#: client/cl_ufopedia.c:410
 #, c-format
 msgid "Depends:\t%s\n"
 msgstr "Závisí na:\t%s\n"
 
-#: client/cl_ufopedia.c:375
+#: client/cl_ufopedia.c:411
 #, c-format
 msgid "Buildtime:\t%i day\n"
 msgid_plural "Buildtime:\t%i days\n"
@@ -13821,39 +13836,39 @@ msgstr[0] "Doba stavby:\t%i den\n"
 msgstr[1] "Doba stavby:\t%i dny\n"
 msgstr[2] "Doba stavby:\t%i dnů\n"
 
-#: client/cl_ufopedia.c:376
+#: client/cl_ufopedia.c:412
 #, c-format
 msgid "Fixcosts:\t%i c\n"
 msgstr "Fixní náklady:\t%i k\n"
 
-#: client/cl_ufopedia.c:377
+#: client/cl_ufopedia.c:413
 #, c-format
 msgid "Running costs:\t%i c\n"
 msgstr "Provozní náklady:\t%i k\n"
 
-#: client/cl_ufopedia.c:396
+#: client/cl_ufopedia.c:432
 msgid "Error - could not find aircraft"
 msgstr "Chyba - letoun nelze najít"
 
-#: client/cl_ufopedia.c:399
+#: client/cl_ufopedia.c:435
 #, c-format
 msgid "Fuel:\t%i\n"
 msgstr "Palivo:\t%i\n"
 
-#: client/cl_ufopedia.c:403
+#: client/cl_ufopedia.c:439
 #, c-format
 msgid "Equipment:\t%s\n"
 msgstr "Vybavení:\t%s\n"
 
-#: client/cl_ufopedia.c:503
+#: client/cl_ufopedia.c:539
 msgid "Proposal: "
 msgstr "Návrh: "
 
-#: client/cl_ufopedia.c:506
+#: client/cl_ufopedia.c:542
 msgid "Re: "
 msgstr "Výsledek: "
 
-#: client/cl_ufopedia.c:514
+#: client/cl_ufopedia.c:550
 #, c-format
 msgid ""
 "FROM: %s\n"
@@ -13866,45 +13881,45 @@ msgstr ""
 "DATUM: %s\n"
 "PŘEDMĚT: %s%s\n"
 
-#: client/cl_ufopedia.c:596
+#: client/cl_ufopedia.c:632
 msgid "No pre-research description available."
 msgstr "Popis není před výzkumem dostupný."
 
-#: client/cl_ufopedia.c:752
+#: client/cl_ufopedia.c:788
 msgid "Ufopedia Content"
 msgstr "Obsah UFOpedie"
 
-#: client/cl_ufopedia.c:786
+#: client/cl_ufopedia.c:822
 #, c-format
 msgid "Ufopedia Index: %s"
 msgstr "Oddíl UFOpedie: %s"
 
-#: client/cl_ufopedia.c:1097
+#: client/cl_ufopedia.c:1133
 #, c-format
 msgid "^BProposal: %s (%s)\n"
 msgstr "^BNávrh: %s (%s)\n"
 
-#: client/cl_ufopedia.c:1099
+#: client/cl_ufopedia.c:1135
 #, c-format
 msgid "Proposal: %s (%s)\n"
 msgstr "Návrh: %s (%s)\n"
 
-#: client/cl_ufopedia.c:1107
+#: client/cl_ufopedia.c:1143
 #, c-format
 msgid "^BRe: %s (%s)\n"
 msgstr "^BVýsledek: %s (%s)\n"
 
-#: client/cl_ufopedia.c:1109
+#: client/cl_ufopedia.c:1145
 #, c-format
 msgid "Re: %s (%s)\n"
 msgstr "Výsledek: %s (%s)\n"
 
-#: client/cl_ufopedia.c:1116 client/cl_ufopedia.c:1123
+#: client/cl_ufopedia.c:1152 client/cl_ufopedia.c:1159
 #, c-format
 msgid "^B%s (%s)\n"
 msgstr "^B%s (%s)\n"
 
-#: client/cl_ufopedia.c:1118 client/cl_ufopedia.c:1125
+#: client/cl_ufopedia.c:1154 client/cl_ufopedia.c:1161
 #, c-format
 msgid "%s (%s)\n"
 msgstr "%s (%s)\n"
