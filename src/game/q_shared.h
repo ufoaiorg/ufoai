@@ -962,6 +962,7 @@ extern const char *pa_format[128];
 /* this is the absolute max for now */
 #define MAX_OBJDEFS     128		/* Remember to adapt the "NONE" define (and similar) if this gets changed. */
 #define MAX_WEAPONS_PER_OBJDEF 4
+#define MAX_AMMOS_PER_OBJDEF 4
 #define MAX_FIREDEFS_PER_WEAPON 8
 #define MAX_DAMAGETYPES 32
 
@@ -1073,6 +1074,9 @@ typedef struct objDef_s {
 											 ** Maximum value for fireDef_t.fd_idx and it't <= MAX_FIREDEFS_PER_WEAPON */
 	int numWeapons;							/**< Number of weapons this ammo can be used in.
 											 ** Maximum value for fireDef_t.weap_fds_idx and it's <= MAX_WEAPONS_PER_OBJDEF) */
+	int ammo_idx[MAX_AMMOS_PER_OBJDEF];			/**< List of ammo-object indices. The index of the ammo in csi.ods[xxx]. */
+	int numAmmos;							/**< Number of ammos this weapon can be used with.
+											 ** it's <= MAX_AMMOS_PER_OBJDEF) */
 
 	/* Technology link */
 	void *tech;		/**< Technology link to item to use this extension for (if this is an extension) */
