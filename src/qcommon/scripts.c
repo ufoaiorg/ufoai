@@ -1453,8 +1453,8 @@ extern void Com_AddObjectLinks (void)
 	}
 
 	/* Add links to ammos */
-	od->numAmmos = 0;	/* Default value */
 	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
+		od->numAmmos = 0;	/* Default value */
 		if (od->weapon && od->numWeapons == 0) {
 			for (n = 0; n < csi.numODs; n++) {
 				for (m = 0; m < csi.ods[n].numWeapons; m++) {
