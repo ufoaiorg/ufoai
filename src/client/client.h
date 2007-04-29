@@ -801,7 +801,6 @@ typedef enum {
 
 /** @brief also used for chat message buffer */
 #define MAX_MESSAGE_TEXT 1024
-#define TIMESTAMP_FORMAT _("%i %s %02i, %02i:%02i: ")
 #define TIMESTAMP_TEXT 21
 typedef struct message_s {
 	char title[MAX_VAR];

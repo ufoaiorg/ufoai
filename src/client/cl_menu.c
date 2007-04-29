@@ -4142,7 +4142,7 @@ message_t *MN_AddNewMessage (const char *title, const char *text, qboolean popup
  */
 static void MN_TimestampedText (char *text, message_t *message)
 {
-	Q_strncpyz(text, va(TIMESTAMP_FORMAT, message->y, CL_DateGetMonthName(message->m), message->d, message->h, message->min), TIMESTAMP_TEXT);
+	Com_sprintf(text, sizeof(text), _("%i %s %02i, %02i:%02i: "), message->y, CL_DateGetMonthName(message->m), message->d, message->h, message->min);
 }
 
 /**
