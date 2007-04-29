@@ -1064,6 +1064,9 @@ typedef struct objDef_s {
 					 ** the number of the "ammo" value above defines how many shots are possible. */
 	byte deplete;			/**< Is this weapon useless after all ("oneshot") ammo is used up? If true this item will not be collected on mission-end. (see CL_CollectItems) */
 	short useable;			/**< Defines which team can use this item: 0 - human, 1 - alien. */
+	int ammo_idx[MAX_AMMOS_PER_OBJDEF];			/**< List of ammo-object indices. The index of the ammo in csi.ods[xxx]. */
+	int numAmmos;							/**< Number of ammos this weapon can be used with.
+											 ** it's <= MAX_AMMOS_PER_OBJDEF) */
 
 	/* Firemodes (per weapon) */
 	char weap_id[MAX_WEAPONS_PER_OBJDEF][MAX_VAR];	/**< List of weapon ids as parsed from the ufo file "weapon_mod <id>" */
@@ -1074,9 +1077,6 @@ typedef struct objDef_s {
 											 ** Maximum value for fireDef_t.fd_idx and it't <= MAX_FIREDEFS_PER_WEAPON */
 	int numWeapons;							/**< Number of weapons this ammo can be used in.
 											 ** Maximum value for fireDef_t.weap_fds_idx and it's <= MAX_WEAPONS_PER_OBJDEF) */
-	int ammo_idx[MAX_AMMOS_PER_OBJDEF];			/**< List of ammo-object indices. The index of the ammo in csi.ods[xxx]. */
-	int numAmmos;							/**< Number of ammos this weapon can be used with.
-											 ** it's <= MAX_AMMOS_PER_OBJDEF) */
 
 	/* Technology link */
 	void *tech;		/**< Technology link to item to use this extension for (if this is an extension) */
