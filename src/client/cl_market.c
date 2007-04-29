@@ -591,7 +591,7 @@ static void BS_SellAircraft_f (void)
 		Cmd_BufClear();
 		BS_BuyType_f();
 		/* Update hangar capacities after selling an aircraft. */
-		AIR_UpdateHangarCapForAll(base->idx);
+		AIR_UpdateHangarCapForAll(baseCurrent->idx);
 		return;
 	}
 	if (!found) {
