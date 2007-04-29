@@ -259,6 +259,7 @@ static void MN_NextMap_f(void);
 static void MN_PrevMap_f(void);
 static int MN_DrawTooltip(const char *font, const char *string, int x, int y, int maxWidth);
 static void CL_ShowMessagesOnStack_f(void);
+static void MN_TimestampedText(char *text, message_t *message, size_t textsize);
 
 /*
 ==============================================================
@@ -2165,7 +2166,7 @@ void MN_DrawMenus (void)
 								int offset = 0;
 								char text[TIMESTAMP_TEXT + MAX_MESSAGE_TEXT];
 								/* get formatted date text and pixel width of text */
-								MN_TimestampedText(text, message);
+								MN_TimestampedText(text, message, sizeof(text));
 								re.FontLength(font, text, &offset, &height);
 								/* append remainder of message */
 								Q_strcat(text, message->text, sizeof(text));
@@ -4079,9 +4080,9 @@ message_t *MN_AddNewMessage (const char *title, const char *text, qboolean popup
  * @param[in] text Buffer to hold the final result
  * @param[in] message The message to convert into text
  */
-void MN_TimestampedText (char *text, message_t *message)
+static void MN_TimestampedText (char *text, message_t *message, size_t textsize)
 {
-	Com_sprintf(text, sizeof(text), _("%i %s %02i, %02i:%02i: "), message->y, CL_DateGetMonthName(message->m), message->d, message->h, message->min);
+	Com_sprintf(text, textsize, _("%i %s %02i, %02i:%02i: "), message->y, CL_DateGetMonthName(message->m), message->d, message->h, message->min);
 }
 
 /**
