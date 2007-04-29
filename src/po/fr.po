@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-04-26 19:39+0200\n"
-"PO-Revision-Date: 2007-04-28 19:58+0100\n"
+"PO-Revision-Date: 2007-04-29 11:04+0100\n"
 "Last-Translator: Kracken <kracken@users.sourceforge.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -6607,7 +6607,7 @@ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 #: ../base/ufos/research.ufo:2631
 #: ../base/ufos/research.ufo:2638
 msgid "Alien Autopsy - Bloodspider"
-msgstr "Autopsie Alienne - Araignée Sanguinaire"
+msgstr "Autopsie - Araignée Sanguinaire"
 
 #: ../base/ufos/research.ufo:2623
 msgid "bloodspider_autopsy_txt"
@@ -6647,7 +6647,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:2666
 #: ../base/ufos/research.ufo:2673
 msgid "Alien Autopsy - Ortnok"
-msgstr "Autopsie Alienne - Ortnok"
+msgstr "Autopsie - Ortnok"
 
 #: ../base/ufos/research.ufo:2658
 msgid "ortnok_autopsy_txt"
@@ -6694,7 +6694,7 @@ msgstr "Aucune information n'est disponible avant d'avoir fini la recherche"
 #: ../base/ufos/research.ufo:2702
 #: ../base/ufos/research.ufo:2709
 msgid "Alien Autopsy - Taman"
-msgstr "Autopsie Alienne - Taman"
+msgstr "Autopsie - Taman"
 
 #: ../base/ufos/research.ufo:2694
 msgid "taman_autopsy_txt"
@@ -6750,7 +6750,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:2736
 #: ../base/ufos/research.ufo:2743
 msgid "Alien Autopsy - Shevaar"
-msgstr "Autopsie Alienne - Shevaar"
+msgstr "Autopsie - Shevaar"
 
 #: ../base/ufos/research.ufo:2728
 msgid "shevaar_autopsy_txt"
@@ -9036,7 +9036,7 @@ msgstr "Exubérant"
 #: client/cl_campaign.c:1165
 #, c-format
 msgid "Gained %i %s, %i %s, %i %s, %i %s, and %i %s from nation %s (%s)"
-msgstr "Vous avez gagné %i %s, %i %s, %i %s, %i %s et %i %s de la nation %s (%s)"
+msgstr "%i %s, %i %s, %i %s, %i %s et %i %s vous sont offerts par la nation %s (%s)"
 
 #: client/cl_campaign.c:1166
 msgid "credit"
