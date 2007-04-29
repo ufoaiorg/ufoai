@@ -470,7 +470,7 @@ static void CL_BuyAircraft_f (void)
  */
 static void CL_SellAircraft_f (void)
 {
-	int num, aircraftID;
+	int num, aircraftID, j;
 	aircraft_t *aircraft;
 	qboolean found = qfalse;
 	qboolean teamNote = qfalse;
