@@ -175,6 +175,7 @@ void FS_FCloseFile (qFILE * f)
  * @brief Finds the file in the search path.
  * @return filesize and an open qFILE *
  * @note Used for streaming data out of either a pak file or a seperate file.
+ * @sa FS_FOpenFile
  */
 static int FS_FOpenFileSingle (const char *filename, qFILE * file)
 {
@@ -304,6 +305,7 @@ int FS_Seek (qFILE * f, long offset, int origin)
  * @brief
  * @returns filesize
  * @sa FS_FOpenFileSingle
+ * @sa FS_LoadFile
  */
 int FS_FOpenFile (const char *filename, qFILE * file)
 {
@@ -402,6 +404,8 @@ void CDAudio_Stop (void);
  * @note This function properly handles partial reads so check that the
  * returned length matches @c len.
  * @note Reads in blocks of 64k.
+ * @sa FS_LoadFile
+ * @sa FS_FOpenFile
  */
 #ifdef DEBUG
 int FS_ReadDebug (void *buffer, int len, qFILE * f, char* file, int line)
@@ -469,7 +473,10 @@ int FS_Read (void *buffer, int len, qFILE * f)
 /**
  * @brief Filename are reletive to the quake search path
  * @param[in] buffer a null buffer will just return the file length without loading
+ * @param[in] path
  * @return a -1 length means that the file is not present
+ * @sa FS_Read
+ * @sa FS_FOpenFile
  */
 int FS_LoadFile (const char *path, void **buffer)
 {
