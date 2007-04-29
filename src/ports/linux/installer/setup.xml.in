@@ -8,8 +8,8 @@
  express="no"
  category="Games"
  superuser="no"
- reinstall="no"
- reinstallnowarning="yes"
+ reinstall="yes"
+ reinstallnowarning="no"
  nopromptoverwrite="yes"
  splashpos="top"
  nomenuitems="no"
@@ -43,7 +43,7 @@
   <option arch="x86_64" install="true">
    64 bit binaries
    <binary arch="any" libc="any" binpath="bin/ufoai" symlink="ufoai"
-          icon="ufo.xpm" name="UFO: Alien Invasion" desc="UFO: Alien Invasion" play="yes">
+          icon="ufo.xpm" name="UFO: Alien Invasion 64-bit" menu="Games" desc="UFO: Alien Invasion" play="gui">
     ufoai
    </binary>
    <files>
@@ -58,7 +58,7 @@
   <option arch="any" install="true">
    32 bit binaries
    <binary arch="any" libc="any" binpath="bin/ufoai" symlink="ufoai"
-          icon="ufo.xpm" name="UFO: Alien Invasion" desc="UFO: Alien Invasion" play="yes">
+          icon="ufo.xpm" name="UFO: Alien Invasion" menu="Games" desc="UFO: Alien Invasion">
     ufoai
    </binary>
    <files>
