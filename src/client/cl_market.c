@@ -547,8 +547,7 @@ static void BS_BuyAircraft_f (void)
  */
 static void BS_SellAircraft_f (void)
 {
-	int num, aircraftID, i, j;
-	base_t *base;
+	int num, aircraftID, j;
 	aircraft_t *aircraft;
 	qboolean found = qfalse;
 	qboolean teamNote = qfalse;
@@ -558,6 +557,11 @@ static void BS_SellAircraft_f (void)
 		return;
 	}
 
+	if (!baseCurrent)
+		return;
+
+	assert(baseCurrent);
+
 	num = atoi(Cmd_Argv(1));
 	if (num < 0 || num >= buyListLength)
 		return;
@@ -566,33 +570,29 @@ static void BS_SellAircraft_f (void)
 	if (aircraftID > numAircraft_samples)
 		return;
 
-	for (i = 0, base = gd.bases; i < gd.numBases; i++, base++) {
-		if (!base->founded)
-			continue;
-		for (j = 0, aircraft = base->aircraft; j < base->numAircraftInBase; j++, aircraft++) {
-			if (!Q_strncmp(aircraft->id, aircraft_samples[aircraftID].id, MAX_VAR)) {
-				if (*aircraft->teamSize) {
-					teamNote = qtrue;
-					continue;
-				}
-				found = qtrue;
-				break;
+	for (j = 0, aircraft = baseCurrent->aircraft; j < baseCurrent->numAircraftInBase; j++, aircraft++) {
+		if (!Q_strncmp(aircraft->id, aircraft_samples[aircraftID].id, MAX_VAR)) {
+			if (*aircraft->teamSize) {
+				teamNote = qtrue;
+				continue;
 			}
+			found = qtrue;
+			break;
 		}
-		/* ok, we've found an empty aircraft (no team) in a base
-		   so now we can sell it */
-		if (found) {
-			Com_DPrintf("BS_SellAircraft_f: Selling aircraft with IDX %i\n", aircraft->idx);
-			AIR_DeleteAircraft(aircraft);
+	}
+	/* ok, we've found an empty aircraft (no team) in a base
+	   so now we can sell it */
+	if (found) {
+		Com_DPrintf("BS_SellAircraft_f: Selling aircraft with IDX %i\n", aircraft->idx);
+		AIR_DeleteAircraft(aircraft);
 
-			CL_UpdateCredits(ccs.credits + aircraft_samples[aircraftID].price);
-			/* reinit the menu */
-			Cmd_BufClear();
-			BS_BuyType_f();
-			/* Update hangar capacities after selling an aircraft. */
-			AIR_UpdateHangarCapForAll(base->idx);
-			return;
-		}
+		CL_UpdateCredits(ccs.credits + aircraft_samples[aircraftID].price);
+		/* reinit the menu */
+		Cmd_BufClear();
+		BS_BuyType_f();
+		/* Update hangar capacities after selling an aircraft. */
+		AIR_UpdateHangarCapForAll(base->idx);
+		return;
 	}
 	if (!found) {
 		if (teamNote)
