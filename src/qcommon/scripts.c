@@ -1333,7 +1333,7 @@ MAIN SCRIPT PARSING FUNCTION
 extern void Com_AddObjectLinks (void)
 {
 	objDef_t *od = NULL;
-	int i;
+	int i, n, m;
 	byte j, k;
 #ifndef DEDICATED_ONLY
 	technology_t *tech = NULL;
@@ -1357,6 +1357,21 @@ extern void Com_AddObjectLinks (void)
 			/* Back-link the obj-idx inside the fds */
 			for (k = 0; k < od->numFiredefs[j]; k++ ) {
 				od->fd[j][k].obj_idx = i;
+			}
+		}
+	}
+
+	/* Add links to ammos */
+	od->numAmmos = 0;	/* Default value */
+	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
+		if (od->weapon && od->numWeapons == 0) {
+			for (n = 0; n < csi.numODs; n++) {
+				for (m = 0; m < csi.ods[n].numWeapons; m++) {
+					if (csi.ods[n].weap_idx[m] == i) {
+						assert(od->numAmmos <= MAX_AMMOS_PER_OBJDEF);
+						od->ammo_idx[od->numAmmos++] = n;
+					}
+				}
 			}
 		}
 	}

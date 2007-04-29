@@ -635,6 +635,8 @@ qboolean G_RunFrame (void)
 		return qtrue;
 	}
 
+	CheckNeedPass();
+
 	/* run ai */
 	AI_Run();
 	G_PhysicsRun();
