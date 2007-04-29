@@ -1036,7 +1036,7 @@ void CL_AircraftEquipmenuMenuClick_f (void)
 /**
  * @brief Returns aircraft for a given global index.
  * @param[in] idx Global aircraft index.
- * @return An aircraft pointer (to a struct in a base) that has the given index.
+ * @return An aircraft pointer (to a struct in a base) that has the given index or NULL if no aircraft found.
  */
 extern aircraft_t* CL_AircraftGetFromIdx (int idx)
 {
@@ -1062,7 +1062,6 @@ extern aircraft_t* CL_AircraftGetFromIdx (int idx)
 			}
 		}
 	}
-	Sys_Error("AIR_AircraftGetFromIdx: No aircraft with given global index found!\n");
 
 	return NULL;
 }
