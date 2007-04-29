@@ -117,14 +117,12 @@ static void BS_MarketAircraftDescription (int aircraftID)
 
 	/* Remember previous settings and restore them in AIM_ResetAircraftCvars_f(). */
 	Cvar_Set("mn_aircraftname_before", Cvar_VariableString("mn_aircraftname"));
-	Cvar_Set("mn_aircraftmodel_before", Cvar_VariableString("mn_aircraft_model"));
 
 	aircraft = &aircraft_samples[aircraftID];
 	tech = RS_GetTechByProvided(aircraft->id);
 	assert(tech);
 	UP_AircraftDescription(tech);
 	Cvar_Set("mn_aircraftname", aircraft->name);
-	Cvar_Set("mn_aircraft_model", aircraft->model);
 }
 
 /**

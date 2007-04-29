@@ -1122,7 +1122,7 @@ menu buy
 		align	cl
 		font	f_verysmall
 	}
-	
+
 	string header_ammo
 	{
 		if "mn_displayweapon == 2"
@@ -1534,13 +1534,6 @@ menu buyaircraft
 		format	"18 150"
 		height	5
 		wheel
-	}
-
-	model aircraftmodel
-	{
-		md2		"*cvar mn_aircraft_model"
-		origin	"690 240 0"
-		color	"0.5 0.5 0.5 1"
 	}
 
 	// ==================

@@ -403,7 +403,6 @@ extern void AIR_NewAircraft_f (void)
 extern void AIM_ResetAircraftCvars_f (void)
 {
 	Cvar_Set("mn_aircraftname", Cvar_VariableString("mn_aircraftname_before"));
-	Cvar_Set("mn_aircraft_model", Cvar_VariableString("mn_aircraftmodel_before"));
 }
 
 /**
@@ -1169,7 +1168,7 @@ extern aircraft_t* AIR_AircraftGetFromIdx (int idx)
 		Com_DPrintf("AIR_AircraftGetFromIdx: no base(s) found!\n");
 	}
 #endif
-	
+
 	for (base = gd.bases; base < (gd.bases + gd.numBases); base++) {
 		for (aircraft = base->aircraft; aircraft < (base->aircraft + base->numAircraftInBase); aircraft++) {
 			if (aircraft->idx == idx) {
@@ -1178,7 +1177,7 @@ extern aircraft_t* AIR_AircraftGetFromIdx (int idx)
 			}
 		}
 	}
-	
+
 	return NULL;
 }
 
