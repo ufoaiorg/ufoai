@@ -225,7 +225,7 @@ extern void CL_ItemDescription (int item)
 	Cvar_Set("mn_ammo", "");
 	Cvar_Set("mn_displayfiremode", "0"); /* use strings here - no int */
 	Cvar_Set("mn_displayweapon", "0"); /* use strings here - no int */
-	Cvar_Set("mn_changefiremode", "0"); /* use strings here - no int */ 
+	Cvar_Set("mn_changefiremode", "0"); /* use strings here - no int */
 	Cvar_Set("mn_changeweapon", "0"); /* use strings here - no int */
 
 #ifdef DEBUG
@@ -236,7 +236,7 @@ extern void CL_ItemDescription (int item)
 #endif
 	/* set description text */
 	if (RS_IsResearched_ptr(od->tech)) {
-		if (!Q_strncmp(od->type, "armor", 5)) {	
+		if (!Q_strncmp(od->type, "armor", 5)) {
 			/* TODO: Print protection */
 			Com_sprintf(itemText, sizeof(itemText), _("Armor\n") );
 		} else if (!Q_strncmp(od->type, "ammo", 4)) {
@@ -264,15 +264,15 @@ extern void CL_ItemDescription (int item)
 			upCurrent = od->tech;
 
 			/* We display the pre/next buttons for changing weapon only if there are at least 2 researched weapons */
-			/* up_numresearchedlink contains the number of researched weapons useable with this ammo */ 
+			/* up_numresearchedlink contains the number of researched weapons useable with this ammo */
 			if (!(od->weapon && !od->reload)) {
 				for (i=0; i<od->numWeapons; i++) {
-					if (RS_IsResearched_ptr(csi.ods[od->weap_idx[i]].tech)) 
+					if (RS_IsResearched_ptr(csi.ods[od->weap_idx[i]].tech))
 						up_numresearchedlink++;
 				}
 			}
 			if (up_numresearchedlink > 1)
-				Cvar_Set("mn_changeweapon", "1"); /* use strings here - no int */ 
+				Cvar_Set("mn_changeweapon", "1"); /* use strings here - no int */
 
 			/* We check that up_researchedlink exists for this ammo (in case we switched from an ammo with more available weapons)*/
 			if (up_researchedlink > od->numWeapons - 1)
@@ -292,10 +292,10 @@ extern void CL_ItemDescription (int item)
 
 			/* We always display the name of the firemode for an ammo */
 			Cvar_Set("mn_displayfiremode", "1"); /* use strings here - no int */
-			Cvar_Set("mn_firemodename", od->fd[up_researchedlink][up_firemode].name); 
+			Cvar_Set("mn_firemodename", od->fd[up_researchedlink][up_firemode].name);
 			/* We display the pre/next buttons for changing firemode only if there are more than one */
 			if (od->numFiredefs[up_researchedlink] > 1)
-				Cvar_Set("mn_changefiremode", "1"); /* use strings here - no int */ 
+				Cvar_Set("mn_changefiremode", "1"); /* use strings here - no int */
 
 			/* We display the characteristics of this firemode */
 			Q_strcat(itemText, va(_("Skill:\t%s\n"), CL_WeaponSkillToName(od->fd[up_researchedlink][up_firemode].weaponSkill)), sizeof(itemText));
@@ -475,16 +475,16 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type)
 	} else {
 		switch (type) {
 		case TECHMAIL_PRE:
-			Com_sprintf(dateBuf, sizeof(dateBuf), _("%02i %s %i"),
-				tech->preResearchedDateDay,
+			Com_sprintf(dateBuf, sizeof(dateBuf), _("%i %s %02i"),
+				tech->preResearchedDateYear,
 				CL_DateGetMonthName(tech->preResearchedDateMonth),
-				tech->preResearchedDateYear);
+				tech->preResearchedDateDay);
 			break;
 		case TECHMAIL_RESEARCHED:
-			Com_sprintf(dateBuf, sizeof(dateBuf), _("%02i %s %i"),
-				tech->researchedDateDay,
+			Com_sprintf(dateBuf, sizeof(dateBuf), _("%i %s %02i"),
+				tech->researchedDateYear,
 				CL_DateGetMonthName(tech->researchedDateMonth),
-				tech->researchedDateYear);
+				tech->researchedDateDay);
 				break;
 		default:
 			Sys_Error("UP_SetMailHeader: unhandled techMailType_t %i for date.\n", type);
@@ -1141,7 +1141,7 @@ static void UP_OpenMail_f (void)
 
 /**
  * @brief Increases the number of the weapon to display (for ammo)
- * @sa CL_ItemDescription 
+ * @sa CL_ItemDescription
  */
 static void UP_IncreaseWeapon_f (void)
 {
@@ -1180,7 +1180,7 @@ static void UP_IncreaseWeapon_f (void)
 
 /**
  * @brief Decreases the number of the firemode to display (for ammo)
- * @sa CL_ItemDescription 
+ * @sa CL_ItemDescription
  */
 static void UP_DecreaseWeapon_f (void)
 {
@@ -1219,7 +1219,7 @@ static void UP_DecreaseWeapon_f (void)
 
 /**
  * @brief Increases the number of the firemode to display
- * @sa CL_ItemDescription 
+ * @sa CL_ItemDescription
  */
 static void UP_IncreaseFiremode_f (void)
 {
@@ -1243,7 +1243,7 @@ static void UP_IncreaseFiremode_f (void)
 
 /**
  * @brief Decreases the number of the firemode to display
- * @sa CL_ItemDescription 
+ * @sa CL_ItemDescription
  */
 static void UP_DecreaseFiremode_f (void)
 {

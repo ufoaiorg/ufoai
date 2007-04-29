@@ -35,4 +35,5 @@
 ./client/cl_view.c
 ./client/cl_aliencont.c
 ./client/cl_save.c
+./client/client.h
 ./po/OTHER_STRINGS
