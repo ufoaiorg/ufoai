@@ -207,7 +207,7 @@ menu aliencont
 		size "480 160"
 		format "16 170"
 		num 0
-		height	"10"
+		height	"20"
 //		bgcolor "1 1 1 0.5"
 		mousefx true
 		wheel
