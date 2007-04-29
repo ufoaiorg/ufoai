@@ -235,7 +235,6 @@ Section "SourceCode" SEC03
   SetOutPath "$INSTDIR\src\ports\linux"
   File "..\..\ports\linux\*.h"
   File "..\..\ports\linux\*.c"
-  File "..\..\ports\linux\*.s"
   File "..\..\ports\linux\*.xbm"
   File "..\..\ports\linux\*.png"
   SetOutPath "$INSTDIR\src\ports\null"
