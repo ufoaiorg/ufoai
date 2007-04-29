@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-04-26 19:39+0200\n"
-"PO-Revision-Date: 2007-04-26 19:42+0100\n"
+"PO-Revision-Date: 2007-04-29 09:15+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -10466,7 +10466,7 @@ msgstr "%s Waffe mit\n"
 #: client/cl_ufopedia.c:342
 #: client/cl_ufopedia.c:348
 msgid "One-handed"
-msgstr "Einhändig"
+msgstr "Einhändige"
 
 #: client/cl_ufopedia.c:240
 #: client/cl_ufopedia.c:243
@@ -10475,7 +10475,7 @@ msgstr "Einhändig"
 #: client/cl_ufopedia.c:342
 #: client/cl_ufopedia.c:348
 msgid "Two-handed"
-msgstr "Beidhändig"
+msgstr "Beidhändige"
 
 #: client/cl_ufopedia.c:241
 #: client/cl_ufopedia.c:340
