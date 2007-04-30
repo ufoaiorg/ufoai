@@ -871,7 +871,7 @@ static void CL_ActorAppear (sizebuf_t *sb)
 	}
 
 	/* add team members to the actor list */
-	CL_AddActorToTeamList( le );
+	CL_AddActorToTeamList(le);
 
 /*	Com_Printf( "Player at (%i %i %i) -> (%f %f %f)\n", */
 /*		le->pos[0], le->pos[1], le->pos[2], le->origin[0], le->origin[1], le->origin[2] ); */
@@ -1016,7 +1016,7 @@ static void CL_PlaceItem (le_t *le)
 		 * This is disabled for now because it'll prevent LE_Add to get a floor-edict when in mid-move.
 		 * See g_client.c:G_ClientInvMove
 		 */
-		/* le->inuse = qfalse; */ 
+		/* le->inuse = qfalse; */
 	}
 }
 

@@ -462,9 +462,11 @@ void G_EndGame (int team)
 				gi.AddEvent(PM_ALL, EV_ACTOR_STATECHANGE);
 				gi.WriteShort(ent->number);
 				gi.WriteShort(STATE_DEAD);
-				level.num_alive[ent->team]--;
 				level.num_kills[team][ent->team]++;
 			}
+		/* also kill all civilians */
+		level.num_kills[team][TEAM_CIVILIAN] += level.num_alive[TEAM_CIVILIAN];
+		level.num_alive[TEAM_CIVILIAN] = 0;
 	}
 
 	/* Make everything visible to anyone who can't already see it */
