@@ -1759,7 +1759,6 @@ static int CL_CheckAction (void)
 	}
 */
 	if (cls.team != cl.actTeam) {
-		Com_Printf("This isn't your round.\n");
 		CL_DisplayHudMessage(_("This isn't your round\n"), 2000);
 		return qfalse;
 	}
