@@ -2513,7 +2513,7 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
 		MSG_WriteByte(sb, b->baseStatus);
 
 		MSG_WriteByte(sb, b->aircraftCurrent);
-		MSG_WriteByte(sb, b->numAircraftInBase);
+		MSG_WriteShort(sb, b->aircraftCurrent); /* might be -1 */
 		for (k = 0; k < b->numAircraftInBase; k++) {
 			aircraft = &b->aircraft[k];
 			MSG_WriteString(sb, aircraft->id);
@@ -2641,7 +2641,7 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 		gd.numBuildings[i] = MSG_ReadShort(sb);
 		b->condition = MSG_ReadByte(sb);
 		b->baseStatus = MSG_ReadByte(sb);
-		b->aircraftCurrent = MSG_ReadByte(sb);
+		b->aircraftCurrent = MSG_ReadShort(sb);
 		b->numAircraftInBase = MSG_ReadByte(sb);
 		for (k = 0; k < b->numAircraftInBase; k++) {
 			aircraft = CL_GetAircraft(MSG_ReadString(sb));
