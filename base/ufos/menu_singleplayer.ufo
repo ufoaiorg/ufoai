@@ -153,6 +153,11 @@ menu singleplayer
 		pos	"768 552"
 		align	cc
 	}
+	func init
+	{
+		// sv_ai might be deactivated because we were in the multiplayer menu before
+		cmd "set sv_ai 1;"
+	}
 }
 
 menu singleplayerInGame extends singleplayer
