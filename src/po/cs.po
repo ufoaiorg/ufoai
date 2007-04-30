@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-04-30 17:22+0200\n"
-"PO-Revision-Date: 2007-04-29 18:36+0100\n"
+"POT-Creation-Date: 2007-04-30 22:51+0200\n"
+"PO-Revision-Date: 2007-04-30 21:31+0100\n"
 "Last-Translator: Lubomír Bláha <tritol@trilogic.cz>\n"
 "Language-Team: čeština <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -568,6 +568,8 @@ msgid "Weapons"
 msgstr "Zbraně"
 
 #: ../base/ufos/menu_aircraft.ufo:423 ../base/ufos/menu_aircraft.ufo:433
+#: ../base/ufos/menu_buy.ufo:1000 ../base/ufos/menu_production.ufo:380
+#: ../base/ufos/menu_team.ufo:1331
 msgid "Armour"
 msgstr "Zbroj"
 
@@ -993,11 +995,6 @@ msgstr "Ostatní"
 msgid "Show armour"
 msgstr "Ukázat zbroj"
 
-#: ../base/ufos/menu_buy.ufo:1000 ../base/ufos/menu_production.ufo:380
-#: ../base/ufos/menu_team.ufo:1331
-msgid "Armor"
-msgstr "Zbroj"
-
 #: ../base/ufos/menu_buy.ufo:1058 ../base/ufos/menu_team.ufo:1376
 #: ../base/ufos/menu_ufopedia.ufo:343
 msgid "Previous weapon chambered for this ammunition"
@@ -1074,8 +1071,8 @@ msgstr "Zahájit kampaň"
 #: ../base/ufos/menu_campaign.ufo:96 ../base/ufos/menu_multiplayer.ufo:123
 #: ../base/ufos/menu_multiplayer.ufo:527 ../base/ufos/menu_options.ufo:123
 #: ../base/ufos/menu_singleplayer.ufo:152
-#: ../base/ufos/menu_singleplayer.ufo:537
-#: ../base/ufos/menu_singleplayer.ufo:720 ../base/ufos/menu_tutorials.ufo:66
+#: ../base/ufos/menu_singleplayer.ufo:542
+#: ../base/ufos/menu_singleplayer.ufo:725 ../base/ufos/menu_tutorials.ufo:66
 msgid "Back"
 msgstr "Zpět"
 
@@ -1123,8 +1120,8 @@ msgstr "Vybudovat základnu"
 
 #: ../base/ufos/menu_geoscape.ufo:253 ../base/ufos/menu_hud.ufo:695
 #: ../base/ufos/menu_main.ufo:110 ../base/ufos/menu_multiplayeringame.ufo:89
-#: ../base/ufos/menu_singleplayer.ufo:214
-#: ../base/ufos/menu_singleplayer.ufo:356
+#: ../base/ufos/menu_singleplayer.ufo:219
+#: ../base/ufos/menu_singleplayer.ufo:361
 msgid "Options"
 msgstr "Nastavení"
 
@@ -1216,7 +1213,7 @@ msgstr "Zvolit položku"
 
 #: ../base/ufos/menu_geoscape.ufo:759
 msgid "Type:"
-msgstr "Typ:"
+msgstr "Druh:"
 
 #: ../base/ufos/menu_geoscape.ufo:827
 msgid "Action:"
@@ -1492,9 +1489,9 @@ msgstr "Znovu"
 #: ../base/ufos/menu_lostwon.ufo:230 ../base/ufos/menu_lostwon.ufo:245
 #: ../base/ufos/menu_multiplayeringame.ufo:69
 #: ../base/ufos/menu_singleplayer.ufo:132
-#: ../base/ufos/menu_singleplayer.ufo:176
-#: ../base/ufos/menu_singleplayer.ufo:193
-#: ../base/ufos/menu_singleplayer.ufo:296
+#: ../base/ufos/menu_singleplayer.ufo:181
+#: ../base/ufos/menu_singleplayer.ufo:198
+#: ../base/ufos/menu_singleplayer.ufo:301
 msgid "Continue"
 msgstr "Pokračovat"
 
@@ -1514,8 +1511,8 @@ msgstr "Jak hrát"
 msgid "Credits"
 msgstr "Titulky"
 
-#: ../base/ufos/menu_main.ufo:170 ../base/ufos/menu_singleplayer.ufo:222
-#: ../base/ufos/menu_singleplayer.ufo:376
+#: ../base/ufos/menu_main.ufo:170 ../base/ufos/menu_singleplayer.ufo:227
+#: ../base/ufos/menu_singleplayer.ufo:381
 msgid "Exit"
 msgstr "Konec"
 
@@ -1536,7 +1533,7 @@ msgid "Load team from current selected slot"
 msgstr "Načíst tým z vybrané pozice"
 
 #: ../base/ufos/menu_multiplayer.ufo:247 ../base/ufos/menu_singleplayer.ufo:89
-#: ../base/ufos/menu_singleplayer.ufo:434
+#: ../base/ufos/menu_singleplayer.ufo:439
 msgid "Load"
 msgstr "Načíst"
 
@@ -1546,7 +1543,7 @@ msgstr "Uložit tým do vybrané pozice"
 
 #: ../base/ufos/menu_multiplayer.ufo:267
 #: ../base/ufos/menu_singleplayer.ufo:109
-#: ../base/ufos/menu_singleplayer.ufo:600
+#: ../base/ufos/menu_singleplayer.ufo:605
 msgid "Save"
 msgstr "Uložit"
 
@@ -1644,7 +1641,7 @@ msgstr "Povolit morálku:"
 
 #: ../base/ufos/menu_multiplayer.ufo:979
 msgid "Gametype:"
-msgstr "Typ hry:"
+msgstr "Druh hry:"
 
 #: ../base/ufos/menu_multiplayer.ufo:1018
 msgid "Teamplay:"
@@ -1772,14 +1769,12 @@ msgid "Force start"
 msgstr "Vynutit zahájení"
 
 #: ../base/ufos/menu_multiplayer.ufo:1738
-#, fuzzy
 msgid "Enter server password"
-msgstr "Heslo serveru:"
+msgstr "Zadat heslo serveru"
 
 #: ../base/ufos/menu_multiplayer.ufo:1746
-#, fuzzy
 msgid "Password:"
-msgstr "Heslo RCON:"
+msgstr "Heslo:"
 
 #: ../base/ufos/menu_multiplayer.ufo:1787
 msgid "1on1"
@@ -2187,35 +2182,35 @@ msgstr "Nová hra"
 msgid "Load last saved game or continue playing"
 msgstr "Načíst poslední uloženou pozici nebo pokračovat v hraní"
 
-#: ../base/ufos/menu_singleplayer.ufo:316
+#: ../base/ufos/menu_singleplayer.ufo:321
 msgid "Abort"
 msgstr "Přerušit"
 
-#: ../base/ufos/menu_singleplayer.ufo:336
+#: ../base/ufos/menu_singleplayer.ufo:341
 msgid "Retry"
 msgstr "Znovu"
 
-#: ../base/ufos/menu_singleplayer.ufo:775
+#: ../base/ufos/menu_singleplayer.ufo:780
 msgid "Thank you for playing UFO:Alien Invasion"
 msgstr "Díky za hraní UFO:Cizácká invaze"
 
-#: ../base/ufos/menu_singleplayer.ufo:784
+#: ../base/ufos/menu_singleplayer.ufo:789
 msgid "Now after you have finished the single-player campaigns"
 msgstr "Když jste teď dohrál kampaně pro jednoho hráče"
 
-#: ../base/ufos/menu_singleplayer.ufo:792
+#: ../base/ufos/menu_singleplayer.ufo:797
 msgid "you should try the multiplayer features"
 msgstr "měl byste zkusit také hru s více hráči"
 
-#: ../base/ufos/menu_singleplayer.ufo:801
+#: ../base/ufos/menu_singleplayer.ufo:806
 msgid "Visit http://www.ufoai.net"
 msgstr "Navštivte http://www.ufoai.net"
 
-#: ../base/ufos/menu_singleplayer.ufo:810
+#: ../base/ufos/menu_singleplayer.ufo:815
 msgid "and join irc.freenode.org #ufo:ai"
 msgstr "a připojte se k irc.freenode.org #ufo:ai"
 
-#: ../base/ufos/menu_singleplayer.ufo:819 ../base/ufos/seq_intro.ufo:73
+#: ../base/ufos/menu_singleplayer.ufo:824 ../base/ufos/seq_intro.ufo:73
 #: ../base/ufos/seq_intro.ufo:192
 msgid "Click to continue"
 msgstr "Klik pro pokračování"
@@ -2974,12 +2969,15 @@ msgstr ""
 "line is, we cannot duplicate this alien technology. We don't know how they "
 "create their antimatter or how they manage to generate enough electricity to "
 "do so. Unless and until we can get our hands on this equipment, our efforts "
-"will be fruitless. Our only major successes have come from studying how the "
-"aliens store their antimatter. We are confident we can employ the same "
-"magnetic storage techniques, creating special facilities for safely storing "
-"up to ten grammes of antimatter, and we've designed antimatter fuel tanks "
-"that should fit in our interceptors given some major overhaul. Of course "
-"we'll need a full understanding of the alien engines before we can begin "
+"will be fruitless.\n"
+"\n"
+"Our only major successes have come from studying how the aliens store their "
+"antimatter. We're confident we can employ the same magnetic storage "
+"techniques, creating special facilities for safely storing up to ten grammes "
+"of antimatter. I've sent you a set of blueprints in a separate message to "
+"peruse at your convenience. We've also designed antimatter fuel tanks that "
+"should fit in our interceptors given some major overhaul. Of course we'll "
+"need a full understanding of the alien engines before we can begin "
 "incorporating it.\n"
 "\n"
 "For all intents and purposes, we are unable to replicate the alien fuel. If "
@@ -6747,7 +6745,7 @@ msgid "Alien Artifact - Particle Beam Pistol"
 msgstr "Cizácký artefakt - Částicová pistole"
 
 #: ../base/ufos/research.ufo:1656 ../base/ufos/research.ufo:1721
-#: ../base/ufos/research.ufo:1785
+#: ../base/ufos/research.ufo:1785 ../base/ufos/research.ufo:1819
 msgid "pbeamammo_txt"
 msgstr ""
 "Commander, my method worked. I think we've managed to crack the secrets of "
@@ -6803,7 +6801,7 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:1657 ../base/ufos/research.ufo:1722
-#: ../base/ufos/research.ufo:1786
+#: ../base/ufos/research.ufo:1786 ../base/ufos/research.ufo:1820
 msgid "pbeamammo_pre_txt"
 msgstr ""
 "Commander, we've decided that more research is badly needed on the particle "
@@ -6962,16 +6960,6 @@ msgstr "Cizácký artefakt - Částicová puška"
 #: ../base/ufos/research.ufo:1833
 msgid "Man-Portable Particle Beams"
 msgstr "Ruční částicové zbraně"
-
-#: ../base/ufos/research.ufo:1819
-msgid "pbeam_ammo_txt"
-msgstr ""
-"Na překladu se pracuje. Více informací na\n"
-"http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
-
-#: ../base/ufos/research.ufo:1820
-msgid "pbeam_ammo_pre_txt"
-msgstr "Před výzkumem nejsou dostupné žádné informace."
 
 #: ../base/ufos/research.ufo:1855
 msgid "combat_armour_txt"
@@ -8644,9 +8632,7 @@ msgstr ""
 "prostě ten nejlepší stíhací nástroj jaký jsem kdy viděl. Budeme ho "
 "potřebovat.\n"
 "\n"
-"\n"
 "Statistiky letounu:\n"
-"\n"
 "\n"
 "Rozměry: 5m x 11m x 4m\n"
 "\n"
@@ -9401,9 +9387,9 @@ msgstr ""
 "When not engaged in combat, Shevaar spend most of their time as scouts or "
 "skirmishers, or as herders for captured humans.\n"
 "\n"
-")There is a complex set of implants in the subject's throat that will "
-"require further research to be fully understood. I will send you a more "
-"detailed analysis along with a research proposal.\n"
+"There is a complex set of implants in the subject's throat that will require "
+"further research to be fully understood. I will send you a more detailed "
+"analysis along with a research proposal.\n"
 "\n"
 "We should be careful whenever we encounter these aliens in the field. They "
 "are fast and dangerous skirmishers who prefer to fight from cover, and "
@@ -12871,7 +12857,7 @@ msgstr "Stavy morálky:\t%s\n"
 #: client/cl_main.c:949
 #, c-format
 msgid "Gametype:\t%s\n"
-msgstr "Typ hry:\t%s\n"
+msgstr "Druh hry:\t%s\n"
 
 #: client/cl_main.c:951
 #, c-format
@@ -12911,16 +12897,15 @@ msgstr "Maximum vojáků na tým:\t%s\n"
 #: client/cl_main.c:966 client/cl_main.c:969
 #, c-format
 msgid "Password protected:\t%s\n"
-msgstr ""
+msgstr "Chráněno heslem:\t%s\n"
 
 #: client/cl_main.c:966
 msgid "yes"
 msgstr "ano"
 
 #: client/cl_main.c:969
-#, fuzzy
 msgid "no"
-msgstr "Sníh"
+msgstr "ne"
 
 # doladit
 #: client/cl_main.c:1083
@@ -13049,7 +13034,7 @@ msgid ""
 "Objective: %s\n"
 msgstr ""
 "Místo: %s\n"
-"Typ: %s\n"
+"Druh: %s\n"
 "Úkol: %s\n"
 
 #: client/cl_map.c:891
@@ -13774,14 +13759,13 @@ msgid "No requirements"
 msgstr "Bez závislostí"
 
 #: client/cl_ufopedia.c:244
-#, fuzzy
 msgid "Type:\tProtection / Hardness:\n"
-msgstr "%s:\tOchrana: %i\tOdolnost: %i\n"
+msgstr "Druh:\tOchrana / Odolnost:\n"
 
 #: client/cl_ufopedia.c:246
-#, fuzzy, c-format
+#, c-format
 msgid "%s\t%i / %i\n"
-msgstr "%s\t%s\t(%i/%i)\n"
+msgstr "%s\t%i / %i\n"
 
 #: client/cl_ufopedia.c:251
 #, c-format
@@ -14119,6 +14103,17 @@ msgstr "5 dnů"
 #: po/OTHER_STRINGS:12
 msgid "Take a screenshot"
 msgstr "Udělat snímek obrazovky"
+
+#~ msgid "Armor"
+#~ msgstr "Zbroj"
+
+#~ msgid "pbeam_ammo_txt"
+#~ msgstr ""
+#~ "Na překladu se pracuje. Více informací na\n"
+#~ "http://ufoai.ninex.info/wiki/index.php/User_talk:Kavol"
+
+#~ msgid "pbeam_ammo_pre_txt"
+#~ msgstr "Před výzkumem nejsou dostupné žádné informace."
 
 #~ msgid "Armor\n"
 #~ msgstr "Zbroj\n"
