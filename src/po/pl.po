@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-04-30 22:40+0200\n"
-"PO-Revision-Date: 2007-04-30 23:35+0100\n"
-"Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
+"PO-Revision-Date: 2007-04-30 23:59+0100\n"
+"Last-Translator: Maciej Wierzbicki <voovoos@killfile.pl>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -34,15 +34,13 @@ msgstr ""
 
 #: ../base/maps/frozend.ump:316
 #: ../base/maps/frozenn.ump:283
-#, fuzzy
 msgid "Multiplayer Coop"
-msgstr "Wieloosobowa"
+msgstr "Drużynowa - współpraca"
 
 #: ../base/maps/frozend.ump:336
 #: ../base/maps/frozenn.ump:303
-#, fuzzy
 msgid "Multiplayer Deathmatch"
-msgstr "Wieloosobowa"
+msgstr "Drużynowa - deathmatch"
 
 #: ../base/maps/orientald.ump:178
 #: ../base/maps/orientaln.ump:159
@@ -1128,7 +1126,6 @@ msgstr "Pokaż pancerze"
 #: ../base/ufos/menu_buy.ufo:1058
 #: ../base/ufos/menu_team.ufo:1376
 #: ../base/ufos/menu_ufopedia.ufo:343
-#, fuzzy
 msgid "Previous weapon chambered for this ammunition"
 msgstr "Poprzednia broń korzystająca z tej amunicji"
 
@@ -1136,12 +1133,11 @@ msgstr "Poprzednia broń korzystająca z tej amunicji"
 #: ../base/ufos/menu_team.ufo:1391
 #: ../base/ufos/menu_ufopedia.ufo:358
 msgid "Previous ammunition compatible with this weapon"
-msgstr ""
+msgstr "Poprzednia amunicja do tej broni"
 
 #: ../base/ufos/menu_buy.ufo:1089
 #: ../base/ufos/menu_team.ufo:1407
 #: ../base/ufos/menu_ufopedia.ufo:373
-#, fuzzy
 msgid "Next weapon chambered for this ammunition"
 msgstr "Następna broń korzystająca z tej amunicji"
 
@@ -1149,12 +1145,11 @@ msgstr "Następna broń korzystająca z tej amunicji"
 #: ../base/ufos/menu_team.ufo:1422
 #: ../base/ufos/menu_ufopedia.ufo:388
 msgid "Next ammunition compatible with this weapon"
-msgstr ""
+msgstr "Kolejna amunicja do tej broni"
 
 #: ../base/ufos/menu_buy.ufo:1120
 #: ../base/ufos/menu_team.ufo:1438
 #: ../base/ufos/menu_ufopedia.ufo:403
-#, fuzzy
 msgid "With weapon:"
 msgstr "Broń:"
 
@@ -1162,7 +1157,7 @@ msgstr "Broń:"
 #: ../base/ufos/menu_team.ufo:1447
 #: ../base/ufos/menu_ufopedia.ufo:412
 msgid "With ammo:"
-msgstr ""
+msgstr "Amunicja:"
 
 #: ../base/ufos/menu_buy.ufo:1146
 #: ../base/ufos/menu_team.ufo:1464
@@ -1947,7 +1942,7 @@ msgstr "Wybór drużyny"
 
 #: ../base/ufos/menu_multiplayer.ufo:1490
 msgid "Click the big button in the lower right corner when ready"
-msgstr ""
+msgstr "Kliknij przycisk w prawym dolnym rogu gdy jesteś gotowy"
 
 #: ../base/ufos/menu_multiplayer.ufo:1526
 msgid "Max. players per team"
@@ -1971,12 +1966,11 @@ msgstr "Poprzednia wolna drużyna"
 
 #: ../base/ufos/menu_multiplayer.ufo:1582
 msgid "Finish the teamselection and start the game"
-msgstr ""
+msgstr "Wybierz drużynę i rozpocznij grę"
 
 #: ../base/ufos/menu_multiplayer.ufo:1600
-#, fuzzy
 msgid "Activate chat"
-msgstr "Aktywuje podpowiedzi"
+msgstr "Czat"
 
 #: ../base/ufos/menu_multiplayer.ufo:1663
 msgid "Please wait"
@@ -1999,14 +1993,12 @@ msgid "Force start"
 msgstr "Rozpocznij"
 
 #: ../base/ufos/menu_multiplayer.ufo:1738
-#, fuzzy
 msgid "Enter server password"
-msgstr "Hasło serwera:"
+msgstr "Wpisz hasło serwera"
 
 #: ../base/ufos/menu_multiplayer.ufo:1746
-#, fuzzy
 msgid "Password:"
-msgstr "Hasło RCONa:"
+msgstr "Hasło:"
 
 #: ../base/ufos/menu_multiplayer.ufo:1787
 msgid "1on1"
@@ -8959,9 +8951,9 @@ msgstr "Zapłacono %i kredytów regulujących Twój dług."
 #: client/cl_save.c:213
 #: client/cl_ufopedia.c:516
 #: client/cl_ufopedia.c:522
-#, fuzzy, c-format
+#, c-format
 msgid "%i %s %02i"
-msgstr "%02i %s %i"
+msgstr "%i %s %02i"
 
 #: client/cl_campaign.c:1397
 #, c-format
@@ -9329,12 +9321,11 @@ msgstr "Max. liczba żołnierzy w drużynie:\t%s\n"
 #: client/cl_main.c:969
 #, c-format
 msgid "Password protected:\t%s\n"
-msgstr ""
+msgstr "Ochrona hasłem:\t%s\n"
 
 #: client/cl_main.c:966
-#, fuzzy
 msgid "yes"
-msgstr "Tak"
+msgstr ""
 
 #: client/cl_main.c:969
 msgid "no"
@@ -9522,7 +9513,7 @@ msgstr "Ukryj HUD (ESC by przywrócić HUD)"
 #: client/cl_menu.c:4145
 #, c-format
 msgid "%i %s %02i, %02i:%02i: "
-msgstr ""
+msgstr "%i %s %02i, %02i:%02i: "
 
 #: client/cl_parse.c:848
 msgid "Alien spotted:"
@@ -10196,9 +10187,9 @@ msgid "Type:\tProtection / Hardness:\n"
 msgstr ""
 
 #: client/cl_ufopedia.c:246
-#, fuzzy, c-format
+#, c-format
 msgid "%s\t%i / %i\n"
-msgstr "%s\t%s\t(%i/%i)\n"
+msgstr "%s\t%i / %i\n"
 
 #: client/cl_ufopedia.c:251
 #, c-format
@@ -10503,12 +10494,10 @@ msgid "Team %i (%s) will get the first turn.\n"
 msgstr "Drużyna %i ( %s) rozpocznie pierwszą turą.\n"
 
 #: po/OTHER_STRINGS:2
-#, fuzzy
 msgid "human"
 msgstr "Ludzie"
 
 #: po/OTHER_STRINGS:3
-#, fuzzy
 msgid "alien"
 msgstr "Obcy"
 
