@@ -2550,6 +2550,13 @@ qboolean G_ClientConnect (player_t * player, char *userinfo)
 		return qfalse;
 	}
 
+	value = Info_ValueForKey(userinfo, "password");
+	if (*password->string && Q_strcmp(password->string, "none")
+	 && Q_strcmp(password->string, value)) {
+		Info_SetValueForKey(userinfo, "rejmsg", "Password required or incorrect.");
+		return qfalse;
+	}
+
 	/* fix for fast reconnects after a disconnect */
 	if (player->inuse) {
 		gi.bprintf(PRINT_HIGH, "%s already in use.\n", player->pers.netname);
