@@ -410,7 +410,6 @@ menu mp_team
 		cmd	"set mn_slot 0;team_comments;set team human;"
 		teamslot0
 	}
-
 }
 
 // ==================
@@ -1707,6 +1706,79 @@ menu multiplayer_wait
 	{
 		timeout 2000
 		cmd "mp_wait_init"
+	}
+}
+
+// ==========================
+// SERVER PASSWORD
+// ==========================
+menu serverpassword
+{
+	zone popup
+	{
+		invis true
+	}
+	pic back
+	{
+		image	menu/popup
+		pos	"256 256"
+	}
+
+	pic bt_close
+	{
+		image	hud/close
+		pos	"722 284"
+		click	{ cmd "mn_pop" }
+	}
+
+	string title
+	{
+		pos	"512 282"
+		align	uc
+		string	"_Enter server password"
+	}
+
+	// ===================
+	// PASSWORD
+	// ===================
+	string current_password
+	{
+		string  "_Password:"
+		pos     "330 320"
+	}
+	pic slot_password
+	{
+		image   menu/save_slot
+		pos     "330 340"
+		mousefx true
+		click   { cmd "msgmenu ?password" *txt_password color "1 1 1 1" *txt_password mousefx true }
+	}
+	string txt_password
+	{
+		string "*cvar password"
+		pos "335 345"
+		color "0 .78 0 1"
+	}
+	confunc password_changed { *txt_password color "0 .78 0 1" *txt_password mousefx false }
+
+	pic bt_ok
+	{
+		tooltip	"_Close this dialogue"
+		image	menu/multi_buttons3
+		texh	"256 64"
+		texl	"0 32"
+		pos	"560 454"
+		out	{ *string_ok color "0 0.5 0 1" *bt_ok image menu/multi_buttons3 }
+		in	{ *string_ok color "1 1 1 1" *bt_ok image menu/multi_buttons3a }
+		click	{ cmd "mn_pop;" }
+	}
+	string string_ok
+	{
+		font	f_menu
+		color	"0 0.5 0 1"
+		string	"_OK"
+		pos	"648 470"
+		align	cc
 	}
 }
 
