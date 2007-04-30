@@ -1504,7 +1504,7 @@ void CL_AddActorToTeamList (le_t * le)
 		Cbuf_AddText(va("huddeselect%i\n", i));
 		if (cl.numTeamList == 1)
 			CL_ActorSelectList(0);
-		Com_Printf("CL_AddActorToTeamList()... CL_SetDefaultReactionFiremode() will be called now\n");
+		Com_DPrintf("CL_AddActorToTeamList()... CL_SetDefaultReactionFiremode() will be called now\n");
 		CL_SetDefaultReactionFiremode(i, 'r');	/**< Set default reaction firemode for this soldier. */
 #if 0
 		/* TODO: remove this if the above works (this should fix the wrong setting of the default firemode on re-try or next mission) */
