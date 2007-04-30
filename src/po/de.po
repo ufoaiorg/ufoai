@@ -3,8 +3,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-04-30 17:22+0200\n"
-"PO-Revision-Date: 2007-04-30 17:33+0100\n"
+"POT-Creation-Date: 2007-04-30 22:40+0200\n"
+"PO-Revision-Date: 2007-04-30 23:41+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -107,7 +107,7 @@ msgstr "Stiletto I"
 
 #: ../base/ufos/aircraftmanagement.ufo:76
 msgid "Saracen-class Interceptor"
-msgstr "Sarazenen-Klasse Abfangjäger"
+msgstr "Sarazen-Klasse Abfangjäger"
 
 #: ../base/ufos/aircraftmanagement.ufo:77
 msgid "Saracen I"
@@ -118,7 +118,7 @@ msgstr "Sarazene I"
 #: ../base/ufos/research.ufo:2476
 #: ../base/ufos/research.ufo:2483
 msgid "UFO - Scout"
-msgstr "UFO - Aufklärer"
+msgstr "UFO - Kundschafter"
 
 #: ../base/ufos/aircraftmanagement.ufo:100
 msgid "Scout U"
@@ -586,6 +586,9 @@ msgstr "Waffen"
 
 #: ../base/ufos/menu_aircraft.ufo:423
 #: ../base/ufos/menu_aircraft.ufo:433
+#: ../base/ufos/menu_buy.ufo:1000
+#: ../base/ufos/menu_production.ufo:380
+#: ../base/ufos/menu_team.ufo:1331
 msgid "Armour"
 msgstr "Rüstung"
 
@@ -1137,12 +1140,6 @@ msgstr "Ausrüstung"
 msgid "Show armour"
 msgstr "Rüstungen anzeigen"
 
-#: ../base/ufos/menu_buy.ufo:1000
-#: ../base/ufos/menu_production.ufo:380
-#: ../base/ufos/menu_team.ufo:1331
-msgid "Armor"
-msgstr "Rüstung"
-
 #: ../base/ufos/menu_buy.ufo:1058
 #: ../base/ufos/menu_team.ufo:1376
 #: ../base/ufos/menu_ufopedia.ufo:343
@@ -1240,8 +1237,8 @@ msgstr "Starte Kampagne"
 #: ../base/ufos/menu_multiplayer.ufo:527
 #: ../base/ufos/menu_options.ufo:123
 #: ../base/ufos/menu_singleplayer.ufo:152
-#: ../base/ufos/menu_singleplayer.ufo:537
-#: ../base/ufos/menu_singleplayer.ufo:720
+#: ../base/ufos/menu_singleplayer.ufo:542
+#: ../base/ufos/menu_singleplayer.ufo:725
 #: ../base/ufos/menu_tutorials.ufo:66
 msgid "Back"
 msgstr "Zurück"
@@ -1298,8 +1295,8 @@ msgstr "Basis anlegen"
 #: ../base/ufos/menu_hud.ufo:695
 #: ../base/ufos/menu_main.ufo:110
 #: ../base/ufos/menu_multiplayeringame.ufo:89
-#: ../base/ufos/menu_singleplayer.ufo:214
-#: ../base/ufos/menu_singleplayer.ufo:356
+#: ../base/ufos/menu_singleplayer.ufo:219
+#: ../base/ufos/menu_singleplayer.ufo:361
 msgid "Options"
 msgstr "Optionen"
 
@@ -1719,9 +1716,9 @@ msgstr "Nochmal"
 #: ../base/ufos/menu_lostwon.ufo:245
 #: ../base/ufos/menu_multiplayeringame.ufo:69
 #: ../base/ufos/menu_singleplayer.ufo:132
-#: ../base/ufos/menu_singleplayer.ufo:176
-#: ../base/ufos/menu_singleplayer.ufo:193
-#: ../base/ufos/menu_singleplayer.ufo:296
+#: ../base/ufos/menu_singleplayer.ufo:181
+#: ../base/ufos/menu_singleplayer.ufo:198
+#: ../base/ufos/menu_singleplayer.ufo:301
 msgid "Continue"
 msgstr "Fortfahren"
 
@@ -1743,8 +1740,8 @@ msgid "Credits"
 msgstr "Mitwirkende"
 
 #: ../base/ufos/menu_main.ufo:170
-#: ../base/ufos/menu_singleplayer.ufo:222
-#: ../base/ufos/menu_singleplayer.ufo:376
+#: ../base/ufos/menu_singleplayer.ufo:227
+#: ../base/ufos/menu_singleplayer.ufo:381
 msgid "Exit"
 msgstr "Beenden"
 
@@ -1766,7 +1763,7 @@ msgstr "Markiertes Team laden"
 
 #: ../base/ufos/menu_multiplayer.ufo:247
 #: ../base/ufos/menu_singleplayer.ufo:89
-#: ../base/ufos/menu_singleplayer.ufo:434
+#: ../base/ufos/menu_singleplayer.ufo:439
 msgid "Load"
 msgstr "Laden"
 
@@ -1776,7 +1773,7 @@ msgstr "Team im gewählten Speicherplatz speichern"
 
 #: ../base/ufos/menu_multiplayer.ufo:267
 #: ../base/ufos/menu_singleplayer.ufo:109
-#: ../base/ufos/menu_singleplayer.ufo:600
+#: ../base/ufos/menu_singleplayer.ufo:605
 msgid "Save"
 msgstr "Speichern"
 
@@ -2452,35 +2449,35 @@ msgstr "Neues Spiel"
 msgid "Load last saved game or continue playing"
 msgstr "Lade das zuletzt gespeicherte Spiel und setze die Kampagne fort"
 
-#: ../base/ufos/menu_singleplayer.ufo:316
+#: ../base/ufos/menu_singleplayer.ufo:321
 msgid "Abort"
 msgstr "Abbrechen"
 
-#: ../base/ufos/menu_singleplayer.ufo:336
+#: ../base/ufos/menu_singleplayer.ufo:341
 msgid "Retry"
 msgstr "Wiederholen"
 
-#: ../base/ufos/menu_singleplayer.ufo:775
+#: ../base/ufos/menu_singleplayer.ufo:780
 msgid "Thank you for playing UFO:Alien Invasion"
 msgstr "Danke, dass Du UFO:Alien Invasion gespielt hast"
 
-#: ../base/ufos/menu_singleplayer.ufo:784
+#: ../base/ufos/menu_singleplayer.ufo:789
 msgid "Now after you have finished the single-player campaigns"
 msgstr "Nachdem Sie nun die Einzelspieler-Kampagnen beendet haben"
 
-#: ../base/ufos/menu_singleplayer.ufo:792
+#: ../base/ufos/menu_singleplayer.ufo:797
 msgid "you should try the multiplayer features"
 msgstr "sollten Sie die Multiplayer-Möglichkeiten ausprobieren"
 
-#: ../base/ufos/menu_singleplayer.ufo:801
+#: ../base/ufos/menu_singleplayer.ufo:806
 msgid "Visit http://www.ufoai.net"
 msgstr "Besuchen Sie http://www.ufoai.net"
 
-#: ../base/ufos/menu_singleplayer.ufo:810
+#: ../base/ufos/menu_singleplayer.ufo:815
 msgid "and join irc.freenode.org #ufo:ai"
 msgstr "und betreten Sie irc.freenode.org #ufo:ai"
 
-#: ../base/ufos/menu_singleplayer.ufo:819
+#: ../base/ufos/menu_singleplayer.ufo:824
 #: ../base/ufos/seq_intro.ufo:73
 #: ../base/ufos/seq_intro.ufo:192
 msgid "Click to continue"
@@ -5454,6 +5451,7 @@ msgstr "Alien Artefakt - Partikelstrahlpistole"
 #: ../base/ufos/research.ufo:1656
 #: ../base/ufos/research.ufo:1721
 #: ../base/ufos/research.ufo:1785
+#: ../base/ufos/research.ufo:1819
 msgid "pbeamammo_txt"
 msgstr ""
 "Herr Kommandant, meine Methode hat funktioniert. Ich denke, wir haben es geschafft, die Geheimnisse der mysteriösen Partikelstrahlwaffen aufzudecken. Hier sind meine Ergebnisse.\n"
@@ -5475,6 +5473,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:1657
 #: ../base/ufos/research.ufo:1722
 #: ../base/ufos/research.ufo:1786
+#: ../base/ufos/research.ufo:1820
 msgid "pbeamammo_pre_txt"
 msgstr ""
 "Herr Kommandant, wir haben entschieden, dass wir dringend mehr Forschung in Richtung Partikelstrahlwaffen brauchen, besonders ihre mysteriöse Kraftquelle, die Magazine, die wir bis jetzt noch nicht untersuchen konnten. Keine noch so hohe Raffinesse oder Ausführung hat uns in die Lage versetzt, sie zu öffnen. Darum schlage ich hiermit extreme Maßnahmen vor.\n"
@@ -5564,46 +5563,6 @@ msgstr "Alien Artefakt - Partikelstrahlgewehr"
 #: ../base/ufos/research.ufo:1833
 msgid "Man-Portable Particle Beams"
 msgstr "Tragbare Partikelstrahlen"
-
-#: ../base/ufos/research.ufo:1819
-#, fuzzy
-msgid "pbeam_ammo_txt"
-msgstr ""
-"Technische Spezifikationen: HE Rakete\n"
-"\n"
-"KLASSIFIZIERUNGSSTUFE GELB\n"
-"\n"
-"PHALANX Extraterrestrial Response Unit\n"
-"\n"
-"Technisches Dokument, Freigabe Delta\n"
-"\n"
-"Gespeichert: 20. März 2084\n"
-"\n"
-"Von: Cdr. Paul Navarre, F&E: Technische Abteilung, PHALANX, Atlantisches Operationskommando\n"
-"\n"
-"\n"
-"\n"
-"Überblick\n"
-"\n"
-"Dies ist eine 120mm Feststoffrakete mit einem hochexplosiven Sprengkopf. Sie wird elektronisch durch einen Funkenzünder innerhalb des Laufes abgefeuert. Der Brennstoff ist sehr stabil und widerstandsfähig gegen Erschütterung und Hitze, obwohl er unter längerer Hitzeeinwirkung verbrennen würde. Der Sprengkopf selbst ist komplett inaktiv bis er gezündet wird. Feuer kann ihn nicht entzünden, bevor es scharf gemacht wurde. Genau wie C4 Sprengstoff, das unscharfe Gemisch innerhalb des Sprengkopfes würde eher verbrennen als explodieren, wenn es Hitze oder offenem Feuer ausgesetzt ist.\n"
-"\n"
-"Da sie keine eigene Elektronik hat, ist die Rakete unempfindlich gegen EMP und elektronische Störung. Das gesamte Zielen wird vom Werfer selbst erledigt. Daher wird eine gutgezielte Rakete ihr Ziel immer erreichen, egal was während des Fluges passiert.\n"
-"\n"
-"Die Rakete wird in einen HPML Raketenwerfer geladen.\n"
-"\n"
-"\n"
-"Empfohlener Einsatz\n"
-"\n"
-"Alle Soldaten, die mit einem Raketenwerfer bewaffnet sind, sollten wenigstens eine Ersatzrakete dabei haben, wenn sie auf das Schlachtfeld geschickt werden. Zwei oder mehr ist sehr anzuraten. Es ist nicht empfehlenswert, Soldaten ohne genug Munition in den Kampf zu schicken.\n"
-"\n"
-"\n"
-"Zusatz\n"
-"\n"
-"Keiner."
-
-#: ../base/ufos/research.ufo:1820
-msgid "pbeam_ammo_pre_txt"
-msgstr "Noch keine Informationen verfügbar. Bitte erst erforschen."
 
 #: ../base/ufos/research.ufo:1855
 msgid "combat_armour_txt"
@@ -6757,7 +6716,7 @@ msgid "bloodspider_autopsy_txt"
 msgstr ""
 "Herr Kommandant,\n"
 "\n"
-"mein Team hat die Überreste der arachniden Maschine abgeschlossen, die unsere Truppen zurückgebracht haben und wir haben eine Zusammenfassung für sie vorbereitet.\n"
+"mein Team hat die Untersuchung der Überreste der arachniden Maschine abgeschlossen, die unsere Truppen zurückgebracht haben und wir haben eine Zusammenfassung für sie vorbereitet.\n"
 "\n"
 "Die Autopsie zeigt, dass die Kreatur ein komplexer Roboter ohne organische Komponenten ist. Sein Körper erinnert an die irdischen Spinnen; ein zentraler Körper, der das künstliche Gehirn und die Energiezellen beinhaltet und acht Beine, die von kräftigen Servomotoren angetrieben werden, was es der Spinne erlaubt, sich mit beängstigender Geschwindigkeit über das Schlachtfeld zu bewegen. Sie hat einen rasiermesserscharfen Unterkiefer, der in der Lage ist, menschliche Opfer in Sekunden zu zerteilen und Gewebe oder Organe in einem großen Hohlraum vor den Energiezellen zu lagern. Diese Maschinen wurden beobachtet, wie sie während einer Terrormission lebende Menschen zerteilten und ihre Biomasse in sich aufnahmen. Dieser Prozess ist grauenvoll und sehr, sehr kurz.\n"
 "\n"
@@ -6855,7 +6814,7 @@ msgstr ""
 "\n"
 "Unter Feuer verkürzte sich der Begriff zu \"Ta ama\" und als die Schießereien vorbei waren, hat er sich noch weiter verändert. Jeder hat sich auf den Begriff \"Taman\" (Aussprache: 'tah-man') als das Wort festgelegt, das den grauen Albtraum beschreibt, der sie dahingemetzelt hat. Der Name gilt immer noch, aber wir können nun mit Bestimmtheit sagen, dass sie aus Fleisch und Blut bestehen, anstatt aus Feuer und Dunkelheit.\n"
 "\n"
-"Als erstes und möglicherweise am interessantesten ist die Tatsache, dass die Kreatur fast menschlich aussieht. Zwei Arme, zwei Beine, ein Oberkörper und ein Kopf; zweibeinige Fortbewegung; Sicht-, Geruchs- und Gehörorgane in den gleichen Positionen. Die Hände und Füße des Subjekts haben drei lange Finger bzw. Zehen, einer davon (der 'Daumen') ist gegenüber den anderen. Die Spezies ist durchschnittlich kleiner als Menschen und hat einen dünnen, delikaten Körper, der ihrer Zähigkeit lügen straft.\n"
+"Als erstes und möglicherweise am interessantesten ist die Tatsache, dass die Kreatur fast menschlich aussieht. Zwei Arme, zwei Beine, ein Oberkörper und ein Kopf; zweibeinige Fortbewegung; Sicht-, Geruchs- und Gehörorgane in den gleichen Positionen. Die Hände und Füße des Subjekts haben drei lange Finger bzw. Zehen, einer davon (der 'Daumen') ist gegenüber den anderen. Die Spezies ist durchschnittlich kleiner als Menschen und hat einen dünnen, zierlichen Körper, der ihrer Zähigkeit lügen straft.\n"
 "\n"
 "Das Subjekt hat eine einfache Reihe lebenswichtiger Organe; Herz, Lungen, Leber etc. Es hat nicht die ungebrauchten und überflüssigen Organe, die die Menschen durch ihre Evolution getragen haben. Biologisch gesehen ist der Verdauungstrakt des Subjekts am interessantesten. Die Kreatur hat 3 Mägen, die für die Verdauung für sehr zähe pflanzliche Materie gedacht sind. Sie sind unfähig, irgendeine Art Fleisch zu verdauen. Daraus schließen wir, dass die Tamans Pflanzenfresser sind, die sich von irgendeiner Art Flora ernähren, wo auch immer sie herkommen. Dieser Fund hat einige unserer nervöseren Teammitglieder beruhigt. Wenigstens wissen wir jetzt, dass die Außerirdischen uns nicht wegen unseres Fleisches ernten.\n"
 "\n"
@@ -6875,7 +6834,7 @@ msgstr ""
 "\n"
 "Das weitere Studium hat andere wilde Theorien ausgeschlossen. Obwohl das Aussehen eines Taman dem der Menschen sehr ähnlich ist, fast schon genug, um eine Art Verwandtschaft zu vermuten, scheinen sie mehr das Ergebnis einer Art zusammenlaufender Evolution zu sein (zwei verschiedene Pfade zu einem ähnlichen Endergebnis), als eine Blutverwandtschaft. Es gibt nur sehr wenige Ähnlichkeiten zwischen der Gensequenz der Taman und der Menschen und die Chromatinstruktur in ihrer DNA sind weit komplexer als unsere. Das schließt einen theoretischen, gemeinsamen Ursprung aus.\n"
 "\n"
-"Im Kampf sind Tamans eine große Gefahr. Sie sind sehr beweglich und können verschiedene Waffen mit großer Genauigkeit benutzen. Neben ihrem Einsatz als Soldaten haben sie viele spezielle Rollen in der außerirdischen Kriegsmaschinerie, Positionen, in denen die Tamans am zahlreichsten sind. Komplexe Waffen und fortgeschrittene Rüstungen werden öfter von Tamans getragen, als von anderen Spezies. Das ist wahrscheinlich wegen ihrer großen Gehirne, sensorischen Organe und delikaten Finger.\n"
+"Im Kampf sind Tamans eine große Gefahr. Sie sind sehr beweglich und können verschiedene Waffen mit großer Genauigkeit benutzen. Neben ihrem Einsatz als Soldaten haben sie viele spezielle Rollen in der außerirdischen Kriegsmaschinerie, Positionen, in denen die Tamans am zahlreichsten sind. Komplexe Waffen und fortgeschrittene Rüstungen werden öfter von Tamans getragen, als von anderen Spezies. Das ist wahrscheinlich wegen ihrer großen Gehirne, sensorischen Organe und zierlichen Finger.\n"
 "\n"
 "Ob die Taman die 'Grauen' der alten UFO Entführungsgeschichten sind, konnten wir nicht herausbekommen, aber es scheint extrem unwahrscheinlich. PHALANX hat nie einen Bericht von Aktivitäten seitens Außerirdischen seit 1950 bestätigen können. Die UFOs, die wir heute sehen, sind auf jeden Fall keine fliegenden Scheiben. Wenn sie die Erde vor einem Jahrhundert hätten invasieren können, warum bis heute warten? Es passt nicht zusammen -- aber wer kann schon etwas über die Motivation eines außerirdischen Bewusstseins sagen?\n"
 "\n"
@@ -10870,6 +10829,60 @@ msgstr "5 Tage"
 msgid "Take a screenshot"
 msgstr "Screenshot speichern"
 
+#~ msgid "Armor"
+#~ msgstr "Rüstung"
+
+#, fuzzy
+#~ msgid "pbeam_ammo_txt"
+#~ msgstr ""
+#~ "Technische Spezifikationen: HE Rakete\n"
+#~ "\n"
+#~ "KLASSIFIZIERUNGSSTUFE GELB\n"
+#~ "\n"
+#~ "PHALANX Extraterrestrial Response Unit\n"
+#~ "\n"
+#~ "Technisches Dokument, Freigabe Delta\n"
+#~ "\n"
+#~ "Gespeichert: 20. März 2084\n"
+#~ "\n"
+#~ "Von: Cdr. Paul Navarre, F&E: Technische Abteilung, PHALANX, Atlantisches "
+#~ "Operationskommando\n"
+#~ "\n"
+#~ "\n"
+#~ "\n"
+#~ "Überblick\n"
+#~ "\n"
+#~ "Dies ist eine 120mm Feststoffrakete mit einem hochexplosiven Sprengkopf. "
+#~ "Sie wird elektronisch durch einen Funkenzünder innerhalb des Laufes "
+#~ "abgefeuert. Der Brennstoff ist sehr stabil und widerstandsfähig gegen "
+#~ "Erschütterung und Hitze, obwohl er unter längerer Hitzeeinwirkung "
+#~ "verbrennen würde. Der Sprengkopf selbst ist komplett inaktiv bis er "
+#~ "gezündet wird. Feuer kann ihn nicht entzünden, bevor es scharf gemacht "
+#~ "wurde. Genau wie C4 Sprengstoff, das unscharfe Gemisch innerhalb des "
+#~ "Sprengkopfes würde eher verbrennen als explodieren, wenn es Hitze oder "
+#~ "offenem Feuer ausgesetzt ist.\n"
+#~ "\n"
+#~ "Da sie keine eigene Elektronik hat, ist die Rakete unempfindlich gegen "
+#~ "EMP und elektronische Störung. Das gesamte Zielen wird vom Werfer selbst "
+#~ "erledigt. Daher wird eine gutgezielte Rakete ihr Ziel immer erreichen, "
+#~ "egal was während des Fluges passiert.\n"
+#~ "\n"
+#~ "Die Rakete wird in einen HPML Raketenwerfer geladen.\n"
+#~ "\n"
+#~ "\n"
+#~ "Empfohlener Einsatz\n"
+#~ "\n"
+#~ "Alle Soldaten, die mit einem Raketenwerfer bewaffnet sind, sollten "
+#~ "wenigstens eine Ersatzrakete dabei haben, wenn sie auf das Schlachtfeld "
+#~ "geschickt werden. Zwei oder mehr ist sehr anzuraten. Es ist nicht "
+#~ "empfehlenswert, Soldaten ohne genug Munition in den Kampf zu schicken.\n"
+#~ "\n"
+#~ "\n"
+#~ "Zusatz\n"
+#~ "\n"
+#~ "Keiner."
+#~ msgid "pbeam_ammo_pre_txt"
+#~ msgstr "Noch keine Informationen verfügbar. Bitte erst erforschen."
 #~ msgid "Hit the lower right button to finish the teamselection"
 #~ msgstr "Drück den Knopf unten rechts wenn du das Team gewählt hast."
 #~ msgid "Armor\n"
