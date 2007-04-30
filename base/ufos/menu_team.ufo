@@ -1319,7 +1319,7 @@ menu equipment
 		align	cc
 		color "1 1 1 0.6"
 		font	"f_big"
-		string	"_Armor"
+		string	"_Armour"
 	}
 
 	// ==================
