@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-04-30 23:42+0200\n"
+"POT-Creation-Date: 2007-04-30 23:46+0200\n"
 "PO-Revision-Date: 2007-04-30 21:31+0100\n"
 "Last-Translator: Lubomír Bláha <tritol@trilogic.cz>\n"
 "Language-Team: čeština <cs@li.org>\n"
@@ -417,7 +417,6 @@ msgid "Captain"
 msgstr "kapitán"
 
 #: ../base/ufos/medals.ufo:89
-#, fuzzy
 msgid "Cpt"
 msgstr "kpt."
 
@@ -11664,11 +11663,11 @@ msgstr "Panikaří!\n"
 msgid "Nobody selected\n"
 msgstr "Nikdo nevybrán\n"
 
-#: client/cl_actor.c:1763
+#: client/cl_actor.c:1762
 msgid "This isn't your round\n"
 msgstr "Nejste na tahu\n"
 
-#: client/cl_actor.c:1896
+#: client/cl_actor.c:1895
 msgid ""
 "You cannot reload this unknown item.\n"
 "You need to research it and its ammunition first.\n"
@@ -11676,57 +11675,57 @@ msgstr ""
 "Tento neznámý předmět nelze nabít.\n"
 "Nejprve je třeba zkoumat jej a jeho munici také.\n"
 
-#: client/cl_actor.c:2409
+#: client/cl_actor.c:2408
 msgid "was stunned.\n"
 msgstr "byl omráčen.\n"
 
-#: client/cl_actor.c:2414
+#: client/cl_actor.c:2413
 msgid "was killed.\n"
 msgstr "byl zabit.\n"
 
-#: client/cl_actor.c:2421
+#: client/cl_actor.c:2420
 msgid "A civilian was stunned.\n"
 msgstr "Byl omráčen civilista.\n"
 
-#: client/cl_actor.c:2423
+#: client/cl_actor.c:2422
 msgid "A civilian was killed.\n"
 msgstr "Byl zabit civilista.\n"
 
-#: client/cl_actor.c:2431
+#: client/cl_actor.c:2430
 msgid "An alien was stunned:"
 msgstr "Byl omráčen cizák:"
 
-#: client/cl_actor.c:2435
+#: client/cl_actor.c:2434
 msgid "An alien was killed:"
 msgstr "Byl zabit cizák:"
 
-#: client/cl_actor.c:2440 client/cl_actor.c:2446
+#: client/cl_actor.c:2439 client/cl_actor.c:2445
 msgid "An alien was stunned.\n"
 msgstr "Byl omráčen cizák.\n"
 
-#: client/cl_actor.c:2442 client/cl_actor.c:2448
+#: client/cl_actor.c:2441 client/cl_actor.c:2447
 msgid "An alien was killed.\n"
 msgstr "Byl zabit cizák.\n"
 
-#: client/cl_actor.c:2453
+#: client/cl_actor.c:2452
 msgid "A soldier was stunned.\n"
 msgstr "Byl omráčen voják.\n"
 
-#: client/cl_actor.c:2455
+#: client/cl_actor.c:2454
 msgid "A soldier was killed.\n"
 msgstr "Byl zabit voják.\n"
 
-#: client/cl_actor.c:2459
+#: client/cl_actor.c:2458
 #, c-format
 msgid "A member of team %i was stunned.\n"
 msgstr "Byl omráčen člen týmu %i.\n"
 
-#: client/cl_actor.c:2461
+#: client/cl_actor.c:2460
 #, c-format
 msgid "A member of team %i was killed.\n"
 msgstr "Byl zabit člen týmu %i.\n"
 
-#: client/cl_actor.c:2631
+#: client/cl_actor.c:2630
 msgid "Your round started!\n"
 msgstr "Začal váš tah!\n"
 
