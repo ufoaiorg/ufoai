@@ -910,6 +910,7 @@ static void CL_ParseServerInfoMessage (void)
 	*var = '\0';
 	Com_DPrintf("%s\n", s);
 	Cvar_Set("mn_mappic", "maps/shots/na.jpg");
+	Cvar_Set("mn_server_need_password", "0"); /* string */
 
 	Com_sprintf(serverInfoText, sizeof(serverInfoText), _("IP\t%s\n\n"), NET_AdrToString(net_from));
 
@@ -964,6 +965,14 @@ static void CL_ParseServerInfoMessage (void)
 			Q_strcat(serverInfoText, va(_("Max. soldiers per player:\t%s\n"), value), sizeof(serverInfoText));
 		else if (!Q_strncmp(var, "maxsoldiers", 11))
 			Q_strcat(serverInfoText, va(_("Max. soldiers per team:\t%s\n"), value), sizeof(serverInfoText));
+		else if (!Q_strncmp(var, "needpass", 8)) {
+			if (*value == '1') {
+				Q_strcat(serverInfoText, va(_("Password protected:\t%s\n"), _("yes")), sizeof(serverInfoText));
+				Cvar_Set("mn_server_need_password", "1"); /* string */
+			} else {
+				Q_strcat(serverInfoText, va(_("Password protected:\t%s\n"), _("no")), sizeof(serverInfoText));
+			}
+		}
 #ifdef DEBUG
 		else
 			Q_strcat(serverInfoText, va("%s\t%s\n", var, value), sizeof(serverInfoText));
@@ -1027,6 +1036,11 @@ static void CL_ServerConnect_f (void)
 	/* TODO: if we are in multiplayer auto generate a team */
 	if (!B_GetNumOnTeam()) {
 		MN_Popup(_("Error"), _("Assemble a team first"));
+		return;
+	}
+
+	if (Cvar_VariableInteger("mn_server_need_password") && !*info_password->string) {
+		MN_PushMenu("serverpassword");
 		return;
 	}
 

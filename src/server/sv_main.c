@@ -458,7 +458,7 @@ static void SVC_DirectConnect (void)
 			Netchan_OutOfBandPrint(NS_SERVER, adr, "print\n%s\nConnection refused.\n", Info_ValueForKey(userinfo, "rejmsg"));
 		else
 			Netchan_OutOfBandPrint(NS_SERVER, adr, "print\nConnection refused.\n");
-		Com_DPrintf("Game rejected a connection.\n");
+		Com_Printf("Game rejected a connection.\n");
 		return;
 	}
 

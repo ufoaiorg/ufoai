@@ -236,16 +236,18 @@ extern void CL_ItemDescription (int item)
 #endif
 	/* set description text */
 	if (RS_IsResearched_ptr(od->tech)) {
+		*itemText = '\0';
 		if (!Q_strncmp(od->type, "armor", 5)) {
-			/* TODO: Print protection */
-			Com_sprintf(itemText, sizeof(itemText), _("Armor\n") );
+			Q_strcat(itemText, va(_("Type:\tProtection / Hardness:\n")), sizeof(itemText));
+			for (i = 0; i < csi.numDTs; i++)
+				Q_strcat(itemText, va(_("%s\t%i / %i\n"), _(csi.dts[i]), od->protection[i], od->hardness[i]), sizeof(itemText));
 		} else if (!Q_strncmp(od->type, "ammo", 4)) {
 			*itemText = '\0';
 			/* more will be written below */
 		} else if (od->weapon && (od->reload || od->thrown)) {
-			/* TODO: Print available ammunitions and their firemodes for non-throwable weapon */
 			Com_sprintf(itemText, sizeof(itemText), _("%s weapon with\n"), (od->firetwohanded ? _("Two-handed") : _("One-handed")));
 			Q_strcat(itemText, va(_("Max ammo:\t%i\n"), (int) (od->ammo)), sizeof(itemText));
+			/* more will be written below */
 		} else if (od->weapon) {
 			Com_sprintf(itemText, sizeof(itemText), _("%s ammo-less weapon with\n"), (od->firetwohanded ? _("Two-handed") : _("One-handed")));
 			/* more will be written below */
