@@ -1085,7 +1085,7 @@ void RS_UpdateData (void)
 			/* Display the concated text in the correct list-entry.
 			 * But embed it in brackets if it isn't researched in the current base. */
 			if ((tech->scientists > 0) && (tech->base_idx != baseCurrent->idx)) {
-				Com_sprintf(name, sizeof(name), "(%s)", name);
+				Com_sprintf(name, sizeof(name), "(%s)", _(name));
 			}
 			Cvar_Set(va("mn_researchitem%i", j), _(name));
 			/* Assign the current tech in the global list to the correct entry in the displayed list. */

@@ -55,7 +55,7 @@ void HOS_CheckRemovalFromEmployeeList (employee_t* employee)
 		for (; i < employeesInHospitalListCount; i++, j++) {
 			if (employeesInHospitalList[i] == employee) {
 				j++;
-				Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Healing of %s completed - %i active healings left\n"), employee->chr.name, employeesInHospitalListCount-1);
+				Com_sprintf(messageBuffer, sizeof(messageBuffer), ngettext("Healing of %s completed - %i active healing left\n", "Healing of %s completed - %i active healings left\n", employeesInHospitalListCount-1), employee->chr.name, employeesInHospitalListCount-1);
 				employeesInHospitalListCount--;
 				MN_AddNewMessage(_("Healing complete"), messageBuffer, qfalse, MSG_STANDARD, NULL);
 			}
