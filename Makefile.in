@@ -63,6 +63,16 @@ HAVE_CURSES=@HAVE_CURSES@
 HAVE_IPV6=@HAVE_IPV6@
 HAVE_SHADERS=@HAVE_SHADERS@
 
+# assign parameters from configure
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+BINDIR=@bindir@
+datarootdir=@datarootdir@
+DATADIR=@datadir@/ufoai
+INSTALL=./install-sh
+
+VERSION=$(shell grep UFO_VERSION src/qcommon/qcommon.h | sed -e 's/.*UFO_VERSION \"\(.*\)\"/\1/')
+
 #######################################################################################################
 
 .PHONY: all all2 clean echo_info
@@ -123,6 +133,58 @@ include build/various.mk
 
 maps: $(UFO2MAP_TARGET)
 	@$(MAKE) -C base/maps all
+
+#
+# Target to install the whole game - executables and game data.
+#
+# Use configure's parameters --bindir= and --datadir= to specify destination
+# directories, "bindir" for run scripts and "datadir" for the whole game.
+# "ufoai/" will be appended to the end of datadir path.
+#
+install_complete: install_data install_exec
+
+#
+# Target to install only the executables, language files and the run script.
+# Other game data has to be installed from the ufoai-VERSION-data.tar archive.
+#
+# For destination directories see install_complete above.
+#
+install: install_exec
+	@echo
+	@echo Please unpack file ufoai-$(VERSION)-data.tar into $(DATADIR)
+	@echo
+	@echo
+
+#
+# Target to install only the game data.
+#
+install_data:
+	@$(MAKE) maps
+# Create all pk3 files
+	@cd base && ./archives.sh
+	$(INSTALL) -d $(DATADIR)/base
+# Copy them to datadir
+	$(INSTALL) -m 644 base/*.pk3 $(DATADIR)/base
+
+#
+# Target to install the game executables and language files. It also creates a
+# shell script to run the game and dedicated server from directory other than
+# datadir.
+#
+install_exec: $(TARGETS)
+	@$(MAKE) lang
+	$(INSTALL) -d $(DATADIR)/base
+# Copy each compiled file to datadir (with path)
+	for file in $(TARGETS); do $(INSTALL) -m 755 $$file $(DATADIR)/$$file; done
+# Copy all language files
+	for dir in base/i18n/*; do $(INSTALL) -m 644 $$dir/LC_MESSAGES/ufoai.mo $(DATADIR)/$$dir/LC_MESSAGES/ufoai.mo; done
+# Create and install run scripts
+	@echo "#!/bin/sh" > ufo.sh
+	@echo "cd $(DATADIR); ./ufo \$$*; exit \$$?" >> ufo.sh
+	$(INSTALL) -m 755 ufo.sh $(BINDIR)/ufo
+	@echo "#!/bin/sh" > ufoded.sh
+	@echo "cd $(DATADIR); ./ufoded \$$*; exit \$$?" >> ufoded.sh
+	$(INSTALL) -m 755 ufoded.sh $(BINDIR)/ufoded
 
 #######################################################################
 
