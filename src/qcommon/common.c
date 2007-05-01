@@ -409,6 +409,7 @@ void MSG_WriteCoord (sizebuf_t * sb, float f)
 
 /**
  * @brief
+ * @sa MSG_Read2Pos
  */
 void MSG_Write2Pos (sizebuf_t * sb, vec2_t pos)
 {
@@ -418,6 +419,7 @@ void MSG_Write2Pos (sizebuf_t * sb, vec2_t pos)
 
 /**
  * @brief
+ * @sa MSG_ReadPos
  */
 void MSG_WritePos (sizebuf_t * sb, vec3_t pos)
 {
@@ -779,6 +781,7 @@ float MSG_ReadCoord (sizebuf_t * msg_read)
 
 /**
  * @brief
+ * @sa MSG_Write2Pos
  */
 void MSG_Read2Pos (sizebuf_t * msg_read, vec2_t pos)
 {
@@ -788,6 +791,7 @@ void MSG_Read2Pos (sizebuf_t * msg_read, vec2_t pos)
 
 /**
  * @brief
+ * @sa MSG_WritePos
  */
 void MSG_ReadPos (sizebuf_t * msg_read, vec3_t pos)
 {
@@ -798,6 +802,9 @@ void MSG_ReadPos (sizebuf_t * msg_read, vec3_t pos)
 
 /**
  * @brief
+ * @sa MSG_WriteGPos
+ * @sa MSG_ReadByte
+ * @note pos3_t are byte values
  */
 void MSG_ReadGPos (sizebuf_t * msg_read, pos3_t pos)
 {
