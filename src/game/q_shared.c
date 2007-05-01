@@ -66,7 +66,11 @@ const char *pa_format[] =
 /*===========================================================================*/
 
 /**
- * @brief Sorts some strings
+ * @brief Compare two strings
+ * @param[in] string1 The first string
+ * @param[in] string2 The second string
+ * @return An integer less than, equal to, or greater than zero if string1 is
+ * found, respectively, to be less than,  to match, or be greater than string2
  * @note sort function pointer for qsort
  */
 int Q_StringSort (const void *string1, const void *string2)
@@ -127,7 +131,11 @@ int AngleToDV (int angle)
 #endif
 
 /**
- * @brief
+ * @brief Rotate a point around a given vector
+ * @param[in] dir The vector around which to rotate
+ * @param[in] point The point to be rotated
+ * @param[in] degrees How many degrees to rotate the point by
+ * @param[out] dst The point after rotation
  */
 void RotatePointAroundVector (vec3_t dst, const vec3_t dir, const vec3_t point, float degrees)
 {
@@ -315,7 +323,8 @@ void R_ConcatTransforms (float in1[3][4], float in2[3][4], float out[3][4])
 }
 
 /**
- * @brief
+ * @brief Print a 3D vector
+ * @param[in] v The vector to be printed
  */
 void Print3Vector (const vec3_t v)
 {
@@ -323,7 +332,8 @@ void Print3Vector (const vec3_t v)
 }
 
 /**
- * @brief
+ * @brief Print a 2D vector
+ * @param[in] v The vector to be printed
  */
 void Print2Vector (const vec2_t v)
 {
@@ -331,7 +341,10 @@ void Print2Vector (const vec2_t v)
 }
 
 /**
- * @brief Converts longitude and latitude to vector coordinates
+ * @brief Converts longitude and latitude to a 3D vector in Euclidean
+ * coordinates
+ * @param[in] a The longitude and latitude in a 2D vector
+ * @param[out] v The resulting normal 3D vector
  * @sa VecToPolar
  */
 void PolarToVec (const vec2_t a, vec3_t v)
@@ -1166,7 +1179,7 @@ void CrossProduct (vec3_t v1, vec3_t v2, vec3_t cross)
 double sqrt (double x);
 
 /**
- * @brief
+ * @brief Calculate the length of a vector
  * @param[in] v Vector to calculate the length of
  * @sa VectorNormalize
  * @return Vector length as vec_t
