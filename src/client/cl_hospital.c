@@ -36,7 +36,37 @@ static employee_t* currentEmployeeInHospital = NULL;
 static employee_t* employeesInHospitalList[MAX_EMPLOYEES_IN_HOSPITAL];
 static int employeesInHospitalListCount = 0;
 
+/** @brief This is a list of all employees that were healing in hospital but leave hospital during a mission */
+static employee_t* employeesHealingInMissionList[MAX_EMPLOYEES_IN_HOSPITAL];
+static int employeesHealingInMissionListCount = 0;
+
 static cvar_t* mn_hosp_heal_limit = NULL;
+
+/**
+ * @brief Remove an employee from a list (employeesInHospitalList or employeesHealingInMissionList)
+ * @return qtrue is the removal is OK
+ * @return qfalse else
+ */
+qboolean HOS_RemoveFromList (employee_t* employee, employee_t** listEmployee, int counter)
+{
+	int i = 0, j = 0;
+	qboolean test = qfalse;
+
+	for (; j < counter; i++, j++) {
+		if (listEmployee[i] == employee) {
+			j++;
+			test = qtrue;
+		}
+		listEmployee[i] = listEmployee[j];
+	}
+	for (; i < MAX_EMPLOYEES_IN_HOSPITAL; i++)
+		listEmployee[i] = NULL;
+
+	if (test)
+		return qtrue;
+	else
+		return qfalse;
+}
 
 /**
  * @brief Checks whether an employee should or can (in case of full healing) be removed
@@ -44,7 +74,6 @@ static cvar_t* mn_hosp_heal_limit = NULL;
  */
 void HOS_CheckRemovalFromEmployeeList (employee_t* employee)
 {
-	int i = 0, j = 0;
 	char messageBuffer[256];
 
 	if (!employeesInHospitalListCount)
@@ -52,21 +81,45 @@ void HOS_CheckRemovalFromEmployeeList (employee_t* employee)
 
 	if (employee->chr.HP >= employee->chr.maxHP) {
 		employee->chr.HP = employee->chr.maxHP;
-		for (; i < employeesInHospitalListCount; i++, j++) {
-			if (employeesInHospitalList[i] == employee) {
-				j++;
-				Com_sprintf(messageBuffer, sizeof(messageBuffer), ngettext("Healing of %s completed - %i active healing left\n", "Healing of %s completed - %i active healings left\n", employeesInHospitalListCount-1), employee->chr.name, employeesInHospitalListCount-1);
-				employeesInHospitalListCount--;
-				MN_AddNewMessage(_("Healing complete"), messageBuffer, qfalse, MSG_STANDARD, NULL);
-			}
-			employeesInHospitalList[i] = employeesInHospitalList[j];
+		if (HOS_RemoveFromList (employee, employeesInHospitalList, employeesInHospitalListCount)) {
+			employeesInHospitalListCount--;
+			Com_sprintf(messageBuffer, sizeof(messageBuffer), ngettext("Healing of %s completed - %i active healing left\n", "Healing of %s completed - %i active healings left\n", employeesInHospitalListCount), employee->chr.name, employeesInHospitalListCount);
+			MN_AddNewMessage(_("Healing complete"), messageBuffer, qfalse, MSG_STANDARD, NULL);
+		} else {
+			Com_Printf("Didn't find employee %s in employeesInHospitalList\n",employee->chr.name);
 		}
-		for (; j < MAX_EMPLOYEES_IN_HOSPITAL; j++)
-			employeesInHospitalList[j] = NULL;
 #ifdef DEBUG
 	} else {
 		Com_DPrintf("character with %i hp\n", employee->chr.HP);
 #endif
+	}
+}
+
+/**
+ * @brief Remove dead employees from employeesHealingInMissionList
+ */
+void HOS_RemoveDeadEmployees(void)
+{
+	int i = 0, j = 0;
+	int type;
+	employee_t* employee;
+	qboolean test = qtrue;
+	
+	for (; i < employeesHealingInMissionListCount; i++) {
+		type = employeesHealingInMissionList[i]->type;
+		for (j = 0; j < gd.numEmployees[type]; j++) {
+			employee = &gd.employees[type][j];
+			if (employee->idx == employeesHealingInMissionList[i]->idx) {
+				test = qfalse;
+				break;
+			}
+		}
+		if (test) {
+			if (HOS_RemoveFromList(employeesHealingInMissionList[i], employeesHealingInMissionList, employeesHealingInMissionListCount))
+				employeesHealingInMissionListCount--;
+			else
+				Com_Printf("Didn't find employee %s in employeesHealingInMissionList\n",employee->chr.name);
+		}
 	}
 }
 
@@ -76,7 +129,7 @@ void HOS_CheckRemovalFromEmployeeList (employee_t* employee)
 void HOS_AddToEmployeeList (employee_t* employee)
 {
 	int i;
-	/* alrady in our list? */
+	/* already in our list? */
 	for (i = 0; i < employeesInHospitalListCount; i++) {
 		if (employeesInHospitalList[i] == employee)
 			return;
@@ -84,6 +137,22 @@ void HOS_AddToEmployeeList (employee_t* employee)
 	/* overflow saftly */
 	if (employeesInHospitalListCount < MAX_EMPLOYEES_IN_HOSPITAL - 1)
 		employeesInHospitalList[employeesInHospitalListCount++] = employee;
+}
+
+/**
+ * @brief Adds an employee to the employeesHealingInMissionList array
+ */
+void HOS_AddToInMissionEmployeeList (employee_t* employee)
+{
+	int i;
+	/* already in our list? */
+	for (i = 0; i < employeesHealingInMissionListCount; i++) {
+		if (employeesHealingInMissionList[i] == employee)
+			return;
+	}
+	/* overflow saftly */
+	if (employeesHealingInMissionListCount < MAX_EMPLOYEES_IN_HOSPITAL - 1)
+		employeesHealingInMissionList[employeesHealingInMissionListCount++] = employee;
 }
 
 /**
@@ -343,6 +412,66 @@ static void HGS_StartHealing_f (void)
 }
 
 /**
+ * @brief Move soldiers leaving base in aircraft from employeesInHospitalList to employeesHealingInMissionList
+ * @sa AIM_AircraftStart_f
+ * @sa AIR_SendAircraftToMission
+ * @todo Soldiers should also be removed from employeesInHospitalList during transfers
+ * @todo All employees of a base should also be moved from employeesInHospitalList to employeesHealingInMissionList during base attack.
+ */
+extern void CL_RemoveEmployeesInHospital (aircraft_t *aircraft)
+{
+	int i;
+	int j;
+	employee_t* employee;
+
+	/* select all soldiers from aircraft who are healing in an hospital */
+	for (i = 0; i < aircraft->size; i++) {
+		if (aircraft->teamIdxs[i] > -1) {
+			for (j = 0; j < employeesInHospitalListCount; j++) {
+				employee = employeesInHospitalList[j];
+				if ((employee->type == EMPL_SOLDIER) && (aircraft->teamIdxs[i] == employee->idx)) { 
+					HOS_AddToInMissionEmployeeList(employee);
+					if (HOS_RemoveFromList (employee, employeesInHospitalList, employeesInHospitalListCount))
+						employeesInHospitalListCount--;
+				}
+			}
+		}
+	}
+}
+
+/**
+ * @brief Move soldiers leaving base in aircraft from employeesHealingInMissionList to employeesInHospitalList
+ * @sa CL_CampaignRunAircraft
+ * @todo All alive employees of a base should be moved from employeesHealingInMissionList to employeesInHospitalList after base attack
+ */
+extern void CL_ReaddEmployeesInHospital (aircraft_t *aircraft)
+{
+	int i;
+	int j;
+	employee_t* employee;
+
+	/* select all soldiers from aircraft who were healing in an hospital */
+	for (i = 0; i < aircraft->size; i++) {
+		if (aircraft->teamIdxs[i] > -1) {
+			for (j = 0; j < employeesHealingInMissionListCount; j++) {
+				employee = employeesHealingInMissionList[j];
+				if ((employee->type == EMPL_SOLDIER) && (aircraft->teamIdxs[i] == employee->idx)) { 
+					/* Soldier goes back to hospital only if he hasn't recover all his HP during mission (medikit) */
+					if (employee->chr.HP < employee->chr.maxHP) 
+						HOS_AddToEmployeeList(employee);
+
+					if (HOS_RemoveFromList (employee, employeesHealingInMissionList, employeesHealingInMissionListCount))
+						employeesHealingInMissionListCount--;
+				}
+			}
+		}
+	}
+
+	/* Clean up employeesHealingInMissionList of dead people */
+	HOS_RemoveDeadEmployees();
+}
+
+/**
  * @brief Initial stuff for hospitals
  * Bind some of the functions in this file to console-commands that you can call ingame.
  * Called from MN_ResetMenus resp. CL_InitLocal
@@ -360,6 +489,7 @@ extern void HOS_Reset (void)
 #endif
 	memset(hospitalText, 0, sizeof(hospitalText));
 	memset(employeesInHospitalList, 0, sizeof(employeesInHospitalList));
+	memset(employeesHealingInMissionList, 0, sizeof(employeesHealingInMissionList));
 	mn_hosp_heal_limit = Cvar_Get("mn_hosp_heal_limit", "0", 0, "Current hospital capacity (for current base)");
 }
 
