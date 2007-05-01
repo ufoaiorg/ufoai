@@ -315,13 +315,6 @@ mission_t* CL_AddMission(const char *name);
 void CL_ParseStage(const char *name, char **text);
 void CL_ParseCampaign(const char *name, char **text);
 void CL_ParseNations(const char *name, char **text);
-#if 0
-/* 20070228 Zenerka: new solution for collecting items from the battlefield
-   see CL_CollectingItems(), CL_SellorAddItems(), CL_CollectingAmmo(), CL_CarriedItems() */
-void CL_CollectItems(int won, int *number, int *credits);
-#endif
-void CL_CollectingItems(int won);
-void CL_SellOrAddItems(void);
 void CL_UpdateCredits(int credits);
 qboolean CL_OnBattlescape(void);
 void CL_GameInit (void);

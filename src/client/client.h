@@ -717,6 +717,9 @@ void CDAudio_RandomPlay(void);
 /* cl_produce.c */
 #include "cl_produce.h"
 
+/* cl_inventory.c */
+#include "cl_inventory.h"
+
 /* cl_aliencont.c */
 #include "cl_aliencont.h"
 

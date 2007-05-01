@@ -1942,14 +1942,9 @@ extern void CL_ParseResults (sizebuf_t * buf)
 		Cvar_Set("mn_active", "");
 		MN_PushMenu("main");
 	} else {
-#if 0
-/* 20070228 Zenerka: new solution for collecting items from the battlefield
-   see CL_CollectingItems(), CL_SellorAddItems(), CL_CollectingAmmo(), CL_CarriedItems() */
 		/* the mission was in singleplayer */
 		/* loot the battlefield */
-		CL_CollectItems(winner == we, &number_items, &credits_gained);
-#endif
-		CL_CollectingItems(winner == we);	/**< Collect items from the battlefield. */
+		INV_CollectingItems(winner == we);	/**< Collect items from the battlefield. */
 		if (winner == we)
 			AL_CollectingAliens();		/**< Collect aliens from the battlefield. */
 

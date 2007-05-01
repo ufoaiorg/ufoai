@@ -2067,43 +2067,6 @@ int RS_GetTechIdxByName (const char *name)
 }
 
 /**
- * @brief Enable autosell option.
- * @param[in] *tech Pointer to newly researched technology.
- * @sa RS_MarkResearched
- */
-void INV_EnableAutosell (technology_t *tech)
-{
-	int i = 0, j;
-	technology_t *ammotech = NULL;
-
-	/* If the tech leads to weapon or armour, find related item and enable autosell. */
-	if ((tech->type == RS_WEAPON) || (tech->type == RS_ARMOR)) {
-		for (i = 0; i < csi.numODs; i++) {
-			if (Q_strncmp(tech->provides, csi.ods[i].id, MAX_VAR) == 0) {
-				gd.autosell[i] = qtrue;
-				break;
-			}
-		}
-		if (i == csi.numODs)
-			return;
-	}
-
-	/* If the weapon has ammo, enable autosell for proper ammo as well. */
-	if ((tech->type == RS_WEAPON) && (csi.ods[i].reload)) {
-		for (j = 0; j < csi.numODs; j++) {
-			/* Find all suitable ammos for this weapon. */
-			if (INV_LoadableInWeapon(&csi.ods[j], i)) {
-				ammotech = RS_GetTechByProvided(csi.ods[j].id);
-				/* If the ammo is not produceable, don't enable autosell. */
-				if (ammotech && (ammotech->produceTime < 0))
-					continue;
-				gd.autosell[j] = qtrue;
-			}
-		}
-	}
-}
-
-/**
  * @brief
  */
 extern qboolean RS_Save (sizebuf_t* sb, void* data)
