@@ -17,16 +17,24 @@ linuxarchive:
 linuxinstaller:
 	$(MAKE) -f src/ports/linux/installer/Makefile
 
+#
+# Generate a tar archive of the sources.
+#
 sourcearchive:
-	if [ -x ./ufo ] ; then $(MAKE) clean ; fi
+# Create the tarsrc/ufoai-$(VERSION)-source directory in order that the
+# resulting tar archive extracts to one directory.
 	mkdir -p ./tarsrc
-	ln -s ../ tarsrc/ufoai-$(VERSION)-source
-	tar -cvjh \
-		-X src/ports/linux/tar.ex_src \
-		--exclude ufoai-$(VERSION)-source/Makefile \
-		--exclude ufoai-$(VERSION)-source/config.h \
-		-f ufoai-$(VERSION)-source.tar.bz2 \
-		-C ./tarsrc ufoai-$(VERSION)-source
+	ln -fsn ../ tarsrc/ufoai-$(VERSION)-source
+# Take a list of files from SVN. Trim SVN's output to include only the filenames
+# and paths. Then feed that list to tar.
+	svn status -v|grep -v "^?"|cut -c 7-|awk '{print $$4}'|sed "s/^/ufoai-$(VERSION)-source\//"> ./tarsrc/filelist
+# Also tell tar to exclude base/ and contrib/ directories.
+	tar -cvjh --no-recursion	\
+		-C ./tarsrc				\
+		--exclude "*base/*"		\
+		--exclude "*contrib*"	\
+		-T ./tarsrc/filelist	\
+		-f ufoai-$(VERSION)-source.tar.bz2
 	rm -rf ./tarsrc
 
 # this done by base/archives.sh
