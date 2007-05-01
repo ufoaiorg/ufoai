@@ -69,10 +69,11 @@ menu irc
 	text users_data
 	{
 		pos		"750 100"
-		size	"240 590"
+		size	"240 594"
 		bgcolor	"0.5 0.5 0.5 0.2"
 		format  "22 0"
 		num		"1"
+		height	"27"
 		wheel
 	}
 
