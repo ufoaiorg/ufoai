@@ -1784,7 +1784,7 @@ static void MN_Tooltip (menu_t *menu, menuNode_t *node, int x, int y)
 
 /**
  * @brief Load all menu images at startup
- * @TODO Rename and move this function and preload all character models and
+ * @todo Rename and move this function and preload all character models and
  * the models from models.ufo, too
  */
 void MN_PrecacheMenus (void)

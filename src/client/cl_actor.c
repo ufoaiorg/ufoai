@@ -322,7 +322,7 @@ static int CL_GetReactionState (le_t *le)
  * @return Time needed to reload or >= 999 if no suitable ammo found.
  * @note This routine assumes the time to reload a weapon
  * @note in the right hand is the same as the left hand.
- * @TODO Distinguish between LEFT(selActor) and RIGHT(selActor).
+ * @todo Distinguish between LEFT(selActor) and RIGHT(selActor).
  * @sa CL_RefreshWeaponButtons
  * @sa CL_CheckMenuAction
  */

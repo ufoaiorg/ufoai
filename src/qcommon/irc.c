@@ -784,7 +784,7 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 
 /**
  * @brief
- * @TODO: Implement me
+ * @todo: Implement me
  */
 static void Irc_Client_CmdRplNamreply (const char *params, const char *trailing)
 {
@@ -822,7 +822,7 @@ static void Irc_Client_CmdRplNamreply (const char *params, const char *trailing)
 
 /**
  * @brief
- * @TODO: Implement me
+ * @todo: Implement me
  */
 static void Irc_Client_CmdRplEndofnames (const char *params, const char *trailing)
 {

@@ -70,7 +70,7 @@ void Font_Shutdown (void)
 
 /**
  * @brief
- * @TODO: Check whether font is already loaded
+ * @todo: Check whether font is already loaded
  */
 font_t *Font_Analyze (const char *name, const char *path, int renderStyle, int size)
 {

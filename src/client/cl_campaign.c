@@ -3024,7 +3024,7 @@ extern void CL_ParseMission (const char *name, char **text)
 
 /**
  * @brief This function parses a list of items that should be set to researched = true after campaign start
- * @TODO: Implement the use of this function
+ * @todo: Implement the use of this function
  */
 extern void CL_ParseResearchedCampaignItems (const char *name, char **text)
 {

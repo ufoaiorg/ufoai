@@ -1915,7 +1915,7 @@ void G_ClientAction (player_t * player)
 /**
  * @brief Sets the teanum var for this match
  * @param[in] player Pointer to connected player
- * @TODO: Check whether there are enough free spawnpoints in all cases
+ * @todo: Check whether there are enough free spawnpoints in all cases
  */
 void G_GetTeam (player_t * player)
 {
@@ -2081,7 +2081,7 @@ void G_ClientTeamAssign (player_t * player)
 /**
  * @brief
  * @sa CL_SendTeamInfo
- * @TODO: Check size (fieldSize here)
+ * @todo: Check size (fieldSize here)
  */
 void G_ClientTeamInfo (player_t * player)
 {

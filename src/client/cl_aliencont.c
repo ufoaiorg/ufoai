@@ -310,7 +310,7 @@ void AL_AddAliens (void)
  * @sa AC_KillAll_f
  * @sa AC_KillOne_f
  * @note Call with name AL_UNKNOWN when no matters what type to remove.
- * @TODO integrate this with research system
+ * @todo integrate this with research system
  */
 void AL_RemoveAliens (const char *name, int amount, alienCalcType_t action)
 {
