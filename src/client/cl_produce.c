@@ -204,8 +204,8 @@ static void PR_UpdateRequiredItemsInBasestorage (int amount, requirements_t *req
 /**
  * @brief Add a new item to the bottom of the production queue.
  * @param[in] *queue
- * @param[in] objID
- * @param[in] amount
+ * @param[in] objID Index of object to produce (in csi.ods[]).
+ * @param[in] amount Desired amount to produce.
  * @return
  */
 static production_t *PR_QueueNew (production_queue_t *queue, signed int objID, signed int amount)
@@ -216,6 +216,11 @@ static production_t *PR_QueueNew (production_queue_t *queue, signed int objID, s
 	production_t *prod = NULL;
 
 	assert(baseCurrent);
+
+	if (E_CountHired(baseCurrent, EMPL_WORKER) <= 0) {
+		MN_Popup(_("Not enough workers"), _("You cannot queue productions without workers hired\nin this base.\n\nHire workers."));
+		return NULL;
+	}
 
 	numWorkshops = B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, B_WORKSHOP);
 
