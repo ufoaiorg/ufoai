@@ -2699,8 +2699,8 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
 		MSG_WriteByte(sb, b->condition);
 		MSG_WriteByte(sb, b->baseStatus);
 
-		MSG_WriteByte(sb, b->aircraftCurrent);
 		MSG_WriteShort(sb, b->aircraftCurrent); /* might be -1 */
+		MSG_WriteByte(sb, b->numAircraftInBase);
 		for (k = 0; k < b->numAircraftInBase; k++) {
 			aircraft = &b->aircraft[k];
 			MSG_WriteString(sb, aircraft->id);
