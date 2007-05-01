@@ -34,7 +34,8 @@ sourcearchive:
 		--exclude "*base/*"		\
 		--exclude "*contrib*"	\
 		-T ./tarsrc/filelist	\
-		-f ufoai-$(VERSION)-source.tar.bz2
+		-f ./tarsrc/ufoai-$(VERSION)-source.tar.bz2
+	mv ./tarsrc/ufoai-$(VERSION)-source.tar.bz2 ./
 	rm -rf ./tarsrc
 
 # this done by base/archives.sh
