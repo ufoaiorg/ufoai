@@ -40,8 +40,6 @@ static int employeesInHospitalListCount = 0;
 static employee_t* employeesHealingInMissionList[MAX_EMPLOYEES_IN_HOSPITAL];
 static int employeesHealingInMissionListCount = 0;
 
-static cvar_t* mn_hosp_heal_limit = NULL;
-
 /**
  * @brief Remove an employee from a list (employeesInHospitalList or employeesHealingInMissionList)
  * @return qtrue is the removal is OK
@@ -74,6 +72,7 @@ qboolean HOS_RemoveFromList (employee_t* employee, employee_t** listEmployee, in
  */
 void HOS_CheckRemovalFromEmployeeList (employee_t* employee)
 {
+	base_t *base;
 	char messageBuffer[256];
 
 	if (!employeesInHospitalListCount)
@@ -85,6 +84,9 @@ void HOS_CheckRemovalFromEmployeeList (employee_t* employee)
 			employeesInHospitalListCount--;
 			Com_sprintf(messageBuffer, sizeof(messageBuffer), ngettext("Healing of %s completed - %i active healing left\n", "Healing of %s completed - %i active healings left\n", employeesInHospitalListCount), employee->chr.name, employeesInHospitalListCount);
 			MN_AddNewMessage(_("Healing complete"), messageBuffer, qfalse, MSG_STANDARD, NULL);
+			base = &gd.bases[employee->baseIDHired];
+			assert (base);
+			base->capacities[CAP_HOSPSPACE].cur--;
 		} else {
 			Com_Printf("Didn't find employee %s in employeesInHospitalList\n",employee->chr.name);
 		}
@@ -124,9 +126,11 @@ void HOS_RemoveDeadEmployees(void)
 }
 
 /**
- * @brief Adds an employee to the employeesInHospitalList array
+ * @brief Adds an employee to the employeesInHospitalList array.
+ * @param[in] *base Pointer to the base with hospital, where the given employee will be healed.
+ * @param[in] *employee Pointer to the employee being added to hospital.
  */
-void HOS_AddToEmployeeList (employee_t* employee)
+void HOS_AddToEmployeeList (base_t *base, employee_t* employee)
 {
 	int i;
 	/* already in our list? */
@@ -134,9 +138,18 @@ void HOS_AddToEmployeeList (employee_t* employee)
 		if (employeesInHospitalList[i] == employee)
 			return;
 	}
+
+	employeesInHospitalList[employeesInHospitalListCount++] = employee;
+	base->capacities[CAP_HOSPSPACE].cur++;
+	return;
+
+#if 0
+	/* If I am not wrong, we don't need this - base capacities won't allow to add
+	   more employees than max capacity. 01052007 Zenerka. */
 	/* overflow saftly */
 	if (employeesInHospitalListCount < MAX_EMPLOYEES_IN_HOSPITAL - 1)
 		employeesInHospitalList[employeesInHospitalListCount++] = employee;
+#endif
 }
 
 /**
@@ -231,6 +244,9 @@ extern void HOS_HealAll (const base_t* const base)
 		}
 }
 
+#if 0
+/* Not needed - the amount of employees being healed is stored in
+   base->capacities[CAP_HOSPSPACE].cur 01052007 Zenerka */
 /**
  * @brief Count all employees in hospital of baseCurrent
  */
@@ -247,6 +263,7 @@ static int HOS_CountHealing (base_t* base)
 	}
 	return cnt;
 }
+#endif
 
 static char hospitalText[1024];
 
@@ -281,8 +298,8 @@ static void HOS_Init_f (void)
 		}
 
 	Cvar_SetValue("mn_hosp_medics", E_CountHired(baseCurrent, EMPL_MEDIC));
-	Cvar_SetValue("mn_hosp_heal_limit", MAX_EMPLOYEES_PER_HOSPITAL * B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, B_HOSPITAL));
-	Cvar_SetValue("mn_hosp_healing", HOS_CountHealing(baseCurrent));
+	Cvar_SetValue("mn_hosp_heal_limit", baseCurrent->capacities[CAP_HOSPSPACE].max);
+	Cvar_SetValue("mn_hosp_healing", baseCurrent->capacities[CAP_HOSPSPACE].cur);
 }
 
 #ifdef DEBUG
@@ -407,8 +424,33 @@ static void HGS_StartHealing_f (void)
 {
 	if (!baseCurrent || !currentEmployeeInHospital)
 		return;
-	if (mn_hosp_heal_limit->integer > employeesInHospitalListCount)
-		HOS_AddToEmployeeList(currentEmployeeInHospital);
+
+	assert (baseCurrent);
+
+	/* Add to the hospital if there is a room for the employee. */
+	if (baseCurrent->capacities[CAP_HOSPSPACE].cur < baseCurrent->capacities[CAP_HOSPSPACE].max) {
+		HOS_AddToEmployeeList(baseCurrent, currentEmployeeInHospital);
+		Cbuf_AddText("hosp_init;mn_pop\n");
+	} else {
+		memset(popupText, 0, sizeof(popupText));
+		/* No room for employee. */
+		if (currentEmployeeInHospital->type == EMPL_SOLDIER) {
+			Q_strcat(popupText, va("%s %s", 
+			_(gd.ranks[currentEmployeeInHospital->chr.rank].shortname),
+			currentEmployeeInHospital->chr.name), 
+			sizeof(popupText));
+		} else {
+			Q_strcat(popupText, va("%s %s", 
+			E_GetEmployeeString(currentEmployeeInHospital->type), 
+			currentEmployeeInHospital->chr.name),
+			sizeof(popupText));
+		}
+		Q_strcat(popupText, _(" needs to be placed in hospital,\nbut there is not enough room!\n\nBuild more hospitals.\n"),
+		sizeof(popupText));
+		
+		MN_Popup(_("Not enough hospital space"), popupText);
+		return;
+	}
 }
 
 /**
@@ -457,8 +499,8 @@ extern void CL_ReaddEmployeesInHospital (aircraft_t *aircraft)
 				employee = employeesHealingInMissionList[j];
 				if ((employee->type == EMPL_SOLDIER) && (aircraft->teamIdxs[i] == employee->idx)) { 
 					/* Soldier goes back to hospital only if he hasn't recover all his HP during mission (medikit) */
-					if (employee->chr.HP < employee->chr.maxHP) 
-						HOS_AddToEmployeeList(employee);
+					if (employee->chr.HP < employee->chr.maxHP)
+						HOS_AddToEmployeeList(aircraft->homebase, employee);
 
 					if (HOS_RemoveFromList (employee, employeesHealingInMissionList, employeesHealingInMissionListCount))
 						employeesHealingInMissionListCount--;
@@ -490,7 +532,6 @@ extern void HOS_Reset (void)
 	memset(hospitalText, 0, sizeof(hospitalText));
 	memset(employeesInHospitalList, 0, sizeof(employeesInHospitalList));
 	memset(employeesHealingInMissionList, 0, sizeof(employeesHealingInMissionList));
-	mn_hosp_heal_limit = Cvar_Get("mn_hosp_heal_limit", "0", 0, "Current hospital capacity (for current base)");
 }
 
 /**
