@@ -609,6 +609,7 @@ void RS_GetName (char *id, char *name)
  */
 static void RS_ResearchDisplayInfo (void)
 {
+	char tmpbuf[128];
 	technology_t *tech = NULL;
 	base_t *base = NULL;
 
@@ -621,8 +622,16 @@ static void RS_ResearchDisplayInfo (void)
 
 	tech = researchList[researchListPos];
 
-	/* Display total number of free labs in current base. */
-	Cvar_Set("mn_research_scis", va(_("Available scientists in this base: %i"), E_CountUnassigned(baseCurrent, EMPL_SCIENTIST)));
+	/* Display laboratories limits. */
+	Com_sprintf(tmpbuf, sizeof(tmpbuf), _("Laboratory space (all/used): %i/%i"), 
+	baseCurrent->capacities[CAP_LABSPACE].max, baseCurrent->capacities[CAP_LABSPACE].cur);
+	Cvar_Set("mn_research_labs", tmpbuf);
+
+	/* Display scientists amounts. */
+	Com_sprintf(tmpbuf, sizeof(tmpbuf), _("Scientists (all/available): %i/%i"), 
+	E_CountHired(baseCurrent, EMPL_SCIENTIST), E_CountUnassigned(baseCurrent, EMPL_SCIENTIST));
+	Cvar_Set("mn_research_scis", tmpbuf);
+
 	Cvar_Set("mn_research_selbase", _("Not researched in any base."));
 
 	/* Display the base this tech is researched in. */
