@@ -548,6 +548,7 @@ static void BS_IncreaseFactor_f (void)
 		Cvar_SetValue("mn_sfactor", baseCurrent->sellfactor);
 	}
 	/* Reinit the menu. */
+	Cmd_BufClear();
 	BS_BuyType_f();
 }
 
@@ -585,6 +586,7 @@ static void BS_DecreaseFactor_f (void)
 		Cvar_SetValue("mn_sfactor", baseCurrent->sellfactor);
 	}
 	/* Reinit the menu. */
+	Cmd_BufClear();
 	BS_BuyType_f();
 }
 
