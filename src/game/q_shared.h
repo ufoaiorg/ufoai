@@ -1311,6 +1311,7 @@ typedef struct character_s {
 	qboolean armor, weapons; /**< able to use weapons/armor */
 	int teamDesc;	/**< id in teamDesc array */
 	int category; 	/**< nameCategory id in nameCat */
+	int gender;	/**< the gender of this character */
 } character_t;
 
 /** @brief The types of employees */

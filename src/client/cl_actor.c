@@ -2355,6 +2355,7 @@ void CL_ActorDie (sizebuf_t * sb)
 	int i;
 	int teamDescID = -1;
 	char tmpbuf[128];
+	const char *actorSound;
 
 	MSG_ReadFormat(sb, ev_format[EV_ACTOR_DIE], &number, &state);
 
@@ -2456,6 +2457,9 @@ void CL_ActorDie (sizebuf_t * sb)
 			break;
 		}
 	}
+
+	actorSound = Com_GetActorSound(le->category, le->gender, SOUND_DEATH);
+	/* @todo play it */
 
 	VectorCopy(player_dead_maxs, le->maxs);
 	CL_RemoveActorFromTeamList(le);

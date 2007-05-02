@@ -486,6 +486,7 @@ typedef struct le_s {
 	int fieldSize;				/**< ACTOR_SIZE_* */
 	int teamDesc;
 	int category; 	/**< nameCategory_t index */
+	int gender;
 
 	/** is called before adding a le to scene */
 	qboolean(*addFunc) (struct le_s * le, entity_t * ent);

@@ -224,6 +224,7 @@ extern void G_AppearPerishEvent (int player_mask, int appear, edict_t * check)
 			gi.WriteByte(check->team);
 			gi.WriteByte(check->chr.teamDesc);
 			gi.WriteByte(check->chr.category);
+			gi.WriteByte(check->chr.gender);
 			gi.WriteByte(check->pnum);
 			gi.WriteGPos(check->pos);
 			gi.WriteByte(check->dir);

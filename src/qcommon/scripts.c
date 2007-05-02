@@ -709,6 +709,30 @@ char *Com_GiveModel (int type, int gender, char *category)
 }
 
 /**
+ * @brief Returns the actor sounds for a given category
+ * @param[in] category Index in nameCat array (from le_t after actor appear event)
+ * @param[in] gender The gender of the actor
+ * @param[in] sound Which sound category (actorSound_t)
+ */
+const char* Com_GetActorSound (int category, int gender, int soundType)
+{
+	int random;
+
+	if (category < 0 || category >= numNameCats) {
+		Com_Printf("Com_GetActorSound: invalid category: %i\n", category);
+		return NULL;
+	}
+	if (gender < 0 || gender >= 3) {
+		Com_Printf("Com_GetActorSound: invalid gender: %i\n", gender);
+		return NULL;
+	}
+
+	random = rand() % nameCat[category].numSounds[soundType][gender];
+
+	return nameCat[category].sounds[soundType][gender][random];
+}
+
+/**
  * @brief Assign 3D models and names to a character.
  * @param[in] team What team the character is on.
  * @param[in,out] chr The character that should get the paths to the differenbt models/skins.
@@ -757,6 +781,7 @@ int Com_GetModelAndName (const char *team, character_t * chr)
 			category = (int) td->cats[rand() % td->num];
 
 		chr->category = category;
+		chr->gender = gender;
 		for (i = 0; i < numTeamDesc; i++)
 			if (!Q_strcmp(teamDesc[i].id, nameCat[category].title)) {
 				/* transfered as byte - 0 means, not found - no -1 possible */
@@ -1045,7 +1070,7 @@ static void Com_ParseActorSounds (const char *name, char **text)
 		if (*token == '}')
 			break;
 
-		for (i = 0; i < NAME_NUM_TYPES; i++)
+		for (i = 0; i < NAME_LAST; i++)
 			if (!Q_strcmp(token, name_strings[i])) {
 				token = COM_EParse(text, errhead, name);
 				if (!*text)
