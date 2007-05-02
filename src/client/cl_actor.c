@@ -2355,7 +2355,6 @@ void CL_ActorDie (sizebuf_t * sb)
 	int i;
 	int teamDescID = -1;
 	char tmpbuf[128];
-	const char *actorSound;
 
 	MSG_ReadFormat(sb, ev_format[EV_ACTOR_DIE], &number, &state);
 
@@ -3420,7 +3419,7 @@ extern void CL_AddTargeting (void)
 void CL_PlayActorSound(int category, int gender, actorSound_t soundType)
 {
 	const char *actorSound;
-	
+
 	actorSound = Com_GetActorSound(category, gender, soundType);
 
 	Com_DPrintf("CL_PlayActorSound()... actorSound: %s\n", actorSound);
