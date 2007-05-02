@@ -722,11 +722,6 @@ int Com_GetModelAndName (const char *team, character_t * chr)
 	int i, gender, category = 0;
 	int retry = 1000;
 
-	if (!numTeamDefs) {
-		/*Sys_Error("Com_GetModelAndName: No team definitions found\n");*/
-		return 0;
-	}
-
 	/* get team definition */
 	for (i = 0; i < numTeamDefs; i++)
 		if (!Q_strncmp(team, teamDef[i].title, MAX_VAR))
@@ -761,6 +756,7 @@ int Com_GetModelAndName (const char *team, character_t * chr)
 		if (td)
 			category = (int) td->cats[rand() % td->num];
 
+		chr->category = category;
 		for (i = 0; i < numTeamDesc; i++)
 			if (!Q_strcmp(teamDesc[i].id, nameCat[category].title)) {
 				/* transfered as byte - 0 means, not found - no -1 possible */

@@ -1013,6 +1013,7 @@ extern qboolean E_Save (sizebuf_t* sb, void* data)
 			MSG_WriteByte(sb, e->chr.armor);
 			MSG_WriteByte(sb, e->chr.weapons);
 			MSG_WriteByte(sb, e->chr.teamDesc);
+			MSG_WriteByte(sb, e->chr.category);
 			MSG_WriteShort(sb, e->chr.ucn);
 			MSG_WriteShort(sb, e->chr.maxHP);
 			MSG_WriteShort(sb, e->chr.HP);
@@ -1083,6 +1084,8 @@ extern qboolean E_Load (sizebuf_t* sb, void* data)
 			e->chr.armor = MSG_ReadByte(sb);
 			e->chr.weapons = MSG_ReadByte(sb);
 			e->chr.teamDesc = MSG_ReadByte(sb);
+			if (*(int*)data >= 2)
+				e->chr.category = MSG_ReadByte(sb);
 			e->chr.ucn = MSG_ReadShort(sb);
 			e->chr.maxHP = MSG_ReadShort(sb);
 			e->chr.HP = MSG_ReadShort(sb);
