@@ -38,7 +38,7 @@ static short *snd_out;
 /**
  * @brief
  */
-void S_WriteLinearBlastStereo16(void)
+void S_WriteLinearBlastStereo16 (void)
 {
 	int i;
 	int val;
@@ -65,7 +65,7 @@ void S_WriteLinearBlastStereo16(void)
 /**
  * @brief
  */
-void S_TransferStereo16(unsigned long *pbuf, int endtime)
+void S_TransferStereo16 (unsigned long *pbuf, int endtime)
 {
 	int lpos;
 	int lpaintedtime;
@@ -103,7 +103,7 @@ void S_TransferStereo16(unsigned long *pbuf, int endtime)
  * @brief
  * @sa S_TransferStereo16
  */
-void S_TransferPaintBuffer(int endtime)
+void S_TransferPaintBuffer (int endtime)
 {
 	int out_idx;
 	int count;
@@ -176,7 +176,7 @@ CHANNEL MIXING
 /**
  * @brief
  */
-void S_PaintChannelFrom8(channel_t * ch, sfxcache_t * sc, int count, int offset)
+void S_PaintChannelFrom8 (channel_t * ch, sfxcache_t * sc, int count, int offset)
 {
 	int data;
 	int *lscale, *rscale;
@@ -209,7 +209,7 @@ void S_PaintChannelFrom8(channel_t * ch, sfxcache_t * sc, int count, int offset)
 /**
  * @brief
  */
-void S_PaintChannelFrom16(channel_t * ch, sfxcache_t * sc, int count, int offset)
+void S_PaintChannelFrom16 (channel_t * ch, sfxcache_t * sc, int count, int offset)
 {
 	int data;
 	int left, right;
@@ -237,7 +237,7 @@ void S_PaintChannelFrom16(channel_t * ch, sfxcache_t * sc, int count, int offset
 /**
  * @brief
  */
-void S_PaintChannels(int endtime)
+void S_PaintChannels (int endtime)
 {
 	int i = 0;
 	int end;
@@ -256,7 +256,7 @@ void S_PaintChannels(int endtime)
 			end = paintedtime + PAINTBUFFER_SIZE;
 
 		/* start any playsounds */
-		for(;;) {
+		for (;;) {
 			ps = s_pendingplays.next;
 			if (ps == &s_pendingplays || !ps)
 				break;			/* no more pending sounds */
@@ -348,7 +348,7 @@ void S_PaintChannels(int endtime)
 /**
  * @brief
  */
-void S_InitScaletable(void)
+void S_InitScaletable (void)
 {
 	int i, j;
 	int scale;

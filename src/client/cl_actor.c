@@ -3416,7 +3416,7 @@ extern void CL_AddTargeting (void)
  * @param[in] gender
  * @param[in] soundType Type of action (among actorSound_t) for which we need a sound.
  */
-void CL_PlayActorSound(int category, int gender, actorSound_t soundType)
+void CL_PlayActorSound (int category, int gender, actorSound_t soundType)
 {
 	const char *actorSound;
 
