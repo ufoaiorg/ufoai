@@ -3621,8 +3621,9 @@ int Com_ParseValue (void *base, char *token, int type, int ofs, size_t size)
 			Com_Printf("Warning: Size mismatch: given size: %Zu, should be: %Zu. File: '%s', line: %i (type: %i)\n", size, vt_sizes[type], file, line, type);
 #endif
 		if (size < vt_sizes[type]) {
+			/* disable this sys error to return -1 and print the value_t->string that is wrong in the parsing function */
 			Sys_Error("Size mismatch: given size: %Zu, should be: %Zu. File: '%s', line: %i (type: %i)\n", size, vt_sizes[type], file, line, type);
-			return -1;
+			return -1;	/* don't delete this please */
 		}
 	}
 
