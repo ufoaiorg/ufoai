@@ -270,6 +270,16 @@ teamdesc bloodspider
 //	alien	true
 //}
 
+// in base/sounds/aliens
+actorsounds shevaar
+{
+	neutral
+	{
+		hurtsound aliens/shevaar
+		deathsound aliens/burble
+	}
+}
+
 names bloodspider
 {
 	neutral

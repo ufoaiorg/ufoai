@@ -1069,11 +1069,13 @@ static void Com_ParseActorSounds (const char *name, char **text)
 						if (!*text)
 							break;
 						Q_strncpyz(nc->sounds[SOUND_HURT][i][nc->numSounds[SOUND_HURT][i]++], token, MAX_QPATH);
-					} else if (!Q_strcmp(token, "hurtsound")) {
+					} else if (!Q_strcmp(token, "deathsound")) {
 						token = COM_EParse(text, errhead, name);
 						if (!*text)
 							break;
-						Q_strncpyz(nc->sounds[SOUND_HURT][i][nc->numSounds[SOUND_HURT][i]++], token, MAX_QPATH);
+						Q_strncpyz(nc->sounds[SOUND_DEATH][i][nc->numSounds[SOUND_DEATH][i]++], token, MAX_QPATH);
+					} else {
+						Com_Printf("Com_ParseActorSounds: unknown token \"%s\" ignored (actorsounds %s)\n", token, name);
 					}
 				}
 				while (*text);
@@ -1081,7 +1083,7 @@ static void Com_ParseActorSounds (const char *name, char **text)
 			}
 
 		if (i == NAME_NUM_TYPES)
-			Com_Printf("Com_ParseActorSounds: unknown token \"%s\" ignored (actors %s)\n", token, name);
+			Com_Printf("Com_ParseActorSounds: unknown token \"%s\" ignored (actorsounds %s)\n", token, name);
 
 	} while (*text);
 }
