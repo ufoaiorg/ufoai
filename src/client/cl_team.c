@@ -1671,6 +1671,8 @@ extern void CL_SendCurTeamInfo (sizebuf_t * buf, character_t ** team, int num)
 
 		MSG_WriteShort(buf, chr->HP);
 		MSG_WriteShort(buf, chr->maxHP);
+		MSG_WriteByte(buf, chr->category);
+		MSG_WriteByte(buf, chr->gender);
 		MSG_WriteByte(buf, chr->STUN);
 		MSG_WriteByte(buf, chr->AP);
 		MSG_WriteByte(buf, chr->morale);

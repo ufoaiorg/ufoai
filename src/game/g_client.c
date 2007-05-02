@@ -2142,6 +2142,8 @@ void G_ClientTeamInfo (player_t * player)
 
 			ent->chr.HP = gi.ReadShort();
 			ent->chr.maxHP = gi.ReadShort();
+			ent->chr.category = gi.ReadByte();
+			ent->chr.gender = gi.ReadByte();
 			ent->chr.STUN = gi.ReadByte();
 			ent->chr.AP = gi.ReadByte();
 			ent->chr.morale = gi.ReadByte();
