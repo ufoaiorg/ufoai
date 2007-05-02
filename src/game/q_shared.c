@@ -2073,7 +2073,7 @@ char *Info_ValueForKey(char *s, char *key)
  * @param[in] key String to search for in s
  * @sa Info_SetValueForKey
  */
-void Info_RemoveKey(char *s, const char *key)
+void Info_RemoveKey (char *s, const char *key)
 {
 	char *start;
 	char pkey[512];
@@ -2138,7 +2138,7 @@ qboolean Info_Validate(char *s)
  * @param[in] s
  * @sa Info_RemoveKey
  */
-void Info_SetValueForKey(char *s, const char *key, const char *value)
+void Info_SetValueForKey (char *s, const char *key, const char *value)
 {
 	char newi[MAX_INFO_STRING];
 
@@ -3602,9 +3602,9 @@ static const size_t vt_sizes[V_NUM_TYPES] = {
  * @endcode
  */
 #ifdef DEBUG
-int Com_ParseValueDebug (void *base, char *token, int type, int ofs, size_t size, const char *file, int line)
+int Com_ParseValueDebug (void *base, char *token, valueTypes_t type, int ofs, size_t size, const char *file, int line)
 #else
-int Com_ParseValue (void *base, char *token, int type, int ofs, size_t size)
+int Com_ParseValue (void *base, char *token, valueTypes_t type, int ofs, size_t size)
 #endif
 {
 	byte *b;
@@ -3617,14 +3617,21 @@ int Com_ParseValue (void *base, char *token, int type, int ofs, size_t size)
 
 	if (size) {
 #ifdef DEBUG
-		if (size > vt_sizes[type])
+		if (size > vt_sizes[type]) {
 			Com_Printf("Warning: Size mismatch: given size: %Zu, should be: %Zu. File: '%s', line: %i (type: %i)\n", size, vt_sizes[type], file, line, type);
-#endif
+		}
 		if (size < vt_sizes[type]) {
 			/* disable this sys error to return -1 and print the value_t->string that is wrong in the parsing function */
 			Sys_Error("Size mismatch: given size: %Zu, should be: %Zu. File: '%s', line: %i (type: %i)\n", size, vt_sizes[type], file, line, type);
 			return -1;	/* don't delete this please */
 		}
+#else
+		if (size < vt_sizes[type]) {
+			/* disable this sys error to return -1 and print the value_t->string that is wrong in the parsing function */
+			Sys_Error("Size mismatch: given size: %Zu, should be: %Zu. (type: %i)\n", size, vt_sizes[type], type);
+			return -1;	/* don't delete this please */
+		}
+#endif
 	}
 
 	switch (type) {
@@ -3834,65 +3841,88 @@ int Com_ParseValue (void *base, char *token, int type, int ofs, size_t size)
  * @sa Com_ValueToStr
  * @note The offset is most likely given by the offsetof macro
  */
-int Com_SetValue (void *base, void *set, int type, int ofs)
+#ifdef DEBUG
+int Com_SetValueDebug (void *base, void *set, valueTypes_t type, int ofs, size_t size, const char *file, int line)
+#else
+int Com_SetValue (void *base, void *set, valueTypes_t type, int ofs, size_t size)
+#endif
 {
 	byte *b;
 	int len;
 
 	b = (byte *) base + ofs;
 
+	if (size) {
+#ifdef DEBUG
+		if (size > vt_sizes[type]) {
+			Com_Printf("Warning: Size mismatch: given size: %Zu, should be: %Zu. File: '%s', line: %i (type: %i)\n", size, vt_sizes[type], file, line, type);
+		}
+		if (size < vt_sizes[type]) {
+			/* disable this sys error to return -1 and print the value_t->string that is wrong in the parsing function */
+			Sys_Error("Size mismatch: given size: %Zu, should be: %Zu. File: '%s', line: %i (type: %i)\n", size, vt_sizes[type], file, line, type);
+			return -1;	/* don't delete this please */
+		}
+#else
+		if (size < vt_sizes[type]) {
+			/* disable this sys error to return -1 and print the value_t->string that is wrong in the parsing function */
+			Sys_Error("Size mismatch: given size: %Zu, should be: %Zu. (type: %i)\n", size, vt_sizes[type], type);
+			return -1;	/* don't delete this please */
+		}
+#endif
+	}
+
 	switch (type) {
 	case V_NULL:
-		return 0;
+		return ALIGN(0);
 
 	case V_BOOL:
 		if (*(byte *) set)
 			*b = qtrue;
 		else
 			*b = qfalse;
-		return sizeof(byte);
+		return ALIGN(sizeof(byte));
 
 	case V_CHAR:
 		*(char *) b = *(char *) set;
-		return sizeof(char);
+		return ALIGN(sizeof(char));
 
 	case V_INT:
 		*(int *) b = *(int *) set;
-		return sizeof(int);
+		return ALIGN(sizeof(int));
 
 	case V_INT2:
 		((int *) b)[0] = ((int *) set)[0];
 		((int *) b)[1] = ((int *) set)[1];
-		return 2 * sizeof(int);
+		return ALIGN(2 * sizeof(int));
 
 	case V_FLOAT:
 		*(float *) b = *(float *) set;
-		return sizeof(float);
+		return ALIGN(sizeof(float));
 
 	case V_POS:
 		((float *) b)[0] = ((float *) set)[0];
 		((float *) b)[1] = ((float *) set)[1];
-		return 2 * sizeof(float);
+		return ALIGN(2 * sizeof(float));
 
 	case V_VECTOR:
 		((float *) b)[0] = ((float *) set)[0];
 		((float *) b)[1] = ((float *) set)[1];
 		((float *) b)[2] = ((float *) set)[2];
-		return 3 * sizeof(float);
+		return ALIGN(3 * sizeof(float));
 
 	case V_COLOR:
 		((float *) b)[0] = ((float *) set)[0];
 		((float *) b)[1] = ((float *) set)[1];
 		((float *) b)[2] = ((float *) set)[2];
 		((float *) b)[3] = ((float *) set)[3];
-		return 4 * sizeof(float);
+		return ALIGN(4 * sizeof(float));
 
 	case V_RGBA:
 		((byte *) b)[0] = ((byte *) set)[0];
 		((byte *) b)[1] = ((byte *) set)[1];
 		((byte *) b)[2] = ((byte *) set)[2];
 		((byte *) b)[3] = ((byte *) set)[3];
-		return 4;
+		return ALIGN(4 * sizeof(int));
 
 	case V_STRING:
 		Q_strncpyz((char *) b, (char *) set, MAX_VAR);
@@ -3911,26 +3941,26 @@ int Com_SetValue (void *base, void *set, int type, int ofs)
 	case V_STYLE:
 	case V_FADE:
 		*b = *(byte *) set;
-		return 1;
+		return ALIGN(1);
 
 	case V_SHAPE_SMALL:
 		*(int *) b = *(int *) set;
-		return 4;
+		return ALIGN(4);
 
 	case V_SHAPE_BIG:
 		memcpy(b, set, 64);
-		return 64;
+		return ALIGN(64);
 
 	case V_DMGTYPE:
 		*b = *(byte *) set;
-		return 1;
+		return ALIGN(1);
 
 	case V_DATE:
 		memcpy(b, set, sizeof(date_t));
 		return sizeof(date_t);
 
 	default:
-		Sys_Error("Com_ParseValue: unknown value type\n");
+		Sys_Error("Com_SetValue: unknown value type\n");
 		return -1;
 	}
 }
@@ -3943,7 +3973,7 @@ int Com_SetValue (void *base, void *set, int type, int ofs)
  * @sa Com_SetValue
  * @return char pointer with translated data type value
  */
-char *Com_ValueToStr (void *base, int type, int ofs)
+char *Com_ValueToStr (void *base, valueTypes_t type, int ofs)
 {
 	static char valuestr[MAX_VAR];
 	byte *b;
@@ -3965,31 +3995,31 @@ char *Com_ValueToStr (void *base, int type, int ofs)
 		break;
 
 	case V_INT:
-		Com_sprintf(valuestr, MAX_VAR, "%i", *(int *) b);
+		Com_sprintf(valuestr, sizeof(valuestr), "%i", *(int *) b);
 		return valuestr;
 
 	case V_INT2:
-		Com_sprintf(valuestr, MAX_VAR, "%i %i", ((int *) b)[0], ((int *) b)[1]);
+		Com_sprintf(valuestr, sizeof(valuestr), "%i %i", ((int *) b)[0], ((int *) b)[1]);
 		return valuestr;
 
 	case V_FLOAT:
-		Com_sprintf(valuestr, MAX_VAR, "%.2f", *(float *) b);
+		Com_sprintf(valuestr, sizeof(valuestr), "%.2f", *(float *) b);
 		return valuestr;
 
 	case V_POS:
-		Com_sprintf(valuestr, MAX_VAR, "%.2f %.2f", ((float *) b)[0], ((float *) b)[1]);
+		Com_sprintf(valuestr, sizeof(valuestr), "%.2f %.2f", ((float *) b)[0], ((float *) b)[1]);
 		return valuestr;
 
 	case V_VECTOR:
-		Com_sprintf(valuestr, MAX_VAR, "%.2f %.2f %.2f", ((float *) b)[0], ((float *) b)[1], ((float *) b)[2]);
+		Com_sprintf(valuestr, sizeof(valuestr), "%.2f %.2f %.2f", ((float *) b)[0], ((float *) b)[1], ((float *) b)[2]);
 		return valuestr;
 
 	case V_COLOR:
-		Com_sprintf(valuestr, MAX_VAR, "%.2f %.2f %.2f %.2f", ((float *) b)[0], ((float *) b)[1], ((float *) b)[2], ((float *) b)[3]);
+		Com_sprintf(valuestr, sizeof(valuestr), "%.2f %.2f %.2f %.2f", ((float *) b)[0], ((float *) b)[1], ((float *) b)[2], ((float *) b)[3]);
 		return valuestr;
 
 	case V_RGBA:
-		Com_sprintf(valuestr, MAX_VAR, "%3i %3i %3i %3i", ((byte *) b)[0], ((byte *) b)[1], ((byte *) b)[2], ((byte *) b)[3]);
+		Com_sprintf(valuestr, sizeof(valuestr), "%3i %3i %3i %3i", ((byte *) b)[0], ((byte *) b)[1], ((byte *) b)[2], ((byte *) b)[3]);
 		return valuestr;
 
 	case V_TRANSLATION_STRING:
@@ -4027,7 +4057,7 @@ char *Com_ValueToStr (void *base, int type, int ofs)
 		return CSI->dts[*(int *)b];
 
 	case V_DATE:
-		Com_sprintf(valuestr, MAX_VAR, "%i %i %i", ((date_t *) b)->day / 365, ((date_t *) b)->day % 365, ((date_t *) b)->sec);
+		Com_sprintf(valuestr, sizeof(valuestr), "%i %i %i", ((date_t *) b)->day / 365, ((date_t *) b)->day % 365, ((date_t *) b)->sec);
 		return valuestr;
 
 	case V_IF:
@@ -4036,13 +4066,13 @@ char *Com_ValueToStr (void *base, int type, int ofs)
 	case V_RELABS:
 		/* absolute value */
 		if (*(float *) b > 2.0)
-			Com_sprintf(valuestr, MAX_VAR, "+%.2f", *(float *) b);
+			Com_sprintf(valuestr, sizeof(valuestr), "+%.2f", *(float *) b);
 		/* absolute value */
 		else if (*(float *) b < 2.0)
-			Com_sprintf(valuestr, MAX_VAR, "-%.2f", *(float *) b);
+			Com_sprintf(valuestr, sizeof(valuestr), "-%.2f", *(float *) b);
 		/* relative value */
 		else
-			Com_sprintf(valuestr, MAX_VAR, "%.2f", *(float *) b);
+			Com_sprintf(valuestr, sizeof(valuestr), "%.2f", *(float *) b);
 		return valuestr;
 
 	default:

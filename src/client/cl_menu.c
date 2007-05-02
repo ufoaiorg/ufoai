@@ -736,7 +736,7 @@ extern void MN_ExecuteActions (const menu_t* const menu, menuAction_t* const fir
 
 				/* 0, -1, -2, -3, -4, -5 fills the data array in menuNode_t */
 				if ((nps[np].ofs > 0) && (nps[np].ofs < (size_t)-5))
-					Com_SetValue(node, (char *) data, nps[np].type, nps[np].ofs);
+					Com_SetValue(node, (char *) data, nps[np].type, nps[np].ofs, nps[np].size);
 				else
 					node->data[-((int)nps[np].ofs)] = data;
 			}
@@ -3045,7 +3045,7 @@ static void MN_EditMenuNode_f (void)
 
 	/* 0, -1, -2, -3, -4, -5 fills the data array in menuNode_t */
 	if ((nps[np].ofs > 0) && (nps[np].ofs < (size_t)-5))
-		Com_SetValue(node, value, nps[np].type, nps[np].ofs);
+		Com_SetValue(node, value, nps[np].type, nps[np].ofs, nps[np].size);
 	else
 		Com_Printf("This var is not supported by inline editing\n");
 }

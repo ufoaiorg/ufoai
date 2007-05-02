@@ -548,7 +548,7 @@ static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 			/* store the value in the stack */
 			stackPtr[s] = &cmdStack[e];
 			stackType[s] = cmd->type;
-			e += Com_SetValue(stackPtr[s++], radr, cmd->type, 0);
+			e += Com_SetValue(stackPtr[s++], radr, cmd->type, 0, 0);
 			break;
 
 		case PC_POP:
@@ -575,9 +575,9 @@ static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 
 			/* get different data */
 			if (cmd->cmd == PC_POP)
-				e -= Com_SetValue(radr, stackPtr[--s], cmd->type, 0);
+				e -= Com_SetValue(radr, stackPtr[--s], cmd->type, 0, 0);
 			else
-				Com_SetValue(radr, stackPtr[s - 1], cmd->type, 0);
+				Com_SetValue(radr, stackPtr[s - 1], cmd->type, 0, 0);
 			break;
 
 		case PC_ADD:

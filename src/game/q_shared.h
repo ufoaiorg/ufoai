@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define GAME_Q_SHARED_H
 
 #ifdef DEBUG
+#define Com_SetValue(base, set, type, ofs, size) Com_SetValueDebug(base, set, type, ofs, size, __FILE__, __LINE__)
 #define Com_ParseValue(base, token, type, ofs, size) Com_ParseValueDebug(base, token, type, ofs, size, __FILE__, __LINE__)
 #define Q_strncpyz(string1,string2,length) Q_strncpyzDebug( string1, string2, length, __FILE__, __LINE__ )
 #define WriteByte(x) WriteByte( x, __FILE__, __LINE__ )
@@ -790,7 +791,7 @@ typedef enum {
 	V_RELABS,					/**< relative (e.g. 1.50) and absolute (e.g. +15) values */
 
 	V_NUM_TYPES
-} value_types;
+} valueTypes_t;
 
 #define V_UNTYPED   0x7FFF
 
@@ -862,12 +863,13 @@ typedef struct value_s {
 } value_t;
 
 #ifdef DEBUG
-int Com_ParseValueDebug(void *base, char *token, int type, int ofs, size_t size, const char* file, int line);
+int Com_ParseValueDebug(void *base, char *token, valueTypes_t type, int ofs, size_t size, const char* file, int line);
+int Com_SetValueDebug(void *base, void *set, valueTypes_t type, int ofs, size_t size, const char* file, int line);
 #else
-int Com_ParseValue(void *base, char *token, int type, int ofs, size_t size);
+int Com_ParseValue(void *base, char *token, valueTypes_t type, int ofs, size_t size);
+int Com_SetValue(void *base, void *set, valueTypes_t type, int ofs, size_t size);
 #endif
-int Com_SetValue(void *base, void *set, int type, int ofs);
-char *Com_ValueToStr(void *base, int type, int ofs);
+char *Com_ValueToStr(void *base, valueTypes_t type, int ofs);
 
 /*
 ==========================================================
