@@ -142,7 +142,7 @@ void NET_GetLocalAddress (void)
  */
 void NetadrToSockadr (netadr_t *a, struct sockaddr_in *s)
 {
-	memset (s, 0, sizeof(*s));
+	memset(s, 0, sizeof(*s));
 
 	if (a->type == NA_BROADCAST) {
 		s->sin_family = AF_INET;
@@ -262,7 +262,7 @@ qboolean NET_StringToSockaddr (char *s, struct sockaddr *sadr)
 	char	*colon;
 	char	copy[128];
 
-	memset (sadr, 0, sizeof(*sadr));
+	memset(sadr, 0, sizeof(*sadr));
 	((struct sockaddr_in *)sadr)->sin_family = AF_INET;
 
 	((struct sockaddr_in *)sadr)->sin_port = 0;
@@ -300,16 +300,16 @@ qboolean NET_StringToAdr (char *s, netadr_t *a)
 
 #ifndef DEDICATED_ONLY
 	if (!strcmp (s, "localhost")) {
-		memset (a, 0, sizeof(*a));
+		memset(a, 0, sizeof(*a));
 		a->type = NA_LOOPBACK;
 		return qtrue;
 	}
 #endif
 
-	if (!NET_StringToSockaddr (s, (struct sockaddr *)&sadr))
+	if (!NET_StringToSockaddr(s, (struct sockaddr *)&sadr))
 		return qfalse;
 
-	SockadrToNetadr (&sadr, a);
+	SockadrToNetadr(&sadr, a);
 
 	return qtrue;
 }
@@ -320,7 +320,7 @@ qboolean NET_StringToAdr (char *s, netadr_t *a)
  */
 qboolean NET_IsLocalAddress (netadr_t adr)
 {
-	return NET_CompareAdr (adr, net_local_adr);
+	return NET_CompareAdr(adr, net_local_adr);
 }
 
 /*
@@ -348,7 +348,7 @@ qboolean NET_GetLoopPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_me
 	i = loop->get & (MAX_LOOPBACK-1);
 	loop->get++;
 
-	memcpy (net_message->data, loop->msgs[i].data, loop->msgs[i].datalen);
+	memcpy(net_message->data, loop->msgs[i].data, loop->msgs[i].datalen);
 	net_message->cursize = loop->msgs[i].datalen;
 	*net_from = net_local_adr;
 	return qtrue;
@@ -369,7 +369,7 @@ void NET_SendLoopPacket (netsrc_t sock, int length, void *data, netadr_t to)
 	i = loop->send & (MAX_LOOPBACK-1);
 	loop->send++;
 
-	memcpy (loop->msgs[i].data, data, length);
+	memcpy(loop->msgs[i].data, data, length);
 	loop->msgs[i].datalen = length;
 }
 
@@ -432,7 +432,7 @@ int NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_message)
 		}
 
 		if (ret == net_message->maxsize) {
-			Com_Printf("Oversize packet from %s\n", NET_AdrToString (*net_from));
+			Com_Printf("Oversize packet from %s\n", NET_AdrToString(*net_from));
 			continue;
 		}
 
@@ -456,7 +456,7 @@ void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 	switch (to.type) {
 #ifndef DEDICATED_ONLY
 	case NA_LOOPBACK:
-		NET_SendLoopPacket (sock, length, data, to);
+		NET_SendLoopPacket(sock, length, data, to);
 		return;
 #endif
 	case NA_BROADCAST:
@@ -468,18 +468,18 @@ void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 		net_socket = ipx_sockets[sock];
 		break;
 	default:
-		Com_Error (ERR_FATAL, "NET_SendPacket: bad address type");
+		Com_Error(ERR_FATAL, "NET_SendPacket: bad address type");
 		return;
 	}
 	if (!net_socket)
 		return;
 
-	NetadrToSockadr (&to, &addr);
+	NetadrToSockadr(&to, &addr);
 
-	ret = sendto (net_socket, data, length, 0, (struct sockaddr *)&addr, sizeof(addr) );
+	ret = sendto(net_socket, data, length, 0, (struct sockaddr *)&addr, sizeof(addr) );
 	if (ret == -1) {
 		Com_Printf("NET_SendPacket Warning: %s to %s\n", NET_ErrorString(),
-			NET_AdrToString (to));
+			NET_AdrToString(to));
 	} else {
 		net_packets_out++;
 		net_total_out += ret;
@@ -516,12 +516,12 @@ void NET_OpenIP (void)
 
 	if (!ip_sockets[NS_SERVER]) {
 		/* there is no server socket, so let's create one */
-		ip_sockets[NS_SERVER] = NET_Socket (ip->string, port);
+		ip_sockets[NS_SERVER] = NET_Socket(ip->string, port);
 		if (!ip_sockets[NS_SERVER] && dedicated) {
 			/* if we couldn't create a socket and this is
 			 * a dedicated server just die miserably */
 			/* @todo: should be more robust than this */
-			Com_Error (ERR_FATAL, "Couldn't allocate server IP port (%i) - use cvar ip_hostport", port);
+			Com_Error(ERR_FATAL, "Couldn't allocate server IP port (%i) - use cvar ip_hostport", port);
 		}
 	}
 	/* at this point we must have a valid server socket open */
@@ -531,11 +531,11 @@ void NET_OpenIP (void)
 	port = Cvar_Get("clientport", va("%i", PORT_CLIENT), CVAR_NOSET, NULL)->integer;
 	if (!ip_sockets[NS_CLIENT]) {
 		/* if there is no client socket, create one */
-		ip_sockets[NS_CLIENT] = NET_Socket (ip->string, port);
+		ip_sockets[NS_CLIENT] = NET_Socket(ip->string, port);
 		if (!ip_sockets[NS_CLIENT]) {
 			/* if we couldn't create a client socket,
 			 * try creating it with _any_ port */
-			ip_sockets[NS_CLIENT] = NET_Socket (ip->string, PORT_ANY);
+			ip_sockets[NS_CLIENT] = NET_Socket(ip->string, PORT_ANY);
 		}
 	}
 	/* at this point we should have a client socket running
@@ -571,11 +571,11 @@ void NET_Config (qboolean multiplayer)
 	if (!multiplayer) {	/* shut down any existing sockets */
 		for (i = 0; i < 2; i++) {
 			if (ip_sockets[i]) {
-				close (ip_sockets[i]);
+				close(ip_sockets[i]);
 				ip_sockets[i] = 0;
 			}
 			if (ipx_sockets[i]) {
-				close (ipx_sockets[i]);
+				close(ipx_sockets[i]);
 				ipx_sockets[i] = 0;
 			}
 		}
@@ -634,7 +634,7 @@ int NET_Socket (char *net_interface, int port)
 #endif /* __APPLE__ || MACOSX */
 		address.sin_addr.s_addr = INADDR_ANY;
 	else
-		NET_StringToSockaddr (net_interface, (struct sockaddr *)&address);
+		NET_StringToSockaddr(net_interface, (struct sockaddr *)&address);
 
 	if (port == PORT_ANY)
 		address.sin_port = 0;
@@ -643,9 +643,9 @@ int NET_Socket (char *net_interface, int port)
 
 	address.sin_family = AF_INET;
 
-	if( bind (newsocket, (void *)&address, sizeof(address)) == -1) {
+	if( bind(newsocket, (void *)&address, sizeof(address)) == -1) {
 		Com_Printf("ERROR: UDP_OpenSocket: bind: %s\n", NET_ErrorString());
-		close (newsocket);
+		close(newsocket);
 		return 0;
 	}
 
@@ -658,7 +658,7 @@ int NET_Socket (char *net_interface, int port)
  */
 void NET_Shutdown (void)
 {
-	NET_Config (qfalse);	/* close sockets */
+	NET_Config(qfalse);	/* close sockets */
 }
 
 
@@ -670,7 +670,7 @@ char *NET_ErrorString (void)
 	int		code;
 
 	code = errno;
-	return strerror (code);
+	return strerror(code);
 }
 
 /**
