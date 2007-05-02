@@ -3635,7 +3635,7 @@ int Com_ParseValue (void *base, char *token, int type, int ofs, size_t size)
 			*b = qtrue;
 		else
 			*b = qfalse;
-		return ALIGN(sizeof(byte));
+		return ALIGN(sizeof(qboolean));
 
 	case V_CHAR:
 		*(char *) b = *token;

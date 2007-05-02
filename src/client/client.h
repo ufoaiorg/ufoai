@@ -896,7 +896,7 @@ typedef struct menuNode_s {
 	byte align;
 	int border;					/**< border for this node - thickness in pixel - default 0 - also see bgcolor */
 	int padding;				/**< padding for this node - default 3 - see bgcolor */
-	byte invis, blend;
+	qboolean invis, blend;
 	int mousefx;
 	int horizontalScroll;		/**< if text is too long, the text is horizontally scrolled */
 	int textScroll;				/**< textfields - current scroll position */

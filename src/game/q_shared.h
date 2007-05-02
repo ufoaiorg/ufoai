@@ -1010,11 +1010,11 @@ typedef struct fireDef_s {
 					 */
 	int fd_idx;		/**< Self link of the fd in the objDef_t->fd[][fd_idx] array. */
 
-	byte soundOnce;
-	byte gravity;			/**< Does gravity has any influence on this item? */
-	byte launched;
-	byte rolled;			/**< Can it be rolled - e.g. grenades */
-	byte reaction;			/**< This firemode can be used/selected for reaction fire.*/
+	qboolean soundOnce;
+	qboolean gravity;			/**< Does gravity has any influence on this item? */
+	qboolean launched;
+	qboolean rolled;			/**< Can it be rolled - e.g. grenades */
+	qboolean reaction;			/**< This firemode can be used/selected for reaction fire.*/
 	byte dmgtype;
 	float speed;
 	vec2_t shotOrg;
@@ -1053,14 +1053,14 @@ typedef struct objDef_s {
 	float scale;		/**< scale value for images? and models */
 	vec3_t center;		/**< origin for models */
 	char category;		/**<  */
-	byte weapon;		/**< This item is a weapon or ammo. */
-	byte holdtwohanded;	/**< The soldier needs both hands to hold this object.
+	qboolean weapon;		/**< This item is a weapon or ammo. */
+	qboolean holdtwohanded;	/**< The soldier needs both hands to hold this object.
 				 		 * Influences model-animations and which hands are blocked int he inventory screen.*/
-	byte firetwohanded;	/**< The soldier needs both hands to fire this object.
+	qboolean firetwohanded;	/**< The soldier needs both hands to fire this object.
 						  * Influences model-animations. */
-	byte extension;		/**< Boolean: Is an extension. */
-	byte headgear;		/**< Boolean: Is a headgear. */
-	byte thrown;		/**< This item is thrown. */
+	qboolean extension;		/**< Boolean: Is an extension. */
+	qboolean headgear;		/**< Boolean: Is a headgear. */
+	qboolean thrown;		/**< This item is thrown. */
 	int price;		/**< the price for this item */
 	int size;		/**< Size of an item, used in storage capacities. */
 	int buytype;		/**< In which category of the buy menu is this item listed. */
@@ -1068,11 +1068,11 @@ typedef struct objDef_s {
 	/* Weapon specific */
 	int ammo;			/**< How much can we load into this weapon at once. */
 	int reload;			/**< Time units (TUs) for reloading the weapon. */
-	byte oneshot;			/**< This weapon contains its own ammo (it is loaded in the base).
+	qboolean oneshot;			/**< This weapon contains its own ammo (it is loaded in the base).
 					 ** Don't confuse "oneshot" with "only one shot is possible",
 					 ** the number of the "ammo" value above defines how many shots are possible. */
-	byte deplete;			/**< Is this weapon useless after all ("oneshot") ammo is used up? If true this item will not be collected on mission-end. (see CL_CollectItems) */
-	short useable;			/**< Defines which team can use this item: 0 - human, 1 - alien. */
+	qboolean deplete;			/**< Is this weapon useless after all ("oneshot") ammo is used up? If true this item will not be collected on mission-end. (see CL_CollectItems) */
+	int useable;			/**< Defines which team can use this item: 0 - human, 1 - alien. */
 	int ammo_idx[MAX_AMMOS_PER_OBJDEF];			/**< List of ammo-object indices. The index of the ammo in csi.ods[xxx]. */
 	int numAmmos;							/**< Number of ammos this weapon can be used with.
 											 ** it's <= MAX_AMMOS_PER_OBJDEF) */
@@ -1102,7 +1102,7 @@ typedef struct objDef_s {
 /** inventory definition for our menus */
 typedef struct invDef_s {
 	char name[MAX_VAR];	/**< id from script files */
-	byte single, armor, all, temp, extension, headgear;	/**< type of this container or inventory */
+	qboolean single, armor, all, temp, extension, headgear;	/**< type of this container or inventory */
 	int shape[16];	/**< the inventory form/shape */
 	int in, out;	/**< TU costs */
 } invDef_t;

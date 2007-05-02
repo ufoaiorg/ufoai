@@ -3505,7 +3505,8 @@ qboolean MN_ParseNodeBody (menuNode_t * node, char **text, char **token)
 						/* get the value */
 						/* 0, -1, -2, -3, -4, -5 fills the data array in menuNode_t */
 						if ((val->ofs > 0) && (val->ofs < (size_t)-5)) {
-							Com_ParseValue(node, *token, val->type, val->ofs, val->size);
+							if (Com_ParseValue(node, *token, val->type, val->ofs, val->size) == -1)
+								Com_Printf("MN_ParseNodeBody: Wrong size for value %s\n", val->string);
 						} else {
 							/* a reference to data is handled like this */
 /* 							Com_Printf( "%i %s\n", val->ofs, *token ); */
