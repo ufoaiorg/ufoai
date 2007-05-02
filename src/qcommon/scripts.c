@@ -726,6 +726,10 @@ const char* Com_GetActorSound (int category, int gender, actorSound_t soundType)
 		Com_Printf("Com_GetActorSound: invalid gender: %i\n", gender);
 		return NULL;
 	}
+	if (nameCat[category].numSounds[soundType][gender] < 0) {
+		Com_Printf("Com_GetActorSound: no sound defined for soundtype: %i, category: %i, gender: %i\n", soundType, category, gender);
+		return NULL;
+	}
 
 	random = rand() % nameCat[category].numSounds[soundType][gender];
 
