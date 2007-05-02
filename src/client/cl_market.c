@@ -37,10 +37,10 @@ static int buyCategory = -1;			/**< Category of items in the menu. */
 static int buyListScrollPos;	/**< start of the buylist index - due to scrolling */
 
 /** @brief Max amount of aircraft type calculated for the market. */
-static int MAX_AIRCRAFT_SUPPLY = 8;
+static const int MAX_AIRCRAFT_SUPPLY = 8;
 
 /** @brief Max values for Buy/Sell factors (base->buyfactor, base->sellfactor). */
-static int MAX_BS_FACTORS = 10;
+static const int MAX_BS_FACTORS = 10;
 
 void UP_AircraftDescription(technology_t* t);
 
@@ -522,18 +522,18 @@ static void BS_Autosell_f (void)
 static void BS_IncreaseFactor_f (void)
 {
 	int num;
-	
+
 	/* Can be called from everywhere. */
 	if (!baseCurrent || !curCampaign)
 		return;
-		
+
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
 		return;
 	}
 
 	num = atoi(Cmd_Argv(1));
-	
+
 	if (num == 0) {
 		if (baseCurrent->buyfactor >= MAX_BS_FACTORS)
 			return;
@@ -560,18 +560,18 @@ static void BS_IncreaseFactor_f (void)
 static void BS_DecreaseFactor_f (void)
 {
 	int num;
-	
+
 	/* Can be called from everywhere. */
 	if (!baseCurrent || !curCampaign)
 		return;
-		
+
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
 		return;
 	}
 
 	num = atoi(Cmd_Argv(1));
-	
+
 	if (num == 0) {
 		if (baseCurrent->buyfactor <= 0)
 			return;
