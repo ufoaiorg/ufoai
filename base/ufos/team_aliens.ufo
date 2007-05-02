@@ -69,6 +69,15 @@ actors ortnok
 	}
 }
 
+actorsounds ortnok
+{
+	neutral
+	{
+		hurtsound aliens/big_angry.wav
+		deathsound aliens/ortnok.wav
+	}
+}
+
 // ==================
 // taman
 // ==================
@@ -129,6 +138,15 @@ actors taman
 	}
 }
 
+actorsounds taman
+{
+	neutral
+	{
+		hurtsound aliens/echovoice1.wav
+		deathsound aliens/echovoice3.wav
+	}
+}
+
 // ==================
 // shevaar
 // ==================
@@ -154,6 +172,15 @@ actors shevaar
 	{
 		aliens/shevaar body01 head01 0
 		aliens/shevaar body01 head01 1
+	}
+}
+
+actorsounds shevaar
+{
+	neutral
+	{
+		hurtsound aliens/gurgle.wav
+		deathsound aliens/shevaar.wav
 	}
 }
 
@@ -269,16 +296,6 @@ teamdesc bloodspider
 //	tech "rs_alien_cyborg_ortnok_autopsy"
 //	alien	true
 //}
-
-// in base/sounds/aliens
-actorsounds shevaar
-{
-	neutral
-	{
-		hurtsound aliens/shevaar
-		deathsound aliens/burble
-	}
-}
 
 names bloodspider
 {

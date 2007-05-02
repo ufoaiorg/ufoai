@@ -714,7 +714,7 @@ char *Com_GiveModel (int type, int gender, char *category)
  * @param[in] gender The gender of the actor
  * @param[in] sound Which sound category (actorSound_t)
  */
-const char* Com_GetActorSound (int category, int gender, int soundType)
+const char* Com_GetActorSound (int category, int gender, actorSound_t soundType)
 {
 	int random;
 

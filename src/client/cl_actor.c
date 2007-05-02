@@ -2458,8 +2458,8 @@ void CL_ActorDie (sizebuf_t * sb)
 		}
 	}
 
-	actorSound = Com_GetActorSound(le->category, le->gender, SOUND_DEATH);
-	/* @todo play it */
+	Com_DPrintf("CL_ActorDie()... category: %i, gender: %i\n", le->category, le->gender);
+	CL_PlayActorSound(le->category, le->gender, SND_DEATH);
 
 	VectorCopy(player_dead_maxs, le->maxs);
 	CL_RemoveActorFromTeamList(le);
@@ -3410,3 +3410,24 @@ extern void CL_AddTargeting (void)
 		break;
 	}
 }
+
+/**
+ * @brief Plays various sounds on actor action.
+ * @param[in] category
+ * @param[in] gender
+ * @param[in] soundType Type of action (among actorSound_t) for which we need a sound.
+ */
+void CL_PlayActorSound(int category, int gender, actorSound_t soundType)
+{
+	const char *actorSound;
+	
+	actorSound = Com_GetActorSound(category, gender, soundType);
+
+	Com_DPrintf("CL_PlayActorSound()... actorSound: %s\n", actorSound);
+	if (actorSound)
+		S_StartLocalSound(actorSound);
+	else
+		Com_Printf("CL_PlayActorSound()... could not start sound for category: %i gender: %i soundType: %i\n",
+		category, gender, soundType);
+}
+

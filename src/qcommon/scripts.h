@@ -37,7 +37,7 @@ extern const char *name_strings[NAME_NUM_TYPES];
 char *Com_GiveName(int gender, char *category);
 char *Com_GiveModel(int type, int gender, char *category);
 int Com_GetModelAndName(const char *team, character_t * chr);
-const char* Com_GetActorSound(int category, int gender, int soundType);
+const char* Com_GetActorSound(int category, int gender, actorSound_t soundType);
 
 void Com_AddObjectLinks(void);
 void Com_ParseScripts(void);

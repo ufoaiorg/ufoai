@@ -650,6 +650,7 @@ void CL_ActorShootHidden(sizebuf_t *sb);
 void CL_ActorDoThrow(sizebuf_t * sb);
 void CL_ActorStartShoot(sizebuf_t * sb);
 void CL_ActorDie(sizebuf_t * sb);
+void CL_PlayActorSound(int category, int gender, actorSound_t soundType);
 
 void CL_ActorActionMouse(void);
 

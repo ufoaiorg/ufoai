@@ -1485,5 +1485,12 @@ typedef enum {
 	|| ((((type2) == BUY_WEAP_PRI) || ((type2) == BUY_WEAP_SEC)) && ((type1) == BUY_MULTI_AMMO)) \
 	|| ((type1) == (type2)) ) \
 	) /**< Check if the 2 buytypes (type1 and type2) are compatible) */
+/** @brief Types of actor sounds being issued by CL_PlayActorSound(). */
+typedef enum {
+	SND_DEATH,	/**< Sound being played on actor death. */
+	SND_HURT,	/**< Sound being played when an actor is being hit. */
+	
+	SND_MAX
+} actorSound_t;
 
 #endif /* GAME_Q_SHARED_H */
