@@ -3953,7 +3953,7 @@ void MN_ParseMenu (const char *name, char **text)
 	for (i = 0; i < numMenus; i++)
 		for (node = menus[i].firstNode; node; node = node->next)
 			if (node->num >= MAX_MENUTEXTS)
-				Sys_Error("Error in menu %s - max menu num exeeded (%i)", menus[i].name, MAX_MENUTEXTS);
+				Sys_Error("Error in menu %s - max menu num exeeded (num: %i, max: %i)", menus[i].name, node->num, MAX_MENUTEXTS);
 
 }
 
@@ -4513,11 +4513,12 @@ static void MS_MessageSave (sizebuf_t * sb, message_t * message)
  */
 extern qboolean MS_Save (sizebuf_t* sb, void* data)
 {
-	int i;
+	int i = 0;
 	message_t* message;
 
 	/* store message system items */
-	for (i = 0, message = messageStack; message; i++, message = message->next);
+	for (message = messageStack; message; message = message->next)
+		i++;
 	MSG_WriteLong(sb, i);
 	MS_MessageSave(sb, messageStack);
 	return qtrue;
