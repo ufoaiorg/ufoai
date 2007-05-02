@@ -169,7 +169,7 @@ extern void G_ResetReactionFire (int team)
 					ent->TU -= TU_REACTION_MULTI;
 					reactionTUs[ent->number][REACT_TUS] = TU_REACTION_MULTI;	/* Save the used TUs for possible later re-adding. */
 #if 0
-/* TODO: this saving might be too powerful with multi-RF. (i.e. mutli-rf is too cheap in a lot of cases) */
+/* @todo: this saving might be too powerful with multi-RF. (i.e. mutli-rf is too cheap in a lot of cases) */
 				} else if (ent->TU > 0) {
 					/* Not enough TUs for reaction fire available. */
 					reactionTUs[ent->number][REACT_TUS] = ent->TU;	/* Save the used TUs for possible later re-adding. */
@@ -280,7 +280,7 @@ static void G_UpdateCharacterScore (edict_t *attacker, fireDef_t *fd, edict_t *t
 
 /**
  * @brief Deals damage of a give type and amount to a target.
- * @param[in] ent TODO ???
+ * @param[in] ent @todo ???
  * @param[in] fd The fire definition that defines what type of damage is dealt.
  * @param[in] damage The value of the damage.
  * @param[in] attacker The attacker.
@@ -483,9 +483,9 @@ extern void G_StunTeam (void)
 
 /**
  * @brief Deals splash damage to a target and its surroundings.
- * @param[in] ent TODO ???
+ * @param[in] ent @todo ???
  * @param[in] fd The fire definition that defines what type of damage is dealt and how big the splash radius is.
- * @param[in] impact TODO ???
+ * @param[in] impact @todo ???
  * @param[in] mock pseudo shooting - only for calculating mock values - NULL for real shots
  */
 static void G_SplashDamage (edict_t * ent, fireDef_t * fd, vec3_t impact, shot_mock_t *mock)
@@ -742,25 +742,25 @@ static void G_ShootGrenade (player_t * player, edict_t * ent, fireDef_t * fd, ve
  * @param[in] fd The fire definition that is used for the shot.
  * @param[in] from Location of the gun muzzle.
  * @param[in] at Grid coordinate of the target.
- * @param[in] mask ?? TODO Visibility bit-mask of the others?
+ * @param[in] mask ?? @todo Visibility bit-mask of the others?
  * @param[in] weapon
  * @param[in] mock pseudo shooting - only for calculating mock values - NULL for real shots
  */
 static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at, int mask, item_t * weapon, shot_mock_t *mock)
 {
 	vec3_t dir;	/* Direction from the location of the gun muzzle ("from") to the target ("at") */
-	vec3_t angles;	/* ?? TODO The random dir-modifier ?? */
+	vec3_t angles;	/* ?? @todo The random dir-modifier ?? */
 	vec3_t cur_loc;	/* The current location of the projectile. */
 	vec3_t impact;	/* The location of the target (-center?) */
 	vec3_t temp;
 	trace_t tr;	/* the traceing */
 	float acc;	/* Accuracy modifier for the angle of the shot. */
-	float range;	/* ?? TODO */
+	float range;	/* ?? @todo */
 	float gauss1;
 	float gauss2;   /* For storing 2 gaussian distributed random values. */
 	int bounce;	/* count the bouncing */
 	int damage;	/* The damage to be dealt to the target. */
-	byte flags;	/* ?? TODO */
+	byte flags;	/* ?? @todo */
 /*	int i; */
 
 	/* Calc direction of the shot. */
@@ -769,7 +769,7 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 	VectorSubtract(impact, cur_loc, dir);	/* Calculate the vector from current location to the target. */
 	VectorNormalize(dir);			/* Normalize the vector i.e. make length 1.0 */
 
-	/* ?? TODO: Probably places the starting-location a bit away (cur_loc+8*dir) from the attacker-model/grid.
+	/* ?? @todo: Probably places the starting-location a bit away (cur_loc+8*dir) from the attacker-model/grid.
 	 * Might need some change to reflect 2x2 units.
 	 * Also might need a check if the distance is bigger than the one to the impact location. */
 	VectorMA(cur_loc, sv_shot_origin->value, dir, cur_loc);
@@ -1004,8 +1004,8 @@ static qboolean G_GetShotFromType (edict_t *ent, int type, int firemode, item_t 
 
 /**
  * @brief Setup for shooting, either real or mock
- * @param[in] player TODO: The player this action belongs to (i.e. either the ai or the player)
- * @param[in] num TODO: The index number of the 'inventory' that is used for the shot (i.e. left or right hand)
+ * @param[in] player @todo: The player this action belongs to (i.e. either the ai or the player)
+ * @param[in] num @todo: The index number of the 'inventory' that is used for the shot (i.e. left or right hand)
  * @param[in] at Position to fire on.
  * @param[in] type What type of shot this is (left, right reaction-left etc...).
  * @param[in] firemode The firemode index of the ammo for the used weapon (objDef.fd[][x])  .
@@ -1182,9 +1182,9 @@ extern qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type, 
 }
 
 /**
- * @brief TODO: This seems to be the function that is called for reaction fire isn't it?
- * @param[in] player TODO: The player this action belongs to (i.e. either the ai or the player)
- * @param[in] num TODO: The index number of the 'inventory' that is used for the shot (i.e. left or right hand)
+ * @brief @todo: This seems to be the function that is called for reaction fire isn't it?
+ * @param[in] player @todo: The player this action belongs to (i.e. either the ai or the player)
+ * @param[in] num @todo: The index number of the 'inventory' that is used for the shot (i.e. left or right hand)
  * @param[in] at Position to fire on.
  * @param[in] type What type of shot this is (left, right reaction-left etc...).
  * @param[in] firemode The firemode index of the ammo for the used weapon (objDef.fd[][x])  .

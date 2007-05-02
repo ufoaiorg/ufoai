@@ -109,7 +109,7 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, ai_action_t * aia)
 		return -10000.0;
 
 	/* see if we are very well visible by a reacting enemy */
-	/* TODO: this is worthless now; need to check all squares along our way! */
+	/* @todo: this is worthless now; need to check all squares along our way! */
 	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++)
 		if (check->inuse && check->type == ET_ACTOR && ent != check
 			 && (check->team != ent->team || ent->state & STATE_INSANE)
@@ -164,9 +164,9 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, ai_action_t * aia)
 			od = &gi.csi->ods[LEFT(ent)->item.m];
 			weap_idx = LEFT(ent)->item.t;
 		} else {
-			Com_DPrintf("AI_FighterCalcGuete: TODO: grenade/knife toss from inventory using empty hand\n");
-			/* TODO: grenade/knife toss from inventory using empty hand */
-			/* TODO: evaluate possible items to retrieve and pick one, then evaluate an action against the nearby enemies or allies */
+			Com_DPrintf("AI_FighterCalcGuete: @todo: grenade/knife toss from inventory using empty hand\n");
+			/* @todo: grenade/knife toss from inventory using empty hand */
+			/* @todo: evaluate possible items to retrieve and pick one, then evaluate an action against the nearby enemies or allies */
 		}
 
 		if (!od || weap_idx == NONE)
@@ -178,7 +178,7 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, ai_action_t * aia)
 		if (weap_fds_idx == -1)
 			continue;
 		/* FIXME: timed firedefs that bounce around should not be thrown/shooten about the hole distance */
-		/* TODO: is this how it should work? i just added this additional loop but don't know anything about the function */
+		/* @todo: is this how it should work? i just added this additional loop but don't know anything about the function */
 		for (fd_idx = 0; fd_idx < od->numFiredefs[weap_fds_idx]; fd_idx++) {
 			fd = &od->fd[weap_fds_idx][fd_idx];
 
@@ -200,8 +200,8 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, ai_action_t * aia)
 						dist = VectorDist(ent->origin, check->origin);
 						if (dist > fd->range)
 							continue;
-						/* TODO: Check whether radius and power of fd are to to big for dist */
-						/* TODO: Check whether the alien will die when shooting */
+						/* @todo: Check whether radius and power of fd are to to big for dist */
+						/* @todo: Check whether the alien will die when shooting */
 						/* don't shoot - we are to close */
 						if (dist < fd->splrad)
 							continue;
@@ -276,7 +276,7 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, ai_action_t * aia)
 		} else if (aia->target && tu >= 2) {
 			byte minX, maxX, minY, maxY;
 			/* reward short walking to shooting spot, when seen by enemies;
-			TODO: do this decently, only penalizing the visible part of walk
+			@todo: do this decently, only penalizing the visible part of walk
 			and penalizing much more for reaction shooters around;
 			now it may remove some tactical options from aliens,
 			e.g. they may now choose only the closer doors;
@@ -321,7 +321,7 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, ai_action_t * aia)
 			VectorCopy(ent->pos, aia->stop);
 			guete += GUETE_HIDE;
 			tu -= delta;
-			/* TODO: also add bonus for fleeing from reaction fire
+			/* @todo: also add bonus for fleeing from reaction fire
 			and a huge malus if more than 1 move under reaction */
 		}
 	}
@@ -550,7 +550,7 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 
 	/* shoot('n'hide) */
 	if (bestAia.target) {
-		/* TODO: check whether shoot is needed or enemy died already;
+		/* @todo: check whether shoot is needed or enemy died already;
 		   use the remaining TUs for reaction fire */
 		while (bestAia.shots) {
 			(void)G_ClientShoot(player, ent->number, bestAia.target->pos, bestAia.mode, 0, NULL, qtrue); /* 0 = first firemode */
@@ -663,7 +663,7 @@ static void G_SpawnAIPlayer (player_t * player, int numSpawn)
 			ent->pnum = player->num;
 			gi.linkentity(ent);
 
-			/* skills; TODO: more power to Ortnoks, more mind to Tamans */
+			/* skills; @todo: more power to Ortnoks, more mind to Tamans */
 			Com_CharGenAbilitySkills(&ent->chr, team);
 			ent->chr.skills[ABILITY_MIND] += 100;
 			if (ent->chr.skills[ABILITY_MIND] >= MAX_SKILL)

@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_global.h"
 
 aircraft_t aircraft_samples[MAX_AIRCRAFT];		/**< Available aircraft types. */
-int numAircraft_samples = 0; /* TODO: should be reset to 0 each time scripts are read anew; also aircraft_samples memory should be freed at that time, or old memory used for new records */
+int numAircraft_samples = 0; /* @todo: should be reset to 0 each time scripts are read anew; also aircraft_samples memory should be freed at that time, or old memory used for new records */
 static int airequipID = -1;				/**< FIXME: document me. */
 static qboolean noparams = qfalse;			/**< FIXME: document me. */
 static int numAircraftItems = 0;			/**< FIXME: document me. */
@@ -98,7 +98,7 @@ static void AIR_UpdateHangarCapForOne (int aircraftID, int base_idx)
 			Com_Printf("AIR_UpdateHangarCapForOne()... no free space!\n");
 		}
 	}
-	/* TODO: introduce capacities for UFO hangars and do space checks for them here. */
+	/* @todo: introduce capacities for UFO hangars and do space checks for them here. */
 	Com_DPrintf("AIR_UpdateHangarCapForOne()... base capacities.cur: small: %i big: %i\n", base->capacities[CAP_AIRCRAFTS_SMALL].cur, base->capacities[CAP_AIRCRAFTS_BIG].cur);
 }
 
@@ -271,7 +271,7 @@ void AIR_AircraftInit (void)
 		} else
 			 air_samp->item = NULL;
 
-		air_samp->homebase = &gd.bases[air_samp->idxBase]; /* TODO: looks like a nonsense */
+		air_samp->homebase = &gd.bases[air_samp->idxBase]; /* @todo: looks like a nonsense */
 		air_samp->teamSize = &gd.bases[air_samp->idxBase].teamNum[air_samp->idxInBase];
 	}
 
@@ -569,7 +569,7 @@ extern void AIR_AircraftSelect (aircraft_t* aircraft)
 	Cvar_Set("mn_aircraft_item_img", aircraft->item ? aircraft->item->image_top : "menu/airequip_no_item");
 
 	/* generate aircraft info text */
-	/* TODO: reimplement me when aircraft equipment will be implemented. */
+	/* @todo: reimplement me when aircraft equipment will be implemented. */
 	Com_sprintf(aircraftInfo, sizeof(aircraftInfo), _("Speed:\t%.0f\n"), aircraft->speed);
 	Q_strcat(aircraftInfo, va(_("Fuel:\t%i/%i\n"), aircraft->fuel / 1000, aircraft->fuelSize / 1000), sizeof(aircraftInfo));
 	Q_strcat(aircraftInfo, va(_("Weapon:\t%s\n"), aircraft->weapon ? _(aircraft->weapon->name) : _("None")), sizeof(aircraftInfo));
@@ -680,14 +680,14 @@ extern void AIR_DeleteAircraft (aircraft_t *aircraft)
 
 	if (!aircraft) {
 		Com_DPrintf("AIR_DeleteAircraft: no aircraft given (NULL)\n");
-		/* TODO: Return deletion status here. */
+		/* @todo: Return deletion status here. */
 		return;
 	}
 
 	/* Check if this aircraft is currently transferred. */
 	if (aircraft->status == AIR_TRANSIT) {
 		Com_DPrintf("CL_DeleteAircraft: this aircraft is currently transferred. We can not remove it.\n");
-		/* TODO: Return deletion status here. */
+		/* @todo: Return deletion status here. */
 		return;
 	}
 
@@ -695,7 +695,7 @@ extern void AIR_DeleteAircraft (aircraft_t *aircraft)
 
 	if (!base) {
 		Com_DPrintf("AIR_DeleteAircraft: No homebase found for aircraft.\n");
-		/* TODO: Return deletion status here. */
+		/* @todo: Return deletion status here. */
 		return;
 	}
 
@@ -750,7 +750,7 @@ extern void AIR_DeleteAircraft (aircraft_t *aircraft)
 	/* Now update the aircraft list - maybe there is a popup active. */
 	Cbuf_ExecuteText(EXEC_NOW, "aircraft_list");
 
-	/* TODO: Return successful deletion status here. */
+	/* @todo: Return successful deletion status here. */
 }
 
 /**
@@ -799,9 +799,9 @@ extern qboolean AIR_AircraftMakeMove (int dt, aircraft_t* aircraft)
 /**
  * @brief
  * @param[in] dt
- * TODO: Fuel
+ * @todo: Fuel
  */
-#define GROUND_MISSION 0.5		/* TODO: what is that? Zenerka. */ /* FIXME: const. */
+#define GROUND_MISSION 0.5		/* @todo: what is that? Zenerka. */ /* FIXME: const. */
 void CL_CampaignRunAircraft (int dt)
 {
 	aircraft_t *aircraft;
@@ -889,14 +889,14 @@ void CL_CampaignRunAircraft (int dt)
 						battleStatus = AIR_Fight(aircraft, ufo);
 
 						if (battleStatus) {
-							/* TODO: What is that? Zenerka. */
+							/* @todo: What is that? Zenerka. */
 							color = CL_GetMapColor(ufo->pos, MAPTYPE_CLIMAZONE);
-							/* TODO: What is that? Zenerka. */
+							/* @todo: What is that? Zenerka. */
 							if (!MapIsWater(color) && frand() <= GROUND_MISSION) {
 								/* spawn new mission */
 								/* some random data like alien race, alien count (also depends on ufo-size) */
-								/* TODO: We should have a ufo crash theme for random map assembly */
-								/* TODO: call the map assembly theme with the right parameter, e.g.: +ufocrash [climazone] */
+								/* @todo: We should have a ufo crash theme for random map assembly */
+								/* @todo: call the map assembly theme with the right parameter, e.g.: +ufocrash [climazone] */
 								zoneType = MAP_GetZoneType(color);
 								Com_sprintf(missionName, sizeof(missionName), "ufocrash%.0f:%.0f", ufo->pos[0], ufo->pos[1]);
 								ms = CL_AddMission(missionName);
@@ -918,15 +918,15 @@ void CL_CampaignRunAircraft (int dt)
 							AIR_AircraftReturnToBase(aircraft);
 							MN_AddNewMessage(_("Interception"), _("You've won the battle"), qfalse, MSG_STANDARD, NULL);
 						} else {
-							/* TODO: destroy the aircraft and all soldiers in it */
-							/* TODO: maybe rescue some of the soldiers */
+							/* @todo: destroy the aircraft and all soldiers in it */
+							/* @todo: maybe rescue some of the soldiers */
 							/* FIXME: remove this */
 							AIR_AircraftReturnToBase(aircraft);
 
 							MN_AddNewMessage(_("Interception"), _("You've lost the battle"), qfalse, MSG_STANDARD, NULL);
 						}
 					} else {
-						/* TODO : Find better system to make the aircraft purchasing ufo */
+						/* @todo : Find better system to make the aircraft purchasing ufo */
 						AIR_SendAircraftPurchasingUfo(aircraft, ufo);
 					}
 				}
@@ -1700,7 +1700,7 @@ extern qboolean AIR_Save (sizebuf_t* sb, void* data)
 		MSG_WriteFloat(sb, gd.ufos[i].route.distance);
 		for (j = 0; j < gd.ufos[i].route.numPoints; j++)
 			MSG_Write2Pos(sb, gd.ufos[i].route.point[j]);
-		/* TODO more? */
+		/* @todo more? */
 	}
 	return qtrue;
 }
@@ -1738,7 +1738,7 @@ extern qboolean AIR_Load (sizebuf_t* sb, void* data)
 		aircraft->route.distance = MSG_ReadFloat(sb);
 		for (j = 0; j < aircraft->route.numPoints; j++)
 			MSG_Read2Pos(sb, aircraft->route.point[j]);
-		/* TODO more? */
+		/* @todo more? */
 	}
 
 	/* now fix the curTeam pointers */

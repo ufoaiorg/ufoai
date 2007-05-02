@@ -375,7 +375,7 @@ char *Sys_GetClipboardData (void)
 static void InitCocoa (void)
 {
 	void* cocoa_lib;
-	/* TODO: Don't hardcode the path - let configure decide */
+	/* @todo: Don't hardcode the path - let configure decide */
 	cocoa_lib = dlopen("/System/Library/Frameworks/Cocoa.framework/Cocoa", RTLD_LAZY);
 	void (*nsappload)(void);
 	if (!cocoa_lib)

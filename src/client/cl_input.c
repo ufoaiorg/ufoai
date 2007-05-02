@@ -503,7 +503,7 @@ static void CL_ConfirmAction_f (void)
 	case M_PEND_FIRE_R:
 	case M_PEND_FIRE_L:
 		CL_ActorShoot(selActor, mousePendPos);
-		/* cl.cmode = M_MOVE; TODO: this might've broken animation choosing in cl_actor:CL_ActorDoShoot and CL_ActorStartShoot. */
+		/* cl.cmode = M_MOVE; @todo: this might've broken animation choosing in cl_actor:CL_ActorDoShoot and CL_ActorStartShoot. */
 		break;
 	default:
 		break;
@@ -1166,7 +1166,7 @@ void CL_ParseInput (void)
 
 		CL_ActorMouseTrace();
 		if (cl.cmode > M_PEND_MOVE)
-			mouseSpace = MS_WORLD;	/* TODO: DEBUGME .. why is this needed? I just left it in because i do not know whe it's supposed to do */
+			mouseSpace = MS_WORLD;	/* @todo: DEBUGME .. why is this needed? I just left it in because i do not know whe it's supposed to do */
 
 		return;
 	}

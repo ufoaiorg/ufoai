@@ -59,7 +59,7 @@ extern void UFO_CampaignRunUfos (int dt)
 		if (AIR_AircraftMakeMove(dt, ufo))
 			UFO_SetUfoRandomDest(ufo);
 
-		/* TODO: Crash */
+		/* @todo: Crash */
 		if (ufo->fuel <= 0)
 			ufo->fuel = ufo->fuelSize;
 	}
@@ -85,7 +85,7 @@ static void UFO_ListUfosOnGeoscape_f (void)
 /**
   * @brief Add an ufo in geoscape
   *
-  * TODO: Ufos are not assigned unique idx fields. Could be handy...
+  * @todo: Ufos are not assigned unique idx fields. Could be handy...
   * @sa UFO_RemoveUfoFromGeoscape
   * @sa UFO_RemoveUfoFromGeoscape_f
   */

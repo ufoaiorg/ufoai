@@ -161,7 +161,7 @@ typedef short INT16;
 
 #ifndef DONT_TYPEDEF_INT32
 #ifndef XMD_H			/* X11/xmd.h correctly defines INT32 */
-typedef long INT32;		/* TODO: why long? long int can have 64 bits on some platforms. */
+typedef long INT32;		/* @todo: why long? long int can have 64 bits on some platforms. */
 #endif
 #endif
 

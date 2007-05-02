@@ -214,7 +214,7 @@ void InitGame (void)
 	m_rage_stop = gi.cvar("m_rage_stop", "2.0", CVAR_LATCH, NULL);
 	m_panic_stop = gi.cvar("m_panic_stop", "1.0", CVAR_LATCH, NULL);
 
-	/* TODO: add CVAR_DEVELOPER flag which if !COM_CheckParm("-developer") acts like CVAR_NOSET and hides the cvar from the console */
+	/* @todo: add CVAR_DEVELOPER flag which if !COM_CheckParm("-developer") acts like CVAR_NOSET and hides the cvar from the console */
 	g_nodamage = gi.cvar("g_nodamage", "0", 0, "No damage in developer mode");
 
 	/* flood control */
@@ -534,15 +534,15 @@ void G_EndGame (int team)
  */
 int G_MissionObjective (int activeTeams, int* winningTeam)
 {
-	/* TODO: put objective flag to level */
+	/* @todo: put objective flag to level */
 	switch (level.objective) {
-	/* TODO: enum for objectives */
+	/* @todo: enum for objectives */
 	case OBJ_RESCUE_CIVILIANS:
 		if (!level.num_alive[TEAM_CIVILIAN])
 			return 0;
 		if (!level.num_alive[TEAM_ALIEN])
 			return 1;
-	/* TODO: More objectives */
+	/* @todo: More objectives */
 	default:
 		return -1;
 	}
@@ -568,7 +568,7 @@ void G_CheckEndGame (void)
 			activeTeams++;
 		}
 
-	/* TODO: < 2 does not work when we count civilians */
+	/* @todo: < 2 does not work when we count civilians */
 	/* prepare for sending results */
 	if (activeTeams < 2 /* || G_MissionObjective(activeTeams, &level.winningTeam) != -1*/ ) {
 		if (activeTeams == 0)

@@ -874,7 +874,7 @@ static void CL_AircraftList_f (void)
  * Should be called at the completion or expiration of every mission.
  * The nation where the mission took place will be most affected,
  * surrounding nations will be less affected.
- * TODO: nations react way too much; independently, an asymptotic reaction near 0.0 and 1.0 would be nice; high alienFriendly factor seems to increase happiness, instead of decreasing it.
+ * @todo: nations react way too much; independently, an asymptotic reaction near 0.0 and 1.0 would be nice; high alienFriendly factor seems to increase happiness, instead of decreasing it.
  */
 static void CL_HandleNationData (qboolean lost, int civiliansSurvived, int civiliansKilled, int aliensSurvived, int aliensKilled, actMis_t * mis)
 {
@@ -951,10 +951,10 @@ static void CL_BaseRansacked (base_t *base)
 	for (ac = base->numAircraftInBase-1; ac >= 0; ac--)
 		AIR_DeleteAircraft(&base->aircraft[ac]);
 
-	/* TODO: Maybe reset research in progress. ... needs playbalance
+	/* @todo: Maybe reset research in progress. ... needs playbalance
 	 *       need another value in technology_t to remember researched
 	 *       time from other bases?
-	 * TODO: Destroy (or better: just damage) some random buildings. */
+	 * @todo: Destroy (or better: just damage) some random buildings. */
 
 	Com_sprintf(messageBuffer, MAX_MESSAGE_TEXT, _("Your base: %s has been ransacked! All employees killed and all equipment destroyed."), base->name);
 	MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);
@@ -1308,7 +1308,7 @@ static void CL_CampaignRunMarket (void)
 			break;
 	assert (i != csi.numEDs);
 
-	/* TODO: Find out why there is a 2 days discrepancy in reasearched_date*/
+	/* @todo: Find out why there is a 2 days discrepancy in reasearched_date*/
 	for (i = 0; i < csi.numODs; i++) {
 		if (RS_ItemIsResearched(csi.ods[i].id)) {
 			/* supply balance */
@@ -2095,7 +2095,7 @@ static void CL_GameGo (void)
 
 	CL_SetMissionCvars(mis);
 
-	/* TODO: Map assembling to get the current used dropship in the map is not fully implemented */
+	/* @todo: Map assembling to get the current used dropship in the map is not fully implemented */
 	/* but can be done via the map assembling part of the random map assembly */
 	Cvar_Set("map_dropship", aircraft->id);
 
@@ -2317,7 +2317,7 @@ static void CL_GameAbort_f (void)
  * @note Soldier skill upgrade is being done here.
  * @sa CL_GameResults_f
  *
- * FIXME: See TODO and FIXME included
+ * FIXME: See @todo and FIXME included
  */
 static void CL_UpdateCharacterStats (int won)
 {
@@ -2328,7 +2328,7 @@ static void CL_UpdateCharacterStats (int won)
 
 	Com_DPrintf("CL_UpdateCharacterStats: numTeamList: %i\n", cl.numTeamList);
 
-	/* aircraft = &baseCurrent->aircraft[gd.interceptAircraft]; remove this TODO: check if baseCurrent has the currect aircraftCurrent.  */
+	/* aircraft = &baseCurrent->aircraft[gd.interceptAircraft]; remove this @todo: check if baseCurrent has the currect aircraftCurrent.  */
 	aircraft = AIR_AircraftGetFromIdx(gd.interceptAircraft);
 
 	Com_DPrintf("CL_UpdateCharacterStats: baseCurrent: %s\n", baseCurrent->name);
@@ -2344,13 +2344,13 @@ static void CL_UpdateCharacterStats (int won)
 
 			CL_UpdateCharacterSkills(chr);
 
-			/* TODO: use chrScore_t to determine negative influence on soldier here,
+			/* @todo: use chrScore_t to determine negative influence on soldier here,
 			   like killing too many civilians and teammates can lead to unhire and disband
 			   such soldier, or maybe rank degradation. */
 
 			/* Check if the soldier meets the requirements for a higher rank
 			   and do a promotion. */
-			/* TODO: use param[in] in some way. */
+			/* @todo: use param[in] in some way. */
 			if (gd.numRanks >= 2) {
 				for (j = gd.numRanks - 1; j > chr->rank; j--) {
 					rank = &gd.ranks[j];
@@ -2505,7 +2505,7 @@ static void CL_GameResults_f (void)
 			chr = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, i);
 			assert(chr);
 			Com_DPrintf("CL_GameResults_f - idx %d hp %d\n",chr->ucn, chr->HP);
-			if (chr->HP <= 0) { /* TODO: <= -50, etc. */
+			if (chr->HP <= 0) { /* @todo: <= -50, etc. */
 				/* Delete the employee. */
 				/* sideeffect: gd.numEmployees[EMPL_SOLDIER] and teamNum[] are decremented by one here. */
 				Com_DPrintf("CL_GameResults_f: Delete this dead employee: %i (%s)\n", i, gd.employees[EMPL_SOLDIER][i].chr.name);
@@ -2527,7 +2527,7 @@ static void CL_GameResults_f (void)
 	} else {
 		/* The aircraft can be savely sent to its homebase without losing aliens */
 
-		/* TODO: Is this really needed? At the beginning of CL_GameResults_f we already have this status (if I read this correctly). */
+		/* @todo: Is this really needed? At the beginning of CL_GameResults_f we already have this status (if I read this correctly). */
 		baseCurrent->aircraft[baseCurrent->aircraftCurrent].homebase = baseCurrent;
 		baseCurrent->aircraft[baseCurrent->aircraftCurrent].idxBase = baseCurrent->idx;
 
@@ -2814,7 +2814,7 @@ extern void CL_ParseResearchableCampaignStates (const char *name, char **text, q
 					gd.technologies[i].mailSent = MAILSENT_PROPOSAL;
 					RS_MarkOneResearchable(&gd.technologies[i]);
 				} else
-					Com_Printf("TODO: Mark unresearchable");
+					Com_Printf("@todo: Mark unresearchable");
 				Com_DPrintf("...tech %s\n", gd.technologies[i].id);
 				break;
 			}
@@ -3433,7 +3433,7 @@ extern void CL_ParseNations (const char *name, char **text)
  * @note handles multiplayer and singleplayer
  *
  * @return true when we are not in battlefield
- * TODO: Check cvar mn_main for value
+ * @todo: Check cvar mn_main for value
  */
 extern qboolean CL_OnBattlescape (void)
 {

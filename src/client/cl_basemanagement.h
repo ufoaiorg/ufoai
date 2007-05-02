@@ -259,7 +259,7 @@ int B_GetNumberOfBuildingsInBaseByType(int base_idx, buildingType_t type);
 int B_ItemInBase(int item_idx, base_t *base);
 
 aircraft_t *B_GetAircraftFromBaseByIndex(base_t* base, int index);
-void B_ReviveSoldiersInBase(base_t* base); /* TODO */
+void B_ReviveSoldiersInBase(base_t* base); /* @todo */
 
 int B_GetAvailableQuarterSpace(const base_t* const base);
 #if 0

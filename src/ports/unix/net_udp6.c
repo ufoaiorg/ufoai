@@ -141,7 +141,7 @@ void NetadrToSockadr (netadr_t *a, struct sockaddr_storage *s)
 		s6->sin6_len = sizeof (struct sockaddr_in6);
 #endif
 		/* scope_id is important for link-local
-		* destination. TODO: check in code for possible
+		* destination. @todo: check in code for possible
 		* uninitialized netadr_t.scope_id instances */
 		s6->sin6_scope_id = a->scope_id;
 		break;
@@ -165,7 +165,7 @@ void NetadrToSockadr (netadr_t *a, struct sockaddr_storage *s)
 			s6->sin6_len = sizeof (struct sockaddr_in6);
 #endif
 			/* scope_id is important for link-local
-			* destination. TODO: check in code for possible
+			* destination. @todo: check in code for possible
 			* uninitialized netadr_t.scope_id instances */
 			s6->sin6_scope_id = a->scope_id;
 		}

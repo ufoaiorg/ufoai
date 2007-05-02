@@ -743,7 +743,7 @@ void CDAudio_RandomPlay(void);
 #include "cl_transfer.h"
 
 /* MISC */
-/* TODO: needs to be sorted (e.g what file is it defined?) */
+/* @todo: needs to be sorted (e.g what file is it defined?) */
 #define MAX_TEAMDATASIZE	32768
 
 /* cl_team.c: CL_UpdateHireVar(), CL_ReloadAndRemoveCarried() */

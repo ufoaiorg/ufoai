@@ -915,7 +915,7 @@ void Draw_3DMapMarkers (vec3_t angles, float zoom, float latitude, float longitu
 	/* restore the matrix */
 	qglPopMatrix();
 
-	/* TODO: Draw the icon ot model of the crashsite or base */
+	/* @todo: Draw the icon ot model of the crashsite or base */
 	R_DrawModelDirect(&mi, NULL, NULL);
 
 	qglColor4f(1, 1, 1, 1);

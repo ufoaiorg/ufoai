@@ -383,7 +383,7 @@ static char *MN_GetReferenceString (const menu_t* const menu, char *ref)
 			}
 			return Key_GetBinding(token, (cls.state != ca_active ? KEYSPACE_MENU : KEYSPACE_GAME));
 		} else if (!Q_strncmp(ident, "cmd", 3)) {
-			/* TODO: get the command output */
+			/* @todo: get the command output */
 			return "TOOD";
 		} else {
 			menuNode_t *refNode;
@@ -646,7 +646,7 @@ static void MN_InvDrawFree (inventory_t * inv, menuNode_t * node)
 		assert(inv);
 
 #if 0
-		/* TODO: add armor support */
+		/* @todo: add armor support */
 		if (csi.ids[container].armor) {
 		} else
 #endif
@@ -1028,7 +1028,7 @@ static void MN_Drag (const menuNode_t* const node, int x, int y)
 				if (i) {
 					et = csi.ods[i->item.t].buytype;
 					if (!BUYTYPE_MATCH(et,baseCurrent->equipType)) {
-						/* TODO: Check this stuff for BUY_MULTI_AMMO .. this is probably broken now.*/
+						/* @todo: Check this stuff for BUY_MULTI_AMMO .. this is probably broken now.*/
 						menuInventory->c[csi.idEquip] = baseCurrent->equipByBuyType.c[et];
 						Com_FindSpace(menuInventory, i->item.t, csi.idEquip, &px, &py);
 						if (px >= 32 && py >= 16) {
@@ -1044,11 +1044,11 @@ static void MN_Drag (const menuNode_t* const node, int x, int y)
 
 			/* end of hack */
 			if (i && !BUYTYPE_MATCH(et,baseCurrent->equipType)) {
-				/* TODO: Check this stuff for BUY_MULTI_AMMO .. this is probably broken now.*/
+				/* @todo: Check this stuff for BUY_MULTI_AMMO .. this is probably broken now.*/
 				baseCurrent->equipByBuyType.c[et] = menuInventory->c[csi.idEquip];
 				menuInventory->c[csi.idEquip] = baseCurrent->equipByBuyType.c[baseCurrent->equipType];
 			} else {
-				/* TODO: Check this stuff for BUY_MULTI_AMMO .. this is probably broken now.*/
+				/* @todo: Check this stuff for BUY_MULTI_AMMO .. this is probably broken now.*/
 				baseCurrent->equipByBuyType.c[baseCurrent->equipType] = menuInventory->c[csi.idEquip];
 			}
 
@@ -1276,7 +1276,7 @@ void MN_Click (int x, int y)
 		if (execute_action)
 			MN_ExecuteActions(menu, execute_action);
 
-		/* TODO: maybe we should also check sp == menuStackPos here */
+		/* @todo: maybe we should also check sp == menuStackPos here */
 		if (!clickedInside && menu->leaveNode)
 			MN_ExecuteActions(menu, menu->leaveNode->click);
 
@@ -2158,7 +2158,7 @@ void MN_DrawMenus (void)
 						message = messageStack;
 						while (message) {
 							if (node->textLines >= node->height) {
-								/* TODO: Draw the scrollbars */
+								/* @todo: Draw the scrollbars */
 								break;
 							}
 							node->textLines++;
@@ -2346,7 +2346,7 @@ void MN_DrawMenus (void)
 							/* set mi pointers to menuModel */
 							mi.origin = menuModel->origin;
 							mi.angles = menuModel->angles;
-							/* TODO: menuScale stuff */
+							/* @todo: menuScale stuff */
 							if (menuModel->menuScaleCnt) {
 								for (i = 0; i < menuModel->menuScaleCnt; i++) {
 									if (menu == menuModel->menuScaleMenusPtr[i]) {
@@ -3224,7 +3224,7 @@ void MN_ResetMenus (void)
 	Cmd_AddCommand("mn_debugreload", MN_ReloadMenus_f, "Reloads the menus to show updates without the need to restart");
 	/* get action data memory */
 	if (adataize)
-		/* TODO: should not be needed - this function is only called once - check this */
+		/* @todo: should not be needed - this function is only called once - check this */
 		memset(adata, 0, adataize);
 	else {
 		/* 256kb */
@@ -4126,7 +4126,7 @@ message_t *MN_AddNewMessage (const char *title, const char *text, qboolean popup
 	case MSG_TERRORSITE:
 	case MSG_BASEATTACK:
 	case MSG_PRODUCTION:
-		/*TODO: S_StartLocalSound(); */
+		/*@todo: S_StartLocalSound(); */
 		break;
 	case MSG_MAX:
 		break;

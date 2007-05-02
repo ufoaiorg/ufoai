@@ -2,7 +2,7 @@
  * @file ref.h
  * @brief Think this may be the header for the renderer that specifies the renderer API, but am not sure.
  *
- * TODO: If this is indeed the header for the render, that specifies the renderer API, it should be with the renderer, not the client.
+ * @todo: If this is indeed the header for the render, that specifies the renderer API, it should be with the renderer, not the client.
  */
 
 /*
@@ -153,7 +153,7 @@ typedef struct shader_s {
 	qboolean light;
 	qboolean edge;
 	byte glMode;
-	/* TODO: */
+	/* @todo: */
 
 	/* vpid and fpid are vertexpid and fragmentpid for binding */
 	unsigned int vpid, fpid, glslpid;

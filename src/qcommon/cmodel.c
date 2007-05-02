@@ -225,7 +225,7 @@ static void CMod_LoadSubmodels (lump_t * l)
 		for (j = 0; j < 3; j++) {
 			out->mins[j] = LittleFloat(in->mins[j]) - 1 + shift[j];
 			out->maxs[j] = LittleFloat(in->maxs[j]) + 1 + shift[j];
-			/* TODO: why don't we shift the origin, too? It is relative to the
+			/* @todo: why don't we shift the origin, too? It is relative to the
 			 * global origin, too - or am I wrong? - i added the shifting here, too
 			 * it's in the gl_model.c code, too */
 			out->origin[j] = LittleFloat(in->origin[j]) + shift[j];
@@ -913,10 +913,10 @@ static void CMod_GetMapSize (routing_t * map)
 
 /**
  * @brief
- * @param[in] l Routing lump ... TODO whatsit?
- * @param[in] sX TODO: See comments in CM_AddMapTile
- * @param[in] sY TODO: --""--
- * @param[in] sZ TODO: --""--
+ * @param[in] l Routing lump ... @todo whatsit?
+ * @param[in] sX @todo: See comments in CM_AddMapTile
+ * @param[in] sY @todo: --""--
+ * @param[in] sZ @todo: --""--
  * @sa CM_AddMapTile
  */
 static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
@@ -1102,12 +1102,12 @@ static void CM_FreeTile (mapTile_t * tile)
 /**
  * @brief Adds in a single map tile
  * @param[in] name The (file-)name of the tile to add.
- * @param[in] sX TODO: How it is supposed to look and why can it be negative?
+ * @param[in] sX @todo: How it is supposed to look and why can it be negative?
  * And is the "WIDTH" value really correct, not WIDTH/2?
  * The values are created in SV_AssembleMap (**pos)
- * @param[in] sY TODO: --""--
- * @param[in] sZ TODO: --""--
- * @return A checksum (TODO: which one exactly?)
+ * @param[in] sY @todo: --""--
+ * @param[in] sZ @todo: --""--
+ * @return A checksum (@todo: which one exactly?)
  * @return 0 on error
  * @sa CM_LoadMap
  * @todo Fix asserts & comments  for sX, sY and sZ

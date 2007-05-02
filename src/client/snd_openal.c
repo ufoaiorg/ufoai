@@ -71,7 +71,7 @@ qboolean SND_OAL_Init (char* device)
 
 	if ((oalState.context = qalcCreateContext(oalState.device, NULL)) == NULL) {
 		Com_Printf("Error: OpenAL context creation error\n");
-		/* TODO: close device here, too */
+		/* @todo: close device here, too */
 		return qfalse;
 	}
 

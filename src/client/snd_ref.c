@@ -419,7 +419,7 @@ void S_Init (void)
 #ifndef _WIN32
 		char libName[MAX_QPATH];
 #endif
-		/* TODO: make openal the default when it is working (i.e. change 0 below to a 1) */
+		/* @todo: make openal the default when it is working (i.e. change 0 below to a 1) */
 		snd_openal = Cvar_Get("snd_openal", "0", CVAR_ARCHIVE, "use OpenAL");
 		snd_ref = Cvar_Get("snd_ref", "sdl", CVAR_ARCHIVE, "Sound renderer libary name - default is sdl");
 		/* don't restart right again */

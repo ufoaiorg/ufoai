@@ -103,7 +103,7 @@ static int BS_CalculateHangarStorage (int aircraftID, int base_idx)
 		}
 	}
 	return -1;
-	/* TODO: introduce capacities for UFO hangars and do space checks for them here. */
+	/* @todo: introduce capacities for UFO hangars and do space checks for them here. */
 }
 
 /**
@@ -295,7 +295,7 @@ static void BS_BuyType_f (void)
 	if (!baseCurrent || buyCategory == -1)
 		return;
 
-	RS_CheckAllCollected(); /* TODO: needed? */
+	RS_CheckAllCollected(); /* @todo: needed? */
 
 	CL_UpdateCredits(ccs.credits);
 

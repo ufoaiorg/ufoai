@@ -257,7 +257,7 @@ extern void CL_ItemDescription (int item)
 		} else {
 			/* just an item */
 			/* only primary definition */
-			/* TODO: We use the default firemodes here. We might need some change the "fd[0]" below to INV_FiredefsIDXForWeapon(od,weapon_idx) on future changes. */
+			/* @todo: We use the default firemodes here. We might need some change the "fd[0]" below to INV_FiredefsIDXForWeapon(od,weapon_idx) on future changes. */
 			Com_sprintf(itemText, sizeof(itemText), _("%s auxiliary equipment with\n"), (od->firetwohanded ? _("Two-handed") : _("One-handed")));
 			Q_strcat(itemText, va(_("Action:\t%s\n"), od->fd[0][0].name), sizeof(itemText));
 			Q_strcat(itemText, va(_("Time units:\t%i\n"), od->fd[0][0].time), sizeof(itemText));
@@ -669,7 +669,7 @@ static void UP_DrawEntry (technology_t* tech)
 	if (!*tech->mdl_bottom && *tech->mdl_bottom)
 		Cvar_Set("mn_upimage_bottom", tech->image_bottom);
 	up_firemode=0;
-	up_researchedlink=0;	/*TODO: if the first weapon of the firemode of an ammo is unresearched, its dommages,... will still be displayed*/
+	up_researchedlink=0;	/*@todo: if the first weapon of the firemode of an ammo is unresearched, its dommages,... will still be displayed*/
 
 	currentChapter = tech->up_chapter;
 
@@ -1051,7 +1051,7 @@ static void UP_Update_f (void)
 
 /**
  * @brief Shows available ufopedia entries
- * TODO: Implement me
+ * @todo: Implement me
  */
 static void UP_List_f (void)
 {
@@ -1363,7 +1363,7 @@ extern void UP_ResetUfopedia (void)
 	Cvar_Set("mn_changefiremode", "0"); /* use strings here - no int */
 	Cvar_Set("mn_researchedlinkname", "");
 	up_firemode=0;
-	up_researchedlink=0;	/*TODO: if the first weapon of the firemode of an ammo is unresearched, its dommages,... will still be displayed*/
+	up_researchedlink=0;	/*@todo: if the first weapon of the firemode of an ammo is unresearched, its dommages,... will still be displayed*/
 }
 
 /**

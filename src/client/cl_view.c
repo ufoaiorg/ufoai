@@ -158,7 +158,7 @@ void CL_ParseEntitystring (char *es)
 	/* -1.0f means - don't use it */
 
 	/*
-	TODO: Implement me: use cvar map_dropship to get the current used dropship
+	@todo: Implement me: use cvar map_dropship to get the current used dropship
 	this cvar is set at mission start and inited with craft_dropship
 	(e.g. for multiplayer missions)
 
@@ -551,7 +551,7 @@ void CL_CalcRefdef (void)
 /**
  * @brief Function to draw the grid and the forbidden places
  *
- * TODO: Implement and extend this function
+ * @todo: Implement and extend this function
  */
 static void CL_DrawGrid (void)
 {

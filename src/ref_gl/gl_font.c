@@ -427,8 +427,8 @@ static char *Font_GetLineWrap (font_t * f, char *buffer, int maxWidth, int *widt
  * y coordinates will change for each linebreak - whereas the absY will be fix
  * @param[in] width The max width of the text
  * @param[in] height The max height of the text
- * @return -1 for scrolling down (TODO)
- * @return +1 for scrolling up (TODO)
+ * @return -1 for scrolling down (@todo)
+ * @return +1 for scrolling up (@todo)
  */
 static int Font_GenerateGLSurface (fontCache_t *cache, int x, int y, int absX, int absY, int width, int height)
 {
@@ -533,7 +533,7 @@ int Font_DrawString (const char *fontID, int align, int x, int y, int absX, int 
 	}
 
 	cache = Font_GetFromCache(c);
-	if (cache) { /* TODO: check that cache.font = fontID and that texh0 was the same */
+	if (cache) { /* @todo: check that cache.font = fontID and that texh0 was the same */
 		if (cur_line) {
 			/* ri.Con_Printf(PRINT_ALL, "h %i - s %i - l %i\n", box_height, scroll_pos, *cur_line); */
 			if (increaseLine)

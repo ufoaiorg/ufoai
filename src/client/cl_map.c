@@ -215,7 +215,7 @@ static void MAP_MultiSelectNotifyUfoRemoved (const aircraft_t* ufo)
 	int i;
 
 	/* Deactive all ufos */
-	/* TODO : Determine THE corresponding ufo in the multi select list */
+	/* @todo : Determine THE corresponding ufo in the multi select list */
 	for (i = 0 ; i < multiSelect.nbSelect ; i++)
 		if (multiSelect.selectType[i] == MULTISELECT_TYPE_UFO)
 			multiSelect.selectType[i] = MULTISELECT_TYPE_NONE;
@@ -271,7 +271,7 @@ extern void MAP_MapClick (const menuNode_t* node, int x, int y, qboolean globe)
 		}
 	} else if (gd.mapAction == MA_UFORADAR) {
 		MN_PushMenu("popup_intercept_ufo");
-		/* TODO: Select aircraft - follow ufo - fight */
+		/* @todo: Select aircraft - follow ufo - fight */
 		/* if shoot down - we have a new crashsite mission if color != water */
 	}
 
@@ -381,7 +381,7 @@ extern qboolean MAP_3DMapToScreen (const menuNode_t* node, const vec2_t pos, int
 	}
 /*	Com_Printf("MAP_3DMapToScreen: %i:%i\n", *x, *y);*/
 
-	/* TODO: Check ccs.angle */
+	/* @todo: Check ccs.angle */
 /*	if (*x < node->pos[0] && *y < node->pos[1] && *x > node->pos[0] + node->size[0] && *y > node->pos[1] + node->size[1])
 		return qfalse;*/
 	return qtrue;
@@ -747,7 +747,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 					mapline_t path;
 
 					path.numPoints = aircraft->route.numPoints - aircraft->point;
-					/* TODO : check why path.numPoints can be sometime equal to -1 */
+					/* @todo : check why path.numPoints can be sometime equal to -1 */
 					if (path.numPoints > 1) {
 						memcpy(path.point, aircraft->pos, sizeof(vec2_t));
 							memcpy(path.point + 1, aircraft->route.point + aircraft->point + 1, (path.numPoints - 1) * sizeof(vec2_t));
@@ -837,7 +837,7 @@ extern void MAP_DrawMap (const menuNode_t* node, qboolean map3D)
 	if (map3D || cl_3dmap->value) {
 		if (!geobackground)
 			geobackground = MN_GetNodeFromCurrentMenu("geobackground");
-		/* TODO change texh, texl of geobackground with zoomlevel */
+		/* @todo change texh, texl of geobackground with zoomlevel */
 		q = (ccs.date.day % 365 + (float) (ccs.date.sec / (3600 * 6)) / 4) * 2 * M_PI / 365 - M_PI;
 		re.Draw3DGlobe(node->pos[0], node->pos[1], node->size[0], node->size[1],
 			(float) ccs.date.sec / (3600 * 24), q, ccs.angles, ccs.zoom / 10, curCampaign->map);
@@ -908,7 +908,7 @@ extern void MAP_ResetAction (void)
 		gd.mapAction = MA_NONE;
 
 	/* FIXME: Don't reset the selMis when we are in tactical mission and enter the geoscape via mn_push map */
-	/* TODO: I think this doesn't matter anymore, don't it? */
+	/* @todo: I think this doesn't matter anymore, don't it? */
 	gd.interceptAircraft = -1;
 	if (selMis) {
 		selMis->def->active = qfalse;
@@ -941,7 +941,7 @@ extern void MAP_SelectMission (actMis_t* mission)
 
 /**
  * @brief Notify that a mission has been removed
- * TODO: Destroy base after removing a baseattack mission??
+ * @todo: Destroy base after removing a baseattack mission??
  */
 extern void MAP_NotifyMissionRemoved (const actMis_t* mission)
 {

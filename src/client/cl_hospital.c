@@ -405,7 +405,7 @@ static void HOS_EmployeeInit_f (void)
 		return;
 	}
 
-	/* TODO */
+	/* @todo */
 	menuText[TEXT_STANDARD] = employeeDesc;
 	*employeeDesc = '\0';
 

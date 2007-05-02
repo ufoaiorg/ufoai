@@ -777,7 +777,7 @@ static void PR_ProductionIncrease_f (void)
 			}
 
 			if (produceable_amount < amount) {
-				 /* TODO: make the numbers work here. */
+				 /* @todo: make the numbers work here. */
 				MN_Popup("Not enough material!", "You don't have enough material to produce all (xx) items. Production will continue with a reduced (xx) number.");
 			}
 
@@ -793,8 +793,8 @@ static void PR_ProductionIncrease_f (void)
 				MN_Popup(_("Queue full!"), _("You cannot queue any more items!"));
 			}
 		} else { /*produceable_amount <= 0 */
-			MN_Popup("Not enough material!", "To produce this item you need at least the following materials ..."); /* TODO: better messages needed - therefore i skip the gettext code for now */
-			/* TODO:
+			MN_Popup("Not enough material!", "To produce this item you need at least the following materials ..."); /* @todo: better messages needed - therefore i skip the gettext code for now */
+			/* @todo:
 			 * If the requirements are not met (produceable_amount<=0) we
 			 *  -) need to popup something like: "You need the following items in order to produce more of ITEM:   x of ITEM, x of ITEM, etc..."
 			 *     This info should also be displayed in the item-info.

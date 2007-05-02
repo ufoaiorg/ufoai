@@ -522,11 +522,11 @@ extern qboolean E_UnhireEmployee (base_t* base, employeeType_t type, int idx)
 		if (employee->buildingID >= 0) {
 			/* Remove employee from building (and tech/production). */
 			E_RemoveEmployeeFromBuilding(employee);
-			/* TODO: Assign a new employee to the tech/production) if one is available.
+			/* @todo: Assign a new employee to the tech/production) if one is available.
 			E_AssignEmployee(employee, building_rom_unhired_employee);
 			*/
 		}
-		/* TODO: this switch should be moved to E_RemoveEmployeeFromBuilding() when I will
+		/* @todo: this switch should be moved to E_RemoveEmployeeFromBuilding() when I will
 		   finish implementing capacities. 22042007 Zenerka */
 		switch (employee->type) {
 		case EMPL_SOLDIER:
@@ -549,7 +549,7 @@ extern qboolean E_UnhireEmployee (base_t* base, employeeType_t type, int idx)
 			}
 			break;
 		case EMPL_MEDIC:
-			/* TODO: implement me. */
+			/* @todo: implement me. */
 			break;
 		default:
 			break;
@@ -730,7 +730,7 @@ extern void E_DeleteAllEmployees (base_t* base)
 
 #if 0
 /************************
-TODO: Will later on be used in e.g RS_AssignScientist_f
+@todo: Will later on be used in e.g RS_AssignScientist_f
 *********************************/
 /**
  * @brief Assigns an employee to a building.
@@ -752,7 +752,7 @@ extern qboolean E_AssignEmployeeToBuilding (building_t *building, employeeType_t
 		if (employee) {
 			employee->buildingID = building->idx;
 		} else {
-			/* TODO: message -> no employee available */
+			/* @todo: message -> no employee available */
 		}
 		break;
 	default:
@@ -793,7 +793,7 @@ extern qboolean E_RemoveEmployeeFromBuilding (employee_t *employee)
 		case EMPL_MEDIC:
 		case EMPL_WORKER:
 		case EMPL_ROBOT:
-			/*TODO: Check if they are linked to anywhere and remove them there. */
+			/*@todo: Check if they are linked to anywhere and remove them there. */
 			break;
 		default:
 			Com_DPrintf("E_RemoveEmployeeFromBuilding: Unhandled employee type: %i\n", chr->empl_type);
@@ -908,19 +908,19 @@ static void E_EmployeeHire_f (void)
 		return;
 
 	/* Already hired in another base. */
-	/* TODO: Should hired employees in another base be listed here at all? */
+	/* @todo: Should hired employees in another base be listed here at all? */
 	if (gd.employees[employeeCategory][num + plus].hired
 		&& gd.employees[employeeCategory][num + plus].baseIDHired != baseCurrent->idx)
 		return;
 
 	if (gd.employees[employeeCategory][num + plus].hired) {
 		if (!E_UnhireEmployee(&gd.bases[gd.employees[employeeCategory][num + plus].baseIDHired], employeeCategory, num + plus)) {
-			/* TODO: message - Couldn't fire employee. */
+			/* @todo: message - Couldn't fire employee. */
 		} else
 			Cbuf_AddText(va("employeedel%i\n", num - minus));
 	} else {
 		if (!E_HireEmployee(baseCurrent, employeeCategory, num + plus)) {
-			/* TODO: message - Couldn't hire employee. */
+			/* @todo: message - Couldn't hire employee. */
 		} else
 			Cbuf_AddText(va("employeeadd%i\n", num - minus));
 	}

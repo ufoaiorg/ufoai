@@ -1306,7 +1306,7 @@ static void CL_ParseEvent (void)
 #endif
 						fd = GET_FIREDEF(obj_idx, weap_fds_idx, fd_idx);
 #if 0
-						TODO: not needed? and SF_BOUNCED?
+						@todo: not needed? and SF_BOUNCED?
 						if (fd->speed)
 							impactTime = shootTime + 1000 * VectorDist( muzzle, impact ) / fd->speed;
 						else

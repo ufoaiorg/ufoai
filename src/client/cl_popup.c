@@ -207,7 +207,7 @@ static void CL_PopupInterceptionReadyAuto_f (void)
 	if (popupInterceptionReady.aircraft->status != AIR_DROP)
 		return;
 
-	/* TODO : launch auto mission */
+	/* @todo : launch auto mission */
 }
 
 /**

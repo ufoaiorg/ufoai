@@ -257,7 +257,7 @@ extern void CL_StartSingleplayer (qboolean singleplayer)
  */
 void CL_Drop (void)
 {
-	/* TODO: I hope this will work for all CL_Drop calls.
+	/* @todo: I hope this will work for all CL_Drop calls.
 	   at least it is working when a map isn't found */
 #if 1
 	/* drop loading plaque unless this is the initial game start */
@@ -1029,7 +1029,7 @@ static void CL_ServerConnect_f (void)
 {
 	char *ip = Cvar_VariableString("mn_server_ip");
 
-	/* TODO: if we are in multiplayer auto generate a team */
+	/* @todo: if we are in multiplayer auto generate a team */
 	if (!B_GetNumOnTeam()) {
 		MN_Popup(_("Error"), _("Assemble a team first"));
 		return;
@@ -1264,7 +1264,7 @@ static void CL_PingServers_f (void)
 	lastServerQuery = Sys_Milliseconds();
 
 	/* query master server? */
-	/* TODO: Cache this to save bandwidth */
+	/* @todo: Cache this to save bandwidth */
 	if (!noudp->value && (Cmd_Argc() == 2 || Q_strcmp(Cmd_Argv(1), "local"))) {
 		adr.port = (unsigned)BigShort(masterserver_port->integer);
 		if (NET_StringToAdr(masterserver_ip->string, &adr)) {
@@ -1464,7 +1464,7 @@ extern void CL_Snd_Restart_f (void)
 /**
  * @brief Increase or decrease the teamnum
  * @sa CL_SelectTeam_Init_f
- * TODO: If no team is free - change to spectator
+ * @todo: If no team is free - change to spectator
  */
 static void CL_TeamNum_f (void)
 {

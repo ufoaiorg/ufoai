@@ -509,7 +509,7 @@ static void B_UpdateBaseBuildingStatus (building_t* building, base_t* base, buil
 	default:
 		break;
 	}
-	/* TODO: this should be an user option defined in Game Options. */
+	/* @todo: this should be an user option defined in Game Options. */
 	CL_GameTimeStop();
 }
 
@@ -539,7 +539,7 @@ extern void B_SetUpBase (base_t* base)
 			|| (gd.numBases == 1
 				&& gd.buildingTypes[i].firstbase
 				&& cl_start_buildings->value)) {
-			/* TODO: implement check for moreThanOne */
+			/* @todo: implement check for moreThanOne */
 			building = &gd.buildings[base->idx][gd.numBuildings[base->idx]];
 			memcpy(building, &gd.buildingTypes[i], sizeof(building_t));
 			/* self-link to building-list in base */
@@ -711,7 +711,7 @@ extern void B_SetBuildingByClick (int row, int col)
 		return;
 	}
 
-	/*TODO: this is bad style (baseCurrent->buildingCurrent shouldn't link to gd.buildingTypes at all ... it's just not logical) */
+	/*@todo: this is bad style (baseCurrent->buildingCurrent shouldn't link to gd.buildingTypes at all ... it's just not logical) */
 	/* if the building is in gd.buildingTypes[] */
 	if (baseCurrent->buildingCurrent->base_idx < 0) {
 		/* search for a free slot - in case of building destruction */
@@ -1109,7 +1109,7 @@ static void B_BuildingClick_f (void)
  * Parses one "building" entry in the basemanagement.ufo file and writes it into the next free entry in bmBuildings[0], which is the list of buildings in the first base (building_t).
  *
  * @param[in] id Unique test-id of a building_t. This is parsed from "building xxx" -> id=xxx.
- * @param[in] text TODO: document this ... It appears to be the whole following text that is part of the "building" item definition in .ufo.
+ * @param[in] text @todo: document this ... It appears to be the whole following text that is part of the "building" item definition in .ufo.
  * @param[in] link Bool value that decides whether to link the tech pointer in or not
  */
 extern void B_ParseBuildings (const char *name, char **text, qboolean link)
@@ -1232,7 +1232,7 @@ extern void B_ParseBuildings (const char *name, char **text, qboolean link)
 			building->tech = tech_link->idx;
 		} else {
 			if (building->visible)
-				/* TODO: are the techs already parsed? */
+				/* @todo: are the techs already parsed? */
 				Com_DPrintf("B_ParseBuildings: Could not find tech that provides %s\n", name);
 		}
 
@@ -1356,7 +1356,7 @@ extern void B_ClearBase (base_t *const base)
 
 	/* setup team */
 	if (!E_CountUnhired(EMPL_SOLDIER)) {
-		/* should be multiplayer (campaignmode TODO) or singleplayer */
+		/* should be multiplayer (campaignmode @todo) or singleplayer */
 		Com_DPrintf("B_ClearBase: create %i soldiers\n", curCampaign->soldiers);
 		for (i = 0; i < curCampaign->soldiers; i++)
 			E_CreateEmployee(EMPL_SOLDIER);
@@ -1475,7 +1475,7 @@ extern void B_DrawBase (menuNode_t * node)
 				if (!building->used) {
 					if (*building->needs)
 						building->used = 1;
-					if (*building->image) {	/* TODO:DEBUG */
+					if (*building->image) {	/* @todo:DEBUG */
 						Q_strncpyz(image, building->image, sizeof(image));
 					} else {
 						/*Com_DPrintf( "B_DrawBase: no image found for building %s / %i\n",building->id ,building->idx ); */
@@ -1718,7 +1718,7 @@ static void CL_SwapSkills (character_t *team[], int num)
 				/* disregard left hand, or dual-wielding guys are too good */
 
 				if (weaponr_fd_idx < 0 || weaponh_fd_idx < 0) {
-					/* TODO: Is there a better way to check for this case? */
+					/* @todo: Is there a better way to check for this case? */
 					Com_DPrintf("CL_SwapSkills: Bad or no firedef indices found (weaponr_fd_idx=%i and weaponh_fd_idx=%i)... skipping\n", weaponr_fd_idx, weaponh_fd_idx);
 				} else {
 					no1 = 2 * (RIGHT(cp1) && skill == csi.ods[RIGHT(cp1)->item.m].fd[weaponr_fd_idx][fmode1].weaponSkill)
@@ -1739,7 +1739,7 @@ static void CL_SwapSkills (character_t *team[], int num)
 							weaponh_fd_idx = INV_FiredefsIDXForWeapon(&csi.ods[HOLSTER(cp2)->item.m], HOLSTER(cp2)->item.t);
 
 						if (weaponr_fd_idx < 0 || weaponh_fd_idx < 0) {
-							/* TODO: Is there a better way to check for this case? */
+							/* @todo: Is there a better way to check for this case? */
 							Com_DPrintf("CL_SwapSkills: Bad or no firedef indices found (weaponr_fd_idx=%i and weaponh_fd_idx=%i)... skipping\n", weaponr_fd_idx, weaponh_fd_idx);
 						} else {
 							/* FIXME This will crash if weaponh_fd_idx or weaponr_fd_idx is -1 */
@@ -2004,7 +2004,7 @@ extern void B_BaseAttack (base_t* const base)
 {
 	assert(base);
 	base->baseStatus = BASE_UNDER_ATTACK;
-#if 0							/*TODO: run eventhandler for each building in base */
+#if 0							/*@todo: run eventhandler for each building in base */
 	if (b->onAttack)
 		Cbuf_AddText(va("%s %i", b->onAttack, b->id));
 #endif
@@ -2089,7 +2089,7 @@ static void B_AssembleMap_f (void)
 			}
 		}
 
-	/* TODO: If a building is still under construction, it will be assembled as a finished part */
+	/* @todo: If a building is still under construction, it will be assembled as a finished part */
 	/* otherwise we need mapparts for all the maps under construction */
 	for (row = 0; row < BASE_SIZE; row++)
 		for (col = 0; col < BASE_SIZE; col++) {

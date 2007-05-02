@@ -32,7 +32,7 @@ void E_Reset(void);
 
 /******* BACKEND STUFF ********/
 
-/* TODO: */
+/* @todo: */
 /* MAX_EMPLOYEES_IN_BUILDING should be redefined by a config variable that is lab/workshop/quarters-specific */
 /* e.g.: */
 /* if ( !maxEmployeesInQuarter ) maxEmployeesInQuarter = MAX_EMPLOYEES_IN_BUILDING; */

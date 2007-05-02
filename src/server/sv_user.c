@@ -223,7 +223,7 @@ void SV_SpawnAllPending (void)
 	if (!svs.initialized)
 		return;
 
- 	/* TODO: how to handle spectators (skip spawning them?) */
+ 	/* @todo: how to handle spectators (skip spawning them?) */
 
 	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++) {
 		if (cl && cl->state == cs_spawning) {

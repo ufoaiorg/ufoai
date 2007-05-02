@@ -440,7 +440,7 @@ static void SCR_DrawCursor (void)
 
 			/* playernames */
 			if (menuText[TEXT_MOUSECURSOR_PLAYERNAMES] && cl_show_cursor_tooltips->value) {
-				/*TODO: activate this:
+				/*@todo: activate this:
 				re.DrawFill(mx + icon_offset_x - 1, my - 33, 20, 128, 0, cursorBG);
 				re.DrawColor(NULL);
 				*/

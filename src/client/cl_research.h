@@ -137,7 +137,7 @@ typedef struct technology_s {
 	float overalltime, time;	/**< The time that is needed to research this tech. (in days).
 					 * "overalltime" stays always the same,
 					 * "time" will be modified when it is under research.*/
-	int delay;			/**< TODO: Number in days the system should wait until the tech is available for research.
+	int delay;			/**< @todo: Number in days the system should wait until the tech is available for research.
 					 * Starting from the first time all other dependencies have been fulfilled and
 					 * counting only if a day has passed and they still are met. */
 

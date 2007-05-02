@@ -39,7 +39,7 @@ typedef enum {
 } alienType_t;
 
 /** specializations of aliens */
-/*TODO: this is not used anywhere yet */
+/*@todo: this is not used anywhere yet */
 typedef enum {
 	AS_PILOT,
 	AS_GUNNER,

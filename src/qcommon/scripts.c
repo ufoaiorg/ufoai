@@ -285,7 +285,7 @@ static void Com_ParseItem (const char *name, char **text)
 
 				/* parse a value */
 				token = COM_EParse(text, errhead, name);
-				/* TODO: maybe we couidl add a check for hte old numbers as well here */
+				/* @todo: maybe we couidl add a check for hte old numbers as well here */
 				for (j = 0; j < MAX_BUYTYPES; j++) {
 					if (!Q_stricmp(token, buytypeNames[j])) {
 						od->buytype = j;

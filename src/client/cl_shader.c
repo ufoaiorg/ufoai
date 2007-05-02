@@ -8,7 +8,7 @@
  * You can add shaders for each texture; new maps can bring new textures.
  * Without a scriptable shader interface we have to rebuild the renderer to get a shader for a specific texture.
  * They are here and not in the renderer because the file parsers are part of the client.
- * TODO: Add command to re-initialise shaders to allow interactive debugging.
+ * @todo: Add command to re-initialise shaders to allow interactive debugging.
  */
 
 /*

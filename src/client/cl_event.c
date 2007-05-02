@@ -137,5 +137,5 @@ extern void CL_EventAddMail_f (void)
 		return;
 	}
 
-	/* TODO - add mail to message system */
+	/* @todo - add mail to message system */
 }

@@ -432,7 +432,7 @@ static void SVC_DirectConnect (void)
 		return;
 	}
 
-	/* TODO: Check if the teamnum preference has already reached maxsoldiers */
+	/* @todo: Check if the teamnum preference has already reached maxsoldiers */
 	/*       and reject connection if so */
 
 	gotnewcl:
@@ -936,7 +936,7 @@ static void SV_ParseMapcycle (void)
 		buf = &buffer;
 		freeMe = buffer;
 		readsize = FS_Read(buffer, length, &file);
-		/* TODO: check that readsize = length */
+		/* @todo: check that readsize = length */
 
 		/* COM_Parse expects a null-terminated string.
 		 * Since FS_Read doesn't do that we null-terminate

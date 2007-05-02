@@ -801,7 +801,7 @@ void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int 
 		gi.cprintf(player, msglevel, _("Can't perform action - not enough TUs!\n"));
 		return;
 	case IA_NORELOAD:
-		gi.cprintf(player, msglevel, _("Can't perform action - weapon already fully loaded with the same ammunition!\n")); /* TODO: "or not researched" */
+		gi.cprintf(player, msglevel, _("Can't perform action - weapon already fully loaded with the same ammunition!\n")); /* @todo: "or not researched" */
 		return;
 	default:
 		/* Continue below. */
@@ -821,7 +821,7 @@ void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int 
 		assert (!newFloor);
 		if (FLOOR(ent)) {
 			/* There is still something on the floor. */
-			FLOOR(floor) = FLOOR(ent); /* TODO: _why_ do we do this here exactly? Shouldn't they be the same already at this point? */
+			FLOOR(floor) = FLOOR(ent); /* @todo: _why_ do we do this here exactly? Shouldn't they be the same already at this point? */
 			/* Tell the client to remove the item from the container */
 			gi.AddEvent(G_VisToPM(floor->visflags), EV_INV_DEL);
 			gi.WriteShort(floor->number);
@@ -890,12 +890,12 @@ void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int 
 		if (newFloor) {
 			/* A new container was created for the floor. */
 			assert(FLOOR(ent));
-			FLOOR(floor) = FLOOR(ent); /* TODO: _why_ do we do this here exactly? Shouldn't they be the same already at this point? */
+			FLOOR(floor) = FLOOR(ent); /* @todo: _why_ do we do this here exactly? Shouldn't they be the same already at this point? */
 			/* Send item info to the clients */
 			G_CheckVis(floor, qtrue);
 		} else {
 			/* Add the item; update floor, because we add at beginning */
-			FLOOR(floor) = FLOOR(ent); /* TODO: _why_ do we do this here exactly? Shouldn't they be the same already at this point? */
+			FLOOR(floor) = FLOOR(ent); /* @todo: _why_ do we do this here exactly? Shouldn't they be the same already at this point? */
 			/* Tell the client to add the item to the container. */
 			gi.AddEvent(G_VisToPM(floor->visflags), EV_INV_ADD);
 			gi.WriteShort(floor->number);
@@ -1013,7 +1013,7 @@ void G_InventoryToFloor (edict_t * ent)
 #ifdef ADJACENT
 				Vector2Copy(ent->pos, oldPos);
 				for (i = 0; i < DIRECTIONS; i++) {
-					/* TODO: Check whether movement is possible here - otherwise don't use this field */
+					/* @todo: Check whether movement is possible here - otherwise don't use this field */
 					/* extend pos with the direction vectors */
 					Vector2Set(ent->pos, ent->pos[0] + dvecs[i][0], ent->pos[0] + dvecs[i][1]);
 					/* now try to get a floor entity for that new location */
@@ -1118,7 +1118,7 @@ void G_BuildForbiddenList (int team)
 }
 
 /**
- * @brief TODO: writeme
+ * @brief @todo: writeme
  * @param[in] team The current team (see G_BuildForbiddenList)
  * @param[in] from Position in the map to start the move-calculation from.
  * @param[in] distance The distance to calculate the move for.
@@ -1349,8 +1349,8 @@ static void G_ClientTurn (player_t * player, int num, int dv)
 
 /**
  * @brief Changes the thate of a player/soldier.
- * @param[in,out] player TODO Writeme
- * @param[in] num TODO Writeme
+ * @param[in,out] player @todo Writeme
+ * @param[in] num @todo Writeme
  * @param[in] reqState The bit-map of the requested state change
  */
 static void G_ClientStateChange (player_t * player, int num, int reqState)
@@ -1422,10 +1422,10 @@ static void G_ClientStateChange (player_t * player, int num, int reqState)
 			ent->TU -= TU_REACTION_MULTI;
 			reactionTUs[ent->number][REACT_TUS] = TU_REACTION_MULTI;
 		} else {
-			/* TODO: this is a workaround for now.
+			/* @todo: this is a workaround for now.
 			the multi-rf button was clicked (i.e. single-rf is activated right now), but there are not enough TUs left for it.
 			so the only sane action if the button is clicked is to disable everything in order to make it work at all.
-			TODO: dsiplay correct "disable" button and directly call this function with "disable rf" parameters
+			@todo: dsiplay correct "disable" button and directly call this function with "disable rf" parameters
 			*/
 			G_ClientStateChange (player, num, ~STATE_REACTION); /**< Turn off RF */
 		}
@@ -1435,7 +1435,7 @@ static void G_ClientStateChange (player_t * player, int num, int reqState)
 			/* Turn on reaction fire and save the used TUs to the list. */
 			ent->state |= STATE_REACTION_ONCE;
 
-#if 0 /* TODO: do we really want to enable this? i don't think we can get soemthing useable out of it .. the whole "save TUs until nex round" needs a cleanup. */
+#if 0 /* @todo: do we really want to enable this? i don't think we can get soemthing useable out of it .. the whole "save TUs until nex round" needs a cleanup. */
 			if (reactionTUs[ent->number][REACT_TUS] > 0) {
 				/* TUs where saved for this turn (either the full TU_REACTION or some remaining TUs from the shot. This was done either in the last turn or this one. */
 				ent->TU -= reactionTUs[ent->number][REACT_TUS];
@@ -1446,7 +1446,7 @@ static void G_ClientStateChange (player_t * player, int num, int reqState)
 				/* Reaction fire was not triggered in the last turn. */
 				ent->TU -= TU_REACTION_SINGLE;
 				reactionTUs[ent->number][REACT_TUS] = TU_REACTION_SINGLE;
-#if 0	/* TODO: Same here */
+#if 0	/* @todo: Same here */
 			}  else {
 				/* reactionTUs[ent->number][REACT_TUS] < 0 */
 				/* Reaction fire was triggered in the last turn,
@@ -1606,7 +1606,7 @@ static void G_MoraleBehaviour (int team, qboolean quiet)
 						G_MoraleRage(ent, sanity);
 					/* if shaken, well .. be shaken; */
 				} else if (ent->morale <= mor_shaken->value && !(ent->state & STATE_PANIC) && !(ent->state & STATE_RAGE)) {
-					ent->TU -= TU_REACTION_SINGLE; /* TODO: Comment-me: Why do we modify reaction stuff here? */
+					ent->TU -= TU_REACTION_SINGLE; /* @todo: Comment-me: Why do we modify reaction stuff here? */
 					/* shaken is later reset along with reaction fire */
 					ent->state |= STATE_SHAKEN | STATE_REACTION_MANY;
 					G_SendState(G_VisToPM(ent->visflags), ent);
@@ -1850,7 +1850,7 @@ void G_KillTeam (void)
 
 /**
  * @brief The client sent us a message that he did something. We now execute the related fucntion(s) adn notify him if neccessary.
- * @param[in] player The player that sent us the message (TODO: is this correct?)
+ * @param[in] player The player that sent us the message (@todo: is this correct?)
  */
 void G_ClientAction (player_t * player)
 {
@@ -1900,7 +1900,7 @@ void G_ClientAction (player_t * player)
 		fd_idx = -1;
 		gi.ReadFormat(pa_format[PA_REACT_SELECT], &hand, &fd_idx);
 		Com_DPrintf("G_ClientAction: entnum:%i hand:%i fd:%i\n", num, hand, fd_idx);
-		/* TODO: Add check for correct player here (player==g_edicts[num]->team ???) */
+		/* @todo: Add check for correct player here (player==g_edicts[num]->team ???) */
 		reactionFiremode[num][RF_HAND] = hand;
 		reactionFiremode[num][RF_FM] = fd_idx;
 		break;
@@ -1958,7 +1958,7 @@ void G_GetTeam (player_t * player)
 	if (sv_maxclients->integer == 1)
 		player->pers.team = TEAM_PHALANX;
 	else if (atoi(Info_ValueForKey(player->pers.userinfo, "spectator"))) {
-		/* TODO: spectators get in a game menu to select the team */
+		/* @todo: spectators get in a game menu to select the team */
 		player->pers.spectator = qtrue;
 	} else if (sv_teamplay->integer) {
 		/* set the team specified in the userinfo */
@@ -2006,7 +2006,7 @@ void G_GetTeam (player_t * player)
 			Com_DPrintf("Assigning %s to Team %i\n", player->pers.netname, i);
 			player->pers.team = i;
 		} else {
-			/* TODO: disconnect the player or convert to spectator */
+			/* @todo: disconnect the player or convert to spectator */
 			player->pers.spectator = qtrue;
 			player->pers.team = -1;
 		}
@@ -2179,7 +2179,7 @@ void G_ClientTeamInfo (player_t * player)
 			/* FIXME: for now, heal fully upon entering mission */
 			ent->morale = GET_MORALE(ent->chr.skills[ABILITY_MIND]);
 
-			ent->reaction_minhit = 30; /* TODO: allow later changes from GUI */
+			ent->reaction_minhit = 30; /* @todo: allow later changes from GUI */
 		} else {
 			/* just do nothing with the info */
 			gi.ReadByte(); /* fieldSize */
@@ -2198,7 +2198,7 @@ void G_ClientTeamInfo (player_t * player)
 				gi.ReadShort(); /* kills */
 			gi.ReadShort(); /* assigned missions */
 			j = gi.ReadShort();
-			/* TODO: skip j bytes instead of reading and ignoring */
+			/* @todo: skip j bytes instead of reading and ignoring */
 			for (k = 0; k < j; k++)
 				gi.ReadByte(); /* inventory */
 		}
@@ -2467,7 +2467,7 @@ void G_ClientBegin (player_t* player)
  */
 qboolean G_ClientSpawn (player_t * player)
 {
-	/* TODO: Check player->pers.team here */
+	/* @todo: Check player->pers.team here */
 	if (level.activeTeam == -1) {
 		/* activate round if in single-player */
 		if (sv_maxclients->integer == 1) {

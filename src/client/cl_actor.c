@@ -102,7 +102,7 @@ ACTOR MENU UPDATING
 /**
  * @brief Return the skill string for the given skill level
  * @return skill string
- * @param[in] skill a skill value between 0 and MAX_SKILL (TODO: 0? never reached?)
+ * @param[in] skill a skill value between 0 and MAX_SKILL (@todo: 0? never reached?)
  */
 static const char *CL_GetSkillString (const int skill)
 {
@@ -567,7 +567,7 @@ static void CL_GetWeaponAndAmmo (char hand, objDef_t **weapon, objDef_t **ammo, 
 	if (!weapon)
 		return;
 
-	if ((*weapon)->numWeapons) /* TODO: "|| invlist_weapon->item.m == NONE" ... actually what does a negative number for ammo mean? */
+	if ((*weapon)->numWeapons) /* @todo: "|| invlist_weapon->item.m == NONE" ... actually what does a negative number for ammo mean? */
 		*ammo = *weapon; /* This weapon doesn't need ammo it already has firedefs */
 	else
 		*ammo = &csi.ods[invlist_weapon->item.m];
@@ -1122,7 +1122,7 @@ static void CL_RefreshWeaponButtons (int time)
 extern qboolean CL_CheckMenuAction (int time, invList_t *weapon, int mode)
 {
 	/* No item in hand. */
-	/* TODO: ignore this condition when ammo in hand */
+	/* @todo: ignore this condition when ammo in hand */
 	if (!weapon || weapon->item.t == NONE) {
 		CL_DisplayHudMessage(_("No item in hand.\n"), 2000);
 		return qfalse;
@@ -1289,7 +1289,7 @@ void CL_ActorUpdateCVars (void)
 			/* If the mouse is outside the world, blank move */
 			/* or the movelength is 255 - not reachable e.g. */
 			if ((mouseSpace != MS_WORLD && cl.cmode < M_PEND_MOVE) || actorMoveLength == 0xFF) {
-				/* TODO: CHECKME Why do we check for (cl.cmode < M_PEND_MOVE) here? */
+				/* @todo: CHECKME Why do we check for (cl.cmode < M_PEND_MOVE) here? */
 				actorMoveLength = 0xFF;
 				Com_sprintf(infoText, sizeof(infoText), _("Armour  %i\tMorale  %i\n"), selActor->AP, selActor->morale);
 				menuText[TEXT_MOUSECURSOR_RIGHT] = NULL;
@@ -1394,7 +1394,7 @@ void CL_ActorUpdateCVars (void)
 				CL_RefreshWeaponButtons(selActor->TU);
 		} else {
 			/* no actor selected, reset cvars */
-			/* TODO: this overwrites the correct values a bit to often.
+			/* @todo: this overwrites the correct values a bit to often.
 			Cvar_Set("mn_tu", "0");
 			Cvar_Set("mn_turemain", "0");
 			Cvar_Set("mn_tumax", "30");
@@ -1432,14 +1432,14 @@ void CL_ActorUpdateCVars (void)
 	/* mode */
 	if (cl.oldcmode != cl.cmode || refresh) {
 		switch (cl.cmode) {
-		/* TODO: Better highlight for active firemode (from the list, not the buttons) needed ... */
+		/* @todo: Better highlight for active firemode (from the list, not the buttons) needed ... */
 		case M_FIRE_L:
 		case M_PEND_FIRE_L:
-			/* TODO: Display current firemode better*/
+			/* @todo: Display current firemode better*/
 			break;
 		case M_FIRE_R:
 		case M_PEND_FIRE_R:
-			/* TODO: Display current firemode better*/
+			/* @todo: Display current firemode better*/
 			break;
 		default:
 			ClearHighlights();
@@ -1504,7 +1504,7 @@ void CL_AddActorToTeamList (le_t * le)
 
 		CL_SetDefaultReactionFiremode(i, 'r');	/**< Set default reaction firemode for this soldier. */
 #if 0
-		/* TODO: remove this if the above works (this should fix the wrong setting of the default firemode on re-try or next mission) */
+		/* @todo: remove this if the above works (this should fix the wrong setting of the default firemode on re-try or next mission) */
 		/* Initialize reactionmode (with undefined firemode) ... this will be checked for in CL_DoEndRound. */
 		CL_SetReactionFiremode( i, -1, -1, -1);
 #endif
@@ -1538,7 +1538,7 @@ void CL_RemoveActorFromTeamList (le_t * le)
 
 	/* check selection */
 	if (selActor == le) {
-		/* TODO: This should probably be a while loop */
+		/* @todo: This should probably be a while loop */
 		for (i = 0; i < cl.numTeamList; i++) {
 			if (CL_ActorSelect(cl.teamList[i]))
 				break;
@@ -1839,7 +1839,7 @@ void CL_ActorShoot (le_t * le, pos3_t at)
 
 	Com_DPrintf("CL_ActorShoot: cl.firemode %i.\n",  cl.cfiremode);
 
-	/* TODO: Is there a better way to do this?
+	/* @todo: Is there a better way to do this?
 	 * This type value will travel until it is checked in at least g_combat.c:G_GetShotFromType.
 	 */
 	type = IS_MODE_FIRE_RIGHT(cl.cmode)
@@ -2100,7 +2100,7 @@ extern void CL_ActorToggleReaction_f (void)
 			break;
 		case R_FIRE_ONCE:
 			state = STATE_REACTION_ONCE;
-			/* TODO: Check if stored info for RF is up-to-date and set it to default if not. */
+			/* @todo: Check if stored info for RF is up-to-date and set it to default if not. */
 			/* Set default rf-mode. */
 			if (!SANE_REACTION(actor_idx)) {
 				CL_SetDefaultReactionFiremode(actor_idx, 'r');
@@ -2108,7 +2108,7 @@ extern void CL_ActorToggleReaction_f (void)
 			break;
 		case R_FIRE_MANY:
 			state = STATE_REACTION_MANY;
-			/* TODO: Check if stored info for RF is up-to-date and set it to default if not. */
+			/* @todo: Check if stored info for RF is up-to-date and set it to default if not. */
 			/* Set default rf-mode. */
 			if (!SANE_REACTION(actor_idx)) {
 				CL_SetDefaultReactionFiremode(actor_idx, 'r');
@@ -2161,7 +2161,7 @@ void CL_ActorDoShoot (sizebuf_t * sb)
 #endif
 	fd = GET_FIREDEF(obj_idx, weap_fds_idx, fd_idx);
 
-	/* TODO/FIXME: e.g. smoke grenades or particles that stay longer than a few seconds
+	/* @todo/FIXME: e.g. smoke grenades or particles that stay longer than a few seconds
 	 * should become invisible if out of actor view */
 	/* add effect le */
 	LE_AddProjectile(fd, flags, muzzle, impact, normal);
@@ -2193,7 +2193,7 @@ void CL_ActorDoShoot (sizebuf_t * sb)
 		CL_SetLastMoving(le);
 
 	/* Animate - we have to check if it is right or left weapon usage. */
-	/* TODO: FIXME the left/right info for actors in the enemy team/turn has to come from somewhere. */
+	/* @todo: FIXME the left/right info for actors in the enemy team/turn has to come from somewhere. */
 	if (RIGHT(le) && IS_MODE_FIRE_RIGHT(cl.cmode)) {
 		re.AnimChange(&le->as, le->model1, LE_GetAnim("shoot", le->right, le->left, le->state));
 		re.AnimAppend(&le->as, le->model1, LE_GetAnim("stand", le->right, le->left, le->state));
@@ -2228,12 +2228,12 @@ void CL_ActorShootHidden (sizebuf_t *sb)
 #endif
 	fd = GET_FIREDEF(obj_idx, weap_fds_idx, fd_idx);
 
-	/* start the sound; TODO: is check for SF_BOUNCED needed? */
+	/* start the sound; @todo: is check for SF_BOUNCED needed? */
 	if (((first && fd->soundOnce) || (!first && !fd->soundOnce)) && fd->fireSound[0] )
 		S_StartLocalSound(fd->fireSound);
 
 #if 0
-	/* TODO/FIXME: e.g. smoke grenades or particles that stay longer than a few seconds should also spawn
+	/* @todo/FIXME: e.g. smoke grenades or particles that stay longer than a few seconds should also spawn
 	 * an invisible particles (until it becomes visible) */
 	/* add effect le */
 	LE_AddProjectile(fd, flags, muzzle, impact, normal);
@@ -2332,7 +2332,7 @@ void CL_ActorStartShoot (sizebuf_t * sb)
 	} */
 
 	/* Animate - we have to check if it is right or left weapon usage. */
-	/* TODO: FIXME the left/right info for actors in the enemy team/turn has to come from somewhere. */
+	/* @todo: FIXME the left/right info for actors in the enemy team/turn has to come from somewhere. */
 	if (RIGHT(le) && IS_MODE_FIRE_RIGHT(cl.cmode)) {
 		re.AnimChange(&le->as, le->model1, LE_GetAnim("move", le->right, le->left, le->state));
 	} else if (LEFT(le) && IS_MODE_FIRE_LEFT(cl.cmode)) {
@@ -3241,7 +3241,7 @@ static void CL_TargetingGrenade (pos3_t fromPos, pos3_t toPos)
 		}
 
 		/* draw particles */
-		/* TODO: character strength should be used here, too
+		/* @todo: character strength should be used here, too
 		 * the stronger the character, the further the throw */
 		if (obstructed || VectorLength(at) > selFD->range)
 			CL_ParticleSpawn("longRangeTracer", 0, from, next, NULL);
@@ -3309,7 +3309,7 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 				break;
 			default:
 				if (mouseActor->team == TEAM_ALIEN) {
-					/* TODO: print alien team */
+					/* @todo: print alien team */
 				} else {
 					/* multiplayer names */
 					/* see CL_ParseClientinfo */

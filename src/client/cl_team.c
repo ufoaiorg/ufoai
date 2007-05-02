@@ -206,7 +206,7 @@ static void CL_GiveName_f (void)
 /**
  * @brief Generates the skills and inventory for a character and for a UGV
  *
- * TODO: Generate UGV
+ * @todo: Generate UGV
  * @sa CL_ResetCharacters
  * @param[in] employee The employee to create character data for.
  * @param[in] team Which team to use for creation.
@@ -516,7 +516,7 @@ static item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
 		/* The item is a weapon and it was reloaded one time. */
 		if (item.a == csi.ods[type].ammo) {
 			/* Fully loaded, no need to reload, but mark the ammo as used. */
-			assert (item.m != NONE);	/* TODO: Isn't this redundant here? */
+			assert (item.m != NONE);	/* @todo: Isn't this redundant here? */
 			if (ed->num[item.m] > 0) {
 				ed->num[item.m]--;
 				return item;
@@ -547,7 +547,7 @@ static item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
 		}
 	}
 
-	/* TODO: on return from a mission with no clips left
+	/* @todo: on return from a mission with no clips left
 	   and one weapon half-loaded wielded by soldier
 	   and one empty in equip, on the first opening of equip,
 	   the empty weapon will be in soldier hands, the half-full in equip;
@@ -1904,7 +1904,7 @@ extern void CL_ParseResults (sizebuf_t * buf)
 		civilian_killed += civilian_stunned;
 
 	if (!curCampaign || !selMis) {
-		/* the mission was started via console (TODO: or is multiplayer) */
+		/* the mission was started via console (@todo: or is multiplayer) */
 		/* needs to be cleared and then append to it */
 		if (curCampaign) {
 			Com_sprintf(resultText, sizeof(resultText), _("Aliens killed\t%i\n"), thier_killed);
@@ -1983,7 +1983,7 @@ extern void CL_ParseResults (sizebuf_t * buf)
 			MN_PushMenu("lost");
 		/* on singleplayer we disconnect the game */
 		/* we can safely wipe all mission data now */
-		/* TODO: I don't understand how this works
+		/* @todo: I don't understand how this works
 		 * and why, when I move this to CL_GameResults_f,
 		 * the "won" menu get's garbled at "killteam 7"
 		 */
@@ -2237,7 +2237,7 @@ extern void CL_UpdateCharacterSkills (character_t *chr)
 	}
 
 	/* Update ABILITY_MIND just to make ranks work.
-	   TODO: ABILITY_MIND should be improved other way. FIXME. */
+	   @todo: ABILITY_MIND should be improved other way. FIXME. */
 	if (!changed)
 		chr->skills[ABILITY_MIND]++;
 

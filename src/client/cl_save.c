@@ -212,7 +212,7 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 	CL_DateConvert(&ccs.date, &day, &month);
 	Com_sprintf(header.gameDate, sizeof(header.gameDate), _("%i %s %02i"),
 		ccs.date.day / 365, CL_DateGetMonthName(month), day);
-	/* TODO fill real date string */
+	/* @todo fill real date string */
 	memcpy(fbuf, &header, sizeof(saveFileHeader_t));
 
 	/* step 5 - compress */
@@ -237,7 +237,7 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 
 	if (res == bufLen + sizeof(saveFileHeader_t)) {
 		/* set mn_lastsave to let the continue function know which game to
-		 * automatically continue TODO: redo this in the menu */
+		 * automatically continue @todo: redo this in the menu */
 		Cvar_Set("mn_lastsave", filename);
 		Com_Printf("Campaign '%s' saved.\n", comment);
 		return qtrue;

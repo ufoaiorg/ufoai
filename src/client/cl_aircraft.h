@@ -86,7 +86,7 @@ typedef struct itemsTmp_s {
 
 /** @brief An aircraft with all it's data */
 typedef struct aircraft_s {
-	int idx;					/**< Global index of this aircraft. See also gd.numAircraft. TODO: is this updated when one aircraft is lost (it is checked agains gd.numAircraft sometimes)? We do not really have a global list of acs do we? */
+	int idx;					/**< Global index of this aircraft. See also gd.numAircraft. @todo: is this updated when one aircraft is lost (it is checked agains gd.numAircraft sometimes)? We do not really have a global list of acs do we? */
 	int idx_sample;				/**< self-link in aircraft_sample list */
 	char id[MAX_VAR];			/**< internal id from script file */
 	char name[MAX_VAR];			/**< translateable name */
@@ -143,7 +143,7 @@ typedef struct aircraft_s {
 } aircraft_t;
 
 /*
-TODO: for later, this is used quite a lot in the code.
+@todo: for later, this is used quite a lot in the code.
 #define AIRCRAFTCURRENT_IS_SANE(base) (((base)->aircraftCurrent >= 0) && ((base)->aircraftCurrent < (base)->numAircraftInBase))
 */
 

@@ -528,7 +528,7 @@ static qboolean SV_FitTile (byte map[32][32][MAX_TILEALTS], mTile_t * tile, int 
 /**
  * @brief Adds a new region-part to an assembled map.
  * @param[in] map The map array the region should be added to.
- * @param[in] num TODO: writeme
+ * @param[in] num @todo: writeme
  * @return qtrue if the region could be added.
  * @return qtrue if the region does not fit or an error was encountered.
  * @sa SV_FitTile
@@ -607,7 +607,7 @@ static qboolean SV_AddRegion (byte map[32][32][MAX_TILEALTS], byte * num)
 
 /**
  * @param[in] map The map parts should be added to.
- * @param[out] num TODO
+ * @param[out] num @todo
  * @sa SV_FitTile
  * @sa SV_AddTile
  */
@@ -911,7 +911,7 @@ static void SV_SpawnServer (char *server, char *param, server_state_t serverstat
 	Com_DPrintf("checksum for this map: %u\n", checksum);
 	Com_sprintf(sv.configstrings[CS_MAPCHECKSUM], sizeof(sv.configstrings[CS_MAPCHECKSUM]), "%i", checksum);
 
-	checksum = 0;	/* TODO */
+	checksum = 0;	/* @todo */
 	Com_DPrintf("ufo script checksum %u\n", checksum);
 	Com_sprintf(sv.configstrings[CS_UFOCHECKSUM], sizeof(sv.configstrings[CS_UFOCHECKSUM]), "%i", checksum);
 

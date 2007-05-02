@@ -3091,7 +3091,7 @@ PNG_EXTERN void png_do_read_interlace PNGARG((png_row_infop row_info,
 PNG_EXTERN void png_do_read_interlace PNGARG((png_structp png_ptr));
 #endif
 
-/* GRR TODO (2.0 or whenever):  simplify other internal calling interfaces */
+/* GRR @todo (2.0 or whenever):  simplify other internal calling interfaces */
 
 #if defined(PNG_WRITE_INTERLACING_SUPPORTED)
 /* grab pixels out of a row for an interlaced pass */

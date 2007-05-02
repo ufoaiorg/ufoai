@@ -966,8 +966,8 @@ extern const char *pa_format[128];
 #define MAX_FIREDEFS_PER_WEAPON 8
 #define MAX_DAMAGETYPES 32
 
-/* #define GET_FIREDEF(type)   (&csi.ods[type & 0x7F].fd[0][!!(type & 0x80)]) TODO remove me */
-/* TODO: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
+/* #define GET_FIREDEF(type)   (&csi.ods[type & 0x7F].fd[0][!!(type & 0x80)]) @todo remove me */
+/* @todo: might need some changes so the correct weapon (i.e. not 0) is used for the fd */
 
 #define GET_FIREDEFDEBUG(obj_idx,weap_fds_idx,fd_idx) \
 	if (obj_idx < 0 || obj_idx >= MAX_OBJDEFS) \
@@ -1159,7 +1159,7 @@ typedef struct csi_s {
 } csi_t;
 
 
-/* TODO: Medals. Still subject to (major) changes. */
+/* @todo: Medals. Still subject to (major) changes. */
 
 #define MAX_SKILL           100
 
@@ -1243,10 +1243,10 @@ extern int numRanks;            /**< The number of entries in the list above. */
 typedef struct chrScore_s {
 	int alienskilled;	/**< Killed aliens. */
 	int aliensstunned;	/**< Stunned aliens. */
-	int civilianskilled;	/**< Killed civilians. TODO: use me. */
-	int civiliansstunned;	/**< Stunned civilians. TODO: use me. */
-	int teamkilled;		/**< Killed teammates. TODO: use me. */
-	int teamstunned;	/**< Stunned teammates. TODO: use me. */
+	int civilianskilled;	/**< Killed civilians. @todo: use me. */
+	int civiliansstunned;	/**< Stunned civilians. @todo: use me. */
+	int teamkilled;		/**< Killed teammates. @todo: use me. */
+	int teamstunned;	/**< Stunned teammates. @todo: use me. */
 	int closekills;		/**< Aliens killed by CLOSE. */
 	int heavykills;		/**< Aliens killed by HEAVY. */
 	int assaultkills;	/**< Aliens killed by ASSAULT. */
@@ -1254,7 +1254,7 @@ typedef struct chrScore_s {
 	int explosivekills;	/**< Aliens killed by EXPLOSIVE. */
 	int accuracystat;	/**< Aliens kills or stuns counted to ACCURACY. */
 	int powerstat;		/**< Aliens kills or stuns counted to POWER. */
-	int survivedmissions;	/**< Missions survived. TODO: use me. */
+	int survivedmissions;	/**< Missions survived. @todo: use me. */
 } chrScore_t;
 
 /** @brief Describes a character with all its attributes */
@@ -1286,7 +1286,7 @@ typedef struct character_s {
 	/* date     died; */
 	int rank; /* index in gd.ranks */
 	medals_t *medals;
-	/* TODO: */
+	/* @todo: */
 	/* *------------------** */
 	/* *------------------** */
 

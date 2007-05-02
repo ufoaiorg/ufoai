@@ -748,7 +748,7 @@ static void MYgluPerspective(GLdouble zNear, GLdouble zFar)
 	GLdouble xmin, xmax, ymin, ymax, yaspect = (double) r_newrefdef.height / r_newrefdef.width;
 
 	if (r_isometric->value) {
-		/* TODO: someone with stereo glasses should try to figure out what the correct stereo separation multiplier is for ortho mode */
+		/* @todo: someone with stereo glasses should try to figure out what the correct stereo separation multiplier is for ortho mode */
 		qglOrtho((-10 - 2 * gl_state.camera_separation) * r_newrefdef.fov_x, (10 - 2 * gl_state.camera_separation) * r_newrefdef.fov_x, -10 * r_newrefdef.fov_x * yaspect, 10 * r_newrefdef.fov_x * yaspect, -zFar, zFar);
 	} else {
 		xmax = zNear * tan(r_newrefdef.fov_x * M_PI / 360.0);

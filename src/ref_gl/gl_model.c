@@ -1159,7 +1159,7 @@ static void Mod_LoadAliasMD3Model (model_t *mod, void *buffer)
 			poutframe->translate[j] = LittleFloat(pinframe->translate[j] );
 		}
 
-		/* TODO:
+		/* @todo:
 		poutframe->radius = LittleFloat ( pinframe->radius );
 		*/
 		mod->radius = max(mod->radius, poutframe->radius);
@@ -1507,7 +1507,7 @@ struct model_s *R_RegisterModel (const char *name)
 				mod->texinfo[i].image->registration_sequence = registration_sequence;
 			break;
 		case mod_obj:
-			/* TODO: */
+			/* @todo: */
 			break;
 		default:
 			break;

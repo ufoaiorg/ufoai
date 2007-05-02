@@ -30,7 +30,7 @@ typedef enum { NS_CLIENT, NS_SERVER } netsrc_t;
 typedef struct {
 	netadrtype_t type;
 #ifdef HAVE_IPV6
-	/* TODO: Use sockaddr_storage instead */
+	/* @todo: Use sockaddr_storage instead */
 	byte ip[16];
 	unsigned int scope_id;
 #else							/* HAVE_IPV6 */

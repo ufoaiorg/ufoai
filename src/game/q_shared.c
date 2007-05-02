@@ -2390,8 +2390,8 @@ invList_t *Com_AddToInventory(inventory_t * const i, item_t item, int container,
  * @brief
  * @param[in] i The inventory the container is in.
  * @param[in] container The container where the item should be removed.
- * @param[in] x The x position of the item (container?) to be removed. TODO: is this correct?
- * @param[in] y The y position of the item (container?) to be removed. TODO: is this correct?
+ * @param[in] x The x position of the item (container?) to be removed. @todo: is this correct?
+ * @param[in] y The y position of the item (container?) to be removed. @todo: is this correct?
  * @return qtrue If removal was successful.
  * @return qfalse If nothing was removed or an error occured.
  * @sa Com_RemoveFromInventoryIgnore
@@ -2405,8 +2405,8 @@ qboolean Com_RemoveFromInventory (inventory_t* const i, int container, int x, in
  * @brief
  * @param[in] i The inventory the container is in.
  * @param[in] container The container where the item should be removed.
- * @param[in] x The x position of the item (container?) to be removed. TODO: is this correct?
- * @param[in] y The y position of the item (container?) to be removed. TODO: is this correct?
+ * @param[in] x The x position of the item (container?) to be removed. @todo: is this correct?
+ * @param[in] y The y position of the item (container?) to be removed. @todo: is this correct?
  * @param[in] ignore_type Ignroes teh type of container (only used for a workaround in the base-equipemnt see CL_MoveMultiEquipment) HACKHACK
  * @return qtrue If removal was successful.
  * @return qfalse If nothing was removed or an error occured.
@@ -2579,7 +2579,7 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
 		ic = Com_SearchInInventory(i, to, tx, ty);
 
 		if (ic && INV_LoadableInWeapon(&CSI->ods[cacheItem.t], ic->item.t)) {
-			/* TODO (or do this in two places in cl_menu.c):
+			/* @todo (or do this in two places in cl_menu.c):
 			if ( !RS_ItemIsResearched(CSI->ods[ic->item.t].id)
 				 || !RS_ItemIsResearched(CSI->ods[cacheItem.t].id) ) {
 				return IA_NORELOAD;
