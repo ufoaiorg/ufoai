@@ -42,22 +42,22 @@ int r_numshaders;
 shader_t r_shaders[MAX_SHADERS];
 
 static const value_t shader_values[] = {
-	{"filename",	V_STRING,	offsetof( shader_t, filename)},
-	{"normal",	V_STRING,	offsetof( shader_t, normal)},
-	{"distort",	V_STRING,	offsetof( shader_t, distort)},
-	{"frag",	V_BOOL,	offsetof( shader_t, frag)},
-	{"vertex",	V_BOOL,	offsetof( shader_t, vertex)},
-	{"glsl",	V_BOOL,	offsetof( shader_t, glsl)},
-	{"glmode",	V_BLEND,	offsetof( shader_t, glMode)},
-	{"emboss",	V_BOOL,	offsetof( shader_t, emboss)},
-	{"emboss_high",	V_BOOL,	offsetof( shader_t, embossHigh)},
-	{"emboss_low",	V_BOOL,	offsetof( shader_t, embossLow)},
-	{"emboss_2",	V_BOOL,	offsetof( shader_t, emboss2)},
-	{"blur",	V_BOOL,	offsetof( shader_t, blur)},
-	{"light",	V_BOOL,	offsetof( shader_t, light)},
-	{"edge",	V_BOOL,	offsetof( shader_t, edge)},
+	{"filename", V_STRING, offsetof(shader_t, filename), 0},
+	{"normal", V_STRING, offsetof(shader_t, normal), 0},
+	{"distort", V_STRING, offsetof(shader_t, distort), 0},
+	{"frag", V_BOOL, offsetof(shader_t, frag), MEMBER_SIZEOF(shader_t, frag)},
+	{"vertex", V_BOOL, offsetof(shader_t, vertex), MEMBER_SIZEOF(shader_t, vertex)},
+	{"glsl", V_BOOL, offsetof(shader_t, glsl), MEMBER_SIZEOF(shader_t, glsl)},
+	{"glmode", V_BLEND, offsetof(shader_t, glMode), MEMBER_SIZEOF(shader_t, glMode)},
+	{"emboss", V_BOOL, offsetof(shader_t, emboss), MEMBER_SIZEOF(shader_t, emboss)},
+	{"emboss_high", V_BOOL, offsetof(shader_t, embossHigh), MEMBER_SIZEOF(shader_t, embossHigh)},
+	{"emboss_low", V_BOOL, offsetof(shader_t, embossLow), MEMBER_SIZEOF(shader_t, embossLow)},
+	{"emboss_2", V_BOOL, offsetof(shader_t, emboss2), MEMBER_SIZEOF(shader_t, emboss2)},
+	{"blur", V_BOOL, offsetof(shader_t, blur), MEMBER_SIZEOF(shader_t, blur)},
+	{"light", V_BOOL, offsetof(shader_t, light), MEMBER_SIZEOF(shader_t, light)},
+	{"edge", V_BOOL, offsetof(shader_t, edge), MEMBER_SIZEOF(shader_t, edge)},
 
-	{NULL, 0, 0}
+	{NULL, 0, 0, 0}
 };
 
 /**
@@ -104,7 +104,7 @@ void CL_ParseShaders (const char *name, char **text)
 					return;
 
 				if (v->ofs && v->type != V_NULL)
-					Com_ParseValue(entry, token, v->type, v->ofs);
+					Com_ParseValue(entry, token, v->type, v->ofs, v->size);
 				break;
 			}
 

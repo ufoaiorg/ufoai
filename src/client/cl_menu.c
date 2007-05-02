@@ -113,65 +113,64 @@ static size_t const ne_values[NE_NUM_NODEEVENT] = {
 
 /** @brief valid properties for a menu node */
 static const value_t nps[] = {
-	{"invis", V_BOOL, offsetof(menuNode_t, invis)},
-	{"mousefx", V_BOOL, offsetof(menuNode_t, mousefx)},
-	{"blend", V_BOOL, offsetof(menuNode_t, blend)},
-	{"texh", V_POS, offsetof(menuNode_t, texh)},
-	{"texl", V_POS, offsetof(menuNode_t, texl)},
-	{"border", V_INT, offsetof(menuNode_t, border)},
-	{"padding", V_INT, offsetof(menuNode_t, padding)},
-	{"pos", V_POS, offsetof(menuNode_t, pos)},
-	{"size", V_POS, offsetof(menuNode_t, size)},
-	{"format", V_POS, offsetof(menuNode_t, texh)},
-	{"origin", V_VECTOR, offsetof(menuNode_t, origin)},
-	{"center", V_VECTOR, offsetof(menuNode_t, center)},
-	{"scale", V_VECTOR, offsetof(menuNode_t, scale)},
-	{"angles", V_VECTOR, offsetof(menuNode_t, angles)},
-	{"num", V_INT, offsetof(menuNode_t, num)},
-	{"height", V_INT, offsetof(menuNode_t, height)},
-	{"text_scroll", V_INT, offsetof(menuNode_t, textScroll)},
-	{"timeout", V_INT, offsetof(menuNode_t, timeOut)},
-	{"timeout_once", V_BOOL, offsetof(menuNode_t, timeOutOnce)},
-	{"bgcolor", V_COLOR, offsetof(menuNode_t, bgcolor)},
-	{"bordercolor", V_COLOR, offsetof(menuNode_t, bordercolor)},
-	{"key", V_STRING, offsetof(menuNode_t, key)},
+	{"invis", V_BOOL, offsetof(menuNode_t, invis), MEMBER_SIZEOF(menuNode_t, invis)},
+	{"mousefx", V_BOOL, offsetof(menuNode_t, mousefx), MEMBER_SIZEOF(menuNode_t, mousefx)},
+	{"blend", V_BOOL, offsetof(menuNode_t, blend), MEMBER_SIZEOF(menuNode_t, blend)},
+	{"texh", V_POS, offsetof(menuNode_t, texh), MEMBER_SIZEOF(menuNode_t, texh)},
+	{"texl", V_POS, offsetof(menuNode_t, texl), MEMBER_SIZEOF(menuNode_t, texl)},
+	{"border", V_INT, offsetof(menuNode_t, border), MEMBER_SIZEOF(menuNode_t, border)},
+	{"padding", V_INT, offsetof(menuNode_t, padding), MEMBER_SIZEOF(menuNode_t, padding)},
+	{"pos", V_POS, offsetof(menuNode_t, pos), MEMBER_SIZEOF(menuNode_t, pos)},
+	{"size", V_POS, offsetof(menuNode_t, size), MEMBER_SIZEOF(menuNode_t, size)},
+	{"format", V_POS, offsetof(menuNode_t, texh), MEMBER_SIZEOF(menuNode_t, texh)},
+	{"origin", V_VECTOR, offsetof(menuNode_t, origin), MEMBER_SIZEOF(menuNode_t, origin)},
+	{"center", V_VECTOR, offsetof(menuNode_t, center), MEMBER_SIZEOF(menuNode_t, center)},
+	{"scale", V_VECTOR, offsetof(menuNode_t, scale), MEMBER_SIZEOF(menuNode_t, scale)},
+	{"angles", V_VECTOR, offsetof(menuNode_t, angles), MEMBER_SIZEOF(menuNode_t, angles)},
+	{"num", V_INT, offsetof(menuNode_t, num), MEMBER_SIZEOF(menuNode_t, num)},
+	{"height", V_INT, offsetof(menuNode_t, height), MEMBER_SIZEOF(menuNode_t, height)},
+	{"text_scroll", V_INT, offsetof(menuNode_t, textScroll), MEMBER_SIZEOF(menuNode_t, textScroll)},
+	{"timeout", V_INT, offsetof(menuNode_t, timeOut), MEMBER_SIZEOF(menuNode_t, timeOut)},
+	{"timeout_once", V_BOOL, offsetof(menuNode_t, timeOutOnce), MEMBER_SIZEOF(menuNode_t, timeOutOnce)},
+	{"bgcolor", V_COLOR, offsetof(menuNode_t, bgcolor), MEMBER_SIZEOF(menuNode_t, bgcolor)},
+	{"bordercolor", V_COLOR, offsetof(menuNode_t, bordercolor), MEMBER_SIZEOF(menuNode_t, bordercolor)},
+	{"key", V_STRING, offsetof(menuNode_t, key), 0},
 	/* 0, -1, -2, -3, -4, -5 fills the data array in menuNode_t */
-	{"tooltip", V_STRING, -5},	/* translated in MN_Tooltip */
-	{"image", V_STRING, 0},
-	{"md2", V_STRING, 0},
-	{"anim", V_STRING, -1},
-	{"tag", V_STRING, -2},
-	{"skin", V_STRING, -3},
+	{"tooltip", V_STRING, -5, 0},	/* translated in MN_Tooltip */
+	{"image", V_STRING, 0, 0},
+	{"md2", V_STRING, 0, 0},
+	{"anim", V_STRING, -1, 0},
+	{"tag", V_STRING, -2, 0},
+	{"skin", V_STRING, -3, 0},
 	/* -4 is animation state */
-	{"string", V_STRING, 0},	/* no gettext here - this can be a cvar, too */
-	{"font", V_STRING, -1},
-	{"max", V_FLOAT, 0},
-	{"min", V_FLOAT, -1},
-	{"current", V_FLOAT, -2},
-	{"weapon", V_STRING, 0},
-	{"color", V_COLOR, offsetof(menuNode_t, color)},
-	{"align", V_ALIGN, offsetof(menuNode_t, align)},
-	{"if", V_IF, offsetof(menuNode_t, depends)},
+	{"string", V_STRING, 0, 0},	/* no gettext here - this can be a cvar, too */
+	{"font", V_STRING, -1, 0},
+	{"max", V_FLOAT, 0, 0},
+	{"min", V_FLOAT, -1, 0},
+	{"current", V_FLOAT, -2, 0},
+	{"weapon", V_STRING, 0, 0},
+	{"color", V_COLOR, offsetof(menuNode_t, color), MEMBER_SIZEOF(menuNode_t, color)},
+	{"align", V_ALIGN, offsetof(menuNode_t, align), MEMBER_SIZEOF(menuNode_t, align)},
+	{"if", V_IF, offsetof(menuNode_t, depends), 0},
 
-	{NULL, V_NULL, 0},
+	{NULL, V_NULL, 0, 0},
 };
 
 /** @brief valid properties for a menu model definition */
 static const value_t menuModelValues[] = {
-	{"model", V_STRING, offsetof(menuModel_t, model)},
-	{"need", V_NULL, 0},
-	{"menuscale", V_NULL, 0},
-	{"anim", V_STRING, offsetof(menuModel_t, anim)},
-	{"skin", V_INT, offsetof(menuModel_t, skin)},
-	{"origin", V_VECTOR, offsetof(menuModel_t, origin)},
-	{"center", V_VECTOR, offsetof(menuModel_t, center)},
-	{"scale", V_VECTOR, offsetof(menuModel_t, scale)},
-	{"angles", V_VECTOR, offsetof(menuModel_t, angles)},
-	{"color", V_COLOR, offsetof(menuModel_t, color)},
-	{"tag", V_STRING, offsetof(menuModel_t, tag)},
-	{"parent", V_STRING, offsetof(menuModel_t, parent)},
-
-	{NULL, V_NULL, 0},
+	{"model", V_STRING, offsetof(menuModel_t, model), 0},
+	{"need", V_NULL, 0, 0},
+	{"menuscale", V_NULL, 0, 0},
+	{"anim", V_STRING, offsetof(menuModel_t, anim), 0},
+	{"skin", V_INT, offsetof(menuModel_t, skin), sizeof(int)},
+	{"origin", V_VECTOR, offsetof(menuModel_t, origin), sizeof(vec3_t)},
+	{"center", V_VECTOR, offsetof(menuModel_t, center), sizeof(vec3_t)},
+	{"scale", V_VECTOR, offsetof(menuModel_t, scale), sizeof(vec3_t)},
+	{"angles", V_VECTOR, offsetof(menuModel_t, angles), sizeof(vec3_t)},
+	{"color", V_COLOR, offsetof(menuModel_t, color), sizeof(vec4_t)},
+	{"tag", V_STRING, offsetof(menuModel_t, tag), 0},
+	{"parent", V_STRING, offsetof(menuModel_t, parent), 0},
+	{NULL, V_NULL, 0, 0},
 };
 
 /* =========================================================== */
@@ -3322,7 +3321,7 @@ qboolean MN_ParseAction (menuNode_t * menuNode, menuAction_t * action, char **te
 
 						/* get the value */
 						action->data = curadata;
-						curadata += Com_ParseValue(curadata, *token, ea_values[i], 0);
+						curadata += Com_ParseValue(curadata, *token, ea_values[i], 0, 0);
 					}
 
 /*					Com_Printf( "\n" ); */
@@ -3386,7 +3385,7 @@ qboolean MN_ParseAction (menuNode_t * menuNode, menuAction_t * action, char **te
 /*				Com_Printf( " %s\n", *token ); */
 
 				curadata += sizeof(int);
-				curadata += Com_ParseValue(curadata, *token, val->type, 0);
+				curadata += Com_ParseValue(curadata, *token, val->type, 0, val->size);
 
 				/* get next token */
 				*token = COM_EParse(text, errhead, NULL);
@@ -3505,16 +3504,16 @@ qboolean MN_ParseNodeBody (menuNode_t * node, char **text, char **token)
 
 						/* get the value */
 						/* 0, -1, -2, -3, -4, -5 fills the data array in menuNode_t */
-						if ((val->ofs > 0) && (val->ofs < (size_t)-5))
-							Com_ParseValue(node, *token, val->type, val->ofs);
-						else {
+						if ((val->ofs > 0) && (val->ofs < (size_t)-5)) {
+							Com_ParseValue(node, *token, val->type, val->ofs, val->size);
+						} else {
 							/* a reference to data is handled like this */
 /* 							Com_Printf( "%i %s\n", val->ofs, *token ); */
 							node->data[-((int)val->ofs)] = curadata;
 							if (**token == '*')
-								curadata += Com_ParseValue(curadata, *token, V_STRING, 0);
+								curadata += Com_ParseValue(curadata, *token, V_STRING, 0, 0);
 							else
-								curadata += Com_ParseValue(curadata, *token, val->type, 0);
+								curadata += Com_ParseValue(curadata, *token, val->type, 0, val->size);
 						}
 					}
 
@@ -3583,12 +3582,12 @@ qboolean MN_ParseNodeBody (menuNode_t * node, char **text, char **token)
 					*token = COM_EParse(text, errhead, node->name);
 					if (!*text)
 						return qfalse;
-					Com_ParseValue(&node->exclude[node->excludeNum], *token, V_POS, offsetof(excludeRect_t, pos));
+					Com_ParseValue(&node->exclude[node->excludeNum], *token, V_POS, offsetof(excludeRect_t, pos), sizeof(vec2_t));
 				} else if (!Q_strcmp(*token, "size")) {
 					*token = COM_EParse(text, errhead, node->name);
 					if (!*text)
 						return qfalse;
-					Com_ParseValue(&node->exclude[node->excludeNum], *token, V_POS, offsetof(excludeRect_t, size));
+					Com_ParseValue(&node->exclude[node->excludeNum], *token, V_POS, offsetof(excludeRect_t, size), sizeof(vec2_t));
 				}
 			} while (**token != '}');
 			if (node->excludeNum < MAX_EXLUDERECTS - 1)
@@ -3874,7 +3873,7 @@ void MN_ParseMenuModel (const char *name, char **text)
 							Com_Printf("Error in menumodel '%s' menuscale definition - missing scale float value\n", name);
 							break;
 						}
-						Com_ParseValue(&menuModel->menuScaleValue[menuModel->menuScaleCnt], token, V_VECTOR, 0);
+						Com_ParseValue(&menuModel->menuScaleValue[menuModel->menuScaleCnt], token, V_VECTOR, 0, sizeof(vec3_t));
 						menuModel->menuScaleCnt++;
 					} while (*token != '}'); /* dummy condition - break is earlier here */
 					menuModel->next = MN_GetMenuModel(token);
@@ -3886,7 +3885,7 @@ void MN_ParseMenuModel (const char *name, char **text)
 					if (!*text)
 						return;
 
-					Com_ParseValue(menuModel, token, v->type, v->ofs);
+					Com_ParseValue(menuModel, token, v->type, v->ofs, v->size);
 				}
 				break;
 			}
@@ -4304,9 +4303,9 @@ font_t *fontBig;
 font_t *fontSmall;
 
 static const value_t fontValues[] = {
-	{"font", V_TRANSLATION2_STRING, offsetof(font_t, path)},
-	{"size", V_INT, offsetof(font_t, size)},
-	{"style", V_STRING, offsetof(font_t, style)},
+	{"font", V_TRANSLATION2_STRING, offsetof(font_t, path), 0},
+	{"size", V_INT, offsetof(font_t, size), MEMBER_SIZEOF(font_t, size)},
+	{"style", V_STRING, offsetof(font_t, style), 0},
 
 	{NULL, V_NULL, 0},
 };
@@ -4389,7 +4388,7 @@ void CL_ParseFont (const char *name, char **text)
 				if (!*text)
 					return;
 
-				Com_ParseValue(font, token, v->type, v->ofs);
+				Com_ParseValue(font, token, v->type, v->ofs, v->size);
 				break;
 			}
 
@@ -4419,11 +4418,9 @@ void CL_InitFonts (void)
 /* ===================== USE_SDL_TTF stuff end ====================== */
 
 static const value_t tutValues[] = {
-	{"name", V_TRANSLATION_STRING, offsetof(tutorial_t, name)}
-	,
-	{"sequence", V_STRING, offsetof(tutorial_t, sequence)}
-	,
-	{NULL, 0, 0}
+	{"name", V_TRANSLATION_STRING, offsetof(tutorial_t, name), 0},
+	{"sequence", V_STRING, offsetof(tutorial_t, sequence), 0},
+	{NULL, 0, 0, 0}
 };
 
 /**
@@ -4466,7 +4463,7 @@ extern void MN_ParseTutorials (const char *name, char **text)
 				token = COM_EParse(text, errhead, name);
 				if (!*text)
 					return;
-				Com_ParseValue(t, token, v->type, v->ofs);
+				Com_ParseValue(t, token, v->type, v->ofs, v->size);
 				break;
 			}
 		if (!v->string)

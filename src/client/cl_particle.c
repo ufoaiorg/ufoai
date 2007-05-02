@@ -124,40 +124,40 @@ static const int pc_types[PC_NUM_PTLCMDS] = {
 
 /** @brief particle script values */
 static const value_t pps[] = {
-	{"image", V_STRING, offsetof(ptl_t, pic)},
-	{"model", V_STRING, offsetof(ptl_t, model)},
-	{"skin", V_INT, offsetof(ptl_t, skin)},
-	{"blend", V_BLEND, offsetof(ptl_t, blend)},
-	{"style", V_STYLE, offsetof(ptl_t, style)},
-	{"tfade", V_FADE, offsetof(ptl_t, thinkFade)},
-	{"ffade", V_FADE, offsetof(ptl_t, frameFade)},
-	{"size", V_POS, offsetof(ptl_t, size)},
-	{"scale", V_VECTOR, offsetof(ptl_t, scale)},
-	{"color", V_COLOR, offsetof(ptl_t, color)},
-	{"a", V_VECTOR, offsetof(ptl_t, a)},
-	{"v", V_VECTOR, offsetof(ptl_t, v)},
-	{"s", V_VECTOR, offsetof(ptl_t, s)},
-	{"offset", V_VECTOR, offsetof(ptl_t, offset)},
+	{"image", V_STRING, offsetof(ptl_t, pic), 0},
+	{"model", V_STRING, offsetof(ptl_t, model), 0},
+	{"skin", V_INT, offsetof(ptl_t, skin), MEMBER_SIZEOF(ptl_t, skin)},
+	{"blend", V_BLEND, offsetof(ptl_t, blend), MEMBER_SIZEOF(ptl_t, blend)},
+	{"style", V_STYLE, offsetof(ptl_t, style), MEMBER_SIZEOF(ptl_t, style)},
+	{"tfade", V_FADE, offsetof(ptl_t, thinkFade), MEMBER_SIZEOF(ptl_t, thinkFade)},
+	{"ffade", V_FADE, offsetof(ptl_t, frameFade), MEMBER_SIZEOF(ptl_t, frameFade)},
+	{"size", V_POS, offsetof(ptl_t, size), MEMBER_SIZEOF(ptl_t, size)},
+	{"scale", V_VECTOR, offsetof(ptl_t, scale), MEMBER_SIZEOF(ptl_t, scale)},
+	{"color", V_COLOR, offsetof(ptl_t, color), MEMBER_SIZEOF(ptl_t, color)},
+	{"a", V_VECTOR, offsetof(ptl_t, a), MEMBER_SIZEOF(ptl_t, a)},
+	{"v", V_VECTOR, offsetof(ptl_t, v), MEMBER_SIZEOF(ptl_t, v)},
+	{"s", V_VECTOR, offsetof(ptl_t, s), MEMBER_SIZEOF(ptl_t, s)},
+	{"offset", V_VECTOR, offsetof(ptl_t, offset), MEMBER_SIZEOF(ptl_t, offset)},
 
 	/* t and dt are not specified in particle definitions */
 	/* but they can be used as references */
-	{"t", V_FLOAT, offsetof(ptl_t, t)},
-	{"dt", V_FLOAT, offsetof(ptl_t, dt)},
+	{"t", V_FLOAT, offsetof(ptl_t, t), MEMBER_SIZEOF(ptl_t, t)},
+	{"dt", V_FLOAT, offsetof(ptl_t, dt), MEMBER_SIZEOF(ptl_t, dt)},
 
-	{"rounds", V_INT, offsetof(ptl_t, rounds)},
-	{"angles", V_VECTOR, offsetof(ptl_t, angles)},
-	{"omega", V_VECTOR, offsetof(ptl_t, omega)},
-	{"life", V_FLOAT, offsetof(ptl_t, life)},
-	{"tps", V_FLOAT, offsetof(ptl_t, tps)},
-	{"lastthink", V_FLOAT, offsetof(ptl_t, lastThink)},
-	{"frame", V_INT, offsetof(ptl_t, frame)},
-	{"endframe", V_INT, offsetof(ptl_t, endFrame)},
-	{"fps", V_FLOAT, offsetof(ptl_t, fps)},
-	{"lastframe", V_FLOAT, offsetof(ptl_t, lastFrame)},
-	{"levelflags", V_INT, offsetof(ptl_t, levelFlags)},
-	{"light", V_INT, offsetof(ptl_t, light)},
+	{"rounds", V_INT, offsetof(ptl_t, rounds), MEMBER_SIZEOF(ptl_t, rounds)},
+	{"angles", V_VECTOR, offsetof(ptl_t, angles), MEMBER_SIZEOF(ptl_t, angles)},
+	{"omega", V_VECTOR, offsetof(ptl_t, omega), MEMBER_SIZEOF(ptl_t, omega)},
+	{"life", V_FLOAT, offsetof(ptl_t, life), MEMBER_SIZEOF(ptl_t, life)},
+	{"tps", V_FLOAT, offsetof(ptl_t, tps), MEMBER_SIZEOF(ptl_t, tps)},
+	{"lastthink", V_FLOAT, offsetof(ptl_t, lastThink), MEMBER_SIZEOF(ptl_t, lastThink)},
+	{"frame", V_INT, offsetof(ptl_t, frame), MEMBER_SIZEOF(ptl_t, frame)},
+	{"endframe", V_INT, offsetof(ptl_t, endFrame), MEMBER_SIZEOF(ptl_t, endFrame)},
+	{"fps", V_FLOAT, offsetof(ptl_t, fps), MEMBER_SIZEOF(ptl_t, fps)},
+	{"lastframe", V_FLOAT, offsetof(ptl_t, lastFrame), MEMBER_SIZEOF(ptl_t, lastFrame)},
+	{"levelflags", V_INT, offsetof(ptl_t, levelFlags), MEMBER_SIZEOF(ptl_t, levelFlags)},
+	{"light", V_INT, offsetof(ptl_t, light), MEMBER_SIZEOF(ptl_t, light)},
 
-	{NULL, 0, 0}
+	{NULL, 0, 0, 0}
 };
 
 /** @brief particle art type */
@@ -1062,7 +1062,7 @@ void CL_ParseMapParticle (ptl_t * ptl, char *es, qboolean afterwards)
 				}
 
 				/* found a normal particle value */
-				Com_ParseValue(ptl, token, pp->type, pp->ofs);
+				Com_ParseValue(ptl, token, pp->type, pp->ofs, pp->size);
 				break;
 			}
 	} while (token);
@@ -1227,7 +1227,7 @@ void CL_ParsePtlCmds (const char *name, char **text)
 				/* set the values */
 				pc->type = j;
 				pc->ref = pcmdPos;
-				pcmdPos += Com_ParseValue(&pcmdData[pc->ref], token, pc->type, 0);
+				pcmdPos += Com_ParseValue(&pcmdData[pc->ref], token, pc->type, 0, 0);
 
 /*				Com_Printf( "%s %s %i\n", vt_names[pc->type], token, pcmdPos - pc->ref, (char *)pc->ref ); */
 				break;
@@ -1248,7 +1248,7 @@ void CL_ParsePtlCmds (const char *name, char **text)
 				pc->cmd = PC_PUSH;
 				pc->type = pp->type;
 				pc->ref = pcmdPos;
-				pcmdPos += Com_ParseValue(&pcmdData[pc->ref], token, pc->type, 0);
+				pcmdPos += Com_ParseValue(&pcmdData[pc->ref], token, pc->type, 0, 0);
 
 				pc = &ptlCmd[numPtlCmds++];
 				pc->cmd = PC_POP;

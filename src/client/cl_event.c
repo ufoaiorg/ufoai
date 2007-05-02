@@ -45,18 +45,13 @@ static eventMail_t* CL_GetEventMail (const char *id)
 
 /** @brief Valid event mail parameters */
 static const value_t eventMail_vals[] = {
-	{"subject", V_TRANSLATION2_STRING, offsetof(eventMail_t, subject)}
-	,
-	{"from", V_TRANSLATION2_STRING, offsetof(eventMail_t, from)}
-	,
-	{"to", V_TRANSLATION2_STRING, offsetof(eventMail_t, to)}
-	,
-	{"cc", V_TRANSLATION2_STRING, offsetof(eventMail_t, cc)}
-	,
-	{"date", V_TRANSLATION2_STRING, offsetof(eventMail_t, date)}
-	,
+	{"subject", V_TRANSLATION2_STRING, offsetof(eventMail_t, subject), 0},
+	{"from", V_TRANSLATION2_STRING, offsetof(eventMail_t, from), 0},
+	{"to", V_TRANSLATION2_STRING, offsetof(eventMail_t, to), 0},
+	{"cc", V_TRANSLATION2_STRING, offsetof(eventMail_t, cc), 0},
+	{"date", V_TRANSLATION2_STRING, offsetof(eventMail_t, date), 0},
 
-	{NULL, 0, 0}
+	{NULL, 0, 0, 0}
 };
 
 /**
@@ -105,7 +100,7 @@ extern void CL_ParseEventMails (const char *name, char **text)
 				if (!*text)
 					return;
 
-				Com_ParseValue(eventMail, token, vp->type, vp->ofs);
+				Com_ParseValue(eventMail, token, vp->type, vp->ofs, vp->size);
 				break;
 			}
 

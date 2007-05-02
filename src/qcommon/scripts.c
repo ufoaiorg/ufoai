@@ -56,71 +56,71 @@ static const char *buytypeNames[MAX_BUYTYPES] = {
 };
 
 static const value_t od_vals[] = {
-	{"weapon_mod", V_NULL, 0},
-	{"protection", V_NULL, 0},
-	{"hardness", V_NULL, 0},
+	{"weapon_mod", V_NULL, 0, 0},
+	{"protection", V_NULL, 0, 0},
+	{"hardness", V_NULL, 0, 0},
 
-	{"name", V_TRANSLATION_STRING, offsetof(objDef_t, name)},
-	{"model", V_STRING, offsetof(objDef_t, model)},
-	{"image", V_STRING, offsetof(objDef_t, image)},
-	{"type", V_STRING, offsetof(objDef_t, type)},
-	{"category", V_CHAR, offsetof(objDef_t, category)},
-	{"shape", V_SHAPE_SMALL, offsetof(objDef_t, shape)},
-	{"scale", V_FLOAT, offsetof(objDef_t, scale)},
-	{"center", V_VECTOR, offsetof(objDef_t, center)},
-	{"weapon", V_BOOL, offsetof(objDef_t, weapon)},
-	{"holdtwohanded", V_BOOL, offsetof(objDef_t, holdtwohanded)},
-	{"firetwohanded", V_BOOL, offsetof(objDef_t, firetwohanded)},
-	{"extends_item", V_STRING, offsetof(objDef_t, extends_item)},
-	{"extension", V_BOOL, offsetof(objDef_t, extension)},
-	{"headgear", V_BOOL, offsetof(objDef_t, headgear)},
-	{"thrown", V_BOOL, offsetof(objDef_t, thrown)},
-	{"ammo", V_INT, offsetof(objDef_t, ammo)},
-	{"oneshot", V_BOOL, offsetof(objDef_t, oneshot)},
-	{"deplete", V_BOOL, offsetof(objDef_t, deplete)},
-	{"reload", V_INT, offsetof(objDef_t, reload)},
-	{"size", V_INT, offsetof(objDef_t, size)},
-	{"price", V_INT, offsetof(objDef_t, price)},
-	{"buytype", V_INT, offsetof(objDef_t, buytype)},	/** Not parsed automatically anymore, this enrty is just there for overview. */
-	{"useable", V_INT, offsetof(objDef_t, useable)},
-	{NULL, V_NULL, 0}
+	{"name", V_TRANSLATION_STRING, offsetof(objDef_t, name), 0},
+	{"model", V_STRING, offsetof(objDef_t, model), 0},
+	{"image", V_STRING, offsetof(objDef_t, image), 0},
+	{"type", V_STRING, offsetof(objDef_t, type), 0},
+	{"category", V_CHAR, offsetof(objDef_t, category), MEMBER_SIZEOF(objDef_t, category)},
+	{"shape", V_SHAPE_SMALL, offsetof(objDef_t, shape), MEMBER_SIZEOF(objDef_t, shape)},
+	{"scale", V_FLOAT, offsetof(objDef_t, scale), MEMBER_SIZEOF(objDef_t, scale)},
+	{"center", V_VECTOR, offsetof(objDef_t, center), MEMBER_SIZEOF(objDef_t, center)},
+	{"weapon", V_BOOL, offsetof(objDef_t, weapon), MEMBER_SIZEOF(objDef_t, weapon)},
+	{"holdtwohanded", V_BOOL, offsetof(objDef_t, holdtwohanded), MEMBER_SIZEOF(objDef_t, holdtwohanded)},
+	{"firetwohanded", V_BOOL, offsetof(objDef_t, firetwohanded), MEMBER_SIZEOF(objDef_t, firetwohanded)},
+	{"extends_item", V_STRING, offsetof(objDef_t, extends_item), 0},
+	{"extension", V_BOOL, offsetof(objDef_t, extension), MEMBER_SIZEOF(objDef_t, extension)},
+	{"headgear", V_BOOL, offsetof(objDef_t, headgear), MEMBER_SIZEOF(objDef_t, headgear)},
+	{"thrown", V_BOOL, offsetof(objDef_t, thrown), MEMBER_SIZEOF(objDef_t, thrown)},
+	{"ammo", V_INT, offsetof(objDef_t, ammo), MEMBER_SIZEOF(objDef_t, ammo)},
+	{"oneshot", V_BOOL, offsetof(objDef_t, oneshot), MEMBER_SIZEOF(objDef_t, oneshot)},
+	{"deplete", V_BOOL, offsetof(objDef_t, deplete), MEMBER_SIZEOF(objDef_t, deplete)},
+	{"reload", V_INT, offsetof(objDef_t, reload), MEMBER_SIZEOF(objDef_t, reload)},
+	{"size", V_INT, offsetof(objDef_t, size), MEMBER_SIZEOF(objDef_t, size)},
+	{"price", V_INT, offsetof(objDef_t, price), MEMBER_SIZEOF(objDef_t, price)},
+	{"buytype", V_INT, offsetof(objDef_t, buytype), MEMBER_SIZEOF(objDef_t, buytype)},	/** Not parsed automatically anymore, this enrty is just there for overview. */
+	{"useable", V_INT, offsetof(objDef_t, useable), MEMBER_SIZEOF(objDef_t, useable)},
+	{NULL, V_NULL, 0, 0}
 };
 
 /* =========================================================== */
 
 static const value_t fdps[] = {
-	{"name", V_TRANSLATION_STRING, offsetof(fireDef_t, name)},
-	{"shotorg", V_POS, offsetof(fireDef_t, shotOrg)},
-	{"projtl", V_STRING, offsetof(fireDef_t, projectile)},
-	{"impact", V_STRING, offsetof(fireDef_t, impact)},
-	{"hitbody", V_STRING, offsetof(fireDef_t, hitBody)},
-	{"firesnd", V_STRING, offsetof(fireDef_t, fireSound)},
-	{"impsnd", V_STRING, offsetof(fireDef_t, impactSound)},
-	{"bodysnd", V_STRING, offsetof(fireDef_t, hitBodySound)},
-	{"bncsnd", V_STRING, offsetof(fireDef_t, bounceSound)},
-	{"sndonce", V_BOOL, offsetof(fireDef_t, soundOnce)},
-	{"gravity", V_BOOL, offsetof(fireDef_t, gravity)},
-	{"launched", V_BOOL, offsetof(fireDef_t, launched)},
-	{"rolled", V_BOOL, offsetof(fireDef_t, rolled)},
-	{"reaction", V_BOOL, offsetof(fireDef_t, reaction)},
-	{"delay", V_INT, offsetof(fireDef_t, delay)},
-	{"bounce", V_INT, offsetof(fireDef_t, bounce)},
-	{"bncfac", V_FLOAT, offsetof(fireDef_t, bounceFac)},
-	{"speed", V_FLOAT, offsetof(fireDef_t, speed)},
-	{"spread", V_POS, offsetof(fireDef_t, spread)},
-	{"modif", V_FLOAT, offsetof(fireDef_t, modif)},
-	{"crouch", V_FLOAT, offsetof(fireDef_t, crouch)},
-/*	{"range", V_FLOAT, offsetof(fireDef_t, range)},*/
-	{"shots", V_INT, offsetof(fireDef_t, shots)},
-	{"ammo", V_INT, offsetof(fireDef_t, ammo)},
-	{"rof", V_FLOAT, offsetof(fireDef_t, rof)},
-	{"time", V_INT, offsetof(fireDef_t, time)},
-	{"damage", V_POS, offsetof(fireDef_t, damage)},
-	{"spldmg", V_POS, offsetof(fireDef_t, spldmg)},
-/*	{"splrad", V_FLOAT, offsetof(fireDef_t, splrad)},*/
-	{"dmgtype", V_DMGTYPE, offsetof(fireDef_t, dmgtype)},
-	{"irgoggles", V_BOOL, offsetof(fireDef_t, irgoggles)},
-	{NULL, 0, 0}
+	{"name", V_TRANSLATION_STRING, offsetof(fireDef_t, name), 0},
+	{"shotorg", V_POS, offsetof(fireDef_t, shotOrg), MEMBER_SIZEOF(fireDef_t, shotOrg)},
+	{"projtl", V_STRING, offsetof(fireDef_t, projectile), 0},
+	{"impact", V_STRING, offsetof(fireDef_t, impact), 0},
+	{"hitbody", V_STRING, offsetof(fireDef_t, hitBody), 0},
+	{"firesnd", V_STRING, offsetof(fireDef_t, fireSound), 0},
+	{"impsnd", V_STRING, offsetof(fireDef_t, impactSound), 0},
+	{"bodysnd", V_STRING, offsetof(fireDef_t, hitBodySound), 0},
+	{"bncsnd", V_STRING, offsetof(fireDef_t, bounceSound), 0},
+	{"sndonce", V_BOOL, offsetof(fireDef_t, soundOnce), MEMBER_SIZEOF(fireDef_t, soundOnce)},
+	{"gravity", V_BOOL, offsetof(fireDef_t, gravity), MEMBER_SIZEOF(fireDef_t, gravity)},
+	{"launched", V_BOOL, offsetof(fireDef_t, launched), MEMBER_SIZEOF(fireDef_t, launched)},
+	{"rolled", V_BOOL, offsetof(fireDef_t, rolled), MEMBER_SIZEOF(fireDef_t, rolled)},
+	{"reaction", V_BOOL, offsetof(fireDef_t, reaction), MEMBER_SIZEOF(fireDef_t, reaction)},
+	{"delay", V_INT, offsetof(fireDef_t, delay), MEMBER_SIZEOF(fireDef_t, delay)},
+	{"bounce", V_INT, offsetof(fireDef_t, bounce), MEMBER_SIZEOF(fireDef_t, bounce)},
+	{"bncfac", V_FLOAT, offsetof(fireDef_t, bounceFac), MEMBER_SIZEOF(fireDef_t, bounceFac)},
+	{"speed", V_FLOAT, offsetof(fireDef_t, speed), MEMBER_SIZEOF(fireDef_t, speed)},
+	{"spread", V_POS, offsetof(fireDef_t, spread), MEMBER_SIZEOF(fireDef_t, spread)},
+	{"modif", V_FLOAT, offsetof(fireDef_t, modif), MEMBER_SIZEOF(fireDef_t, modif)},
+	{"crouch", V_FLOAT, offsetof(fireDef_t, crouch), MEMBER_SIZEOF(fireDef_t, crouch)},
+/*	{"range", V_FLOAT, offsetof(fireDef_t, range), MEMBER_SIZEOF(fireDef_t, range)},*/
+	{"shots", V_INT, offsetof(fireDef_t, shots), MEMBER_SIZEOF(fireDef_t, shots)},
+	{"ammo", V_INT, offsetof(fireDef_t, ammo), MEMBER_SIZEOF(fireDef_t, ammo)},
+	{"rof", V_FLOAT, offsetof(fireDef_t, rof), MEMBER_SIZEOF(fireDef_t, rof)},
+	{"time", V_INT, offsetof(fireDef_t, time), MEMBER_SIZEOF(fireDef_t, time)},
+	{"damage", V_POS, offsetof(fireDef_t, damage), MEMBER_SIZEOF(fireDef_t, damage)},
+	{"spldmg", V_POS, offsetof(fireDef_t, spldmg), MEMBER_SIZEOF(fireDef_t, spldmg)},
+/*	{"splrad", V_FLOAT, offsetof(fireDef_t, splrad), MEMBER_SIZEOF(fireDef_t, splrad)},*/
+	{"dmgtype", V_DMGTYPE, offsetof(fireDef_t, dmgtype), MEMBER_SIZEOF(fireDef_t, dmgtype)},
+	{"irgoggles", V_BOOL, offsetof(fireDef_t, irgoggles), MEMBER_SIZEOF(fireDef_t, irgoggles)},
+	{NULL, 0, 0, 0}
 };
 
 
@@ -155,7 +155,7 @@ static void Com_ParseFire (const char *name, char **text, fireDef_t * fd)
 				if (!*text)
 					return;
 
-				Com_ParseValue(fd, token, fdp->type, fdp->ofs);
+				Com_ParseValue(fd, token, fdp->type, fdp->ofs, fdp->size);
 				break;
 			}
 
@@ -301,7 +301,8 @@ static void Com_ParseItem (const char *name, char **text)
 					if (!*text)
 						break;
 
-					Com_ParseValue(od, token, val->type, val->ofs);
+					if (Com_ParseValue(od, token, val->type, val->ofs, val->size) == -1)
+						Com_Printf("Com_ParseItem: Wrong size for value %s\n", val->string);
 				} else {
 					/* parse fire definitions */
 					switch (i) {
@@ -391,33 +392,24 @@ INVENTORY DEFINITION INTERPRETER
 */
 
 static const value_t idps[] = {
-	{"shape", V_SHAPE_BIG, offsetof(invDef_t, shape)}
-	,
+	{"shape", V_SHAPE_BIG, offsetof(invDef_t, shape), 0},
 	/* only a single item */
-	{"single", V_BOOL, offsetof(invDef_t, single)}
-	,
+	{"single", V_BOOL, offsetof(invDef_t, single), MEMBER_SIZEOF(invDef_t, single)},
 	/* only a single item as weapon extension - single should be set, too */
-	{"extension", V_BOOL, offsetof(invDef_t, extension)}
-	,
+	{"extension", V_BOOL, offsetof(invDef_t, extension), MEMBER_SIZEOF(invDef_t, extension)},
 	/* this is the armor container */
-	{"armor", V_BOOL, offsetof(invDef_t, armor)}
-	,
+	{"armor", V_BOOL, offsetof(invDef_t, armor), MEMBER_SIZEOF(invDef_t, armor)},
 	/* this is the headgear container */
-	{"headgear", V_BOOL, offsetof(invDef_t, headgear)}
-	,
+	{"headgear", V_BOOL, offsetof(invDef_t, headgear), MEMBER_SIZEOF(invDef_t, headgear)},
 	/* allow everything to be stored in this container (e.g armor and weapons) */
-	{"all", V_BOOL, offsetof(invDef_t, all)}
-	,
-	{"temp", V_BOOL, offsetof(invDef_t, temp)}
-	,
+	{"all", V_BOOL, offsetof(invDef_t, all), MEMBER_SIZEOF(invDef_t, all)},
+	{"temp", V_BOOL, offsetof(invDef_t, temp), MEMBER_SIZEOF(invDef_t, temp)},
 	/* time units for moving something in */
-	{"in", V_INT, offsetof(invDef_t, in)}
-	,
+	{"in", V_INT, offsetof(invDef_t, in), MEMBER_SIZEOF(invDef_t, in)},
 	/* time units for moving something out */
-	{"out", V_INT, offsetof(invDef_t, out)}
-	,
+	{"out", V_INT, offsetof(invDef_t, out), MEMBER_SIZEOF(invDef_t, out)},
 
-	{NULL, 0, 0}
+	{NULL, 0, 0, 0}
 };
 
 /**
@@ -497,7 +489,7 @@ static void Com_ParseInventory (const char *name, char **text)
 				if (!*text)
 					return;
 
-				Com_ParseValue(id, token, idp->type, idp->ofs);
+				Com_ParseValue(id, token, idp->type, idp->ofs, idp->size);
 				break;
 			}
 
@@ -1096,17 +1088,12 @@ static void Com_ParseActorSounds (const char *name, char **text)
 
 /** @brief possible teamdesc values (ufo-scriptfiles) */
 static const value_t teamDescValues[] = {
-	{"tech", V_STRING, offsetof(teamDesc_t, tech)} /**< tech id from research.ufo */
-	,
-	{"name", V_TRANSLATION2_STRING, offsetof(teamDesc_t, name)} /**< internal team name */
-	,
-	{"alien", V_BOOL, offsetof(teamDesc_t, alien)} /**< is this an alien? */
-	,
-	{"armor", V_BOOL, offsetof(teamDesc_t, armor)} /**< are these team members able to wear armor? */
-	,
-	{"weapons", V_BOOL, offsetof(teamDesc_t, weapons)} /**< are these team members able to use weapons? */
-	,
-	{NULL, 0, 0}
+	{"tech", V_STRING, offsetof(teamDesc_t, tech), 0}, /**< tech id from research.ufo */
+	{"name", V_TRANSLATION2_STRING, offsetof(teamDesc_t, name), 0}, /**< internal team name */
+	{"alien", V_BOOL, offsetof(teamDesc_t, alien), MEMBER_SIZEOF(teamDesc_t, alien)}, /**< is this an alien? */
+	{"armor", V_BOOL, offsetof(teamDesc_t, armor), MEMBER_SIZEOF(teamDesc_t, armor)}, /**< are these team members able to wear armor? */
+	{"weapons", V_BOOL, offsetof(teamDesc_t, weapons), MEMBER_SIZEOF(teamDesc_t, weapons)}, /**< are these team members able to use weapons? */
+	{NULL, 0, 0, 0}
 };
 
 
@@ -1167,7 +1154,7 @@ static void Com_ParseTeamDesc (const char *name, char **text)
 				if (!*text)
 					return;
 
-				Com_ParseValue(td, token, v->type, v->ofs);
+				Com_ParseValue(td, token, v->type, v->ofs, v->size);
 				break;
 			}
 
@@ -1259,9 +1246,8 @@ int numGTs = 0;
 
 /** @brief possible gametype values for the gameserver (ufo-scriptfiles) */
 static const value_t gameTypeValues[] = {
-	{"name", V_TRANSLATION2_STRING, offsetof(gametype_t, name)} /**< translated game-type name for menu displaying */
-	,
-	{NULL, 0, 0}
+	{"name", V_TRANSLATION2_STRING, offsetof(gametype_t, name), 0}, /**< translated game-type name for menu displaying */
+	{NULL, 0, 0, 0}
 };
 
 static void Com_ParseGameTypes (const char *name, char **text)
@@ -1306,7 +1292,7 @@ static void Com_ParseGameTypes (const char *name, char **text)
 					if (!*text)
 						return;
 
-					Com_ParseValue(gt, token, v->type, v->ofs);
+					Com_ParseValue(gt, token, v->type, v->ofs, v->size);
 					break;
 				}
 

@@ -1469,36 +1469,36 @@ extern void RS_ResetHash (void)
  */
 static const value_t valid_tech_vars[] = {
 	/*name of technology */
-	{"name", V_TRANSLATION2_STRING, offsetof(technology_t, name)},
-	{"description", V_TRANSLATION2_STRING, offsetof(technology_t, description)},
-	{"pre_description", V_TRANSLATION2_STRING, offsetof(technology_t, pre_description)},
+	{"name", V_TRANSLATION2_STRING, offsetof(technology_t, name), 0},
+	{"description", V_TRANSLATION2_STRING, offsetof(technology_t, description), 0},
+	{"pre_description", V_TRANSLATION2_STRING, offsetof(technology_t, pre_description), 0},
 	/*what does this research provide */
-	{"provides", V_STRING, offsetof(technology_t, provides)},
+	{"provides", V_STRING, offsetof(technology_t, provides), 0},
 	/* ("require_AND")	Handled in parser below. */
 	/* ("require_OR")	Handled in parser below. */
 	/* ("up_chapter")	Handled in parser below. */
-	{"delay", V_INT, offsetof(technology_t, delay)},
-	{"producetime", V_INT, offsetof(technology_t, produceTime)},
-	{"time", V_FLOAT, offsetof(technology_t, time)},
-	{"pushnews", V_BOOL, offsetof(technology_t, pushnews)},
-	{"image_top", V_STRING, offsetof(technology_t, image_top)},
-	{"image_bottom", V_STRING, offsetof(technology_t, image_bottom)},
-	{"mdl_top", V_STRING, offsetof(technology_t, mdl_top)},
-	{"mdl_bottom", V_STRING, offsetof(technology_t, mdl_bottom)},
+	{"delay", V_INT, offsetof(technology_t, delay), MEMBER_SIZEOF(technology_t, delay)},
+	{"producetime", V_INT, offsetof(technology_t, produceTime), MEMBER_SIZEOF(technology_t, produceTime)},
+	{"time", V_FLOAT, offsetof(technology_t, time), MEMBER_SIZEOF(technology_t, time)},
+	{"pushnews", V_BOOL, offsetof(technology_t, pushnews), MEMBER_SIZEOF(technology_t, pushnews)},
+	{"image_top", V_STRING, offsetof(technology_t, image_top), 0},
+	{"image_bottom", V_STRING, offsetof(technology_t, image_bottom), 0},
+	{"mdl_top", V_STRING, offsetof(technology_t, mdl_top), 0},
+	{"mdl_bottom", V_STRING, offsetof(technology_t, mdl_bottom), 0},
 
-	{NULL, 0, 0}
+	{NULL, 0, 0, 0}
 };
 
 /**
  * @brief The valid definition names in the research.ufo file for tech mails
  */
 static const value_t valid_techmail_vars[] = {
-	{"from", V_TRANSLATION2_STRING, offsetof(techMail_t, from)},
-	{"to", V_TRANSLATION2_STRING, offsetof(techMail_t, to)},
-	{"subject", V_TRANSLATION2_STRING, offsetof(techMail_t, subject)},
-	{"date", V_TRANSLATION2_STRING, offsetof(techMail_t, date)},
+	{"from", V_TRANSLATION2_STRING, offsetof(techMail_t, from), 0},
+	{"to", V_TRANSLATION2_STRING, offsetof(techMail_t, to), 0},
+	{"subject", V_TRANSLATION2_STRING, offsetof(techMail_t, subject), 0},
+	{"date", V_TRANSLATION2_STRING, offsetof(techMail_t, date), 0},
 
-	{NULL, 0, 0}
+	{NULL, 0, 0, 0}
 };
 
 /**
@@ -1508,7 +1508,7 @@ static const value_t valid_techmail_vars[] = {
  */
 extern void RS_ParseTechnologies (const char *name, char **text)
 {
-	const value_t *var = NULL;
+	const value_t *vp = NULL;
 	technology_t *tech = NULL;
 	unsigned hash;
 	int tech_old;
@@ -1757,18 +1757,18 @@ extern void RS_ParseTechnologies (const char *name, char **text)
 				if (!*text || *token == '}')
 					return;
 				do {
-					for (var = valid_techmail_vars; var->string; var++)
-						if (!Q_strncmp(token, var->string, sizeof(var->string))) {
+					for (vp = valid_techmail_vars; vp->string; vp++)
+						if (!Q_strncmp(token, vp->string, sizeof(vp->string))) {
 							/* found a definition */
 							token = COM_EParse(text, errhead, name);
 							if (!*text)
 								return;
 
-							if (var->type != V_NULL)
-								Com_ParseValue(mail, token, var->type, var->ofs);
+							if (vp->type != V_NULL)
+								Com_ParseValue(mail, token, vp->type, vp->ofs, vp->size);
 							else
 								/* NOTE: do we need a buffer here? for saving or something like that? */
-								Com_Printf("RS_ParseTechnologies Error: - no buffer for technologies - V_NULL not allowed (token: '%s') entry: '%s' - offset: %Zu\n", token, name, var->ofs);
+								Com_Printf("RS_ParseTechnologies Error: - no buffer for technologies - V_NULL not allowed (token: '%s') entry: '%s' - offset: %Zu\n", token, name, vp->ofs);
 							break;
 						}
 					/* grab the next entry */
@@ -1777,22 +1777,22 @@ extern void RS_ParseTechnologies (const char *name, char **text)
 						return;
 				} while (*text && *token != '}');
 			} else {
-				for (var = valid_tech_vars; var->string; var++)
-					if (!Q_strncmp(token, var->string, sizeof(var->string))) {
+				for (vp = valid_tech_vars; vp->string; vp++)
+					if (!Q_strncmp(token, vp->string, sizeof(vp->string))) {
 						/* found a definition */
 						token = COM_EParse(text, errhead, name);
 						if (!*text)
 							return;
 
-						if (var->ofs && var->type != V_NULL)
-							Com_ParseValue(tech, token, var->type, var->ofs);
+						if (vp->ofs && vp->type != V_NULL)
+							Com_ParseValue(tech, token, vp->type, vp->ofs, vp->size);
 						else
 							/* NOTE: do we need a buffer here? for saving or something like that? */
 							Com_Printf("RS_ParseTechnologies Error: - no buffer for technologies - V_NULL not allowed (token: '%s') entry: '%s'\n", token, name);
 						break;
 					}
 				/*@todo: escape "type weapon/tech/etc.." here */
-				if (!var->string)
+				if (!vp->string)
 					Com_Printf("RS_ParseTechnologies: unknown token \"%s\" ignored (entry %s)\n", token, name);
 			}
 		}

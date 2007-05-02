@@ -2029,13 +2029,13 @@ static int CL_GetRank (const char* rankID)
 
 static const value_t rankValues[] =
 {
-	{ "name",		V_TRANSLATION_STRING,	offsetof(rank_t, name) },
-	{ "shortname",		V_TRANSLATION_STRING,	offsetof(rank_t, shortname) },
-	{ "image",		V_STRING,		offsetof(rank_t, image) },
-	{ "mind",		V_INT,			offsetof(rank_t, mind) },
-	{ "killed_enemies",	V_INT,			offsetof(rank_t, killed_enemies) },
-	{ "killed_others",	V_INT,			offsetof(rank_t, killed_others) },
-	{ NULL,	0, 0 }
+	{"name", V_TRANSLATION_STRING, offsetof(rank_t, name), 0},
+	{"shortname", V_TRANSLATION_STRING,	offsetof(rank_t, shortname), 0},
+	{"image", V_STRING, offsetof(rank_t, image), 0},
+	{"mind", V_INT, offsetof(rank_t, mind), MEMBER_SIZEOF(rank_t, mind)},
+	{"killed_enemies", V_INT, offsetof(rank_t, killed_enemies), MEMBER_SIZEOF(rank_t, killed_enemies)},
+	{"killed_others", V_INT, offsetof(rank_t, killed_others), MEMBER_SIZEOF(rank_t, killed_others)},
+	{NULL, 0, 0, 0}
 };
 
 /**
@@ -2081,7 +2081,7 @@ extern void CL_ParseMedalsAndRanks (const char *name, char **text, byte parseran
 					token = COM_EParse(text, errhead, name);
 					if (!*text)
 						return;
-					Com_ParseValue(rank, token, v->type, v->ofs);
+					Com_ParseValue(rank, token, v->type, v->ofs, v->size);
 					break;
 				}
 
@@ -2099,14 +2099,13 @@ extern void CL_ParseMedalsAndRanks (const char *name, char **text, byte parseran
 	}
 }
 
-static const value_t ugvValues[] =
-{
-	{ "tu",	V_INT,			offsetof( ugv_t, tu ) },
-	{ "weapon",	V_STRING,	offsetof( ugv_t, weapon ) },
-	{ "armor",	V_STRING,	offsetof( ugv_t, armor ) },
-	{ "size",	V_INT,		offsetof( ugv_t, size ) },
+static const value_t ugvValues[] = {
+	{"tu", V_INT, offsetof(ugv_t, tu), MEMBER_SIZEOF(ugv_t, tu)},
+	{"weapon", V_STRING, offsetof(ugv_t, weapon), 0},
+	{"armor", V_STRING, offsetof(ugv_t, armor), 0},
+	{"size", V_INT, offsetof(ugv_t, size), MEMBER_SIZEOF(ugv_t, size)},
 
-	{ NULL,	0, 0 }
+	{NULL, 0, 0, 0}
 };
 
 /**
@@ -2150,7 +2149,7 @@ extern void CL_ParseUGVs (const char *name, char **text)
 				token = COM_EParse(text, errhead, name);
 				if (!*text)
 					return;
-				Com_ParseValue(ugv, token, v->type, v->ofs);
+				Com_ParseValue(ugv, token, v->type, v->ofs, v->size);
 				break;
 			}
 			if (!v->string)

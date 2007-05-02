@@ -2562,48 +2562,27 @@ static void CL_GameResults_f (void)
 
 /** @brief valid mission descriptors */
 static const value_t mission_vals[] = {
-	{"location", V_TRANSLATION_STRING, offsetof(mission_t, location)}
-	,
-	{"type", V_TRANSLATION_STRING, offsetof(mission_t, type)}
-	,
-	{"text", V_TRANSLATION_STRING, 0}	/* max length is 128 */
-	,
-	{"nation", V_STRING, offsetof(mission_t, nation)}
-	,
-	{"map", V_STRING, offsetof(mission_t, map)}
-	,
-	{"param", V_STRING, offsetof(mission_t, param)}
-	,
-	{"music", V_STRING, offsetof(mission_t, music)}
-	,
-	{"pos", V_POS, offsetof(mission_t, pos)}
-	,
-	{"mask", V_RGBA, offsetof(mission_t, mask)}	/* color values from map mask this mission needs */
-	,
-	{"aliens", V_INT, offsetof(mission_t, aliens)}
-	,
-	{"maxugv", V_INT, offsetof(mission_t, ugv)}
-	,
-	{"commands", V_STRING, offsetof(mission_t, cmds)}	/* commands that are excuted when this mission gets active */
-	,
-	{"onwin", V_STRING, offsetof(mission_t, onwin)}
-	,
-	{"onlose", V_STRING, offsetof(mission_t, onlose)}
-	,
-	{"alienteam", V_STRING, offsetof(mission_t, alienTeam)}
-	,
-	{"alienequip", V_STRING, offsetof(mission_t, alienEquipment)}
-	,
-	{"civilians", V_INT, offsetof(mission_t, civilians)}
-	,
-	{"civteam", V_STRING, offsetof(mission_t, civTeam)}
-	,
-	{"storyrelated", V_BOOL, offsetof(mission_t, storyRelated)}
-	,
-	{"loadingscreen", V_STRING, offsetof(mission_t, loadingscreen)}
-	,
-	{NULL, 0, 0}
-	,
+	{"location", V_TRANSLATION_STRING, offsetof(mission_t, location), 0},
+	{"type", V_TRANSLATION_STRING, offsetof(mission_t, type), 0},
+	{"text", V_TRANSLATION_STRING, 0, 0},	/* max length is 128 */
+	{"nation", V_STRING, offsetof(mission_t, nation), 0},
+	{"map", V_STRING, offsetof(mission_t, map), 0},
+	{"param", V_STRING, offsetof(mission_t, param), 0},
+	{"music", V_STRING, offsetof(mission_t, music), 0},
+	{"pos", V_POS, offsetof(mission_t, pos), MEMBER_SIZEOF(mission_t, pos)},
+	{"mask", V_RGBA, offsetof(mission_t, mask), MEMBER_SIZEOF(mission_t, mask)}, /* color values from map mask this mission needs */
+	{"aliens", V_INT, offsetof(mission_t, aliens), MEMBER_SIZEOF(mission_t, aliens)},
+	{"maxugv", V_INT, offsetof(mission_t, ugv), MEMBER_SIZEOF(mission_t, ugv)},
+	{"commands", V_STRING, offsetof(mission_t, cmds), 0},	/* commands that are excuted when this mission gets active */
+	{"onwin", V_STRING, offsetof(mission_t, onwin), 0},
+	{"onlose", V_STRING, offsetof(mission_t, onlose), 0},
+	{"alienteam", V_STRING, offsetof(mission_t, alienTeam), 0},
+	{"alienequip", V_STRING, offsetof(mission_t, alienEquipment), 0},
+	{"civilians", V_INT, offsetof(mission_t, civilians), MEMBER_SIZEOF(mission_t, civilians)},
+	{"civteam", V_STRING, offsetof(mission_t, civTeam), 0},
+	{"storyrelated", V_BOOL, offsetof(mission_t, storyRelated), MEMBER_SIZEOF(mission_t, storyRelated)},
+	{"loadingscreen", V_STRING, offsetof(mission_t, loadingscreen), 0},
+	{NULL, 0, 0, 0}
 };
 
 /**
@@ -2693,7 +2672,7 @@ extern void CL_ParseMission (const char *name, char **text)
 					return;
 
 				if (vp->ofs)
-					Com_ParseValue(ms, token, vp->type, vp->ofs);
+					Com_ParseValue(ms, token, vp->type, vp->ofs, vp->size);
 				else {
 					if (*token == '_')
 						token++;
@@ -2828,28 +2807,17 @@ extern void CL_ParseResearchableCampaignStates (const char *name, char **text, q
 /* =========================================================== */
 
 static const value_t stageset_vals[] = {
-	{"needed", V_STRING, offsetof(stageSet_t, needed)}
-	,
-	{"delay", V_DATE, offsetof(stageSet_t, delay)}
-	,
-	{"frame", V_DATE, offsetof(stageSet_t, frame)}
-	,
-	{"expire", V_DATE, offsetof(stageSet_t, expire)}
-	,
-	{"number", V_INT, offsetof(stageSet_t, number)}
-	,
-	{"quota", V_INT, offsetof(stageSet_t, quota)}
-	,
-	{"seq", V_STRING, offsetof(stageSet_t, sequence)}
-	,
-	{"nextstage", V_STRING, offsetof(stageSet_t, nextstage)}
-	,
-	{"endstage", V_STRING, offsetof(stageSet_t, endstage)}
-	,
-	{"commands", V_STRING, offsetof(stageSet_t, cmds)}
-	,
-	{NULL, 0, 0}
-	,
+	{"needed", V_STRING, offsetof(stageSet_t, needed), 0},
+	{"delay", V_DATE, offsetof(stageSet_t, delay), 0},
+	{"frame", V_DATE, offsetof(stageSet_t, frame), 0},
+	{"expire", V_DATE, offsetof(stageSet_t, expire), 0},
+	{"number", V_INT, offsetof(stageSet_t, number), MEMBER_SIZEOF(stageSet_t, number)},
+	{"quota", V_INT, offsetof(stageSet_t, quota), MEMBER_SIZEOF(stageSet_t, quota)},
+	{"seq", V_STRING, offsetof(stageSet_t, sequence), 0},
+	{"nextstage", V_STRING, offsetof(stageSet_t, nextstage), 0},
+	{"endstage", V_STRING, offsetof(stageSet_t, endstage), 0},
+	{"commands", V_STRING, offsetof(stageSet_t, cmds), 0},
+	{NULL, 0, 0, 0}
 };
 
 /**
@@ -2897,7 +2865,7 @@ static void CL_ParseStageSet (const char *name, char **text)
 				if (!*text)
 					return;
 
-				Com_ParseValue(sp, token, vp->type, vp->ofs);
+				Com_ParseValue(sp, token, vp->type, vp->ofs, vp->size);
 				break;
 			}
 		if (vp->string)
@@ -3001,47 +2969,27 @@ extern void CL_ParseStage (const char *name, char **text)
 /* =========================================================== */
 
 static const value_t salary_vals[] = {
-	{"soldier_base", V_INT, offsetof(salary_t, soldier_base)}
-	,
-	{"soldier_rankbonus", V_INT, offsetof(salary_t, soldier_rankbonus)}
-	,
-	{"worker_base", V_INT, offsetof(salary_t, worker_base)}
-	,
-	{"worker_rankbonus", V_INT, offsetof(salary_t, worker_rankbonus)}
-	,
-	{"scientist_base", V_INT, offsetof(salary_t, scientist_base)}
-	,
-	{"scientist_rankbonus", V_INT, offsetof(salary_t, scientist_rankbonus)}
-	,
-	{"medic_base", V_INT, offsetof(salary_t, medic_base)}
-	,
-	{"medic_rankbonus", V_INT, offsetof(salary_t, medic_rankbonus)}
-	,
-	{"robot_base", V_INT, offsetof(salary_t, robot_base)}
-	,
-	{"robot_rankbonus", V_INT, offsetof(salary_t, robot_rankbonus)}
-	,
-	{"aircraft_factor", V_INT, offsetof(salary_t, aircraft_factor)}
-	,
-	{"aircraft_divisor", V_INT, offsetof(salary_t, aircraft_divisor)}
-	,
-	{"base_upkeep", V_INT, offsetof(salary_t, base_upkeep)}
-	,
-	{"admin_initial", V_INT, offsetof(salary_t, admin_initial)}
-	,
-	{"admin_soldier", V_INT, offsetof(salary_t, admin_soldier)}
-	,
-	{"admin_worker", V_INT, offsetof(salary_t, admin_worker)}
-	,
-	{"admin_scientist", V_INT, offsetof(salary_t, admin_scientist)}
-	,
-	{"admin_medic", V_INT, offsetof(salary_t, admin_medic)}
-	,
-	{"admin_robot", V_INT, offsetof(salary_t, admin_robot)}
-	,
-	{"debt_interest", V_FLOAT, offsetof(salary_t, debt_interest)}
-	,
-	{NULL, 0, 0}
+	{"soldier_base", V_INT, offsetof(salary_t, soldier_base), MEMBER_SIZEOF(salary_t, soldier_base)},
+	{"soldier_rankbonus", V_INT, offsetof(salary_t, soldier_rankbonus), MEMBER_SIZEOF(salary_t, soldier_rankbonus)},
+	{"worker_base", V_INT, offsetof(salary_t, worker_base), MEMBER_SIZEOF(salary_t, worker_base)},
+	{"worker_rankbonus", V_INT, offsetof(salary_t, worker_rankbonus), MEMBER_SIZEOF(salary_t, worker_rankbonus)},
+	{"scientist_base", V_INT, offsetof(salary_t, scientist_base), MEMBER_SIZEOF(salary_t, scientist_base)},
+	{"scientist_rankbonus", V_INT, offsetof(salary_t, scientist_rankbonus), MEMBER_SIZEOF(salary_t, scientist_rankbonus)},
+	{"medic_base", V_INT, offsetof(salary_t, medic_base), MEMBER_SIZEOF(salary_t, medic_base)},
+	{"medic_rankbonus", V_INT, offsetof(salary_t, medic_rankbonus), MEMBER_SIZEOF(salary_t, medic_rankbonus)},
+	{"robot_base", V_INT, offsetof(salary_t, robot_base), MEMBER_SIZEOF(salary_t, robot_base)},
+	{"robot_rankbonus", V_INT, offsetof(salary_t, robot_rankbonus), MEMBER_SIZEOF(salary_t, robot_rankbonus)},
+	{"aircraft_factor", V_INT, offsetof(salary_t, aircraft_factor), MEMBER_SIZEOF(salary_t, aircraft_factor)},
+	{"aircraft_divisor", V_INT, offsetof(salary_t, aircraft_divisor), MEMBER_SIZEOF(salary_t, aircraft_divisor)},
+	{"base_upkeep", V_INT, offsetof(salary_t, base_upkeep), MEMBER_SIZEOF(salary_t, base_upkeep)},
+	{"admin_initial", V_INT, offsetof(salary_t, admin_initial), MEMBER_SIZEOF(salary_t, admin_initial)},
+	{"admin_soldier", V_INT, offsetof(salary_t, admin_soldier), MEMBER_SIZEOF(salary_t, admin_soldier)},
+	{"admin_worker", V_INT, offsetof(salary_t, admin_worker), MEMBER_SIZEOF(salary_t, admin_worker)},
+	{"admin_scientist", V_INT, offsetof(salary_t, admin_scientist), MEMBER_SIZEOF(salary_t, admin_scientist)},
+	{"admin_medic", V_INT, offsetof(salary_t, admin_medic), MEMBER_SIZEOF(salary_t, admin_medic)},
+	{"admin_robot", V_INT, offsetof(salary_t, admin_robot), MEMBER_SIZEOF(salary_t, admin_robot)},
+	{"debt_interest", V_FLOAT, offsetof(salary_t, debt_interest), MEMBER_SIZEOF(salary_t, debt_interest)},
+	{NULL, 0, 0, 0}
 };
 
 /**
@@ -3087,7 +3035,7 @@ static void CL_ParseSalary (const char *name, char **text, int campaignID)
 				if (!*text)
 					return;
 
-				Com_ParseValue(s, token, vp->type, vp->ofs);
+				Com_ParseValue(s, token, vp->type, vp->ofs, vp->size);
 				break;
 			}
 		if (!vp->string) {
@@ -3172,42 +3120,24 @@ static void CL_ParseCharacterValues (const char *name, char **text, int campaign
 /* =========================================================== */
 
 static const value_t campaign_vals[] = {
-	{"team", V_STRING, offsetof(campaign_t, team)}
-	,
-	{"soldiers", V_INT, offsetof(campaign_t, soldiers)}
-	,
-	{"workers", V_INT, offsetof(campaign_t, workers)}
-	,
-	{"medics", V_INT, offsetof(campaign_t, medics)}
-	,
-	{"scientists", V_INT, offsetof(campaign_t, scientists)}
-	,
-	{"ugvs", V_INT, offsetof(campaign_t, ugvs)}
-	,
-	{"equipment", V_STRING, offsetof(campaign_t, equipment)}
-	,
-	{"market", V_STRING, offsetof(campaign_t, market)}
-	,
-	{"researched", V_STRING, offsetof(campaign_t, researched)}
-	,
-	{"difficulty", V_INT, offsetof(campaign_t, difficulty)}
-	,
-	{"firststage", V_STRING, offsetof(campaign_t, firststage)}
-	,
-	{"map", V_STRING, offsetof(campaign_t, map)}
-	,
-	{"credits", V_INT, offsetof(campaign_t, credits)}
-	,
-	{"visible", V_BOOL, offsetof(campaign_t, visible)}
-	,
-	{"text", V_TRANSLATION2_STRING, offsetof(campaign_t, text)}
-	,							/* just a gettext placeholder */
-	{"name", V_TRANSLATION_STRING, offsetof(campaign_t, name)}
-	,
-	{"date", V_DATE, offsetof(campaign_t, date)}
-	,
-	{NULL, 0, 0}
-	,
+	{"team", V_STRING, offsetof(campaign_t, team), 0},
+	{"soldiers", V_INT, offsetof(campaign_t, soldiers), MEMBER_SIZEOF(campaign_t, soldiers)},
+	{"workers", V_INT, offsetof(campaign_t, workers), MEMBER_SIZEOF(campaign_t, workers)},
+	{"medics", V_INT, offsetof(campaign_t, medics), MEMBER_SIZEOF(campaign_t, medics)},
+	{"scientists", V_INT, offsetof(campaign_t, scientists), MEMBER_SIZEOF(campaign_t, scientists)},
+	{"ugvs", V_INT, offsetof(campaign_t, ugvs), MEMBER_SIZEOF(campaign_t, ugvs)},
+	{"equipment", V_STRING, offsetof(campaign_t, equipment), 0},
+	{"market", V_STRING, offsetof(campaign_t, market), 0},
+	{"researched", V_STRING, offsetof(campaign_t, researched), 0},
+	{"difficulty", V_INT, offsetof(campaign_t, difficulty), MEMBER_SIZEOF(campaign_t, difficulty)},
+	{"firststage", V_STRING, offsetof(campaign_t, firststage), 0},
+	{"map", V_STRING, offsetof(campaign_t, map), 0},
+	{"credits", V_INT, offsetof(campaign_t, credits), MEMBER_SIZEOF(campaign_t, credits)},
+	{"visible", V_BOOL, offsetof(campaign_t, visible), MEMBER_SIZEOF(campaign_t, visible)},
+	{"text", V_TRANSLATION2_STRING, offsetof(campaign_t, text), 0}, /* just a gettext placeholder */
+	{"name", V_TRANSLATION_STRING, offsetof(campaign_t, name), 0},
+	{"date", V_DATE, offsetof(campaign_t, date), 0},
+	{NULL, 0, 0, 0}
 };
 
 /**
@@ -3299,7 +3229,7 @@ extern void CL_ParseCampaign (const char *name, char **text)
 				if (!*text)
 					return;
 
-				Com_ParseValue(cp, token, vp->type, vp->ofs);
+				Com_ParseValue(cp, token, vp->type, vp->ofs, vp->size);
 				break;
 			}
 		if (!Q_strncmp(token, "character_data", MAX_VAR)) {
@@ -3316,26 +3246,16 @@ extern void CL_ParseCampaign (const char *name, char **text)
 /* =========================================================== */
 
 static const value_t nation_vals[] = {
-	{"name", V_TRANSLATION_STRING, offsetof(nation_t, name)}
-	,
-	{"pos", V_POS, offsetof(nation_t, pos)}
-	,
-	{"color", V_COLOR, offsetof(nation_t, color)}
-	,
-	{"funding", V_INT, offsetof(nation_t, funding)}
-	,
-	{"happiness", V_FLOAT, offsetof(nation_t, happiness)}
-	,
-	{"alien_friendly", V_FLOAT, offsetof(nation_t, alienFriendly)}
-	,
-	{"soldiers", V_INT, offsetof(nation_t, soldiers)}
-	,
-	{"scientists", V_INT, offsetof(nation_t, scientists)}
-	,
-	{"names", V_INT, offsetof(nation_t, names)}
-	,
-
-	{NULL, 0, 0}
+	{"name", V_TRANSLATION_STRING, offsetof(nation_t, name), 0},
+	{"pos", V_POS, offsetof(nation_t, pos), MEMBER_SIZEOF(nation_t, pos)},
+	{"color", V_COLOR, offsetof(nation_t, color), MEMBER_SIZEOF(nation_t, color)},
+	{"funding", V_INT, offsetof(nation_t, funding), MEMBER_SIZEOF(nation_t, funding)},
+	{"happiness", V_FLOAT, offsetof(nation_t, happiness), MEMBER_SIZEOF(nation_t, happiness)},
+	{"alien_friendly", V_FLOAT, offsetof(nation_t, alienFriendly), MEMBER_SIZEOF(nation_t, alienFriendly)},
+	{"soldiers", V_INT, offsetof(nation_t, soldiers), MEMBER_SIZEOF(nation_t, soldiers)},
+	{"scientists", V_INT, offsetof(nation_t, scientists), MEMBER_SIZEOF(nation_t, scientists)},
+	{"names", V_INT, offsetof(nation_t, names), MEMBER_SIZEOF(nation_t, names)},
+	{NULL, 0, 0, 0}
 };
 
 /**
@@ -3404,7 +3324,7 @@ extern void CL_ParseNations (const char *name, char **text)
 				if (*token != '}') {
 					if (nation->numBorders >= MAX_NATION_BORDERS)
 						Sys_Error("CL_ParseNations: too many nation borders for nation '%s'\n", name);
-					Com_ParseValue(nation, token, V_POS, offsetof(nation_t, borders[nation->numBorders++]));
+					Com_ParseValue(nation, token, V_POS, offsetof(nation_t, borders[nation->numBorders++]), sizeof(nation->borders[nation->numBorders]));
 				}
 			} while (*token != '}');
 		} else {
@@ -3416,7 +3336,7 @@ extern void CL_ParseNations (const char *name, char **text)
 					if (!*text)
 						return;
 
-					Com_ParseValue(nation, token, vp->type, vp->ofs);
+					Com_ParseValue(nation, token, vp->type, vp->ofs, vp->size);
 					break;
 				}
 
@@ -3504,73 +3424,43 @@ static void CL_NationList_f (void)
 
 /* these commands are only available in singleplayer */
 static const cmdList_t game_commands[] = {
-	{"aircraft_start", AIM_AircraftStart_f, NULL}
+	{"aircraft_start", AIM_AircraftStart_f, NULL},
 #ifdef DEBUG
-	,
-	{"aircraftlist", AIR_ListAircraft_f, "Debug function to list all aircraft in all bases"}
+	{"aircraftlist", AIR_ListAircraft_f, "Debug function to list all aircraft in all bases"},
 #endif
-	,
-	{"aircraft_select", AIR_AircraftSelect_f, NULL}
-	,
-	{"aircraft_init", AIR_AircraftInit, NULL}
-	,
-	{"airequip_init", AIM_AircraftEquipmenuInit_f, NULL}
-	,
-	{"airequip_list_click", AIM_AircraftEquipmenuClick_f, NULL}
-	,
-	{"mn_next_aircraft", AIM_NextAircraft_f, NULL}
-	,
-	{"mn_prev_aircraft", AIM_PrevAircraft_f, NULL}
-	,
-	{"aircraft_new", AIR_NewAircraft_f, NULL}
-	,
-	{"mn_reset_air", AIM_ResetAircraftCvars_f, NULL}
-	,
-	{"aircraft_return", AIR_AircraftReturnToBase_f, NULL}
-	,
-	{"aircraft_list", CL_AircraftList_f, "Generate the aircraft (interception) list"}
-	,
+	{"aircraft_select", AIR_AircraftSelect_f, NULL},
+	{"aircraft_init", AIR_AircraftInit, NULL},
+	{"airequip_init", AIM_AircraftEquipmenuInit_f, NULL},
+	{"airequip_list_click", AIM_AircraftEquipmenuClick_f, NULL},
+	{"mn_next_aircraft", AIM_NextAircraft_f, NULL},
+	{"mn_prev_aircraft", AIM_PrevAircraft_f, NULL},
+	{"aircraft_new", AIR_NewAircraft_f, NULL},
+	{"mn_reset_air", AIM_ResetAircraftCvars_f, NULL},
+	{"aircraft_return", AIR_AircraftReturnToBase_f, NULL},
+	{"aircraft_list", CL_AircraftList_f, "Generate the aircraft (interception) list"},
 #if 0
 	/* This function is a copy of more detailed AIR_ListAircraft_f().
 	   10042007 Zenerka. */
-	{"aircraft_list_debug", CL_AircraftListDebug_f, "Shows all aircraft in all bases"}
-	,
+	{"aircraft_list_debug", CL_AircraftListDebug_f, "Shows all aircraft in all bases"},
 #endif
-	{"stats_update", CL_StatsUpdate_f, NULL}
-	,
-	{"game_go", CL_GameGo, NULL}
-	,
-	{"game_auto_check", CL_GameAutoCheck_f, NULL}
-	,
-	{"game_auto_go", CL_GameAutoGo_f, NULL}
-	,
-	{"game_abort", CL_GameAbort_f, NULL}
-	,
-	{"game_results", CL_GameResults_f, "Parses and shows the game results"}
-	,
-	{"game_timestop", CL_GameTimeStop, NULL}
-	,
-	{"game_timeslow", CL_GameTimeSlow, NULL}
-	,
-	{"game_timefast", CL_GameTimeFast, NULL}
-	,
-	{"inc_sensor", B_SetSensor_f, "Increase the radar range"}
-	,
-	{"dec_sensor", B_SetSensor_f, "Decrease the radar range"}
-	,
-	{"mn_mapaction_reset", MAP_ResetAction, NULL}
-	,
-	{"nationlist", CL_NationList_f, "List all nations on the game console"}
-	,
-	{"mission", CL_StartMission_f, NULL}
-	,
-	{"addeventmail", CL_EventAddMail_f, "Add a new mail (event trigger) - e.g. after a mission"}
-	,
+	{"stats_update", CL_StatsUpdate_f, NULL},
+	{"game_go", CL_GameGo, NULL},
+	{"game_auto_check", CL_GameAutoCheck_f, NULL},
+	{"game_auto_go", CL_GameAutoGo_f, NULL},
+	{"game_abort", CL_GameAbort_f, NULL},
+	{"game_results", CL_GameResults_f, "Parses and shows the game results"},
+	{"game_timestop", CL_GameTimeStop, NULL},
+	{"game_timeslow", CL_GameTimeSlow, NULL},
+	{"game_timefast", CL_GameTimeFast, NULL},
+	{"inc_sensor", B_SetSensor_f, "Increase the radar range"},
+	{"dec_sensor", B_SetSensor_f, "Decrease the radar range"},
+	{"mn_mapaction_reset", MAP_ResetAction, NULL},
+	{"nationlist", CL_NationList_f, "List all nations on the game console"},
+	{"mission", CL_StartMission_f, NULL},
+	{"addeventmail", CL_EventAddMail_f, "Add a new mail (event trigger) - e.g. after a mission"},
 #ifdef DEBUG
-	{"debug_fullcredits", CL_DebugFullCredits_f, "Debug function to give the player full credits"}
-	,
-	{"debug_additems", CL_DebugAllItems_f, "Debug function to add one item of every type to base storage and mark related tech collected"}
-	,
+	{"debug_fullcredits", CL_DebugFullCredits_f, "Debug function to give the player full credits"},
+	{"debug_additems", CL_DebugAllItems_f, "Debug function to add one item of every type to base storage and mark related tech collected"},
 #endif
 	{NULL, NULL, NULL}
 };

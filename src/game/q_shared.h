@@ -32,6 +32,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define GAME_Q_SHARED_H
 
 #ifdef DEBUG
+#define Com_ParseValue(base, token, type, ofs, size) Com_ParseValueDebug(base, token, type, ofs, size, __FILE__, __LINE__)
 #define Q_strncpyz(string1,string2,length) Q_strncpyzDebug( string1, string2, length, __FILE__, __LINE__ )
 #define WriteByte(x) WriteByte( x, __FILE__, __LINE__ )
 #define WriteShort(x) WriteShort( x, __FILE__, __LINE__ )
@@ -754,9 +755,12 @@ typedef struct menuDepends_s {
 #endif
 #define ALIGN(size)  ((size) + ((ALIGN_BYTES - ((size) % ALIGN_BYTES)) % ALIGN_BYTES))
 
+#define MEMBER_SIZEOF(TYPE, MEMBER) sizeof(((TYPE *)0)->MEMBER)
+
 /**
  * @brief possible values for parsing functions
  * @sa vt_names
+ * @sa vt_sizes
  */
 typedef enum {
 	V_NULL,
@@ -854,9 +858,14 @@ typedef struct value_s {
 	const char *string;
 	const int type;
 	const size_t ofs;
+	const size_t size;
 } value_t;
 
-int Com_ParseValue(void *base, char *token, int type, int ofs);
+#ifdef DEBUG
+int Com_ParseValueDebug(void *base, char *token, int type, int ofs, size_t size, const char* file, int line);
+#else
+int Com_ParseValue(void *base, char *token, int type, int ofs, size_t size);
+#endif
 int Com_SetValue(void *base, void *set, int type, int ofs);
 char *Com_ValueToStr(void *base, int type, int ofs);
 

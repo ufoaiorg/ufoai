@@ -442,47 +442,47 @@ void CL_ResetSequences (void)
 
 /** @brief valid id names for camera */
 static const value_t seqCamera_vals[] = {
-	{"origin", V_VECTOR, offsetof(seqCamera_t, origin)},
-	{"speed", V_VECTOR, offsetof(seqCamera_t, speed)},
-	{"angles", V_VECTOR, offsetof(seqCamera_t, angles)},
-	{"omega", V_VECTOR, offsetof(seqCamera_t, omega)},
-	{"dist", V_FLOAT, offsetof(seqCamera_t, dist)},
-	{"ddist", V_FLOAT, offsetof(seqCamera_t, dist)},
-	{"zoom", V_FLOAT, offsetof(seqCamera_t, zoom)},
-	{"dzoom", V_FLOAT, offsetof(seqCamera_t, dist)},
-	{NULL, 0, 0},
+	{"origin", V_VECTOR, offsetof(seqCamera_t, origin), MEMBER_SIZEOF(seqCamera_t, origin)},
+	{"speed", V_VECTOR, offsetof(seqCamera_t, speed), MEMBER_SIZEOF(seqCamera_t, speed)},
+	{"angles", V_VECTOR, offsetof(seqCamera_t, angles), MEMBER_SIZEOF(seqCamera_t, angles)},
+	{"omega", V_VECTOR, offsetof(seqCamera_t, omega), MEMBER_SIZEOF(seqCamera_t, omega)},
+	{"dist", V_FLOAT, offsetof(seqCamera_t, dist), MEMBER_SIZEOF(seqCamera_t, dist)},
+	{"ddist", V_FLOAT, offsetof(seqCamera_t, dist), MEMBER_SIZEOF(seqCamera_t, dist)},
+	{"zoom", V_FLOAT, offsetof(seqCamera_t, zoom), MEMBER_SIZEOF(seqCamera_t, zoom)},
+	{"dzoom", V_FLOAT, offsetof(seqCamera_t, dist), MEMBER_SIZEOF(seqCamera_t, dist)},
+	{NULL, 0, 0, 0}
 };
 
 /** @brief valid entity names for a sequence */
 static const value_t seqEnt_vals[] = {
-	{"name", V_STRING, offsetof(seqEnt_t, name)},
-	{"skin", V_INT, offsetof(seqEnt_t, skin)},
-	{"alpha", V_FLOAT, offsetof(seqEnt_t, alpha)},
-	{"origin", V_VECTOR, offsetof(seqEnt_t, origin)},
-	{"speed", V_VECTOR, offsetof(seqEnt_t, speed)},
-	{"angles", V_VECTOR, offsetof(seqEnt_t, angles)},
-	{"omega", V_VECTOR, offsetof(seqEnt_t, omega)},
-	{"parent", V_STRING, offsetof(seqEnt_t, parent)},
-	{"tag", V_STRING, offsetof(seqEnt_t, tag)},
-	{NULL, 0, 0},
+	{"name", V_STRING, offsetof(seqEnt_t, name), 0},
+	{"skin", V_INT, offsetof(seqEnt_t, skin), MEMBER_SIZEOF(seqEnt_t, skin)},
+	{"alpha", V_FLOAT, offsetof(seqEnt_t, alpha), MEMBER_SIZEOF(seqEnt_t, alpha)},
+	{"origin", V_VECTOR, offsetof(seqEnt_t, origin), MEMBER_SIZEOF(seqEnt_t, origin)},
+	{"speed", V_VECTOR, offsetof(seqEnt_t, speed), MEMBER_SIZEOF(seqEnt_t, speed)},
+	{"angles", V_VECTOR, offsetof(seqEnt_t, angles), MEMBER_SIZEOF(seqEnt_t, angles)},
+	{"omega", V_VECTOR, offsetof(seqEnt_t, omega), MEMBER_SIZEOF(seqEnt_t, omega)},
+	{"parent", V_STRING, offsetof(seqEnt_t, parent), 0},
+	{"tag", V_STRING, offsetof(seqEnt_t, tag), 0},
+	{NULL, 0, 0, 0}
 };
 
 /** @brief valid id names for 2d entity */
 static const value_t seq2D_vals[] = {
-	{"name", V_STRING, offsetof(seq2D_t, name)},
-	{"text", V_TRANSLATION2_STRING, offsetof(seq2D_t, text)},
-	{"font", V_STRING, offsetof(seq2D_t, font)},
-	{"image", V_STRING, offsetof(seq2D_t, image)},
-	{"pos", V_POS, offsetof(seq2D_t, pos)},
-	{"speed", V_POS, offsetof(seq2D_t, speed)},
-	{"size", V_POS, offsetof(seq2D_t, size)},
-	{"enlarge", V_POS, offsetof(seq2D_t, enlarge)},
-	{"bgcolor", V_COLOR, offsetof(seq2D_t, bgcolor)},
-	{"color", V_COLOR, offsetof(seq2D_t, color)},
-	{"fade", V_COLOR, offsetof(seq2D_t, fade)},
-	{"align", V_ALIGN, offsetof(seq2D_t, align)},
-	{"relative", V_BOOL, offsetof(seq2D_t, relativePos)},
-	{NULL, 0, 0},
+	{"name", V_STRING, offsetof(seq2D_t, name), 0},
+	{"text", V_TRANSLATION2_STRING, offsetof(seq2D_t, text), 0},
+	{"font", V_STRING, offsetof(seq2D_t, font), 0},
+	{"image", V_STRING, offsetof(seq2D_t, image), 0},
+	{"pos", V_POS, offsetof(seq2D_t, pos), MEMBER_SIZEOF(seq2D_t, pos)},
+	{"speed", V_POS, offsetof(seq2D_t, speed), MEMBER_SIZEOF(seq2D_t, speed)},
+	{"size", V_POS, offsetof(seq2D_t, size), MEMBER_SIZEOF(seq2D_t, size)},
+	{"enlarge", V_POS, offsetof(seq2D_t, enlarge), MEMBER_SIZEOF(seq2D_t, enlarge)},
+	{"bgcolor", V_COLOR, offsetof(seq2D_t, bgcolor), MEMBER_SIZEOF(seq2D_t, bgcolor)},
+	{"color", V_COLOR, offsetof(seq2D_t, color), MEMBER_SIZEOF(seq2D_t, color)},
+	{"fade", V_COLOR, offsetof(seq2D_t, fade), MEMBER_SIZEOF(seq2D_t, fade)},
+	{"align", V_ALIGN, offsetof(seq2D_t, align), MEMBER_SIZEOF(seq2D_t, align)},
+	{"relative", V_BOOL, offsetof(seq2D_t, relativePos), MEMBER_SIZEOF(seq2D_t, relativePos)},
+	{NULL, 0, 0, 0},
 };
 
 /**
@@ -552,7 +552,7 @@ int SEQ_Camera (const char *name, char *data)
 		for (vp = seqCamera_vals; vp->string; vp++)
 			if (!Q_strcmp(data, vp->string)) {
 				data += strlen(data) + 1;
-				Com_ParseValue(&seqCamera, data, vp->type, vp->ofs);
+				Com_ParseValue(&seqCamera, data, vp->type, vp->ofs, vp->size);
 				break;
 			}
 		if (!vp->string)
@@ -598,7 +598,7 @@ int SEQ_Model (const char *name, char *data)
 		for (vp = seqEnt_vals; vp->string; vp++)
 			if (!Q_strcmp(data, vp->string)) {
 				data += strlen(data) + 1;
-				Com_ParseValue(se, data, vp->type, vp->ofs);
+				Com_ParseValue(se, data, vp->type, vp->ofs, vp->size);
 				break;
 			}
 		if (!vp->string) {
@@ -657,7 +657,7 @@ int SEQ_2Dobj (const char *name, char *data)
 		for (vp = seq2D_vals; vp->string; vp++)
 			if (!Q_strcmp(data, vp->string)) {
 				data += strlen(data) + 1;
-				Com_ParseValue(s2d, data, vp->type, vp->ofs);
+				Com_ParseValue(s2d, data, vp->type, vp->ofs, vp->size);
 				break;
 			}
 		if (!vp->string)

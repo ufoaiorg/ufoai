@@ -3563,6 +3563,35 @@ static int Com_ParseConditionType (const char* conditionString, const char *toke
 	return -1;
 }
 
+/** @brief target sizes for buffer */
+static const size_t vt_sizes[V_NUM_TYPES] = {
+	0,	/* V_NULL */
+	sizeof(qboolean),	/* V_BOOL */
+	sizeof(char),	/* V_CHAR */
+	sizeof(int),	/* V_INT */
+	2 * sizeof(int),	/* V_INT2 */
+	sizeof(float),	/* V_FLOAT */
+	sizeof(vec2_t),	/* V_POS */
+	sizeof(vec3_t),	/* V_VECTOR */
+	sizeof(vec4_t),	/* V_COLOR */
+	sizeof(vec4_t),	/* V_RGBA */
+	0,	/* V_STRING */
+	0,	/* V_TRANSLATION_STRING */
+	0,	/* V_TRANSLATION2_STRING */
+	0,	/* V_LONGSTRING */
+	sizeof(void*),	/* V_POINTER */
+	sizeof(byte),	/* V_ALIGN */
+	sizeof(byte),	/* V_BLEND */
+	sizeof(byte),	/* V_STYLE */
+	sizeof(byte),	/* V_FADE */
+	sizeof(int),	/* V_SHAPE_SMALL */
+	0,	/* V_SHAPE_BIG */
+	sizeof(byte),	/* V_DMGTYPE */
+	0,	/* V_DATE */
+	0,	/* V_IF */
+	sizeof(float)	/* V_RELABS */
+};
+
 /**
  * @brief
  * @note translateable string are marked with _ at the beginning
@@ -3572,7 +3601,11 @@ static int Com_ParseConditionType (const char* conditionString, const char *toke
  * }
  * @endcode
  */
-int Com_ParseValue (void *base, char *token, int type, int ofs)
+#ifdef DEBUG
+int Com_ParseValueDebug (void *base, char *token, int type, int ofs, size_t size, const char *file, int line)
+#else
+int Com_ParseValue (void *base, char *token, int type, int ofs, size_t size)
+#endif
 {
 	byte *b;
 	char string[MAX_VAR];
@@ -3581,6 +3614,17 @@ int Com_ParseValue (void *base, char *token, int type, int ofs)
 	int x, y, w, h;
 
 	b = (byte *) base + ofs;
+
+	if (size) {
+#ifdef DEBUG
+		if (size > vt_sizes[type])
+			Com_Printf("Warning: Size mismatch: given size: %Zu, should be: %Zu. File: '%s', line: %i (type: %i)\n", size, vt_sizes[type], file, line, type);
+#endif
+		if (size < vt_sizes[type]) {
+			Sys_Error("Size mismatch: given size: %Zu, should be: %Zu. File: '%s', line: %i (type: %i)\n", size, vt_sizes[type], file, line, type);
+			return -1;
+		}
+	}
 
 	switch (type) {
 	case V_NULL:
@@ -3633,7 +3677,7 @@ int Com_ParseValue (void *base, char *token, int type, int ofs)
 		if (strstr(strstr(strstr(token, " "), " "), " ") == NULL)
 			Sys_Error("Com_ParseValue: Illegal rgba statement '%s'\n", token);
 		sscanf(token, "%i %i %i %i", &((int *) b)[0], &((int *) b)[1], &((int *) b)[2], &((int *) b)[3]);
-		return ALIGN(4);
+		return ALIGN(4 * sizeof(int));
 
 	case V_STRING:
 		Q_strncpyz((char *) b, token, MAX_VAR);

@@ -1202,7 +1202,7 @@ extern qboolean AIR_SendAircraftToMission (aircraft_t* aircraft, actMis_t* missi
 	/* if aircraft was in base, remove soldier aboard from hospital */
 	if (aircraft->status == AIR_REFUEL || aircraft->status == AIR_HOME)
 		CL_RemoveEmployeesInHospital(aircraft);
-		
+
 	/* ensure interceptAircraft IDX is set correctly */
 	gd.interceptAircraft = aircraft->idx;
 
@@ -1227,30 +1227,19 @@ extern qboolean AIR_SendAircraftToMission (aircraft_t* aircraft, actMis_t* missi
 
 /** @brief Valid aircraft items (craftitem) definition values from script files. */
 static const value_t aircraftitems_vals[] = {
-	{"tech", V_TRANSLATION_STRING, offsetof(aircraftItem_t, tech)}
-	,
-	{"speed", V_FLOAT, offsetof(aircraftItem_t, speed)}
-	,
-	{"price", V_INT, offsetof(aircraftItem_t, price)}
-	,
-	{"shield", V_RELABS, offsetof(aircraftItem_t, shield)}
-	,
-	{"wrange", V_INT, offsetof(aircraftItem_t, weaponRange)}
-	,
-	{"range", V_RELABS, offsetof(aircraftItem_t, range)}
-	,
-	{"damage", V_INT, offsetof(aircraftItem_t, damage)}
-	,
-	{"accuracy", V_INT, offsetof(aircraftItem_t, accuracy)}
-	,
-	{"ecm", V_RELABS, offsetof(aircraftItem_t, ecm)}
-	,
-	{"weight", V_STRING, offsetof(aircraftItem_t, weight)}
-	,
-	{"weapon", V_STRING, offsetof(aircraftItem_t, weapon)}
-	,
+	{"tech", V_TRANSLATION_STRING, offsetof(aircraftItem_t, tech), 0},
+	{"speed", V_FLOAT, offsetof(aircraftItem_t, speed), MEMBER_SIZEOF(aircraftItem_t, speed)},
+	{"price", V_INT, offsetof(aircraftItem_t, price), MEMBER_SIZEOF(aircraftItem_t, price)},
+	{"shield", V_RELABS, offsetof(aircraftItem_t, shield), MEMBER_SIZEOF(aircraftItem_t, shield)},
+	{"wrange", V_INT, offsetof(aircraftItem_t, weaponRange), MEMBER_SIZEOF(aircraftItem_t, weaponRange)},
+	{"range", V_RELABS, offsetof(aircraftItem_t, range), MEMBER_SIZEOF(aircraftItem_t, range)},
+	{"damage", V_INT, offsetof(aircraftItem_t, damage), MEMBER_SIZEOF(aircraftItem_t, damage)},
+	{"accuracy", V_INT, offsetof(aircraftItem_t, accuracy), MEMBER_SIZEOF(aircraftItem_t, accuracy)},
+	{"ecm", V_RELABS, offsetof(aircraftItem_t, ecm), MEMBER_SIZEOF(aircraftItem_t, ecm)},
+	{"weight", V_STRING, offsetof(aircraftItem_t, weight), 0},
+	{"weapon", V_STRING, offsetof(aircraftItem_t, weapon), 0},
 
-	{NULL, 0, 0}
+	{NULL, 0, 0, 0}
 };
 
 /**
@@ -1320,7 +1309,7 @@ extern void AII_ParseAircraftItem (const char *name, char **text)
 					if (!*text)
 						return;
 
-					Com_ParseValue(airItem, token, vp->type, vp->ofs);
+					Com_ParseValue(airItem, token, vp->type, vp->ofs, vp->size);
 					break;
 				}
 			}
@@ -1334,54 +1323,34 @@ extern void AII_ParseAircraftItem (const char *name, char **text)
 
 /** @brief Valid aircraft definition values from script files. */
 static const value_t aircraft_vals[] = {
-	{"name", V_TRANSLATION_STRING, offsetof(aircraft_t, name)}
-	,
-	{"shortname", V_TRANSLATION_STRING, offsetof(aircraft_t, shortname)}
-	,
-	{"speed", V_FLOAT, offsetof(aircraft_t, speed)}
-	,
-	{"size", V_INT, offsetof(aircraft_t, size)}
-	,
-	{"weight", V_INT, offsetof(aircraft_t, weight)}
-	,
-	{"fuel", V_INT, offsetof(aircraft_t, fuel)}
-	,
-	{"fuelsize", V_INT, offsetof(aircraft_t, fuelSize)}
-	,
-	{"angles", V_VECTOR, offsetof(aircraft_t, angles)}
-	,
-	{"center", V_VECTOR, offsetof(aircraft_t, center)}
-	,
-	{"scale", V_VECTOR, offsetof(aircraft_t, scale)}
-	,
-	{"angles_equip", V_VECTOR, offsetof(aircraft_t, anglesEquip)}
-	,
-	{"center_equip", V_VECTOR, offsetof(aircraft_t, centerEquip)}
-	,
-	{"scale_equip", V_VECTOR, offsetof(aircraft_t, scaleEquip)}
-	,
-	{"image", V_STRING, offsetof(aircraft_t, image)}
-	,
+	{"name", V_TRANSLATION_STRING, offsetof(aircraft_t, name), 0},
+	{"shortname", V_TRANSLATION_STRING, offsetof(aircraft_t, shortname), 0},
+	{"speed", V_FLOAT, offsetof(aircraft_t, speed), MEMBER_SIZEOF(aircraft_t, speed)},
+	{"size", V_INT, offsetof(aircraft_t, size), MEMBER_SIZEOF(aircraft_t, size)},
+	{"weight", V_INT, offsetof(aircraft_t, weight), MEMBER_SIZEOF(aircraft_t, weight)},
+	{"fuel", V_INT, offsetof(aircraft_t, fuel), MEMBER_SIZEOF(aircraft_t, fuel)},
+	{"fuelsize", V_INT, offsetof(aircraft_t, fuelSize), MEMBER_SIZEOF(aircraft_t, fuelSize)},
+	{"angles", V_VECTOR, offsetof(aircraft_t, angles), MEMBER_SIZEOF(aircraft_t, angles)},
+	{"center", V_VECTOR, offsetof(aircraft_t, center), MEMBER_SIZEOF(aircraft_t, center)},
+	{"scale", V_VECTOR, offsetof(aircraft_t, scale), MEMBER_SIZEOF(aircraft_t, scale)},
+	{"angles_equip", V_VECTOR, offsetof(aircraft_t, anglesEquip), MEMBER_SIZEOF(aircraft_t, anglesEquip)},
+	{"center_equip", V_VECTOR, offsetof(aircraft_t, centerEquip), MEMBER_SIZEOF(aircraft_t, centerEquip)},
+	{"scale_equip", V_VECTOR, offsetof(aircraft_t, scaleEquip), MEMBER_SIZEOF(aircraft_t, scaleEquip)},
+	{"image", V_STRING, offsetof(aircraft_t, image), 0},
 
 	/* pointer to technology_t */
-	{"weapon", V_STRING, offsetof(aircraft_t, weapon_string)}
-	,
-	{"shield", V_STRING, offsetof(aircraft_t, shield_string)}
-	,
-	{"item", V_STRING, offsetof(aircraft_t, item_string)}
-	,
+	{"weapon", V_STRING, offsetof(aircraft_t, weapon_string), 0},
+	{"shield", V_STRING, offsetof(aircraft_t, shield_string), 0},
+	{"item", V_STRING, offsetof(aircraft_t, item_string), 0},
 
-	{"model", V_STRING, offsetof(aircraft_t, model)}
-	,
+	{"model", V_STRING, offsetof(aircraft_t, model), 0},
 	/* price for selling/buying */
-	{"price", V_INT, offsetof(aircraft_t, price)}
-	,
+	{"price", V_INT, offsetof(aircraft_t, price), MEMBER_SIZEOF(aircraft_t, price)},
 	/* this is needed to let the buy and sell screen look for the needed building */
 	/* to place the aircraft in */
-	{"building", V_STRING, offsetof(aircraft_t, building)}
-	,
+	{"building", V_STRING, offsetof(aircraft_t, building), 0},
 
-	{NULL, 0, 0}
+	{NULL, 0, 0, 0}
 };
 
 /**
@@ -1437,7 +1406,7 @@ extern void AIR_ParseAircraft (const char *name, char **text)
 				if (!*text)
 					return;
 
-				Com_ParseValue(air_samp, token, vp->type, vp->ofs);
+				Com_ParseValue(air_samp, token, vp->type, vp->ofs, vp->size);
 				break;
 			}
 

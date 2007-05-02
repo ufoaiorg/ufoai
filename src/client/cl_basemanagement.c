@@ -164,31 +164,31 @@ static void B_ResetBuildingCurrent_f (void)
  * to the appropriate values in the corresponding struct
  */
 static const value_t valid_vars[] = {
-	{"map_name", V_STRING, offsetof(building_t, mapPart)},	/**< Name of the map file for generating basemap. */
-	{"more_than_one", V_BOOL, offsetof(building_t, moreThanOne)},	/**< Is the building allowed to be build more the one time? */
-	{"name", V_TRANSLATION_STRING, offsetof(building_t, name)},	/**< The displayed building name. */
-	{"pedia", V_STRING, offsetof(building_t, pedia)},	/**< The pedia-id string for the associated pedia entry. */
-	{"status", V_INT, offsetof(building_t, buildingStatus)},	/**< The current status of the building. */
-	{"image", V_STRING, offsetof(building_t, image)},	/**< Identifies the image for the building. */
-	{"visible", V_BOOL, offsetof(building_t, visible)}, /**< Determines whether a building should be listed in the construction list. Set the first part of a building to 1 all others to 0 otherwise all building-parts will be on the list */
-	{"needs", V_STRING, offsetof(building_t, needs)},	/**<  For buildings with more than one part; the other parts of the building needed.*/
-	{"fixcosts", V_FLOAT, offsetof(building_t, fixCosts)},	/**< Cost to build. */
-	{"varcosts", V_FLOAT, offsetof(building_t, varCosts)},	/**< Costs that will come up by using the building. */
-	{"build_time", V_INT, offsetof(building_t, buildTime)},	/**< How many days it takes to construct the building. */
-	{"max_employees", V_INT, offsetof(building_t, maxEmployees)},	/**< How many employees to hire on construction in the first base. */
-	{"capacity", V_INT, offsetof(building_t, capacity)},	/**< A size value that is used by many buldings in a different way. */
+	{"map_name", V_STRING, offsetof(building_t, mapPart), 0},	/**< Name of the map file for generating basemap. */
+	{"more_than_one", V_BOOL, offsetof(building_t, moreThanOne), MEMBER_SIZEOF(building_t, moreThanOne)},	/**< Is the building allowed to be build more the one time? */
+	{"name", V_TRANSLATION_STRING, offsetof(building_t, name), 0},	/**< The displayed building name. */
+	{"pedia", V_STRING, offsetof(building_t, pedia), 0},	/**< The pedia-id string for the associated pedia entry. */
+	{"status", V_INT, offsetof(building_t, buildingStatus), MEMBER_SIZEOF(building_t, buildingStatus)},	/**< The current status of the building. */
+	{"image", V_STRING, offsetof(building_t, image), 0},	/**< Identifies the image for the building. */
+	{"visible", V_BOOL, offsetof(building_t, visible), MEMBER_SIZEOF(building_t, visible)}, /**< Determines whether a building should be listed in the construction list. Set the first part of a building to 1 all others to 0 otherwise all building-parts will be on the list */
+	{"needs", V_STRING, offsetof(building_t, needs), 0},	/**<  For buildings with more than one part; the other parts of the building needed.*/
+	{"fixcosts", V_FLOAT, offsetof(building_t, fixCosts), MEMBER_SIZEOF(building_t, fixCosts)},	/**< Cost to build. */
+	{"varcosts", V_FLOAT, offsetof(building_t, varCosts), MEMBER_SIZEOF(building_t, varCosts)},	/**< Costs that will come up by using the building. */
+	{"build_time", V_INT, offsetof(building_t, buildTime), MEMBER_SIZEOF(building_t, buildTime)},	/**< How many days it takes to construct the building. */
+	{"max_employees", V_INT, offsetof(building_t, maxEmployees), MEMBER_SIZEOF(building_t, maxEmployees)},	/**< How many employees to hire on construction in the first base. */
+	{"capacity", V_INT, offsetof(building_t, capacity), MEMBER_SIZEOF(building_t, capacity)},	/**< A size value that is used by many buldings in a different way. */
 
 	/*event handler functions */
-	{"onconstruct", V_STRING, offsetof(building_t, onConstruct)}, /**< Event handler. */
-	{"onattack", V_STRING, offsetof(building_t, onAttack)}, /**< Event handler. */
-	{"ondestroy", V_STRING, offsetof(building_t, onDestroy)}, /**< Event handler. */
-	{"onupgrade", V_STRING, offsetof(building_t, onUpgrade)}, /**< Event handler. */
-	{"onrepair", V_STRING, offsetof(building_t, onRepair)}, /**< Event handler. */
-	{"onclick", V_STRING, offsetof(building_t, onClick)}, /**< Event handler. */
-	{"pos", V_POS, offsetof(building_t, pos)}, /**< Place of a building. Needed for flag autobuild */
-	{"autobuild", V_BOOL, offsetof(building_t, autobuild)}, /**< Automatically construct this building when a base is set up. Must also set the pos-flag. */
-	{"firstbase", V_BOOL, offsetof(building_t, firstbase)}, /**< Automatically construct this building for the first base you build. Must also set the pos-flag. */
-	{NULL, 0, 0}
+	{"onconstruct", V_STRING, offsetof(building_t, onConstruct), 0}, /**< Event handler. */
+	{"onattack", V_STRING, offsetof(building_t, onAttack), 0}, /**< Event handler. */
+	{"ondestroy", V_STRING, offsetof(building_t, onDestroy), 0}, /**< Event handler. */
+	{"onupgrade", V_STRING, offsetof(building_t, onUpgrade), 0}, /**< Event handler. */
+	{"onrepair", V_STRING, offsetof(building_t, onRepair), 0}, /**< Event handler. */
+	{"onclick", V_STRING, offsetof(building_t, onClick), 0}, /**< Event handler. */
+	{"pos", V_POS, offsetof(building_t, pos), MEMBER_SIZEOF(building_t, pos)}, /**< Place of a building. Needed for flag autobuild */
+	{"autobuild", V_BOOL, offsetof(building_t, autobuild), MEMBER_SIZEOF(building_t, autobuild)}, /**< Automatically construct this building when a base is set up. Must also set the pos-flag. */
+	{"firstbase", V_BOOL, offsetof(building_t, firstbase), MEMBER_SIZEOF(building_t, firstbase)}, /**< Automatically construct this building for the first base you build. Must also set the pos-flag. */
+	{NULL, 0, 0, 0}
 };
 
 /**
@@ -1117,7 +1117,7 @@ extern void B_ParseBuildings (const char *name, char **text, qboolean link)
 	building_t *building = NULL;
 	building_t *dependsBuilding = NULL;
 	technology_t *tech_link = NULL;
-	const value_t *edp = NULL;
+	const value_t *vp = NULL;
 	const char *errhead = "B_ParseBuildings: unexpected end of file (names ";
 	char *token = NULL;
 #if 0
@@ -1206,19 +1206,19 @@ extern void B_ParseBuildings (const char *name, char **text, qboolean link)
 					if (!*text)
 						return;
 				} else {
-				for (edp = valid_vars; edp->string; edp++)
-					if (!Q_strncmp(token, edp->string, sizeof(edp->string))) {
+				for (vp = valid_vars; vp->string; vp++)
+					if (!Q_strncmp(token, vp->string, sizeof(vp->string))) {
 						/* found a definition */
 						token = COM_EParse(text, errhead, name);
 						if (!*text)
 							return;
 
-						Com_ParseValue(building, token, edp->type, edp->ofs);
+						Com_ParseValue(building, token, vp->type, vp->ofs, vp->size);
 						break;
 					}
 				}
 
-			if (!edp->string)
+			if (!vp->string)
 				Com_Printf("B_ParseBuildings: unknown token \"%s\" ignored (building %s)\n", token, name);
 
 		} while (*text);
