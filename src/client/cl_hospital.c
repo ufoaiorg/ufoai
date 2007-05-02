@@ -100,14 +100,15 @@ void HOS_CheckRemovalFromEmployeeList (employee_t* employee)
 /**
  * @brief Remove dead employees from employeesHealingInMissionList
  */
-void HOS_RemoveDeadEmployees(void)
+void HOS_RemoveDeadEmployees (void)
 {
 	int i = 0, j = 0;
 	int type;
-	employee_t* employee;
+	employee_t* employee = NULL;
 	qboolean test = qtrue;
-	
+
 	for (; i < employeesHealingInMissionListCount; i++) {
+		test = qtrue;
 		type = employeesHealingInMissionList[i]->type;
 		for (j = 0; j < gd.numEmployees[type]; j++) {
 			employee = &gd.employees[type][j];
@@ -435,19 +436,19 @@ static void HGS_StartHealing_f (void)
 		memset(popupText, 0, sizeof(popupText));
 		/* No room for employee. */
 		if (currentEmployeeInHospital->type == EMPL_SOLDIER) {
-			Q_strcat(popupText, va("%s %s", 
+			Q_strcat(popupText, va("%s %s",
 			_(gd.ranks[currentEmployeeInHospital->chr.rank].shortname),
-			currentEmployeeInHospital->chr.name), 
+			currentEmployeeInHospital->chr.name),
 			sizeof(popupText));
 		} else {
-			Q_strcat(popupText, va("%s %s", 
-			E_GetEmployeeString(currentEmployeeInHospital->type), 
+			Q_strcat(popupText, va("%s %s",
+			E_GetEmployeeString(currentEmployeeInHospital->type),
 			currentEmployeeInHospital->chr.name),
 			sizeof(popupText));
 		}
 		Q_strcat(popupText, _(" needs to be placed in hospital,\nbut there is not enough room!\n\nBuild more hospitals.\n"),
 		sizeof(popupText));
-		
+
 		MN_Popup(_("Not enough hospital space"), popupText);
 		return;
 	}
@@ -471,7 +472,7 @@ extern void CL_RemoveEmployeesInHospital (aircraft_t *aircraft)
 		if (aircraft->teamIdxs[i] > -1) {
 			for (j = 0; j < employeesInHospitalListCount; j++) {
 				employee = employeesInHospitalList[j];
-				if ((employee->type == EMPL_SOLDIER) && (aircraft->teamIdxs[i] == employee->idx)) { 
+				if ((employee->type == EMPL_SOLDIER) && (aircraft->teamIdxs[i] == employee->idx)) {
 					HOS_AddToInMissionEmployeeList(employee);
 					if (HOS_RemoveFromList (employee, employeesInHospitalList, employeesInHospitalListCount))
 						employeesInHospitalListCount--;
@@ -497,7 +498,7 @@ extern void CL_ReaddEmployeesInHospital (aircraft_t *aircraft)
 		if (aircraft->teamIdxs[i] > -1) {
 			for (j = 0; j < employeesHealingInMissionListCount; j++) {
 				employee = employeesHealingInMissionList[j];
-				if ((employee->type == EMPL_SOLDIER) && (aircraft->teamIdxs[i] == employee->idx)) { 
+				if ((employee->type == EMPL_SOLDIER) && (aircraft->teamIdxs[i] == employee->idx)) {
 					/* Soldier goes back to hospital only if he hasn't recover all his HP during mission (medikit) */
 					if (employee->chr.HP < employee->chr.maxHP)
 						HOS_AddToEmployeeList(aircraft->homebase, employee);
