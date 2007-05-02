@@ -82,7 +82,7 @@ const char *ev_format[] =
 	"s",				/* EV_ENT_PERISH */
 	"sss",				/* EV_ENT_EDICT */
 
-	"!sbbbgbbbssbsbbbs",	/* EV_ACTOR_APPEAR; beware of the '!' */
+	"!sbbbbgbbbssbsbbbs",	/* EV_ACTOR_APPEAR; beware of the '!' */
 	"s",				/* EV_ACTOR_START_MOVE */
 	"sb",				/* EV_ACTOR_TURN */
 	"!s*",				/* EV_ACTOR_MOVE; beware of the '!' */
@@ -783,7 +783,7 @@ static void CL_ActorAppear (sizebuf_t *sb)
 
 	/* get the info */
 	MSG_ReadFormat(sb, ev_format[EV_ACTOR_APPEAR],
-				&le->team, &le->teamDesc, &le->pnum, &le->pos,
+				&le->team, &le->teamDesc, &le->category, &le->pnum, &le->pos,
 				&le->dir, &le->right, &le->left,
 				&modelnum1, &modelnum2, &le->skinnum,
 				&le->state, &le->fieldSize,
