@@ -3917,6 +3917,11 @@ void MN_ParseMenu (const char *name, char **text)
 		return;
 	}
 
+	if (numMenus >= MAX_MENUS) {
+		Sys_Error("MN_ParseMenu: max menus exceeded (%i) - ignore '%s'\n", MAX_MENUS, name);
+		return;	/* never reached */
+	}
+
 	/* initialize the menu */
 	menu = &menus[numMenus++];
 	memset(menu, 0, sizeof(menu_t));
@@ -3932,6 +3937,8 @@ void MN_ParseMenu (const char *name, char **text)
 		token = COM_Parse(text);
 		Com_DPrintf("MN_ParseMenus: menu \"%s\" inheriting menu \"%s\"\n", name, token);
 		superMenu = MN_GetMenu(token);
+		if (!superMenu)
+			Sys_Error("MN_ParseMenu: menu '%s' can't inherit from menu '%s' - because '%s' was not found\n", name, token, token);
 		memcpy(menu, superMenu, sizeof(menu_t));
 		Q_strncpyz(menu->name, name, sizeof(menu->name));
 		token = COM_Parse(text);
