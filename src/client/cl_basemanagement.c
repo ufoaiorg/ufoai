@@ -580,6 +580,9 @@ extern void B_SetUpBase (base_t* base)
 	/* if no autobuild, set up zero build time for the first base */
 	if (gd.numBases == 1 && !cl_start_buildings->value)
 		gd.instant_build = 1;
+	/* Set up default buy/sell factors for this base. */
+	base->sellfactor = 5;
+	base->buyfactor = 1;
 }
 
 /**
@@ -2784,6 +2787,10 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
 			MSG_WriteByte(sb, b->capacities[k].cur);
 			MSG_WriteByte(sb, b->capacities[k].max);
 		}
+
+		/* Buy/Sell factors. */
+		MSG_WriteByte(sb, b->buyfactor);
+		MSG_WriteByte(sb, b->sellfactor);
 	}
 	return qtrue;
 }
@@ -2935,6 +2942,10 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 				b->capacities[k].cur = MSG_ReadByte(sb);
 				b->capacities[k].max = MSG_ReadByte(sb);
 			}
+
+			/* Buy/Sell factors. */
+			b->buyfactor = MSG_ReadByte(sb);
+			b->sellfactor = MSG_ReadByte(sb);
 		}
 
 		/* clear the mess of stray loaded pointers */

@@ -905,6 +905,87 @@ menu buy
 	}
 
 	// ==================
+	// factors
+	// ==================
+
+	string txt_buyfactor
+	{
+		string 	"_Buy factor:"
+		pos		"650 120"
+		font		f_small
+		align		ul
+	}
+
+	string txt_bf_val
+	{
+		font	"f_small"
+		string	"*cvar mn_bfactor"
+		pos		"750 120"
+		align	ur
+	}
+
+	pic bt_buydecrease
+	{
+		tooltip	"_Decrease buy factor"
+		image		menu/buttons_small
+		pos		"760 120"
+		mousefx 	true
+		texl		"0 0"
+		texh	"16 16"
+		click	{ cmd "buy_factor_dec 0" }
+	}
+
+	pic bt_buyincrease
+	{
+		tooltip	"_Increase buy factor"
+		image		menu/buttons_small
+		pos		"770 120"
+		mousefx 	true
+		texl		"16 0"
+		texh	"32 16"
+		click	{ cmd "buy_factor_inc 0" }
+	}
+
+	string txt_sellfactor
+	{
+		string 	"_Sell factor:"
+		pos		"810 120"
+		font		f_small
+		align		ul
+	}
+
+	string txt_sf_val
+	{
+		font	"f_small"
+		string	"*cvar mn_sfactor"
+		pos		"910 120"
+		align	ur
+	}
+
+	pic bt_selldecrease
+	{
+		tooltip	"_Decrease sell factor"
+		image		menu/buttons_small
+		pos		"920 120"
+		mousefx 	true
+		texl		"0 0"
+		texh	"16 16"
+		click	{ cmd "buy_factor_dec 1" }
+	}
+
+	pic bt_sellincrease
+	{
+		tooltip	"_Increase sell factor"
+		image		menu/buttons_small
+		pos		"930 120"
+		mousefx 	true
+		texl		"16 0"
+		texh	"32 16"
+		click	{ cmd "buy_factor_inc 1" }
+	}
+
+
+	// ==================
 	// buttons
 	// ==================
 

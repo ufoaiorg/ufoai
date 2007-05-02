@@ -39,6 +39,9 @@ static int buyListScrollPos;	/**< start of the buylist index - due to scrolling 
 /** @brief Max amount of aircraft type calculated for the market. */
 static int MAX_AIRCRAFT_SUPPLY = 8;
 
+/** @brief Max values for Buy/Sell factors (base->buyfactor, base->sellfactor). */
+static int MAX_BS_FACTORS = 10;
+
 void UP_AircraftDescription(technology_t* t);
 
 /**
@@ -197,8 +200,10 @@ static void BS_MarketClick_f (void)
 
 	if (buyCategory == BUY_AIRCRAFT)
 		BS_MarketAircraftDescription(buyList[num]);
-	else if (buyCategory != -1)
+	else if (buyCategory != -1) {
 		CL_ItemDescription(buyList[num]);
+		Cvar_SetValue("mn_bs_current", buyList[num]);
+	}
 }
 
 /**
@@ -356,12 +361,21 @@ static void BS_BuyType_f (void)
 		Cbuf_AddText(va("buy_hide%i\n", j));
 	}
 
+	/* Set up Buy/Sell factors. */
+	Cvar_SetValue("mn_bfactor", baseCurrent->buyfactor);
+	Cvar_SetValue("mn_sfactor", baseCurrent->sellfactor);
+
 	/* select first item */
 	if (buyListLength) {
 		if (buyCategory == BUY_AIRCRAFT)
 			BS_MarketAircraftDescription(buyList[0]);
-		else if (buyCategory != -1)
-			CL_ItemDescription(buyList[0]);
+		else if (buyCategory != -1) {
+			/* Select current item or first one. */
+			if (Cvar_VariableInteger("mn_bs_current") > 0)
+				CL_ItemDescription(Cvar_VariableInteger("mn_bs_current"));
+			else
+				CL_ItemDescription(buyList[0]);
+		}
 	} else {
 		/* reset description */
 		Cvar_Set("mn_itemname", "");
@@ -381,7 +395,7 @@ static void BS_BuyType_f (void)
  */
 static void BS_BuyItem_f (void)
 {
-	int num, item;
+	int num, item, i;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: mn_buy <num>\n");
@@ -400,15 +414,20 @@ static void BS_BuyItem_f (void)
 	Cbuf_AddText(va("market_click %i\n", num + buyListScrollPos));
 
 	item = buyList[num + buyListScrollPos];
+	Cvar_SetValue("mn_bs_current", item);
 	CL_ItemDescription(item);
 	Com_DPrintf("BS_BuyItem_f: item %i\n", item);
-	if (ccs.credits >= ccs.eMarket.ask[item] && ccs.eMarket.num[item]) {
-		/* reinit the menu */
-		baseCurrent->storage.num[item]++;
-		ccs.eMarket.num[item]--;
-		Cmd_BufClear();
-		BS_BuyType_f();
-		CL_UpdateCredits(ccs.credits - ccs.eMarket.ask[item]);
+	for (i = 0; i < baseCurrent->buyfactor; i++) {
+		if (ccs.credits >= ccs.eMarket.ask[item] && ccs.eMarket.num[item]) {
+			/* reinit the menu */
+			baseCurrent->storage.num[item]++;
+			ccs.eMarket.num[item]--;
+			Cmd_BufClear();
+			BS_BuyType_f();
+			CL_UpdateCredits(ccs.credits - ccs.eMarket.ask[item]);
+		} else {
+			break;
+		}
 	}
 }
 
@@ -420,7 +439,7 @@ static void BS_BuyItem_f (void)
  */
 static void BS_SellItem_f (void)
 {
-	int num, item;
+	int num, item, i;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: mn_sell <num>\n");
@@ -439,14 +458,19 @@ static void BS_SellItem_f (void)
 	Cbuf_AddText(va("market_click %i\n", num + buyListScrollPos));
 
 	item = buyList[num + buyListScrollPos];
+	Cvar_SetValue("mn_bs_current", item);
 	CL_ItemDescription(item);
-	if (baseCurrent->storage.num[item]) {
-		/* reinit the menu */
-		baseCurrent->storage.num[item]--;
-		ccs.eMarket.num[item]++;
-		Cmd_BufClear();
-		BS_BuyType_f();
-		CL_UpdateCredits(ccs.credits + ccs.eMarket.bid[item]);
+	for (i = 0; i < baseCurrent->sellfactor; i++) {
+		if (baseCurrent->storage.num[item]) {
+			/* reinit the menu */
+			baseCurrent->storage.num[item]--;
+			ccs.eMarket.num[item]++;
+			Cmd_BufClear();
+			BS_BuyType_f();
+			CL_UpdateCredits(ccs.credits + ccs.eMarket.bid[item]);
+		} else {
+			break;
+		}
 	}
 }
 
@@ -487,6 +511,80 @@ static void BS_Autosell_f (void)
 
 	/* Reinit the menu. */
 	Cmd_BufClear();
+	BS_BuyType_f();
+}
+
+/**
+ * @brief Increase the Buy/Sell factor.
+ * @note Command to call this: buy_factor_inc.
+ * @note call with 0 for buy, 1 for sell.
+ */
+static void BS_IncreaseFactor_f (void)
+{
+	int num;
+	
+	/* Can be called from everywhere. */
+	if (!baseCurrent || !curCampaign)
+		return;
+		
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
+		return;
+	}
+
+	num = atoi(Cmd_Argv(1));
+	
+	if (num == 0) {
+		if (baseCurrent->buyfactor >= MAX_BS_FACTORS)
+			return;
+		else
+			baseCurrent->buyfactor++;
+		Cvar_SetValue("mn_bfactor", baseCurrent->buyfactor);
+	} else {
+		if (baseCurrent->sellfactor >= MAX_BS_FACTORS)
+			return;
+		else
+			baseCurrent->sellfactor++;
+		Cvar_SetValue("mn_sfactor", baseCurrent->sellfactor);
+	}
+	/* Reinit the menu. */
+	BS_BuyType_f();
+}
+
+/**
+ * @brief Decrease the Buy/Sell factor.
+ * @note Command to call this: buy_factor_dec.
+ * @note call with 0 for buy, 1 for sell.
+ */
+static void BS_DecreaseFactor_f (void)
+{
+	int num;
+	
+	/* Can be called from everywhere. */
+	if (!baseCurrent || !curCampaign)
+		return;
+		
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <num>\n", Cmd_Argv(0));
+		return;
+	}
+
+	num = atoi(Cmd_Argv(1));
+	
+	if (num == 0) {
+		if (baseCurrent->buyfactor <= 0)
+			return;
+		else
+			baseCurrent->buyfactor--;
+		Cvar_SetValue("mn_bfactor", baseCurrent->buyfactor);
+	} else {
+		if (baseCurrent->sellfactor <= 0)
+			return;
+		else
+			baseCurrent->sellfactor--;
+		Cvar_SetValue("mn_sfactor", baseCurrent->sellfactor);
+	}
+	/* Reinit the menu. */
 	BS_BuyType_f();
 }
 
@@ -613,6 +711,8 @@ extern void BS_ResetMarket (void)
 	Cmd_AddCommand("mn_buy_aircraft", BS_BuyAircraft_f, NULL);
 	Cmd_AddCommand("mn_sell_aircraft", BS_SellAircraft_f, NULL);
 	Cmd_AddCommand("buy_autosell", BS_Autosell_f, "Enable or disable autosell option for given item.");
+	Cmd_AddCommand("buy_factor_inc", BS_IncreaseFactor_f, "Increase Buy/Sell factor for current base.");
+	Cmd_AddCommand("buy_factor_dec", BS_DecreaseFactor_f, "Decrease Buy/Sell factor for current base.");
 	buyListLength = -1;
 	buyListScrollPos = 0;
 }

@@ -213,6 +213,9 @@ typedef struct base_s {
 	character_t *curTeam[MAX_ACTIVETEAM];	/**< set in CL_GenerateEquipment_f and CL_LoadTeamMultiplayer */
 	character_t *curChr;	/**< needn't be saved */
 
+	int buyfactor;	/**< Factor for buying items in Buy/Sell menu for this base. */
+	int sellfactor;	/**< Factor for selling items in Buy/Sell menu for this base. */
+
 	int buildingToBuild;	/**< needed if there is another buildingpart to build (link to gd.buildingTypes) */
 
 	struct building_s *buildingCurrent; /**< needn't be saved */
