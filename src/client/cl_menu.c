@@ -3957,10 +3957,9 @@ void MN_ParseMenu (const char *name, char **text)
 		return;
 	}
 
-	for (i = 0; i < numMenus; i++)
-		for (node = menus[i].firstNode; node; node = node->next)
-			if (node->num >= MAX_MENUTEXTS)
-				Sys_Error("Error in menu %s - max menu num exeeded (num: %i, max: %i)", menus[i].name, node->num, MAX_MENUTEXTS);
+	for (node = menus[numNodes-1].firstNode; node; node = node->next)
+		if (node->num >= MAX_MENUTEXTS)
+			Sys_Error("Error in menu %s - max menu num exeeded (num: %i, max: %i) in node '%s'", menus[i].name, node->num, MAX_MENUTEXTS, node->name);
 
 }
 
