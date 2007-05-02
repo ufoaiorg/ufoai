@@ -3254,7 +3254,7 @@ static const value_t nation_vals[] = {
 	{"alien_friendly", V_FLOAT, offsetof(nation_t, alienFriendly), MEMBER_SIZEOF(nation_t, alienFriendly)},
 	{"soldiers", V_INT, offsetof(nation_t, soldiers), MEMBER_SIZEOF(nation_t, soldiers)},
 	{"scientists", V_INT, offsetof(nation_t, scientists), MEMBER_SIZEOF(nation_t, scientists)},
-	{"names", V_INT, offsetof(nation_t, names), MEMBER_SIZEOF(nation_t, names)},
+	{"names", V_STRING, offsetof(nation_t, names), 0},
 	{NULL, 0, 0, 0}
 };
 
@@ -3336,7 +3336,8 @@ extern void CL_ParseNations (const char *name, char **text)
 					if (!*text)
 						return;
 
-					Com_ParseValue(nation, token, vp->type, vp->ofs, vp->size);
+					if (Com_ParseValue(nation, token, vp->type, vp->ofs, vp->size) == -1)
+						Com_Printf("CL_ParseNations: Wrong size for value %s\n", vp->string);
 					break;
 				}
 
