@@ -152,6 +152,21 @@ actors german
 	}
 }
 
+actorsounds german
+{
+	female
+	{
+		hurtsound misc/newmission.wav
+		deathsound misc/newmission.wav
+	}
+        male
+        {
+                hurtsound misc/newmission.wav
+                deathsound misc/newmission.wav
+        }
+}
+
+
 //==================
 // spanish_italian
 //==================
@@ -290,6 +305,21 @@ actors spanish_italian
 		soldiers/male body head03a 0
 	}
 }
+
+actorsounds spanish_italian
+{
+	female
+	{
+		hurtsound	misc/newmission.wav
+		deathsound	misc/newmission.wav
+	}
+	male
+	{
+		hurtsound 	misc/newmission.wav
+		deathsound	misc/newmission.wav
+	}
+}
+
 
 
 //==================
@@ -432,6 +462,21 @@ actors french
 	}
 }
 
+actorsounds french
+{
+	female
+	{
+		hurtsound	misc/newmission.wav
+		deathsound	misc/newmission.wav
+	}
+	male
+	{
+		hurtsound 	misc/newmission.wav
+		deathsound	misc/newmission.wav
+	}
+}
+
+
 
 //==================
 // english_american
@@ -561,6 +606,19 @@ actors english_american
 	}
 }
 
+actorsounds english_american
+{
+	female
+	{
+		hurtsound	misc/newmission.wav
+		deathsound	misc/newmission.wav
+	}
+	male
+	{
+		hurtsound 	misc/newmission.wav
+		deathsound	misc/newmission.wav
+	}
+}
 
 //==================
 // arabic
@@ -666,6 +724,20 @@ actors arabic
 	male
 	{
 		soldiers/male body head03a 0
+	}
+}
+
+actorsounds arabic
+{
+	female
+	{
+		hurtsound	misc/newmission.wav
+		deathsound	misc/newmission.wav
+	}
+	male
+	{
+		hurtsound 	misc/newmission.wav
+		deathsound	misc/newmission.wav
 	}
 }
 
@@ -798,6 +870,19 @@ actors scandinavian
 	}
 }
 
+actorsounds scandinavian
+{
+	female
+	{
+		hurtsound	misc/newmission.wav
+		deathsound	misc/newmission.wav
+	}
+	male
+	{
+		hurtsound 	misc/newmission.wav
+		deathsound	misc/newmission.wav
+	}
+}
 
 //==================
 // russian
@@ -995,6 +1080,20 @@ actors russian
 	}
 }
 
+actorsounds russian
+{
+	female
+	{
+		hurtsound	misc/newmission.wav
+		deathsound	misc/newmission.wav
+	}
+	male
+	{
+		hurtsound 	misc/newmission.wav
+		deathsound	misc/newmission.wav
+	}
+}
+
 //==================
 // chinese
 //==================
@@ -1095,6 +1194,19 @@ actors chinese
 	}
 }
 
+actorsounds chinese
+{
+	female
+	{
+		hurtsound	misc/newmission.wav
+		deathsound	misc/newmission.wav
+	}
+	male
+	{
+		hurtsound 	misc/newmission.wav
+		deathsound	misc/newmission.wav
+	}
+}
 
 //==================
 // japanese
@@ -1194,6 +1306,19 @@ actors japanese
 	}
 }
 
+actorsounds japanese
+{
+	female
+	{
+		hurtsound	misc/newmission.wav
+		deathsound	misc/newmission.wav
+	}
+	male
+	{
+		hurtsound 	misc/newmission.wav
+		deathsound	misc/newmission.wav
+	}
+}
 
 //==================
 // african
@@ -1275,6 +1400,20 @@ actors african
 		soldiers/male body head04b 0
 		soldiers/male body head05a 0
 		soldiers/male body head05b 0
+	}
+}
+
+actorsounds african
+{
+	female
+	{
+		hurtsound	misc/newmission.wav
+		deathsound	misc/newmission.wav
+	}
+	male
+	{
+		hurtsound 	misc/newmission.wav
+		deathsound	misc/newmission.wav
 	}
 }
 

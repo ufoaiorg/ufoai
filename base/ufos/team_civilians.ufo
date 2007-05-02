@@ -71,6 +71,21 @@ actors americans
 	}
 }
 
+actorsounds americans
+{
+	female
+	{
+		hurtsound	misc/newmission.wav
+		deathsound	misc/newmission.wav
+	}
+	male
+	{
+		hurtsound 	misc/newmission.wav
+		deathsound	misc/newmission.wav
+	}
+}
+
+
 actors european
 {
 	female
@@ -111,6 +126,19 @@ actors european
 	}
 }
 
+actorsounds european
+{
+	female
+	{
+		hurtsound	misc/newmission.wav
+		deathsound	misc/newmission.wav
+	}
+	male
+	{
+		hurtsound 	misc/newmission.wav
+		deathsound	misc/newmission.wav
+	}
+}
 
 actors oriental
 {
@@ -124,6 +152,20 @@ actors oriental
 	male
 	{
 		civilians/male body02 head02 0
+	}
+}
+
+actorsounds oriental
+{
+	female
+	{
+		hurtsound	misc/newmission.wav
+		deathsound	misc/newmission.wav
+	}
+	male
+	{
+		hurtsound 	misc/newmission.wav
+		deathsound	misc/newmission.wav
 	}
 }
 
