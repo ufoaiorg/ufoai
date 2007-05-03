@@ -52,5 +52,7 @@ void TR_TransferAircraftMenu(aircraft_t* aircraft);
 void TR_TransferEnd(aircraft_t* aircraft);
 void TR_EmptyTransferCargo (aircraft_t *aircraft);
 
+void TR_Reset(void);
+
 #endif /* CLIENT_CL_TRANSFER_H */
 
