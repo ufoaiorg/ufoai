@@ -724,7 +724,7 @@ SOURCE=..\..\src\ports\win32\conproc.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\client\console.c
+SOURCE=..\..\src\client\cl_console.c
 
 !IF  "$(CFG)" == "ufo - Win32 Release"
 

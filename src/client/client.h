@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "sound.h"
 #include "cl_input.h"
 #include "cl_keys.h"
-#include "console.h"
+#include "cl_console.h"
 #include "cl_market.h"
 #include "cl_event.h"
 #ifdef HAVE_OPENAL
@@ -714,6 +714,9 @@ void CDAudio_Update(void);
 void CDAudio_Activate (qboolean active);
 void CDAudio_RandomPlay(void);
 
+/* cl_hunk.c */
+#include "cl_hunk.h"
+
 /* cl_research.c */
 #include "cl_research.h"
 
@@ -1127,8 +1130,5 @@ extern char *keybindings[K_LAST_KEY];
 
 /* os specific video functions */
 void VID_Error(int err_level, const char *fmt, ...) __attribute__((noreturn));
-
-char *CL_ClientHunkUse(const char *token, size_t size);
-void CL_ClientHunkClear(void);
 
 #endif /* CLIENT_CLIENT_H */

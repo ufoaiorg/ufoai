@@ -640,7 +640,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\client\console.c"
+				RelativePath="..\..\src\client\cl_console.c"
 				>
 			</File>
 			<File

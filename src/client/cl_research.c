@@ -623,12 +623,12 @@ static void RS_ResearchDisplayInfo (void)
 	tech = researchList[researchListPos];
 
 	/* Display laboratories limits. */
-	Com_sprintf(tmpbuf, sizeof(tmpbuf), _("Laboratory space (all/used): %i/%i"), 
+	Com_sprintf(tmpbuf, sizeof(tmpbuf), _("Laboratory space (all/used): %i/%i"),
 	baseCurrent->capacities[CAP_LABSPACE].max, baseCurrent->capacities[CAP_LABSPACE].cur);
 	Cvar_Set("mn_research_labs", tmpbuf);
 
 	/* Display scientists amounts. */
-	Com_sprintf(tmpbuf, sizeof(tmpbuf), _("Scientists (all/available): %i/%i"), 
+	Com_sprintf(tmpbuf, sizeof(tmpbuf), _("Scientists (all/available): %i/%i"),
 	E_CountHired(baseCurrent, EMPL_SCIENTIST), E_CountUnassigned(baseCurrent, EMPL_SCIENTIST));
 	Cvar_Set("mn_research_scis", tmpbuf);
 
@@ -1643,7 +1643,7 @@ extern void RS_ParseTechnologies (const char *name, char **text)
 
 							/* Set requirement-name (id). */
 							token = COM_Parse(text);
-							required_temp->id[required_temp->numLinks] = CL_ClientHunkUse(token, MAX_VAR);
+							required_temp->id[required_temp->numLinks] = CL_ClientHunkUse(token, strlen(token) + 1);
 
 							Com_DPrintf("RS_ParseTechnologies: require-tech - %s\n", required_temp->id[required_temp->numLinks]);
 
@@ -1658,7 +1658,7 @@ extern void RS_ParseTechnologies (const char *name, char **text)
 							required_temp->type[required_temp->numLinks] = RS_LINK_ITEM;
 							/* Set requirement-name (id). */
 							token = COM_Parse(text);
-							required_temp->id[required_temp->numLinks] = CL_ClientHunkUse(token, MAX_VAR);
+							required_temp->id[required_temp->numLinks] = CL_ClientHunkUse(token, strlen(token) + 1);
 							/* Set requirement-amount of item. */
 							token = COM_Parse(text);
 							required_temp->amount[required_temp->numLinks] = atoi(token);
@@ -1699,7 +1699,7 @@ extern void RS_ParseTechnologies (const char *name, char **text)
 							}
 							/* Set requirement-name (id). */
 							token = COM_Parse(text);
-							required_temp->id[required_temp->numLinks] = CL_ClientHunkUse(token, MAX_VAR);
+							required_temp->id[required_temp->numLinks] = CL_ClientHunkUse(token, strlen(token) + 1);
 							/* Set requirement-amount of item. */
 							token = COM_Parse(text);
 							required_temp->amount[required_temp->numLinks] = atoi(token);

@@ -210,7 +210,7 @@
 			<Option link="0" />
 			<Option target="default" />
 		</Unit>
-		<Unit filename="..\..\src\client\console.c">
+		<Unit filename="..\..\src\client\cl_console.c">
 			<Option compilerVar="CC" />
 			<Option target="default" />
 		</Unit>

@@ -1,5 +1,5 @@
 /**
- * @file console.h
+ * @file cl_console.h
  * @brief Console header file.
  */
 
@@ -26,8 +26,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#ifndef CLIENT_CONSOLE_H
-#define CLIENT_CONSOLE_H
+#ifndef CLIENT_CL_CONSOLE_H
+#define CLIENT_CL_CONSOLE_H
 
 #define	NUM_CON_TIMES 8
 
@@ -71,4 +71,4 @@ void Con_ToggleConsole_f(void);
 void Con_SaveConsoleHistory(const char* path);
 void Con_LoadConsoleHistory(const char* path);
 
-#endif /* CLIENT_CONSOLE_H */
+#endif /* CLIENT_CL_CONSOLE_H */

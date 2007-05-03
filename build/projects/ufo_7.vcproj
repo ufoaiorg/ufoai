@@ -418,7 +418,7 @@
 				RelativePath="ports\win32\conproc.c">
 			</File>
 			<File
-				RelativePath="client\console.c">
+				RelativePath="client\cl_console.c">
 			</File>
 			<File
 				RelativePath="qcommon\ioapi.c">

@@ -2624,7 +2624,7 @@ extern void CL_ParseMission (const char *name, char **text)
 	const char *errhead = "CL_ParseMission: unexpected end of file (mission ";
 	mission_t *ms;
 	const value_t *vp;
-	char *token, *mtp;
+	char *token;
 	int i;
 
 	/* search for missions with same name */
@@ -2676,13 +2676,7 @@ extern void CL_ParseMission (const char *name, char **text)
 				else {
 					if (*token == '_')
 						token++;
-					ms->text = CL_ClientHunkUse(_(token), 128);
-					mtp = ms->text;
-					do {
-						mtp = strchr(mtp, '\\');
-						if (mtp)
-							*mtp = '\n';
-					} while (mtp);
+					ms->text = CL_ClientHunkUse(_(token), 128); /* FIXME */
 				}
 				break;
 			}
@@ -2739,7 +2733,7 @@ extern void CL_ParseResearchedCampaignItems (const char *name, char **text)
 			if (!Q_strncmp(token, gd.technologies[i].id, MAX_VAR)) {
 				gd.technologies[i].mailSent = MAILSENT_FINISHED;
 				gd.technologies[i].markResearched.markOnly[gd.technologies[i].markResearched.numDefinitions] = qtrue;
-				gd.technologies[i].markResearched.campaign[gd.technologies[i].markResearched.numDefinitions] = CL_ClientHunkUse(name, MAX_VAR);
+				gd.technologies[i].markResearched.campaign[gd.technologies[i].markResearched.numDefinitions] = CL_ClientHunkUse(name, strlen(name) + 1);
 				gd.technologies[i].markResearched.numDefinitions++;
 				Com_DPrintf("...tech %s\n", gd.technologies[i].id);
 				break;

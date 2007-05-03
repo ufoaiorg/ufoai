@@ -16,6 +16,7 @@ CLIENT_SRCS = \
 	client/cl_map.c \
 	client/cl_aircraft.c \
 	client/cl_fx.c \
+	client/cl_hunk.c \
 	client/cl_input.c \
 	client/cl_le.c \
 	client/cl_main.c \
@@ -30,7 +31,7 @@ CLIENT_SRCS = \
 	client/cl_inventory.c \
 	client/cl_ufopedia.c \
 	client/cl_view.c \
-	client/console.c \
+	client/cl_console.c \
 	client/cl_keys.c \
 	client/snd_ref.c \
 	client/snd_mem.c \

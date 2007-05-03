@@ -38,7 +38,6 @@ cvar_t *noipx;
 cvar_t *cl_isometric;
 cvar_t *cl_stereo_separation;
 cvar_t *cl_stereo;
-cvar_t* cl_hunkmegs;
 
 cvar_t *rcon_client_password;
 cvar_t *rcon_address;
@@ -2374,70 +2373,6 @@ extern void CL_Frame (int msec)
 			}
 		}
 	}
-}
-
-/** @brief don't allow external access to this hunk */
-static char *clHunkData;
-static char *clHunkPointerPos;
-
-/**
- * @brief Inits some client hunk mem to store parsed data
- * @sa CL_ClientHunkShutdown
- * @sa CL_ClientHunkUse
- * @sa CL_Init
- */
-static void CL_ClientHunkInit (void)
-{
-	cl_hunkmegs = Cvar_Get("cl_hunkmegs", "1", 0, "Hunk megabytes for client parsed static data");
-
-	clHunkData = malloc(cl_hunkmegs->integer * 1024 * 1024 * sizeof(char));
-	if (!clHunkData)
-		Sys_Error("Could not allocate client hunk with %i megabytes\n", cl_hunkmegs->integer);
-	clHunkPointerPos = clHunkData;
-	Com_Printf("inited client hunk data with %i megabytes\n", cl_hunkmegs->integer);
-}
-
-/**
- * @brief Clears the client hunk and reset the hunk to zero
- * @sa CL_ClientHunkInit
- * @sa CL_ClientHunkUse
- * @sa CL_ResetSinglePlayerData
- */
-extern void CL_ClientHunkClear (void)
-{
-	memset(clHunkData, 0, cl_hunkmegs->integer * 1024 * 1024 * sizeof(char));
-	clHunkPointerPos = clHunkData;
-}
-
-/**
- * @brief Frees the client hunk
- * @sa CL_ClientHunkInit
- * @sa CL_ClientHunkUse
- * @sa CL_Shutdown
- */
-static void CL_ClientHunkShutdown (void)
-{
-	free(clHunkData);
-}
-
-/**
- * @brief
- * @sa CL_ClientHunkInit
- * @sa CL_ClientHunkShutdown
- * @sa CL_ParseScriptFirst
- * @sa CL_ParseScriptSecond
- * @note Everything that gets parsed in CL_ParseScriptFirst or
- * CL_ParseScriptSecond may use the hunk - it's cleared on every restart or
- * reload of a singleplayer game
- */
-extern char *CL_ClientHunkUse (const char *token, size_t size)
-{
-	char *tokenPos = clHunkPointerPos;
-	if (clHunkPointerPos + size > clHunkData + (cl_hunkmegs->integer * 1024 * 1024))
-		Sys_Error("Increase the cl_hunkmegs value\n");
-	Q_strncpyz(clHunkPointerPos, token, size);
-	clHunkPointerPos = clHunkPointerPos + strlen(clHunkPointerPos) + 1;
-	return tokenPos;
 }
 
 /**

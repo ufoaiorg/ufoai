@@ -240,7 +240,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit22]
-FileName=..\..\src\client\console.c
+FileName=..\..\src\client\cl_console.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
