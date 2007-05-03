@@ -164,34 +164,34 @@ menu hospital
 	confunc hospitalheal26 { *hos_item26 color "0 0 1 1" }
 	confunc hospitalheal27 { *hos_item27 color "0 0 1 1" }
 
-	string hos_item0	{ string "*cvar mn_hos_item0"		pos "30 30"		color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 0" } }
-	string hos_item1	{ string "*cvar mn_hos_item1"		pos "30 50"		color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 1" } }
-	string hos_item2	{ string "*cvar mn_hos_item2"		pos "30 70"		color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 2" } }
-	string hos_item3	{ string "*cvar mn_hos_item3"		pos "30 90"		color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 3" } }
-	string hos_item4	{ string "*cvar mn_hos_item4"		pos "30 110"	color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 4" } }
-	string hos_item5	{ string "*cvar mn_hos_item5"		pos "30 130"	color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 5" } }
-	string hos_item6	{ string "*cvar mn_hos_item6"		pos "30 150"	color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 6" } }
-	string hos_item7	{ string "*cvar mn_hos_item7"		pos "30 170"	color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 7" } }
-	string hos_item8	{ string "*cvar mn_hos_item8"		pos "30 190"	color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 8" } }
-	string hos_item9	{ string "*cvar mn_hos_item9"		pos "30 210"	color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 9" } }
-	string hos_item10	{ string "*cvar mn_hos_item10"	pos "30 230"	color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 10" } }
-	string hos_item11	{ string "*cvar mn_hos_item11"	pos "30 250"	color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 11" } }
-	string hos_item12	{ string "*cvar mn_hos_item12"	pos "30 270"	color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 12" } }
-	string hos_item13	{ string "*cvar mn_hos_item13"	pos "30 290"	color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 13" } }
-	string hos_item14	{ string "*cvar mn_hos_item14"	pos "30 310"	color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 14" } }
-	string hos_item15	{ string "*cvar mn_hos_item15"	pos "30 330"	color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 15" } }
-	string hos_item16	{ string "*cvar mn_hos_item16"	pos "30 350"	color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 16" } }
-	string hos_item17	{ string "*cvar mn_hos_item17"	pos "30 370"	color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 17" } }
-	string hos_item18	{ string "*cvar mn_hos_item18"	pos "30 390"	color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 18" } }
-	string hos_item19	{ string "*cvar mn_hos_item19"	pos "30 410"	color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 19" } }
-	string hos_item20	{ string "*cvar mn_hos_item20"	pos "30 430"	color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 20" } }
-	string hos_item21	{ string "*cvar mn_hos_item21"	pos "30 450"	color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 21" } }
-	string hos_item22	{ string "*cvar mn_hos_item22"	pos "30 470"	color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 22" } }
-	string hos_item23	{ string "*cvar mn_hos_item23"	pos "30 490"	color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 23" } }
-	string hos_item24	{ string "*cvar mn_hos_item24"	pos "30 510"	color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 24" } }
-	string hos_item25	{ string "*cvar mn_hos_item25"	pos "30 530"	color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 25" } }
-	string hos_item26	{ string "*cvar mn_hos_item26"	pos "30 550"	color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 26" } }
-	string hos_item27	{ string "*cvar mn_hos_item27"	pos "30 570"	color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 27" } }
+	string hos_item0	{ string "*cvar mn_hos_item0"		pos "30 30"		color "1 1 1 1"	size "395 16"	click { cmd "hosp_list_click 0" } }
+	string hos_item1	{ string "*cvar mn_hos_item1"		pos "30 50"		color "1 1 1 1"	size "395 16"	click { cmd "hosp_list_click 1" } }
+	string hos_item2	{ string "*cvar mn_hos_item2"		pos "30 70"		color "1 1 1 1"	size "395 16"	click { cmd "hosp_list_click 2" } }
+	string hos_item3	{ string "*cvar mn_hos_item3"		pos "30 90"		color "1 1 1 1"	size "395 16"	click { cmd "hosp_list_click 3" } }
+	string hos_item4	{ string "*cvar mn_hos_item4"		pos "30 110"	color "1 1 1 1"	size "395 16"	click { cmd "hosp_list_click 4" } }
+	string hos_item5	{ string "*cvar mn_hos_item5"		pos "30 130"	color "1 1 1 1"	size "395 16"	click { cmd "hosp_list_click 5" } }
+	string hos_item6	{ string "*cvar mn_hos_item6"		pos "30 150"	color "1 1 1 1"	size "395 16"	click { cmd "hosp_list_click 6" } }
+	string hos_item7	{ string "*cvar mn_hos_item7"		pos "30 170"	color "1 1 1 1"	size "395 16"	click { cmd "hosp_list_click 7" } }
+	string hos_item8	{ string "*cvar mn_hos_item8"		pos "30 190"	color "1 1 1 1"	size "395 16"	click { cmd "hosp_list_click 8" } }
+	string hos_item9	{ string "*cvar mn_hos_item9"		pos "30 210"	color "1 1 1 1"	size "395 16"	click { cmd "hosp_list_click 9" } }
+	string hos_item10	{ string "*cvar mn_hos_item10"	pos "30 230"	color "1 1 1 1"	size "395 16"	click { cmd "hosp_list_click 10" } }
+	string hos_item11	{ string "*cvar mn_hos_item11"	pos "30 250"	color "1 1 1 1"	size "395 16"	click { cmd "hosp_list_click 11" } }
+	string hos_item12	{ string "*cvar mn_hos_item12"	pos "30 270"	color "1 1 1 1"	size "395 16"	click { cmd "hosp_list_click 12" } }
+	string hos_item13	{ string "*cvar mn_hos_item13"	pos "30 290"	color "1 1 1 1"	size "395 16"	click { cmd "hosp_list_click 13" } }
+	string hos_item14	{ string "*cvar mn_hos_item14"	pos "30 310"	color "1 1 1 1"	size "395 16"	click { cmd "hosp_list_click 14" } }
+	string hos_item15	{ string "*cvar mn_hos_item15"	pos "30 330"	color "1 1 1 1"	size "395 16"	click { cmd "hosp_list_click 15" } }
+	string hos_item16	{ string "*cvar mn_hos_item16"	pos "30 350"	color "1 1 1 1"	size "395 16"	click { cmd "hosp_list_click 16" } }
+	string hos_item17	{ string "*cvar mn_hos_item17"	pos "30 370"	color "1 1 1 1"	size "395 16"	click { cmd "hosp_list_click 17" } }
+	string hos_item18	{ string "*cvar mn_hos_item18"	pos "30 390"	color "1 1 1 1"	size "395 16"	click { cmd "hosp_list_click 18" } }
+	string hos_item19	{ string "*cvar mn_hos_item19"	pos "30 410"	color "1 1 1 1"	size "395 16"	click { cmd "hosp_list_click 19" } }
+	string hos_item20	{ string "*cvar mn_hos_item20"	pos "30 430"	color "1 1 1 1"	size "395 16"	click { cmd "hosp_list_click 20" } }
+	string hos_item21	{ string "*cvar mn_hos_item21"	pos "30 450"	color "1 1 1 1"	size "395 16"	click { cmd "hosp_list_click 21" } }
+	string hos_item22	{ string "*cvar mn_hos_item22"	pos "30 470"	color "1 1 1 1"	size "395 16"	click { cmd "hosp_list_click 22" } }
+	string hos_item23	{ string "*cvar mn_hos_item23"	pos "30 490"	color "1 1 1 1"	size "395 16"	click { cmd "hosp_list_click 23" } }
+	string hos_item24	{ string "*cvar mn_hos_item24"	pos "30 510"	color "1 1 1 1"	size "395 16"	click { cmd "hosp_list_click 24" } }
+	string hos_item25	{ string "*cvar mn_hos_item25"	pos "30 530"	color "1 1 1 1"	size "395 16"	click { cmd "hosp_list_click 25" } }
+	string hos_item26	{ string "*cvar mn_hos_item26"	pos "30 550"	color "1 1 1 1"	size "395 16"	click { cmd "hosp_list_click 26" } }
+	string hos_item27	{ string "*cvar mn_hos_item27"	pos "30 570"	color "1 1 1 1"	size "395 16"	click { cmd "hosp_list_click 27" } }
 
 	// ==================
 	// healing limit
