@@ -140,7 +140,7 @@ void NET_GetLocalAddress (void)
  */
 void NetadrToSockadr (netadr_t *a, struct sockaddr *s)
 {
-	memset (s, 0, sizeof(*s));
+	memset(s, 0, sizeof(*s));
 
 	if (a->type == NA_BROADCAST) {
 		((struct sockaddr_in *)s)->sin_family = AF_INET;
@@ -271,7 +271,7 @@ char *NET_AdrToString (netadr_t a)
 #define DO(src,dest)	\
 	copy[0] = s[src];	\
 	copy[1] = s[src + 1];	\
-	sscanf (copy, "%x", &val);	\
+	sscanf(copy, "%x", &val);	\
 	((struct sockaddr_ipx *)sadr)->dest = val
 
 /**
@@ -284,7 +284,7 @@ qboolean NET_StringToSockaddr (char *s, struct sockaddr *sadr)
 	int		val;
 	char	copy[128];
 
-	memset (sadr, 0, sizeof(*sadr));
+	memset(sadr, 0, sizeof(*sadr));
 
 	if ((strlen(s) >= 23) && (s[8] == ':') && (s[21] == ':')) {	/* check for an IPX address */
 		((struct sockaddr_ipx *)sadr)->sa_family = AF_IPX;
@@ -299,7 +299,7 @@ qboolean NET_StringToSockaddr (char *s, struct sockaddr *sadr)
 		DO(15, sa_nodenum[3]);
 		DO(17, sa_nodenum[4]);
 		DO(19, sa_nodenum[5]);
-		sscanf (&s[22], "%u", &val);
+		sscanf(&s[22], "%u", &val);
 		((struct sockaddr_ipx *)sadr)->sa_socket = htons((unsigned short)val);
 	} else {
 		((struct sockaddr_in *)sadr)->sin_family = AF_INET;
@@ -341,7 +341,7 @@ qboolean NET_StringToAdr (char *s, netadr_t *a)
 	struct sockaddr sadr;
 
 	if (!strcmp(s, "localhost")) {
-		memset (a, 0, sizeof(*a));
+		memset(a, 0, sizeof(*a));
 		a->type = NA_LOOPBACK;
 		return qtrue;
 	}
@@ -349,7 +349,7 @@ qboolean NET_StringToAdr (char *s, netadr_t *a)
 	if (!NET_StringToSockaddr(s, &sadr))
 		return qfalse;
 
-	SockadrToNetadr (&sadr, a);
+	SockadrToNetadr(&sadr, a);
 
 	return qtrue;
 }
@@ -478,7 +478,7 @@ int NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_message)
 		}
 
 		if (ret == net_message->maxsize) {
-			Com_Printf("Oversize packet from %s\n", NET_AdrToString (*net_from));
+			Com_Printf("Oversize packet from %s\n", NET_AdrToString(*net_from));
 			continue;
 		}
 
@@ -502,7 +502,7 @@ void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 	switch (to.type) {
 #ifndef DEDICATED_ONLY
 	case NA_LOOPBACK:
-		NET_SendLoopPacket (sock, length, data, to);
+		NET_SendLoopPacket(sock, length, data, to);
 		return;
 #endif
 	case NA_BROADCAST:
@@ -520,9 +520,9 @@ void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 	if (!net_socket)
 		return;
 
-	NetadrToSockadr (&to, &addr);
+	NetadrToSockadr(&to, &addr);
 
-	ret = sendto (net_socket, data, length, 0, &addr, sizeof(addr) );
+	ret = sendto(net_socket, data, length, 0, &addr, sizeof(addr) );
 	if (ret == -1) {
 		int err = WSAGetLastError();
 
@@ -538,12 +538,12 @@ void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 			/* this error is "normal" in Win2k TCP/IP stack */
 			if (err != WSAECONNRESET)
 				Com_Printf("NET_SendPacket Warning: %s to %s\n", NET_ErrorString(),
-					NET_AdrToString (to));
+					NET_AdrToString(to));
 		} else {
 			/* WSAEHOSTDOWN and WSAEHOSTUNREACH for master server response via lan */
 			if (err == WSAEADDRNOTAVAIL || err == WSAEHOSTDOWN || err == WSAEHOSTUNREACH) {
 				Com_Printf("NET_SendPacket Warning: %s : %s\n",
-					NET_ErrorString(), NET_AdrToString (to));
+					NET_ErrorString(), NET_AdrToString(to));
 			/**
 			 *  r1: ignore "errors" from connectionless info packets (FUCKING UGLY HACK)
 			 *      if the first 4 bytes are connectionless and len=10 (ÿÿÿÿinfo 34) ignore.
@@ -636,9 +636,9 @@ void NET_OpenIP (void)
 	int		dedicated;
 
 	/* get our ip address from cvar "ip" or use "localhost" if it is not set */
-	ip = Cvar_Get ("ip", "localhost", CVAR_NOSET, NULL);
+	ip = Cvar_Get("ip", "localhost", CVAR_NOSET, NULL);
 
-	dedicated = Cvar_VariableInteger ("dedicated");
+	dedicated = Cvar_VariableInteger("dedicated");
 
 	/* create a server socket if there is none yet */
 	if (!ip_sockets[NS_SERVER]) {
@@ -657,7 +657,7 @@ void NET_OpenIP (void)
 		}
 		/* at this point we might or might not have a valid port */
 		/* attempt to open the server socket with the best settings found */
-		ip_sockets[NS_SERVER] = NET_IPSocket (ip->string, port);
+		ip_sockets[NS_SERVER] = NET_IPSocket(ip->string, port);
 		if (!ip_sockets[NS_SERVER] && dedicated)
 			Com_Error(ERR_FATAL, "Couldn't allocate dedicated server IP port");
 	}
@@ -682,9 +682,9 @@ void NET_OpenIP (void)
 				port = PORT_ANY;
 		}
 		/* open the client socket with the best settings found */
-		ip_sockets[NS_CLIENT] = NET_IPSocket (ip->string, port);
+		ip_sockets[NS_CLIENT] = NET_IPSocket(ip->string, port);
 		if (!ip_sockets[NS_CLIENT])
-			ip_sockets[NS_CLIENT] = NET_IPSocket (ip->string, PORT_ANY);
+			ip_sockets[NS_CLIENT] = NET_IPSocket(ip->string, PORT_ANY);
 	}
 
 	/* reset connection counters */
@@ -767,7 +767,7 @@ void NET_OpenIPX (void)
 			}
 		}
 		/* attempt to open the server socket with the best settings found */
-		ipx_sockets[NS_SERVER] = NET_IPXSocket (port);
+		ipx_sockets[NS_SERVER] = NET_IPXSocket(port);
 	}
 
 	NET_GetLocalAddress();
@@ -790,9 +790,9 @@ void NET_OpenIPX (void)
 				port = PORT_ANY;
 		}
 		/* attempt to open the client socket with the best settings found */
-		ipx_sockets[NS_CLIENT] = NET_IPXSocket (port);
+		ipx_sockets[NS_CLIENT] = NET_IPXSocket(port);
 		if (!ipx_sockets[NS_CLIENT])
-			ipx_sockets[NS_CLIENT] = NET_IPXSocket (PORT_ANY);
+			ipx_sockets[NS_CLIENT] = NET_IPXSocket(PORT_ANY);
 	}
 
 	/* reset connection counters */
@@ -820,11 +820,11 @@ void NET_Config (qboolean multiplayer)
 	if (!multiplayer) {	/* shut down any existing sockets */
 		for (i = 0; i < 2; i++) {
 			if (ip_sockets[i]) {
-				closesocket (ip_sockets[i]);
+				closesocket(ip_sockets[i]);
 				ip_sockets[i] = 0;
 			}
 			if (ipx_sockets[i]) {
-				closesocket (ipx_sockets[i]);
+				closesocket(ipx_sockets[i]);
 				ipx_sockets[i] = 0;
 			}
 		}
@@ -914,7 +914,7 @@ char *NET_ErrorString (void)
 {
 	int		code;
 
-	code = WSAGetLastError ();
+	code = WSAGetLastError();
 	switch (code) {
 	case WSAEINTR: return "WSAEINTR";
 	case WSAEBADF: return "WSAEBADF";

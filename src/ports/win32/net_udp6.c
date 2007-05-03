@@ -80,7 +80,7 @@ void NetadrToSockadr (netadr_t *a, struct sockaddr_storage *s)
 	struct addrinfo *res;
 	int error;
 
-	memset (s, 0, sizeof(*s));
+	memset(s, 0, sizeof(*s));
 	switch (a->type) {
 	case NA_BROADCAST:
 		((struct sockaddr_in*)s)->sin_family = AF_INET;
@@ -102,7 +102,7 @@ void NetadrToSockadr (netadr_t *a, struct sockaddr_storage *s)
 		hints.ai_socktype = SOCK_DGRAM;
 		hints.ai_flags = AI_NUMERICHOST;
 
-		error = getaddrinfo (UFOAIMCAST, NULL, &hints, &res);
+		error = getaddrinfo(UFOAIMCAST, NULL, &hints, &res);
 		if (error) {
 			Com_Printf("NET_NetadrToSockadr: inet_pton: %s", gai_strerror(error));
 			return;
@@ -119,14 +119,14 @@ void NetadrToSockadr (netadr_t *a, struct sockaddr_storage *s)
 		break;
 
 	case NA_IPV6:
-		if (IN6_IS_ADDR_V4MAPPED ((struct in6_addr *) a->ip)) {
+		if (IN6_IS_ADDR_V4MAPPED((struct in6_addr *) a->ip)) {
 #ifdef HAVE_SIN6_LEN
-			s->ss_len = sizeof (struct sockaddr_in);
+			s->ss_len = sizeof(struct sockaddr_in);
 #endif
 			s->ss_family = AF_INET;
-			memcpy (&((struct sockaddr_in *)s)->sin_addr,
+			memcpy(&((struct sockaddr_in *)s)->sin_addr,
 					&((struct in6_addr *) a->ip)->s6_addr[12],
-					sizeof (struct in_addr));
+					sizeof(struct in_addr));
 			((struct sockaddr_in*)s)->sin_port = a->port;
 
 		} else {
@@ -136,7 +136,7 @@ void NetadrToSockadr (netadr_t *a, struct sockaddr_storage *s)
 			memcpy(&s6->sin6_addr, a->ip, sizeof(s6->sin6_addr));
 			s6->sin6_port = a->port;
 #ifdef HAVE_SIN6_LEN
-			s6->sin6_len = sizeof (struct sockaddr_in6);
+			s6->sin6_len = sizeof(struct sockaddr_in6);
 #endif
 			/* scope_id is important for link-local
 			* destination. @todo: check in code for possible
@@ -167,8 +167,8 @@ void SockadrToNetadr (struct sockaddr_storage *s, netadr_t *a)
 	} else if (s->ss_family == AF_INET6) {
 		s6 = (struct sockaddr_in6 *)s;
 
-		if (IN6_IS_ADDR_V4MAPPED ((struct in6_addr *)&s6->sin6_addr)) {
-			memcpy (a->ip, (struct in_addr *)&s6->sin6_addr.s6_addr[12], sizeof (struct in_addr));
+		if (IN6_IS_ADDR_V4MAPPED((struct in6_addr *)&s6->sin6_addr)) {
+			memcpy(a->ip, (struct in_addr *)&s6->sin6_addr.s6_addr[12], sizeof(struct in_addr));
 			a->port = ((struct sockaddr_in*)s)->sin_port;
 			a->type = NA_IP;
 		} else {
@@ -265,37 +265,37 @@ char *NET_BaseAdrToString (netadr_t a)
 		break;
 	case NA_IPV6:
 	case NA_MULTICAST6:
-		memset (&ss, 0, sizeof (ss));
+		memset(&ss, 0, sizeof(ss));
 		s6 = (struct sockaddr_in6 *)&ss;
 
-		if (IN6_IS_ADDR_V4MAPPED ((struct in6_addr *) a.ip)) {
+		if (IN6_IS_ADDR_V4MAPPED((struct in6_addr *) a.ip)) {
 #ifdef HAVE_SIN6_LEN
-			ss.ss_len = sizeof (struct sockaddr_in);
+			ss.ss_len = sizeof(struct sockaddr_in);
 #endif
 			ss.ss_family = AF_INET;
 			memcpy(&((struct sockaddr_in *) &ss)->sin_addr,
 					&((struct in6_addr *) a.ip)->s6_addr[12],
-					sizeof (struct in_addr));
+					sizeof(struct in_addr));
 		} else {
 #ifdef HAVE_SIN6_LEN
-			s6->sin6_len = sizeof (struct sockaddr_in6);
+			s6->sin6_len = sizeof(struct sockaddr_in6);
 #endif
 			/* Possible bug: a.scope_id may not have been
 			 * initialized. See comments below on better
 			 * way to handle this */
 			s6->sin6_scope_id = a.scope_id;
 			s6->sin6_family = AF_INET6;
-			memcpy(&s6->sin6_addr, a.ip, sizeof (struct in6_addr));
+			memcpy(&s6->sin6_addr, a.ip, sizeof(struct in6_addr));
 		}
 
 		flags = NI_NUMERICHOST;
 
 #ifdef HAVE_SIN6_LEN
-		if (getnameinfo((struct sockaddr *) &ss, ss.ss_len, s, sizeof (s),
+		if (getnameinfo((struct sockaddr *) &ss, ss.ss_len, s, sizeof(s),
 				NULL, 0, NI_NUMERICHOST))
 #else
 		if (getnameinfo((struct sockaddr *) &ss, sizeof(struct sockaddr_in6),
-				s, sizeof (s), NULL, 0, NI_NUMERICHOST))
+				s, sizeof(s), NULL, 0, NI_NUMERICHOST))
 #endif
 			Com_sprintf(s, sizeof(s), "<invalid>");
 		else {
@@ -357,7 +357,7 @@ char *NET_AdrToString (netadr_t a)
 #define DO(src,dest)	\
 	copy[0] = s[src];	\
 	copy[1] = s[src + 1];	\
-	sscanf (copy, "%x", &val);	\
+	sscanf(copy, "%x", &val);	\
 	((struct sockaddr_ipx *)sadr)->dest = val
 #endif
 
@@ -378,12 +378,12 @@ qboolean NET_StringToSockaddr (char *s, struct sockaddr_storage *sadr)
 	struct addrinfo hints;
 	struct addrinfo *resultp;
 
-	memset (sadr, 0, sizeof(*sadr));
-	memset (&hints,0, sizeof(hints));
+	memset(sadr, 0, sizeof(*sadr));
+	memset(&hints,0, sizeof(hints));
 	hints.ai_socktype = SOCK_DGRAM;
 	hints.ai_family = PF_UNSPEC;
 
-	strcpy (copy, s);
+	strcpy(copy, s);
 	addrs = space = copy;
 	if (*addrs == '[') {
 		addrs++;
@@ -411,12 +411,12 @@ qboolean NET_StringToSockaddr (char *s, struct sockaddr_storage *sadr)
 	switch (resultp->ai_family) {
 	case AF_INET:
 		/* convert to ipv4 addr */
-		memset(sadr, 0, sizeof (struct sockaddr_storage));
+		memset(sadr, 0, sizeof(struct sockaddr_storage));
 		memcpy(sadr, resultp->ai_addr, resultp->ai_addrlen);
 		break;
 	case AF_INET6:
 		/* convert to ipv6 addr */
-		memset(sadr, 0, sizeof (struct sockaddr_storage));
+		memset(sadr, 0, sizeof(struct sockaddr_storage));
 		memcpy(sadr, resultp->ai_addr, resultp->ai_addrlen);
 		break;
 	default:
@@ -605,7 +605,7 @@ int NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_message)
 		}
 
 		if (ret == net_message->maxsize) {
-			Com_Printf("Oversize packet from %s\n", NET_AdrToString (*net_from));
+			Com_Printf("Oversize packet from %s\n", NET_AdrToString(*net_from));
 			continue;
 		}
 
@@ -629,7 +629,7 @@ void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 	switch (to.type) {
 #ifndef DEDICATED_ONLY
 	case NA_LOOPBACK:
-		NET_SendLoopPacket (sock, length, data, to);
+		NET_SendLoopPacket(sock, length, data, to);
 		return;
 #endif
 	case NA_BROADCAST:
@@ -653,7 +653,7 @@ void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 	if (!net_socket)
 		return;
 
-	NetadrToSockadr (&to, &addr);
+	NetadrToSockadr(&to, &addr);
 
 	/**
 	 * Re-check the address family. If to.type is NA_IPV6 but
@@ -687,10 +687,10 @@ void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 			 * ff0x::xxx%multicast_interface
 			 */
 #ifdef HAVE_SIN6_LEN
-			error = getnameinfo((struct sockaddr *) s6, s6->sin6_len, tmp, sizeof (tmp),
+			error = getnameinfo((struct sockaddr *) s6, s6->sin6_len, tmp, sizeof(tmp),
 					NULL, 0, NI_NUMERICHOST);
 #else
-			error = getnameinfo((struct sockaddr *) s6, sizeof(struct sockaddr_in6), tmp, sizeof (tmp),
+			error = getnameinfo((struct sockaddr *) s6, sizeof(struct sockaddr_in6), tmp, sizeof(tmp),
 					NULL, 0, NI_NUMERICHOST);
 #endif
 			if (error) {
@@ -731,7 +731,7 @@ void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 		}
 	}
 
-	ret = sendto (net_socket, data, length, 0, (struct sockaddr *)&addr, addr_size );
+	ret = sendto(net_socket, data, length, 0, (struct sockaddr *)&addr, addr_size );
 	if (ret == -1) {
 		int err = WSAGetLastError();
 
@@ -746,14 +746,14 @@ void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 		if (dedicated->value) {
 			/* let dedicated servers continue after errors */
 			Com_Printf("NET_SendPacket Warning: %s to %s\n", NET_ErrorString(),
-				NET_AdrToString (to));
+				NET_AdrToString(to));
 		} else {
 			if (err == WSAEADDRNOTAVAIL) {
 				Com_DPrintf("NET_SendPacket Warning: %s : %s\n",
-					NET_ErrorString(), NET_AdrToString (to));
+					NET_ErrorString(), NET_AdrToString(to));
 			} else {
 				Com_Printf("NET_SendPacket ERROR: %s to %s\n",
-					NET_ErrorString(), NET_AdrToString (to));
+					NET_ErrorString(), NET_AdrToString(to));
 			}
 		}
 	} else {
@@ -780,7 +780,7 @@ int NET_IPSocket (char *net_interface, int port, netsrc_t type, int family)
 	struct ipv6_mreq mreq;
 	cvar_t *mcast;
 
-	memset (&hints, 0, sizeof (hints));
+	memset(&hints, 0, sizeof(hints));
 	hints.ai_family = family;
 	hints.ai_socktype = SOCK_DGRAM;
 	hints.ai_protocol = IPPROTO_UDP;
@@ -798,18 +798,18 @@ int NET_IPSocket (char *net_interface, int port, netsrc_t type, int family)
 		Service = Buf;
 	}
 
-	if ((Error = getaddrinfo (Host, Service, &hints, &res))) {
+	if ((Error = getaddrinfo(Host, Service, &hints, &res))) {
 		return 0;
 	}
 
 	for (ai = res; ai != NULL; ai = ai->ai_next) {
-		if ((newsocket = socket (ai->ai_family, ai->ai_socktype, ai->ai_protocol)) == -1) {
-			Com_Printf("NET_IPSocket: socket: %s\n", strerror (errno));
+		if ((newsocket = socket(ai->ai_family, ai->ai_socktype, ai->ai_protocol)) == -1) {
+			Com_Printf("NET_IPSocket: socket: %s\n", strerror(errno));
 			continue;
 		}
 		/* make it non-blocking */
-		if (ioctlsocket (newsocket, FIONBIO, &_true) == -1) {
-				Com_Printf("NET_IPSocket: ioctl FIONBIO: %s\n", strerror (errno));
+		if (ioctlsocket(newsocket, FIONBIO, &_true) == -1) {
+				Com_Printf("NET_IPSocket: ioctl FIONBIO: %s\n", strerror(errno));
 				continue;
 		}
 		if (setsockopt(newsocket, SOL_SOCKET, SO_REUSEADDR, (char *)&one, sizeof(one))) {
@@ -819,19 +819,19 @@ int NET_IPSocket (char *net_interface, int port, netsrc_t type, int family)
 		}
 #ifdef IPV6_V6ONLY
 		if (family == AF_INET6)
-			if (ioctlsocket (newsocket, IPPROTO_IPV6, IPV6_V6ONLY, &dummy, sizeof (dummy)) < 0) {
-				Com_Printf("NET_IPSocket: setsockopt IPV6_V6ONLY: %s\n", strerror (errno));
+			if (ioctlsocket(newsocket, IPPROTO_IPV6, IPV6_V6ONLY, &dummy, sizeof(dummy)) < 0) {
+				Com_Printf("NET_IPSocket: setsockopt IPV6_V6ONLY: %s\n", strerror(errno));
 			}
 #endif
 			if (family == AF_INET) {
 				/* make it broadcast capable */
 				if (setsockopt(newsocket, SOL_SOCKET, SO_BROADCAST, (char *)&one, sizeof(one))) {
-						Com_Printf("ERROR: NET_IPSocket: setsockopt SO_BROADCAST:%s\n", strerror (errno));
+						Com_Printf("ERROR: NET_IPSocket: setsockopt SO_BROADCAST:%s\n", strerror(errno));
 						return 0;
 				}
 			}
-			if (bind (newsocket, ai->ai_addr, ai->ai_addrlen) < 0) {
-				Com_Printf("NET_IPSocket: bind: %s\n", strerror (errno));
+			if (bind(newsocket, ai->ai_addr, ai->ai_addrlen) < 0) {
+				Com_Printf("NET_IPSocket: bind: %s\n", strerror(errno));
 				closesocket(newsocket);
 			} else {
 				memcpy(&ss, ai->ai_addr, ai->ai_addrlen);
@@ -864,18 +864,18 @@ int NET_IPSocket (char *net_interface, int port, netsrc_t type, int family)
 			mreq.ipv6mr_interface = mcast->integer;
 			if (setsockopt(newsocket, IPPROTO_IPV6, IPV6_MULTICAST_IF, (char*)&mreq.ipv6mr_interface,
 					sizeof(mreq.ipv6mr_interface)) < 0) {
-				Com_Printf("NET_IPSocket: IPV6_MULTICAST_IF: %s\n", strerror (errno));
+				Com_Printf("NET_IPSocket: IPV6_MULTICAST_IF: %s\n", strerror(errno));
 			}
 			/* Join multicast group ONLY if server */
 			if (type == NS_SERVER) {
-				memset (&hints, 0, sizeof (hints));
+				memset(&hints, 0, sizeof(hints));
 				hints.ai_family = AF_INET6;
 				hints.ai_socktype = SOCK_DGRAM;
 				hints.ai_protocol = IPPROTO_UDP;
 				hints.ai_flags = AI_PASSIVE;
 
-				if ((Error = getaddrinfo (UFOAIMCAST, NULL, &hints, &res))) {
-					Com_Printf("NET_IPSocket: getaddrinfo: %s\n", gai_strerror (Error));
+				if ((Error = getaddrinfo(UFOAIMCAST, NULL, &hints, &res))) {
+					Com_Printf("NET_IPSocket: getaddrinfo: %s\n", gai_strerror(Error));
 					break;
 				}
 
@@ -897,7 +897,7 @@ int NET_IPSocket (char *net_interface, int port, netsrc_t type, int family)
 
 				if (Error) {
 					Com_Printf("NET_IPSocket: IPV6_JOIN_GROUP: %s\n",
-						strerror (errno));
+						strerror(errno));
 					break;
 				}
 			}
@@ -943,8 +943,8 @@ void NET_OpenIP (void)
 		}
 		/* at this point we might or might not have a valid port */
 		/* attempt to open the server IPv6 and IPv4 sockets with the best settings found */
-		ip6_sockets[NS_SERVER] = NET_IPSocket (ip->string, port, NS_SERVER, AF_INET6);
-		ip_sockets[NS_SERVER] = NET_IPSocket (ip->string, port, NS_SERVER, AF_INET);
+		ip6_sockets[NS_SERVER] = NET_IPSocket(ip->string, port, NS_SERVER, AF_INET6);
+		ip_sockets[NS_SERVER] = NET_IPSocket(ip->string, port, NS_SERVER, AF_INET);
 		if (!ip_sockets[NS_SERVER] && !ip6_sockets[NS_SERVER] && dedicated)
 			Com_Error(ERR_FATAL, "Couldn't allocate server IP port (%i)  - use cvar ip_hostport", port);
 	}
@@ -967,12 +967,12 @@ void NET_OpenIP (void)
 				port = PORT_ANY;
 		}
 		/* open the client IPv6 and IPv4 sockets with the best settings found */
-		ip6_sockets[NS_CLIENT] = NET_IPSocket (ip->string, port, NS_CLIENT, AF_INET6);
-		ip_sockets[NS_CLIENT] = NET_IPSocket (ip->string, port, NS_CLIENT, AF_INET);
+		ip6_sockets[NS_CLIENT] = NET_IPSocket(ip->string, port, NS_CLIENT, AF_INET6);
+		ip_sockets[NS_CLIENT] = NET_IPSocket(ip->string, port, NS_CLIENT, AF_INET);
 		/* if that didn't work, retry by opening sockets with any available port */
 		if (!ip_sockets[NS_CLIENT] && !ip6_sockets[NS_CLIENT]) {
-			ip6_sockets[NS_CLIENT] = NET_IPSocket (ip->string, PORT_ANY, NS_CLIENT, AF_INET6);
-			ip_sockets[NS_CLIENT] = NET_IPSocket (ip->string, PORT_ANY, NS_CLIENT, AF_INET);
+			ip6_sockets[NS_CLIENT] = NET_IPSocket(ip->string, PORT_ANY, NS_CLIENT, AF_INET6);
+			ip_sockets[NS_CLIENT] = NET_IPSocket(ip->string, PORT_ANY, NS_CLIENT, AF_INET);
 		}
 	}
 
@@ -995,7 +995,7 @@ int NET_IPXSocket (int port)
 	int					_true = 1;
 	int					err;
 
-	if ((newsocket = socket (PF_IPX, SOCK_DGRAM, NSPROTO_IPX)) == -1) {
+	if ((newsocket = socket(PF_IPX, SOCK_DGRAM, NSPROTO_IPX)) == -1) {
 		err = WSAGetLastError();
 		if (err != WSAEAFNOSUPPORT)
 			Com_Printf("WARNING: IPX_Socket: socket: %s\n", NET_ErrorString());
@@ -1015,8 +1015,8 @@ int NET_IPXSocket (int port)
 	}
 
 	address.sa_family = AF_IPX;
-	memset (address.sa_netnum, 0, 4);
-	memset (address.sa_nodenum, 0, 6);
+	memset(address.sa_netnum, 0, 4);
+	memset(address.sa_nodenum, 0, 6);
 	if (port == PORT_ANY)
 		address.sa_socket = 0;
 	else
@@ -1024,7 +1024,7 @@ int NET_IPXSocket (int port)
 
 	if (bind(newsocket, (void *)&address, sizeof(address)) == -1) {
 		Com_Printf("WARNING: IPX_Socket: bind: %s\n", NET_ErrorString());
-		closesocket (newsocket);
+		closesocket(newsocket);
 		return 0;
 	}
 
@@ -1057,7 +1057,7 @@ void NET_OpenIPX (void)
 			}
 		}
 		/* attempt to open the server socket with the best settings found */
-		ipx_sockets[NS_SERVER] = NET_IPXSocket (port);
+		ipx_sockets[NS_SERVER] = NET_IPXSocket(port);
 	}
 
 	/* dedicated servers don't need client ports */
@@ -1078,9 +1078,9 @@ void NET_OpenIPX (void)
 				port = PORT_ANY;
 		}
 		/* attempt to open the client socket with the best settings found */
-		ipx_sockets[NS_CLIENT] = NET_IPXSocket (port);
+		ipx_sockets[NS_CLIENT] = NET_IPXSocket(port);
 		if (!ipx_sockets[NS_CLIENT])
-			ipx_sockets[NS_CLIENT] = NET_IPXSocket (PORT_ANY);
+			ipx_sockets[NS_CLIENT] = NET_IPXSocket(PORT_ANY);
 	}
 
 	/* reset connection counters */
@@ -1201,9 +1201,9 @@ void NET_Init (void)
 void NET_Shutdown (void)
 {
 	/* close sockets */
-	NET_Config (qfalse);
+	NET_Config(qfalse);
 
-	WSACleanup ();
+	WSACleanup();
 }
 
 
@@ -1214,7 +1214,7 @@ char *NET_ErrorString (void)
 {
 	int		code;
 
-	code = WSAGetLastError ();
+	code = WSAGetLastError();
 	switch (code) {
 	case WSAEINTR: return "WSAEINTR";
 	case WSAEBADF: return "WSAEBADF";

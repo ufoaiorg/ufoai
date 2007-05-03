@@ -299,7 +299,7 @@ qboolean NET_StringToAdr (char *s, netadr_t *a)
 	struct sockaddr_in sadr;
 
 #ifndef DEDICATED_ONLY
-	if (!strcmp (s, "localhost")) {
+	if (!strcmp(s, "localhost")) {
 		memset(a, 0, sizeof(*a));
 		a->type = NA_LOOPBACK;
 		return qtrue;
