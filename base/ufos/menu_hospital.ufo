@@ -44,6 +44,38 @@ menu hospital
 	// employee list
 	// ==================
 
+	confunc hospital_clear
+	{
+		*hos_item0 color "1 1 1 1"
+		*hos_item1 color "1 1 1 1"
+		*hos_item2 color "1 1 1 1"
+		*hos_item3 color "1 1 1 1"
+		*hos_item4 color "1 1 1 1"
+		*hos_item5 color "1 1 1 1"
+		*hos_item6 color "1 1 1 1"
+		*hos_item7 color "1 1 1 1"
+		*hos_item8 color "1 1 1 1"
+		*hos_item9 color "1 1 1 1"
+		*hos_item10 color "1 1 1 1"
+		*hos_item11 color "1 1 1 1"
+		*hos_item12 color "1 1 1 1"
+		*hos_item13 color "1 1 1 1"
+		*hos_item14 color "1 1 1 1"
+		*hos_item15 color "1 1 1 1"
+		*hos_item16 color "1 1 1 1"
+		*hos_item17 color "1 1 1 1"
+		*hos_item18 color "1 1 1 1"
+		*hos_item19 color "1 1 1 1"
+		*hos_item20 color "1 1 1 1"
+		*hos_item21 color "1 1 1 1"
+		*hos_item22 color "1 1 1 1"
+		*hos_item23 color "1 1 1 1"
+		*hos_item24 color "1 1 1 1"
+		*hos_item25 color "1 1 1 1"
+		*hos_item26 color "1 1 1 1"
+		*hos_item27 color "1 1 1 1"
+	}
+
 	confunc hospitalserious0  { *hos_item0  color "1 0 0 1" }
 	confunc hospitalserious1  { *hos_item1  color "1 0 0 1" }
 	confunc hospitalserious2  { *hos_item2  color "1 0 0 1" }

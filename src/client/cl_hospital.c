@@ -292,6 +292,9 @@ static void HOS_Init_f (void)
 		return;
 	}
 
+	/* Prepare default list in default color. */
+	Cbuf_AddText("hospital_clear\n");
+
 	for (type = 0, j = 0; type < MAX_EMPL; type++) {
 		for (i = 0; i < gd.numEmployees[type]; i++) {
 			employee = &gd.employees[type][i];
@@ -310,7 +313,7 @@ static void HOS_Init_f (void)
 				Q_strcat(name, " ", sizeof(name));
 				/* Print HP stats. */
 				Q_strcat(name, va("(%i/%i)", employee->chr.HP, employee->chr.maxHP), sizeof(name));
-				Com_Printf("%s j: %i\n", name, j);
+				Com_DPrintf("%s j: %i\n", name, j);
 				/* If the employee is seriously wounded (HP <= 50% maxHP), make him red. */
 				if (employee->chr.HP <= (int) (employee->chr.maxHP * 0.5))
 					Cbuf_AddText(va("hospitalserious%i\n", j));
