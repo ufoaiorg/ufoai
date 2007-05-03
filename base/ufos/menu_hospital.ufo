@@ -268,7 +268,7 @@ menu hospital
 
 	string hos_legend_blue
 	{
-		string	"_Blue means employeer currently being healed."
+		string	"_Blue means employee currently being healed."
 		pos		"510 500"
 		font		f_small
 		align		ul
@@ -277,7 +277,7 @@ menu hospital
 
 	string hos_legend_red
 	{
-		string	"_Red means employeer heavily wounded."
+		string	"_Red means employee heavily wounded."
 		pos		"510 520"
 		font		f_small
 		align		ul
@@ -286,7 +286,7 @@ menu hospital
 
 	string hos_legend_yellow
 	{
-		string	"_Yellow means employeer slightly wounded."
+		string	"_Yellow means employee slightly wounded."
 		pos		"510 540"
 		font		f_small
 		align		ul
@@ -295,7 +295,7 @@ menu hospital
 
 	string hos_legend_green
 	{
-		string	"_Green means employeer under surgery proceedings."
+		string	"_Green means employee under surgery proceedings."
 		pos		"510 560"
 		font		f_small
 		align		ul
