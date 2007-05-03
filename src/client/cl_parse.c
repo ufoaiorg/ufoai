@@ -263,7 +263,7 @@ extern void CL_RegisterSounds (void)
 		}
 	}
 
-	S_EndRegistration ();
+	S_EndRegistration();
 }
 
 /*
@@ -295,22 +295,22 @@ static void CL_ParseServerData (void)
 	if (i != PROTOCOL_VERSION)
 		Com_Error(ERR_DROP,"Server returned version %i, not %i", i, PROTOCOL_VERSION);
 
-	cl.servercount = MSG_ReadLong (&net_message);
-	cl.attractloop = MSG_ReadByte (&net_message);
+	cl.servercount = MSG_ReadLong(&net_message);
+	cl.attractloop = MSG_ReadByte(&net_message);
 
 	/* game directory */
-	str = MSG_ReadString (&net_message);
-	Q_strncpyz (cl.gamedir, str, sizeof(cl.gamedir));
+	str = MSG_ReadString(&net_message);
+	Q_strncpyz(cl.gamedir, str, sizeof(cl.gamedir));
 
 	/* set gamedir */
 	if ((*str && (!fs_gamedir->string || !*fs_gamedir->string || strcmp(fs_gamedir->string, str))) || (!*str && (fs_gamedir->string || *fs_gamedir->string)))
 		Cvar_Set("fs_gamedir", str);
 
 	/* parse player entity number */
-	cl.pnum = MSG_ReadShort (&net_message);
+	cl.pnum = MSG_ReadShort(&net_message);
 
 	/* get the full level name */
-	str = MSG_ReadString (&net_message);
+	str = MSG_ReadString(&net_message);
 
 	if (cl.pnum >= 0) {
 		/* seperate the printfs so the server message can have a color */
@@ -467,10 +467,21 @@ static void CL_ParseStartBreakSoundPacket (void)
 		pos = NULL;
 
 	switch (material) {
+	case MAT_METAL:
+		sound = "ambient/breakmetal.wav";
+		break;
 	case MAT_GLASS:
 		sound = "ambient/breakglass.wav";
 		break;
+	case MAT_ELECTRICAL:
+		sound = "ambient/breakeletric.wav";
+		break;
+	case MAT_WOOD:
+		sound = "ambient/breakwood.wav";
+		break;
 	default:
+		if (material >= MAT_MAX)
+			Com_Printf("CL_ParseStartBreakSoundPacket: Unknown material\n");
 		/* no sound */
 		return;
 	}
@@ -509,7 +520,7 @@ static void CL_Reset (sizebuf_t *sb)
 	numLEs = 0;
 	selActor = NULL;
 	cl.numTeamList = 0;
-	Cbuf_AddText( "numonteam1\n" );
+	Cbuf_AddText("numonteam1\n");
 
 	CL_EventReset();
 	parsedDeath = qfalse;
@@ -521,7 +532,7 @@ static void CL_Reset (sizebuf_t *sb)
 
 	/* set the active player */
 	MSG_ReadFormat(sb, ev_format[EV_RESET], &cls.team, &cl.actTeam);
-	Com_Printf( "(player %i) It's team %i's round\n", cl.pnum, cl.actTeam );
+	Com_Printf("(player %i) It's team %i's round\n", cl.pnum, cl.actTeam);
 	/* if in multiplayer spawn the soldiers */
 	if (!ccs.singleplayer) {
 		/* pop any waiting menu and activate the HUD */
@@ -998,8 +1009,8 @@ static void CL_PlaceItem (le_t *le)
 	if (FLOOR(le)) {
 		biggest = CL_BiggestItem(FLOOR(le));
 		le->model1 = cl.model_weapons[biggest];
-		Grid_PosToVec( &clMap, le->pos, le->origin );
-		VectorSubtract( le->origin, csi.ods[biggest].center, le->origin );
+		Grid_PosToVec(&clMap, le->pos, le->origin);
+		VectorSubtract(le->origin, csi.ods[biggest].center, le->origin);
 		/* fall to ground */
 		le->origin[2] -= 28;
 		le->angles[ROLL] = 90;
@@ -1027,7 +1038,7 @@ static void CL_InvAdd (sizebuf_t *sb)
 	le_t	*le;
 	item_t 	item;
 
-	number = MSG_ReadShort( sb );
+	number = MSG_ReadShort(sb);
 
 	le = LE_Get(number);
 	if (!le) {
@@ -1200,7 +1211,7 @@ static void CL_LogEvent (int num)
 	if (!cl_logevents->value)
 		return;
 
-	logfile = fopen(va( "%s/events.log", FS_Gamedir() ), "a");
+	logfile = fopen(va("%s/events.log", FS_Gamedir()), "a");
 	fprintf(logfile, "%10i %s\n", cl.eventTime, ev_names[num]);
 	fclose(logfile);
 }
@@ -1504,7 +1515,7 @@ void CL_ParseServerMessage (void)
 			break;
 		}
 
-		cmd = MSG_ReadByte (&net_message);
+		cmd = MSG_ReadByte(&net_message);
 
 		if (cmd == -1) {
 			CL_ShowNet("END OF MESSAGE");
@@ -1597,5 +1608,5 @@ void CL_ParseServerMessage (void)
 		}
 	}
 
-	CL_AddNetgraph ();
+	CL_AddNetgraph();
 }

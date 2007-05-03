@@ -715,6 +715,7 @@ typedef enum {
 	MAT_METAL,		/* default */
 	MAT_GLASS,
 	MAT_ELECTRICAL,
+	MAT_WOOD,
 
 	MAT_MAX
 } edictMaterial_t;
@@ -1489,7 +1490,7 @@ typedef enum {
 typedef enum {
 	SND_DEATH,	/**< Sound being played on actor death. */
 	SND_HURT,	/**< Sound being played when an actor is being hit. */
-	
+
 	SND_MAX
 } actorSound_t;
 
