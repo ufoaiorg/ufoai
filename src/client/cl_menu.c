@@ -1791,7 +1791,7 @@ void MN_PrecacheMenus (void)
 	int i;
 	menu_t *menu;
 	menuNode_t *node;
-	char *ref;
+	const char *ref;
 	char source[MAX_VAR];
 
 	Com_Printf("...precaching %i menus\n", numMenus);
@@ -1874,7 +1874,7 @@ void MN_DrawMenus (void)
 	menuNode_t *node;
 	menu_t *menu;
 	animState_t *as;
-	char *ref;
+	const char *ref;
 	const char *font;
 	char *anim;					/* model anim state */
 	char source[MAX_VAR] = "";
@@ -3305,6 +3305,8 @@ qboolean MN_ParseAction (menuNode_t * menuNode, menuAction_t * action, char **te
 
 					/* add the action */
 					if (lastAction) {
+						if (numActions >= MAX_MENUACTIONS)
+							Sys_Error("MN_ParseAction: MAX_MENUACTIONS exceeded (%i)\n", numActions);
 						action = &menuActions[numActions++];
 						memset(action, 0, sizeof(menuAction_t));
 						lastAction->next = action;
@@ -3342,6 +3344,8 @@ qboolean MN_ParseAction (menuNode_t * menuNode, menuAction_t * action, char **te
 
 				/* add the action */
 				if (lastAction) {
+					if (numActions >= MAX_MENUACTIONS)
+						Sys_Error("MN_ParseAction: MAX_MENUACTIONS exceeded (%i)\n", numActions);
 					action = &menuActions[numActions++];
 					memset(action, 0, sizeof(menuAction_t));
 					lastAction->next = action;
@@ -3404,6 +3408,8 @@ qboolean MN_ParseAction (menuNode_t * menuNode, menuAction_t * action, char **te
 
 					/* add the action */
 					if (lastAction) {
+						if (numActions >= MAX_MENUACTIONS)
+							Sys_Error("MN_ParseAction: MAX_MENUACTIONS exceeded (%i)\n", numActions);
 						action = &menuActions[numActions++];
 						memset(action, 0, sizeof(menuAction_t));
 						lastAction->next = action;
@@ -3466,6 +3472,8 @@ qboolean MN_ParseNodeBody (menuNode_t * node, char **text, char **token)
 		action = &node->click;
 		for (; *action; action = &(*action)->next);
 
+		if (numActions >= MAX_MENUACTIONS)
+			Sys_Error("MN_ParseNodeBody: MAX_MENUACTIONS exceeded (%i)\n", numActions);
 		*action = &menuActions[numActions++];
 		memset(*action, 0, sizeof(menuAction_t));
 
@@ -3539,6 +3547,8 @@ qboolean MN_ParseNodeBody (menuNode_t * node, char **text, char **token)
 					action = (menuAction_t **) ((byte *) node + ne_values[i]);
 					for (; *action; action = &(*action)->next);
 
+					if (numActions >= MAX_MENUACTIONS)
+						Sys_Error("MN_ParseNodeBody: MAX_MENUACTIONS exceeded (%i)\n", numActions);
 					*action = &menuActions[numActions++];
 					memset(*action, 0, sizeof(menuAction_t));
 
