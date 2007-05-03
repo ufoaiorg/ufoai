@@ -67,8 +67,6 @@ typedef struct menuModel_s {
 typedef struct menuAction_s {
 	int type;
 	void *data;
-	void *value;
-	int	id;
 	struct menuAction_s *next;
 } menuAction_t;
 
