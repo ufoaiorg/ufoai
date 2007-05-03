@@ -124,13 +124,13 @@ static qboolean alinit_fail = qfalse;
 /**
  * @brief Loads symbols from openal lib
  */
-static void *GPAT(char *str)
+static void *GPAT (char *str)
 {
 	void *rv;
 
 	rv = GPA(str);
 	if (!rv) {
-		Com_Printf( " Can't load symbol %s\n", str);
+		Com_Printf("Can't load symbol %s\n", str);
 		alinit_fail = qtrue;
 		return NULL;
 	}
@@ -140,13 +140,13 @@ static void *GPAT(char *str)
 /**
  * @brief Loads symbols from alut lib
  */
-static void *GPAT2(char *str)
+static void *GPAT2 (char *str)
 {
 	void *rv;
 
 	rv = GPA2(str);
 	if (!rv) {
-		Com_Printf( " Can't load symbol %s\n", str);
+		Com_Printf("Can't load symbol %s\n", str);
 		alinit_fail = qtrue;
 		return NULL;
 	}

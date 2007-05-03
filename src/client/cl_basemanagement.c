@@ -1486,7 +1486,7 @@ extern void B_DrawBase (menuNode_t * node)
 					if (*building->image) {	/* @todo:DEBUG */
 						Q_strncpyz(image, building->image, sizeof(image));
 					} else {
-						/*Com_DPrintf( "B_DrawBase: no image found for building %s / %i\n",building->id ,building->idx ); */
+						/*Com_DPrintf("B_DrawBase: no image found for building %s / %i\n",building->id ,building->idx); */
 					}
 				} else if (*building->needs) {
 					secondBuilding = B_GetBuildingType(building->needs);

@@ -293,7 +293,7 @@ lm_t *CL_AddLocalModel (char *model, char *particle, vec3_t origin, vec3_t angle
 
 	LM_GenerateList();
 	Grid_RecalcRouting(&clMap, lm->name, lmList);
-	/*  Com_Printf( "adding model %s %i\n", lm->name, numLMs ); */
+/* 	Com_Printf("adding model %s %i\n", lm->name, numLMs); */
 
 	return lm;
 }

@@ -532,7 +532,7 @@ extern void MAP_MapCalcLine (const vec2_t start, const vec2_t end, mapline_t* li
 	else
 		n = -n + 1;
 
-/*	Com_Printf( "#(%3.1f %3.1f) -> (%3.1f %3.1f)\n", start[0], start[1], end[0], end[1] ); */
+/*	Com_Printf("#(%3.1f %3.1f) -> (%3.1f %3.1f)\n", start[0], start[1], end[0], end[1]); */
 
 	line->distance = fabs(phiEnd - phiStart) / n * todeg;
 	line->numPoints = n + 1;

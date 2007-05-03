@@ -241,7 +241,7 @@ static void DS_DestroyBuffers (void)
 
 	/* only release primary buffer if it's not also the mixing buffer we just released */
 	if (pDSPBuf && (pDSBuf != pDSPBuf)) {
-		si->Com_DPrintf( "...releasing primary buffer\n" );
+		si->Com_DPrintf("...releasing primary buffer\n");
 		pDSPBuf->lpVtbl->Release(pDSPBuf);
 	}
 	pDSBuf = NULL;

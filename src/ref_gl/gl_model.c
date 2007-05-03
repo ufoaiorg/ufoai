@@ -125,7 +125,7 @@ static model_t *Mod_ForName (const char *name, qboolean crash)
 
 	memset(mod, 0, sizeof(model_t));
 	Q_strncpyz(mod->name, name, sizeof(mod->name));
-/*	Com_Printf( "name: %s\n", name ); */
+/*	Com_Printf("name: %s\n", name); */
 
 	/* load the file */
 	modfilelen = ri.FS_LoadFile(mod->name, (void **) &buf);

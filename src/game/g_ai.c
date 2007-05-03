@@ -484,9 +484,9 @@ static ai_action_t AI_PrepBestAction (player_t * player, edict_t * ent)
 	G_ClientMove(player, 0, ent->number, bestAia.to, qfalse, QUIET);
 
 #if 0
-	Com_DPrintf( "(%i %i %i) (%i %i %i)\n",
+	Com_DPrintf("(%i %i %i) (%i %i %i)\n",
 		(int)bestAia.to[0], (int)bestAia.to[1], (int)bestAia.to[2],
-		(int)bestAia.stop[0], (int)bestAia.stop[1], (int)bestAia.stop[2] );
+		(int)bestAia.stop[0], (int)bestAia.stop[1], (int)bestAia.stop[2]);
 #endif
 	return bestAia;
 }
@@ -506,7 +506,7 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 	ai_action_t bestAia;
 
 #ifdef PARANOID
-	Com_DPrintf( "AI_ActorThink: (ent %i, frame %i)\n", ent->number, level.framenum );
+	Com_DPrintf("AI_ActorThink: (ent %i, frame %i)\n", ent->number, level.framenum);
 #endif
 
 	/* if a weapon can be reloaded we attempt to do so if TUs permit, otherwise drop it */

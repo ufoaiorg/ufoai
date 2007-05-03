@@ -1233,7 +1233,7 @@ void CL_ParsePtlCmds (const char *name, char **text)
 				pc->ref = pcmdPos;
 				pcmdPos += Com_ParseValue(&pcmdData[pc->ref], token, pc->type, 0, 0);
 
-/*				Com_Printf( "%s %s %i\n", vt_names[pc->type], token, pcmdPos - pc->ref, (char *)pc->ref ); */
+/*				Com_Printf("%s %s %i\n", vt_names[pc->type], token, pcmdPos - pc->ref, (char *)pc->ref); */
 				break;
 			}
 

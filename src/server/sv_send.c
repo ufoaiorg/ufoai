@@ -239,7 +239,7 @@ void SV_SendClientMessages(void)
 		/* just update reliable if needed */
 		if (c->netchan.message.cursize || (c->curMsg != c->addMsg && !c->netchan.message.cursize)
 			|| curtime - c->netchan.last_sent > 1000) {
-/*			Com_Printf( "send %i %i\n", c->netchan.message.cursize, c->netchan.reliable_length ); */
+/*			Com_Printf("send %i %i\n", c->netchan.message.cursize, c->netchan.reliable_length); */
 			if (c->curMsg != c->addMsg && !c->netchan.message.cursize) {
 				/* copy the next reliable message */
 				c->curMsg = (c->curMsg + 1) % RELIABLEBUFFERS;

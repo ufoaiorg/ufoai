@@ -269,11 +269,11 @@ LRESULT WINAPI MainWndProc (HWND hWnd, UINT uMsg, WPARAM  wParam, LPARAM lParam)
 				r.right  = 1;
 				r.bottom = 1;
 
-				style = GetWindowLong( hWnd, GWL_STYLE );
-				AdjustWindowRect( &r, style, FALSE );
+				style = GetWindowLong(hWnd, GWL_STYLE);
+				AdjustWindowRect(&r, style, FALSE);
 
-				Cvar_SetValue( "vid_xpos", xPos + r.left);
-				Cvar_SetValue( "vid_ypos", yPos + r.top);
+				Cvar_SetValue("vid_xpos", xPos + r.left);
+				Cvar_SetValue("vid_ypos", yPos + r.top);
 				vid_xpos->modified = qfalse;
 				vid_ypos->modified = qfalse;
 				if (ActiveApp)
@@ -314,7 +314,7 @@ LRESULT WINAPI MainWndProc (HWND hWnd, UINT uMsg, WPARAM  wParam, LPARAM lParam)
 	case WM_SYSKEYDOWN:
 		if (wParam == 13) {
 			if (vid_fullscreen)
-				Cvar_SetValue( "vid_fullscreen", !vid_fullscreen->value );
+				Cvar_SetValue("vid_fullscreen", !vid_fullscreen->value);
 			return 0;
 		}
 		/* fall through */

@@ -855,7 +855,7 @@ static void CM_CheckUnit (routing_t * map, int x, int y, int z)
 				end[2] = start[2] + PH - (start[2] - tend[2]);
 				height = UNIT_HEIGHT - (start[2] - tend[2]);
 
-/*				printf( "%i %i\n", (int)height, (int)(start[2]-tend[2]) ); */
+/*				printf("%i %i\n", (int)height, (int)(start[2]-tend[2])); */
 
 				if (!CM_EntTestLineDM(start, end, tend))
 					map->route[z][y][x] = ((height + QUANT / 2) / QUANT < 0) ? 0 : (height + QUANT / 2) / QUANT;
@@ -991,8 +991,8 @@ static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
 	/* calculate new border */
 	CMod_GetMapSize(&clMap);
 
-/*	Com_Printf( "route: (%i %i) fall: %i step: %i\n", */
-/*		(int)map->route[0][0][0], (int)map->route[1][0][0], (int)map->fall[0][0], (int)map->step[0][0] ); */
+/*	Com_Printf("route: (%i %i) fall: %i step: %i\n", */
+/*		(int)map->route[0][0][0], (int)map->route[1][0][0], (int)map->fall[0][0], (int)map->step[0][0]); */
 }
 
 
@@ -2009,7 +2009,7 @@ static trace_t CM_BoxTrace (vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, 
 }
 
 #ifdef _MSC_VER
-#pragma optimize( "", off )
+#pragma optimize("", off )
 #endif
 
 /**
@@ -2081,7 +2081,7 @@ trace_t CM_TransformedBoxTrace (vec3_t start, vec3_t end, vec3_t mins, vec3_t ma
 }
 
 #ifdef _MSC_VER
-#pragma optimize( "", on )
+#pragma optimize("", on )
 #endif
 
 
@@ -2180,9 +2180,9 @@ void BuildTnode_r (int node)
 		VectorCopy(curTile->nodes[n->children[0]].maxs, c0maxs);
 		VectorCopy(curTile->nodes[n->children[1]].mins, c1mins);
 
-		/*  printf( "(%i %i : %i %i) (%i %i : %i %i)\n", */
+		/*  printf("(%i %i : %i %i) (%i %i : %i %i)\n", */
 		/*      (int)dnodes[n->children[0]].mins[0], (int)dnodes[n->children[0]].mins[1], (int)dnodes[n->children[0]].maxs[0], (int)dnodes[n->children[0]].maxs[1], */
-		/*      (int)dnodes[n->children[1]].mins[0], (int)dnodes[n->children[1]].mins[1], (int)dnodes[n->children[1]].maxs[0], (int)dnodes[n->children[1]].maxs[1] ); */
+		/*      (int)dnodes[n->children[1]].mins[0], (int)dnodes[n->children[1]].mins[1], (int)dnodes[n->children[1]].maxs[0], (int)dnodes[n->children[1]].maxs[1]); */
 
 		for (i = 0; i < 2; i++)
 			if (c0maxs[i] <= c1mins[i]) {
@@ -2708,7 +2708,7 @@ int Grid_MoveCheck (struct routing_s *map, pos3_t pos, int sz, int l)
 		while (map->fall[pos[1]][pos[0]] & (1 << z))
 			z--;
 
-		/*  Com_Printf( "pos: (%i %i %i) (x,y,z): (%i %i %i)\n", pos[0], pos[1], pos[2], x, y, z ); */
+		/*  Com_Printf("pos: (%i %i %i) (x,y,z): (%i %i %i)\n", pos[0], pos[1], pos[2], x, y, z); */
 
 		if (pos[2] == z)
 			break;				/* found it! */

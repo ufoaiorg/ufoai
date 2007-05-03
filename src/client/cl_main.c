@@ -2410,7 +2410,7 @@ extern void CL_Init (void)
 	IN_Init();
 
 	/* FIXME: Maybe we should activate this again when all savegames issues are solved */
-/*	Cbuf_AddText( "loadteam current\n" ); */
+/*	Cbuf_AddText("loadteam current\n"); */
 	FS_ExecAutoexec();
 	Cbuf_Execute();
 

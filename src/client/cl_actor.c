@@ -634,11 +634,11 @@ static void CL_UpdateReactionFiremodes (char hand, int actor_idx, int active_fir
 	}
 
 	/* Search for a (reaction) firemode with the given index and store/send it. */
-	CL_SetReactionFiremode( actor_idx, -1, -1, -1 );
+	CL_SetReactionFiremode( actor_idx, -1, -1, -1);
 	for (i = 0; i < ammo->numFiredefs[weap_fd_idx]; i++) {
 		if (ammo->fd[weap_fd_idx][i].reaction) {
 			if (i == active_firemode) {
-				CL_SetReactionFiremode( actor_idx, handidx, ammo->weap_idx[weap_fd_idx], i );
+				CL_SetReactionFiremode( actor_idx, handidx, ammo->weap_idx[weap_fd_idx], i);
 				return;
 			}
 		}
@@ -1302,7 +1302,7 @@ void CL_ActorUpdateCVars (void)
 					if (actorMoveLength <= selActor->TU)
 						Com_sprintf(mouseText, sizeof(mouseText), "%i (%i)\n", actorMoveLength, selActor->TU);
 					else
-						Com_sprintf(mouseText, sizeof(mouseText), "- (-)\n" );
+						Com_sprintf(mouseText, sizeof(mouseText), "- (-)\n");
 				} else {
 					CL_RefreshWeaponButtons(selActor->TU);
 				}
@@ -1967,7 +1967,7 @@ void CL_ActorDoMove (sizebuf_t * sb)
 	}
 
 	if (le->state & STATE_DEAD) {
-		Com_Printf( "Can't move, actor dead\n" );
+		Com_Printf("Can't move, actor dead\n");
 		return;
 	}
 
@@ -2031,7 +2031,7 @@ void CL_ActorDoTurn (sizebuf_t *sb)
 	}
 
 	if (le->state & STATE_DEAD) {
-		Com_Printf( "Can't turn, actor dead\n" );
+		Com_Printf("Can't turn, actor dead\n");
 		return;
 	}
 
@@ -2184,7 +2184,7 @@ void CL_ActorDoShoot (sizebuf_t * sb)
 	}
 
 	if (le->state & STATE_DEAD) {
-		Com_Printf( "Can't shoot, actor dead\n" );
+		Com_Printf("Can't shoot, actor dead\n");
 		return;
 	}
 
@@ -2321,7 +2321,7 @@ void CL_ActorStartShoot (sizebuf_t * sb)
 	}
 
 	if (le->state & STATE_DEAD) {
-		Com_Printf( "Can't start shoot, actor dead\n" );
+		Com_Printf("Can't start shoot, actor dead\n");
 		return;
 	}
 

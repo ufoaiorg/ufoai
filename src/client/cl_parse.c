@@ -787,7 +787,7 @@ static void CL_ActorAppear (sizebuf_t *sb)
 		le = LE_Add(entnum);
 		newActor = qtrue;
 	} else {
-/*		Com_Printf( "Actor appearing already visible... overwriting the old one\n" ); */
+/*		Com_Printf("Actor appearing already visible... overwriting the old one\n"); */
 		le->inuse = qtrue;
 		newActor = qfalse;
 	}
@@ -830,7 +830,7 @@ static void CL_ActorAppear (sizebuf_t *sb)
 	if (cls.state == ca_active && !(le->state & STATE_DEAD)) {
 		/* center view (if wanted) */
 		if (cl_centerview->integer> 1 || (cl_centerview->integer == 1 && cl.actTeam != cls.team)) {
-			VectorCopy( le->origin, cl.cam.reforg );
+			VectorCopy( le->origin, cl.cam.reforg);
 			Cvar_SetValue("cl_worldlevel", le->pos[2]);
 		}
 
@@ -846,7 +846,7 @@ static void CL_ActorAppear (sizebuf_t *sb)
 					eyes[2] += EYE_HT_STAND;
 				ptl = CL_ParticleSpawn("fadeTracer", 0, eyes, le->origin, NULL);
 				if ( le->team == TEAM_CIVILIAN )
-					VectorSet( ptl->color, 0.2, 0.2, 1 );
+					VectorSet( ptl->color, 0.2, 0.2, 1);
 			}
 
 			/* message */
@@ -876,8 +876,8 @@ static void CL_ActorAppear (sizebuf_t *sb)
 	/* add team members to the actor list */
 	CL_AddActorToTeamList(le);
 
-/*	Com_Printf( "Player at (%i %i %i) -> (%f %f %f)\n", */
-/*		le->pos[0], le->pos[1], le->pos[2], le->origin[0], le->origin[1], le->origin[2] ); */
+/*	Com_Printf("Player at (%i %i %i) -> (%f %f %f)\n", */
+/*		le->pos[0], le->pos[1], le->pos[2], le->origin[0], le->origin[1], le->origin[2]); */
 }
 
 
@@ -1052,7 +1052,7 @@ static void CL_InvAdd (sizebuf_t *sb)
 		return;
 	}
 	if (!le->inuse)
-		Com_DPrintf( "InvAdd: warning... LE found but not in-use\n" );
+		Com_DPrintf("InvAdd: warning... LE found but not in-use\n");
 
 	nr = MSG_ReadShort(sb) / 6;
 
@@ -1096,7 +1096,7 @@ static void CL_InvDel (sizebuf_t *sb)
 
 	le = LE_Get(number);
 	if (!le) {
-		Com_DPrintf( "InvDel message ignored... LE not found\n" );
+		Com_DPrintf("InvDel message ignored... LE not found\n");
 		return;
 	}
 
@@ -1169,7 +1169,7 @@ static void CL_InvReload (sizebuf_t *sb)
 
 	le = LE_Get(number);
 	if (!le) {
-		Com_DPrintf( "CL_InvReload: only sound played\n" );
+		Com_DPrintf("CL_InvReload: only sound played\n");
 		return;
 	}
 

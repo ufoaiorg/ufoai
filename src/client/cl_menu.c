@@ -3064,7 +3064,7 @@ static void MN_ReloadMenus_f (void)
 	assert(adataize);
 
 	/* pre-stage parsing */
-	FS_BuildFileList( "ufos/*.ufo" );
+	FS_BuildFileList("ufos/*.ufo");
 	FS_NextScriptHeader(NULL, NULL, NULL);
 	text = NULL;
 
@@ -3079,7 +3079,7 @@ static void MN_ReloadMenus_f (void)
 
 	curadata = adata;
 
-	while ((type = FS_NextScriptHeader( "ufos/*.ufo", &name, &text)) != 0 )
+	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != 0 )
 		if (!Q_strncmp(type, "menu", 4))
 			MN_ParseMenu(name, &text);
 }
@@ -3301,7 +3301,7 @@ qboolean MN_ParseAction (menuNode_t * menuNode, menuAction_t * action, char **te
 			/* standard function execution */
 			for (i = 0; i < EA_CALL; i++)
 				if (!Q_stricmp(*token, ea_strings[i])) {
-/*					Com_Printf( "   %s", *token ); */
+/*					Com_Printf("   %s", *token); */
 
 					/* add the action */
 					if (lastAction) {
@@ -3319,14 +3319,14 @@ qboolean MN_ParseAction (menuNode_t * menuNode, menuAction_t * action, char **te
 						if (!*text)
 							return qfalse;
 
-/*						Com_Printf( " %s", *token ); */
+/*						Com_Printf(" %s", *token); */
 
 						/* get the value */
 						action->data = curadata;
 						curadata += Com_ParseValue(curadata, *token, ea_values[i], 0, 0);
 					}
 
-/*					Com_Printf( "\n" ); */
+/*					Com_Printf("\n"); */
 
 					/* get next token */
 					*token = COM_EParse(text, errhead, NULL);
@@ -3340,7 +3340,7 @@ qboolean MN_ParseAction (menuNode_t * menuNode, menuAction_t * action, char **te
 
 			/* node property setting */
 			if (**token == '*') {
-/*				Com_Printf( "   %s", *token ); */
+/*				Com_Printf("   %s", *token); */
 
 				/* add the action */
 				if (lastAction) {
@@ -3363,7 +3363,7 @@ qboolean MN_ParseAction (menuNode_t * menuNode, menuAction_t * action, char **te
 				if (!*text)
 					return qfalse;
 
-/*				Com_Printf( " %s", *token ); */
+/*				Com_Printf(" %s", *token); */
 
 				for (val = nps, i = 0; val->type; val++, i++)
 					if (!Q_stricmp(*token, val->string)) {
@@ -3386,7 +3386,7 @@ qboolean MN_ParseAction (menuNode_t * menuNode, menuAction_t * action, char **te
 				if (!*text)
 					return qfalse;
 
-/*				Com_Printf( " %s\n", *token ); */
+/*				Com_Printf(" %s\n", *token); */
 
 				curadata += sizeof(int);
 				curadata += Com_ParseValue(curadata, *token, val->type, 0, val->size);
@@ -3404,7 +3404,7 @@ qboolean MN_ParseAction (menuNode_t * menuNode, menuAction_t * action, char **te
 			for (node = menus[numMenus - 1].firstNode; node; node = node->next)
 				if ((node->type == MN_FUNC || node->type == MN_CONFUNC || node->type == MN_CVARFUNC)
 					&& !Q_strncmp(node->name, *token, sizeof(node->name))) {
-/*					Com_Printf( "   %s\n", node->name ); */
+/*					Com_Printf("   %s\n", node->name); */
 
 					/* add the action */
 					if (lastAction) {
@@ -3500,7 +3500,7 @@ qboolean MN_ParseNodeBody (menuNode_t * node, char **text, char **token)
 
 			for (val = nps; val->type; val++)
 				if (!Q_strcmp(*token, val->string)) {
-/*					Com_Printf( "  %s", *token ); */
+/*					Com_Printf("  %s", *token); */
 
 					if (val->type != V_NULL) {
 						/* get parameter values */
@@ -3508,7 +3508,7 @@ qboolean MN_ParseNodeBody (menuNode_t * node, char **text, char **token)
 						if (!*text)
 							return qfalse;
 
-/*						Com_Printf( " %s", *token ); */
+/*						Com_Printf(" %s", *token); */
 
 						/* get the value */
 						/* 0, -1, -2, -3, -4, -5 fills the data array in menuNode_t */
@@ -3517,7 +3517,7 @@ qboolean MN_ParseNodeBody (menuNode_t * node, char **text, char **token)
 								Com_Printf("MN_ParseNodeBody: Wrong size for value %s\n", val->string);
 						} else {
 							/* a reference to data is handled like this */
-/* 							Com_Printf( "%i %s\n", val->ofs, *token ); */
+/* 							Com_Printf("%i %s\n", val->ofs, *token); */
 							node->data[-((int)val->ofs)] = curadata;
 							if (**token == '*')
 								curadata += Com_ParseValue(curadata, *token, V_STRING, 0, 0);
@@ -3526,7 +3526,7 @@ qboolean MN_ParseNodeBody (menuNode_t * node, char **text, char **token)
 						}
 					}
 
-/*					Com_Printf( "\n" ); */
+/*					Com_Printf("\n"); */
 
 					/* get next token */
 					*token = COM_EParse(text, errhead, node->name);
@@ -3541,7 +3541,7 @@ qboolean MN_ParseNodeBody (menuNode_t * node, char **text, char **token)
 				if (!Q_strcmp(*token, ne_strings[i])) {
 					menuAction_t **action;
 
-/*					Com_Printf( "  %s\n", *token ); */
+/*					Com_Printf("  %s\n", *token); */
 
 					/* add new actions to end of list */
 					action = (menuAction_t **) ((byte *) node + ne_values[i]);
@@ -3680,7 +3680,7 @@ qboolean MN_ParseMenuBody (menu_t * menu, char **text)
 							Sys_Error("MAX_MENUNODES exceeded\n");
 						node = &menuNodes[numNodes++];
 						memset(node, 0, sizeof(menuNode_t));
-						Q_strncpyz(node->name, token, MAX_VAR);
+						Q_strncpyz(node->name, token, sizeof(node->name));
 
 						/* link it in */
 						if (lastNode)
@@ -3695,7 +3695,7 @@ qboolean MN_ParseMenuBody (menu_t * menu, char **text)
 					/* node default values */
 					node->padding = 3;
 
-/*					Com_Printf( " %s %s\n", nt_strings[i], *token ); */
+/*					Com_Printf(" %s %s\n", nt_strings[i], *token); */
 
 					/* check for special nodes */
 					switch (node->type) {

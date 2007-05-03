@@ -108,7 +108,7 @@ static qboolean SND_InitWav (void)
 	int i;
 	HRESULT hr;
 
-	si->Com_Printf( "Initializing wave sound\n" );
+	si->Com_Printf("Initializing wave sound\n");
 
 	snd_sent = 0;
 	snd_completed = 0;
@@ -171,14 +171,14 @@ static qboolean SND_InitWav (void)
 	}
 	si->Com_DPrintf("ok\n");
 
-	si->Com_DPrintf ("...locking waveform buffer: ");
+	si->Com_DPrintf("...locking waveform buffer: ");
 	lpData = GlobalLock(hData);
 	if (!lpData) {
-		si->Com_DPrintf( " failed\n" );
+		si->Com_DPrintf(" failed\n");
 		FreeSound ();
 		return qfalse;
 	}
-	memset (lpData, 0, gSndBufSize);
+	memset(lpData, 0, gSndBufSize);
 	si->Com_DPrintf("ok\n");
 
 	/*

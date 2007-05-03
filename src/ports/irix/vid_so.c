@@ -244,7 +244,7 @@ qboolean VID_LoadRefresh (const char *name)
 #ifndef REF_HARD_LINKED
 	getcwd(curpath, sizeof(curpath));
 
-	Com_Printf( "------- Loading %s -------\n", name );
+	Com_Printf("------- Loading %s -------\n", name);
 
 	/* now run through the search paths */
 	path = NULL;

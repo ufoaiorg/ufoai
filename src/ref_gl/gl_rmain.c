@@ -1244,7 +1244,7 @@ static qboolean R_Init (HINSTANCE hinstance, WNDPROC wndproc)
 		} else if (gl_config.renderer & GL_RENDERER_POWERVR)
 			ri.Cvar_Set("gl_monolightmap", "0");
 		else
-			ri.Cvar_Set( "gl_monolightmap", "0" );
+			ri.Cvar_Set("gl_monolightmap", "0");
 	}
 
 #if defined (__linux__) || defined (__FreeBSD__) || defined (__NetBSD__)

@@ -1623,8 +1623,8 @@ qboolean OGG_Open (const char *filename)
 		return qfalse;
 	}
 
-/*	Com_Printf( "Playing '%s'\n", filename ); */
-	Q_strncpyz(music.ovPlaying, filename, MAX_QPATH);
+/*	Com_Printf("Playing '%s'\n", filename); */
+	Q_strncpyz(music.ovPlaying, filename, sizeof(music.ovPlaying));
 	music.ovSection = 0;
 	return qtrue;
 }

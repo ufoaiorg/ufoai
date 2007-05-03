@@ -603,9 +603,9 @@ static void SP_func_breakable (edict_t * self)
 	if (!self->model)
 		Com_Printf("Error - func_breakable with no model\n");
 #if 0
-	Com_Printf( "model (%s) num: %i mins: %i %i %i maxs: %i %i %i\n",
+	Com_Printf("model (%s) num: %i mins: %i %i %i maxs: %i %i %i\n",
 		self->model, self->mapNum, (int)self->mins[0], (int)self->mins[1], (int)self->mins[2],
-		(int)self->maxs[0], (int)self->maxs[1], (int)self->maxs[2] );
+		(int)self->maxs[0], (int)self->maxs[1], (int)self->maxs[2]);
 #endif
 }
 
