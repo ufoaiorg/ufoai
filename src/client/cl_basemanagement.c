@@ -492,8 +492,16 @@ static void B_UpdateBaseBuildingStatus (building_t* building, base_t* base, buil
 		PR_UpdateProductionTime(base->idx);
 		break;
 	case B_HOSPITAL:
-		if (building->buildingStatus == B_STATUS_WORKING)
-			base->hasHospital = qtrue;
+		if (building->buildingStatus == B_STATUS_WORKING) {
+			/* If this is first hospital in base, setup relevant arrays. */
+			if (B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType) == 1) {
+				memset(base->hospitalList, -1, sizeof(base->hospitalList));
+				memset(base->hospitalMissionList, -1, sizeof(base->hospitalMissionList));
+				base->hospitalListCount = 0;
+				base->hospitalMissionListCount = 0;
+			}
+ 			base->hasHospital = qtrue;
+		}
 		B_UpdateBaseCapacities(CAP_HOSPSPACE, base);
 		break;
 	case B_HANGAR:
@@ -2562,11 +2570,12 @@ void CL_DropshipReturned (base_t* base, aircraft_t* aircraft)
 	/* Don't call cargo functions if aircraft is not a transporter. */
 	if (aircraft->type != AIRCRAFT_TRANSPORTER)
 		return;
-	baseCurrent = base;
+	baseCurrent = base;	/* @todo: hehe, i was great here - destroying the baseCurrent pointer :> */
 	AL_AddAliens();		/**< Add aliens to Alien Containment. */
 	AL_CountAll();		/**< Count all alive aliens. */
 	INV_SellOrAddItems();	/**< Sell collected items or add them to storage. */
 	RS_MarkResearchable(qfalse);	/**< Mark new technologies researchable. */
+	HOS_ReaddEmployeesInHospital(aircraft);	/**< Try to readd soldiers to hospital. */
 
 	/* Now empty alien/item cargo just in case. */
 	memset(aircraft->aliencargo, 0, sizeof(aircraft->aliencargo));
@@ -2791,6 +2800,18 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
 		/* Buy/Sell factors. */
 		MSG_WriteByte(sb, b->buyfactor);
 		MSG_WriteByte(sb, b->sellfactor);
+
+		/* Hospital stuff. */
+		MSG_WriteShort(sb, b->hospitalListCount);
+		MSG_WriteByte(sb, b->hospitalMissionListCount);
+		for (k = 0; k < MAX_EMPL; k++) {
+			for (l = 0; l < MAX_EMPLOYEES; l++) {
+				MSG_WriteShort(sb, b->hospitalList[k][l]);
+			}
+		}
+		for (k = 0; k < MAX_TEAMLIST; k++) {
+			MSG_WriteShort(sb, b->hospitalMissionList[k]);
+		}
 	}
 	return qtrue;
 }
@@ -2946,6 +2967,18 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 			/* Buy/Sell factors. */
 			b->buyfactor = MSG_ReadByte(sb);
 			b->sellfactor = MSG_ReadByte(sb);
+
+			/* Hospital stuff. */
+			b->hospitalListCount = MSG_ReadShort(sb);
+			b->hospitalMissionListCount = MSG_ReadByte(sb);
+			for (k = 0; k < MAX_EMPL; k++) {
+				for (l = 0; l < MAX_EMPLOYEES; l++) {
+					b->hospitalList[k][l] = MSG_ReadShort(sb);
+				}
+			}
+			for (k = 0; k < MAX_TEAMLIST; k++) {
+				b->hospitalMissionList[k] = MSG_ReadShort(sb);
+			}
 		}
 
 		/* clear the mess of stray loaded pointers */

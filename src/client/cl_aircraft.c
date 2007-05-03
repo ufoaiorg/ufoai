@@ -224,7 +224,7 @@ void AIM_AircraftStart_f (void)
 	if (aircraft->status < AIR_IDLE) {
 		aircraft->pos[0] = baseCurrent->pos[0] + 2;
 		aircraft->pos[1] = baseCurrent->pos[1] + 2;
-		CL_RemoveEmployeesInHospital(aircraft);
+		HOS_RemoveEmployeesInHospital(aircraft);
 	}
 	MN_AddNewMessage(_("Notice"), _("Aircraft started"), qfalse, MSG_STANDARD, NULL);
 	aircraft->status = AIR_IDLE;
@@ -846,7 +846,6 @@ void CL_CampaignRunAircraft (int dt)
 						case AIR_RETURNING:
 							/* aircraft enter in  homebase */
 							CL_DropshipReturned((base_t*)aircraft->homebase, aircraft);
-							CL_ReaddEmployeesInHospital(aircraft);
 							aircraft->status = AIR_REFUEL;
 							break;
 						case AIR_TRANSPORT:
@@ -1201,7 +1200,7 @@ extern qboolean AIR_SendAircraftToMission (aircraft_t* aircraft, actMis_t* missi
 
 	/* if aircraft was in base, remove soldier aboard from hospital */
 	if (aircraft->status == AIR_REFUEL || aircraft->status == AIR_HOME)
-		CL_RemoveEmployeesInHospital(aircraft);
+		HOS_RemoveEmployeesInHospital(aircraft);
 
 	/* ensure interceptAircraft IDX is set correctly */
 	gd.interceptAircraft = aircraft->idx;

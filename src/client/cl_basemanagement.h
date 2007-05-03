@@ -216,6 +216,11 @@ typedef struct base_s {
 	int buyfactor;	/**< Factor for buying items in Buy/Sell menu for this base. */
 	int sellfactor;	/**< Factor for selling items in Buy/Sell menu for this base. */
 
+	int hospitalList[MAX_EMPL][MAX_EMPLOYEES];	/**< Hospital list of employees currently being healed. */
+	int hospitalListCount;				/**< Counter for hospitalList. */
+	int hospitalMissionList[MAX_TEAMLIST];		/**< Hospital list of soldiers being healed but moved to the mission. */
+	int hospitalMissionListCount;A			/**< Counter for hospitalMissionList. */
+
 	int buildingToBuild;	/**< needed if there is another buildingpart to build (link to gd.buildingTypes) */
 
 	struct building_s *buildingCurrent; /**< needn't be saved */
@@ -235,7 +240,7 @@ void B_ClearBuilding(building_t *building);
 void B_ParseBuildings(const char *name, char **text, qboolean link);
 void B_ParseBases(const char *name, char **text);
 void B_BaseAttack(base_t* const base);
-void B_BaseResetStatus (base_t* const base);
+void B_BaseResetStatus(base_t* const base);
 building_t *B_GetBuildingByIdx(base_t* base, int idx);
 /*building_t *B_GetBuildingInBase(base_t* base, char* buildingID);*/
 building_t *B_GetBuildingType(const char *buildingName);
