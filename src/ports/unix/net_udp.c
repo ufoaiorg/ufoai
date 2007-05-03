@@ -555,8 +555,6 @@ void NET_OpenIP (void)
  */
 void NET_OpenIPX (void)
 {
-	net_total_in = net_packets_in = net_total_out = net_packets_out = 0;
-	net_inittime = (unsigned int)time(NULL);
 }
 
 
