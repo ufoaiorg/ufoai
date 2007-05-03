@@ -55,6 +55,25 @@ typedef enum {
 	MAX_ACITEMS
 } aircraftItemType_t;
 
+/** @brief Aircraft parameters. */
+typedef enum {
+	AIR_RANGE,	/**< Aircraft range. */
+	AIR_WRANGE,	/**< Aircraft weapon range - the maximum distance aircraft can open fire. */
+	AIR_SPEED,	/**< Aircraft speed. */
+	AIR_SHIELD,	/**< Aircraft shield. */
+	AIR_ECM,	/**< Aircraft electronic warfare level. */
+	AIR_DAMAGE,	/**< Aircraft damage points. */
+	AIR_ACCURACY,	/**< Aircraft accuracy - most accurate weapon. */
+	
+	AIR_MAX
+} aircraftParams_t;
+
+/** @brief Aircraft stats. */
+typedef struct aircraftStats_s {
+	aircraftParams_t param;	/**< Aircraft parameter... */
+	int value;		/**< ... and its value. */
+} aircraftStats_t;
+
 struct actMis_s;
 
 #define MAX_AIRCRAFTITEMS 64
@@ -138,6 +157,9 @@ typedef struct aircraft_s {
 	struct actMis_s* mission;	/**< The mission the aircraft is moving to */
 	int ufo;				/**< Ufo's id the aircraft is purchasing (gd.ufos + id) */
 	radar_t	radar;			/**< Radar to track ufos */
+	/*
+	aircraftStats_t stats;
+	*/
 
 	qboolean visible;		/**< The ufo is visible ? */
 } aircraft_t;
