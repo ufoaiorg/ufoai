@@ -501,7 +501,7 @@ extern void HOS_RemoveEmployeesInHospital (aircraft_t *aircraft)
 	for (i = 0; i < aircraft->size; i++) {
 		if (aircraft->teamIdxs[i] > -1) {
 			/* Check whether any team member is in base->hospitalList. */
-			employee = &(gd.employees[EMPL_SOLDIER][i]);
+			employee = &(gd.employees[EMPL_SOLDIER][aircraft->teamIdxs[i]]);
 			assert (employee);
 			for (j = 0; j < base->hospitalListCount; j++) {
 				/* If the soldier is in base->hospitalList, remove him ... */
@@ -540,7 +540,7 @@ extern void HOS_ReaddEmployeesInHospital (aircraft_t *aircraft)
 		if (aircraft->teamIdxs[i] > -1) {
 			for (j = 0; j < base->hospitalMissionListCount; j++) {
 				if ((aircraft->teamIdxs[i] == base->hospitalMissionList[j])) {
-					employee = &(gd.employees[EMPL_SOLDIER][i]);
+					employee = &(gd.employees[EMPL_SOLDIER][aircraft->teamIdxs[i]]);
 					assert (employee);
 					/* Soldier goes back to hospital only if he hasn't recover all his HP during mission (medikit). */
 					if (employee->chr.HP < employee->chr.maxHP)
