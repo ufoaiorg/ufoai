@@ -116,7 +116,7 @@ void HOS_AddToEmployeeList (base_t *base, employee_t* employee)
 	}
 	if (base->capacities[CAP_HOSPSPACE].cur < base->capacities[CAP_HOSPSPACE].max) {
 		base->hospitalList[employee->type][base->hospitalListCount] = employee->idx;
-		base->hospitalListCount++;	
+		base->hospitalListCount++;
 		base->capacities[CAP_HOSPSPACE].cur++;
 		return;
 	} else {
@@ -133,11 +133,11 @@ void HOS_AddToEmployeeList (base_t *base, employee_t* employee)
 void HOS_AddToInMissionEmployeeList (employee_t* employee, base_t *base)
 {
 	int i;
-	
-	assert (base);	
+
+	assert (base);
 	/* Do nothing if the base does not have hospital. */
 	if (!base->hasHospital)
-		return;	
+		return;
 
 	/* Already in our list? */
 	for (i = 0; i < base->hospitalMissionListCount; i++) {
@@ -288,7 +288,7 @@ static void HOS_Init_f (void)
 				/* If the employee is seriously wounded (HP <= 50% maxHP), make him red. */
 				if (employee->chr.HP <= (int) (employee->chr.maxHP * 0.5))
 					Cbuf_AddText(va("hospitalserious%i\n", j));
-				/* If the employee is semi-seriously wounded (HP <= 85% maxHP), make him yellow. */	
+				/* If the employee is semi-seriously wounded (HP <= 85% maxHP), make him yellow. */
 				else if (employee->chr.HP <= (int) (employee->chr.maxHP * 0.85))
 					Cbuf_AddText(va("hospitallight%i\n", j));
 				/* If the employee is currently being healed, make him blue. */
@@ -299,7 +299,7 @@ static void HOS_Init_f (void)
 					}
 				}
 				/* Display text in the correct list-entry. */
-				Cvar_Set(va("mn_hos_item%i", j), name);	
+				Cvar_Set(va("mn_hos_item%i", j), name);
 				/* Assign the employee to proper position on the list. */
 				hospitalList[j] = &gd.employees[type][i];
 				/* Increase the counter of list entries. */
@@ -472,7 +472,7 @@ static void HOS_StartHealing_f (void)
 }
 
 /**
- * @brief Moves soldiers leaving base between hospital arrays in base_t. 
+ * @brief Moves soldiers leaving base between hospital arrays in base_t.
  * @param[in] *aircraft Pointer to an aircraft with team onboard.
  * @sa AIM_AircraftStart_f
  * @sa AIR_SendAircraftToMission
@@ -535,7 +535,7 @@ extern void HOS_ReaddEmployeesInHospital (aircraft_t *aircraft)
 	/* Do nothing if the base does not have hospital. */
 	if (!base->hasHospital)
 		return;
-	
+
 	for (i = 0; i < aircraft->size; i++) {
 		if (aircraft->teamIdxs[i] > -1) {
 			for (j = 0; j < base->hospitalMissionListCount; j++) {
@@ -579,19 +579,7 @@ extern void HOS_Reset (void)
  */
 extern qboolean HOS_Save (sizebuf_t *sb, void* data)
 {
-#if 0
-	int i;
-
-	/* how many employees */
-	MSG_WriteShort(sb, employeesInHospitalListCount);
-
-	/* now store the employee id for each patient */
-	for (i = 0; i < employeesInHospitalListCount; i++) {
-		MSG_WriteByte(sb, employeesInHospitalList[i]->baseIDHired);
-		MSG_WriteByte(sb, employeesInHospitalList[i]->type);
-		MSG_WriteShort(sb, employeesInHospitalList[i]->idx);
-	}
-#endif
+	/* nothing to save here - all saved in cl_basemanagement.c */
 	return qtrue;
 }
 
@@ -602,17 +590,20 @@ extern qboolean HOS_Save (sizebuf_t *sb, void* data)
  */
 extern qboolean HOS_Load (sizebuf_t *sb, void* data)
 {
-#if 0
 	int i, baseID, type;
 
-	employeesInHospitalListCount = MSG_ReadShort(sb);
+	/* version 2.1.1 had some data stored here */
+	if (*(int*)data == 1) {	/* 2.1.1 */
+#if 0
+		employeesInHospitalListCount = MSG_ReadShort(sb);
 
-	for (i = 0; i < employeesInHospitalListCount; i++) {
-		baseID = MSG_ReadByte(sb);
-		type = MSG_ReadByte(sb);
-		employeesInHospitalList[i] = &(gd.employees[type][MSG_ReadShort(sb)]);
-	}
+		for (i = 0; i < employeesInHospitalListCount; i++) {
+			baseID = MSG_ReadByte(sb);
+			type = MSG_ReadByte(sb);
+			employeesInHospitalList[i] = &(gd.employees[type][MSG_ReadShort(sb)]);
+		}
 #endif
+	}
 	return qtrue;
 }
 
