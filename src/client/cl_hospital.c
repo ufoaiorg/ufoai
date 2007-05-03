@@ -40,6 +40,12 @@ static int employeesInHospitalListCount = 0;
 static employee_t* employeesHealingInMissionList[MAX_EMPLOYEES_IN_HOSPITAL];
 static int employeesHealingInMissionListCount = 0;
 
+/** @brief Hospital employee list in Hospital menu. */
+static employee_t *hospitalList[MAX_EMPLOYEES_IN_HOSPITAL];
+
+/** @brief Length of list in Hospital menu. */
+static int HOSPITAL_LIST_LENGHT;
+
 /**
  * @brief Remove an employee from a list (employeesInHospitalList or employeesHealingInMissionList)
  * @return qtrue is the removal is OK
@@ -274,7 +280,8 @@ static char hospitalText[1024];
  */
 static void HOS_Init_f (void)
 {
-	int i, type;
+	char name[128];
+	int i, j, k, type;
 	employee_t* employee = NULL;
 
 	if (!baseCurrent)
@@ -285,18 +292,54 @@ static void HOS_Init_f (void)
 		return;
 	}
 
-	*hospitalText = '\0';
-	menuText[TEXT_HOSPITAL] = hospitalText;
-
-	for (type = 0; type < MAX_EMPL; type++)
+	for (type = 0, j = 0; type < MAX_EMPL; type++) {
 		for (i = 0; i < gd.numEmployees[type]; i++) {
 			employee = &gd.employees[type][i];
-			/* only show those employees, that are in the current base */
+			/* Only show those employees, that are in the current base. */
 			if (!E_IsInBase(employee, baseCurrent))
 				continue;
-			if (employee->chr.HP < employee->chr.maxHP)
-				Q_strcat(hospitalText, va(_("%s\t%s\t(%i/%i)\n"), employee->chr.name, E_GetEmployeeString(type), employee->chr.HP, employee->chr.maxHP), sizeof(hospitalText));
+			if (employee->chr.HP < employee->chr.maxHP) {
+				/* Print rank for soldiers or type for other personel. */
+				if (type == EMPL_SOLDIER)
+					Com_sprintf(name, sizeof(name), _(gd.ranks[employee->chr.rank].shortname));
+				else
+					Com_sprintf(name, sizeof(name), E_GetEmployeeString(employee->type));
+				Q_strcat(name, " ", sizeof(name));
+				/* Print name. */
+				Q_strcat(name, employee->chr.name, sizeof(name));
+				Q_strcat(name, " ", sizeof(name));
+				/* Print HP stats. */
+				Q_strcat(name, va("(%i/%i)", employee->chr.HP, employee->chr.maxHP), sizeof(name));
+				Com_Printf("%s j: %i\n", name, j);
+				/* If the employee is seriously wounded (HP <= 50% maxHP), make him red. */
+				if (employee->chr.HP <= (int) (employee->chr.maxHP * 0.5))
+					Cbuf_AddText(va("hospitalserious%i\n", j));
+				/* If the employee is semi-seriously wounded (HP <= 85% maxHP), make him yellow. */	
+				else if (employee->chr.HP <= (int) (employee->chr.maxHP * 0.85))
+					Cbuf_AddText(va("hospitallight%i\n", j));
+				/* If the employee is currently being healed, make him blue. */
+				for (k = 0; k < employeesInHospitalListCount; k++) {
+					if (employeesInHospitalList[k] == employee) {
+						Cbuf_AddText(va("hospitalheal%i\n", j));
+						break;
+					}
+				}
+				/* Display text in the correct list-entry. */
+				Cvar_Set(va("mn_hos_item%i", j), name);	
+				/* Assign the employee to proper position on the list. */
+				hospitalList[j] = &gd.employees[type][i];
+				/* Increase the counter of list entries. */
+				j++;
+			}
 		}
+	}
+	
+	HOSPITAL_LIST_LENGHT = j;
+
+	/* Set rest of the list-entries to have no text at all. */
+	for (; j < 27; j++) {
+		Cvar_Set(va("mn_hos_item%i", j), "");
+	}
 
 	Cvar_SetValue("mn_hosp_medics", E_CountHired(baseCurrent, EMPL_MEDIC));
 	Cvar_SetValue("mn_hosp_heal_limit", baseCurrent->capacities[CAP_HOSPSPACE].max);

@@ -44,17 +44,122 @@ menu hospital
 	// employee list
 	// ==================
 
-	text hosp_list
-	{
-		pos		"30 30"
-		size	"420 712"
-//		bgcolor "1 1 1 0.5"
-		format	"22 170"
-		click
-		rclick
-		num		21
-		mousefx true
-	}
+	confunc hospitalserious0  { *hos_item0  color "1 0 0 1" }
+	confunc hospitalserious1  { *hos_item1  color "1 0 0 1" }
+	confunc hospitalserious2  { *hos_item2  color "1 0 0 1" }
+	confunc hospitalserious3  { *hos_item3  color "1 0 0 1" }
+	confunc hospitalserious4  { *hos_item4  color "1 0 0 1" }
+	confunc hospitalserious5  { *hos_item5  color "1 0 0 1" }
+	confunc hospitalserious6  { *hos_item6  color "1 0 0 1" }
+	confunc hospitalserious7  { *hos_item7  color "1 0 0 1" }
+	confunc hospitalserious8  { *hos_item8  color "1 0 0 1" }
+	confunc hospitalserious9  { *hos_item9  color "1 0 0 1" }
+	confunc hospitalserious10 { *hos_item10 color "1 0 0 1" }
+	confunc hospitalserious11 { *hos_item11 color "1 0 0 1" }
+	confunc hospitalserious12 { *hos_item12 color "1 0 0 1" }
+	confunc hospitalserious13 { *hos_item13 color "1 0 0 1" }
+	confunc hospitalserious14 { *hos_item14 color "1 0 0 1" }
+	confunc hospitalserious15 { *hos_item15 color "1 0 0 1" }
+	confunc hospitalserious16 { *hos_item16 color "1 0 0 1" }
+	confunc hospitalserious17 { *hos_item17 color "1 0 0 1" }
+	confunc hospitalserious18 { *hos_item18 color "1 0 0 1" }
+	confunc hospitalserious19 { *hos_item19 color "1 0 0 1" }
+	confunc hospitalserious20 { *hos_item20 color "1 0 0 1" }
+	confunc hospitalserious21 { *hos_item21 color "1 0 0 1" }
+	confunc hospitalserious22 { *hos_item22 color "1 0 0 1" }
+	confunc hospitalserious23 { *hos_item23 color "1 0 0 1" }
+	confunc hospitalserious24 { *hos_item24 color "1 0 0 1" }
+	confunc hospitalserious25 { *hos_item25 color "1 0 0 1" }
+	confunc hospitalserious26 { *hos_item26 color "1 0 0 1" }
+	confunc hospitalserious27 { *hos_item27 color "1 0 0 1" }
+
+	confunc hospitallight0  { *hos_item0  color "255 255 0 1" }
+	confunc hospitallight1  { *hos_item1  color "255 255 0 1" }
+	confunc hospitallight2  { *hos_item2  color "255 255 0 1" }
+	confunc hospitallight3  { *hos_item3  color "255 255 0 1" }
+	confunc hospitallight4  { *hos_item4  color "255 255 0 1" }
+	confunc hospitallight5  { *hos_item5  color "255 255 0 1" }
+	confunc hospitallight6  { *hos_item6  color "255 255 0 1" }
+	confunc hospitallight7  { *hos_item7  color "255 255 0 1" }
+	confunc hospitallight8  { *hos_item8  color "255 255 0 1" }
+	confunc hospitallight9  { *hos_item9  color "255 255 0 1" }
+	confunc hospitallight10 { *hos_item10 color "255 255 0 1" }
+	confunc hospitallight11 { *hos_item11 color "255 255 0 1" }
+	confunc hospitallight12 { *hos_item12 color "255 255 0 1" }
+	confunc hospitallight13 { *hos_item13 color "255 255 0 1" }
+	confunc hospitallight14 { *hos_item14 color "255 255 0 1" }
+	confunc hospitallight15 { *hos_item15 color "255 255 0 1" }
+	confunc hospitallight16 { *hos_item16 color "255 255 0 1" }
+	confunc hospitallight17 { *hos_item17 color "255 255 0 1" }
+	confunc hospitallight18 { *hos_item18 color "255 255 0 1" }
+	confunc hospitallight19 { *hos_item19 color "255 255 0 1" }
+	confunc hospitallight20 { *hos_item20 color "255 255 0 1" }
+	confunc hospitallight21 { *hos_item21 color "255 255 0 1" }
+	confunc hospitallight22 { *hos_item22 color "255 255 0 1" }
+	confunc hospitallight23 { *hos_item23 color "255 255 0 1" }
+	confunc hospitallight24 { *hos_item24 color "255 255 0 1" }
+	confunc hospitallight25 { *hos_item25 color "255 255 0 1" }
+	confunc hospitallight26 { *hos_item26 color "255 255 0 1" }
+	confunc hospitallight27 { *hos_item27 color "255 255 0 1" }
+
+
+	confunc hospitalheal0  { *hos_item0  color "0 0 1 1" }
+	confunc hospitalheal1  { *hos_item1  color "0 0 1 1" }
+	confunc hospitalheal2  { *hos_item2  color "0 0 1 1" }
+	confunc hospitalheal3  { *hos_item3  color "0 0 1 1" }
+	confunc hospitalheal4  { *hos_item4  color "0 0 1 1" }
+	confunc hospitalheal5  { *hos_item5  color "0 0 1 1" }
+	confunc hospitalheal6  { *hos_item6  color "0 0 1 1" }
+	confunc hospitalheal7  { *hos_item7  color "0 0 1 1" }
+	confunc hospitalheal8  { *hos_item8  color "0 0 1 1" }
+	confunc hospitalheal9  { *hos_item9  color "0 0 1 1" }
+	confunc hospitalheal10 { *hos_item10 color "0 0 1 1" }
+	confunc hospitalheal11 { *hos_item11 color "0 0 1 1" }
+	confunc hospitalheal12 { *hos_item12 color "0 0 1 1" }
+	confunc hospitalheal13 { *hos_item13 color "0 0 1 1" }
+	confunc hospitalheal14 { *hos_item14 color "0 0 1 1" }
+	confunc hospitalheal15 { *hos_item15 color "0 0 1 1" }
+	confunc hospitalheal16 { *hos_item16 color "0 0 1 1" }
+	confunc hospitalheal17 { *hos_item17 color "0 0 1 1" }
+	confunc hospitalheal18 { *hos_item18 color "0 0 1 1" }
+	confunc hospitalheal19 { *hos_item19 color "0 0 1 1" }
+	confunc hospitalheal20 { *hos_item20 color "0 0 1 1" }
+	confunc hospitalheal21 { *hos_item21 color "0 0 1 1" }
+	confunc hospitalheal22 { *hos_item22 color "0 0 1 1" }
+	confunc hospitalheal23 { *hos_item23 color "0 0 1 1" }
+	confunc hospitalheal24 { *hos_item24 color "0 0 1 1" }
+	confunc hospitalheal25 { *hos_item25 color "0 0 1 1" }
+	confunc hospitalheal26 { *hos_item26 color "0 0 1 1" }
+	confunc hospitalheal27 { *hos_item27 color "0 0 1 1" }
+
+	string hos_item0	{ string "*cvar mn_hos_item0"		pos "30 30"		color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 0" } }
+	string hos_item1	{ string "*cvar mn_hos_item1"		pos "30 50"		color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 1" } }
+	string hos_item2	{ string "*cvar mn_hos_item2"		pos "30 70"		color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 2" } }
+	string hos_item3	{ string "*cvar mn_hos_item3"		pos "30 90"		color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 3" } }
+	string hos_item4	{ string "*cvar mn_hos_item4"		pos "30 110"	color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 4" } }
+	string hos_item5	{ string "*cvar mn_hos_item5"		pos "30 130"	color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 5" } }
+	string hos_item6	{ string "*cvar mn_hos_item6"		pos "30 150"	color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 6" } }
+	string hos_item7	{ string "*cvar mn_hos_item7"		pos "30 170"	color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 7" } }
+	string hos_item8	{ string "*cvar mn_hos_item8"		pos "30 190"	color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 8" } }
+	string hos_item9	{ string "*cvar mn_hos_item9"		pos "30 210"	color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 9" } }
+	string hos_item10	{ string "*cvar mn_hos_item10"	pos "30 230"	color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 10" } }
+	string hos_item11	{ string "*cvar mn_hos_item11"	pos "30 250"	color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 11" } }
+	string hos_item12	{ string "*cvar mn_hos_item12"	pos "30 270"	color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 12" } }
+	string hos_item13	{ string "*cvar mn_hos_item13"	pos "30 290"	color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 13" } }
+	string hos_item14	{ string "*cvar mn_hos_item14"	pos "30 310"	color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 14" } }
+	string hos_item15	{ string "*cvar mn_hos_item15"	pos "30 330"	color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 15" } }
+	string hos_item16	{ string "*cvar mn_hos_item16"	pos "30 350"	color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 16" } }
+	string hos_item17	{ string "*cvar mn_hos_item17"	pos "30 370"	color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 17" } }
+	string hos_item18	{ string "*cvar mn_hos_item18"	pos "30 390"	color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 18" } }
+	string hos_item19	{ string "*cvar mn_hos_item19"	pos "30 410"	color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 19" } }
+	string hos_item20	{ string "*cvar mn_hos_item20"	pos "30 430"	color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 20" } }
+	string hos_item21	{ string "*cvar mn_hos_item21"	pos "30 450"	color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 21" } }
+	string hos_item22	{ string "*cvar mn_hos_item22"	pos "30 470"	color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 22" } }
+	string hos_item23	{ string "*cvar mn_hos_item23"	pos "30 490"	color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 23" } }
+	string hos_item24	{ string "*cvar mn_hos_item24"	pos "30 510"	color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 24" } }
+	string hos_item25	{ string "*cvar mn_hos_item25"	pos "30 530"	color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 25" } }
+	string hos_item26	{ string "*cvar mn_hos_item26"	pos "30 550"	color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 26" } }
+	string hos_item27	{ string "*cvar mn_hos_item27"	pos "30 570"	color "1 1 1 1"	size "275 16"	click { cmd "hosp_list_click 27" } }
 
 	// ==================
 	// healing limit
@@ -114,6 +219,55 @@ menu hospital
 		string	"*cvar mn_hosp_medics"
 		pos		"975 140"
 		align	ur
+	}
+
+	// ==================
+	// legend
+	// ==================
+
+	string hos_legend
+	{
+		string	"_Legend"
+		pos		"510 480"
+		font		f_small
+		align		ul
+		color		"1 1 1 1"
+	}
+
+	string hos_legend_blue
+	{
+		string	"_Blue means employeer currently being healed."
+		pos		"510 500"
+		font		f_small
+		align		ul
+		color		"0 0 1 1"
+	}
+
+	string hos_legend_red
+	{
+		string	"_Red means employeer heavily wounded."
+		pos		"510 520"
+		font		f_small
+		align		ul
+		color		"1 0 0 1"
+	}
+
+	string hos_legend_yellow
+	{
+		string	"_Yellow means employeer slightly wounded."
+		pos		"510 540"
+		font		f_small
+		align		ul
+		color		"255 255 0 1"
+	}
+
+	string hos_legend_green
+	{
+		string	"_Green means employeer under surgery proceedings."
+		pos		"510 560"
+		font		f_small
+		align		ul
+		color		"0 1 0 1"
 	}
 
 	// ==================
