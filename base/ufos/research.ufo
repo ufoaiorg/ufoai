@@ -2387,6 +2387,21 @@ tech rs_building_workshop
 	time	0
 }
 
+tech rs_building_antimatter
+{
+	type		building
+	description	"_b_antimatter_txt"
+	up_chapter	buildings
+
+	require_AND
+	{
+		tech rs_antimatter
+	}
+
+	provides	building_amstorage
+	time		0
+}
+
 //========================
 // Crafts - Human
 //========================

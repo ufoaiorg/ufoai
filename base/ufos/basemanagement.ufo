@@ -343,6 +343,19 @@ building building_hospital
 	capacity	30
 }
 
+building building_amstorage
+{
+	name		"_Antimatter Storage"
+	image		base/amstorage
+	fixcosts	750000
+	depends		building_powerplant 
+	build_time	20
+	varcosts	10000
+	map_name	"amstorage"
+	pedia		rs_building_antimatter
+}
+
+
 base main
 {
 	base1		"_Home"
