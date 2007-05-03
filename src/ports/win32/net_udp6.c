@@ -910,7 +910,9 @@ int NET_IPSocket (char *net_interface, int port, netsrc_t type, int family)
 
 
 /**
- * @brief
+ * @brief Open the server and client IPv6 (and IPv4) sockets
+ * @sa NET_OpenIPX
+ * @todo: should return a value to indicate success/failure
  */
 void NET_OpenIP (void)
 {
@@ -918,18 +920,29 @@ void NET_OpenIP (void)
 	int		port;
 	int		dedicated;
 
+	/* get our ip address from cvar "ip"
+	 * or use "localhost" if it is not set */
 	ip = Cvar_Get("ip", "localhost", CVAR_NOSET, NULL);
 
 	dedicated = Cvar_VariableInteger("dedicated");
 
+	/* create server sockets if there are none yet */
 	if (!ip_sockets[NS_SERVER]) {
+		/* lookup the server port from cvar "ip_hostport",
+		 * if it isn't set, use 0 */
 		port = Cvar_Get("ip_hostport", "0", CVAR_NOSET, NULL)->integer;
+		/* for our purposes port 0 is invalid */
 		if (!port) {
+			/* if we didn't get a valid port, try cvar "hostport" */
 			port = Cvar_Get("hostport", "0", CVAR_NOSET, NULL)->integer;
 			if (!port) {
+				/* finaly try cvar "port"
+				 * and if it isn't set use the value of PORT_SERVER */
 				port = Cvar_Get("port", va("%i", PORT_SERVER), CVAR_NOSET, NULL)->integer;
 			}
 		}
+		/* at this point we might or might not have a valid port */
+		/* attempt to open the server IPv6 and IPv4 sockets with the best settings found */
 		ip6_sockets[NS_SERVER] = NET_IPSocket (ip->string, port, NS_SERVER, AF_INET6);
 		ip_sockets[NS_SERVER] = NET_IPSocket (ip->string, port, NS_SERVER, AF_INET);
 		if (!ip_sockets[NS_SERVER] && !ip6_sockets[NS_SERVER] && dedicated)
@@ -940,28 +953,40 @@ void NET_OpenIP (void)
 	if (dedicated)
 		return;
 
+	/* at this point we need client sockets as well */
+	/* create them if there are none yet */
 	if (!ip_sockets[NS_CLIENT]) {
+		/* lookup the client port from cvar "ip_clientport",
+		 * if it isn't set, use 0 */
 		port = Cvar_Get("ip_clientport", "0", CVAR_NOSET, NULL)->value;
 		if (!port) {
+			/* if that wasn't valid, try cvar "clientport" or PORT_CLIENT */
 			port = Cvar_Get("clientport", va("%i", PORT_CLIENT), CVAR_NOSET, NULL)->value;
+			/* if we can't find a valid port in the settings, use any available */
 			if (!port)
 				port = PORT_ANY;
 		}
+		/* open the client IPv6 and IPv4 sockets with the best settings found */
 		ip6_sockets[NS_CLIENT] = NET_IPSocket (ip->string, port, NS_CLIENT, AF_INET6);
 		ip_sockets[NS_CLIENT] = NET_IPSocket (ip->string, port, NS_CLIENT, AF_INET);
+		/* if that didn't work, retry by opening sockets with any available port */
 		if (!ip_sockets[NS_CLIENT] && !ip6_sockets[NS_CLIENT]) {
 			ip6_sockets[NS_CLIENT] = NET_IPSocket (ip->string, PORT_ANY, NS_CLIENT, AF_INET6);
 			ip_sockets[NS_CLIENT] = NET_IPSocket (ip->string, PORT_ANY, NS_CLIENT, AF_INET);
 		}
 	}
 
+	/* reset connection counters */
 	net_total_in = net_packets_in = net_total_out = net_packets_out = 0;
 	net_inittime = (unsigned int)time(NULL);
 }
 
 
 /**
- * @brief
+ * @brief Create an IPX socket
+ * param[in] port Port for this socket
+ * returns The created socket's descriptor upon success. Otherwise returns 0.
+ * @sa NET_IPSocket
  */
 int NET_IPXSocket (int port)
 {
@@ -1008,7 +1033,9 @@ int NET_IPXSocket (int port)
 
 
 /**
- * @brief
+ * @brief Open the server and client IPX sockets
+ * @sa NET_OpenIP
+ * @todo: should return a value to indicate success/failure
  */
 void NET_OpenIPX (void)
 {
@@ -1018,13 +1045,18 @@ void NET_OpenIPX (void)
 	dedicated = Cvar_VariableInteger("dedicated");
 
 	if (!ipx_sockets[NS_SERVER]) {
+		/* lookup the server port from cvar "ipx_hostport",
+		 * if it isn't set, use 0 */
 		port = Cvar_Get("ipx_hostport", "0", CVAR_NOSET, NULL)->integer;
 		if (!port) {
+			/* if that was invalid try cvar "hostport" */
 			port = Cvar_Get("hostport", "0", CVAR_NOSET, NULL)->integer;
 			if (!port) {
+				/* finally try cvar "port" followed by PORT_SERVER */
 				port = Cvar_Get("port", va("%i", PORT_SERVER), CVAR_NOSET, NULL)->integer;
 			}
 		}
+		/* attempt to open the server socket with the best settings found */
 		ipx_sockets[NS_SERVER] = NET_IPXSocket (port);
 	}
 
@@ -1032,25 +1064,36 @@ void NET_OpenIPX (void)
 	if (dedicated)
 		return;
 
+	/* at this point we need a client socket as well */
+	/* create it if there is none yet */
 	if (!ipx_sockets[NS_CLIENT]) {
+		/* lookup the client port from cvar "ipx_clientport",
+		 * if it isn't set, use 0 */
 		port = Cvar_Get("ipx_clientport", "0", CVAR_NOSET, NULL)->value;
 		if (!port) {
+			/* if that was invalid try cvar "clientport", followed by PORT_CLIENT */
 			port = Cvar_Get("clientport", va("%i", PORT_CLIENT), CVAR_NOSET, NULL)->value;
+			/* if we can't find a valid port in the settings, use any available */
 			if (!port)
 				port = PORT_ANY;
 		}
+		/* attempt to open the client socket with the best settings found */
 		ipx_sockets[NS_CLIENT] = NET_IPXSocket (port);
 		if (!ipx_sockets[NS_CLIENT])
 			ipx_sockets[NS_CLIENT] = NET_IPXSocket (PORT_ANY);
 	}
 
+	/* reset connection counters */
 	net_total_in = net_packets_in = net_total_out = net_packets_out = 0;
 	net_inittime = (unsigned int)time(NULL);
 }
 
 
-/*
- * @brief A single player game will only use the loopback code
+/**
+ * @brief Configure the network connections
+ * @param multiplayer Specify whether this is a single or a multi player game
+ * @note A single player game will only use the loopback code
+ * @todo: should return a value to indicate success/failure
  */
 void NET_Config (qboolean multiplayer)
 {
