@@ -120,13 +120,18 @@ static int enter;
 void ThreadSetDefault (void)
 {
 	SYSTEM_INFO info;
+/*	DWORD_PTR procAffinity = 0;*/
+/*	HANDLE proc = GetCurrentProcess();*/
 
 	if (numthreads == -1) {	/* not set manually */
 		GetSystemInfo(&info);
 		numthreads = info.dwNumberOfProcessors;
-		if (numthreads < 1 || numthreads > 32)
+		if (numthreads < 1 || numthreads > 32) {
 			numthreads = 1;
+			/*SetProcessAffinityMask(proc, procAffinity);*/
+		}
 	}
+/*	CloseHandle(proc);*/
 
 	Sys_FPrintf(SYS_VRB, "%i threads\n", numthreads);
 }

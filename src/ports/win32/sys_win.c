@@ -1204,6 +1204,26 @@ static DWORD UFOAIExceptionHandler (DWORD exceptionCode, LPEXCEPTION_POINTERS ex
 #endif
 
 /**
+ * @brief Switch to one processor usage for windows system with more than
+ * one processor
+ */
+static void Sys_SetAffinity (void)
+{
+	SYSTEM_INFO sysInfo;
+	DWORD_PTR procAffinity = 0;
+	HANDLE proc = GetCurrentProcess();
+
+	GetSystemInfo(&sysInfo);
+	Com_Printf("Found %i processors\n", sysInfo.dwNumberOfProcessors);
+	if (sysInfo.dwNumberOfProcessors > 1) {
+		Com_Printf("...only use one processor\n");
+		SetProcessAffinityMask(proc, procAffinity);
+	}
+	CloseHandle(proc);
+}
+
+
+/**
  * @brief
  */
 int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
@@ -1231,7 +1251,9 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 		timescale = 1.0;
 		oldtime = Sys_Milliseconds();
 
-		srand( oldtime );
+		Sys_SetAffinity();	/* only use one processor */
+
+		srand(oldtime);
 
 		/* main window message loop */
 		while (1) {
@@ -1240,7 +1262,7 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 				Sys_Sleep(1);
 
 			while (PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE)) {
-				if (!GetMessage (&msg, NULL, 0, 0))
+				if (!GetMessage(&msg, NULL, 0, 0))
 					Com_Quit();
 				sys_msg_time = msg.time;
 				TranslateMessage(&msg);
