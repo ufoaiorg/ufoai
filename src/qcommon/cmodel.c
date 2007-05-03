@@ -2213,6 +2213,7 @@ void BuildTnode_r (int node)
 			curTile->cheads[curTile->numcheads].cnode = node;
 			curTile->cheads[curTile->numcheads].level = cur_level;
 			curTile->numcheads++;
+			assert(curTile->numcheads <= MAX_MAP_NODES);
 		}
 
 		MakeTnode(node);
