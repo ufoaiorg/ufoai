@@ -488,7 +488,8 @@ void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 
 
 /**
- * @brief Setup the server and client IP sockets
+ * @brief Open the server and client IP sockets
+ * @sa NET_OpenIPX
  * @todo: should return a value to indicate success/failure
  */
 void NET_OpenIP (void)
@@ -511,7 +512,7 @@ void NET_OpenIP (void)
 	}
 	/* at this point port can still be an invalid number */
 
-	/* get our ip from cvar "ip" or use "localhost" if that is not set */
+	/* get our ip address from cvar "ip" or use "localhost" if it is not set */
 	ip = Cvar_Get("ip", "localhost", CVAR_NOSET, NULL);
 
 	if (!ip_sockets[NS_SERVER]) {
@@ -533,7 +534,7 @@ void NET_OpenIP (void)
 		/* if there is no client socket, create one */
 		ip_sockets[NS_CLIENT] = NET_Socket(ip->string, port);
 		if (!ip_sockets[NS_CLIENT]) {
-			/* if we couldn't create a client socket,
+			/* if we couldn't create a client socket with the found port,
 			 * try creating it with _any_ port */
 			ip_sockets[NS_CLIENT] = NET_Socket(ip->string, PORT_ANY);
 		}
@@ -547,8 +548,9 @@ void NET_OpenIP (void)
 }
 
 /**
- * @brief Open IPX sockets
+ * @brief Open the server and client IPX sockets
  * @note This does nothing.
+ * @sa NET_OpenIP
  * @todo: should return a value to indicate success/failure
  */
 void NET_OpenIPX (void)
@@ -601,7 +603,7 @@ void NET_Init (void)
  * @brief Create an IP socket
  * param[in] net_interface Interface for this socket
  * param[in] port Port for this socket
- * returns A created socket's descriptor upon success. Otherwise returns 0.
+ * returns The created socket's descriptor upon success. Otherwise returns 0.
  */
 int NET_Socket (char *net_interface, int port)
 {
