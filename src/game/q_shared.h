@@ -712,8 +712,8 @@ typedef struct {
 
 /** @brief e.g. used for breakable objects */
 typedef enum {
-	MAT_METAL,		/* default */
-	MAT_GLASS,
+	MAT_GLASS,		/* default */
+	MAT_METAL,
 	MAT_ELECTRICAL,
 	MAT_WOOD,
 

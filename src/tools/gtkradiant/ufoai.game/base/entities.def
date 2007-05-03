@@ -84,7 +84,7 @@ Only for editor and terrain convenience.
 /*QUAKED func_breakable (0 0 0) ? level1 level2 level3 level4 level5 level6 level7 level8
 "health"	damage until destroyed
 "particle"	particle id
-"material"	material id MAT_METAL = 0, MAT_GLASS = 1, MAT_ELECTRICAL = 2
+"material"	material id MAT_GLASS = 0 (default), MAT_METAL = 1, MAT_ELECTRICAL = 2, MAT_WOOD = 3
 */
 
 
