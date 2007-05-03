@@ -372,23 +372,34 @@ void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 
 
 /**
- * @brief
+ * @brief Open the server and client IP sockets
+ * @sa NET_OpenIPX
+ * @todo: should return a value to indicate success/failure
  */
 void NET_OpenIP (void)
 {
 	cvar_t	*port, *ip;
 
+	/* lookup the server port from cvar "port",
+	 * if it isn't set, just use PORT_SERVER */
 	port = Cvar_Get ("port", va("%i", PORT_SERVER), CVAR_NOSET);
+
+	/* get our ip address from cvar "ip" or use "localhost" if it is not set */
 	ip = Cvar_Get ("ip", "localhost", CVAR_NOSET);
 
+	/* create a server socket if there is none yet */
 	if (!ip_sockets[NS_SERVER])
 		ip_sockets[NS_SERVER] = NET_Socket (ip->string, port->value);
+	/* create a client socket if there is none yet */
 	if (!ip_sockets[NS_CLIENT])
 		ip_sockets[NS_CLIENT] = NET_Socket (ip->string, PORT_ANY);
 }
 
 /**
- * @brief
+ * @brief Open the server and client IPX sockets
+ * @note This does nothing.
+ * @sa NET_OpenIP
+ * @todo: should return a value to indicate success/failure
  */
 void NET_OpenIPX (void)
 {
@@ -396,7 +407,10 @@ void NET_OpenIPX (void)
 
 
 /**
- * @brief A single player game will only use the loopback code
+ * @brief Configure the network connections
+ * @param multiplayer Specify whether this is a single or a multi player game
+ * @note A single player game will only use the loopback code
+ * @todo: should return a value to indicate success/failure
  */
 void NET_Config (qboolean multiplayer)
 {
@@ -432,7 +446,10 @@ void NET_Init (void)
 
 
 /**
- * @brief
+ * @brief Create an IP socket
+ * param[in] net_interface Interface for this socket
+ * param[in] port Port for this socket
+ * returns The created socket's descriptor upon success. Otherwise returns 0.
  */
 int NET_Socket (char *net_interface, int port)
 {
