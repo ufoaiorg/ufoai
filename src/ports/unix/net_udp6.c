@@ -697,35 +697,52 @@ void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 
 
 /**
- * @brief
+ * @brief Open the server and client IPv6 (and IPv4) sockets
+ * @sa NET_OpenIPX
+ * @todo: should return a value to indicate success/failure
  */
 void NET_OpenIP (void)
 {
 	cvar_t	*port, *ip;
 
+	/* lookup the server port from cvar "port",
+	 * if it isn't set, just use PORT_SERVER */
 	port = Cvar_Get ("port", va("%i", PORT_SERVER), CVAR_NOSET, NULL);
+
+	/* get our ip address from cvar "ip" or use "localhost" if it is not set */
 	ip = Cvar_Get ("ip", "localhost", CVAR_NOSET, NULL);
 
+	/* if there is no IPv6 server socket, open one */
 	if (!ip6_sockets[NS_SERVER])
 		ip6_sockets[NS_SERVER] = NET_Socket (ip->string, port->value, NS_SERVER, AF_INET6);
+	/* if there is no IPv4 server socket, open one */
 	if (!ip_sockets[NS_SERVER])
 		ip_sockets[NS_SERVER] = NET_Socket (ip->string, port->value, NS_SERVER, AF_INET);
 
+	/* lookup the client port from cvar "clientport",
+	 * if it isn't set, just use PORT_CLIENT */
 	port = Cvar_Get ("clientport", va("%i", PORT_CLIENT), CVAR_NOSET, NULL);
+	/* if there is no IPv6 client socket, open one */
 	if (!ip6_sockets[NS_CLIENT]) {
 		ip6_sockets[NS_CLIENT] = NET_Socket (ip->string, port->integer, NS_CLIENT, AF_INET6);
+		/* if that didn't work, try with any available port */
 		if (!ip_sockets[NS_CLIENT])
 			ip_sockets[NS_CLIENT] = NET_Socket (ip->string, PORT_ANY, NS_CLIENT, AF_INET);
 	}
+	/* if there is no IPv4 client socket, open one */
 	if (!ip_sockets[NS_CLIENT]) {
 		ip_sockets[NS_CLIENT] = NET_Socket (ip->string, port->integer, NS_CLIENT, AF_INET);
+		/* if that didn't work, try with any available port */
 		if (!ip_sockets[NS_CLIENT])
 			ip_sockets[NS_CLIENT] = NET_Socket (ip->string, PORT_ANY, NS_CLIENT, AF_INET);
 	}
 }
 
 /**
- * @brief
+ * @brief Open the server and client IPX sockets
+ * @note This does nothing.
+ * @sa NET_OpenIP
+ * @todo: should return a value to indicate success/failure
  */
 void NET_OpenIPX (void)
 {
@@ -733,7 +750,10 @@ void NET_OpenIPX (void)
 
 
 /**
- * @brief A single player game will only use the loopback code
+ * @brief Configure the network connections
+ * @param multiplayer Specify whether this is a single or a multi player game
+ * @note A single player game will only use the loopback code
+ * @todo: should return a value to indicate success/failure
  */
 void NET_Config (qboolean multiplayer)
 {
@@ -770,7 +790,12 @@ void NET_Init (void)
 
 
 /**
- * @brief
+ * @brief Create an IPv6 socket
+ * param[in] net_interface Interface for this socket
+ * param[in] port Port for this socket
+ * param[in] type The game role (NS_SERVER/NS_CLIENT)
+ * param[in] family The network protocol family to use for this socket
+ * returns The created socket's descriptor upon success. Otherwise returns 0.
  */
 int NET_Socket (char *net_interface, int port, netsrc_t type, int family)
 {
