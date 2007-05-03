@@ -254,6 +254,9 @@ static void Com_ParseItem (const char *name, char **text)
 		return;
 	}
 
+	if (i >= MAX_OBJDEFS)
+		Sys_Error("Com_ParseItem: MAX_OBJDEFS exceeded\n");
+
 	/* initialize the object definition */
 	od = &csi.ods[csi.numODs++];
 	memset(od, 0, sizeof(objDef_t));
@@ -576,6 +579,9 @@ static void Com_ParseEquipment (const char *name, char **text)
 		Com_Printf("Com_ParseEquipment: equipment def \"%s\" with same name found, second ignored\n", name);
 		return;
 	}
+
+	if (i >= MAX_EQUIPDEFS)
+		Sys_Error("Com_ParseEquipment: MAX_EQUIPDEFS exceeded\n");
 
 	/* initialize the equipment definition */
 	ed = &csi.eds[csi.numEDs++];
@@ -1299,6 +1305,8 @@ static void Com_ParseGameTypes (const char *name, char **text)
 			break;
 
 	if (i == numGTs) {
+		if (i >= MAX_DAMAGETYPES)
+			Sys_Error("Com_ParseGameTypes: MAX_DAMAGETYPES exceeded\n");
 		gt = &gts[numGTs++];
 		memset(gt, 0, sizeof(gametype_t));
 		Q_strncpyz(gt->id, name, sizeof(gt->id));

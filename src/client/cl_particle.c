@@ -1123,6 +1123,8 @@ void CL_ParsePtlCmds (const char *name, char **text)
 
 	if (!*text || *token != '{') {
 		Com_Printf("CL_ParsePtlCmds: particle cmds \"%s\" without body ignored\n", name);
+		if (numPtlCmds >= MAX_PTLCMDS)
+			Sys_Error("CL_ParsePtlCmds: MAX_PTLCMDS exceeded\n");
 		pc = &ptlCmd[numPtlCmds++];
 		memset(pc, 0, sizeof(ptlCmd_t));
 		return;
@@ -1138,6 +1140,8 @@ void CL_ParsePtlCmds (const char *name, char **text)
 		for (i = 0; i < PC_NUM_PTLCMDS; i++)
 			if (!Q_strcmp(token, pc_strings[i])) {
 				/* allocate an new cmd */
+				if (numPtlCmds >= MAX_PTLCMDS)
+					Sys_Error("CL_ParsePtlCmds: MAX_PTLCMDS exceeded\n");
 				pc = &ptlCmd[numPtlCmds++];
 				memset(pc, 0, sizeof(ptlCmd_t));
 
@@ -1244,6 +1248,8 @@ void CL_ParsePtlCmds (const char *name, char **text)
 					return;
 
 				/* translate set to a push and pop */
+				if (numPtlCmds >= MAX_PTLCMDS)
+					Sys_Error("CL_ParsePtlCmds: MAX_PTLCMDS exceeded\n");
 				pc = &ptlCmd[numPtlCmds++];
 				pc->cmd = PC_PUSH;
 				pc->type = pp->type;
@@ -1263,6 +1269,8 @@ void CL_ParsePtlCmds (const char *name, char **text)
 	} while (*text);
 
 	/* terminalize cmd chain */
+	if (numPtlCmds >= MAX_PTLCMDS)
+		Sys_Error("CL_ParsePtlCmds: MAX_PTLCMDS exceeded\n");
 	pc = &ptlCmd[numPtlCmds++];
 	memset(pc, 0, sizeof(ptlCmd_t));
 }
