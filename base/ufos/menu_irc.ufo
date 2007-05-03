@@ -2,6 +2,7 @@
 // IRC MENU
 // ==================
 
+// don't change this name!
 menu irc
 {
 	// ==================

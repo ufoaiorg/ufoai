@@ -53,6 +53,7 @@ static cvar_t *irc_password = NULL;
 static cvar_t *irc_topic = NULL;
 static cvar_t *irc_defaultChannel = NULL;
 static cvar_t *irc_logConsole = NULL;
+static cvar_t *irc_showIfNotInMenu = NULL;
 /* menu cvar */
 static cvar_t *irc_send_buffer = NULL;
 
@@ -134,10 +135,10 @@ typedef struct irc_bucket_message_s {
 } irc_bucket_message_t;
 
 typedef struct irc_bucket_s {
-	irc_bucket_message_t *first_msg;	/* pointer to first message in queue */
-	unsigned int message_size;			/* number of messages in bucket */
-	unsigned int character_size;		/* number of characters in bucket */
-	int last_refill;				/* last refill timestamp */
+	irc_bucket_message_t *first_msg;	/**< pointer to first message in queue */
+	unsigned int message_size;			/**< number of messages in bucket */
+	unsigned int character_size;		/**< number of characters in bucket */
+	int last_refill;				/**< last refill timestamp */
 	double character_token;
 } irc_bucket_t;
 
@@ -445,6 +446,7 @@ qboolean Irc_Proto_PollServerMsg (irc_server_msg_t *msg, qboolean *msg_complete)
 static void Irc_AppendToBuffer (const char* const msg)
 {
 	char buf[IRC_RECV_BUF_SIZE];
+	menu_t* menu;
 
 	while (strlen(irc_buffer) + strlen(msg) + 1 >= sizeof(irc_buffer) ) {
 		char *n;
@@ -457,10 +459,15 @@ static void Irc_AppendToBuffer (const char* const msg)
 
 	Com_sprintf(buf, sizeof(buf), "%s\n", msg);
 	Q_strcat(irc_buffer, buf, sizeof(irc_buffer));
-	if (irc_logConsole->value)
+	if (irc_logConsole->integer)
 		Com_Printf("IRC: %s\n", msg);
 
 	MN_TextScrollBottom("irc_data");
+	menu = MN_GetMenu(NULL); /* get current menu from stack */
+	if (irc_showIfNotInMenu->integer && Q_strncmp(menu->name, "irc", 4)) {
+		S_StartLocalSound("misc/talk.wav");
+		MN_AddChatMessage(msg);
+	}
 }
 
 /**
@@ -1798,6 +1805,7 @@ extern void Irc_Init (void)
 	irc_topic = Cvar_Get("irc_topic", "", CVAR_NOSET, NULL);
 	irc_defaultChannel = Cvar_Get("irc_defaultChannel", "", CVAR_NOSET, NULL);
 	irc_logConsole = Cvar_Get("irc_logConsole", "0", CVAR_ARCHIVE, NULL);
+	irc_showIfNotInMenu = Cvar_Get("irc_showIfNotInMenu", "1", CVAR_ARCHIVE, "Show chat messages on top of the menu stack if we are not in the irc menu");
 	irc_send_buffer = Cvar_Get("irc_send_buffer", "", 0, NULL);
 	irc_nick = Cvar_Get("name", "", 0, NULL);
 

@@ -554,7 +554,7 @@ char *Sys_ConsoleInput (void)
 	if (!dedicated || !dedicated->value || !oldconsole)
 		return NULL;
 
-	for ( ;; ) {
+	for (;;) {
 		if (!GetNumberOfConsoleInputEvents(hinput, &numevents))
 			Sys_Error("Error getting # of console events");
 
@@ -572,32 +572,32 @@ char *Sys_ConsoleInput (void)
 				ch = recs[0].Event.KeyEvent.uChar.AsciiChar;
 
 				switch (ch) {
-					case '\r':
-						WriteFile(houtput, "\r\n", 2, &dummy, NULL);
+				case '\r':
+					WriteFile(houtput, "\r\n", 2, &dummy, NULL);
 
-						if (console_textlen) {
-							console_text[console_textlen] = 0;
-							console_textlen = 0;
-							return console_text;
-						}
-						break;
+					if (console_textlen) {
+						console_text[console_textlen] = 0;
+						console_textlen = 0;
+						return console_text;
+					}
+					break;
 
-					case '\b':
-						if (console_textlen) {
-							console_textlen--;
-							WriteFile(houtput, "\b \b", 3, &dummy, NULL);
-						}
-						break;
+				case '\b':
+					if (console_textlen) {
+						console_textlen--;
+						WriteFile(houtput, "\b \b", 3, &dummy, NULL);
+					}
+					break;
 
-					default:
-						if (ch >= ' ') {
-							if (console_textlen < sizeof(console_text)-2) {
-								WriteFile(houtput, &ch, 1, &dummy, NULL);
-								console_text[console_textlen] = ch;
-								console_textlen++;
-							}
+				default:
+					if (ch >= ' ') {
+						if (console_textlen < sizeof(console_text)-2) {
+							WriteFile(houtput, &ch, 1, &dummy, NULL);
+							console_text[console_textlen] = ch;
+							console_textlen++;
 						}
-						break;
+					}
+					break;
 				}
 			}
 		}
@@ -767,15 +767,15 @@ GAME DLL
 ========================================================================
 */
 
-static HINSTANCE	game_library;
+static HINSTANCE game_library;
 
 /**
  * @brief
  */
 void Sys_UnloadGame (void)
 {
-	if (!FreeLibrary (game_library))
-		Com_Error (ERR_FATAL, "FreeLibrary failed for game library");
+	if (!FreeLibrary(game_library))
+		Com_Error(ERR_FATAL, "FreeLibrary failed for game library");
 	game_library = NULL;
 }
 
@@ -848,7 +848,7 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 
 	/* check the current debug directory for development purposes */
 	if (!game_library) {
-		_getcwd (cwd, sizeof(cwd));
+		_getcwd(cwd, sizeof(cwd));
 		Com_sprintf(name, sizeof(name), "%s/%s/%s", cwd, debugdir, gamename);
 		game_library = LoadLibrary(name);
 		if (game_library)
@@ -872,14 +872,14 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 		return NULL;
 	}
 
-	GetGameAPI = (GetGameApi_t)GetProcAddress (game_library, "GetGameAPI");
+	GetGameAPI = (GetGameApi_t)GetProcAddress(game_library, "GetGameAPI");
 	if (!GetGameAPI) {
 		Sys_UnloadGame();
 		Com_Printf("Could not load game lib '%s'\n", name);
 		return NULL;
 	}
 
-	return GetGameAPI (parms);
+	return GetGameAPI(parms);
 }
 
 
@@ -911,7 +911,7 @@ static void ParseCommandLine (LPSTR lpCmdLine)
 
 }
 
-HINSTANCE	global_hInstance;
+HINSTANCE global_hInstance;
 
 /**
  * @brief
