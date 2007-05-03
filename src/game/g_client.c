@@ -74,6 +74,7 @@ int G_VisToPM (int vis_mask)
 
 /**
  * @brief Send stats to network buffer
+ * @sa CL_ActorStats
  */
 void G_SendStats (edict_t * ent)
 {

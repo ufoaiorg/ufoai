@@ -871,8 +871,10 @@ static void CL_ActorAppear (sizebuf_t *sb)
 
 
 /**
- * @brief
+ * @brief Parses the actor stats that comes from the netchannel
  * @sa CL_ParseEvent
+ * @sa G_SendStats
+ * @sa ev_func
  */
 static void CL_ActorStats (sizebuf_t *sb)
 {
