@@ -427,7 +427,8 @@ static void LoadPCX (const char *filename, byte ** pic, byte ** palette, int *wi
 	int dataByte, runLength;
 	byte *out, *pix;
 
-	*pic = NULL;
+	if (*pic != NULL)
+		Sys_Error("possible mem leak in LoadPCX\n");
 	*palette = NULL;
 
 	/* load the file */
@@ -547,8 +548,8 @@ static int LoadPNG (const char *name, byte **pic, int *width, int *height)
 
 	pngBuf_t		PngFileBuffer = {NULL,0};
 
-	if (pic)
-		*pic = NULL;
+	if (*pic != NULL)
+		Sys_Error("possible mem leak in LoadPNG\n");
 
 	/* Load the file */
 	ri.FS_LoadFile (name, (void **)&PngFileBuffer.buffer);
@@ -735,7 +736,8 @@ extern void LoadTGA (const char *name, byte ** pic, int *width, int *height)
 	byte *targa_rgba;
 	byte tmp[2];
 
-	*pic = NULL;
+	if (*pic != NULL)
+		Sys_Error("possible mem leak in LoadTGA\n");
 
 	/* load the file */
 	length = ri.FS_LoadFile(name, (void **) &buffer);
@@ -1014,7 +1016,8 @@ static void LoadJPG (const char *filename, byte ** pic, int *width, int *height)
 	byte *rawdata, *rgbadata, *scanline, *p, *q;
 	int rawsize, i;
 
-	*pic = NULL;
+	if (*pic != NULL)
+		Sys_Error("possible mem leak in LoadJPG\n");
 
 	/* Load JPEG file into memory */
 	rawsize = ri.FS_LoadFile(filename, (void **) &rawdata);
@@ -2213,7 +2216,7 @@ image_t *GL_FindImage (const char *pname, imagetype_t type)
 	image_t *image;
 	int i;
 	size_t len;
-	byte *pic, *palette;
+	byte *pic = NULL, *palette;
 	int width, height;
 
 	if (!pname)
@@ -2364,7 +2367,7 @@ int Draw_GetPalette (void)
 	int i;
 	int r, g, b;
 	unsigned v;
-	byte *pic, *pal;
+	byte *pic = NULL, *pal;
 	int width, height;
 
 	/* get the palette */

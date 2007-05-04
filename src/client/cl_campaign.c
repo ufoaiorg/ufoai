@@ -49,33 +49,21 @@ campaign_t *curCampaign;			/**< Document me. */
 ccs_t ccs;					/**< Document me. */
 base_t *baseCurrent;				/**< Pointer to current base. */
 
-static byte *maskPic;				/**< Document me. */
-static int maskWidth, maskHeight;		/**< Document me. */
+static byte *maskPic = NULL;				/**< this is the mask for seperating the clima
+												zone and water by different color values */
+static int maskWidth, maskHeight;		/**< the width and height for the mask pic. */
 
-static byte *nationsPic;			/**< Document me. */
-static int nationsWidth, nationsHeight;		/**< Document me. */
+static byte *nationsPic = NULL;			/**< this is the nation mask - seperated
+											by colors given in nations.ufo. */
+static int nationsWidth, nationsHeight;		/**< the width and height for the nation pic. */
 
 static salary_t salaries[MAX_CAMPAIGNS];
-
-#if 0
-static int ever4hours;
-#endif
 
 /* extern in client.h */
 stats_t stats;					/**< Document me. */
 
-/* FIXME: why AIR_SendAircraftToMission is here? extern definition in in this file below,
-   function declaration is in cl_aircraft.h. 10042007 Zenerka. */
-
 extern qboolean AIR_SendAircraftToMission(aircraft_t * aircraft, actMis_t * mission);
 extern void AIR_AircraftsNotifyMissionRemoved(const actMis_t * mission);
-
-#if 0
-/* 20070228 Zenerka: new solution for collecting items from the battlefield
-   see CL_CollectingItems(), CL_SellorAddItems(), CL_CollectingAmmo(), CL_CarriedItems() */
-/* 20060923 LordHavoc: made autosell an option here */
-static qboolean MARKET_AUTOSELL = qtrue;
-#endif
 
 /*
 ============================================================================
@@ -1641,10 +1629,14 @@ extern qboolean CP_Load (sizebuf_t *sb, void *data)
 	Com_sprintf(val, sizeof(val), "%i", curCampaign->difficulty);
 	Cvar_ForceSet("difficulty", val);
 
+	if (maskPic)
+		free(maskPic);
 	re.LoadTGA(va("pics/menu/%s_mask.tga", curCampaign->map), &maskPic, &maskWidth, &maskHeight);
 	if (!maskPic)
 		Sys_Error("Couldn't load map mask %s_mask.tga in pics/menu\n", curCampaign->map);
 
+	if (nationsPic)
+		free(nationsPic);
 	re.LoadTGA(va("pics/menu/%s_nations.tga", curCampaign->map), &nationsPic, &nationsWidth, &nationsHeight);
 	if (!nationsPic)
 		Sys_Error("Couldn't load map mask %s_nations.tga in pics/menu\n", curCampaign->map);
@@ -3590,6 +3582,8 @@ static void CL_GameNew (void)
 	else if (difficulty->integer > 4)
 		Cvar_ForceSet("difficulty", "4");
 
+	if (maskPic)
+		free(maskPic);
 	re.LoadTGA(va("pics/menu/%s_mask.tga", curCampaign->map), &maskPic, &maskWidth, &maskHeight);
 	if (!maskPic)
 		Sys_Error("Couldn't load map mask %s_mask.tga in pics/menu\n", curCampaign->map);

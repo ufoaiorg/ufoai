@@ -15,4 +15,4 @@ void Save256Image (char *name, byte *pixels, byte *palette,
 				   int width, int height);
 
 
-void LoadTGA (char *filename, byte **pixels, int *width, int *height);
+void LoadTGA (const char *filename, byte **pixels, int *width, int *height);

@@ -559,16 +559,16 @@ static int fgetLittleShort (FILE *f)
 /**
  * @brief
  */
-void LoadTGA (char *name, byte **pixels, int *width, int *height)
+void LoadTGA (const char *name, byte **pixels, int *width, int *height)
 {
 	int columns, rows, numPixels, row, column;
 	byte *pixbuf, *targa_rgba;
 	FILE *fin;
 	TargaHeader targa_header;
 
-	fin = fopen (name, "rb");
+	fin = fopen(name, "rb");
 	if (!fin)
-		Error ("Couldn't read %s", name);
+		Error("Couldn't read %s", name);
 
 	targa_header.id_length = fgetc(fin);
 	targa_header.colormap_type = fgetc(fin);
