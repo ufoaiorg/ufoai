@@ -773,10 +773,10 @@ extern void LoadTGA (const char *name, byte ** pic, int *width, int *height)
 	targa_header.attributes = *buf_p++;
 
 	if (targa_header.image_type != 2 && targa_header.image_type != 10)
-		ri.Sys_Error(ERR_DROP, "LoadTGA: Only type 2 and 10 targa RGB images supported\n");
+		ri.Sys_Error(ERR_DROP, "LoadTGA: Only type 2 and 10 targa RGB images supported (%s) (type: %i)\n", name, targa_header.image_type);
 
 	if (targa_header.colormap_type != 0 || (targa_header.pixel_size != 32 && targa_header.pixel_size != 24))
-		ri.Sys_Error(ERR_DROP, "LoadTGA: Only 32 or 24 bit images supported (no colormaps)\n");
+		ri.Sys_Error(ERR_DROP, "LoadTGA: Only 32 or 24 bit images supported (no colormaps) (%s) (pixel_size: %i)\n", name, targa_header.pixel_size);
 
 	columns = targa_header.width;
 	rows = targa_header.height;
