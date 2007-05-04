@@ -161,6 +161,8 @@ equipment multiplayer
 {
 	assault				1
 	assault_ammo		3
+	machinegun			1
+	machinegun_ammo		2
 	sniper				1
 	sniper_ammo			3
 	pistol				2
@@ -231,6 +233,8 @@ equipment multiplayer_initial
 {
 	assault				10
 	assault_ammo		13
+	machinegun			1
+	machinegun_ammo		2
 	sniper				12
 	sniper_ammo			13
 	pistol				8
