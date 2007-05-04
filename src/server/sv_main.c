@@ -1158,7 +1158,7 @@ extern void SV_Init (void)
 	Cvar_Get("protocol", va("%i", PROTOCOL_VERSION), CVAR_SERVERINFO | CVAR_NOSET, NULL);
 	masterserver_ip = Cvar_Get("masterserver_ip", "195.136.48.62", CVAR_ARCHIVE, "IP address of UFO:AI masterserver (Sponsored by NineX)");
 	masterserver_port = Cvar_Get("masterserver_port", "27900", CVAR_ARCHIVE, "Port of UFO:AI masterserver");
-	sv_maxclients = Cvar_Get("maxclients", "1", CVAR_SERVERINFO, "Max. connected clients");
+	sv_maxclients = Cvar_Get("maxclients", "1", CVAR_SERVERINFO | CVAR_LATCH, "Max. connected clients");
 	hostname = Cvar_Get("hostname", _("noname"), CVAR_SERVERINFO | CVAR_ARCHIVE, "The name of the server that is displayed in the serverlist");
 	timeout = Cvar_Get("timeout", "125", 0, NULL);
 	zombietime = Cvar_Get("zombietime", "2", 0, NULL);
@@ -1166,7 +1166,7 @@ extern void SV_Init (void)
 	sv_paused = Cvar_Get("paused", "0", 0, NULL);
 	sv_timedemo = Cvar_Get("timedemo", "0", 0, NULL);
 	sv_enforcetime = Cvar_Get("sv_enforcetime", "0", 0, NULL);
-	sv_enablemorale = Cvar_Get("sv_enablemorale", "1", CVAR_ARCHIVE | CVAR_SERVERINFO, "Enable morale changes in multiplayer");
+	sv_enablemorale = Cvar_Get("sv_enablemorale", "1", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, "Enable morale changes in multiplayer");
 	maxsoldiers = Cvar_Get("maxsoldiers", "4", CVAR_ARCHIVE | CVAR_SERVERINFO, NULL);
 	maxsoldiersperplayer = Cvar_Get("maxsoldiersperplayer", "8", CVAR_ARCHIVE | CVAR_SERVERINFO, NULL);
 

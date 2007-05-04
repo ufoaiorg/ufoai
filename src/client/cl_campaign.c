@@ -1629,14 +1629,18 @@ extern qboolean CP_Load (sizebuf_t *sb, void *data)
 	Com_sprintf(val, sizeof(val), "%i", curCampaign->difficulty);
 	Cvar_ForceSet("difficulty", val);
 
-	if (maskPic)
+	if (maskPic) {
 		free(maskPic);
+		maskPic = NULL;
+	}
 	re.LoadTGA(va("pics/menu/%s_mask.tga", curCampaign->map), &maskPic, &maskWidth, &maskHeight);
 	if (!maskPic)
 		Sys_Error("Couldn't load map mask %s_mask.tga in pics/menu\n", curCampaign->map);
 
-	if (nationsPic)
+	if (nationsPic) {
 		free(nationsPic);
+		nationsPic = NULL;
+	}
 	re.LoadTGA(va("pics/menu/%s_nations.tga", curCampaign->map), &nationsPic, &nationsWidth, &nationsHeight);
 	if (!nationsPic)
 		Sys_Error("Couldn't load map mask %s_nations.tga in pics/menu\n", curCampaign->map);
@@ -3582,8 +3586,10 @@ static void CL_GameNew (void)
 	else if (difficulty->integer > 4)
 		Cvar_ForceSet("difficulty", "4");
 
-	if (maskPic)
+	if (maskPic) {
 		free(maskPic);
+		maskPic = NULL;
+	}
 	re.LoadTGA(va("pics/menu/%s_mask.tga", curCampaign->map), &maskPic, &maskWidth, &maskHeight);
 	if (!maskPic)
 		Sys_Error("Couldn't load map mask %s_mask.tga in pics/menu\n", curCampaign->map);
