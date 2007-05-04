@@ -261,7 +261,16 @@ extern int Cvar_CompleteVariable (const char *partial, const char **match)
 
 /**
  * @brief Init or return a cvar
- *
+ * @param[in] var_name The cvar name
+ * @param[in] var_value The standard cvar value (will be set if the cvar doesn't exist)
+ * @param[in] flags CVAR_USERINFO, CVAR_LATCH, CVAR_SERVERINFO, CVAR_ARCHIVE and so on
+ * @param[in] desc This is a short description of the cvar (see console command cvarlist)
+ * @note CVAR_ARCHIVE: Cvar will be saved to config.cfg when game shuts down - and
+ * will be reloaded when game starts up the next time
+ * @note CVAR_LATCH: Latched cvars will be updated at the next map load
+ * @note CVAR_SERVERINFO: This cvar will be send in the server info response strings (server browser)
+ * @note CVAR_NOSET: This cvar can not be set from the commandline
+ * @note CVAR_USERINFO: This cvar will be added to the userinfo string when changed (network synced)
  * If the variable already exists, the value will not be set
  * The flags will be or'ed in if the variable exists.
  */
@@ -323,9 +332,9 @@ extern cvar_t *Cvar_Get (const char *var_name, const char *var_value, int flags,
 /**
  * @brief Sets a cvar values
  * Handles writeprotection and latched cvars as expected
- * @param var_name Which cvar
- * @param value Set the cvar to the value specified by 'value'
- * @param force Force the update of the cvar
+ * @param[in] var_name Which cvar
+ * @param[in] value Set the cvar to the value specified by 'value'
+ * @param[in] force Force the update of the cvar
  */
 static cvar_t *Cvar_Set2 (const char *var_name, const char *value, qboolean force)
 {
