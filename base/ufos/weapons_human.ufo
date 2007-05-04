@@ -178,6 +178,108 @@ item chaingun_ammo
 }
 
 // =======================
+// MACHINE GUN
+// =======================
+item machinegun
+{
+	name		"_Machine Gun"
+	model		weapons/machinegun/machinegun
+	weapon		true
+	type		rifle
+	category	1
+	holdtwohanded	false
+	firetwohanded	true
+	shape		"0 0 5 2"
+	center		"3 0 2"
+	scale		1.25
+	ammo		30
+	reload		12
+	price		8400
+	size		20
+	buytype	weap_pri
+}
+
+item machinegun_ammo
+{
+	name		"_Machine Gun Magazine"
+	model		weapons/machinegun/machinegun_clip
+	type		ammo
+	category	0
+	shape		"0 0 1 2"
+	center		"0 0 0"
+	scale		1.25
+	price		130
+	size		3
+	buytype	weap_pri
+
+	weapon_mod machinegun
+	{
+		firedef
+		{
+			name	"_Snap Shot"
+			skill	assault
+			projtl	bullet
+			impact	bulletImpact
+			hitbody blood
+			firesnd	weapons/machinegun.wav
+			speed	0
+			spread	"1.0 1.0"
+			modif	0.7
+			crouch	0.7
+			range	80
+			shots	1
+			ammo	1
+			time	8
+			damage	"37 0"
+			dmgtype normal
+			reaction	true
+		}
+		firedef
+		{
+			name	"_3-Round Burst"
+			skill	assault
+			projtl	bullet
+			impact	bulletImpact
+			hitbody blood
+			firesnd	weapons/machinegun.wav
+			speed	0
+			spread	"1.4 1.4"
+			modif	0.7
+			crouch	0.7
+			range	70
+			shots	3
+			ammo	3
+			rof		5
+			time	12
+			damage	"37 0"
+			dmgtype normal
+			reaction	true
+		}
+		firedef
+		{
+			name	"_Full-Auto"
+			skill	assault
+			projtl	bullet
+			impact	bulletImpact
+			hitbody blood
+			firesnd	weapons/machinegun.wav
+			speed	0
+			spread	"1.8 1.8"
+			modif	0.7
+			crouch	0.6
+			range	70
+			shots	8
+			ammo	8
+			rof		10
+			time	18
+			damage	"37 0"
+			dmgtype normal
+			reaction 	true
+		}
+	}
+}
+
+// =======================
 // SNIPER RIFLE
 // =======================
 item sniper

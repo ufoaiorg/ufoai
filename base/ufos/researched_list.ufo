@@ -3,6 +3,8 @@ researched rslist_human
 {
 	rs_weapon_assault
 	rs_weapon_assault_ammo
+	rs_weapon_machinegun
+	rs_weapon_machinegun_ammo
 	rs_weapon_sniper
 	rs_weapon_sniper_ammo
 	rs_weapon_smg

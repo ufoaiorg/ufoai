@@ -8,6 +8,8 @@ equipment campaign_player
 {
 	assault			1
 	assault_ammo	12
+	machinegun		1
+	machinegun_ammo	12
 	sniper			1
 	sniper_ammo		10
 	pistol			1

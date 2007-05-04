@@ -372,6 +372,39 @@ tech rs_weapon_assault_ammo
 	producetime	12
 }
 
+tech rs_weapon_machinegun
+{
+	type	weapon
+	up_chapter	equipment
+	description	"_machinegun_txt"
+	// pre_description	"_machinegun_pre_txt"
+
+	require_AND
+	{
+		tech rs_skill_assault
+	}
+	provides	machinegun
+	time	0
+	producetime	90
+}
+
+tech rs_weapon_machinegun_ammo
+{
+	type	weapon
+	up_chapter	equipment
+	description	"_machinegun_mag_txt"
+	// pre_description	"_machinegun_mag_pre_txt"
+
+	require_AND
+	{
+		tech rs_damage_normal
+		tech rs_weapon_assault
+	}
+	provides	machinegun_ammo
+	time	0
+	producetime	12
+}
+
 tech rs_weapon_bolterrifle
 {
 	type	weapon
