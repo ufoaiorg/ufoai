@@ -45,14 +45,15 @@ typedef enum objdefs {
 } objdef_t;
 
 
-/** @sa cl_basemanagement.h:equipment_buytypes_t */
+/** @sa q_shared.h:equipment_buytypes_t */
 static const char *buytypeNames[MAX_BUYTYPES] = {
 	"weap_pri",
 	"weap_sec",
 	"misc",
 	"armour",
 	"multi_ammo",
-	"aircraft"
+	"aircraft",
+	"dummy"
 };
 
 static const value_t od_vals[] = {

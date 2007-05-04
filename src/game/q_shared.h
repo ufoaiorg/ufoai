@@ -1041,6 +1041,7 @@ typedef struct fireDef_s {
 /**
  * @brief Defines all attributes of obejcts used in the inventory.
  * @todo Document the various (and mostly not obvious) varables here. The documentation in the .ufo file(s) might be a good starting point.
+ * @note See also http://ufoai.ninex.info/wiki/index.php/UFO-Scripts/weapon_%2A.ufo
  */
 typedef struct objDef_s {
 	/* Common */
@@ -1055,7 +1056,8 @@ typedef struct objDef_s {
 	byte sx, sy;		/**< Size in x and y direction. */
 	float scale;		/**< scale value for images? and models */
 	vec3_t center;		/**< origin for models */
-	char category;		/**<  */
+	char category;		/**<  The animation index for the character with the weapon.
+						 * Don't confuse this with buytype. */
 	qboolean weapon;		/**< This item is a weapon or ammo. */
 	qboolean holdtwohanded;	/**< The soldier needs both hands to hold this object.
 				 		 * Influences model-animations and which hands are blocked int he inventory screen.*/
@@ -1476,6 +1478,7 @@ typedef enum {
 	BUY_MULTI_AMMO, /**< Ammo (and other stuff) that is used in both Pri/Sec weapons. */
 	/* MAX_SOLDIER_EQU_BUYTYPES ... possible better solution? */
 	BUY_AIRCRAFT,	/**< Aircraft and craft-equipment. */
+	BUY_DUMMY,	/**< Everything that is not equipment for soldiers. */
 	MAX_BUYTYPES
 } equipment_buytypes_t;
 
