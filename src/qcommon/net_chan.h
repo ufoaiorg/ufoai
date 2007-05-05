@@ -1,10 +1,31 @@
+/**
+ * @file net_chan.h
+ * @brief Quake's interface to the networking layer
+ */
+
 /*
-==============================================================
-NET
-==============================================================
+All original materal Copyright (C) 2002-2007 UFO: Alien Invasion team.
+
+Original file from Quake 2 v3.21: quake2-2.31/qcommon/net_chan.c
+Copyright (C) 1997-2001 Id Software, Inc.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
 */
 
-/* net.h -- quake's interface to the networking layer */
 
 #ifdef _WINDOWS
 #include <winsock.h>
@@ -19,6 +40,9 @@ NET
 #define	MAX_MSGLEN		7400	/* max length of a message */
 #define	PACKET_HEADER	10		/* two ints and a short */
 
+/**
+ * @brief network address types
+ */
 #ifdef HAVE_IPV6
 typedef enum { NA_LOOPBACK, NA_BROADCAST, NA_IP, NA_IPX, NA_BROADCAST_IPX, NA_IPV6, NA_MULTICAST6 } netadrtype_t;
 #else							/* HAVE_IPV6 */
@@ -27,18 +51,21 @@ typedef enum { NA_LOOPBACK, NA_BROADCAST, NA_IP, NA_IPX, NA_BROADCAST_IPX } neta
 
 typedef enum { NS_CLIENT, NS_SERVER } netsrc_t;
 
+/**
+ * @brief Structure describing an Internet address.
+ */
 typedef struct {
-	netadrtype_t type;
+	netadrtype_t type;	/**< address type */
 #ifdef HAVE_IPV6
 	/* @todo: Use sockaddr_storage instead */
-	byte ip[16];
-	unsigned int scope_id;
+	byte ip[16];		/**< IP */
+	unsigned int scope_id;	/**< IPv6 scope-id */
 #else							/* HAVE_IPV6 */
-	byte ip[4];
+	byte ip[4];		/**< IP number */
 #endif							/* HAVE_IPV6 */
-	byte ipx[10];
+	byte ipx[10];		/**< IPX number */
 
-	unsigned short port;
+	unsigned short port;	/**< port number */
 } netadr_t;
 
 void NET_Init(void);
