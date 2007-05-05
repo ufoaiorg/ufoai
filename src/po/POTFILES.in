@@ -3,7 +3,7 @@
 ./game/g_svcmds.c
 ./game/g_client.c
 ./game/q_shared.c
-./client/console.c
+./client/cl_console.c
 ./client/cl_actor.c
 ./client/cl_aircraft.c
 ./client/cl_basemanagement.c
