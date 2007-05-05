@@ -317,6 +317,15 @@ actors bloodspider
 	}
 }
 
+actorsounds bloodspider
+{
+	neutral
+	{
+		hurtsound aliens/big_angry.wav
+		deathsound aliens/ortnok.wav
+	}
+}
+
 // ==================
 // TEAMS
 // ==================
