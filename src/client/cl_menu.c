@@ -4422,12 +4422,6 @@ static void MS_MessageSave (sizebuf_t * sb, message_t * message)
 	/* bottom up */
 	MS_MessageSave(sb, message->next);
 
-#ifndef DEBUG
-	/* don't save these message types */
-	if (message->type == MSG_DEBUG)
-		return;
-#endif
-
 	/* don't save these message types */
 	if (message->type == MSG_INFO)
 		return;
@@ -4453,19 +4447,13 @@ static void MS_MessageSave (sizebuf_t * sb, message_t * message)
  */
 extern qboolean MS_Save (sizebuf_t* sb, void* data)
 {
-	int i;
+	int i = 0;
 	message_t* message;
 
 	/* store message system items */
 	for (message = messageStack; message; message = message->next) {
 		if (message->type == MSG_INFO)
 			continue;
-		if (message->type == MSG_DEBUG)	{
-#ifdef DEBUG
-			i++;
-#endif
-			continue;
-		}
 		i++;
 	}
 	MSG_WriteLong(sb, i);
@@ -4481,18 +4469,33 @@ extern qboolean MS_Load (sizebuf_t* sb, void* data)
 	int i, mtype, idx;
 	char title[MAX_VAR], text[MAX_MESSAGE_TEXT];
 	message_t *mess;
+	/* ==== HOTFIX ==== */
+	int hotfix;
+	/* ==== HOTFIX ==== */
 
 	MN_ShutdownMessageSystem();
 
 	/* how many message items */
 	i = MSG_ReadLong(sb);
 	for (; i--;) {
+		/* ==== HOTFIX ==== */
+		hotfix = sb->readcount;
+		/* dont' load any following message */
+		if (MSG_ReadByte(sb) == 0x9) {
+			Com_Printf("HOTFIX: %i message(s) - resave this savegame\n", i);
+			sb->readcount = hotfix;
+			return qtrue;
+		} else
+			sb->readcount = hotfix;
+		/* ==== HOTFIX ==== */
+
 		/* can contain high bits due to utf8 */
 		Q_strncpyz(title, MSG_ReadStringRaw(sb), sizeof(title));
 		Q_strncpyz(text, MSG_ReadStringRaw(sb), sizeof(text));
 		mtype = MSG_ReadByte(sb);
 		idx = MSG_ReadLong(sb);
-		mess = MN_AddNewMessage(title, text, qfalse, mtype, RS_GetTechByIDX(idx));
+		if (mtype != MSG_DEBUG || developer->integer == 1)
+			mess = MN_AddNewMessage(title, text, qfalse, mtype, RS_GetTechByIDX(idx));
 		mess->d = MSG_ReadLong(sb);
 		mess->m = MSG_ReadLong(sb);
 		mess->y = MSG_ReadLong(sb);
