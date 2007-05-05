@@ -28,6 +28,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_SAVESUBSYSTEMS 32
 
+/**
+ * HISTORY
+ * version id   | game version
+ * ===========================
+ *          1   | 2.1.1
+ *          2   | 2.2
+ */
 #define SAVE_FILE_VERSION 2
 /* MAX_GAMESAVESIZE has room for 3MB for dynamic data, eg geoscape messages */
 #define MAX_GAMESAVESIZE	3145728
