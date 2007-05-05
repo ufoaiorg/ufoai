@@ -4554,14 +4554,22 @@ extern qboolean MS_Load (sizebuf_t* sb, void* data)
 		Q_strncpyz(text, MSG_ReadStringRaw(sb), sizeof(text));
 		mtype = MSG_ReadByte(sb);
 		idx = MSG_ReadLong(sb);
-		if (mtype != MSG_DEBUG || developer->integer == 1)
+		if (mtype != MSG_DEBUG || developer->integer == 1) {
 			mess = MN_AddNewMessage(title, text, qfalse, mtype, RS_GetTechByIDX(idx));
-		mess->d = MSG_ReadLong(sb);
-		mess->m = MSG_ReadLong(sb);
-		mess->y = MSG_ReadLong(sb);
-		mess->h = MSG_ReadLong(sb);
-		mess->min = MSG_ReadLong(sb);
-		mess->s = MSG_ReadLong(sb);
+			mess->d = MSG_ReadLong(sb);
+			mess->m = MSG_ReadLong(sb);
+			mess->y = MSG_ReadLong(sb);
+			mess->h = MSG_ReadLong(sb);
+			mess->min = MSG_ReadLong(sb);
+			mess->s = MSG_ReadLong(sb);
+		} else {
+			MSG_ReadLong(sb);
+			MSG_ReadLong(sb);
+			MSG_ReadLong(sb);
+			MSG_ReadLong(sb);
+			MSG_ReadLong(sb);
+			MSG_ReadLong(sb);
+		}
 	}
 	return qtrue;
 }
