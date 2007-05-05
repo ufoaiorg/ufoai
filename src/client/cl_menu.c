@@ -4541,6 +4541,7 @@ extern qboolean MS_Save (sizebuf_t* sb, void* data)
 			continue;
 		}
 		i++;
+	}
 	MSG_WriteLong(sb, i);
 	MS_MessageSave(sb, messageStack);
 	return qtrue;
