@@ -92,6 +92,7 @@ static void UP_ChangeDisplay (int newDisplay)
 	Cvar_Set("mn_changeweapon", "0"); /* use strings here - no int */
 	Cvar_Set("mn_changefiremode", "0"); /* use strings here - no int */
 	Cvar_Set("mn_researchedlinkname", "");
+	Cvar_Set("mn_upresearchedlinknametooltip", "");
 
 	/**
 	 * only fetch this once after ufopedia menu was on the stack (was the
@@ -231,6 +232,7 @@ extern void CL_ItemDescription (int item)
 	Cvar_Set("mn_changefiremode", "0"); /* use strings here - no int */ 
 	Cvar_Set("mn_changeweapon", "0"); /* use strings here - no int */
 	Cvar_Set("mn_researchedlinkname", "");
+	Cvar_Set("mn_upresearchedlinknametooltip", "");
 
 #ifdef DEBUG
 	if (!od->tech && ccs.singleplayer) {
@@ -290,6 +292,7 @@ extern void CL_ItemDescription (int item)
 			if (!(od->weapon && !od->reload)) {
 				Cvar_Set("mn_displayweapon", "1"); /* use strings here - no int */
 				Cvar_Set("mn_researchedlinkname", csi.ods[od->weap_idx[up_researchedlink]].name);
+				Cvar_Set("mn_upresearchedlinknametooltip", va(_("Go to '%s' UFOpedia entry"), csi.ods[od->weap_idx[up_researchedlink]].name));
 			}
 		} else if (od->weapon) {
 			/* We have a weapon that uses ammos */
@@ -318,6 +321,7 @@ extern void CL_ItemDescription (int item)
 
 			Cvar_Set("mn_displayweapon", "2"); /* use strings here - no int */
 			Cvar_Set("mn_researchedlinkname", od->name);
+			Cvar_Set("mn_upresearchedlinknametooltip", va(_("Go to '%s' UFOpedia entry"), od->name));
 		}
 
 		if (od->weapon || !Q_strncmp(od->type, "ammo", 4)) {
@@ -1038,7 +1042,7 @@ static void UP_TechTreeClick_f (void)
 	if (techRequired->up_chapter == -1)
 		return;
 
-	UP_OpenCopyWith(techRequired->id);
+	UP_OpenWith(techRequired->id);
 }
 
 /**
@@ -1109,6 +1113,34 @@ static void UP_MailClientClick_f (void)
 		m = m->next;
 	}
 }
+
+/**
+ * @brief Change Ufopedia article when clicking on the name of associated ammo or weapon
+ */
+static void UP_ResearchedLinkClick_f (void)
+{
+	technology_t *t = NULL;
+	int i;
+	if (!upCurrent) /* if called from console */
+		return;
+
+	t = upCurrent;
+	for (i = 0; i < csi.numODs; i++)
+		if (!Q_strncmp(t->provides, csi.ods[i].id, MAX_VAR)) {
+			break;
+		}
+
+	if (!Q_strncmp(csi.ods[i].type, "ammo", 4)) {
+		t = csi.ods[csi.ods[i].weap_idx[up_researchedlink]].tech;
+		if (UP_TechGetsDisplayed (t))
+			UP_OpenWith (t->id);
+	} else if (csi.ods[i].weapon && csi.ods[i].reload) {
+		t = csi.ods[csi.ods[i].ammo_idx[up_researchedlink]].tech;
+		if (UP_TechGetsDisplayed (t))
+			UP_OpenWith (t->id);
+	} 
+}
+
 
 #define MAIL_LENGTH 256
 #define MAIL_BUFFER_SIZE 0x4000
@@ -1351,6 +1383,7 @@ extern void UP_ResetUfopedia (void)
 	Cmd_AddCommand("ufopedia_rclick", UP_RightClick_f, NULL);
 	Cmd_AddCommand("ufopedia_openmail", UP_OpenMail_f, "Start the mailclient");
 	Cmd_AddCommand("techtree_click", UP_TechTreeClick_f, NULL);
+	Cmd_AddCommand("mn_upgotoresearchedlink", UP_ResearchedLinkClick_f, NULL);
 	Cmd_AddCommand("mn_increasefiremode", UP_IncreaseFiremode_f, NULL);
 	Cmd_AddCommand("mn_decreasefiremode", UP_DecreaseFiremode_f, NULL);
 	Cmd_AddCommand("mn_increaseweapon", UP_IncreaseWeapon_f, NULL);
@@ -1363,6 +1396,7 @@ extern void UP_ResetUfopedia (void)
 	Cvar_Set("mn_changeweapon", "0"); /* use strings here - no int */
 	Cvar_Set("mn_changefiremode", "0"); /* use strings here - no int */
 	Cvar_Set("mn_researchedlinkname", "");
+	Cvar_Set("mn_upresearchedlinknametooltip", "");
 	up_firemode=0;
 	up_researchedlink=0;	/*@todo: if the first weapon of the firemode of an ammo is unresearched, its dommages,... will still be displayed*/
 }

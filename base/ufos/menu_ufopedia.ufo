@@ -418,10 +418,24 @@ menu ufopedia
 
 	string weapon_name
 	{
+		if "mn_displayweapon > 0"
+		tooltip "*cvar mn_upresearchedlinknametooltip"
+		in
+		size	"240 20"
 		string	"*cvar mn_researchedlinkname"
-		pos		"395 712"
-		align	cc
+		pos		"395 704"
+		align	uc
 		font	f_small
+	}
+
+	zone weapon_name_click
+	{
+		pos		"285 702"
+		size	"220 20"
+		click
+		{
+			cmd mn_upgotoresearchedlink
+		}
 	}
 
 	pic firemode_dec
