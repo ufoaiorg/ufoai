@@ -280,7 +280,7 @@ static int BrushContents (mapbrush_t *b)
 		s = &b->original_sides[i];
 		trans |= texinfo[s->texinfo].flags;
 		if (s->contents != contents) {
-			Sys_Printf("Entity %i, Brush %i: mixed face contents (f: %i, %i)\n"
+			Sys_FPrintf(SYS_VRB, "Entity %i, Brush %i: mixed face contents (f: %i, %i)\n"
 				, b->entitynum, b->brushnum, s->contents, contents);
 			break;
 		}
@@ -509,9 +509,9 @@ static void ParseBrush (entity_t *mapent)
 				&& strlen(ValueForKey(&entities[b->entitynum], "phongshading")) > 0);
 #if 1
 	if (b->isTerrain)
-		Sys_Printf("Brush number %i in entity number %i has terrain flag set.\n", b->brushnum, b->entitynum);
+		Sys_FPrintf(SYS_VRB, "Brush number %i in entity number %i has terrain flag set.\n", b->brushnum, b->entitynum);
 	if (phongShading)
-		Sys_Printf("Brush number %i in entity number %i has phong shading flag set.\n", b->brushnum, b->entitynum);
+		Sys_FPrintf(SYS_VRB, "Brush number %i in entity number %i has phong shading flag set.\n", b->brushnum, b->entitynum);
 #endif
 
 	do {

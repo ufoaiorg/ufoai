@@ -46,7 +46,7 @@ void Cmd_Spritename (void);
  */
 void FinishSprite (void)
 {
-	FILE	*spriteouthandle;
+	qFILE	spriteouthandle;
 	int			i, curframe;
 	dsprite_t	spritetemp;
 	char		savename[1024];
@@ -72,27 +72,27 @@ void FinishSprite (void)
 
 	printf ("saving in %s\n", savename);
 	CreatePath (savename);
-	spriteouthandle = SafeOpenWrite (savename);
+	SafeOpenWrite (savename, &spriteouthandle);
 
 	/* write out the sprite header */
 	spritetemp.ident = LittleLong (IDSPRITEHEADER);
 	spritetemp.version = LittleLong (SPRITE_VERSION);
 	spritetemp.numframes = LittleLong (sprite.numframes);
 
-	SafeWrite (spriteouthandle, &spritetemp, 12);
+	SafeWrite (&spriteouthandle, &spritetemp, 12);
 
 	/* write out the frames */
 	curframe = 0;
 
-	for (i=0 ; i<sprite.numframes ; i++) {
+	for (i = 0; i < sprite.numframes; i++) {
 		frames[i].width = LittleLong(frames[i].width);
 		frames[i].height = LittleLong(frames[i].height);
 		frames[i].origin_x = LittleLong(frames[i].origin_x);
 		frames[i].origin_y = LittleLong(frames[i].origin_y);
 	}
-	SafeWrite (spriteouthandle, frames, sizeof(frames[0])*sprite.numframes);
+	SafeWrite(&spriteouthandle, frames, sizeof(frames[0])*sprite.numframes);
 
-	fclose (spriteouthandle);
+	CloseFile(&spriteouthandle);
 
 	spritename[0] = 0;		/* clear for a new sprite */
 	sprite.numframes = 0;

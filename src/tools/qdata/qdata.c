@@ -61,7 +61,7 @@ typedef struct
 } packheader_t;
 
 packfile_t		pfiles[16384];
-FILE			*pakfile;
+qFILE			pakfile;
 packfile_t		*pf;
 packheader_t	pakheader;
 
@@ -76,10 +76,10 @@ static void BeginPak (char *outname)
 	if (!g_pak)
 		return;
 
-	pakfile = SafeOpenWrite (outname);
+	SafeOpenWrite (outname, &pakfile);
 
 	/* leave space for header */
-	SafeWrite (pakfile, &pakheader, sizeof(pakheader));
+	SafeWrite (&pakfile, &pakheader, sizeof(pakheader));
 
 	pf = pfiles;
 }
@@ -134,11 +134,11 @@ extern void ReleaseFile (char *filename)
 	}
 
 	strcpy (pf->name, filename);
-	pf->filepos = LittleLong(ftell(pakfile));
+	pf->filepos = LittleLong(ftell(pakfile.f));
 	pf->filelen = LittleLong(len);
 	pf++;
 
-	SafeWrite (pakfile, buf, len);
+	SafeWrite (&pakfile, buf, len);
 
 	free (buf);
 }
@@ -160,22 +160,22 @@ void FinishPak (void)
 	pakheader.id[2] = 'C';
 	pakheader.id[3] = 'K';
 	dirlen = (byte *)pf - (byte *)pfiles;
-	pakheader.dirofs = LittleLong(ftell(pakfile));
+	pakheader.dirofs = LittleLong(ftell(pakfile.f));
 	pakheader.dirlen = LittleLong(dirlen);
 
 	checksum = Com_BlockChecksum ( (void *)pfiles, dirlen );
 
-	SafeWrite (pakfile, pfiles, dirlen);
+	SafeWrite (&pakfile, pfiles, dirlen);
 
-	i = ftell (pakfile);
+	i = ftell (pakfile.f);
 
-	fseek (pakfile, 0, SEEK_SET);
-	SafeWrite (pakfile, &pakheader, sizeof(pakheader));
-	fclose (pakfile);
+	fseek(pakfile.f, 0, SEEK_SET);
+	SafeWrite(&pakfile, &pakheader, sizeof(pakheader));
+	CloseFile(&pakfile);
 
 	d = pf - pfiles;
-	printf ("%i files packed in %i bytes\n",d, i);
-	printf ("checksum: 0x%x\n", checksum);
+	printf("%i files packed in %i bytes\n",d, i);
+	printf("checksum: 0x%x\n", checksum);
 }
 
 

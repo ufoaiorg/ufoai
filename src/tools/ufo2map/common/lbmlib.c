@@ -23,6 +23,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include <limits.h>
+
 #include "cmdlib.h"
 #include "lbmlib.h"
 
@@ -92,7 +94,7 @@ int Align (int l)
  * @brief
  * @note Source must be evenly aligned!
  */
-static byte *LBMRLEDecompress (byte *source,byte *unpacked, int bpwidth)
+static byte *LBMRLEDecompress (byte *source, byte *unpacked, int bpwidth)
 {
 	int count;
 	byte b,rept;
@@ -129,7 +131,7 @@ static byte *LBMRLEDecompress (byte *source,byte *unpacked, int bpwidth)
  * @brief
  * @sa WriteLBMfile
  */
-void LoadLBM (char *filename, byte **picture, byte **palette)
+void LoadLBM (const char *filename, byte **picture, byte **palette)
 {
 	byte *LBMbuffer, *picbuffer, *cmapbuffer;
 	byte *LBM_P, *LBMEND_P, *pic_p, *body_p;
@@ -225,7 +227,7 @@ WRITE LBM
  * @brief
  * @sa LoadLBM
  */
-void WriteLBMfile (char *filename, byte *data, int width, int height, byte *palette)
+void WriteLBMfile (const char *filename, byte *data, int width, int height, byte *palette)
 {
 	byte *lbm, *lbmptr;
 	int *formlength, *bmhdlength, *cmaplength, *bodylength, length;
@@ -325,29 +327,11 @@ LOAD PCX
 ============================================================================
 */
 
-typedef struct
-{
-	char manufacturer;
-	char version;
-	char encoding;
-	char bits_per_pixel;
-	unsigned short xmin,ymin,xmax,ymax;
-	unsigned short hres,vres;
-	unsigned char palette[48];
-	char reserved;
-	char color_planes;
-	unsigned short bytes_per_line;
-	unsigned short palette_type;
-	char filler[58];
-	unsigned char data;			/* unbounded */
-} pcx_t;
-
-
 /**
  * @brief
  * @sa WritePCXfile
  */
-void LoadPCX (char *filename, byte **pic, byte **palette, int *width, int *height)
+void LoadPCX (const char *filename, byte **pic, byte **palette, int *width, int *height)
 {
 	byte	*raw;
 	pcx_t	*pcx;
@@ -428,14 +412,14 @@ void LoadPCX (char *filename, byte **pic, byte **palette, int *width, int *heigh
  * @brief
  * @sa LoadPCX
  */
-void WritePCXfile (char *filename, byte *data, int width, int height, byte *palette)
+void WritePCXfile (const char *filename, byte *data, int width, int height, byte *palette)
 {
 	int		i, j, length;
 	pcx_t	*pcx;
 	byte		*pack;
 
-	pcx = malloc (width*height*2+1000);
-	memset (pcx, 0, sizeof(*pcx));
+	pcx = malloc(width * height * 2 + 1000);
+	memset(pcx, 0, sizeof(*pcx));
 
 	pcx->manufacturer = 0x0a;	/* PCX id */
 	pcx->version = 5;			/* 256 color */
@@ -472,9 +456,9 @@ void WritePCXfile (char *filename, byte *data, int width, int height, byte *pale
 
 	/* write output file */
 	length = pack - (byte *)pcx;
-	SaveFile (filename, pcx, length);
+	SaveFile(filename, pcx, length);
 
-	free (pcx);
+	free(pcx);
 }
 
 
@@ -491,21 +475,21 @@ LOAD IMAGE
  * @sa LoadLBM
  * @sa Save256Image
  */
-void Load256Image (char *name, byte **pixels, byte **palette, int *width, int *height)
+void Load256Image (const char *name, byte **pixels, byte **palette, int *width, int *height)
 {
 	char	ext[128];
 
-	ExtractFileExtension (name, ext);
-	if (!Q_strcasecmp (ext, "lbm")) {
-		LoadLBM (name, pixels, palette);
+	ExtractFileExtension(name, ext);
+	if (!Q_strcasecmp(ext, "lbm")) {
+		LoadLBM(name, pixels, palette);
 		if (width)
 			*width = bmhd.w;
 		if (height)
 			*height = bmhd.h;
 	} else if (!Q_strcasecmp (ext, "pcx")) {
-		LoadPCX (name, pixels, palette, width, height);
+		LoadPCX(name, pixels, palette, width, height);
 	} else
-		Error ("%s doesn't have a known image extension", name);
+		Error("%s doesn't have a known image extension", name);
 }
 
 
@@ -515,7 +499,7 @@ void Load256Image (char *name, byte **pixels, byte **palette, int *width, int *h
  * @sa WriteLBMfile
  * @sa WritePCXfile
  */
-void Save256Image (char *name, byte *pixels, byte *palette, int width, int height)
+void Save256Image (const char *name, byte *pixels, byte *palette, int width, int height)
 {
 	char ext[128];
 
@@ -546,51 +530,59 @@ typedef struct _TargaHeader {
 /**
  * @brief
  */
-static int fgetLittleShort (FILE *f)
+extern void LoadTGA (const char *name, byte ** pic, int *width, int *height)
 {
-	byte b1, b2;
-
-	b1 = fgetc(f);
-	b2 = fgetc(f);
-
-	return (short)(b1 + b2*256);
-}
-
-/**
- * @brief
- */
-void LoadTGA (const char *name, byte **pixels, int *width, int *height)
-{
-	int columns, rows, numPixels, row, column;
-	byte *pixbuf, *targa_rgba;
-	FILE *fin;
+	int columns, rows, numPixels;
+	byte *pixbuf;
+	int row, column;
+	byte *buf_p;
+	byte *buffer;
+	int length;
 	TargaHeader targa_header;
+	byte *targa_rgba;
+	byte tmp[2];
 
-	fin = fopen(name, "rb");
-	if (!fin)
-		Error("Couldn't read %s", name);
+	if (*pic != NULL)
+		Error("possible mem leak in LoadTGA\n");
 
-	targa_header.id_length = fgetc(fin);
-	targa_header.colormap_type = fgetc(fin);
-	targa_header.image_type = fgetc(fin);
+	/* load the file */
+	length = LoadFile(name, (void **) &buffer);
+	if (!buffer) {
+		Sys_Printf("Bad tga file %s\n", name);
+		return;
+	}
 
-	targa_header.colormap_index = fgetLittleShort(fin);
-	targa_header.colormap_length = fgetLittleShort(fin);
-	targa_header.colormap_size = fgetc(fin);
-	targa_header.x_origin = fgetLittleShort(fin);
-	targa_header.y_origin = fgetLittleShort(fin);
-	targa_header.width = fgetLittleShort(fin);
-	targa_header.height = fgetLittleShort(fin);
-	targa_header.pixel_size = fgetc(fin);
-	targa_header.attributes = fgetc(fin);
+	buf_p = buffer;
 
-	if (targa_header.image_type!=2
-		&& targa_header.image_type!=10)
-		Error ("LoadTGA: Only type 2 and 10 targa RGB images supported\n");
+	targa_header.id_length = *buf_p++;
+	targa_header.colormap_type = *buf_p++;
+	targa_header.image_type = *buf_p++;
 
-	if (targa_header.colormap_type !=0
-		|| (targa_header.pixel_size!=32 && targa_header.pixel_size!=24))
-		Error ("Texture_LoadTGA: Only 32 or 24 bit images supported (no colormaps)\n");
+	tmp[0] = buf_p[0];
+	tmp[1] = buf_p[1];
+	targa_header.colormap_index = LittleShort(*((short *) tmp));
+	buf_p += 2;
+	tmp[0] = buf_p[0];
+	tmp[1] = buf_p[1];
+	targa_header.colormap_length = LittleShort(*((short *) tmp));
+	buf_p += 2;
+	targa_header.colormap_size = *buf_p++;
+	targa_header.x_origin = LittleShort(*((short *) buf_p));
+	buf_p += 2;
+	targa_header.y_origin = LittleShort(*((short *) buf_p));
+	buf_p += 2;
+	targa_header.width = LittleShort(*((short *) buf_p));
+	buf_p += 2;
+	targa_header.height = LittleShort(*((short *) buf_p));
+	buf_p += 2;
+	targa_header.pixel_size = *buf_p++;
+	targa_header.attributes = *buf_p++;
+
+	if (targa_header.image_type != 2 && targa_header.image_type != 10)
+		Error("LoadTGA: Only type 2 and 10 targa RGB images supported (%s) (type: %i)\n", name, targa_header.image_type);
+
+	if (targa_header.colormap_type != 0 || (targa_header.pixel_size != 32 && targa_header.pixel_size != 24))
+		Error("LoadTGA: Only 32 or 24 bit images supported (no colormaps) (%s) (pixel_size: %i)\n", name, targa_header.pixel_size);
 
 	columns = targa_header.width;
 	rows = targa_header.height;
@@ -600,128 +592,130 @@ void LoadTGA (const char *name, byte **pixels, int *width, int *height)
 		*width = columns;
 	if (height)
 		*height = rows;
+
 	targa_rgba = malloc(numPixels * 4);
-	*pixels = targa_rgba;
+	*pic = targa_rgba;
 
 	if (targa_header.id_length != 0)
-		fseek(fin, targa_header.id_length, SEEK_CUR);  /* skip TARGA image comment */
+		buf_p += targa_header.id_length;	/* skip TARGA image comment */
 
-	if (targa_header.image_type == 2) {  /* Uncompressed, RGB images */
+	if (targa_header.image_type == 2) {	/* Uncompressed, RGB images */
 		for (row = rows - 1; row >= 0; row--) {
-			pixbuf = targa_rgba + row*columns*4;
+			pixbuf = targa_rgba + row * columns * 4;
 			for (column = 0; column < columns; column++) {
-				unsigned char red,green,blue,alphabyte;
+				unsigned char red, green, blue, alphabyte;
+
+				red = green = blue = alphabyte = 0;
 				switch (targa_header.pixel_size) {
 				case 24:
-					blue = getc(fin);
-					green = getc(fin);
-					red = getc(fin);
+
+					blue = *buf_p++;
+					green = *buf_p++;
+					red = *buf_p++;
 					*pixbuf++ = red;
 					*pixbuf++ = green;
 					*pixbuf++ = blue;
 					*pixbuf++ = 255;
 					break;
 				case 32:
-					blue = getc(fin);
-					green = getc(fin);
-					red = getc(fin);
-					alphabyte = getc(fin);
+					blue = *buf_p++;
+					green = *buf_p++;
+					red = *buf_p++;
+					alphabyte = *buf_p++;
 					*pixbuf++ = red;
 					*pixbuf++ = green;
 					*pixbuf++ = blue;
 					*pixbuf++ = alphabyte;
 					break;
+				default:
+					break;
 				}
 			}
 		}
-	} else if (targa_header.image_type == 10) {   /* Runlength encoded RGB images */
-		unsigned char red,green,blue,alphabyte,packetHeader,packetSize,j;
-		red=green=blue=alphabyte=0;
-		for (row=rows-1; row>=0; row--) {
-			pixbuf = targa_rgba + row*columns*4;
-			for (column=0; column<columns; ) {
-				packetHeader=getc(fin);
-				packetSize = 1 + (packetHeader & 0x7f);
-				if (packetHeader & 0x80) {        /* run-length packet */
+	} else if (targa_header.image_type == 10) {	/* Runlength encoded RGB images */
+		unsigned char red, green, blue, alphabyte, packetHeader, packetSize, j;
+
+		red = green = blue = alphabyte = 0;
+		for (row = rows - 1; row >= 0; row--) {
+			pixbuf = targa_rgba + row * columns * 4;
+			for (column = 0; column < columns;) {
+				packetHeader = *buf_p++;
+				/* SCHAR_MAX although it's unsigned */
+				packetSize = 1 + (packetHeader & SCHAR_MAX);
+				if (packetHeader & 0x80) {	/* run-length packet */
 					switch (targa_header.pixel_size) {
 					case 24:
-						blue = getc(fin);
-						green = getc(fin);
-						red = getc(fin);
+						blue = *buf_p++;
+						green = *buf_p++;
+						red = *buf_p++;
 						alphabyte = 255;
 						break;
 					case 32:
-						blue = getc(fin);
-						green = getc(fin);
-						red = getc(fin);
-						alphabyte = getc(fin);
+						blue = *buf_p++;
+						green = *buf_p++;
+						red = *buf_p++;
+						alphabyte = *buf_p++;
+						break;
+					default:
 						break;
 					}
 
-					for (j=0;j<packetSize;j++) {
-						*pixbuf++=red;
-						*pixbuf++=green;
-						*pixbuf++=blue;
-						*pixbuf++=alphabyte;
+					for (j = 0; j < packetSize; j++) {
+						*pixbuf++ = red;
+						*pixbuf++ = green;
+						*pixbuf++ = blue;
+						*pixbuf++ = alphabyte;
 						column++;
-						if (column==columns) { /* run spans across rows */
-							column=0;
-							if (row>0)
+						if (column == columns) {	/* run spans across rows */
+							column = 0;
+							if (row > 0)
 								row--;
 							else
 								goto breakOut;
-							pixbuf = targa_rgba + row*columns*4;
+							pixbuf = targa_rgba + row * columns * 4;
 						}
 					}
-				} else {                            /* non run-length packet */
-					for (j=0;j<packetSize;j++) {
+				} else {		/* non run-length packet */
+					for (j = 0; j < packetSize; j++) {
 						switch (targa_header.pixel_size) {
 						case 24:
-							blue = getc(fin);
-							green = getc(fin);
-							red = getc(fin);
+							blue = *buf_p++;
+							green = *buf_p++;
+							red = *buf_p++;
 							*pixbuf++ = red;
 							*pixbuf++ = green;
 							*pixbuf++ = blue;
 							*pixbuf++ = 255;
 							break;
 						case 32:
-							blue = getc(fin);
-							green = getc(fin);
-							red = getc(fin);
-							alphabyte = getc(fin);
+							blue = *buf_p++;
+							green = *buf_p++;
+							red = *buf_p++;
+							alphabyte = *buf_p++;
 							*pixbuf++ = red;
 							*pixbuf++ = green;
 							*pixbuf++ = blue;
 							*pixbuf++ = alphabyte;
 							break;
+						default:
+							break;
 						}
 						column++;
-						if (column==columns) { /* pixel packet run spans across rows */
-							column=0;
-							if (row>0)
+						if (column == columns) {	/* pixel packet run spans across rows */
+							column = 0;
+							if (row > 0)
 								row--;
 							else
 								goto breakOut;
-							pixbuf = targa_rgba + row*columns*4;
+							pixbuf = targa_rgba + row * columns * 4;
 						}
 					}
 				}
 			}
-			breakOut:;
+		  breakOut:;
 		}
 	}
 
-	/* vertically flipped */
-	if ((targa_header.attributes & (1<<5))) {
-		int flip;
-		for (row = 0; row < .5f * rows; row++) {
-			for (column = 0; column < columns; column++) {
-				flip = *( (int*)targa_rgba + row * columns + column);
-				*( (int*)targa_rgba + row * columns + column) = *( (int*)targa_rgba + ( ( rows - 1 ) - row ) * columns + column );
-				*( (int*)targa_rgba + ( ( rows - 1 ) - row ) * columns + column ) = flip;
-			}
-		}
-	}
-	fclose(fin);
+	FreeFile(buffer);
 }
+

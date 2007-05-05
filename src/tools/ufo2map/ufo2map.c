@@ -226,6 +226,7 @@ int main (int argc, char **argv)
 
 	ThreadSetDefault();
 	numthreads = 1;		/* multiple threads aren't helping... */
+	Sys_Printf("path: '%s'\n", argv[argc-1]);
 	SetQdirFromPath(argv[argc-1]);
 
 	strcpy(source, ExpandArg(argv[argc-1]));

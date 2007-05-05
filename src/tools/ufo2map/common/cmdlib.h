@@ -32,6 +32,8 @@ typedef enum {qfalse, qtrue} qboolean;
 typedef unsigned char byte;
 #endif
 
+#include "qfiles.h"
+
 extern	qboolean verbose;
 
 #define SYS_VRB 0 /* verbose support (on/off) */
@@ -53,7 +55,7 @@ int Q_strncasecmp(const char *s1, const char *s2, int n);
 int Q_strcasecmp(const char *s1, const char *s2);
 void Q_getwd(char *out);
 
-int Q_filelength(FILE *f);
+int Q_filelength(qFILE *f);
 int FileTime(const char *path);
 
 void Q_mkdir(const char *path);
@@ -69,12 +71,14 @@ double I_FloatTime(void);
 
 int CheckParm(char *check);
 
-FILE *SafeOpenWrite(const char *filename);
-FILE *SafeOpenRead(const char *filename);
-void SafeRead(FILE *f, void *buffer, int count);
-void SafeWrite(FILE *f, void *buffer, int count);
+qFILE *SafeOpenWrite(const char *filename, qFILE *f);
+qFILE *SafeOpenRead(const char *filename, qFILE *f);
+void SafeRead(qFILE *f, void *buffer, int count);
+void SafeWrite(qFILE *f, void *buffer, int count);
 
 int LoadFile(const char *filename, void **bufferptr);
+void CloseFile(qFILE *f);
+void FreeFile(void *buffer);
 int TryLoadFile(const char *filename, void **bufferptr);
 void SaveFile(const char *filename, void *buffer, int count);
 qboolean FileExists(const char *filename);
@@ -84,9 +88,9 @@ void DefaultPath(char *path, char *basepath);
 void StripFilename(char *path);
 void StripExtension(char *path);
 
-void ExtractFilePath(char *path, char *dest);
-void ExtractFileBase(char *path, char *dest);
-void ExtractFileExtension(char *path, char *dest);
+void ExtractFilePath(const char *path, char *dest);
+void ExtractFileBase(const char *path, char *dest);
+void ExtractFileExtension(const char *path, char *dest);
 
 int ParseNum(char *str);
 

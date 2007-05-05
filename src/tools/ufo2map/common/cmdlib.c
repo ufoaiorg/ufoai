@@ -26,12 +26,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cmdlib.h"
 #include <sys/types.h>
 #include <sys/stat.h>
+#include "../../../qcommon/unzip.h"
 
 #ifdef _WIN32
 #include <direct.h>
 #include <io.h>
 #define PATHSEPERATOR   '\\'
 #else
+#include <zlib.h>
 #include <unistd.h>
 #include <dirent.h>
 #define PATHSEPERATOR   '/'
@@ -496,14 +498,18 @@ int CheckParm (char *check)
 /**
  * @brief
  */
-int Q_filelength (FILE *f)
+int Q_filelength (qFILE *f)
 {
-	int pos, end;
+	int pos, end = 0;
 
-	pos = ftell (f);
-	fseek (f, 0, SEEK_END);
-	end = ftell (f);
-	fseek (f, pos, SEEK_SET);
+	if (f->f) {
+		pos = ftell(f->f);
+		fseek(f->f, 0, SEEK_END);
+		end = ftell (f->f);
+		fseek(f->f, pos, SEEK_SET);
+	} else if (f->z) {
+		/* TODO */
+	}
 
 	return end;
 }
@@ -511,12 +517,11 @@ int Q_filelength (FILE *f)
 /**
  * @brief
  */
-FILE *SafeOpenWrite (const char *filename)
+qFILE *SafeOpenWrite (const char *filename, qFILE* f)
 {
-	FILE	*f;
-
-	f = fopen(filename, "wb");
-	if (!f)
+	memset(f, 0, sizeof(qFILE));
+	f->f = fopen(filename, "wb");
+	if (!f->f)
 		Error("Error opening %s for writing: %s", filename, strerror(errno));
 
 	return f;
@@ -525,13 +530,15 @@ FILE *SafeOpenWrite (const char *filename)
 /**
  * @brief
  */
-FILE *SafeOpenRead (const char *filename)
+qFILE *SafeOpenRead (const char *filename, qFILE *f)
 {
-	FILE	*f;
+	memset(f, 0, sizeof(qFILE));
+	f->f = fopen(filename, "rb");
+	if (!f->f) {
+		/* TODO: Try to load zip files */
+	}
 
-	f = fopen(filename, "rb");
-	if (!f)
-		Error("Error opening %s for reading: %s", filename, strerror(errno));
+	strncpy(f->name, filename, sizeof(f->name));
 
 	return f;
 }
@@ -540,20 +547,29 @@ FILE *SafeOpenRead (const char *filename)
 /**
  * @brief
  */
-void SafeRead (FILE *f, void *buffer, int count)
+void SafeRead (qFILE *f, void *buffer, int count)
 {
-	if (fread (buffer, 1, count, f) != (size_t)count)
-		Error("File read failure");
+	if (f->f) {
+		if (fread(buffer, 1, count, f->f) != (size_t)count)
+			Error("SafeRead: File read failure");
+	} else if (f->z) {
+		/* TODO */
+	} else
+		Error("SafeRead: No filehandle given");
 }
 
 
 /**
  * @brief
  */
-void SafeWrite (FILE *f, void *buffer, int count)
+void SafeWrite (qFILE *f, void *buffer, int count)
 {
-	if (fwrite (buffer, 1, count, f) != (size_t)count)
-		Error ("File write failure");
+	if (f->z)
+		Error("SafeWrite: Could not write into zip files");
+	if (!f->f)
+		Error("SafeWrite: No file handle given");
+	if (fwrite(buffer, 1, count, f->f) != (size_t)count)
+		Error("SafeWrite: File write failure");
 }
 
 
@@ -562,13 +578,21 @@ void SafeWrite (FILE *f, void *buffer, int count)
  */
 qboolean FileExists (const char *filename)
 {
-	FILE	*f;
+	qFILE	f;
 
-	f = fopen(filename, "r");
-	if (!f)
+	SafeOpenRead(filename, &f);
+	if (!f.f && !f.z)
 		return qfalse;
-	fclose(f);
+	CloseFile(&f);
 	return qtrue;
+}
+
+/**
+ * @brief
+ */
+void FreeFile (void *buffer)
+{
+	free(buffer);
 }
 
 /**
@@ -577,21 +601,35 @@ qboolean FileExists (const char *filename)
  */
 extern int LoadFile (const char *filename, void **bufferptr)
 {
-	FILE *f;
+	qFILE f;
 	int length;
 	void *buffer;
 
-	f = SafeOpenRead(filename);
-	length = Q_filelength (f);
-	buffer = malloc(length+1);
+	SafeOpenRead(filename, &f);
+	if (!f.f && !f.z)
+		Error("Could not load %s", filename);
+	length = Q_filelength(&f);
+	buffer = malloc(length + 1);
 	((char *)buffer)[length] = 0;
-	SafeRead(f, buffer, length);
-	fclose(f);
+	SafeRead(&f, buffer, length);
+	CloseFile(&f);
 
 	*bufferptr = buffer;
 	return length;
 }
 
+/**
+ * @brief
+ */
+void CloseFile (qFILE *f)
+{
+	if (f->f)
+		fclose(f->f);
+	else if (f->z)
+		unzCloseCurrentFile(f->z);
+
+	f->f = f->z = NULL;
+}
 
 /**
  * @brief
@@ -600,20 +638,20 @@ extern int LoadFile (const char *filename, void **bufferptr)
  */
 int TryLoadFile (const char *filename, void **bufferptr)
 {
-	FILE *f;
+	qFILE f;
 	int length;
 	void *buffer;
 
 	*bufferptr = NULL;
 
-	f = fopen (filename, "rb");
-	if (!f)
+	SafeOpenRead(filename, &f);
+	if (!f.f && !f.z)
 		return -1;
-	length = Q_filelength (f);
-	buffer = malloc (length+1);
+	length = Q_filelength(&f);
+	buffer = malloc(length + 1);
 	((char *)buffer)[length] = 0;
-	SafeRead (f, buffer, length);
-	fclose (f);
+	SafeRead(&f, buffer, length);
+	CloseFile(&f);
 
 	*bufferptr = buffer;
 	return length;
@@ -625,11 +663,11 @@ int TryLoadFile (const char *filename, void **bufferptr)
  */
 void SaveFile (const char *filename, void *buffer, int count)
 {
-	FILE *f;
+	qFILE f;
 
-	f = SafeOpenWrite(filename);
-	SafeWrite(f, buffer, count);
-	fclose(f);
+	SafeOpenWrite(filename, &f);
+	SafeWrite(&f, buffer, count);
+	CloseFile(&f);
 }
 
 /**
@@ -648,7 +686,7 @@ void DefaultExtension (char *path, char *extension)
 		src--;
 	}
 
-	strcat (path, extension);
+	strcat(path, extension);
 }
 
 /**
@@ -660,9 +698,9 @@ void DefaultPath (char *path, char *basepath)
 
 	if (path[0] == '\\' || path[0] == '/' || path[1] == ':')
 		return;                   /* absolute path location */
-	strcpy(temp,path);
-	strcpy(path,basepath);
-	strcat(path,temp);
+	strncpy(temp, path, sizeof(temp));
+	strcpy(path, basepath);
+	strcat(path, temp);
 }
 
 
@@ -702,9 +740,9 @@ void StripExtension (char *path)
  * FIXME: should include the slash, otherwise
  * backing to an empty path will be wrong when appending a slash
  */
-void ExtractFilePath (char *path, char *dest)
+void ExtractFilePath (const char *path, char *dest)
 {
-	char *src;
+	const char *src;
 
 	src = path + strlen(path) - 1;
 
@@ -719,9 +757,9 @@ void ExtractFilePath (char *path, char *dest)
 /**
  * @brief
  */
-void ExtractFileBase (char *path, char *dest)
+void ExtractFileBase (const char *path, char *dest)
 {
-	char    *src;
+	const char *src;
 
 	src = path + strlen(path) - 1;
 
@@ -738,9 +776,9 @@ void ExtractFileBase (char *path, char *dest)
 /**
  * @brief
  */
-void ExtractFileExtension (char *path, char *dest)
+void ExtractFileExtension (const char *path, char *dest)
 {
-	char    *src;
+	const char *src;
 
 	src = path + strlen(path) - 1;
 

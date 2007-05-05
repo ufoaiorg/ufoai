@@ -316,7 +316,7 @@ static int CopyLump (int lump, void *dest, int size)
 /**
  * @brief
  */
-extern void LoadBSPFile (char *filename)
+extern void LoadBSPFile (const char *filename)
 {
 	int i;
 
@@ -360,15 +360,18 @@ extern void LoadBSPFile (char *filename)
 /**
  * @brief Only loads the texinfo lump, so qdata can scan for textures
  */
-extern void LoadBSPFileTexinfo (char *filename)
+extern void LoadBSPFileTexinfo (const char *filename)
 {
 	int i, length, ofs;
-	FILE *f;
+	qFILE f;
 
+	SafeOpenRead(filename, &f);
+	if (!f.f) {
+		Sys_Printf("LoadBSPFileTexinfo: Could not load '%s'\n", filename);
+		return;
+	}
 	header = malloc(sizeof(dheader_t));
-
-	f = fopen(filename, "rb");
-	if (fread(header, sizeof(dheader_t), 1, f) != 1) {
+	if (fread(header, sizeof(dheader_t), 1, f.f) != 1) {
 		Sys_Printf("LoadBSPFileTexinfo: Header size mismatch\n");
 		free(header);
 		return;
@@ -386,10 +389,10 @@ extern void LoadBSPFileTexinfo (char *filename)
 	length = header->lumps[LUMP_TEXINFO].filelen;
 	ofs = header->lumps[LUMP_TEXINFO].fileofs;
 
-	fseek(f, ofs, SEEK_SET);
-	if (fread(texinfo, length, 1, f) != 1)
+	fseek(f.f, ofs, SEEK_SET);
+	if (fread(texinfo, length, 1, f.f) != 1)
 		Sys_Printf("LoadBSPFileTexInfo: Warning, read error\n");
-	fclose(f);
+	CloseFile(&f);
 
 	numtexinfo = length / sizeof(texinfo_t);
 
@@ -399,7 +402,7 @@ extern void LoadBSPFileTexinfo (char *filename)
 }
 
 
-static FILE *wadfile;
+static qFILE wadfile;
 static dheader_t outheader;
 
 /**
@@ -411,9 +414,9 @@ static void AddLump (int lumpnum, void *data, int len)
 
 	lump = &header->lumps[lumpnum];
 
-	lump->fileofs = LittleLong(ftell(wadfile));
+	lump->fileofs = LittleLong(ftell(wadfile.f));
 	lump->filelen = LittleLong(len);
-	SafeWrite(wadfile, data, (len + 3) &~ 3);
+	SafeWrite(&wadfile, data, (len + 3) &~ 3);
 }
 
 /**
@@ -429,8 +432,9 @@ extern void WriteBSPFile (const char *filename)
 	header->ident = LittleLong(IDBSPHEADER);
 	header->version = LittleLong(BSPVERSION);
 
-	wadfile = SafeOpenWrite(filename);
-	SafeWrite(wadfile, header, sizeof(dheader_t));	/* overwritten later */
+	memset(&wadfile, 0, sizeof(qFILE));
+	SafeOpenWrite(filename, &wadfile);
+	SafeWrite(&wadfile, header, sizeof(dheader_t));	/* overwritten later */
 
 	AddLump(LUMP_PLANES, dplanes, numplanes*sizeof(dplane_t));
 	AddLump(LUMP_LEAFS, dleafs, numleafs*sizeof(dleaf_t));
@@ -451,9 +455,9 @@ extern void WriteBSPFile (const char *filename)
 	AddLump(LUMP_ROUTING, droutedata, routedatasize);
 	AddLump(LUMP_ENTITIES, dentdata, entdatasize);
 
-	fseek(wadfile, 0, SEEK_SET);
-	SafeWrite(wadfile, header, sizeof(dheader_t));
-	fclose(wadfile);
+	fseek(wadfile.f, 0, SEEK_SET);
+	SafeWrite(&wadfile, header, sizeof(dheader_t));
+	CloseFile(&wadfile);
 	SwapBSPFile(qtrue);
 }
 

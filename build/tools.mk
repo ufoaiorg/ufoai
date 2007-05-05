@@ -28,7 +28,9 @@ UFO2MAP_SRCS = \
 	tools/ufo2map/common/scriplib.c \
 	tools/ufo2map/common/trace.c \
 	tools/ufo2map/common/lbmlib.c \
-	tools/ufo2map/common/threads.c
+	tools/ufo2map/common/threads.c \
+	qcommon/unzip.c \
+	qcommon/ioapi.c
 
 UFO2MAP_OBJS=$(UFO2MAP_SRCS:%.c=$(BUILDDIR)/tools/ufo2map/%.o)
 UFO2MAP_DEPS=$(UFO2MAP_OBJS:%.o=%.d)
@@ -69,6 +71,8 @@ QDATA_SRCS=\
 	tools/qdata/video.c \
 	\
 	qcommon/md4.c \
+	qcommon/unzip.c \
+	qcommon/ioapi.c \
 	\
 	tools/qdata/common/trilib.c \
 	tools/qdata/common/l3dslib.c \

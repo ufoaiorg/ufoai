@@ -24,6 +24,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#ifndef QFILES_H
+#define QFILES_H
+
 /*
 ========================================================================
 The .pak files are just a linear collapse of a directory tree
@@ -31,7 +34,14 @@ The .pak files are just a linear collapse of a directory tree
 */
 
 #define MAX_QPATH 64
+#define MAX_OSPATH 128
 
+typedef struct qFILE_s {
+	void *z; /* in case of the file being a zip archive */
+	FILE *f; /* in case the file being part of a pak or the actual file */
+	char name[MAX_OSPATH];
+	unsigned long filepos;
+} qFILE;
 
 /*
 ========================================================================
@@ -418,3 +428,5 @@ typedef struct
 
 #define	ANGLE_UP	-1
 #define	ANGLE_DOWN	-2
+
+#endif /* QFILES_H */

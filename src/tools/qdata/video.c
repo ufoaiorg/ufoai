@@ -237,40 +237,40 @@ static wavinfo_t GetWavinfo (char *name, byte *wav, int wavlength)
 void LoadSoundtrack (void)
 {
 	char	name[1024];
-	FILE	*f;
+	qFILE	f;
 	int		len;
 	int     i, val, j;
 
 	soundtrack = NULL;
 	sprintf (name, "%svideo/%s/%s.wav", gamedir, base, base);
 	printf ("%s\n", name);
-	f = fopen (name, "rb");
-	if (!f) {
+	SafeOpenRead(name, &f);
+	if (!f.f) {
 		printf ("no soundtrack for %s\n", base);
 		return;
 	}
-	len = Q_filelength(f);
+	len = Q_filelength(&f);
 	soundtrack = malloc(len);
-	if (fread (soundtrack, 1, len, f) != 1)
+	if (fread (soundtrack, 1, len, f.f) != 1)
 		printf("LoadSoundtrack: Warning, size mismatch\n");
-	fclose (f);
+	CloseFile(&f);
 
-	wavinfo = GetWavinfo (name, soundtrack, len);
+	wavinfo = GetWavinfo(name, soundtrack, len);
 
 	/* count samples for compression */
-	memset (samplecounts, 0, sizeof(samplecounts));
+	memset(samplecounts, 0, sizeof(samplecounts));
 
 	j = wavinfo.samples/2;
-	for (i=0 ; i<j ; i++) {
+	for (i = 0; i < j; i++) {
 		val = ((unsigned short *)( soundtrack + wavinfo.dataofs))[i];
 		samplecounts[val]++;
 	}
 	val = 0;
-	for (i=0 ; i<0x10000 ; i++)
+	for (i = 0; i < 0x10000; i++)
 		if (samplecounts[i])
 			val++;
 
-	printf ("%i unique sample values\n", val);
+	printf("%i unique sample values\n", val);
 }
 
 /**
