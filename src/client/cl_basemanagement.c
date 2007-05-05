@@ -2982,9 +2982,13 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 			for (k = 0; k < MAX_TEAMLIST; k++) {
 				b->hospitalMissionList[k] = MSG_ReadShort(sb);
 			}
-		} else if (*(int*)data == 1) {
-			/* 2.1.1 didn't know anything about capacities - so we have to
-			 * calculate them on our own */
+		} else if (*(int*)data == 1) {	/* 2.1.1 */
+			/* Buy/Sell factors - set them to default ones. */
+			b->buyfactor = 1;
+			b->sellfactor = 5;
+
+			/* Base capacities - update capacity.max here. */
+			B_UpdateBaseCapacities(MAX_CAP, b);
 		}
 
 		/* clear the mess of stray loaded pointers */
