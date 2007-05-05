@@ -256,33 +256,20 @@ extern void INV_CollectingItems (int won)
 
 /**
  * @brief Sell items to the market or add them to base storage.
+ * @param[in] *aircraft Pointer to an aircraft landing in base.
  * @sa CL_DropshipReturned
- * @todo remove baseCurrent from this function - replace with aircraft->homebase
  */
-void INV_SellOrAddItems (void)
+void INV_SellOrAddItems (aircraft_t *aircraft)
 {
 	int i, numitems = 0, gained = 0;
 	char str[128];
 	itemsTmp_t *cargo = NULL;
-	aircraft_t *aircraft = NULL;
 	technology_t *tech = NULL;
+	base_t *base;
 
-	if (!baseCurrent) {
-#ifdef DEBUG
-		/* should never happen */
-		Com_Printf("INV_SellingItems()... no base selected!\n");
-#endif
-		return;
-	}
-	if ((baseCurrent->aircraftCurrent >= 0) && (baseCurrent->aircraftCurrent < baseCurrent->numAircraftInBase)) {
-		aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
-	} else {
-#ifdef DEBUG
-		/* should never happen */
-		Com_Printf("INV_SellingItems()... no aircraft selected!\n");
-#endif
-		return;
-	}
+	assert (aircraft);
+	base = aircraft->homebase;
+	assert (base);
 
 	eTempCredits = ccs.credits;
 	cargo = aircraft->itemcargo;
@@ -293,7 +280,7 @@ void INV_SellOrAddItems (void)
 			Sys_Error("INV_SellOrAddItems: No tech for %s / %s\n", csi.ods[cargo[i].idx].id, csi.ods[cargo[i].idx].name);
 		/* If the related technology is NOT researched, don't sell items. */
 		if (!RS_IsResearched_ptr(tech)) {
-			baseCurrent->storage.num[cargo[i].idx] += cargo[i].amount;
+			base->storage.num[cargo[i].idx] += cargo[i].amount;
 			if (cargo[i].amount > 0)
 				RS_MarkCollected(tech);
 			continue;
@@ -305,7 +292,7 @@ void INV_SellOrAddItems (void)
 				eTempCredits += (csi.ods[cargo[i].idx].price * cargo[i].amount);
 				numitems += cargo[i].amount;
 			} else { /* Store items if autosell is disabled. */
-				baseCurrent->storage.num[cargo[i].idx] += cargo[i].amount;
+				base->storage.num[cargo[i].idx] += cargo[i].amount;
 			}
 			continue;
 		}

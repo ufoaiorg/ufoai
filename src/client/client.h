@@ -723,9 +723,6 @@ void CDAudio_RandomPlay(void);
 /* cl_produce.c */
 #include "cl_produce.h"
 
-/* cl_inventory.c */
-#include "cl_inventory.h"
-
 /* cl_aliencont.c */
 #include "cl_aliencont.h"
 
@@ -738,6 +735,9 @@ void CDAudio_RandomPlay(void);
 /* cl_basemanagment.c */
 /* needs the MAX_ACTIVETEAM definition from above. */
 #include "cl_basemanagement.h"
+
+/* cl_inventory.c */
+#include "cl_inventory.h"
 
 /* cl_employee.c */
 #include "cl_employee.h"
