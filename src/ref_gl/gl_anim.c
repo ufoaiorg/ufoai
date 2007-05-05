@@ -28,6 +28,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /**
  * @brief
+ * @sa Anim_Change
+ * @sa Anim_Append
+ * @sa Anim_Run
+ * @sa Anim_GetName
  */
 static manim_t *Anim_Get (model_t * mod, const char *name)
 {
@@ -48,6 +52,10 @@ static manim_t *Anim_Get (model_t * mod, const char *name)
 
 /**
  * @brief
+ * @sa Anim_Get
+ * @sa Anim_Change
+ * @sa Anim_Run
+ * @sa Anim_GetName
  */
 void Anim_Append (animState_t * as, model_t * mod, const char *name)
 {
@@ -91,7 +99,14 @@ void Anim_Append (animState_t * as, model_t * mod, const char *name)
 
 
 /**
- * @brief
+ * @brief Changes the animation for md2 models
+ * @sa Anim_Get
+ * @sa Anim_Append
+ * @sa Anim_Run
+ * @sa Anim_GetName
+ * @param[in] as Client side animation state of the model
+ * @param[in] mod Model structure to change the animation for (md2/mod_alias)
+ * @param[in] name Animation state name to switch to
  */
 void Anim_Change (animState_t * as, model_t * mod, const char *name)
 {
@@ -144,7 +159,11 @@ void Anim_Change (animState_t * as, model_t * mod, const char *name)
 
 
 /**
- * @brief
+ * @brief Run the animation of the given md2 model
+ * @sa Anim_Get
+ * @sa Anim_Append
+ * @sa Anim_Change
+ * @sa Anim_GetName
  */
 void Anim_Run (animState_t * as, model_t * mod, int msec)
 {
@@ -195,6 +214,10 @@ void Anim_Run (animState_t * as, model_t * mod, int msec)
 
 /**
  * @brief
+ * @sa Anim_Get
+ * @sa Anim_Append
+ * @sa Anim_Run
+ * @sa Anim_Change
  */
 char *Anim_GetName (animState_t * as, model_t * mod)
 {
