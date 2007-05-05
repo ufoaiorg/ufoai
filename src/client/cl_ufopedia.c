@@ -645,6 +645,36 @@ extern void UP_Article (technology_t* tech)
 }
 
 /**
+ * @brief Set the ammo model to display to selected ammo (only for a reloadable weapon)
+ * @param tech technology_t pointer for the weapon's tech 
+ * @sa UP_DrawEntry
+ * @sa UP_DecreaseWeapon_f
+ * @sa UP_IncreaseWeapon_f
+ */
+static void UP_DrawAssociatedAmmo (technology_t* tech)
+{
+	int i;
+	technology_t *t_associated = NULL;
+
+	if (!tech)
+		return;
+
+	/* select item */
+	for (i = 0; i < csi.numODs; i++)
+		if (!Q_strncmp(tech->provides, csi.ods[i].id, MAX_VAR)) {
+			break;
+		}
+
+	/* If this is a weapon, we display the model of the associated ammunition in the lower right */
+	if (csi.ods[i].numAmmos > 0) {
+		/* We set t_associated to ammo to display */
+		t_associated = csi.ods[csi.ods[i].ammo_idx[up_researchedlink]].tech;
+		assert(t_associated);
+		Cvar_Set("mn_upmodel_bottom", t_associated->mdl_top);
+	}
+}
+
+/**
  * @brief Displays the ufopedia information about a technology
  * @param tech technology_t pointer for the tech to display the information about
  * @sa UP_AircraftDescription
@@ -668,7 +698,7 @@ static void UP_DrawEntry (technology_t* tech)
 	if (*tech->mdl_top)
 		Cvar_Set("mn_upmodel_top", tech->mdl_top);
 	if (*tech->mdl_bottom )
-		Cvar_Set("mn_upmodel_bottom", tech->mdl_bottom);
+		UP_DrawAssociatedAmmo(tech);
 	if (!*tech->mdl_top && *tech->image_top)
 		Cvar_Set("mn_upimage_top", tech->image_top);
 	if (!*tech->mdl_bottom && *tech->mdl_bottom)
@@ -1256,6 +1286,7 @@ static void UP_IncreaseWeapon_f (void)
 
 		if (up_researchedlink_temp < csi.ods[i].numAmmos) {
 			up_researchedlink = up_researchedlink_temp;
+			UP_DrawAssociatedAmmo(t);
 			CL_ItemDescription(i);
 		}
 	}
@@ -1307,6 +1338,7 @@ static void UP_DecreaseWeapon_f (void)
 
 		if (up_researchedlink_temp >= 0) {
 			up_researchedlink = up_researchedlink_temp;
+			UP_DrawAssociatedAmmo(t);
 			CL_ItemDescription(i);
 		}
 	}
