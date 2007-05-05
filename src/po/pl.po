@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-04-30 22:40+0200\n"
-"PO-Revision-Date: 2007-04-30 23:59+0100\n"
+"PO-Revision-Date: 2007-05-05 20:34+0100\n"
 "Last-Translator: Maciej Wierzbicki <voovoos@killfile.pl>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -7848,7 +7848,7 @@ msgstr "Karabin szturmowy"
 
 #: ../base/ufos/weapons_human.ufo:25
 msgid "Assault Rifle Magazine"
-msgstr "Magazynek do karabinu szturmowego"
+msgstr "Mag. do kar. szturmowego"
 
 #: ../base/ufos/weapons_human.ufo:40
 #: ../base/ufos/weapons_human.ufo:219
@@ -7895,7 +7895,7 @@ msgstr "Karabin snajperski"
 
 #: ../base/ufos/weapons_human.ufo:204
 msgid "Sniper Rifle Magazine"
-msgstr "Magazynek do karabinu snajperskiego"
+msgstr "Mag. do kar. snajperskiego"
 
 #: ../base/ufos/weapons_human.ufo:239
 #: ../base/ufos/weapons_human.ufo:337
@@ -7915,7 +7915,7 @@ msgstr "Pistolet kal. 7.62 mm"
 
 #: ../base/ufos/weapons_human.ufo:303
 msgid "7.62mm Pistol Magazine"
-msgstr "Magazynek do pistoletu kal. 7.62 mm"
+msgstr "Mag. do pis. kal. 7.62 mm"
 
 #: ../base/ufos/weapons_human.ufo:363
 msgid "Machine Pistol"
@@ -7931,7 +7931,7 @@ msgstr "Pistolet maszynowy"
 
 #: ../base/ufos/weapons_human.ufo:482
 msgid "SMG Magazine"
-msgstr "Magazynek do pistoletu maszynowego"
+msgstr "Mag. do pistoletu maszynowego"
 
 #: ../base/ufos/weapons_human.ufo:497
 msgid "5-Round Burst"
