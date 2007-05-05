@@ -368,11 +368,8 @@ static void UP_ArmorDescription (technology_t* t)
 	int	i;
 
 	/* select item */
-	for (i = 0; i < csi.numODs; i++)
-		if (!Q_strncmp(t->provides, csi.ods[i].id, MAX_VAR)) {
-			od = &csi.ods[i];
-			break;
-		}
+ 	i=Com_GetItemByID(t->provides);
+	od = &csi.ods[i];
 
 #ifdef DEBUG
 	if (od == NULL)
@@ -653,22 +650,19 @@ extern void UP_Article (technology_t* tech)
  */
 static void UP_DrawAssociatedAmmo (technology_t* tech)
 {
-	int i;
+	int idx;
 	technology_t *t_associated = NULL;
 
 	if (!tech)
 		return;
 
 	/* select item */
-	for (i = 0; i < csi.numODs; i++)
-		if (!Q_strncmp(tech->provides, csi.ods[i].id, MAX_VAR)) {
-			break;
-		}
+ 	idx=Com_GetItemByID(tech->provides);
 
 	/* If this is a weapon, we display the model of the associated ammunition in the lower right */
-	if (csi.ods[i].numAmmos > 0) {
+	if (csi.ods[idx].numAmmos > 0) {
 		/* We set t_associated to ammo to display */
-		t_associated = csi.ods[csi.ods[i].ammo_idx[up_researchedlink]].tech;
+		t_associated = csi.ods[csi.ods[idx].ammo_idx[up_researchedlink]].tech;
 		assert(t_associated);
 		Cvar_Set("mn_upmodel_bottom", t_associated->mdl_top);
 	}
@@ -1155,10 +1149,8 @@ static void UP_ResearchedLinkClick_f (void)
 		return;
 
 	t = upCurrent;
-	for (i = 0; i < csi.numODs; i++)
-		if (!Q_strncmp(t->provides, csi.ods[i].id, MAX_VAR)) {
-			break;
-		}
+
+ 	i=Com_GetItemByID(t->provides);
 
 	if (!Q_strncmp(csi.ods[i].type, "ammo", 4)) {
 		t = csi.ods[csi.ods[i].weap_idx[up_researchedlink]].tech;
@@ -1256,10 +1248,7 @@ static void UP_IncreaseWeapon_f (void)
 	t = upCurrent;
 
 	/* select item */
-	for (i = 0; i < csi.numODs; i++)
-		if (!Q_strncmp(t->provides, csi.ods[i].id, MAX_VAR)) {
-			break;
-		}
+ 	i=Com_GetItemByID(t->provides);
 
 	up_researchedlink_temp = up_researchedlink;
 	up_researchedlink_temp++;
@@ -1308,10 +1297,7 @@ static void UP_DecreaseWeapon_f (void)
 	t = upCurrent;
 
 	/* select item */
-	for (i = 0; i < csi.numODs; i++)
-		if (!Q_strncmp(t->provides, csi.ods[i].id, MAX_VAR)) {
-			break;
-		}
+ 	i=Com_GetItemByID(t->provides);
 
 	up_researchedlink_temp = up_researchedlink;
 	up_researchedlink_temp--;
@@ -1360,12 +1346,9 @@ static void UP_IncreaseFiremode_f (void)
 
 	up_firemode++;
 
-	for (i = 0; i < csi.numODs; i++) {
-		if (!Q_strncmp(t->provides, csi.ods[i].id, MAX_VAR)) {
-			CL_ItemDescription(i);
-			break;
-		}
-	}
+ 	i=Com_GetItemByID(t->provides);
+	if (i > -1)
+		CL_ItemDescription(i);
 }
 
 /**
@@ -1384,12 +1367,9 @@ static void UP_DecreaseFiremode_f (void)
 
 	up_firemode--;
 
-	for (i = 0; i < csi.numODs; i++) {
-		if (!Q_strncmp(t->provides, csi.ods[i].id, MAX_VAR)) {
-			CL_ItemDescription(i);
-			break;
-		}
-	}
+ 	i=Com_GetItemByID(t->provides);
+	if (i > -1)
+		CL_ItemDescription(i);
 }
 
 /**
