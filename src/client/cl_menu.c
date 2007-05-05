@@ -4531,7 +4531,15 @@ extern qboolean MS_Save (sizebuf_t* sb, void* data)
 	message_t* message;
 
 	/* store message system items */
-	for (message = messageStack; message; message = message->next)
+	for (message = messageStack; message; message = message->next) {
+		if (message->type == MSG_INFO)
+			continue;
+		if (message->type == MSG_DEBUG)	{
+#ifdef DEBUG
+			i++;
+#endif
+			continue;
+		}
 		i++;
 	MSG_WriteLong(sb, i);
 	MS_MessageSave(sb, messageStack);
