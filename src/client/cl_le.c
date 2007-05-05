@@ -336,7 +336,7 @@ static char retAnim[MAX_VAR];
  * have a 'c' in front of their animation definitions (see *.anm files for
  * characters)
  */
-char *LE_GetAnim (char *anim, int right, int left, int state)
+char *LE_GetAnim (const char *anim, int right, int left, int state)
 {
 	char *mod;
 	qboolean akimbo;
