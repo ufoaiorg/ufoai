@@ -2649,7 +2649,7 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 			}
 		}
 		/* First base gets extra space for employees. */
-		if ((gd.numBases == 1) && (cap == CAP_EMPLOYEES))
+		if ((gd.numBases == 1) && (base->idx == 0) && (cap == CAP_EMPLOYEES))
 			base->capacities[cap].max += 13;
 		if (b_idx != -1)
 			Com_DPrintf("B_UpdateBaseCapacities()... updated capacity of %s: %i\n",
