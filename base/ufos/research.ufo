@@ -153,6 +153,21 @@ tech rs_antimatter
 //	image_top	techs/antimatter
 }
 
+tech rs_item_antimatter
+{
+	type		equipment
+	name		"_Antimatter"
+	description	"_antimatter_txt"
+
+	require_AND
+	{
+		tech rs_antimatter
+	}
+        provides	antimatter
+	time		0
+	producetime	-1
+}
+
 // Should contain _every_ enemy possible.
 //tech rs_contained_alien
 //{
@@ -245,6 +260,23 @@ tech rs_alien_breathing
 	time		1500
 //	image_top	techs/alienbreathing //TODO: add image
 }
+
+tech rs_item_brapparatus
+{
+	type		equipment
+	name		"_Alien Breathing Apparatus"
+	description	"_alien_breathing_txt"
+
+	require_AND
+	{
+		tech rs_alien_breathing
+	}
+
+	provides	brapparatus
+	time		0
+	producetime	-1
+}
+
 
 tech rs_alien_mind
 {

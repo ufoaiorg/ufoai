@@ -1,0 +1,21 @@
+// =======================
+// ANTIMATTER
+// =======================
+item antimatter
+{
+	name		"_Antimatter"
+	type		dummy
+	buytype		dummy
+
+//	model		xxx/yyy
+//	center		"1 0 2"
+//	scale		1.1
+}
+
+item brapparatus
+{
+	name		"_Alien Breathing Apparatus"
+	type		dummy
+	buytype		dummy
+}
+
