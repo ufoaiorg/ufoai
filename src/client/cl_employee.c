@@ -1061,6 +1061,7 @@ extern qboolean E_Load (sizebuf_t* sb, void* data)
 {
 	int i, j, k;
 	employee_t* e;
+	base_t *b;
 
 	/* load inventories */
 	for (j = 0; j < MAX_EMPL; j++) {
@@ -1120,6 +1121,16 @@ extern qboolean E_Load (sizebuf_t* sb, void* data)
 			memset(&gd.employees[j][i].inv, 0, sizeof(inventory_t));
 			CL_ReceiveInventory(sb, &e->inv, qtrue);
 			gd.employees[j][i].chr.inv = &gd.employees[j][i].inv;
+		}
+	}
+
+	if (*(int*)data == 1) {	/* 2.1.1 */
+		/* Fix Living Quarters capacity.cur. */
+		for (i = 0, b = gd.bases; i < MAX_BASES; i++, b++) {
+			if (B_GetEmployeeCount(b) > b->capacities[CAP_EMPLOYEES].max)
+				b->capacities[CAP_EMPLOYEES].cur = b->capacities[CAP_EMPLOYEES].max;
+			else
+				b->capacities[CAP_EMPLOYEES].cur = B_GetEmployeeCount(b);
 		}
 	}
 

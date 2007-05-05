@@ -2826,7 +2826,7 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
  */
 extern qboolean B_Load (sizebuf_t* sb, void* data)
 {
-	int i, bases, k, l;
+	int i, bases, k, l, amount;
 	base_t *b;
 	aircraft_t *aircraft;
 	building_t *building;
@@ -2989,6 +2989,25 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 
 			/* Base capacities - update capacity.max here. */
 			B_UpdateBaseCapacities(MAX_CAP, b);
+
+			/* Update Alien Containment capacity.cur. */
+			amount = 0;
+			for (k = 0; k < numTeamDesc; k++) {
+				if (!teamDesc[k].alien)
+					continue;
+				if (b->alienscont[k].alientype)
+					amount += b->alienscont[k].amount_alive;
+			}
+			if (amount > b->capacities[CAP_ALIENS].max)
+				b->capacities[CAP_ALIENS].cur = b->capacities[CAP_ALIENS].max;
+			else
+				b->capacities[CAP_ALIENS].cur = amount;
+
+			/* Update hangars capacity.cur. */
+			AIR_UpdateHangarCapForAll(b->idx);
+
+			/* Make laboratory capacity.cur zeroed - we will update them in cl_research.c. */
+			b->capacities[CAP_LABSPACE].cur = 0;
 		}
 
 		/* clear the mess of stray loaded pointers */

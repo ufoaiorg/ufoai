@@ -2119,6 +2119,7 @@ extern qboolean RS_Load (sizebuf_t* sb, void* data)
 	technology_t *t;
 	const char *techString;
 	techMailType_t mailType;
+	base_t *b;
 
 	j = MSG_ReadShort(sb);
 	if (j != gd.numTechnologies)
@@ -2164,6 +2165,11 @@ extern qboolean RS_Load (sizebuf_t* sb, void* data)
 		for (k = 0; k < TECHMAIL_MAX; k++) {
 			mailType = MSG_ReadByte(sb);
 			t->mail[mailType].read = MSG_ReadByte(sb);
+		}
+		if (*(int*)data == 1) {	/* 2.1.1 */
+			/* We will update laboratory capacity here. */
+			b = &gd.bases[t->base_idx];
+			b->capacities[CAP_LABSPACE].cur += t->scientists;
 		}
 	}
 
