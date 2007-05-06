@@ -180,30 +180,36 @@ else
 		# search for misc_model in the *.map files
 		GetMapModels "maps/$mapname$daynight.map"
 		for model in $FILES; do
-			CheckExistenceInPK3 $model;
-			if [ $? -eq 0 ]
-			then
-				echo "... adding $model"
-				# TODO: add anm file - strip md2 from modelname and check for anm existence
-				zip $ZIP_PARM $mapname.$EXT $model
-			else
-				echo "the model $model is already in a pk3"
+			if test -e $model; then
+				CheckExistenceInPK3 $model;
+				if [ $? -eq 0 ]
+				then
+					echo "... adding $model"
+					# TODO: add anm file - strip md2 from modelname and check for anm existence
+					zip $ZIP_PARM $mapname.$EXT $model
+				else
+					echo "the model $model is already in a pk3"
+				fi
+			elif test "$VERBOSE" == 1; then
+				echo "... $model must be in a pk3 file or doesn't exists"
 			fi
 		done
 		GetMapTextures "maps/$mapname$daynight.map"
 		for texture in $FILES; do
 			for extension in $IMAGE_TYPES; do
-				CheckExistenceInPK3 $texture.$extension;
-				if [ $? -eq 0 ]
-				then
-					if test -e $texture.$extension; then
+				if test -e $texture.$extension; then
+					CheckExistenceInPK3 $texture.$extension;
+					if [ $? -eq 0 ]
+					then
 						echo "... adding $texture.$extension"
 						zip $ZIP_PARM $mapname.$EXT $texture.$extension
 						break;
+					else
+						echo "the texture $texture.$extension is already in a pk3"
+						break;
 					fi
-				else
-					echo "the texture $texture.$extension is already in a pk3"
-					break;
+				elif test "$VERBOSE" == 1; then
+				echo "... $texture.$extension must be in a pk3 file or doesn't exists"
 				fi
 			done
 		done
