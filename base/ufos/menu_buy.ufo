@@ -926,7 +926,7 @@ menu buy
 
 	pic bt_buydecrease
 	{
-		tooltip	"_Decrease buy factor"
+		tooltip	"_Decrease the amount of items you want to buy"
 		image		menu/buttons_small
 		pos		"760 120"
 		mousefx 	true
@@ -937,7 +937,7 @@ menu buy
 
 	pic bt_buyincrease
 	{
-		tooltip	"_Increase buy factor"
+		tooltip	"_Increase the amount of items you want to buy"
 		image		menu/buttons_small
 		pos		"770 120"
 		mousefx 	true
@@ -964,7 +964,7 @@ menu buy
 
 	pic bt_selldecrease
 	{
-		tooltip	"_Decrease sell factor"
+		tooltip	"_Decrease the amount of items you want to sell"
 		image		menu/buttons_small
 		pos		"920 120"
 		mousefx 	true
@@ -975,7 +975,7 @@ menu buy
 
 	pic bt_sellincrease
 	{
-		tooltip	"_Increase sell factor"
+		tooltip	"_Increase the amount of items you want to sell"
 		image		menu/buttons_small
 		pos		"930 120"
 		mousefx 	true
