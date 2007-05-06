@@ -69,11 +69,12 @@ CheckExistenceInPK3()
 			$UNZIP_PROG -l $i | grep $1
 			if [ $? -eq 0 ]
 			then
-				echo "Not found $1"
+				# the file is in a pk3 archive
+				return 1
 			fi
 		done
 	done
-	# FIXME
+	# the file is not in pk3 archives
 	return 0
 }
 
@@ -180,18 +181,30 @@ else
 		# search for misc_model in the *.map files
 		GetMapModels "maps/$mapname$daynight.map"
 		for model in $FILES; do
+			# add model if it exists and is not in pk3
 			if test -e $model; then
 				CheckExistenceInPK3 $model;
 				if [ $? -eq 0 ]
 				then
 					echo "... adding $model"
-					# TODO: add anm file - strip md2 from modelname and check for anm existence
 					zip $ZIP_PARM $mapname.$EXT $model
 				else
 					echo "the model $model is already in a pk3"
 				fi
 			elif test "$VERBOSE" == 1; then
 				echo "... $model must be in a pk3 file or doesn't exists"
+			fi
+			# add animation if it exists and is not in pk3
+			animation=`echo $model | cut -d . -f 1`".anm"
+			if test -e $animation; then
+				CheckExistenceInPK3 $animation;
+				if [ $? -eq 0 ]
+				then
+					echo "... adding $model"
+					zip $ZIP_PARM $mapname.$EXT $animation
+				else
+					echo "the animation $animation is already in a pk3"
+				fi
 			fi
 		done
 		GetMapTextures "maps/$mapname$daynight.map"
