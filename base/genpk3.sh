@@ -9,25 +9,71 @@ VERSION=0.1
 UPDATE=1
 VERBOSE=0
 
+#variables
+FILES=
+
+GetMapModels()
+{
+	if test "$VERBOSE" == 1; then
+		echo "... checking $1 for models"
+	fi
+	FILES=`awk ' BEGIN {line="jsqhdflzhfliuazblrfhb"}
+		$0 ~ line {next}
+		{ match($0,"\"model\"")
+			if (RLENGTH>0) {
+				$0=substr($0,RSTART+RLENGTH+2,length($0)-RSTART-RLENGTH-2);
+				line=$0
+				print line
+				next
+			}
+		}' $1`
+}
+
+GetMapTextures()
+{
+	if test "$VERBOSE" == 1; then
+		echo "... checking $1 for textures"
+	fi
+	# FIXME: not only tex_material (there are even directories that don't start with tex_*)
+	FILES=`awk ' BEGIN {line="jsqhdflzhfliuazblrfhb"}
+		$0 ~ line {next}
+		{ match ($0,"tex_material")
+			if (RLENGTH>0) {
+				$0=substr($0,RSTART,length($0)-RSTART+1);
+				line=$1
+				print line
+			}
+		}' $1`
+}
+
 GenPK3_Usage()
 {
-    echo "Usage: $0 mapname (without extension)"
-    echo "params can be one or more of the following :"
-    echo "    --version | -v  : Print out Makeself version number and exit"
-    echo "    --help | -h     : Print out this help message"
-    echo "    --verbose       : Verbose output"
-    echo "    --only-new | -n : Only add missing files to the pk3 - don't update existing ones"
-    exit 1
+	echo "Usage: $0 mapname (without extension)"
+	echo "params can be one or more of the following :"
+	echo "    --version | -v  : Print out Makeself version number and exit"
+	echo "    --help | -h     : Print out this help message"
+	echo "    --verbose       : Verbose output"
+	echo "    --only-new | -n : Only add missing files to the pk3 - don't update existing ones"
+	exit 1
 }
 
 CheckExistenceInPK3()
 {
 	if test "$VERBOSE" == 1; then
-		echo "Check for $1 in pk3 files"
+		echo "... check for $1 in pk3 files"
 	fi
 	# check whether file exists in pk3 archives
+	for originalarchives in `echo "0 1 2 3 4 5 6 7 8 9"`; do
+		for i in `ls $originalarchives*.$EXT 2> /dev/null`; do
+			$UNZIP_PROG -l $i | grep $1
+			if [ $? -eq 0 ]
+			then
+				echo "Not found $1"
+			fi
+		done
+	done
 	# FIXME
-	return 1
+	return 0
 }
 
 if ! test -d "./maps"; then
@@ -77,7 +123,7 @@ if test "$UPDATE" == 1; then
 fi
 
 if test "$VERBOSE" == 1; then
-	ZIP_PARM+=v
+	ZIP_PARM+=
 else
 	ZIP_PARM+=q
 fi
@@ -118,35 +164,42 @@ else
 		echo "Warning: pics/loading/$mapname.jpg (loading screen) does not exist."
 	fi
 	for shotnr in `echo "2 3"`; do
-		if test -f "pics/maps/shots/$1_$shotnr.jpg"; then
-			echo "... adding pics/maps/shots/$mapname_$shotnr.jpg"
-			zip $ZIP_PARM $mapname.$EXT pics/maps/shots/$mapname_$shotnr.jpg
+		if test -f "pics/maps/shots/${mapname}_${shotnr}.jpg"; then
+			echo "... adding pics/maps/shots/${mapname}_${shotnr}.jpg"
+			zip $ZIP_PARM $mapname.$EXT pics/maps/shots/${mapname}_${shotnr}.jpg
 		else
 			echo "Warning: pics/loading/$mapname_$shotnr.jpg (loading screen) does not exist."
 		fi
 	done
 
-	filename=FIXME
 	# now search for models given in the map file that are not in the already
 	# existing [0-9].*\.pk3 files
 	for daynight in `echo "d n"`; do
 		# no need to check the existence of the map - done above
 		# search for misc_model in the *.map files
-		CheckExistenceInPK3 $filename;
-		if [ $? -eq 0 ]
-		then
-			zip $ZIP_PARM $mapname.$EXT $filename
-		fi
-	done
-
-	# now search for textures given in the map file that are not in the already
-	# existing [0-9].*\.pk3 files
-	for daynight in `echo "d n"`; do
-		# no need to check the existence of the map - done above
-		CheckExistenceInPK3 $filename;
-		if [ $? -eq 0 ]
-		then
-			zip $ZIP_PARM $mapname.$EXT $filename
-		fi
+		GetMapModels "maps/$mapname$daynight.map"
+		for model in $FILES; do
+			CheckExistenceInPK3 $model;
+			if [ $? -eq 0 ]
+			then
+				echo "... adding $model"
+				# TODO: add anm file - strip md2 from modelname and check for anm existence
+				zip $ZIP_PARM $mapname.$EXT $model
+			else
+				echo "the model $model is already in a pk3"
+			fi
+		done
+		GetMapTextures "maps/$mapname$daynight.map"
+		for texture in $FILES; do
+			# TODO: add image extensions
+			CheckExistenceInPK3 $texture;
+			if [ $? -eq 0 ]
+			then
+				echo "... adding $texture"
+				zip $ZIP_PARM $mapname.$EXT $texture
+			else
+				echo "the texture $texture is already in a pk3"
+			fi
+		done
 	done
 fi
