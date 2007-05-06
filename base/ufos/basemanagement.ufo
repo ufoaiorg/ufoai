@@ -102,7 +102,7 @@ building building_storage
 	pedia		rs_building_storage
 	firstbase	true
 	pos			"3 4"
-	capacity	100
+	capacity	100000
 	more_than_one	true
 }
 

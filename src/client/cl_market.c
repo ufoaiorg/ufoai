@@ -419,12 +419,18 @@ static void BS_BuyItem_f (void)
 	Com_DPrintf("BS_BuyItem_f: item %i\n", item);
 	for (i = 0; i < baseCurrent->buyfactor; i++) {
 		if (ccs.credits >= ccs.eMarket.ask[item] && ccs.eMarket.num[item]) {
-			/* reinit the menu */
-			baseCurrent->storage.num[item]++;
-			ccs.eMarket.num[item]--;
-			Cmd_BufClear();
-			BS_BuyType_f();
-			CL_UpdateCredits(ccs.credits - ccs.eMarket.ask[item]);
+			if (baseCurrent->capacities[CAP_ITEMS].max - baseCurrent->capacities[CAP_ITEMS].cur >= csi.ods[item].size) {
+				/* reinit the menu */
+				baseCurrent->storage.num[item]++;
+				baseCurrent->capacities[CAP_ITEMS].cur += csi.ods[item].size;
+				ccs.eMarket.num[item]--;
+				Cmd_BufClear();
+				BS_BuyType_f();
+				CL_UpdateCredits(ccs.credits - ccs.eMarket.ask[item]);
+			} else {
+				MN_Popup(_("Not enough storage space"), _("You cannot buy this item.\nNot enough space in storage.\nBuild more storage facilities."));
+				break;
+			}
 		} else {
 			break;
 		}
@@ -439,7 +445,7 @@ static void BS_BuyItem_f (void)
  */
 static void BS_SellItem_f (void)
 {
-	int num, item, i;
+	int num, item, i, j;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: mn_sell <num>\n");
@@ -464,6 +470,12 @@ static void BS_SellItem_f (void)
 		if (baseCurrent->storage.num[item]) {
 			/* reinit the menu */
 			baseCurrent->storage.num[item]--;
+			for (j = csi.ods[item].size; j > 0; j--) {
+				if (baseCurrent->capacities[CAP_ITEMS].cur > 0)
+					baseCurrent->capacities[CAP_ITEMS].cur--;
+				else
+					break;
+			}
 			ccs.eMarket.num[item]++;
 			Cmd_BufClear();
 			BS_BuyType_f();
