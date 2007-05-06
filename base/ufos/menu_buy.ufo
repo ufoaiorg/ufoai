@@ -891,7 +891,7 @@ menu buy
 	string txt_credits_caption
 	{
 		string	"_CREDIT"
-		pos	"650 70"
+		pos	"650 50"
 		font	f_big
 		align	ul
 	}
@@ -900,7 +900,7 @@ menu buy
 	{
 		font	"f_big"
 		string	"*cvar mn_credits"
-		pos		"944 70"
+		pos		"940 50"
 		align	ur
 	}
 
@@ -911,7 +911,7 @@ menu buy
 	string txt_buyfactor
 	{
 		string 	"_Buy factor:"
-		pos		"650 120"
+		pos		"650 90"
 		font		f_small
 		align		ul
 	}
@@ -920,7 +920,7 @@ menu buy
 	{
 		font	"f_small"
 		string	"*cvar mn_bfactor"
-		pos		"750 120"
+		pos		"750 90"
 		align	ur
 	}
 
@@ -928,7 +928,7 @@ menu buy
 	{
 		tooltip	"_Decrease the amount of items you want to buy"
 		image		menu/buttons_small
-		pos		"760 120"
+		pos		"760 90"
 		mousefx 	true
 		texl		"0 0"
 		texh	"16 16"
@@ -939,7 +939,7 @@ menu buy
 	{
 		tooltip	"_Increase the amount of items you want to buy"
 		image		menu/buttons_small
-		pos		"770 120"
+		pos		"770 90"
 		mousefx 	true
 		texl		"16 0"
 		texh	"32 16"
@@ -949,7 +949,7 @@ menu buy
 	string txt_sellfactor
 	{
 		string 	"_Sell factor:"
-		pos		"810 120"
+		pos		"805 90"
 		font		f_small
 		align		ul
 	}
@@ -958,7 +958,7 @@ menu buy
 	{
 		font	"f_small"
 		string	"*cvar mn_sfactor"
-		pos		"910 120"
+		pos		"905 90"
 		align	ur
 	}
 
@@ -966,7 +966,7 @@ menu buy
 	{
 		tooltip	"_Decrease the amount of items you want to sell"
 		image		menu/buttons_small
-		pos		"920 120"
+		pos		"915 90"
 		mousefx 	true
 		texl		"0 0"
 		texh	"16 16"
@@ -977,13 +977,32 @@ menu buy
 	{
 		tooltip	"_Increase the amount of items you want to sell"
 		image		menu/buttons_small
-		pos		"930 120"
+		pos		"925 90"
 		mousefx 	true
 		texl		"16 0"
 		texh	"32 16"
 		click	{ cmd "buy_factor_inc 1" }
 	}
 
+	// ==================
+	// storage capacity
+	// ==================
+
+	string txt_storage_caption
+	{
+		string 		"_Storage (all/free):"
+		pos		"650 120"
+		font		f_small
+		align		ul
+	}
+
+	string txt_storage_value
+	{
+		string 		"*cvar mn_bs_storage"
+		pos		"830 120"
+		font		f_small
+		align		ul
+	}
 
 	// ==================
 	// buttons
