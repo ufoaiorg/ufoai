@@ -20,6 +20,16 @@ GenPK3_Usage()
     exit 1
 }
 
+CheckExistenceInPK3()
+{
+	if test "$VERBOSE" == 1; then
+		echo "Check for $1 in pk3 files"
+	fi
+	# check whether file exists in pk3 archives
+	# FIXME
+	return 1
+}
+
 if ! test -d "./maps"; then
 	echo "$0 must be in the base dir"
 	exit 1
@@ -116,18 +126,27 @@ else
 		fi
 	done
 
+	filename=FIXME
 	# now search for models given in the map file that are not in the already
 	# existing [0-9].*\.pk3 files
 	for daynight in `echo "d n"`; do
 		# no need to check the existence of the map - done above
 		# search for misc_model in the *.map files
-		echo "TODO"
+		CheckExistenceInPK3 $filename;
+		if [ $? -eq 0 ]
+		then
+			zip $ZIP_PARM $mapname.$EXT $filename
+		fi
 	done
 
 	# now search for textures given in the map file that are not in the already
 	# existing [0-9].*\.pk3 files
 	for daynight in `echo "d n"`; do
 		# no need to check the existence of the map - done above
-		echo "TODO"
+		CheckExistenceInPK3 $filename;
+		if [ $? -eq 0 ]
+		then
+			zip $ZIP_PARM $mapname.$EXT $filename
+		fi
 	done
 fi
