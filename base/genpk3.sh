@@ -93,24 +93,24 @@ fi
 
 while true
 do
-    case "$1" in
-    --version | -v)
+	case "$1" in
+	--version | -v)
 	echo GenPK3 version $VERSION
 	exit 0
 	;;
-    --help | -h)
+	--help | -h)
 	GenPK3_Usage
 	exit 0
 	;;
-    --only-new | -n)
+	--only-new | -n)
 	UPDATE=0
 	shift
 	;;
-    --verbose)
+	--verbose)
 	VERBOSE=1
 	shift
 	;;
-    *)
+	*)
 	break
 	;;
 	esac
