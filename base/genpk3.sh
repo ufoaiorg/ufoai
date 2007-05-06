@@ -9,8 +9,9 @@ VERSION=0.1
 UPDATE=1
 VERBOSE=0
 
-#variables
+#global variables
 FILES=
+IMAGE_TYPES="jpg tga png pcx"
 
 GetMapModels()
 {
@@ -191,15 +192,20 @@ else
 		done
 		GetMapTextures "maps/$mapname$daynight.map"
 		for texture in $FILES; do
-			# TODO: add image extensions
-			CheckExistenceInPK3 $texture;
-			if [ $? -eq 0 ]
-			then
-				echo "... adding $texture"
-				zip $ZIP_PARM $mapname.$EXT $texture
-			else
-				echo "the texture $texture is already in a pk3"
-			fi
+			for extension in $IMAGE_TYPES; do
+				CheckExistenceInPK3 $texture.$extension;
+				if [ $? -eq 0 ]
+				then
+					if test -e $texture.$extension; then
+						echo "... adding $texture.$extension"
+						zip $ZIP_PARM $mapname.$EXT $texture.$extension
+						break;
+					fi
+				else
+					echo "the texture $texture.$extension is already in a pk3"
+					break;
+				fi
+			done
 		done
 	done
 fi
