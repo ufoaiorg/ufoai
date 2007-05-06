@@ -2433,7 +2433,7 @@ static void CL_DebugShowItems_f (void)
 		tech = csi.ods[i].tech;
 		if (!tech)
 			Sys_Error("CL_DebugAllItems_f: No tech for %s / %s\n", csi.ods[i].id, csi.ods[i].name);
-		Com_Printf("%i. %s: %i\n", i, csi.ods[i].name, base->storage.num[i]);
+		Com_Printf("%i. %s: (%s) %i\n", i, csi.ods[i].name, csi.ods[i].id, base->storage.num[i]);
 	}
 }
 
