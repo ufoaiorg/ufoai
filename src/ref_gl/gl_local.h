@@ -67,14 +67,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #       include <SDL_ttf.h>
 #   endif
 #else
-#   ifdef __APPLE__
-#   include <SDL.h>
-#   include <SDL/SDL_ttf.h>
-#   include <SDL/SDL_syswm.h>
-#   endif
 #   include <SDL/SDL.h>
 #   include <SDL/SDL_ttf.h>
-#   include <SDL/SDL_syswm.h>
 #endif
 
 void GL_ShutdownSDLFonts(void); /* gl_draw.c */
