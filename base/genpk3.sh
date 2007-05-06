@@ -19,13 +19,12 @@ GetMapModels()
 		echo "... checking $1 for models"
 	fi
 	FILES=`awk ' BEGIN {line="jsqhdflzhfliuazblrfhb"}
-		$0 ~ line {next}
 		{ match($0,"\"model\"")
 			if (RLENGTH>0) {
 				$0=substr($0,RSTART+RLENGTH+2,length($0)-RSTART-RLENGTH-2);
+				if ($0 == line) {next}
 				line=$0
 				print line
-				next
 			}
 		}' $1`
 }
@@ -35,16 +34,25 @@ GetMapTextures()
 	if test "$VERBOSE" == 1; then
 		echo "... checking $1 for textures"
 	fi
-	# FIXME: not only tex_material (there are even directories that don't start with tex_*)
-	FILES=`awk ' BEGIN {line="jsqhdflzhfliuazblrfhb"}
-		$0 ~ line {next}
-		{ match ($0,"tex_material")
-			if (RLENGTH>0) {
-				$0=substr($0,RSTART,length($0)-RSTART+1);
-				line=$1
-				print line
-			}
-		}' $1`
+	# FIXME: many textures appears several times in FILES
+	FILES=`awk 'BEGIN {line="jsqhdflzhfliuazblrfhb";test=0}
+	{ match ($0,"brush")
+		if (RLENGTH>0) {
+			test=1
+			next
+		}
+	}
+	test == 1 { match ($0,"[a-Z]")
+		if (RLENGTH>0) {
+			$0=substr($0,RSTART+RLENGTH-1,length($0)-RSTART-RLENGTH+2);
+			if ($1 == line) {next}
+			line=$1
+			print line
+		}
+	}
+	test == 1 && $0 ~ /}/ {
+		test=0
+	}' $1`
 }
 
 GenPK3_Usage()
