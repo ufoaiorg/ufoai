@@ -33,13 +33,10 @@ static cvar_t* save_compressed;
 
 /**
  * @brief Loads a savegame from file
- *
- * @param filename Savegame to load (relative to writepath/save)
- *
+ * @param[in] filename Savegame to load (relative to writepath/save)
  * @sa SAV_GameLoad_f
  * @sa SAV_GameSave
  * @sa CL_GameInit
- * @sa MS_MessageSave
  * @sa CL_ReadSinglePlayerData
  * @sa CL_UpdatePointersInGlobalData
  */
@@ -148,7 +145,15 @@ static qboolean SAV_GameLoad (const char *filename, char **error)
 }
 
 /**
- * @brief
+ * @brief This is the save function that calls all save-subsystems and stores
+ * the data in a portable way
+ * @sa SAV_GameLoad
+ * @sa SAV_GameSave_f
+ * @param[in] filename The filename to save your gamestate into (only the base name)
+ * @param[in] comment The comment under which the savegame will be available in the
+ * save/load menu
+ * @param[out] error Pointer to error string in case of errors
+ * @return qfalse on failure, qtrue on success
  */
 static qboolean SAV_GameSave (const char *filename, const char *comment, char **error)
 {
@@ -249,7 +254,7 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 }
 
 /**
- * @brief
+ * @brief Console command binding for save function
  * @sa SAV_GameSave
  */
 static void SAV_GameSave_f (void)
@@ -390,7 +395,9 @@ static void SAV_GameContinue_f (void)
 }
 
 /**
- * @brief
+ * @brief Adds a subsystem to the saveSubsystems array
+ * @note The order matters - don't change it or all previous savegames will be broken
+ * @sa SAV_Init
  */
 extern qboolean SAV_AddSubsystem (saveSubsystems_t *subsystem)
 {
@@ -443,7 +450,9 @@ static void SAV_GameSaveNameCleanup_f (void)
 }
 
 /**
- * @brief
+ * @brief Register all save-subsystems and init some cvars and commands
+ * @sa SAV_GameSave
+ * @sa SAV_GameLoad
  */
 extern void SAV_Init (void)
 {

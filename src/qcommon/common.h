@@ -1,3 +1,27 @@
+/**
+ * @file common.h
+ */
+
+/*
+Copyright (C) 1997-2001 Id Software, Inc.
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+*/
+
 #ifndef min
 #define min(a,b) ((a)<(b) ? (a):(b))
 #endif
@@ -5,12 +29,12 @@
 /*============================================================================ */
 
 typedef struct sizebuf_s {
-	qboolean allowoverflow;		/* if false, do a Com_Error */
-	qboolean overflowed;		/* set to true if the buffer size failed */
-	byte *data;
-	int maxsize;
-	int cursize;
-	int readcount;
+	qboolean allowoverflow;		/**< if false, do a Com_Error */
+	qboolean overflowed;		/**< set to true if the buffer size failed */
+	byte *data;					/**< pointer to the data in the buffer */
+	int maxsize;				/**< max. size of the allocated buffer */
+	int cursize;				/**< current used size of the buffer */
+	int readcount;				/**< current read position */
 } sizebuf_t;
 
 void SZ_Init(sizebuf_t * buf, byte * data, int length);
