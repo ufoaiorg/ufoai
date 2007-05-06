@@ -192,45 +192,32 @@ void AL_CollectingAliens (void)
 
 /**
  * @brief Puts alien cargo into Alien Containment.
+ * @param[in] baseidx Index of base in gd.bases[].
+ * @param[in] airidx Global aircraft index.
  * @sa CL_DropshipReturned
  * @sa AL_FillInContainment
  */
-void AL_AddAliens (void)
+void AL_AddAliens (int baseidx, int airidx)
 {
 	int i, j, k, albridx;
-	base_t *tobase = NULL;
-	aliensTmp_t *cargo = NULL;
-	aircraft_t *aircraft = NULL;
+	base_t *tobase;
+	aliensTmp_t *cargo;
+	aircraft_t *aircraft;
 	qboolean messageAlreadySet = qfalse;
 	qboolean alienBreathing = qfalse;
 	technology_t *tech;
 	qboolean limit = qfalse;
 
-	if (baseCurrent) {
-		tobase = baseCurrent;
-	} else {
-#ifdef DEBUG
-		/* should never happen */
-		Com_Printf("AL_AddAliens()... No base selected!\n");
-#endif
-		return;
-	}
+	tobase = &gd.bases[baseidx];
+	assert(tobase);
 
 	if (!tobase->hasAlienCont) {
 		MN_AddNewMessage(_("Notice"), _("You cannot process aliens yet. Alien Containment not ready in this base."), qfalse, MSG_STANDARD, NULL);
 		return;
 	}
 
-	if ((tobase->aircraftCurrent >= 0) && (tobase->aircraftCurrent < tobase->numAircraftInBase)) {
-		aircraft = &tobase->aircraft[tobase->aircraftCurrent];
-	} else {
-#ifdef DEBUG
-		/* should never happen */
-		Com_Printf("AL_AddAliens()... No aircraft selected!\n");
-#endif
-		return;
-	}
-
+	aircraft = AIR_AircraftGetFromIdx(airidx);
+	assert(aircraft);
 	cargo = aircraft->aliencargo;
 
 	alienBreathing = RS_IsResearched_idx(RS_GetTechIdxByName("rs_alien_breathing"));

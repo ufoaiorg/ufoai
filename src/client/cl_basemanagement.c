@@ -2543,7 +2543,7 @@ void CL_DropshipReturned (base_t* base, aircraft_t* aircraft)
 	if (aircraft->type != AIRCRAFT_TRANSPORTER)
 		return;
 	baseCurrent = base;	/* @todo: hehe, i was great here - destroying the baseCurrent pointer :> */
-	AL_AddAliens();		/**< Add aliens to Alien Containment. */
+	AL_AddAliens(base->idx, aircraft->idx);		/**< Add aliens to Alien Containment. */
 	AL_CountAll();		/**< Count all alive aliens. */
 	INV_SellOrAddItems(aircraft);	/**< Sell collected items or add them to storage. */
 	RS_MarkResearchable(qfalse);	/**< Mark new technologies researchable. */
