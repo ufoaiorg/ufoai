@@ -2980,6 +2980,11 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 
 			/* Make laboratory capacity.cur zeroed - we will update them in cl_research.c. */
 			b->capacities[CAP_LABSPACE].cur = 0;
+
+			/* Update storage capacity.cur. */
+			b->capacities[CAP_ITEMS].cur = 0;
+			for (k = 0; k < MAX_OBJDEFS; k++)
+				b->capacities[CAP_ITEMS].cur += b->storage.num[k] * csi.ods[k].size;
 		}
 
 		/* clear the mess of stray loaded pointers */
