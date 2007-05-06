@@ -6,6 +6,7 @@ item antimatter
 	name		"_Antimatter"
 	type		dummy
 	buytype		dummy
+	size		4
 
 //	model		xxx/yyy
 //	center		"1 0 2"

@@ -197,7 +197,7 @@ void AL_CollectingAliens (void)
  */
 void AL_AddAliens (void)
 {
-	int i, j, k;
+	int i, j, k, albridx;
 	base_t *tobase = NULL;
 	aliensTmp_t *cargo = NULL;
 	aircraft_t *aircraft = NULL;
@@ -234,6 +234,7 @@ void AL_AddAliens (void)
 	cargo = aircraft->aliencargo;
 
 	alienBreathing = RS_IsResearched_idx(RS_GetTechIdxByName("rs_alien_breathing"));
+	albridx = Com_GetItemByID("brapparatus");
 
 	for (i = 0; i < aircraft->alientypes; i++) {
 		for (j = 0; j < numTeamDesc; j++) {
@@ -241,11 +242,17 @@ void AL_AddAliens (void)
 				continue;
 			if (Q_strncmp(tobase->alienscont[j].alientype, cargo[i].alientype, MAX_VAR) == 0) {
 				tobase->alienscont[j].amount_dead += cargo[i].amount_dead;
+				/* Add breathing apparatuses as well and update storage capacity. */
+				tobase->storage.num[albridx] += cargo[i].amount_dead;
+				tobase->capacities[CAP_ITEMS].cur += cargo[i].amount_dead * csi.ods[albridx].size;
 				if (cargo[i].amount_alive <= 0)
 					continue;
 				if (!alienBreathing) {
 					/* we cannot store alive aliens without rs_alien_breathing tech */
 					tobase->alienscont[j].amount_dead += cargo[i].amount_alive;
+					/* Add breathing apparatuses as well and update storage capacity. */
+					tobase->storage.num[albridx] += cargo[i].amount_alive;
+					tobase->capacities[CAP_ITEMS].cur += cargo[i].amount_alive * csi.ods[albridx].size;
 					/* only once */
 					if (!messageAlreadySet) {
 						MN_AddNewMessage(_("Notice"), _("You cannot hold alive aliens yet. Aliens died."), qfalse, MSG_STANDARD, NULL);
@@ -266,6 +273,9 @@ void AL_AddAliens (void)
 							} else {
 								/* Just kill aliens which don't fit the limit. */
 								tobase->alienscont[j].amount_dead++;
+								/* Add breathing apparatus as well and update storage capacity. */
+								tobase->storage.num[albridx]++;
+								tobase->capacities[CAP_ITEMS].cur += csi.ods[albridx].size;
 							}
 						}
 					}
