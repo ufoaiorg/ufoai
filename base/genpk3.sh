@@ -197,19 +197,19 @@ else
 		GetMapTextures "maps/$mapname$daynight.map"
 		for texture in $FILES; do
 			for extension in $IMAGE_TYPES; do
-				if test -e $texture.$extension; then
-					CheckExistenceInPK3 $texture.$extension;
+				if test -e "textures/$texture.$extension"; then
+					CheckExistenceInPK3 "textures/$texture.$extension";
 					if [ $? -eq 0 ]
 					then
-						echo "... adding $texture.$extension"
-						zip $ZIP_PARM $mapname.$EXT $texture.$extension
+						echo "... adding textures/$texture.$extension"
+						zip $ZIP_PARM $mapname.$EXT "textures/$texture.$extension"
 						break;
 					else
-						echo "the texture $texture.$extension is already in a pk3"
+						echo "the texture textures/$texture.$extension is already in a pk3"
 						break;
 					fi
 				elif test "$VERBOSE" == 1; then
-				echo "... $texture.$extension must be in a pk3 file or doesn't exists"
+					echo "... textures/$texture.$extension must be in a pk3 file or doesn't exists"
 				fi
 			done
 		done
