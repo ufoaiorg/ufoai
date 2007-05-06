@@ -573,13 +573,13 @@ static void BS_DecreaseFactor_f (void)
 	num = atoi(Cmd_Argv(1));
 
 	if (num == 0) {
-		if (baseCurrent->buyfactor <= 0)
+		if (baseCurrent->buyfactor <= 1)
 			return;
 		else
 			baseCurrent->buyfactor--;
 		Cvar_SetValue("mn_bfactor", baseCurrent->buyfactor);
 	} else {
-		if (baseCurrent->sellfactor <= 0)
+		if (baseCurrent->sellfactor <= 1)
 			return;
 		else
 			baseCurrent->sellfactor--;
