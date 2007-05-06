@@ -1,5 +1,7 @@
 #!/bin/bash
 
+ZIP_PROG=/usr/bin/zip
+UNZIP_PROG=/usr/bin/unzip
 EXT=pk3
 VERSION=0.1
 
@@ -22,6 +24,17 @@ if ! test -d "./maps"; then
 	echo "$0 must be in the base dir"
 	exit 1
 fi
+
+if ! test -x "$ZIP_PROG"; then
+	echo "You must have zip installed ($ZIP_PROG)"
+	exit 1
+fi
+
+if ! test -x "$UNZIP_PROG"; then
+	echo "You must have unzip installed ($UNZIP_PROG)"
+	exit 1
+fi
+
 while true
 do
     case "$1" in
