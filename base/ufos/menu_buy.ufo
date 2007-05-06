@@ -218,6 +218,8 @@ menu buy
 		pos		"376 40"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 0" }
+		whup	{ cmd "mn_buy 0" }
+		whdown	{ cmd "mn_sell 0" }
 	}
 	pic bt_sell0
 	{
@@ -226,6 +228,8 @@ menu buy
 		pos		"392 40"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 0" }
+		whup	{ cmd "mn_buy 0" }
+		whdown	{ cmd "mn_sell 0" }
 	}
 	pic bt_autosell0
 	{
@@ -242,6 +246,8 @@ menu buy
 		pos		"376 65"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 1" }
+		whup	{ cmd "mn_buy 1" }
+		whdown	{ cmd "mn_sell 1" }
 	}
 	pic bt_sell1
 	{
@@ -250,6 +256,8 @@ menu buy
 		pos		"392 65"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 1" }
+		whup	{ cmd "mn_buy 1" }
+		whdown	{ cmd "mn_sell 1" }
 	}
 	pic bt_autosell1
 	{
@@ -266,6 +274,8 @@ menu buy
 		pos		"376 90"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 2" }
+		whup	{ cmd "mn_buy 2" }
+		whdown	{ cmd "mn_sell 2" }
 	}
 	pic bt_sell2
 	{
@@ -274,6 +284,8 @@ menu buy
 		pos		"392 90"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 2" }
+		whup	{ cmd "mn_buy 2" }
+		whdown	{ cmd "mn_sell 2" }
 	}
 	pic bt_autosell2
 	{
@@ -290,6 +302,8 @@ menu buy
 		pos		"376 115"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 3" }
+		whup	{ cmd "mn_buy 3" }
+		whdown	{ cmd "mn_sell 3" }
 	}
 	pic bt_sell3
 	{
@@ -298,6 +312,8 @@ menu buy
 		pos		"392 115"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 3" }
+		whup	{ cmd "mn_buy 3" }
+		whdown	{ cmd "mn_sell 3" }
 	}
 	pic bt_autosell3
 	{
@@ -314,6 +330,8 @@ menu buy
 		pos		"376 140"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 4" }
+		whup	{ cmd "mn_buy 4" }
+		whdown	{ cmd "mn_sell 4" }
 	}
 	pic bt_sell4
 	{
@@ -322,6 +340,8 @@ menu buy
 		pos		"392 140"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 4" }
+		whup	{ cmd "mn_buy 4" }
+		whdown	{ cmd "mn_sell 4" }
 	}
 	pic bt_autosell4
 	{
@@ -338,6 +358,8 @@ menu buy
 		pos		"376 165"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 5" }
+		whup	{ cmd "mn_buy 5" }
+		whdown	{ cmd "mn_sell 5" }
 	}
 	pic bt_sell5
 	{
@@ -346,6 +368,8 @@ menu buy
 		pos		"392 165"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 5" }
+		whup	{ cmd "mn_buy 5" }
+		whdown	{ cmd "mn_sell 5" }
 	}
 	pic bt_autosell5
 	{
@@ -362,6 +386,8 @@ menu buy
 		pos		"376 190"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 6" }
+		whup	{ cmd "mn_buy 6" }
+		whdown	{ cmd "mn_sell 6" }
 	}
 	pic bt_sell6
 	{
@@ -370,6 +396,8 @@ menu buy
 		pos		"392 190"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 6" }
+		whup	{ cmd "mn_buy 6" }
+		whdown	{ cmd "mn_sell 6" }
 	}
 	pic bt_autosell6
 	{
@@ -386,6 +414,8 @@ menu buy
 		pos		"376 215"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 7" }
+		whup	{ cmd "mn_buy 7" }
+		whdown	{ cmd "mn_sell 7" }
 	}
 	pic bt_sell7
 	{
@@ -394,6 +424,8 @@ menu buy
 		pos		"392 215"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 7" }
+		whup	{ cmd "mn_buy 7" }
+		whdown	{ cmd "mn_sell 7" }
 	}
 	pic bt_autosell7
 	{
@@ -410,6 +442,8 @@ menu buy
 		pos		"376 240"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 8" }
+		whup	{ cmd "mn_buy 8" }
+		whdown	{ cmd "mn_sell 8" }
 	}
 	pic bt_sell8
 	{
@@ -418,6 +452,8 @@ menu buy
 		pos		"392 240"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 8" }
+		whup	{ cmd "mn_buy 8" }
+		whdown	{ cmd "mn_sell 8" }
 	}
 	pic bt_autosell8
 	{
@@ -434,6 +470,8 @@ menu buy
 		pos		"376 265"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 9" }
+		whup	{ cmd "mn_buy 9" }
+		whdown	{ cmd "mn_sell 9" }
 	}
 	pic bt_sell9
 	{
@@ -442,6 +480,8 @@ menu buy
 		pos		"392 265"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 9" }
+		whup	{ cmd "mn_buy 9" }
+		whdown	{ cmd "mn_sell 9" }
 	}
 	pic bt_autosell9
 	{
@@ -458,6 +498,8 @@ menu buy
 		pos		"376 290"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 10" }
+		whup	{ cmd "mn_buy 10" }
+		whdown	{ cmd "mn_sell 10" }
 	}
 	pic bt_sell10
 	{
@@ -466,6 +508,8 @@ menu buy
 		pos		"392 290"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 10" }
+		whup	{ cmd "mn_buy 10" }
+		whdown	{ cmd "mn_sell 10" }
 	}
 	pic bt_autosell10
 	{
@@ -482,6 +526,8 @@ menu buy
 		pos		"376 315"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 11" }
+		whup	{ cmd "mn_buy 11" }
+		whdown	{ cmd "mn_sell 11" }
 	}
 	pic bt_sell11
 	{
@@ -490,6 +536,8 @@ menu buy
 		pos		"392 315"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 11" }
+		whup	{ cmd "mn_buy 11" }
+		whdown	{ cmd "mn_sell 11" }
 	}
 	pic bt_autosell11
 	{
@@ -506,6 +554,8 @@ menu buy
 		pos		"376 340"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 12" }
+		whup	{ cmd "mn_buy 12" }
+		whdown	{ cmd "mn_sell 12" }
 	}
 	pic bt_sell12
 	{
@@ -514,6 +564,8 @@ menu buy
 		pos		"392 340"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 12" }
+		whup	{ cmd "mn_buy 12" }
+		whdown	{ cmd "mn_sell 12" }
 	}
 	pic bt_autosell12
 	{
@@ -530,6 +582,8 @@ menu buy
 		pos		"376 365"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 13" }
+		whup	{ cmd "mn_buy 13" }
+		whdown	{ cmd "mn_sell 13" }
 	}
 	pic bt_sell13
 	{
@@ -538,6 +592,8 @@ menu buy
 		pos		"392 365"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 13" }
+		whup	{ cmd "mn_buy 13" }
+		whdown	{ cmd "mn_sell 13" }
 	}
 	pic bt_autosell13
 	{
@@ -554,6 +610,8 @@ menu buy
 		pos		"376 390"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 14" }
+		whup	{ cmd "mn_buy 14" }
+		whdown	{ cmd "mn_sell 14" }
 	}
 	pic bt_sell14
 	{
@@ -562,6 +620,8 @@ menu buy
 		pos		"392 390"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 14" }
+		whup	{ cmd "mn_buy 14" }
+		whdown	{ cmd "mn_sell 14" }
 	}
 	pic bt_autosell14
 	{
@@ -578,6 +638,8 @@ menu buy
 		pos		"376 415"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 15" }
+		whup	{ cmd "mn_buy 15" }
+		whdown	{ cmd "mn_sell 15" }
 	}
 	pic bt_sell15
 	{
@@ -586,6 +648,8 @@ menu buy
 		pos		"392 415"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 15" }
+		whup	{ cmd "mn_buy 15" }
+		whdown	{ cmd "mn_sell 15" }
 	}
 	pic bt_autosell15
 	{
@@ -602,6 +666,8 @@ menu buy
 		pos		"376 440"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 16" }
+		whup	{ cmd "mn_buy 16" }
+		whdown	{ cmd "mn_sell 16" }
 	}
 	pic bt_sell16
 	{
@@ -610,6 +676,8 @@ menu buy
 		pos		"392 440"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 16" }
+		whup	{ cmd "mn_buy 16" }
+		whdown	{ cmd "mn_sell 16" }
 	}
 	pic bt_autosell16
 	{
@@ -626,6 +694,8 @@ menu buy
 		pos		"376 465"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 17" }
+		whup	{ cmd "mn_buy 17" }
+		whdown	{ cmd "mn_sell 17" }
 	}
 	pic bt_sell17
 	{
@@ -634,6 +704,8 @@ menu buy
 		pos		"392 465"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 17" }
+		whup	{ cmd "mn_buy 17" }
+		whdown	{ cmd "mn_sell 17" }
 	}
 	pic bt_autosell17
 	{
@@ -650,6 +722,8 @@ menu buy
 		pos		"376 490"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 18" }
+		whup	{ cmd "mn_buy 18" }
+		whdown	{ cmd "mn_sell 18" }
 	}
 	pic bt_sell18
 	{
@@ -658,6 +732,8 @@ menu buy
 		pos		"392 490"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 18" }
+		whup	{ cmd "mn_buy 18" }
+		whdown	{ cmd "mn_sell 18" }
 	}
 	pic bt_autosell18
 	{
@@ -674,6 +750,8 @@ menu buy
 		pos		"376 515"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 19" }
+		whup	{ cmd "mn_buy 19" }
+		whdown	{ cmd "mn_sell 19" }
 	}
 	pic bt_sell19
 	{
@@ -682,6 +760,8 @@ menu buy
 		pos		"392 515"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 19" }
+		whup	{ cmd "mn_buy 19" }
+		whdown	{ cmd "mn_sell 19" }
 	}
 	pic bt_autosell19
 	{
@@ -698,6 +778,8 @@ menu buy
 		pos		"376 540"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 20" }
+		whup	{ cmd "mn_buy 20" }
+		whdown	{ cmd "mn_sell 20" }
 	}
 	pic bt_sell20
 	{
@@ -706,6 +788,8 @@ menu buy
 		pos		"392 540"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 20" }
+		whup	{ cmd "mn_buy 20" }
+		whdown	{ cmd "mn_sell 20" }
 	}
 	pic bt_autosell20
 	{
@@ -722,6 +806,8 @@ menu buy
 		pos		"376 565"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 21" }
+		whup	{ cmd "mn_buy 21" }
+		whdown	{ cmd "mn_sell 21" }
 	}
 	pic bt_sell21
 	{
@@ -730,6 +816,8 @@ menu buy
 		pos		"392 565"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 21" }
+		whup	{ cmd "mn_buy 21" }
+		whdown	{ cmd "mn_sell 21" }
 	}
 	pic bt_autosell21
 	{
@@ -746,6 +834,8 @@ menu buy
 		pos		"376 590"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 22" }
+		whup	{ cmd "mn_buy 22" }
+		whdown	{ cmd "mn_sell 22" }
 	}
 	pic bt_sell22
 	{
@@ -754,6 +844,8 @@ menu buy
 		pos		"392 590"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 22" }
+		whup	{ cmd "mn_buy 22" }
+		whdown	{ cmd "mn_sell 22" }
 	}
 	pic bt_autosell22
 	{
@@ -770,6 +862,8 @@ menu buy
 		pos		"376 615"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 23" }
+		whup	{ cmd "mn_buy 23" }
+		whdown	{ cmd "mn_sell 23" }
 	}
 	pic bt_sell23
 	{
@@ -778,6 +872,8 @@ menu buy
 		pos		"392 615"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 23" }
+		whup	{ cmd "mn_buy 23" }
+		whdown	{ cmd "mn_sell 23" }
 	}
 	pic bt_autosell23
 	{
@@ -794,6 +890,8 @@ menu buy
 		pos		"376 640"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 24" }
+		whup	{ cmd "mn_buy 24" }
+		whdown	{ cmd "mn_sell 24" }
 	}
 	pic bt_sell24
 	{
@@ -802,6 +900,8 @@ menu buy
 		pos		"392 640"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 24" }
+		whup	{ cmd "mn_buy 24" }
+		whdown	{ cmd "mn_sell 24" }
 	}
 	pic bt_autosell24
 	{
@@ -818,6 +918,8 @@ menu buy
 		pos		"376 665"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 25" }
+		whup	{ cmd "mn_buy 25" }
+		whdown	{ cmd "mn_sell 25" }
 	}
 	pic bt_sell25
 	{
@@ -826,6 +928,8 @@ menu buy
 		pos		"392 665"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 25" }
+		whup	{ cmd "mn_buy 25" }
+		whdown	{ cmd "mn_sell 25" }
 	}
 	pic bt_autosell25
 	{
@@ -842,6 +946,8 @@ menu buy
 		pos		"376 690"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 26" }
+		whup	{ cmd "mn_buy 26" }
+		whdown	{ cmd "mn_sell 26" }
 	}
 	pic bt_sell26
 	{
@@ -850,6 +956,8 @@ menu buy
 		pos		"392 690"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 26" }
+		whup	{ cmd "mn_buy 26" }
+		whdown	{ cmd "mn_sell 26" }
 	}
 	pic bt_autosell26
 	{
@@ -866,6 +974,8 @@ menu buy
 		pos		"376 715"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "mn_buy 27" }
+		whup	{ cmd "mn_buy 27" }
+		whdown	{ cmd "mn_sell 27" }
 	}
 	pic bt_sell27
 	{
@@ -874,6 +984,8 @@ menu buy
 		pos		"392 715"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "mn_sell 27" }
+		whup	{ cmd "mn_buy 27" }
+		whdown	{ cmd "mn_sell 27" }
 	}
 	pic bt_autosell27
 	{
@@ -933,6 +1045,8 @@ menu buy
 		texl		"0 0"
 		texh	"16 16"
 		click	{ cmd "buy_factor_dec 0" }
+		whdown	{ cmd "buy_factor_dec 0" }
+		whup	{ cmd "buy_factor_inc 0" }
 	}
 
 	pic bt_buyincrease
@@ -944,6 +1058,8 @@ menu buy
 		texl		"16 0"
 		texh	"32 16"
 		click	{ cmd "buy_factor_inc 0" }
+		whdown	{ cmd "buy_factor_dec 0" }
+		whup	{ cmd "buy_factor_inc 0" }
 	}
 
 	string txt_sellfactor
@@ -971,6 +1087,8 @@ menu buy
 		texl		"0 0"
 		texh	"16 16"
 		click	{ cmd "buy_factor_dec 1" }
+		whdown	{ cmd "buy_factor_dec 1" }
+		whup	{ cmd "buy_factor_inc 1" }
 	}
 
 	pic bt_sellincrease
@@ -982,6 +1100,8 @@ menu buy
 		texl		"16 0"
 		texh	"32 16"
 		click	{ cmd "buy_factor_inc 1" }
+		whdown	{ cmd "buy_factor_dec 1" }
+		whup	{ cmd "buy_factor_inc 1" }
 	}
 
 	// ==================
@@ -1165,6 +1285,14 @@ menu buy
 		{
 			cmd mn_decreaseweapon
 		}
+		whup
+		{
+			cmd mn_increaseweapon
+		}
+		whdown
+		{
+			cmd mn_decreaseweapon
+		}
 	}
 
 	pic ammo_dec
@@ -1177,6 +1305,14 @@ menu buy
 		texh	"16 16"
 		mousefx	true
 		click
+		{
+			cmd mn_decreaseweapon
+		}
+		whup
+		{
+			cmd mn_increaseweapon
+		}
+		whdown
 		{
 			cmd mn_decreaseweapon
 		}
@@ -1196,6 +1332,14 @@ menu buy
 		{
 			cmd mn_increaseweapon
 		}
+		whup
+		{
+			cmd mn_increaseweapon
+		}
+		whdown
+		{
+			cmd mn_decreaseweapon
+		}
 	}
 
 	pic ammo_inc
@@ -1210,6 +1354,14 @@ menu buy
 		click
 		{
 			cmd mn_increaseweapon
+		}
+		whup
+		{
+			cmd mn_increaseweapon
+		}
+		whdown
+		{
+			cmd mn_decreaseweapon
 		}
 	}
 
@@ -1253,6 +1405,14 @@ menu buy
 		{
 			cmd mn_decreasefiremode
 		}
+		whup
+		{
+			cmd mn_increasefiremode
+		}
+		whdown
+		{
+			cmd mn_decreasefiremode
+		}
 	}
 
 	pic firemode_inc
@@ -1267,6 +1427,14 @@ menu buy
 		click
 		{
 			cmd mn_increasefiremode
+		}
+		whup
+		{
+			cmd mn_increasefiremode
+		}
+		whdown
+		{
+			cmd mn_decreasefiremode
 		}
 	}
 

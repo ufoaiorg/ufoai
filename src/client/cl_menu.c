@@ -84,6 +84,8 @@ typedef enum ne_s {
 	NE_WHEEL,
 	NE_MOUSEIN,
 	NE_MOUSEOUT,
+	NE_WHEELUP,
+	NE_WHEELDOWN,
 
 	NE_NUM_NODEEVENT
 } ne_t;
@@ -96,7 +98,9 @@ static const char *ne_strings[NE_NUM_NODEEVENT] = {
 	"mclick",
 	"wheel",
 	"in",
-	"out"
+	"out",
+	"whup",
+	"whdown"
 };
 
 static size_t const ne_values[NE_NUM_NODEEVENT] = {
@@ -106,7 +110,9 @@ static size_t const ne_values[NE_NUM_NODEEVENT] = {
 	offsetof(menuNode_t, mclick),
 	offsetof(menuNode_t, wheel),
 	offsetof(menuNode_t, mouseIn),
-	offsetof(menuNode_t, mouseOut)
+	offsetof(menuNode_t, mouseOut),
+	offsetof(menuNode_t, wheelUp),
+	offsetof(menuNode_t, wheelDown)
 };
 
 /* =========================================================== */
@@ -888,7 +894,7 @@ static qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 	}
 
 	/* check for click action */
-	if (node->invis || (!node->click && !node->rclick && !node->mclick && !node->wheel && !node->mouseIn && !node->mouseOut))
+	if (node->invis || (!node->click && !node->rclick && !node->mclick && !node->wheel && !node->mouseIn && !node->mouseOut && !node->wheelUp && !node->wheelDown))
 		return qfalse;
 
 	if (!node->size[0] || !node->size[1]) {
@@ -1573,7 +1579,8 @@ void MN_MouseWheel (qboolean down, int x, int y)
 		menu = menuStack[--sp];
 		for (node = menu->firstNode; node; node = node->next) {
 			/* no middle click for this node defined */
-			if (!node->wheel)
+			/* both wheelUp & wheelDown required */
+			if (!node->wheel && !(node->wheelUp && node->wheelDown))
 				continue;
 
 			/* check whether mouse if over this node */
@@ -1603,12 +1610,19 @@ void MN_MouseWheel (qboolean down, int x, int y)
 					ccs.zoom = cl_mapzoommax->value;
 				break;
 			case MN_TEXT:
-				MN_TextScroll(node, (down ? 1 : -1));
-				/* they can also have script commands assigned */
-				MN_ExecuteActions(menu, node->wheel);
+				if (node->wheelUp && node->wheelDown) {
+					MN_ExecuteActions(menu, (down ? node->wheelDown : node->wheelUp));
+				} else {
+					MN_TextScroll(node, (down ? 1 : -1));
+					/* they can also have script commands assigned */
+					MN_ExecuteActions(menu, node->wheel);
+				}
 				break;
 			default:
-				MN_ExecuteActions(menu, node->wheel);
+				if (node->wheelUp && node->wheelDown)
+					MN_ExecuteActions(menu, (down ? node->wheelDown : node->wheelUp));
+				else
+					MN_ExecuteActions(menu, node->wheel);
 				break;
 			}
 		}

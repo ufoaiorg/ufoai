@@ -101,7 +101,7 @@ typedef struct menuNode_s {
 	vec4_t color;				/**< rgba */
 	vec4_t bgcolor;				/**< rgba */
 	vec4_t bordercolor;			/**< rgba - see border and padding */
-	menuAction_t *click, *rclick, *mclick, *wheel, *mouseIn, *mouseOut;
+	menuAction_t *click, *rclick, *mclick, *wheel, *mouseIn, *mouseOut, *wheelUp, *wheelDown;
 	excludeRect_t exclude[MAX_EXLUDERECTS];	/**< exclude this for hover or click functions */
 	int excludeNum;				/**< how many exclude rects defined? */
 	menuDepends_t depends;
