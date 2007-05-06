@@ -31,18 +31,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define	GAME_API_VERSION	4
 
-/* edict->solid values */
-
+/** @brief edict->solid values */
 typedef enum {
-	SOLID_NOT,					/* no interaction with other objects */
-	SOLID_TRIGGER,				/* only touch when inside, after moving (triggers) */
-	SOLID_BBOX,					/* touch on edge (monsters, etc) */
-	SOLID_BSP					/* bsp clip, touch on edge (solid walls, blocks, etc) */
+	SOLID_NOT,					/**< no interaction with other objects */
+	SOLID_TRIGGER,				/**< only touch when inside, after moving (triggers) */
+	SOLID_BBOX,					/**< touch on edge (monsters, etc) */
+	SOLID_BSP					/**< bsp clip, touch on edge (solid walls, blocks, etc) */
 } solid_t;
 
 /*=============================================================== */
 
-/* link_t is only used for entity area links now */
+/** @brief link_t is only used for entity area links now */
 typedef struct link_s {
 	struct link_s *prev, *next;
 } link_t;
@@ -58,14 +57,14 @@ typedef struct player_s player_t;
 
 struct player_s {
 	qboolean inuse;
-	int num;					/* communicated by server to clients */
+	int num;					/**< communicated by server to clients */
 	int ping;
 
-	/* the game dll can add anything it wants after */
-	/* this point in the structure */
+	/** the game dll can add anything it wants after
+	 * this point in the structure */
 };
 
-/* don't change the order - also see edict_s in g_local.h */
+/** @note don't change the order - also see edict_s in g_local.h */
 struct edict_s {
 	qboolean inuse;
 	int linkcount;
@@ -79,22 +78,22 @@ struct edict_s {
 	link_t area;				/**< linked to a division node or leaf */
 	int headnode;				/**< unused if num_clusters != -1 */
 
-	/* tracing info */
+	/** tracing info */
 	solid_t solid;
 
 	vec3_t mins, maxs; /**< position of min and max points - relative to origin */
 	vec3_t absmin, absmax; /**< position of min and max points - relative to world's origin */
 	vec3_t size;
 
-	/*
-	* usually the entity that spawned this entity - e.g. a bullet is owned
-	* but the player who fired it
-	*/
+	/**
+	 * usually the entity that spawned this entity - e.g. a bullet is owned
+	 * but the player who fired it
+	 */
 	edict_t *owner;
-	/*
-	* type of objects the entity will not pass through
-	* can be any of MASK_* or CONTENTS_*
-	*/
+	/**
+	 * type of objects the entity will not pass through
+	 * can be any of MASK_* or CONTENTS_*
+	 */
 	int clipmask;
 	int modelindex;
 };
@@ -104,7 +103,7 @@ struct edict_s {
 
 /*=============================================================== */
 
-/* functions provided by the main engine */
+/** @brief functions provided by the main engine */
 typedef struct {
 	/* client/server information */
 	int seed;
@@ -116,9 +115,9 @@ typedef struct {
 	/* sends message to all entities */
 	void (*bprintf) (int printlevel, const char *fmt, ...) __attribute__((format(printf, 2, 3)));
 	void (*dprintf) (const char *fmt, ...) __attribute__((format(printf, 1, 2)));
-	/* sends message to only one entity */
+	/** sends message to only one entity */
 	void (*cprintf) (player_t * player, int printlevel, const char *fmt, ...) __attribute__((format(printf, 3, 4)));
-	/* sends message to one entity and displays message on center of the screen */
+	/** sends message to one entity and displays message on center of the screen */
 	void (*centerprintf) (player_t * player, const char *fmt, ...) __attribute__((format(printf, 2, 3)));
 	void (*break_sound) (vec3_t origin, edict_t *ent, int channel, edictMaterial_t material);
 
@@ -130,16 +129,16 @@ typedef struct {
 
 	void (*error) (const char *fmt, ...) __attribute__((noreturn, format(printf, 1, 2)));
 
-	/* the *index functions create configstrings and some internal server state */
+	/** the *index functions create configstrings and some internal server state */
 	int (*modelindex) (const char *name);
-	/* during spawning is caches the sound, after that it simply returns the index which refers to that sound */
+	/** during spawning is caches the sound, after that it simply returns the index which refers to that sound */
 	int (*soundindex) (const char *name);
 	int (*imageindex) (const char *name);
 
 	void (*setmodel) (edict_t * ent, const char *name);
 
-	/* collision detection */
-	/* traces a box from start to end, ignoring entities passent, stoping if it hits an object of type specified
+	/** @brief collision detection
+	 * @note traces a box from start to end, ignoring entities passent, stoping if it hits an object of type specified
 	 * via contentmask (MASK_*). Mins and maxs set the box which will do the tracing - if NULL then a line is used instead
 	 * returns value of type trace_t with attributes:
 	 * allsolid - if true, entire trace was in a wall
@@ -150,7 +149,7 @@ typedef struct {
 	 * ent - entity hit by trace
 	 */
 	trace_t (*trace) (vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, edict_t * passent, int contentmask);
-	/* links entity into the world - so that it is sent to the client and used for
+	/** links entity into the world - so that it is sent to the client and used for
 	 * collision detection, etc. Must be relinked if its size, position or solidarity changes */
 	void (*linkentity) (edict_t * ent);
 	void (*unlinkentity) (edict_t * ent);	/* call before removing an interactive edict */
@@ -187,9 +186,9 @@ typedef struct {
 	void (*WriteLong) (int c);
 	void (*WriteFloat) (float f);
 	void (*WriteString) (const char *s);
-	void (*WritePos) (vec3_t pos);	/* some fractional bits */
+	void (*WritePos) (vec3_t pos);	/**< some fractional bits */
 	void (*WriteGPos) (pos3_t pos);
-	void (*WriteDir) (vec3_t pos);	/* single byte encoded, very coarse */
+	void (*WriteDir) (vec3_t pos);	/**< single byte encoded, very coarse */
 	void (*WriteAngle) (float f);
 	void (*WriteFormat) (const char *format, ...);
 
@@ -242,13 +241,13 @@ typedef struct {
 	void (*DebugGraph) (float value, int color);
 } game_import_t;
 
-/* functions exported by the game subsystem */
+/** @brief functions exported by the game subsystem */
 typedef struct {
 	int apiversion;
 
-	/* the init function will only be called when a game starts, */
-	/* not each time a level is loaded.  Persistant data for clients */
-	/* and the server can be allocated in init */
+	/** the init function will only be called when a game starts,
+	 * not each time a level is loaded.  Persistant data for clients
+	 * and the server can be allocated in init */
 	void (*Init) (void);
 	void (*Shutdown) (void);
 
@@ -270,10 +269,10 @@ typedef struct {
 
 	qboolean (*RunFrame) (void);
 
-	/* ServerCommand will be called when an "sv <command>" command is issued on the */
-	/* server console. */
-	/* The game can issue gi.argc() / gi.argv() commands to get the rest */
-	/* of the parameters */
+	/** ServerCommand will be called when an "sv <command>" command is issued on the
+	 * server console.
+	 * The game can issue gi.argc() / gi.argv() commands to get the rest
+	 * of the parameters */
 	void (*ServerCommand) (void);
 
 	/* global variables shared between game and server */
@@ -281,10 +280,10 @@ typedef struct {
 	/* The edict array is allocated in the game dll so it */
 	/* can vary in size from one game to another. */
 
-	/* The size will be fixed when ge->Init() is called */
+	/** The size will be fixed when ge->Init() is called */
 	struct edict_s *edicts;
 	int edict_size;
-	int num_edicts;				/* current number, <= max_edicts */
+	int num_edicts;				/**< current number, <= max_edicts */
 	int max_edicts;
 
 	struct player_s *players;
