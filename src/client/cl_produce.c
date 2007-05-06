@@ -432,6 +432,8 @@ static void PR_ProductionInfo (void)
 				sizeof(productionInfo) );
 			Q_strcat(productionInfo, va(_("Productiontime\t%ih\n"), time),
 				sizeof(productionInfo) );
+			Q_strcat(productionInfo, va(_("Item size\t%i\n"), od->size),
+				sizeof(productionInfo) );
 			CL_ItemDescription(objID);
 		}
 	} else {
