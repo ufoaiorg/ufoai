@@ -2542,12 +2542,11 @@ void CL_DropshipReturned (base_t* base, aircraft_t* aircraft)
 	/* Don't call cargo functions if aircraft is not a transporter. */
 	if (aircraft->type != AIRCRAFT_TRANSPORTER)
 		return;
-	baseCurrent = base;	/* @todo: hehe, i was great here - destroying the baseCurrent pointer :> */
 	AL_AddAliens(base->idx, aircraft->idx);		/**< Add aliens to Alien Containment. */
-	AL_CountAll();		/**< Count all alive aliens. */
-	INV_SellOrAddItems(aircraft);	/**< Sell collected items or add them to storage. */
-	RS_MarkResearchable(qfalse);	/**< Mark new technologies researchable. */
-	HOS_ReaddEmployeesInHospital(aircraft);	/**< Try to readd soldiers to hospital. */
+	AL_CountAll();					/**< Count all alive aliens. */
+	INV_SellOrAddItems(aircraft);			/**< Sell collected items or add them to storage. */
+	RS_MarkResearchable(qfalse);			/**< Mark new technologies researchable. */
+	HOS_ReaddEmployeesInHospital(aircraft);		/**< Try to readd soldiers to hospital. */
 
 	/* Now empty alien/item cargo just in case. */
 	memset(aircraft->aliencargo, 0, sizeof(aircraft->aliencargo));
