@@ -439,10 +439,9 @@ void RS_RequiredIdxAssign (void)
  */
 void RS_InitTree (void)
 {
-	int i, j, k;
+	int i, j;
 	technology_t *tech = NULL;
 	objDef_t *item = NULL;
-	objDef_t *item_ammo = NULL;
 	building_t *building = NULL;
 	aircraft_t *air_samp = NULL;
 	byte found;
@@ -491,19 +490,6 @@ void RS_InitTree (void)
 						Com_sprintf(tech->mdl_top, MAX_VAR, item->model);
 					if (!*tech->image_top)
 						Com_sprintf(tech->image_top, MAX_VAR, item->image);
-					if (!*tech->mdl_bottom) {
-						if (tech->type == RS_WEAPON) {
-							/* Find ammo for weapon. */
-							/* @todo: Add code+structure to display several ammo-types (even reseachable ones). */
-							for (k = 0; k < csi.numODs; k++) {
-								item_ammo = &csi.ods[k];
-								if ( INV_LoadableInWeapon(item_ammo, j) ) {
-									Com_sprintf(tech->mdl_bottom, MAX_VAR, item_ammo->model);
-									break;
-								}
-							}
-						}
-					}
 					/* Should return to CASE RS_xxx. */
 					break;
 				}
@@ -1491,9 +1477,7 @@ static const value_t valid_tech_vars[] = {
 	{"time", V_FLOAT, offsetof(technology_t, time), MEMBER_SIZEOF(technology_t, time)},
 	{"pushnews", V_BOOL, offsetof(technology_t, pushnews), MEMBER_SIZEOF(technology_t, pushnews)},
 	{"image_top", V_STRING, offsetof(technology_t, image_top), 0},
-	{"image_bottom", V_STRING, offsetof(technology_t, image_bottom), 0},
 	{"mdl_top", V_STRING, offsetof(technology_t, mdl_top), 0},
-	{"mdl_bottom", V_STRING, offsetof(technology_t, mdl_bottom), 0},
 
 	{NULL, 0, 0, 0}
 };

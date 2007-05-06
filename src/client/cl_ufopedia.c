@@ -120,7 +120,6 @@ static void UP_ChangeDisplay (int newDisplay)
 		Cvar_Set("mn_upmodel_bottom", "");
 		Cvar_Set("mn_upmodel_big", "");
 		Cvar_Set("mn_upimage_top", "base/empty");
-		Cvar_Set("mn_upimage_bottom", "base/empty");
 		currentChapter = -1;
 		break;
 	case UFOPEDIA_INDEX:
@@ -128,7 +127,6 @@ static void UP_ChangeDisplay (int newDisplay)
 		Cvar_Set("mn_upmodel_bottom", "");
 		Cvar_Set("mn_upmodel_big", "");
 		Cvar_Set("mn_upimage_top", "base/empty");
-		Cvar_Set("mn_upimage_bottom", "base/empty");
 		/* no break here */
 	case UFOPEDIA_ARTICLE:
 		/* confunc */
@@ -381,7 +379,6 @@ static void UP_ArmorDescription (technology_t* t)
 	{
 		Cvar_Set("mn_upmodel_top", "");
 		Cvar_Set("mn_upmodel_bottom", "");
-		Cvar_Set("mn_upimage_bottom", "base/empty");
 		Cvar_Set("mn_upimage_top", t->image_top);
 		upBuffer[0] = '\0';
 		for (i = 0; i < csi.numDTs; i++)
@@ -688,15 +685,12 @@ static void UP_DrawEntry (technology_t* tech)
 	Cvar_Set("mn_upmodel_top", "");
 	Cvar_Set("mn_upmodel_bottom", "");
 	Cvar_Set("mn_upimage_top", "base/empty");
-	Cvar_Set("mn_upimage_bottom", "base/empty");
 	if (*tech->mdl_top)
 		Cvar_Set("mn_upmodel_top", tech->mdl_top);
-	if (*tech->mdl_bottom )
+	if (tech->type == RS_WEAPON) 
 		UP_DrawAssociatedAmmo(tech);
 	if (!*tech->mdl_top && *tech->image_top)
 		Cvar_Set("mn_upimage_top", tech->image_top);
-	if (!*tech->mdl_bottom && *tech->mdl_bottom)
-		Cvar_Set("mn_upimage_bottom", tech->image_bottom);
 	up_firemode=0;
 	up_researchedlink=0;	/*@todo: if the first weapon of the firemode of an ammo is unresearched, its dommages,... will still be displayed*/
 

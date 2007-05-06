@@ -486,14 +486,6 @@ menu ufopedia
 		font	f_small
 	}
 
-	// FIXME: new position - still needed?
-	pic image_bottom
-	{
-		image   "*cvar mn_upimage_bottom"
-		pos		"810 550"
-		size	"120 120"
-	}
-
 	func init
 	{
 		cmd "mn_upcontent"

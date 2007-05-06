@@ -66,9 +66,9 @@
 //		Time the production of one item takes. This value is similar to time.
 //		0 [Default] The items are produced in (nearly) no time.
 //		-1 Will prevent the item to be produced. (Only needed if the thing 'provides' something and this thing is not meant for production.)
-//	image_top / image_bottom
-//		Path to the image that should be displayed on the top (big) or bottom (small) in the ufopedia.
-//	mdl_top / mdl_bottom
+//	image_top
+//		Path to the image that should be displayed on the top (big) in the ufopedia.
+//	mdl_top
 //		Same as the image but for 3d-models.
 //		It overrides the image-definitions if it is provided.
 //==========================================

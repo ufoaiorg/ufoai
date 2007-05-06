@@ -147,9 +147,7 @@ typedef struct technology_s {
 	int scientists;				/**< How many scientists are researching this tech. */
 
 	char image_top[MAX_VAR];
-	char image_bottom[MAX_VAR];
 	char mdl_top[MAX_QPATH];
-	char mdl_bottom[MAX_QPATH];
 
 	int statusResearchable;		/**< Is this item researchable? */
 
