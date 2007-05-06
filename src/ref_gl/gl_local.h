@@ -53,9 +53,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #if !defined _WIN32 || ( defined(__MINGW32__) && !defined(DEVCPP ) )
 #   ifdef USE_SDL_FRAMEWORK
 #       include <SDL/SDL.h>
+#       include <SDL/SDL_syswm.h>
 #   else
 #       ifndef __APPLE__
 #       include <SDL.h>
+#       include <SDL_syswm.h>
 #       endif
 #   endif
 
@@ -68,9 +70,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #   ifdef __APPLE__
 #   include <SDL.h>
 #   include <SDL/SDL_ttf.h>
+#   include <SDL/SDL_syswm.h>
 #   endif
 #   include <SDL/SDL.h>
 #   include <SDL/SDL_ttf.h>
+#   include <SDL/SDL_syswm.h>
 #endif
 
 void GL_ShutdownSDLFonts(void); /* gl_draw.c */

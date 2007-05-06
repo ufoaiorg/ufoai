@@ -28,14 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <signal.h>
 #include <sys/mman.h>
 
-#ifdef USE_SDL_FRAMEWORK
-#	include <SDL/SDL.h>
-#	include <SDL/SDL_syswm.h>
-#else
-#	include <SDL.h>
-#	include <SDL_syswm.h>
-#endif
-
 /*#include <SDL_opengl.h>*/
 
 #include "../../client/cl_keys.h"
