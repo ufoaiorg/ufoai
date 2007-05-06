@@ -209,6 +209,8 @@ menu production
 		texl	"16 0"
 		texh	"32 16"
 		click	{ cmd "prod_inc" }
+		whup	{ cmd "prod_inc" }
+		whdown	{ cmd "prod_dec" }
 	}
 
 	pic prod_stop
@@ -229,6 +231,8 @@ menu production
 		texl	"0 0"
 		texh	"16 16"
 		click	{ cmd "prod_dec" }
+		whup	{ cmd "prod_inc" }
+		whdown	{ cmd "prod_dec" }
 	}
 
 	pic prod_inc2
@@ -239,6 +243,8 @@ menu production
 		texl	"16 0"
 		texh	"32 16"
 		click	{ cmd "prod_inc 10" }
+		whup	{ cmd "prod_inc 10" }
+		whdown	{ cmd "prod_dec 10" }
 	}
 
 	pic prod_dec2
@@ -249,6 +255,8 @@ menu production
 		texl	"0 0"
 		texh	"16 16"
 		click	{ cmd "prod_dec 10" }
+		whup	{ cmd "prod_inc 10" }
+		whdown	{ cmd "prod_dec 10" }
 	}
 
 	pic prod_up
@@ -258,7 +266,9 @@ menu production
 		tooltip "_Increase priority"
 		texl	"0 0"
 		texh	"16 16"
-		click { cmd "prod_up" }
+		click	{ cmd "prod_up" }
+		whup	{ cmd "prod_up" }
+		whdown	{ cmd "prod_down" }
 	}
 
 	pic prod_down
@@ -268,7 +278,9 @@ menu production
 		tooltip "_Decrease priority"
 		texl	"0 16"
 		texh	"16 32"
-		click { cmd "prod_down" }
+		click	{ cmd "prod_down" }
+		whup	{ cmd "prod_up" }
+		whdown	{ cmd "prod_down" }
 	}
 
 	// ==================
