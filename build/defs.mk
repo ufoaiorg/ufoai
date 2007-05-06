@@ -2,6 +2,7 @@
 SRCDIR=src
 
 CFLAGS+=-DHAVE_CONFIG_H -Wall -pipe
+#-ansi -pedantic -std=c99
 #-combine -fwhole-program
 
 ifeq ($(HAVE_SHADERS),1)

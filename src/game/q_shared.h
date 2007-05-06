@@ -506,12 +506,11 @@ CVARS (console variables)
 #ifndef CVAR
 #define CVAR
 
-#define CVAR_ARCHIVE    1       /* set to cause it to be saved to vars.rc */
-#define CVAR_USERINFO   2       /* added to userinfo  when changed */
-#define CVAR_SERVERINFO 4       /* added to serverinfo when changed */
-#define CVAR_NOSET      8       /* don't allow change from console at all, */
-                            /* but can be set from the command line */
-#define CVAR_LATCH      16      /* save changes until server restart */
+#define CVAR_ARCHIVE    1       /**< set to cause it to be saved to vars.rc */
+#define CVAR_USERINFO   2       /**< added to userinfo  when changed */
+#define CVAR_SERVERINFO 4       /**< added to serverinfo when changed */
+#define CVAR_NOSET      8       /**< don't allow change from console at all, but can be set from the command line */
+#define CVAR_LATCH      16      /**< save changes until server restart */
 
 /**
  * @brief This is a cvar defintion. Cvars can be user modified and used in our menus e.g.
@@ -543,8 +542,8 @@ COLLISION DETECTION
 */
 
 /* lower bits are stronger, and will eat weaker brushes completely */
-#define CONTENTS_SOLID          1   /* an eye is never valid in a solid */
-#define CONTENTS_WINDOW         2   /* translucent, but not watery */
+#define CONTENTS_SOLID          1   /**< an eye is never valid in a solid */
+#define CONTENTS_WINDOW         2   /**< translucent, but not watery */
 #define CONTENTS_AUX            4
 #define CONTENTS_SMOKE          8
 #define CONTENTS_SLIME          16
@@ -567,25 +566,25 @@ COLLISION DETECTION
 #define CONTENTS_CURRENT_UP     0x400000
 #define CONTENTS_CURRENT_DOWN   0x800000
 
-#define CONTENTS_ORIGIN         0x1000000   /* removed before bsping an entity */
+#define CONTENTS_ORIGIN         0x1000000   /**< removed before bsping an entity */
 
-#define CONTENTS_ACTOR          0x2000000   /* should never be on a brush, only in game */
+#define CONTENTS_ACTOR          0x2000000   /**< should never be on a brush, only in game */
 #define CONTENTS_DEADACTOR      0x4000000
-#define CONTENTS_DETAIL         0x8000000   /* brushes to be added after vis leafs */
-#define CONTENTS_TRANSLUCENT    0x10000000  /* auto set if any surface has trans */
+#define CONTENTS_DETAIL         0x8000000   /**< brushes to be added after vis leafs */
+#define CONTENTS_TRANSLUCENT    0x10000000  /**< auto set if any surface has trans */
 #define CONTENTS_LADDER         0x20000000
-#define CONTENTS_STEPON         0x40000000  /* marks areas elevated passable areas */
+#define CONTENTS_STEPON         0x40000000  /**< marks areas elevated passable areas */
 
 
-#define SURF_LIGHT      0x1     /* value will hold the light strength */
-#define SURF_SLICK      0x2     /* effects game physics */
-#define SURF_WARP       0x8     /* turbulent water warp */
+#define SURF_LIGHT      0x1     /**< value will hold the light strength */
+#define SURF_SLICK      0x2     /**< effects game physics */
+#define SURF_WARP       0x8     /**< turbulent water warp */
 #define SURF_TRANS33    0x10
 #define SURF_TRANS66    0x20
-#define SURF_FLOWING    0x40    /* scroll towards angle */
-#define SURF_NODRAW     0x80    /* don't bother referencing the texture */
+#define SURF_FLOWING    0x40    /**< scroll towards angle */
+#define SURF_NODRAW     0x80    /**< don't bother referencing the texture */
 
-#define SURF_ALPHATEST	0x2000000	/* alpha test for transparent textures */
+#define SURF_ALPHATEST	0x2000000	/**< alpha test for transparent textures */
 
 /* content masks */
 #define MASK_ALL                (-1)
@@ -660,25 +659,31 @@ typedef struct {
 #define todeg (180.0f/M_PI)
 
 /* entity->flags (render flags) */
-#define RF_MINLIGHT         0x00000001  /* allways have some light (viewmodel) */
-#define RF_VIEWERMODEL      0x00000002  /* don't draw through eyes, only mirrors */
-#define RF_WEAPONMODEL      0x00000004  /* only draw through eyes */
-#define RF_FULLBRIGHT       0x00000008  /* allways draw full intensity */
-#define RF_DEPTHHACK        0x00000010  /* for view weapon Z crunching */
+/*unused*/
+#define RF_MINLIGHT         0x00000001  /**< allways have some light (viewmodel) */
+/*unused*/
+#define RF_VIEWERMODEL      0x00000002  /**< don't draw through eyes, only mirrors */
+#define RF_WEAPONMODEL      0x00000004  /**< only draw through eyes */
+/*unused*/
+#define RF_FULLBRIGHT       0x00000008  /**< allways draw full intensity */
+#define RF_DEPTHHACK        0x00000010  /**< for view weapon Z crunching */
 #define RF_TRANSLUCENT      0x00000020
+/*unused*/
 #define RF_FRAMELERP        0x00000040
 #define RF_BEAM             0x00000080
-#define RF_CUSTOMSKIN       0x00000100  /* skin is an index in image_precache */
-#define RF_GLOW             0x00000200  /* pulse lighting for bonus items */
+/*unused*/
+#define RF_CUSTOMSKIN       0x00000100  /**< skin is an index in image_precache */
+/*unused*/
+#define RF_GLOW             0x00000200  /**< pulse lighting for bonus items */
 #define RF_SHELL_RED        0x00000400
 #define RF_SHELL_GREEN      0x00000800
 #define RF_SHELL_BLUE       0x00001000
 
-#define RF_BOX              0x00002000	/* actor selection box */
-#define RF_SHADOW           0x00004000	/* shadow for this entity */
-#define RF_SELECTED         0x00008000	/* selected actor */
-#define RF_MEMBER           0x00010000	/* actor in the same team */
-#define RF_ALLIED           0x00020000	/* actor in an allied team (controlled by another player) */
+#define RF_BOX              0x00002000	/**< actor selection box */
+#define RF_SHADOW           0x00004000	/**< shadow for this entity */
+#define RF_SELECTED         0x00008000	/**< selected actor */
+#define RF_MEMBER           0x00010000	/**< actor in the same team */
+#define RF_ALLIED           0x00020000	/**< actor in an allied team (controlled by another player) */
 
 #define RF_LIGHTFIXED       0x00040000
 #define RF_NOSMOOTH         0x00080000
@@ -1006,11 +1011,11 @@ typedef struct fireDef_s {
 	/* These values are created in Com_ParseItem and Com_AddObjectLinks.
 	 * They are used for self-referencing the firedef. */
 	int obj_idx;		/**< The weapon/ammo (csi.ods[obj_idx]) this fd is located in.
-					 ** So you can get the containing object by acceessing e.g. csi.ods[obj_idx]. */
+						 ** So you can get the containing object by acceessing e.g. csi.ods[obj_idx]. */
 	int weap_fds_idx;	/**< The index of the "weapon_mod" entry (objDef_t->fd[weap_fds_idx]) this fd is located in.
-					 ** Depending on this value you can find out via objDef_t->weap_idx[weap_fds_idx] what weapon this firemode is used for.
-					 ** This does _NOT_ equal the index of the weapon object in ods.
-					 */
+						 ** Depending on this value you can find out via objDef_t->weap_idx[weap_fds_idx] what weapon this firemode is used for.
+						 ** This does _NOT_ equal the index of the weapon object in ods.
+						 */
 	int fd_idx;		/**< Self link of the fd in the objDef_t->fd[][fd_idx] array. */
 
 	qboolean soundOnce;
@@ -1074,8 +1079,8 @@ typedef struct objDef_s {
 	int ammo;			/**< How much can we load into this weapon at once. */
 	int reload;			/**< Time units (TUs) for reloading the weapon. */
 	qboolean oneshot;			/**< This weapon contains its own ammo (it is loaded in the base).
-					 ** Don't confuse "oneshot" with "only one shot is possible",
-					 ** the number of the "ammo" value above defines how many shots are possible. */
+								 ** Don't confuse "oneshot" with "only one shot is possible",
+								 ** the number of the "ammo" value above defines how many shots are possible. */
 	qboolean deplete;			/**< Is this weapon useless after all ("oneshot") ammo is used up? If true this item will not be collected on mission-end. (see CL_CollectItems) */
 	int useable;			/**< Defines which team can use this item: 0 - human, 1 - alien. */
 	int ammo_idx[MAX_AMMOS_PER_OBJDEF];			/**< List of ammo-object indices. The index of the ammo in csi.ods[xxx]. */
@@ -1088,7 +1093,7 @@ typedef struct objDef_s {
 												 ** You can get the correct index for this array from e.g. fireDef_t.weap_fds_idx. or with INV_FiredefsIDXForWeapon. */
 	fireDef_t fd[MAX_WEAPONS_PER_OBJDEF][MAX_FIREDEFS_PER_WEAPON];	/**< List of firemodes per weapon (the ammo can be used in). */
 	int numFiredefs[MAX_WEAPONS_PER_OBJDEF];	/**< Number of firemodes per weapon. (How many of the firemodes-per-weapons list is used.)
-											 ** Maximum value for fireDef_t.fd_idx and it't <= MAX_FIREDEFS_PER_WEAPON */
+												 ** Maximum value for fireDef_t.fd_idx and it't <= MAX_FIREDEFS_PER_WEAPON */
 	int numWeapons;							/**< Number of weapons this ammo can be used in.
 											 ** Maximum value for fireDef_t.weap_fds_idx and it's <= MAX_WEAPONS_PER_OBJDEF) */
 
