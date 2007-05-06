@@ -1,4 +1,12 @@
+/**
+ * @file net_udp.c
+ * @brief Unix IPv4 network code
+ */
+
 /*
+All original materal Copyright (C) 2002-2007 UFO: Alien Invasion team.
+
+Original file from Quake 2 v3.21: quake2-2.31/linux/net_udp.c
 Copyright (C) 1997-2001 Id Software, Inc.
 
 This program is free software; you can redistribute it and/or
@@ -75,7 +83,7 @@ static unsigned long long net_packets_in;
 static unsigned long long net_packets_out;
 
 /**
- * @brief
+ * @brief Print network statistics
  */
 void Net_Stats_f (void)
 {
@@ -90,7 +98,7 @@ void Net_Stats_f (void)
 }
 
 /**
- * @brief
+ * @brief Print the local IP addresses
  * @sa NET_GetLocalAddress
  */
 void Sys_ShowIP (void)
@@ -102,7 +110,8 @@ void Sys_ShowIP (void)
 }
 
 /**
- * @brief
+ * @brief Get our local IP addresses
+ * @note The found addresses are stored in a global array localIP
  */
 void NET_GetLocalAddress (void)
 {
@@ -138,7 +147,10 @@ void NET_GetLocalAddress (void)
 }
 
 /**
- * @brief
+ * @brief Convert a network address to a socket one
+ * @param[in] a Pointer to network address which is to be converted
+ * @param[out] s Pointer to where the socket address will be written to
+ * @sa SockadrToNetadr
  */
 void NetadrToSockadr (netadr_t *a, struct sockaddr_in *s)
 {
@@ -158,7 +170,10 @@ void NetadrToSockadr (netadr_t *a, struct sockaddr_in *s)
 }
 
 /**
- * @brief
+ * @brief Convert a socket address to a network one
+ * @param[in] s Pointer to the socket address which is to be converted
+ * @param[out] a Pointer to where the network address will be written to
+ * @sa NetadrToSockadr
  */
 void SockadrToNetadr (struct sockaddr_in *s, netadr_t *a)
 {
@@ -169,7 +184,10 @@ void SockadrToNetadr (struct sockaddr_in *s, netadr_t *a)
 
 
 /**
- * @brief Converts sockaddr_in to string
+ * @brief Converts a socket address to a string representation
+ * @param[in] s_ptr Pointer to the socket address
+ * @returns A pointer to the string representation of this socket address
+ * @post the returned pointer is not null
  * @sa SockadrToNetadr
  */
 char *NET_SocketToString (void *s_ptr)
@@ -185,7 +203,13 @@ char *NET_SocketToString (void *s_ptr)
 }
 
 /**
- * @brief
+ * @brief Compare two network addresses
+ * @param[in] a The first address
+ * @param[in] b The second address
+ * @returns qtrue if their types are the same and
+ * they are either loopback addresses,
+ * or if both addresses' IPs and ports are the same.
+ * Otherwise it returns false.
  */
 qboolean NET_CompareAdr (netadr_t a, netadr_t b)
 {
@@ -195,7 +219,13 @@ qboolean NET_CompareAdr (netadr_t a, netadr_t b)
 }
 
 /**
- * @brief Compares without the port
+ * @brief Compares two network addresses ignoring their ports
+ * @param[in] a The first address
+ * @param[in] b The second address
+ * @returns qtrue if their types are the same and
+ * they are either loopback addresses,
+ * or if both addresses' IPs are the same.
+ * Otherwise it returns false.
  */
 qboolean NET_CompareBaseAdr (netadr_t a, netadr_t b)
 {
@@ -224,8 +254,11 @@ qboolean NET_CompareBaseAdr (netadr_t a, netadr_t b)
 }
 
 /**
- * @brief
- * @note Never return a null pointer here
+ * @brief convert a network address to a string - port included
+ * @param[in] a The network address which is to be converted
+ * @returns a pointer to the string representation of the address
+ * @post the returned pointer is not null
+ * @sa *NET_BaseAdrToString
  */
 char *NET_AdrToString (netadr_t a)
 {
@@ -237,7 +270,11 @@ char *NET_AdrToString (netadr_t a)
 }
 
 /**
- * @brief
+ * @brief convert a network address to a string - port excluded
+ * @param[in] a The network address which is to be converted
+ * @returns a pointer to the string representation of the address
+ * @postcond the returned pointer is not null
+ * @sa *NET_AdrToString
  */
 char *NET_BaseAdrToString (netadr_t a)
 {
@@ -249,8 +286,12 @@ char *NET_BaseAdrToString (netadr_t a)
 }
 
 /**
- * @brief
- * @note localhost
+ * @brief Convert a string to a socket address
+ * @param[out] sadr Pointer to where the resulting socket address will be written
+ * @param[in] s String which is to be converted to a socket address
+ * @returns qtrue if the supplied string was a valid socket address
+ * and conversion succeeded. Otherwise returns qfalse.
+ * @note valid string formats include: localhost
  * idnewt
  * idnewt:28000
  * 192.246.40.70
@@ -287,8 +328,12 @@ qboolean NET_StringToSockaddr (char *s, struct sockaddr *sadr)
 }
 
 /**
- * @brief
- * @note localhost
+ * @brief Convert a string to a network address
+ * @param[out] a Pointer to where the resulting network address will be written
+ * @param[in] s String which is to be converted to a network address
+ * @returns qtrue if the supplied string was a valid network address
+ * and conversion succeeded. Otherwise returns qfalse.
+ * @note valid string formats include: localhost
  * idnewt
  * idnewt:28000
  * 192.246.40.70
@@ -316,7 +361,9 @@ qboolean NET_StringToAdr (char *s, netadr_t *a)
 
 
 /**
- * @brief
+ * @brief Decide whether the address is local
+ * @param[in] adr The address that is in question
+ * @returns qtrue if the supplied address is local. Otherwise returns qfalse.
  */
 qboolean NET_IsLocalAddress (netadr_t adr)
 {
