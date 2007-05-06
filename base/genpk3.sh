@@ -26,7 +26,7 @@ GetMapModels()
 				line=$0
 				print line
 			}
-		}' $1`
+		}' $1  | sort -u`
 }
 
 GetMapTextures()
@@ -34,7 +34,6 @@ GetMapTextures()
 	if test "$VERBOSE" == 1; then
 		echo "... checking $1 for textures"
 	fi
-	# FIXME: many textures appears several times in FILES
 	FILES=`awk 'BEGIN {line="jsqhdflzhfliuazblrfhb";test=0}
 	{ match ($0,"brush")
 		if (RLENGTH>0) {
@@ -52,7 +51,7 @@ GetMapTextures()
 	}
 	test == 1 && $0 ~ /}/ {
 		test=0
-	}' $1`
+	}' $1 | sort -u`
 }
 
 GenPK3_Usage()
