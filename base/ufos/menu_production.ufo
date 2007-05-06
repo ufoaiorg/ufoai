@@ -66,17 +66,17 @@ menu production
 
 	string txt_prod_limit_caption
 	{
-		string	"_Productionlimit"
-		pos	"610 80"
-		font	f_normal
+		string	"_Productionlimit:"
+		pos	"610 70"
+		font	f_small
 		align	ul
 	}
 
 	string txt_prod_limit
 	{
-		font	"f_normal"
+		font	"f_small"
 		string	"*cvar mn_production_limit"
-		pos		"975 80"
+		pos		"975 70"
 		align	ur
 	}
 
@@ -86,37 +86,57 @@ menu production
 
 	string txt_prod_workers_caption
 	{
-		string	"_Workers (all/ready)"
-		pos	"610 110"
-		font	f_normal
+		string	"_Workers (all/ready):"
+		pos	"610 95"
+		font	f_small
 		align	ul
 	}
 
 	string txt_prod_workers
 	{
-		font	f_normal
+		font	f_small
 		string	"*cvar mn_production_workers"
-		pos		"975 110"
+		pos		"975 95"
 		align	ur
 	}
 
 	// ==================
-	// base capacity
+	// workshop capacity
 	// ==================
 
 	string txt_prod_basecap_caption
 	{
-		string	"_Base capacity"
-		pos	"610 140"
-		font	f_normal
+		string	"_Workshop capacity:"
+		pos	"610 120"
+		font	f_small
 		align	ul
 	}
 
 	string txt_prod_basecap
 	{
-		font	f_normal
+		font	f_small
 		string	"*cvar mn_production_basecap"
-		pos	"975 140"
+		pos	"975 120"
+		align	ur
+	}
+
+	// ==================
+	// storage capacity
+	// ==================
+
+	string txt_prod_storage_caption
+	{
+		string	"_Storage capacity:"
+		pos	"610 145"
+		font	f_small
+		align	ul
+	}
+
+	string txt_prod_storage
+	{
+		font	f_small
+		string	"*cvar mn_production_storage"
+		pos	"975 145"
 		align	ur
 	}
 

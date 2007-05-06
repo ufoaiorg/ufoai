@@ -676,6 +676,9 @@ static void PR_ProductionList_f (void)
 	Com_sprintf(tmpbuf, sizeof(tmpbuf), "%i/%i", E_CountHired(baseCurrent, EMPL_WORKER),
 	baseCurrent->capacities[CAP_WORKSPACE].cur);
 	Cvar_Set("mn_production_workers", tmpbuf);
+	Com_sprintf(tmpbuf, sizeof(tmpbuf), "%i/%i", baseCurrent->capacities[CAP_ITEMS].max,
+	baseCurrent->capacities[CAP_ITEMS].cur);
+	Cvar_Set("mn_production_storage", tmpbuf);
 }
 
 /**
