@@ -261,11 +261,12 @@ extern void INV_CollectingItems (int won)
  */
 void INV_SellOrAddItems (aircraft_t *aircraft)
 {
-	int i, numitems = 0, gained = 0;
+	int i, j, numitems = 0, gained = 0, sold = 0;
 	char str[128];
 	itemsTmp_t *cargo = NULL;
 	technology_t *tech = NULL;
 	base_t *base;
+	qboolean notenoughspace = qfalse;
 
 	assert (aircraft);
 	base = aircraft->homebase;
@@ -281,6 +282,8 @@ void INV_SellOrAddItems (aircraft_t *aircraft)
 		/* If the related technology is NOT researched, don't sell items. */
 		if (!RS_IsResearched_ptr(tech)) {
 			base->storage.num[cargo[i].idx] += cargo[i].amount;
+			/* Items not researched cannot be thrown out even if not enough space in storage. */
+			base->capacities[CAP_ITEMS].cur += (cargo[i].amount * csi.ods[cargo[i].idx].size);
 			if (cargo[i].amount > 0)
 				RS_MarkCollected(tech);
 			continue;
@@ -291,8 +294,23 @@ void INV_SellOrAddItems (aircraft_t *aircraft)
 				ccs.eMarket.num[cargo[i].idx] += cargo[i].amount;
 				eTempCredits += (csi.ods[cargo[i].idx].price * cargo[i].amount);
 				numitems += cargo[i].amount;
-			} else { /* Store items if autosell is disabled. */
-				base->storage.num[cargo[i].idx] += cargo[i].amount;
+			} else {
+				/* Check whether there is enough space for adding this item. */
+				/* If yes - add. If not - sell. */
+				for (j = 0; j < cargo[i].amount; j++) {
+					if (base->capacities[CAP_ITEMS].max - base->capacities[CAP_ITEMS].cur >= csi.ods[cargo[i].idx].size) {
+						/* There is a space, add to base storage and increase capacity. */
+						base->storage.num[cargo[i].idx]++;
+						base->capacities[CAP_ITEMS].cur += csi.ods[cargo[i].idx].size;
+					} else {
+						/* Not enough space, sell item. */
+						notenoughspace = qtrue;
+						sold++;
+						ccs.eMarket.num[cargo[i].idx]++;
+						eTempCredits += csi.ods[cargo[i].idx].price;
+					}
+				}
+				
 			}
 			continue;
 		}
@@ -303,6 +321,12 @@ void INV_SellOrAddItems (aircraft_t *aircraft)
 		Com_sprintf(str, sizeof(str), _("By selling %s %s"),
 		va(ngettext("%i collected item", "%i collected items", numitems), numitems),
 		va(_("you gathered %i credits."), gained));
+		MN_AddNewMessage(_("Notice"), str, qfalse, MSG_STANDARD, NULL);
+	}
+	if (notenoughspace) {
+		Com_sprintf(str, sizeof(str), _("Not enough storage space in base %s. %s"),
+		base->name,
+		va(ngettext("%i item was sold.", "%i items were sold.", sold), sold));
 		MN_AddNewMessage(_("Notice"), str, qfalse, MSG_STANDARD, NULL);
 	}
 	CL_UpdateCredits(ccs.credits + gained);
