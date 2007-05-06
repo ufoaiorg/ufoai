@@ -282,6 +282,7 @@ static void BS_BuyType_f (void)
 	technology_t *tech;
 	int i, j = 0;
 	menuNode_t* node;
+	char tmpbuf[64];
 
 	if (Cmd_Argc() == 2) {
 		buyCategory = atoi(Cmd_Argv(1));
@@ -361,9 +362,16 @@ static void BS_BuyType_f (void)
 		Cbuf_AddText(va("buy_hide%i\n", j));
 	}
 
-	/* Set up Buy/Sell factors. */
-	Cvar_SetValue("mn_bfactor", baseCurrent->buyfactor);
-	Cvar_SetValue("mn_sfactor", baseCurrent->sellfactor);
+	/* Update some menu cvars. */
+	if (buyCategory < BUY_AIRCRAFT) {
+		/* Set up Buy/Sell factors. */
+		Cvar_SetValue("mn_bfactor", baseCurrent->buyfactor);
+		Cvar_SetValue("mn_sfactor", baseCurrent->sellfactor);
+		/* Set up base capacities. */
+		Com_sprintf(tmpbuf, sizeof(tmpbuf), "%i/%i", baseCurrent->capacities[CAP_ITEMS].max, 
+		baseCurrent->capacities[CAP_ITEMS].cur);
+		Cvar_Set("mn_bs_storage", tmpbuf);
+	}
 
 	/* select first item */
 	if (buyListLength) {
