@@ -155,7 +155,7 @@ tech rs_antimatter
 
 tech rs_item_antimatter
 {
-	type		equipment
+	type		weapon
 	name		"_Antimatter"
 	description	"_antimatter_txt"
 
@@ -263,7 +263,7 @@ tech rs_alien_breathing
 
 tech rs_item_brapparatus
 {
-	type		equipment
+	type		weapon
 	name		"_Alien Breathing Apparatus"
 	description	"_alien_breathing_txt"
 
