@@ -29,6 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 void INV_CollectingItems(int won);
 void INV_SellOrAddItems(aircraft_t *aircraft);
 void INV_EnableAutosell(technology_t *tech);
+void INV_InitialEquipment(base_t *base);
 
 #endif /* CLIENT_CL_INVENTORY_H */
 

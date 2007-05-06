@@ -369,4 +369,53 @@ void INV_EnableAutosell (technology_t *tech)
 	}
 }
 
+/**
+ * @brief Prepares initial equipment for first base at the beginning of the campaign.
+ * @param[in] *base Pointer to first base.
+ * @sa B_BuildBase_f
+ * @todo Make sure all equipment including soldiers equipment is added to capacity.cur.
+ * @todo Make sure that we do not pay double for items here and in B_PackInitialEquipment_f().
+ * @todo Remove curCampaign pointer usage here. Send campaign idx as param[in] instead.
+ */
+extern void INV_InitialEquipment (base_t *base)
+{
+	int i, price = 0;
+	equipDef_t *ed;
+	const char *eqname = cl_initial_equipment->string;
+	
+	/* Find the initial equipment definition for current campaign. */
+	for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++) {
+		if (!Q_strncmp(curCampaign->equipment, ed->name, sizeof(curCampaign->equipment)))
+			break;
+	}
+	
+	/* Copy it to base storage. */
+	if (i != csi.numEDs)
+		base->storage = *ed;
+	
+	/* Initial soldiers and their equipment. */
+	if (cl_start_employees->value) {
+		Cbuf_AddText("assign_initial;");
+	} else {
+		for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++) {
+			if (!Q_strncmp(eqname, ed->name, MAX_VAR))
+				break;
+		}
+		if (i == csi.numEDs) {
+			Com_DPrintf("B_BuildBase_f: Initial Phalanx equipment %s not found.\n", eqname);
+		} else {
+			for (i = 0; i < csi.numODs; i++)
+				base->storage.num[i] += ed->num[i] / 5;
+		}
+	}
+	
+	/* Pay for the initial equipment as well as update storage capacity. */
+	for (i = 0; i < csi.numODs; i++) {
+		price += base->storage.num[i] * csi.ods[i].price;
+		base->capacities[CAP_ITEMS].cur += base->storage.num[i] * csi.ods[i].size;
+	}
+	/* Finally update credits. */
+	CL_UpdateCredits(ccs.credits - price);
+}
+
 

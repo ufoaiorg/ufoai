@@ -1947,35 +1947,7 @@ static void B_BuildBase_f (void)
 
 			/* initial base equipment */
 			if (gd.numBases == 1) {
-				int i, price = 0;
-				equipDef_t *ed;
-
-				for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++)
-					if (!Q_strncmp(curCampaign->equipment, ed->name, sizeof(curCampaign->equipment)))
-						break;
-				if (i != csi.numEDs)
-					baseCurrent->storage = *ed; /* copied, including arrays! */
-
-				/* initial soldiers and their equipment */
-				if (cl_start_employees->value) {
-					Cbuf_AddText("assign_initial;");
-				} else {
-					const char *name = cl_initial_equipment->string;
-
-					for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++)
-						if (!Q_strncmp(name, ed->name, MAX_VAR))
-							break;
-					if (i == csi.numEDs) {
-						Com_DPrintf("B_BuildBase_f: Initial Phalanx equipment %s not found.\n", name);
-					} else {
-						for (i = 0; i < csi.numODs; i++)
-							baseCurrent->storage.num[i] += ed->num[i] / 5;
-					}
-				}
-				/* pay for the initial equipment */
-				for (i = 0; i < csi.numODs; i++)
-					price += baseCurrent->storage.num[i] * csi.ods[i].price;
-				CL_UpdateCredits(ccs.credits - price);
+				INV_InitialEquipment(baseCurrent);
 				CL_GameTimeFast();
 				CL_GameTimeFast();
 			}
