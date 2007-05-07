@@ -723,8 +723,6 @@ static void CL_GenerateEquipment_f (void)
 	/* reset description */
 	Cvar_Set("mn_itemname", "");
 	Cvar_Set("mn_item", "");
-	Cvar_Set("mn_weapon", "");
-	Cvar_Set("mn_ammo", "");
 	menuText[TEXT_STANDARD] = NULL;
 
 	/* manage inventory */

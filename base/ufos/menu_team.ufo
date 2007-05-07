@@ -1349,20 +1349,6 @@ menu equipment
 		scale	"7 7 7"
 	}
 
-	item weaponmodel
-	{
-		string	"*cvar mn_weapon"
-		pos		"160 472"
-		scale	"7 7 7"
-	}
-
-	item ammomodel
-	{
-		string	"*cvar mn_ammo"
-		pos		"340 472"
-		scale	"7 7 7"
-	}
-
 	text description
 	{
 		pos		"40 550"

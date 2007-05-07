@@ -1249,20 +1249,6 @@ menu buy
 		scale	"7 7 7"
 	}
 
-	item weaponmodel
-	{
-		string	"*cvar mn_weapon"
-		pos		"750 288"
-		scale	"7 7 7"
-	}
-
-	item ammomodel
-	{
-		string	"*cvar mn_ammo"
-		pos		"930 288"
-		scale	"7 7 7"
-	}
-
 	text description
 	{
 		pos		"620 357"

@@ -223,8 +223,6 @@ extern void CL_ItemDescription (int item)
 	Cvar_Set("mn_itemname", _(od->name));
 
 	Cvar_Set("mn_item", od->id);
-	Cvar_Set("mn_weapon", "");
-	Cvar_Set("mn_ammo", "");
 	Cvar_Set("mn_displayfiremode", "0"); /* use strings here - no int */
 	Cvar_Set("mn_displayweapon", "0"); /* use strings here - no int */
 	Cvar_Set("mn_changefiremode", "0"); /* use strings here - no int */ 
