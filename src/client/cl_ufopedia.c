@@ -244,7 +244,6 @@ extern void CL_ItemDescription (int item)
 			for (i = 0; i < csi.numDTs; i++)
 				Q_strcat(itemText, va(_("%s\t%i / %i\n"), _(csi.dts[i]), od->protection[i], od->hardness[i]), sizeof(itemText));
 		} else if (!Q_strncmp(od->type, "ammo", 4)) {
-			*itemText = '\0';
 			/* more will be written below */
 		} else if (od->weapon && (od->reload || od->thrown)) {
 			Com_sprintf(itemText, sizeof(itemText), _("%s weapon with\n"), (od->firetwohanded ? _("Two-handed") : _("One-handed")));
@@ -270,7 +269,7 @@ extern void CL_ItemDescription (int item)
 			/* We display the pre/next buttons for changing weapon only if there are at least 2 researched weapons */
 			/* up_numresearchedlink contains the number of researched weapons useable with this ammo */
 			if (!(od->weapon && !od->reload)) {
-				for (i=0; i<od->numWeapons; i++) {
+				for (i = 0; i < od->numWeapons; i++) {
 					if (RS_IsResearched_ptr(csi.ods[od->weap_idx[i]].tech))
 						up_numresearchedlink++;
 				}
@@ -310,7 +309,7 @@ extern void CL_ItemDescription (int item)
 
 			/* Everything that follows depends only of the ammunition, so we change od to it */
 			od = &csi.ods[od->ammo_idx[up_researchedlink]];
-			for (i=0; i < od->numWeapons; i++) {
+			for (i = 0; i < od->numWeapons; i++) {
 				if (od->weap_idx[i] == item)
 					up_weapon_id = i;
 			}
@@ -340,7 +339,7 @@ extern void CL_ItemDescription (int item)
 			Q_strcat(itemText, va(_("Skill:\t%s\n"), CL_WeaponSkillToName(od->fd[up_weapon_id][up_firemode].weaponSkill)), sizeof(itemText));
 			Q_strcat(itemText, va(_("Damage:\t%i\n"),
 				(int) ((od->fd[up_weapon_id][up_firemode].damage[0] + od->fd[up_weapon_id][up_firemode].spldmg[0]) * od->fd[up_weapon_id][up_firemode].shots)),
-				  		sizeof(itemText));
+						sizeof(itemText));
 			Q_strcat(itemText, va(_("Time units:\t%i\n"), od->fd[up_weapon_id][up_firemode].time),  sizeof(itemText));
 			Q_strcat(itemText, va(_("Range:\t%g\n"), od->fd[up_weapon_id][up_firemode].range / UNIT_SIZE),  sizeof(itemText));
 			Q_strcat(itemText, va(_("Spreads:\t%g\n"),
@@ -404,9 +403,9 @@ static void UP_BuildingDescription (technology_t* t)
 	building_t* b = B_GetBuildingType(t->provides);
 
 	if (!b) {
-		Com_sprintf(upBuffer, MAX_UPTEXT, _("Error - could not find building") );
+		Com_sprintf(upBuffer, sizeof(upBuffer), _("Error - could not find building") );
 	} else {
-		Com_sprintf(upBuffer, MAX_UPTEXT, _("Depends:\t%s\n"), b->dependsBuilding >= 0 ? gd.buildingTypes[b->dependsBuilding].name : _("None") );
+		Com_sprintf(upBuffer, sizeof(upBuffer), _("Depends:\t%s\n"), b->dependsBuilding >= 0 ? gd.buildingTypes[b->dependsBuilding].name : _("None") );
 		Q_strcat(upBuffer, va(ngettext("Buildtime:\t%i day\n", "Buildtime:\t%i days\n", (int)b->buildTime), (int)b->buildTime ), sizeof(upBuffer));
 		Q_strcat(upBuffer, va(_("Fixcosts:\t%i c\n"), (int)b->fixCosts ), sizeof(upBuffer));
 		Q_strcat(upBuffer, va(_("Running costs:\t%i c\n"), (int)b->varCosts ), sizeof(upBuffer));
@@ -428,9 +427,9 @@ extern void UP_AircraftDescription (technology_t* t)
 	if (RS_IsResearched_ptr(t)) {
 		aircraft = AIR_GetAircraft(t->provides);
 		if (!aircraft) {
-			Com_sprintf(upBuffer, MAX_UPTEXT, _("Error - could not find aircraft") );
+			Com_sprintf(upBuffer, sizeof(upBuffer), _("Error - could not find aircraft") );
 		} else {
-			Com_sprintf(upBuffer, MAX_UPTEXT, _("Speed:\t%.0f\n"), aircraft->speed );
+			Com_sprintf(upBuffer, sizeof(upBuffer), _("Speed:\t%.0f\n"), aircraft->speed );
 			Q_strcat(upBuffer, va(_("Fuel:\t%i\n"), aircraft->fuelSize ), sizeof(upBuffer));
 			/* Maybe there are standard equipments given */
 			Q_strcat(upBuffer, va(_("Weapon:\t%s\n"), aircraft->weapon ? _(aircraft->weapon->name) : _("None") ), sizeof(upBuffer));
@@ -797,8 +796,8 @@ static void UP_Content_f (void)
 		/* .. and if so add them to the displaylist of chapters. */
 		if (researched_entries) {
 			upChapters_displaylist[numChapters_displaylist++] = &gd.upChapters[i];
-			Q_strcat(cp, gd.upChapters[i].name, MAX_UPTEXT);
-			Q_strcat(cp, "\n", MAX_UPTEXT);
+			Q_strcat(cp, gd.upChapters[i].name, sizeof(upText));
+			Q_strcat(cp, "\n", sizeof(upText));
 		}
 	}
 
