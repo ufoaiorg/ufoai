@@ -1238,20 +1238,20 @@ menu buy
 	string itemname
 	{
 		string	"*cvar mn_itemname"
-		pos		"793 205"
+		pos		"793 195"
 		align	uc
 	}
 
 	item itemmodel
 	{
 		string	"*cvar mn_item"
-		pos		"793 288"
+		pos		"793 278"
 		scale	"7 7 7"
 	}
 
 	text description
 	{
-		pos		"620 357"
+		pos		"620 347"
 		size	"336 155"
 		format	"20 0"
 		texh	"15 168"
