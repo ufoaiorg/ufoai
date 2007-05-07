@@ -293,8 +293,8 @@ static void HOS_Init_f (void)
 			/* Only show those employees, that are in the current base. */
 			if (!E_IsInBase(employee, baseCurrent))
 				continue;
-			/* Don't show soldiers which are going to or returning from a mission. */
-			/* @todo: implement me. */
+			if (CL_SoldierAwayFromBase(employee))
+				continue;
 			if (employee->chr.HP < employee->chr.maxHP) {
 				/* Print rank for soldiers or type for other personel. */
 				if (type == EMPL_SOLDIER)

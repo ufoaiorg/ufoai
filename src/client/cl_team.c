@@ -1109,15 +1109,12 @@ static void CL_MarkTeam_f (void)
  * @param[in] employee_idx The index of the soldier in the global list.
  * @param[in] aircraft_idx The global index of the aircraft. use -1 to check if the soldier is in _any_ aircraft.
  * @return qboolean qtrue if the soldier was found in the aircraft(s) else: qfalse.
- * @pre Needs baseCurrent set to the base the aircraft is located in.
  * @todo params should be employee_t* and aircraft_t*
  */
 extern qboolean CL_SoldierInAircraft (int employee_idx, int aircraft_idx)
 {
 	int i;
 	aircraft_t* aircraft;
-
-	assert(baseCurrent);
 
 	if (employee_idx < 0 || employee_idx > gd.numEmployees[EMPL_SOLDIER])
 		return qfalse;
@@ -1133,6 +1130,42 @@ extern qboolean CL_SoldierInAircraft (int employee_idx, int aircraft_idx)
 
 	aircraft = AIR_AircraftGetFromIdx(aircraft_idx);
 	return AIR_IsInAircraftTeam(aircraft, employee_idx);
+}
+
+/**
+ * @brief Tells you if a employee is away from his home base (gone in mission).
+ * @param[in] employee Pointer to the employee.
+ * @return qboolean qtrue if the employee is away in mission, qfalse if he is not or he is unhired.
+ */
+extern qboolean CL_SoldierAwayFromBase (employee_t *employee)
+{
+	int i;
+	aircraft_t* aircraft;
+	base_t *base;
+
+	assert(employee);
+
+	/* Check that employee is hired */
+	if (employee->baseIDHired < 0)
+		return qfalse;
+
+	/* for now only soldiers can be assigned to aircrafts */
+	/* @todo add pilots and UGVs */
+	if (employee->type != EMPL_SOLDIER)
+		return qfalse;
+
+	base = &gd.bases[employee->baseIDHired];
+	assert(base);
+
+	for (i = 0; i < base->numAircraftInBase; i++) {
+		aircraft = &base->aircraft[i];
+		assert(aircraft);
+
+		if (aircraft->status > AIR_HOME && AIR_IsInAircraftTeam(aircraft, employee->idx))
+			return qtrue;
+	}
+
+	return qfalse;
 }
 
 /**
