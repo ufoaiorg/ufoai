@@ -125,6 +125,8 @@ menu map
 		out	{ *bt_timestop texl "0 0" *bt_timestop texh "20 20" }
 		in	{ *bt_timestop texl "21 0" *bt_timestop texh "41 20" }
 		click	{ cmd "game_timestop;" }
+		whup	{ cmd "game_timefast;" }
+		whdown	{ cmd "game_timeslow;" }
 	}
 
 	pic bt_timeslow
@@ -137,6 +139,8 @@ menu map
 		out	{ *bt_timeslow texl "42 0" *bt_timeslow texh "52 20" }
 		in	{ *bt_timeslow texl "64 0" *bt_timeslow texh "74 20" }
 		click	{ cmd "game_timeslow;" }
+		whup	{ cmd "game_timefast;" }
+		whdown	{ cmd "game_timeslow;" }
 	}
 
 	pic bt_timefast
@@ -149,6 +153,8 @@ menu map
 		out	{ *bt_timefast texl "53 0" *bt_timefast texh "63 20" }
 		in	{ *bt_timefast texl "75 0" *bt_timefast texh "85 20" }
 		click	{ cmd "game_timefast;" }
+		whup	{ cmd "game_timefast;" }
+		whdown	{ cmd "game_timeslow;" }
 	}
 
 	string timelapse
