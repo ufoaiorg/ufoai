@@ -381,8 +381,9 @@ void PR_ProductionRun (void)
 			prod->timeLeft = t->produceTime;
 			prod->amount--;
 			/* now add it to equipment */
-			/* FIXME: overflow possible */
 			gd.bases[i].storage.num[prod->objID]++;
+			/* and update storage capacity.cur */
+			gd.bases[i].capacities[CAP_ITEMS].cur += od->size;
 
 			/* queue the next production */
 			if (prod->amount <= 0) {
