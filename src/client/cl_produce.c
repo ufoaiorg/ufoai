@@ -367,7 +367,7 @@ void PR_ProductionRun (void)
 			continue;
 
 		/* Not enough free space in base storage for this item. */
-		if (gd.bases[i].capacities[CAP_ITEMS].max - gd.bases[i].capacities[CAP_ITEMS].cur >= od->size)
+		if (gd.bases[i].capacities[CAP_ITEMS].max - gd.bases[i].capacities[CAP_ITEMS].cur < od->size)
 			continue;
 
 		t = (technology_t*)(od->tech);
