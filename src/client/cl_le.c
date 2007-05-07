@@ -541,7 +541,7 @@ void LE_AddProjectile (fireDef_t * fd, int flags, vec3_t muzzle, vec3_t impact, 
 		le->inuse = qfalse;
 		le->ptl->size[0] = dist;
 		VectorMA(muzzle, 0.5, delta, le->ptl->s);
-		if (flags & (SF_IMPACT | SF_BODY) || (fd->splrad && !fd-> bounce)) {
+		if (flags & (SF_IMPACT | SF_BODY) || (fd->splrad && !fd->bounce)) {
 			ptl = NULL;
 			if (flags & SF_BODY) {
 				if (fd->hitBodySound[0])

@@ -368,7 +368,7 @@ static void BS_BuyType_f (void)
 		Cvar_SetValue("mn_bfactor", baseCurrent->buyfactor);
 		Cvar_SetValue("mn_sfactor", baseCurrent->sellfactor);
 		/* Set up base capacities. */
-		Com_sprintf(tmpbuf, sizeof(tmpbuf), "%i/%i", baseCurrent->capacities[CAP_ITEMS].max, 
+		Com_sprintf(tmpbuf, sizeof(tmpbuf), "%i/%i", baseCurrent->capacities[CAP_ITEMS].max,
 		baseCurrent->capacities[CAP_ITEMS].cur);
 		Cvar_Set("mn_bs_storage", tmpbuf);
 	}

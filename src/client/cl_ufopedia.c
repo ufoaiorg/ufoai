@@ -225,7 +225,7 @@ extern void CL_ItemDescription (int item)
 	Cvar_Set("mn_item", od->id);
 	Cvar_Set("mn_displayfiremode", "0"); /* use strings here - no int */
 	Cvar_Set("mn_displayweapon", "0"); /* use strings here - no int */
-	Cvar_Set("mn_changefiremode", "0"); /* use strings here - no int */ 
+	Cvar_Set("mn_changefiremode", "0"); /* use strings here - no int */
 	Cvar_Set("mn_changeweapon", "0"); /* use strings here - no int */
 	Cvar_Set("mn_researchedlinkname", "");
 	Cvar_Set("mn_upresearchedlinknametooltip", "");
@@ -239,7 +239,7 @@ extern void CL_ItemDescription (int item)
 	/* set description text */
 	if (RS_IsResearched_ptr(od->tech)) {
 		*itemText = '\0';
-		if (!Q_strncmp(od->type, "armor", 5)) {	
+		if (!Q_strncmp(od->type, "armor", 5)) {
 			Q_strcat(itemText, va(_("Type:\tProtection / Hardness:\n")), sizeof(itemText));
 			for (i = 0; i < csi.numDTs; i++)
 				Q_strcat(itemText, va(_("%s\t%i / %i\n"), _(csi.dts[i]), od->protection[i], od->hardness[i]), sizeof(itemText));
@@ -268,22 +268,22 @@ extern void CL_ItemDescription (int item)
 			upCurrent = od->tech;
 
 			/* We display the pre/next buttons for changing weapon only if there are at least 2 researched weapons */
-			/* up_numresearchedlink contains the number of researched weapons useable with this ammo */ 
+			/* up_numresearchedlink contains the number of researched weapons useable with this ammo */
 			if (!(od->weapon && !od->reload)) {
 				for (i=0; i<od->numWeapons; i++) {
-					if (RS_IsResearched_ptr(csi.ods[od->weap_idx[i]].tech)) 
+					if (RS_IsResearched_ptr(csi.ods[od->weap_idx[i]].tech))
 						up_numresearchedlink++;
 				}
 			}
 			if (up_numresearchedlink > 1)
-				Cvar_Set("mn_changeweapon", "1"); /* use strings here - no int */ 
+				Cvar_Set("mn_changeweapon", "1"); /* use strings here - no int */
 
 			/* We check that up_researchedlink exists for this ammo (in case we switched from an ammo or a weapon with higher value)*/
 			if (up_researchedlink > od->numWeapons - 1)
 				up_researchedlink = 0;
 
 			up_weapon_id = up_researchedlink;
-			
+
 			/* We only display the name of the associated weapon for an ammo (and not for thrown weapons) */
 			if (!(od->weapon && !od->reload)) {
 				Cvar_Set("mn_displayweapon", "1"); /* use strings here - no int */
@@ -296,13 +296,13 @@ extern void CL_ItemDescription (int item)
 			upCurrent = od->tech;
 
 			/* We display the pre/next buttons for changing ammo only if there are at least 2 researched ammo */
-			/* up_numresearchedlink contains the number of researched ammos useable with this weapon */ 
+			/* up_numresearchedlink contains the number of researched ammos useable with this weapon */
 			for (i = 0; i < od->numAmmos; i++) {
-				if (RS_IsResearched_ptr(csi.ods[od->ammo_idx[i]].tech)) 
+				if (RS_IsResearched_ptr(csi.ods[od->ammo_idx[i]].tech))
 					up_numresearchedlink++;
 			}
 			if (up_numresearchedlink > 1)
-				Cvar_Set("mn_changeweapon", "2"); /* use strings here - no int */ 
+				Cvar_Set("mn_changeweapon", "2"); /* use strings here - no int */
 
 			/* We check that up_researchedlink exists for this weapon (in case we switched from an ammo or a weapon with higher value)*/
 			if (up_researchedlink > od->numAmmos - 1)
@@ -331,7 +331,7 @@ extern void CL_ItemDescription (int item)
 
 			/* We always display the name of the firemode for an ammo */
 			Cvar_Set("mn_displayfiremode", "1"); /* use strings here - no int */
-			Cvar_Set("mn_firemodename", od->fd[up_weapon_id][up_firemode].name); 
+			Cvar_Set("mn_firemodename", od->fd[up_weapon_id][up_firemode].name);
 			/* We display the pre/next buttons for changing firemode only if there are more than one */
 			if (od->numFiredefs[up_weapon_id] > 1)
 				Cvar_Set("mn_changefiremode", "1"); /* use strings here - no int */
@@ -638,7 +638,7 @@ extern void UP_Article (technology_t* tech)
 
 /**
  * @brief Set the ammo model to display to selected ammo (only for a reloadable weapon)
- * @param tech technology_t pointer for the weapon's tech 
+ * @param tech technology_t pointer for the weapon's tech
  * @sa UP_DrawEntry
  * @sa UP_DecreaseWeapon_f
  * @sa UP_IncreaseWeapon_f
@@ -685,7 +685,7 @@ static void UP_DrawEntry (technology_t* tech)
 	Cvar_Set("mn_upimage_top", "base/empty");
 	if (*tech->mdl_top)
 		Cvar_Set("mn_upmodel_top", tech->mdl_top);
-	if (tech->type == RS_WEAPON) 
+	if (tech->type == RS_WEAPON)
 		UP_DrawAssociatedAmmo(tech);
 	if (!*tech->mdl_top && *tech->image_top)
 		Cvar_Set("mn_upimage_top", tech->image_top);
@@ -1152,7 +1152,7 @@ static void UP_ResearchedLinkClick_f (void)
 		t = csi.ods[csi.ods[i].ammo_idx[up_researchedlink]].tech;
 		if (UP_TechGetsDisplayed (t))
 			UP_OpenWith (t->id);
-	} 
+	}
 }
 
 
@@ -1226,7 +1226,7 @@ static void UP_OpenMail_f (void)
 
 /**
  * @brief Increases the number of the weapon to display (for ammo) or the ammo to display (for weapon)
- * @sa CL_ItemDescription 
+ * @sa CL_ItemDescription
  */
 static void UP_IncreaseWeapon_f (void)
 {
@@ -1246,7 +1246,7 @@ static void UP_IncreaseWeapon_f (void)
 	up_researchedlink_temp++;
 	/* We only try to change the value of up_researchedlink if this is possible */
 	if (up_researchedlink < csi.ods[i].numWeapons-1) {
-		/* this is an ammo */			
+		/* this is an ammo */
 		while (!RS_IsResearched_ptr(csi.ods[csi.ods[i].weap_idx[up_researchedlink_temp]].tech)) {
 			up_researchedlink_temp++;
 			if (up_researchedlink_temp > csi.ods[i].numWeapons)
@@ -1258,7 +1258,7 @@ static void UP_IncreaseWeapon_f (void)
 			CL_ItemDescription(i);
 		}
 	} else if (up_researchedlink < csi.ods[i].numAmmos-1) {
-		/* this is a weapon */			
+		/* this is a weapon */
 		while (!RS_IsResearched_ptr(csi.ods[csi.ods[i].ammo_idx[up_researchedlink_temp]].tech)) {
 			up_researchedlink_temp++;
 			if (up_researchedlink_temp > csi.ods[i].numAmmos)
@@ -1275,7 +1275,7 @@ static void UP_IncreaseWeapon_f (void)
 
 /**
  * @brief Decreases the number of the firemode to display (for ammo) or the ammo to display (for weapon)
- * @sa CL_ItemDescription 
+ * @sa CL_ItemDescription
  */
 static void UP_DecreaseWeapon_f (void)
 {
@@ -1295,7 +1295,7 @@ static void UP_DecreaseWeapon_f (void)
 	up_researchedlink_temp--;
 	/* We only try to change the value of up_researchedlink if this is possible */
 	if (up_researchedlink > 0 && csi.ods[i].numWeapons > 0) {
-		/* this is an ammo */			
+		/* this is an ammo */
 		while (!RS_IsResearched_ptr(csi.ods[csi.ods[i].weap_idx[up_researchedlink_temp]].tech)) {
 			up_researchedlink_temp--;
 			if (up_researchedlink_temp < 0)
@@ -1307,7 +1307,7 @@ static void UP_DecreaseWeapon_f (void)
 			CL_ItemDescription(i);
 		}
 	} else if (up_researchedlink > 0 && csi.ods[i].numAmmos > 0) {
-		/* this is a weapon */			
+		/* this is a weapon */
 		while (!RS_IsResearched_ptr(csi.ods[csi.ods[i].ammo_idx[up_researchedlink_temp]].tech)) {
 			up_researchedlink_temp--;
 			if (up_researchedlink_temp < 0)
@@ -1324,7 +1324,7 @@ static void UP_DecreaseWeapon_f (void)
 
 /**
  * @brief Increases the number of the firemode to display
- * @sa CL_ItemDescription 
+ * @sa CL_ItemDescription
  */
 static void UP_IncreaseFiremode_f (void)
 {
@@ -1345,7 +1345,7 @@ static void UP_IncreaseFiremode_f (void)
 
 /**
  * @brief Decreases the number of the firemode to display
- * @sa CL_ItemDescription 
+ * @sa CL_ItemDescription
  */
 static void UP_DecreaseFiremode_f (void)
 {

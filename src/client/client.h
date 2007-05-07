@@ -754,7 +754,7 @@ void CDAudio_RandomPlay(void);
 
 /* cl_team.c: CL_UpdateHireVar(), CL_ReloadAndRemoveCarried() */
 /* cl_team.c should have own header file afterall 24042007 Zenerka */
-qboolean CL_SoldierAwayFromBase (employee_t *soldier);
+qboolean CL_SoldierAwayFromBase(employee_t *soldier);
 void CL_UpdateHireVar(aircraft_t *aircraft);
 void CL_ReloadAndRemoveCarried(aircraft_t *aircraft, equipDef_t * equip);
 void CL_CleanTempInventory(base_t* base);
