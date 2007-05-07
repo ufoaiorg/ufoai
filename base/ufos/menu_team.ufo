@@ -1549,8 +1549,6 @@ menu equipment
 	{
 		*itemname invis false
 		*itemmodel invis false
-		*weaponmodel invis false
-		*ammomodel invis false
 		*description invis false
 		*weapon_dec invis false
 		*ammo_dec invis false
@@ -1582,8 +1580,6 @@ menu equipment
 	{
 		*itemname invis true
 		*itemmodel invis true
-		*weaponmodel invis true
-		*ammomodel invis true
 		*description invis true
 		*weapon_dec invis true
 		*ammo_dec invis true
