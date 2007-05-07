@@ -3163,10 +3163,23 @@ tech rs_alien_materials
 		tech rs_craft_ufo_scout
 	}
 
-//	provides	alien_materials
 	time		6000
-//	producetime	50
 //	image_top	"techs/alien_materials"
+}
+
+tech rs_item_alienmaterials
+{
+        type            weapon
+        name            "_Alien Materials"
+        description     "_alien_materials_txt"
+
+        require_AND
+        {
+                tech rs_alien_materials
+        }
+        provides        alienmaterials
+        time            0
+        producetime     80
 }
 
 //========================

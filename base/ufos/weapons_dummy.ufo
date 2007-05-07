@@ -6,7 +6,6 @@ item antimatter
 	name		"_Antimatter"
 	type		dummy
 	buytype		dummy
-	size		4
 
 //	model		xxx/yyy
 //	center		"1 0 2"
@@ -18,5 +17,14 @@ item brapparatus
 	name		"_Alien Breathing Apparatus"
 	type		dummy
 	buytype		dummy
+	size		4
+}
+
+item alienmaterials
+{
+	name		"_Alien Materials"
+	type		dummy
+	buytype		dummy
+	size		10
 }
 
