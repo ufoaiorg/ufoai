@@ -68,6 +68,29 @@ qboolean HOS_RemoveFromList (employee_t *employee, base_t *base)
 }
 
 /**
+ * @brief Remove an employee from a hospitalMissionList.
+ * @param[in] *employee Pointer to the employee to remove.
+ * @param[in] *base Pointer to the base where the employee is hired.
+ */
+void HOS_RemoveFromMissionList (employee_t *employee, base_t *base)
+{
+	int i = 0, j = 0;
+
+	assert (base);
+
+	for (; j < base->hospitalMissionListCount; i++, j++) {
+		if (base->hospitalMissionList[i] == employee->idx) {
+			j++;
+		}
+		base->hospitalMissionList[i] = base->hospitalMissionList[j];
+	}
+	for (; i < base->hospitalMissionListCount; i++)
+		base->hospitalMissionList[i] = -1;
+	
+	base->hospitalMissionListCount--;
+}
+
+/**
  * @brief Checks whether an employee should be removed from Hospital healing list.
  * @param[in] *employee Pointer to the employee to check.
  */
@@ -477,7 +500,6 @@ static void HOS_StartHealing_f (void)
  * @sa AIM_AircraftStart_f
  * @sa AIR_SendAircraftToMission
  * @todo Soldiers should also be removed from base->hospitalList during transfers
- * @todo All employees of a base should also be moved from base->hospitalList to base->hospitalMissionList during base attack.
  */
 extern void HOS_RemoveEmployeesInHospital (aircraft_t *aircraft)
 {
@@ -519,7 +541,6 @@ extern void HOS_RemoveEmployeesInHospital (aircraft_t *aircraft)
 /**
  * @brief Moves soldiers returning from a mission between hospital arrays in base_t.
  * @sa CL_DropshipReturned
- * @todo All alive employees of a base should be moved from base->hospitalMissionList to base->hospitalList after base attack.
  */
 extern void HOS_ReaddEmployeesInHospital (aircraft_t *aircraft)
 {
@@ -552,6 +573,48 @@ extern void HOS_ReaddEmployeesInHospital (aircraft_t *aircraft)
 	/* Now we can erase the base->hospitalMissionList array - all soldiers has been added to hospital. */
 	memset(base->hospitalMissionList, -1, sizeof(base->hospitalMissionList));
 	base->hospitalMissionListCount = 0;
+}
+
+/**
+ * @brief Update hospital lists when an employee dies.
+ * @param[in] *employee Pointer to the employee who died
+ * @sa E_DeleteEmployee
+ */
+void HOS_RemoveDeadEmployeeFromLists (employee_t *employee)
+{
+	int i;
+	base_t *base;
+
+	assert (employee);
+
+	base = &gd.bases[employee->baseIDHired];
+	assert (base);
+
+	/* Do nothing if the base does not have hospital. */
+	if (!base->hasHospital)
+		return;
+
+	/* update hospitalList. */
+	for (i = 0; i < base->hospitalListCount; i++) {
+		/* remove dead employee from hospitalList. */
+		if (base->hospitalList[employee->type][i] == employee->idx)
+			HOS_RemoveFromList(employee, base);
+		/* decrease idx of all employees who have a higher idx than the dead one (see E_DeleteEmployee). */
+		if (base->hospitalList[employee->type][i] > employee->idx)
+			base->hospitalList[employee->type][i] -= 1;
+	}
+
+	/* because the idx of soldiers changes when one dies, we must also update hospitalMissionList */
+	if (employee->type == EMPL_SOLDIER) {
+		for (i = 0; i < base->hospitalMissionListCount; i++) {
+			/* remove dead employee from hospitalMissionList. */
+			if (base->hospitalMissionList[i] == employee->idx)
+				HOS_RemoveFromMissionList(employee, base);
+			/* decrease idx of all employees who have a higher idx than the dead one (see E_DeleteEmployee). */
+			if (base->hospitalMissionList[i] > employee->idx)
+				base->hospitalMissionList[i] -= 1;
+		}
+	}
 }
 
 /**

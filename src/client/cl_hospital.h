@@ -30,5 +30,6 @@ extern void HOS_HealAll(const base_t* const base);
 extern void HOS_HospitalRun(void);
 extern void HOS_RemoveEmployeesInHospital(aircraft_t *aircraft);
 extern void HOS_ReaddEmployeesInHospital(aircraft_t *aircraft);
+void HOS_RemoveDeadEmployeeFromLists (employee_t *employee);
 extern qboolean HOS_Save(sizebuf_t *sb, void* data);
 extern qboolean HOS_Load(sizebuf_t *sb, void* data);

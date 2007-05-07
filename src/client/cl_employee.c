@@ -661,8 +661,10 @@ extern qboolean E_DeleteEmployee (employee_t *employee, employeeType_t type)
 		2) remove his inventory
 	*/
 
-	if (employee->baseIDHired >= 0)
+	if (employee->baseIDHired >= 0) {
+		HOS_RemoveDeadEmployeeFromLists (employee);
 		E_UnhireEmployee(&gd.bases[employee->baseIDHired], type, employee->idx);
+	}
 
 	/* Remove the employee from the global list. */
 	for (i = 0; i < gd.numEmployees[type]; i++) {
