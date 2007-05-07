@@ -168,7 +168,7 @@ void InitGame (void)
 	sv_ai = gi.cvar("sv_ai", "1", 0, NULL);
 	sv_teamplay = gi.cvar("sv_teamplay", "0", CVAR_ARCHIVE | CVAR_LATCH | CVAR_SERVERINFO, "Is teamplay activated? see maxclients, maxplayers, maxsoldiers and maxsoldiersperplayer");
 	/* how many connected clients */
-	sv_maxclients = gi.cvar("maxclients", "1", CVAR_SERVERINFO | CVAR_LATCH, "If maxclients is 1 we are in singleplayer - otherwise we are mutliplayer mode (see sv_teamplay)");
+	sv_maxclients = gi.cvar("maxclients", "1", CVAR_SERVERINFO, "If maxclients is 1 we are in singleplayer - otherwise we are mutliplayer mode (see sv_teamplay)");
 	/* reaction leftover is 0 for acceptance testing; should default to 13 */
 	sv_reaction_leftover = gi.cvar("sv_reaction_leftover", "0", CVAR_LATCH, "Minimum TU left over by reaction fire");
 	sv_shot_origin = gi.cvar("sv_shot_origin", "8", 0, "Assumed distance of muzzle from model");
