@@ -601,7 +601,7 @@ void HOS_RemoveDeadEmployeeFromLists (employee_t *employee)
 			HOS_RemoveFromList(employee, base);
 		/* decrease idx of all employees who have a higher idx than the dead one (see E_DeleteEmployee). */
 		if (base->hospitalList[employee->type][i] > employee->idx)
-			base->hospitalList[employee->type][i] -= 1;
+			base->hospitalList[employee->type][i]--;
 	}
 
 	/* because the idx of soldiers changes when one dies, we must also update hospitalMissionList */
@@ -612,7 +612,7 @@ void HOS_RemoveDeadEmployeeFromLists (employee_t *employee)
 				HOS_RemoveFromMissionList(employee, base);
 			/* decrease idx of all employees who have a higher idx than the dead one (see E_DeleteEmployee). */
 			if (base->hospitalMissionList[i] > employee->idx)
-				base->hospitalMissionList[i] -= 1;
+				base->hospitalMissionList[i]--;
 		}
 	}
 }
