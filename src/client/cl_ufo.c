@@ -208,6 +208,23 @@ extern void UFO_CampaignCheckEvents (void)
 }
 
 /**
+ * @brief Function to process active recoveries.
+ */
+extern void UFO_Recovery (void)
+{
+	int i;
+	ufoRecoveries_t *recovery;
+
+	for (i = 0; i < MAX_RECOVERIES; i++) {
+		recovery = &gd.recoveries[i];
+		if (recovery->event.day == ccs.date.day) {
+			/* Process UFO recovery. */
+			/* @todo implement me */
+		}
+	}
+}
+
+/**
   * @brief
   */
 extern void UFO_Reset (void)

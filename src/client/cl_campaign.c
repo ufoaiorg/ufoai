@@ -1355,6 +1355,7 @@ extern void CL_CampaignRun (void)
 			CL_CheckResearchStatus();
 			PR_ProductionRun();
 			CL_CampaignRunMarket();
+			UFO_Recovery();
 		}
 
 		while (ccs.date.sec > 3600 * 24) {
@@ -2090,6 +2091,9 @@ static void CL_GameGo (void)
 	}
 
 	CL_SetMissionCvars(mis);
+	/* Set the states of mission Cvars to proper values. */
+	Cvar_SetValue("mission_homebase", baseCurrent->idx);
+	Cvar_SetValue("mission_uforecovered", 0);
 
 	/* @todo: Map assembling to get the current used dropship in the map is not fully implemented */
 	/* but can be done via the map assembling part of the random map assembly */
@@ -3805,6 +3809,101 @@ static void CP_CampaignStats_f (void)
 	Com_Printf("...debt_interest: %.5f\n", SALARY_DEBT_INTEREST);
 }
 
+/* ======================== */
+/* Onwin mission functions. */
+/* ======================== */
+
+/**
+ * @brief Function to trigger UFO Recovered event.
+ * @note This function prepares related cvars for won menu.
+ * @note Command to call this: cp_uforecovery.
+ */
+static void CP_UFORecovered_f (void)
+{
+	ufoType_t UFOtype;
+	base_t *base;
+
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <UFOType>\n", Cmd_Argv(0));
+		return;
+	}
+
+	if ((atoi(Cmd_Argv(2)) >= 0) && (atoi(Cmd_Argv(2)) < UFO_MAX)) {
+		UFOtype = atoi(Cmd_Argv(1));
+	} else {
+		Com_Printf("CP_UFORecovered()... UFOType: %i does not exist!\n", atoi(Cmd_Argv(1)));
+		return;
+	}
+	
+	base = &gd.bases[Cvar_VariableInteger("mission_homebase")];
+	Cvar_SetValue("mission_uforecovered", 1);
+	Cvar_SetValue("mission_ufotype", UFOtype);
+
+	Com_Printf("CP_UFORecovered_f(): base: %s, UFO: %i\n", base->name, UFOtype);
+}
+
+/**
+ * @brief Function to store recovered UFO in desired base.
+ * @note Command to call this: cp_uforecoverystore.
+ */
+static void CP_UFORecoveredStore_f (void)
+{
+	int i;
+	base_t *base;
+	ufoRecoveries_t *recovery;
+	date_t event;
+	
+	/* Make sure destinationbase exist. */
+	base = &gd.bases[Cvar_VariableInteger("mission_homebase")];
+	assert (base);
+	
+	/* Check whether it has UFO hangar. */
+	if ((!base->hasUFOHangar) || (!base->hasUFOHangarSmall)) {
+		Cbuf_AddText("cp_uforecovery_tobase\n");
+		return;
+	}
+	
+	/* Find free uforecovery slot. */
+	for (i = 0; i < MAX_RECOVERIES; i++) {
+		if (gd.recoveries[i].active) {
+			recovery = &gd.recoveries[i];
+			break;
+		}
+	}
+	
+	if (!recovery) {
+		Com_Printf("CP_UFORecoveredStore_f()... free recovery slot not found.\n");
+		return;
+	}
+	assert (recovery);
+	
+	/* Prepare date of the recovery event - always two days after mission. */
+	event = ccs.date;
+	event.day += 2;
+	/* Prepare recovery. */
+	recovery->active = qtrue;
+	recovery->baseID = Cvar_VariableInteger("mission_homebase");
+	recovery->ufotype = Cvar_VariableInteger("mission_ufotype");
+	recovery->event = event;
+
+}
+
+/**
+ * @brief Function to sell recovered UFO to desired nation.
+ * @note Command to call this: cp_uforecoverysell.
+ */
+static void CP_UFORecoveredSell_f (void)
+{
+}
+
+/**
+ * @brief Function to destroy recovered UFO.
+ * @note Command to call this: cp_uforecoverydestroy.
+ */
+static void CP_UFORecoveredDestroy_f (void)
+{
+}
+
 /**
  * @brief
  */
@@ -3821,6 +3920,10 @@ extern void CL_ResetCampaign (void)
 	Cmd_AddCommand("getcampaigns", CP_GetCampaigns_f, NULL);
 	Cmd_AddCommand("missionlist", CP_MissionList_f, "Shows all missions from the script files");
 	Cmd_AddCommand("game_new", CL_GameNew, NULL);	Cmd_AddCommand("game_exit", CL_GameExit, NULL);
+	Cmd_AddCommand("cp_uforecovery", CP_UFORecovered_f, "Function to trigger UFO Recovered event");
+	Cmd_AddCommand("cp_uforecoverystore", CP_UFORecoveredStore_f, "Function to store recovered UFO in desired base.");
+	Cmd_AddCommand("cp_uforecoverysell", CP_UFORecoveredSell_f, "Function to sell recovered UFO to desired nation.");
+	Cmd_AddCommand("cp_uforecoverydestroy", CP_UFORecoveredDestroy_f, "Function to destroy recovered UFO.");
 #ifdef DEBUG
 	Cmd_AddCommand("debug_statsupdate", CL_DebugChangeCharacterStats_f, NULL);
 #endif

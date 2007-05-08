@@ -164,6 +164,15 @@ typedef struct aircraft_s {
 	qboolean visible;		/**< The ufo is visible ? */
 } aircraft_t;
 
+/** @brief All different types of UFOs. */
+typedef enum {
+	UFO_SCOUT,
+	UFO_FIGHTER,
+	UFO_HARVESTER,
+	
+	UFO_MAX
+} ufoType_t;
+
 /*
 @todo: for later, this is used quite a lot in the code.
 #define AIRCRAFTCURRENT_IS_SANE(base) (((base)->aircraftCurrent >= 0) && ((base)->aircraftCurrent < (base)->numAircraftInBase))

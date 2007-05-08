@@ -128,6 +128,9 @@ typedef struct globalData_s
 
 	/* All transfers. */
 	transferlist_t alltransfers[MAX_AIRCRAFT];
+
+	/* UFO recoveries. */
+	ufoRecoveries_t recoveries[MAX_RECOVERIES];
 } globalData_t;
 
 

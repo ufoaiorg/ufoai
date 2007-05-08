@@ -925,6 +925,7 @@ extern void UFO_CampaignRunUfos(int dt);
 extern void UFO_CampaignCheckEvents(void);
 extern void UFO_Reset(void);
 extern void UFO_RemoveUfoFromGeoscape(aircraft_t* ufo);
+extern void UFO_Recovery(void);
 
 /* cl_popup.c */
 extern void CL_PopupInit(void);
