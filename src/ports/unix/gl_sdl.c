@@ -545,10 +545,12 @@ static qboolean GLimp_InitGraphics (qboolean fullscreen)
 	int height = 0;
 #endif
 
+#ifndef __APPLE__
 	SDL_SysWMinfo info;
 	SDL_VERSION(&info.version);
 	Com_Printf("SDL version: %i.%i.%i\n", info.version.major, info.version.minor, info.version.patch);
 	have_stencil = qfalse;
+#endif
 
 #ifndef __APPLE__
 	/* turn off DGA mouse support: leaving it makes cursor _slow_ in fullscreen under X11 at least */
