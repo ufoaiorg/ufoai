@@ -375,7 +375,7 @@ char *Sys_GetClipboardData (void)
 static void InitCocoa (void)
 {
 	void* cocoa_lib;
-	/* TODO: Don't hardcode the path - let configure decide */
+	/* @todo: Don't hardcode the path - let configure decide */
 	cocoa_lib = dlopen("/System/Library/Frameworks/Cocoa.framework/Cocoa", RTLD_LAZY);
 	void (*nsappload)(void);
 	if (!cocoa_lib)
@@ -384,13 +384,78 @@ static void InitCocoa (void)
 	nsappload();
 }
 
+int lenstr(const char *text)
+{
+	int  count=-1;				/* Character counter	*/
+	
+	while(text[++count] != '\0') ;		/* Search for a null	*/
+		  
+		  return(count);				/* Return the position 
+		  * of the NULL-1	*/
+}
+
+
+unsigned char CheckForFinderCall(char **argv, int argc)
+{
+	unsigned char change = 0;
+	
+	
+	if(argc < 2)
+	{
+		/* No change needed, finder would set argc to 2 */
+		change = 0;
+	}
+	else
+	{
+		/* now check if first param is a cvar or a finder path */
+		if (argv[0][0] == '+') 
+		{
+			/* parameter is a cvar, don't change directory */
+			change = 0;
+		}
+		else 
+		{
+			/*change directory is needed */
+			/* finder gives as second argument -psxxxx process ID */
+			if(argv[1][0] == '-')
+			{
+				change = 1;
+			}
+		}
+
+	}	
+	return change;
+}
+
+void FixWorkingDirectory (char **argv)
+{
+	char newPath[255];
+		
+	printf("Path Length : %d \n",lenstr(*argv));
+	if(lenstr(*argv) > 255)
+	{
+		printf("Path is too long. Please copy Bundle to a shorter path location \n");
+		
+	}
+	else
+	{
+		/* unfortunately the finder gives the path inclusive the executeable */
+		/* so we only go to length - 3, to remove "ufo" from the path */
+		printf("Changing wd to path %s \n",argv[0]);
+		strncpy(newPath,argv[0],(strlen(argv[0])-3));
+		printf("%s = neuer Pfad \n",newPath);
+		chdir(newPath);
+	}
+}
+
 /**
- * @brief The entry point for linux server and client.
+* @brief The entry point for OSX server and client.
  *
  * Inits the the program and calls Qcommon in an infinite loop.
  * FIXME: While this works, infinite loops are bad; one should not rely on exit() call; the program should be designed to fall through the bottom.
  * FIXME: Why is there a sleep statement?
  */
+
 int main (int argc, char **argv)
 {
 	/* create Autorelease Pool, to avoid Error Messages under MacOSX */
@@ -399,12 +464,13 @@ int main (int argc, char **argv)
 	float timescale = 1.0;
 
 	InitCocoa();
-	/* go back to real user for config loads */
-	//saved_euid = geteuid();
-	//seteuid(getuid());
-
+		
+	if(CheckForFinderCall(argv,argc))
+	{   
+		printf("---> Fixing Working Directory, depending on Finder Call ! \n");
+		FixWorkingDirectory(argv);
+	}
 	Qcommon_Init(argc, argv);
-
 	fcntl(0, F_SETFL, fcntl (0, F_GETFL, 0) | FNDELAY);
 
 	nostdout = Cvar_Get("nostdout", "0", 0, NULL);
