@@ -500,52 +500,24 @@
 // entity 12
 {
 "classname" "misc_particle"
-"origin" "1104 40 48"
-"spawnflags" "255"
-"particle" "tachyonExplosion_1"
-}
-// entity 13
-{
-"classname" "misc_particle"
 "origin" "832 -176 48"
 "particle" "green_smoke"
 }
-// entity 14
-{
-"classname" "misc_particle"
-"origin" "848 -304 48"
-"spawnflags" "255"
-"particle" "tachyonExplosion_1"
-}
-// entity 15
-{
-"classname" "misc_particle"
-"origin" "1072 -240 48"
-"spawnflags" "255"
-"particle" "tachyonExplosion_1"
-}
-// entity 16
+// entity 13
 {
 "classname" "misc_particle"
 "origin" "1120 -144 48"
 "spawnflags" "255"
 "particle" "green_smoke"
 }
-// entity 17
-{
-"classname" "misc_particle"
-"origin" "1128 -16 48"
-"spawnflags" "255"
-"particle" "tachyonExplosion_1"
-}
-// entity 18
+// entity 14
 {
 "classname" "misc_particle"
 "origin" "1008 40 48"
 "spawnflags" "255"
-"particle" "tachyonExplosion_1"
+"particle" "pbeamBeam"
 }
-// entity 19
+// entity 15
 {
 "classname" "misc_particle"
 "origin" "848 -16 48"
