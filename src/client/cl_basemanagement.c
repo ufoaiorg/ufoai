@@ -313,6 +313,9 @@ static void B_BuildingDestroy_f (void)
 		if (!B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, b1->buildingType))
 			baseCurrent->hasHangarSmall = qfalse;
 		break;
+	case B_UFO_HANGAR:
+	case B_UFO_SMALL_HANGAR:
+		break;
 	case B_MISC:
 		break;
 	default:
@@ -513,6 +516,14 @@ static void B_UpdateBaseBuildingStatus (building_t* building, base_t* base, buil
 		if (building->buildingStatus == B_STATUS_WORKING)
 			base->hasHangarSmall = qtrue;
 		B_UpdateBaseCapacities(CAP_AIRCRAFTS_SMALL, base);
+		break;
+	case B_UFO_HANGAR:
+		if (building->buildingStatus == B_STATUS_WORKING)
+			base->hasUFOHangar = qtrue;
+		break;
+	case B_UFO_SMALL_HANGAR:
+		if (building->buildingStatus == B_STATUS_WORKING)
+			base->hasUFOHangarSmall = qtrue;
 		break;
 	default:
 		break;
@@ -1190,6 +1201,10 @@ extern void B_ParseBuildings (const char *name, char **text, qboolean link)
 					building->buildingType = B_HANGAR;
 				} else if (!Q_strncmp(token, "smallhangar", MAX_VAR)) {
 					building->buildingType = B_SMALL_HANGAR;
+				} else if (!Q_strncmp(token, "ufohangar", MAX_VAR)) {
+					building->buildingType = B_UFO_HANGAR;
+				} else if (!Q_strncmp(token, "smallufohangar", MAX_VAR)) {
+					building->buildingType = B_UFO_SMALL_HANGAR;
 				} else if (!Q_strncmp(token, "quarters", MAX_VAR)) {
 					building->buildingType = B_QUARTERS;
 				} else if (!Q_strncmp(token, "workshop", MAX_VAR)) {

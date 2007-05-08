@@ -217,7 +217,7 @@ building building_small_ufo_hangar
 	pedia		rs_building_small_ufo_hangar
 	more_than_one	true
 	capacity	1
-	type		hangar
+	type		smallufohangar
 	onclick		"building_open"
 }
 
@@ -234,7 +234,7 @@ building building_large_ufo_hangar
 	pedia		rs_building_large_ufo_hangar
 	needs		building_large_ufo_hangar2
 	more_than_one	true
-	type		hangar
+	type		ufohangar
 	onclick		"building_open"
 }
 

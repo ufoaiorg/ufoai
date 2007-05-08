@@ -71,7 +71,9 @@ typedef enum {
 	B_HOSPITAL,		/**< this building is a hospital */
 	B_HANGAR,		/**< this building is a hangar */
 	B_ALIEN_CONTAINMENT,	/**< this building is an alien containment */
-	B_SMALL_HANGAR		/**< this building is a small hangar */
+	B_SMALL_HANGAR,		/**< this building is a small hangar */
+	B_UFO_HANGAR,		/**< this building is an UFO hangar */
+	B_UFO_SMALL_HANGAR	/**< this building is a small UFO hangar */
 } buildingType_t;
 
 /** @brief All possible capacities in base. */
@@ -172,6 +174,8 @@ typedef struct base_s {
 	qboolean hasQuarters;		/**< does this base has quarters */
 	qboolean hasWorkshop;		/**< does this base has a workshop */
 	qboolean hasHangarSmall;	/**< does this base has a small hangar */
+	qboolean hasUFOHangar;		/**< does this base has an UFO hangar */
+	qboolean hasUFOHangarSmall;	/**< does this base has a small UFO hangar */
 
 	/** this is here to allocate the needed memory for the buildinglist */
 	char allBuildingsList[MAX_LIST_CHAR];
