@@ -3893,8 +3893,6 @@ static void CP_UFORecoveredStore_f (void)
 {
 	int i, hasufohangar = 0;
 	base_t *base;
-	ufoRecoveries_t *recovery;
-	date_t event;
 	static char recoveryBaseSelectPopup[512];
 
 	recoveryBaseSelectPopup[0] = '\0';
@@ -3920,33 +3918,8 @@ static void CP_UFORecoveredStore_f (void)
 	}
 	assert (base);
 
-	/* Find free uforecovery slot. */
-	for (i = 0; i < MAX_RECOVERIES; i++) {
-		if (!gd.recoveries[i].active) {
-			/* Make sure it is empty hiere. */
-			memset(&gd.recoveries[i], 0, sizeof(gd.recoveries[i]));
-			recovery = &gd.recoveries[i];
-			break;
-		}
-	}
-
-	if (!recovery) {
-		Com_Printf("CP_UFORecoveredStore_f()... free recovery slot not found.\n");
-		return;
-	}
-	assert (recovery);
-
-	/* Prepare date of the recovery event - always two days after mission. */
-	event = ccs.date;
-	event.day += 2;
-	/* Prepare recovery. */
-	recovery->active = qtrue;
-	recovery->baseID = base->idx;
-	recovery->ufotype = Cvar_VariableInteger("mission_ufotype");
-	recovery->event = event;
-
-	Com_Printf("CP_UFORecoveredStore_f()... the recovery entry in global array is done; base: %s, ufotype: %i, date: %i\n",
-	gd.bases[recovery->baseID].name, recovery->ufotype, recovery->event.day);
+	/* Everything is OK. Insert UFO recovery into global array. */
+	UFO_PrepareRecovery(base);	
 }
 
 /**

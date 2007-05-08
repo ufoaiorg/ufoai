@@ -208,6 +208,45 @@ extern void UFO_CampaignCheckEvents (void)
 }
 
 /**
+ * @brief Prepares UFO recovery in global recoveries array.
+ * @param[in] *base Pointer to the base, where the UFO recovery will be made.
+ */
+extern void UFO_PrepareRecovery (base_t *base)
+{
+	int i;
+	ufoRecoveries_t *recovery;
+	date_t event;
+
+	/* Find free uforecovery slot. */
+	for (i = 0; i < MAX_RECOVERIES; i++) {
+		if (!gd.recoveries[i].active) {
+			/* Make sure it is empty here. */
+			memset(&gd.recoveries[i], 0, sizeof(gd.recoveries[i]));
+			recovery = &gd.recoveries[i];
+			break;
+		}
+	}
+
+	if (!recovery) {
+		Com_Printf("UFO_PrepareRecovery()... free recovery slot not found.\n");
+		return;
+	}
+	assert (recovery);
+
+	/* Prepare date of the recovery event - always two days after mission. */
+	event = ccs.date;
+	event.day += 2;
+	/* Prepare recovery. */
+	recovery->active = qtrue;
+	recovery->baseID = base->idx;
+	recovery->ufotype = Cvar_VariableInteger("mission_ufotype");
+	recovery->event = event;
+
+	Com_Printf("UFO_PrepareRecovery()... the recovery entry in global array is done; base: %s, ufotype: %i, date: %i\n",
+	gd.bases[recovery->baseID].name, recovery->ufotype, recovery->event.day);
+}
+
+/**
  * @brief Function to process active recoveries.
  */
 extern void UFO_Recovery (void)
