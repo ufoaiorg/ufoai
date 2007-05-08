@@ -113,6 +113,10 @@ void Sys_NormPath (char* path)
 {
 }
 
+void Sys_OSPath (char* path)
+{
+}
+
 char *Sys_FindFirst (const char *path, unsigned musthave, unsigned canthave)
 {
 	return NULL;

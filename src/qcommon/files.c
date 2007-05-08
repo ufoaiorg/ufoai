@@ -91,7 +91,7 @@ qboolean strwildcomp (const char *string, const char *pattern)
  * @brief Called to find where to write a file (demos, savegames, etc)
  * @note We will use the searchpath that isn't a pack and has highest priority
  */
-char *FS_Gamedir (void)
+const char *FS_Gamedir (void)
 {
 	searchpath_t *search;
 
@@ -104,12 +104,29 @@ char *FS_Gamedir (void)
 }
 
 /**
- * @brief
+ * @brief Convert operating systems path seperators to ufo virtuell filesystem
+ * seperators (/)
  * @sa Sys_NormPath
+ * @sa Sys_OSPath
  */
 void FS_NormPath (char *path)
 {
 	Sys_NormPath(path);
+}
+
+/**
+ * @param[in] qpath may have either forward or backwards slashes
+ */
+char *FS_BuildOSPath (const char *base, const char *qpath)
+{
+	static char ospath[2][MAX_OSPATH];
+	static int toggle;
+
+	toggle ^= 1;		/* flip-flop to allow two returns without clash */
+
+	Com_sprintf(ospath[toggle], sizeof(ospath[0]), "%s/%s", base, qpath);
+
+	return ospath[toggle];
 }
 
 /**
@@ -846,7 +863,7 @@ char **FS_ListFiles (const char *findname, int *numfiles, unsigned musthave, uns
  */
 static void FS_Dir_f (void)
 {
-	char *path = NULL;
+	const char *path = NULL;
 	char findname[1024];
 	char wildcard[1024] = "*.*";
 	char **dirnames;
@@ -906,7 +923,7 @@ static void FS_Path_f (void)
  * @brief Allows enumerating all of the directories in the search path
  * @note ignore pk3 here
  */
-char *FS_NextPath (const char *prevpath)
+const char *FS_NextPath (const char *prevpath)
 {
 	searchpath_t *s;
 	char *prev;
@@ -1555,5 +1572,80 @@ extern void FS_RestartFilesystem (void)
 	 */
 	if (FS_CheckFile("default.cfg") < 0) {
 		Com_Error(ERR_FATAL, "Couldn't load default.cfg");
+	}
+}
+
+/**
+ * @brief Copy a fully specified file from one place to another
+ */
+static void FS_CopyFile (const char *fromOSPath, const char *toOSPath)
+{
+	FILE *f;
+	int len;
+	byte *buf;
+
+	Com_Printf("FS_CopyFile: copy %s to %s\n", fromOSPath, toOSPath);
+
+	/* @todo: Allow copy of pk3 file content */
+	f = fopen(fromOSPath, "rb");
+	if (!f)
+		return;
+
+	fseek(f, 0, SEEK_END);
+	len = ftell(f);
+	fseek(f, 0, SEEK_SET);
+
+	buf = malloc(len);
+	if (fread(buf, 1, len, f) != len)
+		Com_Error(ERR_FATAL, "Short read in FS_CopyFile()\n" );
+	fclose(f);
+
+	FS_CreatePath(toOSPath);
+
+	f = fopen(toOSPath, "wb");
+	if (!f)
+		return;
+
+	if (fwrite(buf, 1, len, f) != len)
+		Com_Error(ERR_FATAL, "Short write in FS_CopyFile()\n");
+
+	fclose(f);
+	free(buf);
+}
+
+/**
+ * @brief
+ * @sa FS_CopyFile
+ */
+void FS_Remove (const char *osPath)
+{
+	Com_Printf("FS_Remove: remove %s\n", osPath);
+	remove(osPath);
+}
+
+/**
+ * @brief Renames a file
+ * @sa FS_Remove
+ * @sa FS_CopyFile
+ */
+void FS_Rename (const char *from, const char *to)
+{
+	char *from_ospath, *to_ospath;
+
+	if (!fs_searchpaths)
+		Com_Error(ERR_FATAL, "Filesystem call made without initialization\n");
+
+	from_ospath = FS_BuildOSPath(FS_Gamedir(), from);
+	to_ospath = FS_BuildOSPath(FS_Gamedir(), to);
+
+	Sys_OSPath(from_ospath);
+	Sys_OSPath(to_ospath);
+
+	if (rename(from_ospath, to_ospath)) {
+		/* Failed, try copying it and deleting the original */
+		Sys_NormPath(from_ospath);
+		Sys_NormPath(to_ospath);
+		FS_CopyFile(from_ospath, to_ospath);
+		FS_Remove(from_ospath);
 	}
 }

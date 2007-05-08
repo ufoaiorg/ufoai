@@ -369,6 +369,23 @@ char *Sys_Cwd (void)
 }
 
 /**
+ * @brief De-Normalize path (remove all /)
+ * @sa Sys_NormPath
+ */
+void Sys_OSPath (char* path)
+{
+	char *tmp = path;
+
+	while (*tmp) {
+		if (*tmp == '/')
+			*tmp = '\\';
+		else
+			*tmp = tolower(*tmp);
+		tmp++;
+	}
+}
+
+/**
  * @brief Normalize path (remove all \\ )
  */
 void Sys_NormPath (char* path)

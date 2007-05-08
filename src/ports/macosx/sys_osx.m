@@ -96,6 +96,13 @@ void Sys_NormPath (char* path)
 }
 
 /**
+ * @brief
+ */
+void Sys_OSPath (char* path)
+{
+}
+
+/**
  * @brief This resolves any symlinks to the binary. It's disabled for debug
  * builds because there are situations where you are likely to want
  * to symlink to binaries and /not/ have the links resolved.
@@ -387,10 +394,10 @@ static void InitCocoa (void)
 int lenstr(const char *text)
 {
 	int  count=-1;				/* Character counter	*/
-	
+
 	while(text[++count] != '\0') ;		/* Search for a null	*/
-		  
-		  return(count);				/* Return the position 
+
+		  return(count);				/* Return the position
 		  * of the NULL-1	*/
 }
 
@@ -398,8 +405,8 @@ int lenstr(const char *text)
 unsigned char CheckForFinderCall(char **argv, int argc)
 {
 	unsigned char change = 0;
-	
-	
+
+
 	if(argc < 2)
 	{
 		/* No change needed, finder would set argc to 2 */
@@ -408,12 +415,12 @@ unsigned char CheckForFinderCall(char **argv, int argc)
 	else
 	{
 		/* now check if first param is a cvar or a finder path */
-		if (argv[0][0] == '+') 
+		if (argv[0][0] == '+')
 		{
 			/* parameter is a cvar, don't change directory */
 			change = 0;
 		}
-		else 
+		else
 		{
 			/*change directory is needed */
 			/* finder gives as second argument -psxxxx process ID */
@@ -423,19 +430,19 @@ unsigned char CheckForFinderCall(char **argv, int argc)
 			}
 		}
 
-	}	
+	}
 	return change;
 }
 
 void FixWorkingDirectory (char **argv)
 {
 	char newPath[255];
-		
+
 	printf("Path Length : %d \n",lenstr(*argv));
 	if(lenstr(*argv) > 255)
 	{
 		printf("Path is too long. Please copy Bundle to a shorter path location \n");
-		
+
 	}
 	else
 	{
@@ -464,9 +471,9 @@ int main (int argc, char **argv)
 	float timescale = 1.0;
 
 	InitCocoa();
-		
+
 	if(CheckForFinderCall(argv,argc))
-	{   
+	{
 		printf("---> Fixing Working Directory, depending on Finder Call ! \n");
 		FixWorkingDirectory(argv);
 	}

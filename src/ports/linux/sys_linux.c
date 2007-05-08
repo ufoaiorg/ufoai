@@ -116,6 +116,13 @@ void Sys_NormPath (char* path)
 }
 
 /**
+ * @brief
+ */
+void Sys_OSPath (char* path)
+{
+}
+
+/**
  * @brief This resolves any symlinks to the binary. It's disabled for debug
  * builds because there are situations where you are likely to want
  * to symlink to binaries and /not/ have the links resolved.

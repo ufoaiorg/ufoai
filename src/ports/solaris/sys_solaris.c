@@ -224,6 +224,13 @@ void Sys_NormPath (char* path)
 /**
  * @brief
  */
+void Sys_OSPath (char* path)
+{
+}
+
+/**
+ * @brief
+ */
 char *Sys_GetClipboardData (void)
 {
 	return NULL;

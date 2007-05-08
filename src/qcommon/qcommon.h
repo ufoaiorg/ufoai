@@ -334,6 +334,7 @@ NON-PORTABLE SYSTEM SERVICES
 
 void Sys_Init(void);
 void Sys_NormPath(char *path);
+void Sys_OSPath(char* path);
 void Sys_Sleep(int milliseconds);
 void Sys_AppActivate(void);
 
