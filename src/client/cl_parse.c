@@ -839,14 +839,15 @@ static void CL_ActorAppear (sizebuf_t *sb)
 			if (cl.actTeam == cls.team && lastMoving) {
 				ptl_t	*ptl;
 				vec3_t eyes;
+				/* start is the last moving actor's origin */
 				VectorCopy(lastMoving->origin, eyes);
 				if (lastMoving->state & STATE_CROUCHED)
 					eyes[2] += EYE_HT_CROUCH;
 				else
 					eyes[2] += EYE_HT_STAND;
 				ptl = CL_ParticleSpawn("fadeTracer", 0, eyes, le->origin, NULL);
-				if ( le->team == TEAM_CIVILIAN )
-					VectorSet( ptl->color, 0.2, 0.2, 1);
+				if (le->team == TEAM_CIVILIAN)
+					VectorSet(ptl->color, 0.2, 0.2, 1);
 			}
 
 			/* message */

@@ -367,6 +367,11 @@ static void PE_LoadParticle_f (void)
 		CL_ParticleFree(ptledit_ptl);
 	ptledit_ptl = NULL;
 
+	/* free any active particle (some don't have a kill function) */
+	for (i = 0; i < numPtls; i++)
+		ptl[i].inuse = qfalse;
+	numPtls = 0;
+
 	activeParticle = -1;
 	for (i = 0; i < numPtlDefs; i++)
 		if (!Q_strncmp(ptlDef[i].name, Cmd_Argv(1), sizeof(ptlDef[i].name)))
@@ -374,7 +379,7 @@ static void PE_LoadParticle_f (void)
 
 	if (activeParticle != -1) {
 		PE_UpdateMenu(&ptlDef[activeParticle]);
-		ptledit_ptl = CL_ParticleSpawn(ptlDef[activeParticle].name, 0, ptleditMenu.renderZone->origin, NULL, NULL);
+		ptledit_ptl = CL_ParticleSpawn(ptlDef[activeParticle].name, 0, ptleditMenu.renderZone->origin, bytedirs[0], bytedirs[0]);
 	} else
 		PE_UpdateMenu(NULL);
 }
@@ -391,7 +396,7 @@ static void PE_Frame_f (void)
 		} else {
 			/* let main particles respawn if the ptledit_loop cvar is set */
 			if (ptledit_loop->integer && !ptledit_ptl->parent) {
-				ptledit_ptl = CL_ParticleSpawn(ptlDef[activeParticle].name, 0, ptleditMenu.renderZone->origin, NULL, NULL);
+				ptledit_ptl = CL_ParticleSpawn(ptlDef[activeParticle].name, 0, ptleditMenu.renderZone->origin, bytedirs[0], bytedirs[0]);
 			} else {
 				if (ptledit_ptl->parent)
 					Com_Printf("particle '%s' - lifetime exceeded\n", ptlDef[activeParticle].name);
@@ -418,8 +423,8 @@ static void PE_ListClick_f (void)
 	if (num < 0 || num >= numPtlDefs)
 		return;
 
-	Com_Printf("num: %i, name: %s\n", num, ptlDef[num].name);
 	for (i = 0; i <= num; i++) {
+		/* pre defined internal particles */
 		if (*ptlDef[i].name == '*')
 			num++;
 		if (num >= numPtlDefs)
