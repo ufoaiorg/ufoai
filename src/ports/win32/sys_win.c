@@ -800,7 +800,7 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 {
 	GetGameApi_t GetGameAPI;
 	char	name[MAX_OSPATH];
-	char	*path;
+	const char	*path;
 	char	cwd[MAX_OSPATH];
 
 #if defined _M_IX86

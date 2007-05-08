@@ -138,7 +138,7 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 
 	char	name[MAX_OSPATH];
 	char	curpath[MAX_OSPATH];
-	char	*path;
+	const char	*path;
 
 	if (game_library)
 		Com_Error(ERR_FATAL, "Sys_GetGameAPI without Sys_UnloadingGame");

@@ -136,7 +136,7 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 
 	char	name[MAX_OSPATH];
 	char	curpath[MAX_OSPATH];
-	char	*path;
+	const char	*path;
 
 	setreuid(getuid(), getuid());
 	setegid(getgid());

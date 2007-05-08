@@ -117,7 +117,7 @@ void FS_NormPath (char *path)
 /**
  * @param[in] qpath may have either forward or backwards slashes
  */
-char *FS_BuildOSPath (const char *base, const char *qpath)
+static char *FS_BuildOSPath (const char *base, const char *qpath)
 {
 	static char ospath[2][MAX_OSPATH];
 	static int toggle;
@@ -1578,7 +1578,7 @@ extern void FS_RestartFilesystem (void)
 /**
  * @brief Copy a fully specified file from one place to another
  */
-static void FS_CopyFile (const char *fromOSPath, const char *toOSPath)
+extern void FS_CopyFile (const char *fromOSPath, const char *toOSPath)
 {
 	FILE *f;
 	int len;
@@ -1617,7 +1617,7 @@ static void FS_CopyFile (const char *fromOSPath, const char *toOSPath)
  * @brief
  * @sa FS_CopyFile
  */
-void FS_Remove (const char *osPath)
+extern void FS_Remove (const char *osPath)
 {
 	Com_Printf("FS_Remove: remove %s\n", osPath);
 	remove(osPath);
@@ -1628,7 +1628,7 @@ void FS_Remove (const char *osPath)
  * @sa FS_Remove
  * @sa FS_CopyFile
  */
-void FS_Rename (const char *from, const char *to)
+extern void FS_Rename (const char *from, const char *to)
 {
 	char *from_ospath, *to_ospath;
 
