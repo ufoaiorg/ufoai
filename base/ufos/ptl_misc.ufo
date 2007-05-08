@@ -500,14 +500,14 @@ particle smoke2
 	{
 		v      "0 0 0"
 		tps    2.0
-		spawn  smokeRound
+		spawn  smoke
 		v      "0 0 0"
 		tps    25.0
 		spawn  smokeRound2
 	}
 	think
 	{
-		spawn  smokeRound
+		spawn  smoke
 		spawn  smokeRound2
 	}
 }
@@ -518,11 +518,11 @@ particle green_smoke
 	{
 		v      "0 0 0"
 		tps    25.0
-		spawn  greenSmokeMap
+		spawn  greensmokebig
 	}
 	think
 	{
-		spawn  greenSmokeMap
+		spawn  greensmokebig
 	}
 }
 
