@@ -88,6 +88,7 @@ int FS_Seek(qFILE * f, long offset, int origin);
 int FS_WriteFile(const void *buffer, size_t len, const char *filename);
 int FS_Write(const void *buffer, int len, qFILE * f);
 void FS_InitFilesystem(void);
+void FS_RestartFilesystem(void);
 void FS_SetGamedir(const char *dir);
 char *FS_Gamedir(void);
 char *FS_NextPath(const char *prevpath);

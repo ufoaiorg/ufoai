@@ -45,7 +45,6 @@ filelink_t *fs_links;
 searchpath_t *fs_searchpaths;
 searchpath_t *fs_base_searchpaths;	/* without gamedirs */
 
-
 /**
  * @brief
  */
@@ -653,7 +652,7 @@ void FS_AddGameDirectory (const char *dir)
 	qsort((void *)pakfile_list, pakfile_count, MAX_OSPATH, Q_StringSort);
 
 	for (i = 0; i < pakfile_count; i++) {
-		pak = FS_LoadPackFile (pakfile_list[i]);
+		pak = FS_LoadPackFile(pakfile_list[i]);
 		if (!pak)
 			continue;
 
@@ -946,16 +945,32 @@ static void FS_Info_f (void)
 }
 
 /**
+ * @brief filesystem console commands
+ * @sa FS_InitFilesystem
+ * @sa FS_RestartFilesystem
+ */
+static const cmdList_t fs_commands[] = {
+	{"fs_restart", FS_RestartFilesystem, "Reloads the file subsystem"},
+	{"path", FS_Path_f, NULL},
+	{"link", FS_Link_f, NULL},
+	{"dir", FS_Dir_f, NULL},
+	{"fs_info", FS_Info_f, "Show information about the virtuell filesystem"},
+
+	{NULL, NULL, NULL}
+};
+
+/**
  * @brief
+ * @sa FS_Shutdown
+ * @sa FS_RestartFilesystem
  */
 void FS_InitFilesystem (void)
 {
 	cvar_t* fs_usehomedir;
+	const cmdList_t *commands;
 
-	Cmd_AddCommand("path", FS_Path_f, NULL);
-	Cmd_AddCommand("link", FS_Link_f, NULL);
-	Cmd_AddCommand("dir", FS_Dir_f, NULL);
-	Cmd_AddCommand("fs_info", FS_Info_f, "Show information about the virtuell filesystem");
+	for (commands = fs_commands; commands->name; commands++)
+		Cmd_AddCommand(commands->name, commands->function, _(commands->description));
 	fs_usehomedir = Cvar_Get("fs_usehomedir", "1", CVAR_ARCHIVE, "Use the homedir to store files like savegames and screenshots");
 
 	/* basedir <path> */
@@ -1485,14 +1500,60 @@ char* FS_GetBasePath (char* filename)
 
 /**
  * @brief Cleanup function
+ * @sa FS_InitFilesystem
+ * @sa FS_RestartFilesystem
  */
 void FS_Shutdown (void)
 {
 	int i;
+	searchpath_t *p, *next;
+	const cmdList_t *commands;
 
 	/* free malloc'ed space for maplist */
 	if (mapsInstalledInit) {
 		for (i = 0; i <= numInstalledMaps; i++)
 			free(maps[i]);
+	}
+
+	/* free everything */
+	for (p = fs_searchpaths; p; p = next) {
+		next = p->next;
+
+		if (p->pack) {
+			unzClose(p->pack->handle.z);
+			Mem_Free(p->pack->files);
+			Mem_Free(p->pack);
+		}
+		Mem_Free(p);
+	}
+
+	/* any FS_ calls will now be an error until reinitialized */
+	fs_searchpaths = NULL;
+
+	for (commands = fs_commands; commands->name; commands++)
+		Cmd_RemoveCommand(commands->name);
+}
+
+/**
+ * @brief Restart the filesystem (reload all pk3 files)
+ * @note Call this after you finished a download
+ * @sa FS_Shutdown
+ * @sa FS_InitFilesystem
+ */
+extern void FS_RestartFilesystem (void)
+{
+	/* free anything we currently have loaded */
+	FS_Shutdown();
+
+	/* try to start up normally */
+	FS_InitFilesystem();
+
+	/**
+	 * if we can't find default.cfg, assume that the paths are
+	 * busted and error out now, rather than getting an unreadable
+	 * graphics screen when the font fails to load
+	 */
+	if (FS_CheckFile("default.cfg") < 0) {
+		Com_Error(ERR_FATAL, "Couldn't load default.cfg");
 	}
 }
