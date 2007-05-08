@@ -393,6 +393,8 @@ static void UP_ArmorDescription (technology_t* t)
 		Cvar_Set("mn_upmodel_bottom", "");
 		Cvar_Set("mn_upimage_top", t->image_top);
 		upBuffer[0] = '\0';
+		Q_strcat(upBuffer, va(_("Size:\t%i\n"),od->size), sizeof(upBuffer));
+		Q_strcat(upBuffer, "\n", sizeof(upBuffer));
 		for (i = 0; i < csi.numDTs; i++)
 			Q_strcat(upBuffer, va(_("%s:\tProtection: %i\tHardness: %i\n"), _(csi.dts[i]), od->protection[i], od->hardness[i]), sizeof(upBuffer));
 	}
