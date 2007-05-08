@@ -55,6 +55,9 @@ menu won
 	// ==================
 	// UFO Recovery
 	// ==================
+
+	//FIXME: image should be the same as in bt_storeufo but greyed out
+	confunc disufostore 	{ *bt_storeufo image "hud/buttons1g" }
 	
 	pic bt_storeufo
 	{
