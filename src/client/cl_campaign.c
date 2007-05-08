@@ -3820,8 +3820,10 @@ static void CP_CampaignStats_f (void)
  */
 static void CP_UFORecovered_f (void)
 {
+	int i;
 	ufoType_t UFOtype;
 	base_t *base;
+	qboolean hasUFOhangar = qfalse;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <UFOType>\n", Cmd_Argv(0));
@@ -3834,12 +3836,53 @@ static void CP_UFORecovered_f (void)
 		Com_Printf("CP_UFORecovered()... UFOType: %i does not exist!\n", atoi(Cmd_Argv(1)));
 		return;
 	}
-	
-	base = &gd.bases[Cvar_VariableInteger("mission_homebase")];
-	Cvar_SetValue("mission_uforecovered", 1);
-	Cvar_SetValue("mission_ufotype", UFOtype);
 
-	Com_Printf("CP_UFORecovered_f(): base: %s, UFO: %i\n", base->name, UFOtype);
+	/* Now we have to check whether any base has UFO hangar. */
+	for (i = 0; i < gd.numBases; i++) {
+		if (!gd.bases[i].founded)
+			continue;
+		base = &gd.bases[i];
+		if ((base->hasUFOHangar) || (base->hasUFOHangarSmall)) {
+			hasUFOhangar = qtrue;
+			break;
+		}
+	}
+	/* If there is not even single base with UFO Hangars, we won't process UFO recovery. */
+	if (!hasUFOhangar) {
+		MN_AddNewMessage(_("Notice"), _("You don't have any base with UFO hangars. UFO recovered from the battlefield was destroyed."), qfalse, MSG_STANDARD, NULL);
+	} else {
+		Cvar_SetValue("mission_uforecovered", 1);	/* This is used in menus to enable UFO Recovery nodes. */
+		Cvar_SetValue("mission_ufotype", UFOtype);
+		Com_DPrintf("CP_UFORecovered_f(): base: %s, UFO: %i\n", base->name, UFOtype);
+	}
+}
+
+/**
+ * @brief Finds the destination base for UFO recovery.
+ * @note The base selection is being done here.
+ * @note Callback command: cp_uforecovery_baselist_click.
+ */
+static void CP_UfoRecoveryBaseSelectPopup_f (void)
+{
+	int i, j = -1, num;
+	base_t* base;
+
+	if (Cmd_Argc() < 2) {
+		Com_Printf("usage: %s <baseid>\n", Cmd_Argv(0));
+		return;
+	}
+
+	num = atoi(Cmd_Argv(1));
+
+	for (i = 0, base = gd.bases; i < gd.numBases; i++, base++) {
+		if (base->founded == qfalse)
+			continue;
+		j++;
+		if (j == num)
+			break;
+	}
+	Cvar_SetValue("mission_recoverybase", base->idx);
+	Com_DPrintf("CP_UfoRecoveryBaseSelectPopup_f()... picked base: %s\n", base->name);
 }
 
 /**
@@ -3921,6 +3964,7 @@ extern void CL_ResetCampaign (void)
 	Cmd_AddCommand("missionlist", CP_MissionList_f, "Shows all missions from the script files");
 	Cmd_AddCommand("game_new", CL_GameNew, NULL);	Cmd_AddCommand("game_exit", CL_GameExit, NULL);
 	Cmd_AddCommand("cp_uforecovery", CP_UFORecovered_f, "Function to trigger UFO Recovered event");
+	Cmd_AddCommand("cp_uforecovery_baselist_click", CP_UfoRecoveryBaseSelectPopup_f, "Callback for recovery base list popup.");
 	Cmd_AddCommand("cp_uforecoverystore", CP_UFORecoveredStore_f, "Function to store recovered UFO in desired base.");
 	Cmd_AddCommand("cp_uforecoverysell", CP_UFORecoveredSell_f, "Function to sell recovered UFO to desired nation.");
 	Cmd_AddCommand("cp_uforecoverydestroy", CP_UFORecoveredDestroy_f, "Function to destroy recovered UFO.");
