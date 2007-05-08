@@ -407,7 +407,7 @@ static void PE_Frame_f (void)
  */
 static void PE_ListClick_f (void)
 {
-	int num;
+	int num, i;
 
 	if (Cmd_Argc() < 2)
 		return;
@@ -418,6 +418,13 @@ static void PE_ListClick_f (void)
 	if (num < 0 || num >= numPtlDefs)
 		return;
 
+	Com_Printf("num: %i, name: %s\n", num, ptlDef[num].name);
+	for (i = 0; i <= num; i++) {
+		if (*ptlDef[i].name == '*')
+			num++;
+		if (num >= numPtlDefs)
+			return;
+	}
 	Cbuf_ExecuteText(EXEC_NOW, va("ptledit_load %s", ptlDef[num].name));
 }
 
