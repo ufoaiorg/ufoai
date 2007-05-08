@@ -293,6 +293,7 @@ static void HOS_Init_f (void)
 			/* Only show those employees, that are in the current base. */
 			if (!E_IsInBase(employee, baseCurrent))
 				continue;
+			/* Don't show soldiers who are gone in mission */
 			if (CL_SoldierAwayFromBase(employee))
 				continue;
 			if (employee->chr.HP < employee->chr.maxHP) {
@@ -416,6 +417,9 @@ static void HOS_ListClick_f (void)
 			employee = &gd.employees[type][i];
 			/* only those employees, that are in the current base */
 			if (!E_IsInBase(employee, baseCurrent) || employee->chr.HP >= employee->chr.maxHP)
+				continue;
+			/* Don't select soldiers who are gone in mission */
+			if (CL_SoldierAwayFromBase(employee))
 				continue;
 			if (!num) {
 				currentEmployeeInHospital = employee;
