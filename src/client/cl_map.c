@@ -317,7 +317,7 @@ extern void MAP_MapClick (const menuNode_t* node, int x, int y, qboolean globe)
 		/* Nothing selected */
 		if (!selectedAircraft)
 			MAP_ResetAction();
-		else if (selectedAircraft->status > AIR_HOME && selectedAircraft->fuel > 0) {
+		else if (selectedAircraft->status > AIR_HOME && AIR_AircraftHasEnoughFuel(selectedAircraft, pos)) {
 			/* Move the selected aircraft to the position clicked */
 			MAP_MapCalcLine(selectedAircraft->pos, pos, &(selectedAircraft->route));
 			selectedAircraft->status = AIR_TRANSIT;

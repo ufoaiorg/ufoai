@@ -470,6 +470,43 @@ extern void AIM_PrevAircraft_f (void)
 }
 
 /**
+ * @brief check if aircraft has enough fuel to go to destination, and then come back home
+ * @param[in] *aircraft Pointer to the aircraft
+ * @param[in] *position Pointer to the position the aircraft should go to
+ * @sa MAP_MapCalcLine
+ * @return qtrue if the aircraft can go to the position, qfalse else
+ */
+extern qboolean AIR_AircraftHasEnoughFuel (aircraft_t *aircraft, const vec2_t destination)
+{
+	assert(aircraft);
+	base_t *base;
+	float distance=0;
+
+	base = (base_t *) aircraft->homebase;
+	assert(base);
+
+	mapline_t line;
+
+	/* Calculate the line that the aircraft should follow to go to destination */
+	MAP_MapCalcLine(aircraft->pos, destination, &(line));
+	distance = line.distance * (line.numPoints - 1);
+
+	/* Calculate the line that the aircraft should then follow to go back home */
+	MAP_MapCalcLine(destination, base->pos, &(line));
+	distance += line.distance * (line.numPoints - 1);
+
+	/* Check if the aircraft has enough fuel to go to destination and then go back home */
+	if (distance <= aircraft->speed * aircraft->fuel / 3600)
+		return qtrue;
+	else {
+		/* @todo Should check if another base is closer than homeBase and have a hangar */
+		MN_AddNewMessage(_("Notice"), _("Your aircraft doesn't have enough fuel to go there and then come back to its home base"), qfalse, MSG_STANDARD, NULL);
+	}
+
+	return qfalse;
+}
+
+/**
  * @brief Calculates the way back to homebase for given aircraft and returns it.
  * @param[in] *aircraft Pointer to aircraft, which should return to base.
  * @note Command to call this: "aircraft_return".
@@ -869,7 +906,7 @@ void CL_CampaignRunAircraft (int dt)
 				}
 
 				/* Check aircraft low fuel */
-				if (aircraft->fuel <= 0 && aircraft->status >= AIR_IDLE && aircraft->status != AIR_RETURNING) {
+				if (aircraft->status >= AIR_IDLE && aircraft->status != AIR_RETURNING && !AIR_AircraftHasEnoughFuel(aircraft, aircraft->pos)) {
 					MN_AddNewMessage(_("Notice"), _("Your dropship is low on fuel and returns to base"), qfalse, MSG_STANDARD, NULL);
 					AIR_AircraftReturnToBase(aircraft);
 				}
@@ -1215,6 +1252,9 @@ extern qboolean AIR_SendAircraftToMission (aircraft_t* aircraft, actMis_t* missi
 		return qtrue;
 	}
 
+	if (!AIR_AircraftHasEnoughFuel(aircraft, mission->realPos))
+		return qfalse;
+	
 	MAP_MapCalcLine(aircraft->pos, mission->realPos, &(aircraft->route));
 	aircraft->status = AIR_MISSION;
 	aircraft->time = 0;
@@ -1511,6 +1551,11 @@ extern void AIR_SendAircraftPurchasingUfo (aircraft_t* aircraft, aircraft_t* ufo
 	int num = ufo - gd.ufos;
 
 	if (num < 0 || num >= gd.numUfos || ! aircraft || ! ufo)
+		return;
+
+	/* check if the aircraft has enough fuel to go to the ufo and then come back */
+	/* @todo if you have enough fuel to go where the ufo is atm, that doesn't mean that you'll have enough to pursue it ! */
+	if (!AIR_AircraftHasEnoughFuel(aircraft, ufo->pos))
 		return;
 
 	MAP_MapCalcLine(aircraft->pos, ufo->pos, &(aircraft->route));

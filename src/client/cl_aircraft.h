@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /** @brief A path on the map described by 2D points */
 typedef struct mapline_s {
 	int numPoints; /**< number of points that make up this path */
-	float distance; /**< the total distance of the path */
+	float distance; /**< the distance between two points of the path - total distance is then (distance * (numPoints - 1)) */
 	vec2_t point[LINE_MAXPTS]; /**< array of 2D points that make up this path */
 } mapline_t;
 
@@ -208,6 +208,7 @@ extern void CP_GetRandomPosForAircraft(float *pos);
 extern qboolean AIR_AircraftMakeMove(int dt, aircraft_t* aircraft);
 void AIR_ParseAircraft(const char *name, char **text);
 void AII_ParseAircraftItem(const char *name, char **text);
+qboolean AIR_AircraftHasEnoughFuel (aircraft_t *aircraft, const vec2_t destination);
 extern void AIR_AircraftReturnToBase(aircraft_t *aircraft);
 extern qboolean AIR_SendAircraftToMission(aircraft_t* aircraft, struct actMis_s* mission);
 extern void AIR_SendAircraftPurchasingUfo(aircraft_t* aircraft, aircraft_t* ufo);
