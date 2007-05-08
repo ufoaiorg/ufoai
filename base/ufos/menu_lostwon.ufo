@@ -53,6 +53,76 @@ menu won
 	}
 
 	// ==================
+	// UFO Recovery
+	// ==================
+	
+	pic bt_storeufo
+	{
+		if "mission_uforecovered == 1"
+		tooltip	"_Store the UFO in base"
+		image		"menu/button_blue"
+		pos		"480 630"
+		texl		"0 0"
+		texh		"128 53"
+		mousefx	true
+		click	{ cmd "cp_uforecoverystore;" }
+	}
+
+	string s_storeufo
+	{
+		if "mission_uforecovered == 1"
+		pos	"544 656"
+		align	cc
+		color "1 1 1 0.6"
+		font	"f_normal"
+		string	"_Store UFO"
+	}
+
+	pic bt_sellufo
+	{
+		if "mission_uforecovered == 1"
+		tooltip	"_Sell the UFO to desired nation"
+		image		"menu/button_blue"
+		pos		"670 630"
+		texl		"0 0"
+		texh		"128 53"
+		mousefx	true
+		click	{ cmd "mn_pop;" }
+	}
+
+	string s_sellufo
+	{
+		if "mission_uforecovered == 1"
+		pos	"734 656"
+		align	cc
+		color "1 1 1 0.6"
+		font	"f_normal"
+		string	"_Sell UFO"
+	}
+
+	pic bt_destroyufo
+	{
+		if "mission_uforecovered == 1"
+		tooltip	"_Destroy recovered UFO"
+		image		"menu/button_blue"
+		pos		"865 630"
+		texl		"0 0"
+		texh		"128 53"
+		mousefx	true
+		click	{ cmd "mn_pop;" }
+	}
+
+	string s_destroyufo
+	{
+		if "mission_uforecovered == 1"
+		pos	"929 656"
+		align	cc
+		color "1 1 1 0.6"
+		font	"f_normal"
+		string	"_Destroy UFO"
+	}
+
+	// ==================
 	// buttons
 	// ==================
 
