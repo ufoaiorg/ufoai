@@ -32,6 +32,29 @@ static void UFO_RemoveUfoFromGeoscape_f(void);
 extern void UFO_CampaignCheckEvents(void);
 extern void UFO_Reset(void);
 
+/**
+ * @brief Translate UFO type to name.
+ * @param[in] type UFO type in ufoType_t.
+ * @return Translated UFO name.
+ */
+extern char* UFO_UfoTypeToName (ufoType_t type)
+{
+	switch(type) {
+	case 0:
+		return _("Scout");
+		break;
+	case 1:
+		return _("Fighter");
+		break;
+	case 2:
+		return _("Harvester");
+		break;
+	default:
+		Sys_Error("UFO_UfoTypeToName(): Unknown UFO type %i\n", type);
+		break;
+	}
+	return NULL; /* never reached */
+}
 
 /**
  * @brief Give a random destination to an ufo, and make him to move there

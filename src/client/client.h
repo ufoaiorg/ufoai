@@ -956,6 +956,7 @@ extern void MAP_GameInit(void);
 extern const char* MAP_GetZoneType(byte* color);
 
 /* cl_ufo.c */
+extern char* UFO_UfoTypeToName(ufoType_t type);
 extern void UFO_CampaignRunUfos(int dt);
 extern void UFO_CampaignCheckEvents(void);
 extern void UFO_Reset(void);
