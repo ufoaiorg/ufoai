@@ -276,14 +276,42 @@ extern void UFO_PrepareRecovery (base_t *base)
  */
 extern void UFO_Recovery (void)
 {
-	int i;
+	int i, item;
+	objDef_t *od;
+	base_t *base;
 	ufoRecoveries_t *recovery;
 
 	for (i = 0; i < MAX_RECOVERIES; i++) {
 		recovery = &gd.recoveries[i];
 		if (recovery->event.day == ccs.date.day) {
+			switch (recovery->ufotype) {
+				case 0:
+					item = Com_GetItemByID("craft_ufo_scout");
+					od = &csi.ods[item];
+					break;
+				case 1:
+					item = Com_GetItemByID("craft_ufo_fighter");
+					od = &csi.ods[item];
+					break;
+				case 2:
+					item = Com_GetItemByID("craft_ufo_harvester");
+					od = &csi.ods[item];
+					break;
+				default:
+					Sys_Error("UFO_Recovery()... not found item definition for ufotype: %i\n", recovery->ufotype);
+					return;
+			}
+			base = &gd.bases[recovery->baseID];
+			if (!base->founded) {
+				/* Destination base was destroyed meanwhile. */
+				/* UFO is lost, send proper message to the user.*/
+				recovery->active = qfalse;
+				/* @todo: prepare MN_AddNewMessage() here */
+				return;
+			}
 			/* Process UFO recovery. */
-			/* @todo implement me */
+			base->storage.num[item]++;	/* Add dummy UFO item to enable research topic. */
+			RS_MarkCollected(od->tech);	/* Enable research topic. */
 		}
 	}
 }
