@@ -3967,6 +3967,8 @@ static void CP_UFORecoveredStore_f (void)
 	/* If only one base with UFO hangars, the recovery will be done in this base. */
 	if (hasufohangar <= 1) {
 		/* Base is already selected above. */
+		Cvar_SetValue("mission_recoverybase", base->idx);
+		CP_UFORecoveredStart_f();
 	} else {
 		/* If more than one - popup with list to select base. */
 		menuText[TEXT_LIST] = recoveryBaseSelectPopup;
@@ -4038,7 +4040,7 @@ static void CP_UFORecoveredSell_f (void)
 	for (i = 0; i < gd.numNations; i++) {
 		nation = &gd.nations[i];
 		/* @todo only nations with proper alien infiltration values */
-		nation++;
+		nations++;
 		Q_strcat(recoveryNationSelectPopup, gd.nations[i].name, sizeof(recoveryNationSelectPopup));
 		Q_strcat(recoveryNationSelectPopup, "\n", sizeof(recoveryNationSelectPopup));
 	}

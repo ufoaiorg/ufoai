@@ -92,7 +92,7 @@ menu won
 		texl		"0 0"
 		texh		"128 53"
 		mousefx	true
-		click	{ cmd "mn_pop;" }
+		click	{ cmd "cp_uforecoverysell;" }
 	}
 
 	string s_sellufo
