@@ -51,6 +51,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../ports/win32/zlib.h"
 #endif
 
+#ifdef HAVE_CURL
+#define CURL_STATICLIB
+#include <curl/curl.h>
+#include "cl_http.h"
+#endif /* HAVE_CURL */
+
 /*============================================================================= */
 
 #define MAX_TEAMLIST	8
@@ -221,6 +227,18 @@ typedef struct {
 
 	/** needs to be here, because server can be shutdown, before we see the ending screen */
 	int team;
+
+	char downloadtempname[MAX_OSPATH];
+	char downloadname[MAX_OSPATH];
+	size_t downloadposition;
+	int downloadpercent;
+
+#ifdef HAVE_CURL
+	dlqueue_t downloadQueue;	/**< queue of paths we need */
+	dlhandle_t HTTPHandles[4];	/**< actual download handles */
+	char downloadServer[512];	/**< base url prefix to download from */
+	char downloadReferer[32];	/**< libcurl requires a static string :( */
+#endif
 } client_static_t;
 
 extern client_static_t cls;
@@ -230,7 +248,13 @@ extern client_static_t cls;
 /* cvars */
 #ifdef HAVE_GETTEXT
 extern cvar_t *s_language;
-#endif
+#endif /* HAVE_GETTEXT */
+#ifdef HAVE_CURL
+extern cvar_t *cl_http_downloads;
+extern cvar_t *cl_http_filelists;
+extern cvar_t *cl_http_proxy;
+extern cvar_t *cl_http_max_connections;
+#endif /* HAVE_CURL */
 extern cvar_t *cl_isometric;
 extern cvar_t *cl_stereo_separation;
 extern cvar_t *cl_stereo;
@@ -366,13 +390,13 @@ qboolean CL_VideoRecording(void);
 void CL_StopVideo_f(void);
 void CL_Video_f(void);
 
-/* cl_main */
+/* cl_main.c */
 /* interface to refresh lib */
 extern refexport_t re;
 
 void CL_Init(void);
 void CL_ReadSinglePlayerData(void);
-
+void CL_RequestNextDownload(void);
 void CL_StartSingleplayer(qboolean singleplayer);
 void CL_Disconnect(void);
 void CL_GetChallengePacket(void);
@@ -864,6 +888,7 @@ void CL_SetLastMoving(le_t *le);
 void CL_ParseServerMessage(void);
 void CL_InitEvents(void);
 void CL_Events(void);
+qboolean CL_CheckOrDownloadFile(const char *filename);
 
 /* cl_view.c */
 extern sun_t map_sun;

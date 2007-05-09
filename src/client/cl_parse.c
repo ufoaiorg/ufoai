@@ -232,6 +232,51 @@ static qboolean parsedDeath = qfalse;
 /*============================================================================= */
 
 /**
+ * @return true if the file exists, otherwise it attempts to start a download via curl
+ */
+qboolean CL_CheckOrDownloadFile (const char *filename)
+{
+	static char lastfilename[MAX_OSPATH] = {0};
+
+	/* r1: don't attempt same file many times */
+	if (!strcmp(filename, lastfilename))
+		return qtrue;
+
+	strcpy(lastfilename, filename);
+
+	if (strstr (filename, "..")) {
+		Com_Printf("Refusing to check a path with .. (%s)\n",  filename);
+		return qtrue;
+	}
+
+	if (strchr (filename, ' ')) {
+		Com_Printf("Refusing to check a path containing spaces (%s)\n", filename);
+		return qtrue;
+	}
+
+	if (strchr (filename, ':')) {
+		Com_Printf("Refusing to check a path containing a colon (%s)\n", filename);
+		return qtrue;
+	}
+
+	if (filename[0] == '/') {
+		Com_Printf("Refusing to check a path starting with / (%s)\n", filename);
+		return qtrue;
+	}
+
+	if (FS_LoadFile(filename, NULL) != -1) {
+		/* it exists, no need to download */
+		return qtrue;
+	}
+
+#ifdef HAVE_CURL
+	if (CL_QueueHTTPDownload(filename))
+		return qfalse;
+#endif /* HAVE_CURL */
+	return qtrue;
+}
+
+/**
  * @brief
  */
 extern void CL_RegisterSounds (void)
@@ -288,12 +333,12 @@ static void CL_ParseServerData (void)
 	cls.state = ca_connected;
 
 	/* parse protocol version number */
-	i = MSG_ReadLong (&net_message);
+	i = MSG_ReadLong(&net_message);
 	cls.serverProtocol = i;
 
 	/* compare versions */
 	if (i != PROTOCOL_VERSION)
-		Com_Error(ERR_DROP,"Server returned version %i, not %i", i, PROTOCOL_VERSION);
+		Com_Error(ERR_DROP, "Server returned version %i, not %i", i, PROTOCOL_VERSION);
 
 	cl.servercount = MSG_ReadLong(&net_message);
 	cl.attractloop = MSG_ReadByte(&net_message);

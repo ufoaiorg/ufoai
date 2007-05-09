@@ -44,6 +44,8 @@ cvar_t *rcon_password;			/* password for remote server commands */
 
 cvar_t *sv_noreload;			/* don't reload level state when reentering */
 
+cvar_t *sv_downloadserver;
+
 cvar_t *sv_maxclients = NULL;
 cvar_t *sv_showclamp;
 cvar_t *sv_enablemorale;
@@ -465,7 +467,10 @@ static void SVC_DirectConnect (void)
 	SV_UserinfoChanged(newcl);
 
 	/* send the connect packet to the client */
-	Netchan_OutOfBandPrint(NS_SERVER, adr, "client_connect");
+	if (sv_downloadserver->string[0])
+		Netchan_OutOfBandPrint(NS_SERVER, adr, "client_connect dlserver=%s", sv_downloadserver->string);
+	else
+		Netchan_OutOfBandPrint(NS_SERVER, adr, "client_connect");
 
 	Netchan_Setup(NS_SERVER, &newcl->netchan, adr, qport);
 
@@ -1163,6 +1168,7 @@ extern void SV_Init (void)
 	timeout = Cvar_Get("timeout", "125", 0, NULL);
 	zombietime = Cvar_Get("zombietime", "2", 0, NULL);
 	sv_showclamp = Cvar_Get("showclamp", "0", 0, NULL);
+	sv_downloadserver = Cvar_Get("sv_downloadserver", "", 0, "URL to a location where clients can download game content over HTTP");
 	sv_paused = Cvar_Get("paused", "0", 0, NULL);
 	sv_timedemo = Cvar_Get("timedemo", "0", 0, NULL);
 	sv_enforcetime = Cvar_Get("sv_enforcetime", "0", 0, NULL);

@@ -1,3 +1,5 @@
+CLIENT_CFLAGS=-DHAVE_GETTEXT
+
 CLIENT_SRCS = \
 	client/cl_actor.c \
 	client/cl_aliencont.c \
@@ -7,6 +9,7 @@ CLIENT_SRCS = \
 	client/cl_market.c \
 	client/cl_campaign.c \
 	client/cl_hospital.c \
+	client/cl_http.c \
 	client/cl_ufo.c \
 	client/cl_radar.c \
 	client/cl_save.c \
@@ -161,6 +164,10 @@ ifeq ($(TARGET_OS),darwin)
 	CLIENT_CD+=ports/macosx/cd_osx.m
 endif
 
+ifeq ($(HAVE_CURL),1)
+	CLIENT_CFLAGS+=-DHAVE_CURL
+endif
+
 ifeq ($(TARGET_OS),mingw32)
 	CLIENT_SRCS+=$(CLIENT_CD)
 else
@@ -194,7 +201,7 @@ $(CLIENT_TARGET): $(CLIENT_OBJS) $(BUILDDIR)/.dirs
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/client/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 	@echo " * [UFO] $<"; \
-		$(CC) $(CFLAGS) -DHAVE_GETTEXT -o $@ -c $<
+		$(CC) $(CFLAGS) $(CLIENT_CFLAGS) -o $@ -c $<
 
 # Say how to build .o files from .m files for this module
 $(BUILDDIR)/client/%.o: $(SRCDIR)/%.m $(BUILDDIR)/.dirs

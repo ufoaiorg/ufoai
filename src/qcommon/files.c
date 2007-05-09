@@ -1628,7 +1628,7 @@ extern void FS_Remove (const char *osPath)
  * @sa FS_Remove
  * @sa FS_CopyFile
  */
-extern void FS_Rename (const char *from, const char *to)
+extern qboolean FS_Rename (const char *from, const char *to)
 {
 	char *from_ospath, *to_ospath;
 
@@ -1641,11 +1641,7 @@ extern void FS_Rename (const char *from, const char *to)
 	Sys_OSPath(from_ospath);
 	Sys_OSPath(to_ospath);
 
-	if (rename(from_ospath, to_ospath)) {
-		/* Failed, try copying it and deleting the original */
-		Sys_NormPath(from_ospath);
-		Sys_NormPath(to_ospath);
-		FS_CopyFile(from_ospath, to_ospath);
-		FS_Remove(from_ospath);
-	}
+	if (rename(from_ospath, to_ospath))
+		return qfalse;
+	return qtrue;
 }

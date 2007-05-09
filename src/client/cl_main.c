@@ -119,6 +119,8 @@ typedef struct teamData_s {
 
 static teamData_t teamData;
 
+static int precache_check;
+
 static void CL_SpawnSoldiers_f(void);
 
 /*====================================================================== */
@@ -1286,6 +1288,7 @@ static void CL_ConnectionlessPacket (void)
 {
 	char *s;
 	char *c;
+	int i;
 
 	MSG_BeginReading(&net_message);
 	MSG_ReadLong(&net_message);	/* skip the -1 */
@@ -1300,6 +1303,21 @@ static void CL_ConnectionlessPacket (void)
 
 	/* server connection */
 	if (!Q_strncmp(c, "client_connect", 13)) {
+		char *p;
+		for (i = 1; i < Cmd_Argc(); i++) {
+			p = Cmd_Argv(i);
+			if (!Q_strncmp(p, "dlserver=", 9)) {
+#ifdef USE_CURL
+				p += 9;
+				Com_sprintf(cls.downloadReferer, sizeof(cls.downloadReferer), "ufo://%s", buff);
+				CL_SetHTTPServer(p);
+				if (cls.downloadServer[0])
+					Com_Printf("HTTP downloading enabled, URL: %s\n", cls.downloadServer);
+#else
+				Com_Printf("HTTP downloading supported by server but this client was built without USE_CURL, bad luck.\n");
+#endif
+			}
+		}
 		if (cls.state == ca_connected) {
 			Com_Printf("Dup connect received. Ignored.\n");
 			return;
@@ -1579,22 +1597,34 @@ static void CL_SpawnSoldiers_f (void)
 }
 
 /**
- * @brief The server will send this command right before allowing the client into the server
- * @sa CL_StartGame
- * @todo recheck the checksum server side
+ * @brief
  */
-static void CL_Precache_f (void)
+void CL_RequestNextDownload (void)
 {
 	unsigned map_checksum = 0;
 	unsigned ufoScript_checksum = 0;
-	/* stop sound */
-	S_StopAllSounds();
+
+	if (cls.state != ca_connected)
+		return;
+
+	if (precache_check == CS_MODELS) { /* confirm map */
+		if (!CL_CheckOrDownloadFile(cl.configstrings[CS_MODELS+1]))
+			return; /* started a download */
+		precache_check = CS_MODELS + 1;
+	}
+
+#ifdef USE_CURL
+	/* map might still be downloading? */
+	if (CL_PendingHTTPDownloads())
+		return;
+#endif
 
 	/* for singleplayer game this is already loaded in our local server */
 	/* and if we are the server we don't have to reload the map here, too */
 	if (!Com_ServerState()) {
 		/* activate the map loading screen for multiplayer, too */
 		SCR_BeginLoadingPlaque();
+
 		CM_LoadMap(cl.configstrings[CS_TILES], cl.configstrings[CS_POSITIONS], &map_checksum);
 		if (!*cl.configstrings[CS_VERSION] || !*cl.configstrings[CS_MAPCHECKSUM] || !*cl.configstrings[CS_UFOCHECKSUM]) {
 			Com_sprintf(popupText, sizeof(popupText), _("Local game version (%s) differs from the servers"), UFO_VERSION);
@@ -1636,6 +1666,21 @@ static void CL_Precache_f (void)
 	/* for singleplayer the soldiers get spawned here */
 	if (ccs.singleplayer || !baseCurrent)
 		CL_SpawnSoldiers_f();
+}
+
+
+/**
+ * @brief The server will send this command right before allowing the client into the server
+ * @sa CL_StartGame
+ * @todo recheck the checksum server side
+ */
+static void CL_Precache_f (void)
+{
+	precache_check = CS_MODELS;
+
+	/* stop sound */
+	S_StopAllSounds();
+	CL_RequestNextDownload();
 }
 
 /**
@@ -1940,6 +1985,13 @@ static void CL_InitLocal (void)
 	noipx = Cvar_Get("noipx", "0", CVAR_NOSET, "Don't use IPX as network protocol");
 	masterserver_ip = Cvar_Get("masterserver_ip", "195.136.48.62", CVAR_ARCHIVE, "IP address of UFO:AI masterserver (Sponsored by NineX)");
 	masterserver_port = Cvar_Get("masterserver_port", "27900", CVAR_ARCHIVE, "Port of UFO:AI masterserver");
+
+#ifdef HAVE_CURL
+	cl_http_proxy = Cvar_Get("cl_http_proxy", "", 0, NULL);
+	cl_http_filelists = Cvar_Get("cl_http_filelists", "1", 0, NULL);
+	cl_http_downloads = Cvar_Get("cl_http_downloads", "1", 0, "Try to download files via http");
+	cl_http_max_connections = Cvar_Get("cl_http_max_connections", "1", 0, NULL);
+#endif /* HAVE_CURL */
 
 	/* register our commands */
 	Cmd_AddCommand("cmd", CL_ForwardToServer_f, "Forward to server");
@@ -2309,12 +2361,20 @@ extern void CL_Frame (int msec)
 
 	extratime = 0;
 
+	/* don't extrapolate too far ahead */
 	if (cls.frametime > (1.0 / 5))
 		cls.frametime = (1.0 / 5);
 
 	/* if in the debugger last frame, don't timeout */
 	if (msec > 5000)
 		cls.netchan.last_received = Sys_Milliseconds();
+
+	if (cls.state == ca_connected) {
+#ifdef HAVE_CURL
+		/* we run full speed when connecting */
+		CL_RunHTTPDownloads();
+#endif /* HAVE_CURL */
+	}
 
 	/* fetch results from server */
 	CL_ReadPackets();
@@ -2418,6 +2478,10 @@ extern void CL_Init (void)
 	/* Default to single-player mode */
 	ccs.singleplayer = qtrue;
 
+#ifdef HAVE_CURL
+	CL_InitHTTPDownloads();
+#endif /* HAVE_CURL */
+
 	CL_InitParticles();
 }
 
@@ -2439,6 +2503,9 @@ extern void CL_Shutdown (void)
 	}
 	isdown = qtrue;
 
+#ifdef HAVE_CURL
+	CL_HTTP_Cleanup(qtrue);
+#endif /* HAVE_CURL */
 	Irc_Shutdown();
 	CL_WriteConfiguration();
 	Con_SaveConsoleHistory(FS_Gamedir());

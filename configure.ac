@@ -52,13 +52,17 @@ AC_ARG_WITH(vid_vidmode,
 	[AS_HELP_STRING([--with-vid-vidmode], [compile with vidmode support @<:@default=check@:>@])],
 	[], [with_vid_vidmode=check])
 
+AC_ARG_WITH(curl,
+	[AS_HELP_STRING([--with-curl], [compile with curl download support @<:@default=check@:>@])],
+	[], [with_curl=check])
+
 AC_ARG_WITH(ipv6,
 	[AS_HELP_STRING([--with-ipv6], [compile with ipv6 support @<:@default=no@:>@])],
 	[], [with_ipv6=no])
 
 AC_ARG_WITH(curses,
-	[AS_HELP_STRING([--with-curses], [compile with curses console support @<:@default=no@:>@])],
-	[], [with_curses=no])
+	[AS_HELP_STRING([--with-curses], [compile with curses console support @<:@default=check@:>@])],
+	[], [with_curses=check])
 
 AC_ARG_WITH(openal,
 	[AS_HELP_STRING([--with-openal], [build openal sound support @<:@default=no@:>@])],
@@ -1023,6 +1027,27 @@ else
 	AC_MSG_NOTICE([Without curses])
 fi
 SERVER_LIBS="$SERVER_LIBS $LIBS"
+
+#---------------------------------------------------------------------------------------------
+# Check for curl
+#---------------------------------------------------------------------------------------------
+
+LIBS=
+if test "$with_curl" = "check" || test "$with_curl" = "yes"
+then
+	AC_SEARCH_LIBS([curl_easy_init], [curl])
+	if test "$ac_cv_search_curl_easy_init" != "no"
+	then
+		AC_SUBST([HAVE_CURL],1)
+		AC_DEFINE([HAVE_CURL],1)
+	elif test "$with_curl" = "yes"
+	then
+		AC_MSG_ERROR([--with-curl specified but couldn't find ])
+	fi
+else
+	AC_MSG_NOTICE([Without cURL])
+fi
+CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 
 #---------------------------------------------------------------------------------------------
 # Check for ipv6

@@ -208,6 +208,8 @@ extern cvar_t *public_server;			/**< should heartbeats be sent */
 extern cvar_t *masterserver_ip;
 extern cvar_t *masterserver_port;
 
+extern cvar_t *sv_downloadserver;
+
 extern client_t *sv_client;
 extern player_t *sv_player;
 
