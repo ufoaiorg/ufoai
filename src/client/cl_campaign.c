@@ -4068,9 +4068,16 @@ static void CP_UFORecoveredSell_f (void)
  */
 static void CP_UFORecoveredDestroy_f (void)
 {
+	char messageBuffer[256];
+
 	/* Do nothing if recovery process is finished. */
 	if (Cvar_VariableInteger("mission_uforecoverydone") == 1)
 		return;
+
+	Com_sprintf(messageBuffer, sizeof(messageBuffer), va("%s %s %s.", _("Secured UFO of type"), 
+	UFO_UfoTypeToName(Cvar_VariableInteger("mission_ufotype")),
+	_("was destroyed.")));
+	MN_AddNewMessage(_("UFO Recovery"), messageBuffer, qfalse, MSG_STANDARD, NULL);
 
 	/* UFO recovery process is done, disable buttons. */
 	CP_UFORecoveryDone();
