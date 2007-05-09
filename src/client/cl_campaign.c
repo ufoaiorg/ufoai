@@ -2186,7 +2186,7 @@ static void CP_MissionTriggerFunctions (qboolean add)
  * Can execute console commands (triggers) on win and lose
  * This can be used for story dependent missions
  */
-static void CP_ExecuteMissionTrigger (mission_t * m, int won, base_t* base)
+extern void CP_ExecuteMissionTrigger (mission_t * m, int won, base_t* base)
 {
 	/* we add them only here - and remove them afterwards to prevent cheating */
 	CP_MissionTriggerFunctions(qtrue);
@@ -2547,9 +2547,6 @@ static void CL_GameResults_f (void)
 	Com_DPrintf("CL_GameResults_f - num %i\n", numberofsoldiers); /* DEBUG */
 
 	Com_DPrintf("CL_GameResults_f - done removing dead players\n");
-
-	/* onwin and onlose triggers */
-	CP_ExecuteMissionTrigger(selMis->def, won, baseCurrent);
 
 	/* Check for alien containment in aircraft homebase. */
 	if (baseCurrent->aircraft[baseCurrent->aircraftCurrent].alientypes && !baseCurrent->hasAlienCont) {

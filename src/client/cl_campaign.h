@@ -333,6 +333,7 @@ extern float CP_GetDistance(const vec2_t pos1, const vec2_t pos2);
 void AIR_NewAircraft(base_t * base, const char *name);
 void CL_ParseResearchedCampaignItems(const char *name, char **text);
 void CL_ParseResearchableCampaignStates(const char *name, char **text, qboolean researchable);
+extern void CP_ExecuteMissionTrigger (mission_t * m, int won, base_t* base);
 
 campaign_t* CL_GetCampaign(const char* name);
 void CL_GameExit(void);

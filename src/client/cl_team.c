@@ -2010,10 +2010,15 @@ extern void CL_ParseResults (sizebuf_t * buf)
 	}
 	/* show win screen */
 	if (ccs.singleplayer) {
-		if (winner == we)
+		if (winner == we) {
+			/* onwin trigger */
+			CP_ExecuteMissionTrigger(selMis->def, 1, baseCurrent);
 			MN_PushMenu("won");
-		else
+		} else {
+			/* onlose trigger */
+			CP_ExecuteMissionTrigger(selMis->def, 0, baseCurrent);
 			MN_PushMenu("lost");
+		}
 		/* on singleplayer we disconnect the game */
 		/* we can safely wipe all mission data now */
 		/* @todo: I don't understand how this works
