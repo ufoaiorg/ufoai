@@ -3830,7 +3830,7 @@ static void CP_UFORecovered_f (void)
 {
 	int i;
 	ufoType_t UFOtype;
-	base_t *base;
+	base_t *base  = NULL;
 	qboolean hasUFOhangar = qfalse;
 
 	if (Cmd_Argc() < 2) {
@@ -3920,7 +3920,7 @@ static void CP_UFORecoveredStart_f (void)
 static void CP_UFORecoveredStore_f (void)
 {
 	int i, hasufohangar = 0;
-	base_t *base;
+	base_t *base = NULL;
 	static char recoveryBaseSelectPopup[512];
 
 	recoveryBaseSelectPopup[0] = '\0';

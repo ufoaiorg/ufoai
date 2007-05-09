@@ -214,7 +214,7 @@ extern void UFO_CampaignCheckEvents (void)
 extern void UFO_PrepareRecovery (base_t *base)
 {
 	int i;
-	ufoRecoveries_t *recovery;
+	ufoRecoveries_t *recovery = NULL;
 	date_t event;
 
 	assert (base);
