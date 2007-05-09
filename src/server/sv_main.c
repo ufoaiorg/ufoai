@@ -1168,7 +1168,7 @@ extern void SV_Init (void)
 	timeout = Cvar_Get("timeout", "125", 0, NULL);
 	zombietime = Cvar_Get("zombietime", "2", 0, NULL);
 	sv_showclamp = Cvar_Get("showclamp", "0", 0, NULL);
-	sv_downloadserver = Cvar_Get("sv_downloadserver", "", 0, "URL to a location where clients can download game content over HTTP");
+	sv_downloadserver = Cvar_Get("sv_downloadserver", "", CVAR_ARCHIVE, "URL to a location where clients can download game content over HTTP");
 	sv_paused = Cvar_Get("paused", "0", 0, NULL);
 	sv_timedemo = Cvar_Get("timedemo", "0", 0, NULL);
 	sv_enforcetime = Cvar_Get("sv_enforcetime", "0", 0, NULL);

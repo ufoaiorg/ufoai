@@ -1304,6 +1304,7 @@ static void CL_ConnectionlessPacket (void)
 	/* server connection */
 	if (!Q_strncmp(c, "client_connect", 13)) {
 		char *p, *buff;
+		buff = NET_AdrToString(cls.netchan.remote_address);
 		for (i = 1; i < Cmd_Argc(); i++) {
 			p = Cmd_Argv(i);
 			if (!Q_strncmp(p, "dlserver=", 9)) {
