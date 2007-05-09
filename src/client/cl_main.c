@@ -1303,19 +1303,19 @@ static void CL_ConnectionlessPacket (void)
 
 	/* server connection */
 	if (!Q_strncmp(c, "client_connect", 13)) {
-		char *p;
+		char *p, *buff;
 		for (i = 1; i < Cmd_Argc(); i++) {
 			p = Cmd_Argv(i);
 			if (!Q_strncmp(p, "dlserver=", 9)) {
-#ifdef USE_CURL
+#ifdef HAVE_CURL
 				p += 9;
 				Com_sprintf(cls.downloadReferer, sizeof(cls.downloadReferer), "ufo://%s", buff);
 				CL_SetHTTPServer(p);
 				if (cls.downloadServer[0])
 					Com_Printf("HTTP downloading enabled, URL: %s\n", cls.downloadServer);
 #else
-				Com_Printf("HTTP downloading supported by server but this client was built without USE_CURL, bad luck.\n");
-#endif
+				Com_Printf("HTTP downloading supported by server but this client was built without HAVE_CURL, bad luck.\n");
+#endif /* HAVE_CURL */
 			}
 		}
 		if (cls.state == ca_connected) {
@@ -1613,11 +1613,11 @@ void CL_RequestNextDownload (void)
 		precache_check = CS_MODELS + 1;
 	}
 
-#ifdef USE_CURL
+#ifdef HAVE_CURL
 	/* map might still be downloading? */
 	if (CL_PendingHTTPDownloads())
 		return;
-#endif
+#endif /* HAVE_CURL */
 
 	/* for singleplayer game this is already loaded in our local server */
 	/* and if we are the server we don't have to reload the map here, too */
