@@ -86,8 +86,8 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /debug /machine:I386
-# ADD LINK32 winmm.lib wsock32.lib gdi32.lib kernel32.lib user32.lib /nologo /subsystem:windows /incremental:no /map /debug /machine:I386 /out:"..\..\ufo.exe"
-# SUBTRACT LINK32 /nodefaultlib
+# ADD LINK32 winmm.lib wsock32.lib gdi32.lib kernel32.lib user32.lib /nologo /subsystem:windows /map /debug /machine:I386 /out:"..\..\ufo.exe"
+# SUBTRACT LINK32 /pdb:none
 
 !ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
 
@@ -1470,23 +1470,7 @@ SOURCE=..\..\src\ports\win32\intl.lib
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\ports\win32\ALc.lib
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\ports\win32\ALu.lib
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\ports\win32\ALut.lib
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\ports\win32\OpenAL32.lib
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\ports\win32\zlib1.lib
+SOURCE=..\..\src\ports\win32\vc6\zlib.lib
 # End Source File
 # End Group
 # End Target

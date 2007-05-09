@@ -39,6 +39,7 @@ RSC=rc.exe
 # PROP Use_Debug_Libraries 0
 # PROP Output_Dir "ufo2map___Win32_Release"
 # PROP Intermediate_Dir "ufo2map___Win32_Release"
+# PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
 # ADD CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
@@ -73,7 +74,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 /nologo /subsystem:console /debug /machine:I386 /out:"..\..\ufo2map.exe" /pdbtype:sept
+# ADD LINK32 gdi32.lib kernel32.lib user32.lib /nologo /subsystem:console /debug /machine:I386 /out:"..\..\ufo2map.exe" /pdbtype:sept
 
 !ENDIF 
 
@@ -111,6 +112,10 @@ SOURCE=..\..\src\tools\ufo2map\faces.c
 # Begin Source File
 
 SOURCE=..\..\src\tools\ufo2map\glfile.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\qcommon\ioapi.c
 # End Source File
 # Begin Source File
 
@@ -186,6 +191,10 @@ SOURCE=..\..\src\tools\ufo2map\ufo2map.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\qcommon\unzip.c
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\tools\ufo2map\writebsp.c
 # End Source File
 # End Group
@@ -254,7 +263,7 @@ SOURCE=..\..\src\ports\win32\zlib.h
 # PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
 # Begin Source File
 
-SOURCE=..\..\src\ports\win32\zlib1.lib
+SOURCE=..\..\src\ports\win32\vc6\zlib.lib
 # End Source File
 # End Group
 # End Target
