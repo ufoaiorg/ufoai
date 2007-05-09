@@ -146,28 +146,28 @@ menu irc
 
 	pic irc_scrollup
 	{
-		tooltip "_Scroll up (right click to scroll multiple lines)"
+		tooltip "_Scroll up"
 		image menu/buttons_small
 		pos		"710 78"
 		texl	"32 32"
 		texh	"48 48"
 		mousefx	true
 		click	{ cmd "mn_textscroll irc_data -1;" }
-		rclick	{ cmd "mn_textscroll irc_data -10;" }
+		repeat	true
 		out	{ *irc_scrollup texl "32 32" *irc_scrollup texh "48 48" }
 		in	{ *irc_scrollup texl "48 32" *irc_scrollup texh "64 48" }
 	}
 
 	pic irc_scrolldown
 	{
-		tooltip "_Scroll down (right click to scroll multiple lines)"
+		tooltip "_Scroll down"
 		image menu/buttons_small
 		pos		"710 688"
 		texl	"32 48"
 		texh	"48 64"
 		mousefx	true
 		click	{ cmd "mn_textscroll irc_data 1;" }
-		rclick	{ cmd "mn_textscroll irc_data 10;" }
+		repeat	true
 		out	{ *irc_scrolldown texl "32 48" *irc_scrolldown texh "48 64" }
 		in	{ *irc_scrolldown texl "48 48" *irc_scrolldown texh "64 64" }
 	}

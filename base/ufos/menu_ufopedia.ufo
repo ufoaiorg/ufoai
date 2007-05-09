@@ -122,14 +122,14 @@ menu ufopedia
 	pic button_scrollup
 	{
 		if "mn_up_mail == 0"
-		tooltip "_Scroll up (right click to scroll multiple lines)"
+		tooltip "_Scroll up"
 		image	menu/buttons_small
 		mousefx true
 		pos		"25 85"
 		texh	"48 48"
 		texl	"32 32"
 		click	{ cmd "mn_textscroll ufopedia -1;" }
-		rclick	{ cmd "mn_textscroll ufopedia -10;" }
+		repeat	true
 		out		{ *button_scrollup texl "32 32" *button_scrollup texh "48 48" }
 		in		{ *button_scrollup texl "48 32" *button_scrollup texh "64 48" }
 	}
@@ -137,14 +137,14 @@ menu ufopedia
 	pic button_scrolldown
 	{
 		if "mn_up_mail == 0"
-		tooltip "_Scroll down (right click to scroll multiple lines)"
+		tooltip "_Scroll down"
 		image	menu/buttons_small
 		mousefx true
 		pos		"25 450"
 		texl	"32 48"
 		texh	"48 64"
 		click	{ cmd "mn_textscroll ufopedia 1;" }
-		rclick	{ cmd "mn_textscroll ufopedia 10;" }
+		repeat	true
 		out		{ *button_scrolldown texl "32 48" *button_scrolldown texh "48 64" }
 		in		{ *button_scrolldown texl "48 48" *button_scrolldown texh "64 64" }
 	}
@@ -152,14 +152,14 @@ menu ufopedia
 	pic button_scrollup_mail
 	{
 		if "mn_up_mail == 1"
-		tooltip "_Scroll up (right click to scroll multiple lines)"
+		tooltip "_Scroll up"
 		image	menu/buttons_small
 		mousefx true
 		pos		"25 185"
 		texh	"48 48"
 		texl	"32 32"
 		click	{ cmd "mn_textscroll ufopedia_mail -1;" }
-		rclick	{ cmd "mn_textscroll ufopedia_mail -10;" }
+		repeat	true
 		out		{ *button_scrollup_mail texl "32 32" *button_scrollup_mail texh "48 48" }
 		in		{ *button_scrollup_mail texl "48 32" *button_scrollup_mail texh "64 48" }
 	}
@@ -167,14 +167,14 @@ menu ufopedia
 	pic button_scrolldown_mail
 	{
 		if "mn_up_mail == 1"
-		tooltip "_Scroll down (right click to scroll multiple lines)"
+		tooltip "_Scroll down"
 		image	menu/buttons_small
 		mousefx true
 		pos		"25 450"
 		texl	"32 48"
 		texh	"48 64"
 		click	{ cmd "mn_textscroll ufopedia_mail 1;" }
-		rclick	{ cmd "mn_textscroll ufopedia_mail 10;" }
+		repeat	true
 		out		{ *button_scrolldown_mail texl "32 48" *button_scrolldown_mail texh "48 64" }
 		in		{ *button_scrolldown_mail texl "48 48" *button_scrolldown_mail texh "64 64" }
 	}

@@ -375,6 +375,7 @@ menu research
 		pos		"376 40"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 0; mn_rs_add 0" }
+		repeat	true
 		whup	{ cmd "research_select 0; mn_rs_add 0" }
 		whdown	{ cmd "research_select 0; mn_rs_remove 0" }
 	}
@@ -385,6 +386,7 @@ menu research
 		pos		"392 40"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 0; mn_rs_remove 0" }
+		repeat	true
 		whup	{ cmd "research_select 0; mn_rs_add 0" }
 		whdown	{ cmd "research_select 0; mn_rs_remove 0" }
 	}
@@ -395,6 +397,7 @@ menu research
 		pos		"376 65"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 1; mn_rs_add 1" }
+		repeat	true
 		whup	{ cmd "research_select 1; mn_rs_add 1" }
 		whdown	{ cmd "research_select 1; mn_rs_remove 1" }
 	}
@@ -405,6 +408,7 @@ menu research
 		pos		"392 65"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 1; mn_rs_remove 1" }
+		repeat	true
 		whup	{ cmd "research_select 1; mn_rs_add 1" }
 		whdown	{ cmd "research_select 1; mn_rs_remove 1" }
 	}
@@ -415,6 +419,7 @@ menu research
 		pos		"376 90"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 2; mn_rs_add 2" }
+		repeat	true
 		whup	{ cmd "research_select 2; mn_rs_add 2" }
 		whdown	{ cmd "research_select 2; mn_rs_remove 2" }
 	}
@@ -425,6 +430,7 @@ menu research
 		pos		"392 90"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 2; mn_rs_remove 2" }
+		repeat	true
 		whup	{ cmd "research_select 2; mn_rs_add 2" }
 		whdown	{ cmd "research_select 2; mn_rs_remove 2" }
 	}
@@ -435,6 +441,7 @@ menu research
 		pos		"376 115"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 3; mn_rs_add 3" }
+		repeat	true
 		whup	{ cmd "research_select 3; mn_rs_add 3" }
 		whdown	{ cmd "research_select 3; mn_rs_remove 3" }
 	}
@@ -445,6 +452,7 @@ menu research
 		pos		"392 115"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 3; mn_rs_remove 3" }
+		repeat	true
 		whup	{ cmd "research_select 3; mn_rs_add 3" }
 		whdown	{ cmd "research_select 3; mn_rs_remove 3" }
 	}
@@ -455,6 +463,7 @@ menu research
 		pos		"376 140"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 4; mn_rs_add 4" }
+		repeat	true
 		whup	{ cmd "research_select 4; mn_rs_add 4" }
 		whdown	{ cmd "research_select 4; mn_rs_remove 4" }
 	}
@@ -465,6 +474,7 @@ menu research
 		pos		"392 140"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 4; mn_rs_remove 4" }
+		repeat	true
 		whup	{ cmd "research_select 4; mn_rs_add 4" }
 		whdown	{ cmd "research_select 4; mn_rs_remove 4" }
 	}
@@ -475,6 +485,7 @@ menu research
 		pos		"376 165"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 5; mn_rs_add 5" }
+		repeat	true
 		whup	{ cmd "research_select 5; mn_rs_add 5" }
 		whdown	{ cmd "research_select 5; mn_rs_remove 5" }
 	}
@@ -485,6 +496,7 @@ menu research
 		pos		"392 165"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 5; mn_rs_remove 5" }
+		repeat	true
 		whup	{ cmd "research_select 5; mn_rs_add 5" }
 		whdown	{ cmd "research_select 5; mn_rs_remove 5" }
 	}
@@ -495,6 +507,7 @@ menu research
 		pos		"376 190"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 6; mn_rs_add 6" }
+		repeat	true
 		whup	{ cmd "research_select 6; mn_rs_add 6" }
 		whdown	{ cmd "research_select 6; mn_rs_remove 6" }
 	}
@@ -505,6 +518,7 @@ menu research
 		pos		"392 190"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 6; mn_rs_remove 6" }
+		repeat	true
 		whup	{ cmd "research_select 6; mn_rs_add 6" }
 		whdown	{ cmd "research_select 6; mn_rs_remove 6" }
 	}
@@ -515,6 +529,7 @@ menu research
 		pos		"376 215"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 7; mn_rs_add 7" }
+		repeat	true
 		whup	{ cmd "research_select 7; mn_rs_add 7" }
 		whdown	{ cmd "research_select 7; mn_rs_remove 7" }
 	}
@@ -525,6 +540,7 @@ menu research
 		pos		"392 215"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 7; mn_rs_remove 7" }
+		repeat	true
 		whup	{ cmd "research_select 7; mn_rs_add 7" }
 		whdown	{ cmd "research_select 7; mn_rs_remove 7" }
 	}
@@ -535,6 +551,7 @@ menu research
 		pos		"376 240"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 8; mn_rs_add 8" }
+		repeat	true
 		whup	{ cmd "research_select 8; mn_rs_add 8" }
 		whdown	{ cmd "research_select 8; mn_rs_remove 8" }
 	}
@@ -545,6 +562,7 @@ menu research
 		pos		"392 240"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 8; mn_rs_remove 8" }
+		repeat	true
 		whup	{ cmd "research_select 8; mn_rs_add 8" }
 		whdown	{ cmd "research_select 8; mn_rs_remove 8" }
 	}
@@ -555,6 +573,7 @@ menu research
 		pos		"376 265"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 9; mn_rs_add 9" }
+		repeat	true
 		whup	{ cmd "research_select 9; mn_rs_add 9" }
 		whdown	{ cmd "research_select 9; mn_rs_remove 9" }
 	}
@@ -565,6 +584,7 @@ menu research
 		pos		"392 265"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 9; mn_rs_remove 9" }
+		repeat	true
 		whup	{ cmd "research_select 9; mn_rs_add 9" }
 		whdown	{ cmd "research_select 9; mn_rs_remove 9" }
 	}
@@ -575,6 +595,7 @@ menu research
 		pos		"376 290"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 10; mn_rs_add 10" }
+		repeat	true
 		whup	{ cmd "research_select 10; mn_rs_add 10" }
 		whdown	{ cmd "research_select 10; mn_rs_remove 10" }
 	}
@@ -585,6 +606,7 @@ menu research
 		pos		"392 290"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 10; mn_rs_remove 10" }
+		repeat	true
 		whup	{ cmd "research_select 10; mn_rs_add 10" }
 		whdown	{ cmd "research_select 10; mn_rs_remove 10" }
 	}
@@ -595,6 +617,7 @@ menu research
 		pos		"376 315"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 11; mn_rs_add 11" }
+		repeat	true
 		whup	{ cmd "research_select 11; mn_rs_add 11" }
 		whdown	{ cmd "research_select 11; mn_rs_remove 11" }
 	}
@@ -605,6 +628,7 @@ menu research
 		pos		"392 315"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 11; mn_rs_remove 11" }
+		repeat	true
 		whup	{ cmd "research_select 11; mn_rs_add 11" }
 		whdown	{ cmd "research_select 11; mn_rs_remove 11" }
 	}
@@ -615,6 +639,7 @@ menu research
 		pos		"376 340"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 12; mn_rs_add 12" }
+		repeat	true
 		whup	{ cmd "research_select 12; mn_rs_add 12" }
 		whdown	{ cmd "research_select 12; mn_rs_remove 12" }
 	}
@@ -625,6 +650,7 @@ menu research
 		pos		"392 340"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 12; mn_rs_remove 12" }
+		repeat	true
 		whup	{ cmd "research_select 12; mn_rs_add 12" }
 		whdown	{ cmd "research_select 12; mn_rs_remove 12" }
 	}
@@ -635,6 +661,7 @@ menu research
 		pos		"376 365"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 13; mn_rs_add 13" }
+		repeat	true
 		whup	{ cmd "research_select 13; mn_rs_add 13" }
 		whdown	{ cmd "research_select 13; mn_rs_remove 13" }
 	}
@@ -645,6 +672,7 @@ menu research
 		pos		"392 365"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 13; mn_rs_remove 13" }
+		repeat	true
 		whup	{ cmd "research_select 13; mn_rs_add 13" }
 		whdown	{ cmd "research_select 13; mn_rs_remove 13" }
 	}
@@ -655,6 +683,7 @@ menu research
 		pos		"376 390"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 14; mn_rs_add 14" }
+		repeat	true
 		whup	{ cmd "research_select 14; mn_rs_add 14" }
 		whdown	{ cmd "research_select 14; mn_rs_remove 14" }
 	}
@@ -665,6 +694,7 @@ menu research
 		pos		"392 390"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 14; mn_rs_remove 14" }
+		repeat	true
 		whup	{ cmd "research_select 14; mn_rs_add 14" }
 		whdown	{ cmd "research_select 14; mn_rs_remove 14" }
 	}
@@ -675,6 +705,7 @@ menu research
 		pos		"376 415"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 15; mn_rs_add 15" }
+		repeat	true
 		whup	{ cmd "research_select 15; mn_rs_add 15" }
 		whdown	{ cmd "research_select 15; mn_rs_remove 15" }
 	}
@@ -685,6 +716,7 @@ menu research
 		pos		"392 415"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 15; mn_rs_remove 15" }
+		repeat	true
 		whup	{ cmd "research_select 15; mn_rs_add 15" }
 		whdown	{ cmd "research_select 15; mn_rs_remove 15" }
 	}
@@ -695,6 +727,7 @@ menu research
 		pos		"376 440"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 16; mn_rs_add 16" }
+		repeat	true
 		whup	{ cmd "research_select 16; mn_rs_add 16" }
 		whdown	{ cmd "research_select 16; mn_rs_remove 16" }
 	}
@@ -705,6 +738,7 @@ menu research
 		pos		"392 440"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 16; mn_rs_remove 16" }
+		repeat	true
 		whup	{ cmd "research_select 16; mn_rs_add 16" }
 		whdown	{ cmd "research_select 16; mn_rs_remove 16" }
 	}
@@ -715,6 +749,7 @@ menu research
 		pos		"376 465"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 17; mn_rs_add 17" }
+		repeat	true
 		whup	{ cmd "research_select 17; mn_rs_add 17" }
 		whdown	{ cmd "research_select 17; mn_rs_remove 17" }
 	}
@@ -725,6 +760,7 @@ menu research
 		pos		"392 465"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 17; mn_rs_remove 17" }
+		repeat	true
 		whup	{ cmd "research_select 17; mn_rs_add 17" }
 		whdown	{ cmd "research_select 17; mn_rs_remove 17" }
 	}
@@ -735,6 +771,7 @@ menu research
 		pos		"376 490"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 18; mn_rs_add 18" }
+		repeat	true
 		whup	{ cmd "research_select 18; mn_rs_add 18" }
 		whdown	{ cmd "research_select 18; mn_rs_remove 18" }
 	}
@@ -745,6 +782,7 @@ menu research
 		pos		"392 490"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 18; mn_rs_remove 18" }
+		repeat	true
 		whup	{ cmd "research_select 18; mn_rs_add 18" }
 		whdown	{ cmd "research_select 18; mn_rs_remove 18" }
 	}
@@ -755,6 +793,7 @@ menu research
 		pos		"376 515"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 19; mn_rs_add 19" }
+		repeat	true
 		whup	{ cmd "research_select 19; mn_rs_add 19" }
 		whdown	{ cmd "research_select 19; mn_rs_remove 19" }
 	}
@@ -765,6 +804,7 @@ menu research
 		pos		"392 515"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 19; mn_rs_remove 19" }
+		repeat	true
 		whup	{ cmd "research_select 19; mn_rs_add 19" }
 		whdown	{ cmd "research_select 19; mn_rs_remove 19" }
 	}
@@ -775,6 +815,7 @@ menu research
 		pos		"376 540"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 20; mn_rs_add 20" }
+		repeat	true
 		whup	{ cmd "research_select 20; mn_rs_add 20" }
 		whdown	{ cmd "research_select 20; mn_rs_remove 20" }
 	}
@@ -785,6 +826,7 @@ menu research
 		pos		"392 540"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 20; mn_rs_remove 20" }
+		repeat	true
 		whup	{ cmd "research_select 20; mn_rs_add 20" }
 		whdown	{ cmd "research_select 20; mn_rs_remove 20" }
 	}
@@ -795,6 +837,7 @@ menu research
 		pos		"376 565"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 21; mn_rs_add 21" }
+		repeat	true
 		whup	{ cmd "research_select 21; mn_rs_add 21" }
 		whdown	{ cmd "research_select 21; mn_rs_remove 21" }
 	}
@@ -805,6 +848,7 @@ menu research
 		pos		"392 565"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 21; mn_rs_remove 21" }
+		repeat	true
 		whup	{ cmd "research_select 21; mn_rs_add 21" }
 		whdown	{ cmd "research_select 21; mn_rs_remove 21" }
 	}
@@ -815,6 +859,7 @@ menu research
 		pos		"376 590"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 22; mn_rs_add 22" }
+		repeat	true
 		whup	{ cmd "research_select 22; mn_rs_add 22" }
 		whdown	{ cmd "research_select 22; mn_rs_remove 22" }
 	}
@@ -825,6 +870,7 @@ menu research
 		pos		"392 590"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 22; mn_rs_remove 22" }
+		repeat	true
 		whup	{ cmd "research_select 22; mn_rs_add 22" }
 		whdown	{ cmd "research_select 22; mn_rs_remove 22" }
 	}
@@ -835,6 +881,7 @@ menu research
 		pos		"376 615"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 23; mn_rs_add 23" }
+		repeat	true
 		whup	{ cmd "research_select 23; mn_rs_add 23" }
 		whdown	{ cmd "research_select 23; mn_rs_remove 23" }
 	}
@@ -845,6 +892,7 @@ menu research
 		pos		"392 615"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 23; mn_rs_remove 23" }
+		repeat	true
 		whup	{ cmd "research_select 23; mn_rs_add 23" }
 		whdown	{ cmd "research_select 23; mn_rs_remove 23" }
 	}
@@ -855,6 +903,7 @@ menu research
 		pos		"376 640"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 24; mn_rs_add 24" }
+		repeat	true
 		whup	{ cmd "research_select 24; mn_rs_add 24" }
 		whdown	{ cmd "research_select 24; mn_rs_remove 24" }
 	}
@@ -865,6 +914,7 @@ menu research
 		pos		"392 640"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 24; mn_rs_remove 24" }
+		repeat	true
 		whup	{ cmd "research_select 24; mn_rs_add 24" }
 		whdown	{ cmd "research_select 24; mn_rs_remove 24" }
 	}
@@ -875,6 +925,7 @@ menu research
 		pos		"376 665"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 25; mn_rs_add 25" }
+		repeat	true
 		whup	{ cmd "research_select 25; mn_rs_add 25" }
 		whdown	{ cmd "research_select 25; mn_rs_remove 25" }
 	}
@@ -885,6 +936,7 @@ menu research
 		pos		"392 665"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 25; mn_rs_remove 25" }
+		repeat	true
 		whup	{ cmd "research_select 25; mn_rs_add 25" }
 		whdown	{ cmd "research_select 25; mn_rs_remove 25" }
 	}
@@ -895,6 +947,7 @@ menu research
 		pos		"376 690"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 26; mn_rs_add 26" }
+		repeat	true
 		whup	{ cmd "research_select 26; mn_rs_add 26" }
 		whdown	{ cmd "research_select 26; mn_rs_remove 26" }
 	}
@@ -905,6 +958,7 @@ menu research
 		pos		"392 690"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 26; mn_rs_remove 26" }
+		repeat	true
 		whup	{ cmd "research_select 26; mn_rs_add 26" }
 		whdown	{ cmd "research_select 26; mn_rs_remove 26" }
 	}
@@ -915,6 +969,7 @@ menu research
 		pos		"376 715"	mousefx true
 		texl	"0 0"		texh	"16 16"
 		click	{ cmd "research_select 27; mn_rs_add 27" }
+		repeat	true
 		whup	{ cmd "research_select 27; mn_rs_add 27" }
 		whdown	{ cmd "research_select 27; mn_rs_remove 27" }
 	}
@@ -925,6 +980,7 @@ menu research
 		pos		"392 715"	mousefx	true
 		texl	"16 0"		texh	"32 16"
 		click	{ cmd "research_select 27; mn_rs_remove 27" }
+		repeat	true
 		whup	{ cmd "research_select 27; mn_rs_add 27" }
 		whdown	{ cmd "research_select 27; mn_rs_remove 27" }
 	}
