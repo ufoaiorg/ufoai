@@ -65,7 +65,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /GZ /c
-# ADD CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS DEDICATED_ONLY" /YX /FD /GZ /c
+# ADD CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /D "DEDICATED_ONLY" /YX /FD /GZ /c
 # ADD BASE RSC /l 0x407 /d "_DEBUG"
 # ADD RSC /l 0x407 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -130,6 +130,10 @@ SOURCE=..\..\src\qcommon\md5.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\qcommon\msg.c
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\qcommon\net_chan.c
 # End Source File
 # Begin Source File
@@ -190,6 +194,70 @@ SOURCE=..\..\src\qcommon\unzip.c
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
+SOURCE=..\..\src\client\anorms.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\cl_aircraft.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\cl_aliencont.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\cl_basemanagement.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\cl_campaign.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\cl_employee.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\cl_event.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\cl_hospital.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\cl_input.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\cl_keys.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\cl_market.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\cl_produce.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\cl_research.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\cl_transfer.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\cl_ufopedia.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\client.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\qcommon\cmd.h
 # End Source File
 # Begin Source File
@@ -218,6 +286,10 @@ SOURCE=..\..\src\qcommon\filesys.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\game\game.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\qcommon\ioapi.h
 # End Source File
 # Begin Source File
@@ -234,7 +306,31 @@ SOURCE=..\..\src\qcommon\net_chan.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\ports\win32\ogg.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\ports\win32\os_types.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\game\q_shared.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\qcommon\qcommon.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\qcommon\qfiles.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\ref.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\screen.h
 # End Source File
 # Begin Source File
 
@@ -246,11 +342,27 @@ SOURCE=..\..\src\server\server.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\client\snd_loc.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\sound.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\qcommon\ufotypes.h
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\src\qcommon\unzip.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\vid.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\ports\win32\vorbisfile.h
 # End Source File
 # Begin Source File
 
@@ -271,6 +383,10 @@ SOURCE=..\..\src\ports\win32\zlib.h
 # Begin Source File
 
 SOURCE=..\..\src\ports\win32\ufo.rc
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\ports\win32\ufo_ded.ico
 # End Source File
 # Begin Source File
 

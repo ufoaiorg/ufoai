@@ -478,14 +478,13 @@ extern void AIM_PrevAircraft_f (void)
  */
 extern qboolean AIR_AircraftHasEnoughFuel (aircraft_t *aircraft, const vec2_t destination)
 {
-	assert(aircraft);
 	base_t *base;
-	float distance=0;
+	float distance = 0;
+	mapline_t line;
 
+	assert(aircraft);
 	base = (base_t *) aircraft->homebase;
 	assert(base);
-
-	mapline_t line;
 
 	/* Calculate the line that the aircraft should follow to go to destination */
 	MAP_MapCalcLine(aircraft->pos, destination, &(line));

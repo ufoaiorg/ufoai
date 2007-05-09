@@ -259,6 +259,21 @@ SOURCE=..\..\src\client\cl_campaign.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\client\cl_console.c
+
+!IF  "$(CFG)" == "ufo - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\client\cl_employee.c
 
 !IF  "$(CFG)" == "ufo - Win32 Release"
@@ -305,6 +320,36 @@ SOURCE=..\..\src\client\cl_fx.c
 # Begin Source File
 
 SOURCE=..\..\src\client\cl_hospital.c
+
+!IF  "$(CFG)" == "ufo - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\cl_http.c
+
+!IF  "$(CFG)" == "ufo - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\cl_hunk.c
 
 !IF  "$(CFG)" == "ufo - Win32 Release"
 
@@ -724,21 +769,6 @@ SOURCE=..\..\src\ports\win32\conproc.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\client\cl_console.c
-
-!IF  "$(CFG)" == "ufo - Win32 Release"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
-
-!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
-
-!ENDIF 
-
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\src\qcommon\cvar.c
 
 !IF  "$(CFG)" == "ufo - Win32 Release"
@@ -830,6 +860,21 @@ SOURCE=..\..\src\qcommon\md4.c
 # Begin Source File
 
 SOURCE=..\..\src\qcommon\md5.c
+
+!IF  "$(CFG)" == "ufo - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\qcommon\msg.c
 
 !IF  "$(CFG)" == "ufo - Win32 Release"
 
@@ -1099,6 +1144,21 @@ SOURCE=..\..\src\ports\win32\sys_win.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\qcommon\unzip.c
+
+!IF  "$(CFG)" == "ufo - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\ports\win32\vid_dll.c
 
 !IF  "$(CFG)" == "ufo - Win32 Release"
@@ -1173,6 +1233,10 @@ SOURCE=..\..\src\client\cl_campaign.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\client\cl_console.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\client\cl_employee.h
 # End Source File
 # Begin Source File
@@ -1189,7 +1253,19 @@ SOURCE=..\..\src\client\cl_hospital.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\client\cl_http.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\cl_hunk.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\client\cl_input.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\cl_inventory.h
 # End Source File
 # Begin Source File
 
@@ -1198,6 +1274,10 @@ SOURCE=..\..\src\client\cl_keys.h
 # Begin Source File
 
 SOURCE=..\..\src\client\cl_market.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\cl_menu.h
 # End Source File
 # Begin Source File
 
@@ -1233,6 +1313,10 @@ SOURCE=..\..\src\qcommon\cmodel.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\ports\win32\codec.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\qcommon\common.h
 # End Source File
 # Begin Source File
@@ -1258,6 +1342,10 @@ SOURCE=..\..\src\game\game.h
 # Begin Source File
 
 SOURCE=..\..\src\qcommon\ioapi.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\qcommon\irc.h
 # End Source File
 # Begin Source File
 

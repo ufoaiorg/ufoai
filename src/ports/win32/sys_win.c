@@ -342,8 +342,9 @@ static LRESULT CALLBACK ServerWindowProc (HWND hwnd, UINT message, WPARAM wParam
  */
 char *Sys_GetCurrentUser (void)
 {
+#if _MSC_VER >= 1300 /* >= MSVC 7.0 */
 	static char s_userName[1024];
-	unsigned long size = sizeof( s_userName );
+	unsigned long size = sizeof(s_userName);
 
 	if (!GetUserName(s_userName, &size))
 		Q_strncpyz(s_userName, "player", sizeof(s_userName));
@@ -352,6 +353,9 @@ char *Sys_GetCurrentUser (void)
 		Q_strncpyz(s_userName, "player", sizeof(s_userName));
 
 	return s_userName;
+#else
+	return "player";
+#endif
 }
 
 /**
@@ -428,7 +432,7 @@ char *Sys_GetHomeDirectory (void)
 		return NULL;
 	}
 
-	if (!SUCCEEDED(SHGetFolderPath(NULL, CSIDL_APPDATA, NULL, 0, szPath))) {
+	if (!SUCCEEDED(qSHGetFolderPath(NULL, CSIDL_APPDATA, NULL, 0, szPath))) {
 		Com_Printf("Unable to detect CSIDL_APPDATA\n");
 		FreeLibrary(shfolder);
 		return NULL;

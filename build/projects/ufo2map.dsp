@@ -202,6 +202,10 @@ SOURCE=..\..\src\tools\ufo2map\common\cmdlib.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\qcommon\ioapi.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\tools\ufo2map\common\lbmlib.h
 # End Source File
 # Begin Source File
@@ -232,10 +236,26 @@ SOURCE=..\..\src\tools\ufo2map\common\scriplib.h
 
 SOURCE=..\..\src\tools\ufo2map\common\threads.h
 # End Source File
+# Begin Source File
+
+SOURCE=..\..\src\qcommon\unzip.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\ports\win32\zconf.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\ports\win32\zlib.h
+# End Source File
 # End Group
 # Begin Group "Resource Files"
 
 # PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe"
+# Begin Source File
+
+SOURCE=..\..\src\ports\win32\zlib1.lib
+# End Source File
 # End Group
 # End Target
 # End Project

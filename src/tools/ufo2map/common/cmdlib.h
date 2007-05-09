@@ -34,6 +34,12 @@ typedef unsigned char byte;
 
 #include "qfiles.h"
 
+#if defined(_WIN32)
+# ifndef snprintf
+#  define snprintf _snprintf
+# endif
+#endif
+
 extern	qboolean verbose;
 
 #define SYS_VRB 0 /* verbose support (on/off) */

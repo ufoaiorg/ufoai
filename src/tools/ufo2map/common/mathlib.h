@@ -12,6 +12,10 @@ typedef float vec_t;
 #endif
 typedef vec_t vec3_t[3];
 
+#ifndef M_PI
+#define M_PI        3.14159265358979323846  /* matches value in gcc v2 math.h */
+#endif
+
 #define	SIDE_FRONT		0
 #define	SIDE_ON			2
 #define	SIDE_BACK		1
