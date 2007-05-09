@@ -1609,7 +1609,7 @@ void CL_RequestNextDownload (void)
 		return;
 
 	if (precache_check == CS_MODELS) { /* confirm map */
-		if (!CL_CheckOrDownloadFile(cl.configstrings[CS_MODELS+1]))
+		if (!CL_CheckOrDownloadFile(cl.configstrings[CS_TILES]))
 			return; /* started a download */
 		precache_check = CS_MODELS + 1;
 	}

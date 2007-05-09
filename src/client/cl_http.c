@@ -423,11 +423,6 @@ qboolean CL_QueueHTTPDownload (const char *ufoPath)
 	if (needList) {
 		/* grab the filelist */
 		CL_QueueHTTPDownload (va("%s.filelist", cl.gamedir));
-
-		/* this is a nasty hack to let the server know what we're doing so admins don't
-		 * get confused by a ton of people stuck in CNCT state. */
-		MSG_WriteChar(&cls.netchan.message, clc_stringcmd);
-		MSG_WriteString(&cls.netchan.message, "download http\n");
 	}
 
 	/* special case for map file lists, i really wanted a server-push mechanism for this, but oh well */
