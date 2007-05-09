@@ -3855,6 +3855,9 @@ static void CP_UFORecovered_f (void)
 			break;
 		}
 	}
+	/* Do nothing without any base. */
+	if (!base)
+		return;
 	/* Prepare related cvars. */
 	Cvar_SetValue("mission_uforecovered", 1);	/* This is used in menus to enable UFO Recovery nodes. */
 	Cvar_SetValue("mission_ufotype", UFOtype);
@@ -3932,6 +3935,9 @@ static void CP_UFORecoveredStore_f (void)
 			Q_strcat(recoveryBaseSelectPopup, "\n", sizeof(recoveryBaseSelectPopup));
 		}
 	}
+	/* Do nothing without any base. */
+	if (!base)
+		return;
 	/* If only one base with UFO hangars, the recovery will be done in this base. */
 	if (hasufohangar <= 1) {
 		/* Base is already selected above. */

@@ -217,6 +217,8 @@ extern void UFO_PrepareRecovery (base_t *base)
 	ufoRecoveries_t *recovery;
 	date_t event;
 
+	assert (base);
+
 	/* Find free uforecovery slot. */
 	for (i = 0; i < MAX_RECOVERIES; i++) {
 		if (!gd.recoveries[i].active) {
