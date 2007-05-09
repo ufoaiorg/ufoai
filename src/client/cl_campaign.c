@@ -3818,6 +3818,7 @@ static void CP_CampaignStats_f (void)
 4. CP_UFORecoveredStart_f() starts UFO recovery process.
 5. CP_UFORecoveredSell_f() allows to sell UFO to desired nation.
 6. CP_UFORecoveredDestroy_f() destroys UFO.
+7. CP_UFORecoveryDone() finishes the recovery process and updates buttons on menu won.
 */
 /* ======================== */
 
@@ -3860,6 +3861,7 @@ static void CP_UFORecovered_f (void)
 		return;
 	/* Prepare related cvars. */
 	Cvar_SetValue("mission_uforecovered", 1);	/* This is used in menus to enable UFO Recovery nodes. */
+	Cvar_SetValue("mission_uforecoverydone", 0);	/* This is used in menus to block UFO Recovery nodes. */
 	Cvar_SetValue("mission_ufotype", UFOtype);
 	Cvar_SetValue("mission_noufohangar", 0);
 	if (!hasUFOhangar) {
@@ -3868,6 +3870,20 @@ static void CP_UFORecovered_f (void)
 		Cvar_SetValue("mission_noufohangar", 1);
 	}
 	Com_DPrintf("CP_UFORecovered_f()...: base: %s, UFO: %i\n", base->name, UFOtype);
+}
+
+/**
+ * @brief Updates UFO recovery process and disables buttons.
+ */
+static void CP_UFORecoveryDone (void)
+{
+	/* Disable UFORecovery buttons. */
+	Cbuf_AddText("disufostore\n");
+	Cbuf_AddText("disufosell\n");
+	Cbuf_AddText("disufodestroy\n");
+
+	/* Set done cvar for function updating. */
+	Cvar_SetValue("mission_uforecoverydone", 1);
 }
 
 /**
@@ -3911,6 +3927,9 @@ static void CP_UFORecoveredStart_f (void)
 	base = &gd.bases[Cvar_VariableInteger("mission_recoverybase")];
 	assert (base);
 	UFO_PrepareRecovery(base);
+
+	/* UFO recovery process is done, disable buttons. */
+	CP_UFORecoveryDone();
 }
 
 /**
@@ -3922,6 +3941,10 @@ static void CP_UFORecoveredStore_f (void)
 	int i, hasufohangar = 0;
 	base_t *base = NULL;
 	static char recoveryBaseSelectPopup[512];
+
+	/* Do nothing if recovery process is finished. */
+	if (Cvar_VariableInteger("mission_uforecoverydone") == 1)
+		return;
 
 	recoveryBaseSelectPopup[0] = '\0';
 	/* Check how many bases with UFO hangars. */
@@ -3948,9 +3971,6 @@ static void CP_UFORecoveredStore_f (void)
 		base = &gd.bases[Cvar_VariableInteger("mission_recoverybase")];
 	}
 	assert (base);
-
-	/* Everything is OK. Insert UFO recovery into global array. */
-	UFO_PrepareRecovery(base);
 }
 
 /**
@@ -3959,6 +3979,12 @@ static void CP_UFORecoveredStore_f (void)
  */
 static void CP_UFORecoveredSell_f (void)
 {
+	/* Do nothing if recovery process is finished. */
+	if (Cvar_VariableInteger("mission_uforecoverydone") == 1)
+		return;
+
+	/* UFO recovery process is done, disable buttons. */
+	CP_UFORecoveryDone();
 }
 
 /**
@@ -3967,6 +3993,12 @@ static void CP_UFORecoveredSell_f (void)
  */
 static void CP_UFORecoveredDestroy_f (void)
 {
+	/* Do nothing if recovery process is finished. */
+	if (Cvar_VariableInteger("mission_uforecoverydone") == 1)
+		return;
+
+	/* UFO recovery process is done, disable buttons. */
+	CP_UFORecoveryDone();
 }
 
 /**

@@ -58,6 +58,8 @@ menu won
 
 	//FIXME: image should be the same as in bt_storeufo but greyed out
 	confunc disufostore 	{ *bt_storeufo image "hud/buttons1g" }
+	confunc disufosell	{ *bt_sellufo image "hud/buttons1g" }
+	confunc disufodestroy	{ *bt_destroyufo image "hud/buttons1g" }
 	
 	pic bt_storeufo
 	{
