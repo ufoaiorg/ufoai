@@ -158,7 +158,7 @@ static const value_t nps[] = {
 	{"color", V_COLOR, offsetof(menuNode_t, color), MEMBER_SIZEOF(menuNode_t, color)},
 	{"align", V_ALIGN, offsetof(menuNode_t, align), MEMBER_SIZEOF(menuNode_t, align)},
 	{"if", V_IF, offsetof(menuNode_t, depends), 0},
-	{"norep", V_BOOL, offsetof(menuNode_t, norepeat), MEMBER_SIZEOF(menuNode_t, norepeat)},
+	{"repeat", V_BOOL, offsetof(menuNode_t, repeat), MEMBER_SIZEOF(menuNode_t, repeat)},
 
 	{NULL, V_NULL, 0, 0},
 };
@@ -1280,7 +1280,7 @@ void MN_Click (int x, int y)
 		 */
 		if (execute_node) {
 			MN_ExecuteActions(menu, execute_node->click);
-			if (!execute_node->norepeat) {
+			if (execute_node->repeat) {
 				mouseSpace = MS_LHOLD;
 				mouseRepeat.menu = menu;
 				mouseRepeat.action = execute_node->click;
