@@ -3907,7 +3907,7 @@ static void CP_UfoRecoveryBaseSelectPopup_f (void)
 static void CP_UFORecoveredStart_f (void)
 {
 	base_t *base;
-	
+
 	base = &gd.bases[Cvar_VariableInteger("mission_recoverybase")];
 	assert (base);
 	UFO_PrepareRecovery(base);
@@ -3950,7 +3950,7 @@ static void CP_UFORecoveredStore_f (void)
 	assert (base);
 
 	/* Everything is OK. Insert UFO recovery into global array. */
-	UFO_PrepareRecovery(base);	
+	UFO_PrepareRecovery(base);
 }
 
 /**

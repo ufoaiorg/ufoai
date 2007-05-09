@@ -47,6 +47,7 @@ CLIENT_SRCS = \
 	qcommon/files.c \
 	qcommon/md4.c \
 	qcommon/md5.c \
+	qcommon/msg.c \
 	qcommon/net_chan.c \
 	qcommon/scripts.c \
 	\

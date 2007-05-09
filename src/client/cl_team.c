@@ -537,7 +537,7 @@ static item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
 
 	/* Search for any complete clips. */
 	for (i = 0; i < csi.numODs; i++) {
-		if ( INV_LoadableInWeapon(&csi.ods[i], type) ) {
+		if (INV_LoadableInWeapon(&csi.ods[i], type)) {
 			if (ed->num[i] > 0) {
 				ed->num[i]--;
 				item.a = csi.ods[type].ammo;
