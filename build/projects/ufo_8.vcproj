@@ -524,6 +524,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\client\cl_console.c"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\client\cl_employee.c"
 				>
 			</File>
@@ -533,6 +537,14 @@
 			</File>
 			<File
 				RelativePath="..\..\src\client\cl_hospital.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\client\cl_http.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\client\cl_hunk.c"
 				>
 			</File>
 			<File
@@ -640,10 +652,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\client\cl_console.c"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\qcommon\cvar.c"
 				>
 			</File>
@@ -669,6 +677,10 @@
 			</File>
 			<File
 				RelativePath="..\..\src\qcommon\md5.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\qcommon\msg.c"
 				>
 			</File>
 			<File
@@ -774,6 +786,14 @@
 			</File>
 			<File
 				RelativePath="..\..\src\client\cl_employee.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\client\cl_http.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\client\cl_hunk.h"
 				>
 			</File>
 			<File
