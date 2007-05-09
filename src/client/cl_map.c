@@ -424,7 +424,7 @@ extern qboolean MAP_MapToScreen (const menuNode_t* node, const vec2_t pos,
 }
 
 /**
- * @brief
+ * @brief Return longitude and latitude of a point of the screen for 2D geoscape
  * @return pos vec2_t was filled with longitude and latitude
  * @param[in] x X coordinate on the screen that was clicked to
  * @param[in] y Y coordinate on the screen that was clicked to
@@ -442,13 +442,7 @@ static void MAP_ScreenToMap (const menuNode_t* node, int x, int y, vec2_t pos)
 }
 
 /**
- * @brief Return longitude and latitude for the 3d globe
- * FIXME
- * @todo implement me
- * x = cos(alpha)
- * y = sin(alpha)
- * long -180° (w) - 180° (e)
- * lat -90 (n) - 90° (s)
+ * @brief Return longitude and latitude of a point of the screen for 3D geoscape (globe)
  * @return pos vec2_t was filled with longitude and latitude
  * @param[in] x X coordinate on the screen that was clicked to
  * @param[in] y Y coordinate on the screen that was clicked to
@@ -457,37 +451,49 @@ static void MAP_ScreenToMap (const menuNode_t* node, int x, int y, vec2_t pos)
 static void MAP3D_ScreenToMap (const menuNode_t* node, int x, int y, vec2_t pos)
 {
 	vec2_t mid;
+	vec3_t v, v1, rotationAxis;
 	float dist;
-	float theta;
-	float phi;
 	const float radius = GLOBE_RADIUS;
 
+	/* set mid to the coordinates of the center of the globe */
 	Vector2Set(mid, (node->pos[0] + node->size[0]) / 2.0f, (node->pos[1] + node->size[1]) / 2.0f);
 
-	dist = sqrt((abs(x - mid[0]) * abs(x - mid[0])) + ((abs(y - mid[1]) * abs(y - mid[1]))));
-
-	/* check whether we clicked the geoscape */
-	if (dist <= radius) {
-		/* z-coordinates (y on screen) */
-		theta = asin((float)(y - mid[1]) / dist);
-		/* x-coordinates */
-		phi = acos((float)(x - mid[0]) / dist / cos(theta));
-		pos[0] = theta * todeg;	/* longitude */
-		pos[1] = 90.0f - (phi * todeg); /* latitude */
-		/* FIXME */
-/*		pos[0] += ccs.angles[PITCH];
-		pos[1] += (ccs.angles[YAW] - GLOBE_ROTATE);*/
-#if 1
-		Com_Printf("long: %.1f, lat: %.1f\n", pos[0], pos[1]);
-		Com_Printf("rotate: %.1f: %.1f\n", ccs.angles[PITCH], ccs.angles[YAW] - GLOBE_ROTATE);
-#endif
-	} else
+	/* stop if we didn't click on the globe */
+	dist = sqrt((x - mid[0]) * (x - mid[0]) + (y - mid[1]) * (y - mid[1]));
+	if (dist > radius) {
 		Vector2Set(pos, -1.0, -1.0);
+		return;
+	}
+
+	/* calculate the coordinates in the local base */
+	v[0] = - (y - mid[1]);
+	v[1] = - (x - mid[0]);
+	v[2] = - sqrt(radius * radius - (x - mid[0]) * (x - mid[0]) - (y - mid[1]) * (y - mid[1]));
+	VectorNormalize(v);
+
+	/* rotate the vector to switch of reference frame */
+	/* note the ccs.angles[ROLL] is always 0, so there is only 2 rotations */
+	/*	and that GLOBE_ROTATE is already included in ccs.angles[YAW] */
+	rotationAxis[0] = 0;
+	rotationAxis[1] = 1;
+	rotationAxis[2] = 0;
+	RotatePointAroundVector(v1, rotationAxis, v, ccs.angles[YAW]);
+
+	rotationAxis[0] = 0;
+	rotationAxis[1] = 0;
+	rotationAxis[2] = 1;
+	RotatePointAroundVector(v, rotationAxis, v1, ccs.angles[PITCH]);
+
+	/* convert the final vector in polar coordinates */
+	VecToPolar(v, pos);
 }
 
 /**
- * @brief
+ * @brief Calculate the shortest way to go from start to end on a sphere
+ * @param[in] start The point you start from
+ * @param[in] end The point you go to
  * @sa MAP_MapDrawLine
+ * @return line mapline_t* was filled with the shortest path to go from start to end
  */
 extern void MAP_MapCalcLine (const vec2_t start, const vec2_t end, mapline_t* line)
 {
