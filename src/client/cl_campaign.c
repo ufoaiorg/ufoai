@@ -3864,6 +3864,7 @@ static void CP_UFORecovered_f (void)
 	Cvar_SetValue("mission_uforecoverydone", 0);	/* This is used in menus to block UFO Recovery nodes. */
 	Cvar_SetValue("mission_ufotype", UFOtype);
 	Cvar_SetValue("mission_noufohangar", 0);
+	/* @todo block Sell button if no nation with requirements */
 	if (!hasUFOhangar) {
 		/* Don't allow to store if no UFO hangars in any base. */
 		Cbuf_AddText("disufostore\n");
@@ -3979,9 +3980,29 @@ static void CP_UFORecoveredStore_f (void)
  */
 static void CP_UFORecoveredSell_f (void)
 {
+	int i, nations = 0;
+	nation_t *nation = NULL;
+	static char recoveryNationSelectPopup[512];
+
 	/* Do nothing if recovery process is finished. */
 	if (Cvar_VariableInteger("mission_uforecoverydone") == 1)
 		return;
+
+	recoveryNationSelectPopup[0] = '\0';
+	for (i = 0; i < gd.numNations; i++) {
+		nation = &gd.nations[i];
+		/* @todo only nations with proper alien infiltration values */
+		nation++;
+		Q_strcat(recoveryNationSelectPopup, gd.nations[i].name, sizeof(recoveryNationSelectPopup));
+		Q_strcat(recoveryNationSelectPopup, "\n", sizeof(recoveryNationSelectPopup));
+	}
+
+	/* Do nothing without at least one nation. */
+	if (nations == 0)
+		return;
+
+	menuText[TEXT_LIST] = recoveryNationSelectPopup;
+	MN_PushMenu("popup_recoverynationlist");
 
 	/* UFO recovery process is done, disable buttons. */
 	CP_UFORecoveryDone();
