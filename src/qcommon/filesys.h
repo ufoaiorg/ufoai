@@ -104,7 +104,7 @@ void FS_GetMaps(qboolean reset);
 int FS_FOpenFile(const char *filename, qFILE * file);
 void FS_FCloseFile(qFILE * f);
 
-qboolean FS_Rename(const char *from, const char *to);
+qboolean FS_Rename(const char *from, const char *to, qboolean relative);
 void FS_Remove(const char *osPath);
 void FS_CopyFile(const char *fromOSPath, const char *toOSPath);
 

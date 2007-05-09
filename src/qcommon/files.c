@@ -1628,18 +1628,24 @@ extern void FS_Remove (const char *osPath)
  * @sa FS_Remove
  * @sa FS_CopyFile
  */
-extern qboolean FS_Rename (const char *from, const char *to)
+extern qboolean FS_Rename (const char *from, const char *to, qboolean relative)
 {
 	char *from_ospath, *to_ospath;
 
 	if (!fs_searchpaths)
 		Com_Error(ERR_FATAL, "Filesystem call made without initialization\n");
 
-	from_ospath = FS_BuildOSPath(FS_Gamedir(), from);
-	to_ospath = FS_BuildOSPath(FS_Gamedir(), to);
+	if (relative) {
+		from_ospath = FS_BuildOSPath(FS_Gamedir(), from);
+		to_ospath = FS_BuildOSPath(FS_Gamedir(), to);
 
-	Sys_OSPath(from_ospath);
-	Sys_OSPath(to_ospath);
+		Sys_OSPath(from_ospath);
+		Sys_OSPath(to_ospath);
+	} else {
+		/* we won't modify it - so keep the compiler quiet */
+		from_ospath = (char*)from;
+		to_ospath = (char*)to;
+	}
 
 	if (rename(from_ospath, to_ospath))
 		return qfalse;

@@ -797,7 +797,7 @@ static void CL_FinishHTTPDownload (void)
 			/* rename the temp file */
 			Com_sprintf(tempName, sizeof(tempName), "%s/%s", FS_Gamedir(), dl->queueEntry->ufoPath);
 
-			if (!FS_Rename(dl->filePath, tempName))
+			if (!FS_Rename(dl->filePath, tempName, qfalse))
 				Com_Printf("Failed to rename %s for some odd reason...", dl->filePath);
 
 			/* /a pak file is very special... */
