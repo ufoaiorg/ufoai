@@ -123,6 +123,8 @@ static int precache_check;
 
 static void CL_SpawnSoldiers_f(void);
 
+mouseRepeat_t mouseRepeat;
+
 /*====================================================================== */
 
 /**
@@ -2419,6 +2421,15 @@ extern void CL_Frame (int msec)
 	/* advance local effects for next frame */
 	CL_RunLightStyles();
 	SCR_RunConsole();
+
+	/* repeat the mouse button */
+	if (mouseSpace == MS_LHOLD) {
+		int now = Sys_Milliseconds();
+		if (now >= mouseRepeat.nexttime) {
+			MN_ExecuteActions(mouseRepeat.menu, mouseRepeat.action);
+			mouseRepeat.nexttime = now + 100;	/* next "event" after 0.1 sec */
+		}
+	}
 
 	cls.framecount++;
 

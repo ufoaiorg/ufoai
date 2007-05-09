@@ -38,6 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_console.h"
 #include "cl_market.h"
 #include "cl_event.h"
+#include "cl_menu.h"
 #ifdef HAVE_OPENAL
 	#ifndef DEDICATED_ONLY
 		#include "qal.h"
@@ -424,6 +425,7 @@ typedef enum {
 	MS_MENU,	/**< we are over some menu node */
 	MS_DRAG,	/**< we are dragging some stuff / equipment */
 	MS_ROTATE,	/**< we are rotating models (ufopedia) */
+	MS_LHOLD,		/**< we are holding left mouse button */
 	MS_SHIFTMAP,	/**< we move the geoscape map */
 	MS_ZOOMMAP,		/**< we zoom the geoscape map (also possible via mousewheels)*/
 	MS_SHIFT3DMAP,	/**< we rotate the 3d globe */
@@ -435,6 +437,14 @@ extern int mx, my;
 extern int dragFrom, dragFromX, dragFromY;
 extern item_t dragItem;
 extern float *rotateAngles;
+
+typedef struct {
+	menu_t *menu;				/**< mouse autorepeat - where */
+	menuAction_t *action;		/**< mouse autorepeat - what */
+	unsigned nexttime;			/**< mouse autorepeat - when */
+} mouseRepeat_t;
+
+extern mouseRepeat_t mouseRepeat;
 
 extern kbutton_t in_mlook, in_klook;
 extern const float MIN_ZOOM, MAX_ZOOM;

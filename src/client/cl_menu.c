@@ -158,6 +158,7 @@ static const value_t nps[] = {
 	{"color", V_COLOR, offsetof(menuNode_t, color), MEMBER_SIZEOF(menuNode_t, color)},
 	{"align", V_ALIGN, offsetof(menuNode_t, align), MEMBER_SIZEOF(menuNode_t, align)},
 	{"if", V_IF, offsetof(menuNode_t, depends), 0},
+	{"norep", V_BOOL, offsetof(menuNode_t, norepeat), MEMBER_SIZEOF(menuNode_t, norepeat)},
 
 	{NULL, V_NULL, 0, 0},
 };
@@ -1219,17 +1220,16 @@ static void MN_TextRightClick (menuNode_t * node, int mouseOver)
  */
 void MN_Click (int x, int y)
 {
-	menuNode_t *node;
+	menuNode_t *node, *execute_node = NULL;
 	menu_t *menu;
 	int sp, mouseOver;
 	qboolean clickedInside = qfalse;
-	menuAction_t *execute_action = NULL;
 
 	sp = menuStackPos;
 
 	while (sp > 0) {
 		menu = menuStack[--sp];
-		execute_action = NULL;
+		execute_node = NULL;
 		for (node = menu->firstNode; node; node = node->next) {
 			if (node->type != MN_CONTAINER && !node->click)
 				continue;
@@ -1269,7 +1269,7 @@ void MN_Click (int x, int y)
 			default:
 				/* Save the action for later execution. */
 				if (node->click && (node->click->type != EA_NULL))
-					execute_action = node->click;
+					execute_node = node;
 				break;
 			}
 		}
@@ -1278,8 +1278,15 @@ void MN_Click (int x, int y)
 		 * Especially needed for button-nodes that are (partially) overlayed and all have actions defined.
 		 * e.g. the firemode checkboxes.
 		 */
-		if (execute_action)
-			MN_ExecuteActions(menu, execute_action);
+		if (execute_node) {
+			MN_ExecuteActions(menu, execute_node->click);
+			if (!execute_node->norepeat) {
+				mouseSpace = MS_LHOLD;
+				mouseRepeat.menu = menu;
+				mouseRepeat.action = execute_node->click;
+				mouseRepeat.nexttime = Sys_Milliseconds() + 500;	/* second "event" after 0.5 sec */
+			}
+		}
 
 		/* @todo: maybe we should also check sp == menuStackPos here */
 		if (!clickedInside && menu->leaveNode)

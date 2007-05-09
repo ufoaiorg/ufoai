@@ -1146,6 +1146,7 @@ void CL_ParseInput (void)
 		return;
 
 	case MS_DRAG:
+	case MS_LHOLD:
 		/* do nothing */
 		return;
 
