@@ -728,11 +728,15 @@ static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 			return;
 
 		case PC_SPAWN:
+#if 1
+			CL_ParticleSpawn((char *) radr, p->levelFlags, p->s, p->v, p->a);
+#else
 			pnew = CL_ParticleSpawn((char *) radr, p->levelFlags, p->s, p->v, p->a);
 			if (pnew) {
 				/* Also hand down the "angles" values. */
 				VectorCopy(p->angles, pnew->angles);
 			}
+#endif
 			break;
 
 		case PC_NSPAWN:
@@ -748,11 +752,15 @@ static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 			e -= sizeof(int);
 
 			for (i = 0; i < n; i++) {
+#if 1
+				CL_ParticleSpawn((char *) radr, p->levelFlags, p->s, p->v, p->a);
+#else
 				pnew = CL_ParticleSpawn((char *) radr, p->levelFlags, p->s, p->v, p->a);
 				if (pnew) {
 					/* Also hand down the "angles" values. */
 					VectorCopy(p->angles, pnew->angles);
 				}
+#endif
 			}
 			break;
 
