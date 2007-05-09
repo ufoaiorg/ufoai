@@ -1611,7 +1611,7 @@ void CL_RequestNextDownload (void)
 	if (precache_check == CS_MODELS) { /* confirm map */
 		if (*cl.configstrings[CS_TILES] == '+') {
 		} else {
-			if (!CL_CheckOrDownloadFile(va("%s.bsp", cl.configstrings[CS_TILES])))
+			if (!CL_CheckOrDownloadFile(va("maps/%s.bsp", cl.configstrings[CS_TILES])))
 				return; /* started a download */
 		}
 		precache_check = CS_MODELS + 1;

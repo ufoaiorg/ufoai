@@ -247,14 +247,14 @@ static void CL_StartHTTPDownload (dlqueue_t *entry, dlhandle_t *dl)
 		Com_sprintf(dl->filePath, sizeof(dl->filePath), "%s/%s", FS_Gamedir(), entry->ufoPath);
 
 		Com_sprintf(tempFile, sizeof(tempFile), "%s/%s", cl.gamedir, entry->ufoPath);
-		CL_EscapeHTTPPath(dl->filePath, escapedFilePath);
+		CL_EscapeHTTPPath(tempFile, escapedFilePath);
 
 		strcat(dl->filePath, ".tmp");
 
 		FS_CreatePath(dl->filePath);
 
 		/* don't bother with http resume... too annoying if server doesn't support it. */
-		dl->file = fopen (dl->filePath, "wb");
+		dl->file = fopen(dl->filePath, "wb");
 		if (!dl->file) {
 			Com_Printf("CL_StartHTTPDownload: Couldn't open %s for writing.\n", dl->filePath);
 			entry->state = DLQ_STATE_DONE;
@@ -272,7 +272,7 @@ static void CL_StartHTTPDownload (dlqueue_t *entry, dlhandle_t *dl)
 	if (!dl->curl)
 		dl->curl = curl_easy_init ();
 
-	Com_sprintf (dl->URL, sizeof(dl->URL), "%s%s", cls.downloadServer, escapedFilePath);
+	Com_sprintf(dl->URL, sizeof(dl->URL), "%s%s", cls.downloadServer, escapedFilePath);
 
 	curl_easy_setopt(dl->curl, CURLOPT_ENCODING, "");
 	/* curl_easy_setopt(dl->curl, CURLOPT_DEBUGFUNCTION, CL_CURL_Debug); */
@@ -304,7 +304,7 @@ static void CL_StartHTTPDownload (dlqueue_t *entry, dlhandle_t *dl)
 
 	handleCount++;
 	/*Com_Printf("started dl: hc = %d\n", handleCount); */
-	Com_DPrintf("CL_StartHTTPDownload: Fetching %s...\n", dl->URL);
+	Com_Printf("CL_StartHTTPDownload: Fetching %s...\n", dl->URL);
 	dl->queueEntry->state = DLQ_STATE_RUNNING;
 }
 
@@ -864,9 +864,9 @@ static void CL_StartNextHTTPDownload (void)
 	while (q->next) {
 		q = q->next;
 		if (q->state == DLQ_STATE_NOT_STARTED) {
-			size_t		len;
+			size_t len;
 
-			dlhandle_t	*dl;
+			dlhandle_t *dl;
 
 			dl = CL_GetFreeDLHandle();
 
