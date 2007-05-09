@@ -154,7 +154,7 @@ static void CL_EscapeHTTPPath (const char *filePath, char *escaped)
 
 	len = strlen (filePath);
 	for (i = 0; i < len; i++) {
-		if (!isalnum (filePath[i]) && filePath[i] != ';' && filePath[i] != '/' &&
+		if (!isalnum(filePath[i]) && filePath[i] != ';' && filePath[i] != '/' &&
 			filePath[i] != '?' && filePath[i] != ':' && filePath[i] != '@' && filePath[i] != '&' &&
 			filePath[i] != '=' && filePath[i] != '+' && filePath[i] != '$' && filePath[i] != ',' &&
 			filePath[i] != '[' && filePath[i] != ']' && filePath[i] != '-' && filePath[i] != '_' &&
@@ -239,8 +239,8 @@ static void CL_StartHTTPDownload (dlqueue_t *entry, dlhandle_t *dl)
 
 	/* yet another hack to accomodate filelists, how i wish i could push :(
 	 * NULL file handle indicates filelist. */
-	len = strlen (entry->ufoPath);
-	if (len > 9 && !strcmp (entry->ufoPath + len - 9, ".filelist")) {
+	len = strlen(entry->ufoPath);
+	if (len > 9 && !strcmp(entry->ufoPath + len - 9, ".filelist")) {
 		dl->file = NULL;
 		CL_EscapeHTTPPath(entry->ufoPath, escapedFilePath);
 	} else {
@@ -258,7 +258,7 @@ static void CL_StartHTTPDownload (dlqueue_t *entry, dlhandle_t *dl)
 		if (!dl->file) {
 			Com_Printf("CL_StartHTTPDownload: Couldn't open %s for writing.\n", dl->filePath);
 			entry->state = DLQ_STATE_DONE;
-			/* CL_RemoveHTTPDownload (entry->ufoPath); */
+			/* CL_RemoveHTTPDownload(entry->ufoPath); */
 			return;
 		}
 	}
@@ -270,7 +270,7 @@ static void CL_StartHTTPDownload (dlqueue_t *entry, dlhandle_t *dl)
 	dl->queueEntry = entry;
 
 	if (!dl->curl)
-		dl->curl = curl_easy_init ();
+		dl->curl = curl_easy_init();
 
 	Com_sprintf(dl->URL, sizeof(dl->URL), "%s%s", cls.downloadServer, escapedFilePath);
 
@@ -401,7 +401,7 @@ qboolean CL_QueueHTTPDownload (const char *ufoPath)
 
 	/*  first download queued, so we want the mod filelist */
 	if (!cls.downloadQueue.next && cl_http_filelists->integer)
-		needList =qtrue;
+		needList = qtrue;
 
 	q = &cls.downloadQueue;
 
@@ -517,11 +517,11 @@ static void CL_CheckAndQueueDownload (char *path)
 			Com_Printf("WARNING: @ prefix used on a pak file (%s) in filelist.\n", path);
 			return;
 		}
-		gameLocal =qtrue;
+		gameLocal = qtrue;
 		path++;
 		length--;
 	} else
-		gameLocal =qfalse;
+		gameLocal = qfalse;
 
 	if (strstr(path, "..") || !isvalidchar(path[0]) || !isvalidchar(path[length-1]) || strstr(path, "//") ||
 		strchr(path, '\\') || (!pak && !strchr(path, '/')) || (pak && strchr(path, '/'))) {
@@ -666,7 +666,7 @@ void CL_HTTP_Cleanup (qboolean fullShutdown)
 
 	if (fullShutdown) {
 		curl_global_cleanup();
-		httpDown =qtrue;
+		httpDown = qtrue;
 	}
 }
 
@@ -719,9 +719,9 @@ static void CL_FinishHTTPDownload (void)
 
 		/* filelist processing is done on read */
 		if (dl->file)
-			isFile =qtrue;
+			isFile = qtrue;
 		else
-			isFile =qfalse;
+			isFile = qfalse;
 
 		if (isFile) {
 			fclose(dl->file);
@@ -747,7 +747,7 @@ static void CL_FinishHTTPDownload (void)
 				if (responseCode == 404) {
 					i = strlen (dl->queueEntry->ufoPath);
 					if (!strcmp (dl->queueEntry->ufoPath + i - 4, ".pk3"))
-						downloading_pak =qfalse;
+						downloading_pak = qfalse;
 
 					if (isFile)
 						remove (dl->filePath);
@@ -755,7 +755,7 @@ static void CL_FinishHTTPDownload (void)
 					curl_easy_getinfo (curl, CURLINFO_SIZE_DOWNLOAD, &fileSize);
 					if (fileSize > 512) {
 						/* ick */
-						isFile =qfalse;
+						isFile = qfalse;
 						result = CURLE_FILESIZE_EXCEEDED;
 						Com_Printf("Oversized 404 body received (%d bytes), aborting HTTP downloading.\n", (int)fileSize);
 					} else {
@@ -764,7 +764,7 @@ static void CL_FinishHTTPDownload (void)
 					}
 				} else if (responseCode == 200) {
 					if (!isFile && !abortDownloads)
-						CL_ParseFileList (dl);
+						CL_ParseFileList(dl);
 					break;
 				}
 
@@ -797,7 +797,7 @@ static void CL_FinishHTTPDownload (void)
 			/* rename the temp file */
 			Com_sprintf(tempName, sizeof(tempName), "%s/%s", FS_Gamedir(), dl->queueEntry->ufoPath);
 
-			if (FS_Rename(dl->filePath, tempName))
+			if (!FS_Rename(dl->filePath, tempName))
 				Com_Printf("Failed to rename %s for some odd reason...", dl->filePath);
 
 			/* /a pak file is very special... */
@@ -832,7 +832,7 @@ static void CL_FinishHTTPDownload (void)
 
 	/* done current batch, see if we have more to dl - maybe a .bsp needs downloaded */
 	if (cls.state == ca_connected && !CL_PendingHTTPDownloads())
-		CL_RequestNextDownload ();
+		CL_RequestNextDownload();
 }
 
 /**
@@ -878,7 +878,7 @@ static void CL_StartNextHTTPDownload (void)
 			/* ugly hack for pak file single downloading */
 			len = strlen (q->ufoPath);
 			if (len > 4 && !Q_stricmp(q->ufoPath + len - 4, ".pk3"))
-				downloading_pak =qtrue;
+				downloading_pak = qtrue;
 
 			break;
 		}
