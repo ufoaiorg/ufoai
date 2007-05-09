@@ -3922,10 +3922,16 @@ static void CP_UfoRecoveryBaseSelectPopup_f (void)
  */
 static void CP_UFORecoveredStart_f (void)
 {
+	char messageBuffer[256];
 	base_t *base;
 
 	base = &gd.bases[Cvar_VariableInteger("mission_recoverybase")];
 	assert (base);
+	Com_sprintf(messageBuffer, sizeof(messageBuffer), va("%s %s %s %s.", _("Recovered UFO of type"), 
+	UFO_UfoTypeToName(Cvar_VariableInteger("mission_ufotype")),
+	_("from the battlefield. UFO is being transported to base"),
+	base->name));
+	MN_AddNewMessage(_("UFO Recovery"), messageBuffer, qfalse, MSG_STANDARD, NULL);
 	UFO_PrepareRecovery(base);
 
 	/* UFO recovery process is done, disable buttons. */
@@ -4009,10 +4015,16 @@ static void CP_UfoRecoveryNationSelectPopup_f (void)
  */
 static void CP_UFOSellStart_f (void)
 {
+	char messageBuffer[256];
 	nation_t *nation;
 
 	nation = &gd.nations[Cvar_VariableInteger("mission_recoverynation")];
 	assert (nation);
+	Com_sprintf(messageBuffer, sizeof(messageBuffer), va("%s %s %s %s.", _("Recovered UFO of type"), 
+	UFO_UfoTypeToName(Cvar_VariableInteger("mission_ufotype")),
+	_("from the battlefield. UFO is sold to nation"),
+	nation->name));
+	MN_AddNewMessage(_("UFO Recovery"), messageBuffer, qfalse, MSG_STANDARD, NULL);
 	/* @todo: implement me */
 
 	/* UFO recovery process is done, disable buttons. */
