@@ -395,7 +395,7 @@ menu popup_recoverybaselist
 		texl	"0 32"
 		out	{ *bt_go image menu/multi_buttons3 *string_go color "0 0.5 0 1" }
 		in	{ *bt_go image menu/multi_buttons3a *string_go color "1 1 1 1" }
-		click	{ cmd "mn_pop;" }
+		click	{ cmd "cp_uforecoverystart;mn_pop;" }
 	}
 	string string_go
 	{
@@ -464,14 +464,14 @@ menu popup_recoverynationlist
 
 	pic bt_go
 	{
-		tooltip	"_Begin UFO recovery process"
+		tooltip	"_Begin UFO sell process"
 		image	menu/multi_buttons3
 		pos	"530 450"
 		texh	"180 64"
 		texl	"0 32"
 		out	{ *bt_go image menu/multi_buttons3 *string_go color "0 0.5 0 1" }
 		in	{ *bt_go image menu/multi_buttons3a *string_go color "1 1 1 1" }
-		click	{ cmd "mn_pop;" }
+		click	{ cmd "cp_ufosellstart;mn_pop;" }
 	}
 	string string_go
 	{

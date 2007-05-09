@@ -3816,9 +3816,11 @@ static void CP_CampaignStats_f (void)
 2. CP_UFORecoveredStore_f() prepares UFO recovery process.
 3. CP_UfoRecoveryBaseSelectPopup_f() allows to select desired base.
 4. CP_UFORecoveredStart_f() starts UFO recovery process.
-5. CP_UFORecoveredSell_f() allows to sell UFO to desired nation.
-6. CP_UFORecoveredDestroy_f() destroys UFO.
-7. CP_UFORecoveryDone() finishes the recovery process and updates buttons on menu won.
+5. CP_UfoRecoveryNationSelectPopup_f() allows to select desired nation.
+6. CP_UFOSellStart_f() starts UFO sell process.
+7. CP_UFORecoveredSell_f() allows to sell UFO to desired nation.
+8. CP_UFORecoveredDestroy_f() destroys UFO.
+9. CP_UFORecoveryDone() finishes the recovery process and updates buttons on menu won.
 */
 /* ======================== */
 
@@ -3975,6 +3977,50 @@ static void CP_UFORecoveredStore_f (void)
 }
 
 /**
+ * @brief Finds the nation to which recovered UFO will be sold.
+ * @note The nation selection is being done here.
+ * @note Callback command: cp_uforecovery_nationlist_click.
+ */
+static void CP_UfoRecoveryNationSelectPopup_f (void)
+{
+	int i, j = -1, num;
+	nation_t *nation;
+
+	if (Cmd_Argc() < 2) {
+		Com_Printf("usage: %s <nationid>\n", Cmd_Argv(0));
+		return;
+	}
+
+	num = atoi(Cmd_Argv(1));
+
+	for (i = 0, nation = gd.nations; i < gd.numNations; i++, nation++) {
+		j++;
+		if (j == num)
+			break;
+	}
+	assert (nation);
+
+	Cvar_SetValue("mission_recoverynation", i);
+	Com_DPrintf("CP_UfoRecoveryNationSelectPopup_f()... picked nation: %s\n", nation->name);
+}
+
+/**
+ * @brief Function to start UFO selling process.
+ * @note Command to call this: cp_ufosellstart.
+ */
+static void CP_UFOSellStart_f (void)
+{
+	nation_t *nation;
+
+	nation = &gd.nations[Cvar_VariableInteger("mission_recoverynation")];
+	assert (nation);
+	/* @todo: implement me */
+
+	/* UFO recovery process is done, disable buttons. */
+	CP_UFORecoveryDone();
+}
+
+/**
  * @brief Function to sell recovered UFO to desired nation.
  * @note Command to call this: cp_uforecoverysell.
  */
@@ -4003,9 +4049,6 @@ static void CP_UFORecoveredSell_f (void)
 
 	menuText[TEXT_LIST] = recoveryNationSelectPopup;
 	MN_PushMenu("popup_recoverynationlist");
-
-	/* UFO recovery process is done, disable buttons. */
-	CP_UFORecoveryDone();
 }
 
 /**
@@ -4042,6 +4085,8 @@ extern void CL_ResetCampaign (void)
 	Cmd_AddCommand("cp_uforecovery_baselist_click", CP_UfoRecoveryBaseSelectPopup_f, "Callback for recovery base list popup.");
 	Cmd_AddCommand("cp_uforecoverystart", CP_UFORecoveredStart_f, "Function to start UFO recovery processing.");
 	Cmd_AddCommand("cp_uforecoverystore", CP_UFORecoveredStore_f, "Function to store recovered UFO in desired base.");
+	Cmd_AddCommand("cp_uforecovery_nationlist_click", CP_UfoRecoveryNationSelectPopup_f, "Callback for recovery nation list popup.");
+	Cmd_AddCommand("cp_ufosellstart", CP_UFOSellStart_f, "Function to start UFO selling processing.");
 	Cmd_AddCommand("cp_uforecoverysell", CP_UFORecoveredSell_f, "Function to sell recovered UFO to desired nation.");
 	Cmd_AddCommand("cp_uforecoverydestroy", CP_UFORecoveredDestroy_f, "Function to destroy recovered UFO.");
 #ifdef DEBUG
