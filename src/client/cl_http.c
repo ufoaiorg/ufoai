@@ -422,7 +422,7 @@ qboolean CL_QueueHTTPDownload (const char *ufoPath)
 
 	if (needList) {
 		/* grab the filelist */
-		CL_QueueHTTPDownload (va("%s.filelist", cl.gamedir));
+		CL_QueueHTTPDownload(va("%s.filelist", cl.gamedir));
 	}
 
 	/* special case for map file lists, i really wanted a server-push mechanism for this, but oh well */
