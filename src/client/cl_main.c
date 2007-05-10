@@ -1741,6 +1741,8 @@ extern void CL_ParseClientData (const char *type, const char *name, char **text)
 		CL_ParseCampaign(name, text);
 	else if (!Q_strncmp(type, "ugv", 3))
 		CL_ParseUGVs(name, text);
+	else if (!Q_strncmp(type, "components", 10))
+		INV_ParseComponents(name, text);
 }
 
 /**

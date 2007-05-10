@@ -418,4 +418,76 @@ extern void INV_InitialEquipment (base_t *base)
 	CL_UpdateCredits(ccs.credits - price);
 }
 
+/**
+ * @todo Move this to a better place (some client only struct?)
+ */
+int numComponents;
+components_t components[MAX_ASSEMBLIES];
+
+/**
+ * @brief Parses one "components" entry in a .ufo file and writes it into the next free entry in xxxxxxxx (components_t).
+ * @param[in] name The unique id of a components_t array entry.
+ * @param[in] text the whole following text after the "components" definition.
+ */
+extern void INV_ParseComponents (const char *name, char **text)
+{
+	components_t *comp = NULL;
+	const char *errhead = "INV_ParseComponents: unexpected end of file.";
+	char *token = NULL;
+
+	/* get body */
+	token = COM_Parse(text);
+	if (!*text || *token != '{') {
+		Com_Printf("INV_ParseComponents: \"%s\" components def without body ignored.\n", name);
+		return;
+	}
+	if (numComponents >= MAX_ASSEMBLIES) {
+		Com_Printf("INV_ParseComponents: too many technology entries. limit is %i.\n", MAX_ASSEMBLIES);
+		return;
+	}
+
+	/* New components-entry (next free entry in global comp-list) */
+	comp = &components[numComponents];
+	numComponents++;
+
+	memset(comp, 0, sizeof(components_t));
+
+	/*set standard values */
+	/** comp->assembly_idx = -1; < @todo if needed */
+	Q_strncpyz(comp->assembly_id, name, sizeof(comp->assembly_id));
+	
+	do {
+		/* get the name type */
+		token = COM_EParse(text, errhead, name);
+		if (!*text)
+			break;
+		if (*token == '}')
+			break;
+
+		/* get values */
+		if (!Q_strncmp(token, "item", MAX_VAR)) {
+			/* Defines what items need to be collected for this item to be researchable. */
+			if (comp->numItemtypes < MAX_COMP) {
+				/* Parse item name */
+				token = COM_Parse(text);
+				Q_strncpyz(comp->item_id[comp->numItemtypes], token, sizeof(comp->item_id[comp->numItemtypes]));
+				
+				/* Parse number of items. */
+				token = COM_Parse(text);
+				comp->item_amount[comp->numItemtypes] = atoi(token);
+				token = COM_Parse(text);
+				comp->item_amount2[comp->numItemtypes] = atoi(token);
+				
+				/** @todo Set item links to -1 if needed */
+				/* comp->item_idx[comp->numItemtypes] = xxx */
+				
+				comp->numItemtypes++;
+			} else {
+				Com_Printf("INV_ParseComponents: \"%s\" Too many 'items' defined. Limit is %i - ignored.\n", name, MAX_COMP);
+			}
+		} else {
+			Com_Printf("INV_ParseComponents error in \"%s\" - unknown token: \"%s\".\n", name, token);
+		}
+	} while (*text);
+}
 

@@ -1,0 +1,45 @@
+// Components for recovered UFOs and similar stuff.
+//
+// usage:
+// components <ufo_name> {
+//	<type> <id> <number> <number-crash>
+//	...
+// }
+//
+// <ufo_name> Like the id of the ufo itself in the item definitions.
+// <id> id of the item in the item definitions.
+// <type> Only "item" supported right now.
+//
+// See also the struct "components_t"
+
+
+// TODO: fix item names.
+
+
+// UFO -- Scout
+components ufo_scout {
+	item	alien_materials		30	20
+	item	antimatter		200	0
+	item	alien_propulsion	2	1
+	item	alien_astrogation	1	0
+}
+
+// UFO -- Fighter
+components ufo_fighter {
+	item	alien_materials		40	30
+	item	antimatter		250	0
+	item	alien_propulsion	2	1
+	item	alien_astrogation	1	0
+	item	particle_beam_weapon	1	0
+}
+
+// UFO -- Harvester
+components ufo_harvester {
+	item	alien_materials		80	60
+	item	antimatter		600	0
+	item	alien_propulsion	4	2
+	item	alien_astrogation	2	1
+	item	particle_beam_weapon	2	1
+	item	alien_launcher		1	0
+	item	alien_antimatter_missile	12	3
+}
