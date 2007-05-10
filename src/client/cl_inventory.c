@@ -419,12 +419,6 @@ extern void INV_InitialEquipment (base_t *base)
 }
 
 /**
- * @todo Move this to a better place (some client only struct?)
- */
-int numComponents;
-components_t components[MAX_ASSEMBLIES];
-
-/**
  * @brief Parses one "components" entry in a .ufo file and writes it into the next free entry in xxxxxxxx (components_t).
  * @param[in] name The unique id of a components_t array entry.
  * @param[in] text the whole following text after the "components" definition.
@@ -441,18 +435,18 @@ extern void INV_ParseComponents (const char *name, char **text)
 		Com_Printf("INV_ParseComponents: \"%s\" components def without body ignored.\n", name);
 		return;
 	}
-	if (numComponents >= MAX_ASSEMBLIES) {
+	if (gd.numComponents >= MAX_ASSEMBLIES) {
 		Com_Printf("INV_ParseComponents: too many technology entries. limit is %i.\n", MAX_ASSEMBLIES);
 		return;
 	}
 
 	/* New components-entry (next free entry in global comp-list) */
-	comp = &components[numComponents];
-	numComponents++;
+	comp = &gd.components[gd.numComponents];
+	gd.numComponents++;
 
 	memset(comp, 0, sizeof(components_t));
 
-	/*set standard values */
+	/* set standard values */
 	/** comp->assembly_idx = -1; < @todo if needed */
 	Q_strncpyz(comp->assembly_id, name, sizeof(comp->assembly_id));
 	

@@ -131,6 +131,10 @@ typedef struct globalData_s
 
 	/* UFO recoveries. */
 	ufoRecoveries_t recoveries[MAX_RECOVERIES];
+
+	/* UFO components. */
+	int numComponents;
+	components_t components[MAX_ASSEMBLIES];
 } globalData_t;
 
 
