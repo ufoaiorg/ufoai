@@ -358,32 +358,56 @@ static qboolean MAP_IsMapPositionSelected (const menuNode_t* node, vec2_t pos, i
 
 #define GLOBE_RADIUS gl_3dmapradius->value * (ccs.zoom / 4.0f) * 0.1
 /**
- * @brief
+ * @brief Transform a 2D position on the map to screen coordinates.
+ * @param[in] pos vector that holds longitude and latitude
  * @param[out] x normalized (rotated and scaled) x value of mouseclick
  * @param[out] y normalized (rotated and scaled) y value of mouseclick
  * @param[out] z z value of the given latitude and longitude - might also be NULL if not needed
- * @param[in] pos vector that holds longitude and latitude
  * @sa MAP_MapToScreen
+ * @sa MAP3D_ScreenToMap
+ * @return qtrue if the point is visible, qfalse else (if it's outside the screen or on the wrong side of earth).
+ * @note In the function, we do the opposite of MAP3D_ScreenToMap
  */
 extern qboolean MAP_3DMapToScreen (const menuNode_t* node, const vec2_t pos, int *x, int *y, int *z)
 {
-	vec2_t tmp;
+	vec2_t mid;
+	vec3_t v, v1, rotationAxis;
 	const float radius = GLOBE_RADIUS;
 
-	Vector2Set(tmp, (node->pos[0] + node->size[0]) / 2.0f, (node->pos[1] + node->size[1]) / 2.0f);
+	PolarToVec(pos, v);
 
-	/* pos[0] = longitude (theta) */
-	/* pos[1] = latitude (phi) */
-	*x = (radius * cos(pos[0]) * cos(pos[1]+ccs.angles[1])) + tmp[0];
-	*y = (radius * cos(pos[0]) * sin(pos[1]+ccs.angles[1])) + tmp[1];
+	/* rotate the vector to switch of reference frame.
+	 *	We switch from the static frame of earth to the local frame of the player (opposite rotation of MAP3D_ScreenToMap) */
+	rotationAxis[0] = 0;
+	rotationAxis[1] = 0;
+	rotationAxis[2] = 1;
+	RotatePointAroundVector(v1, rotationAxis, v, - ccs.angles[PITCH]);
+	
+	rotationAxis[0] = 0;
+	rotationAxis[1] = 1;
+	rotationAxis[2] = 0;
+	RotatePointAroundVector(v, rotationAxis, v1, - ccs.angles[YAW]);
+
+	/* set mid to the coordinates of the center of the globe */
+	Vector2Set(mid, (node->pos[0] + node->size[0]) / 2.0f, (node->pos[1] + node->size[1]) / 2.0f);
+
+	/* We now convert those coordinates relative to the center of the globe to coordinates of the screen
+	 *	(which are relative to the upper left side of the screen) */
+	*x = (int) (mid[0] - radius * v[1]);
+	*y = (int) (mid[1] - radius * v[0]);
+	/* FIXME: I'm not sure of what z should contain (normalized value ? sign ?) */
 	if (z) {
-		*z = 0; /* FIXME */
+		*z = (int) (- radius * v[2]);
 	}
-/*	Com_Printf("MAP_3DMapToScreen: %i:%i\n", *x, *y);*/
 
-	/* @todo: Check ccs.angle */
-/*	if (*x < node->pos[0] && *y < node->pos[1] && *x > node->pos[0] + node->size[0] && *y > node->pos[1] + node->size[1])
-		return qfalse;*/
+	/* if the point is on the wrong side of earth, the player cannot see it */
+	if (v[3] < 0)
+		return qfalse;
+
+	/* if the point is outside the screen, the player cannot see it */
+	if (*x < node->pos[0] && *y < node->pos[1] && *x > node->pos[0] + node->size[0] && *y > node->pos[1] + node->size[1])
+		return qfalse;
+
 	return qtrue;
 }
 
@@ -447,6 +471,7 @@ static void MAP_ScreenToMap (const menuNode_t* node, int x, int y, vec2_t pos)
  * @param[in] x X coordinate on the screen that was clicked to
  * @param[in] y Y coordinate on the screen that was clicked to
  * @param[in] node The current menuNode we was clicking into (3dmap or map)
+ * @sa MAP_3DMapToScreen
  */
 static void MAP3D_ScreenToMap (const menuNode_t* node, int x, int y, vec2_t pos)
 {
@@ -458,33 +483,43 @@ static void MAP3D_ScreenToMap (const menuNode_t* node, int x, int y, vec2_t pos)
 	/* set mid to the coordinates of the center of the globe */
 	Vector2Set(mid, (node->pos[0] + node->size[0]) / 2.0f, (node->pos[1] + node->size[1]) / 2.0f);
 
-	/* stop if we didn't click on the globe */
+	/* stop if we click outside the globe (distance is the distance of the point to the center of the globe) */
 	dist = sqrt((x - mid[0]) * (x - mid[0]) + (y - mid[1]) * (y - mid[1]));
 	if (dist > radius) {
 		Vector2Set(pos, -1.0, -1.0);
 		return;
 	}
 
-	/* calculate the coordinates in the local base */
+	/* calculate the coordinates in the local frame
+	 * this frame is the frame of the screen.
+	 * v[0] is the vertical axis of the screen
+	 * v[1] is the horizontal axis of the screen
+	 * v[2] is the axis perpendicular to the screen - we get its value knowing that norm of v is egal to radius
+	 * 	(because the point is on the globe) */
 	v[0] = - (y - mid[1]);
 	v[1] = - (x - mid[0]);
 	v[2] = - sqrt(radius * radius - (x - mid[0]) * (x - mid[0]) - (y - mid[1]) * (y - mid[1]));
 	VectorNormalize(v);
 
 	/* rotate the vector to switch of reference frame */
-	/* note the ccs.angles[ROLL] is always 0, so there is only 2 rotations */
+	/* note the ccs.angles[ROLL] is always 0, so there is only 2 rotations and not 3 */
 	/*	and that GLOBE_ROTATE is already included in ccs.angles[YAW] */
+	/* first rotation is along the horizontal axis of the screen, to put north-south axis of the earth
+	 *	perpendicular to the screen */
 	rotationAxis[0] = 0;
 	rotationAxis[1] = 1;
 	rotationAxis[2] = 0;
 	RotatePointAroundVector(v1, rotationAxis, v, ccs.angles[YAW]);
-
+	
+	/* second rotation is to rotate the earth around its north-south axis
+	 *	so that Greenwich meridian is along the vertical axis of the screen */
 	rotationAxis[0] = 0;
 	rotationAxis[1] = 0;
 	rotationAxis[2] = 1;
 	RotatePointAroundVector(v, rotationAxis, v1, ccs.angles[PITCH]);
 
-	/* convert the final vector in polar coordinates */
+	/* we therefore got in v the coordinates of the point in the static frame of the earth
+	 *	that we can convert in polar coordinates to get its latitude and longitude */
 	VecToPolar(v, pos);
 }
 
@@ -492,8 +527,8 @@ static void MAP3D_ScreenToMap (const menuNode_t* node, int x, int y, vec2_t pos)
  * @brief Calculate the shortest way to go from start to end on a sphere
  * @param[in] start The point you start from
  * @param[in] end The point you go to
+ * @param[out] line Contains the shortest path to go from start to end
  * @sa MAP_MapDrawLine
- * @return line mapline_t* was filled with the shortest path to go from start to end
  */
 extern void MAP_MapCalcLine (const vec2_t start, const vec2_t end, mapline_t* line)
 {
