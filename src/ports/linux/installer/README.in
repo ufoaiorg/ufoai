@@ -18,7 +18,7 @@ SYSTEM REQUIREMENTS
 
 	You need the following package versions to run the game
 
-	glibc >= 2.3.5
+	glibc >= 2.4
 	SDL >= 1.2.7
 	SDL_ttf >= 2.0.7
 	ogg >= 1.1
@@ -26,7 +26,7 @@ SYSTEM REQUIREMENTS
 	libjpeg >= 6.2
 	zlib >= 1.2.3
 	libpng
-
+	
 RUNNING THE GAME
 ==================
 
