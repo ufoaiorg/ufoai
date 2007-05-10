@@ -2742,6 +2742,9 @@ extern void CL_ParseResearchedCampaignItems (const char *name, char **text)
 		Com_Printf("CL_ParseResearchedCampaignItems: failed\n");
 		return;
 	}
+	/* Don't parse if it is not definition for current type of campaign. */
+	if ((Q_strncmp(campaign->researched, name, MAX_VAR)) != 0)
+		return;
 
 	/* get it's body */
 	token = COM_Parse(text);
