@@ -1554,6 +1554,7 @@ extern void RS_ParseTechnologies (const char *name, char **text)
 	tech->next = -1;
 	tech->base_idx = -1;
 	tech->up_chapter = -1;
+	tech->mailSent = MAILSENT_NONE;	/* Just in case :) */
 
 	do {
 		/* get the name type */
