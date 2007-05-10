@@ -2010,6 +2010,8 @@ extern void CL_ParseResults (sizebuf_t * buf)
 	}
 	/* show win screen */
 	if (ccs.singleplayer) {
+		/* Make sure that at this point we are able to Try Again a mission. */
+		Cvar_SetValue("mission_tryagain", 0);
 		if (winner == we) {
 			/* onwin trigger */
 			CP_ExecuteMissionTrigger(selMis->def, 1, baseCurrent);

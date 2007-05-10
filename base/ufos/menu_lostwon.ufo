@@ -131,6 +131,8 @@ menu won
 	// buttons
 	// ==================
 
+	confunc distryagain	{ *bt_tryagain image "hud/buttons1g" }
+
 	pic bt_tryagain
 	{
 		tooltip	"_Retry this mission"
@@ -139,7 +141,7 @@ menu won
 		texl	"0 0"
 		texh	"128 53"
 		mousefx	true
-		click	{ cmd "set game_tryagain 1;mn_pop;" }
+		click	{ cmd "cp_tryagain;" }
 	}
 
 	string s_tryagain

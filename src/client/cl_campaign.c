@@ -3897,6 +3897,9 @@ static void CP_UFORecovered_f (void)
  */
 static void CP_UFORecoveryDone (void)
 {
+	/* Disable Try Again a mission. */
+	Cvar_SetValue("mission_tryagain", 1);
+	Cbuf_AddText("distryagain\n");
 	/* Disable UFORecovery buttons. */
 	Cbuf_AddText("disufostore\n");
 	Cbuf_AddText("disufosell\n");
@@ -4104,6 +4107,18 @@ static void CP_UFORecoveredDestroy_f (void)
 }
 
 /**
+ * @brief Function to issue Try Again a Mission.
+ * @note Command to call this: cp_tryagain.
+ */
+static void CP_TryAgain_f (void)
+{
+	/* Do nothing if user did other stuff. */
+	if (Cvar_VariableInteger("mission_tryagain") == 1)
+		return;
+	Cbuf_AddText("set game_tryagain 1;mn_pop\n");
+}
+
+/**
  * @brief
  */
 extern void CL_ResetCampaign (void)
@@ -4119,6 +4134,7 @@ extern void CL_ResetCampaign (void)
 	Cmd_AddCommand("getcampaigns", CP_GetCampaigns_f, NULL);
 	Cmd_AddCommand("missionlist", CP_MissionList_f, "Shows all missions from the script files");
 	Cmd_AddCommand("game_new", CL_GameNew, NULL);	Cmd_AddCommand("game_exit", CL_GameExit, NULL);
+	Cmd_AddCommand("cp_tryagain", CP_TryAgain_f, "Try again a mission");
 	Cmd_AddCommand("cp_uforecovery", CP_UFORecovered_f, "Function to trigger UFO Recovered event");
 	Cmd_AddCommand("cp_uforecovery_baselist_click", CP_UfoRecoveryBaseSelectPopup_f, "Callback for recovery base list popup.");
 	Cmd_AddCommand("cp_uforecoverystart", CP_UFORecoveredStart_f, "Function to start UFO recovery processing.");
