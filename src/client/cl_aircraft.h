@@ -103,6 +103,15 @@ typedef struct itemsTmp_s {
 	int amount;		/**< Amount of collected items of this idx. */
 } itemsTmp_t;
 
+/** @brief All different types of UFOs. */
+typedef enum {
+	UFO_SCOUT,
+	UFO_FIGHTER,
+	UFO_HARVESTER,
+
+	UFO_MAX
+} ufoType_t;
+
 /** @brief An aircraft with all it's data */
 typedef struct aircraft_s {
 	int idx;					/**< Global index of this aircraft. See also gd.numAircraft. @todo: is this updated when one aircraft is lost (it is checked agains gd.numAircraft sometimes)? We do not really have a global list of acs do we? */
@@ -110,9 +119,10 @@ typedef struct aircraft_s {
 	char id[MAX_VAR];			/**< internal id from script file */
 	char name[MAX_VAR];			/**< translateable name */
 	char shortname[MAX_VAR];		/**< translateable shortname */
-	char image[MAX_VAR];		/**< image on geoscape */
+	char image[MAX_VAR];			/**< image on geoscape */
 	aircraftType_t type;
-	int status;					/**< see aircraftStatus_t */
+	ufoType_t ufotype;			/**< type of UFO (if craft is not UFO - not used) */
+	int status;				/**< see aircraftStatus_t */
 	float speed;
 	vec3_t angles;				/**< menu values for rotating */
 	vec3_t scale;				/**< menu values for scaling */
@@ -163,15 +173,6 @@ typedef struct aircraft_s {
 
 	qboolean visible;		/**< The ufo is visible ? */
 } aircraft_t;
-
-/** @brief All different types of UFOs. */
-typedef enum {
-	UFO_SCOUT,
-	UFO_FIGHTER,
-	UFO_HARVESTER,
-	
-	UFO_MAX
-} ufoType_t;
 
 /*
 @todo: for later, this is used quite a lot in the code.
