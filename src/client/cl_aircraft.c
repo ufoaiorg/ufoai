@@ -1253,7 +1253,7 @@ extern qboolean AIR_SendAircraftToMission (aircraft_t* aircraft, actMis_t* missi
 
 	if (!AIR_AircraftHasEnoughFuel(aircraft, mission->realPos))
 		return qfalse;
-	
+
 	MAP_MapCalcLine(aircraft->pos, mission->realPos, &(aircraft->route));
 	aircraft->status = AIR_MISSION;
 	aircraft->time = 0;
@@ -1465,12 +1465,7 @@ extern void AIR_ParseAircraft (const char *name, char **text)
 				air_samp->type = AIRCRAFT_INTERCEPTOR;
 			else if (!Q_strncmp(token, "ufo", 3))
 				air_samp->type = AIRCRAFT_UFO;
-		} else if (!vp->string) {
-			Com_Printf("AIR_ParseAircraft: unknown token \"%s\" ignored (aircraft %s)\n", token, name);
-			COM_EParse(text, errhead, name);
-		}
-
-		if (vp->string && !Q_strncmp(token, "ufotype", 7)) {
+		} else if (!Q_strncmp(token, "ufotype", 7)) {
 			token = COM_EParse(text, errhead, name);
 			if (!*text)
 				return;
@@ -1480,6 +1475,9 @@ extern void AIR_ParseAircraft (const char *name, char **text)
 				air_samp->ufotype = UFO_FIGHTER;
 			else if (!Q_strncmp(token, "harvester", 9))
 				air_samp->ufotype = UFO_HARVESTER;
+		} else if (!vp->string) {
+			Com_Printf("AIR_ParseAircraft: unknown token \"%s\" ignored (aircraft %s)\n", token, name);
+			COM_EParse(text, errhead, name);
 		}
 	} while (*text);
 }
