@@ -143,7 +143,7 @@ typedef struct actMis_s {
 typedef struct ufoRecoveries_s {
 	qboolean active;		/**< True if the recovery is under processing. */
 	int baseID;			/**< Base idx where the recovery will be processing. */
-	ufoType_t ufotype;		/**< Type of UFO to process. */
+	int ufotype;			/**< Index of UFO in aircraft_samples array. */
 	date_t event;			/**< When the process will start (UFO got transported to base). */
 } ufoRecoveries_t;
 

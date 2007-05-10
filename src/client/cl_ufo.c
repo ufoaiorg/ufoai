@@ -238,9 +238,20 @@ extern void UFO_PrepareRecovery (base_t *base)
 {
 	int i;
 	ufoRecoveries_t *recovery = NULL;
+	aircraft_t *ufocraft = NULL;
 	date_t event;
 
 	assert (base);
+
+	/* Find ufo sample of given ufotype. */
+	for (i = 0; i < numAircraft_samples; i++) {
+		ufocraft = &aircraft_samples[i];
+		if (ufocraft->type != AIRCRAFT_UFO)
+			continue;
+		if (ufocraft->ufotype == Cvar_VariableInteger("mission_ufotype"))
+			break;
+	}
+	assert (ufocraft);
 
 	/* Find free uforecovery slot. */
 	for (i = 0; i < MAX_RECOVERIES; i++) {
@@ -264,7 +275,7 @@ extern void UFO_PrepareRecovery (base_t *base)
 	/* Prepare recovery. */
 	recovery->active = qtrue;
 	recovery->baseID = base->idx;
-	recovery->ufotype = Cvar_VariableInteger("mission_ufotype");
+	recovery->ufotype = ufocraft->idx_sample;
 	recovery->event = event;
 
 	Com_Printf("UFO_PrepareRecovery()... the recovery entry in global array is done; base: %s, ufotype: %i, date: %i\n",
@@ -279,28 +290,12 @@ extern void UFO_Recovery (void)
 	int i, item;
 	objDef_t *od;
 	base_t *base;
+	aircraft_t *ufocraft;
 	ufoRecoveries_t *recovery;
 
 	for (i = 0; i < MAX_RECOVERIES; i++) {
 		recovery = &gd.recoveries[i];
 		if (recovery->event.day == ccs.date.day) {
-			switch (recovery->ufotype) {
-				case 0:
-					item = Com_GetItemByID("craft_ufo_scout");
-					od = &csi.ods[item];
-					break;
-				case 1:
-					item = Com_GetItemByID("craft_ufo_fighter");
-					od = &csi.ods[item];
-					break;
-				case 2:
-					item = Com_GetItemByID("craft_ufo_harvester");
-					od = &csi.ods[item];
-					break;
-				default:
-					Sys_Error("UFO_Recovery()... not found item definition for ufotype: %i\n", recovery->ufotype);
-					return;
-			}
 			base = &gd.bases[recovery->baseID];
 			if (!base->founded) {
 				/* Destination base was destroyed meanwhile. */
@@ -309,6 +304,14 @@ extern void UFO_Recovery (void)
 				/* @todo: prepare MN_AddNewMessage() here */
 				return;
 			}
+			/* Get ufocraft. */
+			ufocraft = &aircraft_samples[recovery->ufotype];
+			assert (ufocraft);
+			/* Get item. */
+			/* We can do this because aircraft id is the same as dummy item id. */
+			item = Com_GetItemByID(ufocraft->id);
+			od = &csi.ods[item];
+			assert (od);
 			/* Process UFO recovery. */
 			base->storage.num[item]++;	/* Add dummy UFO item to enable research topic. */
 			RS_MarkCollected(od->tech);	/* Enable research topic. */

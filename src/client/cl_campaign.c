@@ -3831,7 +3831,8 @@ static void CP_UFORecovered_f (void)
 	int i;
 	ufoType_t UFOtype;
 	base_t *base  = NULL;
-	qboolean hasUFOhangar = qfalse;
+	aircraft_t *ufocraft = NULL;
+	qboolean hasUFOhangar = qfalse, ufofound = qfalse;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <UFOType>\n", Cmd_Argv(0));
@@ -3842,6 +3843,22 @@ static void CP_UFORecovered_f (void)
 		UFOtype = atoi(Cmd_Argv(1));
 	} else {
 		Com_Printf("CP_UFORecovered()... UFOType: %i does not exist!\n", atoi(Cmd_Argv(1)));
+		return;
+	}
+
+	/* Find ufo sample of given ufotype. */
+	for (i = 0; i < numAircraft_samples; i++) {
+		ufocraft = &aircraft_samples[i];
+		if (ufocraft->type != AIRCRAFT_UFO)
+			continue;
+		if (ufocraft->ufotype == UFOtype) {
+			ufofound = qtrue;
+			break;
+		}
+	}
+	/* Do nothing without UFO of this type. */
+	if (!ufofound) {
+		Com_Printf("CP_UFORecovered()... UFOType: %i does not have valid craft definition!\n", atoi(Cmd_Argv(1)));
 		return;
 	}
 
