@@ -933,6 +933,7 @@ void CL_CameraMoveRemote (void)
 	}
 
 	cl.cam.omega[ROLL] = 0;
+	/* calculate new camera angles for this frame */
 	VectorMA(cl.cam.angles, cls.frametime, cl.cam.omega, cl.cam.angles);
 
 	if (cl.cam.angles[PITCH] > cl_campitchmax->value)

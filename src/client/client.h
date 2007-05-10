@@ -90,16 +90,15 @@ typedef struct {
 #define CAMERA_LEVEL_HEIGHT 64
 
 typedef struct {
-	vec3_t reforg;
-	vec3_t camorg;
-	vec3_t speed;
-	vec3_t angles;
-	vec3_t omega;
-	vec3_t axis[3];				/**< set when refdef.angles is set */
+	vec3_t reforg;		/**< the reference origin used for rotating around */
+	vec3_t camorg;		/**< origin of the camera */
+	vec3_t speed;		/**< speed of camera movement */
+	vec3_t angles;		/**< current camera angle */
+	vec3_t omega;		/**< speed of rotation */
+	vec3_t axis[3];		/**< set when refdef.angles is set */
 
-	float lerplevel;
-	float zoom;
-	float fpzoom;
+	float lerplevel;	/**< linear interpolation */
+	float zoom;			/**< the current zoom level (see MIN_ZOOM and MAX_ZOOM) */
 } camera_t;
 
 typedef enum { CAMERA_MODE_REMOTE, CAMERA_MODE_FIRSTPERSON } camera_mode_t;

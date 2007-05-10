@@ -222,7 +222,7 @@ typedef struct evTimes_s
 static evTimes_t	evTimes[EV_TIMES];
 static evTimes_t	*etUnused, *etCurrent;
 
-qboolean blockEvents;
+qboolean blockEvents;	/**< block network events - see CL_Events */
 
 static int nextTime;
 static int shootTime;
