@@ -689,7 +689,7 @@ static void CL_FinishHTTPDownload (void)
 	qboolean	isFile;
 
 	do {
-		msg = curl_multi_info_read (multi, &msgs_in_queue);
+		msg = curl_multi_info_read(multi, &msgs_in_queue);
 
 		if (!msg) {
 			Com_Printf("CL_FinishHTTPDownload: Odd, no message for us...\n");
@@ -743,16 +743,16 @@ static void CL_FinishHTTPDownload (void)
 			case CURLE_HTTP_RETURNED_ERROR:
 			case CURLE_OK:
 
-				curl_easy_getinfo (curl, CURLINFO_RESPONSE_CODE, &responseCode);
+				curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &responseCode);
 				if (responseCode == 404) {
-					i = strlen (dl->queueEntry->ufoPath);
-					if (!strcmp (dl->queueEntry->ufoPath + i - 4, ".pk3"))
+					i = strlen(dl->queueEntry->ufoPath);
+					if (!strcmp(dl->queueEntry->ufoPath + i - 4, ".pk3"))
 						downloading_pak = qfalse;
 
 					if (isFile)
-						remove (dl->filePath);
+						remove(dl->filePath);
 					Com_Printf("HTTP(%s): 404 File Not Found [%d remaining files]\n", dl->queueEntry->ufoPath, pendingCount);
-					curl_easy_getinfo (curl, CURLINFO_SIZE_DOWNLOAD, &fileSize);
+					curl_easy_getinfo(curl, CURLINFO_SIZE_DOWNLOAD, &fileSize);
 					if (fileSize > 512) {
 						/* ick */
 						isFile = qfalse;
@@ -775,7 +775,7 @@ static void CL_FinishHTTPDownload (void)
 			case CURLE_COULDNT_CONNECT:
 			case CURLE_COULDNT_RESOLVE_PROXY:
 				if (isFile)
-					remove (dl->filePath);
+					remove(dl->filePath);
 				Com_Printf("Fatal HTTP error: %s\n", curl_easy_strerror(result));
 				curl_multi_remove_handle(multi, dl->curl);
 				if (abortDownloads)

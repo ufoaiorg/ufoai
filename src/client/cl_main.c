@@ -1610,24 +1610,24 @@ void CL_RequestNextDownload (void)
 	if (cls.state != ca_connected)
 		return;
 
-	if (precache_check == CS_MODELS) { /* confirm map */
-		if (*cl.configstrings[CS_TILES] == '+') {
-		} else {
-			if (!CL_CheckOrDownloadFile(va("maps/%s.bsp", cl.configstrings[CS_TILES])))
-				return; /* started a download */
-		}
-		precache_check = CS_MODELS + 1;
-	}
-
-#ifdef HAVE_CURL
-	/* map might still be downloading? */
-	if (CL_PendingHTTPDownloads())
-		return;
-#endif /* HAVE_CURL */
-
 	/* for singleplayer game this is already loaded in our local server */
 	/* and if we are the server we don't have to reload the map here, too */
 	if (!Com_ServerState()) {
+		/* check download */
+		if (precache_check == CS_MODELS) { /* confirm map */
+			if (*cl.configstrings[CS_TILES] == '+') {
+			} else {
+				if (!CL_CheckOrDownloadFile(va("maps/%s.bsp", cl.configstrings[CS_TILES])))
+					return; /* started a download */
+			}
+			precache_check = CS_MODELS + 1;
+		}
+#ifdef HAVE_CURL
+		/* map might still be downloading? */
+		if (CL_PendingHTTPDownloads())
+			return;
+#endif /* HAVE_CURL */
+
 		/* activate the map loading screen for multiplayer, too */
 		SCR_BeginLoadingPlaque();
 
