@@ -343,7 +343,7 @@ menu production
 		tooltip	"_Show primary weapons"
 		image	menu/button_blue
 		mousefx	true
-		pos		"615 585"
+		pos		"615 560"
 		texl	"0 0"
 		texh	"128 52"
 		click	{ prod_primary }
@@ -351,10 +351,10 @@ menu production
 
 	string s_primary
 	{
-		pos	"679 611"
+		pos	"679 586"
 		align	cc
 		color "1 1 1 0.6"
-		font	"f_big"
+		font	"f_small"
 		string	"_Primary"
 	}
 
@@ -363,7 +363,7 @@ menu production
 		tooltip	"_Show only secondary weapons"
 		image	menu/button_blue
 		mousefx	true
-		pos		"615 655"
+		pos		"765 560"
 		texl	"0 0"
 		texh	"128 52"
 		click	{ prod_secondary }
@@ -371,10 +371,10 @@ menu production
 
 	string s_secondary
 	{
-		pos	"679 681"
+		pos	"829 586"
 		align	cc
 		color "1 1 1 0.6"
-		font	"f_big"
+		font	"f_small"
 		string	"_Secondary"
 	}
 
@@ -383,7 +383,7 @@ menu production
 		tooltip	"_Show miscellaneous equipment"
 		image	menu/button_blue
 		mousefx	true
-		pos		"765 585"
+		pos		"615 622"
 		texl	"0 0"
 		texh	"128 52"
 		click	{ prod_misc }
@@ -391,10 +391,10 @@ menu production
 
 	string s_misc
 	{
-		pos	"829 611"
+		pos	"679 648"
 		align	cc
 		color "1 1 1 0.6"
-		font	"f_big"
+		font	"f_small"
 		string	"_Misc"
 	}
 
@@ -403,7 +403,7 @@ menu production
 		tooltip	"_Show armour"
 		image	menu/button_blue
 		mousefx	true
-		pos		"765 655"
+		pos		"765 622"
 		texl	"0 0"
 		texh	"128 52"
 		click	{ prod_armor }
@@ -411,11 +411,51 @@ menu production
 
 	string s_armor
 	{
-		pos	"829 681"
+		pos	"829 648"
 		align	cc
 		color "1 1 1 0.6"
-		font	"f_big"
+		font	"f_small"
 		string	"_Armour"
+	}
+
+	pic bt_other
+	{
+		tooltip	"_Show other items and materials"
+		image	menu/button_blue
+		mousefx	true
+		pos		"615 683"
+		texl	"0 0"
+		texh	"128 52"
+		click	{  }
+	}
+
+	string s_other
+	{
+		pos	"679 709"
+		align	cc
+		color "1 1 1 0.6"
+		font	"f_small"
+		string	"_Other"
+	}
+
+	pic bt_disassembling
+	{
+		tooltip	"_Disassembling items"
+		image	menu/button_blue
+		mousefx	true
+		pos		"765 683"
+		texl	"0 0"
+		texh	"128 52"
+		click	{  }
+	}
+
+	string s_disassembling
+	{
+		pos	"829 709"
+		align	cc
+		color "1 1 1 0.6"
+		font	"f_small"
+		string	"_Disassembling"
 	}
 
 	// ITEMS
