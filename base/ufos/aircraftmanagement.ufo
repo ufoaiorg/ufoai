@@ -99,6 +99,7 @@ aircraft craft_ufo_scout
 	name		"_UFO - Scout"
 	shortname	"_Scout U"
 	type		ufo
+	ufotype		scout
 	model		"ufo1"
 	size		4
 	building	building_small_ufo_hangar
@@ -118,6 +119,7 @@ aircraft craft_ufo_fighter
 	name		"_UFO - Fighter"
 	shortname	"_Fighter U"
 	type		ufo
+	ufotype		fighter
 	model		"ufobig"
 	size		8
 	// FIXME: should be big hangar
