@@ -56,6 +56,14 @@ menu won
 	// UFO Recovery
 	// ==================
 
+	confunct menuwon_update_buttons
+	{
+		*bt_storeufo image "menu/button_blue"
+		*bt_sellufo image "menu/button_blue"
+		*bt_destroyufo image "menu/button_blue"
+		*bt_tryagain image "menu/button_blue"
+	}
+
 	confunc disufostore 	{ *bt_storeufo image "menu/button_gray" *bt_storeufo tooltip "_No UFO hangars or UFO recovery process finished" }
 	confunc disufosell	{ *bt_sellufo image "menu/button_gray" *bt_sellufo tooltip "_No nation with accepted level of alien infiltration or UFO recovery process finished" }
 	confunc disufodestroy	{ *bt_destroyufo image "menu/button_gray" *bt_destroyufo tooltip "_UFO recovery process finished"}
@@ -194,6 +202,7 @@ menu won
 
 	func init
 	{
+		menuwon_update_buttons;
 		cmd "music ufo2;music_start;"
 	}
 
