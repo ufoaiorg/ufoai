@@ -56,10 +56,9 @@ menu won
 	// UFO Recovery
 	// ==================
 
-	//FIXME: image should be the same as in bt_storeufo but greyed out
-	confunc disufostore 	{ *bt_storeufo image "hud/buttons1g" *bt_storeufo tooltip "_No UFO hangars or UFO recovery process finished" }
-	confunc disufosell	{ *bt_sellufo image "hud/buttons1g" *bt_sellufo tooltip "_No nation with accepted level of alien infiltration or UFO recovery process finished" }
-	confunc disufodestroy	{ *bt_destroyufo image "hud/buttons1g" *bt_destroyufo tooltip "_UFO recovery process finished"}
+	confunc disufostore 	{ *bt_storeufo image "hud/button_gray" *bt_storeufo tooltip "_No UFO hangars or UFO recovery process finished" }
+	confunc disufosell	{ *bt_sellufo image "hud/button_gray" *bt_sellufo tooltip "_No nation with accepted level of alien infiltration or UFO recovery process finished" }
+	confunc disufodestroy	{ *bt_destroyufo image "hud/button_gray" *bt_destroyufo tooltip "_UFO recovery process finished"}
 
 	pic bt_storeufo
 	{
@@ -131,7 +130,7 @@ menu won
 	// buttons
 	// ==================
 
-	confunc distryagain	{ *bt_tryagain image "hud/buttons1g" }
+	confunc distryagain	{ *bt_tryagain image "hud/button_gray" }
 
 	pic bt_tryagain
 	{
