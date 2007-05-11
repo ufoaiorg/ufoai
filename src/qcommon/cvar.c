@@ -691,7 +691,7 @@ static void Cvar_List_f (void)
 		else
 			Com_Printf(" ");
 		if (var->flags & CVAR_DEVELOPER)
-			Com_Printf(" ");
+			Com_Printf("D");
 		else
 			Com_Printf(" ");
 		if (var->flags & CVAR_NOSET)
