@@ -56,7 +56,7 @@ menu won
 	// UFO Recovery
 	// ==================
 
-	confunct menuwon_update_buttons
+	confunc menuwon_update_buttons
 	{
 		*bt_storeufo image "menu/button_blue"
 		*bt_sellufo image "menu/button_blue"
