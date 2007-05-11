@@ -58,7 +58,7 @@ static int alias_count;				/* for detecting runaway loops */
  * @brief Reopens the command buffer for writing
  * @sa Cmd_Close_f
  */
-void Cmd_Open_f(void)
+static void Cmd_Open_f (void)
 {
 	Com_DPrintf("Cmd_Close_f: command buffer opened again\n");
 	cmd_closed = qfalse;
@@ -70,7 +70,7 @@ void Cmd_Open_f(void)
  * Does not affect EXEC_NOW
  * @sa Cmd_Open_f
  */
-void Cmd_Close_f(void)
+static void Cmd_Close_f (void)
 {
 	Com_DPrintf("Cmd_Close_f: command buffer closed\n");
 	cmd_closed = qtrue;
@@ -81,7 +81,7 @@ void Cmd_Close_f(void)
  * next frame.  This allows commands like:
  * bind g "impulse 5 ; +attack ; wait ; -attack ; impulse 2"
  */
-void Cmd_Wait_f(void)
+static void Cmd_Wait_f (void)
 {
 	cmd_wait = qtrue;
 }
@@ -999,11 +999,11 @@ static void Cmd_List_f (void)
 extern void Cmd_Init (void)
 {
 	/* register our commands */
-	Cmd_AddCommand("cmdlist", Cmd_List_f, NULL);
-	Cmd_AddCommand("exec", Cmd_Exec_f, NULL);
-	Cmd_AddCommand("echo", Cmd_Echo_f, NULL);
-	Cmd_AddCommand("alias", Cmd_Alias_f, NULL);
-	Cmd_AddCommand("wait", Cmd_Wait_f, NULL);
-	Cmd_AddCommand("cmdclose", Cmd_Close_f, NULL);
-	Cmd_AddCommand("cmdopen", Cmd_Open_f, NULL);
+	Cmd_AddCommand("cmdlist", Cmd_List_f, "List all commands to game console");
+	Cmd_AddCommand("exec", Cmd_Exec_f, "Execute a script file");
+	Cmd_AddCommand("echo", Cmd_Echo_f, "Print to game console");
+	Cmd_AddCommand("alias", Cmd_Alias_f, "Creates a new command that executes a command string");
+	Cmd_AddCommand("wait", Cmd_Wait_f, "Causes execution of the remainder of the command buffer to be delayed until next frame");
+	Cmd_AddCommand("cmdclose", Cmd_Close_f, "Close the command buffer");
+	Cmd_AddCommand("cmdopen", Cmd_Open_f, "Open the command buffer again");
 }
