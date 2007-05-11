@@ -745,6 +745,7 @@ extern void CL_InitInput (void)
 
 #ifdef DEBUG
 	Cmd_AddCommand("camangles", CL_CamPrintAngles_f, NULL);
+	Cmd_AddCommand("debug_drawblocked", CL_DisplayBlockedPaths_f, "Draws a marker for all blocked map-positions.");
 #endif /* DEBUG */
 	Cmd_AddCommand("camsetangles", CL_CamSetAngles_f, NULL);
 	Cmd_AddCommand("basemapshot", CL_MakeBaseMapShot_f, NULL);

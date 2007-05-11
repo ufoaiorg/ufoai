@@ -662,6 +662,9 @@ void CL_DisplayFiremodes_f(void);
 void CL_FireWeapon_f(void);
 void CL_SelectReactionFiremode_f(void);
 
+#ifdef DEBUG
+void CL_DisplayBlockedPaths_f(void);
+#endif
 void CL_ConditionalMoveCalc(struct routing_s *map, le_t *le, int distance);
 qboolean CL_ActorSelect(le_t * le);
 qboolean CL_ActorSelectList(int num);

@@ -1721,6 +1721,40 @@ static void CL_BuildForbiddenList (void)
 #endif
 }
 
+#ifdef DEBUG
+/**
+ * @brief Draws a marker for all blocked map-positions.
+ * @note currently uses basically the same code as CL_BuildForbiddenList
+ * @note usage in console: "debug_drawblocked"
+ * @todo currently the particles stay a _very_ long time ... so everybody ahs to stand still in order for the dsipaly to be correct.
+ * @sa CL_BuildForbiddenList
+ * @sa cl_input:CL_InitInput <-- console command init.
+ */
+extern void CL_DisplayBlockedPaths_f (void)
+{
+	le_t *le;
+	int i;
+	ptl_t *ptl;
+	vec3_t s;
+
+	for (i = 0, le = LEs; i < numLEs; i++, le++) {
+		if (!le->inuse)
+			continue;
+
+		if ( !(le->state & STATE_DEAD)
+		&& (le->type == ET_ACTOR || le->type == ET_UGV)) {
+			/* draw blocking cursor at le->pos */
+			Grid_PosToVec(&clMap,  le->pos, s);
+			ptl = CL_ParticleSpawn("cross", 0, s, NULL, NULL);
+			ptl->rounds = 2;
+			ptl->roundsCnt = 2;
+			ptl->life = 10000;
+			ptl->t = 0;
+		}
+	}
+}
+#endif
+
 /**
  * @brief Recalculate forbidden list, available moves and actor's move length
  * if given le is the selected Actor.
