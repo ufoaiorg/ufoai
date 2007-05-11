@@ -99,6 +99,7 @@ static const value_t fdps[] = {
 	{"impsnd", V_STRING, offsetof(fireDef_t, impactSound), 0},
 	{"bodysnd", V_STRING, offsetof(fireDef_t, hitBodySound), 0},
 	{"bncsnd", V_STRING, offsetof(fireDef_t, bounceSound), 0},
+	{"throughwall", V_INT, offsetof(fireDef_t, throughWall), MEMBER_SIZEOF(fireDef_t, throughWall)},
 	{"sndonce", V_BOOL, offsetof(fireDef_t, soundOnce), MEMBER_SIZEOF(fireDef_t, soundOnce)},
 	{"gravity", V_BOOL, offsetof(fireDef_t, gravity), MEMBER_SIZEOF(fireDef_t, gravity)},
 	{"launched", V_BOOL, offsetof(fireDef_t, launched), MEMBER_SIZEOF(fireDef_t, launched)},

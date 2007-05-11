@@ -1023,6 +1023,7 @@ typedef struct fireDef_s {
 	qboolean launched;
 	qboolean rolled;			/**< Can it be rolled - e.g. grenades */
 	qboolean reaction;			/**< This firemode can be used/selected for reaction fire.*/
+	int throughWall;		/**< allow the shooting through a wall */
 	byte dmgtype;
 	float speed;
 	vec2_t shotOrg;

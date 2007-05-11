@@ -753,6 +753,7 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 	vec3_t cur_loc;	/* The current location of the projectile. */
 	vec3_t impact;	/* The location of the target (-center?) */
 	vec3_t temp;
+	vec3_t tracefrom;	/* sum */
 	trace_t tr;	/* the traceing */
 	float acc;	/* Accuracy modifier for the angle of the shot. */
 	float range;	/* ?? @todo */
@@ -761,6 +762,7 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 	int bounce;	/* count the bouncing */
 	int damage;	/* The damage to be dealt to the target. */
 	byte flags;	/* ?? @todo */
+	int throughWall; /* shoot through x walls */
 /*	int i; */
 
 	/* Calc direction of the shot. */
@@ -793,9 +795,12 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 	AngleVectors(angles, dir, NULL, NULL);
 
 	/* shoot and bounce */
+	throughWall = fd->throughWall;
 	range = fd->range;
 	bounce = 0;
 	flags = 0;
+	damage = fd->damage[0];
+	VectorCopy(cur_loc, tracefrom);
 	for (;;) {
 		/* Calc 'impact' vector that is located at the end of the range
 		   defined by the fireDef_t. This is not really the impact location,
@@ -806,7 +811,7 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 		   to the end_of_range location.*/
 		/* FIXME: This trace doesn't seam to hit any func_breakable - why?? */
 		/* mins and maxs should be set via lm_t don't they? */
-		tr = gi.trace(cur_loc, NULL, NULL, impact, ent, MASK_SHOT);
+		tr = gi.trace(tracefrom, NULL, NULL, impact, ent, MASK_SHOT);
 		/* _Now_ we copy the correct impact location. */
 		VectorCopy(tr.endpos, impact);
 
@@ -842,7 +847,7 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 			gi.WriteByte(fd->weap_fds_idx);
 			gi.WriteByte(fd->fd_idx);
 			gi.WriteByte(flags);
-			gi.WritePos(cur_loc);
+			gi.WritePos(tracefrom);
 			gi.WritePos(impact);
 			gi.WriteDir(tr.plane.normal);
 
@@ -855,14 +860,26 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 		}
 
 		/* do splash damage */
-		if (tr.fraction < 1.0 && fd->splrad && !fd->bounce) {
-			VectorMA(impact, sv_shot_origin->value, tr.plane.normal, impact);
-			G_SplashDamage(ent, fd, impact, mock);
+		if (tr.fraction < 1.0 && !fd->bounce) {
+			/* check for shooting through wall */
+			if (throughWall && tr.contents & CONTENTS_SOLID) {
+				throughWall--;
+				/* redruce damage */
+				/* TODO: redruce even more if the wall was hit far away and
+				 * not close by the shooting actor */
+				damage /= sqrt(fd->throughWall - throughWall +1);
+				VectorMA(tr.endpos, 1, dir, tracefrom);
+				continue;
+			}
+
+			if (fd->splrad) {
+				VectorMA(impact, sv_shot_origin->value, tr.plane.normal, impact);
+				G_SplashDamage(ent, fd, impact, mock);
+			}
 		}
 
 		/* do damage if the trace hit an entity */
 		if (tr.ent && (tr.ent->type == ET_ACTOR || tr.ent->type == ET_UGV || tr.ent->type == ET_BREAKABLE)) {
-			damage = fd->damage[0]; /* + fd->damage[1] * crand(); //  REMOVED random component - it's quite random enough already */
 			G_Damage(tr.ent, fd, damage, ent, mock);
 			break;
 		}
