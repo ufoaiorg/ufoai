@@ -3674,7 +3674,7 @@ static void CL_GameNew (void)
 static char campaignText[MAXCAMPAIGNTEXT];
 static char campaignDesc[MAXCAMPAIGNTEXT];
 /**
- * @brief fill a list with available campaigns
+ * @brief Fill the campaign list with available campaigns
  */
 static void CP_GetCampaigns_f (void)
 {
@@ -3758,10 +3758,10 @@ extern void CL_ResetSinglePlayerData (void)
 	CL_ClientHunkClear();
 }
 
+#ifdef DEBUG
 /**
  * @brief Show campaign stats in console
- *
- * call this function via campaign_stats
+ * call this function via debug_campaignstats
  */
 static void CP_CampaignStats_f (void)
 {
@@ -3808,6 +3808,7 @@ static void CP_CampaignStats_f (void)
 	Com_Printf("...admin_robot: %i\n", SALARY_ADMIN_ROBOT);
 	Com_Printf("...debt_interest: %.5f\n", SALARY_DEBT_INTEREST);
 }
+#endif /* DEBUG */
 
 /* ======================== */
 /* Onwin mission functions. */
@@ -4139,11 +4140,11 @@ extern void CL_ResetCampaign (void)
 	menuText[TEXT_CAMPAIGN_LIST] = campaignText;
 
 	/* commands */
-	Cmd_AddCommand("campaign_stats", CP_CampaignStats_f, NULL);
 	Cmd_AddCommand("campaignlist_click", CP_CampaignsClick_f, NULL);
-	Cmd_AddCommand("getcampaigns", CP_GetCampaigns_f, NULL);
+	Cmd_AddCommand("getcampaigns", CP_GetCampaigns_f, "Fill the campaign list with available campaigns");
 	Cmd_AddCommand("missionlist", CP_MissionList_f, "Shows all missions from the script files");
-	Cmd_AddCommand("game_new", CL_GameNew, NULL);	Cmd_AddCommand("game_exit", CL_GameExit, NULL);
+	Cmd_AddCommand("game_new", CL_GameNew, NULL);
+	Cmd_AddCommand("game_exit", CL_GameExit, NULL);
 	Cmd_AddCommand("cp_tryagain", CP_TryAgain_f, "Try again a mission");
 	Cmd_AddCommand("cp_uforecovery", CP_UFORecovered_f, "Function to trigger UFO Recovered event");
 	Cmd_AddCommand("cp_uforecovery_baselist_click", CP_UfoRecoveryBaseSelectPopup_f, "Callback for recovery base list popup.");
@@ -4154,6 +4155,7 @@ extern void CL_ResetCampaign (void)
 	Cmd_AddCommand("cp_uforecoverysell", CP_UFORecoveredSell_f, "Function to sell recovered UFO to desired nation.");
 	Cmd_AddCommand("cp_uforecoverydestroy", CP_UFORecoveredDestroy_f, "Function to destroy recovered UFO.");
 #ifdef DEBUG
-	Cmd_AddCommand("debug_statsupdate", CL_DebugChangeCharacterStats_f, NULL);
+	Cmd_AddCommand("debug_statsupdate", CL_DebugChangeCharacterStats_f, "Debug function to increase the kills and test the ranks");
+	Cmd_AddCommand("debug_campaignstats", CP_CampaignStats_f, "Print campaign stats to game console");
 #endif
 }
