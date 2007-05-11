@@ -426,11 +426,12 @@ static void CL_ChangeSkinOnBoard_f (void)
 /**
  * @brief Reads tha comments from team files
  */
-static void CL_TeamComments_f (void)
+static void CL_MultiplayerTeamSlotComments_f (void)
 {
 	char comment[MAX_VAR];
 	FILE *f;
 	int i;
+	byte version;
 
 	for (i = 0; i < 8; i++) {
 		/* open file */
@@ -441,6 +442,9 @@ static void CL_TeamComments_f (void)
 		}
 
 		/* read data */
+		if (fread(&version, 1, 1, f) != 1)
+			Com_Printf("Warning: Teamfile may have corrupted version\n");
+
 		if (fread(comment, 1, MAX_VAR, f) != MAX_VAR)
 			Com_Printf("Warning: Teamfile may have corrupted comment\n");
 		Cvar_Set(va("mn_slot%i", i), comment);
@@ -1605,7 +1609,7 @@ extern void CL_ResetTeams (void)
 	Cmd_AddCommand("team_changename", CL_ChangeName_f, NULL);
 	Cmd_AddCommand("team_changeskin", CL_ChangeSkin_f, NULL);
 	Cmd_AddCommand("team_changeskinteam", CL_ChangeSkinOnBoard_f, NULL);
-	Cmd_AddCommand("team_comments", CL_TeamComments_f, NULL);
+	Cmd_AddCommand("team_comments", CL_MultiplayerTeamSlotComments_f, "Fills the multiplayer team selection menu with the team names");
 	Cmd_AddCommand("equip_select", CL_Select_f, NULL);
 	Cmd_AddCommand("soldier_select", CL_Select_f, _("Select a soldier from list"));
 	Cmd_AddCommand("nextsoldier", CL_NextSoldier_f, _("Toggle to next soldier"));
