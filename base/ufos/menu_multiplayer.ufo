@@ -636,7 +636,8 @@ menu mp_serverbrowser
 	{
 		pos	"500 140"
 		size	"420 340"
-		format	"20 198"
+		format	"20 48"
+		font	"f_verysmall"
 		mousefx	true
 		border 3
 		bordercolor "0 0.5 0 1"

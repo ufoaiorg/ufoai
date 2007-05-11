@@ -781,7 +781,7 @@ static void CL_ParseStatusMessage (void)
 	/* update the server string */
 	serverID = CL_AddServerToList(&net_from, s);
 	if (serverID != -1) {
-		Com_sprintf(string, sizeof(string), "%s\t%s %s (%s)\t%i/%i\n",
+		Com_sprintf(string, sizeof(string), "%s\t\t\t%s\t\t\t%s\t(%s)\t%i/%i\n",
 			serverList[serverID].hostname,
 			serverList[serverID].mapname,
 			serverList[serverID].gametype,
