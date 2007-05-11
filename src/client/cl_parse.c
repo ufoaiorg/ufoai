@@ -1614,7 +1614,6 @@ void CL_ParseServerMessage (void)
 				break;
 			}
 			Com_Printf("%s", s);
-			con.ormask = 0;
 			break;
 
 		case svc_centerprint:

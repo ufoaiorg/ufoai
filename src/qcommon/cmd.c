@@ -876,6 +876,8 @@ extern int Cmd_CompleteCommand (const char *partial, const char **match)
 	for (cmd = cmd_functions; cmd; cmd = cmd->next) {
 		if (!Q_strncmp(partial, cmd->name, len)) {
 			Com_Printf("[cmd] %s\n", cmd->name);
+			if (cmd->description)
+				Com_Printf("%c      %s\n", 1, cmd->description);
 			localMatch = cmd->name;
 			matches++;
 		}

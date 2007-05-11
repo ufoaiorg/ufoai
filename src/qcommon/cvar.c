@@ -254,6 +254,8 @@ extern int Cvar_CompleteVariable (const char *partial, const char **match)
 				continue;
 #endif
 			Com_Printf("[var] %s\n", cvar->name);
+			if (cvar->description)
+				Com_Printf("%c      %s\n", 1, cvar->description);
 			localMatch = cvar->name;
 			matches++;
 		}

@@ -456,7 +456,7 @@ void Con_Print (const char *txt)
 				continue;
 #endif
 			y = con.current % con.totallines;
-			con.text[y * con.linewidth + con.x] = c | mask | con.ormask;
+			con.text[y * con.linewidth + con.x] = c | mask;
 			con.x++;
 			if (con.x >= con.linewidth)
 				con.x = 0;
