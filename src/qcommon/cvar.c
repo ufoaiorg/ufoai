@@ -249,6 +249,10 @@ extern int Cvar_CompleteVariable (const char *partial, const char **match)
 	/* check for partial matches */
 	for (cvar = cvar_vars; cvar; cvar = cvar->next)
 		if (!Q_strncmp(partial, cvar->name, len)) {
+#ifndef DEBUG
+			if (cvar->flags & CVAR_DEVELOPER)
+				continue;
+#endif
 			Com_Printf("[var] %s\n", cvar->name);
 			localMatch = cvar->name;
 			matches++;
@@ -271,6 +275,7 @@ extern int Cvar_CompleteVariable (const char *partial, const char **match)
  * @note CVAR_SERVERINFO: This cvar will be send in the server info response strings (server browser)
  * @note CVAR_NOSET: This cvar can not be set from the commandline
  * @note CVAR_USERINFO: This cvar will be added to the userinfo string when changed (network synced)
+ * @note CVAR_DEVELOPER: Only changeable if we are in developement mode
  * If the variable already exists, the value will not be set
  * The flags will be or'ed in if the variable exists.
  */
@@ -356,6 +361,12 @@ static cvar_t *Cvar_Set2 (const char *var_name, const char *value, qboolean forc
 			Com_Printf("%s is write protected.\n", var_name);
 			return var;
 		}
+#ifndef DEBUG
+		if (var->flags & CVAR_DEVELOPER) {
+			Com_Printf("%s is a developer cvar.\n", var_name);
+			return var;
+		}
+#endif
 
 		if (var->flags & CVAR_LATCH) {
 			if (var->latched_string) {
@@ -655,6 +666,12 @@ static void Cvar_List_f (void)
 			i--;
 			continue;
 		}
+#ifndef DEBUG
+		/* don't show developer cvars in release mode */
+		if (var->flags & CVAR_DEVELOPER)
+			continue;;
+#endif
+
 		if (var->flags & CVAR_ARCHIVE)
 			Com_Printf("*");
 		else
@@ -671,6 +688,10 @@ static void Cvar_List_f (void)
 			Com_Printf("M");
 		else
 			Com_Printf(" ");
+		if (var->flags & CVAR_DEVELOPER)
+			Com_Printf(" ");
+		else
+			Com_Printf(" ");
 		if (var->flags & CVAR_NOSET)
 			Com_Printf("-");
 		else if (var->flags & CVAR_LATCH)
@@ -682,6 +703,14 @@ static void Cvar_List_f (void)
 			Com_Printf("%c - %s\n", 2, var->description);
 	}
 	Com_Printf("%i cvars\n", i);
+	Com_Printf("legend:\n"
+		"S: Serverinfo\n"
+		"L: Latched\n"
+		"D: Developer\n"
+		"U: Userinfo\n"
+		"*: Archive\n"
+		"-: Not changeable\n"
+	);
 }
 
 /**

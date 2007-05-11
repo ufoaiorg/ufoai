@@ -3014,6 +3014,7 @@ void MN_InitKeyList_f (void)
 	menuText[TEXT_LIST] = keylist;
 }
 
+#ifdef DEBUG
 /**
  * @brief This function allows you inline editing of menus
  * @note Changes you made are lost on quit
@@ -3070,7 +3071,9 @@ static void MN_EditMenuNode_f (void)
 	else
 		Com_Printf("This var is not supported by inline editing\n");
 }
+#endif /* DEBUG */
 
+#ifdef DEBUG
 /**
  * @brief Callback function that reloads the menus from file
  */
@@ -3104,7 +3107,9 @@ static void MN_ReloadMenus_f (void)
 		if (!Q_strncmp(type, "menu", 4))
 			MN_ParseMenu(name, &text);
 }
+#endif /* DEBUG */
 
+#ifdef DEBUG
 /**
  * @brief Callback function that prints the current menu from stack to game console
  */
@@ -3131,6 +3136,7 @@ static void MN_PrintMenu_f (void)
 	}
 	Com_Printf("}\n");
 }
+#endif /* DEBUG */
 
 /**
  * @brief Hides a given menu node
@@ -3238,10 +3244,12 @@ void MN_ResetMenus (void)
 	Cmd_AddCommand("mn_modifystring", MN_ModifyString_f, NULL);
 	Cmd_AddCommand("mn_translate", MN_Translate_f, NULL);
 	Cmd_AddCommand("menumodelslist", MN_ListMenuModels_f, NULL);
-	Cmd_AddCommand("mn_debugprintmenu", MN_PrintMenu_f, "Shows the current menu as text on the game console");
-	Cmd_AddCommand("mn_editnode", MN_EditMenuNode_f, "This function is for inline editing of nodes - dangerous!!");
+#ifdef DEBUG
+	Cmd_AddCommand("debug_menuprint", MN_PrintMenu_f, "Shows the current menu as text on the game console");
+	Cmd_AddCommand("debug_menueditnode", MN_EditMenuNode_f, "This function is for inline editing of nodes - dangerous!!");
+	Cmd_AddCommand("debug_menureload", MN_ReloadMenus_f, "Reloads the menus to show updates without the need to restart");
+#endif
 	Cmd_AddCommand("hidehud", MN_PushNoHud_f, _("Hide the HUD (press ESC to reactivate HUD)"));
-	Cmd_AddCommand("mn_debugreload", MN_ReloadMenus_f, "Reloads the menus to show updates without the need to restart");
 	/* get action data memory */
 	if (adataize)
 		/* @todo: should not be needed - this function is only called once - check this */

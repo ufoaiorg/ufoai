@@ -809,9 +809,13 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 
 		/* Do the trace from current position of the projectile
 		   to the end_of_range location.*/
-		/* FIXME: This trace doesn't seam to hit any func_breakable - why?? */
 		/* mins and maxs should be set via lm_t don't they? */
 		tr = gi.trace(tracefrom, NULL, NULL, impact, ent, MASK_SHOT);
+
+		/* maybe we start the trace from within a brush (e.g. in case of throughWall) */
+		if (tr.startsolid)
+			break;
+
 		/* _Now_ we copy the correct impact location. */
 		VectorCopy(tr.endpos, impact);
 

@@ -1095,7 +1095,7 @@ void RS_UpdateData (void)
 
 	/* Set rest of the list-entries to have no text at all. */
 	for (; j < MAX_RESEARCHDISPLAY; j++) {
-		/** 
+		/**
 		 * Set all text strings to empty.
 		 * @todo better inside "research_hide" now?
 		 */
@@ -1454,9 +1454,9 @@ extern void RS_ResetResearch (void)
 	Cmd_AddCommand("invlist", Com_InventoryList_f, NULL);
 	Cmd_AddCommand("research_dependencies_click", RS_DependenciesClick_f, NULL);
 #ifdef DEBUG
-	Cmd_AddCommand("techlist", RS_TechnologyList_f, NULL);
-	Cmd_AddCommand("research_all", RS_DebugResearchAll, NULL);
-	Cmd_AddCommand("researchable_all", RS_DebugResearchableAll, NULL);
+	Cmd_AddCommand("debug_techlist", RS_TechnologyList_f, NULL);
+	Cmd_AddCommand("debug_researchall", RS_DebugResearchAll, "Mark all techs are researched");
+	Cmd_AddCommand("debug_researchableall", RS_DebugResearchableAll, "Mark all techs are researchable");
 #endif
 }
 

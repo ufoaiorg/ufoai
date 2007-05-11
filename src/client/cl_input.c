@@ -744,7 +744,7 @@ extern void CL_InitInput (void)
 	Cmd_AddCommand("confirmaction", CL_ConfirmAction_f, _("Confirm the current action"));
 
 #ifdef DEBUG
-	Cmd_AddCommand("camangles", CL_CamPrintAngles_f, NULL);
+	Cmd_AddCommand("debug_camangles", CL_CamPrintAngles_f, "Prints current camera angles");
 	Cmd_AddCommand("debug_drawblocked", CL_DisplayBlockedPaths_f, "Draws a marker for all blocked map-positions.");
 #endif /* DEBUG */
 	Cmd_AddCommand("camsetangles", CL_CamSetAngles_f, NULL);

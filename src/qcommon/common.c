@@ -755,6 +755,47 @@ static void Com_GameTypeList_f (void)
 	}
 }
 
+#ifdef DEBUG
+/**
+ * @brief Prints some debugging help to the game console
+ */
+static void Com_DebugHelp_f (void)
+{
+	Com_Printf("Debugging cvars:\n"
+			"------------------------------\n"
+			" * developer\n"
+			" * mn_debugmenu\n"
+			" * g_nodamage\n"
+			"------------------------------\n"
+			"\n"
+			"Debugging commands:\n"
+			"------------------------------\n"
+			" * debug_drawblocked\n"
+			"   prints forbidden list to console\n"
+			" * debug_capacities\n"
+			" * debug_fullcredits\n"
+			"   restore to full credits\n"
+			" * debug_additems\n"
+			" * debug_showitems\n"
+			" * debug_statsupdate\n"
+			" * debug_menueditnode\n"
+			" * debug_menuprint\n"
+			" * debug_menureload\n"
+			"   reload the menu if you changed it and don't want to restart\n"
+			" * debug_techlist\n"
+			" * debug_researchall\n"
+			"   mark all techs as researched\n"
+			" * debug_researchableall\n"
+			"   mark all techs as researchable\n"
+			" * killteam <teamid>\n"
+			"   kills all living actors in the given team\n"
+			" * sv showall\n"
+			"   make everything visible to everyone\n"
+			"------------------------------\n"
+			);
+}
+#endif
+
 /**
  * @brief Init function
  *
@@ -819,6 +860,9 @@ extern void Qcommon_Init (int argc, char **argv)
 	Cmd_AddCommand("mem_stats", Mem_Stats_f, NULL);
 	Cmd_AddCommand("error", Com_Error_f, NULL);
 	Cmd_AddCommand("gametypelist", Com_GameTypeList_f, "List all available multiplayer game types");
+#ifdef DEBUG
+	Cmd_AddCommand("debug_help", Com_DebugHelp_f, "Show some debugging help");
+#endif
 
 	s_sleep = Cvar_Get("s_sleep", "1", CVAR_ARCHIVE, "Use the sleep function to redruce cpu usage");
 	host_speeds = Cvar_Get("host_speeds", "0", 0, NULL);

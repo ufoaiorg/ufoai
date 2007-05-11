@@ -214,8 +214,7 @@ void InitGame (void)
 	m_rage_stop = gi.cvar("m_rage_stop", "2.0", CVAR_LATCH, NULL);
 	m_panic_stop = gi.cvar("m_panic_stop", "1.0", CVAR_LATCH, NULL);
 
-	/* @todo: add CVAR_DEVELOPER flag which if !COM_CheckParm("-developer") acts like CVAR_NOSET and hides the cvar from the console */
-	g_nodamage = gi.cvar("g_nodamage", "0", 0, "No damage in developer mode");
+	g_nodamage = gi.cvar("g_nodamage", "0", CVAR_DEVELOPER, "No damage in developer mode");
 
 	/* flood control */
 	flood_msgs = gi.cvar("flood_msgs", "4", 0, NULL);

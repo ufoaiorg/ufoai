@@ -511,6 +511,7 @@ CVARS (console variables)
 #define CVAR_SERVERINFO 4       /**< added to serverinfo when changed */
 #define CVAR_NOSET      8       /**< don't allow change from console at all, but can be set from the command line */
 #define CVAR_LATCH      16      /**< save changes until server restart */
+#define CVAR_DEVELOPER  32      /**< set from commandline (not from within the game) and hide from console */
 
 /**
  * @brief This is a cvar defintion. Cvars can be user modified and used in our menus e.g.
