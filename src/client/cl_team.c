@@ -1352,6 +1352,8 @@ static void CL_AssignSoldier_f (void)
 	Cbuf_AddText(va("team_select %i\n", num));
 }
 
+#define MPTEAM_SAVE_FILE_VERSION 1
+
 /**
  * @brief Saves a team
  * @sa CL_SaveTeamInfo
@@ -1369,6 +1371,7 @@ static qboolean CL_SaveTeamMultiplayer (const char *filename)
 
 	/* create data */
 	SZ_Init(&sb, buf, MAX_TEAMDATASIZE);
+	MSG_WriteByte(&sb, MPTEAM_SAVE_FILE_VERSION);
 
 	name = Cvar_VariableString("mn_teamname");
 	if (!strlen(name))
@@ -1427,7 +1430,7 @@ static void CL_SaveTeamMultiplayerSlot_f (void)
  * @sa CL_LoadTeamMultiplayer
  * @sa CL_SaveTeamInfo
  */
-static void CL_LoadTeamMultiplayerMember (sizebuf_t * sb, character_t * chr)
+static void CL_LoadTeamMultiplayerMember (sizebuf_t * sb, character_t * chr, int version)
 {
 	int i;
 
@@ -1446,6 +1449,8 @@ static void CL_LoadTeamMultiplayerMember (sizebuf_t * sb, character_t * chr)
 
 	chr->HP = MSG_ReadShort(sb);
 	chr->maxHP = MSG_ReadShort(sb);
+	chr->category = MSG_ReadByte(sb);
+	chr->gender = MSG_ReadByte(sb);
 	chr->STUN = MSG_ReadByte(sb);
 	chr->AP = MSG_ReadByte(sb);
 	chr->morale = MSG_ReadByte(sb);
@@ -1474,6 +1479,7 @@ static void CL_LoadTeamMultiplayer (const char *filename)
 	sizebuf_t sb;
 	byte buf[MAX_TEAMDATASIZE];
 	FILE *f;
+	int version;
 	character_t *chr;
 	employee_t *employee;
 	aircraft_t *aircraft;
@@ -1490,6 +1496,8 @@ static void CL_LoadTeamMultiplayer (const char *filename)
 	SZ_Init(&sb, buf, MAX_TEAMDATASIZE);
 	sb.cursize = fread(buf, 1, MAX_TEAMDATASIZE, f);
 	fclose(f);
+
+	version = MSG_ReadByte(&sb);
 
 	/* load the teamname */
 	Cvar_Set("mn_teamname", MSG_ReadString(&sb));
@@ -1508,7 +1516,7 @@ static void CL_LoadTeamMultiplayer (const char *filename)
 		employee->hired = qtrue;
 		employee->baseIDHired = gd.bases[0].idx;
 		chr = &employee->chr;
-		CL_LoadTeamMultiplayerMember(&sb, chr);
+		CL_LoadTeamMultiplayerMember(&sb, chr, version);
 	}
 
 	/* get assignment */
@@ -1647,6 +1655,8 @@ static void CL_SaveTeamInfo (sizebuf_t * buf, int baseID, int num)
 
 		MSG_WriteShort(buf, chr->HP);
 		MSG_WriteShort(buf, chr->maxHP);
+		MSG_WriteByte(buf, chr->category);
+		MSG_WriteByte(buf, chr->gender);
 		MSG_WriteByte(buf, chr->STUN);
 		MSG_WriteByte(buf, chr->AP);
 		MSG_WriteByte(buf, chr->morale);
