@@ -4062,11 +4062,21 @@ static void CP_UFORecoveredSell_f (void)
 {
 	int i, nations = 0;
 	nation_t *nation = NULL;
+	aircraft_t *ufocraft = NULL;
 	static char recoveryNationSelectPopup[512];
 
 	/* Do nothing if recovery process is finished. */
 	if (Cvar_VariableInteger("mission_uforecoverydone") == 1)
 		return;
+
+	/* Find ufo sample of given ufotype. */
+	for (i = 0; i < numAircraft_samples; i++) {
+		ufocraft = &aircraft_samples[i];
+		if (ufocraft->type != AIRCRAFT_UFO)
+			continue;
+		if (ufocraft->ufotype == Cvar_VariableInteger("mission_ufotype"))
+			break;
+	}
 
 	recoveryNationSelectPopup[0] = '\0';
 	for (i = 0; i < gd.numNations; i++) {
@@ -4074,6 +4084,10 @@ static void CP_UFORecoveredSell_f (void)
 		/* @todo only nations with proper alien infiltration values */
 		nations++;
 		Q_strcat(recoveryNationSelectPopup, gd.nations[i].name, sizeof(recoveryNationSelectPopup));
+		Q_strcat(recoveryNationSelectPopup, "\t\t\t", sizeof(recoveryNationSelectPopup));
+		Q_strcat(recoveryNationSelectPopup, va("%i", ufocraft->price), sizeof(recoveryNationSelectPopup));
+		Q_strcat(recoveryNationSelectPopup, "\t", sizeof(recoveryNationSelectPopup));
+		Q_strcat(recoveryNationSelectPopup, CL_GetNationHappinessString(nation), sizeof(recoveryNationSelectPopup));
 		Q_strcat(recoveryNationSelectPopup, "\n", sizeof(recoveryNationSelectPopup));
 	}
 
