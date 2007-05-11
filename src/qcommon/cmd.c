@@ -977,9 +977,9 @@ static void Cmd_List_f (void)
 			i--;
 			continue;
 		}
-		Com_Printf("C %s\n", cmd->name);
+		Com_Printf("[cmd] %s\n", cmd->name);
 		if (cmd->description)
-			Com_Printf("%c - %s\n", 2, cmd->description);
+			Com_Printf("%c      %s\n", 2, cmd->description);
 	}
 	/* check alias */
 	for (alias = cmd_alias; alias; alias = alias->next, j++) {
@@ -987,7 +987,7 @@ static void Cmd_List_f (void)
 			j--;
 			continue;
 		}
-		Com_Printf("M %s\n", alias->name);
+		Com_Printf("[ali] %s\n", alias->name);
 	}
 	Com_Printf("%i commands\n", i);
 	Com_Printf("%i macros\n", j);

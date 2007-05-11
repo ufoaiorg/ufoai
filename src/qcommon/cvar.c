@@ -702,7 +702,7 @@ static void Cvar_List_f (void)
 			Com_Printf(" ");
 		Com_Printf(" %s \"%s\"\n", var->name, var->string);
 		if (var->description)
-			Com_Printf("%c - %s\n", 2, var->description);
+			Com_Printf("%c       %s\n", 2, var->description);
 	}
 	Com_Printf("%i cvars\n", i);
 	Com_Printf("legend:\n"
