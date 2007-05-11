@@ -3950,10 +3950,9 @@ static void CP_UFORecoveredStart_f (void)
 
 	base = &gd.bases[Cvar_VariableInteger("mission_recoverybase")];
 	assert (base);
-	Com_sprintf(messageBuffer, sizeof(messageBuffer), va("%s %s %s %s.", _("Recovered UFO of type"), 
-	UFO_UfoTypeToName(Cvar_VariableInteger("mission_ufotype")),
-	_("from the battlefield. UFO is being transported to base"),
-	base->name));
+	Com_sprintf(messageBuffer, sizeof(messageBuffer),
+		_("Recovered UFO of type %s from the battlefield. UFO is being transported to base %s."),
+		UFO_UfoTypeToName(Cvar_VariableInteger("mission_ufotype")), base->name);
 	MN_AddNewMessage(_("UFO Recovery"), messageBuffer, qfalse, MSG_STANDARD, NULL);
 	UFO_PrepareRecovery(base);
 
@@ -4043,10 +4042,8 @@ static void CP_UFOSellStart_f (void)
 
 	nation = &gd.nations[Cvar_VariableInteger("mission_recoverynation")];
 	assert (nation);
-	Com_sprintf(messageBuffer, sizeof(messageBuffer), va("%s %s %s %s.", _("Recovered UFO of type"), 
-	UFO_UfoTypeToName(Cvar_VariableInteger("mission_ufotype")),
-	_("from the battlefield. UFO is sold to nation"),
-	nation->name));
+	Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Recovered UFO of type %s from the battlefield. UFO is sold to nation %s."),
+	UFO_UfoTypeToName(Cvar_VariableInteger("mission_ufotype")), nation->name);
 	MN_AddNewMessage(_("UFO Recovery"), messageBuffer, qfalse, MSG_STANDARD, NULL);
 	/* @todo: implement me */
 
@@ -4111,9 +4108,8 @@ static void CP_UFORecoveredDestroy_f (void)
 	if (Cvar_VariableInteger("mission_uforecoverydone") == 1)
 		return;
 
-	Com_sprintf(messageBuffer, sizeof(messageBuffer), va("%s %s %s.", _("Secured UFO of type"), 
-	UFO_UfoTypeToName(Cvar_VariableInteger("mission_ufotype")),
-	_("was destroyed.")));
+	Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Secured UFO of type %s was destroyed."),
+	UFO_UfoTypeToName(Cvar_VariableInteger("mission_ufotype")));
 	MN_AddNewMessage(_("UFO Recovery"), messageBuffer, qfalse, MSG_STANDARD, NULL);
 
 	/* UFO recovery process is done, disable buttons. */
