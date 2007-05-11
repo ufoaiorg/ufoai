@@ -643,10 +643,7 @@ void Key_Init(void);
 void SCR_EndLoadingPlaque(void);
 
 /**
- * @brief
- *
- * Just throw a fatal error to
- * test error shutdown procedures
+ * @brief Just throw a fatal error to test error shutdown procedures
  */
 static void Com_Error_f (void)
 {
@@ -764,29 +761,31 @@ static void Com_DebugHelp_f (void)
 	Com_Printf("Debugging cvars:\n"
 			"------------------------------\n"
 			" * developer\n"
-			" * mn_debugmenu\n"
 			" * g_nodamage\n"
+			" * mn_debugmenu\n"
 			"------------------------------\n"
 			"\n"
 			"Debugging commands:\n"
 			"------------------------------\n"
+			" * debug_additems\n"
+			" * debug_baselist\n"
+			" * debug_buildinglist\n"
+			" * debug_capacities\n"
 			" * debug_drawblocked\n"
 			"   prints forbidden list to console\n"
-			" * debug_capacities\n"
 			" * debug_fullcredits\n"
 			"   restore to full credits\n"
-			" * debug_additems\n"
-			" * debug_showitems\n"
-			" * debug_statsupdate\n"
 			" * debug_menueditnode\n"
 			" * debug_menuprint\n"
 			" * debug_menureload\n"
 			"   reload the menu if you changed it and don't want to restart\n"
-			" * debug_techlist\n"
 			" * debug_researchall\n"
 			"   mark all techs as researched\n"
 			" * debug_researchableall\n"
 			"   mark all techs as researchable\n"
+			" * debug_showitems\n"
+			" * debug_statsupdate\n"
+			" * debug_techlist\n"
 			" * killteam <teamid>\n"
 			"   kills all living actors in the given team\n"
 			" * sv showall\n"
@@ -857,8 +856,8 @@ extern void Qcommon_Init (int argc, char **argv)
 	Cbuf_Execute();
 
 	/* init commands and vars */
-	Cmd_AddCommand("mem_stats", Mem_Stats_f, NULL);
-	Cmd_AddCommand("error", Com_Error_f, NULL);
+	Cmd_AddCommand("mem_stats", Mem_Stats_f, "Stats about the allocated bytes via Mem_Alloc");
+	Cmd_AddCommand("error", Com_Error_f, "Just throw a fatal error to test error shutdown procedures");
 	Cmd_AddCommand("gametypelist", Com_GameTypeList_f, "List all available multiplayer game types");
 #ifdef DEBUG
 	Cmd_AddCommand("debug_help", Com_DebugHelp_f, "Show some debugging help");

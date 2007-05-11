@@ -592,16 +592,16 @@ void VID_CheckChanges (void)
 void VID_Init (void)
 {
 	/* Create the video variables so we know how to start the graphics drivers */
-	vid_ref = Cvar_Get("vid_ref", "gl", CVAR_ARCHIVE, NULL);
+	vid_ref = Cvar_Get("vid_ref", "gl", CVAR_ARCHIVE, "Video renderer");
 	vid_xpos = Cvar_Get("vid_xpos", "3", CVAR_ARCHIVE, NULL);
 	vid_ypos = Cvar_Get("vid_ypos", "22", CVAR_ARCHIVE, NULL);
-	vid_fullscreen = Cvar_Get("vid_fullscreen", "0", CVAR_ARCHIVE, NULL);
-	vid_grabmouse = Cvar_Get("vid_grabmouse", "1", CVAR_ARCHIVE, NULL);
+	vid_fullscreen = Cvar_Get("vid_fullscreen", "0", CVAR_ARCHIVE, "Run the game in fullscreen mode");
+	vid_grabmouse = Cvar_Get("vid_grabmouse", "1", CVAR_ARCHIVE, "Grab the mouse in the game window");
 	vid_gamma = Cvar_Get("vid_gamma", "1", CVAR_ARCHIVE, NULL);
 	win_noalttab = Cvar_Get("win_noalttab", "0", CVAR_ARCHIVE, NULL);
 
 	/* Add some console commands that we want to handle */
-	Cmd_AddCommand("vid_restart", VID_Restart_f, NULL);
+	Cmd_AddCommand("vid_restart", VID_Restart_f, "Restart the video subsystem");
 	Cmd_AddCommand("vid_front", VID_Front_f, NULL);
 
 	/* Start the graphics mode and load refresh DLL */

@@ -615,7 +615,7 @@ static void SV_MapcycleNext_f (void)
 extern void SV_InitOperatorCommands (void)
 {
 	Cmd_AddCommand("heartbeat", SV_Heartbeat_f, NULL);
-	Cmd_AddCommand("kick", SV_Kick_f, NULL);
+	Cmd_AddCommand("kick", SV_Kick_f, "Kick a user from the server");
 	Cmd_AddCommand("status", SV_Status_f, NULL);
 	Cmd_AddCommand("serverinfo", SV_Serverinfo_f, NULL);
 	Cmd_AddCommand("dumpuser", SV_DumpUser_f, NULL);

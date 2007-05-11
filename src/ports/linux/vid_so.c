@@ -373,7 +373,7 @@ void VID_CheckChanges (void)
 #else
 		Com_sprintf(name, sizeof(name), "ref_%s.so", vid_ref->string);
 #endif
-		
+
 		if (!VID_LoadRefresh(name)) {
 			Cmd_ExecuteString("condump gl_debug");
 
@@ -391,17 +391,17 @@ void VID_Init (void)
 {
 	/* Create the video variables so we know how to start the graphics drivers */
 #ifndef __APPLE__
-	vid_ref = Cvar_Get("vid_ref", "glx", CVAR_ARCHIVE, NULL);
+	vid_ref = Cvar_Get("vid_ref", "glx", CVAR_ARCHIVE, "Video renderer");
 #else
-	vid_ref = Cvar_Get("vid_ref", "sdl", CVAR_ARCHIVE, NULL);
+	vid_ref = Cvar_Get("vid_ref", "sdl", CVAR_ARCHIVE, "Video renderer");
 #endif
 	vid_xpos = Cvar_Get("vid_xpos", "3", CVAR_ARCHIVE, NULL);
 	vid_ypos = Cvar_Get("vid_ypos", "22", CVAR_ARCHIVE, NULL);
-	vid_fullscreen = Cvar_Get("vid_fullscreen", "1", CVAR_ARCHIVE, NULL);
+	vid_fullscreen = Cvar_Get("vid_fullscreen", "1", CVAR_ARCHIVE, "Run the game in fullscreen mode");
 	vid_gamma = Cvar_Get("vid_gamma", "1", CVAR_ARCHIVE, NULL);
 
 	/* Add some console commands that we want to handle */
-	Cmd_AddCommand("vid_restart", VID_Restart_f, NULL);
+	Cmd_AddCommand("vid_restart", VID_Restart_f, "Restart the video subsystem");
 
 	/* Start the graphics mode and load refresh DLL */
 	VID_CheckChanges();

@@ -2162,6 +2162,7 @@ static void B_AssembleRandomBase_f (void)
 	Cbuf_AddText(va("base_assemble %i %i\n", randomBase, setUnderAttack));
 }
 
+#ifdef DEBUG
 /**
  * @brief Just lists all buildings with their data
  *
@@ -2203,7 +2204,9 @@ static void B_BuildingList_f (void)
 		}
 	}
 }
+#endif
 
+#ifdef DEBUG
 /**
  * @brief Just lists all bases with their data
  *
@@ -2237,6 +2240,7 @@ static void B_BaseList_f (void)
 		Com_Printf("\n");
 	}
 }
+#endif
 
 /**
  * @brief Sets the title of the base.
@@ -2397,15 +2401,15 @@ extern void B_ResetBaseManagement (void)
 	Com_DPrintf("Reset basemanagement\n");
 
 	/* add commands and cvars */
-	Cmd_AddCommand("mn_prev_base", B_PrevBase_f, NULL);
-	Cmd_AddCommand("mn_next_base", B_NextBase_f, NULL);
+	Cmd_AddCommand("mn_prev_base", B_PrevBase_f, "Go to the previous base");
+	Cmd_AddCommand("mn_next_base", B_NextBase_f, "Go to the next base");
 	Cmd_AddCommand("mn_select_base", B_SelectBase_f, NULL);
 	Cmd_AddCommand("mn_build_base", B_BuildBase_f, NULL);
 	Cmd_AddCommand("new_building", B_NewBuildingFromList_f, NULL);
 	Cmd_AddCommand("set_building", B_SetBuilding_f, NULL);
 	Cmd_AddCommand("mn_setbasetitle", B_SetBaseTitle_f, NULL);
 	Cmd_AddCommand("bases_check_max", B_CheckMaxBases_f, NULL);
-	Cmd_AddCommand("rename_base", B_RenameBase_f, NULL);
+	Cmd_AddCommand("rename_base", B_RenameBase_f, "Rename the current base");
 	Cmd_AddCommand("base_attack", B_BaseAttack_f, NULL);
 	Cmd_AddCommand("base_changename", B_ChangeBaseName_f, "Called after editing the cvar base name");
 	Cmd_AddCommand("base_init", B_BaseInit_f, NULL);
@@ -2418,11 +2422,11 @@ extern void B_ResetBaseManagement (void)
 	Cmd_AddCommand("buildinginfo_click", B_BuildingInfoClick_f, NULL);
 	Cmd_AddCommand("buildings_click", B_BuildingClick_f, NULL);
 	Cmd_AddCommand("reset_building_current", B_ResetBuildingCurrent_f, NULL);
-	Cmd_AddCommand("baselist", B_BaseList_f, NULL);
-	Cmd_AddCommand("buildinglist", B_BuildingList_f, NULL);
 	Cmd_AddCommand("pack_initial", B_PackInitialEquipment_f, NULL);
 	Cmd_AddCommand("assign_initial", B_AssignInitial_f, NULL);
 #ifdef DEBUG
+	Cmd_AddCommand("debug_baselist", B_BaseList_f, "Print base information to the game console");
+	Cmd_AddCommand("debug_buildinglist", B_BuildingList_f, "Print building information to the game console");
 	Cmd_AddCommand("debug_capacities", B_PrintCapacities_f, "Debug function to show all capacities in given base");
 #endif
 
