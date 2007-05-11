@@ -60,7 +60,7 @@ menu won
 	confunc disufostore 	{ *bt_storeufo image "hud/buttons1g" *bt_storeufo tooltip "_No UFO hangars or UFO recovery process finished" }
 	confunc disufosell	{ *bt_sellufo image "hud/buttons1g" *bt_sellufo tooltip "_No nation with accepted level of alien infiltration or UFO recovery process finished" }
 	confunc disufodestroy	{ *bt_destroyufo image "hud/buttons1g" *bt_destroyufo tooltip "_UFO recovery process finished"}
-	
+
 	pic bt_storeufo
 	{
 		if "mission_uforecovered == 1"
@@ -412,6 +412,7 @@ menu popup_recoverybaselist
 // ================================
 // POPUP SELECT NATION FOR RECOVERY
 // ================================
+
 menu popup_recoverynationlist
 {
 	zone popup
@@ -420,24 +421,43 @@ menu popup_recoverynationlist
 	}
 	pic back
 	{
-		image	menu/popup
-		pos		"256 256"
+		image	menu/popup_big
+		pos		"116 186"
 	}
 
 	string title
 	{
 		string	"_Select nation for UFO recovery"
-		pos	"290 280"
+		pos	"512 210"
 		font	f_big
+		align	uc
+	}
+
+	string name_label
+	{
+		string	"_Nation:"
+		pos	"150 240"
+	}
+
+	string status_label
+	{
+		string	"_Price:"
+		pos	"400 240"
+	}
+
+	string base_label
+	{
+		string	"_Happiness:"
+		pos	"650 240"
 	}
 
 	text cp_uforecovery_nationlist
 	{
-		num 1
-		pos	"290 320"
-		size "440 112"
-//		bgcolor "1 1 1 0.5"
+		num	1
+		pos		"150 266"
+		size	"726 260"
 		format	"16 100"
+//		bgcolor	"1 1 1 0.6"
 		height 7
 		wheel click
 		rclick { cmd "mn_pop;" }
@@ -448,9 +468,9 @@ menu popup_recoverynationlist
 	{
 		tooltip	"_Close this dialogue"
 		image	menu/multi_buttons3
-		texh	"180 64"
+		texh	"256 64"
 		texl	"0 32"
-		pos	"310 450"
+		pos	"160 530"
 		out	{ *string_cancel color "0 0.5 0 1" *bt_cancel image menu/multi_buttons3 }
 		in	{ *string_cancel color "1 1 1 1" *bt_cancel image menu/multi_buttons3a }
 		click	{ cmd "mn_pop;" }
@@ -460,7 +480,7 @@ menu popup_recoverynationlist
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Cancel"
-		pos	"398 466"
+		pos	"248 546"
 		align	cc
 	}
 
@@ -468,7 +488,7 @@ menu popup_recoverynationlist
 	{
 		tooltip	"_Begin UFO sell process"
 		image	menu/multi_buttons3
-		pos	"530 450"
+		pos	"690 530"
 		texh	"180 64"
 		texl	"0 32"
 		out	{ *bt_go image menu/multi_buttons3 *string_go color "0 0.5 0 1" }
@@ -480,7 +500,7 @@ menu popup_recoverynationlist
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Sell"
-		pos	"618 466"
+		pos	"778 546"
 		align	cc
 	}
 }
