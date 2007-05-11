@@ -202,8 +202,7 @@ menu won
 
 	func init
 	{
-		menuwon_update_buttons;
-		cmd "music ufo2;music_start;"
+		cmd "menuwon_update_buttons;music ufo2;music_start;"
 	}
 
 	func close
