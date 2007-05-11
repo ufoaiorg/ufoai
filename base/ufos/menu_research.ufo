@@ -84,6 +84,66 @@ menu research
 		*txt_item27 color "0 .78 0 1" *img_status27 texl	"32 16"	*img_status27 texh	"48 32"
 	}
 
+	// Functions to hide a single entry in the list (icons only right now)
+	confunc research_hide0 { *img_status0 invis true	*bt_rs_add0 invis true	*bt_rs_remove0 invis true }
+	confunc research_hide1 { *img_status1 invis true	*bt_rs_add1 invis true	*bt_rs_remove1 invis true }
+	confunc research_hide2 { *img_status2 invis true	*bt_rs_add2 invis true	*bt_rs_remove2 invis true }
+	confunc research_hide3 { *img_status3 invis true	*bt_rs_add3 invis true	*bt_rs_remove3 invis true }
+	confunc research_hide4 { *img_status4 invis true	*bt_rs_add4 invis true	*bt_rs_remove4 invis true }
+	confunc research_hide5 { *img_status5 invis true	*bt_rs_add5 invis true	*bt_rs_remove5 invis true }
+	confunc research_hide6 { *img_status6 invis true	*bt_rs_add6 invis true	*bt_rs_remove6 invis true }
+	confunc research_hide7 { *img_status7 invis true	*bt_rs_add7 invis true	*bt_rs_remove7 invis true }
+	confunc research_hide8 { *img_status8 invis true	*bt_rs_add8 invis true	*bt_rs_remove8 invis true }
+	confunc research_hide9 { *img_status9 invis true	*bt_rs_add9 invis true	*bt_rs_remove9 invis true }
+	confunc research_hide10 { *img_status10 invis true	*bt_rs_add10 invis true	*bt_rs_remove10 invis true }
+	confunc research_hide11 { *img_status11 invis true	*bt_rs_add11 invis true	*bt_rs_remove11 invis true }
+	confunc research_hide12 { *img_status12 invis true	*bt_rs_add12 invis true	*bt_rs_remove12 invis true }
+	confunc research_hide13 { *img_status13 invis true	*bt_rs_add13 invis true	*bt_rs_remove13 invis true }
+	confunc research_hide14 { *img_status14 invis true	*bt_rs_add14 invis true	*bt_rs_remove14 invis true }
+	confunc research_hide15 { *img_status15 invis true	*bt_rs_add15 invis true	*bt_rs_remove15 invis true }
+	confunc research_hide16 { *img_status16 invis true	*bt_rs_add16 invis true	*bt_rs_remove16 invis true }
+	confunc research_hide17 { *img_status17 invis true	*bt_rs_add17 invis true	*bt_rs_remove17 invis true }
+	confunc research_hide18 { *img_status18 invis true	*bt_rs_add18 invis true	*bt_rs_remove18 invis true }
+	confunc research_hide19 { *img_status19 invis true	*bt_rs_add19 invis true	*bt_rs_remove19 invis true }
+	confunc research_hide20 { *img_status20 invis true	*bt_rs_add20 invis true	*bt_rs_remove20 invis true }
+	confunc research_hide21 { *img_status21 invis true	*bt_rs_add21 invis true	*bt_rs_remove21 invis true }
+	confunc research_hide22 { *img_status22 invis true	*bt_rs_add22 invis true	*bt_rs_remove22 invis true }
+	confunc research_hide23 { *img_status23 invis true	*bt_rs_add23 invis true	*bt_rs_remove23 invis true }
+	confunc research_hide24 { *img_status24 invis true	*bt_rs_add24 invis true	*bt_rs_remove24 invis true }
+	confunc research_hide25 { *img_status25 invis true	*bt_rs_add25 invis true	*bt_rs_remove25 invis true }
+	confunc research_hide26 { *img_status26 invis true	*bt_rs_add26 invis true	*bt_rs_remove26 invis true }
+	confunc research_hide27 { *img_status27 invis true	*bt_rs_add27 invis true	*bt_rs_remove27 invis true }
+	
+	// Functions to make a single entry visible again in the list (icons only right now)
+	confunc research_show0 { *img_status0 invis false	*bt_rs_add0 invis false	*bt_rs_remove0 invis false }
+	confunc research_show1 { *img_status1 invis false	*bt_rs_add1 invis false	*bt_rs_remove1 invis false }
+	confunc research_show2 { *img_status2 invis false	*bt_rs_add2 invis false	*bt_rs_remove2 invis false }
+	confunc research_show3 { *img_status3 invis false	*bt_rs_add3 invis false	*bt_rs_remove3 invis false }
+	confunc research_show4 { *img_status4 invis false	*bt_rs_add4 invis false	*bt_rs_remove4 invis false }
+	confunc research_show5 { *img_status5 invis false	*bt_rs_add5 invis false	*bt_rs_remove5 invis false }
+	confunc research_show6 { *img_status6 invis false	*bt_rs_add6 invis false	*bt_rs_remove6 invis false }
+	confunc research_show7 { *img_status7 invis false	*bt_rs_add7 invis false	*bt_rs_remove7 invis false }
+	confunc research_show8 { *img_status8 invis false	*bt_rs_add8 invis false	*bt_rs_remove8 invis false }
+	confunc research_show9 { *img_status9 invis false	*bt_rs_add9 invis false	*bt_rs_remove9 invis false }
+	confunc research_show10 { *img_status10 invis false	*bt_rs_add10 invis false	*bt_rs_remove10 invis false }
+	confunc research_show11 { *img_status11 invis false	*bt_rs_add11 invis false	*bt_rs_remove11 invis false }
+	confunc research_show12 { *img_status12 invis false	*bt_rs_add12 invis false	*bt_rs_remove12 invis false }
+	confunc research_show13 { *img_status13 invis false	*bt_rs_add13 invis false	*bt_rs_remove13 invis false }
+	confunc research_show14 { *img_status14 invis false	*bt_rs_add14 invis false	*bt_rs_remove14 invis false }
+	confunc research_show15 { *img_status15 invis false	*bt_rs_add15 invis false	*bt_rs_remove15 invis false }
+	confunc research_show16 { *img_status16 invis false	*bt_rs_add16 invis false	*bt_rs_remove16 invis false }
+	confunc research_show17 { *img_status17 invis false	*bt_rs_add17 invis false	*bt_rs_remove17 invis false }
+	confunc research_show18 { *img_status18 invis false	*bt_rs_add18 invis false	*bt_rs_remove18 invis false }
+	confunc research_show19 { *img_status19 invis false	*bt_rs_add19 invis false	*bt_rs_remove19 invis false }
+	confunc research_show20 { *img_status20 invis false	*bt_rs_add20 invis false	*bt_rs_remove20 invis false }
+	confunc research_show21 { *img_status21 invis false	*bt_rs_add21 invis false	*bt_rs_remove21 invis false }
+	confunc research_show22 { *img_status22 invis false	*bt_rs_add22 invis false	*bt_rs_remove22 invis false }
+	confunc research_show23 { *img_status23 invis false	*bt_rs_add23 invis false	*bt_rs_remove23 invis false }
+	confunc research_show24 { *img_status24 invis false	*bt_rs_add24 invis false	*bt_rs_remove24 invis false }
+	confunc research_show25 { *img_status25 invis false	*bt_rs_add25 invis false	*bt_rs_remove25 invis false }
+	confunc research_show26 { *img_status26 invis false	*bt_rs_add26 invis false	*bt_rs_remove26 invis false }
+	confunc research_show27 { *img_status27 invis false	*bt_rs_add27 invis false	*bt_rs_remove27 invis false }
+
 	confunc researchselect0  { *txt_item0  color "1 1 1 1" }
 	confunc researchselect1  { *txt_item1  color "1 1 1 1" }
 	confunc researchselect2  { *txt_item2  color "1 1 1 1" }

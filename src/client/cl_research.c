@@ -1027,6 +1027,9 @@ void RS_UpdateData (void)
 
 		/* @todo: add check for collected items */
 
+		/* Make icons vivible for this entry */
+		Cbuf_AddText(va("research_show%i\n", j));
+
 		if (tech->statusCollected && !tech->statusResearchable && (tech->statusResearch != RS_FINISH)) {
 			/* An unresearched collected item that cannot yet be researched. */
 			Q_strcat(name, _(" [not yet researchable]"), sizeof(name));
@@ -1092,10 +1095,17 @@ void RS_UpdateData (void)
 
 	/* Set rest of the list-entries to have no text at all. */
 	for (; j < MAX_RESEARCHDISPLAY; j++) {
+		/** 
+		 * Set all text strings to empty.
+		 * @todo better inside "research_hide" now?
+		 */
 		Cvar_Set(va("mn_researchitem%i", j), "");
 		Cvar_Set(va("mn_researchassigned%i", j), "");
 		Cvar_Set(va("mn_researchavailable%i", j), "");
 		Cvar_Set(va("mn_researchmax%i", j), "");
+
+		/* Hide the icons for this entry */
+		Cbuf_AddText(va("research_hide%i\n", j));
 	}
 
 	/* Select last selected item if possible or the very first one if not. */
@@ -1107,7 +1117,7 @@ void RS_UpdateData (void)
 			Cbuf_AddText("researchselect0\n");
 		}
 	} else {
-		/* No display list abailable (zero items) - > Reset description. */
+		/* No display list available (zero items) - > Reset description. */
 		Cvar_Set("mn_researchitemname", "");
 		Cvar_Set("mn_researchitem", "");
 		Cvar_Set("mn_researchweapon", "");
@@ -1554,7 +1564,6 @@ extern void RS_ParseTechnologies (const char *name, char **text)
 	tech->next = -1;
 	tech->base_idx = -1;
 	tech->up_chapter = -1;
-	tech->mailSent = MAILSENT_NONE;	/* Just in case :) */
 
 	do {
 		/* get the name type */
