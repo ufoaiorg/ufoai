@@ -169,7 +169,8 @@ static int CreateNewFloatPlane (vec3_t normal, vec_t dist)
 }
 
 /**
- * @brief
+ * @brief Round the vector to int values
+ * @note Can be used to save net bandwidth
  */
 static void SnapVector (vec3_t normal)
 {

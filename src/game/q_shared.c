@@ -913,8 +913,10 @@ vec_t VectorNormalize2 (vec3_t v, vec3_t out)
 
 /**
  * @brief Sets vector_out (vc) to vevtor1 (va) + scale * vector2 (vb)
- * @param
- * @sa
+ * @param[in] veca Position to start from
+ * @param[in] scale Speed of the movement
+ * @param[in] vecb Movement direction
+ * @param[out] vecc Target vector
  */
 void VectorMA (vec3_t veca, float scale, vec3_t vecb, vec3_t vecc)
 {
