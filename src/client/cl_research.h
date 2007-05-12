@@ -173,6 +173,7 @@ typedef struct technology_s {
 	int numTechMails;				/**< Used to store which "mail" entry to display in pedia. if It's equalt to TECHMAIL_MAX both mailtypes are available. */
 
 	struct technology_s *hash_next;
+	struct technology_s *hash_provided_next;
 } technology_t;
 
 void RS_ResetResearch(void);

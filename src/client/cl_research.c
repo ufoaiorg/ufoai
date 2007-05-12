@@ -34,6 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define TECH_HASH_SIZE 64
 static technology_t *tech_hash[TECH_HASH_SIZE];
+static technology_t *tech_hash_provided[TECH_HASH_SIZE];
 
 qboolean RS_TechIsResearchable(technology_t *t);
 
@@ -1467,6 +1468,7 @@ extern void RS_ResetHash (void)
 {
 	/* they are static - but i'm paranoid - this is called before the techs were parsed */
 	memset(tech_hash, 0, sizeof(tech_hash));
+	memset(tech_hash_provided, 0, sizeof(tech_hash_provided));
 }
 
 /**
@@ -1801,6 +1803,17 @@ extern void RS_ParseTechnologies (const char *name, char **text)
 		}
 	} while (*text);
 
+	hash = Com_HashKey(tech->provides, TECH_HASH_SIZE);
+	/* link the variable in */
+	/* tech_hash_provided should be null on the first run */
+	tech->hash_provided_next = tech_hash_provided[hash];
+	/* set the tech_hash_provided pointer to the current tech */
+	/* if there were already others in tech_hash_provided at position hash, they are now
+	 * accessable via tech->next - loop until tech->next is null (the first tech
+	 * at that position)
+	 */
+	tech_hash_provided[hash] = tech;
+
 	/* set the overall reseach time to the one given in the ufo-file. */
 	tech->overalltime = tech->time;
 }
@@ -1975,16 +1988,15 @@ technology_t *RS_GetTechByID (const char *id)
 technology_t *RS_GetTechByProvided (const char *id_provided)
 {
 	int i;
-#if 0
 	unsigned hash;
+	technology_t *tech;
 
 	hash = Com_HashKey(id_provided, TECH_HASH_SIZE);
-	/* @todo */
-#endif
-	for (i = 0; i < gd.numTechnologies; i++)
-		if (!Q_strncmp((char *) id_provided, gd.technologies[i].provides, MAX_VAR))
-			return &gd.technologies[i];
+	for (tech = tech_hash_provided[hash]; tech; tech = tech->hash_provided_next)
+		if (!Q_stricmp(id_provided, tech->provides))
+			return tech;
 
+	Com_DPrintf("RS_GetTechByProvided: %s\n", id_provided);
 	/* if a building, probably needs another building */
 	/* if not a building, catch NULL where function is called! */
 	return NULL;

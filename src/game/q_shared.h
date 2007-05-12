@@ -633,9 +633,9 @@ typedef struct cmodel_s {
 } cmodel_t;
 
 typedef struct csurface_s {
-	char name[16];
-	int flags;
-	int value;
+	char name[16];	/**< not used except in loading CMod_LoadSurfaces */
+	int flags;	/**< not used except in loading CMod_LoadSurfaces */
+	int value;	/**< not used except in loading CMod_LoadSurfaces */
 } csurface_t;
 
 typedef struct mapsurface_s {   /* used internally due to name len probs //ZOID */
