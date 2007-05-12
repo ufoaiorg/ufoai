@@ -43,7 +43,6 @@ typedef struct components_s {
 } components_t;
 
 void INV_ParseComponents(const char *name, char **text);
-void INV_LinkComponentsWithObj(void);
 
 void INV_CollectingItems(int won);
 void INV_SellOrAddItems(aircraft_t *aircraft);

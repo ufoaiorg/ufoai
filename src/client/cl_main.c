@@ -1703,9 +1703,6 @@ extern void CL_InitAfter (void)
 
 	/* link for faster access */
 	MN_LinkMenuModels();
-
-	/* Link objects in csi.ods with components in gd.components. */
-	INV_LinkComponentsWithObj();
 }
 
 /**
@@ -1744,8 +1741,6 @@ extern void CL_ParseClientData (const char *type, const char *name, char **text)
 		CL_ParseCampaign(name, text);
 	else if (!Q_strncmp(type, "ugv", 3))
 		CL_ParseUGVs(name, text);
-	else if (!Q_strncmp(type, "components", 10))
-		INV_ParseComponents(name, text);
 }
 
 /**
@@ -1783,6 +1778,8 @@ static void CL_ParseScriptFirst (const char *type, char *name, char **text)
 		CL_ParseMedalsAndRanks(name, text, qtrue);
 	else if (!Q_strncmp(type, "mail", 4))
 		CL_ParseEventMails(name, text);
+	else if (!Q_strncmp(type, "components", 10))
+		INV_ParseComponents(name, text);
 #if 0
 	else if (!Q_strncmp(type, "medal", 5))
 		Com_ParseMedalsAndRanks( name, &text, qfalse );

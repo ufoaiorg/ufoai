@@ -425,6 +425,8 @@ extern void INV_InitialEquipment (base_t *base)
  */
 extern void INV_ParseComponents (const char *name, char **text)
 {
+	int i;
+	objDef_t *od = NULL;
 	components_t *comp = NULL;
 	const char *errhead = "INV_ParseComponents: unexpected end of file.";
 	char *token = NULL;
@@ -447,8 +449,14 @@ extern void INV_ParseComponents (const char *name, char **text)
 	memset(comp, 0, sizeof(components_t));
 
 	/* set standard values */
-	/** comp->assembly_idx = -1; < @todo if needed */
 	Q_strncpyz(comp->assembly_id, name, sizeof(comp->assembly_id));
+	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
+		if ((Q_strncmp(od->id, name, MAX_VAR)) == 0) {
+			comp->assembly_idx = i;
+			Com_DPrintf("INV_ParseComponents()... linked item: %s idx %i with components: %s idx %i \n", od->id, i, comp->assembly_id, comp->assembly_idx);
+			break;
+		}
+	}
 	
 	do {
 		/* get the name type */
@@ -483,25 +491,5 @@ extern void INV_ParseComponents (const char *name, char **text)
 			Com_Printf("INV_ParseComponents error in \"%s\" - unknown token: \"%s\".\n", name, token);
 		}
 	} while (*text);
-}
-
-/**
- * @brief Links components idx in gd.components[] by object id.
- * @sa CL_InitAfter()
- */
-void INV_LinkComponentsWithObj (void)
-{
-	int i, j;
-	objDef_t *od = NULL;
-
-	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
-		for (j = 0; j < MAX_ASSEMBLIES; j++) {
-			if ((Q_strncmp(od->id, gd.components[j].assembly_id, MAX_VAR)) == 0) {
-				gd.components[j].assembly_idx = i;
-				Com_DPrintf("INV_LinkComponentsWithObj()... linked item: %s idx %i with components: %s idx %i \n", od->id, i, gd.components[j].assembly_id, gd.components[j].assembly_idx);
-				break;
-			}
-		}
-	}
 }
 
