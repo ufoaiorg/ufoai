@@ -4083,8 +4083,8 @@ static void CP_UFORecoveredSell_f (void)
 		nations++;
 		Q_strcat(recoveryNationSelectPopup, gd.nations[i].name, sizeof(recoveryNationSelectPopup));
 		Q_strcat(recoveryNationSelectPopup, "\t\t\t", sizeof(recoveryNationSelectPopup));
-		Q_strcat(recoveryNationSelectPopup, va("%i", ufocraft->price), sizeof(recoveryNationSelectPopup));
-		Q_strcat(recoveryNationSelectPopup, "\t", sizeof(recoveryNationSelectPopup));
+		Q_strcat(recoveryNationSelectPopup, va("%i", (ufocraft->price + (int)(frand()*100000))), sizeof(recoveryNationSelectPopup));
+		Q_strcat(recoveryNationSelectPopup, "\t\t", sizeof(recoveryNationSelectPopup));
 		Q_strcat(recoveryNationSelectPopup, CL_GetNationHappinessString(nation), sizeof(recoveryNationSelectPopup));
 		Q_strcat(recoveryNationSelectPopup, "\n", sizeof(recoveryNationSelectPopup));
 	}

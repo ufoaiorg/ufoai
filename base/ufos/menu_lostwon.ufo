@@ -446,15 +446,15 @@ menu popup_recoverynationlist
 		pos	"150 240"
 	}
 
-	string status_label
+	string price_label
 	{
 		string	"_Price:"
-		pos	"400 240"
+		pos	"450 240"
 	}
 
-	string base_label
+	string relation_label
 	{
-		string	"_Happiness:"
+		string	"_Relations:"
 		pos	"650 240"
 	}
 
