@@ -378,14 +378,10 @@ extern qboolean MAP_3DMapToScreen (const menuNode_t* node, const vec2_t pos, int
 
 	/* rotate the vector to switch of reference frame.
 	 *	We switch from the static frame of earth to the local frame of the player (opposite rotation of MAP3D_ScreenToMap) */
-	rotationAxis[0] = 0;
-	rotationAxis[1] = 0;
-	rotationAxis[2] = 1;
+	VectorSet(rotationAxis, 0, 0, 1);
 	RotatePointAroundVector(v1, rotationAxis, v, - ccs.angles[PITCH]);
 	
-	rotationAxis[0] = 0;
-	rotationAxis[1] = 1;
-	rotationAxis[2] = 0;
+	VectorSet(rotationAxis, 0, 1, 0);
 	RotatePointAroundVector(v, rotationAxis, v1, - ccs.angles[YAW]);
 
 	/* set mid to the coordinates of the center of the globe */
@@ -401,7 +397,7 @@ extern qboolean MAP_3DMapToScreen (const menuNode_t* node, const vec2_t pos, int
 	}
 
 	/* if the point is on the wrong side of earth, the player cannot see it */
-	if (v[3] < 0)
+	if (v[2] > 0)
 		return qfalse;
 
 	/* if the point is outside the screen, the player cannot see it */
@@ -409,6 +405,29 @@ extern qboolean MAP_3DMapToScreen (const menuNode_t* node, const vec2_t pos, int
 		return qfalse;
 
 	return qtrue;
+}
+
+/**
+ * @brief Draws a 3D marker on 3D geoscape if the player can see it.
+ * @param[in] node Menu node.
+ * @param[in] pos Longitude and latitude of the marker to draw.
+ * @param[in] model The name of the model of the marker.
+ */
+extern qboolean MAP_Draw3DMarkerIfVisible (const menuNode_t* node, const vec2_t pos, const char *model)
+{
+	int x, y, z;
+	vec3_t screenPos, angles;
+	float zoom;
+
+	if (MAP_3DMapToScreen (node, pos, &x, &y, &z)) {
+		VectorSet(screenPos, x, y, z);
+		/* @todo Change angle with position */
+		VectorSet(angles, 0, 180, 0);
+		zoom = 0.7 + ccs.zoom * (float) z / (GLOBE_RADIUS) / 2.0;
+		re.Draw3DMapMarkers(angles, zoom, screenPos, model);
+		return qtrue;
+	}
+	return qfalse;
 }
 
 /**
@@ -506,16 +525,12 @@ static void MAP3D_ScreenToMap (const menuNode_t* node, int x, int y, vec2_t pos)
 	/*	and that GLOBE_ROTATE is already included in ccs.angles[YAW] */
 	/* first rotation is along the horizontal axis of the screen, to put north-south axis of the earth
 	 *	perpendicular to the screen */
-	rotationAxis[0] = 0;
-	rotationAxis[1] = 1;
-	rotationAxis[2] = 0;
+	VectorSet(rotationAxis, 0, 1, 0);
 	RotatePointAroundVector(v1, rotationAxis, v, ccs.angles[YAW]);
 	
 	/* second rotation is to rotate the earth around its north-south axis
 	 *	so that Greenwich meridian is along the vertical axis of the screen */
-	rotationAxis[0] = 0;
-	rotationAxis[1] = 0;
-	rotationAxis[2] = 1;
+	VectorSet(rotationAxis, 0, 0, 1);
 	RotatePointAroundVector(v, rotationAxis, v1, ccs.angles[PITCH]);
 
 	/* we therefore got in v the coordinates of the point in the static frame of the earth
@@ -653,7 +668,7 @@ static void MAP_MapDrawLine (const menuNode_t* node, const mapline_t* line)
 static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 {
 	aircraft_t *aircraft;
-	actMis_t *ms;
+	actMis_t *ms = NULL;
 	int i, j;
 	int borders[MAX_NATION_BORDERS * 2];	/**< GL_LINE_LOOP coordinates for nation borders */
 	int x, y, z;
@@ -674,9 +689,8 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 	Cvar_Set("mn_mapdaytime", "");
 	for (i = 0; i < ccs.numMissions; i++) {
 		ms = &ccs.mission[i];
-/*		if (!MAP_3DMapToScreen(node, ms->realPos, &x, &y, &z))
-			continue; */
-		re.Draw3DMapMarkers(ccs.angles, ccs.zoom, ms->def->pos[0], ms->def->pos[1], "cross");
+		if (!MAP_Draw3DMarkerIfVisible (node, ms->realPos, "cross"))
+			continue;
 
 		if (ms == selMis) {
 		/*	re.Draw3DMapMarkers(ccs.angles, ccs.zoom, latitude, longitude, selMis->def->active ? "circleactive" : "circle");*/
@@ -687,12 +701,12 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 	/* draw base pics */
 	for (j = 0; j < gd.numBases; j++)
 		if (gd.bases[j].founded) {
-			re.Draw3DMapMarkers(ccs.angles, ccs.zoom, gd.bases[j].pos[0], gd.bases[j].pos[1], "base");
+			MAP_Draw3DMarkerIfVisible (node, gd.bases[j].pos, "base");
 
 			/* draw aircraft */
 			for (i = 0, aircraft = (aircraft_t *) gd.bases[j].aircraft; i < gd.bases[j].numAircraftInBase; i++, aircraft++)
 				if (aircraft->status > AIR_HOME) {
-					re.Draw3DMapMarkers(ccs.angles, ccs.zoom, aircraft->pos[0], aircraft->pos[0], aircraft->image);
+					MAP_Draw3DMarkerIfVisible (node, gd.bases[j].pos, aircraft->image);
 
 					if (aircraft->status >= AIR_TRANSIT) {
 						mapline_t path;

@@ -858,67 +858,42 @@ void Draw_Polygon (int points, int *verts)
 	qglEnable(GL_TEXTURE_2D);
 }
 
-#define MARKER_SIZE 0.03
+#define MARKER_SIZE 40.0
 /**
- * @brief
- * @todo implement me
+ * @brief Draw a 3D Marker on the 3D geoscape
+ * @sa MAP_Draw3DMarkerIfVisible
  */
-void Draw_3DMapMarkers (vec3_t angles, float zoom, float latitude, float longitude, const char *model)
+void Draw_3DMapMarkers (vec3_t angles, float zoom, vec3_t position, const char *model)
 {
 	modelInfo_t mi;
-	float factor;
-	vec3_t v;
-	vec2_t a;
-	float theta, phi;
 	char path[MAX_QPATH] = "";
-	vec3_t scale;
-	vec4_t color = {1, 1, 1, 1};
-
-	Vector2Set(a, latitude, longitude);
-	factor = 1.0 + (2.0 * MARKER_SIZE) / zoom;
-	/* convert to vector coordinates */
-	PolarToVec(a, v);
-	VectorSet(scale, zoom, zoom, zoom);
+	vec2_t model_center;
+	vec4_t model_color = {0.5, 0.5, 0.5, 1};
 
 	memset(&mi, 0, sizeof(modelInfo_t));
+
+#if 0
+	/* Decommentize me when some models are ready for 3D Markers */
 	Com_sprintf(path, sizeof(path), "models/geoscape/%s.md2", model);
+#endif
+	Com_sprintf(path, sizeof(path), "models/weapons/fraggren/fraggren.md2");
+	mi.model = R_RegisterModelShort(path);
 	mi.name = path;
+	if (!mi.model) {
+		Com_Printf("Could not find '%s'\n", path);
+		return;
+	}
+
+	mi.origin = position;
 	mi.angles = angles;
-	mi.origin = v;
-	mi.center = v;
-	mi.scale = scale;
-	mi.color = color;
+	mi.scale = NULL;
+	mi.color = model_color;
 
-	Print3Vector(v);
+	model_center[0] = MARKER_SIZE * zoom;
+	model_center[1] = MARKER_SIZE * zoom;
+	mi.center = model_center;
 
-	qglPushMatrix();
-
-	/* translate the position */
-	qglTranslated(v[1] * factor, v[2] * factor, v[1] * factor);
-
-	qglColor4f(1, 0, 0, 1);
-	qglDisable(GL_TEXTURE_2D);
-
-	qglBegin(GL_LINES);
-	theta = (90.0 - longitude) * torad;
-	phi = latitude * torad;
-	qglVertex3f(gl_3dmapradius->value * 0.25 * sin(theta) * cos(phi),
-		gl_3dmapradius->value * 0.25 * sin(theta) * sin(phi),
-		gl_3dmapradius->value * 0.25 * cos(theta));
-	qglVertex3f(gl_3dmapradius->value * (0.25 + MARKER_SIZE) * sin(theta) * cos(phi),
-		gl_3dmapradius->value * (0.25 + MARKER_SIZE) * sin(theta) * sin(phi),
-		gl_3dmapradius->value * (0.25 + MARKER_SIZE) * cos(theta));
-	qglEnd();
-
-	qglEnable(GL_TEXTURE_2D);
-
-	/* restore the matrix */
-	qglPopMatrix();
-
-	/* @todo: Draw the icon ot model of the crashsite or base */
 	R_DrawModelDirect(&mi, NULL, NULL);
-
-	qglColor4f(1, 1, 1, 1);
 }
 
 /**
