@@ -69,6 +69,9 @@ void *Hunk_Alloc (int size)
 {
 	void	*buf;
 
+	if (!size)
+		return NULL;
+
 	/* round to cacheline */
 	size = (size + 31) &~ 31;
 

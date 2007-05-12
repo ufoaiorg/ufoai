@@ -84,6 +84,9 @@ void* Hunk_Alloc (int theSize)
 {
 	unsigned char	*myMemory;
 
+	if (!size)
+		return NULL;
+
 	theSize = (theSize + 31) & ~31;
 	if (curhunksize + theSize > maxhunksize)
 		Sys_Error ("Hunk_Alloc overflow");

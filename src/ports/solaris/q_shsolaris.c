@@ -52,6 +52,9 @@ void *Hunk_Alloc (int size)
 {
 	byte *buf;
 
+	if (!size)
+		return NULL;
+
 	/* round to cacheline */
 	size = (size+31)&~31;
 	if (curhunksize + size > maxhunksize)

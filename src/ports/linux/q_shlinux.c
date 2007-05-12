@@ -72,6 +72,9 @@ void *Hunk_Alloc (int size)
 {
 	byte *buf;
 
+	if (!size)
+		return NULL;
+
 	/* round to cacheline */
 	size = (size + 31) &~ 31;
 	if (curhunksize + size > maxhunksize)
@@ -128,8 +131,8 @@ void Hunk_Free (void *base)
 
 	if (base) {
 		m = ((byte *)base) - sizeof(int);
-		if (munmap(m, *((int *)m)))
-			Sys_Error("Hunk_Free: munmap failed (%d)", errno);
+		if (*((int *)m) && munmap(m, *((int *)m)))
+			Sys_Error("Hunk_Free: munmap failed (%d, %s, size: %i)", errno, strerror(errno), *((int *)m));
 	}
 }
 
