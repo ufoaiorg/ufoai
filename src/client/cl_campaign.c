@@ -4004,6 +4004,9 @@ static void CP_UFORecoveredStore_f (void)
 	assert (base);
 }
 
+/** @brief Array of prices proposed by nation. */
+static int UFOprices[MAX_NATIONS];
+
 /**
  * @brief Finds the nation to which recovered UFO will be sold.
  * @note The nation selection is being done here.
@@ -4043,10 +4046,10 @@ static void CP_UFOSellStart_f (void)
 
 	nation = &gd.nations[Cvar_VariableInteger("mission_recoverynation")];
 	assert (nation);
-	Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Recovered UFO of type %s from the battlefield. UFO is sold to nation %s."),
-	UFO_UfoTypeToName(Cvar_VariableInteger("mission_ufotype")), nation->name);
+	Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Recovered UFO of type %s from the battlefield. UFO sold to nation %s, gained %i credits."),
+	UFO_UfoTypeToName(Cvar_VariableInteger("mission_ufotype")), nation->name, UFOprices[Cvar_VariableInteger("mission_recoverynation")]);
 	MN_AddNewMessage(_("UFO Recovery"), messageBuffer, qfalse, MSG_STANDARD, NULL);
-	/* @todo: implement me */
+	CL_UpdateCredits(ccs.credits + UFOprices[Cvar_VariableInteger("mission_recoverynation")]);
 
 	/* UFO recovery process is done, disable buttons. */
 	CP_UFORecoveryDone();
@@ -4076,14 +4079,17 @@ static void CP_UFORecoveredSell_f (void)
 			break;
 	}
 
+	memset (UFOprices, 0, sizeof(UFOprices));
 	recoveryNationSelectPopup[0] = '\0';
 	for (i = 0; i < gd.numNations; i++) {
 		nation = &gd.nations[i];
 		/* @todo only nations with proper alien infiltration values */
 		nations++;
+		/* Calculate price offered by nation. */
+		UFOprices[i] = ufocraft->price + (int)(frand()*100000);
 		Q_strcat(recoveryNationSelectPopup, gd.nations[i].name, sizeof(recoveryNationSelectPopup));
 		Q_strcat(recoveryNationSelectPopup, "\t\t\t", sizeof(recoveryNationSelectPopup));
-		Q_strcat(recoveryNationSelectPopup, va("%i", (ufocraft->price + (int)(frand()*100000))), sizeof(recoveryNationSelectPopup));
+		Q_strcat(recoveryNationSelectPopup, va("%i", UFOprices[i]), sizeof(recoveryNationSelectPopup));
 		Q_strcat(recoveryNationSelectPopup, "\t\t", sizeof(recoveryNationSelectPopup));
 		Q_strcat(recoveryNationSelectPopup, CL_GetNationHappinessString(nation), sizeof(recoveryNationSelectPopup));
 		Q_strcat(recoveryNationSelectPopup, "\n", sizeof(recoveryNationSelectPopup));
