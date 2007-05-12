@@ -485,3 +485,26 @@ extern void INV_ParseComponents (const char *name, char **text)
 	} while (*text);
 }
 
+/**
+ * @brief Links components idx in gd.components[] by object id.
+ * @sa CL_InitAfter()
+ */
+void INV_LinkComponentsWithObj (void)
+{
+	int i, j;
+	objDef_t *od = NULL;
+
+	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
+		for (j = 0; j < MAX_ASSEMBLIES; j++) {
+			if ((Q_strncmp(od->id, gd.components[j].assembly_id, MAX_VAR)) == 0) {
+				Com_DPrintf("INV_LinkComponentsWithObj()... linked item: %s with components: %s\n", od->id, gd.components[j].assembly_id);
+				od->componentsidx = j;
+				break;
+			}
+			/* componentsidx = -1 if no components definition */
+			if (j == (MAX_ASSEMBLIES - 1))
+				od->componentsidx = -1;
+		}
+	}
+}
+

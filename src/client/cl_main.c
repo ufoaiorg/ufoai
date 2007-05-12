@@ -1703,6 +1703,9 @@ extern void CL_InitAfter (void)
 
 	/* link for faster access */
 	MN_LinkMenuModels();
+
+	/* Link objects in csi.ods with components in gd.components. */
+	INV_LinkComponentsWithObj();
 }
 
 /**
