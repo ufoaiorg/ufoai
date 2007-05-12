@@ -1,0 +1,49 @@
+// ===========
+// Dummy items
+// ===========
+item antimatter
+{
+	name		"_Antimatter"
+	type		dummy
+	buytype		dummy
+	weapon		false
+	size		10 //stored in Antimatter Storage Facility
+}
+
+item brapparatus
+{
+	name		"_Alien Breathing Apparatus"
+	type		dummy
+	buytype		dummy
+	size		4
+	weapon		false
+}
+
+item alienmaterials
+{
+	name		"_Alien Materials"
+	type		dummy
+	buytype		dummy
+	size		10
+	weapon		false
+}
+
+// ==========
+// UFO Crafts
+// ==========
+
+item craft_ufo_scout
+{
+	weapon false
+}
+
+item craft_ufo_fighter
+{
+	weapon false
+}
+
+item craft_ufo_harvester
+{
+	weapon false
+}
+

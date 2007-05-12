@@ -332,11 +332,15 @@ menu production
 		*s_secondary	color "1 1 1 0.6"
 		*s_misc			color "1 1 1 0.6"
 		*s_armor		color "1 1 1 0.6"
+		*s_other		color "1 1 1 0.6"
+		*s_disassembling	color "1 1 1 0.6"
 	}
-	confunc prod_primary	{ cmd "prod_select 0;" prod_reset *s_primary	color "1 1 1 1" }
-	confunc prod_secondary	{ cmd "prod_select 1;" prod_reset *s_secondary	color "1 1 1 1" }
+	confunc prod_primary		{ cmd "prod_select 0;" prod_reset *s_primary	color "1 1 1 1" }
+	confunc prod_secondary		{ cmd "prod_select 1;" prod_reset *s_secondary	color "1 1 1 1" }
 	confunc prod_misc		{ cmd "prod_select 2;" prod_reset *s_misc	color "1 1 1 1" }
 	confunc prod_armor		{ cmd "prod_select 3;" prod_reset *s_armor	color "1 1 1 1" }
+	confunc prod_other		{ cmd "prod_select 6;" prod_reset *s_other	color "1 1 1 1" }
+	confunc prod_disassembling	{ cmd "prod_disassembling;" prod_reset *s_disassembling	color "1 1 1 1" }
 
 	pic bt_primary
 	{

@@ -2535,11 +2535,6 @@ tech rs_craft_saracen_interceptor
 //========================
 // Crafts - UFOs
 //========================
-item craft_ufo_scout
-{
-	// dummy package to that we can link
-	weapon false
-}
 
 tech rs_craft_ufo_scout
 {
@@ -2576,12 +2571,6 @@ tech rs_craft_ufo_scout
 	mdl_top		ufo_scout
 }
 
-item craft_ufo_fighter
-{
-	// dummy package to that we can link
-	weapon false
-}
-
 tech rs_craft_ufo_fighter
 {
 	type	tech
@@ -2616,12 +2605,6 @@ tech rs_craft_ufo_fighter
 
 	// TODO should come from craft-definition:
 	mdl_top		ufo1
-}
-
-item craft_ufo_harvester
-{
-	// dummy package to that we can link
-	weapon false
 }
 
 tech rs_craft_ufo_harvester
