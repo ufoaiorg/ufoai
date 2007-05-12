@@ -1588,7 +1588,8 @@ static int CM_TransformedPointContents (vec3_t p, int headnode, vec3_t origin, v
 
 /**
  * @brief
- * @param
+ * @param[in] p1 Startpoint
+ * @param[in] p1 Endpoint
  * @sa
  */
 static void CM_ClipBoxToBrush (vec3_t mins, vec3_t maxs, vec3_t p1, vec3_t p2, trace_t * trace, cbrush_t * brush)
@@ -1642,7 +1643,7 @@ static void CM_ClipBoxToBrush (vec3_t mins, vec3_t maxs, vec3_t p1, vec3_t p2, t
 		if (d2 > 0)
 			getout = qtrue;		/* endpoint is not in solid */
 		if (d1 > 0)
-			startout = qtrue;
+			startout = qtrue;	/* startpoint is not in solid */
 
 		/* if completely in front of face, no intersection */
 		if (d1 > 0 && d2 >= d1)

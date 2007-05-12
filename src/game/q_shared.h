@@ -1001,12 +1001,12 @@ extern const char *pa_format[128];
 /** this is a fire definition for our weapons/ammo */
 typedef struct fireDef_s {
 	char name[MAX_VAR];			/**< script id */
-	char projectile[MAX_VAR];	/**< particle */
-	char impact[MAX_VAR];
-	char hitBody[MAX_VAR];
+	char projectile[MAX_VAR];	/**< projectile particle */
+	char impact[MAX_VAR];		/**< impact particle */
+	char hitBody[MAX_VAR];		/**< hit the body particles */
 	char fireSound[MAX_VAR];	/**< the sound when a recruits fires */
 	char impactSound[MAX_VAR];	/**< the sound that is played on impact */
-	char hitBodySound[MAX_VAR];
+	char hitBodySound[MAX_VAR];	/**< the sound that is played on hitting a body */
 	char bounceSound[MAX_VAR];	/**< bouncing sound */
 
 	/* These values are created in Com_ParseItem and Com_AddObjectLinks.
@@ -1034,13 +1034,13 @@ typedef struct fireDef_s {
 	int bounce;				/**< Is this item bouncing? e.g. grenades */
 	float bounceFac;
 	float crouch;
-	float range;
+	float range;			/**< range of the weapon ammunition */
 	int shots;
 	int ammo;
 	float rof;
 	int time;
 	vec2_t damage, spldmg;
-	float splrad;
+	float splrad;			/**< splash damage radius */
 	int weaponSkill;		/**< What weapon skill is needed to fire this weapon. */
 	int irgoggles;			/**< Is this an irgoogle? */
 } fireDef_t;

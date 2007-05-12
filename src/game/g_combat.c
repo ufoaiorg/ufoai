@@ -27,6 +27,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX(a,b) ((a)>(b)?(a):(b))
 
+#define MAX_WALL_THICKNESS_FOR_SHOOTING_THROUGH 8
+
 /* uncomment this to enable debugging the reaction fire */
 /*#define DEBUG_REACTION*/
 
@@ -863,7 +865,6 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 			gi.WriteByte(fd->fd_idx);
 		}
 
-		/* do splash damage */
 		if (tr.fraction < 1.0 && !fd->bounce) {
 			/* check for shooting through wall */
 			if (throughWall && tr.contents & CONTENTS_SOLID) {
@@ -871,11 +872,12 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 				/* redruce damage */
 				/* TODO: redruce even more if the wall was hit far away and
 				 * not close by the shooting actor */
-				damage /= sqrt(fd->throughWall - throughWall +1);
-				VectorMA(tr.endpos, 1, dir, tracefrom);
+				damage /= sqrt(fd->throughWall - throughWall + 1);
+				VectorMA(tr.endpos, MAX_WALL_THICKNESS_FOR_SHOOTING_THROUGH, dir, tracefrom);
 				continue;
 			}
 
+			/* do splash damage */
 			if (fd->splrad) {
 				VectorMA(impact, sv_shot_origin->value, tr.plane.normal, impact);
 				G_SplashDamage(ent, fd, impact, mock);
