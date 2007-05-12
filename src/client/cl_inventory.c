@@ -497,13 +497,10 @@ void INV_LinkComponentsWithObj (void)
 	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
 		for (j = 0; j < MAX_ASSEMBLIES; j++) {
 			if ((Q_strncmp(od->id, gd.components[j].assembly_id, MAX_VAR)) == 0) {
-				Com_DPrintf("INV_LinkComponentsWithObj()... linked item: %s with components: %s\n", od->id, gd.components[j].assembly_id);
-				od->componentsidx = j;
+				gd.components[j].assembly_idx = i;
+				Com_DPrintf("INV_LinkComponentsWithObj()... linked item: %s idx %i with components: %s idx %i \n", od->id, i, gd.components[j].assembly_id, gd.components[j].assembly_idx);
 				break;
 			}
-			/* componentsidx = -1 if no components definition */
-			if (j == (MAX_ASSEMBLIES - 1))
-				od->componentsidx = -1;
 		}
 	}
 }

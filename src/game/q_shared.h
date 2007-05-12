@@ -1076,7 +1076,6 @@ typedef struct objDef_s {
 	int price;		/**< the price for this item */
 	int size;		/**< Size of an item, used in storage capacities. */
 	int buytype;		/**< In which category of the buy menu is this item listed. */
-	int componentsidx;	/**< Index of components definition in gd.components or -1 if no valid definition. */
 
 	/* Weapon specific */
 	int ammo;			/**< How much can we load into this weapon at once. */
