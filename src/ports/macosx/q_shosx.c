@@ -80,18 +80,18 @@ void* Hunk_Begin (int theMaxSize)
 /**
  * @brief
  */
-void* Hunk_Alloc (int theSize)
+void* Hunk_Alloc (int size)
 {
 	unsigned char	*myMemory;
 
 	if (!size)
 		return NULL;
 
-	theSize = (theSize + 31) & ~31;
-	if (curhunksize + theSize > maxhunksize)
-		Sys_Error ("Hunk_Alloc overflow");
+	size = (size + 31) & ~31;
+	if (curhunksize + size > maxhunksize)
+		Sys_Error("Hunk_Alloc overflow");
 	myMemory = membase + sizeof(int) + curhunksize;
-	curhunksize += theSize;
+	curhunksize += size;
 
 	return (myMemory);
 }
