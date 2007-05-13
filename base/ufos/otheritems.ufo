@@ -34,16 +34,19 @@ item alienmaterials
 
 item craft_ufo_scout
 {
+	name	"_UFO - Scout"
 	weapon false
 }
 
 item craft_ufo_fighter
 {
+	name	"_UFO - Fighter"
 	weapon false
 }
 
 item craft_ufo_harvester
 {
+	name	"_UFO - Harvester"
 	weapon false
 }
 
