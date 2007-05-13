@@ -748,7 +748,8 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 			/* draw aircraft */
 			for (i = 0, aircraft = (aircraft_t *) gd.bases[j].aircraft; i < gd.bases[j].numAircraftInBase; i++, aircraft++)
 				if (aircraft->status > AIR_HOME) {
-					MAP_Draw3DMarkerIfVisible (node, gd.bases[j].pos, aircraft->image);
+					/* Draw aircraft */
+					MAP_Draw3DMarkerIfVisible (node, aircraft->pos, aircraft->image);
 
 					/* Draw aircraft route */
 					if (aircraft->status >= AIR_TRANSIT) {
