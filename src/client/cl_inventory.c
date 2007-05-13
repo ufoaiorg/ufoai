@@ -487,6 +487,10 @@ extern void INV_ParseComponents (const char *name, char **text)
 			} else {
 				Com_Printf("INV_ParseComponents: \"%s\" Too many 'items' defined. Limit is %i - ignored.\n", name, MAX_COMP);
 			}
+		} else if (!Q_strncmp(token, "time", MAX_VAR)) {
+			/* Defines how long disassembly lasts. */
+			token = COM_Parse(text);
+			comp->time = atoi(token);	
 		} else {
 			Com_Printf("INV_ParseComponents error in \"%s\" - unknown token: \"%s\".\n", name, token);
 		}
