@@ -484,6 +484,7 @@ static void PR_ProductionInfo (qboolean disassembly)
 					sizeof(productionInfo) );
 				CL_ItemDescription(objID);
 			}
+		}
 	}
 	menuText[TEXT_PRODUCTION_INFO] = productionInfo;
 }
