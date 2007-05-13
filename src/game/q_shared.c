@@ -236,7 +236,11 @@ void AngleVectors (vec3_t angles, vec3_t forward, vec3_t right, vec3_t up)
 }
 
 /**
- * @brief
+ * @brief Projects a point on a plane
+ * @param[in] p Coordinates of the point to project
+ * @param[in] normal Vector normal to the plane
+ * @param[out] dst Coordinates of the projection of p on the plane
+ * @note the plane is the plane normal to normal, and passing by the origin of the frame.
  */
 void ProjectPointOnPlane (vec3_t dst, const vec3_t p, const vec3_t normal)
 {
@@ -244,7 +248,9 @@ void ProjectPointOnPlane (vec3_t dst, const vec3_t p, const vec3_t normal)
 	vec3_t n;
 	float inv_denom;
 
-	inv_denom = 1.0F / DotProduct(normal, normal);
+	/* I added a sqrt there, otherwise this function does not work for unnormalized vector (13052007 Kracken) */
+	/* old line was inv_denom = 1.0F / DotProduct(normal, normal); */
+	inv_denom = 1.0F / sqrt(DotProduct(normal, normal));
 
 	d = DotProduct(normal, p) * inv_denom;
 
@@ -258,8 +264,10 @@ void ProjectPointOnPlane (vec3_t dst, const vec3_t p, const vec3_t normal)
 }
 
 /**
- * @brief
+ * @brief returns a vector perpendicular to given vector
  * @note assumes "src" is normalized
+ * @param[in] src
+ * @param[out] dst The destination vector, perpendicular to src
  */
 void PerpendicularVector (vec3_t dst, const vec3_t src)
 {
