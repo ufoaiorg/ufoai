@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-05-13 21:23+0200\n"
-"PO-Revision-Date: 2007-05-13 21:42+0100\n"
+"PO-Revision-Date: 2007-05-13 21:58+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1113,9 +1113,8 @@ msgid "Sell item"
 msgstr "Verkaufen"
 
 #: ../base/ufos/menu_buy.ufo:1081
-#, fuzzy
 msgid "Buy factor:"
-msgstr "Kaufe Flugzeug"
+msgstr "Kauffaktor:"
 
 #: ../base/ufos/menu_buy.ufo:1097
 msgid "Decrease the amount of items you want to buy"
@@ -1126,9 +1125,8 @@ msgid "Increase the amount of items you want to buy"
 msgstr ""
 
 #: ../base/ufos/menu_buy.ufo:1125
-#, fuzzy
 msgid "Sell factor:"
-msgstr "Verkaufe Flugzeug"
+msgstr "Verkaufsfaktor:"
 
 #: ../base/ufos/menu_buy.ufo:1141
 msgid "Decrease the amount of items you want to sell"
@@ -1769,9 +1767,8 @@ msgid "No nation with accepted level of alien infiltration or UFO recovery proce
 msgstr ""
 
 #: ../base/ufos/menu_lostwon.ufo:69
-#, fuzzy
 msgid "UFO recovery process finished"
-msgstr "%i Forschungen abgeschlossen\n"
+msgstr "UFO Bergung abgeschlossen"
 
 #: ../base/ufos/menu_lostwon.ufo:74
 msgid "Store the UFO in base"
@@ -1791,7 +1788,7 @@ msgstr "Verkaufe UFO"
 
 #: ../base/ufos/menu_lostwon.ufo:118
 msgid "Destroy recovered UFO"
-msgstr ""
+msgstr "Zerstöre geborgenes UFO"
 
 #: ../base/ufos/menu_lostwon.ufo:134
 msgid "Destroy UFO"
@@ -1820,21 +1817,20 @@ msgid "Continue"
 msgstr "Fortfahren"
 
 #: ../base/ufos/menu_lostwon.ufo:360
-#, fuzzy
 msgid "Select base for UFO recovery"
-msgstr "Zielbasis auswählen"
+msgstr "Zielbasis für UFO Bergung auswählen"
 
 #: ../base/ufos/menu_lostwon.ufo:400
 msgid "Begin UFO recovery process"
-msgstr ""
+msgstr "Beginne mit UFO Bergung"
 
 #: ../base/ufos/menu_lostwon.ufo:413
 msgid "Recover"
-msgstr ""
+msgstr "Bergen"
 
 #: ../base/ufos/menu_lostwon.ufo:437
 msgid "Select nation for UFO recovery"
-msgstr ""
+msgstr "Nation für UFO Bergung auswählen"
 
 #: ../base/ufos/menu_lostwon.ufo:445
 msgid "Nation:"
@@ -2486,11 +2482,11 @@ msgstr "Andere"
 
 #: ../base/ufos/menu_production.ufo:447
 msgid "Disassembling items"
-msgstr ""
+msgstr "Ausrüstung demontieren"
 
 #: ../base/ufos/menu_production.ufo:462
 msgid "Disassembling"
-msgstr ""
+msgstr "Demontieren"
 
 #: ../base/ufos/menu_ptleditor.ufo:16
 msgid "Loop"
@@ -9592,7 +9588,7 @@ msgstr ""
 #: client/cl_campaign.c:4051
 #: client/cl_campaign.c:4120
 msgid "UFO Recovery"
-msgstr ""
+msgstr "UFO Bergung"
 
 #: client/cl_campaign.c:4049
 #, c-format
@@ -10042,7 +10038,7 @@ msgid ""
 "Build more storage facilities."
 msgstr ""
 "Sie können diesen Gegenstand nicht kaufen.\n"
-"Nicht genügen Platz in den Langern.\n"
+"Nicht genügend Platz in den Langern.\n"
 "Errichten Sie weitere Lager."
 
 #: client/cl_market.c:642
@@ -10197,7 +10193,7 @@ msgstr "Keinen Gegenstand ausgewählt"
 #: client/cl_produce.c:491
 #, c-format
 msgid "%s - disassembly\n"
-msgstr ""
+msgstr "%s - Demontage\n"
 
 #: client/cl_produce.c:492
 msgid "Components: "
@@ -10211,7 +10207,7 @@ msgstr "%s (%i) "
 #: client/cl_produce.c:504
 #, c-format
 msgid "Disassemblingtime\t%ih\n"
-msgstr ""
+msgstr "Demontagezeit\t%ih\n"
 
 #: client/cl_produce.c:936
 #, c-format
