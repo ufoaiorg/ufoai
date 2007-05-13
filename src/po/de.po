@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-05-13 21:23+0200\n"
-"PO-Revision-Date: 2007-05-13 21:28+0100\n"
+"PO-Revision-Date: 2007-05-13 21:42+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -249,9 +249,8 @@ msgid "Hospital"
 msgstr "Krankenstation"
 
 #: ../base/ufos/basemanagement.ufo:350
-#, fuzzy
 msgid "Antimatter Storage"
-msgstr "Antimaterie"
+msgstr "Antimaterie-Lager"
 
 #: ../base/ufos/basemanagement.ufo:363
 msgid "Home"
@@ -1140,9 +1139,8 @@ msgid "Increase the amount of items you want to sell"
 msgstr ""
 
 #: ../base/ufos/menu_buy.ufo:1173
-#, fuzzy
 msgid "Storage (all/free):"
-msgstr "Arbeiter (alle/fertig)"
+msgstr "Lager (gesamt/frei):"
 
 #: ../base/ufos/menu_buy.ufo:1205
 #: ../base/ufos/menu_production.ufo:347
@@ -1608,7 +1606,7 @@ msgstr "Gerade in Behandlung"
 
 #: ../base/ufos/menu_hospital.ufo:262
 msgid "Legend"
-msgstr ""
+msgstr "Legende"
 
 #: ../base/ufos/menu_hospital.ufo:271
 msgid "Blue means employee currently being healed."
@@ -1785,11 +1783,11 @@ msgstr "Lagere UFO"
 
 #: ../base/ufos/menu_lostwon.ufo:96
 msgid "Sell the UFO to desired nation"
-msgstr ""
+msgstr "Verkaufe das UFO an die gewählte Nation"
 
 #: ../base/ufos/menu_lostwon.ufo:112
 msgid "Sell UFO"
-msgstr ""
+msgstr "Verkaufe UFO"
 
 #: ../base/ufos/menu_lostwon.ufo:118
 msgid "Destroy recovered UFO"
@@ -2431,14 +2429,12 @@ msgid "Productionlimit:"
 msgstr "Produktionslimit:"
 
 #: ../base/ufos/menu_production.ufo:89
-#, fuzzy
 msgid "Workers (all/ready):"
-msgstr "Arbeiter (alle/fertig)"
+msgstr "Arbeiter (alle/fertig):"
 
 #: ../base/ufos/menu_production.ufo:109
-#, fuzzy
 msgid "Workshop capacity:"
-msgstr "Basiskapazität"
+msgstr "Werkstattskapazität:"
 
 #: ../base/ufos/menu_production.ufo:129
 msgid "Storage capacity:"
@@ -2485,9 +2481,8 @@ msgid "Show other items and materials"
 msgstr ""
 
 #: ../base/ufos/menu_production.ufo:442
-#, fuzzy
 msgid "Other"
-msgstr "Starten"
+msgstr "Andere"
 
 #: ../base/ufos/menu_production.ufo:447
 msgid "Disassembling items"
@@ -9783,16 +9778,16 @@ msgid "you gathered %i credits."
 msgstr "nahmen Sie %i Credits ein."
 
 #: client/cl_inventory.c:327
-#, fuzzy, c-format
+#, c-format
 msgid "Not enough storage space in base %s. %s"
-msgstr "Nicht genug Kapital um eine neue Basis zu bauen."
+msgstr "Nicht genug Lagerkapazität in der Basis %s. %s"
 
 #: client/cl_inventory.c:329
-#, fuzzy, c-format
+#, c-format
 msgid "%i item was sold."
 msgid_plural "%i items were sold."
-msgstr[0] "Keine Ausrüstung an Bord"
-msgstr[1] "Keine Ausrüstung an Bord"
+msgstr[0] "%i Gegenstand wurde verkauft."
+msgstr[1] "%i Gegenstände wurden verkauft."
 
 #: client/cl_main.c:364
 #: client/cl_main.c:1037
@@ -10041,14 +10036,14 @@ msgid "Not enough storage space"
 msgstr "Nicht genügend Lagerkapazität"
 
 #: client/cl_market.c:437
-#, fuzzy
 msgid ""
 "You cannot buy this item.\n"
 "Not enough space in storage.\n"
 "Build more storage facilities."
 msgstr ""
-"Sie können dieses Flugzeug nicht kaufen.\n"
-"Nicht genügen Platz in den Hangars.\n"
+"Sie können diesen Gegenstand nicht kaufen.\n"
+"Nicht genügen Platz in den Langern.\n"
+"Errichten Sie weitere Lager."
 
 #: client/cl_market.c:642
 msgid ""
@@ -10190,9 +10185,9 @@ msgid "Productiontime\t%ih\n"
 msgstr "Produktionszeit\t%ih\n"
 
 #: client/cl_produce.c:460
-#, fuzzy, c-format
+#, c-format
 msgid "Item size\t%i\n"
-msgstr "Eigene Verluste\t%i\n"
+msgstr "Größe des Gegenständes\t%i\n"
 
 #: client/cl_produce.c:483
 #, fuzzy
@@ -10261,12 +10256,12 @@ msgstr "Unbekannte Technologie gefunden"
 #: client/cl_research.c:613
 #, c-format
 msgid "Laboratory space (all/used): %i/%i"
-msgstr ""
+msgstr "Laborkapazität (gesamt/benutzt): %i/%i"
 
 #: client/cl_research.c:618
 #, c-format
 msgid "Scientists (all/available): %i/%i"
-msgstr ""
+msgstr "Wissenschaftler (alle/fertig): %i/%i"
 
 #: client/cl_research.c:622
 msgid "Not researched in any base."
@@ -10772,17 +10767,14 @@ msgid "No alien containment in this base\n"
 msgstr "Keine Quarantänestation in dieser Basis\n"
 
 #: client/cl_ufo.c:44
-#, fuzzy
 msgid "Scout"
-msgstr "UFO-Akl."
+msgstr "UFO - Aufklärer"
 
 #: client/cl_ufo.c:47
-#, fuzzy
 msgid "Fighter"
-msgstr "UFO-Jgr."
+msgstr "UFO - Jäger"
 
 #: client/cl_ufo.c:50
-#, fuzzy
 msgid "Harvester"
 msgstr "UFO - Sammler"
 
@@ -10828,9 +10820,9 @@ msgstr "Keine Vorbedingungen"
 #: client/cl_ufopedia.c:266
 #: client/cl_ufopedia.c:274
 #: client/cl_ufopedia.c:396
-#, fuzzy, c-format
+#, c-format
 msgid "Size:\t%i\n"
-msgstr "Schild:\t%s\n"
+msgstr "Größe:\t%i\n"
 
 #: client/cl_ufopedia.c:250
 msgid "Type:\tProtection / Hardness:\n"
