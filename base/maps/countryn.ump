@@ -260,5 +260,5 @@ size "7 7"
 +re02 "0 1"
 +re03 "0 1"
 +re04 "0 1"
-+drop "1 1"
+*rm_dropship +drop "1 1"
 }
