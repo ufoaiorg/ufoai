@@ -365,7 +365,7 @@ static qboolean MAP_IsMapPositionSelected (const menuNode_t* node, vec2_t pos, i
  * @param[out] z z value of the given latitude and longitude - might also be NULL if not needed
  * @sa MAP_MapToScreen
  * @sa MAP3D_ScreenToMap
- * @return qtrue if the point is visible, qfalse else (if it's outside the screen or on the wrong side of earth).
+ * @return qtrue if the point is visible, qfalse else (if it's outside the node or on the wrong side of earth).
  * @note In the function, we do the opposite of MAP3D_ScreenToMap
  */
 extern qboolean MAP_3DMapToScreen (const menuNode_t* node, const vec2_t pos, int *x, int *y, int *z)
@@ -416,14 +416,26 @@ extern qboolean MAP_3DMapToScreen (const menuNode_t* node, const vec2_t pos, int
 extern qboolean MAP_Draw3DMarkerIfVisible (const menuNode_t* node, const vec2_t pos, const char *model)
 {
 	int x, y, z;
-	vec3_t screenPos, angles;
+	vec3_t screenPos, angles, v;
 	float zoom;
+	const float radius = GLOBE_RADIUS;
 
 	if (MAP_3DMapToScreen (node, pos, &x, &y, &z)) {
+		/* Set position of the model on the screen */
 		VectorSet(screenPos, x, y, z);
-		/* @todo Change angle with position */
-		VectorSet(angles, 0, 180, 0);
-		zoom = 0.7 + ccs.zoom * (float) z / (GLOBE_RADIUS) / 2.0;
+
+		/* Set angles of the model */
+		VectorCopy(screenPos, v);
+		v[0] -= (node->pos[0] + node->size[0]) / 2.0f;
+		v[1] -= (node->pos[1] + node->size[1]) / 2.0f;
+		VectorSet(angles, 0, 0, 0);
+		angles[1] = - asin(v[0]/radius) * todeg;
+		angles[2] = asin(v[1]/radius) * todeg;
+		
+		/* Set zoom */
+		zoom = 0.7 + ccs.zoom * (float) z / radius / 2.0;
+		
+		/* Draw */
 		re.Draw3DMapMarkers(angles, zoom, screenPos, model);
 		return qtrue;
 	}
