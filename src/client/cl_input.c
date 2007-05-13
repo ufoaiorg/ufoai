@@ -1071,6 +1071,7 @@ void CL_CameraRoute (pos3_t from, pos3_t target)
 }
 
 #define ROTATE_SPEED	0.5
+#define ROTATE_SPEED3D	0.3
 /**
  * @brief Called every frame to parse the input
  * @note The geoscape zooming code is in MN_MouseWheel too
@@ -1119,8 +1120,8 @@ void CL_ParseInput (void)
 
 	case MS_SHIFT3DMAP:
 		/* rotate a model */
-		ccs.angles[PITCH] -= ROTATE_SPEED * (mx - oldx);
-		ccs.angles[YAW] += ROTATE_SPEED * (my - oldy);
+		ccs.angles[PITCH] += ROTATE_SPEED3D * (mx - oldx) / ccs.zoom;
+		ccs.angles[YAW] -= ROTATE_SPEED3D * (my - oldy) / ccs.zoom;
 
 		while (ccs.angles[YAW] > 180.0)
 			ccs.angles[YAW] -= 360.0;
