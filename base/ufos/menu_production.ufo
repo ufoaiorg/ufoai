@@ -340,7 +340,7 @@ menu production
 	confunc prod_misc		{ cmd "prod_select 2;" prod_reset *s_misc	color "1 1 1 1" }
 	confunc prod_armor		{ cmd "prod_select 3;" prod_reset *s_armor	color "1 1 1 1" }
 	confunc prod_other		{ cmd "prod_select 6;" prod_reset *s_other	color "1 1 1 1" }
-	confunc prod_disassembling	{ cmd "prod_disassembling;" prod_reset *s_disassembling	color "1 1 1 1" }
+	confunc prod_disassembling	{ cmd "prod_disassemble;" prod_reset *s_disassembling	color "1 1 1 1" }
 
 	pic bt_primary
 	{
@@ -430,7 +430,7 @@ menu production
 		pos		"615 683"
 		texl	"0 0"
 		texh	"128 52"
-		click	{  }
+		click	{ prod_other }
 	}
 
 	string s_other
@@ -450,7 +450,7 @@ menu production
 		pos		"765 683"
 		texl	"0 0"
 		texh	"128 52"
-		click	{  }
+		click	{ prod_disassembling }
 	}
 
 	string s_disassembling

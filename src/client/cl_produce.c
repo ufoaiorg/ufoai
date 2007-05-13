@@ -397,15 +397,17 @@ void PR_ProductionRun (void)
 
 /**
  * @brief Prints information about the selected item in production.
+ * @param[in] disassembly True, if we are trying to display disassembly info.
  * @note -1 for objID means that there is no production in this base.
  */
-static void PR_ProductionInfo (void)
+static void PR_ProductionInfo (qboolean disassembly)
 {
 	static char productionInfo[512];
 	technology_t *t;
-	objDef_t *od;
+	objDef_t *od, *compod;
 	int objID;
-	int time;
+	int time, i, j;
+	components_t *comp = NULL;
 
 	assert(baseCurrent);
 
@@ -415,31 +417,73 @@ static void PR_ProductionInfo (void)
 		objID = selectedIndex;
 	}
 
-	if (objID >= 0) {
-		od = &csi.ods[objID];
-		t = (technology_t*)(od->tech);
-		/* Don't try to display the item which is not produceable. */
-		if (t->produceTime < 0) {
+	if (!disassembly) {
+		if (objID >= 0) {
+			od = &csi.ods[objID];
+			t = (technology_t*)(od->tech);
+			/* Don't try to display the item which is not produceable. */
+			if (t->produceTime < 0) {
+				Com_sprintf(productionInfo, sizeof(productionInfo), _("No item selected"));
+				Cvar_Set("mn_item", "");
+			} else {
+				/* If item is first in queue, use timeLeft as time, otherwise calculate. */
+				if (objID == gd.productions[baseCurrent->idx].items[0].objID)
+					time = gd.productions[baseCurrent->idx].items[0].timeLeft;
+				else
+					time = PR_CalculateProductionTime(baseCurrent, t);
+				Com_sprintf(productionInfo, sizeof(productionInfo), "%s\n", od->name);
+				Q_strcat(productionInfo, va(_("Costs per item\t%i c\n"), (od->price*PRODUCE_FACTOR/PRODUCE_DIVISOR)),
+					sizeof(productionInfo) );
+				Q_strcat(productionInfo, va(_("Productiontime\t%ih\n"), time),
+					sizeof(productionInfo) );
+				Q_strcat(productionInfo, va(_("Item size\t%i\n"), od->size),
+					sizeof(productionInfo) );
+				CL_ItemDescription(objID);
+			}
+		} else {
 			Com_sprintf(productionInfo, sizeof(productionInfo), _("No item selected"));
 			Cvar_Set("mn_item", "");
-		} else {
-			/* If item is first in queue, use timeLeft as time, otherwise calculate. */
-			if (objID == gd.productions[baseCurrent->idx].items[0].objID)
-				time = gd.productions[baseCurrent->idx].items[0].timeLeft;
-			else
-				time = PR_CalculateProductionTime(baseCurrent, t);
-			Com_sprintf(productionInfo, sizeof(productionInfo), "%s\n", od->name);
-			Q_strcat(productionInfo, va(_("Costs per item\t%i c\n"), (od->price*PRODUCE_FACTOR/PRODUCE_DIVISOR)),
-				sizeof(productionInfo) );
-			Q_strcat(productionInfo, va(_("Productiontime\t%ih\n"), time),
-				sizeof(productionInfo) );
-			Q_strcat(productionInfo, va(_("Item size\t%i\n"), od->size),
-				sizeof(productionInfo) );
-			CL_ItemDescription(objID);
 		}
-	} else {
-		Com_sprintf(productionInfo, sizeof(productionInfo), _("No item selected"));
-		Cvar_Set("mn_item", "");
+	} else {	/* Disassembling. */
+		/* Find related components array. */
+		for (i = 0; i < gd.numComponents; i++) {
+			comp = &gd.components[i];
+			Com_Printf("components definition: %s item: %s\n", comp->assembly_id, csi.ods[comp->assembly_idx].id);
+			if (comp->assembly_idx == objID)
+				break;
+		}
+		assert (comp);
+		if (objID >= 0) {
+			od = &csi.ods[objID];
+			t = (technology_t*)(od->tech);
+			Com_Printf("od: %s\n", od->name);
+			/* Don't try to display the item which is not produceable. */
+			if (t->produceTime < 0) {
+				Com_sprintf(productionInfo, sizeof(productionInfo), _("No disassembly selected"));
+				Cvar_Set("mn_item", "");
+			} else {
+				/* If item is first in queue, use timeLeft as time, otherwise calculate. */
+				if (objID == gd.productions[baseCurrent->idx].items[0].objID)
+					time = gd.productions[baseCurrent->idx].items[0].timeLeft;
+				else
+					time = PR_CalculateProductionTime(baseCurrent, t);
+				Com_sprintf(productionInfo, sizeof(productionInfo), _("%s - disassembly\n"), od->name);
+				Q_strcat(productionInfo, va(_("Components: ")),
+					sizeof(productionInfo) );
+				/* Print components. */
+				for (i = 0; i < comp->numItemtypes; i++) {
+					for (j = 0, compod = csi.ods; j < csi.numODs; j++, compod++) {
+						if ((Q_strncmp(compod->id, comp->item_id[i], MAX_VAR)) == 0)
+							break;
+					}
+					Q_strcat(productionInfo, va(_("%s (%i) "), compod->name, comp->item_amount[i]), 
+						sizeof(productionInfo) );
+				}
+				Q_strcat(productionInfo, "\n", sizeof(productionInfo));
+				Q_strcat(productionInfo, va(_("Disassemblingtime\t%ih\n"), time),
+					sizeof(productionInfo) );
+				CL_ItemDescription(objID);
+			}
 	}
 	menuText[TEXT_PRODUCTION_INFO] = productionInfo;
 }
@@ -518,7 +562,7 @@ static void PR_ProductionListClick_f (void)
 #if 0 /* FIXME: not a concern any more ... */
 	/* there is already a running production - stop it first */
 	if (gd.productions[baseCurrent->idx].amount > 0 ) {
-		PR_ProductionInfo();
+		PR_ProductionInfo(qfalse);
 		return;
 	}
 #endif
@@ -537,7 +581,7 @@ static void PR_ProductionListClick_f (void)
 		prod = &queue->items[num];
 		selectedQueueItem = qtrue;
 		selectedIndex = num;
-		PR_ProductionInfo();
+		PR_ProductionInfo(qfalse);
 	} else if (num >= queue->numItems + QUEUE_SPACERS) {
 		/* Clicked in the item list. */
 		idx = num - queue->numItems - QUEUE_SPACERS;
@@ -562,7 +606,7 @@ static void PR_ProductionListClick_f (void)
 #endif
 					selectedQueueItem = qfalse;
 					selectedIndex = i;
-					PR_ProductionInfo();
+					PR_ProductionInfo(qfalse);
 					return;
 				}
 				j++;
@@ -586,6 +630,8 @@ static void PR_UpdateProductionList (void)
 	production_queue_t *queue;
 	production_t *prod;
 	technology_t *tech = NULL;
+
+	Cvar_SetValue("mn_prod_disassembling", 0);
 
 	productionAmount[0] = productionList[0] = productionQueued[0] = '\0';
 	queue = &gd.productions[baseCurrent->idx];
@@ -630,7 +676,64 @@ static void PR_UpdateProductionList (void)
 
 #if 0 /* FIXME: needed now? */
 	/* now print the information about the current item in production */
-	PR_ProductionInfo();
+	PR_ProductionInfo(qfalse);
+#endif
+}
+
+/** @brief update the list of items ready for disassembling */
+static void PR_UpdateDisassemblingList_f (void)
+{
+	int i;
+	static char productionList[1024];
+	static char productionQueued[256];
+	static char productionAmount[256];
+	objDef_t *od;
+	production_queue_t *queue;
+	production_t *prod;
+	
+	Cvar_SetValue("mn_prod_disassembling", 1);
+
+	productionAmount[0] = productionList[0] = productionQueued[0] = '\0';
+	queue = &gd.productions[baseCurrent->idx];
+	
+	/* first add all the queue items */
+	for (i = 0; i < queue->numItems; i++) {
+		prod = &queue->items[i];
+		od = &csi.ods[prod->objID];
+
+		Q_strcat(productionList, va("%s\n", od->name), sizeof(productionList));
+		Q_strcat(productionAmount, va("%i\n", baseCurrent->storage.num[prod->objID]), sizeof(productionAmount));
+		Q_strcat(productionQueued, va("%i\n", prod->amount), sizeof(productionQueued));
+	}
+
+	/* then spacers */
+	for (i = 0; i < QUEUE_SPACERS; i++) {
+		Q_strcat(productionList, "\n", sizeof(productionList));
+		Q_strcat(productionAmount, "\n", sizeof(productionAmount));
+		Q_strcat(productionQueued, "\n", sizeof(productionQueued));
+	}
+
+	for (i = 0; i < gd.numComponents; i++) {
+		Com_Printf("num: %i loc: %i idx: %i\n", gd.numComponents, i, gd.components[i].assembly_idx);
+		if (gd.components[i].assembly_idx <= 0)
+			continue;
+		od = &csi.ods[gd.components[i].assembly_idx];
+/*		if (RS_IsResearched_ptr(od->tech) && (baseCurrent->storage.num[i] > 0)) { */
+			Q_strcat(productionList, va("%s\n", od->name), sizeof(productionList));
+			Q_strcat(productionAmount, va("%i\n", baseCurrent->storage.num[gd.components[i].assembly_idx]), sizeof(productionAmount));
+			Q_strcat(productionQueued, "\n", sizeof(productionQueued));
+/*		}*/
+	}
+	/* bind the menu text to our static char array */
+	menuText[TEXT_PRODUCTION_LIST] = productionList;
+	/* bind the amount of available items */
+	menuText[TEXT_PRODUCTION_AMOUNT] = productionAmount;
+	/* bind the amount of queued items */
+	menuText[TEXT_PRODUCTION_QUEUED] = productionQueued;
+
+#if 0 /* FIXME: needed now? */
+	/* now print the information about the current item in production */
+	PR_ProductionInfo(qfalse);
 #endif
 }
 
@@ -668,7 +771,7 @@ static void PR_ProductionList_f (void)
 		return;
 
 	PR_ProductionSelect_f();
-	PR_ProductionInfo();
+	PR_ProductionInfo(qfalse);
 	Cvar_SetValue("mn_production_limit", MAX_PRODUCTIONS_PER_WORKSHOP * B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, B_WORKSHOP));
 	Cvar_SetValue("mn_production_basecap", baseCurrent->capacities[CAP_WORKSPACE].max);
 	/* Set amount of workers - all/ready to work (determined by base capacity. */
@@ -812,7 +915,7 @@ static void PR_ProductionIncrease_f (void)
 		}
 	}
 
-	PR_ProductionInfo();
+	PR_ProductionInfo(qfalse);
 	PR_UpdateProductionList();
 }
 
@@ -836,7 +939,7 @@ static void PR_ProductionStop_f (void)
 		selectedIndex = queue->numItems - 1;
 	}
 
-	PR_ProductionInfo();
+	PR_ProductionInfo(qfalse);
 	PR_UpdateProductionList();
 }
 
@@ -863,7 +966,7 @@ static void PR_ProductionDecrease_f (void)
 	if (prod->amount <= 0) {
 		PR_ProductionStop_f();
 	} else {
-		PR_ProductionInfo();
+		PR_ProductionInfo(qfalse);
 		PR_UpdateProductionList();
  	}
 }
@@ -920,6 +1023,7 @@ extern void PR_ResetProduction (void)
 	Cmd_AddCommand("prod_init", PR_ProductionList_f, NULL);
 	Cmd_AddCommand("prod_scroll", PR_ProductionListScroll_f, "Scrolls the production lists");
 	Cmd_AddCommand("prod_select", PR_ProductionSelect_f, NULL);
+	Cmd_AddCommand("prod_disassemble", PR_UpdateDisassemblingList_f, "List of items ready for disassembling");
 	Cmd_AddCommand("prodlist_rclick", PR_ProductionListRightClick_f, NULL);
 	Cmd_AddCommand("prodlist_click", PR_ProductionListClick_f, NULL);
 	Cmd_AddCommand("prod_inc", PR_ProductionIncrease_f, NULL);
