@@ -1987,7 +1987,6 @@ technology_t *RS_GetTechByID (const char *id)
  */
 technology_t *RS_GetTechByProvided (const char *id_provided)
 {
-	int i;
 	unsigned hash;
 	technology_t *tech;
 
