@@ -4,240 +4,641 @@
 
 base countryn/c_
 
+// a = everywhere
+// b = street horizontal
+// c = street end horizontal left
+// d = street end horizontal right
+// e = street vertical
+// f = street end vertical left
+// g = street end vertical right
+// h = street cross
+// i = rock horizontal back
+// j = rock end horizontal back left
+// k = rock end horizontal back right
+// l = rock horizontal front
+// m = rock end horizontal front left
+// n = rock end horizontal front right
+// o = rock vertical back
+// p = rock end vertical back left
+// q = rock end vertical back right
+// r = rock vertical front
+// s = rock end vertical front left
+// t = rock end vertical front right
+// u = cave entry horizontal back
+// v = cave entry horizontal front
+// w = cave entry vertical back
+// x = cave entry vertical front
+
+// horizontal first row - abcdlmn
+// horizontal last row - abcdijk
+// vertical first col - acefgrst
+// vertical last col - adefgopq
+
+//--------------------------------------------------
+// AIRCRAFT
+//--------------------------------------------------
+
 // Dropship
 tile +drop
 {
 5 4
 
-0      ab     ab     ab     0
-ac     +a     +a     +a     ac
-ac     +a     +a     +a     ac
-0      ab     ab     ab     0
+0         abcdlmn  abcdlmn  abcdlmn  0
+acefgrst  +a       +a       +a       adefgopq
+acefgrst  +a       +a       +a       adefgopq
+0         abcdijk  abcdijk  abcdijk  0
 }
+//--
+
+// Big UFO
+tile +alienbig
+{
+8 6
+
+0         abcdlmn  abcdlmn  abcdlmn  abcdlmn  abcdlmn  abcdlmn  0
+acefgrst  +a       +a       +a       +a       +a       +a       adefgopq
+acefgrst  +a       +a       +a       +a       +a       +a       adefgopq
+acefgrst  +a       +a       +a       +a       +a       +a       adefgopq
+acefgrst  +a       +a       +a       +a       +a       +a       adefgopq
+0         abcdijk  abcdijk  abcdijk  abcdijk  abcdijk  abcdijk  0
+}
+//--
+
+// Small UFO
+tile +aliensmall
+{
+5 4
+
+0         abcdlmn  abcdlmn  abcdlmn  0
+acefgrst  +a       +a       +a       adefgopq
+acefgrst  +a       +a       +a       adefgopq
+0         abcdijk  abcdijk  abcdijk  0
+}
+//--
+
+//--------------------------------------------------
+// END AIRCRAFT
+//--------------------------------------------------
 
 // old fallen house
 tile +c01
 {
 4 5
 
-0      ab     ab     0
-ac      +a     +a     ac
-ac      +a     +a     ac
-ac      +a     +a     ac
-0      ab      ab      0
+0         abcdlmn  abcdlmn  0
+acefgrst  +a       +a       adefgopq
+acefgrst  +a       +a       adefgopq
+acefgrst  +a       +a       adefgopq
+0         abcdijk  abcdijk  0
 }
+//--
 
 // house + watertower
 tile +c02
 {
 4 5
 
-0      ab     ab     0
-ac      +a     +a     ac
-ac      +a     +a     ac
-ac      +a     +a     ac
-0      ab      ab      0
+0         abcdlmn  abcdlmn  0
+acefgrst  +a       +a       adefgopq
+acefgrst  +a       +a       adefgopq
+acefgrst  +a       +a       adefgopq
+0         abcdijk  abcdijk  0
 }
+//--
 
 // just a little rock
 tile +d01
 {
 4 4
 
-0      ab     ab     0
-ac      +a     +a     ac
-ac      +a     +a     ac
-0      ab      ab    0
+0         abcdlmn  abcdlmn  0
+acefgrst  +a       +a       adefgopq
+acefgrst  +a       +a       adefgopq
+0         abcdijk  abcdijk  0
 }
+//--
 
 // cactus
 tile +d02
 {
 3 3
 
-0      abc     0
-abc     +a     abc
-0      abc     0
+0         abcdlmn  0
+acefgrst  +a       adefgopq
+0         abcdijk  0
 }
+//--
 
 // cactus and plant
 tile +d03
 {
 3 3
 
-0      abc     0
-abc     +a     abc
-0      abc     0
+0         abcdlmn  0
+acefgrst  +a       adefgopq
+0         abcdijk  0
 }
+//--
 
 // cactus and waste
 tile +d04
 {
 3 3
 
-0      abc     0
-abc     +a     abc
-0      abc     0
+0         abcdlmn  0
+acefgrst  +a       adefgopq
+0         abcdijk  0
 }
+//--
 
 // a rock
 tile +d05
 {
 4 5
 
-0      ab     ab     0
-ac      +a     +a     ac
-ac      +a     +a     ac
-ac      +a     +a     ac
-0      ab      ab    0
+0         abcdlmn  abcdlmn  0
+acefgrst  +a       +a       adefgopq
+acefgrst  +a       +a       adefgopq
+acefgrst  +a       +a       adefgopq
+0         abcdijk  abcdijk  0
 }
+//--
 
 // cows
 tile +d06
 {
 4 4
 
-0      ab     ab     0
-ac     +a     +a     ac
-ac     +a     +a     ac
-0      ab     ab     0
+0         abcdlmn  abcdlmn  0
+acefgrst  +a       +a       adefgopq
+acefgrst  +a       +a       adefgopq
+0         abcdijk  abcdijk  0
 }
+//--
 
 // fountain
 tile +d07
 {
 3 3
 
-0      ab     0
-ac     +a     ac
-0      ab     0
+0         abcdlmn  0
+acefgrst  +a       adefgopq
+0         abcdijk  0
 }
+//--
 
-// mountain
+// stroh
+tile +d08
+{
+4 4
+
+0         abcdlmn  abcdlmn  0
+acefgrst  +a       +a       adefgopq
+acefgrst  +a       +a       adefgopq
+0         abcdijk  abcdijk  0
+}
+//--
+
+//
+tile +d09
+{
+4 4
+
+0         abcdlmn  abcdlmn  0
+acefgrst  +a       +a       adefgopq
+acefgrst  +a       +a       adefgopq
+0         abcdijk  abcdijk  0
+}
+//--
+
+// plants/small hills
+tile +d10
+{
+3 3
+
+0         abcdlmn  0
+acefgrst  +a       adefgopq
+0         abcdijk  0
+}
+//--
+
+//--------------------------------------------------
+// MOUNTAINS
+//--------------------------------------------------
+
+// cave entry vertical back
+tile +v01
+{
+4 4
+
+0   opw  abcdlmn  0
+rx  +w   +a       adefgopq
+rx  +w   +a       adefgopq
+0   oqw  abcdijk  0
+}
+//--
+
+// cave entry vertical front
+tile +v01_2
+{
+4 4
+
+0         abcdlmn  rsx  0
+acefgrst  +a       +x   rw
+acefgrst  +a       +x   rw
+0         abcdijk  rtx  0
+}
+//--
+
+// rock vertical back
 tile +r01
 {
 4 5
 
-0      re     ab     0
-ac      +r     +a     ac
-ac      +r     +a     ac
-ac      +r     +a     ac
-0      re      ab    0
+0  opw  abcdlmn  0
+r  +o   +a       adefgopq
+r  +o   +a       adefgopq
+r  +o   +a       adefgopq
+0  opw  abcdijk  0
 }
+//--
 
-// mountain #2
+// rock vertical front
+tile +r01_2
+{
+4 5
+
+0         abcdlmn  rsx  0
+acefgrst  +a       +r   o
+acefgrst  +a       +r   o
+acefgrst  +a       +r   o
+0         abcdijk  rtx  0
+}
+//--
+
+// rock vertical back
 tile +r02
 {
 4 5
 
-0      re     ab     0
-ac      +r     +a     ac
-ac      +r     +a     ac
-ac      +r     +a     ac
-0      re      ab    0
+0  opw  abcdlmn  0
+r  +o   +a       adefgopq
+r  +o   +a       adefgopq
+r  +o   +a       adefgopq
+0  opw  abcdijk  0
 }
+//--
 
-// mountain
+// rock vertical front
+tile +r02_2
+{
+4 5
+
+0         abcdlmn  rsx  0
+acefgrst  +a       +r   o
+acefgrst  +a       +r   o
+acefgrst  +a       +r   o
+0         abcdijk  rtx  0
+}
+//--
+
+// rock vertical back
 tile +r03
 {
 4 5
 
-0      re     ab     0
-ac      +r     +a     ac
-ac      +r     +a     ac
-ac      +r     +a     ac
-0      re      ab    0
+0  opw  abcdlmn  0
+r  +o   +a       adefgopq
+r  +o   +a       adefgopq
+r  +o   +a       adefgopq
+0  opw  abcdijk  0
 }
+//--
 
-// mountain
+// rock vertical front
+tile +r03_2
+{
+4 5
+
+0         abcdlmn  rsx  0
+acefgrst  +a       +r   o
+acefgrst  +a       +r   o
+acefgrst  +a       +r   o
+0         abcdijk  rtx  0
+}
+//--
+
+// rock vertical back
 tile +r04
 {
 4 4
 
-0      re     ab     0
-ac      +r     +a     ac
-ac      +r     +a     ac
-0      re      ab    0
+0  opw  abcdlmn  0
+r  +o   +a       adefgopq
+r  +o   +a       adefgopq
+0  opw  abcdijk  0
 }
+//--
 
-// mountain end
+// rock vertical front
+tile +r04_2
+{
+4 4
+
+0         abcdlmn  rsx  0
+acefgrst  +a       +r   o
+acefgrst  +a       +r   o
+0         abcdijk  rtx  0
+}
+//--
+
+// rock vertical back
+tile +r05
+{
+4 3
+
+0  opw  abcdlmn  0
+r  +o   +a       adefgopq
+0  opw  abcdijk  0
+}
+//--
+
+// rock vertical front
+tile +r05_2
+{
+4 3
+
+0         abcdlmn  rsx  0
+acefgrst  +a       +r   o
+0         abcdijk  rtx  0
+}
+//--
+
+// rock end vertical back right
 tile +re01
 {
 4 5
 
-0      ab     ab     0
-ac      +a     +a     ac
-ac      +e     +a     ac
-ac      +e     +a     ac
-0      r      ab    0
+0         abcdlmn  abcdlmn  0
+acefgrst  +a       +a       adefgopq
+it        +q       +a       adefgopq
+it        +q       +a       adefgopq
+0         po       abcdijk  0
 }
+//--
 
-// mountain end #2
+// rock end vertical front right
+tile +re01_2
+{
+4 5
+
+0         abcdlmn  abcdlmn  0
+acefgrst  +a       +a       adefgopq
+acefgrst  +a       +t       qi
+acefgrst  +a       +t       qi
+0         abcdijk  rs       0
+}
+//--
+
+// rock end vertical back left
 tile +re02
 {
 4 5
 
-0      r     ab     0
-ac      +e     +a     ac
-ac      +a     +a     ac
-ac      +a     +a     ac
-0      ab      ab    0
+0         qo       abcdlmn  0
+sl        +p       +a       adefgopq
+acefgrst  +a       +a       adefgopq
+acefgrst  +a       +a       adefgopq
+0         abcdijk  abcdijk  0
+}
+//--
+
+// rock end vertical front left
+tile +re02_2
+{
+4 5
+
+0         abcdlmn  rt       0
+acefgrst  +a       +s       pl
+acefgrst  +a       +a       adefgopq
+acefgrst  +a       +a       adefgopq
+0         abcdijk  abcdijk  0
 }
 
-// mountain end #3
+// rock end vertical back right
 tile +re03
 {
 4 4
 
-0      ab     ab     0
-ac      +a     +a     ac
-ac      +e     +a     ac
-0      r      ab    0
+0         abcdlmn  abcdlmn  0
+acefgrst  +a       +a       adefgopq
+it        +q       +a       adefgopq
+0         po       abcdijk  0
 }
+//--
 
-// mountain end #4
+// rock end vertical front right
+tile +re03_2
+{
+4 4
+
+0         abcdlmn  abcdlmn  0
+acefgrst  +a       +a       adefgopq
+acefgrst  +a       +t       qi
+0         abcdijk  rs       0
+}
+//--
+
+// rock end vertical back left
 tile +re04
 {
 4 4
 
-0      r     ab     0
-ac      +e     +a     ac
-ac      +a     +a     ac
-0      ab      ab    0
+0         qo       abcdlmn  0
+sl        +p       +a       adefgopq
+acefgrst  +a       +a       adefgopq
+0         abcdijk  abcdijk  0
 }
+//--
+
+// rock end vertical front left
+tile +re04_2
+{
+4 4
+
+0         abcdlmn  rt       0
+acefgrst  +a       +s       pl
+acefgrst  +a       +a       adefgopq
+0         abcdijk  abcdijk  0
+}
+//--
+
+//--------------------------------------------------
+// END MOUNTAINS
+//--------------------------------------------------
+
 
 // house
 tile +h01
 {
 4 3
 
-0      ab     ab     0
-ac     +a     +a     ac
-0      ab     ab     0
+0         abcdlmn  abcdlmn  0
+acefgrst  +a       +a       adefgopq
+0         abcdijk  abcdijk  0
 }
+//--
 
 // house
 tile +h02
 {
 4 3
 
-0      ab     ab     0
-ac     +a     +a     ac
-0      ab     ab     0
+0         abcdlmn  abcdlmn  0
+acefgrst  +a       +a       adefgopq
+0         abcdijk  abcdijk  0
 }
+//--
 
 // house
 tile +h03
 {
 4 4
 
-0      ab     ab     0
-ac     +a     +a     ac
-ac     +a     +a     ac
-0      ab     ab     0
+0         abcdlmn  abcdlmn  0
+acefgrst  +a       +a       adefgopq
+acefgrst  +a       +a       adefgopq
+0         abcdijk  abcdijk  0
+}
+//--
+
+//--------------------------------------------------
+// STREETS
+//--------------------------------------------------
+
+// street horizontal
+tile +s01
+{
+3 3
+
+0    abcdlmn  0
+bch  +b       bdh
+0    abcdijk  0
+}
+//--
+
+// street vertical
+tile +s01_2
+{
+3 3
+
+0         efh  0
+acefgrst  +e   adefgopq
+0         egh  0
+}
+//--
+
+// street end horizontal left
+tile +s02
+{
+3 3
+
+0    abcdlmn  0
+bdh  +c       adefgopq
+0    abcdijk  0
+}
+//--
+
+// street end vertical left
+tile +s02_2
+{
+3 3
+
+0         egh      0
+acefgrst  +f       adefgopq
+0         abcdijk  0
+}
+//--
+
+// street end horizontal right
+tile +s03
+{
+3 3
+
+0         abcdlmn  0
+acefgrst  +d       bch
+0         abcdijk  0
+}
+//--
+
+// street end vertical right
+tile +s03_2
+{
+3 3
+
+0         abcdlmn  0
+acefgrst  +g       adefgopq
+0         efh      0
+}
+//--
+
+// street horizontal
+tile +s04
+{
+4 3
+
+0    abcdlmn  abcdlmn  0
+bch  +b       +b       bdh
+0    abcdijk  abcdijk  0
 }
 
-assembly test
+
+// street vertical
+tile +s04_2
+{
+3 4
+
+0         cgh  0
+acefgrst  +c   adefgopq
+acefgrst  +c   adefgopq
+0         cfh  0
+}
+
+// street cross 1 (not build in / set up)
+tile +s05
+{
+3 3
+
+0         abcdlmn  0
+acefgrst  +g       adefgopq
+0         efh      0
+}
+
+// street cross 2 (not build in / set up)
+tile +s06
+{
+3 3
+
+0         abcdlmn  0
+acefgrst  +g       adefgopq
+0         efh      0
+}
+
+// street cross full (4 sides)
+tile +s07
+{
+3 3
+
+0   eg  0
+bc  +h  bd
+0   ef  0
+}
+
+//--------------------------------------------------
+// END STREETS
+//--------------------------------------------------
+
+assembly cave
 {
 size "7 7"
 +c01 "0 1"
@@ -247,18 +648,104 @@ size "7 7"
 +d03 "0 8"
 +d04 "0 8"
 +d05 "0 2"
-+d06 "0 2"
-+d07 "0 2"
++d06 "0 3"
++d07 "0 3"
++d08 "0 3"
++d09 "0 3"
++d10 "0 6"
 +h01 "0 2"
-+h02 "0 2"
-+h03 "0 2"
++h02 "1 2"
++h03 "1 2"
 +r01 "0 2"
-+r02 "1 2"
++r02 "0 2"
 +r03 "0 2"
 +r04 "0 2"
++r05 "0 2"
++r01_2 "0 2"
++r02_2 "0 2"
++r03_2 "0 2"
++r04_2 "0 2"
++r05_2 "0 2"
++v01 "0 1"
++v01_2 "1 1"
 +re01 "0 1"
 +re02 "0 1"
 +re03 "0 1"
 +re04 "0 1"
++re01_2 "0 1"
++re02_2 "0 1"
++re03_2 "0 1"
++re04_2 "0 1"
 *rm_dropship +drop "1 1"
+}
+
+assembly large
+{
+size "7 7"
++c01 "0 1"
++c02 "0 1"
++d01 "0 8"
++d02 "0 8"
++d03 "0 8"
++d04 "0 8"
++d05 "0 2"
++d06 "0 3"
++d07 "0 3"
++d08 "0 3"
++d09 "0 3"
++d10 "0 6"
++h01 "0 2"
++h02 "0 5"
++h03 "0 2"
++r01 "0 2"
++r02 "0 2"
++r03 "0 2"
++r04 "0 2"
++r05 "0 2"
++r01_2 "0 2"
++r02_2 "0 2"
++r03_2 "0 2"
++r04_2 "0 2"
++r05_2 "0 2"
++v01 "0 1"
++v01_2 "0 1"
++re01 "0 1"
++re02 "0 1"
++re03 "0 1"
++re04 "0 1"
++re01_2 "0 1"
++re02_2 "0 1"
++re03_2 "0 1"
++re04_2 "0 1"
+*rm_dropship +drop "1 1"
++s01 "0 1"
++s02 "1 1"
++s03 "0 1"
+}
+
+assembly street
+{
+size "10 10"
++s01 "1 20"
++s01_2 "0 20"
++s02 "0 20"
++s02_2 "0 20"
++s03 "0 20"
++s03_2 "0 20"
++s04 "0 20"
++s04_2 "0 20"
++s07 "0 20"
++d01 "0 8"
++d02 "0 8"
++d03 "0 8"
++d04 "0 8"
++d05 "0 8"
++d06 "0 8"
++d07 "0 8"
++d08 "0 8"
++d09 "0 8"
++d10 "0 8"
+*rm_dropship +drop "1 1"
++aliensmall "1 1"
++alienbig "1 1"
 }
