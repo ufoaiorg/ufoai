@@ -306,7 +306,7 @@ static void SV_ParseMapTile (const char *filename, char **text)
 static void SV_ParseAssembly (const char *filename, char **text)
 {
 	const char *errhead = "SV_ParseAssembly: Unexpected end of file (";
-	char *token;
+	char *token, *cvarName, *cvarValue;
 	mAssembly_t *a;
 	int i, x, y;
 
@@ -374,28 +374,43 @@ static void SV_ParseAssembly (const char *filename, char **text)
 					a->numFixed++;
 				}
 			continue;
+		/* <format>*cvarname <defaultvalue> "min max"</format> */
 		} else if (*token == '*') {
 			/* '*' is: replace by cvar value */
-			token++; /* strip * */
-			Com_Printf("SV_ParseAssembly: cvar replacement: %s\n", token);
-			token = Cvar_VariableString(token);
-			Com_Printf("SV_ParseAssembly: cvar replacement value: %s\n", token);
-			if (*token != '+')
-				Com_Printf("SV_ParseAssembly: warning - cvar value doesn't seam to be a valid tile id %s\n", token);
+			token++; /* strip '*' */
+			Com_DPrintf("SV_ParseAssembly: cvar replacement: %s\n", token);
+			cvarName = token;
+			token = COM_EParse(text, errhead, filename);
+			if (!text || *token == '}')
+				break;
+			cvarValue = Cvar_VariableString(cvarName);
+			Com_DPrintf("SV_ParseAssembly: cvar replacement value: %s\n", cvarValue);
+			if (*cvarValue != '+') {
+				Com_Printf("SV_ParseAssembly: warning - cvar value doesn't seam to be a valid tile id '%s' - set to default '%s'\n", cvarValue, token);
+				Cvar_Set(cvarName, token);
+				if (*cvarValue != '+')
+					Com_Error(ERR_DROP, "SV_ParseAssembly: wrong tile id\n");
+			}
 		}
 
 		for (i = 0; i < numTiles; i++)
 			if (!Q_strncmp(token, mTile[i].id, MAX_VAR)) {
 				/* get min and max tile number */
 				token = COM_EParse(text, errhead, filename);
-				if (!text)
+				if (!text || *token == '}')
 					break;
 
+				if (!strstr(token, " ")) {
+					Com_Error(ERR_DROP, "SV_ParseAssembly: Error in assembly %s (min max value of tile %s)\n", filename, mTile[i].id);
+					return;
+				}
 				sscanf(token, "%i %i", &x, &y);
 				a->min[i] = x;
 				a->max[i] = y;
 				break;
 			}
+		if (i == numTiles)
+			Com_Error(ERR_DROP, "Could not find tile: '%s'\n", token);
 	}
 	while (text);
 }
