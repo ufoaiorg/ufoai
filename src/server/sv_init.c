@@ -374,6 +374,14 @@ static void SV_ParseAssembly (const char *filename, char **text)
 					a->numFixed++;
 				}
 			continue;
+		} else if (*token == '*') {
+			/* '*' is: replace by cvar value */
+			token++; /* strip * */
+			Com_Printf("SV_ParseAssembly: cvar replacement: %s\n", token);
+			token = Cvar_VariableString(token);
+			Com_Printf("SV_ParseAssembly: cvar replacement value: %s\n", token);
+			if (*token != '+')
+				Com_Printf("SV_ParseAssembly: warning - cvar value doesn't seam to be a valid tile id %s\n", token);
 		}
 
 		for (i = 0; i < numTiles; i++)
