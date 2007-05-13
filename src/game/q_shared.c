@@ -236,31 +236,33 @@ void AngleVectors (vec3_t angles, vec3_t forward, vec3_t right, vec3_t up)
 }
 
 /**
- * @brief Projects a point on a plane
- * @param[in] p Coordinates of the point to project
- * @param[in] normal Vector normal to the plane
- * @param[out] dst Coordinates of the projection of p on the plane
- * @note the plane is the plane normal to normal, and passing by the origin of the frame.
+ * @brief Projects a point on a plane passing through the origin
+ * @param[in] point Coordinates of the point to project
+ * @param[in] normal The normal vector of the plane
+ * @param[out] dst Coordinates of the projection on the plane
+ * @pre @c normal is normalized
  */
-void ProjectPointOnPlane (vec3_t dst, const vec3_t p, const vec3_t normal)
+void ProjectPointOnPlane (vec3_t dst, const vec3_t point, const vec3_t normal)
 {
-	float d;
+	float distance;
+#if 0
 	vec3_t n;
 	float inv_denom;
-
 	/* I added a sqrt there, otherwise this function does not work for unnormalized vector (13052007 Kracken) */
 	/* old line was inv_denom = 1.0F / DotProduct(normal, normal); */
 	inv_denom = 1.0F / sqrt(DotProduct(normal, normal));
+#endif
 
-	d = DotProduct(normal, p) * inv_denom;
-
+	distance = DotProduct(normal, point);
+#if 0
 	n[0] = normal[0] * inv_denom;
 	n[1] = normal[1] * inv_denom;
 	n[2] = normal[2] * inv_denom;
+#endif
 
-	dst[0] = p[0] - d * n[0];
-	dst[1] = p[1] - d * n[1];
-	dst[2] = p[2] - d * n[2];
+	dst[0] = point[0] - distance * normal[0];
+	dst[1] = point[1] - distance * normal[1];
+	dst[2] = point[2] - distance * normal[2];
 }
 
 /**
