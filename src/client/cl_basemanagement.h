@@ -86,6 +86,7 @@ typedef enum {
 	CAP_LABSPACE,		/**< Space for scientists in laboratory. */
 	CAP_WORKSPACE,		/**< Space for workers in workshop. */
 	CAP_HOSPSPACE,		/**< Space for hurted people in hospital. */
+	CAP_UFOHANGARS,		/**< Space for recovered UFOs. */
 
 	MAX_CAP
 } baseCapacities_t;
@@ -149,11 +150,7 @@ typedef struct building_s {
 	/** if the building needs another one to work (= to be buildable) .. links to gd.buildingTypes */
 	int dependsBuilding;
 
-	/** this value is used by many buildings in a different way
-	 * e.g. aliencont uses it for - how many aliens can be 'stored'
-	 * the hangar uses it for - how many aircraft are manageable here
-	 */
-	int capacity;
+	int capacity;		/**< Capacity of this building (used in calculate base capacities). */
 } building_t;
 
 /** @brief A base with all it's data */

@@ -315,6 +315,11 @@ static void B_BuildingDestroy_f (void)
 		break;
 	case B_UFO_HANGAR:
 	case B_UFO_SMALL_HANGAR:
+		cap = CAP_UFOHANGARS;
+		if (!B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, B_UFO_HANGAR))
+			baseCurrent->hasUFOHangar = qfalse;
+		if (!B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, B_UFO_SMALL_HANGAR))
+			baseCurrent->hasUFOHangarSmall = qfalse;
 		break;
 	case B_MISC:
 		break;
@@ -520,10 +525,12 @@ static void B_UpdateBaseBuildingStatus (building_t* building, base_t* base, buil
 	case B_UFO_HANGAR:
 		if (building->buildingStatus == B_STATUS_WORKING)
 			base->hasUFOHangar = qtrue;
+		B_UpdateBaseCapacities(CAP_UFOHANGARS, base);
 		break;
 	case B_UFO_SMALL_HANGAR:
 		if (building->buildingStatus == B_STATUS_WORKING)
 			base->hasUFOHangarSmall = qtrue;
+		B_UpdateBaseCapacities(CAP_UFOHANGARS, base);
 		break;
 	default:
 		break;
@@ -2354,6 +2361,8 @@ static buildingType_t B_GetBuildingTypeByCapacity (baseCapacities_t cap)
 		return B_WORKSHOP;
 	case CAP_HOSPSPACE:
 		return B_HOSPITAL;
+	case CAP_UFOHANGARS:
+		return B_UFO_HANGAR;	/* Note, that CAP_UFOHANGARS also uses B_SMALL_UFO_HANGAR. */
 	default:
 		return B_MISC;
 	}
@@ -2386,8 +2395,12 @@ static void B_PrintCapacities_f (void)
 			if (gd.buildingTypes[j].buildingType == building)
 				break;
 		}
-		Com_Printf("Building: %s, capacity max: %i, capacity cur: %i\n",
-		gd.buildingTypes[j].id, base->capacities[i].max, base->capacities[i].cur);
+		if (i == CAP_UFOHANGARS)
+			Com_Printf("Building: UFO Hangars, capacity max: %i, capacity cur: %i\n",			
+			base->capacities[i].max, base->capacities[i].cur);
+		else
+			Com_Printf("Building: %s, capacity max: %i, capacity cur: %i\n",			
+			gd.buildingTypes[j].id, base->capacities[i].max, base->capacities[i].cur);
 	}
 }
 #endif
@@ -2644,6 +2657,41 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 		if (b_idx != -1)
 			Com_DPrintf("B_UpdateBaseCapacities()... updated capacity of %s: %i\n",
 				gd.buildingTypes[b_idx].id, base->capacities[cap].max);
+		break;
+	case CAP_UFOHANGARS:	/**< Base capacities for UFO hangars. */
+		/* Reset given capacity in current base. */
+		base->capacities[cap].max = 0;
+		/* Get B_UFO_HANGAR capacity. */
+		for (i = 0; i < gd.numBuildingTypes; i++) {
+			if (gd.buildingTypes[i].buildingType == building) {
+				capacity = gd.buildingTypes[i].capacity;
+				Com_Printf("Building: %s capacity: %i\n", gd.buildingTypes[i].id, capacity);
+				break;
+			}
+		}
+		/* Add capacity of B_UFO_HANGAR. */
+		for (j = 0; j < gd.numBuildings[base->idx]; j++) {
+			if ((gd.buildings[base->idx][j].buildingType == building)
+			&& (gd.buildings[base->idx][j].buildingStatus != B_STATUS_NOT_SET)) {
+				base->capacities[cap].max += capacity;
+			}
+		}
+		/* Now check if base has B_UFO_SMALL_HANGAR and update capacity as well. */
+		if (base->hasUFOHangarSmall) {
+			for (i = 0; i < gd.numBuildingTypes; i++) {
+				if (gd.buildingTypes[i].buildingType == B_UFO_SMALL_HANGAR) {
+					capacity = gd.buildingTypes[i].capacity;
+					Com_Printf("Building: %s capacity: %i\n", gd.buildingTypes[i].id, capacity);
+					break;
+				}
+			}
+			for (j = 0; j < gd.numBuildings[base->idx]; j++) {
+				if ((gd.buildings[base->idx][j].buildingType == B_UFO_SMALL_HANGAR)
+				&& (gd.buildings[base->idx][j].buildingStatus != B_STATUS_NOT_SET)) {
+					base->capacities[cap].max += capacity;
+				}
+			}
+		}
 		break;
 	case MAX_CAP:			/**< Update all capacities in base. */
 		Com_DPrintf("B_UpdateBaseCapacities()... going to update ALL capacities.\n");

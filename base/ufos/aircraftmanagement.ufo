@@ -102,6 +102,7 @@ aircraft craft_ufo_scout
 	ufotype		scout
 	model		"ufo1"
 	size		4
+	weight		3
 	building	building_small_ufo_hangar
 	price		3000000
 	fuel		100000
@@ -122,6 +123,7 @@ aircraft craft_ufo_fighter
 	ufotype		fighter
 	model		"ufobig"
 	size		8
+	weight		4
 	// FIXME: should be big hangar
 	building	building_small_ufo_hangar
 	fuel		1000000
