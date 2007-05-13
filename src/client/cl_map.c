@@ -648,6 +648,7 @@ static void MAP_MapDrawLine (const menuNode_t* node, const mapline_t* line)
 	for (i = 0, p = pts; i < line->numPoints; i++, p += 2) {
 		MAP_MapToScreen(node, line->point[i], p, p + 1);
 
+		/* If we cross longitude 180° (right/left edge of the screen), draw the first part of the path */
 		if (i > start && abs(p[0] - old) > 512) {
 			/* shift last point */
 			int diff;
@@ -661,6 +662,7 @@ static void MAP_MapDrawLine (const menuNode_t* node, const mapline_t* line)
 			/* wrap around screen border */
 			re.DrawLineStrip(i - start + 1, pts);
 
+			/* first path of the path is drawn, now we begin the second part of the path */
 			/* shift first point, continue drawing */
 			start = --i;
 			pts[0] = p[-2] - diff;
@@ -673,6 +675,34 @@ static void MAP_MapDrawLine (const menuNode_t* node, const mapline_t* line)
 	re.DrawLineStrip(i - start, pts);
 	re.DrawColor(NULL);
 }
+
+/**
+ * @brief Draw a path on a menu node (usually the 3Dgeoscape map)
+ * @param[in] node The menu node which will be used for drawing dimensions.
+ * This is usually the 3Dgeoscape menu node.
+ * @param[in] line The path which is to be drawn
+ * @sa MAP_MapCalcLine
+ */
+static void MAP_3DMapDrawLine (const menuNode_t* node, const mapline_t* line)
+{
+	const vec4_t color = {1, 0.5, 0.5, 1};
+	int pts[LINE_MAXPTS * 2];
+	int *p;
+	int i, numPoints;
+
+	/* draw only when the point of the path is visible*/
+	re.DrawColor(color);
+	for (i = 0, numPoints = 0, p = pts; i < line->numPoints; i++) {
+		if (MAP_3DMapToScreen(node, line->point[i], p, p + 1, NULL)) {
+			 p += 2;
+			 numPoints++;
+		}
+	}
+
+	re.DrawLineStrip(numPoints, pts);
+	re.DrawColor(NULL);
+}
+
 
 /**
  * @brief
@@ -720,13 +750,17 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 				if (aircraft->status > AIR_HOME) {
 					MAP_Draw3DMarkerIfVisible (node, gd.bases[j].pos, aircraft->image);
 
+					/* Draw aircraft route */
 					if (aircraft->status >= AIR_TRANSIT) {
 						mapline_t path;
 
 						path.numPoints = aircraft->route.numPoints - aircraft->point;
-						memcpy(path.point + 1, aircraft->route.point + aircraft->point + 1, (path.numPoints - 1) * sizeof(vec2_t));
-						memcpy(path.point, aircraft->pos, sizeof(vec2_t));
-						re.Draw3DMapLine(ccs.angles, ccs.zoom, path.numPoints, path.distance, path.point);
+						/* @todo : check why path.numPoints can be sometime equal to -1 */
+						if (path.numPoints > 1) {
+							memcpy(path.point, aircraft->pos, sizeof(vec2_t));
+								memcpy(path.point + 1, aircraft->route.point + aircraft->point + 1, (path.numPoints - 1) * sizeof(vec2_t));
+							MAP_3DMapDrawLine(node, &path);
+						}
 					}
 				}
 		}
