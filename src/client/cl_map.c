@@ -648,7 +648,7 @@ static void MAP_MapDrawLine (const menuNode_t* node, const mapline_t* line)
 	for (i = 0, p = pts; i < line->numPoints; i++, p += 2) {
 		MAP_MapToScreen(node, line->point[i], p, p + 1);
 
-		/* If we cross longitude 180° (right/left edge of the screen), draw the first part of the path */
+		/* If we cross longitude 180 degree (right/left edge of the screen), draw the first part of the path */
 		if (i > start && abs(p[0] - old) > 512) {
 			/* shift last point */
 			int diff;
@@ -712,6 +712,7 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 	aircraft_t *aircraft;
 	actMis_t *ms = NULL;
 	int i, j;
+	base_t* base;
 	int borders[MAX_NATION_BORDERS * 2];	/**< GL_LINE_LOOP coordinates for nation borders */
 	int x, y, z;
 #if 0
@@ -741,29 +742,38 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 	}
 
 	/* draw base pics */
-	for (j = 0; j < gd.numBases; j++)
-		if (gd.bases[j].founded) {
-			MAP_Draw3DMarkerIfVisible (node, gd.bases[j].pos, "base");
+	for (base = gd.bases + gd.numBases - 1; base >= gd.bases ; base--) {
+		if (! base->founded || ! MAP_3DMapToScreen(node, base->pos, &x, &y, NULL))
+			continue;
 
-			/* draw aircraft */
-			for (i = 0, aircraft = (aircraft_t *) gd.bases[j].aircraft; i < gd.bases[j].numAircraftInBase; i++, aircraft++)
-				if (aircraft->status > AIR_HOME) {
-					/* Draw aircraft */
-					MAP_Draw3DMarkerIfVisible (node, aircraft->pos, aircraft->image);
+		/* Draw base radar info */
+		RADAR_DrawInMap(node, &(base->radar), x, y, base->pos, qtrue);
 
-					/* Draw aircraft route */
-					if (aircraft->status >= AIR_TRANSIT) {
-						mapline_t path;
+		/* Draw base */
+		if (base->baseStatus == BASE_UNDER_ATTACK)
+			MAP_Draw3DMarkerIfVisible (node, base->pos, "baseattack");
+		else
+			MAP_Draw3DMarkerIfVisible (node, base->pos, "base");
 
-						path.numPoints = aircraft->route.numPoints - aircraft->point;
-						/* @todo : check why path.numPoints can be sometime equal to -1 */
-						if (path.numPoints > 1) {
-							memcpy(path.point, aircraft->pos, sizeof(vec2_t));
-								memcpy(path.point + 1, aircraft->route.point + aircraft->point + 1, (path.numPoints - 1) * sizeof(vec2_t));
-							MAP_3DMapDrawLine(node, &path);
-						}
+		/* draw aircraft */
+		for (i = 0, aircraft = (aircraft_t *) base->aircraft; i < base->numAircraftInBase; i++, aircraft++)
+			if (aircraft->status > AIR_HOME) {
+				/* Draw aircraft */
+				MAP_Draw3DMarkerIfVisible (node, aircraft->pos, aircraft->image);
+
+				/* Draw aircraft route */
+				if (aircraft->status >= AIR_TRANSIT) {
+					mapline_t path;
+
+					path.numPoints = aircraft->route.numPoints - aircraft->point;
+					/* @todo : check why path.numPoints can be sometime equal to -1 */
+					if (path.numPoints > 1) {
+						memcpy(path.point, aircraft->pos, sizeof(vec2_t));
+							memcpy(path.point + 1, aircraft->route.point + aircraft->point + 1, (path.numPoints - 1) * sizeof(vec2_t));
+						MAP_3DMapDrawLine(node, &path);
 					}
 				}
+			}
 		}
 
 		/* FIXME */

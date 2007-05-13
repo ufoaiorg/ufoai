@@ -2548,7 +2548,7 @@ void MN_DrawMenus (void)
 				case MN_MAP:
 					if (curCampaign) {
 						CL_CampaignRun();	/* advance time */
-						MAP_DrawMap(node, node->type == MN_3DMAP); /* Draw geoscape */
+						MAP_DrawMap(node, cl_3dmap->value); /* Draw geoscape */
 					}
 					break;
 
