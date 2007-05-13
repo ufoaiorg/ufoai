@@ -86,7 +86,7 @@ void HOS_RemoveFromMissionList (employee_t *employee, base_t *base)
 	}
 	for (; i < base->hospitalMissionListCount; i++)
 		base->hospitalMissionList[i] = -1;
-	
+
 	base->hospitalMissionListCount--;
 }
 
@@ -634,8 +634,8 @@ extern void HOS_Reset (void)
 	Cmd_AddCommand("hosp_start_healing", HOS_StartHealing_f, "Start the healing process for the current selected soldier");
 	Cmd_AddCommand("hosp_list_click", HOS_ListClick_f, "Click function for hospital employee list");
 #ifdef DEBUG
-	Cmd_AddCommand("hosp_hurt_all", HOS_HurtAll_f, "Debug function to hurt all employees in the current base by one");
-	Cmd_AddCommand("hosp_heal_all", HOS_HealAll_f, "Debug function to heal all employees in the current base completly");
+	Cmd_AddCommand("debug_hosp_hurt_all", HOS_HurtAll_f, "Debug function to hurt all employees in the current base by one");
+	Cmd_AddCommand("debug_hosp_heal_all", HOS_HealAll_f, "Debug function to heal all employees in the current base completly");
 #endif
 }
 

@@ -4109,7 +4109,7 @@ void Com_PrintItemDescription (int i)
 	Com_Printf("\n");
 }
 
-
+#ifdef DEBUG
 /**
  * @brief Lists all object definitions
  * @todo Why is this here - and not in a client only function
@@ -4121,6 +4121,7 @@ void Com_InventoryList_f (void)
 	for (i = 0; i < CSI->numODs; i++)
 		Com_PrintItemDescription(i);
 }
+#endif /* DEBUG */
 
 /**
  * @brief Returns the index of this item in the inventory.

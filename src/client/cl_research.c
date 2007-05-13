@@ -1452,10 +1452,10 @@ extern void RS_ResetResearch (void)
 	Cmd_AddCommand("mn_rs_add", RS_AssignScientist_f, "Assign one scientist to this entry");
 	Cmd_AddCommand("mn_rs_remove", RS_RemoveScientist_f, "Remove one scientist from this entry");
 	Cmd_AddCommand("research_update", RS_UpdateData, NULL);
-	Cmd_AddCommand("invlist", Com_InventoryList_f, NULL);
 	Cmd_AddCommand("research_dependencies_click", RS_DependenciesClick_f, NULL);
 #ifdef DEBUG
-	Cmd_AddCommand("debug_techlist", RS_TechnologyList_f, NULL);
+	Cmd_AddCommand("debug_invlist", Com_InventoryList_f, "Print the current inventory to the game console");
+	Cmd_AddCommand("debug_techlist", RS_TechnologyList_f, "Print the current parsed technologies to the game console");
 	Cmd_AddCommand("debug_researchall", RS_DebugResearchAll, "Mark all techs are researched");
 	Cmd_AddCommand("debug_researchableall", RS_DebugResearchableAll, "Mark all techs are researchable");
 #endif

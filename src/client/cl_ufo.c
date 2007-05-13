@@ -327,6 +327,6 @@ extern void UFO_Reset (void)
 	Cmd_AddCommand("addufo", UFO_NewUfoOnGeoscape_f, NULL);
 	Cmd_AddCommand("removeufo", UFO_RemoveUfoFromGeoscape_f, NULL);
 #ifdef DEBUG
-	Cmd_AddCommand("listufo", UFO_ListUfosOnGeoscape_f, NULL);
+	Cmd_AddCommand("debug_listufo", UFO_ListUfosOnGeoscape_f, "Print ufo information to game console");
 #endif
 }
