@@ -75,10 +75,12 @@ static qboolean PR_ConditionsDisassembly (components_t *comp)
  * @brief Calculates production time.
  * @param[in] *base Pointer to the base with given production.
  * @param[in] *tech Pointer to the technology for given production.
+ * @param[in] *comp Pointer to components definition.
+ * @param[in] disassembly True if calculations for disassembling, false otherwise.
  * @sa PR_UpdateProductionTime
  * @sa PR_QueueNew
  */
-static int PR_CalculateProductionTime (base_t *base, technology_t *tech)
+static int PR_CalculateProductionTime (base_t *base, technology_t *tech, components_t *comp, qboolean disassembly)
 {
 	signed int allworkers = 0, maxworkers = 0;
 	signed int timeDefault = 0, time = 0;
@@ -95,7 +97,14 @@ static int PR_CalculateProductionTime (base_t *base, technology_t *tech)
 		maxworkers = allworkers;
 	}
 
-	timeDefault = tech->produceTime; /* This is the default production time for 10 workers. */
+	if (!disassembly) {
+		assert (tech);
+		timeDefault = tech->produceTime;	/* This is the default production time for 10 workers. */
+	} else {
+		assert (comp);
+		timeDefault = comp->time;		/* This is the default disassembly time for 10 workers. */
+	}
+
 	if (maxworkers == 10) {
 		/* Return default time because we can use only 10 workers. */
 		Com_DPrintf("PR_CalculateProductionTime()... workers: %i, tech: %s, time: %i\n",
@@ -149,7 +158,7 @@ void PR_UpdateProductionTime (int base_idx)
 		for (i = 1; i < gd.productions[base_idx].numItems; i++) {
 			timeTemp = gd.productions[base_idx].items[i].timeLeft;
 			tech = RS_GetTechByProvided(csi.ods[gd.productions[base_idx].items[i].objID].id);
-			time = PR_CalculateProductionTime(base, tech);
+			time = PR_CalculateProductionTime(base, tech, NULL, qfalse);
 			gd.productions[base_idx].items[i].timeLeft = time;
 			Com_DPrintf("PR_UpdateProductionTime()... updating production time for %s. Original time: %i, new time: %i\n",
 			csi.ods[gd.productions[base_idx].items[i].objID].id, timeTemp, gd.productions[base_idx].items[i].timeLeft);
@@ -261,7 +270,7 @@ static production_t *PR_QueueNew (production_queue_t *queue, signed int objID, s
 	if (t->produceTime < 0)
 		return NULL;
 	else
-		prod->timeLeft = PR_CalculateProductionTime(baseCurrent, t);
+		prod->timeLeft = PR_CalculateProductionTime(baseCurrent, t, NULL, qfalse);
 
 	queue->numItems++;
 	return prod;
@@ -451,7 +460,7 @@ static void PR_ProductionInfo (qboolean disassembly)
 				if (objID == gd.productions[baseCurrent->idx].items[0].objID)
 					time = gd.productions[baseCurrent->idx].items[0].timeLeft;
 				else
-					time = PR_CalculateProductionTime(baseCurrent, t);
+					time = PR_CalculateProductionTime(baseCurrent, t, NULL, qfalse);
 				Com_sprintf(productionInfo, sizeof(productionInfo), "%s\n", od->name);
 				Q_strcat(productionInfo, va(_("Costs per item\t%i c\n"), (od->price*PRODUCE_FACTOR/PRODUCE_DIVISOR)),
 					sizeof(productionInfo) );
@@ -469,7 +478,7 @@ static void PR_ProductionInfo (qboolean disassembly)
 		/* Find related components array. */
 		for (i = 0; i < gd.numComponents; i++) {
 			comp = &gd.components[i];
-			Com_Printf("components definition: %s item: %s\n", comp->assembly_id, csi.ods[comp->assembly_idx].id);
+			Com_DPrintf("components definition: %s item: %s\n", comp->assembly_id, csi.ods[comp->assembly_idx].id);
 			if (comp->assembly_idx == objID)
 				break;
 		}
@@ -477,7 +486,6 @@ static void PR_ProductionInfo (qboolean disassembly)
 		if (objID >= 0) {
 			od = &csi.ods[objID];
 			t = (technology_t*)(od->tech);
-			Com_Printf("od: %s\n", od->name);
 			/* Don't try to display the item which is not produceable. */
 			if (t->produceTime < 0) {
 				Com_sprintf(productionInfo, sizeof(productionInfo), _("No disassembly selected"));
@@ -487,7 +495,7 @@ static void PR_ProductionInfo (qboolean disassembly)
 				if (objID == gd.productions[baseCurrent->idx].items[0].objID)
 					time = gd.productions[baseCurrent->idx].items[0].timeLeft;
 				else
-					time = PR_CalculateProductionTime(baseCurrent, t);
+					time = PR_CalculateProductionTime(baseCurrent, t, comp, qtrue);
 				Com_sprintf(productionInfo, sizeof(productionInfo), _("%s - disassembly\n"), od->name);
 				Q_strcat(productionInfo, va(_("Components: ")),
 					sizeof(productionInfo) );
@@ -501,7 +509,7 @@ static void PR_ProductionInfo (qboolean disassembly)
 						sizeof(productionInfo) );
 				}
 				Q_strcat(productionInfo, "\n", sizeof(productionInfo));
-				Q_strcat(productionInfo, va(_("Disassemblingtime\t%ih\n"), time),
+				Q_strcat(productionInfo, va(_("Disassembly time\t%ih\n"), time),
 					sizeof(productionInfo) );
 				CL_ItemDescription(objID);
 			}
