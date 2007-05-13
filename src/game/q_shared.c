@@ -196,7 +196,10 @@ void RotatePointAroundVector (vec3_t dst, const vec3_t dir, const vec3_t point, 
 #endif
 
 /**
- * @brief
+ * @brief Rotate a frame into another one
+ * @param[in] angles Contains the three Euler angles between the 2 frames
+ * @param[out] forward 
+ *
  */
 void AngleVectors (vec3_t angles, vec3_t forward, vec3_t right, vec3_t up)
 {
@@ -1097,8 +1100,10 @@ void _VectorSubtract (vec3_t veca, vec3_t vecb, vec3_t out)
 }
 
 /**
- * @brief
- * @param
+ * @brief Adds two vectors
+ * @param[in] veca First vector
+ * @param[in] vecb Second vector
+ * @param[out] out The sum of the two vectors
  * @sa _VectorSubtract
  */
 void _VectorAdd (vec3_t veca, vec3_t vecb, vec3_t out)
