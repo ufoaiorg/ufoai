@@ -51,6 +51,27 @@ static cvar_t* mn_production_workers;		/**< Amount of hired workers in base. */
 static menuNode_t *node1, *node2, *prodlist;
 
 /**
+ * @brief Conditions for disassembling.
+ * @param[in] *comp Pointer to components definition.
+ * @return qtrue if disassembling is ready, qfalse otherwise.
+ */
+static qboolean PR_ConditionsDisassembly (components_t *comp)
+{
+	objDef_t *od;
+
+	assert (baseCurrent);
+	assert (comp);
+
+	od = &csi.ods[comp->assembly_idx];
+	assert (od);
+
+	if (RS_IsResearched_ptr(od->tech) && (baseCurrent->storage.num[comp->assembly_idx] > 0))
+		return qtrue;
+	else
+		return qfalse;
+}
+
+/**
  * @brief Calculates production time.
  * @param[in] *base Pointer to the base with given production.
  * @param[in] *tech Pointer to the technology for given production.
@@ -552,6 +573,7 @@ static void PR_ProductionListClick_f (void)
 	int i, j, num, idx;
 	objDef_t *od = NULL;
 	technology_t *t = NULL;
+	components_t *comp = NULL;
 	production_queue_t *queue = NULL;
 	production_t *prod = NULL;
 
@@ -616,6 +638,9 @@ static void PR_ProductionListClick_f (void)
 			}
 		} else {	/* Disassembling. */
 			for (j = 0, i = 0; i < gd.numComponents; i++) {
+				comp = &gd.components[i];
+				if (!PR_ConditionsDisassembly(comp))
+					continue;
 				if (j == idx) {
 					selectedQueueItem = qfalse;
 					selectedIndex = gd.components[i].assembly_idx;
@@ -703,6 +728,7 @@ static void PR_UpdateDisassemblingList_f (void)
 	objDef_t *od;
 	production_queue_t *queue;
 	production_t *prod;
+	components_t *comp;
 	
 	Cvar_SetValue("mn_prod_disassembling", 1);
 
@@ -727,15 +753,14 @@ static void PR_UpdateDisassemblingList_f (void)
 	}
 
 	for (i = 0; i < gd.numComponents; i++) {
-		Com_Printf("num: %i loc: %i idx: %i\n", gd.numComponents, i, gd.components[i].assembly_idx);
 		if (gd.components[i].assembly_idx <= 0)
 			continue;
-		od = &csi.ods[gd.components[i].assembly_idx];
-/*		if (RS_IsResearched_ptr(od->tech) && (baseCurrent->storage.num[i] > 0)) { */
-			Q_strcat(productionList, va("%s\n", od->name), sizeof(productionList));
+		comp = &gd.components[i];
+		if (PR_ConditionsDisassembly(comp)) {
+			Q_strcat(productionList, va("%s\n", csi.ods[gd.components[i].assembly_idx].name), sizeof(productionList));
 			Q_strcat(productionAmount, va("%i\n", baseCurrent->storage.num[gd.components[i].assembly_idx]), sizeof(productionAmount));
 			Q_strcat(productionQueued, "\n", sizeof(productionQueued));
-/*		}*/
+		}
 	}
 	/* bind the menu text to our static char array */
 	menuText[TEXT_PRODUCTION_LIST] = productionList;
