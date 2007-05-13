@@ -586,28 +586,40 @@ static void PR_ProductionListClick_f (void)
 	} else if (num >= queue->numItems + QUEUE_SPACERS) {
 		/* Clicked in the item list. */
 		idx = num - queue->numItems - QUEUE_SPACERS;
-		for (j = 0, i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
-			t = (technology_t*)(od->tech);
+		if (Cvar_VariableInteger("mn_prod_disassembling") == 0) {
+			for (j = 0, i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
+				t = (technology_t*)(od->tech);
 #ifdef DEBUG
-			if (!t)
-				Sys_Error("PR_ProductionListClick_f: No tech pointer for object id %i ('%s')\n", i, od->id);
+				if (!t)
+					Sys_Error("PR_ProductionListClick_f: No tech pointer for object id %i ('%s')\n", i, od->id);
 #endif
-			/* We can only produce items that fulfill the following conditions... */
-			if (BUYTYPE_MATCH(od->buytype, produceCategory)	/* Item is in the current inventory-category */
-				&& RS_IsResearched_ptr(t)		/* Tech is researched */
-				&& t->produceTime >= 0		/* Item is produceable */
-			) {
-				assert(*od->name);
-				if (j == idx) {
+				/* We can only produce items that fulfill the following conditions... */
+				if (BUYTYPE_MATCH(od->buytype, produceCategory)	/* Item is in the current inventory-category */
+					&& RS_IsResearched_ptr(t)		/* Tech is researched */
+					&& t->produceTime >= 0		/* Item is produceable */
+				) {
+					assert(*od->name);
+					if (j == idx) {
 #if 0
-					/* FIXME: don't start production yet .. */
-					gd.productions[baseCurrent->idx].objID = i;
-					gd.productions[baseCurrent->idx].amount = 0;
-					gd.productions[baseCurrent->idx].timeLeft = t->produceTime;
+						/* FIXME: don't start production yet .. */
+						gd.productions[baseCurrent->idx].objID = i;
+						gd.productions[baseCurrent->idx].amount = 0;
+						gd.productions[baseCurrent->idx].timeLeft = t->produceTime;
 #endif
+						selectedQueueItem = qfalse;
+						selectedIndex = i;
+						PR_ProductionInfo(qfalse);
+						return;
+					}
+					j++;
+				}
+			}
+		} else {	/* Disassembling. */
+			for (j = 0, i = 0; i < gd.numComponents; i++) {
+				if (j == idx) {
 					selectedQueueItem = qfalse;
-					selectedIndex = i;
-					PR_ProductionInfo(qfalse);
+					selectedIndex = gd.components[i].assembly_idx;
+					PR_ProductionInfo(qtrue);
 					return;
 				}
 				j++;
