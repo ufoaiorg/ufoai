@@ -1,4 +1,4 @@
-﻿CONTRIBUTORS
+CONTRIBUTORS
 
 This file lists all the contributors who provided their content to
 the UFO:Alien Invasion project. If you have provided content but you
@@ -65,13 +65,13 @@ Mateusz "velo|gfx" Górecki
 Willem "sitters"
 * vehicles models and textures: carcrashed/car1, carcrashed/car2, lorry,
   transporter, car4, van3, aircraft/fighter, aircraft/heli_military,
-  vehicles/tractor, cars/truck
+  vehicles/tractor, cars/truck, cars/policecar
 * furnitures models and textures: comptable, fireext3
 * plants models and textures: tree03, fir
 * map decoration models and textures: city/mailbox, city/lantern,
   city/statues/(dragon, woman, statue), gascylinder, city/trafficsign,
   city/fountain, construct/container, construct/generator, construct/mixer
-  boat/canoe, furniture/campbed
+  boat/canoe, furniture/campbed, city/trafficlights
 * textures: tex_nature/flower.tga
 
 David "PikkaBird" Dallaston
