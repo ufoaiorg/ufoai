@@ -32,6 +32,7 @@
 
 // UFO -- Scout
 components craft_ufo_scout {
+	time	2400
 	item	alienmaterials		30	20
 	item	antimatter		200	0
 	//item	alien_propulsion	2	1
@@ -40,6 +41,7 @@ components craft_ufo_scout {
 
 // UFO -- Fighter
 components craft_ufo_fighter {
+	time	2600
 	item	alienmaterials		40	30
 	item	antimatter		250	0
 	//item	alien_propulsion	2	1
@@ -49,6 +51,7 @@ components craft_ufo_fighter {
 
 // UFO -- Harvester
 components craft_ufo_harvester {
+	time	3400
 	item	alienmaterials		80	60
 	item	antimatter		600	0
 	//item	alien_propulsion	4	2
