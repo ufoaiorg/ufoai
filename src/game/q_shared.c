@@ -2203,6 +2203,7 @@ static item_t cacheItem = {NONE,NONE,NONE}; /* to crash as soon as possible */
 /**
  * @brief
  * @param[in] import
+ * @todo Move to INV_shared.c
  * @sa InitGame
  * @sa Com_ParseScripts
  */
@@ -2215,6 +2216,7 @@ void Com_InitCSI(csi_t * import)
 /**
  * @brief
  * @param[in] invList
+ * @todo Move to INV_shared.c
  * @sa InitGame
  * @sa CL_ResetSinglePlayerData
  * @sa CL_InitLocal
@@ -2247,6 +2249,7 @@ static int cache_Com_CheckToInventory = 0;
  * @param[in] container
  * @param[in] x
  * @param[in] y
+ * @todo Move to INV_shared.c
  * @sa
  */
 qboolean Com_CheckToInventory(const inventory_t * const i, const int item, const int container, int x, int y)
@@ -2342,6 +2345,7 @@ qboolean Com_CheckToInventory(const inventory_t * const i, const int item, const
  * @param[in] container
  * @param[in] x
  * @param[in] y
+ * @todo Move to INV_shared.c
  */
 invList_t *Com_SearchInInventory(const inventory_t* const i, int container, int x, int y)
 {
@@ -2368,6 +2372,7 @@ invList_t *Com_SearchInInventory(const inventory_t* const i, int container, int 
  * @param[in] container
  * @param[in] x
  * @param[in] y
+ * @todo Move to INV_shared.c
  */
 invList_t *Com_AddToInventory(inventory_t * const i, item_t item, int container, int x, int y)
 {
@@ -2412,6 +2417,7 @@ invList_t *Com_AddToInventory(inventory_t * const i, item_t item, int container,
  * @param[in] y The y position of the item (container?) to be removed. @todo: is this correct?
  * @return qtrue If removal was successful.
  * @return qfalse If nothing was removed or an error occured.
+ * @todo Move to INV_shared.c
  * @sa Com_RemoveFromInventoryIgnore
  */
 qboolean Com_RemoveFromInventory (inventory_t* const i, int container, int x, int y)
@@ -2428,6 +2434,7 @@ qboolean Com_RemoveFromInventory (inventory_t* const i, int container, int x, in
  * @param[in] ignore_type Ignroes teh type of container (only used for a workaround in the base-equipemnt see CL_MoveMultiEquipment) HACKHACK
  * @return qtrue If removal was successful.
  * @return qfalse If nothing was removed or an error occured.
+ * @todo Move to INV_shared.c
  * @sa Com_RemoveFromInventory
  */
 qboolean Com_RemoveFromInventoryIgnore (inventory_t* const i, int container, int x, int y, qboolean ignore_type)
@@ -2493,6 +2500,7 @@ qboolean Com_RemoveFromInventoryIgnore (inventory_t* const i, int container, int
  * @return IA_RELOAD when reloading
  * @return IA_ARMOR when placing an armour on the actor
  * @return IA_MOVE when just moving an item
+ * @todo Move to INV_shared.c
  * @sa
  */
 int Com_MoveInInventory (inventory_t* const i, int from, int fx, int fy, int to, int tx, int ty, int *TU, invList_t ** icp)
@@ -2519,6 +2527,7 @@ int Com_MoveInInventory (inventory_t* const i, int from, int fx, int fy, int to,
  * @return IA_RELOAD when reloading
  * @return IA_ARMOR when placing an armour on the actor
  * @return IA_MOVE when just moving an item
+ * @todo Move to INV_shared.c
  * @sa
  */
 int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, int to, int tx, int ty, int *TU, invList_t ** icp, qboolean ignore_type)
@@ -2676,6 +2685,7 @@ int Com_MoveInInventoryIgnore (inventory_t* const i, int from, int fx, int fy, i
  * @brief
  * @param[in] i
  * @param[in] container
+ * @todo Move to INV_shared.c
  * @sa Com_DestroyInventory
  */
 void Com_EmptyContainer (inventory_t* const i, const int container)
@@ -2716,6 +2726,7 @@ void Com_EmptyContainer (inventory_t* const i, const int container)
 /**
  * @brief
  * @param i The invetory which should be erased
+ * @todo Move to INV_shared.c
  * @sa Com_EmptyContainer
  */
 void Com_DestroyInventory (inventory_t* const i)
@@ -2739,6 +2750,7 @@ void Com_DestroyInventory (inventory_t* const i)
  * @param[in] container
  * @param[in] px
  * @param[in] py
+ * @todo Move to INV_shared.c
  * @sa Com_CheckToInventory
  */
 void Com_FindSpace (const inventory_t* const inv, const int item, const int container, int* const px, int* const py)
@@ -2771,6 +2783,7 @@ void Com_FindSpace (const inventory_t* const inv, const int item, const int cont
  * @param[in] inv Inventory pointer to add the item
  * @param[in] item Item to add to inventory
  * @param[in] container Container id
+ * @todo Move to INV_shared.c
  * @sa Com_FindSpace
  * @sa Com_AddToInventory
  */
@@ -2793,6 +2806,7 @@ int Com_TryAddToInventory (inventory_t* const inv, item_t item, int container)
  * @param[in] inv Inventory pointer to add the item
  * @param[in] item Item to add to inventory
  * @param[in] container Container id
+ * @todo Move to INV_shared.c
  * @sa Com_FindSpace
  * @sa Com_AddToInventory
  */
@@ -2818,6 +2832,7 @@ int Com_TryAddToBuyType (inventory_t* const inv, item_t item, int container)
 /**
  * @brief Debug function to print the inventory items for a given inventory_t pointer
  * @param[in] i The inventory you want to see on the game console
+ * @todo Move to INV_shared.c
  */
 void INV_PrintToConsole (inventory_t* const i)
 {
@@ -2856,6 +2871,7 @@ CHARACTER GENERATION AND HANDLING
  * @param[in] weapon The weapon type index in gi.csi->ods
  * @param[in] equip The equipment that shows how many clips to pack
  * @param[in] name The name of the equipment for debug messages
+ * @todo Move to INV_shared.c
  * @sa INV_LoadableInWeapon
  */
 int Com_PackAmmoAndWeapon (inventory_t* const inv, const int weapon, const int equip[MAX_OBJDEFS], int missed_primary, const char *name)
@@ -2981,6 +2997,7 @@ int Com_PackAmmoAndWeapon (inventory_t* const inv, const int weapon, const int e
  * @note The code below is a complete implementation
  * of the scheme sketched at the beginning of equipment_missions.ufo.
  * Beware: if two weapons in the same category have the same price,
+ * @todo Move to INV_shared.c
  * only one will be considered for inventory.
  */
 void Com_EquipActor (inventory_t* const inv, const int equip[MAX_OBJDEFS], const char *name, character_t* chr)
@@ -4129,6 +4146,7 @@ void Com_PrintItemDescription (int i)
 /**
  * @brief Lists all object definitions
  * @todo Why is this here - and not in a client only function
+ * @todo Move to INV_shared.c or cl_inventory.c
  */
 void Com_InventoryList_f (void)
 {
@@ -4142,6 +4160,7 @@ void Com_InventoryList_f (void)
 /**
  * @brief Returns the index of this item in the inventory.
  * @todo This function should be located in a inventory-related file.
+ * @todo Move to INV_shared.c or cl_inventory.c
  * @note id may not be null or empty
  * @note previously known as RS_GetItem
  * @param[in] id the item id in our object definition array (csi.ods)
@@ -4175,6 +4194,7 @@ int Com_GetItemByID (const char *id)
  * @param[in] weapon_idx The index of the weapon (in the inventory) to check the item with.
  * @return qboolean Returns qtrue if the item can be used in the given weapon, otherwise qfalse.
  * @note Formerly named INV_AmmoUsableInWeapon.
+ * @todo Move to INV_shared.c or cl_inventory.c
  * @sa Com_PackAmmoAndWeapon
  */
 qboolean INV_LoadableInWeapon (objDef_t *od, int weapon_idx)
@@ -4206,6 +4226,7 @@ qboolean INV_LoadableInWeapon (objDef_t *od, int weapon_idx)
  * @param[in] weapon_idx The index of the weapon (in the inventory) to check the item with.
  * @return int Returns the index in the fd array. -1 if the weapon-idx was not found. 0 (equals the default firemode) if an invalid or unknown weapon idx was given.
  * @note the return value of -1 is in most cases a fatal error (except the scripts are not parsed while e.g. maptesting)
+ * @todo Move to INV_shared.c
  */
 int INV_FiredefsIDXForWeapon (objDef_t *od, int weapon_idx)
 {
@@ -4239,6 +4260,7 @@ int INV_FiredefsIDXForWeapon (objDef_t *od, int weapon_idx)
  * @param[in] ammo The ammo(or weapon-)object that contains the firedefs
  * @param[in] weapon_fds_idx The index in objDef[x]
  * @return Default reaction-firemode index in objDef->fd[][x]. -1 if an error occurs or no firedefs exist.
+ * @todo Move to INV_shared.c
  */
 int Com_GetDefaultReactionFire (objDef_t *ammo, int weapon_fds_idx)
 {
