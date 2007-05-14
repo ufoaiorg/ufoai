@@ -136,7 +136,7 @@ int AngleToDV (int angle)
  * @param[in] point The point to be rotated
  * @param[in] degrees How many degrees to rotate the point by
  * @param[out] dst The point after rotation
- * @note Warning: dst must be different of point (otherwise the result has no meaning)
+ * @note Warning: dst must be different from point (otherwise the result has no meaning)
  */
 void RotatePointAroundVector (vec3_t dst, const vec3_t dir, const vec3_t point, float degrees)
 {
