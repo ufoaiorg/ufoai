@@ -267,10 +267,14 @@ void ProjectPointOnPlane (vec3_t dst, const vec3_t point, const vec3_t normal)
 }
 
 /**
- * @brief returns a vector perpendicular to given vector
- * @note assumes "src" is normalized
- * @param[in] src
- * @param[out] dst The destination vector, perpendicular to src
+ * @brief Finds a vector perpendicular to the source vector
+ * @param[in] src The source vector
+ * @param[out] dst A vector perpendicular to @c src
+ * @note @c dst is a perpendicular vector to @c src such that it is the closest
+ * to one of the three axis: {1,0,0}, {0,1,0} and {0,0,1} (chosen in that order
+ * in case of equality)
+ * @pre non-NULL pointers and @c src is normalized
+ * @sa ProjectPointOnPlane
  */
 void PerpendicularVector (vec3_t dst, const vec3_t src)
 {
