@@ -946,6 +946,7 @@ extern nation_t* MAP_GetNation(const vec2_t pos);
 extern qboolean MAP_MapToScreen(const menuNode_t* node, const vec2_t pos, int *x, int *y);
 extern qboolean MAP_3DMapToScreen(const menuNode_t* node, const vec2_t pos, int *x, int *y, int *z);
 extern qboolean MAP_Draw3DMarkerIfVisible (const menuNode_t* node, const vec2_t pos, const char *model);
+extern void MAP_MapDrawEquidistantPoints (const menuNode_t* node, vec2_t center, const float angle, const vec4_t color, qboolean globe);
 extern void MAP_MapCalcLine(const vec2_t start, const vec2_t end, mapline_t* line);
 extern void MAP_DrawMap(const menuNode_t* node, qboolean map3D);
 extern void MAP_MapClick(const menuNode_t * node, int x, int y, qboolean globe);

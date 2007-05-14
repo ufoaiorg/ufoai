@@ -676,6 +676,75 @@ static void MAP_MapDrawLine (const menuNode_t* node, const mapline_t* line)
 	re.DrawColor(NULL);
 }
 
+#define CIRCLE_DRAW_POINTS	60
+/**
+ * @brief Draw equidistant points from a given point on a menu node
+ * @param[in] node The menu node which will be used for drawing dimensions.
+ * This is usually the geoscape menu node.
+ * @param[in] center The latitude and longitude of center point
+ * @param[in] angle The angle defining the distance of the equidistant points to center
+ * @param[in] color The color for drawing
+ * @param[in] globe qtrue is this is 3D geoscape, qfalse if this is 2D geoscape
+ * @sa RADAR_DrawCoverage
+ */
+extern void MAP_MapDrawEquidistantPoints (const menuNode_t* node, vec2_t center, const float angle, const vec4_t color, qboolean globe)
+{
+	int i, xCircle, yCircle, zCircle;
+	int pts[CIRCLE_DRAW_POINTS * 2 + 2];
+	vec2_t posCircle;
+	qboolean draw, oldDraw = qfalse;
+	int numPoints = 0;
+	vec3_t initialVector, rotationAxis, currentPoint, centerPos;
+
+	/* Set color */
+	re.DrawColor(color);
+
+	/* Set centerPos corresponding to cartesian coordinates of the center point */
+	PolarToVec(center, centerPos);
+
+	/* Find a perpendicular vector to centerPos, and rotate centerPos around him to obtain one point distant of angle from centerPos */
+	PerpendicularVector(rotationAxis, centerPos);
+	RotatePointAroundVector(initialVector, rotationAxis, centerPos, angle);
+
+	/* Now, each equidistant point is given by a rotation around centerPos */
+	for (i = 0 ; i <= CIRCLE_DRAW_POINTS ; i++) {
+		RotatePointAroundVector(currentPoint, centerPos, initialVector, i * 360 / CIRCLE_DRAW_POINTS);
+		VecToPolar(currentPoint, posCircle);
+		draw = qfalse;
+		if (!globe) {
+			if (MAP_MapToScreen(node, posCircle, &xCircle, &yCircle)) {
+				draw = qtrue;
+				/* if we switch from left to right side of the screen (or the opposite), end this path */
+				if (numPoints != 0 && abs(pts[(numPoints -1) * 2] - xCircle) > 512)
+					oldDraw = qfalse;
+			}
+		}
+		else {
+			if (MAP_3DMapToScreen(node, posCircle, &xCircle, &yCircle, &zCircle))
+				draw = qtrue;
+		}
+		/* if moving from a point of the screen to a distant one, draw the path we already calculated, and begin a new path
+		 * (to avoid unwanted lines) */
+		if (draw != oldDraw && i != 0) {
+			re.DrawLineStrip(numPoints, pts);
+			numPoints = 0;
+		}
+		/* if the current point is to be drawn, add it to the path */
+		if (draw) {
+			pts[numPoints * 2] = xCircle;
+			pts[numPoints * 2 + 1] = yCircle;
+			numPoints++;
+		}
+		/* update value of oldDraw */
+		oldDraw = draw;
+	}
+
+	/* Draw the last path */
+	re.DrawLineStrip(numPoints, pts);
+	re.DrawColor(NULL);
+}
+
+
 /**
  * @brief Draw a path on a menu node (usually the 3Dgeoscape map)
  * @param[in] node The menu node which will be used for drawing dimensions.

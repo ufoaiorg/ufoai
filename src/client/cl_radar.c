@@ -26,47 +26,22 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 
-#define RADAR_DRAW_POINTS	60
 /**
  * @brief Show Radar coverage
+ * @sa MAP_MapDrawEquidistantPoints
  */
 extern void RADAR_DrawCoverage (const menuNode_t* node, const radar_t* radar, vec2_t pos, qboolean globe)
 {
-	int i, xCircle, yCircle, zCircle;
-	int pts[RADAR_DRAW_POINTS * 2 + 2];
-	int pts2[RADAR_DRAW_POINTS * 2 + 2];
-	vec2_t posCircle;
-	float cosinus, sinus, rangeTracking;
+	float rangeTracking;
 
 	const vec4_t color = {0, 1, 0, 1};
 	/* Set color */
 	re.DrawColor(color);
 
-	rangeTracking = radar->range + radar->range / 10.0f;
-	for (i = 0 ; i <= RADAR_DRAW_POINTS ; i++) {
-		cosinus = cos(i * M_TWOPI / RADAR_DRAW_POINTS);
-		sinus = sin(i * M_TWOPI / RADAR_DRAW_POINTS);
-		posCircle[0] = pos[0] + cosinus * radar->range;
-		posCircle[1] = pos[1] + sinus * radar->range;
-		if (!globe)
-			MAP_MapToScreen(node, posCircle, &xCircle, &yCircle);
-		else
-			MAP_3DMapToScreen(node, posCircle, &xCircle, &yCircle, &zCircle);
-		pts[i * 2] = xCircle;
-		pts[i * 2 + 1] = yCircle;
-		posCircle[0] = pos[0] + cosinus * rangeTracking;
-		posCircle[1] = pos[1] + sinus * rangeTracking;
-		if (!globe)
-			MAP_MapToScreen(node, posCircle, &xCircle, &yCircle);
-		else
-			MAP_3DMapToScreen(node, posCircle, &xCircle, &yCircle, &zCircle);
-		pts2[i * 2] = xCircle;
-		pts2[i * 2 + 1] = yCircle;
-	}
-	/* FIXME for globe */
-	re.DrawLineStrip(RADAR_DRAW_POINTS + 1, pts);
-	re.DrawLineStrip(RADAR_DRAW_POINTS + 1, pts2);
-	re.DrawColor(NULL);
+	rangeTracking = 1.1f * radar->range;
+
+	MAP_MapDrawEquidistantPoints (node, pos, radar->range, color, globe);
+	MAP_MapDrawEquidistantPoints (node, pos, rangeTracking, color, globe);
 }
 
 /**
