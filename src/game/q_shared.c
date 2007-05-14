@@ -240,11 +240,12 @@ void AngleVectors (vec3_t angles, vec3_t forward, vec3_t right, vec3_t up)
  * @param[in] point Coordinates of the point to project
  * @param[in] normal The normal vector of the plane
  * @param[out] dst Coordinates of the projection on the plane
- * @pre @c normal is normalized
+ * @pre @c Non-null pointers and a normalized normal vector.
  */
 void ProjectPointOnPlane (vec3_t dst, const vec3_t point, const vec3_t normal)
 {
-	float distance;
+	float distance; /**< closest distance from the point to the plane */
+
 #if 0
 	vec3_t n;
 	float inv_denom;
