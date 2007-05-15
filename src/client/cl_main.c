@@ -1888,7 +1888,7 @@ static void CL_CheckCvars_f (void)
 		if (!checkcvar[i].var)
 			checkcvar[i].var = Cvar_Get(checkcvar[i].name, "", 0, NULL);
 		if (!*(checkcvar[i].var->string))
-			Cbuf_AddText(va("%s_missing; mn_push checkcvars;", checkcvar[i].name));
+			Cbuf_AddText("mn_push checkcvars;");
 		i++;
 	}
 }

@@ -326,6 +326,12 @@ static void SV_ParseAssembly (const char *filename, char **text)
 	a->w = 8;
 	a->h = 8;
 
+	token = COM_EParse(text, errhead, filename);
+	if (!*text || *token != '}') {
+		Com_Printf("Invalid assembly definition '%s' - invalid token '%s'\n", a->id, token);
+		return;
+	}
+
 	do {
 		/* get tile name */
 		token = COM_EParse(text, errhead, filename);
