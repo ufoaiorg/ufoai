@@ -830,7 +830,7 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 		for (i = 0, aircraft = (aircraft_t *) base->aircraft; i < base->numAircraftInBase; i++, aircraft++)
 			if (aircraft->status > AIR_HOME) {
 				/* Draw aircraft */
-				MAP_Draw3DMarkerIfVisible(node, aircraft->pos"dropship");
+				MAP_Draw3DMarkerIfVisible(node, aircraft->pos, "dropship");
 
 				/* Draw aircraft route */
 				if (aircraft->status >= AIR_TRANSIT) {
