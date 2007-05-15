@@ -206,12 +206,14 @@ menu checkcvars
 	{
 		string	"_Variable:"
 		pos	"150 240"
+		font	"f_normal"
 	}
 
 	string status_label
 	{
 		string	"_Value:"
 		pos	"500 240"
+		font	"f_normal"
 	}
 
 	pic bt_ok
@@ -240,7 +242,7 @@ menu checkcvars
 	string current_name
 	{
 		string  "_Name:"
-		pos	"150 280"
+		pos	"165 280"
 		color "1 1 1 1"
 	}
 	pic slot_name
@@ -257,7 +259,66 @@ menu checkcvars
 		color "0 .78 0 1"
 	}
 	confunc name_changed { *txt_name color "0 .78 0 1" *txt_name mousefx false }
-	confunc name_missing { *current_name color ".78 0 0 1" }
+
+	// ===================
+	// BARS
+	// ===================
+	string volume_str
+	{
+		string	"_Volume Control"
+		pos		"150 360"
+		font	"f_normal"
+	}
+	string effects_str
+	{
+		string	"_Effects:"
+		pos		"165 390"
+	}
+	pic effects_rahmen
+	{
+		image	menu/bar_rahmen
+		pos		"311 395"
+	}
+	bar effects_bar
+	{
+		pos		"320 400"
+		size	"245 6"
+		color	"0 .8 0 1"
+		current	"*cvar snd_volume"
+		max		1.0
+		align	ul
+		mousefx	true
+		click	{ }
+	}
+	string music_str
+	{
+		string	"_Music:"
+		pos		"165 415"
+	}
+	pic music_rahmen
+	{
+		image	menu/bar_rahmen
+		pos		"311 420"
+	}
+	bar music_bar
+	{
+		pos		"320 425"
+		size	"245 6"
+		color	"0 .8 0 1"
+		current	"*cvar snd_music_volume"
+		max		1.0
+		align	ul
+		mousefx true
+		click	{ }
+	}
+
+	string message
+	{
+		string	"_You have to set the playername and hit the 'OK' button:"
+		pos		"165 530"
+		size	"500 40"
+		color	"1 1 1 0.5"
+	}
 
 	// check again - maybe the user has forgotton something
 	func close
