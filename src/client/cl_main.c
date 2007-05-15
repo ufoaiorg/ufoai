@@ -1357,6 +1357,12 @@ static void CL_ConnectionlessPacket (void)
 		return;
 	}
 
+	/* get the connected player count */
+	if (!Q_strncmp(c, "playercount", 11)) {
+		s = MSG_ReadString(&net_message);
+		return;
+	}
+
 	/* teaminfo command */
 	if (!Q_strncmp(c, "teaminfo", 8)) {
 		CL_ParseTeamInfoMessage();

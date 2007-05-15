@@ -220,6 +220,15 @@ static void SVC_Status (void)
 }
 
 /**
+ * @brief Only return the player count
+ * @sa SV_StatusString
+ */
+static void SVC_PlayerCount (void)
+{
+	Netchan_OutOfBandPrint(NS_SERVER, net_from, "playercount %i", SV_CountPlayers());
+}
+
+/**
  * @brief Sends an acknowledge
  */
 static void SVC_Ack (void)
@@ -562,6 +571,8 @@ void SV_ConnectionlessPacket (void)
 		SVC_Ack();
 	else if (!strcmp(c, "status"))
 		SVC_Status();
+	else if (!strcmp(c, "playercount"))
+		SVC_PlayerCount();
 	else if (!strcmp(c, "teaminfo"))
 		SVC_TeamInfo();
 	else if (!strcmp(c, "info"))
