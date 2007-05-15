@@ -327,7 +327,7 @@ static void SV_ParseAssembly (const char *filename, char **text)
 	a->h = 8;
 
 	token = COM_EParse(text, errhead, filename);
-	if (!*text || *token != '}') {
+	if (!*text || *token != '{') {
 		Com_Error(ERR_DROP, "Invalid assembly definition '%s' - invalid token '%s'\n", a->id, token);
 		return;
 	}
