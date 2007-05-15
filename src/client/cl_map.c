@@ -411,13 +411,15 @@ extern qboolean MAP_3DMapToScreen (const menuNode_t* node, const vec2_t pos, int
  * @brief Draws a 3D marker on 3D geoscape if the player can see it.
  * @param[in] node Menu node.
  * @param[in] pos Longitude and latitude of the marker to draw.
+ * @param[in] theta Angle (degree) of the model to the horizontal
  * @param[in] model The name of the model of the marker.
  */
-extern qboolean MAP_Draw3DMarkerIfVisible (const menuNode_t* node, const vec2_t pos, const char *model)
+extern qboolean MAP_Draw3DMarkerIfVisible (const menuNode_t* node, const vec2_t pos, float theta, const char *model)
 {
 	int x, y, z;
 	vec3_t screenPos, angles, v;
 	float zoom;
+	float costheta, sintheta;
 	const float radius = GLOBE_RADIUS;
 
 	if (MAP_3DMapToScreen (node, pos, &x, &y, &z)) {
@@ -429,8 +431,13 @@ extern qboolean MAP_Draw3DMarkerIfVisible (const menuNode_t* node, const vec2_t 
 		v[0] -= (node->pos[0] + node->size[0]) / 2.0f;
 		v[1] -= (node->pos[1] + node->size[1]) / 2.0f;
 		VectorSet(angles, 0, 0, 0);
-		angles[1] = - asin(v[0]/radius) * todeg;
-		angles[2] = asin(v[1]/radius) * todeg;
+
+		angles[0] = theta;
+		costheta = cos(theta * torad);
+		sintheta = sin(theta * torad);
+		
+		angles[1] = 180 - asin((v[0] * costheta + v[1] * sintheta) / radius) * todeg; 
+		angles[2] = + asin((v[0] * sintheta - v[1] * costheta) / radius) * todeg; 
 
 		/* Set zoom */
 		zoom = 0.7 + ccs.zoom * (float) z / radius / 2.0;
@@ -772,6 +779,37 @@ static void MAP_3DMapDrawLine (const menuNode_t* node, const mapline_t* line)
 	re.DrawColor(NULL);
 }
 
+/**
+ * @brief Return the start angle of a path on 3Dgeoscape
+ * @param[in] node The menu node which will be used for drawing dimensions.
+ * @param[in] line The path
+ * @todo This need some improvement...
+ */
+static float MAP_AngleOfPath (const menuNode_t* node, const mapline_t* line)
+{
+	int x0, y0, x1, y1;
+	float angle=0;
+
+	/* There must be at least 2 points to define a angle */
+	if (line->numPoints < 4)
+		return angle;
+
+	/* draw only when the point of the path is visible*/
+	MAP_3DMapToScreen(node, line->point[1], &x0, &y0, NULL);
+	MAP_3DMapToScreen(node, line->point[3], &x1, &y1, NULL);
+			
+	if (x0 == x1) {
+		if (y1 > y0)
+			return 90;
+		else
+			return -90;
+	}
+
+	angle = todeg * atan((float)(y1 - y0) / (float)(x1 - x0));
+	if (x1 < x0)
+		angle += 180;
+	return angle;
+}
 
 /**
  * @brief
@@ -784,6 +822,7 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 	base_t* base;
 	int borders[MAX_NATION_BORDERS * 2];	/**< GL_LINE_LOOP coordinates for nation borders */
 	int x, y, z;
+	float angle;
 #if 0
 	vec2_t pos = {0, 0};
 
@@ -801,7 +840,7 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 	Cvar_Set("mn_mapdaytime", "");
 	for (i = 0; i < ccs.numMissions; i++) {
 		ms = &ccs.mission[i];
-		if (!MAP_Draw3DMarkerIfVisible(node, ms->realPos, "cross"))
+		if (!MAP_Draw3DMarkerIfVisible(node, ms->realPos, 0, "cross"))
 			continue;
 
 		if (ms == selMis) {
@@ -822,16 +861,13 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 
 		/* Draw base */
 		if (base->baseStatus == BASE_UNDER_ATTACK)
-			MAP_Draw3DMarkerIfVisible(node, base->pos, "baseattack");
+			MAP_Draw3DMarkerIfVisible(node, base->pos, 0, "baseattack");
 		else
-			MAP_Draw3DMarkerIfVisible(node, base->pos, "base");
+			MAP_Draw3DMarkerIfVisible(node, base->pos, 0, "base");
 
 		/* draw aircraft */
 		for (i = 0, aircraft = (aircraft_t *) base->aircraft; i < base->numAircraftInBase; i++, aircraft++)
 			if (aircraft->status > AIR_HOME) {
-				/* Draw aircraft */
-				MAP_Draw3DMarkerIfVisible(node, aircraft->pos, "dropship");
-
 				/* Draw aircraft route */
 				if (aircraft->status >= AIR_TRANSIT) {
 					mapline_t path;
@@ -843,7 +879,13 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 							memcpy(path.point + 1, aircraft->route.point + aircraft->point + 1, (path.numPoints - 1) * sizeof(vec2_t));
 						MAP_3DMapDrawLine(node, &path);
 					}
+					angle = MAP_AngleOfPath(node, &path);
+				} else {
+					angle = 0;
 				}
+
+				/* Draw aircraft */
+				MAP_Draw3DMarkerIfVisible(node, aircraft->pos, angle, "dropship");
 			}
 		}
 
