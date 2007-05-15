@@ -812,8 +812,10 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 
 	/* draw base pics */
 	for (base = gd.bases + gd.numBases - 1; base >= gd.bases ; base--) {
-		if (! base->founded || ! MAP_3DMapToScreen(node, base->pos, &x, &y, NULL))
+		if (! base->founded)
 			continue;
+		/* Draw base */
+		 MAP_3DMapToScreen(node, base->pos, &x, &y, NULL);
 
 		/* Draw base radar info */
 		RADAR_DrawInMap(node, &(base->radar), x, y, base->pos, qtrue);
@@ -828,7 +830,7 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 		for (i = 0, aircraft = (aircraft_t *) base->aircraft; i < base->numAircraftInBase; i++, aircraft++)
 			if (aircraft->status > AIR_HOME) {
 				/* Draw aircraft */
-				MAP_Draw3DMarkerIfVisible (node, aircraft->pos, aircraft->image);
+				MAP_Draw3DMarkerIfVisible (node, aircraft->pos, "dropship");
 
 				/* Draw aircraft route */
 				if (aircraft->status >= AIR_TRANSIT) {

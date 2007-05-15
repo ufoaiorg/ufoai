@@ -858,7 +858,7 @@ void Draw_Polygon (int points, int *verts)
 	qglEnable(GL_TEXTURE_2D);
 }
 
-#define MARKER_SIZE 40.0
+#define MARKER_SIZE 60.0
 /**
  * @brief Draw a 3D Marker on the 3D geoscape
  * @sa MAP_Draw3DMarkerIfVisible
@@ -872,16 +872,15 @@ void Draw_3DMapMarkers (vec3_t angles, float zoom, vec3_t position, const char *
 
 	memset(&mi, 0, sizeof(modelInfo_t));
 
-#if 0
-	/* Decommentize me when some models are ready for 3D Markers */
 	Com_sprintf(path, sizeof(path), "models/geoscape/%s.md2", model);
-#endif
-	Com_sprintf(path, sizeof(path), "models/weapons/fraggren/fraggren.md2");
 	mi.model = R_RegisterModelShort(path);
 	mi.name = path;
 	if (!mi.model) {
-		Com_Printf("Could not find '%s'\n", path);
-		return;
+		/*Com_Printf("Could not find '%s'\n", path);*/
+		Com_sprintf(path, sizeof(path), "models/weapons/fraggren/fraggren.md2");
+		mi.model = R_RegisterModelShort(path);
+		mi.name = path;
+		/*return;*/
 	}
 
 	mi.origin = position;
