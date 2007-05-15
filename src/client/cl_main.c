@@ -85,8 +85,8 @@ cvar_t *cl_start_employees;
 cvar_t *cl_initial_equipment;
 cvar_t *cl_start_buildings;
 
+/** @brief Confirm actions in tactical mode - valid values are 0, 1 and 2 */
 cvar_t *confirm_actions;
-cvar_t *confirm_movement;
 
 cvar_t *cl_precachemenus;
 
@@ -1871,8 +1871,10 @@ static void CL_WriteConfiguration (void)
 	Cvar_WriteVariables(path);
 }
 
+/** @brief Cvars for initial check (popup at first start) */
 static cvarList_t checkcvar[] = {
 	{"name", NULL, NULL},
+
 	{NULL, NULL, NULL}
 };
 /**
@@ -1981,7 +1983,6 @@ static void CL_InitLocal (void)
 	cl_start_buildings = Cvar_Get("cl_start_buildings", "1", CVAR_ARCHIVE, "Start with initial buildings in your first base");
 
 	confirm_actions = Cvar_Get("confirm_actions", "0", CVAR_ARCHIVE, "Confirm all actions in tactical mode");
-	confirm_movement = Cvar_Get("confirm_movement", "0", CVAR_ARCHIVE, "Confirm all movements in tactical mode");
 
 	Cvar_Set("music", "");
 
@@ -2005,7 +2006,6 @@ static void CL_InitLocal (void)
 	equip = Cvar_Get("equip", "multiplayer_initial", CVAR_USERINFO | CVAR_ARCHIVE, NULL);
 	teamnum = Cvar_Get("teamnum", "1", CVAR_USERINFO | CVAR_ARCHIVE, "Teamnum for multiplayer teamplay games");
 	campaign = Cvar_Get("campaign", "main", 0, "Which is the current selected campaign id");
-	rate = Cvar_Get("rate", "25000", CVAR_USERINFO | CVAR_ARCHIVE, NULL);	/* FIXME */
 	msg = Cvar_Get("msg", "1", CVAR_USERINFO | CVAR_ARCHIVE, "Sets the message level for server messages the client receives");
 	sv_maxclients = Cvar_Get("maxclients", "1", CVAR_SERVERINFO, "If maxclients is 1 we are in singleplayer - otherwise we are mutliplayer mode (see sv_teamplay)");
 

@@ -2523,7 +2523,7 @@ static void CL_ActorMoveMouse (void)
 			VectorCopy(mousePos, mousePendPos);
 		}
 	} else {
-		if (confirm_movement->value || confirm_actions->value) {
+		if (confirm_actions->integer) {
 			/* Set our mode to pending move. */
 			VectorCopy(mousePos, mousePendPos);
 			cl.cmode = M_PEND_MOVE;
@@ -2572,7 +2572,7 @@ void CL_ActorSelectMouse (void)
 		break;
 	case M_FIRE_R:
 		/* We either switch to "pending" fire-mode or fire the gun. */
-		if (confirm_actions->value) {
+		if (confirm_actions->integer == 1) {
 			cl.cmode = M_PEND_FIRE_R;
 			VectorCopy(mousePos, mousePendPos);
 		} else {
@@ -2581,7 +2581,7 @@ void CL_ActorSelectMouse (void)
 		break;
 	case M_FIRE_L:
 		/* We either switch to "pending" fire-mode or fire the gun. */
-		if (confirm_actions->value) {
+		if (confirm_actions->integer == 1) {
 			cl.cmode = M_PEND_FIRE_L ;
 			VectorCopy(mousePos, mousePendPos);
 		} else {

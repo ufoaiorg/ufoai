@@ -86,7 +86,6 @@ typedef enum {
 } client_state_t;
 
 #define	LATENCY_COUNTS	16
-#define	RATE_MESSAGES	10
 
 #define RELIABLEBUFFERS	16
 
@@ -100,10 +99,6 @@ typedef struct client_s {
 
 	int frame_latency[LATENCY_COUNTS];
 	int ping;
-
-	int message_size[RATE_MESSAGES];	/**< used to rate drop packets */
-	int rate;
-	int surpressCount;			/**< number of messages rate supressed */
 
 	char userinfo[MAX_INFO_STRING];
 

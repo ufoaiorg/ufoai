@@ -882,7 +882,7 @@ menu options_game
 		click
 		{
 			cmd "mn_modify confirm_actions -1 0 1;"
-			cmd "mn_translate confirm_actions mn_confirm_actions 0:No,1:Yes;"
+			cmd "mn_translate confirm_actions mn_confirm_actions 0:No,1:Yes,2:Only moving;"
 		}
 	}
 	pic confirm_inc
@@ -896,50 +896,7 @@ menu options_game
 		click
 		{
 			cmd "mn_modify confirm_actions +1 0 1;"
-			cmd "mn_translate confirm_actions mn_confirm_actions 0:No,1:Yes;"
-		}
-	}
-
-	// ===================
-	// CONFIRM MOVEMEMENT
-	// ===================
-	string confirm_move_str
-	{
-		string	"_Confirm Movement:"
-		pos		"500 180"
-	}
-	string confirm_move_value
-	{
-		string	"*cvar mn_confirm_movement"
-		pos		"840 180"
-		align	ur
-	}
-	pic confirm_move_dec
-	{
-		image	menu/buttons_small
-		pos		"868 184"
-		texl	"0 0"
-		texh	"16 16"
-		mousefx	true
-		tooltip	"_No confirmation before walking"
-		click
-		{
-			cmd "mn_modify confirm_movement -1 0 1;"
-			cmd "mn_translate confirm_movement mn_confirm_movement 0:No,1:Yes;"
-		}
-	}
-	pic confirm_move_inc
-	{
-		image	menu/buttons_small
-		pos		"884 184"
-		texl	"16 0"
-		texh	"32 16"
-		mousefx	true
-		tooltip	"_Confirmation needed before walking"
-		click
-		{
-			cmd "mn_modify confirm_movement +1 0 1;"
-			cmd "mn_translate confirm_movement mn_confirm_movement 0:No,1:Yes;"
+			cmd "mn_translate confirm_actions mn_confirm_actions 0:No,1:Yes,2:Only moving;"
 		}
 	}
 
@@ -1336,6 +1293,5 @@ menu options_game
 		cmd "mn_translate cl_show_tooltips mn_show_tooltips 0:No,1:Yes;"
 		cmd "mn_translate cl_show_cursor_tooltips mn_show_cursor_tooltips 0:No,1:Yes;"
 		cmd "mn_translate confirm_actions mn_confirm_actions 0:No,1:Yes;"
-		cmd "mn_translate confirm_movement mn_confirm_movement 0:No,1:Yes;"
 	}
 }
