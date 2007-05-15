@@ -1665,22 +1665,17 @@ menu multiplayer_wait
 		pos "440 280"
 		font f_big
 	}
-	string message
-	{
-		string "_Waiting for other players to join the game"
-		pos "300 340"
-	}
 
 	string teams_str
 	{
-		string "_Players that must join before starting: "
-		pos "300 370"
+		string "_more player(s) are needed before the game can start"
+		pos "320 370"
 	}
 	string teams_val
 	{
 		string "*cvar sv_maxteams"
 		color "0 0.5 0 1"
-		pos "700 370"
+		pos "300 370"
 	}
 
 	pic bt_force
