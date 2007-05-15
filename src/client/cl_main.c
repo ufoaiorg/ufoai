@@ -1871,6 +1871,26 @@ static void CL_WriteConfiguration (void)
 	Cvar_WriteVariables(path);
 }
 
+static cvarList_t checkcvar[] = {
+	{"name", NULL, NULL},
+	{NULL, NULL, NULL}
+};
+/**
+ * @brief Check cvars for some initial values that should/must be set
+ */
+static void CL_CheckCvars_f (void)
+{
+	int i = 0;
+
+	while (checkcvar[i].name) {
+		if (!checkcvar[i].var)
+			checkcvar[i].var = Cvar_Get(checkcvar[i].name, "", 0, NULL);
+		if (!*(checkcvar[i].var->string))
+			Cbuf_AddText(va("%s_missing; mn_push checkcvars;", checkcvar[i].name));
+		i++;
+	}
+}
+
 /**
  * @brief Calls all reset functions for all subsystems like production and research
  * also inits the cvars and commands
@@ -1979,7 +1999,7 @@ static void CL_InitLocal (void)
 	/* userinfo */
 	info_password = Cvar_Get("password", "", CVAR_USERINFO, NULL);
 	info_spectator = Cvar_Get("spectator", "0", CVAR_USERINFO, NULL);
-	name = Cvar_Get("name", _("Unnamed"), CVAR_USERINFO | CVAR_ARCHIVE, "Playername");
+	name = Cvar_Get("name", "", CVAR_USERINFO | CVAR_ARCHIVE, "Playername");
 	snd_ref = Cvar_Get("snd_ref", "sdl", CVAR_ARCHIVE, "Sound renderer");
 	team = Cvar_Get("team", "human", CVAR_USERINFO | CVAR_ARCHIVE, NULL);
 	equip = Cvar_Get("equip", "multiplayer_initial", CVAR_USERINFO | CVAR_ARCHIVE, NULL);
@@ -2005,6 +2025,8 @@ static void CL_InitLocal (void)
 	Cmd_AddCommand("cmd", CL_ForwardToServer_f, "Forward to server");
 	Cmd_AddCommand("pause", CL_Pause_f, _("Pause the current server (singleplayer and multiplayer when you are server)"));
 	Cmd_AddCommand("pingservers", CL_PingServers_f, "Ping all servers in local network to get the serverlist");
+
+	Cmd_AddCommand("check_cvars", CL_CheckCvars_f, "Check cvars like playername and so on");
 
 	Cmd_AddCommand("saveconfig", CL_WriteConfiguration, "Save the configuration");
 
@@ -2071,13 +2093,7 @@ static void CL_InitLocal (void)
 #endif
 }
 
-typedef struct {
-	const char *name;
-	const char *value;
-	cvar_t *var;
-} cheatvar_t;
-
-static cheatvar_t cheatvars[] = {
+static cvarList_t cheatvars[] = {
 	{"timedemo", "0", NULL},
 	{"r_drawworld", "1", NULL},
 	{"r_fullbright", "0", NULL},
@@ -2098,7 +2114,7 @@ static int numcheatvars = 0;
 static void CL_FixCvarCheats (void)
 {
 	int i;
-	cheatvar_t *var;
+	cvarList_t *var;
 
 	if (!Q_strncmp(cl.configstrings[CS_MAXCLIENTS], "1", MAX_TOKEN_CHARS)
 		|| !cl.configstrings[CS_MAXCLIENTS][0])

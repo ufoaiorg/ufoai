@@ -532,6 +532,12 @@ typedef struct cvar_s {
 	struct cvar_s *hash_next;
 } cvar_t;
 
+typedef struct cvarList_s {
+	const char *name;
+	const char *value;
+	cvar_t *var;
+} cvarList_t;
+
 cvar_t *Cvar_Get(const char *var_name, const char *var_value, int flags, const char* desc);
 
 #endif                          /* CVAR */
