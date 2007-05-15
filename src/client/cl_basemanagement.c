@@ -142,6 +142,7 @@ static void B_ResetBuildingCurrent (void)
 		baseCurrent->buildingCurrent = NULL;
 		baseCurrent->buildingToBuild = -1;
 	}
+	gd.baseAction = BA_NONE;
 }
 
 /**
@@ -240,17 +241,17 @@ static void B_BuildingDestroy_f (void)
 
 	b1 = baseCurrent->buildingCurrent;
 
-	if (baseCurrent->map[(int)b1->pos[0]][(int)b1->pos[1]] >= 0) {
+	if (baseCurrent->map[(int)b1->pos[0]][(int)b1->pos[1]] != BASE_FREESLOT) {
 		if (*b1->needs) {
 #if 0
 			b2 = B_GetBuildingType(b1->needs);
 			assert(b2);
 #endif
 			/* "Child" building is always right to the "parent" building". */
-			baseCurrent->map[(int)b1->pos[0]][((int)b1->pos[1])+1] = -1;
+			baseCurrent->map[(int)b1->pos[0]][((int)b1->pos[1])+1] = BASE_FREESLOT;
 		}
 
-		baseCurrent->map[(int)b1->pos[0]][(int)b1->pos[1]] = -1;
+		baseCurrent->map[(int)b1->pos[0]][(int)b1->pos[1]] = BASE_FREESLOT;
 	}
 	b1->buildingStatus = B_STATUS_NOT_SET;
 #if 0
@@ -408,9 +409,8 @@ extern void B_BuildingStatus (void)
 
 /**
  * @brief  Hires some employees of appropriate type for a building
- * @param building	in which building
- * @param num  how many employees, if -1, hire building->maxEmployees
- *
+ * @param[in] building in which building
+ * @param[in] num how many employees, if -1, hire building->maxEmployees
  * @sa B_SetUpBase
  */
 static void B_HireForBuilding (base_t* base, building_t * building, int num)
@@ -769,18 +769,18 @@ extern void B_SetBuildingByClick (int row, int col)
 	}
 
 	if (0 <= row && row < BASE_SIZE && 0 <= col && col < BASE_SIZE) {
-		if (baseCurrent->map[row][col] < 0) {
+		if (baseCurrent->map[row][col] == BASE_FREESLOT) {
 			if (*baseCurrent->buildingCurrent->needs)
 				secondBuildingPart = B_GetBuildingType(baseCurrent->buildingCurrent->needs);
 			if (secondBuildingPart) {
 				if (col + 1 == BASE_SIZE) {
-					if (baseCurrent->map[row][col-1] >= 0) {
+					if (baseCurrent->map[row][col-1] != BASE_FREESLOT) {
 						Com_DPrintf("Can't place this building here - the second part overlapped with another building\n");
 						return;
 					}
 					col--;
-				} else if (baseCurrent->map[row][col+1] >= 0) {
-					if (baseCurrent->map[row][col-1] >= 0 || !col) {
+				} else if (baseCurrent->map[row][col+1] != BASE_FREESLOT) {
+					if (baseCurrent->map[row][col-1] != BASE_FREESLOT || !col) {
 						Com_DPrintf("Can't place this building here - the second part overlapped with another building\n");
 						return;
 					}
@@ -1127,6 +1127,8 @@ static void B_BuildingClick_f (void)
 
 	baseCurrent->buildingCurrent = building;
 	B_DrawBuilding();
+
+	gd.baseAction = BA_NEWBUILDING;
 }
 
 /**
@@ -1406,7 +1408,7 @@ extern void B_ClearBase (base_t *const base)
 
 	for (row = BASE_SIZE - 1; row >= 0; row--)
 		for (col = BASE_SIZE - 1; col >= 0; col--)
-			base->map[row][col] = -1;
+			base->map[row][col] = BASE_FREESLOT;
 }
 
 /**
@@ -1446,7 +1448,7 @@ extern void B_ParseBases (const char *name, char **text)
 		memset(base, 0, sizeof(base_t));
 		base->idx = gd.numBaseNames;
 		base->buildingToBuild = -1;
-		memset(base->map, -1, sizeof(int) * BASE_SIZE * BASE_SIZE);
+		memset(base->map, BASE_FREESLOT, sizeof(int) * BASE_SIZE * BASE_SIZE);
 
 		/* get the title */
 		token = COM_EParse(text, errhead, name);
@@ -1471,9 +1473,8 @@ extern void B_ParseBases (const char *name, char **text)
  */
 extern void B_DrawBase (menuNode_t * node)
 {
-	float x, y;
-	int mx, my, width, height, row, col, time;
-	qboolean hover = qfalse;
+	int x, y, xHover = -1, yHover = -1, widthHover = 1;
+	int mx, my, width, height, row, col, time, colSecond;
 	static vec4_t color = { 0.5f, 1.0f, 0.5f, 1.0 };
 	char image[MAX_QPATH];
 	building_t *building = NULL, *secondBuilding = NULL, *hoverBuilding = NULL;
@@ -1495,7 +1496,7 @@ extern void B_DrawBase (menuNode_t * node)
 			baseCurrent->posX[row][col] = x;
 			baseCurrent->posY[row][col] = y;
 
-			if (baseCurrent->map[row][col] >= 0) {
+			if (baseCurrent->map[row][col] != BASE_FREESLOT) {
 				building = B_GetBuildingByIdx(baseCurrent, baseCurrent->map[row][col]);
 				secondBuilding = NULL;
 
@@ -1522,15 +1523,38 @@ extern void B_DrawBase (menuNode_t * node)
 				Q_strncpyz(image, "base/grid", sizeof(image));
 			}
 
-			if (mx > x && mx < x + width && my > y && my < y + height - 20) {
-				hover = qtrue;
-				if (baseCurrent->map[row][col] >= 0)
-					hoverBuilding = building;
-			} else
-				hover = qfalse;
-
 			if (*image)
 				re.DrawNormPic(x, y, width, height, 0, 0, 0, 0, 0, qfalse, image);
+
+			/* check for hovering building name or outline border */
+			if (mx > x && mx < x + width && my > y && my < y + height - 20) {
+				if (baseCurrent->map[row][col] != BASE_FREESLOT)
+					hoverBuilding = building;
+				else if (gd.baseAction == BA_NEWBUILDING && xHover == -1) {
+					assert(baseCurrent->buildingCurrent);
+					colSecond = col;
+					if (*baseCurrent->buildingCurrent->needs) {
+						if (colSecond + 1 == BASE_SIZE) {
+							if (baseCurrent->map[row][colSecond - 1] == BASE_FREESLOT)
+								colSecond--;
+						} else if (baseCurrent->map[row][colSecond + 1] != BASE_FREESLOT) {
+							if (baseCurrent->map[row][colSecond - 1] == BASE_FREESLOT)
+								colSecond--;
+						} else {
+							colSecond++;
+						}
+						if (colSecond != col) {
+							if (colSecond < col)
+								xHover = node->pos[0] + colSecond * width;
+							else
+								xHover = x;
+							widthHover = 2;
+						}
+					} else
+						xHover = x;
+					yHover = y;
+				}
+			}
 
 			/* only draw for first part of building */
 			if (building && !secondBuilding) {
@@ -1552,6 +1576,15 @@ extern void B_DrawBase (menuNode_t * node)
 		re.DrawColor(color);
 		re.FontDrawString("f_small", 0, mx + 3, my, mx + 3, my, node->size[0], 0, node->texh[0], hoverBuilding->name, 0, 0, NULL, qfalse);
 		re.DrawColor(NULL);
+	}
+	if (xHover != -1) {
+		if (widthHover == 1) {
+			Q_strncpyz(image, "base/hover", sizeof(image));
+			re.DrawNormPic(xHover, yHover, width, height, 0, 0, 0, 0, 0, qfalse, image);
+		} else {
+			Com_sprintf(image, sizeof(image), "base/hover%i", widthHover);
+			re.DrawNormPic(xHover, yHover, width * widthHover, height, 0, 0, 0, 0, 0, qfalse, image);
+		}
 	}
 }
 
@@ -2085,7 +2118,7 @@ static void B_AssembleMap_f (void)
 	/* reset the used flag */
 	for (row = 0; row < BASE_SIZE; row++)
 		for (col = 0; col < BASE_SIZE; col++) {
-			if (base->map[row][col] != -1) {
+			if (base->map[row][col] != BASE_FREESLOT) {
 				entry = B_GetBuildingByIdx(base, base->map[row][col]);
 				entry->used = 0;
 			}
@@ -2097,7 +2130,7 @@ static void B_AssembleMap_f (void)
 		for (col = 0; col < BASE_SIZE; col++) {
 			baseMapPart[0] = '\0';
 
-			if (base->map[row][col] != -1) {
+			if (base->map[row][col] != BASE_FREESLOT) {
 				entry = B_GetBuildingByIdx(base, base->map[row][col]);
 
 				/* basemaps with needs are not (like the images in B_DrawBase) two maps - but one */
@@ -2396,10 +2429,10 @@ static void B_PrintCapacities_f (void)
 				break;
 		}
 		if (i == CAP_UFOHANGARS)
-			Com_Printf("Building: UFO Hangars, capacity max: %i, capacity cur: %i\n",			
+			Com_Printf("Building: UFO Hangars, capacity max: %i, capacity cur: %i\n",
 			base->capacities[i].max, base->capacities[i].cur);
 		else
-			Com_Printf("Building: %s, capacity max: %i, capacity cur: %i\n",			
+			Com_Printf("Building: %s, capacity max: %i, capacity cur: %i\n",
 			gd.buildingTypes[j].id, base->capacities[i].max, base->capacities[i].cur);
 	}
 }

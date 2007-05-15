@@ -380,7 +380,7 @@ extern qboolean MAP_3DMapToScreen (const menuNode_t* node, const vec2_t pos, int
 	 *	We switch from the static frame of earth to the local frame of the player (opposite rotation of MAP3D_ScreenToMap) */
 	VectorSet(rotationAxis, 0, 0, 1);
 	RotatePointAroundVector(v1, rotationAxis, v, - ccs.angles[PITCH]);
-	
+
 	VectorSet(rotationAxis, 0, 1, 0);
 	RotatePointAroundVector(v, rotationAxis, v1, - ccs.angles[YAW]);
 
@@ -431,10 +431,10 @@ extern qboolean MAP_Draw3DMarkerIfVisible (const menuNode_t* node, const vec2_t 
 		VectorSet(angles, 0, 0, 0);
 		angles[1] = - asin(v[0]/radius) * todeg;
 		angles[2] = asin(v[1]/radius) * todeg;
-		
+
 		/* Set zoom */
 		zoom = 0.7 + ccs.zoom * (float) z / radius / 2.0;
-		
+
 		/* Draw */
 		re.Draw3DMapMarkers(angles, zoom, screenPos, model);
 		return qtrue;
@@ -539,7 +539,7 @@ static void MAP3D_ScreenToMap (const menuNode_t* node, int x, int y, vec2_t pos)
 	 *	perpendicular to the screen */
 	VectorSet(rotationAxis, 0, 1, 0);
 	RotatePointAroundVector(v1, rotationAxis, v, ccs.angles[YAW]);
-	
+
 	/* second rotation is to rotate the earth around its north-south axis
 	 *	so that Greenwich meridian is along the vertical axis of the screen */
 	VectorSet(rotationAxis, 0, 0, 1);
@@ -801,7 +801,7 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 	Cvar_Set("mn_mapdaytime", "");
 	for (i = 0; i < ccs.numMissions; i++) {
 		ms = &ccs.mission[i];
-		if (!MAP_Draw3DMarkerIfVisible (node, ms->realPos, "cross"))
+		if (!MAP_Draw3DMarkerIfVisible(node, ms->realPos, "cross"))
 			continue;
 
 		if (ms == selMis) {
@@ -812,7 +812,7 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 
 	/* draw base pics */
 	for (base = gd.bases + gd.numBases - 1; base >= gd.bases ; base--) {
-		if (! base->founded)
+		if (!base->founded)
 			continue;
 		/* Draw base */
 		 MAP_3DMapToScreen(node, base->pos, &x, &y, NULL);
@@ -822,15 +822,15 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 
 		/* Draw base */
 		if (base->baseStatus == BASE_UNDER_ATTACK)
-			MAP_Draw3DMarkerIfVisible (node, base->pos, "baseattack");
+			MAP_Draw3DMarkerIfVisible(node, base->pos, "baseattack");
 		else
-			MAP_Draw3DMarkerIfVisible (node, base->pos, "base");
+			MAP_Draw3DMarkerIfVisible(node, base->pos, "base");
 
 		/* draw aircraft */
 		for (i = 0, aircraft = (aircraft_t *) base->aircraft; i < base->numAircraftInBase; i++, aircraft++)
 			if (aircraft->status > AIR_HOME) {
 				/* Draw aircraft */
-				MAP_Draw3DMarkerIfVisible (node, aircraft->pos, "dropship");
+				MAP_Draw3DMarkerIfVisible(node, aircraft->pos"dropship");
 
 				/* Draw aircraft route */
 				if (aircraft->status >= AIR_TRANSIT) {

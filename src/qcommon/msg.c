@@ -624,23 +624,18 @@ void MSG_V_ReadFormat (sizebuf_t * msg_read, const char *format, va_list ap)
 		switch (typeID) {
 		case 'c':
 			*va_arg(ap, int *) = MSG_ReadChar(msg_read);
-
 			break;
 		case 'b':
 			*va_arg(ap, int *) = MSG_ReadByte(msg_read);
-
 			break;
 		case 's':
 			*va_arg(ap, int *) = MSG_ReadShort(msg_read);
-
 			break;
 		case 'l':
 			*va_arg(ap, int *) = MSG_ReadLong(msg_read);
-
 			break;
 		case 'f':
 			*va_arg(ap, float *) = MSG_ReadFloat(msg_read);
-
 			break;
 		case 'p':
 			MSG_ReadPos(msg_read, *va_arg(ap, vec3_t *));
@@ -653,7 +648,6 @@ void MSG_V_ReadFormat (sizebuf_t * msg_read, const char *format, va_list ap)
 			break;
 		case 'a':
 			*va_arg(ap, float *) = MSG_ReadAngle(msg_read);
-
 			break;
 		case '!':
 			format++;

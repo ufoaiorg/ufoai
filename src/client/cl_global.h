@@ -87,6 +87,8 @@ typedef struct globalData_s
 	/* == misc == */
 	/* MA_NEWBASE, MA_INTERCEPT, MA_BASEATTACK, ... */
 	mapAction_t mapAction;
+	/* BA_NEWBUILDING ... */
+	baseAction_t baseAction;
 	/* how fast the game is running */
 	int gameTimeScale;
 	/* selected aircraft for interceptions */

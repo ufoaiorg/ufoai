@@ -38,6 +38,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_EMPLOYEES_IN_BUILDING 64
 
+#define BASE_FREESLOT -1
+
 /** @brief allocate memory for menuText[TEXT_STANDARD] contained the information about a building */
 char buildingText[MAX_LIST_CHAR];
 
@@ -50,6 +52,14 @@ typedef enum {
 	BASE_UNDER_ATTACK,	/**< base is under attack */
 	BASE_WORKING		/**< nothing special */
 } baseStatus_t;
+
+/** @brief All possible base actions */
+typedef enum {
+	BA_NONE,
+	BA_NEWBUILDING,		/**< hovering the needed base tiles for this building */
+
+	BA_MAX
+} baseAction_t;
 
 /** @brief All possible building status. */
 typedef enum {

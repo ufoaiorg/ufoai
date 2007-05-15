@@ -1130,6 +1130,7 @@ static void MN_BaseMapClick (menuNode_t * node, int x, int y)
 					baseCurrent->buildingCurrent = entry;
 					Cbuf_ExecuteText(EXEC_NOW, va("%s %i;", entry->onClick, baseCurrent->idx));
 					baseCurrent->buildingCurrent = NULL;
+					gd.baseAction = BA_NONE;
 				}
 #if 0
 				else {

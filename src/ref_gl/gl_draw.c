@@ -896,16 +896,6 @@ void Draw_3DMapMarkers (vec3_t angles, float zoom, vec3_t position, const char *
 }
 
 /**
- * @brief This is only used from makeearth, to plot a line on the globe.
- * There is some difficultish maths in this one.
- * "to" and "from" in the comments in the code refers to the two
- * points given as arguments.
- */
-void Draw_3DMapLine (vec3_t angles, float zoom, int n, float dist, vec2_t * path)
-{
-}
-
-/**
  * @brief responsible for drawing the 3d globe on geoscape
  */
 void Draw_3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate, float zoom, const char *map)
@@ -924,13 +914,17 @@ void Draw_3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate, 
 
 	/* load day image */
 	gl = GL_FindImage(va("pics/menu/%s_day", map), it_wrappic);
+	if (!gl) {
+		ri.Con_Printf(PRINT_ALL, "Could not find pics/menu/%s_day\n", map);
+		return;
+	}
 
 #ifdef HAVE_SHADERS
 	if (gl->shader)
 		SH_UseShader(gl->shader, qfalse);
 #endif
 
-	/* turn on fogging.  fog looks good on the skies - it gives them a more */
+	/* turn on fogging. fog looks good on the skies - it gives them a more */
 	/* "airy" far-away look, and has the knock-on effect of preventing the */
 	/* old "texture distortion at the poles" problem. */
 	if (gl_fog->value) {
@@ -1007,7 +1001,7 @@ void Draw_3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate, 
 			GL_Bind(DaN->texnum);
 
 			/* draw night image */
-			qglCallList (spherelist);
+			qglCallList(spherelist);
 
 			GL_SelectTexture(gl_texture0);
 
@@ -1027,12 +1021,12 @@ void Draw_3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate, 
 
 	if (gl_fog->value) {
 		/* turn off fog */
-		qglDisable (GL_FOG);
+		qglDisable(GL_FOG);
 	}
 
 	/* restore the previous matrix */
-	qglPopMatrix ();
-	qglMatrixMode (GL_TEXTURE);
-	qglLoadIdentity ();
-	qglMatrixMode (GL_MODELVIEW);
+	qglPopMatrix();
+	qglMatrixMode(GL_TEXTURE);
+	qglLoadIdentity();
+	qglMatrixMode(GL_MODELVIEW);
 }
