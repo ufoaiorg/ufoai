@@ -2792,8 +2792,18 @@ int Grid_Fall (struct routing_s *map, pos3_t pos)
 	if (z >= HEIGHT)
 		return -1;
 
+	/**
+	 * This fixes a problem with height positions set to 255 in Grid_Height and Grid_PosToVec (->floating soldeirs/aliens).
+	 * I hope it does not break other things - I could not find any yet, but just in case ther eis this note ;)
+	 * This could be done in the while loop as well, but I do not know the code well enough to decide if that works.
+	 * --Höhrer 2007-05-15
+	 */
+	if (z == 0)	
+		return 0;
+
 	while (z >= 0 && map->fall[pos[1]][pos[0]] & (1 << z))
 		z--;
+	
 	return z;
 }
 
