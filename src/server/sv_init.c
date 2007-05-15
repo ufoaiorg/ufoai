@@ -328,7 +328,7 @@ static void SV_ParseAssembly (const char *filename, char **text)
 
 	token = COM_EParse(text, errhead, filename);
 	if (!*text || *token != '}') {
-		Com_Printf("Invalid assembly definition '%s' - invalid token '%s'\n", a->id, token);
+		Com_Error(ERR_DROP, "Invalid assembly definition '%s' - invalid token '%s'\n", a->id, token);
 		return;
 	}
 
@@ -417,8 +417,7 @@ static void SV_ParseAssembly (const char *filename, char **text)
 			}
 		if (i == numTiles)
 			Com_Error(ERR_DROP, "Could not find tile: '%s'\n", token);
-	}
-	while (text);
+	} while (text);
 }
 
 
