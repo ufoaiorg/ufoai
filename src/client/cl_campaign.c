@@ -1627,6 +1627,9 @@ extern qboolean CP_Load (sizebuf_t *sb, void *data)
 
 	CL_GameInit();
 
+	/* character creation needs the campaign id */
+	Com_SetGlobalCampaignID(curCampaign->idx);
+
 	Com_sprintf(val, sizeof(val), "%i", curCampaign->difficulty);
 	Cvar_ForceSet("difficulty", val);
 
@@ -3548,7 +3551,6 @@ void CL_GameInit (void)
 	/* Init popup and map/geoscape */
 	CL_PopupInit();
 	MAP_GameInit();
-	Com_SetGlobalCampaignID(curCampaign->idx);
 }
 
 /**
@@ -3633,6 +3635,11 @@ static void CL_GameNew (void)
 	/* base setup */
 	gd.numBases = 0;
 	gd.numAircraft = 0;
+	
+	/* Moved out from CL_GameInit to happen before B_NewBases() is called. 
+	 * character creation needs the campaign id */
+	Com_SetGlobalCampaignID(curCampaign->idx);
+
 	B_NewBases();
 	PR_ProductionInit();
 

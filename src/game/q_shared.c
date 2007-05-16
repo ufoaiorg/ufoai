@@ -3341,102 +3341,101 @@ void Com_SetGlobalCampaignID (int campaignID)
 }
 
 /**
- * @brief
+ * TRAINING_SCALAR defines how much or little a characters skill set influences
+ * their abilities using a basic mapping of skills to abilities. Higher numbers
+ * results in less influence of natural ability on skill stats. Zero means
+ * natural abilities do not influence skill numbers.
+ */
+#define TRAINING_SCALAR	3
+
+/**
+ * @brief Generate a skill and ability set for any character.
+ *
+ * Character stats are intended to be based on definitions in campaign.ufo,
+ * resulting in more difficult campaigns yielding stronger aliens (and more feeble
+ * soldiers.) Skills (CLOSE, HEAVY, ASSAULT, SNIPER, EXPLOSIVE) are further
+ * influenced by the characters natural abilities (POWER, SPEED, ACCURACY, MIND)
  * @param[in] chr
- * @param[in] minAbility
- * @param[in] maxAbility
- * @param[in] minSkill
- * @param[in] maxSkill
+ * @param[in] team
  * @sa Com_GetAbility
  * @sa Com_GetSkill
+ * @sa Com_SetGlobalCampaignID
  */
-#define MAX_GENCHARRETRIES	20
 void Com_CharGenAbilitySkills (character_t * chr, int team)
 {
-	float randomArray[SKILL_NUM_TYPES];
-	int i, retry;
-	float max, min, rand_avg;
+	int i, skillWindow, abilityWindow, training, ability1, ability2;
+	float windowScalar;
 	int minAbility = 0, maxAbility = 0, minSkill = 0, maxSkill = 0;
 
 	assert(chr);
-#ifdef DEBUG
-	if (!chr)
-		return;	/* never reached. need for code analyst. */
-#endif
-/* 10042007 Zenerka
-   For some reason globalCampaignID is not being cleared after campaing restart.
-   That was the reason of superhuman soldiers at second attempt to start
-   campaign game. I just setting that to static value to fix the bug, but
-   that is a workaround only, not real fix, I believe.
+
+	/* The globalCampaignID must be set to proceed.  Set with Com_SetGlobalCampaignID */
+	assert(globalCampaignID >= 0);
+
+	/**
+	 * Build the acceptable ranges for skills / abilities for this character on this team
+	 * as appropriate for this campaign
+	 */
 	Com_GetAbility(chr, team, &minAbility, &maxAbility, globalCampaignID);
 	Com_GetSkill(chr, team, &minSkill, &maxSkill, globalCampaignID);
-*/
-	Com_GetAbility(chr, team, &minAbility, &maxAbility, -1);
-	Com_GetSkill(chr, team, &minSkill, &maxSkill, -1);
-	retry = MAX_GENCHARRETRIES;
-	do {
-		/* Abilities */
-		max = 0;
-		min = 1;
-		rand_avg = 0;
-		for (i = 0; i < ABILITY_NUM_TYPES; i++) {
-			randomArray[i] = frand();
-			rand_avg += randomArray[i];
-			if (randomArray[i] > max)
-				max = randomArray[i];	/* get max */
-			if (randomArray[i] < min)
-				min = randomArray[i];	/* and min */
-		}
 
-		rand_avg /= ABILITY_NUM_TYPES;
-		if (max - rand_avg < rand_avg - min)
-			min = rand_avg - min;
-		else
-			min = max - rand_avg;
-		for (i = 0; i < ABILITY_NUM_TYPES; i++) {
-			chr->skills[i] = (((randomArray[i] - rand_avg) / min * (maxAbility - minAbility) + minAbility + maxAbility) / 2 + frand() * 3);
-			if (chr->skills[i] > maxAbility)
-				chr->skills[i] = maxAbility;
-		}
-
-		/* Skills */
-		max = 0;
-		min = 1;
-		rand_avg = 0;
-		for (i = 0; i < SKILL_NUM_TYPES - ABILITY_NUM_TYPES; i++) {
-			randomArray[i] = frand();
-			rand_avg += randomArray[i];
-			if (randomArray[i] > max)
-				max = randomArray[i];	/* get max */
-			if (randomArray[i] < min)
-				min = randomArray[i];	/* or min */
-		}
-		rand_avg /= SKILL_NUM_TYPES - ABILITY_NUM_TYPES;
-		if (max - rand_avg < rand_avg - min)
-			min = rand_avg - min;
-		else
-			min = max - rand_avg;
-		for (i = 0; i < SKILL_NUM_TYPES - ABILITY_NUM_TYPES; i++) {
-			chr->skills[ABILITY_NUM_TYPES + i] = (((randomArray[i] - rand_avg) / min * (maxSkill - minSkill) + minSkill + maxSkill) / 2 + frand() * 3);
-			if (chr->skills[ABILITY_NUM_TYPES + i] > maxSkill)
-				chr->skills[ABILITY_NUM_TYPES + i] = maxSkill;
-		}
-
-		/* Check if it makes sense */
-		max = ((max - rand_avg) / min * (maxSkill - minSkill) + minSkill + maxSkill) / 2;
-		min = (maxAbility + minAbility) / 2.2;
-		if ((max - 10 < chr->skills[SKILL_CLOSE] && (chr->skills[ABILITY_SPEED] < min || chr->skills[ABILITY_POWER] < min))
-			|| (max - 10 < chr->skills[SKILL_HEAVY] && chr->skills[ABILITY_POWER] < min)
-			|| (max - 10 < chr->skills[SKILL_SNIPER] && chr->skills[ABILITY_ACCURACY] < min)
-			|| (max - 10 < chr->skills[SKILL_EXPLOSIVE] && chr->skills[ABILITY_MIND] < min))
-			retry--;			/* try again. */
-		else
-			retry = 0;
+	/* Abilities -- random within the range */
+	abilityWindow = maxAbility - minAbility;
+	for (i = 0; i < ABILITY_NUM_TYPES; i++) {
+		chr->skills[i] = (frand() * abilityWindow) + minAbility;
 	}
-	while (retry > 0);
+	
+	/* Skills -- random within the range then scaled (or not) based on natural ability */
+	skillWindow = maxSkill - minSkill;
+	for (i = ABILITY_NUM_TYPES; i < SKILL_NUM_TYPES; i++) {
+
+		/* training is the base for where they fall within the range. */
+		training = (frand() * skillWindow) + minSkill;
+
+		if (TRAINING_SCALAR > 0) {
+			switch (i) {
+			case SKILL_CLOSE:
+				ability1 = chr->skills[ABILITY_POWER];
+				ability2 = chr->skills[ABILITY_SPEED];
+				break;
+			case SKILL_HEAVY:
+				ability1 = chr->skills[ABILITY_POWER];
+				ability2 = chr->skills[ABILITY_ACCURACY];
+				break;
+			case SKILL_ASSAULT:
+				ability1 = chr->skills[ABILITY_ACCURACY];
+				ability2 = chr->skills[ABILITY_SPEED];
+				break;
+			case SKILL_SNIPER:
+				ability1 = chr->skills[ABILITY_MIND];
+				ability2 = chr->skills[ABILITY_ACCURACY];
+				break;
+			case SKILL_EXPLOSIVE:
+				ability1 = chr->skills[ABILITY_MIND];
+				ability2 = chr->skills[ABILITY_SPEED];
+				break;
+			default:
+				ability1 = training;
+				ability2 = training;
+			}
+
+			/* scale the abilitiy window to the skill window. */
+			windowScalar = skillWindow / abilityWindow;
+
+			/* scale the ability numbers to their place in the skill range. */
+			ability1 = ((ability1 - minAbility) * windowScalar) + minSkill;
+			ability2 = ((ability2 - minAbility) * windowScalar) + minSkill;
+
+			/* influence the skills, for better or worse, based on the character's natural ability. */
+			chr->skills[i] = ((TRAINING_SCALAR * training) + ability1 + ability2) / (TRAINING_SCALAR + 2);
+		} else {
+			chr->skills[i] = training;
+		}
+	}
+
 }
 
-
+/** @brief Used in Com_CharGetHead and Com_CharGetBody to generate the model path */
 static char returnModel[MAX_VAR];
 
 /**
