@@ -436,8 +436,8 @@ extern qboolean MAP_Draw3DMarkerIfVisible (const menuNode_t* node, const vec2_t 
 		costheta = cos(theta * torad);
 		sintheta = sin(theta * torad);
 		
-		angles[1] = 180 - asin((v[0] * costheta + v[1] * sintheta) / radius) * todeg; 
-		angles[2] = + asin((v[0] * sintheta - v[1] * costheta) / radius) * todeg; 
+		angles[1] = 180 - asin((v[0] * costheta + v[1] * sintheta) / radius) * todeg;
+		angles[2] = + asin((v[0] * sintheta - v[1] * costheta) / radius) * todeg;
 
 		/* Set zoom */
 		zoom = 0.7 + ccs.zoom * (float) z / radius / 2.0;
