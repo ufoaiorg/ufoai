@@ -1842,6 +1842,9 @@ extern void CL_ActorStartMove (le_t * le, pos3_t to)
 {
 	int length;
 
+	if (mouseSpace != MS_WORLD)
+		return;
+
 	if (!CL_CheckAction())
 		return;
 
@@ -1868,6 +1871,10 @@ extern void CL_ActorStartMove (le_t * le, pos3_t to)
 void CL_ActorShoot (le_t * le, pos3_t at)
 {
 	int type;
+
+	if (mouseSpace != MS_WORLD)
+		return;
+
 	if (!CL_CheckAction())
 		return;
 
