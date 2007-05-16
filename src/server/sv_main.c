@@ -492,6 +492,8 @@ static void SVC_DirectConnect (void)
 	newcl->datagram.allowoverflow = qtrue;
 	newcl->lastmessage = svs.realtime;	/* don't timeout */
 	newcl->lastconnect = svs.realtime;
+
+	SVC_PlayerCount();
 }
 
 /**
