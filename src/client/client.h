@@ -162,6 +162,7 @@ typedef struct {
 	char gamedir[MAX_QPATH];
 	int pnum;
 	int actTeam;
+	int playercount;		/**< currently connected players */
 
 	char configstrings[MAX_CONFIGSTRINGS][MAX_TOKEN_CHARS];
 

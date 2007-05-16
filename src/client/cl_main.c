@@ -797,12 +797,23 @@ static void CL_ParseStatusMessage (void)
 /**
  * @brief Multiplayer wait menu init function
  */
-static void CL_Wait_Init_f (void)
+static void CL_WaitInit_f (void)
 {
+	netadr_t adr;
+
+	if (!NET_StringToAdr(cls.servername, &adr)) {
+		Com_Printf("CL_WaitInit_f: Invalid servername '%s'\n", cls.servername);
+		return;
+	}
+	if (!adr.port)
+		adr.port = (unsigned)BigShort(PORT_SERVER);
+
 	/* the server knows this already */
 	if (!Com_ServerState()) {
 		Cvar_SetValue("sv_maxteams", atoi(cl.configstrings[CS_MAXTEAMS]));
 	}
+	Cvar_SetValue("mp_missing_players", cl.playercount);
+	Netchan_OutOfBandPrint(NS_CLIENT, adr, "playercount %i", PROTOCOL_VERSION);
 }
 
 /**
@@ -1360,6 +1371,8 @@ static void CL_ConnectionlessPacket (void)
 	/* get the connected player count */
 	if (!Q_strncmp(c, "playercount", 11)) {
 		s = MSG_ReadString(&net_message);
+		cl.playercount = atoi(s);
+		Com_DPrintf("CL_ConnectionlessPacket: playercount: %i\n", cl.playercount);
 		return;
 	}
 
@@ -2068,7 +2081,7 @@ static void CL_InitLocal (void)
 
 	Cmd_AddCommand("precache", CL_Precache_f, "Function that is called at mapload to precache map data");
 	Cmd_AddCommand("mp_selectteam_init", CL_SelectTeam_Init_f, "Function that gets all connected players and let you choose a free team");
-	Cmd_AddCommand("mp_wait_init", CL_Wait_Init_f, "Function that inits some nodes");
+	Cmd_AddCommand("mp_wait_init", CL_WaitInit_f, "Function that inits some nodes");
 	Cmd_AddCommand("spawnsoldiers", CL_SpawnSoldiers_f, "Spawns the soldiers for the selected teamnum");
 	Cmd_AddCommand("teamnum_dec", CL_TeamNum_f, "Decrease the prefered teamnum");
 	Cmd_AddCommand("teamnum_inc", CL_TeamNum_f, "Increase the prefered teamnum");
