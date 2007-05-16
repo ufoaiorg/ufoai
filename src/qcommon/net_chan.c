@@ -84,7 +84,7 @@ byte net_message_buffer[MAX_MSGLEN];
 /**
  * @brief
  */
-void Netchan_Init(void)
+void Netchan_Init (void)
 {
 	int port;
 
@@ -101,7 +101,7 @@ void Netchan_Init(void)
 /**
  * @brief Sends an out-of-band datagram
  */
-static void Netchan_OutOfBand(int net_socket, netadr_t adr, int length, byte * data)
+static void Netchan_OutOfBand (int net_socket, netadr_t adr, int length, byte * data)
 {
 	sizebuf_t send;
 	byte send_buf[MAX_MSGLEN];
@@ -119,7 +119,7 @@ static void Netchan_OutOfBand(int net_socket, netadr_t adr, int length, byte * d
 /**
  * @brief Sends a text message in an out-of-band datagram
  */
-void Netchan_OutOfBandPrint(int net_socket, netadr_t adr, char *format, ...)
+void Netchan_OutOfBandPrint (int net_socket, netadr_t adr, char *format, ...)
 {
 	va_list argptr;
 	static char string[MAX_MSGLEN - 4];
@@ -137,7 +137,7 @@ void Netchan_OutOfBandPrint(int net_socket, netadr_t adr, char *format, ...)
 /**
  * @brief called to open a channel to a remote system
  */
-void Netchan_Setup(netsrc_t sock, netchan_t * chan, netadr_t adr, int qport)
+void Netchan_Setup (netsrc_t sock, netchan_t * chan, netadr_t adr, int qport)
 {
 	memset(chan, 0, sizeof(*chan));
 
@@ -168,7 +168,7 @@ static qboolean Netchan_CanReliable(netchan_t * chan)
 /**
  * @brief
  */
-static qboolean Netchan_NeedReliable(netchan_t * chan)
+static qboolean Netchan_NeedReliable (netchan_t * chan)
 {
 	qboolean send_reliable;
 
@@ -191,7 +191,7 @@ static qboolean Netchan_NeedReliable(netchan_t * chan)
  * transmition / retransmition of the reliable messages.
  * @note A 0 length will still generate a packet and deal with the reliable messages.
  */
-void Netchan_Transmit(netchan_t * chan, int length, byte * data)
+void Netchan_Transmit (netchan_t * chan, int length, byte * data)
 {
 	sizebuf_t send;
 	byte send_buf[MAX_MSGLEN];
@@ -260,7 +260,7 @@ void Netchan_Transmit(netchan_t * chan, int length, byte * data)
  * @brief called when the current net_message is from remote_address
  * modifies net_message so that it points to the packet payload
  */
-qboolean Netchan_Process(netchan_t * chan, sizebuf_t * msg)
+qboolean Netchan_Process (netchan_t * chan, sizebuf_t * msg)
 {
 	unsigned sequence, sequence_ack;
 	unsigned reliable_ack, reliable_message;

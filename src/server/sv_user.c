@@ -382,7 +382,7 @@ void SV_ExecuteClientMessage (client_t * cl)
 	while (1) {
 		if (net_message.readcount > net_message.cursize) {
 			Com_Printf("SV_ExecuteClientMessage: badread, %d > %d\n", net_message.readcount, net_message.cursize);
-			SV_DropClient(cl);
+			/*SV_DropClient(cl);*/ /* @todo mattn: check this */
 			return;
 		}
 

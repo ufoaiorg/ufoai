@@ -425,10 +425,7 @@ static void CL_ParseConfigString (void)
 	/* do something apropriate */
 	if (i >= CS_LIGHTS && i < CS_LIGHTS+MAX_LIGHTSTYLES)
 		CL_SetLightstyle (i - CS_LIGHTS);
-	else if (i == CS_CDTRACK) {
-		if (cl.refresh_prepped)
-			CDAudio_Play(atoi(cl.configstrings[CS_CDTRACK]), qtrue);
-	} else if (i >= CS_MODELS && i < CS_MODELS + MAX_MODELS) {
+	else if (i >= CS_MODELS && i < CS_MODELS + MAX_MODELS) {
 		if (cl.refresh_prepped) {
 			cl.model_draw[i-CS_MODELS] = re.RegisterModel(cl.configstrings[i]);
 			if (cl.configstrings[i][0] == '*')

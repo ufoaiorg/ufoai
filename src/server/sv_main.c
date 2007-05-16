@@ -220,15 +220,6 @@ static void SVC_Status (void)
 }
 
 /**
- * @brief Only return the player count
- * @sa SV_StatusString
- */
-static void SVC_PlayerCount (void)
-{
-	Netchan_OutOfBandPrint(NS_SERVER, net_from, "playercount %i", SV_CountPlayers());
-}
-
-/**
  * @brief Sends an acknowledge
  */
 static void SVC_Ack (void)
@@ -492,8 +483,6 @@ static void SVC_DirectConnect (void)
 	newcl->datagram.allowoverflow = qtrue;
 	newcl->lastmessage = svs.realtime;	/* don't timeout */
 	newcl->lastconnect = svs.realtime;
-
-	SVC_PlayerCount();
 }
 
 /**
@@ -573,8 +562,6 @@ void SV_ConnectionlessPacket (void)
 		SVC_Ack();
 	else if (!strcmp(c, "status"))
 		SVC_Status();
-	else if (!strcmp(c, "playercount"))
-		SVC_PlayerCount();
 	else if (!strcmp(c, "teaminfo"))
 		SVC_TeamInfo();
 	else if (!strcmp(c, "info"))
@@ -754,7 +741,7 @@ void SV_CheckTimeouts (void)
 			cl->state = cs_free;	/* can now be reused */
 			continue;
 		}
-		if ((cl->state == cs_connected || cl->state == cs_spawned)
+		if ((cl->state == cs_connected || cl->state == cs_spawning || cl->state == cs_spawned)
 			&& cl->lastmessage < droppoint) {
 			SV_BroadcastPrintf(PRINT_HIGH, "%s timed out\n", cl->name);
 			SV_DropClient(cl);

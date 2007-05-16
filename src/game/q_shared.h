@@ -1441,14 +1441,14 @@ typedef enum {
  * the server to all connected clients.
  * Each config string can be at most MAX_QPATH characters. */
 #define CS_NAME				0
-#define CS_CDTRACK			1
-#define CS_MAPTITLE			2		/**< display map title string - translated client side */
-#define CS_MAXCLIENTS		3
-#define CS_MAPCHECKSUM		4		/**< for catching cheater maps */
-#define CS_MAXSOLDIERS		5		/**< max soldiers per team */
-#define CS_MAXSOLDIERSPERPLAYER	6	/**< max soldiers per player when in teamplay mode */
-#define CS_ENABLEMORALE		7		/**< enable the morale states in multiplayer */
-#define CS_MAXTEAMS			8		/**< how many multiplayer teams for this map */
+#define CS_MAPTITLE			1		/**< display map title string - translated client side */
+#define CS_MAXCLIENTS		2
+#define CS_MAPCHECKSUM		3		/**< for catching cheater maps */
+#define CS_MAXSOLDIERS		4		/**< max soldiers per team */
+#define CS_MAXSOLDIERSPERPLAYER	5	/**< max soldiers per player when in teamplay mode */
+#define CS_ENABLEMORALE		6		/**< enable the morale states in multiplayer */
+#define CS_MAXTEAMS			7		/**< how many multiplayer teams for this map */
+#define CS_PLAYERCOUNT		8		/**< amount of already connected players */
 #define CS_VERSION			9		/**< what is the servers version */
 #define CS_UFOCHECKSUM		10		/**< checksum of ufo files */
 

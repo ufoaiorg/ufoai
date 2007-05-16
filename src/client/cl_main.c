@@ -800,6 +800,7 @@ static void CL_ParseStatusMessage (void)
 static void CL_WaitInit_f (void)
 {
 	netadr_t adr;
+	char buf[32];
 
 	if (!NET_StringToAdr(cls.servername, &adr)) {
 		Com_Printf("CL_WaitInit_f: Invalid servername '%s'\n", cls.servername);
@@ -811,8 +812,16 @@ static void CL_WaitInit_f (void)
 	/* the server knows this already */
 	if (!Com_ServerState()) {
 		Cvar_SetValue("sv_maxteams", atoi(cl.configstrings[CS_MAXTEAMS]));
+		Cvar_Set("mp_wait_init_show_force", "0");
+	} else {
+		Cvar_Set("mp_wait_init_show_force", "1");
 	}
-	Cvar_SetValue("mp_missing_players", cl.playercount);
+	Com_sprintf(buf, sizeof(buf), "%s/%s", cl.configstrings[CS_PLAYERCOUNT], cl.configstrings[CS_MAXTEAMS]);
+	Cvar_Set("mp_wait_init_players", buf);
+	if (!*cl.configstrings[CS_NAME]) {
+		Cbuf_ExecuteText(EXEC_NOW, "disconnect\nmn_pop\n");
+		MN_Popup(_("Error"), _("Server needs restarting - something went wrong"));
+	}
 }
 
 /**
@@ -1367,14 +1376,6 @@ static void CL_ConnectionlessPacket (void)
 		return;
 	}
 
-	/* get the connected player count */
-	if (!Q_strncmp(c, "playercount", 11)) {
-		s = MSG_ReadString(&net_message);
-		cl.playercount = atoi(s);
-		Com_DPrintf("CL_ConnectionlessPacket: playercount: %i\n", cl.playercount);
-		return;
-	}
-
 	/* teaminfo command */
 	if (!Q_strncmp(c, "teaminfo", 8)) {
 		CL_ParseTeamInfoMessage();
@@ -1911,6 +1912,19 @@ static void CL_CheckCvars_f (void)
 	}
 }
 
+#ifdef DEBUG
+/**
+ * @brief Print the configstrings to game console
+ */
+static void CL_ShowConfigstrings_f (void)
+{
+	int i;
+	for (i = 0; i < MAX_CONFIGSTRINGS; i++)
+		if (*cl.configstrings[i])
+			Com_Printf("cl.configstrings[%2i]: %s\n", i, cl.configstrings[i]);
+}
+#endif
+
 /**
  * @brief Calls all reset functions for all subsystems like production and research
  * also inits the cvars and commands
@@ -2105,6 +2119,7 @@ static void CL_InitLocal (void)
 	Cmd_AddCommand("playerlist", NULL, NULL);
 	Cmd_AddCommand("players", NULL, NULL);
 #ifdef DEBUG
+	Cmd_AddCommand("debug_configstrings", CL_ShowConfigstrings_f, "Print configstrings to game console");
 	Cmd_AddCommand("actorinvlist", NULL, "Shows the inventory list of all actors");
 	Cmd_AddCommand("killteam", NULL, NULL);
 	Cmd_AddCommand("stunteam", NULL, NULL);

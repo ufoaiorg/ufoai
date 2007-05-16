@@ -2063,6 +2063,8 @@ void G_ClientTeamAssign (player_t * player)
 				knownTeams[teamCount++] = p->pers.team;
 		}
 	}
+	gi.configstring(CS_PLAYERCOUNT, va("%i", playerCount));
+
 	Com_DPrintf("G_ClientTeamAssign: Players in game: %i, Unique teams in game: %i\n", playerCount, teamCount);
 
 	/* if all teams/players have joined the game, randomly assign which team gets the first turn */

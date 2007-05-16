@@ -771,6 +771,7 @@ static void Com_DebugHelp_f (void)
 			" * debug_baselist\n"
 			" * debug_buildinglist\n"
 			" * debug_campaignstats\n"
+			" * debug_configstrings\n"
 			" * debug_capacities\n"
 			" * debug_drawblocked\n"
 			"   prints forbidden list to console\n"
@@ -794,6 +795,8 @@ static void Com_DebugHelp_f (void)
 			"   kills all living actors in the given team\n"
 			" * sv showall\n"
 			"   make everything visible to everyone\n"
+			" * net_showdrop\n"
+			" * net_showpakets\n"
 			"------------------------------\n"
 			);
 }

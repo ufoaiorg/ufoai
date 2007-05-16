@@ -867,8 +867,6 @@ static void SP_worldspawn (edict_t * ent)
 	} else
 		Q_strncpyz(level.level_name, level.mapname, sizeof(level.level_name));
 
-	gi.configstring(CS_CDTRACK, va("%i", ent->sounds));
-
 	gi.configstring(CS_MAXCLIENTS, va("%i", maxplayers->integer));
 
 	/* only used in multi player */

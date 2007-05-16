@@ -1668,18 +1668,19 @@ menu multiplayer_wait
 
 	string teams_str
 	{
-		string "_more player(s) are needed before the game can start"
-		pos "320 370"
+		string "_Players connected, waiting for others"
+		pos "335 370"
 	}
 	string teams_val
 	{
-		string "*cvar sv_maxteams"
+		string "*cvar mp_wait_init_players"
 		color "0 0.5 0 1"
 		pos "300 370"
 	}
 
 	pic bt_force
 	{
+		if "mp_wait_init_show_force == 1"
 		tooltip	"_Start the game even if not all teams have joined"
 		image	menu/multi_buttons3
 		texh	"256 64"
@@ -1691,6 +1692,7 @@ menu multiplayer_wait
 	}
 	string string_force
 	{
+		if "mp_wait_init_show_force == 1"
 		font	f_menu
 		color	"0 0.5 0 1"
 		string	"_Force start"
