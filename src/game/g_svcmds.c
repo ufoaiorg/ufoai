@@ -356,7 +356,7 @@ static void SVCmd_StartGame_f (void)
 	}
 	Com_DPrintf("SVCmd_StartGame_f: Players in game: %i, Unique teams in game: %i\n", playerCount, teamCount);
 
-	G_PrintStats("Starting new game");
+	G_PrintStats(va("Starting new game: %s", level.mapname));
 	level.activeTeam = knownTeams[(int)(frand() * (teamCount - 1) + 0.5)];
 	turnTeam = level.activeTeam;
 	/* spawn the player (only human controlled players) */
