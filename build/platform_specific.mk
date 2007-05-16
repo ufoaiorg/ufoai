@@ -16,8 +16,8 @@ ifeq ($(TARGET_OS),mingw32)
 	SHARED_CFLAGS=-shared
 	JPEG_CFLAGS=-DDONT_TYPEDEF_INT32
 	CFLAGS+=-DGETTEXT_STATIC
-#	SERVER_LIBS+=-lintl
-#	GAME_LIBS+=-lintl
+#	SERVER_LIBS+=
+#	GAME_LIBS+=
 #	TOOLS_LIBS=
 endif
 
@@ -48,18 +48,18 @@ ifeq ($(TARGET_OS),darwin)
 				-L/sw/lib \
 				-L/opt/local/lib \
 				#-Wl,-syslibroot,/Developer/SDKs/MacOSX10.4u.sdk,-m \
-				#(für intel)-Wl,-syslibroot,/Developer/SDKs/MacOSX10.4u.sdk \
+				#(for intel)-Wl,-syslibroot,/Developer/SDKs/MacOSX10.4u.sdk \
 				-F/Developer/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks \
       			-arch ppc \
       			-framework Carbon \
       			-framework Cocoa \
       			-framework OpenGL \
-      			-framework IOKit      			
-  
+      			-framework IOKit
+
 	CFLAGS += -D_BSD_SOURCE -D_XOPEN_SOURCE
 	#FIXME
 	CLIENT_LIBS+=-lintl
-	SERVER_LIBS+=-lintl 
+	SERVER_LIBS+=
 endif
 
 #########################################################################################################################
@@ -67,6 +67,8 @@ endif
 #########################################################################################################################
 
 RELEASE_CFLAGS=-ffast-math -funroll-loops -D_FORTIFY_SOURCE=2
+
+CFLAGS+=-DSHARED_EXT=\"$(SHARED_EXT)\"
 
 #ifeq ($(TARGET_CPU),axp)
 #	RELEASE_CFLAGS+=-fomit-frame-pointer -fexpensive-optimizations
