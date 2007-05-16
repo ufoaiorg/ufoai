@@ -196,8 +196,6 @@ extern server_static_t svs;		/**< persistant server info */
 extern server_t sv;				/**< local server */
 
 extern cvar_t *sv_paused;
-extern cvar_t *sv_noreload;		/**< don't reload level state when reentering - development tool */
-extern cvar_t *sv_enforcetime;
 
 extern cvar_t *public_server;			/**< should heartbeats be sent */
 extern cvar_t *masterserver_ip;

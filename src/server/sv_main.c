@@ -35,14 +35,10 @@ client_t *sv_client;			/* current client */
 cvar_t *sv_paused;
 cvar_t *sv_timedemo;
 
-cvar_t *sv_enforcetime;
-
 cvar_t *timeout;				/* seconds without any message */
 cvar_t *zombietime;				/* seconds to sink messages after disconnect */
 
 cvar_t *rcon_password;			/* password for remote server commands */
-
-cvar_t *sv_noreload;			/* don't reload level state when reentering */
 
 cvar_t *sv_downloadserver;
 
@@ -1152,20 +1148,18 @@ extern void SV_Init (void)
 	masterserver_port = Cvar_Get("masterserver_port", "27900", CVAR_ARCHIVE, "Port of UFO:AI masterserver");
 	sv_maxclients = Cvar_Get("maxclients", "1", CVAR_SERVERINFO, "Max. connected clients");
 	hostname = Cvar_Get("hostname", _("noname"), CVAR_SERVERINFO | CVAR_ARCHIVE, "The name of the server that is displayed in the serverlist");
-	timeout = Cvar_Get("timeout", "125", 0, NULL);
-	zombietime = Cvar_Get("zombietime", "2", 0, NULL);
+	timeout = Cvar_Get("timeout", "125", 0, "Timeout in seconds");
+	zombietime = Cvar_Get("zombietime", "2", 0, "Timeout for zombies (in sec)");
 	sv_showclamp = Cvar_Get("showclamp", "0", 0, NULL);
 	sv_downloadserver = Cvar_Get("sv_downloadserver", "", CVAR_ARCHIVE, "URL to a location where clients can download game content over HTTP");
 	sv_paused = Cvar_Get("paused", "0", 0, NULL);
 	sv_timedemo = Cvar_Get("timedemo", "0", 0, NULL);
-	sv_enforcetime = Cvar_Get("sv_enforcetime", "0", 0, NULL);
 	sv_enablemorale = Cvar_Get("sv_enablemorale", "1", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, "Enable morale changes in multiplayer");
-	maxsoldiers = Cvar_Get("maxsoldiers", "4", CVAR_ARCHIVE | CVAR_SERVERINFO, NULL);
-	maxsoldiersperplayer = Cvar_Get("maxsoldiersperplayer", "8", CVAR_ARCHIVE | CVAR_SERVERINFO, NULL);
+	maxsoldiers = Cvar_Get("maxsoldiers", "4", CVAR_ARCHIVE | CVAR_SERVERINFO, "Max. amount of soldiers per team (see maxsoldiersperplayer and sv_teamplay)");
+	maxsoldiersperplayer = Cvar_Get("maxsoldiersperplayer", "8", CVAR_ARCHIVE | CVAR_SERVERINFO, "Max. amount of soldiers each player can controll (see maxsoldiers and sv_teamplay)");
 
-	sv_noreload = Cvar_Get("sv_noreload", "0", 0, NULL);
 	public_server = Cvar_Get("public", "1", 0, "Should heartbeats be send to the masterserver");
-	sv_reconnect_limit = Cvar_Get("sv_reconnect_limit", "3", CVAR_ARCHIVE, NULL);
+	sv_reconnect_limit = Cvar_Get("sv_reconnect_limit", "3", CVAR_ARCHIVE, "Minimum seconds between connect messages");
 
 	if (dedicated->value)
 		Cvar_Set("maxclients", "8");
