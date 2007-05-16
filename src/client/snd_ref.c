@@ -452,8 +452,8 @@ void S_Init (void)
 				Com_Printf("Load library failed: %s\n", dlerror());
 				return;
 			}
-#endif /* WIN32 */
 		}
+#endif /* WIN32 */
 
 		if ((SND_Init = (SND_Init_t) dlladdr(snd_ref_lib, "SND_Init")) == 0)
 			Com_Error(ERR_FATAL, "dladdr failed loading SND_Init\n");
