@@ -166,6 +166,9 @@ typedef struct {
 	void (*GridPosToVec) (struct routing_s * map, pos3_t pos, vec3_t vec);
 	void (*GridRecalcRouting) (struct routing_s * map, char *name, char **list);
 
+	/* filesystem functions */
+	const char *(*FS_Gamedir) (void);
+
 	/* network messaging (writing) */
 	void (*multicast) (int mask);
 	void (*unicast) (player_t * player);

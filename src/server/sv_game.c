@@ -325,9 +325,8 @@ static void PF_WriteNewSave (int c)
 		Com_Printf("MSG_WriteShort: range error %i.\n", c);
 #endif
 
- 	pf_save = sv.multicast.data + sv.multicast.cursize;
+	pf_save = sv.multicast.data + sv.multicast.cursize;
 	MSG_WriteShort(&sv.multicast, c);
-
 }
 
 /**
@@ -460,7 +459,7 @@ static void PF_EndEvents (void)
 /**
  * @brief
  */
-static void PF_AddEvent(int mask, int eType)
+static void PF_AddEvent (int mask, int eType)
 {
 	if (!pfe_pending || mask != pfe_mask) {
 		/* the target clients have changed or nothing is pending */
@@ -480,8 +479,9 @@ static void PF_AddEvent(int mask, int eType)
 
 /**
  * @brief Called when either the entire server is being killed, or it is changing to a different game directory.
+ * @sa ShutdownGame
  */
-void SV_ShutdownGameProgs(void)
+void SV_ShutdownGameProgs (void)
 {
 	if (!ge)
 		return;
@@ -498,7 +498,7 @@ void SCR_DebugGraph(float value, int color);
 /**
  * @brief Init the game subsystem for a new map
  */
-void SV_InitGameProgs(void)
+void SV_InitGameProgs (void)
 {
 	game_import_t import;
 
@@ -539,6 +539,8 @@ void SV_InitGameProgs(void)
 
 	import.configstring = PF_Configstring;
 	import.break_sound = SV_BreakSound;
+
+	import.FS_Gamedir = FS_Gamedir;
 
 	import.WriteChar = PF_WriteChar;
 	import.WriteByte = PF_WriteByte;
@@ -588,8 +590,6 @@ void SV_InitGameProgs(void)
 	import.AddCommandString = Cbuf_AddText;
 
 	import.DebugGraph = SCR_DebugGraph;
-/*	import.SetAreaPortalState = CM_SetAreaPortalState; */
-/*	import.AreasConnected = CM_AreasConnected; */
 
 	import.seed = Sys_Milliseconds();
 	import.csi = &csi;

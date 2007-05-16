@@ -2069,15 +2069,20 @@ void G_ClientTeamAssign (player_t * player)
 	if ((!sv_teamplay->integer && teamCount >= sv_maxteams->integer) ||
 		(sv_teamplay->integer && playerCount >= sv_maxclients->integer)) {
 		char buffer[MAX_VAR] = "";
+		G_PrintStats("Starting new game");
 		level.activeTeam = knownTeams[(int)(frand() * (teamCount - 1) + 0.5)];
 		turnTeam = level.activeTeam;
 		for (i = 0, p = game.players; i < game.maxplayers; i++, p++) {
-			if (p->inuse && !p->pers.spectator && p->pers.team == level.activeTeam) {
-				Q_strcat(buffer, p->pers.netname, sizeof(buffer));
-				Q_strcat(buffer, " ", sizeof(buffer));
+			if (p->inuse && !p->pers.spectator) {
+				if (p->pers.team == level.activeTeam) {
+					Q_strcat(buffer, p->pers.netname, sizeof(buffer));
+					Q_strcat(buffer, " ", sizeof(buffer));
+				}
 			}
+			G_PrintStats(va("Team %i: %s", p->pers.team, p->pers.netname));
 		}
-		gi.bprintf(PRINT_HIGH, _("Team %i ( %s) will get the first turn.\n"), turnTeam, buffer);
+		G_PrintStats(va("Team %i got the first round", turnTeam));
+		gi.bprintf(PRINT_HIGH, _("Team %i (%s) will get the first turn.\n"), turnTeam, buffer);
 	}
 }
 

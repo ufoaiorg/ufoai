@@ -288,7 +288,7 @@ static void G_UpdateCharacterScore (edict_t *attacker, fireDef_t *fd, edict_t *t
  * @param[in] attacker The attacker.
  * @param[in] mock pseudo shooting - only for calculating mock values - NULL for real shots
  * @sa G_SplashDamage
- * @sa G_PrintStats
+ * @sa G_PrintActorStats
  */
 static void G_Damage (edict_t * ent, fireDef_t *fd, int damage, edict_t * attacker, shot_mock_t *mock)
 {
@@ -412,7 +412,7 @@ static void G_Damage (edict_t * ent, fireDef_t *fd, int damage, edict_t * attack
 		G_SendStats(ent);
 		/* prints stats for multiplayer to game console */
 		if (sv_maxclients->integer > 1) {
-			G_PrintStats(ent, attacker, fd);
+			G_PrintActorStats(ent, attacker, fd);
 		}
 
 		G_ActorDie(ent, ent->HP == 0 ? STATE_DEAD : STATE_STUN);

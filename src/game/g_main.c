@@ -245,7 +245,7 @@ void InitGame (void)
 
 	logstatsfile = NULL;
 	if (logstats->integer)
-		logstatsfile = fopen("stats.log", "a");
+		logstatsfile = fopen(va("%s/stats.log", gi.FS_Gamedir()), "a");
 }
 
 
@@ -445,6 +445,8 @@ void G_EndGame (int team)
 	int i, j = 0;
 	int	number_of_teams;
 
+	G_PrintStats(va("End of game - Team %i is the winner", team));
+
 	/* if aliens won, make sure every soldier dies */
 	if (team == TEAM_ALIEN) {
 		level.num_alive[TEAM_PHALANX] = 0;
@@ -618,6 +620,7 @@ qboolean G_RunFrame (void)
 	/* check for intermission */
 	if (level.intermissionTime && level.time > level.intermissionTime) {
 		G_EndGame(level.winningTeam);
+		G_PrintStats(va("End of game - Team %i is the winner", level.winningTeam));
 #if 0
 		/* It still happens that game results are send twice --- dangerous */
 

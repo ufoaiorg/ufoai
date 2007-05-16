@@ -246,7 +246,8 @@ edict_t *G_Find(edict_t * from, int fieldofs, char *match);
 edict_t *G_FindRadius(edict_t * from, vec3_t org, float rad, entity_type_t type);
 const char* G_GetPlayerName(int pnum);
 const char* G_GetWeaponNameForFiredef(fireDef_t* fd);
-void G_PrintStats(edict_t* victim, edict_t* attacker, fireDef_t* fd);
+void G_PrintActorStats(edict_t* victim, edict_t* attacker, fireDef_t* fd);
+void G_PrintStats(const char *buffer);
 void Move_Calc(edict_t *ent, vec3_t dest, void(*func)(edict_t*));
 void G_SetMovedir(vec3_t angles, vec3_t movedir);
 

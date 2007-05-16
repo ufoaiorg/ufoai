@@ -27,6 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "g_local.h"
+#include <time.h>
 
 #if 0
 /**
@@ -109,10 +110,30 @@ const char* G_GetPlayerName (int pnum)
 }
 
 /**
+ * @brief Prints stats to game console and stats log file
+ * @sa G_PrintActorStats
+ */
+extern void G_PrintStats (const char *buffer)
+{
+	struct tm *t;
+	char tbuf[32];
+	time_t aclock;
+
+	time(&aclock);
+	t = localtime(&aclock);
+
+	Com_sprintf(tbuf, sizeof(tbuf), "%4i/%02i/%02i %02i:%02i:%02i", t->tm_year + 1900, t->tm_mon + 1, t->tm_mday, t->tm_hour, t->tm_min, t->tm_sec);
+	Com_Printf("[STATS] %s - %s\n", tbuf, buffer);
+	if (logstatsfile)
+		fprintf(logstatsfile, "[STATS] %s - %s\n", tbuf, buffer);
+}
+
+/**
  * @brief Prints stats about who killed who with what and how
  * @sa G_Damage
+ * @sa G_PrintStats
  */
-extern void G_PrintStats (edict_t* victim, edict_t* attacker, fireDef_t* fd)
+extern void G_PrintActorStats (edict_t* victim, edict_t* attacker, fireDef_t* fd)
 {
 	const char *victimName = NULL, *attackerName = NULL;
 	char buffer[512];
@@ -147,25 +168,23 @@ extern void G_PrintStats (edict_t* victim, edict_t* attacker, fireDef_t* fd)
 			}
 		}
 		if (victim->team != attacker->team) {
-			Com_sprintf(buffer, sizeof(buffer), "%s (%s) %s %s (%s) with %s of %s\n",
+			Com_sprintf(buffer, sizeof(buffer), "%s (%s) %s %s (%s) with %s of %s",
 				attackerName, attacker->chr.name,
 				(victim->HP == 0 ? "kills" : "stuns"),
 				victimName, victim->chr.name, fd->name, G_GetWeaponNameForFiredef(fd));
 		} else {
-			Com_sprintf(buffer, sizeof(buffer), "%s (%s) %s %s (%s) (teamkill) with %s of %s\n",
+			Com_sprintf(buffer, sizeof(buffer), "%s (%s) %s %s (%s) (teamkill) with %s of %s",
 				attackerName, attacker->chr.name,
 				(victim->HP == 0 ? "kills" : "stuns"),
 				victimName, victim->chr.name, fd->name, G_GetWeaponNameForFiredef(fd));
 		}
 	} else {
 		attackerName = G_GetPlayerName(attacker->pnum);
-		Com_sprintf(buffer, sizeof(buffer), "%s %s %s (own team) with %s of %s\n",
+		Com_sprintf(buffer, sizeof(buffer), "%s %s %s (own team) with %s of %s",
 			attackerName, (victim->HP == 0 ? "kills" : "stuns"),
 			victim->chr.name, fd->name, G_GetWeaponNameForFiredef(fd));
 	}
-	Com_Printf("[STATS] %s", buffer);
-	if (logstatsfile)
-		fprintf(logstatsfile, "%s", buffer);
+	G_PrintStats(buffer);
 }
 
 /**

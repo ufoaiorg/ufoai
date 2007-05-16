@@ -356,6 +356,7 @@ static void SVCmd_StartGame_f (void)
 	}
 	Com_DPrintf("SVCmd_StartGame_f: Players in game: %i, Unique teams in game: %i\n", playerCount, teamCount);
 
+	G_PrintStats("Starting new game");
 	level.activeTeam = knownTeams[(int)(frand() * (teamCount - 1) + 0.5)];
 	turnTeam = level.activeTeam;
 	/* spawn the player (only human controlled players) */
@@ -367,7 +368,9 @@ static void SVCmd_StartGame_f (void)
 			Q_strcat(buffer, p->pers.netname, MAX_VAR);
 			Q_strcat(buffer, " ", MAX_VAR);
 		}
+		G_PrintStats(va("Team %i: %s", p->pers.team, p->pers.netname));
 	}
+	G_PrintStats(va("Team %i got the first round", turnTeam));
 	gi.bprintf(PRINT_HIGH, _("Team %i (%s) will get the first turn.\n"), turnTeam, buffer);
 }
 

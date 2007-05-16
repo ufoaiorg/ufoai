@@ -3844,7 +3844,7 @@ void GLimp_EnableLogging (qboolean enable)
 			Com_sprintf(buffer, sizeof(buffer), "%s/gl.log", ri.FS_Gamedir());
 			glw_state.log_fp = fopen(buffer, "wt");
 
-			fprintf(glw_state.log_fp, "%s\n", asctime(newtime ));
+			fprintf(glw_state.log_fp, "%s\n", asctime(newtime));
 		}
 
 		qglAccum                     = logAccum;
