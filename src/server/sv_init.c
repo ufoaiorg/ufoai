@@ -56,7 +56,7 @@ static int SV_FindIndex (const char *name, int start, int max, qboolean create)
 
 	if (sv.state != ss_loading) {	/* send the update to everyone */
 		SZ_Clear(&sv.multicast);
-		MSG_WriteChar(&sv.multicast, svc_configstring);
+		MSG_WriteByte(&sv.multicast, svc_configstring);
 		MSG_WriteShort(&sv.multicast, start + i);
 		MSG_WriteString(&sv.multicast, name);
 		SV_Multicast(~0);

@@ -486,8 +486,6 @@ extern void CL_ClearState (void)
  */
 void CL_Disconnect (void)
 {
-	byte final[32];
-
 	if (cls.state == ca_disconnected)
 		return;
 
@@ -504,12 +502,8 @@ void CL_Disconnect (void)
 	cls.connect_time = 0;
 
 	/* send a disconnect message to the server */
-	final[0] = clc_stringcmd;
-	Q_strncpyz((char *) final + 1, "disconnect", sizeof(final) - 1);
-	Netchan_Transmit(&cls.netchan, strlen((char *) final), final);
-	/* FIXME: why 3 times? */
-	Netchan_Transmit(&cls.netchan, strlen((char *) final), final);
-	Netchan_Transmit(&cls.netchan, strlen((char *) final), final);
+	MSG_WriteByte(&cls.netchan.message, clc_stringcmd);
+	MSG_WriteString(&cls.netchan.message, "disconnect");
 
 	CL_ClearState();
 
@@ -605,7 +599,7 @@ static void CL_Reconnect_f (void)
 	S_StopAllSounds();
 	if (cls.state == ca_connected) {
 		Com_Printf("reconnecting...\n");
-		MSG_WriteChar(&cls.netchan.message, clc_stringcmd);
+		MSG_WriteByte(&cls.netchan.message, clc_stringcmd);
 		MSG_WriteString(&cls.netchan.message, "new");
 		return;
 	}
@@ -1345,7 +1339,7 @@ static void CL_ConnectionlessPacket (void)
 			return;
 		}
 		Netchan_Setup(NS_CLIENT, &cls.netchan, net_from, cls.ufoPort);
-		MSG_WriteChar(&cls.netchan.message, clc_stringcmd);
+		MSG_WriteByte(&cls.netchan.message, clc_stringcmd);
 		MSG_WriteString(&cls.netchan.message, "new");
 		cls.state = ca_connected;
 		return;

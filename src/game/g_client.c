@@ -2063,7 +2063,6 @@ void G_ClientTeamAssign (player_t * player)
 				knownTeams[teamCount++] = p->pers.team;
 		}
 	}
-	gi.configstring(CS_PLAYERCOUNT, va("%i", playerCount));
 
 	Com_DPrintf("G_ClientTeamAssign: Players in game: %i, Unique teams in game: %i\n", playerCount, teamCount);
 
@@ -2452,6 +2451,7 @@ void G_ClientBegin (player_t* player)
 	}
 
 	level.numplayers++;
+	gi.configstring(CS_PLAYERCOUNT, va("%i", level.numplayers));
 
 	/*Com_Printf("G_ClientBegin: player: %i - pnum: %i , game.maxplayers: %i	\n", P_MASK(player), player->num, game.maxplayers);*/
 	/* spawn camera (starts client rendering) */
@@ -2589,9 +2589,14 @@ qboolean G_ClientConnect (player_t * player, char *userinfo)
 void G_ClientDisconnect (player_t * player)
 {
 	level.numplayers--;
+	gi.configstring(CS_PLAYERCOUNT, va("%i", level.numplayers));
 
 	if (level.activeTeam == player->pers.team)
 		G_ClientEndRound(player, NOISY);
+
+	/* if no more players are connected - stop the server */
+	if (!level.numplayers)
+		level.intermissionTime = level.time + 10.0f;
 
 	gi.bprintf(PRINT_HIGH, "%s disconnected.\n", player->pers.netname);
 }

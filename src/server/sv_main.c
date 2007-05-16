@@ -77,7 +77,7 @@ void SV_DropClient (client_t * drop)
 	/* add the disconnect */
 	MSG_WriteByte(&drop->netchan.message, svc_disconnect);
 
-	if (drop->state == cs_spawned) {
+	if (drop->state == cs_spawned || drop->state == cs_spawning) {
 		/* call the prog function for removing a client */
 		/* this will remove the body, among other things */
 		ge->ClientDisconnect(drop->player);
