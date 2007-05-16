@@ -552,7 +552,7 @@ void VID_CheckChanges (void)
 		cls.disable_screen = qtrue;
 
 		/* try generic refresh lib first */
-		Com_sprintf(name, sizeof(name), "ref_%s.%s", vid_ref->string, SHARED_EXT);
+		Com_sprintf(name, sizeof(name), "ref_%s.dll", vid_ref->string);
 		if (!VID_LoadRefresh(name)) {
 			Cmd_ExecuteString("condump gl_debug");
 			Com_Error(ERR_FATAL, "Couldn't initialize OpenGL renderer!\nConsult gl_debug.txt for further information.");
