@@ -813,7 +813,6 @@ static void CL_WaitInit_f (void)
 		Cvar_SetValue("sv_maxteams", atoi(cl.configstrings[CS_MAXTEAMS]));
 	}
 	Cvar_SetValue("mp_missing_players", cl.playercount);
-	Netchan_OutOfBandPrint(NS_CLIENT, adr, "playercount %i", PROTOCOL_VERSION);
 }
 
 /**
