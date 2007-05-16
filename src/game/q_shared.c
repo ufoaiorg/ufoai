@@ -45,6 +45,7 @@ static int globalCampaignID = -1;
 
 const int dvecs[DIRECTIONS][2] = { {1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {-1, -1}, {-1, 1}, {1, -1} };
 const float dvecsn[DIRECTIONS][2] = { {1, 0}, {-1, 0}, {0, 1}, {0, -1}, {RT2, RT2}, {-RT2, -RT2}, {-RT2, RT2}, {RT2, -RT2} };
+/* if you change dangle[DIRECTIONS], you must also change function AngleToDV */
 const float dangle[DIRECTIONS] = { 0, 180.0f, 90.0f, 270.0f, 45.0f, 225.0f, 135.0f, 315.0f };
 
 const byte dvright[DIRECTIONS] = { 7, 6, 4, 5, 0, 1, 2, 3 };
@@ -97,13 +98,19 @@ int Q_StringSort (const void *string1, const void *string2)
 }
 
 /**
- * @brief
+ * @brief Returns the indice of array dangle[DIRECTIONS] whose value is the closest to angle
+ * @note This function allows to know the closest multiple of 45 degree of angle.
+ * @param[in] angle The angle (in degrees) which is tested.
+ * @return Corresponding indice of array dangle[DIRECTIONS].
  */
 int AngleToDV (int angle)
 {
+#if 0
 	int i, mini;
 	int div, minDiv;
 
+	/* set angle between -22 <= angle <= 338 */
+	/* The first line is just to minimize the number of loops in the following while */
 	angle %= 360;
 	while (angle > 360 - 22)
 		angle -= 360;
@@ -122,6 +129,39 @@ int AngleToDV (int angle)
 	}
 
 	return mini;
+#endif
+
+	angle += 22;
+	/* set angle between 0 <= angle < 360 */
+	angle %= 360;
+	while (angle < 0)
+		angle += 360;
+
+	/* get an integer quotient */
+	angle /= 45;
+
+	/* return the corresponding indice in dangle[DIRECTIONS] */
+	switch(angle) {
+	case 0:
+		return 0;
+	case 1:
+		return 4;
+	case 2:
+		return 2;
+	case 3:
+		return 6;
+	case 4:
+		return 1;
+	case 5:
+		return 5;
+	case 6:
+		return 3;
+	case 7:
+		return 7;
+	default:
+		Com_Printf("Error in AngleToDV: shouldn't have reached this line\n");
+		return 0;
+	}
 }
 
 /*============================================================================ */
@@ -197,10 +237,11 @@ void RotatePointAroundVector (vec3_t dst, const vec3_t dir, const vec3_t point, 
 #endif
 
 /**
- * @brief Rotate a frame into another one
- * @param[in] angles Contains the three Euler angles between the 2 frames
- * @param[out] forward 
- *
+ * @brief Rotate the frame {1,0,0} {0,1,0} and {0,0,1}
+ * @param[in] angles Contains the three Euler angles of rotation
+ * @param[out] forward
+ * @param[out] right
+ * @param[out] up
  */
 void AngleVectors (vec3_t angles, vec3_t forward, vec3_t right, vec3_t up)
 {
