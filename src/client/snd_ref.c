@@ -429,23 +429,9 @@ void S_Init (void)
 #ifdef _WIN32
 		Com_sprintf(libPath, sizeof(libPath), "snd_%s.dll", snd_ref->string);
 		if ((snd_ref_lib = LoadLibrary(libPath)) == 0) {
-#if defined _M_IX86
-#ifdef DEBUG
-			Com_sprintf(libPath, sizeof(libPath), "snd_%s32d.dll", snd_ref->string);
-#else
-			Com_sprintf(libPath, sizeof(libPath), "snd_%s32.dll", snd_ref->string);
-#endif
-#elif defined _M_X64
-#ifdef DEBUG
-			Com_sprintf(libPath, sizeof(libPath), "snd_%s64d.dll", snd_ref->string);
-#else
-			Com_sprintf(libPath, sizeof(libPath), "snd_%s64.dll", snd_ref->string);
-#endif
-#endif
-			if ((snd_ref_lib = LoadLibrary(libPath)) == 0) {
-				Com_Printf("Load library failed - no sound available\n");
-				return;
-			}
+			Com_Printf("Load library (%s) failed - no sound available\n", libPath);
+			return;
+		}
 #else /* WIN32 */
 		s_libdir = Cvar_Get("s_libdir", "", CVAR_ARCHIVE, "lib dir for graphic and sound renderer - no game libs");
 
@@ -458,11 +444,7 @@ void S_Init (void)
 		Com_Printf("...library search path: '%s'\n", libPath);
 
 		/* first try system wide */
-#ifndef __APPLE__
-		Com_sprintf(libName, sizeof(libName), "snd_%s.so", snd_ref->string);
-#else
-		Com_sprintf(libName, sizeof(libName), "snd_%s.dylib", snd_ref->string);
-#endif
+		Com_sprintf(libName, sizeof(libName), "snd_%s.%s", snd_ref->string, SHARED_EXT);
 		if ((snd_ref_lib = dlopen(libName, RTLD_LAZY|RTLD_GLOBAL)) == 0) {
 			/* then use s_libdir cvar */
 			Com_sprintf(libPath, sizeof(libPath), "%s/%s", libPath, libName);

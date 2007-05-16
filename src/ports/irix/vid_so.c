@@ -384,11 +384,7 @@ void VID_CheckChanges (void)
 		vid_fullscreen->modified = qtrue;
 		cl.refresh_prepped = qfalse;
 		cls.disable_screen = qtrue;
-#ifndef __APPLE__
-		Com_sprintf(name, sizeof(name), "ref_%s.so", vid_ref->string);
-#else
-		Com_sprintf(name, sizeof(name), "ref_%s.dylib", vid_ref->string);
-#endif
+		Com_sprintf(name, sizeof(name), "ref_%s.%s", vid_ref->string, SHARED_EXT);
 		if (!VID_LoadRefresh(name)) {
 			Cmd_ExecuteString("condump gl_debug");
 			Com_Error(ERR_FATAL, "Couldn't initialize OpenGL renderer!\nConsult gl_debug.txt for further information.");

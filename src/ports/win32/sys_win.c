@@ -807,44 +807,6 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 	const char	*path;
 	char	cwd[MAX_OSPATH];
 
-#if defined _M_IX86
-
-#ifndef DEBUG
-	const char *gamename = "game32.dll";
-	const char *debugdir = "src/release/bin/win32";
-#else
-	const char *gamename = "game32d.dll";
-	const char *debugdir = "src/debug/bin/win32";
-#endif
-
-#elif defined _M_X64
-
-#ifndef DEBUG
-	const char *gamename = "game64.dll";
-	const char *debugdir = "src/release/bin/x64";
-#else
-	const char *gamename = "game64d.dll";
-	const char *debugdir = "src/debug/bin/x64";
-#endif
-
-#elif defined _M_ALPHA
-
-#error Update DEC ALPHA platform project configuration
-
-#ifndef DEBUG
-	const char *gamename = "game???.dll";
-	const char *debugdir = "src/release/bin/alpha";
-#else
-	const char *gamename = "game???d.dll";
-	const char *debugdir = "src/debug/bin/alpha";
-#endif
-
-#else
-
-#error Unsupported platform!
-
-#endif
-
 	if (game_library)
 		Com_Error(ERR_FATAL, "Sys_GetGameAPI without Sys_UnloadingGame");
 
@@ -857,32 +819,11 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 		Com_sprintf(name, sizeof(name), "%s/game.dll", path);
 		game_library = LoadLibrary(name);
 		if (game_library) {
-			Com_DPrintf("LoadLibrary (%s)\n",name);
+			Com_DPrintf("LoadLibrary (%s)\n", name);
 			break;
 		} else {
-			Com_DPrintf("LoadLibrary (%s) failed\n",name);
+			Com_DPrintf("LoadLibrary (%s) failed\n", name);
 		}
-	}
-
-	/* check the current debug directory for development purposes */
-	if (!game_library) {
-		_getcwd(cwd, sizeof(cwd));
-		Com_sprintf(name, sizeof(name), "%s/%s/%s", cwd, debugdir, gamename);
-		game_library = LoadLibrary(name);
-		if (game_library)
-			Com_DPrintf("LoadLibrary (%s)\n", name);
-#ifdef DEBUG
-		else {
-			Com_DPrintf("LoadLibrary (%s) failed\n",name);
-			/* check the current directory for other development purposes */
-			Com_sprintf(name, sizeof(name), "%s/%s", cwd, gamename);
-			game_library = LoadLibrary(name);
-			if (game_library)
-				Com_DPrintf("LoadLibrary (%s)\n", name);
-			else
-				Com_DPrintf("LoadLibrary (%s) failed\n",name);
-		}
-#endif
 	}
 
 	if (!game_library) {
