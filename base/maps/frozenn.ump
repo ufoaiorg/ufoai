@@ -192,7 +192,7 @@ a      +a     +a     +a	  a
 0      a      a      a	  0
 }
 
-tile +aliensmall
+tile +ufofighter
 {
 4 4
 
@@ -235,7 +235,7 @@ title "_Alien landing - Snow"
 +h04 "1 2"
 +h05 "0 1"
 +drop "1 1"
-+aliensmall "1 1"
++ufofighter "1 1"
 }
 
 assembly industrial
@@ -273,7 +273,7 @@ title "_Alien landing - Industrial"
 +i04 "1 3"
 +i05 "0 2"
 +i06 "0 3"
-+aliensmall "1 1"
++ufofighter "1 1"
 +drop "1 1"
 }
 
@@ -293,7 +293,7 @@ title "_Multiplayer Coop"
 +i04 "1 3"
 +i05 "0 2"
 +i06 "0 3"
-+aliensmall "1 1"
++ufofighter "1 1"
 +drop "1 1"
 }
 
