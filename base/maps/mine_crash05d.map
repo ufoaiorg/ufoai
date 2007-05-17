@@ -11478,14 +11478,14 @@
 {
 "classname" "misc_model"
 "angles" "0 0 0"
-"model" "models/aircraft/dropship/dropship_top.md2"
+"model" "models/aircraft/drop_firebird/firebird_top.md2"
 "spawnflags" "252"
 "origin" "896 -576 100"
 }
 // entity 27
 {
 "classname" "misc_model"
-"model" "models/aircraft/dropship/dropship_glass.md2"
+"model" "models/aircraft/drop_firebird/firebird_glass.md2"
 "angles" "0 0 0"
 "origin" "896 -576 100"
 "spawnflags" "254"
@@ -11494,7 +11494,7 @@
 {
 "classname" "misc_model"
 "spawnflags" "254"
-"model" "models/aircraft/dropship/dropship.md2"
+"model" "models/aircraft/drop_firebird/firebird.md2"
 "angles" "0 0 0"
 "origin" "896 -576 100"
 }

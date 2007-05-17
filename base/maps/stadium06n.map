@@ -7016,7 +7016,7 @@
 {
 "classname" "misc_model"
 "origin" "-640 -130 32"
-"model" "models/aircraft/dropship/dropship.md2"
+"model" "models/aircraft/drop_firebird/firebird.md2"
 "spawnflags" "255"
 "angles" "0 270 0"
 }
@@ -10521,7 +10521,7 @@
 {
 "classname" "misc_model"
 "origin" "-636 -130 32"
-"model" "models/aircraft/dropship/dropship_top.md2"
+"model" "models/aircraft/drop_firebird/firebird_top.md2"
 "angles" "0 270 0"
 "spawnflags" "254"
 }
@@ -10529,7 +10529,7 @@
 {
 "classname" "misc_model"
 "origin" "-640 -130 32"
-"model" "models/aircraft/dropship/dropship_glass.md2"
+"model" "models/aircraft/drop_firebird/firebird_glass.md2"
 "angles" "0 270 0"
 "spawnflags" "255"
 }
