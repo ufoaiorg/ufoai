@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-05-13 21:23+0200\n"
+"POT-Creation-Date: 2007-05-17 11:44+0200\n"
 "PO-Revision-Date: 2007-04-02 17:45+0600\n"
 "Last-Translator: Gray Fiend <gray_fiend@ngs.ru>\n"
 "Language-Team: \n"
@@ -99,23 +99,67 @@ msgstr ">Перехватчик класса"
 msgid "Saracen I"
 msgstr "Сарацин Пр"
 
-#: ../base/ufos/aircraftmanagement.ufo:99 ../base/ufos/otheritems.ufo:37
+#: ../base/ufos/aircraftmanagement.ufo:99
+#, fuzzy
+msgid "Stingray Interceptor"
+msgstr "Interceptor"
+
+#: ../base/ufos/aircraftmanagement.ufo:100
+#, fuzzy
+msgid "Stingray"
+msgstr "плазменный поток"
+
+#: ../base/ufos/aircraftmanagement.ufo:120 ../base/ufos/otheritems.ufo:49
+#: ../base/ufos/research.ufo:2614 ../base/ufos/research.ufo:2623
+#: ../base/ufos/research.ufo:2630
+msgid "UFO - Harvester"
+msgstr "НЛО - Охотник"
+
+#: ../base/ufos/aircraftmanagement.ufo:121
+#, fuzzy
+msgid "Harvester U"
+msgstr "НЛО - Охотник"
+
+#: ../base/ufos/aircraftmanagement.ufo:142 ../base/ufos/otheritems.ufo:61
+#, fuzzy
+msgid "UFO - Carrier"
+msgstr "НЛО - Охотник"
+
+#: ../base/ufos/aircraftmanagement.ufo:164 ../base/ufos/otheritems.ufo:67
+#, fuzzy
+msgid "UFO - Big"
+msgstr "НЛО - Истребитель"
+
+#: ../base/ufos/aircraftmanagement.ufo:165
+msgid "Big U"
+msgstr ""
+
+#: ../base/ufos/aircraftmanagement.ufo:186 ../base/ufos/otheritems.ufo:55
+#, fuzzy
+msgid "UFO - Condor"
+msgstr "НЛО - Разведчик"
+
+#: ../base/ufos/aircraftmanagement.ufo:187
+msgid "Condor U"
+msgstr ""
+
+#: ../base/ufos/aircraftmanagement.ufo:207 ../base/ufos/otheritems.ufo:37
 #: ../base/ufos/research.ufo:2543 ../base/ufos/research.ufo:2552
 #: ../base/ufos/research.ufo:2559
 msgid "UFO - Scout"
 msgstr "НЛО - Разведчик"
 
-#: ../base/ufos/aircraftmanagement.ufo:100
+#: ../base/ufos/aircraftmanagement.ufo:208
 msgid "Scout U"
 msgstr "Разведчик Н"
 
-#: ../base/ufos/aircraftmanagement.ufo:120 ../base/ufos/otheritems.ufo:43
+#: ../base/ufos/aircraftmanagement.ufo:228 ../base/ufos/otheritems.ufo:43
 #: ../base/ufos/research.ufo:2578 ../base/ufos/research.ufo:2587
 #: ../base/ufos/research.ufo:2594
 msgid "UFO - Fighter"
 msgstr "НЛО - Истребитель"
 
-#: ../base/ufos/aircraftmanagement.ufo:121
+#: ../base/ufos/aircraftmanagement.ufo:229
 msgid "Fighter U"
 msgstr "Истребитель Н"
 
@@ -203,64 +247,64 @@ msgstr "Малый ангар"
 msgid "Small UFO Hangar"
 msgstr "Малый ангар НЛО"
 
-#: ../base/ufos/basemanagement.ufo:226 ../base/ufos/basemanagement.ufo:245
+#: ../base/ufos/basemanagement.ufo:226 ../base/ufos/basemanagement.ufo:243
 msgid "Large UFO Hangar"
 msgstr "Большой ангар НЛО"
 
-#: ../base/ufos/basemanagement.ufo:254
+#: ../base/ufos/basemanagement.ufo:252
 msgid "Team Room"
 msgstr "Комната отдыха"
 
-#: ../base/ufos/basemanagement.ufo:266 ../base/ufos/basemanagement.ufo:286
+#: ../base/ufos/basemanagement.ufo:264 ../base/ufos/basemanagement.ufo:284
 msgid "Workshop"
 msgstr "Мастерская"
 
-#: ../base/ufos/basemanagement.ufo:295
+#: ../base/ufos/basemanagement.ufo:293
 msgid "Radar"
 msgstr "Радар"
 
-#: ../base/ufos/basemanagement.ufo:312
+#: ../base/ufos/basemanagement.ufo:310
 msgid "Laboratory"
 msgstr "Лаборатория"
 
-#: ../base/ufos/basemanagement.ufo:331
+#: ../base/ufos/basemanagement.ufo:329
 msgid "Hospital"
 msgstr "Лазарет"
 
-#: ../base/ufos/basemanagement.ufo:350
+#: ../base/ufos/basemanagement.ufo:348
 #, fuzzy
 msgid "Antimatter Storage"
 msgstr "Антиматерия"
 
-#: ../base/ufos/basemanagement.ufo:363
+#: ../base/ufos/basemanagement.ufo:361
 msgid "Home"
 msgstr "ШТАБ-КВАРТИРА"
 
-#: ../base/ufos/basemanagement.ufo:364
+#: ../base/ufos/basemanagement.ufo:362
 msgid "Base #2"
 msgstr "База #2"
 
-#: ../base/ufos/basemanagement.ufo:365
+#: ../base/ufos/basemanagement.ufo:363
 msgid "Base #3"
 msgstr "База #3"
 
-#: ../base/ufos/basemanagement.ufo:366
+#: ../base/ufos/basemanagement.ufo:364
 msgid "Base #4"
 msgstr "База #4"
 
-#: ../base/ufos/basemanagement.ufo:367
+#: ../base/ufos/basemanagement.ufo:365
 msgid "Base #5"
 msgstr "База #5"
 
-#: ../base/ufos/basemanagement.ufo:368
+#: ../base/ufos/basemanagement.ufo:366
 msgid "Base #6"
 msgstr "База #6"
 
-#: ../base/ufos/basemanagement.ufo:369
+#: ../base/ufos/basemanagement.ufo:367
 msgid "Base #7"
 msgstr "База #7"
 
-#: ../base/ufos/basemanagement.ufo:370
+#: ../base/ufos/basemanagement.ufo:368
 msgid "Base #8"
 msgstr "База #8"
 
@@ -561,7 +605,7 @@ msgstr "Снарядить"
 
 #: ../base/ufos/menu_aircraft.ufo:253 ../base/ufos/menu_aircraft.ufo:470
 #: ../base/ufos/menu_hospital.ufo:311 ../base/ufos/menu_hospital.ufo:516
-#: ../base/ufos/menu_team.ufo:944 ../base/ufos/menu_team.ufo:1706
+#: ../base/ufos/menu_team.ufo:945 ../base/ufos/menu_team.ufo:1707
 msgid "Done"
 msgstr "Готово"
 
@@ -573,7 +617,7 @@ msgstr "Перейти к предыдущему самолету"
 msgid "Switch to the next aircraft"
 msgstr "Перейти к следующему самолету"
 
-#: ../base/ufos/menu_aircraft.ufo:299 ../base/ufos/menu_team.ufo:928
+#: ../base/ufos/menu_aircraft.ufo:299 ../base/ufos/menu_team.ufo:929
 msgid "Team Members:"
 msgstr "Члены отряда:"
 
@@ -587,7 +631,7 @@ msgstr "Вооружение"
 
 #: ../base/ufos/menu_aircraft.ufo:423 ../base/ufos/menu_aircraft.ufo:433
 #: ../base/ufos/menu_buy.ufo:1280 ../base/ufos/menu_production.ufo:422
-#: ../base/ufos/menu_team.ufo:1331
+#: ../base/ufos/menu_team.ufo:1332
 msgid "Armour"
 msgstr "Защитное снаряжение"
 
@@ -895,7 +939,7 @@ msgstr "Вы уверены, что этот модуль необходимо �
 #: ../base/ufos/menu_geoscape.ufo:645 ../base/ufos/menu_geoscape.ufo:695
 #: ../base/ufos/menu_geoscape.ufo:787 ../base/ufos/menu_geoscape.ufo:855
 #: ../base/ufos/menu_geoscape.ufo:913 ../base/ufos/menu_lostwon.ufo:380
-#: ../base/ufos/menu_lostwon.ufo:476 ../base/ufos/menu_multiplayer.ufo:1767
+#: ../base/ufos/menu_lostwon.ufo:476 ../base/ufos/menu_multiplayer.ufo:1764
 #: ../base/ufos/menu_options.ufo:599
 msgid "Close this dialogue"
 msgstr "Закрыть диалог"
@@ -1020,7 +1064,7 @@ msgid "Show primary weapons"
 msgstr "Показать основное вооружение"
 
 #: ../base/ufos/menu_buy.ufo:1220 ../base/ufos/menu_production.ufo:362
-#: ../base/ufos/menu_team.ufo:1271
+#: ../base/ufos/menu_team.ufo:1272
 msgid "Primary"
 msgstr "Основное"
 
@@ -1029,7 +1073,7 @@ msgid "Show only secondary weapons"
 msgstr "Показать только персональное оружие"
 
 #: ../base/ufos/menu_buy.ufo:1240 ../base/ufos/menu_production.ufo:382
-#: ../base/ufos/menu_team.ufo:1291
+#: ../base/ufos/menu_team.ufo:1292
 msgid "Secondary"
 msgstr "Личное"
 
@@ -1038,7 +1082,7 @@ msgid "Show miscellaneous equipment"
 msgstr "Показать прочее снаряжение"
 
 #: ../base/ufos/menu_buy.ufo:1260 ../base/ufos/menu_production.ufo:402
-#: ../base/ufos/menu_team.ufo:1311
+#: ../base/ufos/menu_team.ufo:1312
 msgid "Misc"
 msgstr "Прочее"
 
@@ -1046,50 +1090,50 @@ msgstr "Прочее"
 msgid "Show armour"
 msgstr "Показать броню"
 
-#: ../base/ufos/menu_buy.ufo:1324 ../base/ufos/menu_team.ufo:1362
+#: ../base/ufos/menu_buy.ufo:1324 ../base/ufos/menu_team.ufo:1363
 #: ../base/ufos/menu_ufopedia.ufo:343
 msgid "Previous weapon chambered for this ammunition"
 msgstr ""
 
-#: ../base/ufos/menu_buy.ufo:1347 ../base/ufos/menu_team.ufo:1377
+#: ../base/ufos/menu_buy.ufo:1347 ../base/ufos/menu_team.ufo:1378
 #: ../base/ufos/menu_ufopedia.ufo:358
 msgid "Previous ammunition compatible with this weapon"
 msgstr ""
 
-#: ../base/ufos/menu_buy.ufo:1371 ../base/ufos/menu_team.ufo:1393
+#: ../base/ufos/menu_buy.ufo:1371 ../base/ufos/menu_team.ufo:1394
 #: ../base/ufos/menu_ufopedia.ufo:373
 msgid "Next weapon chambered for this ammunition"
 msgstr ""
 
-#: ../base/ufos/menu_buy.ufo:1394 ../base/ufos/menu_team.ufo:1408
+#: ../base/ufos/menu_buy.ufo:1394 ../base/ufos/menu_team.ufo:1409
 #: ../base/ufos/menu_ufopedia.ufo:388
 msgid "Next ammunition compatible with this weapon"
 msgstr ""
 
-#: ../base/ufos/menu_buy.ufo:1418 ../base/ufos/menu_team.ufo:1424
+#: ../base/ufos/menu_buy.ufo:1418 ../base/ufos/menu_team.ufo:1425
 #: ../base/ufos/menu_ufopedia.ufo:403
 #, fuzzy
 msgid "With weapon:"
 msgstr "Штурмовое оружие:"
 
-#: ../base/ufos/menu_buy.ufo:1427 ../base/ufos/menu_team.ufo:1433
+#: ../base/ufos/menu_buy.ufo:1427 ../base/ufos/menu_team.ufo:1434
 #: ../base/ufos/menu_ufopedia.ufo:412
 msgid "With ammo:"
 msgstr ""
 
-#: ../base/ufos/menu_buy.ufo:1444 ../base/ufos/menu_team.ufo:1450
+#: ../base/ufos/menu_buy.ufo:1444 ../base/ufos/menu_team.ufo:1451
 #: ../base/ufos/menu_ufopedia.ufo:444
 #, fuzzy
 msgid "Previous firemode"
 msgstr "Предыдущая свободная команда"
 
-#: ../base/ufos/menu_buy.ufo:1467 ../base/ufos/menu_team.ufo:1465
+#: ../base/ufos/menu_buy.ufo:1467 ../base/ufos/menu_team.ufo:1466
 #: ../base/ufos/menu_ufopedia.ufo:459
 #, fuzzy
 msgid "Next firemode"
 msgstr "Следующая свободная команда"
 
-#: ../base/ufos/menu_buy.ufo:1490 ../base/ufos/menu_team.ufo:1480
+#: ../base/ufos/menu_buy.ufo:1490 ../base/ufos/menu_team.ufo:1481
 #: ../base/ufos/menu_ufopedia.ufo:474
 #, fuzzy
 msgid "Firemode:"
@@ -1221,8 +1265,8 @@ msgid "New base"
 msgstr "Новая база"
 
 #: ../base/ufos/menu_geoscape.ufo:520 ../base/ufos/menu_geoscape.ufo:614
-#: ../base/ufos/menu_geoscape.ufo:771 ../base/ufos/menu_multiplayer.ufo:659
-#: ../base/ufos/menu_options.ufo:1292
+#: ../base/ufos/menu_geoscape.ufo:771 ../base/ufos/menu_main.ufo:244
+#: ../base/ufos/menu_multiplayer.ufo:659 ../base/ufos/menu_options.ufo:1249
 msgid "Name:"
 msgstr "Название:"
 
@@ -1278,7 +1322,8 @@ msgstr "Действие:"
 msgid "Description:"
 msgstr "Описание:"
 
-#: ../base/ufos/menu_geoscape.ufo:926 ../base/ufos/menu_multiplayer.ufo:1780
+#: ../base/ufos/menu_geoscape.ufo:926 ../base/ufos/menu_main.ufo:234
+#: ../base/ufos/menu_multiplayer.ufo:1777
 msgid "OK"
 msgstr "ОК"
 
@@ -1302,55 +1347,55 @@ msgstr "Переименовать базу"
 
 #: ../base/ufos/menu_hire.ufo:382 ../base/ufos/menu_hospital.ufo:405
 #: ../base/ufos/menu_physdat.ufo:52 ../base/ufos/menu_team.ufo:821
-#: ../base/ufos/menu_team.ufo:1499
+#: ../base/ufos/menu_team.ufo:1500
 msgid "Strength:"
 msgstr "Сила:"
 
 #: ../base/ufos/menu_hire.ufo:395 ../base/ufos/menu_hospital.ufo:410
 #: ../base/ufos/menu_physdat.ufo:57 ../base/ufos/menu_ptleditor.ufo:48
-#: ../base/ufos/menu_team.ufo:826 ../base/ufos/menu_team.ufo:1504
+#: ../base/ufos/menu_team.ufo:826 ../base/ufos/menu_team.ufo:1505
 msgid "Speed:"
 msgstr "Скорость:"
 
 #: ../base/ufos/menu_hire.ufo:409 ../base/ufos/menu_hospital.ufo:415
 #: ../base/ufos/menu_physdat.ufo:62 ../base/ufos/menu_team.ufo:831
-#: ../base/ufos/menu_team.ufo:1509
+#: ../base/ufos/menu_team.ufo:1510
 msgid "Accuracy:"
 msgstr "Точность:"
 
 #: ../base/ufos/menu_hire.ufo:423 ../base/ufos/menu_hospital.ufo:420
 #: ../base/ufos/menu_physdat.ufo:67 ../base/ufos/menu_team.ufo:836
-#: ../base/ufos/menu_team.ufo:1514
+#: ../base/ufos/menu_team.ufo:1515
 msgid "Mind:"
 msgstr "Интеллект:"
 
 #: ../base/ufos/menu_hire.ufo:436 ../base/ufos/menu_hospital.ufo:425
 #: ../base/ufos/menu_physdat.ufo:72 ../base/ufos/menu_team.ufo:841
-#: ../base/ufos/menu_team.ufo:1519
+#: ../base/ufos/menu_team.ufo:1520
 msgid "Close Combat:"
 msgstr "Ближний бой:"
 
 #: ../base/ufos/menu_hire.ufo:449 ../base/ufos/menu_hospital.ufo:430
 #: ../base/ufos/menu_physdat.ufo:77 ../base/ufos/menu_team.ufo:846
-#: ../base/ufos/menu_team.ufo:1524
+#: ../base/ufos/menu_team.ufo:1525
 msgid "Heavy Weapons:"
 msgstr "Тяжёлое вооружение:"
 
 #: ../base/ufos/menu_hire.ufo:462 ../base/ufos/menu_hospital.ufo:435
 #: ../base/ufos/menu_physdat.ufo:82 ../base/ufos/menu_team.ufo:851
-#: ../base/ufos/menu_team.ufo:1529
+#: ../base/ufos/menu_team.ufo:1530
 msgid "Assault Weapons:"
 msgstr "Штурмовое оружие:"
 
 #: ../base/ufos/menu_hire.ufo:475 ../base/ufos/menu_hospital.ufo:440
 #: ../base/ufos/menu_physdat.ufo:87 ../base/ufos/menu_team.ufo:856
-#: ../base/ufos/menu_team.ufo:1534
+#: ../base/ufos/menu_team.ufo:1535
 msgid "Sniper Rifles:"
 msgstr "Снайперское оружие:"
 
 #: ../base/ufos/menu_hire.ufo:488 ../base/ufos/menu_hospital.ufo:445
 #: ../base/ufos/menu_physdat.ufo:92 ../base/ufos/menu_team.ufo:861
-#: ../base/ufos/menu_team.ufo:1539
+#: ../base/ufos/menu_team.ufo:1540
 msgid "High-Explosives:"
 msgstr "Взрывное дело:"
 
@@ -1516,27 +1561,27 @@ msgstr "Физические характеристики бойца"
 msgid "Inventory"
 msgstr "Инвентарь"
 
-#: ../base/ufos/menu_inventory.ufo:21 ../base/ufos/menu_team.ufo:995
+#: ../base/ufos/menu_inventory.ufo:21 ../base/ufos/menu_team.ufo:996
 msgid "Backpack"
 msgstr "Рюкзак"
 
-#: ../base/ufos/menu_inventory.ufo:30 ../base/ufos/menu_team.ufo:1004
+#: ../base/ufos/menu_inventory.ufo:30 ../base/ufos/menu_team.ufo:1005
 msgid "Left Hand"
 msgstr "Левая рука"
 
-#: ../base/ufos/menu_inventory.ufo:39 ../base/ufos/menu_team.ufo:1013
+#: ../base/ufos/menu_inventory.ufo:39 ../base/ufos/menu_team.ufo:1014
 msgid "Right Hand"
 msgstr "Правая рука"
 
-#: ../base/ufos/menu_inventory.ufo:48 ../base/ufos/menu_team.ufo:1022
+#: ../base/ufos/menu_inventory.ufo:48 ../base/ufos/menu_team.ufo:1023
 msgid "Extension"
 msgstr "Насадка"
 
-#: ../base/ufos/menu_inventory.ufo:57 ../base/ufos/menu_team.ufo:1031
+#: ../base/ufos/menu_inventory.ufo:57 ../base/ufos/menu_team.ufo:1032
 msgid "Holster"
 msgstr "Кобура"
 
-#: ../base/ufos/menu_inventory.ufo:66 ../base/ufos/menu_team.ufo:1040
+#: ../base/ufos/menu_inventory.ufo:66 ../base/ufos/menu_team.ufo:1041
 msgid "Belt"
 msgstr "Пояс"
 
@@ -1674,6 +1719,40 @@ msgstr "Титры"
 msgid "Exit"
 msgstr "Выход"
 
+#: ../base/ufos/menu_main.ufo:199
+#, fuzzy
+msgid "Initial settings"
+msgstr "Настройки игры"
+
+#: ../base/ufos/menu_main.ufo:207
+msgid "Variable:"
+msgstr ""
+
+#: ../base/ufos/menu_main.ufo:214
+msgid "Value:"
+msgstr ""
+
+#: ../base/ufos/menu_main.ufo:221
+#, fuzzy
+msgid "Save settings"
+msgstr "Настройки игры"
+
+#: ../base/ufos/menu_main.ufo:268 ../base/ufos/menu_options.ufo:667
+msgid "Volume Control"
+msgstr "Управление громкостью"
+
+#: ../base/ufos/menu_main.ufo:274 ../base/ufos/menu_options.ufo:672
+msgid "Effects:"
+msgstr "Эффекты:"
+
+#: ../base/ufos/menu_main.ufo:295 ../base/ufos/menu_options.ufo:693
+msgid "Music:"
+msgstr "Музыка:"
+
+#: ../base/ufos/menu_main.ufo:317
+msgid "You have to set the playername and hit the 'OK' button:"
+msgstr ""
+
 #: ../base/ufos/menu_multiplayer.ufo:63
 msgid "Join"
 msgstr "Присоединиться"
@@ -1729,7 +1808,7 @@ msgstr "Новый"
 msgid "Generate a team automatically"
 msgstr "Создать отряд автоматически"
 
-#: ../base/ufos/menu_multiplayer.ufo:349 ../base/ufos/weapons_human.ufo:161
+#: ../base/ufos/menu_multiplayer.ufo:349 ../base/ufos/weapons_human.ufo:160
 msgid "Auto"
 msgstr "Авто"
 
@@ -1912,73 +1991,69 @@ msgstr "Включить подсказки"
 msgid "Please wait"
 msgstr "Пожалуйста, подождите"
 
-#: ../base/ufos/menu_multiplayer.ufo:1670
-msgid "Waiting for other players to join the game"
-msgstr "Подождите, пока остальные игроки присоединятся к игре"
+#: ../base/ufos/menu_multiplayer.ufo:1671
+msgid "Players connected, waiting for others"
+msgstr ""
 
-#: ../base/ufos/menu_multiplayer.ufo:1676
-msgid "Players that must join before starting: "
-msgstr "Перед началом к игре должны присединиться: "
-
-#: ../base/ufos/menu_multiplayer.ufo:1688
+#: ../base/ufos/menu_multiplayer.ufo:1684
 msgid "Start the game even if not all teams have joined"
 msgstr "Начать игру, даже если не все команды присединились"
 
-#: ../base/ufos/menu_multiplayer.ufo:1701
+#: ../base/ufos/menu_multiplayer.ufo:1698
 msgid "Force start"
 msgstr "Принудительный старт"
 
-#: ../base/ufos/menu_multiplayer.ufo:1739
+#: ../base/ufos/menu_multiplayer.ufo:1736
 #, fuzzy
 msgid "Enter server password"
 msgstr "Пароль Сервера:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1747
+#: ../base/ufos/menu_multiplayer.ufo:1744
 #, fuzzy
 msgid "Password:"
 msgstr "RCON Пароль:"
 
-#: ../base/ufos/menu_multiplayer.ufo:1788
+#: ../base/ufos/menu_multiplayer.ufo:1785
 msgid "1on1"
 msgstr "1 на 1"
 
-#: ../base/ufos/menu_multiplayer.ufo:1802
+#: ../base/ufos/menu_multiplayer.ufo:1799
 msgid "1on1on1"
 msgstr "1 на 1 на 1"
 
-#: ../base/ufos/menu_multiplayer.ufo:1816
+#: ../base/ufos/menu_multiplayer.ufo:1813
 msgid "2on2"
 msgstr "2 на 2"
 
-#: ../base/ufos/menu_multiplayer.ufo:1830
+#: ../base/ufos/menu_multiplayer.ufo:1827
 msgid "2on2on2"
 msgstr "2 на 2 на 2"
 
-#: ../base/ufos/menu_multiplayer.ufo:1844
+#: ../base/ufos/menu_multiplayer.ufo:1841
 msgid "3on3"
 msgstr "3 на 3"
 
-#: ../base/ufos/menu_multiplayer.ufo:1858
+#: ../base/ufos/menu_multiplayer.ufo:1855
 msgid "3on3on3"
 msgstr "3 на 3 на 3"
 
-#: ../base/ufos/menu_multiplayer.ufo:1872
+#: ../base/ufos/menu_multiplayer.ufo:1869
 msgid "4on4"
 msgstr "4 на 4"
 
-#: ../base/ufos/menu_multiplayer.ufo:1886
+#: ../base/ufos/menu_multiplayer.ufo:1883
 msgid "4on4on4"
 msgstr "4 на 4 на 4"
 
-#: ../base/ufos/menu_multiplayer.ufo:1900
+#: ../base/ufos/menu_multiplayer.ufo:1897
 msgid "Coop 2 players"
 msgstr "2 игрока вместе"
 
-#: ../base/ufos/menu_multiplayer.ufo:1914
+#: ../base/ufos/menu_multiplayer.ufo:1911
 msgid "Coop 3 players"
 msgstr "3 игрока вместе"
 
-#: ../base/ufos/menu_multiplayer.ufo:1928
+#: ../base/ufos/menu_multiplayer.ufo:1925
 msgid "Coop 4 players"
 msgstr "4 игрока вместе"
 
@@ -2066,18 +2141,6 @@ msgstr "Принять"
 msgid "Sound settings"
 msgstr "Настройки звука"
 
-#: ../base/ufos/menu_options.ufo:667
-msgid "Volume Control"
-msgstr "Управление громкостью"
-
-#: ../base/ufos/menu_options.ufo:672
-msgid "Effects:"
-msgstr "Эффекты:"
-
-#: ../base/ufos/menu_options.ufo:693
-msgid "Music:"
-msgstr "Музыка:"
-
 #: ../base/ufos/menu_options.ufo:715
 msgid "Mixing Rate:"
 msgstr "Частота дискретизации:"
@@ -2107,107 +2170,95 @@ msgid "Confirmation needed before walking and shooting"
 msgstr "Перед стрельбой и перемещением требуется подтверждение"
 
 #: ../base/ufos/menu_options.ufo:908
-msgid "Confirm Movement:"
-msgstr "Подтверждение передвижений:"
-
-#: ../base/ufos/menu_options.ufo:924
-msgid "No confirmation before walking"
-msgstr "Не подтверждать начало перемещений"
-
-#: ../base/ufos/menu_options.ufo:938
-msgid "Confirmation needed before walking"
-msgstr "Подтверждать начало перемещений"
-
-#: ../base/ufos/menu_options.ufo:951
 msgid "HUD Design:"
 msgstr "Дизайн графической оболочки:"
 
-#: ../base/ufos/menu_options.ufo:967 ../base/ufos/menu_options.ufo:977
+#: ../base/ufos/menu_options.ufo:924 ../base/ufos/menu_options.ufo:934
 msgid "Choose another hud"
 msgstr "Выбрать другую оболочку"
 
-#: ../base/ufos/menu_options.ufo:986
+#: ../base/ufos/menu_options.ufo:943
 msgid "Tooltips:"
 msgstr "Подсказки:"
 
-#: ../base/ufos/menu_options.ufo:1002
+#: ../base/ufos/menu_options.ufo:959
 msgid "Deactivates tooltips"
 msgstr "Отключить подсказки"
 
-#: ../base/ufos/menu_options.ufo:1016
+#: ../base/ufos/menu_options.ufo:973
 msgid "Activates tooltips"
 msgstr "Включить подсказки"
 
-#: ../base/ufos/menu_options.ufo:1029
+#: ../base/ufos/menu_options.ufo:986
 msgid "Centre view:"
 msgstr "Центральный вид:"
 
-#: ../base/ufos/menu_options.ufo:1045
+#: ../base/ufos/menu_options.ufo:1002
 msgid "No centring at soldier selecting, shooting and appearing"
 msgstr "Не центрировать на бойце при выборе, стрельбе, или обнаружении врага"
 
-#: ../base/ufos/menu_options.ufo:1059
+#: ../base/ufos/menu_options.ufo:1016
 msgid "Centring at soldier selecting, shooting and appearing"
 msgstr ""
 "При выборе, стрельбе, или обнаружении врага, центрировать экран на бойце"
 
-#: ../base/ufos/menu_options.ufo:1072
+#: ../base/ufos/menu_options.ufo:1029
 msgid "Cursor tooltips:"
 msgstr "Подсказки под курсором:"
 
-#: ../base/ufos/menu_options.ufo:1088
+#: ../base/ufos/menu_options.ufo:1045
 msgid "Deactivates cursor tooltips"
 msgstr "Убрать"
 
-#: ../base/ufos/menu_options.ufo:1102
+#: ../base/ufos/menu_options.ufo:1059
 msgid "Activates cursor tooltips"
 msgstr "Показывать"
 
-#: ../base/ufos/menu_options.ufo:1115
+#: ../base/ufos/menu_options.ufo:1072
 msgid "3D Geoscape:"
 msgstr "Трехмерный земной шар:"
 
-#: ../base/ufos/menu_options.ufo:1131
+#: ../base/ufos/menu_options.ufo:1088
 msgid "Use 2D geoscape"
 msgstr "Использовать плоскую карту мира"
 
-#: ../base/ufos/menu_options.ufo:1145
+#: ../base/ufos/menu_options.ufo:1102
 msgid "Use 3D geoscape"
 msgstr "Использовать глобус"
 
-#: ../base/ufos/menu_options.ufo:1158
+#: ../base/ufos/menu_options.ufo:1115
 msgid "Camera Scroll:"
 msgstr "Перемещение камеры:"
 
-#: ../base/ufos/menu_options.ufo:1180
+#: ../base/ufos/menu_options.ufo:1137
 msgid "Camera Rotation:"
 msgstr "Вращение камеры:"
 
-#: ../base/ufos/menu_options.ufo:1206
+#: ../base/ufos/menu_options.ufo:1163
 msgid "Start with employees:"
 msgstr "Начать с подчиненными:"
 
-#: ../base/ufos/menu_options.ufo:1222
+#: ../base/ufos/menu_options.ufo:1179
 msgid "No employees hired at campaign start"
 msgstr "В начале кампании без нанятого персонала"
 
-#: ../base/ufos/menu_options.ufo:1236
+#: ../base/ufos/menu_options.ufo:1193
 msgid "Employees already hired at campaign start"
 msgstr "В начале кампании персонал уже нанят"
 
-#: ../base/ufos/menu_options.ufo:1249
+#: ../base/ufos/menu_options.ufo:1206
 msgid "Start with buildings:"
 msgstr "Начинать со строениями:"
 
-#: ../base/ufos/menu_options.ufo:1265
+#: ../base/ufos/menu_options.ufo:1222
 msgid "No buildings in the initial base"
 msgstr "На начальной базе никаких построек"
 
-#: ../base/ufos/menu_options.ufo:1279
+#: ../base/ufos/menu_options.ufo:1236
 msgid "Buildings already built in the initial base"
 msgstr "На начальной базе модули уже построены"
 
-#: ../base/ufos/menu_options.ufo:1325
+#: ../base/ufos/menu_options.ufo:1282
 msgid "Keys"
 msgstr "Клавиши"
 
@@ -2303,7 +2354,7 @@ msgstr "Очень медленно"
 msgid "Slow"
 msgstr "Медленно"
 
-#: ../base/ufos/menu_ptleditor.ufo:74 client/cl_main.c:2209
+#: ../base/ufos/menu_ptleditor.ufo:74 client/cl_main.c:2252
 msgid "Normal"
 msgstr "Норма"
 
@@ -2466,38 +2517,38 @@ msgstr "Добавить/убрать этого солдата"
 msgid "Rename your soldier"
 msgstr "Переименовать базу"
 
-#: ../base/ufos/menu_team.ufo:1110 ../base/ufos/menu_team.ufo:1119
-#: ../base/ufos/menu_team.ufo:1128 ../base/ufos/menu_team.ufo:1137
-#: ../base/ufos/menu_team.ufo:1146 ../base/ufos/menu_team.ufo:1155
-#: ../base/ufos/menu_team.ufo:1164 ../base/ufos/menu_team.ufo:1173
+#: ../base/ufos/menu_team.ufo:1111 ../base/ufos/menu_team.ufo:1120
+#: ../base/ufos/menu_team.ufo:1129 ../base/ufos/menu_team.ufo:1138
+#: ../base/ufos/menu_team.ufo:1147 ../base/ufos/menu_team.ufo:1156
+#: ../base/ufos/menu_team.ufo:1165 ../base/ufos/menu_team.ufo:1174
 msgid "Equip this soldier"
 msgstr "Снарядить этого солдата"
 
-#: ../base/ufos/menu_team.ufo:1256
+#: ../base/ufos/menu_team.ufo:1257
 msgid "Show primary weapons in store"
 msgstr "Показать основное вооружение на складе"
 
-#: ../base/ufos/menu_team.ufo:1276
+#: ../base/ufos/menu_team.ufo:1277
 msgid "Show secondary weapons in store"
 msgstr "Показать персональное оружие на складе"
 
-#: ../base/ufos/menu_team.ufo:1296
+#: ../base/ufos/menu_team.ufo:1297
 msgid "Show miscellaneous equipment in store"
 msgstr "Показать прочее снаряжение на складе"
 
-#: ../base/ufos/menu_team.ufo:1316
+#: ../base/ufos/menu_team.ufo:1317
 msgid "Show armour in store"
 msgstr "Показать броню на складе"
 
-#: ../base/ufos/menu_team.ufo:1612
+#: ../base/ufos/menu_team.ufo:1613
 msgid "Object Info"
 msgstr "Параметры объекта"
 
-#: ../base/ufos/menu_team.ufo:1624
+#: ../base/ufos/menu_team.ufo:1625
 msgid "Actor Abilities"
 msgstr "Характеристики бойца"
 
-#: ../base/ufos/menu_team.ufo:1668
+#: ../base/ufos/menu_team.ufo:1669
 msgid "Use current skin with every soldier aboard."
 msgstr "Назначить текущий камуфляж для всех солдат на борту"
 
@@ -2537,7 +2588,7 @@ msgstr "Показать только персонал"
 msgid "Show only aliens"
 msgstr "Показать только пришельцев"
 
-#: ../base/ufos/menu_transfer.ufo:285 client/cl_campaign.c:3728
+#: ../base/ufos/menu_transfer.ufo:285 client/cl_campaign.c:3735
 msgid "Aliens"
 msgstr "Пришельцы"
 
@@ -2929,11 +2980,6 @@ msgstr "Дыхательный аппарат пришельцев"
 #: ../base/ufos/research.ufo:3157
 msgid "Alien Materials"
 msgstr "Инопланетные сплавы"
-
-#: ../base/ufos/otheritems.ufo:49 ../base/ufos/research.ufo:2614
-#: ../base/ufos/research.ufo:2623 ../base/ufos/research.ufo:2630
-msgid "UFO - Harvester"
-msgstr "НЛО - Охотник"
 
 #: ../base/ufos/research.ufo:84
 msgid "Background"
@@ -8994,124 +9040,13 @@ msgstr ""
 "--Cdr. Navarre"
 
 #: ../base/ufos/research.ufo:2477
-msgid "dropship_txt"
-msgstr ""
-"ТТХ летательного аппарата -- Десантный транспорт класса \"Жар-Птица\"\n"
-"\n"
-"ГРИФ СЕКРЕТНОСТИ: ЧЁРНЫЙ\n"
-"\n"
-"Подразделение противодействия внеземной угрозе ФАЛАНКС\n"
-"\n"
-"Технический документ, Уровень допуска: Сигма -- Только для командного "
-"персонала --\n"
-"\n"
-"Внесено в реестр: 17 марта 2084\n"
-"\n"
-"Автор: коммандер Поль Наварре, НИОКР: инженерно-технический отдел, ФАЛАНКС, "
-"Атлантическая ударная группа\n"
-"\n"
-"\n"
-"\n"
-"Краткий обзор\n"
-"\n"
-"Командующий, я просмотрел все эти старые файлы до Вас, и я решил заменить их "
-"моей собственной оценкой и выводами о нашем выборе десантного самолёта. "
-"Прошу прощения, если я превысил свои полномочия, но старые десантные корабли "
-"ФАЛАНКС в хранилищах просто не соответствуют современным спецификациям. Даже "
-"когда они были новыми, ни один из них не вышел из стадии прототипа. Там было "
-"только два жизнеспособных образца, и оба этих корабля последние 60 лет были "
-"законсервированы на правительственных военных складах. Они не стоят тех "
-"проблем, что возникнут при их выковыривании из хранилищ. Мы унаследовали "
-"натуральную неразбериху в отношении снаряжения, - я даже не могу найти "
-"половину материала, что предположительно предназначалась нас. Я прилагаю все "
-"усилия, чтобы найти более совершенные альтернативы для выполнения наших "
-"задач.\n"
-"\n"
-"Лишь один удачный момент в этой неразберихе с десантным самолётом, - это то, "
-"что я сумел убедить наших чиновников из ООН ассигновать некоторую долю "
-"бюджета на новый корабль, и я думаю, Вам это понравится.\n"
-"\n"
-"Галлеот \"Жар-Птица\" с технологией ВВП (Вертикального Взлёта и Посадки) - "
-"это наилучший летательный аппарат, который мы можем надеяться использовать в "
-"качестве десантного транспорта. Он был разработан как грузовой транспортный "
-"самолёт, но вскоре стал перевозить пассажиров, и был переоборудован военными "
-"подрядчиками в десантный транспорт. С тех пор он стал популярной "
-"альтернативой вертолетам, как у военных, так и в гражданском применении, "
-"благодаря четырём его импульсным реактивным двигателям HM-5600, которые "
-"обеспечивают \"Жар-Птице\" возможность ВВП, и достигают неплохой топливной "
-"экономичности наряду с гораздо меньшим количеством движущихся частей по "
-"сравнению с любым вертолётным механизмом. Это повышает надёжность всей "
-"конструкции и делает аппарат значительно быстрее, частично, в силу "
-"отсутствия вращающихся лопастей. Однако двигатели HM-5600 расходуют много "
-"горючего, и высокопроизводительное авиационное топливо может быть слишком "
-"дорогим для гражданского применения.\n"
-"\n"
-"Крейсерская скорость \"Жар-Птицы\" составляет 0.74 Маха. Максимальная "
-"скорость достигает 1.03 Маха, так что он едва-едва преодолевает звуковой "
-"барьер, но это служит причиной ударных нагрузок на корпус аппарата и следует "
-"избегать этого без крайней необходимости. Корабль обладает одним узлом "
-"подвески для различного вооружения, расположенным в носовой части, на "
-"который можно монтировать вооружение для поражения воздушных целей, такое "
-"как авиационные пушки или ракетные блоки. Он так же может нести "
-"дополнительное снаряжение для увеличения его полётных характеристик и боевой "
-"эффективности. Десантный отсек оборудован противоперегрузочными ремнями "
-"безопасности для 8 десантников, а грузовой отсек может служить для "
-"транспортировки и боевого развёртывания малогабаритной военной техники.\n"
-"\n"
-"На горизонте нет ничего столь же подходящего на роль нашего десантного "
-"транспорта как эта \"Жар-Птица\". Он быстрее любого вертолёта, более "
-"манёвренный, чем любой аэроплан с неизменяемым профилем крыла, и может "
-"быстро и эффективно реагировать на угрозу по всему миру.\n"
-"\n"
-"\"Жар-Птица\" нуждается в одном Большом Ангаре для хранения, техобслуживания "
-"и базовой эксплуатации. Он имеет 1 средний орудийный узел подвески, "
-"расположенный в носовой части.\n"
-"\n"
-"\n"
-"Рекомендованная доктрина\n"
-"\n"
-"Десантный транспорт, который будет доставлять бойцов в любую точку мира, "
-"чтобы пресечь атаки пришельцев на поверхности, или для зачистки местности в "
-"местах падения сбитых НЛО для их захвата. Он должен развёртываться "
-"немедленно в местах активности пришельцев или при захвате сбитых летательных "
-"аппаратов.\n"
-"\n"
-"Как только местность была очищена от живых пришельцев, тяжело раненные "
-"солдаты будут немедленно отправлены в госпиталь для срочной медицинской "
-"помощи. Оставшиеся бойцы будут охранять область до тех пор, пока поисковая "
-"группа ФАЛАНКС не сможет погрузить и гарантировать доставку любого или всех "
-"артефактов пришельцев на наши базы. Это важно, так как попытки похищения "
-"предметов, оставленных на поле боя, могут стать проблемой в густонаселённых "
-"регионах. Мы не можем позволить себе терять ценные технологии пришельцев из-"
-"за того, что какой-нибудь идиот захочет заиметь это в качестве сувенира.\n"
-"\n"
-"Хоть он и вооружён, десантный транспорт класса \"Жар-Птица\" не в состоянии "
-"противостоять специализированным истребителям, и никогда не должен "
-"отправляться как основной перехватчик при обнаружении какого-либо НЛО.\n"
-"\n"
-"\n"
-"Приложения\n"
-"\n"
-"Нет.\n"
-"\n"
-"Характеристики летательного аппарата:\n"
-"\n"
-"Габариты: 8м x 30м x 5м\n"
-"\n"
-"Крейсерская скорость: 785 км/ч\n"
-"\n"
-"Максимальная скорость: 1,083 км/ч\n"
-"\n"
-"Оперативный радиус действия: 18,000 км\n"
-"\n"
-"Экипаж: 3 чел\n"
-"\n"
-"Вместимость: 8 бойцов десанта\n"
-"\n"
-"Вооружение: 1 средний узел подвески (нос)"
+#, fuzzy
+msgid "drop_firebird_txt"
+msgstr "No pre research info available"
 
 #: ../base/ufos/research.ufo:2492
-msgid "interceptor_txt"
+#, fuzzy
+msgid "inter_stiletto_txt"
 msgstr ""
 "ТТХ летательного аппарата -- Перехватчик класса \"Стилет\"\n"
 "\n"
@@ -12157,220 +12092,220 @@ msgstr "Штурмовая винтовка"
 msgid "Assault Rifle Magazine"
 msgstr "Магазин штурмовой винтовки"
 
-#: ../base/ufos/weapons_human.ufo:40 ../base/ufos/weapons_human.ufo:220
-#: ../base/ufos/weapons_human.ufo:322 ../base/ufos/weapons_human.ufo:421
-#: ../base/ufos/weapons_human.ufo:500 ../base/ufos/weapons_human.ufo:1902
+#: ../base/ufos/weapons_human.ufo:40 ../base/ufos/weapons_human.ufo:219
+#: ../base/ufos/weapons_human.ufo:321 ../base/ufos/weapons_human.ufo:420
+#: ../base/ufos/weapons_human.ufo:499 ../base/ufos/weapons_human.ufo:1901
 #: ../base/ufos/weapons_particle.ufo:40 ../base/ufos/weapons_particle.ufo:201
 msgid "Snap Shot"
 msgstr "навскидку"
 
-#: ../base/ufos/weapons_human.ufo:61 ../base/ufos/weapons_human.ufo:240
-#: ../base/ufos/weapons_human.ufo:519 ../base/ufos/weapons_human.ufo:761
-#: ../base/ufos/weapons_human.ufo:950 ../base/ufos/weapons_human.ufo:997
-#: ../base/ufos/weapons_human.ufo:1671
+#: ../base/ufos/weapons_human.ufo:60 ../base/ufos/weapons_human.ufo:239
+#: ../base/ufos/weapons_human.ufo:518 ../base/ufos/weapons_human.ufo:760
+#: ../base/ufos/weapons_human.ufo:949 ../base/ufos/weapons_human.ufo:996
+#: ../base/ufos/weapons_human.ufo:1670
 msgid "3-Round Burst"
 msgstr "очередь х3"
 
-#: ../base/ufos/weapons_human.ufo:82 ../base/ufos/weapons_human.ufo:261
-#: ../base/ufos/weapons_human.ufo:539 ../base/ufos/weapons_human.ufo:620
-#: ../base/ufos/weapons_human.ufo:783 ../base/ufos/weapons_human.ufo:1019
+#: ../base/ufos/weapons_human.ufo:81 ../base/ufos/weapons_human.ufo:260
+#: ../base/ufos/weapons_human.ufo:538 ../base/ufos/weapons_human.ufo:619
+#: ../base/ufos/weapons_human.ufo:782 ../base/ufos/weapons_human.ufo:1018
 msgid "Full-Auto"
 msgstr "автоматический"
 
-#: ../base/ufos/weapons_human.ufo:110
+#: ../base/ufos/weapons_human.ufo:109
 msgid "Chaingun"
 msgstr "Пулемёт"
 
-#: ../base/ufos/weapons_human.ufo:128
+#: ../base/ufos/weapons_human.ufo:127
 msgid "Chaingun Magazine"
 msgstr "Пулемётная лента"
 
-#: ../base/ufos/weapons_human.ufo:142
+#: ../base/ufos/weapons_human.ufo:141
 msgid "Burst"
 msgstr "очередями"
 
-#: ../base/ufos/weapons_human.ufo:186
+#: ../base/ufos/weapons_human.ufo:185
 #, fuzzy
 msgid "Machine Gun"
 msgstr "Пистолет-пулемёт"
 
-#: ../base/ufos/weapons_human.ufo:205
+#: ../base/ufos/weapons_human.ufo:204
 #, fuzzy
 msgid "Machine Gun Magazine"
 msgstr "Пулемётная лента"
 
-#: ../base/ufos/weapons_human.ufo:288
+#: ../base/ufos/weapons_human.ufo:287
 msgid "Sniper Rifle"
 msgstr "Снайперская винтовка"
 
-#: ../base/ufos/weapons_human.ufo:307
+#: ../base/ufos/weapons_human.ufo:306
 msgid "Sniper Rifle Magazine"
 msgstr "Обойма снайперской винтовки"
 
-#: ../base/ufos/weapons_human.ufo:342 ../base/ufos/weapons_human.ufo:440
-#: ../base/ufos/weapons_human.ufo:1162 ../base/ufos/weapons_human.ufo:1202
-#: ../base/ufos/weapons_human.ufo:1242
+#: ../base/ufos/weapons_human.ufo:341 ../base/ufos/weapons_human.ufo:439
+#: ../base/ufos/weapons_human.ufo:1161 ../base/ufos/weapons_human.ufo:1201
+#: ../base/ufos/weapons_human.ufo:1241
 msgid "Aimed Shot"
 msgstr "прицельно"
 
-#: ../base/ufos/weapons_human.ufo:361
+#: ../base/ufos/weapons_human.ufo:360
 msgid "Headshot"
 msgstr "прицельно в голову"
 
-#: ../base/ufos/weapons_human.ufo:387
+#: ../base/ufos/weapons_human.ufo:386
 msgid "7.62mm Pistol"
 msgstr "Пистолет кал.7.62мм"
 
-#: ../base/ufos/weapons_human.ufo:406
+#: ../base/ufos/weapons_human.ufo:405
 msgid "7.62mm Pistol Magazine"
 msgstr "7.62мм обойма пистолета"
 
-#: ../base/ufos/weapons_human.ufo:466
+#: ../base/ufos/weapons_human.ufo:465
 msgid "Machine Pistol"
 msgstr "Автоматический пистолет"
 
-#: ../base/ufos/weapons_human.ufo:485
+#: ../base/ufos/weapons_human.ufo:484
 msgid "4.2mm MP Magazine"
 msgstr "4.2мм обойма авт.пистолета"
 
-#: ../base/ufos/weapons_human.ufo:566
+#: ../base/ufos/weapons_human.ufo:565
 msgid "Submachine Gun"
 msgstr "Пистолет-пулемёт"
 
-#: ../base/ufos/weapons_human.ufo:585
+#: ../base/ufos/weapons_human.ufo:584
 msgid "SMG Magazine"
 msgstr "Магазин пистолета-пулемёта"
 
-#: ../base/ufos/weapons_human.ufo:600
+#: ../base/ufos/weapons_human.ufo:599
 msgid "5-Round Burst"
 msgstr "очередь х5"
 
-#: ../base/ufos/weapons_human.ufo:647
+#: ../base/ufos/weapons_human.ufo:646
 msgid "Riot Shotgun"
 msgstr "Помповое ружьё"
 
-#: ../base/ufos/weapons_human.ufo:724
+#: ../base/ufos/weapons_human.ufo:723
 msgid "Saboted Slugs"
 msgstr "Патроны с подкалиберными пулями"
 
-#: ../base/ufos/weapons_human.ufo:739 ../base/ufos/weapons_human.ufo:845
-#: ../base/ufos/weapons_human.ufo:928 ../base/ufos/weapons_human.ufo:975
-#: ../base/ufos/weapons_human.ufo:1652
+#: ../base/ufos/weapons_human.ufo:738 ../base/ufos/weapons_human.ufo:844
+#: ../base/ufos/weapons_human.ufo:927 ../base/ufos/weapons_human.ufo:974
+#: ../base/ufos/weapons_human.ufo:1651
 msgid "Single Shot"
 msgstr "одиночными"
 
-#: ../base/ufos/weapons_human.ufo:811
+#: ../base/ufos/weapons_human.ufo:810
 msgid "Shotgun"
 msgstr "Дробовик"
 
 # СПЭ - Стреловидные Поражающие Элементы
-#: ../base/ufos/weapons_human.ufo:830 ../base/ufos/weapons_human.ufo:913
+#: ../base/ufos/weapons_human.ufo:829 ../base/ufos/weapons_human.ufo:912
 msgid "Flechette Shells"
 msgstr "Патроны с СПЭ"
 
-#: ../base/ufos/weapons_human.ufo:867
+#: ../base/ufos/weapons_human.ufo:866
 msgid "Double Shot"
 msgstr "дуплет"
 
-#: ../base/ufos/weapons_human.ufo:894
+#: ../base/ufos/weapons_human.ufo:893
 msgid "Micro Shotgun"
 msgstr "Минидробовик"
 
-#: ../base/ufos/weapons_human.ufo:1046
+#: ../base/ufos/weapons_human.ufo:1045
 msgid "Flamethrower"
 msgstr "Огнемёт"
 
-#: ../base/ufos/weapons_human.ufo:1065
+#: ../base/ufos/weapons_human.ufo:1064
 msgid "C90 Canister"
 msgstr "Баллон С90"
 
-#: ../base/ufos/weapons_human.ufo:1080
+#: ../base/ufos/weapons_human.ufo:1079
 msgid "Candlelight"
 msgstr "огненная струя"
 
-#: ../base/ufos/weapons_human.ufo:1101
+#: ../base/ufos/weapons_human.ufo:1100
 msgid "Inferno"
 msgstr "пекло"
 
-#: ../base/ufos/weapons_human.ufo:1128
+#: ../base/ufos/weapons_human.ufo:1127
 msgid "Rocket Launcher"
 msgstr "Ракетная пусковая установка"
 
-#: ../base/ufos/weapons_human.ufo:1147
+#: ../base/ufos/weapons_human.ufo:1146
 msgid "HE Rocket"
 msgstr "Осколочно-фугасная ракета"
 
-#: ../base/ufos/weapons_human.ufo:1187
+#: ../base/ufos/weapons_human.ufo:1186
 msgid "IC Rocket"
 msgstr "Зажигательная ракета"
 
-#: ../base/ufos/weapons_human.ufo:1228
+#: ../base/ufos/weapons_human.ufo:1227
 msgid "Particle-Beam Rocket"
 msgstr "Лучевая ракета"
 
-#: ../base/ufos/weapons_human.ufo:1271
+#: ../base/ufos/weapons_human.ufo:1270
 msgid "Grenade Launcher"
 msgstr "Гранатомёт"
 
-#: ../base/ufos/weapons_human.ufo:1290
+#: ../base/ufos/weapons_human.ufo:1289
 msgid "25mm HIT Grenades"
 msgstr "25мм фугасные гранаты"
 
-#: ../base/ufos/weapons_human.ufo:1305 ../base/ufos/weapons_human.ufo:1478
-#: ../base/ufos/weapons_human.ufo:1706
+#: ../base/ufos/weapons_human.ufo:1304 ../base/ufos/weapons_human.ufo:1477
+#: ../base/ufos/weapons_human.ufo:1705
 msgid "Snap Shot - Airburst"
 msgstr "бегло - детонация"
 
-#: ../base/ufos/weapons_human.ufo:1330 ../base/ufos/weapons_human.ufo:1504
-#: ../base/ufos/weapons_human.ufo:1731
+#: ../base/ufos/weapons_human.ufo:1329 ../base/ufos/weapons_human.ufo:1503
+#: ../base/ufos/weapons_human.ufo:1730
 msgid "Aimed Shot - Airburst"
 msgstr "точно - детонация"
 
-#: ../base/ufos/weapons_human.ufo:1355 ../base/ufos/weapons_human.ufo:1529
-#: ../base/ufos/weapons_human.ufo:1756
+#: ../base/ufos/weapons_human.ufo:1354 ../base/ufos/weapons_human.ufo:1528
+#: ../base/ufos/weapons_human.ufo:1755
 msgid "3-Round Burst - Airburst"
 msgstr "3х серия - детонация"
 
-#: ../base/ufos/weapons_human.ufo:1380 ../base/ufos/weapons_human.ufo:1554
-#: ../base/ufos/weapons_human.ufo:1781
+#: ../base/ufos/weapons_human.ufo:1379 ../base/ufos/weapons_human.ufo:1553
+#: ../base/ufos/weapons_human.ufo:1780
 msgid "Snap Shot - Timed"
 msgstr "бегло с таймером"
 
-#: ../base/ufos/weapons_human.ufo:1407 ../base/ufos/weapons_human.ufo:1581
-#: ../base/ufos/weapons_human.ufo:1808
+#: ../base/ufos/weapons_human.ufo:1406 ../base/ufos/weapons_human.ufo:1580
+#: ../base/ufos/weapons_human.ufo:1807
 msgid "Aimed Shot - Timed"
 msgstr "точно с таймером"
 
-#: ../base/ufos/weapons_human.ufo:1434 ../base/ufos/weapons_human.ufo:1608
-#: ../base/ufos/weapons_human.ufo:1835
+#: ../base/ufos/weapons_human.ufo:1433 ../base/ufos/weapons_human.ufo:1607
+#: ../base/ufos/weapons_human.ufo:1834
 msgid "3-Round Burst - Timed"
 msgstr "3х серия с таймером"
 
-#: ../base/ufos/weapons_human.ufo:1463
+#: ../base/ufos/weapons_human.ufo:1462
 msgid "25mm IC Grenades"
 msgstr "25мм зажигательные гранаты"
 
-#: ../base/ufos/weapons_human.ufo:1637
+#: ../base/ufos/weapons_human.ufo:1636
 msgid "25mm Flechette Grenades"
 msgstr "25мм иглогранаты"
 
-#: ../base/ufos/weapons_human.ufo:1691
+#: ../base/ufos/weapons_human.ufo:1690
 msgid "25mm PB Grenades"
 msgstr "25мм плазменные гранаты"
 
-#: ../base/ufos/weapons_human.ufo:1868
+#: ../base/ufos/weapons_human.ufo:1867
 msgid "Bolter Rifle"
 msgstr "Игломёт"
 
-#: ../base/ufos/weapons_human.ufo:1887
+#: ../base/ufos/weapons_human.ufo:1886
 msgid "Bolter Rifle Magazine"
 msgstr "Зарядная кассета игломёта"
 
-#: ../base/ufos/weapons_human.ufo:1922
+#: ../base/ufos/weapons_human.ufo:1921
 msgid "Cannonade"
 msgstr "канонада"
 
-#: ../base/ufos/weapons_human.ufo:1942
+#: ../base/ufos/weapons_human.ufo:1941
 msgid "Precision Shot"
 msgstr "точный выстрел"
 
@@ -12639,7 +12574,7 @@ msgstr "Никто не выбран\n"
 msgid "This isn't your round\n"
 msgstr "Сейчас не Ваш ход!\n"
 
-#: client/cl_actor.c:1926
+#: client/cl_actor.c:1933
 msgid ""
 "You cannot reload this unknown item.\n"
 "You need to research it and its ammunition first.\n"
@@ -12647,57 +12582,57 @@ msgstr ""
 "Вы не способны перезарядить неопознанное устройство.\n"
 "Сначала нужно исследовать его и боеприпасы к нему.\n"
 
-#: client/cl_actor.c:2437
+#: client/cl_actor.c:2444
 msgid "was stunned.\n"
 msgstr "теряет сознание.\n"
 
-#: client/cl_actor.c:2442
+#: client/cl_actor.c:2449
 msgid "was killed.\n"
 msgstr "погибает.\n"
 
-#: client/cl_actor.c:2449
+#: client/cl_actor.c:2456
 msgid "A civilian was stunned.\n"
 msgstr "Мирный житель был оглушён.\n"
 
-#: client/cl_actor.c:2451
+#: client/cl_actor.c:2458
 msgid "A civilian was killed.\n"
 msgstr "Мирный житель убит.\n"
 
-#: client/cl_actor.c:2459
+#: client/cl_actor.c:2466
 msgid "An alien was stunned:"
 msgstr "Пришелец был оглушён:"
 
-#: client/cl_actor.c:2463
+#: client/cl_actor.c:2470
 msgid "An alien was killed:"
 msgstr "Пришелец был убит:"
 
-#: client/cl_actor.c:2468 client/cl_actor.c:2474
+#: client/cl_actor.c:2475 client/cl_actor.c:2481
 msgid "An alien was stunned.\n"
 msgstr "Пришелец был оглушён.\n"
 
-#: client/cl_actor.c:2470 client/cl_actor.c:2476
+#: client/cl_actor.c:2477 client/cl_actor.c:2483
 msgid "An alien was killed.\n"
 msgstr "Пришелец был убит.\n"
 
-#: client/cl_actor.c:2481
+#: client/cl_actor.c:2488
 msgid "A soldier was stunned.\n"
 msgstr "Боец без сознания.\n"
 
-#: client/cl_actor.c:2483
+#: client/cl_actor.c:2490
 msgid "A soldier was killed.\n"
 msgstr "Боец погиб.\n"
 
-#: client/cl_actor.c:2487
+#: client/cl_actor.c:2494
 #, c-format
 msgid "A member of team %i was stunned.\n"
 msgstr "Член отряда %i теряет сознание.\n"
 
-#: client/cl_actor.c:2489
+#: client/cl_actor.c:2496
 #, c-format
 msgid "A member of team %i was killed.\n"
 msgstr "Член отряда %i погибает.\n"
 
-#: client/cl_actor.c:2662
+#: client/cl_actor.c:2669
 msgid "Your round started!\n"
 msgstr "Начался Ваш ход!\n"
 
@@ -12709,16 +12644,16 @@ msgstr "Самолёт вылетел на задание"
 #: client/cl_aircraft.c:909 client/cl_aircraft.c:1233
 #: client/cl_aliencont.c:215 client/cl_aliencont.c:245
 #: client/cl_aliencont.c:257 client/cl_aliencont.c:271
-#: client/cl_basemanagement.c:736 client/cl_basemanagement.c:2261
+#: client/cl_basemanagement.c:736 client/cl_basemanagement.c:2294
 #: client/cl_campaign.c:467 client/cl_campaign.c:948 client/cl_campaign.c:1004
 #: client/cl_campaign.c:1169 client/cl_campaign.c:1180
 #: client/cl_campaign.c:1190 client/cl_campaign.c:1200
 #: client/cl_campaign.c:1210 client/cl_campaign.c:1221
 #: client/cl_campaign.c:1234 client/cl_campaign.c:1244
 #: client/cl_campaign.c:1251 client/cl_campaign.c:1259
-#: client/cl_campaign.c:2259 client/cl_campaign.c:2295
-#: client/cl_campaign.c:2297 client/cl_campaign.c:2580
-#: client/cl_inventory.c:324 client/cl_inventory.c:330 client/cl_main.c:1086
+#: client/cl_campaign.c:2262 client/cl_campaign.c:2298
+#: client/cl_campaign.c:2300 client/cl_campaign.c:2583
+#: client/cl_inventory.c:324 client/cl_inventory.c:330 client/cl_main.c:1099
 #: client/cl_map.c:270 client/cl_market.c:642 client/cl_market.c:646
 #: client/cl_research.c:903 client/cl_research.c:921 client/cl_research.c:927
 #: client/cl_research.c:965 client/cl_research.c:996 client/cl_research.c:1149
@@ -12783,12 +12718,12 @@ msgid ""
 "home base"
 msgstr ""
 
-#: client/cl_aircraft.c:609 client/cl_map.c:1005 client/cl_ufopedia.c:449
+#: client/cl_aircraft.c:609 client/cl_map.c:1118 client/cl_ufopedia.c:449
 #, c-format
 msgid "Speed:\t%.0f\n"
 msgstr "Скорость:\t%.0f\n"
 
-#: client/cl_aircraft.c:610 client/cl_map.c:1006
+#: client/cl_aircraft.c:610 client/cl_map.c:1119
 #, c-format
 msgid "Fuel:\t%i/%i\n"
 msgstr "Горючее:\t%i/%i\n"
@@ -12828,11 +12763,11 @@ msgstr ""
 msgid "Interception"
 msgstr "Перехват"
 
-#: client/cl_aircraft.c:954 client/cl_campaign.c:2295
+#: client/cl_aircraft.c:954 client/cl_campaign.c:2298
 msgid "You've won the battle"
 msgstr "Вы выиграли сражение"
 
-#: client/cl_aircraft.c:961 client/cl_campaign.c:2297
+#: client/cl_aircraft.c:961 client/cl_campaign.c:2300
 msgid "You've lost the battle"
 msgstr "Вы проиграли сражение"
 
@@ -12884,24 +12819,24 @@ msgstr "Требуется вскрытите!"
 msgid "Yes"
 msgstr "Да"
 
-#: client/cl_basemanagement.c:384
+#: client/cl_basemanagement.c:385
 msgid "Not set"
 msgstr "не задано"
 
-#: client/cl_basemanagement.c:390
+#: client/cl_basemanagement.c:391
 #, c-format
 msgid "Already %i in base"
 msgstr "%i уже на базе"
 
-#: client/cl_basemanagement.c:396
+#: client/cl_basemanagement.c:397
 msgid "Construction finished"
 msgstr "Строительство завершено"
 
-#: client/cl_basemanagement.c:399
+#: client/cl_basemanagement.c:400
 msgid "Working 100%"
 msgstr "Функционирует на 100%"
 
-#: client/cl_basemanagement.c:402
+#: client/cl_basemanagement.c:403
 msgid "Down"
 msgstr "Отключено"
 
@@ -12926,44 +12861,44 @@ msgstr[1] "%i  дней до окончания сроительства\n"
 msgid "Running Costs:\t%1.0f c\n"
 msgstr "Текущие затраты:\t%1.0f кр\n"
 
-#: client/cl_basemanagement.c:1543
+#: client/cl_basemanagement.c:1567
 #, c-format
 msgid "%i day left"
 msgid_plural "%i days left"
 msgstr[0] "%i день остался"
 msgstr[1] "%i дней осталось"
 
-#: client/cl_basemanagement.c:1571 client/cl_campaign.c:1480
+#: client/cl_basemanagement.c:1604 client/cl_campaign.c:1480
 #, c-format
 msgid "%i c"
 msgstr "%i кр"
 
-#: client/cl_basemanagement.c:1677
+#: client/cl_basemanagement.c:1710
 msgid "Base is under attack"
 msgstr "База атакована враждебными силами"
 
-#: client/cl_basemanagement.c:1886 client/cl_team.c:1382 client/cl_team.c:1590
+#: client/cl_basemanagement.c:1919 client/cl_team.c:1382 client/cl_team.c:1590
 msgid "NewTeam"
 msgstr "Новый отряд"
 
-#: client/cl_basemanagement.c:1965
+#: client/cl_basemanagement.c:1998
 #, c-format
 msgid "A new base has been built: %s."
 msgstr "Была заложена новая база: %s."
 
-#: client/cl_basemanagement.c:1966 client/cl_basemanagement.c:1982
+#: client/cl_basemanagement.c:1999 client/cl_basemanagement.c:2015
 msgid "Base built"
 msgstr "База построена"
 
-#: client/cl_basemanagement.c:1981
+#: client/cl_basemanagement.c:2014
 msgid "Not enough credits to set up a new base."
 msgstr "Не хватает наличных средств для основания новой базы."
 
-#: client/cl_basemanagement.c:2261
+#: client/cl_basemanagement.c:2294
 msgid "You've reached the base limit."
 msgstr "Количество баз ограничено. Вы достигли предела."
 
-#: client/cl_basemanagement.c:2313
+#: client/cl_basemanagement.c:2346
 msgid ""
 "No aircraft in this base - You first have to purchase or transfer an "
 "aircraft\n"
@@ -12971,22 +12906,22 @@ msgstr ""
 "На этой базе нет авиации. Сначала Вы должны купить самолёт, или переслать "
 "его с другой базы.\n"
 
-#: client/cl_basemanagement.c:2313 client/cl_basemanagement.c:2315
-#: client/cl_campaign.c:2085 client/cl_market.c:342 client/cl_market.c:715
+#: client/cl_basemanagement.c:2346 client/cl_basemanagement.c:2348
+#: client/cl_campaign.c:2088 client/cl_market.c:342 client/cl_market.c:715
 #: client/cl_save.c:294 client/cl_team.c:1429
 msgid "Note"
 msgstr "ЗАМЕТКА"
 
-#: client/cl_basemanagement.c:2315
+#: client/cl_basemanagement.c:2348
 msgid "No aircraft in this base - You first have to purchase an aircraft\n"
 msgstr "На этой базе нет авиации. Сначала Вы должны купить самолёт.\n"
 
-#: client/cl_basemanagement.c:2487
+#: client/cl_basemanagement.c:2520
 #, c-format
 msgid "Construction of %s building finished in base %s."
 msgstr "Завершено строительство модуля %s на базе %s."
 
-#: client/cl_basemanagement.c:2488
+#: client/cl_basemanagement.c:2521
 msgid "Building finished"
 msgstr "Строительство завершено"
 
@@ -13127,25 +13062,25 @@ msgid_plural "credits"
 msgstr[0] "кредит"
 msgstr[1] "кредитов"
 
-#: client/cl_campaign.c:1164 client/cl_campaign.c:3733
+#: client/cl_campaign.c:1164 client/cl_campaign.c:3740
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "учёный"
 msgstr[1] "учёных"
 
-#: client/cl_campaign.c:1165 client/cl_campaign.c:3735
+#: client/cl_campaign.c:1165 client/cl_campaign.c:3742
 msgid "medic"
 msgid_plural "medics"
 msgstr[0] "медик"
 msgstr[1] "медиков"
 
-#: client/cl_campaign.c:1166 client/cl_campaign.c:3732
+#: client/cl_campaign.c:1166 client/cl_campaign.c:3739
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "солдат"
 msgstr[1] "солдат"
 
-#: client/cl_campaign.c:1167 client/cl_campaign.c:3734
+#: client/cl_campaign.c:1167 client/cl_campaign.c:3741
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] "рабочий"
@@ -13275,20 +13210,20 @@ msgstr ""
 "\t-------\n"
 "Итог:\t%i кр\n"
 
-#: client/cl_campaign.c:2085
+#: client/cl_campaign.c:2088
 msgid "Assemble or load a team"
 msgstr "Укомплектуйте или соберите отряд"
 
-#: client/cl_campaign.c:2259
+#: client/cl_campaign.c:2262
 msgid "Your dropship is not near the landing zone"
 msgstr "Ваш десантный транспорт слишком далеко от зоны высадки!"
 
-#: client/cl_campaign.c:2363
+#: client/cl_campaign.c:2366
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s получает повышение до звания %s.\n"
 
-#: client/cl_campaign.c:2365
+#: client/cl_campaign.c:2368
 #, c-format
 msgid ""
 "%s has been awarded the posthumous rank of %s\\for inspirational gallantry "
@@ -13297,20 +13232,20 @@ msgstr ""
 "%s награждается посмертно званием %s\\за отважную борьбу с превосходящими "
 "силами противника.\n"
 
-#: client/cl_campaign.c:2366
+#: client/cl_campaign.c:2369
 msgid "Soldier promoted"
 msgstr "Боец получает повышение."
 
-#: client/cl_campaign.c:2579
+#: client/cl_campaign.c:2582
 #, c-format
 msgid "Defense of base: %s successful!"
 msgstr "Защита быза: %s прошла успешно!"
 
-#: client/cl_campaign.c:3728
+#: client/cl_campaign.c:3735
 msgid "Human"
 msgstr "Люди"
 
-#: client/cl_campaign.c:3730
+#: client/cl_campaign.c:3737
 #, c-format
 msgid ""
 "Race: %s\n"
@@ -13325,26 +13260,26 @@ msgstr ""
 "Сложность: %s\n"
 "%s\n"
 
-#: client/cl_campaign.c:3955
+#: client/cl_campaign.c:3962
 #, c-format
 msgid ""
 "Recovered UFO of type %s from the battlefield. UFO is being transported to "
 "base %s."
 msgstr ""
 
-#: client/cl_campaign.c:3957 client/cl_campaign.c:4051
-#: client/cl_campaign.c:4120
+#: client/cl_campaign.c:3964 client/cl_campaign.c:4058
+#: client/cl_campaign.c:4127
 msgid "UFO Recovery"
 msgstr ""
 
-#: client/cl_campaign.c:4049
+#: client/cl_campaign.c:4056
 #, c-format
 msgid ""
 "Recovered UFO of type %s from the battlefield. UFO sold to nation %s, gained "
 "%i credits."
 msgstr ""
 
-#: client/cl_campaign.c:4118
+#: client/cl_campaign.c:4125
 #, c-format
 msgid "Secured UFO of type %s was destroyed."
 msgstr ""
@@ -13535,21 +13470,25 @@ msgid_plural "%i items were sold."
 msgstr[0] "Оборудование не установлено"
 msgstr[1] "Оборудование не установлено"
 
-#: client/cl_main.c:364 client/cl_main.c:1037
+#: client/cl_main.c:364 client/cl_main.c:1050
 msgid "Assemble a team first"
 msgstr "Сначала соберите отряд"
 
-#: client/cl_main.c:364 client/cl_main.c:1037 client/cl_main.c:1637
-#: client/cl_main.c:1642 client/cl_main.c:1648 client/cl_main.c:1654
-#: client/cl_save.c:361 client/cl_save.c:387
+#: client/cl_main.c:364 client/cl_main.c:817 client/cl_main.c:1050
+#: client/cl_main.c:1650 client/cl_main.c:1655 client/cl_main.c:1661
+#: client/cl_main.c:1667 client/cl_save.c:361 client/cl_save.c:387
 msgid "Error"
 msgstr "Ошибка"
 
-#: client/cl_main.c:875
+#: client/cl_main.c:817
+msgid "Server needs restarting - something went wrong"
+msgstr ""
+
+#: client/cl_main.c:888
 msgid "No player connected\n"
 msgstr "Нет подключенных игроков\n"
 
-#: client/cl_main.c:914
+#: client/cl_main.c:927
 #, c-format
 msgid ""
 "IP\t%s\n"
@@ -13558,81 +13497,81 @@ msgstr ""
 "IP\t%s\n"
 "\n"
 
-#: client/cl_main.c:935
+#: client/cl_main.c:948
 #, c-format
 msgid "Map:\t%s\n"
 msgstr "Карта:\t%s\n"
 
-#: client/cl_main.c:946
+#: client/cl_main.c:959
 #, c-format
 msgid "Version:\t%s\n"
 msgstr "Версия:\t%s\n"
 
-#: client/cl_main.c:948
+#: client/cl_main.c:961
 #, c-format
 msgid "Servername:\t%s\n"
 msgstr "Имя сервера:\t%s\n"
 
-#: client/cl_main.c:950
+#: client/cl_main.c:963
 #, c-format
 msgid "Moralestates:\t%s\n"
 msgstr "Показатели морали:\t%s\n"
 
-#: client/cl_main.c:952
+#: client/cl_main.c:965
 #, fuzzy, c-format
 msgid "Gametype:\t%s\n"
 msgstr "Тип игры:"
 
-#: client/cl_main.c:954
+#: client/cl_main.c:967
 #, fuzzy, c-format
 msgid "Roundtime:\t%s\n"
 msgstr "Оборудование:\t%s\n"
 
-#: client/cl_main.c:956
+#: client/cl_main.c:969
 #, c-format
 msgid "Teamplay:\t%s\n"
 msgstr "Командная игра:\t%s\n"
 
-#: client/cl_main.c:958
+#: client/cl_main.c:971
 #, c-format
 msgid "Max. players per team:\t%s\n"
 msgstr "Максимум игроков в команде:\t%s\n"
 
-#: client/cl_main.c:960
+#: client/cl_main.c:973
 #, c-format
 msgid "Max. teams allowed in this map:\t%s\n"
 msgstr "Макс. количество команд на этой карте:\t%s\n"
 
-#: client/cl_main.c:962
+#: client/cl_main.c:975
 #, c-format
 msgid "Max. clients:\t%s\n"
 msgstr "Максимум игроков:\t%s\n"
 
-#: client/cl_main.c:964
+#: client/cl_main.c:977
 #, c-format
 msgid "Max. soldiers per player:\t%s\n"
 msgstr "Максимум бойцов у игрока:\t%s\n"
 
-#: client/cl_main.c:966
+#: client/cl_main.c:979
 #, c-format
 msgid "Max. soldiers per team:\t%s\n"
 msgstr "Максимум бойцов в отряде:\t%s\n"
 
-#: client/cl_main.c:969 client/cl_main.c:972
+#: client/cl_main.c:982 client/cl_main.c:985
 #, c-format
 msgid "Password protected:\t%s\n"
 msgstr ""
 
-#: client/cl_main.c:969
+#: client/cl_main.c:982
 msgid "yes"
 msgstr "yes"
 
-#: client/cl_main.c:972
+#: client/cl_main.c:985
 #, fuzzy
 msgid "no"
 msgstr "Снег"
 
-#: client/cl_main.c:1086
+#: client/cl_main.c:1099
 msgid ""
 "All bookmark slots are used - please removed unused entries and repeat this "
 "step"
@@ -13640,41 +13579,41 @@ msgstr ""
 "Все ячейки для закладок заняты. Пожалуйста, удалите неиспользуемые, и "
 "попробуйте снова."
 
-#: client/cl_main.c:1190
+#: client/cl_main.c:1203
 msgid "Select a free team or your coop team"
 msgstr "Выберите свободную команду или присоединяйтесь Вашей к команде"
 
-#: client/cl_main.c:1452
+#: client/cl_main.c:1465
 msgid "Connection timed out - server is no longer reachable"
 msgstr "Превышено время ожидания ответа - сервер более не доступен"
 
-#: client/cl_main.c:1452
+#: client/cl_main.c:1465
 msgid "Network error"
 msgstr "Ошибка сети"
 
-#: client/cl_main.c:1512 client/cl_main.c:1526
+#: client/cl_main.c:1525 client/cl_main.c:1539
 #, c-format
 msgid "Current team: %i"
 msgstr "Текущий отряд: %i"
 
-#: client/cl_main.c:1516 client/cl_main.c:1530
+#: client/cl_main.c:1529 client/cl_main.c:1543
 msgid "Team is already in use"
 msgstr "Отряд уже используется"
 
-#: client/cl_main.c:1540 client/cl_main.c:1568
+#: client/cl_main.c:1553 client/cl_main.c:1581
 msgid "Invalid or full team"
 msgstr "Неправильная или укомплектованная команда"
 
-#: client/cl_main.c:1636
+#: client/cl_main.c:1649
 #, c-format
 msgid "Local game version (%s) differs from the servers"
 msgstr "Локальная верся игры (%s) отличается от версии на сервере"
 
-#: client/cl_main.c:1642
+#: client/cl_main.c:1655
 msgid "Local map version differs from server"
 msgstr "Локальная верся карты отличается от версии на сервере"
 
-#: client/cl_main.c:1648
+#: client/cl_main.c:1661
 msgid ""
 "You are using modified ufo script files - you won't be able to connect to "
 "the server"
@@ -13682,41 +13621,37 @@ msgstr ""
 "Вы используете модифицированные файлы скриптов, - вам нельзя присоединиться "
 "к серверу"
 
-#: client/cl_main.c:1653
+#: client/cl_main.c:1666
 #, c-format
 msgid "Local game version (%s) differs from the servers (%s)"
 msgstr "Локальная верся игры (%s) отличается от версии на сервере (%s)"
 
-#: client/cl_main.c:1982
-msgid "Unnamed"
-msgstr "без имени"
-
-#: client/cl_main.c:2006
+#: client/cl_main.c:2052
 msgid ""
 "Pause the current server (singleplayer and multiplayer when you are server)"
 msgstr ""
 
-#: client/cl_main.c:2202
+#: client/cl_main.c:2245
 msgid "Chicken-hearted"
 msgstr "детский сад"
 
-#: client/cl_main.c:2204
+#: client/cl_main.c:2247
 msgid "Very Easy"
 msgstr "очень лёгкая"
 
-#: client/cl_main.c:2207
+#: client/cl_main.c:2250
 msgid "Easy"
 msgstr "лёгкая"
 
-#: client/cl_main.c:2212
+#: client/cl_main.c:2255
 msgid "Hard"
 msgstr "сложная"
 
-#: client/cl_main.c:2214
+#: client/cl_main.c:2257
 msgid "Very Hard"
 msgstr "крайне сложная"
 
-#: client/cl_main.c:2216
+#: client/cl_main.c:2259
 msgid "Insane"
 msgstr "безумная"
 
@@ -13724,31 +13659,31 @@ msgstr "безумная"
 msgid "UFO"
 msgstr "НЛО"
 
-#: client/cl_map.c:740 client/cl_map.c:828
+#: client/cl_map.c:848 client/cl_map.c:941
 msgid "Day"
 msgstr "День"
 
-#: client/cl_map.c:740 client/cl_map.c:828
+#: client/cl_map.c:848 client/cl_map.c:941
 msgid "Night"
 msgstr "Ночь"
 
-#: client/cl_map.c:973
+#: client/cl_map.c:1086
 msgid "Select the desired location of the new base on the map.\n"
 msgstr "Выберите место для постройки новой базы.\n"
 
-#: client/cl_map.c:978
+#: client/cl_map.c:1091
 msgid "Aliens are attacking our base at this very moment.\n"
 msgstr "Пришельцы атакуют нашу базу в этот самый момент.\n"
 
-#: client/cl_map.c:983
+#: client/cl_map.c:1096
 msgid "Select ufo or mission on map\n"
 msgstr "Выберете НЛО или миссию на карте.\n"
 
-#: client/cl_map.c:988
+#: client/cl_map.c:1101
 msgid "UFO in radar range\n"
 msgstr "НЛО в пределах радиуса действия радара.\n"
 
-#: client/cl_map.c:998
+#: client/cl_map.c:1111
 #, c-format
 msgid ""
 "Location: %s\n"
@@ -13759,12 +13694,12 @@ msgstr ""
 "Тип: %s\n"
 "Цель: %s\n"
 
-#: client/cl_map.c:1003
+#: client/cl_map.c:1116
 #, c-format
 msgid "Name:\t%s (%i/%i)\n"
 msgstr "Имя:\t%s (%i/%i)\n"
 
-#: client/cl_map.c:1004
+#: client/cl_map.c:1117
 #, c-format
 msgid "Status:\t%s\n"
 msgstr "Состояние:\t%s\n"
@@ -13814,33 +13749,33 @@ msgstr "Установки не имеют смысла!"
 msgid "In: %i Out: %i"
 msgstr "В: %i Вне: %i"
 
-#: client/cl_menu.c:1800
+#: client/cl_menu.c:1801
 #, c-format
 msgid "Key: %s"
 msgstr "Клавиша: %s"
 
-#: client/cl_menu.c:3252
+#: client/cl_menu.c:3253
 msgid "Hide the HUD (press ESC to reactivate HUD)"
 msgstr "Скрыть HUD (нажмите 'ESC', чтобы перезапустить HUD)"
 
-#: client/cl_menu.c:4190
+#: client/cl_menu.c:4191
 #, c-format
 msgid "%i %s %02i, %02i:%02i: "
 msgstr ""
 
-#: client/cl_parse.c:905
+#: client/cl_parse.c:902
 msgid "Alien spotted:"
 msgstr "Обнаружен пришелец:"
 
-#: client/cl_parse.c:908 client/cl_parse.c:910
+#: client/cl_parse.c:905 client/cl_parse.c:907
 msgid "Alien spotted!\n"
 msgstr "Обнаружен пришелец!\n"
 
-#: client/cl_parse.c:912
+#: client/cl_parse.c:909
 msgid "Enemy spotted!\n"
 msgstr "Обнаружен противник!\n"
 
-#: client/cl_parse.c:914
+#: client/cl_parse.c:911
 msgid "Civilian spotted!\n"
 msgstr "Обнаружен гражданский!\n"
 
@@ -13862,12 +13797,12 @@ msgstr "Стоп\n"
 msgid "Mission\t%s (%s)\n"
 msgstr "Операция\t%s (%s)\n"
 
-#: client/cl_produce.c:242
+#: client/cl_produce.c:251
 #, fuzzy
 msgid "Not enough workers"
 msgstr "Не достаточно места в казармах!"
 
-#: client/cl_produce.c:242
+#: client/cl_produce.c:251
 msgid ""
 "You cannot queue productions without workers hired\n"
 "in this base.\n"
@@ -13875,94 +13810,94 @@ msgid ""
 "Hire workers."
 msgstr ""
 
-#: client/cl_produce.c:249
+#: client/cl_produce.c:258
 #, fuzzy
 msgid "Not enough workshops"
 msgstr "Не достаточно места в казармах!"
 
-#: client/cl_produce.c:249
+#: client/cl_produce.c:258
 #, fuzzy
 msgid ""
 "You cannot queue more items.\n"
 "Build more workshops.\n"
 msgstr "Вы больше не можете поместить что-либо в очередь!"
 
-#: client/cl_produce.c:350
+#: client/cl_produce.c:359
 #, c-format
 msgid "Production queue for base %s is empty"
 msgstr "Очередь на производство в мастерских базы %s пуста"
 
-#: client/cl_produce.c:351
+#: client/cl_produce.c:360
 msgid "Production queue empty"
 msgstr "Очередь на производство пуста"
 
-#: client/cl_produce.c:411
+#: client/cl_produce.c:420
 #, c-format
 msgid "The production of %s has finished."
 msgstr "Производство %s завершено."
 
-#: client/cl_produce.c:412
+#: client/cl_produce.c:421
 msgid "Production finished"
 msgstr "Производство завершено"
 
-#: client/cl_produce.c:447 client/cl_produce.c:465
+#: client/cl_produce.c:456 client/cl_produce.c:474
 msgid "No item selected"
 msgstr "Ничего не выбрано"
 
-#: client/cl_produce.c:456
+#: client/cl_produce.c:465
 #, c-format
 msgid "Costs per item\t%i c\n"
 msgstr "Цена за 1 шт:\t%i кр\n"
 
-#: client/cl_produce.c:458
+#: client/cl_produce.c:467
 #, c-format
 msgid "Productiontime\t%ih\n"
 msgstr "Время производства:\t%i ч.\n"
 
-#: client/cl_produce.c:460
+#: client/cl_produce.c:469
 #, fuzzy, c-format
 msgid "Item size\t%i\n"
 msgstr "Потери отряда:\t%i\n"
 
-#: client/cl_produce.c:483
+#: client/cl_produce.c:491
 #, fuzzy
 msgid "No disassembly selected"
 msgstr "Ничего не выбрано"
 
-#: client/cl_produce.c:491
+#: client/cl_produce.c:499
 #, c-format
 msgid "%s - disassembly\n"
 msgstr ""
 
-#: client/cl_produce.c:492
+#: client/cl_produce.c:500
 #, fuzzy
 msgid "Components: "
 msgstr "есть опыт"
 
-#: client/cl_produce.c:500
+#: client/cl_produce.c:508
 #, fuzzy, c-format
 msgid "%s (%i) "
 msgstr "%s (%s)\n"
 
-#: client/cl_produce.c:504
+#: client/cl_produce.c:512
 #, c-format
-msgid "Disassemblingtime\t%ih\n"
+msgid "Disassembly time\t%ih\n"
 msgstr ""
 
-#: client/cl_produce.c:936
+#: client/cl_produce.c:944
 #, c-format
 msgid "Production of %s started"
 msgstr "Начато производство: %s"
 
-#: client/cl_produce.c:937
+#: client/cl_produce.c:945
 msgid "Production started"
 msgstr "Начато производство"
 
-#: client/cl_produce.c:944
+#: client/cl_produce.c:952
 msgid "Queue full!"
 msgstr "Очередь полностью заполнена!"
 
-#: client/cl_produce.c:944
+#: client/cl_produce.c:952
 msgid "You cannot queue any more items!"
 msgstr "Вы больше не можете поместить что-либо в очередь!"
 
@@ -14819,43 +14754,38 @@ msgstr "%s в дикой ярости!\n"
 msgid "%s is currently shaken.\n"
 msgstr "%s дрожит от страха.\n"
 
-#: game/g_client.c:2080
-#, c-format
-msgid "Team %i ( %s) will get the first turn.\n"
-msgstr "Отряд %i ( %s) будет ходить первым.\n"
-
-#: game/g_client.c:2253
-msgid "4 minutes left until forced round end\n"
-msgstr ""
-
-#: game/g_client.c:2256
-msgid "3 minutes left until forced round end\n"
-msgstr ""
-
-#: game/g_client.c:2259
-msgid "2 minutes left until forced round end\n"
-msgstr ""
-
-#: game/g_client.c:2262
-msgid "1 minute left until forced round end\n"
-msgstr ""
-
-#: game/g_client.c:2265
-msgid "30 seconds left until forced round end\n"
-msgstr ""
-
-#: game/g_client.c:2268
-msgid "15 seconds left until forced round end\n"
-msgstr ""
-
-#: game/g_client.c:2276
-msgid "Current active team hit the max round time\n"
-msgstr ""
-
-#: game/g_svcmds.c:371
+#: game/g_client.c:2086 game/g_svcmds.c:374
 #, c-format
 msgid "Team %i (%s) will get the first turn.\n"
 msgstr "Отряд %i (%s) будет ходить первым.\n"
+
+#: game/g_client.c:2259
+msgid "4 minutes left until forced round end\n"
+msgstr ""
+
+#: game/g_client.c:2262
+msgid "3 minutes left until forced round end\n"
+msgstr ""
+
+#: game/g_client.c:2265
+msgid "2 minutes left until forced round end\n"
+msgstr ""
+
+#: game/g_client.c:2268
+msgid "1 minute left until forced round end\n"
+msgstr ""
+
+#: game/g_client.c:2271
+msgid "30 seconds left until forced round end\n"
+msgstr ""
+
+#: game/g_client.c:2274
+msgid "15 seconds left until forced round end\n"
+msgstr ""
+
+#: game/g_client.c:2282
+msgid "Current active team hit the max round time\n"
+msgstr ""
 
 #: po/OTHER_STRINGS:2
 #, fuzzy
@@ -14898,6 +14828,152 @@ msgstr "5 дней"
 #: po/OTHER_STRINGS:12
 msgid "Take a screenshot"
 msgstr ""
+
+#: po/OTHER_STRINGS:13
+msgid "Only moving"
+msgstr ""
+
+#~ msgid "Waiting for other players to join the game"
+#~ msgstr "Подождите, пока остальные игроки присоединятся к игре"
+
+#~ msgid "Players that must join before starting: "
+#~ msgstr "Перед началом к игре должны присединиться: "
+
+#~ msgid "Confirm Movement:"
+#~ msgstr "Подтверждение передвижений:"
+
+#~ msgid "No confirmation before walking"
+#~ msgstr "Не подтверждать начало перемещений"
+
+#~ msgid "Confirmation needed before walking"
+#~ msgstr "Подтверждать начало перемещений"
+
+#~ msgid "dropship_txt"
+#~ msgstr ""
+#~ "ТТХ летательного аппарата -- Десантный транспорт класса \"Жар-Птица\"\n"
+#~ "\n"
+#~ "ГРИФ СЕКРЕТНОСТИ: ЧЁРНЫЙ\n"
+#~ "\n"
+#~ "Подразделение противодействия внеземной угрозе ФАЛАНКС\n"
+#~ "\n"
+#~ "Технический документ, Уровень допуска: Сигма -- Только для командного "
+#~ "персонала --\n"
+#~ "\n"
+#~ "Внесено в реестр: 17 марта 2084\n"
+#~ "\n"
+#~ "Автор: коммандер Поль Наварре, НИОКР: инженерно-технический отдел, "
+#~ "ФАЛАНКС, Атлантическая ударная группа\n"
+#~ "\n"
+#~ "\n"
+#~ "\n"
+#~ "Краткий обзор\n"
+#~ "\n"
+#~ "Командующий, я просмотрел все эти старые файлы до Вас, и я решил заменить "
+#~ "их моей собственной оценкой и выводами о нашем выборе десантного "
+#~ "самолёта. Прошу прощения, если я превысил свои полномочия, но старые "
+#~ "десантные корабли ФАЛАНКС в хранилищах просто не соответствуют "
+#~ "современным спецификациям. Даже когда они были новыми, ни один из них не "
+#~ "вышел из стадии прототипа. Там было только два жизнеспособных образца, и "
+#~ "оба этих корабля последние 60 лет были законсервированы на "
+#~ "правительственных военных складах. Они не стоят тех проблем, что "
+#~ "возникнут при их выковыривании из хранилищ. Мы унаследовали натуральную "
+#~ "неразбериху в отношении снаряжения, - я даже не могу найти половину "
+#~ "материала, что предположительно предназначалась нас. Я прилагаю все "
+#~ "усилия, чтобы найти более совершенные альтернативы для выполнения наших "
+#~ "задач.\n"
+#~ "\n"
+#~ "Лишь один удачный момент в этой неразберихе с десантным самолётом, - это "
+#~ "то, что я сумел убедить наших чиновников из ООН ассигновать некоторую "
+#~ "долю бюджета на новый корабль, и я думаю, Вам это понравится.\n"
+#~ "\n"
+#~ "Галлеот \"Жар-Птица\" с технологией ВВП (Вертикального Взлёта и Посадки) "
+#~ "- это наилучший летательный аппарат, который мы можем надеяться "
+#~ "использовать в качестве десантного транспорта. Он был разработан как "
+#~ "грузовой транспортный самолёт, но вскоре стал перевозить пассажиров, и "
+#~ "был переоборудован военными подрядчиками в десантный транспорт. С тех пор "
+#~ "он стал популярной альтернативой вертолетам, как у военных, так и в "
+#~ "гражданском применении, благодаря четырём его импульсным реактивным "
+#~ "двигателям HM-5600, которые обеспечивают \"Жар-Птице\" возможность ВВП, и "
+#~ "достигают неплохой топливной экономичности наряду с гораздо меньшим "
+#~ "количеством движущихся частей по сравнению с любым вертолётным "
+#~ "механизмом. Это повышает надёжность всей конструкции и делает аппарат "
+#~ "значительно быстрее, частично, в силу отсутствия вращающихся лопастей. "
+#~ "Однако двигатели HM-5600 расходуют много горючего, и "
+#~ "высокопроизводительное авиационное топливо может быть слишком дорогим для "
+#~ "гражданского применения.\n"
+#~ "\n"
+#~ "Крейсерская скорость \"Жар-Птицы\" составляет 0.74 Маха. Максимальная "
+#~ "скорость достигает 1.03 Маха, так что он едва-едва преодолевает звуковой "
+#~ "барьер, но это служит причиной ударных нагрузок на корпус аппарата и "
+#~ "следует избегать этого без крайней необходимости. Корабль обладает одним "
+#~ "узлом подвески для различного вооружения, расположенным в носовой части, "
+#~ "на который можно монтировать вооружение для поражения воздушных целей, "
+#~ "такое как авиационные пушки или ракетные блоки. Он так же может нести "
+#~ "дополнительное снаряжение для увеличения его полётных характеристик и "
+#~ "боевой эффективности. Десантный отсек оборудован противоперегрузочными "
+#~ "ремнями безопасности для 8 десантников, а грузовой отсек может служить "
+#~ "для транспортировки и боевого развёртывания малогабаритной военной "
+#~ "техники.\n"
+#~ "\n"
+#~ "На горизонте нет ничего столь же подходящего на роль нашего десантного "
+#~ "транспорта как эта \"Жар-Птица\". Он быстрее любого вертолёта, более "
+#~ "манёвренный, чем любой аэроплан с неизменяемым профилем крыла, и может "
+#~ "быстро и эффективно реагировать на угрозу по всему миру.\n"
+#~ "\n"
+#~ "\"Жар-Птица\" нуждается в одном Большом Ангаре для хранения, "
+#~ "техобслуживания и базовой эксплуатации. Он имеет 1 средний орудийный узел "
+#~ "подвески, расположенный в носовой части.\n"
+#~ "\n"
+#~ "\n"
+#~ "Рекомендованная доктрина\n"
+#~ "\n"
+#~ "Десантный транспорт, который будет доставлять бойцов в любую точку мира, "
+#~ "чтобы пресечь атаки пришельцев на поверхности, или для зачистки местности "
+#~ "в местах падения сбитых НЛО для их захвата. Он должен развёртываться "
+#~ "немедленно в местах активности пришельцев или при захвате сбитых "
+#~ "летательных аппаратов.\n"
+#~ "\n"
+#~ "Как только местность была очищена от живых пришельцев, тяжело раненные "
+#~ "солдаты будут немедленно отправлены в госпиталь для срочной медицинской "
+#~ "помощи. Оставшиеся бойцы будут охранять область до тех пор, пока "
+#~ "поисковая группа ФАЛАНКС не сможет погрузить и гарантировать доставку "
+#~ "любого или всех артефактов пришельцев на наши базы. Это важно, так как "
+#~ "попытки похищения предметов, оставленных на поле боя, могут стать "
+#~ "проблемой в густонаселённых регионах. Мы не можем позволить себе терять "
+#~ "ценные технологии пришельцев из-за того, что какой-нибудь идиот захочет "
+#~ "заиметь это в качестве сувенира.\n"
+#~ "\n"
+#~ "Хоть он и вооружён, десантный транспорт класса \"Жар-Птица\" не в "
+#~ "состоянии противостоять специализированным истребителям, и никогда не "
+#~ "должен отправляться как основной перехватчик при обнаружении какого-либо "
+#~ "НЛО.\n"
+#~ "\n"
+#~ "\n"
+#~ "Приложения\n"
+#~ "\n"
+#~ "Нет.\n"
+#~ "\n"
+#~ "Характеристики летательного аппарата:\n"
+#~ "\n"
+#~ "Габариты: 8м x 30м x 5м\n"
+#~ "\n"
+#~ "Крейсерская скорость: 785 км/ч\n"
+#~ "\n"
+#~ "Максимальная скорость: 1,083 км/ч\n"
+#~ "\n"
+#~ "Оперативный радиус действия: 18,000 км\n"
+#~ "\n"
+#~ "Экипаж: 3 чел\n"
+#~ "\n"
+#~ "Вместимость: 8 бойцов десанта\n"
+#~ "\n"
+#~ "Вооружение: 1 средний узел подвески (нос)"
+
+#~ msgid "Unnamed"
+#~ msgstr "без имени"
+
+#~ msgid "Team %i ( %s) will get the first turn.\n"
+#~ msgstr "Отряд %i ( %s) будет ходить первым.\n"
 
 #~ msgid "Armor"
 #~ msgstr "Броня"
@@ -15639,9 +15715,6 @@ msgstr ""
 #~ msgid "Dropship"
 #~ msgstr "Dropship"
 
-#~ msgid "Interceptor"
-#~ msgstr "Interceptor"
-
 #~ msgid "News"
 #~ msgstr "News"
 
@@ -16056,9 +16129,6 @@ msgstr ""
 #~ msgstr "No pre research info available"
 
 #~ msgid "b_workshop_pre_txt"
-#~ msgstr "No pre research info available"
-
-#~ msgid "dropship_pre_txt"
 #~ msgstr "No pre research info available"
 
 #~ msgid "interceptor_pre_txt"
