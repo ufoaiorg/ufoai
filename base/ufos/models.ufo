@@ -148,25 +148,25 @@ menu_model civ_female
 }
 
 // ============== Dropship =========================
-menu_model dropship_glass
+menu_model firebird_glass
 {
-	model	"models/aircraft/dropship/dropship_glass.md2"
+	model	"models/aircraft/firebird/firebird_glass.md2"
 }
 menu_model dropship_top
 {
-	model	"models/aircraft/dropship/dropship_top.md2"
-	need	"dropship_glass"
+	model	"models/aircraft/firebird/firebird_top.md2"
+	need	"firebird_glass"
 }
-menu_model dropship
+menu_model firebird
 {
-	model	"models/aircraft/dropship/dropship.md2"
-	need	"dropship_top"
+	model	"models/aircraft/firebird/firebird.md2"
+	need	"firebird_top"
 }
 
 // ============== Saracen Interceptor ======================
 menu_model saracen_interceptor
 {
-	model	"models/aircraft/interceptor2/interceptor2.md2"
+	model	"models/aircraft/saracen_interceptor/saracen_interceptor.md2"
 }
 
 // ============== Interceptor ======================
@@ -185,56 +185,35 @@ menu_model interceptor
 	need	"interceptor_top"
 }
 
-// ============== UFO ==============================
-menu_model ufo1_upper
+// ============== UFO SCOUT ============================
+menu_model ufo_scout_upper
 {
-	model	"models/aircraft/ufo_small/alienship1_upper.md2"
+	model	"models/aircraft/ufo_scout/ufo_scout_upper.md2"
 }
-menu_model ufo1_engines_2
+menu_model ufo_scout_engines_2
 {
-	model	"models/aircraft/ufo_small/alienship1_engines_2.md2"
-	need	"ufo1_upper"
+	model	"models/aircraft/ufo_scout/ufo_scout_engines_2.md2"
+	need	"ufo_scout_upper"
 }
-menu_model ufo1_engines_1
+menu_model ufo_scout_engines_1
 {
-	model	"models/aircraft/ufo_small/alienship1_engines_1.md2"
-	need	"ufo1_engines_2"
+	model	"models/aircraft/ufo_scout/ufo_scout_engines_1.md2"
+	need	"ufo_scout_engines_2"
 }
-menu_model ufo1_hull
+menu_model ufo_scout_hull
 {
-	model	"models/aircraft/ufo_small/alienship1_hull.md2"
-	need	"ufo1_engines_1"
+	model	"models/aircraft/ufo_scout/ufo_scout_hull.md2"
+	need	"ufo_scout_engines_1"
 }
-menu_model ufo1_wings
+menu_model ufo_scout_wings
 {
-	model	"models/aircraft/ufo_small/alienship1_wings.md2"
-	need	"ufo1_hull"
+	model	"models/aircraft/ufo_scout/ufo_scout_wings.md2"
+	need	"ufo_scout_hull"
 }
-menu_model ufo1
+menu_model ufo_scout
 {
-	model	"models/aircraft/ufo_small/alienship1_engines.md2"
-	need	"ufo1_wings"
-}
-
-// ============== UFO ==============================
-menu_model ufoscout_upper
-{
-	model	"models/aircraft/ufo_small/alienship1_upper.md2"
-}
-menu_model ufoscout_engines_1
-{
-	model	"models/aircraft/ufo_small/alienship1_engines_1.md2"
-	need	"ufoscout_upper"
-}
-menu_model ufoscout_hull
-{
-	model	"models/aircraft/ufo_small/alienship1_hull.md2"
-	need	"ufoscout_engines_1"
-}
-menu_model ufoscout
-{
-	model	"models/aircraft/ufo_small/alienship1_engines.md2"
-	need	"ufoscout_hull"
+	model	"models/aircraft/ufo_scout/ufo_scout_engines.md2"
+	need	"ufo_scout_wings"
 }
 
 // ============== UFO BIG ==========================
