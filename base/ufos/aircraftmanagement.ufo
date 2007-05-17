@@ -93,6 +93,114 @@ aircraft craft_inter_saracen
 	shield		rs_craft_shield_polymer
 }
 
+aircraft craft_inter_stingray
+{
+	speed		30.0
+	name		"_Stingray Interceptor"
+	shortname	"_Stingray"
+	type		interceptor
+	model		"inter_stingray"
+	fuel		60000
+	fuelsize	60000
+	size		1
+	weight		4
+	price		2000000
+	building	building_intercept
+	image		air_stingray_interceptor
+	angles		"170 10 -110"
+	scale		"0.8 1.1 1.1"
+	angles_equip	"-90 0 180"
+	scale_equip	"0.9 0.9 0.9"
+}
+
+// FIXME
+aircraft craft_ufo_harvester
+{
+	speed		25.0
+	name		"_UFO - Harvester"
+	shortname	"_Harvester U"
+	type		ufo
+	ufotype		scout
+	model		"ufo_harvester"
+	size		4
+	weight		3
+	building	building_big_ufo_hangar
+	price		-1 // not buyable (implemented already?)
+	fuel		100000
+	fuelsize	100000
+	image		air_ufo
+	angles		"170 -30 -100"
+	scale		"1.1 0.9 1.0"
+	angles_equip	"0 0 180"
+	scale_equip	"0.9 0.9 0.9"
+}
+
+// FIXME
+aircraft craft_ufo_carrier
+{
+	speed		25.0
+	name		"_UFO - Carrier"
+	shortname	"Carrier U"
+	type		ufo
+	ufotype		scout
+	model		"ufo_carrier"
+	size		4
+	weight		3
+	building	building_small_ufo_hangar
+	price		-1 // not buyable (implemented already?)
+	fuel		100000
+	fuelsize	100000
+	image		air_ufo
+	angles		"170 -30 -100"
+	scale		"1.1 0.9 1.0"
+	angles_equip	"0 0 180"
+	scale_equip	"0.9 0.9 0.9"
+}
+
+// FIXME
+aircraft craft_ufo_big
+{
+	speed		25.0
+	name		"_UFO - Big"
+	shortname	"_Big U"
+	type		ufo
+	ufotype		scout
+	model		"ufo_big"
+	size		4
+	weight		3
+	building	building_big_ufo_hangar
+	price		-1 // not buyable (implemented already?)
+	fuel		100000
+	fuelsize	100000
+	image		air_ufo
+	angles		"170 -30 -100"
+	scale		"1.1 0.9 1.0"
+	angles_equip	"0 0 180"
+	scale_equip	"0.9 0.9 0.9"
+}
+
+// FIXME
+aircraft craft_ufo_condor
+{
+	speed		25.0
+	name		"_UFO - Condor"
+	shortname	"_Condor U"
+	type		ufo
+	ufotype		scout
+	model		"ufo_condor"
+	size		4
+	weight		3
+	building	building_big_ufo_hangar
+	price		-1 // not buyable (implemented already?)
+	fuel		100000
+	fuelsize	100000
+	image		air_ufo
+	angles		"170 -30 -100"
+	scale		"1.1 0.9 1.0"
+	angles_equip	"0 0 180"
+	scale_equip	"0.9 0.9 0.9"
+}
+
 aircraft craft_ufo_scout
 {
 	speed		25.0

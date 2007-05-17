@@ -50,3 +50,20 @@ item craft_ufo_harvester
 	weapon false
 }
 
+item craft_ufo_condor
+{
+	name	"_UFO - Condor"
+	weapon false
+}
+
+item craft_ufo_carrier
+{
+	name	"_UFO - Carrier"
+	weapon false
+}
+
+item craft_ufo_big
+{
+	name	"_UFO - Big"
+	weapon false
+}
