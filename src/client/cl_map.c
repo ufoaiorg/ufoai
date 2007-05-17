@@ -75,6 +75,7 @@ static cvar_t* cl_showCoords;
 static aircraft_t *selectedAircraft;	/**< Currently selected aircraft */
 static aircraft_t *selectedUfo;			/**< Currently selected UFO */
 static char text_standard[2048];		/**< Buffer to display standard text in geoscape */
+static vec3_t oldDirectionVector;		/**< Vector allowing to do smooth rotation of a rotating model */
 /*
 ==============================================================
 CLICK ON MAP and MULTI SELECTION FUNCTIONS
@@ -789,6 +790,7 @@ static float MAP_AngleOfPath (const menuNode_t* node, const vec3_t start, const 
 	float angle=0;
 	vec3_t start3D, end3D, ortVector, v, rotationAxis;
 	vec2_t start2D;
+	float dist;
 
 	start2D[0] = start[0];
 	start2D[1] = start[1];
@@ -798,6 +800,22 @@ static float MAP_AngleOfPath (const menuNode_t* node, const vec3_t start, const 
 	CrossProduct(start3D, end3D, v);
 	CrossProduct(v, start3D, ortVector);
 	VectorNormalize(ortVector);
+
+	VectorSubtract(ortVector, oldDirectionVector, v);
+	dist = VectorLength(v);
+	if (dist > 0.01) {
+		CrossProduct(oldDirectionVector, ortVector, rotationAxis);
+		VectorNormalize(rotationAxis);
+		RotatePointAroundVector(v, rotationAxis, oldDirectionVector, 5.0);
+		VectorCopy(v, oldDirectionVector);
+		VectorSubtract(ortVector, oldDirectionVector, v);
+		if (VectorLength(v) < dist) {
+			VectorCopy(oldDirectionVector, ortVector);
+		}
+		else {
+			VectorCopy(ortVector, oldDirectionVector);
+		}
+	}
 
 	VectorSet(rotationAxis, 0, 0, 1);
 	RotatePointAroundVector(v, rotationAxis, ortVector, - ccs.angles[PITCH]);
@@ -811,6 +829,7 @@ static float MAP_AngleOfPath (const menuNode_t* node, const vec3_t start, const 
 	return angle;
 }
 
+#define SELECT_CIRCLE_RADIUS	6
 /**
  * @brief
  */
@@ -842,15 +861,18 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 	Cvar_Set("mn_mapdaytime", "");
 	for (i = 0; i < ccs.numMissions; i++) {
 		ms = &ccs.mission[i];
-		angle = MAP_AngleOfPath(node, ms->realPos, northPole);
-		if (!MAP_Draw3DMarkerIfVisible(node, ms->realPos, angle, "cross"))
+		/*angle = MAP_AngleOfPath(node, ms->realPos, northPole);*/
+		angle =  0;
+		if (!MAP_3DMapToScreen(node, ms->realPos, &x, &y, NULL))
 			continue;
 
 		if (ms == selMis) {
 			if (!selMis->def->active)
-				MAP_MapDrawEquidistantPoints (node,  ms->realPos, 7, yellow, qtrue);
+				MAP_MapDrawEquidistantPoints (node,  ms->realPos, SELECT_CIRCLE_RADIUS, yellow, qtrue);
 			Cvar_Set("mn_mapdaytime", CL_MapIsNight(ms->realPos) ? _("Night") : _("Day"));
 		}
+		/* Draw mission model (this must be after drawing 'selected circle' so that the model looks above it)*/
+		MAP_Draw3DMarkerIfVisible(node, ms->realPos, angle, "cross");
 	}
 
 	/* draw base pics */
@@ -858,9 +880,10 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 		if (!base->founded)
 			continue;
 		
-		angle = MAP_AngleOfPath(node, base->pos, northPole);
+		/*angle = MAP_AngleOfPath(node, base->pos, northPole);*/
+		angle =  0;
 		
-		/* Draw base */
+		/* Get position on screen */
 		 MAP_3DMapToScreen(node, base->pos, &x, &y, NULL);
 
 		/* Draw base radar info */
@@ -891,17 +914,17 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 					angle = MAP_AngleOfPath(node, aircraft->pos, northPole);
 				}
 
-				/* Draw aircraft */
-				MAP_Draw3DMarkerIfVisible(node, aircraft->pos, angle, aircraft->model);
-
-				/* Draw selected aircraft */
+				/* Draw a circle around selected aircraft */
 				if (aircraft == selectedAircraft) {
-					MAP_MapDrawEquidistantPoints (node, aircraft->pos, 7, yellow, qtrue);
+					MAP_MapDrawEquidistantPoints (node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow, qtrue);
 
-					/* Draw ufo purchased by selected aircraft */
+					/* Draw a circle around ufo purchased by selected aircraft */
 					if (aircraft->status == AIR_UFO && MAP_MapToScreen(node, (gd.ufos + aircraft->ufo)->pos, &x, &y))
-						MAP_MapDrawEquidistantPoints (node, aircraft->pos, 7, yellow, qtrue);
+						MAP_MapDrawEquidistantPoints (node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow, qtrue);
 				}
+
+				/* Draw aircraft (this must be after drawing 'selected circle' so that the aircraft looks above it)*/
+				MAP_Draw3DMarkerIfVisible(node, aircraft->pos, angle, aircraft->model);
 			}
 		}
 
