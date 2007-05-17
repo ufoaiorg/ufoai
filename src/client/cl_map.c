@@ -824,6 +824,7 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 	int x, y, z;
 	float angle = 0;
 	const vec2_t northPole = {0, 90};
+	vec4_t yellow={1, 0.874, 0.294, 1};
 #if 0
 	vec2_t pos = {0, 0};
 
@@ -846,7 +847,8 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 			continue;
 
 		if (ms == selMis) {
-		/*	re.Draw3DMapMarkers(ccs.angles, ccs.zoom, latitude, longitude, selMis->def->active ? "circleactive" : "circle");*/
+			if (!selMis->def->active)
+				MAP_MapDrawEquidistantPoints (node,  ms->realPos, 7, yellow, qtrue);
 			Cvar_Set("mn_mapdaytime", CL_MapIsNight(ms->realPos) ? _("Night") : _("Day"));
 		}
 	}
@@ -891,6 +893,15 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 
 				/* Draw aircraft */
 				MAP_Draw3DMarkerIfVisible(node, aircraft->pos, angle, aircraft->model);
+
+				/* Draw selected aircraft */
+				if (aircraft == selectedAircraft) {
+					MAP_MapDrawEquidistantPoints (node, aircraft->pos, 7, yellow, qtrue);
+
+					/* Draw ufo purchased by selected aircraft */
+					if (aircraft->status == AIR_UFO && MAP_MapToScreen(node, (gd.ufos + aircraft->ufo)->pos, &x, &y))
+						MAP_MapDrawEquidistantPoints (node, aircraft->pos, 7, yellow, qtrue);
+				}
 			}
 		}
 
