@@ -7,9 +7,9 @@ Type=1
 Compiler=-D__GNUWIN32__ _@@_-D_M_IX86=500 _@@_-Wall_@@_-DWIN_ERROR_@@_-DDEBUG_@@_-DDEVCPP_@@_-DC_ONLY_@@__@@_
 CppCompiler=
 Includes=D:\Programme\Dev-Cpp\include
-Linker=_@@__@@_
+Linker=-lz_@@_
 Libs=C:\Dev-Cpp\lib
-UnitCount=36
+UnitCount=38
 Folders=Headers,Source
 ObjFiles=
 PrivateResource=
@@ -220,14 +220,14 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit37]
-FileName=..\..\src\tools\ufo2map\common\qfiles.h
-Folder=ufo2map
+FileName=..\..\src\qcommon\ioapi.c
+Folder=Source
 Compile=1
-CompileCpp=1
+CompileCpp=0
 Link=1
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=
+BuildCmd=$(CC) -c ioapi.c -o ufo2map/ioapi.o $(CFLAGS)
 
 [Unit39]
 FileName=..\..\src\tools\ufo2map\common\scriplib.h
@@ -367,14 +367,14 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit38]
-FileName=..\..\src\tools\ufo2map\common\scriplib.c
+FileName=..\..\src\qcommon\unzip.c
 CompileCpp=0
-Folder=ufo2map
+Folder=Source
 Compile=1
 Link=1
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=
+BuildCmd=$(CC) -c unzip.c -o ufo2map/unzip.o $(CFLAGS)
 
 [Unit43]
 FileName=..\..\src\tools\ufo2map\common\trilib.c
