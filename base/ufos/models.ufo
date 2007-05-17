@@ -166,23 +166,23 @@ menu_model firebird
 // ============== Saracen Interceptor ======================
 menu_model saracen_interceptor
 {
-	model	"models/aircraft/saracen_interceptor/saracen_interceptor.md2"
+	model	"models/aircraft/saracen_interceptor/saracen.md2"
 }
 
 // ============== Interceptor ======================
-menu_model interceptor_glass
+menu_model stiletto_interceptor_glass
 {
-	model	"models/aircraft/interceptor/fighter1_glass.md2"
+	model	"models/aircraft/stiletto_interceptor/stiletto_glass.md2"
 }
-menu_model interceptor_top
+menu_model stiletto_interceptor_top
 {
-	model	"models/aircraft/interceptor/fighter1_engines.md2"
-	need	"interceptor_glass"
+	model	"models/aircraft/stiletto_interceptor/stiletto_engines.md2"
+	need	"stiletto_interceptor_glass"
 }
-menu_model interceptor
+menu_model stiletto_interceptor
 {
-	model	"models/aircraft/interceptor/fighter1_main.md2"
-	need	"interceptor_top"
+	model	"models/aircraft/stiletto_interceptor/stiletto.md2"
+	need	"stiletto_interceptor_top"
 }
 
 // ============== UFO SCOUT ============================
