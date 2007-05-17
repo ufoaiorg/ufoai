@@ -3266,7 +3266,7 @@ void MN_ResetMenus (void)
 	for (i = 0; i < MAX_MENUTEXTS; i++)
 		menuText[i] = NULL;
 
-	/* reset ufopedia & basemanagement */
+	/* reset ufopedia, basemanagement and other subsystems */
 	UP_ResetUfopedia();
 	B_ResetBaseManagement();
 	RS_ResetResearch();

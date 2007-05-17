@@ -116,10 +116,17 @@ static void UFO_NewUfoOnGeoscape_f (void)
 {
 	static int newUfoNum = -1;
 	aircraft_t *ufo = NULL;
+	ufoType_t ufotype = UFO_MAX;
 
 	/* check max amount */
 	if (gd.numUfos >= MAX_UFOONGEOSCAPE)
 		return;
+
+	if (Cmd_Argc() == 2) {
+		ufotype = atoi(Cmd_Argv(1));
+		if (ufotype > UFO_MAX || ufotype < 0)
+			ufotype = UFO_MAX;
+	}
 
 	/* Get next type of ufo in aircrafts list */
 	while (++newUfoNum < numAircraft_samples)
@@ -127,14 +134,18 @@ static void UFO_NewUfoOnGeoscape_f (void)
 			break;
 	if (newUfoNum == numAircraft_samples)
 		for (newUfoNum = 0; newUfoNum < numAircraft_samples; newUfoNum++)
-			if (aircraft_samples[newUfoNum].type == AIRCRAFT_UFO)
+			if (aircraft_samples[newUfoNum].type == AIRCRAFT_UFO
+			 && (ufotype == UFO_MAX || ufotype == aircraft_samples[newUfoNum].ufotype))
 				break;
-	if (newUfoNum == numAircraft_samples)
+	if (newUfoNum == numAircraft_samples) {
+		if (ufotype != UFO_MAX)
+			Com_DPrintf("Could not add ufo type %i to geoscape\n", ufotype);
 		return;
+	}
 
 	/* Create ufo */
 	ufo = gd.ufos + gd.numUfos;
-	memcpy(ufo,  aircraft_samples + newUfoNum, sizeof(aircraft_t));
+	memcpy(ufo, aircraft_samples + newUfoNum, sizeof(aircraft_t));
 	Com_DPrintf("New ufo on geoscape: '%s' (%i)\n", ufo->name, gd.numUfos);
 	gd.numUfos++;
 
@@ -251,7 +262,7 @@ extern void UFO_PrepareRecovery (base_t *base)
 		if (ufocraft->ufotype == Cvar_VariableInteger("mission_ufotype"))
 			break;
 	}
-	assert (ufocraft);
+	assert(ufocraft);
 
 	/* Find free uforecovery slot. */
 	for (i = 0; i < MAX_RECOVERIES; i++) {
@@ -267,7 +278,7 @@ extern void UFO_PrepareRecovery (base_t *base)
 		Com_Printf("UFO_PrepareRecovery()... free recovery slot not found.\n");
 		return;
 	}
-	assert (recovery);
+	assert(recovery);
 
 	/* Prepare date of the recovery event - always two days after mission. */
 	event = ccs.date;
@@ -306,12 +317,12 @@ extern void UFO_Recovery (void)
 			}
 			/* Get ufocraft. */
 			ufocraft = &aircraft_samples[recovery->ufotype];
-			assert (ufocraft);
+			assert(ufocraft);
 			/* Get item. */
 			/* We can do this because aircraft id is the same as dummy item id. */
 			item = Com_GetItemByID(ufocraft->id);
 			od = &csi.ods[item];
-			assert (od);
+			assert(od);
 			/* Process UFO recovery. */
 			base->storage.num[item]++;	/* Add dummy UFO item to enable research topic. */
 			RS_MarkCollected(od->tech);	/* Enable research topic. */
@@ -320,13 +331,15 @@ extern void UFO_Recovery (void)
 }
 
 /**
-  * @brief
-  */
+ * @brief
+ * @sa MN_ResetMenus
+ */
 extern void UFO_Reset (void)
 {
-	Cmd_AddCommand("addufo", UFO_NewUfoOnGeoscape_f, NULL);
-	Cmd_AddCommand("removeufo", UFO_RemoveUfoFromGeoscape_f, NULL);
+	Cmd_AddCommand("addufo", UFO_NewUfoOnGeoscape_f, "Add a new ufo to geoscape");
+	Cmd_AddCommand("removeufo", UFO_RemoveUfoFromGeoscape_f, "Remove an ufo from geoscape");
 #ifdef DEBUG
 	Cmd_AddCommand("debug_listufo", UFO_ListUfosOnGeoscape_f, "Print ufo information to game console");
+	Cvar_Get("debug_showufos", "0", 0, "Show all ufos on geoscape");
 #endif
 }

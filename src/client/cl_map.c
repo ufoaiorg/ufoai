@@ -300,7 +300,7 @@ extern void MAP_MapClick (const menuNode_t* node, int x, int y, qboolean globe)
 	for (aircraft = gd.ufos + gd.numUfos - 1 ; aircraft >= gd.ufos ; aircraft--)
 		if (aircraft->visible
 #if DEBUG
-		|| Cvar_VariableInteger("showufos")
+		|| Cvar_VariableInteger("debug_showufos")
 #endif
 		)
 			if (aircraft->status > AIR_HOME && MAP_IsMapPositionSelected(node, aircraft->pos, x, y, globe))
@@ -434,7 +434,7 @@ extern qboolean MAP_Draw3DMarkerIfVisible (const menuNode_t* node, const vec2_t 
 		angles[0] = theta;
 		costheta = cos(angles[0] * torad);
 		sintheta = sin(angles[0] * torad);
-		
+
 		angles[1] = 180 - asin((v[0] * costheta + v[1] * sintheta) / radius) * todeg;
 		angles[2] = + asin((v[0] * sintheta - v[1] * costheta) / radius) * todeg;
 
@@ -794,7 +794,7 @@ static float MAP_AngleOfPath (const menuNode_t* node, const vec3_t start, const 
 	start2D[1] = start[1];
 
 	PolarToVec(start2D, start3D);
-	PolarToVec(end, end3D); 
+	PolarToVec(end, end3D);
 	CrossProduct(start3D, end3D, v);
 	CrossProduct(v, start3D, ortVector);
 	VectorNormalize(ortVector);
@@ -995,7 +995,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 	for (aircraft = gd.ufos + gd.numUfos - 1 ; aircraft >= gd.ufos ; aircraft --) {
 #ifdef DEBUG
 		/* in debug mode you execute set showufos 1 to see the ufos on geoscape */
-		if (Cvar_VariableInteger("showufos")) {
+		if (Cvar_VariableInteger("debug_showufos")) {
 			if (!MAP_MapToScreen(node, aircraft->pos, &x, &y))
 				continue;
 			MAP_MapDrawLine(node, &(aircraft->route)); /* Draw ufo route */
