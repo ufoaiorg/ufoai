@@ -27,7 +27,7 @@
 //
 // AIRCRAFTS
 //
-aircraft craft_dropship
+aircraft craft_drop_firebird
 {
 	speed		10.0
 	name		"_Firebird-class Dropship"
@@ -70,7 +70,7 @@ aircraft craft_interceptor
 	shield		rs_craft_shield_polymer
 }
 
-aircraft craft_saracen_interceptor
+aircraft craft_inter_saracen
 {
 	speed		30.0
 	name		"_Saracen-class Interceptor"

@@ -2471,65 +2471,65 @@ tech rs_building_antimatter
 //========================
 // Crafts - Human
 //========================
-tech rs_craft_dropship
+tech rs_craft_drop_firebird
 {
 	type	craft
-	description	"_dropship_txt"
-	// pre_description	"_dropship_pre_txt"
+	description	"_drop_firebird_txt"
+	// pre_description	"_drop_firebird_pre_txt"
 	up_chapter	crafts
 
-	provides	craft_dropship
+	provides	craft_drop_firebird
 	require_AND { tech nothing }
 	time	0
 
 	// TODO should come from craft-definition:
-	mdl_top		dropship
+	mdl_top		drop_firebird
 }
 
-tech rs_craft_stiletto_interceptor
+tech rs_craft_inter_stiletto
 {
 	type	craft
-	description	"_interceptor_txt"
-	// pre_description	"_interceptor_pre_txt"
+	description	"_inter_stiletto_txt"
+	// pre_description	"_inter_stiletto_pre_txt"
 	up_chapter	crafts
 
-	provides	craft_interceptor
+	provides	craft_inter_stiletto
 	require_AND { tech nothing }
 	time	0
 
 	// TODO should come from craft-definition:
-	mdl_top		interceptor
+	mdl_top		inter_stiletto
 }
 
-tech rs_craft_saracen_interceptor
+tech rs_craft_inter_saracen
 {
 	type	craft
 	description	"_saracen_interceptor_txt"
 	// pre_description	"_saracen_interceptor_pre_txt"
 	up_chapter	crafts
 
-	provides	craft_saracen_interceptor
+	provides	craft_inter_saracen
 	require_AND { tech nothing }
 	time	0
 
 	// TODO should come from craft-definition:
-	mdl_top		saracen_interceptor
+	mdl_top		inter_saracen
 }
 
-//tech rs_craftupgrade_dropship
+//tech rs_craftupgrade_drop_firebird
 //{
 //	type	tech
 //	name	"_Plasmadrive for H-92 Transport"
-//	description	"_dropship_upgrade_txt"
-//	pre_description	"_dropship_upgrade_pre_txt"
+//	description	"_drop_firebird_upgrade_txt"
+//	pre_description	"_drop_firebird_upgrade_pre_txt"
 //	up_chapter	crafts
 //
 //	require_AND
 //	{
-//		tech rs_craft_dropship
+//		tech rs_craft_drop_firebird
 //		tech rs_plasma
 //	}
-//	provides	dropship_plasmadrive
+//	provides	drop_firebird_plasmadrive
 //	time	0
 //}
 

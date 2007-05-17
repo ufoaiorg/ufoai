@@ -58,8 +58,8 @@ researched rslist_human
 	rs_building_hospital
 	rs_building_small_ufo_hangar
 	rs_building_large_ufo_hangar
-	rs_craft_dropship
-	rs_craft_stiletto_interceptor
+	rs_craft_drop_firebird
+	rs_craft_inter_stiletto
 	rs_ugv_phoenix
 	rs_ugv_triax
 	rs_craft_el_raven

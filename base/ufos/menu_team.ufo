@@ -893,10 +893,10 @@ menu team
 	//mn_chrkillteam
 
 	// ==================
-	// dropship
+	// aircraft
 	// ==================
 
-	model dropship
+	model aircraft
 	{
 		md2		"*cvar mn_aircraft_model"
 		origin	"690 640 0"
@@ -905,7 +905,7 @@ menu team
 		color	"0.5 0.5 0.5 1"
 	}
 
-	model dropship_top
+/*	model aircraft_top
 	{
 		md2		"*cvar mn_aircraft_model_top"
 		origin	"690 640 0"
@@ -914,7 +914,7 @@ menu team
 		color	"0.5 0.5 0.5 1"
 	}
 
-	model dropship_glass
+	model aircraft_glass
 	{
 		md2		"*cvar mn_aircraft_model_glass"
 		origin	"690 640 0"
@@ -922,6 +922,7 @@ menu team
 		scale	"1.1 1.1 1.1"
 		color	"0.5 0.5 0.5 1"
 	}
+*/
 
 	string team_members
 	{
