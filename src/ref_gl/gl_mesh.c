@@ -244,7 +244,7 @@ static qboolean R_CullAliasModel (vec4_t bbox[8], entity_t * e)
 		mask = 0;
 
 		for (f = 0; f < 4; f++) {
-			dp = DotProduct( frustum[f].normal, bbox[p] );
+			dp = DotProduct(frustum[f].normal, bbox[p]);
 
 			if ((dp - frustum[f].dist) < 0)
 				mask |= (1 << f);

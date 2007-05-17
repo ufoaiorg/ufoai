@@ -1301,6 +1301,8 @@ static void CL_CampaignRunMarket (void)
 		if (RS_ItemIsResearched(csi.ods[i].id)) {
 			/* supply balance */
 			technology_t *tech = RS_GetTechByProvided(csi.ods[i].id);
+			if (!tech)
+				Sys_Error("No tech that provides '%s'\n", csi.ods[i].id);
 			int reasearched_date = tech->researchedDateDay + tech->researchedDateMonth*30 +  tech->researchedDateYear*DAYS_PER_YEAR - 2;
 			if (reasearched_date <= curCampaign->date.sec/86400 + curCampaign->date.day)
 				reasearched_date -= 100;

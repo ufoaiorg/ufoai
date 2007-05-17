@@ -117,7 +117,6 @@ typedef struct {
 #define MAX_MD2SKINS	32
 #define	MAX_SKINNAME	64
 #define MAX_TAGNAME		64
-#define TAG_MATEXTRA	16
 
 typedef struct {
 	short s;
@@ -133,12 +132,6 @@ typedef struct {
 	byte v[3];					/**< scaled byte to fit in frame mins/maxs */
 	byte lightnormalindex;
 } dtrivertx_t;
-
-#define DTRIVERTX_V0   0
-#define DTRIVERTX_V1   1
-#define DTRIVERTX_V2   2
-#define DTRIVERTX_LNI  3
-#define DTRIVERTX_SIZE 4
 
 typedef struct {
 	float scale[3];				/**< multiply byte verts by this */

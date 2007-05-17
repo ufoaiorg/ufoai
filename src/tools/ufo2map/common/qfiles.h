@@ -100,12 +100,6 @@ typedef struct
 	byte	lightnormalindex;
 } dtrivertx_t;
 
-#define DTRIVERTX_V0   0
-#define DTRIVERTX_V1   1
-#define DTRIVERTX_V2   2
-#define DTRIVERTX_LNI  3
-#define DTRIVERTX_SIZE 4
-
 typedef struct
 {
 	float		scale[3];	/* multiply byte verts by this */
