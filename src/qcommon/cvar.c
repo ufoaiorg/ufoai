@@ -71,7 +71,7 @@ static cvar_t *Cvar_FindVar (const char *var_name)
 	unsigned hash;
 	cvar_t *var;
 
-	hash = Com_HashKey (var_name, CVAR_HASH_SIZE);
+	hash = Com_HashKey(var_name, CVAR_HASH_SIZE);
 	for (var = cvar_vars_hash[hash]; var; var = var->next)
 		if (!Q_strcmp(var_name, var->name))
 			return var;
@@ -292,9 +292,9 @@ extern cvar_t *Cvar_Get (const char *var_name, const char *var_value, int flags,
 			return NULL;
 		}
 
-	hash = Com_HashKey (var_name, CVAR_HASH_SIZE);
-	for (var = cvar_vars_hash[hash]; var;  var=var->hash_next)
-		if (!Q_stricmp (var_name, var->name)) {
+	hash = Com_HashKey(var_name, CVAR_HASH_SIZE);
+	for (var = cvar_vars_hash[hash]; var;  var = var->hash_next)
+		if (!Q_stricmp(var_name, var->name)) {
 			var->flags |= flags;
 			if (desc)
 				var->description = desc;
@@ -346,6 +346,9 @@ extern cvar_t *Cvar_Get (const char *var_name, const char *var_value, int flags,
 static cvar_t *Cvar_Set2 (const char *var_name, const char *value, qboolean force)
 {
 	cvar_t *var;
+
+	if (!value)
+		return NULL;
 
 	var = Cvar_FindVar(var_name);
 	/* create it */
@@ -457,6 +460,9 @@ extern cvar_t *Cvar_Set (const char *var_name, const char *value)
 extern cvar_t *Cvar_FullSet (const char *var_name, const char *value, int flags)
 {
 	cvar_t *var;
+
+	if (!value)
+		return NULL;
 
 	var = Cvar_FindVar(var_name);
 	/* create it */
