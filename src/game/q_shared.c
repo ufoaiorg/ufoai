@@ -3412,9 +3412,6 @@ void Com_CharGenAbilitySkills (character_t * chr, int team)
 
 	assert(chr);
 
-	/* The globalCampaignID must be set to proceed.  Set with Com_SetGlobalCampaignID */
-	assert(globalCampaignID >= 0);
-
 	/**
 	 * Build the acceptable ranges for skills / abilities for this character on this team
 	 * as appropriate for this campaign
@@ -3427,7 +3424,7 @@ void Com_CharGenAbilitySkills (character_t * chr, int team)
 	for (i = 0; i < ABILITY_NUM_TYPES; i++) {
 		chr->skills[i] = (frand() * abilityWindow) + minAbility;
 	}
-	
+
 	/* Skills -- random within the range then scaled (or not) based on natural ability */
 	skillWindow = maxSkill - minSkill;
 	for (i = ABILITY_NUM_TYPES; i < SKILL_NUM_TYPES; i++) {
