@@ -33,7 +33,7 @@ aircraft craft_dropship
 	name		"_Firebird-class Dropship"
 	shortname	"_Firebird D"
 	type		transporter
-	model		"dropship"
+	model		"firebird"
 	price		3500000
 	building	building_hangar
 	size		8
@@ -100,7 +100,7 @@ aircraft craft_ufo_scout
 	shortname	"_Scout U"
 	type		ufo
 	ufotype		scout
-	model		"ufo1"
+	model		"ufo_scout"
 	size		4
 	weight		3
 	building	building_small_ufo_hangar
