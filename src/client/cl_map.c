@@ -430,11 +430,10 @@ extern qboolean MAP_Draw3DMarkerIfVisible (const menuNode_t* node, const vec2_t 
 		VectorCopy(screenPos, v);
 		v[0] -= (node->pos[0] + node->size[0]) / 2.0f;
 		v[1] -= (node->pos[1] + node->size[1]) / 2.0f;
-		VectorSet(angles, 0, 0, 0);
 
 		angles[0] = theta;
-		costheta = cos(theta * torad);
-		sintheta = sin(theta * torad);
+		costheta = cos(angles[0] * torad);
+		sintheta = sin(angles[0] * torad);
 		
 		angles[1] = 180 - asin((v[0] * costheta + v[1] * sintheta) / radius) * todeg;
 		angles[2] = + asin((v[0] * sintheta - v[1] * costheta) / radius) * todeg;
@@ -683,6 +682,33 @@ static void MAP_MapDrawLine (const menuNode_t* node, const mapline_t* line)
 	re.DrawColor(NULL);
 }
 
+/**
+ * @brief Draw a path on a menu node (usually the 3Dgeoscape map)
+ * @param[in] node The menu node which will be used for drawing dimensions.
+ * This is usually the 3Dgeoscape menu node.
+ * @param[in] line The path which is to be drawn
+ * @sa MAP_MapCalcLine
+ */
+static void MAP_3DMapDrawLine (const menuNode_t* node, const mapline_t* line)
+{
+	const vec4_t color = {1, 0.5, 0.5, 1};
+	int pts[LINE_MAXPTS * 2];
+	int *p;
+	int i, numPoints;
+
+	/* draw only when the point of the path is visible*/
+	re.DrawColor(color);
+	for (i = 0, numPoints = 0, p = pts; i < line->numPoints; i++) {
+		if (MAP_3DMapToScreen(node, line->point[i], p, p + 1, NULL)) {
+			 p += 2;
+			 numPoints++;
+		}
+	}
+
+	re.DrawLineStrip(numPoints, pts);
+	re.DrawColor(NULL);
+}
+
 #define CIRCLE_DRAW_POINTS	60
 /**
  * @brief Draw equidistant points from a given point on a menu node
@@ -751,62 +777,36 @@ extern void MAP_MapDrawEquidistantPoints (const menuNode_t* node, vec2_t center,
 	re.DrawColor(NULL);
 }
 
-
 /**
- * @brief Draw a path on a menu node (usually the 3Dgeoscape map)
+ * @brief Return the angle of a model given its position and destination.
  * @param[in] node The menu node which will be used for drawing dimensions.
- * This is usually the 3Dgeoscape menu node.
- * @param[in] line The path which is to be drawn
- * @sa MAP_MapCalcLine
+ * @param[in] start Latitude and longitude of the position of the model.
+ * @param[in] end Latitude and longitude of aimed point.
+ * @return Angle (degrees) of rotation around the axis perpendicular to the screen for a model in @c start going toward @c end.
  */
-static void MAP_3DMapDrawLine (const menuNode_t* node, const mapline_t* line)
+static float MAP_AngleOfPath (const menuNode_t* node, const vec3_t start, const vec2_t end)
 {
-	const vec4_t color = {1, 0.5, 0.5, 1};
-	int pts[LINE_MAXPTS * 2];
-	int *p;
-	int i, numPoints;
-
-	/* draw only when the point of the path is visible*/
-	re.DrawColor(color);
-	for (i = 0, numPoints = 0, p = pts; i < line->numPoints; i++) {
-		if (MAP_3DMapToScreen(node, line->point[i], p, p + 1, NULL)) {
-			 p += 2;
-			 numPoints++;
-		}
-	}
-
-	re.DrawLineStrip(numPoints, pts);
-	re.DrawColor(NULL);
-}
-
-/**
- * @brief Return the start angle of a path on 3Dgeoscape
- * @param[in] node The menu node which will be used for drawing dimensions.
- * @param[in] line The path
- * @todo This need some improvement...
- */
-static float MAP_AngleOfPath (const menuNode_t* node, const mapline_t* line)
-{
-	int x0, y0, x1, y1;
 	float angle=0;
+	vec3_t start3D, end3D, ortVector, v, rotationAxis;
+	vec2_t start2D;
 
-	/* There must be at least 2 points to define a angle */
-	if (line->numPoints < 4)
-		return angle;
+	start2D[0] = start[0];
+	start2D[1] = start[1];
 
-	/* draw only when the point of the path is visible*/
-	MAP_3DMapToScreen(node, line->point[1], &x0, &y0, NULL);
-	MAP_3DMapToScreen(node, line->point[3], &x1, &y1, NULL);
-			
-	if (x0 == x1) {
-		if (y1 > y0)
-			return 90;
-		else
-			return -90;
-	}
+	PolarToVec(start2D, start3D);
+	PolarToVec(end, end3D); 
+	CrossProduct(start3D, end3D, v);
+	CrossProduct(v, start3D, ortVector);
+	VectorNormalize(ortVector);
 
-	angle = todeg * atan((float)(y1 - y0) / (float)(x1 - x0));
-	if (x1 < x0)
+	VectorSet(rotationAxis, 0, 0, 1);
+	RotatePointAroundVector(v, rotationAxis, ortVector, - ccs.angles[PITCH]);
+
+	VectorSet(rotationAxis, 0, 1, 0);
+	RotatePointAroundVector(ortVector, rotationAxis, v, - ccs.angles[YAW]);
+
+	angle = todeg * atan(ortVector[0] / ortVector[1]);
+	if (ortVector[1] > 0)
 		angle += 180;
 	return angle;
 }
@@ -822,7 +822,7 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 	base_t* base;
 	int borders[MAX_NATION_BORDERS * 2];	/**< GL_LINE_LOOP coordinates for nation borders */
 	int x, y, z;
-	float angle;
+	float angle = 0;
 #if 0
 	vec2_t pos = {0, 0};
 
@@ -840,7 +840,7 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 	Cvar_Set("mn_mapdaytime", "");
 	for (i = 0; i < ccs.numMissions; i++) {
 		ms = &ccs.mission[i];
-		if (!MAP_Draw3DMarkerIfVisible(node, ms->realPos, 0, "cross"))
+		if (!MAP_Draw3DMarkerIfVisible(node, ms->realPos, angle, "cross"))
 			continue;
 
 		if (ms == selMis) {
@@ -861,9 +861,9 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 
 		/* Draw base */
 		if (base->baseStatus == BASE_UNDER_ATTACK)
-			MAP_Draw3DMarkerIfVisible(node, base->pos, 0, "baseattack");
+			MAP_Draw3DMarkerIfVisible(node, base->pos, angle, "baseattack");
 		else
-			MAP_Draw3DMarkerIfVisible(node, base->pos, 0, "base");
+			MAP_Draw3DMarkerIfVisible(node, base->pos, angle, "base");
 
 		/* draw aircraft */
 		for (i = 0, aircraft = (aircraft_t *) base->aircraft; i < base->numAircraftInBase; i++, aircraft++)
@@ -879,7 +879,7 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 							memcpy(path.point + 1, aircraft->route.point + aircraft->point + 1, (path.numPoints - 1) * sizeof(vec2_t));
 						MAP_3DMapDrawLine(node, &path);
 					}
-					angle = MAP_AngleOfPath(node, &path);
+					angle = MAP_AngleOfPath(node, aircraft->pos, aircraft->route.point[aircraft->route.numPoints - 1]);
 				} else {
 					angle = 0;
 				}
