@@ -185,35 +185,46 @@ menu_model inter_stiletto
 	need	"inter_stiletto_top"
 }
 
-// ============== UFO SCOUT ============================
+// ============== UFO FIGHTER ============================
+menu_model ufo_fighter_upper
+{
+	model	"models/aircraft/ufo_fighter/ufo_fighter_upper.md2"
+}
+menu_model ufo_fighter_engines_2
+{
+	model	"models/aircraft/ufo_fighter/ufo_fighter_engines_2.md2"
+	need	"ufo_fighter_upper"
+}
+menu_model ufo_fighter_engines_1
+{
+	model	"models/aircraft/ufo_fighter/ufo_fighter_engines_1.md2"
+	need	"ufo_fighter_engines_2"
+}
+menu_model ufo_fighter_wings
+{
+	model	"models/aircraft/ufo_fighter/ufo_fighter_wings.md2"
+	need	"ufo_fighter_engines_1"
+}
+menu_model ufo_fighter
+{
+	model	"models/aircraft/ufo_fighter/ufo_fighter_hull.md2"
+	need	"ufo_fighter_wings"
+}
+
+// ============== UFO SCOUT ==============================
 menu_model ufo_scout_upper
 {
 	model	"models/aircraft/ufo_scout/ufo_scout_upper.md2"
 }
-menu_model ufo_scout_engines_2
-{
-	model	"models/aircraft/ufo_scout/ufo_scout_engines_2.md2"
-	need	"ufo_scout_upper"
-}
-menu_model ufo_scout_engines_1
+menu_model ufo_scout_engines
 {
 	model	"models/aircraft/ufo_scout/ufo_scout_engines_1.md2"
-	need	"ufo_scout_engines_2"
-}
-menu_model ufo_scout_hull
-{
-	model	"models/aircraft/ufo_scout/ufo_scout_hull.md2"
-	need	"ufo_scout_engines_1"
-}
-menu_model ufo_scout_wings
-{
-	model	"models/aircraft/ufo_scout/ufo_scout_wings.md2"
-	need	"ufo_scout_hull"
+	need	"ufo_scout_upper"
 }
 menu_model ufo_scout
 {
-	model	"models/aircraft/ufo_scout/ufo_scout_engines.md2"
-	need	"ufo_scout_wings"
+	model	"models/aircraft/ufo_scout/ufo_scout_hull.md2"
+	need	"ufo_scout_engines"
 }
 
 // ============== UFO BIG ==========================
