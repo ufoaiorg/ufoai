@@ -1947,7 +1947,7 @@ static void CL_InitLocal (void)
 	for (i = 0; i < 16; i++)
 		Cvar_Get(va("adr%i", i), "", CVAR_ARCHIVE, "Bookmark for network ip");
 
-	map_dropship = Cvar_Get("map_dropship", "craft_dropship", 0, "The dropship that is to be used in the map");
+	map_dropship = Cvar_Get("map_dropship", "craft_drop_firebird", 0, "The dropship that is to be used in the map");
 
 	/* register our variables */
 	cl_stereo_separation = Cvar_Get("cl_stereo_separation", "0.4", CVAR_ARCHIVE, NULL);
@@ -2337,11 +2337,11 @@ extern void CL_Frame (int msec)
 			gd.numAircraft = 0;
 
 			/* now add a dropship where we can place our soldiers in */
-			AIR_NewAircraft(baseCurrent, "craft_dropship");
+			AIR_NewAircraft(baseCurrent, "craft_drop_firebird");
 
 			Com_Printf("Changing to Multiplayer\n");
 			/* no campaign equipment but for multiplayer */
-			Cvar_Set("map_dropship", "craft_dropship");
+			Cvar_Set("map_dropship", "craft_drop_firebird");
 			/* disconnect already running session */
 			if (cls.state >= ca_connecting)
 				CL_Disconnect();

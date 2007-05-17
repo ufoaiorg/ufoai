@@ -580,9 +580,9 @@ extern void B_SetUpBase (base_t* base)
 			B_UpdateBaseBuildingStatus(building, base, B_STATUS_WORKING);
 			/* Now buy two first aircrafts if it is our first base. */
 			if (gd.numBases == 1 && building->buildingType == B_HANGAR)
-				Cbuf_AddText("aircraft_new craft_dropship\n");
+				Cbuf_AddText("aircraft_new craft_drop_firebird\n");
 			if (gd.numBases == 1 && building->buildingType == B_SMALL_HANGAR)
-				Cbuf_AddText("aircraft_new craft_interceptor\n");
+				Cbuf_AddText("aircraft_new craft_inter_stiletto\n");
 
 			/* now call the onconstruct trigger */
 			if (*building->onConstruct) {

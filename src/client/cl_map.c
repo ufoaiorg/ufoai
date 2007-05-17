@@ -885,7 +885,7 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 				}
 
 				/* Draw aircraft */
-				MAP_Draw3DMarkerIfVisible(node, aircraft->pos, angle, "dropship");
+				MAP_Draw3DMarkerIfVisible(node, aircraft->pos, angle, aircraft->model);
 			}
 		}
 

@@ -47,7 +47,7 @@ aircraft craft_drop_firebird
 	scale_equip	"1.1 1.1 1.1"
 }
 
-aircraft craft_interceptor
+aircraft craft_inter_stiletto
 {
 	speed		30.0
 	name		"_Stiletto-class Interceptor"
