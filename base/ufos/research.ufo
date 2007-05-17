@@ -2641,7 +2641,7 @@ tech rs_craft_ufo_harvester
 	time	2500
 
 	// TODO should come from craft-definition:
-	mdl_top		ufobig
+	mdl_top		"aircraft/ufo_harvester/ufo_harvester"
 }
 
 //========================
