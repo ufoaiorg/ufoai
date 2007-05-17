@@ -53,7 +53,7 @@ aircraft craft_interceptor
 	name		"_Stiletto-class Interceptor"
 	shortname	"_Stiletto I"
 	type		interceptor
-	model		"interceptor"
+	model		"stiletto_interceptor"
 	fuel		60000
 	fuelsize	60000
 	size		1
@@ -121,7 +121,7 @@ aircraft craft_ufo_fighter
 	shortname	"_Fighter U"
 	type		ufo
 	ufotype		fighter
-	model		"ufobig"
+	model		"ufo_fighter"
 	size		8
 	weight		4
 	// FIXME: should be big hangar

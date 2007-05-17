@@ -216,35 +216,35 @@ menu_model ufo_scout
 	need	"ufo_scout_wings"
 }
 
-// ============== UFO BIG ==========================
-menu_model ufobig_body
+// ============== UFO FIGHTER ==========================
+menu_model ufo_fighter_body
 {
-	model	"models/aircraft/ufo_big/ufo1_body_closed.md2"
+	model	"models/aircraft/ufo_fighter/ufo_fighter_body_closed.md2"
 }
-menu_model ufobig_engine_left
+menu_model ufo_fighter_engine_left
 {
-	model	"models/aircraft/ufo_big/ufo1_engine_left.md2"
-	need	"ufobig_body"
+	model	"models/aircraft/ufo_fighter/ufo_fighter_engine_left.md2"
+	need	"ufo_fighter_body"
 }
-menu_model ufobig_engine_right
+menu_model ufo_fighter_engine_right
 {
-	model	"models/aircraft/ufo_big/ufo1_engine_right.md2"
-	need	"ufobig_engine_left"
+	model	"models/aircraft/ufo_fighter/ufo_fighter_engine_right.md2"
+	need	"ufo_fighter_engine_left"
 }
-menu_model ufobig_wing_left
+menu_model ufo_fighter_wing_left
 {
-	model	"models/aircraft/ufo_big/ufo1_wing_left.md2"
-	need	"ufobig_engine_right"
+	model	"models/aircraft/ufo_fighter/ufo_fighter_wing_left.md2"
+	need	"ufo_fighter_engine_right"
 }
-menu_model ufobig_wing_right
+menu_model ufo_fighter_wing_right
 {
-	model	"models/aircraft/ufo_big/ufo1_wing_right.md2"
-	need	"ufobig_wing_left"
+	model	"models/aircraft/ufo_fighter/ufo_fighter_wing_right.md2"
+	need	"ufo_fighter_wing_left"
 }
-menu_model ufobig
+menu_model ufo_fighter
 {
-	model	"models/aircraft/ufo_big/ufo1.md2"
-	need	"ufobig_wing_right"
+	model	"models/aircraft/ufo_fighter/ufo_fighter.md2"
+	need	"ufo_fighter_wing_right"
 }
 
 // ============== UFO CRASH ========================
