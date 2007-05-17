@@ -14,10 +14,10 @@ sequence credits
 		models/soldiers/malemedium/head01a.md2
 		models/aliens/ortnok/body01.md2
 		models/aliens/ortnok/head02.md2
-		models/aircraft/ufo_small/alienship1_hull.md2
-		models/aircraft/ufo_small/alienship1_engines_1.md2
-		models/aircraft/ufo_small/alienship1_engines_2.md2
-		models/aircraft/ufo_small/alienship1_wings.md2
+		models/aircraft/ufo_fighter/ufo_fighter_hull.md2
+		models/aircraft/ufo_fighter/ufo_fighter_engines_1.md2
+		models/aircraft/ufo_fighter/ufo_fighter_engines_2.md2
+		models/aircraft/ufo_fighter/ufo_fighter_wings.md2
 	}
 	precache pics
 	{
@@ -931,25 +931,25 @@ sequence credits
 	}
 	model ship_hull
 	{
-		model	models/aircraft/ufo_small/alienship1_hull.md2
+		model	models/aircraft/ufo_fighter/ufo_fighter_hull.md2
 		origin	"0 -4000 0"
 		speed	"0 3000 0"
 	}
 	model ship_wings
 	{
-		model	models/aircraft/ufo_small/alienship1_wings.md2
+		model	models/aircraft/ufo_fighter/ufo_fighter_wings.md2
 		origin	"0 -4000 0"
 		speed	"0 3000 0"
 	}
 	model ship_engine1
 	{
-		model	models/aircraft/ufo_small/alienship1_engines_1.md2
+		model	models/aircraft/ufo_fighter/ufo_fighter_engines_1.md2
 		origin	"0 -4000 0"
 		speed	"0 3000 0"
 	}
 	model ship_engine2
 	{
-		model	models/aircraft/ufo_small/alienship1_engines_2.md2
+		model	models/aircraft/ufo_fighter/ufo_fighter_engines_2.md2
 		origin	"0 -4000 0"
 		speed	"0 3000 0"
 	}
