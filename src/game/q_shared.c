@@ -134,7 +134,9 @@ int AngleToDV (int angle)
 	angle += 22;
 	/* set angle between 0 <= angle < 360 */
 	angle %= 360;
-	while (angle < 0)
+	/* next step is because the result of angle %= 360 when angle is negative depends of the compiler
+	 *  (it can be between -360 < angle <= 0 or 0 <= angle < 360) */
+	if (angle < 0)
 		angle += 360;
 
 	/* get an integer quotient */
