@@ -2608,6 +2608,114 @@ tech rs_craft_ufo_fighter
 	mdl_top		ufo1
 }
 
+tech rs_craft_ufo_big
+{
+	type	tech
+	name	"_UFO - Big"
+	description	"_ufo_big_txt"
+	pre_description	"_ufo_big_pre_txt"
+	up_chapter	crafts
+
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_UFO - Big"
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_UFO - Big"
+	}
+
+	// FIXME
+	require_AND
+	{
+		tech craft_ufo_fighter
+		item craft_ufo_big 1
+	}
+
+	provides	"craft_ufo_big"
+	time	2500
+
+	// TODO should come from craft-definition:
+	mdl_top		"aircraft/ufo_big/ufo_big"
+}
+
+tech rs_craft_ufo_carrier
+{
+	type	tech
+	name	"_UFO - Carrier"
+	description	"_ufo_carrier_txt"
+	pre_description	"_ufo_carrier_pre_txt"
+	up_chapter	crafts
+
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_UFO - Carrie"
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_UFO - Carrier"
+	}
+
+	// FIXME
+	require_AND
+	{
+		tech craft_ufo_scout
+		item craft_ufo_carrier 1
+	}
+
+	provides	"craft_ufo_carrier"
+	time	2500
+
+	// TODO should come from craft-definition:
+	mdl_top		"aircraft/ufo_carrier/ufo_carrier"
+}
+
+tech rs_craft_ufo_condor
+{
+	type	tech
+	name	"_UFO - Condor"
+	description	"_ufo_condor_txt"
+	pre_description	"_ufo_condor_pre_txt"
+	up_chapter	crafts
+
+	mail_pre
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_UFO - Condor"
+	}
+
+	mail
+	{
+		from	"_mail_from_paul_navarre"
+		to		"_mail_to_base_commander"
+		subject	"_UFO - Condor"
+	}
+
+	// FIXME
+	require_AND
+	{
+		tech craft_ufo_harvester
+		item craft_ufo_condor 1
+	}
+
+	provides	"craft_ufo_condor"
+	time	2500
+
+	// TODO should come from craft-definition:
+	mdl_top		"aircraft/ufo_condor/ufo_condor"
+}
+
 tech rs_craft_ufo_harvester
 {
 	type	tech
