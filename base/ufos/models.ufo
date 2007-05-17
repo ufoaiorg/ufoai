@@ -169,7 +169,7 @@ menu_model inter_saracen
 	model	"models/aircraft/inter_saracen/saracen.md2"
 }
 
-// ============== Interceptor ======================
+// ============== Stiletto Interceptor =====================
 menu_model inter_stiletto_glass
 {
 	model	"models/aircraft/inter_stiletto/stiletto_glass.md2"
