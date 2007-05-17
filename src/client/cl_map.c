@@ -823,6 +823,7 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 	int borders[MAX_NATION_BORDERS * 2];	/**< GL_LINE_LOOP coordinates for nation borders */
 	int x, y, z;
 	float angle = 0;
+	const vec2_t northPole = {0, 90};
 #if 0
 	vec2_t pos = {0, 0};
 
@@ -840,6 +841,7 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 	Cvar_Set("mn_mapdaytime", "");
 	for (i = 0; i < ccs.numMissions; i++) {
 		ms = &ccs.mission[i];
+		angle = MAP_AngleOfPath(node, ms->realPos, northPole);
 		if (!MAP_Draw3DMarkerIfVisible(node, ms->realPos, angle, "cross"))
 			continue;
 
@@ -853,6 +855,9 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 	for (base = gd.bases + gd.numBases - 1; base >= gd.bases ; base--) {
 		if (!base->founded)
 			continue;
+		
+		angle = MAP_AngleOfPath(node, base->pos, northPole);
+		
 		/* Draw base */
 		 MAP_3DMapToScreen(node, base->pos, &x, &y, NULL);
 
@@ -881,7 +886,7 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 					}
 					angle = MAP_AngleOfPath(node, aircraft->pos, aircraft->route.point[aircraft->route.numPoints - 1]);
 				} else {
-					angle = 0;
+					angle = MAP_AngleOfPath(node, aircraft->pos, northPole);
 				}
 
 				/* Draw aircraft */
