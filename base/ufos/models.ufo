@@ -148,41 +148,41 @@ menu_model civ_female
 }
 
 // ============== Dropship =========================
-menu_model firebird_glass
+menu_model drop_firebird_glass
 {
-	model	"models/aircraft/firebird/firebird_glass.md2"
+	model	"models/aircraft/drop_firebird/firebird_glass.md2"
 }
-menu_model dropship_top
+menu_model drop_firebird_top
 {
-	model	"models/aircraft/firebird/firebird_top.md2"
-	need	"firebird_glass"
+	model	"models/aircraft/drop_firebird/firebird_top.md2"
+	need	"drop_firebird_glass"
 }
-menu_model firebird
+menu_model drop_firebird
 {
-	model	"models/aircraft/firebird/firebird.md2"
-	need	"firebird_top"
+	model	"models/aircraft/drop_firebird/firebird.md2"
+	need	"drop_firebird_top"
 }
 
 // ============== Saracen Interceptor ======================
-menu_model saracen_interceptor
+menu_model inter_saracen
 {
-	model	"models/aircraft/saracen_interceptor/saracen.md2"
+	model	"models/aircraft/inter_saracen/saracen.md2"
 }
 
 // ============== Interceptor ======================
-menu_model stiletto_interceptor_glass
+menu_model inter_stiletto_glass
 {
-	model	"models/aircraft/stiletto_interceptor/stiletto_glass.md2"
+	model	"models/aircraft/inter_stiletto/stiletto_glass.md2"
 }
-menu_model stiletto_interceptor_top
+menu_model inter_stiletto_top
 {
-	model	"models/aircraft/stiletto_interceptor/stiletto_engines.md2"
-	need	"stiletto_interceptor_glass"
+	model	"models/aircraft/inter_stiletto/stiletto_engines.md2"
+	need	"inter_stiletto_glass"
 }
-menu_model stiletto_interceptor
+menu_model inter_stiletto
 {
-	model	"models/aircraft/stiletto_interceptor/stiletto.md2"
-	need	"stiletto_interceptor_top"
+	model	"models/aircraft/inter_stiletto/stiletto.md2"
+	need	"inter_stiletto_top"
 }
 
 // ============== UFO SCOUT ============================
