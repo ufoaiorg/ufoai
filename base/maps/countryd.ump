@@ -51,7 +51,7 @@ acefgrst  +a       +a       +a       adefgopq
 //--
 
 // Big UFO
-tile +alienbig
+tile +ufobig
 {
 8 6
 
@@ -65,7 +65,7 @@ acefgrst  +a       +a       +a       +a       +a       +a       adefgopq
 //--
 
 // Small UFO
-tile +aliensmall
+tile +ufofighter
 {
 5 4
 
@@ -746,6 +746,6 @@ size "10 10"
 +d09 "0 8"
 +d10 "0 8"
 *rm_dropship +drop "1 1"
-+aliensmall "1 1"
-+alienbig "1 1"
++ufofighter "1 1"
++ufobig "1 1"
 }
