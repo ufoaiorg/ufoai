@@ -152,7 +152,7 @@ static void UFO_NewUfoOnGeoscape_f (void)
 	/* Create ufo */
 	ufo = gd.ufos + gd.numUfos;
 	memcpy(ufo, aircraft_samples + newUfoNum, sizeof(aircraft_t));
-	Com_DPrintf("New ufo on geoscape: '%s' (%i)\n", ufo->name, gd.numUfos);
+	Com_DPrintf("New ufo on geoscape: '%s' (gd.numUfos: %i, newUfoNum: %i)\n", ufo->id, gd.numUfos, newUfoNum);
 	gd.numUfos++;
 
 	/* Initialise ufo data */
