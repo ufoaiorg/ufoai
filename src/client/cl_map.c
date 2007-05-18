@@ -886,6 +886,13 @@ static void MAP3D_GetGeoscapeAngle (vec2_t finalAngle) {
 
 extern void MAP3D_CenterOnPoint (void)
 {
+	menu_t *activeMenu = NULL;
+	
+	/* this function only concerns 3D geoscape */
+	activeMenu = MN_ActiveMenu();
+	if (!cl_3dmap->value || Q_strncmp(activeMenu->name, "map", 3))
+		return;
+
 	centerOnEventIdx++;
 
 	MAP3D_GetGeoscapeAngle (finalGlobeAngle);
