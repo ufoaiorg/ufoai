@@ -391,22 +391,26 @@ static void InitCocoa (void)
 	nsappload();
 }
 
+/**
+ * @brief
+ */
 int lenstr(const char *text)
 {
 	int count = -1;				/* Character counter */
 
-	while(text[++count] != '\0');		/* Search for a null */
+	while (text[++count] != '\0');		/* Search for a null */
 
-	return(count);				/* Return the position of the NULL-1 */
+	return (count);				/* Return the position of the NULL-1 */
 }
 
-
+/**
+ * @brief
+ */
 unsigned char CheckForFinderCall(char **argv, int argc)
 {
 	unsigned char change = 0;
 
-
-	if(argc < 2) {
+	if (argc < 2) {
 		/* No change needed, finder would set argc to 2 */
 		change = 0;
 	} else {
@@ -426,12 +430,15 @@ unsigned char CheckForFinderCall(char **argv, int argc)
 	return change;
 }
 
+/**
+ * @brief
+ */
 void FixWorkingDirectory (char **argv)
 {
 	char newPath[255];
 
 	printf("Path Length : %d \n",lenstr(*argv));
-	if(lenstr(*argv) > 255) {
+	if (lenstr(*argv) > 255) {
 		printf("Path is too long. Please copy Bundle to a shorter path location \n");
 	} else {
 		/* unfortunately the finder gives the path inclusive the executeable */
@@ -444,13 +451,12 @@ void FixWorkingDirectory (char **argv)
 }
 
 /**
-* @brief The entry point for OSX server and client.
+ * @brief The entry point for OSX server and client.
  *
  * Inits the the program and calls Qcommon in an infinite loop.
  * FIXME: While this works, infinite loops are bad; one should not rely on exit() call; the program should be designed to fall through the bottom.
  * FIXME: Why is there a sleep statement?
  */
-
 int main (int argc, char **argv)
 {
 	/* create Autorelease Pool, to avoid Error Messages under MacOSX */
@@ -460,7 +466,7 @@ int main (int argc, char **argv)
 
 	InitCocoa();
 
-	if(CheckForFinderCall(argv,argc)) {
+	if (CheckForFinderCall(argv,argc)) {
 		printf("---> Fixing Working Directory, depending on Finder Call ! \n");
 		FixWorkingDirectory(argv);
 	}
