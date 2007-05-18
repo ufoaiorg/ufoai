@@ -38,7 +38,7 @@ static manim_t *Anim_Get (model_t * mod, const char *name)
 	manim_t *anim;
 	int i;
 
-	if (!mod || mod->type != mod_alias)
+	if (!mod || mod->type != mod_alias_md2)
 		return NULL;
 
 	for (i = 0, anim = mod->animdata; i < mod->numanims; i++, anim++)
@@ -67,7 +67,7 @@ void Anim_Append (animState_t * as, model_t * mod, const char *name)
 		return;					/* never reached. need for code analyst. */
 #endif
 
-	if (!mod || mod->type != mod_alias)
+	if (!mod || mod->type != mod_alias_md2)
 		return;
 
 	/* get animation */
@@ -105,7 +105,7 @@ void Anim_Append (animState_t * as, model_t * mod, const char *name)
  * @sa Anim_Run
  * @sa Anim_GetName
  * @param[in] as Client side animation state of the model
- * @param[in] mod Model structure to change the animation for (md2/mod_alias)
+ * @param[in] mod Model structure to change the animation for (md2/mod_alias_md2)
  * @param[in] name Animation state name to switch to
  */
 void Anim_Change (animState_t * as, model_t * mod, const char *name)
@@ -118,7 +118,7 @@ void Anim_Change (animState_t * as, model_t * mod, const char *name)
 		return;					/* never reached. need for code analyst. */
 #endif
 
-	if (!mod || mod->type != mod_alias)
+	if (!mod || mod->type != mod_alias_md2)
 		return;
 
 	/* get animation */
@@ -175,7 +175,7 @@ void Anim_Run (animState_t * as, model_t * mod, int msec)
 		return;					/* never reached. need for code analyst. */
 #endif
 
-	if (!mod || mod->type != mod_alias)
+	if (!mod || mod->type != mod_alias_md2)
 		return;
 
 	if (as->lcur == as->ladd)
@@ -229,7 +229,7 @@ char *Anim_GetName (animState_t * as, model_t * mod)
 		return NULL;			/* never reached. need for code analyst. */
 #endif
 
-	if (!mod || mod->type != mod_alias)
+	if (!mod || mod->type != mod_alias_md2)
 		return NULL;
 
 	if (as->lcur == as->ladd)

@@ -170,7 +170,7 @@ static qboolean R_CullAliasModel (vec4_t bbox[8], entity_t * e)
 	daliasframe_t *pframe, *poldframe;
 	float dp;
 
-	assert (currentmodel->type == mod_alias);
+	assert (currentmodel->type == mod_alias_md2);
 	paliashdr = (dmdl_t *) currentmodel->extradata;
 
 	pframe = (daliasframe_t *) ((byte *) paliashdr + paliashdr->ofs_frames + e->as.frame * paliashdr->framesize);
@@ -354,7 +354,7 @@ void R_DrawAliasModel (entity_t * e)
 	dmdl_t *paliashdr;
 	image_t *skin;
 
-	assert (currentmodel->type == mod_alias);
+	assert (currentmodel->type == mod_alias_md2);
 	paliashdr = (dmdl_t *) currentmodel->extradata;
 
 	/* check animations */
@@ -563,7 +563,7 @@ static void R_TransformModelDirect (modelInfo_t * mi)
 		int i;
 
 		/* get model data */
-		assert (mi->model->type == mod_alias);
+		assert (mi->model->type == mod_alias_md2);
 		paliashdr = (dmdl_t *) mi->model->extradata;
 		pframe = (daliasframe_t *) ((byte *) paliashdr + paliashdr->ofs_frames);
 
@@ -596,7 +596,7 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 	mi->model = R_RegisterModelShort(mi->name);
 
 	/* check if the model exists */
-	if (!mi->model || mi->model->type != mod_alias)
+	if (!mi->model || mi->model->type != mod_alias_md2)
 		return;
 
 	paliashdr = (dmdl_t *) mi->model->extradata;
@@ -716,7 +716,7 @@ void R_DrawModelParticle (modelInfo_t * mi)
 	image_t *skin;
 
 	/* check if the model exists */
-	if (!mi->model || mi->model->type != mod_alias)
+	if (!mi->model || mi->model->type != mod_alias_md2)
 		return;
 
 	paliashdr = (dmdl_t *) mi->model->extradata;

@@ -184,7 +184,7 @@ static void R_CastShadow (void)
 		currentmodel = currententity->model;
 		if (!currentmodel)
 			continue;
-		if (currentmodel->type != mod_alias && currentmodel->type != mod_alias_md3)
+		if (currentmodel->type != mod_alias_md2 && currentmodel->type != mod_alias_md3)
 			continue;
 
 		if (gl_shadows->integer == 2)
@@ -548,7 +548,7 @@ static void R_DrawEntitiesOnList(void)
 				continue;
 			}
 			switch (currentmodel->type) {
-			case mod_alias:
+			case mod_alias_md2:
 				/* MD2 model */
 				R_DrawAliasModel(currententity);
 				break;
@@ -593,7 +593,7 @@ static void R_DrawEntitiesOnList(void)
 				continue;
 			}
 			switch (currentmodel->type) {
-			case mod_alias:
+			case mod_alias_md2:
 				/* MD2 model */
 				R_DrawAliasModel(currententity);
 				break;

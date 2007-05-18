@@ -160,7 +160,11 @@ typedef struct manim_s {
 
 /* Whole model */
 
-typedef enum {mod_bad, mod_brush, mod_sprite, mod_alias, mod_alias_md3, mod_obj} modtype_t;
+/**
+ * @brief All supported model formats
+ * @sa mod_extensions
+ */
+typedef enum {mod_bad, mod_brush, mod_sprite, mod_alias_md2, mod_alias_md3, mod_obj} modtype_t;
 
 typedef struct {
 	int n[3];
@@ -172,7 +176,7 @@ typedef struct model_s {
 
 	int registration_sequence;
 
-	modtype_t type;
+	modtype_t type;	/**< model type */
 	int numframes;
 
 	int flags;

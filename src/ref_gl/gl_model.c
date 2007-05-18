@@ -63,7 +63,7 @@ void Mod_Modellist_f (void)
 		case mod_alias_md3:
 			ri.Con_Printf(PRINT_ALL, "MD3");
 			break;
-		case mod_alias:
+		case mod_alias_md2:
 			ri.Con_Printf(PRINT_ALL, "MD2");
 			break;
 		case mod_sprite:
@@ -1033,7 +1033,7 @@ static void Mod_LoadAliasModel (model_t * mod, void *buffer)
 		memcpy(poutframe->verts, pinframe->verts, pheader->num_xyz * sizeof(dtrivertx_t));
 	}
 
-	mod->type = mod_alias;
+	mod->type = mod_alias_md2;
 
 	/* load the glcmds */
 	pincmd = (int *) ((byte *) pinmodel + pheader->ofs_glcmds);
@@ -1427,7 +1427,7 @@ static void Mod_FindSharedEdges (model_t * mod)
 	dtriangle_t *tris;
 	int i, o;
 
-	assert (mod->type == mod_alias);
+	assert (mod->type == mod_alias_md2);
 	hdr = (dmdl_t *) mod->extradata;
 	tris = (dtriangle_t *) ((unsigned char *) hdr + hdr->ofs_tris);
 
@@ -1467,7 +1467,7 @@ struct model_s *R_RegisterModel (const char *name)
 			for (i = 0; i < sprout->numframes; i++)
 				mod->skins[i] = GL_FindImage(sprout->frames[i].name, it_sprite);
 			break;
-		case mod_alias:
+		case mod_alias_md2:
 			{
 			char path[MAX_QPATH];
 			char *skin, *slash, *end;
@@ -1517,11 +1517,20 @@ struct model_s *R_RegisterModel (const char *name)
 }
 
 /**
+ * @brief all supported model formats
+ * @sa modtype_t
+ */
+static const char *mod_extensions[] = {
+	"md2", "md3", "obj", NULL
+};
+
+/**
  * @brief
  */
 struct model_s *R_RegisterModelShort (const char *name)
 {
 	model_t *mod;
+	int i = 0;
 
 	if (!name || !name[0])
 		return NULL;
@@ -1529,17 +1538,14 @@ struct model_s *R_RegisterModelShort (const char *name)
 	if (name[0] != '*' && (strlen(name) < 4 || name[strlen(name) - 4] != '.')) {
 		char filename[MAX_QPATH];
 
-		Com_sprintf(filename, sizeof(filename), "models/%s.md2", name);
-		mod = R_RegisterModel(filename);
-		if (!mod) {
-			Com_sprintf(filename, sizeof(filename), "models/%s.md3", name);
+		while (mod_extensions[i]) {
+			Com_sprintf(filename, sizeof(filename), "models/%s.%s", name, mod_extensions[i]);
 			mod = R_RegisterModel(filename);
+			if (mod)
+				return mod;
+			i++;
 		}
-		if (!mod) {
-			Com_sprintf(filename, sizeof(filename), "models/%s.obj", name);
-			mod = R_RegisterModel(filename);
-		}
-		return mod;
+		return NULL;
 	} else
 		return R_RegisterModel(name);
 }
