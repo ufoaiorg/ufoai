@@ -834,10 +834,11 @@ static float MAP_AngleOfPath (const menuNode_t* node, const vec3_t start, const 
 }
 
 /**
- * @brief
+ * @brief returns position of the model corresponding to centerOnEventIdx
+ * @param[out] finalAngle Latitude and longitude of the model (finalAngle[2] is always 0)
  * @sa MAP3D_CenterOnPoint
  */
-static void MAP3D_GetGeoscapeAngle (vec2_t finalAngle)
+static void MAP3D_GetGeoscapeAngle (vec3_t finalAngle)
 {
 	int i;
 	int counter = 0;
@@ -890,8 +891,10 @@ static void MAP3D_GetGeoscapeAngle (vec2_t finalAngle)
 }
 
 /**
- * @brief
+ * @brief switch to next model on 3D geoscape
+ * @note set @c smoothRotation to @c qtrue to allow a smooth rotation in MAP_DrawMap
  * @sa MAP3D_GetGeoscapeAngle
+ * @sa MAP_DrawMap
  */
 extern void MAP3D_CenterOnPoint (void)
 {
@@ -910,7 +913,11 @@ extern void MAP3D_CenterOnPoint (void)
 	smoothRotation = qtrue;
 }
 
-#define SMOOTHING_SPEED	5.0f
+#define SMOOTHING_STEP	5.0f
+/**
+ * @brief smooth rotation of the 3D geoscape
+ * @sa MAP_DrawMap
+ */
 static void MAP3D_SmoothRotate(void)
 {
 	vec3_t diff;
@@ -918,11 +925,11 @@ static void MAP3D_SmoothRotate(void)
 
 	VectorSubtract(finalGlobeAngle, ccs.angles, diff);
 	length = VectorLength(diff);
-	if (length < SMOOTHING_SPEED) {
+	if (length < SMOOTHING_STEP) {
 		VectorCopy(finalGlobeAngle, ccs.angles);
 		smoothRotation = qfalse;
 	} else {
-		VectorScale(diff, SMOOTHING_SPEED/length, diff);
+		VectorScale(diff, SMOOTHING_STEP / length, diff);
 		VectorAdd(ccs.angles, diff, ccs.angles);
 	}
 }
