@@ -80,6 +80,6 @@ void VID_Init(void);
 void VID_Shutdown(void);
 void VID_CheckChanges(void);
 
-#define VID_NUM_MODES ( sizeof(vid_modes) / sizeof(vidmode_t) )
+#define VID_NUM_MODES (sizeof(vid_modes) / sizeof(vidmode_t))
 
 #endif /* CLIENT_VID_H */

@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../client/client.h"
 
-viddef_t	viddef;				/* global video state */
+extern viddef_t viddef;				/* global video state; used by other modules */
 
 refexport_t	re;
 
@@ -85,22 +85,7 @@ const vidmode_t vid_modes[] =
 /**
  * @brief
  */
-qboolean VID_GetModeInfo (int *width, int *height, int mode)
-{
-	if (mode < 0 || mode >= VID_NUM_MODES)
-		return qfalse;
-
-	*width  = vid_modes[mode].width;
-	*height = vid_modes[mode].height;
-
-	return qtrue;
-}
-
-
-/**
- * @brief
- */
-void VID_Init (void)
+void Sys_Vid_Init (void)
 {
 	refimport_t	ri;
 
@@ -136,11 +121,12 @@ void VID_Init (void)
 	re = GetRefAPI(ri);
 
 	if (re.api_version != API_VERSION)
-		Com_Error (ERR_FATAL, "Re has incompatible api_version");
+		Com_Error(ERR_FATAL, "Re has incompatible api_version");
 
 	/* call the init function */
-	if (re.Init (NULL, NULL) == -1)
-		Com_Error (ERR_FATAL, "Couldn't start refresh");
+	if (re.Init(NULL, NULL) == -1)
+		Com_Error(ERR_FATAL, "Couldn't start refresh");
+
 	maxVidModes = VID_NUM_MODES;
 }
 

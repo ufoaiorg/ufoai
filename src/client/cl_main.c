@@ -2305,12 +2305,15 @@ static void CL_CvarCheck (void)
 
 	/* gl_mode and fullscreen */
 	v = Cvar_VariableInteger("mn_glmode");
-	if (v < 0 || v >= maxVidModes) {
+	if (v < -1 || v >= maxVidModes) {
 		Com_Printf("Max gl_mode mode is %i (%i)\n", maxVidModes, v);
 		v = Cvar_VariableInteger("gl_mode");
 		Cvar_SetValue("mn_glmode", v);
 	}
-	Cvar_Set("mn_glmodestr", va("%i*%i", vid_modes[v].width, vid_modes[v].height));
+	if (v >= 0)
+		Cvar_Set("mn_glmodestr", va("%i*%i", vid_modes[v].width, vid_modes[v].height));
+	else
+		Cvar_Set("mn_glmodestr", _("Custom"));
 }
 
 

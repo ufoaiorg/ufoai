@@ -2988,10 +2988,10 @@ void MN_ResolutionChange_f (void)
 	action = Cmd_Argv(1);
 	switch (*action) {
 	case '+':
-		Cbuf_ExecuteText(EXEC_NOW, va("mn_modify mn_glmode 1 0 %i;", maxVidModes-1));
+		Cbuf_ExecuteText(EXEC_NOW, va("mn_modify mn_glmode 1 -1 %i;", maxVidModes-1));
 		break;
 	case '-':
-		Cbuf_ExecuteText(EXEC_NOW, va("mn_modify mn_glmode -1 0 %i;", maxVidModes-1));
+		Cbuf_ExecuteText(EXEC_NOW, va("mn_modify mn_glmode -1 -1 %i;", maxVidModes-1));
 		break;
 	}
 }

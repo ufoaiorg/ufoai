@@ -48,15 +48,15 @@ cvar_t *win_noalttab;
 static UINT MSH_MOUSEWHEEL;
 
 /* Console variables that we need to access from this module */
-cvar_t		*vid_gamma;
-cvar_t		*vid_ref;			/* Name of Refresh DLL loaded */
 cvar_t		*vid_xpos;			/* X coordinate of window position */
 cvar_t		*vid_ypos;			/* Y coordinate of window position */
-cvar_t		*vid_fullscreen;
-cvar_t		*vid_grabmouse;
+extern cvar_t *vid_fullscreen;
+extern cvar_t *vid_grabmouse;
+extern cvar_t *vid_gamma;
+extern cvar_t *vid_ref;			/* Name of Refresh DLL loaded */
 
 /* Global variables used internally by this module */
-viddef_t	viddef;				/* global video state; used by other modules */
+extern viddef_t viddef;				/* global video state; used by other modules */
 HINSTANCE	reflib_library;		/* Handle to refresh DLL */
 qboolean	reflib_active = 0;
 
@@ -293,16 +293,6 @@ LRESULT WINAPI MainWndProc (HWND hWnd, UINT uMsg, WPARAM  wParam, LPARAM lParam)
 }
 
 /**
- * @brief Console command to re-start the video mode and refresh DLL. We do this
- * simply by setting the modified flag for the vid_ref variable, which will
- * cause the entire video mode and refresh DLL to be reset on the next frame.
- */
-static void VID_Restart_f (void)
-{
-	vid_ref->modified = qtrue;
-}
-
-/**
  * @brief
  */
 static void VID_Front_f (void)
@@ -340,20 +330,6 @@ const vidmode_t vid_modes[] =
 	{ 1400, 1050, 20 },
 	{ 1440, 900, 21 }
 };
-
-/**
- * @brief
- */
-qboolean VID_GetModeInfo (int *width, int *height, int mode)
-{
-	if (mode < 0 || mode >= VID_NUM_MODES)
-		return qfalse;
-
-	*width  = vid_modes[mode].width;
-	*height = vid_modes[mode].height;
-
-	return qtrue;
-}
 
 /**
  * @brief
@@ -527,23 +503,17 @@ void VID_CheckChanges (void)
  * @brief
  * @sa VID_Shutdown
  */
-void VID_Init (void)
+void Sys_Vid_Init (void)
 {
 	/* Create the video variables so we know how to start the graphics drivers */
 	vid_ref = Cvar_Get("vid_ref", "gl", CVAR_ARCHIVE, "Video renderer");
 	vid_xpos = Cvar_Get("vid_xpos", "3", CVAR_ARCHIVE, NULL);
 	vid_ypos = Cvar_Get("vid_ypos", "22", CVAR_ARCHIVE, NULL);
-	vid_fullscreen = Cvar_Get("vid_fullscreen", "0", CVAR_ARCHIVE, "Run the game in fullscreen mode");
-	vid_grabmouse = Cvar_Get("vid_grabmouse", "1", CVAR_ARCHIVE, "Grab the mouse in the game window");
-	vid_gamma = Cvar_Get("vid_gamma", "1", CVAR_ARCHIVE, NULL);
 	win_noalttab = Cvar_Get("win_noalttab", "0", CVAR_ARCHIVE, NULL);
 
 	/* Add some console commands that we want to handle */
-	Cmd_AddCommand("vid_restart", VID_Restart_f, "Restart the video subsystem");
 	Cmd_AddCommand("vid_front", VID_Front_f, NULL);
 
-	/* Start the graphics mode and load refresh DLL */
-	VID_CheckChanges();
 	maxVidModes = VID_NUM_MODES;
 }
 

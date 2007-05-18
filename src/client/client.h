@@ -981,5 +981,7 @@ extern char *keybindings[K_LAST_KEY];
 /* cl_vid.c */
 void VID_Error(int err_level, const char *fmt, ...) __attribute__((noreturn));
 void VID_Printf(int print_level, const char *fmt, ...);
+qboolean VID_GetModeInfo(int *width, int *height, int mode);
+void Sys_Vid_Init(void);
 
 #endif /* CLIENT_CLIENT_H */
