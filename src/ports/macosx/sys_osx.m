@@ -486,13 +486,3 @@ int main (int argc, char **argv)
 	[pool release];
 	return 0;
 }
-
-void gSysIsDeactivated (void)
-{
-
-}
-
-void gSysIsMinimized(void)
-{
-
-}
