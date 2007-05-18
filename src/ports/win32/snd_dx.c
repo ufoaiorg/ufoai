@@ -266,11 +266,11 @@ static void FreeSound (void)
 		waveOutReset (hWaveOut);
 
 		if (lpWaveHdr) {
-			for (i=0 ; i< WAV_BUFFERS ; i++)
-				waveOutUnprepareHeader (hWaveOut, lpWaveHdr+i, sizeof(WAVEHDR));
+			for (i = 0; i < WAV_BUFFERS; i++)
+				waveOutUnprepareHeader(hWaveOut, lpWaveHdr+i, sizeof(WAVEHDR));
 		}
 
-		waveOutClose (hWaveOut);
+		waveOutClose(hWaveOut);
 
 		if (hWaveHdr) {
 			GlobalUnlock(hWaveHdr);

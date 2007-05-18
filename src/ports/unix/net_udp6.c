@@ -587,7 +587,7 @@ int NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_message)
 	if (NET_GetLoopPacket(sock, net_from, net_message))
 		return 1;
 
-	for (protocol = 0 ; protocol < 3 ; protocol++) {
+	for (protocol = 0; protocol < 3; protocol++) {
 		if (protocol == 0)
 			net_socket = ip_sockets[sock];
 		else if (protocol == 1)
@@ -805,7 +805,7 @@ void NET_Config (qboolean multiplayer)
 	int		i;
 
 	if (!multiplayer) {	/* shut down any existing sockets */
-		for (i=0 ; i<2 ; i++) {
+		for (i = 0; i < 2; i++) {
 			if (ip_sockets[i]) {
 				close(ip_sockets[i]);
 				ip_sockets[i] = 0;

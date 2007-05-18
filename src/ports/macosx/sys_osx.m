@@ -393,12 +393,11 @@ static void InitCocoa (void)
 
 int lenstr(const char *text)
 {
-	int  count=-1;				/* Character counter	*/
+	int count = -1;				/* Character counter */
 
-	while(text[++count] != '\0') ;		/* Search for a null	*/
+	while(text[++count] != '\0');		/* Search for a null */
 
-		  return(count);				/* Return the position
-		  * of the NULL-1	*/
+	return(count);				/* Return the position of the NULL-1 */
 }
 
 
@@ -407,25 +406,18 @@ unsigned char CheckForFinderCall(char **argv, int argc)
 	unsigned char change = 0;
 
 
-	if(argc < 2)
-	{
+	if(argc < 2) {
 		/* No change needed, finder would set argc to 2 */
 		change = 0;
-	}
-	else
-	{
+	} else {
 		/* now check if first param is a cvar or a finder path */
-		if (argv[0][0] == '+')
-		{
+		if (argv[0][0] == '+') {
 			/* parameter is a cvar, don't change directory */
 			change = 0;
-		}
-		else
-		{
+		} else {
 			/*change directory is needed */
 			/* finder gives as second argument -psxxxx process ID */
-			if(argv[1][0] == '-')
-			{
+			if(argv[1][0] == '-') {
 				change = 1;
 			}
 		}
@@ -439,13 +431,9 @@ void FixWorkingDirectory (char **argv)
 	char newPath[255];
 
 	printf("Path Length : %d \n",lenstr(*argv));
-	if(lenstr(*argv) > 255)
-	{
+	if(lenstr(*argv) > 255) {
 		printf("Path is too long. Please copy Bundle to a shorter path location \n");
-
-	}
-	else
-	{
+	} else {
 		/* unfortunately the finder gives the path inclusive the executeable */
 		/* so we only go to length - 3, to remove "ufo" from the path */
 		printf("Changing wd to path %s \n",argv[0]);
@@ -472,8 +460,7 @@ int main (int argc, char **argv)
 
 	InitCocoa();
 
-	if(CheckForFinderCall(argv,argc))
-	{
+	if(CheckForFinderCall(argv,argc)) {
 		printf("---> Fixing Working Directory, depending on Finder Call ! \n");
 		FixWorkingDirectory(argv);
 	}

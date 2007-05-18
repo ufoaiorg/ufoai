@@ -136,7 +136,7 @@ static void DumpChunks(void)
 		memcpy (str, data_p, 4);
 		data_p += 4;
 		iff_chunk_len = GetLittleLong();
-		printf ("0x%x : %s (%d)\n", (int)(data_p - 4), str, iff_chunk_len);
+		printf("0x%x : %s (%d)\n", (int)(data_p - 4), str, iff_chunk_len);
 		data_p += (iff_chunk_len + 1) & ~1;
 	} while (data_p < iff_end);
 }
@@ -242,11 +242,11 @@ void LoadSoundtrack (void)
 	int     i, val, j;
 
 	soundtrack = NULL;
-	sprintf (name, "%svideo/%s/%s.wav", gamedir, base, base);
-	printf ("%s\n", name);
+	sprintf(name, "%svideo/%s/%s.wav", gamedir, base, base);
+	printf("%s\n", name);
 	SafeOpenRead(name, &f);
 	if (!f.f) {
-		printf ("no soundtrack for %s\n", base);
+		printf("no soundtrack for %s\n", base);
 		return;
 	}
 	len = Q_filelength(&f);
@@ -287,17 +287,17 @@ void WriteSound (FILE *output, int frame)
 
 	width = wavinfo.width * wavinfo.channels;
 
-	start = frame*wavinfo.rate/14;
-	end = (frame+1)*wavinfo.rate/14;
+	start = frame * wavinfo.rate / 14;
+	end = (frame + 1) * wavinfo.rate / 14;
 	count = end - start;
 
-	for (i=0 ; i<count ; i++) {
+	for (i = 0; i < count; i++) {
 		sample = start+i;
 		if (sample > wavinfo.samples || !soundtrack) {
-			if (fwrite (&empty, 1, width, output) != width)
+			if (fwrite(&empty, 1, width, output) != width)
 				printf("WriteSound: Write error\n");
 		} else {
-			if (fwrite (soundtrack + wavinfo.dataofs + sample*width, 1, width,output) != width)
+			if (fwrite(soundtrack + wavinfo.dataofs + sample*width, 1, width,output) != width)
 				printf("WriteSound: Write error\n");
 		}
 	}
@@ -321,16 +321,16 @@ cblock_t MTF (cblock_t in)
 	*out_p++ = (in.count>>16)&255;
 	*out_p++ = (in.count>>24)&255;
 
-	for (i=0 ; i<256 ; i++)
+	for (i = 0; i < 256; i++)
 		index[i] = i;
 
-	for (i=0 ; i<in.count ; i++) {
+	for (i = 0; i < in.count; i++) {
 		b = in.data[i];
 		code = index[b];
 		*out_p++ = code;
 
 		/* shuffle b indexes to 0 */
-		for (j=0 ; j<256 ; j++)
+		for (j = 0; j < 256; j++)
 			if (index[j] < code)
 				index[j]++;
 		index[b] = 0;
@@ -357,7 +357,7 @@ static int bwtCompare (const void *elem1, const void *elem2)
 	i1 = *(int *)elem1;
 	i2 = *(int *)elem2;
 
-	for (i=0 ; i<bwt_size ; i++) {
+	for (i = 0; i < bwt_size; i++) {
 		b1 = bwt_data[i1];
 		b2 = bwt_data[i2];
 		if (b1 < b2)
@@ -387,7 +387,7 @@ cblock_t BWT (cblock_t in)
 	bwt_data = in.data;
 
 	sorted = malloc(in.count*sizeof(*sorted));
-	for (i=0 ; i<in.count ; i++)
+	for (i = 0; i < in.count; i++)
 		sorted[i] = i;
 	qsort (sorted, in.count, sizeof(*sorted), bwtCompare);
 
@@ -400,7 +400,7 @@ cblock_t BWT (cblock_t in)
 	*out_p++ = (in.count>>24)&255;
 
 	/* write head index */
-	for (i=0 ; i<in.count ; i++)
+	for (i = 0; i < in.count; i++)
 		if (sorted[i] == 0)
 			break;
 	*out_p++ = i&255;
@@ -409,7 +409,7 @@ cblock_t BWT (cblock_t in)
 	*out_p++ = (i>>24)&255;
 
 	/* write the L column */
-	for (i=0 ; i<in.count ; i++)
+	for (i = 0; i < in.count; i++)
 		*out_p++ = in.data[(sorted[i]+in.count-1)%in.count];
 
 	free (sorted);
@@ -440,7 +440,7 @@ static int	SmallestNode (void)
 
 	best = 99999999;
 	bestnode = -1;
-	for (i=0 ; i<numhnodes ; i++) {
+	for (i = 0; i < numhnodes; i++) {
 		if (hnodes[i].used)
 			continue;
 		if (!hnodes[i].count)
@@ -496,13 +496,13 @@ cblock_t Huffman (cblock_t in)
 
 	/* count */
 	memset (hnodes, 0, sizeof(hnodes));
-	for (i=0 ; i<in.count ; i++)
+	for (i = 0; i < in.count; i++)
 		hnodes[in.data[i]].count++;
 
 	/* normalize counts */
 	max = 0;
 	maxchar = 0;
-	for (i=0 ; i<256 ; i++) {
+	for (i = 0; i < 256; i++) {
 		if (hnodes[i].count > max) {
 			max = hnodes[i].count;
 			maxchar = i;
@@ -511,7 +511,7 @@ cblock_t Huffman (cblock_t in)
 	if (max == 0)
 		Error ("Huffman: max == 0");
 
-	for (i=0 ; i<256 ; i++) {
+	for (i = 0; i < 256; i++) {
 		hnodes[i].count = (hnodes[i].count*255+max-1) / max;
 	}
 
@@ -548,12 +548,12 @@ cblock_t Huffman (cblock_t in)
 	*out_p++ = (in.count>>24)&255;
 
 	/* save out the 256 normalized counts so the tree can be recreated */
-	for (i=0 ; i<256 ; i++)
+	for (i = 0; i < 256; i++)
 		*out_p++ = hnodes[i].count;
 
 	/* write bits */
 	outbits = 0;
-	for (i=0 ; i<in.count ; i++) {
+	for (i = 0; i < in.count; i++) {
 		c = charbitscount[in.data[i]];
 		bits = charbits[in.data[i]];
 		while (c) {
@@ -597,7 +597,7 @@ static cblock_t RLE (cblock_t in)
 	*out_p++ = (in.count>>16)&255;
 	*out_p++ = (in.count>>24)&255;
 
-	for (i=0 ; i<in.count ; ) {
+	for (i = 0; i < in.count; ) {
 		val = in.data[i];
 		rle_bytes[val]++;
 		repeat = 1;
@@ -645,7 +645,7 @@ static int SmallestNode1 (hnode_t *hnodes, int numhnodes)
 
 	best = 99999999;
 	bestnode = -1;
-	for (i=0 ; i<numhnodes ; i++) {
+	for (i = 0; i < numhnodes; i++) {
 		if (hnodes[i].used)
 			continue;
 		if (!hnodes[i].count)
@@ -730,13 +730,13 @@ static void Huffman1_Count (cblock_t in)
 	int		rept;
 
 	prev = 0;
-	for (i=0 ; i<in.count ; i++) {
+	for (i = 0; i < in.count; i++) {
 		v = in.data[i];
 		order0counts[v]++;
 		hnodes1[prev][v].count++;
 		prev = v;
 #if 1
-		for (rept=1 ; i+rept < in.count && rept < MAX_REPT ; rept++)
+		for (rept = 1; i + rept < in.count && rept < MAX_REPT; rept++)
 			if (in.data[i+rept] != v)
 				break;
 		if (rept > MIN_REPT) {
@@ -758,20 +758,19 @@ static void Huffman1_Build (FILE *f)
 	int		max;
 	int		total;
 
-	for (i=0 ; i<256 ; i++) {
+	for (i = 0; i < 256; i++) {
 		/* normalize and save the counts */
 		max = 0;
-		for (j=0 ; j<HUF_TOKENS ; j++)
-		{
+		for (j = 0; j < HUF_TOKENS; j++) {
 			if (hnodes1[i][j].count > max)
 				max = hnodes1[i][j].count;
 		}
 		if (max == 0)
 			max = 1;
 		total = 0;
-		for (j=0 ; j<HUF_TOKENS ; j++) {
+		for (j = 0; j < HUF_TOKENS; j++) {
 			/* easy to overflow 32 bits here! */
-			v = (hnodes1[i][j].count*(double)255+max-1)/max;
+			v = (hnodes1[i][j].count * (double)255 + max - 1) / max;
 			if (v > 255)
 				Error ("v > 255");
 			scaled[i][j] = hnodes1[i][j].count = v;
@@ -792,12 +791,12 @@ static void Huffman1_Build (FILE *f)
 #if 0
 	/* count up the total bits */
 	total = 0;
-	for (i=0 ; i<256 ; i++)
-		for (j=0 ; j<256 ; j++)
+	for (i = 0; i < 256; i++)
+		for (j = 0; j < 256; j++)
 			total += charbitscount1[i][j] * hnodes1[i][j].count;
 
-	total = (total+7)/8;
-	printf ("%i bytes huffman1 compressed\n", total);
+	total = (total + 7) / 8;
+	printf("%i bytes huffman1 compressed\n", total);
 #endif
 
 	if (fwrite (scaled, 1, sizeof(scaled), f) != sizeof(scaled))
@@ -830,7 +829,7 @@ static cblock_t Huffman1 (cblock_t in)
 	/* write bits */
 	outbits = 0;
 	prev = 0;
-	for (i=0 ; i<in.count ; i++) {
+	for (i = 0; i < in.count; i++) {
 		v = in.data[i];
 
 		c = charbitscount1[prev][v];
@@ -847,7 +846,7 @@ static cblock_t Huffman1 (cblock_t in)
 		prev = v;
 #if 1
 		/* check for repeat encodes */
-		for (rept=1 ; i+rept < in.count && rept < MAX_REPT ; rept++)
+		for (rept = 1; i + rept < in.count && rept < MAX_REPT; rept++)
 			if (in.data[i+rept] != v)
 				break;
 		if (rept > MIN_REPT) {
@@ -893,9 +892,9 @@ static cblock_t LoadFrame (char *base, int frame, int digits, byte **palette)
 	ten0 = frame%10;
 
 	if (digits == 4)
-		sprintf (name, "%svideo/%s/%s%i%i%i%i.pcx", gamedir, base, base, ten3, ten2, ten1, ten0);
+		sprintf(name, "%svideo/%s/%s%i%i%i%i.pcx", gamedir, base, base, ten3, ten2, ten1, ten0);
 	else
-		sprintf (name, "%svideo/%s/%s%i%i%i.pcx", gamedir, base, base, ten2, ten1, ten0);
+		sprintf(name, "%svideo/%s/%s%i%i%i.pcx", gamedir, base, base, ten2, ten1, ten0);
 
 	f = fopen(name, "rb");
 	if (!f) {
@@ -904,7 +903,7 @@ static cblock_t LoadFrame (char *base, int frame, int digits, byte **palette)
 	}
 	fclose (f);
 
-	printf ("%s\n", name);
+	printf("%s\n", name);
 	Load256Image (name, &in.data, palette, &width, &height);
 	in.count = width*height;
 	/* FIXME: map 0 and 255! */
@@ -938,25 +937,25 @@ extern void Cmd_Video (void)
 	int		swap;
 
 
-	GetToken (qfalse);
+	GetToken(qfalse);
 	strcpy (base, token);
 	if (g_release) {
-/*		sprintf (savename, "video/%s.cin", token); */
+/*		sprintf(savename, "video/%s.cin", token); */
 /*		ReleaseFile (savename); */
 		return;
 	}
 
-	GetToken (qfalse);
+	GetToken(qfalse);
 	digits = atoi(token);
 
 	/* optionally skip frames */
 	if (TokenAvailable ()) {
-		GetToken (qfalse);
+		GetToken(qfalse);
 		startframe = atoi(token);
 	} else
 		startframe=0;
 
-	sprintf (savename, "%svideo/%s.cin", gamedir, base);
+	sprintf(savename, "%svideo/%s.cin", gamedir, base);
 
 
 	/* clear stuff */
@@ -971,11 +970,11 @@ extern void Cmd_Video (void)
 	LoadSoundtrack ();
 
 	if (digits == 4)
-		sprintf (name, "%svideo/%s/%s0000.pcx", gamedir, base, base);
+		sprintf(name, "%svideo/%s/%s0000.pcx", gamedir, base, base);
 	else
-		sprintf (name, "%svideo/%s/%s000.pcx", gamedir, base, base);
+		sprintf(name, "%svideo/%s/%s000.pcx", gamedir, base, base);
 
-	printf ("%s\n", name);
+	printf("%s\n", name);
 	Load256Image (name, NULL, &palette, &width, &height);
 
 	output = fopen (savename, "wb");
@@ -1000,30 +999,30 @@ extern void Cmd_Video (void)
 		printf("Cmd_Video: Write error\n");
 
 	/* build the dictionary */
-	for ( frame=startframe ;  ; frame++) {
-		printf ("counting %i ", frame);
-		in = LoadFrame (base, frame, digits, &palette);
+	for (frame = startframe; ; frame++) {
+		printf("counting %i ", frame);
+		in = LoadFrame(base, frame, digits, &palette);
 		if (!in.data)
 			break;
-		Huffman1_Count (in);
+		Huffman1_Count(in);
 		free (in.data);
 	}
-	printf ("\n");
+	printf("\n");
 
 	/* build nodes and write counts */
-	Huffman1_Build (output);
+	Huffman1_Build(output);
 
-	memset (current_palette, 0, sizeof(current_palette));
+	memset(current_palette, 0, sizeof(current_palette));
 
 	/* compress it with the dictionary */
-	for (frame=startframe ;  ; frame++) {
-		printf ("packing %i ", frame);
-		in = LoadFrame (base, frame, digits, &palette);
+	for (frame = startframe; ; frame++) {
+		printf("packing %i ", frame);
+		in = LoadFrame(base, frame, digits, &palette);
 		if (!in.data)
 			break;
 
 		/* see if the palette has changed */
-		for (i=0 ; i<768 ; i++)
+		for (i = 0; i < 768; i++)
 			if (palette[i] != current_palette[i]) {
 				/* write a palette change */
 				memcpy (current_palette, palette, sizeof(current_palette));
@@ -1042,7 +1041,7 @@ extern void Cmd_Video (void)
 
 		/* save the image */
 		huffman = Huffman1 (in);
-		printf ("%5i bytes after huffman1\n", huffman.count);
+		printf("%5i bytes after huffman1\n", huffman.count);
 
 		swap = LittleLong (huffman.count);
 		if (fwrite (&swap, 1, sizeof(swap), output) != sizeof(swap))
@@ -1058,14 +1057,14 @@ extern void Cmd_Video (void)
 		free (in.data);
 		free (huffman.data);
 	}
-	printf ("\n");
+	printf("\n");
 
 	/* write end-of-file command */
 	command = 2;
 	if (fwrite (&command, 1, 4, output) != 4)
 		printf("Cmd_Video: Write error\n");
 
-	printf ("Total size: %li\n", ftell (output));
+	printf("Total size: %li\n", ftell (output));
 
 	fclose (output);
 

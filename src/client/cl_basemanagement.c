@@ -1791,7 +1791,7 @@ static void CL_SwapSkills (character_t *team[], int num)
 						+ (HOLSTER(cp1) && csi.ods[HOLSTER(cp1)->item.t].reload
 						   && skill == csi.ods[HOLSTER(cp1)->item.m].fd[weaponh_fd_idx][fmode2].weaponSkill);
 
-					for (i2 = i1 + 1 ; i2 < num; i2++) {
+					for (i2 = i1 + 1; i2 < num; i2++) {
 						cp2 = team[i2];
 						weaponr_fd_idx = -1;
 						weaponh_fd_idx = -1;

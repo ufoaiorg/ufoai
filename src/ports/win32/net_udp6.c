@@ -606,10 +606,10 @@ int NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_message)
 	int		protocol;
 	int		err;
 
-	if (NET_GetLoopPacket (sock, net_from, net_message))
+	if (NET_GetLoopPacket(sock, net_from, net_message))
 		return 1;
 
-	for (protocol = 0 ; protocol < 3 ; protocol++) {
+	for (protocol = 0; protocol < 3; protocol++) {
 		if (protocol == 0)
 			net_socket = ip_sockets[sock];
 		else if (protocol == 1)

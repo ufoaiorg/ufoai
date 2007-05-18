@@ -636,10 +636,10 @@ static side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 				epsilonbrush = 0;
 
 				for (test = brushes; test; test = test->next) {
-					s = TestBrushToPlanenum (test, pnum, &bsplits, &hintsplit, &epsilonbrush);
+					s = TestBrushToPlanenum(test, pnum, &bsplits, &hintsplit, &epsilonbrush);
 
 					splits += bsplits;
-					if (bsplits && (s&PSIDE_FACING) )
+					if (bsplits && (s & PSIDE_FACING))
 						Error("PSIDE_FACING with splits");
 
 					test->testside = s;
@@ -647,8 +647,8 @@ static side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 					/* testing that facenum as a splitter again */
 					if (s & PSIDE_FACING) {
 						facing++;
-						for (j=0 ; j<test->numsides ; j++) {
-							if ( (test->sides[j].planenum&~1) == pnum)
+						for (j = 0; j < test->numsides; j++) {
+							if ((test->sides[j].planenum &~ 1) == pnum)
 								test->sides[j].tested = qtrue;
 						}
 					}
@@ -680,7 +680,7 @@ static side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 					bestvalue = value;
 					bestside = side;
 					bestsplits = splits;
-					for (test = brushes ; test ; test=test->next)
+					for (test = brushes; test; test = test->next)
 						test->side = test->testside;
 				}
 			}

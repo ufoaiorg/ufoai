@@ -62,9 +62,9 @@ static void StoreAliasTriangles (void)
 	if ((totaltris + numtris) > MAXTRIANGLES)
 		Error ("Error: Too many triangles");
 
-	for (i=0; i<numtris ; i++) {
-		for (j=0 ; j<3 ; j++) {
-			for (k=0 ; k<3 ; k++) {
+	for (i = 0; i < numtris; i++) {
+		for (j = 0; j < 3; j++) {
+			for (k = 0; k < 3; k++) {
 				ptri[i+totaltris].verts[j][k] = fverts[tris[i].v[j]][k];
 			}
 		}
@@ -102,10 +102,10 @@ static int ParseVertexL (FILE *input)
 	if (numverts > MAXVERTS)
 		Error ("Error: Too many vertices");
 
-	for (i=0 ; i<numverts ; i++) {
-		for (j=0 ; j<3 ; j++) {
+	for (i = 0; i < numverts; i++) {
+		for (j = 0; j < 3; j++) {
 			if (feof(input))
-				Error ("Error: unexpected end of file");
+				Error("Error: unexpected end of file");
 
 			if (fread(&fverts[i][j], sizeof(float), 1, input) != 1)
 				printf("ParseVertexL: read error\n");
@@ -114,7 +114,7 @@ static int ParseVertexL (FILE *input)
 	}
 
 	if (vertsfound && trisfound)
-		StoreAliasTriangles ();
+		StoreAliasTriangles();
 
 	return bytesread - startbytesread;
 }
@@ -127,16 +127,16 @@ static int ParseFaceL1 (FILE *input)
 {
 
 	int i, j, startbytesread;
-	unsigned short	tshort;
+	unsigned short tshort;
 
 	if (trisfound)
-		Error ("Error: Multiple face chunks");
+		Error("Error: Multiple face chunks");
 
 	trisfound = 1;
 	startbytesread = bytesread;
 
 	if (feof(input))
-		Error ("Error: unexpected end of file");
+		Error("Error: unexpected end of file");
 
 	if (fread(&tshort, sizeof(tshort), 1, input) != 1)
 		printf("ParseFaceL1: read error\n");
@@ -144,12 +144,12 @@ static int ParseFaceL1 (FILE *input)
 	numtris = (int)tshort;
 
 	if (numtris > MAXTRIANGLES)
-		Error ("Error: Too many triangles");
+		Error("Error: Too many triangles");
 
-	for (i=0 ; i<numtris ; i++) {
-		for (j=0 ; j<4 ; j++) {
+	for (i = 0; i < numtris; i++) {
+		for (j = 0; j < 4; j++) {
 			if (feof(input))
-				Error ("Error: unexpected end of file");
+				Error("Error: unexpected end of file");
 
 			if (fread(&tshort, sizeof(tshort), 1, input) != 1)
 				printf("ParseFaceL1: read error\n");
@@ -159,7 +159,7 @@ static int ParseFaceL1 (FILE *input)
 	}
 
 	if (vertsfound && trisfound)
-		StoreAliasTriangles ();
+		StoreAliasTriangles();
 
 	return bytesread - startbytesread;
 }
@@ -180,7 +180,7 @@ static int ParseChunk (FILE *input)
 
 	/* chunk type */
 	if (feof(input))
-		Error ("Error: unexpected end of file");
+		Error("Error: unexpected end of file");
 
 	if (fread(&type, sizeof(type), 1, input) != 1)
 		printf("ParseChunk: read error\n");
@@ -188,9 +188,9 @@ static int ParseChunk (FILE *input)
 
 	/* chunk length */
 	if (feof(input))
-		Error ("Error: unexpected end of file");
+		Error("Error: unexpected end of file");
 
-	if (fread (&length, sizeof(length), 1, input) != 1)
+	if (fread(&length, sizeof(length), 1, input) != 1)
 		printf("ParseChunk: read error\n");
 	bytesread += sizeof(length);
 	w = length - 6;
@@ -198,11 +198,11 @@ static int ParseChunk (FILE *input)
 	/* process chunk if we care about it, otherwise skip it */
 	switch (type) {
 	case TRI_VERTEXL:
-		w -= ParseVertexL (input);
+		w -= ParseVertexL(input);
 		goto ParseSubchunk;
 
 	case TRI_FACEL1:
-		w -= ParseFaceL1 (input);
+		w -= ParseFaceL1(input);
 		goto ParseSubchunk;
 
 	case EDIT_OBJECT:
@@ -211,9 +211,9 @@ static int ParseChunk (FILE *input)
 
 		do {
 			if (feof(input))
-				Error ("Error: unexpected end of file");
+				Error("Error: unexpected end of file");
 
-			if (fread (&temp[i], 1, 1, input) != 1)
+			if (fread(&temp[i], 1, 1, input) != 1)
 				printf("ParseChunk: read error\n");
 			i++;
 			w--;
@@ -226,7 +226,7 @@ static int ParseChunk (FILE *input)
 	/* parse through subchunks */
 ParseSubchunk:
 		while (w > 0) {
-			w -= ParseChunk (input);
+			w -= ParseChunk(input);
 		}
 
 		retval = length;
@@ -241,7 +241,7 @@ ParseSubchunk:
 				t = BLOCK_SIZE;
 
 			if (feof(input))
-				Error ("Error: unexpected end of file");
+				Error("Error: unexpected end of file");
 
 			if (fread (&temp, t, 1, input) != 1)
 				printf("ParseChunk: read error\n");

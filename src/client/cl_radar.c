@@ -64,7 +64,7 @@ extern void RADAR_DrawInMap (const menuNode_t* node, const radar_t* radar, int x
 
 	/* Draw lines from radar to ufos sensored */
 	Vector2Set(pts, x, y);
-	for (i = radar->numUfos - 1 ; i >= 0 ; i--)
+	for (i = radar->numUfos - 1; i >= 0; i--)
 		if (!globe && MAP_MapToScreen(node, (gd.ufos + radar->ufos[i])->pos, &x, &y)) {
 			Vector2Set(pts + 2, x, y);
 			re.DrawLineStrip(2, pts);
@@ -96,7 +96,7 @@ static int RADAR_IsUfoSensored (const radar_t* radar, int numUfo)
 {
 	int i;
 
-	for (i = 0 ; i < radar->numUfos ; i++)
+	for (i = 0; i < radar->numUfos; i++)
 		if (radar->ufos[i] == numUfo)
 			return i;
 
@@ -110,7 +110,7 @@ extern void RADAR_RemoveUfo (radar_t* radar, const aircraft_t* ufo)
 {
 	int i, numUfo = ufo - gd.ufos;
 
-	for (i = 0 ; i < radar->numUfos ; i++)
+	for (i = 0; i < radar->numUfos; i++)
 		if (radar->ufos[i] == numUfo) {
 			radar->numUfos--;
 			radar->ufos[i] = radar->ufos[radar->numUfos];
@@ -125,7 +125,7 @@ extern void Radar_NotifyUfoRemoved (radar_t* radar, const aircraft_t* ufo)
 {
 	int i, numUfo = ufo - gd.ufos;
 
-	for (i = 0 ; i < radar->numUfos ; i++)
+	for (i = 0; i < radar->numUfos; i++)
 		if (radar->ufos[i] == numUfo) {
 			radar->numUfos--;
 			radar->ufos[i] = radar->ufos[radar->numUfos];

@@ -310,7 +310,7 @@ qboolean NET_StringToSockaddr (char *s, struct sockaddr *sadr)
 
 	Q_strncpyz(copy, s, sizeof(copy));
 	/* strip off a trailing :port if present */
-	for (colon = copy ; *colon ; colon++)
+	for (colon = copy; *colon; colon++)
 		if (*colon == ':') {
 			*colon = 0;
 			((struct sockaddr_in *)sadr)->sin_port = htons((short)atoi(colon+1));

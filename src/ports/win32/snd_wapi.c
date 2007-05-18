@@ -73,11 +73,11 @@ static void FreeSound (void)
 		waveOutReset (hWaveOut);
 
 		if (lpWaveHdr) {
-			for (i=0 ; i< WAV_BUFFERS ; i++)
-				waveOutUnprepareHeader (hWaveOut, lpWaveHdr+i, sizeof(WAVEHDR));
+			for (i = 0; i < WAV_BUFFERS; i++)
+				waveOutUnprepareHeader(hWaveOut, lpWaveHdr+i, sizeof(WAVEHDR));
 		}
 
-		waveOutClose (hWaveOut);
+		waveOutClose(hWaveOut);
 
 		if (hWaveHdr) {
 			GlobalUnlock(hWaveHdr);
@@ -210,14 +210,14 @@ static qboolean SND_InitWav (void)
 
 	/* After allocation, set up and prepare headers. */
 	si->Com_DPrintf("...preparing headers: ");
-	for (i=0 ; i<WAV_BUFFERS ; i++) {
+	for (i = 0; i < WAV_BUFFERS; i++) {
 		lpWaveHdr[i].dwBufferLength = WAV_BUFFER_SIZE;
 		lpWaveHdr[i].lpData = lpData + i*WAV_BUFFER_SIZE;
 
 		if (waveOutPrepareHeader(hWaveOut, lpWaveHdr+i, sizeof(WAVEHDR)) !=
 				MMSYSERR_NOERROR) {
 			si->Com_DPrintf("failed\n");
-			FreeSound ();
+			FreeSound();
 			return qfalse;
 		}
 	}

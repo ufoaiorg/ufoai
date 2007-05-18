@@ -386,7 +386,7 @@ static void AddBrushBevels (mapbrush_t *b)
 
 			/* try the six possible slanted axials from this edge */
 			for (axis = 0; axis < 3; axis++) {
-				for (dir = -1 ; dir <= 1; dir += 2) {
+				for (dir = -1; dir <= 1; dir += 2) {
 					/* construct a plane */
 					VectorClear(vec2);
 					vec2[axis] = dir;
@@ -920,7 +920,7 @@ extern void LoadMapFile (char *filename)
 	while (ParseMapEntity());
 
 	ClearBounds(map_mins, map_maxs);
-	for (i = 0; i < entities[0].numbrushes ; i++) {
+	for (i = 0; i < entities[0].numbrushes; i++) {
 		if (mapbrushes[i].mins[0] > 4096)
 			continue;	/* no valid points */
 		AddPointToBounds(mapbrushes[i].mins, map_mins, map_maxs);

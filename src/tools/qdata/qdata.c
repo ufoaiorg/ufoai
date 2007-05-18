@@ -248,7 +248,7 @@ static void PackDirectory_r (char *dir)
 	sprintf (dirstring, "%s%s", gamedir, dir);
 	count = scandir(dirstring, &namelist, NULL, NULL);
 
-	for (i=0 ; i<count ; i++) {
+	for (i = 0; i < count; i++) {
 		ent = namelist[i];
 		name = ent->d_name;
 
@@ -293,7 +293,7 @@ static void ReleaseTexture (char *name)
 	int		i;
 	char	path[1024];
 
-	for (i=0 ; i<numrtex ; i++)
+	for (i = 0; i < numrtex; i++)
 		if (!Q_strcasecmp(name, rtex[i]))
 			return;
 
@@ -328,7 +328,7 @@ void Cmd_Maps (void)
 		/* get all the texture references */
 		snprintf (map, sizeof(map), "%smaps/%s.bsp", gamedir, token);
 		LoadBSPFileTexinfo (map);
-		for (i=0 ; i<numtexinfo ; i++)
+		for (i = 0; i < numtexinfo; i++)
 			ReleaseTexture (texinfo[i].texture);
 	}
 }
@@ -419,7 +419,7 @@ int main (int argc, char **argv)
 
 	ExpandWildcards (&argc, &argv);
 
-	for (i=1 ; i<argc ; i++) {
+	for (i = 1; i < argc; i++) {
 		if (!strcmp(argv[i], "-archive")) {
 			/* -archive f:/quake2/release/dump_11_30 */
 			archive = qtrue;
@@ -461,7 +461,7 @@ int main (int argc, char **argv)
 	else
 		trifileext = ext_tri;
 
-	for ( ; i<argc ; i++) {
+	for (; i < argc; i++) {
 		printf ("--------------- %s ---------------\n", argv[i]);
 		/* load the script */
 		strncpy (path, argv[i], sizeof(path));

@@ -122,7 +122,7 @@ qboolean SND_Init (struct sndinfo *s)
 		si->dma->speed = 0;
 
 	if (!si->dma->speed) {
-		for (i = 0 ; i < sizeof ( tryrates ) / 4 ; i++)
+		for (i = 0; i < sizeof(tryrates) / 4; i++)
 			if (!ioctl(audio_fd, SNDCTL_DSP_SPEED, &tryrates[i]))
 				break;
 		si->dma->speed = tryrates[i];

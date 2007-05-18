@@ -75,25 +75,25 @@ void ExpandWildcards (int *argc, char ***argv)
 	char	*path;
 
 	ex_argc = 0;
-	for (i=0 ; i<*argc ; i++) {
+	for (i = 0; i < *argc; i++) {
 		path = (*argv)[i];
-		if ( path[0] == '-' || ( !strstr(path, "*") && !strstr(path, "?") ) ) {
+		if (path[0] == '-' || (!strstr(path, "*") && !strstr(path, "?"))) {
 			ex_argv[ex_argc++] = path;
 			continue;
 		}
 
-		handle = _findfirst (path, &fileinfo);
+		handle = _findfirst(path, &fileinfo);
 		if (handle == -1)
 			return;
 
-		ExtractFilePath (path, filebase);
+		ExtractFilePath(path, filebase);
 
 		do {
-			sprintf (filename, "%s%s", filebase, fileinfo.name);
-			ex_argv[ex_argc++] = copystring (filename);
-		} while (_findnext( handle, &fileinfo ) != -1);
+			sprintf(filename, "%s%s", filebase, fileinfo.name);
+			ex_argv[ex_argc++] = copystring(filename);
+		} while (_findnext(handle, &fileinfo) != -1);
 
-		_findclose (handle);
+		_findclose(handle);
 	}
 
 	*argc = ex_argc;

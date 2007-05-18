@@ -43,16 +43,16 @@ void RemapZero (byte *pixels, byte *palette, int width, int height)
 
 	alt_zero = 0;
 	best = 9999999;
-	for (i=1 ; i<255 ; i++) {
-		value = palette[i*3+0]+palette[i*3+1]+palette[i*3+2];
+	for (i = 1; i < 255; i++) {
+		value = palette[i * 3 + 0] + palette[i * 3 + 1] + palette[i * 3 + 2];
 		if (value < best) {
 			best = value;
 			alt_zero = i;
 		}
 	}
 
-	c = width*height;
-	for (i=0 ; i<c ; i++)
+	c = width * height;
+	for (i = 0; i < c; i++)
 		if (pixels[i] == 0)
 			pixels[i] = alt_zero;
 }
@@ -67,47 +67,47 @@ void Cmd_Grab (void)
 	char			savename[1024];
 	char			dest[1024];
 
-	GetToken (qfalse);
+	GetToken(qfalse);
 
 	if (token[0] == '/' || token[0] == '\\')
-		sprintf (savename, "%s%s.pcx", gamedir, token+1);
+		sprintf(savename, "%s%s.pcx", gamedir, token+1);
 	else
-		sprintf (savename, "%spics/%s.pcx", gamedir, token);
+		sprintf(savename, "%spics/%s.pcx", gamedir, token);
 
 	if (g_release) {
 		if (token[0] == '/' || token[0] == '\\')
-			sprintf (dest, "%s.pcx", token+1);
+			sprintf(dest, "%s.pcx", token+1);
 		else
-			sprintf (dest, "pics/%s.pcx", token);
+			sprintf(dest, "pics/%s.pcx", token);
 
 		ReleaseFile (dest);
 		return;
 	}
 
-	GetToken (qfalse);
-	xl = atoi (token);
-	GetToken (qfalse);
-	yl = atoi (token);
-	GetToken (qfalse);
-	w = atoi (token);
-	GetToken (qfalse);
-	h = atoi (token);
+	GetToken(qfalse);
+	xl = atoi(token);
+	GetToken(qfalse);
+	yl = atoi(token);
+	GetToken(qfalse);
+	w = atoi(token);
+	GetToken(qfalse);
+	h = atoi(token);
 
-	if (xl<0 || yl<0 || w<0 || h<0 || xl+w>byteimagewidth || yl+h>byteimageheight)
+	if (xl < 0 || yl < 0 || w < 0 || h < 0 || xl + w > byteimagewidth || yl + h > byteimageheight)
 		Error ("GrabPic: Bad size: %i, %i, %i, %i",xl,yl,w,h);
 
 	/* crop it to the proper size */
-	cropped = malloc (w*h);
-	for (y=0 ; y<h ; y++) {
-		memcpy (cropped+y*w, byteimage+(y+yl)*byteimagewidth+xl, w);
+	cropped = malloc(w*h);
+	for (y = 0; y < h; y++) {
+		memcpy(cropped+y*w, byteimage+(y+yl)*byteimagewidth+xl, w);
 	}
 
 	/* save off the new image */
-	printf ("saving %s\n", savename);
-	CreatePath (savename);
-	WritePCXfile (savename, cropped, w,	h, lbmpalette);
+	printf("saving %s\n", savename);
+	CreatePath(savename);
+	WritePCXfile(savename, cropped, w,	h, lbmpalette);
 
-	free (cropped);
+	free(cropped);
 }
 
 /**
@@ -120,36 +120,36 @@ void Cmd_Raw (void)
 	char			savename[1024];
 	char			dest[1024];
 
-	GetToken (qfalse);
+	GetToken(qfalse);
 
-	sprintf (savename, "%s%s.lmp", gamedir, token);
+	sprintf(savename, "%s%s.lmp", gamedir, token);
 
 	if (g_release) {
-		sprintf (dest, "%s.lmp", token);
-		ReleaseFile (dest);
+		sprintf(dest, "%s.lmp", token);
+		ReleaseFile(dest);
 		return;
 	}
 
-	GetToken (qfalse);
-	xl = atoi (token);
-	GetToken (qfalse);
-	yl = atoi (token);
-	GetToken (qfalse);
-	w = atoi (token);
-	GetToken (qfalse);
-	h = atoi (token);
+	GetToken(qfalse);
+	xl = atoi(token);
+	GetToken(qfalse);
+	yl = atoi(token);
+	GetToken(qfalse);
+	w = atoi(token);
+	GetToken(qfalse);
+	h = atoi(token);
 
 	if (xl<0 || yl<0 || w<0 || h<0 || xl+w>byteimagewidth || yl+h>byteimageheight)
 		Error ("GrabPic: Bad size: %i, %i, %i, %i",xl,yl,w,h);
 
 	/* crop it to the proper size */
-	cropped = malloc (w*h);
-	for (y=0 ; y<h ; y++) {
+	cropped = malloc(w*h);
+	for (y = 0; y < h; y++) {
 		memcpy (cropped+y*w, byteimage+(y+yl)*byteimagewidth+xl, w);
 	}
 
 	/* save off the new image */
-	printf ("saving %s\n", savename);
+	printf("saving %s\n", savename);
 	CreatePath (savename);
 
 	SaveFile (savename, cropped, w*h);
@@ -179,12 +179,12 @@ byte BestColor (int r, int g, int b, int start, int stop)
 	bestcolor = 0;
 
 	pal = colormap_palette + start*3;
-	for (i=start ; i<= stop ; i++) {
+	for (i = start; i <= stop; i++) {
 		dr = r - (int)pal[0];
 		dg = g - (int)pal[1];
 		db = b - (int)pal[2];
 		pal += 3;
-		distortion = dr*dr + dg*dg + db*db;
+		distortion = dr * dr + dg * dg + db * db;
 		if (distortion < bestdistortion) {
 			if (!distortion)
 				return i;		/* perfect match */
@@ -217,17 +217,17 @@ void Cmd_Colormap (void)
 
 	colormap_issued = qtrue;
 	if (!g_release)
-		memcpy (colormap_palette, lbmpalette, 768);
+		memcpy(colormap_palette, lbmpalette, 768);
 
-	if (!TokenAvailable ()) {	/* just setting colormap_issued */
+	if (!TokenAvailable()) {	/* just setting colormap_issued */
 		return;
 	}
 
-	GetToken (qfalse);
-	sprintf (savename, "%spics/%s.pcx", gamedir, token);
+	GetToken(qfalse);
+	sprintf(savename, "%spics/%s.pcx", gamedir, token);
 
 	if (g_release) {
-		sprintf (dest, "pics/%s.pcx", token);
+		sprintf(dest, "pics/%s.pcx", token);
 		ReleaseFile (dest);
 		return;
 	}
@@ -240,12 +240,12 @@ void Cmd_Colormap (void)
 	lump_p = cropped;
 
 	/* shaded levels */
-	for (l=0;l<levels;l++) {
-		frac = range - range*(float)l/(levels-1);
-		for (c=0 ; c<256-brights ; c++) {
-			red = lbmpalette[c*3];
-			green = lbmpalette[c*3+1];
-			blue = lbmpalette[c*3+2];
+	for (l = 0; l < levels; l++) {
+		frac = range - range * (float)l / (levels - 1);
+		for (c = 0; c < 256 - brights; c++) {
+			red = lbmpalette[c * 3];
+			green = lbmpalette[c * 3 + 1];
+			blue = lbmpalette[c * 3 + 2];
 
 			red = (int)(red*frac+0.5);
 			green = (int)(green*frac+0.5);
@@ -258,13 +258,13 @@ void Cmd_Colormap (void)
 		}
 
 		/* fullbrights allways stay the same */
-		for ( ; c<256 ; c++)
+		for (; c < 256; c++)
 			*lump_p++ = c;
 	}
 
 	/* 66% transparancy table */
-	for (l=0;l<255;l++) {
-		for (c=0 ; c<255 ; c++) {
+	for (l = 0; l < 255; l++) {
+		for (c = 0; c < 255; c++) {
 			red = lbmpalette[c*3]*0.33 + lbmpalette[l*3]*0.66;
 			green = lbmpalette[c*3+1]*0.33 + lbmpalette[l*3+1]*0.66;
 			blue = lbmpalette[c*3+2]*0.33 + lbmpalette[l*3+2]*0.66;
@@ -273,15 +273,15 @@ void Cmd_Colormap (void)
 		}
 		*lump_p++ = 255;
 	}
-	for (c=0 ; c<256 ; c++)
+	for (c = 0; c < 256; c++)
 		*lump_p++ = 255;
 
 	/* save off the new image */
-	printf ("saving %s\n", savename);
-	CreatePath (savename);
-	WritePCXfile (savename, cropped, 256, levels+256, lbmpalette);
+	printf("saving %s\n", savename);
+	CreatePath(savename);
+	WritePCXfile(savename, cropped, 256, levels + 256, lbmpalette);
 
-	free (cropped);
+	free(cropped);
 }
 
 /*
@@ -339,9 +339,9 @@ void BuildPalmap (void)
 		return;
 	palmap_built = qtrue;
 
-	for (r=4 ; r<256 ; r+=8) {
-		for (g=4 ; g<256 ; g+=8) {
-			for (b=4 ; b<256 ; b+=8) {
+	for (r = 4; r < 256; r += 8) {
+		for (g = 4; g < 256; g += 8) {
+			for (b = 4; b < 256; b += 8) {
 				bestcolor = BestColor (r, g, b, 1, 254);
 				palmap[r>>3][g>>3][b>>3] = bestcolor;
 			}
@@ -370,7 +370,7 @@ byte AveragePixels (int count)
 	vis = 0;
 	r = g = b = 0;
 	fullbright = 0;
-	for (i=0 ; i<count ; i++) {
+	for (i = 0; i < count; i++) {
 		pix = pixdata[i];
 
 		r += lbmpalette[pix*3];
@@ -473,17 +473,17 @@ void Cmd_Mip (void)
 	char			filename[1024];
 	char			animname[64];
 
-	GetToken (qfalse);
+	GetToken(qfalse);
 	strcpy (lumpname, token);
 
-	GetToken (qfalse);
-	xl = atoi (token);
-	GetToken (qfalse);
-	yl = atoi (token);
-	GetToken (qfalse);
-	w = atoi (token);
-	GetToken (qfalse);
-	h = atoi (token);
+	GetToken(qfalse);
+	xl = atoi(token);
+	GetToken(qfalse);
+	yl = atoi(token);
+	GetToken(qfalse);
+	w = atoi(token);
+	GetToken(qfalse);
+	h = atoi(token);
 
 	if ( (w & 15) || (h & 15) )
 		Error ("line %i: miptex sizes must be multiples of 16", scriptline);
@@ -496,13 +496,13 @@ void Cmd_Mip (void)
 
 	/* get optional flags and values */
 	while (TokenAvailable ()) {
-		GetToken (qfalse);
+		GetToken(qfalse);
 
-		for (mp=mipparms ; mp->name ; mp++) {
+		for (mp = mipparms; mp->name; mp++) {
 			if (!strcmp(mp->name, token)) {
 				switch (mp->type) {
 				case pt_animvalue:
-					GetToken (qfalse);	/* specify the next animation frame */
+					GetToken(qfalse);	/* specify the next animation frame */
 					strcpy (animname, token);
 					break;
 				case pt_flags:
@@ -513,7 +513,7 @@ void Cmd_Mip (void)
 					break;
 				case pt_flagvalue:
 					flags |= mp->flags;
-					GetToken (qfalse);	/* specify the light value */
+					GetToken(qfalse);	/* specify the light value */
 					value = atoi(token);
 					break;
 				}
@@ -524,7 +524,7 @@ void Cmd_Mip (void)
 			Error ("line %i: unknown parm %s", scriptline, token);
 	}
 
-	sprintf (filename, "%stextures/%s/%s.wal", gamedir, mip_prefix, lumpname);
+	sprintf(filename, "%stextures/%s/%s.wal", gamedir, mip_prefix, lumpname);
 	if (g_release)
 		return;	/* textures are only released by $maps */
 
@@ -539,9 +539,9 @@ void Cmd_Mip (void)
 	qtex->flags = LittleLong(flags);
 	qtex->contents = LittleLong(contents);
 	qtex->value = LittleLong(value);
-	sprintf (qtex->name, "%s/%s", mip_prefix, lumpname);
+	sprintf(qtex->name, "%s/%s", mip_prefix, lumpname);
 	if (animname[0])
-		sprintf (qtex->animname, "%s/%s", mip_prefix, animname);
+		sprintf(qtex->animname, "%s/%s", mip_prefix, animname);
 
 	lump_p = (byte *)(&qtex->value+1);
 
@@ -551,8 +551,8 @@ void Cmd_Mip (void)
 	source = lump_p;
 	qtex->offsets[0] = LittleLong(lump_p - (byte *)qtex);
 
-	for (y=yl ; y<yh ; y++) {
-		for (x=xl ; x<xh ; x++) {
+	for (y = yl; y < yh; y++) {
+		for (x = xl; x < xh; x++) {
 			pix = *screen_p++;
 			if (pix == 255)
 				pix = 1;		/* should never happen */
@@ -564,33 +564,33 @@ void Cmd_Mip (void)
 	/* subsample for greater mip levels */
 	d_red = d_green = d_blue = 0;	/* no distortion yet */
 
-	for (miplevel = 1 ; miplevel<4 ; miplevel++) {
+	for (miplevel = 1; miplevel < 4; miplevel++) {
 		qtex->offsets[miplevel] = LittleLong(lump_p - (byte *)qtex);
 
-		mipstep = 1<<miplevel;
-		for (y=0 ; y<h ; y+=mipstep) {
+		mipstep = 1 << miplevel;
+		for (y = 0; y < h; y += mipstep) {
 
-			for (x = 0 ; x<w ; x+= mipstep) {
+			for (x = 0; x < w; x += mipstep) {
 				count = 0;
-				for (yy=0 ; yy<mipstep ; yy++)
-					for (xx=0 ; xx<mipstep ; xx++) {
-						pixdata[count] = source[ (y+yy)*w + x + xx ];
+				for (yy = 0; yy < mipstep; yy++)
+					for (xx = 0; xx < mipstep; xx++) {
+						pixdata[count] = source[(y + yy) * w + x + xx];
 						count++;
 					}
-				*lump_p++ = AveragePixels (count);
+				*lump_p++ = AveragePixels(count);
 			}
 		}
 	}
 
 	/* dword align the size */
-	while ((intptr_t)lump_p&3)
+	while ((intptr_t)lump_p & 3)
 		*lump_p++ = 0;
 
 	/* write it out */
-	printf ("writing %s\n", filename);
-	SaveFile (filename, (byte *)qtex, lump_p - (byte *)qtex);
+	printf("writing %s\n", filename);
+	SaveFile(filename, (byte *)qtex, lump_p - (byte *)qtex);
 
-	free (qtex);
+	free(qtex);
 }
 
 /**
@@ -602,7 +602,7 @@ void Cmd_Mippal (void)
 	if (g_release)
 		return;
 
-	memcpy (colormap_palette, lbmpalette, 768);
+	memcpy(colormap_palette, lbmpalette, 768);
 
 	BuildPalmap();
 }
@@ -615,12 +615,12 @@ void Cmd_Mipdir (void)
 {
 	char	filename[1024];
 
-	GetToken (qfalse);
+	GetToken(qfalse);
 	strcpy (mip_prefix, token);
 	/* create the directory if needed */
-	sprintf (filename, "%stextures", gamedir);
+	sprintf(filename, "%stextures", gamedir);
 	Q_mkdir (filename);
-	sprintf (filename, "%stextures/%s", gamedir, mip_prefix);
+	sprintf(filename, "%stextures/%s", gamedir, mip_prefix);
 	Q_mkdir (filename);
 }
 
@@ -648,13 +648,13 @@ void Cmd_Environment (void)
 	byte	image[256*256];
 	byte	*tga;
 
-	GetToken (qfalse);
+	GetToken(qfalse);
 
 	if (g_release) {
-		for (i=0 ; i<6 ; i++) {
-			sprintf (name, "env/%s%s.pcx", token, suf[i]);
+		for (i = 0; i < 6; i++) {
+			sprintf(name, "env/%s%s.pcx", token, suf[i]);
 			ReleaseFile (name);
-			sprintf (name, "env/%s%s.tga", token, suf[i]);
+			sprintf(name, "env/%s%s.tga", token, suf[i]);
 			ReleaseFile (name);
 		}
 		return;
@@ -662,26 +662,26 @@ void Cmd_Environment (void)
 	/* get the palette */
 	BuildPalmap ();
 
-	sprintf (name, "%senv/", gamedir);
+	sprintf(name, "%senv/", gamedir);
 	CreatePath (name);
 
 	/* convert the images */
-	for (i=0 ; i<6 ; i++) {
-		sprintf (name, "%senv/%s%s.tga", gamedir, token, suf[i]);
-		printf ("loading %s...\n", name);
+	for (i = 0; i < 6; i++) {
+		sprintf(name, "%senv/%s%s.tga", gamedir, token, suf[i]);
+		printf("loading %s...\n", name);
 		LoadTGA (name, &tga, NULL, NULL);
 
-		for (y=0 ; y<256 ; y++) {
-			for (x=0 ; x<256 ; x++) {
-				image[y*256+x] = FindColor (tga[(y*256+x)*4+0],tga[(y*256+x)*4+1],tga[(y*256+x)*4+2]);
+		for (y = 0; y < 256; y++) {
+			for (x = 0; x < 256; x++) {
+				image[y * 256 + x] = FindColor(tga[(y * 256 + x) * 4 + 0],tga[(y * 256 + x) * 4 + 1],tga[(y * 256 + x) * 4 + 2]);
 			}
 		}
 		free (tga);
-		sprintf (name, "%senv/%s%s.pcx", gamedir, token, suf[i]);
-		if (FileTime (name) != -1)
-			printf ("%s already exists, not overwriting.\n", name);
+		sprintf(name, "%senv/%s%s.pcx", gamedir, token, suf[i]);
+		if (FileTime(name) != -1)
+			printf("%s already exists, not overwriting.\n", name);
 		else
-			WritePCXfile (name, image, 256, 256, colormap_palette);
+			WritePCXfile(name, image, 256, 256, colormap_palette);
 	}
 }
 

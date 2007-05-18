@@ -95,8 +95,8 @@ static int GetVertexnum (vec3_t in)
 
 	c_totalverts++;
 
-	for (i=0 ; i<3 ; i++) {
-		if ( fabs(in[i] - Q_rint(in[i])) < INTEGRAL_EPSILON)
+	for (i = 0; i < 3; i++) {
+		if (fabs(in[i] - Q_rint(in[i])) < INTEGRAL_EPSILON)
 			vert[i] = Q_rint(in[i]);
 		else
 			vert[i] = in[i];
@@ -104,11 +104,11 @@ static int GetVertexnum (vec3_t in)
 
 	h = HashVec (vert);
 
-	for (vnum=hashverts[h] ; vnum ; vnum=vertexchain[vnum]) {
+	for (vnum = hashverts[h]; vnum; vnum = vertexchain[vnum]) {
 		p = dvertexes[vnum].point;
-		if ( fabs(p[0]-vert[0])<POINT_EPSILON
-		&& fabs(p[1]-vert[1])<POINT_EPSILON
-		&& fabs(p[2]-vert[2])<POINT_EPSILON )
+		if (fabs(p[0]-vert[0]) < POINT_EPSILON
+		 && fabs(p[1]-vert[1]) < POINT_EPSILON
+		 && fabs(p[2]-vert[2]) < POINT_EPSILON)
 			return vnum;
 	}
 

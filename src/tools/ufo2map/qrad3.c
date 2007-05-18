@@ -214,31 +214,31 @@ void MakeTransfers (unsigned int i)
 
 	all_transfers = transfers;
 	patch->numtransfers = 0;
-	for (j=0, patch2 = patches ; j<num_patches ; j++, patch2++) {
+	for (j = 0, patch2 = patches; j < num_patches; j++, patch2++) {
 		transfers[j] = 0;
 
 		if (j == i)
 			continue;
 
 		/* calculate vector */
-		VectorSubtract (patch2->origin, origin, delta);
-		dist = VectorNormalize (delta, delta);
+		VectorSubtract(patch2->origin, origin, delta);
+		dist = VectorNormalize(delta, delta);
 		if (!dist)
 			continue;	/* should never happen */
 
 		/* reletive angles */
-		scale = DotProduct (delta, plane.normal);
-		scale *= -DotProduct (delta, patch2->plane->normal);
+		scale = DotProduct(delta, plane.normal);
+		scale *= -DotProduct(delta, patch2->plane->normal);
 		if (scale <= 0)
 			continue;
 
-		trans = scale * patch2->area / (dist*dist);
+		trans = scale * patch2->area / (dist * dist);
 
 		if ( trans < 0.1 )
 			continue;
 
 		/* check exact transfer */
-		if (TestLine (patch->origin, patch2->origin) )
+		if (TestLine(patch->origin, patch2->origin) )
 			continue;
 
 /*		if (trans < 0) */
@@ -257,23 +257,23 @@ void MakeTransfers (unsigned int i)
 	/* patches have underestimated form factors, it will usually */
 	/* be higher than PI */
 	if (patch->numtransfers) {
-		transfer_t	*t;
+		transfer_t *t;
 
 		if (patch->numtransfers < 0 || patch->numtransfers > MAX_PATCHES)
-			Error ("Weird numtransfers");
+			Error("Weird numtransfers");
 		s = patch->numtransfers * sizeof(transfer_t);
-		patch->transfers = malloc (s);
+		patch->transfers = malloc(s);
 		if (!patch->transfers)
-			Error ("Memory allocation failure");
+			Error("Memory allocation failure");
 
 		/* normalize all transfers so all of the light */
 		/* is transfered to the surroundings */
 		t = patch->transfers;
 		itotal = 0;
-		for (j=0 ; j<num_patches ; j++) {
+		for (j = 0; j < num_patches; j++) {
 			if (transfers[j] <= 0)
 				continue;
-			itrans = transfers[j]*0x10000 / total;
+			itrans = transfers[j] * 0x10000 / total;
 			itotal += itrans;
 			t->transfer = itrans;
 			t->patch = j;
@@ -291,10 +291,10 @@ void MakeTransfers (unsigned int i)
  */
 void FreeTransfers (void)
 {
-	unsigned int		i;
+	unsigned int i;
 
-	for (i=0 ; i<num_patches ; i++) {
-		free (patches[i].transfers);
+	for (i = 0; i<num_patches; i++) {
+		free(patches[i].transfers);
 		patches[i].transfers = NULL;
 	}
 }
@@ -388,7 +388,7 @@ void ShootLight (unsigned int patchnum)
 	trans = patch->transfers;
 	num = patch->numtransfers;
 
-	for (k = 0 ; k < num; k++, trans++) {
+	for (k = 0; k < num; k++, trans++) {
 		for (l = 0; l < 3; l++)
 			illumination[trans->patch][l] += send[l]*trans->transfer;
 	}

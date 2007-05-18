@@ -1351,10 +1351,10 @@ void gaussrand (float *gauss1, float *gauss2)
 		x1 = crand();
 		x2 = crand();
 		w = x1 * x1 + x2 * x2;
-	} while ( w >= 1.0 );
+	} while (w >= 1.0);
 
-	tmp = -2 * logf(w) ;
-	w = sqrt( tmp / w );
+	tmp = -2 * logf(w);
+	w = sqrt(tmp / w);
 	*gauss1 = x1 * w;
 	*gauss2 = x2 * w;
 }

@@ -1601,7 +1601,7 @@ extern void AIR_AddToAircraftTeam (aircraft_t *aircraft, int employee_idx)
 
 	if (aircraft == NULL) {
 		Com_DPrintf("AIR_AddToAircraftTeam: null aircraft \n");
-		return ;
+		return;
 	}
 	if (*(aircraft->teamSize) < aircraft->size) {
 		for (i = 0; i < aircraft->size; i++)
@@ -1652,7 +1652,7 @@ extern void AIR_DecreaseAircraftTeamIdxGreaterThan (aircraft_t *aircraft, int em
 	int i;
 
 	if (aircraft == NULL)
-		return ;
+		return;
 
 	for (i = 0; i < aircraft->size; i++)
 		if (aircraft->teamIdxs[i] > employee_idx) {

@@ -286,25 +286,25 @@ void RunThreadsOn (int workcnt, qboolean showpacifier, void(*func)(unsigned int)
 			Error ("pthread_mutex_init failed");
 	}
 
-	if (pthread_attr_create (&attrib) == -1)
+	if (pthread_attr_create(&attrib) == -1)
 		Error ("pthread_attr_create failed");
-	if (pthread_attr_setstacksize (&attrib, 0x100000) == -1)
+	if (pthread_attr_setstacksize(&attrib, 0x100000) == -1)
 		Error ("pthread_attr_setstacksize failed");
 
-	for (i=0 ; i<numthreads ; i++) {
+	for (i = 0; i < numthreads; i++) {
   		if (pthread_create(&work_threads[i], attrib
 		, (pthread_startroutine_t)func, (pthread_addr_t)i) == -1)
 			Error ("pthread_create failed");
 	}
 
-	for (i=0 ; i<numthreads ; i++) {
+	for (i = 0; i < numthreads; i++) {
 		if (pthread_join (work_threads[i], &status) == -1)
 			Error ("pthread_join failed");
 	}
 
 	threaded = qfalse;
 
-	end = I_FloatTime ();
+	end = I_FloatTime();
 	if (pacifier)
 		Sys_Printf(" (%i)\n", end-start);
 }
@@ -379,7 +379,7 @@ void RunThreadsOn (int workcnt, qboolean showpacifier, void(*func)(unsigned int)
 
 	init_lock (&lck);
 
-	for (i=0 ; i<numthreads-1 ; i++) {
+	for (i = 0; i < numthreads - 1; i++) {
 		pid[i] = sprocsp ( (void (*)(void *, size_t))func, PR_SALL, (void *)i
 			, NULL, 0x100000);
 /*		pid[i] = sprocsp ( (void (*)(void *, size_t))func, PR_SALL, (void *)i */
@@ -392,7 +392,7 @@ void RunThreadsOn (int workcnt, qboolean showpacifier, void(*func)(unsigned int)
 
 	func(i);
 
-	for (i=0 ; i<numthreads-1 ; i++)
+	for (i = 0; i < numthreads - 1; i++)
 		wait (NULL);
 
 	threaded = qfalse;

@@ -2589,7 +2589,7 @@ void CL_ActorSelectMouse (void)
 	case M_FIRE_L:
 		/* We either switch to "pending" fire-mode or fire the gun. */
 		if (confirm_actions->integer == 1) {
-			cl.cmode = M_PEND_FIRE_L ;
+			cl.cmode = M_PEND_FIRE_L;
 			VectorCopy(mousePos, mousePendPos);
 		} else {
 			CL_ActorShoot(selActor, mousePos);

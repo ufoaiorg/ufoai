@@ -146,7 +146,7 @@ int SND_GetDMAPos (void)
 {
 	long long ustFuture, ustNow;
 	if (!sgisnd_aport)
-		return 0 ;
+		return 0;
 	alGetFrameTime( sgisnd_aport, &sgisnd_startframe, &ustFuture );
 	dmGetUST( (unsigned long long *)&ustNow );
 	sgisnd_startframe -= (long long)((ustFuture - ustNow) * sgisnd_frames_per_ns);

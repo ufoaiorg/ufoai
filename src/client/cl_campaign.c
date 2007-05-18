@@ -344,7 +344,7 @@ static date_t Date_Random_Middle (date_t frame)
 	int sec = frame.day * 3600 * 24 + frame.sec;
 
 	/* middle 1/3 of the frame */
-	frame.sec = sec / 3 + sec * frand() / 3 ;
+	frame.sec = sec / 3 + sec * frand() / 3;
 	frame.day = frame.sec / (3600 * 24);
 	frame.sec = frame.sec % (3600 * 24);
 	return frame;
@@ -2529,7 +2529,7 @@ static void CL_GameResults_f (void)
 	CL_UpdateCharacterStats(won);
 
 	/* Backward loop because gd.numEmployees[EMPL_SOLDIER] is decremented by E_DeleteEmployee */
-	for (i = gd.numEmployees[EMPL_SOLDIER]-1; i >= 0 ; i-- ) {
+	for (i = gd.numEmployees[EMPL_SOLDIER] - 1; i >= 0; i--) {
 		/* if employee is marked as dead */
 		if (CL_SoldierInAircraft(i, gd.interceptAircraft))	/* DEBUG? */
 			numberofsoldiers++;

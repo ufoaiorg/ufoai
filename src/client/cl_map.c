@@ -198,7 +198,7 @@ static void MAP_MultiSelectNotifyMissionRemoved (const actMis_t* mission)
 {
 	int num = mission - ccs.mission, i;
 
-	for (i = 0 ; i < multiSelect.nbSelect ; i++)
+	for (i = 0; i < multiSelect.nbSelect; i++)
 		if (multiSelect.selectType[i] == MULTISELECT_TYPE_MISSION) {
 			if (multiSelect.selectId[i] == num)
 				multiSelect.selectType[i] = MULTISELECT_TYPE_NONE;
@@ -216,7 +216,7 @@ static void MAP_MultiSelectNotifyUfoRemoved (const aircraft_t* ufo)
 
 	/* Deactive all ufos */
 	/* @todo : Determine THE corresponding ufo in the multi select list */
-	for (i = 0 ; i < multiSelect.nbSelect ; i++)
+	for (i = 0; i < multiSelect.nbSelect; i++)
 		if (multiSelect.selectType[i] == MULTISELECT_TYPE_UFO)
 			multiSelect.selectType[i] = MULTISELECT_TYPE_NONE;
 }
@@ -291,13 +291,13 @@ extern void MAP_MapClick (const menuNode_t* node, int x, int y, qboolean globe)
 
 		/* Get selected aircrafts wich belong to the base */
 		for (aircraft = gd.bases[i].aircraft + gd.bases[i].numAircraftInBase - 1;
-		aircraft >= gd.bases[i].aircraft ; aircraft--)
+		aircraft >= gd.bases[i].aircraft; aircraft--)
 			if (aircraft->status > AIR_HOME && aircraft->fuel > 0 && MAP_IsMapPositionSelected(node, aircraft->pos, x, y, globe))
 				MAP_MultiSelectListAddItem(MULTISELECT_TYPE_AIRCRAFT, aircraft->idx, _("Aircraft"), aircraft->name);
 	}
 
 	/* Get selected ufos */
-	for (aircraft = gd.ufos + gd.numUfos - 1 ; aircraft >= gd.ufos ; aircraft--)
+	for (aircraft = gd.ufos + gd.numUfos - 1; aircraft >= gd.ufos; aircraft--)
 		if (aircraft->visible
 #if DEBUG
 		|| Cvar_VariableInteger("debug_showufos")
@@ -740,7 +740,7 @@ extern void MAP_MapDrawEquidistantPoints (const menuNode_t* node, vec2_t center,
 	RotatePointAroundVector(initialVector, rotationAxis, centerPos, angle);
 
 	/* Now, each equidistant point is given by a rotation around centerPos */
-	for (i = 0 ; i <= CIRCLE_DRAW_POINTS ; i++) {
+	for (i = 0; i <= CIRCLE_DRAW_POINTS; i++) {
 		RotatePointAroundVector(currentPoint, centerPos, initialVector, i * 360 / CIRCLE_DRAW_POINTS);
 		VecToPolar(currentPoint, posCircle);
 		draw = qfalse;
@@ -971,7 +971,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 
 	/* draw mission pics */
 	Cvar_Set("mn_mapdaytime", "");
-	for (ms = ccs.mission + ccs.numMissions - 1 ; ms >= ccs.mission ; ms--)
+	for (ms = ccs.mission + ccs.numMissions - 1; ms >= ccs.mission; ms--)
 		if (MAP_MapToScreen(node, ms->realPos, &x, &y)) {
 			re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, "cross");
 			if (ms == selMis) {
@@ -981,8 +981,8 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 		}
 
 	/* draw bases pics */
-	for (base = gd.bases + gd.numBases - 1; base >= gd.bases ; base--) {
-		if (! base->founded || ! MAP_MapToScreen(node, base->pos, &x, &y))
+	for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--) {
+		if (!base->founded || !MAP_MapToScreen(node, base->pos, &x, &y))
 			continue;
 
 		/* Draw base radar info */
@@ -996,7 +996,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 
 		re.FontDrawString(font, ALIGN_UL, x, y+10, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1], base->name, 0, 0, NULL, qfalse);
 		/* draw aircrafts of base */
-		for (aircraft = base->aircraft + base->numAircraftInBase - 1; aircraft >= base->aircraft ; aircraft--)
+		for (aircraft = base->aircraft + base->numAircraftInBase - 1; aircraft >= base->aircraft; aircraft--)
 			if (aircraft->status > AIR_HOME && MAP_MapToScreen(node, aircraft->pos, &x, &y)) {
 
 				/* Draw aircraft radar */
@@ -1117,7 +1117,7 @@ extern void MAP_DrawMap (const menuNode_t* node, qboolean map3D)
 	menuText[TEXT_STANDARD] = NULL;
 	switch (gd.mapAction) {
 	case MA_NEWBASE:
-		for (base = gd.bases + gd.numBases - 1; base >= gd.bases ; base--)
+		for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--)
 			/* Draw base radar info */
 			RADAR_DrawCoverage(node, &(base->radar),base->pos, map3D);
 

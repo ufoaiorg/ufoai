@@ -98,7 +98,7 @@ void Alphalight_Thread (unsigned int i)
 	b = (i&31) * (1.0/16);
 
 	bestdistortion = 999999;
-	for (j=0 ; j<16*16*16*16 ; j++) {
+	for (j = 0; j < 16 * 16 * 16 * 16; j++) {
 		mr = (j>>12) * (1.0/16);
 		mg = ((j>>8)&15) * (1.0/16);
 		mb = ((j>>4)&15) * (1.0/16);

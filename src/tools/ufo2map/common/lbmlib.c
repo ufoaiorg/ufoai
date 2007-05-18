@@ -189,21 +189,21 @@ void LoadLBM (const char *filename, byte **picture, byte **palette)
 		case BODYID:
 			body_p = LBM_P;
 
-			pic_p = picbuffer = malloc (bmhd.w*bmhd.h);
+			pic_p = picbuffer = malloc(bmhd.w*bmhd.h);
 			if (formtype == PBMID) {
 				/* unpack PBM */
-				for (y=0 ; y<bmhd.h ; y++, pic_p += bmhd.w) {
+				for (y = 0; y < bmhd.h; y++, pic_p += bmhd.w) {
 					if (bmhd.compression == cm_rle1)
-						body_p = LBMRLEDecompress ((byte *)body_p
+						body_p = LBMRLEDecompress((byte *)body_p
 						, pic_p , bmhd.w);
 					else if (bmhd.compression == cm_none) {
-						memcpy (pic_p,body_p,bmhd.w);
+						memcpy(pic_p,body_p,bmhd.w);
 						body_p += Align(bmhd.w);
 					}
 				}
 			} else {
 				/* unpack ILBM */
-				Error ("%s is an interlaced LBM, not packed", filename);
+				Error("%s is an interlaced LBM, not packed", filename);
 			}
 			break;
 		}

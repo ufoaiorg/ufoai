@@ -153,7 +153,7 @@ qboolean SND_Init (struct sndinfo *s)
 			/* Supported */
 			break;
 		}
-		/* Unsupported, fall through */ ;
+		/* Unsupported, fall through */
 	default:
 		/* Not supported -- force SDL to do our bidding */
 		SDL_CloseAudio ();

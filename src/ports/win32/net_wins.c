@@ -345,7 +345,7 @@ qboolean NET_StringToSockaddr (char *s, struct sockaddr *sadr)
 
 		Q_strncpyz(copy, s, sizeof(copy));
 		/* strip off a trailing :port if present */
-		for (colon = copy ; *colon ; colon++)
+		for (colon = copy; *colon; colon++)
 			if (*colon == ':') {
 				*colon = 0;
 				((struct sockaddr_in *)sadr)->sin_port = htons((short)atoi(colon+1));
@@ -354,7 +354,7 @@ qboolean NET_StringToSockaddr (char *s, struct sockaddr *sadr)
 		if (copy[0] >= '0' && copy[0] <= '9') {
 			*(int *)&((struct sockaddr_in *)sadr)->sin_addr = inet_addr(copy);
 		} else {
-			if ( ( h = gethostbyname(copy) ) == 0 )
+			if ((h = gethostbyname(copy)) == 0)
 				return 0;
 			*(int *)&((struct sockaddr_in *)sadr)->sin_addr = *(int *)h->h_addr_list[0];
 		}
@@ -475,7 +475,7 @@ int NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_message)
 	if (NET_GetLoopPacket(sock, net_from, net_message))
 		return 1;
 
-	for (protocol = 0; protocol < 2 ; protocol++) {
+	for (protocol = 0; protocol < 2; protocol++) {
 		if (protocol == 0)
 			net_socket = ip_sockets[sock];
 		else

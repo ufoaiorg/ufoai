@@ -180,17 +180,17 @@ void Cmd_SpriteFrame (void)
 	}
 
 	/* crop it to the proper size */
-	cropped = malloc (w*h);
-	for (y=0 ; y<h ; y++) {
-		memcpy (cropped+y*w, byteimage+(y+yl)*byteimagewidth+xl, w);
+	cropped = malloc(w*h);
+	for (y = 0; y < h; y++) {
+		memcpy(cropped + y * w, byteimage + (y + yl) * byteimagewidth + xl, w);
 	}
 
 	/* save off the new image */
-	printf ("saving %s\n", savename);
-	CreatePath (savename);
-	WritePCXfile (savename, cropped, w,	h, lbmpalette);
+	printf("saving %s\n", savename);
+	CreatePath(savename);
+	WritePCXfile(savename, cropped, w,	h, lbmpalette);
 
-	free (cropped);
+	free(cropped);
 }
 
 /**
@@ -199,11 +199,11 @@ void Cmd_SpriteFrame (void)
 void Cmd_SpriteName (void)
 {
 	if (sprite.numframes)
-		FinishSprite ();
+		FinishSprite();
 
-	GetToken (qfalse);
-	strcpy (spritename, token);
-	memset (&sprite, 0, sizeof(sprite));
-	memset (&frames, 0, sizeof(frames));
+	GetToken(qfalse);
+	strcpy(spritename, token);
+	memset(&sprite, 0, sizeof(sprite));
+	memset(&frames, 0, sizeof(frames));
 }
 

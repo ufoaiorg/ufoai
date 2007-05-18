@@ -207,7 +207,7 @@ qboolean NET_StringToSockaddr (char *s, struct sockaddr *sadr)
 
 	Q_strncpyz(copy, s, 128);
 	/* strip off a trailing :port if present */
-	for (colon = copy ; *colon ; colon++)
+	for (colon = copy; *colon; colon++)
 		if (*colon == ':') {
 			*colon = 0;
 			((struct sockaddr_in *)sadr)->sin_port = htons((short)atoi(colon+1));
@@ -330,7 +330,7 @@ int NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_message)
 	if (NET_GetLoopPacket(sock, net_from, net_message))
 		return 1;
 
-	for (protocol = 0 ; protocol < 2 ; protocol++) {
+	for (protocol = 0; protocol < 2; protocol++) {
 		if (protocol == 0)
 			net_socket = ip_sockets[sock];
 		else
@@ -453,7 +453,7 @@ void NET_Config (qboolean multiplayer)
 	int		i;
 
 	if (!multiplayer) {	/* shut down any existing sockets */
-		for (i=0 ; i<2 ; i++) {
+		for (i = 0; i < 2; i++) {
 			if (ip_sockets[i]) {
 				close(ip_sockets[i]);
 				ip_sockets[i] = 0;

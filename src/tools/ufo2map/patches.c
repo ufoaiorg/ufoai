@@ -414,7 +414,7 @@ extern void SubdividePatches (void)
 
 	/* because the list will grow */
 	num = num_patches;
-	for (i = 0; i < num ; i++)
+	for (i = 0; i < num; i++)
 		DicePatch(&patches[i]);
 	Sys_FPrintf(SYS_VRB, "%i patches after subdivision\n", num_patches);
 }

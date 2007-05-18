@@ -336,7 +336,7 @@ static void Com_ParseItem (const char *name, char **text)
 
 								if (!Q_strncmp(token, "firedef", MAX_VAR)) {
 									if (od->numFiredefs[weap_fds_idx] < MAX_FIREDEFS_PER_WEAPON) {
-										fd_idx = od->numFiredefs[weap_fds_idx] ;
+										fd_idx = od->numFiredefs[weap_fds_idx];
 										/* Parse firemode into fd[IDXweapon][IDXfiremode] */
 										Com_ParseFire(name, text, &od->fd[weap_fds_idx][fd_idx]);
 										/* Self-link fd */

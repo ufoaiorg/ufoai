@@ -37,8 +37,8 @@ void ByteSwapTri (tf_triangle *tri)
 {
 	int		i;
 
-	for (i=0 ; i<sizeof(tf_triangle)/4 ; i++) {
-		((int *)tri)[i] = BigLong (((int *)tri)[i]);
+	for (i = 0; i < sizeof(tf_triangle) / 4; i++) {
+		((int *)tri)[i] = BigLong(((int *)tri)[i]);
 	}
 }
 
@@ -61,21 +61,21 @@ void LoadTriangleList (char *filename, triangle_t **pptri, int *numtriangles)
 	*((unsigned char *)&exitpattern + 3) = *((unsigned char *)&t + 0);
 
 	if ((input = fopen(filename, "rb")) == 0)
-		Error ("reader: could not open file '%s'", filename);
+		Error("reader: could not open file '%s'", filename);
 
 	iLevel = 0;
 
 	if (fread(&magic, sizeof(int), 1, input) != 1)
 		printf("LoadTriangleList: Read error\n");
 	if (BigLong(magic) != MAGIC)
-		Error ("%s is not a Alias object separated triangle file, magic number is wrong.", filename);
+		Error("%s is not a Alias object separated triangle file, magic number is wrong.", filename);
 
-	ptri = malloc (MAXTRIANGLES * sizeof(triangle_t));
+	ptri = malloc(MAXTRIANGLES * sizeof(triangle_t));
 
 	*pptri = ptri;
 
 	while (feof(input) == 0) {
-		if (fread(&start,  sizeof(float), 1, input) < 1)
+		if (fread(&start, sizeof(float), 1, input) < 1)
 			break;
 		*(int *)&start = BigLong(*(int *)&start);
 		if (*(int *)&start != exitpattern) {
@@ -87,9 +87,9 @@ void LoadTriangleList (char *filename, triangle_t **pptri, int *numtriangles)
 					/* a file, but this does allow you to do error checking */
 					/* (which I'm not doing) on a per character basis.      */
 					++i;
-					if (fread( &(name[i]), sizeof( char ), 1, input) != 1)
+					if (fread(&(name[i]), sizeof(char), 1, input) != 1)
 						printf("LoadTriangleList: Read error\n");
-				} while( name[i] != '\0' );
+				} while (name[i] != '\0');
 
 /*				indent(); */
 /*				fprintf(stdout,"OBJECT START: %s\n",name); */
@@ -104,9 +104,9 @@ void LoadTriangleList (char *filename, triangle_t **pptri, int *numtriangles)
 					i = -1;
 					do {
 						++i;
-						if (fread( &(tex[i]), sizeof( char ), 1, input) != 1)
+						if (fread(&(tex[i]), sizeof(char), 1, input) != 1)
 							printf("LoadTriangleList: Read error\n");
-					} while( tex[i] != '\0' );
+					} while (tex[i] != '\0');
 
 /*					indent(); */
 /*					fprintf(stdout,"  Object texture name: '%s'\n",tex); */
@@ -124,9 +124,9 @@ void LoadTriangleList (char *filename, triangle_t **pptri, int *numtriangles)
 				i = -1;
 				do {
 					++i;
-					if (fread( &(name[i]), sizeof( char ), 1, input) != 1)
+					if (fread(&(name[i]), sizeof(char), 1, input) != 1)
 						printf("LoadTriangleList: Read error\n");
-				} while( name[i] != '\0' );
+				} while (name[i] != '\0');
 
 /*				indent(); */
 /*				fprintf(stdout,"OBJECT END: %s\n",name); */
@@ -136,15 +136,15 @@ void LoadTriangleList (char *filename, triangle_t **pptri, int *numtriangles)
 
 		/* read the triangles */
 		for (i = 0; i < count; ++i) {
-			int		j;
+			int j;
 
-			if (fread( &tri, sizeof(tf_triangle), 1, input ) != 1)
+			if (fread(&tri, sizeof(tf_triangle), 1, input) != 1)
 				printf("LoadTriangleList: Read error\n");
-			ByteSwapTri (&tri);
-			for (j=0 ; j<3 ; j++) {
-				int		k;
+			ByteSwapTri(&tri);
+			for (j = 0; j < 3; j++) {
+				int k;
 
-				for (k=0 ; k<3 ; k++) {
+				for (k = 0; k < 3; k++) {
 					ptri->verts[j][k] = tri.pt[j].p.v[k];
 				}
 			}
@@ -152,12 +152,12 @@ void LoadTriangleList (char *filename, triangle_t **pptri, int *numtriangles)
 			ptri++;
 
 			if ((ptri - *pptri) >= MAXTRIANGLES)
-				Error ("Error: too many triangles; increase MAXTRIANGLES\n");
+				Error("Error: too many triangles; increase MAXTRIANGLES\n");
 		}
 	}
 
 	*numtriangles = ptri - *pptri;
 
-	fclose (input);
+	fclose(input);
 }
 

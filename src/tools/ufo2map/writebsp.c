@@ -132,7 +132,7 @@ static void EmitLeaf (node_t *node)
 			Error("MAX_MAP_LEAFBRUSHES (%i)", numleafbrushes);
 
 		brushnum = b->original - mapbrushes;
-		for (i=leaf_p->firstleafbrush ; i<numleafbrushes ; i++)
+		for (i = leaf_p->firstleafbrush; i < numleafbrushes; i++)
 			if (dleafbrushes[i] == brushnum)
 				break;
 		if (i == numleafbrushes) {
@@ -377,7 +377,7 @@ static void EmitBrushes (void)
 
 		/* add any axis planes not contained in the brush to bevel off corners */
 		for (x = 0; x < 3; x++)
-			for (s = -1 ; s <= 1; s += 2) {
+			for (s = -1; s <= 1; s += 2) {
 				/* add the plane */
 				VectorCopy(vec3_origin, normal);
 				normal[x] = (float)s;

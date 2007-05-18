@@ -250,7 +250,7 @@ extern void CL_DisplayPopupAircraft (const aircraft_t* aircraft)
 
 	/* Set missions in popup_aircraft */
 	if (*aircraft->teamSize > 0) {
-		for (i = 0 ; i < ccs.numMissions ; i++) {
+		for (i = 0; i < ccs.numMissions; i++) {
 			popupAircraft.itemsId[popupAircraft.nbItems] = i;
 			popupAircraft.itemsAction[popupAircraft.nbItems++] = POPUP_AIRCRAFT_ACTION_MOVETOMISSION;
 			Q_strcat(popupAircraft.text_popup, va(_("Mission\t%s (%s)\n"), _(ccs.mission[i].def->type), _(ccs.mission[i].def->location)), POPUP_AIRCARFT_MAX_TEXT);
@@ -314,7 +314,7 @@ static void CL_PopupAircraftNotifyMissionRemoved (const actMis_t* mission)
 	int num = mission - ccs.mission, i;
 
 	/* Deactive elements of list that allow to move to removed mission */
-	for (i = 0 ; i < popupAircraft.nbItems ; i++)
+	for (i = 0; i < popupAircraft.nbItems; i++)
 		if (popupAircraft.itemsAction[i] == POPUP_AIRCRAFT_ACTION_MOVETOMISSION) {
 			if (popupAircraft.itemsId[i] == num)
 				popupAircraft.itemsAction[i] = POPUP_AIRCRAFT_ACTION_NONE;

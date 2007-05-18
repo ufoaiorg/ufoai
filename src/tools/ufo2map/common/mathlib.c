@@ -37,7 +37,7 @@ double VectorLength(vec3_t v)
 	double	length;
 
 	length = 0;
-	for (i=0 ; i< 3 ; i++)
+	for (i = 0; i < 3; i++)
 		length += v[i]*v[i];
 	length = sqrt (length);		/* FIXME */
 

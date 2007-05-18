@@ -64,16 +64,15 @@ static void SplitBrush2 (bspbrush_t *brush, int planenum, bspbrush_t **front, bs
  */
 static bspbrush_t *SubtractBrush (bspbrush_t *a, bspbrush_t *b)
 {	/* a - b = out (list) */
-	int		i;
-	bspbrush_t	*front, *back;
-	bspbrush_t	*out, *in;
+	int i;
+	bspbrush_t *front, *back, *out, *in;
 
 	in = a;
 	out = NULL;
-	for (i=0 ; i<b->numsides && in ; i++) {
-		SplitBrush2 (in, b->sides[i].planenum, &front, &back);
+	for (i = 0; i < b->numsides && in; i++) {
+		SplitBrush2(in, b->sides[i].planenum, &front, &back);
 		if (in != a)
-			FreeBrush (in);
+			FreeBrush(in);
 		if (front) {	/* add to list */
 			front->next = out;
 			out = front;
@@ -81,9 +80,9 @@ static bspbrush_t *SubtractBrush (bspbrush_t *a, bspbrush_t *b)
 		in = back;
 	}
 	if (in)
-		FreeBrush (in);
+		FreeBrush(in);
 	else {	/* didn't really intersect */
-		FreeBrushList (out);
+		FreeBrushList(out);
 		return a;
 	}
 	return out;
@@ -96,19 +95,17 @@ static bspbrush_t *SubtractBrush (bspbrush_t *a, bspbrush_t *b)
  */
 static qboolean BrushesDisjoint (bspbrush_t *a, bspbrush_t *b)
 {
-	int		i, j;
+	int i, j;
 
 	/* check bounding boxes */
-	for (i=0 ; i<3 ; i++)
-		if (a->mins[i] >= b->maxs[i]
-		|| a->maxs[i] <= b->mins[i])
+	for (i = 0; i < 3; i++)
+		if (a->mins[i] >= b->maxs[i] || a->maxs[i] <= b->mins[i])
 			return qtrue;	/* bounding boxes don't overlap */
 
 	/* check for opposing planes */
-	for (i=0 ; i<a->numsides ; i++) {
-		for (j=0 ; j<b->numsides ; j++) {
-			if (a->sides[i].planenum ==
-			(b->sides[j].planenum^1) )
+	for (i = 0; i < a->numsides; i++) {
+		for (j = 0; j < b->numsides; j++) {
+			if (a->sides[i].planenum == (b->sides[j].planenum ^ 1))
 				return qtrue;	/* opposite planes, so not touching */
 		}
 	}
@@ -124,11 +121,10 @@ int maxplanenums[3];
  */
 static bspbrush_t *ClipBrushToBox (bspbrush_t *brush, vec3_t clipmins, vec3_t clipmaxs)
 {
-	int		i, j;
-	bspbrush_t	*front,	*back;
-	int		p;
+	int i, j, p;
+	bspbrush_t *front, *back;
 
-	for (j=0 ; j<2 ; j++) {
+	for (j = 0; j < 2; j++) {
 		if (brush->maxs[j] > clipmaxs[j]) {
 			SplitBrush (brush, maxplanenums[j], &front, &back);
 			if (front)
@@ -148,7 +144,7 @@ static bspbrush_t *ClipBrushToBox (bspbrush_t *brush, vec3_t clipmins, vec3_t cl
 	}
 
 	/* remove any colinear faces */
-	for (i=0 ; i<brush->numsides ; i++) {
+	for (i = 0; i < brush->numsides; i++) {
 		p = brush->sides[i].planenum & ~1;
 		if (p == maxplanenums[0] || p == maxplanenums[1]
 			|| p == minplanenums[0] || p == minplanenums[1]) {
