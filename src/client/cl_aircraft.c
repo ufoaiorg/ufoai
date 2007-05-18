@@ -678,6 +678,10 @@ extern void AIR_NewAircraft (base_t *base, const char *name)
 		/* this is the aircraft array id in current base */
 		/* NOTE: when we send the aircraft to another base this has to be changed, too */
 		aircraft->idxInBase = base->numAircraftInBase;
+		/* set initial direction of the aircraft */
+		aircraft->direction[0] = 1;
+		aircraft->direction[1] = 0;
+		aircraft->direction[2] = 0;
 		/* link the teamSize pointer in */
 		aircraft->teamSize = &base->teamNum[base->numAircraftInBase];
 		AIR_ResetAircraftTeam(aircraft);

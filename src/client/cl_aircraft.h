@@ -136,6 +136,7 @@ typedef struct aircraft_s {
 	int size;				/**< how many soldiers max */
 	int weight;				/**< "Size" of the aircraft used in capacity calculations. */
 	vec3_t pos;				/**< actual pos on geoscape */
+	vec3_t direction;		/**< direction in which the aircraft is going on 3D geoscape (used for smoothed rotation)*/
 	int point;
 	int time;
 	int idxInBase;				/**< Index in base. See also base_t->numAircraftInBase. */

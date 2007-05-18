@@ -75,7 +75,6 @@ static cvar_t* cl_showCoords;
 static aircraft_t *selectedAircraft;	/**< Currently selected aircraft */
 static aircraft_t *selectedUfo;			/**< Currently selected UFO */
 static char text_standard[2048];		/**< Buffer to display standard text in geoscape */
-static vec3_t oldDirectionVector;		/**< Vector allowing to do smooth rotation of a rotating model */
 /*
 ==============================================================
 CLICK ON MAP and MULTI SELECTION FUNCTIONS
@@ -785,7 +784,7 @@ extern void MAP_MapDrawEquidistantPoints (const menuNode_t* node, vec2_t center,
  * @param[in] end Latitude and longitude of aimed point.
  * @return Angle (degrees) of rotation around the axis perpendicular to the screen for a model in @c start going toward @c end.
  */
-static float MAP_AngleOfPath (const menuNode_t* node, const vec3_t start, const vec2_t end)
+static float MAP_AngleOfPath (const menuNode_t* node, const vec3_t start, const vec2_t end, qboolean smoothDirection, vec3_t direction)
 {
 	float angle=0;
 	vec3_t start3D, end3D, ortVector, v, rotationAxis;
@@ -801,19 +800,21 @@ static float MAP_AngleOfPath (const menuNode_t* node, const vec3_t start, const 
 	CrossProduct(v, start3D, ortVector);
 	VectorNormalize(ortVector);
 
-	VectorSubtract(ortVector, oldDirectionVector, v);
-	dist = VectorLength(v);
-	if (dist > 0.01) {
-		CrossProduct(oldDirectionVector, ortVector, rotationAxis);
-		VectorNormalize(rotationAxis);
-		RotatePointAroundVector(v, rotationAxis, oldDirectionVector, 5.0);
-		VectorCopy(v, oldDirectionVector);
-		VectorSubtract(ortVector, oldDirectionVector, v);
-		if (VectorLength(v) < dist) {
-			VectorCopy(oldDirectionVector, ortVector);
-		}
-		else {
-			VectorCopy(ortVector, oldDirectionVector);
+	if (smoothDirection) {
+		VectorSubtract(ortVector, direction, v);
+		dist = VectorLength(v);
+		if (dist > 0.01) {
+			CrossProduct(direction, ortVector, rotationAxis);
+			VectorNormalize(rotationAxis);
+			RotatePointAroundVector(v, rotationAxis, direction, 5.0);
+			VectorCopy(v, direction);
+			VectorSubtract(ortVector, direction, v);
+			if (VectorLength(v) < dist) {
+				VectorCopy(direction, ortVector);
+			}
+			else {
+				VectorCopy(ortVector, direction);
+			}
 		}
 	}
 
@@ -861,8 +862,7 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 	Cvar_Set("mn_mapdaytime", "");
 	for (i = 0; i < ccs.numMissions; i++) {
 		ms = &ccs.mission[i];
-		/*angle = MAP_AngleOfPath(node, ms->realPos, northPole);*/
-		angle =  0;
+		angle = MAP_AngleOfPath(node, ms->realPos, northPole, qfalse, NULL);
 		if (!MAP_3DMapToScreen(node, ms->realPos, &x, &y, NULL))
 			continue;
 
@@ -880,8 +880,7 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 		if (!base->founded)
 			continue;
 		
-		/*angle = MAP_AngleOfPath(node, base->pos, northPole);*/
-		angle =  0;
+		angle = MAP_AngleOfPath(node, base->pos, northPole, qfalse, NULL);
 		
 		/* Get position on screen */
 		 MAP_3DMapToScreen(node, base->pos, &x, &y, NULL);
@@ -909,9 +908,9 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 							memcpy(path.point + 1, aircraft->route.point + aircraft->point + 1, (path.numPoints - 1) * sizeof(vec2_t));
 						MAP_3DMapDrawLine(node, &path);
 					}
-					angle = MAP_AngleOfPath(node, aircraft->pos, aircraft->route.point[aircraft->route.numPoints - 1]);
+					angle = MAP_AngleOfPath(node, aircraft->pos, aircraft->route.point[aircraft->route.numPoints - 1], qtrue, aircraft->direction);
 				} else {
-					angle = MAP_AngleOfPath(node, aircraft->pos, northPole);
+					angle = MAP_AngleOfPath(node, aircraft->pos, northPole, qtrue, aircraft->direction);
 				}
 
 				/* Draw a circle around selected aircraft */
