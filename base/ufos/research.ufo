@@ -2516,6 +2516,21 @@ tech rs_craft_inter_saracen
 	mdl_top		inter_saracen
 }
 
+tech rs_craft_inter_stingray
+{
+	type	craft
+	description	"_stingray_interceptor_txt"
+	// pre_description	"_stingray_interceptor_pre_txt"
+	up_chapter	crafts
+
+	provides	craft_inter_stingray
+	require_AND { tech nothing }
+	time	0
+
+	// TODO should come from craft-definition:
+	mdl_top		inter_stingray
+}
+
 //tech rs_craftupgrade_drop_firebird
 //{
 //	type	tech
