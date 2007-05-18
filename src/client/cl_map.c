@@ -976,7 +976,7 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 			Cvar_Set("mn_mapdaytime", CL_MapIsNight(ms->realPos) ? _("Night") : _("Day"));
 		}
 		/* Draw mission model (this must be after drawing 'selected circle' so that the model looks above it)*/
-		MAP_Draw3DMarkerIfVisible(node, ms->realPos, angle, "cross");
+		MAP_Draw3DMarkerIfVisible(node, ms->realPos, angle, "mission");
 	}
 
 	/* draw base pics */

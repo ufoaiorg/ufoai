@@ -876,8 +876,7 @@ void Draw_3DMapMarkers (vec3_t angles, float zoom, vec3_t position, const char *
 	mi.model = R_RegisterModelShort(path);
 	mi.name = path;
 	if (!mi.model) {
-		/*Com_Printf("Could not find '%s'\n", path);*/
-		Com_sprintf(path, sizeof(path), "weapons/fraggren/fraggren");
+		Com_Printf("Could not find '%s'\n", path);
 		mi.model = R_RegisterModelShort(path);
 		mi.name = path;
 		/*return;*/
