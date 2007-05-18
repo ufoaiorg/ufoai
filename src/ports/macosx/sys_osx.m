@@ -45,6 +45,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <dirent.h>
 #include <libgen.h> /* dirname */
 
+#include <dlfcn.h>
+
 #include "../../qcommon/qcommon.h"
 #include "../linux/rw_linux.h"
 #include <Carbon/Carbon.h>
