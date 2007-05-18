@@ -109,53 +109,6 @@ DLL GLUE
 ==========================================================================
 */
 
-#define	MAXPRINTMSG	4096
-/**
- * @brief
- */
-void VID_Printf (int print_level, const char *fmt, ...)
-{
-	va_list		argptr;
-	char		msg[MAXPRINTMSG];
-
-	va_start (argptr,fmt);
-	Q_vsnprintf(msg, sizeof(msg), fmt, argptr);
-	va_end(argptr);
-
-	msg[sizeof(msg)-1] = 0;
-
-	if (print_level == PRINT_ALL)
-		Com_Printf("%s", msg);
-	else if (print_level == PRINT_DEVELOPER)
-		Com_DPrintf("%s", msg);
-	else if (print_level == PRINT_ALERT) {
-		MessageBox(0, msg, "PRINT_ALERT", MB_ICONWARNING);
-		OutputDebugString(msg);
-	}
-}
-
-/**
- * @brief
- */
-void VID_Error (int err_level, const char *fmt, ...)
-{
-	va_list		argptr;
-	char		msg[MAXPRINTMSG];
-
-#if defined DEBUG && defined _MSC_VER
-	__debugbreak();	/* break execution before game shutdown */
-#endif
-
-	va_start (argptr,fmt);
-	Q_vsnprintf(msg, sizeof(msg), fmt, argptr);
-	va_end(argptr);
-
-	msg[sizeof(msg)-1] = 0;
-
-	Com_Error (err_level,"%s", msg);
-}
-
-
 /**
  * @brief
  */

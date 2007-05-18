@@ -975,10 +975,11 @@ extern void CL_PopupNotifyUfoDisappeared(const aircraft_t* ufo);
 extern void CL_DisplayPopupAircraft(const aircraft_t* aircraft);
 extern void CL_DisplayPopupIntercept(struct actMis_s* mission, aircraft_t* ufo);
 
-/* keys.c */
+/* cl_keys.c */
 extern char *keybindings[K_LAST_KEY];
 
-/* os specific video functions */
+/* cl_vid.c */
 void VID_Error(int err_level, const char *fmt, ...) __attribute__((noreturn));
+void VID_Printf(int print_level, const char *fmt, ...);
 
 #endif /* CLIENT_CLIENT_H */

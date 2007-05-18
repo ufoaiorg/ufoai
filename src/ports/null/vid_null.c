@@ -40,44 +40,6 @@ DIRECT LINK GLUE
 ==========================================================================
 */
 
-#define	MAXPRINTMSG	4096
-/**
- * @brief
- */
-void VID_Printf (int print_level, const char *fmt, ...)
-{
-	va_list		argptr;
-	char		msg[MAXPRINTMSG];
-
-	va_start (argptr,fmt);
-	Q_vsnprintf(msg, sizeof(msg), fmt, argptr);
-	va_end(argptr);
-
-	msg[sizeof(msg)-1] = 0;
-
-	if (print_level == PRINT_ALL)
-		Com_Printf("%s", msg);
-	else
-		Com_DPrintf("%s", msg);
-}
-
-/**
- * @brief
- */
-void VID_Error (int err_level, const char *fmt, ...)
-{
-	va_list		argptr;
-	char		msg[MAXPRINTMSG];
-
-	va_start(argptr,fmt);
-	Q_vsnprintf(msg, sizeof(msg), fmt, argptr);
-	va_end(argptr);
-
-	msg[sizeof(msg)-1] = 0;
-
-	Com_Error(err_level, "%s", msg);
-}
-
 /**
  * @brief
  */

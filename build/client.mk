@@ -33,6 +33,7 @@ CLIENT_SRCS = \
 	client/cl_transfer.c \
 	client/cl_inventory.c \
 	client/cl_ufopedia.c \
+	client/cl_vid.c \
 	client/cl_view.c \
 	client/cl_console.c \
 	client/cl_keys.c \
