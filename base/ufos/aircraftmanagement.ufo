@@ -19,7 +19,7 @@
 //	accuracy - the parameter of weapon accuracy, the bigger, the bigger possibility to hit an enemy
 // understanding the values:
 // shield 1.50 means: the shield of the aircraft is 50% stronger
-// shield +10 means: the shield of the aircraft is stronger by 10 points 
+// shield +10 means: the shield of the aircraft is stronger by 10 points
 // speed 0.75 means: the aircraft is 25% slower
 // damage 35 means: the aircraft weapon power does 35 points of damage
 //
@@ -99,7 +99,7 @@ aircraft craft_inter_stingray
 	name		"_Stingray Interceptor"
 	shortname	"_Stingray"
 	type		interceptor
-	model		"aircraft/inter_stingray/stingray_landed"
+	model		"inter_stingray"
 	fuel		60000
 	fuelsize	60000
 	size		1
@@ -121,7 +121,7 @@ aircraft craft_ufo_harvester
 	shortname	"_Harvester U"
 	type		ufo
 	ufotype		scout
-	model		"aircraft/ufo_harvester/ufo_harvester"
+	model		"ufo_harvester"
 	size		4
 	weight		3
 	building	building_big_ufo_hangar
@@ -143,7 +143,7 @@ aircraft craft_ufo_carrier
 	shortname	"Carrier U"
 	type		ufo
 	ufotype		scout
-	model		"aircraft/ufo_carrier/ufo_carrier"
+	model		"ufo_carrier"
 	size		4
 	weight		3
 	building	building_small_ufo_hangar
@@ -273,7 +273,7 @@ craftitem craft_ammo_shiva_HEI
 	tech		rs_craft_ammo_shiva_2
 	weapon		craft_weapon_shiva
 	price		100
-	
+
 	damage	18
 	wrange  35
 }
@@ -314,7 +314,7 @@ craftitem craft_weapon_tr20
 	tech		rs_craft_weapon_tr20
 	weight		medium
 	price		19998
-	
+
 	speed		-14
 }
 

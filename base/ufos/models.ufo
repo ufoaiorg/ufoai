@@ -163,6 +163,24 @@ menu_model drop_firebird
 	need	"drop_firebird_top"
 }
 
+// ============== Stingray Interceptor ======================
+menu_model inter_stingray
+{
+	model	"models/aircraft/inter_stingray/stingray_landed.md2"
+}
+
+// ============== UFO Carrier ======================
+menu_model ufo_carrier
+{
+	model	"models/aircraft/ufo_carrier/ufo_carrier.md2"
+}
+
+// ============== UFO Harvester ======================
+menu_model ufo_harvester
+{
+	model	"models/aircraft/ufo_harvester/ufo_harvester.md2"
+}
+
 // ============== Saracen Interceptor ======================
 menu_model inter_saracen
 {
