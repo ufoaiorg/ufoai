@@ -56,6 +56,8 @@ extern cvar_t *nostdout;
 
 unsigned	sys_frame_time;
 
+uid_t saved_euid;	/* extern in vid_so */
+
 /**
  * @brief This resolves any symlinks to the binary. It's disabled for debug
  * builds because there are situations where you are likely to want
