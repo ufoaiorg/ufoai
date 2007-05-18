@@ -948,7 +948,7 @@ extern qboolean MAP_Draw3DMarkerIfVisible (const menuNode_t* node, const vec2_t 
 extern void MAP_MapDrawEquidistantPoints (const menuNode_t* node, vec2_t center, const float angle, const vec4_t color, qboolean globe);
 extern void MAP_MapCalcLine(const vec2_t start, const vec2_t end, mapline_t* line);
 extern void MAP_DrawMap(const menuNode_t* node, qboolean map3D);
-extern void MAP3D_CenterOnPoint(void);
+extern void MAP_CenterOnPoint(void);
 extern void MAP_MapClick(const menuNode_t * node, int x, int y, qboolean globe);
 extern void MAP_ResetAction(void);
 extern void MAP_SelectAircraft(aircraft_t* aircraft);

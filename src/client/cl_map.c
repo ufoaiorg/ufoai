@@ -76,7 +76,8 @@ static aircraft_t *selectedAircraft;	/**< Currently selected aircraft */
 static aircraft_t *selectedUfo;			/**< Currently selected UFO */
 static char text_standard[2048];		/**< Buffer to display standard text in geoscape */
 static int centerOnEventIdx = 0;		/**< Current Event centered on 3D geoscape */
-static vec3_t finalGlobeAngle = {0, GLOBE_ROTATE, 0};		/**< value of ccs.angles for a smooth change */
+static vec3_t finalGlobeAngle = {0, GLOBE_ROTATE, 0};		/**< value of finale ccs.angles for a smooth change of angle (see MAP_CenterOnPoint)*/
+static vec2_t final2DGeoscapeCenter = {0.5, 0.5};		/**< value of ccs.center for a smooth change of position (see MAP_CenterOnPoint) */
 static qboolean smoothRotation = qfalse;			/**< qtrue if the rotation of 3D geoscape must me smooth */
 /*
 ==============================================================
@@ -442,7 +443,7 @@ extern qboolean MAP_Draw3DMarkerIfVisible (const menuNode_t* node, const vec2_t 
 		angles[2] = + asin((v[0] * sintheta - v[1] * costheta) / radius) * todeg;
 
 		/* Set zoom */
-		zoom = 0.7 + ccs.zoom * (float) z / radius / 2.0;
+		zoom = 0.4 + ccs.zoom * (float) z / radius / 2.0;
 
 		/* Draw */
 		re.Draw3DMapMarkers(angles, zoom, screenPos, model);
@@ -834,11 +835,12 @@ static float MAP_AngleOfPath (const menuNode_t* node, const vec3_t start, const 
 }
 
 /**
- * @brief returns position of the model corresponding to centerOnEventIdx
- * @param[out] finalAngle Latitude and longitude of the model (finalAngle[2] is always 0)
- * @sa MAP3D_CenterOnPoint
+ * @brief Returns position of the model corresponding to centerOnEventIdx.
+ * @param[out] Vector Latitude and longitude of the model (finalAngle[2] is always 0).
+ * @note Vector is a vec3_t if globe is qtrue, and a vec2_t if globe is qfalse.
+ * @sa MAP_CenterOnPoint
  */
-static void MAP3D_GetGeoscapeAngle (vec3_t finalAngle)
+static void MAP_GetGeoscapeAngle (float *Vector, qboolean globe)
 {
 	int i;
 	int counter = 0;
@@ -867,7 +869,12 @@ static void MAP3D_GetGeoscapeAngle (vec3_t finalAngle)
 
 	/* Cycle through missions */
 	if (centerOnEventIdx < ccs.numMissions) {
-		VectorSet(finalAngle, ccs.mission[centerOnEventIdx - counter].realPos[0], -ccs.mission[centerOnEventIdx - counter].realPos[1], 0);
+		if (globe)
+			VectorSet(Vector, ccs.mission[centerOnEventIdx - counter].realPos[0], -ccs.mission[centerOnEventIdx - counter].realPos[1], 0);
+		else {
+			Vector[0] = ccs.mission[centerOnEventIdx - counter].realPos[0];
+			Vector[1] = ccs.mission[centerOnEventIdx - counter].realPos[1];
+		}
 		MAP_ResetAction();
 		selMis = ccs.mission + centerOnEventIdx - counter;
 		return;
@@ -876,7 +883,13 @@ static void MAP3D_GetGeoscapeAngle (vec3_t finalAngle)
 
 	/* Cycle through bases */
 	if (centerOnEventIdx < gd.numBases + counter) {
-		VectorSet(finalAngle, gd.bases[centerOnEventIdx - counter].pos[0], -gd.bases[centerOnEventIdx - counter].pos[1], 0);
+		if (globe)
+			VectorSet(Vector, gd.bases[centerOnEventIdx - counter].pos[0], -gd.bases[centerOnEventIdx - counter].pos[1], 0);
+		else {
+			Vector[0] = gd.bases[centerOnEventIdx - counter].pos[0];
+			Vector[1] = gd.bases[centerOnEventIdx - counter].pos[1];
+		}
+
 		return;
 	}
 	counter += gd.numBases;
@@ -886,7 +899,12 @@ static void MAP3D_GetGeoscapeAngle (vec3_t finalAngle)
 		for (i = 0, aircraft = (aircraft_t *) base->aircraft; i < base->numAircraftInBase; i++, aircraft++) {
 			if (aircraft->status > AIR_HOME) {
 				if (centerOnEventIdx == counter) {
-					VectorSet(finalAngle, aircraft->pos[0], -aircraft->pos[1], 0);
+					if (globe)
+						VectorSet(Vector, aircraft->pos[0], -aircraft->pos[1], 0);
+					else {
+						Vector[0] = aircraft->pos[0];
+						Vector[1] = aircraft->pos[1];
+					}
 					MAP_ResetAction();
 					selectedAircraft = aircraft;
 					return;
@@ -900,7 +918,12 @@ static void MAP3D_GetGeoscapeAngle (vec3_t finalAngle)
 	for (aircraft = gd.ufos + gd.numUfos - 1; aircraft >= gd.ufos; aircraft --) {
 		if (aircraft->visible) {
 			if (centerOnEventIdx == counter) {
-				VectorSet(finalAngle, aircraft->pos[0], -aircraft->pos[1], 0);
+				if (globe)
+					VectorSet(Vector, aircraft->pos[0], -aircraft->pos[1], 0);
+				else {
+					Vector[0] = aircraft->pos[0];
+					Vector[1] = aircraft->pos[1];
+				}
 				MAP_ResetAction();
 				selectedUfo = aircraft;
 				return;
@@ -910,13 +933,18 @@ static void MAP3D_GetGeoscapeAngle (vec3_t finalAngle)
 	}
 }
 
+#define ZOOM_LIMIT	2.0f
 /**
- * @brief switch to next model on 3D geoscape
- * @note set @c smoothRotation to @c qtrue to allow a smooth rotation in MAP_DrawMap
- * @sa MAP3D_GetGeoscapeAngle
+ * @brief Switch to next model on 2D and 3D geoscape.
+ * @note Set @c smoothRotation to @c qtrue to allow a smooth rotation in MAP_DrawMap.
+ * @note This function sets the value of finalGlobeAngle (for 3D) or final2DGeoscapeCenter (for 2D),
+ *  which contains the finale value that ccs.angles or ccs.centre must respectively take.
+ * @sa MAP_GetGeoscapeAngle
  * @sa MAP_DrawMap
+ * @sa MAP3D_SmoothRotate
+ * @sa MAP_SmoothTranslate
  */
-extern void MAP3D_CenterOnPoint (void)
+extern void MAP_CenterOnPoint (void)
 {
 	menu_t *activeMenu = NULL;
 
@@ -928,10 +956,18 @@ extern void MAP3D_CenterOnPoint (void)
 	centerOnEventIdx++;
 
 	if (cl_3dmap->value) {
-		MAP3D_GetGeoscapeAngle (finalGlobeAngle);
+		/* case 3D geoscape */
+		MAP_GetGeoscapeAngle (finalGlobeAngle, qtrue);
 		finalGlobeAngle[1] += GLOBE_ROTATE;
 	} else {
-		/*@todo write code for 2D geoscape */
+		/* case 2D geoscape */
+		MAP_GetGeoscapeAngle (final2DGeoscapeCenter, qfalse);
+		final2DGeoscapeCenter[0] = 0.5f - final2DGeoscapeCenter[0] / 360.0f;
+		final2DGeoscapeCenter[1] = 0.5f - final2DGeoscapeCenter[1] / 180.0f;
+		if (final2DGeoscapeCenter[1] < 0.5 / ZOOM_LIMIT)
+			final2DGeoscapeCenter[1] = 0.5 / ZOOM_LIMIT;
+		if (final2DGeoscapeCenter[1] > 1.0 - 0.5 / ZOOM_LIMIT)
+			final2DGeoscapeCenter[1] = 1.0 - 0.5 / ZOOM_LIMIT;
 	}
 
 	smoothRotation = qtrue;
@@ -940,7 +976,9 @@ extern void MAP3D_CenterOnPoint (void)
 #define SMOOTHING_STEP	5.0f
 /**
  * @brief smooth rotation of the 3D geoscape
+ * @note updates slowly values of ccs.angles so that its value goes to finalGlobeAngle
  * @sa MAP_DrawMap
+ * @sa MAP_CenterOnPoint
  */
 static void MAP3D_SmoothRotate(void)
 {
@@ -955,6 +993,36 @@ static void MAP3D_SmoothRotate(void)
 	} else {
 		VectorScale(diff, SMOOTHING_STEP / length, diff);
 		VectorAdd(ccs.angles, diff, ccs.angles);
+	}
+}
+
+#define SMOOTHING_STEP_2D	0.02f
+/**
+ * @brief smooth translation of the 2D geoscape
+ * @note updates slowly values of ccs.center so that its value goes to final2DGeoscapeCenter
+ * @note updates slowly values of ccs.zoom so that its value goes to ZOOM_LIMIT
+ * @sa MAP_DrawMap
+ * @sa MAP_CenterOnPoint
+ */
+static void MAP_SmoothTranslate(void)
+{
+	vec2_t diff;
+	float length, diff_zoom;
+
+	diff[0] = final2DGeoscapeCenter[0] - ccs.center[0];
+	diff[1] = final2DGeoscapeCenter[1] - ccs.center[1];
+	diff_zoom = ZOOM_LIMIT - ccs.zoom;
+
+	length = sqrt (diff[0] * diff[0] + diff[1] * diff[1]);
+	if (length < SMOOTHING_STEP_2D) {
+		ccs.center[0] = final2DGeoscapeCenter[0];
+		ccs.center[1] = final2DGeoscapeCenter[1];
+		ccs.zoom = ZOOM_LIMIT;
+		smoothRotation = qfalse;
+	} else {
+		ccs.center[0] = ccs.center[0] + SMOOTHING_STEP_2D * diff[0] / length;
+		ccs.center[1] = ccs.center[1] + SMOOTHING_STEP_2D * diff[1] / length;
+		ccs.zoom = ccs.zoom + SMOOTHING_STEP_2D * diff_zoom / length;
 	}
 }
 
@@ -1253,6 +1321,8 @@ extern void MAP_DrawMap (const menuNode_t* node, qboolean map3D)
 
 		MAP_Draw3DMapMarkers(node);
 	} else {
+		if (smoothRotation)
+			MAP_SmoothTranslate();
 		q = (ccs.date.day % 365 + (float) (ccs.date.sec / (3600 * 6)) / 4) * 2 * M_PI / 365 - M_PI;
 		re.DrawDayAndNight(node->pos[0], node->pos[1], node->size[0], node->size[1], (float) ccs.date.sec / (3600 * 24), q,
 			ccs.center[0], ccs.center[1], 0.5 / ccs.zoom, curCampaign->map);
