@@ -4038,7 +4038,7 @@ static void CP_UfoRecoveryNationSelectPopup_f (void)
 		if (j == num)
 			break;
 	}
-	assert (nation);
+	assert(nation);
 
 	Cvar_SetValue("mission_recoverynation", i);
 	Com_DPrintf("CP_UfoRecoveryNationSelectPopup_f()... picked nation: %s\n", nation->name);
@@ -4095,7 +4095,7 @@ static void CP_UFORecoveredSell_f (void)
 		/* @todo only nations with proper alien infiltration values */
 		nations++;
 		/* Calculate price offered by nation. */
-		UFOprices[i] = ufocraft->price + (int)(frand()*100000);
+		UFOprices[i] = ufocraft->price + (int)(frand() * 100000);
 		Q_strcat(recoveryNationSelectPopup, gd.nations[i].name, sizeof(recoveryNationSelectPopup));
 		Q_strcat(recoveryNationSelectPopup, "\t\t\t", sizeof(recoveryNationSelectPopup));
 		Q_strcat(recoveryNationSelectPopup, va("%i", UFOprices[i]), sizeof(recoveryNationSelectPopup));

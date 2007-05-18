@@ -787,7 +787,7 @@ extern void MAP_MapDrawEquidistantPoints (const menuNode_t* node, vec2_t center,
  */
 static float MAP_AngleOfPath (const menuNode_t* node, const vec3_t start, const vec2_t end, vec3_t direction)
 {
-	float angle=0;
+	float angle = 0.0f;
 	vec3_t start3D, end3D, ortVector, v, rotationAxis;
 	float dist;
 
@@ -826,7 +826,7 @@ static float MAP_AngleOfPath (const menuNode_t* node, const vec3_t start, const 
 	/* calculate the orientation angle of the model around axis perpendicular to the screen */
 	angle = todeg * atan(ortVector[0] / ortVector[1]);
 	if (ortVector[1] > 0)
-		angle += 180;
+		angle += 180.0f;
 	return angle;
 }
 
@@ -842,9 +842,9 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 	base_t* base;
 	int borders[MAX_NATION_BORDERS * 2];	/**< GL_LINE_LOOP coordinates for nation borders */
 	int x, y, z;
-	float angle = 0;
-	const vec2_t northPole = {0, 90};
-	vec4_t yellow={1, 0.874, 0.294, 1};
+	float angle = 0.0f;
+	const vec2_t northPole = {0.0f, 90.0f};
+	const vec4_t yellow = {1.0f, 0.874f, 0.294f, 1.0f};
 #if 0
 	vec2_t pos = {0, 0};
 
@@ -876,7 +876,7 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 	}
 
 	/* draw base pics */
-	for (base = gd.bases + gd.numBases - 1; base >= gd.bases ; base--) {
+	for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--) {
 		if (!base->founded)
 			continue;
 
