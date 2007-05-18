@@ -851,7 +851,12 @@ static void MAP3D_GetGeoscapeAngle (vec3_t finalAngle)
 	for (base = gd.bases + gd.numBases - 1; base >= gd.bases ; base--) {
 		for (i = 0, aircraft = (aircraft_t *) base->aircraft; i < base->numAircraftInBase; i++, aircraft++) {
 			if (aircraft->status > AIR_HOME)
-				maxEventIdx ++;
+				maxEventIdx++;
+		}
+	}
+	for (aircraft = gd.ufos + gd.numUfos - 1; aircraft >= gd.ufos; aircraft --) {
+		if (aircraft->visible) {
+			maxEventIdx++;
 		}
 	}
 	/* check centerOnEventIdx is within the bounds */
@@ -863,6 +868,8 @@ static void MAP3D_GetGeoscapeAngle (vec3_t finalAngle)
 	/* Cycle through missions */
 	if (centerOnEventIdx < ccs.numMissions) {
 		VectorSet(finalAngle, ccs.mission[centerOnEventIdx - counter].realPos[0], -ccs.mission[centerOnEventIdx - counter].realPos[1], 0);
+		MAP_ResetAction();
+		selMis = ccs.mission + centerOnEventIdx - counter;
 		return;
 	}
 	counter += ccs.numMissions;
@@ -874,12 +881,14 @@ static void MAP3D_GetGeoscapeAngle (vec3_t finalAngle)
 	}
 	counter += gd.numBases;
 
-	/* Cycle through aircrafts (only those visible on geoscape) */
+	/* Cycle through aircrafts (only those present on geoscape) */
 	for (base = gd.bases + gd.numBases - 1; base >= gd.bases ; base--) {
 		for (i = 0, aircraft = (aircraft_t *) base->aircraft; i < base->numAircraftInBase; i++, aircraft++) {
 			if (aircraft->status > AIR_HOME) {
 				if (centerOnEventIdx == counter) {
 					VectorSet(finalAngle, aircraft->pos[0], -aircraft->pos[1], 0);
+					MAP_ResetAction();
+					selectedAircraft = aircraft;
 					return;
 				}
 				counter++;
@@ -887,7 +896,18 @@ static void MAP3D_GetGeoscapeAngle (vec3_t finalAngle)
 		}
 	}
 
-	/* @todo Cycle through UFO */
+	/* Cycle through UFO (only those visible on geoscape) */
+	for (aircraft = gd.ufos + gd.numUfos - 1; aircraft >= gd.ufos; aircraft --) {
+		if (aircraft->visible) {
+			if (centerOnEventIdx == counter) {
+				VectorSet(finalAngle, aircraft->pos[0], -aircraft->pos[1], 0);
+				MAP_ResetAction();
+				selectedUfo = aircraft;
+				return;
+			}
+			counter++;
+		}
+	}
 }
 
 /**
@@ -900,15 +920,19 @@ extern void MAP3D_CenterOnPoint (void)
 {
 	menu_t *activeMenu = NULL;
 
-	/* this function only concerns 3D geoscape */
+	/* this function only concerns maps */
 	activeMenu = MN_ActiveMenu();
-	if (!cl_3dmap->value || Q_strncmp(activeMenu->name, "map", 3))
+	if (Q_strncmp(activeMenu->name, "map", 3))
 		return;
 
 	centerOnEventIdx++;
 
-	MAP3D_GetGeoscapeAngle (finalGlobeAngle);
-	finalGlobeAngle[1] += GLOBE_ROTATE;
+	if (cl_3dmap->value) {
+		MAP3D_GetGeoscapeAngle (finalGlobeAngle);
+		finalGlobeAngle[1] += GLOBE_ROTATE;
+	} else {
+		/*@todo write code for 2D geoscape */
+	}
 
 	smoothRotation = qtrue;
 }
