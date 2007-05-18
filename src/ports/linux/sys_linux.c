@@ -60,11 +60,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #else
 #include <mntent.h>
 #endif
-#include <pwd.h>
 #include <dirent.h>
 #include <libgen.h> /* dirname */
-
-#include <dlfcn.h>
 
 #include "../../qcommon/qcommon.h"
 
@@ -77,35 +74,7 @@ uid_t saved_euid;
 extern void Sys_ConsoleInputInit(void);
 extern void Sys_ConsoleInputShutdown(void);
 
-static void *game_library;
 extern cvar_t *nostdout;
-/**
- * @brief
- */
-char *Sys_GetCurrentUser (void)
-{
-	struct passwd *p;
-
-	if ((p = getpwuid(getuid())) == NULL) {
-		return "player";
-	}
-	return p->pw_name;
-}
-
-/**
- * @brief
- * @return NULL if getcwd failed
- */
-char *Sys_Cwd (void)
-{
-	static char cwd[MAX_OSPATH];
-
-	if (getcwd(cwd, sizeof(cwd) - 1) == NULL)
-		return NULL;
-	cwd[MAX_OSPATH-1] = 0;
-
-	return cwd;
-}
 
 /**
  * @brief This resolves any symlinks to the binary. It's disabled for debug
@@ -333,61 +302,6 @@ void Sys_Error (const char *error, ...)
 void floating_point_exception_handler (int whatever)
 {
 	signal(SIGFPE, floating_point_exception_handler);
-}
-
-/**
- * @brief
- */
-void Sys_UnloadGame (void)
-{
-	if (game_library)
-		dlclose(game_library);
-	game_library = NULL;
-}
-
-/**
- * @brief Loads the game dll
- */
-game_export_t *Sys_GetGameAPI (game_import_t *parms)
-{
-	void	*(*GetGameAPI) (void *);
-
-	char	name[MAX_OSPATH];
-	const char *path;
-
-	setreuid(getuid(), getuid());
-	setegid(getgid());
-
-	if (game_library)
-		Com_Error(ERR_FATAL, "Sys_GetGameAPI without Sys_UnloadingGame");
-
-	Com_Printf("------- Loading game.so -------\n");
-
-	/* now run through the search paths */
-	path = NULL;
-	while (1) {
-		path = FS_NextPath(path);
-		if (!path)
-			return NULL;		/* couldn't find one anywhere */
-		Com_sprintf(name, sizeof(name), "%s/game.so", path);
-
-		game_library = dlopen(name, RTLD_LAZY);
-		if (game_library) {
-			Com_Printf("LoadLibrary (%s)\n", name);
-			break;
-		} else {
-			Com_Printf("LoadLibrary failed (%s)\n", name);
-			Com_Printf("%s\n", dlerror());
-		}
-	}
-
-	GetGameAPI = (void *)dlsym(game_library, "GetGameAPI");
-	if (!GetGameAPI) {
-		Sys_UnloadGame();
-		return NULL;
-	}
-
-	return GetGameAPI(parms);
 }
 
 /**
