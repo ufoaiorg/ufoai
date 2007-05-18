@@ -833,7 +833,12 @@ static float MAP_AngleOfPath (const menuNode_t* node, const vec3_t start, const 
 	return angle;
 }
 
-static void MAP3D_GetGeoscapeAngle (vec2_t finalAngle) {
+/**
+ * @brief
+ * @sa MAP3D_CenterOnPoint
+ */
+static void MAP3D_GetGeoscapeAngle (vec2_t finalAngle)
+{
 	int i;
 	int counter = 0;
 	int maxEventIdx;
@@ -884,10 +889,14 @@ static void MAP3D_GetGeoscapeAngle (vec2_t finalAngle) {
 	/* @todo Cycle through UFO */
 }
 
+/**
+ * @brief
+ * @sa MAP3D_GetGeoscapeAngle
+ */
 extern void MAP3D_CenterOnPoint (void)
 {
 	menu_t *activeMenu = NULL;
-	
+
 	/* this function only concerns 3D geoscape */
 	activeMenu = MN_ActiveMenu();
 	if (!cl_3dmap->value || Q_strncmp(activeMenu->name, "map", 3))
@@ -897,7 +906,7 @@ extern void MAP3D_CenterOnPoint (void)
 
 	MAP3D_GetGeoscapeAngle (finalGlobeAngle);
 	finalGlobeAngle[1] += GLOBE_ROTATE;
-	
+
 	smoothRotation = qtrue;
 }
 
