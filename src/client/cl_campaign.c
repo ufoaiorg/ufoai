@@ -3637,8 +3637,8 @@ static void CL_GameNew (void)
 	/* base setup */
 	gd.numBases = 0;
 	gd.numAircraft = 0;
-	
-	/* Moved out from CL_GameInit to happen before B_NewBases() is called. 
+
+	/* Moved out from CL_GameInit to happen before B_NewBases() is called.
 	 * character creation needs the campaign id */
 	Com_SetGlobalCampaignID(curCampaign->idx);
 
@@ -3961,7 +3961,7 @@ static void CP_UFORecoveredStart_f (void)
 	base = &gd.bases[Cvar_VariableInteger("mission_recoverybase")];
 	assert (base);
 	Com_sprintf(messageBuffer, sizeof(messageBuffer),
-		_("Recovered UFO of type %s from the battlefield. UFO is being transported to base %s."),
+		_("Recovered %s from the battlefield. UFO is being transported to base %s."),
 		UFO_UfoTypeToName(Cvar_VariableInteger("mission_ufotype")), base->name);
 	MN_AddNewMessage(_("UFO Recovery"), messageBuffer, qfalse, MSG_STANDARD, NULL);
 	UFO_PrepareRecovery(base);
