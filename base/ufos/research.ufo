@@ -2633,7 +2633,7 @@ tech rs_craft_ufo_big
 	// FIXME
 	require_AND
 	{
-		tech craft_ufo_fighter
+		tech rs_craft_ufo_fighter
 		item craft_ufo_big 1
 	}
 
@@ -2669,7 +2669,7 @@ tech rs_craft_ufo_carrier
 	// FIXME
 	require_AND
 	{
-		tech craft_ufo_scout
+		tech rs_craft_ufo_scout
 		item craft_ufo_carrier 1
 	}
 
@@ -2705,7 +2705,7 @@ tech rs_craft_ufo_condor
 	// FIXME
 	require_AND
 	{
-		tech craft_ufo_harvester
+		tech rs_craft_ufo_harvester
 		item craft_ufo_condor 1
 	}
 
