@@ -31,6 +31,8 @@ cvar_t *vid_fullscreen;
 cvar_t *vid_grabmouse;
 cvar_t *vid_gamma;
 cvar_t *vid_ref;
+cvar_t *vid_xpos;
+cvar_t *vid_ypos;
 static cvar_t *vid_height;
 static cvar_t *vid_width;
 
@@ -108,6 +110,8 @@ void VID_Init (void)
 	vid_gamma = Cvar_Get("vid_gamma", "1", CVAR_ARCHIVE, NULL);
 	vid_height = Cvar_Get("vid_height", "768", CVAR_ARCHIVE, "Custom video height - set gl_mode to -1 to use this");
 	vid_width = Cvar_Get("vid_width", "1024", CVAR_ARCHIVE, "Custom video width - set gl_mode to -1 to use this");
+	vid_xpos = Cvar_Get("vid_xpos", "3", CVAR_ARCHIVE, NULL);
+	vid_ypos = Cvar_Get("vid_ypos", "22", CVAR_ARCHIVE, NULL);
 
 	/* Add some console commands that we want to handle */
 	Cmd_AddCommand("vid_restart", VID_Restart_f, "Restart the video subsystem");

@@ -40,8 +40,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 refexport_t	re;
 
 /* Console variables that we need to access from this module */
-cvar_t		*vid_xpos;			/* X coordinate of window position */
-cvar_t		*vid_ypos;			/* Y coordinate of window position */
+extern cvar_t *vid_xpos;			/* X coordinate of window position */
+extern cvar_t *vid_ypos;			/* Y coordinate of window position */
 extern cvar_t *vid_fullscreen;
 extern cvar_t *vid_grabmouse;
 extern cvar_t *vid_gamma;
@@ -328,8 +328,6 @@ void Sys_Vid_Init (void)
 #else
 	vid_ref = Cvar_Get("vid_ref", "sdl", CVAR_ARCHIVE, "Video renderer");
 #endif
-	vid_xpos = Cvar_Get("vid_xpos", "3", CVAR_ARCHIVE, NULL);
-	vid_ypos = Cvar_Get("vid_ypos", "22", CVAR_ARCHIVE, NULL);
 
 	maxVidModes = VID_NUM_MODES;
 }

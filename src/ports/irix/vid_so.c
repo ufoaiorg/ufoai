@@ -39,8 +39,8 @@ refexport_t GetRefAPI (refimport_t rimp);
 #endif
 
 /* Console variables that we need to access from this module */
-cvar_t		*vid_xpos;			/* X coordinate of window position */
-cvar_t		*vid_ypos;			/* Y coordinate of window position */
+extern cvar_t *vid_xpos;			/* X coordinate of window position */
+extern cvar_t *vid_ypos;			/* Y coordinate of window position */
 extern cvar_t *vid_fullscreen;
 extern cvar_t *vid_grabmouse;
 extern cvar_t *vid_gamma;
@@ -49,7 +49,7 @@ extern cvar_t *vid_ref;			/* Name of Refresh DLL loaded */
 /* Global variables used internally by this module */
 extern viddef_t viddef;				/* global video state; used by other modules */
 void		*reflib_library;		/* Handle to refresh DLL */
-qboolean	reflib_active = 0;
+qboolean	reflib_active = qfalse;
 
 /** KEYBOARD **************************************************************/
 
@@ -337,8 +337,6 @@ void Sys_Vid_Init (void)
 {
 	/* Create the video variables so we know how to start the graphics drivers */
 	vid_ref = Cvar_Get("vid_ref", "soft", CVAR_ARCHIVE, "Video renderer");
-	vid_xpos = Cvar_Get("vid_xpos", "3", CVAR_ARCHIVE, NULL);
-	vid_ypos = Cvar_Get("vid_ypos", "22", CVAR_ARCHIVE, NULL);
 
 	maxVidModes = VID_NUM_MODES;
 }
