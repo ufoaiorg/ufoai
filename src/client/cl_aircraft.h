@@ -64,7 +64,7 @@ typedef enum {
 	AIR_ECM,	/**< Aircraft electronic warfare level. */
 	AIR_DAMAGE,	/**< Aircraft damage points. */
 	AIR_ACCURACY,	/**< Aircraft accuracy - most accurate weapon. */
-	
+
 	AIR_MAX
 } aircraftParams_t;
 
@@ -108,6 +108,8 @@ typedef enum {
 	UFO_SCOUT,
 	UFO_FIGHTER,
 	UFO_HARVESTER,
+	UFO_CONDOR,
+	UFO_CARRIER,
 
 	UFO_MAX
 } ufoType_t;

@@ -40,8 +40,8 @@ extern void RADAR_DrawCoverage (const menuNode_t* node, const radar_t* radar, ve
 
 	rangeTracking = 1.1f * radar->range;
 
-	MAP_MapDrawEquidistantPoints (node, pos, radar->range, color, globe);
-	MAP_MapDrawEquidistantPoints (node, pos, rangeTracking, color, globe);
+	MAP_MapDrawEquidistantPoints(node, pos, radar->range, color, globe);
+	MAP_MapDrawEquidistantPoints(node, pos, rangeTracking, color, globe);
 }
 
 /**
@@ -53,7 +53,7 @@ extern void RADAR_DrawInMap (const menuNode_t* node, const radar_t* radar, int x
 	const vec4_t color = {0, 1, 0, 1};
 	int pts[4];
 
-	if (radar->numUfos==0)
+	if (radar->numUfos == 0)
 		return;
 
 	/* Show radar range zones */

@@ -40,14 +40,20 @@ extern void UFO_Reset(void);
 extern char* UFO_UfoTypeToName (ufoType_t type)
 {
 	switch(type) {
-	case 0:
-		return _("Scout");
+	case UFO_SCOUT:
+		return _("UFO - Scout");
 		break;
-	case 1:
-		return _("Fighter");
+	case UFO_FIGHTER:
+		return _("UFO - Fighter");
 		break;
-	case 2:
-		return _("Harvester");
+	case UFO_HARVESTER:
+		return _("UFO - Harvester");
+		break;
+	case UFO_CONDOR:
+		return _("UFO - Condor");
+		break;
+	case UFO_CARRIER:
+		return _("UFO - Carrier");
 		break;
 	default:
 		Sys_Error("UFO_UfoTypeToName(): Unknown UFO type %i\n", type);
