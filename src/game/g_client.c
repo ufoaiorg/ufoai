@@ -713,7 +713,7 @@ edict_t *G_GetFloorItems (edict_t * ent)
 	return NULL;
 }
 
-#ifdef DEBUG
+#if 0
 /**
  * @brief Debug functions that prints the content of a floor (container) at a given position in the map.
  * @param[in] Position of the floor in the map.
