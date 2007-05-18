@@ -782,24 +782,23 @@ extern void MAP_MapDrawEquidistantPoints (const menuNode_t* node, vec2_t center,
  * @param[in] node The menu node which will be used for drawing dimensions.
  * @param[in] start Latitude and longitude of the position of the model.
  * @param[in] end Latitude and longitude of aimed point.
+ * @param[in] direction vec3_t giving current direction of the model (NULL if the model is idle).
  * @return Angle (degrees) of rotation around the axis perpendicular to the screen for a model in @c start going toward @c end.
  */
 static float MAP_AngleOfPath (const menuNode_t* node, const vec3_t start, const vec2_t end, vec3_t direction)
 {
 	float angle=0;
 	vec3_t start3D, end3D, ortVector, v, rotationAxis;
-	vec2_t start2D;
 	float dist;
 
-	start2D[0] = start[0];
-	start2D[1] = start[1];
-
-	PolarToVec(start2D, start3D);
+	/* calculate the vector tangent to movement */
+	PolarToVec(start, start3D);
 	PolarToVec(end, end3D);
 	CrossProduct(start3D, end3D, v);
 	CrossProduct(v, start3D, ortVector);
 	VectorNormalize(ortVector);
 
+	/* smooth change of direction if the model is not idle */
 	if (direction) {
 		VectorSubtract(ortVector, direction, v);
 		dist = VectorLength(v);
@@ -818,12 +817,13 @@ static float MAP_AngleOfPath (const menuNode_t* node, const vec3_t start, const 
 		}
 	}
 
+	/* rotate vector tangent to movement in the frame of the screen */
 	VectorSet(rotationAxis, 0, 0, 1);
 	RotatePointAroundVector(v, rotationAxis, ortVector, - ccs.angles[PITCH]);
-
 	VectorSet(rotationAxis, 0, 1, 0);
 	RotatePointAroundVector(ortVector, rotationAxis, v, - ccs.angles[YAW]);
 
+	/* calculate the orientation angle of the model around axis perpendicular to the screen */
 	angle = todeg * atan(ortVector[0] / ortVector[1]);
 	if (ortVector[1] > 0)
 		angle += 180;
