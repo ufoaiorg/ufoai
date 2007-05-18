@@ -394,7 +394,7 @@ static void InitCocoa (void)
 /**
  * @brief
  */
-int lenstr(const char *text)
+int lenstr (const char *text)
 {
 	int count = -1;				/* Character counter */
 
@@ -406,7 +406,7 @@ int lenstr(const char *text)
 /**
  * @brief
  */
-unsigned char CheckForFinderCall(char **argv, int argc)
+unsigned char CheckForFinderCall (char **argv, int argc)
 {
 	unsigned char change = 0;
 
