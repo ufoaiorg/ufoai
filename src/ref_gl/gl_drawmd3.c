@@ -58,7 +58,7 @@ static void GL_DrawAliasMD3FrameLerp (maliasmodel_t *paliashdr, maliasmesh_t mes
 
 	/* if ( currententity->flags & ( RF_SHELL_RED | RF_SHELL_GREEN | RF_SHELL_BLUE | RF_SHELL_DOUBLE | RF_SHELL_HALF_DAM) ) */
 	if (currententity->flags & (RF_SHELL_RED | RF_SHELL_GREEN | RF_SHELL_BLUE))
-		qglDisable( GL_TEXTURE_2D );
+		qglDisable(GL_TEXTURE_2D);
 
 	frame = paliashdr->frames + currententity->frame;
 	oldframe = paliashdr->frames + currententity->oldframe;
@@ -72,41 +72,41 @@ static void GL_DrawAliasMD3FrameLerp (maliasmodel_t *paliashdr, maliasmesh_t mes
 	move[1] = -DotProduct(delta, vectors[1]);	/* left */
 	move[2] = DotProduct(delta, vectors[2]);	/* up */
 
-	VectorAdd (move, oldframe->translate, move);
+	VectorAdd(move, oldframe->translate, move);
 
 	for (i = 0; i < 3; i++) {
-		move[i] = backlerp*move[i] + frontlerp*frame->translate[i];
+		move[i] = backlerp * move[i] + frontlerp * frame->translate[i];
 	}
 
 	v = mesh.vertexes + currententity->frame*mesh.num_verts;
 	ov = mesh.vertexes + currententity->oldframe*mesh.num_verts;
-	for ( i = 0; i < mesh.num_verts; i++, v++, ov++ ) {
-		VectorSet ( tempNormalsArray[i],
+	for (i = 0; i < mesh.num_verts; i++, v++, ov++) {
+		VectorSet(tempNormalsArray[i],
 				v->normal[0] + (ov->normal[0] - v->normal[0])*backlerp,
 				v->normal[1] + (ov->normal[1] - v->normal[1])*backlerp,
-				v->normal[2] + (ov->normal[2] - v->normal[2])*backlerp );
-		VectorSet ( tempVertexArray[i],
+				v->normal[2] + (ov->normal[2] - v->normal[2])*backlerp);
+		VectorSet(tempVertexArray[i],
 				move[0] + ov->point[0]*backlerp + v->point[0]*frontlerp,
 				move[1] + ov->point[1]*backlerp + v->point[1]*frontlerp,
 				move[2] + ov->point[2]*backlerp + v->point[2]*frontlerp);
 	}
-	qglBegin (GL_TRIANGLES);
+	qglBegin(GL_TRIANGLES);
 
-	for(j = 0; j < mesh.num_tris; j++) {
-		qglTexCoord2f (mesh.stcoords[mesh.indexes[3*j+0]].st[0], mesh.stcoords[mesh.indexes[3*j+0]].st[1]);
-		qglVertex3fv(tempVertexArray[mesh.indexes[3*j+0]]);
+	for (j = 0; j < mesh.num_tris; j++) {
+		qglTexCoord2f(mesh.stcoords[mesh.indexes[3 * j + 0]].st[0], mesh.stcoords[mesh.indexes[3 * j + 0]].st[1]);
+		qglVertex3fv(tempVertexArray[mesh.indexes[3 * j + 0]]);
 
-		qglTexCoord2f (mesh.stcoords[mesh.indexes[3*j+1]].st[0], mesh.stcoords[mesh.indexes[3*j+1]].st[1]);
-		qglVertex3fv(tempVertexArray[mesh.indexes[3*j+1]]);
+		qglTexCoord2f(mesh.stcoords[mesh.indexes[3 * j + 1]].st[0], mesh.stcoords[mesh.indexes[3 * j + 1]].st[1]);
+		qglVertex3fv(tempVertexArray[mesh.indexes[3 * j + 1]]);
 
-		qglTexCoord2f (mesh.stcoords[mesh.indexes[3*j+2]].st[0], mesh.stcoords[mesh.indexes[3*j+2]].st[1]);
-		qglVertex3fv(tempVertexArray[mesh.indexes[3*j+2]]);
+		qglTexCoord2f(mesh.stcoords[mesh.indexes[3 * j + 2]].st[0], mesh.stcoords[mesh.indexes[3 * j + 2]].st[1]);
+		qglVertex3fv(tempVertexArray[mesh.indexes[3 * j + 2]]);
 	}
-	qglEnd ();
+	qglEnd();
 
 	/* if ( currententity->flags & ( RF_SHELL_RED | RF_SHELL_GREEN | RF_SHELL_BLUE | RF_SHELL_DOUBLE | RF_SHELL_HALF_DAM) ) */
-	if ( currententity->flags & ( RF_SHELL_RED | RF_SHELL_GREEN | RF_SHELL_BLUE ) )
-		qglEnable( GL_TEXTURE_2D );
+	if (currententity->flags & (RF_SHELL_RED | RF_SHELL_GREEN | RF_SHELL_BLUE))
+		qglEnable(GL_TEXTURE_2D);
 }
 
 /**
@@ -119,7 +119,7 @@ void R_DrawAliasMD3Model (entity_t *e)
 	int	i;
 	qboolean lightfixed;
 
-	assert (currentmodel->type == mod_alias_md3);
+	assert(currentmodel->type == mod_alias_md3);
 
 	paliashdr = (maliasmodel_t *)currentmodel->extradata;
 
@@ -198,7 +198,7 @@ void R_DrawAliasMD3Model (entity_t *e)
 		if (!skin)
 			skin = r_notexture;
 		GL_Bind(skin->texnum);
-		GL_DrawAliasMD3FrameLerp (paliashdr, paliashdr->meshes[i], e->backlerp);
+		GL_DrawAliasMD3FrameLerp(paliashdr, paliashdr->meshes[i], e->backlerp);
 	}
 
 	qglDisableClientState(GL_COLOR_ARRAY);
@@ -207,12 +207,12 @@ void R_DrawAliasMD3Model (entity_t *e)
 		GLSTATE_DISABLE_BLEND
 
 	if (e->flags & RF_DEPTHHACK)
-		qglDepthRange (gldepthmin, gldepthmax);
+		qglDepthRange(gldepthmin, gldepthmax);
 
 	qglPopMatrix();
 
 	if (gl_fog->value && r_newrefdef.fog)
 		qglEnable(GL_FOG);
 
-	qglColor4f (1,1,1,1);
+	qglColor4f(1,1,1,1);
 }
