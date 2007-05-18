@@ -640,6 +640,7 @@ extern aircraft_t *AIR_GetAircraft (const char *name)
 {
 	int i;
 
+	assert(name);
 	for (i = 0; i < numAircraft_samples; i++) {
 		if (!Q_strncmp(aircraft_samples[i].id, name, MAX_VAR))
 			return &aircraft_samples[i];
@@ -1744,31 +1745,56 @@ extern qboolean AIR_Save (sizebuf_t* sb, void* data)
  */
 extern qboolean AIR_Load (sizebuf_t* sb, void* data)
 {
-	base_t* base;
-	aircraft_t* aircraft;
+	base_t *base;
+	aircraft_t *ufo, *aircraft;
 	employee_t *employee;
 	int i, j, p, hired;
+	const char *s;
+	/* vars, if aircraft wasn't found */
+	vec3_t tmp_vec3t;
+	vec2_t tmp_vec2t;
+	int tmp_int;
 
 	/* load the ufos on geoscape */
 	gd.numUfos = MSG_ReadByte(sb);
 	for (i = 0; i < gd.numUfos; i++) {
-		aircraft = AIR_GetAircraft(MSG_ReadString(sb));
-		memcpy(&gd.ufos[i], aircraft, sizeof(aircraft_t));
-		aircraft = &gd.ufos[i];
-		aircraft->visible = MSG_ReadByte(sb);
-		MSG_ReadPos(sb, aircraft->pos);
-		aircraft->status = MSG_ReadByte(sb);
-		aircraft->speed = MSG_ReadFloat(sb);
-		aircraft->fuel = MSG_ReadLong(sb);
-		aircraft->fuelSize = MSG_ReadLong(sb);
-		aircraft->time = MSG_ReadShort(sb);
-		aircraft->point = MSG_ReadShort(sb);
-		aircraft->route.numPoints = MSG_ReadShort(sb);
-		aircraft->route.distance = MSG_ReadFloat(sb);
-		for (j = 0; j < aircraft->route.numPoints; j++)
-			MSG_Read2Pos(sb, aircraft->route.point[j]);
-		if (*(int*)data >= 2) { /* >= 2.2 */
-			MSG_ReadPos(sb, aircraft->direction);
+		s = MSG_ReadString(sb);
+		ufo = AIR_GetAircraft(s);
+		if (!aircraft) {
+			Com_Printf("Could not find ufo '%s'\n", s);
+			MSG_ReadByte(sb); /* visible */
+			MSG_ReadPos(sb, tmp_vec3t);	/* pos */
+			MSG_ReadByte(sb);	/* status */
+			MSG_ReadFloat(sb);	/* speed */
+			MSG_ReadLong(sb);	/* fuel */
+			MSG_ReadLong(sb);	/* fuelsize */
+			MSG_ReadShort(sb);	/* time */
+			MSG_ReadShort(sb);	/* point */
+			tmp_int = MSG_ReadShort(sb);	/* numPoints */
+			MSG_ReadFloat(sb);	/* distance */
+			for (j = 0; j < tmp_int; j++)
+				MSG_Read2Pos(sb, tmp_vec2t);	/* route points */
+			if (*(int*)data >= 2) { /* >= 2.2 */
+				MSG_ReadPos(sb, tmp_vec3t);	/* direction */
+			}
+		} else {
+			memcpy(&gd.ufos[i], ufo, sizeof(aircraft_t));
+			ufo = &gd.ufos[i];
+			ufo->visible = MSG_ReadByte(sb);
+			MSG_ReadPos(sb, ufo->pos);
+			ufo->status = MSG_ReadByte(sb);
+			ufo->speed = MSG_ReadFloat(sb);
+			ufo->fuel = MSG_ReadLong(sb);
+			ufo->fuelSize = MSG_ReadLong(sb);
+			ufo->time = MSG_ReadShort(sb);
+			ufo->point = MSG_ReadShort(sb);
+			ufo->route.numPoints = MSG_ReadShort(sb);
+			ufo->route.distance = MSG_ReadFloat(sb);
+			for (j = 0; j < ufo->route.numPoints; j++)
+				MSG_Read2Pos(sb, ufo->route.point[j]);
+			if (*(int*)data >= 2) { /* >= 2.2 */
+				MSG_ReadPos(sb, ufo->direction);
+			}
 		}
 		/* @todo more? */
 	}

@@ -96,28 +96,28 @@ extern void UFO_CampaignRunUfos (int dt)
 
 #ifdef DEBUG
 /**
-  * @brief Write the ufo list, for debugging
-  *
-  * listufo
-  * only for debugging
-  */
+ * @brief Write the ufo list, for debugging
+ *
+ * listufo
+ * only for debugging
+ */
 static void UFO_ListUfosOnGeoscape_f (void)
 {
 	aircraft_t* ufo;
 
 	Com_Printf("There are %i ufos on geoscape\n", gd.numUfos);
 	for (ufo = gd.ufos + gd.numUfos - 1; ufo >= gd.ufos; ufo--)
-		Com_Printf("ufo: %s - status: %i - pos: %.0f:%0.f\n", gd.ufos[ufo - gd.ufos + 1].name, ufo->status, ufo->pos[0], ufo->pos[1]);
+		Com_Printf("..%s (%s) - status: %i - pos: %.0f:%0.f\n", ufo->name, ufo->id, ufo->status, ufo->pos[0], ufo->pos[1]);
 }
 #endif
 
 /**
-  * @brief Add an ufo in geoscape
-  *
-  * @todo: Ufos are not assigned unique idx fields. Could be handy...
-  * @sa UFO_RemoveUfoFromGeoscape
-  * @sa UFO_RemoveUfoFromGeoscape_f
-  */
+ * @brief Add an ufo in geoscape
+ *
+ * @todo: Ufos are not assigned unique idx fields. Could be handy...
+ * @sa UFO_RemoveUfoFromGeoscape
+ * @sa UFO_RemoveUfoFromGeoscape_f
+ */
 static void UFO_NewUfoOnGeoscape_f (void)
 {
 	static int newUfoNum = -1;
@@ -196,7 +196,7 @@ extern void UFO_RemoveUfoFromGeoscape (aircraft_t* ufo)
 }
 
 /**
-  * @brief Remove an ufo from the geoscape
+ * @brief Remove an ufo from the geoscape
   */
 static void UFO_RemoveUfoFromGeoscape_f (void)
 {

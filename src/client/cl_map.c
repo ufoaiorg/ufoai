@@ -1019,11 +1019,11 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 
 				/* Draw a circle around selected aircraft */
 				if (aircraft == selectedAircraft) {
-					MAP_MapDrawEquidistantPoints (node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow, qtrue);
+					MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow, qtrue);
 
 					/* Draw a circle around ufo purchased by selected aircraft */
 					if (aircraft->status == AIR_UFO && MAP_3DMapToScreen(node, (gd.ufos + aircraft->ufo)->pos, &x, &y, NULL))
-						MAP_MapDrawEquidistantPoints (node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow, qtrue);
+						MAP_MapDrawEquidistantPoints(node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow, qtrue);
 				}
 
 				/* Draw aircraft (this must be after drawing 'selected circle' so that the aircraft looks above it)*/
