@@ -805,7 +805,6 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 	GetGameApi_t GetGameAPI;
 	char	name[MAX_OSPATH];
 	const char	*path;
-	char	cwd[MAX_OSPATH];
 
 	if (game_library)
 		Com_Error(ERR_FATAL, "Sys_GetGameAPI without Sys_UnloadingGame");
@@ -1173,7 +1172,7 @@ static void Sys_SetAffinity (void)
 	HANDLE proc = GetCurrentProcess();
 
 	GetSystemInfo(&sysInfo);
-	Com_Printf("Found %i processors\n", sysInfo.dwNumberOfProcessors);
+	Com_Printf("Found %i processors\n", (int)sysInfo.dwNumberOfProcessors);
 	if (sysInfo.dwNumberOfProcessors > 1) {
 		Com_Printf("...only use one processor\n");
 		SetProcessAffinityMask(proc, procAffinity);
