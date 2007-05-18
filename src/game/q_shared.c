@@ -239,11 +239,11 @@ void RotatePointAroundVector (vec3_t dst, const vec3_t dir, const vec3_t point, 
 #endif
 
 /**
- * @brief Rotate the frame {1,0,0} {0,1,0} and {0,0,1}
- * @param[in] angles Contains the three Euler angles of rotation
- * @param[out] forward
- * @param[out] right
- * @param[out] up
+ * @brief Rotate a point around static (idle ?) frame {0, 1, 0}, {0, 0, 1} ,{1, 0, 0}
+ * @param[in] angles Contains the three angles of rotation around idle frame ({0, 1, 0}, {0, 0, 1} ,{1, 0, 0}) (in this order)
+ * @param[out] forward result of previous rotation for point {1, 0, 0} (can be NULL if not needed)
+ * @param[out] right result of previous rotation for point {0, -1, 0} (!) (can be NULL if not needed)
+ * @param[out] up result of previous rotation for point {0, 0, 1} (can be NULL if not needed)
  */
 void AngleVectors (vec3_t angles, vec3_t forward, vec3_t right, vec3_t up)
 {
