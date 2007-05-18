@@ -1022,35 +1022,51 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 					MAP_MapDrawEquidistantPoints (node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow, qtrue);
 
 					/* Draw a circle around ufo purchased by selected aircraft */
-					if (aircraft->status == AIR_UFO && MAP_MapToScreen(node, (gd.ufos + aircraft->ufo)->pos, &x, &y))
+					if (aircraft->status == AIR_UFO && MAP_3DMapToScreen(node, (gd.ufos + aircraft->ufo)->pos, &x, &y, NULL))
 						MAP_MapDrawEquidistantPoints (node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow, qtrue);
 				}
 
 				/* Draw aircraft (this must be after drawing 'selected circle' so that the aircraft looks above it)*/
 				MAP_Draw3DMarkerIfVisible(node, aircraft->pos, angle, aircraft->model);
 			}
-		}
+	}
 
-		/* FIXME */
-		/* use the latitude and longitude values from nation border definition to draw a polygon */
-		for (i = 0; i < gd.numNations; i++) {
-			/* font color for nations */
-			re.DrawColor(gd.nations[i].color);
-			if (gd.nations[i].numBorders) {
-				for (j = 0; j < gd.nations[i].numBorders; j++) {
-					/* FIXME: doesn't work for z positions */
-					MAP_3DMapToScreen(node, gd.nations[i].borders[j], &x, &y, &z);
-					borders[j * 2] = x;
-					borders[j * 2 + 1] = y;
-/*					borders[j * 2 + 2] = z;*/
-				}
-				re.DrawPolygon(gd.nations[i].numBorders, borders);
-				re.DrawColor(NULL);
-				re.DrawLineLoop(gd.nations[i].numBorders, borders);
+	/* draws ufos */
+	for (aircraft = gd.ufos + gd.numUfos - 1; aircraft >= gd.ufos; aircraft --) {
+#ifdef DEBUG
+		/* in debug mode you execute set showufos 1 to see the ufos on geoscape */
+		if (Cvar_VariableInteger("debug_showufos")) {
+			MAP_3DMapDrawLine(node, &(aircraft->route)); /* Draw ufo route */
+		} else
+#endif
+		if (!aircraft->visible || !MAP_3DMapToScreen(node, aircraft->pos, &x, &y, NULL))
+			continue;
+		if (aircraft == selectedUfo)
+			MAP_MapDrawEquidistantPoints (node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow, qtrue);
+		angle = MAP_AngleOfPath(node, aircraft->pos, aircraft->route.point[aircraft->route.numPoints - 1], aircraft->direction);
+		MAP_Draw3DMarkerIfVisible(node, aircraft->pos, angle, aircraft->model);
+	}
+
+	/* FIXME */
+	/* use the latitude and longitude values from nation border definition to draw a polygon */
+	for (i = 0; i < gd.numNations; i++) {
+		/* font color for nations */
+		re.DrawColor(gd.nations[i].color);
+		if (gd.nations[i].numBorders) {
+			for (j = 0; j < gd.nations[i].numBorders; j++) {
+				/* FIXME: doesn't work for z positions */
+				MAP_3DMapToScreen(node, gd.nations[i].borders[j], &x, &y, &z);
+				borders[j * 2] = x;
+				borders[j * 2 + 1] = y;
+/*				borders[j * 2 + 2] = z;*/
 			}
+			re.DrawPolygon(gd.nations[i].numBorders, borders);
+			re.DrawColor(NULL);
+			re.DrawLineLoop(gd.nations[i].numBorders, borders);
 		}
+	}
 
-		re.DrawColor(NULL);
+	re.DrawColor(NULL);
 }
 
 /**
