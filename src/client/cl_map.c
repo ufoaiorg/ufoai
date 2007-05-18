@@ -784,7 +784,7 @@ extern void MAP_MapDrawEquidistantPoints (const menuNode_t* node, vec2_t center,
  * @param[in] end Latitude and longitude of aimed point.
  * @return Angle (degrees) of rotation around the axis perpendicular to the screen for a model in @c start going toward @c end.
  */
-static float MAP_AngleOfPath (const menuNode_t* node, const vec3_t start, const vec2_t end, qboolean smoothDirection, vec3_t direction)
+static float MAP_AngleOfPath (const menuNode_t* node, const vec3_t start, const vec2_t end, vec3_t direction)
 {
 	float angle=0;
 	vec3_t start3D, end3D, ortVector, v, rotationAxis;
@@ -800,7 +800,7 @@ static float MAP_AngleOfPath (const menuNode_t* node, const vec3_t start, const 
 	CrossProduct(v, start3D, ortVector);
 	VectorNormalize(ortVector);
 
-	if (smoothDirection) {
+	if (direction) {
 		VectorSubtract(ortVector, direction, v);
 		dist = VectorLength(v);
 		if (dist > 0.01) {
@@ -862,7 +862,7 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 	Cvar_Set("mn_mapdaytime", "");
 	for (i = 0; i < ccs.numMissions; i++) {
 		ms = &ccs.mission[i];
-		angle = MAP_AngleOfPath(node, ms->realPos, northPole, qfalse, NULL);
+		angle = MAP_AngleOfPath(node, ms->realPos, northPole, NULL);
 		if (!MAP_3DMapToScreen(node, ms->realPos, &x, &y, NULL))
 			continue;
 
@@ -880,7 +880,7 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 		if (!base->founded)
 			continue;
 		
-		angle = MAP_AngleOfPath(node, base->pos, northPole, qfalse, NULL);
+		angle = MAP_AngleOfPath(node, base->pos, northPole, NULL);
 		
 		/* Get position on screen */
 		 MAP_3DMapToScreen(node, base->pos, &x, &y, NULL);
@@ -908,9 +908,9 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 							memcpy(path.point + 1, aircraft->route.point + aircraft->point + 1, (path.numPoints - 1) * sizeof(vec2_t));
 						MAP_3DMapDrawLine(node, &path);
 					}
-					angle = MAP_AngleOfPath(node, aircraft->pos, aircraft->route.point[aircraft->route.numPoints - 1], qtrue, aircraft->direction);
+					angle = MAP_AngleOfPath(node, aircraft->pos, aircraft->route.point[aircraft->route.numPoints - 1], aircraft->direction);
 				} else {
-					angle = MAP_AngleOfPath(node, aircraft->pos, northPole, qtrue, aircraft->direction);
+					angle = MAP_AngleOfPath(node, aircraft->pos, northPole, aircraft->direction);
 				}
 
 				/* Draw a circle around selected aircraft */
