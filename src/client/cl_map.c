@@ -75,6 +75,9 @@ static cvar_t* cl_showCoords;
 static aircraft_t *selectedAircraft;	/**< Currently selected aircraft */
 static aircraft_t *selectedUfo;			/**< Currently selected UFO */
 static char text_standard[2048];		/**< Buffer to display standard text in geoscape */
+static int centerOnEventIdx = 0;		/**< Current Event centered on 3D geoscape */
+static vec3_t finalGlobeAngle = {0, GLOBE_ROTATE, 0};		/**< value of ccs.angles for a smooth change */
+static qboolean smoothRotation = qfalse;			/**< qtrue if the rotation of 3D geoscape must me smooth */
 /*
 ==============================================================
 CLICK ON MAP and MULTI SELECTION FUNCTIONS
@@ -830,6 +833,84 @@ static float MAP_AngleOfPath (const menuNode_t* node, const vec3_t start, const 
 	return angle;
 }
 
+static void MAP3D_GetGeoscapeAngle (vec2_t finalAngle) {
+	int i;
+	int counter = 0;
+	int maxEventIdx;
+	base_t *base;
+	aircraft_t *aircraft;
+
+	/* If the value of maxEventIdx is too big or to low, restart from begining */
+	maxEventIdx = ccs.numMissions + gd.numBases - 1;
+	for (base = gd.bases + gd.numBases - 1; base >= gd.bases ; base--) {
+		for (i = 0, aircraft = (aircraft_t *) base->aircraft; i < base->numAircraftInBase; i++, aircraft++) {
+			if (aircraft->status > AIR_HOME)
+				maxEventIdx ++;
+		}
+	}
+	/* check centerOnEventIdx is within the bounds */
+	if (centerOnEventIdx < 0)
+		centerOnEventIdx = maxEventIdx;
+	if (centerOnEventIdx > maxEventIdx)
+		centerOnEventIdx = 0;
+
+	/* Cycle through missions */
+	if (centerOnEventIdx < ccs.numMissions) {
+		VectorSet(finalAngle, ccs.mission[centerOnEventIdx - counter].realPos[0], -ccs.mission[centerOnEventIdx - counter].realPos[1], 0);
+		return;
+	}
+	counter += ccs.numMissions;
+
+	/* Cycle through bases */
+	if (centerOnEventIdx < gd.numBases + counter) {
+		VectorSet(finalAngle, gd.bases[centerOnEventIdx - counter].pos[0], -gd.bases[centerOnEventIdx - counter].pos[1], 0);
+		return;
+	}
+	counter += gd.numBases;
+
+	/* Cycle through aircrafts (only those visible on geoscape) */
+	for (base = gd.bases + gd.numBases - 1; base >= gd.bases ; base--) {
+		for (i = 0, aircraft = (aircraft_t *) base->aircraft; i < base->numAircraftInBase; i++, aircraft++) {
+			if (aircraft->status > AIR_HOME) {
+				if (centerOnEventIdx == counter) {
+					VectorSet(finalAngle, aircraft->pos[0], -aircraft->pos[1], 0);
+					return;
+				}
+				counter++;
+			}
+		}
+	}
+
+	/* @todo Cycle through UFO */
+}
+
+extern void MAP3D_CenterOnPoint (void)
+{
+	centerOnEventIdx++;
+
+	MAP3D_GetGeoscapeAngle (finalGlobeAngle);
+	finalGlobeAngle[1] += GLOBE_ROTATE;
+	
+	smoothRotation = qtrue;
+}
+
+#define SMOOTHING_SPEED	5.0f
+static void MAP3D_SmoothRotate(void)
+{
+	vec3_t diff;
+	float length;
+
+	VectorSubtract(finalGlobeAngle, ccs.angles, diff);
+	length = VectorLength(diff);
+	if (length < SMOOTHING_SPEED) {
+		VectorCopy(finalGlobeAngle, ccs.angles);
+		smoothRotation = qfalse;
+	} else {
+		VectorScale(diff, SMOOTHING_SPEED/length, diff);
+		VectorAdd(ccs.angles, diff, ccs.angles);
+	}
+}
+
 #define SELECT_CIRCLE_RADIUS	6
 /**
  * @brief
@@ -1101,6 +1182,8 @@ extern void MAP_DrawMap (const menuNode_t* node, qboolean map3D)
 		if (!geobackground)
 			geobackground = MN_GetNodeFromCurrentMenu("geobackground");
 		/* @todo change texh, texl of geobackground with zoomlevel */
+		if (smoothRotation)
+			MAP3D_SmoothRotate();
 		q = (ccs.date.day % 365 + (float) (ccs.date.sec / (3600 * 6)) / 4) * 2 * M_PI / 365 - M_PI;
 		re.Draw3DGlobe(node->pos[0], node->pos[1], node->size[0], node->size[1],
 			(float) ccs.date.sec / (3600 * 24), q, ccs.angles, ccs.zoom / 10, curCampaign->map);

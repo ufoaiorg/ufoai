@@ -3489,6 +3489,7 @@ static const cmdList_t game_commands[] = {
 	{"nationlist", CL_NationList_f, "List all nations on the game console"},
 	{"mission", CL_StartMission_f, NULL},
 	{"addeventmail", CL_EventAddMail_f, "Add a new mail (event trigger) - e.g. after a mission"},
+	{"center3Dgeoscape", MAP3D_CenterOnPoint, NULL},
 #ifdef DEBUG
 	{"debug_fullcredits", CL_DebugFullCredits_f, "Debug function to give the player full credits"},
 	{"debug_additems", CL_DebugAllItems_f, "Debug function to add one item of every type to base storage and mark related tech collected"},
