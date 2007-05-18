@@ -34,7 +34,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <stdio.h>
 #include <sys/ipc.h>
 #include <sys/shm.h>
-#include <sys/stat.h>
 #include <sys/select.h>
 #include <string.h>
 #include <ctype.h>
@@ -109,20 +108,6 @@ char *Sys_Cwd (void)
 }
 
 /**
- * @brief
- */
-void Sys_NormPath (char* path)
-{
-}
-
-/**
- * @brief
- */
-void Sys_OSPath (char* path)
-{
-}
-
-/**
  * @brief This resolves any symlinks to the binary. It's disabled for debug
  * builds because there are situations where you are likely to want
  * to symlink to binaries and /not/ have the links resolved.
@@ -160,14 +145,6 @@ char *Sys_BinName (const char *arg0)
 	}
 #endif
 	return dst;
-}
-
-/**
- * @brief
- */
-char *Sys_GetHomeDirectory (void)
-{
-	return getenv("HOME");
 }
 
 #ifdef __linux__
@@ -280,19 +257,6 @@ void Sys_Backtrace (int sig, siginfo_t *siginfo, void *secret)
 /**
  * @brief
  */
-int Sys_FileLength (const char *path)
-{
-	struct stat st;
-
-	if (stat (path, &st) || (st.st_mode & S_IFDIR))
-		return -1;
-
-	return st.st_size;
-}
-
-/**
- * @brief
- */
 void Sys_Quit (void)
 {
 	CL_Shutdown();
@@ -336,29 +300,6 @@ void Sys_Init (void)
 
 /**
  * @brief
- * @sa Sys_DisableTray
- */
-void Sys_EnableTray (void)
-{
-}
-
-/**
- * @brief
- * @sa Sys_EnableTray
- */
-void Sys_DisableTray (void)
-{
-}
-
-/**
- * @brief
- */
-void Sys_Minimize (void)
-{
-}
-
-/**
- * @brief
  */
 void Sys_Error (const char *error, ...)
 {
@@ -384,20 +325,6 @@ void Sys_Error (const char *error, ...)
 	Sys_DebugBreak();				/* break execution before game shutdown */
 #endif
 	exit(1);
-}
-
-/**
- * @brief
- * @return -1 if not present
- */
-int Sys_FileTime (const char *path)
-{
-	struct	stat	buf;
-
-	if (stat (path,&buf) == -1)
-		return -1;
-
-	return buf.st_mtime;
 }
 
 /**
@@ -461,13 +388,6 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 	}
 
 	return GetGameAPI(parms);
-}
-
-/**
- * @brief
- */
-void Sys_AppActivate (void)
-{
 }
 
 /**

@@ -89,20 +89,6 @@ char *Sys_Cwd (void)
 }
 
 /**
- * @brief
- */
-void Sys_NormPath (char* path)
-{
-}
-
-/**
- * @brief
- */
-void Sys_OSPath (char* path)
-{
-}
-
-/**
  * @brief This resolves any symlinks to the binary. It's disabled for debug
  * builds because there are situations where you are likely to want
  * to symlink to binaries and /not/ have the links resolved.
@@ -142,30 +128,9 @@ char *Sys_BinName (const char *arg0)
 	return dst;
 }
 
-/**
- * @brief
- */
-char *Sys_GetHomeDirectory (void)
-{
-	return getenv("HOME");
-}
-
 /* ======================================================================= */
 /* General routines */
 /* ======================================================================= */
-
-/**
- * @brief
- */
-int Sys_FileLength (const char *path)
-{
-	struct stat st;
-
-	if (stat (path, &st) || (st.st_mode & S_IFDIR))
-		return -1;
-
-	return st.st_size;
-}
 
 /**
  * @brief
@@ -184,29 +149,6 @@ void Sys_Quit (void)
 void Sys_Init (void)
 {
 	Cvar_Get("sys_os", "macosx", CVAR_SERVERINFO, NULL);
-}
-
-/**
- * @brief
- * @sa Sys_DisableTray
- */
-void Sys_EnableTray (void)
-{
-}
-
-/**
- * @brief
- * @sa Sys_EnableTray
- */
-void Sys_DisableTray (void)
-{
-}
-
-/**
- * @brief
- */
-void Sys_Minimize (void)
-{
 }
 
 /**
@@ -236,20 +178,6 @@ void Sys_Error (const char *error, ...)
 	Sys_DebugBreak();				/* break execution before game shutdown */
 #endif
 	exit(1);
-}
-
-/**
- * @brief
- * @return -1 if not present
- */
-int Sys_FileTime (const char *path)
-{
-	struct	stat	buf;
-
-	if (stat (path,&buf) == -1)
-		return -1;
-
-	return buf.st_mtime;
 }
 
 /**
@@ -312,13 +240,6 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 	}
 
 	return GetGameAPI(parms);
-}
-
-/**
- * @brief
- */
-void Sys_AppActivate (void)
-{
 }
 
 /**
