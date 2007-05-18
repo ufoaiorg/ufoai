@@ -241,15 +241,19 @@ static qboolean CheckBEP (char *expr, qboolean(*varFuncParam) (char *var))
  * @param[in] pos1 Position at the start.
  * @param[in] pos2 Position at the end.
  * @return Distance from pos1 to pos2.
+ * @note distance is an angle! This is the angle (in degrees) between the 2 vectors starting at earth's center and ending at start or end.
  */
 extern float CP_GetDistance (const vec2_t pos1, const vec2_t pos2)
 {
-	float a, b, c;
+	float distance;
+	vec3_t start, end;
 
-	a = fabs(pos1[0] - pos2[0]);
-	b = fabs(pos1[1] - pos2[1]);
-	c = (a * a) + (b * b);
-	return sqrt(c);
+	PolarToVec(pos1, start);
+	PolarToVec(pos2, end);
+
+	distance = DotProduct(start, end);
+	distance = acos(distance) * todeg;
+	return distance;
 }
 
 
