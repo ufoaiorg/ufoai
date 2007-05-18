@@ -431,9 +431,17 @@ static void PF_ReadData (void *buffer, int size)
 	MSG_ReadData(&net_message, buffer, size);
 }
 
+/**
+ * @brief
+ * @sa MSG_V_ReadFormat
+ */
 static void PF_ReadFormat (const char *format, ...)
 {
 	va_list ap;
+
+	assert(format);
+	if (!*format)	/* PA_NULL */
+		return;
 	va_start(ap, format);
 	MSG_V_ReadFormat(&net_message, format, ap);
 	va_end(ap);
