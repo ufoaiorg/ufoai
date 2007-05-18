@@ -872,12 +872,12 @@ void Draw_3DMapMarkers (vec3_t angles, float zoom, vec3_t position, const char *
 
 	memset(&mi, 0, sizeof(modelInfo_t));
 
-	Com_sprintf(path, sizeof(path), "models/geoscape/%s.md2", model);
+	Com_sprintf(path, sizeof(path), "geoscape/%s", model);
 	mi.model = R_RegisterModelShort(path);
 	mi.name = path;
 	if (!mi.model) {
 		/*Com_Printf("Could not find '%s'\n", path);*/
-		Com_sprintf(path, sizeof(path), "models/weapons/fraggren/fraggren.md2");
+		Com_sprintf(path, sizeof(path), "weapons/fraggren/fraggren");
 		mi.model = R_RegisterModelShort(path);
 		mi.name = path;
 		/*return;*/

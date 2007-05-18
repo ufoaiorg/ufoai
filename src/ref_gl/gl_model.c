@@ -1456,7 +1456,7 @@ struct model_s *R_RegisterModel (const char *name)
 	int i;
 	dsprite_t *sprout;
 	dmdl_t *pheader;
-	maliasmodel_t	*pheader3;
+	maliasmodel_t *pheader3;
 
 	mod = Mod_ForName(name, qfalse);
 	if (mod) {
@@ -1521,6 +1521,8 @@ struct model_s *R_RegisterModel (const char *name)
  */
 struct model_s *R_RegisterModelShort (const char *name)
 {
+	model_t *mod;
+
 	if (!name || !name[0])
 		return NULL;
 
@@ -1528,7 +1530,16 @@ struct model_s *R_RegisterModelShort (const char *name)
 		char filename[MAX_QPATH];
 
 		Com_sprintf(filename, sizeof(filename), "models/%s.md2", name);
-		return R_RegisterModel(filename);
+		mod = R_RegisterModel(filename);
+		if (!mod) {
+			Com_sprintf(filename, sizeof(filename), "models/%s.md3", name);
+			mod = R_RegisterModel(filename);
+		}
+		if (!mod) {
+			Com_sprintf(filename, sizeof(filename), "models/%s.obj", name);
+			mod = R_RegisterModel(filename);
+		}
+		return mod;
 	} else
 		return R_RegisterModel(name);
 }

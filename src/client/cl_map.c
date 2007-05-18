@@ -422,7 +422,7 @@ extern qboolean MAP_Draw3DMarkerIfVisible (const menuNode_t* node, const vec2_t 
 	float costheta, sintheta;
 	const float radius = GLOBE_RADIUS;
 
-	if (MAP_3DMapToScreen (node, pos, &x, &y, &z)) {
+	if (MAP_3DMapToScreen(node, pos, &x, &y, &z)) {
 		/* Set position of the model on the screen */
 		VectorSet(screenPos, x, y, z);
 
@@ -879,9 +879,9 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 	for (base = gd.bases + gd.numBases - 1; base >= gd.bases ; base--) {
 		if (!base->founded)
 			continue;
-		
+
 		angle = MAP_AngleOfPath(node, base->pos, northPole, NULL);
-		
+
 		/* Get position on screen */
 		 MAP_3DMapToScreen(node, base->pos, &x, &y, NULL);
 
