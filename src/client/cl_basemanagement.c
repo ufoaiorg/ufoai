@@ -2838,6 +2838,7 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
 				for (l = 0; l < MAX_EMPLOYEES; l++)
 					MSG_WriteShort(sb, gd.alltransfers[aircraft->idx].employees[l]);
 			}
+			MSG_WritePos(sb, aircraft->direction);
 		}
 		MSG_WriteShort(sb, MAX_AIRCRAFT);
 		for (k = 0; k < MAX_AIRCRAFT; k++)
@@ -3002,6 +3003,9 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 				for (l = 0; l < MAX_EMPLOYEES; l++)
 					gd.alltransfers[aircraft->idx].employees[l] = MSG_ReadShort(sb);
 			}
+			if (*(int*)data >= 2) { /* >= 2.2 */
+				MSG_ReadPos(sb, aircraft->direction);
+			}
 #if 0
 			struct actMis_s* mission;	/**< The mission the aircraft is moving to */
 #endif
@@ -3031,7 +3035,7 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 			b->alienscont[k].techIdx = MSG_ReadShort(sb);
 		}
 
-		if (*(int*)data >= 2) {
+		if (*(int*)data >= 2) { /* >= 2.2 */
 			/* Base capacities. */
 			for (k = 0; k < MAX_CAP; k++) {
 				b->capacities[k].cur = MSG_ReadShort(sb);

@@ -679,9 +679,7 @@ extern void AIR_NewAircraft (base_t *base, const char *name)
 		/* NOTE: when we send the aircraft to another base this has to be changed, too */
 		aircraft->idxInBase = base->numAircraftInBase;
 		/* set initial direction of the aircraft */
-		aircraft->direction[0] = 1;
-		aircraft->direction[1] = 0;
-		aircraft->direction[2] = 0;
+		VectorSet(aircraft->direction, 1, 0, 0);
 		/* link the teamSize pointer in */
 		aircraft->teamSize = &base->teamNum[base->numAircraftInBase];
 		AIR_ResetAircraftTeam(aircraft);
@@ -1726,6 +1724,7 @@ extern qboolean AIR_Save (sizebuf_t* sb, void* data)
 		MSG_WriteFloat(sb, gd.ufos[i].route.distance);
 		for (j = 0; j < gd.ufos[i].route.numPoints; j++)
 			MSG_Write2Pos(sb, gd.ufos[i].route.point[j]);
+		MSG_WritePos(sb, gd.ufos[i].direction);
 		/* @todo more? */
 	}
 	return qtrue;
@@ -1764,6 +1763,9 @@ extern qboolean AIR_Load (sizebuf_t* sb, void* data)
 		aircraft->route.distance = MSG_ReadFloat(sb);
 		for (j = 0; j < aircraft->route.numPoints; j++)
 			MSG_Read2Pos(sb, aircraft->route.point[j]);
+		if (*(int*)data >= 2) { /* >= 2.2 */
+			MSG_ReadPos(sb, aircraft->direction);
+		}
 		/* @todo more? */
 	}
 

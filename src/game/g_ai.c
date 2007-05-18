@@ -646,7 +646,7 @@ static void G_SpawnAIPlayer (player_t * player, int numSpawn)
 
 	/* spawn players */
 	for (j = 0; j < numSpawn; j++) {
-		assert (numPoints > 0);
+		assert(numPoints > 0);
 		/* select spawnpoint */
 		while (ent->type != ET_ACTORSPAWN)
 			ent = &g_edicts[spawnPoints[rand() % numPoints]];
