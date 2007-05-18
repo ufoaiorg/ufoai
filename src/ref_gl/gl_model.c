@@ -85,6 +85,7 @@ void Mod_Modellist_f (void)
 
 /**
  * @brief Loads in a model for the given name
+ * @sa R_RegisterModel
  */
 static model_t *Mod_ForName (const char *name, qboolean crash)
 {
@@ -1448,7 +1449,9 @@ static void Mod_FindSharedEdges (model_t * mod)
 #endif
 
 /**
- * @brief
+ * @brief Register model and skins
+ * @sa R_RegisterModelShort
+ * @sa Mod_ForName
  */
 struct model_s *R_RegisterModel (const char *name)
 {
@@ -1525,7 +1528,17 @@ static const char *mod_extensions[] = {
 };
 
 /**
- * @brief
+ * @brief Tries to load a model
+ * @param[in] name The model path or name (with or without extension) - see notes
+ * this parameter is always relativ to the game base dir - it can also be relative
+ * to the models/ dir in the game folder
+ * @note trying all supported model formats is only supported when you are using
+ * a name without extension and relative to models/ dir
+ * @note if first char of name is a '*' - this is an inline model
+ * @note if there is not extension in the given filename the function will
+ * try to load one of the supported model formats
+ * @return NULL if no model could be found with the given name, model_t otherwise
+ * @sa R_RegisterModel
  */
 struct model_s *R_RegisterModelShort (const char *name)
 {

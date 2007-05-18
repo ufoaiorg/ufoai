@@ -46,44 +46,40 @@
 
 #include "gl_local.h"
 
-/* Vertex */
-typedef struct
-{
+/** @brief obj Vertex */
+typedef struct {
 	vec4_t xyzw;
 } obj_vertex_t;
 
 
-/* Texture coordinates */
-typedef struct
-{
+/** @brief obj Texture coordinates */
+typedef struct obj_texCoord_s {
 	vec3_t uvw;
 } obj_texCoord_t;
 
 
-/* Polygon/Face */
-typedef struct
-{
-	GLenum type;		/* primitive type */
-	int num_elems;		/* number of vertices */
+/** @brief obj Polygon/Face */
+typedef struct obj_face_s {
+	GLenum type;		/**< primitive type */
+	int num_elems;		/**< number of vertices */
 
-	int *vert_indices;	/* vertex indices */
-	int *uvw_indices;	/* texture coordinate indices */
-	int *norm_indices;	/* normal vector indices */
+	int *vert_indices;	/**< vertex indices */
+	int *uvw_indices;	/**< texture coordinate indices */
+	int *norm_indices;	/**< normal vector indices */
 } obj_face_t;
 
 
-/* OBJ model structure */
-typedef struct
-{
-	char name[MAX_VAR];			/* the model name */
-	int num_texCoords;			/* number of texture coords. */
-	int num_faces;				/* number of polygons */
+/** @brief obj model structure */
+typedef struct obj_model_s {
+	char name[MAX_VAR];			/**< the model name */
+	int num_texCoords;			/**< number of texture coords. */
+	int num_faces;				/**< number of polygons */
 
-	int has_texCoords;			/* has texture coordinates? */
-	int has_normals;			/* has normal vectors? */
+	int has_texCoords;			/**< has texture coordinates? */
+	int has_normals;			/**< has normal vectors? */
 
-	obj_texCoord_t *texCoords;	/* tex. coord. list */
-	obj_face_t *faces;			/* model's polygons */
+	obj_texCoord_t *texCoords;	/**< tex. coord. list */
+	obj_face_t *faces;			/**< model's polygons */
 } obj_model_t;
 
 /**
@@ -390,6 +386,6 @@ static void R_OBJ_Render (model_t *mod)
 void R_DrawOBJModel (entity_t *e)
 {
 	currentmodel = e->model;
-	assert (currentmodel->type == mod_obj);
+	assert(currentmodel->type == mod_obj);
 	R_OBJ_Render(currentmodel);
 }
