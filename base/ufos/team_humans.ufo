@@ -753,13 +753,14 @@ names scandinavian
 	Anne
 	Anna
 	Astrid
+	Beate
 	Berit
 	Betje
 	Dana
 	Doris
 	Edda
 	Emma
-	Eli
+	Elin
 	Eva
 	Hendrika
 	Helga
@@ -769,7 +770,8 @@ names scandinavian
 	Karin
 	Katrina
 	Kirsten
-	Lina
+	Kerstin
+	Lena
 	Lise
 	Liv
 	Nada
@@ -785,10 +787,12 @@ names scandinavian
 	{
 	Anders
 	Andreas
+	Arne
 	Bjorn
-	Bjorn
+	Benny
 	Christian
-	Devoss
+	Daniel
+	Erik
 	Godewyn
 	Groot
 	Gustaf
@@ -800,6 +804,7 @@ names scandinavian
 	Jilt
 	Jens
 	Jon
+	John-Andre
 	Knut
 	Kristian
 	Kjell
@@ -811,6 +816,7 @@ names scandinavian
 	Ottar
 	Olav
 	Olaf
+	Ole
 	Ole-Gunnar
 	Soren
 	Sven
@@ -824,32 +830,33 @@ names scandinavian
 	lastname
 	{
 	Aas
+	Arneberg
 	Berg
-	"De Boer"
 	Fidjestoel
+	Gudmundsen
 	Hagen
 	Haugen
 	Heyerdal
 	Hjelset
+	Hostmark
+	Kramberger
 	Lerby
 	Lie
 	Lund
-	Nelson
+	Nylander
 	Salhoff
 	Skog
-	"Van Aken"
-	"Van Eych"
-	Vanderveer
 	Vik
-	Zeeman
 // "...son" or "...dottir" names:
+	Andersen
 	Andersson
 	Eriksson
-	Gustavson
-	Hanson
-	Jenson
-	Larson
-	Sorenson
+	Gustavsson
+	Hansson
+	Jensen
+	Johansson
+	Larsson
+	Sorensen
 	}
 }
 
