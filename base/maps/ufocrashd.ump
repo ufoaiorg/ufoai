@@ -9,14 +9,102 @@
 
 base ucd/uc_
 
+// *********************************
+// Tiles
+// *********************************
+
 // ---------------------------------
 // Dropship
-tile +drop
+tile +drop_firebird
 {
 4 4
 0      abc     abc     0
 abc     +a     +a      abc
 abc     +a     +a      abc
 0      abc     abc     0
+}
+
+
+
+// *********************************
+// Assemblies
+// *********************************
+
+// grass
+
+assembly ufo_carrier-grass
+{
+}
+
+assembly ufo_harvester-grass
+{
+}
+
+assembly ufo_condor-grass
+{
+}
+
+assembly ufo_scout-grass
+{
+}
+
+assembly ufo_fighter-grass
+{
+}
+
+assembly ufo_big-grass
+{
+}
+
+// desert
+
+assembly ufo_carrier-desert
+{
+}
+
+assembly ufo_harvester-desert
+{
+}
+
+assembly ufo_condor-desert
+{
+}
+
+assembly ufo_scout-desert
+{
+}
+
+assembly ufo_fighter-desert
+{
+}
+
+assembly ufo_big-desert
+{
+}
+
+// arctic
+
+assembly ufo_carrier-arctic
+{
+}
+
+assembly ufo_harvester-arctic
+{
+}
+
+assembly ufo_condor-arctic
+{
+}
+
+assembly ufo_scout-arctic
+{
+}
+
+assembly ufo_fighter-arctic
+{
+}
+
+assembly ufo_big-arctic
+{
 }
 
