@@ -978,7 +978,7 @@ extern void MAP_CenterOnPoint (void)
  * @sa MAP_DrawMap
  * @sa MAP_CenterOnPoint
  */
-static void MAP3D_SmoothRotate(void)
+static void MAP3D_SmoothRotate (void)
 {
 	vec3_t diff;
 	float length;
@@ -1002,7 +1002,7 @@ static void MAP3D_SmoothRotate(void)
  * @sa MAP_DrawMap
  * @sa MAP_CenterOnPoint
  */
-static void MAP_SmoothTranslate(void)
+static void MAP_SmoothTranslate (void)
 {
 	vec2_t diff;
 	float length, diff_zoom;
@@ -1266,8 +1266,6 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 	/* FIXME */
 	/* use the latitude and longitude values from nation border definition to draw a polygon */
 	for (i = 0; i < gd.numNations; i++) {
-		/* font color for nations */
-		re.DrawColor(gd.nations[i].color);
 		if (gd.nations[i].numBorders) {
 			for (j = 0; j < gd.nations[i].numBorders; j++) {
 				/* FIXME: doesn't work for scrolling the map */
@@ -1276,7 +1274,6 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 				borders[j * 2 + 1] = y;
 			}
 			re.DrawPolygon(gd.nations[i].numBorders, borders);
-			re.DrawColor(NULL);
 			re.DrawLineLoop(gd.nations[i].numBorders, borders);
 		}
 	}
@@ -1284,14 +1281,9 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 	re.DrawColor(NULL);
 
 	for (i = 0; i < gd.numNations; i++) {
-		/* font color for nations */
-		re.DrawColor(gd.nations[i].color);
 		MAP_MapToScreen(node, gd.nations[i].pos, &x, &y);
 		re.FontDrawString("f_verysmall", ALIGN_UC, x , y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1], gd.nations[i].name, 0, 0, NULL, qfalse);
 	}
-
-	/* reset color */
-	re.DrawColor(NULL);
 }
 
 /** @brief geobackground image for 3d globe */
