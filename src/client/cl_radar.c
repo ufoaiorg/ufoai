@@ -47,8 +47,9 @@ extern void RADAR_DrawCoverage (const menuNode_t* node, const radar_t* radar, ve
 /**
  * @brief Display radar in geoscape
  */
-extern void RADAR_DrawInMap (const menuNode_t* node, const radar_t* radar, int x, int y, vec2_t pos, qboolean globe)
+extern void RADAR_DrawInMap (const menuNode_t* node, const radar_t* radar, vec2_t pos, qboolean globe)
 {
+	int x, y;
 	int i, z;
 	const vec4_t color = {0, 1, 0, 1};
 	int pts[4];
@@ -63,6 +64,10 @@ extern void RADAR_DrawInMap (const menuNode_t* node, const radar_t* radar, int x
 	re.DrawColor(color);
 
 	/* Draw lines from radar to ufos sensored */
+	if (globe)
+		MAP_3DMapToScreen(node, pos, &x, &y, NULL);
+	else
+		MAP_MapToScreen(node, pos, &x, &y);
 	Vector2Set(pts, x, y);
 	for (i = radar->numUfos - 1; i >= 0; i--)
 		if (!globe && MAP_MapToScreen(node, (gd.ufos + radar->ufos[i])->pos, &x, &y)) {

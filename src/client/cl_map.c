@@ -1077,11 +1077,8 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 
 		angle = MAP_AngleOfPath(node, base->pos, northPole, NULL, NULL);
 
-		/* Get position on screen */
-		 MAP_3DMapToScreen(node, base->pos, &x, &y, NULL);
-
 		/* Draw base radar info */
-		RADAR_DrawInMap(node, &(base->radar), x, y, base->pos, qtrue);
+		RADAR_DrawInMap(node, &(base->radar), base->pos, qtrue);
 
 		/* Draw base */
 		if (base->baseStatus == BASE_UNDER_ATTACK)
@@ -1092,6 +1089,10 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 		/* draw aircraft */
 		for (i = 0, aircraft = (aircraft_t *) base->aircraft; i < base->numAircraftInBase; i++, aircraft++)
 			if (aircraft->status > AIR_HOME) {
+
+				/* Draw aircraft radar */
+				RADAR_DrawInMap(node, &(aircraft->radar), aircraft->pos, qtrue);
+
 				/* Draw aircraft route */
 				if (aircraft->status >= AIR_TRANSIT) {
 					mapline_t path;
@@ -1203,7 +1204,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 			continue;
 
 		/* Draw base radar info */
-		RADAR_DrawInMap(node, &(base->radar), x, y, base->pos, qfalse);
+		RADAR_DrawInMap(node, &(base->radar), base->pos, qfalse);
 
 		/* Draw base */
 		if (base->baseStatus == BASE_UNDER_ATTACK)
@@ -1217,7 +1218,7 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 			if (aircraft->status > AIR_HOME && MAP_MapToScreen(node, aircraft->pos, &x, &y)) {
 
 				/* Draw aircraft radar */
-				RADAR_DrawInMap(node, &(aircraft->radar), x, y, aircraft->pos, qfalse);
+				RADAR_DrawInMap(node, &(aircraft->radar), aircraft->pos, qfalse);
 
 				/* Draw aircraft */
 				re.DrawNormPic(x, y, 0, 0, 0, 0, 0, 0, ALIGN_CC, qfalse, aircraft->image);
