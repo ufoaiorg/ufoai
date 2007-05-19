@@ -793,51 +793,53 @@ extern void MAP_MapDrawEquidistantPoints (const menuNode_t* node, vec2_t center,
 static float MAP_AngleOfPath (const menuNode_t* node, const vec3_t start, const vec2_t end, vec3_t direction, aircraftProjectile_t *projectile)
 {
 	float angle = 0.0f;
-	vec3_t start3D, end3D, ortVector, v, rotationAxis;
+	vec3_t start3D, end3D, tangentVector, v, rotationAxis;
 	float dist;
 
 	/* calculate the vector tangent to movement */
 	PolarToVec(start, start3D);
 	PolarToVec(end, end3D);
 	CrossProduct(start3D, end3D, v);
-	CrossProduct(v, start3D, ortVector);
-	VectorNormalize(ortVector);
+	CrossProduct(v, start3D, tangentVector);
+	VectorNormalize(tangentVector);
 
 	/* smooth change of direction if the model is not idle */
 	if (direction) {
-		VectorSubtract(ortVector, direction, v);
+		VectorSubtract(tangentVector, direction, v);
 		dist = VectorLength(v);
 		if (dist > 0.01) {
-			CrossProduct(direction, ortVector, rotationAxis);
+			CrossProduct(direction, tangentVector, rotationAxis);
 			VectorNormalize(rotationAxis);
 			RotatePointAroundVector(v, rotationAxis, direction, 5.0);
 			VectorCopy(v, direction);
-			VectorSubtract(ortVector, direction, v);
+			VectorSubtract(tangentVector, direction, v);
 			if (VectorLength(v) < dist) {
-				VectorCopy(direction, ortVector);
+				VectorCopy(direction, tangentVector);
 			}
 			else {
-				VectorCopy(ortVector, direction);
+				VectorCopy(tangentVector, direction);
 			}
 		}
 	}
 
-	/* rotate vector tangent to movement in the frame of the screen */
-	VectorSet(rotationAxis, 0, 0, 1);
-	RotatePointAroundVector(v, rotationAxis, ortVector, - ccs.angles[PITCH]);
-	VectorSet(rotationAxis, 0, 1, 0);
-	RotatePointAroundVector(ortVector, rotationAxis, v, - ccs.angles[YAW]);
-
-	/* calculate the orientation angle of the model around axis perpendicular to the screen */
-	angle = todeg * atan(ortVector[0] / ortVector[1]);
-	if (ortVector[1] > 0)
-		angle += 180.0f;
-
+	/* if this is a projectile, update its position toward the target */
 	if (projectile) {
-		VectorScale(ortVector, 0.01f, ortVector);
-		VectorAdd(start3D, ortVector, end3D);
+		VectorScale(tangentVector, 0.01f, tangentVector);
+		VectorAdd(start3D, tangentVector, end3D);
 		VecToPolar(end3D, projectile->pos);
 	}
+
+	/* rotate vector tangent to movement in the frame of the screen */
+	VectorSet(rotationAxis, 0, 0, 1);
+	RotatePointAroundVector(v, rotationAxis, tangentVector, - ccs.angles[PITCH]);
+	VectorSet(rotationAxis, 0, 1, 0);
+	RotatePointAroundVector(tangentVector, rotationAxis, v, - ccs.angles[YAW]);
+
+	/* calculate the orientation angle of the model around axis perpendicular to the screen */
+	angle = todeg * atan(tangentVector[0] / tangentVector[1]);
+	if (tangentVector[1] > 0)
+		angle += 180.0f;
+
 	return angle;
 }
 

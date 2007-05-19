@@ -118,7 +118,7 @@ extern void AIRFIGHT_ActionsAfterAirfight (aircraft_t* aircraft, qboolean phalan
 }
 
 /**
- * @brief Check if projectiles arrived at destination.
+ * @brief Check if some projectiles on geoscape arrived at destination.
  */
 extern void AIRFIGHT_ProjectileReachedTarget (void)
 {
