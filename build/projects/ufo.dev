@@ -9,7 +9,7 @@ CppCompiler=
 Includes=
 Linker=-lvorbisfile_@@_-lvorbis_@@_-logg_@@_-lwinmm _@@_-lwsock32 _@@_-lkernel32 _@@_-luser32 _@@_-lgdi32 _@@_-lgmon_@@_../../src/ports/win32/intl.lib _@@_-lSDL_@@_-lSDL_ttf_@@_../../src/ports/win32/libjpeg.lib_@@_-lz_@@_
 Libs=C:\Dev-Cpp\lib
-UnitCount=121
+UnitCount=122
 Folders="Header Files","Resource Files","Source Files"
 ObjFiles=
 PrivateResource=ufo_private.rc
@@ -1256,4 +1256,14 @@ Link=1
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=$(CC) -c cl_vid.c -o ufo/cl_vid.o $(CFLAGS)
+
+[Unit122]
+FileName=..\..\src\client\cl_airfight.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=$(CC) -c cl_airfight.c -o ufo/cl_airfight.o $(CFLAGS)
 

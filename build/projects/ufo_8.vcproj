@@ -512,6 +512,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\client\cl_airfight.c"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\client\cl_aliencont.c"
 				>
 			</File>
