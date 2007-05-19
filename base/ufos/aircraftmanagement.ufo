@@ -24,9 +24,17 @@
 // damage 35 means: the aircraft weapon power does 35 points of damage
 //
 
+// don't forget to add mini-models to base/models/geoscape, too
+// also read the notes about ufos
+
 //
 // AIRCRAFTS
 //
+
+// *********************************
+// Dropships
+// *********************************
+
 aircraft craft_drop_firebird
 {
 	speed		10.0
@@ -46,6 +54,10 @@ aircraft craft_drop_firebird
 	angles_equip	"90 0 180"
 	scale_equip	"1.1 1.1 1.1"
 }
+
+// *********************************
+// Interceptors
+// *********************************
 
 aircraft craft_inter_stiletto
 {
@@ -112,6 +124,12 @@ aircraft craft_inter_stingray
 	angles_equip	"-90 0 180"
 	scale_equip	"0.9 0.9 0.9"
 }
+
+// *********************************
+// UFOS
+// Notes
+// adding or renaming ufos: change the assembly name or add the assembly to base/maps/ufocrash[dn].ump
+// *********************************
 
 // FIXME
 aircraft craft_ufo_harvester
