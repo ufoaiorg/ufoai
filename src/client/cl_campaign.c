@@ -1298,36 +1298,37 @@ static void CL_CampaignRunMarket (void)
 	for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++)
 		if (!Q_strncmp(curCampaign->market, ed->name, MAX_VAR))
 			break;
-	assert (i != csi.numEDs);
+	assert(i != csi.numEDs);
 
 	/* @todo: Find out why there is a 2 days discrepancy in reasearched_date*/
 	for (i = 0; i < csi.numODs; i++) {
 		if (RS_ItemIsResearched(csi.ods[i].id)) {
 			/* supply balance */
 			technology_t *tech = RS_GetTechByProvided(csi.ods[i].id);
+			int reasearched_date;
 			if (!tech)
 				Sys_Error("No tech that provides '%s'\n", csi.ods[i].id);
-			int reasearched_date = tech->researchedDateDay + tech->researchedDateMonth*30 +  tech->researchedDateYear*DAYS_PER_YEAR - 2;
-			if (reasearched_date <= curCampaign->date.sec/86400 + curCampaign->date.day)
+			reasearched_date = tech->researchedDateDay + tech->researchedDateMonth * 30 +  tech->researchedDateYear * DAYS_PER_YEAR - 2;
+			if (reasearched_date <= curCampaign->date.sec / 86400 + curCampaign->date.day)
 				reasearched_date -= 100;
 			research_factor = mrs1 * sqrt(ccs.date.day - reasearched_date);
-			price_factor = mpr1/sqrt(csi.ods[i].price+1);
+			price_factor = mpr1 / sqrt(csi.ods[i].price+1);
 			curr_supp_diff = floor(research_factor*price_factor - ccs.eMarket.num[i]);
 			if(curr_supp_diff != 0)
 				ccs.eMarket.cumm_supp_diff[i] += curr_supp_diff;
 			else
 				ccs.eMarket.cumm_supp_diff[i] *= 0.9;
-			market_action = floor(mrg1*ccs.eMarket.cumm_supp_diff[i] + mrg2*curr_supp_diff);
+			market_action = floor(mrg1 * ccs.eMarket.cumm_supp_diff[i] + mrg2 * curr_supp_diff);
 			ccs.eMarket.num[i] += market_action;
-			if (ccs.eMarket.num[i]<0)
-				ccs.eMarket.num[i]=0;
+			if (ccs.eMarket.num[i] < 0)
+				ccs.eMarket.num[i] = 0;
 
 			/* set item price based on supply imbalance */
 			if(research_factor*price_factor >= 1)
-				ccs.eMarket.ask[i] = floor( csi.ods[i].price*(1-(1-BID_FACTOR)/2*(1/(1+exp(curr_supp_diff/(research_factor*price_factor)))*2-1)) );
+				ccs.eMarket.ask[i] = floor(csi.ods[i].price * (1 - (1 - BID_FACTOR) / 2 * (1 / (1 + exp(curr_supp_diff / (research_factor * price_factor))) * 2 - 1)) );
 			else
 				ccs.eMarket.ask[i] = csi.ods[i].price;
-			ccs.eMarket.bid[i] = floor(ccs.eMarket.ask[i]*BID_FACTOR);
+			ccs.eMarket.bid[i] = floor(ccs.eMarket.ask[i] * BID_FACTOR);
 		}
 	}
 }

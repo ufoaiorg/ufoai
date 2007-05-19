@@ -1760,7 +1760,7 @@ extern qboolean AIR_Load (sizebuf_t* sb, void* data)
 	for (i = 0; i < gd.numUfos; i++) {
 		s = MSG_ReadString(sb);
 		ufo = AIR_GetAircraft(s);
-		if (!aircraft) {
+		if (!ufo) {
 			Com_Printf("Could not find ufo '%s'\n", s);
 			MSG_ReadByte(sb); /* visible */
 			MSG_ReadPos(sb, tmp_vec3t);	/* pos */
