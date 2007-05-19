@@ -7,9 +7,9 @@ Type=1
 Compiler=-D__GNUWIN32__ _@@_-D_M_IX86=500 _@@_-Wall_@@_-DWIN_ERROR_@@_-DDEBUG_@@_-DDEVCPP_@@_-DC_ONLY_@@__@@_
 CppCompiler=
 Includes=D:\Programme\Dev-Cpp\include
-Linker=_@@__@@_
+Linker=-lz_@@_
 Libs=C:\Dev-Cpp\lib
-UnitCount=26
+UnitCount=28
 Folders=header,src
 ObjFiles=
 PrivateResource=
@@ -130,24 +130,24 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit27]
-FileName=..\..\src\tools\qdata\common\lbmlib.c
-Folder=qdata
+FileName=..\..\src\qcommon\ioapi.c
+Folder=src
 Compile=1
 CompileCpp=0
 Link=1
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=$(CC) -c lbmlib.c -o lbmlib.o $(CFLAGS)
+BuildCmd=$(CC) -c ioapi.c -o ioapi.o $(CFLAGS)
 
 [Unit28]
-FileName=..\..\src\tools\qdata\common\cmdlib.h
-Folder=qdata
+FileName=..\..\src\qcommon\unzip.c
+Folder=src
 Compile=1
-CompileCpp=1
+CompileCpp=0
 Link=1
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=
+BuildCmd=$(CC) -c unzip.c -o unzip.o $(CFLAGS)
 
 [Unit29]
 FileName=..\..\src\tools\qdata\common\l3dslib.c
