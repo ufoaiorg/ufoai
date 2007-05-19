@@ -73,6 +73,7 @@ extern void AIRFIGHT_ActionsAfterAirfight (aircraft_t* aircraft, qboolean phalan
 	byte *color;
 	const char *zoneType = NULL;
 	char missionName[MAX_VAR];
+	const nation_t *nation = NULL;
 
 	if (phalanxWon) {
 		/* get the color value of the map at the crash position */
@@ -100,8 +101,12 @@ extern void AIRFIGHT_ActionsAfterAirfight (aircraft_t* aircraft, qboolean phalan
 			ms->civilians %= 4;
 			ms->civilians += 1;
 			Vector2Set(ms->pos, aircraft->pos[0], aircraft->pos[1]);
+			nation = MAP_GetNation(ms->pos);
 			Com_sprintf(ms->type, sizeof(ms->type), _("UFO crash site"));
-			Com_sprintf(ms->location, sizeof(ms->location), "todo: nation");
+			if (nation)
+				Com_sprintf(ms->location, sizeof(ms->location), _(nation->name));
+			else
+				Com_sprintf(ms->location, sizeof(ms->location), _("No nation"));
 			/* FIXME: */
 			Q_strncpyz(ms->alienTeam, "ortnok", sizeof(ms->alienTeam));
 			Q_strncpyz(ms->civTeam, "european", sizeof(ms->civTeam));
