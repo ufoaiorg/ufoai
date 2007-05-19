@@ -871,10 +871,8 @@ static void MAP_GetGeoscapeAngle (float *Vector, qboolean globe)
 	if (centerOnEventIdx < ccs.numMissions) {
 		if (globe)
 			VectorSet(Vector, ccs.mission[centerOnEventIdx - counter].realPos[0], -ccs.mission[centerOnEventIdx - counter].realPos[1], 0);
-		else {
-			Vector[0] = ccs.mission[centerOnEventIdx - counter].realPos[0];
-			Vector[1] = ccs.mission[centerOnEventIdx - counter].realPos[1];
-		}
+		else
+			Vector2Set(Vector, ccs.mission[centerOnEventIdx - counter].realPos[0], ccs.mission[centerOnEventIdx - counter].realPos[1]);
 		MAP_ResetAction();
 		selMis = ccs.mission + centerOnEventIdx - counter;
 		return;
@@ -885,11 +883,8 @@ static void MAP_GetGeoscapeAngle (float *Vector, qboolean globe)
 	if (centerOnEventIdx < gd.numBases + counter) {
 		if (globe)
 			VectorSet(Vector, gd.bases[centerOnEventIdx - counter].pos[0], -gd.bases[centerOnEventIdx - counter].pos[1], 0);
-		else {
-			Vector[0] = gd.bases[centerOnEventIdx - counter].pos[0];
-			Vector[1] = gd.bases[centerOnEventIdx - counter].pos[1];
-		}
-
+		else
+			Vector2Set(Vector, gd.bases[centerOnEventIdx - counter].pos[0], gd.bases[centerOnEventIdx - counter].pos[1]);
 		return;
 	}
 	counter += gd.numBases;
@@ -901,10 +896,8 @@ static void MAP_GetGeoscapeAngle (float *Vector, qboolean globe)
 				if (centerOnEventIdx == counter) {
 					if (globe)
 						VectorSet(Vector, aircraft->pos[0], -aircraft->pos[1], 0);
-					else {
-						Vector[0] = aircraft->pos[0];
-						Vector[1] = aircraft->pos[1];
-					}
+					else
+						Vector2Set(Vector, aircraft->pos[0], aircraft->pos[1]);
 					MAP_ResetAction();
 					selectedAircraft = aircraft;
 					return;
@@ -920,10 +913,8 @@ static void MAP_GetGeoscapeAngle (float *Vector, qboolean globe)
 			if (centerOnEventIdx == counter) {
 				if (globe)
 					VectorSet(Vector, aircraft->pos[0], -aircraft->pos[1], 0);
-				else {
-					Vector[0] = aircraft->pos[0];
-					Vector[1] = aircraft->pos[1];
-				}
+				else
+					Vector2Set(Vector, aircraft->pos[0], aircraft->pos[1]);
 				MAP_ResetAction();
 				selectedUfo = aircraft;
 				return;
@@ -957,13 +948,12 @@ extern void MAP_CenterOnPoint (void)
 
 	if (cl_3dmap->value) {
 		/* case 3D geoscape */
-		MAP_GetGeoscapeAngle (finalGlobeAngle, qtrue);
+		MAP_GetGeoscapeAngle(finalGlobeAngle, qtrue);
 		finalGlobeAngle[1] += GLOBE_ROTATE;
 	} else {
 		/* case 2D geoscape */
-		MAP_GetGeoscapeAngle (final2DGeoscapeCenter, qfalse);
-		final2DGeoscapeCenter[0] = 0.5f - final2DGeoscapeCenter[0] / 360.0f;
-		final2DGeoscapeCenter[1] = 0.5f - final2DGeoscapeCenter[1] / 180.0f;
+		MAP_GetGeoscapeAngle(final2DGeoscapeCenter, qfalse);
+		Vector2Set(final2DGeoscapeCenter, 0.5f - final2DGeoscapeCenter[0] / 360.0f, 0.5f - final2DGeoscapeCenter[1] / 180.0f);
 		if (final2DGeoscapeCenter[1] < 0.5 / ZOOM_LIMIT)
 			final2DGeoscapeCenter[1] = 0.5 / ZOOM_LIMIT;
 		if (final2DGeoscapeCenter[1] > 1.0 - 0.5 / ZOOM_LIMIT)
