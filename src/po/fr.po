@@ -3424,7 +3424,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:3075
 #: ../base/ufos/research.ufo:3082
 msgid "mail_from_paul_navarre"
-msgstr "Cdt Paul Navarre, R&D: Division Ingénierie, PHALANX, Commandement des Opérations Atlantique"
+msgstr ""
+"Cdt Paul Navarre, R&D: Division Ingénierie, PHALANX, Commandement des Opérations Atlantique"
 
 #: ../base/ufos/research.ufo:109
 #: ../base/ufos/research.ufo:116
@@ -3510,7 +3511,8 @@ msgstr "Cdt Paul Navarre, R&D: Division Ingénierie, PHALANX, Commandement des O
 #: ../base/ufos/research.ufo:3083
 #: ../base/ufos/research.ufo:3216
 msgid "mail_to_base_commander"
-msgstr "Commandant de Base, PHALANX, Commandement des Opérations Atlantique"
+msgstr ""
+"Commandant de Base, PHALANX, Commandement des Opérations Atlantique"
 
 #: ../base/ufos/research.ufo:131
 #: ../base/ufos/research.ufo:161
@@ -3558,7 +3560,7 @@ msgstr ""
 "\n"
 "Le sujet est certes vivant, et nous avons procédé à tout un panel d'expérimentations toxicologiques sur lui, qui nous ont donné des informations vitales sur leurs vulnérabilités face à plusieurs agents biologiques et substances chimiques. Cependant, nous avons été totalement incapables de faire une analyse du comportement de l'esprit alien. Cela est dû au fait que l'alien n'a montré aucun signe d'intelligence depuis que nous l'avons capturé. Il n'a fait guère plus que dormir, manger et fixer les murs de sa cellule. Il répond aux stimulus par des actions réflexes, de l'agressivité ou de la soumission, mais nous ne pouvons rien tirer de cela. Même un simple signe de la main semble dépasser la capacité de compréhension de la créature. L'électro-encéphalogramme révèle que le cerveau hautement développé de la créature ne laisse apparaître aucun signe d'activités cérébrales.\n"
 "\n"
-"Il est assez difficile de croire que cette même créature a pu utiliser un armement alien avancé contre nos troupes sur un champ de bataille. Il n'y a de plus aucun traumatisme physique qui puisse expliquer cette régression. Peut-être que sa capture a activé une sorte de mécanisme d'autodéfense anti-interrogatoire. En fait nous n'en savons rien. Aucun membre de mon équipe n'a réussi à émettre une hypothèse viable sur la raison de cette inactivité. Il faudra certainement appronfondir les recherches sur ce sujet. Nous allons garder le spécimen sous surveillance, et vous serez immédiatement averti en cas de changement de situation.\n"
+"Il est assez difficile de croire que cette même créature a pu utiliser un armement alien avancé contre nos troupes sur un champ de bataille. Il n'y a de plus aucun traumatisme physique qui puisse expliquer cette régression. Peut-être que sa capture a activé une sorte de mécanisme d'autodéfense anti-interrogatoire. En fait nous n'en savons rien. Aucun membre de mon équipe n'a réussi à émettre une hypothèse viable sur la raison de cette inactivité. Il faudra certainement approfondir les recherches sur ce sujet. Nous allons garder le spécimen sous surveillance, et vous serez immédiatement averti en cas de changement de situation.\n"
 "\n"
 "Sincèrement,\n"
 "\n"
@@ -3597,7 +3599,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:2793
 #: ../base/ufos/research.ufo:3215
 msgid "mail_from_dr_connor"
-msgstr "Dr Connor, R&D: Division Biologie et Confinement, PHALANX, Commandement des Opérations Atlantique"
+msgstr ""
+"Dr Connor, R&D: Division Biologie et Confinement, PHALANX, Commandement des Opérations Atlantique"
 
 #: ../base/ufos/research.ufo:237
 #: ../base/ufos/research.ufo:269
@@ -3783,7 +3786,8 @@ msgstr ""
 #: ../base/ufos/research.ufo:352
 #: ../base/ufos/research.ufo:359
 msgid "mail_from_col_falkland"
-msgstr "Col. Ingrid Falkland, Division Renseignements, PHALANX, Commandement des Opérations Atlantique"
+msgstr ""
+"Col. Ingrid Falkland, Division Renseignements, PHALANX, Commandement des Opérations Atlantique"
 
 #: ../base/ufos/research.ufo:379
 msgid "assault_txt"
@@ -4529,36 +4533,36 @@ msgstr "Découverte Alienne - Épée Kerr"
 #: ../base/ufos/research.ufo:871
 msgid "laserpistol_txt"
 msgstr ""
-"Commander, I apologise in advance if my typing isn't up to standard in this message. We've had a lot of sleepless nights down here in DivEngine working on the laser pistol project. It's been a gruelling amount of work, but I'm very proud to say that we've pulled it off. We have prototyped a working laser pistol.\n"
+"Commandant, je m'excuse par avance de la formulation non-standard de ce message. Nous avons accumulé les nuits blanches à la section DivEngine pour travailler sur le projet d'un pistolet laser. Cela fut une tâche titanesque, mais je suis très fier de vous annoncer que nous l'avons menée à bien. Nous avons un prototype de pistolet laser.\n"
 "\n"
-"The system is essentially the same as the one I've outlined for you in my report on Continuous Wave Laser Operation. Excited molecules of deuterium fluoride are lased and focused through a series of intelligent lenses. Waste gases are put through our custom filtering system, which we've scaled down even further. However, the reduced capacity of the filtering system and the smaller optical resonator have demanded some tradeoffs.\n"
+"Le procédé est essentiellement le même que celui décrit dans mon rapport sur les lasers continus. Les molécules excitées de fluorure d'hydrogène émettent un rayon focalisé par une série de lentilles intelligentes. Les gaz utilisés sont évacués à travers un système de filtre, dont nous avons encore diminué la taille. Toutefois, la capacité réduite du système de filtrage et la chambre de résonance diminuée ont des impacts sur les capacités de l'arme.\n"
 "\n"
-"The laser pistol can only lase deuterium-fluoride at about half the rate as our old Continuous Wave Laser prototype. Naturally this produces only a half-strength beam, doing half the damage of a larger weapon. It requires a period of continuous exposure -- several seconds at least -- for the beam to inflict enough damage to kill an unarmoured target. Armour will complicate the issue even further, and it's impossible for lasers to shoot through clouds of smoke, gas or fire. Still, as long as the target isn't obscured or immune to highly-focused light or heat, the laser will burn through anything given enough time.\n"
+"Le pistolet laser ne peut émettre un rayonnement de fluorure d'hydrogène que pendant un temps réduit de moitié par rapport à notre prototype de laser continu. Naturellement, le faisceau produit est deux fois moins puissant, infligeant deux fois moins de dommages qu'une arme plus grande. Il est nécessaire d'augmenter la période d'exposition -- de plusieurs secondes au moins -- pour que le laser inflige assez de dégât pour tuer une cible sans armure. L'armure complique encore le problème et il est impossible pour les lasers de traverser les nuages de fumées, les gaz ou le feu. Toutefois, aussi longtemps que la cible n'est pas masquée ou immunisée à un rayonnement concentré de lumière ou de chaleur, le laser brulera n'importe quoi si on y mets le temps.\n"
 "\n"
-"All the usual advantages of laser weaponry are present in the pistol. It's very quick to fire, and if the soldier misses his target at first, he can adjust his aim without letting go of the trigger. And there's another bonus particular to our pistol design. Thanks to the extremely high accuracy inherent in laser weaponry, it will be easy for ambidextrous soldiers to use two laser pistols at once.\n"
+"Tous les avantages habituels des armes lasers sont valables pour le pistolet. Très rapide à tirer, et si le soldat manque la cible, il peut ajuster son tir sans lâcher la gâchette. Et il y a une avantage supplémentaire à notre pistolet. Grâce à l'extrême précision inhérente aux armes lasers, il sera facile aux soldats ambidextres d'utiliser deux pistolets en même temps.\n"
 "\n"
-"We've designed the pistol to use the standard deuterium-fluoride cartridges which we've drawn up to power all of our laser weaponry. This means it uses the same amount of D-F as the larger designs, but uses it up at a much lower rate, effectively giving the laser pistol more ammunition than any of our other laser weapons.\n"
+"Nous avons conçu le pistolet laser pour fonctionner avec les cartouches de deutérium-fluorure standard que nous avons utilisé pour alimenter toutes nos armes laser. Cela signifie que l'arme utilise le même nombre de munitions D-F que les versions plus grandes, mais qu'elles les utilisent à un rendement moins haut. Ceci donne au pistolet laser un nombre de coups plus grand que les autres armes lasers.\n"
 "\n"
-"As with all handguns, the laser pistol is strictly a backup weapon. It isn't powerful enough to compete with rifles of any kind. On the other hand, the laser pistol completely eliminates the problems regarding range and accuracy that plague conventional handguns. Its range is quite impressive indeed for a handgun. It can shoot out to 60 metres with pinpoint accuracy thanks to the aim-correcting lenses, and it can fire continuously for minutes without reloading. This will make it particularly valuable in wide open terrain.\n"
+"Comme avec toutes les armes de cette taille, le pistolet laser est uniquement une arme secondaire. Il n'est pas assez puissant pour rivaliser avec les fusils de quelque sorte que ce soit. D'un autre côté, le pistolet laser élimine complètement le problème de la portée et de la précision qui sont le défaut des autres pistolets. Sa portée est réellement impressionnante pour une arme de cette taille. Il peut tirer jusqu'à 60 mètres avec une précision excellente grâce aux lentilles de correction de visée et il peut tirer plusieurs minutes en continu sans recharger. Cela le rend particulièrement précieux sur les vastes terrains ouverts.\n"
 "\n"
-"We will need to have at least one D-F Cartridge on hand at all times in order to be able to load and use a laser pistol.\n"
+"Il est nécessaire d'avoir au moins une cartouche sous la main à tout moment pour charger et utiliser un pistolet laser.\n"
 "\n"
-"--Cdr. Navarre"
+"--Cdt Navarre"
 
 #: ../base/ufos/research.ufo:872
 msgid "laserpistol_pre_txt"
 msgstr ""
-"This is one of several proposals I'm submitting for the research and development of new laser weaponry. Each of these will have to be developed separately due to the size differences, power levels and complexity of the systems involved.\n"
+"C'est l'une des propositions que je soumets pour la recherche et le développement d'un nouvel armement laser. Chacune d'elles devra être développée séparément due aux différences de taille, de niveaux de puissance et de complexité des systèmes impliqués.\n"
 "\n"
-"Our notes on Continuous Wave Laser Operation have produced a lot of designs, and this is possibly the most difficult one to bring into reality: a deuterium-fluoride laser weapon the size of an ordinary pistol.\n"
+"Nos découvertes sur l'utilisation de lasers continus a amené plusieurs idées, et celle-ci est peut-être la plus difficile à mettre au point : une arme laser deutérium-fluorure de la taille d'un pistolet classique.\n"
 "\n"
-"The difficulty in making this a reality will be to get the parts small enough and light enough so that they will:\n"
+"La difficulté sera de réduire les éléments pour les rendre suffisamment petits et légers pour :\n"
 "\n"
-"1) Fit into a pistol-sized package, and2) Be light enough to aim and fire one-handed.\n"
+"1) qu'ils s'adaptent à la taille d'un pistolet,2) et qu'ils soient assez léger pour viser et tirer avec une seule main.\n"
 "\n"
-"As always, it's going to be a tradeoff between size and power, but with enough work I believe we can indeed build a functioning laser pistol. We're just waiting for your authorisation, Commander.\n"
+"Comme souvent, il va s'agir de trouver un équilibre entre taille et puissance, mais avec un peu de travail, je pense que nous devrions réussir à construire un pistolet laser fonctionnel. Nous attendons juste votre autorisation, Commandant.\n"
 "\n"
-"--Cdr. Navarre"
+"--Cdt Navarre"
 
 #: ../base/ufos/research.ufo:878
 #: ../base/ufos/research.ufo:885
@@ -5839,7 +5843,7 @@ msgstr ""
 #: ../base/ufos/research.ufo:1968
 msgid "alien_medium_armour_pre_txt"
 msgstr ""
-"Commandant, nous avons récupéré une nouvelle armure alienne sur le champ de bataille. Elle est beaucoup plus lourde que l'armure alienne que nous avons découvert précédemment, et elle semble arrêter les armes à feu ordinaires sans une égratignure. Ses plaques de protection sont faites du plus dense tissage de nanotubes de carbone que je n'ai jamais vu. Nous avons besoin d'étudier cette armure dès maintenant pour déterminer quelles armes resteront efficaces contre des aliens la portant, et pour trouver le moyen de la dupliquer pour nos propres troupes. Aussi longtemps que nous ne pourrons pas égaler cette technologie, nous aurons un grand désavantage.\n"
+"Commandant, nous avons récupéré une nouvelle armure alienne du champ de bataille. Elle est beaucoup plus lourde que l'armure alienne que nous avons découvert précédemment, et elle semble arrêter les armes à feu ordinaires sans une égratignure. Ses plaques de protection sont faites du plus dense tissage de nanotubes de carbone que je n'ai jamais vu. Nous avons besoin d'étudier cette armure dès maintenant pour déterminer quelles armes resteront efficaces contre des aliens la portant, et pour trouver le moyen de la dupliquer pour nos propres troupes. Aussi longtemps que nous ne pourrons pas égaler cette technologie, nous aurons un grand désavantage.\n"
 "\n"
 "Ce projet exigera une quantité significative de temps de laboratoire et de fonds. Le travail commencera dès que nous aurons votre autorisation, Commandant.\n"
 "\n"
@@ -6857,27 +6861,25 @@ msgstr ""
 "\n"
 "Il y a trois supports de fixation d'arme disposés en triangle autour du cockpit. Deux de ces derniers sont équipés de l'arme à faisceau de particules que nous avons observée sur les autres OVNIs, mais le support restant est équipé d'un genre intéressant de lance-missiles alien. Les missiles ont un système d'autoguidage hautement sophistiqué et sont propulsés par des fusées à antimatière semblables aux moteurs d'OVNI. Ces missiles sont démentiellement rapides, tellement rapidement qu'ils n'ont pas besoin d'ogives explosives pour tuer leur proie, comptant seulement sur l'impact cinétique et la détonation du carburant restant. Plus de recherche sur cette arme sera hautement prioritaire.\n"
 "\n"
-"Dans le ciel, la moissonneuse est extrêmement dangereuse et devrait être une cible prioritaire. Entre les faisceaux jumeaux de particules et le lanceur étranger, sa puissance de feu est plus qu'un match pour quelque chose nous gisement de bidon actuellement. Sa seulement paille évidente est une baisse significative dans la manoeuvrabilité des modèles de scout et de combattant. Nos intercepteurs sont sensiblement plus d'agile et nous faisons faire bien plus d'expérience de combat en atmosphère de la terre que les étrangers. C'est l'un des quelques avantages que nous aurons contre la moissonneuse, et il serait sage d'améliorer notre équipement afin d'atténuer une partie de la supériorité de la technologie des étrangers.In the air, the Harvester is extremely dangerous and should be a high-priority target. Between the twin particle beams and the alien launcher, its firepower is more than a match for anything we can currently field. Its only obvious flaw is a significant drop in manoeuvrability from the Scout and Fighter models. Our interceptors are significantly more agile and we have far more combat experience in Earth atmosphere than the aliens do. This is one of the few advantages we'll have against the Harvester, and it would be wise to upgrade our equipment in order to mitigate some of the aliens' tech superiority.\n"
+"Dans le ciel, la Moissonneuse est extrêmement dangereuse et devrait être une cible prioritaire. Entre les deux faisceaux de particules et le lance missiles alien, sa puissance de feu est bien plus importante que tout ce que nous pouvons lui opposer actuellement. Sa seule faille évidente est une baisse significative de sa manoeuvrabilité par rapport aux Éclaireurs et aux Chasseurs. Nos intercepteurs sont significativement plus agiles et nous avons bien plus d'expérience de combat en atmosphère Terrienne que les aliens. C'est l'un des quelques avantages que nous aurons contre la Moissonneuse, et il serait sage d'améliorer notre équipement afin d'atténuer en partie la supériorité technologique alienne.\n"
 "\n"
-"When encountered, we should concentrate our best pilots on any and all Harvesters in the area and take them out as fast as possible. Only then should we concern ourselves with shooting down any escorts.\n"
+"Une fois rencontrés, nous devrions concentrer nos meilleurs pilotes sur toutes les Moissonneuses dans le secteur et les descendre aussi rapidement que possible. Seulement ensuite nous nous occuperons de tirer sur son escorte.\n"
 "\n"
-"Our analysis of the Harvester's increased capabilities over the Scout raises some frightening points. It seems that alien craft will actually grow faster as they become larger and more powerful, and there's no doubt that, if they can build these Harvesters, they can build bigger and nastier UFOs. We should try to adapt the alien antimatter technologies to our own interceptors as soon as possible so that we can get on an even footing with the aliens now and will be able to stand up to more dangerous threats in the future.\n"
+"Notre analyse des capacités accrues de la Moissonneuse par rapport à l'Éclaireur soulève quelques points effrayants. Il semble que les vaisseaux aliens deviendront réellement plus rapides, plus grands et plus puissants, et il n'y a aucun doute que, s'ils peuvent construire ces Moissonneuses, ils peuvent construire des OVNIs plus grand et plus dangereux. Nous devrions essayer d'adapter les technologies à antimatière aliennes à nos propres intercepteurs dès que possible afin que nous puissions être à égalité avec les aliens maintenant et que nous puissions résister aux menaces plus dangereuses à l'avenir.\n"
 "\n"
-"--Cdr. Navarre\n"
+"--Cdt Navarre\n"
 "\n"
+"Statistiques estimées de l'appareil :\n"
 "\n"
-"Estimated Harvester statistics:\n"
+"Dimensions : Petit (12 m x 18 m x 6 m)\n"
 "\n"
+"Vitesse de croisière : +/- 2 200 km/h\n"
 "\n"
-"Size: Small (12m x 18m x 6m)\n"
+"Vitesse maximale : +/- 4 100 km/h\n"
 "\n"
-"Cruising speed: +/- 2,200 km/h\n"
+"Nombre de passagers : 12 max.\n"
 "\n"
-"Top speed: +/- 4,100km/h\n"
-"\n"
-"Crew capacity: 12 max.\n"
-"\n"
-"Weapon capacity: 2 Particle Beam hardpoints, 1 Alien Launcher hardpoint"
+"Capacité d'armement : 2 points de montage pour des Faisceaux de Particules, 1 point de montage pour un lance missiles alien"
 
 #: ../base/ufos/research.ufo:2616
 msgid "ufo_harvester_pre_txt"
@@ -6913,7 +6915,7 @@ msgstr ""
 "\n"
 "Mon équipe a analysé les restes d'une machine arachnoïde que nos opérateurs ont ramenés. Nous vous avons préparé un résumé que voici.\n"
 "\n"
-"L'autopsie révèle que la créature est un robot complexe sans aucune partie organique. Son corps rappelle celui de l'araignée terrestre : un corps central contenant un cerveau artificiel et des cellules énergétiques, ainsi que huit pattes pilotées par des servomoteurs qui lui permettent de se déplacer à une vitesse surprenante sur le champ de bataille. Elle est équipée de mandibules aussi coupantes que des lames de rasoir, qui peuvent disséquer des victimes humaines sur place et stocker les tissus ou des organes entiers dans de grandes cavités disposées devant les cellules énergétiques. Ces machines ont été filmées en train de découper vivant des êtres humains lors d'une attaque de terreur, puis de stocker leur biomasse pour une utilisation ultérieure. Le procédé horrible, et très, très court.\n"
+"L'autopsie révèle que la créature est un robot complexe sans aucune partie organique. Son corps rappelle celui de l'araignée terrestre : un corps central contenant un cerveau artificiel et des cellules énergétiques, ainsi que huit pattes pilotées par des servomoteurs qui lui permettent de se déplacer à une vitesse surprenante sur le champ de bataille. Elle est équipée de mandibules aussi coupantes que des lames de rasoir, qui peuvent disséquer des victimes humaines sur place et stocker les tissus ou des organes entiers dans de grandes cavités disposées devant les cellules énergétiques. Ces machines ont été filmées en train de découper vivant des êtres humains lors d'une attaque de terreur, puis de stocker leur biomasse pour une utilisation ultérieure. Le procédé est horrible et très, très court.\n"
 "\n"
 "Nos soldats ont baptisé la créature « Araignée Sanguinaire », et le nom est resté.\n"
 "\n"
@@ -7004,7 +7006,7 @@ msgstr ""
 "\n"
 "Sous les balles, le terme se transforma rapidement en \"Taaman\", et lorsque le calme revint il s'était encore transformé. Tout le monde s'était accordé sur \"Taman\" (prononcé \"Tamane\") pour décrire le cauchemar gris qui les avaient massacrés. Le nom reste encore, mais nous pouvons maintenant affirmer que ces aliens sont faits de chair et de sang plutôt que de feu et d'obscurité.\n"
 "\n"
-"La première, et sans doute le plus intéressant des élèments, est le fait que cette créature ressemble presque à un être humain. Deux bras, deux jambes, un torse et une tête ; un déplacement bipède ; des organes visuels, olfactifs et auditifs situés aux même endroits que sur un être humain. Les mains et les pieds du sujet présentent trois doigts, dont l'un (le \"pouce\") est opposable. Cette espèce est en moyenne plus petite que la nôtre, et possède une fine ossature, presque délicate, qui contraste avec leur cruauté.\n"
+"La première chose, et sans doute la plus intéressante, est le fait que cette créature ressemble presque à un être humain. Deux bras, deux jambes, un torse et une tête ; un déplacement bipède ; des organes visuels, olfactifs et auditifs situés aux même endroits que sur un être humain. Les mains et les pieds du sujet présentent trois doigts, dont l'un (le \"pouce\") est opposable. Cette espèce est en moyenne plus petite que la nôtre, et possède une fine ossature, presque délicate, qui contraste avec leur cruauté.\n"
 "\n"
 "Le sujet a un ensemble d'organes vitaux très classique : cœur, poumons, foie, etc. Il lui manque la plupart des organes redondant ou obsolète que les êtres humains ont gardé au cours de leur évolution. Biologiquement, la partie la plus intéressante de leurs organes réside dans leur appareil digestif. La créature possède trois estomacs dont le but est de digérer des plantes, même les plus résistantes. Elle ne peut digérer de viande d'aucune sorte. Cela implique que, quelque soit l'endroit d'où ils proviennent, les Tamans sont des herbivores qui se nourrissent d'une quelconque espèce végétale. Cette découverte a réconforté certains de nos collaborateurs les plus sensibles. Nous savons au moins maintenant que les aliens ne nous capturent pas pour se nourrir.\n"
 "\n"
@@ -7054,7 +7056,7 @@ msgid "shevaar_autopsy_txt"
 msgstr ""
 "Commandant,\n"
 "\n"
-"Notre autopsie de ce nouvel alien, -- le Shevaar -- a été très intéressante. Cet être est réellement différent des Tamans et des Ortnoks, plus humanoïdes. Il possède des jambes digitigrades et une petite queue, résidu probable de l'évolution de son espèce. La créature paraît être de plus complètement aveugle. Il n' a ni oeil, ni aucun autre organe sensible à la lumière dans le domaine du visible. Toutefois, il semble avoir d'autres organes intéressants pour compenser leur abscence.\n"
+"Notre autopsie de ce nouvel alien, -- le Shevaar -- a été très intéressante. Cet être est réellement différent des Tamans et des Ortnoks, plus humanoïdes. Il possède des jambes digitigrades et une petite queue, résidu probable de l'évolution de son espèce. La créature paraît être de plus complètement aveugle. Il n'a ni oeil, ni aucun autre organe sensible à la lumière dans le domaine du visible. Toutefois, il semble avoir d'autres organes intéressants pour compenser cette absence.\n"
 "\n"
 "A première vue, le Shevaar ressemble au croisement impie entre un homme et un lézard. Contrairement à la plupart des lézards terrestres, ces aliens ont le sang chaud et leurs cerveaux sont de tailles similaires aux nôtres -- probablement même un peu plus volumineux. Leurs pieds massifs sont incroyablement élastiques, et ils peuvent couvrir une longue distance en faisant des bonds. Leurs grandes mains ne semblent pas leur poser de problèmes pour manier tous les types d'armements aliens.\n"
 "\n"
@@ -7068,7 +7070,7 @@ msgstr ""
 "\n"
 "- Les Shevaars voient dans l'infrarouge. Ce qui nous empêche de rester cacher et rend une éventuelle approche furtive très risquée.\n"
 "\n"
-"- Ils portent l'équipement le plus léger possible afin de préserver leur mobilité naturelle. Ce qui leur permet de rendre des tactiques de type attaques éclair efficaces.\n"
+"- Ils portent l'équipement le plus léger possible afin de préserver leur mobilité naturelle. Ce qui leur permet de rendre des tactiques de type attaques éclairs efficaces.\n"
 "\n"
 "- Les corps des Shevaars sont hautement résistants aux impacts et aux coupures, et leurs organes internes compacts sont peu sujets aux commotions et explosions. Cependant, leur peau écaillée leur fournit une faible protection contre le feu, les lasers et l'électricité.\n"
 "\n"
@@ -7076,7 +7078,7 @@ msgstr ""
 "\n"
 "Quand ils ne sont pas engagés dans un combat, les Shevaar passent la plupart de leur temps comme éclaireurs, tirailleurs, ou gardiens des humains capturés.\n"
 "\n"
-")Il y a un ensemble complexe d'implants dans la gorge du sujet qui vont demander de plus de recherches pour être complètement compris. Je vais vous envoyer une analyse plus complète avec une proposition de recherche.\n"
+")Il y a un ensemble complexe d'implants dans la gorge du sujet qui vont demander plus de recherches pour être complètement compris. Je vais vous envoyer une analyse plus complète avec une proposition de recherche.\n"
 "\n"
 "Nous devons faire très attention lorsque nous rencontrons ce type d'aliens lors d'opérations. Ce sont de rapides et dangereux tirailleurs qui préfèrent combattre que rester à couvert, qui nous poursuivront et feront feu à chaque fois que nous serons a découvert, jusqu'à ce que nos positions soient anéanties. Exposer les flancs, ou l'arrière de notre équipe à une escouade Shevaar peut causer des résultats désastreux. Bien que les grenades ne soient pas appropriées pour tuer des Shevaar, elles pourront être très utiles pour les débusquer.\n"
 "\n"
@@ -8036,75 +8038,93 @@ msgstr "Finalement : L'attaque de la base aliens..."
 
 #: ../base/ufos/seq_intro.ufo:8
 msgid "intro_sentence1"
-msgstr "Nous sommes en 2084. Pour la première fois depuis longtemps, la Terre connaît une période de paix. Les violences du début du XXIème siècle sont passées, mais restent encore ancrées dans la mémoire de chacun. Pour la plupart des habitants de la Terre, la Seconde Guerre Froide est une ombre du passé, comme le furent les guerres mondiales pour les enfants de la fin du XXème siècle."
+msgstr ""
+"Nous sommes en 2084. Pour la première fois depuis longtemps, la Terre connaît une période de paix. Les violences du début du XXIème siècle sont passées, mais restent encore ancrées dans la mémoire de chacun. Pour la plupart des habitants de la Terre, la Seconde Guerre Froide est une ombre du passé, comme le furent les guerres mondiales pour les enfants de la fin du XXème siècle."
 
 #: ../base/ufos/seq_intro.ufo:16
 msgid "intro_sentence2"
-msgstr "La fin du siècle a vu les conflits se raréfier avec l'avènement des nouvelles technologies et l'amélioration considérable des conditions de santé dans le tiers monde. Même les violentes actions terroristes ont disparu avec le début de la Deuxième Guerre Froide, laissant un souvenir macabre aux habitants du nord de l'Amérique et à ceux des terres ravagées du continent Indien... La lutte des classes passe désormais au coeur des débats politiques, depuis que chaque nation est équitablement représentée à l'ONU. Partout dans le monde, la qualité de vie s'améliore. Les états se sont renforcés et stabilisés autour des Nations Unies, qui sont parvenues à s'imposer sur les gouvernements du monde entier depuis leur restructuration. Des groupes de petits états, tout d'abord intimidés par la puissance des blocs chinois et européens, se sont réunis pour former une puissante coalition politique. Pour la première fois dans l'histoire de l'humanité, la loi et l'ordre règnent sur plus des trois quarts du globe."
+msgstr ""
+"La fin du siècle a vu les conflits se raréfier avec l'avènement des nouvelles technologies et l'amélioration considérable des conditions de santé dans le tiers monde. Même les violentes actions terroristes ont disparu avec le début de la Deuxième Guerre Froide, laissant un souvenir macabre aux habitants du nord de l'Amérique et à ceux des terres ravagées du continent Indien... La lutte des classes passe désormais au coeur des débats politiques, depuis que chaque nation est équitablement représentée à l'ONU. Partout dans le monde, la qualité de vie s'améliore. Les états se sont renforcés et stabilisés autour des Nations Unies, qui sont parvenues à s'imposer sur les gouvernements du monde entier depuis leur restructuration. Des groupes de petits états, tout d'abord intimidés par la puissance des blocs chinois et européens, se sont réunis pour former une puissante coalition politique. Pour la première fois dans l'histoire de l'humanité, la loi et l'ordre règnent sur plus des trois quarts du globe."
 
 #: ../base/ufos/seq_intro.ufo:24
 msgid "intro_sentence3"
-msgstr "Pour la plupart des gens, la vie semble avoir repris son cours."
+msgstr ""
+"Pour la plupart des gens, la vie semble avoir repris son cours."
 
 #: ../base/ufos/seq_intro.ufo:32
 msgid "intro_sentence4"
-msgstr "La première attaque touche la ville de Mumbai le 3 mai 2084. Six petits OVNIs sortent du néant et déferlent sur la ville, sans qu'aucune des énormes installations radar couvrant le ciel de Mumbai ne les détecte. Il n'y a ni avertissements, ni explications. Les pertes de la ville la plus peuplée du monde sont colossales : vingt mille civils innocents, et trois bataillons de troupes d'élite sont massacrés en moins d'une douzaine d'heures. C'est à ce prix que les soldats du Commonwealth parviennent à repousser l'avancée des aliens. Puis, aussi soudainement qu'ils étaient apparus, ils retournent à leurs vaisseaux qui s'évanouissent dans le ciel, laissant derrière eux les rues ravagées de Mumbai."
+msgstr ""
+"La première attaque touche la ville de Mumbai le 3 mai 2084. Six petits OVNIs sortent du néant et déferlent sur la ville, sans qu'aucune des énormes installations radar couvrant le ciel de Mumbai ne les détecte. Il n'y a ni avertissements, ni explications. Les pertes de la ville la plus peuplée du monde sont colossales : vingt mille civils innocents, et trois bataillons de troupes d'élite sont massacrés en moins d'une douzaine d'heures. C'est à ce prix que les soldats du Commonwealth parviennent à repousser l'avancée des aliens. Puis, aussi soudainement qu'ils étaient apparus, ils retournent à leurs vaisseaux qui s'évanouissent dans le ciel, laissant derrière eux les rues ravagées de Mumbai."
 
 #: ../base/ufos/seq_intro.ufo:40
 msgid "intro_sentence5"
-msgstr "Une réunion d'urgence des Nations Unies ne parvient à aucune conclusion. Les attaquent s'enchaînent rapidement, plus importantes et mortelles encore, touchant Bonn, Johannesburg et Bangkok. Quelques nations tentent la voie diplomatique, envoyant des messages en un millier de langues différentes aux aliens qui ravagent le globe. Leurs tentatives sont ignorées. En quelques heures, toute vie humaine est anéantie dans les trois villes. L'attaque est terminée avant que les armées terriennes ne reçoivent l'autorisation de contre-attaquer. Les aliens ne laissent derrière eux que du béton et du sang. Une fois encore, ils disparaissent sans laisser de trace... Mais nul ne doute qu'ils reviendront."
+msgstr ""
+"Une réunion d'urgence des Nations Unies ne parvient à aucune conclusion. Les attaquent s'enchaînent rapidement, plus importantes et mortelles encore, touchant Bonn, Johannesburg et Bangkok. Quelques nations tentent la voie diplomatique, envoyant des messages en un millier de langues différentes aux aliens qui ravagent le globe. Leurs tentatives sont ignorées. En quelques heures, toute vie humaine est anéantie dans les trois villes. L'attaque est terminée avant que les armées terriennes ne reçoivent l'autorisation de contre-attaquer. Les aliens ne laissent derrière eux que du béton et du sang. Une fois encore, ils disparaissent sans laisser de trace... Mais nul ne doute qu'ils reviendront."
 
 #: ../base/ufos/seq_intro.ufo:48
 msgid "intro_sentence6"
-msgstr "Quatre vingt sept heures après la première attaque sur Mumbai, la Terre entre en guerre. Pendant deux semaines, toutes les armées de l'humanité tentent de repousser les mystérieux assaillants aliens au mieux de leur possibilité. Les succès sont peu nombreux."
+msgstr ""
+"Quatre vingt sept heures après la première attaque sur Mumbai, la Terre entre en guerre. Pendant deux semaines, toutes les armées de l'humanité tentent de repousser les mystérieux assaillants aliens au mieux de leur possibilité. Les succès sont peu nombreux."
 
 #: ../base/ufos/seq_intro.ufo:56
 msgid "intro_sentence7"
-msgstr "Sans autre alternative, les Nations Unies prennent les choses en main. La défunte agence anti-extraterrestre \"PHALANX\" des anciens États Unis est ressuscitée sous la bannière de l'ONU. Son ancien équipement est remis en service, certains éléments datant de plus d'un siècle. Sa mission : combattre la menace extraterrestre et garantir la survie de l'espèce humaine à tout prix."
+msgstr ""
+"Sans autre alternative, les Nations Unies prennent les choses en main. La défunte agence anti-extraterrestre \"PHALANX\" des anciens États Unis est ressuscitée sous la bannière de l'ONU. Son ancien équipement est remis en service, certains éléments datant de plus d'un siècle. Sa mission : combattre la menace extraterrestre et garantir la survie de l'espèce humaine à tout prix."
 
 #: ../base/ufos/seq_intro.ufo:64
 msgid "intro_sentence8"
-msgstr "Financée par les huit puissances politiques mondiales, et recrutant ses soldats parmi les meilleurs de leurs armées, PHALANX est la crème de l'élite. Elle est la première et unique ligne de défense de la Terre. Elle ne peut échouer, car si tel était le cas, l'humanité n'aurait plus aucun espoir."
+msgstr ""
+"Financée par les huit puissances politiques mondiales, et recrutant ses soldats parmi les meilleurs de leurs armées, PHALANX est la crème de l'élite. Elle est la première et unique ligne de défense de la Terre. Elle ne peut échouer, car si tel était le cas, l'humanité n'aurait plus aucun espoir."
 
 #: ../base/ufos/seq_intro.ufo:100
 msgid "prolog_sentence1"
-msgstr "POUR: Commandant de la Base, PHALANX, Commandement des Opérations Atlantique"
+msgstr ""
+"POUR: Commandant de la Base, PHALANX, Commandement des Opérations Atlantique"
 
 #: ../base/ufos/seq_intro.ufo:110
 msgid "prolog_sentence2"
-msgstr "DE: Secrétaire Général Mahouf Serra, Nations Unies, New York"
+msgstr ""
+"DE: Secrétaire Général Mahouf Serra, Nations Unies, New York"
 
 #: ../base/ufos/seq_intro.ufo:119
 msgid "prolog_sentence3"
-msgstr "DATE: 21 Mars 2084"
+msgstr ""
+"DATE: 21 Mars 2084"
 
 #: ../base/ufos/seq_intro.ufo:128
 msgid "prolog_sentence4"
-msgstr "SUJET: Bonne Chance"
+msgstr ""
+"SUJET: Bonne Chance"
 
 #: ../base/ufos/seq_intro.ufo:137
 msgid "prolog_sentence5"
-msgstr "Bienvenu dans vos nouvelles fonctions, Commandant. Vous avez dès maintenant les pleins pouvoirs sur l'Unité de Réaction Extraterrestre PHALANX. Votre mission est de protéger les citoyens de la Terre et de stopper la menace alienne à tout prix. La façon dont vous procéderez nous importe peu, notre seule exigence est votre réussite."
+msgstr ""
+"Bienvenu dans vos nouvelles fonctions, Commandant. Vous avez dès maintenant les pleins pouvoirs sur l'Unité de Réaction Extraterrestre PHALANX. Votre mission est de protéger les citoyens de la Terre et de stopper la menace alienne à tout prix. La façon dont vous procéderez nous importe peu, notre seule exigence est votre réussite."
 
 #: ../base/ufos/seq_intro.ufo:146
 msgid "prolog_sentence6"
-msgstr "Votre première mission est d'aménager votre quartier général. Les Nations Unies ont accès à n'importe quelle base à travers le monde, et vous pouvez par conséquent envisager la totalité du globe pour l'installation de votre centre d'opération. Choisissez cet endroit judicieusement, car il aura beaucoup d'influence sur les chances de succès du projet PHALANX."
+msgstr ""
+"Votre première mission est d'aménager votre quartier général. Les Nations Unies ont accès à n'importe quelle base à travers le monde, et vous pouvez par conséquent envisager la totalité du globe pour l'installation de votre centre d'opération. Choisissez cet endroit judicieusement, car il aura beaucoup d'influence sur les chances de succès du projet PHALANX."
 
 #: ../base/ufos/seq_intro.ufo:155
 msgid "prolog_sentence7"
-msgstr "Une analyse récente des attaques sur Mumbai et Bonn révèle que les observations d'OVNI et d'activités aliennes semblent se concentrer dans les régions les plus densément peuplées du monde. Ceci inclus les zones côtières d'Amérique du nord et du sud, l'Europe, l'Asie de l'est, l'Afrique du sud et l'Afrique méditerranéenne, ainsi que l'Australie. Vous devriez envisager d'inclure ces terres dans votre rayon d'action."
+msgstr ""
+"Une analyse récente des attaques sur Mumbai et Bonn révèle que les observations d'OVNI et d'activités aliennes semblent se concentrer dans les régions les plus densément peuplées du monde. Ceci inclus les zones côtières d'Amérique du nord et du sud, l'Europe, l'Asie de l'est, l'Afrique du sud et l'Afrique méditerranéenne, ainsi que l'Australie. Vous devriez envisager d'inclure ces terres dans votre rayon d'action."
 
 #: ../base/ufos/seq_intro.ufo:164
 msgid "prolog_sentence8"
-msgstr "Une fois votre première base établie, vous devez préparer vos soldats à l'action. Les recrues que nous avons assignées à PHALANX doivent être affectées à un appareil de transport, puis équipées pour le combat."
+msgstr ""
+"Une fois votre première base établie, vous devez préparer vos soldats à l'action. Les recrues que nous avons assignées à PHALANX doivent être affectées à un appareil de transport, puis équipées pour le combat."
 
 #: ../base/ufos/seq_intro.ufo:173
 msgid "prolog_sentence9"
-msgstr "Prenez soin d'elles, Commandant. Nous comptons tous sur vous, et prions pour vous."
+msgstr ""
+"Prenez soin d'elles, Commandant. Nous comptons tous sur vous, et prions pour vous."
 
 #: ../base/ufos/seq_intro.ufo:182
 msgid "prolog_sentence10"
-msgstr "Ce sera tout. Bonne chance, et bonne chasse."
+msgstr ""
+"Ce sera tout. Bonne chance, et bonne chasse."
 
 #: ../base/ufos/seq_tutorials.ufo:3
 msgid "Gameplay"
@@ -8525,7 +8545,6 @@ msgstr "Rafale de 3 coups retardés"
 #: ../base/ufos/weapons_human.ufo:1462
 msgid "25mm IC Grenades"
 msgstr "Grenades IC 25mm"
-
 # Gren. à fléchettes de 25mm
 #: ../base/ufos/weapons_human.ufo:1636
 msgid "25mm Flechette Grenades"
