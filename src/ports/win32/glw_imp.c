@@ -39,11 +39,11 @@ void WG_RestoreGamma( void );
 
 glwstate_t glw_state;
 
-extern cvar_t *vid_xpos;			/* X coordinate of window position */
-extern cvar_t *vid_ypos;			/* Y coordinate of window position */
-extern cvar_t *vid_fullscreen;
-extern cvar_t *vid_ref;
-extern cvar_t *vid_grabmouse;
+cvar_t *vid_xpos;			/* X coordinate of window position */
+cvar_t *vid_ypos;			/* Y coordinate of window position */
+//extern cvar_t *vid_fullscreen;
+//extern cvar_t *vid_ref;
+//extern cvar_t *vid_grabmouse;
 
 /**
  * @brief
@@ -156,6 +156,8 @@ qboolean VID_CreateWindow (int width, int height, qboolean fullscreen)
 	if (fullscreen)
 		x = y = 0;
 	else {
+		vid_xpos = ri.Cvar_Get("vid_xpos", "0", 0, NULL);
+		vid_ypos = ri.Cvar_Get("vid_ypos", "0", 0, NULL);
 		x = vid_xpos->value;
 		y = vid_ypos->value;
 	}
