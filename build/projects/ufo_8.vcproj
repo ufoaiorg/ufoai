@@ -632,6 +632,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\client\cl_vid.c"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\client\cl_view.c"
 				>
 			</File>

@@ -98,6 +98,10 @@ SOURCE=..\..\src\tools\qdata\images.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\qcommon\ioapi.c
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\tools\qdata\common\l3dslib.c
 # End Source File
 # Begin Source File
@@ -135,6 +139,10 @@ SOURCE=..\..\src\tools\ufo2map\common\threads.c
 # Begin Source File
 
 SOURCE=..\..\src\tools\qdata\common\trilib.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\qcommon\unzip.c
 # End Source File
 # Begin Source File
 
@@ -184,6 +192,10 @@ SOURCE=..\..\src\tools\qdata\common\trilib.h
 # Begin Group "Resource Files"
 
 # PROP Default_Filter "ico;cur;bmp;dlg;rc2;rct;bin;cnt;rtf;gif;jpg;jpeg;jpe"
+# Begin Source File
+
+SOURCE=..\..\src\ports\win32\zlib.lib
+# End Source File
 # End Group
 # End Target
 # End Project
