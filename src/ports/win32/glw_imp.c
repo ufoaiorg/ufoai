@@ -34,21 +34,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "glw_win.h"
 #include "winquake.h"
 
-qboolean GLimp_InitGL (void);
-void WG_RestoreGamma( void );
+qboolean GLimp_InitGL(void);
+void WG_RestoreGamma(void);
 
 glwstate_t glw_state;
 
 cvar_t *vid_xpos;			/* X coordinate of window position */
 cvar_t *vid_ypos;			/* Y coordinate of window position */
-//extern cvar_t *vid_fullscreen;
-//extern cvar_t *vid_ref;
-//extern cvar_t *vid_grabmouse;
 
 /**
  * @brief
  */
-static qboolean VerifyDriver( void )
+static qboolean VerifyDriver (void)
 {
 	char buffer[1024];
 
@@ -67,6 +64,7 @@ static unsigned short s_oldHardwareGamma[3][256];
 
 /**
  * @brief Determines if the underlying hardware supports the Win32 gamma correction API.
+ * @sa WG_RestoreGamma
  */
 void WG_CheckHardwareGamma (void)
 {
@@ -337,6 +335,7 @@ rserr_t GLimp_SetMode (unsigned *pwidth, unsigned *pheight, int mode, qboolean f
  * @note Under OpenGL this means NULLing out the current DC and
  * HGLRC, deleting the rendering context, and releasing the DC acquired
  * for the window.  The state structure is also nulled out.
+ * @sa WG_RestoreGamma
  */
 void GLimp_Shutdown (void)
 {
@@ -444,7 +443,7 @@ qboolean GLimp_InitGL (void)
 		0,								/* reserved */
 		0, 0, 0							/* layer masks ignored */
 	};
-	int  pixelformat;
+	int pixelformat;
 	cvar_t *stereo;
 
 	stereo = ri.Cvar_Get("cl_stereo", "0", 0, NULL);
@@ -636,7 +635,9 @@ void GLimp_SetGamma (void)
 }
 
 /**
- * @brief
+ * @brief Restore the old gamme value when shutting down the renderer
+ * @sa GLimp_Shutdown
+ * @sa WG_CheckHardwareGamma
  */
 void WG_RestoreGamma (void)
 {
