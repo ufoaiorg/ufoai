@@ -1278,8 +1278,6 @@ static void MAP_DrawMapMarkers (const menuNode_t* node)
 		}
 	}
 
-	re.DrawColor(NULL);
-
 	for (i = 0; i < gd.numNations; i++) {
 		MAP_MapToScreen(node, gd.nations[i].pos, &x, &y);
 		re.FontDrawString("f_verysmall", ALIGN_UC, x , y, node->pos[0], node->pos[1], node->size[0], node->size[1], node->size[1], gd.nations[i].name, 0, 0, NULL, qfalse);
