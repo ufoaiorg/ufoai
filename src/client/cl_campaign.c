@@ -701,7 +701,10 @@ static void CP_MissionList_f (void)
  */
 extern qboolean CL_CampaignAddGroundMission (mission_t* mission)
 {
-	actMis_t *mis;
+	stageState_t *stage = NULL;
+	setState_t *set = NULL;
+	actMis_t *mis = NULL;
+	int i, j;
 
 	/* add mission */
 	if (ccs.numMissions >= MAX_ACTMISSIONS) {
@@ -713,9 +716,18 @@ extern qboolean CL_CampaignAddGroundMission (mission_t* mission)
 
 	/* set relevant info */
 	mis->def = mission;
-	mis->cause = NULL; /* FIXME */
-
-	return qtrue;
+	/* check campaign events */
+	/* check campaign events */
+	for (i = 0, stage = ccs.stage; i < numStages; i++, stage++)
+		if (stage->active)
+			for (j = 0, set = &ccs.set[stage->def->first]; j < stage->def->num; j++, set++)
+				if (set->active && set->def->numMissions) {
+					mis->cause = set;
+					return qtrue;
+				}
+	Com_Printf("Could not add ground mission '%s'\n", mission->name);
+	ccs.numMissions--;
+	return qfalse;
 }
 
 #define DIST_MIN_BASE_MISSION 4

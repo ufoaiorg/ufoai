@@ -112,6 +112,7 @@ extern void AIRFIGHT_ActionsAfterAirfight (aircraft_t* aircraft, qboolean phalan
 			Q_strncpyz(ms->civTeam, "european", sizeof(ms->civTeam));
 			Q_strncpyz(ms->loadingscreen, "crashsite", sizeof(ms->civTeam));
 
+			Com_sprintf(ms->onwin, sizeof(ms->onwin), "cp_uforecovery %s", aircraft->id); /* TODO: correct? */
 			/* use ufocrash.ump as random tile assembly */
 			Com_sprintf(ms->map, sizeof(ms->map), "+ufocrash");
 			Com_sprintf(ms->param, sizeof(ms->param), "%s-%s", UFO_UfoTypeToShortName(aircraft->ufotype), MAP_GetZoneType(color));
