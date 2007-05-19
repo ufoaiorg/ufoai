@@ -3059,7 +3059,7 @@ tech rs_craft_weapon_shiva
 	// pre_description	"_craft_weapon_shiva_pre_txt"
 	description	"_craft_weapon_shiva_txt"
 
-//	provides	craft_weapon_shiva
+	provides	craft_weapon_shiva
 	require_AND { tech nothing }
 	time		0
 	producetime	1111
@@ -3075,7 +3075,7 @@ tech rs_craft_ammo_shiva_1
 	// pre_description	"_craft_ammo_shiva_1_pre_txt"
 	description	"_craft_ammo_shiva_1_txt"
 
-//	provides	craft_ammo_shiva_API
+	provides	craft_ammo_shiva_API
 	require_AND
 	{
 		tech rs_craft_weapon_shiva
@@ -3094,7 +3094,7 @@ tech rs_craft_ammo_shiva_2
 	// pre_description	"_craft_ammo_shiva_2_pre_txt"
 	description	"_craft_ammo_shiva_2_txt"
 
-//	provides	craft_ammo_shiva_HEI
+	provides	craft_ammo_shiva_HEI
 	require_AND
 	{
 		tech rs_craft_weapon_shiva
@@ -3113,7 +3113,7 @@ tech rs_craft_weapon_sparrowhawk
 	// pre_description	"_craft_weapon_sparrowhawk_pre_txt"
 	description	"_craft_weapon_sparrowhawk_txt"
 
-//	provides	craft_weapon_sparrowhawk
+	provides	craft_weapon_sparrowhawk
 	require_AND { tech nothing }
 	time		0
 	producetime	1255
@@ -3129,7 +3129,7 @@ tech rs_craft_ammo_sparrowhawk
 	// pre_description	"_craft_ammo_sparrowhawk_pre_txt"
 	description	"_craft_ammo_sparrowhawk_txt"
 
-//	provides	craft_ammo_sparrowhawk
+	provides	craft_ammo_sparrowhawk
 	require_AND
 	{
 		tech rs_craft_weapon_sparrowhawk
@@ -3148,7 +3148,7 @@ tech rs_craft_weapon_tr20
 	// pre_description	"_craft_weapon_tr20_pre_txt"
 	description	"_craft_weapon_tr20_txt"
 
-//	provides	craft_weapon_tr20
+	provides	craft_weapon_tr20
 	require_AND { tech nothing }
 	time		0
 	producetime	1810
@@ -3164,7 +3164,7 @@ tech rs_craft_ammo_tr20
 	// pre_description	"_craft_ammo_tr20_pre_txt"
 	description	"_craft_ammo_tr20_txt"
 
-//	provides	craft_ammo_tr20
+	provides	craft_ammo_tr20
 	require_AND
 	{
 		tech rs_craft_weapon_tr20
