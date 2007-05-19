@@ -15,6 +15,7 @@ base ucn/uc_
 
 // ---------------------------------
 // Dropship
+// ---------------------------------
 tile +drop_firebird
 {
 4 4
@@ -24,7 +25,41 @@ abc     +a     +a      abc
 0      abc     abc     0
 }
 
+// ---------------------------------
+// Stiletto
+// ---------------------------------
+tile +inter_stiletto
+{
+4 4
+0      abc     abc     0
+abc     +a     +a      abc
+abc     +a     +a      abc
+0      abc     abc     0
+}
 
+// ---------------------------------
+// Stiletto
+// ---------------------------------
+tile +inter_saracen
+{
+4 4
+0      abc     abc     0
+abc     +a     +a      abc
+abc     +a     +a      abc
+0      abc     abc     0
+}
+
+// ---------------------------------
+// Stingray
+// ---------------------------------
+tile +inter_stingray
+{
+4 4
+0      abc     abc     0
+abc     +a     +a      abc
+abc     +a     +a      abc
+0      abc     abc     0
+}
 
 // *********************************
 // Assemblies
