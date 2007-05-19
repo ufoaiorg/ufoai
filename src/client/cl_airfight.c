@@ -28,15 +28,45 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /**
  * @brief Remove a projectile from gd.projectiles
+ * @param[in] idx of the projectile to remove in array gd.projectiles[]
  */
-static void AIRFIGHT_RemoveProjectile (int idx)
+static qboolean AIRFIGHT_RemoveProjectile (int idx)
 {
 	int i = 0;
+
+#ifdef DEBUG
+	if (idx > gd.numProjectiles - 1) {
+		Com_Printf("Tried to remove an unexisting idx in array gd.numProjectiles\n");
+		return qfalse;
+	}
+#endif
 
 	for (i = idx; i < gd.numProjectiles; i++) {
 		gd.projectiles[i] = gd.projectiles[i+1];
 	}
 	gd.numProjectiles--;
+
+	return qtrue;
+}
+
+/**
+ * @brief Add a projectile in gd.projectiles
+ * @param[in] idx of the ammo to add in array aircraftItems[]
+ */
+static qboolean AIRFIGHT_AddProjectile (int idx, vec3_t start, aircraft_t *target)
+{
+	if (gd.numProjectiles >= MAX_PROJECTILESONGEOSCAPE) {
+		Com_Printf("Too many projectiles on map\n");
+		return qfalse;
+	}
+
+	gd.projectiles[gd.numProjectiles].aircraftItemsIdx = idx;
+	gd.projectiles[gd.numProjectiles].idx = gd.numProjectiles;
+	VectorCopy(start, gd.projectiles[gd.numProjectiles].pos);
+	gd.projectiles[gd.numProjectiles].aimedAircraft = target;
+	gd.numProjectiles++;
+
+	return qtrue;
 }
 
 /**
@@ -47,18 +77,23 @@ static void AIRFIGHT_RemoveProjectile (int idx)
  */
 extern void AIRFIGHT_ExecuteActions (aircraft_t* air, aircraft_t* ufo)
 {
-	/* variables here */
+	int idx;
+	technology_t *tech;
 
 	/* some asserts */
 	assert(air);
 	assert(ufo);
 
-	if (gd.numProjectiles < 1) {
-		gd.projectiles[gd.numProjectiles].idx = gd.numProjectiles;
-		VectorCopy(air->pos, gd.projectiles[gd.numProjectiles].pos);
-		gd.projectiles[gd.numProjectiles].aimedAircraft = ufo;
-		gd.projectiles[gd.numProjectiles].speed = 1.0f;
-		gd.numProjectiles++;
+	tech = air->weapon;
+
+	if (tech) {
+		/* @todo we need the ammunition and not the weapon */
+		idx = AII_GetAircraftItemByID(tech->provides);
+		/* FIXME: we set a temporary value for craft_ammo_sparrowhawk */
+		idx = 5;
+
+		if (gd.numProjectiles < 1)
+			AIRFIGHT_AddProjectile(idx, air->pos, ufo);
 	}
 }
 

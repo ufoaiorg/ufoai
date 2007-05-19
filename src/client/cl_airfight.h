@@ -28,9 +28,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /** @brief projectile used during fight between aircrafts */
 typedef struct aircraftProjectile_s {
-	aircraftItem_t *aircraftItem; /**< corresponding aircraftItem_t */
-	int idx;					/**< self link */
-	float speed;
+	int aircraftItemsIdx;	/**< idx of the corresponding ammo in the array aircraftItems[] */
+	int idx;				/**< self link of the idx in gd.projectiles[] */
 	vec3_t pos;
 	aircraft_t * aimedAircraft;
 } aircraftProjectile_t;
