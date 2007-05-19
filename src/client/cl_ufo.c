@@ -33,11 +33,41 @@ extern void UFO_CampaignCheckEvents(void);
 extern void UFO_Reset(void);
 
 /**
+ * @brief Translate UFO type to short name.
+ * @sa UFO_UfoTypeToName
+ */
+extern const char* UFO_UfoTypeToShortName (ufoType_t type)
+{
+	switch(type) {
+	case UFO_SCOUT:
+		return "ufo_scout";
+		break;
+	case UFO_FIGHTER:
+		return "ufo_fighter";
+		break;
+	case UFO_HARVESTER:
+		return "ufo_harvester";
+		break;
+	case UFO_CONDOR:
+		return "ufo_condor";
+		break;
+	case UFO_CARRIER:
+		return "ufo_carrier";
+		break;
+	default:
+		Sys_Error("UFO_UfoTypeToShortName(): Unknown UFO type %i\n", type);
+		break;
+	}
+	return NULL; /* never reached */
+}
+
+/**
  * @brief Translate UFO type to name.
  * @param[in] type UFO type in ufoType_t.
  * @return Translated UFO name.
+ * @sa UFO_UfoTypeToShortName
  */
-extern char* UFO_UfoTypeToName (ufoType_t type)
+extern const char* UFO_UfoTypeToName (ufoType_t type)
 {
 	switch(type) {
 	case UFO_SCOUT:
