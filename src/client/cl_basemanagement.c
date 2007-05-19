@@ -1981,6 +1981,7 @@ static void B_PackInitialEquipment_f (void)
  */
 static void B_BuildBase_f (void)
 {
+	const nation_t *nation = NULL;
 	assert(baseCurrent);
 	assert(!baseCurrent->founded);
 	assert(ccs.singleplayer);
@@ -1995,7 +1996,11 @@ static void B_BuildBase_f (void)
 			gd.mapAction = MA_NONE;
 			CL_UpdateCredits(ccs.credits - BASE_COSTS);
 			Q_strncpyz(baseCurrent->name, mn_base_title->string, sizeof(baseCurrent->name));
-			Q_strncpyz(messageBuffer, va(_("A new base has been built: %s."), mn_base_title->string), sizeof(messageBuffer));
+			nation = MAP_GetNation(baseCurrent->pos);
+			if (nation)
+				Com_sprintf(messageBuffer, sizeof(messageBuffer), _("A new base has been built: %s (nation: %s)"), mn_base_title->string, _(nation->name));
+			else
+				Com_sprintf(messageBuffer, sizeof(messageBuffer), _("A new base has been built: %s"), mn_base_title->string);
 			MN_AddNewMessage(_("Base built"), messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
 			Radar_Initialise(&(baseCurrent->radar), 0);
 			AL_FillInContainment();
@@ -2007,7 +2012,6 @@ static void B_BuildBase_f (void)
 				CL_GameTimeFast();
 			}
 			Cbuf_AddText(va("mn_select_base %i;", baseCurrent->idx));
-
 			return;
 		}
 	} else {

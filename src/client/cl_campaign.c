@@ -1654,7 +1654,7 @@ extern qboolean CP_Load (sizebuf_t *sb, void *data)
 		maskPic = NULL;
 	}
 	re.LoadTGA(va("pics/menu/%s_mask.tga", curCampaign->map), &maskPic, &maskWidth, &maskHeight);
-	if (!maskPic)
+	if (!maskPic || !maskWidth || !maskHeight)
 		Sys_Error("Couldn't load map mask %s_mask.tga in pics/menu\n", curCampaign->map);
 
 	if (nationsPic) {
@@ -1662,7 +1662,7 @@ extern qboolean CP_Load (sizebuf_t *sb, void *data)
 		nationsPic = NULL;
 	}
 	re.LoadTGA(va("pics/menu/%s_nations.tga", curCampaign->map), &nationsPic, &nationsWidth, &nationsHeight);
-	if (!nationsPic)
+	if (!nationsPic || !nationsWidth || !nationsHeight)
 		Sys_Error("Couldn't load map mask %s_nations.tga in pics/menu\n", curCampaign->map);
 
 	/* reset */
@@ -3647,8 +3647,16 @@ static void CL_GameNew (void)
 		maskPic = NULL;
 	}
 	re.LoadTGA(va("pics/menu/%s_mask.tga", curCampaign->map), &maskPic, &maskWidth, &maskHeight);
-	if (!maskPic)
+	if (!maskPic || !maskWidth || !maskHeight)
 		Sys_Error("Couldn't load map mask %s_mask.tga in pics/menu\n", curCampaign->map);
+
+	if (nationsPic) {
+		free(nationsPic);
+		nationsPic = NULL;
+	}
+	re.LoadTGA(va("pics/menu/%s_nations.tga", curCampaign->map), &nationsPic, &nationsWidth, &nationsHeight);
+	if (!nationsPic || !nationsWidth || !nationsHeight)
+		Sys_Error("Couldn't load map mask %s_nations.tga in pics/menu\n", curCampaign->map);
 
 	/* base setup */
 	gd.numBases = 0;
