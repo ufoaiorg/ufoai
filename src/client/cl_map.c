@@ -1477,7 +1477,7 @@ extern nation_t* MAP_GetNation (const vec2_t pos)
 		if (VectorCompare(nation->color, color))
 			return nation;
 	}
-	Com_DPrintf("MAP_GetNation: No nation found at %.0f:%.0f\n", pos[0], pos[1]);
+	Com_Printf("MAP_GetNation: No nation found at %.0f:%.0f - color: %i:%i:%i\n", pos[0], pos[1], color[0], color[1], color[2]);
 	return NULL;
 }
 
