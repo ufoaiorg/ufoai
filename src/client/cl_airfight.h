@@ -26,6 +26,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_AIRFIGHT_H
 #define CLIENT_CL_AIRFIGHT_H
 
+/** @brief projectile used during fight between aircrafts */
+typedef struct aircraftProjectile_s {
+	aircraftItem_t *aircraftItem; /**< corresponding aircraftItem_t */
+	int idx;					/**< self link */
+	float speed;
+	vec3_t pos;
+	aircraft_t * aimedAircraft;
+} aircraftProjectile_t;
 
+extern void AIRFIGHT_ExecuteActions(aircraft_t* air, aircraft_t* ufo);
+extern void AIRFIGHT_ActionsAfterAirfight(aircraft_t* aircraft, qboolean phalanxWon);
+extern void AIRFIGHT_ProjectileReachedTarget(void);
 
 #endif /* CLIENT_CL_AIRFIGHT_H */

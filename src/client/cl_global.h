@@ -128,6 +128,10 @@ typedef struct globalData_s
 	aircraft_t ufos[MAX_UFOONGEOSCAPE];
 	int numUfos;
 
+	/* Projectiles on geoscape (during fights) */
+	aircraftProjectile_t projectiles[MAX_PROJECTILESONGEOSCAPE];
+	int numProjectiles;
+
 	/* All transfers. */
 	transferlist_t alltransfers[MAX_AIRCRAFT];
 

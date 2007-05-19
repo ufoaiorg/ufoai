@@ -39,7 +39,7 @@ static aircraftItem_t aircraftItems[MAX_AIRCRAFTITEMS];	/**< FIXME: document me.
 #define AIRCRAFT_RADAR_RANGE	20			/* FIXME: const */
 
 /* =========================================================== */
-#define DISTANCE 1					/* FIXME: const */
+#define DISTANCE 15					/* FIXME: const */
 
 /**
  * @brief Updates base capacities after buying new aircraft.
@@ -134,26 +134,6 @@ void AIR_UpdateHangarCapForAll (int base_idx)
 		AIR_UpdateHangarCapForOne(aircraft->idx_sample, base->idx);
 	}
 	Com_DPrintf("AIR_UpdateHangarCapForAll()... base capacities.cur: small: %i big: %i\n", base->capacities[CAP_AIRCRAFTS_SMALL].cur, base->capacities[CAP_AIRCRAFTS_BIG].cur);
-}
-
-/**
- * @brief Calculates the fight between aircraft and ufo.
- * @param[in] aircraft The aircraft we attack with.
- * @param[in] ufo The ufo we are going to attack.
- * @return qtrue When aircraft hits ufo.
- * @return qfalse When ufo hits aircraft.
- * @todo Implement me and display an attack popup.
- */
-static qboolean AIR_Fight (aircraft_t* air, aircraft_t* ufo)
-{
-	/* variables here */
-
-	/* some asserts */
-	assert(air);
-	assert(ufo);
-
-	/* FIXME: */
-	return qtrue;
 }
 
 #ifdef DEBUG
@@ -835,9 +815,6 @@ extern qboolean AIR_AircraftMakeMove (int dt, aircraft_t* aircraft)
 	return qfalse;
 }
 
-/** @brief chance that this will spawn a crashsite when fought over land. */
-static const float GROUND_MISSION = 0.5f;
-
 /**
  * @brief
  * @param[in] dt
@@ -848,10 +825,6 @@ void CL_CampaignRunAircraft (int dt)
 	aircraft_t *aircraft;
 	base_t *base;
 	int i, j;
-	const char *zoneType = NULL;
-	char missionName[MAX_VAR];
-	byte *color;
-	qboolean battleStatus = qfalse;
 
 	for (j = 0, base = gd.bases; j < gd.numBases; j++, base++) {
 		if (!base->founded)
@@ -918,54 +891,16 @@ void CL_CampaignRunAircraft (int dt)
 				/* Aircraft purchasing ufo */
 				if (aircraft->status == AIR_UFO) {
 					aircraft_t* ufo = NULL;
-					mission_t* ms = NULL;
 
 					ufo = gd.ufos + aircraft->ufo;
-					if (abs(ufo->pos[0] - aircraft->pos[0]) < DISTANCE && abs(ufo->pos[1] - aircraft->pos[1]) < DISTANCE) {
+					if (CP_GetDistance(ufo->pos, aircraft->pos) < DISTANCE) {
+#if 0							
 						/* Display airfight sequence */
 						Cbuf_ExecuteText(EXEC_NOW, "seq_start airfight;");
+#endif
 
-						/* The aircraft can attack the ufo */
-						battleStatus = AIR_Fight(aircraft, ufo);
-
-						if (battleStatus) {
-							/* get the color value of the map at the crash position */
-							color = CL_GetMapColor(ufo->pos, MAPTYPE_CLIMAZONE);
-							/* if this color value is not the value for water ...
-							 * and we hit the probability to spawn a crashsite mission */
-							if (!MapIsWater(color) && frand() <= GROUND_MISSION) {
-								/* spawn new mission */
-								/* some random data like alien race, alien count (also depends on ufo-size) */
-								/* @todo: We should have a ufo crash theme for random map assembly */
-								/* @todo: call the map assembly theme with the right parameter, e.g.: +ufocrash [climazone] */
-								zoneType = MAP_GetZoneType(color);
-								Com_sprintf(missionName, sizeof(missionName), "ufocrash%.0f:%.0f", ufo->pos[0], ufo->pos[1]);
-								ms = CL_AddMission(missionName);
-								/* the size if somewhat random, because not all map tiles would have
-								 * alien spawn points */
-								ms->aliens = ufo->size;
-								/* 1-4 civilians */
-								ms->civilians = (frand() * 10);
-								ms->civilians %= 4;
-								ms->civilians += 1;
-
-								/* FIXME: */
-								Q_strncpyz(ms->alienTeam, "ortnok", sizeof(ms->alienTeam));
-								Q_strncpyz(ms->civTeam, "european", sizeof(ms->civTeam));
-							}
-							/* now remove the ufo from geoscape */
-							UFO_RemoveUfoFromGeoscape(ufo);
-							/* and send our aircraft back to base */
-							AIR_AircraftReturnToBase(aircraft);
-							MN_AddNewMessage(_("Interception"), _("You've won the battle"), qfalse, MSG_STANDARD, NULL);
-						} else {
-							/* @todo: destroy the aircraft and all soldiers in it */
-							/* @todo: maybe rescue some of the soldiers */
-							/* FIXME: remove this */
-							AIR_AircraftReturnToBase(aircraft);
-
-							MN_AddNewMessage(_("Interception"), _("You've lost the battle"), qfalse, MSG_STANDARD, NULL);
-						}
+						/* Solve the fight */
+						AIRFIGHT_ExecuteActions(aircraft, ufo);
 					} else {
 						/* @todo : Find better system to make the aircraft purchasing ufo */
 						AIR_SendAircraftPurchasingUfo(aircraft, ufo);
