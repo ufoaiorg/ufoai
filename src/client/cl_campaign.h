@@ -80,13 +80,13 @@ typedef struct mission_s {
 	char cmds[MAX_VAR];
 	char onwin[MAX_VAR];
 	char onlose[MAX_VAR];
-	int ugv;					/* uncontrolled ground units (entity: info_ugv_start) */
-	qboolean active;			/* aircraft at place? */
-	qboolean onGeoscape;		/* already on geoscape - don't add it twice */
-	date_t dateOnGeoscape;		/* last time the mission was on geoscape */
-	qboolean storyRelated;		/* auto mission play disabled when true */
-	missionType_t missionType;	/* type of mission */
-	void* data;					/* may be related to mission type */
+	int ugv;					/**< uncontrolled ground units (entity: info_ugv_start) */
+	qboolean active;			/**< aircraft at place? */
+	qboolean onGeoscape;		/**< already on geoscape - don't add it twice */
+	date_t dateOnGeoscape;		/**< last time the mission was on geoscape */
+	qboolean storyRelated;		/**< auto mission play disabled when true */
+	missionType_t missionType;	/**< type of mission */
+	void* data;					/**< may be related to mission type */
 	vec2_t pos;
 	byte mask[4];
 	int aliens, civilians;
@@ -97,15 +97,15 @@ typedef struct stageSet_s {
 	char needed[MAX_VAR];
 	char nextstage[MAX_VAR];
 	char endstage[MAX_VAR];
-	char cmds[MAX_VAR];			/* script commands to execute when stageset gets activated */
-	char sequence[MAX_VAR];		/* play a sequence when entering a new stage? */
+	char cmds[MAX_VAR];			/**< script commands to execute when stageset gets activated */
+	char sequence[MAX_VAR];		/**< play a sequence when entering a new stage? */
 	date_t delay;
 	date_t frame;
 	date_t expire;
-	int number;					/* number of missions until set is deactivated (they only need to appear on geoscape) */
-	int quota;					/* number of successfully ended missions until set gets deactivated */
-	byte numMissions;			/* number of missions in this set */
-	int missions[MAX_SETMISSIONS];	/* mission names in this set */
+	int number;					/**< number of missions until set is deactivated (they only need to appear on geoscape) */
+	int quota;					/**< number of successfully ended missions until set gets deactivated */
+	byte numMissions;			/**< number of missions in this set */
+	int missions[MAX_SETMISSIONS];	/**< mission names in this set */
 } stageSet_t;
 
 typedef struct stage_s {

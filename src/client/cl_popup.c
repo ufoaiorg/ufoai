@@ -47,7 +47,6 @@ typedef enum {
 	POPUP_AIRCRAFT_ACTION_NONE,				/**< Do nothing */
 
 	POPUP_AIRCRAFT_ACTION_MAX
-
 } popup_aircraft_action_e;
 
 /**
@@ -59,7 +58,6 @@ typedef struct popup_aircarft_s {
 	popup_aircraft_action_e itemsAction[POPUP_AIRCRAFT_MAX_ITEMS];	/**< Action type of items */
 	int itemsId[POPUP_AIRCRAFT_MAX_ITEMS];	/**< IDs corresponding to items */
 	char text_popup[POPUP_AIRCARFT_MAX_TEXT];	/**< Text displayed in popup_aircraft */
-
 } popup_aircraft_t;
 
 /** FIXME: Save me */
@@ -77,7 +75,6 @@ typedef struct popup_intercept_s {
 	aircraft_t* ufo;		/**< UFO the selected aircraft have to move to */
 } popup_intercept_t;
 
-/** FIXME: Save me */
 static popup_intercept_t popupIntercept;	/**< Data about popup_intercept */
 
 #if 0
@@ -235,7 +232,7 @@ extern void CL_DisplayPopupAircraft (const aircraft_t* aircraft)
 	int i;
 
 	/* Initialise popup_aircraft datas */
-	if (! aircraft)
+	if (!aircraft)
 		return;
 	popupAircraft.aircraft_idx = aircraft->idx;
 	popupAircraft.nbItems = 0;
@@ -339,7 +336,7 @@ extern void CL_DisplayPopupIntercept (actMis_t* mission, aircraft_t* ufo)
 	aircraft_t *air;
 
 	/* One parameter must be specified, mission or ufo */
-	if (! mission && ! ufo)
+	if (!mission && !ufo)
 		return;
 	popupIntercept.mission = mission;
 	popupIntercept.ufo = mission ? NULL : ufo;
@@ -357,6 +354,9 @@ extern void CL_DisplayPopupIntercept (actMis_t* mission, aircraft_t* ufo)
 			/* if aircraft is empty we can't send it on a ground mission */
 			if (mission && *air->teamSize <= 0)
 				continue;
+			/* don't show aircraft with no weapons */
+			if (ufo && !air->weapon)
+				continue;
 
 			s = va("%s (%i/%i)\t%s\t%s\n", air->shortname, *air->teamSize, air->size, AIR_AircraftStatusToName(air), gd.bases[j].name);
 			Q_strcat(aircraftListText, s, sizeof(aircraftListText));
@@ -370,11 +370,15 @@ extern void CL_DisplayPopupIntercept (actMis_t* mission, aircraft_t* ufo)
 		if (popupIntercept.numAircraft >= POPUP_INTERCEPT_MAX_AIRCRAFT)
 			break;
 	}
-	menuText[TEXT_AIRCRAFT_LIST] = aircraftListText;
+	if (popupIntercept.numAircraft)
+		menuText[TEXT_AIRCRAFT_LIST] = aircraftListText;
+	else if (mission)
+		menuText[TEXT_AIRCRAFT_LIST] = _("No craft available, or no tactical teams assigned to available craft.");
+	else if (ufo)
+		menuText[TEXT_AIRCRAFT_LIST] = _("No craft available, or no weapons loaded on available craft.");
 
 	/* Display the popup */
-	if (popupIntercept.numAircraft > 0)
-		MN_PushMenu("popup_intercept");
+	MN_PushMenu("popup_intercept");
 }
 
 /**
@@ -421,7 +425,7 @@ static void CL_PopupInterceptClick_f (void)
 
 /**
  * @brief User select an item in the popup_aircraft with right click
- * Opens up the aircraftn
+ * Opens up the aircraft menu
  */
 static void CL_PopupInterceptRClick_f (void)
 {

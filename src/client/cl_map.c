@@ -121,7 +121,6 @@ static void MAP_MultiSelectExecuteAction_f (void)
 
 	/* Execute action on element */
 	switch(multiSelect.selectType[selected]) {
-
 	case MULTISELECT_TYPE_BASE:	/* Select a base */
 		if (id >= gd.numBases)
 			break;

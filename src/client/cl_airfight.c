@@ -62,9 +62,6 @@ extern void AIRFIGHT_ExecuteActions (aircraft_t* air, aircraft_t* ufo)
 	}
 }
 
-/** @brief chance that this will spawn a crashsite when fought over land. */
-static const float GROUND_MISSION = 0.5f;
-
 /**
  * @brief Actions to execute when a fight is done.
  * @param[in] aircraft The aircraft which was destroyed (alien or phalanx).
@@ -76,13 +73,13 @@ extern void AIRFIGHT_ActionsAfterAirfight (aircraft_t* aircraft, qboolean phalan
 	byte *color;
 	const char *zoneType = NULL;
 	char missionName[MAX_VAR];
-	
+
 	if (phalanxWon) {
 		/* get the color value of the map at the crash position */
 		color = CL_GetMapColor(aircraft->pos, MAPTYPE_CLIMAZONE);
 		/* if this color value is not the value for water ...
 		 * and we hit the probability to spawn a crashsite mission */
-		if (!MapIsWater(color) && frand() <= GROUND_MISSION) {
+		if (!MapIsWater(color)) {
 			/* spawn new mission */
 			/* some random data like alien race, alien count (also depends on ufo-size) */
 			/* @todo: We should have a ufo crash theme for random map assembly */
@@ -90,6 +87,11 @@ extern void AIRFIGHT_ActionsAfterAirfight (aircraft_t* aircraft, qboolean phalan
 			zoneType = MAP_GetZoneType(color);
 			Com_sprintf(missionName, sizeof(missionName), "ufocrash%.0f:%.0f", aircraft->pos[0], aircraft->pos[1]);
 			ms = CL_AddMission(missionName);
+			if (!ms) {
+				MN_AddNewMessage(_("Interception"), _("UFO interception succesful -- UFO lost."), qfalse, MSG_STANDARD, NULL);
+				return;
+			}
+			ms->missionType = MIS_INTERCEPT;
 			/* the size if somewhat random, because not all map tiles would have
 			 * alien spawn points */
 			ms->aliens = aircraft->size;
@@ -97,16 +99,21 @@ extern void AIRFIGHT_ActionsAfterAirfight (aircraft_t* aircraft, qboolean phalan
 			ms->civilians = (frand() * 10);
 			ms->civilians %= 4;
 			ms->civilians += 1;
-
+			Vector2Set(ms->pos, aircraft->pos[0], aircraft->pos[1]);
+			Com_sprintf(ms->type, sizeof(ms->type), _("UFO crash site"));
+			Com_sprintf(ms->location, sizeof(ms->location), "todo: nation");
 			/* FIXME: */
 			Q_strncpyz(ms->alienTeam, "ortnok", sizeof(ms->alienTeam));
 			Q_strncpyz(ms->civTeam, "european", sizeof(ms->civTeam));
+			MN_AddNewMessage(_("Interception"), _("UFO interception succesful -- New mission available."), qfalse, MSG_STANDARD, NULL);
+		} else {
+			Com_Printf("zone: %s (%i:%i:%i)\n", MAP_GetZoneType(color), color[0], color[1], color[2]);
+			MN_AddNewMessage(_("Interception"), _("UFO interception succesful -- UFO lost to sea."), qfalse, MSG_STANDARD, NULL);
 		}
 		/* now remove the ufo from geoscape */
 		UFO_RemoveUfoFromGeoscape(aircraft);
 		/* and send our aircraft back to base */
 		AIR_AircraftReturnToBase(aircraft);
-		MN_AddNewMessage(_("Interception"), _("You've won the battle"), qfalse, MSG_STANDARD, NULL);
 	} else {
 		/* @todo: destroy the aircraft and all soldiers in it */
 		/* @todo: maybe rescue some of the soldiers */
@@ -124,10 +131,10 @@ extern void AIRFIGHT_ProjectileReachedTarget (void)
 {
 	aircraftProjectile_t *projectile;
 	int idx;
-	
+
 	for (idx = 0, projectile = gd.projectiles; idx < gd.numProjectiles; projectile++, idx++) {
 		if (CP_GetDistance(projectile->aimedAircraft->pos, projectile->pos) < 1.0f) {
-			AIRFIGHT_ActionsAfterAirfight (projectile->aimedAircraft, qtrue);
+			AIRFIGHT_ActionsAfterAirfight(projectile->aimedAircraft, qtrue);
 			AIRFIGHT_RemoveProjectile(idx);
 		}
 	}
