@@ -1487,7 +1487,7 @@ extern const char* MAP_GetZoneType (byte* color)
 	else if (MapIsWater(color))
 		return "water";
 	else
-		return "gras";
+		return "grass";
 }
 
 /**

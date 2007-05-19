@@ -107,9 +107,14 @@ extern void AIRFIGHT_ActionsAfterAirfight (aircraft_t* aircraft, qboolean phalan
 				Com_sprintf(ms->location, sizeof(ms->location), _(nation->name));
 			else
 				Com_sprintf(ms->location, sizeof(ms->location), _("No nation"));
-			/* FIXME: */
+			/* FIXME: teams + loadingscreen */
 			Q_strncpyz(ms->alienTeam, "ortnok", sizeof(ms->alienTeam));
 			Q_strncpyz(ms->civTeam, "european", sizeof(ms->civTeam));
+			Q_strncpyz(ms->loadingscreen, "crashsite", sizeof(ms->civTeam));
+
+			/* use ufocrash.ump as random tile assembly */
+			Com_sprintf(ms->map, sizeof(ms->map), "+ufocrash %s", MAP_GetZoneType(color));
+			CL_CampaignAddGroundMission(ms);
 			MN_AddNewMessage(_("Interception"), _("UFO interception succesful -- New mission available."), qfalse, MSG_STANDARD, NULL);
 		} else {
 			Com_Printf("zone: %s (%i:%i:%i)\n", MAP_GetZoneType(color), color[0], color[1], color[2]);

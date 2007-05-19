@@ -692,12 +692,37 @@ static void CP_MissionList_f (void)
 	}
 }
 
+/**
+ * @brief Add a new ground mission to the ccs.mission array
+ * @param[in] mis The mission to add to geoscape
+ * @note This mission must already be defined completly
+ * @sa CL_AddMission
+ * @sa CL_CampaignAddMission
+ */
+extern qboolean CL_CampaignAddGroundMission (mission_t* mission)
+{
+	actMis_t *mis;
+
+	/* add mission */
+	if (ccs.numMissions >= MAX_ACTMISSIONS) {
+		Com_DPrintf("CL_CampaignAddGroundMission: Too many active missions!\n");
+		return;
+	}
+	mis = &ccs.mission[ccs.numMissions++];
+	memset(mis, 0, sizeof(actMis_t));
+
+	/* set relevant info */
+	mis->def = mission;
+	mis->cause = NULL; /* FIXME */
+}
+
 #define DIST_MIN_BASE_MISSION 4
 /**
  * @brief
  * @sa CL_CampaignRemoveMission
  * @sa CL_CampaignCheckEvents
  * @sa CL_AddMission
+ * @sa CL_CampaignAddGroundMission
  */
 static void CL_CampaignAddMission (setState_t * set)
 {
@@ -709,7 +734,7 @@ static void CL_CampaignAddMission (setState_t * set)
 
 	/* add mission */
 	if (ccs.numMissions >= MAX_ACTMISSIONS) {
-		Com_Printf("Too many active missions!\n");
+		Com_DPrintf("CL_CampaignAddMission: Too many active missions!\n");
 		return;
 	}
 
@@ -727,7 +752,7 @@ static void CL_CampaignAddMission (setState_t * set)
 
 	/* maybe the mission is already on geoscape --- e.g. one-mission sets */
 	if (misTemp->onGeoscape) {
-		Com_DPrintf("Mission is already on geoscape\n");
+		Com_DPrintf("CL_CampaignAddMission: Mission is already on geoscape\n");
 		return;
 	} else {
 		misTemp->onGeoscape = qtrue;
@@ -759,9 +784,12 @@ static void CL_CampaignAddMission (setState_t * set)
 				if (gd.bases[i].founded)
 					break;
 			}
-			/* at this point there should be at least one base */
-			if (i == MAX_BASES)
-				Sys_Error("No bases found\n");
+			/* at this point there should be at least one base - but maybe they
+			 * are destroyed already */
+			if (i == MAX_BASES) {
+				Com_DPrintf("CL_CampaignAddMission: No bases found\n");
+				return;
+			}
 		}
 
 		B_BaseAttack(&gd.bases[i]);
@@ -2638,6 +2666,7 @@ static const value_t mission_vals[] = {
  * @param[in] name valid mission name
  * @return ms is the mission_t pointer of the mission to add
  * @sa CL_CampaignAddMission
+ * @sa CL_CampaignAddGroundMission
  */
 extern mission_t *CL_AddMission (const char *name)
 {

@@ -101,7 +101,7 @@ typedef struct stageSet_s {
 	char sequence[MAX_VAR];		/**< play a sequence when entering a new stage? */
 	date_t delay;
 	date_t frame;
-	date_t expire;
+	date_t expire;				/**< date when this mission will expire and will be removed from geoscape */
 	int number;					/**< number of missions until set is deactivated (they only need to appear on geoscape) */
 	int quota;					/**< number of successfully ended missions until set gets deactivated */
 	byte numMissions;			/**< number of missions in this set */
@@ -109,18 +109,19 @@ typedef struct stageSet_s {
 } stageSet_t;
 
 typedef struct stage_s {
-	char name[MAX_VAR];
-	int first, num;
+	char name[MAX_VAR];			/**< stage name */
+	int first;					/**< stageSet id in stageSets array */
+	int num;					/**< how many stageSets in this stage */
 } stage_t;
 
 typedef struct setState_s {
 	stageSet_t *def;
 	stage_t *stage;
-	byte active;
-	date_t start;
+	byte active;				/**< is this set active? */
+	date_t start;				/**< date when the set was activated */
 	date_t event;
 	int num;
-	int done;
+	int done;					/**< how many mission out of the mission pool are already done */
 } setState_t;
 
 typedef struct stageState_s {
@@ -331,7 +332,8 @@ extern float CP_GetDistance(const vec2_t pos1, const vec2_t pos2);
 void AIR_NewAircraft(base_t * base, const char *name);
 void CL_ParseResearchedCampaignItems(const char *name, char **text);
 void CL_ParseResearchableCampaignStates(const char *name, char **text, qboolean researchable);
-extern void CP_ExecuteMissionTrigger (mission_t * m, int won, base_t* base);
+extern void CP_ExecuteMissionTrigger(mission_t * m, int won, base_t* base);
+extern qboolean CL_CampaignAddGroundMission(mission_t* mis);
 
 campaign_t* CL_GetCampaign(const char* name);
 void CL_GameExit(void);
