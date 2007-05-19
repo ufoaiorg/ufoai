@@ -408,8 +408,13 @@ static qboolean CL_MapMaskFind (byte * color, vec2_t polar)
 /**
  * @brief Returns the color value from geoscape of maskPic at a given position.
  * @param[in] pos vec2_t Value of position on map to get the color value from.
- * @param[in] type determine the map to get the color from
+ * pos is longitude and latitude
+ * @param[in] type determine the map to get the color from (there are different masks)
+ * one for the climazone (bases made use of this - there are grass, ice and desert
+ * base tiles available) and one for the nations
  * @return Returns the color value at given position.
+ * @note maskPic is a pointer to an rgba image in memory
+ * @sa MAP_GetZoneType
  */
 extern byte *CL_GetMapColor (const vec2_t pos, mapType_t type)
 {
@@ -440,6 +445,9 @@ extern byte *CL_GetMapColor (const vec2_t pos, mapType_t type)
 	if (y < 0)
 		y = 0;
 
+	/* 4 => RGBA */
+	/* maskWidth is the width of the image */
+	/* this calulation returns the pixel in col x and in row y */
 	return maskPic + 4 * (x + y * maskWidth);
 }
 
@@ -689,6 +697,7 @@ static void CP_MissionList_f (void)
  * @brief
  * @sa CL_CampaignRemoveMission
  * @sa CL_CampaignCheckEvents
+ * @sa CL_AddMission
  */
 static void CL_CampaignAddMission (setState_t * set)
 {
@@ -2628,6 +2637,7 @@ static const value_t mission_vals[] = {
  * @note the returned mission_t pointer has to be filled - this function only fills the name
  * @param[in] name valid mission name
  * @return ms is the mission_t pointer of the mission to add
+ * @sa CL_CampaignAddMission
  */
 extern mission_t *CL_AddMission (const char *name)
 {
