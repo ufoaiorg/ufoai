@@ -185,6 +185,8 @@ typedef struct aircraft_s {
 
 extern aircraft_t aircraft_samples[MAX_AIRCRAFT]; /**< available aircraft types */
 extern int numAircraft_samples;
+extern int numAircraftItems;			/**< number of available aircrafts items in game. */
+extern aircraftItem_t aircraftItems[MAX_AIRCRAFTITEMS];	/**< Available aicraft items. */
 
 /* script functions */
 
@@ -217,6 +219,7 @@ qboolean AIR_IsInAircraftTeam(aircraft_t *aircraft,int idx);
 void CL_CampaignRunAircraft(int dt);
 aircraft_t *AIR_GetAircraft(const char *name);
 extern aircraft_t* AIR_AircraftGetFromIdx(int idx);
+extern int AII_GetAircraftItemByID(const char *id);
 extern void CP_GetRandomPosForAircraft(float *pos);
 extern qboolean AIR_AircraftMakeMove(int dt, aircraft_t* aircraft);
 void AIR_ParseAircraft(const char *name, char **text);

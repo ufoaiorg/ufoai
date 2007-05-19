@@ -33,8 +33,8 @@ aircraft_t aircraft_samples[MAX_AIRCRAFT];		/**< Available aircraft types. */
 int numAircraft_samples = 0; /* @todo: should be reset to 0 each time scripts are read anew; also aircraft_samples memory should be freed at that time, or old memory used for new records */
 static int airequipID = -1;				/**< FIXME: document me. */
 static qboolean noparams = qfalse;			/**< FIXME: document me. */
-static int numAircraftItems = 0;			/**< FIXME: document me. */
-static aircraftItem_t aircraftItems[MAX_AIRCRAFTITEMS];	/**< FIXME: document me. */
+int numAircraftItems = 0;			/**< number of available aircrafts items in game. */
+aircraftItem_t aircraftItems[MAX_AIRCRAFTITEMS];	/**< Available aicraft items. */
 
 #define AIRCRAFT_RADAR_RANGE	20			/* FIXME: const */
 
@@ -960,6 +960,34 @@ static technology_t **AII_GetCraftitemTechsByType (int type, qboolean usetypedef
 	/* terminate the list */
 	techList[j] = NULL;
 	return techList;
+}
+
+/**
+ * @brief Returns the index of this aircraft item in the list of aircraft Items.
+ * @note id may not be null or empty
+ * @param[in] id the item id in our aircraftItems array
+ */
+extern int AII_GetAircraftItemByID (const char *id)
+{
+	int i;
+	aircraftItem_t *aircraftItem = NULL;
+
+#ifdef DEBUG
+	if (!id || !*id) {
+		Com_Printf("AII_GetAircraftItemByID: Called with empty id\n");
+		return -1;
+	}
+#endif
+
+	for (i = 0; i < numAircraftItems; i++) {	/* i = item index */
+		aircraftItem = &aircraftItems[i];
+		if (!Q_strncmp(id, aircraftItem->id, MAX_VAR)) {
+			return i;
+		}
+	}
+
+	Com_Printf("AII_GetAircraftItemByID: Aircraft Item \"%s\" not found.\n", id);
+	return -1;
 }
 
 /**
