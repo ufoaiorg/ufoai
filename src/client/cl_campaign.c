@@ -706,7 +706,7 @@ extern qboolean CL_CampaignAddGroundMission (mission_t* mission)
 	/* add mission */
 	if (ccs.numMissions >= MAX_ACTMISSIONS) {
 		Com_DPrintf("CL_CampaignAddGroundMission: Too many active missions!\n");
-		return;
+		return qfalse;
 	}
 	mis = &ccs.mission[ccs.numMissions++];
 	memset(mis, 0, sizeof(actMis_t));
@@ -714,6 +714,8 @@ extern qboolean CL_CampaignAddGroundMission (mission_t* mission)
 	/* set relevant info */
 	mis->def = mission;
 	mis->cause = NULL; /* FIXME */
+
+	return qtrue;
 }
 
 #define DIST_MIN_BASE_MISSION 4
