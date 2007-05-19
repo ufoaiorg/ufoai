@@ -765,7 +765,11 @@ void CDAudio_RandomPlay(void);
 /* we need this in cl_aircraft.h */
 #define MAX_EMPLOYEES 256
 
+/* cl_aircraft.c */
 #include "cl_aircraft.h"
+
+/* cl_airfight.c */
+#include "cl_airfight.h"
 
 /* cl_basemanagment.c */
 /* needs the MAX_ACTIVETEAM definition from above. */
