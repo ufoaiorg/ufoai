@@ -3,40 +3,41 @@ CLIENT_CFLAGS=-DHAVE_GETTEXT
 CLIENT_SRCS = \
 	client/cl_actor.c \
 	client/cl_aliencont.c \
+	client/cl_aircraft.c \
+	client/cl_airfight.c \
 	client/cl_basemanagement.c \
-	client/cl_event.c \
-	client/cl_research.c \
-	client/cl_market.c \
 	client/cl_campaign.c \
+	client/cl_console.c \
+	client/cl_event.c \
+	client/cl_employee.c \
+	client/cl_fx.c \
 	client/cl_hospital.c \
 	client/cl_http.c \
-	client/cl_ufo.c \
-	client/cl_radar.c \
-	client/cl_save.c \
-	client/cl_popup.c \
-	client/cl_produce.c \
-	client/cl_employee.c \
-	client/cl_map.c \
-	client/cl_aircraft.c \
-	client/cl_fx.c \
 	client/cl_hunk.c \
+	client/cl_inventory.c \
 	client/cl_input.c \
+	client/cl_keys.c \
 	client/cl_le.c \
 	client/cl_main.c \
 	client/cl_menu.c \
+	client/cl_market.c \
+	client/cl_map.c \
+	client/cl_popup.c \
+	client/cl_produce.c \
 	client/cl_parse.c \
 	client/cl_particle.c \
+	client/cl_radar.c \
+	client/cl_research.c \
+	client/cl_save.c \
 	client/cl_shader.c \
 	client/cl_scrn.c \
 	client/cl_sequence.c \
 	client/cl_team.c \
 	client/cl_transfer.c \
-	client/cl_inventory.c \
+	client/cl_ufo.c \
 	client/cl_ufopedia.c \
 	client/cl_vid.c \
 	client/cl_view.c \
-	client/cl_console.c \
-	client/cl_keys.c \
 	client/snd_ref.c \
 	client/snd_mem.c \
 	client/snd_mix.c \
