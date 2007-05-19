@@ -929,9 +929,10 @@ void CL_CampaignRunAircraft (int dt)
 						battleStatus = AIR_Fight(aircraft, ufo);
 
 						if (battleStatus) {
-							/* @todo: What is that? Zenerka. */
+							/* get the color value of the map at the crash position */
 							color = CL_GetMapColor(ufo->pos, MAPTYPE_CLIMAZONE);
-							/* @todo: What is that? Zenerka. */
+							/* if this color value is not the value for water ...
+							 * and we hit the probability to spawn a crashsite mission */
 							if (!MapIsWater(color) && frand() <= GROUND_MISSION) {
 								/* spawn new mission */
 								/* some random data like alien race, alien count (also depends on ufo-size) */
