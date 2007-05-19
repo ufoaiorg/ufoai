@@ -835,12 +835,14 @@ extern qboolean AIR_AircraftMakeMove (int dt, aircraft_t* aircraft)
 	return qfalse;
 }
 
+/** @brief chance that this will spawn a crashsite when fought over land. */
+static const float GROUND_MISSION = 0.5f;
+
 /**
  * @brief
  * @param[in] dt
  * @todo: Fuel
  */
-#define GROUND_MISSION 0.5		/* @todo: what is that? Zenerka. */ /* FIXME: const. */
 void CL_CampaignRunAircraft (int dt)
 {
 	aircraft_t *aircraft;
