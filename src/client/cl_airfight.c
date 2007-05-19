@@ -87,13 +87,23 @@ extern void AIRFIGHT_ExecuteActions (aircraft_t* air, aircraft_t* ufo)
 	tech = air->weapon;
 
 	if (tech) {
+		/* aircraft has a weapon */
 		/* @todo we need the ammunition and not the weapon */
 		idx = AII_GetAircraftItemByID(tech->provides);
 		/* FIXME: we set a temporary value for craft_ammo_sparrowhawk */
 		idx = 5;
 
-		if (gd.numProjectiles < 1)
+		/* if we can shoot, shoot */
+		/* FIXME: for now, you can only fire one missile at a time */
+		/* we must add a rate of fire in aircraftmanagement.ufo */
+		if (CP_GetDistance(ufo->pos, air->pos) < aircraftItems[idx].weaponRange / 2.0f && gd.numProjectiles < 1)
 			AIRFIGHT_AddProjectile(idx, air->pos, ufo);
+		else
+			/* otherwise, pursue target */
+			AIR_SendAircraftPurchasingUfo(air, ufo);
+	} else {
+		/* no weapon, you should flee ! */
+		AIR_AircraftReturnToBase(air);
 	}
 }
 

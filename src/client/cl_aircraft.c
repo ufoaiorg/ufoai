@@ -893,18 +893,12 @@ void CL_CampaignRunAircraft (int dt)
 					aircraft_t* ufo = NULL;
 
 					ufo = gd.ufos + aircraft->ufo;
-					if (CP_GetDistance(ufo->pos, aircraft->pos) < DISTANCE) {
 #if 0							
-						/* Display airfight sequence */
-						Cbuf_ExecuteText(EXEC_NOW, "seq_start airfight;");
+					/* Display airfight sequence */
+					Cbuf_ExecuteText(EXEC_NOW, "seq_start airfight;");
 #endif
-
-						/* Solve the fight */
-						AIRFIGHT_ExecuteActions(aircraft, ufo);
-					} else {
-						/* @todo : Find better system to make the aircraft purchasing ufo */
-						AIR_SendAircraftPurchasingUfo(aircraft, ufo);
-					}
+					/* Solve the fight */
+					AIRFIGHT_ExecuteActions(aircraft, ufo);
 				}
 			}
 	}
@@ -1238,7 +1232,7 @@ static const value_t aircraftitems_vals[] = {
 	{"speed", V_FLOAT, offsetof(aircraftItem_t, speed), MEMBER_SIZEOF(aircraftItem_t, speed)},
 	{"price", V_INT, offsetof(aircraftItem_t, price), MEMBER_SIZEOF(aircraftItem_t, price)},
 	{"shield", V_RELABS, offsetof(aircraftItem_t, shield), MEMBER_SIZEOF(aircraftItem_t, shield)},
-	{"wrange", V_INT, offsetof(aircraftItem_t, weaponRange), MEMBER_SIZEOF(aircraftItem_t, weaponRange)},
+	{"wrange", V_FLOAT, offsetof(aircraftItem_t, weaponRange), MEMBER_SIZEOF(aircraftItem_t, weaponRange)},
 	{"range", V_RELABS, offsetof(aircraftItem_t, range), MEMBER_SIZEOF(aircraftItem_t, range)},
 	{"damage", V_INT, offsetof(aircraftItem_t, damage), MEMBER_SIZEOF(aircraftItem_t, damage)},
 	{"accuracy", V_INT, offsetof(aircraftItem_t, accuracy), MEMBER_SIZEOF(aircraftItem_t, accuracy)},
@@ -1300,7 +1294,7 @@ extern void AII_ParseAircraftItem (const char *name, char **text)
 			if (!Q_strncmp(token, "weapon", MAX_VAR))
 				airItem->type = AC_ITEM_WEAPON;
 			else if (!Q_strncmp(token, "ammo", MAX_VAR))
-				airItem->type = AC_ITEM_WEAPON;	/* NOTE: Same as weapon right now. Might change int he future. */
+				airItem->type = AC_ITEM_WEAPON;	/* NOTE: Same as weapon right now. Might change in the future. */
 			else if (!Q_strncmp(token, "armour", MAX_VAR))
 				airItem->type = AC_ITEM_ARMOUR;
 			else if (!Q_strncmp(token, "electronics", MAX_VAR))
