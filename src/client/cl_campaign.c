@@ -438,8 +438,8 @@ extern byte *CL_GetMapColor (const vec2_t pos, mapType_t type)
 	}
 
 	/* get coordinates */
-	x = (180 - pos[0]) / 360 * maskWidth;
-	y = (90 - pos[1]) / 180 * maskHeight;
+	x = (180 - pos[0]) / 360 * width;
+	y = (90 - pos[1]) / 180 * height;
 	if (x < 0)
 		x = 0;
 	if (y < 0)
@@ -448,7 +448,7 @@ extern byte *CL_GetMapColor (const vec2_t pos, mapType_t type)
 	/* 4 => RGBA */
 	/* maskWidth is the width of the image */
 	/* this calulation returns the pixel in col x and in row y */
-	return maskPic + 4 * (x + y * maskWidth);
+	return mask + 4 * (x + y * width);
 }
 
 /**
