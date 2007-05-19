@@ -113,7 +113,8 @@ extern void AIRFIGHT_ActionsAfterAirfight (aircraft_t* aircraft, qboolean phalan
 			Q_strncpyz(ms->loadingscreen, "crashsite", sizeof(ms->civTeam));
 
 			/* use ufocrash.ump as random tile assembly */
-			Com_sprintf(ms->map, sizeof(ms->map), "+ufocrash %s-%s", UFO_UfoTypeToShortName(aircraft->ufotype), MAP_GetZoneType(color));
+			Com_sprintf(ms->map, sizeof(ms->map), "+ufocrash");
+			Com_sprintf(ms->param, sizeof(ms->param), "%s-%s", UFO_UfoTypeToShortName(aircraft->ufotype), MAP_GetZoneType(color));
 			CL_CampaignAddGroundMission(ms);
 			MN_AddNewMessage(_("Interception"), _("UFO interception successful -- New mission available."), qfalse, MSG_STANDARD, NULL);
 		} else {
