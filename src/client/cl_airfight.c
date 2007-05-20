@@ -231,31 +231,34 @@ extern void AIRFIGHT_ActionsAfterAirfight (aircraft_t* aircraft, qboolean phalan
 
 /**
  * @brief Check if some projectiles on geoscape arrived at destination.
+ * @param[in] projectile Pointer to the projectile
+ * @param[in] movement distance that the projectile will do up to next draw of geoscape
+ * @sa AIRFIGHT_CampaignRunProjectiles
  */
-extern void AIRFIGHT_ProjectileReachedTarget (void)
+static qboolean AIRFIGHT_ProjectileReachedTarget (aircraftProjectile_t *projectile, float movement)
 {
-	aircraftProjectile_t *projectile;
 	float distance;
-	int idx;
 
-	for (idx = 0, projectile = gd.projectiles; idx < gd.numProjectiles; projectile++, idx++) {
-		if (!projectile->aimedAircraft)
+	if (!projectile->aimedAircraft)
 			/* the target is idle, its position is in idleTarget*/
-			distance = CP_GetDistance(projectile->idleTarget, projectile->pos);
-		else {
-			/* the target is moving, pointer to the other aircraft is aimedAircraft */
-			distance = CP_GetDistance(projectile->aimedAircraft->pos, projectile->pos);
-			if (distance < 1.0f)
-				AIRFIGHT_ActionsAfterAirfight(projectile->aimedAircraft, qtrue);
-		}
-
-		if (distance < 1.0f)
-			AIRFIGHT_RemoveProjectile(idx);
-		else if (projectile->distance > aircraftItems[gd.projectiles[idx].aircraftItemsIdx].weaponRange) {
-			/* projectile went too far, delete it */
-			AIRFIGHT_RemoveProjectile(idx);
-		}
+		distance = CP_GetDistance(projectile->idleTarget, projectile->pos);
+	else {
+		/* the target is moving, pointer to the other aircraft is aimedAircraft */
+		distance = CP_GetDistance(projectile->aimedAircraft->pos, projectile->pos);
 	}
+
+	/* projectile reaches its target */
+	if (distance < movement) {
+		return qtrue;
+	}
+
+	/* check if the projectile went farther than it's range */
+	distance = (float) projectile->time * aircraftItems[projectile->aircraftItemsIdx].weaponSpeed / 3600.0f;
+	if (distance > aircraftItems[projectile->aircraftItemsIdx].weaponRange) {
+		return qtrue;
+	}
+
+	return qfalse;
 }
 
 /**
@@ -266,15 +269,28 @@ extern void AIRFIGHT_CampaignRunProjectiles (int dt)
 	aircraftProjectile_t *projectile;
 	int idx;
 	float angle;
+	float movement;
 	
 	for (idx = 0, projectile = gd.projectiles; idx < gd.numProjectiles; projectile++, idx++) {
-		if (projectile->aimedAircraft)
-			angle = MAP_AngleOfPath(projectile->pos, projectile->aimedAircraft->pos, NULL, projectile);
-		else
-			angle = MAP_AngleOfPath(projectile->pos, projectile->idleTarget, NULL, projectile);
-		projectile->angle = angle;
-
+		projectile->time += dt;
+		movement = (float) dt * aircraftItems[projectile->aircraftItemsIdx].weaponSpeed / 3600.0f;
+		if (AIRFIGHT_ProjectileReachedTarget(projectile, movement)) {
+			/* the projectile finished its job */
+			if (projectile->aimedAircraft) {
+				/* it destroyed its target */
+				/* FIXME: atm, only UFOs can be destroyed (not PHALANX) */
+				AIRFIGHT_ActionsAfterAirfight(projectile->aimedAircraft, qtrue);
+			}
+			/* remove the missile from gd.projectiles[] */
+			AIRFIGHT_RemoveProjectile(idx);
+		} else {
+			/* projectile moves */
+			if (projectile->aimedAircraft)
+				angle = MAP_AngleOfPath(projectile->pos, projectile->aimedAircraft->pos, NULL, projectile, movement);
+			else
+				angle = MAP_AngleOfPath(projectile->pos, projectile->idleTarget, NULL, projectile, movement);
+			projectile->angle = angle;
+		}
 	}
-	AIRFIGHT_ProjectileReachedTarget();
 }
 

@@ -324,7 +324,7 @@ craftitem craft_ammo_sparrowhawk
 
 	damage		20
 	wrange		50
-	wspeed		50
+	wspeed		200
 	delay		200
 }
 

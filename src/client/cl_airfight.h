@@ -35,13 +35,12 @@ typedef struct aircraftProjectile_s {
 							 ** used only if the projectile will miss its target (that is if aimedAircraft is NULL) */
 	aircraft_t * aimedAircraft;	/**< target of the projectile/
 							 	 ** used only if the projectile will touch its target (otherwise it's NULL) */
-	float distance;			/**< distance already done by the projectile */
+	int time;				/**< time since the projectile has been launched */
 	float angle;			/**< angle of the missile on the geoscape */
 } aircraftProjectile_t;
 
 extern void AIRFIGHT_ExecuteActions(aircraft_t* air, aircraft_t* ufo);
 extern void AIRFIGHT_ActionsAfterAirfight(aircraft_t* aircraft, qboolean phalanxWon);
-extern void AIRFIGHT_ProjectileReachedTarget(void);
 extern void AIRFIGHT_CampaignRunProjectiles(int dt);
 
 #endif /* CLIENT_CL_AIRFIGHT_H */
