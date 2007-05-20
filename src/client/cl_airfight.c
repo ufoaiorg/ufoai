@@ -55,15 +55,20 @@ static qboolean AIRFIGHT_RemoveProjectile (int idx)
  */
 static qboolean AIRFIGHT_AddProjectile (int idx, vec3_t start, aircraft_t *target)
 {
+	aircraftProjectile_t *projectile;
+		
 	if (gd.numProjectiles >= MAX_PROJECTILESONGEOSCAPE) {
 		Com_Printf("Too many projectiles on map\n");
 		return qfalse;
 	}
+	assert(target);
 
-	gd.projectiles[gd.numProjectiles].aircraftItemsIdx = idx;
-	gd.projectiles[gd.numProjectiles].idx = gd.numProjectiles;
-	VectorCopy(start, gd.projectiles[gd.numProjectiles].pos);
-	gd.projectiles[gd.numProjectiles].aimedAircraft = target;
+	projectile = &gd.projectiles[gd.numProjectiles];
+	assert(projectile);
+	projectile->aircraftItemsIdx = idx;
+	projectile->idx = gd.numProjectiles;
+	VectorSet(projectile->pos, start[0], start[1], 0);
+	projectile->aimedAircraft = target;
 	gd.numProjectiles++;
 
 	return qtrue;
