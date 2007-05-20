@@ -90,6 +90,8 @@ typedef struct aircraftItem_s {
 	float damage;
 	float range;
 	float weaponRange;
+	float weaponSpeed;
+	float rateFire;
 	float speed;
 	float shield;
 	float accuracy;
