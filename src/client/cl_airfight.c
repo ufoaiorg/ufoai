@@ -56,7 +56,7 @@ static qboolean AIRFIGHT_RemoveProjectile (int idx)
 static qboolean AIRFIGHT_AddProjectile (int idx, vec3_t start, aircraft_t *target)
 {
 	aircraftProjectile_t *projectile;
-		
+
 	if (gd.numProjectiles >= MAX_PROJECTILESONGEOSCAPE) {
 		Com_Printf("Too many projectiles on map\n");
 		return qfalse;
@@ -76,20 +76,20 @@ static qboolean AIRFIGHT_AddProjectile (int idx, vec3_t start, aircraft_t *targe
 }
 
 /**
- * brief Set a wrong destination for projectile intended to touch aircraft, but missing it.
+ * brief Change destination of projectile to an idle point of the map, close to its former target.
  * @param[in] idx idx of the projectile to update in gd.projectiles[].
  */
 static void AIRFIGHT_MissTarget (int idx)
 {
 	aircraft_t *oldTarget;
 	aircraftProjectile_t *projectile;
-		
+
 	projectile = &gd.projectiles[idx];
 	assert(projectile);
 
 	oldTarget = projectile->aimedAircraft;
 	assert(oldTarget);
-	
+
 	VectorSet(projectile->idleTarget, oldTarget->pos[0] + 10 * frand() - 5, oldTarget->pos[1] + 10 * frand() - 5, 0);
 	projectile->aimedAircraft = NULL;
 }
@@ -98,7 +98,9 @@ static void AIRFIGHT_MissTarget (int idx)
  * brief Calculate the probability to hit the ennemy.
  * @param[in] shooter Pointer to the attacking aircraft.
  * @param[in] target Pointer to the aimed aircraft.
- * @return Probability to hit the target (0 when you don't have a chance, 1 when you're sure to hit).
+ * @return Probability to hit the target (0 when you don't have a chance, 1 (or more) when you're sure to hit).
+ * @sa AIRFIGHT_ExecuteActions
+ * @todo This probability should also depend on the pilot skills, when they will be implemented.
  */
 static float AIRFIGHT_ProbabilityToHit (aircraft_t *shooter, aircraft_t *target)
 {
@@ -113,11 +115,13 @@ static float AIRFIGHT_ProbabilityToHit (aircraft_t *shooter, aircraft_t *target)
 		return probability;
 	}
 
+	/* Take Base probability from the ammo of the attacking aircraft */
 	idx = AII_GetAircraftItemByID(tech->provides);
 	/* FIXME: this should be the ammo and not the weapon */
 	idx = 5;
 	probability = aircraftItems[idx].accuracy;
 
+	/* Check if the attacking aircraft has an item to improve its accuracy */
 	tech = shooter->item;
 	if (tech) {
 		idx = AII_GetAircraftItemByID(tech->provides);
@@ -126,6 +130,7 @@ static float AIRFIGHT_ProbabilityToHit (aircraft_t *shooter, aircraft_t *target)
 			probability *= factor;
 	}
 
+	/* Check if the target aircraft has an item to decrease accuracy of attacking aircraft */
 	tech = target->item;
 	if (tech) {
 		idx = AII_GetAircraftItemByID(tech->provides);
@@ -133,13 +138,13 @@ static float AIRFIGHT_ProbabilityToHit (aircraft_t *shooter, aircraft_t *target)
 		if (factor)
 			probability /= factor;
 	}
-		
+
 	Com_DPrintf("Probability to hit: %f\n", probability);
-	return probability;	
+	return probability;
 }
 
 /**
- * @brief Calculates the fight between aircraft and ufo.
+ * @brief Decide what an attacking aircraft can do.
  * @param[in] aircraft The aircraft we attack with.
  * @param[in] ufo The ufo we are going to attack.
  * @todo Implement me and display an attack popup.
@@ -165,11 +170,10 @@ extern void AIRFIGHT_ExecuteActions (aircraft_t* air, aircraft_t* ufo)
 		/* if we can shoot, shoot */
 		if (CP_GetDistance(ufo->pos, air->pos) < aircraftItems[idx].weaponRange / 2.0f && air->delayNextShot <= 0) {
 			float probability;
-			
+
 			if (AIRFIGHT_AddProjectile(idx, air->pos, ufo)) {
 				air->delayNextShot = aircraftItems[idx].weaponDelay;
 				/* will we miss the target ? */
-				/* FIXME: this must depend of ecm, accuracy, skills of the pilot, ... */
 				probability = frand();
 				if (probability > AIRFIGHT_ProbabilityToHit(air, ufo))
 					AIRFIGHT_MissTarget(gd.numProjectiles - 1);
@@ -185,15 +189,16 @@ extern void AIRFIGHT_ExecuteActions (aircraft_t* air, aircraft_t* ufo)
 
 /**
  * @brief Set all projectile aiming a given aircraft to an idle destination.
- * @note This is used when aircraft is destroyed.
  * @param[in] aircraft Pointer to the aimed aircraft.
+ * @note This function is called when @c aircraft is destroyed.
+ * @sa AIRFIGHT_ActionsAfterAirfight
  */
 static void AIRFIGHT_RemoveProjectileAimingAircraft (aircraft_t * aircraft)
 {
 	aircraftProjectile_t *projectile;
 	aircraft_t *target;
 	int idx;
-	
+
 	for (idx = 0, projectile = gd.projectiles; idx < gd.numProjectiles; projectile++, idx++) {
 		target = projectile->aimedAircraft;
 
@@ -284,7 +289,8 @@ extern void AIRFIGHT_ActionsAfterAirfight (aircraft_t* aircraft, qboolean phalan
 }
 
 /**
- * @brief Check if some projectiles on geoscape arrived at destination.
+ * @brief Check if some projectiles on geoscape reached their destination.
+ * @note Destination is not necessarily an aircraft, in case the projectile missed its initial target.
  * @param[in] projectile Pointer to the projectile
  * @param[in] movement distance that the projectile will do up to next draw of geoscape
  * @sa AIRFIGHT_CampaignRunProjectiles
@@ -294,7 +300,7 @@ static qboolean AIRFIGHT_ProjectileReachedTarget (aircraftProjectile_t *projecti
 	float distance;
 
 	if (!projectile->aimedAircraft)
-			/* the target is idle, its position is in idleTarget*/
+		/* the target is idle, its position is in idleTarget*/
 		distance = CP_GetDistance(projectile->idleTarget, projectile->pos);
 	else {
 		/* the target is moving, pointer to the other aircraft is aimedAircraft */
@@ -317,6 +323,7 @@ static qboolean AIRFIGHT_ProjectileReachedTarget (aircraftProjectile_t *projecti
 
 /**
  * @brief Update values of projectiles.
+ * @param[in] dt Time elapsed since last call of this function.
  */
 extern void AIRFIGHT_CampaignRunProjectiles (int dt)
 {
@@ -324,21 +331,21 @@ extern void AIRFIGHT_CampaignRunProjectiles (int dt)
 	int idx;
 	float angle;
 	float movement;
-	
+
 	for (idx = 0, projectile = gd.projectiles; idx < gd.numProjectiles; projectile++, idx++) {
 		projectile->time += dt;
 		movement = (float) dt * aircraftItems[projectile->aircraftItemsIdx].weaponSpeed / 3600.0f;
+		/* Check if the projectile reached its destination (aircraft or idle point) */
 		if (AIRFIGHT_ProjectileReachedTarget(projectile, movement)) {
-			/* the projectile finished its job */
+			/* check if it got the ennemy */
+			/* FIXME: atm, only UFOs can be destroyed (not PHALANX) */
 			if (projectile->aimedAircraft) {
-				/* it destroyed its target */
-				/* FIXME: atm, only UFOs can be destroyed (not PHALANX) */
 				AIRFIGHT_ActionsAfterAirfight(projectile->aimedAircraft, qtrue);
 			}
 			/* remove the missile from gd.projectiles[] */
 			AIRFIGHT_RemoveProjectile(idx);
 		} else {
-			/* projectile moves */
+			/* update position of the missile */
 			if (projectile->aimedAircraft)
 				angle = MAP_AngleOfPath(projectile->pos, projectile->aimedAircraft->pos, NULL, projectile, movement);
 			else
