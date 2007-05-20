@@ -68,6 +68,7 @@ static qboolean AIRFIGHT_AddProjectile (int idx, vec3_t start, aircraft_t *targe
 	projectile->aircraftItemsIdx = idx;
 	projectile->idx = gd.numProjectiles;
 	VectorSet(projectile->pos, start[0], start[1], 0);
+	VectorSet(projectile->idleTarget, 0, 0, 0);
 	projectile->aimedAircraft = target;
 	gd.numProjectiles++;
 
@@ -110,6 +111,40 @@ extern void AIRFIGHT_ExecuteActions (aircraft_t* air, aircraft_t* ufo)
 	} else {
 		/* no weapon, you should flee ! */
 		AIR_AircraftReturnToBase(air);
+	}
+}
+
+/**
+ * brief Set a wrong destination for projectile intended to touch aircraft, but missing it.
+ * @param[in] idx idx of the projectile to update in gd.projectiles[].
+ */
+static void AIRFIGHT_MissTarget (int idx)
+{
+	aircraft_t *oldTarget;
+	aircraftProjectile_t *projectile;
+		
+	projectile = &gd.projectiles[idx];
+	assert(projectile);
+
+	oldTarget = projectile->aimedAircraft;
+	assert(oldTarget);
+	
+	VectorSet(projectile->idleTarget, oldTarget->pos[0] + 10 * frand() - 5, oldTarget->pos[1] + 10 * frand() - 5, 0);
+	projectile->aimedAircraft = NULL;
+}
+
+/**
+ * brief Set a all projectile aiming an aircraft to an idle destination.
+ * @param[in] aircraft Pointer to the aimed aircraft.
+ */
+static void AIRFIGHT_RemoveProjectileAimingAircraft (aircraft_t * aircraft)
+{
+	aircraftProjectile_t *projectile;
+	int idx;
+	
+	for (idx = 0, projectile = gd.projectiles; idx < gd.numProjectiles; projectile++, idx++) {
+		if (projectile->aimedAircraft->idx == aircraft->idx)
+			AIRFIGHT_MissTarget(idx);
 	}
 }
 
@@ -175,6 +210,8 @@ extern void AIRFIGHT_ActionsAfterAirfight (aircraft_t* aircraft, qboolean phalan
 			Com_Printf("zone: %s (%i:%i:%i)\n", MAP_GetZoneType(color), color[0], color[1], color[2]);
 			MN_AddNewMessage(_("Interception"), _("UFO interception successful -- UFO lost to sea."), qfalse, MSG_STANDARD, NULL);
 		}
+		/* change destination of other projectiles aiming aircraft */
+		AIRFIGHT_RemoveProjectileAimingAircraft(aircraft);
 		/* now remove the ufo from geoscape */
 		UFO_RemoveUfoFromGeoscape(aircraft);
 		/* and send our aircraft back to base */
@@ -184,6 +221,9 @@ extern void AIRFIGHT_ActionsAfterAirfight (aircraft_t* aircraft, qboolean phalan
 		/* @todo: maybe rescue some of the soldiers */
 		/* FIXME: remove this */
 		AIR_AircraftReturnToBase(aircraft);
+
+		/* change destination of other projectiles aiming aircraft */
+		AIRFIGHT_RemoveProjectileAimingAircraft(aircraft);
 
 		MN_AddNewMessage(_("Interception"), _("You've lost the battle"), qfalse, MSG_STANDARD, NULL);
 	}
@@ -195,15 +235,23 @@ extern void AIRFIGHT_ActionsAfterAirfight (aircraft_t* aircraft, qboolean phalan
 extern void AIRFIGHT_ProjectileReachedTarget (void)
 {
 	aircraftProjectile_t *projectile;
+	float distance;
 	int idx;
 
 	for (idx = 0, projectile = gd.projectiles; idx < gd.numProjectiles; projectile++, idx++) {
 		if (!projectile->aimedAircraft)
+			/* the target is idle, its position is in idleTarget*/
+			distance = CP_GetDistance(projectile->idleTarget, projectile->pos);
+		else {
+			/* the target is moving, pointer to the other aircraft is aimedAircraft */
+			distance = CP_GetDistance(projectile->aimedAircraft->pos, projectile->pos);
+			if (distance < 1.0f)
+				AIRFIGHT_ActionsAfterAirfight(projectile->aimedAircraft, qtrue);
+		}
+
+		if (distance < 1.0f)
 			AIRFIGHT_RemoveProjectile(idx);
-		if (CP_GetDistance(projectile->aimedAircraft->pos, projectile->pos) < 1.0f) {
-			AIRFIGHT_ActionsAfterAirfight(projectile->aimedAircraft, qtrue);
-			AIRFIGHT_RemoveProjectile(idx);
-		} else if (projectile->distance > aircraftItems[gd.projectiles[idx].aircraftItemsIdx].weaponRange) {
+		else if (projectile->distance > aircraftItems[gd.projectiles[idx].aircraftItemsIdx].weaponRange) {
 			/* projectile went too far, delete it */
 			AIRFIGHT_RemoveProjectile(idx);
 		}
@@ -220,8 +268,12 @@ extern void AIRFIGHT_CampaignRunProjectiles (int dt)
 	float angle;
 	
 	for (idx = 0, projectile = gd.projectiles; idx < gd.numProjectiles; projectile++, idx++) {
-		angle = MAP_AngleOfPath(projectile->pos, projectile->aimedAircraft->pos, NULL, projectile);
+		if (projectile->aimedAircraft)
+			angle = MAP_AngleOfPath(projectile->pos, projectile->aimedAircraft->pos, NULL, projectile);
+		else
+			angle = MAP_AngleOfPath(projectile->pos, projectile->idleTarget, NULL, projectile);
 		projectile->angle = angle;
+
 	}
 	AIRFIGHT_ProjectileReachedTarget();
 }

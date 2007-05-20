@@ -31,7 +31,10 @@ typedef struct aircraftProjectile_s {
 	int aircraftItemsIdx;	/**< idx of the corresponding ammo in the array aircraftItems[] */
 	int idx;				/**< self link of the idx in gd.projectiles[] */
 	vec3_t pos;				/**< position of the projectile (latitude and longitude) */
-	aircraft_t * aimedAircraft;	/**< target of the projectile */
+	vec3_t idleTarget;		/**< target of the projectile
+							 ** used only if the projectile will miss its target (that is if aimedAircraft is NULL) */
+	aircraft_t * aimedAircraft;	/**< target of the projectile/
+							 	 ** used only if the projectile will touch its target (otherwise it's NULL) */
 	float distance;			/**< distance already done by the projectile */
 	float angle;			/**< angle of the missile on the geoscape */
 } aircraftProjectile_t;
