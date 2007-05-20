@@ -49,7 +49,6 @@ int block_xl = -8, block_xh = 7, block_yl = -8, block_yh = 7;
 int entity_num;
 
 
-#define NUMMODELS 258
 /**
  * @brief
  */

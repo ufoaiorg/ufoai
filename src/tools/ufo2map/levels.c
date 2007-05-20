@@ -123,9 +123,11 @@ static int BuildNodeChildren (vec3_t mins, vec3_t maxs, int n[3])
 	return node;
 }
 
+#define SPLIT_BRUSH_SIZE 256
 
 /**
  * @brief
+ * @sa ProcessLevel
  */
 static int ConstructLevelNodes_r (int levelnum, vec3_t cmins, vec3_t cmaxs)
 {
@@ -140,21 +142,20 @@ static int ConstructLevelNodes_r (int levelnum, vec3_t cmins, vec3_t cmaxs)
 	if (!MapBrushesBounds(brush_start, brush_end, levelnum, cmins, cmaxs, bmins, bmaxs))
 		return -1;
 
-/*	VectorCopy( cmins, bmins ); */
-/*	VectorCopy( cmaxs, bmaxs ); */
+/*	VectorCopy(cmins, bmins); */
+/*	VectorCopy(cmaxs, bmaxs); */
 
 	VectorSubtract(bmaxs, bmins, diff);
 
-/*	Sys_Printf( "(%i): %i %i: (%i %i) (%i %i) -> (%i %i) (%i %i)\n", levelnum, (int)diff[0], (int)diff[1],
+/*	Sys_Printf("(%i): %i %i: (%i %i) (%i %i) -> (%i %i) (%i %i)\n", levelnum, (int)diff[0], (int)diff[1],
 		(int)cmins[0], (int)cmins[1], (int)cmaxs[0], (int)cmaxs[1],
-		(int)bmins[0], (int)bmins[1], (int)bmaxs[0], (int)bmaxs[1] ); */
+		(int)bmins[0], (int)bmins[1], (int)bmaxs[0], (int)bmaxs[1]); */
 
-	if (diff[0] > 256 || diff[1] > 256) {
+	if (diff[0] > SPLIT_BRUSH_SIZE || diff[1] > SPLIT_BRUSH_SIZE) {
 		/* continue subdivision */
-		/* split the remaining hull at the middle of */
-		/* the longer axis */
-		vec3_t		nmins, nmaxs;
-		int			n;
+		/* split the remaining hull at the middle of the longer axis */
+		vec3_t nmins, nmaxs;
+		int n;
 
 		if (diff[1] > diff[0])
 			n = 1;
@@ -165,12 +166,12 @@ static int ConstructLevelNodes_r (int levelnum, vec3_t cmins, vec3_t cmaxs)
 		VectorCopy(bmaxs, nmaxs);
 
 		nmaxs[n] -= diff[n] / 2;
-/*		Sys_Printf( "  (%i %i) (%i %i)\n", (int)nmins[0], (int)nmins[1], (int)nmaxs[0], (int)nmaxs[1] ); */
+/*		Sys_Printf("  (%i %i) (%i %i)\n", (int)nmins[0], (int)nmins[1], (int)nmaxs[0], (int)nmaxs[1]); */
 		nn[0] = ConstructLevelNodes_r(levelnum, nmins, nmaxs);
 
 		nmins[n] += diff[n] / 2;
 		nmaxs[n] += diff[n] / 2;
-/*		Sys_Printf( "    (%i %i) (%i %i)\n", (int)nmins[0], (int)nmins[1], (int)nmaxs[0], (int)nmaxs[1] ); */
+/*		Sys_Printf("    (%i %i) (%i %i)\n", (int)nmins[0], (int)nmins[1], (int)nmaxs[0], (int)nmaxs[1]); */
 		nn[1] = ConstructLevelNodes_r(levelnum, nmins, nmaxs);
 	} else {
 		/* no children */
@@ -223,6 +224,10 @@ static int ConstructLevelNodes_r (int levelnum, vec3_t cmins, vec3_t cmaxs)
 
 /**
  * @brief
+ * @note levelnum
+ * 256: actorclip-level
+ * 258: stepon-level
+ * 259: tracing structure
  */
 extern void ProcessLevel (int levelnum)
 {
@@ -237,6 +242,8 @@ extern void ProcessLevel (int levelnum)
 	maxs[0] = (block_xh+1)*512-1;
 	maxs[1] = (block_yh+1)*512-1;
 	maxs[2] = 4096-1;
+
+	Sys_FPrintf(SYS_VRB, "Process levelnum %i (nummodels: %i)\n", levelnum, nummodels);
 
 	dm = &dmodels[levelnum];
 	memset(dm, 0, sizeof(dmodel_t));

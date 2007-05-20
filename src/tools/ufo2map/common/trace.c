@@ -142,6 +142,7 @@ static void BuildTnode_r (int node)
 
 /**
  * @brief Loads the node structure out of a .bsp file to be used for light occlusion
+ * @sa CloseTNodes
  */
 extern void MakeTnodes (int levels)
 {
@@ -323,6 +324,7 @@ int TestLineMask (vec3_t start, vec3_t stop, int levels)
 {
 	int i;
 
+	/* loop over all theads */
 	for (i = 0; i < numtheads; i++) {
 		if (theadlevel[i] > 255 + levels)
 			continue;
@@ -360,7 +362,7 @@ int TestLineDM (vec3_t start, vec3_t stop, vec3_t end, int levels)
 /**
  * @brief
  */
-int TestContents_r (int node, vec3_t pos)
+static int TestContents_r (int node, vec3_t pos)
 {
 	tnode_t	*tnode;
 	float	front;
@@ -399,23 +401,29 @@ int TestContents_r (int node, vec3_t pos)
 
 
 /**
- * @brief
+ * @brief Step height check
+ * @sa TestContents_r
  */
-int TestContents (vec3_t pos)
+extern qboolean TestContents (vec3_t pos)
 {
 	int i;
 
-	for (i = numtheads-1; i >= 0; i--) {
+	/* loop over all theads */
+	for (i = numtheads - 1; i >= 0; i--) {
 		if (theadlevel[i] != 258)
 			continue;
 
 		if (TestContents_r(thead[i], pos))
-			return 1;
+			return qtrue;
 		break;
 	}
-	return 0;
+	return qfalse;
 }
 
+/**
+ * @brief
+ * @sa MakeTnodes
+ */
 void CloseTNodes (void)
 {
 	if (freeTnodes)

@@ -41,15 +41,14 @@ const vec3_t dwn = {0, 0, -UH/2};
 const vec3_t move_vec[4] = { {US, 0, 0}, {-US, 0, 0}, {0, US, 0}, {0, -US, 0} };
 const vec3_t testvec[5] = { {-US/2+5,-US/2+5,0}, {US/2-5,US/2-5,0}, {-US/2+5,US/2-5,0}, {US/2-5,-US/2+5,0}, {0,0,0} };
 
-/* data structures */
+/** routing data structures */
 byte	route[HEIGHT][WIDTH][WIDTH];
 byte	fall[WIDTH][WIDTH];
 byte	step[WIDTH][WIDTH];
-byte	filled[WIDTH][WIDTH];
+byte	filled[WIDTH][WIDTH];	/**< totally blocked units */
 
-
+/** @brief world min and max values converted from vec to pos */
 static ipos3_t wpMins, wpMaxs;
-
 
 /**
  * @brief
@@ -182,6 +181,10 @@ static void CheckConnections_Thread (unsigned int unitnum)
 	y = (unitnum / WIDTH) % WIDTH;
 	x = unitnum % WIDTH;
 
+	assert(z < HEIGHT);
+	assert(y < WIDTH);
+	assert(x < WIDTH);
+
 	/* totally blocked unit */
 	if (filled[y][x] & (1<<z))
 		return;
@@ -190,9 +193,9 @@ static void CheckConnections_Thread (unsigned int unitnum)
 
 	/* prepare trace */
 	pos[0] = x; pos[1] = y; pos[2] = z;
-	PosToVec( pos, start );
+	PosToVec(pos, start);
 	start[2] += h * QUANT;
-	VectorCopy( start, ts );
+	VectorCopy(start, ts);
 
 	sh = (step[y][x] & (1<<z)) ? SH_BIG : SH_LOW;
 	sz = z + (h + sh) / 0x10;
@@ -240,31 +243,28 @@ static void CheckConnections_Thread (unsigned int unitnum)
  */
 extern void DoRouting (void)
 {
-	int		x, y, i;
+	int		i;
 	byte	*data;
 
 	PushInfo();
 	nummodels += 1;
 
 	/* process actorclip-level */
-/*	ProcessLevel(256); */
+	ProcessLevel(NUMMODELS-2);
 	/* process stepon-level */
-	ProcessLevel(258);
+	ProcessLevel(NUMMODELS);
 
 	/* build tracing structure */
 /*	EmitBrushes(); */
 	EmitPlanes();
-	MakeTnodes(259);
+	MakeTnodes(NUMMODELS+1);
 
 	PopInfo();
 	nummodels -= 1;
 
 	/* reset */
-	for (y = 0; y < WIDTH; y++)
-		for (x = 0; x < WIDTH; x++) {
-			fall[y][x] = 0;
-			filled[y][x] = 0;
-		}
+	memset(fall, 0, sizeof(fall));
+	memset(filled, 0, sizeof(filled));
 
 	/* get world bounds for optimizing */
 	VecToPos(worldMins, wpMins);

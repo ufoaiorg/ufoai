@@ -23,6 +23,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include <assert.h>
+
 #include "common/scriplib.h"
 #include "common/mathlib.h"
 #include "common/polylib.h"
@@ -306,12 +308,14 @@ void CloseTNodes(void);
 int TestLine(vec3_t start, vec3_t stop);
 int TestLineMask(vec3_t start, vec3_t stop, int levels);
 int TestLineDM(vec3_t start, vec3_t stop, vec3_t end, int levels);
-int TestContents(vec3_t pos);
+qboolean TestContents(vec3_t pos);
 
 /* levels.c */
 
 extern vec3_t	v_epsilon;
 extern vec3_t	worldMins, worldMaxs;
+
+#define NUMMODELS 258
 
 void PushInfo(void);
 void PopInfo(void);

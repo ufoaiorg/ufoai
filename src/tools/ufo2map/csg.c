@@ -159,24 +159,28 @@ static bspbrush_t *ClipBrushToBox (bspbrush_t *brush, vec3_t clipmins, vec3_t cl
 /**
  * @brief
  */
-static qboolean IsInLevel( int contents, int level )
+static qboolean IsInLevel (int contents, int level)
 {
 	/* special levels */
-	if (level == 256) {
+
+	/* weaponclip */
+	if (level == NUMMODELS-2) {
 		if (contents & CONTENTS_WEAPONCLIP)
 			return qtrue;
 		else
 			return qfalse;
 	}
 
-	if (level == 257) {
+	/* actorclip */
+	if (level == NUMMODELS-1) {
 		if (contents & CONTENTS_ACTORCLIP)
 			return qtrue;
 		else
 			return qfalse;
 	}
 
-	if (level == 258) {
+	/* stepon */
+	if (level == NUMMODELS) {
 		if (contents & CONTENTS_STEPON)
 			return qtrue;
 		else
