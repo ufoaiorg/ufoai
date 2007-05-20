@@ -1,0 +1,181 @@
+
+// entity 0
+{
+"classname" "worldspawn"
+"light" "100"
+"_color" "0.8 0.8 1"
+"ambient" "0.4 0.4 0.4"
+"angles" "25 45 0"
+// brush 0
+{
+( 384 336 4 ) ( 168 336 4 ) ( 168 184 4 ) tex_material/c_orange2 -0 8 0 0.5 0.5 65536 0 0
+( 168 184 8 ) ( 168 336 8 ) ( 384 336 8 ) tex_material/c_orange2 -0 8 0 0.5 0.5 65536 0 0
+( 168 184 40 ) ( 384 184 40 ) ( 384 184 12 ) tex_material/c_orange2 -0 0 0 0.5 0.5 65536 0 0
+( 384 184 40 ) ( 384 336 40 ) ( 384 336 12 ) tex_material/c_orange2 8 0 0 0.5 0.5 65536 0 0
+( 384 336 40 ) ( 168 336 40 ) ( 168 336 12 ) tex_material/c_orange2 -0 0 0 0.5 0.5 65536 0 0
+( 168 336 40 ) ( 168 184 40 ) ( 168 184 12 ) tex_material/c_orange2 8 0 0 0.5 0.5 65536 0 0
+}
+// brush 1
+{
+( 328 300 0 ) ( 328 324 0 ) ( 248 324 0 ) tex_material/c_orange2 8 -0 90 0.5 0.5 65536 0 0
+( 248 324 112 ) ( 328 324 112 ) ( 328 300 112 ) tex_material/c_orange2 8 -0 90 0.5 0.5 65536 0 0
+( 232 324 112 ) ( 232 300 112 ) ( 232 300 0 ) tex_material/c_orange2 8 0 0 0.5 0.5 65536 0 0
+( 248 300 112 ) ( 328 300 112 ) ( 328 300 0 ) tex_material/c_orange2 0 16 0 -0.5 0.5 65536 0 0
+( 392 292 112 ) ( 392 316 112 ) ( 392 316 0 ) tex_material/c_orange2 8 0 0 0.5 0.5 65536 0 0
+( 328 340 112 ) ( 248 340 112 ) ( 248 340 0 ) tex_material/c_orange2 0 16 0 -0.5 0.5 65536 0 0
+}
+// brush 2
+{
+( 456 220 0 ) ( 456 300 0 ) ( 328 300 0 ) tex_material/c_orange2 8 -0 90 0.5 0.5 65536 0 0
+( 328 300 112 ) ( 456 300 112 ) ( 456 220 112 ) tex_material/c_orange2 8 -0 90 0.5 0.5 65536 0 0
+( 328 300 112 ) ( 328 220 112 ) ( 328 220 0 ) tex_material/c_orange2 8 0 0 0.5 0.5 65536 0 0
+( 328 220 112 ) ( 456 220 112 ) ( 456 220 0 ) tex_material/c_orange2 0 16 0 -0.5 0.5 65536 0 0
+( 416 228 112 ) ( 416 308 112 ) ( 416 308 0 ) tex_material/c_orange2 8 0 0 0.5 0.5 65536 0 0
+( 456 300 112 ) ( 328 300 112 ) ( 328 300 0 ) tex_material/c_orange2 0 16 0 -0.5 0.5 65536 0 0
+}
+// brush 3
+{
+( 328 180 0 ) ( 328 204 0 ) ( 248 204 0 ) tex_material/c_orange2 8 -0 90 0.5 0.5 65536 0 0
+( 248 204 112 ) ( 328 204 112 ) ( 328 180 112 ) tex_material/c_orange2 8 -0 90 0.5 0.5 65536 0 0
+( 232 204 112 ) ( 232 180 112 ) ( 232 180 0 ) tex_material/c_orange2 8 0 0 0.5 0.5 65536 0 0
+( 248 180 112 ) ( 328 180 112 ) ( 328 180 0 ) tex_material/c_orange2 0 16 0 -0.5 0.5 65536 0 0
+( 392 172 112 ) ( 392 196 112 ) ( 392 196 0 ) tex_material/c_orange2 8 0 0 0.5 0.5 65536 0 0
+( 312 220 112 ) ( 232 220 112 ) ( 232 220 0 ) tex_material/c_orange2 0 16 0 -0.5 0.5 65536 0 0
+}
+// brush 4
+{
+( 520 236 0 ) ( 520 284 0 ) ( 416 284 0 ) tex_material/c_orange2 8 -0 90 0.5 0.5 65536 0 0
+( 416 284 112 ) ( 520 284 112 ) ( 520 236 112 ) tex_material/c_orange2 8 -0 90 0.5 0.5 65536 0 0
+( 416 284 112 ) ( 416 236 112 ) ( 416 236 0 ) tex_material/c_orange2 8 0 0 0.5 0.5 65536 0 0
+( 416 236 112 ) ( 520 236 112 ) ( 520 236 0 ) tex_material/c_orange2 0 16 0 -0.5 0.5 65536 0 0
+( 520 236 112 ) ( 520 284 112 ) ( 520 284 0 ) tex_material/c_orange2 8 0 0 0.5 0.5 65536 0 0
+( 520 284 112 ) ( 416 284 112 ) ( 416 284 0 ) tex_material/c_orange2 0 16 0 -0.5 0.5 65536 0 0
+}
+// brush 5
+{
+( 168 176 0 ) ( 168 348 0 ) ( 136 348 0 ) tex_material/c_orange2 8 -0 90 0.5 0.5 65536 0 0
+( 136 348 112 ) ( 168 348 112 ) ( 168 176 112 ) tex_material/c_orange2 8 -0 90 0.5 0.5 65536 0 0
+( 136 348 112 ) ( 136 176 112 ) ( 136 176 0 ) tex_material/c_orange2 8 0 0 0.5 0.5 65536 0 0
+( 136 164 112 ) ( 168 164 112 ) ( 168 164 0 ) tex_material/c_orange2 0 16 0 -0.5 0.5 65536 0 0
+( 168 176 112 ) ( 168 348 112 ) ( 168 348 0 ) tex_material/c_orange2 8 0 0 0.5 0.5 65536 0 0
+( 168 356 112 ) ( 136 356 112 ) ( 136 356 0 ) tex_material/c_orange2 0 16 0 -0.5 0.5 65536 0 0
+}
+// brush 6
+{
+( 136 196 0 ) ( 136 324 0 ) ( 40 324 0 ) tex_material/c_orange2 8 -0 90 0.5 0.5 65536 0 0
+( 40 324 112 ) ( 136 324 112 ) ( 136 196 112 ) tex_material/c_orange2 8 -0 90 0.5 0.5 65536 0 0
+( 8 332 112 ) ( 8 204 112 ) ( 8 204 0 ) tex_material/c_orange2 8 0 0 0.5 0.5 65536 0 0
+( 40 196 112 ) ( 136 196 112 ) ( 136 196 0 ) tex_material/c_orange2 0 16 0 -0.5 0.5 65536 0 0
+( 136 196 112 ) ( 136 324 112 ) ( 136 324 0 ) tex_material/c_orange2 8 0 0 0.5 0.5 65536 0 0
+( 136 324 112 ) ( 40 324 112 ) ( 40 324 0 ) tex_material/c_orange2 0 16 0 -0.5 0.5 65536 0 0
+}
+// brush 7
+{
+( 136 164 0 ) ( 136 196 0 ) ( 104 196 0 ) tex_material/c_orange2 8 -0 90 0.5 0.5 65536 0 0
+( 104 196 112 ) ( 136 196 112 ) ( 136 164 112 ) tex_material/c_orange2 8 -0 90 0.5 0.5 65536 0 0
+( 104 196 112 ) ( 104 164 112 ) ( 104 164 0 ) tex_material/c_orange2 8 0 0 0.5 0.5 65536 0 0
+( 104 164 112 ) ( 136 164 112 ) ( 136 164 0 ) tex_material/c_orange2 0 16 0 -0.5 0.5 65536 0 0
+( 136 164 112 ) ( 136 196 112 ) ( 136 196 0 ) tex_material/c_orange2 8 0 0 0.5 0.5 65536 0 0
+( 136 196 112 ) ( 104 196 112 ) ( 104 196 0 ) tex_material/c_orange2 0 16 0 -0.5 0.5 65536 0 0
+}
+// brush 8
+{
+( 136 324 0 ) ( 136 356 0 ) ( 104 356 0 ) tex_material/c_orange2 8 -0 90 0.5 0.5 65536 0 0
+( 104 356 112 ) ( 136 356 112 ) ( 136 324 112 ) tex_material/c_orange2 8 -0 90 0.5 0.5 65536 0 0
+( 104 356 112 ) ( 104 324 112 ) ( 104 324 0 ) tex_material/c_orange2 8 0 0 0.5 0.5 65536 0 0
+( 104 324 112 ) ( 136 324 112 ) ( 136 324 0 ) tex_material/c_orange2 0 16 0 -0.5 0.5 65536 0 0
+( 136 324 112 ) ( 136 356 112 ) ( 136 356 0 ) tex_material/c_orange2 8 0 0 0.5 0.5 65536 0 0
+( 136 356 112 ) ( 104 356 112 ) ( 104 356 0 ) tex_material/c_orange2 0 16 0 -0.5 0.5 65536 0 0
+}
+// brush 9
+{
+( 424 196 0 ) ( 424 236 0 ) ( 392 236 0 ) tex_material/c_orange2 8 -0 90 0.5 0.5 65536 0 0
+( 392 236 112 ) ( 424 236 112 ) ( 424 196 112 ) tex_material/c_orange2 8 -0 90 0.5 0.5 65536 0 0
+( 392 236 112 ) ( 392 196 112 ) ( 392 196 0 ) tex_material/c_orange2 8 0 0 0.5 0.5 65536 0 0
+( 392 196 112 ) ( 424 196 112 ) ( 424 196 0 ) tex_material/c_orange2 0 16 0 -0.5 0.5 65536 0 0
+( 424 196 112 ) ( 424 236 112 ) ( 424 236 0 ) tex_material/c_orange2 8 0 0 0.5 0.5 65536 0 0
+( 424 236 112 ) ( 392 236 112 ) ( 392 236 0 ) tex_material/c_orange2 0 16 0 -0.5 0.5 65536 0 0
+}
+// brush 10
+{
+( 424 284 0 ) ( 424 324 0 ) ( 392 324 0 ) tex_material/c_orange2 8 -0 90 0.5 0.5 65536 0 0
+( 392 324 112 ) ( 424 324 112 ) ( 424 284 112 ) tex_material/c_orange2 8 -0 90 0.5 0.5 65536 0 0
+( 392 324 112 ) ( 392 284 112 ) ( 392 284 0 ) tex_material/c_orange2 8 0 0 0.5 0.5 65536 0 0
+( 392 284 112 ) ( 424 284 112 ) ( 424 284 0 ) tex_material/c_orange2 0 16 0 -0.5 0.5 65536 0 0
+( 424 284 112 ) ( 424 324 112 ) ( 424 324 0 ) tex_material/c_orange2 8 0 0 0.5 0.5 65536 0 0
+( 424 324 112 ) ( 392 324 112 ) ( 392 324 0 ) tex_material/c_orange2 0 16 0 -0.5 0.5 65536 0 0
+}
+// brush 11
+{
+( 704 768 0 ) ( 500 768 0 ) ( 500 672 0 ) tex_material/c_yellow 0 0 0 0.5 0.5 33619968 128 0
+( 500 672 4 ) ( 500 768 4 ) ( 704 768 4 ) tex_material/c_yellow 0 0 0 0.5 0.5 33619968 128 0
+( 0 778 4 ) ( 0 682 4 ) ( 0 682 0 ) tex_material/c_yellow 4 8 0 0.5 0.5 33619968 128 0
+( 264 0 8 ) ( 584 0 8 ) ( 584 0 0 ) tex_material/c_yellow 128 0 0 0.25 0.25 33619968 128 0
+( 636 512 8 ) ( 316 512 8 ) ( 316 512 0 ) tex_material/c_yellow 0 0 0 0.25 0.25 33619968 128 0
+( 512 504 0 ) ( 512 504 8 ) ( 512 672 8 ) tex_material/c_yellow 128 0 0 0.25 0.25 33619968 128 0
+}
+}
+// entity 1
+{
+"classname" "misc_model"
+"origin" "264 260 36"
+"spawnflags" "254"
+"model" "models/aircraft/drop_firebird/firebird_top.md2"
+"angles" "0 180 0"
+}
+// entity 2
+{
+"classname" "misc_model"
+"spawnflags" "255"
+"origin" "264 260 36"
+"model" "models/aircraft/drop_firebird/firebird_glass.md2"
+"angles" "0 180 0"
+}
+// entity 3
+{
+"classname" "misc_model"
+"origin" "264 260 36"
+"model" "models/aircraft/drop_firebird/firebird.md2"
+"spawnflags" "255"
+"angles" "0 180 0"
+}
+// entity 4
+{
+"classname" "info_human_start"
+"origin" "336 48 40"
+}
+// entity 5
+{
+"classname" "info_human_start"
+"origin" "112 112 40"
+}
+// entity 6
+{
+"classname" "info_human_start"
+"origin" "240 112 40"
+}
+// entity 7
+{
+"classname" "info_human_start"
+"origin" "176 400 40"
+}
+// entity 8
+{
+"classname" "info_human_start"
+"origin" "432 400 40"
+}
+// entity 9
+{
+"classname" "info_human_start"
+"origin" "368 400 40"
+}
+// entity 10
+{
+"classname" "info_human_start"
+"origin" "368 144 40"
+}
+// entity 11
+{
+"classname" "info_human_start"
+"origin" "400 112 40"
+}

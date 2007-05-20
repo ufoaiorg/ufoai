@@ -6,6 +6,9 @@
 // ----------
 // +: tile contains something
 // a: any
+// b: street horizontal
+// c: street vertical
+// d: dropship
 
 base ucd/uc_
 
@@ -19,10 +22,10 @@ base ucd/uc_
 tile +drop_firebird
 {
 4 4
-0      abc     abc     0
-abc     +a     +a      abc
-abc     +a     +a      abc
-0      abc     abc     0
+0      ab     ab     0
+ac     +d     +d      ac
+ac     +d     +d      ac
+0      ab     ab     0
 }
 
 // ---------------------------------
@@ -31,10 +34,10 @@ abc     +a     +a      abc
 tile +inter_stiletto
 {
 4 4
-0      abc     abc     0
-abc     +a     +a      abc
-abc     +a     +a      abc
-0      abc     abc     0
+0      ab     ab     0
+ac     +d     +d      ac
+ac     +d     +d      ac
+0      ab     ab     0
 }
 
 // ---------------------------------
@@ -43,10 +46,10 @@ abc     +a     +a      abc
 tile +inter_saracen
 {
 4 4
-0      abc     abc     0
-abc     +a     +a      abc
-abc     +a     +a      abc
-0      abc     abc     0
+0      ab     ab     0
+ac     +d     +d      ac
+ac     +d     +d      ac
+0      ab     ab     0
 }
 
 // ---------------------------------
@@ -55,10 +58,37 @@ abc     +a     +a      abc
 tile +inter_stingray
 {
 4 4
-0      abc     abc     0
-abc     +a     +a      abc
-abc     +a     +a      abc
-0      abc     abc     0
+0      ab     ab     0
+ac     +d     +d      ac
+ac     +d     +d      ac
+0      ab     ab     0
+}
+
+// ---------------------------------
+// house (desert)
+// ---------------------------------
+tile +d_h01
+{
+4 3
+
+0      ab     ab     0
+ac     +a     +a      ac
+0      ab     ab     0
+}
+
+// ---------------------------------
+// craft tile (desert)
+// d means, that the clipped dropship
+// model is placed there
+// ---------------------------------
+tile +d_craft
+{
+6 4
+
+0      ab     ab     ab     ab     0
+ac      d      d     +a     +a      ac
+ac      d      d     +a     +a      ac
+0      ab     ab     ab     ab     0
 }
 
 // *********************************
@@ -69,6 +99,10 @@ abc     +a     +a      abc
 
 assembly ufo_carrier-grass
 {
+size "4 2"
++d_h01 "0 10"
++d_craft "1 1"
+*rm_dropship +drop_firebird "1 1"
 }
 
 assembly ufo_harvester-grass
