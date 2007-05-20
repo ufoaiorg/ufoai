@@ -89,9 +89,9 @@ typedef struct aircraftItem_s {
 	int weight;
 	float damage;
 	float range;
-	float weaponRange;
-	float weaponSpeed;
-	float rateFire;
+	float weaponRange;			/**< The range of the projectile */
+	float weaponSpeed;			/**< The speed of the projectile on geoscape */
+	float weaponDelay;			/**< The minimum delay between 2 shots */
 	float speed;
 	float shield;
 	float accuracy;
@@ -157,6 +157,7 @@ typedef struct aircraft_s {
 	technology_t *shield;
 	char item_string[MAX_VAR];
 	technology_t *item;
+	float delayLastShot;		/**< The delay since the last projectile has been shot */
 	mapline_t route;
 	void *homebase;				/**< Pointer to homebase for faster access. See also idxBase. */
 	void *transferBase;			/**< Pointer to the base we are transfering equipment to */

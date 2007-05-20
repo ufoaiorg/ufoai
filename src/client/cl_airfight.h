@@ -30,8 +30,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 typedef struct aircraftProjectile_s {
 	int aircraftItemsIdx;	/**< idx of the corresponding ammo in the array aircraftItems[] */
 	int idx;				/**< self link of the idx in gd.projectiles[] */
-	vec3_t pos;
-	aircraft_t * aimedAircraft;
+	vec3_t pos;				/**< position of the projectile (latitude and longitude) */
+	aircraft_t * aimedAircraft;	/**< target of the projectile */
 } aircraftProjectile_t;
 
 extern void AIRFIGHT_ExecuteActions(aircraft_t* air, aircraft_t* ufo);
