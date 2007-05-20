@@ -789,7 +789,7 @@ extern void MAP_MapDrawEquidistantPoints (const menuNode_t* node, vec2_t center,
  * @param[in] projectile if not NULL, will update the position of the projectile going toward @c direction.
  * @return Angle (degrees) of rotation around the axis perpendicular to the screen for a model in @c start going toward @c end.
  */
-static float MAP_AngleOfPath (const menuNode_t* node, const vec3_t start, const vec2_t end, vec3_t direction, aircraftProjectile_t *projectile)
+extern float MAP_AngleOfPath (const vec3_t start, const vec2_t end, vec3_t direction, aircraftProjectile_t *projectile)
 {
 	float angle = 0.0f;
 	vec3_t start3D, end3D, tangentVector, v, rotationAxis;
@@ -826,6 +826,7 @@ static float MAP_AngleOfPath (const menuNode_t* node, const vec3_t start, const 
 		VectorScale(tangentVector, 0.01f, tangentVector);
 		VectorAdd(start3D, tangentVector, end3D);
 		VecToPolar(end3D, projectile->pos);
+		projectile->distance += 0.01f;
 	}
 
 	/* rotate vector tangent to movement in the frame of the screen */
@@ -1057,7 +1058,7 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 	Cvar_Set("mn_mapdaytime", "");
 	for (i = 0; i < ccs.numMissions; i++) {
 		ms = &ccs.mission[i];
-		angle = MAP_AngleOfPath(node, ms->realPos, northPole, NULL, NULL);
+		angle = MAP_AngleOfPath(ms->realPos, northPole, NULL, NULL);
 		if (!MAP_3DMapToScreen(node, ms->realPos, &x, &y, NULL))
 			continue;
 
@@ -1075,7 +1076,7 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 		if (!base->founded)
 			continue;
 
-		angle = MAP_AngleOfPath(node, base->pos, northPole, NULL, NULL);
+		angle = MAP_AngleOfPath(base->pos, northPole, NULL, NULL);
 
 		/* Draw base radar info */
 		RADAR_DrawInMap(node, &(base->radar), base->pos, qtrue);
@@ -1104,9 +1105,9 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 							memcpy(path.point + 1, aircraft->route.point + aircraft->point + 1, (path.numPoints - 1) * sizeof(vec2_t));
 						MAP_3DMapDrawLine(node, &path);
 					}
-					angle = MAP_AngleOfPath(node, aircraft->pos, aircraft->route.point[aircraft->route.numPoints - 1], aircraft->direction, NULL);
+					angle = MAP_AngleOfPath(aircraft->pos, aircraft->route.point[aircraft->route.numPoints - 1], aircraft->direction, NULL);
 				} else {
-					angle = MAP_AngleOfPath(node, aircraft->pos, northPole, aircraft->direction, NULL);
+					angle = MAP_AngleOfPath(aircraft->pos, northPole, aircraft->direction, NULL);
 				}
 
 				/* Draw a circle around selected aircraft */
@@ -1135,14 +1136,13 @@ static void MAP_Draw3DMapMarkers (const menuNode_t * node)
 			continue;
 		if (aircraft == selectedUfo)
 			MAP_MapDrawEquidistantPoints (node, aircraft->pos, SELECT_CIRCLE_RADIUS, yellow, qtrue);
-		angle = MAP_AngleOfPath(node, aircraft->pos, aircraft->route.point[aircraft->route.numPoints - 1], aircraft->direction, NULL);
+		angle = MAP_AngleOfPath(aircraft->pos, aircraft->route.point[aircraft->route.numPoints - 1], aircraft->direction, NULL);
 		MAP_Draw3DMarkerIfVisible(node, aircraft->pos, angle, aircraft->model);
 	}
 
 	/* draws projectiles */
 	for (projectile = gd.projectiles + gd.numProjectiles - 1; projectile >= gd.projectiles; projectile --) {
-		angle = MAP_AngleOfPath(node, projectile->pos, projectile->aimedAircraft->pos, NULL, projectile);
-		MAP_Draw3DMarkerIfVisible(node, projectile->pos, angle, "missile");
+		MAP_Draw3DMarkerIfVisible(node, projectile->pos, projectile->angle, "missile");
 	}
 
 	/* FIXME */

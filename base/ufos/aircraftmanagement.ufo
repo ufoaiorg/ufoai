@@ -322,8 +322,10 @@ craftitem craft_ammo_sparrowhawk
 	weapon		craft_weapon_sparrowhawk
 	price		250
 
-	damage	20
-	wrange	50
+	damage		20
+	wrange		50
+	wspeed		50
+	delay		200
 }
 
 craftitem craft_weapon_tr20

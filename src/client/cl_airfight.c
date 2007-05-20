@@ -96,9 +96,10 @@ extern void AIRFIGHT_ExecuteActions (aircraft_t* air, aircraft_t* ufo)
 		/* if we can shoot, shoot */
 		/* FIXME: for now, you can only fire one missile at a time */
 		/* we must add a rate of fire in aircraftmanagement.ufo */
-		if (CP_GetDistance(ufo->pos, air->pos) < aircraftItems[idx].weaponRange / 2.0f && gd.numProjectiles < 1)
-			AIRFIGHT_AddProjectile(idx, air->pos, ufo);
-		else
+		if (CP_GetDistance(ufo->pos, air->pos) < aircraftItems[idx].weaponRange / 2.0f && air->delayNextShot <= 0) {
+			if (AIRFIGHT_AddProjectile(idx, air->pos, ufo))
+				air->delayNextShot = aircraftItems[idx].weaponDelay;
+		} else
 			/* otherwise, pursue target */
 			AIR_SendAircraftPurchasingUfo(air, ufo);
 	} else {
@@ -195,7 +196,25 @@ extern void AIRFIGHT_ProjectileReachedTarget (void)
 		if (CP_GetDistance(projectile->aimedAircraft->pos, projectile->pos) < 1.0f) {
 			AIRFIGHT_ActionsAfterAirfight(projectile->aimedAircraft, qtrue);
 			AIRFIGHT_RemoveProjectile(idx);
+		} else if (projectile->distance > aircraftItems[gd.projectiles[idx].aircraftItemsIdx].weaponRange) {
+			/* projectile went too far, delete it */
+			AIRFIGHT_RemoveProjectile(idx);
 		}
+	}
+}
+
+/**
+ * @brief Update values of projectiles.
+ */
+extern void AIRFIGHT_CampaignRunProjectiles (int dt)
+{
+	aircraftProjectile_t *projectile;
+	int idx;
+	float angle;
+	
+	for (idx = 0, projectile = gd.projectiles; idx < gd.numProjectiles; projectile++, idx++) {
+		angle = MAP_AngleOfPath(projectile->pos, projectile->aimedAircraft->pos, NULL, projectile);
+		projectile->angle = angle;
 	}
 }
 

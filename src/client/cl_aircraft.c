@@ -900,6 +900,10 @@ void CL_CampaignRunAircraft (int dt)
 					/* Solve the fight */
 					AIRFIGHT_ExecuteActions(aircraft, ufo);
 				}
+
+				/* Update delay to launch next projectile */
+				if (aircraft->status >= AIR_IDLE && aircraft->delayNextShot > 0)
+					aircraft->delayNextShot -= dt;
 			}
 	}
 }

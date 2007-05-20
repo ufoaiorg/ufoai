@@ -1428,6 +1428,7 @@ extern void CL_CampaignRun (void)
 		CL_CampaignRunAircraft(dt);
 		UFO_CampaignRunUfos(dt);
 		CL_CampaignCheckEvents();
+		AIRFIGHT_CampaignRunProjectiles(dt);
 
 		/* set time cvars */
 		CL_DateConvert(&ccs.date, &day, &month);

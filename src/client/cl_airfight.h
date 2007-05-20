@@ -32,10 +32,13 @@ typedef struct aircraftProjectile_s {
 	int idx;				/**< self link of the idx in gd.projectiles[] */
 	vec3_t pos;				/**< position of the projectile (latitude and longitude) */
 	aircraft_t * aimedAircraft;	/**< target of the projectile */
+	float distance;			/**< distance already done by the projectile */
+	float angle;			/**< angle of the missile on the geoscape */
 } aircraftProjectile_t;
 
 extern void AIRFIGHT_ExecuteActions(aircraft_t* air, aircraft_t* ufo);
 extern void AIRFIGHT_ActionsAfterAirfight(aircraft_t* aircraft, qboolean phalanxWon);
 extern void AIRFIGHT_ProjectileReachedTarget(void);
+extern void AIRFIGHT_CampaignRunProjectiles(int dt);
 
 #endif /* CLIENT_CL_AIRFIGHT_H */
