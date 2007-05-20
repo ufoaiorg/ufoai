@@ -193,6 +193,8 @@ extern void AIRFIGHT_ProjectileReachedTarget (void)
 	int idx;
 
 	for (idx = 0, projectile = gd.projectiles; idx < gd.numProjectiles; projectile++, idx++) {
+		if (!projectile->aimedAircraft)
+			AIRFIGHT_RemoveProjectile(idx);
 		if (CP_GetDistance(projectile->aimedAircraft->pos, projectile->pos) < 1.0f) {
 			AIRFIGHT_ActionsAfterAirfight(projectile->aimedAircraft, qtrue);
 			AIRFIGHT_RemoveProjectile(idx);
@@ -216,5 +218,6 @@ extern void AIRFIGHT_CampaignRunProjectiles (int dt)
 		angle = MAP_AngleOfPath(projectile->pos, projectile->aimedAircraft->pos, NULL, projectile);
 		projectile->angle = angle;
 	}
+	AIRFIGHT_ProjectileReachedTarget();
 }
 

@@ -1316,7 +1316,6 @@ extern void MAP_DrawMap (const menuNode_t* node, qboolean map3D)
 			(float) ccs.date.sec / (3600 * 24), q, ccs.angles, ccs.zoom / 10, curCampaign->map);
 
 		MAP_Draw3DMapMarkers(node);
-		AIRFIGHT_ProjectileReachedTarget();
 	} else {
 		if (smoothRotation)
 			MAP_SmoothTranslate();
