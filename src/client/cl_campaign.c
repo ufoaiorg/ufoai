@@ -716,7 +716,7 @@ extern qboolean CL_CampaignAddGroundMission (mission_t* mission)
 
 	/* set relevant info */
 	mis->def = mission;
-	/* check campaign events */
+
 	/* check campaign events */
 	for (i = 0, stage = ccs.stage; i < numStages; i++, stage++)
 		if (stage->active)

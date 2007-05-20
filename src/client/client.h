@@ -844,6 +844,7 @@ typedef enum {
 	MSG_PRODUCTION,
 	MSG_NEWS,
 	MSG_DEATH,
+	MSG_CRASHSITE,
 
 	MSG_MAX
 } messagetype_t;

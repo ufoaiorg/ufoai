@@ -4172,6 +4172,7 @@ message_t *MN_AddNewMessage (const char *title, const char *text, qboolean popup
 	case MSG_TERRORSITE:
 	case MSG_BASEATTACK:
 	case MSG_PRODUCTION:
+	case MSG_CRASHSITE:
 		/*@todo: S_StartLocalSound(); */
 		break;
 	case MSG_MAX:
