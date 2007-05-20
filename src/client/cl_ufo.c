@@ -164,6 +164,9 @@ static void UFO_NewUfoOnGeoscape_f (void)
 			ufotype = UFO_MAX;
 	}
 
+	if (newUfoNum >= numAircraft_samples)
+		newUfoNum = -1;
+
 	/* Get next type of ufo in aircrafts list */
 	while (++newUfoNum < numAircraft_samples)
 		if (aircraft_samples[newUfoNum].type == AIRCRAFT_UFO)
