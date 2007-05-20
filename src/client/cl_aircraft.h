@@ -92,6 +92,7 @@ typedef struct aircraftItem_s {
 	float weaponRange;			/**< The range of the projectile */
 	float weaponSpeed;			/**< The speed of the projectile on geoscape */
 	float weaponDelay;			/**< The minimum delay between 2 shots */
+	int ammo;					/**< The total number of ammo that can be fired */
 	float speed;
 	float shield;
 	float accuracy;

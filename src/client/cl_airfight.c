@@ -52,10 +52,16 @@ static qboolean AIRFIGHT_RemoveProjectile (int idx)
 /**
  * @brief Add a projectile in gd.projectiles
  * @param[in] idx of the ammo to add in array aircraftItems[]
+ * @param[in] attacker Pointer to the attacking aircraft
+ * @param[in] target Pointer to the target aircraft
+ * @todo decrease the number of ammos in the aircraft
  */
-static qboolean AIRFIGHT_AddProjectile (int idx, vec3_t start, aircraft_t *target)
+static qboolean AIRFIGHT_AddProjectile (int idx, aircraft_t *attacker, aircraft_t *target)
 {
 	aircraftProjectile_t *projectile;
+
+	assert(attacker);
+	assert(target);
 
 	if (gd.numProjectiles >= MAX_PROJECTILESONGEOSCAPE) {
 		Com_Printf("Too many projectiles on map\n");
@@ -67,7 +73,7 @@ static qboolean AIRFIGHT_AddProjectile (int idx, vec3_t start, aircraft_t *targe
 	assert(projectile);
 	projectile->aircraftItemsIdx = idx;
 	projectile->idx = gd.numProjectiles;
-	VectorSet(projectile->pos, start[0], start[1], 0);
+	VectorSet(projectile->pos, attacker->pos[0], attacker->pos[1], 0);
 	VectorSet(projectile->idleTarget, 0, 0, 0);
 	projectile->aimedAircraft = target;
 	gd.numProjectiles++;
@@ -171,7 +177,7 @@ extern void AIRFIGHT_ExecuteActions (aircraft_t* air, aircraft_t* ufo)
 		if (CP_GetDistance(ufo->pos, air->pos) < aircraftItems[idx].weaponRange && air->delayNextShot <= 0) {
 			float probability;
 
-			if (AIRFIGHT_AddProjectile(idx, air->pos, ufo)) {
+			if (AIRFIGHT_AddProjectile(idx, air, ufo)) {
 				air->delayNextShot = aircraftItems[idx].weaponDelay;
 				/* will we miss the target ? */
 				probability = frand();
@@ -322,6 +328,19 @@ static qboolean AIRFIGHT_ProjectileReachedTarget (aircraftProjectile_t *projecti
 }
 
 /**
+ * @brief Solve the result of one projectile hitting an aircraft.
+ * @param[in] projectile Pointer to the projectile.
+ * @todo Implement me (decrease shield).
+ */
+static void AIRFIGHT_ProjectileHits(aircraftProjectile_t *projectile)
+{
+	assert(projectile);
+
+	/* atm, one projectile is enough to destroy it's target */
+	AIRFIGHT_ActionsAfterAirfight(projectile->aimedAircraft, qtrue);
+}
+
+/**
  * @brief Update values of projectiles.
  * @param[in] dt Time elapsed since last call of this function.
  */
@@ -338,9 +357,8 @@ extern void AIRFIGHT_CampaignRunProjectiles (int dt)
 		/* Check if the projectile reached its destination (aircraft or idle point) */
 		if (AIRFIGHT_ProjectileReachedTarget(projectile, movement)) {
 			/* check if it got the ennemy */
-			/* FIXME: atm, only UFOs can be destroyed (not PHALANX) */
 			if (projectile->aimedAircraft) {
-				AIRFIGHT_ActionsAfterAirfight(projectile->aimedAircraft, qtrue);
+				AIRFIGHT_ProjectileHits(projectile);
 			}
 			/* remove the missile from gd.projectiles[] */
 			AIRFIGHT_RemoveProjectile(idx);

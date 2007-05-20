@@ -1238,6 +1238,7 @@ static const value_t aircraftitems_vals[] = {
 	{"shield", V_RELABS, offsetof(aircraftItem_t, shield), MEMBER_SIZEOF(aircraftItem_t, shield)},
 	{"wrange", V_FLOAT, offsetof(aircraftItem_t, weaponRange), MEMBER_SIZEOF(aircraftItem_t, weaponRange)},
 	{"wspeed", V_FLOAT, offsetof(aircraftItem_t, weaponSpeed), MEMBER_SIZEOF(aircraftItem_t, weaponSpeed)},
+	{"ammo", V_INT, offsetof(aircraftItem_t, ammo), MEMBER_SIZEOF(aircraftItem_t, ammo)},
 	{"delay", V_FLOAT, offsetof(aircraftItem_t, weaponDelay), MEMBER_SIZEOF(aircraftItem_t, weaponDelay)},
 	{"range", V_RELABS, offsetof(aircraftItem_t, range), MEMBER_SIZEOF(aircraftItem_t, range)},
 	{"damage", V_FLOAT, offsetof(aircraftItem_t, damage), MEMBER_SIZEOF(aircraftItem_t, damage)},

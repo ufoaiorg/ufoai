@@ -12,6 +12,8 @@
 // aircraft parameters which can get influenced by craft equipement:
 //	range - the range of the aircraft, which tells how far aircraft can fly
 //	wrange - the range of the weapon, which tells the minimum distance of opening fire
+//	wspeed - the speed of the munition once it's shot
+//	delay - the delay between 2 shots of this ammunition
 //	speed - the speed of the aircraft, which tells how fast the aircraft is
 //	shield - the parameter of aircraft armour, which tells aircraft's protection
 //	ecm - the parameter of electronic level at aircraft, the bigger, the lower possibility to hit by enemy
@@ -19,6 +21,7 @@
 //	accuracy - the parameter of accuracy, the bigger, the bigger possibility to hit an enemy
 //			for an ammo, this is the base probability to hit (between 0 and 1)
 //			for an item, this is the factor which multiplies the base probability ( > 1 to increase probability)
+//	ammo - the total number of ammo that can be fired with one unit of ammunition
 // understanding the values:
 // shield 1.50 means: the shield of the aircraft is 50% stronger
 // shield +10 means: the shield of the aircraft is stronger by 10 points
@@ -273,7 +276,7 @@ craftitem craft_weapon_shiva
 	type	weapon
 	tech		rs_craft_weapon_shiva
 	weight		light
-        price           34000
+	price		34000
 }
 
 craftitem craft_ammo_shiva_API
@@ -283,8 +286,12 @@ craftitem craft_ammo_shiva_API
 	weapon		craft_weapon_shiva
 	price		100
 
-	damage	15
-	wrange	30
+	ammo		20
+	damage		15
+	accuracy	0.3
+	wrange		20
+	wspeed		500
+	delay		10
 }
 
 craftitem craft_ammo_shiva_HEI
@@ -294,8 +301,12 @@ craftitem craft_ammo_shiva_HEI
 	weapon		craft_weapon_shiva
 	price		100
 
-	damage	18
-	wrange  35
+	ammo		20
+	damage		22
+	accuracy	0.2
+	wrange		25
+	wspeed		500
+	delay		10
 }
 
 craftitem craft_el_raven
@@ -324,6 +335,7 @@ craftitem craft_ammo_sparrowhawk
 	weapon		craft_weapon_sparrowhawk
 	price		250
 
+	ammo		8
 	damage		20
 	accuracy	0.5
 	wrange		50
@@ -348,8 +360,12 @@ craftitem craft_ammo_tr20
 	weapon		craft_weapon_tr20
 	price		310
 
+	ammo		12
 	damage		28
-	wrange		42
+	accuracy	0.4
+	wrange		20
+	wspeed		20
+	delay		40
 }
 
 craftitem craft_weapon_particle_beam
