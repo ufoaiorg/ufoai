@@ -168,8 +168,8 @@ static void CL_InvReload(sizebuf_t *sb);
 static void (*ev_func[])( sizebuf_t *sb ) =
 {
 	NULL,
-	CL_Reset,
-	CL_StartGame,
+	CL_Reset,		/* EV_RESET */
+	CL_StartGame,	/* EV_START */
 	CL_DoEndRound,
 	CL_ParseResults,
 	CL_CenterView,
@@ -587,8 +587,6 @@ static void CL_Reset (sizebuf_t *sb)
 		Cbuf_AddText("startround\n");
 	else
 		Com_Printf("You lost the coin-toss for first-turn\n");
-
-	SCR_EndLoadingPlaque();	/* get rid of loading plaque */
 }
 
 
@@ -658,6 +656,7 @@ static void CL_StartGame (sizebuf_t *sb)
 		MN_PushMenu(mn_hud->string);
 		Cvar_Set("mn_active", mn_hud->string);
 	}
+	SCR_EndLoadingPlaque();	/* get rid of loading plaque */
 }
 
 
