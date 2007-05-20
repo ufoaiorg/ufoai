@@ -893,7 +893,7 @@ void CL_CampaignRunAircraft (int dt)
 					aircraft_t* ufo = NULL;
 
 					ufo = gd.ufos + aircraft->ufo;
-#if 0							
+#if 0
 					/* Display airfight sequence */
 					Cbuf_ExecuteText(EXEC_NOW, "seq_start airfight;");
 #endif
@@ -1307,6 +1307,19 @@ extern void AII_ParseAircraftItem (const char *name, char **text)
 				airItem->type = AC_ITEM_ELECTRONICS;
 			else
 				Com_Printf("AII_ParseAircraftItem: \"%s\" unknown craftitem type: \"%s\" - ignored.\n", name, token);
+		} else if (!Q_strncmp(token, "weight", MAX_VAR)) {
+			/* Craftitem type definition. */
+			token = COM_EParse(text, errhead, name);
+			if (!*text)
+				return;
+			if (!Q_strncmp(token, "light", MAX_VAR))
+				airItem->weight = 0; /*FIXME*/
+			else if (!Q_strncmp(token, "medium", MAX_VAR))
+				airItem->weight = 1; /*FIXME*/
+			else if (!Q_strncmp(token, "heavy", MAX_VAR))
+				airItem->weight = 2; /*FIXME*/
+			else
+				Com_Printf("Unknown weight value for craftitem '%s': '%s'\n", airItem->id, token);
 		} else {
 			/* Check for some standard values. */
 			for (vp = aircraftitems_vals; vp->string; vp++) {
