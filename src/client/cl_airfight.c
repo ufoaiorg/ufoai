@@ -168,7 +168,7 @@ extern void AIRFIGHT_ExecuteActions (aircraft_t* air, aircraft_t* ufo)
 		idx = 5;
 
 		/* if we can shoot, shoot */
-		if (CP_GetDistance(ufo->pos, air->pos) < aircraftItems[idx].weaponRange / 2.0f && air->delayNextShot <= 0) {
+		if (CP_GetDistance(ufo->pos, air->pos) < aircraftItems[idx].weaponRange && air->delayNextShot <= 0) {
 			float probability;
 
 			if (AIRFIGHT_AddProjectile(idx, air->pos, ufo)) {
