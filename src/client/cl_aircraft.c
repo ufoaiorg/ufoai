@@ -1232,7 +1232,7 @@ extern qboolean AIR_SendAircraftToMission (aircraft_t* aircraft, actMis_t* missi
 
 /** @brief Valid aircraft items (craftitem) definition values from script files. */
 static const value_t aircraftitems_vals[] = {
-	{"tech", V_TRANSLATION_STRING, offsetof(aircraftItem_t, tech), 0},
+	{"tech", V_STRING, offsetof(aircraftItem_t, tech), 0},
 	{"speed", V_FLOAT, offsetof(aircraftItem_t, speed), MEMBER_SIZEOF(aircraftItem_t, speed)},
 	{"price", V_INT, offsetof(aircraftItem_t, price), MEMBER_SIZEOF(aircraftItem_t, price)},
 	{"shield", V_RELABS, offsetof(aircraftItem_t, shield), MEMBER_SIZEOF(aircraftItem_t, shield)},
@@ -1243,7 +1243,6 @@ static const value_t aircraftitems_vals[] = {
 	{"damage", V_FLOAT, offsetof(aircraftItem_t, damage), MEMBER_SIZEOF(aircraftItem_t, damage)},
 	{"accuracy", V_FLOAT, offsetof(aircraftItem_t, accuracy), MEMBER_SIZEOF(aircraftItem_t, accuracy)},
 	{"ecm", V_RELABS, offsetof(aircraftItem_t, ecm), MEMBER_SIZEOF(aircraftItem_t, ecm)},
-	{"weight", V_STRING, offsetof(aircraftItem_t, weight), 0},
 	{"weapon", V_STRING, offsetof(aircraftItem_t, weapon), 0},
 
 	{NULL, 0, 0, 0}
