@@ -42,7 +42,7 @@ const vec3_t move_vec[4] = { {US, 0, 0}, {-US, 0, 0}, {0, US, 0}, {0, -US, 0} };
 const vec3_t testvec[5] = { {-US/2+5,-US/2+5,0}, {US/2-5,US/2-5,0}, {-US/2+5,US/2-5,0}, {US/2-5,-US/2+5,0}, {0,0,0} };
 
 /* data structures */
-byte	area[HEIGHT][WIDTH][WIDTH];
+byte	route[HEIGHT][WIDTH][WIDTH];
 byte	fall[WIDTH][WIDTH];
 byte	step[WIDTH][WIDTH];
 byte	filled[WIDTH][WIDTH];
@@ -122,7 +122,7 @@ static void CheckUnit_Thread (unsigned int unitnum)
 			end[2] = start[2] + height;
 
 			if (!TestLineDM(start, end, tr_end, 2))
-				area[z][y][x] = ((height+QUANT/2)/QUANT < 0) ? 0 : (height+QUANT/2)/QUANT;
+				route[z][y][x] = ((height+QUANT/2)/QUANT < 0) ? 0 : (height+QUANT/2)/QUANT;
 			else
 				filled[y][x] |= 1 << z; /* don't enter */
 		} else {
@@ -152,15 +152,15 @@ static void CheckUnit_Thread (unsigned int unitnum)
 
 /*				Sys_Printf( "%i %i\n", (int)height, (int)(start[2]-tr_end[2]) ); */
 
-				if (!TestLineDM( start, end, tr_end, 2))
-					area[z][y][x] = ((height + QUANT / 2) / QUANT < 0) ? 0 : (height + QUANT / 2) / QUANT;
+				if (!TestLineDM(start, end, tr_end, 2))
+					route[z][y][x] = ((height + QUANT / 2) / QUANT < 0) ? 0 : (height + QUANT / 2) / QUANT;
 				else
 					filled[y][x] |= 1 << z; /* don't enter */
 			}
 		}
 	} else {
 		/* fall down */
-		area[z][y][x] = 0;
+		route[z][y][x] = 0;
 		fall[y][x] |= 1 << z;
 	}
 }
@@ -186,7 +186,7 @@ static void CheckConnections_Thread (unsigned int unitnum)
 	if (filled[y][x] & (1<<z))
 		return;
 
-	h = (area[z][y][x] & 0xF);
+	h = (route[z][y][x] & 0xF);
 
 	/* prepare trace */
 	pos[0] = x; pos[1] = y; pos[2] = z;
@@ -207,13 +207,13 @@ static void CheckConnections_Thread (unsigned int unitnum)
 	/* test connections in all 4 directions */
 	for (i = 0; i < 4; i++) {
 		/* range check and test height */
-		if (i == 0 && (x >= ROUTING_NOT_REACHABLE || (filled[y][x+1] & (1<<sz)) || (area[sz][y][x+1]&0x0F) > h))
+		if (i == 0 && (x >= ROUTING_NOT_REACHABLE || (filled[y][x+1] & (1<<sz)) || (route[sz][y][x+1]&0x0F) > h))
 			continue;
-		if (i == 1 && (x <= 0 || (filled[y][x-1] & (1<<sz)) || (area[sz][y][x-1] & 0x0F) > h))
+		if (i == 1 && (x <= 0 || (filled[y][x-1] & (1<<sz)) || (route[sz][y][x-1] & 0x0F) > h))
 			continue;
-		if (i == 2 && (y >= ROUTING_NOT_REACHABLE || (filled[y+1][x] & (1<<sz)) || (area[sz][y+1][x]&0x0F) > h))
+		if (i == 2 && (y >= ROUTING_NOT_REACHABLE || (filled[y+1][x] & (1<<sz)) || (route[sz][y+1][x]&0x0F) > h))
 			continue;
-		if (i == 3 && (y <= 0 || (filled[y-1][x] & (1<<sz)) || (area[sz][y-1][x] & 0x0F) > h))
+		if (i == 3 && (y <= 0 || (filled[y-1][x] & (1<<sz)) || (route[sz][y-1][x] & 0x0F) > h))
 			continue;
 
 		/* test for walls */
@@ -228,7 +228,7 @@ static void CheckConnections_Thread (unsigned int unitnum)
 		if (TestLineMask(ts, te, 2))
 			continue;
 
-		area[z][y][x] |= 1 << (i + 4);
+		route[z][y][x] |= 1 << (i + 4);
 	}
 }
 
@@ -292,7 +292,7 @@ extern void DoRouting (void)
 	data = droutedata;
 	*data++ = SH_LOW;
 	*data++ = SH_BIG;
-	data = CompressRouting(&(area[0][0][0]), data, WIDTH * WIDTH * HEIGHT);
+	data = CompressRouting(&(route[0][0][0]), data, WIDTH * WIDTH * HEIGHT);
 	data = CompressRouting(&(fall[0][0]), data, WIDTH * WIDTH);
 	data = CompressRouting(&(step[0][0]), data, WIDTH * WIDTH);
 
