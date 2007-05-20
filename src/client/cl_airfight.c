@@ -76,6 +76,69 @@ static qboolean AIRFIGHT_AddProjectile (int idx, vec3_t start, aircraft_t *targe
 }
 
 /**
+ * brief Set a wrong destination for projectile intended to touch aircraft, but missing it.
+ * @param[in] idx idx of the projectile to update in gd.projectiles[].
+ */
+static void AIRFIGHT_MissTarget (int idx)
+{
+	aircraft_t *oldTarget;
+	aircraftProjectile_t *projectile;
+		
+	projectile = &gd.projectiles[idx];
+	assert(projectile);
+
+	oldTarget = projectile->aimedAircraft;
+	assert(oldTarget);
+	
+	VectorSet(projectile->idleTarget, oldTarget->pos[0] + 10 * frand() - 5, oldTarget->pos[1] + 10 * frand() - 5, 0);
+	projectile->aimedAircraft = NULL;
+}
+
+/**
+ * brief Calculate the probability to hit the ennemy.
+ * @param[in] shooter Pointer to the attacking aircraft.
+ * @param[in] target Pointer to the aimed aircraft.
+ * @return Probability to hit the target (0 when you don't have a chance, 1 when you're sure to hit).
+ */
+static float AIRFIGHT_ProbabilityToHit (aircraft_t *shooter, aircraft_t *target)
+{
+	technology_t *tech;
+	int idx;
+	float probability = 0.0f;
+	float factor;
+
+	tech = shooter->weapon;
+	if (!tech) {
+		Com_Printf("AIRFIGHT_ProbabilityToHit: no weapon assigned to attacking aircraft\n");
+		return probability;
+	}
+
+	idx = AII_GetAircraftItemByID(tech->provides);
+	/* FIXME: this should be the ammo and not the weapon */
+	idx = 5;
+	probability = aircraftItems[idx].accuracy;
+
+	tech = shooter->item;
+	if (tech) {
+		idx = AII_GetAircraftItemByID(tech->provides);
+		factor = aircraftItems[idx].accuracy;
+		if (factor)
+			probability *= factor;
+	}
+
+	tech = target->item;
+	if (tech) {
+		idx = AII_GetAircraftItemByID(tech->provides);
+		factor = aircraftItems[idx].ecm;
+		if (factor)
+			probability /= factor;
+	}
+		
+	Com_DPrintf("Probability to hit: %f\n", probability);
+	return probability;	
+}
+
+/**
  * @brief Calculates the fight between aircraft and ufo.
  * @param[in] aircraft The aircraft we attack with.
  * @param[in] ufo The ufo we are going to attack.
@@ -100,11 +163,17 @@ extern void AIRFIGHT_ExecuteActions (aircraft_t* air, aircraft_t* ufo)
 		idx = 5;
 
 		/* if we can shoot, shoot */
-		/* FIXME: for now, you can only fire one missile at a time */
-		/* we must add a rate of fire in aircraftmanagement.ufo */
 		if (CP_GetDistance(ufo->pos, air->pos) < aircraftItems[idx].weaponRange / 2.0f && air->delayNextShot <= 0) {
-			if (AIRFIGHT_AddProjectile(idx, air->pos, ufo))
+			float probability;
+			
+			if (AIRFIGHT_AddProjectile(idx, air->pos, ufo)) {
 				air->delayNextShot = aircraftItems[idx].weaponDelay;
+				/* will we miss the target ? */
+				/* FIXME: this must depend of ecm, accuracy, skills of the pilot, ... */
+				probability = frand();
+				if (probability > AIRFIGHT_ProbabilityToHit(air, ufo))
+					AIRFIGHT_MissTarget(gd.numProjectiles - 1);
+			}
 		} else
 			/* otherwise, pursue target */
 			AIR_SendAircraftPurchasingUfo(air, ufo);
@@ -115,35 +184,20 @@ extern void AIRFIGHT_ExecuteActions (aircraft_t* air, aircraft_t* ufo)
 }
 
 /**
- * brief Set a wrong destination for projectile intended to touch aircraft, but missing it.
- * @param[in] idx idx of the projectile to update in gd.projectiles[].
- */
-static void AIRFIGHT_MissTarget (int idx)
-{
-	aircraft_t *oldTarget;
-	aircraftProjectile_t *projectile;
-		
-	projectile = &gd.projectiles[idx];
-	assert(projectile);
-
-	oldTarget = projectile->aimedAircraft;
-	assert(oldTarget);
-	
-	VectorSet(projectile->idleTarget, oldTarget->pos[0] + 10 * frand() - 5, oldTarget->pos[1] + 10 * frand() - 5, 0);
-	projectile->aimedAircraft = NULL;
-}
-
-/**
- * brief Set a all projectile aiming an aircraft to an idle destination.
+ * @brief Set all projectile aiming a given aircraft to an idle destination.
+ * @note This is used when aircraft is destroyed.
  * @param[in] aircraft Pointer to the aimed aircraft.
  */
 static void AIRFIGHT_RemoveProjectileAimingAircraft (aircraft_t * aircraft)
 {
 	aircraftProjectile_t *projectile;
+	aircraft_t *target;
 	int idx;
 	
 	for (idx = 0, projectile = gd.projectiles; idx < gd.numProjectiles; projectile++, idx++) {
-		if (projectile->aimedAircraft->idx == aircraft->idx)
+		target = projectile->aimedAircraft;
+
+		if (target && target->idx == aircraft->idx)
 			AIRFIGHT_MissTarget(idx);
 	}
 }

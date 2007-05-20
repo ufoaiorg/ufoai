@@ -16,7 +16,9 @@
 //	shield - the parameter of aircraft armour, which tells aircraft's protection
 //	ecm - the parameter of electronic level at aircraft, the bigger, the lower possibility to hit by enemy
 //	damage - the parameter of weapon power, which tells how much damage such aircraft can do
-//	accuracy - the parameter of weapon accuracy, the bigger, the bigger possibility to hit an enemy
+//	accuracy - the parameter of accuracy, the bigger, the bigger possibility to hit an enemy
+//			for an ammo, this is the base probability to hit (between 0 and 1)
+//			for an item, this is the factor which multiplies the base probability ( > 1 to increase probability)
 // understanding the values:
 // shield 1.50 means: the shield of the aircraft is 50% stronger
 // shield +10 means: the shield of the aircraft is stronger by 10 points
@@ -323,6 +325,7 @@ craftitem craft_ammo_sparrowhawk
 	price		250
 
 	damage		20
+	accuracy	0.5
 	wrange		50
 	wspeed		200
 	delay		200
@@ -367,7 +370,7 @@ craftitem craft_el_targeting
 	tech		rs_craft_el_targeting
 	price		33333
 
-	accuracy	50
+	accuracy	1.25
 }
 
 craftitem craft_el_fuelpod
