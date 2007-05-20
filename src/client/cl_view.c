@@ -491,8 +491,6 @@ void CL_PrepRefresh (void)
 	/* the renderer can now free unneeded stuff */
 	re.EndRegistration();
 
-	SCR_EndLoadingPlaque();
-
 	SCR_UpdateScreen();
 	cl.refresh_prepped = qtrue;
 	cl.force_refdef = qtrue;	/* make sure we have a valid refdef */

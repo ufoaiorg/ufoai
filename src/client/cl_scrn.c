@@ -508,10 +508,12 @@ static void SCR_DrawConsole (void)
 		return;
 	}
 
+#if 0
 	if (cls.state == ca_connecting || cls.state == ca_connected) {	/* forced full screen console */
 		Con_DrawConsole(1.0);
 		return;
 	}
+#endif
 
 	if (scr_con_current) {
 		Con_DrawConsole(scr_con_current);

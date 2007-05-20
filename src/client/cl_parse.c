@@ -574,6 +574,7 @@ static void CL_Reset (sizebuf_t *sb)
 
 	/* set the active player */
 	MSG_ReadFormat(sb, ev_format[EV_RESET], &cls.team, &cl.actTeam);
+
 	Com_Printf("(player %i) It's team %i's round\n", cl.pnum, cl.actTeam);
 	/* if in multiplayer spawn the soldiers */
 	if (!ccs.singleplayer) {
@@ -586,6 +587,8 @@ static void CL_Reset (sizebuf_t *sb)
 		Cbuf_AddText("startround\n");
 	else
 		Com_Printf("You lost the coin-toss for first-turn\n");
+
+	SCR_EndLoadingPlaque();	/* get rid of loading plaque */
 }
 
 
