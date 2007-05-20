@@ -154,10 +154,9 @@ static int numInline;
 static byte sh_low;
 static byte sh_big;
 static char **inlineList; /**< a list with all local models (like func_breakable) */
-static int cur_level;
 static vec3_t tr_end;
 static byte *cmod_base;
-static vec3_t shift;
+static vec3_t shift; /**< use for random map assembly for shifting origins and so on */
 static byte filled[256][256];
 
 static const vec3_t v_dup = { 0, 0, PH - UNIT_HEIGHT / 2 };
@@ -1001,6 +1000,7 @@ static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
 
 /**
  * @brief
+ * @note Transforms coordinates and stuff for assembled maps
  * @param[in] l
  * @sa CM_AddMapTile
  */
@@ -1967,7 +1967,8 @@ static trace_t CM_BoxTrace (vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, 
 
 	/* check for position test special case */
 	if (start[0] == end[0] && start[1] == end[1] && start[2] == end[2]) {
-		int leafs[1024];
+		const int max_lefts = 1024;
+		int leafs[max_lefts];
 		int numleafs;
 		vec3_t c1, c2;
 		int topnode;
@@ -1979,7 +1980,7 @@ static trace_t CM_BoxTrace (vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, 
 			c2[i] += 1;
 		}
 
-		numleafs = CM_BoxLeafnums_headnode(c1, c2, leafs, 1024, headnode, &topnode);
+		numleafs = CM_BoxLeafnums_headnode(c1, c2, leafs, max_lefts, headnode, &topnode);
 		for (i = 0; i < numleafs; i++) {
 			CM_TestInLeaf(leafs[i]);
 			if (trace_trace.allsolid)
@@ -2163,7 +2164,7 @@ void MakeTnode (int nodenum)
  * @param
  * @sa
  */
-void BuildTnode_r (int node)
+void BuildTnode_r (int node, int level)
 {
 	assert(node < curTile->numnodes + 6); /* +6 => bbox */
 
@@ -2198,9 +2199,9 @@ void BuildTnode_r (int node)
 				t->dist = (c0maxs[i] + c1mins[i]) / 2;
 
 				t->children[1] = tnode_p - curTile->tnodes;
-				BuildTnode_r(n->children[0]);
+				BuildTnode_r(n->children[0], level);
 				t->children[0] = tnode_p - curTile->tnodes;
-				BuildTnode_r(n->children[1]);
+				BuildTnode_r(n->children[1], level);
 				return;
 			}
 
@@ -2209,13 +2210,13 @@ void BuildTnode_r (int node)
 
 		for (i = 0; i < 2; i++) {
 			t->children[i] = tnode_p - curTile->tnodes;
-			BuildTnode_r(n->children[i]);
+			BuildTnode_r(n->children[i], level);
 		}
 	} else {
 		/* don't include weapon clip in standard tracing */
-		if (cur_level <= 256) {
+		if (level <= 256) {
 			curTile->cheads[curTile->numcheads].cnode = node;
-			curTile->cheads[curTile->numcheads].level = cur_level;
+			curTile->cheads[curTile->numcheads].level = level;
 			curTile->numcheads++;
 			assert(curTile->numcheads <= MAX_MAP_NODES);
 		}
@@ -2248,9 +2249,7 @@ void CM_MakeTnodes (void)
 		curTile->thead[curTile->numtheads] = tnode_p - curTile->tnodes;
 		curTile->numtheads++;
 
-		cur_level = i;
-
-		BuildTnode_r(curTile->cmodels[i].headnode);
+		BuildTnode_r(curTile->cmodels[i].headnode, i);
 /*		MakeTnode(map_models[i].headnode); */
 	}
 }
