@@ -1184,8 +1184,8 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 	G_MoveCalc(visTeam, ent->pos, MAX_ROUTE);
 	length = gi.MoveLength(gi.map, to, qfalse);
 
-	/* length of 0xFF means not reachable */
-	if (length && length < 0xFF) {
+	/* length of ROUTING_NOT_REACHABLE means not reachable */
+	if (length && length < ROUTING_NOT_REACHABLE) {
 		/* start move */
 		gi.AddEvent(G_TeamToPM(ent->team), EV_ACTOR_START_MOVE);
 		gi.WriteShort(ent->number);
@@ -1196,7 +1196,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 		tu = 0;
 		initTU = ent->TU;
 
-		while ((dv = gi.MoveNext(gi.map, pos)) < 0xFF) {
+		while ((dv = gi.MoveNext(gi.map, pos)) < ROUTING_NOT_REACHABLE) {
 			/* store the inverted dv */
 			/* (invert by flipping the first bit and add the old height) */
 			dvtab[numdv++] = ((dv ^ 1) & (DIRECTIONS - 1)) | (pos[2] << 3);

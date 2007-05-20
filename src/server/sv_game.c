@@ -601,6 +601,7 @@ void SV_InitGameProgs (void)
 
 	import.seed = Sys_Milliseconds();
 	import.csi = &csi;
+	/* import the server routing table */
 	import.map = (void *) &svMap;
 
 	ge = Sys_GetGameAPI(&import);

@@ -129,8 +129,8 @@ extern int TexinfoForBrushTexture (plane_t *plane, brush_texture_t *bt, vec3_t o
 
 	TextureAxisFromPlane(plane, vecs[0], vecs[1], isTerrain);
 
-	shift[0] = DotProduct (origin, vecs[0]);
-	shift[1] = DotProduct (origin, vecs[1]);
+	shift[0] = DotProduct(origin, vecs[0]);
+	shift[1] = DotProduct(origin, vecs[1]);
 
 	if (!bt->scale[0])
 		bt->scale[0] = 1;

@@ -1296,6 +1296,7 @@ typedef struct character_s {
 	/** new abilities and skills: */
 	int skills[SKILL_NUM_TYPES];
 
+	/* health points, stun points, armor points and morale points */
 	int HP, STUN, AP, morale;
 	int maxHP;	/**< to be restored in hospital */
 
@@ -1428,6 +1429,8 @@ typedef enum {
 #define PLAYER_DEAD			-12
 #define PLAYER_MIN			-24
 #define PLAYER_WIDTH		9
+
+#define ROUTING_NOT_REACHABLE 0xFF
 
 /* field marker box */
 #define BOX_DELTA_WIDTH		11

@@ -108,7 +108,7 @@ typedef struct {
 	/* client/server information */
 	int seed;
 	csi_t *csi;
-	struct routing_s *map;
+	struct routing_s *map;	/**< server side routing table */
 
 	/* special messages */
 

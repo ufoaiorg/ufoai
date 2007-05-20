@@ -1288,15 +1288,15 @@ void CL_ActorUpdateCVars (void)
 		if (cl.cmode == M_MOVE || cl.cmode == M_PEND_MOVE) {
 			/* If the mouse is outside the world, blank move */
 			/* or the movelength is 255 - not reachable e.g. */
-			if ((mouseSpace != MS_WORLD && cl.cmode < M_PEND_MOVE) || actorMoveLength == 0xFF) {
+			if ((mouseSpace != MS_WORLD && cl.cmode < M_PEND_MOVE) || actorMoveLength == ROUTING_NOT_REACHABLE) {
 				/* @todo: CHECKME Why do we check for (cl.cmode < M_PEND_MOVE) here? */
-				actorMoveLength = 0xFF;
+				actorMoveLength = ROUTING_NOT_REACHABLE;
 				Com_sprintf(infoText, sizeof(infoText), _("Armour  %i\tMorale  %i\n"), selActor->AP, selActor->morale);
 				menuText[TEXT_MOUSECURSOR_RIGHT] = NULL;
 			}
 			if (cl.cmode != cl.oldcmode || refresh || lastHUDActor != selActor
 						|| lastMoveLength != actorMoveLength || lastTU != selActor->TU) {
-				if (actorMoveLength != 0xFF) {
+				if (actorMoveLength != ROUTING_NOT_REACHABLE) {
 					CL_RefreshWeaponButtons(selActor->TU - actorMoveLength);
 					Com_sprintf(infoText, sizeof(infoText), _("Armour  %i\tMorale  %i\nMove %i (%i TU left)\n"), selActor->AP, selActor->morale, actorMoveLength, selActor->TU - actorMoveLength);
 					if (actorMoveLength <= selActor->TU)
@@ -1387,7 +1387,7 @@ void CL_ActorUpdateCVars (void)
 			}
 
 			cl.oldstate = selActor->state;
-			if (actorMoveLength < 0xFF
+			if (actorMoveLength < ROUTING_NOT_REACHABLE
 				&& (cl.cmode == M_MOVE || cl.cmode == M_PEND_MOVE))
 				CL_RefreshWeaponButtons(time);
 			else
@@ -1816,7 +1816,7 @@ static qboolean CL_TraceMove (pos3_t to)
 	Grid_PosToVec(&clMap, to, oldVec);
 	VectorCopy(to, pos);
 
-	while ((dv = Grid_MoveNext(&clMap, pos)) < 0xFF) {
+	while ((dv = Grid_MoveNext(&clMap, pos)) < ROUTING_NOT_REACHABLE) {
 		length = Grid_MoveLength(&clMap, pos, qfalse);
 		PosAddDV(pos, dv);
 		Grid_PosToVec(&clMap, pos, vec);
@@ -1850,7 +1850,7 @@ extern void CL_ActorStartMove (le_t * le, pos3_t to)
 
 	length = Grid_MoveLength(&clMap, to, qfalse);
 
-	if (!length || length >= 0xFF) {
+	if (!length || length >= ROUTING_NOT_REACHABLE) {
 		/* move not valid, don't even care to send */
 		return;
 	}
@@ -3332,7 +3332,7 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 	Grid_PosToVec(&clMap, pos, ent.origin);
 
 	/* ok, paint the green box if move is possible */
-	if (selActor && actorMoveLength < 0xFF && actorMoveLength <= selActor->TU)
+	if (selActor && actorMoveLength < ROUTING_NOT_REACHABLE && actorMoveLength <= selActor->TU)
 		VectorSet(ent.angles, 0, 1, 0);
 	/* and paint a dark blue one if move is impossible or the soldier */
 	/* does not have enough TimeUnits left */

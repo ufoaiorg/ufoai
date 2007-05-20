@@ -52,16 +52,14 @@ typedef ipos_t ipos3_t[3];
 #define PosToVec(p,v)		(v[0]=((int)p[0]-128)*US+US/2, v[1]=((int)p[1]-128)*US+US/2, v[2]=(int)p[2]*UH+UH/2)
 
 
-typedef struct plane_s
-{
+typedef struct plane_s {
 	vec3_t	normal;
 	vec_t	dist;
 	int		type;
 	struct plane_s	*hash_chain;
 } plane_t;
 
-typedef struct
-{
+typedef struct {
 	vec_t	shift[2];
 	vec_t	rotate;
 	vec_t	scale[2];
@@ -70,21 +68,19 @@ typedef struct
 	int		value;
 } brush_texture_t;
 
-typedef struct side_s
-{
+typedef struct side_s {
 	int			planenum;
 	int			texinfo;
 	winding_t	*winding;
-	struct side_s	*original;	/* bspbrush_t sides will reference the mapbrush_t sides */
-	int			contents;		/* from miptex */
-	int			surf;			/* from miptex */
-	qboolean	visible;		/* choose visible planes first */
-	qboolean	tested;			/* this plane allready checked as a split */
-	qboolean	bevel;			/* don't ever use for bsp splitting */
+	struct side_s	*original;	/**< bspbrush_t sides will reference the mapbrush_t sides */
+	int			contents;		/**< from miptex */
+	int			surf;			/**< from miptex */
+	qboolean	visible;		/**< choose visible planes first */
+	qboolean	tested;			/**< this plane allready checked as a split */
+	qboolean	bevel;			/**< don't ever use for bsp splitting */
 } side_t;
 
-typedef struct brush_s
-{
+typedef struct brush_s {
 	int		entitynum;
 	int		brushnum;
 
@@ -105,81 +101,72 @@ typedef struct brush_s
 
 #define	MAXEDGES		20
 
-typedef struct face_s
-{
-	struct face_s	*next;		/* on node */
+typedef struct face_s {
+	struct face_s	*next;		/**< on node */
 
-	/* the chain of faces off of a node can be merged or split, */
-	/* but each face_t along the way will remain in the chain */
-	/* until the entire tree is freed */
-	struct face_s	*merged;	/* if set, this face isn't valid anymore */
-	struct face_s	*split[2];	/* if set, this face isn't valid anymore */
+	/** the chain of faces off of a node can be merged or split,
+	 * but each face_t along the way will remain in the chain
+	 * until the entire tree is freed */
+	struct face_s	*merged;	/**< if set, this face isn't valid anymore */
+	struct face_s	*split[2];	/**< if set, this face isn't valid anymore */
 
 	struct portal_s	*portal;
 	int				texinfo;
 	int				planenum;
-	int				contents;	/* faces in different contents can't merge */
+	int				contents;	/**< faces in different contents can't merge */
 	int				outputnumber;
 	winding_t		*w;
 	int				numpoints;
-	qboolean		badstartvert;	/* tjunctions cannot be fixed without a midpoint vertex */
+	qboolean		badstartvert;	/**< tjunctions cannot be fixed without a midpoint vertex */
 	int				vertexnums[MAXEDGES];
 } face_t;
 
-
-
-typedef struct bspbrush_s
-{
+typedef struct bspbrush_s {
 	struct bspbrush_s	*next;
 	vec3_t	mins, maxs;
-	int		side, testside;		/* side of node during construction */
+	int		side, testside;		/**< side of node during construction */
 	mapbrush_t	*original;
 	int		numsides;
-	side_t	sides[6];			/* variably sized */
+	side_t	sides[6];			/**< variably sized */
 } bspbrush_t;
 
-
-
 #define	MAX_NODE_BRUSHES	8
-typedef struct node_s
-{
-	/* both leafs and nodes */
-	int				planenum;	/* -1 = leaf node */
+typedef struct node_s {
+	/** both leafs and nodes */
+	int				planenum;	/**< -1 = leaf node */
 	struct node_s	*parent;
-	vec3_t			mins, maxs;	/* valid after portalization */
-	bspbrush_t		*volume;	/* one for each leaf/node */
+	vec3_t			mins, maxs;	/**< valid after portalization */
+	bspbrush_t		*volume;	/**< one for each leaf/node */
 
-	/* nodes only */
-	qboolean		detail_seperator;	/* a detail brush caused the split */
-	side_t			*side;		/* the side that created the node */
+	/** nodes only */
+	qboolean		detail_seperator;	/**< a detail brush caused the split */
+	side_t			*side;		/**< the side that created the node */
 	struct node_s	*children[2];
 	face_t			*faces;
 
-	/* leafs only */
-	bspbrush_t		*brushlist;	/* fragments of all brushes in this leaf */
-	int				contents;	/* OR of all brush contents */
-	int				occupied;	/* 1 or greater can reach entity */
-	entity_t		*occupant;	/* for leak file testing */
-	int				cluster;	/* for portalfile writing */
-	int				area;		/* for areaportals */
-	struct portal_s	*portals;	/* also on nodes during construction */
+	/** leafs only */
+	bspbrush_t		*brushlist;	/**< fragments of all brushes in this leaf */
+	int				contents;	/**< OR of all brush contents */
+	int				occupied;	/**< 1 or greater can reach entity */
+	entity_t		*occupant;	/**< for leak file testing */
+	int				cluster;	/**< for portalfile writing */
+	int				area;		/**< for areaportals */
+	struct portal_s	*portals;	/**< also on nodes during construction */
 } node_t;
 
-typedef struct portal_s
-{
+typedef struct portal_s {
 	plane_t		plane;
-	node_t		*onnode;		/* NULL = outside box */
-	node_t		*nodes[2];		/* [0] = front side of plane */
+	node_t		*onnode;		/**< NULL = outside box */
+	node_t		*nodes[2];		/**< [0] = front side of plane */
 	struct portal_s	*next[2];
 	winding_t	*winding;
 
-	qboolean	sidefound;		/* false if ->side hasn't been checked */
-	side_t		*side;			/* NULL = non-visible */
-	face_t		*face[2];		/* output face in bsp file */
+	qboolean	sidefound;		/**< false if ->side hasn't been checked */
+	side_t		*side;			/**< NULL = non-visible */
+	face_t		*face[2];		/**< output face in bsp file */
 } portal_t;
 
-typedef struct
-{
+typedef struct {
 	node_t		*headnode;
 	node_t		outside_node;
 	vec3_t		mins, maxs;
@@ -229,8 +216,7 @@ int		FindFloatPlane (vec3_t normal, vec_t dist);
 
 /* textures.c */
 
-typedef struct
-{
+typedef struct {
 	char	name[64];
 	int		flags;
 	int		value;
@@ -353,6 +339,8 @@ extern qboolean	verboseentities;
 extern qboolean	norouting;
 extern qboolean	nobackclip;
 extern float subdivide_size;
+
+#define ROUTING_NOT_REACHABLE 0xFF
 
 /* qbsp3.c */
 

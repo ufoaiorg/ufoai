@@ -121,6 +121,7 @@ typedef struct {
 	chead_t cheads[MAX_MAP_NODES];
 } mapTile_t;
 
+/** @brief Pathfinding routing structure */
 typedef struct routing_s {
 	byte route[HEIGHT][WIDTH][WIDTH];
 	byte fall[WIDTH][WIDTH];
@@ -130,8 +131,8 @@ typedef struct routing_s {
 	byte areaStored[HEIGHT][WIDTH][WIDTH];
 
 	/* forbidden list */
-	byte **fblist;
-	int fblength;
+	byte **fblist;	/**< pointer to forbidden list (entities are standing here) */
+	int fblength;	/**< length of forbidden list (amount of entries) */
 } routing_t;
 
 /* extern */
@@ -139,6 +140,8 @@ int c_pointcontents;
 int c_traces, c_brush_traces;
 char map_entitystring[MAX_MAP_ENTSTRING];
 vec3_t map_min, map_max;
+
+/** @brief server and client routing table */
 struct routing_s svMap, clMap;
 
 /* static */
@@ -723,7 +726,7 @@ static qboolean CM_TestConnection (routing_t * map, int x, int y, int z, unsigne
 	assert((z >= 0) && (z < HEIGHT));
 
 	/* totally blocked unit */
-	if ((fill && (filled[y][x] & (1 << z))) || (map->fall[y][x] == 0xFF))
+	if ((fill && (filled[y][x] & (1 << z))) || (map->fall[y][x] == ROUTING_NOT_REACHABLE))
 		return qfalse;
 
 	/* get step height and trace vectors */
@@ -877,7 +880,7 @@ static void CM_CheckUnit (routing_t * map, int x, int y, int z)
  */
 static void CMod_GetMapSize (routing_t * map)
 {
-	const vec3_t offset = { 100, 100, 100 };
+	const vec3_t offset = {100, 100, 100};
 	pos3_t min, max;
 	int x, y;
 
@@ -889,8 +892,8 @@ static void CMod_GetMapSize (routing_t * map)
 	/* get border */
 	for (y = 0; y < WIDTH; y++)
 		for (x = 0; x < WIDTH; x++)
-			/* 0xFF means that we can't walk there */
-			if (map->fall[y][x] != 0xFF) {
+			/* ROUTING_NOT_REACHABLE means that we can't walk there */
+			if (map->fall[y][x] != ROUTING_NOT_REACHABLE) {
 				if (x < min[0])
 					min[0] = x;
 				if (y < min[1])
@@ -963,7 +966,7 @@ static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
 
 	for (y = sY < 0 ? -sY : 0; y < maxY; y++)
 		for (x = sX < 0 ? -sX : 0; x < maxX; x++)
-			if (temp_fall[y][x] != 0xFF) {
+			if (temp_fall[y][x] != ROUTING_NOT_REACHABLE) {
 				/* add new quant */
 				clMap.fall[y + sY][x + sX] = temp_fall[y][x];
 				clMap.step[y + sY][x + sX] = temp_step[y][x];
@@ -977,7 +980,7 @@ static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
 					/* test for border */
 					ax = x + dvecs[i][0];
 					ay = y + dvecs[i][1];
-					if (temp_fall[ay][ax] != 0xFF)
+					if (temp_fall[ay][ax] != ROUTING_NOT_REACHABLE)
 						continue;
 
 					/* check for walls */
@@ -1206,8 +1209,8 @@ extern void CM_LoadMap (char *tiles, char *pos, unsigned *mapchecksum)
 	c_pointcontents = c_traces = c_brush_traces = numInline = numTiles = 0;
 	map_entitystring[0] = base[0] = 0;
 
-	/* 0xFF means, not reachable */
-	memset(&(clMap.fall[0][0]), 0xFF, WIDTH * WIDTH);
+	/* ROUTING_NOT_REACHABLE means, not reachable */
+	memset(&(clMap.fall[0][0]), ROUTING_NOT_REACHABLE, WIDTH * WIDTH);
 	memset(&(clMap.step[0][0]), 0, WIDTH * WIDTH);
 	memset(&(clMap.route[0][0][0]), 0, WIDTH * WIDTH * HEIGHT);
 
@@ -2569,10 +2572,10 @@ static void Grid_MoveMarkRoute (struct routing_s *map, int xl, int yl, int xh, i
 
 /**
  * @brief
- * @param[in] map
- * @param[in] from
+ * @param[in] map Pointer to client or server side routing table (clMap, svMap)
+ * @param[in] from The position to start the calculation from
  * @param[in] distance
- * @param[in] fb_list Forbidden list
+ * @param[in] fb_list Forbidden list (entities are standing at those points)
  * @param[in] fb_length Length of forbidden list
  * @sa Grid_MoveMarkRoute
  * @sa G_MoveCalc
@@ -2583,8 +2586,8 @@ void Grid_MoveCalc (struct routing_s *map, pos3_t from, int distance, byte ** fb
 	int i;
 
 	/* reset move data */
-	/* 0xFF means, not reachable */
-	memset(map->area, 0xFF, WIDTH * WIDTH * HEIGHT);
+	/* ROUTING_NOT_REACHABLE means, not reachable */
+	memset(map->area, ROUTING_NOT_REACHABLE, WIDTH * WIDTH * HEIGHT);
 	memset(tfList, 0, WIDTH * WIDTH * HEIGHT);
 	map->fblist = fb_list;
 	map->fblength = fb_length;
@@ -2637,7 +2640,7 @@ void Grid_MoveStore (struct routing_s *map)
  * @param[in] map Routing data
  * @param[in] to Position to walk to
  * @param[in] stored Use the stored mask (the cached move) of the routing data
- * @return 0xFF if the move isn't possible
+ * @return ROUTING_NOT_REACHABLE if the move isn't possible
  * @return length of move otherwise (TUs)
  */
 int Grid_MoveLength (struct routing_s *map, pos3_t to, qboolean stored)
@@ -2645,7 +2648,7 @@ int Grid_MoveLength (struct routing_s *map, pos3_t to, qboolean stored)
 #ifdef PARANOID
 	if (to[2] >= HEIGHT) {
 		Com_DPrintf("Grid_MoveLength: WARNING to[2] = %i(>= HEIGHT)\n", to[2]);
-		return 0xFF;
+		return ROUTING_NOT_REACHABLE;
 	}
 #endif
 
@@ -2736,8 +2739,8 @@ int Grid_MoveNext (struct routing_s *map, pos3_t from)
 
 	/* finished */
 	if (!l) {
-		/* 0xFF means, not possible/reachable */
-		return 0xFF;
+		/* ROUTING_NOT_REACHABLE means, not possible/reachable */
+		return ROUTING_NOT_REACHABLE;
 	}
 
 	/* initialize tests */
@@ -2754,8 +2757,8 @@ int Grid_MoveNext (struct routing_s *map, pos3_t from)
 
 	/* shouldn't happen */
 	Com_Printf("failed...\n");
-	/* 0xFF means, not possible/reachable */
-	return 0xFF;
+	/* ROUTING_NOT_REACHABLE means, not possible/reachable */
+	return ROUTING_NOT_REACHABLE;
 }
 
 
