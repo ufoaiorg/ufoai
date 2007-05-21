@@ -377,9 +377,9 @@ extern void AIRFIGHT_CampaignRunProjectiles (int dt)
 		} else {
 			/* update position of the missile */
 			if (projectile->aimedAircraft)
-				angle = MAP_AngleOfPath(projectile->pos, projectile->aimedAircraft->pos, NULL, projectile, movement);
+				angle = MAP_AngleOfPath(projectile->pos, projectile->aimedAircraft->pos, NULL, projectile, movement, cl_3dmap->value);
 			else
-				angle = MAP_AngleOfPath(projectile->pos, projectile->idleTarget, NULL, projectile, movement);
+				angle = MAP_AngleOfPath(projectile->pos, projectile->idleTarget, NULL, projectile, movement, cl_3dmap->value);
 			projectile->angle = angle;
 		}
 	}
