@@ -268,12 +268,12 @@ extern void AIRFIGHT_ActionsAfterAirfight (aircraft_t* aircraft, qboolean phalan
 				Com_sprintf(ms->location, sizeof(ms->location), _(nation->name));
 			else
 				Com_sprintf(ms->location, sizeof(ms->location), _("No nation"));
-			/* FIXME: teams + loadingscreen */
+			/* FIXME: teams */
 			Q_strncpyz(ms->alienTeam, "ortnok", sizeof(ms->alienTeam));
 			Q_strncpyz(ms->civTeam, "european", sizeof(ms->civTeam));
-			Q_strncpyz(ms->loadingscreen, "crashsite", sizeof(ms->civTeam));
 
-			Com_sprintf(ms->onwin, sizeof(ms->onwin), "cp_uforecovery %s", aircraft->id); /* TODO: correct? */
+			Q_strncpyz(ms->loadingscreen, "crashsite", sizeof(ms->loadingscreen));
+			Com_sprintf(ms->onwin, sizeof(ms->onwin), "cp_uforecovery %i", aircraft->ufotype);
 			/* use ufocrash.ump as random tile assembly */
 			Com_sprintf(ms->map, sizeof(ms->map), "+ufocrash");
 			Com_sprintf(ms->param, sizeof(ms->param), "%s-%s", UFO_TypeToShortName(aircraft->ufotype), MAP_GetZoneType(color));
