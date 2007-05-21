@@ -362,6 +362,7 @@ extern void AIRFIGHT_CampaignRunProjectiles (int dt)
 	int idx;
 	float angle;
 	float movement;
+	vec3_t ortogonalVector, finalPoint, startPoint;
 
 	for (idx = 0, projectile = gd.projectiles; idx < gd.numProjectiles; projectile++, idx++) {
 		projectile->time += dt;
@@ -375,12 +376,17 @@ extern void AIRFIGHT_CampaignRunProjectiles (int dt)
 			/* remove the missile from gd.projectiles[] */
 			AIRFIGHT_RemoveProjectile(idx);
 		} else {
-			/* update position of the missile */
+			/* missile is moving towards its target */
 			if (projectile->aimedAircraft)
-				angle = MAP_AngleOfPath(projectile->pos, projectile->aimedAircraft->pos, NULL, projectile, movement, cl_3dmap->value);
+				angle = MAP_AngleOfPath(projectile->pos, projectile->aimedAircraft->pos, NULL, ortogonalVector, cl_3dmap->value);
 			else
-				angle = MAP_AngleOfPath(projectile->pos, projectile->idleTarget, NULL, projectile, movement, cl_3dmap->value);
+				angle = MAP_AngleOfPath(projectile->pos, projectile->idleTarget, NULL, ortogonalVector, cl_3dmap->value);
+			/* udpate angle of the projectile */
 			projectile->angle = angle;
+			/* update position of the projectile */
+			PolarToVec(projectile->pos, startPoint);
+			RotatePointAroundVector(finalPoint, ortogonalVector, startPoint, movement);
+			VecToPolar(finalPoint, projectile->pos);
 		}
 	}
 }
