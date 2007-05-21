@@ -159,14 +159,18 @@ aircraft craft_ufo_harvester
 	scale_equip	"0.9 0.9 0.9"
 }
 
-// FIXME
+// FIXME - should not be shown on geoscape
+// The carrier UFO does not normally appear on the geoscape. It's used to carry
+// other UFOs to and from the mothership.
+// The only times it shows up on the geoscape is when PHALANX shoots one down
+// from orbit as per a story-driven mission.
 aircraft craft_ufo_carrier
 {
 	speed		25.0
 	name		"_UFO - Carrier"
 	shortname	"Carrier U"
 	type		ufo
-	ufotype		scout
+	ufotype		carrier
 	model		"ufo_carrier"
 	size		4
 	weight		3
@@ -188,7 +192,7 @@ aircraft craft_ufo_big
 	name		"_UFO - Big"
 	shortname	"_Big U"
 	type		ufo
-	ufotype		scout
+	ufotype		scout // FIXME
 	model		"ufo_big"
 	size		4
 	weight		3
@@ -210,7 +214,7 @@ aircraft craft_ufo_condor
 	name		"_UFO - Condor"
 	shortname	"_Condor U"
 	type		ufo
-	ufotype		scout
+	ufotype		condor
 	model		"ufo_condor"
 	size		4
 	weight		3
@@ -274,7 +278,7 @@ aircraft craft_ufo_fighter
 
 craftitem craft_weapon_shiva
 {
-	type	weapon
+	type		weapon
 	tech		rs_craft_weapon_shiva
 	weight		light
 	price		34000
