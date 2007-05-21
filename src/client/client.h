@@ -967,8 +967,8 @@ extern void MAP_GameInit(void);
 extern const char* MAP_GetZoneType(byte* color);
 
 /* cl_ufo.c */
-extern const char* UFO_UfoTypeToShortName(ufoType_t type);
-extern const char* UFO_UfoTypeToName(ufoType_t type);
+extern const char* UFO_TypeToShortName(ufoType_t type);
+extern const char* UFO_TypeToName(ufoType_t type);
 extern void UFO_CampaignRunUfos(int dt);
 extern void UFO_CampaignCheckEvents(void);
 extern void UFO_Reset(void);
@@ -978,7 +978,7 @@ extern void UFO_Recovery(void);
 
 /* cl_popup.c */
 extern void CL_PopupInit(void);
-extern void CL_PopupNotifyMIssionRemoved(const actMis_t* mission);
+extern void CL_PopupNotifyMissionRemoved(const actMis_t* mission);
 extern void CL_PopupNotifyUfoRemoved(const aircraft_t* ufo);
 extern void CL_PopupNotifyUfoDisappeared(const aircraft_t* ufo);
 extern void CL_DisplayPopupAircraft(const aircraft_t* aircraft);

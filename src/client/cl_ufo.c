@@ -34,9 +34,9 @@ extern void UFO_Reset(void);
 
 /**
  * @brief Translate UFO type to short name.
- * @sa UFO_UfoTypeToName
+ * @sa UFO_TypeToName
  */
-extern const char* UFO_UfoTypeToShortName (ufoType_t type)
+extern const char* UFO_TypeToShortName (ufoType_t type)
 {
 	switch(type) {
 	case UFO_SCOUT:
@@ -55,7 +55,7 @@ extern const char* UFO_UfoTypeToShortName (ufoType_t type)
 		return "ufo_carrier";
 		break;
 	default:
-		Sys_Error("UFO_UfoTypeToShortName(): Unknown UFO type %i\n", type);
+		Sys_Error("UFO_TypeToShortName(): Unknown UFO type %i\n", type);
 		break;
 	}
 	return NULL; /* never reached */
@@ -65,9 +65,9 @@ extern const char* UFO_UfoTypeToShortName (ufoType_t type)
  * @brief Translate UFO type to name.
  * @param[in] type UFO type in ufoType_t.
  * @return Translated UFO name.
- * @sa UFO_UfoTypeToShortName
+ * @sa UFO_TypeToShortName
  */
-extern const char* UFO_UfoTypeToName (ufoType_t type)
+extern const char* UFO_TypeToName (ufoType_t type)
 {
 	switch(type) {
 	case UFO_SCOUT:
@@ -86,7 +86,7 @@ extern const char* UFO_UfoTypeToName (ufoType_t type)
 		return _("UFO - Carrier");
 		break;
 	default:
-		Sys_Error("UFO_UfoTypeToName(): Unknown UFO type %i\n", type);
+		Sys_Error("UFO_TypeToName(): Unknown UFO type %i\n", type);
 		break;
 	}
 	return NULL; /* never reached */

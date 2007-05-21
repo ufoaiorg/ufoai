@@ -881,7 +881,7 @@ static void CL_CampaignRemoveMission (actMis_t * mis)
 	/* Notifications */
 	MAP_NotifyMissionRemoved(mis);
 	AIR_AircraftsNotifyMissionRemoved(mis);
-	CL_PopupNotifyMIssionRemoved(mis);
+	CL_PopupNotifyMissionRemoved(mis);
 
 	ccs.numMissions--;
 	Com_DPrintf("%i missions left\n", ccs.numMissions);
@@ -4035,7 +4035,7 @@ static void CP_UFORecoveredStart_f (void)
 	assert(base);
 	Com_sprintf(messageBuffer, sizeof(messageBuffer),
 		_("Recovered %s from the battlefield. UFO is being transported to base %s."),
-		UFO_UfoTypeToName(Cvar_VariableInteger("mission_ufotype")), base->name);
+		UFO_TypeToName(Cvar_VariableInteger("mission_ufotype")), base->name);
 	MN_AddNewMessage(_("UFO Recovery"), messageBuffer, qfalse, MSG_STANDARD, NULL);
 	UFO_PrepareRecovery(base);
 
@@ -4129,7 +4129,7 @@ static void CP_UFOSellStart_f (void)
 	nation = &gd.nations[Cvar_VariableInteger("mission_recoverynation")];
 	assert(nation);
 	Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Recovered UFO of type %s from the battlefield. UFO sold to nation %s, gained %i credits."),
-	UFO_UfoTypeToName(Cvar_VariableInteger("mission_ufotype")), nation->name, UFOprices[Cvar_VariableInteger("mission_recoverynation")]);
+	UFO_TypeToName(Cvar_VariableInteger("mission_ufotype")), nation->name, UFOprices[Cvar_VariableInteger("mission_recoverynation")]);
 	MN_AddNewMessage(_("UFO Recovery"), messageBuffer, qfalse, MSG_STANDARD, NULL);
 	CL_UpdateCredits(ccs.credits + UFOprices[Cvar_VariableInteger("mission_recoverynation")]);
 
@@ -4198,7 +4198,7 @@ static void CP_UFORecoveredDestroy_f (void)
 		return;
 
 	Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Secured UFO of type %s was destroyed."),
-	UFO_UfoTypeToName(Cvar_VariableInteger("mission_ufotype")));
+	UFO_TypeToName(Cvar_VariableInteger("mission_ufotype")));
 	MN_AddNewMessage(_("UFO Recovery"), messageBuffer, qfalse, MSG_STANDARD, NULL);
 
 	/* UFO recovery process is done, disable buttons. */

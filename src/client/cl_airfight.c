@@ -276,7 +276,7 @@ extern void AIRFIGHT_ActionsAfterAirfight (aircraft_t* aircraft, qboolean phalan
 			Com_sprintf(ms->onwin, sizeof(ms->onwin), "cp_uforecovery %s", aircraft->id); /* TODO: correct? */
 			/* use ufocrash.ump as random tile assembly */
 			Com_sprintf(ms->map, sizeof(ms->map), "+ufocrash");
-			Com_sprintf(ms->param, sizeof(ms->param), "%s-%s", UFO_UfoTypeToShortName(aircraft->ufotype), MAP_GetZoneType(color));
+			Com_sprintf(ms->param, sizeof(ms->param), "%s-%s", UFO_TypeToShortName(aircraft->ufotype), MAP_GetZoneType(color));
 			if (CL_CampaignAddGroundMission(ms))
 				MN_AddNewMessage(_("Interception"), _("UFO interception successful -- New mission available."), qfalse, MSG_CRASHSITE, NULL);
 			else

@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /* global_popup */
 extern void CL_PopupInit(void);
-extern void CL_PopupNotifyMIssionRemoved(const actMis_t* mission);
+extern void CL_PopupNotifyMissionRemoved(const actMis_t* mission);
 extern void CL_PopupNotifyUfoRemoved(const aircraft_t* ufo);
 extern void CL_PopupNotifyUfoDisappeared(const aircraft_t* ufo);
 
@@ -126,7 +126,7 @@ extern void CL_PopupInit (void)
 /**
  * @brief Notify that a mission has been removed
  */
-extern void CL_PopupNotifyMIssionRemoved (const actMis_t* mission)
+extern void CL_PopupNotifyMissionRemoved (const actMis_t* mission)
 {
 	/* Notify all popups */
 	CL_PopupAircraftNotifyMissionRemoved(mission);
