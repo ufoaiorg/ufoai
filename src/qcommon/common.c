@@ -949,12 +949,6 @@ extern void Qcommon_Init (int argc, char **argv)
 	}
 
 #ifndef DEDICATED_ONLY
-	/* init irc commands and cvars */
-	Irc_Init();
-
-	if (Cvar_VariableInteger("cl_precachemenus"))
-		MN_PrecacheMenus();
-
 	CL_InitAfter();
 #else
 	Com_AddObjectLinks();	/* Add tech links + ammo<->weapon links to items.*/

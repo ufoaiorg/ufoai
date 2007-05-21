@@ -690,6 +690,7 @@ extern void Com_PrecacheCharacterModels (void)
 	char *str;
 	char model[MAX_QPATH];
 	const char *path;
+	float loading = loadingPercent;
 
 	/* search the name */
 	for (i = 0, nc = nameCat; i < numNameCats; i++, nc++)
@@ -715,8 +716,12 @@ extern void Com_PrecacheCharacterModels (void)
 				str += strlen(str) + 1;
 				/* new path */
 				str += strlen(str) + 1;
+				loadingPercent += 20.0f / (nc->numModels[j] * numNameCats * NAME_LAST);
+				SCR_DrawPrecacheScreen();
 			}
 		}
+	/* some genders may not have models - ensure that we do a 20 percent step */
+	loadingPercent = loading + 20.0f;
 }
 #endif
 

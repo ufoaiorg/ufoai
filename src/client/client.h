@@ -321,8 +321,6 @@ extern cvar_t *snd_ref;
 
 extern cvar_t *confirm_actions;
 
-extern cvar_t *cl_precachemenus;
-
 extern cvar_t *mn_inputlength;
 
 /** limit the input for cvar editing (base name, save slots and so on) */
@@ -409,6 +407,7 @@ char* CL_ToDifficultyName(int difficulty);
 extern qboolean loadingMessage;
 extern char loadingMessages[96];
 extern float loadingPercent;
+void SCR_DrawPrecacheScreen(void);
 
 /* cl_input */
 typedef struct {

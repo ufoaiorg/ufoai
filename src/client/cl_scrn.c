@@ -351,6 +351,22 @@ void SCR_DrawLoadingBar (int x, int y, int w, int h, int percent)
 }
 
 /**
+ * @brief Precache and loading screen at startup
+ * @sa CL_InitAfter
+ */
+extern void SCR_DrawPrecacheScreen (void)
+{
+	re.BeginFrame(0);
+	re.DrawStretchPic(0, 0, viddef.width, viddef.height, "loading");
+	re.FontDrawString("f_menubig", ALIGN_UC,
+		(int)(VID_NORM_WIDTH / 2),
+		(int)(VID_NORM_HEIGHT / 2 - 60),
+		0, 1, VID_NORM_WIDTH, VID_NORM_HEIGHT, 50, _("Loading game"), 0, 0, NULL, qfalse);
+	SCR_DrawLoadingBar((int)(VID_NORM_WIDTH / 2) - 300, VID_NORM_HEIGHT - 30, 600, 20, (int)loadingPercent);
+	re.EndFrame();
+}
+
+/**
  * @brief Draws the current loading pic of the map from base/pics/maps/loading
  * @sa SCR_DrawLoadingBar
  */

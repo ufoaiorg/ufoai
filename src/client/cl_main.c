@@ -88,8 +88,7 @@ cvar_t *cl_start_buildings;
 /** @brief Confirm actions in tactical mode - valid values are 0, 1 and 2 */
 cvar_t *confirm_actions;
 
-cvar_t *cl_precachemenus;
-cvar_t *cl_precachemodels;
+cvar_t *cl_precache;
 
 /* userinfo */
 cvar_t *info_password;
@@ -1699,14 +1698,14 @@ void Com_PrecacheCharacterModels(void);
 
 /**
  * @brief Precaches all models at game startup - for faster access
- * @note only called when cl_precachemodels was set to 1
+ * @note only called when cl_precache was set to 1
  * @sa MN_PrecacheModels
  * @sa E_PrecacheModels
  */
 static void CL_PrecacheModels (void)
 {
 	int i;
-	/* TODO: Do this in a seperate thread? */
+
 	MN_PrecacheModels();
 	Com_PrecacheCharacterModels();
 
@@ -1714,6 +1713,8 @@ static void CL_PrecacheModels (void)
 		if (*csi.ods[i].model)
 			if (!re.RegisterModel(csi.ods[i].model))
 				Com_Printf("CL_PrecacheModels: Could not register object model: '%s'\n", csi.ods[i].model);
+		loadingPercent += 20.0f / csi.numODs;
+		SCR_DrawPrecacheScreen();
 	}
 }
 
@@ -1723,18 +1724,36 @@ static void CL_PrecacheModels (void)
  */
 extern void CL_InitAfter (void)
 {
+	loadingPercent = 0;
+
+	/* precache loading screen */
+	SCR_DrawPrecacheScreen();
+
+	/* init irc commands and cvars */
+	Irc_Init();
+
 	/* this will init some more employee stuff */
 	E_Init();
 
 	/* init some production menu nodes */
 	PR_Init();
 
-	/* link for faster access */
-	MN_LinkMenuModels();
+	loadingPercent = 5.0f;
+	SCR_DrawPrecacheScreen();
 
 	/* preload all models for faster access */
-	if (cl_precachemodels->value)
+	if (cl_precache->value) {
 		CL_PrecacheModels();
+		/* loading percent is 65 now */
+
+		MN_PrecacheMenus();
+	}
+
+	loadingPercent = 100.0f;
+	SCR_DrawPrecacheScreen();
+
+	/* link for faster access */
+	MN_LinkMenuModels();
 }
 
 /**
@@ -1995,8 +2014,7 @@ static void CL_InitLocal (void)
 	sensitivity = Cvar_Get("sensitivity", "2", CVAR_ARCHIVE, NULL);
 	cl_markactors = Cvar_Get("cl_markactors", "1", CVAR_ARCHIVE, NULL);
 
-	cl_precachemenus = Cvar_Get("cl_precachemenus", "0", CVAR_ARCHIVE, "Precache all menus at startup");
-	cl_precachemodels = Cvar_Get("cl_precachemodels", "0", CVAR_ARCHIVE, "Precache all models at startup");
+	cl_precache = Cvar_Get("cl_precache", "1", CVAR_ARCHIVE, "Precache models and menus at startup");
 
 	cl_aviForceDemo = Cvar_Get("cl_aviForceDemo", "1", CVAR_ARCHIVE, "AVI recording - record even if no game is loaded");
 	cl_aviFrameRate = Cvar_Get("cl_aviFrameRate", "25", CVAR_ARCHIVE, "AVI recording - see video command");
