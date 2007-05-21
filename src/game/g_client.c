@@ -102,7 +102,7 @@ void G_SendStats (edict_t * ent)
  */
 void G_WriteItem (item_t item, int container, int x, int y)
 {
-	assert (item.t != NONE);
+	assert(item.t != NONE);
 	gi.WriteFormat("bbbbbb", item.t, item.a, item.m, container, x, y);
 }
 
@@ -779,7 +779,7 @@ void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int 
 
 	/* search for space */
 	if (tx == NONE) {
-/*		assert (ty == NONE); */
+/*		assert(ty == NONE); */
 		if (ty != NONE)
 			Com_Printf("G_ClientInvMove: Error: ty != NONE, it is %i.\n", ty);
 
@@ -788,7 +788,7 @@ void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int 
 			Com_FindSpace(&ent->i, ic->item.t, to, &tx, &ty);
 	}
 	if (tx == NONE) {
-/*		assert (ty == NONE); */
+/*		assert(ty == NONE); */
 		if (ty != NONE)
 			Com_Printf("G_ClientInvMove: Error: ty != NONE, it is %i.\n", ty);
 		return;
@@ -821,7 +821,7 @@ void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int 
 	/* successful inventory change; remove the item in clients */
 	if (from == gi.csi->idFloor) {
 		/* We removed an item from a floor - check how the client needs to be updated. */
-		assert (!newFloor);
+		assert(!newFloor);
 		if (FLOOR(ent)) {
 			/* There is still something on the floor. */
 			FLOOR(floor) = FLOOR(ent); /* @todo: _why_ do we do this here exactly? Shouldn't they be the same already at this point? */
@@ -856,8 +856,8 @@ void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int 
 	if (ia == IA_RELOAD || ia == IA_RELOAD_SWAP) {
 		/* reload */
 		if (to == gi.csi->idFloor) {
-			assert (!newFloor);
-			assert (FLOOR(floor) == FLOOR(ent));
+			assert(!newFloor);
+			assert(FLOOR(floor) == FLOOR(ent));
 			mask = G_VisToPM(floor->visflags);
 		} else {
 			mask = G_TeamToPM(ent->team);
@@ -1009,7 +1009,7 @@ void G_InventoryToFloor (edict_t * ent)
 			/* find the coordinates for the current item on floor */
 			Com_FindSpace(&floor->i, ic->item.t, gi.csi->idFloor, &x, &y);
 			if (x == NONE) {
-				assert (y == NONE);
+				assert(y == NONE);
 				/* Run out of space on the floor or the item is armor
 				   destroy the offending item if no adjacent places are free */
 				/* store pos for later restoring the original value */

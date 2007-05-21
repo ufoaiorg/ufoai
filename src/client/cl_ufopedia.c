@@ -914,7 +914,7 @@ static void UP_Prev_f (void)
 		/* Check if the previous entry is researched already otherwise go to the next entry. */
 		do {
 			t = &gd.technologies[t->prev];
-			assert (t);
+			assert(t);
 			if (t->idx == t->prev)
 				Sys_Error("UP_Prev_f: The 'prev':%d entry equals to 'idx' entry for '%s'.\n", t->prev, t->id);
 		} while (t->prev >= 0 && !UP_TechGetsDisplayed(t));
@@ -948,7 +948,7 @@ static void UP_Next_f (void)
 		/* Check if the next entry is researched already otherwise go to the next entry. */
 		do {
 			t = &gd.technologies[t->next];
-			assert (upCurrent);
+			assert(upCurrent);
 			if (t->idx == t->next)
 				Sys_Error("UP_Next_f: The 'next':%d entry equals to 'idx' entry for '%s'.\n", t->next, t->id);
 		} while (t->next >= 0 && !UP_TechGetsDisplayed(t));

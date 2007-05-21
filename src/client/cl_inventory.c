@@ -268,9 +268,9 @@ void INV_SellOrAddItems (aircraft_t *aircraft)
 	base_t *base;
 	qboolean notenoughspace = qfalse;
 
-	assert (aircraft);
+	assert(aircraft);
 	base = aircraft->homebase;
-	assert (base);
+	assert(base);
 
 	eTempCredits = ccs.credits;
 	cargo = aircraft->itemcargo;
@@ -310,7 +310,6 @@ void INV_SellOrAddItems (aircraft_t *aircraft)
 						eTempCredits += csi.ods[cargo[i].idx].price;
 					}
 				}
-				
 			}
 			continue;
 		}
@@ -345,7 +344,7 @@ void INV_EnableAutosell (technology_t *tech)
 	/* If the tech leads to weapon or armour, find related item and enable autosell. */
 	if ((tech->type == RS_WEAPON) || (tech->type == RS_ARMOR)) {
 		for (i = 0; i < csi.numODs; i++) {
-			if (Q_strncmp(tech->provides, csi.ods[i].id, MAX_VAR) == 0) {
+			if (!Q_strncmp(tech->provides, csi.ods[i].id, MAX_VAR)) {
 				gd.autosell[i] = qtrue;
 				break;
 			}
@@ -382,17 +381,17 @@ extern void INV_InitialEquipment (base_t *base)
 	int i, price = 0;
 	equipDef_t *ed;
 	const char *eqname = cl_initial_equipment->string;
-	
+
 	/* Find the initial equipment definition for current campaign. */
 	for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++) {
 		if (!Q_strncmp(curCampaign->equipment, ed->name, sizeof(curCampaign->equipment)))
 			break;
 	}
-	
+
 	/* Copy it to base storage. */
 	if (i != csi.numEDs)
 		base->storage = *ed;
-	
+
 	/* Initial soldiers and their equipment. */
 	if (cl_start_employees->value) {
 		Cbuf_AddText("assign_initial;");
@@ -408,7 +407,7 @@ extern void INV_InitialEquipment (base_t *base)
 				base->storage.num[i] += ed->num[i] / 5;
 		}
 	}
-	
+
 	/* Pay for the initial equipment as well as update storage capacity. */
 	for (i = 0; i < csi.numODs; i++) {
 		price += base->storage.num[i] * csi.ods[i].price;
@@ -451,13 +450,13 @@ extern void INV_ParseComponents (const char *name, char **text)
 	/* set standard values */
 	Q_strncpyz(comp->assembly_id, name, sizeof(comp->assembly_id));
 	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
-		if ((Q_strncmp(od->id, name, MAX_VAR)) == 0) {
+		if (!Q_strncmp(od->id, name, MAX_VAR)) {
 			comp->assembly_idx = i;
 			Com_DPrintf("INV_ParseComponents()... linked item: %s idx %i with components: %s idx %i \n", od->id, i, comp->assembly_id, comp->assembly_idx);
 			break;
 		}
 	}
-	
+
 	do {
 		/* get the name type */
 		token = COM_EParse(text, errhead, name);
@@ -473,16 +472,16 @@ extern void INV_ParseComponents (const char *name, char **text)
 				/* Parse item name */
 				token = COM_Parse(text);
 				Q_strncpyz(comp->item_id[comp->numItemtypes], token, sizeof(comp->item_id[comp->numItemtypes]));
-				
+
 				/* Parse number of items. */
 				token = COM_Parse(text);
 				comp->item_amount[comp->numItemtypes] = atoi(token);
 				token = COM_Parse(text);
 				comp->item_amount2[comp->numItemtypes] = atoi(token);
-				
+
 				/** @todo Set item links to -1 if needed */
 				/* comp->item_idx[comp->numItemtypes] = xxx */
-				
+
 				comp->numItemtypes++;
 			} else {
 				Com_Printf("INV_ParseComponents: \"%s\" Too many 'items' defined. Limit is %i - ignored.\n", name, MAX_COMP);
@@ -490,7 +489,7 @@ extern void INV_ParseComponents (const char *name, char **text)
 		} else if (!Q_strncmp(token, "time", MAX_VAR)) {
 			/* Defines how long disassembly lasts. */
 			token = COM_Parse(text);
-			comp->time = atoi(token);	
+			comp->time = atoi(token);
 		} else {
 			Com_Printf("INV_ParseComponents error in \"%s\" - unknown token: \"%s\".\n", name, token);
 		}

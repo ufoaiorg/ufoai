@@ -1028,7 +1028,7 @@ static void MN_Drag (const menuNode_t* const node, int x, int y)
 			if (node->mousefx == csi.idEquip) {
 				/* a hack to add the equipment correctly into buy categories;
 				   it is valid only due to the following property: */
-				assert (MAX_CONTAINERS >= BUY_AIRCRAFT);
+				assert(MAX_CONTAINERS >= BUY_AIRCRAFT);
 
 				i = Com_SearchInInventory(menuInventory, dragFrom, dragFromX, dragFromY);
 				if (i) {
@@ -1698,7 +1698,7 @@ void MN_DrawItem (vec3_t org, item_t item, int sx, int sy, int x, int y, vec3_t 
 	vec3_t size;
 	vec4_t col;
 
-	assert (item.t != NONE);
+	assert(item.t != NONE);
 	od = &csi.ods[item.t];
 
 	if (od->image[0]) {

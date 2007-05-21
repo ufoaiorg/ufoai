@@ -68,7 +68,7 @@ static void AIR_UpdateHangarCapForOne (int aircraftID, int base_idx)
 #endif
 		return;
 	}
-	assert (base);
+	assert(base);
 
 	freespace = base->capacities[CAP_AIRCRAFTS_SMALL].max - base->capacities[CAP_AIRCRAFTS_SMALL].cur;
 	Com_DPrintf("AIR_UpdateHangarCapForOne()... freespace: %i aircraft weight: %i\n", freespace, aircraftSize);
@@ -123,7 +123,7 @@ void AIR_UpdateHangarCapForAll (int base_idx)
 #endif
 		return;
 	}
-	assert (base);
+	assert(base);
 	/* Reset current capacities for hangar. */
 	base->capacities[CAP_AIRCRAFTS_BIG].cur = 0;
 	base->capacities[CAP_AIRCRAFTS_SMALL].cur = 0;

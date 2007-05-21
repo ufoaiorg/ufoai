@@ -584,6 +584,7 @@ static void Cvar_Set_f (void)
 {
 	int c;
 	int flags;
+	const char *arg;
 
 	c = Cmd_Argc();
 	if (c != 3 && c != 4) {
@@ -592,9 +593,10 @@ static void Cvar_Set_f (void)
 	}
 
 	if (c == 4) {
-		if (!Q_strncmp(Cmd_Argv(3), "u", 1))
+		arg = Cmd_Argv(3);
+		if (*arg == 'u')
 			flags = CVAR_USERINFO;
-		else if (!Q_strncmp(Cmd_Argv(3), "s", 1))
+		else if (*arg == 's')
 			flags = CVAR_SERVERINFO;
 		else {
 			Com_Printf("flags can only be 'u' or 's'\n");

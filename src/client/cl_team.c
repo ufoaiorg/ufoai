@@ -65,7 +65,7 @@ extern char* CL_GetTeamSkinName (int id)
  */
 extern void CL_SendItem (sizebuf_t *buf, item_t item, int container, int x, int y, qboolean save)
 {
-	assert (item.t != NONE);
+	assert(item.t != NONE);
 /*	Com_Printf("Add item %s to container %i (t=%i:a=%i:m=%i) (x=%i:y=%i)\n", csi.ods[item.t].id, container, item.t, item.a, item.m, x, y);*/
 	if (save) {
 		MSG_WriteFormat(buf, "bbbb", item.a, container, x, y);
@@ -473,8 +473,8 @@ extern void CL_AddCarriedToEq (equipDef_t * ed)
 				next = ic->next;
 				ed->num[type]++;
 				if (item.a) {
-					assert (csi.ods[type].reload);
-					assert (item.m != NONE);
+					assert(csi.ods[type].reload);
+					assert(item.m != NONE);
 					ed->num_loose[item.m] += item.a;
 					/* Accumulate loose ammo into clips */
 					if (ed->num_loose[item.m] >= csi.ods[type].ammo) {
@@ -495,7 +495,7 @@ static item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
 {
 	int i = -1, type = item.t;	/* 'type' equals idx in "&csi.ods[idx]" */
 
-	assert (ed->num[type] > 0);
+	assert(ed->num[type] > 0);
 	ed->num[type]--;
 
 	if (csi.ods[type].weap_idx[0] >= 0) {
@@ -516,11 +516,11 @@ static item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
 		item.m = item.t;
 		return item;
 	} else if (item.a) {
-		assert (item.m != NONE);
+		assert(item.m != NONE);
 		/* The item is a weapon and it was reloaded one time. */
 		if (item.a == csi.ods[type].ammo) {
 			/* Fully loaded, no need to reload, but mark the ammo as used. */
-			assert (item.m != NONE);	/* @todo: Isn't this redundant here? */
+			assert(item.m != NONE);	/* @todo: Isn't this redundant here? */
 			if (ed->num[item.m] > 0) {
 				ed->num[item.m]--;
 				return item;
@@ -575,7 +575,7 @@ static item_t CL_AddWeaponAmmo (equipDef_t * ed, item_t item)
 				/* loose ammo of a different (but appropriate) type with */
 				/* more bullets.  Put the previously found ammo back, so */
 				/* we'll take the new type. */
-				assert (item.m != NONE);
+				assert(item.m != NONE);
 				ed->num_loose[item.m] = item.a;
 				/* We don't have to accumulate loose ammo into clips
 				   because we did it previously and we create no new ammo */
@@ -611,9 +611,9 @@ extern void CL_ReloadAndRemoveCarried (aircraft_t *aircraft, equipDef_t * ed)
 	/* the first person in the squad filling their backpack with spare ammo */
 	/* leaving others with unloaded guns in their hands... */
 
-	assert (aircraft);
+	assert(aircraft);
 	base = aircraft->homebase;
-	assert (base);
+	assert(base);
 
 	Com_Printf("CL_ReloadAndRemoveCarried()...aircraft idx: %i, teamNum: %i\n",
 	aircraft->idx, base->teamNum[aircraft->idx]);
@@ -738,7 +738,7 @@ static void CL_GenerateEquipment_f (void)
 	/* a 'tiny hack' to add the remaining equipment (not carried)
 	   correctly into buy categories, reloading at the same time;
 	   it is valid only due to the following property: */
-	assert (MAX_CONTAINERS >= BUY_AIRCRAFT);
+	assert(MAX_CONTAINERS >= BUY_AIRCRAFT);
 
 	for (i = 0; i < csi.numODs; i++) {
 		/* Don't allow to show armours for other teams in the menu. */
@@ -750,7 +750,7 @@ static void CL_GenerateEquipment_f (void)
 		while (unused.num[i]) {
 			item.t = i;
 
-			assert (unused.num[i] > 0);
+			assert(unused.num[i] > 0);
 
 			/* Check if there are any "multi_ammo" items and move them to the PRI container (along with PRI items of course).
 			 * Otherwise just use the container-buytype of the item.
@@ -950,9 +950,9 @@ extern void CL_UpdateHireVar (aircraft_t *aircraft)
 	employee_t *employee = NULL;
 	base_t *base = NULL;
 
-	assert (aircraft);
+	assert(aircraft);
 	base = aircraft->homebase;
-	assert (base);
+	assert(base);
 
 	Cvar_Set("mn_hired", va(_("%i of %i"), base->teamNum[aircraft->idxInBase], aircraft->size));
 	hired_in_base = E_CountHired(base, EMPL_SOLDIER);

@@ -1970,7 +1970,7 @@ technology_t *RS_GetTechByID (const char *id)
 	if (!id || !*id)
 		return NULL;
 
-	if (!Q_strncmp((char *) id, "nothing", MAX_VAR))
+	if (!Q_strncmp(id, "nothing", MAX_VAR))
 		return NULL;
 
 	hash = Com_HashKey(id, TECH_HASH_SIZE);

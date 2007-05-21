@@ -296,8 +296,8 @@ static void G_Damage (edict_t * ent, fireDef_t *fd, int damage, edict_t * attack
 	qboolean stun = (fd->dmgtype == gi.csi->damStun);
 	qboolean shock = (fd->dmgtype == gi.csi->damShock);
 
-	assert (ent);
-	assert (ent->type == ET_ACTOR
+	assert(ent);
+	assert(ent->type == ET_ACTOR
 			|| ent->type == ET_UGV
 			|| ent->type == ET_BREAKABLE
 			|| ent->type == ET_DOOR);
@@ -500,7 +500,7 @@ static void G_SplashDamage (edict_t * ent, fireDef_t * fd, vec3_t impact, shot_m
 
 	qboolean shock = (fd->dmgtype == gi.csi->damShock);
 
-	assert (fd->splrad);
+	assert(fd->splrad);
 
 	for (i = 0, check = g_edicts; i < globals.num_edicts; i++, check++) {
 		/* check basic info */
@@ -1164,7 +1164,7 @@ extern qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type, 
 				gi.AddEvent(G_VisToPM(ent->visflags), EV_INV_DEL);
 				gi.WriteShort(num);
 				gi.WriteByte(container);
-				assert (gi.csi->ids[container].single);
+				assert(gi.csi->ids[container].single);
 				Com_EmptyContainer(&ent->i, container);
 			}
 			/* x and y value */

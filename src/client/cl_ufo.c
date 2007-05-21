@@ -291,7 +291,7 @@ extern void UFO_PrepareRecovery (base_t *base)
 	aircraft_t *ufocraft = NULL;
 	date_t event;
 
-	assert (base);
+	assert(base);
 
 	/* Find ufo sample of given ufotype. */
 	for (i = 0; i < numAircraft_samples; i++) {

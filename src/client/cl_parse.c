@@ -1230,7 +1230,7 @@ static void CL_InvReload (sizebuf_t *sb)
 	if (curCampaign
 		 && ic->item.a > 0
 		 && ic->item.a != csi.ods[ic->item.t].ammo) {
-		assert (ammo == csi.ods[ic->item.t].ammo);
+		assert(ammo == csi.ods[ic->item.t].ammo);
 		ccs.eMission.num_loose[ic->item.m] += ic->item.a;
 		/* Accumulate loose ammo into clips (only accessible post-mission) */
 		if (ccs.eMission.num_loose[ic->item.m] >= csi.ods[ic->item.t].ammo) {

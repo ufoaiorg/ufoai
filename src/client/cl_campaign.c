@@ -4011,7 +4011,7 @@ static void CP_UfoRecoveryBaseSelectPopup_f (void)
 		if (j == num)
 			break;
 	}
-	assert (base);
+	assert(base);
 
 	Cvar_SetValue("mission_recoverybase", base->idx);
 	Com_DPrintf("CP_UfoRecoveryBaseSelectPopup_f()... picked base: %s\n", base->name);
@@ -4027,7 +4027,7 @@ static void CP_UFORecoveredStart_f (void)
 	base_t *base;
 
 	base = &gd.bases[Cvar_VariableInteger("mission_recoverybase")];
-	assert (base);
+	assert(base);
 	Com_sprintf(messageBuffer, sizeof(messageBuffer),
 		_("Recovered %s from the battlefield. UFO is being transported to base %s."),
 		UFO_UfoTypeToName(Cvar_VariableInteger("mission_ufotype")), base->name);
@@ -4078,7 +4078,7 @@ static void CP_UFORecoveredStore_f (void)
 		MN_PushMenu("popup_recoverybaselist");
 		base = &gd.bases[Cvar_VariableInteger("mission_recoverybase")];
 	}
-	assert (base);
+	assert(base);
 }
 
 /** @brief Array of prices proposed by nation. */
@@ -4122,7 +4122,7 @@ static void CP_UFOSellStart_f (void)
 	nation_t *nation;
 
 	nation = &gd.nations[Cvar_VariableInteger("mission_recoverynation")];
-	assert (nation);
+	assert(nation);
 	Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Recovered UFO of type %s from the battlefield. UFO sold to nation %s, gained %i credits."),
 	UFO_UfoTypeToName(Cvar_VariableInteger("mission_ufotype")), nation->name, UFOprices[Cvar_VariableInteger("mission_recoverynation")]);
 	MN_AddNewMessage(_("UFO Recovery"), messageBuffer, qfalse, MSG_STANDARD, NULL);

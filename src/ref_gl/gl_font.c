@@ -222,7 +222,7 @@ static fontCache_t *Font_GetFromCache (const char *s)
 
 	hashValue = Font_Hash(s, MAX_HASH_STRING);
 	for (font = hash[hashValue]; font; font = font->next)
-		if (!Q_strncmp((char *) s, font->string, MAX_HASH_STRING))
+		if (!Q_strncmp(s, font->string, MAX_HASH_STRING))
 			return font;
 
 	return NULL;
@@ -355,8 +355,8 @@ static char *Font_GetLineWrap (font_t * f, char *buffer, int maxWidth, int *widt
 	int h = 0;
 
 	/* TTF does not like empty strings... */
-	assert (buffer);
-	assert (strlen(buffer));
+	assert(buffer);
+	assert(strlen(buffer));
 
 	if (!maxWidth)
 		maxWidth = VID_NORM_WIDTH;

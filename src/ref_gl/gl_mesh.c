@@ -170,7 +170,7 @@ static qboolean R_CullAliasModel (vec4_t bbox[8], entity_t * e)
 	daliasframe_t *pframe, *poldframe;
 	float dp;
 
-	assert (currentmodel->type == mod_alias_md2);
+	assert(currentmodel->type == mod_alias_md2);
 	paliashdr = (dmdl_t *) currentmodel->extradata;
 
 	pframe = (daliasframe_t *) ((byte *) paliashdr + paliashdr->ofs_frames + e->as.frame * paliashdr->framesize);
@@ -354,7 +354,7 @@ void R_DrawAliasModel (entity_t * e)
 	dmdl_t *paliashdr;
 	image_t *skin;
 
-	assert (currentmodel->type == mod_alias_md2);
+	assert(currentmodel->type == mod_alias_md2);
 	paliashdr = (dmdl_t *) currentmodel->extradata;
 
 	/* check animations */
@@ -563,7 +563,7 @@ static void R_TransformModelDirect (modelInfo_t * mi)
 		int i;
 
 		/* get model data */
-		assert (mi->model->type == mod_alias_md2);
+		assert(mi->model->type == mod_alias_md2);
 		paliashdr = (dmdl_t *) mi->model->extradata;
 		pframe = (daliasframe_t *) ((byte *) paliashdr + paliashdr->ofs_frames);
 

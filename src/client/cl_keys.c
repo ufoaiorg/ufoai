@@ -729,10 +729,10 @@ static void Key_Unbind_f (void)
  */
 static int Key_SpaceStringToEnumValue (char* keySpace)
 {
-	if (Q_strncmp(keySpace, "KEYSPACE_MENU", MAX_VAR))
+	if (!Q_strncmp(keySpace, "KEYSPACE_MENU", MAX_VAR))
 		return KEYSPACE_MENU;
-	else if (Q_strncmp(keySpace, "KEYSPACE_GAME", MAX_VAR))
-		return KEYSPACE_MENU;
+	else if (!Q_strncmp(keySpace, "KEYSPACE_GAME", MAX_VAR))
+		return KEYSPACE_GAME;
 	else
 		return -1;
 }

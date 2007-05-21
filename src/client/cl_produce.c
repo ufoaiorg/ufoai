@@ -59,11 +59,11 @@ static qboolean PR_ConditionsDisassembly (components_t *comp)
 {
 	objDef_t *od;
 
-	assert (baseCurrent);
-	assert (comp);
+	assert(baseCurrent);
+	assert(comp);
 
 	od = &csi.ods[comp->assembly_idx];
-	assert (od);
+	assert(od);
 
 	if (RS_IsResearched_ptr(od->tech) && (baseCurrent->storage.num[comp->assembly_idx] > 0))
 		return qtrue;
@@ -85,8 +85,8 @@ static int PR_CalculateProductionTime (base_t *base, technology_t *tech, compone
 	signed int allworkers = 0, maxworkers = 0;
 	signed int timeDefault = 0, time = 0;
 	float timeTemp = 0;
-	assert (base);
-	assert (tech);
+	assert(base);
+	assert(tech);
 
 	/* Check how many workers hired in this base. */
 	allworkers = E_CountHired(base, EMPL_WORKER);
@@ -98,10 +98,10 @@ static int PR_CalculateProductionTime (base_t *base, technology_t *tech, compone
 	}
 
 	if (!disassembly) {
-		assert (tech);
+		assert(tech);
 		timeDefault = tech->produceTime;	/* This is the default production time for 10 workers. */
 	} else {
-		assert (comp);
+		assert(comp);
 		timeDefault = comp->time;		/* This is the default disassembly time for 10 workers. */
 	}
 
@@ -150,7 +150,7 @@ void PR_UpdateProductionTime (int base_idx)
 #endif
 		return;
 	}
-	assert (base);
+	assert(base);
 
 	/* Loop through all productions in queue and adjust production time. */
 	if (gd.productions[base_idx].numItems > 0) {
@@ -482,7 +482,7 @@ static void PR_ProductionInfo (qboolean disassembly)
 			if (comp->assembly_idx == objID)
 				break;
 		}
-		assert (comp);
+		assert(comp);
 		if (objID >= 0) {
 			od = &csi.ods[objID];
 			t = (technology_t*)(od->tech);
@@ -502,10 +502,10 @@ static void PR_ProductionInfo (qboolean disassembly)
 				/* Print components. */
 				for (i = 0; i < comp->numItemtypes; i++) {
 					for (j = 0, compod = csi.ods; j < csi.numODs; j++, compod++) {
-						if ((Q_strncmp(compod->id, comp->item_id[i], MAX_VAR)) == 0)
+						if (!Q_strncmp(compod->id, comp->item_id[i], MAX_VAR))
 							break;
 					}
-					Q_strcat(productionInfo, va(_("%s (%i) "), compod->name, comp->item_amount[i]), 
+					Q_strcat(productionInfo, va(_("%s (%i) "), compod->name, comp->item_amount[i]),
 						sizeof(productionInfo) );
 				}
 				Q_strcat(productionInfo, "\n", sizeof(productionInfo));
@@ -737,12 +737,12 @@ static void PR_UpdateDisassemblingList_f (void)
 	production_queue_t *queue;
 	production_t *prod;
 	components_t *comp;
-	
+
 	Cvar_SetValue("mn_prod_disassembling", 1);
 
 	productionAmount[0] = productionList[0] = productionQueued[0] = '\0';
 	queue = &gd.productions[baseCurrent->idx];
-	
+
 	/* first add all the queue items */
 	for (i = 0; i < queue->numItems; i++) {
 		prod = &queue->items[i];

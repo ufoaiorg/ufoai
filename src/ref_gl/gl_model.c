@@ -1428,7 +1428,7 @@ static void Mod_FindSharedEdges (model_t * mod)
 	dtriangle_t *tris;
 	int i, o;
 
-	assert (mod->type == mod_alias_md2);
+	assert(mod->type == mod_alias_md2);
 	hdr = (dmdl_t *) mod->extradata;
 	tris = (dtriangle_t *) ((unsigned char *) hdr + hdr->ofs_tris);
 

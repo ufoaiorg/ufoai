@@ -47,7 +47,7 @@ qboolean HOS_RemoveFromList (employee_t *employee, base_t *base)
 	int i = 0, j = 0;
 	qboolean test = qfalse;
 
-	assert (base);
+	assert(base);
 
 	for (; j < base->hospitalListCount; i++, j++) {
 		if (base->hospitalList[employee->type][i] == employee->idx) {
@@ -76,7 +76,7 @@ void HOS_RemoveFromMissionList (employee_t *employee, base_t *base)
 {
 	int i = 0, j = 0;
 
-	assert (base);
+	assert(base);
 
 	for (; j < base->hospitalMissionListCount; i++, j++) {
 		if (base->hospitalMissionList[i] == employee->idx) {
@@ -99,9 +99,9 @@ void HOS_CheckRemovalFromEmployeeList (employee_t *employee)
 	base_t *base;
 	char messageBuffer[256];
 
-	assert (employee);
+	assert(employee);
 	base = &gd.bases[employee->baseIDHired];
-	assert (base);
+	assert(base);
 
 	if (base->hospitalListCount <= 0)
 		return;
@@ -157,7 +157,7 @@ void HOS_AddToInMissionEmployeeList (employee_t* employee, base_t *base)
 {
 	int i;
 
-	assert (base);
+	assert(base);
 	/* Do nothing if the base does not have hospital. */
 	if (!base->hasHospital)
 		return;
@@ -215,7 +215,7 @@ extern void HOS_HospitalRun (void)
 		if (base->founded == qfalse)
 			continue;
 
-		assert (base);
+		assert(base);
 		for (type = 0; type < MAX_EMPL; type++) {
 			for (i = 0; i < gd.numEmployees[type]; i++) {
 				employee = &gd.employees[type][i];
@@ -470,7 +470,7 @@ static void HOS_StartHealing_f (void)
 	if (!baseCurrent || !currentEmployeeInHospital)
 		return;
 
-	assert (baseCurrent);
+	assert(baseCurrent);
 
 	/* Add to the hospital if there is a room for the employee. */
 	if (baseCurrent->capacities[CAP_HOSPSPACE].cur < baseCurrent->capacities[CAP_HOSPSPACE].max) {
@@ -512,9 +512,9 @@ extern void HOS_RemoveEmployeesInHospital (aircraft_t *aircraft)
 	employee_t *employee;
 	base_t *base;
 
-	assert (aircraft);
+	assert(aircraft);
 	base = aircraft->homebase;
-	assert (base);
+	assert(base);
 
 	/* Do nothing if the base does not have hospital. */
 	if (!base->hasHospital)
@@ -528,7 +528,7 @@ extern void HOS_RemoveEmployeesInHospital (aircraft_t *aircraft)
 		if (aircraft->teamIdxs[i] > -1) {
 			/* Check whether any team member is in base->hospitalList. */
 			employee = &(gd.employees[EMPL_SOLDIER][aircraft->teamIdxs[i]]);
-			assert (employee);
+			assert(employee);
 			for (j = 0; j < base->hospitalListCount; j++) {
 				/* If the soldier is in base->hospitalList, remove him ... */
 				if (base->hospitalList[EMPL_SOLDIER][j] == employee->idx) {
@@ -553,9 +553,9 @@ extern void HOS_ReaddEmployeesInHospital (aircraft_t *aircraft)
 	employee_t* employee;
 	base_t *base;
 
-	assert (aircraft);
+	assert(aircraft);
 	base = aircraft->homebase;
-	assert (base);
+	assert(base);
 
 	/* Do nothing if the base does not have hospital. */
 	if (!base->hasHospital)
@@ -566,7 +566,7 @@ extern void HOS_ReaddEmployeesInHospital (aircraft_t *aircraft)
 			for (j = 0; j < base->hospitalMissionListCount; j++) {
 				if ((aircraft->teamIdxs[i] == base->hospitalMissionList[j])) {
 					employee = &(gd.employees[EMPL_SOLDIER][aircraft->teamIdxs[i]]);
-					assert (employee);
+					assert(employee);
 					/* Soldier goes back to hospital only if he hasn't recover all his HP during mission (medikit). */
 					if (employee->chr.HP < employee->chr.maxHP)
 						HOS_AddToEmployeeList(base, employee);
@@ -589,10 +589,10 @@ void HOS_RemoveDeadEmployeeFromLists (employee_t *employee)
 	int i;
 	base_t *base;
 
-	assert (employee);
+	assert(employee);
 
 	base = &gd.bases[employee->baseIDHired];
-	assert (base);
+	assert(base);
 
 	/* Do nothing if the base does not have hospital. */
 	if (!base->hasHospital)

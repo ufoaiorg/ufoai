@@ -2173,7 +2173,7 @@ void Info_RemoveKey (char *s, const char *key)
 		}
 		*o = 0;
 
-		if (!Q_strncmp((char *) key, pkey, 512)) {
+		if (!Q_strncmp(key, pkey, sizeof(pkey))) {
 			strcpy(start, s);	/* remove this part */
 			return;
 		}
@@ -2842,7 +2842,7 @@ int Com_TryAddToInventory (inventory_t* const inv, item_t item, int container)
 
 	Com_FindSpace(inv, item.t, container, &x, &y);
 	if (x == NONE) {
-		assert (y == NONE);
+		assert(y == NONE);
 		return 0;
 	} else {
 		Com_AddToInventory(inv, item, container, x, y);
@@ -2869,7 +2869,7 @@ int Com_TryAddToBuyType (inventory_t* const inv, item_t item, int container)
 
 	Com_FindSpace(&hackInv, item.t, CSI->idEquip, &x, &y);
 	if (x == NONE) {
-		assert (y == NONE);
+		assert(y == NONE);
 		return 0;
 	} else {
 		Com_AddToInventory(&hackInv, item, CSI->idEquip, x, y);
@@ -3018,7 +3018,7 @@ int Com_PackAmmoAndWeapon (inventory_t* const inv, const int weapon, const int e
 				+ (PROB_COMPENSATION > 40 * frand())
 				+ (float) missed_primary * (1 + frand() * PROB_COMPENSATION) / 40.0, 20);
 
-			assert (num >= 0);
+			assert(num >= 0);
 			/* pack some more ammo */
 			while (num--) {
 				item_t mun = {NONE_AMMO, NONE, NONE};
@@ -3635,7 +3635,7 @@ static int Com_ParseConditionType (const char* conditionString, const char *toke
 {
 	int i = IF_SIZE;
 	for (; i--;) {
-		if (!Q_strncmp(if_strings[i], (char*)conditionString, 2)) {
+		if (!Q_strncmp(if_strings[i], conditionString, 2)) {
 			return i;
 		}
 	}

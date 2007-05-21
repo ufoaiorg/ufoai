@@ -264,7 +264,7 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, ai_action_t * aia)
 	/* add damage to guete */
 	if (aia->target) {
 		guete += maxDmg;
-		assert (best_time > 0);
+		assert(best_time > 0);
 		tu -= best_time;
 	}
 

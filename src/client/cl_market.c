@@ -72,7 +72,7 @@ static int BS_CalculateHangarStorage (int aircraftID, int base_idx)
 #endif
 		return -1;
 	}
-	assert (base);
+	assert(base);
 
 	/* If the aircraft size is less than 8, we will check space in small hangar. */
 	if (aircraftSize < 8) {

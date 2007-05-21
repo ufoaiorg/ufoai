@@ -206,7 +206,7 @@ static int FS_FOpenFileSingle (const char *filename, qFILE * file)
 
 	/* check for links first */
 	for (link = fs_links; link; link = link->next)
-		if (!Q_strncmp((char *) filename, link->from, link->fromlength)) {
+		if (!Q_strncmp(filename, link->from, link->fromlength)) {
 			Com_sprintf(netpath, sizeof(netpath), "%s%s", link->to, filename + link->fromlength);
 			file->f = fopen(netpath, "rb");
 			if (file->f) {

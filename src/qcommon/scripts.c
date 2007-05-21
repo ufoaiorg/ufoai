@@ -547,7 +547,7 @@ teamDesc_t teamDesc[MAX_TEAMDEFS];
 static nameCategory_t nameCat[MAX_NAMECATS];
 static teamDef_t teamDef[MAX_TEAMDEFS];
 static char infoStr[MAX_INFOSTRING];
-static char *infoPos;
+static char *infoPos; /* size checked - see infoSize */
 static int numNameCats = 0;
 static int numTeamDefs = 0;
 int numTeamDesc = 0;
