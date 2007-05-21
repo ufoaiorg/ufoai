@@ -87,6 +87,7 @@ typedef struct mission_s {
 	qboolean storyRelated;		/**< auto mission play disabled when true */
 	missionType_t missionType;	/**< type of mission */
 	void* data;					/**< may be related to mission type */
+	qboolean keepAfterFail;		/**< keep the mission on geoscape after failing */
 	vec2_t pos;
 	byte mask[4];
 	int aliens, civilians;

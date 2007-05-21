@@ -733,6 +733,8 @@ extern qboolean CL_CampaignAddGroundMission (mission_t* mission)
 #define DIST_MIN_BASE_MISSION 4
 /**
  * @brief
+ * @note missions that have the keepAfterFail boolean set should not be removed
+ * after the mission failed - but only when the mission was successful
  * @sa CL_CampaignRemoveMission
  * @sa CL_CampaignCheckEvents
  * @sa CL_AddMission
@@ -2351,7 +2353,8 @@ static void CL_GameAutoGo_f (void)
 	/* onwin and onlose triggers */
 	CP_ExecuteMissionTrigger(selMis->def, won, aircraft->homebase);
 
-	CL_CampaignRemoveMission(selMis);
+	if (won || !selMis->def->keepAfterFail)
+		CL_CampaignRemoveMission(selMis);
 
 	if (won)
 		MN_AddNewMessage(_("Notice"), _("You've won the battle"), qfalse, MSG_STANDARD, NULL);
@@ -2645,7 +2648,8 @@ static void CL_GameResults_f (void)
 	}
 
 	/* remove mission from list */
-	CL_CampaignRemoveMission(selMis);
+	if (won || !selMis->def->keepAfterFail)
+		CL_CampaignRemoveMission(selMis);
 }
 
 /* =========================================================== */
@@ -2671,6 +2675,7 @@ static const value_t mission_vals[] = {
 	{"civilians", V_INT, offsetof(mission_t, civilians), MEMBER_SIZEOF(mission_t, civilians)},
 	{"civteam", V_STRING, offsetof(mission_t, civTeam), 0},
 	{"storyrelated", V_BOOL, offsetof(mission_t, storyRelated), MEMBER_SIZEOF(mission_t, storyRelated)},
+	{"keepafterfail", V_BOOL, offsetof(mission_t, keepAfterFail), MEMBER_SIZEOF(mission_t, keepAfterFail)},
 	{"loadingscreen", V_STRING, offsetof(mission_t, loadingscreen), 0},
 	{NULL, 0, 0, 0}
 };
