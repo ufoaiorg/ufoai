@@ -239,7 +239,7 @@ void AIR_AircraftInit (void)
 			air_samp->weapon = RS_GetTechByID(air_samp->weapon_string);
 		} else
 			air_samp->weapon = NULL;
-		
+
 		if (*air_samp->ammo_string) {
 			Com_DPrintf("....ammo: %s\n", air_samp->ammo_string);
 			air_samp->ammo = RS_GetTechByID(air_samp->ammo_string);
