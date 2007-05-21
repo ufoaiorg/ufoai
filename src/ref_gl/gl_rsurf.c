@@ -624,9 +624,9 @@ static void R_DrawInlineBModel (void)
 	int i, k;
 	cplane_t *pplane;
 	float dot;
-	msurface_t *psurf;
+	msurface_t *psurf, *s;
 	dlight_t *lt;
-
+	qboolean duplicate = qfalse;
 	/* calculate dynamic lighting for bmodel */
 	if (!gl_flashblend->value) {
 		lt = r_newrefdef.dlights;
@@ -660,8 +660,18 @@ static void R_DrawInlineBModel (void)
 		if (((psurf->flags & SURF_PLANEBACK) && (dot < -BACKFACE_EPSILON)) || (!(psurf->flags & SURF_PLANEBACK) && (dot > BACKFACE_EPSILON))) {
 			/* add to the translucent chain */
 			if (psurf->texinfo->flags & (SURF_TRANS33 | SURF_TRANS66)) {
-				psurf->texturechain = r_alpha_surfaces;
-				r_alpha_surfaces = psurf;
+				/* if bmodel is used by multiple entities, adding surface
+				 * to linked list more than once would result in an infinite loop */
+				for (s = r_alpha_surfaces; s; s = s->texturechain)
+					if (s == psurf) {
+						duplicate = qtrue;
+						break;
+					}
+				/* Don't allow surface to be added twice (fixes hang) */
+				if (!duplicate) {
+					psurf->texturechain = r_alpha_surfaces;
+					r_alpha_surfaces = psurf;
+				}
 			} else if (qglMTexCoord2fSGIS && !(psurf->flags & SURF_DRAWTURB)) {
 				GL_RenderLightmappedPoly(psurf);
 			} else {
