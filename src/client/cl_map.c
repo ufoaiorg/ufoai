@@ -452,10 +452,10 @@ extern qboolean MAP_Draw3DMarkerIfVisible (const menuNode_t* node, const vec2_t 
 			angles[2] = + asin((v[0] * sintheta - v[1] * costheta) / radius) * todeg;
 
 			/* Set zoom */
-			zoom = 0.4 + ccs.zoom * (float) z / radius / 2.0;
+			zoom = 0.5f + ccs.zoom * (float) z / radius / 3.0f;
 		} else {
 			VectorSet(angles, theta, 180, 0);
-			zoom = 0.6f;
+			zoom = 0.3f + ccs.zoom / 2.0f;
 		}
 
 		/* Draw */
