@@ -151,13 +151,16 @@ typedef struct aircraft_s {
 	int teamIdxs[MAX_ACTIVETEAM];	/**< array of team members on board employee idx*/
 
 	char model[MAX_QPATH];
-	char weapon_string[MAX_VAR];
+	char weapon_string[MAX_VAR];	/**< Name of the weapon equipping aircraft */
 	/* NOTE: these pointers needs reinit after loading a saved game */
-	technology_t *weapon;
-	char shield_string[MAX_VAR];
-	technology_t *shield;
-	char item_string[MAX_VAR];
-	technology_t *item;
+	technology_t *weapon;			/**< Pointer to the technology of weapon equipping aircraft */
+	char ammo_string[MAX_VAR];		/**< Name of the ammo equipping aircraft */
+	technology_t *ammo;				/**< Pointer to the technology of ammo equipping aircraft */
+	char shield_string[MAX_VAR];	/**< Name of the shield equipping aircraft */
+	technology_t *shield;			/**< Pointer to the technology of shield equipping aircraft */
+	char item_string[MAX_VAR];		/**< Name of the itme equipping aircraft */
+	technology_t *item;				/**< Pointer to the item of weapon equipping aircraft */
+	int ammoLeft;				/**< The number of ammo left in weapon */
 	float delayNextShot;		/**< The delay before the next projectile can be shot */
 	mapline_t route;
 	void *homebase;				/**< Pointer to homebase for faster access. See also idxBase. */

@@ -83,7 +83,8 @@ aircraft craft_inter_stiletto
 	angles_equip	"0 0 180"
 	scale_equip	"1.1 1.1 1.1"
 	// FIXME: This is just testing
-	weapon		rs_craft_weapon_shiva
+	weapon		rs_craft_weapon_sparrowhawk
+	ammo		rs_craft_ammo_sparrowhawk
 	shield		rs_craft_shield_polymer
 }
 

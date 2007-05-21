@@ -115,16 +115,22 @@ static float AIRFIGHT_ProbabilityToHit (aircraft_t *shooter, aircraft_t *target)
 	float probability = 0.0f;
 	float factor;
 
+#ifdef DEBUG
 	tech = shooter->weapon;
 	if (!tech) {
 		Com_Printf("AIRFIGHT_ProbabilityToHit: no weapon assigned to attacking aircraft\n");
 		return probability;
 	}
+#endif
+
+	tech = shooter->ammo;
+	if (!tech) {
+		Com_Printf("AIRFIGHT_ProbabilityToHit: no ammo in weapon of attacking aircraft\n");
+		return probability;
+	}
 
 	/* Take Base probability from the ammo of the attacking aircraft */
 	idx = AII_GetAircraftItemByID(tech->provides);
-	/* FIXME: this should be the ammo and not the weapon */
-	idx = 5;
 	probability = aircraftItems[idx].accuracy;
 
 	/* Check if the attacking aircraft has an item to improve its accuracy */
@@ -164,14 +170,11 @@ extern void AIRFIGHT_ExecuteActions (aircraft_t* air, aircraft_t* ufo)
 	assert(air);
 	assert(ufo);
 
-	tech = air->weapon;
+	tech = air->ammo;
 
 	if (tech) {
-		/* aircraft has a weapon */
-		/* @todo we need the ammunition and not the weapon */
+		/* aircraft has ammunitions */
 		idx = AII_GetAircraftItemByID(tech->provides);
-		/* FIXME: we set a temporary value for craft_ammo_sparrowhawk */
-		idx = 5;
 
 		/* if we can shoot, shoot */
 		if (CP_GetDistance(ufo->pos, air->pos) < aircraftItems[idx].weaponRange && air->delayNextShot <= 0) {

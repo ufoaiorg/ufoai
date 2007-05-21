@@ -236,6 +236,12 @@ void AIR_AircraftInit (void)
 			air_samp->weapon = RS_GetTechByID(air_samp->weapon_string);
 		} else
 			air_samp->weapon = NULL;
+		
+		if (*air_samp->ammo_string) {
+			Com_DPrintf("....ammo: %s\n", air_samp->ammo_string);
+			air_samp->ammo = RS_GetTechByID(air_samp->ammo_string);
+		} else
+			air_samp->weapon = NULL;
 
 		if (*air_samp->shield_string) {
 			/* link with tech pointer */
@@ -1360,6 +1366,7 @@ static const value_t aircraft_vals[] = {
 
 	/* pointer to technology_t */
 	{"weapon", V_STRING, offsetof(aircraft_t, weapon_string), 0},
+	{"ammo", V_STRING, offsetof(aircraft_t, ammo_string), 0},
 	{"shield", V_STRING, offsetof(aircraft_t, shield_string), 0},
 	{"item", V_STRING, offsetof(aircraft_t, item_string), 0},
 
