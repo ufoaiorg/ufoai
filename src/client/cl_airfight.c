@@ -75,12 +75,14 @@ static qboolean AIRFIGHT_AddProjectile (int idx, aircraft_t *attacker, aircraft_
 	assert(target);
 
 	projectile = &gd.projectiles[gd.numProjectiles];
-	assert(projectile);
+
 	projectile->aircraftItemsIdx = idx;
 	projectile->idx = gd.numProjectiles;
 	VectorSet(projectile->pos, attacker->pos[0], attacker->pos[1], 0);
 	VectorSet(projectile->idleTarget, 0, 0, 0);
 	projectile->aimedAircraft = target;
+	projectile->time = 0;
+	projectile->angle = 0.0f;
 
 	attacker->ammoLeft -= 1;
 	gd.numProjectiles++;
