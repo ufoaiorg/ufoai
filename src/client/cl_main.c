@@ -1738,6 +1738,8 @@ extern void CL_InitAfter (void)
 	/* init some production menu nodes */
 	PR_Init();
 
+	FS_GetMaps(qfalse);
+
 	loadingPercent = 5.0f;
 	SCR_DrawPrecacheScreen();
 

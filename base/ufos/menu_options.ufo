@@ -901,6 +901,49 @@ menu options_game
 	}
 
 	// ===================
+	// PRECACHE
+	// ===================
+	string precache_str
+	{
+		string	"_Precache images and models:"
+		pos		"500 180"
+	}
+	string precache_value
+	{
+		string	"*cvar mn_precache"
+		pos		"840 180"
+		align	ur
+	}
+	pic precache_dec
+	{
+		image	menu/buttons_small
+		pos		"868 184"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx	true
+		tooltip	"_Don't precache - images and models are loaded on the fly"
+		click
+		{
+			cmd "mn_modify cl_precache -1 0 1;"
+			cmd "mn_translate cl_precache mn_precache 0:No,1:Yes;"
+		}
+	}
+	pic precache_inc
+	{
+		image	menu/buttons_small
+		pos		"884 184"
+		texl	"16 0"
+		texh	"32 16"
+		mousefx	true
+		tooltip	"_Precache images and models (faster menus)"
+		click
+		{
+			cmd "mn_modify cl_precache +1 0 1;"
+			cmd "mn_translate cl_precache mn_precache 0:No,1:Yes;"
+		}
+	}
+
+	// ===================
 	// HUD
 	// ===================
 	string hud_str
@@ -1286,6 +1329,7 @@ menu options_game
 
 	func init
 	{
+		cmd "mn_translate cl_precache mn_precache 0:No,1:Yes;"
 		cmd "mn_translate cl_3dmap mn_3dmap 0:No,1:Yes;"
 		cmd "mn_translate cl_start_employees mn_start_employees 0:No,1:Yes;"
 		cmd "mn_translate cl_start_buildings mn_start_buildings 0:No,1:Yes;"
