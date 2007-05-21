@@ -204,7 +204,10 @@ void AIM_AircraftStart_f (void)
 	if (aircraft->status < AIR_IDLE) {
 		aircraft->pos[0] = baseCurrent->pos[0] + 2;
 		aircraft->pos[1] = baseCurrent->pos[1] + 2;
+		/* remove soldier aboard from hospital */
 		HOS_RemoveEmployeesInHospital(aircraft);
+		/* reload its ammunition */
+		AII_ReloadWeapon(aircraft);
 	}
 	MN_AddNewMessage(_("Notice"), _("Aircraft started"), qfalse, MSG_STANDARD, NULL);
 	aircraft->status = AIR_IDLE;
@@ -1207,9 +1210,13 @@ extern qboolean AIR_SendAircraftToMission (aircraft_t* aircraft, actMis_t* missi
 		return qfalse;
 	}
 
-	/* if aircraft was in base, remove soldier aboard from hospital */
-	if (aircraft->status == AIR_REFUEL || aircraft->status == AIR_HOME)
+	/* if aircraft was in base */
+	if (aircraft->status == AIR_REFUEL || aircraft->status == AIR_HOME) {
+		/* remove soldier aboard from hospital */
 		HOS_RemoveEmployeesInHospital(aircraft);
+		/* reload its ammunition */
+		AII_ReloadWeapon(aircraft);
+	}
 
 	/* ensure interceptAircraft IDX is set correctly */
 	gd.interceptAircraft = aircraft->idx;
@@ -1475,6 +1482,27 @@ extern void AIR_ParseAircraft (const char *name, char **text)
 	} while (*text);
 }
 
+/**
+ * @brief Reload the weapon of an aircraft
+ * @param[in] aircraft Pointer to the aircraft to reload
+ * @todo check if there is still ammo in storage, and remove them from it
+ */
+extern void AII_ReloadWeapon (aircraft_t *aircraft)
+{
+	technology_t *tech;
+	int idx;
+
+	assert(aircraft);
+
+	/* check if aircraft has ammo */
+	tech = aircraft->ammo;
+	if (!tech)
+		return;
+
+	idx = AII_GetAircraftItemByID(tech->provides);
+	aircraft->ammoLeft = aircraftItems[idx].ammo;
+}
+
 /*===============================================
 Aircraft functions related to UFOs or missions.
 ===============================================*/
@@ -1554,6 +1582,14 @@ extern void AIR_SendAircraftPurchasingUfo (aircraft_t* aircraft, aircraft_t* ufo
 
 	if (num < 0 || num >= gd.numUfos || ! aircraft || ! ufo)
 		return;
+
+	/* if aircraft was in base */
+	if (aircraft->status == AIR_REFUEL || aircraft->status == AIR_HOME) {
+		/* remove soldier aboard from hospital */
+		HOS_RemoveEmployeesInHospital(aircraft);
+		/* reload its ammunition */
+		AII_ReloadWeapon(aircraft);
+	}
 
 	/* check if the aircraft has enough fuel to go to the ufo and then come back */
 	/* @todo if you have enough fuel to go where the ufo is atm, that doesn't mean that you'll have enough to pursue it ! */

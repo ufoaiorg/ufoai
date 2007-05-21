@@ -231,6 +231,7 @@ extern void CP_GetRandomPosForAircraft(float *pos);
 extern qboolean AIR_AircraftMakeMove(int dt, aircraft_t* aircraft);
 void AIR_ParseAircraft(const char *name, char **text);
 void AII_ParseAircraftItem(const char *name, char **text);
+extern void AII_ReloadWeapon(aircraft_t *aircraft);
 qboolean AIR_AircraftHasEnoughFuel (aircraft_t *aircraft, const vec2_t destination);
 extern void AIR_AircraftReturnToBase(aircraft_t *aircraft);
 extern qboolean AIR_SendAircraftToMission(aircraft_t* aircraft, struct actMis_s* mission);

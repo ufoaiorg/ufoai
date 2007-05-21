@@ -54,7 +54,6 @@ static qboolean AIRFIGHT_RemoveProjectile (int idx)
  * @param[in] idx of the ammo to add in array aircraftItems[]
  * @param[in] attacker Pointer to the attacking aircraft
  * @param[in] target Pointer to the target aircraft
- * @todo decrease the number of ammos in the aircraft
  */
 static qboolean AIRFIGHT_AddProjectile (int idx, aircraft_t *attacker, aircraft_t *target)
 {
@@ -67,6 +66,12 @@ static qboolean AIRFIGHT_AddProjectile (int idx, aircraft_t *attacker, aircraft_
 		Com_Printf("Too many projectiles on map\n");
 		return qfalse;
 	}
+
+	/* no more ammo */
+	if (attacker->ammoLeft <= 0) {
+		Com_Printf("No more ammo\n");
+		return qfalse;
+	}
 	assert(target);
 
 	projectile = &gd.projectiles[gd.numProjectiles];
@@ -76,6 +81,8 @@ static qboolean AIRFIGHT_AddProjectile (int idx, aircraft_t *attacker, aircraft_
 	VectorSet(projectile->pos, attacker->pos[0], attacker->pos[1], 0);
 	VectorSet(projectile->idleTarget, 0, 0, 0);
 	projectile->aimedAircraft = target;
+
+	attacker->ammoLeft -= 1;
 	gd.numProjectiles++;
 
 	return qtrue;
