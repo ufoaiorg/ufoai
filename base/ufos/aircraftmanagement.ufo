@@ -144,7 +144,7 @@ aircraft craft_ufo_harvester
 	name		"_UFO - Harvester"
 	shortname	"_Harvester U"
 	type		ufo
-	ufotype		scout
+	ufotype		harvester
 	model		"ufo_harvester"
 	size		4
 	weight		3
