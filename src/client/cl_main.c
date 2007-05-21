@@ -89,6 +89,7 @@ cvar_t *cl_start_buildings;
 cvar_t *confirm_actions;
 
 cvar_t *cl_precachemenus;
+cvar_t *cl_precachemodels;
 
 /* userinfo */
 cvar_t *info_password;
@@ -1693,6 +1694,29 @@ static void CL_Precache_f (void)
 	CL_RequestNextDownload();
 }
 
+/** @brief Header from scripts.c */
+void Com_PrecacheCharacterModels(void);
+
+/**
+ * @brief Precaches all models at game startup - for faster access
+ * @note only called when cl_precachemodels was set to 1
+ * @sa MN_PrecacheModels
+ * @sa E_PrecacheModels
+ */
+static void CL_PrecacheModels (void)
+{
+	int i;
+	/* TODO: Do this in a seperate thread? */
+	MN_PrecacheModels();
+	Com_PrecacheCharacterModels();
+
+	for (i = 0; i < csi.numODs; i++) {
+		if (*csi.ods[i].model)
+			if (!re.RegisterModel(csi.ods[i].model))
+				Com_Printf("CL_PrecacheModels: Could not register object model: '%s'\n", csi.ods[i].model);
+	}
+}
+
 /**
  * @brief Init function for clients - called after menu was inited and ufo-scripts were parsed
  * @sa Qcommon_Init
@@ -1707,6 +1731,10 @@ extern void CL_InitAfter (void)
 
 	/* link for faster access */
 	MN_LinkMenuModels();
+
+	/* preload all models for faster access */
+	if (cl_precachemodels->value)
+		CL_PrecacheModels();
 }
 
 /**
@@ -1968,6 +1996,7 @@ static void CL_InitLocal (void)
 	cl_markactors = Cvar_Get("cl_markactors", "1", CVAR_ARCHIVE, NULL);
 
 	cl_precachemenus = Cvar_Get("cl_precachemenus", "0", CVAR_ARCHIVE, "Precache all menus at startup");
+	cl_precachemodels = Cvar_Get("cl_precachemodels", "0", CVAR_ARCHIVE, "Precache all models at startup");
 
 	cl_aviForceDemo = Cvar_Get("cl_aviForceDemo", "1", CVAR_ARCHIVE, "AVI recording - record even if no game is loaded");
 	cl_aviFrameRate = Cvar_Get("cl_aviFrameRate", "25", CVAR_ARCHIVE, "AVI recording - see video command");

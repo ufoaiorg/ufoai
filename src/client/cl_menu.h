@@ -204,6 +204,7 @@ const char *MN_GetFont(const menu_t *m, const menuNode_t *const n);
 void MN_TextScrollBottom(const char* nodeName);
 void MN_ExecuteActions(const menu_t* const menu, menuAction_t* const first);
 void MN_LinkMenuModels(void);
+void MN_PrecacheModels(void);
 
 void MN_ResetMenus(void);
 void MN_Shutdown(void);

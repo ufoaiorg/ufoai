@@ -219,7 +219,7 @@ void AIM_AircraftStart_f (void)
 }
 
 /**
- * @brief Assigns the tech pointers, homebase and teamsize pointers to all aircrafts.
+ * @brief Assigns the tech pointers, homebase and teamsize pointers to all aircraft.
  */
 void AIR_AircraftInit (void)
 {

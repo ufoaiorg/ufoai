@@ -3819,7 +3819,7 @@ qboolean MN_ParseMenuBody (menu_t * menu, char **text)
  * @brief Add a menu link to menumodel definition for faster access
  * @note Called after all menus are parsed of course
  */
-void MN_LinkMenuModels (void)
+extern void MN_LinkMenuModels (void)
 {
 	int i, j;
 	for (i = 0; i < numMenuModels; i++) {
@@ -3827,6 +3827,26 @@ void MN_LinkMenuModels (void)
 			menuModels[i].menuScaleMenusPtr[j] = MN_GetMenu(menuModels[i].menuScale[j]);
 			if (menuModels[i].menuScaleMenusPtr[j] == NULL)
 				Com_Printf("Could not find menu '%s' as requested by menumodel '%s'", menuModels[i].menuScale[j], menuModels[i].id);
+		}
+	}
+}
+
+/**
+ * @brief Precache all menu models for faster access
+ * @sa CL_PrecacheModels
+ */
+extern void MN_PrecacheModels (void)
+{
+	int i;
+	menuModel_t *menuModel;
+
+	for (i = 0; i < numMenuModels; i++) {
+		menuModel = &menuModels[i];
+		if (!re.RegisterModel(menuModel->model))
+			Com_Printf("MN_PrecacheModels: Could not register model '%s'\n", menuModel->model);
+		while ((menuModel = menuModel->next) != NULL) {
+			if (!re.RegisterModel(menuModel->model))
+				Com_Printf("MN_PrecacheModels: Could not register model '%s'\n", menuModel->model);
 		}
 	}
 }
