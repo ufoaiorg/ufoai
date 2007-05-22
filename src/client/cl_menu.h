@@ -173,10 +173,10 @@ void CL_ParseFont(const char *name, char **text);
 void CL_InitFonts(void);
 
 typedef struct font_s {
-	char name[MAX_VAR];
+	char *name;
 	int size;
-	char style[MAX_VAR];
-	char path[MAX_QPATH];
+	char *style;
+	char *path;
 } font_t;
 
 extern font_t *fontSmall;

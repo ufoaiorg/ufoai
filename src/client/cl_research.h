@@ -101,12 +101,12 @@ typedef enum {
  * @sa eventMail_t
  */
 typedef struct techMail_s {
-	char from[MAX_VAR];			/**< sender (_mail_from_paul_navarre, _mail_from_dr_connor) */
-	char to[MAX_VAR];			/**< recipient (_mail_to_base_commander) */
-	char subject[MAX_VAR];		/**< mail subject line - if mail and mail_pre are available
+	char *from;			/**< sender (_mail_from_paul_navarre, _mail_from_dr_connor) */
+	char *to;			/**< recipient (_mail_to_base_commander) */
+	char *subject;		/**< mail subject line - if mail and mail_pre are available
 								 * this will be filled with Proposal: (mail_pre) and Re: (mail)
 								 * automatically */
-	char date[MAX_VAR];			/**< date string, if empty use the date of research */
+	char *date;			/**< date string, if empty use the date of research */
 	qboolean read;				/**< already read the mail? */
 } techMail_t;
 
@@ -120,11 +120,11 @@ typedef enum {
 
 /** @brief This is the technology parsed from research.ufo */
 typedef struct technology_s {
-	char id[MAX_VAR];		/**< Short (unique) id/name. */
+	char *id;		/**< Short (unique) id/name. */
 	int idx;			/**< Self-link in the global list */
-	char name[MAX_VAR];		/**< Full name of this technology. */
-	char description[MAX_VAR];	/**< Description of researched item. Short text-id to get the full text via gettext. */
-	char pre_description[MAX_VAR];	/**< Description of item before it's researched. Short text-id to get the full text via gettext. */
+	char *name;		/**< Full name of this technology. */
+	char *description;	/**< Description of researched item. Short text-id to get the full text via gettext. */
+	char *pre_description;	/**< Description of item before it's researched. Short text-id to get the full text via gettext. */
 	researchType_t type;		/**< Defines what type this tech-entry is an where to search for other information "tech", "weapon" etc... see research.ufo for more */
 
 	requirements_t require_AND;	/**< A list of requirements that ALL need to be met (= AND-related) See struct above. */
@@ -133,7 +133,7 @@ typedef struct technology_s {
 					 * This is updated from the info stored in the require_OR and require_AND lists.
 					 * See RS_CheckCollected and RS_CheckAllCollected. */
 
-	char provides[MAX_VAR];		/**< The item that this technology enables. */
+	char *provides;		/**< The item that this technology enables. */
 	float overalltime, time;	/**< The time that is needed to research this tech. (in days).
 					 * "overalltime" stays always the same,
 					 * "time" will be modified when it is under research.*/
@@ -146,8 +146,8 @@ typedef struct technology_s {
 	int base_idx;				/**< The base this tech is researched in. */
 	int scientists;				/**< How many scientists are researching this tech. */
 
-	char image_top[MAX_VAR];
-	char mdl_top[MAX_QPATH];
+	char *image_top;
+	char *mdl_top;
 
 	int statusResearchable;		/**< Is this item researchable? */
 

@@ -101,7 +101,7 @@ extern char *CL_ClientHunkStoreString (const char *string, char **dst)
 {
 	assert(dst);
 	assert(string);
-	*dst = (char*)CL_ClientHunkUse(string, strlen(string) + 1);
+	*dst = (char*)CL_ClientHunkUse(string, (strlen(string) + 1) * sizeof(char));
 	return *dst;
 }
 

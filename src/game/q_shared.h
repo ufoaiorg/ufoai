@@ -802,6 +802,8 @@ typedef enum {
 	V_DATE,
 	V_IF,
 	V_RELABS,					/**< relative (e.g. 1.50) and absolute (e.g. +15) values */
+	V_CLIENT_HUNK,				/**< only for client side data - not handled in Com_ParseValue */
+	V_CLIENT_HUNK_STRING,		/**< same as for V_CLIENT_HUNK */
 
 	V_NUM_TYPES
 } valueTypes_t;

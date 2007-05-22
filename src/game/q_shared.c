@@ -3715,6 +3715,10 @@ int Com_ParseValue (void *base, char *token, valueTypes_t type, int ofs, size_t 
 	}
 
 	switch (type) {
+	case V_CLIENT_HUNK_STRING:
+	case V_CLIENT_HUNK:
+		Sys_Error("Com_ParseValue: V_CLIENT_HUNK and V_CLIENT_HUNK_STRING are not parsed here\n");
+
 	case V_NULL:
 		return ALIGN(0);
 

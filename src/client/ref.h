@@ -132,14 +132,14 @@ typedef struct shader_s {
 	/* title is internal for finding the shader */
 
 	/** we should use this shader when loading the image */
-	char name[MAX_VAR];
+	char *name;
 
 	/** filename is for an external filename to load the shader from */
-	char filename[MAX_VAR];
+	char *filename;
 
 	/** image filenames */
-	char distort[MAX_VAR];
-	char normal[MAX_VAR];
+	char *distort;
+	char *normal;
 
 	qboolean glsl;				/**< glsl shader */
 	qboolean frag;				/**< fragment-shader */

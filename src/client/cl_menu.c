@@ -254,7 +254,7 @@ char popupText[MAX_SMALLMENUTEXTLEN];
 
 typedef struct tutorial_s {
 	char name[MAX_VAR];
-	char sequence[MAX_VAR];
+	char *sequence;
 } tutorial_t;
 
 #define MAX_TUTORIALS 16
@@ -4349,7 +4349,7 @@ font_t *fontSmall;
 static const value_t fontValues[] = {
 	{"font", V_TRANSLATION2_STRING, offsetof(font_t, path), 0},
 	{"size", V_INT, offsetof(font_t, size), MEMBER_SIZEOF(font_t, size)},
-	{"style", V_STRING, offsetof(font_t, style), 0},
+	{"style", V_CLIENT_HUNK_STRING, offsetof(font_t, style), 0},
 
 	{NULL, V_NULL, 0},
 };
@@ -4398,11 +4398,11 @@ void CL_ParseFont (const char *name, char **text)
 	font = &fonts[numFonts];
 	memset(font, 0, sizeof(font_t));
 
-	Q_strncpyz(font->name, name, sizeof(font->name));
+	CL_ClientHunkStoreString(name, &font->name);
 
-	if (!Q_strncmp(font->name, "f_small", MAX_VAR))
+	if (!Q_strcmp(font->name, "f_small"))
 		fontSmall = font;
-	else if (!Q_strncmp(font->name, "f_big", MAX_VAR))
+	else if (!Q_strcmp(font->name, "f_big"))
 		fontBig = font;
 
 	Com_DPrintf("...found font %s (%i)\n", font->name, numFonts);
@@ -4432,14 +4432,25 @@ void CL_ParseFont (const char *name, char **text)
 				if (!*text)
 					return;
 
-				Com_ParseValue(font, token, v->type, v->ofs, v->size);
+				switch (v->type) {
+				case V_TRANSLATION2_STRING:
+					token++;
+				case V_CLIENT_HUNK_STRING:
+					CL_ClientHunkStoreString(token, (char**) ((void*)font + (int)v->ofs));
+					break;
+				default:
+					Com_ParseValue(font, token, v->type, v->ofs, v->size);
+					break;
+				}
 				break;
 			}
 
 		if (!v->string)
 			Com_Printf("CL_ParseFont: unknown token \"%s\" ignored (font %s)\n", token, name);
-
 	} while (*text);
+
+	if (!font->path)
+		Sys_Error("...font without path (font %s)\n", font->name);
 
 	if (FS_CheckFile(font->path) == -1)
 		Sys_Error("...font file %s does not exist (font %s)\n", font->path, font->name);
@@ -4463,7 +4474,7 @@ void CL_InitFonts (void)
 
 static const value_t tutValues[] = {
 	{"name", V_TRANSLATION_STRING, offsetof(tutorial_t, name), 0},
-	{"sequence", V_STRING, offsetof(tutorial_t, sequence), 0},
+	{"sequence", V_CLIENT_HUNK_STRING, offsetof(tutorial_t, sequence), 0},
 	{NULL, 0, 0, 0}
 };
 
@@ -4507,7 +4518,14 @@ extern void MN_ParseTutorials (const char *name, char **text)
 				token = COM_EParse(text, errhead, name);
 				if (!*text)
 					return;
-				Com_ParseValue(t, token, v->type, v->ofs, v->size);
+
+				switch (v->type) {
+				case V_CLIENT_HUNK_STRING:
+					CL_ClientHunkStoreString(token, (char**) ((void*)t + (int)v->ofs));
+					break;
+				default:
+					Com_ParseValue(t, token, v->type, v->ofs, v->size);
+				}
 				break;
 			}
 		if (!v->string)

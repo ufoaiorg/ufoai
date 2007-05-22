@@ -70,7 +70,7 @@ static qboolean UP_TechGetsDisplayed (technology_t *tech)
 {
 	return RS_IsResearched_ptr(tech)	/* Is already researched OR ... */
 	 || RS_Collected_(tech)	/* ... has collected items OR ... */
-	 || ((tech->statusResearchable) && (*tech->pre_description));
+	 || (tech->statusResearchable && tech->pre_description);
 }
 
 /**
@@ -591,7 +591,7 @@ extern void UP_Article (technology_t* tech)
 		Cvar_Set("mn_uptitle", va("%s *", _(tech->name)));
 		/* If researched -> display research text */
 		menuText[TEXT_UFOPEDIA] = _(tech->description);
-		if (*tech->pre_description) {
+		if (tech->pre_description) {
 			/* Display pre-research text and the buttons if a pre-research text is available. */
 			if (mn_uppretext->integer) {
 				menuText[TEXT_UFOPEDIA] = _(tech->pre_description);
@@ -636,11 +636,11 @@ extern void UP_Article (technology_t* tech)
 			}
 		}
 	/* see also UP_TechGetsDisplayed */
-	} else if (RS_Collected_(tech) || ((tech->statusResearchable) && (*tech->pre_description))) {
+	} else if (RS_Collected_(tech) || (tech->statusResearchable && tech->pre_description)) {
 		/* This tech has something collected or has a research proposal. (i.e. pre-research text) */
 		Cvar_Set("mn_uptitle", _(tech->name));
 		/* Not researched but some items collected -> display pre-research text if available. */
-		if (*tech->pre_description) {
+		if (tech->pre_description) {
 			menuText[TEXT_UFOPEDIA] = _(tech->pre_description);
 			UP_SetMailHeader(tech, TECHMAIL_PRE);
 		} else {
@@ -699,11 +699,11 @@ static void UP_DrawEntry (technology_t* tech)
 	Cvar_Set("mn_upmodel_top", "");
 	Cvar_Set("mn_upmodel_bottom", "");
 	Cvar_Set("mn_upimage_top", "base/empty");
-	if (*tech->mdl_top)
+	if (tech->mdl_top)
 		Cvar_Set("mn_upmodel_top", tech->mdl_top);
 	if (tech->type == RS_WEAPON)
 		UP_DrawAssociatedAmmo(tech);
-	if (!*tech->mdl_top && *tech->image_top)
+	if (!tech->mdl_top && tech->image_top)
 		Cvar_Set("mn_upimage_top", tech->image_top);
 	up_firemode=0;
 	up_researchedlink=0;	/*@todo: if the first weapon of the firemode of an ammo is unresearched, its dommages,... will still be displayed*/

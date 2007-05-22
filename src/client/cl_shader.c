@@ -42,9 +42,9 @@ int r_numshaders;
 shader_t r_shaders[MAX_SHADERS];
 
 static const value_t shader_values[] = {
-	{"filename", V_STRING, offsetof(shader_t, filename), 0},
-	{"normal", V_STRING, offsetof(shader_t, normal), 0},
-	{"distort", V_STRING, offsetof(shader_t, distort), 0},
+	{"filename", V_CLIENT_HUNK_STRING, offsetof(shader_t, filename), 0},
+	{"normal", V_CLIENT_HUNK_STRING, offsetof(shader_t, normal), 0},
+	{"distort", V_CLIENT_HUNK_STRING, offsetof(shader_t, distort), 0},
 	{"frag", V_BOOL, offsetof(shader_t, frag), MEMBER_SIZEOF(shader_t, frag)},
 	{"vertex", V_BOOL, offsetof(shader_t, vertex), MEMBER_SIZEOF(shader_t, vertex)},
 	{"glsl", V_BOOL, offsetof(shader_t, glsl), MEMBER_SIZEOF(shader_t, glsl)},
@@ -86,7 +86,7 @@ void CL_ParseShaders (const char *name, char **text)
 	/* default value */
 	entry->glMode = BLEND_FILTER;
 
-	Q_strncpyz(entry->name, name, sizeof(entry->name));
+	CL_ClientHunkStoreString(name, &entry->name);
 	do {
 		/* get the name type */
 		token = COM_EParse(text, errhead, name);
@@ -103,8 +103,19 @@ void CL_ParseShaders (const char *name, char **text)
 				if (!*text)
 					return;
 
-				if (v->ofs && v->type != V_NULL)
+				if (!v->ofs)
+					break;
+
+				switch (v->type) {
+				case V_NULL:
+					break;
+				case V_CLIENT_HUNK_STRING:
+					CL_ClientHunkStoreString(token, (char**) ((void*)entry + (int)v->ofs));
+					break;
+				default:
 					Com_ParseValue(entry, token, v->type, v->ofs, v->size);
+					break;
+				}
 				break;
 			}
 

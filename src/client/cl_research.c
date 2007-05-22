@@ -465,15 +465,15 @@ void RS_InitTree (void)
 		/* Search in correct data/.ufo */
 		switch (tech->type) {
 		case RS_CRAFTITEM:
-			if (!*tech->name)
+			if (!tech->name)
 				Com_DPrintf("RS_InitTree: \"%s\" A type craftitem needs to have a 'name\txxx' defined.", tech->id);
 			break;
 		case RS_NEWS:
-			if (!*tech->name)
+			if (!tech->name)
 				Com_DPrintf("RS_InitTree: \"%s\" A 'type news' item needs to have a 'name\txxx' defined.", tech->id);
 			break;
 		case RS_TECH:
-			if (!*tech->name)
+			if (!tech->name)
 				Com_DPrintf("RS_InitTree: \"%s\" A 'type tech' item needs to have a 'name\txxx' defined.", tech->id);
 			break;
 		case RS_WEAPON:
@@ -485,12 +485,12 @@ void RS_InitTree (void)
 				/* This item has been 'provided' -> get the correct data. */
 				if (!Q_strncmp(tech->provides, item->id, MAX_VAR)) {
 					found = qtrue;
-					if (!*tech->name)
-						Com_sprintf(tech->name, MAX_VAR, item->name);
-					if (!*tech->mdl_top)
-						Com_sprintf(tech->mdl_top, MAX_VAR, item->model);
-					if (!*tech->image_top)
-						Com_sprintf(tech->image_top, MAX_VAR, item->image);
+					if (!tech->name)
+						CL_ClientHunkStoreString(item->name, &tech->name);
+					if (!tech->mdl_top)
+						CL_ClientHunkStoreString(item->model, &tech->mdl_top);
+					if (!tech->image_top)
+						CL_ClientHunkStoreString(item->image, &tech->image_top);
 					/* Should return to CASE RS_xxx. */
 					break;
 				}
@@ -508,17 +508,17 @@ void RS_InitTree (void)
 				/* This building has been 'provided'  -> get the correct data. */
 				if (!Q_strncmp(tech->provides, building->id, MAX_VAR)) {
 					found = qtrue;
-					if (!*tech->name)
-						Com_sprintf(tech->name, MAX_VAR, building->name);
-					if (!*tech->image_top)
-						Com_sprintf(tech->image_top, MAX_VAR, building->image);
+					if (!tech->name)
+						CL_ClientHunkStoreString(building->name, &tech->name);
+					if (!tech->image_top)
+						CL_ClientHunkStoreString(building->image, &tech->image_top);
 
 					/* Should return to CASE RS_xxx. */
 					break;
 				}
 			}
 			if (!found) {
-				Com_sprintf(tech->name, MAX_VAR, tech->id);
+				CL_ClientHunkStoreString(tech->id, &tech->name);
 				Com_DPrintf("RS_InitTree: \"%s\" - Linked building (provided=\"%s\") not found. Tech-id used as name.\n", tech->id, tech->provides);
 			}
 			break;
@@ -529,10 +529,10 @@ void RS_InitTree (void)
 				/* This aircraft has been 'provided'  -> get the correct data. */
 				if (!Q_strncmp(tech->provides, air_samp->id, MAX_VAR)) {
 					found = qtrue;
-					if (!*tech->name)
-						Com_sprintf(tech->name, MAX_VAR, air_samp->name);
-					if (!*tech->mdl_top) {	/* DEBUG testing */
-						Com_sprintf(tech->mdl_top, MAX_VAR, air_samp->model);
+					if (!tech->name)
+						CL_ClientHunkStoreString(air_samp->name, &tech->name);
+					if (!tech->mdl_top) {	/* DEBUG testing */
+						CL_ClientHunkStoreString(air_samp->model, &tech->mdl_top);
 						Com_DPrintf("RS_InitTree: aircraft model \"%s\" \n", air_samp->model);
 					}
 					/* Should return to CASE RS_xxx. */
@@ -579,7 +579,7 @@ void RS_GetName (char *id, char *name)
 		return;
 	}
 
-	if (*tech->name) {
+	if (tech->name) {
 		Com_sprintf(name, MAX_VAR, _(tech->name));
 		return;
 	} else {
@@ -990,7 +990,7 @@ static void RS_ShowPedia_f (void)
 	/* get the currently selected research-item */
 
 	tech = researchList[researchListPos];
-	if (*tech->pre_description) {
+	if (tech->pre_description) {
 		UP_OpenCopyWith(tech->id);
 	} else {
 		MN_Popup(_("Notice"), _("No research proposal available for this project."));
@@ -1480,7 +1480,7 @@ static const value_t valid_tech_vars[] = {
 	{"description", V_TRANSLATION2_STRING, offsetof(technology_t, description), 0},
 	{"pre_description", V_TRANSLATION2_STRING, offsetof(technology_t, pre_description), 0},
 	/*what does this research provide */
-	{"provides", V_STRING, offsetof(technology_t, provides), 0},
+	{"provides", V_CLIENT_HUNK_STRING, offsetof(technology_t, provides), 0},
 	/* ("require_AND")	Handled in parser below. */
 	/* ("require_OR")	Handled in parser below. */
 	/* ("up_chapter")	Handled in parser below. */
@@ -1488,8 +1488,8 @@ static const value_t valid_tech_vars[] = {
 	{"producetime", V_INT, offsetof(technology_t, produceTime), MEMBER_SIZEOF(technology_t, produceTime)},
 	{"time", V_FLOAT, offsetof(technology_t, time), MEMBER_SIZEOF(technology_t, time)},
 	{"pushnews", V_BOOL, offsetof(technology_t, pushnews), MEMBER_SIZEOF(technology_t, pushnews)},
-	{"image_top", V_STRING, offsetof(technology_t, image_top), 0},
-	{"mdl_top", V_STRING, offsetof(technology_t, mdl_top), 0},
+	{"image_top", V_CLIENT_HUNK_STRING, offsetof(technology_t, image_top), 0},
+	{"mdl_top", V_CLIENT_HUNK_STRING, offsetof(technology_t, mdl_top), 0},
 
 	{NULL, 0, 0, 0}
 };
@@ -1542,9 +1542,8 @@ extern void RS_ParseTechnologies (const char *name, char **text)
 
 	/*set standard values */
 	tech->idx = gd.numTechnologies - 1;
-	Q_strncpyz(tech->id, name, sizeof(tech->id));
+	CL_ClientHunkStoreString(name, &tech->id);
 	hash = Com_HashKey(tech->id, TECH_HASH_SIZE);
-	Q_strncpyz(tech->description, _("No description available."), sizeof(tech->description));
 
 	/* link the variable in */
 	/* tech_hash should be null on the first run */
@@ -1769,11 +1768,17 @@ extern void RS_ParseTechnologies (const char *name, char **text)
 							if (!*text)
 								return;
 
-							if (vp->type != V_NULL)
+							switch (vp->type) {
+							case V_TRANSLATION2_STRING:
+								token++;
+								CL_ClientHunkStoreString(token, (char**) ((void*)mail + (int)vp->ofs));
+								break;
+							case V_NULL:
+								Com_Printf("RS_ParseTechnologies Error: - no buffer for technologies - V_NULL not allowed (token: '%s') entry: '%s'\n", token, name);
+								break;
+							default:
 								Com_ParseValue(mail, token, vp->type, vp->ofs, vp->size);
-							else
-								/* NOTE: do we need a buffer here? for saving or something like that? */
-								Com_Printf("RS_ParseTechnologies Error: - no buffer for technologies - V_NULL not allowed (token: '%s') entry: '%s' - offset: %Zu\n", token, name, vp->ofs);
+							}
 							break;
 						}
 					/* grab the next entry */
@@ -1789,11 +1794,20 @@ extern void RS_ParseTechnologies (const char *name, char **text)
 						if (!*text)
 							return;
 
-						if (vp->ofs && vp->type != V_NULL)
-							Com_ParseValue(tech, token, vp->type, vp->ofs, vp->size);
-						else
-							/* NOTE: do we need a buffer here? for saving or something like that? */
+						if (!vp->ofs)
+							break;
+						switch (vp->type) {
+						case V_TRANSLATION2_STRING:
+							token++;
+						case V_CLIENT_HUNK_STRING:
+							CL_ClientHunkStoreString(token, (char**) ((void*)tech + (int)vp->ofs));
+							break;
+						case V_NULL:
 							Com_Printf("RS_ParseTechnologies Error: - no buffer for technologies - V_NULL not allowed (token: '%s') entry: '%s'\n", token, name);
+							break;
+						default:
+							Com_ParseValue(tech, token, vp->type, vp->ofs, vp->size);
+						}
 						break;
 					}
 				/*@todo: escape "type weapon/tech/etc.." here */
@@ -1803,16 +1817,23 @@ extern void RS_ParseTechnologies (const char *name, char **text)
 		}
 	} while (*text);
 
-	hash = Com_HashKey(tech->provides, TECH_HASH_SIZE);
-	/* link the variable in */
-	/* tech_hash_provided should be null on the first run */
-	tech->hash_provided_next = tech_hash_provided[hash];
-	/* set the tech_hash_provided pointer to the current tech */
-	/* if there were already others in tech_hash_provided at position hash, they are now
-	 * accessable via tech->next - loop until tech->next is null (the first tech
-	 * at that position)
-	 */
-	tech_hash_provided[hash] = tech;
+	if (!tech->description)
+		CL_ClientHunkStoreString(_("No description available."), &tech->description);
+
+	if (tech->provides) {
+		hash = Com_HashKey(tech->provides, TECH_HASH_SIZE);
+		/* link the variable in */
+		/* tech_hash_provided should be null on the first run */
+		tech->hash_provided_next = tech_hash_provided[hash];
+		/* set the tech_hash_provided pointer to the current tech */
+		/* if there were already others in tech_hash_provided at position hash, they are now
+		* accessable via tech->next - loop until tech->next is null (the first tech
+		* at that position)
+		*/
+		tech_hash_provided[hash] = tech;
+	} else {
+		Com_DPrintf("tech '%s' doesn't have a provides string\n", tech->id);
+	}
 
 	/* set the overall reseach time to the one given in the ufo-file. */
 	tech->overalltime = tech->time;
