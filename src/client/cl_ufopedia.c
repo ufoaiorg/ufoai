@@ -815,7 +815,7 @@ static void UP_Content_f (void)
 		/* .. and if so add them to the displaylist of chapters. */
 		if (researched_entries) {
 			upChapters_displaylist[numChapters_displaylist++] = &gd.upChapters[i];
-			Q_strcat(cp, gd.upChapters[i].name, sizeof(upText));
+			Q_strcat(cp, _(gd.upChapters[i].name), sizeof(upText));
 			Q_strcat(cp, "\n", sizeof(upText));
 		}
 	}
@@ -860,7 +860,7 @@ static void UP_Index_f (void)
 	menuText[TEXT_STANDARD] = NULL;
 	menuText[TEXT_UFOPEDIA] = upIndex;
 	menuText[TEXT_LIST] = NULL;
-	Cvar_Set("mn_uptitle", va(_("Ufopedia Index: %s"), gd.upChapters[currentChapter].name));
+	Cvar_Set("mn_uptitle", va(_("Ufopedia Index: %s"), _(gd.upChapters[currentChapter].name)));
 
 	t = &gd.technologies[gd.upChapters[currentChapter].first];
 
@@ -1419,8 +1419,8 @@ extern void UP_ResetUfopedia (void)
 	Cvar_Set("mn_changefiremode", "0"); /* use strings here - no int */
 	Cvar_Set("mn_researchedlinkname", "");
 	Cvar_Set("mn_upresearchedlinknametooltip", "");
-	up_firemode=0;
-	up_researchedlink=0;	/*@todo: if the first weapon of the firemode of an ammo is unresearched, its dommages,... will still be displayed*/
+	up_firemode = 0;
+	up_researchedlink = 0;	/*@todo: if the first weapon of the firemode of an ammo is unresearched, its dommages,... will still be displayed*/
 }
 
 /**
@@ -1456,7 +1456,7 @@ extern void UP_ParseUpChapters (const char *name, char **text)
 			return;
 		}
 		memset(&gd.upChapters[gd.numChapters], 0, sizeof(pediaChapter_t));
-		Q_strncpyz(gd.upChapters[gd.numChapters].id, token, MAX_VAR);
+		CL_ClientHunkStoreString(token, &gd.upChapters[gd.numChapters].id);
 		gd.upChapters[gd.numChapters].idx = gd.numChapters;	/* set self-link */
 
 		/* get the name */
@@ -1469,7 +1469,7 @@ extern void UP_ParseUpChapters (const char *name, char **text)
 			token++;
 		if (!*token)
 			continue;
-		Q_strncpyz(gd.upChapters[gd.numChapters].name, _(token), MAX_VAR);
+		CL_ClientHunkStoreString(token, &gd.upChapters[gd.numChapters].name);
 
 		gd.numChapters++;
 	} while (*text);

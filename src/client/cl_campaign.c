@@ -3340,7 +3340,7 @@ extern void CL_ParseCampaign (const char *name, char **text)
 /* =========================================================== */
 
 static const value_t nation_vals[] = {
-	{"name", V_TRANSLATION_STRING, offsetof(nation_t, name), 0},
+	{"name", V_TRANSLATION2_STRING, offsetof(nation_t, name), 0},
 	{"pos", V_POS, offsetof(nation_t, pos), MEMBER_SIZEOF(nation_t, pos)},
 	{"color", V_COLOR, offsetof(nation_t, color), MEMBER_SIZEOF(nation_t, color)},
 	{"funding", V_INT, offsetof(nation_t, funding), MEMBER_SIZEOF(nation_t, funding)},
@@ -3348,7 +3348,7 @@ static const value_t nation_vals[] = {
 	{"alien_friendly", V_FLOAT, offsetof(nation_t, alienFriendly), MEMBER_SIZEOF(nation_t, alienFriendly)},
 	{"soldiers", V_INT, offsetof(nation_t, soldiers), MEMBER_SIZEOF(nation_t, soldiers)},
 	{"scientists", V_INT, offsetof(nation_t, scientists), MEMBER_SIZEOF(nation_t, scientists)},
-	{"names", V_STRING, offsetof(nation_t, names), 0},
+	{"names", V_CLIENT_HUNK_STRING, offsetof(nation_t, names), 0},
 	{NULL, 0, 0, 0}
 };
 
@@ -3375,7 +3375,7 @@ extern void CL_ParseNations (const char *name, char **text)
 	memset(nation, 0, sizeof(nation_t));
 
 	Com_DPrintf("...found nation %s\n", name);
-	Q_strncpyz(nation->id, name, sizeof(nation->id));
+	CL_ClientHunkStoreString(name, &nation->id);
 
 	/* get it's body */
 	token = COM_Parse(text);
@@ -3430,8 +3430,17 @@ extern void CL_ParseNations (const char *name, char **text)
 					if (!*text)
 						return;
 
-					if (Com_ParseValue(nation, token, vp->type, vp->ofs, vp->size) == -1)
-						Com_Printf("CL_ParseNations: Wrong size for value %s\n", vp->string);
+					switch (vp->type) {
+					case V_TRANSLATION2_STRING:
+						token++;
+					case V_CLIENT_HUNK_STRING:
+						CL_ClientHunkStoreString(token, (char**) ((void*)nation + (int)vp->ofs));
+						break;
+					default:
+						if (Com_ParseValue(nation, token, vp->type, vp->ofs, vp->size) == -1)
+							Com_Printf("CL_ParseNations: Wrong size for value %s\n", vp->string);
+						break;
+					}
 					break;
 				}
 
@@ -4129,7 +4138,7 @@ static void CP_UFOSellStart_f (void)
 	nation = &gd.nations[Cvar_VariableInteger("mission_recoverynation")];
 	assert(nation);
 	Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Recovered UFO of type %s from the battlefield. UFO sold to nation %s, gained %i credits."),
-	UFO_TypeToName(Cvar_VariableInteger("mission_ufotype")), nation->name, UFOprices[Cvar_VariableInteger("mission_recoverynation")]);
+	UFO_TypeToName(Cvar_VariableInteger("mission_ufotype")), _(nation->name), UFOprices[Cvar_VariableInteger("mission_recoverynation")]);
 	MN_AddNewMessage(_("UFO Recovery"), messageBuffer, qfalse, MSG_STANDARD, NULL);
 	CL_UpdateCredits(ccs.credits + UFOprices[Cvar_VariableInteger("mission_recoverynation")]);
 

@@ -234,8 +234,8 @@ typedef struct market_s {
 
 /** nation definition */
 typedef struct nation_s {
-	char id[MAX_VAR];
-	char name[MAX_VAR];
+	char *id;
+	char *name;
 	int funding;		/**< how many (monthly) credits */
 	float happiness;
 	vec4_t color;
@@ -246,7 +246,7 @@ typedef struct nation_s {
 	int workers;		/**< how many (monthly) workers */
 	int medics;			/**< how many (monthly) medics */
 	int ugvs;			/**< how many (monthly) ugvs (robots) */
-	char names[MAX_VAR];
+	char *names;
 	vec2_t borders[MAX_NATION_BORDERS];	/**< GL_LINE_LOOP coordinates */
 	int numBorders;		/**< coordinate count */
 } nation_t;
