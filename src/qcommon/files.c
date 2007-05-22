@@ -175,11 +175,12 @@ void FS_CreatePath (const char *path)
 /**
  * @brief For some reason, other dll's can't just call fclose()
  * on files returned by FS_FOpenFile...
+ * @sa FS_FOpenFileWrite
  */
 void FS_FCloseFile (qFILE * f)
 {
 	if (f->f)
-		fclose (f->f);
+		fclose(f->f);
 	else if (f->z)
 		unzCloseCurrentFile(f->z);
 

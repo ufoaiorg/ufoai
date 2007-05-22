@@ -33,6 +33,26 @@ static byte *clHunkData = NULL;
 static byte *clHunkPointerPos;
 
 /**
+ * @brief Dumps the hunk to a file
+ */
+static void CL_ClientHunkDumpToFile_f (void)
+{
+	qFILE f;
+	ptrdiff_t size = clHunkPointerPos - clHunkData;
+
+	memset(&f, 0, sizeof(qFILE));
+	FS_FOpenFileWrite(va("%s/hunk.dump", FS_Gamedir()), &f);
+	if (!f.f) {
+		Com_Printf("CL_ClientHunkDumpToFile_f: Error opening dump file for writing");
+		return;
+	}
+
+	FS_Write(clHunkData, size, &f);
+
+	FS_FCloseFile(&f);
+}
+
+/**
  * @brief
  */
 static void CL_ClientHunkUsage_f (void)
@@ -56,6 +76,7 @@ static void CL_ClientHunkUsage_f (void)
 extern void CL_ClientHunkInit (void)
 {
 	cl_hunkmegs = Cvar_Get("cl_hunkmegs", "1", 0, "Hunk megabytes for client parsed static data");
+	Cmd_AddCommand("cl_hunkdump", CL_ClientHunkDumpToFile_f, "Dump the client hunk into a file");
 	Cmd_AddCommand("cl_hunkstats", CL_ClientHunkUsage_f, "Displays some client hunk stats");
 
 	clHunkData = malloc(cl_hunkmegs->integer * 1024 * 1024 * sizeof(char));

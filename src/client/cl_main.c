@@ -2010,9 +2010,29 @@ static void CL_GlobalDataSizes_f (void)
 		sizeof(gd.bases[0].hospitalList),
 		sizeof(gd.bases[0].hospitalMissionList),
 		sizeof(gd.bases[0].aircraft),
+		sizeof(aircraft_t),
 		sizeof(gd.bases[0].allBuildingsList),
 		sizeof(gd.bases[0].radar)
 	);
+}
+
+/**
+ * @brief Dumps the globalData_t structure to a file
+ */
+static void CL_DumpGlobalDataToFile_f (void)
+{
+	qFILE f;
+
+	memset(&f, 0, sizeof(qFILE));
+	FS_FOpenFileWrite(va("%s/gd.dump", FS_Gamedir()), &f);
+	if (!f.f) {
+		Com_Printf("CL_ClientHunkDumpToFile_f: Error opening dump file for writing");
+		return;
+	}
+
+	FS_Write(&gd, sizeof(gd), &f);
+
+	FS_FCloseFile(&f);
 }
 #endif /* DEBUG */
 
@@ -2211,6 +2231,7 @@ static void CL_InitLocal (void)
 	Cmd_AddCommand("players", NULL, NULL);
 #ifdef DEBUG
 	Cmd_AddCommand("debug_configstrings", CL_ShowConfigstrings_f, "Print configstrings to game console");
+	Cmd_AddCommand("debug_gddump", CL_DumpGlobalDataToFile_f, "Dumps gd to a file");
 	Cmd_AddCommand("debug_gdstats", CL_GlobalDataSizes_f, "Show globalData_t sizes");
 	Cmd_AddCommand("actorinvlist", NULL, "Shows the inventory list of all actors");
 	Cmd_AddCommand("killteam", NULL, NULL);
