@@ -3567,7 +3567,7 @@ SCRIPT VALUE PARSING
 
 /**
  * @brief possible values for parsing functions
- * @sa value_types
+ * @sa valueTypes_t
  */
 const char *vt_names[V_NUM_TYPES] = {
 	"",
@@ -3594,7 +3594,9 @@ const char *vt_names[V_NUM_TYPES] = {
 	"dmgtype",
 	"date",
 	"if",
-	"relabs"
+	"relabs",
+	"client_hunk",
+	"client_hunk_string"
 };
 
 const char *align_names[ALIGN_LAST] = {
@@ -3669,7 +3671,9 @@ static const size_t vt_sizes[V_NUM_TYPES] = {
 	sizeof(byte),	/* V_DMGTYPE */
 	0,	/* V_DATE */
 	0,	/* V_IF */
-	sizeof(float)	/* V_RELABS */
+	sizeof(float),	/* V_RELABS */
+	0,	/* V_CLIENT_HUNK */
+	0	/* V_CLIENT_HUNK_STRING */
 };
 
 /**
