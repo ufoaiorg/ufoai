@@ -287,7 +287,7 @@ void CL_SendConnectPacket (void)
 		return;
 	}
 	if (adr.port == 0)
-		adr.port = (unsigned)BigShort(PORT_SERVER);
+		adr.port = htons(PORT_SERVER);
 
 	port = Cvar_VariableInteger("qport");
 	userinfo_modified = qfalse;
@@ -328,7 +328,7 @@ void CL_CheckForResend (void)
 		return;
 	}
 	if (adr.port == 0)
-		adr.port = (unsigned)BigShort(PORT_SERVER);
+		adr.port = htons(PORT_SERVER);
 
 	cls.connect_time = cls.realtime;	/* for retransmit requests */
 
@@ -435,7 +435,7 @@ static void CL_Rcon_f (void)
 			return;
 		}
 		if (to.port == 0)
-			to.port = (unsigned)BigShort(PORT_SERVER);
+			to.port = htons(PORT_SERVER);
 	}
 
 	NET_SendPacket(NS_CLIENT, strlen(message) + 1, message, to);
@@ -548,7 +548,7 @@ static void CL_Packet_f (void)
 		return;
 	}
 	if (!adr.port)
-		adr.port = (unsigned)BigShort(PORT_SERVER);
+		adr.port = htons(PORT_SERVER);
 
 	in = Cmd_Argv(2);
 	out = send + 4;
@@ -792,7 +792,7 @@ static void CL_WaitInit_f (void)
 		return;
 	}
 	if (!adr.port)
-		adr.port = (unsigned)BigShort(PORT_SERVER);
+		adr.port = htons(PORT_SERVER);
 
 	/* the server knows this already */
 	if (!Com_ServerState()) {
@@ -1113,7 +1113,7 @@ void CL_BookmarkListClick_f (void)
 			return;
 		}
 		if (adr.port == 0)
-			adr.port = (unsigned)BigShort(PORT_SERVER);
+			adr.port = htons(PORT_SERVER);
 
 		Cvar_Set("mn_server_ip", bookmark);
 		Netchan_OutOfBandPrint(NS_CLIENT, adr, "status %i", PROTOCOL_VERSION);
@@ -1142,7 +1142,7 @@ static void CL_ServerInfo_f (void)
 	}
 
 	if (adr.port == 0)
-		adr.port = (unsigned)BigShort(PORT_SERVER);
+		adr.port = htons(PORT_SERVER);
 
 	Netchan_OutOfBandPrint(NS_CLIENT, adr, "status %i", PROTOCOL_VERSION);
 }
@@ -1188,7 +1188,7 @@ static void CL_SelectTeam_Init_f (void)
 		return;
 	}
 	if (!adr.port)
-		adr.port = (unsigned)BigShort(PORT_SERVER);
+		adr.port = htons(PORT_SERVER);
 
 	Netchan_OutOfBandPrint(NS_CLIENT, adr, "teaminfo %i", PROTOCOL_VERSION);
 	menuText[TEXT_STANDARD] = _("Select a free team or your coop team");
@@ -1234,13 +1234,13 @@ static void CL_PingServers_f (void)
 
 	if (!noudp->value) {
 		adr.type = NA_BROADCAST;
-		adr.port = (unsigned)BigShort(PORT_SERVER);
+		adr.port = htons(PORT_SERVER);
 		Netchan_OutOfBandPrint(NS_CLIENT, adr, "info %i", PROTOCOL_VERSION);
 	}
 
 	if (!noipx->value) {
 		adr.type = NA_BROADCAST_IPX;
-		adr.port = (unsigned)BigShort(PORT_SERVER);
+		adr.port = htons(PORT_SERVER);
 		Netchan_OutOfBandPrint(NS_CLIENT, adr, "info %i", PROTOCOL_VERSION);
 	}
 
@@ -1256,7 +1256,7 @@ static void CL_PingServers_f (void)
 		}
 
 		if (!adr.port)
-			adr.port = (unsigned)BigShort(PORT_SERVER);
+			adr.port = htons(PORT_SERVER);
 		CL_AddServerToList(&adr, NULL);
 	}
 
