@@ -2000,6 +2000,7 @@ static void CL_GlobalDataSizes_f (void)
 		"hospitalList       %10Zu bytes\n"
 		"hospitalMissionLst %10Zu bytes\n"
 		"aircraft           %10Zu bytes\n"
+		"aircraft (single)  %10Zu bytes\n"
 		"allBuildingsList   %10Zu bytes\n"
 		"radar              %10Zu bytes\n"
 		,
