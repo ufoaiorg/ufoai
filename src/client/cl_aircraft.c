@@ -1072,7 +1072,7 @@ void AIM_AircraftEquipmenuInit_f (void)
 	while (*list) {
 		/*Com_Printf("%s\n", (*list)->id);*/
 		if (RS_IsResearched_ptr(*list))
-			Q_strcat(buffer, va("%s\n", _((*list)->name)), sizeof(buffer) );
+			Q_strcat(buffer, va("%s\n", _((*list)->name)), sizeof(buffer));
 		list++;
 	}
 	menuText[TEXT_LIST] = buffer;

@@ -497,7 +497,7 @@ void RS_InitTree (void)
 			}
 			/* No id found in csi.ods */
 			if (!found) {
-				Com_sprintf(tech->name, MAX_VAR, tech->id);
+				CL_ClientHunkStoreString(tech->id, &tech->name);
 				Com_Printf("RS_InitTree: \"%s\" - Linked weapon or armor (provided=\"%s\") not found. Tech-id used as name.\n", tech->id, tech->provides);
 			}
 			break;
@@ -562,33 +562,28 @@ void RS_InitTree (void)
 	Com_DPrintf("RS_InitTree: Technology tree initialised. %i entries found.\n", i);
 }
 
+#if 0
 /**
  * @brief Return "name" if present, otherwise enter the correct .ufo file and get it from the definition there.
  * @param[in] id unique id of a technology_t
- * @param[out] name Full name of this technology_t (technology_t->name) - defaults to id if nothing is found.
- * @note name has a maxlength of MAX_VAR
  */
-void RS_GetName (char *id, char *name)
+const char *RS_GetName (const char *id)
 {
 	technology_t *tech = NULL;
 
 	tech = RS_GetTechByID(id);
 	if (!tech) {
 		/* set the name to the id. */
-		Com_sprintf(name, MAX_VAR, id);
-		return;
+		return id;
 	}
 
 	if (tech->name) {
-		Com_sprintf(name, MAX_VAR, _(tech->name));
-		return;
+		return _(tech->name);
 	} else {
-		/* FIXME: Do we need to translate the id? */
-		/* set the name to the id. */
-		Com_sprintf(name, MAX_VAR, _(id));
-		return;
+		return _(id);
 	}
 }
+#endif
 
 /**
  * @brief Displays the informations of the current selected technology in the description-area.
