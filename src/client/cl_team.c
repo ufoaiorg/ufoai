@@ -2085,7 +2085,7 @@ static const value_t rankValues[] =
 {
 	{"name", V_TRANSLATION_STRING, offsetof(rank_t, name), 0},
 	{"shortname", V_TRANSLATION_STRING,	offsetof(rank_t, shortname), 0},
-	{"image", V_STRING, offsetof(rank_t, image), 0},
+	{"image", V_CLIENT_HUNK_STRING, offsetof(rank_t, image), 0},
 	{"mind", V_INT, offsetof(rank_t, mind), MEMBER_SIZEOF(rank_t, mind)},
 	{"killed_enemies", V_INT, offsetof(rank_t, killed_enemies), MEMBER_SIZEOF(rank_t, killed_enemies)},
 	{"killed_others", V_INT, offsetof(rank_t, killed_others), MEMBER_SIZEOF(rank_t, killed_others)},
@@ -2120,7 +2120,7 @@ extern void CL_ParseMedalsAndRanks (const char *name, char **text, byte parseran
 
 		rank = &gd.ranks[gd.numRanks++];
 		memset(rank, 0, sizeof(rank_t));
-		Q_strncpyz(rank->id, name, sizeof(rank->id));
+		CL_ClientHunkStoreString(name, &rank->id);
 
 		do {
 			/* get the name type */
@@ -2135,7 +2135,16 @@ extern void CL_ParseMedalsAndRanks (const char *name, char **text, byte parseran
 					token = COM_EParse(text, errhead, name);
 					if (!*text)
 						return;
-					Com_ParseValue(rank, token, v->type, v->ofs, v->size);
+					switch (v->type) {
+					case V_TRANSLATION2_STRING:
+						token++;
+					case V_CLIENT_HUNK_STRING:
+						CL_ClientHunkStoreString(token, (char**) ((void*)rank + (int)v->ofs));
+						break;
+					default:
+						Com_ParseValue(rank, token, v->type, v->ofs, v->size);
+						break;
+					}
 					break;
 				}
 

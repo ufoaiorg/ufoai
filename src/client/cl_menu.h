@@ -47,8 +47,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /** @brief Model that have more than one part (head, body) but may only use one menu node */
 typedef struct menuModel_s {
-	char id[MAX_VAR];
-	char need[MAX_VAR];
+	char *id;
+	char *need;
 	char anim[MAX_VAR];
 	char parent[MAX_VAR];
 	char tag[MAX_VAR];

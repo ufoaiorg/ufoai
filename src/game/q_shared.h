@@ -1232,33 +1232,14 @@ typedef struct ugv_s {
 	int tu;
 } ugv_t;
 
-
-typedef enum {
-	MEDAL_CROSS,
-	MEDAL_COIN
-} medalType_t;
-
-#define MAX_MEDALTEXT       256
-#define MAX_MEDALTITLE      32
 #define MAX_RANKS           32
-typedef struct medals_s {
-	char id[MAX_MEDALTITLE];
-	char name[MAX_MEDALTITLE];
-	medalType_t type;
-	int band;
-	abilityskills_t affectedSkill;
-	int skillIncrease;
-	/*date  date; */
-	char text[MAX_MEDALTEXT];
-	struct medals_s *next_medal;
-} medals_t;
 
 /** @brief Describes a rank that a recruit can gain */
 typedef struct rank_s {
-	char id[MAX_VAR];		/**< Index in gd.ranks */
-	char name[MAX_MEDALTITLE];	/**< Rank name (Captain, Squad Leader) */
+	char *id;		/**< Index in gd.ranks */
+	char name[MAX_VAR];	/**< Rank name (Captain, Squad Leader) */
 	char shortname[8];		/**< Rank shortname (Cpt, Sqd Ldr) */
-	char image[MAX_VAR];		/**< Image to show in menu */
+	char *image;		/**< Image to show in menu */
 	int type;			/**< employeeType_t */
 	int mind;			/**< character mind attribute needed */
 	int killed_enemies;		/**< needed amount of enemies killed */
@@ -1315,7 +1296,6 @@ typedef struct character_s {
 	/* date     joined_edc; */
 	/* date     died; */
 	int rank; /* index in gd.ranks */
-	medals_t *medals;
 	/* @todo: */
 	/* *------------------** */
 	/* *------------------** */

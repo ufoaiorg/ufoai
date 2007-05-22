@@ -3862,7 +3862,7 @@ void MN_ParseMenuModel (const char *name, char **text)
 
 	Vector4Set(menuModel->color, 0.5, 0.5, 0.5, 1.0);
 
-	Q_strncpyz(menuModel->id, name, sizeof(menuModel->id));
+	CL_ClientHunkStoreString(name, &menuModel->id);
 	Com_DPrintf("Found menu model %s (%i)\n", menuModel->id, numMenuModels);
 
 	/* get it's body */
@@ -3893,7 +3893,7 @@ void MN_ParseMenuModel (const char *name, char **text)
 					menuModel->next = MN_GetMenuModel(token);
 					if (!menuModel->next)
 						Com_Printf("Could not find menumodel %s", token);
-					Q_strncpyz(menuModel->need, token, sizeof(menuModel->need));
+					CL_ClientHunkStoreString(token, &menuModel->need);
 				} else if (!Q_strncmp(v->string, "menuscale", 9)) {
 					token = COM_EParse(text, errhead, name);
 					if (!*text)
@@ -3919,10 +3919,6 @@ void MN_ParseMenuModel (const char *name, char **text)
 						Com_ParseValue(&menuModel->menuScaleValue[menuModel->menuScaleCnt], token, V_VECTOR, 0, sizeof(vec3_t));
 						menuModel->menuScaleCnt++;
 					} while (*token != '}'); /* dummy condition - break is earlier here */
-					menuModel->next = MN_GetMenuModel(token);
-					if (!menuModel->next)
-						Com_Printf("Could not find menumodel %s", token);
-					Q_strncpyz(menuModel->need, token, sizeof(menuModel->need));
 				} else {
 					token = COM_EParse(text, errhead, name);
 					if (!*text)
