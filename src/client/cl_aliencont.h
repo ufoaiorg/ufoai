@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_CL_ALIENCONT_H
 
 #define MAX_CARGO		32
-#define MAX_ALIENCONT_CAP	512
+#define MAX_ALIENCONT_CAP	32
 
 /** types of aliens */
 typedef enum {
