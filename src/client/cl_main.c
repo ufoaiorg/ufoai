@@ -1724,7 +1724,7 @@ static void CL_PrecacheModels (void)
  */
 extern void CL_InitAfter (void)
 {
-	loadingPercent = 0;
+	loadingPercent = 2.0f;
 
 	/* precache loading screen */
 	SCR_DrawPrecacheScreen(qtrue);

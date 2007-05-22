@@ -1808,43 +1808,21 @@ static void MN_Tooltip (menu_t *menu, menuNode_t *node, int x, int y)
  * @todo Rename and move this function and preload all character models and
  * the models from models.ufo, too
  */
-void MN_PrecacheMenus (void)
+extern void MN_PrecacheMenus (void)
 {
 	int i;
 	menu_t *menu;
 	menuNode_t *node;
-	const char *ref;
-	char source[MAX_VAR];
 
 	Com_Printf("...precaching %i menus\n", numMenus);
 
 	for (i = 0; i < numMenus; i++) {
 		menu = &menus[i];
 		for (node = menu->firstNode; node; node = node->next) {
-			if (!node->invis && node->data[0]
-				&& (node->type == MN_PIC || node->type == MN_MODEL)) {
-				ref = MN_GetReferenceString(menu, node->data[0]);
-				if (!ref) {
-					/* bad reference */
-					node->invis = qtrue;
-					Com_Printf("MN_PrecacheMenus: node \"%s\" bad reference \"%s\"\n", node->name, (char*)node->data);
+			if (!node->invis && node->data[0] && node->type == MN_PIC) {
+				if (*((char*)node->data[0]) == '*') /* don't load references */
 					continue;
-				}
-				/* e.g. cvar image with empty cvar */
-				if (!*ref) {
-					Com_DPrintf("MN_PrecacheMenus: node \"%s\" empty ref string (cvar value)\n", node->name);
-					continue;
-				}
-				Q_strncpyz(source, ref, sizeof(source));
-				switch (node->type) {
-				case MN_PIC:
-					re.RegisterPic(ref);
-					break;
-				case MN_MODEL:
-					/* FIXME: menuModel_t!! */
-					re.RegisterModel(source);
-					break;
-				}
+				re.RegisterPic(node->data[0]);
 			}
 		}
 		loadingPercent += 35.0f / numMenus;
