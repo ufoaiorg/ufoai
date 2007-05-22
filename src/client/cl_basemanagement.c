@@ -164,15 +164,15 @@ static void B_ResetBuildingCurrent_f (void)
  * The valid definition names for BUILDINGS (building_t) in the basemagagement.ufo file.
  * to the appropriate values in the corresponding struct
  */
-static const value_t valid_vars[] = {
-	{"map_name", V_STRING, offsetof(building_t, mapPart), 0},	/**< Name of the map file for generating basemap. */
+static const value_t valid_building_vars[] = {
+	{"map_name", V_CLIENT_HUNK_STRING, offsetof(building_t, mapPart), 0},	/**< Name of the map file for generating basemap. */
 	{"more_than_one", V_BOOL, offsetof(building_t, moreThanOne), MEMBER_SIZEOF(building_t, moreThanOne)},	/**< Is the building allowed to be build more the one time? */
-	{"name", V_TRANSLATION_STRING, offsetof(building_t, name), 0},	/**< The displayed building name. */
-	{"pedia", V_STRING, offsetof(building_t, pedia), 0},	/**< The pedia-id string for the associated pedia entry. */
+	{"name", V_TRANSLATION2_STRING, offsetof(building_t, name), 0},	/**< The displayed building name. */
+	{"pedia", V_CLIENT_HUNK_STRING, offsetof(building_t, pedia), 0},	/**< The pedia-id string for the associated pedia entry. */
 	{"status", V_INT, offsetof(building_t, buildingStatus), MEMBER_SIZEOF(building_t, buildingStatus)},	/**< The current status of the building. */
-	{"image", V_STRING, offsetof(building_t, image), 0},	/**< Identifies the image for the building. */
+	{"image", V_CLIENT_HUNK_STRING, offsetof(building_t, image), 0},	/**< Identifies the image for the building. */
 	{"visible", V_BOOL, offsetof(building_t, visible), MEMBER_SIZEOF(building_t, visible)}, /**< Determines whether a building should be listed in the construction list. Set the first part of a building to 1 all others to 0 otherwise all building-parts will be on the list */
-	{"needs", V_STRING, offsetof(building_t, needs), 0},	/**<  For buildings with more than one part; the other parts of the building needed.*/
+	{"needs", V_CLIENT_HUNK_STRING, offsetof(building_t, needs), 0},	/**<  For buildings with more than one part; the other parts of the building needed.*/
 	{"fixcosts", V_FLOAT, offsetof(building_t, fixCosts), MEMBER_SIZEOF(building_t, fixCosts)},	/**< Cost to build. */
 	{"varcosts", V_FLOAT, offsetof(building_t, varCosts), MEMBER_SIZEOF(building_t, varCosts)},	/**< Costs that will come up by using the building. */
 	{"build_time", V_INT, offsetof(building_t, buildTime), MEMBER_SIZEOF(building_t, buildTime)},	/**< How many days it takes to construct the building. */
@@ -242,7 +242,7 @@ static void B_BuildingDestroy_f (void)
 	b1 = baseCurrent->buildingCurrent;
 
 	if (baseCurrent->map[(int)b1->pos[0]][(int)b1->pos[1]] != BASE_FREESLOT) {
-		if (*b1->needs) {
+		if (b1->needs) {
 #if 0
 			b2 = B_GetBuildingType(b1->needs);
 			assert(b2);
@@ -770,7 +770,7 @@ extern void B_SetBuildingByClick (int row, int col)
 
 	if (0 <= row && row < BASE_SIZE && 0 <= col && col < BASE_SIZE) {
 		if (baseCurrent->map[row][col] == BASE_FREESLOT) {
-			if (*baseCurrent->buildingCurrent->needs)
+			if (baseCurrent->buildingCurrent->needs)
 				secondBuildingPart = B_GetBuildingType(baseCurrent->buildingCurrent->needs);
 			if (secondBuildingPart) {
 				if (col + 1 == BASE_SIZE) {
@@ -867,7 +867,7 @@ static void B_DrawBuilding (void)
 
 	B_BuildingStatus();
 
-	Com_sprintf(buildingText, sizeof(buildingText), va("%s\n", building->name));
+	Com_sprintf(buildingText, sizeof(buildingText), "%s\n", _(building->name));
 
 	if (building->buildingStatus < B_STATUS_UNDER_CONSTRUCTION && building->fixCosts)
 		Com_sprintf(buildingText, sizeof(buildingText), _("Costs:\t%1.0f c\n"), building->fixCosts);
@@ -886,7 +886,7 @@ static void B_DrawBuilding (void)
 		Cvar_Set("mn_building_name", building->id);
 
 	if (building->name)
-		Cvar_Set("mn_building_title", building->name);
+		Cvar_Set("mn_building_title", _(building->name));
 
 	/* link into menu text array */
 	menuText[TEXT_BUILDING_INFO] = buildingText;
@@ -904,6 +904,7 @@ static void B_DrawBuilding (void)
 static void B_BuildingAddToList (building_t * building)
 {
 	assert(baseCurrent);
+	assert(building->name);
 
 	Q_strcat(baseCurrent->allBuildingsList, va("%s\n", _(building->name)), MAX_LIST_CHAR);
 	BuildingConstructionList[numBuildingConstructionList] = building->type_idx;
@@ -1169,7 +1170,7 @@ extern void B_ParseBuildings (const char *name, char **text, qboolean link)
 		/* new entry */
 		building = &gd.buildingTypes[gd.numBuildingTypes];
 		memset(building, 0, sizeof(building_t));
-		Q_strncpyz(building->id, name, sizeof(building->id));
+		CL_ClientHunkStoreString(name, &building->id);
 
 		Com_DPrintf("...found building %s\n", building->id);
 
@@ -1238,14 +1239,25 @@ extern void B_ParseBuildings (const char *name, char **text, qboolean link)
 					if (!*text)
 						return;
 				} else {
-				for (vp = valid_vars; vp->string; vp++)
+				for (vp = valid_building_vars; vp->string; vp++)
 					if (!Q_strncmp(token, vp->string, sizeof(vp->string))) {
 						/* found a definition */
 						token = COM_EParse(text, errhead, name);
 						if (!*text)
 							return;
 
-						Com_ParseValue(building, token, vp->type, vp->ofs, vp->size);
+						switch (vp->type) {
+						case V_NULL:
+							break;
+						case V_TRANSLATION2_STRING:
+							token++;
+						case V_CLIENT_HUNK_STRING:
+							CL_ClientHunkStoreString(token, (char**) ((void*)building + (int)vp->ofs));
+							break;
+						default:
+							Com_ParseValue(building, token, vp->type, vp->ofs, vp->size);
+							break;
+						}
 						break;
 					}
 				}
@@ -1504,14 +1516,14 @@ extern void B_DrawBase (menuNode_t * node)
 					Sys_Error("Error in DrawBase - no building with id %i\n", baseCurrent->map[row][col]);
 
 				if (!building->used) {
-					if (*building->needs)
+					if (building->needs)
 						building->used = 1;
-					if (*building->image) {	/* @todo:DEBUG */
+					if (building->image) {	/* @todo:DEBUG */
 						Q_strncpyz(image, building->image, sizeof(image));
 					} else {
 						/*Com_DPrintf("B_DrawBase: no image found for building %s / %i\n",building->id ,building->idx); */
 					}
-				} else if (*building->needs) {
+				} else if (building->needs) {
 					secondBuilding = B_GetBuildingType(building->needs);
 					if (!secondBuilding)
 						Sys_Error("Error in ufo-scriptfile - could not find the needed building\n");
@@ -1533,7 +1545,7 @@ extern void B_DrawBase (menuNode_t * node)
 				else if (gd.baseAction == BA_NEWBUILDING && xHover == -1) {
 					assert(baseCurrent->buildingCurrent);
 					colSecond = col;
-					if (*baseCurrent->buildingCurrent->needs) {
+					if (baseCurrent->buildingCurrent->needs) {
 						if (colSecond + 1 == BASE_SIZE) {
 							if (baseCurrent->map[row][colSecond - 1] == BASE_FREESLOT)
 								colSecond--;
@@ -1574,7 +1586,7 @@ extern void B_DrawBase (menuNode_t * node)
 	}
 	if (hoverBuilding) {
 		re.DrawColor(color);
-		re.FontDrawString("f_small", 0, mx + 3, my, mx + 3, my, node->size[0], 0, node->texh[0], hoverBuilding->name, 0, 0, NULL, qfalse);
+		re.FontDrawString("f_small", 0, mx + 3, my, mx + 3, my, node->size[0], 0, node->texh[0], _(hoverBuilding->name), 0, 0, NULL, qfalse);
 		re.DrawColor(NULL);
 	}
 	if (xHover != -1) {
@@ -2139,15 +2151,15 @@ static void B_AssembleMap_f (void)
 
 				/* basemaps with needs are not (like the images in B_DrawBase) two maps - but one */
 				/* this is why we check the used flag and continue if it was set already */
-				if (!entry->used && *entry->needs) {
+				if (!entry->used && entry->needs) {
 					entry->used = 1;
-				} else if (*entry->needs) {
+				} else if (entry->needs) {
 					Com_DPrintf("B_AssembleMap_f: '%s' needs '%s' (used: %i)\n", entry->id, entry->needs, entry->used );
 					entry->used = 0;
 					continue;
 				}
 
-				if (*entry->mapPart)
+				if (entry->mapPart)
 					Q_strncpyz(baseMapPart, va("b/%c/%s", base->mapChar, entry->mapPart), sizeof(baseMapPart));
 				else
 					Com_Printf("B_AssembleMap_f: Error - map has no mapPart set. Building '%s'\n'", entry->id);
@@ -2521,7 +2533,7 @@ void B_UpdateBaseData (void)
 			new = B_CheckBuildingConstruction(b, i);
 			newBuilding += new;
 			if (new) {
-				Com_sprintf(messageBuffer, MAX_MESSAGE_TEXT, _("Construction of %s building finished in base %s."), b->name, gd.bases[i].name);
+				Com_sprintf(messageBuffer, MAX_MESSAGE_TEXT, _("Construction of %s building finished in base %s."), _(b->name), gd.bases[i].name);
 				MN_AddNewMessage(_("Building finished"), messageBuffer, qfalse, MSG_CONSTRUCTION, NULL);
 			}
 		}

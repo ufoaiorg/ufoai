@@ -113,11 +113,11 @@ typedef struct building_s {
 	int type_idx;				/**< self link in "buildingTypes" list. */
 	int base_idx;				/**< Number/index of base this building is located in. */
 
-	char id[MAX_VAR];
-	char name[MAX_VAR];
-	char image[MAX_VAR], mapPart[MAX_VAR], pedia[MAX_VAR];
+	char *id;
+	char *name;
+	char *image, *mapPart, *pedia;
 	/** needs determines the second building part */
-	char needs[MAX_VAR];		/**< if the buildign has a second part */
+	char *needs;		/**< if the buildign has a second part */
 	float fixCosts, varCosts;
 
 	int timeStart, buildTime;

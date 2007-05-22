@@ -492,9 +492,9 @@ extern int UP_GetUnreadMails (void)
 				gd.numUnreadMails++;
 			break;
 		case MSG_NEWS:
-			if (m->pedia->mail[TECHMAIL_PRE].from[0] && m->pedia->mail[TECHMAIL_PRE].read == qfalse)
+			if (m->pedia->mail[TECHMAIL_PRE].from && m->pedia->mail[TECHMAIL_PRE].read == qfalse)
 				gd.numUnreadMails++;
-			if (m->pedia->mail[TECHMAIL_RESEARCHED].from[0] && m->pedia->mail[TECHMAIL_RESEARCHED].read == qfalse)
+			if (m->pedia->mail[TECHMAIL_RESEARCHED].from && m->pedia->mail[TECHMAIL_RESEARCHED].read == qfalse)
 				gd.numUnreadMails++;
 			break;
 		default:
@@ -521,7 +521,7 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type)
 	assert(tech);
 	assert(type < TECHMAIL_MAX);
 
-	if (tech->mail[type].date[0]) {
+	if (tech->mail[type].date) {
 		Q_strncpyz(dateBuf, tech->mail[type].date, sizeof(dateBuf));
 	} else {
 		switch (type) {
@@ -541,7 +541,7 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type)
 			Sys_Error("UP_SetMailHeader: unhandled techMailType_t %i for date.\n", type);
 		}
 	}
-	if (tech->mail[type].from[0]) {
+	if (tech->mail[type].from) {
 		if (!tech->mail[type].read) {
 			tech->mail[type].read = qtrue;
 			/* reread the unread mails in UP_GetUnreadMails */
@@ -722,6 +722,8 @@ static void UP_DrawEntry (technology_t* tech)
  */
 extern void UP_OpenWith (const char *name)
 {
+	if (!name)
+		return;
 	Cbuf_AddText("mn_push ufopedia\n");
 	Cbuf_Execute();
 	Cbuf_AddText(va("ufopedia %s\n", name));
@@ -1111,7 +1113,7 @@ static void UP_MailClientClick_f (void)
 	while (m) {
 		switch (m->type) {
 		case MSG_RESEARCH_PROPOSAL:
-			if (!m->pedia->mail[TECHMAIL_PRE].from[0])
+			if (!m->pedia->mail[TECHMAIL_PRE].from)
 				break;
 			cnt++;
 			if (cnt == num) {
@@ -1121,7 +1123,7 @@ static void UP_MailClientClick_f (void)
 			}
 			break;
 		case MSG_RESEARCH_FINISHED:
-			if (!m->pedia->mail[TECHMAIL_RESEARCHED].from[0])
+			if (!m->pedia->mail[TECHMAIL_RESEARCHED].from)
 				break;
 			cnt++;
 			if (cnt == num) {
@@ -1131,7 +1133,7 @@ static void UP_MailClientClick_f (void)
 			}
 			break;
 		case MSG_NEWS:
-			if (m->pedia->mail[TECHMAIL_PRE].from[0] || m->pedia->mail[TECHMAIL_RESEARCHED].from[0]) {
+			if (m->pedia->mail[TECHMAIL_PRE].from || m->pedia->mail[TECHMAIL_RESEARCHED].from) {
 				cnt++;
 				if (cnt >= num) {
 					UP_OpenWith(m->pedia->id);
@@ -1192,7 +1194,7 @@ static void UP_OpenMail_f (void)
 	while (m) {
 		switch (m->type) {
 		case MSG_RESEARCH_PROPOSAL:
-			if (!m->pedia->mail[TECHMAIL_PRE].from[0])
+			if (!m->pedia->mail[TECHMAIL_PRE].from)
 				break;
 			if (m->pedia->mail[TECHMAIL_PRE].read == qfalse)
 				Com_sprintf(tempBuf, sizeof(tempBuf), _("^BProposal: %s (%s)\n"), _(m->pedia->mail[TECHMAIL_PRE].subject), _(m->pedia->mail[TECHMAIL_PRE].from));
@@ -1202,7 +1204,7 @@ static void UP_OpenMail_f (void)
 			Q_strcat(mailBuffer, tempBuf, sizeof(mailBuffer));
 			break;
 		case MSG_RESEARCH_FINISHED:
-			if (!m->pedia->mail[TECHMAIL_RESEARCHED].from[0])
+			if (!m->pedia->mail[TECHMAIL_RESEARCHED].from)
 				break;
 			if (m->pedia->mail[TECHMAIL_RESEARCHED].read == qfalse)
 				Com_sprintf(tempBuf, sizeof(tempBuf), _("^BRe: %s (%s)\n"), _(m->pedia->mail[TECHMAIL_RESEARCHED].subject), _(m->pedia->mail[TECHMAIL_RESEARCHED].from));
@@ -1212,14 +1214,14 @@ static void UP_OpenMail_f (void)
 			Q_strcat(mailBuffer, tempBuf, sizeof(mailBuffer));
 			break;
 		case MSG_NEWS:
-			if (m->pedia->mail[TECHMAIL_PRE].from[0]) {
+			if (m->pedia->mail[TECHMAIL_PRE].from) {
 				if (m->pedia->mail[TECHMAIL_PRE].read == qfalse)
 					Com_sprintf(tempBuf, sizeof(tempBuf), _("^B%s (%s)\n"), _(m->pedia->mail[TECHMAIL_PRE].subject), _(m->pedia->mail[TECHMAIL_PRE].from));
 				else
 					Com_sprintf(tempBuf, sizeof(tempBuf), _("%s (%s)\n"), _(m->pedia->mail[TECHMAIL_PRE].subject), _(m->pedia->mail[TECHMAIL_PRE].from));
 				CHECK_MAIL_EOL
 				Q_strcat(mailBuffer, tempBuf, sizeof(mailBuffer));
-			} else if (m->pedia->mail[TECHMAIL_RESEARCHED].from[0]) {
+			} else if (m->pedia->mail[TECHMAIL_RESEARCHED].from) {
 				if (m->pedia->mail[TECHMAIL_RESEARCHED].read == qfalse)
 					Com_sprintf(tempBuf, sizeof(tempBuf), _("^B%s (%s)\n"), _(m->pedia->mail[TECHMAIL_RESEARCHED].subject), _(m->pedia->mail[TECHMAIL_RESEARCHED].from));
 				else
