@@ -1346,7 +1346,7 @@ extern void AII_ParseAircraftItem (const char *name, char **text)
 					case V_TRANSLATION2_STRING:
 						token++;
 					case V_CLIENT_HUNK_STRING:
-						CL_ClientHunkStoreString(token, (char**) ((void*)airItem+ (int)vp->ofs));
+						CL_ClientHunkStoreString(token, (char**) ((void*)airItem + (int)vp->ofs));
 						break;
 					default:
 						Com_ParseValue(airItem, token, vp->type, vp->ofs, vp->size);

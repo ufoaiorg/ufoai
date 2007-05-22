@@ -28,11 +28,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_PEDIACHAPTERS	16
 
-typedef struct pediaChapter_s
-{
-	int idx;				/* self-link */
-	char	*id;
-	char	*name;
+typedef struct pediaChapter_s {
+	int idx;				/**< self-link */
+	char	*id;			/**< script file id */
+	char	*name;			/**< translateable chapter names */
 	int first;
 	int last;
 } pediaChapter_t;
