@@ -244,7 +244,7 @@ void AIR_AircraftInit (void)
 			Com_DPrintf("....ammo: %s\n", air_samp->ammo_string);
 			air_samp->ammo = RS_GetTechByID(air_samp->ammo_string);
 		} else
-			air_samp->weapon = NULL;
+			air_samp->ammo = NULL;
 
 		if (*air_samp->shield_string) {
 			/* link with tech pointer */
