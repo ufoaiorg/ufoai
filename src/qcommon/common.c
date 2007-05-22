@@ -891,11 +891,11 @@ extern void Qcommon_Init (int argc, char **argv)
 	gametype->modified = qfalse;
 #endif
 	cl_maxfps = Cvar_Get("cl_maxfps", "90", 0, NULL);
-	teamnum = Cvar_Get("teamnum", "1", CVAR_ARCHIVE, NULL);
+	teamnum = Cvar_Get("teamnum", "1", CVAR_ARCHIVE, "Multiplayer team num");
 
 	s = va("UFO: Alien Invasion %s %s %s %s", UFO_VERSION, CPUSTRING, __DATE__, BUILDSTRING);
-	Cvar_Get("version", s, CVAR_NOSET, NULL);
-	Cvar_Get("ver", UFO_VERSION, CVAR_SERVERINFO | CVAR_NOSET, NULL);
+	Cvar_Get("version", s, CVAR_NOSET, "Full version string");
+	Cvar_Get("ver", UFO_VERSION, CVAR_SERVERINFO | CVAR_NOSET, "Version number");
 
 	if (dedicated->value)
 		Cmd_AddCommand("quit", Com_Quit, NULL);

@@ -407,7 +407,7 @@ char* CL_ToDifficultyName(int difficulty);
 extern qboolean loadingMessage;
 extern char loadingMessages[96];
 extern float loadingPercent;
-void SCR_DrawPrecacheScreen(void);
+void SCR_DrawPrecacheScreen(qboolean string);
 
 /* cl_input */
 typedef struct {

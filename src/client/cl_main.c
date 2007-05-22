@@ -1714,7 +1714,7 @@ static void CL_PrecacheModels (void)
 			if (!re.RegisterModel(csi.ods[i].model))
 				Com_Printf("CL_PrecacheModels: Could not register object model: '%s'\n", csi.ods[i].model);
 		loadingPercent += 20.0f / csi.numODs;
-		SCR_DrawPrecacheScreen();
+		SCR_DrawPrecacheScreen(qtrue);
 	}
 }
 
@@ -1727,7 +1727,7 @@ extern void CL_InitAfter (void)
 	loadingPercent = 0;
 
 	/* precache loading screen */
-	SCR_DrawPrecacheScreen();
+	SCR_DrawPrecacheScreen(qtrue);
 
 	/* init irc commands and cvars */
 	Irc_Init();
@@ -1741,7 +1741,7 @@ extern void CL_InitAfter (void)
 	FS_GetMaps(qfalse);
 
 	loadingPercent = 5.0f;
-	SCR_DrawPrecacheScreen();
+	SCR_DrawPrecacheScreen(qtrue);
 
 	/* preload all models for faster access */
 	if (cl_precache->value) {
@@ -1752,7 +1752,7 @@ extern void CL_InitAfter (void)
 	}
 
 	loadingPercent = 100.0f;
-	SCR_DrawPrecacheScreen();
+	SCR_DrawPrecacheScreen(qtrue);
 
 	/* link for faster access */
 	MN_LinkMenuModels();
@@ -2567,6 +2567,8 @@ extern void CL_Init (void)
 	net_message.maxsize = sizeof(net_message_buffer);
 
 	SCR_Init();
+	loadingPercent = 0.0f;
+	SCR_DrawPrecacheScreen(qfalse);
 
 	CDAudio_Init();
 	CL_InitLocal();

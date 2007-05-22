@@ -717,7 +717,7 @@ extern void Com_PrecacheCharacterModels (void)
 				/* new path */
 				str += strlen(str) + 1;
 				loadingPercent += 20.0f / (nc->numModels[j] * numNameCats * NAME_LAST);
-				SCR_DrawPrecacheScreen();
+				SCR_DrawPrecacheScreen(qtrue);
 			}
 		}
 	/* some genders may not have models - ensure that we do a 20 percent step */
