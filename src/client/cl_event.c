@@ -73,7 +73,7 @@ extern void CL_ParseEventMails (const char *name, char **text)
 	memset(eventMail, 0, sizeof(eventMail_t));
 
 	Com_DPrintf("...found eventMail %s\n", name);
-	Q_strncpyz(eventMail->id, name, sizeof(eventMail->id));
+	CL_ClientHunkStoreString(name, &eventMail->id);
 
 	/* get it's body */
 	token = COM_Parse(text);
@@ -99,7 +99,16 @@ extern void CL_ParseEventMails (const char *name, char **text)
 				if (!*text)
 					return;
 
-				Com_ParseValue(eventMail, token, vp->type, vp->ofs, vp->size);
+				switch (vp->type) {
+				case V_TRANSLATION2_STRING:
+					token++;
+				case V_CLIENT_HUNK_STRING:
+					CL_ClientHunkStoreString(token, (char**) ((void*)eventMail + (int)vp->ofs));
+					break;
+				default:
+					Com_ParseValue(eventMail, token, vp->type, vp->ofs, vp->size);
+					break;
+				}
 				break;
 			}
 

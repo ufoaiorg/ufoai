@@ -38,10 +38,12 @@ static byte *clHunkPointerPos;
 static void CL_ClientHunkUsage_f (void)
 {
 	ptrdiff_t size = clHunkPointerPos - clHunkData;
+	int allocated = (int)cl_hunkmegs->integer * 1024 * 1024;
 
 	Com_Printf("client hunk statistics:\n"
-		"used: %i bytes\n"
-		"allocated: %i bytes\n", size, (int)cl_hunkmegs->integer * 1024 * 1024);
+		"used:      %10i bytes\n"
+		"free:      %10i bytes\n"
+		"allocated: %10i bytes\n", size, allocated - size, allocated);
 }
 
 /**
