@@ -1957,7 +1957,63 @@ static void CL_ShowConfigstrings_f (void)
 		if (*cl.configstrings[i])
 			Com_Printf("cl.configstrings[%2i]: %s\n", i, cl.configstrings[i]);
 }
-#endif
+
+/**
+ * @brief Shows the sizes some parts of globalData_t uses - this is only to
+ * analyse where the most optimization potential is hiding
+ */
+static void CL_GlobalDataSizes_f (void)
+{
+	Com_Printf(
+		"globalData_t size: %10Zu bytes\n"
+		"bases              %10Zu bytes\n"
+		"buildings          %10Zu bytes\n"
+		"nations            %10Zu bytes\n"
+		"ranks              %10Zu bytes\n"
+		"ugv                %10Zu bytes\n"
+		"productions        %10Zu bytes\n"
+		"buildingTypes      %10Zu bytes\n"
+		"employees          %10Zu bytes\n"
+		"eventMails         %10Zu bytes\n"
+		"upChapters         %10Zu bytes\n"
+		"technologies       %10Zu bytes\n"
+		,
+		sizeof(globalData_t),
+		sizeof(gd.bases),
+		sizeof(gd.buildings),
+		sizeof(gd.nations),
+		sizeof(gd.ranks),
+		sizeof(gd.ugvs),
+		sizeof(gd.productions),
+		sizeof(gd.buildingTypes),
+		sizeof(gd.employees),
+		sizeof(gd.eventMails),
+		sizeof(gd.upChapters),
+		sizeof(gd.technologies)
+	);
+
+	Com_Printf(
+		"bases:\n"
+		"alienscont         %10Zu bytes\n"
+		"capacities         %10Zu bytes\n"
+		"equipByBuyType     %10Zu bytes\n"
+		"hospitalList       %10Zu bytes\n"
+		"hospitalMissionLst %10Zu bytes\n"
+		"aircraft           %10Zu bytes\n"
+		"allBuildingsList   %10Zu bytes\n"
+		"radar              %10Zu bytes\n"
+		,
+		sizeof(gd.bases[0].alienscont),
+		sizeof(gd.bases[0].capacities),
+		sizeof(gd.bases[0].equipByBuyType),
+		sizeof(gd.bases[0].hospitalList),
+		sizeof(gd.bases[0].hospitalMissionList),
+		sizeof(gd.bases[0].aircraft),
+		sizeof(gd.bases[0].allBuildingsList),
+		sizeof(gd.bases[0].radar)
+	);
+}
+#endif /* DEBUG */
 
 /**
  * @brief Calls all reset functions for all subsystems like production and research
@@ -2154,6 +2210,7 @@ static void CL_InitLocal (void)
 	Cmd_AddCommand("players", NULL, NULL);
 #ifdef DEBUG
 	Cmd_AddCommand("debug_configstrings", CL_ShowConfigstrings_f, "Print configstrings to game console");
+	Cmd_AddCommand("debug_gdstats", CL_GlobalDataSizes_f, "Show globalData_t sizes");
 	Cmd_AddCommand("actorinvlist", NULL, "Shows the inventory list of all actors");
 	Cmd_AddCommand("killteam", NULL, NULL);
 	Cmd_AddCommand("stunteam", NULL, NULL);

@@ -80,12 +80,12 @@ struct actMis_s;
 
 /** @brief parsed craftitem from script files */
 typedef struct aircraftItem_s {
-	char id[MAX_VAR];			/**< from script files */
+	char *id;			/**< from script files */
 	int idx;					/**< self link */
 	aircraftItemType_t type;		/**< The type of the aircraft item. */
-	char tech[MAX_VAR];		/**< tech id for this item.*/
+	char *tech;		/**< tech id for this item.*/
 	int tech_idx;				/**< tech index for this item.*/
-	char weapon[MAX_VAR];		/**< if this is ammo there must be a weapon */
+	char *weapon;		/**< if this is ammo there must be a weapon */
 	int weight;
 	float damage;
 	float range;
@@ -121,10 +121,10 @@ typedef enum {
 typedef struct aircraft_s {
 	int idx;					/**< Global index of this aircraft. See also gd.numAircraft. @todo: is this updated when one aircraft is lost (it is checked agains gd.numAircraft sometimes)? We do not really have a global list of acs do we? */
 	int idx_sample;				/**< self-link in aircraft_sample list */
-	char id[MAX_VAR];			/**< internal id from script file */
+	char *id;			/**< internal id from script file */
 	char name[MAX_VAR];			/**< translateable name */
 	char shortname[MAX_VAR];		/**< translateable shortname */
-	char image[MAX_VAR];			/**< image on geoscape */
+	char *image;			/**< image on geoscape */
 	aircraftType_t type;
 	ufoType_t ufotype;			/**< type of UFO (if craft is not UFO - not used) */
 	int status;				/**< see aircraftStatus_t */
@@ -150,7 +150,7 @@ typedef struct aircraft_s {
 	int *teamSize;				/**< how many soldiers on board */
 	int teamIdxs[MAX_ACTIVETEAM];	/**< array of team members on board employee idx*/
 
-	char model[MAX_QPATH];
+	char *model;
 	char weapon_string[MAX_VAR];	/**< Name of the weapon equipping aircraft */
 	/* NOTE: these pointers needs reinit after loading a saved game */
 	technology_t *weapon;			/**< Pointer to the technology of weapon equipping aircraft */
@@ -170,7 +170,7 @@ typedef struct aircraft_s {
 	itemsTmp_t itemcargo[MAX_CARGO];	/**< Cargo of items. */
 	int itemtypes;				/**< How many types of items we collected. */
 
-	char building[MAX_VAR];		/**< id of the building needed as hangar */
+	char *building;		/**< id of the building needed as hangar */
 
 	int numUpgrades;
 

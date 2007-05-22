@@ -1245,7 +1245,7 @@ extern qboolean AIR_SendAircraftToMission (aircraft_t* aircraft, actMis_t* missi
 
 /** @brief Valid aircraft items (craftitem) definition values from script files. */
 static const value_t aircraftitems_vals[] = {
-	{"tech", V_STRING, offsetof(aircraftItem_t, tech), 0},
+	{"tech", V_CLIENT_HUNK_STRING, offsetof(aircraftItem_t, tech), 0},
 	{"speed", V_FLOAT, offsetof(aircraftItem_t, speed), MEMBER_SIZEOF(aircraftItem_t, speed)},
 	{"price", V_INT, offsetof(aircraftItem_t, price), MEMBER_SIZEOF(aircraftItem_t, price)},
 	{"shield", V_RELABS, offsetof(aircraftItem_t, shield), MEMBER_SIZEOF(aircraftItem_t, shield)},
@@ -1257,7 +1257,7 @@ static const value_t aircraftitems_vals[] = {
 	{"damage", V_FLOAT, offsetof(aircraftItem_t, damage), MEMBER_SIZEOF(aircraftItem_t, damage)},
 	{"accuracy", V_FLOAT, offsetof(aircraftItem_t, accuracy), MEMBER_SIZEOF(aircraftItem_t, accuracy)},
 	{"ecm", V_RELABS, offsetof(aircraftItem_t, ecm), MEMBER_SIZEOF(aircraftItem_t, ecm)},
-	{"weapon", V_STRING, offsetof(aircraftItem_t, weapon), 0},
+	{"weapon", V_CLIENT_HUNK_STRING, offsetof(aircraftItem_t, weapon), 0},
 
 	{NULL, 0, 0, 0}
 };
@@ -1285,7 +1285,7 @@ extern void AII_ParseAircraftItem (const char *name, char **text)
 	Com_DPrintf("...found craftitem %s\n", name);
 	airItem->idx = numAircraftItems;
 	numAircraftItems++;
-	Q_strncpyz(airItem->id, name, sizeof(airItem->id));
+	CL_ClientHunkStoreString(name, &airItem->id);
 
 	/* get it's body */
 	token = COM_Parse(text);
@@ -1342,7 +1342,15 @@ extern void AII_ParseAircraftItem (const char *name, char **text)
 					if (!*text)
 						return;
 
-					Com_ParseValue(airItem, token, vp->type, vp->ofs, vp->size);
+					switch (vp->type) {
+					case V_TRANSLATION2_STRING:
+						token++;
+					case V_CLIENT_HUNK_STRING:
+						CL_ClientHunkStoreString(token, (char**) ((void*)airItem+ (int)vp->ofs));
+						break;
+					default:
+						Com_ParseValue(airItem, token, vp->type, vp->ofs, vp->size);
+					}
 					break;
 				}
 			}
@@ -1369,7 +1377,7 @@ static const value_t aircraft_vals[] = {
 	{"angles_equip", V_VECTOR, offsetof(aircraft_t, anglesEquip), MEMBER_SIZEOF(aircraft_t, anglesEquip)},
 	{"center_equip", V_VECTOR, offsetof(aircraft_t, centerEquip), MEMBER_SIZEOF(aircraft_t, centerEquip)},
 	{"scale_equip", V_VECTOR, offsetof(aircraft_t, scaleEquip), MEMBER_SIZEOF(aircraft_t, scaleEquip)},
-	{"image", V_STRING, offsetof(aircraft_t, image), 0},
+	{"image", V_CLIENT_HUNK_STRING, offsetof(aircraft_t, image), 0},
 
 	/* pointer to technology_t */
 	{"weapon", V_STRING, offsetof(aircraft_t, weapon_string), 0},
@@ -1377,12 +1385,12 @@ static const value_t aircraft_vals[] = {
 	{"shield", V_STRING, offsetof(aircraft_t, shield_string), 0},
 	{"item", V_STRING, offsetof(aircraft_t, item_string), 0},
 
-	{"model", V_STRING, offsetof(aircraft_t, model), 0},
+	{"model", V_CLIENT_HUNK_STRING, offsetof(aircraft_t, model), 0},
 	/* price for selling/buying */
 	{"price", V_INT, offsetof(aircraft_t, price), MEMBER_SIZEOF(aircraft_t, price)},
 	/* this is needed to let the buy and sell screen look for the needed building */
 	/* to place the aircraft in */
-	{"building", V_STRING, offsetof(aircraft_t, building), 0},
+	{"building", V_CLIENT_HUNK_STRING, offsetof(aircraft_t, building), 0},
 
 	{NULL, 0, 0, 0}
 };
@@ -1411,7 +1419,7 @@ extern void AIR_ParseAircraft (const char *name, char **text)
 	Com_DPrintf("...found aircraft %s\n", name);
 	air_samp->idx = gd.numAircraft;
 	air_samp->idx_sample = numAircraft_samples;
-	Q_strncpyz(air_samp->id, name, sizeof(air_samp->id));
+	CL_ClientHunkStoreString(name, &air_samp->id);
 	air_samp->status = AIR_HOME;
 
 	/* get it's body */
@@ -1439,8 +1447,16 @@ extern void AIR_ParseAircraft (const char *name, char **text)
 				token = COM_EParse(text, errhead, name);
 				if (!*text)
 					return;
+				switch (vp->type) {
+				case V_TRANSLATION2_STRING:
+					token++;
+				case V_CLIENT_HUNK_STRING:
+					CL_ClientHunkStoreString(token, (char**) ((void*)air_samp+ (int)vp->ofs));
+					break;
+				default:
+					Com_ParseValue(air_samp, token, vp->type, vp->ofs, vp->size);
+				}
 
-				Com_ParseValue(air_samp, token, vp->type, vp->ofs, vp->size);
 				break;
 			}
 

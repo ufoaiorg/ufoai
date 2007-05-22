@@ -26,7 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_ALIENCONT_H
 #define CLIENT_CL_ALIENCONT_H
 
-#define MAX_CARGO		256
+#define MAX_CARGO		32
 #define MAX_ALIENCONT_CAP	512
 
 /** types of aliens */
