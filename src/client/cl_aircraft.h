@@ -67,12 +67,6 @@ typedef enum {
 	AIR_MAX
 } aircraftParams_t;
 
-/** @brief Aircraft stats. */
-typedef struct aircraftStats_s {
-	aircraftParams_t param;	/**< Aircraft parameter... */
-	int value;		/**< ... and its value. */
-} aircraftStats_t;
-
 struct actMis_s;
 
 #define MAX_AIRCRAFTITEMS 64
@@ -177,7 +171,7 @@ typedef struct aircraft_s {
 	int ufo;				/**< Ufo's id the aircraft is purchasing (gd.ufos + id) */
 	radar_t	radar;			/**< Radar to track ufos */
 	/*
-	aircraftStats_t stats;
+	int stats[AIR_MAX];
 	*/
 
 	qboolean visible;		/**< The ufo is visible ? */
