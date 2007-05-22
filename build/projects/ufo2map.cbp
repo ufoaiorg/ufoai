@@ -13,6 +13,9 @@
 				<Option object_output=".objs\ufo2map" />
 				<Option type="1" />
 				<Option compiler="gcc" />
+				<Linker>
+					<Add option="-lz" />
+				</Linker>
 			</Target>
 		</Build>
 		<Compiler>
@@ -28,6 +31,26 @@
 		<Linker>
 			<Add directory="C:\Dev-Cpp\lib" />
 		</Linker>
+		<Unit filename="..\..\src\qcommon\ioapi.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\qcommon\ioapi.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\qcommon\unzip.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\qcommon\unzip.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
 		<Unit filename="..\..\src\tools\ufo2map\brushbsp.c">
 			<Option compilerVar="CC" />
 			<Option target="default" />
@@ -73,6 +96,10 @@
 			<Option target="default" />
 		</Unit>
 		<Unit filename="..\..\src\tools\ufo2map\common\trace.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\tools\ufo2map\convert_ase.c">
 			<Option compilerVar="CC" />
 			<Option target="default" />
 		</Unit>
@@ -152,8 +179,6 @@
 			<Option compilerVar="CC" />
 			<Option target="default" />
 		</Unit>
-		<Extensions>
-			<code_completion />
-		</Extensions>
+		<Extensions />
 	</Project>
 </CodeBlocks_project_file>

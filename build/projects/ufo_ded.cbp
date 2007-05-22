@@ -126,6 +126,10 @@
 			<Option compilerVar="CC" />
 			<Option target="default" />
 		</Unit>
+		<Unit filename="..\..\src\qcommon\msg.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
 		<Unit filename="..\..\src\qcommon\net_chan.c">
 			<Option compilerVar="CC" />
 			<Option target="default" />
@@ -178,8 +182,6 @@
 			<Option compilerVar="CC" />
 			<Option target="default" />
 		</Unit>
-		<Extensions>
-			<code_completion />
-		</Extensions>
+		<Extensions />
 	</Project>
 </CodeBlocks_project_file>

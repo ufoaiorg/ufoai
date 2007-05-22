@@ -68,6 +68,16 @@
 			<Option link="0" />
 			<Option target="default" />
 		</Unit>
+		<Unit filename="..\..\src\client\cl_airfight.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\client\cl_airfight.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
 		<Unit filename="..\..\src\client\cl_aliencont.c">
 			<Option compilerVar="CC" />
 			<Option target="default" />
@@ -92,11 +102,25 @@
 			<Option compilerVar="CC" />
 			<Option target="default" />
 		</Unit>
+		<Unit filename="..\..\src\client\cl_console.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
 		<Unit filename="..\..\src\client\cl_employee.c">
 			<Option compilerVar="CC" />
 			<Option target="default" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_employee.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\client\cl_event.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\client\cl_event.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
@@ -116,8 +140,54 @@
 			<Option link="0" />
 			<Option target="default" />
 		</Unit>
+		<Unit filename="..\..\src\client\cl_http.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\client\cl_http.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\client\cl_hunk.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\client\cl_hunk.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
 		<Unit filename="..\..\src\client\cl_input.c">
 			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\client\cl_input.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\client\cl_inventory.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\client\cl_inventory.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\client\cl_keys.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\client\cl_keys.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
 			<Option target="default" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_le.c">
@@ -176,6 +246,16 @@
 			<Option link="0" />
 			<Option target="default" />
 		</Unit>
+		<Unit filename="..\..\src\client\cl_save.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\client\cl_save.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
 		<Unit filename="..\..\src\client\cl_scrn.c">
 			<Option compilerVar="CC" />
 			<Option target="default" />
@@ -192,11 +272,25 @@
 			<Option compilerVar="CC" />
 			<Option target="default" />
 		</Unit>
+		<Unit filename="..\..\src\client\cl_transfer.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\client\cl_transfer.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="default" />
+		</Unit>
 		<Unit filename="..\..\src\client\cl_ufo.c">
 			<Option compilerVar="CC" />
 			<Option target="default" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_ufopedia.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
+		<Unit filename="..\..\src\client\cl_vid.c">
 			<Option compilerVar="CC" />
 			<Option target="default" />
 		</Unit>
@@ -210,27 +304,7 @@
 			<Option link="0" />
 			<Option target="default" />
 		</Unit>
-		<Unit filename="..\..\src\client\cl_console.c">
-			<Option compilerVar="CC" />
-			<Option target="default" />
-		</Unit>
 		<Unit filename="..\..\src\client\console.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="default" />
-		</Unit>
-		<Unit filename="..\..\src\client\cl_input.h">
-			<Option compilerVar="CPP" />
-			<Option compile="0" />
-			<Option link="0" />
-			<Option target="default" />
-		</Unit>
-		<Unit filename="..\..\src\client\cl_keys.c">
-			<Option compilerVar="CC" />
-			<Option target="default" />
-		</Unit>
-		<Unit filename="..\..\src\client\cl_keys.h">
 			<Option compilerVar="CPP" />
 			<Option compile="0" />
 			<Option link="0" />
@@ -448,6 +522,10 @@
 			<Option link="0" />
 			<Option target="default" />
 		</Unit>
+		<Unit filename="..\..\src\qcommon\msg.c">
+			<Option compilerVar="CC" />
+			<Option target="default" />
+		</Unit>
 		<Unit filename="..\..\src\qcommon\net_chan.c">
 			<Option compilerVar="CC" />
 			<Option target="default" />
@@ -524,8 +602,6 @@
 			<Option compilerVar="CC" />
 			<Option target="default" />
 		</Unit>
-		<Extensions>
-			<code_completion />
-		</Extensions>
+		<Extensions />
 	</Project>
 </CodeBlocks_project_file>
