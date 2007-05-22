@@ -30,5 +30,6 @@ void *CL_ClientHunkUse(const void *token, size_t size);
 qboolean CL_ClientHunkClear(void);
 void CL_ClientHunkInit(void);
 void CL_ClientHunkShutdown(void);
+char *CL_ClientHunkStoreString(const char *string, char **dst);
 
 #endif /* CLIENT_CL_HUNK_H */

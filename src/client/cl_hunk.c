@@ -33,6 +33,18 @@ static byte *clHunkData = NULL;
 static byte *clHunkPointerPos;
 
 /**
+ * @brief
+ */
+static void CL_ClientHunkUsage_f (void)
+{
+	ptrdiff_t size = clHunkPointerPos - clHunkData;
+
+	Com_Printf("client hunk statistics:\n"
+		"used: %i bytes\n"
+		"allocated: %i bytes\n", size, (int)cl_hunkmegs->integer * 1024 * 1024);
+}
+
+/**
  * @brief Inits some client hunk mem to store parsed data
  * @sa CL_ClientHunkShutdown
  * @sa CL_ClientHunkUse
@@ -42,12 +54,13 @@ static byte *clHunkPointerPos;
 extern void CL_ClientHunkInit (void)
 {
 	cl_hunkmegs = Cvar_Get("cl_hunkmegs", "1", 0, "Hunk megabytes for client parsed static data");
+	Cmd_AddCommand("cl_hunkstats", CL_ClientHunkUsage_f, "Displays some client hunk stats");
 
 	clHunkData = malloc(cl_hunkmegs->integer * 1024 * 1024 * sizeof(char));
 	if (!clHunkData)
-		Sys_Error("Could not allocate client hunk with %i megabytes\n", cl_hunkmegs->integer);
+		Sys_Error("Could not allocate client hunk with %i megabyte(s)\n", cl_hunkmegs->integer);
 	clHunkPointerPos = clHunkData;
-	Com_Printf("inited client hunk data with %i megabytes\n", cl_hunkmegs->integer);
+	Com_Printf("inited client hunk data with %i megabyte(s)\n", cl_hunkmegs->integer);
 }
 
 /**
@@ -78,6 +91,21 @@ extern void CL_ClientHunkShutdown (void)
 }
 
 /**
+ * @brief Saves a string to client hunk
+ * @sa CL_ClientHunkUse
+ * @param[in] string String to store on hunk
+ * @param[in] dst The offset or char pointer that points to the hunk space that
+ * was used to store the string
+ */
+extern char *CL_ClientHunkStoreString (const char *string, char **dst)
+{
+	assert(dst);
+	assert(string);
+	*dst = (char*)CL_ClientHunkUse(string, strlen(string) + 1);
+	return *dst;
+}
+
+/**
  * @brief Copy data to hunk and return the position in current hunk
  * @sa CL_ClientHunkInit
  * @sa CL_ClientHunkShutdown
@@ -90,6 +118,7 @@ extern void CL_ClientHunkShutdown (void)
 extern void *CL_ClientHunkUse (const void *data, size_t size)
 {
 	void *hunkPos = clHunkPointerPos;
+	assert(clHunkData);
 	if (clHunkPointerPos + size > clHunkData + (cl_hunkmegs->integer * 1024 * 1024))
 		Sys_Error("Increase the cl_hunkmegs value\n");
 	/* maybe we just want to alloc, but not copy the mem */
