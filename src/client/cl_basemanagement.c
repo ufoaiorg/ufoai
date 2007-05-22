@@ -2918,6 +2918,7 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 	base_t *b;
 	aircraft_t *aircraft;
 	building_t *building;
+	int maxCargo = (*(int*)data >= 2) ? MAX_CARGO : 256; /* old value */
 
 	gd.numAircraft = MSG_ReadShort(sb);
 	bases = MSG_ReadByte(sb);
@@ -3012,9 +3013,9 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 				gd.alltransfers[aircraft->idx].destBase = MSG_ReadByte(sb);
 				for (l = 0; l < MAX_OBJDEFS; l++)
 					gd.alltransfers[aircraft->idx].itemAmount[l] = MSG_ReadShort(sb);
-				for (l = 0; l < MAX_CARGO; l++)
+				for (l = 0; l < maxCargo; l++)
 					gd.alltransfers[aircraft->idx].alienLiveAmount[l] = MSG_ReadShort(sb);
-				for (l = 0; l < MAX_CARGO; l++)
+				for (l = 0; l < maxCargo; l++)
 					gd.alltransfers[aircraft->idx].alienBodyAmount[l] = MSG_ReadShort(sb);
 				for (l = 0; l < MAX_EMPLOYEES; l++)
 					gd.alltransfers[aircraft->idx].employees[l] = MSG_ReadShort(sb);
