@@ -253,8 +253,26 @@ then
 	fi
 fi
 
+echo "========================================"
+echo " LIBCURL"
+echo "========================================"
+version="7.16.2"
+download http://curl.haxx.se/download/libcurl-$version-win32-nossl.zip
+any2deb mingw32-libcurl-dev $version libvorbis-mingw32-$version.tar.gz /usr/i586-mingw32msvc >> /dev/null
+if [ "$dont_install" -ne "1" ]
+then
+	dpkg -i mingw32-libcurl-dev_$version-2_all.deb
+	if [ $? -ne 0 ]
+	then
+		echo "Fatal error with dpkg (libcurl)"
+		if [ "$stop_on_error" -eq "1" ]
+		then
+			exit 1
+		fi
+	fi
+fi
+
 if [ "$dont_install" -eq "1" ]
 then
 	echo "NOTE: No packages were installed - deactivate dont_install if you want to install them automatically"
 fi
-
