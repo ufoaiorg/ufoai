@@ -1034,7 +1034,7 @@ static void B_BuildingInit (void)
 					B_BuildingAddToList(buildingType);
 				}
 			} else {
-				Com_DPrintf("Building not researched yet %s\n", buildingType->id);
+				Com_DPrintf("Building not researched yet %s (tech idx: %i)\n", buildingType->id, buildingType->tech);
 			}
 		}
 	}

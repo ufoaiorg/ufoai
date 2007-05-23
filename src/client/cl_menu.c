@@ -3846,7 +3846,7 @@ void MN_ParseMenuModel (const char *name, char **text)
 
 	/* search for menumodels with same name */
 	for (i = 0; i < numMenuModels; i++)
-		if (!Q_strncmp(menuModels[i].id, name, sizeof(menuModels[i].id))) {
+		if (!Q_strcmp(menuModels[i].id, name)) {
 			Com_Printf("MN_ParseMenuModel: menu_model \"%s\" with same name found, second ignored\n", name);
 			return;
 		}
