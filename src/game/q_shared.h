@@ -299,7 +299,7 @@ typedef union {
 /** @brief Map boundary is +/- 4096 - to get into the positive area we
  * add the possible max negative value and divide by the size of a grid unit field
  */
-#define VecToPos(v,p)       (p[0]=(((int)v[0]+4096)/UNIT_SIZE), p[1]=(((int)v[1]+4096)/UNIT_SIZE), p[2]=((int)v[2]/UNIT_HEIGHT))
+#define VecToPos(v,p)       (p[0]=LittleLong(((int)v[0]+4096)/UNIT_SIZE), p[1]=LittleLong(((int)v[1]+4096)/UNIT_SIZE), p[2]=LittleLong((int)v[2]/UNIT_HEIGHT))
 /** @brief Pos boundary size is +/- 128 - to get into the positive area we add
  * the possible max negative value and multiply with the grid unit size to get
  * back the the vector coordinates - now go into the middle of the grid field

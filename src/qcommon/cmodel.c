@@ -2794,7 +2794,7 @@ int Grid_Fall (struct routing_s *map, pos3_t pos)
 	if (z >= HEIGHT)
 		return -1;
 
-	Com_Printf("%i:%i:%i\n", pos[0], pos[1], pos[2]);
+/*	Com_Printf("%i:%i:%i\n", pos[0], pos[1], pos[2]);*/
 
 	/**
 	 * This fixes a problem with height positions set to 255 in Grid_Height and Grid_PosToVec (->floating soldiers/aliens).
