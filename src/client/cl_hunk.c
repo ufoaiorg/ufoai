@@ -27,6 +27,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static cvar_t* cl_hunkmegs;
 
+/* FIXME: The client hunk isn't cleared in CL_ReadSinglePlayerData - so if a
+ * player restarts the campaign a few times without restarting the game - the
+ * hunk may overflow but we can't just call CL_ClientHunkClear because fonts,
+ * shaders and other stuff (not reparsed) are stored, there, too
+ */
 
 /** @brief don't allow external access to this hunk */
 static byte *clHunkData = NULL;

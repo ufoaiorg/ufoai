@@ -3680,6 +3680,10 @@ static void CL_GameNew (void)
 
 	memset(&gd, 0, sizeof(gd));
 	memset(&stats, 0, sizeof(stats));
+	/* FIXME: The client hunk isn't cleared here - so if a player restarts the campaign
+	 * a few times without restarting the game - the hunk may overflow
+	 * but we can't just call CL_ClientHunkClear because fonts, shaders and other stuff (not reparsed)
+	 * are stored, there, too */
 	CL_ReadSinglePlayerData();
 
 	Cvar_Set("team", curCampaign->team);
