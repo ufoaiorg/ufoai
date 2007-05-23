@@ -10,13 +10,13 @@ JPEG_CFLAGS=
 
 # MinGW32
 ifeq ($(TARGET_OS),mingw32)
-	LIBS+=-lwsock32 -lwinmm -lkernel32 -luser32 -lgdi32
+	CLIENT_LIBS+=-lwsock32 -lwinmm -lkernel32 -luser32 -lgdi32
+	SERVER_LIBS+=-lwsock32 -lwinmm -lkernel32 -luser32 -lgdi32
 	SHARED_EXT=dll
 	SHARED_LDFLAGS=-shared
 	SHARED_CFLAGS=-shared
 	JPEG_CFLAGS=-DDONT_TYPEDEF_INT32
 	CFLAGS+=-DGETTEXT_STATIC
-#	SERVER_LIBS+=
 #	GAME_LIBS+=
 #	TOOLS_LIBS=
 endif
