@@ -809,7 +809,7 @@ extern qboolean AIR_AircraftMakeMove (int dt, aircraft_t* aircraft)
 	/* calc distance */
 	aircraft->time += dt;
 	aircraft->fuel -= dt;
-	dist = aircraft->stats[AIR_STATS_SPEED] * aircraft->time / 3600;
+	dist = (float) aircraft->stats[AIR_STATS_SPEED] * aircraft->time / 3600.0f;
 
 	/* Check if destination reached */
 	if (dist >= aircraft->route.distance * (aircraft->route.numPoints - 1))
