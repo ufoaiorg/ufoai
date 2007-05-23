@@ -12,7 +12,7 @@
 //		tech
 //			Items have all the information in here. Especially the name and the model/image.
 //		logic
-//			"logic" defines that this entry is onbly used for complex requirements as defined in "require_*". This is not displayed anywhere.
+//			"logic" defines that this entry is onbly used for complex requirements as defined in "require_*". This is not displayed anywhere. logic technologies are moved to research_logic.ufo
 //		weapon
 //			This is an entry for an item that is defined in "weapon*.ufo".
 //		everything else (craft, building, alien, etc...)
@@ -150,9 +150,11 @@ tech rs_antimatter
 	up_chapter	tech
 	description {
 		default "_antimatter_txt"
+		rs_antimatter_extra "_antimatter_extra_txt"
 	}
 	pre_description {
 		default "_antimatter_pre_txt"
+		rs_antimatter_extra "_antimatter_extra_pre_txt"
 	}
 
 	mail_pre
@@ -193,34 +195,6 @@ tech rs_item_antimatter
         provides	antimatter
 	time		0
 	producetime	-1
-}
-
-// Should contain _every_ enemy possible.
-//tech rs_contained_alien
-//{
-//	type	logic
-//	name	"LOGIC:One Live Alien"
-//	require_OR
-//	{
-//TODO: live alien support (i.e. containment)
-//		alien alien_taman 1
-//		alien alien_ortnok 1
-//		alien alien_shevaar 1
-//		alien alien_bloodspider 1
-//	}
-//}
-
-// Should contain _every_ organic enemy possible.
-tech rs_contained_organic_alien
-{
-	type	logic
-	name	"LOGIC:One Live Organic Alien"
-	require_OR
-	{
-		alien Taman 1
-		alien Ortnok 1
-		alien Shevaar 1
-	}
 }
 
 tech rs_alien_live
@@ -3180,9 +3154,11 @@ tech rs_alien_ortnok_autopsy
 	name	"_Alien Autopsy - Ortnok"
 	description {
 		default "_ortnok_autopsy_txt"
+		rs_ortnok_extra "_ortnok_autopsy_extra_txt"
 	}
 	pre_description {
 		default "_ortnok_autopsy_pre_txt"
+		rs_ortnok_extra "_ortnok_autopsy_extra_pre_txt"
 	}
 	up_chapter	aliens
 
@@ -3220,9 +3196,11 @@ tech rs_alien_taman_autopsy
 	name	"_Alien Autopsy - Taman"
 	description {
 		default "_taman_autopsy_txt"
+		rs_taman_extra "_taman_autopsy_extra_txt"
 	}
 	pre_description {
 		default "_taman_autopsy_pre_txt"
+		rs_taman_extra "_taman_autopsy_extra_pre_txt"
 	}
 	up_chapter	aliens
 
@@ -3258,9 +3236,11 @@ tech rs_alien_shevaar_autopsy
 	name	"_Alien Autopsy - Shevaar"
 	description {
 		default "_shevaar_autopsy_txt"
+		rs_shevaar_extra "_shevaar_autopsy_extra_txt"
 	}
 	pre_description {
 		default "_shevaar_autopsy_pre_txt"
+		rs_shevaar_extra "_shevaar_autopsy_extra_pre_txt"
 	}
 	up_chapter	aliens
 
@@ -3760,31 +3740,3 @@ tech news_newtwist
 	pushnews	true
 }
 
-//========================
-// WIPs
-//========================
-
-// Concept of using dummy techs for extended requirements (they should not be displayed anywhere - thus the "logic" type)
-// These entries can later be moved in front of the rs_craft_weapon_particle_beam entry.
-
-tech rs_fighter_AND_particle
-{
-	type	logic
-	name	"LOGIC:Fighter AND 1beamweapon"
-	require_AND
-	{
-		item craft_weapon_particle 1
-		tech rs_craft_ufo_fighter
-	}
-}
-
-tech rs_harvester_AND_particle
-{
-	type	logic
-	name	"LOGIC:Harvester AND 1beamweapon"
-	require_AND
-	{
-		item craft_weapon_particle 1
-		tech rs_craft_ufo_harvester
-	}
-}

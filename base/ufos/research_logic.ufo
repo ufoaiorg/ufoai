@@ -1,0 +1,92 @@
+// Should contain _every_ enemy possible.
+//tech rs_contained_alien
+//{
+//      type    logic
+//      name    "LOGIC:One Live Alien"
+//      require_OR
+//      {
+//TODO: live alien support (i.e. containment)
+//              alien alien_taman 1
+//              alien alien_ortnok 1
+//              alien alien_shevaar 1
+//              alien alien_bloodspider 1
+//      }
+//}
+
+// Should contain _every_ organic enemy possible.
+tech rs_contained_organic_alien
+{
+	type	logic
+	name	"LOGIC:One Live Organic Alien"
+	require_OR
+	{
+		alien Taman 1
+		alien Ortnok 1
+		alien Shevaar 1
+	}
+}
+
+tech rs_fighter_AND_particle
+{
+	type	logic
+	name	"LOGIC:Fighter AND 1beamweapon"
+	require_AND
+	{
+		item craft_weapon_particle 1
+		tech rs_craft_ufo_fighter
+	}
+}
+
+tech rs_harvester_AND_particle
+{
+	type	logic
+	name	"LOGIC:Harvester AND 1beamweapon"
+	require_AND
+	{
+		item craft_weapon_particle 1
+	tech rs_craft_ufo_harvester
+	}
+}
+
+tech rs_antimatter_extra
+{
+        type    logic
+        name    "LOGIC:Antimatter"
+        require_AND
+        {
+		tech rs_craft_ufo_harvester
+        }
+}
+
+tech rs_taman_extra
+{
+	type	logic
+	name	"LOGIC:Taman autopsy"
+	require_OR
+	{
+		tech rs_alien_shevaar_autopsy
+		tech rs_alien_ortnok_autopsy
+	}
+}
+
+tech rs_shevaar_extra
+{
+	type	logic
+	name	"LOGIC:Shevaar autopsy"
+	require_OR
+	{
+		tech rs_alien_taman_autopsy
+		tech rs_alien_ortnok_autopsy
+	}
+}
+
+tech rs_ortnok_extra
+{
+	type	logic
+	name	"LOGIC:Ortnok autopsy"
+	require_OR
+	{
+		tech rs_alien_taman_autopsy
+		tech rs_alien_shevaar_autopsy
+	}
+}
