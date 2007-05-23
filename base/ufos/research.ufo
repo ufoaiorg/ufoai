@@ -30,7 +30,10 @@
 //		}
 //
 //		rs_tech_id:
-//			The first entry does not need this, you can use any string, but "defualt" is
+//			This string links to a tech that is used to check if this text should be displayed.
+//			If all requirements of the tech are met the text will be displayed.
+//			First match in the list (after the default) will be used, so order is important.
+//			The first entry (default/fallback) does not need an existing tech, you can use any string, but "default" is recommended.
 //		_gettext_text:
 //			A short string that is used by gettext to be translatable (e.g. "default _itemname_txt").
 //			This needs to be a unique string in all descriptions.
