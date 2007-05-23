@@ -39,8 +39,6 @@ void Font_CleanCache(void);
 void Font_Shutdown(void);
 void Font_Init(void);
 void Font_ListCache_f(void);
-void Font_Register(const char *name, int size, char *path, char *style);
-void Font_Register(const char *name, int size, char *path, char *style);
-
+void Font_Register(const char *name, int size, const char *path, const char *style);
 
 #endif	/* _GL_FONTS */

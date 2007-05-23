@@ -692,7 +692,7 @@ void Font_Init (void)
 /**
  * @brief
  */
-void Font_Register (const char *name, int size, char *path, char *style)
+void Font_Register (const char *name, int size, const char *path, const char *style)
 {
 	int renderstyle = 0;		/* NORMAL is standard */
 	int i;
