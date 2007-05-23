@@ -663,6 +663,8 @@ extern void AIR_NewAircraft (base_t *base, const char *name)
 		aircraft = &base->aircraft[base->numAircraftInBase];
 		aircraft->idx = gd.numAircraft;
 		aircraft->homebase = base;
+		/* give him some fuel */
+		aircraft->fuel = aircraft->fuelSize;
 		/* for saving and loading a base */
 		aircraft->idxBase = base->idx;
 		/* this is the aircraft array id in current base */
@@ -1387,7 +1389,6 @@ static const value_t aircraft_vals[] = {
 	{"shortname", V_TRANSLATION_STRING, offsetof(aircraft_t, shortname), 0},
 	{"size", V_INT, offsetof(aircraft_t, size), MEMBER_SIZEOF(aircraft_t, size)},
 	{"weight", V_INT, offsetof(aircraft_t, weight), MEMBER_SIZEOF(aircraft_t, weight)},
-	{"fuel", V_INT, offsetof(aircraft_t, fuel), MEMBER_SIZEOF(aircraft_t, fuel)},
 	{"fuelsize", V_INT, offsetof(aircraft_t, fuelSize), MEMBER_SIZEOF(aircraft_t, fuelSize)},
 	{"angles", V_VECTOR, offsetof(aircraft_t, angles), MEMBER_SIZEOF(aircraft_t, angles)},
 	{"center", V_VECTOR, offsetof(aircraft_t, center), MEMBER_SIZEOF(aircraft_t, center)},

@@ -60,7 +60,6 @@ aircraft craft_drop_firebird
 	building	building_hangar
 	size		8
 	weight		8
-	fuel		100000
 	fuelsize	100000
 	image		air_dropship
 	angles		"-20 -40 120"
@@ -89,7 +88,6 @@ aircraft craft_inter_stiletto
 	shortname	"_Stiletto I"
 	type		interceptor
 	model		"inter_stiletto"
-	fuel		60000
 	fuelsize	60000
 	size		1
 	weight		4
@@ -122,7 +120,6 @@ aircraft craft_inter_saracen
 	shortname	"_Saracen I"
 	type		interceptor
 	model		"inter_saracen"
-	fuel		60000
 	fuelsize	60000
 	size		1
 	weight		4
@@ -154,7 +151,6 @@ aircraft craft_inter_stingray
 	shortname	"_Stingray"
 	type		interceptor
 	model		"inter_stingray"
-	fuel		60000
 	fuelsize	60000
 	size		1
 	weight		4
@@ -195,7 +191,6 @@ aircraft craft_ufo_harvester
 	weight		3
 	building	building_big_ufo_hangar
 	price		-1 // not buyable (implemented already?)
-	fuel		100000
 	fuelsize	100000
 	image		air_ufo
 	angles		"170 -30 -100"
@@ -230,7 +225,6 @@ aircraft craft_ufo_carrier
 	weight		3
 	building	building_small_ufo_hangar
 	price		-1 // not buyable (implemented already?)
-	fuel		100000
 	fuelsize	100000
 	image		air_ufo
 	angles		"170 -30 -100"
@@ -261,7 +255,6 @@ aircraft craft_ufo_big
 	weight		3
 	building	building_big_ufo_hangar
 	price		-1 // not buyable (implemented already?)
-	fuel		100000
 	fuelsize	100000
 	image		air_ufo
 	angles		"170 -30 -100"
@@ -292,7 +285,6 @@ aircraft craft_ufo_condor
 	weight		3
 	building	building_big_ufo_hangar
 	price		-1 // not buyable (implemented already?)
-	fuel		100000
 	fuelsize	100000
 	image		air_ufo
 	angles		"170 -30 -100"
@@ -322,7 +314,6 @@ aircraft craft_ufo_scout
 	weight		3
 	building	building_small_ufo_hangar
 	price		3000000
-	fuel		100000
 	fuelsize	100000
 	image		air_ufo
 	angles		"170 -30 -100"
@@ -352,7 +343,6 @@ aircraft craft_ufo_fighter
 	weight		4
 	// FIXME: should be big hangar
 	building	building_small_ufo_hangar
-	fuel		1000000
 	fuelsize	1000000
 	price		4000000
 	image		air_ufo
