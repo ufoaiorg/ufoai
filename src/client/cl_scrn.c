@@ -83,75 +83,107 @@ BAR GRAPHS
 void CL_AddNetgraph (void)
 {
 	int i;
-	int in;
-	int ping;
 
 	/* if using the debuggraph for something else, don't */
 	/* add the net lines */
-	if (scr_debuggraph->value || scr_timegraph->value)
+	if (scr_debuggraph->integer || scr_timegraph->integer)
 		return;
 
 	for (i = 0; i < cls.netchan.dropped; i++)
 		SCR_DebugGraph(30, 0x40);
-
-	for (i = 0; i < cl.surpressCount; i++)
-		SCR_DebugGraph(30, 0xdf);
-
-	/* see what the latency was on this packet */
-	in = cls.netchan.incoming_acknowledged & (CMD_BACKUP - 1);
-/*	ping = cls.realtime - cl.cmd_time[in]; */
-	ping = 100;
-	ping /= 30;
-	if (ping > 30)
-		ping = 30;
-	SCR_DebugGraph(ping, 0xd0);
 }
 
-
+/** @brief Graph color and value */
 typedef struct {
 	float value;
-	int color;
+	int color;		/**< color value */
 } graphsamp_t;
 
-static int current = 0;
-static graphsamp_t values[1024];
+#define GRAPH_WIDTH 256
+
+static int currentPos = 0;
+static graphsamp_t values[GRAPH_WIDTH];
 
 /**
  * @brief
+ * @sa SCR_DrawDebugGraph
  */
 void SCR_DebugGraph (float value, int color)
 {
-	values[current & 1023].value = value;
-	values[current & 1023].color = color;
-	current++;
+	values[currentPos & (GRAPH_WIDTH-1)].value = value;
+	values[currentPos & (GRAPH_WIDTH-1)].color = color;
+	currentPos++;
 }
 
 /**
  * @brief
+ * @sa SCR_DebugGraph
  */
 static void SCR_DrawDebugGraph (void)
 {
-	int a, x, y, w, i, h;
+	int a, x, y, w, i, h, min, max;
 	float v;
-	vec4_t color = { 0.0, 0.0, 0.0, 1.0 };
+	vec4_t color = {1, 0, 0, 0.5};
+	static float lasttime = 0;
+	static int fps;
+	struct tm *now;
+	time_t tnow;
+	char timebuf[32], temp_map[32];
+	int time_clock, map_time = 0, time_map, hour, mins, secs;
 
-	/* draw the graph */
-	w = scr_vrect.width;
+	tnow = time((time_t *) 0);
+	now = localtime(&tnow);
 
-	x = scr_vrect.x;
-	y = scr_vrect.y + scr_vrect.height;
-	re.DrawFill(x, y - scr_graphheight->value, w, scr_graphheight->value, 0, color);
+	h = w = GRAPH_WIDTH;
 
-	for (a = 0; a < w; a++) {
-		i = (current - 1 - a + 1024) & 1023;
+	x = scr_vrect.width - (w + 2) - 1;
+	y = scr_vrect.height - (h + 2) - 1;
+
+	re.DrawFill(x, y, w, h, 0, color);
+
+	for (a = 0; a < GRAPH_WIDTH; a++) {
+		i = (currentPos - 1 - a + GRAPH_WIDTH) & (GRAPH_WIDTH-1);
 		v = values[i].value;
-		color[0] = color[1] = color[2] = values[i].color;
-		v = v * scr_graphscale->value + scr_graphshift->value;
+		Vector4Set(color, values[i].color, values[i].color, values[i].color, 1.0f);
+		v = v * scr_graphscale->value;
 
-		if (v < 0)
-			v += scr_graphheight->value * (1 + (int) (-v / scr_graphheight->value));
-		h = (int)v % scr_graphheight->integer;
-		re.DrawFill(x + w - 1 - a, y - h, 1, h, 0, color);
+		if (v < 1)
+			v += h * (1 + (int)(-v / h));
+
+		max = (int)v % h + 1;
+		min = y + h - max - scr_graphshift->integer;
+
+		/* bind to box! */
+		if (min < y + 1)
+			min = y + 1;
+		if (min > y + h)
+			min = y + h;
+		if (min + max > y + h)
+			max = y + h - max;
+
+		re.DrawFill(x + w - a, min, 1, max, 0, color);
+	}
+
+	if (cls.realtime - lasttime > 50) {
+		lasttime = cls.realtime;
+		fps = (cls.frametime) ? 1 / cls.frametime : 0;
+	}
+
+	if (scr_netgraph->integer == 3) {
+		time_clock = strftime(timebuf, 32, "Time: %H:%M", now);
+		time_map = cl.time / 1000;
+		hour = time_map / 3600;
+		mins = (time_map % 3600) / 60;
+		secs = time_map % 60;
+
+		if (hour > 0)
+			Com_sprintf(temp_map, sizeof(temp_map), "Map:  %i:%02i:%02i", hour, mins, secs);
+		else
+			Com_sprintf(temp_map, sizeof(temp_map), "Map:  %i:%02i", mins, secs);
+
+		SCR_DrawString(x + 5, y + 5 * 0, va("FPS:  %3i", fps), qtrue);
+		SCR_DrawString(x + 5, y + 5 * 1.7, va(timebuf, time_clock), qtrue);
+		SCR_DrawString(x + 5, y + 5 * 3.4, va(temp_map, map_time), qtrue);
 	}
 }
 
@@ -717,12 +749,12 @@ void SCR_UpdateScreen (void)
 	 ** range check cl_camera_separation so we don't inadvertently fry someone's
 	 ** brain
 	 */
-	if (cl_stereo_separation->value > 1.0)
+	if (cl_stereo_separation->integer > 1.0)
 		Cvar_SetValue("cl_stereo_separation", 1.0);
-	else if (cl_stereo_separation->value < 0)
+	else if (cl_stereo_separation->integer < 0)
 		Cvar_SetValue("cl_stereo_separation", 0.0);
 
-	if (cl_stereo->value) {
+	if (cl_stereo->integer) {
 		numframes = 2;
 		separation[0] = -cl_stereo_separation->value / 2;
 		separation[1] = cl_stereo_separation->value / 2;
@@ -749,13 +781,13 @@ void SCR_UpdateScreen (void)
 		SCR_DrawNet();
 		SCR_CheckDrawCenterString();
 
-		if (cl_fps->value)
+		if (cl_fps->integer)
 			SCR_DrawString(viddef.width - 80, 4, va("fps: %3.1f", cls.framerate), qtrue);
 
-		if (scr_timegraph->value)
+		if (scr_timegraph->integer)
 			SCR_DebugGraph(cls.frametime * 300, 0);
 
-		if (scr_debuggraph->value || scr_timegraph->value || scr_netgraph->value)
+		if (scr_debuggraph->integer || scr_timegraph->integer || scr_netgraph->integer)
 			SCR_DrawDebugGraph();
 
 		SCR_DrawPause();

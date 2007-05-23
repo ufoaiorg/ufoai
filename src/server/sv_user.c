@@ -355,10 +355,10 @@ static void SV_ExecuteUserCommand (char *s)
 		if (!Q_strncmp(Cmd_Argv(0), u->name, MAX_VAR)) {
 			Com_DPrintf("SV_ExecuteUserCommand: %s\n", s);
 			u->func();
-			break;
+			return;
 		}
 
-	if (!u->name && sv.state == ss_game) {
+	if (sv.state == ss_game) {
 		Com_DPrintf("SV_ExecuteUserCommand: client command: %s\n", s);
 		ge->ClientCommand(sv_player);
 	}

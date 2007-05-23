@@ -68,15 +68,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define FLOOR(e) ((e)->i.c[csi.idFloor])
 
 typedef struct {
-	int serverframe;			/**< if not current, this ent isn't in the frame */
-
-	int trailcount;				/**< for diminishing grenade trails */
-	vec3_t lerp_origin;			/**< for trails (variable hz) */
-
-	int fly_stoptime;
-} centity_t;
-
-typedef struct {
 	char name[MAX_QPATH];
 	char cinfo[MAX_QPATH];
 } clientinfo_t;
@@ -87,7 +78,7 @@ typedef struct {
 #define FOV_FPS			90.0
 #define CAMERA_START_DIST   600
 #define CAMERA_START_HEIGHT UNIT_HEIGHT*1.5
-#define CAMERA_LEVEL_HEIGHT 64
+#define CAMERA_LEVEL_HEIGHT UNIT_HEIGHT
 
 typedef struct {
 	vec3_t reforg;		/**< the reference origin used for rotating around */
@@ -132,8 +123,6 @@ typedef struct {
 	qboolean sound_prepped;		/**< ambient sounds can start */
 	qboolean force_refdef;		/**< vid has changed, so we can't use a paused refdef */
 
-	int surpressCount;			/**< number of messages rate supressed */
-
 	int parse_entities;			/**< index (not anded off) into cl_parse_entities[] */
 
 	int time;					/**< this is the time value that the client */
@@ -173,8 +162,7 @@ typedef struct {
 	struct sfx_s *sound_precache[MAX_SOUNDS];
 	struct image_s *image_precache[MAX_IMAGES];
 
-	clientinfo_t clientinfo[MAX_CLIENTS];
-	clientinfo_t baseclientinfo;
+	clientinfo_t clientinfo[MAX_CLIENTS]; /* client info of all connected clients */
 } client_state_t;
 
 extern client_state_t cl;
@@ -336,7 +324,6 @@ typedef struct {
 	float minlight;				/**< don't add when contributing less */
 } cdlight_t;
 
-extern centity_t cl_entities[MAX_EDICTS];
 extern cdlight_t cl_dlights[MAX_DLIGHTS];
 
 /*============================================================================= */

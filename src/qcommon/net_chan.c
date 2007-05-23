@@ -91,8 +91,8 @@ void Netchan_Init (void)
 	/* pick a port value that should be nice and random */
 	port = Sys_Milliseconds() & 0xffff;
 
-	net_showpackets = Cvar_Get("net_showpackets", "0", 0, NULL);
-	net_showdrop = Cvar_Get("net_showdrop", "0", 0, NULL);
+	net_showpackets = Cvar_Get("net_showpackets", "0", 0, "Print network packets to game console");
+	net_showdrop = Cvar_Get("net_showdrop", "0", 0, "Print dropped network packets to game console");
 	qport = Cvar_Get("qport", va("%i", port), CVAR_NOSET, NULL);
 
 	Cmd_AddCommand("net_stats", Net_Stats_f, "Network statistics");
@@ -156,7 +156,7 @@ void Netchan_Setup (netsrc_t sock, netchan_t * chan, netadr_t adr, int qport)
 /**
  * @brief Returns true if the last reliable message has acked
  */
-static qboolean Netchan_CanReliable(netchan_t * chan)
+static qboolean Netchan_CanReliable (netchan_t * chan)
 {
 	if (chan->reliable_length)
 		return qfalse;			/* waiting for ack */
@@ -214,7 +214,6 @@ void Netchan_Transmit (netchan_t * chan, int length, byte * data)
 		chan->reliable_sequence ^= 1;
 	}
 
-
 	/* write the packet header */
 	SZ_Init(&send, send_buf, sizeof(send_buf));
 
@@ -229,7 +228,7 @@ void Netchan_Transmit (netchan_t * chan, int length, byte * data)
 
 	/* send the qport if we are a client */
 	if (chan->sock == NS_CLIENT)
-		MSG_WriteShort(&send, qport->value);
+		MSG_WriteShort(&send, qport->integer);
 
 	/* copy the reliable message to the packet first */
 	if (send_reliable) {
@@ -246,7 +245,7 @@ void Netchan_Transmit (netchan_t * chan, int length, byte * data)
 	/* send the datagram */
 	NET_SendPacket(chan->sock, send.cursize, send.data, chan->remote_address);
 
-	if (net_showpackets->value) {
+	if (net_showpackets->integer) {
 		if (send_reliable)
 			Com_Printf("send %4i : s=%i reliable=%i ack=%i rack=%i\n", send.cursize, chan->outgoing_sequence - 1, chan->reliable_sequence,
 					chan->incoming_sequence, chan->incoming_reliable_sequence);
@@ -281,7 +280,7 @@ qboolean Netchan_Process (netchan_t * chan, sizebuf_t * msg)
 	sequence &= ~(1 << 31);
 	sequence_ack &= ~(1 << 31);
 
-	if (net_showpackets->value) {
+	if (net_showpackets->integer) {
 		if (reliable_message)
 			Com_Printf("recv %4i : s=%i reliable=%i ack=%i rack=%i\n", msg->cursize, sequence, chan->incoming_reliable_sequence ^ 1, sequence_ack,
 					reliable_ack);
@@ -291,7 +290,7 @@ qboolean Netchan_Process (netchan_t * chan, sizebuf_t * msg)
 
 	/* discard stale or duplicated packets */
 	if (sequence <= chan->incoming_sequence) {
-		if (net_showdrop->value)
+		if (net_showdrop->integer)
 			Com_Printf("%s:Out of order packet %i at %i\n", NET_AdrToString(chan->remote_address),
 					sequence, chan->incoming_sequence);
 		return qfalse;

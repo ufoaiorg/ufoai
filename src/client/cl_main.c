@@ -104,8 +104,6 @@ cvar_t *msg;
 client_static_t cls;
 client_state_t cl;
 
-centity_t cl_entities[MAX_EDICTS];
-
 static qboolean soldiersSpawned = qfalse;
 
 typedef struct teamData_s {
@@ -455,7 +453,6 @@ extern void CL_ClearState (void)
 
 	/* wipe the entire cl structure */
 	memset(&cl, 0, sizeof(cl));
-	memset(&cl_entities, 0, sizeof(cl_entities));
 	cl.cam.zoom = 1.0;
 	CalcFovX();
 
