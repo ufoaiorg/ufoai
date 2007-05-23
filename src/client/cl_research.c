@@ -1681,6 +1681,11 @@ extern void RS_ParseTechnologies (const char *name, char **text)
 
 						/* Copy description text into the entry. */
 						token = COM_EParse(text, errhead, name);
+						if (*token == '_')
+							token++;	/**< Remove first char (i.e. "_") */
+						else
+							Sys_Error("RS_ParseTechnologies: '%s' No gettext string for description '%s'. Abort.\n", name, desc_temp->tech[desc_temp->numDescriptions]);
+						
 						desc_temp->text[desc_temp->numDescriptions] = CL_ClientHunkUse(token, strlen(token) + 1);
 						desc_temp->numDescriptions++;
 					}
@@ -1853,7 +1858,7 @@ extern void RS_ParseTechnologies (const char *name, char **text)
 
 							switch (vp->type) {
 							case V_TRANSLATION2_STRING:
-								token++;
+								token++;	/**< Remove first char (i.e. we assume it's the "_") */
 							case V_CLIENT_HUNK_STRING:
 								CL_ClientHunkStoreString(token, (char**) ((void*)mail + (int)vp->ofs));
 								break;
@@ -2136,7 +2141,7 @@ technology_t **RS_GetTechsByType (researchType_t type)
 
 /**
  * @brief Searches for the technology that has the most scientists assigned in a given base.
- * @param[in] base_idx In what base the tech shoudl be researched.
+ * @param[in] base_idx In what base the tech should be researched.
  * @sa E_RemoveEmployeeFromBuilding
  */
 technology_t *RS_GetTechWithMostScientists (int base_idx)

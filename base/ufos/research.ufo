@@ -2215,7 +2215,7 @@ tech rs_damage_blast
 	name "_Blast Damage Type"
 	up_chapter damage
 	description {
-		default "none"
+		default "_none"
 	}
 	require_AND { tech nothing }
 
@@ -2229,7 +2229,7 @@ tech rs_damage_fire
 	name "_Fire Damage Type"
 	up_chapter	damage
 	description {
-		default "none"
+		default "_none"
 	}
 	require_AND { tech nothing }
 
@@ -2243,7 +2243,7 @@ tech rs_damage_laser
 	name "_Laser Damage Type"
 	up_chapter	damage
 	description {
-		default "none"
+		default "_none"
 	}
 
 	require_AND
@@ -2261,7 +2261,7 @@ tech rs_damage_normal
 	name "_Impact Damage Type"
 	up_chapter	damage
 	description {
-		default "none"
+		default "_none"
 	}
 	require_AND { tech nothing }
 
@@ -2275,7 +2275,7 @@ tech rs_damage_shock
 	name "_Shock Damage Type"
 	up_chapter	damage
 	description {
-		default "none"
+		default "_none"
 	}
 	require_AND { tech nothing }
 
@@ -2289,7 +2289,7 @@ tech rs_damage_plasma
 	name "_Plasma Damage Type"
 	up_chapter	damage
 	description {
-		default "none"
+		default "_none"
 	}
 
 	require_OR
@@ -2310,7 +2310,7 @@ tech rs_damage_stun
 	name "_Stun Damage Type"
 	up_chapter	damage
 	description {
-		default "none"
+		default "_none"
 	}
 	require_AND { tech nothing }
 
@@ -2324,7 +2324,7 @@ tech rs_damage_pbeam
 	name 		"_Particle Beam Damage Type"
 	up_chapter	damage
 	description {
-		default "none"
+		default "_none"
 	}
 
 	require_AND 	{ tech nothing }
@@ -2343,7 +2343,7 @@ tech rs_skill_accuracy
 	name "_Accuracy Attribute"
 	up_chapter	skill
 	description {
-		default "none"
+		default "_none"
 	}
 	require_AND { tech nothing }
 
@@ -2357,7 +2357,7 @@ tech rs_skill_assault
 	name "_Assault Guns Proficiency"
 	up_chapter	skill
 	description {
-		default "none"
+		default "_none"
 	}
 	require_AND { tech nothing }
 
@@ -2371,7 +2371,7 @@ tech rs_skill_close
 	name "_Close Combat Proficiency"
 	up_chapter	skill
 	description {
-		default "none"
+		default "_none"
 	}
 	require_AND { tech nothing }
 
@@ -2385,7 +2385,7 @@ tech rs_skill_explosive
 	name "_High-Explosives Proficiency"
 	up_chapter	skill
 	description {
-		default "none"
+		default "_none"
 	}
 	require_AND { tech nothing }
 
@@ -2399,7 +2399,7 @@ tech rs_skill_heavy
 	name "_Heavy Weapons Proficiency"
 	up_chapter	skill
 	description {
-		default "none"
+		default "_none"
 	}
 	require_AND { tech nothing }
 
@@ -2413,7 +2413,7 @@ tech rs_skill_mind
 	name "_Mind Attribute"
 	up_chapter	skill
 	description {
-		default "none"
+		default "_none"
 	}
 	require_AND { tech nothing }
 
@@ -2427,7 +2427,7 @@ tech rs_skill_power
 	name "_Power Attribute"
 	up_chapter	skill
 	description {
-		default "none"
+		default "_none"
 	}
 	require_AND { tech nothing }
 
@@ -2441,7 +2441,7 @@ tech rs_skill_sniper
 	name "_Sniper Rifles Proficiency"
 	up_chapter	skill
 	description {
-		default "none"
+		default "_none"
 	}
 	require_AND { tech nothing }
 
@@ -2455,7 +2455,7 @@ tech rs_skill_speed
 	name "_Speed Attribute"
 	up_chapter	skill
 	description {
-		default "none"
+		default "_none"
 	}
 	require_AND { tech nothing }
 
