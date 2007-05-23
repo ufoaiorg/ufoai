@@ -1674,14 +1674,14 @@ extern void RS_ParseTechnologies (const char *name, char **text)
 						return;
 					if (*token == '}')
 						break;
-					
+
 					if (desc_temp->numDescriptions < MAX_DESCRIPTIONS) {
-						/* Copy description text into the entry. */
-						desc_temp->text[desc_temp->numDescriptions] = CL_ClientHunkUse(token, strlen(token) + 1);
-						
 						/* Copy tech string into entry. */
-						token = COM_EParse(text, errhead, name);
 						desc_temp->tech[desc_temp->numDescriptions] = CL_ClientHunkUse(token, strlen(token) + 1);
+
+						/* Copy description text into the entry. */
+						token = COM_EParse(text, errhead, name);
+						desc_temp->text[desc_temp->numDescriptions] = CL_ClientHunkUse(token, strlen(token) + 1);
 						desc_temp->numDescriptions++;
 					}
 					
