@@ -21,12 +21,25 @@
 //		Self-explaining I hope :) Only needed when type=tech
 //	up_chapter
 //		Defines in which chapter of the ufopedia this item will show up.
-//	description
-//		The full description to be displayed after research.
-//		A short string that is used by gettext to be translatable (e.g. "description _itemname_txt").
-//		This needs to be a unique string in all descriptions. See the po files in the source directory (src/po/*.po)
-//	pre_description
-//		The description to be displayed when an item has been collected, but it's not yet researched. Usage is the same as 'description'
+//	description {}
+//		A list of all full descriptions that can be be displayed after research (depending on logic blocks).
+//		The first entry must always exist and it is used as default/fallback text.
+//		Example:
+//		description {
+//			rs_tech_id "_gettext_text"
+//		}
+//
+//		rs_tech_id:
+//			The first entry does not need this, you can use any string, but "defualt" is
+//		_gettext_text:
+//			A short string that is used by gettext to be translatable (e.g. "default _itemname_txt").
+//			This needs to be a unique string in all descriptions.
+//			See the po files in the source directory (src/po/*.po)
+//	pre_description {}
+//		Usage is the same as "description".
+//		The diffrence is that these entries are displayed e.g.:
+//			* A new tefchnology is proposed by out scientists (even with no obvious "prequesites")
+//			* When an item has been collected, but it's not yet researched.
 // ===============
 //	require_AND { type id [amount] }
 //		A list of requirements that ALL need to be met in order to be able to research it.
