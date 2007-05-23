@@ -630,7 +630,7 @@ extern void R_LightPoint (vec3_t p, vec3_t color)
 	else
 		VectorCopy(pointcolor, color);
 
-	/*this catches too bright modulated color */
+	/* this catches too bright modulated color */
 	for (i = 0; i < 3; i++)
 		if (color[i] > 1)
 			color[i] = 1;

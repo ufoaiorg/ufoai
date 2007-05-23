@@ -2732,14 +2732,14 @@ void CL_ActorMouseTrace (void)
 		VecToPos(from, testPos);
 		intersectionLevel = Grid_Fall(&clMap, testPos);
  		/* if looking up, raise the intersection level */
-		if (cur[1] < 0.)
+		if (cur[1] < 0.0f)
 			intersectionLevel++;
 	} else {
 		VectorCopy(cl.cam.camorg, from);
 		VectorCopy(cl.cam.axis[0], forward);
 		VectorCopy(cl.cam.axis[1], right);
 		VectorCopy(cl.cam.axis[2], up);
-		intersectionLevel = cl_worldlevel->value;
+		intersectionLevel = cl_worldlevel->integer;
 	}
 
 	if (cl_isometric->value)
@@ -2755,7 +2755,7 @@ void CL_ActorMouseTrace (void)
 
 	/* in isometric mode the camera position has to be calculated from the cursor position so that the trace goes in the right direction */
 	if (cl_isometric->value)
-		VectorMA(stop, -projectiondistance*2, forward, from);
+		VectorMA(stop, -projectiondistance * 2, forward, from);
 
 	/* set stop point to the intersection of the trace line with the desired plane */
 	/* description of maths used:
