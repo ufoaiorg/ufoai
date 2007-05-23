@@ -177,7 +177,7 @@ static const value_t valid_building_vars[] = {
 	{"varcosts", V_FLOAT, offsetof(building_t, varCosts), MEMBER_SIZEOF(building_t, varCosts)},	/**< Costs that will come up by using the building. */
 	{"build_time", V_INT, offsetof(building_t, buildTime), MEMBER_SIZEOF(building_t, buildTime)},	/**< How many days it takes to construct the building. */
 	{"max_employees", V_INT, offsetof(building_t, maxEmployees), MEMBER_SIZEOF(building_t, maxEmployees)},	/**< How many employees to hire on construction in the first base. */
-	{"capacity", V_INT, offsetof(building_t, capacity), MEMBER_SIZEOF(building_t, capacity)},	/**< A size value that is used by many buldings in a different way. */
+	{"capacity", V_INT, offsetof(building_t, capacity), MEMBER_SIZEOF(building_t, capacity)},	/**< A size value that is used by many buildings in a different way. */
 
 	/*event handler functions */
 	{"onconstruct", V_STRING, offsetof(building_t, onConstruct), 0}, /**< Event handler. */
@@ -325,7 +325,7 @@ static void B_BuildingDestroy_f (void)
 	case B_MISC:
 		break;
 	default:
-		Com_Printf("B_BuildingDestroy_f: Unknown bulding type: %i.\n", b1->buildingType);
+		Com_Printf("B_BuildingDestroy_f: Unknown building type: %i.\n", b1->buildingType);
 		break;
 	}
 
@@ -440,10 +440,10 @@ static void B_HireForBuilding (base_t* base, building_t * building, int num)
 		case B_QUARTERS:
 			return;
 		case B_MISC:
-			Com_DPrintf("B_HireForBuilding: Misc bulding type: %i with employees: %i.\n", building->buildingType, num);
+			Com_DPrintf("B_HireForBuilding: Misc building type: %i with employees: %i.\n", building->buildingType, num);
 			return;
 		default:
-			Com_DPrintf("B_HireForBuilding: Unknown bulding type: %i.\n", building->buildingType);
+			Com_DPrintf("B_HireForBuilding: Unknown building type: %i.\n", building->buildingType);
 			return;
 		}
 		if (num > gd.numEmployees[employeeType])
@@ -1149,11 +1149,20 @@ extern void B_ParseBuildings (const char *name, char **text, qboolean link)
 	const value_t *vp = NULL;
 	const char *errhead = "B_ParseBuildings: unexpected end of file (names ";
 	char *token = NULL;
+	int i;
 #if 0
 	char *split = NULL;
 	int employeesAmount = 0, i;
 	employee_t* employee;
 #endif
+
+	for (i = 0; i < gd.numBuildingTypes; i++) {
+		if (!Q_strcmp(gd.buildingTypes[i].id, name)) {
+			Com_Printf("B_ParseBuildings: Second buliding with same name found (%s) - second ignored\n", name);
+			return;
+		}
+	}
+
 	/* get id list body */
 	token = COM_Parse(text);
 	if (!*text || *token != '{') {
@@ -1321,7 +1330,7 @@ building_t *B_GetFreeBuilding (int base_idx, buildingType_t type)
 			/* found correct building-type */
 			employees_in_building = &building->assigned_employees;
 			if (employees_in_building->numEmployees < employees_in_building->maxEmployees) {
-				/* the bulding has free space for employees */
+				/* the building has free space for employees */
 				return building;
 			}
 		}
@@ -1350,7 +1359,7 @@ static building_t *B_GetFreeBuildingType (buildingType_t type)
 			/* found correct building-type */
 /*			employees_in_building = &building->assigned_employees;
 			if (employees_in_building->numEmployees < employees_in_building->maxEmployees) {*/
-				/* the bulding has free space for employees */
+				/* the building has free space for employees */
 				/*return building;
 			}*/
 		}

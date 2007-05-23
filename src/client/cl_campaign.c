@@ -3529,9 +3529,6 @@ static void CL_NationList_f (void)
 /* these commands are only available in singleplayer */
 static const cmdList_t game_commands[] = {
 	{"aircraft_start", AIM_AircraftStart_f, NULL},
-#ifdef DEBUG
-	{"aircraftlist", AIR_ListAircraft_f, "Debug function to list all aircraft in all bases"},
-#endif
 	{"aircraft_select", AIR_AircraftSelect_f, NULL},
 	{"aircraft_init", AIR_AircraftInit, NULL},
 	{"airequip_init", AIM_AircraftEquipmenuInit_f, NULL},
@@ -3542,11 +3539,6 @@ static const cmdList_t game_commands[] = {
 	{"mn_reset_air", AIM_ResetAircraftCvars_f, NULL},
 	{"aircraft_return", AIR_AircraftReturnToBase_f, NULL},
 	{"aircraft_list", CL_AircraftList_f, "Generate the aircraft (interception) list"},
-#if 0
-	/* This function is a copy of more detailed AIR_ListAircraft_f().
-	   10042007 Zenerka. */
-	{"aircraft_list_debug", CL_AircraftListDebug_f, "Shows all aircraft in all bases"},
-#endif
 	{"stats_update", CL_StatsUpdate_f, NULL},
 	{"game_go", CL_GameGo, NULL},
 	{"game_auto_check", CL_GameAutoCheck_f, NULL},
@@ -3564,6 +3556,7 @@ static const cmdList_t game_commands[] = {
 	{"addeventmail", CL_EventAddMail_f, "Add a new mail (event trigger) - e.g. after a mission"},
 	{"center_geoscape", MAP_CenterOnPoint, NULL},
 #ifdef DEBUG
+	{"debug_aircraftlist", AIR_ListAircraft_f, "Debug function to list all aircraft in all bases"},
 	{"debug_fullcredits", CL_DebugFullCredits_f, "Debug function to give the player full credits"},
 	{"debug_additems", CL_DebugAllItems_f, "Debug function to add one item of every type to base storage and mark related tech collected"},
 	{"debug_showitems", CL_DebugShowItems_f, "Debug function to show all items in base storage"},

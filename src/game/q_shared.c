@@ -4072,6 +4072,13 @@ char *Com_ValueToStr (void *base, valueTypes_t type, int ofs)
 	case V_NULL:
 		return 0;
 
+	case V_CLIENT_HUNK:
+	case V_CLIENT_HUNK_STRING:
+		if (b == NULL)
+			return "(null)";
+		else
+			return (char*)b;
+
 	case V_BOOL:
 		if (*b)
 			return "true";
@@ -4114,7 +4121,10 @@ char *Com_ValueToStr (void *base, valueTypes_t type, int ofs)
 	case V_TRANSLATION2_STRING:
 	case V_STRING:
 	case V_LONGSTRING:
-		return (char *) b;
+		if (b == NULL)
+			return "(null)";
+		else
+			return (char *) b;
 
 	case V_ALIGN:
 		assert(*(int *)b < ALIGN_LAST);

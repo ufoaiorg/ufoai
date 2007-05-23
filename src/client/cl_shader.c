@@ -71,6 +71,19 @@ void CL_ParseShaders (const char *name, char **text)
 	const value_t *v;
 	const char *errhead = "CL_ParseShaders: unexpected end of file (names ";
 	char *token;
+	int i;
+
+	for (i = 0; i < r_numshaders; i++) {
+		if (!Q_strcmp(r_shaders[i].name, name)) {
+			Com_Printf("CL_ParseShaders: Second shader with same name found (%s) - second ignored\n", name);
+			return;
+		}
+	}
+
+	if (r_numshaders >= MAX_SHADERS) {
+		Com_Printf("CL_ParseShaders: shader \"%s\" ignored - too many shaders\n", name);
+		return;
+	}
 
 	/* get name list body body */
 	token = COM_Parse(text);

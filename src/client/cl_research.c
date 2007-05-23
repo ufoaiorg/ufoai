@@ -1515,17 +1515,24 @@ extern void RS_ParseTechnologies (const char *name, char **text)
 	const char *errhead = "RS_ParseTechnologies: unexpected end of file.";
 	char *token = NULL;
 	requirements_t *required_temp = NULL;
-
 	int i;
+
+	for (i = 0; i < gd.numTechnologies; i++) {
+		if (!Q_strcmp(gd.technologies[i].id, name)) {
+			Com_Printf("RS_ParseTechnologies: Second tech with same name found (%s) - second ignored\n", name);
+			return;
+		}
+	}
+
+	if (gd.numTechnologies >= MAX_TECHNOLOGIES) {
+		Com_Printf("RS_ParseTechnologies: too many technology entries. limit is %i.\n", MAX_TECHNOLOGIES);
+		return;
+	}
 
 	/* get body */
 	token = COM_Parse(text);
 	if (!*text || *token != '{') {
 		Com_Printf("RS_ParseTechnologies: \"%s\" technology def without body ignored.\n", name);
-		return;
-	}
-	if (gd.numTechnologies >= MAX_TECHNOLOGIES) {
-		Com_Printf("RS_ParseTechnologies: too many technology entries. limit is %i.\n", MAX_TECHNOLOGIES);
 		return;
 	}
 

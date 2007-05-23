@@ -2230,6 +2230,7 @@ static void CL_InitLocal (void)
 	Cmd_AddCommand("playerlist", NULL, NULL);
 	Cmd_AddCommand("players", NULL, NULL);
 #ifdef DEBUG
+	Cmd_AddCommand("debug_aircraftsamplelist", AIR_ListAircraftSamples_f, "Show aircraft parameter on game console");
 	Cmd_AddCommand("debug_configstrings", CL_ShowConfigstrings_f, "Print configstrings to game console");
 	Cmd_AddCommand("debug_gddump", CL_DumpGlobalDataToFile_f, "Dumps gd to a file");
 	Cmd_AddCommand("debug_gdstats", CL_GlobalDataSizes_f, "Show globalData_t sizes");

@@ -258,7 +258,7 @@ void AIR_AircraftInit (void)
 			Com_DPrintf("....item: %s\n", air_samp->item_string);
 			air_samp->item = RS_GetTechByID(air_samp->item_string);
 		} else
-			 air_samp->item = NULL;
+			air_samp->item = NULL;
 
 		air_samp->homebase = &gd.bases[air_samp->idxBase]; /* @todo: looks like a nonsense */
 		air_samp->teamSize = &gd.bases[air_samp->idxBase].teamNum[air_samp->idxInBase];
@@ -1272,6 +1272,14 @@ extern void AII_ParseAircraftItem (const char *name, char **text)
 	aircraftItem_t *airItem;
 	const value_t *vp;
 	char *token;
+	int i;
+
+	for (i = 0; i < numAircraftItems; i++) {
+		if (!Q_strcmp(aircraftItems[i].id, name)) {
+			Com_Printf("AII_ParseAircraftItem: Second airitem with same name found (%s) - second ignored\n", name);
+			return;
+		}
+	}
 
 	if (numAircraftItems >= MAX_AIRCRAFTITEMS) {
 		Com_Printf("AII_ParseAircraftItem: too many craftitem definitions; def \"%s\" ignored\n", name);
@@ -1406,10 +1414,18 @@ extern void AIR_ParseAircraft (const char *name, char **text)
 	aircraft_t *air_samp;
 	const value_t *vp;
 	char *token;
+	int i;
 
 	if (numAircraft_samples >= MAX_AIRCRAFT) {
 		Com_Printf("AIR_ParseAircraft: too many aircraft definitions; def \"%s\" ignored\n", name);
 		return;
+	}
+
+	for (i = 0; i < numAircraft_samples; i++) {
+		if (!Q_strcmp(aircraft_samples[i].id, name)) {
+			Com_Printf("AIR_ParseAircraft: Second aircraft with same name found (%s) - second ignored\n", name);
+			return;
+		}
 	}
 
 	/* initialize the menu */
@@ -1497,6 +1513,33 @@ extern void AIR_ParseAircraft (const char *name, char **text)
 		}
 	} while (*text);
 }
+
+#ifdef DEBUG
+/**
+ * @brief Debug function that prints aircraft to game console
+ */
+extern void AIR_ListAircraftSamples_f (void)
+{
+	int i = 0, max = numAircraft_samples;
+	const value_t *vp;
+	aircraft_t *air_samp;
+
+	Com_Printf("%i aircrafts\n", max);
+	if (Cmd_Argc() == 2) {
+		max = atoi(Cmd_Argv(1));
+		if (max >= numAircraft_samples || max < 0)
+			return;
+		i = max - 1;
+	}
+	for (; i < max; i++) {
+		air_samp = &aircraft_samples[i];
+		Com_Printf("aircraft: '%s'\n", air_samp->id);
+		for (vp = aircraft_vals; vp->string; vp++) {
+			Com_Printf("%s: %s\n", vp->string, Com_ValueToStr(air_samp, vp->type, vp->ofs));
+		}
+	}
+}
+#endif
 
 /**
  * @brief Reload the weapon of an aircraft

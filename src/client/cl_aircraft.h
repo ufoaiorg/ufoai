@@ -192,6 +192,7 @@ extern aircraftItem_t aircraftItems[MAX_AIRCRAFTITEMS];	/**< Available aicraft i
 
 #ifdef DEBUG
 void AIR_ListAircraft_f(void);
+void AIR_ListAircraftSamples_f(void);
 #endif
 
 void AIM_AircraftStart_f(void);
