@@ -127,7 +127,7 @@ typedef struct entity_s {
 
 /*============================================================================= */
 
-#define MAX_SHADERS 255
+#define MAX_SHADERS 64
 typedef struct shader_s {
 	/* title is internal for finding the shader */
 

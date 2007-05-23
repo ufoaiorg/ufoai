@@ -1766,6 +1766,7 @@ extern void RS_ParseTechnologies (const char *name, char **text)
 							switch (vp->type) {
 							case V_TRANSLATION2_STRING:
 								token++;
+							case V_CLIENT_HUNK_STRING:
 								CL_ClientHunkStoreString(token, (char**) ((void*)mail + (int)vp->ofs));
 								break;
 							case V_NULL:

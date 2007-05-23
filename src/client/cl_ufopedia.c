@@ -378,7 +378,7 @@ static void UP_ArmorDescription (technology_t* t)
 	int	i;
 
 	/* select item */
- 	i=Com_GetItemByID(t->provides);
+	i = Com_GetItemByID(t->provides);
 	od = &csi.ods[i];
 
 #ifdef DEBUG
@@ -668,7 +668,7 @@ static void UP_DrawAssociatedAmmo (technology_t* tech)
 		return;
 
 	/* select item */
- 	idx=Com_GetItemByID(tech->provides);
+	idx = Com_GetItemByID(tech->provides);
 
 	/* If this is a weapon, we display the model of the associated ammunition in the lower right */
 	if (csi.ods[idx].numAmmos > 0) {
@@ -1160,7 +1160,7 @@ static void UP_ResearchedLinkClick_f (void)
 
 	t = upCurrent;
 
- 	i=Com_GetItemByID(t->provides);
+	i = Com_GetItemByID(t->provides);
 
 	if (!Q_strncmp(csi.ods[i].type, "ammo", 4)) {
 		t = csi.ods[csi.ods[i].weap_idx[up_researchedlink]].tech;
@@ -1258,7 +1258,7 @@ static void UP_IncreaseWeapon_f (void)
 	t = upCurrent;
 
 	/* select item */
- 	i=Com_GetItemByID(t->provides);
+	i = Com_GetItemByID(t->provides);
 
 	up_researchedlink_temp = up_researchedlink;
 	up_researchedlink_temp++;
@@ -1307,7 +1307,7 @@ static void UP_DecreaseWeapon_f (void)
 	t = upCurrent;
 
 	/* select item */
- 	i=Com_GetItemByID(t->provides);
+	i = Com_GetItemByID(t->provides);
 
 	up_researchedlink_temp = up_researchedlink;
 	up_researchedlink_temp--;
@@ -1356,7 +1356,7 @@ static void UP_IncreaseFiremode_f (void)
 
 	up_firemode++;
 
- 	i=Com_GetItemByID(t->provides);
+	i = Com_GetItemByID(t->provides);
 	if (i > -1)
 		CL_ItemDescription(i);
 }
@@ -1377,7 +1377,7 @@ static void UP_DecreaseFiremode_f (void)
 
 	up_firemode--;
 
- 	i=Com_GetItemByID(t->provides);
+	i = Com_GetItemByID(t->provides);
 	if (i > -1)
 		CL_ItemDescription(i);
 }

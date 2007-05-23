@@ -103,9 +103,6 @@ void CL_ParseShaders (const char *name, char **text)
 				if (!*text)
 					return;
 
-				if (!v->ofs)
-					break;
-
 				switch (v->type) {
 				case V_NULL:
 					break;
