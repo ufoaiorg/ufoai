@@ -104,6 +104,7 @@ menu_model alien_shevaar
 	anim	stand_still
 }
 
+/*
 menu_model alien_hovernet_head
 {
 	model	"models/aliens/hovernet/head01.md2"
@@ -117,6 +118,7 @@ menu_model alien_hovernet
 	need	"alien_hovernet_head"
 	anim	stand_still
 }
+*/
 
 //menu_model alien_cyborg_ortnok_head
 //{
