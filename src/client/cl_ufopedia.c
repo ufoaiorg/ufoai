@@ -446,7 +446,7 @@ extern void UP_AircraftDescription (technology_t* t)
 		if (!aircraft) {
 			Com_sprintf(upBuffer, sizeof(upBuffer), _("Error - could not find aircraft") );
 		} else {
-			Com_sprintf(upBuffer, sizeof(upBuffer), _("Speed:\t%.0f\n"), aircraft->speed );
+			Com_sprintf(upBuffer, sizeof(upBuffer), _("Speed:\t%i\n"), aircraft->stats[AIR_STATS_SPEED]);
 			Q_strcat(upBuffer, va(_("Fuel:\t%i\n"), aircraft->fuelSize ), sizeof(upBuffer));
 			/* Maybe there are standard equipments given */
 			Q_strcat(upBuffer, va(_("Weapon:\t%s\n"), aircraft->weapon ? _(aircraft->weapon->name) : _("None") ), sizeof(upBuffer));

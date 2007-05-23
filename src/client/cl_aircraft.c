@@ -164,7 +164,7 @@ extern void AIR_ListAircraft_f (void)
 			Com_Printf("Aircraft %s\n", aircraft->name);
 			Com_Printf("...idx cur=base/global %i=%i/%i\n", i, aircraft->idxInBase, aircraft->idx);
 			Com_Printf("...name %s\n", aircraft->id);
-			Com_Printf("...speed %0.2f\n", aircraft->speed);
+			Com_Printf("...speed %i\n", aircraft->stats[AIR_STATS_SPEED]);
 			Com_Printf("...type %i\n", aircraft->type);
 			Com_Printf("...size %i\n", aircraft->size);
 			Com_Printf("...status %s\n", AIR_AircraftStatusToName(aircraft));
@@ -484,7 +484,7 @@ extern qboolean AIR_AircraftHasEnoughFuel (aircraft_t *aircraft, const vec2_t de
 	distance += line.distance * (line.numPoints - 1);
 
 	/* Check if the aircraft has enough fuel to go to destination and then go back home */
-	if (distance <= aircraft->speed * aircraft->fuel / 3600)
+	if (distance <= aircraft->stats[AIR_STATS_SPEED] * aircraft->fuel / 3600)
 		return qtrue;
 	else {
 		/* @todo Should check if another base is closer than homeBase and have a hangar */
@@ -595,7 +595,7 @@ extern void AIR_AircraftSelect (aircraft_t* aircraft)
 
 	/* generate aircraft info text */
 	/* @todo: reimplement me when aircraft equipment will be implemented. */
-	Com_sprintf(aircraftInfo, sizeof(aircraftInfo), _("Speed:\t%.0f\n"), aircraft->speed);
+	Com_sprintf(aircraftInfo, sizeof(aircraftInfo), _("Speed:\t%i\n"), aircraft->stats[AIR_STATS_SPEED]);
 	Q_strcat(aircraftInfo, va(_("Fuel:\t%i/%i\n"), aircraft->fuel / 1000, aircraft->fuelSize / 1000), sizeof(aircraftInfo));
 	Q_strcat(aircraftInfo, va(_("Weapon:\t%s\n"), aircraft->weapon ? _(aircraft->weapon->name) : _("None")), sizeof(aircraftInfo));
 	Q_strcat(aircraftInfo, va(_("Shield:\t%s\n"), aircraft->shield ? _(aircraft->shield->name) : _("None")), sizeof(aircraftInfo));
@@ -807,7 +807,7 @@ extern qboolean AIR_AircraftMakeMove (int dt, aircraft_t* aircraft)
 	/* calc distance */
 	aircraft->time += dt;
 	aircraft->fuel -= dt;
-	dist = aircraft->speed * aircraft->time / 3600;
+	dist = aircraft->stats[AIR_STATS_SPEED] * aircraft->time / 3600;
 
 	/* Check if destination reached */
 	if (dist >= aircraft->route.distance * (aircraft->route.numPoints - 1))
@@ -1370,11 +1370,21 @@ extern void AII_ParseAircraftItem (const char *name, char **text)
 	} while (*text);
 }
 
+/** @brief Valid aircraft parameter definitions from script files. */
+static const value_t aircraft_param_vals[] = {
+	{"range", V_INT, offsetof(aircraft_t, stats[AIR_STATS_RANGE]), MEMBER_SIZEOF(aircraft_t, stats[0])},
+	{"wrange", V_INT, offsetof(aircraft_t, stats[AIR_STATS_WRANGE]), MEMBER_SIZEOF(aircraft_t, stats[0])},
+	{"speed", V_INT, offsetof(aircraft_t, stats[AIR_STATS_SPEED]), MEMBER_SIZEOF(aircraft_t, stats[0])},
+	{"shield", V_INT, offsetof(aircraft_t, stats[AIR_STATS_SHIELD]), MEMBER_SIZEOF(aircraft_t, stats[0])},
+	{"ecm", V_INT, offsetof(aircraft_t, stats[AIR_STATS_ECM]), MEMBER_SIZEOF(aircraft_t, stats[0])},
+	{"damage", V_INT, offsetof(aircraft_t, stats[AIR_STATS_DAMAGE]), MEMBER_SIZEOF(aircraft_t, stats[0])},
+	{"accuracy", V_INT, offsetof(aircraft_t, stats[AIR_STATS_ACCURACY]), MEMBER_SIZEOF(aircraft_t, stats[0])},
+};
+
 /** @brief Valid aircraft definition values from script files. */
 static const value_t aircraft_vals[] = {
 	{"name", V_TRANSLATION_STRING, offsetof(aircraft_t, name), 0},
 	{"shortname", V_TRANSLATION_STRING, offsetof(aircraft_t, shortname), 0},
-	{"speed", V_FLOAT, offsetof(aircraft_t, speed), MEMBER_SIZEOF(aircraft_t, speed)},
 	{"size", V_INT, offsetof(aircraft_t, size), MEMBER_SIZEOF(aircraft_t, size)},
 	{"weight", V_INT, offsetof(aircraft_t, weight), MEMBER_SIZEOF(aircraft_t, weight)},
 	{"fuel", V_INT, offsetof(aircraft_t, fuel), MEMBER_SIZEOF(aircraft_t, fuel)},
@@ -1478,7 +1488,7 @@ extern void AIR_ParseAircraft (const char *name, char **text)
 
 		if (vp->string && !Q_strncmp(vp->string, "size", 4)) {
 			if (air_samp->size > MAX_ACTIVETEAM) {
-				Com_DPrintf("Set size for aircraft to the max value of %i\n", MAX_ACTIVETEAM);
+				Com_DPrintf("AIR_ParseAircraft: Set size for aircraft to the max value of %i\n", MAX_ACTIVETEAM);
 				air_samp->size = MAX_ACTIVETEAM;
 			}
 		}
@@ -1493,6 +1503,39 @@ extern void AIR_ParseAircraft (const char *name, char **text)
 				air_samp->type = AIRCRAFT_INTERCEPTOR;
 			else if (!Q_strncmp(token, "ufo", 3))
 				air_samp->type = AIRCRAFT_UFO;
+		} else if (!Q_strncmp(token, "param", 5)) {
+			token = COM_EParse(text, errhead, name);
+			if (!*text || *token != '{') {
+				Com_Printf("AIR_ParseAircraft: Invalid param value for aircraft: %s\n", name);
+				return;
+			}
+			do {
+				token = COM_EParse(text, errhead, name);
+				if (!*text)
+					break;
+				if (*token == '}')
+					break;
+
+				for (vp = aircraft_param_vals; vp->string; vp++)
+					if (!Q_strcmp(token, vp->string)) {
+						/* found a definition */
+						token = COM_EParse(text, errhead, name);
+						if (!*text)
+							return;
+						switch (vp->type) {
+						case V_TRANSLATION2_STRING:
+							token++;
+						case V_CLIENT_HUNK_STRING:
+							CL_ClientHunkStoreString(token, (char**) ((void*)air_samp + (int)vp->ofs));
+							break;
+						default:
+							Com_ParseValue(air_samp, token, vp->type, vp->ofs, vp->size);
+						}
+						break;
+					}
+				if (!vp->string)
+					Com_Printf("AIR_ParseAircraft: Ignoring unknown param value '%s'\n", token);
+			} while (*text); /* dummy condition */
 		} else if (!Q_strncmp(token, "ufotype", 7)) {
 			token = COM_EParse(text, errhead, name);
 			if (!*text)
@@ -1801,7 +1844,6 @@ extern qboolean AIR_Save (sizebuf_t* sb, void* data)
 		MSG_WriteByte(sb, gd.ufos[i].visible);
 		MSG_WritePos(sb, gd.ufos[i].pos);
 		MSG_WriteByte(sb, gd.ufos[i].status);
-		MSG_WriteFloat(sb, gd.ufos[i].speed);
 		MSG_WriteLong(sb, gd.ufos[i].fuel);
 		MSG_WriteLong(sb, gd.ufos[i].fuelSize);
 		MSG_WriteShort(sb, gd.ufos[i].time);
@@ -1811,6 +1853,8 @@ extern qboolean AIR_Save (sizebuf_t* sb, void* data)
 		for (j = 0; j < gd.ufos[i].route.numPoints; j++)
 			MSG_Write2Pos(sb, gd.ufos[i].route.point[j]);
 		MSG_WritePos(sb, gd.ufos[i].direction);
+		for (j = 0; j < AIR_STATS_MAX; j++)
+			MSG_WriteLong(sb, gd.ufos[i].stats[j]);
 		/* @todo more? */
 	}
 	return qtrue;
@@ -1857,6 +1901,8 @@ extern qboolean AIR_Load (sizebuf_t* sb, void* data)
 				MSG_Read2Pos(sb, tmp_vec2t);	/* route points */
 			if (*(int*)data >= 2) { /* >= 2.2 */
 				MSG_ReadPos(sb, tmp_vec3t);	/* direction */
+				for (j = 0; j < AIR_STATS_MAX; j++)
+					MSG_ReadLong(sb);
 			}
 		} else {
 			memcpy(&gd.ufos[i], ufo, sizeof(aircraft_t));
@@ -1864,7 +1910,9 @@ extern qboolean AIR_Load (sizebuf_t* sb, void* data)
 			ufo->visible = MSG_ReadByte(sb);
 			MSG_ReadPos(sb, ufo->pos);
 			ufo->status = MSG_ReadByte(sb);
-			ufo->speed = MSG_ReadFloat(sb);
+			if (*(int*)data == 1) { /* >= 2.1.1 */
+				ufo->stats[AIR_STATS_SPEED] = MSG_ReadFloat(sb);
+			}
 			ufo->fuel = MSG_ReadLong(sb);
 			ufo->fuelSize = MSG_ReadLong(sb);
 			ufo->time = MSG_ReadShort(sb);
@@ -1875,6 +1923,8 @@ extern qboolean AIR_Load (sizebuf_t* sb, void* data)
 				MSG_Read2Pos(sb, ufo->route.point[j]);
 			if (*(int*)data >= 2) { /* >= 2.2 */
 				MSG_ReadPos(sb, ufo->direction);
+				for (j = 0; j < AIR_STATS_MAX; j++)
+					ufo->stats[i] = MSG_ReadLong(sb);
 			}
 		}
 		/* @todo more? */

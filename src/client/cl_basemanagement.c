@@ -2817,7 +2817,6 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
 			MSG_WriteString(sb, aircraft->id);
 			MSG_WriteShort(sb, aircraft->idx);
 			MSG_WriteByte(sb, aircraft->status);
-			MSG_WriteFloat(sb, aircraft->speed);
 			MSG_WriteLong(sb, aircraft->fuel);
 			MSG_WriteLong(sb, aircraft->fuelSize);
 			transferBase = (base_t*)aircraft->transferBase;
@@ -2864,6 +2863,8 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
 					MSG_WriteShort(sb, gd.alltransfers[aircraft->idx].employees[l]);
 			}
 			MSG_WritePos(sb, aircraft->direction);
+			for (l = 0; l < AIR_STATS_MAX; l++)
+				MSG_WriteLong(sb, aircraft->stats[l]);
 		}
 		MSG_WriteShort(sb, MAX_AIRCRAFT);
 		for (k = 0; k < MAX_AIRCRAFT; k++)
@@ -2982,7 +2983,9 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 			/* link the teamSize pointer in */
 			aircraft->teamSize = &b->teamNum[k];
 			aircraft->status = MSG_ReadByte(sb);
-			aircraft->speed = MSG_ReadFloat(sb);
+			if (*(int*)data == 1) { /* >= 2.1.1 */
+				aircraft->stats[AIR_STATS_SPEED] = MSG_ReadFloat(sb);
+			}
 			aircraft->fuel = MSG_ReadLong(sb);
 			aircraft->fuelSize = MSG_ReadLong(sb);
 			l = MSG_ReadShort(sb);
@@ -3040,6 +3043,8 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 			}
 			if (*(int*)data >= 2) { /* >= 2.2 */
 				MSG_ReadPos(sb, aircraft->direction);
+				for (l = 0; l < AIR_STATS_MAX; l++)
+					aircraft->stats[l] = MSG_ReadLong(sb);
 			}
 #if 0
 			struct actMis_s* mission;	/**< The mission the aircraft is moving to */

@@ -56,15 +56,15 @@ typedef enum {
 
 /** @brief Aircraft parameters. */
 typedef enum {
-	AIR_RANGE,	/**< Aircraft range. */
-	AIR_WRANGE,	/**< Aircraft weapon range - the maximum distance aircraft can open fire. */
-	AIR_SPEED,	/**< Aircraft speed. */
-	AIR_SHIELD,	/**< Aircraft shield. */
-	AIR_ECM,	/**< Aircraft electronic warfare level. */
-	AIR_DAMAGE,	/**< Aircraft damage points. */
-	AIR_ACCURACY,	/**< Aircraft accuracy - most accurate weapon. */
+	AIR_STATS_RANGE,	/**< Aircraft range. */
+	AIR_STATS_WRANGE,	/**< Aircraft weapon range - the maximum distance aircraft can open fire. */
+	AIR_STATS_SPEED,	/**< Aircraft speed. */
+	AIR_STATS_SHIELD,	/**< Aircraft shield. */
+	AIR_STATS_ECM,	/**< Aircraft electronic warfare level. */
+	AIR_STATS_DAMAGE,	/**< Aircraft damage points. */
+	AIR_STATS_ACCURACY,	/**< Aircraft accuracy - most accurate weapon. */
 
-	AIR_MAX
+	AIR_STATS_MAX
 } aircraftParams_t;
 
 struct actMis_s;
@@ -121,7 +121,6 @@ typedef struct aircraft_s {
 	aircraftType_t type;
 	ufoType_t ufotype;			/**< type of UFO (if craft is not UFO - not used) */
 	int status;				/**< see aircraftStatus_t */
-	float speed;
 	vec3_t angles;				/**< menu values for rotating */
 	vec3_t scale;				/**< menu values for scaling */
 	vec3_t center;				/**< menu values for shifting */
@@ -170,9 +169,7 @@ typedef struct aircraft_s {
 	struct actMis_s* mission;	/**< The mission the aircraft is moving to */
 	int ufo;				/**< Ufo's id the aircraft is purchasing (gd.ufos + id) */
 	radar_t	radar;			/**< Radar to track ufos */
-	/*
-	int stats[AIR_MAX];
-	*/
+	int stats[AIR_STATS_MAX];	/**< aircraft parameters for speed, damage and so on */
 
 	qboolean visible;		/**< The ufo is visible ? */
 } aircraft_t;
