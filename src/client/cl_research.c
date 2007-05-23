@@ -206,6 +206,35 @@ static qboolean RS_RequirementsMet (requirements_t *required_AND, requirements_t
 }
 
 /**
+ * @brief returns the currently used description for a technology.
+ * @param[in] desc A list of possible descriptions (with tech-links that decide which one is the corerect one)
+ */
+char *RS_GetDescription (descriptions_t *desc)
+{
+	technology_t *tech = NULL;
+	int i = 0;
+	
+	/* Return (unparsed) default description (0) if nothing is defined.
+	 * it is _always_ set, even if numDescriptions is zero. See RS_ParseTechnologies (standard values). */
+	if (desc->numDescriptions == 0)
+		return desc->text[0];
+
+	/* Search for useable description text (first match is returned => order is important)
+	 * The default (0) entry is skipped here. */
+	for (i = 1; i < desc->numDescriptions; i++) {
+		tech = RS_GetTechByID(desc->tech[i]);
+		if (!tech)
+			continue;
+		
+		if (RS_RequirementsMet(&tech->require_AND, &tech->require_OR))
+			return desc->text[i];
+	}
+
+	/* Nothing found, return (parsed) default description. */
+	return desc->text[0];
+}
+
+/**
  * @brief Marks a give technology as collected
  * @sa CP_AddItemAsCollected
  * @sa MN_AddNewMessage
@@ -985,7 +1014,7 @@ static void RS_ShowPedia_f (void)
 	/* get the currently selected research-item */
 
 	tech = researchList[researchListPos];
-	if (tech->pre_description) {
+	if (tech->pre_description.numDescriptions > 0) {
 		UP_OpenCopyWith(tech->id);
 	} else {
 		MN_Popup(_("Notice"), _("No research proposal available for this project."));
@@ -1470,15 +1499,17 @@ extern void RS_ResetHash (void)
  * @brief The valid definition names in the research.ufo file.
  */
 static const value_t valid_tech_vars[] = {
-	/*name of technology */
-	{"name", V_TRANSLATION2_STRING, offsetof(technology_t, name), 0},
-	{"description", V_TRANSLATION2_STRING, offsetof(technology_t, description), 0},
-	{"pre_description", V_TRANSLATION2_STRING, offsetof(technology_t, pre_description), 0},
-	/*what does this research provide */
-	{"provides", V_CLIENT_HUNK_STRING, offsetof(technology_t, provides), 0},
-	/* ("require_AND")	Handled in parser below. */
-	/* ("require_OR")	Handled in parser below. */
-	/* ("up_chapter")	Handled in parser below. */
+ 	{"name", V_TRANSLATION2_STRING, offsetof(technology_t, name), 0},
+	/* Handled in parser below.
+	 * {"description", V_TRANSLATION2_STRING, offsetof(technology_t, description), 0},
+	 * {"pre_description", V_TRANSLATION2_STRING, offsetof(technology_t, pre_description), 0},
+	*/
+ 	{"provides", V_STRING, offsetof(technology_t, provides), 0},
+	/* Handled in parser below.
+	 * ("require_AND")
+	 * ("require_OR")
+	 * ("up_chapter")
+	 */
 	{"delay", V_INT, offsetof(technology_t, delay), MEMBER_SIZEOF(technology_t, delay)},
 	{"producetime", V_INT, offsetof(technology_t, produceTime), MEMBER_SIZEOF(technology_t, produceTime)},
 	{"time", V_FLOAT, offsetof(technology_t, time), MEMBER_SIZEOF(technology_t, time)},
@@ -1515,6 +1546,8 @@ extern void RS_ParseTechnologies (const char *name, char **text)
 	const char *errhead = "RS_ParseTechnologies: unexpected end of file.";
 	char *token = NULL;
 	requirements_t *required_temp = NULL;
+	descriptions_t *desc_temp = NULL;
+
 	int i;
 
 	for (i = 0; i < gd.numTechnologies; i++) {
@@ -1542,10 +1575,16 @@ extern void RS_ParseTechnologies (const char *name, char **text)
 
 	memset(tech, 0, sizeof(technology_t));
 
-	/*set standard values */
+	/*
+	 * Set standard values
+	 */
 	tech->idx = gd.numTechnologies - 1;
 	CL_ClientHunkStoreString(name, &tech->id);
 	hash = Com_HashKey(tech->id, TECH_HASH_SIZE);
+	
+	/* Set the default string for descriptions (available even if numDescriotions is 0) */
+	CL_ClientHunkStoreString(_("No description available."), &tech->description.text[0]);
+	CL_ClientHunkStoreString(_("No research proposal available."), &tech->pre_description.text[0]); /* I think this is not needed, but just in case. */
 
 	/* link the variable in */
 	/* tech_hash should be null on the first run */
@@ -1605,10 +1644,47 @@ extern void RS_ParseTechnologies (const char *name, char **text)
 			else
 				Com_Printf("RS_ParseTechnologies: \"%s\" unknown techtype: \"%s\" - ignored.\n", name, token);
 		} else {
+			if ((!Q_strncmp(token, "description", MAX_VAR))
+			|| (!Q_strncmp(token, "pre_description", MAX_VAR))) {
+				/* Parse the available descriptions for this tech */
 
-			if ((!Q_strncmp(token, "require_AND", MAX_VAR))
-			 || (!Q_strncmp(token, "require_OR", MAX_VAR))
-			 || (!Q_strncmp(token, "require_for_production", MAX_VAR))) {
+ 				/* Link to correct list. */
+				if (!Q_strncmp(token, "pre_description", MAX_VAR)) {
+					desc_temp = &tech->pre_description;
+				} else {
+					desc_temp = &tech->description;
+				}
+
+				token = COM_EParse(text, errhead, name);
+				if (!*text)
+					break;
+				if (*token != '{')
+					break;
+				if (*token == '}')
+					break;
+
+				do {	/* Loop through all descriptions in the list.*/
+					token = COM_EParse(text, errhead, name);
+					if (!*text)
+						return;
+					if (*token == '}')
+						break;
+					
+					if (desc_temp->numDescriptions < MAX_DESCRIPTIONS) {
+						/* Copy description text into the entry. */
+						desc_temp->text[desc_temp->numDescriptions] = CL_ClientHunkUse(token, strlen(token) + 1);
+						
+						/* Copy tech string into entry. */
+						token = COM_EParse(text, errhead, name);
+						desc_temp->tech[desc_temp->numDescriptions] = CL_ClientHunkUse(token, strlen(token) + 1);
+						desc_temp->numDescriptions++;
+					}
+					
+				} while (*text);
+				
+			 } else if ((!Q_strncmp(token, "require_AND", MAX_VAR))
+				|| (!Q_strncmp(token, "require_OR", MAX_VAR))
+				|| (!Q_strncmp(token, "require_for_production", MAX_VAR))) {
 				/* Link to correct list. */
 				if (!Q_strncmp(token, "require_AND", MAX_VAR)) {
 					required_temp = &tech->require_AND;
@@ -1820,8 +1896,6 @@ extern void RS_ParseTechnologies (const char *name, char **text)
 		}
 	} while (*text);
 
-	if (!tech->description)
-		CL_ClientHunkStoreString(_("No description available."), &tech->description);
 
 	if (tech->provides) {
 		hash = Com_HashKey(tech->provides, TECH_HASH_SIZE);

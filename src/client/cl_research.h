@@ -28,12 +28,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "cl_ufopedia.h"
 
-#define MAX_RESEARCHDISPLAY 28	/* Number of the available string (in the list) in the research menu */
+#define MAX_RESEARCHDISPLAY 28	/**< Number of the available string (in the list) in the research menu */
 #define MAX_RESEARCHLIST 32
-#define MAX_TECHNOLOGIES 256	/* Maximum number of technologies overall. */
-#define MAX_TECHLINKS 16	/* Maximum number of requirements in a technology (i.e in require_AND and require_OR).
-				 * Needs to be synced with MAX_TECHLINKS in q_shared.h */
-
+#define MAX_TECHNOLOGIES 256	/**< Maximum number of technologies overall. */
+#define MAX_TECHLINKS 16	/**< Maximum number of requirements in a technology (i.e in require_AND and require_OR).
+				 *   Needs to be synced with MAX_TECHLINKS in q_shared.h */
+#define MAX_DESCRIPTIONS 8	/** < Maximum number of descriptions (per tech and description-type). */
 
 /** @brief The status of a research (per tech) */
 typedef enum researchStatus_s {
@@ -118,13 +118,19 @@ typedef enum {
 	MAILSENT_MAX
 } mailSentType_t;
 
+typedef struct descriptions_s {
+	int numDescriptions;	/**< The number of descriptions. */
+	char *text[MAX_DESCRIPTIONS];	/**< A list of descriptions (Short text-id to get the full text via gettext). */
+	char *tech[MAX_DESCRIPTIONS];	/**< The technology to check (i.e. are its requirements met?) if this decription should be displayed. */
+} descriptions_t;
+
 /** @brief This is the technology parsed from research.ufo */
 typedef struct technology_s {
 	char *id;		/**< Short (unique) id/name. */
 	int idx;			/**< Self-link in the global list */
 	char *name;		/**< Full name of this technology. */
-	char *description;	/**< Description of researched item. Short text-id to get the full text via gettext. */
-	char *pre_description;	/**< Description of item before it's researched. Short text-id to get the full text via gettext. */
+	descriptions_t description;	/**< Descriptions of researched item.  */
+	descriptions_t pre_description;	/**< Descriptions of item before it's researched. */
 	researchType_t type;		/**< Defines what type this tech-entry is an where to search for other information "tech", "weapon" etc... see research.ufo for more */
 
 	requirements_t require_AND;	/**< A list of requirements that ALL need to be met (= AND-related) See struct above. */
@@ -192,6 +198,7 @@ void RS_CheckAllCollected(void);
 void RS_AddObjectTechs(void);
 void RS_RequiredIdxAssign(void);
 void RS_InitTree(void);
+char *RS_GetDescription(descriptions_t *desc);
 void RS_MarkCollected(technology_t *tech) __attribute__((nonnull));
 void RS_MarkResearchable(qboolean init);
 void RS_MarkOneResearchable(technology_t *tech);

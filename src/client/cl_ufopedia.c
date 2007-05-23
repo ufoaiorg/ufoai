@@ -70,7 +70,7 @@ static qboolean UP_TechGetsDisplayed (technology_t *tech)
 {
 	return RS_IsResearched_ptr(tech)	/* Is already researched OR ... */
 	 || RS_Collected_(tech)	/* ... has collected items OR ... */
-	 || (tech->statusResearchable && tech->pre_description);
+	 || (tech->statusResearchable && (tech->pre_description.numDescriptions > 0));
 }
 
 /**
@@ -590,11 +590,11 @@ extern void UP_Article (technology_t* tech)
 	if (RS_IsResearched_ptr(tech)) {
 		Cvar_Set("mn_uptitle", va("%s *", _(tech->name)));
 		/* If researched -> display research text */
-		menuText[TEXT_UFOPEDIA] = _(tech->description);
-		if (tech->pre_description) {
+		menuText[TEXT_UFOPEDIA] = _(RS_GetDescription(&tech->description));
+		if (tech->pre_description.numDescriptions > 0) {
 			/* Display pre-research text and the buttons if a pre-research text is available. */
 			if (mn_uppretext->integer) {
-				menuText[TEXT_UFOPEDIA] = _(tech->pre_description);
+				menuText[TEXT_UFOPEDIA] = _(RS_GetDescription(&tech->pre_description));
 				UP_SetMailHeader(tech, TECHMAIL_PRE);
 			} else {
 				UP_SetMailHeader(tech, TECHMAIL_RESEARCHED);
@@ -636,12 +636,12 @@ extern void UP_Article (technology_t* tech)
 			}
 		}
 	/* see also UP_TechGetsDisplayed */
-	} else if (RS_Collected_(tech) || (tech->statusResearchable && tech->pre_description)) {
+	} else if (RS_Collected_(tech) || (tech->statusResearchable && (tech->pre_description.numDescriptions > 0))) {
 		/* This tech has something collected or has a research proposal. (i.e. pre-research text) */
 		Cvar_Set("mn_uptitle", _(tech->name));
 		/* Not researched but some items collected -> display pre-research text if available. */
-		if (tech->pre_description) {
-			menuText[TEXT_UFOPEDIA] = _(tech->pre_description);
+		if (tech->pre_description.numDescriptions > 0) {
+			menuText[TEXT_UFOPEDIA] = _(RS_GetDescription(&tech->pre_description));
 			UP_SetMailHeader(tech, TECHMAIL_PRE);
 		} else {
 			menuText[TEXT_UFOPEDIA] = _("No pre-research description available.");
