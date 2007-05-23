@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-05-17 11:44+0200\n"
-"PO-Revision-Date: 2007-05-17 11:46+0100\n"
+"PO-Revision-Date: 2007-05-23 07:05+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -114,14 +114,12 @@ msgid "Saracen I"
 msgstr "Sarazene I"
 
 #: ../base/ufos/aircraftmanagement.ufo:99
-#, fuzzy
 msgid "Stingray Interceptor"
-msgstr "Abfangjäger"
+msgstr "Stingray - Abfangjäger"
 
 #: ../base/ufos/aircraftmanagement.ufo:100
-#, fuzzy
 msgid "Stingray"
-msgstr "Streuschuss"
+msgstr "Stingray"
 
 #: ../base/ufos/aircraftmanagement.ufo:120
 #: ../base/ufos/otheritems.ufo:49
@@ -132,15 +130,13 @@ msgid "UFO - Harvester"
 msgstr "UFO - Sammler"
 
 #: ../base/ufos/aircraftmanagement.ufo:121
-#, fuzzy
 msgid "Harvester U"
-msgstr "UFO - Sammler"
+msgstr "UFO - Samm."
 
 #: ../base/ufos/aircraftmanagement.ufo:142
 #: ../base/ufos/otheritems.ufo:61
-#, fuzzy
 msgid "UFO - Carrier"
-msgstr "UFO - Sammler"
+msgstr "UFO - Transporter"
 
 #: ../base/ufos/aircraftmanagement.ufo:164
 #: ../base/ufos/otheritems.ufo:67
@@ -154,13 +150,12 @@ msgstr ""
 
 #: ../base/ufos/aircraftmanagement.ufo:186
 #: ../base/ufos/otheritems.ufo:55
-#, fuzzy
 msgid "UFO - Condor"
-msgstr "UFO - Kundschafter"
+msgstr "UFO - Kondor"
 
 #: ../base/ufos/aircraftmanagement.ufo:187
 msgid "Condor U"
-msgstr ""
+msgstr "UFO - Kond."
 
 #: ../base/ufos/aircraftmanagement.ufo:207
 #: ../base/ufos/otheritems.ufo:37
@@ -1167,11 +1162,11 @@ msgstr "Kauffaktor:"
 
 #: ../base/ufos/menu_buy.ufo:1097
 msgid "Decrease the amount of items you want to buy"
-msgstr ""
+msgstr "Einzukaufende Menge reduzieren"
 
 #: ../base/ufos/menu_buy.ufo:1111
 msgid "Increase the amount of items you want to buy"
-msgstr ""
+msgstr "Einzukaufende Menge erhöhen"
 
 #: ../base/ufos/menu_buy.ufo:1125
 msgid "Sell factor:"
@@ -1179,11 +1174,11 @@ msgstr "Verkaufsfaktor:"
 
 #: ../base/ufos/menu_buy.ufo:1141
 msgid "Decrease the amount of items you want to sell"
-msgstr ""
+msgstr "Zu verkaufende Menge reduzieren"
 
 #: ../base/ufos/menu_buy.ufo:1155
 msgid "Increase the amount of items you want to sell"
-msgstr ""
+msgstr "Zu verkaufende Menge erhöhen"
 
 #: ../base/ufos/menu_buy.ufo:1173
 msgid "Storage (all/free):"
@@ -1663,15 +1658,15 @@ msgstr ""
 
 #: ../base/ufos/menu_hospital.ufo:280
 msgid "Red means employee heavily wounded."
-msgstr ""
+msgstr "'Rot' bedeutet: Angestellter schwer verwundet."
 
 #: ../base/ufos/menu_hospital.ufo:289
 msgid "Yellow means employee slightly wounded."
-msgstr ""
+msgstr "'Gelb' bedeutet: Angestellter leicht verletzt."
 
 #: ../base/ufos/menu_hospital.ufo:298
 msgid "Green means employee under surgery proceedings."
-msgstr ""
+msgstr "'Grün' bedeutet: Angestellter ist in ärztlicher Behandlung."
 
 #: ../base/ufos/menu_hospital.ufo:462
 msgid "Heal this soldier"
@@ -1811,7 +1806,7 @@ msgstr "Spieler"
 
 #: ../base/ufos/menu_lostwon.ufo:67
 msgid "No UFO hangars or UFO recovery process finished"
-msgstr ""
+msgstr "Keine UFO-Hangars oder UFO-Bergung abgeschlossen"
 
 #: ../base/ufos/menu_lostwon.ufo:68
 msgid "No nation with accepted level of alien infiltration or UFO recovery process finished"
@@ -1927,7 +1922,6 @@ msgid "Exit"
 msgstr "Beenden"
 
 #: ../base/ufos/menu_main.ufo:199
-#, fuzzy
 msgid "Initial settings"
 msgstr "Spieleinstellungen"
 
@@ -1960,7 +1954,7 @@ msgstr "Musik:"
 
 #: ../base/ufos/menu_main.ufo:317
 msgid "You have to set the playername and hit the 'OK' button:"
-msgstr ""
+msgstr "Sie müssen den Spielernamen festlegen und OK drücken:"
 
 #: ../base/ufos/menu_multiplayer.ufo:63
 msgid "Join"
@@ -2212,7 +2206,7 @@ msgstr "Bitte warten"
 
 #: ../base/ufos/menu_multiplayer.ufo:1671
 msgid "Players connected, waiting for others"
-msgstr ""
+msgstr "Spieler verbunden, warten auf weitere"
 
 #: ../base/ufos/menu_multiplayer.ufo:1684
 msgid "Start the game even if not all teams have joined"
@@ -2533,7 +2527,7 @@ msgstr "Priorität verringern"
 
 #: ../base/ufos/menu_production.ufo:427
 msgid "Show other items and materials"
-msgstr ""
+msgstr "Andere Gegenstände und Materialien anzeigen"
 
 #: ../base/ufos/menu_production.ufo:442
 msgid "Other"
@@ -8381,9 +8375,8 @@ msgid "Burst"
 msgstr "Feuerstoß"
 
 #: ../base/ufos/weapons_human.ufo:185
-#, fuzzy
 msgid "Machine Gun"
-msgstr "Schwere Maschinenpistole"
+msgstr "Maschinengewehr"
 
 #: ../base/ufos/weapons_human.ufo:204
 #, fuzzy
@@ -9020,7 +9013,7 @@ msgstr "Zurück zur Basis"
 
 #: client/cl_aircraft.c:502
 msgid "Your aircraft doesn't have enough fuel to go there and then come back to its home base"
-msgstr ""
+msgstr "Ihr Flugzeug hat nicht genügend Treibstoff um dorthin und zurück zur Heimatbasis zu fliegen"
 
 #: client/cl_aircraft.c:609
 #: client/cl_map.c:1118
@@ -9580,7 +9573,7 @@ msgstr ""
 #: client/cl_campaign.c:3962
 #, c-format
 msgid "Recovered UFO of type %s from the battlefield. UFO is being transported to base %s."
-msgstr ""
+msgstr "UFO vom Typ %s vom Schlachtfeld geborgen. UFO wird zur Basis %s gebracht."
 
 #: client/cl_campaign.c:3964
 #: client/cl_campaign.c:4058
@@ -9591,12 +9584,12 @@ msgstr "UFO Bergung"
 #: client/cl_campaign.c:4056
 #, c-format
 msgid "Recovered UFO of type %s from the battlefield. UFO sold to nation %s, gained %i credits."
-msgstr ""
+msgstr "UFO vom Typ %s vom Schlachtfeld geborgen. Nation %s hat es zum Preis von %i Credits gekauft."
 
 #: client/cl_campaign.c:4125
 #, c-format
 msgid "Secured UFO of type %s was destroyed."
-msgstr ""
+msgstr "Gesichertes UFO vom Typ %s wurde zerstört."
 
 #: client/cl_console.c:370
 msgid "Bring up the in-game console"
@@ -9655,6 +9648,10 @@ msgid ""
 "\n"
 "Build more hospitals.\n"
 msgstr ""
+"muss auf die Krankenstation gebracht werden,\n"
+"aber dort ist nicht genügend Platz!\n"
+"\n"
+"Bauen Sie weitere Krankenstationen.\n"
 
 #: client/cl_hospital.c:496
 msgid "Not enough hospital space"
@@ -9802,7 +9799,7 @@ msgstr "Fehler"
 
 #: client/cl_main.c:817
 msgid "Server needs restarting - something went wrong"
-msgstr ""
+msgstr "Server muss neugestartet werden - etwas ist schiefgegangen"
 
 #: client/cl_main.c:888
 msgid "No player connected\n"
@@ -10133,6 +10130,10 @@ msgid ""
 "\n"
 "Hire workers."
 msgstr ""
+"Ohne Arbeiter können Sie keine Produktion in Auftrag geben\n"
+"in dieser Basis.\n"
+"\n"
+"Stellen Sie Arbeiter ein."
 
 #: client/cl_produce.c:258
 msgid "Not enough workshops"
@@ -10204,7 +10205,7 @@ msgid "%s (%i) "
 msgstr "%s (%i) "
 
 #: client/cl_produce.c:512
-#, fuzzy, c-format
+#, c-format
 msgid "Disassembly time\t%ih\n"
 msgstr "Demontagezeit\t%ih\n"
 
@@ -10879,9 +10880,9 @@ msgstr "Reichweite:\t%g\n"
 
 #: client/cl_ufopedia.c:305
 #: client/cl_ufopedia.c:334
-#, fuzzy, c-format
+#, c-format
 msgid "Go to '%s' UFOpedia entry"
-msgstr "Wechsele zum Ufopediaeintrag"
+msgstr "Wechsele zum Ufopediaeintrag '%s'"
 
 #: client/cl_ufopedia.c:354
 #, c-format
