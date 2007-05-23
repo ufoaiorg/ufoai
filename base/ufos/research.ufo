@@ -100,8 +100,12 @@ tech rs_laser
 	type	tech
 	name "_Continuous Wave Laser Operation"
 	up_chapter	tech
-	description	"_laser_txt"
-	pre_description	"_laser_pre_txt"
+	description {
+		default "_laser_txt"
+	}
+	pre_description {
+		default "_laser_pre_txt"
+	}
 
 	mail_pre
 	{
@@ -128,8 +132,12 @@ tech rs_antimatter
 	type		tech
 	name		"_Antimatter"
 	up_chapter	tech
-	description	"_antimatter_txt"
-	pre_description	"_antimatter_pre_txt"
+	description {
+		default "_antimatter_txt"
+	}
+	pre_description {
+		default "_antimatter_pre_txt"
+	}
 
 	mail_pre
 	{
@@ -158,7 +166,9 @@ tech rs_item_antimatter
 {
 	type		weapon
 	name		"_Antimatter"
-	description	"_antimatter_txt"
+	description {
+		default "_antimatter_txt"
+	}
 
 	require_AND
 	{
@@ -202,8 +212,12 @@ tech rs_alien_live
 	type	tech
 	name	"_Live Alien"
 	up_chapter	aliens
-	description	"_alien_live_txt"
-	pre_description	"_alien_live_pre_txt"
+	description {
+		default "_alien_live_txt"
+	}
+	pre_description {
+		default "_alien_live_pre_txt"
+	}
 
 	mail_pre
 	{
@@ -234,8 +248,12 @@ tech rs_alien_breathing
 	type		tech
 	name		"_Alien Breathing Apparatus"
 	up_chapter	aliens
-	description	"_alien_breathing_txt"
-	pre_description	"_alien_breathing_pre_txt"
+	description {
+		default "_alien_breathing_txt"
+	}
+	pre_description {
+		default "_alien_breathing_pre_txt"
+	}
 
 	mail_pre
 	{
@@ -266,7 +284,9 @@ tech rs_item_brapparatus
 {
 	type		weapon
 	name		"_Alien Breathing Apparatus"
-	description	"_alien_breathing_txt"
+	description {
+		default "_alien_breathing_txt"
+	}
 
 	require_AND
 	{
@@ -284,8 +304,12 @@ tech rs_alien_mind
 	type	tech
 	name	"_The Alien Mind"
 	up_chapter	threat
-	description	"_alien_mind_txt"
-	pre_description	"_alien_mind_pre_txt"
+	description {
+		default "_alien_mind_txt"
+	}
+	pre_description {
+		default "_alien_mind_pre_txt"
+	}
 
 	mail_pre
 	{
@@ -314,8 +338,12 @@ tech rs_alien_oddbehaviour
 	type		tech
 	name		"_Odd Behaviour"
 	up_chapter	threat
-	description	"_alien_odd_behaviour_txt"
-	pre_description	"_alien_odd_behaviour_pre_txt"
+	description {
+		default "_alien_odd_behaviour_txt"
+	}
+	pre_description {
+		default "_alien_odd_behaviour_pre_txt"
+	}
 
 	mail_pre
 	{
@@ -344,8 +372,12 @@ tech rs_alien_origins
 	type		tech
 	name		"_Alien Origins"
 	up_chapter	threat
-	description	"_alien_origins_txt"
-	pre_description	"_alien_origins_pre_txt"
+	description {
+		default "_alien_origins_txt"
+	}
+	pre_description {
+		default "_alien_origins_pre_txt"
+	}
 
 	mail_pre
 	{
@@ -376,7 +408,9 @@ tech rs_weapon_assault
 {
 	type	weapon
 	up_chapter	equipment
-	description	"_assault_txt"
+	description {
+		default "_assault_txt"
+	}
 	// pre_description	"_assault_pre_txt"
 
 	require_AND
@@ -392,7 +426,9 @@ tech rs_weapon_assault_ammo
 {
 	type	weapon
 	up_chapter	equipment
-	description	"_assault_mag_txt"
+	description {
+		default "_assault_mag_txt"
+	}
 	// pre_description	"_assault_mag_pre_txt"
 
 	require_AND
@@ -409,7 +445,9 @@ tech rs_weapon_machinegun
 {
 	type	weapon
 	up_chapter	equipment
-	description	"_machinegun_txt"
+	description {
+		default "_machinegun_txt"
+	}
 	// pre_description	"_machinegun_pre_txt"
 
 	require_AND
@@ -425,7 +463,9 @@ tech rs_weapon_machinegun_ammo
 {
 	type	weapon
 	up_chapter	equipment
-	description	"_machinegun_mag_txt"
+	description {
+		default "_machinegun_mag_txt"
+	}
 	// pre_description	"_machinegun_mag_pre_txt"
 
 	require_AND
@@ -442,8 +482,12 @@ tech rs_weapon_bolterrifle
 {
 	type	weapon
 	up_chapter	equipment
-	description	"_bolterrifle_txt"
-	pre_description	"_bolterrifle_pre_txt"
+	description {
+		default "_bolterrifle_txt"
+	}
+	pre_description {
+		default "_bolterrifle_pre_txt"
+	}
 
 	mail_pre
 	{
@@ -473,8 +517,12 @@ tech rs_weapon_bolterrifle_ammo
 {
 	type	weapon
 	up_chapter	equipment
-	description	"_bolterrifle_txt"
-	pre_description	"_bolterrifle_pre_txt"
+	description {
+		default "_bolterrifle_txt"
+	}
+	pre_description {
+		default "_bolterrifle_pre_txt"
+	}
 
 	mail_pre
 	{
@@ -504,7 +552,9 @@ tech rs_weapon_combatknife
 {
 	type	weapon
 	up_chapter	equipment
-	description	"_combatknife_txt"
+	description {
+		default "_combatknife_txt"
+	}
 	// pre_description	"_combatknife_pre_txt"
 
 	require_AND
@@ -521,8 +571,12 @@ tech rs_weapon_monoknife
 {
 	type	weapon
 	up_chapter	equipment
-	description	"_monoknife_txt"
-	pre_description	"_monoknife_pre_txt"
+	description {
+		default "_monoknife_txt"
+	}
+	pre_description {
+		default "_monoknife_pre_txt"
+	}
 
 	mail_pre
 	{
@@ -554,7 +608,9 @@ tech rs_weapon_flamer
 {
 	type	weapon
 	up_chapter	equipment
-	description	"_flamer_txt"
+	description {
+		default "_flamer_txt"
+	}
 	// pre_description	"_flamer_pre_txt"
 
 	require_AND
@@ -570,7 +626,9 @@ tech rs_weapon_flamer_ammo
 {
 	type	weapon
 	up_chapter	equipment
-	description	"_flamer_mag_txt"
+	description {
+		default "_flamer_mag_txt"
+	}
 	// pre_description	"_flamer_mag_pre_txt"
 
 	require_AND
@@ -587,7 +645,9 @@ tech rs_weapon_flashbang
 {
 	type	weapon
 	up_chapter	equipment
-	description	"_flashbang_txt"
+	description {
+		default "_flashbang_txt"
+	}
 	// pre_description	"_flashbang_pre_txt"
 
 	require_AND
@@ -604,7 +664,9 @@ tech rs_weapon_fraggren
 {
 	type	weapon
 	up_chapter	equipment
-	description	"_fraggren_txt"
+	description {
+		default "_fraggren_txt"
+	}
 	// pre_description	"_fraggren_pre_txt"
 
 	require_AND
@@ -621,7 +683,9 @@ tech rs_weapon_incgren
 {
 	type	weapon
 	up_chapter	equipment
-	description	"_incgren_txt"
+	description {
+		default "_incgren_txt"
+	}
 	// pre_description	"_incgren_pre_txt"
 
 	require_AND
@@ -638,7 +702,9 @@ tech rs_weapon_grenl
 {
 	type	weapon
 	up_chapter	equipment
-	description	"_grenl_txt"
+	description {
+		default "_grenl_txt"
+	}
 	// pre_description	"_grenl_pre_txt"
 
 	require_AND
@@ -654,7 +720,9 @@ tech rs_weapon_grenl_ammo
 {
 	type	weapon
 	up_chapter	equipment
-	description	"_grenl_ammo_txt"
+	description {
+		default "_grenl_ammo_txt"
+	}
 	// pre_description	"_grenl_ammo_pre_txt"
 
 	require_AND
@@ -671,7 +739,9 @@ tech rs_weapon_grenl_fle_ammo
 {
 	type	weapon
 	up_chapter	equipment
-	description	"_grenl_fle_ammo_txt"
+	description {
+		default "_grenl_fle_ammo_txt"
+	}
 	// pre_description	"_grenl_fle_ammo_pre_txt"
 
 	require_AND
@@ -688,7 +758,9 @@ tech rs_weapon_grenl_incendiary_ammo
 {
 	type	weapon
 	up_chapter	equipment
-	description	"_grenl_incendiary_ammo_txt"
+	description {
+		default "_grenl_incendiary_ammo_txt"
+	}
 	// pre_description	"_grenl_incendiary_ammo_pre_txt"
 
 	require_AND
@@ -705,8 +777,12 @@ tech rs_weapon_grenl_plasma_ammo
 {
 	type	weapon
 	up_chapter	equipment
-	description	"_grenl_plasma_ammo_txt"
-	pre_description	"_grenl_plasma_ammo_pre_txt"
+	description {
+		default "_grenl_plasma_ammo_txt"
+	}
+	pre_description {
+		default "_grenl_plasma_ammo_pre_txt"
+	}
 
 	mail_pre
 	{
@@ -740,8 +816,12 @@ tech rs_weapon_laserammo
 {
 	type		weapon
 	up_chapter	equipment
-	description	"_laser_ammo_txt"
-	pre_description	"_laser_ammo_pre_txt"
+	description {
+		default "_laser_ammo_txt"
+	}
+	pre_description {
+		default "_laser_ammo_pre_txt"
+	}
 
 	mail_pre
 	{
@@ -770,8 +850,12 @@ tech rs_weapon_heavylaser
 {
 	type	weapon
 	up_chapter	equipment
-	description	"_heavylaser_txt"
-	pre_description	"_heavylaser_pre_txt"
+	description {
+		default "_heavylaser_txt"
+	}
+	pre_description {
+		default "_heavylaser_pre_txt"
+	}
 
 	mail_pre
 	{
@@ -820,7 +904,9 @@ tech rs_irgoggles
 {
 	type	weapon
 	up_chapter	equipment
-	description	"_irgoggles_txt"
+	description {
+		default "_irgoggles_txt"
+	}
 	// pre_description	"_irgoggles_pre_txt"
 
 	require_AND
@@ -836,8 +922,12 @@ tech rs_weapon_kerrblade
 {
 	type	weapon
 	up_chapter	artifacts
-	description	"_kerrblade_txt"
-	pre_description	"_kerrblade_pre_txt"
+	description {
+		default "_kerrblade_txt"
+	}
+	pre_description {
+		default "_kerrblade_pre_txt"
+	}
 
 	mail_pre
 	{
@@ -868,8 +958,12 @@ tech rs_weapon_laserpistol
 {
 	type	weapon
 	up_chapter	equipment
-	description	"_laserpistol_txt"
-	pre_description	"_laserpistol_pre_txt"
+	description {
+		default "_laserpistol_txt"
+	}
+	pre_description {
+		default "_laserpistol_pre_txt"
+	}
 
 	mail_pre
 	{
@@ -917,8 +1011,12 @@ tech rs_weapon_laserrifle
 {
 	type	weapon
 	up_chapter	equipment
-	description	"_laserrifle_txt"
-	pre_description	"_laserrifle_pre_txt"
+	description {
+		default "_laserrifle_txt"
+	}
+	pre_description {
+		default "_laserrifle_pre_txt"
+	}
 
 	mail_pre
 	{
@@ -967,7 +1065,9 @@ tech rs_medikit
 {
 	type	weapon
 	up_chapter	equipment
-	description	"_medikit_txt"
+	description {
+		default "_medikit_txt"
+	}
 	// pre_description	"_medikit_pre_txt"
 
 	require_AND
@@ -983,7 +1083,9 @@ tech rs_weapon_pistol
 {
 	type	weapon
 	up_chapter	equipment
-	description	"_pistol_txt"
+	description {
+		default "_pistol_txt"
+	}
 	// pre_description	"_pistol_pre_txt"
 
 	require_AND
@@ -1000,7 +1102,9 @@ tech rs_weapon_pistol_ammo
 {
 	type	weapon
 	up_chapter	equipment
-	description	"_pistol_mag_txt"
+	description {
+		default "_pistol_mag_txt"
+	}
 	// pre_description	"_pistol_mag_pre_txt"
 
 	require_AND
@@ -1018,7 +1122,9 @@ tech rs_weapon_pistol2
 {
 	type	weapon
 	up_chapter	equipment
-	description	"_pistol2_txt"
+	description {
+		default "_pistol2_txt"
+	}
 	// pre_description	"_pistol2_pre_txt"
 
 	require_AND
@@ -1035,7 +1141,9 @@ tech rs_weapon_pistol2_ammo
 {
 	type	weapon
 	up_chapter	equipment
-	description	"_pistol2_mag_txt"
+	description {
+		default "_pistol2_mag_txt"
+	}
 	// pre_description	"_pistol2_mag_pre_txt"
 
 	require_AND
@@ -1053,8 +1161,12 @@ tech rs_weapon_plasatomizer
 {
 	type	weapon
 	up_chapter	artifacts
-	description	"_plasatomizer_txt"
-	pre_description	"_plasatomizer_pre_txt"
+	description {
+		default "_plasatomizer_txt"
+	}
+	pre_description {
+		default "_plasatomizer_pre_txt"
+	}
 
 	mail_pre
 	{
@@ -1087,8 +1199,12 @@ tech rs_weapon_plasatomizer_ammo
 {
 	type	weapon
 	up_chapter	artifacts
-	description	"_plasatomizer_txt"
-	pre_description	"_plasatomizer_pre_txt"
+	description {
+		default "_plasatomizer_txt"
+	}
+	pre_description {
+		default "_plasatomizer_pre_txt"
+	}
 
 	mail_pre
 	{
@@ -1118,8 +1234,12 @@ tech rs_weapon_plasblaster
 {
 	type	weapon
 	up_chapter	artifacts
-	description	"_plasblaster_txt"
-	pre_description	"_plasblaster_pre_txt"
+	description {
+		default "_plasblaster_txt"
+	}
+	pre_description {
+		default "_plasblaster_pre_txt"
+	}
 
 	mail_pre
 	{
@@ -1150,8 +1270,12 @@ tech rs_weapon_plasblaster_ammo
 {
 	type	weapon
 	up_chapter	artifacts
-	description	"_plasblaster_txt"
-	pre_description	"_plasblaster_pre_txt"
+	description {
+		default "_plasblaster_txt"
+	}
+	pre_description {
+		default "_plasblaster_pre_txt"
+	}
 
 	mail_pre
 	{
@@ -1181,8 +1305,12 @@ tech rs_weapon_plasblade
 {
 	type	weapon
 	up_chapter	artifacts
-	description	"_plasblade_txt"
-	pre_description	"_plasblade_pre_txt"
+	description {
+		default "_plasblade_txt"
+	}
+	pre_description {
+		default "_plasblade_pre_txt"
+	}
 
 	mail_pre
 	{
@@ -1213,8 +1341,12 @@ tech rs_weapon_plasmagren
 {
 	type	weapon
 	up_chapter	artifacts
-	description	"_plasmagren_txt"
-	pre_description	"_plasmagren_pre_txt"
+	description {
+		default "_plasmagren_txt"
+	}
+	pre_description {
+		default "_plasmagren_pre_txt"
+	}
 
 	mail_pre
 	{
@@ -1245,8 +1377,12 @@ tech rs_weapon_plasrifle
 {
 	type	weapon
 	up_chapter	artifacts
-	description	"_plasrifle_txt"
-	pre_description	"_plasrifle_pre_txt"
+	description {
+		default "_plasrifle_txt"
+	}
+	pre_description {
+		default "_plasrifle_pre_txt"
+	}
 
 	mail_pre
 	{
@@ -1279,8 +1415,12 @@ tech rs_weapon_plasrifle_ammo
 {
 	type	weapon
 	up_chapter	artifacts
-	description	"_plasrifle_txt"
-	pre_description	"_plasrifle_pre_txt"
+	description {
+		default "_plasrifle_txt"
+	}
+	pre_description {
+		default "_plasrifle_pre_txt"
+	}
 
 	mail_pre
 	{
@@ -1310,7 +1450,9 @@ tech rs_weapon_rpg
 {
 	type	weapon
 	up_chapter	equipment
-	description	"_rpg_txt"
+	description {
+		default "_rpg_txt"
+	}
 	// pre_description	"_rpg_pre_txt"
 
 	require_AND
@@ -1327,7 +1469,9 @@ tech rs_weapon_rpg_ammo
 {
 	type	weapon
 	up_chapter	equipment
-	description	"_rpg_ammo_txt"
+	description {
+		default "_rpg_ammo_txt"
+	}
 	// pre_description	"_rpg_ammo_pre_txt"
 
 	require_AND
@@ -1345,7 +1489,9 @@ tech rs_weapon_rpg_incendiary_ammo
 {
 	type	weapon
 	up_chapter	equipment
-	description	"_rpg_incendiary_ammo_txt"
+	description {
+		default "_rpg_incendiary_ammo_txt"
+	}
 	// pre_description	"_rpg_incendiary_ammo_pre_txt"
 
 	require_AND
@@ -1364,8 +1510,12 @@ tech rs_weapon_chaingun
 	// Note: Multiplayer only
 	type	weapon
 	up_chapter	equipment
-	description	"_chaingun_txt"
-	pre_description	"_chaingun_pre_txt"
+	description {
+		default "_chaingun_txt"
+	}
+	pre_description {
+		default "_chaingun_pre_txt"
+	}
 
 //	require_AND
 //	{
@@ -1382,8 +1532,12 @@ tech rs_weapon_chaingun_ammo
 	// Note: Multiplayer only
 	type	weapon
 	up_chapter	equipment
-	description	"_chaingun_ammo_txt"
-	pre_description	"_chaingun_ammo_pre_txt"
+	description {
+		default "_chaingun_ammo_txt"
+	}
+	pre_description {
+		default "_chaingun_ammo_pre_txt"
+	}
 
 	require_AND
 	{
@@ -1401,7 +1555,9 @@ tech rs_weapon_shotgun
 	// Note: Multiplayer only
 	type	weapon
 	up_chapter	equipment
-	description	"_shotgun_txt"
+	description {
+		default "_shotgun_txt"
+	}
 	// pre_description	"_shotgun_pre_txt"
 
 // multiplayer only thus not needed at production menu
@@ -1420,7 +1576,9 @@ tech rs_weapon_shotgun_ammo
 	// Note: Multiplayer only
 	type	weapon
 	up_chapter	equipment
-	description	"_shotgun_ammo_txt"
+	description {
+		default "_shotgun_ammo_txt"
+	}
 	// pre_description	"_shotgun_ammo_pre_txt"
 
 	require_AND
@@ -1439,7 +1597,9 @@ tech rs_weapon_shotgun2
 	// Riot Shotgun
 	type	weapon
 	up_chapter	equipment
-	description	"_shotgun2_txt"
+	description {
+		default "_shotgun2_txt"
+	}
 	// pre_description	"_shotgun2_pre_txt"
 
 	require_AND
@@ -1475,7 +1635,9 @@ tech rs_weapon_shotgun2_slug_ammo
 {
 	type	weapon
 	up_chapter	equipment
-	description	"_shotgun2_slug_ammo_txt"
+	description {
+		default "_shotgun2_slug_ammo_txt"
+	}
 	// pre_description	"_shotgun2_slug_ammo_pre_txt"
 
 	require_AND
@@ -1493,7 +1655,9 @@ tech rs_weapon_shotgun_micro
 {
 	type	weapon
 	up_chapter	equipment
-	description	"_shotgun_micro_txt"
+	description {
+		default "_shotgun_micro_txt"
+	}
 	// pre_description	"_shotgun_micro_pre_txt"
 
 	require_AND
@@ -1510,7 +1674,9 @@ tech rs_weapon_shotgun_micro_ammo
 {
 	type	weapon
 	up_chapter	equipment
-	description	"_shotgun_micro_ammo_txt"
+	description {
+		default "_shotgun_micro_ammo_txt"
+	}
 	// pre_description	"_shotgun_micro_ammo_pre_txt"
 
 	require_AND
@@ -1528,7 +1694,9 @@ tech rs_weapon_smg
 {
 	type	weapon
 	up_chapter	equipment
-	description	"_smg_txt"
+	description {
+		default "_smg_txt"
+	}
 	// pre_description	"_smg_pre_txt"
 
 	require_AND
@@ -1545,7 +1713,9 @@ tech rs_weapon_smg_ammo
 {
 	type	weapon
 	up_chapter	equipment
-	description	"_smg_mag_txt"
+	description {
+		default "_smg_mag_txt"
+	}
 	// pre_description	"_smg_mag_pre_txt"
 
 	require_AND
@@ -1563,7 +1733,9 @@ tech rs_weapon_smokegren
 {
 	type	weapon
 	up_chapter	equipment
-	description	"_smokegren_txt"
+	description {
+		default "_smokegren_txt"
+	}
 	// pre_description	"_smokegren_pre_txt"
 
 	require_AND
@@ -1580,7 +1752,9 @@ tech rs_weapon_sniper
 {
 	type	weapon
 	up_chapter	equipment
-	description	"_sniper_txt"
+	description {
+		default "_sniper_txt"
+	}
 	// pre_description	"_sniper_pre_txt"
 
 	require_AND
@@ -1597,7 +1771,9 @@ tech rs_weapon_sniper_ammo
 {
 	type	weapon
 	up_chapter	equipment
-	description	"_sniper_mag_txt"
+	description {
+		default "_sniper_mag_txt"
+	}
 	// pre_description	"_sniper_mag_pre_txt"
 
 	require_AND
@@ -1616,8 +1792,12 @@ tech rs_weapon_stungren
 {
 	type		weapon
 	up_chapter	equipment
-	description	"_stungren_txt"
-	pre_description	"_stungren_pre_txt"
+	description {
+		default "_stungren_txt"
+	}
+	pre_description {
+		default "_stungren_pre_txt"
+	}
 
 	mail_pre
 	{
@@ -1654,8 +1834,12 @@ tech rs_weapon_stunrod
 {
 	type		weapon
 	up_chapter	equipment
-	description	"_stunrod_txt"
-	pre_description	"_stunrod_pre_txt"
+	description {
+		default "_stunrod_txt"
+	}
+	pre_description {
+		default "_stunrod_pre_txt"
+	}
 
 	mail_pre
 	{
@@ -1687,8 +1871,12 @@ tech rs_weapon_pbeampistol
 {
 	type	weapon
 	up_chapter	artifacts
-	description	"_pbeampistol_txt"
-	pre_description	"_pbeampistol_pre_txt"
+	description {
+		default "_pbeampistol_txt"
+	}
+	pre_description {
+		default "_pbeampistol_pre_txt"
+	}
 
 	mail_pre
 	{
@@ -1719,8 +1907,12 @@ tech rs_weapon_pbeampistol_ammo
 {
 	type		weapon
 	up_chapter	artifacts
-	description	"_pbeamammo_txt"
-	pre_description	"_pbeamammo_pre_txt"
+	description {
+		default "_pbeamammo_txt"
+	}
+	pre_description {
+		default "_pbeamammo_pre_txt"
+	}
 
 	mail_pre
 	{
@@ -1751,8 +1943,12 @@ tech rs_weapon_pbeamcannon
 {
 	type		weapon
 	up_chapter	artifacts
-	description	"_pbeamcannon_txt"
-	pre_description	"_pbeamcannon_pre_txt"
+	description {
+		default "_pbeamcannon_txt"
+	}
+	pre_description {
+		default "_pbeamcannon_pre_txt"
+	}
 
 	mail_pre
 	{
@@ -1784,8 +1980,12 @@ tech rs_weapon_pbeamcannon_ammo
 {
 	type		weapon
 	up_chapter	artifacts
-	description	"_pbeamammo_txt"
-	pre_description	"_pbeamammo_pre_txt"
+	description {
+		default "_pbeamammo_txt"
+	}
+	pre_description {
+		default "_pbeamammo_pre_txt"
+	}
 
 	mail_pre
 	{
@@ -1816,8 +2016,12 @@ tech rs_weapon_pbeamrifle
 {
 	type		weapon
 	up_chapter	artifacts
-	description	"_pbeamrifle_txt"
-	pre_description	"_pbeamrifle_pre_txt"
+	description {
+		default "_pbeamrifle_txt"
+	}
+	pre_description {
+		default "_pbeamrifle_pre_txt"
+	}
 
 	mail_pre
 	{
@@ -1848,8 +2052,12 @@ tech rs_weapon_pbeamrifle_ammo
 {
 	type		weapon
 	up_chapter	artifacts
-	description	"_pbeamammo_txt"
-	pre_description	"_pbeamammo_pre_txt"
+	description {
+		default "_pbeamammo_txt"
+	}
+	pre_description {
+		default "_pbeamammo_pre_txt"
+	}
 
 	mail_pre
 	{
@@ -1882,8 +2090,12 @@ tech rs_weapon_pbeam_ammo
 	type		tech
 	name		"_Man-Portable Particle Beams"
 	up_chapter	artifacts
-	description	"_pbeamammo_txt"
-	pre_description	"_pbeamammo_pre_txt"
+	description {
+		default "_pbeamammo_txt"
+	}
+	pre_description {
+		default "_pbeamammo_pre_txt"
+	}
 
 	mail_pre
 	{
@@ -1918,7 +2130,9 @@ tech rs_combat_armour
 {
 	type	armor
 	up_chapter	equipment
-	description	"_combat_armour_txt"
+	description {
+		default "_combat_armour_txt"
+	}
 	// pre_description	"_combat_armour_pre_txt"
 
 	require_AND { tech nothing }
@@ -1932,8 +2146,12 @@ tech rs_nano_armour
 {
 	type	armor
 	up_chapter	equipment
-	description	"_nano_armour_txt"
-	pre_description	"_nano_armour_pre_txt"
+	description {
+		default "_nano_armour_txt"
+	}
+	pre_description {
+		default "_nano_armour_pre_txt"
+	}
 
 	require_AND
 	{
@@ -1948,8 +2166,12 @@ tech rs_alien_body_armour
 {
 	type		armor
 	up_chapter	artifacts
-	description	"_alien_body_armour_txt"
-	pre_description	"_alien_body_armour_pre_txt"
+	description {
+		default "_alien_body_armour_txt"
+	}
+	pre_description {
+		default "_alien_body_armour_pre_txt"
+	}
 
 	require_AND
 	{
@@ -1964,8 +2186,12 @@ tech rs_alien_medium_armour
 {
 	type		armor
 	up_chapter	artifacts
-	description	"_alien_medium_armour_txt"
-	pre_description	"_alien_medium_armour_pre_txt"
+	description {
+		default "_alien_medium_armour_txt"
+	}
+	pre_description {
+		default "_alien_medium_armour_pre_txt"
+	}
 
 	require_AND
 	{
@@ -1998,7 +2224,9 @@ tech rs_damage_blast
 	type	tech
 	name "_Blast Damage Type"
 	up_chapter damage
-	description	"none"
+	description {
+		default "none"
+	}
 	require_AND { tech nothing }
 
 	time	0
@@ -2010,7 +2238,9 @@ tech rs_damage_fire
 	type	tech
 	name "_Fire Damage Type"
 	up_chapter	damage
-	description	"none"
+	description {
+		default "none"
+	}
 	require_AND { tech nothing }
 
 	time	0
@@ -2022,7 +2252,9 @@ tech rs_damage_laser
 	type	tech
 	name "_Laser Damage Type"
 	up_chapter	damage
-	description	"none"
+	description {
+		default "none"
+	}
 
 	require_AND
 	{
@@ -2038,7 +2270,9 @@ tech rs_damage_normal
 	type	tech
 	name "_Impact Damage Type"
 	up_chapter	damage
-	description	"none"
+	description {
+		default "none"
+	}
 	require_AND { tech nothing }
 
 	time	0
@@ -2050,7 +2284,9 @@ tech rs_damage_shock
 	type	tech
 	name "_Shock Damage Type"
 	up_chapter	damage
-	description	"none"
+	description {
+		default "none"
+	}
 	require_AND { tech nothing }
 
 	time	0
@@ -2062,7 +2298,9 @@ tech rs_damage_plasma
 	type	tech
 	name "_Plasma Damage Type"
 	up_chapter	damage
-	description	"none"
+	description {
+		default "none"
+	}
 
 	require_OR
 	{
@@ -2081,7 +2319,9 @@ tech rs_damage_stun
 	type	tech
 	name "_Stun Damage Type"
 	up_chapter	damage
-	description	"none"
+	description {
+		default "none"
+	}
 	require_AND { tech nothing }
 
 	time	0
@@ -2093,7 +2333,9 @@ tech rs_damage_pbeam
 	type		tech
 	name 		"_Particle Beam Damage Type"
 	up_chapter	damage
-	description	"none"
+	description {
+		default "none"
+	}
 
 	require_AND 	{ tech nothing }
 
@@ -2110,7 +2352,9 @@ tech rs_skill_accuracy
 	type	tech
 	name "_Accuracy Attribute"
 	up_chapter	skill
-	description	"none"
+	description {
+		default "none"
+	}
 	require_AND { tech nothing }
 
 	time	0
@@ -2122,7 +2366,9 @@ tech rs_skill_assault
 	type	tech
 	name "_Assault Guns Proficiency"
 	up_chapter	skill
-	description	"none"
+	description {
+		default "none"
+	}
 	require_AND { tech nothing }
 
 	time	0
@@ -2134,7 +2380,9 @@ tech rs_skill_close
 	type	tech
 	name "_Close Combat Proficiency"
 	up_chapter	skill
-	description	"none"
+	description {
+		default "none"
+	}
 	require_AND { tech nothing }
 
 	time	0
@@ -2146,7 +2394,9 @@ tech rs_skill_explosive
 	type	tech
 	name "_High-Explosives Proficiency"
 	up_chapter	skill
-	description	"none"
+	description {
+		default "none"
+	}
 	require_AND { tech nothing }
 
 	time	0
@@ -2158,7 +2408,9 @@ tech rs_skill_heavy
 	type	tech
 	name "_Heavy Weapons Proficiency"
 	up_chapter	skill
-	description	"none"
+	description {
+		default "none"
+	}
 	require_AND { tech nothing }
 
 	time	0
@@ -2170,7 +2422,9 @@ tech rs_skill_mind
 	type	tech
 	name "_Mind Attribute"
 	up_chapter	skill
-	description	"none"
+	description {
+		default "none"
+	}
 	require_AND { tech nothing }
 
 	time	0
@@ -2182,7 +2436,9 @@ tech rs_skill_power
 	type	tech
 	name "_Power Attribute"
 	up_chapter	skill
-	description	"none"
+	description {
+		default "none"
+	}
 	require_AND { tech nothing }
 
 	time	0
@@ -2194,7 +2450,9 @@ tech rs_skill_sniper
 	type	tech
 	name "_Sniper Rifles Proficiency"
 	up_chapter	skill
-	description	"none"
+	description {
+		default "none"
+	}
 	require_AND { tech nothing }
 
 	time	0
@@ -2206,7 +2464,9 @@ tech rs_skill_speed
 	type	tech
 	name "_Speed Attribute"
 	up_chapter	skill
-	description	"none"
+	description {
+		default "none"
+	}
 	require_AND { tech nothing }
 
 	time	0
@@ -2220,7 +2480,9 @@ tech rs_skill_speed
 tech rs_building_aliencontainment
 {
 	type	building
-	description	"_b_aliencontainment_txt"
+	description {
+		default "_b_aliencontainment_txt"
+	}
 	// pre_description	"_b_aliencontainment_pre_txt"
 	up_chapter	buildings
 
@@ -2236,7 +2498,9 @@ tech rs_building_aliencontainment
 tech rs_building_command
 {
 	type	building
-	description	"_b_command_txt"
+	description {
+		default "_b_command_txt"
+	}
 	// pre_description	"_b_command_pre_txt"
 	up_chapter	buildings
 
@@ -2252,7 +2516,9 @@ tech rs_building_command
 tech rs_building_entrance
 {
 	type	building
-	description	"_b_entrance_txt"
+	description {
+		default "_b_entrance_txt"
+	}
 	// pre_description	"_b_entrance_pre_txt"
 	up_chapter	buildings
 	require_AND { tech nothing }
@@ -2264,7 +2530,9 @@ tech rs_building_entrance
 tech rs_building_large_hangar
 {
 	type	building
-	description	"_b_large_hangar_txt"
+	description {
+		default "_b_large_hangar_txt"
+	}
 	// pre_description	"_b_large_hangar_pre_txt"
 	up_chapter	buildings
 
@@ -2280,7 +2548,9 @@ tech rs_building_large_hangar
 tech rs_building_hospital
 {
 	type	    building
-	description	"_b_hospital_txt"
+	description {
+		default "_b_hospital_txt"
+	}
 	// pre_description	"_b_hospital_pre_txt"
 	up_chapter	buildings
 
@@ -2296,7 +2566,9 @@ tech rs_building_hospital
 tech rs_building_small_hangar
 {
 	type	building
-	description	"_b_small_hangar_txt"
+	description {
+		default "_b_small_hangar_txt"
+	}
 	// pre_description	"_b_small_hangar_pre_txt"
 	up_chapter	buildings
 
@@ -2312,7 +2584,9 @@ tech rs_building_small_hangar
 tech rs_building_lab
 {
 	type	    building
-	description	"_b_lab_txt"
+	description {
+		default "_b_lab_txt"
+	}
 	// pre_description	"_b_lab_pre_txt"
 	up_chapter	buildings
 
@@ -2328,7 +2602,9 @@ tech rs_building_lab
 tech rs_building_powerplant
 {
 	type	building
-	description	"_b_powerplant_txt"
+	description {
+		default "_b_powerplant_txt"
+	}
 	// pre_description	"_b_powerplant_pre_txt"
 	up_chapter	buildings
 
@@ -2344,7 +2620,9 @@ tech rs_building_powerplant
 tech rs_building_quarters
 {
 	type	building
-	description	"_b_quarters_txt"
+	description {
+		default "_b_quarters_txt"
+	}
 	// pre_description	"_b_quarters_pre_txt"
 	up_chapter	buildings
 
@@ -2360,7 +2638,9 @@ tech rs_building_quarters
 tech rs_building_radar
 {
 	type	building
-	description	"_b_radar_txt"
+	description {
+		default "_b_radar_txt"
+	}
 	// pre_description	"_b_radar_pre_txt"
 	up_chapter	buildings
 
@@ -2376,7 +2656,9 @@ tech rs_building_radar
 tech rs_building_storage
 {
 	type	building
-	description	"_b_storage_txt"
+	description {
+		default "_b_storage_txt"
+	}
 	// pre_description	"_b_storage_pre_txt"
 	up_chapter	buildings
 
@@ -2392,7 +2674,9 @@ tech rs_building_storage
 tech rs_building_teamroom
 {
 	type	building
-	description	"_b_teamroom_txt"
+	description {
+		default "_b_teamroom_txt"
+	}
 	// pre_description	"_b_teamroom_pre_txt"
 	up_chapter	buildings
 
@@ -2408,7 +2692,9 @@ tech rs_building_teamroom
 tech rs_building_small_ufo_hangar
 {
 	type	building
-	description	"_b_small_ufo_hangar_txt"
+	description {
+		default "_b_small_ufo_hangar_txt"
+	}
 	// pre_description	"_b_small_ufo_hangar_pre_txt"
 	up_chapter	buildings
 
@@ -2424,7 +2710,9 @@ tech rs_building_small_ufo_hangar
 tech rs_building_large_ufo_hangar
 {
 	type	building
-	description	"_b_large_ufo_hangar_txt"
+	description {
+		default "_b_large_ufo_hangar_txt"
+	}
 	// pre_description	"_b_large_ufo_hangar_pre_txt"
 	up_chapter	buildings
 
@@ -2440,7 +2728,9 @@ tech rs_building_large_ufo_hangar
 tech rs_building_workshop
 {
 	type	    building
-	description	"_b_workshop_txt"
+	description {
+		default "_b_workshop_txt"
+	}
 	// pre_description	"_b_workshop_pre_txt"
 	up_chapter	buildings
 
@@ -2456,7 +2746,9 @@ tech rs_building_workshop
 tech rs_building_antimatter
 {
 	type		building
-	description	"_b_antimatter_txt"
+	description {
+		default "_b_antimatter_txt"
+	}
 	up_chapter	buildings
 
 	require_AND
@@ -2474,7 +2766,9 @@ tech rs_building_antimatter
 tech rs_craft_drop_firebird
 {
 	type	craft
-	description	"_drop_firebird_txt"
+	description {
+		default "_drop_firebird_txt"
+	}
 	// pre_description	"_drop_firebird_pre_txt"
 	up_chapter	crafts
 
@@ -2489,7 +2783,9 @@ tech rs_craft_drop_firebird
 tech rs_craft_inter_stiletto
 {
 	type	craft
-	description	"_inter_stiletto_txt"
+	description {
+		default "_inter_stiletto_txt"
+	}
 	// pre_description	"_inter_stiletto_pre_txt"
 	up_chapter	crafts
 
@@ -2504,7 +2800,9 @@ tech rs_craft_inter_stiletto
 tech rs_craft_inter_saracen
 {
 	type	craft
-	description	"_saracen_interceptor_txt"
+	description {
+		default "_saracen_interceptor_txt"
+	}
 	// pre_description	"_saracen_interceptor_pre_txt"
 	up_chapter	crafts
 
@@ -2519,7 +2817,9 @@ tech rs_craft_inter_saracen
 tech rs_craft_inter_stingray
 {
 	type	craft
-	description	"_stingray_interceptor_txt"
+	description {
+		default "_stingray_interceptor_txt"
+	}
 	// pre_description	"_stingray_interceptor_pre_txt"
 	up_chapter	crafts
 
@@ -2556,8 +2856,12 @@ tech rs_craft_ufo_scout
 {
 	type	tech
 	name	"_UFO - Scout"
-	description	"_ufo_scout_txt"
-	pre_description	"_ufo_scout_pre_txt"
+	description {
+		default "_ufo_scout_txt"
+	}
+	pre_description {
+		default "_ufo_scout_pre_txt"
+	}
 	up_chapter	crafts
 
 	mail_pre
@@ -2591,8 +2895,12 @@ tech rs_craft_ufo_fighter
 {
 	type	tech
 	name	"_UFO - Fighter"
-	description	"_ufo_fighter_txt"
-	description	"_ufo_fighter_pre_txt"
+	description {
+		default "_ufo_fighter_txt"
+	}
+	description {
+		default "_ufo_fighter_pre_txt"
+	}
 	up_chapter	crafts
 
 	mail_pre
@@ -2627,8 +2935,12 @@ tech rs_craft_ufo_big
 {
 	type	tech
 	name	"_UFO - Big"
-	description	"_ufo_big_txt"
-	pre_description	"_ufo_big_pre_txt"
+	description {
+		default "_ufo_big_txt"
+	}
+	pre_description {
+		default "_ufo_big_pre_txt"
+	}
 	up_chapter	crafts
 
 	mail_pre
@@ -2663,8 +2975,12 @@ tech rs_craft_ufo_carrier
 {
 	type	tech
 	name	"_UFO - Carrier"
-	description	"_ufo_carrier_txt"
-	pre_description	"_ufo_carrier_pre_txt"
+	description {
+		default "_ufo_carrier_txt"
+	}
+	pre_description {
+		default "_ufo_carrier_pre_txt"
+	}
 	up_chapter	crafts
 
 	mail_pre
@@ -2699,8 +3015,12 @@ tech rs_craft_ufo_condor
 {
 	type	tech
 	name	"_UFO - Condor"
-	description	"_ufo_condor_txt"
-	pre_description	"_ufo_condor_pre_txt"
+	description {
+		default "_ufo_condor_txt"
+	}
+	pre_description {
+		default "_ufo_condor_pre_txt"
+	}
 	up_chapter	crafts
 
 	mail_pre
@@ -2735,8 +3055,12 @@ tech rs_craft_ufo_harvester
 {
 	type	tech
 	name	"_UFO - Harvester"
-	description	"_ufo_harvester_txt"
-	pre_description	"_ufo_harvester_pre_txt"
+	description {
+		default "_ufo_harvester_txt"
+	}
+	pre_description {
+		default "_ufo_harvester_pre_txt"
+	}
 	up_chapter	crafts
 
 	mail_pre
@@ -2777,8 +3101,12 @@ tech rs_alien_bloodspider_live
 {
 	type	alien
 	name	"_Live Specimen - Bloodspider"
-	description	"_bloodspider_notes_txt"
-	pre_description	"_bloodspider_notes_pre_txt"
+	description {
+		default "_bloodspider_notes_txt"
+	}
+	pre_description {
+		default "_bloodspider_notes_pre_txt"
+	}
 	up_chapter	aliens
 
 	require_AND
@@ -2795,8 +3123,12 @@ tech rs_alien_bloodspider_autopsy
 {
 	type	alien
 	name	"_Alien Autopsy - Bloodspider"
-	description	"_bloodspider_autopsy_txt"
-	pre_description	"_bloodspider_autopsy_pre_txt"
+	description {
+		default "_bloodspider_autopsy_txt"
+	}
+	pre_description {
+		default "_bloodspider_autopsy_pre_txt"
+	}
 	up_chapter	aliens
 
 	mail_pre
@@ -2830,8 +3162,12 @@ tech rs_alien_ortnok_autopsy
 {
 	type	alien
 	name	"_Alien Autopsy - Ortnok"
-	description	"_ortnok_autopsy_txt"
-	pre_description	"_ortnok_autopsy_pre_txt"
+	description {
+		default "_ortnok_autopsy_txt"
+	}
+	pre_description {
+		default "_ortnok_autopsy_pre_txt"
+	}
 	up_chapter	aliens
 
 	mail_pre
@@ -2866,8 +3202,12 @@ tech rs_alien_taman_autopsy
 {
 	type	alien
 	name	"_Alien Autopsy - Taman"
-	description	"_taman_autopsy_txt"
-	pre_description	"_taman_autopsy_pre_txt"
+	description {
+		default "_taman_autopsy_txt"
+	}
+	pre_description {
+		default "_taman_autopsy_pre_txt"
+	}
 	up_chapter	aliens
 
 	mail_pre
@@ -2900,8 +3240,12 @@ tech rs_alien_shevaar_autopsy
 {
 	type	alien
 	name	"_Alien Autopsy - Shevaar"
-	description	"_shevaar_autopsy_txt"
-	pre_description	"_shevaar_autopsy_pre_txt"
+	description {
+		default "_shevaar_autopsy_txt"
+	}
+	pre_description {
+		default "_shevaar_autopsy_pre_txt"
+	}
 	up_chapter	aliens
 
 	mail_pre
@@ -2988,8 +3332,12 @@ tech rs_ugv_phoenix
 	type	ugv
 	up_chapter	equipment
 	name	"_Phoenix UGV"
-	description	"_ugv_phoenix_txt"
-	pre_description	"_ugv_phoenix_pre_txt"
+	description {
+		default "_ugv_phoenix_txt"
+	}
+	pre_description {
+		default "_ugv_phoenix_pre_txt"
+	}
 
 	provides	ugv_phoenix
 	require_AND { tech nothing }
@@ -3004,8 +3352,12 @@ tech rs_ugv_triax
 	type	ugv
 	up_chapter	equipment
 	name	"_Triax UGV"
-	description	"_ugv_triax_txt"
-	pre_description	"_ugv_triax_pre_txt"
+	description {
+		default "_ugv_triax_txt"
+	}
+	pre_description {
+		default "_ugv_triax_pre_txt"
+	}
 
 	provides	ugv_triax
 	require_AND { tech nothing }
@@ -3025,7 +3377,9 @@ tech rs_craft_el_raven
 	up_chapter	crafts
 	name		"_'Raven' ECM Unit"
 	// pre_description	"_craft_electronics_raven_pre_txt"
-	description	"_craft_electronics_raven_txt"
+	description {
+		default "_craft_electronics_raven_txt"
+	}
 
 //	provides	craft_el_raven
 	require_AND { tech nothing }
@@ -3041,7 +3395,9 @@ tech rs_craft_shield_polymer
 	up_chapter	crafts
 	name		"_Polymer Aircraft Armour"
 	// pre_description	"_craft_shield_light_pre_txt"
-	description	"_craft_shield_light_txt"
+	description {
+		default "_craft_shield_light_txt"
+	}
 
 //	provides	craft_shield_polymer
 	require_AND { tech nothing }
@@ -3057,7 +3413,9 @@ tech rs_craft_weapon_shiva
 	up_chapter	crafts
 	name		"_SHIVA Rotary Cannon"
 	// pre_description	"_craft_weapon_shiva_pre_txt"
-	description	"_craft_weapon_shiva_txt"
+	description {
+		default "_craft_weapon_shiva_txt"
+	}
 
 	provides	craft_weapon_shiva
 	require_AND { tech nothing }
@@ -3073,7 +3431,9 @@ tech rs_craft_ammo_shiva_1
 	up_chapter	crafts
 	name		"_SHIVA 20mm API Rounds"
 	// pre_description	"_craft_ammo_shiva_1_pre_txt"
-	description	"_craft_ammo_shiva_1_txt"
+	description {
+		default "_craft_ammo_shiva_1_txt"
+	}
 
 	provides	craft_ammo_shiva_API
 	require_AND
@@ -3092,7 +3452,9 @@ tech rs_craft_ammo_shiva_2
 	up_chapter	crafts
 	name		"_SHIVA 20mm HEI Rounds"
 	// pre_description	"_craft_ammo_shiva_2_pre_txt"
-	description	"_craft_ammo_shiva_2_txt"
+	description {
+		default "_craft_ammo_shiva_2_txt"
+	}
 
 	provides	craft_ammo_shiva_HEI
 	require_AND
@@ -3111,7 +3473,9 @@ tech rs_craft_weapon_sparrowhawk
 	up_chapter	crafts
 	name		"_'Sparrowhawk' AA Missile Rack"
 	// pre_description	"_craft_weapon_sparrowhawk_pre_txt"
-	description	"_craft_weapon_sparrowhawk_txt"
+	description {
+		default "_craft_weapon_sparrowhawk_txt"
+	}
 
 	provides	craft_weapon_sparrowhawk
 	require_AND { tech nothing }
@@ -3127,7 +3491,9 @@ tech rs_craft_ammo_sparrowhawk
 	up_chapter	crafts
 	name		"_'Sparrowhawk' Missile"
 	// pre_description	"_craft_ammo_sparrowhawk_pre_txt"
-	description	"_craft_ammo_sparrowhawk_txt"
+	description {
+		default "_craft_ammo_sparrowhawk_txt"
+	}
 
 	provides	craft_ammo_sparrowhawk
 	require_AND
@@ -3146,7 +3512,9 @@ tech rs_craft_weapon_tr20
 	up_chapter	crafts
 	name		"_TR-20 Rocket Pod"
 	// pre_description	"_craft_weapon_tr20_pre_txt"
-	description	"_craft_weapon_tr20_txt"
+	description {
+		default "_craft_weapon_tr20_txt"
+	}
 
 	provides	craft_weapon_tr20
 	require_AND { tech nothing }
@@ -3162,7 +3530,9 @@ tech rs_craft_ammo_tr20
 	up_chapter	crafts
 	name		"_TR-20 Rocket"
 	// pre_description	"_craft_ammo_tr20_pre_txt"
-	description	"_craft_ammo_tr20_txt"
+	description {
+		default "_craft_ammo_tr20_txt"
+	}
 
 	provides	craft_ammo_tr20
 	require_AND
@@ -3188,8 +3558,12 @@ tech rs_craft_weapon_particle
 	type		craftitem
 	up_chapter	crafts
 	name		"_Particle Beam Weapon"
-	pre_description	"_craft_weapon_particle_beam_pre_txt"
-	description	"_craft_weapon_particle_beam_txt"
+	pre_description {
+		default "_craft_weapon_particle_beam_pre_txt"
+	}
+	description {
+		default "_craft_weapon_particle_beam_txt"
+	}
 
 	provides	craft_weapon_particle
 
@@ -3227,7 +3601,9 @@ tech rs_craft_el_targeting
 	up_chapter	crafts
 	name		"_Targeting Computer"
 	// pre_description	"_craft_electronics_targeting_pre_txt"
-	description	"_craft_electronics_targeting_txt"
+	description {
+		default "_craft_electronics_targeting_txt"
+	}
 
 //	provides	craft_el_targeting
 	require_AND	{ tech nothing }
@@ -3243,7 +3619,9 @@ tech rs_craft_el_fuelpod
 	up_chapter	crafts
 	name		"_Fuel Pod"
 	// pre_description	"_craft_electronics_fuelpod_pre_txt"
-	description	"_craft_electronics_fuelpod_txt"
+	description {
+		default "_craft_electronics_fuelpod_txt"
+	}
 
 //	provides	craft_el_fuelpod
 	require_AND	{ tech nothing }
@@ -3262,8 +3640,12 @@ tech rs_alien_materials
 	type		tech
 	up_chapter	equipment
 	name		"_Alien Materials"
-	description	"_alien_materials_txt"
-	pre_description	"_alien_materials_pre_txt"
+	description {
+		default "_alien_materials_txt"
+	}
+	pre_description {
+		default "_alien_materials_pre_txt"
+	}
 
 	require_AND
 	{
@@ -3278,7 +3660,9 @@ tech rs_item_alienmaterials
 {
         type            weapon
         name            "_Alien Materials"
-        description     "_alien_materials_txt"
+	description {
+		default "_alien_materials_txt"
+	}
 
         require_AND
         {
@@ -3297,7 +3681,9 @@ tech news_init_political_situation
 {
 	type	news
 	name	"_Political Situation Before The Invasion"
-	description	"_news_initial_political_situation_txt"
+	description {
+		default "_news_initial_political_situation_txt"
+	}
 	up_chapter	news
 
 	require_AND { tech nothing }
@@ -3308,7 +3694,9 @@ tech news_after_the_war
 {
 	type	news
 	name	"_After The War"
-	description	"_news_after_the_war_txt"
+	description {
+		default "_news_after_the_war_txt"
+	}
 	up_chapter	news
 
 	require_AND { tech nothing }
@@ -3319,7 +3707,9 @@ tech news_phalanx_mumbai_aftermath
 {
 	type	news
 	name	"_PHALANX And The Mumbai Aftermath"
-	description	"_news_phalanx_and_mumbai_aftermath_txt"
+	description {
+		default "_news_phalanx_and_mumbai_aftermath_txt"
+	}
 	up_chapter	news
 
 	require_AND { tech nothing }
@@ -3330,7 +3720,9 @@ tech news_newtwist
 {
 	type		news
 	name		"_A New Twist"
-	description	"_news_newtwist_txt"
+	description {
+		default "_news_newtwist_txt"
+	}
 	up_chapter	news
 
 	mail
