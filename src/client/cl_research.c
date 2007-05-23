@@ -1506,19 +1506,12 @@ extern void RS_ResetHash (void)
 
 /**
  * @brief The valid definition names in the research.ufo file.
+ * @note Handled in parser below.
+ * description, pre_description, require_AND, require_OR, up_chapter
  */
 static const value_t valid_tech_vars[] = {
  	{"name", V_TRANSLATION2_STRING, offsetof(technology_t, name), 0},
-	/* Handled in parser below.
-	 * {"description", V_TRANSLATION2_STRING, offsetof(technology_t, description), 0},
-	 * {"pre_description", V_TRANSLATION2_STRING, offsetof(technology_t, pre_description), 0},
-	*/
- 	{"provides", V_STRING, offsetof(technology_t, provides), 0},
-	/* Handled in parser below.
-	 * ("require_AND")
-	 * ("require_OR")
-	 * ("up_chapter")
-	 */
+ 	{"provides", V_CLIENT_HUNK_STRING, offsetof(technology_t, provides), 0},
 	{"delay", V_INT, offsetof(technology_t, delay), MEMBER_SIZEOF(technology_t, delay)},
 	{"producetime", V_INT, offsetof(technology_t, produceTime), MEMBER_SIZEOF(technology_t, produceTime)},
 	{"time", V_FLOAT, offsetof(technology_t, time), MEMBER_SIZEOF(technology_t, time)},
@@ -1592,8 +1585,8 @@ extern void RS_ParseTechnologies (const char *name, char **text)
 	hash = Com_HashKey(tech->id, TECH_HASH_SIZE);
 
 	/* Set the default string for descriptions (available even if numDescriptions is 0) */
-	CL_ClientHunkStoreString(_("No description available."), &tech->description.text[0]);
-	CL_ClientHunkStoreString(_("No research proposal available."), &tech->pre_description.text[0]); /* I think this is not needed, but just in case. */
+	tech->description.text[0] = _("No description available.");
+	tech->pre_description.text[0] = _("No research proposal available.");
 	/* Set desc-indices to undef. */
 	tech->description.usedDescription = -1;		
 	tech->pre_description.usedDescription = -1;
