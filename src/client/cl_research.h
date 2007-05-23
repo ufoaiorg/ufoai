@@ -120,6 +120,8 @@ typedef enum {
 
 typedef struct descriptions_s {
 	int numDescriptions;	/**< The number of descriptions. */
+	int usedDescription;	/**< The index of the first used description, so we do not get a different text each time it should be displayed. undef=-1
+				 * @todo Check if we should set this in the function that updates the research_proposals? Currently it's only in RS_GetDescription. */
 	char *text[MAX_DESCRIPTIONS];	/**< A list of descriptions (Short text-id to get the full text via gettext). */
 	char *tech[MAX_DESCRIPTIONS];	/**< The technology to check (i.e. are its requirements met?) if this decription should be displayed. */
 } descriptions_t;

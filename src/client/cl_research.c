@@ -216,8 +216,14 @@ char *RS_GetDescription (descriptions_t *desc)
 	
 	/* Return (unparsed) default description (0) if nothing is defined.
 	 * it is _always_ set, even if numDescriptions is zero. See RS_ParseTechnologies (standard values). */
-	if (desc->numDescriptions == 0)
+	if (desc->numDescriptions == 0) {
+		desc->usedDescription = 0;	/**< Stored used description */
 		return desc->text[0];
+	}
+
+	/* Return already used description if it's defined. */
+	if (desc->usedDescription >= 0)
+		return desc->text[desc->usedDescription];
 
 	/* Search for useable description text (first match is returned => order is important)
 	 * The default (0) entry is skipped here. */
@@ -226,11 +232,14 @@ char *RS_GetDescription (descriptions_t *desc)
 		if (!tech)
 			continue;
 		
-		if (RS_RequirementsMet(&tech->require_AND, &tech->require_OR))
+		if (RS_RequirementsMet(&tech->require_AND, &tech->require_OR)) {
+			desc->usedDescription = i;	/**< Stored used description */
 			return desc->text[i];
+		}
 	}
 
 	/* Nothing found, return (parsed) default description. */
+	desc->usedDescription = 0;	/**< Stored used description */
 	return desc->text[0];
 }
 
@@ -1581,10 +1590,13 @@ extern void RS_ParseTechnologies (const char *name, char **text)
 	tech->idx = gd.numTechnologies - 1;
 	CL_ClientHunkStoreString(name, &tech->id);
 	hash = Com_HashKey(tech->id, TECH_HASH_SIZE);
-	
-	/* Set the default string for descriptions (available even if numDescriotions is 0) */
+
+	/* Set the default string for descriptions (available even if numDescriptions is 0) */
 	CL_ClientHunkStoreString(_("No description available."), &tech->description.text[0]);
 	CL_ClientHunkStoreString(_("No research proposal available."), &tech->pre_description.text[0]); /* I think this is not needed, but just in case. */
+	/* Set desc-indices to undef. */
+	tech->description.usedDescription = -1;		
+	tech->pre_description.usedDescription = -1;
 
 	/* link the variable in */
 	/* tech_hash should be null on the first run */
