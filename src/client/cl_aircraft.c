@@ -1535,7 +1535,7 @@ extern void AIR_ListAircraftSamples_f (void)
 		air_samp = &aircraft_samples[i];
 		Com_Printf("aircraft: '%s'\n", air_samp->id);
 		for (vp = aircraft_vals; vp->string; vp++) {
-			Com_Printf("%s: %s\n", vp->string, Com_ValueToStr(air_samp, vp->type, vp->ofs));
+			Com_Printf("..%s: %s\n", vp->string, Com_ValueToStr(air_samp, vp->type, vp->ofs));
 		}
 	}
 }

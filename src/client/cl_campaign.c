@@ -1337,7 +1337,7 @@ static void CL_CampaignInitMarket (void)
 /**
  * @brief simulates one hour of supply and demand on the market (adds items and sets prices)
  * @sa CL_CampaignRun
- * @sa CL_GameNew
+ * @sa CL_GameNew_f
  */
 static void CL_CampaignRunMarket (void)
 {
@@ -3566,7 +3566,7 @@ static const cmdList_t game_commands[] = {
 
 /**
  * @brief
- * @sa CL_GameNew
+ * @sa CL_GameNew_f
  * @sa SAV_GameLoad
  */
 extern void CL_GameExit (void)
@@ -3592,7 +3592,7 @@ extern void CL_GameExit (void)
 /**
  * @brief Called at new game and load game
  * @sa SAV_GameLoad
- * @sa CL_GameNew
+ * @sa CL_GameNew_f
  */
 void CL_GameInit (void)
 {
@@ -3643,14 +3643,14 @@ campaign_t* CL_GetCampaign (const char* name)
 	return campaign;
 }
 
-/* called by CL_GameNew */
+/* called by CL_GameNew_f */
 static void CL_CampaignRunMarket(void);
 
 /**
  * @brief Starts a new single-player game
  * @sa CL_GameInit
  */
-static void CL_GameNew (void)
+static void CL_GameNew_f (void)
 {
 	int i;
 	char val[8];
@@ -3842,8 +3842,6 @@ extern void CL_ResetSinglePlayerData (void)
 	RS_ResetHash();
 	E_ResetEmployees();
 	Com_InitInventory(invList);
-	/* clear the hunk with all parsed static data */
-	CL_ClientHunkClear();
 }
 
 #ifdef DEBUG
@@ -4237,7 +4235,7 @@ extern void CL_ResetCampaign (void)
 	Cmd_AddCommand("campaignlist_click", CP_CampaignsClick_f, NULL);
 	Cmd_AddCommand("getcampaigns", CP_GetCampaigns_f, "Fill the campaign list with available campaigns");
 	Cmd_AddCommand("missionlist", CP_MissionList_f, "Shows all missions from the script files");
-	Cmd_AddCommand("game_new", CL_GameNew, NULL);
+	Cmd_AddCommand("game_new", CL_GameNew_f, "Start the new campaign");
 	Cmd_AddCommand("game_exit", CL_GameExit, NULL);
 	Cmd_AddCommand("cp_tryagain", CP_TryAgain_f, "Try again a mission");
 	Cmd_AddCommand("cp_uforecovery", CP_UFORecovered_f, "Function to trigger UFO Recovered event");

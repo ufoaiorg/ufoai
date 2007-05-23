@@ -1862,7 +1862,7 @@ static void CL_ParseScriptSecond (const char *type, char *name, char **text)
 /**
  * @brief Read the data into gd for singleplayer campaigns
  * @sa SAV_GameLoad
- * @sa CL_GameNew
+ * @sa CL_GameNew_f
  */
 extern void CL_ReadSinglePlayerData (void)
 {
