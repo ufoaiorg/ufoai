@@ -104,19 +104,19 @@ menu_model alien_shevaar
 	anim	stand_still
 }
 
-//menu_model alien_hovernet_head
-//{
-//	model	"models/aliens/hovernet/head01.md2"
-//	tag	"tag_head"
-//	parent	"alien_hovernet"
-//	scale	"1.0 1.0 1.0"
-//}
-//menu_model alien_hovernet
-//{
-//	model	"models/aliens/hovernet/body01.md2"
-//	need	"alien_hovernet_head"
-//	anim	stand_still
-//}
+menu_model alien_hovernet_head
+{
+	model	"models/aliens/hovernet/head01.md2"
+	tag	"tag_head"
+	parent	"alien_hovernet"
+	scale	"1.0 1.0 1.0"
+}
+menu_model alien_hovernet
+{
+	model	"models/aliens/hovernet/body01.md2"
+	need	"alien_hovernet_head"
+	anim	stand_still
+}
 
 //menu_model alien_cyborg_ortnok_head
 //{
