@@ -1156,13 +1156,6 @@ extern void B_ParseBuildings (const char *name, char **text, qboolean link)
 	employee_t* employee;
 #endif
 
-	for (i = 0; i < gd.numBuildingTypes; i++) {
-		if (!Q_strcmp(gd.buildingTypes[i].id, name)) {
-			Com_Printf("B_ParseBuildings: Second buliding with same name found (%s) - second ignored\n", name);
-			return;
-		}
-	}
-
 	/* get id list body */
 	token = COM_Parse(text);
 	if (!*text || *token != '{') {
@@ -1176,6 +1169,13 @@ extern void B_ParseBuildings (const char *name, char **text, qboolean link)
 	}
 
 	if (!link) {
+		for (i = 0; i < gd.numBuildingTypes; i++) {
+			if (!Q_strcmp(gd.buildingTypes[i].id, name)) {
+				Com_Printf("B_ParseBuildings: Second buliding with same name found (%s) - second ignored\n", name);
+				return;
+			}
+		}
+
 		/* new entry */
 		building = &gd.buildingTypes[gd.numBuildingTypes];
 		memset(building, 0, sizeof(building_t));
