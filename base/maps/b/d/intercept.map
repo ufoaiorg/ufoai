@@ -3416,13 +3416,13 @@
 "origin" "156 240 192"
 "angles" "-0 0 70"
 "spawnflags" "4"
-"model" "models/aircraft/interceptor/fighter1_engines.md2"
+"model" "models/aircraft/inter_stiletto/stiletto_engines.md2"
 }
 // entity 16
 {
 "classname" "misc_model"
 "origin" "156 240 192"
-"model" "models/aircraft/interceptor/fighter1_glass.md2"
+"model" "models/aircraft/inter_stiletto/stiletto_glass.md2"
 "spawnflags" "4"
 }
 // entity 17
@@ -3430,12 +3430,12 @@
 "classname" "misc_model"
 "origin" "156 240 192"
 "spawnflags" "4"
-"model" "models/aircraft/interceptor/fighter1_main.md2"
+"model" "models/aircraft/inter_stiletto/stiletto_main.md2"
 }
 // entity 18
 {
 "classname" "misc_model"
-"model" "models/aircraft/interceptor/fighter1_engines.md2"
+"model" "models/aircraft/inter_stiletto/stiletto_engines.md2"
 "spawnflags" "4"
 "angles" "-0 0 70"
 "origin" "356 240 192"
@@ -3443,14 +3443,14 @@
 // entity 19
 {
 "classname" "misc_model"
-"model" "models/aircraft/interceptor/fighter1_glass.md2"
+"model" "models/aircraft/inter_stiletto/stiletto_glass.md2"
 "origin" "356 240 192"
 "spawnflags" "4"
 }
 // entity 20
 {
 "classname" "misc_model"
-"model" "models/aircraft/interceptor/fighter1_main.md2"
+"model" "models/aircraft/inter_stiletto/stiletto_main.md2"
 "spawnflags" "4"
 "origin" "356 240 192"
 }
