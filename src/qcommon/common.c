@@ -807,7 +807,7 @@ static void Com_DebugHelp_f (void)
 			" * net_showpackets"
 			"   show packets (reliable and unreliable)\n"
 			" * net_showpacketsreliable"
-			"   only show reliable packets\n"
+			"   only show reliable packets (net_showpackets must be 1, too)\n"
 			" * net_showpacketsdata"
 			"   also print the received and sent data packets to console\n"
 			"------------------------------\n"

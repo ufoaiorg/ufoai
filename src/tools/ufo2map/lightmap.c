@@ -1008,6 +1008,11 @@ void BuildFacelights (unsigned int facenum)
 	size_t		tablesize;
 	facelight_t		*fl;
 
+	if (facenum >= MAX_MAP_FACES) {
+		Sys_Printf("MAX_MAP_FACES hit\n");
+		return;
+	}
+
 	f = &dfaces[facenum];
 
 	if (texinfo[f->texinfo].flags & SURF_WARP)
@@ -1077,9 +1082,10 @@ void BuildFacelights (unsigned int facenum)
 
 	/* the light from DIRECT_LIGHTS is sent out, but the */
 	/* texture itself should still be full bright */
-	if (face_patches[facenum]->baselight[0] >= DIRECT_LIGHT ||
+	if (face_patches[facenum] &&
+		(face_patches[facenum]->baselight[0] >= DIRECT_LIGHT ||
 		face_patches[facenum]->baselight[1] >= DIRECT_LIGHT ||
-		face_patches[facenum]->baselight[2] >= DIRECT_LIGHT) {
+		face_patches[facenum]->baselight[2] >= DIRECT_LIGHT)) {
 		spot = fl->samples[0];
 		for (i = 0; i < l[0].numsurfpt; i++, spot += 3)
 			VectorAdd(spot, face_patches[facenum]->baselight, spot);

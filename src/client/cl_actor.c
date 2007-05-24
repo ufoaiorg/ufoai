@@ -634,11 +634,11 @@ static void CL_UpdateReactionFiremodes (char hand, int actor_idx, int active_fir
 	}
 
 	/* Search for a (reaction) firemode with the given index and store/send it. */
-	CL_SetReactionFiremode( actor_idx, -1, -1, -1);
+	CL_SetReactionFiremode(actor_idx, -1, -1, -1);
 	for (i = 0; i < ammo->numFiredefs[weap_fd_idx]; i++) {
 		if (ammo->fd[weap_fd_idx][i].reaction) {
 			if (i == active_firemode) {
-				CL_SetReactionFiremode( actor_idx, handidx, ammo->weap_idx[weap_fd_idx], i);
+				CL_SetReactionFiremode(actor_idx, handidx, ammo->weap_idx[weap_fd_idx], i);
 				return;
 			}
 		}
@@ -781,7 +781,7 @@ void CL_DisplayFiremodes_f (void)
 	for (i = 0; i < MAX_FIREDEFS_PER_WEAPON; i++) {
 		if (i < ammo->numFiredefs[weap_fd_idx]) { /* We have a defined fd ... */
 			/* Display the firemode information (image + text). */
-			if (ammo->fd[weap_fd_idx][i].time <= selActor->TU ) {  /* Enough timeunits for this firemode?*/
+			if (ammo->fd[weap_fd_idx][i].time <= selActor->TU) {  /* Enough timeunits for this firemode?*/
 				CL_DisplayFiremodeEntry(&ammo->fd[weap_fd_idx][i], hand[0], qtrue);
 			} else{
 				CL_DisplayFiremodeEntry(&ammo->fd[weap_fd_idx][i], hand[0], qfalse);
@@ -1506,7 +1506,7 @@ void CL_AddActorToTeamList (le_t * le)
 #if 0
 		/* @todo: remove this if the above works (this should fix the wrong setting of the default firemode on re-try or next mission) */
 		/* Initialize reactionmode (with undefined firemode) ... this will be checked for in CL_DoEndRound. */
-		CL_SetReactionFiremode( i, -1, -1, -1);
+		CL_SetReactionFiremode(i, -1, -1, -1);
 #endif
 	}
 }
@@ -1584,7 +1584,7 @@ extern qboolean CL_ActorSelect (le_t * le)
 			HideFiremodes();
 			/* console commands, update cvars */
 			Cvar_ForceSet("cl_selected", va("%i", i));
-			if ( le->fieldSize == ACTOR_SIZE_NORMAL ) {
+			if (le->fieldSize == ACTOR_SIZE_NORMAL) {
 				selChr = baseCurrent->curTeam[i];
 				CL_CharacterCvars(selChr);
 			} else {
@@ -1741,7 +1741,7 @@ extern void CL_DisplayBlockedPaths_f (void)
 		if (!le->inuse)
 			continue;
 
-		if ( !(le->state & STATE_DEAD)
+		if (!(le->state & STATE_DEAD)
 		&& (le->type == ET_ACTOR || le->type == ET_UGV)) {
 			/* draw blocking cursor at le->pos */
 			Grid_PosToVec(&clMap,  le->pos, s);
@@ -1942,7 +1942,7 @@ void CL_ActorReload (int hand)
 			/* we've already found. */
 			for (ic = inv->c[container]; ic; ic = ic->next)
 				if (INV_LoadableInWeapon(&csi.ods[ic->item.t], weapon)
-				&& RS_ItemIsResearched(csi.ods[ic->item.t].id) ) {
+				 && RS_ItemIsResearched(csi.ods[ic->item.t].id)) {
 					x = ic->x;
 					y = ic->y;
 					tu = csi.ids[container].out;
@@ -2089,7 +2089,7 @@ extern void CL_ActorStandCrouch_f (void)
 	if (!CL_CheckAction())
 		return;
 
-	if (selActor->fieldSize == ACTOR_SIZE_UGV )
+	if (selActor->fieldSize == ACTOR_SIZE_UGV)
 		return;
 	/* send a request to toggle crouch to the server */
 	MSG_Write_PA(PA_STATE, selActor->entnum, STATE_CROUCHED);
@@ -2270,7 +2270,7 @@ void CL_ActorShootHidden (sizebuf_t *sb)
 	fd = GET_FIREDEF(obj_idx, weap_fds_idx, fd_idx);
 
 	/* start the sound; @todo: is check for SF_BOUNCED needed? */
-	if (((first && fd->soundOnce) || (!first && !fd->soundOnce)) && fd->fireSound[0] )
+	if (((first && fd->soundOnce) || (!first && !fd->soundOnce)) && fd->fireSound[0])
 		S_StartLocalSound(fd->fireSound);
 
 #if 0
