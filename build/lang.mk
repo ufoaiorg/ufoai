@@ -14,3 +14,11 @@ lang:
 
 update-po:
 	$(MAKE) -C src/po update-po
+
+po-sync:
+	@cd src/po
+	@pofiles='$(POFILES)'; \
+	for po in $$pofiles; do \
+	  po=`basename $$po|awk -F\. '{print $1}'`; \
+	  ./update_po_from_wiki $$po;
+	done
