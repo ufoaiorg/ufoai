@@ -1025,7 +1025,7 @@ static void SV_InitGame (void)
  * @note the full syntax is:
  * @note map [*]<map>$<startspot>+<nextserver>
  * command from the console or progs.
- * Map can also be a .pcx, or .dm2 file
+ * Map can also be a .pcx, or .dm file
  * Nextserver is used to allow a cinematic to play, then proceed to
  * another level:
  * map tram.pcx#jail_e3
@@ -1059,7 +1059,7 @@ extern void SV_Map (qboolean attractloop, char *levelstring, char *assembly)
 		Q_strncpyz(level, level + 1, sizeof(level));
 
 	l = strlen(level);
-	if (l > 4 && !Q_strcmp(level + l - 4, ".dm2")) {
+	if (l > 4 && !Q_strcmp(level + l - 4, ".dm")) {
 		SCR_BeginLoadingPlaque();	/* for local system */
 		SV_BroadcastCommand("changing\n");
 		SV_SpawnServer(level, NULL, ss_demo, attractloop);
