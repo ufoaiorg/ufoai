@@ -78,7 +78,7 @@ static unsigned int rd_buffersize;
 static void (*rd_flush) (int target, char *buffer);
 
 /**
- * @brief Redirect pakets/ouput from server to client
+ * @brief Redirect packets/ouput from server to client
  * @sa Com_EndRedirect
  *
  * This is used to redirect printf outputs for rcon commands
@@ -96,7 +96,7 @@ void Com_BeginRedirect (int target, char *buffer, int buffersize, void (*flush) 
 }
 
 /**
- * @brief End the redirection of pakets/output
+ * @brief End the redirection of packets/output
  * @sa Com_BeginRedirect
  */
 void Com_EndRedirect (void)
@@ -798,8 +798,18 @@ static void Com_DebugHelp_f (void)
 			"   kills all living actors in the given team\n"
 			" * sv showall\n"
 			"   make everything visible to everyone\n"
-			" * net_showdrop\n"
-			" * net_showpakets\n"
+			"------------------------------\n"
+			"\n"
+			"Network debugging:\n"
+			"------------------------------\n"
+			" * net_showdrop"
+			"   console message if we have to drop a packet\n"
+			" * net_showpackets"
+			"   show packets (reliable and unreliable)\n"
+			" * net_showpacketsreliable"
+			"   only show reliable packets\n"
+			" * net_showpacketsdata"
+			"   also print the received and sent data packets to console\n"
 			"------------------------------\n"
 			);
 }
