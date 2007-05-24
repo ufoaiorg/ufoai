@@ -1,0 +1,137 @@
+
+// entity 0
+{
+"classname" "worldspawn"
+// brush 0
+{
+( -109 226 32 ) ( -173 226 32 ) ( -173 18 32 ) tex_material/c_orange2 10 12 0 0.5 0.5 65536 0 0
+( -174 16 96 ) ( -174 224 96 ) ( -110 224 96 ) tex_material/c_orange2 12 8 0 0.5 0.5 65536 0 0
+( -183 -64 101 ) ( -119 -64 101 ) ( -119 -64 1 ) tex_material/c_orange2 14 10 0 0.5 0.5 65536 0 0
+( 384 114.875 64 ) ( 384 114.875 32 ) ( 384 64 32 ) tex_material/c_orange2 0 12 0 0.5 0.5 65536 0 0
+( -124 256 85 ) ( -188 256 85 ) ( -188 256 -15 ) tex_material/c_orange2 8 10 0 0.5 0.5 65536 0 0
+( -112 64 32 ) ( -176 64 96 ) ( -112 -64 32 ) tex_material/c_orange2 0 0 0 1 1 65536 0 0
+( -112 64 96 ) ( 384 64 64 ) ( -112 -64 96 ) tex_material/c_orange2 0 0 0 1 1 65536 0 0
+( 384 64 -64 ) ( -96 -64 -64 ) ( 384 64 64 ) tex_material/c_orange2 0 0 0 1 1 65536 0 0
+( -96 256 -64 ) ( 384 112 -64 ) ( -96 256 64 ) tex_material/c_orange2 0 0 0 1 1 65536 0 0
+}
+// brush 1
+{
+( 96 256 92 ) ( 96 96 92 ) ( -128 256 92 ) tex_material/c_yellow 0 0 0 1 1 0 128 0
+( 96 256 88 ) ( 96 256 24 ) ( 96 96 88 ) tex_material/c_yellow 0 8 0 1 1 0 128 0
+( -128 48 36 ) ( 96 48 36 ) ( -128 208 36 ) tex_material/c_yellow 0 0 0 1 1 0 128 0
+( -116 180 -72 ) ( -108 248 -72 ) ( -116 180 56 ) tex_material/c_yellow 0 8 0 1 1
+( -108 248 -72 ) ( 96 188 -72 ) ( -108 248 56 ) tex_material/c_yellow 0 8 0 1 1
+( -108 -68 -72 ) ( -116 -4 -72 ) ( -108 -68 56 ) tex_material/c_yellow 0 8 0 1 1
+( 96 -12 -72 ) ( -108 -68 -72 ) ( 96 -12 56 ) tex_material/c_yellow 0 8 0 1 1
+( -108 64 92 ) ( 32 64 80 ) ( -108 -64 92 ) tex_material/c_yellow 0 0 0 1 1
+( -116 64 36 ) ( -128 64 48 ) ( -116 -64 36 ) tex_material/c_yellow 0 0 0 1 1
+}
+// brush 2
+{
+( 148 188 84 ) ( 148 188 76 ) ( 148 128 84 ) tex_material/c_yellow 0 4 0 1 1
+( 96 128 36 ) ( 148 128 36 ) ( 96 188 36 ) tex_material/c_yellow 0 0 0 1 1
+( 96 128 56 ) ( 96 188 56 ) ( 96 128 64 ) tex_material/c_yellow 0 0 0 1 1
+( 148 28 -64 ) ( 96 -12 -64 ) ( 148 28 64 ) tex_material/c_yellow 0 0 0 1 1
+( 96 188 -64 ) ( 148 148 -64 ) ( 96 188 64 ) tex_material/c_yellow 0 0 0 1 1
+( 96 64 76 ) ( 148 64 76 ) ( 96 -64 76 ) tex_material/c_yellow 0 0 0 1 1
+}
+// brush 3
+{
+( 276 148 84 ) ( 276 148 76 ) ( 276 28 84 ) tex_material/c_yellow 0 4 0 1 1
+( 148 28 36 ) ( 276 28 36 ) ( 148 148 36 ) tex_material/c_yellow 0 0 0 1 1
+( 148 28 76 ) ( 148 148 76 ) ( 148 28 84 ) tex_material/c_yellow 0 4 0 1 1
+( 148 148 -64 ) ( 276 140 -64 ) ( 148 148 64 ) tex_material/c_yellow 0 0 0 1 1
+( 276 36 -64 ) ( 148 28 -64 ) ( 276 36 64 ) tex_material/c_yellow 0 0 0 1 1
+( 148 64 76 ) ( 276 64 72 ) ( 148 -64 76 ) tex_material/c_yellow 0 0 0 1 1
+}
+// brush 4
+{
+( 276 36 76 ) ( 276 140 76 ) ( 276 36 84 ) tex_material/c_yellow 0 4 0 1 1
+( 276 140 -64 ) ( 324 128 -64 ) ( 276 140 64 ) tex_material/c_yellow 0 0 0 1 1
+( 328 128 -64 ) ( 360 112 -64 ) ( 328 128 64 ) tex_material/c_yellow 0 0 0 1 1
+( 364 108 -64 ) ( 392 88 -64 ) ( 364 108 64 ) tex_material/c_yellow 0 0 0 1 1
+( 392 88 -64 ) ( 360 64 -64 ) ( 392 88 64 ) tex_material/c_yellow 0 0 0 1 1
+( 360 64 -64 ) ( 328 48 -64 ) ( 360 64 64 ) tex_material/c_yellow 0 0 0 1 1
+( 328 48 -64 ) ( 276 36 -64 ) ( 328 48 64 ) tex_material/c_yellow 0 0 0 1 1
+( 276 64 72 ) ( 288 64 76 ) ( 276 -64 72 ) tex_material/c_yellow 0 0 0 1 1
+( 288 64 76 ) ( 316 64 72 ) ( 288 -64 76 ) tex_material/c_yellow 0 0 0 1 1
+( 320 64 72 ) ( 392 64 56 ) ( 320 -64 72 ) tex_material/c_yellow 0 0 0 1 1
+( 392 64 56 ) ( 276 64 36 ) ( 392 -64 56 ) tex_material/c_yellow 0 0 0 1 1
+}
+// brush 5
+{
+( -112 180 92 ) ( -112 128 92 ) ( -180 180 92 ) tex_material/c_yellow 4 0 0 1 1
+( -108 180 64 ) ( -176 180 64 ) ( -108 180 56 ) tex_material/c_yellow 0 0 0 1 1
+( -108 180 64 ) ( -108 180 56 ) ( -108 128 64 ) tex_material/c_yellow -0 0 0 1 1
+( -176 128 48 ) ( -108 128 48 ) ( -176 180 48 ) tex_material/c_yellow 0 0 0 1 1
+( -140 108 56 ) ( -140 108 64 ) ( -72 108 56 ) tex_material/c_yellow 12 0 0 1 1
+( -176 128 56 ) ( -176 180 56 ) ( -176 128 64 ) tex_material/c_yellow -0 0 0 1 1
+( -172 168 -64 ) ( -156 180 -64 ) ( -172 168 64 ) tex_material/c_yellow 0 0 0 1 1
+( -148 108 -64 ) ( -176 132 -64 ) ( -148 108 64 ) tex_material/c_yellow 0 0 0 1 1
+( -136 240 48 ) ( -176 112 88 ) ( -136 112 48 ) tex_material/c_yellow 0 -0 0 1 -1
+}
+// brush 6
+{
+( -180 -4 92 ) ( -112 48 92 ) ( -112 -4 92 ) tex_material/c_yellow 4 0 0 1 -1
+( -108 -4 56 ) ( -176 -4 64 ) ( -108 -4 64 ) tex_material/c_yellow 0 0 0 1 1
+( -108 48 64 ) ( -108 -4 56 ) ( -108 -4 64 ) tex_material/c_yellow 0 0 0 -1 1
+( -176 -4 48 ) ( -108 48 48 ) ( -176 48 48 ) tex_material/c_yellow 0 0 0 1 -1
+( -72 68 56 ) ( -140 68 64 ) ( -140 68 56 ) tex_material/c_yellow 12 0 0 1 1
+( -176 48 64 ) ( -176 -4 56 ) ( -176 48 56 ) tex_material/c_yellow 0 0 0 -1 1
+( -172 8 64 ) ( -156 -4 -64 ) ( -172 8 -64 ) tex_material/c_yellow 0 0 0 1 1
+( -148 68 64 ) ( -176 44 -64 ) ( -148 68 -64 ) tex_material/c_yellow 0 0 0 1 1
+( -136 64 48 ) ( -176 64 88 ) ( -136 -64 48 ) tex_material/c_yellow 0 0 0 1 1
+}
+// brush 7
+{
+( 324 176 48 ) ( 324 -140 48 ) ( 256 176 48 ) tex_material/c_yellow 8 8 0 1 1
+( 332 80 28 ) ( 264 80 28 ) ( 332 80 16 ) tex_material/c_yellow 0 8 0 1 1
+( 336 176 56 ) ( 336 176 44 ) ( 336 -140 56 ) tex_material/c_yellow 8 4 0 1 1
+( 304 -140 24 ) ( 372 -140 24 ) ( 304 176 24 ) tex_material/c_yellow 8 8 0 1 1
+( 248 76 16 ) ( 248 76 28 ) ( 316 76 16 ) tex_material/c_yellow 0 8 0 1 1
+( 276 -140 16 ) ( 276 176 16 ) ( 276 -140 28 ) tex_material/c_yellow 8 8 0 1 1
+}
+// brush 8
+{
+( 108 248 36 ) ( 108 -68 36 ) ( 40 248 36 ) tex_material/c_yellow 0 0 0 1 1
+( 116 152 36 ) ( 48 152 36 ) ( 116 152 24 ) tex_material/c_yellow 8 0 0 1 1
+( 76 248 36 ) ( 76 248 24 ) ( 76 -68 36 ) tex_material/c_yellow 0 0 0 1 1
+( 44 -68 4 ) ( 112 -68 4 ) ( 44 248 4 ) tex_material/c_yellow 12 0 0 1 1
+( 32 132 24 ) ( 32 132 36 ) ( 100 132 24 ) tex_material/c_yellow 8 0 0 1 1
+( 60 -68 24 ) ( 60 248 24 ) ( 60 -68 36 ) tex_material/c_yellow 0 0 0 1 1
+}
+// brush 9
+{
+( 108 144 36 ) ( 108 -172 36 ) ( 40 144 36 ) tex_material/c_yellow 0 8 0 1 1
+( 116 48 36 ) ( 48 48 36 ) ( 116 48 24 ) tex_material/c_yellow 8 0 0 1 1
+( 76 144 36 ) ( 76 144 24 ) ( 76 -172 36 ) tex_material/c_yellow 8 0 0 1 1
+( 44 -172 4 ) ( 112 -172 4 ) ( 44 144 4 ) tex_material/c_yellow 12 8 0 1 1
+( 32 28 24 ) ( 32 28 36 ) ( 100 28 24 ) tex_material/c_yellow 8 0 0 1 1
+( 60 -172 24 ) ( 60 144 24 ) ( 60 -172 36 ) tex_material/c_yellow 8 0 0 1 1
+}
+// brush 10
+{
+( 340 196 44 ) ( 340 -120 44 ) ( 272 196 44 ) tex_material/c_yellow 8 12 0 1 1
+( 348 100 36 ) ( 280 100 36 ) ( 348 100 24 ) tex_material/c_yellow -0 0 0 1 1
+( 308 196 36 ) ( 308 196 24 ) ( 308 -120 36 ) tex_material/c_yellow 4 0 0 1 1
+( 276 -120 4 ) ( 344 -120 4 ) ( 276 196 4 ) tex_material/c_yellow 4 12 0 1 1
+( 264 80 24 ) ( 264 80 36 ) ( 332 80 24 ) tex_material/c_yellow -0 0 0 1 1
+( 292 -120 24 ) ( 292 196 24 ) ( 292 -120 36 ) tex_material/c_yellow 4 0 0 1 1
+}
+// brush 11
+{
+( 324 196 48 ) ( 324 -120 48 ) ( 256 196 48 ) tex_material/c_yellow 8 12 0 1 1
+( 332 100 28 ) ( 264 100 28 ) ( 332 100 16 ) tex_material/c_yellow 0 8 0 1 1
+( 336 196 56 ) ( 336 196 44 ) ( 336 -120 56 ) tex_material/c_yellow 4 4 0 1 1
+( 304 -120 24 ) ( 372 -120 24 ) ( 304 196 24 ) tex_material/c_yellow 8 12 0 1 1
+( 248 96 16 ) ( 248 96 28 ) ( 316 96 16 ) tex_material/c_yellow 0 8 0 1 1
+( 276 -120 16 ) ( 276 196 16 ) ( 276 -120 28 ) tex_material/c_yellow 4 8 0 1 1
+}
+}
+// entity 1
+{
+"classname" "misc_model"
+"origin" "200 89 3"
+"model" "models/aircraft/inter_saracen/saracen.md2"
+"spawnflags" "255"
+}
