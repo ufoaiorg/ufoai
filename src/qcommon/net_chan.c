@@ -74,6 +74,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "qcommon.h"
 
 static cvar_t *net_showpackets;
+static cvar_t *net_showpacketsreliable;
+static cvar_t *net_showpacketsdata;
 static cvar_t *net_showdrop;
 static cvar_t *qport;
 
@@ -92,6 +94,8 @@ void Netchan_Init (void)
 	port = Sys_Milliseconds() & 0xffff;
 
 	net_showpackets = Cvar_Get("net_showpackets", "0", 0, "Print network packets to game console");
+	net_showpacketsreliable = Cvar_Get("net_showpacketsreliable", "0", 0, "If net_showpackets is activated and this is set to 1, too then you will only see the reliable packets");
+	net_showpacketsdata = Cvar_Get("net_showpacketsdata", "0", 0, "Print network packets data to game console if net_showpackets is 1, too");
 	net_showdrop = Cvar_Get("net_showdrop", "0", 0, "Print dropped network packets to game console");
 	qport = Cvar_Get("qport", va("%i", port), CVAR_NOSET, NULL);
 
@@ -197,6 +201,7 @@ void Netchan_Transmit (netchan_t * chan, int length, byte * data)
 	byte send_buf[MAX_MSGLEN];
 	qboolean send_reliable;
 	unsigned w1, w2;
+	int i;
 
 	/* check for message overflow */
 	if (chan->message.overflowed) {
@@ -246,12 +251,25 @@ void Netchan_Transmit (netchan_t * chan, int length, byte * data)
 	NET_SendPacket(chan->sock, send.cursize, send.data, chan->remote_address);
 
 	if (net_showpackets->integer) {
-		if (send_reliable)
+		if (send_reliable) {
 			Com_Printf("send %4i : s=%i reliable=%i ack=%i rack=%i\n", send.cursize, chan->outgoing_sequence - 1, chan->reliable_sequence,
 					chan->incoming_sequence, chan->incoming_reliable_sequence);
-		else
+			if (net_showpacketsdata->integer) {
+				Com_Printf("..data: ");
+				for (i = 0; i < send.cursize; i++)
+					Com_Printf("%i..", send.data[i]);
+				Com_Printf("\n");
+			}
+		} else if (!net_showpacketsreliable->integer) {
 			Com_Printf("send %4i : s=%i ack=%i rack=%i\n", send.cursize, chan->outgoing_sequence - 1, chan->incoming_sequence,
 					chan->incoming_reliable_sequence);
+			if (net_showpacketsdata->integer) {
+				Com_Printf("..data: ");
+				for (i = 0; i < send.cursize; i++)
+					Com_Printf("%i..", send.data[i]);
+				Com_Printf("\n");
+			}
+		}
 	}
 }
 
@@ -263,7 +281,7 @@ qboolean Netchan_Process (netchan_t * chan, sizebuf_t * msg)
 {
 	unsigned sequence, sequence_ack;
 	unsigned reliable_ack, reliable_message;
-	int qport;
+	int qport, i;
 
 	/* get sequence numbers */
 	MSG_BeginReading(msg);
@@ -281,11 +299,24 @@ qboolean Netchan_Process (netchan_t * chan, sizebuf_t * msg)
 	sequence_ack &= ~(1 << 31);
 
 	if (net_showpackets->integer) {
-		if (reliable_message)
+		if (reliable_message) {
 			Com_Printf("recv %4i : s=%i reliable=%i ack=%i rack=%i\n", msg->cursize, sequence, chan->incoming_reliable_sequence ^ 1, sequence_ack,
 					reliable_ack);
-		else
+			if (net_showpacketsdata->integer) {
+				Com_Printf("..data: ");
+				for (i = 0; i < msg->cursize; i++)
+					Com_Printf("%i..", msg->data[i]);
+				Com_Printf("\n");
+			}
+		} else if (!net_showpacketsreliable->integer) {
 			Com_Printf("recv %4i : s=%i ack=%i rack=%i\n", msg->cursize, sequence, sequence_ack, reliable_ack);
+			if (net_showpacketsdata->integer) {
+				Com_Printf("..data: ");
+				for (i = 0; i < msg->cursize; i++)
+					Com_Printf("%i..", msg->data[i]);
+				Com_Printf("\n");
+			}
+		}
 	}
 
 	/* discard stale or duplicated packets */

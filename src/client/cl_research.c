@@ -213,7 +213,7 @@ char *RS_GetDescription (descriptions_t *desc)
 {
 	technology_t *tech = NULL;
 	int i = 0;
-	
+
 	/* Return (unparsed) default description (0) if nothing is defined.
 	 * it is _always_ set, even if numDescriptions is zero. See RS_ParseTechnologies (standard values). */
 	if (desc->numDescriptions == 0) {
@@ -231,7 +231,7 @@ char *RS_GetDescription (descriptions_t *desc)
 		tech = RS_GetTechByID(desc->tech[i]);
 		if (!tech)
 			continue;
-		
+
 		if (RS_RequirementsMet(&tech->require_AND, &tech->require_OR)) {
 			desc->usedDescription = i;	/**< Stored used description */
 			return desc->text[i];
@@ -1588,7 +1588,7 @@ extern void RS_ParseTechnologies (const char *name, char **text)
 	tech->description.text[0] = _("No description available.");
 	tech->pre_description.text[0] = _("No research proposal available.");
 	/* Set desc-indices to undef. */
-	tech->description.usedDescription = -1;		
+	tech->description.usedDescription = -1;
 	tech->pre_description.usedDescription = -1;
 
 	/* link the variable in */
@@ -1685,13 +1685,12 @@ extern void RS_ParseTechnologies (const char *name, char **text)
 							token++;	/**< Remove first char (i.e. "_") */
 						else
 							Sys_Error("RS_ParseTechnologies: '%s' No gettext string for description '%s'. Abort.\n", name, desc_temp->tech[desc_temp->numDescriptions]);
-						
+
 						desc_temp->text[desc_temp->numDescriptions] = CL_ClientHunkUse(token, strlen(token) + 1);
 						desc_temp->numDescriptions++;
 					}
-					
 				} while (*text);
-				
+
 			 } else if ((!Q_strncmp(token, "require_AND", MAX_VAR))
 				|| (!Q_strncmp(token, "require_OR", MAX_VAR))
 				|| (!Q_strncmp(token, "require_for_production", MAX_VAR))) {
@@ -1905,7 +1904,6 @@ extern void RS_ParseTechnologies (const char *name, char **text)
 			}
 		}
 	} while (*text);
-
 
 	if (tech->provides) {
 		hash = Com_HashKey(tech->provides, TECH_HASH_SIZE);

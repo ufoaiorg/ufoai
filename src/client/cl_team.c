@@ -309,6 +309,7 @@ extern void CL_GenerateCharacter (employee_t *employee, const char *team, employ
 /**
  * @brief
  * @sa CL_GenerateCharacter
+ * @sa AIR_ResetAircraftTeam
  */
 extern void CL_ResetCharacters (base_t* const base)
 {
