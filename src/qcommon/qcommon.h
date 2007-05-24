@@ -148,16 +148,8 @@ PROTOCOL
 
 #define	PROTOCOL_VERSION	3
 
-/*========================================= */
-
 #define	PORT_CLIENT	27901
 #define	PORT_SERVER	27910
-
-/*========================================= */
-
-#define	UPDATE_BACKUP	16		/* copies of entity_state_t to keep buffered */
-							/* must be power of two */
-#define	UPDATE_MASK		(UPDATE_BACKUP-1)
 
 /**
  * @brief server to client

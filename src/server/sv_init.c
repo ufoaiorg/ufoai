@@ -1003,7 +1003,6 @@ static void SV_InitGame (void)
 
 	svs.spawncount = rand();
 	svs.clients = Mem_Alloc(sizeof(client_t) * sv_maxclients->value);
-	svs.num_client_entities = sv_maxclients->value * UPDATE_BACKUP * 64;
 
 	/* init network stuff */
 	NET_Config((sv_maxclients->value > 1));

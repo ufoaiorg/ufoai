@@ -112,7 +112,7 @@ static qboolean SV_SetPlayer (void)
  */
 static void SV_Demo_f (void)
 {
-	SV_Map(qtrue, va("%s.dm2", Cmd_Argv(1)), NULL);
+	SV_Map(qtrue, va("%s.dm", Cmd_Argv(1)), NULL);
 }
 
 /**
@@ -336,8 +336,9 @@ static void SV_DumpUser_f (void)
 /**
  * @brief Begins server demo recording.  Every entity and every message will be
  * recorded, but no playerinfo will be stored. Primarily for demo merging.
+ * @sa SV_ServerRecordStop_f
  */
-static void SV_ServerRecord_f (void)
+static void SV_ServerRecordRecord_f (void)
 {
 	char name[MAX_OSPATH];
 	byte buf_data[32768];
@@ -351,7 +352,7 @@ static void SV_ServerRecord_f (void)
 	}
 
 	if (svs.demofile.f) {
-		Com_Printf("Already recording.\n");
+		Com_Printf("Already recording. Use serverstop to stop the record.\n");
 		return;
 	}
 
@@ -361,7 +362,7 @@ static void SV_ServerRecord_f (void)
 	}
 
 	/* open the demo file */
-	Com_sprintf(name, sizeof(name), "%s/demos/%s.dm2", FS_Gamedir(), Cmd_Argv(1));
+	Com_sprintf(name, sizeof(name), "%s/demos/%s.dm", FS_Gamedir(), Cmd_Argv(1));
 
 	Com_Printf("recording to %s.\n", name);
 	FS_CreatePath(name);
@@ -412,11 +413,12 @@ static void SV_ServerRecord_f (void)
 
 /**
  * @brief Ends server demo recording
+ * @sa SV_ServerRecordRecord_f
  */
-static void SV_ServerStop_f (void)
+static void SV_ServerRecordStop_f (void)
 {
 	if (!svs.demofile.f) {
-		Com_Printf("Not doing a serverrecord.\n");
+		Com_Printf("Not doing a serverrecord. Use serverrecord to start one.\n");
 		return;
 	}
 	fclose(svs.demofile.f);
@@ -614,11 +616,11 @@ static void SV_MapcycleNext_f (void)
  */
 extern void SV_InitOperatorCommands (void)
 {
-	Cmd_AddCommand("heartbeat", SV_Heartbeat_f, NULL);
+	Cmd_AddCommand("heartbeat", SV_Heartbeat_f, "Sends a heartbeat to the masterserver");
 	Cmd_AddCommand("kick", SV_Kick_f, "Kick a user from the server");
-	Cmd_AddCommand("status", SV_Status_f, NULL);
-	Cmd_AddCommand("serverinfo", SV_Serverinfo_f, NULL);
-	Cmd_AddCommand("dumpuser", SV_DumpUser_f, NULL);
+	Cmd_AddCommand("status", SV_Status_f, "Prints status of server and connected clients");
+	Cmd_AddCommand("serverinfo", SV_Serverinfo_f, "Prints the serverinfo that is visible in the server browsers");
+	Cmd_AddCommand("dumpuser", SV_DumpUser_f, "Prints the userinfo for a given userid");
 
 	Cmd_AddCommand("map", SV_Map_f, "Quit client and load the new map");
 	Cmd_AddParamCompleteFunction("map", SV_CompleteMapCommand);
@@ -627,7 +629,7 @@ extern void SV_InitOperatorCommands (void)
 	Cmd_AddCommand("demo", SV_Demo_f, NULL);
 	Cmd_AddCommand("maplist", SV_ListMaps_f, "List of all available maps");
 
-	Cmd_AddCommand("setmaster", SV_SetMaster_f, NULL);
+	Cmd_AddCommand("setmaster", SV_SetMaster_f, "Send ping command to masterserver (see cvars: masterserver_ip and masterserver_port)");
 	Cmd_AddCommand("tray", SV_Trayicon_f, "Enable or disable minimize to notifcation area");
 	Cmd_AddCommand("minimize", SV_Minimize_f, "Minimize");
 	Cmd_AddCommand("mapcyclelist", SV_MapcycleList_f, "Print the current mapcycle");
@@ -640,10 +642,10 @@ extern void SV_InitOperatorCommands (void)
 	Cmd_AddCommand("say", SV_ConSay_f, "Broadcasts server messages to all connected players");
 #endif
 
-	Cmd_AddCommand("serverrecord", SV_ServerRecord_f, NULL);
-	Cmd_AddCommand("serverstop", SV_ServerStop_f, NULL);
+	Cmd_AddCommand("serverrecord", SV_ServerRecordRecord_f, "Starts a server record session");
+	Cmd_AddCommand("serverstop", SV_ServerRecordStop_f, "Stops the server record session");
 
-	Cmd_AddCommand("killserver", SV_KillServer_f, NULL);
+	Cmd_AddCommand("killserver", SV_KillServer_f, "Shuts the server down - and disconnect all clients");
 
 	Cmd_AddCommand("sv", SV_ServerCommand_f, "Server command");
 }

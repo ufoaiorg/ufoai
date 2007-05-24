@@ -37,7 +37,7 @@ typedef enum {
 	ss_dead,					/**< no map loaded */
 	ss_loading,					/**< spawning level edicts */
 	ss_game,					/**< actively running */
-	ss_demo,
+	ss_demo,					/**< running a demo server */
 	ss_pic
 } server_state_t;
 
@@ -159,8 +159,6 @@ typedef struct {
 	int spawncount;				/**< incremented each server start - used to check late spawns */
 
 	client_t *clients;			/**< [maxclients->value]; */
-	int num_client_entities;	/**< maxclients->value*UPDATE_BACKUP*MAX_PACKET_ENTITIES */
-	int next_client_entities;	/**< next client_entity to use */
 
 	int last_heartbeat;
 
