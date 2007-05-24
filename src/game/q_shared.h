@@ -200,7 +200,6 @@ typedef uint8_t byte;
 #define MAX_MODELS          256 /* these are sent over the net as bytes */
 #define MAX_SOUNDS          256 /* so they cannot be blindly increased */
 #define MAX_IMAGES          256
-#define MAX_ITEMS           256
 #define MAX_GENERAL         (MAX_CLIENTS*2) /* general config strings */
 
 /* not really max hp - but an initial value */
@@ -1450,8 +1449,7 @@ typedef enum {
 #define CS_SOUNDS			(CS_MODELS+MAX_MODELS)
 #define CS_IMAGES			(CS_SOUNDS+MAX_SOUNDS)
 #define CS_LIGHTS			(CS_IMAGES+MAX_IMAGES)
-#define CS_ITEMS			(CS_LIGHTS+MAX_LIGHTSTYLES)
-#define CS_PLAYERNAMES		(CS_ITEMS+MAX_ITEMS)
+#define CS_PLAYERNAMES		(CS_LIGHTS+MAX_LIGHTSTYLES)
 #define CS_GENERAL			(CS_PLAYERNAMES+MAX_CLIENTS)
 #define MAX_CONFIGSTRINGS	(CS_GENERAL+MAX_GENERAL)
 
