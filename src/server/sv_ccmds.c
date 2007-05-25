@@ -626,7 +626,7 @@ extern void SV_InitOperatorCommands (void)
 	Cmd_AddParamCompleteFunction("map", SV_CompleteMapCommand);
 	Cmd_AddCommand("devmap", SV_Map_f, "Quit client and load the new map - deactivate the ai");
 	Cmd_AddParamCompleteFunction("devmap", SV_CompleteMapCommand);
-	Cmd_AddCommand("demo", SV_Demo_f, NULL);
+	Cmd_AddCommand("demo", SV_Demo_f, "Start a demo server");
 	Cmd_AddCommand("maplist", SV_ListMaps_f, "List of all available maps");
 
 	Cmd_AddCommand("setmaster", SV_SetMaster_f, "Send ping command to masterserver (see cvars: masterserver_ip and masterserver_port)");
