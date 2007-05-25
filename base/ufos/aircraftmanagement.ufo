@@ -51,7 +51,6 @@ aircraft craft_drop_firebird
 		damage		0
 		accuracy	0
 	}
-	speed		10.0
 	name		"_Firebird-class Dropship"
 	shortname	"_Firebird D"
 	type		transporter
@@ -83,7 +82,6 @@ aircraft craft_inter_stiletto
 		damage		0
 		accuracy	0
 	}
-	speed		30.0
 	name		"_Stiletto-class Interceptor"
 	shortname	"_Stiletto I"
 	type		interceptor
@@ -115,7 +113,6 @@ aircraft craft_inter_saracen
 		damage		0
 		accuracy	0
 	}
-	speed		30.0
 	name		"_Saracen-class Interceptor"
 	shortname	"_Saracen I"
 	type		interceptor
@@ -146,7 +143,6 @@ aircraft craft_inter_stingray
 		damage		0
 		accuracy	0
 	}
-	speed		45.0
 	name		"_Stingray Interceptor"
 	shortname	"_Stingray"
 	type		interceptor
@@ -181,7 +177,6 @@ aircraft craft_ufo_harvester
 		damage		0
 		accuracy	0
 	}
-	speed		25.0
 	name		"_UFO - Harvester"
 	shortname	"_Harvester U"
 	type		ufo
@@ -215,7 +210,6 @@ aircraft craft_ufo_carrier
 		damage		0
 		accuracy	0
 	}
-	speed		25.0
 	name		"_UFO - Carrier"
 	shortname	"Carrier U"
 	type		ufo
@@ -245,7 +239,6 @@ aircraft craft_ufo_big
 		damage		0
 		accuracy	0
 	}
-	speed		25.0
 	name		"_UFO - Big"
 	shortname	"_Big U"
 	type		ufo
@@ -275,7 +268,6 @@ aircraft craft_ufo_condor
 		damage		0
 		accuracy	0
 	}
-	speed		25.0
 	name		"_UFO - Condor"
 	shortname	"_Condor U"
 	type		ufo
@@ -304,7 +296,6 @@ aircraft craft_ufo_scout
 		damage		0
 		accuracy	0
 	}
-	speed		25.0
 	name		"_UFO - Scout"
 	shortname	"_Scout U"
 	type		ufo
@@ -333,7 +324,6 @@ aircraft craft_ufo_fighter
 		damage		0
 		accuracy	0
 	}
-	speed		18.0
 	name		"_UFO - Fighter"
 	shortname	"_Fighter U"
 	type		ufo
