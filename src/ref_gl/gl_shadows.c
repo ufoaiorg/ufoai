@@ -167,7 +167,7 @@ static void GL_DrawAliasShadow (entity_t * e, dmdl_t * paliashdr, int posenum)
 	verts = frame->verts;
 	height = 0;
 	order = (int *) ((byte *) paliashdr + paliashdr->ofs_glcmds);
-	height = -lheight;
+	height = -lheight + 0.1;
 
 	if (nolight)
 		qglScalef(1.1, 1.1, 1);	/* scale  nolight shadow by Kirk Barnes */
@@ -192,6 +192,7 @@ static void GL_DrawAliasShadow (entity_t * e, dmdl_t * paliashdr, int posenum)
 			qglBegin(GL_TRIANGLE_STRIP);
 
 		do {
+			assert(order[2] < MAX_VERTS);
 			/* normals and vertexes come from the frame list */
 			memcpy(point, s_lerped[order[2]], sizeof(point));
 			point[0] -= shadevector[0] * (point[2] + lheight);
@@ -618,7 +619,7 @@ void R_DrawShadowVolume (entity_t * e)
 		backv[i] = currententity->as.backlerp * oldframe->scale[i];
 	}
 
-/*	GL_LerpVerts( paliashdr->num_xyz, v, ov, s_lerped[0], move, frontv, backv,0); */
+/*	GL_LerpVerts(paliashdr->num_xyz, v, ov, s_lerped[0], move, frontv, backv, 0); */
 
 /*	|RF_NOSHADOW|RF_NOSHADOW2 */
 	if (!(currententity->flags & (RF_TRANSLUCENT | RF_WEAPONMODEL))) {
