@@ -1,6 +1,6 @@
 /**
  * @file lbmlib.c
- * @brief
+ * @brief Image related code
  */
 
 /*

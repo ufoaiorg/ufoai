@@ -28,6 +28,23 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <sys/stat.h>
 #include "../../../qcommon/unzip.h"
 
+typedef struct {
+	char name[MAX_QPATH];
+	unsigned long filepos;
+	unsigned long filelen;
+} packfile_t;
+
+typedef struct pack_s {
+	char filename[MAX_OSPATH];
+	qFILE handle;
+	int numfiles;
+	packfile_t *files;
+} pack_t;
+
+static pack_t *pak;
+
+static pack_t *FS_LoadPackFile(const char *packfile);
+
 #ifdef _WIN32
 #include <direct.h>
 #include <io.h>
@@ -177,17 +194,22 @@ void SetQdirFromPath (char *path)
 
 	/* search for ".gamedir"-file in path */
 	strncpy (c, path, strlen(path)-1);
-	for (pathlength = strlen(c)-1; pathlength > 0; pathlength--) {
+	for (pathlength = strlen(c) - 1; pathlength > 0; pathlength--) {
 		c[pathlength] = 0;
-		if ( (!c[strlen(c)-1] == '/')
-		&& (!c[strlen(c)-1] == '\\')
-		&& (!c[strlen(c)-1] == ':') )
+		if ((!c[strlen(c)-1] == '/')
+		 && (!c[strlen(c)-1] == '\\')
+		 && (!c[strlen(c)-1] == ':'))
 			continue;
 		snprintf (temp, sizeof(temp), "%s/%s", c, BASEDIR_ID_FILE);
-		if ( FileExists(temp) ) {
-			strncpy (gamedir, c, strlen(c)-1);
-			strncat (gamedir, "/"BASEDIR"/", sizeof(gamedir));
-			Sys_FPrintf( SYS_VRB, "gamedir: %s\n", gamedir);
+		if (FileExists(temp)) {
+			strncpy(gamedir, c, strlen(c)-1);
+			strncat(gamedir, "/"BASEDIR"/", sizeof(gamedir));
+/*			Sys_FPrintf(SYS_VRB, "gamedir: %s\n", gamedir);*/
+			Sys_Printf("gamedir: %s\n", gamedir);
+			snprintf(c, sizeof(c) - 1, "%s/0pics.pk3", gamedir);
+			pak = FS_LoadPackFile(c);
+			if (!pak)
+				Sys_Printf("Could not load image pk3 (%s)\n", c);
 			return;
 		}
 	}
@@ -527,6 +549,79 @@ qFILE *SafeOpenWrite (const char *filename, qFILE* f)
 	return f;
 }
 
+
+/**
+ * @brief Takes an explicit (not game tree related) path to a pak file.
+ * Adding the files at the beginning of the list so they override previous pack files.
+ */
+static pack_t *FS_LoadPackFile (const char *packfile)
+{
+	unsigned int i, len, err;
+	packfile_t *newfiles;
+	pack_t *pack;
+	FILE *packhandle;
+	unz_file_info file_info;
+	unzFile uf;
+	unz_global_info gi;
+	char filename_inzip[MAX_QPATH];
+
+	packhandle = fopen(packfile, "rb");
+	if (!packhandle)
+		return NULL;
+	len = strlen(packfile);
+
+	if (!Q_strncasecmp(packfile + len - 4, ".pk3", 4) || !Q_strncasecmp(packfile + len - 4, ".zip", 4)) {
+		uf = unzOpen(packfile);
+		err = unzGetGlobalInfo(uf, &gi);
+
+		if (err != UNZ_OK) {
+			Sys_Printf("Could not load '%s'\n", packfile);
+			return NULL;
+		}
+
+		len = 0;
+		unzGoToFirstFile(uf);
+		for (i = 0; i < gi.number_entry; i++) {
+			err = unzGetCurrentFileInfo(uf, &file_info, filename_inzip, sizeof(filename_inzip), NULL, 0, NULL, 0);
+			if (err != UNZ_OK) {
+				break;
+			}
+			len += strlen(filename_inzip) + 1;
+			unzGoToNextFile(uf);
+		}
+
+		pack = malloc(sizeof(pack_t));
+		strncpy(pack->filename, packfile, sizeof(pack->filename) - 1);
+		pack->handle.z = uf;
+		pack->handle.f = NULL;
+		pack->numfiles = gi.number_entry;
+		unzGoToFirstFile(uf);
+
+		/* Allocate space for array of packfile structures (filename, offset, length) */
+		newfiles = malloc(i * sizeof(packfile_t));
+
+		for (i = 0; i < gi.number_entry; i++) {
+			err = unzGetCurrentFileInfo(uf, &file_info, filename_inzip, sizeof(filename_inzip), NULL, 0, NULL, 0);
+			if (err != UNZ_OK)
+				break;
+			strlower(filename_inzip);
+
+			unzGetCurrentFileInfoPosition(uf, &newfiles[i].filepos);
+			strncpy(newfiles[i].name, filename_inzip, sizeof(newfiles[i].name) - 1);
+			newfiles[i].filelen = file_info.compressed_size;
+			unzGoToNextFile(uf);
+		}
+		pack->files = newfiles;
+
+		Sys_Printf("Added packfile %s (%li files)\n", packfile, gi.number_entry);
+		return pack;
+	} else {
+		/* Unrecognized file type! */
+		Sys_Printf("Pack file type %s unrecognized\n", packfile + len - 4);
+		return NULL;
+	}
+}
+
 /**
  * @brief
  */
@@ -534,8 +629,17 @@ qFILE *SafeOpenRead (const char *filename, qFILE *f)
 {
 	memset(f, 0, sizeof(qFILE));
 	f->f = fopen(filename, "rb");
-	if (!f->f) {
-		/* TODO: Try to load zip files */
+	if (!f->f && pak) {
+		if (unzLocateFile(pak->handle.z, filename, 2) == UNZ_OK) {	/* found it! */
+			if (unzOpenCurrentFile(pak->handle.z) == UNZ_OK) {
+				unz_file_info info;
+				Sys_Printf("PackFile: %s : %s\n", pak->filename, filename);
+				if (unzGetCurrentFileInfo(pak->handle.z, &info, NULL, 0, NULL, 0, NULL, 0) != UNZ_OK)
+					Error("Couldn't get size of %s in %s", filename, pak->filename);
+				unzGetCurrentFileInfoPosition(pak->handle.z, &f->filepos);
+				f->z = pak->handle.z;
+			}
+		}
 	}
 
 	strncpy(f->name, filename, sizeof(f->name));
@@ -553,7 +657,8 @@ void SafeRead (qFILE *f, void *buffer, int count)
 		if (fread(buffer, 1, count, f->f) != (size_t)count)
 			Error("SafeRead: File read failure");
 	} else if (f->z) {
-		/* TODO */
+		if (unzReadCurrentFile(f->z, buffer, count) == -1)
+			Error("SafeRead: unzReadCurrentFile error");
 	} else
 		Error("SafeRead: No filehandle given");
 }
