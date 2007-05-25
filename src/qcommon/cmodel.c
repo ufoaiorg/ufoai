@@ -2471,8 +2471,8 @@ int CM_TestLineDM (vec3_t start, vec3_t stop, vec3_t end)
  * @brief Checks a field on the grid of the given routing data
  * @param[in] map Routing data
  * @param[in] x Field in x direction
- * @param[in] y Field in x direction
- * @param[in] z Field in x direction
+ * @param[in] y Field in y direction
+ * @param[in] z Field in z direction
  * @sa Grid_MoveMark
  * @return true if the field is in the forbidden list and one can't walk there
  */

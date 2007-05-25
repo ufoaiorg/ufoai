@@ -230,15 +230,15 @@ static int FS_FOpenFileSingle (const char *filename, qFILE * file)
 					/* open a new file on the pakfile */
 					if (unzLocateFile(pak->handle.z, filename, 2) == UNZ_OK) {	/* found it! */
 						if (unzOpenCurrentFile(pak->handle.z) == UNZ_OK) {
-		  					unz_file_info info;
-				  			Com_DPrintf ("PackFile: %s : %s\n", pak->filename, filename);
-							if (unzGetCurrentFileInfo (pak->handle.z, &info, NULL, 0, NULL, 0, NULL, 0) != UNZ_OK)
-		  						Com_Error (ERR_FATAL, "Couldn't get size of %s in %s", filename, pak->filename);
+							unz_file_info info;
+							Com_DPrintf("PackFile: %s : %s\n", pak->filename, filename);
+							if (unzGetCurrentFileInfo(pak->handle.z, &info, NULL, 0, NULL, 0, NULL, 0) != UNZ_OK)
+								Com_Error(ERR_FATAL, "Couldn't get size of %s in %s", filename, pak->filename);
 							unzGetCurrentFileInfoPosition(pak->handle.z, &file->filepos);
 							file->z = pak->handle.z;
-		  					return info.uncompressed_size;
-	  					}
-  					}
+							return info.uncompressed_size;
+						}
+					}
 					/*fseek(*file, pak->files[i].filepos->pos_in_zip_directory, SEEK_SET);*/
 					return pak->files[i].filelen;
 				}
@@ -674,7 +674,7 @@ void FS_AddGameDirectory (const char *dir)
 		if (!pak)
 			continue;
 
-		search = Mem_Alloc (sizeof(searchpath_t));
+		search = Mem_Alloc(sizeof(searchpath_t));
 		search->pack = pak;
 		search->next = fs_searchpaths;
 		fs_searchpaths = search;
