@@ -1237,6 +1237,36 @@ extern qboolean AIR_SendAircraftToMission (aircraft_t* aircraft, actMis_t* missi
 	return qtrue;
 }
 
+/**
+ * @brief Initialise values of one slot of an aircraft common to all types of items.
+ * @note Only values which shoudln't be iniatized to 0 are done here (others are done by memset)
+ * @param[in] slot Pointer to the slot to initialize.
+ */
+static void AII_InitialiseSlot (aircraftSlot_t *slot, int aircraftIdx)
+{
+	slot->aircraftIdx = aircraftIdx;
+	slot->itemIdx = -1;
+	slot->ammoIdx = -1;
+	slot->size = ITEM_LIGHT;
+	slot->nextItemIdx = -1;
+}
+
+/**
+ * @brief Initialise all values of an aircraft slot.
+ * @param[in] aircraft Pointer to the aircraft which needs initalisation of its slots.
+ */
+static void AII_InitialiseAircraftSlots (aircraft_t *aircraft)
+{
+	int i;
+
+	/* initialise weapon slots */
+	for (i = 0; i < MAX_AIRCRAFTSLOT; i++) {
+		AII_InitialiseSlot (aircraft->weapons + i, aircraft->idx);
+		AII_InitialiseSlot (aircraft->electronics + i, aircraft->idx);
+	}
+	AII_InitialiseSlot (&aircraft->shield, aircraft->idx);
+}
+
 /** @brief Valid aircraft items (craftitem) definition values from script files. */
 static const value_t aircraftitems_vals[] = {
 	{"tech", V_CLIENT_HUNK_STRING, offsetof(aircraftItem_t, tech), 0},
@@ -1449,6 +1479,7 @@ extern void AIR_ParseAircraft (const char *name, char **text, qboolean assignAir
 		air_samp->idx_sample = numAircraft_samples;
 		CL_ClientHunkStoreString(name, &air_samp->id);
 		air_samp->status = AIR_HOME;
+		AII_InitialiseAircraftSlots(air_samp);
 
 		/* TODO: document why do we have two values for this */
 		numAircraft_samples++;
