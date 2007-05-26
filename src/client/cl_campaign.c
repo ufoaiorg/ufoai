@@ -833,8 +833,7 @@ static void CL_CampaignAddMission (setState_t * set)
 			}
 		}
 		/* get default position first, then try to find a corresponding mask color */
-		mis->realPos[0] = mis->def->pos[0];
-		mis->realPos[1] = mis->def->pos[1];
+		Vector2Set(mis->realPos, mis->def->pos[0], mis->def->pos[1]);
 		CL_MapMaskFind(mis->def->mask, mis->realPos);
 
 		/* Add message to message-system. */
@@ -927,8 +926,10 @@ extern const char* CL_GetNationTeamName (const nation_t* nation, char *teamname,
 	char *string, *string2;
 	char namesString[256];
 
-	if (!nation || !nation->names)
-		return "european";
+	if (!nation || !nation->names) {
+		Q_strncpyz(teamname, "european", size);
+		return teamname;
+	}
 
 #ifdef DEBUG
 	if (strlen(nation->names) >= sizeof(namesString))
@@ -950,7 +951,7 @@ extern const char* CL_GetNationTeamName (const nation_t* nation, char *teamname,
 
 	Com_sprintf(namesString, sizeof(namesString), nation->names);
 	randTeamString = rand() % i;
-	Com_Printf("%i\n", randTeamString);
+	Com_DPrintf("CL_GetNationTeamName: rnd: %i (names: %s)\n", randTeamString, nation->names);
 	string2 = namesString;
 	for (i = 0; i <= randTeamString; i++) {
 		string = string2;
@@ -958,7 +959,7 @@ extern const char* CL_GetNationTeamName (const nation_t* nation, char *teamname,
 		assert(string2);
 		*string2++ = '\0';
 	}
-	Com_Printf("CL_GetNationTeamName: name: %s", string);
+	Com_DPrintf("CL_GetNationTeamName: name: %s\n", string);
 #ifdef DEBUG
 	if (strlen(string) >= size)
 		Com_Printf("CL_GetNationTeamName: teamname buffer will be trancated (%s is too long)\n", string);

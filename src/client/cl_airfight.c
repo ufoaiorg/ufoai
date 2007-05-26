@@ -258,6 +258,7 @@ extern void AIRFIGHT_ActionsAfterAirfight (aircraft_t* aircraft, qboolean phalan
 			ms->civilians %= 4;
 			ms->civilians += 1;
 			Vector2Set(ms->pos, aircraft->pos[0], aircraft->pos[1]);
+			Com_Printf("%.0f:%.0f\n", ms->pos[0], ms->pos[1]);
 			nation = MAP_GetNation(ms->pos);
 			Com_sprintf(ms->type, sizeof(ms->type), _("UFO crash site"));
 			if (nation) {
@@ -266,6 +267,8 @@ extern void AIRFIGHT_ActionsAfterAirfight (aircraft_t* aircraft, qboolean phalan
 				Com_sprintf(ms->location, sizeof(ms->location), _("No nation"));
 			}
 			CL_GetNationTeamName(nation, ms->civTeam, sizeof(ms->civTeam));
+
+			/* FIXME */
 			Q_strncpyz(ms->alienTeam, "ortnok", sizeof(ms->alienTeam));
 
 			Q_strncpyz(ms->loadingscreen, "crashsite", sizeof(ms->loadingscreen));

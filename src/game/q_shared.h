@@ -187,11 +187,12 @@ typedef uint8_t byte;
 #define MAX_TOKEN_CHARS     256 /* max length of an individual token */
 
 #define MAX_QPATH           64  /* max length of a quake game pathname */
+/* windows + linux 256, macosx 32 */
 #define MAX_OSPATH          128 /* max length of a filesystem pathname */
 #define MAX_FILES           512 /* max files in a directory */
 
 /* per-level limits */
-/* 25 - bases are 5*5 */
+/* 25 - bases are 5*5 - see BASE_SIZE*/
 #define MAX_TILESTRINGS     25
 #define MAX_TEAMS           8
 #define MAX_CLIENTS         256 /* absolute limit */
