@@ -568,21 +568,24 @@ extern void AIR_AircraftSelect (aircraft_t* aircraft)
 	Cvar_Set("mn_aircraftname", va("%s (%i/%i)", aircraft->name, (aircraftID + 1), baseCurrent->numAircraftInBase));
 	Cvar_Set("mn_aircraft_model", aircraft->model);
 	idx = aircraft->weapons[0].itemIdx;
-	Cvar_Set("mn_aircraft_weapon", idx >= 0 ? gd.technologies[aircraftItems[idx].tech_idx].name : "");
-	Cvar_Set("mn_aircraft_shield", aircraft->shield ? aircraft->shield->name : "");
-	idx = aircraft->weapons[0].itemIdx;
-	Cvar_Set("mn_aircraft_weapon_img", idx >= 0 ? gd.technologies[aircraftItems[idx].tech_idx].image_top : "menu/airequip_no_weapon");
-	Cvar_Set("mn_aircraft_shield_img", aircraft->shield ? aircraft->shield->image_top : "menu/airequip_no_shield");
-	Cvar_Set("mn_aircraft_item_img", aircraft->item ? aircraft->item->image_top : "menu/airequip_no_item");
+	Cvar_Set("mn_aircraft_weapon", idx > -1 ? gd.technologies[aircraftItems[idx].tech_idx].name : "");
+	Cvar_Set("mn_aircraft_weapon_img", idx > -1 ? gd.technologies[aircraftItems[idx].tech_idx].image_top : "menu/airequip_no_weapon");
+	idx = aircraft->shield.itemIdx;
+	Cvar_Set("mn_aircraft_shield", idx > -1 ? gd.technologies[aircraftItems[idx].tech_idx].name : "");
+	Cvar_Set("mn_aircraft_shield_img", idx > -1 ? gd.technologies[aircraftItems[idx].tech_idx].image_top : "menu/airequip_no_shield");
+	idx = aircraft->electronics[0].itemIdx;
+	Cvar_Set("mn_aircraft_item_img", idx > -1 ? gd.technologies[aircraftItems[idx].tech_idx].image_top : "menu/airequip_no_item");
 
 	/* generate aircraft info text */
 	/* @todo: reimplement me when aircraft equipment will be implemented. */
 	Com_sprintf(aircraftInfo, sizeof(aircraftInfo), _("Speed:\t%i\n"), aircraft->stats[AIR_STATS_SPEED]);
 	Q_strcat(aircraftInfo, va(_("Fuel:\t%i/%i\n"), aircraft->fuel / 1000, aircraft->fuelSize / 1000), sizeof(aircraftInfo));
 	idx = aircraft->weapons[0].itemIdx;
-	Q_strcat(aircraftInfo, va(_("Weapon:\t%s\n"), idx >= 0 ? _(gd.technologies[aircraftItems[idx].tech_idx].name) : _("None")), sizeof(aircraftInfo));
-	Q_strcat(aircraftInfo, va(_("Shield:\t%s\n"), aircraft->shield ? _(aircraft->shield->name) : _("None")), sizeof(aircraftInfo));
-	Q_strcat(aircraftInfo, va(_("Equipment:\t%s"), aircraft->item ? _(aircraft->item->name) : _("None")), sizeof(aircraftInfo));
+	Q_strcat(aircraftInfo, va(_("Weapon:\t%s\n"), idx > -1 ? _(gd.technologies[aircraftItems[idx].tech_idx].name) : _("None")), sizeof(aircraftInfo));
+	idx = aircraft->shield.itemIdx;
+	Q_strcat(aircraftInfo, va(_("Shield:\t%s\n"), idx > -1 ? _(gd.technologies[aircraftItems[idx].tech_idx].name) : _("None")), sizeof(aircraftInfo));
+	idx = aircraft->electronics[0].itemIdx;
+	Q_strcat(aircraftInfo, va(_("Equipment:\t%s"), idx > -1 ? _(gd.technologies[aircraftItems[idx].tech_idx].name) : _("None")), sizeof(aircraftInfo));
 	menuText[TEXT_AIRCRAFT_INFO] = aircraftInfo;
 }
 
@@ -1107,11 +1110,11 @@ void AIM_AircraftEquipmenuClick_f (void)
 			break;
 		case AC_ITEM_ELECTRONICS:
 			Com_sprintf(desc, sizeof(desc), _("No item assigned"));
-			aircraft->item = NULL;
+			aircraft->electronics[0].itemIdx = -1;
 			break;
 		case AC_ITEM_SHIELD:
 			Com_sprintf(desc, sizeof(desc), _("No shield assigned"));
-			aircraft->shield = NULL;
+			aircraft->shield.itemIdx = -1;
 			break;
 		}
 		AIR_AircraftSelect(aircraft);
@@ -1131,12 +1134,10 @@ void AIM_AircraftEquipmenuClick_f (void)
 					AII_AddItemToSlot(*list, aircraft->weapons);
 					break;
 				case AC_ITEM_ELECTRONICS:
-					aircraft->item = *list;
-					Q_strncpyz(aircraft->item_string, (*list)->id, MAX_VAR);
+					AII_AddItemToSlot(*list, aircraft->electronics);
 					break;
 				case AC_ITEM_SHIELD:
-					aircraft->shield = *list;
-					Q_strncpyz(aircraft->shield_string, (*list)->id, MAX_VAR);
+					AII_AddItemToSlot(*list, &aircraft->shield);
 					break;
 				default:
 					Com_Printf("AIM_AircraftEquipmenuMenuClick_f: Unknown airequipID: %i\n", airequipID);
@@ -1509,7 +1510,7 @@ extern void AIR_ParseAircraft (const char *name, char **text, qboolean assignAir
 				if (!*text)
 					return;
 				Com_DPrintf("use shield %s for aircraft %s\n", token, air_samp->id);
-				AII_AddItemToSlot(RS_GetTechByID(token), &(air_samp->armour));
+				AII_AddItemToSlot(RS_GetTechByID(token), &(air_samp->shield));
 			} else if (!Q_strncmp(token, "electronics", 11)) {
 				token = COM_EParse(text, errhead, name);
 				if (!*text)
@@ -1666,7 +1667,7 @@ extern void AII_ReloadWeapon (aircraft_t *aircraft)
 #if 0
 	for (i = 0; i < aircraft->maxWeapons; i++) {
 		if (aircraft->weapons[i].ammoIdx > -1) {
-			idx = aircraft->weapons[i].itemIdx;
+			idx = aircraft->weapons[i].ammoIdx;
 			aircraft->weapons[i].ammoLeft = aircraftItems[idx].ammo;
 		}
 	}
@@ -1702,7 +1703,7 @@ extern int AII_GetSlotItems (aircraftItemType_t type, aircraft_t *aircraft)
 
 	switch (type) {
 	case AC_ITEM_SHIELD:
-		if (aircraft->armour.itemIdx >= 0)
+		if (aircraft->shield.itemIdx >= 0)
 			return 1;
 		else
 			return 0;

@@ -142,18 +142,16 @@ static float AIRFIGHT_ProbabilityToHit (aircraft_t *shooter, aircraft_t *target)
 	probability = aircraftItems[idx].stats[AIR_STATS_ACCURACY];
 
 	/* Check if the attacking aircraft has an item to improve its accuracy */
-	tech = shooter->item;
-	if (tech) {
-		idx = AII_GetAircraftItemByID(tech->provides);
+	idx = shooter->electronics[0].itemIdx;
+	if (idx > -1) {
 		factor = aircraftItems[idx].stats[AIR_STATS_ACCURACY];
 		if (factor)
 			probability *= factor;
 	}
 
 	/* Check if the target aircraft has an item to decrease accuracy of attacking aircraft */
-	tech = target->item;
-	if (tech) {
-		idx = AII_GetAircraftItemByID(tech->provides);
+	idx = target->electronics[0].itemIdx;
+	if (idx > -1) {
 		factor = aircraftItems[idx].stats[AIR_STATS_ECM];
 		if (factor)
 			probability /= factor;

@@ -452,8 +452,10 @@ extern void UP_AircraftDescription (technology_t* t)
 			/* Maybe there are standard equipments given */
 			idx = aircraft->weapons[0].itemIdx;
 			Q_strcat(upBuffer, va(_("Weapon:\t%s\n"), idx >= 0 ? _(gd.technologies[aircraftItems[idx].tech_idx].name) : _("None") ), sizeof(upBuffer));
-			Q_strcat(upBuffer, va(_("Shield:\t%s\n"), aircraft->shield ? _(aircraft->shield->name) : _("None") ), sizeof(upBuffer));
-			Q_strcat(upBuffer, va(_("Equipment:\t%s\n"), aircraft->item ? _(aircraft->item->name) : _("None") ), sizeof(upBuffer));
+			idx = aircraft->shield.itemIdx;
+			Q_strcat(upBuffer, va(_("Shield:\t%s\n"), idx >= 0 ? _(gd.technologies[aircraftItems[idx].tech_idx].name) : _("None") ), sizeof(upBuffer));
+			idx = aircraft->electronics[0].itemIdx;
+			Q_strcat(upBuffer, va(_("Equipment:\t%s\n"), idx >= 0 ? _(gd.technologies[aircraftItems[idx].tech_idx].name) : _("None") ), sizeof(upBuffer));
 		}
 	}
 #if 0
