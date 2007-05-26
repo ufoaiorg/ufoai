@@ -2824,9 +2824,30 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
 			MSG_WritePos(sb, aircraft->pos);
 			MSG_WriteShort(sb, aircraft->time);
 			MSG_WriteShort(sb, aircraft->point);
-			MSG_WriteString(sb, aircraft->weapon_string);
-			MSG_WriteString(sb, aircraft->shield_string);
-			MSG_WriteString(sb, aircraft->item_string);
+			/* save weapon slots */
+			MSG_WriteShort(sb, AII_GetSlotItems(AC_ITEM_WEAPON, aircraft));
+			for (l = 0; l < MAX_AIRCRAFTSLOT; l++) {
+				if (aircraft->weapons[l].itemIdx >= 0) {
+					MSG_WriteString(sb, aircraftItems[aircraft->weapons[l].itemIdx].id);
+					if (aircraft->weapons[l].ammoIdx >= 0) {
+						MSG_WriteString(sb, aircraftItems[aircraft->weapons[l].ammoIdx].id);
+					} else {
+						MSG_WriteString(sb, "");
+					}
+				}
+			}
+			/* save shield slots */
+			MSG_WriteShort(sb, AII_GetSlotItems(AC_ITEM_SHIELD, aircraft));
+			for (l = 0; l < MAX_AIRCRAFTSLOT; l++) {
+				if (aircraft->weapons[l].itemIdx >= 0) {
+					MSG_WriteString(sb, aircraftItems[aircraft->weapons[l].itemIdx].id);
+					if (aircraft->weapons[l].ammoIdx >= 0) {
+						MSG_WriteString(sb, aircraftItems[aircraft->weapons[l].ammoIdx].id);
+					} else {
+						MSG_WriteString(sb, "");
+					}
+				}
+			}
 			for (l = 0; l < MAX_ACTIVETEAM; l++)
 				MSG_WriteShort(sb, aircraft->teamIdxs[l]);
 			MSG_WriteShort(sb, aircraft->numUpgrades);
@@ -2983,7 +3004,7 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 			/* link the teamSize pointer in */
 			aircraft->teamSize = &b->teamNum[k];
 			aircraft->status = MSG_ReadByte(sb);
-			if (*(int*)data == 1) { /* >= 2.1.1 */
+			if (*(int*)data == 1) { /* == 2.1.1 */
 				aircraft->stats[AIR_STATS_SPEED] = MSG_ReadFloat(sb);
 			}
 			aircraft->fuel = MSG_ReadLong(sb);
@@ -2994,9 +3015,28 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 			MSG_ReadPos(sb, aircraft->pos);
 			aircraft->time = MSG_ReadShort(sb);
 			aircraft->point = MSG_ReadShort(sb);
-			Q_strncpyz(aircraft->weapon_string, MSG_ReadString(sb), sizeof(aircraft->weapon_string));
-			Q_strncpyz(aircraft->shield_string, MSG_ReadString(sb), sizeof(aircraft->shield_string));
-			Q_strncpyz(aircraft->item_string, MSG_ReadString(sb), sizeof(aircraft->item_string));
+			if (*(int*)data == 1) { /* >= 2.1.1 */
+				MSG_ReadString(sb);     /* old weapon string */
+				MSG_ReadString(sb);     /* old shield string */
+				MSG_ReadString(sb);     /* old item string */
+			} else {
+				/* read weapon slot */
+				amount = MSG_ReadShort(sb);
+				for (l = 0; l < amount; l++) {
+					AII_AddItemToSlot(RS_GetTechByID(MSG_ReadString(sb)), aircraft->weapons);
+					/* TODO: check for loaded ammo */
+				}
+				/* check for shield slot */
+				/* there is only one shield - but who knows - breaking the savegames if this changes
+				 * isn't worth it */
+				amount = MSG_ReadShort(sb);
+				for (l = 0; l < amount; l++)
+					AII_AddItemToSlot(RS_GetTechByID(MSG_ReadString(sb)), &aircraft->shield);
+				/* read electronics slot */
+				amount = MSG_ReadShort(sb);
+				for (l = 0; l < amount; l++)
+					AII_AddItemToSlot(RS_GetTechByID(MSG_ReadString(sb)), aircraft->electronics);
+			}
 			for (l = 0; l < MAX_ACTIVETEAM; l++)
 				aircraft->teamIdxs[l] = MSG_ReadShort(sb);
 			aircraft->numUpgrades = MSG_ReadShort(sb);

@@ -959,7 +959,7 @@ static technology_t **AII_GetCraftitemTechsByType (int type, qboolean usetypedef
 		} else {
 			switch (type) {
 			case 1: /* armour */
-				if (aircraftitem->type == AC_ITEM_ARMOUR) {
+				if (aircraftitem->type == AC_ITEM_SHIELD) {
 					techList[j] = &gd.technologies[aircraftitem->tech_idx];
 					j++;
 				}
@@ -1036,8 +1036,8 @@ void AIM_AircraftEquipmenuInit_f (void)
 			return;
 		} else {
 			switch (airequipID) {
-			case AC_ITEM_ARMOUR:
-				/* armour */
+			case AC_ITEM_SHIELD:
+				/* shield/armour */
 				type = 1;
 				break;
 			case AC_ITEM_ELECTRONICS:
@@ -1077,7 +1077,7 @@ void AIM_AircraftEquipmenuInit_f (void)
 	switch (type) {
 	case 1: /* armour */
 		list = AII_GetCraftitemTechsByType(type, qfalse);
-		airequipID = AC_ITEM_ARMOUR;
+		airequipID = AC_ITEM_SHIELD;
 		break;
 	case 2:	/* items */
 		list = AII_GetCraftitemTechsByType(type, qfalse);
@@ -1135,7 +1135,7 @@ void AIM_AircraftEquipmenuClick_f (void)
 			Com_sprintf(desc, sizeof(desc), _("No item assigned"));
 			aircraft->item = NULL;
 			break;
-		case AC_ITEM_ARMOUR:
+		case AC_ITEM_SHIELD:
 			Com_sprintf(desc, sizeof(desc), _("No shield assigned"));
 			aircraft->shield = NULL;
 			break;
@@ -1160,7 +1160,7 @@ void AIM_AircraftEquipmenuClick_f (void)
 					aircraft->item = *list;
 					Q_strncpyz(aircraft->item_string, (*list)->id, MAX_VAR);
 					break;
-				case AC_ITEM_ARMOUR:
+				case AC_ITEM_SHIELD:
 					aircraft->shield = *list;
 					Q_strncpyz(aircraft->shield_string, (*list)->id, MAX_VAR);
 					break;
@@ -1341,8 +1341,8 @@ extern void AII_ParseAircraftItem (const char *name, char **text)
 				airItem->type = AC_ITEM_WEAPON;
 			else if (!Q_strncmp(token, "ammo", MAX_VAR))
 				airItem->type = AC_ITEM_WEAPON;	/* NOTE: Same as weapon right now. Might change in the future. */
-			else if (!Q_strncmp(token, "armour", MAX_VAR))
-				airItem->type = AC_ITEM_ARMOUR;
+			else if (!Q_strncmp(token, "shield", MAX_VAR))
+				airItem->type = AC_ITEM_SHIELD;
 			else if (!Q_strncmp(token, "electronics", MAX_VAR))
 				airItem->type = AC_ITEM_ELECTRONICS;
 			else
@@ -1548,11 +1548,9 @@ extern void AIR_ParseAircraft (const char *name, char **text, qboolean assignAir
 			/* these values are parsed in a later stage and ignored for now */
 			for (vp = aircraft_standard_vals; vp->string; vp++)
 				if (!Q_strcmp(token, vp->string)) {
-					Com_Printf("ignore %s for now\n", token);
 					token = COM_EParse(text, errhead, name);
 					if (!*text)
 						return;
-					Com_Printf("value %s\n", token);
 					ignoreForNow = qtrue;
 					break;
 				}
@@ -1726,7 +1724,7 @@ extern int AII_GetSlotItems (aircraftItemType_t type, aircraft_t *aircraft)
 	assert(aircraft);
 
 	switch (type) {
-	case AC_ITEM_ARMOUR:
+	case AC_ITEM_SHIELD:
 		if (aircraft->armour.itemIdx >= 0)
 			return 1;
 		else

@@ -8,7 +8,7 @@
 // color
 //	Defines the color used to seperate the nations in the geoscape (internally)
 // names
-//	TODO: Defines what "type" of names should be used. They are defined in team_human.ufo.
+//	Defines what "type" of names should be used. They are defined in team_human.ufo.
 // alien_friendly (percentage 0-100)
 //	Indicated the friendlyness (political and civilan) towards the aliens and influence the chance that this country stops it's funding after some time.
 //	TODO This value should be changed according to Phalanx' performance on it's territory and the terror missions of the aliens.

@@ -48,9 +48,10 @@ typedef enum {
 /** @brief All different types of craft items. */
 typedef enum {
 	AC_ITEM_WEAPON,
-/*	AC_ITEM_AMMO, unused right now */
-	AC_ITEM_ARMOUR,
+	AC_ITEM_AMMO,
+	AC_ITEM_SHIELD,
 	AC_ITEM_ELECTRONICS,
+
 	MAX_ACITEMS
 } aircraftItemType_t;
 
@@ -115,8 +116,8 @@ typedef struct aircraftSlot_s {
 	int idx;					/**< self link */
 	int aircraftIdx;			/**< Global index of this aircraft. See also gd.numAircraft. */
 	aircraftItemType_t type;	/**< The type of item that can fit in this slot. */
-	int itemIdx;				/**< The index in aircraftItems[] of item that is currently in the slot */
-	int ammoIdx;				/**< The index in aircraftItems[] of the ammo that is currently in the slot */
+	int itemIdx;				/**< The index in aircraftItems[] of item that is currently in the slot. -1 if empty */
+	int ammoIdx;				/**< The index in aircraftItems[] of the ammo that is currently in the slot. -1 if empty */
 	itemWeight_t size;			/**< The maximum size (weight) of item that can fit in this slot. */
 	int ammoLeft;				/**< The number of ammo left in this slot */
 	int delayNextShot;			/**< The delay before the next projectile can be shot */

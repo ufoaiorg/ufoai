@@ -15,7 +15,7 @@
 //	wspeed - the speed of the munition once it's shot
 //	delay - the delay between 2 shots of this ammunition
 //	speed - the speed of the aircraft, which tells how fast the aircraft is
-//	shield - the parameter of aircraft armour, which tells aircraft's protection
+//	shield - the parameter of aircraft shield, which tells aircraft's protection
 //	ecm - the parameter of electronic level at aircraft, the bigger, the lower possibility to hit by enemy
 //	damage - the parameter of weapon power, which tells how much damage such aircraft can do
 //	accuracy - the parameter of accuracy, the bigger, the bigger possibility to hit an enemy
@@ -122,7 +122,7 @@ aircraft craft_inter_saracen
 	weight		4
 	price		2000000
 	building	building_intercept
-	image		air_saracen_interceptor
+	image		air_interceptor
 	angles		"170 10 -110"
 	scale		"0.8 1.1 1.1"
 	angles_equip	"-90 0 180"
@@ -152,7 +152,7 @@ aircraft craft_inter_stingray
 	weight		4
 	price		2000000
 	building	building_intercept
-	image		air_stingray_interceptor
+	image		air_interceptor
 	angles		"170 10 -110"
 	scale		"0.8 1.1 1.1"
 	angles_equip	"-90 0 180"
@@ -476,7 +476,7 @@ craftitem craft_el_fuelpod
 
 craftitem craft_shield_polymer
 {
-	type	armour
+	type	shield
 	tech		rs_craft_shield_polymer
 	price		16000
 
