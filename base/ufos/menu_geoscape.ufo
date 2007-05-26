@@ -775,9 +775,11 @@ menu popup_multi_selection
 	text multi_select
 	{
 		pos		"290 340"
-		size	"420 110"
+		size	"420 100"
 		format	"20 150"
 		num	14
+		wheel
+		height	5
 		mousefx	true
 		click	{ cmd "multi_select;" }
 	}
@@ -843,11 +845,13 @@ menu popup_aircraft
 	text popup_aircraft_action
 	{
 		pos             "290 340"
-		size    "420 110"
+		size    "420 100"
 		format  "20 150"
 		num	7
 		mousefx true
 		click { }
+		wheel
+		height	5
 	}
 
 	pic bt_cancel
