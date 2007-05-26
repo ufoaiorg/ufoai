@@ -177,8 +177,10 @@ static void GL_DrawAliasShadow (entity_t * e, dmdl_t * paliashdr, int posenum)
 	qglEnable(GL_POLYGON_OFFSET_FILL);
 
 	qglEnable(GL_STENCIL_TEST);	/* stencil buffered shadow by MrG */
-	qglStencilFunc(GL_GREATER, 2, 2);
-	qglStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+	qglStencilFunc(GL_EQUAL, 1, 2);
+	qglStencilOp(GL_KEEP, GL_KEEP, GL_INCR);
+
+	qglBlendFunc(GL_SRC_ALPHA_SATURATE, GL_ONE_MINUS_SRC_ALPHA);
 
 	while (1) {
 		/* get the vertex count and primitive type */
@@ -340,13 +342,13 @@ static void GL_RenderVolumes (dmdl_t * paliashdr, vec3_t lightdir, int projdist)
 		qglEnable(GL_CULL_FACE);
 	} else if (gl_state.stencil_two_side) {	/* two side stensil support for nv30+ by Kirk Barnes */
 		qglDisable(GL_CULL_FACE);
-		qglEnable (GL_STENCIL_TEST_TWO_SIDE_EXT);
+		qglEnable(GL_STENCIL_TEST_TWO_SIDE_EXT);
 		qglActiveStencilFaceEXT(GL_BACK);
 		qglStencilOp(GL_KEEP, incr, GL_KEEP);
 		qglActiveStencilFaceEXT(GL_FRONT);
 		qglStencilOp(GL_KEEP, decr, GL_KEEP);
 		BuildShadowVolume(paliashdr, lightdir, projdist);
-		qglDisable (GL_STENCIL_TEST_TWO_SIDE_EXT);
+		qglDisable(GL_STENCIL_TEST_TWO_SIDE_EXT);
 		qglEnable(GL_CULL_FACE);
 	} else {
 		/* decrement stencil if backface is behind depthbuffer */
@@ -414,19 +416,13 @@ static void GL_DrawAliasShadowVolume (dmdl_t * paliashdr, int posenumm)
 
 	qglEnable(GL_STENCIL_TEST);
 
-/*	if (clamp) qglEnable(GL_DEPTH_CLAMP_NV); */
-
-/*	qglEnable(GL_CULL_FACE);*/
-	qglDepthMask(qfalse);
-	qglStencilMask(255);
+	qglDepthMask(GL_FALSE);
 	qglDepthFunc(GL_LESS);
 
 	if (gl_state.ati_separate_stencil)
-/*		qglStencilFuncSeparateATI(GL_ALWAYS, GL_ALWAYS, 128, 255);*/
-		qglStencilFuncSeparateATI(GL_NOTEQUAL, GL_NOTEQUAL, 128, 255);
+		qglStencilFuncSeparateATI(GL_EQUAL, GL_EQUAL, 1, 2);
 	else
-/*		qglStencilFunc(GL_ALWAYS, 128, 255);*/
-		qglStencilFunc(GL_NOTEQUAL, 128, 255);
+		qglStencilFunc(GL_EQUAL, 1, 2);
 
 	qglStencilOp(GL_KEEP, GL_KEEP, (gl_state.stencil_wrap ? GL_INCR_WRAP_EXT : GL_INCR));
 
@@ -438,7 +434,6 @@ static void GL_DrawAliasShadowVolume (dmdl_t * paliashdr, int posenumm)
 
 		if (dist > 200)
 			continue;
-/*		if (!ri.IsVisible(currententity->origin, l->origin)) continue; */
 
 		/* lights origin in relation to the entity */
 		for (o = 0; o < 3; o++)
@@ -471,7 +466,6 @@ static void GL_DrawAliasShadowVolume (dmdl_t * paliashdr, int posenumm)
 		qglDisable(GL_STENCIL_TEST_TWO_SIDE_EXT);
 
 	qglDisable(GL_STENCIL_TEST);
-	qglStencilMask(0);
 
 /* 	if (clamp) qglDisable(GL_DEPTH_CLAMP_NV); */
 
@@ -482,7 +476,7 @@ static void GL_DrawAliasShadowVolume (dmdl_t * paliashdr, int posenumm)
 
 	qglPopAttrib(); /* restore stencil buffer */
 	qglStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
-	qglDepthMask(qtrue);
+	qglDepthMask(GL_TRUE);
 	qglDepthFunc(GL_LEQUAL);
 /*	Com_Printf("worldlight: %i - c_shadow_volumes: %i - dlights: %i\n", worldlight, c_shadow_volumes, r_newrefdef.num_dlights);*/
 }
@@ -550,7 +544,7 @@ void R_DrawShadow (entity_t * e)
 
 			qglDisable(GL_TEXTURE_2D);
 			GLSTATE_ENABLE_BLEND
-			qglDepthMask(0);
+			qglDepthMask(GL_FALSE);
 			qglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			qglTranslatef(e->origin[0], e->origin[1], e->origin[2]);
 			qglRotatef(e->angles[1], 0, 0, 1);
@@ -558,7 +552,7 @@ void R_DrawShadow (entity_t * e)
 			RecursiveLightPoint(rTiles[0]->nodes, currententity->origin, end);
 			R_ShadowLight(currententity->origin, shadevector);
 			GL_DrawAliasShadow(e, paliashdr, currententity->as.frame);
-			qglDepthMask(1);
+			qglDepthMask(GL_TRUE);
 		}
 		qglEnable(GL_TEXTURE_2D);
 		GLSTATE_DISABLE_BLEND
@@ -657,13 +651,12 @@ void R_ShadowBlend (void)
 	GLSTATE_DISABLE_ALPHATEST
 	GLSTATE_ENABLE_BLEND
 	qglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	qglDepthMask(0);
+	qglDepthMask(GL_FALSE);
 	qglDisable(GL_TEXTURE_2D);
 	qglColor4f(0, 0, 0, 0.5);
 
 	qglEnable(GL_STENCIL_TEST);
-	qglStencilFunc(GL_NOTEQUAL, 128, 255);
-	qglStencilMask(0);
+	qglStencilFunc(GL_EQUAL, 1, 2);
 
 	qglBegin(GL_TRIANGLES);
 	qglVertex2f(-5, -5);
@@ -675,10 +668,11 @@ void R_ShadowBlend (void)
 	qglEnable(GL_TEXTURE_2D);
 	GLSTATE_ENABLE_ALPHATEST
 	qglDisable(GL_STENCIL_TEST);
-	qglDepthMask(1);
+	qglDepthMask(GL_TRUE);
 
 	qglMatrixMode(GL_PROJECTION);
 	qglPopMatrix();
 
 	qglMatrixMode(GL_MODELVIEW);
-	qglPopMatrix();}
+	qglPopMatrix();
+}

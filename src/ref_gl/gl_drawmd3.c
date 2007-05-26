@@ -165,7 +165,7 @@ void R_DrawAliasMD3Model (entity_t *e)
 
 	if (gl_shadows->integer == 1 && (e->flags & RF_SHADOW)) {
 		if (!(e->flags & RF_TRANSLUCENT))
-			qglDepthMask(0);
+			qglDepthMask(GL_FALSE);
 		GLSTATE_ENABLE_BLEND
 
 		qglColor4f(1, 1, 1, 1);
@@ -185,7 +185,7 @@ void R_DrawAliasMD3Model (entity_t *e)
 
 		GLSTATE_DISABLE_BLEND
 		if (!(e->flags & RF_TRANSLUCENT))
-			qglDepthMask(1);
+			qglDepthMask(GL_TRUE);
 	} else if (gl_shadows->integer == 2 && (e->flags & RF_SHADOW)) {
 		R_DrawShadowVolume(e);
 	}

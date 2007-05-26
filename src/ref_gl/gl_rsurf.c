@@ -222,7 +222,7 @@ static void R_BlendLightmaps (void)
 		return;
 
 	/* don't bother writing Z */
-	qglDepthMask(0);
+	qglDepthMask(GL_FALSE);
 
 	/*
 	 ** set the appropriate blending mode unless we're only looking at the
@@ -336,7 +336,7 @@ static void R_BlendLightmaps (void)
 	/* restore state */
 	GLSTATE_DISABLE_BLEND
 	qglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	qglDepthMask(1);
+	qglDepthMask(GL_TRUE);
 }
 
 /**

@@ -86,7 +86,7 @@ void R_RenderDlights (void)
 
 	r_dlightframecount = r_framecount + 1;	/* because the count hasn't */
 	/*  advanced yet for this frame */
-	qglDepthMask(0);
+	qglDepthMask(GL_FALSE);
 	qglDisable(GL_TEXTURE_2D);
 	GLSTATE_ENABLE_BLEND
 	qglBlendFunc(GL_ONE, GL_ONE);
@@ -99,7 +99,7 @@ void R_RenderDlights (void)
 	GLSTATE_DISABLE_BLEND
 	qglEnable(GL_TEXTURE_2D);
 	qglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	qglDepthMask(1);
+	qglDepthMask(GL_TRUE);
 }
 
 

@@ -863,7 +863,7 @@ static void R_Clear(void)
 
 	if (gl_shadows->integer == 2) {
 		/* set the reference stencil value */
-		qglClearStencil(128);
+		qglClearStencil(1);
 		/* reset stencil buffer */
 		qglClear(GL_STENCIL_BUFFER_BIT);
 	}
