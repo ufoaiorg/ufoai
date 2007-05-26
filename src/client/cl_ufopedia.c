@@ -440,6 +440,7 @@ static void UP_BuildingDescription (technology_t* t)
 extern void UP_AircraftDescription (technology_t* t)
 {
 	aircraft_t* aircraft;
+	int idx;
 
 	if (RS_IsResearched_ptr(t)) {
 		aircraft = AIR_GetAircraft(t->provides);
@@ -449,7 +450,8 @@ extern void UP_AircraftDescription (technology_t* t)
 			Com_sprintf(upBuffer, sizeof(upBuffer), _("Speed:\t%i\n"), aircraft->stats[AIR_STATS_SPEED]);
 			Q_strcat(upBuffer, va(_("Fuel:\t%i\n"), aircraft->fuelSize ), sizeof(upBuffer));
 			/* Maybe there are standard equipments given */
-			Q_strcat(upBuffer, va(_("Weapon:\t%s\n"), aircraft->weapon ? _(aircraft->weapon->name) : _("None") ), sizeof(upBuffer));
+			idx = aircraft->weapons[0].itemIdx;
+			Q_strcat(upBuffer, va(_("Weapon:\t%s\n"), idx >= 0 ? _(gd.technologies[aircraftItems[idx].tech_idx].name) : _("None") ), sizeof(upBuffer));
 			Q_strcat(upBuffer, va(_("Shield:\t%s\n"), aircraft->shield ? _(aircraft->shield->name) : _("None") ), sizeof(upBuffer));
 			Q_strcat(upBuffer, va(_("Equipment:\t%s\n"), aircraft->item ? _(aircraft->item->name) : _("None") ), sizeof(upBuffer));
 		}

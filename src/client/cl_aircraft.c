@@ -236,15 +236,17 @@ void AIR_AircraftInit (void)
 		Com_DPrintf("...aircraft: %s\n", air_samp->name);
 		if (*air_samp->weapon_string) {
 			Com_DPrintf("....weapon: %s\n", air_samp->weapon_string);
-			air_samp->weapon = RS_GetTechByID(air_samp->weapon_string);
+			tech = RS_GetTechByID(air_samp->weapon_string);
+			air_samp->weapons[0].itemIdx = AII_GetAircraftItemByID(tech->provides);
 		} else
-			air_samp->weapon = NULL;
+			air_samp->weapons[0].itemIdx = -1;
 
 		if (*air_samp->ammo_string) {
 			Com_DPrintf("....ammo: %s\n", air_samp->ammo_string);
-			air_samp->ammo = RS_GetTechByID(air_samp->ammo_string);
+			tech = RS_GetTechByID(air_samp->ammo_string);
+			air_samp->weapons[0].ammoIdx = AII_GetAircraftItemByID(tech->provides);
 		} else
-			air_samp->ammo = NULL;
+			air_samp->weapons[0].ammoIdx = -1;
 
 		if (*air_samp->shield_string) {
 			/* link with tech pointer */
@@ -544,6 +546,7 @@ extern void AIR_AircraftSelect (aircraft_t* aircraft)
 	menuNode_t *node = NULL;
 	int aircraftID = Cvar_VariableInteger("mn_aircraft_idx");
 	static char aircraftInfo[256];
+	int idx;
 
 	/* calling from console? with no baseCurrent? */
 	if (!baseCurrent || !baseCurrent->numAircraftInBase)
@@ -587,9 +590,11 @@ extern void AIR_AircraftSelect (aircraft_t* aircraft)
 	Cvar_Set("mn_aircraftinbase", AIR_IsAircraftInBase(aircraft) ? "1" : "0");
 	Cvar_Set("mn_aircraftname", va("%s (%i/%i)", aircraft->name, (aircraftID + 1), baseCurrent->numAircraftInBase));
 	Cvar_Set("mn_aircraft_model", aircraft->model);
-	Cvar_Set("mn_aircraft_weapon", aircraft->weapon ? aircraft->weapon->name : "");
+	idx = aircraft->weapons[0].itemIdx;
+	Cvar_Set("mn_aircraft_weapon", idx >= 0 ? gd.technologies[aircraftItems[idx].tech_idx].name : "");
 	Cvar_Set("mn_aircraft_shield", aircraft->shield ? aircraft->shield->name : "");
-	Cvar_Set("mn_aircraft_weapon_img", aircraft->weapon ? aircraft->weapon->image_top : "menu/airequip_no_weapon");
+	idx = aircraft->weapons[0].itemIdx;
+	Cvar_Set("mn_aircraft_weapon_img", idx >= 0 ? gd.technologies[aircraftItems[idx].tech_idx].image_top : "menu/airequip_no_weapon");
 	Cvar_Set("mn_aircraft_shield_img", aircraft->shield ? aircraft->shield->image_top : "menu/airequip_no_shield");
 	Cvar_Set("mn_aircraft_item_img", aircraft->item ? aircraft->item->image_top : "menu/airequip_no_item");
 
@@ -597,7 +602,8 @@ extern void AIR_AircraftSelect (aircraft_t* aircraft)
 	/* @todo: reimplement me when aircraft equipment will be implemented. */
 	Com_sprintf(aircraftInfo, sizeof(aircraftInfo), _("Speed:\t%i\n"), aircraft->stats[AIR_STATS_SPEED]);
 	Q_strcat(aircraftInfo, va(_("Fuel:\t%i/%i\n"), aircraft->fuel / 1000, aircraft->fuelSize / 1000), sizeof(aircraftInfo));
-	Q_strcat(aircraftInfo, va(_("Weapon:\t%s\n"), aircraft->weapon ? _(aircraft->weapon->name) : _("None")), sizeof(aircraftInfo));
+	idx = aircraft->weapons[0].itemIdx;
+	Q_strcat(aircraftInfo, va(_("Weapon:\t%s\n"), idx >= 0 ? _(gd.technologies[aircraftItems[idx].tech_idx].name) : _("None")), sizeof(aircraftInfo));
 	Q_strcat(aircraftInfo, va(_("Shield:\t%s\n"), aircraft->shield ? _(aircraft->shield->name) : _("None")), sizeof(aircraftInfo));
 	Q_strcat(aircraftInfo, va(_("Equipment:\t%s"), aircraft->item ? _(aircraft->item->name) : _("None")), sizeof(aircraftInfo));
 	menuText[TEXT_AIRCRAFT_INFO] = aircraftInfo;
@@ -913,8 +919,12 @@ void CL_CampaignRunAircraft (int dt)
 				}
 
 				/* Update delay to launch next projectile */
-				if (aircraft->status >= AIR_IDLE && aircraft->delayNextShot > 0)
-					aircraft->delayNextShot -= dt;
+				if (aircraft->status >= AIR_IDLE) {
+					for (i = 0; i < aircraft->maxWeapons; i++) {
+						if (aircraft->weapons[i].delayNextShot > 0)
+							aircraft->weapons[i].delayNextShot -= dt;
+					}
+				}
 			}
 	}
 }
@@ -1111,7 +1121,7 @@ void AIM_AircraftEquipmenuClick_f (void)
 		switch (airequipID) {
 		case AC_ITEM_WEAPON:
 			Com_sprintf(desc, sizeof(desc), _("No weapon assigned"));
-			aircraft->weapon = NULL;
+			aircraft->weapons[0].itemIdx = -1;
 			break;
 		case AC_ITEM_ELECTRONICS:
 			Com_sprintf(desc, sizeof(desc), _("No item assigned"));
@@ -1136,8 +1146,7 @@ void AIM_AircraftEquipmenuClick_f (void)
 				/* store the item string ids to be able to restore them after
 				 * loading a savegame */
 				case AC_ITEM_WEAPON:
-					aircraft->weapon = *list;
-					Q_strncpyz(aircraft->weapon_string, (*list)->id, MAX_VAR);
+					AII_AddItemToSlot(*list, aircraft->weapons);
 					break;
 				case AC_ITEM_ELECTRONICS:
 					aircraft->item = *list;
@@ -1248,17 +1257,17 @@ extern qboolean AIR_SendAircraftToMission (aircraft_t* aircraft, actMis_t* missi
 /** @brief Valid aircraft items (craftitem) definition values from script files. */
 static const value_t aircraftitems_vals[] = {
 	{"tech", V_CLIENT_HUNK_STRING, offsetof(aircraftItem_t, tech), 0},
-	{"speed", V_FLOAT, offsetof(aircraftItem_t, speed), MEMBER_SIZEOF(aircraftItem_t, speed)},
+	{"speed", V_FLOAT, offsetof(aircraftItem_t, stats[AIR_STATS_SPEED]), MEMBER_SIZEOF(aircraftItem_t, stats[AIR_STATS_SPEED])},
 	{"price", V_INT, offsetof(aircraftItem_t, price), MEMBER_SIZEOF(aircraftItem_t, price)},
-	{"shield", V_RELABS, offsetof(aircraftItem_t, shield), MEMBER_SIZEOF(aircraftItem_t, shield)},
-	{"wrange", V_FLOAT, offsetof(aircraftItem_t, weaponRange), MEMBER_SIZEOF(aircraftItem_t, weaponRange)},
+	{"shield", V_RELABS, offsetof(aircraftItem_t, stats[AIR_STATS_SHIELD]), MEMBER_SIZEOF(aircraftItem_t,  stats[AIR_STATS_SHIELD])},
+	{"wrange", V_FLOAT, offsetof(aircraftItem_t, stats[AIR_STATS_WRANGE]), MEMBER_SIZEOF(aircraftItem_t, stats[AIR_STATS_WRANGE])},
 	{"wspeed", V_FLOAT, offsetof(aircraftItem_t, weaponSpeed), MEMBER_SIZEOF(aircraftItem_t, weaponSpeed)},
 	{"ammo", V_INT, offsetof(aircraftItem_t, ammo), MEMBER_SIZEOF(aircraftItem_t, ammo)},
 	{"delay", V_FLOAT, offsetof(aircraftItem_t, weaponDelay), MEMBER_SIZEOF(aircraftItem_t, weaponDelay)},
-	{"range", V_RELABS, offsetof(aircraftItem_t, range), MEMBER_SIZEOF(aircraftItem_t, range)},
-	{"damage", V_FLOAT, offsetof(aircraftItem_t, damage), MEMBER_SIZEOF(aircraftItem_t, damage)},
-	{"accuracy", V_FLOAT, offsetof(aircraftItem_t, accuracy), MEMBER_SIZEOF(aircraftItem_t, accuracy)},
-	{"ecm", V_RELABS, offsetof(aircraftItem_t, ecm), MEMBER_SIZEOF(aircraftItem_t, ecm)},
+	{"range", V_RELABS, offsetof(aircraftItem_t, stats[AIR_STATS_RANGE]), MEMBER_SIZEOF(aircraftItem_t, stats[AIR_STATS_RANGE])},
+	{"damage", V_FLOAT, offsetof(aircraftItem_t, stats[AIR_STATS_DAMAGE]), MEMBER_SIZEOF(aircraftItem_t, stats[AIR_STATS_DAMAGE])},
+	{"accuracy", V_FLOAT, offsetof(aircraftItem_t, stats[AIR_STATS_ACCURACY]), MEMBER_SIZEOF(aircraftItem_t, stats[AIR_STATS_ACCURACY])},
+	{"ecm", V_RELABS, offsetof(aircraftItem_t, stats[AIR_STATS_ECM]), MEMBER_SIZEOF(aircraftItem_t, stats[AIR_STATS_ECM])},
 	{"weapon", V_CLIENT_HUNK_STRING, offsetof(aircraftItem_t, weapon), 0},
 
 	{NULL, 0, 0, 0}
@@ -1336,11 +1345,11 @@ extern void AII_ParseAircraftItem (const char *name, char **text)
 			if (!*text)
 				return;
 			if (!Q_strncmp(token, "light", MAX_VAR))
-				airItem->weight = 0; /*FIXME*/
+				airItem->itemWeight = ITEM_LIGHT;
 			else if (!Q_strncmp(token, "medium", MAX_VAR))
-				airItem->weight = 1; /*FIXME*/
+				airItem->itemWeight = ITEM_MEDIUM;
 			else if (!Q_strncmp(token, "heavy", MAX_VAR))
-				airItem->weight = 2; /*FIXME*/
+				airItem->itemWeight = ITEM_HEAVY;
 			else
 				Com_Printf("Unknown weight value for craftitem '%s': '%s'\n", airItem->id, token);
 		} else {
@@ -1592,18 +1601,31 @@ extern void AIR_ListAircraftSamples_f (void)
  */
 extern void AII_ReloadWeapon (aircraft_t *aircraft)
 {
-	technology_t *tech;
 	int idx;
+	int i;
 
 	assert(aircraft);
 
-	/* check if aircraft has ammo */
-	tech = aircraft->ammo;
-	if (!tech)
-		return;
+	/* Reload all ammos of aircraft */
+	for (i = 0; i < aircraft->maxWeapons; i++) {
+		if (aircraft->weapons[i].ammoIdx > -1) {
+			idx = aircraft->weapons[i].itemIdx;
+			aircraft->weapons[i].ammoLeft = aircraftItems[idx].ammo;
+		}
+	}
+}
 
-	idx = AII_GetAircraftItemByID(tech->provides);
-	aircraft->ammoLeft = aircraftItems[idx].ammo;
+/**
+ * @brief Add an item to an aircraft slot
+ * @todo Check that the item has a weight small enough to fit the slot.
+ */
+extern qboolean AII_AddItemToSlot (technology_t *tech, aircraftSlot_t *slot)
+{
+	assert(slot);
+
+	slot->itemIdx = AII_GetAircraftItemByID(tech->provides);
+
+	return qtrue;
 }
 
 /*===============================================

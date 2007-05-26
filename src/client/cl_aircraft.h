@@ -55,6 +55,8 @@ typedef enum {
 } aircraftItemType_t;
 
 /** @brief Aircraft parameters. */
+/** @note This is a list of all aircraft parameters that depends on aircraft items.
+ **  those values doesn't change with shield or weapon assigned to aircraft */
 typedef enum {
 	AIR_STATS_RANGE,	/**< Aircraft range. */
 	AIR_STATS_WRANGE,	/**< Aircraft weapon range - the maximum distance aircraft can open fire. */
@@ -62,10 +64,18 @@ typedef enum {
 	AIR_STATS_SHIELD,	/**< Aircraft shield. */
 	AIR_STATS_ECM,	/**< Aircraft electronic warfare level. */
 	AIR_STATS_DAMAGE,	/**< Aircraft damage points. */
-	AIR_STATS_ACCURACY,	/**< Aircraft accuracy - most accurate weapon. */
+	AIR_STATS_ACCURACY,	/**< Aircraft accuracy - base accuracy (without weapon). */
+	AIR_STATS_FUELSIZE,	/**< Aircraft fuel capacity. */
 
 	AIR_STATS_MAX
 } aircraftParams_t;
+
+/** @brief different weight for aircraft items */
+typedef enum {
+	ITEM_LIGHT,
+	ITEM_MEDIUM,
+	ITEM_HEAVY
+} itemWeight_t;
 
 struct actMis_s;
 
@@ -79,19 +89,44 @@ typedef struct aircraftItem_s {
 	char *tech;		/**< tech id for this item.*/
 	int tech_idx;				/**< tech index for this item.*/
 	char *weapon;		/**< if this is ammo there must be a weapon */
-	int weight;
+	float stats[AIR_STATS_MAX];	/**< All coefficient that can affect aircraft->stats */
+	itemWeight_t itemWeight;	/**< The weight of the item (which must be smaller that slot size) */
 	float damage;
-	float range;
-	float weaponRange;			/**< The range of the projectile */
 	float weaponSpeed;			/**< The speed of the projectile on geoscape */
 	float weaponDelay;			/**< The minimum delay between 2 shots */
 	int ammo;					/**< The total number of ammo that can be fired */
-	float speed;
-	float shield;
-	float accuracy;
-	float ecm;
 	int price;
 } aircraftItem_t;
+
+/** @brief different positions for aircraft items */
+typedef enum {
+	AIR_NOSE_LEFT,
+	AIR_NOSE_CENTER,
+	AIR_NOSE_RIGHT,
+	AIR_WING_LEFT,
+	AIR_WING_RIGHT,
+} itemPos_t;
+
+
+#define MAX_AIRCRAFTSLOT 4
+
+/** @brief slot of aircraft */
+typedef struct aircraftSlot_s {
+	int idx;					/**< self link */
+	int aircraftIdx;			/**< Global index of this aircraft. See also gd.numAircraft. */
+	aircraftItemType_t type;	/**< The type of item that can fit in this slot. */
+	int itemIdx;				/**< The index in aircraftItems[] of item that is currently in the slot */
+	int ammoIdx;				/**< The index in aircraftItems[] of the ammo that is currently in the slot */
+	itemWeight_t size;			/**< The maximum size (weight) of item that can fit in this slot. */
+	int ammoLeft;				/**< The number of ammo left in this slot */
+	int delayNextShot;			/**< The delay before the next projectile can be shot */
+	int installationTime;		/**< The time left before the item is finished to be installed or removed in/from slot
+								  *	This is > 0 if the item ins installed, < 0 if the item is removed, 0 if the item is in place */
+	int nextItemIdx;			/**< Indice in aircraftItems[] of the next item to install when the current item in slot will be removed
+								  *	(Should be used only if installationTime is different of 0 */
+	itemPos_t pos;				/**< Position of the slot on the aircraft */
+} aircraftSlot_t;
+
 
 /** @brief A cargo of items collected after mission. */
 typedef struct itemsTmp_s {
@@ -143,17 +178,22 @@ typedef struct aircraft_s {
 	int teamIdxs[MAX_ACTIVETEAM];	/**< array of team members on board employee idx*/
 
 	char *model;
-	char weapon_string[MAX_VAR];	/**< Name of the weapon equipping aircraft */
 	/* NOTE: these pointers needs reinit after loading a saved game */
-	technology_t *weapon;			/**< Pointer to the technology of weapon equipping aircraft */
-	char ammo_string[MAX_VAR];		/**< Name of the ammo equipping aircraft */
-	technology_t *ammo;				/**< Pointer to the technology of ammo equipping aircraft */
+	/*@todo remove me */
+	char weapon_string[MAX_VAR];	/**< Name of the weapon equipping aircraft */
+	char ammo_string[MAX_VAR];		/**< Name of the ammo equipping aircraft */	
 	char shield_string[MAX_VAR];	/**< Name of the shield equipping aircraft */
 	technology_t *shield;			/**< Pointer to the technology of shield equipping aircraft */
 	char item_string[MAX_VAR];		/**< Name of the itme equipping aircraft */
-	technology_t *item;				/**< Pointer to the item of weapon equipping aircraft */
-	int ammoLeft;				/**< The number of ammo left in weapon */
-	float delayNextShot;		/**< The delay before the next projectile can be shot */
+	technology_t *item;
+
+	aircraftSlot_t weapons[MAX_AIRCRAFTSLOT];	/**< Weapons assigned to aircraft */
+	int maxWeapons;
+	/*@todo use me */
+	aircraftSlot_t shields;				/**< Shield assigned to aircraft (1 maximum ?) */
+	aircraftSlot_t electronics[MAX_AIRCRAFTSLOT];		/**< Electronics assigned to aircraft */
+	int maxElectronics;
+
 	mapline_t route;
 	void *homebase;				/**< Pointer to homebase for faster access. See also idxBase. */
 	void *transferBase;			/**< Pointer to the base we are transfering equipment to */
@@ -223,6 +263,7 @@ extern qboolean AIR_AircraftMakeMove(int dt, aircraft_t* aircraft);
 void AIR_ParseAircraft(const char *name, char **text);
 void AII_ParseAircraftItem(const char *name, char **text);
 extern void AII_ReloadWeapon(aircraft_t *aircraft);
+extern qboolean AII_AddItemToSlot(technology_t *tech, aircraftSlot_t *slot);
 qboolean AIR_AircraftHasEnoughFuel (aircraft_t *aircraft, const vec2_t destination);
 extern void AIR_AircraftReturnToBase(aircraft_t *aircraft);
 extern qboolean AIR_SendAircraftToMission(aircraft_t* aircraft, struct actMis_s* mission);

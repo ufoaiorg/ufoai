@@ -3139,7 +3139,7 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 		/* fix aircraft tech pointers */
 		for (k = 0, aircraft = b->aircraft; k < b->numAircraftInBase; k++, aircraft++) {
 			aircraft->shield = RS_GetTechByID(aircraft->shield_string);
-			aircraft->weapon = RS_GetTechByID(aircraft->weapon_string);
+			aircraft->weapons[0].itemIdx = (RS_GetTechByID(aircraft->weapon_string))->idx;
 			aircraft->item = RS_GetTechByID(aircraft->item_string);
 		}
 

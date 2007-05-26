@@ -68,7 +68,7 @@ static qboolean AIRFIGHT_AddProjectile (int idx, aircraft_t *attacker, aircraft_
 	}
 
 	/* no more ammo */
-	if (attacker->ammoLeft <= 0) {
+	if (attacker->weapons[0].ammoLeft <= 0) {
 		Com_Printf("No more ammo\n");
 		return qfalse;
 	}
@@ -84,7 +84,7 @@ static qboolean AIRFIGHT_AddProjectile (int idx, aircraft_t *attacker, aircraft_
 	projectile->time = 0;
 	projectile->angle = 0.0f;
 
-	attacker->ammoLeft -= 1;
+	attacker->weapons[0].ammoLeft -= 1;
 	gd.numProjectiles++;
 
 	return qtrue;
@@ -125,28 +125,27 @@ static float AIRFIGHT_ProbabilityToHit (aircraft_t *shooter, aircraft_t *target)
 	float factor;
 
 #ifdef DEBUG
-	tech = shooter->weapon;
-	if (!tech) {
+	idx = shooter->weapons[0].itemIdx;
+	if (idx < 0) {
 		Com_Printf("AIRFIGHT_ProbabilityToHit: no weapon assigned to attacking aircraft\n");
 		return probability;
 	}
 #endif
 
-	tech = shooter->ammo;
-	if (!tech) {
+	idx = shooter->weapons[0].ammoIdx;
+	if (idx < 0) {
 		Com_Printf("AIRFIGHT_ProbabilityToHit: no ammo in weapon of attacking aircraft\n");
 		return probability;
 	}
 
 	/* Take Base probability from the ammo of the attacking aircraft */
-	idx = AII_GetAircraftItemByID(tech->provides);
-	probability = aircraftItems[idx].accuracy;
+	probability = aircraftItems[idx].stats[AIR_STATS_ACCURACY];
 
 	/* Check if the attacking aircraft has an item to improve its accuracy */
 	tech = shooter->item;
 	if (tech) {
 		idx = AII_GetAircraftItemByID(tech->provides);
-		factor = aircraftItems[idx].accuracy;
+		factor = aircraftItems[idx].stats[AIR_STATS_ACCURACY];
 		if (factor)
 			probability *= factor;
 	}
@@ -155,7 +154,7 @@ static float AIRFIGHT_ProbabilityToHit (aircraft_t *shooter, aircraft_t *target)
 	tech = target->item;
 	if (tech) {
 		idx = AII_GetAircraftItemByID(tech->provides);
-		factor = aircraftItems[idx].ecm;
+		factor = aircraftItems[idx].stats[AIR_STATS_ECM];
 		if (factor)
 			probability /= factor;
 	}
@@ -173,24 +172,22 @@ static float AIRFIGHT_ProbabilityToHit (aircraft_t *shooter, aircraft_t *target)
 extern void AIRFIGHT_ExecuteActions (aircraft_t* air, aircraft_t* ufo)
 {
 	int idx;
-	technology_t *tech;
 
 	/* some asserts */
 	assert(air);
 	assert(ufo);
 
-	tech = air->ammo;
+	idx = air->weapons[0].ammoIdx;
 
-	if (tech) {
+	if (idx > -1) {
 		/* aircraft has ammunitions */
-		idx = AII_GetAircraftItemByID(tech->provides);
 
 		/* if we can shoot, shoot */
-		if (CP_GetDistance(ufo->pos, air->pos) < aircraftItems[idx].weaponRange && air->delayNextShot <= 0) {
+		if (CP_GetDistance(ufo->pos, air->pos) < aircraftItems[idx].stats[AIR_STATS_WRANGE] && air->weapons[0].delayNextShot <= 0) {
 			float probability;
 
 			if (AIRFIGHT_AddProjectile(idx, air, ufo)) {
-				air->delayNextShot = aircraftItems[idx].weaponDelay;
+				air->weapons[0].delayNextShot = aircraftItems[idx].weaponDelay;
 				/* will we miss the target ? */
 				probability = frand();
 				if (probability > AIRFIGHT_ProbabilityToHit(air, ufo))
@@ -332,7 +329,7 @@ static qboolean AIRFIGHT_ProjectileReachedTarget (aircraftProjectile_t *projecti
 
 	/* check if the projectile went farther than it's range */
 	distance = (float) projectile->time * aircraftItems[projectile->aircraftItemsIdx].weaponSpeed / 3600.0f;
-	if (distance > aircraftItems[projectile->aircraftItemsIdx].weaponRange) {
+	if (distance > aircraftItems[projectile->aircraftItemsIdx].stats[AIR_STATS_WRANGE]) {
 		return qtrue;
 	}
 

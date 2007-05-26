@@ -355,7 +355,7 @@ extern void CL_DisplayPopupIntercept (actMis_t* mission, aircraft_t* ufo)
 			if (mission && *air->teamSize <= 0)
 				continue;
 			/* don't show aircraft with no weapons */
-			if (ufo && !air->weapon)
+			if (ufo && air->weapons[0].itemIdx < 0)
 				continue;
 
 			s = va("%s (%i/%i)\t%s\t%s\n", air->shortname, *air->teamSize, air->size, AIR_AircraftStatusToName(air), gd.bases[j].name);
