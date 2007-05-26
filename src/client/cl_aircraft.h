@@ -264,6 +264,7 @@ void AIR_ParseAircraft(const char *name, char **text);
 void AII_ParseAircraftItem(const char *name, char **text);
 extern void AII_ReloadWeapon(aircraft_t *aircraft);
 extern qboolean AII_AddItemToSlot(technology_t *tech, aircraftSlot_t *slot);
+extern int AII_GetSlotItems(aircraftItemType_t type, aircraft_t *aircraft);
 qboolean AIR_AircraftHasEnoughFuel (aircraft_t *aircraft, const vec2_t destination);
 extern void AIR_AircraftReturnToBase(aircraft_t *aircraft);
 extern qboolean AIR_SendAircraftToMission(aircraft_t* aircraft, struct actMis_s* mission);

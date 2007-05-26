@@ -1634,9 +1634,9 @@ extern qboolean AII_AddItemToSlot (technology_t *tech, aircraftSlot_t *slot)
 * @param[in] aircraft The aircraft to count the items for (may not be NULL)
 * @return The amount of assigned items for the given slot
 */
-int AIR_GetSlotItems (aircraftItemType_t type, aircraft_t *aircraft)
+extern int AII_GetSlotItems (aircraftItemType_t type, aircraft_t *aircraft)
 {
-	int i, cnt = 0;
+	int i, max, cnt = 0;
 	aircraftSlot_t *slot;
 
 	assert(aircraft);
@@ -1650,16 +1650,18 @@ int AIR_GetSlotItems (aircraftItemType_t type, aircraft_t *aircraft)
 		break;
 	case AC_ITEM_WEAPON:
 		slot = aircraft->weapons;
+		max = aircraft->maxWeapons;
 		break;
 	case AC_ITEM_ELECTRONICS:
 		slot = aircraft->electronics;
+		max = aircraft->maxElectronics;
 		break;
 	default:
 		Com_Printf("AIR_GetSlotItems: Unknow type of slot : %i", type);
 		return 0;
 	}
 
-	for (i = 0; i < MAX_AIRCRAFTSLOT; i++)
+	for (i = 0; i < max; i++)
 		if (slot[i].itemIdx >= 0)
 			cnt++;
 
