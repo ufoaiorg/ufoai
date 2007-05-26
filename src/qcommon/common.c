@@ -776,6 +776,7 @@ static void Com_DebugHelp_f (void)
 			" * debug_campaignstats\n"
 			" * debug_configstrings\n"
 			" * debug_capacities\n"
+			" * debug_destroyallufos\n"
 			" * debug_drawblocked\n"
 			"   prints forbidden list to console\n"
 			" * debug_fullcredits\n"

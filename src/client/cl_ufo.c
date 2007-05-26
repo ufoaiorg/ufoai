@@ -369,6 +369,30 @@ extern void UFO_Recovery (void)
 	}
 }
 
+#ifdef DEBUG
+/**
+ * @brief This function will destroy all ufos on the geoscape and
+ * spawn the crash site missions when the ufo was "shot" over land
+ * @note Give a parameter (a number) to spawn new ufos and crash
+ * them afterwards
+ */
+static void UFO_DestroyAllUFOsOnGeoscape_f (void)
+{
+	int i, cnt;
+
+	/* add new ufos to destroy */
+	if (Cmd_Argc() == 2) {
+		cnt = atoi(Cmd_Argv(1));
+		Cmd_BufClear();
+		for (i = 0; i < cnt; i++)
+			UFO_NewUfoOnGeoscape_f();
+	}
+
+	for (i = 0; i < gd.numUfos; i++)
+		AIRFIGHT_ActionsAfterAirfight(&gd.ufos[i], qtrue);
+}
+#endif
+
 /**
  * @brief
  * @sa MN_ResetMenus
@@ -378,6 +402,7 @@ extern void UFO_Reset (void)
 	Cmd_AddCommand("addufo", UFO_NewUfoOnGeoscape_f, "Add a new ufo to geoscape");
 	Cmd_AddCommand("removeufo", UFO_RemoveUfoFromGeoscape_f, "Remove an ufo from geoscape");
 #ifdef DEBUG
+	Cmd_AddCommand("debug_destroyallufos", UFO_DestroyAllUFOsOnGeoscape_f, "Destroy all ufos on geoscape and spawn the crashsite missions (if not over water)");
 	Cmd_AddCommand("debug_listufo", UFO_ListUfosOnGeoscape_f, "Print ufo information to game console");
 	Cvar_Get("debug_showufos", "0", 0, "Show all ufos on geoscape");
 #endif
