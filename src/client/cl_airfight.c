@@ -119,7 +119,6 @@ static void AIRFIGHT_MissTarget (int idx)
  */
 static float AIRFIGHT_ProbabilityToHit (aircraft_t *shooter, aircraft_t *target)
 {
-	technology_t *tech;
 	int idx;
 	float probability = 0.0f;
 	float factor;

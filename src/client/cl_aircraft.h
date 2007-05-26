@@ -55,18 +55,20 @@ typedef enum {
 	MAX_ACITEMS
 } aircraftItemType_t;
 
-/** @brief Aircraft parameters. */
-/** @note This is a list of all aircraft parameters that depends on aircraft items.
- **  those values doesn't change with shield or weapon assigned to aircraft */
+/** @brief Aircraft parameters.
+ * @note This is a list of all aircraft parameters that depends on aircraft items.
+ *  those values doesn't change with shield or weapon assigned to aircraft
+ * @note AIR_STATS_WRANGE must be the last parameter (see AII_UpdateAircraftStats)
+ */
 typedef enum {
 	AIR_STATS_RANGE,	/**< Aircraft range. */
-	AIR_STATS_WRANGE,	/**< Aircraft weapon range - the maximum distance aircraft can open fire. */
 	AIR_STATS_SPEED,	/**< Aircraft speed. */
 	AIR_STATS_SHIELD,	/**< Aircraft shield. */
-	AIR_STATS_ECM,	/**< Aircraft electronic warfare level. */
+	AIR_STATS_ECM,		/**< Aircraft electronic warfare level. */
 	AIR_STATS_DAMAGE,	/**< Aircraft damage points. */
 	AIR_STATS_ACCURACY,	/**< Aircraft accuracy - base accuracy (without weapon). */
 	AIR_STATS_FUELSIZE,	/**< Aircraft fuel capacity. */
+	AIR_STATS_WRANGE,	/**< Aircraft weapon range - the maximum distance aircraft can open fire. */
 
 	AIR_STATS_MAX
 } aircraftParams_t;
@@ -262,6 +264,7 @@ void AIR_ParseAircraft(const char *name, char **text, qboolean assignAircraftIte
 void AII_ParseAircraftItem(const char *name, char **text);
 extern void AII_ReloadWeapon(aircraft_t *aircraft);
 extern qboolean AII_AddItemToSlot(technology_t *tech, aircraftSlot_t *slot);
+extern void AII_UpdateAircraftStats(aircraft_t *aircraft);
 extern int AII_GetSlotItems(aircraftItemType_t type, aircraft_t *aircraft);
 qboolean AIR_AircraftHasEnoughFuel (aircraft_t *aircraft, const vec2_t destination);
 extern void AIR_AircraftReturnToBase(aircraft_t *aircraft);

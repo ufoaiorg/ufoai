@@ -1152,6 +1152,10 @@ void AIM_AircraftEquipmenuClick_f (void)
 			list++;
 		}
 	}
+
+	/* Update the values of aircraft stats */
+	AII_UpdateAircraftStats(aircraft);
+
 	menuText[TEXT_STANDARD] = desc;
 }
 
@@ -1270,7 +1274,7 @@ static void AII_InitialiseAircraftSlots (aircraft_t *aircraft)
 /** @brief Valid aircraft items (craftitem) definition values from script files. */
 static const value_t aircraftitems_vals[] = {
 	{"tech", V_CLIENT_HUNK_STRING, offsetof(aircraftItem_t, tech), 0},
-	{"speed", V_FLOAT, offsetof(aircraftItem_t, stats[AIR_STATS_SPEED]), MEMBER_SIZEOF(aircraftItem_t, stats[AIR_STATS_SPEED])},
+	{"speed", V_RELABS, offsetof(aircraftItem_t, stats[AIR_STATS_SPEED]), MEMBER_SIZEOF(aircraftItem_t, stats[AIR_STATS_SPEED])},
 	{"price", V_INT, offsetof(aircraftItem_t, price), MEMBER_SIZEOF(aircraftItem_t, price)},
 	{"shield", V_RELABS, offsetof(aircraftItem_t, stats[AIR_STATS_SHIELD]), MEMBER_SIZEOF(aircraftItem_t,  stats[AIR_STATS_SHIELD])},
 	{"wrange", V_FLOAT, offsetof(aircraftItem_t, stats[AIR_STATS_WRANGE]), MEMBER_SIZEOF(aircraftItem_t, stats[AIR_STATS_WRANGE])},
@@ -1278,8 +1282,8 @@ static const value_t aircraftitems_vals[] = {
 	{"ammo", V_INT, offsetof(aircraftItem_t, ammo), MEMBER_SIZEOF(aircraftItem_t, ammo)},
 	{"delay", V_FLOAT, offsetof(aircraftItem_t, weaponDelay), MEMBER_SIZEOF(aircraftItem_t, weaponDelay)},
 	{"range", V_RELABS, offsetof(aircraftItem_t, stats[AIR_STATS_RANGE]), MEMBER_SIZEOF(aircraftItem_t, stats[AIR_STATS_RANGE])},
-	{"damage", V_FLOAT, offsetof(aircraftItem_t, stats[AIR_STATS_DAMAGE]), MEMBER_SIZEOF(aircraftItem_t, stats[AIR_STATS_DAMAGE])},
-	{"accuracy", V_FLOAT, offsetof(aircraftItem_t, stats[AIR_STATS_ACCURACY]), MEMBER_SIZEOF(aircraftItem_t, stats[AIR_STATS_ACCURACY])},
+	{"damage", V_RELABS, offsetof(aircraftItem_t, stats[AIR_STATS_DAMAGE]), MEMBER_SIZEOF(aircraftItem_t, stats[AIR_STATS_DAMAGE])},
+	{"accuracy", V_RELABS, offsetof(aircraftItem_t, stats[AIR_STATS_ACCURACY]), MEMBER_SIZEOF(aircraftItem_t, stats[AIR_STATS_ACCURACY])},
 	{"ecm", V_RELABS, offsetof(aircraftItem_t, stats[AIR_STATS_ECM]), MEMBER_SIZEOF(aircraftItem_t, stats[AIR_STATS_ECM])},
 	{"weapon", V_CLIENT_HUNK_STRING, offsetof(aircraftItem_t, weapon), 0},
 
@@ -1720,6 +1724,52 @@ extern qboolean AII_AddItemToSlot (technology_t *tech, aircraftSlot_t *slot)
 }
 
 /**
+* @brief Update the value of stats array of an aircraft.
+* @param[in] aircraft Pointer to the aircraft
+*/
+extern void AII_UpdateAircraftStats (aircraft_t *aircraft)
+{
+	int i, currentStat;
+	const aircraft_t *source;
+	const aircraftItem_t *item;
+
+	assert(aircraft);
+
+	source = &aircraft_samples[aircraft->idx_sample];
+
+	/* we scan all the stats except AIR_STATS_WRANGE (see below) */
+	/* note all this stats can not be modified by weapons */
+	for (currentStat = 0; currentStat < AIR_STATS_MAX - 1; currentStat++) {
+		/* initialise value */
+		aircraft->stats[currentStat] = source->stats[currentStat];
+
+		/* modify by electronics (do nothing if the value of stat is 0) */
+		for (i = 0; i < aircraft->maxElectronics; i++) {
+			item = &aircraftItems[aircraft->electronics[i].itemIdx];
+			if (fabs(item->stats[i]) > 2.0f)
+				aircraft->stats[currentStat] += item->stats[i];
+			else if (item->stats[i] > 0.0f)
+				aircraft->stats[currentStat] *= item->stats[i];
+		}
+
+		/* modify by shield (do nothing if the value of stat is 0) */
+		item = &aircraftItems[aircraft->shield.itemIdx];
+		if (fabs(item->stats[i]) > 2.0f)
+			aircraft->stats[currentStat] += item->stats[i];
+		else if (item->stats[i] > 0.0f)
+			aircraft->stats[currentStat] *= item->stats[i];
+	}
+
+	/* now we update AIR_STATS_WRANGE (this one is the biggest value on every ammo) */
+	aircraft->stats[AIR_STATS_WRANGE] = 0;
+	for (i = 0; i < aircraft->maxWeapons; i++) {
+		item = &aircraftItems[aircraft->weapons[i].ammoIdx];
+		if (item->stats[AIR_STATS_WRANGE] > aircraft->stats[AIR_STATS_WRANGE])
+			aircraft->stats[AIR_STATS_WRANGE] = item->stats[AIR_STATS_WRANGE];
+	}
+}
+
+/**
 * @brief Returns the amount of assigned items for a given slot of a given aircraft
 * @param[in] type This is the slot type to get the amount of assigned items for
 * @param[in] aircraft The aircraft to count the items for (may not be NULL)
@@ -1758,6 +1808,7 @@ extern int AII_GetSlotItems (aircraftItemType_t type, aircraft_t *aircraft)
 
 	return cnt;
 }
+
 /*===============================================
 Aircraft functions related to UFOs or missions.
 ===============================================*/
