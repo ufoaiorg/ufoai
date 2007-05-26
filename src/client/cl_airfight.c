@@ -263,13 +263,13 @@ extern void AIRFIGHT_ActionsAfterAirfight (aircraft_t* aircraft, qboolean phalan
 			Vector2Set(ms->pos, aircraft->pos[0], aircraft->pos[1]);
 			nation = MAP_GetNation(ms->pos);
 			Com_sprintf(ms->type, sizeof(ms->type), _("UFO crash site"));
-			if (nation)
+			if (nation) {
 				Com_sprintf(ms->location, sizeof(ms->location), _(nation->name));
-			else
+			} else {
 				Com_sprintf(ms->location, sizeof(ms->location), _("No nation"));
-			/* FIXME: teams */
+			}
+			CL_GetNationTeamName(nation, ms->civTeam, sizeof(ms->civTeam));
 			Q_strncpyz(ms->alienTeam, "ortnok", sizeof(ms->alienTeam));
-			Q_strncpyz(ms->civTeam, "european", sizeof(ms->civTeam));
 
 			Q_strncpyz(ms->loadingscreen, "crashsite", sizeof(ms->loadingscreen));
 			Com_sprintf(ms->onwin, sizeof(ms->onwin), "cp_uforecovery %i", aircraft->ufotype);
@@ -341,7 +341,7 @@ static qboolean AIRFIGHT_ProjectileReachedTarget (aircraftProjectile_t *projecti
  * @param[in] projectile Pointer to the projectile.
  * @todo Implement me (decrease shield).
  */
-static void AIRFIGHT_ProjectileHits(aircraftProjectile_t *projectile)
+static void AIRFIGHT_ProjectileHits (aircraftProjectile_t *projectile)
 {
 	assert(projectile);
 

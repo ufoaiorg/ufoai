@@ -915,6 +915,59 @@ static void CL_AircraftList_f (void)
 }
 
 /**
+ * @brief Returns one of the teamnames from nation->names
+ * @param[in] nation The nation to get the team name for - may also be NULL
+ * @param[in] teamname This is the target buffer for the teamname string
+ * @param[in] size Size of the the target buffer teamname
+ * @return Also returns the teamname
+ */
+extern const char* CL_GetNationTeamName (const nation_t* nation, char *teamname, size_t size)
+{
+	int i, randTeamString;
+	char *string, *string2;
+	char namesString[256];
+
+	if (!nation || !nation->names)
+		return "european";
+
+#ifdef DEBUG
+	if (strlen(nation->names) >= sizeof(namesString))
+		Com_Printf("CL_GetNationTeamName: nation->names will be trancated\n");
+#endif
+
+	string = nation->names;
+	while (*string) {
+		if (*string == ' ')
+			i++;
+		string++;
+	}
+
+	/* only one entry */
+	if (i == 0) {
+		Q_strncpyz(teamname, nation->names, size);
+		return nation->names;
+	}
+
+	Com_sprintf(namesString, sizeof(namesString), nation->names);
+	randTeamString = rand() % i;
+	Com_Printf("%i\n", randTeamString);
+	string2 = namesString;
+	for (i = 0; i <= randTeamString; i++) {
+		string = string2;
+		string2 = strstr(string, " ");
+		assert(string2);
+		*string2++ = '\0';
+	}
+	Com_Printf("CL_GetNationTeamName: name: %s", string);
+#ifdef DEBUG
+	if (strlen(string) >= size)
+		Com_Printf("CL_GetNationTeamName: teamname buffer will be trancated (%s is too long)\n", string);
+#endif
+	Q_strncpyz(teamname, string, size);
+	return string;
+}
+
+/**
  * @brief Updates each nation's happiness and mission win/loss stats.
  * Should be called at the completion or expiration of every mission.
  * The nation where the mission took place will be most affected,
@@ -1418,6 +1471,7 @@ extern void CL_CampaignRun (void)
 			UFO_Recovery();
 		}
 
+		/* daily events */
 		while (ccs.date.sec > 3600 * 24) {
 			ccs.date.sec -= 3600 * 24;
 			ccs.date.day++;

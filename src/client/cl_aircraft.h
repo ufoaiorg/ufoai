@@ -181,7 +181,7 @@ typedef struct aircraft_s {
 	/* NOTE: these pointers needs reinit after loading a saved game */
 	/*@todo remove me */
 	char weapon_string[MAX_VAR];	/**< Name of the weapon equipping aircraft */
-	char ammo_string[MAX_VAR];		/**< Name of the ammo equipping aircraft */	
+	char ammo_string[MAX_VAR];		/**< Name of the ammo equipping aircraft */
 	char shield_string[MAX_VAR];	/**< Name of the shield equipping aircraft */
 	technology_t *shield;			/**< Pointer to the technology of shield equipping aircraft */
 	char item_string[MAX_VAR];		/**< Name of the itme equipping aircraft */
@@ -260,7 +260,7 @@ extern aircraft_t* AIR_AircraftGetFromIdx(int idx);
 extern int AII_GetAircraftItemByID(const char *id);
 extern void CP_GetRandomPosForAircraft(float *pos);
 extern qboolean AIR_AircraftMakeMove(int dt, aircraft_t* aircraft);
-void AIR_ParseAircraft(const char *name, char **text);
+void AIR_ParseAircraft(const char *name, char **text, qboolean assignAircraftItems);
 void AII_ParseAircraftItem(const char *name, char **text);
 extern void AII_ReloadWeapon(aircraft_t *aircraft);
 extern qboolean AII_AddItemToSlot(technology_t *tech, aircraftSlot_t *slot);

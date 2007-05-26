@@ -163,6 +163,12 @@ extern void AIR_ListAircraft_f (void)
 			aircraft = &base->aircraft[i];
 			Com_Printf("Aircraft %s\n", aircraft->name);
 			Com_Printf("...idx cur=base/global %i=%i/%i\n", i, aircraft->idxInBase, aircraft->idx);
+			if (aircraft->weapon_string)
+				Com_Printf("...weapon %s\n", aircraft->weapon_string);
+			if (aircraft->shield_string)
+				Com_Printf("...shield %s\n", aircraft->shield_string);
+			if (aircraft->item_string)
+				Com_Printf("...item %s\n", aircraft->item_string);
 			Com_Printf("...name %s\n", aircraft->id);
 			Com_Printf("...speed %i\n", aircraft->stats[AIR_STATS_SPEED]);
 			Com_Printf("...type %i\n", aircraft->type);
@@ -1390,6 +1396,19 @@ static const value_t aircraft_param_vals[] = {
 	{"ecm", V_INT, offsetof(aircraft_t, stats[AIR_STATS_ECM]), MEMBER_SIZEOF(aircraft_t, stats[0])},
 	{"damage", V_INT, offsetof(aircraft_t, stats[AIR_STATS_DAMAGE]), MEMBER_SIZEOF(aircraft_t, stats[0])},
 	{"accuracy", V_INT, offsetof(aircraft_t, stats[AIR_STATS_ACCURACY]), MEMBER_SIZEOF(aircraft_t, stats[0])},
+
+	{NULL, 0, 0, 0}
+};
+
+/** @brief These values will be linked into the aircaft when assignAircraftItems is true */
+static const value_t aircraft_standard_vals[] = {
+	/* will be linked in for single player games */
+	{"weapon", V_STRING, offsetof(aircraft_t, weapon_string), 0},
+	{"ammo", V_STRING, offsetof(aircraft_t, ammo_string), 0},
+	{"shield", V_STRING, offsetof(aircraft_t, shield_string), 0},
+	{"item", V_STRING, offsetof(aircraft_t, item_string), 0},
+
+	{NULL, 0, 0, 0}
 };
 
 /** @brief Valid aircraft definition values from script files. */
@@ -1407,12 +1426,6 @@ static const value_t aircraft_vals[] = {
 	{"scale_equip", V_VECTOR, offsetof(aircraft_t, scaleEquip), MEMBER_SIZEOF(aircraft_t, scaleEquip)},
 	{"image", V_CLIENT_HUNK_STRING, offsetof(aircraft_t, image), 0},
 
-	/* pointer to technology_t */
-	{"weapon", V_STRING, offsetof(aircraft_t, weapon_string), 0},
-	{"ammo", V_STRING, offsetof(aircraft_t, ammo_string), 0},
-	{"shield", V_STRING, offsetof(aircraft_t, shield_string), 0},
-	{"item", V_STRING, offsetof(aircraft_t, item_string), 0},
-
 	{"model", V_CLIENT_HUNK_STRING, offsetof(aircraft_t, model), 0},
 	/* price for selling/buying */
 	{"price", V_INT, offsetof(aircraft_t, price), MEMBER_SIZEOF(aircraft_t, price)},
@@ -1428,46 +1441,63 @@ static const value_t aircraft_vals[] = {
  * @sa CL_ParseClientData
  * @note parses the aircraft into our aircraft_sample array to use as reference
  */
-extern void AIR_ParseAircraft (const char *name, char **text)
+extern void AIR_ParseAircraft (const char *name, char **text, qboolean assignAircraftItems)
 {
 	const char *errhead = "AIR_ParseAircraft: unexpected end of file (aircraft ";
 	aircraft_t *air_samp;
 	const value_t *vp;
 	char *token;
 	int i;
+	qboolean ignoreForNow = qfalse;
 
 	if (numAircraft_samples >= MAX_AIRCRAFT) {
 		Com_Printf("AIR_ParseAircraft: too many aircraft definitions; def \"%s\" ignored\n", name);
 		return;
 	}
 
-	for (i = 0; i < numAircraft_samples; i++) {
-		if (!Q_strcmp(aircraft_samples[i].id, name)) {
-			Com_Printf("AIR_ParseAircraft: Second aircraft with same name found (%s) - second ignored\n", name);
+	if (!assignAircraftItems) {
+		for (i = 0; i < numAircraft_samples; i++) {
+			if (!Q_strcmp(aircraft_samples[i].id, name)) {
+				Com_Printf("AIR_ParseAircraft: Second aircraft with same name found (%s) - second ignored\n", name);
+				return;
+			}
+		}
+
+		/* initialize the menu */
+		air_samp = &aircraft_samples[numAircraft_samples];
+		memset(air_samp, 0, sizeof(aircraft_t));
+
+		Com_DPrintf("...found aircraft %s\n", name);
+		air_samp->idx = gd.numAircraft;
+		air_samp->idx_sample = numAircraft_samples;
+		CL_ClientHunkStoreString(name, &air_samp->id);
+		air_samp->status = AIR_HOME;
+
+		/* get it's body */
+		token = COM_Parse(text);
+
+		if (!*text || *token != '{') {
+			Com_Printf("AIR_ParseAircraft: aircraft def \"%s\" without body ignored\n", name);
 			return;
 		}
+
+		/* TODO: document why do we have two values for this */
+		numAircraft_samples++;
+		gd.numAircraft++;
+	} else {
+		for (i = 0; i < numAircraft_samples; i++) {
+			if (!Q_strcmp(aircraft_samples[i].id, name)) {
+				air_samp = &aircraft_samples[i];
+				break;
+			}
+		}
+		if (i == numAircraft_samples) {
+			for (i = 0; i < numAircraft_samples; i++) {
+				Com_Printf("aircraft id: %s\n", aircraft_samples[i].id);
+			}
+			Sys_Error("AIR_ParseAircraft: aircraft not found - can not link (%s) - parsed aircraft amount: %i\n", name, numAircraft_samples);
+		}
 	}
-
-	/* initialize the menu */
-	air_samp = &aircraft_samples[numAircraft_samples];
-	memset(air_samp, 0, sizeof(aircraft_t));
-
-	Com_DPrintf("...found aircraft %s\n", name);
-	air_samp->idx = gd.numAircraft;
-	air_samp->idx_sample = numAircraft_samples;
-	CL_ClientHunkStoreString(name, &air_samp->id);
-	air_samp->status = AIR_HOME;
-
-	/* get it's body */
-	token = COM_Parse(text);
-
-	if (!*text || *token != '{') {
-		Com_Printf("AIR_ParseAircraft: aircraft def \"%s\" without body ignored\n", name);
-		return;
-	}
-
-	numAircraft_samples++;
-	gd.numAircraft++;
 
 	do {
 		token = COM_EParse(text, errhead, name);
@@ -1476,57 +1506,11 @@ extern void AIR_ParseAircraft (const char *name, char **text)
 		if (*token == '}')
 			break;
 
-		/* check for some standard values */
-		for (vp = aircraft_vals; vp->string; vp++)
-			if (!Q_strcmp(token, vp->string)) {
-				/* found a definition */
-				token = COM_EParse(text, errhead, name);
-				if (!*text)
-					return;
-				switch (vp->type) {
-				case V_TRANSLATION2_STRING:
-					token++;
-				case V_CLIENT_HUNK_STRING:
-					CL_ClientHunkStoreString(token, (char**) ((void*)air_samp + (int)vp->ofs));
-					break;
-				default:
-					Com_ParseValue(air_samp, token, vp->type, vp->ofs, vp->size);
-				}
-
-				break;
-			}
-
-		if (vp->string && !Q_strncmp(vp->string, "size", 4)) {
-			if (air_samp->size > MAX_ACTIVETEAM) {
-				Com_DPrintf("AIR_ParseAircraft: Set size for aircraft to the max value of %i\n", MAX_ACTIVETEAM);
-				air_samp->size = MAX_ACTIVETEAM;
-			}
-		}
-
-		if (!Q_strncmp(token, "type", 4)) {
-			token = COM_EParse(text, errhead, name);
-			if (!*text)
-				return;
-			if (!Q_strncmp(token, "transporter", 11))
-				air_samp->type = AIRCRAFT_TRANSPORTER;
-			else if (!Q_strncmp(token, "interceptor", 11))
-				air_samp->type = AIRCRAFT_INTERCEPTOR;
-			else if (!Q_strncmp(token, "ufo", 3))
-				air_samp->type = AIRCRAFT_UFO;
-		} else if (!Q_strncmp(token, "param", 5)) {
-			token = COM_EParse(text, errhead, name);
-			if (!*text || *token != '{') {
-				Com_Printf("AIR_ParseAircraft: Invalid param value for aircraft: %s\n", name);
-				return;
-			}
-			do {
-				token = COM_EParse(text, errhead, name);
-				if (!*text)
-					break;
-				if (*token == '}')
-					break;
-
-				for (vp = aircraft_param_vals; vp->string; vp++)
+		if (assignAircraftItems) {
+			if (!Q_strcmp(token, "FIXME")) {
+				/* TODO: Do the aircraftitem linkage here - they are now parsed at this stage */
+			} else {
+				for (vp = aircraft_standard_vals; vp->string; vp++) {
 					if (!Q_strcmp(token, vp->string)) {
 						/* found a definition */
 						token = COM_EParse(text, errhead, name);
@@ -1541,29 +1525,116 @@ extern void AIR_ParseAircraft (const char *name, char **text)
 						default:
 							Com_ParseValue(air_samp, token, vp->type, vp->ofs, vp->size);
 						}
+
 						break;
 					}
-				if (!vp->string)
-					Com_Printf("AIR_ParseAircraft: Ignoring unknown param value '%s'\n", token);
-			} while (*text); /* dummy condition */
-		} else if (!Q_strncmp(token, "ufotype", 7)) {
-			token = COM_EParse(text, errhead, name);
-			if (!*text)
-				return;
-			if (!Q_strncmp(token, "scout", 5))
-				air_samp->ufotype = UFO_SCOUT;
-			else if (!Q_strncmp(token, "fighter", 7))
-				air_samp->ufotype = UFO_FIGHTER;
-			else if (!Q_strncmp(token, "harvester", 9))
-				air_samp->ufotype = UFO_HARVESTER;
-			else if (!Q_strncmp(token, "condor", 6))
-				air_samp->ufotype = UFO_CONDOR;
-			else if (!Q_strncmp(token, "carrier", 7))
-				air_samp->ufotype = UFO_CARRIER;
-		} else if (!vp->string) {
-			Com_Printf("AIR_ParseAircraft: unknown token \"%s\" ignored (aircraft %s)\n", token, name);
-			COM_EParse(text, errhead, name);
-		}
+				}
+			}
+		} else {
+			ignoreForNow = qfalse;
+			/* these values are parsed in a later stage and ignored for now */
+			for (vp = aircraft_standard_vals; vp->string; vp++)
+				if (!Q_strcmp(token, vp->string)) {
+					Com_Printf("ignore %s for now\n", token);
+					token = COM_EParse(text, errhead, name);
+					if (!*text)
+						return;
+					Com_Printf("value %s\n", token);
+					ignoreForNow = qtrue;
+					break;
+				}
+			if (ignoreForNow)
+				continue;
+
+			/* check for some standard values */
+			for (vp = aircraft_vals; vp->string; vp++)
+				if (!Q_strcmp(token, vp->string)) {
+					/* found a definition */
+					token = COM_EParse(text, errhead, name);
+					if (!*text)
+						return;
+					switch (vp->type) {
+					case V_TRANSLATION2_STRING:
+						token++;
+					case V_CLIENT_HUNK_STRING:
+						CL_ClientHunkStoreString(token, (char**) ((void*)air_samp + (int)vp->ofs));
+						break;
+					default:
+						Com_ParseValue(air_samp, token, vp->type, vp->ofs, vp->size);
+					}
+
+					break;
+				}
+
+			if (vp->string && !Q_strncmp(vp->string, "size", 4)) {
+				if (air_samp->size > MAX_ACTIVETEAM) {
+					Com_DPrintf("AIR_ParseAircraft: Set size for aircraft to the max value of %i\n", MAX_ACTIVETEAM);
+					air_samp->size = MAX_ACTIVETEAM;
+				}
+			}
+
+			if (!Q_strncmp(token, "type", 4)) {
+				token = COM_EParse(text, errhead, name);
+				if (!*text)
+					return;
+				if (!Q_strncmp(token, "transporter", 11))
+					air_samp->type = AIRCRAFT_TRANSPORTER;
+				else if (!Q_strncmp(token, "interceptor", 11))
+					air_samp->type = AIRCRAFT_INTERCEPTOR;
+				else if (!Q_strncmp(token, "ufo", 3))
+					air_samp->type = AIRCRAFT_UFO;
+			} else if (!Q_strncmp(token, "param", 5)) {
+				token = COM_EParse(text, errhead, name);
+				if (!*text || *token != '{') {
+					Com_Printf("AIR_ParseAircraft: Invalid param value for aircraft: %s\n", name);
+					return;
+				}
+				do {
+					token = COM_EParse(text, errhead, name);
+					if (!*text)
+						break;
+					if (*token == '}')
+						break;
+
+					for (vp = aircraft_param_vals; vp->string; vp++)
+						if (!Q_strcmp(token, vp->string)) {
+							/* found a definition */
+							token = COM_EParse(text, errhead, name);
+							if (!*text)
+								return;
+							switch (vp->type) {
+							case V_TRANSLATION2_STRING:
+								token++;
+							case V_CLIENT_HUNK_STRING:
+								CL_ClientHunkStoreString(token, (char**) ((void*)air_samp + (int)vp->ofs));
+								break;
+							default:
+								Com_ParseValue(air_samp, token, vp->type, vp->ofs, vp->size);
+							}
+							break;
+						}
+					if (!vp->string)
+						Com_Printf("AIR_ParseAircraft: Ignoring unknown param value '%s'\n", token);
+				} while (*text); /* dummy condition */
+			} else if (!Q_strncmp(token, "ufotype", 7)) {
+				token = COM_EParse(text, errhead, name);
+				if (!*text)
+					return;
+				if (!Q_strncmp(token, "scout", 5))
+					air_samp->ufotype = UFO_SCOUT;
+				else if (!Q_strncmp(token, "fighter", 7))
+					air_samp->ufotype = UFO_FIGHTER;
+				else if (!Q_strncmp(token, "harvester", 9))
+					air_samp->ufotype = UFO_HARVESTER;
+				else if (!Q_strncmp(token, "condor", 6))
+					air_samp->ufotype = UFO_CONDOR;
+				else if (!Q_strncmp(token, "carrier", 7))
+					air_samp->ufotype = UFO_CARRIER;
+			} else if (!vp->string) {
+				Com_Printf("AIR_ParseAircraft: unknown token \"%s\" ignored (aircraft %s)\n", token, name);
+				COM_EParse(text, errhead, name);
+			}
+		} /* assignAircraftItems */
 	} while (*text);
 }
 

@@ -1784,9 +1784,7 @@ extern void CL_ParseClientData (const char *type, const char *name, char **text)
 	else if (!Q_strncmp(type, "sequence", 8))
 		CL_ParseSequence(name, text);
 	else if (!Q_strncmp(type, "aircraft", 8))
-		AIR_ParseAircraft(name, text);
-	else if (!Q_strncmp(type, "craftitem", 8))
-		AII_ParseAircraftItem(name, text);
+		AIR_ParseAircraft(name, text, qfalse);
 	else if (!Q_strncmp(type, "campaign", 8))
 		CL_ParseCampaign(name, text);
 	else if (!Q_strncmp(type, "ugv", 3))
@@ -1794,11 +1792,12 @@ extern void CL_ParseClientData (const char *type, const char *name, char **text)
 }
 
 /**
- * @brief
+ * @brief Parsing only for singleplayer
  *
  * parsed if we are no dedicated server
  * first stage parses all the main data into their struct
  * see CL_ParseScriptSecond for more details about parsing stages
+ * @sa CL_ReadSinglePlayerData
  * @sa Com_ParseScripts
  * @sa CL_ParseScriptSecond
  * @note make sure that the client hunk was cleared - otherwise it may overflow
@@ -1820,6 +1819,8 @@ static void CL_ParseScriptFirst (const char *type, char *name, char **text)
 		CL_ParseResearchableCampaignStates(name, text, qfalse);
 	else if (!Q_strncmp(type, "tech", 4))
 		RS_ParseTechnologies(name, text);
+	else if (!Q_strncmp(type, "craftitem", 8))
+		AII_ParseAircraftItem(name, text);
 	else if (!Q_strncmp(type, "base", 4))
 		B_ParseBases(name, text);
 	else if (!Q_strncmp(type, "nation", 6))
@@ -1837,12 +1838,13 @@ static void CL_ParseScriptFirst (const char *type, char *name, char **text)
 }
 
 /**
- * @brief
+ * @brief Parsing only for singleplayer
  *
  * parsed if we are no dedicated server
  * second stage links all the parsed data from first stage
  * example: we need a techpointer in a building - in the second stage the buildings and the
  * techs are already parsed - so now we can link them
+ * @sa CL_ReadSinglePlayerData
  * @sa Com_ParseScripts
  * @sa CL_ParseScriptFirst
  * @note make sure that the client hunk was cleared - otherwise it may overflow
@@ -1854,6 +1856,8 @@ static void CL_ParseScriptSecond (const char *type, char *name, char **text)
 		CL_ParseStage(name, text);
 	else if (!Q_strncmp(type, "building", 8))
 		B_ParseBuildings(name, text, qtrue);
+	else if (!Q_strncmp(type, "aircraft", 8))
+		AIR_ParseAircraft(name, text, qtrue);
 }
 
 /**
