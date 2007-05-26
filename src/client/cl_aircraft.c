@@ -1628,6 +1628,43 @@ extern qboolean AII_AddItemToSlot (technology_t *tech, aircraftSlot_t *slot)
 	return qtrue;
 }
 
+/**
+* @brief Returns the amount of assigned items for a given slot of a given aircraft
+* @param[in] type This is the slot type to get the amount of assigned items for
+* @param[in] aircraft The aircraft to count the items for (may not be NULL)
+* @return The amount of assigned items for the given slot
+*/
+int AIR_GetSlotItems (aircraftItemType_t type, aircraft_t *aircraft)
+{
+	int i, cnt = 0;
+	aircraftSlot_t *slot;
+
+	assert(aircraft);
+
+	switch (type) {
+	case AC_ITEM_ARMOUR:
+		if (aircraft->armour.itemIdx >= 0)
+			return 1;
+		else
+			return 0;
+		break;
+	case AC_ITEM_WEAPON:
+		slot = aircraft->weapons;
+		break;
+	case AC_ITEM_ELECTRONICS:
+		slot = aircraft->electronics;
+		break;
+	default:
+		Com_Printf("AIR_GetSlotItems: Unknow type of slot : %i", type);
+		return 0;
+	}
+
+	for (i = 0; i < MAX_AIRCRAFTSLOT; i++)
+		if (slot[i].itemIdx >= 0)
+			cnt++;
+
+	return cnt;
+}
 /*===============================================
 Aircraft functions related to UFOs or missions.
 ===============================================*/

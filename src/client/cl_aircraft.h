@@ -190,7 +190,7 @@ typedef struct aircraft_s {
 	aircraftSlot_t weapons[MAX_AIRCRAFTSLOT];	/**< Weapons assigned to aircraft */
 	int maxWeapons;
 	/*@todo use me */
-	aircraftSlot_t shields;				/**< Shield assigned to aircraft (1 maximum ?) */
+	aircraftSlot_t armour;				/**< Armour assigned to aircraft (1 maximum ?) */
 	aircraftSlot_t electronics[MAX_AIRCRAFTSLOT];		/**< Electronics assigned to aircraft */
 	int maxElectronics;
 
