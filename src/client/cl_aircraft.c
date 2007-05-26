@@ -238,41 +238,11 @@ void AIR_AircraftInit (void)
 
 	for (i = 0; i < numAircraft_samples; i++) {
 		air_samp = &aircraft_samples[i];
-		/* link with tech pointer */
-		Com_DPrintf("...aircraft: %s\n", air_samp->name);
-		if (*air_samp->weapon_string) {
-			Com_DPrintf("....weapon: %s\n", air_samp->weapon_string);
-			tech = RS_GetTechByID(air_samp->weapon_string);
-			air_samp->weapons[0].itemIdx = AII_GetAircraftItemByID(tech->provides);
-		} else
-			air_samp->weapons[0].itemIdx = -1;
-
-		if (*air_samp->ammo_string) {
-			Com_DPrintf("....ammo: %s\n", air_samp->ammo_string);
-			tech = RS_GetTechByID(air_samp->ammo_string);
-			air_samp->weapons[0].ammoIdx = AII_GetAircraftItemByID(tech->provides);
-		} else
-			air_samp->weapons[0].ammoIdx = -1;
-
-		if (*air_samp->shield_string) {
-			/* link with tech pointer */
-			Com_DPrintf("....shield: %s\n", air_samp->shield_string);
-			air_samp->shield = RS_GetTechByID(air_samp->shield_string);
-		} else
-			 air_samp->shield = NULL;
-
-		if (*air_samp->item_string) {
-			/* link with tech pointer */
-			Com_DPrintf("....item: %s\n", air_samp->item_string);
-			air_samp->item = RS_GetTechByID(air_samp->item_string);
-		} else
-			air_samp->item = NULL;
 
 		air_samp->homebase = &gd.bases[air_samp->idxBase]; /* @todo: looks like a nonsense */
 		air_samp->teamSize = &gd.bases[air_samp->idxBase].teamNum[air_samp->idxInBase];
 	}
 
-#if 0
 	/* Link technologies for craftitems. */
 	for (i = 0; i < numAircraftItems; i++) {
 		aircraftitem = &aircraftItems[i];
@@ -285,7 +255,6 @@ void AIR_AircraftInit (void)
 				Com_Printf("AIR_AircraftInit: No tech with the name '%s' found for craftitem '%s'.\n",  aircraftitem->tech, aircraftitem->id);
 		}
 	}
-#endif
 
 	Com_Printf("...aircraft and aircraft-items inited\n");
 }

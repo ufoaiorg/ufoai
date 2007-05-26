@@ -3377,7 +3377,7 @@ tech rs_craft_el_raven
 		default "_craft_electronics_raven_txt"
 	}
 
-//	provides	craft_el_raven
+	provides	craft_el_raven
 	require_AND { tech nothing }
 	time		0
 	producetime	1221
@@ -3395,7 +3395,7 @@ tech rs_craft_shield_polymer
 		default "_craft_shield_light_txt"
 	}
 
-//	provides	craft_shield_polymer
+	provides	craft_shield_polymer
 	require_AND { tech nothing }
 	time		0
 	producetime	1678
@@ -3601,7 +3601,7 @@ tech rs_craft_el_targeting
 		default "_craft_electronics_targeting_txt"
 	}
 
-//	provides	craft_el_targeting
+	provides	craft_el_targeting
 	require_AND	{ tech nothing }
 	time		0
 	producetime	571
@@ -3619,7 +3619,7 @@ tech rs_craft_el_fuelpod
 		default "_craft_electronics_fuelpod_txt"
 	}
 
-//	provides	craft_el_fuelpod
+	provides	craft_el_fuelpod
 	require_AND	{ tech nothing }
 	time		0
 	producetime	400
