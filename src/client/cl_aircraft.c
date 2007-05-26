@@ -272,6 +272,7 @@ void AIR_AircraftInit (void)
 		air_samp->teamSize = &gd.bases[air_samp->idxBase].teamNum[air_samp->idxInBase];
 	}
 
+#if 0
 	/* Link technologies for craftitems. */
 	for (i = 0; i < numAircraftItems; i++) {
 		aircraftitem = &aircraftItems[i];
@@ -284,6 +285,7 @@ void AIR_AircraftInit (void)
 				Com_Printf("AIR_AircraftInit: No tech with the name '%s' found for craftitem '%s'.\n",  aircraftitem->tech, aircraftitem->id);
 		}
 	}
+#endif
 
 	Com_Printf("...aircraft and aircraft-items inited\n");
 }
@@ -1473,14 +1475,6 @@ extern void AIR_ParseAircraft (const char *name, char **text, qboolean assignAir
 		CL_ClientHunkStoreString(name, &air_samp->id);
 		air_samp->status = AIR_HOME;
 
-		/* get it's body */
-		token = COM_Parse(text);
-
-		if (!*text || *token != '{') {
-			Com_Printf("AIR_ParseAircraft: aircraft def \"%s\" without body ignored\n", name);
-			return;
-		}
-
 		/* TODO: document why do we have two values for this */
 		numAircraft_samples++;
 		gd.numAircraft++;
@@ -1499,6 +1493,14 @@ extern void AIR_ParseAircraft (const char *name, char **text, qboolean assignAir
 		}
 	}
 
+	/* get it's body */
+	token = COM_Parse(text);
+
+	if (!*text || *token != '{') {
+		Com_Printf("AIR_ParseAircraft: aircraft def \"%s\" without body ignored\n", name);
+		return;
+	}
+
 	do {
 		token = COM_EParse(text, errhead, name);
 		if (!*text)
@@ -1507,28 +1509,39 @@ extern void AIR_ParseAircraft (const char *name, char **text, qboolean assignAir
 			break;
 
 		if (assignAircraftItems) {
-			if (!Q_strcmp(token, "FIXME")) {
-				/* TODO: Do the aircraftitem linkage here - they are now parsed at this stage */
-			} else {
-				for (vp = aircraft_standard_vals; vp->string; vp++) {
-					if (!Q_strcmp(token, vp->string)) {
-						/* found a definition */
-						token = COM_EParse(text, errhead, name);
-						if (!*text)
-							return;
-						switch (vp->type) {
-						case V_TRANSLATION2_STRING:
-							token++;
-						case V_CLIENT_HUNK_STRING:
-							CL_ClientHunkStoreString(token, (char**) ((void*)air_samp + (int)vp->ofs));
-							break;
-						default:
-							Com_ParseValue(air_samp, token, vp->type, vp->ofs, vp->size);
-						}
-
+			/* blocks like param { [..] } - otherwise we would leave the loop too early */
+			if (*token == '{') {
+				do {
+					token = COM_EParse(text, errhead, name);
+					if (!*text)
 						break;
-					}
-				}
+					if (*token == '}')
+						break;
+				} while (*text);
+			} else if (!Q_strncmp(token, "weapon", 6)) {
+				token = COM_EParse(text, errhead, name);
+				if (!*text)
+					return;
+				Com_DPrintf("use weapon %s for aircraft %s\n", token, air_samp->id);
+				AII_AddItemToSlot(RS_GetTechByID(token), air_samp->weapons);
+			} else if (!Q_strncmp(token, "ammo", 4)) {
+				token = COM_EParse(text, errhead, name);
+				if (!*text)
+					return;
+				Com_DPrintf("use ammo %s for aircraft %s\n", token, air_samp->id);
+				air_samp->weapons[0].ammoIdx = AII_GetAircraftItemByID((RS_GetTechByID(token))->provides);
+			} else if (!Q_strncmp(token, "shield", 6)) {
+				token = COM_EParse(text, errhead, name);
+				if (!*text)
+					return;
+				Com_DPrintf("use shield %s for aircraft %s\n", token, air_samp->id);
+				AII_AddItemToSlot(RS_GetTechByID(token), &(air_samp->armour));
+			} else if (!Q_strncmp(token, "electronics", 11)) {
+				token = COM_EParse(text, errhead, name);
+				if (!*text)
+					return;
+				Com_DPrintf("use electronics %s for aircraft %s\n", token, air_samp->id);
+				AII_AddItemToSlot(RS_GetTechByID(token), air_samp->electronics);
 			}
 		} else {
 			ignoreForNow = qfalse;

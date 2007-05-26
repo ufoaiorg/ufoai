@@ -246,7 +246,7 @@ typedef struct nation_s {
 	int workers;		/**< how many (monthly) workers */
 	int medics;			/**< how many (monthly) medics */
 	int ugvs;			/**< how many (monthly) ugvs (robots) */
-	char *names;
+	char *names;		/**< space seperated list of possible team ids */
 	vec2_t borders[MAX_NATION_BORDERS];	/**< GL_LINE_LOOP coordinates */
 	int numBorders;		/**< coordinate count */
 } nation_t;
