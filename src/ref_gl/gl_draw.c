@@ -954,7 +954,7 @@ void Draw_3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate, 
 
 	/* flatten the sphere */
 	/* this will also scale the normal vectors */
-	qglScalef(fullscale, fullscale, fullscale);
+	qglScalef(fullscale * vid.rx, fullscale * vid.ry, fullscale);
 
 #if 0
 	/* call this to rescale the normal vectors */
