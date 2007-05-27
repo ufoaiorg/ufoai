@@ -67,9 +67,6 @@ static char cursor_pic[MAX_QPATH];
 static void SCR_TimeRefresh_f(void);
 static void SCR_Loading_f(void);
 static void SCR_DrawString(int x, int y, const char *string, qboolean bitmapFont);
-qboolean loadingMessage;
-char loadingMessages[96];
-float loadingPercent;
 
 /*
 ===============================================================================
@@ -397,7 +394,7 @@ extern void SCR_DrawPrecacheScreen (qboolean string)
 			(int)(VID_NORM_WIDTH / 2),
 			(int)(VID_NORM_HEIGHT / 2 - 60),
 			0, 1, VID_NORM_WIDTH, VID_NORM_HEIGHT, 50, _("Loading game"), 0, 0, NULL, qfalse);
-	SCR_DrawLoadingBar((int)(VID_NORM_WIDTH / 2) - 300, VID_NORM_HEIGHT - 30, 600, 20, (int)loadingPercent);
+	SCR_DrawLoadingBar((int)(VID_NORM_WIDTH / 2) - 300, VID_NORM_HEIGHT - 30, 600, 20, (int)cls.loadingPercent);
 	re.EndFrame();
 }
 
@@ -436,9 +433,9 @@ static void SCR_DrawLoading (void)
 	re.FontDrawString("f_menu", ALIGN_UC,
 		(int)(VID_NORM_WIDTH / 2),
 		(int)(VID_NORM_HEIGHT / 2),
-		0, 1, VID_NORM_WIDTH, VID_NORM_HEIGHT, 50, loadingMessages, 0, 0, NULL, qfalse);
+		0, 1, VID_NORM_WIDTH, VID_NORM_HEIGHT, 50, cls.loadingMessages, 0, 0, NULL, qfalse);
 
-	SCR_DrawLoadingBar((int)(VID_NORM_WIDTH / 2) - 300, VID_NORM_HEIGHT - 30, 600, 20, (int)loadingPercent);
+	SCR_DrawLoadingBar((int)(VID_NORM_WIDTH / 2) - 300, VID_NORM_HEIGHT - 30, 600, 20, (int)cls.loadingPercent);
 }
 
 static const vec4_t cursorBG = { 0.0f, 0.0f, 0.0f, 0.7f };

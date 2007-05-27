@@ -956,23 +956,24 @@ void GLimp_Shutdown (void)
 	if (dpy) {
 		uninstall_grabs();
 
-		if (ctx)
-			qglXDestroyContext(dpy, ctx);
-		if (win)
-			XDestroyWindow(dpy, win);
 #ifdef HAVE_XF86_VIDMODE
 		/*revert to original gamma-settings */
 		if (gl_state.hwgamma)
 			XF86VidModeSetGamma(dpy, scrnum, &oldgamma);
 		if (vidmode_active)
 			XF86VidModeSwitchToMode(dpy, scrnum, vidmodes[0]);
+		XF86VidModeSetViewPort(dpy, scrnum, 0, 0);
 #endif /* HAVE_XF86_VIDMODE */
+
+		if (ctx)
+			qglXDestroyContext(dpy, ctx);
+		if (win)
+			XDestroyWindow(dpy, win);
 		XCloseDisplay(dpy);
 	}
 	ctx = NULL;
 	dpy = NULL;
 	win = 0;
-	ctx = NULL;
 }
 
 /**

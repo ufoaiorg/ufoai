@@ -112,8 +112,9 @@ typedef enum {
  * @brief the client_state_t structure is wiped completely at every server map change
  * @note the client_static_t structure is persistant through an arbitrary
  * number of server connections
+ * @sa client_static_t
  */
-typedef struct {
+typedef struct client_state_s {
 	int timeoutcount;
 
 	int timedemo_frames;
@@ -179,7 +180,11 @@ typedef enum {
 
 typedef enum { key_game, key_input, key_console, key_message } keydest_t;
 
-typedef struct {
+/**
+ * @brief Not cleared on levelchange (static data)
+ * @sa client_state_t
+ */
+typedef struct client_static_s {
 	connstate_t state;
 	keydest_t key_dest;
 
@@ -216,12 +221,15 @@ typedef struct {
 	/** needs to be here, because server can be shutdown, before we see the ending screen */
 	int team;
 
-	char downloadtempname[MAX_OSPATH];
-	char downloadname[MAX_OSPATH];
-	size_t downloadposition;
-	int downloadpercent;
+	int loadingPercent;
+	qboolean loadingMessage;
+	char loadingMessages[96];
 
 #ifdef HAVE_CURL
+	char downloadName[MAX_OSPATH];
+	size_t downloadPosition;
+	int downloadPercent;
+
 	dlqueue_t downloadQueue;	/**< queue of paths we need */
 	dlhandle_t HTTPHandles[4];	/**< actual download handles */
 	char downloadServer[512];	/**< base url prefix to download from */
@@ -391,9 +399,6 @@ void CL_ParseUGVs(const char *name, char **text);
 void CL_UpdateCharacterSkills(character_t *chr);	/* cl_team.c */
 char* CL_ToDifficultyName(int difficulty);
 
-extern qboolean loadingMessage;
-extern char loadingMessages[96];
-extern float loadingPercent;
 void SCR_DrawPrecacheScreen(qboolean string);
 
 /* cl_input */

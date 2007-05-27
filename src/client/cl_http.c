@@ -92,13 +92,13 @@ static int CL_HTTP_Progress (void *clientp, double dltotal, double dlnow, double
 
 	/* don't care which download shows as long as something does :) */
 	if (!abortDownloads) {
-		strcpy(cls.downloadname, dl->queueEntry->ufoPath);
-		cls.downloadposition = dl->position;
+		strcpy(cls.downloadName, dl->queueEntry->ufoPath);
+		cls.downloadPosition = dl->position;
 
 		if (dltotal)
-			cls.downloadpercent = (int)((dlnow / dltotal) * 100.0f);
+			cls.downloadPercent = (int)((dlnow / dltotal) * 100.0f);
 		else
-			cls.downloadpercent = 0;
+			cls.downloadPercent = 0;
 	}
 
 	return abortDownloads;
@@ -152,7 +152,7 @@ static void CL_EscapeHTTPPath (const char *filePath, char *escaped)
 
 	p = escaped;
 
-	len = strlen (filePath);
+	len = strlen(filePath);
 	for (i = 0; i < len; i++) {
 		if (!isalnum(filePath[i]) && filePath[i] != ';' && filePath[i] != '/' &&
 			filePath[i] != '?' && filePath[i] != ':' && filePath[i] != '@' && filePath[i] != '&' &&
@@ -195,7 +195,7 @@ static size_t CL_HTTP_Recv (void *ptr, size_t size, size_t nmemb, void *stream)
 		dl->fileSize = bytes > 131072 ? bytes : 131072;
 		dl->tempBuffer = Mem_Alloc((int)dl->fileSize);
 	} else if (dl->position + bytes >= dl->fileSize - 1) {
-		char		*tmp;
+		char *tmp;
 
 		tmp = dl->tempBuffer;
 
@@ -345,7 +345,7 @@ void CL_SetHTTPServer (const char *URL)
 	if (multi)
 		Com_Error(ERR_DROP, "CL_SetHTTPServer: Still have old handle");
 
-	multi = curl_multi_init ();
+	multi = curl_multi_init();
 
 	memset(&cls.downloadQueue, 0, sizeof(cls.downloadQueue));
 
@@ -733,8 +733,8 @@ static void CL_FinishHTTPDownload (void)
 			pendingCount--;
 		handleCount--;
 		/* Com_Printf("finished dl: hc = %d\n", handleCount); */
-		cls.downloadname[0] = 0;
-		cls.downloadposition = 0;
+		cls.downloadName[0] = 0;
+		cls.downloadPosition = 0;
 
 		result = msg->data.result;
 
@@ -876,7 +876,7 @@ static void CL_StartNextHTTPDownload (void)
 			CL_StartHTTPDownload(q, dl);
 
 			/* ugly hack for pak file single downloading */
-			len = strlen (q->ufoPath);
+			len = strlen(q->ufoPath);
 			if (len > 4 && !Q_stricmp(q->ufoPath + len - 4, ".pk3"))
 				downloading_pak = qtrue;
 
@@ -906,7 +906,7 @@ void CL_RunHTTPDownloads (void)
 		CL_StartNextHTTPDownload();
 
 	do {
-		ret = curl_multi_perform (multi, &newHandleCount);
+		ret = curl_multi_perform(multi, &newHandleCount);
 		if (newHandleCount < handleCount) {
 			/* Com_Printf("runnd dl: hc = %d, nc = %d\n", handleCount, newHandleCount); */
 			/* hmm, something either finished or errored out. */

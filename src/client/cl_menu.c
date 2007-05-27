@@ -1825,7 +1825,7 @@ extern void MN_PrecacheMenus (void)
 				re.RegisterPic(node->data[0]);
 			}
 		}
-		loadingPercent += 35.0f / numMenus;
+		cls.loadingPercent += 35.0f / numMenus;
 		SCR_DrawPrecacheScreen(qtrue);
 	}
 }
@@ -3828,7 +3828,7 @@ extern void MN_PrecacheModels (void)
 			if (!re.RegisterModel(menuModel->model))
 				Com_Printf("MN_PrecacheModels: Could not register model '%s'\n", menuModel->model);
 		}
-		loadingPercent += 20.0f / numMenuModels;
+		cls.loadingPercent += 20.0f / numMenuModels;
 		SCR_DrawPrecacheScreen(qtrue);
 	}
 }
