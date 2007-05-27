@@ -1460,6 +1460,7 @@ extern void AIR_ParseAircraft (const char *name, char **text, qboolean assignAir
 	char *token;
 	int i;
 	qboolean ignoreForNow = qfalse;
+	technology_t *tech;
 
 	if (numAircraft_samples >= MAX_AIRCRAFT) {
 		Com_Printf("AIR_ParseAircraft: too many aircraft definitions; def \"%s\" ignored\n", name);
@@ -1533,25 +1534,33 @@ extern void AIR_ParseAircraft (const char *name, char **text, qboolean assignAir
 				if (!*text)
 					return;
 				Com_DPrintf("use weapon %s for aircraft %s\n", token, air_samp->id);
-				AII_AddItemToSlot(RS_GetTechByID(token), air_samp->weapons);
+				tech = RS_GetTechByID(token);
+				if (tech)
+					AII_AddItemToSlot(tech, air_samp->weapons);
 			} else if (!Q_strncmp(token, "ammo", 4)) {
 				token = COM_EParse(text, errhead, name);
 				if (!*text)
 					return;
 				Com_DPrintf("use ammo %s for aircraft %s\n", token, air_samp->id);
-				air_samp->weapons[0].ammoIdx = AII_GetAircraftItemByID((RS_GetTechByID(token))->provides);
+				tech = RS_GetTechByID(token);
+				if (tech)
+					air_samp->weapons[0].ammoIdx = AII_GetAircraftItemByID(tech->provides);
 			} else if (!Q_strncmp(token, "shield", 6)) {
 				token = COM_EParse(text, errhead, name);
 				if (!*text)
 					return;
 				Com_DPrintf("use shield %s for aircraft %s\n", token, air_samp->id);
-				AII_AddItemToSlot(RS_GetTechByID(token), &(air_samp->shield));
+				tech = RS_GetTechByID(token);
+				if (tech)
+					AII_AddItemToSlot(tech, &(air_samp->shield));
 			} else if (!Q_strncmp(token, "electronics", 11)) {
 				token = COM_EParse(text, errhead, name);
 				if (!*text)
 					return;
 				Com_DPrintf("use electronics %s for aircraft %s\n", token, air_samp->id);
-				AII_AddItemToSlot(RS_GetTechByID(token), air_samp->electronics);
+				tech = RS_GetTechByID(token);
+				if (tech)
+					AII_AddItemToSlot(tech, air_samp->electronics);
 			}
 		} else {
 			ignoreForNow = qfalse;
@@ -1723,6 +1732,7 @@ extern void AII_ReloadWeapon (aircraft_t *aircraft)
 extern qboolean AII_AddItemToSlot (technology_t *tech, aircraftSlot_t *slot)
 {
 	assert(slot);
+	assert(tech);
 
 	slot->itemIdx = AII_GetAircraftItemByID(tech->provides);
 
