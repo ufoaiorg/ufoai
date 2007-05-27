@@ -2949,6 +2949,7 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 	base_t *b;
 	aircraft_t *aircraft;
 	building_t *building;
+	technology_t *tech;
 	int maxCargo = (*(int*)data >= 2) ? MAX_CARGO : 256; /* old value */
 
 	gd.numAircraft = MSG_ReadShort(sb);
@@ -3023,19 +3024,27 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 				/* read weapon slot */
 				amount = MSG_ReadShort(sb);
 				for (l = 0; l < amount; l++) {
-					AII_AddItemToSlot(RS_GetTechByID(MSG_ReadString(sb)), aircraft->weapons);
+					tech = RS_GetTechByID(MSG_ReadString(sb));
+					if (tech)
+						AII_AddItemToSlot(tech, aircraft->weapons);
 					/* TODO: check for loaded ammo */
 				}
 				/* check for shield slot */
 				/* there is only one shield - but who knows - breaking the savegames if this changes
 				 * isn't worth it */
 				amount = MSG_ReadShort(sb);
-				for (l = 0; l < amount; l++)
-					AII_AddItemToSlot(RS_GetTechByID(MSG_ReadString(sb)), &aircraft->shield);
+				for (l = 0; l < amount; l++) {
+					tech = RS_GetTechByID(MSG_ReadString(sb));
+					if (tech)
+						AII_AddItemToSlot(tech, &aircraft->shield);
+				}
 				/* read electronics slot */
 				amount = MSG_ReadShort(sb);
-				for (l = 0; l < amount; l++)
-					AII_AddItemToSlot(RS_GetTechByID(MSG_ReadString(sb)), aircraft->electronics);
+				for (l = 0; l < amount; l++) {
+					tech = RS_GetTechByID(MSG_ReadString(sb));
+					if (tech)
+						AII_AddItemToSlot(tech, aircraft->electronics);
+				}
 			}
 			for (l = 0; l < MAX_ACTIVETEAM; l++)
 				aircraft->teamIdxs[l] = MSG_ReadShort(sb);
