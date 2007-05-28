@@ -6,6 +6,16 @@
 // BOLTER EFFECTS
 // ==================
 
+particle bolterCannonade
+{
+	init
+	{
+		push   int 3
+		nspawn bolter
+	}
+	think { kill }
+}
+
 particle bolter
 {
 	init

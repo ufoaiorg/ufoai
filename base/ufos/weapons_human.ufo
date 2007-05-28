@@ -1920,8 +1920,8 @@ item bolterrifle_ammo
 		{
 			name    "_Cannonade"
 			skill   assault
-			projtl  bullet
-			impact  bulletImpact
+			projtl  bolterCannonade
+			impact  bolterImpact
 			hitbody blood
 			firesnd weapons/boltercannonade.wav
 			speed   0
@@ -1940,8 +1940,8 @@ item bolterrifle_ammo
 		{
 			name    "_Precision Shot"
 			skill   sniper
-			projtl  bullet
-			impact  bulletImpact
+			projtl  bolter
+			impact  bolterImpact
 			hitbody blood
 			firesnd weapons/bolter2.wav
 			speed   0

@@ -34,36 +34,42 @@ item alienmaterials
 
 item craft_ufo_scout
 {
+	buytype dummy
 	name	"_UFO - Scout"
 	weapon false
 }
 
 item craft_ufo_fighter
 {
+	buytype dummy
 	name	"_UFO - Fighter"
 	weapon false
 }
 
 item craft_ufo_harvester
 {
+	buytype dummy
 	name	"_UFO - Harvester"
 	weapon false
 }
 
 item craft_ufo_condor
 {
+	buytype dummy
 	name	"_UFO - Condor"
 	weapon false
 }
 
 item craft_ufo_carrier
 {
+	buytype dummy
 	name	"_UFO - Carrier"
 	weapon false
 }
 
 item craft_ufo_big
 {
+	buytype dummy
 	name	"_UFO - Big"
 	weapon false
 }

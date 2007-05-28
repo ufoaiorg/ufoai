@@ -3545,6 +3545,7 @@ tech rs_craft_ammo_tr20
 // code is ready :> -Zenerka 25.01.2007
 item craft_weapon_particle
 {
+	buytype dummy
 	// dummy package to that we can link
 	weapon false
 }
@@ -3561,6 +3562,7 @@ tech rs_craft_weapon_particle
 		default "_craft_weapon_particle_beam_txt"
 	}
 
+	// FIXME use craftitem craft_weapon_particle_beam
 	provides	craft_weapon_particle
 
 	mail_pre
