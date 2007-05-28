@@ -99,6 +99,11 @@ Alex Parker
   microshotgun2.wav, sniperrifle.wav, kerrblade_swip.wav, knife.wav, medikit.wav,
   boltercannonade.wav, machinegun.wav, plasmablade.wav, assaultrifle.wav
 * mission tracks: AlexFightmare.ogg, AlexForest.ogg, AlexSullencity.ogg
+* Six "alien" death samples, derived originally from a recording of a pig being slaughtered.
+  The original (and disturbing) Pig Death recording from which these samples are
+  derived was taken by Dobroide at the Free Sound Project.
+  aliendeath1.wav, aliendeath2.wav, aliendeath3.wav, aliendeath4.wav, aliendeath5.wav,
+  aliendeath6.wav
 
 David Reeves
 * music tracks: David01.ogg
