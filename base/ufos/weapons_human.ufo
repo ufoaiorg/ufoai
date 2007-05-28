@@ -1900,8 +1900,8 @@ item bolterrifle_ammo
 		{
 			name    "_Snap Shot"
 			skill   assault
-			projtl  bullet
-			impact  bulletImpact
+			projtl  bolter
+			impact  bolterImpact
 			hitbody blood
 			firesnd weapons/bolter2.wav
 			speed   0

@@ -3,6 +3,83 @@
 // for the description of the particle language
 
 // ==================
+// BOLTER EFFECTS
+// ==================
+
+particle bolter
+{
+	init
+	{
+		image  sfx/bolter
+		blend  add
+		style  beam
+		tfade  out
+		push   float 2.0
+		pop    *size.2
+		tps    4.0
+	}
+	think { kill }
+}
+
+particle bolterImpact
+{
+	init
+	{
+		image  sfx/smoke
+		blend  add
+		style  facing
+		tfade  sin
+		size   "20 20"
+
+		push   *v
+		mul    float 5.0
+		kpop   *v
+		add    *s
+		pop    *s
+		tps    1.0
+
+		push   int 10
+		nspawn bolterFragment
+	}
+	run
+	{
+		push *color
+		mul  float 0.5
+		pop  *color
+	}
+	think { kill }
+}
+
+particle bolterFragment
+{
+	init
+	{
+		image  sfx/spark
+		blend  add
+		style  facing
+		tfade  out
+		size   "2 2"
+
+		push   *v
+		rand   float 28.0
+		add    float 3.0
+		mul    #
+		crand  vector "15 15 15"
+		add    #
+		pop    *v
+
+		crand  vector "5 5 5"
+		add    *s
+		pop    *s
+
+		rand   float 1.3
+		add    float 1.2
+		pop    *tps
+	}
+	think { kill }
+}
+
+// ==================
 // BULLET EFFECTS
 // ==================
 
