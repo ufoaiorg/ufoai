@@ -2826,7 +2826,6 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
 			MSG_WriteShort(sb, aircraft->point);
 			/* save weapon slots */
 			cnt = AII_GetSlotItems(AC_ITEM_WEAPON, aircraft);
-			Com_Printf("store weapons: %i\n", cnt);
 			MSG_WriteByte(sb, cnt);
 			for (l = 0; l < MAX_AIRCRAFTSLOT; l++) {
 				if (aircraft->weapons[l].itemIdx >= 0) {
@@ -2842,7 +2841,6 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
 				MSG_WriteString(sb, aircraftItems[aircraft->shield.itemIdx].id);
 			/* save electronics slots */
 			cnt = AII_GetSlotItems(AC_ITEM_ELECTRONICS, aircraft);
-			Com_Printf("store items: %i\n", cnt);
 			MSG_WriteByte(sb, cnt);
 			for (l = 0; l < MAX_AIRCRAFTSLOT; l++) {
 				if (aircraft->electronics[l].itemIdx >= 0)
@@ -3030,9 +3028,8 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 			} else {
 				/* read weapon slot */
 				amount = MSG_ReadByte(sb);
-				Com_Printf("weapons: %i\n", amount);
 				for (l = 0; l < amount; l++) {
-					tech = RS_GetTechByID(MSG_ReadString(sb));
+					tech = RS_GetTechByProvided(MSG_ReadString(sb));
 					if (tech)
 						AII_AddItemToSlot(tech, aircraft->weapons);
 					/* TODO: check for loaded ammo */
@@ -3043,17 +3040,15 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 				 * isn't worth it */
 				amount = MSG_ReadByte(sb);
 				if (amount) {
-					Com_Printf("shields: %i\n", amount);
-					tech = RS_GetTechByID(MSG_ReadString(sb));
+					tech = RS_GetTechByProvided(MSG_ReadString(sb));
 					if (tech)
 						AII_AddItemToSlot(tech, &aircraft->shield);
 				}
 
 				/* read electronics slot */
 				amount = MSG_ReadByte(sb);
-				Com_Printf("items: %i\n", amount);
 				for (l = 0; l < amount; l++) {
-					tech = RS_GetTechByID(MSG_ReadString(sb));
+					tech = RS_GetTechByProvided(MSG_ReadString(sb));
 					if (tech)
 						AII_AddItemToSlot(tech, aircraft->electronics);
 				}
