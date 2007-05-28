@@ -2839,14 +2839,14 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
 			/* save shield slots */
 			MSG_WriteShort(sb, AII_GetSlotItems(AC_ITEM_SHIELD, aircraft));
 			for (l = 0; l < MAX_AIRCRAFTSLOT; l++) {
-				if (aircraft->weapons[l].itemIdx >= 0) {
-					MSG_WriteString(sb, aircraftItems[aircraft->weapons[l].itemIdx].id);
-					if (aircraft->weapons[l].ammoIdx >= 0) {
-						MSG_WriteString(sb, aircraftItems[aircraft->weapons[l].ammoIdx].id);
-					} else {
-						MSG_WriteString(sb, "");
-					}
-				}
+				if (aircraft->shield.itemIdx >= 0)
+					MSG_WriteString(sb, aircraftItems[aircraft->shield.itemIdx].id);
+			}
+			/* save electronics slots */
+			MSG_WriteShort(sb, AII_GetSlotItems(AC_ITEM_ELECTRONICS, aircraft));
+			for (l = 0; l < MAX_AIRCRAFTSLOT; l++) {
+				if (aircraft->electronics[l].itemIdx >= 0)
+					MSG_WriteString(sb, aircraftItems[aircraft->electronics[l].itemIdx].id);
 			}
 			for (l = 0; l < MAX_ACTIVETEAM; l++)
 				MSG_WriteShort(sb, aircraft->teamIdxs[l]);
@@ -3028,6 +3028,7 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 					if (tech)
 						AII_AddItemToSlot(tech, aircraft->weapons);
 					/* TODO: check for loaded ammo */
+					MSG_ReadString(sb);
 				}
 				/* check for shield slot */
 				/* there is only one shield - but who knows - breaking the savegames if this changes
