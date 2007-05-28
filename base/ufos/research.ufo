@@ -2977,7 +2977,7 @@ tech rs_craft_ufo_carrier
 	{
 		from	"_mail_from_paul_navarre"
 		to		"_mail_to_base_commander"
-		subject	"_UFO - Carrie"
+		subject	"_UFO - Carrier"
 	}
 
 	mail
