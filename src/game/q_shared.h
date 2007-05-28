@@ -1164,44 +1164,46 @@ typedef struct equipDef_s {
 	byte num_loose[MAX_OBJDEFS];
 } equipDef_t;
 
-/** the csi structure is the client-server-information structure
- * which contains all the UFO info needed by the server and the client */
+/**
+ * @brief The csi structure is the client-server-information structure
+ * which contains all the UFO info needed by the server and the client.
+ */
 typedef struct csi_s {
-	/** object definitions */
+	/** Object definitions */
 	objDef_t ods[MAX_OBJDEFS];
-	/** the amount of parsed object definitions */
 	int numODs;
 
-	/** inventory definitions */
+	/** Inventory definitions */
 	invDef_t ids[MAX_INVDEFS];
-	/** the amount of parsed inventory definitions */
 	int numIDs;
-	int idRight, idLeft, idExtension;	/**< special container ids */
-	int idHeadgear, idBackpack, idBelt, idHolster;	/**< special container ids */
-	int idArmor, idFloor, idEquip;	/**< special container ids */
 
-	/** damage type ids */
+	/** Special container ids */
+	int idRight, idLeft, idExtension;	
+	int idHeadgear, idBackpack, idBelt, idHolster;
+	int idArmor, idFloor, idEquip;
+
+	/** Damage type ids */
 	int damNormal, damBlast, damFire, damShock;
-	/** damage type ids */
+	/** Damage type ids */
 	int damLaser, damPlasma, damParticle, damStun;
 
-	/** equipment definitions */
+	/** Equipment definitions */
 	equipDef_t eds[MAX_EQUIPDEFS];
 	int numEDs;
 
-	/** damage types */
+	/** Damage types */
 	char dts[MAX_DAMAGETYPES][MAX_VAR];
 	int numDTs;
 } csi_t;
 
 
-/* @todo: Medals. Still subject to (major) changes. */
+/** @todo Medals. Still subject to (major) changes. */
 
-#define MAX_SKILL           100
+#define MAX_SKILL           100 
 
 #define GET_HP_HEALING( ab ) (1 + (ab) * 10/MAX_SKILL)
 #define GET_HP( ab )        (80 + (ab) * 90/MAX_SKILL)
-#define GET_ACC( ab, sk )   ((1 - (float)(ab)/MAX_SKILL))
+#define GET_ACC( ab, sk )   ((1 - ((float)(ab)/MAX_SKILL + (float)(sk)/MAX_SKILL) / 2)) /**@todo Skill-influence needs some balancing. */
 #define GET_TU( ab )        (27 + (ab) * 20/MAX_SKILL)
 #define GET_MORALE( ab )        (100 + (ab) * 150/MAX_SKILL)
 
