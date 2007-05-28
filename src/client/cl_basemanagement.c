@@ -2771,7 +2771,7 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
  */
 extern qboolean B_Save (sizebuf_t* sb, void* data)
 {
-	int i, k, l;
+	int i, k, l, cnt;
 	base_t *b, *transferBase;
 	aircraft_t *aircraft;
 	building_t *building;
@@ -2825,25 +2825,26 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
 			MSG_WriteShort(sb, aircraft->time);
 			MSG_WriteShort(sb, aircraft->point);
 			/* save weapon slots */
-			MSG_WriteShort(sb, AII_GetSlotItems(AC_ITEM_WEAPON, aircraft));
+			cnt = AII_GetSlotItems(AC_ITEM_WEAPON, aircraft);
+			Com_Printf("store weapons: %i\n", cnt);
+			MSG_WriteByte(sb, cnt);
 			for (l = 0; l < MAX_AIRCRAFTSLOT; l++) {
 				if (aircraft->weapons[l].itemIdx >= 0) {
 					MSG_WriteString(sb, aircraftItems[aircraft->weapons[l].itemIdx].id);
-					if (aircraft->weapons[l].ammoIdx >= 0) {
-						MSG_WriteString(sb, aircraftItems[aircraft->weapons[l].ammoIdx].id);
-					} else {
-						MSG_WriteString(sb, "");
-					}
+					/* if there is no ammo MSG_WriteString will write an empty string */
+					MSG_WriteString(sb, aircraftItems[aircraft->weapons[l].ammoIdx].id);
 				}
 			}
-			/* save shield slots */
-			MSG_WriteShort(sb, AII_GetSlotItems(AC_ITEM_SHIELD, aircraft));
-			for (l = 0; l < MAX_AIRCRAFTSLOT; l++) {
-				if (aircraft->shield.itemIdx >= 0)
-					MSG_WriteString(sb, aircraftItems[aircraft->shield.itemIdx].id);
+			/* save shield slots - currently only one */
+			cnt = AII_GetSlotItems(AC_ITEM_SHIELD, aircraft);
+			MSG_WriteByte(sb, cnt);
+			if (aircraft->shield.itemIdx >= 0) {
+				MSG_WriteString(sb, aircraftItems[aircraft->shield.itemIdx].id);
 			}
 			/* save electronics slots */
-			MSG_WriteShort(sb, AII_GetSlotItems(AC_ITEM_ELECTRONICS, aircraft));
+			cnt = AII_GetSlotItems(AC_ITEM_ELECTRONICS, aircraft);
+			Com_Printf("store items: %i\n", cnt);
+			MSG_WriteByte(sb, cnt);
 			for (l = 0; l < MAX_AIRCRAFTSLOT; l++) {
 				if (aircraft->electronics[l].itemIdx >= 0)
 					MSG_WriteString(sb, aircraftItems[aircraft->electronics[l].itemIdx].id);
@@ -3016,13 +3017,14 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 			MSG_ReadPos(sb, aircraft->pos);
 			aircraft->time = MSG_ReadShort(sb);
 			aircraft->point = MSG_ReadShort(sb);
-			if (*(int*)data == 1) { /* >= 2.1.1 */
+			if (*(int*)data == 1) { /* == 2.1.1 */
 				MSG_ReadString(sb);     /* old weapon string */
 				MSG_ReadString(sb);     /* old shield string */
 				MSG_ReadString(sb);     /* old item string */
 			} else {
 				/* read weapon slot */
-				amount = MSG_ReadShort(sb);
+				amount = MSG_ReadByte(sb);
+				Com_Printf("weapons: %i\n", amount);
 				for (l = 0; l < amount; l++) {
 					tech = RS_GetTechByID(MSG_ReadString(sb));
 					if (tech)
@@ -3033,14 +3035,17 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 				/* check for shield slot */
 				/* there is only one shield - but who knows - breaking the savegames if this changes
 				 * isn't worth it */
-				amount = MSG_ReadShort(sb);
-				for (l = 0; l < amount; l++) {
+				amount = MSG_ReadByte(sb);
+				if (amount) {
+					Com_Printf("shields: %i\n", amount);
 					tech = RS_GetTechByID(MSG_ReadString(sb));
 					if (tech)
 						AII_AddItemToSlot(tech, &aircraft->shield);
 				}
+
 				/* read electronics slot */
-				amount = MSG_ReadShort(sb);
+				amount = MSG_ReadByte(sb);
+				Com_Printf("items: %i\n", amount);
 				for (l = 0; l < amount; l++) {
 					tech = RS_GetTechByID(MSG_ReadString(sb));
 					if (tech)
