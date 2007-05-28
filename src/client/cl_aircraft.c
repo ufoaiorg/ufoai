@@ -1807,11 +1807,11 @@ extern int AII_GetSlotItems (aircraftItemType_t type, aircraft_t *aircraft)
 		break;
 	case AC_ITEM_WEAPON:
 		slot = aircraft->weapons;
-		max = aircraft->maxWeapons;
+		max = MAX_AIRCRAFTSLOT;
 		break;
 	case AC_ITEM_ELECTRONICS:
 		slot = aircraft->electronics;
-		max = aircraft->maxElectronics;
+		max = MAX_AIRCRAFTSLOT;
 		break;
 	default:
 		Com_Printf("AIR_GetSlotItems: Unknow type of slot : %i", type);
