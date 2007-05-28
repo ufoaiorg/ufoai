@@ -2838,9 +2838,8 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
 			/* save shield slots - currently only one */
 			cnt = AII_GetSlotItems(AC_ITEM_SHIELD, aircraft);
 			MSG_WriteByte(sb, cnt);
-			if (aircraft->shield.itemIdx >= 0) {
+			if (cnt)
 				MSG_WriteString(sb, aircraftItems[aircraft->shield.itemIdx].id);
-			}
 			/* save electronics slots */
 			cnt = AII_GetSlotItems(AC_ITEM_ELECTRONICS, aircraft);
 			Com_Printf("store items: %i\n", cnt);
@@ -3018,9 +3017,16 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 			aircraft->time = MSG_ReadShort(sb);
 			aircraft->point = MSG_ReadShort(sb);
 			if (*(int*)data == 1) { /* == 2.1.1 */
-				MSG_ReadString(sb);     /* old weapon string */
-				MSG_ReadString(sb);     /* old shield string */
-				MSG_ReadString(sb);     /* old item string */
+				/* fix aircraft tech pointers */
+				tech = RS_GetTechByID(MSG_ReadString(sb));
+				if (tech)
+					aircraft->weapons[0].itemIdx = tech->idx;
+				tech = RS_GetTechByID(MSG_ReadString(sb));
+				if (tech)
+					aircraft->shield.itemIdx = tech->idx;
+				tech = RS_GetTechByID(MSG_ReadString(sb));
+				if (tech)
+					aircraft->electronics[0].itemIdx = tech->idx;
 			} else {
 				/* read weapon slot */
 				amount = MSG_ReadByte(sb);
@@ -3190,13 +3196,6 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 
 		/* some functions needs the baseCurrent pointer set */
 		baseCurrent = b;
-
-		/* fix aircraft tech pointers */
-		for (k = 0, aircraft = b->aircraft; k < b->numAircraftInBase; k++, aircraft++) {
-			aircraft->shield.itemIdx = (RS_GetTechByID(aircraft->shield_string))->idx;
-			aircraft->weapons[0].itemIdx = (RS_GetTechByID(aircraft->weapon_string))->idx;
-			aircraft->electronics[0].itemIdx = (RS_GetTechByID(aircraft->item_string))->idx;
-		}
 
 		/* initalize team to null */
 		for (k = 0; k < MAX_ACTIVETEAM; k++)
