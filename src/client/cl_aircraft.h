@@ -98,6 +98,7 @@ typedef struct aircraftItem_s {
 	float weaponSpeed;			/**< The speed of the projectile on geoscape */
 	float weaponDelay;			/**< The minimum delay between 2 shots */
 	int ammo;					/**< The total number of ammo that can be fired */
+	int installationTime;		/**< The time needed to install/remove the item on an aircraft */
 	int price;
 } aircraftItem_t;
 
@@ -239,6 +240,9 @@ void AIM_NextAircraft_f(void);
 void AIM_PrevAircraft_f(void);
 void AIR_AircraftReturnToBase_f(void);
 void AIM_AircraftEquipmenuInit_f(void);
+extern void AIM_AircraftEquipzoneSelect_f(void);
+extern void AIM_AircraftEquipAddItem_f(void);
+extern void AIM_AircraftEquipDeleteItem_f(void);
 void AIM_AircraftEquipmenuClick_f(void);
 char *AIR_AircraftStatusToName(aircraft_t *aircraft);
 qboolean AIR_IsAircraftInBase(aircraft_t *aircraft);

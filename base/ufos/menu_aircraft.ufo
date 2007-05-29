@@ -371,15 +371,27 @@ menu aircraft_equip
 		*airequip_button_weapons_str		color "1 1 1 0.6"
 		*airequip_button_shields_str		color "1 1 1 0.6"
 		*airequip_button_items_str			color "1 1 1 0.6"
+		*airequip_header3					invis true
 	}
-	confunc airequip_weapons		{ cmd "airequip_init 0;" airequip_reset *airequip_button_weapons_str	color "1 1 1 1" }
+	confunc airequip_weapons		{ cmd "airequip_init 0;" airequip_reset *airequip_button_weapons_str	color "1 1 1 1" *airequip_header3 invis false }
 	confunc airequip_shields	{ cmd "airequip_init 1;" airequip_reset *airequip_button_shields_str	color "1 1 1 1" }
 	confunc airequip_items		{ cmd "airequip_init 2;" airequip_reset *airequip_button_items_str color "1 1 1 1" }
 	
+	confunc airequip_zone_reset
+	{
+		*airequip_zone_select1 invis false
+		*airequip_zone_select2 invis false
+		*airequip_zone_select3 invis false
+	}
+	confunc	airequip_zone1	{ cmd "airequip_init;" cmd "airequip_zone_select 1;" airequip_zone_reset *airequip_zone_select1 invis true }
+	confunc	airequip_zone2	{ cmd "airequip_init;" cmd "airequip_zone_select 2;" airequip_zone_reset *airequip_zone_select2 invis true }
+	confunc	airequip_zone3	{ cmd "airequip_init 3;" cmd "airequip_zone_select 3;" airequip_zone_reset *airequip_zone_select3 invis true }
+	
+
 	model aircraftequip
 	{
 		md2		"*cvar mn_aircraft_model"
-		origin	"228 384 0"
+		origin	"228 324 0"
 		color	"0.5 0.5 0.5 1"
 		pos	"20 20"
 		size	"415 728"
@@ -388,24 +400,32 @@ menu aircraft_equip
 	string airequip_available
 	{
 		string	"_Available equipment:"
-		pos		"740 86"
+		pos		"880 441"
 		font	f_big
 		align	uc
 	}
 
 	text airequip_selected_description
 	{
-		pos	"474 474"
+		pos	"474 480"
 		size	"530 150"
 		format	"20 0"
 //		bgcolor	"1 1 1 0.5"
+	}
+
+	string airequip_description
+	{
+		string	"_Selected item:"
+		pos		"594 441"
+		font	f_big
+		align	uc
 	}
 
 	pic airequip_button_weapons
 	{
 		tooltip	"_Weapons"
 		mousefx	true
-		pos		"490 4"
+		pos		"10 700"
 		image	menu/button_blue
 		texl	"0 0"
 		texh	"128 52"
@@ -414,7 +434,7 @@ menu aircraft_equip
 	string airequip_button_weapons_str
 	{
 		string "_Weapons"
-		pos		"554 30"
+		pos		"74 726"
 		align	cc
 	}
 
@@ -422,7 +442,7 @@ menu aircraft_equip
 	{
 		tooltip	"_Armour"
 		mousefx	true
-		pos		"670 4"
+		pos		"160 700"
 		image	menu/button_blue
 		texl	"0 0"
 		texh	"128 52"
@@ -431,7 +451,7 @@ menu aircraft_equip
 	string airequip_button_shields_str
 	{
 		string "_Armour"
-		pos		"734 30"
+		pos		"224 726"
 		align	cc
 	}
 
@@ -439,7 +459,7 @@ menu aircraft_equip
 	{
 		tooltip	"_Items"
 		mousefx	true
-		pos		"850 4"
+		pos		"310 700"
 		image	menu/button_blue
 		texl	"0 0"
 		texh	"128 52"
@@ -448,13 +468,13 @@ menu aircraft_equip
 	string airequip_button_items_str
 	{
 		string "_Items"
-		pos		"914 30"
+		pos		"374 726"
 		align	cc
 	}
 
 	text airequip_list
 	{
-		pos	"476 134"
+		pos	"756 480"
 		size	"252 300"
 //		bgcolor	"1 1 1 0.5"
 		format	"20 0"
@@ -465,25 +485,181 @@ menu aircraft_equip
 		click
 	}
 
+	pic airequip_button_add1
+	{
+		tooltip	"_Add selected item"
+		mousefx	true
+		pos		"467 40"
+		image	menu/button_aircraft_menu
+		texl	"0 0"
+		texh	"36 32"
+		click { cmd "airequip_add_item 1;" }
+	}
+
+	pic airequip_button_remove1
+	{
+		tooltip	"_Remove item from slot"
+		mousefx	true
+		pos		"467 75"
+		image	menu/button_aircraft_menu
+		texl	"37 0"
+		texh	"73 32"
+		click { cmd "airequip_del_item 1;" }
+	}
+
+	pic airequip_button_add2
+	{
+		tooltip	"_Add selected item"
+		mousefx	true
+		pos		"467 174"
+		image	menu/button_aircraft_menu
+		texl	"0 0"
+		texh	"36 32"
+		click { cmd "airequip_add_item 2;" }
+	}
+
+	pic airequip_button_remove2
+	{
+		tooltip	"_Remove item from slot"
+		mousefx	true
+		pos		"467 209"
+		image	menu/button_aircraft_menu
+		texl	"37 0"
+		texh	"73 32"
+		click { cmd "airequip_del_item 2;" }
+	}
+
+	pic airequip_button_add3
+	{
+		tooltip	"_Add selected item"
+		mousefx	true
+		pos		"467 308"
+		image	menu/button_aircraft_menu
+		texl	"0 0"
+		texh	"36 32"
+		click { cmd "airequip_add_item 3;" }
+	}
+
+	pic airequip_button_remove3
+	{
+		tooltip	"_Remove item from slot"
+		mousefx	true
+		pos		"467 343"
+		image	menu/button_aircraft_menu
+		texl	"37 0"
+		texh	"73 32"
+		click { cmd "airequip_del_item 3;" }
+	}
+
+	pic airequip_zone_select1
+	{
+		invis false
+		tooltip	"_Select this zone"
+		mousefx	true
+		pos		"534 30"
+		image	menu/button_big_menu
+		texl	"0 0"
+		texh	"458 82"
+		click	{ airequip_zone1 }
+	}
+
+	text airequip_text_zone1
+	{
+		pos	"546 70"
+		size	"430 35"
+		format	"16 0"
+//		bgcolor	"1 1 1 0.5"
+		num 39
+	}
+
+	pic airequip_zone_select2
+	{
+		invis false
+		tooltip	"_Select this zone"
+		mousefx	true
+		pos		"534 164"
+		image	menu/button_big_menu
+		texl	"0 0"
+		texh	"458 82"
+		click	{ airequip_zone2 }
+	}
+
+	text airequip_text_zone2
+	{
+		pos	"546 204"
+		size	"430 35"
+		format	"16 0"
+//		bgcolor	"1 1 1 0.5"
+		num 40
+	}
+
+	pic airequip_zone_select3
+	{
+		invis false
+		tooltip	"_Select this zone"
+		mousefx	true
+		pos		"534 300"
+		image	menu/button_big_menu
+		texl	"0 0"
+		texh	"458 82"
+		click	{ airequip_zone3 }
+	}
+
+	text airequip_text_zone3
+	{
+		pos	"546 339"
+		size	"430 35"
+		format	"16 0"
+//		bgcolor	"1 1 1 0.5"
+		num 41
+	}
+
+	string airequip_header1
+	{
+		string	"_Current item in slot"
+		pos		"649 50"
+		font	f_small
+		color	"0 .78 0 1"
+		align	cc
+	}
+
+	string airequip_header2
+	{
+		string	"_Item to install after removal"
+		pos		"649 185"
+		font	f_small
+		color	"0 .78 0 1"
+		align	cc
+	}
+
+	string airequip_header3
+	{
+		string	"_Ammo fitting this weapon"
+		pos		"649 320"
+		font	f_small
+		color	"0 .78 0 1"
+		align	cc
+	}
+
 	pic airequip_button_leave
 	{
 		tooltip	"_Done"
 		image	hud/buttons2
 		mousefx	true
-		pos		"940 600"
+		pos		"940 720"
 		texl	"0 0"
 		texh	"64 37"
 		click	{ cmd "mn_pop"  }
 	}
 
-	text aircraft_description
-	{
-		pos	"474 665"
-		size	"530 85"
-		format	"16 0"
+//	text aircraft_description
+//	{
+//		pos	"474 665"
+//		size	"530 85"
+//		format	"16 0"
 //		bgcolor	"1 1 1 0.5"
-		num 11
-	}
+//		num 11
+//	}
 
 	// ==================
 	// init function
@@ -492,5 +668,6 @@ menu aircraft_equip
 	func init
 	{
 		airequip_weapons		
+		airequip_zone1
 	}
 }
