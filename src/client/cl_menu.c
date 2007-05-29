@@ -899,12 +899,12 @@ static qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 		return qfalse;
 
 	if (!node->size[0] || !node->size[1]) {
-		if (node->type == MN_PIC && node->data[0]) {
+		if (node->type == MN_PIC && node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]) {
 			if (node->texh[0] && node->texh[1]) {
 				sx = node->texh[0] - node->texl[0];
 				sy = node->texh[1] - node->texl[1];
 			} else
-				re.DrawGetPicSize(&sx, &sy, node->data[0]);
+				re.DrawGetPicSize(&sx, &sy, node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]);
 		} else
 			return qfalse;
 	} else {
@@ -1084,13 +1084,14 @@ static void MN_BarClick (menu_t * menu, menuNode_t * node, int x)
 	if (!node->mousefx)
 		return;
 
-	Q_strncpyz(var, node->data[2], MAX_VAR);
+	Q_strncpyz(var, node->data[2], sizeof(var));
 	/* no cvar? */
 	if (Q_strncmp(var, "*cvar", 5))
 		return;
 
 	/* normalize it */
 	frac = (float) (x - node->pos[0]) / node->size[0];
+	/* in the case of MN_BAR the first three data array values are float values - see menuDataValues_t */
 	min = MN_GetReferenceFloat(menu, node->data[1]);
 	Cvar_SetValue(&var[6], min + frac * (MN_GetReferenceFloat(menu, node->data[0]) - min));
 }
@@ -1784,16 +1785,17 @@ static void MN_Tooltip (menu_t *menu, menuNode_t *node, int x, int y)
 	int width = 0;
 
 	/* tooltips
-	   data[5] is a char pointer to the tooltip text
+	   data[MN_DATA_NODE_TOOLTIP] is a char pointer to the tooltip text
 	   see value_t nps for more info */
 
 	/* maybe not tooltip but a key entity? */
-	if (node->data[5]) {
-		tooltip = (char *) node->data[5];
+	if (node->data[MN_DATA_NODE_TOOLTIP]) {
+		tooltip = (char *) node->data[MN_DATA_NODE_TOOLTIP];
+		assert(tooltip);
 		if (*tooltip == '_')
 			tooltip++;
 
-		width = MN_DrawTooltip("f_small", _(MN_GetReferenceString(menu, node->data[5])), x, y, width);
+		width = MN_DrawTooltip("f_small", _(MN_GetReferenceString(menu, node->data[MN_DATA_NODE_TOOLTIP])), x, y, width);
 		y += 20;
 	}
 	if (node->key[0]) {
@@ -1819,10 +1821,10 @@ extern void MN_PrecacheMenus (void)
 	for (i = 0; i < numMenus; i++) {
 		menu = &menus[i];
 		for (node = menu->firstNode; node; node = node->next) {
-			if (!node->invis && node->data[0] && node->type == MN_PIC) {
-				if (*((char*)node->data[0]) == '*') /* don't load references */
+			if (!node->invis && node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL] && node->type == MN_PIC) {
+				if (*((char*)node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]) == '*') /* don't load references */
 					continue;
-				re.RegisterPic(node->data[0]);
+				re.RegisterPic(node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]);
 			}
 		}
 		cls.loadingPercent += 35.0f / numMenus;
@@ -1856,11 +1858,11 @@ static menuModel_t *MN_GetMenuModel (const char *menuModel)
  */
 const char *MN_GetFont (const menu_t *m, const menuNode_t *const n)
 {
-	if (!n || n->data[1]) {
+	if (!n || n->data[MN_DATA_ANIM_OR_FONT]) {
 		if (!m) {
 			m = menuStack[menuStackPos-1];
 		}
-		return MN_GetReferenceString(m, n->data[1]);
+		return MN_GetReferenceString(m, n->data[MN_DATA_ANIM_OR_FONT]);
 	}
 	return "f_small";
 }
@@ -1918,7 +1920,7 @@ void MN_DrawMenus (void)
 			}
 		}
 		for (node = menu->firstNode; node; node = node->next) {
-			if (!node->invis && ((node->data[0] /* 0 are images, models and strings e.g. */
+			if (!node->invis && ((node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL] /* 0 are images, models and strings e.g. */
 					|| node->type == MN_CONTAINER || node->type == MN_TEXT || node->type == MN_BASEMAP || node->type == MN_MAP
 					|| node->type == MN_3DMAP) || (node->type == MN_ZONE && node->bgcolor[3]))) {
 				/* if construct */
@@ -2019,7 +2021,7 @@ void MN_DrawMenus (void)
 				/* get the reference */
 				if (node->type != MN_BAR && node->type != MN_CONTAINER && node->type != MN_BASEMAP && node->type != MN_TEXT && node->type != MN_MAP
 					&& node->type != MN_3DMAP && node->type != MN_ZONE) {
-					ref = MN_GetReferenceString(menu, node->data[0]);
+					ref = MN_GetReferenceString(menu, node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]);
 					if (!ref) {
 						/* bad reference */
 						node->invis = qtrue;
@@ -2149,8 +2151,8 @@ void MN_DrawMenus (void)
 							cur = end;
 						} while (cur);
 					} else if (node->num == TEXT_MESSAGESYSTEM) {
-						if (node->data[1])
-							font = MN_GetReferenceString(menu, node->data[1]);
+						if (node->data[MN_DATA_ANIM_OR_FONT])
+							font = MN_GetReferenceString(menu, node->data[MN_DATA_ANIM_OR_FONT]);
 						else
 							font = "f_small";
 
@@ -2210,6 +2212,7 @@ void MN_DrawMenus (void)
 					{
 						float fac, width;
 
+						/* in the case of MN_BAR the first three data array values are float values - see menuDataValues_t */
 						fac = node->size[0] / (MN_GetReferenceFloat(menu, node->data[0]) - MN_GetReferenceFloat(menu, node->data[1]));
 						width = (MN_GetReferenceFloat(menu, node->data[2]) - MN_GetReferenceFloat(menu, node->data[1])) * fac;
 						re.DrawFill(node->pos[0], node->pos[1], width, node->size[1], node->align, mouseOver ? color : node->color);
@@ -2373,8 +2376,8 @@ void MN_DrawMenus (void)
 								VectorCopy(node->angles, mi.angles);
 
 								/* get the animation given by menu node properties */
-								if (node->data[1] && *(char *) node->data[1])
-									ref = MN_GetReferenceString(menu, node->data[1]);
+								if (node->data[MN_DATA_ANIM_OR_FONT] && *(char *) node->data[MN_DATA_ANIM_OR_FONT])
+									ref = MN_GetReferenceString(menu, node->data[MN_DATA_ANIM_OR_FONT]);
 								/* otherwise use the standard animation from modelmenu defintion */
 								else
 									ref = menuModel->anim;
@@ -2431,21 +2434,21 @@ void MN_DrawMenus (void)
 							menuModel = menuModel->next;
 						} else {
 							/* get skin */
-							if (node->data[3] && *(char *) node->data[3])
-								mi.skin = atoi(MN_GetReferenceString(menu, node->data[3]));
+							if (node->data[MN_DATA_MODEL_SKIN] && *(char *) node->data[MN_DATA_MODEL_SKIN])
+								mi.skin = atoi(MN_GetReferenceString(menu, node->data[MN_DATA_MODEL_SKIN]));
 							else
 								mi.skin = 0;
 
 							/* do animations */
-							if (node->data[1] && *(char *) node->data[1]) {
-								ref = MN_GetReferenceString(menu, node->data[1]);
+							if (node->data[MN_DATA_ANIM_OR_FONT] && *(char *) node->data[MN_DATA_ANIM_OR_FONT]) {
+								ref = MN_GetReferenceString(menu, node->data[MN_DATA_ANIM_OR_FONT]);
 								/* needed if model changed - and that model doesn't have the old animstate */
-								if (!node->data[2] && Q_strncmp(oldSource, source, MAX_VAR)) {
+								if (!node->data[MN_DATA_MODEL_TAG] && Q_strncmp(oldSource, source, MAX_VAR)) {
 									Q_strncpyz(oldSource, source, MAX_VAR);
-									oldAnimState = node->data[4];
-									node->data[4] = NULL;
+									oldAnimState = node->data[MN_DATA_MODEL_ANIMATION_STATE];
+									node->data[MN_DATA_MODEL_ANIMATION_STATE] = NULL;
 								}
-								if (!node->data[4]) {
+								if (!node->data[MN_DATA_MODEL_ANIMATION_STATE]) {
 									/* model has changed but mem is already reserved in curadata */
 									if (!oldAnimState) {
 										/* new anim state */
@@ -2457,10 +2460,10 @@ void MN_DrawMenus (void)
 									}
 									memset(as, 0, sizeof(animState_t));
 									re.AnimChange(as, mi.model, ref);
-									node->data[4] = as;
+									node->data[MN_DATA_MODEL_ANIMATION_STATE] = as;
 								} else {
 									/* change anim if needed */
-									as = node->data[4];
+									as = node->data[MN_DATA_MODEL_ANIMATION_STATE];
 									anim = re.AnimGetName(as, mi.model);
 									if (anim && Q_strncmp(anim, ref, MAX_VAR))
 										re.AnimChange(as, mi.model, ref);
@@ -2473,12 +2476,12 @@ void MN_DrawMenus (void)
 							}
 
 							/* place on tag */
-							if (node->data[2]) {
+							if (node->data[MN_DATA_MODEL_TAG]) {
 								menuNode_t *search;
 								char parent[MAX_VAR];
 								char *tag;
 
-								Q_strncpyz(parent, MN_GetReferenceString(menu, node->data[2]), MAX_VAR);
+								Q_strncpyz(parent, MN_GetReferenceString(menu, node->data[MN_DATA_MODEL_TAG]), MAX_VAR);
 								tag = parent;
 								/* tag "menuNodeName modelTag" */
 								while (*tag && *tag != ' ')
@@ -2490,7 +2493,7 @@ void MN_DrawMenus (void)
 									if (search->type == MN_MODEL && !Q_strncmp(search->name, parent, MAX_VAR)) {
 										char model[MAX_VAR];
 
-										Q_strncpyz(model, MN_GetReferenceString(menu, search->data[0]), MAX_VAR);
+										Q_strncpyz(model, MN_GetReferenceString(menu, search->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]), MAX_VAR);
 
 										pmi.model = re.RegisterModel(model);
 										if (!pmi.model)
@@ -2509,7 +2512,7 @@ void MN_DrawMenus (void)
 											mi.center = node->size;
 										}
 
-										as = search->data[4];
+										as = search->data[MN_DATA_MODEL_ANIMATION_STATE];
 										pmi.frame = as->frame;
 										pmi.oldframe = as->oldframe;
 										pmi.backlerp = as->backlerp;

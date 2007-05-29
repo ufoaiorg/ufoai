@@ -74,6 +74,27 @@ typedef struct excludeRect_s {
 	vec2_t pos, size;
 } excludeRect_t;
 
+/**
+ * @brief possible values for the data array of a menu node
+ * @note the positions 0, 1 and 2 are also used for MN_BAR values
+ * like min, max and current
+ */
+typedef enum {
+	MN_DATA_STRING_OR_IMAGE_OR_MODEL,	/**< First entry in data array can
+						* be an image, an model or an string, this depends
+						* on the node type
+						*/
+	MN_DATA_ANIM_OR_FONT,	/** This is the font string or the anim string
+						* from the *.anm files for the model */
+	MN_DATA_MODEL_TAG,	/**< the tag to place the model onto */
+	MN_DATA_MODEL_SKIN,	/**< the skin of the model */
+	MN_DATA_MODEL_ANIMATION_STATE,	/**< holds then anim state for the current model
+						* model - also see MN_DATA_ANIM_OR_FONT */
+	MN_DATA_NODE_TOOLTIP,	/**< holds the tooltip for the menu */
+
+	MN_DATA_MAX
+} menuDataValues_t;
+
 /** @brief menu node */
 typedef struct menuNode_s {
 	void *data[6];				/**< needs to be first */
