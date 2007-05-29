@@ -25,36 +25,36 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "gl_local.h"
 
-static float diamond[4][4] = {
+static const float diamond[4][4] = {
 	{0.3f, 0.4f, 0.4f, 0.3f},
 	{0.4f, 0.9f, 0.9f, 0.4f},
 	{0.4f, 0.9f, 0.9f, 0.4f},
 	{0.3f, 0.4f, 0.4f, 0.3f}
 };
 
-int bloom_size;
+static int bloom_size = 0;
 
-cvar_t *gl_bloom;
-cvar_t *gl_bloomalpha;
-cvar_t *gl_bloomintensity;
-cvar_t *gl_bloomsize;
+static cvar_t *gl_bloom;
+static cvar_t *gl_bloomalpha;
+static cvar_t *gl_bloomintensity;
+static cvar_t *gl_bloomsize;
 
-image_t	*gl_bloomscreentexture;
-image_t	*gl_bloomeffecttexture;
-image_t	*gl_bloomoriginaltexture;
-image_t	*gl_bloomdowntexture;
+static image_t	*gl_bloomscreentexture;
+static image_t	*gl_bloomeffecttexture;
+static image_t	*gl_bloomoriginaltexture;
+static image_t	*gl_bloomdowntexture;
 
-int original_tex_size;
+static int original_tex_size;
 
 /* dimensions of the screen data */
-int screen_tex_width, screen_tex_height;
+static int screen_tex_width, screen_tex_height;
 /* texture coordinates of screen data */
-float screen_texc_width, screen_texc_height;
+static float screen_texc_width, screen_texc_height;
 
 /* dimensions of the downsampled data */
-int	sample_tex_width, sample_tex_height;
+static int	sample_tex_width, sample_tex_height;
 /* texture coordinates of downsampled data */
-float sample_texc_width, sample_texc_height;
+static float sample_texc_width, sample_texc_height;
 
 /*this macro is in sample size workspace coordinates */
 #define GL_Bloom_SamplePass(x, y)									\
@@ -84,8 +84,9 @@ float sample_texc_width, sample_texc_height;
 
 /**
  * @brief
+ * @sa GL_Bloom_InitTextures
  */
-void GL_Bloom_InitOriginalTexture (int width, int height)
+static void GL_Bloom_InitOriginalTexture (int width, int height)
 {
 	byte *data;
 
@@ -103,8 +104,9 @@ void GL_Bloom_InitOriginalTexture (int width, int height)
 
 /**
  * @brief
+ * @sa GL_Bloom_InitTextures
  */
-void GL_Bloom_InitEffectTexture (void)
+static void GL_Bloom_InitEffectTexture (void)
 {
 	byte *data;
 	float b;
@@ -140,8 +142,10 @@ void GL_Bloom_InitEffectTexture (void)
 
 /**
  * @brief
+ * @sa GL_Bloom_InitEffectTexture
+ * @sa GL_Bloom_InitOriginalTexture
  */
-void GL_Bloom_InitTextures (void)
+static void GL_Bloom_InitTextures (void)
 {
 	byte *data;
 	int size;
@@ -175,8 +179,9 @@ void GL_Bloom_InitTextures (void)
 
 /**
  * @brief
+ * @sa GL_Bloom_InitTextures
  */
-void GL_InitBloom (void)
+extern void GL_InitBloom (void)
 {
 	gl_bloom = ri.Cvar_Get( "gl_bloom", "0", CVAR_ARCHIVE, "Activate light blooms");
 	gl_bloomalpha = ri.Cvar_Get("gl_bloomalpha", "0.4", CVAR_ARCHIVE, NULL);
@@ -195,14 +200,14 @@ void GL_InitBloom (void)
 /**
  * @brief
  */
-void GL_Bloom_DrawEffect (void)
+static void GL_Bloom_DrawEffect (void)
 {
 	float a;
 
 	a = gl_bloomalpha->value;
 
 	GL_Bind(gl_bloomeffecttexture->texnum);
-	qglEnable(GL_BLEND);
+	GLSTATE_ENABLE_BLEND
 	qglBlendFunc(GL_ONE, GL_ONE);
 	qglColor4f(a, a, a, 1.0f);
 	GL_TexEnv(GL_MODULATE);
@@ -218,14 +223,14 @@ void GL_Bloom_DrawEffect (void)
 	qglVertex2f(vid.width, 0);
 	qglEnd();
 
-	qglDisable(GL_BLEND);
+	GLSTATE_DISABLE_BLEND
 }
 
 
 /**
  * @brief
  */
-void GL_Bloom_GenerateBlooms (void)
+static void GL_Bloom_GenerateBlooms (void)
 {
 	int i, j;
 	float intensity;
@@ -242,7 +247,7 @@ void GL_Bloom_GenerateBlooms (void)
 	GL_Bind(gl_bloomeffecttexture->texnum);
 	qglCopyTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 0, 0, sample_tex_width, sample_tex_height);
 
-	qglEnable(GL_BLEND);
+	GLSTATE_ENABLE_BLEND
 
 	/* one darkening pass */
 	qglBlendFunc(GL_DST_COLOR, GL_ZERO);
@@ -276,8 +281,9 @@ void GL_Bloom_GenerateBlooms (void)
 
 /**
  * @brief
+ * @sa GL_BloomBlend
  */
-void GL_Bloom_DownsampleView (void)
+static void GL_Bloom_DownsampleView (void)
 {
 	int midsample_tex_width = bloom_size * sample_texc_width;
 	int midsample_tex_height = bloom_size * sample_texc_height;
@@ -299,7 +305,7 @@ void GL_Bloom_DownsampleView (void)
 			sample_tex_height, sample_texc_width, sample_texc_height);
 
 	/* blend screen texture into bloom space for final rendering */
-	qglEnable(GL_BLEND);
+	GLSTATE_ENABLE_BLEND
 	qglBlendFunc(GL_ONE, GL_ONE);
 
 	GL_Bind(gl_bloomscreentexture->texnum);
@@ -307,7 +313,7 @@ void GL_Bloom_DownsampleView (void)
 	GL_Bloom_Quad(0, vid.height - sample_tex_height, sample_tex_width, sample_tex_height,
 			screen_texc_width, screen_texc_height);
 
-	qglDisable(GL_BLEND);
+	GLSTATE_DISABLE_BLEND
 }
 
 
@@ -315,7 +321,7 @@ extern void GL_SetupGL(void);
 /**
  * @brief
  */
-void GL_BloomBlend (void)
+extern void GL_BloomBlend (void)
 {
 	/* if params have changed, update texture sizes */
 	if (gl_bloom->modified || gl_bloomsize->modified)
@@ -333,7 +339,7 @@ void GL_BloomBlend (void)
 	qglViewport(0, 0, vid.width, vid.height);
 	qglDisable(GL_DEPTH_TEST);
 	qglDisable(GL_CULL_FACE);
-	qglDisable(GL_BLEND);
+	GLSTATE_DISABLE_BLEND
 	qglEnable(GL_TEXTURE_2D);
 
 	qglMatrixMode(GL_PROJECTION);
@@ -362,7 +368,7 @@ void GL_BloomBlend (void)
 	GL_Bloom_GenerateBlooms();
 
 	/* restore the screen */
-	qglDisable(GL_BLEND);
+	GLSTATE_DISABLE_BLEND
 	GL_Bind(gl_bloomoriginaltexture->texnum);
 	qglColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 	GL_Bloom_Quad(0, vid.height - (original_tex_size * sample_texc_height),
