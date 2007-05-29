@@ -2990,6 +2990,35 @@ TARGETING GRAPHICS
 ==============================================================
 */
 
+static const float lookup[]= {
+	0.0f,0.1125f,0.2227f,0.3286f,0.4284f,0.5205f,0.6039f,
+	0.6778f,0.7421f,0.7969f,0.8427f,0.8802f,0.9103f,0.9340f,
+	0.9523f,0.9661f,0.9763f,0.9838f,0.9891f,0.9928f,0.9953f};
+
+static const float lookupdiff[]= {
+	0.1125f,0.1102f,0.1059f,0.0998f,0.0921f,0.0834f,0.0739f,
+	0.0643f,0.0548f,0.0458f,0.0375f,0.0301f,0.0237f,0.0183f,
+	0.0138f,0.0102f,0.0075f,0.0053f,0.0037f,0.0025f };
+
+/**
+ * @brief calculate approximate erf, the error function
+ * uses lookup table.
+ * lookup table erf calc. mostly good to around 0.001.
+ * goes 0.007 high just above 1.9, when it starts returning 1
+ * easily good enough for the job.
+ */
+static float lookup_erf (float z)
+{
+	float ifloat;
+	int iint;
+
+	if (z > 1.9f)
+		return 1.0f;
+	ifloat = floor(z * 10.0f);
+	iint = (int)ifloat;
+	return lookup[iint] + (z - ifloat / 10.0f) * lookupdiff[iint] / 0.1f;
+}
+
 /**
  * @brief Calculates chance to hit.
  * @param[in] toPos
@@ -2997,7 +3026,8 @@ TARGETING GRAPHICS
 static float CL_TargetingToHit (pos3_t toPos)
 {
 	vec3_t shooter, target;
-	float distance, pseudosin, width, height, acc, perpX, perpY, hitchance;
+	float distance, pseudosin, width, height, acc, perpX, perpY, hitchance,
+		stdevupdown, stdevleftright, crouch, commonfactor;
 	int distx, disty, i, n;
 	le_t *le;
 
@@ -3029,26 +3059,22 @@ static float CL_TargetingToHit (pos3_t toPos)
 	width = 2 * PLAYER_WIDTH * pseudosin;
 	height = ((le->state & STATE_CROUCHED) ? PLAYER_CROUCH : PLAYER_STAND) - PLAYER_MIN;
 
-	acc = torad
-		* GET_ACC(selChr->skills[ABILITY_ACCURACY],
-			selFD->weaponSkill
-			? selChr->skills[selFD->weaponSkill]
-			: 0);
+	acc = GET_ACC(selChr->skills[ABILITY_ACCURACY],
+			selFD->weaponSkill ? selChr->skills[selFD->weaponSkill] : 0);
 
-	if ((selActor->state & STATE_CROUCHED) && selFD->crouch)
-		acc *= selFD->crouch;
+	crouch = ((selActor->state & STATE_CROUCHED) && selFD->crouch) ? selFD->crouch : 1;
 
-	hitchance = width / (2 * distance * tan(acc * (1+selFD->modif) + selFD->spread[0]));
-	if (hitchance > 1)
-		hitchance = 1;
-	if (height / (2 * distance * tan(acc * selFD->spread[1])) < 1)
-		hitchance *= height / (2 * distance * tan(acc * (1+selFD->modif) + selFD->spread[1]));
+	commonfactor = 0.5f * crouch * torad * distance;
+	stdevupdown = (selFD->spread[0] + acc * (1 + selFD->modif)) * commonfactor;
+	stdevleftright = (selFD->spread[1] + acc * (1 + selFD->modif)) * commonfactor;
+
+	hitchance = lookup_erf(height * 1.4142f / stdevupdown) * lookup_erf(width * 1.4142f / stdevleftright);
 
 	/* Calculate cover: */
 	n = 0;
 	height = height / 18;
 	width = width / 18;
-	target[2] -= UNIT_HEIGHT/2;
+	target[2] -= UNIT_HEIGHT / 2;
 	target[2] += height * 9;
 	perpX = disty / distance * width;
 	perpY = 0 - distx / distance * width;
