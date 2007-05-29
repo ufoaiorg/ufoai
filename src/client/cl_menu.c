@@ -165,18 +165,18 @@ static const value_t nps[] = {
 
 /** @brief valid properties for a menu model definition */
 static const value_t menuModelValues[] = {
-	{"model", V_STRING, offsetof(menuModel_t, model), 0},
+	{"model", V_CLIENT_HUNK_STRING, offsetof(menuModel_t, model), 0},
 	{"need", V_NULL, 0, 0},
 	{"menuscale", V_NULL, 0, 0},
-	{"anim", V_STRING, offsetof(menuModel_t, anim), 0},
+	{"anim", V_CLIENT_HUNK_STRING, offsetof(menuModel_t, anim), 0},
 	{"skin", V_INT, offsetof(menuModel_t, skin), sizeof(int)},
 	{"origin", V_VECTOR, offsetof(menuModel_t, origin), sizeof(vec3_t)},
 	{"center", V_VECTOR, offsetof(menuModel_t, center), sizeof(vec3_t)},
 	{"scale", V_VECTOR, offsetof(menuModel_t, scale), sizeof(vec3_t)},
 	{"angles", V_VECTOR, offsetof(menuModel_t, angles), sizeof(vec3_t)},
 	{"color", V_COLOR, offsetof(menuModel_t, color), sizeof(vec4_t)},
-	{"tag", V_STRING, offsetof(menuModel_t, tag), 0},
-	{"parent", V_STRING, offsetof(menuModel_t, parent), 0},
+	{"tag", V_CLIENT_HUNK_STRING, offsetof(menuModel_t, tag), 0},
+	{"parent", V_CLIENT_HUNK_STRING, offsetof(menuModel_t, parent), 0},
 	{NULL, V_NULL, 0, 0},
 };
 
@@ -3912,7 +3912,7 @@ void MN_ParseMenuModel (const char *name, char **text)
 							return;
 						if (*token == '}')
 							break;
-						Q_strncpyz(menuModel->menuScale[menuModel->menuScaleCnt], token, sizeof(menuModel->menuScale[menuModel->menuScaleCnt]));
+						CL_ClientHunkStoreString(token, &menuModel->menuScale[menuModel->menuScaleCnt]);
 						token = COM_EParse(text, errhead, name);
 						if (!*text)
 							return;
@@ -3928,7 +3928,13 @@ void MN_ParseMenuModel (const char *name, char **text)
 					if (!*text)
 						return;
 
-					Com_ParseValue(menuModel, token, v->type, v->ofs, v->size);
+					switch (v->type) {
+					case V_CLIENT_HUNK_STRING:
+						CL_ClientHunkStoreString(token, (char**) ((void*)menuModel + (int)v->ofs));
+						break;
+					default:
+						Com_ParseValue(menuModel, token, v->type, v->ofs, v->size);
+					}
 				}
 				break;
 			}

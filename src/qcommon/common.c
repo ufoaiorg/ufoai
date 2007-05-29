@@ -941,6 +941,7 @@ extern void Qcommon_Init (int argc, char **argv)
 #endif /* HAVE_GETTEXT */
 #endif /* DEDICATED_ONLY */
 
+	/* e.g. init the client hunk that is used in script parsing */
 	CL_Init();
 
 	Com_ParseScripts();

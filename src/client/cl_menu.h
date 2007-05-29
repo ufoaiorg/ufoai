@@ -49,12 +49,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 typedef struct menuModel_s {
 	char *id;
 	char *need;
-	char anim[MAX_VAR];
-	char parent[MAX_VAR];
-	char tag[MAX_VAR];
-	int skin;
-	char model[MAX_QPATH];
-	char menuScale[MAX_MENUMODELS_SCALEMENUS][MAX_VAR];	/**< the menu id to scale this model for */
+	char *anim;	/**< animation to run for this model */
+	char *parent;	/**< parent model id */
+	char *tag;	/**< the tag the model should placed onto */
+	int skin;		/**< skin number to use - default 0 (first skin) */
+	char *model;
+	char *menuScale[MAX_MENUMODELS_SCALEMENUS];	/**< the menu id to scale this model for */
 	void *menuScaleMenusPtr[MAX_MENUMODELS_SCALEMENUS];	/**< linked after parsing for faster access */
 	vec3_t menuScaleValue[MAX_MENUMODELS_SCALEMENUS];	/**< the scale values for the specific menu */
 	int menuScaleCnt;			/**< parsed menuscale menus */
