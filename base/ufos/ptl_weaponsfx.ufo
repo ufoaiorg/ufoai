@@ -1167,3 +1167,102 @@ particle plasblade
 		angles "90 0 0"
 	}
 }
+
+// FIXME: New particle name
+particle fwl
+{
+	init
+	{
+		model  weapons/rpg/rocket
+		color  ".5 .5 .5 1"
+		tps    80.0
+	}
+	think
+	{
+		spawn Firez
+		spawn Smokez
+		spawn Firez
+		spawn Smokez
+		spawn Firez
+		spawn Firez
+	}
+}
+
+// FIXME: New particle name
+particle Smokez
+{
+	init
+	{
+		image  sfx/plasmaball2
+		blend  add
+		style  facing
+		tfade  saw
+		tps  50
+		color  ".5 .5 .5 1"
+		v      "0 0 20"
+	}
+	run
+	{
+		push   pos "15 15"
+		mul    *t
+		add    pos "10 10"
+		pop    *size
+		push   *color
+		mul    float .5
+		pop    *color
+
+		crand  vector "1 1 1"
+		add    *s
+		pop    *s
+	}
+	think { kill }
+}
+
+// FIXME: New particle name
+particle Firez
+{
+	init
+	{
+		image  sfx/plasmaball2
+		blend  add
+		style  facing
+		tfade  out
+		tps  18
+		color  ".5 .5 .5 1"
+
+		push   *v
+		mul    float 0.8
+		pop   *v
+	}
+	run
+	{
+		push   pos "10 10"
+		mul    *t
+		add    pos "5 5"
+		pop    *size
+		push   *color
+		mul    float .5
+		pop    *color
+
+		crand  vector "0.5 0.5 0.5"
+		add    *s
+		pop    *s
+	}
+	think { kill }
+}
+
+// FIXME: New particle name
+particle incz
+{
+	init
+	{
+		model  weapons/rpg/rocket
+		color  ".5 .5 .5 1"
+		tps    80.0
+	}
+	think
+	{
+		spawn Smokez
+		spawn Firez
+	}
+}
