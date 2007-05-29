@@ -221,7 +221,7 @@ typedef struct client_static_s {
 	/** needs to be here, because server can be shutdown, before we see the ending screen */
 	int team;
 
-	int loadingPercent;
+	float loadingPercent;
 	qboolean loadingMessage;
 	char loadingMessages[96];
 

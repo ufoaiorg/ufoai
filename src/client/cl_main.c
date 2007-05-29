@@ -1702,9 +1702,12 @@ void Com_PrecacheCharacterModels(void);
 static void CL_PrecacheModels (void)
 {
 	int i;
+	float loading;
 
-	MN_PrecacheModels();
-	Com_PrecacheCharacterModels();
+	MN_PrecacheModels(); /* 20% */
+	Com_PrecacheCharacterModels(); /* 20% */
+
+	loading = cls.loadingPercent;
 
 	for (i = 0; i < csi.numODs; i++) {
 		if (*csi.ods[i].model)
@@ -1713,6 +1716,9 @@ static void CL_PrecacheModels (void)
 		cls.loadingPercent += 20.0f / csi.numODs;
 		SCR_DrawPrecacheScreen(qtrue);
 	}
+	/* ensure 20% */
+	cls.loadingPercent = loading + 20.0f;
+	SCR_DrawPrecacheScreen(qtrue);
 }
 
 /**
@@ -1741,11 +1747,10 @@ extern void CL_InitAfter (void)
 	SCR_DrawPrecacheScreen(qtrue);
 
 	/* preload all models for faster access */
-	if (cl_precache->value) {
-		CL_PrecacheModels();
+	if (cl_precache->integer) {
+		CL_PrecacheModels(); /* 60% */
 		/* loading percent is 65 now */
-
-		MN_PrecacheMenus();
+		MN_PrecacheMenus(); /* 35% */
 	}
 
 	cls.loadingPercent = 100.0f;

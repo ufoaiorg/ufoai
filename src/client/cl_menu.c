@@ -3819,6 +3819,7 @@ extern void MN_PrecacheModels (void)
 {
 	int i;
 	menuModel_t *menuModel;
+	float loading = cls.loadingPercent;
 
 	for (i = 0; i < numMenuModels; i++) {
 		menuModel = &menuModels[i];
@@ -3831,6 +3832,9 @@ extern void MN_PrecacheModels (void)
 		cls.loadingPercent += 20.0f / numMenuModels;
 		SCR_DrawPrecacheScreen(qtrue);
 	}
+	/* ensure 20% */
+	cls.loadingPercent = loading + 20.0f;
+	SCR_DrawPrecacheScreen(qtrue);
 }
 
 /**
