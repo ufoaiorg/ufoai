@@ -612,5 +612,10 @@ void Draw_3DMapMarkers(vec3_t angles, float zoom, vec3_t position, const char *m
 
 /* end of 3d globe */
 
+extern qboolean update_viewdef;
+
+void GL_InitBloom(void);
+void GL_BloomBlend(void);
+
 
 #endif                          /* GL_LOCAL_H */

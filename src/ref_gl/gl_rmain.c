@@ -657,7 +657,7 @@ static void R_PolyBlend(void)
 /**
  * @brief
  */
-static int SignbitsForPlane(cplane_t * out)
+static int SignbitsForPlane (cplane_t * out)
 {
 	int bits, j;
 
@@ -673,7 +673,7 @@ static int SignbitsForPlane(cplane_t * out)
 /**
  * @brief
  */
-static void R_SetFrustum(void)
+static void R_SetFrustum (void)
 {
 	int i;
 
@@ -831,7 +831,7 @@ static void R_SetupGL (void)
 /**
  * @brief
  */
-static void R_Clear(void)
+static void R_Clear (void)
 {
 	if (gl_ztrick->value) {
 		static int trickframe;
@@ -943,6 +943,9 @@ static void R_RenderView (refdef_t * fd)
 
 	R_Flash();
 
+	/* apply 2d bloom effect */
+	GL_BloomBlend();
+
 	if (r_speeds->value) {
 		ri.Con_Printf(PRINT_ALL, "%4i wpoly %4i epoly %i tex %i lmaps\n", c_brush_polys, c_alias_polys, c_visible_textures, c_visible_lightmaps);
 	}
@@ -979,11 +982,10 @@ static void R_SetGL2D (void)
 	qglOrtho(0, vid.width, vid.height, 0, 9999, -9999);
 	qglMatrixMode(GL_MODELVIEW);
 	qglLoadIdentity();
-	qglDisable(GL_DEPTH_TEST);
-	qglDisable(GL_CULL_FACE);
 	GLSTATE_DISABLE_BLEND
 	qglDisable(GL_FOG);
 	GLSTATE_ENABLE_ALPHATEST
+	qglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	GL_TexEnv(GL_MODULATE);
 	qglColor4f(1, 1, 1, 1);
 }
@@ -1526,6 +1528,7 @@ static qboolean R_Init (HINSTANCE hinstance, WNDPROC wndproc)
 	GL_InitImages();
 	R_InitParticleTexture();
 	Draw_InitLocal();
+	GL_InitBloom();
 
 	GL_CHECK_ERROR
 

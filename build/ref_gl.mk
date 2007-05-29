@@ -1,5 +1,6 @@
 REF_GL_SRCS = \
 	ref_gl/gl_anim.c \
+	ref_gl/gl_bloom.c \
 	ref_gl/gl_draw.c \
 	ref_gl/gl_font.c \
 	ref_gl/gl_image.c \

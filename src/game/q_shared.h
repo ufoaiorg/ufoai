@@ -1090,7 +1090,8 @@ typedef struct objDef_s {
 	qboolean thrown;		/**< This item is thrown. */
 	int price;		/**< the price for this item */
 	int size;		/**< Size of an item, used in storage capacities. */
-	int buytype;		/**< In which category of the buy menu is this item listed. */
+	int buytype;		/**< In which category of the buy menu is this item listed.
+						 * see equipment_buytypes_t */
 
 	/* Weapon specific */
 	int ammo;			/**< How much can we load into this weapon at once. */
@@ -1178,7 +1179,7 @@ typedef struct csi_s {
 	int numIDs;
 
 	/** Special container ids */
-	int idRight, idLeft, idExtension;	
+	int idRight, idLeft, idExtension;
 	int idHeadgear, idBackpack, idBelt, idHolster;
 	int idArmor, idFloor, idEquip;
 
@@ -1199,7 +1200,7 @@ typedef struct csi_s {
 
 /** @todo Medals. Still subject to (major) changes. */
 
-#define MAX_SKILL           100 
+#define MAX_SKILL           100
 
 #define GET_HP_HEALING( ab ) (1 + (ab) * 10/MAX_SKILL)
 #define GET_HP( ab )        (80 + (ab) * 90/MAX_SKILL)
@@ -1471,7 +1472,7 @@ typedef enum {
 	ACTOR_SIZE_UGV
 } actorSizeEnum_t;
 
-/** @brief Buytype categories in the various equipment screens (buy/seel, equip, etc...)
+/** @brief Buytype categories in the various equipment screens (buy/sell, equip, etc...)
  ** Do not mess with the order (especially BUY_AIRCRAFT and BUY_MULTI_AMMO is/will be used for max-check in normal equipment screens)
  ** @sa scripts.c:buytypeNames
  ** @note Be sure to also update all usages of the buy_type" console function (defined in cl_market.c and mostly used there and in menu_buy.ufo) when changing this.
