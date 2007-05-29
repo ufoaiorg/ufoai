@@ -180,6 +180,21 @@ SOURCE=..\..\src\ref_gl\gl_anim.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\ref_gl\gl_bloom.c
+
+!IF  "$(CFG)" == "ref_gl - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ref_gl - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ref_gl - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ref_gl - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\ref_gl\gl_draw.c
 
 !IF  "$(CFG)" == "ref_gl - Win32 Release"
