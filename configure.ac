@@ -1,5 +1,38 @@
 AC_INIT(src/server/sv_main.c)
+
+# check build/host/target systems
+# (build  = system we're building on,
+#  host   = system we're building for,
+#  target = system the program we're building will build for)
+AC_CANONICAL_BUILD
+AC_CANONICAL_HOST
 AC_CANONICAL_TARGET
+
+AC_MSG_CHECKING(system)
+case "$host_os" in
+	linux*)
+		AC_MSG_RESULT(UNIX (GNU/Linux))
+		;;
+	mingw32* )
+		AC_MSG_RESULT(Win32 (mingw32))
+		;;
+	cygwin* )
+		AC_MSG_RESULT(Win32 (cygwin))
+		;;
+	openbsd* )
+		AC_MSG_RESULT(UNIX (OpenBSD))
+		;;
+	solaris* )
+		AC_MSG_RESULT(UNIX (Solaris))
+		;;
+	darwin*)
+		AC_MSG_RESULT(Mac OS X)
+		;;
+	*)
+		AC_MSG_RESULT(not sure... guessing a unix variant)
+		;;
+esac
+
 AC_ARG_WITH(sdl,
 	[AS_HELP_STRING([--with-sdl], [with SDL support @<:@default=yes@:>@])],
 	[], [with_sdl=yes])
@@ -117,6 +150,10 @@ AC_ARG_ENABLE(release,
 	[AS_HELP_STRING([--enable-release], [build release, if disabled then build debug @<:@default=disabled@:>@])],
 	[], [enable_release=no])
 
+AC_ARG_ENABLE(valgrind,
+	[AS_HELP_STRING([--enable-valgrind], [enable valgrind support @<:@default=check@:>@])],
+	[], [enable_valgrind=check])
+
 AC_ARG_ENABLE(paranoid,
 	[AS_HELP_STRING([--enable-paranoid], [enable PARANOID checks @<:@default=disabled@:>@])],
 	[], [enable_paranoid=no])
@@ -124,6 +161,10 @@ AC_ARG_ENABLE(paranoid,
 AC_ARG_ENABLE(profiling,
 	[AS_HELP_STRING([--enable-profiling], [build with profiling for gprof @<:@default=disabled@:>@])],
 	[], [enable_profiling=no])
+
+AC_ARG_ENABLE(mmx,
+	[AS_HELP_STRING([--enable-mmx], [use MMX optimisations @<:@default=disabled@:>@])],
+	[], [enable_mmx=no])
 
 #---------------------------------------------------------------------------------------------
 # CHECK SED
@@ -204,6 +245,15 @@ AC_MSG_RESULT($TARGET_CPU)
 #---------------------------------------------------------------------------------------------
 
 AC_PROG_CC
+
+# ---------------------------------------------------------------------
+# CHECK SIZES OF INTEGER TYPES
+# ---------------------------------------------------------------------
+AC_CHECK_SIZEOF(short)
+AC_CHECK_SIZEOF(int)
+AC_CHECK_SIZEOF(long)
+AC_CHECK_SIZEOF(long long)
+AC_CHECK_SIZEOF(int*)
 
 #---------------------------------------------------------------------------------------------
 # CHECK RM
@@ -1129,6 +1179,24 @@ then
 fi
 
 #---------------------------------------------------------------------------------------------
+# Check for extra valgrind memory debugging code
+#---------------------------------------------------------------------------------------------
+#LIBS=
+#if test "$enable_valgrind" = "check" || test "$enable_valgrind" = "yes"
+#then
+#	AC_CHECK_HEADERS([valgrind/memcheck.h])
+#	if test "$ac_cv_header_valgrind_memcheck_h" = "yes"
+#	then
+#		AC_SUBST([HAVE_VALGRIND],1)
+#	elif test "$enable_valgrind" = "yes"
+#	then
+#		AC_MSG_ERROR([specified --enable-valgrind but cannot find valgrind/memcheck.h!])
+#	fi
+#else
+#	AC_MSG_NOTICE([Without valgrind])
+#fi
+
+#---------------------------------------------------------------------------------------------
 # Check for debug
 #---------------------------------------------------------------------------------------------
 
@@ -1161,6 +1229,18 @@ then
 	AC_MSG_NOTICE([Enabling profiling])
 else
 	AC_SUBST([PROFILING],0)
+fi
+
+# ---------------------------------------------------------------------
+# Architecture dependent optimisations
+# ---------------------------------------------------------------------
+
+if test "$enable_mmx" = "yes"
+then
+	AC_SUBST([MMX],1)
+	AC_MSG_NOTICE([Enabling MMX])
+else
+	AC_SUBST([MMX],0)
 fi
 
 #---------------------------------------------------------------------------------------------

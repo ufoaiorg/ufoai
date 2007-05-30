@@ -5,6 +5,10 @@ CFLAGS+=-DHAVE_CONFIG_H -Wall -pipe
 #-ansi -pedantic -std=c99
 #-combine -fwhole-program
 
+ifeq ($(MMX),1)
+	CFLAGS+= -DUFO_MMX_ENABLED
+endif
+
 ifeq ($(HAVE_SHADERS),1)
 	CFLAGS+= -DHAVE_SHADERS
 endif
