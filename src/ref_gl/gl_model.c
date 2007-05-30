@@ -153,7 +153,7 @@ static model_t *Mod_ForName (const char *name, qboolean crash)
 	case IDMD3HEADER:
 		/* MD3 header */
 		loadmodel->extradata = Hunk_Begin(0x800000);
-		Mod_LoadAliasMD3Model (mod, buf);
+		Mod_LoadAliasMD3Model(mod, buf);
 		break;
 
 	case IDSPRITEHEADER:
@@ -321,8 +321,10 @@ static void Mod_LoadTexinfo (lump_t * l)
 	loadmodel->numtexinfo = count;
 
 	for (i = 0; i < count; i++, in++, out++) {
-		for (j = 0; j < 8; j++)
+		for (j = 0; j < 4; j++) {
 			out->vecs[0][j] = LittleFloat(in->vecs[0][j]);
+			out->vecs[1][j] = LittleFloat(in->vecs[1][j]);
+		}
 
 		out->flags = LittleLong(in->flags);
 		next = LittleLong(in->nexttexinfo);
