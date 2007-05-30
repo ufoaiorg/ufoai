@@ -179,7 +179,7 @@ static void S_SoundInfo_f (void)
 			Com_Printf("......%ldHz %d channels bitrate %ldkbps serial number=%ld\n",
 				vi->rate, vi->channels, ov_bitrate(&music.ovFile,i)/1000, ov_serialnumber(&music.ovFile, i));
 			Com_Printf("......compressed length: %ld bytes\n", (long)(ov_raw_total(&music.ovFile, i)));
-			Com_Printf("...play time: %ld s\n", (long)ov_time_total(&music.ovFile, i));
+			Com_Printf("...play time: %.0f s\n", ov_time_total(&music.ovFile, i));
 			Com_Printf("...compressed length: %ld bytes\n", (long)(ov_raw_total(&music.ovFile, i)));
 		}
 	}
