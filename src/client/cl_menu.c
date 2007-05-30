@@ -2335,6 +2335,7 @@ void MN_DrawMenus (void)
 						mi.oldframe = 0;
 						mi.backlerp = 0;
 						if (menuModel) {
+							assert(menuModel->model);
 							mi.model = re.RegisterModel(menuModel->model);
 							if (!mi.model) {
 								menuModel = menuModel->next;
@@ -2368,7 +2369,7 @@ void MN_DrawMenus (void)
 							mi.color = menuModel->color;
 
 							/* no tag and no parent means - base model or single model */
-							if (!*menuModel->tag && !*menuModel->parent) {
+							if (!menuModel->tag && !menuModel->parent) {
 								VectorCopy(node->color, mi.color);
 								VectorCopy(node->origin, mi.origin);
 								VectorCopy(node->scale, mi.scale);
@@ -2383,7 +2384,7 @@ void MN_DrawMenus (void)
 									ref = menuModel->anim;
 
 								/* only base models have animations */
-								if (*ref) {
+								if (ref && *ref) {
 									as = &menuModel->animState;
 									anim = re.AnimGetName(as, mi.model);
 									/* initial animation or animation change */
@@ -2400,6 +2401,8 @@ void MN_DrawMenus (void)
 							/* tag and parent defined */
 							} else {
 								/* place this menumodel part on an already existing menumodel tag */
+								assert(menuModel->parent);
+								assert(menuModel->tag);
 								menuModelParent = MN_GetMenuModel(menuModel->parent);
 								if (!menuModelParent) {
 									Com_Printf("Menumodel: Could not get the menuModel '%s'\n", menuModel->parent);
