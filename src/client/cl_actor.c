@@ -934,7 +934,7 @@ static qboolean CL_WeaponWithReaction (char hand)
 {
 	objDef_t *ammo = NULL;
 	objDef_t *weapon = NULL;
-	int weap_fd_idx;
+	int weap_fd_idx = -1;
 	int i;
 
 	/* Get ammo and weapon-index in ammo. */
