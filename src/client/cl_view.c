@@ -227,62 +227,44 @@ void CL_ParseEntitystring (char *es)
 			/* filter interesting keys */
 			if (!Q_strcmp(keyname, "classname"))
 				Q_strncpyz(classname, com_token, sizeof(classname));
-
-			if (!Q_strcmp(keyname, "model"))
+			else if (!Q_strcmp(keyname, "model"))
 				Q_strncpyz(model, com_token, sizeof(model));
-
-			if (!Q_strcmp(keyname, "frame"))
+			else if (!Q_strcmp(keyname, "frame"))
 				frame = atoi(com_token);
-
-			if (!Q_strcmp(keyname, "anim"))
+			else if (!Q_strcmp(keyname, "anim"))
 				Q_strncpyz(animname, com_token, sizeof(animname));
-
-			if (!Q_strcmp(keyname, "particle"))
+			else if (!Q_strcmp(keyname, "particle"))
 				Q_strncpyz(particle, com_token, sizeof(particle));
-
-			if (!Q_strcmp(keyname, "_color") || !Q_strcmp(keyname, "lightcolor"))
-				sscanf(com_token, "%f %f %f", &(color[0]), &(color[1]), &(color[2]));
-
-			if (!Q_strcmp(keyname, "origin"))
-				sscanf(com_token, "%f %f %f", &(origin[0]), &(origin[1]), &(origin[2]));
-
-			if (!Q_strcmp(keyname, "ambient") || !Q_strcmp(keyname, "lightambient"))
-				sscanf(com_token, "%f %f %f", &(ambient[0]), &(ambient[1]), &(ambient[2]));
-
-			if (!Q_strcmp(keyname, "angles") && !angles[YAW])
-				sscanf(com_token, "%f %f %f", &(angles[PITCH]), &(angles[YAW]), &(angles[ROLL]));
-
-			if (!Q_strcmp(keyname, "angle") && !angles[YAW])
+			else if (!Q_strcmp(keyname, "_color") || !Q_strcmp(keyname, "lightcolor"))
+				Com_ParseValue(color, com_token, V_VECTOR, 0, sizeof(vec3_t));
+			else if (!Q_strcmp(keyname, "origin"))
+				Com_ParseValue(origin, com_token, V_VECTOR, 0, sizeof(vec3_t));
+			else if (!Q_strcmp(keyname, "ambient") || !Q_strcmp(keyname, "lightambient"))
+				Com_ParseValue(ambient, com_token, V_VECTOR, 0, sizeof(vec3_t));
+			else if (!Q_strcmp(keyname, "angles") && !angles[YAW])
+				/* pitch, yaw, roll */
+				Com_ParseValue(angles, com_token, V_VECTOR, 0, sizeof(vec3_t));
+			else if (!Q_strcmp(keyname, "angle") && !angles[YAW])
 				angles[YAW] = atof(com_token);
-
-			if (!Q_strcmp(keyname, "wait"))
-				sscanf(com_token, "%f %f", &(wait[0]), &(wait[1]));
-
-			if (!Q_strcmp(keyname, "light"))
+			else if (!Q_strcmp(keyname, "wait"))
+				Com_ParseValue(wait, com_token, V_POS, 0, sizeof(vec2_t));
+			else if (!Q_strcmp(keyname, "light"))
 				light = atof(com_token);
-
-			if (!Q_strcmp(keyname, "lightangles"))
-				sscanf(com_token, "%f %f %f", &(lightangles[0]), &(lightangles[1]), &(lightangles[2]));
-
-			if (!Q_strcmp(keyname, "spawnflags"))
+			else if (!Q_strcmp(keyname, "lightangles"))
+				Com_ParseValue(lightangles, com_token, V_VECTOR, 0, sizeof(vec3_t));
+			else if (!Q_strcmp(keyname, "spawnflags"))
 				spawnflags = atoi(com_token);
-
-			if (!Q_strcmp(keyname, "maxlevel"))
+			else if (!Q_strcmp(keyname, "maxlevel"))
 				maxlevel = atoi(com_token);
-
-			if (!Q_strcmp(keyname, "maxteams"))
+			else if (!Q_strcmp(keyname, "maxteams"))
 				maxmultiplayerteams = atoi(com_token);
-
-			if (!Q_strcmp(keyname, "dropship_coord"))
-				sscanf(com_token, "%f %f %f", &(dropship_coord[0]), &(dropship_coord[1]), &(dropship_coord[2]));
-
-			if (!Q_strcmp(keyname, "fog"))
+			else if (!Q_strcmp(keyname, "dropship_coord"))
+				Com_ParseValue(dropship_coord, com_token, V_VECTOR, 0, sizeof(vec3_t));
+			else if (!Q_strcmp(keyname, "fog"))
 				map_fog = atof(com_token);
-
-			if (!Q_strcmp(keyname, "fogcolor"))
-				sscanf(com_token, "%f %f %f", &(map_fogColor[0]), &(map_fogColor[1]), &(map_fogColor[2]));
-
-			if (!Q_strcmp(keyname, "skin"))
+			else if (!Q_strcmp(keyname, "fogcolor"))
+				Com_ParseValue(map_fogColor, com_token, V_VECTOR, 0, sizeof(vec3_t));
+			else if (!Q_strcmp(keyname, "skin"))
 				skin = atoi(com_token);
 		}
 
@@ -310,10 +292,10 @@ void CL_ParseEntitystring (char *es)
 			if (!ccs.singleplayer && (teamnum->value > maxmultiplayerteams
 									|| teamnum->value <= TEAM_CIVILIAN)) {
 				Com_Printf("The selected team is not useable. "
-					"The map doesn't support %.0f teams but only %i teams\n",
-					teamnum->value, maxmultiplayerteams);
+					"The map doesn't support %i teams but only %i teams\n",
+					teamnum->integer, maxmultiplayerteams);
 				Cvar_SetValue("teamnum", DEFAULT_TEAMNUM);
-				Com_Printf("Set teamnum to %.0f\n", teamnum->value);
+				Com_Printf("Set teamnum to %i\n", teamnum->integer);
 			}
 		} else if (!Q_strcmp(classname, "light") && light) {
 			dlight_t *newlight;
