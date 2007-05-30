@@ -2025,17 +2025,18 @@ extern void CL_ParseResults (sizebuf_t * buf)
 	}
 	/* show win screen */
 	if (ccs.singleplayer) {
-		/* Make sure that at this point we are able to Try Again a mission. */
+		/* Make sure that at this point we are able to 'Try Again' a mission. */
 		Cvar_SetValue("mission_tryagain", 0);
-		if (winner == we) {
-			/* onwin trigger */
-			CP_ExecuteMissionTrigger(selMis->def, 1, baseCurrent);
+		if (selMis && baseCurrent)
+			CP_ExecuteMissionTrigger(selMis->def, winner == we, baseCurrent);
+		else
+			Com_Printf("CL_ParseResults: Error - no mission triggers, because selMis or baseCurrent are not valid\n");
+
+		if (winner == we)
 			MN_PushMenu("won");
-		} else {
-			/* onlose trigger */
-			CP_ExecuteMissionTrigger(selMis->def, 0, baseCurrent);
+		else
 			MN_PushMenu("lost");
-		}
+
 		/* on singleplayer we disconnect the game */
 		/* we can safely wipe all mission data now */
 		/* @todo: I don't understand how this works
