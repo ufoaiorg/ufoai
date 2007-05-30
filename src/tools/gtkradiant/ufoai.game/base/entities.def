@@ -37,8 +37,12 @@ Use angles [pitch yaw roll] to rotate the model. pitch (up/down), yaw (left/righ
 "angles"	direction of the model [pitch yaw roll]
 "angle"		direction of the model [yaw]
 "skin"		skin nummer (default 0)
-"frame"		frame nummer (default 0)
+"frame"		frame nummer (default 0) - use frame or anim - but not both
 "anim"		is this an animated model (default empty otherwise fill the animname)
+"light"		light value (alpha value - A)
+"color"		light color value (RGB) - see light parameter for A
+"ambient"	ambient light color value (RGB)
+"lightangles"	light angles
 */
 
 

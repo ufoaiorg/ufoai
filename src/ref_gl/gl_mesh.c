@@ -262,6 +262,7 @@ static qboolean R_CullAliasModel (vec4_t bbox[8], entity_t * e)
  * @brief
  * @sa R_DrawAliasModel
  * @sa R_DrawAliasMD3Model
+ * @param[in] lightambient May not be null for fixed lightning
  */
 extern void R_EnableLights (qboolean fixed, float *matrix, float *lightparam, float *lightambient)
 {
@@ -272,6 +273,7 @@ extern void R_EnableLights (qboolean fixed, float *matrix, float *lightparam, fl
 	int i, j, n;
 
 	if (fixed) {
+		assert(lightambient);
 		/* add the fixed light */
 		qglLightfv(GL_LIGHT0, GL_POSITION, lightparam);
 		qglLightfv(GL_LIGHT0, GL_DIFFUSE, matrix);

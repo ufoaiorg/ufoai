@@ -607,7 +607,7 @@ void GLimp_SetGamma(void);
 #define PHYSICAL_EARTH_CIRC (2.0 * M_PI * PHYSICAL_EARTH_RADIUS)
 #define NOT_SELECTABLE ~0U              /* For picking reasons, see which_site() */
 
-void Draw_3DGlobe(int x, int y, int w, int h, float p, float q, vec3_t rotate, float zoom, const char *map);
+void Draw_3DGlobe(int x, int y, int w, int h, float p, vec3_t rotate, float zoom, const char *map);
 void Draw_3DMapMarkers(vec3_t angles, float zoom, vec3_t position, const char *model);
 
 /* end of 3d globe */

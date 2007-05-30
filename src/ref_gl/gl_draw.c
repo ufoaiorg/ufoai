@@ -897,10 +897,12 @@ void Draw_3DMapMarkers (vec3_t angles, float zoom, vec3_t position, const char *
 /**
  * @brief responsible for drawing the 3d globe on geoscape
  */
-void Draw_3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate, float zoom, const char *map)
+void Draw_3DGlobe (int x, int y, int w, int h, float p, vec3_t rotate, float zoom, const char *map)
 {
 	/* globe scaling */
 	float fullscale = zoom / 4.0f;
+	vec4_t lightPos = {0.0f, 0.0f, 0.0f, 0.0f};
+	vec4_t lightColor = {1.0f, 1.0f, 1.0f, 1.0f};
 
 	image_t* gl = NULL;
 	float nx, ny, nw, nh;
@@ -972,42 +974,21 @@ void Draw_3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate, 
 	qglEnable(GL_CULL_FACE);
 	qglCullFace(GL_BACK);
 
+	/* add the light */
+	lightPos[0] = p;
+	lightPos[1] = p;
+	VectorAdd(lightPos, rotate, lightPos);
+	VectorNormalize(lightPos);
+	qglLightfv(GL_LIGHT0, GL_POSITION, lightPos);
+	qglLightfv(GL_LIGHT0, GL_DIFFUSE, lightColor);
+	qglLightfv(GL_LIGHT0, GL_AMBIENT, lightColor);
+
+	/* enable the lighting */
+	qglEnable(GL_LIGHTING);
+	qglEnable(GL_LIGHT0);
+
 	/* draw the sphere */
 	qglCallList(spherelist);
-
-	/* qglMTexCoord2fSGIS isn't working with compiled lists afaik */
-#if 0
-	/* test for multitexture and env_combine support */
-	if (qglSelectTextureSGIS || qglActiveTextureARB) {
-		gl = GL_FindImage(va("pics/menu/%s_night", map), it_pic);
-		/* maybe the campaign map doesn't have a night image */
-		if (gl) {
-			/* init combiner */
-			GLSTATE_ENABLE_BLEND
-
-			/* night texture */
-			GL_SelectTexture(gl_texture0);
-			GL_Bind(gl->texnum);
-
-			/* mask texture */
-			GL_SelectTexture(gl_texture1);
-			if (!DaN || lastQ != q) {
-				/* calculate new mask */
-				GL_CalcDayAndNight(q);
-				lastQ = q;
-			}
-
-			GL_Bind(DaN->texnum);
-
-			/* draw night image */
-			qglCallList(spherelist);
-
-			GL_SelectTexture(gl_texture0);
-
-			GLSTATE_DISABLE_BLEND
-		}
-	}
-#endif
 
 #ifdef HAVE_SHADERS
 	if (gl->shader)
@@ -1022,6 +1003,9 @@ void Draw_3DGlobe (int x, int y, int w, int h, float p, float q, vec3_t rotate, 
 		/* turn off fog */
 		qglDisable(GL_FOG);
 	}
+
+	/* disable 3d geoscape lightning */
+	qglDisable(GL_LIGHTING);
 
 	/* restore the previous matrix */
 	qglPopMatrix();

@@ -1510,8 +1510,8 @@ extern void RS_ResetHash (void)
  * description, pre_description, require_AND, require_OR, up_chapter
  */
 static const value_t valid_tech_vars[] = {
- 	{"name", V_TRANSLATION2_STRING, offsetof(technology_t, name), 0},
- 	{"provides", V_CLIENT_HUNK_STRING, offsetof(technology_t, provides), 0},
+	{"name", V_TRANSLATION2_STRING, offsetof(technology_t, name), 0},
+	{"provides", V_CLIENT_HUNK_STRING, offsetof(technology_t, provides), 0},
 	{"delay", V_INT, offsetof(technology_t, delay), MEMBER_SIZEOF(technology_t, delay)},
 	{"producetime", V_INT, offsetof(technology_t, produceTime), MEMBER_SIZEOF(technology_t, produceTime)},
 	{"time", V_FLOAT, offsetof(technology_t, time), MEMBER_SIZEOF(technology_t, time)},

@@ -2000,7 +2000,8 @@ static byte DaNalpha[DAN_WIDTH * DAN_HEIGHT];
 image_t *DaN;
 
 /**
- * @brief
+ * @brief Applies alpha values to the night overlay image for 2d geoscape
+ * @param[in] q
  */
 void GL_CalcDayAndNight (float q)
 {
@@ -2024,7 +2025,7 @@ void GL_CalcDayAndNight (float q)
 	GL_Bind(DaN->texnum);
 
 	/* init geometric data */
-	dphi = (float) 2 *M_PI / DAN_WIDTH;
+	dphi = (float) 2 * M_PI / DAN_WIDTH;
 
 	da = M_PI / 2 * (HIGH_LAT - LOW_LAT) / DAN_HEIGHT;
 

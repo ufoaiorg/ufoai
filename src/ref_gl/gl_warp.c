@@ -192,7 +192,7 @@ float r_turbsin[] = {
 /**
  * @brief Does a water warp on the pre-fragmented glpoly_t chain
  */
-void EmitWaterPolys(msurface_t * fa)
+void EmitWaterPolys (msurface_t * fa)
 {
 	glpoly_t *p, *bp;
 	float *v;

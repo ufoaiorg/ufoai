@@ -1340,9 +1340,8 @@ extern void MAP_DrawMap (const menuNode_t* node, qboolean map3D)
 		/* @todo change texh, texl of geobackground with zoomlevel */
 		if (smoothRotation)
 			MAP3D_SmoothRotate();
-		q = (ccs.date.day % 365 + (float) (ccs.date.sec / (3600 * 6)) / 4) * 2 * M_PI / 365 - M_PI;
 		re.Draw3DGlobe(node->pos[0], node->pos[1], node->size[0], node->size[1],
-			(float) ccs.date.sec / (3600 * 24), q, ccs.angles, ccs.zoom / 10, curCampaign->map);
+			(float) (ccs.date.sec / 60) / 4, ccs.angles, ccs.zoom / 10, curCampaign->map);
 
 		MAP_Draw3DMapMarkers(node);
 	} else {
