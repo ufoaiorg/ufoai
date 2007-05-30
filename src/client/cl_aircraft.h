@@ -55,7 +55,8 @@ typedef enum {
 	MAX_ACITEMS
 } aircraftItemType_t;
 
-/** @brief Aircraft parameters.
+/**
+ * @brief Aircraft parameters.
  * @note This is a list of all aircraft parameters that depends on aircraft items.
  *  those values doesn't change with shield or weapon assigned to aircraft
  * @note AIR_STATS_WRANGE must be the last parameter (see AII_UpdateAircraftStats)

@@ -35,9 +35,9 @@ static int airequipID = -1;				/**< FIXME: document me. */
 static qboolean noparams = qfalse;			/**< FIXME: document me. */
 int numAircraftItems = 0;			/**< number of available aircrafts items in game. */
 aircraftItem_t aircraftItems[MAX_AIRCRAFTITEMS];	/**< Available aicraft items. */
-static int airequipSelectedZone = 0;		/** Selected zone in equip menu */
-static int airequipSelectedSlot = 0;			/** Selected slot in equip menu */
-static technology_t *airequipSelectedTechnology = NULL;		/** Selected technolgy in equip menu */
+static int airequipSelectedZone = 0;		/**< Selected zone in equip menu */
+static int airequipSelectedSlot = 0;			/**< Selected slot in equip menu */
+static technology_t *airequipSelectedTechnology = NULL;		/**< Selected technolgy in equip menu */
 
 #define AIRCRAFT_RADAR_RANGE	20			/* FIXME: const */
 
