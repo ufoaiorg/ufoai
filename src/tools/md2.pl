@@ -211,7 +211,7 @@ if ($param_action eq 'skinedit') {
 			print "Skin ",$i," new: \"", $md2_file->Path->[$i][0],"\"\n";
 			
 		}
-		
+
 		# save as another .md2 file
 		md2_save($md2_file, $MD2OUT);
 	} else {
@@ -222,7 +222,7 @@ if ($param_action eq 'skinedit') {
 	# we are adding/removing skins
 	# TODO: this is undocumented and untested right now
 	# TODO: add proper commandline handling (maybe use extra file?)
-	
+
 	# parse commandline parameters (md2-filenames)
 	if ( $#ARGV < 1 || $#ARGV > 2) {
 		die "Usage:\tmd2.pl skinnum [in.md2 [out.md2]]\n";
@@ -274,20 +274,28 @@ if ($param_action eq 'skinedit') {
 		print "No change in skin-number.\n";
 		return;
 	}
-	
+
 	if ($NumSkins_new <= 0) {
 		print "Invalid skin number given: ",$NumSkins_new, "\n";
 		return;
 	}
-	
+
 	# Add/remove skins and update offsets correctly
 	if ($NumSkins_new > $md2_file->NumSkins) {
-		# TODO: do the magic (add skins and update offsets correctly)
+		# So the magic (add skins and update offsets correctly)
 		print "Adding skins and updating offsets ...\n";
+
+		# Create skin-list if it isn't there yet
+		if (!exists($md2_file->{struct}->{Path})) {
+			# print "DEBUG: Creating skin list.\n";
+			$md2_file->{struct}->{Path} = [];
+		}
+
+		# Append the (new) skin
 		for (my $i = $md2_file->NumSkins; $i < $NumSkins_new; $i++) {
 			push (@{$md2_file->Path}, ['dummy']);
 		}
-		
+
 		# Update following offsets (after skin data) correctly.
 		my $data_offset_delta = ($NumSkins_new-$md2_file->NumSkins) * 64;
 		$md2_file->struct->{OffsetST} += $data_offset_delta;		# update offset to s-t texture coordinates
