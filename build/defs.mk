@@ -1,8 +1,9 @@
 # Some variables needed by the modules
 SRCDIR=src
 
-CFLAGS+=-DHAVE_CONFIG_H -Wall -pipe
-#-ansi -pedantic -std=c99
+CFLAGS+=-DHAVE_CONFIG_H -Wall -pipe -Winline -Wcast-qual -Wcast-align -ansi
+#	-Wshadow -Wpointer-arith -Wmissing-prototypes -Wmissing-declarations \
+#	-Wbad-function-cast -pedantic -std=c99
 #-combine -fwhole-program
 
 ifeq ($(MMX),1)
