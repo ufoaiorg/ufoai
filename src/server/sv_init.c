@@ -683,8 +683,8 @@ static void SV_AssembleMap (const char *name, const char *assembly, char **map, 
 	mPlaced_t *pl;
 	byte curMap[32][32][MAX_TILEALTS];
 	byte curNum[MAX_TILETYPES];
-	char asmMap[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
-	char asmPos[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
+	static char asmMap[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
+	static char asmPos[MAX_TOKEN_CHARS * MAX_TILESTRINGS];
 	char filename[MAX_QPATH];
 	char basePath[MAX_QPATH];
 	char *buf;
