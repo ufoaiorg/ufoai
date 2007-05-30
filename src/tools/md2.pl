@@ -178,41 +178,46 @@ if ($param_action eq 'skinedit') {
 
 	print $md2_file->NumSkins, " Skin(s) found\n";
 
-	#just to prevent warnings
-	if ( $#TextureString < $md2_file->NumSkins ) {
-		for ( my $i = $#TextureString + 1; $i < $md2_file->NumSkins; $i++ ) {
-			$TextureString[$i] = '';
-		}
-	}
-
-	for (my $i=0; $i < $md2_file->NumSkins; $i++ ) {
-		print "Skin ",$i," old: \"", $md2_file->Path->[$i][0],"\"\n";
-
-		# get new texture-path from user if no filename was given per commandline parameter.
-		if ($TextureString[$i] eq '') {
-			print "Enter new path (Enter=Skip):";
-
-			my $key = '';
-			use Term::ReadKey;
-			do {
-				$key = ReadKey(0);
-				$TextureString[$i] .= $key;
-			} while ($key ne "\n");
-
-			chomp($TextureString[$i]);
+	if ($md2_file->NumSkins > 0) {
+		#just to prevent warnings
+		if ( $#TextureString < $md2_file->NumSkins ) {
+			for ( my $i = $#TextureString + 1; $i < $md2_file->NumSkins; $i++ ) {
+				$TextureString[$i] = '';
+			}
 		}
 
-		# replace texture-path
-		if ($TextureString[$i] ne '') {
-			$md2_file->Path->[$i][0] = $TextureString[$i];
-		}
+		for (my $i=0; $i < $md2_file->NumSkins; $i++ ) {
+			print "Skin ",$i," old: \"", $md2_file->Path->[$i][0],"\"\n";
 
-		print "Skin ",$i," new: \"", $md2_file->Path->[$i][0],"\"\n";
+			# get new texture-path from user if no filename was given per commandline parameter.
+			if ($TextureString[$i] eq '') {
+				print "Enter new path (Enter=Skip):";
+
+				my $key = '';
+				use Term::ReadKey;
+				do {
+					$key = ReadKey(0);
+					$TextureString[$i] .= $key;
+				} while ($key ne "\n");
+
+				chomp($TextureString[$i]);
+			}
+
+			# replace texture-path
+			if ($TextureString[$i] ne '') {
+				$md2_file->Path->[$i][0] = $TextureString[$i];
+			}
+
+			print "Skin ",$i," new: \"", $md2_file->Path->[$i][0],"\"\n";
+			
+		}
 		
+		# save as another .md2 file
+		md2_save($md2_file, $MD2OUT);
+	} else {
+		print "No skins to edit found in this file.\n";
+		print "You might want to add some first.\n";
 	}
-
-	# save as another .md2 file
-	md2_save($md2_file, $MD2OUT);
 } elsif ($param_action eq 'skinnum') {
 	# we are adding/removing skins
 	# TODO: this is undocumented and untested right now
