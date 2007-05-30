@@ -93,7 +93,7 @@ char *Sys_BinName (const char *arg0)
 #endif
 
 	static char	dst[MAX_OSPATH];
-	Com_sprintf(dst, MAX_OSPATH, (char*)arg0);
+	Com_sprintf(dst, MAX_OSPATH, arg0);
 
 #ifndef DEBUG
 	while ((n = readlink(dst, src, MAX_OSPATH)) >= 0) {

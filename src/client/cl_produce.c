@@ -349,7 +349,6 @@ static void PR_QueueMove (production_queue_t *queue, int index, int dir)
  */
 static void PR_QueueNext (int base)
 {
-	char messageBuffer[256];
 	production_queue_t *queue = &gd.productions[base];
 
 	PR_QueueDelete(queue, 0);
@@ -894,7 +893,6 @@ static void PR_ProductionIncrease_f (void)
 {
 	int amount = 1;
 	int produceable_amount;
-	char messageBuffer[256];
 	production_queue_t *queue = NULL;
 	objDef_t *od = NULL;
 	technology_t *tech = NULL;

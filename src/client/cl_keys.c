@@ -304,8 +304,6 @@ static void Key_Console (int key)
 		char *cbd;
 
 		if ((cbd = Sys_GetClipboardData()) != 0) {
-			int i;
-
 			strtok(cbd, "\n\r\b");
 
 			i = strlen(cbd);
@@ -476,8 +474,6 @@ static void Key_Console (int key)
 		return;					/* non printable */
 
 	if (key_linepos < MAXCMDLINE - 1) {
-		int i;
-
 		if (key_insert) {  /* can't do strcpy to move string to right */
 			i = strlen(key_lines[edit_line]) - 1;
 

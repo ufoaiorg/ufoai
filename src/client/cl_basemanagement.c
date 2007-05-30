@@ -1495,7 +1495,7 @@ extern void B_ParseBases (const char *name, char **text)
 extern void B_DrawBase (menuNode_t * node)
 {
 	int x, y, xHover = -1, yHover = -1, widthHover = 1;
-	int mx, my, width, height, row, col, time, colSecond;
+	int mouseX, mouseY, width, height, row, col, time, colSecond;
 	static vec4_t color = { 0.5f, 1.0f, 0.5f, 1.0 };
 	char image[MAX_QPATH];
 	building_t *building = NULL, *secondBuilding = NULL, *hoverBuilding = NULL;
@@ -1506,7 +1506,7 @@ extern void B_DrawBase (menuNode_t * node)
 	width = node->size[0] / BASE_SIZE;
 	height = (node->size[1] + BASE_SIZE * 20) / BASE_SIZE;
 
-	IN_GetMousePos(&mx, &my);
+	IN_GetMousePos(&mouseX, &mouseY);
 
 	for (row = 0; row < BASE_SIZE; row++) {
 		for (col = 0; col < BASE_SIZE; col++) {
@@ -1548,7 +1548,7 @@ extern void B_DrawBase (menuNode_t * node)
 				re.DrawNormPic(x, y, width, height, 0, 0, 0, 0, 0, qfalse, image);
 
 			/* check for hovering building name or outline border */
-			if (mx > x && mx < x + width && my > y && my < y + height - 20) {
+			if (mouseX > x && mouseX < x + width && mouseY > y && mouseY < y + height - 20) {
 				if (baseCurrent->map[row][col] != BASE_FREESLOT)
 					hoverBuilding = building;
 				else if (gd.baseAction == BA_NEWBUILDING && xHover == -1) {
@@ -1595,7 +1595,7 @@ extern void B_DrawBase (menuNode_t * node)
 	}
 	if (hoverBuilding) {
 		re.DrawColor(color);
-		re.FontDrawString("f_small", 0, mx + 3, my, mx + 3, my, node->size[0], 0, node->texh[0], _(hoverBuilding->name), 0, 0, NULL, qfalse);
+		re.FontDrawString("f_small", 0, mouseX + 3, mouseY, mouseX + 3, mouseY, node->size[0], 0, node->texh[0], _(hoverBuilding->name), 0, 0, NULL, qfalse);
 		re.DrawColor(NULL);
 	}
 	if (xHover != -1) {

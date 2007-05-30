@@ -1255,9 +1255,9 @@ static void Mod_LoadAliasMD3Model (model_t *mod, void *buffer)
 
 		for (l = 0; l < poutmodel->num_frames; l++) {
 			for (j = 0; j < poutmesh->num_verts; j++, pinvert++, poutvert++) {
-				poutvert->point[0] = (float)LittleShort(pinvert->point[0]) * MD3_XYZ_SCALE;
-				poutvert->point[1] = (float)LittleShort(pinvert->point[1]) * MD3_XYZ_SCALE;
-				poutvert->point[2] = (float)LittleShort(pinvert->point[2]) * MD3_XYZ_SCALE;
+				poutvert->point[0] = LittleShort(pinvert->point[0]) * MD3_XYZ_SCALE;
+				poutvert->point[1] = LittleShort(pinvert->point[1]) * MD3_XYZ_SCALE;
+				poutvert->point[2] = LittleShort(pinvert->point[2]) * MD3_XYZ_SCALE;
 
 				lat = (pinvert->norm >> 8) & 0xff;
 				lng = (pinvert->norm & 0xff);

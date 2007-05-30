@@ -2210,12 +2210,12 @@ void MN_DrawMenus (void)
 
 				case MN_BAR:
 					{
-						float fac, width;
+						float fac, bar_width;
 
 						/* in the case of MN_BAR the first three data array values are float values - see menuDataValues_t */
 						fac = node->size[0] / (MN_GetReferenceFloat(menu, node->data[0]) - MN_GetReferenceFloat(menu, node->data[1]));
-						width = (MN_GetReferenceFloat(menu, node->data[2]) - MN_GetReferenceFloat(menu, node->data[1])) * fac;
-						re.DrawFill(node->pos[0], node->pos[1], width, node->size[1], node->align, mouseOver ? color : node->color);
+						bar_width = (MN_GetReferenceFloat(menu, node->data[2]) - MN_GetReferenceFloat(menu, node->data[1])) * fac;
+						re.DrawFill(node->pos[0], node->pos[1], bar_width, node->size[1], node->align, mouseOver ? color : node->color);
 					}
 					break;
 

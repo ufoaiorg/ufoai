@@ -1200,13 +1200,13 @@ static qboolean R_Init (HINSTANCE hinstance, WNDPROC wndproc)
 	}
 
 	/* get our various GL strings */
-	gl_config.vendor_string = (char *)qglGetString (GL_VENDOR);
+	gl_config.vendor_string = (const char *)qglGetString (GL_VENDOR);
 	ri.Con_Printf(PRINT_ALL, "GL_VENDOR: %s\n", gl_config.vendor_string);
-	gl_config.renderer_string = (char *)qglGetString (GL_RENDERER);
+	gl_config.renderer_string = (const char *)qglGetString (GL_RENDERER);
 	ri.Con_Printf(PRINT_ALL, "GL_RENDERER: %s\n", gl_config.renderer_string);
-	gl_config.version_string = (char *)qglGetString (GL_VERSION);
+	gl_config.version_string = (const char *)qglGetString (GL_VERSION);
 	ri.Con_Printf(PRINT_ALL, "GL_VERSION: %s\n", gl_config.version_string);
-	gl_config.extensions_string = (char *)qglGetString (GL_EXTENSIONS);
+	gl_config.extensions_string = (const char *)qglGetString (GL_EXTENSIONS);
 	ri.Con_Printf(PRINT_ALL, "GL_EXTENSIONS: %s\n", gl_config.extensions_string);
 
 	Q_strncpyz(renderer_buffer, gl_config.renderer_string, sizeof(renderer_buffer));

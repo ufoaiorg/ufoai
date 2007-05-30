@@ -172,7 +172,6 @@ void WriteModelFile (qFILE *modelouthandle)
 
 	/* write out the triangles */
 	for (i = 0; i < model.num_tris; i++) {
-		int			j;
 		dtriangle_t	tri;
 
 		for (j = 0; j < 3; j++) {
@@ -822,7 +821,6 @@ void GrabFrame (char *frame)
 	/* calculate the vertex normals, match them to the template list, and store the */
 	/* index of the best match */
 	for (i = 0; i < model.num_xyz; i++) {
-		int		j;
 		vec3_t	v;
 		float	maxdot;
 		int		maxdotindex;

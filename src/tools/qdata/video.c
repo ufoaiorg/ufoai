@@ -354,8 +354,8 @@ static int bwtCompare (const void *elem1, const void *elem2)
 	int		i1, i2;
 	int		b1, b2;
 
-	i1 = *(int *)elem1;
-	i2 = *(int *)elem2;
+	i1 = *(const int *)elem1;
+	i2 = *(const int *)elem2;
 
 	for (i = 0; i < bwt_size; i++) {
 		b1 = bwt_data[i1];

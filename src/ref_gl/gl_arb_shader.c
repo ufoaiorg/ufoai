@@ -165,7 +165,7 @@ unsigned int SH_LoadProgram_ARB_FP (const char *path)
 	qglGetIntegerv(GL_PROGRAM_ERROR_POSITION_ARB, &error_pos);
 	if (error_pos != -1) {
 		ri.Con_Printf(PRINT_ALL, "!! FP error at position %d in %s\n", error_pos, path);
-		ri.Con_Printf(PRINT_ALL, "!! Error: %s\n", (char *) errors);
+		ri.Con_Printf(PRINT_ALL, "!! Error: %s\n", errors);
 		qglDeleteProgramsARB(1, &fpid);
 		free(buf);
 		return 0;
@@ -214,7 +214,7 @@ unsigned int SH_LoadProgram_ARB_VP (const char *path)
 		qglGetIntegerv(GL_PROGRAM_ERROR_POSITION_ARB, &error_pos);
 		if (error_pos != -1) {
 			ri.Con_Printf(PRINT_ALL, "!! VP error at position %d in %s\n", error_pos, path);
-			ri.Con_Printf(PRINT_ALL, "!! Error: %s\n", (char *) errors);
+			ri.Con_Printf(PRINT_ALL, "!! Error: %s\n", errors);
 
 			qglDeleteProgramsARB(1, &vpid);
 			free(buf);

@@ -117,16 +117,12 @@ void FS_NormPath (char *path)
 /**
  * @param[in] qpath may have either forward or backwards slashes
  */
-static char *FS_BuildOSPath (const char *base, const char *qpath)
+static char *FS_BuildOSPath (const char *base, const char *qpath, char *buffer, size_t size)
 {
-	static char ospath[2][MAX_OSPATH];
-	static int toggle;
+	Com_sprintf(buffer, size, "%s/%s", base, qpath);
+	Sys_OSPath(buffer);
 
-	toggle ^= 1;		/* flip-flop to allow two returns without clash */
-
-	Com_sprintf(ospath[toggle], sizeof(ospath[0]), "%s/%s", base, qpath);
-
-	return ospath[toggle];
+	return buffer;
 }
 
 /**
@@ -225,7 +221,7 @@ static int FS_FOpenFileSingle (const char *filename, qFILE * file)
 			pak = search->pack;
 			for (i = 0; i < pak->numfiles; i++)
 				/* found it! */
-				if (!Q_strcasecmp(pak->files[i].name, (char *) filename)) {
+				if (!Q_strcasecmp(pak->files[i].name, filename)) {
 					Com_DPrintf("PackFile: %s : %s\n", pak->filename, filename);
 					/* open a new file on the pakfile */
 					if (unzLocateFile(pak->handle.z, filename, 2) == UNZ_OK) {	/* found it! */
@@ -1150,8 +1146,6 @@ void FS_BuildFileList (char *fileList)
 			FS_NormPath(findname);
 
 			if ((filenames = FS_ListFiles(findname, &nfiles, 0, SFF_HIDDEN | SFF_SYSTEM)) != 0) {
-				int i;
-
 				for (i = 0; i < nfiles - 1; i++) {
 					_AddToListBlock(&fl, block, tblock, filenames[i]);
 					free(filenames[i]);
@@ -1398,13 +1392,13 @@ int FS_Write (const void *buffer, int len, qFILE * f)
 {
 	int block, remaining;
 	int written;
-	byte *buf;
+	const byte *buf;
 	int tries;
 
 	if (!f->f)
 		return 0;
 
-	buf = (byte *) buffer;
+	buf = (const byte *) buffer;
 
 	remaining = len;
 	tries = 0;
@@ -1631,21 +1625,19 @@ extern void FS_Remove (const char *osPath)
  */
 extern qboolean FS_Rename (const char *from, const char *to, qboolean relative)
 {
-	char *from_ospath, *to_ospath;
+	const char *from_ospath, *to_ospath;
+	char from_buf[MAX_OSPATH];
+	char to_buf[MAX_OSPATH];
 
 	if (!fs_searchpaths)
 		Com_Error(ERR_FATAL, "Filesystem call made without initialization\n");
 
 	if (relative) {
-		from_ospath = FS_BuildOSPath(FS_Gamedir(), from);
-		to_ospath = FS_BuildOSPath(FS_Gamedir(), to);
-
-		Sys_OSPath(from_ospath);
-		Sys_OSPath(to_ospath);
+		from_ospath = FS_BuildOSPath(FS_Gamedir(), from, from_buf, sizeof(from_buf));
+		to_ospath = FS_BuildOSPath(FS_Gamedir(), to, to_buf, sizeof(to_buf));
 	} else {
-		/* we won't modify it - so keep the compiler quiet */
-		from_ospath = (char*)from;
-		to_ospath = (char*)to;
+		from_ospath = from;
+		to_ospath = to;
 	}
 
 	if (rename(from_ospath, to_ospath))

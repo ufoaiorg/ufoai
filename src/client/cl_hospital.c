@@ -97,7 +97,6 @@ void HOS_RemoveFromMissionList (employee_t *employee, base_t *base)
 void HOS_CheckRemovalFromEmployeeList (employee_t *employee)
 {
 	base_t *base;
-	char messageBuffer[256];
 
 	assert(employee);
 	base = &gd.bases[employee->baseIDHired];

@@ -4090,7 +4090,6 @@ static void CP_UfoRecoveryBaseSelectPopup_f (void)
  */
 static void CP_UFORecoveredStart_f (void)
 {
-	char messageBuffer[256];
 	base_t *base;
 
 	base = &gd.bases[Cvar_VariableInteger("mission_recoverybase")];
@@ -4185,7 +4184,6 @@ static void CP_UfoRecoveryNationSelectPopup_f (void)
  */
 static void CP_UFOSellStart_f (void)
 {
-	char messageBuffer[256];
 	nation_t *nation;
 
 	nation = &gd.nations[Cvar_VariableInteger("mission_recoverynation")];
@@ -4253,8 +4251,6 @@ static void CP_UFORecoveredSell_f (void)
  */
 static void CP_UFORecoveredDestroy_f (void)
 {
-	char messageBuffer[256];
-
 	/* Do nothing if recovery process is finished. */
 	if (Cvar_VariableInteger("mission_uforecoverydone") == 1)
 		return;
