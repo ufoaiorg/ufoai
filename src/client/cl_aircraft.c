@@ -257,6 +257,8 @@ void AIR_AircraftInit (void)
 			else
 				Com_Printf("AIR_AircraftInit: No tech with the name '%s' found for craftitem '%s'.\n",  aircraftitem->tech, aircraftitem->id);
 		}
+		/* Convert installationTime from hours to second */
+		aircraftitem->installationTime *= 3600;
 	}
 
 	Com_Printf("...aircraft and aircraft-items inited\n");
@@ -438,6 +440,58 @@ extern void AIM_PrevAircraft_f (void)
 	} else {
 		Com_DPrintf("AIM_PrevAircraft_f: we are at the beginning of the list already -> mn_aircraft_idx: %i - numAircraftInBase: %i\n", aircraftID, baseCurrent->numAircraftInBase);
 	}
+}
+
+/**
+* @brief Update the installation delay of one slot of a given aircraft.
+* @param[in] slot Pointer to the slot to update
+* @param[in] dt Time ellapsed since last call of this function
+*/
+static void AII_UpdateOneInstallationDelay (aircraftSlot_t *slot, int dt)
+{
+	/* if the item is already installed, nothing to do */
+	if (slot->installationTime == 0)
+		return;
+	else if (slot->installationTime > 0) {
+		/* the item is being installed */
+		slot->installationTime -= dt;
+		if (slot->installationTime < 0)
+			slot->installationTime = 0;
+	} else if (slot->installationTime < 0) {
+		/* the item is being removed */
+		slot->installationTime += dt;
+		if (slot->installationTime > 0) {
+			/* the removal is over */
+			if (slot->nextItemIdx > -1) {
+				/* there is anoter item to install after this one */
+				slot->itemIdx = slot->nextItemIdx;
+				slot->nextItemIdx = -1;
+				slot->installationTime = aircraftItems[slot->itemIdx].installationTime;
+			} else
+				slot->installationTime = 0;
+		}
+	}
+}
+
+/**
+* @brief Update the installation delay of all slots of a given aircraft.
+* @param[in] aircraft Pointer to the aircraft
+*/
+
+static void AII_UpdateInstallationDelay (aircraft_t *aircraft, int dt)
+{
+	int i;
+
+	/* Update electronics delay */
+	for (i = 0; i < aircraft->maxElectronics; i++)
+		AII_UpdateOneInstallationDelay(aircraft->electronics + i, dt);
+
+	/* Update weapons delay */
+	for (i = 0; i < aircraft->maxWeapons; i++)
+		AII_UpdateOneInstallationDelay(aircraft->weapons + i, dt);
+
+	/* Update shield delay */
+	AII_UpdateOneInstallationDelay(&aircraft->shield, dt);
 }
 
 /**
@@ -913,6 +967,8 @@ void CL_CampaignRunAircraft (int dt)
 							aircraft->weapons[0].delayNextShot -= dt;
 				}
 
+				/* Update aircraft items installation delay */
+				AII_UpdateInstallationDelay(aircraft, dt);
 			}
 	}
 }
@@ -1109,9 +1165,9 @@ void AIM_AircraftEquipmenuInit_f (void)
 		if (!slot->installationTime)
 			Q_strcat(smallbuffer1, "This item is functionnal\n", sizeof(smallbuffer1));
 		else if (slot->installationTime > 0)
-			Q_strcat(smallbuffer1, va(_("This item will be installed in %i hours\n"),slot->installationTime), sizeof(smallbuffer1));
+			Q_strcat(smallbuffer1, va(_("This item will be installed in %i hours\n"),(slot->installationTime - 1) / 3600 + 1), sizeof(smallbuffer1));
 		else
-			Q_strcat(smallbuffer1, va(_("This item will be removed in %i hours\n"),-slot->installationTime), sizeof(smallbuffer1));
+			Q_strcat(smallbuffer1, va(_("This item will be removed in %i hours\n"),(-slot->installationTime - 1) / 3600 + 1), sizeof(smallbuffer1));
 	}
 	menuText[TEXT_AIREQUIP_1] = smallbuffer1;
 
@@ -1122,7 +1178,7 @@ void AIM_AircraftEquipmenuInit_f (void)
 		else {
 			Com_sprintf(smallbuffer2, sizeof(smallbuffer2), _(gd.technologies[aircraftItems[slot->nextItemIdx].tech_idx].name));
 			Q_strcat(smallbuffer2, "\n", sizeof(smallbuffer2));
-			Q_strcat(smallbuffer2, va(_("This item will be operational in %i hours\n"),aircraftItems[slot->nextItemIdx].installationTime - slot->installationTime), sizeof(smallbuffer2));
+			Q_strcat(smallbuffer2, va(_("This item will be operational in %i hours\n"), (aircraftItems[slot->nextItemIdx].installationTime - slot->installationTime) / 3600 + 1), sizeof(smallbuffer2));
 		}
 	} else
 		*smallbuffer2 = '\0';
@@ -1434,6 +1490,7 @@ static const value_t aircraftitems_vals[] = {
 	{"tech", V_CLIENT_HUNK_STRING, offsetof(aircraftItem_t, tech), 0},
 	{"speed", V_RELABS, offsetof(aircraftItem_t, stats[AIR_STATS_SPEED]), MEMBER_SIZEOF(aircraftItem_t, stats[AIR_STATS_SPEED])},
 	{"price", V_INT, offsetof(aircraftItem_t, price), MEMBER_SIZEOF(aircraftItem_t, price)},
+	{"installationTime", V_INT, offsetof(aircraftItem_t, installationTime), MEMBER_SIZEOF(aircraftItem_t, installationTime)},
 	{"shield", V_RELABS, offsetof(aircraftItem_t, stats[AIR_STATS_SHIELD]), MEMBER_SIZEOF(aircraftItem_t,  stats[AIR_STATS_SHIELD])},
 	{"wrange", V_FLOAT, offsetof(aircraftItem_t, stats[AIR_STATS_WRANGE]), MEMBER_SIZEOF(aircraftItem_t, stats[AIR_STATS_WRANGE])},
 	{"wspeed", V_FLOAT, offsetof(aircraftItem_t, weaponSpeed), MEMBER_SIZEOF(aircraftItem_t, weaponSpeed)},
@@ -1893,6 +1950,7 @@ extern qboolean AII_AddItemToSlot (technology_t *tech, aircraftSlot_t *slot)
 	assert(tech);
 
 	slot->itemIdx = AII_GetAircraftItemByID(tech->provides);
+	slot->installationTime = aircraftItems[slot->itemIdx].installationTime;
 
 	return qtrue;
 }

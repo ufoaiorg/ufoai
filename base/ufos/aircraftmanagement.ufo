@@ -351,6 +351,7 @@ craftitem craft_weapon_shiva
 	type		weapon
 	tech		rs_craft_weapon_shiva
 	weight		light
+	installationTime	2
 	price		34000
 }
 
@@ -388,6 +389,7 @@ craftitem craft_el_raven
 {
 	type	electronics
 	tech		rs_craft_el_raven
+	installationTime	1
 	price		12345
 
 	ecm		1.25
@@ -398,6 +400,7 @@ craftitem craft_weapon_sparrowhawk
 	type	weapon
 	tech		rs_craft_weapon_sparrowhawk
 	weight		light
+	installationTime	2
 	price		12321
 
 	speed		-10
@@ -423,6 +426,7 @@ craftitem craft_weapon_tr20
 	type	weapon
 	tech		rs_craft_weapon_tr20
 	weight		medium
+	installationTime	2
 	price		19998
 
 	speed		-14
@@ -448,6 +452,7 @@ craftitem craft_weapon_particle_beam
 	type	weapon
 	tech		rs_craft_weapon_particle
 	weight		medium
+	installationTime	2
 	price		25252
 
 	damage		35
@@ -459,6 +464,7 @@ craftitem craft_el_targeting
 {
 	type	electronics
 	tech		rs_craft_el_targeting
+	installationTime	1
 	price		33333
 
 	accuracy	1.25
@@ -468,6 +474,7 @@ craftitem craft_el_fuelpod
 {
 	type	electronics
 	tech		rs_craft_el_fuelpod
+	installationTime	2
 	price		8500
 
 	range		+100
@@ -478,6 +485,7 @@ craftitem craft_shield_polymer
 {
 	type	shield
 	tech		rs_craft_shield_polymer
+	installationTime	24
 	price		16000
 
 	shield		1.25

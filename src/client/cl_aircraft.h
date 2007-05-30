@@ -125,8 +125,8 @@ typedef struct aircraftSlot_s {
 	itemWeight_t size;			/**< The maximum size (weight) of item that can fit in this slot. */
 	int ammoLeft;				/**< The number of ammo left in this slot */
 	int delayNextShot;			/**< The delay before the next projectile can be shot */
-	int installationTime;		/**< The time left before the item is finished to be installed or removed in/from slot
-								  *	This is > 0 if the item ins installed, < 0 if the item is removed, 0 if the item is in place */
+	int installationTime;		/**< The time (in second) left before the item is finished to be installed or removed in/from slot
+								  *	This is > 0 if the item is being installed, < 0 if the item is being removed, 0 if the item is in place */
 	int nextItemIdx;			/**< Indice in aircraftItems[] of the next item to install when the current item in slot will be removed
 								  *	(Should be used only if installationTime is different of 0 */
 	itemPos_t pos;				/**< Position of the slot on the aircraft */
