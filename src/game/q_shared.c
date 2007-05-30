@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "q_shared.h"
 
-#ifdef Q2_MMX_ENABLED
+#ifdef UFO_MMX_ENABLED
 /* used for mmx optimizations */
 #include <xmmintrin.h>
 #endif
@@ -1134,7 +1134,7 @@ vec_t _DotProduct (vec3_t v1, vec3_t v2)
  */
 void _VectorSubtract (vec3_t veca, vec3_t vecb, vec3_t out)
 {
-#ifdef Q2_MMX_ENABLED
+#ifdef UFO_MMX_ENABLED
 	/* raynorpat: msvc sse optimization */
 	__m128 xmm_veca, xmm_vecb, xmm_out;
 
@@ -1168,7 +1168,7 @@ void _VectorSubtract (vec3_t veca, vec3_t vecb, vec3_t out)
  */
 void _VectorAdd (vec3_t veca, vec3_t vecb, vec3_t out)
 {
-#ifdef Q2_MMX_ENABLED
+#ifdef UFO_MMX_ENABLED
 	/* raynorpat: msvc sse optimization */
 	__m128 xmm_veca, xmm_vecb, xmm_out;
 
@@ -1200,7 +1200,7 @@ void _VectorAdd (vec3_t veca, vec3_t vecb, vec3_t out)
  */
 void _VectorCopy (vec3_t in, vec3_t out)
 {
-#ifdef Q2_MMX_ENABLED
+#ifdef UFO_MMX_ENABLED
 	/* raynorpat: msvc sse optimization */
 	__m128 xmm_in;
 
@@ -1283,7 +1283,7 @@ void VectorInverse (vec3_t v)
  */
 void VectorScale (vec3_t in, vec_t scale, vec3_t out)
 {
-#ifdef Q2_MMX_ENABLED
+#ifdef UFO_MMX_ENABLED
 	/* raynorpat: msvc sse optimization */
 	__m128 xmm_in, xmm_scale, xmm_out;
 
