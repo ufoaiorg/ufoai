@@ -206,7 +206,7 @@ void SetQdirFromPath (char *path)
 			strncat(gamedir, "/"BASEDIR"/", sizeof(gamedir));
 /*			Sys_FPrintf(SYS_VRB, "gamedir: %s\n", gamedir);*/
 			Sys_Printf("gamedir: %s\n", gamedir);
-			snprintf(c, sizeof(c) - 1, "%s/0pics.pk3", gamedir);
+			snprintf(c, sizeof(c) - 1, "%s0pics.pk3", gamedir);
 			pak = FS_LoadPackFile(c);
 			if (!pak)
 				Sys_Printf("Could not load image pk3 (%s)\n", c);
@@ -566,8 +566,10 @@ static pack_t *FS_LoadPackFile (const char *packfile)
 	char filename_inzip[MAX_QPATH];
 
 	packhandle = fopen(packfile, "rb");
-	if (!packhandle)
+	if (!packhandle) {
+		Sys_FPrintf(SYS_VRB, "Could not open '%s' for reading\n", packfile);
 		return NULL;
+	}
 	len = strlen(packfile);
 
 	if (!Q_strncasecmp(packfile + len - 4, ".pk3", 4) || !Q_strncasecmp(packfile + len - 4, ".zip", 4)) {
@@ -575,7 +577,7 @@ static pack_t *FS_LoadPackFile (const char *packfile)
 		err = unzGetGlobalInfo(uf, &gi);
 
 		if (err != UNZ_OK) {
-			Sys_Printf("Could not load '%s'\n", packfile);
+			Sys_FPrintf(SYS_VRB, "Could not load '%s' into zlib\n", packfile);
 			return NULL;
 		}
 

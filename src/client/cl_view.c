@@ -137,7 +137,7 @@ void V_AddLightStyle (int style, float r, float g, float b)
 void CL_ParseEntitystring (char *es)
 {
 	char *strstart;
-	char *com_token;
+	char *entity_token;
 	char keyname[256];
 
 	char classname[MAX_VAR];
@@ -196,11 +196,11 @@ void CL_ParseEntitystring (char *es)
 		skin = 0;
 
 		/* parse the opening brace */
-		com_token = COM_Parse(&es);
+		entity_token = COM_Parse(&es);
 		if (!es)
 			break;
-		if (com_token[0] != '{')
-			Com_Error(ERR_DROP, "CL_ParseEntitystring: found %s when expecting {", com_token);
+		if (entity_token[0] != '{')
+			Com_Error(ERR_DROP, "CL_ParseEntitystring: found %s when expecting {", entity_token);
 
 		/* memorize the start */
 		strstart = es;
@@ -208,64 +208,64 @@ void CL_ParseEntitystring (char *es)
 		/* go through all the dictionary pairs */
 		while (1) {
 			/* parse key */
-			com_token = COM_Parse(&es);
-			if (com_token[0] == '}')
+			entity_token = COM_Parse(&es);
+			if (entity_token[0] == '}')
 				break;
 			if (!es)
 				Com_Error(ERR_DROP, "CL_ParseEntitystring: EOF without closing brace");
 
-			Q_strncpyz(keyname, com_token, sizeof(keyname));
+			Q_strncpyz(keyname, entity_token, sizeof(keyname));
 
 			/* parse value */
-			com_token = COM_Parse(&es);
+			entity_token = COM_Parse(&es);
 			if (!es)
 				Com_Error(ERR_DROP, "CL_ParseEntitystring: EOF without closing brace");
 
-			if (com_token[0] == '}')
+			if (entity_token[0] == '}')
 				Com_Error(ERR_DROP, "CL_ParseEntitystring: closing brace without data");
 
 			/* filter interesting keys */
 			if (!Q_strcmp(keyname, "classname"))
-				Q_strncpyz(classname, com_token, sizeof(classname));
+				Q_strncpyz(classname, entity_token, sizeof(classname));
 			else if (!Q_strcmp(keyname, "model"))
-				Q_strncpyz(model, com_token, sizeof(model));
+				Q_strncpyz(model, entity_token, sizeof(model));
 			else if (!Q_strcmp(keyname, "frame"))
-				frame = atoi(com_token);
+				frame = atoi(entity_token);
 			else if (!Q_strcmp(keyname, "anim"))
-				Q_strncpyz(animname, com_token, sizeof(animname));
+				Q_strncpyz(animname, entity_token, sizeof(animname));
 			else if (!Q_strcmp(keyname, "particle"))
-				Q_strncpyz(particle, com_token, sizeof(particle));
+				Q_strncpyz(particle, entity_token, sizeof(particle));
 			else if (!Q_strcmp(keyname, "_color") || !Q_strcmp(keyname, "lightcolor"))
-				Com_ParseValue(color, com_token, V_VECTOR, 0, sizeof(vec3_t));
+				Com_ParseValue(color, entity_token, V_VECTOR, 0, sizeof(vec3_t));
 			else if (!Q_strcmp(keyname, "origin"))
-				Com_ParseValue(origin, com_token, V_VECTOR, 0, sizeof(vec3_t));
+				Com_ParseValue(origin, entity_token, V_VECTOR, 0, sizeof(vec3_t));
 			else if (!Q_strcmp(keyname, "ambient") || !Q_strcmp(keyname, "lightambient"))
-				Com_ParseValue(ambient, com_token, V_VECTOR, 0, sizeof(vec3_t));
+				Com_ParseValue(ambient, entity_token, V_VECTOR, 0, sizeof(vec3_t));
 			else if (!Q_strcmp(keyname, "angles") && !angles[YAW])
 				/* pitch, yaw, roll */
-				Com_ParseValue(angles, com_token, V_VECTOR, 0, sizeof(vec3_t));
+				Com_ParseValue(angles, entity_token, V_VECTOR, 0, sizeof(vec3_t));
 			else if (!Q_strcmp(keyname, "angle") && !angles[YAW])
-				angles[YAW] = atof(com_token);
+				angles[YAW] = atof(entity_token);
 			else if (!Q_strcmp(keyname, "wait"))
-				Com_ParseValue(wait, com_token, V_POS, 0, sizeof(vec2_t));
+				Com_ParseValue(wait, entity_token, V_POS, 0, sizeof(vec2_t));
 			else if (!Q_strcmp(keyname, "light"))
-				light = atof(com_token);
+				light = atof(entity_token);
 			else if (!Q_strcmp(keyname, "lightangles"))
-				Com_ParseValue(lightangles, com_token, V_VECTOR, 0, sizeof(vec3_t));
+				Com_ParseValue(lightangles, entity_token, V_VECTOR, 0, sizeof(vec3_t));
 			else if (!Q_strcmp(keyname, "spawnflags"))
-				spawnflags = atoi(com_token);
+				spawnflags = atoi(entity_token);
 			else if (!Q_strcmp(keyname, "maxlevel"))
-				maxlevel = atoi(com_token);
+				maxlevel = atoi(entity_token);
 			else if (!Q_strcmp(keyname, "maxteams"))
-				maxmultiplayerteams = atoi(com_token);
+				maxmultiplayerteams = atoi(entity_token);
 			else if (!Q_strcmp(keyname, "dropship_coord"))
-				Com_ParseValue(dropship_coord, com_token, V_VECTOR, 0, sizeof(vec3_t));
+				Com_ParseValue(dropship_coord, entity_token, V_VECTOR, 0, sizeof(vec3_t));
 			else if (!Q_strcmp(keyname, "fog"))
-				map_fog = atof(com_token);
+				map_fog = atof(entity_token);
 			else if (!Q_strcmp(keyname, "fogcolor"))
-				Com_ParseValue(map_fogColor, com_token, V_VECTOR, 0, sizeof(vec3_t));
+				Com_ParseValue(map_fogColor, entity_token, V_VECTOR, 0, sizeof(vec3_t));
 			else if (!Q_strcmp(keyname, "skin"))
-				skin = atoi(com_token);
+				skin = atoi(entity_token);
 		}
 
 		/* analyze values */
