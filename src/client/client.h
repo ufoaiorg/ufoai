@@ -658,7 +658,7 @@ void CL_DisplayBlockedPaths_f(void);
 void CL_ConditionalMoveCalc(struct routing_s *map, le_t *le, int distance);
 qboolean CL_ActorSelect(le_t * le);
 qboolean CL_ActorSelectList(int num);
-qboolean CL_ActorSelectNext();
+qboolean CL_ActorSelectNext(void);
 void CL_AddActorToTeamList(le_t * le);
 void CL_RemoveActorFromTeamList(le_t * le);
 void CL_ActorSelectMouse(void);

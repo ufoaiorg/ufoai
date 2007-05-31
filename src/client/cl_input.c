@@ -46,6 +46,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 
 extern unsigned sys_frame_time;
+extern pos3_t mousePendPos;
 
 int mouseSpace;
 int mx, my;
@@ -491,8 +492,6 @@ invList_t* CL_GetLeftHandWeapon (le_t *actor)
  */
 static void CL_ConfirmAction_f (void)
 {
-	extern pos3_t mousePendPos;
-
 	if (!selActor)
 		return;
 
