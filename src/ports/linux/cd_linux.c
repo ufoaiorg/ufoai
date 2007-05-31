@@ -231,10 +231,10 @@ void CDAudio_Play (int track, qboolean looping)
 	}
 
 #if defined(__FreeBSD__) || defined(__NetBSD__)
-	if ( ioctl(cdfile, CDIOCRESUME) == -1 )
+	if (ioctl(cdfile, CDIOCRESUME) == -1)
 #endif
 #if defined(__linux__)
-	if ( ioctl(cdfile, CDROMRESUME) == -1 )
+	if (ioctl(cdfile, CDROMRESUME) == -1)
 #endif
 		Com_DPrintf("ioctl cdromresume failed\n");
 
@@ -242,8 +242,8 @@ void CDAudio_Play (int track, qboolean looping)
 	playTrack = track;
 	playing = qtrue;
 
-	if (cd_volume->value == 0.0)
-		CDAudio_Pause ();
+	if (!cd_volume->integer)
+		CDAudio_Pause();
 }
 
 /**
@@ -282,7 +282,7 @@ void CDAudio_RandomPlay (void)
 
 		entry.starting_track = remap[i];
 		entry.address_format = CD_LBA_FORMAT;
-		if ( ioctl(cdfile, CDIOREADTOCENTRYS, &entry) == -1 ) {
+		if (ioctl(cdfile, CDIOREADTOCENTRYS, &entry) == -1) {
 			track_bools[i] = 0;
 		} else
 			track_bools[i] = (entry.data->control != CDROM_DATA_TRACK);
@@ -290,7 +290,7 @@ void CDAudio_RandomPlay (void)
 #if defined(__linux__)
 		entry.cdte_track = remap[i];
 		entry.cdte_format = CDROM_LBA;
-		if ( ioctl(cdfile, CDROMREADTOCENTRY, &entry) == -1 ) {
+		if (ioctl(cdfile, CDROMREADTOCENTRY, &entry) == -1) {
 			track_bools[i] = 0;
 		} else
 			track_bools[i] = (entry.cdte_ctrl != CDROM_DATA_TRACK);
@@ -310,7 +310,7 @@ void CDAudio_RandomPlay (void)
 			f = ((float)rand()) / ((float)RAND_MAX + 1.0);
 			track = (int)(maxTrack  * f);
 		}
-		while ( ! track_bools[track] );
+		while (!track_bools[track]);
 
 		remap_track = remap[track];
 
@@ -336,7 +336,7 @@ void CDAudio_RandomPlay (void)
 		ti.cdti_ind1 = 0;
 #endif
 
-		if ( ioctl(cdfile, CDROMPLAYTRKIND, &ti) == -1 ) {
+		if (ioctl(cdfile, CDROMPLAYTRKIND, &ti) == -1) {
 			track_bools[track] = 0;
 			free_tracks--;
 		} else {
