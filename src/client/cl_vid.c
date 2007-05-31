@@ -68,6 +68,7 @@ void VID_Error (int err_level, const char *fmt, ...)
 	Q_vsnprintf(msg, sizeof(msg), fmt, argptr);
 	va_end(argptr);
 
+	Cbuf_ExecuteText(EXEC_NOW, "gl_reset");
 	Com_Error(err_level, "%s", msg);
 }
 

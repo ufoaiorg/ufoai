@@ -156,9 +156,19 @@ cvar_t *vid_ref;
 cvar_t *vid_grabmouse;
 
 /**
+ * @brief Reset to initial state
+ */
+static void GL_Reset_f (void)
+{
+	GL_EnableMultitexture(qfalse);
+	GLSTATE_DISABLE_ALPHATEST
+	GLSTATE_DISABLE_BLEND
+}
+
+/**
  * @brief Prints some OpenGL strings
  */
-static void GL_Strings_f(void)
+static void GL_Strings_f (void)
 {
 	ri.Con_Printf(PRINT_ALL, "GL_VENDOR: %s\n", gl_config.vendor_string);
 	ri.Con_Printf(PRINT_ALL, "GL_RENDERER: %s\n", gl_config.renderer_string);
@@ -1005,6 +1015,7 @@ static const cmdList_t r_commands[] = {
 	{"screenshot", GL_ScreenShot_f, "Take a screenshot"},
 	{"modellist", Mod_Modellist_f, NULL},
 	{"gl_strings", GL_Strings_f, NULL},
+	{"gl_reset", GL_Reset_f, "Reset to initial state"},
 
 	{NULL, NULL, NULL}
 };
