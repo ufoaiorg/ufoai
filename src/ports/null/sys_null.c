@@ -86,7 +86,7 @@ void *Hunk_Begin (int maxsize)
 	return NULL;
 }
 
-void *Hunk_Alloc (int size)
+void *Hunk_Alloc (int size, const char *name)
 {
 	return NULL;
 }

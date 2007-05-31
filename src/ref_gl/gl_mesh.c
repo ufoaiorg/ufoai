@@ -171,7 +171,7 @@ static qboolean R_CullAliasModel (vec4_t bbox[8], entity_t * e)
 	float dp;
 
 	assert(currentmodel->type == mod_alias_md2);
-	paliashdr = (dmdl_t *) currentmodel->extradata;
+	paliashdr = (dmdl_t *) currentmodel->extraData;
 
 	pframe = (daliasframe_t *) ((byte *) paliashdr + paliashdr->ofs_frames + e->as.frame * paliashdr->framesize);
 
@@ -357,7 +357,7 @@ void R_DrawAliasModel (entity_t * e)
 	image_t *skin;
 
 	assert(currentmodel->type == mod_alias_md2);
-	paliashdr = (dmdl_t *) currentmodel->extradata;
+	paliashdr = (dmdl_t *) currentmodel->extraData;
 
 	/* check animations */
 	if ((e->as.frame >= paliashdr->num_frames) || (e->as.frame < 0)) {
@@ -566,7 +566,7 @@ static void R_TransformModelDirect (modelInfo_t * mi)
 
 		/* get model data */
 		assert(mi->model->type == mod_alias_md2);
-		paliashdr = (dmdl_t *) mi->model->extradata;
+		paliashdr = (dmdl_t *) mi->model->extraData;
 		pframe = (daliasframe_t *) ((byte *) paliashdr + paliashdr->ofs_frames);
 
 		/* get center and scale */
@@ -601,7 +601,7 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 	if (!mi->model || mi->model->type != mod_alias_md2)
 		return;
 
-	paliashdr = (dmdl_t *) mi->model->extradata;
+	paliashdr = (dmdl_t *) mi->model->extraData;
 
 	/* check animations */
 	if ((mi->frame >= paliashdr->num_frames) || (mi->frame < 0)) {
@@ -721,7 +721,7 @@ void R_DrawModelParticle (modelInfo_t * mi)
 	if (!mi->model || mi->model->type != mod_alias_md2)
 		return;
 
-	paliashdr = (dmdl_t *) mi->model->extradata;
+	paliashdr = (dmdl_t *) mi->model->extraData;
 
 	/* check animations */
 	if ((mi->frame >= paliashdr->num_frames) || (mi->frame < 0)) {

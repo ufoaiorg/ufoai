@@ -36,8 +36,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static int hunkcount;
 
 static byte *membase;
-static int hunkmaxsize;
-static int cursize;
+static int maxhunksize;
+static int curhunksize;
 
 #define	VIRTUAL_ALLOC
 
@@ -47,8 +47,8 @@ static int cursize;
 void *Hunk_Begin (int maxsize)
 {
 	/* reserve a huge chunk of memory, but don't commit any yet */
-	cursize = 0;
-	hunkmaxsize = maxsize;
+	curhunksize = 0;
+	maxhunksize = maxsize;
 #ifdef VIRTUAL_ALLOC
 	membase = VirtualAlloc(NULL, maxsize, MEM_RESERVE, PAGE_NOACCESS);
 	if (!membase)
@@ -65,7 +65,7 @@ void *Hunk_Begin (int maxsize)
 /**
  * @brief
  */
-void *Hunk_Alloc (int size)
+void *Hunk_Alloc (int size, const char *name)
 {
 	void	*buf;
 
@@ -75,20 +75,23 @@ void *Hunk_Alloc (int size)
 	/* round to cacheline */
 	size = (size + 31) &~ 31;
 
+	Com_DPrintf("Hunk_Alloc: Allocate %8i / %8i bytes (used: %8i bytes): %s\n",
+		size, maxhunksize, curhunksize, name);
+
 #ifdef VIRTUAL_ALLOC
 	/* commit pages as needed */
-/*	buf = VirtualAlloc (membase+cursize, size, MEM_COMMIT, PAGE_READWRITE); */
-	buf = VirtualAlloc (membase, cursize+size, MEM_COMMIT, PAGE_READWRITE);
+/*	buf = VirtualAlloc(membase+curhunksize, size, MEM_COMMIT, PAGE_READWRITE); */
+	buf = VirtualAlloc(membase, curhunksize + size, MEM_COMMIT, PAGE_READWRITE);
 	if (!buf) {
 		FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM, NULL, GetLastError(), MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR) &buf, 0, NULL);
 		Sys_Error("VirtualAlloc commit failed.\n%p", buf);
 	}
 #endif
-	cursize += size;
-	if (cursize > hunkmaxsize)
+	curhunksize += size;
+	if (curhunksize > maxhunksize)
 		Sys_Error("Hunk_Alloc overflow");
 
-	return (void *)(membase+cursize-size);
+	return (void *)(membase + curhunksize - size);
 }
 
 /**
@@ -101,14 +104,14 @@ int Hunk_End (void)
 	void	*buf;
 
 	/* write protect it */
-	buf = VirtualAlloc(membase, cursize, MEM_COMMIT, PAGE_READONLY);
+	buf = VirtualAlloc(membase, curhunksize, MEM_COMMIT, PAGE_READONLY);
 	if (!buf)
 		Sys_Error("VirtualAlloc commit failed");
 #endif
 
 	hunkcount++;
 /*	Com_Printf("hunkcount: %i\n", hunkcount); */
-	return cursize;
+	return curhunksize;
 }
 
 /**
@@ -116,7 +119,7 @@ int Hunk_End (void)
  */
 void Hunk_Free (void *base)
 {
-	if ( base )
+	if (base)
 #ifdef VIRTUAL_ALLOC
 		VirtualFree(base, 0, MEM_RELEASE);
 #else

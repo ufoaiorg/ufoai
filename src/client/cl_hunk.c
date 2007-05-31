@@ -147,6 +147,9 @@ extern void *CL_ClientHunkUse (const void *data, size_t size)
 {
 	void *hunkPos = clHunkPointerPos;
 	assert(clHunkData);
+
+	size = (size + 31) & ~31;  /* round to cacheline */
+
 	if (clHunkPointerPos + size > clHunkData + (cl_hunkmegs->integer * 1024 * 1024))
 		Sys_Error("Increase the cl_hunkmegs value\n");
 	/* maybe we just want to alloc, but not copy the mem */

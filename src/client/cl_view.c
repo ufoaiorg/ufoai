@@ -393,7 +393,7 @@ void CL_PrepRefresh (void)
 	/* register models, pics, and skins */
 	Com_Printf("Map: %s\n", cl.configstrings[CS_NAME]);
 	SCR_UpdateScreen();
-	re.BeginRegistration(cl.configstrings[CS_TILES], cl.configstrings[CS_POSITIONS]);
+	re.BeginLoading(cl.configstrings[CS_TILES], cl.configstrings[CS_POSITIONS]);
 	CL_ParseEntitystring(map_entitystring);
 	Com_Printf("                                     \r");
 
@@ -471,7 +471,7 @@ void CL_PrepRefresh (void)
 	SCR_UpdateScreen();
 
 	/* the renderer can now free unneeded stuff */
-	re.EndRegistration();
+	re.EndLoading();
 
 	Com_sprintf(cls.loadingMessages, sizeof(cls.loadingMessages), _("Awaiting game start"));
 	SCR_UpdateScreen();

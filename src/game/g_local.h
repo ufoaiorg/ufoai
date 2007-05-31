@@ -254,7 +254,7 @@ void G_SetMovedir(vec3_t angles, vec3_t movedir);
 edict_t *G_Spawn(void);
 void G_FreeEdict(edict_t * e);
 
-char *G_CopyString(char *in);
+char *G_CopyString(const char *in);
 
 float *tv(float x, float y, float z);
 char *vtos(vec3_t v);

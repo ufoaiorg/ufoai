@@ -121,7 +121,7 @@ void R_DrawAliasMD3Model (entity_t *e)
 
 	assert(currentmodel->type == mod_alias_md3);
 
-	paliashdr = (maliasmodel_t *)currentmodel->extradata;
+	paliashdr = (maliasmodel_t *)currentmodel->extraData;
 
 	/* set-up lighting */
 	lightfixed = e->flags & RF_LIGHTFIXED ? qtrue : qfalse;

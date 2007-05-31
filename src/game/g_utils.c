@@ -424,7 +424,7 @@ float vectoyaw (vec3_t vec)
 /**
  * @brief Allocates memory in TAG_LEVEL context for edicts
  */
-char *G_CopyString (char *in)
+char *G_CopyString (const char *in)
 {
 	char *out;
 	size_t l = strlen(in);

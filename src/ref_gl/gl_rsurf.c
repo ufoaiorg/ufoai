@@ -1043,7 +1043,7 @@ extern void GL_BuildPolygonFromSurface (msurface_t * fa, int shift[3])
 	VectorClear(total);
 
 	/* draw texture */
-	poly = Hunk_Alloc(sizeof(glpoly_t) + (lnumverts - 4) * VERTEXSIZE * sizeof(float));
+	poly = Hunk_Alloc(sizeof(glpoly_t) + (lnumverts - 4) * VERTEXSIZE * sizeof(float), "GL_BuildPolygonFromSurface");
 	poly->next = fa->polys;
 	fa->polys = poly;
 	poly->numverts = lnumverts;
@@ -1122,6 +1122,8 @@ void GL_CreateSurfaceLightmap (msurface_t * surf)
 
 /**
  * @brief
+ * @sa GL_BeginLoading
+ * @sa GL_EndBuildingLightmaps
  */
 void GL_BeginBuildingLightmaps (void)
 {
@@ -1188,6 +1190,8 @@ void GL_BeginBuildingLightmaps (void)
 
 /**
  * @brief
+ * @sa GL_BeginBuildingLightmaps
+ * @sa GL_BeginLoading
  */
 void GL_EndBuildingLightmaps (void)
 {

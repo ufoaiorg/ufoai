@@ -80,7 +80,7 @@ void* Hunk_Begin (int theMaxSize)
 /**
  * @brief
  */
-void* Hunk_Alloc (int size)
+void* Hunk_Alloc (int size, const char *name)
 {
 	unsigned char	*myMemory;
 
@@ -88,6 +88,10 @@ void* Hunk_Alloc (int size)
 		return NULL;
 
 	size = (size + 31) & ~31;
+
+	Com_DPrintf("Hunk_Alloc: Allocate %8i / %8i bytes (used: %8i bytes): %s\n",
+		size, maxhunksize, curhunksize, name);
+
 	if (curhunksize + size > maxhunksize)
 		Sys_Error("Hunk_Alloc overflow");
 	myMemory = membase + sizeof(int) + curhunksize;

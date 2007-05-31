@@ -68,7 +68,7 @@ void *Hunk_Begin (int maxsize)
 /**
  * @brief
  */
-void *Hunk_Alloc (int size)
+void *Hunk_Alloc (int size, const char *name)
 {
 	byte *buf;
 
@@ -76,7 +76,11 @@ void *Hunk_Alloc (int size)
 		return NULL;
 
 	/* round to cacheline */
-	size = (size + 31) &~ 31;
+	size = (size + 31) & ~31;
+
+	Com_DPrintf("Hunk_Alloc: Allocate %8i / %8i bytes (used: %8i bytes): %s\n",
+		size, maxhunksize, curhunksize, name);
+
 	if (curhunksize + size > maxhunksize)
 		Sys_Error("Hunk_Alloc overflow");
 	buf = membase + sizeof(int) + curhunksize;
@@ -102,7 +106,8 @@ int Hunk_End (void)
 		Sys_Error("Hunk_End Overflow");
 	else if (newsz < maxhunksize) {
 		modsz = newsz % pgsz;
-		if (modsz) newsz += pgsz - modsz;
+		if (modsz)
+			newsz += pgsz - modsz;
 
 		if (munmap(membase + newsz, maxhunksize - newsz) == -1)
 			Sys_Error("Hunk_End: munmap() failed: %s", strerror(errno));

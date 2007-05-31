@@ -481,7 +481,7 @@ char *strlwr(char *s);          /* this is non ansi and is defined for some OSs 
 
 /* large block stack allocation routines */
 void *Hunk_Begin(int maxsize);
-void *Hunk_Alloc(int size);
+void *Hunk_Alloc(int size, const char *name);
 void Hunk_Free(void *buf) __attribute__((nonnull));
 int Hunk_End(void);
 

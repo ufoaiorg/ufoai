@@ -60,22 +60,21 @@ void ( APIENTRY * qglPNTrianglesfATIX) (GLenum pname, GLfloat param);
  */
 void* qglGetProcAddress (const char *theName, enum qglGetAdrMode theMode)
 {
-	NSSymbol	mySymbol = NULL;
-	char *	mySymbolName = malloc (strlen (theName) + 2);
+	NSSymbol mySymbol = NULL;
+	char *mySymbolName = malloc(strlen(theName) + 2);
 
 	if (mySymbolName != NULL) {
-		strcpy (mySymbolName + 1, theName);
-		mySymbolName[0] = '_';
+		Com_sprintf(mySymbolName, strlen(theName) + 2, "_%s", theName);
 
 		mySymbol = NULL;
-		if (NSIsSymbolNameDefined (mySymbolName))
-			mySymbol = NSLookupAndBindSymbol (mySymbolName);
+		if (NSIsSymbolNameDefined(mySymbolName))
+			mySymbol = NSLookupAndBindSymbol(mySymbolName);
 
-		free (mySymbolName);
+		free(mySymbolName);
 	}
 
 	if (theMode == QGL_SAFE_SYMBOL && mySymbol == NULL) {
-		ri.Sys_Error (ERR_FATAL, "Failed to import a required OpenGL function!\n");
+		ri.Sys_Error(ERR_FATAL, "Failed to import a required OpenGL function!\n");
 	}
 
 	return ((mySymbol != NULL) ? NSAddressOfSymbol(mySymbol) : NULL);

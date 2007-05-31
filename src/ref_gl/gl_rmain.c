@@ -245,7 +245,7 @@ static void R_DrawSpriteModel (entity_t * e)
 	/* don't even bother culling, because it's just a single */
 	/* polygon without a surface cache */
 	assert(currentmodel->type == mod_sprite);
-	psprite = (dsprite_t *) currentmodel->extradata;
+	psprite = (dsprite_t *) currentmodel->extraData;
 
 #if 0
 	if (e->frame < 0 || e->frame >= psprite->numframes) {
@@ -1674,11 +1674,11 @@ refexport_t GetRefAPI (refimport_t rimp)
 
 	re.api_version = API_VERSION;
 
-	re.BeginRegistration = R_BeginRegistration;
+	re.BeginLoading = GL_BeginLoading;
 	re.RegisterModel = R_RegisterModelShort;
 	re.RegisterSkin = R_RegisterSkin;
 	re.RegisterPic = Draw_FindPic;
-	re.EndRegistration = R_EndRegistration;
+	re.EndLoading = GL_EndLoading;
 
 	re.RenderFrame = R_RenderFrame;
 	re.SetRefDef = R_SetRefreshDefinition;

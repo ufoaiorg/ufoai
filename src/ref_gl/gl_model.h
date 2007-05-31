@@ -233,8 +233,8 @@ typedef struct model_s {
 	/** for alias models and skins */
 	image_t *skins[MAX_MD2SKINS];
 
-	int extradatasize;
-	void *extradata;
+	int extraDataSize;
+	void *extraData;
 
 	/** tag data */
 	char tagname[MAX_QPATH];
@@ -252,14 +252,6 @@ typedef struct model_s {
 /*============================================================================ */
 
 void Mod_ClearAll(void);
-
 void Mod_Modellist_f(void);
-
-void *Hunk_Begin(int maxsize);
-void *Hunk_Alloc(int size);
-int Hunk_End(void);
-void Hunk_Free(void *base);
-
 void Mod_FreeAll(void);
-
 void Mod_DrawModelBBox(vec4_t bbox[8], entity_t *e);

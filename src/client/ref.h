@@ -287,20 +287,20 @@ typedef struct {
 	/* but they can still be registered at a later time */
 	/* if necessary. */
 
-	/* EndRegistration will free any remaining data that wasn't registered. */
-	/* Any model_s or skin_s pointers from before the BeginRegistration */
-	/* are no longer valid after EndRegistration. */
+	/* EndLoading will free any remaining data that wasn't registered. */
+	/* Any model_s or skin_s pointers from before the BeginLoading */
+	/* are no longer valid after EndLoading. */
 
 	/* Skins and images need to be differentiated, because skins */
 	/* are flood filled to eliminate mip map edge errors, and pics have */
 	/* an implicit "pics/" prepended to the name. (a pic name that starts with a */
 	/* slash will not use the "pics/" prefix or the ".pcx" postfix) */
-	void (*BeginRegistration) (char *tiles, char *pos);
+	void (*BeginLoading) (char *tiles, char *pos);
 	struct model_s *(*RegisterModel) (const char *name);
 	struct image_s *(*RegisterSkin) (const char *name);
 
 	struct image_s *(*RegisterPic) (const char *name);
-	void (*EndRegistration) (void);
+	void (*EndLoading) (void);
 
 	void (*RenderFrame) (refdef_t * fd);
 	void (*SetRefDef) (refdef_t * fd);

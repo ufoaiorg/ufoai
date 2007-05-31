@@ -506,7 +506,7 @@ void R_DrawShadow (entity_t * e)
 		return;
 
 	assert(currentmodel->type == mod_alias_md2);
-	paliashdr = (dmdl_t *) currentmodel->extradata;
+	paliashdr = (dmdl_t *) currentmodel->extraData;
 
 	frame = (daliasframe_t *) ((byte *) paliashdr + paliashdr->ofs_frames + currententity->as.frame * paliashdr->framesize);
 	verts = v = frame->verts;
@@ -585,7 +585,7 @@ void R_DrawShadowVolume (entity_t * e)
 		return;
 
 	assert(currentmodel->type == mod_alias_md2);
-	paliashdr = (dmdl_t *) currentmodel->extradata;
+	paliashdr = (dmdl_t *) currentmodel->extraData;
 
 	frame = (daliasframe_t *) ((byte *) paliashdr + paliashdr->ofs_frames + currententity->as.frame * paliashdr->framesize);
 	verts = v = frame->verts;

@@ -55,7 +55,7 @@ static void BoundPoly(int numverts, float *verts, vec3_t mins, vec3_t maxs)
 /**
  * @brief
  */
-static void SubdividePolygon(int numverts, float *verts)
+static void SubdividePolygon (int numverts, float *verts)
 {
 	int i, j, k;
 	vec3_t mins, maxs;
@@ -122,7 +122,7 @@ static void SubdividePolygon(int numverts, float *verts)
 	}
 
 	/* add a point in the center to help keep warp valid */
-	poly = Hunk_Alloc(sizeof(glpoly_t) + ((numverts - 4) + 2) * VERTEXSIZE * sizeof(float));
+	poly = Hunk_Alloc(sizeof(glpoly_t) + ((numverts - 4) + 2) * VERTEXSIZE * sizeof(float), "SubdividePolygon");
 	poly->next = warpface->polys;
 	warpface->polys = poly;
 	poly->numverts = numverts + 2;
