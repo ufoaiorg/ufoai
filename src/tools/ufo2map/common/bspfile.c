@@ -165,7 +165,7 @@ extern int DeCompressRouting( byte **source, byte *dataStart )
 /**
  * @brief Byte swaps all data in a bsp file.
  */
-static void SwapBSPFile (qboolean todisk)
+static void SwapBSPFile (void)
 {
 	int i, j;
 	dmodel_t *d;
@@ -277,19 +277,6 @@ static void SwapBSPFile (qboolean todisk)
 		dbrushsides[i].planenum = LittleShort(dbrushsides[i].planenum);
 		dbrushsides[i].texinfo = LittleShort(dbrushsides[i].texinfo);
 	}
-
-#if 0
-	/* visibility */
-	if (todisk)
-		j = dvis->numclusters;
-	else
-		j = LittleLong(dvis->numclusters);
-	dvis->numclusters = LittleLong(dvis->numclusters);
-	for (i = 0; i < j; i++) {
-		dvis->bitofs[i][0] = LittleLong(dvis->bitofs[i][0]);
-		dvis->bitofs[i][1] = LittleLong(dvis->bitofs[i][1]);
-	}
-#endif
 }
 
 
@@ -353,7 +340,7 @@ extern void LoadBSPFile (const char *filename)
 	free(header);		/* everything has been copied out */
 
 	/* swap everything */
-	SwapBSPFile(qfalse);
+	SwapBSPFile();
 }
 
 
@@ -398,7 +385,7 @@ extern void LoadBSPFileTexinfo (const char *filename)
 
 	free(header);		/* everything has been copied out */
 
-	SwapBSPFile(qfalse);
+	SwapBSPFile();
 }
 
 
@@ -427,7 +414,7 @@ extern void WriteBSPFile (const char *filename)
 	header = &outheader;
 	memset(header, 0, sizeof(dheader_t));
 
-	SwapBSPFile(qtrue);
+	SwapBSPFile();
 
 	header->ident = LittleLong(IDBSPHEADER);
 	header->version = LittleLong(BSPVERSION);
@@ -458,7 +445,7 @@ extern void WriteBSPFile (const char *filename)
 	fseek(wadfile.f, 0, SEEK_SET);
 	SafeWrite(&wadfile, header, sizeof(dheader_t));
 	CloseFile(&wadfile);
-	SwapBSPFile(qtrue);
+	SwapBSPFile();
 }
 
 /**
