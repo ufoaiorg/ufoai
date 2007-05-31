@@ -1365,7 +1365,7 @@ static qboolean R_Init (HINSTANCE hinstance, WNDPROC wndproc)
 
 	aniso_level = r_anisotropic->value;
 	if (strstr(gl_config.extensions_string, "GL_EXT_texture_filter_anisotropic")) {
-		if (r_anisotropic->value == 0)
+		if (!r_anisotropic->integer)
 			ri.Con_Printf(PRINT_ALL, "...ignoring GL_EXT_texture_filter_anisotropic\n");
 		else {
 			ri.Con_Printf(PRINT_ALL, "...using GL_EXT_texture_filter_anisotropic [%2i max] [%2i selected]\n", max_aniso, aniso_level);
