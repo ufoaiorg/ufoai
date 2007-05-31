@@ -785,7 +785,6 @@ static void R_AddMapTile (const char *name, int sX, int sY, int sZ)
 
 		starmod->numleafs = bm->visleafs;
 	}
-
 }
 
 /*

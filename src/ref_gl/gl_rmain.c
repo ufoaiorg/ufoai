@@ -992,6 +992,8 @@ static void R_SetGL2D (void)
 	qglOrtho(0, vid.width, vid.height, 0, 9999, -9999);
 	qglMatrixMode(GL_MODELVIEW);
 	qglLoadIdentity();
+	qglDisable(GL_DEPTH_TEST);
+	qglDisable(GL_CULL_FACE);
 	GLSTATE_DISABLE_BLEND
 	qglDisable(GL_FOG);
 	GLSTATE_ENABLE_ALPHATEST
