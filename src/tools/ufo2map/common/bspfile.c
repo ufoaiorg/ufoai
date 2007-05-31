@@ -389,11 +389,12 @@ extern void LoadBSPFileTexinfo (const char *filename)
 }
 
 
-static qFILE wadfile;
+static qFILE bspfile;
 static dheader_t outheader;
 
 /**
  * @brief
+ * @sa WriteBSPFile
  */
 static void AddLump (int lumpnum, void *data, int len)
 {
@@ -401,9 +402,10 @@ static void AddLump (int lumpnum, void *data, int len)
 
 	lump = &header->lumps[lumpnum];
 
-	lump->fileofs = LittleLong(ftell(wadfile.f));
+	lump->fileofs = LittleLong(ftell(bspfile.f));
 	lump->filelen = LittleLong(len);
-	SafeWrite(&wadfile, data, (len + 3) &~ 3);
+	/* 4 byte align */
+	SafeWrite(&bspfile, data, (len + 3) &~ 3);
 }
 
 /**
@@ -419,9 +421,9 @@ extern void WriteBSPFile (const char *filename)
 	header->ident = LittleLong(IDBSPHEADER);
 	header->version = LittleLong(BSPVERSION);
 
-	memset(&wadfile, 0, sizeof(qFILE));
-	SafeOpenWrite(filename, &wadfile);
-	SafeWrite(&wadfile, header, sizeof(dheader_t));	/* overwritten later */
+	memset(&bspfile, 0, sizeof(qFILE));
+	SafeOpenWrite(filename, &bspfile);
+	SafeWrite(&bspfile, header, sizeof(dheader_t));	/* overwritten later */
 
 	AddLump(LUMP_PLANES, dplanes, numplanes*sizeof(dplane_t));
 	AddLump(LUMP_LEAFS, dleafs, numleafs*sizeof(dleaf_t));
@@ -442,9 +444,9 @@ extern void WriteBSPFile (const char *filename)
 	AddLump(LUMP_ROUTING, droutedata, routedatasize);
 	AddLump(LUMP_ENTITIES, dentdata, entdatasize);
 
-	fseek(wadfile.f, 0, SEEK_SET);
-	SafeWrite(&wadfile, header, sizeof(dheader_t));
-	CloseFile(&wadfile);
+	fseek(bspfile.f, 0, SEEK_SET);
+	SafeWrite(&bspfile, header, sizeof(dheader_t));
+	CloseFile(&bspfile);
 	SwapBSPFile();
 }
 
