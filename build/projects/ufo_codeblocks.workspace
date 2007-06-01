@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_workspace_file>
 	<Workspace title="Default workspace">
-		<Project filename="ufo.cbp" active="1" />
+		<Project filename="ufo.cbp" active="1">
+			<Depends filename="game.cbp" />
+			<Depends filename="ufo_ded.cbp" />
+			<Depends filename="ufo2map.cbp" />
+			<Depends filename="snd_sdl.cbp" />
+			<Depends filename="snd_wapi.cbp" />
+			<Depends filename="ref_gl.cbp" />
+		</Project>
 		<Project filename="game.cbp" />
 		<Project filename="ufo_ded.cbp" />
 		<Project filename="ufo2map.cbp" />
