@@ -7,55 +7,70 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="windows">
-				<Option output="..\..\base\game.dll" prefix_auto="1" extension_auto="1" />
-				<Option object_output=".objs\game" />
+				<Option output="../../base/game.so" prefix_auto="1" extension_auto="1" />
+				<Option object_output=".objs/game" />
 				<Option type="3" />
 				<Option compiler="gcc" />
+				<Linker>
+					<Add option="../../src/ports/win32/intl.lib" />
+					<Add option="--export-all-symbols" />
+					<Add library="kernel32" />
+					<Add library="user32" />
+					<Add library="winmm" />
+				</Linker>
+			</Target>
+			<Target title="linux">
+				<Option platforms="Unix;" />
+				<Option output="game.so" prefix_auto="1" extension_auto="1" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+			</Target>
+			<Target title="macosx">
+				<Option output="game.dylib" prefix_auto="1" extension_auto="1" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
 			</Target>
 		</Build>
-		<Linker>
-			<Add option="../../src/ports/win32/intl.lib" />
-			<Add option="--export-all-symbols" />
-			<Add library="kernel32" />
-			<Add library="user32" />
-			<Add library="winmm" />
-		</Linker>
-		<Unit filename="..\..\src\game\g_ai.c">
+		<Unit filename="../../src/game/g_ai.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\game\g_client.c">
+		<Unit filename="../../src/game/g_client.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\game\g_cmds.c">
+		<Unit filename="../../src/game/g_cmds.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\game\g_combat.c">
+		<Unit filename="../../src/game/g_combat.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\game\g_local.h" />
-		<Unit filename="..\..\src\game\g_main.c">
+		<Unit filename="../../src/game/g_local.h" />
+		<Unit filename="../../src/game/g_main.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\game\g_phys.c">
+		<Unit filename="../../src/game/g_phys.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\game\g_spawn.c">
+		<Unit filename="../../src/game/g_spawn.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\game\g_svcmds.c">
+		<Unit filename="../../src/game/g_svcmds.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\game\g_utils.c">
+		<Unit filename="../../src/game/g_utils.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\game\game.def">
+		<Unit filename="../../src/game/game.def">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\game\game.h" />
-		<Unit filename="..\..\src\game\q_shared.c">
+		<Unit filename="../../src/game/game.h" />
+		<Unit filename="../../src/game/q_shared.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\game\q_shared.h" />
+		<Unit filename="../../src/game/q_shared.h" />
 		<Extensions>
 			<code_completion />
 		</Extensions>

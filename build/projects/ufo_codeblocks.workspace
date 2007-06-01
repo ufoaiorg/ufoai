@@ -6,7 +6,10 @@
 			<Depends filename="ufo_ded.cbp" />
 			<Depends filename="ufo2map.cbp" />
 			<Depends filename="snd_sdl.cbp" />
+			<Depends filename="snd_wapi.cbp" />
 			<Depends filename="ref_gl.cbp" />
+			<Depends filename="snd_alsa.cbp" />
+			<Depends filename="snd_oss.cbp" />
 		</Project>
 		<Project filename="game.cbp" />
 		<Project filename="ufo_ded.cbp">
