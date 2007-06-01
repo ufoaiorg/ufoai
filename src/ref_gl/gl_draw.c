@@ -266,47 +266,21 @@ void Draw_GetPicSize (int *w, int *h, const char *pic)
 }
 
 /**
- * @brief
- */
-void Draw_StretchPic (int x, int y, int w, int h, const char *pic)
-{
-	image_t *gl;
-
-	gl = Draw_FindPic(pic);
-	if (!gl) {
-		ri.Con_Printf(PRINT_ALL, "Can't find pic: %s\n", pic);
-		return;
-	}
-
-	if (scrap_dirty)
-		Scrap_Upload();
-
-#ifdef HAVE_SHADERS
-	if (gl->shader)
-		SH_UseShader(gl->shader, qfalse);
-#endif
-
-	GL_Bind(gl->texnum);
-	qglBegin(GL_QUADS);
-	qglTexCoord2f(gl->sl, gl->tl);
-	qglVertex2f(x, y);
-	qglTexCoord2f(gl->sh, gl->tl);
-	qglVertex2f(x + w, y);
-	qglTexCoord2f(gl->sh, gl->th);
-	qglVertex2f(x + w, y + h);
-	qglTexCoord2f(gl->sl, gl->th);
-	qglVertex2f(x, y + h);
-	qglEnd();
-
-#ifdef HAVE_SHADERS
-	if (gl->shader)
-		SH_UseShader(gl->shader, qtrue);
-#endif
-}
-
-
-/**
- * @brief
+ * @brief Draws an image or parts of it
+ * @param[in] x X position to draw the image to
+ * @param[in] y Y position to draw the image to
+ * @param[in] w Width of the image
+ * @param[in] h Height of the image
+ * @param[in] sh The height value to start from (0 to sh is not drawn)
+ * @param[in] th The height value to draw up to (th to h is not drawn)
+ * @param[in] sl The width value to start from (0 to sl is not drawn)
+ * @param[in] tl The width value to draw up to (tl to w is not drawn)
+ * @param[in] align The alignment we should use for placing the image onto the screen (see align_t)
+ * @param[in] blend Enable the blend mode (for alpha channel images)
+ * @param[in] name The name of the image - relative to base/pics
+ * @sa Draw_FindPic
+ * @note All these parameter are normalized to VID_NORM_WIDTH and VID_NORM_HEIGHT
+ * they are adjusted in this function
  */
 void Draw_NormPic (float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, qboolean blend, const char *name)
 {
@@ -423,13 +397,13 @@ void Draw_Pic (int x, int y, const char *pic)
 #endif
 	GL_Bind(gl->texnum);
 	qglBegin(GL_QUADS);
-	qglTexCoord2f(gl->sl, gl->tl);
+	qglTexCoord2f(0, 0);
 	qglVertex2f(x, y);
-	qglTexCoord2f(gl->sh, gl->tl);
+	qglTexCoord2f(1, 0);
 	qglVertex2f(x + gl->width, y);
-	qglTexCoord2f(gl->sh, gl->th);
+	qglTexCoord2f(1, 1);
 	qglVertex2f(x + gl->width, y + gl->height);
-	qglTexCoord2f(gl->sl, gl->th);
+	qglTexCoord2f(0, 1);
 	qglVertex2f(x, y + gl->height);
 	qglEnd();
 #ifdef HAVE_SHADERS
@@ -476,7 +450,7 @@ void Draw_TileClear (int x, int y, int w, int h, const char *name)
 /**
  * @brief Fills a box of pixels with a single color
  */
-void Draw_Fill (int x, int y, int w, int h, int style, const vec4_t color)
+void Draw_Fill (int x, int y, int w, int h, int align, const vec4_t color)
 {
 	float nx, ny, nw, nh;
 
@@ -490,7 +464,7 @@ void Draw_Fill (int x, int y, int w, int h, int style, const vec4_t color)
 	qglDisable(GL_TEXTURE_2D);
 	qglBegin(GL_QUADS);
 
-	switch (style) {
+	switch (align) {
 	case ALIGN_CL:
 		qglVertex2f(nx, ny);
 		qglVertex2f(nx + nh, ny);

@@ -694,7 +694,7 @@ static vec3_t sun_dir;
 /**
  * @brief
  */
-static entity_t *FindTargetEntity (char *target)
+static entity_t *FindTargetEntity (const char *target)
 {
 	int		i;
 	char	*n;

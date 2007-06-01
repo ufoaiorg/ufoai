@@ -56,12 +56,6 @@ static cvar_t *scr_graphheight;
 static cvar_t *scr_graphscale;
 static cvar_t *scr_graphshift;
 
-typedef struct {
-	int x1, y1, x2, y2;
-} dirty_t;
-
-static dirty_t scr_dirty;
-
 static char cursor_pic[MAX_QPATH];
 
 static void SCR_TimeRefresh_f(void);
@@ -274,13 +268,11 @@ static void SCR_DrawCenterString (void)
 			if (start[l] == '\n' || !start[l])
 				break;
 		x = (viddef.width - l * 8) / 2;
-		SCR_AddDirtyPoint(x, y);
 		for (j = 0; j < l; j++, x += 8) {
 			re.DrawChar(x, y, start[j]);
 			if (!remaining--)
 				return;
 		}
-		SCR_AddDirtyPoint(x, y + 8);
 
 		y += 8;
 
@@ -388,7 +380,7 @@ void SCR_DrawLoadingBar (int x, int y, int w, int h, int percent)
 extern void SCR_DrawPrecacheScreen (qboolean string)
 {
 	re.BeginFrame(0);
-	re.DrawStretchPic(0, 0, viddef.width, viddef.height, "loading");
+	re.DrawNormPic(0, 0, viddef.width, viddef.height, 0, 0, 0, 0, ALIGN_UL, qfalse, "loading");
 	if (string)
 		re.FontDrawString("f_menubig", ALIGN_UC,
 			(int)(VID_NORM_WIDTH / 2),
@@ -419,7 +411,7 @@ static void SCR_DrawLoading (void)
 		else
 			Com_sprintf(loadingPic, MAX_QPATH, "maps/loading/default.jpg");
 	}
-	re.DrawStretchPic(0, 0, viddef.width, viddef.height, loadingPic);
+	re.DrawNormPic(0, 0, viddef.width, viddef.height, 0, 0, 0, 0, ALIGN_UL, qfalse, loadingPic);
 	re.DrawColor(color);
 
 	if (cl.configstrings[CS_TILES][0]) {
@@ -648,32 +640,6 @@ static void SCR_TimeRefresh_f (void)
 	stop = Sys_Milliseconds();
 	time = (stop - start) / 1000.0;
 	Com_Printf("%f seconds (%f fps)\n", time, 128 / time);
-}
-
-/**
- * @brief
- * @sa SCR_DirtyScreen
- */
-void SCR_AddDirtyPoint (int x, int y)
-{
-	if (x < scr_dirty.x1)
-		scr_dirty.x1 = x;
-	if (x > scr_dirty.x2)
-		scr_dirty.x2 = x;
-	if (y < scr_dirty.y1)
-		scr_dirty.y1 = y;
-	if (y > scr_dirty.y2)
-		scr_dirty.y2 = y;
-}
-
-/**
- * @brief
- * @sa SCR_AddDirtyPoint
- */
-void SCR_DirtyScreen (void)
-{
-	SCR_AddDirtyPoint(0, 0);
-	SCR_AddDirtyPoint(viddef.width - 1, viddef.height - 1);
 }
 
 /**

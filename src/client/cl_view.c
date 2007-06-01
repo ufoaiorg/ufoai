@@ -387,9 +387,6 @@ void CL_PrepRefresh (void)
 
 	CL_ResetWeaponButtons();
 
-	SCR_AddDirtyPoint(0, 0);
-	SCR_AddDirtyPoint(viddef.width - 1, viddef.height - 1);
-
 	/* register models, pics, and skins */
 	Com_Printf("Map: %s\n", cl.configstrings[CS_NAME]);
 	SCR_UpdateScreen();
@@ -636,9 +633,6 @@ void V_RenderView (float stereo_separation)
 		fprintf(log_stats_file, "%i,%i,", r_numentities, r_numdlights);
 	if (cl_drawgrid->value)
 		CL_DrawGrid();
-
-	SCR_AddDirtyPoint(scr_vrect.x, scr_vrect.y);
-	SCR_AddDirtyPoint(scr_vrect.x + scr_vrect.width - 1, scr_vrect.y + scr_vrect.height - 1);
 
 	if (cls.state == ca_sequence)
 		CL_Sequence2D();

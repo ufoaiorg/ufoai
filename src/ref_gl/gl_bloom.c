@@ -39,10 +39,10 @@ static cvar_t *gl_bloomalpha;
 static cvar_t *gl_bloomintensity;
 static cvar_t *gl_bloomsize;
 
-static image_t	*gl_bloomscreentexture;
-static image_t	*gl_bloomeffecttexture;
-static image_t	*gl_bloomoriginaltexture;
-static image_t	*gl_bloomdowntexture;
+static image_t *gl_bloomscreentexture = NULL;
+static image_t *gl_bloomeffecttexture = NULL;
+static image_t *gl_bloomoriginaltexture = NULL;
+static image_t *gl_bloomdowntexture = NULL;
 
 static int original_tex_size;
 
@@ -111,7 +111,7 @@ static void GL_Bloom_InitEffectTexture (void)
 	byte *data;
 	float b;
 
-	bloom_size = (int)gl_bloomsize->value;
+	bloom_size = gl_bloomsize->integer;
 
 	/* enforce a reasonable minimum sample size */
 	if (bloom_size < 16)
@@ -126,9 +126,9 @@ static void GL_Bloom_InitEffectTexture (void)
 	while (b > 1.0f)
 		b /= 2.0f;
 
-	if (b != 1.0f){
+	if (b != 1.0f) {
 		bloom_size = 16;
-		while (bloom_size < gl_bloomsize->value)
+		while (bloom_size < gl_bloomsize->integer)
 			bloom_size *= 2;
 	}
 
@@ -149,6 +149,23 @@ static void GL_Bloom_InitTextures (void)
 {
 	byte *data;
 	int size;
+
+	if (gl_bloomscreentexture) {
+		qglDeleteTextures(1, &gl_bloomscreentexture->texnum);
+		memset(gl_bloomscreentexture, 0, sizeof(image_t));
+	}
+	if (gl_bloomeffecttexture) {
+		qglDeleteTextures(1, &gl_bloomeffecttexture->texnum);
+		memset(gl_bloomeffecttexture, 0, sizeof(image_t));
+	}
+	if (gl_bloomoriginaltexture) {
+		qglDeleteTextures(1, &gl_bloomoriginaltexture->texnum);
+		memset(gl_bloomoriginaltexture, 0, sizeof(image_t));
+	}
+	if (gl_bloomdowntexture) {
+		qglDeleteTextures(1, &gl_bloomdowntexture->texnum);
+		memset(gl_bloomdowntexture, 0, sizeof(image_t));
+	}
 
 	/* find closer power of 2 to screen size */
 	for (screen_tex_width = 1; screen_tex_width < vid.width; screen_tex_width *= 2);
@@ -259,8 +276,8 @@ static void GL_Bloom_GenerateBlooms (void)
 	/* 4 bluring passes */
 	qglBlendFunc(GL_ONE, GL_ONE);
 
-	for(i = 0; i < 4; i++){
-		for(j = 0; j < 4; j++){
+	for (i = 0; i < 4; i++) {
+		for (j = 0; j < 4; j++) {
 			intensity = gl_bloomintensity->value * 0.8f * diamond[i][j];
 			qglColor4f(intensity, intensity, intensity, 1.0);
 			GL_Bloom_SamplePass(i - 2, j - 2);
@@ -324,10 +341,10 @@ extern void GL_SetupGL(void);
 extern void GL_BloomBlend (void)
 {
 	/* if params have changed, update texture sizes */
-	if (gl_bloom->modified || gl_bloomsize->modified)
+	if (gl_bloom->modified || gl_bloomsize->modified) {
 		GL_Bloom_InitTextures();
-
-	gl_bloom->modified = gl_bloomsize->modified = qfalse;
+		gl_bloom->modified = gl_bloomsize->modified = qfalse;
+	}
 
 	if (!gl_bloom->integer)
 		return;

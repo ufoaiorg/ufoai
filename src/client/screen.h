@@ -49,7 +49,4 @@ extern cvar_t *cursor;
 
 extern vrect_t scr_vrect;		/* position of render window */
 
-void SCR_AddDirtyPoint(int x, int y);
-void SCR_DirtyScreen(void);
-
 #endif /* CLIENT_SCREEN_H */

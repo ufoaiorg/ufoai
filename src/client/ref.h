@@ -310,13 +310,12 @@ typedef struct {
 	void (*DrawGetPicSize) (int *w, int *h, const char *name);	/* will return 0 0 if not found */
 	void (*DrawPic) (int x, int y, const char *name);
 	void (*DrawNormPic) (float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, qboolean blend, const char *name);
-	void (*DrawStretchPic) (int x, int y, int w, int h, const char *name);
 	void (*DrawChar) (int x, int y, int c);
 	void (*FontRegister) (const char *name, int size, const char *path, const char *style);
 	void (*FontLength) (const char *font, const char *c, int *width, int *height);
 	int (*FontDrawString) (const char *font, int align, int x, int y, int absX, int absY, int maxWidth, int maxHeight, const int lineHeight, const char *c, int box_height, int scroll_pos, int *cur_line, qboolean increaseLine);
 	void (*DrawTileClear) (int x, int y, int w, int h, const char *name);
-	void (*DrawFill) (int x, int y, int w, int h, int style, const vec4_t color);
+	void (*DrawFill) (int x, int y, int w, int h, int align, const vec4_t color);
 	void (*DrawColor) (const float *rgba);
 	void (*DrawFadeScreen) (void);
 	void (*DrawDayAndNight) (int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, const char *map);

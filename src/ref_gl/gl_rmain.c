@@ -101,7 +101,6 @@ cvar_t *gl_particle_att_b;
 cvar_t *gl_particle_att_c;
 
 cvar_t *gl_ext_swapinterval;
-cvar_t *gl_ext_palettedtexture;
 cvar_t *gl_ext_multitexture;
 cvar_t *gl_ext_combine;
 cvar_t *gl_ext_pointparameters;
@@ -1096,7 +1095,6 @@ static void R_Register (void)
 	gl_vertex_arrays = ri.Cvar_Get("gl_vertex_arrays", "0", CVAR_ARCHIVE, NULL);
 
 	gl_ext_swapinterval = ri.Cvar_Get("gl_ext_swapinterval", "1", CVAR_ARCHIVE, NULL);
-	gl_ext_palettedtexture = ri.Cvar_Get("gl_ext_palettedtexture", "1", CVAR_ARCHIVE, NULL);
 	gl_ext_multitexture = ri.Cvar_Get("gl_ext_multitexture", "1", CVAR_ARCHIVE, NULL);
 	gl_ext_combine = ri.Cvar_Get("gl_ext_combine", "1", CVAR_ARCHIVE, NULL);
 	gl_ext_lockarrays = ri.Cvar_Get("gl_ext_lockarrays", "0", CVAR_ARCHIVE, NULL);
@@ -1701,7 +1699,6 @@ refexport_t GetRefAPI (refimport_t rimp)
 	re.DrawGetPicSize = Draw_GetPicSize;
 	re.DrawPic = Draw_Pic;
 	re.DrawNormPic = Draw_NormPic;
-	re.DrawStretchPic = Draw_StretchPic;
 	re.DrawChar = Draw_Char;
 	re.FontDrawString = Font_DrawString;
 	re.FontLength = Font_Length;

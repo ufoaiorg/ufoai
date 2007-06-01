@@ -294,10 +294,6 @@ extern void GL_ImageList_f (void)
 	int i;
 	image_t *image;
 	int texels;
-	const char *palstrings[2] = {
-		"RGB",
-		"PAL"
-	};
 
 	ri.Con_Printf(PRINT_ALL, "------------------\n");
 	texels = 0;
@@ -324,8 +320,8 @@ extern void GL_ImageList_f (void)
 			break;
 		}
 
-		ri.Con_Printf(PRINT_ALL, " %3i %3i %s: %s - shader: %s\n",
-				image->upload_width, image->upload_height, palstrings[image->paletted], image->name,
+		ri.Con_Printf(PRINT_ALL, " %3i %3i RGB: %s - shader: %s\n",
+				image->upload_width, image->upload_height, image->name,
 				(image->shader ? image->shader->name : "NONE"));
 	}
 	ri.Con_Printf(PRINT_ALL, "Total textures: %i (max textures: %i)\n", numgltextures, MAX_GLTEXTURES);
@@ -2125,15 +2121,9 @@ image_t *GL_LoadPic (const char *name, byte * pic, int width, int height, imaget
 			for (j = 0; j < image->width; j++, k++)
 				scrap_texels[texnum][(y + i) * BLOCK_WIDTH + x + j] = pic[k];
 		image->texnum = TEXNUM_SCRAPS + texnum;
-		image->scrap = qtrue;
 		image->has_alpha = qtrue;
-		image->sl = (x + 0.01) / (float) BLOCK_WIDTH;
-		image->sh = (x + image->width - 0.01) / (float) BLOCK_WIDTH;
-		image->tl = (y + 0.01) / (float) BLOCK_WIDTH;
-		image->th = (y + image->height - 0.01) / (float) BLOCK_WIDTH;
 	} else {
 	  nonscrap:
-		image->scrap = qfalse;
 		image->texnum = TEXNUM_IMAGES + (image - gltextures);
 		GL_Bind(image->texnum);
 		if (bits == 8)
@@ -2143,11 +2133,6 @@ image_t *GL_LoadPic (const char *name, byte * pic, int width, int height, imaget
 										   (image->type != it_pic), image->type == it_pic, image->type, image);
 		image->upload_width = upload_width;	/* after power of 2 and scales */
 		image->upload_height = upload_height;
-		image->paletted = qfalse;
-		image->sl = 0;
-		image->sh = 1;
-		image->tl = 0;
-		image->th = 1;
 	}
 	return image;
 }

@@ -161,12 +161,9 @@ typedef struct image_s {
 	int upload_width, upload_height;    /* dimensions after power of two and picmip */
 	int registration_sequence;  /* 0 = free */
 	struct msurface_s *texturechain;    /* for sort-by-texture world drawing */
-	int texnum;                 /* gl texture binding */
-	float sl, tl, sh, th;       /* 0,0 - 1,1 unless part of the scrap */
-	qboolean scrap;
+	GLuint texnum;                 /* gl texture binding */
 	qboolean has_alpha;
 	shader_t *shader;           /* pointer to shader from refdef_t */
-	qboolean paletted;
 } image_t;
 
 #define TEXNUM_LIGHTMAPS    1024
@@ -425,10 +422,9 @@ void R_EnableLights(qboolean fixed, float *matrix, float *lightparam, float *lig
 void Draw_GetPicSize(int *w, int *h, const char *name);
 void Draw_Pic(int x, int y, const char *name);
 void Draw_NormPic(float x, float y, float w, float h, float sh, float th, float sl, float tl, int align, qboolean blend, const char *name);
-void Draw_StretchPic(int x, int y, int w, int h, const char *name);
 void Draw_Char(int x, int y, int c);
 void Draw_TileClear(int x, int y, int w, int h, const char *name);
-void Draw_Fill(int x, int y, int w, int h, int style, const vec4_t color);
+void Draw_Fill(int x, int y, int w, int h, int align, const vec4_t color);
 void Draw_Color(const float *rgba);
 void Draw_FadeScreen(void);
 void Draw_DayAndNight(int x, int y, int w, int h, float p, float q, float cx, float cy, float iz, const char *map);

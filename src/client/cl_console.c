@@ -589,11 +589,6 @@ void Con_DrawNotify (void)
 		re.DrawChar(l + ((x + skip) << 3), v, 10 + ((cls.realtime >> 8) & 1));
 		v += 8;
 	}
-
-	if (v) {
-		SCR_AddDirtyPoint(0, 0);
-		SCR_AddDirtyPoint(viddef.width - 1, v);
-	}
 }
 
 /**
@@ -606,6 +601,7 @@ void Con_DrawConsole (float frac)
 	int rows, row, lines;
 	char *text;
 	char version[MAX_VAR];
+	/*const vec4_t consoleBG = {0.1, 0.1, 0.1, 0.9};*/
 
 	lines = viddef.height * frac;
 	if (lines <= 0)
@@ -615,9 +611,8 @@ void Con_DrawConsole (float frac)
 		lines = viddef.height;
 
 	/* draw the background */
-	re.DrawStretchPic(0, lines - (int) viddef.height, viddef.width, viddef.height, "conback");
-	SCR_AddDirtyPoint(0, 0);
-	SCR_AddDirtyPoint(viddef.width - 1, lines - 1);
+	/*re.DrawFill(0, 0, viddef.width, viddef.height, ALIGN_UL, consoleBG);*/
+	re.DrawNormPic(0, lines - (int) viddef.height, viddef.width, viddef.height, 0, 0, 0, 0, ALIGN_UL, qfalse, "conback");
 
 	Com_sprintf(version, sizeof(version), "v%s", UFO_VERSION);
 	len = strlen(version);

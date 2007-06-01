@@ -82,7 +82,7 @@ dbrushside_t dbrushsides[MAX_MAP_BRUSHSIDES];
  * @brief Compress the routing data of a map
  * @sa DeCompressRouting
  */
-extern byte *CompressRouting( byte *dataStart, byte *destStart, int l )
+extern byte *CompressRouting (byte *dataStart, byte *destStart, int l)
 {
 	int c;
 	byte val;
@@ -292,6 +292,8 @@ static int CopyLump (int lump, void *dest, int size)
 	length = header->lumps[lump].filelen;
 	ofs = header->lumps[lump].fileofs;
 
+	if (length == 0)
+		return 0;
 	if (length % size)
 		Error("LoadBSPFile: odd lump size");
 

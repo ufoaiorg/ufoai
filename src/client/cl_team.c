@@ -1945,7 +1945,7 @@ extern void CL_ParseResults (sizebuf_t * buf)
 		/* if we lost, they revive stunned */
 		thier_stunned = 0;
 
-	/* we won,and we'r not the dirty aliens*/
+	/* we won, and we're not the dirty aliens */
 	if ((winner == we) && (curCampaign))
 		civilian_surviviurs += civilian_stunned;
 	else
