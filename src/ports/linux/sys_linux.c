@@ -143,9 +143,9 @@ static int dlcallback (struct dl_phdr_info *info, size_t size, void *data)
 
 	/* this is terrible. */
 #if __WORDSIZE == 64
-	fprintf (stderr, "[0x%lux-0x%lux] %s\n", info->dlpi_addr, info->dlpi_addr + end, info->dlpi_name);
+	fprintf(stderr, "[0x%lux-0x%lux] %s\n", info->dlpi_addr, info->dlpi_addr + end, info->dlpi_name);
 #else
-	fprintf (stderr, "[0x%ux-0x%ux] %s\n", info->dlpi_addr, info->dlpi_addr + end, info->dlpi_name);
+	fprintf(stderr, "[0x%ux-0x%ux] %s\n", info->dlpi_addr, info->dlpi_addr + end, info->dlpi_name);
 #endif
 	return 0;
 }
@@ -195,26 +195,26 @@ void Sys_Backtrace (int sig, siginfo_t *siginfo, void *secret)
 #endif
 #endif
 
-	strings = backtrace_symbols (array, size);
+	strings = backtrace_symbols(array, size);
 
-	fprintf (stderr, "Stack dump (%zd frames):\n", size);
+	fprintf(stderr, "Stack dump (%zd frames):\n", size);
 
 	for (i = 0; i < size; i++)
-		fprintf (stderr, "%.2zd: %s\n", i, strings[i]);
+		fprintf(stderr, "%.2zd: %s\n", i, strings[i]);
 
-	fprintf (stderr, "\nVersion: " UFO_VERSION " (" BUILDSTRING " " CPUSTRING ")\n");
+	fprintf(stderr, "\nVersion: " UFO_VERSION " (" BUILDSTRING " " CPUSTRING ")\n");
 
-	uname (&info);
-	fprintf (stderr, "OS Info: %s %s %s %s %s\n\n", info.sysname, info.nodename, info.release, info.version, info.machine);
+	uname(&info);
+	fprintf(stderr, "OS Info: %s %s %s %s %s\n\n", info.sysname, info.nodename, info.release, info.version, info.machine);
 
 #if GCC_VERSION > 30000
-	fprintf (stderr, "Loaded libraries:\n");
+	fprintf(stderr, "Loaded libraries:\n");
 	dl_iterate_phdr(dlcallback, NULL);
 #endif
 
-	free (strings);
+	free(strings);
 
-	raise (SIGSEGV);
+	raise(SIGSEGV);
 }
 
 #endif /* __linux__ */
@@ -232,7 +232,7 @@ void Sys_Quit (void)
 	Qcommon_Shutdown();
 	Sys_ConsoleInputShutdown();
 
-	fcntl (0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
+	fcntl(0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
 	exit(0);
 }
 
@@ -241,7 +241,6 @@ void Sys_Quit (void)
  */
 void Sys_Init (void)
 {
-	Cvar_Get("sys_os", "linux", CVAR_SERVERINFO, NULL);
 #if id386
 /*	Sys_SetFPCW(); */
 #endif
@@ -265,6 +264,7 @@ void Sys_Init (void)
 	signal(SIGSEGV, Sys_Backtrace);
 # endif
 #endif /* __linux__ */
+	Cvar_Get("sys_os", "linux", CVAR_SERVERINFO, NULL);
 }
 
 /**

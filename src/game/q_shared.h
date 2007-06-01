@@ -82,11 +82,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /* filesystem stuff */
 #ifdef _WIN32
-#include <direct.h>
-#include <io.h>
+# include <direct.h>
+# include <io.h>
 #else
-#include <unistd.h>
-#include <dirent.h>
+# ifndef SHARED_EXT
+#  define SHARED_EXT "so"
+# endif
+# ifndef stricmp
+#  define stricmp strcasecmp
+# endif
+# include <unistd.h>
+# include <dirent.h>
 #endif
 
 #if defined(_WIN32)
@@ -497,6 +503,7 @@ char *Sys_FindFirst(const char *path, unsigned musthave, unsigned canthave);
 char *Sys_FindNext(unsigned musthave, unsigned canthave);
 void Sys_FindClose(void);
 void Sys_DebugBreak(void);
+char *Sys_Cwd(void);
 
 /* this is only here so the functions in q_shared.c and q_shwin.c can link */
 void Sys_Error(const char *error, ...) __attribute__((noreturn, format(printf, 1, 2)));
