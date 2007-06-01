@@ -6,9 +6,19 @@
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
-			<Target title="default">
+			<Target title="windows">
 				<Option output="..\..\ufo.exe" prefix_auto="1" extension_auto="1" />
 				<Option object_output=".objs\client" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+			</Target>
+			<Target title="linux">
+				<Option output="..\..\ufo" prefix_auto="0" extension_auto="0" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+			</Target>
+			<Target title="macosx">
+				<Option output="..\..\ufo" prefix_auto="0" extension_auto="0" />
 				<Option type="0" />
 				<Option compiler="gcc" />
 			</Target>
@@ -194,32 +204,96 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\game\q_shared.h" />
+		<Unit filename="..\..\src\ports\linux\in_linux.c">
+			<Option compilerVar="CC" />
+			<Option target="linux" />
+		</Unit>
+		<Unit filename="..\..\src\ports\linux\q_shlinux.c">
+			<Option compilerVar="CC" />
+			<Option target="linux" />
+		</Unit>
+		<Unit filename="..\..\src\ports\linux\vid_so.c">
+			<Option compilerVar="CC" />
+			<Option target="linux" />
+		</Unit>
+		<Unit filename="..\..\src\ports\macosx\in_osx.m">
+			<Option target="macosx" />
+		</Unit>
+		<Unit filename="..\..\src\ports\macosx\q_shosx.c">
+			<Option compilerVar="CC" />
+			<Option target="macosx" />
+		</Unit>
+		<Unit filename="..\..\src\ports\macosx\sys_osx.m">
+			<Option target="macosx" />
+		</Unit>
+		<Unit filename="..\..\src\ports\unix\cd_sdl.c">
+			<Option compilerVar="CC" />
+			<Option target="linux" />
+			<Option target="macosx" />
+		</Unit>
+		<Unit filename="..\..\src\ports\unix\glob.c">
+			<Option compilerVar="CC" />
+			<Option target="linux" />
+			<Option target="macosx" />
+		</Unit>
+		<Unit filename="..\..\src\ports\unix\net_udp.c">
+			<Option compilerVar="CC" />
+			<Option target="linux" />
+			<Option target="macosx" />
+		</Unit>
+		<Unit filename="..\..\src\ports\unix\sys_console.c">
+			<Option compilerVar="CC" />
+			<Option target="linux" />
+			<Option target="macosx" />
+		</Unit>
+		<Unit filename="..\..\src\ports\unix\sys_unix.c">
+			<Option compilerVar="CC" />
+			<Option target="linux" />
+			<Option target="macosx" />
+		</Unit>
 		<Unit filename="..\..\src\ports\win32\cd_win.c">
 			<Option compilerVar="CC" />
+			<Option target="windows" />
 		</Unit>
 		<Unit filename="..\..\src\ports\win32\conproc.c">
 			<Option compilerVar="CC" />
+			<Option target="windows" />
 		</Unit>
-		<Unit filename="..\..\src\ports\win32\conproc.h" />
+		<Unit filename="..\..\src\ports\win32\conproc.h">
+			<Option target="windows" />
+		</Unit>
 		<Unit filename="..\..\src\ports\win32\in_win.c">
 			<Option compilerVar="CC" />
+			<Option target="windows" />
 		</Unit>
-		<Unit filename="..\..\src\ports\win32\libintl.h" />
+		<Unit filename="..\..\src\ports\win32\libintl.h">
+			<Option target="windows" />
+		</Unit>
 		<Unit filename="..\..\src\ports\win32\net_wins.c">
 			<Option compilerVar="CC" />
+			<Option target="windows" />
 		</Unit>
 		<Unit filename="..\..\src\ports\win32\q_shwin.c">
 			<Option compilerVar="CC" />
+			<Option target="windows" />
 		</Unit>
 		<Unit filename="..\..\src\ports\win32\sys_win.c">
 			<Option compilerVar="CC" />
+			<Option target="windows" />
 		</Unit>
-		<Unit filename="..\..\src\ports\win32\ufo.ico" />
+		<Unit filename="..\..\src\ports\win32\ufo.ico">
+			<Option target="windows" />
+		</Unit>
 		<Unit filename="..\..\src\ports\win32\vid_dll.c">
 			<Option compilerVar="CC" />
+			<Option target="windows" />
 		</Unit>
-		<Unit filename="..\..\src\ports\win32\vorbisfile.h" />
-		<Unit filename="..\..\src\ports\win32\winquake.h" />
+		<Unit filename="..\..\src\ports\win32\vorbisfile.h">
+			<Option target="windows" />
+		</Unit>
+		<Unit filename="..\..\src\ports\win32\winquake.h">
+			<Option target="windows" />
+		</Unit>
 		<Unit filename="..\..\src\qcommon\cmd.c">
 			<Option compilerVar="CC" />
 		</Unit>

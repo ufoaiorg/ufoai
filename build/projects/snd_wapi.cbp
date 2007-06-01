@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_project_file>
-	<FileVersion major="1" minor="5" />
+	<FileVersion major="1" minor="6" />
 	<Project>
 		<Option title="snd_wapi" />
+		<Option platforms="Windows;" />
 		<Option pch_mode="2" />
-		<Option default_target="" />
 		<Option compiler="gcc" />
-		<Option virtualFolders="" />
 		<Build>
-			<Target title="default">
+			<Target title="windows">
 				<Option output="..\..\snd_wapi.dll" prefix_auto="1" extension_auto="1" />
 				<Option object_output=".objs\snd_wapi" />
 				<Option type="3" />
@@ -25,7 +24,6 @@
 		</Linker>
 		<Unit filename="..\..\src\ports\win32\snd_wapi.c">
 			<Option compilerVar="CC" />
-			<Option target="default" />
 		</Unit>
 		<Extensions>
 			<code_completion />

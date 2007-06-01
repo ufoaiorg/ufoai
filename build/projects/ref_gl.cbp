@@ -6,7 +6,7 @@
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
-			<Target title="default">
+			<Target title="windows">
 				<Option output="..\..\ref_gl.dll" prefix_auto="1" extension_auto="1" />
 				<Option object_output=".objs\ref_gl" />
 				<Option type="3" />
