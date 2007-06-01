@@ -17,6 +17,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "snd_sdl", "snd_sdl.vcproj",
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "snd_wapi", "snd_wapi.vcproj", "{BB22A9ED-7CF8-473A-BE40-B0D6F7FDF2D2}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ufomaster", "ufomaster.vcproj", "{477648F9-C93B-4A1F-BC43-300B0717197B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug Alpha|Win32 = Debug Alpha|Win32
@@ -86,6 +88,16 @@ Global
 		{BB22A9ED-7CF8-473A-BE40-B0D6F7FDF2D2}.Release|Win32.Build.0 = Release|Win32
 		{BB22A9ED-7CF8-473A-BE40-B0D6F7FDF2D2}.Release-SDLTTF|Win32.ActiveCfg = Release|Win32
 		{BB22A9ED-7CF8-473A-BE40-B0D6F7FDF2D2}.Release-SDLTTF|Win32.Build.0 = Release|Win32
+		{477648F9-C93B-4A1F-BC43-300B0717197B}.Debug Alpha|Win32.ActiveCfg = Debug|Win32
+		{477648F9-C93B-4A1F-BC43-300B0717197B}.Debug Alpha|Win32.Build.0 = Debug|Win32
+		{477648F9-C93B-4A1F-BC43-300B0717197B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{477648F9-C93B-4A1F-BC43-300B0717197B}.Debug|Win32.Build.0 = Debug|Win32
+		{477648F9-C93B-4A1F-BC43-300B0717197B}.Release Alpha|Win32.ActiveCfg = Release|Win32
+		{477648F9-C93B-4A1F-BC43-300B0717197B}.Release Alpha|Win32.Build.0 = Release|Win32
+		{477648F9-C93B-4A1F-BC43-300B0717197B}.Release|Win32.ActiveCfg = Release|Win32
+		{477648F9-C93B-4A1F-BC43-300B0717197B}.Release|Win32.Build.0 = Release|Win32
+		{477648F9-C93B-4A1F-BC43-300B0717197B}.Release-SDLTTF|Win32.ActiveCfg = Release|Win32
+		{477648F9-C93B-4A1F-BC43-300B0717197B}.Release-SDLTTF|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
