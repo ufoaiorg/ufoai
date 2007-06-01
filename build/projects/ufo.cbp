@@ -12,7 +12,6 @@
 				<Option type="0" />
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add option='-DSHARED_EXT=\&quot;dll\&quot;' />
 					<Add option="-D__GNUWIN32__" />
 					<Add option="-D_M_IX86=500" />
 					<Add option="-DDEVCPP" />
@@ -22,7 +21,6 @@
 				</Compiler>
 				<Linker>
 					<Add option="../../src/ports/win32/intl.lib" />
-					<Add option="../../src/ports/win32/libjpeg.lib" />
 					<Add library="vorbisfile" />
 					<Add library="vorbis" />
 					<Add library="ogg" />
@@ -42,10 +40,10 @@
 				<Option type="0" />
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add option='-DSHARED_EXT=\&quot;so\&quot;' />
 					<Add option="-DC_ONLY" />
 					<Add option="-DHAVE_SHADERS" />
 					<Add option="-DHAVE_GETTEXT" />
+					<Add directory="/usr/include/SDL" />
 				</Compiler>
 				<Linker>
 					<Add library="vorbisfile" />
@@ -54,15 +52,17 @@
 					<Add library="SDL" />
 					<Add library="SDL_ttf" />
 					<Add library="z" />
-					<Add library="jpeg" />
 				</Linker>
+				<Environment>
+					<Variable name="sdl_libs" value='&quot;`sdl-config --libs`&quot;' />
+					<Variable name="sdl" value='&quot;`sdl-config --cflags`&quot;' />
+				</Environment>
 			</Target>
 			<Target title="macosx">
 				<Option output="../../ufo" prefix_auto="1" extension_auto="1" />
 				<Option type="0" />
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add option='-DSHARED_EXT=\&quot;dylib\&quot;' />
 					<Add option="-DC_ONLY" />
 					<Add option="-DHAVE_SHADERS" />
 					<Add option="-DHAVE_GETTEXT" />
@@ -74,7 +74,6 @@
 					<Add library="SDL" />
 					<Add library="SDL_ttf" />
 					<Add library="z" />
-					<Add library="jpeg" />
 				</Linker>
 			</Target>
 		</Build>
@@ -238,11 +237,11 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/game/q_shared.h" />
-		<Unit filename="../../src/ports/linux/in_linux.c">
+		<Unit filename="../../src/ports/linux/q_shlinux.c">
 			<Option compilerVar="CC" />
 			<Option target="linux" />
 		</Unit>
-		<Unit filename="../../src/ports/linux/q_shlinux.c">
+		<Unit filename="../../src/ports/linux/sys_linux.c">
 			<Option compilerVar="CC" />
 			<Option target="linux" />
 		</Unit>
