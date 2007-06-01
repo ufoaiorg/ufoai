@@ -916,8 +916,9 @@ extern void LoadTGA (const char *name, byte ** pic, int *width, int *height)
  */
 extern void WriteTGA (FILE *f, byte *buffer, int width, int height)
 {
-	int		i, size, temp;
+	int		i, temp;
 	byte	*out;
+	size_t size;
 
 	/* Allocate an output buffer */
 	size = (width * height * 3) + 18;

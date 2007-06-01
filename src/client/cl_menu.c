@@ -3936,7 +3936,7 @@ void MN_ParseMenuModel (const char *name, char **text)
 
 					switch (v->type) {
 					case V_CLIENT_HUNK_STRING:
-						CL_ClientHunkStoreString(token, (char**) ((void*)menuModel + (int)v->ofs));
+						CL_ClientHunkStoreString(token, (char**) (menuModel + (int)v->ofs));
 						break;
 					default:
 						Com_ParseValue(menuModel, token, v->type, v->ofs, v->size);
@@ -4448,7 +4448,7 @@ void CL_ParseFont (const char *name, char **text)
 				case V_TRANSLATION2_STRING:
 					token++;
 				case V_CLIENT_HUNK_STRING:
-					CL_ClientHunkStoreString(token, (char**) ((void*)font + (int)v->ofs));
+					CL_ClientHunkStoreString(token, (char**) (font + (int)v->ofs));
 					break;
 				default:
 					Com_ParseValue(font, token, v->type, v->ofs, v->size);
@@ -4533,7 +4533,7 @@ extern void MN_ParseTutorials (const char *name, char **text)
 
 				switch (v->type) {
 				case V_CLIENT_HUNK_STRING:
-					CL_ClientHunkStoreString(token, (char**) ((void*)t + (int)v->ofs));
+					CL_ClientHunkStoreString(token, (char**) (t + (int)v->ofs));
 					break;
 				default:
 					Com_ParseValue(t, token, v->type, v->ofs, v->size);

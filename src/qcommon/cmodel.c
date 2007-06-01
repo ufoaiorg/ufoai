@@ -1976,7 +1976,7 @@ static trace_t CM_BoxTrace (vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, 
 
 	/* check for position test special case */
 	if (start[0] == end[0] && start[1] == end[1] && start[2] == end[2]) {
-		const int max_lefts = 1024;
+#define max_lefts 1024
 		int leafs[max_lefts];
 		int numleafs;
 		vec3_t c1, c2;

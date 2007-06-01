@@ -45,6 +45,10 @@ cvar_t *win_noalttab;
 #define WM_MOUSEWHEEL (WM_MOUSELAST+1)  /* message that will be supported by the OS */
 #endif
 
+#ifndef SPI_SCREENSAVERRUNNING
+#define SPI_SCREENSAVERRUNNING 97
+#endif
+
 static UINT MSH_MOUSEWHEEL;
 
 /* Console variables that we need to access from this module */
@@ -184,7 +188,6 @@ LRESULT WINAPI MainWndProc (HWND hWnd, UINT uMsg, WPARAM  wParam, LPARAM lParam)
 		return DefWindowProc(hWnd, uMsg, wParam, lParam);
 
 	case WM_PAINT:
-		SCR_DirtyScreen();	/* force entire screen to update next frame */
 		return DefWindowProc(hWnd, uMsg, wParam, lParam);
 
 	case WM_DESTROY:

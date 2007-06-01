@@ -120,7 +120,7 @@ void CL_ParseShaders (const char *name, char **text)
 				case V_NULL:
 					break;
 				case V_CLIENT_HUNK_STRING:
-					CL_ClientHunkStoreString(token, (char**) ((void*)entry + (int)v->ofs));
+					CL_ClientHunkStoreString(token, (char**) (entry + (int)v->ofs));
 					break;
 				default:
 					Com_ParseValue(entry, token, v->type, v->ofs, v->size);

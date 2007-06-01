@@ -1597,7 +1597,7 @@ extern void AII_ParseAircraftItem (const char *name, char **text)
 					case V_TRANSLATION2_STRING:
 						token++;
 					case V_CLIENT_HUNK_STRING:
-						CL_ClientHunkStoreString(token, (char**) ((void*)airItem + (int)vp->ofs));
+						CL_ClientHunkStoreString(token, (char**) (airItem + (int)vp->ofs));
 						break;
 					default:
 						Com_ParseValue(airItem, token, vp->type, vp->ofs, vp->size);
@@ -1802,7 +1802,7 @@ extern void AIR_ParseAircraft (const char *name, char **text, qboolean assignAir
 					case V_TRANSLATION2_STRING:
 						token++;
 					case V_CLIENT_HUNK_STRING:
-						CL_ClientHunkStoreString(token, (char**) ((void*)air_samp + (int)vp->ofs));
+						CL_ClientHunkStoreString(token, (char**) (air_samp + (int)vp->ofs));
 						break;
 					default:
 						Com_ParseValue(air_samp, token, vp->type, vp->ofs, vp->size);
@@ -1851,7 +1851,7 @@ extern void AIR_ParseAircraft (const char *name, char **text, qboolean assignAir
 							case V_TRANSLATION2_STRING:
 								token++;
 							case V_CLIENT_HUNK_STRING:
-								CL_ClientHunkStoreString(token, (char**) ((void*)air_samp + (int)vp->ofs));
+								CL_ClientHunkStoreString(token, (char**) (air_samp + (int)vp->ofs));
 								break;
 							default:
 								Com_ParseValue(air_samp, token, vp->type, vp->ofs, vp->size);

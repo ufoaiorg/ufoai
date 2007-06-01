@@ -1261,7 +1261,7 @@ extern void B_ParseBuildings (const char *name, char **text, qboolean link)
 						case V_TRANSLATION2_STRING:
 							token++;
 						case V_CLIENT_HUNK_STRING:
-							CL_ClientHunkStoreString(token, (char**) ((void*)building + (int)vp->ofs));
+							CL_ClientHunkStoreString(token, (char**) (building + (int)vp->ofs));
 							break;
 						default:
 							Com_ParseValue(building, token, vp->type, vp->ofs, vp->size);

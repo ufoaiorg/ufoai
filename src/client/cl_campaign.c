@@ -922,7 +922,7 @@ static void CL_AircraftList_f (void)
  */
 extern const char* CL_GetNationTeamName (const nation_t* nation, char *teamname, size_t size)
 {
-	int i, randTeamString;
+	int i = 0, randTeamString;
 	char *string, *string2;
 	char namesString[256];
 
@@ -3489,7 +3489,7 @@ extern void CL_ParseNations (const char *name, char **text)
 					case V_TRANSLATION2_STRING:
 						token++;
 					case V_CLIENT_HUNK_STRING:
-						CL_ClientHunkStoreString(token, (char**) ((void*)nation + (int)vp->ofs));
+						CL_ClientHunkStoreString(token, (char**) (nation + (int)vp->ofs));
 						break;
 					default:
 						if (Com_ParseValue(nation, token, vp->type, vp->ofs, vp->size) == -1)

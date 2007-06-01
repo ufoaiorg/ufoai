@@ -1859,7 +1859,7 @@ extern void RS_ParseTechnologies (const char *name, char **text)
 							case V_TRANSLATION2_STRING:
 								token++;	/**< Remove first char (i.e. we assume it's the "_") */
 							case V_CLIENT_HUNK_STRING:
-								CL_ClientHunkStoreString(token, (char**) ((void*)mail + (int)vp->ofs));
+								CL_ClientHunkStoreString(token, (char**) (mail + (int)vp->ofs));
 								break;
 							case V_NULL:
 								Com_Printf("RS_ParseTechnologies Error: - no buffer for technologies - V_NULL not allowed (token: '%s') entry: '%s'\n", token, name);
@@ -1888,7 +1888,7 @@ extern void RS_ParseTechnologies (const char *name, char **text)
 						case V_TRANSLATION2_STRING:
 							token++;
 						case V_CLIENT_HUNK_STRING:
-							CL_ClientHunkStoreString(token, (char**) ((void*)tech + (int)vp->ofs));
+							CL_ClientHunkStoreString(token, (char**) (tech + (int)vp->ofs));
 							break;
 						case V_NULL:
 							Com_Printf("RS_ParseTechnologies Error: - no buffer for technologies - V_NULL not allowed (token: '%s') entry: '%s'\n", token, name);
