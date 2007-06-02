@@ -1341,7 +1341,7 @@ extern void MAP_DrawMap (const menuNode_t* node, qboolean map3D)
 		if (smoothRotation)
 			MAP3D_SmoothRotate();
 		re.Draw3DGlobe(node->pos[0], node->pos[1], node->size[0], node->size[1],
-			(float) (ccs.date.sec / 60) / 4, ccs.angles, ccs.zoom / 10, curCampaign->map);
+			(float) (ccs.date.sec / (24 * 3600.0f)) * 2 * M_PI - M_PI, ccs.angles, ccs.zoom / 10, curCampaign->map);
 
 		MAP_Draw3DMapMarkers(node);
 	} else {
