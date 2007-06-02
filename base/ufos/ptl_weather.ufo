@@ -21,6 +21,7 @@ particle weather_snow_flakes
 {
 	init
 	{
+		physics true
 		image  sfx/snow
 		blend  add
 		style  facing
@@ -68,6 +69,7 @@ particle weather_rain_drop
 {
 	init
 	{
+		physics true
 		image  sfx/rain
 		blend  add
 		style  facing
