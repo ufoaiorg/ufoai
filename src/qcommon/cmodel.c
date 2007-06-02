@@ -1933,6 +1933,7 @@ static void CM_RecursiveHullCheck (int num, float p1f, float p2f, vec3_t p1, vec
 
 /*====================================================================== */
 
+#define MAX_LEAFS 1024
 /**
  * @brief
  * @param[in] start trace start vector
@@ -1976,8 +1977,7 @@ static trace_t CM_BoxTrace (vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, 
 
 	/* check for position test special case */
 	if (start[0] == end[0] && start[1] == end[1] && start[2] == end[2]) {
-#define max_lefts 1024
-		int leafs[max_lefts];
+		int leafs[MAX_LEAFS];
 		int numleafs;
 		vec3_t c1, c2;
 		int topnode;
@@ -1989,7 +1989,7 @@ static trace_t CM_BoxTrace (vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, 
 			c2[i] += 1;
 		}
 
-		numleafs = CM_BoxLeafnums_headnode(c1, c2, leafs, max_lefts, headnode, &topnode);
+		numleafs = CM_BoxLeafnums_headnode(c1, c2, leafs, MAX_LEAFS, headnode, &topnode);
 		for (i = 0; i < numleafs; i++) {
 			CM_TestInLeaf(leafs[i]);
 			if (trace_trace.allsolid)

@@ -555,7 +555,6 @@ typedef struct mp_s {
 } mp_t;							/* mapparticles */
 
 extern lm_t LMs[MAX_LOCALMODELS];
-extern mp_t MPs[MAX_MAPPARTICLES];
 
 extern int numLMs;
 extern int numMPs;

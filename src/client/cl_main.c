@@ -2334,32 +2334,6 @@ static void CL_SendCommand (void)
 	CL_CheckForResend();
 }
 
-
-/**
- * @brief
- */
-extern void CL_AddMapParticle (char *ptl, vec3_t origin, vec2_t wait, char *info, int levelflags)
-{
-	mp_t *mp;
-
-	mp = &MPs[numMPs++];
-
-	if (numMPs >= MAX_MAPPARTICLES) {
-		Sys_Error("Too many map particles\n");
-		return;
-	}
-
-	Q_strncpyz(mp->ptl, ptl, MAX_QPATH);
-	VectorCopy(origin, mp->origin);
-	mp->info = info;
-	mp->levelflags = levelflags;
-	mp->wait[0] = wait[0] * 1000;
-	mp->wait[1] = wait[1] * 1000;
-	mp->nextTime = cl.time + wait[0] + wait[1] * frand() + 1;
-
-	Com_DPrintf("Adding map particle %s (%i) with levelflags %i\n", ptl, numMPs, levelflags);
-}
-
 /**
  * @brief Translate the difficulty int to a translated string
  * @param difficulty the difficulty integer value

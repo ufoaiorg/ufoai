@@ -849,12 +849,6 @@ static void R_DrawWorld (mnode_t * nodes)
 {
 	entity_t ent;
 
-	if (!r_drawworld->value)
-		return;
-
-	if (r_newrefdef.rdflags & RDF_NOWORLDMODEL)
-		return;
-
 	FastVectorCopy(r_newrefdef.vieworg, modelorg);
 
 	/* auto cycle the world frame for texture animation */
@@ -906,8 +900,9 @@ static void R_FindModelNodes_r (mnode_t * node)
 
 
 /**
- * @brief Draws the brushes for the current worldlevel
+ * @brief Draws the brushes for the current worldlevel and hide other levels
  * @sa cvar cl_worldlevel
+ * @sa R_FindModelNodes_r
  */
 void R_DrawLevelBrushes (void)
 {
@@ -915,6 +910,9 @@ void R_DrawLevelBrushes (void)
 	int i, tile, mask;
 
 	if (r_newrefdef.rdflags & RDF_NOWORLDMODEL)
+		return;
+
+	if (!r_drawworld->integer)
 		return;
 
 	memset(&ent, 0, sizeof(ent));
@@ -925,6 +923,8 @@ void R_DrawLevelBrushes (void)
 	for (tile = 0; tile < rNumTiles; tile++) {
 		currentmodel = rTiles[tile];
 
+		/* don't draw stepon and actorclip */
+		/* @note Change this to 258 to see the actorclip brushes in-game */
 		for (i = 0; i < 256; i++) {
 			/* check the worldlevel flags */
 			if (i && !(i & mask))

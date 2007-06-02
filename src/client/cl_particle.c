@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 
-mp_t MPs[MAX_MAPPARTICLES];
+static mp_t MPs[MAX_MAPPARTICLES];
 int numMPs;
 
 #define RADR(x)		((x < 0) ? (byte*)p-x : (byte*)pcmdData+x)
@@ -201,6 +201,31 @@ static void CL_ParticleRun2 (ptl_t *p);
 
 /* =========================================================== */
 
+
+/**
+ * @brief
+ */
+extern void CL_AddMapParticle (char *ptl, vec3_t origin, vec2_t wait, char *info, int levelflags)
+{
+	mp_t *mp;
+
+	mp = &MPs[numMPs++];
+
+	if (numMPs >= MAX_MAPPARTICLES) {
+		Sys_Error("Too many map particles\n");
+		return;
+	}
+
+	Q_strncpyz(mp->ptl, ptl, MAX_QPATH);
+	VectorCopy(origin, mp->origin);
+	mp->info = info;
+	mp->levelflags = levelflags;
+	mp->wait[0] = wait[0] * 1000;
+	mp->wait[1] = wait[1] * 1000;
+	mp->nextTime = cl.time + wait[0] + wait[1] * frand() + 1;
+
+	Com_DPrintf("Adding map particle %s (%i) with levelflags %i\n", ptl, numMPs, levelflags);
+}
 
 /**
  * @brief
