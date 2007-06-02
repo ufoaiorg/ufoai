@@ -897,6 +897,7 @@ void CL_ParticleFree (ptl_t *p)
 	ptl_t *c;
 
 	p->inuse = qfalse;
+	p->invis = qtrue;
 	for (c = p->children; c; c = c->next) {
 		CL_ParticleFree(c);
 	}
@@ -992,6 +993,7 @@ static void CL_ParticleRun2 (ptl_t *p)
 {
 	qboolean onlyAlpha;
 	trace_t tr;
+	int z, oldLevel;
 
 	/* advance time */
 	p->dt = cls.frametime;
@@ -1053,13 +1055,26 @@ static void CL_ParticleRun2 (ptl_t *p)
 				CL_Fading(p->color, p->frameFade, p->lastFrame * p->fps, p->blend == BLEND_BLEND);
 	}
 
+	z = (int)p->s[2] / UNIT_HEIGHT;
+	if (z > cl_worldlevel->integer) {
+		p->invis = qtrue;
+		return;
+	}
+
 	/* basic 'physics' for particles */
 	if (p->physics) {
+		oldLevel = cl_worldlevel->integer;
+		cl_worldlevel->integer = map_maxlevel - 1;
 		tr = CL_Trace(p->origin, p->s, vec3_origin, vec3_origin, NULL, NULL, MASK_SOLID);
+		cl_worldlevel->integer = oldLevel;
 
-		if (tr.fraction < 1.0)
+		/* hit something solid */
+		if (tr.fraction < 1.0 || tr.startsolid) {
 			CL_ParticleFree(p);
+			return;
+		}
 	}
+	p->invis = qfalse;
 }
 
 /**

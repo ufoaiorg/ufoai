@@ -280,7 +280,7 @@ extern void R_DrawPtls (void)
 	blend_mode = BLEND_REPLACE;
 
 	for (i = 0, p = r_newrefdef.ptls; i < r_newrefdef.num_ptls; i++, p++)
-		if (p->inuse) {
+		if (p->inuse && !p->invis) {
 			/* test for visibility */
 			if (p->levelFlags && !((1 << r_newrefdef.worldlevel) & p->levelFlags))
 				continue;

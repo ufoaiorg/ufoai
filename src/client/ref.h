@@ -196,6 +196,7 @@ typedef struct {
 typedef struct ptl_s {
 	/* used by ref */
 	qboolean inuse;			/**< particle active? */
+	qboolean invis;			/**< is this particle invisible */
 	int pic, model;			/**< index of pic or model */
 	byte blend;				/**< blend mode */
 	byte style;				/**< style mode */
