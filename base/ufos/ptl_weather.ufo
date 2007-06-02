@@ -1,0 +1,44 @@
+// wheather particles like snow and rain
+
+particle weather_snow
+{
+	init
+	{
+		v      "0 0 0"
+		tps    25.0
+	}
+	think
+	{
+		spawn weather_snow_flakes
+	}
+}
+
+particle weather_snow_flakes
+{
+	init
+	{
+		image  sfx/snow
+		blend  add
+		style  facing
+		thinkfade  out
+		size   "2 2"
+		a      "40 40 -300"
+
+		push   *v
+		rand   vector "20 20 -40"
+		add    vector "3 3 3"
+		mul    #
+		crand  vector "15 15 -15"
+		add    #
+		pop    *v
+
+		crand  vector "80 80 -80"
+		add    *s
+		pop    *s
+
+		rand   float 1
+		add    float 0.2
+		pop    *tps
+	}
+	think { kill }
+}
