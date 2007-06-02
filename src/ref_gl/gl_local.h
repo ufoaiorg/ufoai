@@ -244,6 +244,8 @@ extern transform_t trafo[MAX_ENTITIES];
 
 /*==================================================== */
 
+extern int spherelist;	/* the gl list of the 3d globe */
+
 extern image_t *shadow;
 
 extern image_t *r_notexture;

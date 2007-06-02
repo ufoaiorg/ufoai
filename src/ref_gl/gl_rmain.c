@@ -1557,6 +1557,9 @@ static void R_Shutdown (void)
 	for (commands = r_commands; commands->name; commands++)
 		ri.Cmd_RemoveCommand(commands->name);
 
+	qglDeleteLists(spherelist, 1);
+	spherelist = -1;
+
 	Mod_FreeAll();
 
 	GL_ShutdownImages();

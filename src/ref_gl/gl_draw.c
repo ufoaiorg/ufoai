@@ -31,7 +31,7 @@ void Scrap_Upload(void);
 image_t *shadow;
 
 static float globe_fog[4];
-static int spherelist = -1;
+int spherelist;
 #define GLOBE_TRIS 60
 #define GLOBE_TEXES (GLOBE_TRIS+1)*(GLOBE_TRIS+1)*4
 #define GLOBE_VERTS (GLOBE_TRIS+1)*(GLOBE_TRIS+1)*6
@@ -138,6 +138,7 @@ static void GL_InitGlobeChain (void)
 
 		t -= dt;
 	}
+	spherelist = -1;
 }
 
 /* console font */
