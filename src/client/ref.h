@@ -48,7 +48,6 @@ typedef void* WNDPROC;
 
 #define	MAX_DLIGHTS		32
 #define	MAX_ENTITIES	512
-#define	MAX_PARTICLES	8192
 #define	MAX_LIGHTSTYLES	256
 #define MAX_PTL_ART		512
 #define MAX_PTLS		2048
@@ -231,6 +230,8 @@ typedef struct ptl_s {
 						 * not higher than the current level (useful for weather
 						 * particles) */
 	qboolean stayalive;	/**< used for physics particles that hit the ground */
+	qboolean weather;	/**< used to identify weather particles (can be switched
+						 * off via cvar cl_particleweather) */
 } ptl_t;
 
 typedef struct ptlArt_s {

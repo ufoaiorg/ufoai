@@ -310,17 +310,17 @@ void Draw_NormPic (float x, float y, float w, float h, float sh, float th, float
 			nw = (sh - sl) * vid.rx;
 			nh = (th - tl) * vid.ry;
 		}
-		sl = sl / gl->width;
-		sh = sh / gl->width;
-		tl = tl / gl->height;
-		th = th / gl->height;
+		sl = sl / (float)gl->width;
+		sh = sh / (float)gl->width;
+		tl = tl / (float)gl->height;
+		th = th / (float)gl->height;
 	} else {
 		if (!w || !h) {
-			nw = (float) gl->width * vid.rx;
-			nh = (float) gl->height * vid.ry;
+			nw = (float)gl->width * vid.rx;
+			nh = (float)gl->height * vid.ry;
 		}
-		sh = 1;
-		th = 1;
+		sh = 1.0f;
+		th = 1.0f;
 	}
 
 	/* get alignement */

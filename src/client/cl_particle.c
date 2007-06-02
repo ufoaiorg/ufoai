@@ -159,6 +159,7 @@ static const value_t pps[] = {
 	{"physics", V_BOOL, offsetof(ptl_t, physics), MEMBER_SIZEOF(ptl_t, physics)},
 	{"autohide", V_BOOL, offsetof(ptl_t, autohide), MEMBER_SIZEOF(ptl_t, autohide)},
 	{"stayalive", V_BOOL, offsetof(ptl_t, stayalive), MEMBER_SIZEOF(ptl_t, stayalive)},
+	{"weather", V_BOOL, offsetof(ptl_t, weather), MEMBER_SIZEOF(ptl_t, weather)},
 
 	{NULL, 0, 0, 0}
 };
@@ -1008,6 +1009,12 @@ static void CL_ParticleRun2 (ptl_t *p)
 
 	/* test for end of life */
 	if (p->life && p->t >= p->life && !p->parent) {
+		CL_ParticleFree(p);
+		return;
+	/* don't play the weather particles if a user don't want them
+	 * there can be a lot of weather particles - which might slow the computer
+	 * down - so i made them switchable */
+	} else if (p->weather && !cl_particleWeather->integer) {
 		CL_ParticleFree(p);
 		return;
 	}

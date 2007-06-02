@@ -524,6 +524,44 @@ menu options_video
 		}
 	}
 
+	string ptlweather_str
+	{
+		string	"_Wheater effects:"
+		pos		"500 440"
+	}
+	string ptlweather_value
+	{
+		string	"*cvar mn_particleweather"
+		pos		"840 440"
+		align	ur
+	}
+	pic ptlweather_dec
+	{
+		image	menu/buttons_small
+		pos		"868 444"
+		texl	"0 0"
+		texh	"16 16"
+		mousefx	true
+		click
+		{
+			cmd "mn_modify cl_particleweather -1 0 1;"
+			cmd "mn_translate cl_particleweather mn_particleweather 0:No,1:Yes;"
+		}
+	}
+	pic ptlweather_inc
+	{
+		image	menu/buttons_small
+		pos		"884 444"
+		texl	"16 0"
+		texh	"32 16"
+		mousefx	true
+		click
+		{
+			cmd "mn_modify cl_particleweather +1 0 1;"
+			cmd "mn_translate cl_particleweather mn_particleweather 0:No,1:Yes;"
+		}
+	}
+
 	string gamma_str
 	{
 		string	"_Gamma:"
@@ -549,6 +587,7 @@ menu options_video
 	func init
 	{
 		cmd "copy mn_glmode gl_mode;"
+		cmd "mn_translate cl_particleweather mn_particleweather 0:No,1:Yes;"
 		cmd "mn_translate vid_fullscreen mn_fullscreen 0:No,1:Yes;"
 		cmd "mn_translate cl_fps mn_fps 0:No,1:Yes;"
 		cmd "mn_translate gl_imagefilter mn_imagefilter 0:No,1:Yes;"

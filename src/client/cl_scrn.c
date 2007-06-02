@@ -380,7 +380,7 @@ void SCR_DrawLoadingBar (int x, int y, int w, int h, int percent)
 extern void SCR_DrawPrecacheScreen (qboolean string)
 {
 	re.BeginFrame(0);
-	re.DrawNormPic(0, 0, 0, 0, 0, 0, 0, 0, ALIGN_UL, qfalse, "loading");
+	re.DrawNormPic(0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, 0, 0, 0, 0, ALIGN_UL, qfalse, "loading");
 	if (string)
 		re.FontDrawString("f_menubig", ALIGN_UC,
 			(int)(VID_NORM_WIDTH / 2),
@@ -411,7 +411,7 @@ static void SCR_DrawLoading (void)
 		else
 			Com_sprintf(loadingPic, MAX_QPATH, "maps/loading/default.jpg");
 	}
-	re.DrawNormPic(0, 0, 0, 0, 0, 0, 0, 0, ALIGN_UL, qfalse, loadingPic);
+	re.DrawNormPic(0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, 0, 0, 0, 0, ALIGN_UL, qfalse, loadingPic);
 	re.DrawColor(color);
 
 	if (cl.configstrings[CS_TILES][0]) {

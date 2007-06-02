@@ -259,6 +259,8 @@ extern cvar_t *cl_aviForceDemo;
 extern cvar_t *cl_aviFrameRate;
 extern cvar_t *cl_aviMotionJpeg;
 
+extern cvar_t *cl_particleWeather;
+
 extern cvar_t *cl_markactors;
 
 extern cvar_t *cl_camrotspeed;

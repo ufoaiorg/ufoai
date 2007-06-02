@@ -58,6 +58,8 @@ cvar_t *cl_aviForceDemo;
 cvar_t *cl_aviFrameRate;
 cvar_t *cl_aviMotionJpeg;
 
+cvar_t *cl_particleWeather;
+
 cvar_t *sensitivity;
 
 cvar_t *cl_logevents;
@@ -2104,6 +2106,8 @@ static void CL_InitLocal (void)
 	cl_aviForceDemo = Cvar_Get("cl_aviForceDemo", "1", CVAR_ARCHIVE, "AVI recording - record even if no game is loaded");
 	cl_aviFrameRate = Cvar_Get("cl_aviFrameRate", "25", CVAR_ARCHIVE, "AVI recording - see video command");
 	cl_aviMotionJpeg = Cvar_Get("cl_aviMotionJpeg", "1", CVAR_ARCHIVE, "AVI recording - see video command");
+
+	cl_particleWeather = Cvar_Get("cl_particleweather", "0", CVAR_ARCHIVE | CVAR_LATCH, "Switch the weather particles on or off");
 
 	cl_fps = Cvar_Get("cl_fps", "0", CVAR_ARCHIVE, "Show frames per second");
 	cl_shownet = Cvar_Get("cl_shownet", "0", CVAR_ARCHIVE, NULL);

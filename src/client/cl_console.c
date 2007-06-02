@@ -612,7 +612,7 @@ void Con_DrawConsole (float frac)
 
 	/* draw the background */
 	/*re.DrawFill(0, 0, viddef.width, viddef.height, ALIGN_UL, consoleBG);*/
-	re.DrawNormPic(0, lines - (int) viddef.height, 0, 0, 0, 0, 0, 0, ALIGN_UL, qfalse, "conback");
+	re.DrawNormPic(0, lines - (int) viddef.height, VID_NORM_WIDTH, VID_NORM_HEIGHT, 0, 0, 0, 0, ALIGN_UL, qfalse, "conback");
 
 	Com_sprintf(version, sizeof(version), "v%s", UFO_VERSION);
 	len = strlen(version);
