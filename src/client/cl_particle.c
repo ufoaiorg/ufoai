@@ -156,6 +156,7 @@ static const value_t pps[] = {
 	{"lastframe", V_FLOAT, offsetof(ptl_t, lastFrame), MEMBER_SIZEOF(ptl_t, lastFrame)},
 	{"levelflags", V_INT, offsetof(ptl_t, levelFlags), MEMBER_SIZEOF(ptl_t, levelFlags)},
 	{"light", V_INT, offsetof(ptl_t, light), MEMBER_SIZEOF(ptl_t, light)},
+	{"physics", V_BOOL, offsetof(ptl_t, physics), MEMBER_SIZEOF(ptl_t, physics)},
 
 	{NULL, 0, 0, 0}
 };
@@ -841,8 +842,10 @@ ptl_t *CL_ParticleSpawn (const char *name, int levelFlags, const vec3_t s, const
 	p->model = -1;
 
 	/* copy location */
-	if (s)
+	if (s) {
+		VectorCopy(s, p->origin);
 		VectorCopy(s, p->s);
+	}
 	/* copy velocity */
 	if (v)
 		VectorCopy(v, p->v);
@@ -963,6 +966,7 @@ void CL_ParticleCheckRounds (void)
 static void CL_ParticleRun2 (ptl_t *p)
 {
 	qboolean onlyAlpha;
+	trace_t tr;
 
 	/* advance time */
 	p->dt = cls.frametime;
@@ -1022,6 +1026,14 @@ static void CL_ParticleRun2 (ptl_t *p)
 				CL_Fading(p->color, p->thinkFade, p->lastThink * p->tps, p->blend == BLEND_BLEND);
 			if (p->frameFade)
 				CL_Fading(p->color, p->frameFade, p->lastFrame * p->fps, p->blend == BLEND_BLEND);
+	}
+
+	/* basic 'physics' for particles */
+	if (p->physics) {
+		tr = CL_Trace(p->origin, p->s, vec3_origin, vec3_origin, NULL, NULL, MASK_SOLID);
+
+		if (tr.fraction < 1.0)
+			CL_ParticleFree(p);
 	}
 }
 

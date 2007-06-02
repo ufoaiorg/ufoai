@@ -3167,7 +3167,6 @@ static void CL_TargetingStraight (pos3_t fromPos, pos3_t toPos)
 {
 	vec3_t start, end;
 	vec3_t dir, mid;
-	vec3_t mins, maxs;
 	trace_t tr;
 	int oldLevel, i;
 	float d;
@@ -3205,10 +3204,7 @@ static void CL_TargetingStraight (pos3_t fromPos, pos3_t toPos)
 			break;
 		}
 
-	/* trace for obstacles */
-	VectorSet(mins, 0, 0, 0);
-	VectorSet(maxs, 0, 0, 0);
-	tr = CL_Trace(start, mid, mins, maxs, selActor, target, MASK_SHOT);
+	tr = CL_Trace(start, mid, vec3_origin, vec3_origin, selActor, target, MASK_SHOT);
 
 	if (tr.fraction < 1.0) {
 		d = VectorDist(start, mid);
@@ -3248,7 +3244,6 @@ static void CL_TargetingGrenade (pos3_t fromPos, pos3_t toPos)
 	vec3_t from, at, cross;
 	float vz, dt;
 	vec3_t v0, ds, next;
-	vec3_t mins, maxs;
 	trace_t tr;
 	int oldLevel;
 	qboolean obstructed = qfalse;
@@ -3295,10 +3290,6 @@ static void CL_TargetingGrenade (pos3_t fromPos, pos3_t toPos)
 	/* paint */
 	vz = v0[2];
 
-	/* mins/maxs: Used for obstacle-tracing later on (CL_Trace) */
-	VectorSet(mins, 0, 0, 0);
-	VectorSet(maxs, 0, 0, 0);
-
 	for (i = 0; i < GRENADE_PARTITIONS; i++) {
 		VectorAdd(from, ds, next);
 		next[2] += dt * (vz - 0.5 * GRAVITY * dt);
@@ -3306,7 +3297,7 @@ static void CL_TargetingGrenade (pos3_t fromPos, pos3_t toPos)
 		VectorScale(v0, (i + 1.0) / GRENADE_PARTITIONS, at);
 
 		/* trace for obstacles */
-		tr = CL_Trace(from, next, mins, maxs, selActor, target, MASK_SHOT);
+		tr = CL_Trace(from, next, vec3_origin, vec3_origin, selActor, target, MASK_SHOT);
 
 		if (tr.fraction < 1.0) {
 			obstructed = qtrue;

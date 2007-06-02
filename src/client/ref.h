@@ -202,7 +202,8 @@ typedef struct ptl_s {
 	vec2_t size;
 	vec3_t scale;
 	vec4_t color;
-	vec3_t s;
+	vec3_t s;			/**< current position */
+	vec3_t origin;		/**< start position - set initial s position to get this value */
 	vec3_t offset;
 	vec3_t angles;
 	int levelFlags;
@@ -224,6 +225,7 @@ typedef struct ptl_s {
 	int rounds, roundsCnt;
 	vec3_t a, v, omega;
 	int light;
+	qboolean physics;	/**< basic physics */
 } ptl_t;
 
 typedef struct ptlArt_s {
