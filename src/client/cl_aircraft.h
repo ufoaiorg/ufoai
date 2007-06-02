@@ -110,8 +110,9 @@ typedef enum {
 	AIR_NOSE_RIGHT,
 	AIR_WING_LEFT,
 	AIR_WING_RIGHT,
-} itemPos_t;
 
+	AIR_POSITIONS_MAX
+} itemPos_t;
 
 #define MAX_AIRCRAFTSLOT 4
 

@@ -1613,6 +1613,33 @@ extern void AII_ParseAircraftItem (const char *name, char **text)
 	} while (*text);
 }
 
+/**
+ * @brief List of valid strings for slot types
+ * @note slot names are the same as the item types
+ */
+static const char *air_slot_type_strings[MAX_ACITEMS] = {
+	"weapon",
+	"ammo",
+	"shield",
+	"electronics"
+};
+
+/** @brief List of valid strings for itemPos_t */
+static const char *air_position_strings[AIR_POSITIONS_MAX] = {
+	"nose_left",
+	"nose_center",
+	"nose_right",
+	"wing_left",
+	"wing_right"
+};
+
+/** @brief Valid aircraft slot definitions from script files. */
+static const value_t aircraft_slot_vals[] = {
+	{"contains", V_CLIENT_HUNK_STRING, offsetof(aircraft_t, stats[AIR_STATS_RANGE]), MEMBER_SIZEOF(aircraft_t, stats[0])},
+
+	{NULL, 0, 0, 0}
+};
+
 /** @brief Valid aircraft parameter definitions from script files. */
 static const value_t aircraft_param_vals[] = {
 	{"range", V_INT, offsetof(aircraft_t, stats[AIR_STATS_RANGE]), MEMBER_SIZEOF(aircraft_t, stats[0])},
@@ -1860,6 +1887,65 @@ extern void AIR_ParseAircraft (const char *name, char **text, qboolean assignAir
 						}
 					if (!vp->string)
 						Com_Printf("AIR_ParseAircraft: Ignoring unknown param value '%s'\n", token);
+				} while (*text); /* dummy condition */
+			} else if (!Q_strncmp(token, "slot", 4)) {
+				token = COM_EParse(text, errhead, name);
+				if (!*text || *token != '{') {
+					Com_Printf("AIR_ParseAircraft: Invalid slot value for aircraft: %s\n", name);
+					return;
+				}
+				do {
+					token = COM_EParse(text, errhead, name);
+					if (!*text)
+						break;
+					if (*token == '}')
+						break;
+
+					for (vp = aircraft_slot_vals; vp->string; vp++)
+						if (!Q_strcmp(token, vp->string)) {
+							/* found a definition */
+							token = COM_EParse(text, errhead, name);
+							if (!*text)
+								return;
+							switch (vp->type) {
+							case V_TRANSLATION2_STRING:
+								token++;
+							case V_CLIENT_HUNK_STRING:
+								CL_ClientHunkStoreString(token, (char**) ((char*)air_samp + (int)vp->ofs));
+								break;
+							default:
+								Com_ParseValue(air_samp, token, vp->type, vp->ofs, vp->size);
+							}
+							break;
+						}
+					if (!vp->string) {
+						if (!Q_strcmp(token, "position")) {
+							token = COM_EParse(text, errhead, name);
+							if (!*text)
+								return;
+							for (i = 0; i < AIR_POSITIONS_MAX; i++) {
+								if (!Q_strcmp(token, air_position_strings[i])) {
+									/* TODO: position = i */
+									break;
+								}
+							}
+							if (i == AIR_POSITIONS_MAX)
+								Sys_Error("Unknown value '%s' for slot position\n", token);
+						} else if (!Q_strcmp(token, "type")) {
+							token = COM_EParse(text, errhead, name);
+							if (!*text)
+								return;
+							for (i = 0; i < MAX_ACITEMS; i++) {
+								if (!Q_strcmp(token, air_slot_type_strings[i])) {
+									/* TODO: type = i */
+									break;
+								}
+							}
+							if (i == MAX_ACITEMS)
+								Sys_Error("Unknown value '%s' for slot type\n", token);
+						}
+						Com_Printf("AIR_ParseAircraft: Ignoring unknown slot value '%s'\n", token);
+					}
 				} while (*text); /* dummy condition */
 			} else if (!Q_strncmp(token, "ufotype", 7)) {
 				token = COM_EParse(text, errhead, name);
