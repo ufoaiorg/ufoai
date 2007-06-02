@@ -2141,7 +2141,7 @@ extern void CL_ParseMedalsAndRanks (const char *name, char **text, byte parseran
 					case V_TRANSLATION2_STRING:
 						token++;
 					case V_CLIENT_HUNK_STRING:
-						CL_ClientHunkStoreString(token, (char**) (rank + (int)v->ofs));
+						CL_ClientHunkStoreString(token, (char**) ((char*)rank + (int)v->ofs));
 						break;
 					default:
 						Com_ParseValue(rank, token, v->type, v->ofs, v->size);

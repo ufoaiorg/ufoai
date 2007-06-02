@@ -3489,7 +3489,7 @@ extern void CL_ParseNations (const char *name, char **text)
 					case V_TRANSLATION2_STRING:
 						token++;
 					case V_CLIENT_HUNK_STRING:
-						CL_ClientHunkStoreString(token, (char**) (nation + (int)vp->ofs));
+						CL_ClientHunkStoreString(token, (char**) ((char*)nation + (int)vp->ofs));
 						break;
 					default:
 						if (Com_ParseValue(nation, token, vp->type, vp->ofs, vp->size) == -1)
