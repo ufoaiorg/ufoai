@@ -2990,35 +2990,53 @@ TARGETING GRAPHICS
 ==============================================================
 */
 
+/** 
+ * @brief table for lookup_erf
+ * lookup[]= {erf(0), erf(0.1), ...}
+ */
 static const float lookup[]= {
 	0.0f,0.1125f,0.2227f,0.3286f,0.4284f,0.5205f,0.6039f,
 	0.6778f,0.7421f,0.7969f,0.8427f,0.8802f,0.9103f,0.9340f,
-	0.9523f,0.9661f,0.9763f,0.9838f,0.9891f,0.9928f,0.9953f
+	0.9523f,0.9661f,0.9763f,0.9838f,0.9891f,0.9928f,0.9953f,
+	0.9970f,0.9981f,0.9989f,0.9993f,0.9996f,0.9998f,0.9999f,
+	0.9999f,1.0000f,1.0000f
 };
 
+/** 
+ * @brief table for lookup_erf
+ * lookup[]= {10*(erf(0.1)-erf(0.0)), 10*(erf(0.2)-erf(0.1)), ...}
+ */
 static const float lookupdiff[]= {
-	0.1125f,0.1102f,0.1059f,0.0998f,0.0921f,0.0834f,0.0739f,
-	0.0643f,0.0548f,0.0458f,0.0375f,0.0301f,0.0237f,0.0183f,
-	0.0138f,0.0102f,0.0075f,0.0053f,0.0037f,0.0025f
+	1.1246f,1.1024f,1.0592f,0.9977f,0.9211f,0.8336f,0.7395f,
+	0.6430f,0.5481f,0.4579f,0.3750f,0.3011f,0.2369f,0.1828f,
+	0.1382f,0.1024f,0.0744f,0.0530f,0.0370f,0.0253f,0.0170f,
+	0.0112f,0.0072f,0.0045f,0.0028f,0.0017f,0.0010f,0.0006f,
+	0.0003f,0.0002f
 };
 
 /**
  * @brief calculate approximate erf, the error function
- * uses lookup table.
- * lookup table erf calc. mostly good to around 0.001.
- * goes 0.007 high just above 1.9, when it starts returning 1
+ * http://en.wikipedia.org/wiki/Error_function
+ * uses lookup table and linear interpolation
+ * approximation good to around 0.001.
  * easily good enough for the job.
+ * @param[in] the number to calculate the erf of.
+ * @return for posotive arg, returns approximate erf. for -ve arg returns 0.0f.
  */
 static float lookup_erf (float z)
 {
 	float ifloat;
 	int iint;
-
-	if (z > 1.9f)
+	
+	/* erf(-z)=-erf(z), but erf of -ve number should never be used here
+	 * so return 0 here */
+	if (z < 0.0f)
+		return 0.0f;
+	if (z > 2.9f)
 		return 1.0f;
 	ifloat = floor(z * 10.0f);
 	iint = (int)ifloat;
-	return lookup[iint] + (z - ifloat / 10.0f) * lookupdiff[iint] / 0.1f;
+	return lookup[iint] + (z - ifloat / 10.0f) * lookupdiff[iint];
 }
 
 /**
