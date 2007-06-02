@@ -835,7 +835,7 @@ ptl_t *CL_ParticleSpawn (const char *name, int levelFlags, const vec3_t s, const
 	p->inuse = qtrue;
 	p->startTime = cl.time;
 	p->ctrl = pd;
-	p->color[0] = p->color[1] = p->color[2] = p->color[3] = 1.0f;
+	Vector4Set(p->color, 1.0f, 1.0f, 1.0f, 1.0f);
 
 	p->pic = -1;
 	p->model = -1;
@@ -1015,7 +1015,7 @@ static void CL_ParticleRun2 (ptl_t *p)
 	if (p->thinkFade || p->frameFade) {
 		onlyAlpha = (p->blend == BLEND_BLEND);
 		if (!onlyAlpha) {
-			p->color[0] = p->color[1] = p->color[2] = p->color[3] = 1.0;
+			Vector4Set(p->color, 1.0f, 1.0f, 1.0f, 1.0f);
 		} else
 			p->color[3] = 1.0;
 			if (p->thinkFade)
