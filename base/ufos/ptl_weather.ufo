@@ -34,10 +34,10 @@ particle weather_snow_flakes
 		a      "40 40 -100"
 
 		push   *v
-		rand   vector "20 20 -40"
+		rand   vector "20 20 -20"
 		add    vector "3 3 3"
 		mul    #
-		crand  vector "15 15 -15"
+		crand  vector "15 15 -5"
 		add    #
 		pop    *v
 
@@ -45,8 +45,8 @@ particle weather_snow_flakes
 		add    *s
 		pop    *s
 
-		rand   float 1
-		add    float 0.2
+		rand   float 0.5
+		add    float 0.1
 		pop    *tps
 	}
 	think { kill }
