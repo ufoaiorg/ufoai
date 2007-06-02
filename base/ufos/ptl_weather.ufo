@@ -31,7 +31,7 @@ particle weather_snow_flakes
 		style  facing
 		thinkfade  out
 		size   "3 3"
-		a      "40 40 -300"
+		a      "40 40 -100"
 
 		push   *v
 		rand   vector "20 20 -40"
@@ -98,6 +98,10 @@ particle weather_rain_drop
 		rand   float 0.1
 		add    float 0.2
 		pop    *tps
+	}
+	physics
+	{
+		// TODO splash rain drops
 	}
 	think { kill }
 }

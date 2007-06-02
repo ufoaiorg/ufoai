@@ -39,7 +39,7 @@ typedef struct ptlCmd_s {
 
 typedef struct ptlDef_s {
 	char name[MAX_VAR];
-	ptlCmd_t *init, *run, *think, *round;
+	ptlCmd_t *init, *run, *think, *round, *physics;
 } ptlDef_t;
 
 
@@ -51,6 +51,7 @@ typedef enum pf_s {
 	PF_RUN,
 	PF_THINK,
 	PF_ROUND,
+	PF_PHYSICS,	/**< if a particle hit the ground */
 
 	PF_NUM_PTLFUNCS
 } pf_t;
@@ -60,7 +61,8 @@ static const char *pf_strings[PF_NUM_PTLFUNCS] = {
 	"init",
 	"run",
 	"think",
-	"round"
+	"round",
+	"physics"
 };
 
 /** @brief particle functions offsets - see pf_strings and pf_t */
@@ -68,7 +70,8 @@ static const size_t pf_values[PF_NUM_PTLFUNCS] = {
 	offsetof(ptlDef_t, init),
 	offsetof(ptlDef_t, run),
 	offsetof(ptlDef_t, think),
-	offsetof(ptlDef_t, round)
+	offsetof(ptlDef_t, round),
+	offsetof(ptlDef_t, physics)
 };
 
 /** @brief particle commands - see pc_strings */
@@ -1083,6 +1086,9 @@ static void CL_ParticleRun2 (ptl_t *p)
 
 		/* hit something solid */
 		if (tr.fraction < 1.0 || tr.startsolid) {
+			/* now execute the physics handler */
+			if (p->ctrl->physics)
+				CL_ParticleFunction(p, p->ctrl->physics);
 			/* let them stay on the ground until they fade out or die */
 			if (!p->stayalive) {
 				CL_ParticleFree(p);
