@@ -1923,8 +1923,10 @@ extern void AIR_ListAircraftSamples_f (void)
  */
 extern void AII_ReloadWeapon (aircraft_t *aircraft)
 {
+#if 0
 	int idx;
 	int i;
+#endif
 
 	assert(aircraft);
 
