@@ -23,7 +23,7 @@ particle bolter
 		image  sfx/bolter
 		blend  add
 		style  beam
-		tfade  out
+		thinkfade  out
 		push   float 2.0
 		pop    *size.2
 		tps    4.0
@@ -38,7 +38,7 @@ particle bolterImpact
 		image  sfx/smoke
 		blend  add
 		style  facing
-		tfade  sin
+		thinkfade  sin
 		size   "20 20"
 
 		push   *v
@@ -67,7 +67,7 @@ particle bolterFragment
 		image  sfx/spark
 		blend  add
 		style  facing
-		tfade  out
+		thinkfade  out
 		size   "2 2"
 
 		push   *v
@@ -100,7 +100,7 @@ particle bullet
 		image  sfx/bullet
 		blend  add
 		style  beam
-		tfade  out
+		thinkfade  out
 		push   float 2.0
 		pop    *size.2
 		tps    4.0
@@ -115,7 +115,7 @@ particle bulletImpact
 		image  sfx/smoke
 		blend  add
 		style  facing
-		tfade  sin
+		thinkfade  sin
 		size   "20 20"
 
 		push   *v
@@ -144,7 +144,7 @@ particle bulletFragment
 		image  sfx/spark
 		blend  add
 		style  facing
-		tfade  out
+		thinkfade  out
 		size   "2 2"
 
 		push   *v
@@ -187,7 +187,7 @@ particle fireBall
 		add    vector "10 10"
 		pop    *size
 	}
-	think { tfade  out }
+	think { thinkfade  out }
 }
 
 particle fireImpact
@@ -198,7 +198,7 @@ particle fireImpact
 		blend  add
 		style  rotated
 		size   "80 80"
-		tfade  out
+		thinkfade  out
 		tps    1.25
 	}
 	run
@@ -238,7 +238,7 @@ particle rocketSmoke
 		image  sfx/smoke
 		blend  add
 		style  facing
-		tfade  out
+		thinkfade  out
 		tps    0.8
 		color  ".5 .5 .5 1"
 		v      "0 0 20"
@@ -267,7 +267,7 @@ particle rocketFire
 		image  sfx/fireball
 		blend  add
 		style  facing
-		tfade  out
+		thinkfade  out
 		tps    1.8
 		color  ".5 .5 .5 1"
 
@@ -336,7 +336,7 @@ particle laserPulse
 		image  sfx/laserbeam
 		blend  add
 		style  beam
-		tfade  sin
+		thinkfade  sin
 		tps    6.0
 		push   float 2.2
 		pop    *size.2
@@ -351,7 +351,7 @@ particle laserOverload
 		image  sfx/bullet
 		blend  add
 		style  beam
-		tfade  sin
+		thinkfade  sin
 		tps    2.0
 		push   float 2.7
 		pop    *size.2
@@ -366,7 +366,7 @@ particle laserImpact
 		image  sfx/smoke
 		blend  add
 		style  facing
-		tfade  sin
+		thinkfade  sin
 		size   "20 20"
 
 		push   *v
@@ -395,7 +395,7 @@ particle laserSpark
 		image  sfx/laserimpact
 		blend  add
 		style  facing
-		tfade  out
+		thinkfade  out
 		size   "20 20"
 
 		push   *v
@@ -563,7 +563,7 @@ particle plasmaImpactCharged
 		image  sfx/plasmaball
 		blend  add
 		style  rotated
-		tfade  out
+		thinkfade  out
 		tps    2.0
 	}
 	run
@@ -588,7 +588,7 @@ particle plasmaParticleCharged
 		style  facing
 		tps    2.0
 		size   "12 12"
-		tfade  out
+		thinkfade  out
 
 		a      "0 0 -50"
 		crand  vector "25 25 25"
@@ -629,7 +629,7 @@ particle plasmaImpact
 		image  sfx/plasmaball
 		blend  add
 		style  rotated
-		tfade  out
+		thinkfade  out
 		tps    2.0
 	}
 	run
@@ -654,7 +654,7 @@ particle plasmaParticle
 		style  facing
 		tps    2.2
 		size   "7 7"
-		tfade  out
+		thinkfade  out
 
 		a      "0 0 -50"
 		crand  vector "20 20 20"
@@ -697,7 +697,7 @@ particle plasmaBigSplash
 		image  sfx/plasmaball
 		blend  add
 		style  facing
-		tfade  out
+		thinkfade  out
 
 		push   pos "2 2"
 		rand   float 5.0
@@ -731,7 +731,7 @@ particle plasmaParticleRandom
 		image  sfx/plasmadust
 		blend  add
 		style  facing
-		tfade  out
+		thinkfade  out
 
 		push   pos "2 2"
 		rand   float 2.5
@@ -787,7 +787,7 @@ particle pbeamBeam
 		image  sfx/greenplasbeam
 		blend  add
 		style  beam
-		tfade  sin
+		thinkfade  sin
 		tps    10.0
 	}
 	run
@@ -809,7 +809,7 @@ particle pbeamBigBeam
 		image  sfx/greenplasbeam
 		blend  add
 		style  beam
-		tfade  sin
+		thinkfade  sin
 		tps    2.0
 	}
 	run
@@ -833,7 +833,7 @@ particle pbeamImpact
 		image  sfx/particleball
 		blend  add
 		style  rotated
-		tfade  out
+		thinkfade  out
 		tps    2.0
 	}
 	run
@@ -856,7 +856,7 @@ particle pbeamSplash
 		image  sfx/greenball
 		blend  add
 		style  facing
-		tfade  out
+		thinkfade  out
 		size   "3 3"
 
 		crand  vector "30 30 30"
@@ -882,7 +882,7 @@ particle pbeamExplosion_1
 		image +sfx/greenplas_
 		blend blend
 		style facing
-		ffade in
+		framefade in
 		size  "70 70"
 		fps   6.0
 		tps   0.75
@@ -899,7 +899,7 @@ particle pbeamExplosion_2
 		image +sfx/greenplas_
 		blend blend
 		style facing
-		ffade out
+		framefade out
 		size  "70 70"
 		fps   6.0
 		tps   0.75
@@ -926,7 +926,7 @@ particle pbeamBigSplash
 		image  sfx/greenball
 		blend  add
 		style  facing
-		tfade  out
+		thinkfade  out
 		size   "4 4"
 
 		crand  vector "50 50 50"
@@ -1111,7 +1111,7 @@ particle grenadeFragment
 		image  sfx/spark
 		blend  add
 		style  facing
-		tfade  out
+		thinkfade  out
 		size   "5 5"
 
 		a      "0 0 -100"
@@ -1196,7 +1196,7 @@ particle Smokez
 		image  sfx/plasmaball2
 		blend  add
 		style  facing
-		tfade  saw
+		thinkfade  saw
 		tps  50
 		color  ".5 .5 .5 1"
 		v      "0 0 20"
@@ -1226,7 +1226,7 @@ particle Firez
 		image  sfx/plasmaball2
 		blend  add
 		style  facing
-		tfade  out
+		thinkfade  out
 		tps  18
 		color  ".5 .5 .5 1"
 
