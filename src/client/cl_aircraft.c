@@ -1615,7 +1615,7 @@ extern void AII_ParseAircraftItem (const char *name, char **text)
 
 /**
  * @brief List of valid strings for slot types
- * @note slot names are the same as the item types
+ * @note slot names are the same as the item types (and must be in the same order)
  */
 static const char *air_slot_type_strings[MAX_ACITEMS] = {
 	"weapon",
@@ -1703,6 +1703,7 @@ extern void AIR_ParseAircraft (const char *name, char **text, qboolean assignAir
 	int i;
 	qboolean ignoreForNow = qfalse;
 	technology_t *tech;
+	aircraftItemType_t itemType;
 
 	if (numAircraft_samples >= MAX_AIRCRAFT) {
 		Com_Printf("AIR_ParseAircraft: too many aircraft definitions; def \"%s\" ignored\n", name);
@@ -1771,22 +1772,6 @@ extern void AIR_ParseAircraft (const char *name, char **text, qboolean assignAir
 					if (*token == '}')
 						break;
 				} while (*text);
-			} else if (!Q_strncmp(token, "weapon", 6)) {
-				token = COM_EParse(text, errhead, name);
-				if (!*text)
-					return;
-				Com_DPrintf("use weapon %s for aircraft %s\n", token, air_samp->id);
-				tech = RS_GetTechByID(token);
-				if (tech)
-					AII_AddItemToSlot(tech, air_samp->weapons);
-			} else if (!Q_strncmp(token, "ammo", 4)) {
-				token = COM_EParse(text, errhead, name);
-				if (!*text)
-					return;
-				Com_DPrintf("use ammo %s for aircraft %s\n", token, air_samp->id);
-				tech = RS_GetTechByID(token);
-				if (tech)
-					air_samp->weapons[0].ammoIdx = AII_GetAircraftItemByID(tech->provides);
 			} else if (!Q_strncmp(token, "shield", 6)) {
 				token = COM_EParse(text, errhead, name);
 				if (!*text)
@@ -1795,14 +1780,6 @@ extern void AIR_ParseAircraft (const char *name, char **text, qboolean assignAir
 				tech = RS_GetTechByID(token);
 				if (tech)
 					AII_AddItemToSlot(tech, &(air_samp->shield));
-			} else if (!Q_strncmp(token, "electronics", 11)) {
-				token = COM_EParse(text, errhead, name);
-				if (!*text)
-					return;
-				Com_DPrintf("use electronics %s for aircraft %s\n", token, air_samp->id);
-				tech = RS_GetTechByID(token);
-				if (tech)
-					AII_AddItemToSlot(tech, air_samp->electronics);
 			}
 		} else {
 			ignoreForNow = qfalse;
@@ -1919,30 +1896,80 @@ extern void AIR_ParseAircraft (const char *name, char **text, qboolean assignAir
 							break;
 						}
 					if (!vp->string) {
-						if (!Q_strcmp(token, "position")) {
-							token = COM_EParse(text, errhead, name);
-							if (!*text)
-								return;
-							for (i = 0; i < AIR_POSITIONS_MAX; i++) {
-								if (!Q_strcmp(token, air_position_strings[i])) {
-									/* TODO: position = i */
-									break;
-								}
-							}
-							if (i == AIR_POSITIONS_MAX)
-								Sys_Error("Unknown value '%s' for slot position\n", token);
-						} else if (!Q_strcmp(token, "type")) {
+						if (!Q_strcmp(token, "type")) {
 							token = COM_EParse(text, errhead, name);
 							if (!*text)
 								return;
 							for (i = 0; i < MAX_ACITEMS; i++) {
 								if (!Q_strcmp(token, air_slot_type_strings[i])) {
-									/* TODO: type = i */
+									itemType = i;
+									switch (itemType) {
+									case AC_ITEM_WEAPON:
+										air_samp->maxWeapons++;
+										break;
+									case AC_ITEM_ELECTRONICS:
+										air_samp->maxElectronics++;
+										break;
+									default:
+										itemType = MAX_ACITEMS;
+									}
 									break;
 								}
 							}
 							if (i == MAX_ACITEMS)
 								Sys_Error("Unknown value '%s' for slot type\n", token);
+						} else if (!Q_strcmp(token, "position")) {
+							token = COM_EParse(text, errhead, name);
+							if (!*text)
+								return;
+							for (i = 0; i < AIR_POSITIONS_MAX; i++) {
+								if (!Q_strcmp(token, air_position_strings[i])) {
+									switch (itemType) {
+									case AC_ITEM_WEAPON:
+										air_samp->weapons[air_samp->maxWeapons - 1].pos = i;
+										break;
+									case AC_ITEM_ELECTRONICS:
+										air_samp->electronics[air_samp->maxElectronics - 1].pos = i;
+										break;
+									default:
+										i = AIR_POSITIONS_MAX;
+									}
+									break;
+								}
+							}
+							if (i == AIR_POSITIONS_MAX)
+								Sys_Error("Unknown value '%s' for slot position\n", token);
+						} else if (!Q_strcmp(token, "contains")) {
+							token = COM_EParse(text, errhead, name);
+							if (!*text)
+								return;
+							tech = RS_GetTechByID(token);
+							if (tech) {
+								switch (itemType) {
+								case AC_ITEM_WEAPON:
+									air_samp->weapons[air_samp->maxWeapons - 1].itemIdx = AII_GetAircraftItemByID(tech->provides);
+									Com_DPrintf("use weapon %s for aircraft %s\n", token, air_samp->id);
+									break;
+								case AC_ITEM_ELECTRONICS:
+									air_samp->electronics[air_samp->maxElectronics - 1].itemIdx = AII_GetAircraftItemByID(tech->provides);
+									Com_DPrintf("use electronics %s for aircraft %s\n", token, air_samp->id);
+									break;
+								default:
+									Com_Printf("Ignoring item value '%s' due to unknown slot type\n", token);
+								}
+							}
+						} else if (!Q_strcmp(token, "ammo")) {
+							token = COM_EParse(text, errhead, name);
+							if (!*text)
+								return;
+							tech = RS_GetTechByID(token);
+							if (tech) {
+								if (itemType == AC_ITEM_WEAPON) {
+									air_samp->weapons[air_samp->maxWeapons - 1].ammoIdx = AII_GetAircraftItemByID(tech->provides);
+									Com_DPrintf("use ammo %s for aircraft %s\n", token, air_samp->id);
+								} else
+									Com_Printf("Ignoring ammo value '%s' due to unknown slot type\n", token);
+							}
 						}
 						Com_Printf("AIR_ParseAircraft: Ignoring unknown slot value '%s'\n", token);
 					}
