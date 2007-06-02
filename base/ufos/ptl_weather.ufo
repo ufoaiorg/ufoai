@@ -21,6 +21,8 @@ particle weather_snow_flakes
 {
 	init
 	{
+		stayalive true
+		autohide true
 		physics true
 		image  sfx/snow
 		blend  add
@@ -69,6 +71,7 @@ particle weather_rain_drop
 {
 	init
 	{
+		autohide true
 		physics true
 		image  sfx/rain
 		blend  add

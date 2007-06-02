@@ -227,6 +227,10 @@ typedef struct ptl_s {
 	vec3_t a, v, omega;
 	int light;
 	qboolean physics;	/**< basic physics */
+	qboolean autohide;	/**< only draw the particle if the current position is
+						 * not higher than the current level (useful for weather
+						 * particles) */
+	qboolean stayalive;	/**< used for physics particles that hit the ground */
 } ptl_t;
 
 typedef struct ptlArt_s {

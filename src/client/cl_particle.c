@@ -157,6 +157,8 @@ static const value_t pps[] = {
 	{"levelflags", V_INT, offsetof(ptl_t, levelFlags), MEMBER_SIZEOF(ptl_t, levelFlags)},
 	{"light", V_INT, offsetof(ptl_t, light), MEMBER_SIZEOF(ptl_t, light)},
 	{"physics", V_BOOL, offsetof(ptl_t, physics), MEMBER_SIZEOF(ptl_t, physics)},
+	{"autohide", V_BOOL, offsetof(ptl_t, autohide), MEMBER_SIZEOF(ptl_t, autohide)},
+	{"stayalive", V_BOOL, offsetof(ptl_t, stayalive), MEMBER_SIZEOF(ptl_t, stayalive)},
 
 	{NULL, 0, 0, 0}
 };
@@ -1055,10 +1057,14 @@ static void CL_ParticleRun2 (ptl_t *p)
 				CL_Fading(p->color, p->frameFade, p->lastFrame * p->fps, p->blend == BLEND_BLEND);
 	}
 
-	z = (int)p->s[2] / UNIT_HEIGHT;
-	if (z > cl_worldlevel->integer) {
-		p->invis = qtrue;
-		return;
+	/* this is useful for particles like wheater effects that are on top of
+	 * some other brushes in higher level but should be visible in lower ones */
+	if (p->autohide) {
+		z = (int)p->s[2] / UNIT_HEIGHT;
+		if (z > cl_worldlevel->integer) {
+			p->invis = qtrue;
+			return;
+		}
 	}
 
 	/* basic 'physics' for particles */
@@ -1070,7 +1076,13 @@ static void CL_ParticleRun2 (ptl_t *p)
 
 		/* hit something solid */
 		if (tr.fraction < 1.0 || tr.startsolid) {
-			CL_ParticleFree(p);
+			/* let them stay on the ground until they fade out or die */
+			if (!p->stayalive) {
+				CL_ParticleFree(p);
+			} else {
+				VectorCopy(vec3_origin, p->v);
+				VectorCopy(tr.endpos, p->s);
+			}
 			return;
 		}
 	}
