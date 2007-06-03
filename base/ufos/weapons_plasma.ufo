@@ -176,7 +176,7 @@ item plasblaster
 	shape		"0 0 5 2"
 	center		"7 0 1.4"
 	scale		1.06
-	ammo		4
+	ammo		50
 	reload		18
 	price		58000
 	size		80
@@ -201,25 +201,24 @@ item plasblaster_ammo
 		firedef 
 		{
 			name	"_Ball"
-			skill 	explosive
+			skill 	heavy
 			projtl	plasmaBigBall
 			impact	plasmaBigImpact
 			hitbody	plasmaBigImpact
 			firesnd	weapons/plasma_s.wav
-			impsnd	weapons/plasma_grenade.wav
-			bodysnd	weapons/plasma_grenade.wav
-			gravity	true
-			launched true
-			spread	"0 1"
-			range	17
-			shots	1
-			ammo	1
-			rof		1
-			time	10
-			damage	"60 10"
-			spldmg	"120 20"
+			speed	2000
+			spread	"1 3"
+			crouch 	1.0
+			range	90
+			shots	10
+			ammo	2
+			rof		10
+			time	12
+			damage	"10 5"
+			spldmg	"10 5"
 			splrad	5
 			dmgtype plasma
+			reaction	true
 		}
 		firedef
 		{
@@ -231,14 +230,35 @@ item plasblaster_ammo
 			firesnd	weapons/plasma_big.wav
 			sndonce true
 			speed	0
-			spread	"1 5"
+			spread	"3 5"
 			crouch	1.0
-			range	15
-			shots	15
-			ammo	1
-			rof		15
-			time	12
-			damage	"21 6"
+			range	30
+			shots	50
+			ammo	10
+			rof		38
+			time	20
+			damage	"15 6"
+			dmgtype plasma
+			reaction	true
+		}
+		firedef
+		{
+			name	"_Spray Sweep"
+			skill 	heavy
+			projtl	plasmaContinuous
+			impact	plasmaImpact
+			hitbody	plasmaImpact
+			firesnd	weapons/plasma_big.wav
+			sndonce true
+			speed	0
+			spread	"3 15"
+			crouch	1.0
+			range	30
+			shots	50
+			ammo	10
+			rof		38
+			time	20
+			damage	"15 6"
 			dmgtype plasma
 			reaction	true
 		}

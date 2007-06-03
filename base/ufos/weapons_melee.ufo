@@ -32,6 +32,7 @@ item knife
 			time	4
 			damage	"40 20"
 			dmgtype normal
+			reaction	true
 		}
 		firedef
 		{
@@ -48,8 +49,9 @@ item knife
 			shots	1
 			ammo	1
 			time	8
-			damage	"35 30"
+			damage	"35 15"
 			dmgtype normal
+			reaction	true
 		}
 	}
 }
@@ -81,13 +83,14 @@ item knifemono
 			projtl	null
 			impact	null
 			hitbody blood
-			firesnd	misc/klonk03.wav
+			firesnd	weapons/knife.wav
 			speed	0
 			range	1.5
 			shots	1
 			time	6
-			damage	"50 20"
+			damage	"70 35"
 			dmgtype normal
+			reaction	true
 		}
 		firedef
 		{
@@ -96,13 +99,33 @@ item knifemono
 			projtl	null
 			impact	null
 			hitbody blood
-			firesnd	misc/klonk03.wav
+			firesnd	weapons/kerrblade_swip.wav
 			speed	0
 			range	1.5
 			shots	1
-			time	10
-			damage	"70 20"
+			time	12
+			damage	"140 35"
 			dmgtype normal
+			reaction	true
+		}
+		firedef
+		{
+			name	"_Throw"
+			skill	close
+			projtl	knife
+			impact	null
+			hitbody blood
+			impsnd	misc/klonk03.wav
+			bodysnd misc/klonk01.wav
+			speed	320
+			range	7
+			spread	"1 4"
+			shots	1
+			ammo	1
+			time	8
+			damage	"60 30"
+			dmgtype normal
+			reaction	true
 		}
 	}
 }
@@ -144,6 +167,7 @@ item stunrod
 			time	7
 			damage	"60 20"
 			dmgtype stun
+			reaction	true
 		}
 
 		firedef
@@ -160,8 +184,9 @@ item stunrod
 			ammo	2
 			rof		5
 			time	11
-			damage	"50 20"
+			damage	"60 20"
 			dmgtype stun
+			reaction	true
 		}
 	}
 }
@@ -194,13 +219,14 @@ item kerrblade
 			projtl	null
 			impact	null
 			hitbody blood
-			firesnd	weapons/kerrblade_swip.wav
+			firesnd	weapons/knife.wav
 			speed	0
 			range	1.5
 			shots	1
 			time	8
-			damage	"60 20"
+			damage	"95 45"
 			dmgtype normal
+			reaction	true
 		}
 		firedef 
 		{
@@ -214,8 +240,9 @@ item kerrblade
 			range	1.5
 			shots	1
 			time	14
-			damage	"80 20"
+			damage	"180 45"
 			dmgtype normal
+			reaction	true
 		}
 	}
 }
@@ -255,11 +282,13 @@ item plasblade
 			firesnd	weapons/plasmablade.wav
 			speed	0
 			range	1.5
+			spread	"1 4"
 			shots	1
 			ammo 1
 			time	7
-			damage	"100 5"
+			damage	"300 5"
 			dmgtype plasma
+			reaction	true
 		}
 		firedef
 		{
@@ -276,8 +305,9 @@ item plasblade
 			shots	1
 			ammo	1
 			time	12
-			damage	"100 5"
+			damage	"300 5"
 			dmgtype plasma
+			reaction	true
 		}
 	}
 }

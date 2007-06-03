@@ -14,7 +14,7 @@ item laserpistol
 	center		"2.5 0 1.2"
 	scale		1.7
 	ammo		26
-	reload		12
+	reload		8
 	price		5400
 	size		10
 	buytype	weap_sec
@@ -90,14 +90,13 @@ item laserrifle_ammo
 			hitbody	laserImpact
 			firesnd	weapons/laser.wav
 			speed	0
-			spread	"0 1"
-			crouch	0.8
-			range	30
+			spread	"0 0.8"
+			crouch	0.3
+			range	60
 			shots	1
 			ammo	1
-			rof		6
-			time	6
-			damage	"22 5"
+			time	2
+			damage	"10 5"
 			dmgtype laser
 			reaction	true
 		}
@@ -110,14 +109,15 @@ item laserrifle_ammo
 			hitbody	laserImpact
 			firesnd	weapons/laser.wav
 			speed	0
-			spread	"0 1"
-			crouch	1.0
-			range	30
+			spread	"0 0.8"
+			crouch	0.3
+			range	60
 			shots	1
 			ammo	3
-			time	8
-			damage	"35 6"
+			time	3
+			damage	"20 6"
 			dmgtype laser
+			reaction	true
 		}
 	}
 
@@ -132,13 +132,13 @@ item laserrifle_ammo
 			hitbody	laserImpact
 			firesnd	weapons/laser.wav
 			speed	0
-			spread	"0 0.2"
-			crouch	0.7
-			range	60
+			spread	"0 0.4"
+			crouch	0.6
+			range	90
 			shots	1
 			ammo	1
-			time	8
-			damage	"34 6"
+			time	3
+			damage	"24 6"
 			dmgtype laser
 			reaction	true
 		}
@@ -151,15 +151,15 @@ item laserrifle_ammo
 			hitbody	laserImpact
 			firesnd	weapons/laser.wav
 			speed	0
-			spread	"0 2"
-			crouch	1.0
-			range	60
+			spread	"0 0.4"
+			crouch	0.6
+			range	90
 			shots	1
 			ammo	3
-			rof		6
-			time	14
-			damage	"49 6"
+			time	5
+			damage	"50 6"
 			dmgtype laser
+			reaction	true
 		}
 	}
 
@@ -174,14 +174,13 @@ item laserrifle_ammo
 			hitbody	laserImpact
 			firesnd	weapons/laser.wav
 			speed	0
-			spread	"0 2"
-			crouch	0.7
-			range	90
+			spread	"0 0.2"
+			crouch	0.8
+			range	120
 			shots	1
 			ammo	1
-			rof		10
-			time	10
-			damage	"46 6"
+			time	5
+			damage	"60 6"
 			dmgtype laser
 			reaction	true
 		}
@@ -195,13 +194,14 @@ item laserrifle_ammo
 			firesnd	weapons/heavy_laser.wav
 			speed	0
 			spread	"0 0.2"
-			crouch	0.7
-			range	90
+			crouch	0.8
+			range	120
 			shots	1
 			ammo	3
-			time	18
-			damage	"65 6"
+			time	7
+			damage	"100 6"
 			dmgtype laser
+			reaction	true
 		}
 	}
 }

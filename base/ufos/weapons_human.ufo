@@ -101,12 +101,12 @@ item assault_ammo
 }
 
 // =======================
-// CHAINGUN
+// MINIGUN
 // (should be multiplayer only)
 // =======================
 item chaingun
 {
-	name		"_Chaingun"
+	name		"_Minigun"
 	model		weapons/chaingun/chaingun
 	weapon		true
 	type		biggun
@@ -116,15 +116,15 @@ item chaingun
 	shape		"0 0 5 2"
 	center		"5 0 2"
 	scale		1.25
-	ammo		30
-	reload		12
+	ammo		200
+	reload		20
 	price		18400
 	buytype	weap_pri
 }
 
 item chaingun_ammo
 {
-	name		"_Chaingun Magazine"
+	name		"_Minigun Magazine"
 	model		weapons/chaingun/chaingun_ammo
 	type		ammo
 	category	0
@@ -138,41 +138,63 @@ item chaingun_ammo
 	{
 		firedef
 		{
-			name	"_Burst"
+			name	"_5-Round Burst"
 			skill	heavy
 			projtl	bullet
 			impact	bulletImpact
 			hitbody blood
 			firesnd	weapons/chaingun.wav
 			speed	0
-			spread	"0 2"
-			crouch	0.7
+			spread	"1 4"
+			crouch	1.0
 			range	60
-			shots	3
-			ammo	3
-			rof		5
-			time	7
+			shots	5
+			ammo	5
+			rof		10
+			time	10
 			damage	"20 5"
 			dmgtype normal
+			reaction 	true
 		}
 		firedef
 		{
-			name	"_Auto"
+			name	"_Full-Auto"
 			skill	heavy
 			projtl	bullet
 			impact	bulletImpact
 			hitbody blood
 			firesnd	weapons/chaingun.wav
 			speed	0
-			spread	"1 2"
-			crouch	0.6
+			spread	"3 6"
+			crouch	1.0
 			range	60
-			shots	9
-			ammo	9
-			rof		10
-			time	9
+			shots	25
+			ammo	25
+			rof		20
+			time	20
 			damage	"20 5"
 			dmgtype normal
+			reaction 	true
+		}
+		firedef
+		{
+			name	"_Full-Auto Sweep"
+			skill	heavy
+			projtl	bullet
+			impact	bulletImpact
+			hitbody blood
+			firesnd	weapons/chaingun.wav
+			speed	0
+			spread	"3 15"
+			crouch	1.0
+			range	60
+			shots	25
+			ammo	25
+			rof		20
+			time	20
+			damage	"20 5"
+			dmgtype normal
+			reaction 	true
 		}
 	}
 }
@@ -436,6 +458,26 @@ item pistol_ammo
 		}
 		firedef
 		{
+			name	"_3-Round Burst"
+			skill	close
+			projtl	bullet
+			impact	bulletImpact
+			hitbody blood
+			firesnd	weapons/pistol2.wav
+			speed	0
+			spread	"3.2 3.2"
+			crouch	0.9
+			range	40
+			shots	3
+			ammo	3
+			rof		10
+			time	8
+			damage	"37 5"
+			dmgtype normal
+			reaction true
+		}
+		firedef
+		{
 			name	"_Aimed Shot"
 			skill	close
 			projtl	bullet
@@ -596,6 +638,25 @@ item smg_ammo
 	{
 		firedef
 		{
+			name	"_Snap Shot"
+			skill	assault
+			projtl	bullet
+			impact	bulletImpact
+			hitbody blood
+			firesnd	weapons/smg2.wav
+			speed	0
+			spread	"1.5 1.5"
+			crouch	0.7
+			range	45
+			shots	1
+			ammo	1
+			time	6
+			damage	"25 0"
+			dmgtype normal
+			reaction	true
+		}
+		firedef
+		{
 			name	"_5-Round Burst"
 			skill	assault
 			projtl	bullet
@@ -691,7 +752,7 @@ item shotgun2
 //		shots	10
 //		ammo	1
 //		rof		0
-//		time	12
+//		time	8
 //		damage	"11 0"
 //		dmgtype blast
 //	}
@@ -709,10 +770,10 @@ item shotgun2
 //		spread	"5.5 5.5"
 //		crouch	1.0
 //		range	60
-//		shots	16
+//		shots	20
 //		ammo	2
 //		rof		0
-//		time	17
+//		time	12
 //		damage	"11 0"
 //		dmgtype blast
 //	}
@@ -749,9 +810,9 @@ item shotgun2_slug_ammo
 			shots	1
 			ammo	1
 			rof		0
-			time	12
+			time	8
 			damage	"51 0"
-			dmgtype blast
+			dmgtype normal
 			reaction true
 		}
 
@@ -771,9 +832,9 @@ item shotgun2_slug_ammo
 			shots	3
 			ammo	3
 			rof		5
-			time	17
+			time	12
 			damage	"51 0"
-			dmgtype blast
+			dmgtype normal
 			reaction	true
 		}
 
@@ -793,7 +854,7 @@ item shotgun2_slug_ammo
 			shots	7
 			ammo	7
 			rof		7
-			time	26
+			time	20
 			damage	"51 0"
 			dmgtype normal
 			reaction	true
@@ -842,7 +903,7 @@ item shotgun_ammo
 		firedef
 		{
 			name	"_Single Shot"
-			skill	heavy
+			skill	close
 			projtl	null
 			impact	bulletImpact
 			hitbody blood
@@ -855,7 +916,7 @@ item shotgun_ammo
 			shots	10
 			ammo	1
 			rof		0
-			time	12
+			time	8
 			damage	"11 0"
 			dmgtype blast
 			reaction true
@@ -864,7 +925,7 @@ item shotgun_ammo
 		firedef
 		{
 			name	"_Double Shot"
-			skill	heavy
+			skill	close
 			projtl	null
 			impact	bulletImpact
 			hitbody blood
@@ -874,12 +935,13 @@ item shotgun_ammo
 			spread	"5.5 5.5"
 			crouch	1.0
 			range	60
-			shots	16
+			shots	20
 			ammo	2
 			rof		0
-			time	17
+			time	12
 			damage	"11 0"
 			dmgtype blast
+			reaction true
 		}
 	}
 }
@@ -940,7 +1002,7 @@ item shotgun_micro_ammo
 			rof		0
 			time	6
 			damage	"7 2"
-			dmgtype normal
+			dmgtype blast
 			reaction	true
 		}
 
@@ -962,7 +1024,7 @@ item shotgun_micro_ammo
 			rof		15
 			time	10
 			damage	"7 2"
-			dmgtype normal
+			dmgtype blast
 			reaction	true
 		}
 	}
@@ -985,9 +1047,9 @@ item shotgun_micro_ammo
 			shots	8
 			ammo	1
 			rof		0
-			time	12
+			time	8
 			damage	"11 0"
-			dmgtype normal
+			dmgtype blast
 			reaction	true
 		}
 
@@ -1007,9 +1069,9 @@ item shotgun_micro_ammo
 			shots	24
 			ammo	3
 			rof		15
-			time	17
+			time	12
 			damage	"11 0"
-			dmgtype normal
+			dmgtype blast
 			reaction	true
 		}
 
@@ -1029,9 +1091,9 @@ item shotgun_micro_ammo
 			shots	56
 			ammo	7
 			rof		30
-			time	26
+			time	20
 			damage	"11 0"
-			dmgtype normal
+			dmgtype blast
 			reaction	true
 		}
 	}
@@ -1087,7 +1149,7 @@ item flamer_ammo
 			spread	"3 1"
 			crouch  1.0
 			range	8
-			shots	15
+			shots	30
 			ammo	1
 			rof		25
 			time	8
@@ -1108,12 +1170,34 @@ item flamer_ammo
 			spread	"4 1"
 			crouch  1.0
 			range	8
-			shots	30
+			shots	60
 			ammo	2
 			rof		25
 			time	12
 			damage	"6 2"
 			dmgtype fire
+			reaction	true
+		}
+		firedef
+		{
+			name	"_Inferno Sweep"
+			skill	heavy
+			projtl	fireBall
+			impact	fireImpact
+			hitbody burning
+			firesnd	weapons/flamer_l.wav
+			sndonce true
+			speed	400
+			spread	"1 27"
+			crouch  1.0
+			range	8
+			shots	60
+			ammo	2
+			rof		25
+			time	12
+			damage	"6 2"
+			dmgtype fire
+			reaction	true
 		}
 	}
 }
@@ -1322,6 +1406,7 @@ item grenl_ammo
 			spldmg	"70 20"
 			splrad	4
 			dmgtype blast
+			reaction	true
 		}
 
 		firedef
@@ -1372,6 +1457,7 @@ item grenl_ammo
 			spldmg	"70 20"
 			splrad	4
 			dmgtype blast
+			reaction	true
 		}
 
 		firedef
@@ -1453,6 +1539,7 @@ item grenl_ammo
 			spldmg	"70 20"
 			splrad	4
 			dmgtype blast
+			reaction	true
 		}
 	}
 }
@@ -1495,6 +1582,7 @@ item grenl_incendiary_ammo
 			spldmg	"70 20"
 			splrad	4
 			dmgtype fire
+			reaction	true
 		}
 
 
@@ -1546,6 +1634,7 @@ item grenl_incendiary_ammo
 			spldmg	"70 20"
 			splrad	4
 			dmgtype fire
+			reaction	true
 		}
 
 		firedef
@@ -1661,7 +1750,7 @@ item grenl_fle_ammo
 			rof		15
 			time	8
 			damage	"6 2"
-			dmgtype normal
+			dmgtype blast
 			reaction	true
 		}
 
@@ -1680,7 +1769,8 @@ item grenl_fle_ammo
 			rof		72
 			time	14
 			damage	"6 2"
-			dmgtype normal
+			dmgtype blast
+			reaction	true
 		}
 	}
 }
@@ -1723,6 +1813,7 @@ item grenl_plasma_ammo
 			spldmg	"100 20"
 			splrad	5
 			dmgtype plasma
+			reaction	true
 		}
 
 		firedef
@@ -1773,6 +1864,7 @@ item grenl_plasma_ammo
 			spldmg	"100 20"
 			splrad	5
 			dmgtype plasma
+			reaction	true
 		}
 
 		firedef
