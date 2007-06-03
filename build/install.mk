@@ -9,6 +9,7 @@ win32installer:
 	makensis src/ports/win32/installer.nsi
 
 win32installerarchive:
+	cd base; ./archives.sh
 	makensis src/ports/win32/installer_archive.nsi
 
 linuxarchive:
