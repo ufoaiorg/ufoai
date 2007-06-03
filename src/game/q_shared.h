@@ -876,7 +876,8 @@ typedef enum {
 } fade_t;
 
 typedef struct date_s {
-	int day, sec;
+	int day;	/**< Number of ellapsed days since 1st january of year 0 */
+	int sec;	/**< Number of ellapsed seconds since the begining of current day */
 } date_t;
 
 extern const char *align_names[ALIGN_LAST];

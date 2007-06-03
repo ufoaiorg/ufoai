@@ -266,7 +266,9 @@ extern qboolean CL_MapIsNight (vec2_t pos)
 {
 	float p, q, a, root, x;
 
+	/* set p to hours (we don't use ccs.day here because we need a float value) */
 	p = (float) ccs.date.sec / (3600 * 24);
+	/* convert current day to angle (-pi on 1st january, pi on 31 december) */
 	q = (ccs.date.day + p) * 2 * M_PI / DAYS_PER_YEAR_AVG - M_PI;
 	p = (0.5 + pos[0] / 360 - p) * 2 * M_PI - q;
 	a = sin(pos[1] * torad);
@@ -3733,7 +3735,9 @@ static void CL_GameNew_f (void)
 	memset(&ccs, 0, sizeof(ccs_t));
 	CL_StartSingleplayer(qtrue);
 
+	/* initialise view angle for 3D geoscape so that europe is seen */
 	ccs.angles[YAW] = GLOBE_ROTATE;
+	/* initialise date */
 	ccs.date = curCampaign->date;
 
 	memset(&gd, 0, sizeof(gd));
