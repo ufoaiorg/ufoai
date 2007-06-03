@@ -391,12 +391,35 @@ menu aircraft_equip
 	model aircraftequip
 	{
 		md2		"*cvar mn_aircraft_model"
-		origin	"228 324 0"
+		origin	"228 318 0"
 		color	"0.5 0.5 0.5 1"
 		pos	"20 20"
 		size	"415 728"
 //		bgcolor	"1 1 1 0.5"
 	}
+
+	pic bt_prev
+	{
+		tooltip "_Previous aircrat"
+		image	menu/ufopedia_buttons1
+		pos		"10 665"
+		texl	"0 37"
+		texh	"64 73"
+		mousefx true
+		click	{ cmd "mn_prev_aircraft"; cmd "airequip_zone1" }
+	}
+
+	pic bt_next
+	{
+		tooltip "_Next aircraft"
+		image	menu/ufopedia_buttons1
+		pos		"382 665"
+		texl	"0 0"
+		texh	"64 36"
+		mousefx true
+		click	{ cmd "mn_next_aircraft"; cmd "airequip_zone1" }
+	}
+
 	string airequip_available
 	{
 		string	"_Available equipment:"
@@ -425,7 +448,7 @@ menu aircraft_equip
 	{
 		tooltip	"_Weapons"
 		mousefx	true
-		pos		"10 700"
+		pos		"10 710"
 		image	menu/button_blue
 		texl	"0 0"
 		texh	"128 52"
@@ -434,7 +457,7 @@ menu aircraft_equip
 	string airequip_button_weapons_str
 	{
 		string "_Weapons"
-		pos		"74 726"
+		pos		"74 736"
 		align	cc
 	}
 
@@ -442,7 +465,7 @@ menu aircraft_equip
 	{
 		tooltip	"_Armour"
 		mousefx	true
-		pos		"160 700"
+		pos		"164 710"
 		image	menu/button_blue
 		texl	"0 0"
 		texh	"128 52"
@@ -451,7 +474,7 @@ menu aircraft_equip
 	string airequip_button_shields_str
 	{
 		string "_Armour"
-		pos		"224 726"
+		pos		"228 736"
 		align	cc
 	}
 
@@ -459,7 +482,7 @@ menu aircraft_equip
 	{
 		tooltip	"_Items"
 		mousefx	true
-		pos		"310 700"
+		pos		"318 710"
 		image	menu/button_blue
 		texl	"0 0"
 		texh	"128 52"
@@ -468,7 +491,7 @@ menu aircraft_equip
 	string airequip_button_items_str
 	{
 		string "_Items"
-		pos		"374 726"
+		pos		"382 736"
 		align	cc
 	}
 
