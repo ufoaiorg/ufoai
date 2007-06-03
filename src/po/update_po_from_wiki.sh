@@ -23,6 +23,7 @@ input_file=$language".po"
 output_file=updated_${language}.po
 log_file=updated_${language}.log
 debug=0
+onlyDescription=1	#set to 0 if you want to update also name of the items
 elseenglish=1
 
 if [ -z $language ]
@@ -706,7 +707,7 @@ do
 					update_txt 2 1 3
 				fi
 				language=$language0
-			elif [[ "$test" -eq 1 ]]
+			elif [[ "$test" -eq 1 ]] && [[ "$onlyDescription" = "0" ]]
 			then
 				test_artifact="0"
 				number=`grep -iwnm 1 ">$english</a>" ${index} | cut -d : -f 1`
