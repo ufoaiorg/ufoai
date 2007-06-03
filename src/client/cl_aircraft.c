@@ -1878,7 +1878,7 @@ extern void AIR_ParseAircraft (const char *name, char **text, qboolean assignAir
 								} else
 									Com_Printf("Ignoring ammo value '%s' due to unknown slot type\n", token);
 							}
-						} else if (!Q_strncmp(token, "weight", MAX_VAR)) {
+						} else if (!Q_strncmp(token, "size", MAX_VAR)) {
 							token = COM_EParse(text, errhead, name);
 							if (!*text)
 								return;
