@@ -1764,13 +1764,7 @@ extern void AIR_ParseAircraft (const char *name, char **text, qboolean assignAir
 		if (assignAircraftItems) {
 			/* blocks like param { [..] } - otherwise we would leave the loop too early */
 			if (*token == '{') {
-				do {
-					token = COM_EParse(text, errhead, name);
-					if (!*text)
-						break;
-					if (*token == '}')
-						break;
-				} while (*text);
+				FS_SkipBlock(text);
 			} else if (!Q_strncmp(token, "shield", 6)) {
 				token = COM_EParse(text, errhead, name);
 				if (!*text)
@@ -1899,8 +1893,8 @@ extern void AIR_ParseAircraft (const char *name, char **text, qboolean assignAir
 									Com_Printf("Unknown size value for aircraft slot: '%s'\n", token);
 							} else
 								Com_Printf("Ignoring size parameter '%s' for non-weapon aircraft slots\n", token);
-						}
-						Com_Printf("AIR_ParseAircraft: Ignoring unknown slot value '%s'\n", token);
+						} else
+							Com_Printf("AIR_ParseAircraft: Ignoring unknown slot value '%s'\n", token);
 					}
 				} while (*text); /* dummy condition */
 			}
