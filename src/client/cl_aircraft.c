@@ -1783,7 +1783,10 @@ static const char *air_position_strings[AIR_POSITIONS_MAX] = {
 	"nose_center",
 	"nose_right",
 	"wing_left",
-	"wing_right"
+	"wing_right",
+	"rear_left",
+	"rear_center",
+	"rear_right"
 };
 
 /** @brief Valid aircraft slot definitions from script files. */
