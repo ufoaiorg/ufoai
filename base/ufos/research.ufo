@@ -3403,6 +3403,28 @@ tech rs_craft_shield_polymer
 	image_top	"techs/craft_shield_light"
 }
 
+tech rs_craft_shield_plating
+{
+	type		craftitem
+	up_chapter	crafts
+	name		"_Alien Aircraft Plating"
+	pre_description {
+		default	"_craft_shield_plating_pre_txt"
+	}
+	description {
+		default "_craft_shield_plating_txt"
+	}
+
+	provides	craft_shield_plating
+	require_AND {
+		tech	rs_alien_materials
+	}
+	time		620
+	producetime	1940
+
+	image_top	"techs/craft_shield_plating"
+}
+
 tech rs_craft_weapon_shiva
 {
 	type		craftitem

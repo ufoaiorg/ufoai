@@ -555,4 +555,14 @@ craftitem craft_shield_polymer
 	shield		1.25
 }
 
+craftitem craft_shield_plating
+{
+	type	shield
+	tech	rs_craft_shield_plating
+	installationTime	24
+	price		24000
+
+	shield		1.80
+}
+
 
