@@ -376,7 +376,7 @@ menu aircraft_equip
 	confunc airequip_weapons		{ cmd "airequip_init 0;" airequip_reset *airequip_button_weapons_str	color "1 1 1 1" *airequip_header3 invis false }
 	confunc airequip_shields	{ cmd "airequip_init 1;" airequip_reset *airequip_button_shields_str	color "1 1 1 1" }
 	confunc airequip_items		{ cmd "airequip_init 2;" airequip_reset *airequip_button_items_str color "1 1 1 1" }
-	
+
 	confunc airequip_zone_reset
 	{
 		*airequip_zone_select1 invis false
@@ -386,7 +386,7 @@ menu aircraft_equip
 	confunc	airequip_zone1	{ cmd "airequip_init;" cmd "airequip_zone_select 1;" airequip_zone_reset *airequip_zone_select1 invis true }
 	confunc	airequip_zone2	{ cmd "airequip_init;" cmd "airequip_zone_select 2;" airequip_zone_reset *airequip_zone_select2 invis true }
 	confunc	airequip_zone3	{ cmd "airequip_init 3;" cmd "airequip_zone_select 3;" airequip_zone_reset *airequip_zone_select3 invis true }
-	
+
 
 	model aircraftequip
 	{
@@ -406,7 +406,7 @@ menu aircraft_equip
 		texl	"0 37"
 		texh	"64 73"
 		mousefx true
-		click	{ cmd "mn_prev_aircraft"; cmd "airequip_zone1" }
+		click	{ cmd "mn_prev_aircraft;airequip_zone1" }
 	}
 
 	pic bt_next
@@ -417,7 +417,7 @@ menu aircraft_equip
 		texl	"0 0"
 		texh	"64 36"
 		mousefx true
-		click	{ cmd "mn_next_aircraft"; cmd "airequip_zone1" }
+		click	{ cmd "mn_next_aircraft;airequip_zone1" }
 	}
 
 	string airequip_available
@@ -690,7 +690,7 @@ menu aircraft_equip
 
 	func init
 	{
-		airequip_weapons		
+		airequip_weapons
 		airequip_zone1
 	}
 }
