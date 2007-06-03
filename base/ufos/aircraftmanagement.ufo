@@ -11,23 +11,35 @@
 //
 // aircraft parameters which can get influenced by craft equipement:
 //	range - the range of the aircraft, which tells how far aircraft can fly
-//	wrange - the range of the weapon, which tells the minimum distance of opening fire
-//	wspeed - the speed of the munition once it's shot
-//	delay - the delay between 2 shots of this ammunition
 //	speed - the speed of the aircraft, which tells how fast the aircraft is
 //	shield - the parameter of aircraft shield, which tells aircraft's protection
 //	ecm - the parameter of electronic level at aircraft, the bigger, the lower possibility to hit by enemy
-//	damage - the parameter of weapon power, which tells how much damage such aircraft can do
+//	damage - the parameter of aircraft hit points, which tells how much damage aircraft can suffer
 //	accuracy - the parameter of accuracy, the bigger, the bigger possibility to hit an enemy
-//			for an ammo, this is the base probability to hit (between 0 and 1)
-//			for an item, this is the factor which multiplies the base probability ( > 1 to increase probability)
-//	ammo - the total number of ammo that can be fired with one unit of ammunition
-// understanding the values:
-// shield 1.50 means: the shield of the aircraft is 50% stronger
-// shield +10 means: the shield of the aircraft is stronger by 10 points
-// speed 0.75 means: the aircraft is 25% slower
-// damage 35 means: the aircraft weapon power does 35 points of damage
+//	wrange - not defined here for aircrafts (see aircraft items below)
 //
+// aircraft slot parameters can be the following :
+//	type - the type of item this slot can contain (weapon or electronics)
+//	position - slot's position on the aircraft. See cl_aircraft.c for available values.
+//	size - the maximum weight of an item fitting this slot (light, medium, heavy) (only for weapon slots)
+//	contains - technology of the item in the slot at the begining of the game
+//	ammo - technology of the ammo loading the weapon (only for weapon slots)
+//
+// aircraft item parameter can be :
+//	weight - the weight of the item used to see if it fits the slot (only for weapons)
+//	installationTime - the time needed to install/remove the item from the aircraft
+//	any param of aircraft param{}. This values are V_RELABS, and will modifiy the values of the aircraft.
+//		understanding the values:
+//		shield 1.50 means: the shield of the aircraft is 50% stronger
+//		shield +10 means: the shield of the aircraft is stronger by 10 points
+//		speed 0.75 means: the aircraft is 25% slower
+// parameters specific to ammos :
+//	weapon - the weapon that can use this ammo
+//	ammo - the total number of ammo that can be fired with one unit of ammunition
+//	wspeed - the speed of the ammo on geoscape once it's been shot
+//	wrange - the range of the weapon, which tells the minimum distance of opening fire
+//	delay - the delay between 2 shots of this ammunition
+//	damage - for ammos, it's the parameter which tells how much damage such weapon can do (this one is not V_RELABS)
 
 // don't forget to add mini-models to base/models/geoscape, too
 // also read the notes about ufos
@@ -45,9 +57,8 @@ aircraft craft_drop_firebird
 	param {
 		speed		10
 		range		0
-		wrange		0
 		shield		0
-		ecm		0
+		ecm			0
 		damage		0
 		accuracy	0
 	}
@@ -65,6 +76,19 @@ aircraft craft_drop_firebird
 	scale		"1.1 1.1 1.1"
 	angles_equip	"90 0 180"
 	scale_equip	"1.1 1.1 1.1"
+	slot {
+		type		weapon
+		position	nose_center
+		size		medium
+	}
+	slot {
+		type		electronics
+		position	wing_left
+	}
+	slot {
+		type		electronics
+		position	wing_right
+	}
 }
 
 // *********************************
@@ -96,10 +120,33 @@ aircraft craft_inter_stiletto
 	scale		"1.1 1.1 1.1"
 	angles_equip	"0 0 180"
 	scale_equip	"1.1 1.1 1.1"
-	// FIXME: This is just testing
-	weapon		rs_craft_weapon_sparrowhawk
-	ammo		rs_craft_ammo_sparrowhawk
 	shield		rs_craft_shield_polymer
+	slot {
+		type		weapon
+		position	nose_center
+		size		light
+		contains	rs_craft_weapon_sparrowhawk
+		ammo		rs_craft_ammo_sparrowhawk
+	}
+	slot {
+		type		weapon
+		position	wing_left
+		size		medium
+	}
+	slot {
+		type		weapon
+		position	wing_right
+		size		medium
+	}
+	slot {
+		type		electronics
+		position	wing_left
+		contains	rs_craft_el_fuelpod
+	}
+	slot {
+		type		electronics
+		position	wing_right
+	}
 }
 
 aircraft craft_inter_saracen
@@ -128,8 +175,25 @@ aircraft craft_inter_saracen
 	angles_equip	"-90 0 180"
 	scale_equip	"0.9 0.9 0.9"
 	// FIXME: This is just testing
-	weapon		rs_craft_weapon_shiva
 	shield		rs_craft_shield_polymer
+	slot {
+		type		weapon
+		position	wing_left
+		size		medium
+	}
+	slot {
+		type		weapon
+		position	wing_right
+		size		medium
+	}
+	slot {
+		type		electronics
+		position	wing_left
+	}
+	slot {
+		type		electronics
+		position	wing_right
+	}
 }
 
 aircraft craft_inter_stingray
