@@ -957,14 +957,10 @@ void CL_CampaignRunAircraft (int dt)
 
 				/* Update delay to launch next projectile */
 				if (aircraft->status >= AIR_IDLE) {
-#if 0
 					for (i = 0; i < aircraft->maxWeapons; i++) {
 						if (aircraft->weapons[i].delayNextShot > 0)
 							aircraft->weapons[i].delayNextShot -= dt;
 					}
-#endif
-					if (aircraft->weapons[0].delayNextShot > 0)
-							aircraft->weapons[0].delayNextShot -= dt;
 				}
 
 				/* Update aircraft items installation delay */
@@ -2051,23 +2047,18 @@ extern void AIR_ListAircraftSamples_f (void)
  */
 extern void AII_ReloadWeapon (aircraft_t *aircraft)
 {
-#if 0
 	int idx;
 	int i;
-#endif
 
 	assert(aircraft);
 
 	/* Reload all ammos of aircraft */
-#if 0
 	for (i = 0; i < aircraft->maxWeapons; i++) {
 		if (aircraft->weapons[i].ammoIdx > -1) {
 			idx = aircraft->weapons[i].ammoIdx;
 			aircraft->weapons[i].ammoLeft = aircraftItems[idx].ammo;
 		}
 	}
-#endif
-	aircraft->weapons[0].ammoLeft = 10;
 }
 
 /**
