@@ -48,7 +48,7 @@ mission farm
 	civteam		european
 	nation		"states"
 	onlose		""
-	onwin		"cp_add_item craft_ufo_scout;"
+	onwin		"cp_uforecovery 0;"
 	storyrelated	true
 }
 
@@ -97,7 +97,7 @@ mission estate
 }
 
 // Antarctica
-// artifacts: craft_ufo_scout
+// artifacts: craft_ufo_fighter
 mission frozen_alienlandingindustrial
 {
 	location	"_Somewhere in Antarctica"
@@ -114,7 +114,7 @@ mission frozen_alienlandingindustrial
 	civteam		european
 	nation		"oceania"		//FIXME: does Antarctica belongs to Oceania?
 	onlose		""
-	onwin		""			//FIXME: craft_ufo_scout here (or harvester? check it)
+	onwin		"cp_uforecovery 1;"
 	storyrelated    false
 }
 
@@ -179,7 +179,6 @@ mission mine
 }
 
 // Tennessee, USA
-//FIXME - artifacts?
 mission transport
 {
 	location	"_Greeneville"
@@ -304,7 +303,7 @@ mission stadium
 }
 
 // Canada
-//FIXME - artifacts?
+// artifacts: craft_ufo_fighter
 mission industrial
 {
 	location	"_Radisson"
@@ -320,7 +319,7 @@ mission industrial
 	civteam		european
 	nation		"states"
 	onlose		""
-	onwin		""
+	onwin		"cp_uforecovery 1;"
 	storyrelated	true
 }
 
@@ -329,7 +328,6 @@ mission industrial
 //--------------------------------------
 
 // Mexico
-//FIXME - artifacts?
 mission city
 {
 	location	"_Veracruz"
@@ -350,7 +348,6 @@ mission city
 }
 
 //FIXME - where do we play now?
-//FIXME - artifacts?
 mission gasstation
 {
 	location	"_La Paz"
@@ -371,7 +368,6 @@ mission gasstation
 }
 
 //FIXME - where we will play now?
-//FIXME - artifacts?
 mission oriental
 {
 	location	"_Gobabis"
@@ -412,7 +408,6 @@ mission subway
 }
 
 // America
-//FIXME: artifacts?
 mission tower
 {
 	location	"_San Francisco"
@@ -433,7 +428,6 @@ mission tower
 }
 
 //FIXME - where we will play now?
-//FIXME - artifacts?
 mission village
 {
 	location	"_Fargo"
@@ -458,7 +452,7 @@ mission village
 //-----------------------------------
 
 // Kenya, Africa
-// artifacts: crashed harvester
+// artifacts: crashed craft_ufo_fighter
 mission mine_crash
 {
 	location	"_Wajir"
@@ -474,7 +468,7 @@ mission mine_crash
 	civteam		european
 	nation		"africa"
 	onlose		""
-	onwin		""
+	onwin		"cp_ufocrashed 1;"
 	storyrelated	true
 }
 
@@ -483,6 +477,7 @@ mission mine_crash
 //-----------------------------------------
 
 // Netherlands
+// artifacts: crashed craft_ufo_fighter
 mission bridge
 {
 	location	"_Arnhem"
@@ -498,7 +493,7 @@ mission bridge
 	civteam		european
 	nation		"europa"
 	onlose		""
-	onwin		""
+	onwin		"cp_ufocrashed 1;"
 	storyrelated	true
 }
 
@@ -565,7 +560,6 @@ mission harbor
 }
 
 // Australia
-//FIXME - artifacts?
 mission office
 {
 	location	"_Mackay"
@@ -586,7 +580,6 @@ mission office
 }
 
 // Turkey
-//FIXME - artifacts?
 mission pdi
 {
 	location	"_Antalya"
@@ -611,7 +604,7 @@ mission pdi
 //-------------------------------------
 
 //FIXME: where will we play now?
-//FIXME: artifacts?
+//artifacts: craft_ufo_harvester
 mission africa
 {
 	location	"_Dongola"
@@ -627,12 +620,12 @@ mission africa
 	civteam		oriental
 	nation		"africa"
 	onlose		""
-	onwin		""
+	onwin		"cp_uforecovery 2;"
 	storyrelated	true
 }
 
 //FIXME: where will we play now?
-//FIXME: artifacts? harvester crashsite?
+//artifacts: crashed craft_ufo_harvester
 mission harvestercrash
 {
 	location	"_Atacama Desert"
@@ -648,12 +641,11 @@ mission harvestercrash
 	civteam		european
 	nation		"latin"
 	onlose		""
-	onwin		""
+	onwin		"cp_ufocrashed 2;"
 	storyrelated	true
 }
 
 //FIXME: where will we play now?
-//FIXME: artifacts?
 mission lake
 {
 	location	"_Tazovskij"
@@ -674,7 +666,6 @@ mission lake
 }
 
 // Qatar
-//FIXME: artifacts?
 mission qatar
 {
 	location	"_Doha"
@@ -695,7 +686,7 @@ mission qatar
 }
 
 // Switzerland
-//FIXME: artifacts?
+//FIXME: artifact: craft_ufo_big (name needed)
 mission terrain
 {
 	location	"_Altdorf"
@@ -712,6 +703,7 @@ mission terrain
 	nation		"europa"
 	onlose		""
 	onwin		""
+//	onwin		"cp_uforecovery 5;" FIXME
 	storyrelated	true
 }
 
