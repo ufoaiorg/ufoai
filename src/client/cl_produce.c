@@ -236,9 +236,10 @@ static void PR_UpdateRequiredItemsInBasestorage (int amount, requirements_t *req
  * @param[in] *queue
  * @param[in] objID Index of object to produce (in csi.ods[]).
  * @param[in] amount Desired amount to produce.
+ * @param[in] disassembling True if this is disassembling, false if production.
  * @return
  */
-static production_t *PR_QueueNew (production_queue_t *queue, signed int objID, signed int amount)
+static production_t *PR_QueueNew (production_queue_t *queue, signed int objID, signed int amount, qboolean disassembling)
 {
 	int numWorkshops = 0;
 	technology_t *t = NULL;
@@ -266,11 +267,19 @@ static production_t *PR_QueueNew (production_queue_t *queue, signed int objID, s
 
 	prod->objID = objID;
 	prod->amount = amount;
-	/* Don't try to add to queue an item which is not produceable. */
-	if (t->produceTime < 0)
-		return NULL;
-	else
+	if (disassembling) {	/* Disassembling. */
+		prod->production = qfalse;
+		/* We have to remove amount of items being disassembled from base storage. */
+		baseCurrent->storage.num[objID] -= amount;
+		/* Now find related components definition. */
+		prod->timeLeft = PR_CalculateProductionTime(baseCurrent, t, INV_GetComponentsByItemIdx(prod->objID), qtrue);
+	} else {	/* Production. */
+		prod->production = qtrue;
+		/* Don't try to add to queue an item which is not produceable. */
+		if (t->produceTime < 0)
+			return NULL;
 		prod->timeLeft = PR_CalculateProductionTime(baseCurrent, t, NULL, qfalse);
+	}
 
 	queue->numItems++;
 	return prod;
@@ -391,13 +400,18 @@ void PR_ProductionRun (void)
 		assert(prod->objID >= 0);
 		od = &csi.ods[prod->objID];
 
-		/* not enough money to produce more items in this base */
-		if (od->price*PRODUCE_FACTOR/PRODUCE_DIVISOR > ccs.credits)
-			continue;
-
-		/* Not enough free space in base storage for this item. */
-		if (gd.bases[i].capacities[CAP_ITEMS].max - gd.bases[i].capacities[CAP_ITEMS].cur < od->size)
-			continue;
+		if (prod->production) {	/* This is production, not disassembling. */
+			/* Not enough money to produce more items in this base. */
+			if (od->price*PRODUCE_FACTOR/PRODUCE_DIVISOR > ccs.credits)
+				continue;
+			/* Not enough free space in base storage for this item. */
+			if (gd.bases[i].capacities[CAP_ITEMS].max - gd.bases[i].capacities[CAP_ITEMS].cur < od->size)
+				continue;
+		} else {		/* This is disassembling. */
+			if (gd.bases[i].capacities[CAP_ITEMS].max - gd.bases[i].capacities[CAP_ITEMS].cur < 
+			INV_DisassemblyItem(NULL, INV_GetComponentsByItemIdx(prod->objID), qtrue))
+				continue;
+		}
 
 		t = (technology_t*)(od->tech);
 #ifdef DEBUG
@@ -406,19 +420,30 @@ void PR_ProductionRun (void)
 #endif
 		prod->timeLeft--;
 		if (prod->timeLeft <= 0) {
-			CL_UpdateCredits(ccs.credits - (od->price*PRODUCE_FACTOR/PRODUCE_DIVISOR));
-			prod->timeLeft = t->produceTime;
-			prod->amount--;
-			/* now add it to equipment */
-			gd.bases[i].storage.num[prod->objID]++;
-			/* and update storage capacity.cur */
-			gd.bases[i].capacities[CAP_ITEMS].cur += od->size;
+			if (prod->production) {	/* This is production, not disassembling. */
+				CL_UpdateCredits(ccs.credits - (od->price*PRODUCE_FACTOR/PRODUCE_DIVISOR));
+				prod->timeLeft = PR_CalculateProductionTime(&gd.bases[i], t, NULL, qfalse);
+				prod->amount--;
+				/* now add it to equipment */
+				gd.bases[i].storage.num[prod->objID]++;
+				/* and update storage capacity.cur */
+				gd.bases[i].capacities[CAP_ITEMS].cur += od->size;
 
-			/* queue the next production */
-			if (prod->amount <= 0) {
-				Com_sprintf(messageBuffer, sizeof(messageBuffer), _("The production of %s has finished."),od->name);
-				MN_AddNewMessage(_("Production finished"), messageBuffer, qfalse, MSG_PRODUCTION, od->tech);
-				PR_QueueNext(i);
+				/* queue the next production */
+				if (prod->amount <= 0) {
+					Com_sprintf(messageBuffer, sizeof(messageBuffer), _("The production of %s has finished."),od->name);
+					MN_AddNewMessage(_("Production finished"), messageBuffer, qfalse, MSG_PRODUCTION, od->tech);
+					PR_QueueNext(i);
+				}
+			} else {	/* This is disassembling. */
+				gd.bases[i].capacities[CAP_ITEMS].cur += INV_DisassemblyItem(&gd.bases[i], INV_GetComponentsByItemIdx(prod->objID), qfalse);
+				prod->timeLeft = PR_CalculateProductionTime(&gd.bases[i], t, INV_GetComponentsByItemIdx(prod->objID), qtrue);
+				prod->amount--;
+				if (prod->amount <= 0) {
+					Com_sprintf(messageBuffer, sizeof(messageBuffer), _("The disassembling of %s has finished."),od->name);
+					MN_AddNewMessage(_("Production finished"), messageBuffer, qfalse, MSG_PRODUCTION, od->tech);
+					PR_QueueNext(i);
+				}
 			}
 		}
 	}
@@ -611,7 +636,10 @@ static void PR_ProductionListClick_f (void)
 		prod = &queue->items[num];
 		selectedQueueItem = qtrue;
 		selectedIndex = num;
-		PR_ProductionInfo(qfalse);
+		if (prod->production)
+			PR_ProductionInfo(qfalse);
+		else
+			PR_ProductionInfo(qtrue);
 	} else if (num >= queue->numItems + QUEUE_SPACERS) {
 		/* Clicked in the item list. */
 		idx = num - queue->numItems - QUEUE_SPACERS;
@@ -769,17 +797,15 @@ static void PR_UpdateDisassemblingList_f (void)
 			Q_strcat(productionQueued, "\n", sizeof(productionQueued));
 		}
 	}
+
+	/* Enable disassembly cvar. */
+	Cvar_SetValue("mn_prod_disassembling", 1);
 	/* bind the menu text to our static char array */
 	menuText[TEXT_PRODUCTION_LIST] = productionList;
 	/* bind the amount of available items */
 	menuText[TEXT_PRODUCTION_AMOUNT] = productionAmount;
 	/* bind the amount of queued items */
 	menuText[TEXT_PRODUCTION_QUEUED] = productionQueued;
-
-#if 0 /* FIXME: needed now? */
-	/* now print the information about the current item in production */
-	PR_ProductionInfo(qfalse);
-#endif
 }
 
 /**
@@ -796,6 +822,9 @@ static void PR_ProductionSelect_f (void)
 		return;
 	}
 	produceCategory = atoi(Cmd_Argv(1));
+
+	/* Enable disassembly cvar. */
+	Cvar_SetValue("mn_prod_disassembling", 0);
 
 	/* reset scroll values */
 	node1->textScroll = node2->textScroll = prodlist->textScroll = 0;
@@ -891,7 +920,7 @@ extern void PR_Init (void)
  */
 static void PR_ProductionIncrease_f (void)
 {
-	int amount = 1;
+	int amount = 1, amount_temp = 0;
 	int produceable_amount;
 	production_queue_t *queue = NULL;
 	objDef_t *od = NULL;
@@ -908,11 +937,32 @@ static void PR_ProductionIncrease_f (void)
 	if (selectedQueueItem) {
 		assert(selectedIndex >= 0 && selectedIndex < queue->numItems);
 		prod = &queue->items[selectedIndex];
-		prod->amount += amount;
+		if (prod->production) {		/* Production. */
+			prod->amount += amount;
+		} else {			/* Disassembling. */
+			/* We can disassembly only as many items as we have in base storage. */
+			if (baseCurrent->storage.num[prod->objID] > amount)
+				amount_temp = amount;
+			else
+				amount_temp = baseCurrent->storage.num[prod->objID];
+			Com_DPrintf("PR_ProductionIncrease_f()... amounts: storage: %i, param: %i, temp: %i\n", baseCurrent->storage.num[prod->objID], amount, amount_temp);
+			/* Now remove the amount we just added to queue from base storage. */
+			baseCurrent->storage.num[prod->objID] -= amount_temp;
+			prod->amount += amount_temp;
+		}
 	} else {
 		if (selectedIndex < 0)
 			return;
-		prod = PR_QueueNew(queue, selectedIndex, amount);
+		if (Cvar_VariableInteger("mn_prod_disassembling") == 0) {
+			prod = PR_QueueNew(queue, selectedIndex, amount, qfalse);	/* Production. */
+		} else {
+			/* We can disassembly only as many items as we have in base storage. */
+			if (baseCurrent->storage.num[selectedIndex] > amount)
+				amount_temp = amount;
+			else
+				amount_temp = baseCurrent->storage.num[selectedIndex];
+			prod = PR_QueueNew(queue, selectedIndex, amount_temp, qtrue);	/* Disassembling. */
+		}
 		/* prod is NULL when queue limit is reached */
 		if (!prod)
 			return;
@@ -939,8 +989,13 @@ static void PR_ProductionIncrease_f (void)
 			}
 
 			if (prod) {
-				Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Production of %s started"), csi.ods[selectedIndex].name);
-				MN_AddNewMessage(_("Production started"), messageBuffer, qfalse, MSG_PRODUCTION, csi.ods[selectedIndex].tech);
+				if (Cvar_VariableInteger("mn_prod_disassembling") == 0) {
+					Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Production of %s started"), csi.ods[selectedIndex].name);
+					MN_AddNewMessage(_("Production started"), messageBuffer, qfalse, MSG_PRODUCTION, csi.ods[selectedIndex].tech);
+				} else {
+					Com_sprintf(messageBuffer, sizeof(messageBuffer), _("Disassembling of %s started"), csi.ods[selectedIndex].name);
+					MN_AddNewMessage(_("Production started"), messageBuffer, qfalse, MSG_PRODUCTION, csi.ods[selectedIndex].tech);
+				}
 
 				/* Now we select the item we just created. */
 				selectedQueueItem = qtrue;
@@ -959,8 +1014,13 @@ static void PR_ProductionIncrease_f (void)
 		}
 	}
 
-	PR_ProductionInfo(qfalse);
-	PR_UpdateProductionList();
+	if (Cvar_VariableInteger("mn_prod_disassembling") == 0) {	/* Production. */
+		PR_ProductionInfo(qfalse);
+		PR_UpdateProductionList();
+	} else {							/* Disassembling. */
+		PR_ProductionInfo(qtrue);
+		PR_UpdateDisassemblingList_f();
+	}
 }
 
 /**
@@ -969,11 +1029,15 @@ static void PR_ProductionIncrease_f (void)
 static void PR_ProductionStop_f (void)
 {
 	production_queue_t *queue;
+	qboolean disassembling = qfalse;
 
 	if (!baseCurrent || !selectedQueueItem)
 		return;
 
 	queue = &gd.productions[baseCurrent->idx];
+	if (!queue->items[selectedIndex].production)
+		disassembling = qtrue;	
+
 	PR_QueueDelete(queue, selectedIndex);
 
 	if (queue->numItems == 0) {
@@ -983,8 +1047,13 @@ static void PR_ProductionStop_f (void)
 		selectedIndex = queue->numItems - 1;
 	}
 
-	PR_ProductionInfo(qfalse);
-	PR_UpdateProductionList();
+	if (disassembling) {
+		PR_ProductionInfo(qtrue);
+		PR_UpdateDisassemblingList_f();
+	} else {
+		PR_ProductionInfo(qfalse);
+		PR_UpdateProductionList();
+	}
 }
 
 /**
@@ -992,7 +1061,7 @@ static void PR_ProductionStop_f (void)
  */
 static void PR_ProductionDecrease_f (void)
 {
-	int amount = 1;
+	int amount = 1, amount_temp = 0;
 	production_queue_t *queue;
 	production_t *prod;
 
@@ -1005,13 +1074,26 @@ static void PR_ProductionDecrease_f (void)
 	queue = &gd.productions[baseCurrent->idx];
 	assert(selectedIndex >= 0 && selectedIndex < queue->numItems);
 	prod = &queue->items[selectedIndex];
-	prod->amount -= amount;
+	if (prod->amount >= amount)
+		amount_temp = amount;
+	else
+		amount_temp = prod->amount;
+
+	prod->amount -= amount_temp;
+	/* We need to readd items being disassembled to base storage. */	
+	if (!prod->production)
+		baseCurrent->storage.num[prod->objID] += amount_temp;
 
 	if (prod->amount <= 0) {
 		PR_ProductionStop_f();
 	} else {
-		PR_ProductionInfo(qfalse);
-		PR_UpdateProductionList();
+		if (prod->production) {
+			PR_ProductionInfo(qfalse);
+			PR_UpdateProductionList();
+		} else {
+			PR_ProductionInfo(qtrue);
+			PR_UpdateDisassemblingList_f();
+		}
  	}
 }
 

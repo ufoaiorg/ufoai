@@ -365,6 +365,8 @@ extern void UFO_Recovery (void)
 			/* Process UFO recovery. */
 			base->storage.num[item]++;	/* Add dummy UFO item to enable research topic. */
 			RS_MarkCollected(od->tech);	/* Enable research topic. */
+			/* Reset this recovery. */
+			memset(&gd.recoveries[i], 0, sizeof(gd.recoveries[i]));
 		}
 	}
 }

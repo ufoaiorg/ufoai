@@ -496,3 +496,55 @@ extern void INV_ParseComponents (const char *name, char **text)
 	} while (*text);
 }
 
+/**
+ * @brief Returns components definition by item idx in csi.ods[].
+ * @param[in] itemIdx Global item index in csi.ods[].
+ * @return *comp Pointer to components_t definition.
+ */
+extern components_t *INV_GetComponentsByItemIdx (int itemIdx)
+{
+	int i;
+	components_t *comp = NULL;
+
+	for (i = 0; i < gd.numComponents; i++) {
+		comp = &gd.components[i];
+		if (comp->assembly_idx == itemIdx)
+			break;
+	}
+	Com_DPrintf("INV_GetComponentsByItemIdx()... found components id: %s\n", comp->assembly_id);
+	return comp;
+}
+
+/**
+ * @brief Disassembles item, adds components to base storage and calculates all components size.
+ * @param[in] *base Pointer to base where the disassembling is being made.
+ * @param[in] *comp Pointer to components definition.
+ * @param[in] calculate True if this is only calculation of item size, false if this is real disassembling.
+ * @return Size of all components in this disassembling.
+ */
+extern int INV_DisassemblyItem (base_t *base, components_t *comp, qboolean calculate)
+{
+	int i, j, size = 0;
+	objDef_t *compod;
+
+	assert (comp);
+	if (!calculate)	/* We need base only if this is real disassembling. */
+		assert (base);
+
+	for (i = 0; i < comp->numItemtypes; i++) {
+		for (j = 0, compod = csi.ods; j < csi.numODs; j++, compod++) {
+			if (!Q_strncmp(compod->id, comp->item_id[i], MAX_VAR))
+				break;
+		}
+		assert (compod);
+		size += compod->size * comp->item_amount[i];
+		/* Add to base storage only if this is real disassembling, not calculation of size. */
+		if (!calculate) {
+			base->storage.num[j] += comp->item_amount[i];
+			Com_DPrintf("INV_DisassemblyItem()... added %i amounts of %s\n", comp->item_amount[i], compod->id);
+		}
+	}
+	return size;
+}
+
+
