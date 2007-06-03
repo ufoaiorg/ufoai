@@ -4270,6 +4270,72 @@ static void CP_UFORecoveredDestroy_f (void)
 }
 
 /**
+ * @brief Function to process crashed UFO.
+ * @note Command to call this: cp_ufocrashed.
+ */
+static void CP_UFOCrashed_f (void)
+{
+	int i, j;
+	ufoType_t UFOtype;
+	aircraft_t *aircraft = NULL, *ufocraft = NULL;
+	qboolean ufofound = qfalse;
+	components_t *comp = NULL;
+	objDef_t *compod;
+	itemsTmp_t *cargo;
+
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: %s <UFOType>\n", Cmd_Argv(0));
+		return;
+	}
+
+	if ((atoi(Cmd_Argv(2)) >= 0) && (atoi(Cmd_Argv(2)) < UFO_MAX)) {
+		UFOtype = atoi(Cmd_Argv(1));
+	} else {
+		Com_Printf("CP_UFOCrashed_f()... UFOType: %i does not exist!\n", atoi(Cmd_Argv(1)));
+		return;
+	}
+
+	/* Find ufo sample of given ufotype. */
+	for (i = 0; i < numAircraft_samples; i++) {
+		ufocraft = &aircraft_samples[i];
+		if (ufocraft->type != AIRCRAFT_UFO)
+			continue;
+		if (ufocraft->ufotype == UFOtype) {
+			ufofound = qtrue;
+			break;
+		}
+	}
+
+	/* Do nothing without UFO of this type. */
+	if (!ufofound) {
+		Com_Printf("CP_UFORecovered()... UFOType: %i does not have valid craft definition!\n", atoi(Cmd_Argv(1)));
+		return;
+	}
+
+	/* Find dropship. */
+	aircraft = AIR_AircraftGetFromIdx(gd.interceptAircraft);
+	assert (aircraft);
+	cargo = aircraft->itemcargo;
+
+	/* Find components definition. */
+	comp = INV_GetComponentsByItemIdx(Com_GetItemByID(ufocraft->id));
+	assert (comp);
+
+	/* Add components of crashed UFO to dropship. */
+	for (i = 0; i < comp->numItemtypes; i++) {
+		for (j = 0, compod = csi.ods; j < csi.numODs; j++, compod++) {
+			if (!Q_strncmp(compod->id, comp->item_id[i], MAX_VAR))
+				break;
+		}
+		assert (compod);
+		/* Add items to cargo, increase itemtypes. */
+		cargo[aircraft->itemtypes].idx = j;
+		cargo[aircraft->itemtypes].amount = comp->item_amount2[i];
+		aircraft->itemtypes++;
+	}
+}
+
+/**
  * @brief Function to issue Try Again a Mission.
  * @note Command to call this: cp_tryagain.
  */
@@ -4306,6 +4372,7 @@ extern void CL_ResetCampaign (void)
 	Cmd_AddCommand("cp_ufosellstart", CP_UFOSellStart_f, "Function to start UFO selling processing.");
 	Cmd_AddCommand("cp_uforecoverysell", CP_UFORecoveredSell_f, "Function to sell recovered UFO to desired nation.");
 	Cmd_AddCommand("cp_uforecoverydestroy", CP_UFORecoveredDestroy_f, "Function to destroy recovered UFO.");
+	Cmd_AddCommand("cp_ufocrashed", CP_UFOCrashed_f, "Function to process crashed UFO after a mission.");
 #ifdef DEBUG
 	Cmd_AddCommand("debug_statsupdate", CL_DebugChangeCharacterStats_f, "Debug function to increase the kills and test the ranks");
 	Cmd_AddCommand("debug_campaignstats", CP_CampaignStats_f, "Print campaign stats to game console");

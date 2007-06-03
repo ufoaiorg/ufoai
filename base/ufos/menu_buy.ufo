@@ -1170,7 +1170,7 @@ menu buy
 
 	string txt_storage_caption
 	{
-		string 		"_Storage (all/free):"
+		string 		"_Storage (all/used):"
 		pos		"650 120"
 		font		f_small
 		align		ul

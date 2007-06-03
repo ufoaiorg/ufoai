@@ -1178,6 +1178,7 @@ extern qboolean PR_Save (sizebuf_t* sb, void* data)
 			MSG_WriteLong(sb, pq->items[j].amount);
 			MSG_WriteLong(sb, pq->items[j].timeLeft);
 			MSG_WriteLong(sb, pq->items[j].workers);
+			MSG_WriteByte(sb, pq->items[j].production);
 			MSG_WriteByte(sb, pq->items[j].items_cached);
 		}
 	}
@@ -1202,8 +1203,12 @@ extern qboolean PR_Load (sizebuf_t* sb, void* data)
 			pq->items[j].objID = MSG_ReadLong(sb);
 			pq->items[j].amount = MSG_ReadLong(sb);
 			pq->items[j].timeLeft = MSG_ReadLong(sb);
-			if (*(int*)data >= 2)
+			if (*(int*)data >= 2) {
 				pq->items[j].workers = MSG_ReadLong(sb);
+				pq->items[j].production = MSG_ReadByte(sb);
+			} else {
+				pq->items[j].production = qtrue;	/* Before 2.2.0 there were no disassembling. */
+			}
 			pq->items[j].items_cached = MSG_ReadByte(sb);
 		}
 	}
