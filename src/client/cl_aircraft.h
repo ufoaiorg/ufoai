@@ -187,10 +187,7 @@ typedef struct aircraft_s {
 	char *model;
 	/* NOTE: these pointers needs reinit after loading a saved game */
 	/*@todo remove me */
-	char weapon_string[MAX_VAR];	/**< Name of the weapon equipping aircraft */
-	char ammo_string[MAX_VAR];		/**< Name of the ammo equipping aircraft */
 	char shield_string[MAX_VAR];	/**< Name of the shield equipping aircraft */
-	char item_string[MAX_VAR];		/**< Name of the itme equipping aircraft */
 
 	aircraftSlot_t weapons[MAX_AIRCRAFTSLOT];	/**< Weapons assigned to aircraft */
 	int maxWeapons;

@@ -1666,10 +1666,7 @@ static const value_t aircraft_param_vals[] = {
 /** @brief These values will be linked into the aircaft when assignAircraftItems is true */
 static const value_t aircraft_standard_vals[] = {
 	/* will be linked in for single player games */
-	{"weapon", V_STRING, offsetof(aircraft_t, weapon_string), 0},
-	{"ammo", V_STRING, offsetof(aircraft_t, ammo_string), 0},
 	{"shield", V_STRING, offsetof(aircraft_t, shield_string), 0},
-	{"item", V_STRING, offsetof(aircraft_t, item_string), 0},
 
 	{NULL, 0, 0, 0}
 };
