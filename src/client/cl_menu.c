@@ -42,6 +42,9 @@ static void CL_ShowChatMessagesOnStack_f(void);
 static const vec4_t tooltipBG = { 0.0f, 0.0f, 0.0f, 0.7f };
 static const vec4_t tooltipColor = { 0.0f, 0.8f, 0.0f, 1.0f };
 
+/* oldSource used in MN_DrawMenus to draw faster */ 
+static char oldSource[MAX_VAR] = "";
+
 /* =========================================================== */
 
 typedef enum ea_s {
@@ -1853,6 +1856,15 @@ const char *MN_GetFont (const menu_t *m, const menuNode_t *const n)
 }
 
 /**
+ * @brief Reset the value of oldsource
+ * @note use this function when you want to force a model to be drawn again
+ */
+extern void MN_ResetoldSource_f (void)
+{
+	*oldSource = '\0';
+}
+
+/**
  * @brief Draws the menu stack
  * @sa SCR_UpdateScreen
  */
@@ -1867,7 +1879,6 @@ void MN_DrawMenus (void)
 	const char *font;
 	char *anim;					/* model anim state */
 	char source[MAX_VAR] = "";
-	static char oldSource[MAX_VAR] = "";
 	int sp, pp;
 	item_t item = {1, NONE, NONE}; /* 1 so it's not reddish; fake item anyway */
 	vec4_t color;

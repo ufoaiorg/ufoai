@@ -3601,6 +3601,7 @@ static const cmdList_t game_commands[] = {
 	{"aircraft_return", AIR_AircraftReturnToBase_f, NULL},
 	{"aircraft_list", CL_AircraftList_f, "Generate the aircraft (interception) list"},
 	{"stats_update", CL_StatsUpdate_f, NULL},
+	{"reset_oldSource", MN_ResetoldSource_f, NULL},
 	{"game_go", CL_GameGo, NULL},
 	{"game_auto_check", CL_GameAutoCheck_f, NULL},
 	{"game_auto_go", CL_GameAutoGo_f, NULL},

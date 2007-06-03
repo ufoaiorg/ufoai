@@ -205,7 +205,7 @@ menu aircraft
 		mousefx true
 		click
 		{
-			cmd "mn_push aircraft_equip"
+			cmd "reset_oldSource;mn_push aircraft_equip"
 		}
 		out		{ *txt_equip color "0 0.8 0 1" *button_equip texl "0 0" *button_equip texh "230 64" }
 		in		{ *txt_equip color "1 1 1 1" *button_equip texl "230 0" *button_equip texh "460 64" }
