@@ -110,6 +110,9 @@ typedef enum {
 	AIR_NOSE_RIGHT,
 	AIR_WING_LEFT,
 	AIR_WING_RIGHT,
+	AIR_REAR_LEFT,
+	AIR_REAR_CENTER,
+	AIR_REAR_RIGHT,
 
 	AIR_POSITIONS_MAX
 } itemPos_t;
@@ -240,6 +243,7 @@ void AIM_NextAircraft_f(void);
 void AIM_PrevAircraft_f(void);
 void AIR_AircraftReturnToBase_f(void);
 void AIM_AircraftEquipmenuInit_f(void);
+extern void AIM_AircraftEquipSlotSelect_f(void);
 extern void AIM_AircraftEquipzoneSelect_f(void);
 extern void AIM_AircraftEquipAddItem_f(void);
 extern void AIM_AircraftEquipDeleteItem_f(void);

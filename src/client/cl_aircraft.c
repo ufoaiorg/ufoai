@@ -1071,6 +1071,83 @@ extern int AII_GetAircraftItemByID (const char *id)
 }
 
 /**
+ * @brief Check that airequipSelectedSlot is the indice of an existing slot in the aircraft
+ * @note airequipSelectedSlot concerns only weapons and electronics
+ * @sa aircraft Pointer to the aircraft
+ */
+static void AIM_CheckairequipSelectedSlot (aircraft_t *aircraft)
+{
+	switch (airequipID) {
+	case AC_ITEM_WEAPON:
+		if (airequipSelectedSlot >= aircraft->maxWeapons) {
+			airequipSelectedSlot = 0;
+			return;
+		}
+		break;
+	case AC_ITEM_ELECTRONICS:
+		if (airequipSelectedSlot >= aircraft->maxElectronics) {
+			airequipSelectedSlot = 0;
+			return;
+		}
+		break;
+	}
+}
+
+/**
+ * @brief Draw only slots existing for this aircraft, and emphases selected one
+ * @sa aircraft Pointer to the aircraft
+ */
+static void AIM_DrawAircraftSlots (aircraft_t *aircraft)
+{
+	menuNode_t *node;
+	int i, j;
+
+	node = MN_GetNodeFromCurrentMenu("airequip_slot0");
+	for (i = 0; node && i < AIR_POSITIONS_MAX; node = node->next) {
+		if (!Q_strncmp(node->name, "airequip_slot", 13)) {
+			/* Default value */
+			node->invis = qtrue;
+			/* Draw available slots */
+			switch (airequipID) {
+			case AC_ITEM_WEAPON:
+				for (j = 0; j < aircraft->maxWeapons; j++) {
+					/* check if one of the aircraft slots is at this position */
+					if (aircraft->weapons[j].pos == i) {
+						node->invis = qfalse;
+						/* draw in white if this is the selected slot */
+						if (j == airequipSelectedSlot) {
+							Vector2Set(node->texl, 64, 0);
+							Vector2Set(node->texh, 128, 64);
+						} else {
+							Vector2Set(node->texl, 0, 0);
+							Vector2Set(node->texh, 64, 64);
+						}
+					}
+				}
+				break;
+			case AC_ITEM_ELECTRONICS:
+				for (j = 0; j < aircraft->maxElectronics; j++) {
+					if (aircraft->electronics[j].pos == i) {
+						node->invis = qfalse;
+						/* draw in white if this is the selected slot */
+						if (j == airequipSelectedSlot) {
+							Vector2Set(node->texl, 64, 0);
+							Vector2Set(node->texh, 128, 64);
+						} else {
+							Vector2Set(node->texl, 0, 0);
+							Vector2Set(node->texh, 64, 64);
+						}
+					}
+				}
+				break;
+			/* do nothing for shield: there is only one slot */
+			}
+			i++;
+		}
+	}
+}
+
+/**
  * @brief Fills the weapon and shield list of the aircraft equip menu
  * @sa CL_AircraftEquipmenuMenuWeaponsClick_f
  * @sa CL_AircraftEquipmenuMenuShieldsClick_f
@@ -1154,6 +1231,9 @@ void AIM_AircraftEquipmenuInit_f (void)
 		break;
 	}
 
+	/* Check that airequipSelectedSlot corresponds to an existing slot for this aircraft */
+	AIM_CheckairequipSelectedSlot(aircraft);
+
 	while (*list) {
 		/*Com_Printf("%s\n", (*list)->id);*/
 		if (RS_IsResearched_ptr(*list))
@@ -1204,6 +1284,60 @@ void AIM_AircraftEquipmenuInit_f (void)
 	} else
 		*smallbuffer3 = '\0';
 	menuText[TEXT_AIREQUIP_3] = smallbuffer3;
+
+	/* Draw existing slots for this aircraft */
+	AIM_DrawAircraftSlots(aircraft);
+}
+
+/**
+ * @brief Select the current slot you want to assign the item to.
+ */
+extern void AIM_AircraftEquipSlotSelect_f (void)
+{
+	int i, pos;
+	aircraft_t *aircraft;
+
+	if (Cmd_Argc() < 2) {
+		Com_Printf("Usage: airequip_slot_select <arg>\n");
+		return;
+	}
+
+	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
+	assert(aircraft);
+
+	pos = atoi(Cmd_Argv(1));
+
+	/* select the slot corresponding to pos, and set airequipSelectedSlot to this slot */
+	switch (airequipID) {
+	case AC_ITEM_ELECTRONICS:
+		/* electronics selected */
+		for (i = 0; i < aircraft->maxElectronics; i++) {
+			if (aircraft->electronics[i].pos == pos) {
+				airequipSelectedSlot = i;
+				break;
+			}
+		}
+		if (i == aircraft->maxElectronics)
+			Com_Printf("this slot hasn't been found in aircraft electronics slots\n");
+		break;
+	case AC_ITEM_WEAPON:
+		/* weapon selected */
+		for (i = 0; i < aircraft->maxWeapons; i++) {
+			if (aircraft->weapons[i].pos == pos) {
+				airequipSelectedSlot = i;
+				break;
+			}
+		}
+		if (i == aircraft->maxWeapons)
+			Com_Printf("this slot hasn't been found in aircraft weapon slots\n");
+		break;
+	default:
+		Com_Printf("AIM_AircraftEquipSlotSelect_f : only weapons and electronics have several slots\n");
+	}
+
+	/* Update menu after changing slot */
+	noparams = qtrue; /* used for AIM_AircraftEquipmenuInit_f */
+	AIM_AircraftEquipmenuInit_f();
 }
 
 /**
@@ -1233,9 +1367,14 @@ extern void AIM_AircraftEquipAddItem_f (void)
 		return;
 	}
 
+	/* proceed only if an item has been selected */
+	if (!airequipSelectedTechnology)
+		return;
+
 	num = atoi(Cmd_Argv(1));
 
 	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
+	assert(aircraft);
 
 	switch (airequipID) {
 	case AC_ITEM_SHIELD:
@@ -1273,7 +1412,7 @@ extern void AIM_AircraftEquipAddItem_f (void)
 	else if (airequipID == AC_ITEM_WEAPON)
 		slot->ammoIdx = AII_GetAircraftItemByID(airequipSelectedTechnology->provides);
 
-	noparams = qtrue; /* used for AIM_AircraftEquipmenuMenuInit_f */
+	noparams = qtrue; /* used for AIM_AircraftEquipmenuInit_f */
 	AIM_AircraftEquipmenuInit_f();
 }
 
@@ -1327,12 +1466,12 @@ extern void AIM_AircraftEquipDeleteItem_f (void)
 	else if (airequipID == AC_ITEM_WEAPON)
 		slot->ammoIdx = -1;
 
-	noparams = qtrue; /* used for AIM_AircraftEquipmenuMenuInit_f */
+	noparams = qtrue; /* used for AIM_AircraftEquipmenuInit_f */
 	AIM_AircraftEquipmenuInit_f();
 }
 
 /**
- * @brief Assigns the weapon to current selected aircraft when clicked on the list.
+ * @brief Set airequipSelectedTechnology to the technology of current selected aircraft item.
  * @sa AIM_AircraftEquipmenuInit_f
  */
 void AIM_AircraftEquipmenuClick_f (void)
@@ -1635,7 +1774,10 @@ static const char *air_slot_type_strings[MAX_ACITEMS] = {
 	"electronics"
 };
 
-/** @brief List of valid strings for itemPos_t */
+/**
+ * @brief List of valid strings for itemPos_t
+ * @note must be in the same order than itemPos_t in cl_aircraft.h
+ */
 static const char *air_position_strings[AIR_POSITIONS_MAX] = {
 	"nose_left",
 	"nose_center",

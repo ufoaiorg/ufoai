@@ -75,7 +75,7 @@ aircraft craft_drop_firebird
 	angles		"-20 -40 120"
 	scale		"1.1 1.1 1.1"
 	angles_equip	"90 0 180"
-	scale_equip	"1.1 1.1 1.1"
+	scale_equip	"0.7 0.7 0.7"
 	slot {
 		type		weapon
 		position	nose_center
@@ -119,7 +119,7 @@ aircraft craft_inter_stiletto
 	angles		"-20 -40 120"
 	scale		"1.1 1.1 1.1"
 	angles_equip	"0 0 180"
-	scale_equip	"1.1 1.1 1.1"
+	scale_equip	"0.7 0.7 0.7"
 	shield		rs_craft_shield_polymer
 	slot {
 		type		weapon

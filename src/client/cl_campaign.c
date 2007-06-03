@@ -3590,6 +3590,7 @@ static const cmdList_t game_commands[] = {
 	{"aircraft_init", AIR_AircraftInit, NULL},
 	{"airequip_init", AIM_AircraftEquipmenuInit_f, NULL},
 	{"airequip_list_click", AIM_AircraftEquipmenuClick_f, NULL},
+	{"airequip_slot_select", AIM_AircraftEquipSlotSelect_f, NULL},
 	{"airequip_zone_select", AIM_AircraftEquipzoneSelect_f, NULL},
 	{"airequip_add_item", AIM_AircraftEquipAddItem_f, NULL},
 	{"airequip_del_item", AIM_AircraftEquipDeleteItem_f, NULL},

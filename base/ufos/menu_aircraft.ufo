@@ -664,6 +664,94 @@ menu aircraft_equip
 		align	cc
 	}
 
+	pic airequip_slot0
+	{
+		tooltip	"_Select this slot"
+		image	menu/button_square
+		mousefx	true
+		pos		"38 38"
+		texl	"0 0"
+		texh	"64 64"
+		click	{ cmd "airequip_slot_select 0;" }
+	}
+
+	pic airequip_slot1
+	{
+		tooltip	"_Select this slot"
+		image	menu/button_square
+		mousefx	true
+		pos		"196 38"
+		texl	"0 0"
+		texh	"64 64"
+		click	{ cmd "airequip_slot_select 1;" }
+	}
+
+	pic airequip_slot2
+	{
+		tooltip	"_Select this slot"
+		image	menu/button_square
+		mousefx	true
+		pos		"353 38"
+		texl	"0 0"
+		texh	"64 64"
+		click	{ cmd "airequip_slot_select 2;" }
+	}
+
+	pic airequip_slot3
+	{
+		tooltip	"_Select this slot"
+		image	menu/button_square
+		mousefx	true
+		pos		"38 301"
+		texl	"0 0"
+		texh	"64 64"
+		click	{ cmd "airequip_slot_select 3;" }
+	}
+
+	pic airequip_slot4
+	{
+		tooltip	"_Select this slot"
+		image	menu/button_square
+		mousefx	true
+		pos		"353 301"
+		texl	"0 0"
+		texh	"64 64"
+		click	{ cmd "airequip_slot_select 4;" }
+	}
+
+	pic airequip_slot5
+	{
+		tooltip	"_Select this slot"
+		image	menu/button_square
+		mousefx	true
+		pos		"38 564"
+		texl	"0 0"
+		texh	"64 64"
+		click	{ cmd "airequip_slot_select 5;" }
+	}
+
+	pic airequip_slot6
+	{
+		tooltip	"_Select this slot"
+		image	menu/button_square
+		mousefx	true
+		pos		"196 564"
+		texl	"0 0"
+		texh	"64 64"
+		click	{ cmd "airequip_slot_select 6;" }
+	}
+
+	pic airequip_slot7
+	{
+		tooltip	"_Select this slot"
+		image	menu/button_square
+		mousefx	true
+		pos		"353 564"
+		texl	"0 0"
+		texh	"64 64"
+		click	{ cmd "airequip_slot_select 7;" }
+	}
+
 	pic airequip_button_leave
 	{
 		tooltip	"_Done"
