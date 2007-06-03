@@ -103,6 +103,9 @@ item assault_ammo
 // =======================
 // MINIGUN
 // (should be multiplayer only)
+//
+// TODO: If the name sticks we need to rename all "chaingun" stuff to "minigun" for consistency (files, techs, etc...).
+//
 // =======================
 item chaingun
 {
