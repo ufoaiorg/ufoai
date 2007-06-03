@@ -166,12 +166,27 @@ extern void AIR_ListAircraft_f (void)
 			aircraft = &base->aircraft[i];
 			Com_Printf("Aircraft %s\n", aircraft->name);
 			Com_Printf("...idx cur=base/global %i=%i/%i\n", i, aircraft->idxInBase, aircraft->idx);
-			if (aircraft->weapon_string)
-				Com_Printf("...weapon %s\n", aircraft->weapon_string);
-			if (aircraft->shield_string)
-				Com_Printf("...shield %s\n", aircraft->shield_string);
-			if (aircraft->item_string)
-				Com_Printf("...item %s\n", aircraft->item_string);
+			for (k = 0; k < aircraft->maxWeapons; k++) {
+				if (aircraft->weapons[k].itemIdx > -1) {
+					Com_Printf("...weapon slot %i contains %s\n", k, aircraftItems[aircraft->weapons[k].itemIdx].id);
+					if (aircraft->weapons[k].ammoIdx > -1)
+						Com_Printf("......this weapon is loaded with ammo %s\n", aircraftItems[aircraft->weapons[k].ammoIdx].id);
+					else
+						Com_Printf("......this weapon isn't loaded with ammo\n");
+				}
+				else
+					Com_Printf("...weapon slot %i is empty\n", k);
+			}
+			if (aircraft->shield.itemIdx > -1)
+				Com_Printf("...shield slot contains %s\n", aircraftItems[aircraft->shield.itemIdx].id);
+			else
+				Com_Printf("...shield slot is empty\n");
+			for (k = 0; k < aircraft->maxElectronics; k++) {
+				if (aircraft->electronics[k].itemIdx > -1)
+					Com_Printf("...electronics slot %i contains %s\n", k, aircraftItems[aircraft->weapons[k].itemIdx].id);
+				else
+					Com_Printf("...electronics slot %i is empty\n", k);
+			}
 			Com_Printf("...name %s\n", aircraft->id);
 			Com_Printf("...speed %i\n", aircraft->stats[AIR_STATS_SPEED]);
 			Com_Printf("...type %i\n", aircraft->type);
@@ -2091,7 +2106,6 @@ extern void AII_UpdateAircraftStats (aircraft_t *aircraft)
 	source = &aircraft_samples[aircraft->idx_sample];
 
 	/* we scan all the stats except AIR_STATS_WRANGE (see below) */
-	/* note all this stats can not be modified by weapons */
 	for (currentStat = 0; currentStat < AIR_STATS_MAX - 1; currentStat++) {
 		/* initialise value */
 		aircraft->stats[currentStat] = source->stats[currentStat];
@@ -2099,6 +2113,16 @@ extern void AII_UpdateAircraftStats (aircraft_t *aircraft)
 		/* modify by electronics (do nothing if the value of stat is 0) */
 		for (i = 0; i < aircraft->maxElectronics; i++) {
 			item = &aircraftItems[aircraft->electronics[i].itemIdx];
+			if (fabs(item->stats[i]) > 2.0f)
+				aircraft->stats[currentStat] += item->stats[i];
+			else if (item->stats[i] > 0.0f)
+				aircraft->stats[currentStat] *= item->stats[i];
+		}
+
+		/* modify by weapons (do nothing if the value of stat is 0) */
+		/* note that stats are not modified by ammos */
+		for (i = 0; i < aircraft->maxWeapons; i++) {
+			item = &aircraftItems[aircraft->weapons[i].itemIdx];
 			if (fabs(item->stats[i]) > 2.0f)
 				aircraft->stats[currentStat] += item->stats[i];
 			else if (item->stats[i] > 0.0f)
