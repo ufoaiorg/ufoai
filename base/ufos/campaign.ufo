@@ -153,7 +153,7 @@ campaign veryhard
 	map		    map_earth
 	visible		true
 
-	date		"2084 0 1902"
+	date		"2084 79 6"
 	firststage	intro
 }
 
@@ -183,7 +183,7 @@ campaign hard
 	map		    map_earth
 	visible		true
 
-	date		"2084 0 1902"
+	date		"2084 79 6"
 	firststage	intro
 }
 
@@ -232,7 +232,7 @@ campaign main
 	map		    map_earth
 	visible		true
 
-	date		"2084 0 1902"
+	date		"2084 79 6"
 	firststage	intro
 }
 
@@ -262,7 +262,7 @@ campaign easy
 	map		    map_earth
 	visible		true
 
-	date		"2084 0 1902"
+	date		"2084 79 6"
 	firststage	intro
 }
 
@@ -307,7 +307,7 @@ campaign veryeasy
 	map		    map_earth
 	visible		true
 
-	date		"2084 0 1902"
+	date		"2084 79 6"
 	firststage	intro
 }
 
@@ -328,7 +328,7 @@ campaign aliencampaign
 	map		    map_earth
 	visible		true
 
-	date		"2084 0 1902"
+	date		"2084 79 6"
 	firststage	intro
 }
 
