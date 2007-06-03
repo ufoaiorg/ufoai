@@ -197,7 +197,6 @@ typedef enum mn_s {
 	MN_CONTAINER,
 	MN_ITEM,
 	MN_MAP,
-	MN_3DMAP,
 	MN_BASEMAP,
 
 	MN_NUM_NODETYPE
@@ -218,7 +217,6 @@ static const char *nt_strings[MN_NUM_NODETYPE] = {
 	"container",
 	"item",
 	"map",
-	"3dmap",
 	"basemap"
 };
 
@@ -1259,9 +1257,6 @@ void MN_Click (int x, int y)
 			case MN_MAP:
 				MAP_MapClick(node, x, y, cl_3dmap->value);
 				break;
-			case MN_3DMAP:
-				MAP_MapClick(node, x, y, qtrue);
-				break;
 			case MN_MODEL:
 				MN_ModelClick(node);
 				break;
@@ -1489,10 +1484,6 @@ void MN_RightClick (int x, int y)
 
 			/* found a node -> do actions */
 			switch (node->type) {
-			case MN_3DMAP:
-				MAP_ResetAction();
-				mouseSpace = MS_SHIFT3DMAP;
-				break;
 			case MN_BASEMAP:
 				MN_BaseMapRightClick(node, x, y);
 				break;
@@ -1546,7 +1537,6 @@ void MN_MiddleClick (int x, int y)
 
 			/* found a node -> do actions */
 			switch (node->type) {
-			case MN_3DMAP:
 			case MN_MAP:
 				mouseSpace = MS_ZOOMMAP;
 				break;
@@ -1606,17 +1596,12 @@ void MN_MouseWheel (qboolean down, int x, int y)
 				else if (ccs.zoom > cl_mapzoommax->value)
 					ccs.zoom = cl_mapzoommax->value;
 
-				if (ccs.center[1] < 0.5 / ccs.zoom)
-					ccs.center[1] = 0.5 / ccs.zoom;
-				if (ccs.center[1] > 1.0 - 0.5 / ccs.zoom)
-					ccs.center[1] = 1.0 - 0.5 / ccs.zoom;
-				break;
-			case MN_3DMAP:
-				ccs.zoom *= pow(0.995, (down ? 10: -10));
-				if (ccs.zoom < cl_mapzoommin->value)
-					ccs.zoom = cl_mapzoommin->value;
-				else if (ccs.zoom > cl_mapzoommax->value)
-					ccs.zoom = cl_mapzoommax->value;
+				if (!cl_3dmap->value) { 
+					if (ccs.center[1] < 0.5 / ccs.zoom)
+						ccs.center[1] = 0.5 / ccs.zoom;
+					if (ccs.center[1] > 1.0 - 0.5 / ccs.zoom)
+						ccs.center[1] = 1.0 - 0.5 / ccs.zoom;
+				}
 				break;
 			case MN_TEXT:
 				if (node->wheelUp && node->wheelDown) {
@@ -1921,8 +1906,8 @@ void MN_DrawMenus (void)
 		}
 		for (node = menu->firstNode; node; node = node->next) {
 			if (!node->invis && ((node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL] /* 0 are images, models and strings e.g. */
-					|| node->type == MN_CONTAINER || node->type == MN_TEXT || node->type == MN_BASEMAP || node->type == MN_MAP
-					|| node->type == MN_3DMAP) || (node->type == MN_ZONE && node->bgcolor[3]))) {
+					|| node->type == MN_CONTAINER || node->type == MN_TEXT || node->type == MN_BASEMAP || node->type == MN_MAP)
+					|| (node->type == MN_ZONE && node->bgcolor[3]))) {
 				/* if construct */
 				if (*node->depends.var) {
 					/* menuIfCondition_t */
@@ -2020,7 +2005,7 @@ void MN_DrawMenus (void)
 
 				/* get the reference */
 				if (node->type != MN_BAR && node->type != MN_CONTAINER && node->type != MN_BASEMAP && node->type != MN_TEXT && node->type != MN_MAP
-					&& node->type != MN_3DMAP && node->type != MN_ZONE) {
+					&& node->type != MN_ZONE) {
 					ref = MN_GetReferenceString(menu, node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]);
 					if (!ref) {
 						/* bad reference */
@@ -2531,7 +2516,6 @@ void MN_DrawMenus (void)
 					} while (menuModel != NULL);
 					break;
 
-				case MN_3DMAP:
 				case MN_MAP:
 					if (curCampaign) {
 						CL_CampaignRun();	/* advance time */
