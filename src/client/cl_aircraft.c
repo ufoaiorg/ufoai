@@ -1497,7 +1497,7 @@ static const value_t aircraftitems_vals[] = {
 	{"ammo", V_INT, offsetof(aircraftItem_t, ammo), MEMBER_SIZEOF(aircraftItem_t, ammo)},
 	{"delay", V_FLOAT, offsetof(aircraftItem_t, weaponDelay), MEMBER_SIZEOF(aircraftItem_t, weaponDelay)},
 	{"range", V_RELABS, offsetof(aircraftItem_t, stats[AIR_STATS_RANGE]), MEMBER_SIZEOF(aircraftItem_t, stats[AIR_STATS_RANGE])},
-	{"damage", V_RELABS, offsetof(aircraftItem_t, stats[AIR_STATS_DAMAGE]), MEMBER_SIZEOF(aircraftItem_t, stats[AIR_STATS_DAMAGE])},
+	{"damage", V_FLOAT, offsetof(aircraftItem_t, stats[AIR_STATS_DAMAGE]), MEMBER_SIZEOF(aircraftItem_t, stats[AIR_STATS_DAMAGE])},
 	{"accuracy", V_RELABS, offsetof(aircraftItem_t, stats[AIR_STATS_ACCURACY]), MEMBER_SIZEOF(aircraftItem_t, stats[AIR_STATS_ACCURACY])},
 	{"ecm", V_RELABS, offsetof(aircraftItem_t, stats[AIR_STATS_ECM]), MEMBER_SIZEOF(aircraftItem_t, stats[AIR_STATS_ECM])},
 	{"weapon", V_CLIENT_HUNK_STRING, offsetof(aircraftItem_t, weapon), 0},
@@ -1635,7 +1635,6 @@ static const char *air_position_strings[AIR_POSITIONS_MAX] = {
 
 /** @brief Valid aircraft slot definitions from script files. */
 static const value_t aircraft_slot_vals[] = {
-	{"contains", V_CLIENT_HUNK_STRING, offsetof(aircraft_t, stats[AIR_STATS_RANGE]), MEMBER_SIZEOF(aircraft_t, stats[0])},
 
 	{NULL, 0, 0, 0}
 };
@@ -1703,7 +1702,7 @@ extern void AIR_ParseAircraft (const char *name, char **text, qboolean assignAir
 	int i;
 	qboolean ignoreForNow = qfalse;
 	technology_t *tech;
-	aircraftItemType_t itemType;
+	aircraftItemType_t itemType = MAX_ACITEMS;
 
 	if (numAircraft_samples >= MAX_AIRCRAFT) {
 		Com_Printf("AIR_ParseAircraft: too many aircraft definitions; def \"%s\" ignored\n", name);
@@ -1722,7 +1721,7 @@ extern void AIR_ParseAircraft (const char *name, char **text, qboolean assignAir
 		air_samp = &aircraft_samples[numAircraft_samples];
 		memset(air_samp, 0, sizeof(aircraft_t));
 
-		Com_DPrintf("...found aircraft %s\n", name);
+		Com_Printf("...found aircraft %s\n", name);
 		air_samp->idx = gd.numAircraft;
 		air_samp->idx_sample = numAircraft_samples;
 		CL_ClientHunkStoreString(name, &air_samp->id);
@@ -1780,91 +1779,6 @@ extern void AIR_ParseAircraft (const char *name, char **text, qboolean assignAir
 				tech = RS_GetTechByID(token);
 				if (tech)
 					AII_AddItemToSlot(tech, &(air_samp->shield));
-			}
-		} else {
-			ignoreForNow = qfalse;
-			/* these values are parsed in a later stage and ignored for now */
-			for (vp = aircraft_standard_vals; vp->string; vp++)
-				if (!Q_strcmp(token, vp->string)) {
-					token = COM_EParse(text, errhead, name);
-					if (!*text)
-						return;
-					ignoreForNow = qtrue;
-					break;
-				}
-			if (ignoreForNow)
-				continue;
-
-			/* check for some standard values */
-			for (vp = aircraft_vals; vp->string; vp++)
-				if (!Q_strcmp(token, vp->string)) {
-					/* found a definition */
-					token = COM_EParse(text, errhead, name);
-					if (!*text)
-						return;
-					switch (vp->type) {
-					case V_TRANSLATION2_STRING:
-						token++;
-					case V_CLIENT_HUNK_STRING:
-						CL_ClientHunkStoreString(token, (char**) ((char*)air_samp + (int)vp->ofs));
-						break;
-					default:
-						Com_ParseValue(air_samp, token, vp->type, vp->ofs, vp->size);
-					}
-
-					break;
-				}
-
-			if (vp->string && !Q_strncmp(vp->string, "size", 4)) {
-				if (air_samp->size > MAX_ACTIVETEAM) {
-					Com_DPrintf("AIR_ParseAircraft: Set size for aircraft to the max value of %i\n", MAX_ACTIVETEAM);
-					air_samp->size = MAX_ACTIVETEAM;
-				}
-			}
-
-			if (!Q_strncmp(token, "type", 4)) {
-				token = COM_EParse(text, errhead, name);
-				if (!*text)
-					return;
-				if (!Q_strncmp(token, "transporter", 11))
-					air_samp->type = AIRCRAFT_TRANSPORTER;
-				else if (!Q_strncmp(token, "interceptor", 11))
-					air_samp->type = AIRCRAFT_INTERCEPTOR;
-				else if (!Q_strncmp(token, "ufo", 3))
-					air_samp->type = AIRCRAFT_UFO;
-			} else if (!Q_strncmp(token, "param", 5)) {
-				token = COM_EParse(text, errhead, name);
-				if (!*text || *token != '{') {
-					Com_Printf("AIR_ParseAircraft: Invalid param value for aircraft: %s\n", name);
-					return;
-				}
-				do {
-					token = COM_EParse(text, errhead, name);
-					if (!*text)
-						break;
-					if (*token == '}')
-						break;
-
-					for (vp = aircraft_param_vals; vp->string; vp++)
-						if (!Q_strcmp(token, vp->string)) {
-							/* found a definition */
-							token = COM_EParse(text, errhead, name);
-							if (!*text)
-								return;
-							switch (vp->type) {
-							case V_TRANSLATION2_STRING:
-								token++;
-							case V_CLIENT_HUNK_STRING:
-								CL_ClientHunkStoreString(token, (char**) ((char*)air_samp + (int)vp->ofs));
-								break;
-							default:
-								Com_ParseValue(air_samp, token, vp->type, vp->ofs, vp->size);
-							}
-							break;
-						}
-					if (!vp->string)
-						Com_Printf("AIR_ParseAircraft: Ignoring unknown param value '%s'\n", token);
-				} while (*text); /* dummy condition */
 			} else if (!Q_strncmp(token, "slot", 4)) {
 				token = COM_EParse(text, errhead, name);
 				if (!*text || *token != '{') {
@@ -1970,9 +1884,116 @@ extern void AIR_ParseAircraft (const char *name, char **text, qboolean assignAir
 								} else
 									Com_Printf("Ignoring ammo value '%s' due to unknown slot type\n", token);
 							}
+						} else if (!Q_strncmp(token, "weight", MAX_VAR)) {
+							token = COM_EParse(text, errhead, name);
+							if (!*text)
+								return;
+							if (itemType == AC_ITEM_WEAPON) {
+								if (!Q_strncmp(token, "light", MAX_VAR))
+									air_samp->weapons[air_samp->maxWeapons - 1].size = ITEM_LIGHT;
+								else if (!Q_strncmp(token, "medium", MAX_VAR))
+									air_samp->weapons[air_samp->maxWeapons - 1].size = ITEM_MEDIUM;
+								else if (!Q_strncmp(token, "heavy", MAX_VAR))
+									air_samp->weapons[air_samp->maxWeapons - 1].size = ITEM_HEAVY;
+								else
+									Com_Printf("Unknown size value for aircraft slot: '%s'\n", token);
+							} else
+								Com_Printf("Ignoring size parameter '%s' for non-weapon aircraft slots\n", token);
 						}
 						Com_Printf("AIR_ParseAircraft: Ignoring unknown slot value '%s'\n", token);
 					}
+				} while (*text); /* dummy condition */
+			}
+		} else {
+			ignoreForNow = qfalse;
+			/* these values are parsed in a later stage and ignored for now */
+			for (vp = aircraft_standard_vals; vp->string; vp++)
+				if (!Q_strcmp(token, vp->string)) {
+					token = COM_EParse(text, errhead, name);
+					if (!*text)
+						return;
+					ignoreForNow = qtrue;
+					break;
+				}
+			if (ignoreForNow)
+				continue;
+
+			/* check for some standard values */
+			for (vp = aircraft_vals; vp->string; vp++)
+				if (!Q_strcmp(token, vp->string)) {
+					/* found a definition */
+					token = COM_EParse(text, errhead, name);
+					if (!*text)
+						return;
+					switch (vp->type) {
+					case V_TRANSLATION2_STRING:
+						token++;
+					case V_CLIENT_HUNK_STRING:
+						CL_ClientHunkStoreString(token, (char**) ((char*)air_samp + (int)vp->ofs));
+						break;
+					default:
+						Com_ParseValue(air_samp, token, vp->type, vp->ofs, vp->size);
+					}
+
+					break;
+				}
+
+			if (vp->string && !Q_strncmp(vp->string, "size", 4)) {
+				if (air_samp->size > MAX_ACTIVETEAM) {
+					Com_DPrintf("AIR_ParseAircraft: Set size for aircraft to the max value of %i\n", MAX_ACTIVETEAM);
+					air_samp->size = MAX_ACTIVETEAM;
+				}
+			}
+
+			if (!Q_strncmp(token, "type", 4)) {
+				token = COM_EParse(text, errhead, name);
+				if (!*text)
+					return;
+				if (!Q_strncmp(token, "transporter", 11))
+					air_samp->type = AIRCRAFT_TRANSPORTER;
+				else if (!Q_strncmp(token, "interceptor", 11))
+					air_samp->type = AIRCRAFT_INTERCEPTOR;
+				else if (!Q_strncmp(token, "ufo", 3))
+					air_samp->type = AIRCRAFT_UFO;
+			} else if (!Q_strncmp(token, "slot", 5)) {
+				token = COM_EParse(text, errhead, name);
+				if (!*text || *token != '{') {
+					Com_Printf("AIR_ParseAircraft: Invalid slot value for aircraft: %s\n", name);
+					return;
+				}
+				FS_SkipBlock(text);
+			} else if (!Q_strncmp(token, "param", 5)) {
+				token = COM_EParse(text, errhead, name);
+				if (!*text || *token != '{') {
+					Com_Printf("AIR_ParseAircraft: Invalid param value for aircraft: %s\n", name);
+					return;
+				}
+				do {
+					token = COM_EParse(text, errhead, name);
+					if (!*text)
+						break;
+					if (*token == '}')
+						break;
+
+					for (vp = aircraft_param_vals; vp->string; vp++)
+						if (!Q_strcmp(token, vp->string)) {
+							/* found a definition */
+							token = COM_EParse(text, errhead, name);
+							if (!*text)
+								return;
+							switch (vp->type) {
+							case V_TRANSLATION2_STRING:
+								token++;
+							case V_CLIENT_HUNK_STRING:
+								CL_ClientHunkStoreString(token, (char**) ((char*)air_samp + (int)vp->ofs));
+								break;
+							default:
+								Com_ParseValue(air_samp, token, vp->type, vp->ofs, vp->size);
+							}
+							break;
+						}
+					if (!vp->string)
+						Com_Printf("AIR_ParseAircraft: Ignoring unknown param value '%s'\n", token);
 				} while (*text); /* dummy condition */
 			} else if (!Q_strncmp(token, "ufotype", 7)) {
 				token = COM_EParse(text, errhead, name);
