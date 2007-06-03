@@ -177,7 +177,7 @@ tech rs_antimatter
 	}
 
 	time 2800
-//	image_top	techs/antimatter
+	image_top	techs/antimatter
 }
 
 tech rs_item_antimatter
@@ -230,7 +230,7 @@ tech rs_alien_live
 	}
 
 	time	1500
-//	image_top	techs/livealien	//TODO:add image
+	image_top	techs/taman
 }
 
 tech rs_alien_breathing
@@ -267,7 +267,7 @@ tech rs_alien_breathing
 	}
 
 	time		1500
-//	image_top	techs/alienbreathing //TODO: add image
+	image_top	techs/alien_breathing
 }
 
 tech rs_item_brapparatus
