@@ -3243,7 +3243,7 @@ void MN_ResetMenus (void)
 		memset(adata, 0, adataize);
 	else {
 		/* 256kb */
-		adata = malloc(0x40000);
+		adata = (byte*)malloc(0x40000);
 		adataize = 0x40000;
 	}
 	curadata = adata;

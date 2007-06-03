@@ -84,7 +84,7 @@ extern void CL_ClientHunkInit (void)
 	Cmd_AddCommand("cl_hunkdump", CL_ClientHunkDumpToFile_f, "Dump the client hunk into a file");
 	Cmd_AddCommand("cl_hunkstats", CL_ClientHunkUsage_f, "Displays some client hunk stats");
 
-	clHunkData = malloc(cl_hunkmegs->integer * 1024 * 1024 * sizeof(char));
+	clHunkData = (byte*)malloc(cl_hunkmegs->integer * 1024 * 1024 * sizeof(char));
 	if (!clHunkData)
 		Sys_Error("Could not allocate client hunk with %i megabyte(s)\n", cl_hunkmegs->integer);
 	clHunkPointerPos = clHunkData;
