@@ -1721,7 +1721,7 @@ extern void AIR_ParseAircraft (const char *name, char **text, qboolean assignAir
 		air_samp = &aircraft_samples[numAircraft_samples];
 		memset(air_samp, 0, sizeof(aircraft_t));
 
-		Com_Printf("...found aircraft %s\n", name);
+		Com_DPrintf("...found aircraft %s\n", name);
 		air_samp->idx = gd.numAircraft;
 		air_samp->idx_sample = numAircraft_samples;
 		CL_ClientHunkStoreString(name, &air_samp->id);
