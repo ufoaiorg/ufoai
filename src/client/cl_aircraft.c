@@ -1389,6 +1389,7 @@ extern void AIM_AircraftEquipAddItem_f (void)
 		break;
 	default:
 		Com_Printf("AIM_AircraftEquipAddItem_f: Unknown airequipID: %i\n", airequipID);
+		return;
 	}
 
 	/* the clicked button doesn't correspond to the selected zone */
@@ -1447,6 +1448,7 @@ extern void AIM_AircraftEquipDeleteItem_f (void)
 		break;
 	default:
 		Com_Printf("AIM_AircraftEquipDeleteItem_f: Unknown airequipID: %i\n", airequipID);
+		return;
 	}
 
 	/* there's no item in zone 1: you can't use zone 2 */
@@ -1849,7 +1851,7 @@ static const value_t aircraft_vals[] = {
 extern void AIR_ParseAircraft (const char *name, char **text, qboolean assignAircraftItems)
 {
 	const char *errhead = "AIR_ParseAircraft: unexpected end of file (aircraft ";
-	aircraft_t *air_samp;
+	aircraft_t *air_samp = NULL;
 	const value_t *vp;
 	char *token;
 	int i;
