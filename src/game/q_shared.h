@@ -236,6 +236,7 @@ typedef uint8_t byte;
 #define UNIT_HEIGHT         64
 
 /* earth map data */
+/* values of sinus and cosinus of earth inclinaison (23,5 degrees) for faster day and night calculations */
 #define SIN_ALPHA   0.39875
 #define COS_ALPHA   0.91706
 /*#define HIGH_LAT      +0.953 */
