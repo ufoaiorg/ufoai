@@ -147,6 +147,7 @@ typedef enum {
 	UFO_HARVESTER,
 	UFO_CONDOR,
 	UFO_CARRIER,
+	UFO_BIG,
 
 	UFO_MAX
 } ufoType_t;

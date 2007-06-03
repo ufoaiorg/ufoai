@@ -306,7 +306,7 @@ aircraft craft_ufo_big
 	name		"_UFO - Big"
 	shortname	"_Big U"
 	type		ufo
-	ufotype		scout // FIXME
+	ufotype		ufobig // FIXME
 	model		"ufo_big"
 	size		4
 	weight		3
