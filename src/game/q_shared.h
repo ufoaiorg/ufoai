@@ -468,11 +468,11 @@ char *va(char *format, ...) __attribute__((format(printf, 1, 2)));
 #define MAX_INFO_VALUE      64
 #define MAX_INFO_STRING     512
 
-char *Info_ValueForKey(char *s, char *key);
+char *Info_ValueForKey(char *s, const char *key);
 void Info_RemoveKey(char *s, const char *key);
 void Info_SetValueForKey(char *s, const char *key, const char *value);
 
-qboolean Info_Validate(char *s);
+qboolean Info_Validate(const char *s);
 
 /*
 ==============================================================

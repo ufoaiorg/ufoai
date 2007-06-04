@@ -423,25 +423,25 @@ menu serverinfo
 	}
 	pic back_ul
 	{
-		image	menu/options_ul
+		image	menu/multiplayer_ul
 		pos	"0 0"
 	}
 
 	pic back_ur
 	{
-		image	menu/options_ur
+		image	menu/multiplayer_ur
 		pos	"512 0"
 	}
 
 	pic back_ll
 	{
-		image	menu/options_ll
+		image	menu/multiplayer_ll
 		pos	"0 512"
 	}
 
 	pic back_lr
 	{
-		image	menu/options_lr
+		image	menu/multiplayer_lr
 		pos	"512 512"
 	}
 	text server_info
@@ -450,6 +450,46 @@ menu serverinfo
 		size	"420 550"
 		format	"20 200"
 		num	0
+	}
+
+	string user_list_str
+	{
+		pos	"200 128"
+		color	"1 1 1 1"
+		font	"f_normal_bold"
+		string	"_Userlist"
+		align	cc
+	}
+	string user_list_head1
+	{
+		pos	"70 144"
+		color	"1 1 1 1"
+		font	"f_verysmall"
+		string	"_Name"
+		align	cc
+	}
+	string user_list_head2
+	{
+		pos	"270 144"
+		color	"1 1 1 1"
+		font	"f_verysmall"
+		string	"_Team"
+		align	cc
+	}
+	text user_list
+	{
+		pos	"50 170"
+		size	"300 378"
+		format	"20 200"
+		font	"f_verysmall"
+		mousefx	true
+		border 3
+		bordercolor "0 0.5 0 1"
+		padding 10
+		bgcolor	"0.3 0.3 0.3 0.4"
+		wheel
+		height	"20"
+		num	1
 	}
 
 	string mapstring
@@ -469,29 +509,9 @@ menu serverinfo
 		texh    "128 96"
 	}
 
-	pic button_favorite
-	{
-		pos	"80 270"
-		click	{ cmd "bookmark_add" }
-		image	menu/button_big
-		texl	"0 0"
-		texh	"256 64"
-		mousefx	true
-		out	{ *string_favorite color "0 0.5 0 1" *button_favorite texl "0 0"  *button_favorite texh "256 64" }
-		in	{ *string_favorite color "1 1 1 1" *button_favorite texl "0 64" *button_favorite texh "256 128" }
-	}
-	string string_favorite
-	{
-		font	f_menubig
-		color	"0 0.5 0 1"
-		string	"_Bookmark"
-		pos	"208 302"
-		align	cc
-	}
-
 	pic button_connect
 	{
-		pos	"80 360"
+		pos	"70 580"
 		click	{ cmd "server_connect; music_randomtrack" }
 		image	menu/button_big
 		texl	"0 0"
@@ -505,27 +525,39 @@ menu serverinfo
 		font	f_menubig
 		color	"0 0.5 0 1"
 		string	"_Connect"
-		pos	"208 392"
+		pos	"198 612"
 		align	cc
 	}
 
-	pic button_back
+	pic button_exit
 	{
-		pos	"80 450"
-		click	{ cmd "mn_pop;" }
-		image	menu/button_big
+		tooltip "_Leave Serverbrowser"
+		image	hud/buttons2
+		mousefx true
+		pos		"26 720"
 		texl	"0 0"
-		texh	"256 64"
-		mousefx	true
-		out	{ *string_back color "0 0.5 0 1" *button_back texl "0 0"  *button_back texh "256 64" }
-		in	{ *string_back color "1 1 1 1" *button_back texl "0 64" *button_back texh "256 128" }
+		texh	"64 37"
+		click	{
+			cmd "mn_pop;"
+		}
 	}
-	string string_back
+
+	pic button_favorite
 	{
-		font	f_menubig
-		color	"0 0.5 0 1"
-		string	"_Back"
-		pos	"208 482"
+		pos	"200 720"
+		click	{ cmd "bookmark_add" }
+		image	menu/button_long
+		texl	"0 0"
+		texh	"128 35"
+		size	"140 35"
+		mousefx	true
+	}
+	string string_favorite
+	{
+		font	f_menu
+		color	"1 1 1 1"
+		string	"_Bookmark"
+		pos	"268 736"
 		align	cc
 	}
 

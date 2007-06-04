@@ -750,6 +750,7 @@ extern char *Cvar_Userinfo (void)
 
 /**
  * @brief Returns an info string containing all the CVAR_SERVERINFO cvars
+ * @sa SV_StatusString
  */
 extern char *Cvar_Serverinfo (void)
 {

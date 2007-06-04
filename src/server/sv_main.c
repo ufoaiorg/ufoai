@@ -110,7 +110,7 @@ static const char *SV_FindPlayer (netadr_t from)
 		if (cl->state == cs_free)
 			continue;
 
-		if (!NET_CompareBaseAdr (from, cl->netchan.remote_address))
+		if (!NET_CompareBaseAdr(from, cl->netchan.remote_address))
 			continue;
 
 		return cl->name;
@@ -127,6 +127,7 @@ CONNECTIONLESS COMMANDS
 
 /**
  * @brief Builds the string that is sent as heartbeats and status replies
+ * @sa Cvar_Serverinfo
  */
 static char *SV_StatusString (void)
 {
@@ -143,14 +144,18 @@ static char *SV_StatusString (void)
 
 	for (i = 0; i < sv_maxclients->value; i++) {
 		cl = &svs.clients[i];
-		if (cl->state == cs_connected || cl->state == cs_spawned) {
-			Com_sprintf(player, sizeof(player), "%i %i \"%s\"\n", 0, cl->ping, cl->name);
+		if (cl->state == cs_connected || cl->state == cs_spawning || cl->state == cs_spawned) {
+			Com_sprintf(player, sizeof(player), "%i %i \"%s\"\n", ge->ClientGetTeamNum(cl->player), cl->ping, cl->name);
 			playerLength = strlen(player);
 			if (statusLength + playerLength >= sizeof(status))
 				break;			/* can't hold any more */
 			Q_strcat(status, player, sizeof(status));
 			statusLength += playerLength;
 		}
+#if 0
+		else
+			Com_Printf("%2i client->state: %i\n", i, cl->state);
+#endif
 	}
 
 	return status;

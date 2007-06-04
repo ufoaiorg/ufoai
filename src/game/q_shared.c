@@ -2093,10 +2093,12 @@ INFO STRINGS
 
 /**
  * @brief Searches the string for the given key and returns the associated value, or an empty string.
- * @param
- * @sa
+ * @param[in] s The string you want to extract the keyvalue from
+ * @param[in] key The key you want to extract the value for
+ * @sa Info_SetValueForKey
+ * @return The value or empty string - never NULL
  */
-char *Info_ValueForKey(char *s, char *key)
+char *Info_ValueForKey (char *s, const char *key)
 {
 	char pkey[512];
 	/* use two buffers so compares */
@@ -2190,7 +2192,7 @@ void Info_RemoveKey (char *s, const char *key)
  * @param
  * @sa
  */
-qboolean Info_Validate(char *s)
+qboolean Info_Validate (const char *s)
 {
 	if (strstr(s, "\""))
 		return qfalse;

@@ -889,6 +889,7 @@ static void CL_ParseTeamInfoMessage (void)
 }
 
 static char serverInfoText[MAX_MESSAGE_TEXT];
+static char userInfoText[MAX_MESSAGE_TEXT];
 /**
  * @brief Serverbrowser text
  *
@@ -898,94 +899,75 @@ static char serverInfoText[MAX_MESSAGE_TEXT];
 static void CL_ParseServerInfoMessage (void)
 {
 	char *s = MSG_ReadString(&net_message);
-	char *var = NULL;
 	char *value = NULL;
+	char *users;
+	int team;
+	char *token;
 
 	if (!s)
 		return;
 
-	var = strstr(s, "\n");
-	if (!var) {
-		Com_Printf("CL_ParseServerInfoMessage: Invalid status response '%s'\n", s);
-		return;
-	}
-	*var = '\0';
-	Com_DPrintf("%s\n", s);
-	Cvar_Set("mn_mappic", "maps/shots/na.jpg");
-	Cvar_Set("mn_server_need_password", "0"); /* string */
+	/* check for server status response message */
+	value = Info_ValueForKey(s, "dedicated");
+	if (*value) {
+		Com_DPrintf("%s\n", s); /* status string */
+		/* server info cvars and users are seperated via newline */
+		users = strstr(s, "\n");
+		if (!users) {
+			Com_Printf("%c%s\n", 1, s);
+			return;
+		}
+		/* split the strings */
+		*users++ = '\0';
 
-	Com_sprintf(serverInfoText, sizeof(serverInfoText), _("IP\t%s\n\n"), NET_AdrToString(net_from));
+		Cvar_Set("mn_mappic", "maps/shots/na.jpg");
+		Cvar_Set("mn_server_need_password", "0"); /* string */
 
-	/* first char is slash */
-	s++;
-	do {
-		/* var */
-		var = s;
-		s = strstr(s, "\\");
-		if (!s)
-			break;
-		*s++ = '\0';
-
-		/* value */
-		value = s;
-		s = strstr(s, "\\");
-		/* last? */
-		if (s)
-			*s++ = '\0';
-
-		if (!Q_strncmp(var, "mapname", 7)) {
-			Cvar_ForceSet("mapname", value);
-			Q_strcat(serverInfoText, va(_("Map:\t%s\n"), value), sizeof(serverInfoText));
-
+		Com_sprintf(serverInfoText, sizeof(serverInfoText), _("IP\t%s\n\n"), NET_AdrToString(net_from));
+		value = Info_ValueForKey(s, "mapname");
+		Cvar_Set("mapname", value);
+		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Map:\t%s\n"), value);
+		if (FS_CheckFile(va("pics/maps/shots/%s.jpg", value)) != -1)
+			Cvar_Set("mn_mappic", va("maps/shots/%s.jpg", value));
+		else {
+			value[strlen(value)-1] = '\0';	/* cut day and night char */
 			if (FS_CheckFile(va("pics/maps/shots/%s.jpg", value)) != -1)
 				Cvar_Set("mn_mappic", va("maps/shots/%s.jpg", value));
-			else {
-				value[strlen(value)-1] = '\0';
-				if (FS_CheckFile(va("pics/maps/shots/%s.jpg", value)) != -1)
-					Cvar_Set("mn_mappic", va("maps/shots/%s.jpg", value));
-			}
-
-		} else if (!Q_strncmp(var, "version", 7))
-			Q_strcat(serverInfoText, va(_("Version:\t%s\n"), value), sizeof(serverInfoText));
-		else if (!Q_strncmp(var, "hostname", 8))
-			Q_strcat(serverInfoText, va(_("Servername:\t%s\n"), value), sizeof(serverInfoText));
-		else if (!Q_strncmp(var, "sv_enablemorale", 15))
-			Q_strcat(serverInfoText, va(_("Moralestates:\t%s\n"), MN_TranslateBool(*value == '1')), sizeof(serverInfoText));
-		else if (!Q_strncmp(var, "gametype", 8))
-			Q_strcat(serverInfoText, va(_("Gametype:\t%s\n"), value), sizeof(serverInfoText));
-		else if (!Q_strncmp(var, "ver", 4))
-			Q_strcat(serverInfoText, va(_("Gameversion:\t%s\n"), value), sizeof(serverInfoText));
-		else if (!Q_strncmp(var, "dedicated", 9))
-			Q_strcat(serverInfoText, va(_("Dedicated server:\t%s\n"), MN_TranslateBool(*value == '1')), sizeof(serverInfoText));
-		else if (!Q_strncmp(var, "sys_os", 6))
-			Q_strcat(serverInfoText, va(_("Operating system:\t%s\n"), value), sizeof(serverInfoText));
-		else if (!Q_strncmp(var, "protocoll", 9))
-			Q_strcat(serverInfoText, va(_("Network protocol:\t%s\n"), value), sizeof(serverInfoText));
-		else if (!Q_strncmp(var, "sv_roundtimelimit", 17))
-			Q_strcat(serverInfoText, va(_("Roundtime:\t%s\n"), value), sizeof(serverInfoText));
-		else if (!Q_strncmp(var, "sv_teamplay", 11)) {
-			Q_strcat(serverInfoText, va(_("Teamplay:\t%s\n"), MN_TranslateBool(*value == '1')), sizeof(serverInfoText));
-		} else if (!Q_strncmp(var, "maxplayers", 10))
-			Q_strcat(serverInfoText, va(_("Max. players per team:\t%s\n"), value), sizeof(serverInfoText));
-		else if (!Q_strncmp(var, "sv_maxteams", 11))
-			Q_strcat(serverInfoText, va(_("Max. teams allowed in this map:\t%s\n"), value), sizeof(serverInfoText));
-		else if (!Q_strncmp(var, "maxclients", 10))
-			Q_strcat(serverInfoText, va(_("Max. clients:\t%s\n"), value), sizeof(serverInfoText));
-		else if (!Q_strncmp(var, "maxsoldiersperplayer", 20))
-			Q_strcat(serverInfoText, va(_("Max. soldiers per player:\t%s\n"), value), sizeof(serverInfoText));
-		else if (!Q_strncmp(var, "maxsoldiers", 11))
-			Q_strcat(serverInfoText, va(_("Max. soldiers per team:\t%s\n"), value), sizeof(serverInfoText));
-		else if (!Q_strncmp(var, "needpass", 8)) {
-			Cvar_Set("mn_server_need_password", value); /* string */
-			Q_strcat(serverInfoText, va(_("Password protected:\t%s\n"), MN_TranslateBool(*value == '1')), sizeof(serverInfoText));
 		}
-#ifdef DEBUG
-		else
-			Q_strcat(serverInfoText, va("%s\t%s\n", var, value), sizeof(serverInfoText));
-#endif
-	} while (s != NULL);
-	menuText[TEXT_STANDARD] = serverInfoText;
-	MN_PushMenu("serverinfo");
+		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Servername:\t%s\n"), Info_ValueForKey(s, "hostname"));
+		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Moralestates:\t%s\n"), Info_ValueForKey(s, "sv_enablemorale"));
+		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Gametype:\t%s\n"), Info_ValueForKey(s, "gametype"));
+		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Gameversion:\t%s\n"), Info_ValueForKey(s, "ver"));
+		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Dedicated server:\t%s\n"), Info_ValueForKey(s, "dedicated"));
+		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Operating system:\t%s\n"), Info_ValueForKey(s, "sys_os"));
+		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Network protocol:\t%s\n"), Info_ValueForKey(s, "protocol"));
+		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Roundtime:\t%s\n"), Info_ValueForKey(s, "sv_roundtimelimit"));
+		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Teamplay:\t%s\n"), Info_ValueForKey(s, "sv_teamplay"));
+		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Max. players per team:\t%s\n"), Info_ValueForKey(s, "maxplayers"));
+		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Max. teams allowed in this map:\t%s\n"), Info_ValueForKey(s, "sv_maxteams"));
+		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Max. clients:\t%s\n"), Info_ValueForKey(s, "maxclients"));
+		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Max. soldiers per player:\t%s\n"), Info_ValueForKey(s, "maxsoldiersperplayer"));
+		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Max. soldiers per team:\t%s\n"), Info_ValueForKey(s, "maxsoldiers"));
+		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Password protected:\t%s\n"), Info_ValueForKey(s, "needpass"));
+		menuText[TEXT_STANDARD] = serverInfoText;
+		do {
+			token = COM_Parse(&users);
+			if (!users)
+				break;
+			team = atoi(token);
+			/* skip null ping */
+			COM_Parse(&users);
+			if (!users)
+				break;
+			token = COM_Parse(&users);
+			if (!users)
+				break;
+			Com_sprintf(userInfoText, sizeof(userInfoText), "%s\t%i\n", token, team);
+		} while (1);
+		menuText[TEXT_LIST] = userInfoText;
+		MN_PushMenu("serverinfo");
+	} else
+		Com_Printf("%c%s", 1, s);
 }
 
 /**
