@@ -462,7 +462,7 @@ extern void AIM_PrevAircraft_f (void)
 * @param[in] slot Pointer to the slot to update
 * @param[in] dt Time ellapsed since last call of this function
 */
-static void AII_UpdateOneInstallationDelay (aircraftSlot_t *slot, int dt)
+static void AII_UpdateOneInstallationDelay (aircraft_t *aircraft, aircraftSlot_t *slot, int dt)
 {
 	/* if the item is already installed, nothing to do */
 	if (slot->installationTime == 0)
@@ -470,8 +470,12 @@ static void AII_UpdateOneInstallationDelay (aircraftSlot_t *slot, int dt)
 	else if (slot->installationTime > 0) {
 		/* the item is being installed */
 		slot->installationTime -= dt;
-		if (slot->installationTime < 0)
+		/* check if installation is over */
+		if (slot->installationTime < 0) {
 			slot->installationTime = 0;
+			/* Update stats values */
+			AII_UpdateAircraftStats(aircraft);
+		}
 	} else if (slot->installationTime < 0) {
 		/* the item is being removed */
 		slot->installationTime += dt;
@@ -482,8 +486,9 @@ static void AII_UpdateOneInstallationDelay (aircraftSlot_t *slot, int dt)
 				slot->itemIdx = slot->nextItemIdx;
 				slot->nextItemIdx = -1;
 				slot->installationTime = aircraftItems[slot->itemIdx].installationTime;
-			} else
+			} else {
 				slot->installationTime = 0;
+			}
 		}
 	}
 }
@@ -499,14 +504,14 @@ static void AII_UpdateInstallationDelay (aircraft_t *aircraft, int dt)
 
 	/* Update electronics delay */
 	for (i = 0; i < aircraft->maxElectronics; i++)
-		AII_UpdateOneInstallationDelay(aircraft->electronics + i, dt);
+		AII_UpdateOneInstallationDelay(aircraft, aircraft->electronics + i, dt);
 
 	/* Update weapons delay */
 	for (i = 0; i < aircraft->maxWeapons; i++)
-		AII_UpdateOneInstallationDelay(aircraft->weapons + i, dt);
+		AII_UpdateOneInstallationDelay(aircraft, aircraft->weapons + i, dt);
 
 	/* Update shield delay */
-	AII_UpdateOneInstallationDelay(&aircraft->shield, dt);
+	AII_UpdateOneInstallationDelay(aircraft, &aircraft->shield, dt);
 }
 
 /**
@@ -2264,6 +2269,9 @@ extern void AII_UpdateAircraftStats (aircraft_t *aircraft)
 
 		/* modify by electronics (do nothing if the value of stat is 0) */
 		for (i = 0; i < aircraft->maxElectronics; i++) {
+			/* check if the electroincs is operationnal (not in installing or removing process) */
+			if (aircraft->electronics[i].installationTime != 0)
+				continue;
 			item = &aircraftItems[aircraft->electronics[i].itemIdx];
 			if (fabs(item->stats[currentStat]) > 2.0f)
 				aircraft->stats[currentStat] += (int) item->stats[currentStat];
@@ -2274,6 +2282,9 @@ extern void AII_UpdateAircraftStats (aircraft_t *aircraft)
 		/* modify by weapons (do nothing if the value of stat is 0) */
 		/* note that stats are not modified by ammos */
 		for (i = 0; i < aircraft->maxWeapons; i++) {
+			/* check if the weapon is operationnal (not in installing or removing process) */
+			if (aircraft->weapons[i].installationTime != 0)
+				continue;
 			item = &aircraftItems[aircraft->weapons[i].itemIdx];
 			if (fabs(item->stats[currentStat]) > 2.0f)
 				aircraft->stats[currentStat] += item->stats[currentStat];
@@ -2282,20 +2293,34 @@ extern void AII_UpdateAircraftStats (aircraft_t *aircraft)
 		}
 
 		/* modify by shield (do nothing if the value of stat is 0) */
-		item = &aircraftItems[aircraft->shield.itemIdx];
-		if (fabs(item->stats[currentStat]) > 2.0f)
-			aircraft->stats[currentStat] += item->stats[currentStat];
-		else if (item->stats[currentStat] > 0.0f)
-			aircraft->stats[currentStat] *= item->stats[currentStat];
+		/* check if the shield is operationnal (not in installing or removing process) */
+		if (aircraft->shield.installationTime == 0) {
+			item = &aircraftItems[aircraft->shield.itemIdx];
+			if (fabs(item->stats[currentStat]) > 2.0f)
+				aircraft->stats[currentStat] += item->stats[currentStat];
+			else if (item->stats[currentStat] > 0.0f)
+				aircraft->stats[currentStat] *= item->stats[currentStat];
+		}
 	}
 
-	/* now we update AIR_STATS_WRANGE (this one is the biggest value on every ammo) */
+	/* now we update AIR_STATS_WRANGE (this one is the biggest value of every ammo) */
 	aircraft->stats[AIR_STATS_WRANGE] = 0;
 	for (i = 0; i < aircraft->maxWeapons; i++) {
+		/* check if the weapon is operationnal (not in installing or removing process) */
+		if (aircraft->weapons[i].installationTime != 0)
+			continue;
 		item = &aircraftItems[aircraft->weapons[i].ammoIdx];
 		if (item->stats[AIR_STATS_WRANGE] > aircraft->stats[AIR_STATS_WRANGE])
 			aircraft->stats[AIR_STATS_WRANGE] = item->stats[AIR_STATS_WRANGE];
 	}
+
+	/* check that iracraft hasn't too much fuel (caused by removal of fuel pod) */
+	if (aircraft->fuel > aircraft->stats[AIR_STATS_FUELSIZE])
+		aircraft->fuel = aircraft->stats[AIR_STATS_FUELSIZE];
+
+	/* Update aircraft state if needed */
+	if (aircraft->status == AIR_HOME && aircraft->fuel < aircraft->stats[AIR_STATS_FUELSIZE])
+		aircraft->status = AIR_REFUEL;
 }
 
 /**
