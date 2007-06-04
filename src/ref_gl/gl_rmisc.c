@@ -105,7 +105,7 @@ enum {
 extern void GL_ScreenShot_f (void)
 {
 	char	checkName[MAX_OSPATH];
-	int		type, shotNum, quality;
+	int		type, shotNum, quality = 100;
 	char	*ext;
 	byte	*buffer;
 	FILE	*f;
@@ -127,13 +127,11 @@ extern void GL_ScreenShot_f (void)
 	switch (type) {
 	case SSHOTTYPE_TGA:
 		ri.Con_Printf(PRINT_ALL, "Taking TGA screenshot...\n");
-		quality = 100;
 		ext = "tga";
 		break;
 
 	case SSHOTTYPE_PNG:
 		ri.Con_Printf(PRINT_ALL, "Taking PNG screenshot...\n");
-		quality = 100;
 		ext = "png";
 		break;
 

@@ -437,6 +437,7 @@ extern byte *CL_GetMapColor (const vec2_t pos, mapType_t type)
 		break;
 	default:
 		Sys_Error("Unknown maptype %i\n", type);
+		return NULL;
 	}
 
 	/* get coordinates */

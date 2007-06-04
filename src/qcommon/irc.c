@@ -1050,7 +1050,7 @@ static qboolean Irc_Proto_ParseServerMsg (const char *txt, size_t txt_len, irc_s
 	}
 	if (c < end && *c != '\r') {
 		/* parse command */
-		if (c < end && *c >= '0' && *c <= '9') {
+		if (*c >= '0' && *c <= '9') {
 			/* numeric command */
 			char command[4];
 			int i;
@@ -1064,7 +1064,7 @@ static qboolean Irc_Proto_ParseServerMsg (const char *txt, size_t txt_len, irc_s
 			command[3] = '\0';
 			msg->type = IRC_COMMAND_NUMERIC;
 			msg->id.numeric = atoi(command);
-		} else if (c < end && *c != '\r') {
+		} else { /* != \r */
 			/* string command */
 			char *command = msg->id.string;
 			while (c < end && *c != '\r' && *c != ' ') {
@@ -1074,8 +1074,7 @@ static qboolean Irc_Proto_ParseServerMsg (const char *txt, size_t txt_len, irc_s
 			}
 			*command = '\0';
 			msg->type = IRC_COMMAND_STRING;
-		} else
-			return qtrue;
+		}
 		if (c < end && *c == ' ') {
 			/* parse params and trailing */
 			char *params = msg->params;

@@ -444,8 +444,6 @@ int AL_GetAlienAmount (int idx, requirementType_t reqtype)
 	default:
 		return containment[idx].amount_dead;
 	}
-
-	return -1;
 }
 
 /**

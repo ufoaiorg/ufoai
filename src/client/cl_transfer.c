@@ -569,7 +569,8 @@ static void TR_TransferDisplayAircraftInfo (void)
 static void TR_TransferAircraftListClick_f (void)
 {
 	int i, j = -1, num;
-	aircraft_t* aircraft;
+	/* initialize - maybe there are no aircraft in base */
+	aircraft_t* aircraft = NULL;
 
 	if (!baseCurrent)
 		return;

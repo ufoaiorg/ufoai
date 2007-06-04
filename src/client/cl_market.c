@@ -91,9 +91,8 @@ static int BS_CalculateHangarStorage (int aircraftID, int base_idx)
 				return 0;
 			}
 		}
-	}
-	/* If the aircraft size is more or equal to 8, we will check space in big hangar. */
-	if (aircraftSize >= 8) {
+	} else {
+		/* If the aircraft size is more or equal to 8, we will check space in big hangar. */
 		freespace = base->capacities[CAP_AIRCRAFTS_BIG].max - base->capacities[CAP_AIRCRAFTS_BIG].cur;
 		if (aircraftSize <= freespace) {
 			return freespace;
@@ -102,7 +101,6 @@ static int BS_CalculateHangarStorage (int aircraftID, int base_idx)
 			return 0;
 		}
 	}
-	return -1;
 	/* @todo: introduce capacities for UFO hangars and do space checks for them here. */
 }
 
