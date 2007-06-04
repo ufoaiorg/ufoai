@@ -73,7 +73,7 @@ menu bases
 		if "mn_base_status_id != 1"
 		tooltip	"_Build base facilities"
 		image	menu/button
-		pos	"755 130"
+		pos	"755 120"
 		texl	"0 0"
 		texh	"230 64"
 		mousefx true
@@ -90,7 +90,7 @@ menu bases
 		if "mn_base_status_id == 1"
 		tooltip	"_Build base facilities"
 		image	menu/button
-		pos	"755 130"
+		pos	"755 120"
 		texl	"0 64"
 		texh	"230 128"
 	}
@@ -98,7 +98,7 @@ menu bases
 	{
 		string	"_Buildings"
 		color	"0 0.8 0 1"
-		pos	"874 163"
+		pos	"874 153"
 		font	f_menu
 		align	cc
 	}
@@ -109,7 +109,7 @@ menu bases
 		if "mn_base_num_aircraft >= 1"
 		tooltip	"_Manage your aircraft"
 		image	menu/button
-		pos	"755 200"
+		pos	"755 180"
 		texl	"0 0"
 		texh	"230 64"
 		mousefx true
@@ -126,7 +126,7 @@ menu bases
 		if "mn_base_num_aircraft <= 0"
 		tooltip	"_Buy a new aircraft"
 		image	menu/button
-		pos	"755 200"
+		pos	"755 180"
 		texl	"0 0"
 		texh	"230 64"
 		mousefx true
@@ -141,7 +141,7 @@ menu bases
 	{
 		string	"_Aircraft"
 		color	"0 0.8 0 1"
-		pos	"874 233"
+		pos	"874 213"
 		font	f_menu
 		align	cc
 	}
@@ -152,7 +152,7 @@ menu bases
 		if "mn_base_status_id != 1"
 		tooltip	"_Buy/Sell equipment"
 		image	menu/button
-		pos	"755 270"
+		pos	"755 240"
 		texl	"0 0"
 		texh	"230 64"
 		mousefx true
@@ -169,7 +169,7 @@ menu bases
 		if "mn_base_status_id == 1"
 		tooltip	"_Build base facilities"
 		image	menu/button
-		pos	"755 270"
+		pos	"755 240"
 		texl	"0 64"
 		texh	"230 128"
 	}
@@ -177,7 +177,7 @@ menu bases
 	{
 		string	"_Buy/Sell Equipment"
 		color	"0 0.8 0 1"
-		pos	"874 303"
+		pos	"874 273"
 		font	f_menu
 		align	cc
 	}
@@ -187,7 +187,7 @@ menu bases
 		if "mn_numbases > 1"
 		tooltip	"_Transfer equipment or personnel"
 		image	menu/button
-		pos	"755 340"
+		pos	"755 300"
 		texl	"0 0"
 		texh	"230 64"
 		mousefx true
@@ -203,7 +203,7 @@ menu bases
 		if "mn_numbases == 1"
 		tooltip	"_Can't transfer - only one base"
 		image	menu/button
-		pos	"755 340"
+		pos	"755 300"
 		texl	"0 64"
 		texh	"230 128"
 		in
@@ -212,7 +212,7 @@ menu bases
 	{
 		string	"_Transfer"
 		color	"0 0.8 0 1"
-		pos	"874 373"
+		pos	"874 333"
 		font	f_menu
 		align	cc
 	}
@@ -223,7 +223,7 @@ menu bases
 		if "mn_base_status_id != 1"
 		tooltip	"_Research new technology"
 		image	menu/button
-		pos	"755 410"
+		pos	"755 360"
 		texl	"0 0"
 		texh	"230 64"
 		mousefx true
@@ -240,7 +240,7 @@ menu bases
 		if "mn_base_status_id == 1"
 		tooltip	"_Build base facilities"
 		image	menu/button
-		pos	"755 410"
+		pos	"755 360"
 		texl	"0 64"
 		texh	"230 128"
 	}
@@ -248,7 +248,7 @@ menu bases
 	{
 		string	"_Research"
 		color	"0 0.8 0 1"
-		pos	"874 443"
+		pos	"874 393"
 		font	f_menu
 		align	cc
 	}
@@ -259,7 +259,7 @@ menu bases
 		if "mn_base_prod_allowed == 1"
 		tooltip	"_Produce new equipment"
 		image	menu/button
-		pos	"755 480"
+		pos	"755 420"
 		texl	"0 0"
 		texh	"230 64"
 		mousefx true
@@ -276,7 +276,7 @@ menu bases
 		if "mn_base_prod_allowed == 0"
 		tooltip	"_Workshop not operational"
 		image	menu/button
-		pos	"755 480"
+		pos	"755 420"
 		texl	"0 64"
 		texh	"230 128"
 		in
@@ -285,7 +285,7 @@ menu bases
 	{
 		string	"_Production"
 		color	"0 0.8 0 1"
-		pos	"874 513"
+		pos	"874 453"
 		font	f_menu
 		align	cc
 	}
@@ -296,7 +296,7 @@ menu bases
 		if "mn_base_status_id != 1"
 		tooltip	"_Hire employees"
 		image	menu/button
-		pos	"755 550"
+		pos	"755 480"
 		texl	"0 0"
 		texh	"230 64"
 		mousefx true
@@ -313,7 +313,7 @@ menu bases
 		if "mn_base_status_id == 1"
 		tooltip	"_Build base facilities"
 		image	menu/button
-		pos	"755 550"
+		pos	"755 480"
 		texl	"0 64"
 		texh	"230 128"
 	}
@@ -321,10 +321,76 @@ menu bases
 	{
 		string	"_Hire employees"
 		color	"0 0.8 0 1"
-		pos	"874 583"
+		pos	"874 513"
 		font	f_menu
 		align	cc
 	}
+
+	pic containment
+	{
+		// only if base is not under attack
+		if "mn_base_status_id != 1"
+		tooltip	"_Deal with Aliens in Alien Containment"
+		image	menu/button
+		pos	"755 540"
+		texl	"0 0"
+		texh	"230 64"
+		mousefx true
+		click
+		{
+			cmd "mn_push aliencont"
+		}
+		out		{ *txt_containment color "0 0.8 0 1" *containment texl "0 0" *containment texh "230 64" }
+		in		{ *txt_containment color "1 1 1 1" *containment texl "230 0" *containment texh "460 64" }
+	}
+
+	string txt_containment
+	{
+		string	"_Containment"
+		color	"0 0.8 0 1"
+		pos	"874 573"
+		font	f_menu
+		align	cc
+	}
+
+	pic hospital
+	{
+		// only if base is not under attack
+		if "mn_base_status_id != 1"
+		tooltip	"_Medical and Surgery operations"
+		image	menu/button
+		pos	"755 600"
+		texl	"0 0"
+		texh	"230 64"
+		mousefx true
+		click
+		{
+			cmd "mn_push hospital"
+		}
+		out		{ *txt_hospital color "0 0.8 0 1" *hospital texl "0 0" *hospital texh "230 64" }
+		in		{ *txt_hospital color "1 1 1 1" *hospital texl "230 0" *hospital texh "460 64" }
+	}
+
+	pic hospital_na
+	{
+		// FIXME: if no hospital in this base
+		if "mn_base_status_id == 1"
+		tooltip	"_Medical and Surgery operations"
+		image	menu/button
+		pos	"755 600"
+		texl	"0 64"
+		texh	"230 128"
+	}
+
+	string txt_hospital
+	{
+		string	"_Hospital"
+		color	"0 0.8 0 1"
+		pos	"874 633"
+		font	f_menu
+		align	cc
+	}
+
 
 	// ==================
 	// text and info
