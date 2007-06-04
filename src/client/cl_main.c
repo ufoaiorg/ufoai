@@ -1272,10 +1272,10 @@ static void CL_PingServers_f (void)
 	/* query master server? */
 	/* @todo: Cache this to save bandwidth */
 	if (!noudp->value && (Cmd_Argc() == 2 || Q_strcmp(Cmd_Argv(1), "local"))) {
-		adr.port = (unsigned)BigShort(masterserver_port->integer);
+		adr.port = htons(masterserver_port->integer);
 		if (NET_StringToAdr(masterserver_ip->string, &adr)) {
 			if (!adr.port)
-				adr.port = (unsigned)BigShort(masterserver_port->integer);
+				adr.port = htons(masterserver_port->integer);
 			adr.type = NA_IP;
 			Com_DPrintf("Send master server query request to '%s:%s'\n", masterserver_ip->string, masterserver_port->string);
 			Netchan_OutOfBandPrint (NS_CLIENT, adr, "getservers");
