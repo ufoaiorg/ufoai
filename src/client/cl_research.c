@@ -691,6 +691,9 @@ static void RS_ResearchDisplayInfo (void)
 	default:
 		break;
 	}
+
+	/* Set image_top cvar. */
+	Cvar_Set("mn_research_imagetop", tech->image_top);
 }
 
 /**

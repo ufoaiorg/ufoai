@@ -3224,8 +3224,7 @@ tech rs_alien_taman_autopsy
 	}
 	time	1500
 
-	// menuModel - see models.ufo
-	mdl_top	alien_taman
+	image_top	techs/taman_autopsy
 }
 
 // SHEVAAR
