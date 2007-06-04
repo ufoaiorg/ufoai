@@ -3893,6 +3893,7 @@ static void CP_CampaignsClick_f (void)
  * @brief Will clear most of the parsed singleplayer data
  * @sa Com_InitInventory
  * @sa CL_ClientHunkClear
+ * @sa CL_ReadSinglePlayerData
  */
 extern void CL_ResetSinglePlayerData (void)
 {

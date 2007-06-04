@@ -709,8 +709,8 @@ static void UP_DrawEntry (technology_t* tech)
 		UP_DrawAssociatedAmmo(tech);
 	if (!tech->mdl_top && tech->image_top)
 		Cvar_Set("mn_upimage_top", tech->image_top);
-	up_firemode=0;
-	up_researchedlink=0;	/*@todo: if the first weapon of the firemode of an ammo is unresearched, its dommages,... will still be displayed*/
+	up_firemode = 0;
+	up_researchedlink = 0;	/*@todo: if the first weapon of the firemode of an ammo is unresearched, its dommages,... will still be displayed*/
 
 	currentChapter = tech->up_chapter;
 
