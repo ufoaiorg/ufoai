@@ -782,6 +782,7 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 	char nick[MAX_VAR];
 	char * const emph = strchr(prefix, '!');
 	char * ctcp = strchr(trailing, 1);
+	menu_t* menu;
 	memset(nick, 0, sizeof(nick));
 	if (emph)
 		memcpy(nick, prefix, emph - prefix);
@@ -798,6 +799,10 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 			Com_Printf("Irc_Client_CmdPrivmsg: Unknown ctcp command: '%s'\n", trailing);
 		}
 	} else {
+		menu = MN_GetMenu(NULL);
+		if (menu && Q_strcmp(menu->name, "irc")) {
+			Com_Printf("%c<%s@lobby> %s\n", 1, nick, trailing);
+		}
 		Irc_AppendToBuffer(va("<%s> %s", nick, trailing));
 	}
 }
