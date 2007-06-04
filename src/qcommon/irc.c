@@ -781,12 +781,25 @@ static void Irc_Client_CmdPrivmsg (const char *prefix, const char *params, const
 {
 	char nick[MAX_VAR];
 	char * const emph = strchr(prefix, '!');
+	char * ctcp = strchr(trailing, 1);
 	memset(nick, 0, sizeof(nick));
 	if (emph)
 		memcpy(nick, prefix, emph - prefix);
 	else
 		strcpy(nick, prefix);
-	Irc_AppendToBuffer(va("<%s> %s", nick, trailing));
+	if (ctcp) {
+		trailing++;
+		if (!Q_strncmp(trailing, "VERSION", 7)
+		 || !Q_strncmp(trailing, "version", 7)) {
+			/* response with the game version */
+			Irc_Proto_Msg(irc_defaultChannel->string, Cvar_VariableString("version"));
+			Com_DPrintf("Irc_Client_CmdPrivmsg: Response to version query\n");
+		} else {
+			Com_Printf("Irc_Client_CmdPrivmsg: Unknown ctcp command: '%s'\n", trailing);
+		}
+	} else {
+		Irc_AppendToBuffer(va("<%s> %s", nick, trailing));
+	}
 }
 
 /**
@@ -1597,21 +1610,20 @@ static void Irc_Client_Msg_f (void)
 {
 	char cropped_msg[IRC_SEND_BUF_SIZE];
 	const char *msg = NULL;
-	char *channel = irc_defaultChannel->string;
 	if (Cmd_Argc() >= 2)
 		msg = Cmd_Args();
 	else if (*irc_send_buffer->string)
 		msg = irc_send_buffer->string;
 
 	if (msg && *msg) {
-		if (*channel) {
+		if (*irc_defaultChannel->string) {
 			if (*msg == '"') {
 				size_t msg_len = strlen(msg);
 				memcpy(cropped_msg, msg + 1, msg_len - 2);
 				cropped_msg[msg_len - 2] = '\0';
 				msg = cropped_msg;
 			}
-			Irc_Proto_Msg(channel, msg);
+			Irc_Proto_Msg(irc_defaultChannel->string, msg);
 			/* local echo */
 			Irc_AppendToBuffer(va("<%s> %s", irc_nick->string, msg));
 			Cvar_ForceSet("irc_send_buffer", "");
@@ -1844,10 +1856,11 @@ extern void Irc_Input_Activate (void)
  */
 extern void Irc_Input_Deactivate (void)
 {
-	if (cls.key_dest == key_input) {
-		cls.key_dest = key_game;
-	} else
+	if (cls.key_dest != key_input)
 		Com_DPrintf("Note: Not in irc input mode - thus we can not leave it\n");
+	cls.key_dest = key_game;
+	irc_messagemode_buflen = 0;
+	irc_send_buffer->modified = qfalse;
 	/* if this is set - the command is called after Irc_Input_Activate call */
 	if (inputLengthBackup) {
 		Cvar_SetValue("mn_inputlength", inputLengthBackup);
@@ -1855,6 +1868,7 @@ extern void Irc_Input_Deactivate (void)
 		menuText[TEXT_STANDARD] = NULL;
 		menuText[TEXT_LIST] = NULL;
 	}
+	Cbuf_ExecuteText(EXEC_NOW, "msgmenu ';");
 }
 
 /**

@@ -1340,11 +1340,18 @@ static void CL_MessageMenu_f (void)
 		Q_strncpyz(msg_buffer, nameBackup, sizeof(msg_buffer));
 		msg_bufferlen = strlen(nameBackup);
 		break;
+	case '\'':
+		if (!*cvarName)
+			break;
+		/* abort without doing anything */
+		nameBackup[0] = cvarName[0] = '\0';
+		break;
 	case '!':
 		if (!*cvarName)
 			break;
 		/* cancel */
 		Cvar_ForceSet(cvarName, nameBackup);
+		/* hack for actor renaming */
 		Cvar_ForceSet(va("%s%i", cvarName, cl_selected->integer), nameBackup);
 		/* call trigger function */
 		Cbuf_AddText(va("%s_changed\n", cvarName));
