@@ -16,6 +16,7 @@
 //	ecm - the parameter of electronic level at aircraft, the bigger, the lower possibility to hit by enemy
 //	damage - the parameter of aircraft hit points, which tells how much damage aircraft can suffer
 //	accuracy - the parameter of accuracy, the bigger, the bigger possibility to hit an enemy
+//	fuelsize - maximum capacity of fuel tank
 //	wrange - not defined here for aircrafts (see aircraft items below)
 //
 // aircraft slot parameters can be the following :
@@ -61,6 +62,7 @@ aircraft craft_drop_firebird
 		ecm			0
 		damage		0
 		accuracy	0
+		fuelsize	100000
 	}
 	name		"_Firebird-class Dropship"
 	shortname	"_Firebird D"
@@ -70,7 +72,6 @@ aircraft craft_drop_firebird
 	building	building_hangar
 	size		8
 	weight		8
-	fuelsize	100000
 	image		air_dropship
 	angles		"-20 -40 120"
 	scale		"1.1 1.1 1.1"
@@ -105,12 +106,12 @@ aircraft craft_inter_stiletto
 		ecm		0
 		damage		0
 		accuracy	0
+		fuelsize	60000
 	}
 	name		"_Stiletto-class Interceptor"
 	shortname	"_Stiletto I"
 	type		interceptor
 	model		"inter_stiletto"
-	fuelsize	60000
 	size		1
 	weight		4
 	price		2000000
@@ -159,12 +160,12 @@ aircraft craft_inter_saracen
 		ecm		0
 		damage		0
 		accuracy	0
+		fuelsize	60000
 	}
 	name		"_Saracen-class Interceptor"
 	shortname	"_Saracen I"
 	type		interceptor
 	model		"inter_saracen"
-	fuelsize	60000
 	size		1
 	weight		4
 	price		2000000
@@ -206,12 +207,12 @@ aircraft craft_inter_stingray
 		ecm		0
 		damage		0
 		accuracy	0
+		fuelsize	60000
 	}
 	name		"_Stingray Interceptor"
 	shortname	"_Stingray"
 	type		interceptor
 	model		"inter_stingray"
-	fuelsize	60000
 	size		1
 	weight		4
 	price		2000000
@@ -240,6 +241,7 @@ aircraft craft_ufo_harvester
 		ecm		0
 		damage		0
 		accuracy	0
+		fuelsize	100000
 	}
 	name		"_UFO - Harvester"
 	shortname	"_Harvester U"
@@ -250,7 +252,6 @@ aircraft craft_ufo_harvester
 	weight		3
 	building	building_big_ufo_hangar
 	price		-1 // not buyable (implemented already?)
-	fuelsize	100000
 	image		air_ufo
 	angles		"170 -30 -100"
 	scale		"1.1 0.9 1.0"
@@ -273,6 +274,7 @@ aircraft craft_ufo_carrier
 		ecm		0
 		damage		0
 		accuracy	0
+		fuelsize	100000
 	}
 	name		"_UFO - Carrier"
 	shortname	"Carrier U"
@@ -283,7 +285,6 @@ aircraft craft_ufo_carrier
 	weight		3
 	building	building_small_ufo_hangar
 	price		-1 // not buyable (implemented already?)
-	fuelsize	100000
 	image		air_ufo
 	angles		"170 -30 -100"
 	scale		"1.1 0.9 1.0"
@@ -302,6 +303,7 @@ aircraft craft_ufo_big
 		ecm		0
 		damage		0
 		accuracy	0
+		fuelsize	100000
 	}
 	name		"_UFO - Big"
 	shortname	"_Big U"
@@ -312,7 +314,6 @@ aircraft craft_ufo_big
 	weight		3
 	building	building_big_ufo_hangar
 	price		-1 // not buyable (implemented already?)
-	fuelsize	100000
 	image		air_ufo
 	angles		"170 -30 -100"
 	scale		"1.1 0.9 1.0"
@@ -328,9 +329,10 @@ aircraft craft_ufo_condor
 		range		0
 		wrange		0
 		shield		0
-		ecm		0
+		ecm			0
 		damage		0
 		accuracy	0
+		fuelsize	100000
 	}
 	name		"_UFO - Condor"
 	shortname	"_Condor U"
@@ -341,7 +343,6 @@ aircraft craft_ufo_condor
 	weight		3
 	building	building_big_ufo_hangar
 	price		-1 // not buyable (implemented already?)
-	fuelsize	100000
 	image		air_ufo
 	angles		"170 -30 -100"
 	scale		"1.1 0.9 1.0"
@@ -359,6 +360,7 @@ aircraft craft_ufo_scout
 		ecm		0
 		damage		0
 		accuracy	0
+		fuelsize	100000
 	}
 	name		"_UFO - Scout"
 	shortname	"_Scout U"
@@ -369,7 +371,6 @@ aircraft craft_ufo_scout
 	weight		3
 	building	building_small_ufo_hangar
 	price		3000000
-	fuelsize	100000
 	image		air_ufo
 	angles		"170 -30 -100"
 	scale		"1.1 0.9 1.0"
@@ -387,6 +388,7 @@ aircraft craft_ufo_fighter
 		ecm		0
 		damage		0
 		accuracy	0
+		fuelsize	1000000
 	}
 	name		"_UFO - Fighter"
 	shortname	"_Fighter U"
@@ -397,7 +399,6 @@ aircraft craft_ufo_fighter
 	weight		4
 	// FIXME: should be big hangar
 	building	building_small_ufo_hangar
-	fuelsize	1000000
 	price		4000000
 	image		air_ufo
 	angles		"-20 -40 120"
@@ -541,8 +542,8 @@ craftitem craft_el_fuelpod
 	installationTime	2
 	price		8500
 
-	range		+100
-	speed		0.75
+	fuelsize	+30000
+	speed		0.9
 }
 
 craftitem craft_shield_polymer

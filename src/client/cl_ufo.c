@@ -120,7 +120,7 @@ extern void UFO_CampaignRunUfos (int dt)
 
 		/* @todo: Crash */
 		if (ufo->fuel <= 0)
-			ufo->fuel = ufo->fuelSize;
+			ufo->fuel = ufo->stats[AIR_STATS_FUELSIZE];
 	}
 }
 

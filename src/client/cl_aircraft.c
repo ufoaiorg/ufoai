@@ -651,7 +651,7 @@ extern void AIR_AircraftSelect (aircraft_t* aircraft)
 	/* generate aircraft info text */
 	/* @todo: reimplement me when aircraft equipment will be implemented. */
 	Com_sprintf(aircraftInfo, sizeof(aircraftInfo), _("Speed:\t%i\n"), aircraft->stats[AIR_STATS_SPEED]);
-	Q_strcat(aircraftInfo, va(_("Fuel:\t%i/%i\n"), aircraft->fuel / 1000, aircraft->fuelSize / 1000), sizeof(aircraftInfo));
+	Q_strcat(aircraftInfo, va(_("Fuel:\t%i/%i\n"), aircraft->fuel / 1000, aircraft->stats[AIR_STATS_FUELSIZE] / 1000), sizeof(aircraftInfo));
 	idx = aircraft->weapons[0].itemIdx;
 	Q_strcat(aircraftInfo, va(_("Weapon:\t%s\n"), idx > -1 ? _(gd.technologies[aircraftItems[idx].tech_idx].name) : _("None")), sizeof(aircraftInfo));
 	idx = aircraft->shield.itemIdx;
@@ -721,8 +721,10 @@ extern void AIR_NewAircraft (base_t *base, const char *name)
 		aircraft = &base->aircraft[base->numAircraftInBase];
 		aircraft->idx = gd.numAircraft;
 		aircraft->homebase = base;
+		/* Update the values of its stats */
+		AII_UpdateAircraftStats(aircraft);
 		/* give him some fuel */
-		aircraft->fuel = aircraft->fuelSize;
+		aircraft->fuel = aircraft->stats[AIR_STATS_FUELSIZE];
 		/* for saving and loading a base */
 		aircraft->idxBase = base->idx;
 		/* this is the aircraft array id in current base */
@@ -945,8 +947,8 @@ void CL_CampaignRunAircraft (int dt)
 				} else if (aircraft->status == AIR_REFUEL) {
 					/* Aircraft is refluing at base */
 					aircraft->fuel += dt;
-					if (aircraft->fuel >= aircraft->fuelSize) {
-						aircraft->fuel = aircraft->fuelSize;
+					if (aircraft->fuel >= aircraft->stats[AIR_STATS_FUELSIZE]) {
+						aircraft->fuel = aircraft->stats[AIR_STATS_FUELSIZE];
 						aircraft->status = AIR_HOME;
 					}
 				}
@@ -1413,6 +1415,9 @@ extern void AIM_AircraftEquipAddItem_f (void)
 	else if (airequipID == AC_ITEM_WEAPON)
 		slot->ammoIdx = AII_GetAircraftItemByID(airequipSelectedTechnology->provides);
 
+	/* Update the values of aircraft stats */
+	AII_UpdateAircraftStats(aircraft);
+
 	noparams = qtrue; /* used for AIM_AircraftEquipmenuInit_f */
 	AIM_AircraftEquipmenuInit_f();
 }
@@ -1468,6 +1473,9 @@ extern void AIM_AircraftEquipDeleteItem_f (void)
 	else if (airequipID == AC_ITEM_WEAPON)
 		slot->ammoIdx = -1;
 
+	/* Update the values of aircraft stats */
+	AII_UpdateAircraftStats(aircraft);
+
 	noparams = qtrue; /* used for AIM_AircraftEquipmenuInit_f */
 	AIM_AircraftEquipmenuInit_f();
 }
@@ -1518,9 +1526,6 @@ void AIM_AircraftEquipmenuClick_f (void)
 			list++;
 		}
 	}
-
-	/* Update the values of aircraft stats */
-	AII_UpdateAircraftStats(aircraft);
 
 	menuText[TEXT_STANDARD] = desc;
 }
@@ -1641,6 +1646,7 @@ static void AII_InitialiseAircraftSlots (aircraft_t *aircraft)
 static const value_t aircraftitems_vals[] = {
 	{"tech", V_CLIENT_HUNK_STRING, offsetof(aircraftItem_t, tech), 0},
 	{"speed", V_RELABS, offsetof(aircraftItem_t, stats[AIR_STATS_SPEED]), MEMBER_SIZEOF(aircraftItem_t, stats[AIR_STATS_SPEED])},
+	{"fuelsize", V_RELABS, offsetof(aircraftItem_t, stats[AIR_STATS_FUELSIZE]), MEMBER_SIZEOF(aircraftItem_t, stats[AIR_STATS_FUELSIZE])},
 	{"price", V_INT, offsetof(aircraftItem_t, price), MEMBER_SIZEOF(aircraftItem_t, price)},
 	{"installationTime", V_INT, offsetof(aircraftItem_t, installationTime), MEMBER_SIZEOF(aircraftItem_t, installationTime)},
 	{"shield", V_RELABS, offsetof(aircraftItem_t, stats[AIR_STATS_SHIELD]), MEMBER_SIZEOF(aircraftItem_t,  stats[AIR_STATS_SHIELD])},
@@ -1800,12 +1806,13 @@ static const value_t aircraft_slot_vals[] = {
 /** @brief Valid aircraft parameter definitions from script files. */
 static const value_t aircraft_param_vals[] = {
 	{"range", V_INT, offsetof(aircraft_t, stats[AIR_STATS_RANGE]), MEMBER_SIZEOF(aircraft_t, stats[0])},
-	{"wrange", V_INT, offsetof(aircraft_t, stats[AIR_STATS_WRANGE]), MEMBER_SIZEOF(aircraft_t, stats[0])},
 	{"speed", V_INT, offsetof(aircraft_t, stats[AIR_STATS_SPEED]), MEMBER_SIZEOF(aircraft_t, stats[0])},
 	{"shield", V_INT, offsetof(aircraft_t, stats[AIR_STATS_SHIELD]), MEMBER_SIZEOF(aircraft_t, stats[0])},
 	{"ecm", V_INT, offsetof(aircraft_t, stats[AIR_STATS_ECM]), MEMBER_SIZEOF(aircraft_t, stats[0])},
 	{"damage", V_INT, offsetof(aircraft_t, stats[AIR_STATS_DAMAGE]), MEMBER_SIZEOF(aircraft_t, stats[0])},
 	{"accuracy", V_INT, offsetof(aircraft_t, stats[AIR_STATS_ACCURACY]), MEMBER_SIZEOF(aircraft_t, stats[0])},
+	{"fuelsize", V_INT, offsetof(aircraft_t, stats[AIR_STATS_FUELSIZE]), MEMBER_SIZEOF(aircraft_t, stats[0])},
+	{"wrange", V_INT, offsetof(aircraft_t, stats[AIR_STATS_WRANGE]), MEMBER_SIZEOF(aircraft_t, stats[0])},
 
 	{NULL, 0, 0, 0}
 };
@@ -1824,7 +1831,6 @@ static const value_t aircraft_vals[] = {
 	{"shortname", V_TRANSLATION_STRING, offsetof(aircraft_t, shortname), 0},
 	{"size", V_INT, offsetof(aircraft_t, size), MEMBER_SIZEOF(aircraft_t, size)},
 	{"weight", V_INT, offsetof(aircraft_t, weight), MEMBER_SIZEOF(aircraft_t, weight)},
-	{"fuelsize", V_INT, offsetof(aircraft_t, fuelSize), MEMBER_SIZEOF(aircraft_t, fuelSize)},
 	{"angles", V_VECTOR, offsetof(aircraft_t, angles), MEMBER_SIZEOF(aircraft_t, angles)},
 	{"center", V_VECTOR, offsetof(aircraft_t, center), MEMBER_SIZEOF(aircraft_t, center)},
 	{"scale", V_VECTOR, offsetof(aircraft_t, scale), MEMBER_SIZEOF(aircraft_t, scale)},
@@ -2259,28 +2265,28 @@ extern void AII_UpdateAircraftStats (aircraft_t *aircraft)
 		/* modify by electronics (do nothing if the value of stat is 0) */
 		for (i = 0; i < aircraft->maxElectronics; i++) {
 			item = &aircraftItems[aircraft->electronics[i].itemIdx];
-			if (fabs(item->stats[i]) > 2.0f)
-				aircraft->stats[currentStat] += item->stats[i];
-			else if (item->stats[i] > 0.0f)
-				aircraft->stats[currentStat] *= item->stats[i];
+			if (fabs(item->stats[currentStat]) > 2.0f)
+				aircraft->stats[currentStat] += (int) item->stats[currentStat];
+			else if (item->stats[currentStat] > 0.0f)
+				aircraft->stats[currentStat] *= item->stats[currentStat];
 		}
 
 		/* modify by weapons (do nothing if the value of stat is 0) */
 		/* note that stats are not modified by ammos */
 		for (i = 0; i < aircraft->maxWeapons; i++) {
 			item = &aircraftItems[aircraft->weapons[i].itemIdx];
-			if (fabs(item->stats[i]) > 2.0f)
-				aircraft->stats[currentStat] += item->stats[i];
-			else if (item->stats[i] > 0.0f)
-				aircraft->stats[currentStat] *= item->stats[i];
+			if (fabs(item->stats[currentStat]) > 2.0f)
+				aircraft->stats[currentStat] += item->stats[currentStat];
+			else if (item->stats[currentStat] > 0.0f)
+				aircraft->stats[currentStat] *= item->stats[currentStat];
 		}
 
 		/* modify by shield (do nothing if the value of stat is 0) */
 		item = &aircraftItems[aircraft->shield.itemIdx];
-		if (fabs(item->stats[i]) > 2.0f)
-			aircraft->stats[currentStat] += item->stats[i];
-		else if (item->stats[i] > 0.0f)
-			aircraft->stats[currentStat] *= item->stats[i];
+		if (fabs(item->stats[currentStat]) > 2.0f)
+			aircraft->stats[currentStat] += item->stats[currentStat];
+		else if (item->stats[currentStat] > 0.0f)
+			aircraft->stats[currentStat] *= item->stats[currentStat];
 	}
 
 	/* now we update AIR_STATS_WRANGE (this one is the biggest value on every ammo) */
@@ -2572,7 +2578,6 @@ extern qboolean AIR_Save (sizebuf_t* sb, void* data)
 		MSG_WritePos(sb, gd.ufos[i].pos);
 		MSG_WriteByte(sb, gd.ufos[i].status);
 		MSG_WriteLong(sb, gd.ufos[i].fuel);
-		MSG_WriteLong(sb, gd.ufos[i].fuelSize);
 		MSG_WriteShort(sb, gd.ufos[i].time);
 		MSG_WriteShort(sb, gd.ufos[i].point);
 		MSG_WriteShort(sb, gd.ufos[i].route.numPoints);
@@ -2619,7 +2624,6 @@ extern qboolean AIR_Load (sizebuf_t* sb, void* data)
 			MSG_ReadByte(sb);	/* status */
 			MSG_ReadFloat(sb);	/* speed */
 			MSG_ReadLong(sb);	/* fuel */
-			MSG_ReadLong(sb);	/* fuelsize */
 			MSG_ReadShort(sb);	/* time */
 			MSG_ReadShort(sb);	/* point */
 			tmp_int = MSG_ReadShort(sb);	/* numPoints */
@@ -2641,7 +2645,6 @@ extern qboolean AIR_Load (sizebuf_t* sb, void* data)
 				ufo->stats[AIR_STATS_SPEED] = MSG_ReadFloat(sb);
 			}
 			ufo->fuel = MSG_ReadLong(sb);
-			ufo->fuelSize = MSG_ReadLong(sb);
 			ufo->time = MSG_ReadShort(sb);
 			ufo->point = MSG_ReadShort(sb);
 			ufo->route.numPoints = MSG_ReadShort(sb);

@@ -448,7 +448,7 @@ extern void UP_AircraftDescription (technology_t* t)
 			Com_sprintf(upBuffer, sizeof(upBuffer), _("Error - could not find aircraft") );
 		} else {
 			Com_sprintf(upBuffer, sizeof(upBuffer), _("Speed:\t%i\n"), aircraft->stats[AIR_STATS_SPEED]);
-			Q_strcat(upBuffer, va(_("Fuel:\t%i\n"), aircraft->fuelSize ), sizeof(upBuffer));
+			Q_strcat(upBuffer, va(_("Fuel:\t%i\n"), aircraft->stats[AIR_STATS_FUELSIZE] ), sizeof(upBuffer));
 			/* Maybe there are standard equipments given */
 			idx = aircraft->weapons[0].itemIdx;
 			Q_strcat(upBuffer, va(_("Weapon:\t%s\n"), idx >= 0 ? _(gd.technologies[aircraftItems[idx].tech_idx].name) : _("None") ), sizeof(upBuffer));

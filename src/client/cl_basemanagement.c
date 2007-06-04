@@ -2818,7 +2818,6 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
 			MSG_WriteShort(sb, aircraft->idx);
 			MSG_WriteByte(sb, aircraft->status);
 			MSG_WriteLong(sb, aircraft->fuel);
-			MSG_WriteLong(sb, aircraft->fuelSize);
 			transferBase = (base_t*)aircraft->transferBase;
 			MSG_WriteShort(sb, transferBase ? transferBase->idx : -1);
 			MSG_WritePos(sb, aircraft->pos);
@@ -3007,7 +3006,6 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 				aircraft->stats[AIR_STATS_SPEED] = MSG_ReadFloat(sb);
 			}
 			aircraft->fuel = MSG_ReadLong(sb);
-			aircraft->fuelSize = MSG_ReadLong(sb);
 			l = MSG_ReadShort(sb);
 			if (l >= 0)
 				aircraft->transferBase = &gd.bases[l];

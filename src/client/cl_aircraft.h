@@ -174,7 +174,6 @@ typedef struct aircraft_s {
 	vec3_t centerEquip;			/**< menu values for shifting - aircraft_equip menu */
 	int price;
 	int fuel;				/**< actual fuel */
-	int fuelSize;				/**< max fuel */
 	int size;				/**< how many soldiers max */
 	int weight;				/**< "Size" of the aircraft used in capacity calculations. */
 	vec3_t pos;				/**< actual pos on geoscape */
