@@ -502,6 +502,10 @@ static void AII_UpdateInstallationDelay (aircraft_t *aircraft, int dt)
 {
 	int i;
 
+	/* installation can proceed only if aircraft is in base */
+	if (!AIR_IsAircraftInBase(aircraft))
+		return;
+
 	/* Update electronics delay */
 	for (i = 0; i < aircraft->maxElectronics; i++)
 		AII_UpdateOneInstallationDelay(aircraft, aircraft->electronics + i, dt);
