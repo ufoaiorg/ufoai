@@ -42,7 +42,7 @@ static void CL_ShowChatMessagesOnStack_f(void);
 static const vec4_t tooltipBG = { 0.0f, 0.0f, 0.0f, 0.7f };
 static const vec4_t tooltipColor = { 0.0f, 0.8f, 0.0f, 1.0f };
 
-/* oldSource used in MN_DrawMenus to draw faster */ 
+/* oldSource used in MN_DrawMenus to draw faster */
 static char oldSource[MAX_VAR] = "";
 
 /* =========================================================== */
@@ -268,6 +268,17 @@ static void MN_PrevMap_f(void);
 static int MN_DrawTooltip(const char *font, const char *string, int x, int y, int maxWidth);
 static void CL_ShowMessagesOnStack_f(void);
 static void MN_TimestampedText(char *text, message_t *message, size_t textsize);
+
+/**
+ * @brief Just translate the bool value to translateable yes or no strings
+ */
+extern const char* MN_TranslateBool (qboolean value)
+{
+	if (value)
+		return _("yes");
+	else
+		return _("no");
+}
 
 /*
 ==============================================================
@@ -1599,7 +1610,7 @@ void MN_MouseWheel (qboolean down, int x, int y)
 				else if (ccs.zoom > cl_mapzoommax->value)
 					ccs.zoom = cl_mapzoommax->value;
 
-				if (!cl_3dmap->value) { 
+				if (!cl_3dmap->value) {
 					if (ccs.center[1] < 0.5 / ccs.zoom)
 						ccs.center[1] = 0.5 / ccs.zoom;
 					if (ccs.center[1] > 1.0 - 0.5 / ccs.zoom)

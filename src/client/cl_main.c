@@ -950,14 +950,22 @@ static void CL_ParseServerInfoMessage (void)
 		else if (!Q_strncmp(var, "hostname", 8))
 			Q_strcat(serverInfoText, va(_("Servername:\t%s\n"), value), sizeof(serverInfoText));
 		else if (!Q_strncmp(var, "sv_enablemorale", 15))
-			Q_strcat(serverInfoText, va(_("Moralestates:\t%s\n"), value), sizeof(serverInfoText));
+			Q_strcat(serverInfoText, va(_("Moralestates:\t%s\n"), MN_TranslateBool(*value == '1')), sizeof(serverInfoText));
 		else if (!Q_strncmp(var, "gametype", 8))
 			Q_strcat(serverInfoText, va(_("Gametype:\t%s\n"), value), sizeof(serverInfoText));
+		else if (!Q_strncmp(var, "ver", 4))
+			Q_strcat(serverInfoText, va(_("Gameversion:\t%s\n"), value), sizeof(serverInfoText));
+		else if (!Q_strncmp(var, "dedicated", 9))
+			Q_strcat(serverInfoText, va(_("Dedicated server:\t%s\n"), MN_TranslateBool(*value == '1')), sizeof(serverInfoText));
+		else if (!Q_strncmp(var, "sys_os", 6))
+			Q_strcat(serverInfoText, va(_("Operating system:\t%s\n"), value), sizeof(serverInfoText));
+		else if (!Q_strncmp(var, "protocoll", 9))
+			Q_strcat(serverInfoText, va(_("Network protocol:\t%s\n"), value), sizeof(serverInfoText));
 		else if (!Q_strncmp(var, "sv_roundtimelimit", 17))
 			Q_strcat(serverInfoText, va(_("Roundtime:\t%s\n"), value), sizeof(serverInfoText));
-		else if (!Q_strncmp(var, "sv_teamplay", 11))
-			Q_strcat(serverInfoText, va(_("Teamplay:\t%s\n"), value), sizeof(serverInfoText));
-		else if (!Q_strncmp(var, "maxplayers", 10))
+		else if (!Q_strncmp(var, "sv_teamplay", 11)) {
+			Q_strcat(serverInfoText, va(_("Teamplay:\t%s\n"), MN_TranslateBool(*value == '1')), sizeof(serverInfoText));
+		} else if (!Q_strncmp(var, "maxplayers", 10))
 			Q_strcat(serverInfoText, va(_("Max. players per team:\t%s\n"), value), sizeof(serverInfoText));
 		else if (!Q_strncmp(var, "sv_maxteams", 11))
 			Q_strcat(serverInfoText, va(_("Max. teams allowed in this map:\t%s\n"), value), sizeof(serverInfoText));
@@ -968,12 +976,8 @@ static void CL_ParseServerInfoMessage (void)
 		else if (!Q_strncmp(var, "maxsoldiers", 11))
 			Q_strcat(serverInfoText, va(_("Max. soldiers per team:\t%s\n"), value), sizeof(serverInfoText));
 		else if (!Q_strncmp(var, "needpass", 8)) {
-			if (*value == '1') {
-				Q_strcat(serverInfoText, va(_("Password protected:\t%s\n"), _("yes")), sizeof(serverInfoText));
-				Cvar_Set("mn_server_need_password", "1"); /* string */
-			} else {
-				Q_strcat(serverInfoText, va(_("Password protected:\t%s\n"), _("no")), sizeof(serverInfoText));
-			}
+			Cvar_Set("mn_server_need_password", value); /* string */
+			Q_strcat(serverInfoText, va(_("Password protected:\t%s\n"), MN_TranslateBool(*value == '1')), sizeof(serverInfoText));
 		}
 #ifdef DEBUG
 		else

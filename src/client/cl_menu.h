@@ -209,6 +209,8 @@ extern font_t *fontBig;
 /* will return the size and the path for each font */
 void CL_GetFontData(const char *name, int *size, char *path);
 
+const char* MN_TranslateBool(qboolean value);
+
 qboolean MN_CursorOnMenu(int x, int y);
 void MN_Click(int x, int y);
 void MN_RightClick(int x, int y);
