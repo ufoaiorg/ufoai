@@ -13,6 +13,10 @@
 #ifndef JPEGLIB_H
 #define JPEGLIB_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /*
  * First we include the configuration files that record how this
  * installation of the JPEG library is set up.  jconfig.h can be
@@ -25,6 +29,9 @@
 #endif
 #include "jmorecfg.h"		/* seldom changed options */
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
 
 /* Version ID for the JPEG library.
  * Might be useful for tests like "#if JPEG_LIB_VERSION >= 60".
@@ -1080,6 +1087,9 @@ struct jpeg_color_quantizer { long dummy; };
 #endif /* JPEG_INTERNALS */
 #endif /* INCOMPLETE_TYPES_BROKEN */
 
+#ifdef __cplusplus
+}
+#endif
 
 /*
  * The JPEG library modules define JPEG_INTERNALS before including this file.
@@ -1091,6 +1101,10 @@ struct jpeg_color_quantizer { long dummy; };
 #ifdef JPEG_INTERNALS
 #include "jpegint.h"		/* fetch private declarations */
 #include "jerror.h"		/* fetch error codes too */
+#endif
+
+#ifdef __cplusplus
+}
 #endif
 
 #endif /* JPEGLIB_H */

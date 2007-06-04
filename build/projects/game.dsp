@@ -38,8 +38,8 @@ CFG=game - Win32 Debug Alpha
 # PROP BASE Target_Dir "."
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir ".\release"
-# PROP Intermediate_Dir ".\release"
+# PROP Output_Dir ".\release_game"
+# PROP Intermediate_Dir ".\release_game"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir "."
 CPP=cl.exe
@@ -56,7 +56,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /machine:I386
-# ADD LINK32 kernel32.lib user32.lib winmm.lib /nologo /base:"0x20000000" /subsystem:windows /dll /machine:I386 /out:"..\..\base\gamex86.dll"
+# ADD LINK32 kernel32.lib user32.lib winmm.lib /nologo /base:"0x20000000" /subsystem:windows /dll /machine:I386 /out:"..\..\base\game.dll"
 # SUBTRACT LINK32 /pdb:none
 
 !ELSEIF  "$(CFG)" == "game - Win32 Debug"
@@ -68,8 +68,8 @@ LINK32=link.exe
 # PROP BASE Target_Dir "."
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\debug"
-# PROP Intermediate_Dir ".\debug"
+# PROP Output_Dir ".\debug_game"
+# PROP Intermediate_Dir ".\debug_game"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir "."
 CPP=cl.exe

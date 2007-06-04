@@ -22,6 +22,11 @@
 
 #define BITS_IN_JSAMPLE  8	/* use 8 or 12 */
 
+#if (defined (_MSC_VER) && (_MSC_VER >= 1300))
+#define HAVE_UNSIGNED_CHAR
+#define HAVE_ALL_INTS
+#define EXTERN(type)  extern type __cdecl
+#endif
 
 /*
  * Maximum number of components (color channels) allowed in JPEG image.
@@ -129,9 +134,8 @@ typedef char JOCTET;
  * typedefs live at a different point on the speed/space tradeoff curve.)
  */
 
-#if _MSC_VER < 1300 /* < MSVC 7.0 */
-
 /* UINT8 must hold at least the values 0..255. */
+#ifndef HAVE_ALL_INTS
 
 #ifdef HAVE_UNSIGNED_CHAR
 typedef unsigned char UINT8;
@@ -159,14 +163,11 @@ typedef short INT16;
 
 /* INT32 must hold at least signed 32-bit values. */
 
-#ifndef DONT_TYPEDEF_INT32
-#ifndef XMD_H			/* X11/xmd.h correctly defines INT32 */
-typedef long INT32;		/* @todo: why long? long int can have 64 bits on some platforms. */
-#endif
+#if !defined(XMD_H) && !defined(_WIN32)			/* X11/xmd.h correctly defines INT32 */
+typedef long INT32;
 #endif
 
-#endif	/* #ifndef _MVC_VER */
-
+#endif /* HAVE_ALL_INTS */
 
 /* Datatype used for image dimensions.  The JPEG standard only supports
  * images up to 64K*64K due to 16-bit fields in SOF markers.  Therefore
@@ -187,14 +188,63 @@ typedef unsigned int JDIMENSION;
  * or code profilers that require it.
  */
 
+#ifdef _WIN32
+#  if defined(ALL_STATIC)
+#    if defined(JPEG_DLL)
+#      undef JPEG_DLL
+#    endif
+#    if !defined(JPEG_STATIC)
+#      define JPEG_STATIC
+#    endif
+#  endif
+#  if defined(JPEG_DLL)
+#    if defined(JPEG_STATIC)
+#      undef JPEG_STATIC
+#    endif
+#  endif
+#  if defined(JPEG_DLL)
+/* building a DLL */
+#    define JPEG_IMPEXP __declspec(dllexport)
+#  elif defined(JPEG_STATIC)
+/* building or linking to a static library */
+#    define JPEG_IMPEXP
+#  else
+/* linking to the DLL */
+#    define JPEG_IMPEXP __declspec(dllimport)
+#  endif
+#  if !defined(JPEG_API)
+#    define JPEG_API __cdecl
+#  endif
+/* The only remaining magic that is necessary for cygwin */
+#elif defined(__CYGWIN__)
+#  if !defined(JPEG_IMPEXP)
+#    define JPEG_IMPEXP
+#  endif
+#  if !defined(JPEG_API)
+#    define JPEG_API __cdecl
+#  endif
+#endif
+
+/* Ensure our magic doesn't hurt other platforms */
+#if !defined(JPEG_IMPEXP)
+#  define JPEG_IMPEXP
+#endif
+#if !defined(JPEG_API)
+#  define JPEG_API
+#endif
+
 /* a function called through method pointers: */
-#define METHODDEF(type)		static type
+#define METHODDEF(type)       static type
 /* a function used only in its module: */
-#define LOCAL(type)		static type
+#define LOCAL(type)      static type
 /* a function referenced thru EXTERNs: */
-#define GLOBAL(type)		type
+#define GLOBAL(type)          type JPEG_API
 /* a reference to a GLOBAL function: */
-#define EXTERN(type)		extern type
+#ifndef EXTERN 
+# define EXTERN(type)          extern JPEG_IMPEXP type JPEG_API
+/* a reference to a "GLOBAL" function exported by sourcefiles of utility progs */
+#endif /* EXTERN */
+#define EXTERN_1(type)   extern type JPEG_API
 
 
 /* This macro is used to declare a "method", that is, a function pointer.
@@ -216,12 +266,16 @@ typedef unsigned int JDIMENSION;
  * explicit coding is needed; see uses of the NEED_FAR_POINTERS symbol.
  */
 
-#ifndef _MSC_VER
-#ifdef NEED_FAR_POINTERS
-#define FAR  far
-#else
-#define FAR
-#endif
+/* jmorecfg.h line 220 */
+/* HJH modification: several of the windows header files already define FAR
+   because of this, the code below was changed so that it only tinkers with
+   the FAR define if FAR is still undefined */
+#ifndef FAR
+  #ifdef NEED_FAR_POINTERS
+  #define FAR  far
+  #else
+  #define FAR
+  #endif
 #endif
 
 

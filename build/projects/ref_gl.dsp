@@ -38,8 +38,8 @@ CFG=ref_gl - Win32 Debug Alpha
 # PROP BASE Target_Dir "."
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 0
-# PROP Output_Dir "..\..\"
-# PROP Intermediate_Dir ".\release"
+# PROP Output_Dir ".\release_refgl"
+# PROP Intermediate_Dir ".\release_refgl"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir "."
 CPP=cl.exe
@@ -56,7 +56,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /machine:I386
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib winmm.lib /nologo /subsystem:windows /dll /machine:I386
+# ADD LINK32 kernel32.lib user32.lib gdi32.lib winmm.lib SDL.lib SDLmain.lib SDL_ttf.lib /nologo /subsystem:windows /dll /machine:I386
 # SUBTRACT LINK32 /incremental:yes /debug
 
 !ELSEIF  "$(CFG)" == "ref_gl - Win32 Debug"
@@ -68,8 +68,8 @@ LINK32=link.exe
 # PROP BASE Target_Dir "."
 # PROP Use_MFC 0
 # PROP Use_Debug_Libraries 1
-# PROP Output_Dir "..\debug"
-# PROP Intermediate_Dir ".\debug"
+# PROP Output_Dir ".\debug_refgl"
+# PROP Intermediate_Dir ".\debug_refgl"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir "."
 CPP=cl.exe
@@ -86,7 +86,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /debug /machine:I386
-# ADD LINK32 gdi32.lib winmm.lib kernel32.lib /nologo /subsystem:windows /dll /incremental:no /map /debug /machine:I386 /out:"..\..\ref_gl.dll"
+# ADD LINK32 kernel32.lib user32.lib gdi32.lib winmm.lib SDL.lib SDLmain.lib SDL_ttf.lib /nologo /subsystem:windows /dll /incremental:no /map /debug /machine:I386 /out:"..\..\ref_gl.dll"
 # SUBTRACT LINK32 /profile
 
 !ELSEIF  "$(CFG)" == "ref_gl - Win32 Debug Alpha"
@@ -180,6 +180,21 @@ SOURCE=..\..\src\ref_gl\gl_anim.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\ref_gl\gl_arb_shader.c
+
+!IF  "$(CFG)" == "ref_gl - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ref_gl - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ref_gl - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ref_gl - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\ref_gl\gl_bloom.c
 
 !IF  "$(CFG)" == "ref_gl - Win32 Release"
@@ -196,6 +211,36 @@ SOURCE=..\..\src\ref_gl\gl_bloom.c
 # Begin Source File
 
 SOURCE=..\..\src\ref_gl\gl_draw.c
+
+!IF  "$(CFG)" == "ref_gl - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ref_gl - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ref_gl - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ref_gl - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\ref_gl\gl_drawmd3.c
+
+!IF  "$(CFG)" == "ref_gl - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ref_gl - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ref_gl - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ref_gl - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\ref_gl\gl_font.c
 
 !IF  "$(CFG)" == "ref_gl - Win32 Release"
 
@@ -270,6 +315,21 @@ SOURCE=..\..\src\ref_gl\gl_model.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\ref_gl\gl_obj.c
+
+!IF  "$(CFG)" == "ref_gl - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ref_gl - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ref_gl - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ref_gl - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\ref_gl\gl_particle.c
 
 !IF  "$(CFG)" == "ref_gl - Win32 Release"
@@ -316,6 +376,21 @@ SOURCE=..\..\src\ref_gl\gl_rmisc.c
 # Begin Source File
 
 SOURCE=..\..\src\ref_gl\gl_rsurf.c
+
+!IF  "$(CFG)" == "ref_gl - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ref_gl - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ref_gl - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ref_gl - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\ref_gl\gl_shadows.c
 
 !IF  "$(CFG)" == "ref_gl - Win32 Release"
 
@@ -390,6 +465,21 @@ SOURCE=..\..\src\ports\win32\q_shwin.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\ref_gl\qgl.c
+
+!IF  "$(CFG)" == "ref_gl - Win32 Release"
+
+!ELSEIF  "$(CFG)" == "ref_gl - Win32 Debug"
+
+!ELSEIF  "$(CFG)" == "ref_gl - Win32 Debug Alpha"
+
+!ELSEIF  "$(CFG)" == "ref_gl - Win32 Release Alpha"
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\ports\win32\qgl_win.c
 
 !IF  "$(CFG)" == "ref_gl - Win32 Release"
@@ -417,7 +507,19 @@ SOURCE=..\..\src\ref_gl\anormtab.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\ref_gl\gl_arb_shader.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\ref_gl\gl_font.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\ref_gl\gl_local.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\ref_gl\gl_md3.h
 # End Source File
 # Begin Source File
 
@@ -477,15 +579,15 @@ SOURCE=..\..\src\ref_gl\ref_gl.def
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\ports\win32\libjpeg.lib
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\src\ports\win32\libpng.lib
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\src\ports\win32\zlib1.lib
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\contrib\vc6\jpeg.lib
 # End Source File
 # End Group
 # End Target
