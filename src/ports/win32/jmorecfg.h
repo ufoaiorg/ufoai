@@ -129,7 +129,7 @@ typedef char JOCTET;
  * typedefs live at a different point on the speed/space tradeoff curve.)
  */
 
-#ifndef _MSC_VER
+#if _MSC_VER < 1300 /* < MSVC 7.0 */
 
 /* UINT8 must hold at least the values 0..255. */
 
