@@ -152,6 +152,7 @@ static const value_t nps[] = {
 	{"tag", V_STRING, -2, 0},
 	{"skin", V_STRING, -3, 0},
 	/* -4 is animation state */
+	{"value", V_STRING, 0, 0},	/* e.g for MN_CHECKBOX */
 	{"string", V_STRING, 0, 0},	/* no gettext here - this can be a cvar, too */
 	{"font", V_STRING, -1, 0},
 	{"max", V_FLOAT, 0, 0},
@@ -201,6 +202,8 @@ typedef enum mn_s {
 	MN_ITEM,
 	MN_MAP,
 	MN_BASEMAP,
+	MN_CHECKBOX,
+	MN_SELECTBOX,
 
 	MN_NUM_NODETYPE
 } mn_t;
@@ -220,7 +223,9 @@ static const char *nt_strings[MN_NUM_NODETYPE] = {
 	"container",
 	"item",
 	"map",
-	"basemap"
+	"basemap",
+	"checkbox",
+	"selectbox"
 };
 
 
@@ -906,12 +911,18 @@ static qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 		return qtrue;
 	}
 
-	/* check for click action */
-	if (node->invis || (!node->click && !node->rclick && !node->mclick && !node->wheel && !node->mouseIn && !node->mouseOut && !node->wheelUp && !node->wheelDown))
-		return qfalse;
+	/* checkboxes don't need action nodes */
+	if (node->type != MN_CHECKBOX) {
+		/* check for click action */
+		if (node->invis || (!node->click && !node->rclick && !node->mclick && !node->wheel && !node->mouseIn && !node->mouseOut && !node->wheelUp && !node->wheelDown))
+			return qfalse;
+	}
 
 	if (!node->size[0] || !node->size[1]) {
-		if (node->type == MN_PIC && node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]) {
+		if (node->type == MN_CHECKBOX) {
+			/* the checked and unchecked should always have the same dimensions */
+			re.DrawGetPicSize(&sx, &sy, "menu/checkbox_checked");
+		} else if (node->type == MN_PIC && node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]) {
 			if (node->texh[0] && node->texh[1]) {
 				sx = node->texh[0] - node->texl[0];
 				sy = node->texh[1] - node->texl[1];
@@ -1083,6 +1094,23 @@ static void MN_Drag (const menuNode_t* const node, int x, int y)
 
 }
 
+/**
+ * @brief Handles checkboxes clicks
+ */
+static void MN_CheckboxClick (menuNode_t * node)
+{
+	char var[MAX_VAR];
+	int value;
+
+	assert(node->data[0]);
+	Q_strncpyz(var, node->data[0], sizeof(var));
+	/* no cvar? */
+	if (Q_strncmp(var, "*cvar", 5))
+		return;
+
+	value = Cvar_VariableInteger(&var[6]) ^ 1;
+	Cvar_SetValue(&var[6], value);
+}
 
 /**
  * @brief Handles the bar cvar values
@@ -1223,6 +1251,7 @@ static void MN_TextRightClick (menuNode_t * node, int mouseOver)
  * @sa MN_TextClick
  * @sa MN_Drag
  * @sa MN_BarClick
+ * @sa MN_CheckboxClick
  * @sa MN_BaseMapClick
  * @sa MAP_3DMapClick
  * @sa MAP_MapClick
@@ -1245,7 +1274,7 @@ void MN_Click (int x, int y)
 		menu = menuStack[--sp];
 		execute_node = NULL;
 		for (node = menu->firstNode; node; node = node->next) {
-			if (node->type != MN_CONTAINER && !node->click)
+			if (node->type != MN_CONTAINER && node->type != MN_CHECKBOX && !node->click)
 				continue;
 
 			/* check whether mouse is over this node */
@@ -1270,6 +1299,9 @@ void MN_Click (int x, int y)
 				break;
 			case MN_MAP:
 				MAP_MapClick(node, x, y, cl_3dmap->value);
+				break;
+			case MN_CHECKBOX:
+				MN_CheckboxClick(node);
 				break;
 			case MN_MODEL:
 				MN_ModelClick(node);
@@ -2066,6 +2098,23 @@ void MN_DrawMenus (void)
 					if (ref && *ref)
 						re.DrawNormPic(node->pos[0], node->pos[1], node->size[0], node->size[1],
 								node->texh[0], node->texh[1], node->texl[0], node->texl[1], node->align, node->blend, ref);
+					break;
+
+				case MN_CHECKBOX:
+					if (ref && *ref) {
+						switch (*ref) {
+						case '0':
+							re.DrawNormPic(node->pos[0], node->pos[1], node->size[0], node->size[1],
+								node->texh[0], node->texh[1], node->texl[0], node->texl[1], node->align, node->blend, "menu/checkbox_unchecked");
+							break;
+						case '1':
+							re.DrawNormPic(node->pos[0], node->pos[1], node->size[0], node->size[1],
+								node->texh[0], node->texh[1], node->texl[0], node->texl[1], node->align, node->blend, "menu/checkbox_checked");
+							break;
+						default:
+							Com_Printf("Error - invalid value for MN_CHECKBOX node - only 0/1 allowed\n");
+						}
+					}
 					break;
 
 				case MN_STRING:

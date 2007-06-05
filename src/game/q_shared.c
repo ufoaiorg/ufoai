@@ -1428,7 +1428,7 @@ char *Com_SkipTokens (char *s, int numTokens, char *sep)
  */
 char *COM_SkipPath (char *pathname)
 {
-	char *last;
+	const char *last;
 
 	last = pathname;
 	while (*pathname) {
