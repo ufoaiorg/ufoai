@@ -928,39 +928,11 @@ menu mp_create_server
 		string	"_Make this server public:"
 		pos	"500 120"
 	}
-	string public_value
+	checkbox public_value
 	{
-		string	"*cvar mn_public"
+		value	"*cvar public"
 		pos	"840 120"
 		align	ur
-	}
-	pic public_dec
-	{
-		tooltip "_Don't make it public via masterserver"
-		image	menu/buttons_small
-		pos	"868 122"
-		texl	"0 0"
-		texh	"16 16"
-		mousefx	true
-		click
-		{
-			cmd "mn_modify public -1 0 1;"
-			cmd "mn_translate public mn_public 0:No,1:Yes;"
-		}
-	}
-	pic public_inc
-	{
-		tooltip "_Publish server address via masterserver"
-		image	menu/buttons_small
-		pos	"884 122"
-		texl	"16 0"
-		texh	"32 16"
-		mousefx	true
-		click
-		{
-			cmd "mn_modify public +1 0 1;"
-			cmd "mn_translate public mn_public 0:No,1:Yes;"
-		}
 	}
 
 	// ===================
@@ -971,37 +943,11 @@ menu mp_create_server
 		string	"_Enable morale states:"
 		pos	"500 140"
 	}
-	string morale_value
+	checkbox morale_value
 	{
-		string	"*cvar mn_enablemorale"
+		value	"*cvar sv_enablemorale"
 		pos	"840 140"
 		align	ur
-	}
-	pic morale_dec
-	{
-		image	menu/buttons_small
-		pos	"868 142"
-		texl	"0 0"
-		texh	"16 16"
-		mousefx	true
-		click
-		{
-			cmd "mn_modify sv_enablemorale -1 0 1;"
-			cmd "mn_translate sv_enablemorale mn_enablemorale 0:No,1:Yes;"
-		}
-	}
-	pic morale_inc
-	{
-		image	menu/buttons_small
-		pos	"884 142"
-		texl	"16 0"
-		texh	"32 16"
-		mousefx	true
-		click
-		{
-			cmd "mn_modify sv_enablemorale +1 0 1;"
-			cmd "mn_translate sv_enablemorale mn_enablemorale 0:No,1:Yes;"
-		}
 	}
 
 	// ===================
@@ -1051,37 +997,11 @@ menu mp_create_server
 		string	"_Teamplay:"
 		pos	"500 180"
 	}
-	string server_teamplay_value
+	checkbox server_teamplay_value
 	{
-		string	"*cvar mn_teamplay"
+		value	"*cvar sv_teamplay"
 		pos	"840 180"
 		align	ur
-	}
-	pic server_teamplay_dec
-	{
-		image	menu/buttons_small
-		pos	"868 182"
-		texl	"0 0"
-		texh	"16 16"
-		mousefx	true
-		click
-		{
-			cmd "mn_modify sv_teamplay -1 0 1;"
-			cmd "mn_translate sv_teamplay mn_teamplay 0:No,1:Yes;"
-		}
-	}
-	pic server_teamplay_inc
-	{
-		image	menu/buttons_small
-		pos	"884 182"
-		texl	"16 0"
-		texh	"32 16"
-		mousefx	true
-		click
-		{
-			cmd "mn_modify sv_teamplay +1 0 1;"
-			cmd "mn_translate sv_teamplay mn_teamplay 0:No,1:Yes;"
-		}
 	}
 
 	// ===================
@@ -1263,37 +1183,11 @@ menu mp_create_server
 		pos	"500 300"
 		tooltip	"_AI autojoin on free teams"
 	}
-	string ai_autojoin_value
+	checkbox ai_autojoin_value
 	{
-		string	"*cvar mn_autojoin"
+		value	"*cvar ai_autojoin"
 		pos	"840 300"
 		align	ur
-	}
-	pic ai_autojoin_dec
-	{
-		image	menu/buttons_small
-		pos	"868 302"
-		texl	"0 0"
-		texh	"16 16"
-		mousefx	true
-		click
-		{
-			cmd "mn_modify ai_autojoin -1 0 1;"
-			cmd "mn_translate ai_autojoin mn_autojoin 0:No,1:Yes;"
-		}
-	}
-	pic ai_autojoin_inc
-	{
-		image	menu/buttons_small
-		pos	"884 302"
-		texl	"16 0"
-		texh	"32 16"
-		mousefx	true
-		click
-		{
-			cmd "mn_modify ai_autojoin +1 0 1;"
-			cmd "mn_translate ai_autojoin mn_autojoin 0:No,1:Yes;"
-		}
 	}
 
 	// ===================
