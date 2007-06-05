@@ -26,6 +26,10 @@
 #include <stdarg.h>
 #include <stddef.h>
 
+#ifndef errno
+extern int errno;
+#endif
+
 #ifndef __BYTEBOOL__
 #define __BYTEBOOL__
 typedef enum {qfalse, qtrue} qboolean;

@@ -205,8 +205,6 @@ char *Sys_FindFirst (const char *path, unsigned musthave, unsigned canthave)
 	COM_FilePath (path, findbase);
 	findhandle = _findfirst (path, &findinfo);
 	while (findhandle != -1) {
-		if (findhandle == -1)
-			return NULL;
 		/* found one that matched */
 		if (strcmp(findinfo.name, ".") && strcmp(findinfo.name, "..") &&
 			CompareAttributes(findinfo.attrib, musthave, canthave)) {

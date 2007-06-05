@@ -757,7 +757,7 @@ static void CL_CampaignAddMission (setState_t * set)
 		return;
 	}
 
-	while (1) {
+	do {
 		misTemp = &missions[set->def->missions[rand() % set->def->numMissions]];
 
 		if ((set->def->numMissions < 2
@@ -767,7 +767,7 @@ static void CL_CampaignAddMission (setState_t * set)
 			&& (set->def->numMissions < 4
 				|| Q_strncmp(misTemp->name, gd.oldMis3, MAX_VAR)))
 			break;
-	}
+	} while (1);
 
 	/* maybe the mission is already on geoscape --- e.g. one-mission sets */
 	if (misTemp->onGeoscape) {
