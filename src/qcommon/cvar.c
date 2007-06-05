@@ -98,11 +98,11 @@ extern float Cvar_VariableValue (const char *var_name)
 
 
 /**
- * @brief Returns the float value of a cvar
+ * @brief Set a checker function for cvar values
  * @sa Cvar_FindVar
  * @return true if set
  */
-extern qboolean Cvar_SetCheckFunction (char *var_name, qboolean (*check) (void) )
+extern qboolean Cvar_SetCheckFunction (char *var_name, qboolean (*check) (cvar_t* cvar) )
 {
 	cvar_t *var;
 
@@ -354,6 +354,12 @@ static cvar_t *Cvar_Set2 (const char *var_name, const char *value, qboolean forc
 	/* create it */
 	if (!var)
 		return Cvar_Get(var_name, value, 0, NULL);
+
+	if (var->check)
+		if (!var->check(var)) {
+			Com_Printf("Invalid value for cvar %s\n", var_name);
+			return var;
+		}
 
 	if (var->flags & (CVAR_USERINFO | CVAR_SERVERINFO))
 		if (!Cvar_InfoValidate(value)) {

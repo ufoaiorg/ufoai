@@ -1294,7 +1294,7 @@ void FS_GetMaps (qboolean reset)
 	char findname[MAX_OSPATH];
 	char filename[MAX_QPATH];
 	int status, i;
-	char *baseMapName = NULL;
+	const char *baseMapName = NULL;
 	char **dirnames;
 	int ndirs;
 	searchpath_t *search;

@@ -1426,7 +1426,7 @@ char *Com_SkipTokens (char *s, int numTokens, char *sep)
  * @param
  * @sa COM_StripExtension
  */
-char *COM_SkipPath (char *pathname)
+const char *COM_SkipPath (char *pathname)
 {
 	const char *last;
 

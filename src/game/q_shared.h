@@ -410,7 +410,7 @@ void gaussrand(float *gauss1, float *gauss2);   /* -inf to +inf, median 0, stdev
 
 void stradd(char **str, const char *addStr);
 
-char *COM_SkipPath(char *pathname);
+const char *COM_SkipPath(char *pathname);
 void COM_StripExtension(const char *in, char *out);
 void COM_FileBase(const char *in, char *out);
 void COM_FilePath(const char *in, char *out);
@@ -542,7 +542,7 @@ typedef struct cvar_s {
 	qboolean modified;		/**< set each time the cvar is changed */
 	float value;			/**< value as float */
 	int integer;			/**< value as integer */
-	qboolean (*check) (void);	/**< cvar check function */
+	qboolean (*check) (struct cvar_s* cvar);	/**< cvar check function */
 	struct cvar_s *next;
 	struct cvar_s *hash_next;
 } cvar_t;

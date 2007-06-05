@@ -257,7 +257,8 @@ static void S_RandomTrack_f (void)
 {
 	char findname[MAX_OSPATH];
 	int i, randomID;
-	char **dirnames, *musicTrack;
+	char **dirnames;
+	const char *musicTrack;
 	int ndirs;
 	searchpath_t *search;
 	pack_t *pak;
