@@ -70,12 +70,12 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /c
-# ADD CPP /nologo /G5 /MTd /W3 /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /FR /FD /c
+# ADD CPP /nologo /G5 /MTd /W3 /GX /ZI /Od /D "WIN32" /D "DEBUG" /D "_WINDOWS" /D "_CONSOLE" /FR /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "_DEBUG" /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
-# ADD RSC /l 0x409 /fo".\debug_ufo\ufo.res" /d "_DEBUG"
+# ADD RSC /l 0x409 /d "_DEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
@@ -648,7 +648,20 @@ SOURCE=..\..\src\ports\win32\ufo.ico
 # Begin Source File
 
 SOURCE=..\..\src\ports\win32\ufo.rc
-# PROP Exclude_From_Build 1
+
+!IF  "$(CFG)" == "ufo - Win32 Release"
+
+# ADD BASE RSC /l 0x407 /i "\Development\ufoai\trunk\src\ports\win32"
+# ADD RSC /l 0x407 /fo".\ufo.res" /i "\Development\ufoai\trunk\src\ports\win32"
+
+!ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
+
+# ADD BASE RSC /l 0x407 /i "\Development\ufoai\trunk\src\ports\win32"
+# ADD RSC /l 0x407 /fo".\ufo.res" /i "\Development\ufoai\trunk\src\ports\win32" /d "DEBUG"
+# SUBTRACT RSC /d "_DEBUG"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 
