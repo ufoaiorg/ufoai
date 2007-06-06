@@ -245,6 +245,11 @@ extern void INV_CollectingItems (int won)
 			break;
 		}
 	}
+	/* Fill the missionresults array. */
+	missionresults.itemtypes = aircraft->itemtypes;
+	for (i = 0; i < aircraft->itemtypes; i++)
+		missionresults.itemamount += cargo[i].amount;
+
 #ifdef DEBUG
 	/* Print all of collected items. */
 	for (i = 0; i < aircraft->itemtypes; i++) {

@@ -152,6 +152,15 @@ typedef struct ufoRecoveries_s {
 	date_t event;			/**< When the process will start (UFO got transported to base). */
 } ufoRecoveries_t;
 
+/** @brief Structure with mission info needed to create results summary at Menu Won. */
+typedef struct missionResults_s {
+	int itemtypes;		/**< Types of items gathered from a mission. */
+	int itemamount;		/**< Amount of items (all) gathered from a mission. */
+	qboolean recovery;	/**< Qtrue if player secured an UFO (landed or crashed). */
+	ufoType_t ufotype;	/**< Type of UFO secured during the mission. */
+	qboolean crashsite;	/**< Qtrue if secured UFO was crashed one. */
+} missionResults_t;
+
 /** campaign definition */
 typedef struct campaign_s {
 	int idx;					/**< own index in global campaign array */

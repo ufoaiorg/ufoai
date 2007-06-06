@@ -864,6 +864,7 @@ void CL_InitMessageSystem(void);
 void MN_AddChatMessage(const char *text);
 
 #include "cl_campaign.h"
+missionResults_t missionresults;	/**< Mission results pointer used for Menu Won. */
 
 #include "cl_menu.h"
 

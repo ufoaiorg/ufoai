@@ -2199,6 +2199,9 @@ static void CL_GameGo (void)
 	baseCurrent = aircraft->homebase;
 	assert(baseCurrent && mis && aircraft);
 
+	/* Before we start, we should clear the missionresults array. */
+	memset(&missionresults, 0, sizeof(missionresults));
+
 	/* set current aircraft of current base */
 	baseCurrent->aircraftCurrent = aircraft->idxInBase;
 
@@ -4028,6 +4031,10 @@ static void CP_UFORecovered_f (void)
 			break;
 		}
 	}
+	/* Put relevant info into missionresults array. */
+	missionresults.recovery = qtrue;
+	missionresults.crashsite = qfalse;
+	missionresults.ufotype = ufocraft->ufotype;
 	/* Do nothing without any base. */
 	if (!base)
 		return;
@@ -4335,6 +4342,10 @@ static void CP_UFOCrashed_f (void)
 		cargo[aircraft->itemtypes].amount = comp->item_amount2[i];
 		aircraft->itemtypes++;
 	}
+	/* Put relevant info into missionresults array. */
+	missionresults.recovery = qtrue;
+	missionresults.crashsite = qtrue;
+	missionresults.ufotype = ufocraft->ufotype;
 }
 
 /**

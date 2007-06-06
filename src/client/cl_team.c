@@ -2015,6 +2015,7 @@ extern void CL_ParseResults (sizebuf_t * buf)
 		Q_strcat(resultText, va(_("Civilians killed by Aliens\t%i\n"), civilian_killed), sizeof(resultText));
 		Q_strcat(resultText, va(_("Civilians killed by friendly fire\t%i\n"), num_kills[we][TEAM_CIVILIAN] + num_kills[TEAM_CIVILIAN][TEAM_CIVILIAN]), sizeof(resultText));
 		Q_strcat(resultText, va(_("Civilians saved\t%i\n\n"), civilian_surviviurs), sizeof(resultText));
+		Q_strcat(resultText, va(_("Gathered items (types/all)\t%i/%i\n"), missionresults.itemtypes,  missionresults.itemamount), sizeof(resultText));
 
 		ccs.civiliansKilled += civilian_killed;
 
@@ -2032,9 +2033,16 @@ extern void CL_ParseResults (sizebuf_t * buf)
 		else
 			Com_Printf("CL_ParseResults: Error - no mission triggers, because selMis or baseCurrent are not valid\n");
 
-		if (winner == we)
+		if (winner == we) {
+			/* We need to update Menu Won with UFO recovery stuff. */
+			if (missionresults.recovery) {
+				if (missionresults.crashsite)
+					Q_strcat(resultText, va(_("\nSecured crashed %s\n"), UFO_TypeToName(missionresults.ufotype)), sizeof(resultText));
+				else
+					Q_strcat(resultText, va(_("\nSecured landed %s\n"), UFO_TypeToName(missionresults.ufotype)), sizeof(resultText));
+			}
 			MN_PushMenu("won");
-		else
+		} else
 			MN_PushMenu("lost");
 
 		/* on singleplayer we disconnect the game */
