@@ -272,10 +272,10 @@ void Draw_GetPicSize (int *w, int *h, const char *pic)
  * @param[in] y Y position to draw the image to
  * @param[in] w Width of the image
  * @param[in] h Height of the image
- * @param[in] sh The height value to start from (0 to sh is not drawn)
- * @param[in] th The height value to draw up to (th to h is not drawn)
- * @param[in] sl The width value to start from (0 to sl is not drawn)
- * @param[in] tl The width value to draw up to (tl to w is not drawn)
+ * @param[in] sh Right x corner coord of the square to draw
+ * @param[in] th Lower y corner coord of the square to draw
+ * @param[in] sl Left x corner coord of the square to draw
+ * @param[in] tl Upper y corner coord of the square to draw
  * @param[in] align The alignment we should use for placing the image onto the screen (see align_t)
  * @param[in] blend Enable the blend mode (for alpha channel images)
  * @param[in] name The name of the image - relative to base/pics
