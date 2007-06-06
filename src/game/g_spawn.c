@@ -75,7 +75,6 @@ typedef enum {
 	F_LSTRING,					/* string on disk, pointer in memory, TAG_LEVEL */
 	F_GSTRING,					/* string on disk, pointer in memory, TAG_GAME */
 	F_VECTOR,
-	F_ANGLEHACK,
 	F_EDICT,					/* index on disk, pointer in memory */
 	F_CLIENT,					/* index on disk, pointer in memory */
 	F_FUNCTION,
@@ -188,7 +187,6 @@ static void ED_ParseField (const char *key, const char *value, edict_t * ent)
 {
 	const field_t *f;
 	byte *b;
-	float v;
 	vec3_t vec;
 
 	for (f = fields; f->name; f++) {
@@ -214,12 +212,6 @@ static void ED_ParseField (const char *key, const char *value, edict_t * ent)
 				break;
 			case F_FLOAT:
 				*(float *) (b + f->ofs) = atof(value);
-				break;
-			case F_ANGLEHACK:
-				v = atof(value);
-				((float *) (b + f->ofs))[0] = 0;
-				((float *) (b + f->ofs))[1] = v;
-				((float *) (b + f->ofs))[2] = 0;
 				break;
 			case F_IGNORE:
 				break;
