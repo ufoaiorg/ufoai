@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../client/client.h"
 #include "winquake.h"
 
-#if defined DEBUG && defined _MSC_VER
+#if defined DEBUG && defined _MSC_VER >= 1300
 #include <intrin.h>
 #endif
 

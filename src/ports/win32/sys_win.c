@@ -36,11 +36,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #if _MSC_VER >= 1300 /* >= MSVC 7.0 */
 #include <dbghelp.h>
+# ifdef DEBUG
+# include <intrin.h>
+# endif
 #endif
 
-#if defined DEBUG && defined _MSC_VER
-#include <intrin.h>
-#endif
 
 #define MINIMUM_WIN_MEMORY	0x0a00000
 #define MAXIMUM_WIN_MEMORY	0x1000000

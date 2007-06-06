@@ -29,7 +29,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <direct.h>
 #include <io.h>
 #include <conio.h>
-#if defined DEBUG && defined _MSC_VER
+#if defined DEBUG && defined _MSC_VER >= 1300
 #include <intrin.h>
 #endif
 
@@ -266,7 +266,7 @@ void Sys_FindClose (void)
 void Sys_DebugBreak (void)
 {
 #if defined DEBUG
-# ifdef _MSC_VER
+# if _MSC_VER >= 1300
 	__debugbreak();	/* break execution before game shutdown */
 # else
 	/*DebugBreak();*/

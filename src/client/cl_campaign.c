@@ -35,7 +35,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* public vars */
 static mission_t missions[MAX_MISSIONS];	/**< Document me. */
 static int numMissions;				/**< Document me. */
-actMis_t *selMis;				/**< Document me. */
+actMis_t *selMis;				/**< Currently selected mission on geoscape */
 
 static campaign_t campaigns[MAX_CAMPAIGNS];	/**< Document me. */
 static int numCampaigns = 0;			/**< Document me. */
@@ -45,7 +45,7 @@ static stage_t stages[MAX_STAGES];		/**< Document me. */
 static int numStageSets = 0;			/**< Document me. */
 static int numStages = 0;			/**< Document me. */
 
-campaign_t *curCampaign;			/**< Document me. */
+campaign_t *curCampaign;			/**< Current running campaign */
 ccs_t ccs;					/**< Document me. */
 base_t *baseCurrent;				/**< Pointer to current base. */
 

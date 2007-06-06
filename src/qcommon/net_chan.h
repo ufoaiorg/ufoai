@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 
 #ifdef _WINDOWS
-#include <winsock.h>
+# include <winsock.h>
 #endif
 
 #ifdef __linux__

@@ -47,7 +47,7 @@ extern void SV_SetMaster_f (void)
 		Com_Printf("SV_SetMaster_f: Bad Master IP");
 
 	if (master_adr.port == 0)
-		master_adr.port = htons(masterserver_port->integer);
+		master_adr.port = (unsigned)BigShort(masterserver_port->integer);
 
 	Com_Printf("Master server at %s - sending a ping\n", NET_AdrToString(master_adr));
 
