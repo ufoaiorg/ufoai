@@ -1497,7 +1497,7 @@ qboolean FS_FileExists (const char *filename)
 char* FS_GetBasePath (char* filename)
 {
 	char* pathSep = filename;
-	char* endPos;
+	char* endPos = NULL;
 
 	FS_NormPath(filename);
 	while ((pathSep = strstr(pathSep, "/")) != NULL) {
