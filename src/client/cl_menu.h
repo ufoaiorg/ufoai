@@ -95,6 +95,20 @@ typedef enum {
 	MN_DATA_MAX
 } menuDataValues_t;
 
+/* all available select box options - for all menunodes */
+#define MAX_SELECT_BOX_OPTIONS 64
+#define SELECTBOX_LEFTSIDE_WIDTH 7.0f
+
+/** @brief MN_SELECTBOX definition */
+typedef struct selectBoxOptions_s {
+	char id[MAX_VAR];	/**< text for the select box - V_TRANSLATION2_STRING */
+	char label[MAX_VAR];	/**< text for the select box - V_TRANSLATION2_STRING */
+	char action[MAX_VAR];	/**< execute this when the value is selected */
+	char value[MAX_VAR];	/**< the value the cvar should get */
+	struct selectBoxOptions_s *next;	/**< pointer to next option entry for this node
+							 * NULL terminated for each node */
+} selectBoxOptions_t;
+
 /** @brief menu node */
 typedef struct menuNode_s {
 	void *data[6];				/**< needs to be first */
@@ -118,7 +132,10 @@ typedef struct menuNode_s {
 	int timeOut;				/**< ms value until invis is set (see cl.time) */
 	int timePushed;				/**< when a menu was pushed this value is set to cl.time */
 	qboolean timeOutOnce;		/**< timeOut is decreased if this value is true */
-	int num, height;			/**< textfields - num: menutexts-id; height: max. rows to show */
+	int num;					/**< textfields: menutexts-id */
+	int height;					/**< textfields: max. rows to show
+								 * select box: options count */
+	selectBoxOptions_t* options;	/**< pointer to select box options when type is MN_SELECTBOX */
 	vec4_t color;				/**< rgba */
 	vec4_t bgcolor;				/**< rgba */
 	vec4_t bordercolor;			/**< rgba - see border and padding */

@@ -167,6 +167,15 @@ static const value_t nps[] = {
 	{NULL, V_NULL, 0, 0},
 };
 
+/** @brief valid properties for a select box */
+static const value_t selectBoxValues[] = {
+	{"label", V_STRING, offsetof(selectBoxOptions_t, label), 0},
+	{"action", V_STRING, offsetof(selectBoxOptions_t, action), 0},
+	{"value", V_STRING, offsetof(selectBoxOptions_t, value), 0},
+
+	{NULL, V_NULL, 0, 0},
+};
+
 /** @brief valid properties for a menu model definition */
 static const value_t menuModelValues[] = {
 	{"model", V_CLIENT_HUNK_STRING, offsetof(menuModel_t, model), 0},
@@ -181,6 +190,7 @@ static const value_t menuModelValues[] = {
 	{"color", V_COLOR, offsetof(menuModel_t, color), sizeof(vec4_t)},
 	{"tag", V_CLIENT_HUNK_STRING, offsetof(menuModel_t, tag), 0},
 	{"parent", V_CLIENT_HUNK_STRING, offsetof(menuModel_t, parent), 0},
+
 	{NULL, V_NULL, 0, 0},
 };
 
@@ -251,6 +261,9 @@ static int menuStackPos = -1;
 
 inventory_t *menuInventory = NULL;
 const char *menuText[MAX_MENUTEXTS];
+
+static selectBoxOptions_t menuSelectBoxes[MAX_SELECT_BOX_OPTIONS];
+static int numSelectBoxes;
 
 static cvar_t *mn_escpop;
 static cvar_t *mn_debugmenu;
@@ -912,7 +925,7 @@ static qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 	}
 
 	/* checkboxes don't need action nodes */
-	if (node->type != MN_CHECKBOX) {
+	if (node->type != MN_CHECKBOX && node->type != MN_SELECTBOX) {
 		/* check for click action */
 		if (node->invis || (!node->click && !node->rclick && !node->mclick && !node->wheel && !node->mouseIn && !node->mouseOut && !node->wheelUp && !node->wheelDown))
 			return qfalse;
@@ -930,9 +943,21 @@ static qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 				re.DrawGetPicSize(&sx, &sy, node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]);
 		} else
 			return qfalse;
+#if 0
+		/* @todo: Check this */
+		Vector2Set(node->size, sx, sy); /* speed up further calls */
+#endif
 	} else {
 		sx = node->size[0];
 		sy = node->size[1];
+	}
+
+	/* hardcoded value for select box from selectbox.tga image */
+	if (node->type == MN_SELECTBOX) {
+		sx += 20;
+		/* state is set when the selectbox is hovered */
+		if (node->state)
+			sy += (node->size[1] * node->height);
 	}
 
 	tx = x - node->pos[0];
@@ -1113,6 +1138,44 @@ static void MN_CheckboxClick (menuNode_t * node)
 }
 
 /**
+ * @brief Handles selectboxes clicks
+ */
+static void MN_SelectboxClick (menu_t * menu, menuNode_t * node, int y)
+{
+	selectBoxOptions_t* selectBoxOption;
+	int clickedAtOption;
+
+	clickedAtOption = (y - node->pos[1]);
+
+	if (node->size[1])
+		clickedAtOption = (clickedAtOption - node->size[1]) / node->size[1];
+	else
+		clickedAtOption = (clickedAtOption - 20) / 20; /* default height - see selectbox.tga */
+
+	if (clickedAtOption < 0 || clickedAtOption >= node->height)
+		return;
+
+	/* no cvar given */
+	if (!node->data[0] || !*(char*)node->data[0] || strlen((char*)node->data[0]) < 7) {
+		Com_Printf("MN_SelectboxClick: node '%s' doesn't have a valid cvar assigned\n", node->name);
+		return;
+	}
+
+	/* only execute the click stuff if the selectbox is active */
+	if (node->state) {
+		selectBoxOption = node->options;
+		for (; clickedAtOption > 0 && selectBoxOption; selectBoxOption = selectBoxOption->next) {
+			clickedAtOption--;
+		}
+		if (selectBoxOption) {
+			/* strip '*cvar ' from data[0] */
+			Cvar_Set(&((char*)node->data[0])[6], selectBoxOption->value);
+			Com_Printf("Set cvar %s to %s\n", &((char*)node->data[0])[6], selectBoxOption->value);
+		}
+	}
+}
+
+/**
  * @brief Handles the bar cvar values
  * @sa Key_Message
  */
@@ -1274,7 +1337,8 @@ void MN_Click (int x, int y)
 		menu = menuStack[--sp];
 		execute_node = NULL;
 		for (node = menu->firstNode; node; node = node->next) {
-			if (node->type != MN_CONTAINER && node->type != MN_CHECKBOX && !node->click)
+			if (node->type != MN_CONTAINER && node->type != MN_CHECKBOX
+			 && node->type != MN_SELECTBOX && !node->click)
 				continue;
 
 			/* check whether mouse is over this node */
@@ -1302,6 +1366,9 @@ void MN_Click (int x, int y)
 				break;
 			case MN_CHECKBOX:
 				MN_CheckboxClick(node);
+				break;
+			case MN_SELECTBOX:
+				MN_SelectboxClick(menu, node, y);
 				break;
 			case MN_MODEL:
 				MN_ModelClick(node);
@@ -1930,6 +1997,7 @@ void MN_DrawMenus (void)
 	char *anim;					/* model anim state */
 	char source[MAX_VAR] = "";
 	int sp, pp;
+	int selBoxX, selBoxY;
 	item_t item = {1, NONE, NONE}; /* 1 so it's not reddish; fake item anyway */
 	vec4_t color;
 	int mouseOver = 0;
@@ -2113,6 +2181,50 @@ void MN_DrawMenus (void)
 							break;
 						default:
 							Com_Printf("Error - invalid value for MN_CHECKBOX node - only 0/1 allowed\n");
+						}
+					}
+					break;
+
+				case MN_SELECTBOX:
+					font = MN_GetFont(menu, node);
+					selBoxX = node->pos[0] + SELECTBOX_LEFTSIDE_WIDTH;
+					selBoxY = node->pos[1] + 2;
+
+					/* left border */
+					re.DrawNormPic(node->pos[0], node->pos[1], SELECTBOX_LEFTSIDE_WIDTH, node->size[1],
+						SELECTBOX_LEFTSIDE_WIDTH, 20.0f, 0.0f, 0.0f, node->align, node->blend, "menu/selectbox");
+					/* stretched middle bar */
+					re.DrawNormPic(node->pos[0] + SELECTBOX_LEFTSIDE_WIDTH, node->pos[1], node->size[0], node->size[1],
+						10.0f, 20.0f, 9.0f, 0.0f, node->align, node->blend, "menu/selectbox");
+					/* right border (arrow) */
+					re.DrawNormPic(node->pos[0] + SELECTBOX_LEFTSIDE_WIDTH + node->size[0], node->pos[1], 20.0f, node->size[1],
+						32.0f, 20.0f, 12.0f, 0.0f, node->align, node->blend, "menu/selectbox");
+					re.FontDrawString(font, node->align, selBoxX, selBoxY,
+						selBoxX, selBoxY, node->size[0] - 4, 0,
+						node->texh[0], ref, 0, 0, NULL, qfalse);
+
+					/* active? */
+					if (node->state) {
+						selectBoxOptions_t* selectBoxOption;
+						selBoxY += node->size[1];
+
+						/* drop down menu */
+						/* left border */
+						re.DrawNormPic(node->pos[0], node->pos[1] + node->size[1], SELECTBOX_LEFTSIDE_WIDTH, node->size[1] * node->height,
+							SELECTBOX_LEFTSIDE_WIDTH, 24.0f, 0.0f, 0.22f, node->align, node->blend, "menu/selectbox");
+						/* stretched middle bar */
+						re.DrawNormPic(node->pos[0] + SELECTBOX_LEFTSIDE_WIDTH, node->pos[1] + node->size[1], node->size[0], node->size[1] * node->height,
+							10.0f, 24.0f, 8.0f, 22.0f, node->align, node->blend, "menu/selectbox");
+						/* right border (arrow) */
+						re.DrawNormPic(node->pos[0] + SELECTBOX_LEFTSIDE_WIDTH + node->size[0], node->pos[1] + node->size[1], 20.0f, node->size[1] * node->height,
+							22.0f, 24.0f, 15.0f, 22.0f, node->align, node->blend, "menu/selectbox");
+
+						/* now draw all available options for this selectbox */
+						for (selectBoxOption = node->options; selectBoxOption; selectBoxOption = selectBoxOption->next) {
+							re.FontDrawString(font, node->align, selBoxX, selBoxY,
+								selBoxX, node->pos[1] + node->size[1], node->size[0] - 4, 0,
+								node->texh[0], selectBoxOption->label, 0, 0, NULL, qfalse);
+							selBoxY += node->size[1];
 						}
 					}
 					break;
@@ -3253,6 +3365,7 @@ void MN_ResetMenus (void)
 	numMenuModels = 0;
 	menuStackPos = 0;
 	numTutorials = 0;
+	numSelectBoxes = 0;
 
 	/* add commands */
 	mn_escpop = Cvar_Get("mn_escpop", "1", 0, NULL);
@@ -3534,8 +3647,9 @@ qboolean MN_ParseAction (menuNode_t * menuNode, menuAction_t * action, char **te
 
 /**
  * @brief
+ * @sa MN_ParseMenuBody
  */
-qboolean MN_ParseNodeBody (menuNode_t * node, char **text, char **token)
+static qboolean MN_ParseNodeBody (menuNode_t * node, char **text, char **token)
 {
 	const char *errhead = "MN_ParseNodeBody: unexpected end of file (node";
 	qboolean found;
@@ -3683,6 +3797,74 @@ qboolean MN_ParseNodeBody (menuNode_t * node, char **text, char **token)
 				node->excludeNum++;
 			else
 				Com_Printf("MN_ParseNodeBody: exluderect limit exceeded (max: %i)\n", MAX_EXLUDERECTS);
+		/* for MN_SELECTBOX */
+		} else if (!Q_strncmp(*token, "option", 7)) {
+			selectBoxOptions_t *selectBoxOption;
+			/* get parameters */
+			*token = COM_EParse(text, errhead, node->name);
+			if (!*text)
+				return qfalse;
+			Q_strncpyz(menuSelectBoxes[numSelectBoxes].id, *token, sizeof(menuSelectBoxes[numSelectBoxes].id));
+			Com_Printf("...found selectbox: '%s'\n", *token);
+
+			*token = COM_EParse(text, errhead, node->name);
+			if (!*text)
+				return qfalse;
+			if (**token != '{') {
+				Com_Printf("MN_ParseNodeBody: node with bad option definition ignored (node \"%s\")\n", node->name);
+				continue;
+			}
+
+			if (numSelectBoxes >= MAX_SELECT_BOX_OPTIONS) {
+				FS_SkipBlock(text);
+				Com_Printf("MN_ParseNodeBody: Too many option entries for node %s\n", node->name);
+				return qfalse;
+			}
+
+			/**
+			 * the options data can be defined like this
+			 * @code
+			 * option string {
+			 *  value "value"
+			 *  action "command string"
+			 * }
+			 * @endcode
+			 * The strings will appear in the drop down list of the select box
+			 * if you select the 'string', the 'cvarname' will be set to 'value'
+			 * and if action is defined (which is a console/script command string)
+			 * this one is executed on each selection
+			 * @sa
+			 */
+
+			do {
+				*token = COM_EParse(text, errhead, node->name);
+				if (!*text)
+					return qfalse;
+				if (**token == '}')
+					break;
+				for (val = selectBoxValues; val->string; val++)
+					if (!Q_strncmp(*token, val->string, sizeof(val->string))) {
+						/* get parameter values */
+						*token = COM_EParse(text, errhead, node->name);
+						if (!*text)
+							return qfalse;
+						Com_ParseValue(&menuSelectBoxes[numSelectBoxes], *token, val->type, val->ofs, val->size);
+						break;
+					}
+				if (!val->string)
+					Com_Printf("MN_ParseNodeBody: unknown options value: '%s' - ignore it\n", *token);
+			} while (**token != '}');
+			/* initial options entry */
+			if (!node->options)
+				node->options = &menuSelectBoxes[numSelectBoxes];
+			else {
+				/* link it in */
+				for (selectBoxOption = node->options; selectBoxOption->next; selectBoxOption = selectBoxOption->next);
+				selectBoxOption->next = &menuSelectBoxes[numSelectBoxes];
+				selectBoxOption->next->next = NULL;
+			}
+			node->height++;
+			numSelectBoxes++;
 		} else {
 			/* unknown token, print message and continue */
 			Com_Printf("MN_ParseNodeBody: unknown token \"%s\" ignored (node \"%s\")\n", *token, node->name);
@@ -3694,8 +3876,9 @@ qboolean MN_ParseNodeBody (menuNode_t * node, char **text, char **token)
 
 /**
  * @brief
+ * @sa MN_ParseNodeBody
  */
-qboolean MN_ParseMenuBody (menu_t * menu, char **text)
+static qboolean MN_ParseMenuBody (menu_t * menu, char **text)
 {
 	const char *errhead = "MN_ParseMenuBody: unexpected end of file (menu";
 	char *token;
@@ -3705,6 +3888,7 @@ qboolean MN_ParseMenuBody (menu_t * menu, char **text)
 
 	lastNode = NULL;
 
+	/* FIXME: why increasing numNodes here? */
 	/* if inheriting another menu, link in the super menu's nodes */
 	for (node = menu->firstNode; node; node = node->next) {
 		if (numNodes >= MAX_MENUNODES)
