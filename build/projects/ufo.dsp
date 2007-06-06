@@ -43,7 +43,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /c
-# ADD CPP /nologo /G5 /W4 /GX /Zd /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
+# ADD CPP /nologo /G5 /MT /W4 /GX /Zd /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /YX /FD /c
 # ADD BASE MTL /nologo /D "NDEBUG" /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "NDEBUG"
@@ -53,8 +53,8 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /machine:I386
-# ADD LINK32 winmm.lib wsock32.lib kernel32.lib user32.lib gdi32.lib /nologo /subsystem:windows /machine:I386 /out:"..\..\ufo.exe"
-# SUBTRACT LINK32 /incremental:yes /debug /nodefaultlib
+# ADD LINK32 winmm.lib wsock32.lib kernel32.lib user32.lib gdi32.lib msvcrt.lib libc.lib /nologo /subsystem:windows /machine:I386 /nodefaultlib /out:"..\..\ufo.exe"
+# SUBTRACT LINK32 /incremental:yes /map /debug
 
 !ELSEIF  "$(CFG)" == "ufo - Win32 Debug"
 
@@ -70,18 +70,18 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /Zi /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /YX /c
-# ADD CPP /nologo /G5 /W3 /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /FR /FD /c
+# ADD CPP /nologo /G5 /MTd /W3 /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /FR /FD /c
 # SUBTRACT CPP /YX
 # ADD BASE MTL /nologo /D "_DEBUG" /win32
 # ADD MTL /nologo /D "_DEBUG" /mktyplib203 /win32
 # ADD BASE RSC /l 0x409 /d "_DEBUG"
-# ADD RSC /l 0x409 /d "_DEBUG"
+# ADD RSC /l 0x409 /fo".\debug_ufo\ufo.res" /d "_DEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /debug /machine:I386
-# ADD LINK32 winmm.lib wsock32.lib gdi32.lib kernel32.lib user32.lib /nologo /subsystem:windows /map /debug /machine:I386 /out:"..\..\ufo.exe"
+# ADD LINK32 winmm.lib wsock32.lib gdi32.lib kernel32.lib user32.lib msvcrt.lib libc.lib /nologo /subsystem:windows /map /debug /machine:I386 /nodefaultlib /out:"..\..\ufo.exe"
 # SUBTRACT LINK32 /pdb:none
 
 !ENDIF 
@@ -407,6 +407,10 @@ SOURCE=..\..\src\client\cl_aircraft.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\client\cl_airfight.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\client\cl_aliencont.h
 # End Source File
 # Begin Source File
@@ -639,8 +643,16 @@ SOURCE=ufo.ico
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\ports\win32\ufo.ico
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\ports\win32\ufo.rc
 # PROP Exclude_From_Build 1
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\ports\win32\ufo_ded.ico
 # End Source File
 # Begin Source File
 

@@ -42,7 +42,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /G5 /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /D "DEDICATED_ONLY" /YX /FD /c
+# ADD CPP /nologo /G5 /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "DEDICATED_ONLY" /YX /FD /c
 # ADD BASE RSC /l 0x407 /d "NDEBUG"
 # ADD RSC /l 0x407 /d "NDEBUG"
 BSC32=bscmake.exe
@@ -50,8 +50,8 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
-# ADD LINK32 winmm.lib wsock32.lib gdi32.lib kernel32.lib user32.lib /nologo /subsystem:console /machine:I386 /out:"..\..\ufo_ded.exe"
-# SUBTRACT LINK32 /incremental:yes /nodefaultlib
+# ADD LINK32 winmm.lib wsock32.lib kernel32.lib user32.lib gdi32.lib msvcrt.lib libc.lib /nologo /subsystem:console /machine:I386 /nodefaultlib /out:"..\..\ufo_ded.exe"
+# SUBTRACT LINK32 /incremental:yes
 
 !ELSEIF  "$(CFG)" == "ufo_ded - Win32 Debug"
 
@@ -67,7 +67,7 @@ LINK32=link.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /GZ /c
-# ADD CPP /nologo /G5 /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /D "DEDICATED_ONLY" /YX /FD /GZ /c
+# ADD CPP /nologo /G5 /MTd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "DEDICATED_ONLY" /YX /FD /GZ /c
 # ADD BASE RSC /l 0x407 /d "_DEBUG"
 # ADD RSC /l 0x407 /d "_DEBUG"
 BSC32=bscmake.exe
@@ -75,7 +75,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 winmm.lib wsock32.lib gdi32.lib kernel32.lib user32.lib /nologo /subsystem:console /debug /machine:I386 /pdbtype:sept
+# ADD LINK32 winmm.lib wsock32.lib kernel32.lib user32.lib gdi32.lib msvcrt.lib libc.lib /nologo /subsystem:console /map /debug /machine:I386 /nodefaultlib /pdbtype:sept
 
 !ENDIF 
 
@@ -204,6 +204,10 @@ SOURCE=..\..\src\client\cl_aircraft.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\client\cl_airfight.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\client\cl_aliencont.h
 # End Source File
 # Begin Source File
@@ -213,6 +217,10 @@ SOURCE=..\..\src\client\cl_basemanagement.h
 # Begin Source File
 
 SOURCE=..\..\src\client\cl_campaign.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\cl_console.h
 # End Source File
 # Begin Source File
 
@@ -228,7 +236,15 @@ SOURCE=..\..\src\client\cl_hospital.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\client\cl_hunk.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\client\cl_input.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\cl_inventory.h
 # End Source File
 # Begin Source File
 
@@ -237,6 +253,10 @@ SOURCE=..\..\src\client\cl_keys.h
 # Begin Source File
 
 SOURCE=..\..\src\client\cl_market.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\cl_menu.h
 # End Source File
 # Begin Source File
 
@@ -385,6 +405,19 @@ SOURCE=..\..\src\ports\win32\zlib.h
 # Begin Source File
 
 SOURCE=..\..\src\ports\win32\ufo.rc
+
+!IF  "$(CFG)" == "ufo_ded - Win32 Release"
+
+# ADD BASE RSC /l 0x407 /i "\Development\ufoai\trunk\src\ports\win32"
+# ADD RSC /l 0x407 /fo".\release_ufoded\ufo.res" /i "\Development\ufoai\trunk\src\ports\win32"
+
+!ELSEIF  "$(CFG)" == "ufo_ded - Win32 Debug"
+
+# ADD BASE RSC /l 0x407 /i "\Development\ufoai\trunk\src\ports\win32"
+# ADD RSC /l 0x407 /fo".\debug_ufoded\ufo.res" /i "\Development\ufoai\trunk\src\ports\win32"
+
+!ENDIF 
+
 # End Source File
 # Begin Source File
 

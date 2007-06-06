@@ -71,18 +71,6 @@ Package=<5>
 
 Package=<4>
 {{{
-    Begin Project Dependency
-    Project_Dep_Name game
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name ref_gl
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name snd_wapi
-    End Project Dependency
-    Begin Project Dependency
-    Project_Dep_Name ufo2map
-    End Project Dependency
 }}}
 
 ###############################################################################
