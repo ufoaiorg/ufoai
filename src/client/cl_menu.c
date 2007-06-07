@@ -1187,6 +1187,13 @@ static void MN_SelectboxClick (menu_t * menu, menuNode_t * node, int y)
 		if (selectBoxOption) {
 			/* strip '*cvar ' from data[0] - length is already checked above */
 			Cvar_Set(&((char*)node->data[MN_DATA_MODEL_SKIN_OR_CVAR])[6], selectBoxOption->value);
+			if (*selectBoxOption->action) {
+#ifdef DEBUG
+				if (selectBoxOption->action[strlen(selectBoxOption->action)-1] != ';')
+					Com_Printf("selectbox option with none terminated action command");
+#endif
+				Cbuf_AddText(selectBoxOption->action);
+			}
 		}
 	}
 }
