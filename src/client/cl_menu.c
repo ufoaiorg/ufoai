@@ -957,8 +957,21 @@ static qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 	if (node->type == MN_SELECTBOX) {
 		sx += 20;
 		/* state is set when the selectbox is hovered */
-		if (node->state)
+		if (node->state) {
+			int hoverOptionID;
 			sy += (node->size[1] * node->height);
+			/* hover a given entry in the list */
+			hoverOptionID = (y - node->pos[1]);
+
+			if (node->size[1])
+				hoverOptionID = (hoverOptionID - node->size[1]) / node->size[1];
+			else
+				hoverOptionID = (hoverOptionID - SELECTBOX_DEFAULT_HEIGHT) / SELECTBOX_DEFAULT_HEIGHT;
+
+			if (hoverOptionID >= 0 && hoverOptionID < node->height) {
+				node->options[hoverOptionID].hovered = qtrue;
+			}
+		}
 	}
 
 	tx = x - node->pos[0];
@@ -1152,7 +1165,7 @@ static void MN_SelectboxClick (menu_t * menu, menuNode_t * node, int y)
 	if (node->size[1])
 		clickedAtOption = (clickedAtOption - node->size[1]) / node->size[1];
 	else
-		clickedAtOption = (clickedAtOption - 20) / 20; /* default height - see selectbox.tga */
+		clickedAtOption = (clickedAtOption - SELECTBOX_DEFAULT_HEIGHT) / SELECTBOX_DEFAULT_HEIGHT; /* default height - see selectbox.tga */
 
 	if (clickedAtOption < 0 || clickedAtOption >= node->height)
 		return;
@@ -2131,7 +2144,7 @@ void MN_DrawMenus (void)
 				color[3] = node->color[3];
 				if (node->mousefx && node->type == MN_PIC && mouseOver && sp > pp)
 					re.DrawColor(color);
-				else
+				else if (node->type != MN_SELECTBOX)
 					re.DrawColor(node->color);
 
 				/* get the reference */
@@ -2207,7 +2220,7 @@ void MN_DrawMenus (void)
 						re.DrawNormPic(node->pos[0] + SELECTBOX_SIDE_WIDTH, node->pos[1], node->size[0], node->size[1],
 							12.0f, 20.0f, 7.0f, 0.0f, node->align, node->blend, image);
 						/* right border (arrow) */
-						re.DrawNormPic(node->pos[0] + SELECTBOX_SIDE_WIDTH + node->size[0], node->pos[1], 20.0f, node->size[1],
+						re.DrawNormPic(node->pos[0] + SELECTBOX_SIDE_WIDTH + node->size[0], node->pos[1], SELECTBOX_DEFAULT_HEIGHT, node->size[1],
 							32.0f, 20.0f, 12.0f, 0.0f, node->align, node->blend, image);
 						/* draw the label for the current selected option */
 						for (selectBoxOption = node->options; selectBoxOption; selectBoxOption = selectBoxOption->next) {
@@ -2237,10 +2250,17 @@ void MN_DrawMenus (void)
 
 							/* now draw all available options for this selectbox */
 							for (selectBoxOption = node->options; selectBoxOption; selectBoxOption = selectBoxOption->next) {
+								/* draw the hover effect */
+								if (selectBoxOption->hovered)
+									re.DrawFill(selBoxX, selBoxY, node->size[0], SELECTBOX_DEFAULT_HEIGHT, ALIGN_UL, node->color);
+								/* print the option label */
 								re.FontDrawString(font, node->align, selBoxX, selBoxY,
 									selBoxX, node->pos[1] + node->size[1], node->size[0] - 4, 0,
 									node->texh[0], _(selectBoxOption->label), 0, 0, NULL, qfalse);
+								/* next entries' position */
 								selBoxY += node->size[1];
+								/* reset the hovering - will be recalculated next frame */
+								selectBoxOption->hovered = qfalse;
 							}
 							/* left side */
 							re.DrawNormPic(node->pos[0], selBoxY - SELECTBOX_SPACER, SELECTBOX_SIDE_WIDTH, SELECTBOX_BOTTOM_HEIGHT,

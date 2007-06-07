@@ -97,6 +97,7 @@ typedef enum {
 
 /* all available select box options - for all menunodes */
 #define MAX_SELECT_BOX_OPTIONS 64
+#define SELECTBOX_DEFAULT_HEIGHT 20.0f
 #define SELECTBOX_SIDE_WIDTH 7.0f
 #define SELECTBOX_BOTTOM_HEIGHT 4.0f
 #define SELECTBOX_SPACER 2.0f
@@ -109,6 +110,7 @@ typedef struct selectBoxOptions_s {
 	char value[MAX_VAR];	/**< the value the cvar should get */
 	struct selectBoxOptions_s *next;	/**< pointer to next option entry for this node
 							 * NULL terminated for each node */
+	qboolean hovered;		/**< current selected option entry selected? */
 } selectBoxOptions_t;
 
 /** @brief menu node */
