@@ -271,38 +271,6 @@ menu options_video
 		string	"_Texture resolution cap:"
 		pos		"500 230"
 	}
-	string texres_value
-	{
-		string	"*cvar mn_texres"
-		pos		"840 230"
-		align	ur
-	}
-	pic texres_dec
-	{
-		image	menu/buttons_small
-		pos		"868 234"
-		texl	"0 0"
-		texh	"16 16"
-		mousefx	true
-		click
-		{
-			cmd "mn_modifystring gl_maxtexres -1 256:512:1024:2048:4096:8192;"
-			cmd "mn_translate gl_maxtexres mn_texres 256:Low,512:Medium,1024:Normal,2048:High,4096:Excellent,8192:Extreme;"
-		}
-	}
-	pic texres_inc
-	{
-		image	menu/buttons_small
-		pos		"884 234"
-		texl	"16 0"
-		texh	"32 16"
-		mousefx	true
-		click
-		{
-			cmd "mn_modifystring gl_maxtexres +1 256:512:1024:2048:4096:8192;"
-			cmd "mn_translate gl_maxtexres mn_texres 256:Low,512:Medium,1024:Normal,2048:High,4096:Excellent,8192:Extreme;"
-		}
-	}
 
 	string fps_str
 	{
@@ -584,6 +552,44 @@ menu options_video
 		click	{ }
 	}
 
+	/* must be the last one - otherwise other strings and images will shine through */
+	selectbox texres_box
+	{
+		pos	"774 232"
+		size	"100 20"
+		value	"*cvar gl_maxtexres"
+		option low_value {
+			label	"_Low"
+			value	"256"
+			action	""
+		}
+		option medium_value {
+			label	"_Medium"
+			value	"512"
+			action	""
+		}
+		option normal_value {
+			label	"_Normal"
+			value	"1024"
+			action	""
+		}
+		option high_value {
+			label	"_High"
+			value	"2048"
+			action	""
+		}
+		option excellent_value {
+			label	"_Excellent"
+			value	"4096"
+			action	""
+		}
+		option extrem_value {
+			label	"_Extreme"
+			value	"8192"
+			action	""
+		}
+	}
+
 	func init
 	{
 		cmd "copy mn_glmode gl_mode;"
@@ -594,7 +600,6 @@ menu options_video
 		cmd "mn_translate r_texture_lod mn_lod 0:No,1:Yes;"
 		cmd "mn_translate r_isometric mn_isomode 0:No,1:Yes;"
 		cmd "mn_translate gl_ext_texture_compression mn_compression 0:No,1:Yes;"
-		cmd "mn_translate gl_maxtexres mn_texres 256:Low,512:Medium,1024:High,2048:Excellent;"
 		cmd "mn_translate gl_ext_multitexture mn_ext_multitexture 0:No,1:Yes;"
 	}
 	func close

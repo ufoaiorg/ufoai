@@ -169,7 +169,7 @@ static const value_t nps[] = {
 
 /** @brief valid properties for a select box */
 static const value_t selectBoxValues[] = {
-	{"label", V_STRING, offsetof(selectBoxOptions_t, label), 0},
+	{"label", V_TRANSLATION2_STRING, offsetof(selectBoxOptions_t, label), 0},
 	{"action", V_STRING, offsetof(selectBoxOptions_t, action), 0},
 	{"value", V_STRING, offsetof(selectBoxOptions_t, value), 0},
 
@@ -2207,7 +2207,7 @@ void MN_DrawMenus (void)
 							if (!Q_strcmp(selectBoxOption->value, ref)) {
 								re.FontDrawString(font, node->align, selBoxX, selBoxY,
 									selBoxX, selBoxY, node->size[0] - 4, 0,
-									node->texh[0], selectBoxOption->label, 0, 0, NULL, qfalse);
+									node->texh[0], _(selectBoxOption->label), 0, 0, NULL, qfalse);
 							}
 						}
 
@@ -2224,7 +2224,7 @@ void MN_DrawMenus (void)
 							for (selectBoxOption = node->options; selectBoxOption; selectBoxOption = selectBoxOption->next) {
 								re.FontDrawString(font, node->align, selBoxX, selBoxY,
 									selBoxX, node->pos[1] + node->size[1], node->size[0] - 4, 0,
-									node->texh[0], selectBoxOption->label, 0, 0, NULL, qfalse);
+									node->texh[0], _(selectBoxOption->label), 0, 0, NULL, qfalse);
 								selBoxY += node->size[1];
 							}
 						}
