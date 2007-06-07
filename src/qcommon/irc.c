@@ -34,11 +34,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #else
 #	include <netinet/in.h>
 #	include <arpa/inet.h>
-#	include <sys/socket.h>
 #	include <netdb.h>
-#	include <unistd.h>
 #	include <fcntl.h>
-#	include <errno.h>
 #endif
 
 #define STRINGIFY(x) #x
@@ -1327,9 +1324,8 @@ void Irc_Logic_Connect (const char *server, unsigned short port)
 void Irc_Logic_Disconnect (const char *reason)
 {
 	if (irc_connected) {
-		char buf[1024];
 		Com_Printf("Irc_Disconnect: %s\n", reason);
-		Irc_Proto_Quit(buf);
+		Irc_Proto_Quit(reason);
 		Irc_Proto_Disconnect();
 		irc_connected = qfalse;
 		chan = NULL;
