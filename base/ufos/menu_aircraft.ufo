@@ -400,7 +400,7 @@ menu aircraft_equip
 
 	pic bt_prev
 	{
-		tooltip "_Previous aircrat"
+		tooltip "_Previous aircraft"
 		image	menu/ufopedia_buttons1
 		pos		"10 665"
 		texl	"0 37"
