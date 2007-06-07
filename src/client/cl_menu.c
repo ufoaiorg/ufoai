@@ -150,6 +150,7 @@ static const value_t nps[] = {
 	{"md2", V_STRING, 0, 0},
 	{"anim", V_STRING, -1, 0},
 	{"tag", V_STRING, -2, 0},
+	{"cvar", V_STRING, -3, 0},	/* for selectbox */
 	{"skin", V_STRING, -3, 0},
 	/* -4 is animation state */
 	{"value", V_STRING, 0, 0},	/* e.g for MN_CHECKBOX */
@@ -1139,6 +1140,7 @@ static void MN_CheckboxClick (menuNode_t * node)
 
 /**
  * @brief Handles selectboxes clicks
+ * @sa MN_SELECTBOX
  */
 static void MN_SelectboxClick (menu_t * menu, menuNode_t * node, int y)
 {
@@ -1155,9 +1157,10 @@ static void MN_SelectboxClick (menu_t * menu, menuNode_t * node, int y)
 	if (clickedAtOption < 0 || clickedAtOption >= node->height)
 		return;
 
-	/* no cvar given */
+	/* the cvar string is stored in data[MN_DATA_MODEL_SKIN_OR_CVAR] */
+	/* no cvar given? */
 	/* check the min length because we will strip '*cvar ' to get the cvar name */
-	if (!node->data[0] || !*(char*)node->data[0] || strlen((char*)node->data[0]) < 7) {
+	if (!node->data[MN_DATA_MODEL_SKIN_OR_CVAR] || !*(char*)node->data[MN_DATA_MODEL_SKIN_OR_CVAR] || strlen((char*)node->data[MN_DATA_MODEL_SKIN_OR_CVAR]) < 7) {
 		Com_Printf("MN_SelectboxClick: node '%s' doesn't have a valid cvar assigned\n", node->name);
 		return;
 	}
@@ -1170,7 +1173,7 @@ static void MN_SelectboxClick (menu_t * menu, menuNode_t * node, int y)
 		}
 		if (selectBoxOption) {
 			/* strip '*cvar ' from data[0] - length is already checked above */
-			Cvar_Set(&((char*)node->data[0])[6], selectBoxOption->value);
+			Cvar_Set(&((char*)node->data[MN_DATA_MODEL_SKIN_OR_CVAR])[6], selectBoxOption->value);
 		}
 	}
 }
@@ -2188,20 +2191,24 @@ void MN_DrawMenus (void)
 					{
 						selectBoxOptions_t* selectBoxOption;
 						int selBoxX, selBoxY;
+						const char *image = ref;
+						if (!image)
+							image = "menu/selectbox";
+						ref = MN_GetReferenceString(menu, node->data[MN_DATA_MODEL_SKIN_OR_CVAR]);
 
 						font = MN_GetFont(menu, node);
-						selBoxX = node->pos[0] + SELECTBOX_LEFTSIDE_WIDTH;
-						selBoxY = node->pos[1] + 2;
+						selBoxX = node->pos[0] + SELECTBOX_SIDE_WIDTH;
+						selBoxY = node->pos[1] + SELECTBOX_SPACER;
 
 						/* left border */
-						re.DrawNormPic(node->pos[0], node->pos[1], SELECTBOX_LEFTSIDE_WIDTH, node->size[1],
-							SELECTBOX_LEFTSIDE_WIDTH, 20.0f, 0.0f, 0.0f, node->align, node->blend, "menu/selectbox");
+						re.DrawNormPic(node->pos[0], node->pos[1], SELECTBOX_SIDE_WIDTH, node->size[1],
+							SELECTBOX_SIDE_WIDTH, 20.0f, 0.0f, 0.0f, node->align, node->blend, image);
 						/* stretched middle bar */
-						re.DrawNormPic(node->pos[0] + SELECTBOX_LEFTSIDE_WIDTH, node->pos[1], node->size[0], node->size[1],
-							10.0f, 20.0f, 9.0f, 0.0f, node->align, node->blend, "menu/selectbox");
+						re.DrawNormPic(node->pos[0] + SELECTBOX_SIDE_WIDTH, node->pos[1], node->size[0], node->size[1],
+							12.0f, 20.0f, 7.0f, 0.0f, node->align, node->blend, image);
 						/* right border (arrow) */
-						re.DrawNormPic(node->pos[0] + SELECTBOX_LEFTSIDE_WIDTH + node->size[0], node->pos[1], 20.0f, node->size[1],
-							32.0f, 20.0f, 12.0f, 0.0f, node->align, node->blend, "menu/selectbox");
+						re.DrawNormPic(node->pos[0] + SELECTBOX_SIDE_WIDTH + node->size[0], node->pos[1], 20.0f, node->size[1],
+							32.0f, 20.0f, 12.0f, 0.0f, node->align, node->blend, image);
 						/* draw the label for the current selected option */
 						for (selectBoxOption = node->options; selectBoxOption; selectBoxOption = selectBoxOption->next) {
 							if (!Q_strcmp(selectBoxOption->value, ref)) {
@@ -2216,9 +2223,17 @@ void MN_DrawMenus (void)
 							selBoxY += node->size[1];
 
 							/* drop down menu */
+							/* left side */
+							re.DrawNormPic(node->pos[0], node->pos[1] + node->size[1], SELECTBOX_SIDE_WIDTH, node->size[1] * node->height,
+								7.0f, 28.0f, 0.0f, 21.0f, node->align, node->blend, image);
+
 							/* stretched middle bar */
-							re.DrawNormPic(node->pos[0] + SELECTBOX_LEFTSIDE_WIDTH, node->pos[1] + node->size[1], node->size[0], node->size[1] * node->height,
-								10.0f, 24.0f, 9.0f, 23.0f, node->align, node->blend, "menu/selectbox");
+							re.DrawNormPic(node->pos[0] + SELECTBOX_SIDE_WIDTH, node->pos[1] + node->size[1], node->size[0], node->size[1] * node->height,
+								16.0f, 28.0f, 7.0f, 21.0f, node->align, node->blend, image);
+
+							/* right side */
+							re.DrawNormPic(node->pos[0] + SELECTBOX_SIDE_WIDTH + node->size[0], node->pos[1] + node->size[1], SELECTBOX_SIDE_WIDTH, node->size[1] * node->height,
+								23.0f, 28.0f, 16.0f, 21.0f, node->align, node->blend, image);
 
 							/* now draw all available options for this selectbox */
 							for (selectBoxOption = node->options; selectBoxOption; selectBoxOption = selectBoxOption->next) {
@@ -2227,6 +2242,18 @@ void MN_DrawMenus (void)
 									node->texh[0], _(selectBoxOption->label), 0, 0, NULL, qfalse);
 								selBoxY += node->size[1];
 							}
+							/* left side */
+							re.DrawNormPic(node->pos[0], selBoxY - SELECTBOX_SPACER, SELECTBOX_SIDE_WIDTH, SELECTBOX_BOTTOM_HEIGHT,
+								7.0f, 32.0f, 0.0f, 28.0f, node->align, node->blend, image);
+
+							/* stretched middle bar */
+							re.DrawNormPic(node->pos[0] + SELECTBOX_SIDE_WIDTH, selBoxY - SELECTBOX_SPACER, node->size[0], SELECTBOX_BOTTOM_HEIGHT,
+								16.0f, 32.0f, 7.0f, 28.0f, node->align, node->blend, image);
+
+							/* right bottom side */
+							re.DrawNormPic(node->pos[0] + SELECTBOX_SIDE_WIDTH + node->size[0], selBoxY - SELECTBOX_SPACER,
+								SELECTBOX_SIDE_WIDTH, SELECTBOX_BOTTOM_HEIGHT,
+								23.0f, 32.0f, 16.0f, 28.0f, node->align, node->blend, image);
 						}
 						break;
 					}
@@ -2614,8 +2641,8 @@ void MN_DrawMenus (void)
 							menuModel = menuModel->next;
 						} else {
 							/* get skin */
-							if (node->data[MN_DATA_MODEL_SKIN] && *(char *) node->data[MN_DATA_MODEL_SKIN])
-								mi.skin = atoi(MN_GetReferenceString(menu, node->data[MN_DATA_MODEL_SKIN]));
+							if (node->data[MN_DATA_MODEL_SKIN_OR_CVAR] && *(char *) node->data[MN_DATA_MODEL_SKIN_OR_CVAR])
+								mi.skin = atoi(MN_GetReferenceString(menu, node->data[MN_DATA_MODEL_SKIN_OR_CVAR]));
 							else
 								mi.skin = 0;
 

@@ -555,9 +555,10 @@ menu options_video
 	/* must be the last one - otherwise other strings and images will shine through */
 	selectbox texres_box
 	{
+		image	"menu/selectbox_green"
 		pos	"774 232"
 		size	"100 20"
-		value	"*cvar gl_maxtexres"
+		cvar	"*cvar gl_maxtexres"
 		option low_value {
 			label	"_Low"
 			value	"256"

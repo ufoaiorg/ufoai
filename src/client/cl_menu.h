@@ -87,7 +87,7 @@ typedef enum {
 	MN_DATA_ANIM_OR_FONT,	/** This is the font string or the anim string
 						* from the *.anm files for the model */
 	MN_DATA_MODEL_TAG,	/**< the tag to place the model onto */
-	MN_DATA_MODEL_SKIN,	/**< the skin of the model */
+	MN_DATA_MODEL_SKIN_OR_CVAR,	/**< the skin of the model */
 	MN_DATA_MODEL_ANIMATION_STATE,	/**< holds then anim state for the current model
 						* model - also see MN_DATA_ANIM_OR_FONT */
 	MN_DATA_NODE_TOOLTIP,	/**< holds the tooltip for the menu */
@@ -97,7 +97,9 @@ typedef enum {
 
 /* all available select box options - for all menunodes */
 #define MAX_SELECT_BOX_OPTIONS 64
-#define SELECTBOX_LEFTSIDE_WIDTH 7.0f
+#define SELECTBOX_SIDE_WIDTH 7.0f
+#define SELECTBOX_BOTTOM_HEIGHT 4.0f
+#define SELECTBOX_SPACER 2.0f
 
 /** @brief MN_SELECTBOX definition */
 typedef struct selectBoxOptions_s {
