@@ -131,7 +131,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #endif /* HAVE_GETTEXT */
 
 /* to support the gnuc __attribute__ command */
-#ifndef __GNUC__
+#ifdef __ICC || !defined __GNUC__
 #  define __attribute__(x)  /*NOTHING*/
 #endif
 
