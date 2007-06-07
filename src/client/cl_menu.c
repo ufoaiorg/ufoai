@@ -1156,6 +1156,7 @@ static void MN_SelectboxClick (menu_t * menu, menuNode_t * node, int y)
 		return;
 
 	/* no cvar given */
+	/* check the min length because we will strip '*cvar ' to get the cvar name */
 	if (!node->data[0] || !*(char*)node->data[0] || strlen((char*)node->data[0]) < 7) {
 		Com_Printf("MN_SelectboxClick: node '%s' doesn't have a valid cvar assigned\n", node->name);
 		return;
@@ -1168,9 +1169,8 @@ static void MN_SelectboxClick (menu_t * menu, menuNode_t * node, int y)
 			clickedAtOption--;
 		}
 		if (selectBoxOption) {
-			/* strip '*cvar ' from data[0] */
+			/* strip '*cvar ' from data[0] - length is already checked above */
 			Cvar_Set(&((char*)node->data[0])[6], selectBoxOption->value);
-			Com_Printf("Set cvar %s to %s\n", &((char*)node->data[0])[6], selectBoxOption->value);
 		}
 	}
 }
@@ -1997,7 +1997,6 @@ void MN_DrawMenus (void)
 	char *anim;					/* model anim state */
 	char source[MAX_VAR] = "";
 	int sp, pp;
-	int selBoxX, selBoxY;
 	item_t item = {1, NONE, NONE}; /* 1 so it's not reddish; fake item anyway */
 	vec4_t color;
 	int mouseOver = 0;
@@ -2186,48 +2185,51 @@ void MN_DrawMenus (void)
 					break;
 
 				case MN_SELECTBOX:
-					font = MN_GetFont(menu, node);
-					selBoxX = node->pos[0] + SELECTBOX_LEFTSIDE_WIDTH;
-					selBoxY = node->pos[1] + 2;
-
-					/* left border */
-					re.DrawNormPic(node->pos[0], node->pos[1], SELECTBOX_LEFTSIDE_WIDTH, node->size[1],
-						SELECTBOX_LEFTSIDE_WIDTH, 20.0f, 0.0f, 0.0f, node->align, node->blend, "menu/selectbox");
-					/* stretched middle bar */
-					re.DrawNormPic(node->pos[0] + SELECTBOX_LEFTSIDE_WIDTH, node->pos[1], node->size[0], node->size[1],
-						10.0f, 20.0f, 9.0f, 0.0f, node->align, node->blend, "menu/selectbox");
-					/* right border (arrow) */
-					re.DrawNormPic(node->pos[0] + SELECTBOX_LEFTSIDE_WIDTH + node->size[0], node->pos[1], 20.0f, node->size[1],
-						32.0f, 20.0f, 12.0f, 0.0f, node->align, node->blend, "menu/selectbox");
-					re.FontDrawString(font, node->align, selBoxX, selBoxY,
-						selBoxX, selBoxY, node->size[0] - 4, 0,
-						node->texh[0], ref, 0, 0, NULL, qfalse);
-
-					/* active? */
-					if (node->state) {
+					{
 						selectBoxOptions_t* selectBoxOption;
-						selBoxY += node->size[1];
+						int selBoxX, selBoxY;
 
-						/* drop down menu */
+						font = MN_GetFont(menu, node);
+						selBoxX = node->pos[0] + SELECTBOX_LEFTSIDE_WIDTH;
+						selBoxY = node->pos[1] + 2;
+
 						/* left border */
-						re.DrawNormPic(node->pos[0], node->pos[1] + node->size[1], SELECTBOX_LEFTSIDE_WIDTH, node->size[1] * node->height,
-							SELECTBOX_LEFTSIDE_WIDTH, 24.0f, 0.0f, 0.22f, node->align, node->blend, "menu/selectbox");
+						re.DrawNormPic(node->pos[0], node->pos[1], SELECTBOX_LEFTSIDE_WIDTH, node->size[1],
+							SELECTBOX_LEFTSIDE_WIDTH, 20.0f, 0.0f, 0.0f, node->align, node->blend, "menu/selectbox");
 						/* stretched middle bar */
-						re.DrawNormPic(node->pos[0] + SELECTBOX_LEFTSIDE_WIDTH, node->pos[1] + node->size[1], node->size[0], node->size[1] * node->height,
-							10.0f, 24.0f, 8.0f, 22.0f, node->align, node->blend, "menu/selectbox");
+						re.DrawNormPic(node->pos[0] + SELECTBOX_LEFTSIDE_WIDTH, node->pos[1], node->size[0], node->size[1],
+							10.0f, 20.0f, 9.0f, 0.0f, node->align, node->blend, "menu/selectbox");
 						/* right border (arrow) */
-						re.DrawNormPic(node->pos[0] + SELECTBOX_LEFTSIDE_WIDTH + node->size[0], node->pos[1] + node->size[1], 20.0f, node->size[1] * node->height,
-							22.0f, 24.0f, 15.0f, 22.0f, node->align, node->blend, "menu/selectbox");
-
-						/* now draw all available options for this selectbox */
+						re.DrawNormPic(node->pos[0] + SELECTBOX_LEFTSIDE_WIDTH + node->size[0], node->pos[1], 20.0f, node->size[1],
+							32.0f, 20.0f, 12.0f, 0.0f, node->align, node->blend, "menu/selectbox");
+						/* draw the label for the current selected option */
 						for (selectBoxOption = node->options; selectBoxOption; selectBoxOption = selectBoxOption->next) {
-							re.FontDrawString(font, node->align, selBoxX, selBoxY,
-								selBoxX, node->pos[1] + node->size[1], node->size[0] - 4, 0,
-								node->texh[0], selectBoxOption->label, 0, 0, NULL, qfalse);
-							selBoxY += node->size[1];
+							if (!Q_strcmp(selectBoxOption->value, ref)) {
+								re.FontDrawString(font, node->align, selBoxX, selBoxY,
+									selBoxX, selBoxY, node->size[0] - 4, 0,
+									node->texh[0], selectBoxOption->label, 0, 0, NULL, qfalse);
+							}
 						}
+
+						/* active? */
+						if (node->state) {
+							selBoxY += node->size[1];
+
+							/* drop down menu */
+							/* stretched middle bar */
+							re.DrawNormPic(node->pos[0] + SELECTBOX_LEFTSIDE_WIDTH, node->pos[1] + node->size[1], node->size[0], node->size[1] * node->height,
+								10.0f, 24.0f, 9.0f, 23.0f, node->align, node->blend, "menu/selectbox");
+
+							/* now draw all available options for this selectbox */
+							for (selectBoxOption = node->options; selectBoxOption; selectBoxOption = selectBoxOption->next) {
+								re.FontDrawString(font, node->align, selBoxX, selBoxY,
+									selBoxX, node->pos[1] + node->size[1], node->size[0] - 4, 0,
+									node->texh[0], selectBoxOption->label, 0, 0, NULL, qfalse);
+								selBoxY += node->size[1];
+							}
+						}
+						break;
 					}
-					break;
 
 				case MN_STRING:
 					font = MN_GetFont(menu, node);
