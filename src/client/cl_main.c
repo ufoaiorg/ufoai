@@ -1715,6 +1715,11 @@ static void CL_PrecacheModels (void)
  */
 extern void CL_InitAfter (void)
 {
+	int i;
+	menu_t* menu;
+	menuNode_t* vidModesOptions;
+	selectBoxOptions_t* selectBoxOption;
+
 	cls.loadingPercent = 2.0f;
 
 	/* precache loading screen */
@@ -1746,6 +1751,21 @@ extern void CL_InitAfter (void)
 
 	/* link for faster access */
 	MN_LinkMenuModels();
+
+	menu = MN_GetMenu("options_video");
+	if (!menu)
+		Sys_Error("Could not find menu options_video\n");
+	vidModesOptions = MN_GetNode(menu, "select_res");
+	if (!vidModesOptions)
+		Sys_Error("Could not find node select_res in menu options_video\n");
+	for (i = 0; i < maxVidModes; i++) {
+		selectBoxOption = MN_AddSelectboxOption(vidModesOptions);
+		if (!selectBoxOption) {
+			return;
+		}
+		Com_sprintf(selectBoxOption->label, sizeof(selectBoxOption->label), "%i:%i", vid_modes[i].width, vid_modes[i].height);
+		Com_sprintf(selectBoxOption->value, sizeof(selectBoxOption->value), "%i", vid_modes[i].mode);
+	}
 }
 
 /**

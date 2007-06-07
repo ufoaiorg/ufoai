@@ -264,4 +264,6 @@ menu_t* MN_ActiveMenu(void);
 void MN_Popup(const char *title, const char *text);
 void MN_ParseTutorials(const char *title, char **text);
 
+selectBoxOptions_t* MN_AddSelectboxOption(menuNode_t *node);
+
 #endif /* CLIENT_CL_MENU_H */

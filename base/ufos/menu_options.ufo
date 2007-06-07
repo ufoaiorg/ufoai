@@ -152,30 +152,6 @@ menu options_video
 		string	"_Resolution:"
 		pos		"500 140"
 	}
-	string res_value
-	{
-		string	"*cvar mn_glmodestr"
-		pos		"840 140"
-		align	ur
-	}
-	pic res_dec
-	{
-		image	menu/buttons_small
-		pos		"868 144"
-		texl	"0 0"
-		texh	"16 16"
-		mousefx	true
-		click	{ cmd "mn_resolution_change -;" }
-	}
-	pic res_inc
-	{
-		image	menu/buttons_small
-		pos		"884 144"
-		texl	"16 0"
-		texh	"32 16"
-		mousefx	true
-		click	{ cmd "mn_resolution_change +;" }
-	}
 
 	pic res_test_pic
 	{
@@ -590,6 +566,16 @@ menu options_video
 			value	"8192"
 			action	""
 		}
+	}
+
+	selectbox select_res
+	{
+		pos		"774 142"
+		cvar	"*cvar mn_glmode"
+		image	"menu/selectbox_green"
+		size	"100 20"
+		color	"0.6 0.6 0.6 0.3"
+		// will be filled in CL_InitAfter
 	}
 
 	func init

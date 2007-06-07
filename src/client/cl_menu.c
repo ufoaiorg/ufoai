@@ -298,6 +298,39 @@ extern const char* MN_TranslateBool (qboolean value)
 		return _("no");
 }
 
+/**
+ * @brief Adds a new selectbox option to a selectbox node
+ * @sa MN_SELECTBOX
+ * @return NULL if menuSelectBoxes is 'full' - otherwise pointer to the selectBoxOption
+ * @param[in] node The node (must be of type MN_SELECTBOX) where you want to append
+ * the option
+ * @note You have to add the values manually to the option pointer
+ */
+extern selectBoxOptions_t* MN_AddSelectboxOption (menuNode_t *node)
+{
+	selectBoxOptions_t *selectBoxOption;
+
+	assert(node->type == MN_SELECTBOX);
+
+	if (numSelectBoxes >= MAX_SELECT_BOX_OPTIONS) {
+		Com_Printf("MN_AddSelectboxOption: numSelectBoxes exceeded - increase MAX_SELECT_BOX_OPTIONS\n");
+		return NULL;
+	}
+	/* initial options entry */
+	if (!node->options)
+		node->options = &menuSelectBoxes[numSelectBoxes];
+	else {
+		/* link it in */
+		for (selectBoxOption = node->options; selectBoxOption->next; selectBoxOption = selectBoxOption->next);
+		selectBoxOption->next = &menuSelectBoxes[numSelectBoxes];
+		selectBoxOption->next->next = NULL;
+	}
+	selectBoxOption = &menuSelectBoxes[numSelectBoxes];
+	node->height++;
+	numSelectBoxes++;
+	return selectBoxOption;
+}
+
 /*
 ==============================================================
 ACTION EXECUTION
@@ -2229,6 +2262,11 @@ void MN_DrawMenus (void)
 						if (!image)
 							image = "menu/selectbox";
 						ref = MN_GetReferenceString(menu, node->data[MN_DATA_MODEL_SKIN_OR_CVAR]);
+						if (!ref || !*ref) {
+							Com_Printf("MN_DrawMenus: skip node '%s' (MN_SELECTBOX) - no cvar given\n", node->name);
+							node->invis = qtrue;
+							break;
+						}
 
 						font = MN_GetFont(menu, node);
 						selBoxX = node->pos[0] + SELECTBOX_SIDE_WIDTH;
@@ -3205,28 +3243,6 @@ static void MN_ListMenuModels_f (void)
 }
 
 /**
- * @brief
- */
-void MN_ResolutionChange_f (void)
-{
-	char* action;
-
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: mn_resolution_change [-|+]\n");
-		return;
-	}
-	action = Cmd_Argv(1);
-	switch (*action) {
-	case '+':
-		Cbuf_ExecuteText(EXEC_NOW, va("mn_modify mn_glmode 1 -1 %i;", maxVidModes-1));
-		break;
-	case '-':
-		Cbuf_ExecuteText(EXEC_NOW, va("mn_modify mn_glmode -1 -1 %i;", maxVidModes-1));
-		break;
-	}
-}
-
-/**
  * @brief Prints a list of tab and newline seperated string to keylist char array that hold the key and the command desc
  */
 void MN_InitKeyList_f (void)
@@ -3452,8 +3468,6 @@ void MN_ResetMenus (void)
 
 	/* print the keybindings to menuText */
 	Cmd_AddCommand("mn_init_keylist", MN_InitKeyList_f, NULL);
-
-	Cmd_AddCommand("mn_resolution_change", MN_ResolutionChange_f, NULL);
 
 	/* tutorial stuff */
 	Cmd_AddCommand("listtutorials", MN_ListTutorials_f, "Show all tutorials");
@@ -3869,7 +3883,6 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, char **text, char **token)
 				Com_Printf("MN_ParseNodeBody: exluderect limit exceeded (max: %i)\n", MAX_EXLUDERECTS);
 		/* for MN_SELECTBOX */
 		} else if (!Q_strncmp(*token, "option", 7)) {
-			selectBoxOptions_t *selectBoxOption;
 			/* get parameters */
 			*token = COM_EParse(text, errhead, node->name);
 			if (!*text)
@@ -3924,17 +3937,7 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, char **text, char **token)
 				if (!val->string)
 					Com_Printf("MN_ParseNodeBody: unknown options value: '%s' - ignore it\n", *token);
 			} while (**token != '}');
-			/* initial options entry */
-			if (!node->options)
-				node->options = &menuSelectBoxes[numSelectBoxes];
-			else {
-				/* link it in */
-				for (selectBoxOption = node->options; selectBoxOption->next; selectBoxOption = selectBoxOption->next);
-				selectBoxOption->next = &menuSelectBoxes[numSelectBoxes];
-				selectBoxOption->next->next = NULL;
-			}
-			node->height++;
-			numSelectBoxes++;
+			MN_AddSelectboxOption(node);
 		} else {
 			/* unknown token, print message and continue */
 			Com_Printf("MN_ParseNodeBody: unknown token \"%s\" ignored (node \"%s\")\n", *token, node->name);
