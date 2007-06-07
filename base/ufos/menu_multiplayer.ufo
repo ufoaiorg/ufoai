@@ -930,7 +930,8 @@ menu mp_create_server
 	}
 	checkbox public_value
 	{
-		value	"*cvar public"
+		image	"menu/checkbox"
+		cvar	"*cvar public"
 		pos	"840 120"
 		align	ur
 	}
@@ -945,7 +946,7 @@ menu mp_create_server
 	}
 	checkbox morale_value
 	{
-		value	"*cvar sv_enablemorale"
+		cvar	"*cvar sv_enablemorale"
 		pos	"840 140"
 		align	ur
 	}
@@ -999,7 +1000,7 @@ menu mp_create_server
 	}
 	checkbox server_teamplay_value
 	{
-		value	"*cvar sv_teamplay"
+		cvar	"*cvar sv_teamplay"
 		pos	"840 180"
 		align	ur
 	}
@@ -1185,7 +1186,7 @@ menu mp_create_server
 	}
 	checkbox ai_autojoin_value
 	{
-		value	"*cvar ai_autojoin"
+		cvar	"*cvar ai_autojoin"
 		pos	"840 300"
 		align	ur
 	}
