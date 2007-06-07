@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-06-03 12:21+0200\n"
-"PO-Revision-Date: 2007-06-03 12:29+0100\n"
+"PO-Revision-Date: 2007-06-07 09:16+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -2365,7 +2365,7 @@ msgstr "Anisotrophisches Filtering:"
 
 #: ../base/ufos/menu_options.ufo:377
 msgid "Texture Lod:"
-msgstr "Textur Detaillierungsgrad:"
+msgstr "Texturdetaillierungsgrad:"
 
 #: ../base/ufos/menu_options.ufo:415
 msgid "Image Filter:"
@@ -2373,7 +2373,7 @@ msgstr "Texturenfilter:"
 
 #: ../base/ufos/menu_options.ufo:453
 msgid "Isometric Mode:"
-msgstr "IIsometrisch:"
+msgstr "Isometrisch:"
 
 #: ../base/ufos/menu_options.ufo:491
 msgid "Multitexturing:"
