@@ -153,7 +153,6 @@ static const value_t nps[] = {
 	{"cvar", V_STRING, -3, 0},	/* for selectbox */
 	{"skin", V_STRING, -3, 0},
 	/* -4 is animation state */
-	{"value", V_STRING, 0, 0},	/* e.g for MN_CHECKBOX */
 	{"string", V_STRING, 0, 0},	/* no gettext here - this can be a cvar, too */
 	{"font", V_STRING, -1, 0},
 	{"max", V_FLOAT, 0, 0},
@@ -935,7 +934,11 @@ static qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 	if (!node->size[0] || !node->size[1]) {
 		if (node->type == MN_CHECKBOX) {
 			/* the checked and unchecked should always have the same dimensions */
-			re.DrawGetPicSize(&sx, &sy, "menu/checkbox_checked");
+			if (!node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]) {
+				re.DrawGetPicSize(&sx, &sy, "menu/checkbox_checked");
+			} else {
+				re.DrawGetPicSize(&sx, &sy, va("%s_checked", (char*)node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]));
+			}
 		} else if (node->type == MN_PIC && node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]) {
 			if (node->texh[0] && node->texh[1]) {
 				sx = node->texh[0] - node->texl[0];
@@ -1138,17 +1141,15 @@ static void MN_Drag (const menuNode_t* const node, int x, int y)
  */
 static void MN_CheckboxClick (menuNode_t * node)
 {
-	char var[MAX_VAR];
 	int value;
 
-	assert(node->data[0]);
-	Q_strncpyz(var, node->data[0], sizeof(var));
+	assert(node->data[MN_DATA_MODEL_SKIN_OR_CVAR]);
 	/* no cvar? */
-	if (Q_strncmp(var, "*cvar", 5))
+	if (Q_strncmp(node->data[MN_DATA_MODEL_SKIN_OR_CVAR], "*cvar", 5))
 		return;
 
-	value = Cvar_VariableInteger(&var[6]) ^ 1;
-	Cvar_SetValue(&var[6], value);
+	value = Cvar_VariableInteger(&((char*)node->data[MN_DATA_MODEL_SKIN_OR_CVAR])[6]) ^ 1;
+	Cvar_SetValue(&((char*)node->data[MN_DATA_MODEL_SKIN_OR_CVAR])[6], value);
 }
 
 /**
@@ -1172,11 +1173,14 @@ static void MN_SelectboxClick (menu_t * menu, menuNode_t * node, int y)
 
 	/* the cvar string is stored in data[MN_DATA_MODEL_SKIN_OR_CVAR] */
 	/* no cvar given? */
-	/* check the min length because we will strip '*cvar ' to get the cvar name */
-	if (!node->data[MN_DATA_MODEL_SKIN_OR_CVAR] || !*(char*)node->data[MN_DATA_MODEL_SKIN_OR_CVAR] || strlen((char*)node->data[MN_DATA_MODEL_SKIN_OR_CVAR]) < 7) {
+	if (!node->data[MN_DATA_MODEL_SKIN_OR_CVAR] || !*(char*)node->data[MN_DATA_MODEL_SKIN_OR_CVAR]) {
 		Com_Printf("MN_SelectboxClick: node '%s' doesn't have a valid cvar assigned\n", node->name);
 		return;
 	}
+
+	/* no cvar? */
+	if (Q_strncmp((char*)node->data[MN_DATA_MODEL_SKIN_OR_CVAR], "*cvar", 5))
+		return;
 
 	/* only execute the click stuff if the selectbox is active */
 	if (node->state) {
@@ -2058,7 +2062,7 @@ void MN_DrawMenus (void)
 		for (node = menu->firstNode; node; node = node->next) {
 			if (!node->invis && ((node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL] /* 0 are images, models and strings e.g. */
 					|| node->type == MN_CONTAINER || node->type == MN_TEXT || node->type == MN_BASEMAP || node->type == MN_MAP)
-					|| (node->type == MN_ZONE && node->bgcolor[3]))) {
+					|| node->type == MN_CHECKBOX || node->type == MN_SELECTBOX || (node->type == MN_ZONE && node->bgcolor[3]))) {
 				/* if construct */
 				if (*node->depends.var) {
 					/* menuIfCondition_t */
@@ -2155,16 +2159,19 @@ void MN_DrawMenus (void)
 					re.DrawColor(node->color);
 
 				/* get the reference */
-				if (node->type != MN_BAR && node->type != MN_CONTAINER && node->type != MN_BASEMAP && node->type != MN_TEXT && node->type != MN_MAP
-					&& node->type != MN_ZONE) {
+				if (node->type != MN_BAR && node->type != MN_CONTAINER && node->type != MN_BASEMAP
+					&& node->type != MN_TEXT && node->type != MN_MAP && node->type != MN_ZONE) {
 					ref = MN_GetReferenceString(menu, node->data[MN_DATA_STRING_OR_IMAGE_OR_MODEL]);
 					if (!ref) {
-						/* bad reference */
-						node->invis = qtrue;
-						Com_Printf("MN_DrawActiveMenus: node \"%s\" bad reference \"%s\"\n", node->name, (char*)node->data);
-						continue;
-					}
-					Q_strncpyz(source, ref, MAX_VAR);
+						/* these have default values for their image */
+						if (node->type != MN_SELECTBOX && node->type != MN_CHECKBOX) {
+							/* bad reference */
+							node->invis = qtrue;
+							Com_Printf("MN_DrawActiveMenus: node \"%s\" bad reference \"%s\"\n", node->name, (char*)node->data);
+							continue;
+						}
+					} else
+						Q_strncpyz(source, ref, MAX_VAR);
 				} else {
 					ref = NULL;
 					*source = '\0';
@@ -2191,21 +2198,28 @@ void MN_DrawMenus (void)
 					break;
 
 				case MN_CHECKBOX:
-					if (ref && *ref) {
+					{
+						const char *image;
+						/* image set? */
+						if (ref && *ref)
+							image = ref;
+						else
+							image = "menu/checkbox";
+						ref = MN_GetReferenceString(menu, node->data[MN_DATA_MODEL_SKIN_OR_CVAR]);
 						switch (*ref) {
 						case '0':
 							re.DrawNormPic(node->pos[0], node->pos[1], node->size[0], node->size[1],
-								node->texh[0], node->texh[1], node->texl[0], node->texl[1], node->align, node->blend, "menu/checkbox_unchecked");
+								node->texh[0], node->texh[1], node->texl[0], node->texl[1], node->align, node->blend, va("%s_unchecked", image));
 							break;
 						case '1':
 							re.DrawNormPic(node->pos[0], node->pos[1], node->size[0], node->size[1],
-								node->texh[0], node->texh[1], node->texl[0], node->texl[1], node->align, node->blend, "menu/checkbox_checked");
+								node->texh[0], node->texh[1], node->texl[0], node->texl[1], node->align, node->blend, va("%s_checked", image));
 							break;
 						default:
 							Com_Printf("Error - invalid value for MN_CHECKBOX node - only 0/1 allowed\n");
 						}
+						break;
 					}
-					break;
 
 				case MN_SELECTBOX:
 					{
@@ -3861,7 +3875,7 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, char **text, char **token)
 			if (!*text)
 				return qfalse;
 			Q_strncpyz(menuSelectBoxes[numSelectBoxes].id, *token, sizeof(menuSelectBoxes[numSelectBoxes].id));
-			Com_Printf("...found selectbox: '%s'\n", *token);
+			Com_DPrintf("...found selectbox: '%s'\n", *token);
 
 			*token = COM_EParse(text, errhead, node->name);
 			if (!*text)
