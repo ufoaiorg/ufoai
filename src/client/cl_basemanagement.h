@@ -230,6 +230,7 @@ typedef struct base_s {
 
 	int hospitalList[MAX_EMPL][MAX_EMPLOYEES];	/**< Hospital list of employees currently being healed. */
 	int hospitalListCount;				/**< Counter for hospitalList. */
+	/* FIXME : more than 1 aircraft can be in mission at the same time, so more than MAX_TEAMLIST wounded soldiers can be out at same time */
 	int hospitalMissionList[MAX_TEAMLIST];		/**< Hospital list of soldiers being healed but moved to the mission. */
 	int hospitalMissionListCount;			/**< Counter for hospitalMissionList. */
 

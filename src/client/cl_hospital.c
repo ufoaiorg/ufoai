@@ -41,8 +41,11 @@ static int HOSPITAL_LIST_LENGHT;
  * @param[in] *employee Pointer to the employee to remove.
  * @param[in] *base Pointer to the base where the employee is hired.
  * @return qtrue if the removal is OK, qfalse if it is not
+ * FIXME : only handle the soldier type of employee: if there is an other type
+ * of employee in the list, the last will be removed at the same time than the
+ * current employee, and the two counts will be wrong
  */
-qboolean HOS_RemoveFromList (employee_t *employee, base_t *base)
+extern qboolean HOS_RemoveFromList (employee_t *employee, base_t *base)
 {
 	int i = 0, j = 0;
 	qboolean test = qfalse;

@@ -522,6 +522,8 @@ extern qboolean E_UnhireEmployee (base_t* base, employeeType_t type, int idx)
 		if (employee->buildingID >= 0) {
 			/* Remove employee from building (and tech/production). */
 			E_RemoveEmployeeFromBuilding(employee);
+			/* Remove employee from hospital if needed */
+			HOS_RemoveFromList(employee, base);
 			/* @todo: Assign a new employee to the tech/production) if one is available.
 			E_AssignEmployee(employee, building_rom_unhired_employee);
 			*/
