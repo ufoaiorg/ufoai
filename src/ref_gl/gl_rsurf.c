@@ -95,49 +95,6 @@ static image_t *R_TextureAnimation (mtexinfo_t * tex)
 /**
  * @brief
  */
-static void DrawGLPoly (msurface_t * fa)
-{
-	int i;
-	float *v;
-	glpoly_t *p = fa->polys;
-
-	qglBegin(GL_POLYGON);
-	v = p->verts[0];
-	for (i = 0; i < p->numverts; i++, v += VERTEXSIZE) {
-		qglTexCoord2f(v[3], v[4]);
-		qglVertex3fv(v);
-	}
-	qglEnd();
-}
-
-/**
- * @brief version of DrawGLPoly that handles scrolling texture
- */
-static void DrawGLFlowingPoly (msurface_t * fa)
-{
-	int i;
-	float *v;
-	glpoly_t *p;
-	float scroll;
-
-	p = fa->polys;
-
-	scroll = -64 * ((r_newrefdef.time / 40.0) - (int) (r_newrefdef.time / 40.0));
-	if (scroll == 0.0)
-		scroll = -64.0;
-
-	qglBegin(GL_POLYGON);
-	v = p->verts[0];
-	for (i = 0; i < p->numverts; i++, v += VERTEXSIZE) {
-		qglTexCoord2f((v[3] + scroll), v[4]);
-		qglVertex3fv(v);
-	}
-	qglEnd();
-}
-
-/**
- * @brief
- */
 extern void R_DrawTriangleOutlines (void)
 {
 	int i, j;
@@ -174,35 +131,64 @@ extern void R_DrawTriangleOutlines (void)
 
 /**
  * @brief
+ * @param[in] scroll != 0 for SURF_FLOWING
  */
-static void DrawGLPolyChain (glpoly_t * p, float soffset, float toffset)
+static void DrawGLPoly (const msurface_t * fa, const float scroll)
 {
-	if (soffset == 0 && toffset == 0) {
-		for (; p != 0; p = p->chain) {
-			float *v;
-			int j;
+	int i;
+	float *v;
+	glpoly_t *p = fa->polys;
 
-			qglBegin(GL_POLYGON);
-			v = p->verts[0];
-			for (j = 0; j < p->numverts; j++, v += VERTEXSIZE) {
-				qglTexCoord2f(v[5], v[6]);
-				qglVertex3fv(v);
-			}
-			qglEnd();
-		}
-	} else {
-		for (; p != 0; p = p->chain) {
-			float *v;
-			int j;
+	qglBegin(GL_POLYGON);
+	v = p->verts[0];
+	for (i = 0; i < p->numverts; i++, v += VERTEXSIZE) {
+		qglTexCoord2f(v[3] + scroll, v[4]);
+		qglVertex3fv(v);
+	}
+	qglEnd();
+}
 
-			qglBegin(GL_POLYGON);
-			v = p->verts[0];
-			for (j = 0; j < p->numverts; j++, v += VERTEXSIZE) {
-				qglTexCoord2f(v[5] - soffset, v[6] - toffset);
-				qglVertex3fv(v);
-			}
-			qglEnd();
+/**
+ * @brief Used for flowing and non-flowing surfaces
+ * @param[in] scroll != 0 for SURF_FLOWING
+ * @sa GL_RenderLightmappedPoly
+ * @sa DrawGLPolyChainOffset
+ */
+static void DrawGLPolyChain (const msurface_t *surf, const float scroll)
+{
+	int i, nv = surf->polys->numverts;
+	float *v;
+	glpoly_t *p;
+
+	for (p = surf->polys; p; p = p->chain) {
+		v = p->verts[0];
+		qglBegin(GL_POLYGON);
+		for (i = 0; i < nv; i++, v += VERTEXSIZE) {
+			qglMTexCoord2fSGIS(gl_texture0, (v[3] + scroll), v[4]);
+			qglMTexCoord2fSGIS(gl_texture1, v[5], v[6]);
+			qglVertex3fv(v);
 		}
+		qglEnd();
+	}
+}
+
+/**
+ * @brief
+ * @sa DrawGLPolyChain
+ */
+static void DrawGLPolyChainOffset (const glpoly_t * p, const float soffset, const float toffset)
+{
+	for (; p != 0; p = p->chain) {
+		const float *v;
+		int j;
+
+		qglBegin(GL_POLYGON);
+		v = p->verts[0];
+		for (j = 0; j < p->numverts; j++, v += VERTEXSIZE) {
+			qglTexCoord2f(v[5] - soffset, v[6] - toffset);
+			qglVertex3fv(v);
+		}
+		qglEnd();
 	}
 }
 
@@ -265,7 +251,7 @@ static void R_BlendLightmaps (void)
 
 			for (surf = gl_lms.lightmap_surfaces[i]; surf != 0; surf = surf->lightmapchain) {
 				if (surf->polys)
-					DrawGLPolyChain(surf->polys, 0, 0);
+					DrawGLPolyChainOffset(surf->polys, 0, 0);
 			}
 		}
 	}
@@ -302,9 +288,9 @@ static void R_BlendLightmaps (void)
 				/* draw all surfaces that use this lightmap */
 				for (drawsurf = newdrawsurf; drawsurf != surf; drawsurf = drawsurf->lightmapchain) {
 					if (drawsurf->polys)
-						DrawGLPolyChain(drawsurf->polys,
-										(drawsurf->light_s - drawsurf->dlight_s) * (1.0 / BLOCK_WIDTH),
-										(drawsurf->light_t - drawsurf->dlight_t) * (1.0 / BLOCK_HEIGHT));
+						DrawGLPolyChainOffset(drawsurf->polys,
+							(drawsurf->light_s - drawsurf->dlight_s) * (1.0 / BLOCK_WIDTH),
+							(drawsurf->light_t - drawsurf->dlight_t) * (1.0 / BLOCK_HEIGHT));
 				}
 
 				newdrawsurf = drawsurf;
@@ -329,7 +315,7 @@ static void R_BlendLightmaps (void)
 
 		for (surf = newdrawsurf; surf != 0; surf = surf->lightmapchain) {
 			if (surf->polys)
-				DrawGLPolyChain(surf->polys, (surf->light_s - surf->dlight_s) * (1.0 / BLOCK_WIDTH), (surf->light_t - surf->dlight_t) * (1.0 / BLOCK_HEIGHT));
+				DrawGLPolyChainOffset(surf->polys, (surf->light_s - surf->dlight_s) * (1.0 / BLOCK_WIDTH), (surf->light_t - surf->dlight_t) * (1.0 / BLOCK_HEIGHT));
 		}
 	}
 
@@ -371,10 +357,14 @@ static void R_RenderBrushPoly (msurface_t * fa)
 		GL_TexEnv(GL_REPLACE);
 	}
 
-	if (fa->texinfo->flags & SURF_FLOWING)
-		DrawGLFlowingPoly(fa);
-	else
-		DrawGLPoly(fa);
+	if (fa->texinfo->flags & SURF_FLOWING) {
+		float scroll;
+		scroll = -64 * ((r_newrefdef.time / 40.0) - (int) (r_newrefdef.time / 40.0));
+		if (scroll == 0.0)
+			scroll = -64.0;
+		DrawGLPoly(fa, scroll);
+	} else
+		DrawGLPoly(fa, 0.0f);
 
 	/* check for lightmap modification */
 	for (maps = 0; maps < MAXLIGHTMAPS && fa->styles[maps] != 255; maps++) {
@@ -462,10 +452,14 @@ void R_DrawAlphaSurfaces (void)
 
 		if (s->flags & SURF_DRAWTURB)
 			EmitWaterPolys(s);
-		else if (s->texinfo->flags & SURF_FLOWING)
-			DrawGLFlowingPoly(s);
-		else
-			DrawGLPoly(s);
+		else if (s->texinfo->flags & SURF_FLOWING) {
+			float scroll;
+			scroll = -64 * ((r_newrefdef.time / 40.0) - (int) (r_newrefdef.time / 40.0));
+			if (scroll == 0.0)
+				scroll = -64.0;
+			DrawGLPoly(s, scroll);
+		} else
+			DrawGLPoly(s, 0.0f);
 
 #ifdef HAVE_SHADERS
 		if (s->texinfo->image->shader)
@@ -487,13 +481,10 @@ void R_DrawAlphaSurfaces (void)
  */
 static void GL_RenderLightmappedPoly (msurface_t * surf)
 {
-	int i, nv = surf->polys->numverts;
 	int map;
-	float *v;
 	image_t *image = R_TextureAnimation(surf->texinfo);
 	qboolean is_dynamic = qfalse;
 	unsigned lmtex = surf->lightmaptexturenum;
-	glpoly_t *p;
 
 	if (surf->texinfo->flags & SURF_ALPHATEST)
 		GLSTATE_ENABLE_ALPHATEST
@@ -541,76 +532,23 @@ static void GL_RenderLightmappedPoly (msurface_t * surf)
 
 			qglTexSubImage2D(GL_TEXTURE_2D, 0, surf->light_s, surf->light_t, smax, tmax, GL_LIGHTMAP_FORMAT, GL_UNSIGNED_BYTE, temp);
 		}
+	}
 
-		c_brush_polys++;
+	c_brush_polys++;
 
-		GL_MBind(gl_texture0, image->texnum);
-		GL_MBind(gl_texture1, gl_state.lightmap_textures + lmtex);
+	GL_MBind(gl_texture0, image->texnum);
+	GL_MBind(gl_texture1, gl_state.lightmap_textures + lmtex);
 
-		if (surf->texinfo->flags & SURF_FLOWING) {
-			float scroll;
+	if (surf->texinfo->flags & SURF_FLOWING) {
+		float scroll;
 
-			scroll = -64 * ((r_newrefdef.time / 40.0) - (int) (r_newrefdef.time / 40.0));
-			if (scroll == 0.0)
-				scroll = -64.0;
+		scroll = -64 * ((r_newrefdef.time / 40.0) - (int) (r_newrefdef.time / 40.0));
+		if (scroll == 0.0)
+			scroll = -64.0;
 
-			for (p = surf->polys; p; p = p->chain) {
-				v = p->verts[0];
-				qglBegin(GL_POLYGON);
-				for (i = 0; i < nv; i++, v += VERTEXSIZE) {
-					qglMTexCoord2fSGIS(gl_texture0, (v[3] + scroll), v[4]);
-					qglMTexCoord2fSGIS(gl_texture1, v[5], v[6]);
-					qglVertex3fv(v);
-				}
-				qglEnd();
-			}
-		} else {
-			for (p = surf->polys; p; p = p->chain) {
-				v = p->verts[0];
-				qglBegin(GL_POLYGON);
-				for (i = 0; i < nv; i++, v += VERTEXSIZE) {
-					qglMTexCoord2fSGIS(gl_texture0, v[3], v[4]);
-					qglMTexCoord2fSGIS(gl_texture1, v[5], v[6]);
-					qglVertex3fv(v);
-				}
-				qglEnd();
-			}
-		}
+		DrawGLPolyChain(surf, scroll);
 	} else {
-		c_brush_polys++;
-
-		GL_MBind(gl_texture0, image->texnum);
-		GL_MBind(gl_texture1, gl_state.lightmap_textures + lmtex);
-
-		if (surf->texinfo->flags & SURF_FLOWING) {
-			float scroll;
-
-			scroll = -64 * ((r_newrefdef.time / 40.0) - (int) (r_newrefdef.time / 40.0));
-			if (scroll == 0.0)
-				scroll = -64.0;
-
-			for (p = surf->polys; p; p = p->chain) {
-				v = p->verts[0];
-				qglBegin(GL_POLYGON);
-				for (i = 0; i < nv; i++, v += VERTEXSIZE) {
-					qglMTexCoord2fSGIS(gl_texture0, (v[3] + scroll), v[4]);
-					qglMTexCoord2fSGIS(gl_texture1, v[5], v[6]);
-					qglVertex3fv(v);
-				}
-				qglEnd();
-			}
-		} else {
-			for (p = surf->polys; p; p = p->chain) {
-				v = p->verts[0];
-				qglBegin(GL_POLYGON);
-				for (i = 0; i < nv; i++, v += VERTEXSIZE) {
-					qglMTexCoord2fSGIS(gl_texture0, v[3], v[4]);
-					qglMTexCoord2fSGIS(gl_texture1, v[5], v[6]);
-					qglVertex3fv(v);
-				}
-				qglEnd();
-			}
-		}
+		DrawGLPolyChain(surf, 0.0f);
 	}
 
 	GLSTATE_DISABLE_ALPHATEST
