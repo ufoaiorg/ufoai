@@ -264,10 +264,10 @@ extern void UFO_CampaignCheckEvents (void)
 		/* Check if ufo appears or disappears on radar */
 		if (visible != ufo->visible) {
 			if (ufo->visible) {
-				MN_AddNewMessage(_("Notice"), _("Our radar tracked a new UFO"), qfalse, MSG_STANDARD, NULL);
+				MN_AddNewMessage(_("Notice"), _("Our radar detected a new UFO"), qfalse, MSG_STANDARD, NULL);
 				CL_GameTimeStop();
 			} else {
-				MN_AddNewMessage(_("Notice"), _("Our radar has lost the tracking on an UFO"), qfalse, MSG_STANDARD, NULL);
+				MN_AddNewMessage(_("Notice"), _("Our radar has lost the tracking on a UFO"), qfalse, MSG_STANDARD, NULL);
 
 				/* Notify that ufo disappeared */
 				AIR_AircraftsUfoDisappear(ufo);
