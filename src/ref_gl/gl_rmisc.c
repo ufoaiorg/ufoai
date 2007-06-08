@@ -50,7 +50,7 @@ static const byte gridtexture[8][8] = {
 /**
  * @brief
  */
-void R_InitParticleTexture(void)
+void R_InitParticleTexture (void)
 {
 	int x, y;
 	byte data[8][8][4];

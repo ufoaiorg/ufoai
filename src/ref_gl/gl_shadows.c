@@ -383,8 +383,6 @@ static void GL_DrawAliasShadowVolume (dmdl_t * paliashdr, int posenumm)
 	c_shadow_volumes = 0;
 	l = r_newrefdef.dlights;
 
-	if (gl_shadows->integer != 2)
-		return;
 	if (r_newrefdef.rdflags & RDF_NOWORLDMODEL)
 		return;
 	if (currentmodel->noshadow)
@@ -483,6 +481,8 @@ static void GL_DrawAliasShadowVolume (dmdl_t * paliashdr, int posenumm)
 
 /**
  * @brief
+ * @sa R_DrawShadowVolume
+ * @sa R_CastShadow
  */
 void R_DrawShadow (entity_t * e)
 {
@@ -495,9 +495,6 @@ void R_DrawShadow (entity_t * e)
 	vec3_t move, delta, vectors[3];
 	vec3_t frontv, backv;
 	int i;
-
-	if (gl_shadows->integer != 1)
-		return;
 
 	if (r_newrefdef.rdflags & RDF_NOWORLDMODEL)
 		return;
@@ -577,9 +574,6 @@ void R_DrawShadowVolume (entity_t * e)
 	vec3_t frontv, backv;
 	int i;
 	int *order;
-
-	if (gl_shadows->integer != 2)
-		return;
 
 	if (r_newrefdef.rdflags & RDF_NOWORLDMODEL)
 		return;

@@ -179,6 +179,8 @@ static void GL_Strings_f (void)
 
 /**
  * @brief
+ * @sa R_DrawShadowVolume
+ * @sa R_DrawShadow
  */
 static void R_CastShadow (void)
 {
