@@ -10,7 +10,7 @@ particle weather_snow
 	init
 	{
 		v      "0 0 0"
-		tps    25.0
+		tps    7.0
 		weather true
 	}
 	think
@@ -41,7 +41,7 @@ particle weather_snow_flakes
 		add    #
 		pop    *v
 
-		crand  vector "80 80 0"
+		crand  vector "160 160 0"
 		add    *s
 		pop    *s
 
