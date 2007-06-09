@@ -10256,8 +10256,8 @@
 // entity 40
 {
 "classname" "info_alien_start"
-"origin" "528 338 216"
-"angle" "225"
+"origin" "528 336 216"
+"angle" "-135"
 }
 // entity 41
 {
@@ -11801,4 +11801,144 @@
 {
 "classname" "info_civilian_start"
 "origin" "1424 48 32"
+}
+// entity 173
+{
+"classname" "misc_particle"
+"origin" "1568 800 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 174
+{
+"classname" "misc_particle"
+"origin" "1568 -288 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 175
+{
+"classname" "misc_particle"
+"origin" "1568 96 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 176
+{
+"classname" "misc_particle"
+"origin" "1568 480 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 177
+{
+"classname" "misc_particle"
+"origin" "544 800 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 178
+{
+"classname" "misc_particle"
+"origin" "544 -288 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 179
+{
+"classname" "misc_particle"
+"origin" "544 96 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 180
+{
+"classname" "misc_particle"
+"origin" "544 480 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 181
+{
+"classname" "misc_particle"
+"origin" "224 800 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 182
+{
+"classname" "misc_particle"
+"origin" "224 -288 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 183
+{
+"classname" "misc_particle"
+"origin" "224 96 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 184
+{
+"classname" "misc_particle"
+"origin" "224 480 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 185
+{
+"classname" "misc_particle"
+"origin" "1248 800 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 186
+{
+"classname" "misc_particle"
+"origin" "1248 -288 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 187
+{
+"classname" "misc_particle"
+"origin" "1248 96 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 188
+{
+"classname" "misc_particle"
+"origin" "1248 480 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 189
+{
+"classname" "misc_particle"
+"origin" "864 800 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 190
+{
+"classname" "misc_particle"
+"origin" "864 -288 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 191
+{
+"classname" "misc_particle"
+"origin" "864 96 368"
+"spawnflags" "255"
+"particle" "weather_snow"
+}
+// entity 192
+{
+"classname" "misc_particle"
+"origin" "864 480 368"
+"spawnflags" "255"
+"particle" "weather_snow"
 }
