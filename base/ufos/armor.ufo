@@ -1,8 +1,14 @@
 // useable parameter for amours defines which team can use it: 0 - human, 1 - alien
-
+/*	steelblade is here for the combat knife
+	monomolecularblade is here for the kerrblade (and similar)
+	it ensures that the superior tech blades are much better against armour
+	and keeps the kerrblade scary 
+*/
 damagetypes standard
 {
 	"_normal"
+	"_steelblade"
+	"_monomolecularblade"
 	"_blast"
 	"_fire"
 	"_shock"
@@ -31,6 +37,8 @@ item light
 	protection
 	{
 		normal	20
+		steelblade	80
+		monomolecularblade	10 
 		blast	40
 		fire	5
 		shock	5
@@ -42,6 +50,8 @@ item light
 	hardness
 	{
 		normal	3
+		steelblade	90
+		monomolecularblade	10 
 		blast	5
 		fire	2
 		shock	8
@@ -71,6 +81,8 @@ item medium
 	protection
 	{
 		normal	35
+		steelblade	90
+		monomolecularblade	20 
 		blast	55
 		fire	20
 		shock	20
@@ -82,6 +94,8 @@ item medium
 	hardness
 	{
 		normal	6
+		steelblade	95
+		monomolecularblade	15 
 		blast	10
 		fire	10
 		shock	10
@@ -108,6 +122,8 @@ item medium
 //	protection
 //	{
 //		normal	50
+//		steelblade	100
+//		monomolecularblade	40 
 //		blast	70
 //		fire	75
 //		shock	35
@@ -119,6 +135,8 @@ item medium
 //	hardness
 //	{
 //		normal	18
+//		steelblade	100
+//		monomolecularblade	40 
 //		blast	30
 //		fire	30
 //		shock	30
@@ -148,6 +166,8 @@ item light_alien
 	protection
 	{
 		normal	27
+		steelblade	100
+		monomolecularblade	40
 		blast	47
 		fire	15
 		shock	15
@@ -159,6 +179,8 @@ item light_alien
 	hardness
 	{
 		normal	4
+		steelblade	100
+		monomolecularblade	40
 		blast	7
 		fire	6
 		shock	9
@@ -188,6 +210,8 @@ item medium_alien
 	protection
 	{
 		normal	42
+		steelblade	100
+		monomolecularblade	40
 		blast	62
 		fire	30
 		shock	30
@@ -199,6 +223,8 @@ item medium_alien
 	hardness
 	{
 		normal	12
+		steelblade	100
+		monomolecularblade	40
 		blast	20
 		fire	20
 		shock	20

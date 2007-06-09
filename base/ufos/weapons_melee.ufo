@@ -1,6 +1,8 @@
 // =======================
 // COMBAT KNIFE
 // =======================
+// all knife firedefs now use steelblade dmgtype.
+// this ensures the knife is rubbish against armour
 item knife
 {
 	name		"_Combat Knife"
@@ -31,7 +33,7 @@ item knife
 			shots	1
 			time	4
 			damage	"40 20"
-			dmgtype normal
+			dmgtype steelblade
 			reaction	true
 		}
 		firedef
@@ -50,7 +52,7 @@ item knife
 			ammo	1
 			time	8
 			damage	"35 15"
-			dmgtype normal
+			dmgtype steelblade
 			reaction	true
 		}
 	}
@@ -59,6 +61,8 @@ item knife
 // =======================
 // MONOMOLECULAR KNIFE
 // =======================
+// all monomolecular firedefs now use monomolecularblade dmgtype.
+// this ensures the monomolecular blades are better than the combat knife against armour
 item knifemono
 {
 	name		"_Monomolecular Knife"
@@ -89,7 +93,7 @@ item knifemono
 			shots	1
 			time	6
 			damage	"70 35"
-			dmgtype normal
+			dmgtype monomolecularblade
 			reaction	true
 		}
 		firedef
@@ -105,7 +109,7 @@ item knifemono
 			shots	1
 			time	12
 			damage	"140 35"
-			dmgtype normal
+			dmgtype monomolecularblade
 			reaction	true
 		}
 		firedef
@@ -124,7 +128,7 @@ item knifemono
 			ammo	1
 			time	8
 			damage	"60 30"
-			dmgtype normal
+			dmgtype monomolecularblade
 			reaction	true
 		}
 	}
@@ -195,6 +199,8 @@ item stunrod
 // =======================
 // KERRBLADE
 // =======================
+// all monomolecular firedefs now use monomolecularblade dmgtype.
+// this ensures the monomolecular blades are better than the combat knife against armour
 item kerrblade
 {
 	name		"_Kerrblade"
@@ -225,7 +231,7 @@ item kerrblade
 			shots	1
 			time	8
 			damage	"95 45"
-			dmgtype normal
+			dmgtype monomolecularblade
 			reaction	true
 		}
 		firedef 
@@ -241,7 +247,7 @@ item kerrblade
 			shots	1
 			time	14
 			damage	"180 45"
-			dmgtype normal
+			dmgtype monomolecularblade
 			reaction	true
 		}
 	}
