@@ -504,8 +504,8 @@ static void B_UpdateBaseBuildingStatus (building_t* building, base_t* base, buil
 			/* If this is first hospital in base, setup relevant arrays. */
 			if (B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType) == 1) {
 				memset(base->hospitalList, -1, sizeof(base->hospitalList));
+				memset(base->hospitalListCount, 0, sizeof(base->hospitalListCount));
 				memset(base->hospitalMissionList, -1, sizeof(base->hospitalMissionList));
-				base->hospitalListCount = 0;
 				base->hospitalMissionListCount = 0;
 			}
  			base->hasHospital = qtrue;
@@ -2629,6 +2629,7 @@ aircraft_t *B_GetAircraftFromBaseByIndex (base_t* base, int index)
  */
 void CL_DropshipReturned (base_t* base, aircraft_t* aircraft)
 {
+	HOS_ReaddEmployeesInHospital(aircraft);		/**< Try to readd soldiers to hospital. */
 	/* Don't call cargo functions if aircraft is not a transporter. */
 	if (aircraft->type != AIRCRAFT_TRANSPORTER)
 		return;
@@ -2636,7 +2637,6 @@ void CL_DropshipReturned (base_t* base, aircraft_t* aircraft)
 	AL_CountAll();					/**< Count all alive aliens. */
 	INV_SellOrAddItems(aircraft);			/**< Sell collected items or add them to storage. */
 	RS_MarkResearchable(qfalse);			/**< Mark new technologies researchable. */
-	HOS_ReaddEmployeesInHospital(aircraft);		/**< Try to readd soldiers to hospital. */
 
 	/* Now empty alien/item cargo just in case. */
 	memset(aircraft->aliencargo, 0, sizeof(aircraft->aliencargo));
@@ -2922,14 +2922,14 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
 		MSG_WriteByte(sb, b->sellfactor);
 
 		/* Hospital stuff. */
-		MSG_WriteShort(sb, b->hospitalListCount);
-		MSG_WriteByte(sb, b->hospitalMissionListCount);
 		for (k = 0; k < MAX_EMPL; k++) {
+			MSG_WriteShort(sb, b->hospitalListCount[k]);
 			for (l = 0; l < MAX_EMPLOYEES; l++) {
 				MSG_WriteShort(sb, b->hospitalList[k][l]);
 			}
 		}
-		for (k = 0; k < MAX_TEAMLIST; k++) {
+		MSG_WriteShort(sb, b->hospitalMissionListCount);
+		for (k = 0; k < MAX_EMPLOYEES; k++) {
 			MSG_WriteShort(sb, b->hospitalMissionList[k]);
 		}
 	}
@@ -3156,14 +3156,14 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 			b->sellfactor = MSG_ReadByte(sb);
 
 			/* Hospital stuff. */
-			b->hospitalListCount = MSG_ReadShort(sb);
-			b->hospitalMissionListCount = MSG_ReadByte(sb);
 			for (k = 0; k < MAX_EMPL; k++) {
+				b->hospitalListCount[k] = MSG_ReadShort(sb);
 				for (l = 0; l < MAX_EMPLOYEES; l++) {
 					b->hospitalList[k][l] = MSG_ReadShort(sb);
 				}
 			}
-			for (k = 0; k < MAX_TEAMLIST; k++) {
+			b->hospitalMissionListCount = MSG_ReadShort(sb);
+			for (k = 0; k < MAX_EMPLOYEES; k++) {
 				b->hospitalMissionList[k] = MSG_ReadShort(sb);
 			}
 		} else if (*(int*)data == 1) {	/* 2.1.1 */
