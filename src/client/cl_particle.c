@@ -1067,12 +1067,15 @@ static void CL_ParticleRun2 (ptl_t *p)
 				CL_Fading(p->color, p->frameFade, p->lastFrame * p->fps, p->blend == BLEND_BLEND);
 	}
 
-	/* this is useful for particles like wheater effects that are on top of
+	/* this is useful for particles like weather effects that are on top of
 	 * some other brushes in higher level but should be visible in lower ones */
 	if (p->autohide) {
 		z = (int)p->s[2] / UNIT_HEIGHT;
 		if (z > cl_worldlevel->integer) {
 			p->invis = qtrue;
+			return;
+		} else if (z < 0) {
+			CL_ParticleFree(p);
 			return;
 		}
 	}
