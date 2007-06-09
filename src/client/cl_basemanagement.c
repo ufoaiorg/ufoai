@@ -2892,6 +2892,7 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
 
 		/* store equipment */
 		for (k = 0; k < MAX_OBJDEFS; k++) {
+			MSG_WriteString(sb, csi.ods[k].id);
 			MSG_WriteShort(sb, b->storage.num[k]);
 			MSG_WriteByte(sb, b->storage.num_loose[k]);
 		}
@@ -2944,6 +2945,7 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 {
 	int i, bases, k, l, amount;
 	base_t *b;
+	const char *s;
 	aircraft_t *aircraft;
 	building_t *building;
 	technology_t *tech;
@@ -3113,8 +3115,21 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 
 		/* read equipment */
 		for (k = 0; k < MAX_OBJDEFS; k++) {
-			b->storage.num[k] = MSG_ReadShort(sb);
-			b->storage.num_loose[k] = MSG_ReadByte(sb);
+			if (*(int*)data >= 2) { /* >= 2.2 */
+				s = MSG_ReadString(sb);
+				l = Com_GetItemByID(s);
+				if (l == -1 || l >= MAX_OBJDEFS) {
+					Com_Printf("B_Load: Could not find item '%s'\n", s);
+					MSG_ReadShort(sb);
+					MSG_ReadByte(sb);
+				} else {
+					b->storage.num[l] = MSG_ReadShort(sb);
+					b->storage.num_loose[l] = MSG_ReadByte(sb);
+				}
+			} else { /* load it the old way - items may be corrupted */
+				b->storage.num[k] = MSG_ReadShort(sb);
+				b->storage.num_loose[k] = MSG_ReadByte(sb);
+			}
 		}
 
 		b->radar.range = MSG_ReadShort(sb);
