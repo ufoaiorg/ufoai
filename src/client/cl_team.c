@@ -2231,6 +2231,20 @@ extern void CL_ParseUGVs (const char *name, char **text)
 }
 
 /**
+ * @brief Ensures skills increase quickly at first and then slows down as they near 100.
+ * @note (number of calls to this function/skill increase range)
+ * 5/20-40 6/40-50 8/50-60 11/60-70 15/80-90 24/90-100
+ * @param[in] skill The current value of the skill to be increased.
+ * @return The amount to be added to the skill
+ */
+static int CL_SkillIncreaseBy (float skill)
+{
+	if (skill >= MAX_SKILL)
+		return 0;
+	return (int)(2.3f - 0.02f * skill + (2.0f - 0.01f * skill) * frand());
+}
+
+/**
  * @brief Updates character skills after a mission.
  * @param[in] *chr Pointer to a character_t.
  * @sa CL_UpdateCharacterStats
@@ -2243,67 +2257,67 @@ extern void CL_UpdateCharacterSkills (character_t *chr)
 	if (!chr)
 		return;
 	/* We are only updating skills to max value 100.
-	   More than 100 is available only with implants. */
+	   TODO: More than 100 is available only with implants. */
 
-	/* Update SKILL_CLOSE. 4 closekills needed. */
-	if (chr->skills[SKILL_CLOSE] < 100) {
-		if (chr->chrscore.closekills >= 4) {
-			chr->skills[SKILL_CLOSE]++;
-			chr->chrscore.closekills = chr->chrscore.closekills - 4;
+	/* Update SKILL_CLOSE. 2 closekills needed. */
+	if (chr->skills[SKILL_CLOSE] < MAX_SKILL) {
+		if (chr->chrscore.closekills >= 2) {
+			chr->skills[SKILL_CLOSE] += CL_SkillIncreaseBy((float)chr->skills[SKILL_CLOSE]);
+			chr->chrscore.closekills = chr->chrscore.closekills - 2;
 			changed = qtrue;
 		}
 	}
 
-	/* Update SKILL_HEAVY. 6 heavykills needed.*/
-	if (chr->skills[SKILL_HEAVY] < 100) {
-		if (chr->chrscore.heavykills >= 6) {
-			chr->skills[SKILL_HEAVY]++;
-			chr->chrscore.heavykills = chr->chrscore.heavykills - 6;
+	/* Update SKILL_HEAVY. 4 heavykills needed.*/
+	if (chr->skills[SKILL_HEAVY] < MAX_SKILL) {
+		if (chr->chrscore.heavykills >= 4) {
+			chr->skills[SKILL_HEAVY] += CL_SkillIncreaseBy((float)chr->skills[SKILL_HEAVY]);
+			chr->chrscore.heavykills = chr->chrscore.heavykills - 4;
 			changed = qtrue;
 		}
 	}
 
-	/* Update SKILL_ASSAULT. 5 assaultkills needed.*/
-	if (chr->skills[SKILL_ASSAULT] < 100) {
-		if (chr->chrscore.assaultkills >= 5) {
-			chr->skills[SKILL_ASSAULT]++;
-			chr->chrscore.assaultkills = chr->chrscore.assaultkills - 5;
+	/* Update SKILL_ASSAULT. 3 assaultkills needed.*/
+	if (chr->skills[SKILL_ASSAULT] < MAX_SKILL) {
+		if (chr->chrscore.assaultkills >= 3) {
+			chr->skills[SKILL_ASSAULT] += CL_SkillIncreaseBy((float)chr->skills[SKILL_ASSAULT]);
+			chr->chrscore.assaultkills = chr->chrscore.assaultkills - 3;
 			changed = qtrue;
 		}
 	}
 
-	/* Update SKILL_SNIPER. 5 sniperkills needed. */
-	if (chr->skills[SKILL_SNIPER] < 100) {
-		if (chr->chrscore.sniperkills >= 5) {
-			chr->skills[SKILL_SNIPER]++;
-			chr->chrscore.sniperkills = chr->chrscore.sniperkills - 5;
+	/* Update SKILL_SNIPER. 3 sniperkills needed. */
+	if (chr->skills[SKILL_SNIPER] < MAX_SKILL) {
+		if (chr->chrscore.sniperkills >= 3) {
+			chr->skills[SKILL_SNIPER] += CL_SkillIncreaseBy((float)chr->skills[SKILL_SNIPER]);
+			chr->chrscore.sniperkills = chr->chrscore.sniperkills - 3;
 			changed = qtrue;
 		}
 	}
 
-	/* Update SKILL_EXPLOSIVE. 8 explosivekills needed. */
-	if (chr->skills[SKILL_EXPLOSIVE] < 100) {
-		if (chr->chrscore.explosivekills >= 8) {
-			chr->skills[SKILL_EXPLOSIVE]++;
-			chr->chrscore.explosivekills = chr->chrscore.explosivekills - 8;
+	/* Update SKILL_EXPLOSIVE. 5 explosivekills needed. */
+	if (chr->skills[SKILL_EXPLOSIVE] < MAX_SKILL) {
+		if (chr->chrscore.explosivekills >= 5) {
+			chr->skills[SKILL_EXPLOSIVE] += CL_SkillIncreaseBy((float)chr->skills[SKILL_EXPLOSIVE]);
+			chr->chrscore.explosivekills = chr->chrscore.explosivekills - 5;
 			changed = qtrue;
 		}
 	}
 
-	/* Update ABILITY_ACCURACY. 12 accuracystat (succesful kill or stun) needed. */
-	if (chr->skills[ABILITY_ACCURACY] < 100) {
-		if (chr->chrscore.accuracystat >= 12) {
-			chr->skills[ABILITY_ACCURACY]++;
-			chr->chrscore.accuracystat = chr->chrscore.accuracystat - 12;
+	/* Update ABILITY_ACCURACY. 8 accuracystat (succesful kill or stun) needed. */
+	if (chr->skills[ABILITY_ACCURACY] < MAX_SKILL) {
+		if (chr->chrscore.accuracystat >= 8) {
+			chr->skills[ABILITY_ACCURACY] += CL_SkillIncreaseBy((float)chr->skills[ABILITY_ACCURACY]);
+			chr->chrscore.accuracystat = chr->chrscore.accuracystat - 8;
 			changed = qtrue;
 		}
 	}
 
-	/* Update ABILITY_POWER. 12 powerstat (succesful kill or stun with heavy) needed. */
-	if (chr->skills[ABILITY_POWER] < 100) {
-		if (chr->chrscore.powerstat >= 12) {
-			chr->skills[ABILITY_POWER]++;
-			chr->chrscore.powerstat = chr->chrscore.powerstat - 12;
+	/* Update ABILITY_POWER. 8 powerstat (succesful kill or stun with heavy) needed. */
+	if (chr->skills[ABILITY_POWER] < MAX_SKILL) {
+		if (chr->chrscore.powerstat >= 8) {
+			chr->skills[ABILITY_POWER] += CL_SkillIncreaseBy((float)chr->skills[ABILITY_POWER]);
+			chr->chrscore.powerstat = chr->chrscore.powerstat - 8;
 			changed = qtrue;
 		}
 	}
