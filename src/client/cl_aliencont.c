@@ -897,48 +897,49 @@ static void AC_Init (void)
 				}
 			}
 		}
-	}
 
-	/* Disable KillOne buttons for empty entries. */
-	for (i = 0; i < 10; i++) {
-		if (i < numAliensOnList)
-			continue;
-		Cbuf_AddText(va("aliencont_aliend%i\n", i));
-	}
-
-	/* Set state of KillAll button. */
-	for (i = 0; i < numTeamDesc; i++) {
-		if (!teamDesc[i].alien)
-			continue;
-		if (containment[i].amount_alive > 0) {
-			killall_state = qtrue;
-			break;
+		/* Disable KillOne buttons for empty entries. */
+		for (i = 0; i < 10; i++) {
+			if (i < numAliensOnList)
+				continue;
+			Cbuf_AddText(va("aliencont_aliend%i\n", i));
 		}
-	}
-	if (killall_state)
-		Cbuf_AddText("aliencont_killb\n");
-	else
-		Cbuf_AddText("aliencont_killg\n");
 
-	/* By default Research and UFOpedia buttons should be disabled. */
-	Cbuf_AddText("aliencont_researchg;aliencont_ufopediag\n");
+		/* Set state of KillAll button. */
+		for (i = 0; i < numTeamDesc; i++) {
+			if (!teamDesc[i].alien)
+				continue;
+			if (containment[i].amount_alive > 0) {
+				killall_state = qtrue;
+				break;
+			}
+		}
+		if (killall_state)
+			Cbuf_AddText("aliencont_killb\n");
+		else
+			Cbuf_AddText("aliencont_killg\n");
 
-	/* State of next and prev AC buttons. */
-	if (AC_NextAC())
-		Cbuf_AddText("aliencont_nextbb\n");
-	else
-		Cbuf_AddText("aliencont_nextbg\n");
-	if (AC_PrevAC())
-		Cbuf_AddText("aliencont_prevbb\n");
-	else
-		Cbuf_AddText("aliencont_prevbg\n");
+		/* By default Research and UFOpedia buttons should be disabled. */
+		Cbuf_AddText("aliencont_researchg;aliencont_ufopediag\n");
 
-	Cvar_SetValue("mn_al_globalamount", AL_CountAll());
-	Cvar_SetValue("mn_al_localamount", baseCurrent->capacities[CAP_ALIENS].cur);
-	Cvar_SetValue("mn_al_capacity", baseCurrent->capacities[CAP_ALIENS].max);
-	Cvar_Set("mn_al_base", baseCurrent->name);
+		/* State of next and prev AC buttons. */
+		if (AC_NextAC())
+			Cbuf_AddText("aliencont_nextbb\n");
+		else
+			Cbuf_AddText("aliencont_nextbg\n");
+		if (AC_PrevAC())
+			Cbuf_AddText("aliencont_prevbb\n");
+		else
+			Cbuf_AddText("aliencont_prevbg\n");
 
-	menuText[TEXT_STANDARD] = aliencontText;
+		Cvar_SetValue("mn_al_globalamount", AL_CountAll());
+		Cvar_SetValue("mn_al_localamount", baseCurrent->capacities[CAP_ALIENS].cur);
+		Cvar_SetValue("mn_al_capacity", baseCurrent->capacities[CAP_ALIENS].max);
+		Cvar_Set("mn_al_base", baseCurrent->name);
+
+		menuText[TEXT_STANDARD] = aliencontText;
+	} else
+		menuText[TEXT_STANDARD] = NULL;
 	menuText[TEXT_UFOPEDIA] = NULL;
 }
 
