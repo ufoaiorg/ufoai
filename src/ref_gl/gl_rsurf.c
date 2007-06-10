@@ -201,9 +201,6 @@ static void R_BlendLightmaps (void)
 	int i;
 	msurface_t *surf, *newdrawsurf = 0;
 
-	/* don't bother if we're set to fullbright */
-	if (r_fullbright->value)
-		return;
 	if (!rTiles[0]->lightdata)
 		return;
 

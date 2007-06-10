@@ -77,17 +77,14 @@ static cvar_t *r_norefresh;
 static cvar_t *r_drawentities;
 static cvar_t *r_speeds;
 cvar_t *r_drawworld;
-cvar_t *r_fullbright;
 cvar_t *r_nocull;
 cvar_t *r_isometric;
 cvar_t *r_lerpmodels;
-/*cvar_t *r_lefthand;*/
 cvar_t *r_displayrefresh;
 cvar_t *r_anisotropic;
 cvar_t *r_ext_max_anisotropy;
 cvar_t *r_texture_lod;			/* lod_bias */
 
-cvar_t *gl_allow_software;
 cvar_t *gl_screenshot;
 cvar_t *gl_screenshot_jpeg_quality;
 
@@ -131,11 +128,7 @@ cvar_t *gl_round_down;
 cvar_t *gl_picmip;
 cvar_t *gl_maxtexres;
 cvar_t *gl_showtris;
-cvar_t *gl_ztrick;
 cvar_t *gl_finish;
-cvar_t *gl_clear;
-cvar_t *gl_cull;
-cvar_t *gl_polyblend;
 cvar_t *gl_flashblend;
 cvar_t *gl_saturatelighting;
 cvar_t *gl_swapinterval;
@@ -630,44 +623,6 @@ static void R_DrawEntitiesOnList(void)
 /**
  * @brief
  */
-static void R_PolyBlend(void)
-{
-	if (!gl_polyblend->value)
-		return;
-	if (!v_blend[3])
-		return;
-
-	GLSTATE_DISABLE_ALPHATEST
-	GLSTATE_ENABLE_BLEND
-	qglDisable(GL_DEPTH_TEST);
-	qglDisable(GL_TEXTURE_2D);
-
-	qglLoadIdentity();
-
-	/* FIXME: get rid of these */
-	qglRotatef(-90, 1, 0, 0);	/* put Z going up */
-	qglRotatef(90, 0, 0, 1);	/* put Z going up */
-
-	qglColor4fv(v_blend);
-
-	qglBegin(GL_QUADS);
-
-	qglVertex3f(10, 100, 100);
-	qglVertex3f(10, -100, 100);
-	qglVertex3f(10, -100, -100);
-	qglVertex3f(10, 100, -100);
-	qglEnd();
-
-	GLSTATE_DISABLE_BLEND
-	qglEnable(GL_TEXTURE_2D);
-	GLSTATE_ENABLE_ALPHATEST
-
-	qglColor4f(1, 1, 1, 1);
-}
-
-/**
- * @brief
- */
 static int SignbitsForPlane (cplane_t * out)
 {
 	int bits, j;
@@ -725,7 +680,7 @@ static void R_SetFrustum (void)
 /**
  * @brief
  */
-static void R_SetupFrame(void)
+static void R_SetupFrame (void)
 {
 	int i;
 
@@ -814,10 +769,7 @@ static void R_SetupGL (void)
 	qglGetFloatv(GL_MODELVIEW_MATRIX, r_world_matrix);
 
 	/* set drawing parms */
-	if (gl_cull->value)
-		qglEnable(GL_CULL_FACE);
-	else
-		qglDisable(GL_CULL_FACE);
+	qglEnable(GL_CULL_FACE);
 
 	GLSTATE_DISABLE_BLEND
 	GLSTATE_DISABLE_ALPHATEST
@@ -844,31 +796,10 @@ static void R_SetupGL (void)
  */
 static void R_Clear (void)
 {
-	if (gl_ztrick->value) {
-		static int trickframe;
-
-		if (gl_clear->value)
-			qglClear(GL_COLOR_BUFFER_BIT);
-
-		trickframe++;
-		if (trickframe & 1) {
-			gldepthmin = 0;
-			gldepthmax = 0.49999;
-			qglDepthFunc(GL_LEQUAL);
-		} else {
-			gldepthmin = 1;
-			gldepthmax = 0.5;
-			qglDepthFunc(GL_GEQUAL);
-		}
-	} else {
-		if (gl_clear->value)
-			qglClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		else
-			qglClear(GL_DEPTH_BUFFER_BIT);
-		gldepthmin = 0;
-		gldepthmax = 1;
-		qglDepthFunc(GL_LEQUAL);
-	}
+	qglClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	gldepthmin = 0;
+	gldepthmax = 1;
+	qglDepthFunc(GL_LEQUAL);
 
 	qglDepthRange(gldepthmin, gldepthmax);
 
@@ -886,7 +817,6 @@ static void R_Clear (void)
 static void R_Flash (void)
 {
 	R_ShadowBlend();
-	R_PolyBlend();
 }
 
 /**
@@ -1030,9 +960,7 @@ static void R_Register (void)
 {
 	const cmdList_t *commands;
 
-/*	r_lefthand = ri.Cvar_Get("hand", "0", CVAR_USERINFO | CVAR_ARCHIVE, NULL);*/
-	r_norefresh = ri.Cvar_Get("r_norefresh", "0", 0, NULL);
-	r_fullbright = ri.Cvar_Get("r_fullbright", "0", 0, NULL);
+	r_norefresh = ri.Cvar_Get("r_norefresh", "0", 0, "Fix the screen to the last thing you saw. Only used for debugging.");
 	r_drawentities = ri.Cvar_Get("r_drawentities", "1", 0, NULL);
 	r_drawworld = ri.Cvar_Get("r_drawworld", "1", 0, NULL);
 	r_isometric = ri.Cvar_Get("r_isometric", "0", CVAR_ARCHIVE, "Draw the world in isometric mode");
@@ -1043,8 +971,6 @@ static void R_Register (void)
 	r_anisotropic = ri.Cvar_Get("r_anisotropic", "1", CVAR_ARCHIVE, NULL);
 	r_ext_max_anisotropy = ri.Cvar_Get("r_ext_max_anisotropy", "0", 0, NULL);
 	r_texture_lod = ri.Cvar_Get("r_texture_lod", "0", CVAR_ARCHIVE, NULL);
-
-	gl_allow_software = ri.Cvar_Get("gl_allow_software", "0", 0, NULL);
 
 	gl_screenshot = ri.Cvar_Get("gl_screenshot", "jpg", CVAR_ARCHIVE, "png, jpg or tga are valid screenshot formats");
 	gl_screenshot_jpeg_quality = ri.Cvar_Get("gl_screenshot_jpeg_quality", "75", CVAR_ARCHIVE, "jpeg quality in percent for jpeg screenshots");
@@ -1074,12 +1000,8 @@ static void R_Register (void)
 	gl_picmip = ri.Cvar_Get("gl_picmip", "0", 0, NULL);
 	gl_maxtexres = ri.Cvar_Get("gl_maxtexres", "2048", CVAR_ARCHIVE, NULL);
 	gl_showtris = ri.Cvar_Get("gl_showtris", "0", 0, NULL);
-	gl_ztrick = ri.Cvar_Get("gl_ztrick", "0", 0, NULL);
 	gl_finish = ri.Cvar_Get("gl_finish", "0", CVAR_ARCHIVE, NULL);
-	gl_clear = ri.Cvar_Get("gl_clear", "1", 0, NULL);
-	gl_cull = ri.Cvar_Get("gl_cull", "1", 0, NULL);
-	gl_polyblend = ri.Cvar_Get("gl_polyblend", "1", 0, NULL);
-	gl_flashblend = ri.Cvar_Get("gl_flashblend", "0", 0, NULL);
+	gl_flashblend = ri.Cvar_Get("gl_flashblend", "0", 0, "Controls the way dynamic lights are drawn");
 	gl_monolightmap = ri.Cvar_Get("gl_monolightmap", "0", 0, NULL);
 #if defined(_WIN32)
 	gl_driver = ri.Cvar_Get("gl_driver", "opengl32", CVAR_ARCHIVE, NULL);
@@ -1091,7 +1013,7 @@ static void R_Register (void)
 	gl_texturemode = ri.Cvar_Get("gl_texturemode", "GL_LINEAR_MIPMAP_NEAREST", CVAR_ARCHIVE, NULL);
 	gl_texturealphamode = ri.Cvar_Get("gl_texturealphamode", "default", CVAR_ARCHIVE, NULL);
 	gl_texturesolidmode = ri.Cvar_Get("gl_texturesolidmode", "default", CVAR_ARCHIVE, NULL);
-	gl_wire = ri.Cvar_Get("gl_wire", "0", 0, NULL);
+	gl_wire = ri.Cvar_Get("gl_wire", "0", 0, "Draw the scene in wireframe mode");
 	gl_fog = ri.Cvar_Get("gl_fog", "1", CVAR_ARCHIVE, NULL);
 	gl_showbox = ri.Cvar_Get("gl_showbox", "0", CVAR_ARCHIVE, "Shows model bounding box");
 	gl_vertex_arrays = ri.Cvar_Get("gl_vertex_arrays", "0", CVAR_ARCHIVE, NULL);

@@ -2260,7 +2260,6 @@ static void CL_InitLocal (void)
 static cvarList_t cheatvars[] = {
 	{"timedemo", "0", NULL},
 	{"r_drawworld", "1", NULL},
-	{"r_fullbright", "0", NULL},
 	{"paused", "0", NULL},
 	{"fixedtime", "0", NULL},
 	{"gl_lightmap", "0", NULL},

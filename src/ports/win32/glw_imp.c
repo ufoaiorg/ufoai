@@ -52,8 +52,7 @@ static qboolean VerifyDriver (void)
 	Q_strncpyz(buffer, (const char*)qglGetString(GL_RENDERER), sizeof(buffer));
 	Q_strlwr(buffer);
 	if (Q_strcmp(buffer, "gdi generic") == 0)
-		if (!glw_state.mcd_accelerated)
-			return qfalse;
+		return qfalse;
 	return qtrue;
 }
 
@@ -237,8 +236,8 @@ rserr_t GLimp_SetMode (unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 		dm.dmFields     = DM_PELSWIDTH | DM_PELSHEIGHT;
 
 		if (r_displayrefresh->value != 0) {
-	    	gl_state.displayrefresh = r_displayrefresh->value;
-			dm.dmDisplayFrequency = r_displayrefresh->value;
+			gl_state.displayrefresh = r_displayrefresh->integer;
+			dm.dmDisplayFrequency = r_displayrefresh->integer;
 			dm.dmFields |= DM_DISPLAYFREQUENCY;
 			ri.Con_Printf(PRINT_ALL, "...display frequency is %d hz\n", gl_state.displayrefresh);
 		} else {
@@ -491,16 +490,6 @@ qboolean GLimp_InitGL (void)
 			return qfalse;
 		}
 		DescribePixelFormat(glw_state.hDC, pixelformat, sizeof(pfd), &pfd);
-
-		if (!(pfd.dwFlags & PFD_GENERIC_ACCELERATED)) {
-			extern cvar_t *gl_allow_software;
-
-			if (gl_allow_software->value)
-				glw_state.mcd_accelerated = qtrue;
-			else
-				glw_state.mcd_accelerated = qfalse;
-		} else
-			glw_state.mcd_accelerated = qtrue;
 	}
 
 	/* report if stereo is desired but unavailable */
