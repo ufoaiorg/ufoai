@@ -58,6 +58,7 @@ static qboolean SAV_PresaveArraySave (sizebuf_t* sb, void* data)
 	presaveArray[PRE_NMTECH] = gd.numTechnologies;	/* gd.numTechnologies */
 	presaveArray[PRE_TECHMA] = TECHMAIL_MAX;	/* TECHMAIL_MAX in techMailType_t */
 	presaveArray[PRE_NUMTDS] = numTeamDesc;		/* numTeamDesc */
+	presaveArray[PRE_NUMALI] = gd.numAliensTD;	/* gd.numAliensTD */
 
 	MSG_WriteLong(sb, PRE_MAX);
 	for (i = 0; i < PRE_MAX; i++) {

@@ -3902,6 +3902,8 @@ static void CP_CampaignsClick_f (void)
  */
 extern void CL_ResetSinglePlayerData (void)
 {
+	int i;
+
 	numStageSets = numStages = numMissions = 0;
 	memset(missions, 0, sizeof(mission_t) * MAX_MISSIONS);
 	memset(stageSets, 0, sizeof(stageSet_t) * MAX_STAGESETS);
@@ -3912,6 +3914,11 @@ extern void CL_ResetSinglePlayerData (void)
 	RS_ResetHash();
 	E_ResetEmployees();
 	Com_InitInventory(invList);
+	/* Count Alien team definitions. */
+	for (i = 0; i < numTeamDesc; i++) {
+		if (teamDesc[i].alien)
+			gd.numAliensTD++;
+	}
 }
 
 #ifdef DEBUG

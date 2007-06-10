@@ -395,6 +395,7 @@ typedef enum {
 	PRE_NMTECH,	/* gd.numTechnologies */
 	PRE_TECHMA,	/* TECHMAIL_MAX in techMailType_t */
 	PRE_NUMTDS,	/* numTeamDesc */
+	PRE_NUMALI,	/* gd.numAliensTD */
 
 	PRE_MAX
 } presaveType_t;

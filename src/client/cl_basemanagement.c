@@ -2900,9 +2900,7 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
 		MSG_WriteShort(sb, b->radar.range);
 
 		/* Alien Containment. */
-		for (k = 0; k < presaveArray[PRE_NUMTDS]; k++) {
-			if (!teamDesc[k].alien)	/* FIXME: what if the teamDesc array order will change? */
-				continue;
+		for (k = 0; k < presaveArray[PRE_NUMALI]; k++) {
 			MSG_WriteString(sb, b->alienscont[k].alientype);
 			MSG_WriteShort(sb, b->alienscont[k].amount_alive);
 			MSG_WriteShort(sb, b->alienscont[k].amount_dead);
@@ -3118,7 +3116,7 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 
 		/* Alien Containment. */
 		AL_FillInContainment(b->idx);	/* Fill Alien Containment with default values. */
-		for (k = 0; k < presaveArray[PRE_NUMTDS]; k++) {
+		for (k = 0; k < presaveArray[PRE_NUMALI]; k++) {
 			s = MSG_ReadString(sb);
 			for (l = 0; l < numTeamDesc; l++) {
 				if (!teamDesc[l].alien)

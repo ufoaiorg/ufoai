@@ -141,6 +141,9 @@ typedef struct globalData_s
 	/* UFO components. */
 	int numComponents;
 	components_t components[MAX_ASSEMBLIES];
+
+	/* Alien Team Definitions. */
+	int numAliensTD;
 } globalData_t;
 
 
