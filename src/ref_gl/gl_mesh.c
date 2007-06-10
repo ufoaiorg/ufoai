@@ -357,6 +357,10 @@ void R_DrawAliasModel (entity_t * e)
 	dmdl_t *paliashdr;
 	image_t *skin;
 
+	/* check if model is out of fov */
+	if (R_CullAliasModel(bbox, e))
+		return;
+
 	assert(currentmodel->type == mod_alias_md2);
 	paliashdr = (dmdl_t *) currentmodel->extraData;
 
@@ -372,10 +376,6 @@ void R_DrawAliasModel (entity_t * e)
 
 	if (!r_lerpmodels->integer)
 		e->as.backlerp = 0;
-
-	/* check if model is out of fov */
-	if (R_CullAliasModel(bbox, e))
-		return;
 
 	/* select skin */
 	if (e->skin)
