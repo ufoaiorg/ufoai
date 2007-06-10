@@ -951,7 +951,7 @@ def get_frame_list():
 			file.close()
 
 			#check header (first line)
-			if lines[0]<>"# MD2 Frame Name List":
+			if lines[0].strip()<>"# MD2 Frame Name List":
 				print "its not a valid file"
 				result=Blender.Draw.PupMenu("This is not a valid frame definition file-using default%t|OK")
 				return MD2_FRAME_NAME_LIST
