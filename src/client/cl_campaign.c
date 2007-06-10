@@ -1473,6 +1473,7 @@ extern void CL_CampaignRun (void)
 			PR_ProductionRun();
 			CL_CampaignRunMarket();
 			UFO_Recovery();
+			AII_UpdateInstallationDelay();
 		}
 
 		/* daily events */

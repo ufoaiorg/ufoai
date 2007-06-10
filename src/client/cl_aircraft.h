@@ -129,7 +129,7 @@ typedef struct aircraftSlot_s {
 	itemWeight_t size;			/**< The maximum size (weight) of item that can fit in this slot. */
 	int ammoLeft;				/**< The number of ammo left in this slot */
 	int delayNextShot;			/**< The delay before the next projectile can be shot */
-	int installationTime;		/**< The time (in second) left before the item is finished to be installed or removed in/from slot
+	int installationTime;		/**< The time (in hours) left before the item is finished to be installed or removed in/from slot
 								  *	This is > 0 if the item is being installed, < 0 if the item is being removed, 0 if the item is in place */
 	int nextItemIdx;			/**< Indice in aircraftItems[] of the next item to install when the current item in slot will be removed
 								  *	(Should be used only if installationTime is different of 0 */
@@ -269,6 +269,7 @@ extern void CP_GetRandomPosForAircraft(float *pos);
 extern qboolean AIR_AircraftMakeMove(int dt, aircraft_t* aircraft);
 void AIR_ParseAircraft(const char *name, char **text, qboolean assignAircraftItems);
 void AII_ParseAircraftItem(const char *name, char **text);
+extern void AII_UpdateInstallationDelay(void);
 extern void AII_ReloadWeapon(aircraft_t *aircraft);
 extern qboolean AII_AddItemToSlot(technology_t *tech, aircraftSlot_t *slot);
 extern void AII_UpdateAircraftStats(aircraft_t *aircraft);
