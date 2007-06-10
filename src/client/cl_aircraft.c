@@ -187,6 +187,10 @@ extern void AIR_ListAircraft_f (void)
 				else
 					Com_Printf("...electronics slot %i is empty\n", k);
 			}
+			Com_Printf("...stats: ");
+			for (k = 0; k < AIR_STATS_MAX; k++)
+				Com_Printf("%i ", aircraft->stats[k]);
+			Com_Printf("\n");
 			Com_Printf("...name %s\n", aircraft->id);
 			Com_Printf("...speed %i\n", aircraft->stats[AIR_STATS_SPEED]);
 			Com_Printf("...type %i\n", aircraft->type);
