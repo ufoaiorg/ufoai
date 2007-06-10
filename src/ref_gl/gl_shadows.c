@@ -499,9 +499,6 @@ void R_DrawShadow (entity_t * e)
 	if (r_newrefdef.rdflags & RDF_NOWORLDMODEL)
 		return;
 
-	if (currententity->flags & (RF_SHELL_GREEN | RF_SHELL_RED | RF_SHELL_BLUE))
-		return;
-
 	assert(currentmodel->type == mod_alias_md2);
 	paliashdr = (dmdl_t *) currentmodel->extraData;
 

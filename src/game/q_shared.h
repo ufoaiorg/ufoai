@@ -697,9 +697,6 @@ typedef struct {
 #define RF_CUSTOMSKIN       0x00000100  /**< skin is an index in image_precache */
 /*unused*/
 #define RF_GLOW             0x00000200  /**< pulse lighting for bonus items */
-#define RF_SHELL_RED        0x00000400
-#define RF_SHELL_GREEN      0x00000800
-#define RF_SHELL_BLUE       0x00001000
 
 #define RF_BOX              0x00002000	/**< actor selection box */
 #define RF_SHADOW           0x00004000	/**< shadow for this entity */

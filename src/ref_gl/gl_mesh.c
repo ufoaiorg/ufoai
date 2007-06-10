@@ -348,6 +348,7 @@ extern void R_EnableLights (qboolean fixed, float *matrix, float *lightparam, fl
 
 /**
  * @brief
+ * @sa R_DrawAliasMD3Model
  */
 void R_DrawAliasModel (entity_t * e)
 {

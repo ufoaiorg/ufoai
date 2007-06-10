@@ -56,10 +56,6 @@ static void GL_DrawAliasMD3FrameLerp (maliasmodel_t *paliashdr, maliasmesh_t mes
 	else
 		alpha = 1.0;
 
-	/* if ( currententity->flags & ( RF_SHELL_RED | RF_SHELL_GREEN | RF_SHELL_BLUE | RF_SHELL_DOUBLE | RF_SHELL_HALF_DAM) ) */
-	if (currententity->flags & (RF_SHELL_RED | RF_SHELL_GREEN | RF_SHELL_BLUE))
-		qglDisable(GL_TEXTURE_2D);
-
 	frame = paliashdr->frames + currententity->frame;
 	oldframe = paliashdr->frames + currententity->oldframe;
 
@@ -78,17 +74,17 @@ static void GL_DrawAliasMD3FrameLerp (maliasmodel_t *paliashdr, maliasmesh_t mes
 		move[i] = backlerp * move[i] + frontlerp * frame->translate[i];
 	}
 
-	v = mesh.vertexes + currententity->frame*mesh.num_verts;
-	ov = mesh.vertexes + currententity->oldframe*mesh.num_verts;
+	v = mesh.vertexes + currententity->frame * mesh.num_verts;
+	ov = mesh.vertexes + currententity->oldframe * mesh.num_verts;
 	for (i = 0; i < mesh.num_verts; i++, v++, ov++) {
 		VectorSet(tempNormalsArray[i],
-				v->normal[0] + (ov->normal[0] - v->normal[0])*backlerp,
-				v->normal[1] + (ov->normal[1] - v->normal[1])*backlerp,
-				v->normal[2] + (ov->normal[2] - v->normal[2])*backlerp);
+				v->normal[0] + (ov->normal[0] - v->normal[0]) * backlerp,
+				v->normal[1] + (ov->normal[1] - v->normal[1]) * backlerp,
+				v->normal[2] + (ov->normal[2] - v->normal[2]) * backlerp);
 		VectorSet(tempVertexArray[i],
-				move[0] + ov->point[0]*backlerp + v->point[0]*frontlerp,
-				move[1] + ov->point[1]*backlerp + v->point[1]*frontlerp,
-				move[2] + ov->point[2]*backlerp + v->point[2]*frontlerp);
+				move[0] + ov->point[0] * backlerp + v->point[0] * frontlerp,
+				move[1] + ov->point[1] * backlerp + v->point[1] * frontlerp,
+				move[2] + ov->point[2] * backlerp + v->point[2] * frontlerp);
 	}
 	qglBegin(GL_TRIANGLES);
 
@@ -103,14 +99,11 @@ static void GL_DrawAliasMD3FrameLerp (maliasmodel_t *paliashdr, maliasmesh_t mes
 		qglVertex3fv(tempVertexArray[mesh.indexes[3 * j + 2]]);
 	}
 	qglEnd();
-
-	/* if ( currententity->flags & ( RF_SHELL_RED | RF_SHELL_GREEN | RF_SHELL_BLUE | RF_SHELL_DOUBLE | RF_SHELL_HALF_DAM) ) */
-	if (currententity->flags & (RF_SHELL_RED | RF_SHELL_GREEN | RF_SHELL_BLUE))
-		qglEnable(GL_TEXTURE_2D);
 }
 
 /**
  * @brief
+ * @sa R_DrawAliasModel
  */
 void R_DrawAliasMD3Model (entity_t *e)
 {
@@ -198,6 +191,8 @@ void R_DrawAliasMD3Model (entity_t *e)
 		if (!skin)
 			skin = r_notexture;
 		GL_Bind(skin->texnum);
+		/* locate the proper data */
+		c_alias_polys += paliashdr->meshes[i].num_tris;
 		GL_DrawAliasMD3FrameLerp(paliashdr, paliashdr->meshes[i], e->backlerp);
 	}
 

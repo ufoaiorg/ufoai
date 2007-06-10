@@ -1163,13 +1163,13 @@ static void Mod_LoadAliasMD3Model (model_t *mod, void *buffer)
 	poutframe = poutmodel->frames = Hunk_Alloc(sizeof(maliasframe_t) * poutmodel->num_frames, "Model frames");
 
 	mod->radius = 0;
-	ClearBounds ( mod->mins, mod->maxs );
+	ClearBounds(mod->mins, mod->maxs);
 
 	for (i = 0; i < poutmodel->num_frames; i++, pinframe++, poutframe++) {
 		for (j = 0; j < 3; j++) {
-			poutframe->mins[j] = LittleFloat(pinframe->mins[j] );
-			poutframe->maxs[j] = LittleFloat(pinframe->maxs[j] );
-			poutframe->translate[j] = LittleFloat(pinframe->translate[j] );
+			poutframe->mins[j] = LittleFloat(pinframe->mins[j]);
+			poutframe->maxs[j] = LittleFloat(pinframe->maxs[j]);
+			poutframe->translate[j] = LittleFloat(pinframe->translate[j]);
 		}
 
 		/* @todo:
