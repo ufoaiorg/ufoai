@@ -1178,19 +1178,17 @@ static qboolean R_Init (HINSTANCE hinstance, WNDPROC wndproc)
 		if (gl_config.renderer == GL_RENDERER_PERMEDIA2) {
 			ri.Cvar_Set("gl_monolightmap", "A");
 			ri.Con_Printf(PRINT_ALL, "...using gl_monolightmap ' a '\n");
-		} else if (gl_config.renderer & GL_RENDERER_POWERVR)
-			ri.Cvar_Set("gl_monolightmap", "0");
-		else
+		} else
 			ri.Cvar_Set("gl_monolightmap", "0");
 	}
 
 #if defined (__linux__) || defined (__FreeBSD__) || defined (__NetBSD__)
 	ri.Cvar_SetValue("gl_finish", 1);
-#endif
-
+#else
 	/* MCD has buffering issues */
 	if (gl_config.renderer == GL_RENDERER_MCD)
 		ri.Cvar_SetValue("gl_finish", 1);
+#endif
 
 	/* grab extensions */
 	if (strstr(gl_config.extensions_string, "GL_EXT_compiled_vertex_array") || strstr(gl_config.extensions_string, "GL_SGI_compiled_vertex_array")) {
