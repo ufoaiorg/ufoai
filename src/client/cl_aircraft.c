@@ -1909,6 +1909,9 @@ extern void AIR_ParseAircraft (const char *name, char **text, qboolean assignAir
 		for (i = 0; i < numAircraft_samples; i++) {
 			if (!Q_strcmp(aircraft_samples[i].id, name)) {
 				air_samp = &aircraft_samples[i];
+				/* initialize slot numbers (useful when restarting a single campaign) */
+				air_samp->maxWeapons = 0;
+				air_samp->maxElectronics = 0;
 				break;
 			}
 		}
