@@ -1169,12 +1169,11 @@ extern qboolean PR_Save (sizebuf_t* sb, void* data)
 	int i, j;
 	production_queue_t *pq;
 
-	MSG_WriteByte(sb, MAX_BASES);
-	for (i = 0; i < MAX_BASES; i++) {
+	for (i = 0; i < presaveArray[PRE_MAXBAS]; i++) {
 		pq = &gd.productions[i];
 		MSG_WriteByte(sb, pq->numItems);
 		for (j = 0; j < pq->numItems; j++) {
-			MSG_WriteLong(sb, pq->items[j].objID);
+			MSG_WriteString(sb, csi.ods[pq->items[j].objID].id);
 			MSG_WriteLong(sb, pq->items[j].amount);
 			MSG_WriteLong(sb, pq->items[j].timeLeft);
 			MSG_WriteLong(sb, pq->items[j].workers);
@@ -1192,24 +1191,31 @@ extern qboolean PR_Save (sizebuf_t* sb, void* data)
  */
 extern qboolean PR_Load (sizebuf_t* sb, void* data)
 {
-	int i, j, cnt;
+	int i, j, k;
+	const char *s;
 	production_queue_t *pq;
 
-	cnt = MSG_ReadByte(sb);
-	for (i = 0; i < cnt; i++) {
+	for (i = 0; i < presaveArray[PRE_MAXBAS]; i++) {
 		pq = &gd.productions[i];
 		pq->numItems = MSG_ReadByte(sb);
 		for (j = 0; j < pq->numItems; j++) {
-			pq->items[j].objID = MSG_ReadLong(sb);
-			pq->items[j].amount = MSG_ReadLong(sb);
-			pq->items[j].timeLeft = MSG_ReadLong(sb);
-			if (*(int*)data >= 2) {
+			s = MSG_ReadString(sb);
+			k = Com_GetItemByID(s);
+			if (k == -1 || k >= MAX_OBJDEFS) {
+				Com_Printf("PR_Load: Could not find item '%s'\n", s);
+				MSG_ReadLong(sb);
+				MSG_ReadLong(sb);
+				MSG_ReadLong(sb);
+				MSG_ReadByte(sb);
+				MSG_ReadByte(sb);
+			} else {
+				pq->items[j].objID = k;
+				pq->items[j].amount = MSG_ReadLong(sb);
+				pq->items[j].timeLeft = MSG_ReadLong(sb);
 				pq->items[j].workers = MSG_ReadLong(sb);
 				pq->items[j].production = MSG_ReadByte(sb);
-			} else {
-				pq->items[j].production = qtrue;	/* Before 2.2.0 there were no disassembling. */
+				pq->items[j].items_cached = MSG_ReadByte(sb);
 			}
-			pq->items[j].items_cached = MSG_ReadByte(sb);
 		}
 	}
 	return qtrue;

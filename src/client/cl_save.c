@@ -30,6 +30,56 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 saveSubsystems_t saveSubsystems[MAX_SAVESUBSYSTEMS];
 int saveSubsystemsAmount;
 static cvar_t* save_compressed;
+int presaveArray[MAX_ARRAYINDEXES];
+
+/**
+ * @brief Fills the presaveArray with needed values and saves it.
+ * @sa SAV_PresaveArrayLoad
+ */
+static qboolean SAV_PresaveArraySave (sizebuf_t* sb, void* data)
+{
+	int i;
+
+	presaveArray[PRE_NUMODS] = csi.numODs;		/* Number of Objects in csi.ods */
+	presaveArray[PRE_NUMIDS] = csi.numIDs;		/* Number of Containers */
+	presaveArray[PRE_BASESI] = BASE_SIZE;		/* #define BASE_SIZE */
+	presaveArray[PRE_MAXBUI] = MAX_BUILDINGS;	/* #define MAX_BUILDINGS */
+	presaveArray[PRE_ACTTEA] = MAX_ACTIVETEAM;	/* #define MAX_ACTIVETEAM */
+	presaveArray[PRE_MAXEMP] = MAX_EMPLOYEES;	/* #define MAX_EMPLOYEES */
+	presaveArray[PRE_MCARGO] = MAX_CARGO;		/* #define MAX_CARGO */
+	presaveArray[PRE_MAXAIR] = MAX_AIRCRAFT;	/* #define MAX_AIRCRAFTS */
+	presaveArray[PRE_AIRSTA] = AIR_STATS_MAX;	/* AIR_STATS_MAX in aircraftParams_t */
+	presaveArray[PRE_MAXCAP] = MAX_CAP;		/* MAX_CAP in baseCapacities_t */
+	presaveArray[PRE_EMPTYP] = MAX_EMPL;		/* MAX_EMPL in employeeType_t */
+	presaveArray[PRE_MAXBAS] = MAX_BASES;		/* #define MAX_BASES */
+	presaveArray[PRE_NATION] = gd.numNations;	/* gd.numNations */
+	presaveArray[PRE_KILLTP] = KILLED_NUM_TYPES;	/* KILLED_NUM_TYPES in killtypes_t */
+	presaveArray[PRE_SKILTP] = SKILL_NUM_TYPES;	/* SKILL_NUM_TYPES in abilityskills_t */
+	presaveArray[PRE_NMTECH] = gd.numTechnologies;	/* gd.numTechnologies */
+	presaveArray[PRE_TECHMA] = TECHMAIL_MAX;	/* TECHMAIL_MAX in techMailType_t */
+	presaveArray[PRE_NUMTDS] = numTeamDesc;		/* numTeamDesc */
+
+	MSG_WriteLong(sb, PRE_MAX);
+	for (i = 0; i < PRE_MAX; i++) {
+		MSG_WriteLong(sb, presaveArray[i]);
+	}
+	return qtrue;
+}
+
+/**
+ * @brief Loads presaveArray.
+ * @sa SAV_PresaveArraySave
+ */
+static qboolean SAV_PresaveArrayLoad (sizebuf_t* sb, void* data)
+{
+	int i, cnt;
+
+	cnt = MSG_ReadByte(sb);
+	for (i = 0; i < cnt; i++) {
+		presaveArray[i] = MSG_ReadLong(sb);
+	}
+	return qtrue;
+}
 
 /**
  * @brief Loads a savegame from file
@@ -456,6 +506,7 @@ static void SAV_GameSaveNameCleanup_f (void)
  */
 extern void SAV_Init (void)
 {
+	static saveSubsystems_t pre_subsystem = {"size", SAV_PresaveArraySave, SAV_PresaveArrayLoad, 0xFF};
 	static saveSubsystems_t b_subsystem = {"base", B_Save, B_Load, 0x0};
 	static saveSubsystems_t cp_subsystem = {"campaign", CP_Save, CP_Load, 0x1};
 	static saveSubsystems_t hos_subsystem = {"hospital", HOS_Save, HOS_Load, 0x2};
@@ -474,6 +525,7 @@ extern void SAV_Init (void)
 
 	Com_Printf("Init saving subsystems\n");
 	/* don't mess with the order */
+	SAV_AddSubsystem(&pre_subsystem);
 	SAV_AddSubsystem(&b_subsystem);
 	SAV_AddSubsystem(&cp_subsystem);
 	SAV_AddSubsystem(&hos_subsystem);

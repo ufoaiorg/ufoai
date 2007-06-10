@@ -373,6 +373,37 @@ void IN_Accumulate(void);
 
 /* cl_save.c */
 void SAV_Init(void);
+#define MAX_ARRAYINDEXES	512
+
+/** @brief Indexes of presaveArray. DON'T MESS WITH ORDER. */
+typedef enum {
+	PRE_NUMODS,	/* Number of Objects in csi.ods */
+	PRE_NUMIDS,	/* Number of Containers */
+	PRE_BASESI,	/* #define BASE_SIZE */
+	PRE_MAXBUI,	/* #define MAX_BUILDINGS */
+	PRE_ACTTEA,	/* #define MAX_ACTIVETEAM */
+	PRE_MAXEMP,	/* #define MAX_EMPLOYEES */
+	PRE_MCARGO,	/* #define MAX_CARGO */
+	PRE_MAXAIR,	/* #define MAX_AIRCRAFT */
+	PRE_AIRSTA,	/* AIR_STATS_MAX in aircraftParams_t */
+	PRE_MAXCAP,	/* MAX_CAP in baseCapacities_t */
+	PRE_EMPTYP,	/* MAX_EMPL in employeeType_t */
+	PRE_MAXBAS,	/* #define MAX_BASES */
+	PRE_NATION,	/* gd.numNations */
+	PRE_KILLTP,	/* KILLED_NUM_TYPES in killtypes_t */
+	PRE_SKILTP,	/* SKILL_NUM_TYPES in abilityskills_t */
+	PRE_NMTECH,	/* gd.numTechnologies */
+	PRE_TECHMA,	/* TECHMAIL_MAX in techMailType_t */
+	PRE_NUMTDS,	/* numTeamDesc */
+
+	PRE_MAX
+} presaveType_t;
+
+/**
+ * @brief Presave array of arrays indexes.
+ * @note Needs to be loaded first, values from here should be used in every loops.
+ */
+extern int presaveArray[MAX_ARRAYINDEXES];
 
 /* cl_sequence.c (avi stuff) */
 qboolean CL_OpenAVIForWriting(const char *filename);

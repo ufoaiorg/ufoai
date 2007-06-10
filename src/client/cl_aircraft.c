@@ -2621,7 +2621,7 @@ extern qboolean AIR_Save (sizebuf_t* sb, void* data)
 		for (j = 0; j < gd.ufos[i].route.numPoints; j++)
 			MSG_Write2Pos(sb, gd.ufos[i].route.point[j]);
 		MSG_WritePos(sb, gd.ufos[i].direction);
-		for (j = 0; j < AIR_STATS_MAX; j++)
+		for (j = 0; j < presaveArray[PRE_AIRSTA]; j++)
 			MSG_WriteLong(sb, gd.ufos[i].stats[j]);
 		/* @todo more? */
 	}
@@ -2655,31 +2655,27 @@ extern qboolean AIR_Load (sizebuf_t* sb, void* data)
 		ufo = AIR_GetAircraft(s);
 		if (!ufo) {
 			Com_Printf("Could not find ufo '%s'\n", s);
-			MSG_ReadByte(sb); /* visible */
-			MSG_ReadPos(sb, tmp_vec3t);	/* pos */
-			MSG_ReadByte(sb);	/* status */
-			MSG_ReadFloat(sb);	/* speed */
-			MSG_ReadLong(sb);	/* fuel */
-			MSG_ReadShort(sb);	/* time */
-			MSG_ReadShort(sb);	/* point */
-			tmp_int = MSG_ReadShort(sb);	/* numPoints */
-			MSG_ReadFloat(sb);	/* distance */
+			MSG_ReadByte(sb); 			/* visible */
+			MSG_ReadPos(sb, tmp_vec3t);		/* pos */
+			MSG_ReadByte(sb);			/* status */
+			MSG_ReadFloat(sb);			/* speed */
+			MSG_ReadLong(sb);			/* fuel */
+			MSG_ReadShort(sb);			/* time */
+			MSG_ReadShort(sb);			/* point */
+			tmp_int = MSG_ReadShort(sb);		/* numPoints */
+			MSG_ReadFloat(sb);			/* distance */
 			for (j = 0; j < tmp_int; j++)
 				MSG_Read2Pos(sb, tmp_vec2t);	/* route points */
-			if (*(int*)data >= 2) { /* >= 2.2 */
-				MSG_ReadPos(sb, tmp_vec3t);	/* direction */
-				for (j = 0; j < AIR_STATS_MAX; j++)
-					MSG_ReadLong(sb);
-			}
+			MSG_ReadPos(sb, tmp_vec3t);		/* direction */
+			for (j = 0; j < presaveArray[PRE_AIRSTA]; j++)
+				MSG_ReadLong(sb);
 		} else {
 			memcpy(&gd.ufos[i], ufo, sizeof(aircraft_t));
 			ufo = &gd.ufos[i];
 			ufo->visible = MSG_ReadByte(sb);
 			MSG_ReadPos(sb, ufo->pos);
 			ufo->status = MSG_ReadByte(sb);
-			if (*(int*)data == 1) { /* >= 2.1.1 */
-				ufo->stats[AIR_STATS_SPEED] = MSG_ReadFloat(sb);
-			}
+			ufo->stats[AIR_STATS_SPEED] = MSG_ReadFloat(sb);
 			ufo->fuel = MSG_ReadLong(sb);
 			ufo->time = MSG_ReadShort(sb);
 			ufo->point = MSG_ReadShort(sb);
@@ -2687,11 +2683,9 @@ extern qboolean AIR_Load (sizebuf_t* sb, void* data)
 			ufo->route.distance = MSG_ReadFloat(sb);
 			for (j = 0; j < ufo->route.numPoints; j++)
 				MSG_Read2Pos(sb, ufo->route.point[j]);
-			if (*(int*)data >= 2) { /* >= 2.2 */
-				MSG_ReadPos(sb, ufo->direction);
-				for (j = 0; j < AIR_STATS_MAX; j++)
-					ufo->stats[i] = MSG_ReadLong(sb);
-			}
+			MSG_ReadPos(sb, ufo->direction);
+			for (j = 0; j < presaveArray[PRE_AIRSTA]; j++)
+				ufo->stats[i] = MSG_ReadLong(sb);
 		}
 		/* @todo more? */
 	}

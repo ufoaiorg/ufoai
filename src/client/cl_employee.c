@@ -1000,7 +1000,7 @@ extern qboolean E_Save (sizebuf_t* sb, void* data)
 	int i, j, k;
 	employee_t* e;
 
-	for (j = 0; j < MAX_EMPL; j++) {
+	for (j = 0; j < presaveArray[PRE_EMPTYP]; j++) {
 		MSG_WriteShort(sb, gd.numEmployees[j]);
 		for (i = 0; i < gd.numEmployees[j]; i++) {
 			e = &gd.employees[j][i];
@@ -1030,9 +1030,9 @@ extern qboolean E_Save (sizebuf_t* sb, void* data)
 
 			MSG_WriteShort(sb, e->chr.assigned_missions);
 
-			for (k = 0; k < KILLED_NUM_TYPES; k++)
+			for (k = 0; k < presaveArray[PRE_KILLTP]; k++)
 				MSG_WriteShort(sb, e->chr.kills[k]);
-			for (k = 0; k < SKILL_NUM_TYPES; k++)
+			for (k = 0; k < presaveArray[PRE_SKILTP]; k++)
 				MSG_WriteShort(sb, e->chr.skills[k]);
 
 			MSG_WriteByte(sb, e->chr.chrscore.alienskilled);
@@ -1066,10 +1066,9 @@ extern qboolean E_Load (sizebuf_t* sb, void* data)
 {
 	int i, j, k;
 	employee_t* e;
-	base_t *b;
 
 	/* load inventories */
-	for (j = 0; j < MAX_EMPL; j++) {
+	for (j = 0; j < presaveArray[PRE_EMPTYP]; j++) {
 		gd.numEmployees[j] = MSG_ReadShort(sb);
 		for (i = 0; i < gd.numEmployees[j]; i++) {
 			e = &gd.employees[j][i];
@@ -1090,10 +1089,8 @@ extern qboolean E_Load (sizebuf_t* sb, void* data)
 			e->chr.armor = MSG_ReadByte(sb);
 			e->chr.weapons = MSG_ReadByte(sb);
 			e->chr.teamDesc = MSG_ReadByte(sb);
-			if (*(int*)data >= 2) {
-				e->chr.category = MSG_ReadByte(sb);
-				e->chr.gender = MSG_ReadByte(sb);
-			}
+			e->chr.category = MSG_ReadByte(sb);
+			e->chr.gender = MSG_ReadByte(sb);
 			e->chr.ucn = MSG_ReadShort(sb);
 			e->chr.maxHP = MSG_ReadShort(sb);
 			e->chr.HP = MSG_ReadShort(sb);
@@ -1105,9 +1102,9 @@ extern qboolean E_Load (sizebuf_t* sb, void* data)
 
 			e->chr.assigned_missions = MSG_ReadShort(sb);
 
-			for (k = 0; k < KILLED_NUM_TYPES; k++)
+			for (k = 0; k < presaveArray[PRE_KILLTP]; k++)
 				e->chr.kills[k] = MSG_ReadShort(sb);
-			for (k = 0; k < SKILL_NUM_TYPES; k++)
+			for (k = 0; k < presaveArray[PRE_SKILTP]; k++)
 				e->chr.skills[k] = MSG_ReadShort(sb);
 
 			e->chr.chrscore.alienskilled = MSG_ReadByte(sb);
@@ -1128,16 +1125,6 @@ extern qboolean E_Load (sizebuf_t* sb, void* data)
 			memset(&gd.employees[j][i].inv, 0, sizeof(inventory_t));
 			CL_ReceiveInventory(sb, &e->inv, qtrue);
 			gd.employees[j][i].chr.inv = &gd.employees[j][i].inv;
-		}
-	}
-
-	if (*(int*)data == 1) {	/* 2.1.1 */
-		/* Fix Living Quarters capacity.cur. */
-		for (i = 0, b = gd.bases; i < MAX_BASES; i++, b++) {
-			if (B_GetEmployeeCount(b) > b->capacities[CAP_EMPLOYEES].max)
-				b->capacities[CAP_EMPLOYEES].cur = b->capacities[CAP_EMPLOYEES].max;
-			else
-				b->capacities[CAP_EMPLOYEES].cur = B_GetEmployeeCount(b);
 		}
 	}
 

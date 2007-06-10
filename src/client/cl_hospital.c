@@ -662,21 +662,6 @@ extern qboolean HOS_Save (sizebuf_t *sb, void* data)
  */
 extern qboolean HOS_Load (sizebuf_t *sb, void* data)
 {
-	int i, baseID, type, count;
-	employee_t *employee;
-	base_t *base;
-
-	/* version 2.1.1 had some data stored here */
-	if (*(int*)data == 1) {	/* 2.1.1 */
-		count = MSG_ReadShort(sb);
-		for (i = 0; i < count; i++) {
-			baseID = MSG_ReadByte(sb);
-			type = MSG_ReadByte(sb);
-			base = &gd.bases[baseID];
-			employee = &(gd.employees[type][MSG_ReadShort(sb)]);
-			HOS_AddToEmployeeList(employee, base);
-		}
-	}
 	return qtrue;
 }
 

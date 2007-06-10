@@ -2066,7 +2066,7 @@ extern qboolean STATS_Load (sizebuf_t* sb, void* data)
 extern qboolean NA_Save (sizebuf_t* sb, void* data)
 {
 	int i;
-	for (i = 0; i < gd.numNations; i++) {
+	for (i = 0; i < presaveArray[PRE_NATION]; i++) {
 		MSG_WriteFloat(sb, gd.nations[i].happiness);
 	}
 	return qtrue;
@@ -2079,7 +2079,7 @@ extern qboolean NA_Load (sizebuf_t* sb, void* data)
 {
 	int i;
 
-	for (i = 0; i < gd.numNations; i++) {
+	for (i = 0; i < presaveArray[PRE_NATION]; i++) {
 		gd.nations[i].happiness = MSG_ReadFloat(sb);
 	}
 	return qtrue;

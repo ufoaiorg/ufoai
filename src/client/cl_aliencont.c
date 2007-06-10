@@ -39,24 +39,18 @@ static aliensCont_t* aliencontCurrent;		/**< Current selected Alien Containment.
 
 /**
  * @brief Prepares Alien Containment - names, states, and zeroed amount.
+ * @param[in] Index of base with AC.
  * @sa B_BuildBase
  * @sa AL_AddAliens
  */
-void AL_FillInContainment (void)
+void AL_FillInContainment (int baseidx)
 {
 	int i, j;
 	base_t *base = NULL;
 	aliensCont_t *containment = NULL;
 
-	if (baseCurrent) {
-		base = baseCurrent;
-	} else {
-#ifdef DEBUG
-		/* should never happen */
-		Com_Printf("AL_FillInContainment()... No base selected!\n");
-#endif
-		return;
-	}
+	base = &gd.bases[baseidx];
+	assert (base);
 
 	containment = base->alienscont;
 

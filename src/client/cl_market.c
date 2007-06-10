@@ -745,7 +745,8 @@ extern qboolean BS_Save (sizebuf_t* sb, void* data)
 	int i;
 
 	/* store market */
-	for (i = 0; i < MAX_OBJDEFS; i++) {
+	for (i = 0; i < presaveArray[PRE_NUMODS]; i++) {
+		MSG_WriteString(sb, csi.ods[i].id);
 		MSG_WriteLong(sb, ccs.eMarket.num[i]);
 		MSG_WriteLong(sb, ccs.eMarket.bid[i]);
 		MSG_WriteLong(sb, ccs.eMarket.ask[i]);
@@ -763,15 +764,27 @@ extern qboolean BS_Save (sizebuf_t* sb, void* data)
  */
 extern qboolean BS_Load (sizebuf_t* sb, void* data)
 {
-	int i;
+	int i, j;
+	const char *s;
 
 	/* read market */
-	for (i = 0; i < MAX_OBJDEFS; i++) {
-		ccs.eMarket.num[i] = MSG_ReadLong(sb);
-		ccs.eMarket.bid[i] = MSG_ReadLong(sb);
-		ccs.eMarket.ask[i] = MSG_ReadLong(sb);
-		ccs.eMarket.cumm_supp_diff[i] = MSG_ReadFloat(sb);
-		gd.autosell[i] = MSG_ReadByte(sb);
+	for (i = 0; i < presaveArray[PRE_NUMODS]; i++) {
+		s = MSG_ReadString(sb);
+		j = Com_GetItemByID(s);
+		if (j == -1 || j >= MAX_OBJDEFS) {
+			Com_Printf("BS_Load: Could not find item '%s'\n", s);
+			MSG_ReadLong(sb);
+			MSG_ReadLong(sb);
+			MSG_ReadLong(sb);
+			MSG_ReadFloat(sb);
+			MSG_ReadByte(sb);
+		} else {
+			ccs.eMarket.num[j] = MSG_ReadLong(sb);
+			ccs.eMarket.bid[j] = MSG_ReadLong(sb);
+			ccs.eMarket.ask[j] = MSG_ReadLong(sb);
+			ccs.eMarket.cumm_supp_diff[j] = MSG_ReadFloat(sb);
+			gd.autosell[j] = MSG_ReadByte(sb);
+		}
 	}
 
 	return qtrue;

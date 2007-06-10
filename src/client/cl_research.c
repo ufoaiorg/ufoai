@@ -2197,8 +2197,7 @@ extern qboolean RS_Save (sizebuf_t* sb, void* data)
 	int i, j;
 	technology_t *t;
 
-	MSG_WriteShort(sb, gd.numTechnologies);
-	for (i = 0; i < gd.numTechnologies; i++) {
+	for (i = 0; i < presaveArray[PRE_NMTECH]; i++) {
 		t = &gd.technologies[i];
 		MSG_WriteString(sb, t->id);
 		MSG_WriteByte(sb, t->statusCollected);
@@ -2214,7 +2213,7 @@ extern qboolean RS_Save (sizebuf_t* sb, void* data)
 		MSG_WriteShort(sb, t->researchedDateMonth);
 		MSG_WriteShort(sb, t->researchedDateYear);
 		MSG_WriteByte(sb, t->mailSent);
-		for (j = 0; j < TECHMAIL_MAX; j++) {
+		for (j = 0; j < presaveArray[PRE_TECHMA]; j++) {
 			/* only save the already read mails */
 			MSG_WriteByte(sb, j);
 			MSG_WriteByte(sb, t->mail[j].read);
@@ -2229,16 +2228,12 @@ extern qboolean RS_Save (sizebuf_t* sb, void* data)
  */
 extern qboolean RS_Load (sizebuf_t* sb, void* data)
 {
-	int i, j, k;
+	int i, j;
 	technology_t *t;
 	const char *techString;
 	techMailType_t mailType;
-	base_t *b;
 
-	j = MSG_ReadShort(sb);
-	if (j != gd.numTechnologies)
-		Com_Printf("......different amount of technologies found - resave this game %i, %i\n", j, gd.numTechnologies);
-	for (i = 0; i < j; i++) {
+	for (i = 0; i < presaveArray[PRE_NMTECH]; i++) {
 		techString = MSG_ReadString(sb);
 		t = RS_GetTechByID(techString);
 		if (!t) {
@@ -2257,7 +2252,7 @@ extern qboolean RS_Load (sizebuf_t* sb, void* data)
 			MSG_ReadShort(sb);	/* researchedDateMonth */
 			MSG_ReadShort(sb);	/* researchedDateYear */
 			MSG_ReadByte(sb);	/* mailSent */
-			for (k = 0; k < TECHMAIL_MAX; k++) {
+			for (j = 0; j < presaveArray[PRE_TECHMA]; j++) {
 				MSG_ReadByte(sb);	/* mailType */
 				MSG_ReadByte(sb);	/* t->mail[mailType].read */
 			}
@@ -2276,14 +2271,9 @@ extern qboolean RS_Load (sizebuf_t* sb, void* data)
 		t->researchedDateMonth = MSG_ReadShort(sb);
 		t->researchedDateYear = MSG_ReadShort(sb);
 		t->mailSent = MSG_ReadByte(sb);
-		for (k = 0; k < TECHMAIL_MAX; k++) {
+		for (j = 0; j < presaveArray[PRE_TECHMA]; j++) {
 			mailType = MSG_ReadByte(sb);
 			t->mail[mailType].read = MSG_ReadByte(sb);
-		}
-		if (*(int*)data == 1) {	/* 2.1.1 */
-			/* We will update laboratory capacity here. */
-			b = &gd.bases[t->base_idx];
-			b->capacities[CAP_LABSPACE].cur += t->scientists;
 		}
 	}
 
