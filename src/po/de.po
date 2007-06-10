@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: UFO Alien Invasion\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
 "POT-Creation-Date: 2007-06-07 09:37+0200\n"
-"PO-Revision-Date: 2007-06-07 09:59+0100\n"
+"PO-Revision-Date: 2007-06-10 12:20+0100\n"
 "Last-Translator: Martin Gerhardy <martin.gerhardy@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -132,7 +132,7 @@ msgstr "UFO - Sammler"
 
 #: ../base/ufos/aircraftmanagement.ufo:247
 msgid "Harvester U"
-msgstr "UFO - Samm."
+msgstr "UFO-Saml."
 
 #: ../base/ufos/aircraftmanagement.ufo:279
 #: ../base/ufos/otheritems.ufo:66
@@ -148,13 +148,13 @@ msgstr "UFO - Transporter"
 #: ../base/ufos/research.ufo:2927
 #: ../base/ufos/research.ufo:2940
 #: ../base/ufos/research.ufo:2947
-#, fuzzy
 msgid "UFO - Big"
-msgstr "UFO - Jäger"
+msgstr "UFO - Groß"
 
 #: ../base/ufos/aircraftmanagement.ufo:309
+#, fuzzy
 msgid "Big U"
-msgstr ""
+msgstr "UFO-Gr."
 
 #: ../base/ufos/aircraftmanagement.ufo:337
 #: ../base/ufos/otheritems.ufo:59
@@ -167,7 +167,7 @@ msgstr "UFO - Kondor"
 
 #: ../base/ufos/aircraftmanagement.ufo:338
 msgid "Condor U"
-msgstr "UFO - Kond."
+msgstr "UFO-Kond."
 
 #: ../base/ufos/aircraftmanagement.ufo:365
 #: ../base/ufos/otheritems.ufo:38
@@ -653,9 +653,8 @@ msgid "Available equipment:"
 msgstr "Verfügbare Ausrüstung"
 
 #: ../base/ufos/menu_aircraft.ufo:441
-#, fuzzy
 msgid "Selected item:"
-msgstr "Bitte wählen"
+msgstr "Gewählter Gegenstand:"
 
 #: ../base/ufos/menu_aircraft.ufo:449
 #: ../base/ufos/menu_aircraft.ufo:459
@@ -678,31 +677,30 @@ msgstr "Gegenstände"
 #: ../base/ufos/menu_aircraft.ufo:513
 #: ../base/ufos/menu_aircraft.ufo:535
 #: ../base/ufos/menu_aircraft.ufo:557
-#, fuzzy
 msgid "Add selected item"
-msgstr "Bitte wählen"
+msgstr "Gewählten Gegenstand hinzufügen"
 
 #: ../base/ufos/menu_aircraft.ufo:524
 #: ../base/ufos/menu_aircraft.ufo:546
 #: ../base/ufos/menu_aircraft.ufo:568
+#, fuzzy
 msgid "Remove item from slot"
-msgstr ""
+msgstr "Gegenstand entfernen"
 
 #: ../base/ufos/menu_aircraft.ufo:580
 #: ../base/ufos/menu_aircraft.ufo:601
 #: ../base/ufos/menu_aircraft.ufo:622
-#, fuzzy
 msgid "Select this zone"
-msgstr "Bitte wählen"
+msgstr "Diese Zone wählen"
 
 #: ../base/ufos/menu_aircraft.ufo:642
 #, fuzzy
 msgid "Current item in slot"
-msgstr "Aktuelles Team: %i"
+msgstr "Aktueller Gegenstand im Slot"
 
 #: ../base/ufos/menu_aircraft.ufo:651
 msgid "Item to install after removal"
-msgstr ""
+msgstr "Nach Entfernung zu installieren"
 
 #: ../base/ufos/menu_aircraft.ufo:660
 msgid "Ammo fitting this weapon"
@@ -1043,14 +1041,13 @@ msgid "Deal with Aliens in Alien Containment"
 msgstr "Nächste Quarantänestation"
 
 #: ../base/ufos/menu_bases.ufo:349
-#, fuzzy
 msgid "Containment"
-msgstr "Zufrieden"
+msgstr "Quarantäne"
 
 #: ../base/ufos/menu_bases.ufo:360
 #: ../base/ufos/menu_bases.ufo:378
 msgid "Medical and Surgery operations"
-msgstr ""
+msgstr "Medizinische und chirurgische Vorgänge"
 
 #: ../base/ufos/menu_bases.ufo:409
 #: ../base/ufos/menu_geoscape.ufo:109
@@ -1257,7 +1254,7 @@ msgstr "Einzukaufende Menge erhöhen"
 
 #: ../base/ufos/menu_buy.ufo:1125
 msgid "Sell factor:"
-msgstr "Verkaufsfaktor:"
+msgstr "Verkaufsfakt.:"
 
 #: ../base/ufos/menu_buy.ufo:1141
 msgid "Decrease the amount of items you want to sell"
@@ -1667,7 +1664,7 @@ msgstr "Sturmgewehre:"
 #: ../base/ufos/menu_team.ufo:856
 #: ../base/ufos/menu_team.ufo:1535
 msgid "Sniper Rifles:"
-msgstr "Scharfschützengewehre:"
+msgstr "Scharfschützengew.:"
 
 #: ../base/ufos/menu_hire.ufo:488
 #: ../base/ufos/menu_hospital.ufo:445
@@ -1740,7 +1737,7 @@ msgstr "Legende"
 
 #: ../base/ufos/menu_hospital.ufo:271
 msgid "Blue means employee currently being healed."
-msgstr ""
+msgstr "'Blau' bedeutet: Angestellter wird gerade geheilt."
 
 #: ../base/ufos/menu_hospital.ufo:280
 msgid "Red means employee heavily wounded."
@@ -1895,8 +1892,9 @@ msgid "No UFO hangars or UFO recovery process finished"
 msgstr "Keine UFO-Hangars oder UFO-Bergung abgeschlossen"
 
 #: ../base/ufos/menu_lostwon.ufo:68
+#, fuzzy
 msgid "No nation with accepted level of alien infiltration or UFO recovery process finished"
-msgstr ""
+msgstr "Keine Nation mit akzeptiertem Grad an Alien-Infiltration oder UFO-Bergungsprozess beendet"
 
 #: ../base/ufos/menu_lostwon.ufo:69
 msgid "UFO recovery process finished"
@@ -1978,7 +1976,7 @@ msgstr "Beziehungen:"
 
 #: ../base/ufos/menu_lostwon.ufo:496
 msgid "Begin UFO sell process"
-msgstr ""
+msgstr "Beginne UFO-Verkaufsprozess"
 
 #: ../base/ufos/menu_lostwon.ufo:509
 msgid "Sell"
@@ -2504,11 +2502,11 @@ msgstr "Precachen von Bildern und Modellen:"
 
 #: ../base/ufos/menu_options.ufo:968
 msgid "Don't precache - images and models are loaded on the fly"
-msgstr ""
+msgstr "Nicht precachen - Bilder und Modelle werden im Betrieb geladen"
 
 #: ../base/ufos/menu_options.ufo:982
 msgid "Precache images and models (faster menus)"
-msgstr ""
+msgstr "Bilder und Modelle precachen (schnellere Menüs)"
 
 #: ../base/ufos/menu_options.ufo:995
 msgid "HUD Design:"
@@ -6097,9 +6095,8 @@ msgstr "Explosion"
 #: ../base/ufos/research.ufo:2430
 #: ../base/ufos/research.ufo:2444
 #: ../base/ufos/research.ufo:2458
-#, fuzzy
 msgid "none"
-msgstr "Fertig"
+msgstr "Keine"
 
 #: ../base/ufos/research.ufo:2229
 msgid "Fire Damage Type"
@@ -7780,9 +7777,8 @@ msgstr ""
 "Keiner."
 
 #: ../base/ufos/research.ufo:3409
-#, fuzzy
 msgid "Alien Aircraft Plating"
-msgstr "UFO gesichtet"
+msgstr "Alien-Flugzeugpanzerung"
 
 #: ../base/ufos/research.ufo:3411
 #, fuzzy
@@ -9011,9 +9007,8 @@ msgid "Machine Gun"
 msgstr "Maschinengewehr"
 
 #: ../base/ufos/weapons_human.ufo:229
-#, fuzzy
 msgid "Machine Gun Magazine"
-msgstr "Maschienengewehrmunition"
+msgstr "Maschinengewehrmagazin"
 
 #: ../base/ufos/weapons_human.ufo:312
 msgid "Sniper Rifle"
@@ -9057,7 +9052,7 @@ msgstr "Schwere Maschinenpistole"
 
 #: ../base/ufos/weapons_human.ufo:629
 msgid "SMG Magazine"
-msgstr "Schweres Maschinenpistolenmagazin"
+msgstr "Schweres MP-Magazin"
 
 #: ../base/ufos/weapons_human.ufo:710
 msgid "Riot Shotgun"
@@ -9712,22 +9707,21 @@ msgstr "Keine Ausrüstung an Bord"
 #: client/cl_aircraft.c:1270
 #, c-format
 msgid "This item will be installed in %i hours\n"
-msgstr ""
+msgstr "Gegenstand wird in %i Std. installiert\n"
 
 #: client/cl_aircraft.c:1272
 #, c-format
 msgid "This item will be removed in %i hours\n"
-msgstr ""
+msgstr "Gegenstand wird in %i Std. entfernt werden\n"
 
 #: client/cl_aircraft.c:1283
 #, c-format
 msgid "This item will be operational in %i hours\n"
-msgstr ""
+msgstr "Gegenstand wird in %i Std. einsatzbereit sein\n"
 
 #: client/cl_aircraft.c:1292
-#, fuzzy
 msgid "No ammo assigned to this weapon"
-msgstr "Nächste Munition, die mit dieser Waffe benutzt werden kann"
+msgstr "Dieser Waffe ist keine Munition zugewiesen"
 
 #: client/cl_aircraft.c:1587
 msgid "Assign a team to aircraft"
@@ -10783,11 +10777,11 @@ msgstr "Mission\t%s (%s)\n"
 
 #: client/cl_popup.c:376
 msgid "No craft available, or no tactical teams assigned to available craft."
-msgstr ""
+msgstr "Kein Flugzeug verfügbar, oder kein Einsatzkommando zugewiesen."
 
 #: client/cl_popup.c:378
 msgid "No craft available, or no weapons loaded on available craft."
-msgstr ""
+msgstr "Kein Flugzeug verfügbar, oder keine Waffen darauf installiert."
 
 #: client/cl_produce.c:252
 msgid "Not enough workers"
@@ -10837,9 +10831,9 @@ msgid "Production finished"
 msgstr "Produktion abgeschlossen"
 
 #: client/cl_produce.c:443
-#, fuzzy, c-format
+#, c-format
 msgid "The disassembling of %s has finished."
-msgstr "Die Produktion von %s ist abgeschlossen"
+msgstr "Demontage von %s wurde abgeschlossen."
 
 #: client/cl_produce.c:480
 #: client/cl_produce.c:498
@@ -10862,9 +10856,8 @@ msgid "Item size\t%i\n"
 msgstr "Größe des Gegenstandes\t%i\n"
 
 #: client/cl_produce.c:515
-#, fuzzy
 msgid "No disassembly selected"
-msgstr "Keinen Gegenstand ausgewählt"
+msgstr "Keine Demontage ausgewählt"
 
 #: client/cl_produce.c:523
 #, c-format
@@ -10896,9 +10889,9 @@ msgid "Production started"
 msgstr "Produktion gestartet"
 
 #: client/cl_produce.c:996
-#, fuzzy, c-format
+#, c-format
 msgid "Disassembling of %s started"
-msgstr "Ausrüstung demontieren"
+msgstr "%s-Demontage gestartet"
 
 #: client/cl_produce.c:1005
 msgid "Queue full!"
@@ -11272,7 +11265,7 @@ msgstr ""
 #: client/cl_team.c:2018
 #, c-format
 msgid "Gathered items (types/all)\t%i/%i\n"
-msgstr ""
+msgstr "Sichergestellte Gegenstände: (Typ/Alle)\t%i/%i\n"
 
 #: client/cl_team.c:2040
 #, c-format
@@ -11280,13 +11273,17 @@ msgid ""
 "\n"
 "Secured crashed %s\n"
 msgstr ""
+"\n"
+"Abgestürztes %s gesichert\n"
 
 #: client/cl_team.c:2042
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\n"
 "Secured landed %s\n"
-msgstr "Gebiet sichern"
+msgstr ""
+"\n"
+"Gelandetes %s gesichert\n"
 
 #: client/cl_team.c:2057
 #, c-format
@@ -11863,6 +11860,7 @@ msgid "Take a screenshot"
 msgstr "Screenshot speichern"
 
 #: po/OTHER_STRINGS:13
+#, fuzzy
 msgid "Only moving"
 msgstr ""
 
