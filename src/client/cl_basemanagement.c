@@ -3123,10 +3123,15 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 					continue;
 				if ((Q_strncmp(s, teamDesc[l].name, MAX_VAR)) == 0)
 					break;
-				/* @todo: error reporting here if no alien in current version found */
 			}
-			b->alienscont[l].amount_alive = MSG_ReadShort(sb);
-			b->alienscont[l].amount_dead = MSG_ReadShort(sb);
+			if (l == numTeamDesc) {
+				Com_Printf("B_Load: Could not find teamDesc '%s' - skipping the aliencont\n", s);
+				MSG_ReadShort(sb);
+				MSG_ReadShort(sb);
+			} else {
+				b->alienscont[l].amount_alive = MSG_ReadShort(sb);
+				b->alienscont[l].amount_dead = MSG_ReadShort(sb);
+			}
 		}
 
 		/* Base capacities. */
