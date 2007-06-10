@@ -431,7 +431,7 @@ void R_DrawAliasModel (entity_t * e)
 
 	if (gl_combine) {
 		GL_TexEnv(gl_combine);
-		qglTexEnvf(GL_TEXTURE_ENV, GL_RGB_SCALE_EXT, intensity->value);
+		qglTexEnvf(GL_TEXTURE_ENV, GL_RGB_SCALE_EXT, gl_intensity->value);
 	} else {
 		GL_TexEnv(GL_MODULATE);
 	}
@@ -687,7 +687,7 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 
 	if (gl_combine) {
 		GL_TexEnv(gl_combine);
-		qglTexEnvf(GL_TEXTURE_ENV, GL_RGB_SCALE_EXT, intensity->value);
+		qglTexEnvf(GL_TEXTURE_ENV, GL_RGB_SCALE_EXT, gl_intensity->value);
 	} else {
 		GL_TexEnv(GL_MODULATE);
 	}
@@ -771,7 +771,7 @@ void R_DrawModelParticle (modelInfo_t * mi)
 
 	if (gl_combine) {
 		GL_TexEnv(gl_combine);
-		qglTexEnvf(GL_TEXTURE_ENV, GL_RGB_SCALE_EXT, intensity->value);
+		qglTexEnvf(GL_TEXTURE_ENV, GL_RGB_SCALE_EXT, gl_intensity->value);
 	} else {
 		GL_TexEnv(GL_MODULATE);
 	}

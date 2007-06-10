@@ -681,17 +681,8 @@ typedef struct {
 #define todeg (180.0f/M_PI)
 
 /* entity->flags (render flags) */
-/*unused*/
-#define RF_MINLIGHT         0x00000001  /**< allways have some light (viewmodel) */
-/*unused*/
-#define RF_VIEWERMODEL      0x00000002  /**< don't draw through eyes, only mirrors */
-#define RF_WEAPONMODEL      0x00000004  /**< only draw through eyes */
-/*unused*/
-#define RF_FULLBRIGHT       0x00000008  /**< allways draw full intensity */
 #define RF_DEPTHHACK        0x00000010  /**< for view weapon Z crunching */
 #define RF_TRANSLUCENT      0x00000020
-/*unused*/
-#define RF_FRAMELERP        0x00000040
 #define RF_BEAM             0x00000080
 /*unused*/
 #define RF_CUSTOMSKIN       0x00000100  /**< skin is an index in image_precache */

@@ -332,7 +332,6 @@ extern cvar_t *gl_flashblend;
 extern cvar_t *gl_lightmaptype;
 extern cvar_t *gl_modulate;
 extern cvar_t *gl_drawbuffer;
-extern cvar_t *gl_3dlabs_broken;
 extern cvar_t *gl_driver;
 extern cvar_t *gl_swapinterval;
 extern cvar_t *gl_texturemode;
@@ -346,7 +345,7 @@ extern cvar_t *vid_fullscreen;
 extern cvar_t *vid_gamma;
 extern cvar_t *vid_grabmouse;
 
-extern cvar_t *intensity;
+extern cvar_t *gl_intensity;
 
 extern int gl_lightmap_format;
 extern int gl_solid_format;

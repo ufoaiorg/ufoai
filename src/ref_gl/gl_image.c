@@ -33,7 +33,7 @@ static int numgltextures;
 static byte intensitytable[256];
 static byte gammatable[256];
 
-cvar_t *intensity;
+cvar_t *gl_intensity;
 extern cvar_t *gl_imagefilter;
 
 unsigned d_8to24table[256];
@@ -2397,12 +2397,12 @@ void GL_InitImages (void)
 	DaN = NULL;
 
 	/* init intensity conversions */
-	intensity = ri.Cvar_Get("intensity", "2", CVAR_ARCHIVE, NULL);
+	gl_intensity = ri.Cvar_Get("gl_intensity", "2", CVAR_ARCHIVE, NULL);
 
-	if (intensity->value < 1)
-		ri.Cvar_Set("intensity", "1");
+	if (gl_intensity->value < 1)
+		ri.Cvar_Set("gl_intensity", "1");
 
-	gl_state.inverse_intensity = 1 / intensity->value;
+	gl_state.inverse_intensity = 1 / gl_intensity->value;
 
 	Draw_GetPalette();
 
@@ -2425,7 +2425,7 @@ void GL_InitImages (void)
 	}
 
 	for (i = 0; i < 256; i++) {
-		j = i * intensity->value;
+		j = i * gl_intensity->value;
 
 		if (j > 255)
 			j = 255;

@@ -805,7 +805,7 @@ static void R_DrawWorld (mnode_t * nodes)
 
 		if (gl_combine) {
 			GL_TexEnv(gl_combine);
-			qglTexEnvf(GL_TEXTURE_ENV, GL_RGB_SCALE_EXT, intensity->value);
+			qglTexEnvf(GL_TEXTURE_ENV, GL_RGB_SCALE_EXT, gl_intensity->value);
 		} else {
 			GL_TexEnv(GL_MODULATE);
 		}

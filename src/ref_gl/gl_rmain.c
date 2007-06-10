@@ -139,7 +139,6 @@ cvar_t *gl_wire;
 cvar_t *gl_fog;
 cvar_t *gl_showbox;
 
-cvar_t *gl_3dlabs_broken;
 cvar_t *gl_3dmapradius;
 
 cvar_t *vid_fullscreen;
@@ -218,7 +217,7 @@ qboolean R_CullBox (vec3_t mins, vec3_t maxs)
 /**
  * @brief
  */
-void R_RotateForEntity(entity_t * e)
+void R_RotateForEntity (entity_t * e)
 {
 	qglTranslatef(e->origin[0], e->origin[1], e->origin[2]);
 
@@ -335,10 +334,7 @@ static void R_DrawNullModel (void)
 	vec3_t shadelight;
 	int i;
 
-/*	if ( currententity->flags & RF_FULLBRIGHT ) */
-	shadelight[0] = shadelight[1] = shadelight[2] = 1.0F;
-/*	else */
-/*		R_LightPoint (currententity->origin, shadelight); */
+	R_LightPoint(currententity->origin, shadelight);
 
 	qglPushMatrix();
 
@@ -371,7 +367,7 @@ static void R_DrawNullModel (void)
 /**
  * @brief
  */
-void R_InterpolateTransform(animState_t * as, int numframes, float *tag, float *interpolated)
+void R_InterpolateTransform (animState_t * as, int numframes, float *tag, float *interpolated)
 {
 	float *current, *old;
 	float bl, fl;
@@ -525,7 +521,7 @@ static void R_TransformEntitiesOnList(void)
 /**
  * @brief
  */
-static void R_DrawEntitiesOnList(void)
+static void R_DrawEntitiesOnList (void)
 {
 	int i;
 
@@ -1031,8 +1027,6 @@ static void R_Register (void)
 	gl_swapinterval = ri.Cvar_Get("gl_swapinterval", "1", CVAR_ARCHIVE, NULL);
 
 	gl_saturatelighting = ri.Cvar_Get("gl_saturatelighting", "0", 0, NULL);
-
-	gl_3dlabs_broken = ri.Cvar_Get("gl_3dlabs_broken", "1", CVAR_ARCHIVE, NULL);
 
 	gl_3dmapradius = ri.Cvar_Get("gl_3dmapradius", "8192.0", CVAR_NOSET, NULL);
 

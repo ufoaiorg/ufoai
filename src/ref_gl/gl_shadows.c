@@ -531,7 +531,7 @@ void R_DrawShadow (entity_t * e)
 /*	GL_LerpVerts( paliashdr->num_xyz, v, ov, s_lerped[0], move, frontv, backv,0); */
 
 	/*|RF_NOSHADOW */
-	if (!(currententity->flags & (RF_TRANSLUCENT | RF_WEAPONMODEL))) {
+	if (!(currententity->flags & RF_TRANSLUCENT)) {
 		qglPushMatrix();
 		{
 			vec3_t end;
@@ -607,7 +607,7 @@ void R_DrawShadowVolume (entity_t * e)
 /*	GL_LerpVerts(paliashdr->num_xyz, v, ov, s_lerped[0], move, frontv, backv, 0); */
 
 /*	|RF_NOSHADOW|RF_NOSHADOW2 */
-	if (!(currententity->flags & (RF_TRANSLUCENT | RF_WEAPONMODEL))) {
+	if (!(currententity->flags & RF_TRANSLUCENT)) {
 		qglPushMatrix();
 		qglDisable(GL_TEXTURE_2D);
 		qglTranslatef(e->origin[0], e->origin[1], e->origin[2]);
