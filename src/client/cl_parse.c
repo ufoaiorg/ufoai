@@ -1213,7 +1213,7 @@ static void CL_InvReload (sizebuf_t *sb)
 	MSG_ReadFormat(sb, ev_format[EV_INV_RELOAD],
 		&number, &ammo, &type, &container, &x, &y);
 
-	S_StartLocalSound("weapons/verschluss.wav");
+	S_StartLocalSound("weapons/reload");
 
 	le = LE_Get(number);
 	if (!le) {
@@ -1598,7 +1598,7 @@ void CL_ParseServerMessage (void)
 			s = MSG_ReadString(&net_message);
 			switch (i) {
 			case PRINT_CHAT:
-				S_StartLocalSound("misc/talk.wav");
+				S_StartLocalSound("misc/talk");
 				MN_AddChatMessage(s);
 				/* skip format strings */
 				if (*s == '^')

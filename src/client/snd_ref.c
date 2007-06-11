@@ -609,18 +609,30 @@ static sfx_t *S_FindName (const char *name, qboolean create)
 {
 	int i;
 	sfx_t *sfx;
+	char lname[MAX_QPATH];
+	char *ename;
+	size_t len;
 
 	if (!name)
 		Com_Error(ERR_FATAL, "S_FindName: NULL\n");
 	if (!name[0])
 		Com_Error(ERR_FATAL, "S_FindName: empty name\n");
 
-	if (strlen(name) >= MAX_QPATH)
+	len = strlen(name);
+	if (len >= MAX_QPATH)
 		Com_Error(ERR_FATAL, "Sound name too long: %s", name);
 
+	/* drop extension */
+	Q_strncpyz(lname, name, sizeof(lname));
+	if (lname[len - 4] == '.')
+		len -= 4;
+	ename = &(lname[len]);
+	*ename = '\0';
+
+	strcpy(ename, ".wav");
 	/* see if already loaded */
 	for (i = 0; i < num_sfx; i++)
-		if (!Q_strncmp(known_sfx[i].name, name, sizeof(known_sfx[i].name))) {
+		if (!Q_strncmp(known_sfx[i].name, lname, sizeof(known_sfx[i].name))) {
 			return &known_sfx[i];
 		}
 
@@ -641,7 +653,7 @@ static sfx_t *S_FindName (const char *name, qboolean create)
 
 	sfx = &known_sfx[i];
 	memset(sfx, 0, sizeof(*sfx));
-	Q_strncpyz(sfx->name, name, MAX_QPATH);
+	Q_strncpyz(sfx->name, lname, sizeof(sfx->name));
 	sfx->registration_sequence = s_registration_sequence;
 
 	return sfx;
@@ -979,8 +991,10 @@ extern void S_StartLocalSound (const char *sound)
 {
 	sfx_t *sfx;
 
-	if (!sound_started)
+	if (!sound_started) {
+		Com_Printf("Sound is not yet started\n");
 		return;
+	}
 
 	sfx = S_RegisterSound(sound);
 	if (!sfx) {

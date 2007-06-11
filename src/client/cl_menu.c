@@ -4500,13 +4500,17 @@ message_t *MN_AddNewMessage (const char *title, const char *text, qboolean popup
 	case MSG_NEWS:
 		/* reread the new mails in UP_GetUnreadMails */
 		gd.numUnreadMails = -1;
-	case MSG_CONSTRUCTION:
+		/*S_StartLocalSound("misc/mail");*/
+		break;
 	case MSG_UFOSPOTTED:
 	case MSG_TERRORSITE:
 	case MSG_BASEATTACK:
-	case MSG_PRODUCTION:
 	case MSG_CRASHSITE:
-		/*@todo: S_StartLocalSound(); */
+		S_StartLocalSound("misc/newmission");
+		break;
+	case MSG_CONSTRUCTION:
+		break;
+	case MSG_PRODUCTION:
 		break;
 	case MSG_MAX:
 		break;

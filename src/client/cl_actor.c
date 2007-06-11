@@ -2672,7 +2672,7 @@ void CL_DoEndRound (sizebuf_t * sb)
 		CL_ParticleCheckRounds();
 		Cbuf_AddText("startround\n");
 		CL_DisplayHudMessage(_("Your round started!\n"), 2000);
-		S_StartLocalSound("misc/roundstart.wav");
+		S_StartLocalSound("misc/roundstart");
 		CL_ConditionalMoveCalc(&clMap, selActor, MAX_ROUTE);
 
 		for (actor_idx = 0; actor_idx < cl.numTeamList; actor_idx++) {

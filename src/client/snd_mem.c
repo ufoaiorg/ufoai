@@ -127,17 +127,16 @@ extern sfxcache_t *S_LoadSound (sfx_t * s)
 		name = s->name;
 
 	if (name[0] == '#')
-		Q_strncpyz(namebuffer, &name[1], MAX_QPATH);
+		Q_strncpyz(namebuffer, &name[1], sizeof(namebuffer));
 	else
 		Com_sprintf(namebuffer, sizeof(namebuffer), "sound/%s", name);
 
 /*	Com_Printf("loading %s\n",namebuffer); */
 
 	size = FS_LoadFile(namebuffer, (void **) (char *) &data);
-
 	if (!data) {
 		s->cache = NULL;
-		Com_DPrintf("Couldn't load %s\n", namebuffer);
+		Com_Printf("Couldn't load %s\n", namebuffer);
 		return NULL;
 	}
 
