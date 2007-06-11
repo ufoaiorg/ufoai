@@ -393,8 +393,6 @@ void R_DrawModelDirect(modelInfo_t * mi, modelInfo_t * pmi, const char *tag);
 void R_DrawModelParticle(modelInfo_t * mi);
 void R_DrawAliasModel(entity_t * e);
 void R_DrawBrushModel(entity_t * e);
-void R_DrawAllBrushModels(void);
-void R_DrawBeam(entity_t * e);
 void R_DrawBox(entity_t * e);
 void R_DrawLevelBrushes(void);
 void R_DrawOBJModel (entity_t *e);

@@ -289,73 +289,6 @@ SOME DRAWING
 
 
 /**
- * @brief
- */
-void R_DrawBeam (entity_t * e)
-{
-#define NUM_BEAM_SEGS 6
-
-	int i;
-	float r, g, b;
-
-	vec3_t perpvec;
-	vec3_t direction, normalized_direction;
-	vec3_t start_points[NUM_BEAM_SEGS], end_points[NUM_BEAM_SEGS];
-	vec3_t oldorigin, origin;
-
-	oldorigin[0] = e->oldorigin[0];
-	oldorigin[1] = e->oldorigin[1];
-	oldorigin[2] = e->oldorigin[2];
-
-	origin[0] = e->origin[0];
-	origin[1] = e->origin[1];
-	origin[2] = e->origin[2];
-
-	normalized_direction[0] = direction[0] = oldorigin[0] - origin[0];
-	normalized_direction[1] = direction[1] = oldorigin[1] - origin[1];
-	normalized_direction[2] = direction[2] = oldorigin[2] - origin[2];
-
-	if (VectorNormalize(normalized_direction) == 0)
-		return;
-
-	PerpendicularVector(perpvec, normalized_direction);
-	VectorScale(perpvec, e->as.frame / 2, perpvec);
-
-	for (i = 0; i < 6; i++) {
-		RotatePointAroundVector(start_points[i], normalized_direction, perpvec, (360.0 / NUM_BEAM_SEGS) * i);
-		VectorAdd(start_points[i], origin, start_points[i]);
-		VectorAdd(start_points[i], direction, end_points[i]);
-	}
-
-	qglDisable(GL_TEXTURE_2D);
-	GLSTATE_ENABLE_BLEND
-	qglDepthMask(GL_FALSE);
-
-	r = (d_8to24table[e->skinnum & 0xFF]) & 0xFF;
-	g = (d_8to24table[e->skinnum & 0xFF] >> 8) & 0xFF;
-	b = (d_8to24table[e->skinnum & 0xFF] >> 16) & 0xFF;
-
-	r *= 1 / 255.0F;
-	g *= 1 / 255.0F;
-	b *= 1 / 255.0F;
-
-	qglColor4f(r, g, b, e->alpha);
-
-	qglBegin(GL_TRIANGLE_STRIP);
-	for (i = 0; i < NUM_BEAM_SEGS; i++) {
-		qglVertex3fv(start_points[i]);
-		qglVertex3fv(end_points[i]);
-		qglVertex3fv(start_points[(i + 1) % NUM_BEAM_SEGS]);
-		qglVertex3fv(end_points[(i + 1) % NUM_BEAM_SEGS]);
-	}
-	qglEnd();
-
-	qglEnable(GL_TEXTURE_2D);
-	GLSTATE_DISABLE_BLEND
-	qglDepthMask(GL_TRUE);
-}
-
-/**
  * @brief Draws the field marker entity is specified in cl_actor.c CL_AddTargeting
  * @sa CL_AddTargeting
  */
@@ -364,7 +297,7 @@ void R_DrawBox (entity_t * e)
 	vec3_t upper, lower;
 	float dx, dy;
 
-/*	if ( R_CullBox( e->origin, e->oldorigin ) ) */
+/*	if (R_CullBox(e->origin, e->oldorigin)) */
 /*		return; */
 
 	qglDepthMask(GL_FALSE);

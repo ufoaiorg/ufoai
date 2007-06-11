@@ -623,7 +623,6 @@ COLLISION DETECTION
 /* FIXME: eliminate AREA_ distinction? */
 #define AREA_SOLID      1
 
-
 /**
  * @brief plane_t structure
  * @note !!! if this is changed, it must be changed in asm code too !!!
@@ -635,16 +634,6 @@ typedef struct cplane_s {
 	byte signbits;              /**< signx + (signy<<1) + (signz<<1) */
 	byte pad[2];
 } cplane_t;
-
-/* structure offset for asm code */
-#define CPLANE_NORMAL_X         0
-#define CPLANE_NORMAL_Y         4
-#define CPLANE_NORMAL_Z         8
-#define CPLANE_DIST             12
-#define CPLANE_TYPE             16
-#define CPLANE_SIGNBITS         17
-#define CPLANE_PAD0             18
-#define CPLANE_PAD1             19
 
 typedef struct cmodel_s {
 	vec3_t mins, maxs;
@@ -682,15 +671,13 @@ typedef struct {
 
 /* entity->flags (render flags) */
 #define RF_TRANSLUCENT      0x00000001
-#define RF_BEAM             0x00000002
-#define RF_BOX              0x00000004	/**< actor selection box */
-#define RF_SHADOW           0x00000008	/**< shadow for this entity */
-#define RF_SELECTED         0x00000010	/**< selected actor */
-#define RF_MEMBER           0x00000020	/**< actor in the same team */
-#define RF_ALLIED           0x00000040	/**< actor in an allied team (controlled by another player) */
-
-#define RF_LIGHTFIXED       0x00000080	/**< @sa LMF_LIGHTFIXED */
-#define RF_NOSMOOTH         0x00000100	/**< @sa LMF_NOSMOOTH */
+#define RF_BOX              0x00000002	/**< actor selection box */
+#define RF_SHADOW           0x00000004	/**< shadow for this entity */
+#define RF_SELECTED         0x00000008	/**< selected actor */
+#define RF_MEMBER           0x00000010	/**< actor in the same team */
+#define RF_ALLIED           0x00000020	/**< actor in an allied team (controlled by another player) */
+#define RF_LIGHTFIXED       0x00000040	/**< @sa LMF_LIGHTFIXED */
+#define RF_NOSMOOTH         0x00000080	/**< @sa LMF_NOSMOOTH */
 
 /* player_state_t->refdef bit flags */
 #define RDF_NOWORLDMODEL    1	/* e.g. used for sequences and particle editor */

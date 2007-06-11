@@ -87,8 +87,8 @@ typedef struct entity_s {
 	struct model_s *model;		/**< opaque type outside refresh */
 	float angles[3];
 
-	float origin[3];			/**< also used as RF_BEAM's "from" */
-	float oldorigin[3];			/**< also used as RF_BEAM's "to" */
+	float origin[3];
+	float oldorigin[3];
 
 	/*
 	 ** tag positioning
@@ -99,7 +99,7 @@ typedef struct entity_s {
 	/*
 	 ** misc
 	 */
-	int skinnum;				/**< also used as RF_BEAM's palette index */
+	int skinnum;
 
 	float *lightcolor;			/**< color for fixed light */
 	float *lightambient;		/**< ambient color for fixed light */

@@ -537,9 +537,7 @@ static void R_DrawEntitiesOnList (void)
 		if (currententity->flags & RF_TRANSLUCENT)
 			continue;			/* solid */
 
-		if (currententity->flags & RF_BEAM)
-			R_DrawBeam(currententity);
-		else if (currententity->flags & RF_BOX)
+		if (currententity->flags & RF_BOX)
 			R_DrawBox(currententity);
 		else {
 			currentmodel = currententity->model;
@@ -581,9 +579,7 @@ static void R_DrawEntitiesOnList (void)
 		if (!(currententity->flags & RF_TRANSLUCENT))
 			continue;			/* solid */
 
-		if (currententity->flags & RF_BEAM)
-			R_DrawBeam(currententity);
-		else if (currententity->flags & RF_BOX)
+		if (currententity->flags & RF_BOX)
 			R_DrawBox(currententity);
 		else {
 			currentmodel = currententity->model;
