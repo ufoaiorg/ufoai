@@ -123,9 +123,6 @@ void R_DrawAliasMD3Model (entity_t *e)
 	else
 		R_EnableLights(lightfixed, trafo[e - r_newrefdef.entities].matrix, e->lightparam, NULL);
 
-	if (e->flags & RF_DEPTHHACK) /* hack the depth range to prevent view model from poking into walls */
-		qglDepthRange (gldepthmin, gldepthmin + 0.3*(gldepthmax-gldepthmin));
-
 	for (i = 0; i < paliashdr->num_meshes; i++) {
 		c_alias_polys += paliashdr->meshes[i].num_tris;
 	}
@@ -200,9 +197,6 @@ void R_DrawAliasMD3Model (entity_t *e)
 
 	if (e->flags & RF_TRANSLUCENT)
 		GLSTATE_DISABLE_BLEND
-
-	if (e->flags & RF_DEPTHHACK)
-		qglDepthRange(gldepthmin, gldepthmax);
 
 	qglPopMatrix();
 

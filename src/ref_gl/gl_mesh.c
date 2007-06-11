@@ -391,8 +391,7 @@ void R_DrawAliasModel (entity_t * e)
 	}
 	if (!skin)
 		skin = r_notexture;		/* fallback... */
-
-	if (skin->has_alpha && !(e->flags & RF_TRANSLUCENT)) {
+	else if (skin->has_alpha && !(e->flags & RF_TRANSLUCENT)) {
 		/* it will be drawn in the next entity render pass */
 		/* for the translucent entities */
 		e->flags |= RF_TRANSLUCENT;
@@ -417,10 +416,6 @@ void R_DrawAliasModel (entity_t * e)
 		qglColor4f(1.0, 0.0, 0.0, e->alpha);
 	else
 		qglColor4f(1.0, 1.0, 1.0, e->alpha);
-
-	/* draw all the triangles */
-	if (e->flags & RF_DEPTHHACK)	/* hack the depth range to prevent view model from poking into walls */
-		qglDepthRange(gldepthmin, gldepthmin + 0.3 * (gldepthmax - gldepthmin));
 
 	qglPushMatrix();
 
@@ -526,9 +521,6 @@ void R_DrawAliasModel (entity_t * e)
 	qglEnable(GL_CULL_FACE);
 
 	qglPopMatrix();
-
-	if (e->flags & RF_DEPTHHACK)
-		qglDepthRange(gldepthmin, gldepthmax);
 
 	/* show model bounding box */
 	Mod_DrawModelBBox(bbox, e);

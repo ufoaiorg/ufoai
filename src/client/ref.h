@@ -249,7 +249,7 @@ typedef struct {
 	float viewangles[3];
 	float blend[4];				/**< rgba 0-1 full screen blend */
 	float time;					/**< time is used to auto animate */
-	int rdflags;				/**< RDF_UNDERWATER, etc */
+	int rdflags;				/**< RDF_NOWORLDMODEL, etc */
 	int worldlevel;
 
 	byte *areabits;				/**< if not NULL, only areas with set bits will be drawn */

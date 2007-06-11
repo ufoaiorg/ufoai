@@ -681,31 +681,20 @@ typedef struct {
 #define todeg (180.0f/M_PI)
 
 /* entity->flags (render flags) */
-#define RF_DEPTHHACK        0x00000010  /**< for view weapon Z crunching */
-#define RF_TRANSLUCENT      0x00000020
-#define RF_BEAM             0x00000080
-/*unused*/
-#define RF_CUSTOMSKIN       0x00000100  /**< skin is an index in image_precache */
-/*unused*/
-#define RF_GLOW             0x00000200  /**< pulse lighting for bonus items */
+#define RF_TRANSLUCENT      0x00000001
+#define RF_BEAM             0x00000002
+#define RF_BOX              0x00000004	/**< actor selection box */
+#define RF_SHADOW           0x00000008	/**< shadow for this entity */
+#define RF_SELECTED         0x00000010	/**< selected actor */
+#define RF_MEMBER           0x00000020	/**< actor in the same team */
+#define RF_ALLIED           0x00000040	/**< actor in an allied team (controlled by another player) */
 
-#define RF_BOX              0x00002000	/**< actor selection box */
-#define RF_SHADOW           0x00004000	/**< shadow for this entity */
-#define RF_SELECTED         0x00008000	/**< selected actor */
-#define RF_MEMBER           0x00010000	/**< actor in the same team */
-#define RF_ALLIED           0x00020000	/**< actor in an allied team (controlled by another player) */
+#define RF_LIGHTFIXED       0x00000080	/**< @sa LMF_LIGHTFIXED */
+#define RF_NOSMOOTH         0x00000100	/**< @sa LMF_NOSMOOTH */
 
-#define RF_LIGHTFIXED       0x00040000
-#define RF_NOSMOOTH         0x00080000
-
-/* player_state_t->refdef flags */
-#define RDF_UNDERWATER      1   /* warp the screen as apropriate */
-#define RDF_NOWORLDMODEL    2   /* e.g. used for sequences */
-
-/*ROGUE */
-#define RDF_IRGOGGLES       4
-#define RDF_UVGOGGLES       8
-/*ROGUE */
+/* player_state_t->refdef bit flags */
+#define RDF_NOWORLDMODEL    1	/* e.g. used for sequences and particle editor */
+#define RDF_IRGOGGLES       2
 
 /* sound channels */
 /* channel 0 never willingly overrides */

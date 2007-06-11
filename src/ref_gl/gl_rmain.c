@@ -836,8 +836,8 @@ static void R_RenderView (refdef_t * fd)
 
 	r_newrefdef = *fd;
 
-/*	if (!r_worldmodel && !( r_newrefdef.rdflags & RDF_NOWORLDMODEL ) ) */
-/*		ri.Sys_Error (ERR_DROP, "R_RenderView: NULL worldmodel"); */
+/*	if (!r_worldmodel && !(r_newrefdef.rdflags & RDF_NOWORLDMODEL)) */
+/*		ri.Sys_Error(ERR_DROP, "R_RenderView: NULL worldmodel"); */
 
 	if (r_speeds->value) {
 		c_brush_polys = 0;
