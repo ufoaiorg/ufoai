@@ -1238,6 +1238,7 @@ static void Mod_LoadAliasMD3Model (model_t *mod, void *buffer)
 				name[0] = 'm';
 			if (name[1] == 'l')
 				name[0] = 'p';
+			/* FIXME: support the . feature for model textures like for md2 */
 			memcpy(poutskin->name, name, MD3_MAX_PATH);
 			mod->skins[i] = GL_FindImage(name, it_skin);
 		}
