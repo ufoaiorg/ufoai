@@ -1437,7 +1437,7 @@ static void CL_SaveTeamMultiplayerSlot_f (void)
  */
 static void CL_LoadTeamMultiplayerMember (sizebuf_t * sb, character_t * chr, int version)
 {
-	int i;
+	int i, num;
 
 	/* unique character number */
 	chr->fieldSize = MSG_ReadByte(sb);
@@ -1461,11 +1461,13 @@ static void CL_LoadTeamMultiplayerMember (sizebuf_t * sb, character_t * chr, int
 	chr->morale = MSG_ReadByte(sb);
 
 	/* new attributes */
-	for (i = 0; i < SKILL_NUM_TYPES; i++)
+	num = MSG_ReadByte(buf);
+	for (i = 0; i < num; i++)
 		chr->skills[i] = MSG_ReadByte(sb);
 
 	/* load scores */
-	for (i = 0; i < KILLED_NUM_TYPES; i++)
+	num = MSG_ReadByte(buf);
+	for (i = 0; i < num; i++)
 		chr->kills[i] = MSG_ReadShort(sb);
 	chr->assigned_missions = MSG_ReadShort(sb);
 
@@ -1627,6 +1629,7 @@ extern void CL_ResetTeams (void)
  *
  * Called by CL_SaveTeamMultiplayer to store the team info
  * @sa CL_SendCurTeamInfo
+ * @sa CL_LoadTeamMultiplayerMember
  */
 static void CL_SaveTeamInfo (sizebuf_t * buf, int baseID, int num)
 {
@@ -1667,10 +1670,12 @@ static void CL_SaveTeamInfo (sizebuf_t * buf, int baseID, int num)
 		MSG_WriteByte(buf, chr->morale);
 
 		/* even new attributes */
+		MSG_WriteByte(buf, SKILL_NUM_TYPES);
 		for (j = 0; j < SKILL_NUM_TYPES; j++)
 			MSG_WriteByte(buf, chr->skills[j]);
 
 		/* scores */
+		MSG_WriteByte(buf, KILLED_NUM_TYPES);
 		for (j = 0; j < KILLED_NUM_TYPES; j++)
 			MSG_WriteShort(buf, chr->kills[j]);
 		MSG_WriteShort(buf, chr->assigned_missions);
