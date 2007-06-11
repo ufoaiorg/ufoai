@@ -2611,8 +2611,7 @@ extern qboolean AIR_Save (sizebuf_t* sb, void* data)
 	int i, j;
 
 	/* save the ufos on geoscape */
-	MSG_WriteByte(sb, gd.numUfos);
-	for (i = 0; i < gd.numUfos; i++) {
+	for (i = 0; i < presaveArray[PRE_NUMUFO]; i++) {
 		MSG_WriteString(sb, gd.ufos[i].id);
 		MSG_WriteByte(sb, gd.ufos[i].visible);
 		MSG_WritePos(sb, gd.ufos[i].pos);
@@ -2628,6 +2627,15 @@ extern qboolean AIR_Save (sizebuf_t* sb, void* data)
 		for (j = 0; j < presaveArray[PRE_AIRSTA]; j++)
 			MSG_WriteLong(sb, gd.ufos[i].stats[j]);
 		/* @todo more? */
+	}
+
+	/* Save recoveries. */
+	for (i = 0; i < presaveArray[PRE_MAXREC]; i++) {
+		MSG_WriteByte(sb, gd.recoveries[i].active);
+		MSG_WriteByte(sb, gd.recoveries[i].baseID);
+		MSG_WriteByte(sb, gd.recoveries[i].ufotype);
+		MSG_WriteLong(sb, gd.recoveries[i].event.day);
+		MSG_WriteLong(sb, gd.recoveries[i].event.sec);
 	}
 	return qtrue;
 }
@@ -2653,8 +2661,7 @@ extern qboolean AIR_Load (sizebuf_t* sb, void* data)
 	int tmp_int;
 
 	/* load the ufos on geoscape */
-	gd.numUfos = MSG_ReadByte(sb);
-	for (i = 0; i < gd.numUfos; i++) {
+	for (i = 0; i < presaveArray[PRE_NUMUFO]; i++) {
 		s = MSG_ReadString(sb);
 		ufo = AIR_GetAircraft(s);
 		if (!ufo) {
@@ -2692,6 +2699,14 @@ extern qboolean AIR_Load (sizebuf_t* sb, void* data)
 				ufo->stats[i] = MSG_ReadLong(sb);
 		}
 		/* @todo more? */
+	}
+	/* Load recoveries. */
+	for (i = 0; i < presaveArray[PRE_MAXREC]; i++) {
+		gd.recoveries[i].active = MSG_ReadByte(sb);
+		gd.recoveries[i].baseID = MSG_ReadByte(sb);
+		gd.recoveries[i].ufotype = MSG_ReadByte(sb);
+		gd.recoveries[i].event.day = MSG_ReadLong(sb);
+		gd.recoveries[i].event.sec = MSG_ReadLong(sb);
 	}
 
 	/* now fix the curTeam pointers */
