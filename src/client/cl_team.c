@@ -1461,12 +1461,12 @@ static void CL_LoadTeamMultiplayerMember (sizebuf_t * sb, character_t * chr, int
 	chr->morale = MSG_ReadByte(sb);
 
 	/* new attributes */
-	num = MSG_ReadByte(buf);
+	num = MSG_ReadByte(sb);
 	for (i = 0; i < num; i++)
 		chr->skills[i] = MSG_ReadByte(sb);
 
 	/* load scores */
-	num = MSG_ReadByte(buf);
+	num = MSG_ReadByte(sb);
 	for (i = 0; i < num; i++)
 		chr->kills[i] = MSG_ReadShort(sb);
 	chr->assigned_missions = MSG_ReadShort(sb);
