@@ -2140,9 +2140,12 @@ image_t *GL_LoadPic (const char *name, byte * pic, int width, int height, imaget
 
 
 /**
- * @brief
+ * @brief Loads a ID wall image format
+ * basically pcx with 3 midmap levels
+ * @sa GL_LoadPic
+ * @param[in] bpp Should be 8 for wal images, and 32 for m32
  */
-image_t *GL_LoadWal (const char *name)
+static image_t *GL_LoadWal (const char *name, int bpp)
 {
 	miptex_t *mt;
 	int width, height, ofs;
@@ -2158,7 +2161,7 @@ image_t *GL_LoadWal (const char *name)
 	height = LittleLong(mt->height);
 	ofs = LittleLong(mt->offsets[0]);
 
-	image = GL_LoadPic(name, (byte *) mt + ofs, width, height, it_wall, 8);
+	image = GL_LoadPic(name, (byte *) mt + ofs, width, height, it_wall, bpp);
 
 	ri.FS_FreeFile((void *) mt);
 
@@ -2277,9 +2280,15 @@ image_t *GL_FindImage (const char *pname, imagetype_t type)
 		}
 	}
 
+	strcpy(ename, ".m32");
+	if (ri.FS_CheckFile(lname) != -1) {
+		image = GL_LoadWal(lname, 32);
+		goto end;
+	}
+
 	strcpy(ename, ".wal");
 	if (ri.FS_CheckFile(lname) != -1) {
-		image = GL_LoadWal(lname);
+		image = GL_LoadWal(lname, 8);
 		goto end;
 	}
 
