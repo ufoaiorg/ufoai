@@ -14230,7 +14230,7 @@
 {
 "classname" "misc_model"
 "origin" "226 1745 117"
-"model" "models/objects/cars/truck/truck.md2"
+"model" "models/objects/trucks/truck/truck.md2"
 "angle" "-90"
 "spawnflags" "252"
 }
