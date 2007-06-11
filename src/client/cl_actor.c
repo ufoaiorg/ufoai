@@ -2213,6 +2213,9 @@ void CL_ActorDoShoot (sizebuf_t * sb)
 		S_StartLocalSound(fd->fireSound);
 	firstShot = qfalse;
 
+	if (fd->irgoggles)
+		cl.refdef.rdflags |= RDF_IRGOGGLES;
+
 	/* do actor related stuff */
 	if (!le) {
 		/* it's OK, the actor is not visible */
@@ -2656,6 +2659,8 @@ void CL_DoEndRound (sizebuf_t * sb)
 	if (cls.team == cl.actTeam)
 		Cbuf_AddText("endround\n");
 
+	cl.refdef.rdflags &= ~RDF_IRGOGGLES;
+
 	/* change active player */
 	Com_Printf("Team %i ended round", cl.actTeam);
 	cl.actTeam = MSG_ReadByte(sb);
@@ -2990,7 +2995,7 @@ TARGETING GRAPHICS
 ==============================================================
 */
 
-/** 
+/**
  * @brief table for lookup_erf
  * lookup[]= {erf(0), erf(0.1), ...}
  */
@@ -3002,7 +3007,7 @@ static const float lookup[]= {
 	0.9999f,1.0000f,1.0000f
 };
 
-/** 
+/**
  * @brief table for lookup_erf
  * lookup[]= {10*(erf(0.1)-erf(0.0)), 10*(erf(0.2)-erf(0.1)), ...}
  */
@@ -3027,7 +3032,7 @@ static float lookup_erf (float z)
 {
 	float ifloat;
 	int iint;
-	
+
 	/* erf(-z)=-erf(z), but erf of -ve number should never be used here
 	 * so return 0 here */
 	if (z < 0.0f)
@@ -3087,10 +3092,10 @@ static float CL_TargetingToHit (pos3_t toPos)
 	commonfactor = 0.5f * crouch * torad * distance;
 	stdevupdown = (selFD->spread[0] + acc * (1 + selFD->modif)) * commonfactor;
 	stdevleftright = (selFD->spread[1] + acc * (1 + selFD->modif)) * commonfactor;
-	
+
 	hitchance = lookup_erf(height * 0.3536f / stdevupdown) * lookup_erf(width * 0.3536f / stdevleftright);
 	/* 0.3536=sqrt(2)/4 */
-	
+
 	/* Calculate cover: */
 	n = 0;
 	height = height / 18;
