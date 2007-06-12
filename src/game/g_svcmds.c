@@ -221,7 +221,6 @@ static void SVCmd_WriteIP_f (void)
 	char name[MAX_OSPATH];
 	byte b[4];
 	int i;
-	cvar_t *game;
 
 	Com_sprintf(name, sizeof(name), "%s/listip.cfg", gi.FS_Gamedir());
 
@@ -279,7 +278,7 @@ static void SVCmd_Win_f (void)
 		return;
 	}
 	team = atoi(gi.argv(2));
-	if (team > 0 && team < MAX_TEAMS)
+	if (team > TEAM_CIVILIAN && team < MAX_TEAMS)
 		G_EndGame(team);
 	else
 		Com_Printf("Bad team number.\n");
