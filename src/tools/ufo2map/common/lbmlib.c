@@ -719,3 +719,198 @@ extern void LoadTGA (const char *name, byte ** pic, int *width, int *height)
 	FreeFile(buffer);
 }
 
+/**
+ * @brief This is robbed from the engine source code, and refactored for
+ * use during map compilation.
+ */
+int TryLoadTGA (const char *path, miptex_t **mt)
+{
+	int cols, rows, pixels;
+	int row, col, length;
+	targa_header_t targa_header;
+	byte *b, *buffer, *pixbuf;
+	byte *targa_rgba;
+	byte tmp[2];
+	byte red, green, blue, alpha;
+	byte packet_header, packet_size, j;
+
+	*mt = NULL;
+
+	Sys_FPrintf(SYS_VRB, "Trying TGA %s\n", path);
+
+	length = TryLoadFile(path, (void **)(char *)&buffer);
+
+	if (!buffer) {  /* unable to open file */
+		Sys_FPrintf(SYS_VRB, "Could not load tga: %s\n", path);
+		return -1;
+	}
+
+	b = buffer;
+
+	targa_header.id_length = *buffer++;
+	targa_header.colormap_type = *buffer++;
+	targa_header.image_type = *buffer++;
+
+	tmp[0] = buffer[0];
+	tmp[1] = buffer[1];
+	targa_header.colormap_index = LittleShort(*((short *)tmp));
+	buffer += 2;
+	tmp[0] = buffer[0];
+	tmp[1] = buffer[1];
+	targa_header.colormap_length = LittleShort(*((short *)tmp));
+	buffer += 2;
+	targa_header.colormap_size = *buffer++;
+	targa_header.x_origin = LittleShort(*((short *)buffer));
+	buffer += 2;
+	targa_header.y_origin = LittleShort(*((short *)buffer));
+	buffer += 2;
+	targa_header.width = LittleShort(*((short *)buffer));
+	buffer += 2;
+	targa_header.height = LittleShort(*((short *)buffer));
+	buffer += 2;
+	targa_header.pixel_size = *buffer++;
+	targa_header.attributes = *buffer++;
+
+	if (targa_header.image_type != 2 && targa_header.image_type != 10)
+		return -1;  /* uncompressed rgb[a] and runlength compression only */
+
+	if (targa_header.pixel_size != 32 && targa_header.pixel_size != 24)
+		return -1;  /* 24 and 32bpp only */
+
+	cols = targa_header.width;
+	rows = targa_header.height;
+	pixels = cols * rows;
+
+	*mt = (miptex_t *)malloc(sizeof(miptex_t) + pixels * 4);
+	memset(*mt, 0, sizeof(miptex_t) + pixels * 4);
+
+	targa_rgba = (byte *)(*mt + 1);  /* stuff RGBA into this opaque space */
+
+	Sys_FPrintf(SYS_VRB, "Allocated %d bytes for %dx%d TGA\n", (int)(sizeof(miptex_t) + pixels * 4),
+			targa_header.width, targa_header.height);
+
+	if (targa_header.id_length != 0)  /* skip header comment */
+		buffer += targa_header.id_length;
+
+	red = green = blue = alpha = 0;
+	packet_header = packet_size = j = 0;
+
+	if (targa_header.image_type == 2){  /* uncompressed rgb */
+		Sys_FPrintf(SYS_VRB, "Found type 2 uncompressed TGA\n");
+
+		for (row = rows - 1; row >= 0; row--) {
+			pixbuf = targa_rgba + row * cols * 4;
+			for (col = 0; col < cols; col++) {
+				switch (targa_header.pixel_size) {
+				case 24:
+					blue = *buffer++;
+					green = *buffer++;
+					red = *buffer++;
+					*pixbuf++ = red;
+					*pixbuf++ = green;
+					*pixbuf++ = blue;
+					*pixbuf++ = 255;
+					break;
+				case 32:
+					blue = *buffer++;
+					green = *buffer++;
+					red = *buffer++;
+					alpha = *buffer++;
+					*pixbuf++ = red;
+					*pixbuf++ = green;
+					*pixbuf++ = blue;
+					*pixbuf++ = alpha;
+					break;
+				}
+			}
+		}
+	} else if (targa_header.image_type == 10) {   /* runlength encoded */
+		Sys_FPrintf(SYS_VRB, "Found type 10 runlength encoded TGA\n");
+
+		for (row = rows - 1; row >= 0; row--) {
+			pixbuf = targa_rgba + row * cols * 4;
+			for (col = 0; col < cols;) {
+				packet_header = *buffer++;
+				packet_size = 1 + (packet_header & 0x7f);
+				if (packet_header & 0x80) {  /* runlength packet */
+					switch (targa_header.pixel_size) {
+					case 24:
+						blue = *buffer++;
+						green = *buffer++;
+						red = *buffer++;
+						alpha = 255;
+						break;
+					case 32:
+						blue = *buffer++;
+						green = *buffer++;
+						red = *buffer++;
+						alpha = *buffer++;
+						break;
+					}
+
+					for (j = 0; j < packet_size; j++) {
+						*pixbuf++ = red;
+						*pixbuf++ = green;
+						*pixbuf++ = blue;
+						*pixbuf++ = alpha;
+						col++;
+						if (col == cols) {  /* run spans across rows */
+							col = 0;
+							if (row > 0)
+								row--;
+							else
+								goto breakOut;
+							pixbuf = targa_rgba + row * cols * 4;
+						}
+					}
+				} else {  /* non runlength packet */
+					for (j = 0; j < packet_size; j++) {
+						switch (targa_header.pixel_size) {
+						case 24:
+							blue = *buffer++;
+							green = *buffer++;
+							red = *buffer++;
+							*pixbuf++ = red;
+							*pixbuf++ = green;
+							*pixbuf++ = blue;
+							*pixbuf++ = 255;
+							break;
+						case 32:
+							blue = *buffer++;
+							green = *buffer++;
+							red = *buffer++;
+							alpha = *buffer++;
+							*pixbuf++ = red;
+							*pixbuf++ = green;
+							*pixbuf++ = blue;
+							*pixbuf++ = alpha;
+							break;
+						}
+						col++;
+						if (col == cols) { /* pixel packet run spans across rows */
+							col = 0;
+							if(row > 0)
+								row--;
+							else
+								goto breakOut;
+							pixbuf = targa_rgba + row * cols * 4;
+						}
+					}
+				}
+			}
+	breakOut:
+			;
+		}
+	}
+
+	/* copy relevant header fields to miptex_t */
+	(*mt)->width = targa_header.width;
+	(*mt)->height = targa_header.height;
+	(*mt)->offsets[0] = sizeof(miptex_t);
+	(*mt)->animname[0] = 0;
+
+	free(b);
+
+	Sys_FPrintf(SYS_VRB, "Loaded TGA\n");
+	return 0;
+}

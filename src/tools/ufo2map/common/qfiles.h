@@ -180,6 +180,27 @@ typedef struct miptex_s {
 	int			value;
 } miptex_t;
 
+/*
+==============================================================================
+Targa header structure, encapsulates only the header.
+==============================================================================
+*/
+typedef struct targa_header_s {
+	unsigned char id_length;
+	unsigned char colormap_type;
+	unsigned char image_type;
+	unsigned short colormap_index;
+	unsigned short colormap_length;
+	unsigned char colormap_size;
+	unsigned short x_origin;
+	unsigned short y_origin;
+	unsigned short width;
+	unsigned short height;
+	unsigned char pixel_size;
+	unsigned char attributes;
+} targa_header_t;
+
+extern int TryLoadTGA(const char *path, miptex_t **mt);
 
 
 /*

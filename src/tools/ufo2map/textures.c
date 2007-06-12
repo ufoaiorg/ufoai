@@ -48,18 +48,27 @@ extern int FindMiptex (char *name)
 	strcpy (textureref[i].name, name);
 
 	/* load the miptex to get the flags and values */
-	sprintf (path, "%stextures/%s.wal", gamedir, name);
-	if (TryLoadFile (path, (void **)&mt) != -1) {
-		textureref[i].value = LittleLong (mt->value);
-		textureref[i].flags = LittleLong (mt->flags);
-		textureref[i].contents = LittleLong (mt->contents);
-		strcpy (textureref[i].animname, mt->animname);
-		free (mt);
+	sprintf(path, "%stextures/%s.tga", gamedir, name);
+	if (TryLoadTGA(path, &mt) != -1) {
+		textureref[i].value = LittleLong(mt->value);
+		textureref[i].flags = LittleLong(mt->flags);
+		textureref[i].contents = LittleLong(mt->contents);
+		strcpy(textureref[i].animname, mt->animname);
+		free(mt);
+	} else {	/* fall back to wal */
+		sprintf(path, "%stextures/%s.wal", gamedir, name);
+		if (TryLoadFile(path, (void **)&mt) != -1) {
+			textureref[i].value = LittleLong (mt->value);
+			textureref[i].flags = LittleLong (mt->flags);
+			textureref[i].contents = LittleLong (mt->contents);
+			strcpy(textureref[i].animname, mt->animname);
+			free(mt);
+		}
 	}
 	nummiptex++;
 
 	if (textureref[i].animname[0])
-		FindMiptex (textureref[i].animname);
+		FindMiptex(textureref[i].animname);
 
 	return i;
 }

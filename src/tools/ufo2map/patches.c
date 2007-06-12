@@ -38,10 +38,15 @@ TEXTURE LIGHT VALUES
  */
 extern void CalcTextureReflectivity (void)
 {
-	int i, j;
+	int i, j, k, texels, texel;
 
 	byte *palette = NULL;
 	char path[1024];
+	int color[3];
+	byte *pos;
+	float r, scale;
+	qboolean tga;
+	miptex_t *mt;
 
 	sprintf(path, "%spics/colormap.pcx", gamedir);
 
@@ -54,18 +59,63 @@ extern void CalcTextureReflectivity (void)
 	texture_reflectivity[0][2] = 0.5;
 
 	for (i = 0; i < numtexinfo; i++) {
+		tga = qfalse;
 		/* see if an earlier texinfo allready got the value */
-		for (j = 0; j < i; j++)
+		for (j = 0; j < i; j++) {
 			if (!strcmp(texinfo[i].texture, texinfo[j].texture)) {
 				VectorCopy(texture_reflectivity[j], texture_reflectivity[i]);
 				break;
 			}
+		}
 		if (j != i)
 			continue;
 
-		texture_reflectivity[i][0] = 0.5;
-		texture_reflectivity[i][1] = 0.5;
-		texture_reflectivity[i][2] = 0.5;
+		/* load the wal file */
+		sprintf(path, "%stextures/%s.tga", gamedir, texinfo[i].texture);
+		if (TryLoadTGA(path, &mt) != -1) {
+			/* load rgba from the tga */
+			tga = qtrue;
+			texels = mt->width * mt->height;  /* these are already endian-correct */
+			color[0] = color[1] = color[2] = 0;
+
+			for (j = 0; j < texels; j++) {
+				pos = ((byte *)mt + mt->offsets[0]) + j * 4;
+				color[0] += *pos++; /* r */
+				color[1] += *pos++; /* g */
+				color[2] += *pos++; /* b */
+			}
+			free(mt);
+		} else {
+			sprintf(path, "%stextures/%s.wal", gamedir, texinfo[i].texture);
+			if (TryLoadFile(path, (void **)&mt) == -1) {
+				Sys_FPrintf(SYS_VRB, "Couldn't load %s\n", path);
+				texture_reflectivity[i][0] = 0.5;
+				texture_reflectivity[i][1] = 0.5;
+				texture_reflectivity[i][2] = 0.5;
+				continue;
+			}
+			texels = LittleLong(mt->width) * LittleLong(mt->height);
+			color[0] = color[1] = color[2] = 0;
+
+			for (j = 0; j < texels; j++) {
+				texel = ((byte *) mt)[LittleLong(mt->offsets[0]) + j];
+				for(k = 0; k < 3; k++)
+					color[k] += palette[texel * 3 + k];
+			}
+			free(mt);
+		}
+		for (j = 0; j < 3; j++) {
+			r = color[j] / texels / 255.0;
+			texture_reflectivity[i][j] = r;
+		}
+		if (!tga) {  /* tgas do not need to be scaled */
+			/* scale the reflectivity up, because the textures are so dim */
+			scale = ColorNormalize(texture_reflectivity[i], texture_reflectivity[i]);
+			if (scale < 0.5) {
+				scale *= 2;
+				VectorScale(texture_reflectivity[i], scale, texture_reflectivity[i]);
+			}
+		}
 	}
 	if (palette)
 		free(palette);
