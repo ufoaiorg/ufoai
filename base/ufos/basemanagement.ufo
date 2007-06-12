@@ -61,7 +61,7 @@ building building_aliencontainment
 {
 	name		"_Alien Containment Facility"
 	image		base/aliencont
-	fixcosts	500000
+	fixcosts	92000
 	type		aliencont
 	build_time	10
 	varcosts	1000
@@ -93,10 +93,10 @@ building building_storage
 {
 	name		"_Storage"
 	image		base/storage
-	fixcosts	75000
+	fixcosts	36000
 	depends		building_entrance // storage base needs just entrance
 	type		storage
-	build_time	5
+	build_time	4
 	varcosts	200
 	map_name	"storage"
 	pedia		rs_building_storage
@@ -110,10 +110,10 @@ building building_powerplant
 {
 	name		"_Power Plant"
 	image		base/powerplant
-	fixcosts	90000
+	fixcosts	35000
 	depends		building_entrance
 	type		power
-	build_time	2
+	build_time	12
 	varcosts	3000
 	map_name	"powerplant"
 	pedia		rs_building_powerplant
@@ -127,9 +127,9 @@ building building_command
 {
 	name		"_Command Centre"
 	image		base/commando
-	fixcosts	740000 // next stage in base costs
+	fixcosts	58000
 	depends		building_powerplant
-	build_time	4
+	build_time	12
 	varcosts	1000
 	map_name	"commando"
 	pedia		rs_building_command
@@ -141,9 +141,9 @@ building building_quarters
 {
 	name		"_Living Quarters"
 	image		base/quarters
-	fixcosts	80000
+	fixcosts	40000
 	depends		building_powerplant // so that they don't freeze
-	build_time	4
+	build_time	5
 	varcosts	200
 	map_name	"quarters"
 	pedia		rs_building_quarters
@@ -160,9 +160,9 @@ building building_hangar
 {
 	name		"_Large Hangar"
 	image		base/drop2
-	fixcosts	310000
+	fixcosts	68000
 	depends		building_powerplant // slow dropship operations can be coordinated from another base, so no Command Center needed
-	build_time	6
+	build_time	8
 	varcosts	2600
 	map_name	"drop"
 	pedia		rs_building_hangar
@@ -190,7 +190,7 @@ building building_intercept
 {
 	name		"_Small Hangar"
 	image		base/intercept
-	fixcosts	330000
+	fixcosts	60000
 	depends		building_powerplant	// slow interceptions can be coordinated from another base, so no Command Center needed
 	build_time	5
 	varcosts	4200
@@ -210,9 +210,9 @@ building building_small_ufo_hangar
 {
 	name		"_Small UFO Hangar"
 	image		base/adrop
-	fixcosts	940000
+	fixcosts	71000
 	depends		building_powerplant
-	build_time	12
+	build_time	8
 	varcosts	5600
 	map_name	"ufohangar"
 	pedia		rs_building_small_ufo_hangar
@@ -226,9 +226,9 @@ building building_large_ufo_hangar
 {
 	name		"_Large UFO Hangar"
 	image		base/adropl2
-	fixcosts	1000000
+	fixcosts	80000
 	depends		building_powerplant
-	build_time	18
+	build_time	11
 	varcosts	5600
 	map_name	"ufohangar_l"
 	capacity	1
@@ -252,7 +252,7 @@ building building_teamroom
 {
 	name		"_Team Room"
 	image		base/teamroom
-	fixcosts	30000
+	fixcosts	32000
 	depends		building_command
 	build_time	3
 	varcosts	140
@@ -264,9 +264,9 @@ building building_workshop
 {
 	name		"_Workshop"
 	image		base/workshop2
-	fixcosts	230000
+	fixcosts	100000
 	depends		building_command
-	build_time	7
+	build_time	12
 	varcosts	8000
 	map_name	"workshop"
 	pedia		rs_building_workshop
@@ -293,9 +293,9 @@ building building_radar
 {
 	name		"_Radar"
 	image		base/radar
-	fixcosts	270000 // a major cost to prevent 10 radars in initial base
+	fixcosts	55000
 	depends		building_command
-	build_time	10
+	build_time	7
 	varcosts	1600
 	map_name	"radar"
 	pedia		rs_building_radar
@@ -310,9 +310,9 @@ building building_lab
 {
 	name		"_Laboratory"
 	image		base/lab
-	fixcosts	1200000 // next stage in base costs
+	fixcosts	100000
 	depends		building_command // scientists need supervision, or...
-	build_time	14
+	build_time	12
 	varcosts	6000
 	map_name	"lab"
 	pedia		rs_building_lab
@@ -329,9 +329,9 @@ building building_hospital
 {
 	name		"_Hospital"
 	image		base/hospital
-	fixcosts	750000
+	fixcosts	62000
 	depends		building_command // medics need supervision, or...
-	build_time	9
+	build_time	8
 	varcosts	10000
 	map_name	"hospital"
 	pedia		rs_building_hospital
@@ -348,7 +348,7 @@ building building_amstorage
 {
 	name		"_Antimatter Storage"
 	image		base/amstorage
-	fixcosts	750000
+	fixcosts	70000
 	depends		building_powerplant 
 	build_time	20
 	varcosts	10000
