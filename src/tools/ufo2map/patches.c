@@ -221,12 +221,12 @@ static void MakePatchForFace (int fn, winding_t *w)
 
 	f = &dfaces[fn];
 
-	area = WindingArea (w);
+	area = WindingArea(w);
 	totalarea += area;
 
 	patch = &patches[num_patches];
 	if (num_patches == MAX_PATCHES)
-		Error ("num_patches == MAX_PATCHES");
+		Error("num_patches == MAX_PATCHES");
 	patch->next = face_patches[fn];
 	face_patches[fn] = patch;
 

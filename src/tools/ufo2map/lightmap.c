@@ -612,7 +612,7 @@ static void CalcPoints (lightinfo_t *l, float sofs, float tofs)
 	midt = (l->exactmaxs[1] + l->exactmins[1])/2;
 
 	for (j = 0; j < 3; j++)
-		facemid[j] = l->texorg[j] + l->textoworld[0][j]*mids + l->textoworld[1][j]*midt;
+		facemid[j] = l->texorg[j] + l->textoworld[0][j] * mids + l->textoworld[1][j] * midt;
 
 	h = l->texsize[1]+1;
 	w = l->texsize[0]+1;
@@ -624,15 +624,15 @@ static void CalcPoints (lightinfo_t *l, float sofs, float tofs)
 
 	for (t = 0; t < h; t++) {
 		for (s = 0; s < w; s++, surf += 3) {
-			us = starts + (s+sofs)*step;
-			ut = startt + (t+tofs)*step;
+			us = starts + (s + sofs) * step;
+			ut = startt + (t + tofs) * step;
 
 			/* if a line can be traced from surf to facemid, the point is good */
 			for (i = 0; i < 6; i++) {
 				/* calculate texture point */
 				for (j = 0; j < 3; j++)
-					surf[j] = l->texorg[j] + l->textoworld[0][j]*us
-					+ l->textoworld[1][j]*ut;
+					surf[j] = l->texorg[j] + l->textoworld[0][j] * us
+					+ l->textoworld[1][j] * ut;
 
 				leaf = Rad_PointInLeaf(surf);
 				if (leaf->contents != CONTENTS_SOLID) {
@@ -816,8 +816,8 @@ void CreateDirectLights (void)
 					dl->normal[2] = -1;
 				} else {
 					dl->normal[2] = 0;
-					dl->normal[0] = cos (angle/180*M_PI);
-					dl->normal[1] = sin (angle/180*M_PI);
+					dl->normal[0] = cos(angle / 180.0f * M_PI);
+					dl->normal[1] = sin(angle / 180.0f * M_PI);
 				}
 			}
 		}
@@ -901,8 +901,9 @@ static void GatherSampleLight (vec3_t pos, vec3_t normal,
 		case emit_spotlight:
 			/* linear falloff */
 			dot2 = -DotProduct(delta, l->normal);
-			if (dot2 <= l->stopdot)
+			if (dot2 <= l->stopdot) {
 				goto skipadd;	/* outside light cone */
+			}
 			scale = (l->intensity - dist) * dot;
 			break;
 		default:
@@ -923,7 +924,7 @@ static void GatherSampleLight (vec3_t pos, vec3_t normal,
 
 		dest = styletable[l->style] + offset;
 		/* add some light to it */
-		VectorMA(dest, scale*lightscale, l->color, dest);
+		VectorMA(dest, scale * lightscale, l->color, dest);
 
 skipadd: ;
 	}
@@ -1062,7 +1063,7 @@ void BuildFacelights (unsigned int facenum)
 		}
 
 		/* contribute the sample to one or more patches */
-		AddSampleToPatch (l[0].surfpt[i], styletable[0]+i*3, facenum);
+		AddSampleToPatch(l[0].surfpt[i], styletable[0]+i*3, facenum);
 	}
 
 	/* average up the direct light on each patch for radiosity */

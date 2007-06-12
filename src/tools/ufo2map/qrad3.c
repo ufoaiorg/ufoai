@@ -206,7 +206,7 @@ void MakeTransfers (unsigned int i)
 	patch = patches + i;
 	total = 0;
 
-	VectorCopy (patch->origin, origin);
+	VectorCopy(patch->origin, origin);
 	plane = *patch->plane;
 
 	/* find out which patch2s will collect light */
@@ -234,15 +234,17 @@ void MakeTransfers (unsigned int i)
 
 		trans = scale * patch2->area / (dist * dist);
 
-		if ( trans < 0.1 )
+		if (trans < 0.1)
 			continue;
 
 		/* check exact transfer */
-		if (TestLine(patch->origin, patch2->origin) )
+		if (TestLine(patch->origin, patch2->origin))
 			continue;
 
-/*		if (trans < 0) */
-/*			trans = 0;		// rounding errors... */
+#if 0
+		if (trans < 0)
+			trans = 0;		/* rounding errors... */
+#endif
 
 		transfers[j] = trans;
 		if (trans > 0) {
@@ -344,7 +346,7 @@ void WriteGlView (void)
 /**
  * @brief
  */
-float CollectLight (void)
+static float CollectLight (void)
 {
 	unsigned int i, j;
 	patch_t	*patch;
@@ -370,7 +372,7 @@ float CollectLight (void)
  * @brief Send light out to other patches
  * @note Run multi-threaded
  */
-void ShootLight (unsigned int patchnum)
+static void ShootLight (unsigned int patchnum)
 {
 	int			k, l;
 	transfer_t	*trans;
@@ -390,7 +392,7 @@ void ShootLight (unsigned int patchnum)
 
 	for (k = 0; k < num; k++, trans++) {
 		for (l = 0; l < 3; l++)
-			illumination[trans->patch][l] += send[l]*trans->transfer;
+			illumination[trans->patch][l] += send[l] * trans->transfer;
 	}
 }
 
@@ -473,8 +475,8 @@ void RadWorld (void)
 	if (numbounce > 0) {
 		/* build transfer lists */
 		RunThreadsOnIndividual(num_patches, qtrue, MakeTransfers);
-		Sys_FPrintf(SYS_VRB, "transfer lists: %5.1f megs\n"
-		, (float)total_transfer * sizeof(transfer_t) / (1024*1024));
+		Sys_FPrintf(SYS_VRB, "transfer lists: %5.1f megs\n",
+			(float)total_transfer * sizeof(transfer_t) / (1024 * 1024));
 
 		/* spread light around */
 		BounceLight();
