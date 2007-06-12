@@ -229,7 +229,7 @@ typedef struct {
 #define	MAX_MAP_TEXTURES	1024
 
 extern	textureref_t	textureref[MAX_MAP_TEXTURES];
-int	FindMiptex(char *name);
+int	FindMiptex(const char *name);
 int TexinfoForBrushTexture(plane_t *plane, brush_texture_t *bt, vec3_t origin, qboolean isTerrain);
 
 /* draw.c */

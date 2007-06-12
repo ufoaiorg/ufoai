@@ -33,7 +33,7 @@ textureref_t textureref[MAX_MAP_TEXTURES];
 /**
  * @brief
  */
-extern int FindMiptex (char *name)
+extern int FindMiptex (const char *name)
 {
 	int i;
 	char path[1024];

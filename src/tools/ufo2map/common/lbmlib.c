@@ -741,6 +741,12 @@ int TryLoadTGA (const char *path, miptex_t **mt)
 	memcpy(dest, pic, width * height * 4);  /* stuff RGBA into this opaque space */
 	free(pic);
 
+	/* copy relevant header fields to miptex_t */
+	(*mt)->width = width;
+	(*mt)->height = height;
+	(*mt)->offsets[0] = sizeof(miptex_t);
+	(*mt)->animname[0] = 0;
+
 	return 0;
 }
 
