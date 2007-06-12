@@ -37,15 +37,16 @@ extern int FindMiptex (const char *name)
 {
 	int i;
 	char path[1024];
+	qboolean loaded = qfalse;
 	miptex_t *mt;
 
 	for (i = 0; i < nummiptex; i++)
-		if (!strcmp (name, textureref[i].name)) {
+		if (!strcmp(name, textureref[i].name)) {
 			return i;
 		}
 	if (nummiptex == MAX_MAP_TEXTURES)
-		Error ("MAX_MAP_TEXTURES");
-	strcpy (textureref[i].name, name);
+		Error("MAX_MAP_TEXTURES");
+	strcpy(textureref[i].name, name);
 
 	/* load the miptex to get the flags and values */
 	sprintf(path, "%stextures/%s.tga", gamedir, name);
@@ -55,14 +56,30 @@ extern int FindMiptex (const char *name)
 		textureref[i].contents = LittleLong(mt->contents);
 		strcpy(textureref[i].animname, mt->animname);
 		free(mt);
-	} else {	/* fall back to wal */
-		sprintf(path, "%stextures/%s.wal", gamedir, name);
-		if (TryLoadFile(path, (void **)&mt) != -1) {
-			textureref[i].value = LittleLong (mt->value);
-			textureref[i].flags = LittleLong (mt->flags);
-			textureref[i].contents = LittleLong (mt->contents);
+		loaded = qtrue;
+	}
+
+	if (!loaded) {	/* fall back to jpg */
+		sprintf(path, "%stextures/%s.jpg", gamedir, name);
+		if (TryLoadJPG(path, &mt) != -1) {
+			textureref[i].value = LittleLong(mt->value);
+			textureref[i].flags = LittleLong(mt->flags);
+			textureref[i].contents = LittleLong(mt->contents);
 			strcpy(textureref[i].animname, mt->animname);
 			free(mt);
+			loaded = qtrue;
+		}
+	}
+
+	if (!loaded) {	/* fall back to wal */
+		sprintf(path, "%stextures/%s.wal", gamedir, name);
+		if (TryLoadFile(path, (void **)&mt) != -1) {
+			textureref[i].value = LittleLong(mt->value);
+			textureref[i].flags = LittleLong(mt->flags);
+			textureref[i].contents = LittleLong(mt->contents);
+			strcpy(textureref[i].animname, mt->animname);
+			free(mt);
+			loaded = qtrue;
 		}
 	}
 	nummiptex++;
@@ -104,15 +121,15 @@ static void TextureAxisFromPlane (plane_t *pln, vec3_t xv, vec3_t yv, qboolean i
 	bestaxis = 0;
 
 	for (i = 0; i < numaxis; i++) {
-		dot = DotProduct(pln->normal, baseaxis[i*3]);
+		dot = DotProduct(pln->normal, baseaxis[i * 3]);
 		if (dot > best) {
 			best = dot;
 			bestaxis = i;
 		}
 	}
 
-	VectorCopy(baseaxis[bestaxis*3+1], xv);
-	VectorCopy(baseaxis[bestaxis*3+2], yv);
+	VectorCopy(baseaxis[bestaxis * 3 + 1], xv);
+	VectorCopy(baseaxis[bestaxis * 3 + 2], yv);
 }
 
 
@@ -133,8 +150,8 @@ extern int TexinfoForBrushTexture (plane_t *plane, brush_texture_t *bt, vec3_t o
 	if (!bt->name[0])
 		return 0;
 
-	memset (&tx, 0, sizeof(tx));
-	strcpy (tx.texture, bt->name);
+	memset(&tx, 0, sizeof(tx));
+	strcpy(tx.texture, bt->name);
 
 	TextureAxisFromPlane(plane, vecs[0], vecs[1], isTerrain);
 
@@ -203,7 +220,7 @@ extern int TexinfoForBrushTexture (plane_t *plane, brush_texture_t *bt, vec3_t o
 		if (tc->value != tx.value)
 			continue;
 		for (j = 0; j < 2; j++) {
-			if (strcmp (tc->texture, tx.texture))
+			if (strcmp(tc->texture, tx.texture))
 				goto skip;
 			for (k = 0; k < 4; k++) {
 				if (tc->vecs[j][k] != tx.vecs[j][k])
@@ -220,8 +237,8 @@ skip:;
 	mt = FindMiptex (bt->name);
 	if (textureref[mt].animname[0]) {
 		anim = *bt;
-		strcpy (anim.name, textureref[mt].animname);
-		tc->nexttexinfo = TexinfoForBrushTexture (plane, &anim, origin, isTerrain);
+		strcpy(anim.name, textureref[mt].animname);
+		tc->nexttexinfo = TexinfoForBrushTexture(plane, &anim, origin, isTerrain);
 	} else
 		tc->nexttexinfo = -1;
 
