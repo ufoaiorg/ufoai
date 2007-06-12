@@ -45,8 +45,9 @@ extern void CalcTextureReflectivity (void)
 	int color[3];
 	byte *pos;
 	float r, scale;
-	qboolean tga;
+	qboolean wal;
 	miptex_t *mt;
+	qboolean loaded = qfalse;
 
 	sprintf(path, "%spics/colormap.pcx", gamedir);
 
@@ -59,7 +60,7 @@ extern void CalcTextureReflectivity (void)
 	texture_reflectivity[0][2] = 0.5;
 
 	for (i = 0; i < numtexinfo; i++) {
-		tga = qfalse;
+		wal = qfalse;
 		/* see if an earlier texinfo allready got the value */
 		for (j = 0; j < i; j++) {
 			if (!strcmp(texinfo[i].texture, texinfo[j].texture)) {
@@ -70,11 +71,10 @@ extern void CalcTextureReflectivity (void)
 		if (j != i)
 			continue;
 
-		/* load the wal file */
+		/* load the tga file */
 		sprintf(path, "%stextures/%s.tga", gamedir, texinfo[i].texture);
 		if (TryLoadTGA(path, &mt) != -1) {
 			/* load rgba from the tga */
-			tga = qtrue;
 			texels = mt->width * mt->height;  /* these are already endian-correct */
 			color[0] = color[1] = color[2] = 0;
 
@@ -85,15 +85,37 @@ extern void CalcTextureReflectivity (void)
 				color[2] += *pos++; /* b */
 			}
 			free(mt);
-		} else {
+			loaded = qtrue;
+			Sys_FPrintf(SYS_VRB, "...path: %s (%i) - use tga colors: %i:%i:%i\n", path, texels, color[0], color[1], color[2]);
+		}
+
+		if (!loaded) {
+			/* try jpeg */
+			sprintf(path, "%stextures/%s.jpg", gamedir, texinfo[i].texture);
+			if (TryLoadJPG(path, &mt) != -1) {
+				/* load rgba from the tga */
+				texels = mt->width * mt->height;  /* these are already endian-correct */
+				color[0] = color[1] = color[2] = 0;
+
+				for (j = 0; j < texels; j++) {
+					pos = ((byte *)mt + mt->offsets[0]) + j * 4;
+					color[0] += *pos++; /* r */
+					color[1] += *pos++; /* g */
+					color[2] += *pos++; /* b */
+				}
+				free(mt);
+				loaded = qtrue;
+				Sys_FPrintf(SYS_VRB, "...path: %s (%i) - use jpeg colors: %i:%i:%i\n", path, texels, color[0], color[1], color[2]);
+			}
+		}
+
+		if (!loaded) { /* wal fallback */
 			sprintf(path, "%stextures/%s.wal", gamedir, texinfo[i].texture);
 			if (TryLoadFile(path, (void **)&mt) == -1) {
 				Sys_FPrintf(SYS_VRB, "Couldn't load %s\n", path);
-				texture_reflectivity[i][0] = 0.5;
-				texture_reflectivity[i][1] = 0.5;
-				texture_reflectivity[i][2] = 0.5;
 				continue;
 			}
+			wal = qtrue;
 			texels = LittleLong(mt->width) * LittleLong(mt->height);
 			color[0] = color[1] = color[2] = 0;
 
@@ -102,13 +124,22 @@ extern void CalcTextureReflectivity (void)
 				for(k = 0; k < 3; k++)
 					color[k] += palette[texel * 3 + k];
 			}
+			Sys_FPrintf(SYS_VRB, "...path: %s (%i) - use wal colors: %i:%i:%i\n", path, texels, color[0], color[1], color[2]);
+			loaded = qtrue;
 			free(mt);
 		}
-		for (j = 0; j < 3; j++) {
-			r = color[j] / texels / 255.0;
-			texture_reflectivity[i][j] = r;
+
+		if (!loaded) {
+			texture_reflectivity[i][0] = 0.5;
+			texture_reflectivity[i][1] = 0.5;
+			texture_reflectivity[i][2] = 0.5;
+		} else {
+			for (j = 0; j < 3; j++) {
+				r = color[j] / texels / 255.0;
+				texture_reflectivity[i][j] = r;
+			}
 		}
-		if (!tga) {  /* tgas do not need to be scaled */
+		if (wal) {  /* tgas and jpegs do not need to be scaled */
 			/* scale the reflectivity up, because the textures are so dim */
 			scale = ColorNormalize(texture_reflectivity[i], texture_reflectivity[i]);
 			if (scale < 0.5) {
@@ -228,7 +259,7 @@ static void MakePatchForFace (int fn, winding_t *w)
 	if (patch->area <= 1)
 		patch->area = 1;
 
-	VectorCopy (texture_reflectivity[f->texinfo], patch->reflectivity);
+	VectorCopy(texture_reflectivity[f->texinfo], patch->reflectivity);
 
 	/* non-bmodel patches can emit light */
 	if (fn < dmodels[0].numfaces) {

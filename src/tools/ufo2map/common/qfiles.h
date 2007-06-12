@@ -202,6 +202,19 @@ typedef struct targa_header_s {
 
 extern int TryLoadTGA(const char *path, miptex_t **mt);
 
+/*
+==============================================================================
+JPEG
+==============================================================================
+*/
+#if !defined _MSC_VER && !defined __MINGW32__
+#include <jpeglib.h>
+#else
+#include "../ports/win32/jpeglib.h"
+#endif
+
+void LoadJPG(const char *filename, byte ** pic, int *width, int *height);
+int TryLoadJPG(const char *path, miptex_t **mt);
 
 /*
 ==============================================================================

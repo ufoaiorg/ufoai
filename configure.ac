@@ -711,6 +711,7 @@ then
 		AC_MSG_ERROR([You must have the JPEG development libraries])
 	fi
 fi
+TOOLS_LIBS="$TOOLS_LIBS $LIBS"
 REF_GL_LIBS="$REF_GL_LIBS $LIBS"
 REF_GLX_LIBS="$REF_GLX_LIBS $LIBS"
 REF_SDL_LIBS="$REF_SDL_LIBS $LIBS"
