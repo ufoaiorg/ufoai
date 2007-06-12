@@ -546,11 +546,9 @@ extern void LoadTGA (const char *name, byte ** pic, int *width, int *height)
 		Error("possible mem leak in LoadTGA\n");
 
 	/* load the file */
-	length = LoadFile(name, (void **) &buffer);
-	if (!buffer) {
-		Sys_Printf("Bad tga file %s\n", name);
+	length = TryLoadFile(name, (void **) &buffer);
+	if (!buffer)
 		return;
-	}
 
 	buf_p = buffer;
 
@@ -743,7 +741,6 @@ int TryLoadTGA (const char *path, miptex_t **mt)
 	memcpy(dest, pic, width * height * 4);  /* stuff RGBA into this opaque space */
 	free(pic);
 
-	Sys_FPrintf(SYS_VRB, "Loaded TGA\n");
 	return 0;
 }
 
