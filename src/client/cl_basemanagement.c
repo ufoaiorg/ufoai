@@ -1974,9 +1974,10 @@ static void B_AssignInitial_f (void)
  */
 static void B_PackInitialEquipment_f (void)
 {
-	int i, price = 0;
+	int i, p, container, price = 0;
 	equipDef_t *ed;
 	character_t *chr;
+	invList_t *ic, *next;
 	const char *name = curCampaign ? cl_initial_equipment->string : Cvar_VariableString("equip");
 
 	/* check syntax */
@@ -2005,8 +2006,16 @@ static void B_PackInitialEquipment_f (void)
 		CL_SwapSkills(baseCurrent->curTeam, baseCurrent->teamNum[baseCurrent->aircraftCurrent]);
 
 		/* pay for the initial equipment */
-		for (i = 0; i < csi.numODs; i++)
-			price += baseCurrent->storage.num[i] * csi.ods[i].price;
+		for (container = 0; container < csi.numIDs; container++) {
+			for (p = 0; p < baseCurrent->teamNum[baseCurrent->aircraftCurrent]; p++) {
+				for (ic = baseCurrent->curTeam[p]->inv->c[container]; ic; ic = next) {
+					item_t item = ic->item;
+					price += csi.ods[item.t].price;
+					Com_DPrintf("B_PackInitialEquipment_f()... adding price for %s, price: %i\n", csi.ods[item.t].id, price);
+					next = ic->next;
+				}
+			}
+		}
 		CL_UpdateCredits(ccs.credits - price);
 	}
 }

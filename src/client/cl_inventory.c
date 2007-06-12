@@ -378,7 +378,6 @@ void INV_EnableAutosell (technology_t *tech)
  * @param[in] *base Pointer to first base.
  * @sa B_BuildBase_f
  * @todo Make sure all equipment including soldiers equipment is added to capacity.cur.
- * @todo Make sure that we do not pay double for items here and in B_PackInitialEquipment_f().
  * @todo Remove curCampaign pointer usage here. Send campaign idx as param[in] instead.
  */
 extern void INV_InitialEquipment (base_t *base)
