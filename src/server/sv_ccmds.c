@@ -618,7 +618,7 @@ static void SV_MapcycleNext_f (void)
 static const char *serverCommandList[] = {
 	"startgame", "Force the gamestart - useful for multiplayer games",
 	"addip", "The ip address is specified in dot format, and any unspecified digits will match any value, so you can specify an entire class C network with 'addip 192.246.40'",
-	"removeip", "Removeip will only remove an address specified exactly the same way.  You cannot addip a subnet, then removeip a single host",
+	"removeip", "Removeip will only remove an address specified exactly the same way. You cannot addip a subnet, then removeip a single host",
 	"listip", "Prints the current list of filters",
 	"writeip", "Dumps ips to listip.cfg so it can be executed at a later date",
 	"ai_add", "Used to add ai opponents to a game - but no civilians",

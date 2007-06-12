@@ -44,7 +44,7 @@ static void SVCmd_Test_f (void)
  * addip <ip>
  * removeip <ip>
  * The ip address is specified in dot format, and any unspecified digits will match any value, so you can specify an entire class C network with "addip 192.246.40".
- * Removeip will only remove an address specified exactly the same way.  You cannot addip a subnet, then removeip a single host.
+ * Removeip will only remove an address specified exactly the same way. You cannot addip a subnet, then removeip a single host.
  *
  * listip
  * Prints the current list of filters.
@@ -198,7 +198,7 @@ static void SVCmd_RemoveIP_f (void)
 }
 
 /**
- * @brief
+ * @brief Shows the current ip in the filter list
  */
 static void SVCmd_ListIP_f (void)
 {
@@ -213,7 +213,7 @@ static void SVCmd_ListIP_f (void)
 }
 
 /**
- * @brief
+ * @brief Store all ips in the current filter list in
  */
 static void SVCmd_WriteIP_f (void)
 {
@@ -223,12 +223,7 @@ static void SVCmd_WriteIP_f (void)
 	int i;
 	cvar_t *game;
 
-	game = gi.cvar("fs_gamedir", "", 0, NULL);
-
-	if (!*game->string)
-		Com_sprintf(name, MAX_OSPATH, "%s/listip.cfg", GAMEVERSION);
-	else
-		Com_sprintf(name, MAX_OSPATH, "%s/listip.cfg", game->string);
+	Com_sprintf(name, sizeof(name), "%s/listip.cfg", gi.FS_Gamedir());
 
 	gi.cprintf(NULL, PRINT_HIGH, "Writing %s.\n", name);
 
