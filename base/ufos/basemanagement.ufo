@@ -112,6 +112,7 @@ building building_powerplant
 	image		base/powerplant
 	fixcosts	90000
 	depends		building_entrance
+	type		power
 	build_time	2
 	varcosts	3000
 	map_name	"powerplant"

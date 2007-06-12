@@ -322,6 +322,11 @@ static void B_BuildingDestroy_f (void)
 		if (!B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, B_UFO_SMALL_HANGAR))
 			baseCurrent->hasUFOHangarSmall = qfalse;
 		break;
+	case B_POWER:
+		if (!B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, b1->buildingType))
+			baseCurrent->hasPower = qfalse;
+		B_UpdateStatusWithPower(baseCurrent);
+		break;
 	case B_MISC:
 		break;
 	default:
@@ -473,7 +478,7 @@ static void B_UpdateBaseBuildingStatus (building_t* building, base_t* base, buil
 
 	switch (building->buildingType) {
 	case B_ALIEN_CONTAINMENT:
-		if (building->buildingStatus == B_STATUS_WORKING)
+		if ((building->buildingStatus == B_STATUS_WORKING) && (base->hasPower))
 			base->hasAlienCont = qtrue;
 		B_UpdateBaseCapacities(CAP_ALIENS, base);
 		break;
@@ -483,24 +488,24 @@ static void B_UpdateBaseBuildingStatus (building_t* building, base_t* base, buil
 		B_UpdateBaseCapacities(CAP_EMPLOYEES, base);
 		break;
 	case B_STORAGE:
-		if (building->buildingStatus == B_STATUS_WORKING)
+		if ((building->buildingStatus == B_STATUS_WORKING) && (base->hasPower))
 			base->hasStorage = qtrue;
 		B_UpdateBaseCapacities(CAP_ITEMS, base);
 		break;
 	case B_LAB:
-		if (building->buildingStatus == B_STATUS_WORKING)
+		if ((building->buildingStatus == B_STATUS_WORKING) && (base->hasPower))
 			base->hasLab = qtrue;
 		B_UpdateBaseCapacities(CAP_LABSPACE, base);
 		break;
 	case B_WORKSHOP:
-		if (building->buildingStatus == B_STATUS_WORKING)
+		if ((building->buildingStatus == B_STATUS_WORKING) && (base->hasPower))
 			base->hasWorkshop = qtrue;
 		B_UpdateBaseCapacities(CAP_WORKSPACE, base);
 		/* Update production times in queue. */
 		PR_UpdateProductionTime(base->idx);
 		break;
 	case B_HOSPITAL:
-		if (building->buildingStatus == B_STATUS_WORKING) {
+		if ((building->buildingStatus == B_STATUS_WORKING) && (base->hasPower)) {
 			/* If this is first hospital in base, setup relevant arrays. */
 			if (B_GetNumberOfBuildingsInBaseByType(base->idx, building->buildingType) == 1) {
 				memset(base->hospitalList, -1, sizeof(base->hospitalList));
@@ -513,24 +518,29 @@ static void B_UpdateBaseBuildingStatus (building_t* building, base_t* base, buil
 		B_UpdateBaseCapacities(CAP_HOSPSPACE, base);
 		break;
 	case B_HANGAR:
-		if (building->buildingStatus == B_STATUS_WORKING)
+		if ((building->buildingStatus == B_STATUS_WORKING) && (base->hasPower))
 			base->hasHangar = qtrue;
 		B_UpdateBaseCapacities(CAP_AIRCRAFTS_BIG, base);
 		break;
 	case B_SMALL_HANGAR:
-		if (building->buildingStatus == B_STATUS_WORKING)
+		if ((building->buildingStatus == B_STATUS_WORKING) && (base->hasPower))
 			base->hasHangarSmall = qtrue;
 		B_UpdateBaseCapacities(CAP_AIRCRAFTS_SMALL, base);
 		break;
 	case B_UFO_HANGAR:
-		if (building->buildingStatus == B_STATUS_WORKING)
+		if ((building->buildingStatus == B_STATUS_WORKING) && (base->hasPower))
 			base->hasUFOHangar = qtrue;
 		B_UpdateBaseCapacities(CAP_UFOHANGARS, base);
 		break;
 	case B_UFO_SMALL_HANGAR:
-		if (building->buildingStatus == B_STATUS_WORKING)
+		if ((building->buildingStatus == B_STATUS_WORKING) && (base->hasPower))
 			base->hasUFOHangarSmall = qtrue;
 		B_UpdateBaseCapacities(CAP_UFOHANGARS, base);
+		break;
+	case B_POWER:
+		if (building->buildingStatus == B_STATUS_WORKING)
+			base->hasPower = qtrue;
+		B_UpdateStatusWithPower(base);
 		break;
 	default:
 		break;
@@ -1228,6 +1238,8 @@ extern void B_ParseBuildings (const char *name, char **text, qboolean link)
 					building->buildingType = B_QUARTERS;
 				} else if (!Q_strncmp(token, "workshop", MAX_VAR)) {
 					building->buildingType = B_WORKSHOP;
+				} else if (!Q_strncmp(token, "power", MAX_VAR)) {
+					building->buildingType = B_POWER;
 				}
 /*			} else if (!Q_strncmp(token, "max_employees", MAX_VAR)) {
 				token = COM_EParse(text, errhead, name);
@@ -2579,6 +2591,21 @@ int B_CheckBuildingConstruction (building_t * building, int base_idx)
 }
 
 /**
+ * @brief Update buildings status when we gain or loose power.
+ * @param[in] *base Pointer to the base with newly constructed power supply.
+ */
+void B_UpdateStatusWithPower (base_t *base)
+{
+	int i;
+
+	assert (base);
+	for (i = 0; i < gd.numBuildings[base->idx]; i++) {
+		if (gd.buildings[base->idx][i].buildingStatus == B_STATUS_WORKING)
+			B_UpdateBaseBuildingStatus(&gd.buildings[base->idx][i], &gd.bases[base->idx], B_STATUS_WORKING);	
+	}
+}
+
+/**
  * @brief Selects a base by its index.
  * @param[in] base_idx Index of the base - see gd.bases array and gd.numBases
  */
@@ -2792,6 +2819,7 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
 		MSG_WriteByte(sb, b->hasQuarters);
 		MSG_WriteByte(sb, b->hasWorkshop);
 		MSG_WriteByte(sb, b->hasHangarSmall);
+		MSG_WriteByte(sb, b->hasPower);
 		for (k = 0; k < presaveArray[PRE_BASESI]; k++)
 			for (l = 0; l < presaveArray[PRE_BASESI]; l++) {
 				MSG_WriteShort(sb, b->map[k][l]);
@@ -2962,6 +2990,7 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 		b->hasQuarters = MSG_ReadByte(sb);
 		b->hasWorkshop = MSG_ReadByte(sb);
 		b->hasHangarSmall = MSG_ReadByte(sb);
+		b->hasPower = MSG_ReadByte(sb);
 		for (k = 0; k < presaveArray[PRE_BASESI]; k++)
 			for (l = 0; l < presaveArray[PRE_BASESI]; l++) {
 				b->map[k][l] = MSG_ReadShort(sb);

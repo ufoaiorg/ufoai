@@ -84,7 +84,8 @@ typedef enum {
 	B_ALIEN_CONTAINMENT,	/**< this building is an alien containment */
 	B_SMALL_HANGAR,		/**< this building is a small hangar */
 	B_UFO_HANGAR,		/**< this building is an UFO hangar */
-	B_UFO_SMALL_HANGAR	/**< this building is a small UFO hangar */
+	B_UFO_SMALL_HANGAR,	/**< this building is a small UFO hangar */
+	B_POWER			/**< this building is power plant */
 } buildingType_t;
 
 /** @brief All possible capacities in base. */
@@ -184,6 +185,7 @@ typedef struct base_s {
 	qboolean hasHangarSmall;	/**< does this base has a small hangar */
 	qboolean hasUFOHangar;		/**< does this base has an UFO hangar */
 	qboolean hasUFOHangarSmall;	/**< does this base has a small UFO hangar */
+	qboolean hasPower;		/**< does this base has any power supply */
 
 	/** this is here to allocate the needed memory for the buildinglist */
 	char allBuildingsList[MAX_LIST_CHAR];
@@ -245,6 +247,7 @@ void B_SetSensor_f(void);
 
 void B_UpdateBaseData(void);
 base_t *B_GetBase(int id);
+void B_UpdateStatusWithPower(base_t *base);
 int B_CheckBuildingConstruction(building_t *b, int baseID);
 int B_GetNumOnTeam(void);
 building_t *B_GetLab(int base_id);
