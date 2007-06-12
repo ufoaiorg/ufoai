@@ -72,5 +72,13 @@ typedef double double64_t;
 
 typedef enum {qfalse, qtrue} qboolean;
 
+#if defined _WIN64
+# define SIZE_T "%I64u"
+#elif defined _WIN32
+# define SIZE_T "%u"
+#else
+# define SIZE_T "%zu"
+#endif
+
 #endif /* COMMON_UFOTYPES_H */
 

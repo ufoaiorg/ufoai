@@ -443,4 +443,12 @@ typedef struct {
 #define	ANGLE_UP	-1
 #define	ANGLE_DOWN	-2
 
+#if defined _WIN64
+# define SIZE_T "%I64u"
+#elif defined _WIN32
+# define SIZE_T "%u"
+#else
+# define SIZE_T "%zu"
+#endif
+
 #endif /* QFILES_H */

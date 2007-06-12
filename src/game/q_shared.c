@@ -1761,7 +1761,7 @@ skipwhite:
 				com_token[len] = c;
 				len++;
 			} else {
-				Com_Printf("Com_Parse len exceeded: %Zu/MAX_TOKEN_CHARS\n", len);
+				Com_Printf("Com_Parse len exceeded: "SIZE_T"/MAX_TOKEN_CHARS\n", len);
 			}
 		}
 	}
@@ -2078,7 +2078,7 @@ qboolean Com_sprintf (char *dest, size_t size, const char *fmt, ...)
 
 	if (len >= size) {
 #ifdef PARANOID
-		Com_Printf("Com_sprintf: overflow of %Zu in %Zu\n", len, size);
+		Com_Printf("Com_sprintf: overflow of "SIZE_T" in "SIZE_T"\n", len, size);
 #endif
 		return qfalse;
 	}
@@ -3704,17 +3704,17 @@ int Com_ParseValue (void *base, char *token, valueTypes_t type, int ofs, size_t 
 	if (size) {
 #ifdef DEBUG
 		if (size > vt_sizes[type]) {
-			Com_Printf("Warning: Size mismatch: given size: %Zu, should be: %Zu. File: '%s', line: %i (type: %i)\n", size, vt_sizes[type], file, line, type);
+			Com_Printf("Warning: Size mismatch: given size: "SIZE_T", should be: "SIZE_T". File: '%s', line: %i (type: %i)\n", size, vt_sizes[type], file, line, type);
 		}
 		if (size < vt_sizes[type]) {
 			/* disable this sys error to return -1 and print the value_t->string that is wrong in the parsing function */
-			Sys_Error("Size mismatch: given size: %Zu, should be: %Zu. File: '%s', line: %i (type: %i)\n", size, vt_sizes[type], file, line, type);
+			Sys_Error("Size mismatch: given size: "SIZE_T", should be: "SIZE_T". File: '%s', line: %i (type: %i)\n", size, vt_sizes[type], file, line, type);
 			return -1;	/* don't delete this please */
 		}
 #else
 		if (size < vt_sizes[type]) {
 			/* disable this sys error to return -1 and print the value_t->string that is wrong in the parsing function */
-			Sys_Error("Size mismatch: given size: %Zu, should be: %Zu. (type: %i)\n", size, vt_sizes[type], type);
+			Sys_Error("Size mismatch: given size: "SIZE_T", should be: "SIZE_T". (type: %i)\n", size, vt_sizes[type], type);
 			return -1;	/* don't delete this please */
 		}
 #endif
@@ -3945,17 +3945,17 @@ int Com_SetValue (void *base, void *set, valueTypes_t type, int ofs, size_t size
 	if (size) {
 #ifdef DEBUG
 		if (size > vt_sizes[type]) {
-			Com_Printf("Warning: Size mismatch: given size: %Zu, should be: %Zu. File: '%s', line: %i (type: %i)\n", size, vt_sizes[type], file, line, type);
+			Com_Printf("Warning: Size mismatch: given size: "SIZE_T", should be: "SIZE_T". File: '%s', line: %i (type: %i)\n", size, vt_sizes[type], file, line, type);
 		}
 		if (size < vt_sizes[type]) {
 			/* disable this sys error to return -1 and print the value_t->string that is wrong in the parsing function */
-			Sys_Error("Size mismatch: given size: %Zu, should be: %Zu. File: '%s', line: %i (type: %i)\n", size, vt_sizes[type], file, line, type);
+			Sys_Error("Size mismatch: given size: "SIZE_T", should be: "SIZE_T". File: '%s', line: %i (type: %i)\n", size, vt_sizes[type], file, line, type);
 			return -1;	/* don't delete this please */
 		}
 #else
 		if (size < vt_sizes[type]) {
 			/* disable this sys error to return -1 and print the value_t->string that is wrong in the parsing function */
-			Sys_Error("Size mismatch: given size: %Zu, should be: %Zu. (type: %i)\n", size, vt_sizes[type], type);
+			Sys_Error("Size mismatch: given size: "SIZE_T", should be: "SIZE_T". (type: %i)\n", size, vt_sizes[type], type);
 			return -1;	/* don't delete this please */
 		}
 #endif

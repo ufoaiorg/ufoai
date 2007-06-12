@@ -614,7 +614,7 @@ extern void *Mem_TagMalloc (size_t size, int tag)
 	size = size + sizeof(zhead_t);
 	z = malloc(size);
 	if (!z)
-		Com_Error(ERR_FATAL, "Mem_TagMalloc: failed on allocation of %Zu bytes", size);
+		Com_Error(ERR_FATAL, "Mem_TagMalloc: failed on allocation of "SIZE_T" bytes", size);
 	memset(z, 0, size);
 	z_count++;
 	z_bytes += size;

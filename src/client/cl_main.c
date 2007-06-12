@@ -1903,7 +1903,7 @@ extern void CL_ReadSinglePlayerData (void)
 	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != 0)
 		CL_ParseScriptSecond(type, name, &text);
 
-	Com_Printf("Global data loaded - size %Zu bytes\n", sizeof(gd));
+	Com_Printf("Global data loaded - size "SIZE_T" bytes\n", sizeof(gd));
 	Com_Printf("...techs: %i\n", gd.numTechnologies);
 	Com_Printf("...buildings: %i\n", gd.numBuildingTypes);
 	Com_Printf("...ranks: %i\n", gd.numRanks);
