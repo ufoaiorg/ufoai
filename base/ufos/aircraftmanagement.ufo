@@ -68,7 +68,7 @@ aircraft craft_drop_firebird
 	shortname	"_Firebird D"
 	type		transporter
 	model		"drop_firebird"
-	price		3500000
+	price		35000
 	building	building_hangar
 	size		8
 	weight		8
@@ -114,7 +114,7 @@ aircraft craft_inter_stiletto
 	model		"inter_stiletto"
 	size		1
 	weight		4
-	price		2000000
+	price		20000
 	building	building_intercept
 	image		air_interceptor
 	angles		"-20 -40 120"
@@ -168,7 +168,7 @@ aircraft craft_inter_saracen
 	model		"inter_saracen"
 	size		1
 	weight		4
-	price		2000000
+	price		26000
 	building	building_intercept
 	image		air_interceptor
 	angles		"170 10 -110"
@@ -215,7 +215,7 @@ aircraft craft_inter_stingray
 	model		"inter_stingray"
 	size		1
 	weight		4
-	price		2000000
+	price		48000
 	building	building_intercept
 	image		air_interceptor
 	angles		"170 10 -110"
