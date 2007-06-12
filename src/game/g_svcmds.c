@@ -39,26 +39,21 @@ static void SVCmd_Test_f (void)
 
 /**
  * @brief PACKET FILTERING
- *
  * You can add or remove addresses from the filter list with:
  *
  * addip <ip>
  * removeip <ip>
- *
  * The ip address is specified in dot format, and any unspecified digits will match any value, so you can specify an entire class C network with "addip 192.246.40".
- *
  * Removeip will only remove an address specified exactly the same way.  You cannot addip a subnet, then removeip a single host.
  *
  * listip
  * Prints the current list of filters.
  *
  * writeip
- * Dumps "addip <ip>" commands to listip.cfg so it can be execed at a later date.  The filter lists are not saved and restored by default, because I beleive it would cause too much confusion.
+ * Dumps "addip <ip>" commands to listip.cfg so it can be executed at a later date.  The filter lists are not saved and restored by default, because I beleive it would cause too much confusion.
  *
  * filterban <0 or 1>
- *
  * If 1 (the default), then ip addresses matching the current list will be prohibited from entering the game.  This is the default setting.
- *
  * If 0, then only addresses matching the list will be allowed.  This lets you easily set up a private game, or a game that only allows players from your local network.
  */
 
@@ -75,7 +70,7 @@ static int numipfilters;
 /**
  * @brief
  */
-static qboolean StringToFilter (char *s, ipfilter_t * f)
+static qboolean StringToFilter (const char *s, ipfilter_t * f)
 {
 	char num[128];
 	int i, j;
@@ -100,7 +95,7 @@ static qboolean StringToFilter (char *s, ipfilter_t * f)
 		num[j] = 0;
 		b[i] = atoi(num);
 		if (b[i] != 0)
-			m[i] = 255;
+			m[i] = 0xFF;
 
 		if (!*s)
 			break;
@@ -116,12 +111,12 @@ static qboolean StringToFilter (char *s, ipfilter_t * f)
 /**
  * @brief
  */
-extern qboolean SV_FilterPacket (char *from)
+extern qboolean SV_FilterPacket (const char *from)
 {
 	int i;
 	unsigned in;
 	byte m[4];
-	char *p;
+	const char *p;
 
 	i = 0;
 	p = from;
@@ -160,7 +155,7 @@ static void SVCmd_AddIP_f (void)
 	}
 
 	for (i = 0; i < numipfilters; i++)
-		if (ipfilters[i].compare == 0xffffffff)
+		if (ipfilters[i].compare == ~0x0)
 			break;				/* free spot */
 	if (i == numipfilters) {
 		if (numipfilters == MAX_IPFILTERS) {
@@ -171,7 +166,7 @@ static void SVCmd_AddIP_f (void)
 	}
 
 	if (!StringToFilter(gi.argv(2), &ipfilters[i]))
-		ipfilters[i].compare = 0xffffffff;
+		ipfilters[i].compare = ~0x0;
 }
 
 /**
@@ -254,7 +249,9 @@ static void SVCmd_WriteIP_f (void)
 }
 
 /**
- * @brief
+ * @brief Used to add ai opponents to a game
+ * @note civilians can not be added with this function
+ * @sa AI_CreatePlayer
  */
 static void SVCmd_AI_Add_f (void)
 {
@@ -265,7 +262,7 @@ static void SVCmd_AI_Add_f (void)
 		return;
 	}
 	team = atoi(gi.argv(2));
-	if (team > 0 && team < MAX_TEAMS) {
+	if (team > TEAM_CIVILIAN && team < MAX_TEAMS) {
 		if (!AI_CreatePlayer(team))
 			Com_Printf("Couldn't create AI player.\n");
 	} else
@@ -274,7 +271,9 @@ static void SVCmd_AI_Add_f (void)
 
 
 /**
- * @brief
+ * @brief Call the end game function with the given team
+ * used to e.g. abort singleplayer games and let the aliens win
+ * @sa G_EndGame
  */
 static void SVCmd_Win_f (void)
 {
@@ -378,6 +377,7 @@ static void SVCmd_StartGame_f (void)
  * @brief ServerCommand will be called when an "sv" command is issued.
  * The game can issue gi.argc() / gi.argv() commands to get the rest
  * of the parameters
+ * @sa serverCommandList
  */
 extern void ServerCommand (void)
 {

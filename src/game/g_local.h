@@ -365,7 +365,7 @@ player_t *AI_CreatePlayer(int team);
 
 /* g_svcmds.c */
 void ServerCommand(void);
-qboolean SV_FilterPacket(char *from);
+qboolean SV_FilterPacket(const char *from);
 
 /* g_main.c */
 void SaveClientData(void);

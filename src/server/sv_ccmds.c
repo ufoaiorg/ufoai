@@ -612,6 +612,106 @@ static void SV_MapcycleNext_f (void)
 }
 
 /**
+ * @brief List for SV_CompleteServerCommand
+ * @sa ServerCommand
+ */
+static const char *serverCommandList[] = {
+	"startgame", "Force the gamestart - useful for multiplayer games",
+	"addip", "The ip address is specified in dot format, and any unspecified digits will match any value, so you can specify an entire class C network with 'addip 192.246.40'",
+	"removeip", "Removeip will only remove an address specified exactly the same way.  You cannot addip a subnet, then removeip a single host",
+	"listip", "Prints the current list of filters",
+	"writeip", "Dumps ips to listip.cfg so it can be executed at a later date",
+	"ai_add", "Used to add ai opponents to a game - but no civilians",
+	"win", "Call the end game function with the given team",
+#ifdef DEBUG
+	"showall", "Debug function: Reveal all items to all sides",
+	"actorinvlist", "Debug function to show the hole inventory of all connected clients on the server",
+#endif
+	NULL
+};
+
+
+/**
+ * @brief Autocomplete function for server commands
+ * @sa ServerCommand
+ */
+static int SV_CompleteServerCommand (const char *partial, const char **match)
+{
+	int i, j, matches = 0;
+	const char *localMatch[128]; /* i don't think that there will ever
+								* be more than 128 server command ;-) */
+	size_t len, lenResult = 0, tmp;
+	static char matchString[MAX_QPATH];
+	int numServerCommands;
+
+	len = strlen(partial);
+	if (!len) {
+		for (i = 0; ; i += 2) {
+			if (!serverCommandList[i])
+				break;
+			Com_Printf("[cmd] %s\n", serverCommandList[i]);
+			if (*serverCommandList[i + 1])
+			Com_Printf("%c      %s\n", 1, serverCommandList[i + 1]);
+		}
+		return i - 1;
+	}
+
+	for (i = 0, numServerCommands = 0; ; numServerCommands++, i += 2) {
+		if (!serverCommandList[i])
+			break;
+	}
+
+	localMatch[matches] = NULL;
+
+	/* search all matches and fill the localMatch array */
+	for (i = 0; i < numServerCommands; i++)
+		if (!Q_strncmp(partial, serverCommandList[i * 2], len)) {
+			Com_Printf("[cmd] %s\n", serverCommandList[i * 2]);
+			if (*serverCommandList[i * 2 + 1])
+				Com_Printf("%c      %s\n", 1, serverCommandList[i * 2 + 1]);
+			localMatch[matches++] = serverCommandList[i * 2];
+		}
+
+	/* no matches or exactly one match */
+	if (matches <= 1) {
+		if (matches == 1)
+			*match = localMatch[0];
+	} else {
+		/* get the shortest string of the results */
+		lenResult = strlen(localMatch[0]);
+		for (i = 0; i < matches; i++) {
+			tmp = strlen(localMatch[i]);
+			if (tmp < lenResult)
+				lenResult = tmp;
+		}
+		/* len is >= 1 here */
+		if (len != lenResult) {
+			if (lenResult >= MAX_QPATH)
+				lenResult = MAX_QPATH - 1;
+			/* compare up to lenResult chars */
+			for (i = len + 1; i < lenResult; i++) {
+				/* just take the first string */
+				Q_strncpyz(matchString, localMatch[0], i + 1);
+				for (j = 1; j < matches; j++) {
+					if (Q_strncmp(matchString, localMatch[j], i)) {
+						break;
+					}
+				}
+				if (j < matches)
+					break;
+
+				/* j must be bigger than 0 here */
+				Q_strncpyz(matchString, localMatch[0], i + 1);
+				*match = matchString;
+				matches = 1;
+			}
+		}
+	}
+
+	return matches;
+}
+
+/**
  * @brief
  */
 extern void SV_InitOperatorCommands (void)
@@ -648,4 +748,5 @@ extern void SV_InitOperatorCommands (void)
 	Cmd_AddCommand("killserver", SV_KillServer_f, "Shuts the server down - and disconnect all clients");
 
 	Cmd_AddCommand("sv", SV_ServerCommand_f, "Server command");
+	Cmd_AddParamCompleteFunction("sv", SV_CompleteServerCommand);
 }
