@@ -557,6 +557,7 @@ extern void B_SetUpBase (base_t* base)
 {
 	int i;
 	building_t *building = NULL;
+	aircraft_t *aircraft = NULL;
 
 	assert(base);
 	/* Resent current capacities. */
@@ -589,10 +590,16 @@ extern void B_SetUpBase (base_t* base)
 			B_SetBuildingByClick((int) building->pos[0], (int) building->pos[1]);
 			B_UpdateBaseBuildingStatus(building, base, B_STATUS_WORKING);
 			/* Now buy two first aircrafts if it is our first base. */
-			if (gd.numBases == 1 && building->buildingType == B_HANGAR)
+			if (gd.numBases == 1 && building->buildingType == B_HANGAR) {
 				Cbuf_AddText("aircraft_new craft_drop_firebird\n");
-			if (gd.numBases == 1 && building->buildingType == B_SMALL_HANGAR)
+				aircraft = AIR_GetAircraft("craft_drop_firebird");
+				CL_UpdateCredits(ccs.credits - aircraft->price);
+			}
+			if (gd.numBases == 1 && building->buildingType == B_SMALL_HANGAR) {
 				Cbuf_AddText("aircraft_new craft_inter_stiletto\n");
+				aircraft = AIR_GetAircraft("craft_inter_stiletto");
+				CL_UpdateCredits(ccs.credits - aircraft->price);
+			}
 
 			/* now call the onconstruct trigger */
 			if (*building->onConstruct) {
