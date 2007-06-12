@@ -59,7 +59,7 @@ extern winding_t *AllocWinding (int points)
 	s = sizeof(vec_t) * 3 * points + sizeof(int);
 	w = malloc(s);
 	if (!w) {
-		Error("could not allocate winding of size: "SIZE_T"\n", s);
+		Error("could not allocate winding of size: "UFO_SIZE_T"\n", s);
 		return NULL;
 	}
 	memset(w, 0, s);

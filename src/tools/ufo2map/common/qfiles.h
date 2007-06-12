@@ -444,11 +444,11 @@ typedef struct {
 #define	ANGLE_DOWN	-2
 
 #if defined _WIN64
-# define SIZE_T "%I64u"
+# define UFO_SIZE_T "%I64u"
 #elif defined _WIN32
-# define SIZE_T "%u"
+# define UFO_SIZE_T "%u"
 #else
-# define SIZE_T "%zu"
+# define UFO_SIZE_T "%zu"
 #endif
 
 #endif /* QFILES_H */
