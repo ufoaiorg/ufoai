@@ -35,8 +35,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define SH_BIG	9
 #define SH_LOW	2
 
-const vec3_t dup = {0, 0, PH-UH/2};
-const vec3_t dwn = {0, 0, -UH/2};
+static const vec3_t dup_vec = {0, 0, PH-UH/2};
+static const vec3_t dwn_vec = {0, 0, -UH/2};
 
 const vec3_t move_vec[4] = { {US, 0, 0}, {-US, 0, 0}, {0, US, 0}, {0, -US, 0} };
 const vec3_t testvec[5] = { {-US/2+5,-US/2+5,0}, {US/2-5,US/2-5,0}, {-US/2+5,US/2-5,0}, {US/2-5,-US/2+5,0}, {0,0,0} };
@@ -94,8 +94,8 @@ static void CheckUnit_Thread (unsigned int unitnum)
 	/* test for fall down */
 	if (TestLineMask(start, end, 2)) {
 		PosToVec(pos, end);
-		VectorAdd(end, dup, start);
-		VectorAdd(end, dwn, end);
+		VectorAdd(end, dup_vec, start);
+		VectorAdd(end, dwn_vec, end);
 		height = 0;
 
 		/* test for ground with a "middled" height */
