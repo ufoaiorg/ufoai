@@ -118,26 +118,49 @@ typedef struct {
 #define	MAX_SKINNAME	64
 #define MAX_TAGNAME		64
 
+/**
+ * @brief These two shorts are used to map a vertex onto a skin
+ * The horizontal axis position is given by s, and the vertical axis position is given by t.
+ * The ranges for s and t are greater than or equal to 0 and less than skinWidth and skinHeight
+ */
 typedef struct {
-	short s;
-	short t;
+	short s; /**< (0 <= s < skinWidth) */
+	short t; /**< (0 <= t < skinHeight) */
 } dstvert_t;
 
 typedef struct {
-	short index_xyz[3];
-	short index_st[3];
+	short index_xyz[3];	/**< these three shorts are indices into the array of vertices in each frames.
+						 * In other words, the number of triangles in a md2 file is fixed, and each
+						 * triangle is always made of the same three indices into each frame's array
+						 * of vertices. So, in each frame, the triangles themselves stay intact, their
+						 * vertices are just moved around
+						 */
+	short index_st[3];	/**< these three shorts are indices into the array of texture coordinates */
 } dtriangle_t;
 
 typedef struct {
-	byte v[3];					/**< scaled byte to fit in frame mins/maxs */
-	byte lightnormalindex;
+	byte v[3];					/**< scaled byte to fit in frame mins/maxs
+								 * The three bytes represent the x, y, and z coordinates of this vertex.
+								 * This is not the "real" vertex coordinate. This is a scaled version of the
+								 * coordinate, scaled so that each of the three numbers fit within one byte.
+								 * To scale the vertex back to the "real" coordinate, you need to first
+								 * multiply each of the bytes by their respective float scale in the daliasframe_t
+								 * structure, and then add the respective float translation, also in the daliasframe_t
+								 * structure. This will give you the vertex coordinate relative to the model's
+								 * origin, which is at the origin, (0, 0, 0)
+								 */
+	byte lightnormalindex;		/**< this is an index into a table of normals */
 } dtrivertx_t;
 
+/**
+ * @brief is a variable sized structure, however all frame_t structures within the same file will
+ * have the same size (numVertices in the header)
+ */
 typedef struct {
 	float scale[3];				/**< multiply byte verts by this */
 	float translate[3];			/**< then add this */
 	char name[16];				/**< frame name from grabbing */
-	dtrivertx_t verts[1];		/**< variable sized */
+	dtrivertx_t verts[1];		/**< variable sized - an array of num_xyz dtrivertx_t structures.*/
 } daliasframe_t;
 
 
@@ -151,38 +174,43 @@ typedef struct {
  * and an integer vertex index.
  */
 
-
+/** @brief model file header structure - 68 bytes */
 typedef struct {
-	int ident;
-	int version;
+	int ident;					/**< a "magic number" used to identify the file. The magic number is
+								 * 844121161 in decimal (0x32504449 in hexadecimal). The magic number
+								 * is equal to the int "IDP2" (id polygon 2), which is formed by
+								 * ('I' + ('D' << 8) + ('P' << 16) + ('2' << 24))
+								 */
+	int version;				/**< version number of the file. Always 8 */
 
-	int skinwidth;
-	int skinheight;
+	int skinwidth;				/**< width of the skin(s) in pixels */
+	int skinheight;				/**< height of the skin(s) in pixels */
 	int framesize;				/**< byte size of each frame */
 
-	int num_skins;
-	int num_xyz;
-	int num_st;					/**< greater than num_xyz for seams */
-	int num_tris;
+	int num_skins;				/**< Number of skins associated with this model */
+	int num_xyz;				/**< number of vertices */
+	int num_st;					/**< number of texture coordinates - can be greater than num_xyz */
+	int num_tris;				/**< number of triangles in each frame. */
 	int num_glcmds;				/**< dwords in strip/fan command list */
-	int num_frames;
+	int num_frames;				/**< number of frames for this model */
 
 	int ofs_skins;				/**< each skin is a MAX_SKINNAME string */
 	int ofs_st;					/**< byte offset from start for stverts */
 	int ofs_tris;				/**< offset for dtriangles */
 	int ofs_frames;				/**< offset for first frame */
-	int ofs_glcmds;
+	int ofs_glcmds;				/**< offset to the gl command list */
 	int ofs_end;				/**< end of file */
 } dmdl_t;
 
 
-
+/** @brief Tag file header structure - 32 byte */
 typedef struct {
-	int ident;
-	int version;
+	int ident;					/**< 844121162 */
+	int version;				/**< version of the tag file - @sa TAG_VERSION */
 
-	int num_tags;
-	int num_frames;
+	int num_tags;				/**< number of tags in this tag file */
+	int num_frames;				/**< number of frames in this tag file - should be the same as in your
+								 * exported model that uses this tag file */
 
 	int ofs_names;
 	int ofs_tags;
@@ -216,25 +244,21 @@ typedef struct {
 
 typedef unsigned int index_t;
 
-typedef struct
-{
+typedef struct {
 	float			st[2];
 } dmd3coord_t;
 
-typedef struct
-{
+typedef struct {
 	short			point[3];
 	short			norm;
 } dmd3vertex_t;
 
-typedef struct
-{
+typedef struct {
 	vec3_t			point;
 	vec3_t			normal;
 } admd3vertex_t;
 
-typedef struct
-{
+typedef struct {
 	vec3_t			mins;
 	vec3_t			maxs;
 	vec3_t			translate;
@@ -242,26 +266,22 @@ typedef struct
 	char			creator[16];
 } dmd3frame_t;
 
-typedef struct
-{
+typedef struct {
 	vec3_t			origin;
 	float			axis[3][3];
 } dorientation_t;
 
-typedef struct
-{
+typedef struct {
 	char			name[MD3_MAX_PATH];		/**< tag name */
 	dorientation_t	orient;
 } dmd3tag_t;
 
-typedef struct
-{
+typedef struct {
 	char			name[MD3_MAX_PATH];
 	int				unused;					/**< shader */
 } dmd3skin_t;
 
-typedef struct
-{
+typedef struct {
 	char			id[4];
 
 	char			name[MD3_MAX_PATH];
@@ -281,8 +301,7 @@ typedef struct
 	int				meshsize;
 } dmd3mesh_t;
 
-typedef struct
-{
+typedef struct {
 	int				id;
 	int				version;
 
@@ -316,8 +335,8 @@ typedef struct {
 } dsprframe_t;
 
 typedef struct {
-	int ident;
-	int version;
+	int ident;					/**< @sa IDSPRITEHEADER*/
+	int version;				/**< version is 2 - @sa SPRITE_VERSION */
 	int numframes;
 	dsprframe_t frames[1];		/**< variable sized */
 } dsprite_t;
