@@ -2197,11 +2197,11 @@ static void B_AssembleMap_f (void)
 				}
 
 				if (entry->mapPart)
-					Q_strncpyz(baseMapPart, va("b/%s", base->mapChar, entry->mapPart), sizeof(baseMapPart));
+					Q_strncpyz(baseMapPart, va("b/%s", entry->mapPart), sizeof(baseMapPart));
 				else
 					Com_Printf("B_AssembleMap_f: Error - map has no mapPart set. Building '%s'\n'", entry->id);
 			} else
-				Q_strncpyz(baseMapPart, va("b/empty", base->mapChar), sizeof(baseMapPart));
+				Q_strncpyz(baseMapPart, "b/empty", sizeof(baseMapPart));
 
 			if (*baseMapPart) {
 				Q_strcat(maps, baseMapPart, sizeof(maps));
