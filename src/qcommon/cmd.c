@@ -993,6 +993,50 @@ static void Cmd_List_f (void)
 	Com_Printf("%i macros\n", j);
 }
 
+
+/**
+ * @brief Autocomplete function for exec command
+ * @note This function only lists all cfg files - but doesn't perform any
+ * autocomplete step when hitting tab after "exec "
+ * @sa Cmd_AddParamCompleteFunction
+ */
+static int Cmd_CompleteExecCommand (const char *partial, const char **match)
+{
+	int i;
+	size_t len;
+	char findname[MAX_OSPATH];
+	char **dirnames;
+	int ndirs;
+	searchpath_t *search;
+
+	len = strlen(partial);
+	if (!len) {
+		/* search through the path, one element at a time */
+		for (search = fs_searchpaths; search; search = search->next) {
+			/* is the element a pak file? */
+			if (search->pack) {
+				/* look through all the pak file elements */
+				for (i = 0; i < search->pack->numfiles; i++)
+					/* found it! */
+					if (strstr(search->pack->files[i].name, ".cfg")) {
+						Com_Printf("%s\n", search->pack->files[i].name);
+					}
+			} else {
+				Com_sprintf(findname, sizeof(findname), "%s/*.cfg", search->filename);
+				if ((dirnames = FS_ListFiles(findname, &ndirs, 0, SFF_HIDDEN | SFF_SYSTEM)) != 0) {
+					for (i = 0; i < ndirs - 1; i++) {
+						Com_Printf("%s\n", COM_SkipPath(dirnames[i]));
+						free(dirnames[i]);
+					}
+					free(dirnames);
+				}
+			}
+		}
+	}
+
+	return 0;
+}
+
 /**
  * @brief
  */
@@ -1001,6 +1045,7 @@ extern void Cmd_Init (void)
 	/* register our commands */
 	Cmd_AddCommand("cmdlist", Cmd_List_f, "List all commands to game console");
 	Cmd_AddCommand("exec", Cmd_Exec_f, "Execute a script file");
+	Cmd_AddParamCompleteFunction("exec", Cmd_CompleteExecCommand);
 	Cmd_AddCommand("echo", Cmd_Echo_f, "Print to game console");
 	Cmd_AddCommand("alias", Cmd_Alias_f, "Creates a new command that executes a command string");
 	Cmd_AddCommand("wait", Cmd_Wait_f, "Causes execution of the remainder of the command buffer to be delayed until next frame");
