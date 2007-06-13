@@ -693,7 +693,7 @@ extern void AIR_AircraftSelect (aircraft_t* aircraft)
 extern void AIR_AircraftSelect_f (void)
 {
 	/* calling from console? with no baseCurrent? */
-	if (!baseCurrent || !baseCurrent->numAircraftInBase || !baseCurrent->hasHangar) {
+	if (!baseCurrent || !baseCurrent->numAircraftInBase || (!baseCurrent->hasHangar && !baseCurrent->hasHangarSmall)) {
 		MN_PopMenu(qfalse);
 		return;
 	}
