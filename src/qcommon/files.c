@@ -438,7 +438,7 @@ int FS_Read (void *buffer, int len, qFILE * f)
 #ifdef DEBUG
 			Com_Printf("FS_Read: %s:%i (%s)\n", file, line, f->name);
 #endif
-			Com_Error (ERR_FATAL, "FS_Read (zipfile): -1 bytes read");
+			Com_Error(ERR_FATAL, "FS_Read (zipfile): -1 bytes read");
 		}
 		return read;
 	}

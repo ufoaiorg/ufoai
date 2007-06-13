@@ -213,7 +213,7 @@ void SetQdirFromPath (char *path)
 			return;
 		}
 	}
-	Error ("SetQdirFromPath: No file '%s' found in any directory of the path %s", BASEDIR_ID_FILE, path);
+	Error("SetQdirFromPath: No file '%s' found in any directory of the path %s", BASEDIR_ID_FILE, path);
 }
 
 /**
@@ -530,7 +530,7 @@ int Q_filelength (qFILE *f)
 		end = ftell (f->f);
 		fseek(f->f, pos, SEEK_SET);
 	} else if (f->z) {
-		/* TODO */
+		return f->size;
 	}
 
 	return end;
@@ -629,9 +629,16 @@ static pack_t *FS_LoadPackFile (const char *packfile)
  */
 qFILE *SafeOpenRead (const char *filename, qFILE *f)
 {
-	memset(f, 0, sizeof(qFILE));
+	char path[MAX_OSPATH];
+	size_t len;
+
 	f->f = fopen(filename, "rb");
 	if (!f->f && pak) {
+		len = strlen(gamedir);
+		memset(f, 0, sizeof(qFILE));
+		strncpy(path, filename, sizeof(path));
+		path[len-1] = '\0';
+		filename = &path[len];
 		if (unzLocateFile(pak->handle.z, filename, 2) == UNZ_OK) {	/* found it! */
 			if (unzOpenCurrentFile(pak->handle.z) == UNZ_OK) {
 				unz_file_info info;
@@ -640,6 +647,7 @@ qFILE *SafeOpenRead (const char *filename, qFILE *f)
 					Error("Couldn't get size of %s in %s", filename, pak->filename);
 				unzGetCurrentFileInfoPosition(pak->handle.z, &f->filepos);
 				f->z = pak->handle.z;
+				f->size = info.compressed_size;
 			}
 		}
 	}
@@ -652,6 +660,7 @@ qFILE *SafeOpenRead (const char *filename, qFILE *f)
 
 /**
  * @brief
+ * @sa LoadFile
  */
 void SafeRead (qFILE *f, void *buffer, int count)
 {
@@ -668,6 +677,7 @@ void SafeRead (qFILE *f, void *buffer, int count)
 
 /**
  * @brief
+ * @sa SafeRead
  */
 void SafeWrite (qFILE *f, void *buffer, int count)
 {
@@ -705,6 +715,7 @@ void FreeFile (void *buffer)
 /**
  * @brief
  * @sa SaveFile
+ * @sa SafeRead
  */
 extern int LoadFile (const char *filename, void **bufferptr)
 {

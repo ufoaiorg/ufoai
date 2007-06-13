@@ -41,6 +41,7 @@ typedef struct qFILE_s {
 	FILE *f; /**< in case the file being part of a pak or the actual file */
 	char name[MAX_OSPATH];
 	unsigned long filepos;
+	unsigned long size;
 } qFILE;
 
 /*
