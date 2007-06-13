@@ -336,7 +336,11 @@ static void Mod_LoadTexinfo (lump_t * l)
 			out->next = loadmodel->texinfo + next;
 		else
 			out->next = NULL;
-		Com_sprintf(name, sizeof(name), "textures/%s", in->texture);
+		/* exchange the textures with the ones that are needed for base assembly */
+		if (strstr(in->texture, "tex_bases/dummy")) {
+			Com_sprintf(name, sizeof(name), "textures/tex_bases/%s", "grass"); /* FIXME */
+		} else
+			Com_sprintf(name, sizeof(name), "textures/%s", in->texture);
 
 		out->image = GL_FindImage(name, it_wall);
 		if (!out->image) {

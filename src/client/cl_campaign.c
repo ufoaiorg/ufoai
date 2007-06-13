@@ -463,7 +463,6 @@ extern byte *CL_GetMapColor (const vec2_t pos, mapType_t type)
 extern qboolean CL_NewBase (base_t* base, vec2_t pos)
 {
 	byte *color;
-	const char *zoneType = NULL;
 
 	assert(base);
 
@@ -482,9 +481,8 @@ extern qboolean CL_NewBase (base_t* base, vec2_t pos)
 		MN_AddNewMessage(_("Notice"), _("Could not set up your base at this location"), qfalse, MSG_INFO, NULL);
 		return qfalse;
 	} else {
-		zoneType = MAP_GetZoneType(color);
-		Com_DPrintf("CL_NewBase: zoneType: '%s'\n", zoneType);
-		base->mapChar = zoneType[0];
+		base->mapZone = MAP_GetZoneType(color);
+		Com_DPrintf("CL_NewBase: zoneType: '%s'\n", base->mapZone);
 	}
 
 	Com_DPrintf("Colorvalues for base: R:%i G:%i B:%i\n", color[0], color[1], color[2]);

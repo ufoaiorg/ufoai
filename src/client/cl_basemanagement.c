@@ -2826,7 +2826,6 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
 	for (i = 0; i < gd.numBases; i++) {
 		b = &gd.bases[i];
 		MSG_WriteString(sb, b->name);
-		MSG_WriteChar(sb, b->mapChar);
 		MSG_WritePos(sb, b->pos);
 		MSG_WriteByte(sb, b->founded);
 		MSG_WriteByte(sb, b->hasHangar);
@@ -2991,14 +2990,18 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 	building_t *building;
 	technology_t *tech;
 	int maxCargo = (*(int*)data >= 2) ? MAX_CARGO : 256; /* old value */
+	byte *color;
 
 	gd.numAircraft = MSG_ReadShort(sb);
 	bases = MSG_ReadByte(sb);
 	for (i = 0; i < bases; i++) {
 		b = &gd.bases[i];
 		Q_strncpyz(b->name, MSG_ReadStringRaw(sb), sizeof(b->name));
-		b->mapChar = MSG_ReadChar(sb);
 		MSG_ReadPos(sb, b->pos);
+		if (b->founded) {
+			color = CL_GetMapColor(b->pos, MAPTYPE_CLIMAZONE);
+			b->mapZone = MAP_GetZoneType(color);
+		}
 		b->founded = MSG_ReadByte(sb);
 		b->hasHangar = MSG_ReadByte(sb);
 		b->hasLab = MSG_ReadByte(sb);
