@@ -129,6 +129,7 @@ building building_command
 	image		base/commando
 	fixcosts	58000
 	depends		building_powerplant
+	type		command
 	build_time	12
 	varcosts	1000
 	map_name	"commando"

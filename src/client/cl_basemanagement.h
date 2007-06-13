@@ -85,7 +85,8 @@ typedef enum {
 	B_SMALL_HANGAR,		/**< this building is a small hangar */
 	B_UFO_HANGAR,		/**< this building is an UFO hangar */
 	B_UFO_SMALL_HANGAR,	/**< this building is a small UFO hangar */
-	B_POWER			/**< this building is power plant */
+	B_POWER,		/**< this building is power plant */
+	B_COMMAND		/**< this building is command centre */
 } buildingType_t;
 
 /** @brief All possible capacities in base. */
@@ -174,18 +175,23 @@ typedef struct base_s {
 	qboolean founded;	/**< already founded? */
 	vec3_t pos;		/**< pos on geoscape */
 
-	/** to decide which actions are available in the basemenu */
-	qboolean hasHangar;		/**< does this base has a hangar */
-	qboolean hasLab;		/**< does this base has a lab */
-	qboolean hasHospital;		/**< does this base has a hospital */
-	qboolean hasAlienCont;		/**< does this base has a alien containment */
-	qboolean hasStorage;		/**< does this base has a storage */
-	qboolean hasQuarters;		/**< does this base has quarters */
-	qboolean hasWorkshop;		/**< does this base has a workshop */
-	qboolean hasHangarSmall;	/**< does this base has a small hangar */
-	qboolean hasUFOHangar;		/**< does this base has an UFO hangar */
-	qboolean hasUFOHangarSmall;	/**< does this base has a small UFO hangar */
-	qboolean hasPower;		/**< does this base has any power supply */
+	/**
+	/* @note These qbooleans does not say whether there is such building in the base or there is not.
+	 * @note They are true only if such buildings are operational (for example, in some cases,
+	 * @note if they are provided with power.
+	 */
+	qboolean hasHangar;		/**< B_HANGAR (Large Hangar) */
+	qboolean hasLab;		/**< B_LAB (Laboratory) */
+	qboolean hasHospital;		/**< B_HOSPITAL (Hospital) */
+	qboolean hasAlienCont;		/**< B_ALIEN_CONTAINMENT (Alien Containment) */
+	qboolean hasStorage;		/**< B_STORAGE (Storage) */
+	qboolean hasQuarters;		/**< B_QUARTERS (Living Quarters) */
+	qboolean hasWorkshop;		/**< B_WORKSHOP (Workshop) */
+	qboolean hasHangarSmall;	/**< B_SMALL_HANGAR (Small Hangar) */
+	qboolean hasUFOHangar;		/**< B_UFO_HANGAR (Large UFO hangar) */
+	qboolean hasUFOHangarSmall;	/**< B_UFO_SMALL_HANGAR (Small UFO Hangar) */
+	qboolean hasPower;		/**< B_POWER (Power Plant) */
+	qboolean hasCommand;		/**< B_COMMAND (Command Centre) */
 
 	/** this is here to allocate the needed memory for the buildinglist */
 	char allBuildingsList[MAX_LIST_CHAR];

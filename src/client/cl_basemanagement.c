@@ -327,6 +327,10 @@ static void B_BuildingDestroy_f (void)
 			baseCurrent->hasPower = qfalse;
 		B_UpdateStatusWithPower(baseCurrent);
 		break;
+	case B_COMMAND:
+		if (!B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, b1->buildingType))
+			baseCurrent->hasCommand = qfalse;
+		break;
 	case B_MISC:
 		break;
 	default:
@@ -541,6 +545,10 @@ static void B_UpdateBaseBuildingStatus (building_t* building, base_t* base, buil
 		if (building->buildingStatus == B_STATUS_WORKING)
 			base->hasPower = qtrue;
 		B_UpdateStatusWithPower(base);
+		break;
+	case B_COMMAND:
+		if ((building->buildingStatus == B_STATUS_WORKING) && (base->hasPower))
+			base->hasCommand = qtrue;
 		break;
 	default:
 		break;
@@ -1247,6 +1255,8 @@ extern void B_ParseBuildings (const char *name, char **text, qboolean link)
 					building->buildingType = B_WORKSHOP;
 				} else if (!Q_strncmp(token, "power", MAX_VAR)) {
 					building->buildingType = B_POWER;
+				} else if (!Q_strncmp(token, "command", MAX_VAR)) {
+					building->buildingType = B_COMMAND;
 				}
 /*			} else if (!Q_strncmp(token, "max_employees", MAX_VAR)) {
 				token = COM_EParse(text, errhead, name);

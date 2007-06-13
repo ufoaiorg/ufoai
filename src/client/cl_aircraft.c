@@ -228,6 +228,12 @@ void AIM_AircraftStart_f (void)
 		return;
 	}
 
+	/* Aircraft cannot start without Command Centre operational. */
+	if (!baseCurrent->hasCommand) {
+		MN_Popup(_("Notice"), _("No Command Centre operational in this base.\n\nAircrafts cannot start.\n"));
+		return;
+	}
+
 	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
 	if (aircraft->status < AIR_IDLE) {
 		aircraft->pos[0] = baseCurrent->pos[0] + 2;

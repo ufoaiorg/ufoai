@@ -409,12 +409,20 @@ static aircraft_t* CL_PopupInterceptGetAircraft (void)
  */
 static void CL_PopupInterceptClick_f (void)
 {
-	aircraft_t* aircraft;
+	aircraft_t *aircraft;
+	base_t *base;
 
 	/* Get the selected aircraft */
 	aircraft = CL_PopupInterceptGetAircraft();
 	if (aircraft == NULL)
 		return;
+
+	/* Aircraft can start if only Command Centre in base is operational. */
+	base = (base_t *) aircraft->homebase;
+	if (!base->hasCommand) {
+		MN_Popup(_("Notice"), _("No Command Centre operational in homebase\nof this aircraft.\n\nAircraft cannot start.\n"));
+		return;
+	}
 
 	/* Set action to aircraft */
 	if (popupIntercept.mission)
