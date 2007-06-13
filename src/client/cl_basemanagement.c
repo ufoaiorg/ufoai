@@ -2847,7 +2847,10 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
 		MSG_WriteByte(sb, b->hasQuarters);
 		MSG_WriteByte(sb, b->hasWorkshop);
 		MSG_WriteByte(sb, b->hasHangarSmall);
+		MSG_WriteByte(sb, b->hasUFOHangar);
+		MSG_WriteByte(sb, b->hasUFOHangarSmall);
 		MSG_WriteByte(sb, b->hasPower);
+		MSG_WriteByte(sb, b->hasCommand);
 		for (k = 0; k < presaveArray[PRE_BASESI]; k++)
 			for (l = 0; l < presaveArray[PRE_BASESI]; l++) {
 				MSG_WriteShort(sb, b->map[k][l]);
@@ -3022,7 +3025,10 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 		b->hasQuarters = MSG_ReadByte(sb);
 		b->hasWorkshop = MSG_ReadByte(sb);
 		b->hasHangarSmall = MSG_ReadByte(sb);
+		b->hasUFOHangar = MSG_ReadByte(sb);
+		b->hasUFOHangarSmall = MSG_ReadByte(sb);
 		b->hasPower = MSG_ReadByte(sb);
+		b->hasCommand = MSG_ReadByte(sb);
 		for (k = 0; k < presaveArray[PRE_BASESI]; k++)
 			for (l = 0; l < presaveArray[PRE_BASESI]; l++) {
 				b->map[k][l] = MSG_ReadShort(sb);
