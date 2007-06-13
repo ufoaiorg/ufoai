@@ -176,7 +176,7 @@ typedef struct base_s {
 	vec3_t pos;		/**< pos on geoscape */
 
 	/**
-	/* @note These qbooleans does not say whether there is such building in the base or there is not.
+	 * @note These qbooleans does not say whether there is such building in the base or there is not.
 	 * @note They are true only if such buildings are operational (for example, in some cases,
 	 * @note if they are provided with power.
 	 */
