@@ -114,6 +114,8 @@ extern void CalcTextureReflectivity (void)
 			texels = LittleLong(mt->width) * LittleLong(mt->height);
 			color[0] = color[1] = color[2] = 0;
 
+			/* moved this into the loop - we are not using wal textures in general
+			 * so overall this might be faster */
 			sprintf(path, "%spics/colormap.pcx", gamedir);
 
 			/* get the game palette */
