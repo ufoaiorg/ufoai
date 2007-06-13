@@ -668,9 +668,9 @@ static void CL_CamSetAngles_f (void)
 		return;
 	}
 
-	cl.cam.angles[0] = atof(Cmd_Argv(1));
-	cl.cam.angles[1] = atof(Cmd_Argv(2));
-	cl.cam.angles[2] = 0.0f;
+	cl.cam.angles[PITCH] = atof(Cmd_Argv(1));
+	cl.cam.angles[YAW] = atof(Cmd_Argv(2));
+	cl.cam.angles[ROLL] = 0.0f;
 }
 
 /**
@@ -746,7 +746,7 @@ extern void CL_InitInput (void)
 	Cmd_AddCommand("debug_camangles", CL_CamPrintAngles_f, "Prints current camera angles");
 	Cmd_AddCommand("debug_drawblocked", CL_DisplayBlockedPaths_f, "Draws a marker for all blocked map-positions.");
 #endif /* DEBUG */
-	Cmd_AddCommand("camsetangles", CL_CamSetAngles_f, NULL);
+	Cmd_AddCommand("camsetangles", CL_CamSetAngles_f, "Set camera angles to the given values");
 	Cmd_AddCommand("basemapshot", CL_MakeBaseMapShot_f, NULL);
 
 	Cmd_AddCommand("cameramode", CL_CameraMode_f, _("Toggle first-person/third-person camera mode"));
