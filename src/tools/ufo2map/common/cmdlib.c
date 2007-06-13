@@ -648,7 +648,7 @@ qFILE *SafeOpenRead (const char *filename, qFILE *f)
 					Error("Couldn't get size of %s in %s", filename, pak->filename);
 				unzGetCurrentFileInfoPosition(pak->handle.z, &f->filepos);
 				f->z = pak->handle.z;
-				f->size = info.compressed_size;
+				f->size = info.uncompressed_size;
 			}
 		}
 	}
