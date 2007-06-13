@@ -2212,6 +2212,7 @@ static void B_AssembleMap_f (void)
 		}
 	/* set maxlevel for base attacks to 5 */
 	map_maxlevel_base = 5;
+	cl.refdef.mapZone = base->mapZone;
 
 	Cbuf_AddText(va("map \"%s\" \"%s\"\n", maps, coords));
 }

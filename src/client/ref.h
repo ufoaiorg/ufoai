@@ -275,6 +275,8 @@ typedef struct {
 
 	float fog;
 	float *fogColor;
+
+	const char *mapZone;	/**< used to replace textures in base assembly */
 } refdef_t;
 
 #define	API_VERSION		4

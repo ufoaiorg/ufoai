@@ -2132,6 +2132,9 @@ static void CL_StartMissionMap (mission_t* mission)
 	else
 		timeChar = 'd';
 
+	/* reset the mapZone - this is only needed in vase of base assembly map */
+	cl.refdef.mapZone = NULL;
+
 	switch (mission->map[0]) {
 	case '+':
 		Com_sprintf(expanded, sizeof(expanded), "maps/%s%c.ump", mission->map + 1, timeChar);
