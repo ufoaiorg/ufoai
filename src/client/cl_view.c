@@ -598,7 +598,6 @@ void V_RenderView (float stereo_separation)
 	}
 
 	V_ClearScene();
-/*	CL_RunLightStyles (); */
 
 	if (cls.state == ca_sequence) {
 		CL_SequenceRender();

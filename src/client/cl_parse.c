@@ -372,7 +372,7 @@ static void CL_ParseServerData (void)
  * @brief Stores the client name
  * @sa CL_ParseClientinfo
  */
-static void CL_LoadClientinfo (clientinfo_t *ci, char *s)
+static void CL_LoadClientinfo (clientinfo_t *ci, const char *s)
 {
 	Q_strncpyz(ci->cinfo, s, sizeof(ci->cinfo));
 
@@ -426,8 +426,8 @@ static void CL_ParseConfigString (void)
 	}
 
 	/* do something apropriate */
-	if (i >= CS_LIGHTS && i < CS_LIGHTS+MAX_LIGHTSTYLES)
-		CL_SetLightstyle (i - CS_LIGHTS);
+	if (i >= CS_LIGHTS && i < CS_LIGHTS + MAX_LIGHTSTYLES)
+		CL_SetLightstyle(i - CS_LIGHTS);
 	else if (i >= CS_MODELS && i < CS_MODELS + MAX_MODELS) {
 		if (cl.refresh_prepped) {
 			cl.model_draw[i-CS_MODELS] = re.RegisterModel(cl.configstrings[i]);

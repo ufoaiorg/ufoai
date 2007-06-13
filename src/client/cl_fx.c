@@ -28,8 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 
-typedef struct
-{
+typedef struct {
 	int		length;
 	float	value[3];
 	float	map[MAX_QPATH];
@@ -42,7 +41,7 @@ static int lastofs;
  * @brief
  * @sa CL_Frame
  */
-void CL_RunLightStyles (void)
+extern void CL_RunLightStyles (void)
 {
 	int		ofs;
 	int		i;
@@ -68,21 +67,21 @@ void CL_RunLightStyles (void)
 
 
 /**
- * @brief
+ * @brief Sets lightstyles for e.g. switchable lights
  * @param[in] i Which lightstyle in configstrings array
  * @note Bounds for i are already checked
  * @sa CL_ParseConfigString
  */
-void CL_SetLightstyle (int i)
+extern void CL_SetLightstyle (int i)
 {
-	char	*s;
-	int		j, k;
+	const char *s;
+	int j, k;
 
-	s = cl.configstrings[i+CS_LIGHTS];
+	s = cl.configstrings[i + CS_LIGHTS];
 
-	j = strlen (s);
+	j = strlen(s);
 	if (j >= MAX_QPATH)
-		Com_Error (ERR_DROP, "svc_lightstyle length=%i", j);
+		Com_Error(ERR_DROP, "svc_lightstyle length=%i", j);
 
 	cl_lightstyle[i].length = j;
 
@@ -97,8 +96,8 @@ void CL_SetLightstyle (int i)
  */
 void CL_AddLightStyles (void)
 {
-	int		i;
-	clightstyle_t	*ls;
+	int i;
+	clightstyle_t *ls;
 
 	for (i = 0, ls = cl_lightstyle; i < MAX_LIGHTSTYLES; i++, ls++)
 		V_AddLightStyle(i, ls->value[0], ls->value[1], ls->value[2]);
