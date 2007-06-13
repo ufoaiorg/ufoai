@@ -449,12 +449,16 @@ static void CL_Rcon_f (void)
  */
 extern void CL_ClearState (void)
 {
+	const char *mapZone;
+
 	S_StopAllSounds();
 	CL_ClearEffects();
 	CL_InitEvents();
 
 	/* wipe the entire cl structure */
+	mapZone = cl.refdef.mapZone;
 	memset(&cl, 0, sizeof(cl));
+	cl.refdef.mapZone = mapZone;
 	cl.cam.zoom = 1.0;
 	CalcFovX();
 
