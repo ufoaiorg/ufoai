@@ -7,7 +7,7 @@ Type=1
 Compiler=-D__GNUWIN32__ _@@_-D_M_IX86=500 _@@_-Wall_@@_-DWIN_ERROR_@@_-DDEBUG_@@_-DDEVCPP_@@_-DC_ONLY_@@__@@_
 CppCompiler=
 Includes=D:\Programme\Dev-Cpp\include
-Linker=-lz_@@_
+Linker=-lz -llibjpeg_@@_
 Libs=C:\Dev-Cpp\lib
 UnitCount=38
 Folders=Headers,Source
