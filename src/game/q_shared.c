@@ -2344,18 +2344,18 @@ qboolean Com_CheckToInventory(const inventory_t * const i, const int item, const
 
 	/* twohanded item */
 	if (CSI->ods[item].holdtwohanded) {
-		if ( (container == CSI->idRight && i->c[CSI->idLeft])
-			 || container == CSI->idLeft )
+		if ((container == CSI->idRight && i->c[CSI->idLeft])
+			 || container == CSI->idLeft)
 			return qfalse;
 	}
 
 	/* left hand is busy if right wields twohanded */
-	if ( container == CSI->idLeft && i->c[CSI->idRight]
-		 && CSI->ods[i->c[CSI->idRight]->item.t].holdtwohanded )
+	if (container == CSI->idLeft && i->c[CSI->idRight]
+		 && CSI->ods[i->c[CSI->idRight]->item.t].holdtwohanded)
 		return qfalse;
 
 	/* can't put an item that is 'firetwohanded' into the left hand */
-	if ( container == CSI->idLeft && CSI->ods[item].firetwohanded)
+	if (container == CSI->idLeft && CSI->ods[item].firetwohanded)
 		return qfalse;
 
 	/* single item containers, e.g. hands */
