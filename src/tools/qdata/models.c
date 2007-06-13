@@ -929,9 +929,9 @@ void Cmd_Skin (void)
 	WritePCXfile(savename, cropped, model.skinwidth,
 		model.skinheight, palette);
 
-	free (pixels);
-	free (palette);
-	free (cropped);
+	free(pixels);
+	free(palette);
+	free(cropped);
 }
 
 

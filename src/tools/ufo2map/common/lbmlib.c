@@ -341,7 +341,7 @@ void LoadPCX (const char *filename, byte **pic, byte **palette, int *width, int 
 	byte	*out, *pix;
 
 	/* load the file */
-	len = LoadFile (filename, (void **)&raw);
+	len = LoadFile(filename, (void **)&raw);
 
 	/* parse the PCX file */
 	pcx = (pcx_t *)raw;
@@ -362,11 +362,11 @@ void LoadPCX (const char *filename, byte **pic, byte **palette, int *width, int 
 		|| pcx->bits_per_pixel != 8
 		|| pcx->xmax >= 640
 		|| pcx->ymax >= 480)
-		Error ("Bad pcx file %s", filename);
+		Error("Bad pcx file %s", filename);
 
 	if (palette) {
 		*palette = malloc(768);
-		memcpy (*palette, (byte *)pcx + len - 768, 768);
+		memcpy(*palette, (byte *)pcx + len - 768, 768);
 	}
 
 	if (width)
@@ -379,9 +379,9 @@ void LoadPCX (const char *filename, byte **pic, byte **palette, int *width, int 
 		return;
 	}
 
-	out = malloc ( (pcx->ymax+1) * (pcx->xmax+1) );
+	out = malloc((pcx->ymax + 1) * (pcx->xmax + 1));
 	if (!out)
-		Error ("Skin_Cache: couldn't allocate");
+		Error("Skin_Cache: couldn't allocate");
 
 	*pic = out;
 
@@ -403,9 +403,9 @@ void LoadPCX (const char *filename, byte **pic, byte **palette, int *width, int 
 	}
 
 	if (raw - (byte *)pcx > len)
-		Error ("PCX file %s was malformed", filename);
+		Error("PCX file %s was malformed", filename);
 
-	free (pcx);
+	free(pcx);
 }
 
 /**
@@ -474,6 +474,8 @@ LOAD IMAGE
  * @sa LoadPCX
  * @sa LoadLBM
  * @sa Save256Image
+ * @note LoadPCX and LoadLBM will allocate pixles and palette - make sure you free them
+ * after using them
  */
 void Load256Image (const char *name, byte **pixels, byte **palette, int *width, int *height)
 {

@@ -27,18 +27,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define MAX_SPRFRAMES			MAX_MD2SKINS
 
-dsprite_t		sprite;
-dsprframe_t		frames[MAX_SPRFRAMES];
+static dsprite_t sprite;
+static dsprframe_t frames[MAX_SPRFRAMES];
 
-byte			*byteimage, *lbmpalette;
-int				byteimagewidth, byteimageheight;
+byte *byteimage, *lbmpalette;
+int byteimagewidth, byteimageheight;
 
-char			spritename[1024];
+static char spritename[1024];
 
 
-void FinishSprite (void);
-void Cmd_Spritename (void);
-
+void FinishSprite(void);
+void Cmd_Spritename(void);
 
 
 /**
@@ -55,31 +54,31 @@ void FinishSprite (void)
 		return;
 
 	if (!strlen(spritename))
-		Error ("Didn't name sprite file");
+		Error("Didn't name sprite file");
 
-	sprintf (savename, "%s%s.sp2", gamedir, spritename);
+	sprintf(savename, "%s%s.sp2", gamedir, spritename);
 
 	if (g_release) {
-		char	name[1024];
+		char name[1024];
 
-		sprintf (name, "%s.sp2", spritename);
-		ReleaseFile (name);
+		sprintf(name, "%s.sp2", spritename);
+		ReleaseFile(name);
 		spritename[0] = 0;		/* clear for a new sprite */
 		sprite.numframes = 0;
 		return;
 	}
 
 
-	printf ("saving in %s\n", savename);
-	CreatePath (savename);
-	SafeOpenWrite (savename, &spriteouthandle);
+	printf("saving in %s\n", savename);
+	CreatePath(savename);
+	SafeOpenWrite(savename, &spriteouthandle);
 
 	/* write out the sprite header */
-	spritetemp.ident = LittleLong (IDSPRITEHEADER);
-	spritetemp.version = LittleLong (SPRITE_VERSION);
-	spritetemp.numframes = LittleLong (sprite.numframes);
+	spritetemp.ident = LittleLong(IDSPRITEHEADER);
+	spritetemp.version = LittleLong(SPRITE_VERSION);
+	spritetemp.numframes = LittleLong(sprite.numframes);
 
-	SafeWrite (&spriteouthandle, &spritetemp, 12);
+	SafeWrite(&spriteouthandle, &spritetemp, 12);
 
 	/* write out the frames */
 	curframe = 0;
@@ -115,9 +114,9 @@ void Cmd_Load (void)
 
 	/* load the image */
 	printf ("loading %s\n", name);
-	Load256Image (name, &byteimage, &lbmpalette,
+	Load256Image(name, &byteimage, &lbmpalette,
 		&byteimagewidth, &byteimageheight);
-	RemapZero (byteimage, lbmpalette,
+	RemapZero(byteimage, lbmpalette,
 		byteimagewidth, byteimageheight);
 }
 
