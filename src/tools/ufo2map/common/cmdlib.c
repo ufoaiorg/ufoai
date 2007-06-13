@@ -632,10 +632,11 @@ qFILE *SafeOpenRead (const char *filename, qFILE *f)
 	char path[MAX_OSPATH];
 	size_t len;
 
+	memset(f, 0, sizeof(qFILE));
+
 	f->f = fopen(filename, "rb");
 	if (!f->f && pak) {
 		len = strlen(gamedir);
-		memset(f, 0, sizeof(qFILE));
 		strncpy(path, filename, sizeof(path));
 		path[len-1] = '\0';
 		filename = &path[len];
