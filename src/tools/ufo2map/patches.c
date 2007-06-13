@@ -49,11 +49,6 @@ extern void CalcTextureReflectivity (void)
 	miptex_t *mt;
 	qboolean loaded = qfalse;
 
-	sprintf(path, "%spics/colormap.pcx", gamedir);
-
-	/* get the game palette */
-	Load256Image(path, NULL, &palette, NULL, NULL);
-
 	/* allways set index 0 even if no textures */
 	texture_reflectivity[0][0] = 0.5;
 	texture_reflectivity[0][1] = 0.5;
@@ -119,6 +114,11 @@ extern void CalcTextureReflectivity (void)
 			texels = LittleLong(mt->width) * LittleLong(mt->height);
 			color[0] = color[1] = color[2] = 0;
 
+			sprintf(path, "%spics/colormap.pcx", gamedir);
+
+			/* get the game palette */
+			Load256Image(path, NULL, &palette, NULL, NULL);
+
 			for (j = 0; j < texels; j++) {
 				texel = ((byte *) mt)[LittleLong(mt->offsets[0]) + j];
 				for(k = 0; k < 3; k++)
@@ -126,6 +126,8 @@ extern void CalcTextureReflectivity (void)
 			}
 			Sys_FPrintf(SYS_VRB, "...path: %s (%i) - use wal colors: %i:%i:%i\n", path, texels, color[0], color[1], color[2]);
 			loaded = qtrue;
+			if (palette)
+				free(palette);
 			free(mt);
 		}
 
@@ -148,8 +150,6 @@ extern void CalcTextureReflectivity (void)
 			}
 		}
 	}
-	if (palette)
-		free(palette);
 }
 
 /*
