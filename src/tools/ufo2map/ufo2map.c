@@ -279,8 +279,6 @@ int main (int argc, char **argv)
 		start = I_FloatTime();
 		DefaultExtension(source, ".bsp");
 
-/*		ReadLightFile(); */
-
 		sprintf(name, "%s%s", inbase, source);
 		CalcTextureReflectivity();
 
