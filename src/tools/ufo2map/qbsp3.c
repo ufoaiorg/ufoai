@@ -51,6 +51,7 @@ int entity_num;
 
 /**
  * @brief
+ * @sa ProcessModels
  */
 static void ProcessWorldModel (void)
 {
@@ -94,6 +95,7 @@ static void ProcessWorldModel (void)
 
 /**
  * @brief
+ * @sa ProcessModels
  */
 static void ProcessSubModel (void)
 {
@@ -134,6 +136,8 @@ static void ProcessSubModel (void)
 
 /**
  * @brief
+ * @sa ProcessWorldModel
+ * @sa ProcessSubModel
  */
 extern void ProcessModels (void)
 {

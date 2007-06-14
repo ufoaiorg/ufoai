@@ -240,6 +240,7 @@ static void CheckConnections_Thread (unsigned int unitnum)
  * @brief Calculates the routing of a map
  * @sa CheckUnit_Thread
  * @sa CheckConnections_Thread
+ * @sa ProcessWorldModel
  */
 extern void DoRouting (void)
 {

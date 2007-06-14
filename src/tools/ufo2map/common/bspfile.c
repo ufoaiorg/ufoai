@@ -446,6 +446,25 @@ extern void WriteBSPFile (const char *filename)
 	AddLump(LUMP_ROUTING, droutedata, routedatasize);
 	AddLump(LUMP_ENTITIES, dentdata, entdatasize);
 
+#if 0
+	Sys_Printf("numplanes: %i\n", numplanes);
+	Sys_Printf("numleafs: %i\n", numleafs);
+	Sys_Printf("numvertexes: %i\n", numvertexes);
+	Sys_Printf("numnodes: %i\n", numnodes);
+	Sys_Printf("numtexinfo: %i\n", numtexinfo);
+	Sys_Printf("numfaces: %i\n", numfaces);
+	Sys_Printf("numbrushes: %i\n", numbrushes);
+	Sys_Printf("numbrushsides: %i\n", numbrushsides);
+	Sys_Printf("numleaffaces: %i\n", numleaffaces);
+	Sys_Printf("numleafbrushes: %i\n", numleafbrushes);
+	Sys_Printf("numsurfedges: %i\n", numsurfedges);
+	Sys_Printf("numedges: %i\n", numedges);
+	Sys_Printf("nummodels: %i\n", nummodels);
+	Sys_Printf("lightdatasize: %i\n", lightdatasize);
+	Sys_Printf("routedatasize: %i\n", routedatasize);
+	Sys_Printf("entdatasize: %i\n", entdatasize);
+#endif
+
 	fseek(bspfile.f, 0, SEEK_SET);
 	SafeWrite(&bspfile, header, sizeof(dheader_t));
 	CloseFile(&bspfile);

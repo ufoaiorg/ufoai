@@ -228,6 +228,8 @@ static int ConstructLevelNodes_r (int levelnum, vec3_t cmins, vec3_t cmaxs)
  * 256: actorclip-level
  * 258: stepon-level
  * 259: tracing structure
+ * @sa ProcessWorldModel
+ * @sa ConstructLevelNodes_r
  */
 extern void ProcessLevel (int levelnum)
 {
