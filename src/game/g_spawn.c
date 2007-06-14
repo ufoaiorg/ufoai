@@ -859,7 +859,7 @@ static void SP_worldspawn (edict_t * ent)
 	} else
 		Q_strncpyz(level.level_name, level.mapname, sizeof(level.level_name));
 
-	gi.configstring(CS_MAXCLIENTS, va("%i", maxplayers->integer));
+	gi.configstring(CS_MAXCLIENTS, va("%i", sv_maxclients->integer));
 
 	/* only used in multi player */
 	if (sv_maxclients->value >= 2) {
