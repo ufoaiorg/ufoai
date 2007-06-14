@@ -27,6 +27,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef QFILES_H
 #define QFILES_H
 
+#include <limits.h>
+
 /*
 ========================================================================
 The .pak files are just a linear collapse of a directory tree

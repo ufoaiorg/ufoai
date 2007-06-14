@@ -98,24 +98,24 @@ extern byte *CompressRouting (byte *dataStart, byte *destStart, int l)
 			val = *data++;
 			c = 0;
 			while (data + 1 < dend && *data == *(data + 1)) {
-				if (c >= 0x7F)
+				if (c >= SCHAR_MAX) /* must fit into one byte */
 					break;
 				data++;
 				c++;
 			}
-			*dest_p++ = c | 0x80;
+			*dest_p++ = (byte)(c) | 0x80;
 			*dest_p++ = val;
 		} else {
 			/* identities */
 			count_p = dest_p++;
 			c = 0;
 			while ((data + 1 < dend && *data != *(data + 1)) || data == dend - 1) {
-				if (c >= 0x7F)
+				if (c >= SCHAR_MAX) /* must fit into one byte */
 					break;
 				*dest_p++ = *data++;
 				c++;
 			}
-			*count_p = c;
+			*count_p = (byte)c;
 		}
 	}
 
@@ -131,7 +131,7 @@ extern byte *CompressRouting (byte *dataStart, byte *destStart, int l)
  * @sa CompressRouting
  * @note unused
  */
-extern int DeCompressRouting( byte **source, byte *dataStart )
+extern int DeCompressRouting (byte **source, byte *dataStart)
 {
 	int	i, c;
 	byte	*data_p;
