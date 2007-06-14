@@ -453,12 +453,13 @@ qboolean CL_QueueHTTPDownload (const char *ufoPath)
  */
 qboolean CL_PendingHTTPDownloads (void)
 {
-	dlqueue_t	*q;
-
 	if (!cls.downloadServer[0])
 		return qfalse;
 
+#if 1
 	return pendingCount + handleCount;
+#else
+	dlqueue_t	*q;
 
 	q = &cls.downloadQueue;
 
@@ -469,6 +470,7 @@ qboolean CL_PendingHTTPDownloads (void)
 	}
 
 	return qfalse;
+#endif
 }
 
 /**

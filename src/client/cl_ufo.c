@@ -41,22 +41,16 @@ extern const char* UFO_TypeToShortName (ufoType_t type)
 	switch(type) {
 	case UFO_SCOUT:
 		return "ufo_scout";
-		break;
 	case UFO_FIGHTER:
 		return "ufo_fighter";
-		break;
 	case UFO_HARVESTER:
 		return "ufo_harvester";
-		break;
 	case UFO_CONDOR:
 		return "ufo_condor";
-		break;
 	case UFO_CARRIER:
 		return "ufo_carrier";
-		break;
 	default:
 		Sys_Error("UFO_TypeToShortName(): Unknown UFO type %i\n", type);
-		break;
 	}
 	return NULL; /* never reached */
 }
