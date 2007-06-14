@@ -88,27 +88,18 @@ static int PlaneTypeForNormal (vec3_t normal)
 	return PLANE_ANYZ;
 }
 
+#define	NORMAL_EPSILON	0.00001
+#define	DIST_EPSILON	0.01
 /**
  * @brief
  */
-#define	NORMAL_EPSILON	0.00001
-#define	DIST_EPSILON	0.01
 static qboolean PlaneEqual (plane_t *p, vec3_t normal, vec_t dist)
 {
-#if 1
-	if (
-	   fabs(p->normal[0] - normal[0]) < NORMAL_EPSILON
-	&& fabs(p->normal[1] - normal[1]) < NORMAL_EPSILON
-	&& fabs(p->normal[2] - normal[2]) < NORMAL_EPSILON
-	&& fabs(p->dist - dist) < DIST_EPSILON )
+	if (fabs(p->normal[0] - normal[0]) < NORMAL_EPSILON
+	 && fabs(p->normal[1] - normal[1]) < NORMAL_EPSILON
+	 && fabs(p->normal[2] - normal[2]) < NORMAL_EPSILON
+	 && fabs(p->dist - dist) < DIST_EPSILON)
 		return qtrue;
-#else
-	if (p->normal[0] == normal[0]
-		&& p->normal[1] == normal[1]
-		&& p->normal[2] == normal[2]
-		&& p->dist == dist)
-		return qtrue;
-#endif
 	return qfalse;
 }
 
@@ -398,6 +389,8 @@ static void AddBrushBevels (mapbrush_t *b)
 					/* if all the points on all the sides are */
 					/* behind this plane, it is a proper edge bevel */
 					for (k = 0; k < b->numsides; k++) {
+						/* FIXME: This leads to different results on different archs
+						 * due to float rounding/precision errors */
 						/* if this plane has allready been used, skip it */
 						if (PlaneEqual(&mapplanes[b->original_sides[k].planenum]
 							, normal, dist) )
