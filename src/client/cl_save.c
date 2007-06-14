@@ -62,7 +62,7 @@ static qboolean SAV_PresaveArraySave (sizebuf_t* sb, void* data)
 	presaveArray[PRE_NUMUFO] = gd.numUfos;		/* gd.numUfos */
 	presaveArray[PRE_MAXREC] = MAX_RECOVERIES;	/* #define MAX_RECOVERIES */
 
-	MSG_WriteLong(sb, PRE_MAX);
+	MSG_WriteByte(sb, PRE_MAX);
 	for (i = 0; i < PRE_MAX; i++) {
 		MSG_WriteLong(sb, presaveArray[i]);
 	}
