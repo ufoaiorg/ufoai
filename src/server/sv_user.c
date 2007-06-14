@@ -341,6 +341,7 @@ static const ucmd_t ucmds[] = {
 
 /**
  * @brief
+ * @sa SV_ExecuteClientMessage
  */
 static void SV_ExecuteUserCommand (char *s)
 {
@@ -419,11 +420,15 @@ void SV_ExecuteClientMessage (client_t * cl)
 			break;
 
 		case clc_action:
+			if (sv_paused->integer)
+				break;
 			/* client actions are handled by the game module */
 			ge->ClientAction(sv_player);
 			break;
 
 		case clc_endround:
+			if (sv_paused->integer)
+				break;
 			/* player wants to end round */
 			ge->ClientEndRound(sv_player, NOISY);
 			break;
