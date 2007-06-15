@@ -28,8 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define	MAX_LSTYLES	256
 
-typedef struct
-{
+typedef struct {
 	dface_t		*faces[2];
 	qboolean	coplanar;
 } edgeshare_t;

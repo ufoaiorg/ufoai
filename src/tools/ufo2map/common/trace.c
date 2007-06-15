@@ -170,7 +170,7 @@ extern void MakeTnodes (int levels)
 /**
  * @brief
  */
-static int TestLine_r (int node, vec3_t start, vec3_t stop)
+static int TestLine_r (int node, const vec3_t start, const vec3_t stop)
 {
 	tnode_t	*tnode;
 	float	front, back;
@@ -231,7 +231,7 @@ static int TestLine_r (int node, vec3_t start, vec3_t stop)
 /**
  * @brief
  */
-static int TestLineDist_r (int node, vec3_t start, vec3_t stop)
+static int TestLineDist_r (int node, const vec3_t start, const vec3_t stop)
 {
 	tnode_t	*tnode;
 	float	front, back;
@@ -261,18 +261,19 @@ static int TestLineDist_r (int node, vec3_t start, vec3_t stop)
 		back = stop[2] - tnode->dist;
 		break;
 	case PLANE_NONE:
-		r = TestLineDist_r (tnode->children[0], start, stop);
-		if ( r ) VectorCopy( tr_end, mid );
-		side = TestLineDist_r (tnode->children[1], start, stop);
+		r = TestLineDist_r(tnode->children[0], start, stop);
+		if (r)
+			VectorCopy(tr_end, mid);
+		side = TestLineDist_r(tnode->children[1], start, stop);
 		if (side && r) {
-			if ( VectorNearer( mid, tr_end, start ) ) {
-				VectorCopy( mid, tr_end );
+			if (VectorNearer(mid, tr_end, start)) {
+				VectorCopy(mid, tr_end);
 				return r;
 			}
 			else return side;
 		}
 		if (r) {
-			VectorCopy( mid, tr_end );
+			VectorCopy(mid, tr_end);
 			return r;
 		}
 		return side;
@@ -284,10 +285,10 @@ static int TestLineDist_r (int node, vec3_t start, vec3_t stop)
 	}
 
 	if (front >= -ON_EPSILON && back >= -ON_EPSILON)
-		return TestLineDist_r (tnode->children[0], start, stop);
+		return TestLineDist_r(tnode->children[0], start, stop);
 
 	if (front < ON_EPSILON && back < ON_EPSILON)
-		return TestLineDist_r (tnode->children[1], start, stop);
+		return TestLineDist_r(tnode->children[1], start, stop);
 
 	side = front < 0;
 
@@ -297,16 +298,16 @@ static int TestLineDist_r (int node, vec3_t start, vec3_t stop)
 	mid[1] = start[1] + (stop[1] - start[1])*frac;
 	mid[2] = start[2] + (stop[2] - start[2])*frac;
 
-	r = TestLineDist_r (tnode->children[side], start, mid);
+	r = TestLineDist_r(tnode->children[side], start, mid);
 	if (r)
 		return r;
-	return TestLineDist_r (tnode->children[!side], mid, stop);
+	return TestLineDist_r(tnode->children[!side], mid, stop);
 }
 
 /**
  * @brief
  */
-int TestLine (vec3_t start, vec3_t stop)
+int TestLine (const vec3_t start, const vec3_t stop)
 {
 	int i;
 
@@ -320,7 +321,7 @@ int TestLine (vec3_t start, vec3_t stop)
 /**
  * @brief
  */
-int TestLineMask (vec3_t start, vec3_t stop, int levels)
+int TestLineMask (const vec3_t start, const vec3_t stop, int levels)
 {
 	int i;
 
@@ -338,7 +339,7 @@ int TestLineMask (vec3_t start, vec3_t stop, int levels)
 /**
  * @brief
  */
-int TestLineDM (vec3_t start, vec3_t stop, vec3_t end, int levels)
+int TestLineDM (const vec3_t start, const vec3_t stop, vec3_t end, int levels)
 {
 	int i;
 

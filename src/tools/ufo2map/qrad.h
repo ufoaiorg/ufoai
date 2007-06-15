@@ -134,11 +134,9 @@ void BuildFacelights(unsigned int facenum);
 
 void FinalLightFace(unsigned int facenum);
 
-qboolean PvsForOrigin(vec3_t org, byte *pvs);
-
 void MakeTnodes(int levels);
 void CloseTNodes(void);
-int TestLine(vec3_t start, vec3_t stop);
+int TestLine(const vec3_t start, const vec3_t stop);
 
 void CreateDirectLights(void);
 

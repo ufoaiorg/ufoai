@@ -47,8 +47,8 @@ qboolean	extrasamples;
 float	subdiv = 64;
 qboolean	dumppatches;
 
-void BuildLightmaps (void);
-int TestLine (vec3_t start, vec3_t stop);
+void BuildLightmaps(void);
+int TestLine(const vec3_t start, const vec3_t stop);
 
 int		junk;
 

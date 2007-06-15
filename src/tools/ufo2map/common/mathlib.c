@@ -31,7 +31,7 @@ vec3_t vec3_origin = {0,0,0};
 /**
  * @brief
  */
-double VectorLength(vec3_t v)
+double VectorLength (vec3_t v)
 {
 	int		i;
 	double	length;
@@ -39,7 +39,7 @@ double VectorLength(vec3_t v)
 	length = 0;
 	for (i = 0; i < 3; i++)
 		length += v[i]*v[i];
-	length = sqrt (length);		/* FIXME */
+	length = sqrt(length);		/* FIXME */
 
 	return length;
 }
@@ -47,7 +47,7 @@ double VectorLength(vec3_t v)
 /**
  * @brief
  */
-qboolean VectorCompare (vec3_t v1, vec3_t v2)
+qboolean VectorCompare (const vec3_t v1, const vec3_t v2)
 {
 	int		i;
 
@@ -61,12 +61,12 @@ qboolean VectorCompare (vec3_t v1, vec3_t v2)
 /**
  * @brief
  */
-qboolean VectorNearer (vec3_t v1, vec3_t v2, vec3_t comp)
+qboolean VectorNearer (const vec3_t v1, const vec3_t v2, const vec3_t comp)
 {
 	int		i;
 
 	for (i = 0; i < 3; i++)
-		if (fabs(v1[i]-comp[i]) < fabs(v2[i]-comp[i]) )
+		if (fabs(v1[i]-comp[i]) < fabs(v2[i]-comp[i]))
 			return qtrue;
 
 	return qfalse;
@@ -77,13 +77,13 @@ qboolean VectorNearer (vec3_t v1, vec3_t v2, vec3_t comp)
  */
 vec_t Q_rint (vec_t in)
 {
-	return floor (in + 0.5);
+	return floor(in + 0.5);
 }
 
 /**
  * @brief Sets vector_out (vc) to vevtor1 (va) + scale * vector2 (vb)
  */
-void VectorMA (vec3_t va, double scale, vec3_t vb, vec3_t vc)
+void VectorMA (const vec3_t va, const vec_t scale, const vec3_t vb, vec3_t vc)
 {
 	vc[0] = va[0] + scale*vb[0];
 	vc[1] = va[1] + scale*vb[1];

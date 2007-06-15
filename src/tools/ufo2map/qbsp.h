@@ -305,10 +305,10 @@ void FreeTree (tree_t *tree);
 
 void MakeTnodes(int levels);
 void CloseTNodes(void);
-int TestLine(vec3_t start, vec3_t stop);
-int TestLineMask(vec3_t start, vec3_t stop, int levels);
-int TestLineDM(vec3_t start, vec3_t stop, vec3_t end, int levels);
-qboolean TestContents(vec3_t pos);
+int TestLine(const vec3_t start, const vec3_t stop);
+int TestLineMask(const vec3_t start, const vec3_t stop, int levels);
+int TestLineDM(const vec3_t start, const vec3_t stop, vec3_t end, int levels);
+qboolean TestContents(const vec3_t pos);
 
 /* levels.c */
 
