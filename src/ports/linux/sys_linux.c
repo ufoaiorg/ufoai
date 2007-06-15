@@ -241,7 +241,7 @@ void Sys_Quit (void)
  */
 void Sys_Init (void)
 {
-#if id386
+#if USE_X86_ASM
 /*	Sys_SetFPCW(); */
 #endif
 #ifdef __linux__

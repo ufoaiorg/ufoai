@@ -377,7 +377,7 @@ typedef struct
 typedef struct {
 	int			planenum;
 	int			children[2];	/**< negative numbers are -(leafs+1), not nodes */
-	short		mins[3];		/**< for frustom culling */
+	short		mins[3];		/**< for frustum culling */
 	short		maxs[3];
 	unsigned short	firstface;
 	unsigned short	numfaces;	/**< counting both sides */

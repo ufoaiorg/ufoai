@@ -66,7 +66,7 @@ void Sys_Quit (void)
 void Sys_Init (void)
 {
 	Cvar_Get("sys_os", "solaris", CVAR_SERVERINFO, NULL);
-#if id386
+#if USE_X86_ASM
 /*	Sys_SetFPCW(); */
 #endif
 }

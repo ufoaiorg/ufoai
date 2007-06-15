@@ -198,7 +198,7 @@ static void R_CastShadow (void)
 }
 
 /**
- * @brief Returns true if the box is completely outside the frustom
+ * @brief Returns true if the box is completely outside the frustum
  */
 qboolean R_CullBox (vec3_t mins, vec3_t maxs)
 {

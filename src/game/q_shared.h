@@ -136,9 +136,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #endif
 
 #if (defined _M_IX86 || defined __i386__ || defined(__ia64__)) && !defined C_ONLY && !defined __sun__ && !defined _MSC_VER
-#define id386   1
+#define USE_X86_ASM   1
 #else
-#define id386   0
+#define USE_X86_ASM   0
 #endif
 
 #if defined _M_ALPHA && !defined C_ONLY

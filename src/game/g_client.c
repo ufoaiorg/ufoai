@@ -280,9 +280,9 @@ extern void G_AppearPerishEvent (int player_mask, int appear, edict_t * check)
 /**
  * @brief Checks whether a point is "visible" from the edicts position
  */
-extern qboolean G_FrustomVis (edict_t * from, vec3_t point)
+extern qboolean G_FrustumVis (edict_t * from, vec3_t point)
 {
-	/* view frustom check */
+	/* view frustum check */
 	vec3_t delta;
 	byte dv;
 
@@ -292,7 +292,7 @@ extern qboolean G_FrustomVis (edict_t * from, vec3_t point)
 	VectorNormalize(delta);
 	dv = from->dir & (DIRECTIONS-1);
 
-	/* test 120 frustom (cos 60 = 0.5) */
+	/* test 120 frustum (cos 60 = 0.5) */
 	if ((delta[0] * dvecsn[dv][0] + delta[1] * dvecsn[dv][1]) < 0.5)
 		return qfalse;
 	else
@@ -418,8 +418,8 @@ float G_Vis (int team, edict_t * from, edict_t * check, int flags)
 	if (VectorDistSqr(from->origin, check->origin) > MAX_SPOT_DIST * MAX_SPOT_DIST)
 		return 0.0;
 
-	/* view frustom check */
-	if (!(flags & VT_NOFRUSTOM) && !G_FrustomVis(from, check->origin))
+	/* view frustum check */
+	if (!(flags & VT_NOFRUSTUM) && !G_FrustumVis(from, check->origin))
 		return 0.0;
 
 	/* get viewers eye height */

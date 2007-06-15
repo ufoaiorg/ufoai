@@ -270,7 +270,7 @@ void G_RecalcRouting(edict_t * ent);
 #define VIS_STOP	4
 
 #define VT_PERISH		1
-#define VT_NOFRUSTOM	2
+#define VT_NOFRUSTUM	2
 #define VT_FULL			4
 
 /* Timeunits for the various actions. */
@@ -311,7 +311,7 @@ void G_ClientMove(player_t * player, int team, int num, pos3_t to, qboolean stop
 void G_MoveCalc(int team, pos3_t from, int distance);
 void G_ClientInvMove(player_t * player, int num, int from, int fx, int fy, int to, int tx, int ty, qboolean checkaction, qboolean quiet);
 
-qboolean G_FrustomVis(edict_t * from, vec3_t point);
+qboolean G_FrustumVis(edict_t * from, vec3_t point);
 float G_ActorVis(vec3_t from, edict_t * check, qboolean full);
 void G_ClearVisFlags(int team);
 int G_CheckVis(edict_t * check, qboolean perish);

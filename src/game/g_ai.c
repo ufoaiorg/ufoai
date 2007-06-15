@@ -116,13 +116,12 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, ai_action_t * aia)
 			 && !(check->state & STATE_DEAD)
 			 /* also check if we are in range of the weapon's primary mode */
 			 && check->state & STATE_REACTION) {
-			qboolean frustom;
+			qboolean frustum;
 			float actorVis;
 
 			actorVis = G_ActorVis(check->origin, ent, qtrue);
-			frustom = G_FrustomVis(check, ent->origin);
-			if (actorVis > 0.6
-				&& frustom
+			frustum = G_FrustumVis(check, ent->origin);
+			if (actorVis > 0.6 && frustum
 				&& (VectorDistSqr(check->origin, ent->origin)
 					> MAX_SPOT_DIST * MAX_SPOT_DIST))
 				reaction_trap++;
@@ -270,7 +269,7 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, ai_action_t * aia)
 
 	if (!(ent->state & STATE_RAGE)) {
 		/* hide */
-		if (!(G_TestVis(-ent->team, ent, VT_PERISH | VT_NOFRUSTOM) & VIS_YES)) {
+		if (!(G_TestVis(-ent->team, ent, VT_PERISH | VT_NOFRUSTUM) & VIS_YES)) {
 			/* is a hiding spot */
 			guete += GUETE_HIDE + (aia->target ? GUETE_CLOSE_IN : 0);
 		} else if (aia->target && tu >= 2) {
@@ -301,7 +300,7 @@ static float AI_FighterCalcGuete (edict_t * ent, pos3_t to, ai_action_t * aia)
 
 					/* visibility */
 					gi.GridPosToVec(gi.map, ent->pos, ent->origin);
-					if (G_TestVis(-ent->team, ent, VT_PERISH | VT_NOFRUSTOM) & VIS_YES)
+					if (G_TestVis(-ent->team, ent, VT_PERISH | VT_NOFRUSTUM) & VIS_YES)
 						continue;
 
 					still_searching = 0;

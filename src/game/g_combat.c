@@ -56,7 +56,7 @@ static qboolean G_TeamPointVis (int team, vec3_t point)
 
 	/* test if point is visible from team */
 	for (i = 0, from = g_edicts; i < globals.num_edicts; i++, from++)
-		if (from->inuse && (from->type == ET_ACTOR || from->type == ET_UGV) && !(from->state & STATE_DEAD) && from->team == team && G_FrustomVis(from, point)) {
+		if (from->inuse && (from->type == ET_ACTOR || from->type == ET_UGV) && !(from->state & STATE_DEAD) && from->team == team && G_FrustumVis(from, point)) {
 			/* get viewers eye height */
 			VectorCopy(from->origin, eye);
 			if (from->state & (STATE_CROUCHED | STATE_PANIC))
@@ -99,7 +99,7 @@ static void G_Morale (int type, edict_t * victim, edict_t * attacker, int param)
 				if (type == ML_DEATH)
 					mod += mob_death->value;
 				/* seeing how someone gets shot increases the morale change */
-				if (ent == victim || (G_ActorVis(ent->origin, victim, qfalse) && G_FrustomVis(ent, victim->origin)))
+				if (ent == victim || (G_ActorVis(ent->origin, victim, qfalse) && G_FrustumVis(ent, victim->origin)))
 					mod *= mof_watching->value;
 				if (ent->team == attacker->team) {
 					/* teamkills are considered to be bad form, but won't cause an increased morale boost for the enemy */
@@ -508,7 +508,7 @@ static void G_SplashDamage (edict_t * ent, fireDef_t * fd, vec3_t impact, shot_m
 			continue;
 
 		/* If we use a blinding weapon we skip the target if it's looking away from the impact location. */
-		if (shock && !G_FrustomVis(ent, impact))
+		if (shock && !G_FrustumVis(ent, impact))
 			continue;
 
 		if (check->type == ET_ACTOR || check->type == ET_UGV)
@@ -527,7 +527,7 @@ static void G_SplashDamage (edict_t * ent, fireDef_t * fd, vec3_t impact, shot_m
 
 		/* FIXME: don't make aliens in back visible */
 		if (fd->irgoggles && (check->type == ET_ACTOR || check->type == ET_UGV)) {
-			if (G_FrustomVis(ent, check->origin)) {
+			if (G_FrustumVis(ent, check->origin)) {
 				if (!mock) {
 					G_AppearPerishEvent(~G_VisToPM(check->visflags), 1, check);
 					check->visflags |= ~check->visflags;
@@ -1259,7 +1259,7 @@ static qboolean G_FireWithJudgementCall (player_t * player, int num, pos3_t at, 
 static qboolean G_CanReactionFire (edict_t *ent, edict_t *target, char *reason)
 {
 	float actorVis;
-	qboolean frustom;
+	qboolean frustum;
 
 	/* an entity can't reaction fire at itself */
 	if (ent == target) {
@@ -1299,8 +1299,8 @@ static qboolean G_CanReactionFire (edict_t *ent, edict_t *target, char *reason)
 	}
 
 	actorVis = G_ActorVis(ent->origin, target, qtrue);
-	frustom = G_FrustomVis(ent, target->origin);
-	if (actorVis <= 0.2 || !frustom) {
+	frustum = G_FrustumVis(ent, target->origin);
+	if (actorVis <= 0.2 || !frustum) {
 #ifdef DEBUG_REACTION
 		if (reason)
 			Com_sprintf(reason, sizeof(reason), "Target is not visible");

@@ -471,7 +471,6 @@ typedef struct {
 
 extern mouseRepeat_t mouseRepeat;
 
-extern kbutton_t in_mlook, in_klook;
 extern const float MIN_ZOOM, MAX_ZOOM;
 
 void CL_InitInput(void);
@@ -964,12 +963,12 @@ cdlight_t *CL_AllocDlight(int key);
 void CL_AddParticles(void);
 
 
-#if id386
+#if USE_X86_ASM
 void x86_TimerStart(void);
 void x86_TimerStop(void);
 void x86_TimerInit(unsigned long smallest, unsigned longest);
 unsigned long *x86_TimerGetHistogram(void);
-#endif /* id386 */
+#endif /* USE_X86_ASM */
 
 /* cl_map.c */
 #define GLOBE_ROTATE -90
