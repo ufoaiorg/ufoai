@@ -669,7 +669,7 @@ void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 	int		ret;
 	struct sockaddr_storage	addr;
 	int		net_socket;
-	int		addr_size = sizeof(struct sockaddr_in);
+	socklen_t		addr_size = sizeof(struct sockaddr_in);
 
 	switch (to.type) {
 #ifndef DEDICATED_ONLY
