@@ -104,15 +104,15 @@ static void BuildTnode_r (int node)
 		if (n->children[0] < 0 || n->children[1] < 0)
 			Error("Unexpected leaf");
 
-		VectorCopy( dnodes[n->children[0]].maxs, c0maxs );
-		VectorCopy( dnodes[n->children[1]].mins, c1mins );
+		VectorCopy(dnodes[n->children[0]].maxs, c0maxs);
+		VectorCopy(dnodes[n->children[1]].mins, c1mins);
 
 		/*	Sys_Printf( "(%i %i : %i %i) (%i %i : %i %i)\n", */
 		/*		(int)dnodes[n->children[0]].mins[0], (int)dnodes[n->children[0]].mins[1], (int)dnodes[n->children[0]].maxs[0], (int)dnodes[n->children[0]].maxs[1], */
 		/*		(int)dnodes[n->children[1]].mins[0], (int)dnodes[n->children[1]].mins[1], (int)dnodes[n->children[1]].maxs[0], (int)dnodes[n->children[1]].maxs[1] ); */
 
 		for (i = 0; i < 2; i++)
-			if ( c0maxs[i] <= c1mins[i] ) {
+			if (c0maxs[i] <= c1mins[i]) {
 				/* create a separation plane */
 				t->type = i;
 				t->normal[0] = i;
@@ -121,9 +121,9 @@ static void BuildTnode_r (int node)
 				t->dist = (c0maxs[i] + c1mins[i]) / 2;
 
 				t->children[1] = tnode_p - tnodes;
-				BuildTnode_r( n->children[0] );
+				BuildTnode_r(n->children[0]);
 				t->children[0] = tnode_p - tnodes;
-				BuildTnode_r( n->children[1] );
+				BuildTnode_r(n->children[1]);
 				return;
 			}
 
@@ -132,10 +132,10 @@ static void BuildTnode_r (int node)
 
 		for (i = 0; i < 2; i++) {
 			t->children[i] = tnode_p - tnodes;
-			BuildTnode_r( n->children[i] );
+			BuildTnode_r(n->children[i]);
 		}
 	} else {
-		MakeTnode( node );
+		MakeTnode(node);
 	}
 }
 
@@ -197,10 +197,10 @@ static int TestLine_r (int node, const vec3_t start, const vec3_t stop)
 		back = stop[2] - tnode->dist;
 		break;
 	case PLANE_NONE:
-		r = TestLine_r (tnode->children[0], start, stop);
+		r = TestLine_r(tnode->children[0], start, stop);
 		if (r)
 			return r;
-		return TestLine_r (tnode->children[1], start, stop);
+		return TestLine_r(tnode->children[1], start, stop);
 		break;
 	default:
 		front = (start[0]*tnode->normal[0] + start[1]*tnode->normal[1] + start[2]*tnode->normal[2]) - tnode->dist;
@@ -209,10 +209,10 @@ static int TestLine_r (int node, const vec3_t start, const vec3_t stop)
 	}
 
 	if (front >= -ON_EPSILON && back >= -ON_EPSILON)
-		return TestLine_r (tnode->children[0], start, stop);
+		return TestLine_r(tnode->children[0], start, stop);
 
 	if (front < ON_EPSILON && back < ON_EPSILON)
-		return TestLine_r (tnode->children[1], start, stop);
+		return TestLine_r(tnode->children[1], start, stop);
 
 	side = front < 0;
 
@@ -222,10 +222,10 @@ static int TestLine_r (int node, const vec3_t start, const vec3_t stop)
 	mid[1] = start[1] + (stop[1] - start[1])*frac;
 	mid[2] = start[2] + (stop[2] - start[2])*frac;
 
-	r = TestLine_r (tnode->children[side], start, mid);
+	r = TestLine_r(tnode->children[side], start, mid);
 	if (r)
 		return r;
-	return TestLine_r (tnode->children[!side], mid, stop);
+	return TestLine_r(tnode->children[!side], mid, stop);
 }
 
 /**
@@ -242,7 +242,8 @@ static int TestLineDist_r (int node, const vec3_t start, const vec3_t stop)
 
 	if (node & (1<<31)) {
 		r = node & ~(1<<31);
-		if ( r ) VectorCopy( start, tr_end );
+		if (r)
+			VectorCopy(start, tr_end);
 		return r;	/* leaf node */
 	}
 
