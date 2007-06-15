@@ -1530,6 +1530,8 @@ static void GL_MipMap (byte * in, int width, int height)
 #define EMBOSS_FILTER_LOW	4
 #define EMBOSS_FILTER_HIGH	5
 #define EMBOSS_FILTER_2	6
+#define DARKEN_FILTER 7
+#define SHARPEN_FILTER 8
 
 /**
  * @brief
@@ -1591,6 +1593,22 @@ static const float FilterMatrix[][FILTER_SIZE][FILTER_SIZE] = {
 	 {1, 0, -1, -1, -1},
 	 {0, -1, -1, -1, -1},
 	 },
+	/* darken */
+	{
+	 {0, 0, 0, 0, 0},
+	 {0, 0, 0, 0, 0},
+	 {0, 0, 0, 0, 0},
+	 {0, 0, 0, 0, 0},
+	 {0, 0, 0, 0, 0},
+	},
+	/* sharpen */
+	{
+	 {1, 2,  0,  -2,   1},
+	 {4, 8,  0,  -8,  -4},
+	 {6, 12, 0, -12,  -6},
+	 {4, 8,  0,  -8,  -4},
+	 {1, 2,  0,  -2,  -1}
+	}
 };
 
 /**
