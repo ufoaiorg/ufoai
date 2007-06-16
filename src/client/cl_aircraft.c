@@ -168,7 +168,13 @@ extern void AIR_ListAircraft_f (void)
 			Com_Printf("...idx cur=base/global %i=%i/%i\n", i, aircraft->idxInBase, aircraft->idx);
 			for (k = 0; k < aircraft->maxWeapons; k++) {
 				if (aircraft->weapons[k].itemIdx > -1) {
-					Com_Printf("...weapon slot %i contains %s\n", k, aircraftItems[aircraft->weapons[k].itemIdx].id);
+					Com_Printf("...weapon slot %i contains %s", k, aircraftItems[aircraft->weapons[k].itemIdx].id);
+					if (!aircraft->weapons[k].installationTime)
+						Com_Printf(" (functional)\n");
+					else if (aircraft->weapons[k].installationTime > 0)
+						Com_Printf(" (%i hours before installation is finished)\n",aircraft->weapons[k].installationTime);
+					else
+						Com_Printf(" (%i hours before removing is finished)\n",aircraft->weapons[k].installationTime);
 					if (aircraft->weapons[k].ammoIdx > -1)
 						Com_Printf("......this weapon is loaded with ammo %s\n", aircraftItems[aircraft->weapons[k].ammoIdx].id);
 					else
@@ -177,13 +183,26 @@ extern void AIR_ListAircraft_f (void)
 				else
 					Com_Printf("...weapon slot %i is empty\n", k);
 			}
-			if (aircraft->shield.itemIdx > -1)
-				Com_Printf("...shield slot contains %s\n", aircraftItems[aircraft->shield.itemIdx].id);
-			else
+			if (aircraft->shield.itemIdx > -1) {
+				Com_Printf("...shield slot contains %s", aircraftItems[aircraft->shield.itemIdx].id);
+				if (!aircraft->shield.installationTime)
+						Com_Printf(" (functional)\n");
+					else if (aircraft->shield.installationTime > 0)
+						Com_Printf(" (%i hours before installation is finished)\n",aircraft->shield.installationTime);
+					else
+						Com_Printf(" (%i hours before removing is finished)\n",aircraft->shield.installationTime);
+			} else
 				Com_Printf("...shield slot is empty\n");
 			for (k = 0; k < aircraft->maxElectronics; k++) {
-				if (aircraft->electronics[k].itemIdx > -1)
-					Com_Printf("...electronics slot %i contains %s\n", k, aircraftItems[aircraft->weapons[k].itemIdx].id);
+				if (aircraft->electronics[k].itemIdx > -1) {
+					Com_Printf("...electronics slot %i contains %s", k, aircraftItems[aircraft->electronics[k].itemIdx].id);
+					if (!aircraft->electronics[k].installationTime)
+						Com_Printf(" (functional)\n");
+					else if (aircraft->electronics[k].installationTime > 0)
+						Com_Printf(" (%i hours before installation is finished)\n",aircraft->electronics[k].installationTime);
+					else
+						Com_Printf(" (%i hours before removing is finished)\n",aircraft->electronics[k].installationTime);
+				}
 				else
 					Com_Printf("...electronics slot %i is empty\n", k);
 			}
@@ -478,7 +497,7 @@ static void AII_UpdateOneInstallationDelay (aircraft_t *aircraft, aircraftSlot_t
 		/* the item is being installed */
 		slot->installationTime--;
 		/* check if installation is over */
-		if (slot->installationTime < 0) {
+		if (slot->installationTime <= 0) {
 			slot->installationTime = 0;
 			/* Update stats values */
 			AII_UpdateAircraftStats(aircraft);
@@ -486,7 +505,7 @@ static void AII_UpdateOneInstallationDelay (aircraft_t *aircraft, aircraftSlot_t
 	} else if (slot->installationTime < 0) {
 		/* the item is being removed */
 		slot->installationTime++;
-		if (slot->installationTime > 0) {
+		if (slot->installationTime >= 0) {
 			/* the removal is over */
 			if (slot->nextItemIdx > -1) {
 				/* there is anoter item to install after this one */
@@ -494,6 +513,7 @@ static void AII_UpdateOneInstallationDelay (aircraft_t *aircraft, aircraftSlot_t
 				slot->nextItemIdx = -1;
 				slot->installationTime = aircraftItems[slot->itemIdx].installationTime;
 			} else {
+				slot->itemIdx = -1;
 				slot->installationTime = 0;
 			}
 		}
@@ -1438,7 +1458,7 @@ extern void AIM_AircraftEquipAddItem_f (void)
 	else if (airequipID == AC_ITEM_WEAPON)
 		slot->ammoIdx = AII_GetAircraftItemByID(airequipSelectedTechnology->provides);
 
-	/* Update the values of aircraft stats */
+	/* Update the values of aircraft stats (just in case an item has an installationTime of 0) */
 	AII_UpdateAircraftStats(aircraft);
 
 	noparams = qtrue; /* used for AIM_AircraftEquipmenuInit_f */
@@ -1490,7 +1510,7 @@ extern void AIM_AircraftEquipDeleteItem_f (void)
 	/* select the slot we are changing */
 	/* update the new item to slot */
 	if (num == 1)
-		slot->itemIdx = -1;
+		slot->installationTime = -aircraftItems[slot->itemIdx].installationTime;
 	else if (num == 2)
 		slot->nextItemIdx = -1;
 	else if (airequipID == AC_ITEM_WEAPON)
