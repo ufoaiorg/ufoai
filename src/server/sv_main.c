@@ -673,7 +673,7 @@ void SV_ReadPackets (void)
 		MSG_BeginReading(&net_message);
 		MSG_ReadLong(&net_message);	/* sequence number */
 		MSG_ReadLong(&net_message);	/* sequence number */
-		qport = MSG_ReadShort(&net_message) & 0xffff;
+		qport = MSG_ReadShort(&net_message) & USHRT_MAX;
 
 		/* check for packets from connected clients */
 		for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++) {
@@ -711,7 +711,7 @@ void SV_ReadPackets (void)
 			break;
 		}
 
-		if (i != sv_maxclients->value)
+		if (i != sv_maxclients->integer)
 			continue;
 	}
 }
