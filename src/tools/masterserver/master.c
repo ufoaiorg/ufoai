@@ -24,14 +24,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 /**
- * gloommaster 0.0.3 (c) 2002-2003 r1ch.net
- * quake 2 compatible master server for gloom
+ * ufoai master server - based on gloommaster 0.0.3
  */
 
-/* change this to the game name of servers you only wish to accept */
 #define MASTER_SERVER "195.136.48.62" /* sponsored by NineX */
-#define VERSION "0.0.3"
+#define VERSION "0.0.4"
 
+#include <stdarg.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -52,17 +51,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # include <netinet/in.h>
 # include <sys/types.h>
 # include <sys/socket.h>
+# include <unistd.h>
 # define SOCKET int
 # define SOCKET_ERROR -1
 # define TIMEVAL struct timeval
 # define WSAGetLastError() errno
 # define strnicmp strncasecmp
-#endif
-
-#ifndef DEBUG
-#define dprintf printf
-#else
-#define dprintf printf
+# define COMMANDLINE
 #endif
 
 typedef struct server_s server_t;
@@ -80,42 +75,127 @@ struct server_s {
 	unsigned char	validated;
 };
 
-server_t servers;
+static server_t servers;
 
-struct sockaddr_in listenaddress;
-SOCKET listener;
-TIMEVAL delay;
+static struct sockaddr_in listenaddress;
+static SOCKET listener;
+static TIMEVAL delay;
 #ifdef _WIN32
-WSADATA ws;
+static WSADATA ws;
+#define MS_vsnprintf _vsnprintf
+#else
+#define MS_vsnprintf vsnprintf
 #endif
-fd_set set;
-char incoming[150000];
-int retval;
-FILE *logfile;
+static fd_set set;
+static char incoming[150000];
+static int retval;
+static FILE *logfile;
+static int logileActive;
 
-#ifndef _WIN32
+/**
+ * @brief Output function
+ */
+static void MS_Printf (const char *msg, ...)
+{
+	va_list argptr;
+	char text[1024];
+
+	va_start(argptr, msg);
+	MS_vsnprintf(text, sizeof(text), msg, argptr);
+	va_end(argptr);
+
+	/* ensure termination */
+	text[sizeof(text) - 1] = '\0';
+	if (logileActive) {
+		logfile = fopen("masterserver.log", "wa");
+		fprintf(logfile, "%s", text);
+		fclose(logfile);
+	}
+	printf("%s", text);
+}
+
+#ifdef COMMANDLINE
+/**
+ * @brief Show all servers if the user typed 'list' to the command prompt
+ */
+static void MS_ListServers_f (void)
+{
+	server_t *server = &servers;
+	int i = 0;
+
+	while (server->next) {
+		server = server->next;
+		i++;
+
+		if (server->validated)
+			printf("V");
+		else
+			printf(" ");
+
+		if (server->shutdown_issued)
+			printf("S");
+		else
+			printf(" ");
+
+		printf("%15s\n", inet_ntoa(server->ip.sin_addr));
+	}
+
+	printf("%i server(s) on the list\n", i);
+}
+
+/**
+ * @brief Console input - currently only for linux
+ */
+static char* MS_RunInput (void)
+{
+	static char text[256];
+	int len;
+	fd_set inputset;
+	struct timeval timeout;
+
+	FD_ZERO(&inputset);
+	FD_SET(0, &inputset); /* stdin */
+	timeout.tv_sec = 0;
+	timeout.tv_usec = 0;
+	if (select(1, &inputset, NULL, NULL, &timeout) == -1 || !FD_ISSET(0, &inputset))
+		return NULL;
+
+	len = read(0, text, sizeof(text));
+	if (len == 0) { /* eof! */
+		return NULL;
+	}
+
+	if (len < 1)
+		return NULL;
+	text[len-1] = 0;    /* rip off the /n and terminate */
+
+	return text;
+}
+#endif /* COMMANDLINE */
+
+#if defined COMMANDLINE || !defined _WIN32
 /**
  * @brief Shutdown function
  * @sa signal_handler
  */
 static void MS_ExitNicely (void)
 {
-	server_t	*server = &servers;
-	server_t	*old = NULL;
+	server_t *server = &servers;
+	server_t *old = NULL;
 
-	printf ("[I] shutting down.\n");
+	printf("[I] shutting down.\n");
 
 	while (server->next) {
 		if (old)
-			free (old);
+			free(old);
 		server = server->next;
 		old = server;
 	}
 
 	if (old)
-		free (old);
+		free(old);
 }
-#endif
+#endif /* COMMANDLINE || ! _WIN32 */
 
 /**
  * @brief
@@ -130,7 +210,7 @@ static void MS_DropServer (server_t *server)
 		server->prev->next = server->next;
 
 	/* free */
-	free (server);
+	free(server);
 }
 
 /**
@@ -139,22 +219,22 @@ static void MS_DropServer (server_t *server)
  */
 static void MS_AddServer (struct sockaddr_in *from, int normal)
 {
-	server_t	*server = &servers;
-	int			preserved_heartbeats = 0;
+	server_t *server = &servers;
+	int preserved_heartbeats = 0;
 
 	while (server->next) {
 		server = server->next;
 		if (*(int *)&from->sin_addr == *(int *)&server->ip.sin_addr && from->sin_port == server->port) {
 			/* already exists - could be a pending shutdown (ie killserver, change of map, etc) */
 			if (server->shutdown_issued) {
-				dprintf ("[I] scheduled shutdown server %s sent another ping!\n", inet_ntoa (from->sin_addr));
-				MS_DropServer (server);
+				MS_Printf("[I] scheduled shutdown server %s sent another ping!\n", inet_ntoa(from->sin_addr));
+				MS_DropServer(server);
 				server = &servers;
 				while (server->next)
 					server = server->next;
 				break;
 			} else {
-				dprintf ("[W] dupe ping from %s!! ignored.\n", inet_ntoa (server->ip.sin_addr));
+				MS_Printf("[W] dupe ping from %s!! ignored.\n", inet_ntoa(server->ip.sin_addr));
 				return;
 			}
 		}
@@ -166,25 +246,20 @@ static void MS_AddServer (struct sockaddr_in *from, int normal)
 	server = server->next;
 
 	server->heartbeats = preserved_heartbeats;
-	memcpy (&server->ip, from, sizeof(server->ip));
+	memcpy(&server->ip, from, sizeof(server->ip));
 	server->last_heartbeat = time(0);
 	server->next = NULL;
 	server->port = from->sin_port;
 	server->shutdown_issued = server->queued_pings = server->last_ping = server->validated = 0;
 
-	dprintf ("[I] server %s added to queue! (%d)\n", inet_ntoa (from->sin_addr), normal);
+	MS_Printf("[I] server %s added to queue! (%d)\n", inet_ntoa(from->sin_addr), normal);
 	/* write out to log file, I want to track this */
-#if 0
-	logfile = fopen(inet_ntoa(from->sin_addr), "w");
-	fprintf(logfile, "%s\n", inet_ntoa(from->sin_addr));
-	fclose(logfile);
-#endif
 	if (normal) {
 		struct sockaddr_in addr;
-		memcpy (&addr.sin_addr, &server->ip.sin_addr, sizeof(addr.sin_addr));
+		memcpy(&addr.sin_addr, &server->ip.sin_addr, sizeof(addr.sin_addr));
 		addr.sin_family = AF_INET;
 		addr.sin_port = server->port;
-		memset (&addr.sin_zero, 0, sizeof(addr.sin_zero));
+		memset(&addr.sin_zero, 0, sizeof(addr.sin_zero));
 		sendto(listener, "\xFF\xFF\xFF\xFF""ack", 7, 0, (struct sockaddr*)&addr, sizeof(addr));
 	}
 }
@@ -194,7 +269,7 @@ static void MS_AddServer (struct sockaddr_in *from, int normal)
  */
 static void MS_QueueShutdown (struct sockaddr_in *from, server_t *myserver)
 {
-	server_t	*server = &servers;
+	server_t *server = &servers;
 
 	if (!myserver) {
 		while (server->next) {
@@ -208,19 +283,19 @@ static void MS_QueueShutdown (struct sockaddr_in *from, server_t *myserver)
 
 	if (myserver) {
 		struct sockaddr_in addr;
-		memcpy (&addr.sin_addr, &myserver->ip.sin_addr, sizeof(addr.sin_addr));
+		memcpy(&addr.sin_addr, &myserver->ip.sin_addr, sizeof(addr.sin_addr));
 		addr.sin_family = AF_INET;
 		addr.sin_port = server->port;
-		memset (&addr.sin_zero, 0, sizeof(addr.sin_zero));
+		memset(&addr.sin_zero, 0, sizeof(addr.sin_zero));
 
 		/* hack, server will drop in next minute IF it doesn't respond to our ping */
 		myserver->shutdown_issued = 1;
 
-		dprintf ("[I] %s shutdown queued\n", inet_ntoa (myserver->ip.sin_addr));
-		sendto (listener, "\xFF\xFF\xFF\xFFping", 8, 0, (struct sockaddr *)&addr, sizeof(addr));
+		MS_Printf("[I] %s shutdown queued\n", inet_ntoa(myserver->ip.sin_addr));
+		sendto(listener, "\xFF\xFF\xFF\xFF""ping", 8, 0, (struct sockaddr *)&addr, sizeof(addr));
 		return;
 	} else {
-		dprintf ("[W] shutdown issued from unregistered server %s!\n", inet_ntoa (from->sin_addr));
+		MS_Printf("[W] shutdown issued from unregistered server %s!\n", inet_ntoa(from->sin_addr));
 	}
 }
 
@@ -229,8 +304,8 @@ static void MS_QueueShutdown (struct sockaddr_in *from, server_t *myserver)
  */
 static void MS_RunFrame (void)
 {
-	server_t		*server = &servers;
-	unsigned int	curtime = time(0);
+	server_t *server = &servers;
+	unsigned int curtime = time(0);
 
 	while (server->next) {
 		server = server->next;
@@ -240,22 +315,22 @@ static void MS_RunFrame (void)
 			server = old->prev;
 
 			if (old->shutdown_issued || old->queued_pings > 6) {
-				dprintf ("[I] %s shut down.\n", inet_ntoa (old->ip.sin_addr));
-				MS_DropServer (old);
+				MS_Printf("[I] %s shut down.\n", inet_ntoa(old->ip.sin_addr));
+				MS_DropServer(old);
 				continue;
 			}
 
 			server = old;
 			if (curtime - server->last_ping >= 10) {
 				struct sockaddr_in addr;
-				memcpy (&addr.sin_addr, &server->ip.sin_addr, sizeof(addr.sin_addr));
+				memcpy(&addr.sin_addr, &server->ip.sin_addr, sizeof(addr.sin_addr));
 				addr.sin_family = AF_INET;
 				addr.sin_port = server->port;
 				memset (&addr.sin_zero, 0, sizeof(addr.sin_zero));
 				server->queued_pings++;
 				server->last_ping = curtime;
-				dprintf ("[I] ping %s\n", inet_ntoa (server->ip.sin_addr));
-				sendto (listener, "\xFF\xFF\xFF\xFFping", 8, 0, (struct sockaddr *)&addr, sizeof(addr));
+				MS_Printf("[I] ping %s\n", inet_ntoa(server->ip.sin_addr));
+				sendto(listener, "\xFF\xFF\xFF\xFF""ping", 8, 0, (struct sockaddr *)&addr, sizeof(addr));
 			}
 		}
 	}
@@ -267,35 +342,35 @@ static void MS_RunFrame (void)
 static void MS_SendServerListToClient (struct sockaddr_in *from)
 {
 	/* unsigned short	port; */
-	int				buflen;
-	char			buff[0xFFFF];
-	server_t		*server = &servers;
+	int buflen;
+	char buff[0xFFFF];
+	server_t *server = &servers;
 
 	buflen = 0;
-	memset (buff, 0, sizeof(buff));
+	memset(buff, 0, sizeof(buff));
 
-	memcpy (buff, "\xFF\xFF\xFF\xFFservers ", 12);
+	memcpy(buff, "\xFF\xFF\xFF\xFF""servers ", 12);
 	buflen += 12;
 
 	while (server->next) {
 		server = server->next;
 		/* at least one heartbeat */
 		if (server->validated) {
-			memcpy (buff + buflen, &server->ip.sin_addr, 4);
+			memcpy(buff + buflen, &server->ip.sin_addr, 4);
 			buflen += 4;
 			/*port = ntohs(server->port); */
-			memcpy (buff + buflen, &server->port, 2);
+			memcpy(buff + buflen, &server->port, 2);
 			buflen += 2;
 		}
 	}
 
-	dprintf ("[I] query response (%d bytes) sent to %s:%d\n", buflen, inet_ntoa (from->sin_addr), ntohs (from->sin_port));
+	MS_Printf("[I] query response (%d bytes) sent to %s:%d\n", buflen, inet_ntoa(from->sin_addr), ntohs(from->sin_port));
 
-	if ((sendto (listener, buff, buflen, 0, (struct sockaddr *)from, sizeof(*from))) == SOCKET_ERROR) {
-		dprintf ("[E] socket error on send! code %d.\n", WSAGetLastError());
+	if ((sendto(listener, buff, buflen, 0, (struct sockaddr *)from, sizeof(*from))) == SOCKET_ERROR) {
+		MS_Printf("[E] socket error on send! code %d.\n", WSAGetLastError());
 	}
 
-	dprintf ("[I] sent server list to client %s\n", inet_ntoa (from->sin_addr));
+	MS_Printf("[I] sent server list to client %s\n", inet_ntoa(from->sin_addr));
 }
 
 /**
@@ -303,14 +378,14 @@ static void MS_SendServerListToClient (struct sockaddr_in *from)
  */
 static void MS_Ack (struct sockaddr_in *from)
 {
-	server_t	*server = &servers;
+	server_t *server = &servers;
 
 	/* iterate through known servers */
 	while (server->next) {
 		server = server->next;
 		/* a match! */
 		if (*(int *)&from->sin_addr == *(int *)&server->ip.sin_addr && from->sin_port == server->port) {
-			printf ("[I] ack from %s (%d).\n", inet_ntoa (server->ip.sin_addr), server->queued_pings);
+			printf("[I] ack from %s (%d).\n", inet_ntoa(server->ip.sin_addr), server->queued_pings);
 			server->last_heartbeat = time(0);
 			server->queued_pings = 0;
 			server->heartbeats++;
@@ -325,7 +400,7 @@ static void MS_Ack (struct sockaddr_in *from)
  */
 static void MS_HeartBeat (struct sockaddr_in *from, char *data)
 {
-	server_t	*server = &servers;
+	server_t *server = &servers;
 
 	/* iterate through known servers */
 	while (server->next) {
@@ -334,20 +409,20 @@ static void MS_HeartBeat (struct sockaddr_in *from, char *data)
 		if (*(int *)&from->sin_addr == *(int *)&server->ip.sin_addr && from->sin_port == server->port) {
 			struct sockaddr_in addr;
 
-			memcpy (&addr.sin_addr, &server->ip.sin_addr, sizeof(addr.sin_addr));
+			memcpy(&addr.sin_addr, &server->ip.sin_addr, sizeof(addr.sin_addr));
 			addr.sin_family = AF_INET;
 			addr.sin_port = server->port;
-			memset (&addr.sin_zero, 0, sizeof(addr.sin_zero));
+			memset(&addr.sin_zero, 0, sizeof(addr.sin_zero));
 
 			server->validated = 1;
 			server->last_heartbeat = time(0);
-			dprintf ("[I] heartbeat from %s.\n", inet_ntoa (server->ip.sin_addr));
+			MS_Printf("[I] heartbeat from %s.\n", inet_ntoa (server->ip.sin_addr));
 			sendto(listener, "\xFF\xFF\xFF\xFF""ack", 7, 0, (struct sockaddr*)&addr, sizeof(addr));
 			return;
 		}
 	}
 
-	MS_AddServer (from, 0);
+	MS_AddServer(from, 0);
 }
 
 /**
@@ -364,20 +439,20 @@ static void MS_ParseResponse (struct sockaddr_in *from, char *data, int dglen)
 	*(line++) = '\0';
 	cmd += 4;
 
-	/* dprintf ("[I] %s:%d : query (%d bytes) '%s'\n", inet_ntoa(from->sin_addr), htons(from->sin_port), dglen, data); */
+	/* MS_Printf ("[I] %s:%d : query (%d bytes) '%s'\n", inet_ntoa(from->sin_addr), htons(from->sin_port), dglen, data); */
 
-	if (strnicmp (cmd, "ping", 4) == 0) {
-		MS_AddServer (from, 1);
-	} else if (strnicmp (cmd, "heartbeat", 9) == 0 || strnicmp (cmd, "print", 5) == 0) {
-		MS_HeartBeat (from, line);
-	} else if (strncmp (cmd, "ack", 3) == 0) {
-		MS_Ack (from);
-	} else if (strnicmp (cmd, "shutdown", 8) == 0) {
-		MS_QueueShutdown (from, NULL);
-	} else if (strnicmp (cmd, "getservers", 10) == 0) {
-		MS_SendServerListToClient (from);
+	if (strnicmp(cmd, "ping", 4) == 0) {
+		MS_AddServer(from, 1);
+	} else if (strnicmp(cmd, "heartbeat", 9) == 0 || strnicmp(cmd, "print", 5) == 0) {
+		MS_HeartBeat(from, line);
+	} else if (strncmp(cmd, "ack", 3) == 0) {
+		MS_Ack(from);
+	} else if (strnicmp(cmd, "shutdown", 8) == 0) {
+		MS_QueueShutdown(from, NULL);
+	} else if (strnicmp(cmd, "getservers", 10) == 0) {
+		MS_SendServerListToClient(from);
 	} else {
-		printf ("[W] Unknown command from %s!\n... cmd: '%s'", inet_ntoa (from->sin_addr), cmd);
+		printf("[W] Unknown command from %s!\n... cmd: '%s'", inet_ntoa(from->sin_addr), cmd);
 	}
 }
 
@@ -386,7 +461,7 @@ static void MS_ParseResponse (struct sockaddr_in *from, char *data, int dglen)
  * @brief Signal handler function that calls the shutdown function
  * @sa MS_ExitNicely
  */
-static void signal_handler(int sig)
+static void signal_handler (int sig)
 {
 	printf("Received signal %d, exiting...\n", sig);
 	MS_ExitNicely();
@@ -402,23 +477,28 @@ int main (int argc, char **argv)
 	int len;
 	socklen_t fromlen;
 	struct sockaddr_in from;
+#ifndef _WIN32
+	const char *input;
+#endif
+	printf("ufomaster %s\n", VERSION);
 
-	printf ("ufomaster %s\n", VERSION);
+	/* default is no logging */
+	logileActive = 0;
 
 #ifdef _WIN32
-	WSAStartup ((WORD)MAKEWORD (1,1), &ws);
+	WSAStartup((WORD)MAKEWORD (1,1), &ws);
 #endif
 
-	listener = socket (AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+	listener = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 
-	memset (&listenaddress, 0, sizeof(listenaddress));
+	memset(&listenaddress, 0, sizeof(listenaddress));
 
 	listenaddress.sin_family = AF_INET;
 	listenaddress.sin_port = htons(27900);
 	listenaddress.sin_addr.s_addr = INADDR_ANY;
 
-	if ((bind (listener, (struct sockaddr *)&listenaddress, sizeof(listenaddress))) == SOCKET_ERROR) {
-		printf ("[E] Couldn't bind to port 27900 UDP (something is probably using it)\n");
+	if ((bind(listener, (struct sockaddr *)&listenaddress, sizeof(listenaddress))) == SOCKET_ERROR) {
+		printf("[E] Couldn't bind to port 27900 UDP (something is probably using it)\n");
 		return 1;
 	}
 
@@ -427,9 +507,11 @@ int main (int argc, char **argv)
 
 	/* listen (listener, SOMAXCONN); */
 
-	memset (&servers, 0, sizeof(servers));
+	memset(&servers, 0, sizeof(servers));
 
-	printf ("listening on port 27900 (UDP)\n");
+	printf("listening on port 27900 (UDP)\n");
+
+	printf("type 'help' to get a list of available commands\n");
 
 #ifndef _WIN32
 	signal(SIGHUP, signal_handler);
@@ -446,32 +528,52 @@ int main (int argc, char **argv)
 
 	while (1) {
 		FD_ZERO(&set);
-		FD_SET (listener, &set);
+		FD_SET(listener, &set);
 		delay.tv_sec = 1;
 		delay.tv_usec = 0;
 
-		retval = select(listener+1, &set, NULL, NULL, &delay);
+		retval = select(listener + 1, &set, NULL, NULL, &delay);
 		if (retval > 0) {
 			if (FD_ISSET(listener, &set)) {
 				fromlen = sizeof(from);
-				len = recvfrom (listener, incoming, sizeof(incoming), 0, (struct sockaddr *)&from, &fromlen);
+				len = recvfrom(listener, incoming, sizeof(incoming), 0, (struct sockaddr *)&from, &fromlen);
 				if (len > 0) {
 					if (len > 4) {
 						/* parse this packet */
-						MS_ParseResponse (&from, incoming, len);
+						MS_ParseResponse(&from, incoming, len);
 					} else {
-						dprintf ("[W] runt packet from %s:%d\n", inet_ntoa (from.sin_addr), ntohs(from.sin_port));
+						MS_Printf("[W] runt packet from %s:%d\n", inet_ntoa(from.sin_addr), ntohs(from.sin_port));
 					}
 
 					/* reset for next packet */
-					memset (incoming, 0, sizeof(incoming));
+					memset(incoming, 0, sizeof(incoming));
 				} else {
-					dprintf ("[E] socket error during select from %s:%d (%d)\n", inet_ntoa (from.sin_addr), ntohs(from.sin_port), WSAGetLastError());
+					MS_Printf("[E] socket error during select from %s:%d (%d)\n", inet_ntoa(from.sin_addr), ntohs(from.sin_port), WSAGetLastError());
 				}
 			}
 		}
 
 		/* destroy old servers, etc */
-		MS_RunFrame ();
+		MS_RunFrame();
+#ifdef COMMANDLINE
+		input = MS_RunInput();
+		if (input) {
+			if (!strcmp(input, "quit")) {
+				MS_ExitNicely();
+				exit(0);
+			} else if (!strcmp(input, "list"))
+				MS_ListServers_f();
+			else if (!strcmp(input, "log on"))
+				logileActive = 1;
+			else if (!strcmp(input, "log off"))
+				logileActive = 0;
+			else if (!strcmp(input, "help")) {
+				printf("quit       - shutdown masterserver\n");
+				printf("log on|off - activate/deactivate logging\n");
+				printf("help       - show this help\n");
+				printf("list       - list of all known servers\n");
+			}
+		}
+#endif
 	}
 }
