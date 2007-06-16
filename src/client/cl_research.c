@@ -633,6 +633,9 @@ static void RS_ResearchDisplayInfo (void)
 	technology_t *tech = NULL;
 	base_t *base = NULL;
 
+	/* reset cvars */
+	Cvar_Set("mn_research_imagetop", "");
+
 	/* we are not in base view */
 	if (!baseCurrent)
 		return;
@@ -693,7 +696,8 @@ static void RS_ResearchDisplayInfo (void)
 	}
 
 	/* Set image_top cvar. */
-	Cvar_Set("mn_research_imagetop", tech->image_top);
+	if (tech->image_top)
+		Cvar_Set("mn_research_imagetop", tech->image_top);
 }
 
 /**
@@ -719,7 +723,7 @@ static void CL_ResearchSelect_f (void)
 	researchListPos = num;
 	Cbuf_AddText(va("researchselect%i\n", researchListPos));
 
-	/*RS_ResearchDisplayInfo(); */
+	RS_ResearchDisplayInfo();
 	RS_UpdateData();
 }
 
