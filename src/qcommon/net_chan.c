@@ -91,7 +91,7 @@ void Netchan_Init (void)
 	int port;
 
 	/* pick a port value that should be nice and random */
-	port = Sys_Milliseconds() & 0xffff;
+	port = Sys_Milliseconds() & USHRT_MAX;
 
 	net_showpackets = Cvar_Get("net_showpackets", "0", 0, "Print network packets to game console");
 	net_showpacketsreliable = Cvar_Get("net_showpacketsreliable", "0", 0, "If net_showpackets is activated and this is set to 1, too then you will only see the reliable packets");
