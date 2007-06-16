@@ -30,6 +30,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define MASTER_SERVER "195.136.48.62" /* sponsored by NineX */
 #define VERSION "0.0.4"
 
+#define MS_PORT 27900
+
 #include <stdarg.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -47,6 +49,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #else
 # include <signal.h>
 # include <errno.h>
+# include <netdb.h>
 # include <arpa/inet.h>
 # include <netinet/in.h>
 # include <sys/types.h>
@@ -76,6 +79,14 @@ struct server_s {
 };
 
 static server_t servers;
+
+typedef struct msConfig_s {
+	unsigned short port;
+	const char* listenName;
+	struct in_addr listenAddr;
+} msConfig_t;
+
+static msConfig_t config;
 
 static struct sockaddr_in listenaddress;
 static SOCKET listener;
@@ -463,16 +474,54 @@ static void MS_ParseResponse (struct sockaddr_in *from, char *data, int dglen)
  */
 static void signal_handler (int sig)
 {
-	printf("Received signal %d, exiting...\n", sig);
+	printf("[W] Received signal %d, exiting...\n", sig);
 	MS_ExitNicely();
 	exit(0);
 }
 #endif
 
 /**
+ * @brief Parse command line parameters
+ */
+static void MS_ParseCommandLine (int argc, const char **argv)
+{
+	int i = 1;
+
+	/* clear the config data */
+	memset(&config, 0, sizeof(config));
+
+	/* default values */
+	config.port = MS_PORT;
+
+	while (i < argc) {
+		if (argv[i][0] != '-') {
+			printf("[E] Invalid commandline options - skip the rest\n");
+			return;
+		}
+		switch (argv[i][1]) {
+		case 'l':
+			i++;
+			config.listenName = argv[i];
+			break;
+		case 'p':
+			i++;
+			config.port = atoi(argv[i]);
+			if (!config.port) {
+				printf("[W] Invalid port - using default %i\n", MS_PORT);
+				config.port = MS_PORT;
+			}
+			break;
+		default:
+			printf("[E] Unknown commandline option %s\n", &argv[i][1]);
+		}
+		i++;
+	}
+}
+
+/**
  * @brief
  */
-int main (int argc, char **argv)
+int main (int argc, const char **argv)
 {
 	int len;
 	socklen_t fromlen;
@@ -480,38 +529,53 @@ int main (int argc, char **argv)
 #ifndef _WIN32
 	const char *input;
 #endif
-	printf("ufomaster %s\n", VERSION);
+	printf("    ufomaster %s\n", VERSION);
 
 	/* default is no logging */
 	logileActive = 0;
 
 #ifdef _WIN32
 	WSAStartup((WORD)MAKEWORD (1,1), &ws);
+#else
+	if (geteuid() == 0) {
+		printf("[E] You should not run this as root - quitting now\n");
+		return 0;
+	}
 #endif
+
+	/* now parse the commandline and set the config values */
+	MS_ParseCommandLine(argc, argv);
 
 	listener = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
 
 	memset(&listenaddress, 0, sizeof(listenaddress));
-
 	listenaddress.sin_family = AF_INET;
-	listenaddress.sin_port = htons(27900);
-	listenaddress.sin_addr.s_addr = INADDR_ANY;
+	if (config.listenName != NULL) {
+		listenaddress.sin_addr.s_addr = inet_addr(config.listenName);
+		if (listenaddress.sin_addr.s_addr == -1) {
+			printf("[W] Could not use address %s - listen to any\n", config.listenName);
+			listenaddress.sin_addr.s_addr = INADDR_ANY;
+		} else
+			printf("[I] Only listen at %s\n", config.listenName);
+	} else {
+		listenaddress.sin_addr.s_addr = INADDR_ANY;
+	}
+	listenaddress.sin_port = htons(config.port);
 
-	if ((bind(listener, (struct sockaddr *)&listenaddress, sizeof(listenaddress))) == SOCKET_ERROR) {
-		printf("[E] Couldn't bind to port 27900 UDP (something is probably using it)\n");
+	if ((bind(listener, (struct sockaddr *)&listenaddress, sizeof(listenaddress))) != 0) {
+		printf("[E] Couldn't bind to port %i UDP (something is probably using it)\n", config.port);
 		return 1;
 	}
 
 	delay.tv_sec = 1;
 	delay.tv_usec = 0;
 
-	/* listen (listener, SOMAXCONN); */
+	/* listen(listener, SOMAXCONN); */
 
 	memset(&servers, 0, sizeof(servers));
 
-	printf("listening on port 27900 (UDP)\n");
-
-	printf("type 'help' to get a list of available commands\n");
+	printf("[I] listening on port %i (UDP)\n", config.port);
+	printf("[I] type 'help' to get a list of available commands\n");
 
 #ifndef _WIN32
 	signal(SIGHUP, signal_handler);
