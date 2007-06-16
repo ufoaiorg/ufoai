@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 
 #define MASTER_SERVER "195.136.48.62" /* sponsored by NineX */
-#define VERSION "0.0.4"
+#define VERSION "0.0.5"
 
 #define MS_PORT 27900
 
@@ -46,6 +46,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # ifndef socklen_t
 #  define socklen_t size_t
 # endif
+# define MS_CloseSocket closesocket
 #else
 # include <signal.h>
 # include <errno.h>
@@ -61,6 +62,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # define WSAGetLastError() errno
 # define strnicmp strncasecmp
 # define COMMANDLINE
+# define MS_CloseSocket close
 #endif
 
 typedef struct server_s server_t;
@@ -84,6 +86,7 @@ typedef struct msConfig_s {
 	unsigned short port;
 	const char* listenName;
 	struct in_addr listenAddr;
+	unsigned char daemonized;
 } msConfig_t;
 
 static msConfig_t config;
@@ -110,6 +113,9 @@ static void MS_Printf (const char *msg, ...)
 {
 	va_list argptr;
 	char text[1024];
+
+	if (config.daemonized)
+		return; /* don't print anything when master server is daemonized */
 
 	va_start(argptr, msg);
 	MS_vsnprintf(text, sizeof(text), msg, argptr);
@@ -481,6 +487,21 @@ static void signal_handler (int sig)
 #endif
 
 /**
+ * @brief Command line parameter help
+ */
+static void MS_PrintHelp (void)
+{
+	printf(
+		"    -h                  : show this screen\n"
+		"    -p <port number>    : show this screen\n"
+		"    -l <address>        : only listen to this address\n"
+#ifndef _WIN32
+		"    -d                  : daemonize the masterserver\n"
+#endif
+);
+}
+
+/**
  * @brief Parse command line parameters
  */
 static void MS_ParseCommandLine (int argc, const char **argv)
@@ -501,12 +522,26 @@ static void MS_ParseCommandLine (int argc, const char **argv)
 		switch (argv[i][1]) {
 		case 'l':
 			i++;
-			config.listenName = argv[i];
+			if (i >= argc || *argv[i] == '\0')
+				printf("[W] Invalid address parameter\n");
+			else
+				config.listenName = argv[i];
 			break;
+		case 'h':
+			MS_PrintHelp();
+			exit(0);
+#ifndef _WIN32
+		case 'd':
+			if (daemon(0, 0)) {
+				printf("[W] Daemonization failed\n");
+			} else
+				config.daemonized = 1;
+			break;
+#endif
 		case 'p':
 			i++;
 			config.port = atoi(argv[i]);
-			if (!config.port) {
+			if (!config.port || config.port < 1024) {
 				printf("[W] Invalid port - using default %i\n", MS_PORT);
 				config.port = MS_PORT;
 			}
@@ -564,6 +599,7 @@ int main (int argc, const char **argv)
 
 	if ((bind(listener, (struct sockaddr *)&listenaddress, sizeof(listenaddress))) != 0) {
 		printf("[E] Couldn't bind to port %i UDP (something is probably using it)\n", config.port);
+		MS_CloseSocket(listener);
 		return 1;
 	}
 
@@ -632,10 +668,10 @@ int main (int argc, const char **argv)
 			else if (!strcmp(input, "log off"))
 				logileActive = 0;
 			else if (!strcmp(input, "help")) {
-				printf("quit       - shutdown masterserver\n");
-				printf("log on|off - activate/deactivate logging\n");
-				printf("help       - show this help\n");
-				printf("list       - list of all known servers\n");
+				printf("[H] quit         : shutdown masterserver\n");
+				printf("[H] log <on|off> : activate/deactivate logging\n");
+				printf("[H] help         : show this help\n");
+				printf("[H] list         : list of all known servers\n");
 			}
 		}
 #endif
