@@ -100,7 +100,6 @@ cvar_t *team;
 cvar_t *equip;
 cvar_t *teamnum;
 cvar_t *campaign;
-cvar_t *rate;
 cvar_t *msg;
 
 client_static_t cls;
