@@ -487,17 +487,18 @@ static void SVC_DirectConnect (void)
 }
 
 /**
- * @brief
+ * @brief Checks whether the remote connection is allowed (rcon_password must be
+ * set on the server) - and verify the user given password with the cvar value.
  */
-int Rcon_Validate (void)
+static qboolean Rcon_Validate (void)
 {
 	if (!strlen(rcon_password->string))
-		return 0;
+		return qfalse;
 
 	if (strcmp(Cmd_Argv(1), rcon_password->string))
-		return 0;
+		return qfalse;
 
-	return 1;
+	return qtrue;
 }
 
 /**
@@ -506,18 +507,19 @@ int Rcon_Validate (void)
 void SVC_RemoteCommand (void)
 {
 	int i;
+	qboolean valid;
 	char remaining[1024];
 
-	i = Rcon_Validate();
+	valid = Rcon_Validate();
 
-	if (i == 0)
+	if (!valid)
 		Com_Printf("Bad rcon from %s (%s):\n%s\n", SV_FindPlayer(net_from), NET_AdrToString(net_from), net_message.data + 4);
 	else
 		Com_Printf("Rcon from %s (%s):\n%s\n", SV_FindPlayer(net_from), NET_AdrToString(net_from), net_message.data + 4);
 
 	Com_BeginRedirect(RD_PACKET, sv_outputbuf, SV_OUTPUTBUF_LENGTH, SV_FlushRedirect);
 
-	if (!Rcon_Validate())
+	if (!valid)
 		/* inform the client */
 		Com_Printf("Bad rcon_password.\n");
 	else {
