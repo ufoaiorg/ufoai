@@ -575,17 +575,20 @@ extern qboolean AIR_AircraftHasEnoughFuel (aircraft_t *aircraft, const vec2_t de
 	/* Calculate the line that the aircraft should follow to go to destination */
 	MAP_MapCalcLine(aircraft->pos, destination, &(line));
 	distance = line.distance * (line.numPoints - 1);
+	Com_DPrintf("distance to go to destination: %f\n", distance);
 
 	/* Calculate the line that the aircraft should then follow to go back home */
 	MAP_MapCalcLine(destination, base->pos, &(line));
 	distance += line.distance * (line.numPoints - 1);
+	Com_DPrintf("distance to go to destination and then come back to base: %f\n", distance);
 
 	/* Check if the aircraft has enough fuel to go to destination and then go back home */
-	if (distance <= aircraft->stats[AIR_STATS_SPEED] * aircraft->fuel / 3600)
+	if (distance <= aircraft->stats[AIR_STATS_SPEED] * aircraft->fuel / 3600.0f)
 		return qtrue;
 	else {
 		/* @todo Should check if another base is closer than homeBase and have a hangar */
 		MN_AddNewMessage(_("Notice"), _("Your aircraft doesn't have enough fuel to go there and then come back to its home base"), qfalse, MSG_STANDARD, NULL);
+		Com_DPrintf("Your aircraft doesn't have enough fuel to go there and then come back to its home base. It can only fly on: %f\n", aircraft->stats[AIR_STATS_SPEED] * aircraft->fuel / 3600.0f);
 	}
 
 	return qfalse;
@@ -1000,7 +1003,7 @@ void CL_CampaignRunAircraft (int dt)
 				}
 
 				/* Check aircraft low fuel */
-				if (aircraft->status >= AIR_IDLE && aircraft->status != AIR_RETURNING && !AIR_AircraftHasEnoughFuel(aircraft, aircraft->pos)) {
+				if (aircraft->status == AIR_IDLE && !AIR_AircraftHasEnoughFuel(aircraft, aircraft->pos)) {
 					MN_AddNewMessage(_("Notice"), _("Your dropship is low on fuel and returns to base"), qfalse, MSG_STANDARD, NULL);
 					AIR_AircraftReturnToBase(aircraft);
 				}
