@@ -858,9 +858,9 @@ void R_DrawLevelBrushes (void)
 	for (tile = 0; tile < rNumTiles; tile++) {
 		currentmodel = rTiles[tile];
 
-		/* don't draw stepon and actorclip */
+		/* don't draw weapon-, actorclip and stepon */
 		/* @note Change this to 258 to see the actorclip brushes in-game */
-		for (i = 0; i < 256; i++) {
+		for (i = 0; i <= LEVEL_LASTVISIBLE; i++) {
 			/* check the worldlevel flags */
 			if (i && !(i & mask))
 				continue;

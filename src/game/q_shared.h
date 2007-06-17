@@ -169,10 +169,11 @@ typedef uint8_t byte;
 
 #define DEFAULT_TEAMNUM 1
 
-/* NOTE: place this macro after stddef.h inclusion. */
-/*#if !defined offsetof*/
-/*#define offsetof(TYPE, MEMBER) ((size_t) &((TYPE *)0)->MEMBER)*/
-/*#endif*/
+#define LEVEL_LASTVISIBLE 255
+#define LEVEL_WEAPONCLIP 256
+#define LEVEL_ACTORCLIP 257
+#define LEVEL_STEPON 258
+#define LEVEL_TRACING 259
 
 #define NONE		0xFF
 #define NONE_AMMO	0

@@ -180,7 +180,7 @@ static byte stf;
 static byte tfList[HEIGHT][WIDTH][WIDTH];
 static byte tf;
 
-void CM_MakeTnodes(void);
+static void CM_MakeTnodes(void);
 static void CM_InitBoxHull(void);
 
 
@@ -1190,7 +1190,7 @@ static unsigned CM_AddMapTile (char *name, int sX, int sY, int sZ)
 
 	FS_FreeFile(buf);
 
-	numInline += curTile->numcmodels - 258;
+	numInline += curTile->numcmodels - LEVEL_STEPON;
 
 	curTile->extraDataSize = Hunk_End();
 
@@ -1280,10 +1280,11 @@ extern cmodel_t *CM_InlineModel (const char *name)
 		Com_Error(ERR_DROP, "CM_InlineModel: bad number");
 
 	for (i = 0; i < numTiles; i++)
-		if (num >= mapTiles[i].numcmodels - 258) {
-			num -= mapTiles[i].numcmodels - 258;
+		/* FIXME: Is this if really needed? */
+		if (num >= mapTiles[i].numcmodels - LEVEL_STEPON) {
+			num -= mapTiles[i].numcmodels - LEVEL_STEPON;
 		} else {
-			return &mapTiles[i].cmodels[258 + num];
+			return &mapTiles[i].cmodels[LEVEL_STEPON + num];
 		}
 
 	Com_Error(ERR_DROP, "CM_InlineModel: impossible error ;)");
@@ -2239,7 +2240,7 @@ void BuildTnode_r (int node, int level)
  * @brief Loads the node structure out of a .bsp file to be used for light occlusion
  * @sa BuildTnode_r
  */
-void CM_MakeTnodes (void)
+static void CM_MakeTnodes (void)
 {
 	int i;
 
@@ -2251,7 +2252,7 @@ void CM_MakeTnodes (void)
 	curTile->numtheads = 0;
 	curTile->numcheads = 0;
 
-	for (i = 0; i < 257; i++) {
+	for (i = 0; i <= LEVEL_LASTVISIBLE; i++) {
 		if (curTile->cmodels[i].headnode == -1)
 			continue;
 

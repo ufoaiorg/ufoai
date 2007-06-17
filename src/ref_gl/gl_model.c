@@ -766,7 +766,7 @@ static void R_AddMapTile (const char *name, int sX, int sY, int sZ)
 	/* set up the submodels, the first 255 submodels */
 	/* are the models of the different levels, don't */
 	/* care about them */
-	for (i = 258; i < loadmodel->numsubmodels; i++) {
+	for (i = LEVEL_TRACING - 1; i < loadmodel->numsubmodels; i++) {
 		model_t *starmod;
 
 		bm = &loadmodel->submodels[i];
