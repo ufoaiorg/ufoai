@@ -296,7 +296,7 @@ extern vec3_t	worldMins, worldMaxs;
 
 void PushInfo(void);
 void PopInfo(void);
-void ProcessLevel(int levelnum);
+void ProcessLevel(unsigned int levelnum);
 void PruneNodes(node_t *node);
 
 /* routing.c */

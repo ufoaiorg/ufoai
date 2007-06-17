@@ -382,7 +382,7 @@ void BounceLight (void)
 	}
 
 	for (i = 0; i < config.numbounce; i++) {
-		ShootLight(num_patches);
+		U2M_ProgressBar(ShootLight, num_patches, qfalse);
 		added = CollectLight();
 
 		Sys_FPrintf(SYS_VRB, "bounce:%i added:%f\n", i, added);
@@ -431,17 +431,17 @@ void RadWorld (void)
 	SubdividePatches();
 
 	/* calculate vertex normals for smooth lightning */
-	/*CalcVertexNormals(numvertexes - 1);*/
+	/*U2M_ProgressBar(CalcVertexNormals, numvertexes - 1, qfalse);*/
 
 	/* create directlights out of patches and lights */
 	CreateDirectLights();
 
 	/* build initial facelights */
-	BuildFacelights(numfaces);
+	U2M_ProgressBar(BuildFacelights, numfaces, qtrue);
 
 	if (config.numbounce > 0) {
 		/* build transfer lists */
-		MakeTransfers(num_patches);
+		U2M_ProgressBar(MakeTransfers, num_patches, qtrue);
 		Sys_FPrintf(SYS_VRB, "transfer lists: %5.1f megs\n",
 			(float)total_transfer * sizeof(transfer_t) / (1024 * 1024));
 
@@ -461,6 +461,6 @@ void RadWorld (void)
 	dlightdata[0] = config.lightquant;
 	lightdatasize = 1;
 
-	FinalLightFace(numfaces);
+	U2M_ProgressBar(FinalLightFace, numfaces, qtrue);
 /*	CloseTNodes();*/
 }

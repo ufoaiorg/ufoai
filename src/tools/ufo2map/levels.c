@@ -231,7 +231,7 @@ static int ConstructLevelNodes_r (int levelnum, vec3_t cmins, vec3_t cmaxs)
  * @sa ProcessWorldModel
  * @sa ConstructLevelNodes_r
  */
-extern void ProcessLevel (int levelnum)
+extern void ProcessLevel (unsigned int levelnum)
 {
 	vec3_t		mins, maxs;
 	dmodel_t	*dm;

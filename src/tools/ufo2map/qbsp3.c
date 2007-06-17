@@ -37,7 +37,6 @@ int entity_num;
 static void ProcessWorldModel (void)
 {
 	entity_t	*e;
-	int			i;
 
 	e = &entities[entity_num];
 
@@ -47,24 +46,7 @@ static void ProcessWorldModel (void)
 	ClearBounds(worldMins, worldMaxs);
 
 	/* process levels */
-	{
-		int	start, end;
-		nummodels = NUMMODELS;
-
-		start = I_FloatTime();
-		for (i = 0; i < NUMMODELS; i++) {
-			if (!(i % 26)) {
-				fprintf(stdout, "%i...", (int)(i / 26));
-				fflush(stdout);
-			}
-
-			/* process brushes with that level mask */
-			ProcessLevel(i);
-		}
-		end = I_FloatTime();
-
-		Sys_Printf(" (%i)\n", end - start);
-	}
+	U2M_ProgressBar(ProcessLevel, NUMMODELS, qtrue);
 
 	/* calculate routing */
 	if (!config.norouting)

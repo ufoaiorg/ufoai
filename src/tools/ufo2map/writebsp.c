@@ -28,6 +28,31 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static int c_nofaces;
 static int c_facenodes;
 
+extern void U2M_ProgressBar (void (*func) (unsigned int cnt), unsigned int count, qboolean showProgress)
+{
+	int i;
+	int current, previous = 0;
+	int	start, end;
+
+	start = I_FloatTime();
+	if (showProgress)
+		fprintf(stdout, "%% ");
+	for (i = 0; i < count; i++) {
+		current = (10 * i / count);
+		if (showProgress && current != previous) {
+			previous = current;
+			fprintf(stdout, "%i...", current * 10);
+			fflush(stdout);
+		}
+
+		/* process brushes with that level mask */
+		func(i);
+	}
+	end = I_FloatTime();
+	if (showProgress)
+		Sys_Printf(" (time: %i)\n", end - start);
+}
+
 
 /*
 =========================================================
