@@ -9,7 +9,6 @@ UFO2MAP_SRCS = \
 	tools/ufo2map/brushbsp.c \
 	tools/ufo2map/csg.c \
 	tools/ufo2map/faces.c \
-	tools/ufo2map/glfile.c \
 	tools/ufo2map/levels.c \
 	tools/ufo2map/lightmap.c \
 	tools/ufo2map/map.c \
@@ -28,7 +27,6 @@ UFO2MAP_SRCS = \
 	tools/ufo2map/common/scriplib.c \
 	tools/ufo2map/common/trace.c \
 	tools/ufo2map/common/lbmlib.c \
-	tools/ufo2map/common/threads.c \
 	qcommon/unzip.c \
 	qcommon/ioapi.c
 
@@ -81,8 +79,7 @@ QDATA_SRCS=\
 	tools/ufo2map/common/cmdlib.c \
 	tools/ufo2map/common/lbmlib.c \
 	tools/ufo2map/common/mathlib.c \
-	tools/ufo2map/common/scriplib.c \
-	tools/ufo2map/common/threads.c
+	tools/ufo2map/common/scriplib.c
 
 QDATA_OBJS=$(QDATA_SRCS:%.c=$(BUILDDIR)/tools/qdata/%.o)
 QDATA_DEPS=$(QDATA_OBJS:%.o=%.d)

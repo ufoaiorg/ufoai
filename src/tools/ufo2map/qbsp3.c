@@ -26,26 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "qbsp.h"
 
-vec_t		microvolume = 1.0;
-qboolean	noprune;
-qboolean	nodetail;
-qboolean	fulldetail;
-qboolean	onlyents;
-qboolean	nomerge;
-qboolean	nowater;
-qboolean	nofill;
-qboolean	nocsg;
-qboolean	noweld;
-qboolean	noshare;
-qboolean	nosubdiv;
-qboolean	notjunc;
-qboolean	noopt;
-qboolean	verboseentities;
-qboolean	norouting;
-qboolean	nobackclip;
-
 char outbase[32];
-int block_xl = -8, block_xh = 7, block_yl = -8, block_yh = 7;
 int entity_num;
 
 
@@ -57,8 +38,6 @@ static void ProcessWorldModel (void)
 {
 	entity_t	*e;
 	int			i;
-
-/*	BeginModel(); */
 
 	e = &entities[entity_num];
 
@@ -88,7 +67,7 @@ static void ProcessWorldModel (void)
 	}
 
 	/* calculate routing */
-	if (!norouting)
+	if (!config.norouting)
 		DoRouting();
 }
 
@@ -120,7 +99,7 @@ static void ProcessSubModel (void)
 	mins[0] = mins[1] = mins[2] = -4096;
 	maxs[0] = maxs[1] = maxs[2] = 4096;
 	list = MakeBspBrushList(start, end, -1, mins, maxs);
-	if (!nocsg)
+	if (!config.nocsg)
 		list = ChopBrushes(list);
 	tree = BrushBSP(list, mins, maxs);
 	MakeTreePortals(tree);
@@ -153,7 +132,7 @@ extern void ProcessModels (void)
 		else
 			ProcessSubModel();
 
-		if (!verboseentities)
+		if (!config.verboseentities)
 			verbose = qfalse;	/* don't bother printing submodels */
 	}
 

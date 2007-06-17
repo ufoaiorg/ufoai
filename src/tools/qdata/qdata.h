@@ -7,7 +7,6 @@
 #include "../ufo2map/common/scriplib.h"
 #include "../ufo2map/common/mathlib.h"
 #include "../ufo2map/common/lbmlib.h"
-#include "../ufo2map/common/threads.h"
 #include "../ufo2map/common/bspfile.h"
 #include "common/trilib.h"
 #include "common/l3dslib.h"

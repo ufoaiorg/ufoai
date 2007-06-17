@@ -569,7 +569,7 @@ static void ParseBrush (entity_t *mapent)
 		/* translucent objects are automatically classified as detail */
 		if (side->surf & (SURF_TRANS33|SURF_TRANS66|SURF_ALPHATEST) )
 			side->contents |= CONTENTS_DETAIL;
-		if (fulldetail)
+		if (config.fulldetail)
 			side->contents &= ~CONTENTS_DETAIL;
 		if (!(side->contents & (LAST_VISIBLE_CONTENTS-1) ) )
 			side->contents |= CONTENTS_SOLID;
@@ -623,13 +623,13 @@ static void ParseBrush (entity_t *mapent)
 	b->contents = BrushContents(b);
 
 	/* allow detail brushes to be removed  */
-	if (nodetail && (b->contents & CONTENTS_DETAIL)) {
+	if (config.nodetail && (b->contents & CONTENTS_DETAIL)) {
 		b->numsides = 0;
 		return;
 	}
 
 	/* allow water brushes to be removed */
-	if (nowater && (b->contents & (CONTENTS_SLIME | CONTENTS_WATER))) {
+	if (config.nowater && (b->contents & (CONTENTS_SLIME | CONTENTS_WATER))) {
 		b->numsides = 0;
 		return;
 	}
@@ -899,7 +899,7 @@ static void TestExpandBrushes (void)
 /**
  * @brief
  */
-extern void LoadMapFile (char *filename)
+extern void LoadMapFile (const char *filename)
 {
 	int i;
 

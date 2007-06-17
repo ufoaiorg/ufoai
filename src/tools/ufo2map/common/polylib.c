@@ -28,11 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "mathlib.h"
 #include "polylib.h"
 
-
-extern int numthreads;
-
-/* counters are only bumped when running single threaded, */
-/* because they are an awefull coherence problem */
 int	c_active_windings;
 int	c_peak_windings;
 int	c_winding_allocs;
@@ -49,13 +44,11 @@ extern winding_t *AllocWinding (int points)
 	winding_t *w;
 	size_t s;
 
-	if (numthreads == 1) {
-		c_winding_allocs++;
-		c_winding_points += points;
-		c_active_windings++;
-		if (c_active_windings > c_peak_windings)
-			c_peak_windings = c_active_windings;
-	}
+	c_winding_allocs++;
+	c_winding_points += points;
+	c_active_windings++;
+	if (c_active_windings > c_peak_windings)
+		c_peak_windings = c_active_windings;
 	s = sizeof(vec_t) * 3 * points + sizeof(int);
 	w = malloc(s);
 	if (!w) {
@@ -76,8 +69,7 @@ extern void FreeWinding (winding_t *w)
 		Error("FreeWinding: freed a freed winding");
 	*(unsigned *)w = 0xdeaddead;
 
-	if (numthreads == 1)
-		c_active_windings--;
+	c_active_windings--;
 	free(w);
 }
 
@@ -110,8 +102,7 @@ extern void RemoveColinearPoints (winding_t *w)
 	if (nump == w->numpoints)
 		return;
 
-	if (numthreads == 1)
-		c_removed += w->numpoints - nump;
+	c_removed += w->numpoints - nump;
 	w->numpoints = nump;
 	memcpy(w->p, p, nump*sizeof(p[0]));
 }
@@ -124,11 +115,11 @@ static void WindingPlane (winding_t *w, vec3_t normal, vec_t *dist)
 {
 	vec3_t	v1, v2;
 
-	VectorSubtract (w->p[1], w->p[0], v1);
-	VectorSubtract (w->p[2], w->p[0], v2);
-	CrossProduct (v2, v1, normal);
-	VectorNormalize (normal, normal);
-	*dist = DotProduct (w->p[0], normal);
+	VectorSubtract(w->p[1], w->p[0], v1);
+	VectorSubtract(w->p[2], w->p[0], v2);
+	CrossProduct(v2, v1, normal);
+	VectorNormalize(normal, normal);
+	*dist = DotProduct(w->p[0], normal);
 }
 #endif
 
@@ -143,10 +134,10 @@ extern vec_t WindingArea (winding_t *w)
 
 	total = 0;
 	for (i = 2; i < w->numpoints; i++) {
-		VectorSubtract (w->p[i-1], w->p[0], d1);
-		VectorSubtract (w->p[i], w->p[0], d2);
-		CrossProduct (d1, d2, cross);
-		total += 0.5 * VectorLength ( cross );
+		VectorSubtract(w->p[i-1], w->p[0], d1);
+		VectorSubtract(w->p[i], w->p[0], d2);
+		CrossProduct(d1, d2, cross);
+		total += 0.5 * VectorLength(cross);
 	}
 	return total;
 }
@@ -181,12 +172,12 @@ extern void WindingCenter (winding_t *w, vec3_t center)
 	int		i;
 	float	scale;
 
-	VectorCopy (vec3_origin, center);
+	VectorCopy(vec3_origin, center);
 	for (i = 0; i < w->numpoints; i++)
-		VectorAdd (w->p[i], center, center);
+		VectorAdd(w->p[i], center, center);
 
 	scale = 1.0/w->numpoints;
-	VectorScale (center, scale, center);
+	VectorScale(center, scale, center);
 }
 
 /**

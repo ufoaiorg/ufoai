@@ -408,7 +408,7 @@ static void SubdividePatch (patch_t *patch)
 		}
 	VectorSubtract (maxs, mins, total);
 	for (i = 0; i < 3; i++)
-		if (total[i] > (subdiv+1) )
+		if (total[i] > (config.subdiv + 1) )
 			break;
 	/* no splitting needed */
 	if (i == 3)
@@ -417,7 +417,7 @@ static void SubdividePatch (patch_t *patch)
 	/* split the winding */
 	VectorCopy(vec3_origin, split);
 	split[i] = 1;
-	dist = (mins[i] + maxs[i])*0.5;
+	dist = (mins[i] + maxs[i]) * 0.5;
 	ClipWindingEpsilon(w, split, dist, ON_EPSILON, &o1, &o2);
 
 	/* create a new patch */
@@ -454,7 +454,7 @@ static void DicePatch (patch_t *patch)
 	w = patch->winding;
 	WindingBounds(w, mins, maxs);
 	for (i = 0; i < 3; i++)
-		if (floor((mins[i] + 1) / subdiv) < floor((maxs[i] - 1) / subdiv))
+		if (floor((mins[i] + 1) / config.subdiv) < floor((maxs[i] - 1) / config.subdiv))
 			break;
 	/* no splitting needed */
 	if (i == 3)
@@ -463,7 +463,7 @@ static void DicePatch (patch_t *patch)
 	/* split the winding */
 	VectorCopy(vec3_origin, split);
 	split[i] = 1;
-	dist = subdiv * (1 + floor((mins[i] + 1) / subdiv));
+	dist = config.subdiv * (1 + floor((mins[i] + 1) / config.subdiv));
 	ClipWindingEpsilon(w, split, dist, ON_EPSILON, &o1, &o2);
 
 	/* create a new patch */
@@ -492,7 +492,7 @@ extern void SubdividePatches (void)
 {
 	int i, num;
 
-	if (subdiv < 1)
+	if (config.subdiv < 1)
 		return;
 
 	/* because the list will grow */

@@ -28,24 +28,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "common/mathlib.h"
 #include "common/bspfile.h"
 #include "common/polylib.h"
-#include "common/threads.h"
 #include "common/lbmlib.h"
 
 #ifdef _WIN32
 #include <windows.h>
 #endif
 
-extern qboolean	glview;
-
-typedef enum
-{
+typedef enum {
 	emit_surface,
 	emit_point,
 	emit_spotlight
 } emittype_t;
 
-typedef struct directlight_s
-{
+typedef struct directlight_s {
 	struct directlight_s *next;
 	emittype_t	type;
 
@@ -61,8 +56,7 @@ typedef struct directlight_s
 /* the sum of all tranfer->transfer values for a given patch */
 /* should equal exactly 0x10000, showing that all radiance */
 /* reaches other patches */
-typedef struct
-{
+typedef struct {
 	unsigned short	patch;
 	unsigned short	transfer;
 } transfer_t;
@@ -70,8 +64,7 @@ typedef struct
 
 #define	MAX_PATCHES	65000			/* larger will cause 32 bit overflows */
 
-typedef struct patch_s
-{
+typedef struct patch_s {
 	winding_t	*winding;
 	struct patch_s		*next;		/* next in face */
 	int			numtransfers;
@@ -96,37 +89,28 @@ typedef struct patch_s
 	int			samples;		/* for averaging direct light */
 } patch_t;
 
-extern	patch_t		*face_patches[MAX_MAP_FACES];
-extern	entity_t	*face_entity[MAX_MAP_FACES];
-extern	vec3_t		face_offset[MAX_MAP_FACES];		/* for rotating bmodels */
-extern	patch_t		patches[MAX_PATCHES];
-extern	unsigned	num_patches;
+extern patch_t *face_patches[MAX_MAP_FACES];
+extern entity_t *face_entity[MAX_MAP_FACES];
+extern vec3_t face_offset[MAX_MAP_FACES];		/* for rotating bmodels */
+extern patch_t patches[MAX_PATCHES];
+extern unsigned num_patches;
 
-extern	float	lightscale;
-extern	int		lightquant;
 
 void MakeShadowSplits(void);
 
 /*============================================== */
 
 
-void BuildVisMatrix (void);
-qboolean CheckVisBit (unsigned p1, unsigned p2);
+void BuildVisMatrix(void);
+qboolean CheckVisBit(unsigned p1, unsigned p2);
 
 /*============================================== */
 
-extern	float ambient_red, ambient_green, ambient_blue, maxlight;
-
 void LinkPlaneFaces(void);
 
-extern	qboolean	extrasamples;
-extern unsigned int numbounce;
-extern qboolean	dumppatches;
-extern qboolean	nopvs;
-extern qboolean noradiosity;
-extern char		inbase[32], outbase[32];
+extern char inbase[32], outbase[32];
 
-extern	byte	nodehit[MAX_MAP_NODES];
+extern byte nodehit[MAX_MAP_NODES];
 
 void BuildLightmaps(void);
 
@@ -140,18 +124,11 @@ int TestLine(const vec3_t start, const vec3_t stop);
 
 void CreateDirectLights(void);
 
-dleaf_t		*Rad_PointInLeaf(vec3_t point);
+dleaf_t *Rad_PointInLeaf(vec3_t point);
 
-
-extern	dplane_t	backplanes[MAX_MAP_PLANES];
-extern	int			fakeplanes;					/* created planes for origin offset  */
-
-extern	float	subdiv;
-
-extern	float	direct_scale;
-extern	float	entity_scale;
-
-extern	vec3_t		vnormals[MAX_MAP_VERTS];
+extern dplane_t backplanes[MAX_MAP_PLANES];
+extern int fakeplanes;					/* created planes for origin offset  */
+extern vec3_t vnormals[MAX_MAP_VERTS];
 
 void MakePatches(void);
 void SubdividePatches(void);

@@ -16,11 +16,11 @@ extern	int		scriptline; /* extern - qdata */
 extern	qboolean	endofscript; /* extern - qdata */
 
 
-void LoadScriptFile (char *filename);
-void ParseFromMemory (char *buffer, int size);
+void LoadScriptFile(const char *filename);
+void ParseFromMemory(char *buffer, int size);
 
-qboolean GetToken (qboolean crossline);
-qboolean TokenAvailable (void);
+qboolean GetToken(qboolean crossline);
+qboolean TokenAvailable(void);
 
 
 #endif /* _SCRIPTLIB */

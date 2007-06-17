@@ -29,6 +29,47 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <limits.h>
 
+typedef struct mapConfig_s {
+	float subdivideSize;
+	int nice;
+	/**< convert function pointer */
+	int (*convertFunc) (char *);
+	qboolean verbose;
+	qboolean noprune;
+	qboolean nodetail;
+	qboolean fulldetail;
+	qboolean onlyents;
+	qboolean nomerge;
+	qboolean nowater;
+	qboolean nofill;
+	qboolean nocsg;
+	qboolean noweld;
+	qboolean noshare;
+	qboolean nosubdiv;
+	qboolean notjunc;
+	qboolean verboseentities;
+	qboolean norouting;
+	qboolean nobackclip;
+	qboolean drawflag;
+	qboolean noradiosity;
+	int block_xl, block_xh, block_yl, block_yh;
+	float microvolume;
+	unsigned int numbounce;
+	qboolean extrasamples;
+	float subdiv;
+	qboolean dumppatches;
+	float ambient_red;
+	float ambient_green;
+	float ambient_blue;
+	float maxlight;
+	float lightscale;
+	int lightquant;
+	float direct_scale;
+	float entity_scale;
+} mapConfig_t;
+
+mapConfig_t config;
+
 /*
 ========================================================================
 The .pak files are just a linear collapse of a directory tree
@@ -395,14 +436,12 @@ typedef struct texinfo_s {
 
 /** note that edge 0 is never used, because negative edge nums are used for
  * counterclockwise use of the edge in a face */
-typedef struct
-{
+typedef struct {
 	unsigned short	v[2];		/**< vertex numbers */
 } dedge_t;
 
 #define	MAXLIGHTMAPS	4
-typedef struct
-{
+typedef struct {
 	unsigned short	planenum;
 	short		side;
 
@@ -415,8 +454,7 @@ typedef struct
 	int			lightofs;		/**< start of [numstyles*surfsize] samples */
 } dface_t;
 
-typedef struct
-{
+typedef struct {
 	int				contents;			/**< OR of all brushes (not needed?) */
 
 	short			cluster;

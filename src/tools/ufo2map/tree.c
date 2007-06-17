@@ -63,26 +63,25 @@ static void FreeTree_r (node_t *node)
 
 	/* free children */
 	if (node->planenum != PLANENUM_LEAF) {
-		FreeTree_r (node->children[0]);
-		FreeTree_r (node->children[1]);
+		FreeTree_r(node->children[0]);
+		FreeTree_r(node->children[1]);
 	}
 
 	/* free bspbrushes */
-	FreeBrushList (node->brushlist);
+	FreeBrushList(node->brushlist);
 
 	/* free faces */
 	for (f = node->faces; f; f = nextf) {
 		nextf = f->next;
-		FreeFace (f);
+		FreeFace(f);
 	}
 
 	/* free the node */
 	if (node->volume)
-		FreeBrush (node->volume);
+		FreeBrush(node->volume);
 
-	if (numthreads == 1)
-		c_nodes--;
-	free (node);
+	c_nodes--;
+	free(node);
 }
 
 
@@ -91,9 +90,9 @@ static void FreeTree_r (node_t *node)
  */
 extern void FreeTree (tree_t *tree)
 {
-	FreeTreePortals_r (tree->headnode);
-	FreeTree_r (tree->headnode);
-	free (tree);
+	FreeTreePortals_r(tree->headnode);
+	FreeTree_r(tree->headnode);
+	free(tree);
 }
 
 /**

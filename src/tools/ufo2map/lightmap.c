@@ -506,8 +506,8 @@ static void CalcFaceExtents (lightinfo_t *l)
 		l->exactmins[i] = mins[i];
 		l->exactmaxs[i] = maxs[i];
 
-		mins[i] = floor(mins[i]/(1<<lightquant));
-		maxs[i] = ceil(maxs[i]/(1<<lightquant));
+		mins[i] = floor(mins[i] / (1 << config.lightquant));
+		maxs[i] = ceil(maxs[i] / (1 << config.lightquant));
 
 		l->texmins[i] = mins[i];
 		l->texsize[i] = maxs[i] - mins[i];
@@ -617,9 +617,9 @@ static void CalcPoints (lightinfo_t *l, float sofs, float tofs)
 	w = l->texsize[0]+1;
 	l->numsurfpt = w * h;
 
-	step = 1 << lightquant;
-	starts = l->texmins[0]*step;
-	startt = l->texmins[1]*step;
+	step = 1 << config.lightquant;
+	starts = l->texmins[0] * step;
+	startt = l->texmins[1] * step;
 
 	for (t = 0; t < h; t++) {
 		for (s = 0; s < w; s++, surf += 3) {
@@ -748,7 +748,7 @@ void CreateDirectLights (void)
 		VectorCopy(p->plane->normal, dl->normal);
 
 		dl->intensity = ColorNormalize(p->totallight, dl->color);
-		dl->intensity *= p->area * direct_scale;
+		dl->intensity *= p->area * config.direct_scale;
 		VectorClear(p->totallight);	/* all sent now */
 	}
 
@@ -785,7 +785,7 @@ void CreateDirectLights (void)
 			ColorNormalize(dl->color, dl->color);
 		} else
 			dl->color[0] = dl->color[1] = dl->color[2] = 1.0;
-		dl->intensity = intensity*entity_scale;
+		dl->intensity = intensity * config.entity_scale;
 		dl->type = emit_point;
 
 		target = ValueForKey(e, "target");
@@ -853,10 +853,10 @@ void CreateDirectLights (void)
 
 	/* get ambient light */
 	_color = ValueForKey(e, "ambient");
-	sscanf(_color, "%f %f %f", &ambient_red, &ambient_green, &ambient_blue );
-	ambient_red *= 128;
-	ambient_green *= 128;
-	ambient_blue *= 128;
+	sscanf(_color, "%f %f %f", &config.ambient_red, &config.ambient_green, &config.ambient_blue );
+	config.ambient_red *= 128;
+	config.ambient_green *= 128;
+	config.ambient_blue *= 128;
 
 	Sys_FPrintf(SYS_VRB, "%i direct lights\n", numdlights);
 }
@@ -968,7 +968,7 @@ static void AddSampleToPatch (vec3_t pos, vec3_t color, int facenum)
 	vec3_t	mins, maxs;
 	int		i;
 
-	if (numbounce == 0)
+	if (config.numbounce == 0)
 		return;
 	if (color[0] + color[1] + color[2] < 3)
 		return;
@@ -1021,7 +1021,7 @@ void BuildFacelights (unsigned int facenum)
 	l = malloc(MAX_SAMPLES * sizeof(lightinfo_t));
 	memset(styletable, 0, sizeof(styletable));
 
-	if (extrasamples)
+	if (config.extrasamples)
 		numsamples = MAX_SAMPLES;
 	else
 		numsamples = 1;
@@ -1120,7 +1120,6 @@ void FinalLightFace (unsigned int facenum)
 	if (texinfo[f->texinfo].flags & SURF_WARP)
 		return;
 
-	ThreadLock();
 	f->lightofs = lightdatasize;
 	lightdatasize += fl->numstyles * (fl->numsamples * 3);
 
@@ -1133,13 +1132,12 @@ void FinalLightFace (unsigned int facenum)
 
 	if (lightdatasize > MAX_MAP_LIGHTING)
 		Error("MAX_MAP_LIGHTING (%i)", lightdatasize);
-	ThreadUnlock();
 
 	f->styles[0] = 0;
 	f->styles[1] = f->styles[2] = f->styles[3] = 0xff;
 
 	/* set up the triangulation */
-	if (numbounce > 0) {
+	if (config.numbounce > 0) {
 		ClearBounds(facemins, facemaxs);
 		for (i = 0; i < f->numedges; i++) {
 			int ednum;
@@ -1160,9 +1158,9 @@ void FinalLightFace (unsigned int facenum)
 		for (pfacenum = planelinks[f->side][f->planenum]; pfacenum; pfacenum = facelinks[pfacenum]) {
 			for (patch = face_patches[pfacenum]; patch; patch = patch->next) {
 				for (i = 0; i < 3; i++) {
-					if (facemins[i] - patch->origin[i] > subdiv * 2)
+					if (facemins[i] - patch->origin[i] > config.subdiv * 2)
 						break;
-					if (patch->origin[i] - facemaxs[i] > subdiv * 2)
+					if (patch->origin[i] - facemaxs[i] > config.subdiv * 2)
 						break;
 				}
 				if (i != 3)
@@ -1199,18 +1197,18 @@ void FinalLightFace (unsigned int facenum)
 		f->styles[st] = fl->stylenums[st];
 		for (j = 0; j < fl->numsamples; j++) {
 			VectorCopy((fl->samples[st] + j * 3), lb);
-			if (numbounce > 0 && st == 0) {
+			if (config.numbounce > 0 && st == 0) {
 				vec3_t	add;
 
-				SampleTriangulation(fl->origins + j*3, trian, add);
+				SampleTriangulation(fl->origins + j * 3, trian, add);
 				VectorAdd(lb, add, lb);
 			}
 			/* add an ambient term if desired */
-			lb[0] += ambient_red;
-			lb[1] += ambient_green;
-			lb[2] += ambient_blue;
+			lb[0] += config.ambient_red;
+			lb[1] += config.ambient_green;
+			lb[2] += config.ambient_blue;
 
-			VectorScale(lb, lightscale, lb);
+			VectorScale(lb, config.lightscale, lb);
 
 			/* we need to clamp without allowing hue to change */
 			for (k = 0; k < 3; k++)
@@ -1227,8 +1225,8 @@ void FinalLightFace (unsigned int facenum)
 			if (newmax < minlight) {
 				newmax = minlight + (rand() % 48);
 			}
-			if (newmax > maxlight)
-				newmax = maxlight;
+			if (newmax > config.maxlight)
+				newmax = config.maxlight;
 
 			for (k = 0; k < 3; k++) {
 				*dest++ = lb[k] * newmax/max;
@@ -1236,6 +1234,6 @@ void FinalLightFace (unsigned int facenum)
 		}
 	}
 
-	if (numbounce > 0)
+	if (config.numbounce > 0)
 		FreeTriangulation(trian);
 }

@@ -245,14 +245,13 @@ static node_t *AllocNode (void)
  */
 extern bspbrush_t *AllocBrush (int numsides)
 {
-	bspbrush_t	*bb;
-	ptrdiff_t			c;
+	bspbrush_t *bb;
+	ptrdiff_t c;
 
 	c = (ptrdiff_t)&(((bspbrush_t *)0)->sides[numsides]);
 	bb = malloc(c);
-	memset (bb, 0, c);
-	if (numthreads == 1)
-		c_active_brushes++;
+	memset(bb, 0, c);
+	c_active_brushes++;
 	return bb;
 }
 
@@ -267,8 +266,7 @@ extern void FreeBrush (bspbrush_t *brushes)
 		if (brushes->sides[i].winding)
 			FreeWinding(brushes->sides[i].winding);
 	free (brushes);
-	if (numthreads == 1)
-		c_active_brushes--;
+	c_active_brushes--;
 }
 
 
@@ -277,12 +275,11 @@ extern void FreeBrush (bspbrush_t *brushes)
  */
 extern void FreeBrushList (bspbrush_t *brushes)
 {
-	bspbrush_t	*next;
+	bspbrush_t *next;
 
 	for (; brushes; brushes = next) {
 		next = brushes->next;
-
-		FreeBrush (brushes);
+		FreeBrush(brushes);
 	}
 }
 
@@ -291,18 +288,18 @@ extern void FreeBrushList (bspbrush_t *brushes)
  */
 extern bspbrush_t *CopyBrush (bspbrush_t *brush)
 {
-	bspbrush_t	*newbrush;
-	ptrdiff_t	size;
-	int	i;
+	bspbrush_t *newbrush;
+	ptrdiff_t size;
+	int i;
 
 	size = (ptrdiff_t)&(((bspbrush_t *)0)->sides[brush->numsides]);
 
-	newbrush = AllocBrush (brush->numsides);
-	memcpy (newbrush, brush, size);
+	newbrush = AllocBrush(brush->numsides);
+	memcpy(newbrush, brush, size);
 
 	for (i = 0; i < brush->numsides; i++) {
 		if (brush->sides[i].winding)
-			newbrush->sides[i].winding = CopyWinding (brush->sides[i].winding);
+			newbrush->sides[i].winding = CopyWinding(brush->sides[i].winding);
 	}
 
 	return newbrush;
@@ -364,8 +361,8 @@ static int BoxOnPlaneSide (vec3_t mins, vec3_t maxs, plane_t *plane)
 		}
 	}
 
-	dist1 = DotProduct (plane->normal, corners[0]) - plane->dist;
-	dist2 = DotProduct (plane->normal, corners[1]) - plane->dist;
+	dist1 = DotProduct(plane->normal, corners[0]) - plane->dist;
+	dist2 = DotProduct(plane->normal, corners[1]) - plane->dist;
 	side = 0;
 	if (dist1 >= PLANESIDE_EPSILON)
 		side = PSIDE_FRONT;
@@ -405,7 +402,7 @@ static int TestBrushToPlanenum (bspbrush_t *brush, int planenum,
 
 	/* box on plane side */
 	plane = &mapplanes[planenum];
-	s = BoxOnPlaneSide (brush->mins, brush->maxs, plane);
+	s = BoxOnPlaneSide(brush->mins, brush->maxs, plane);
 
 	if (s != PSIDE_BOTH)
 		return s;
@@ -689,10 +686,8 @@ static side_t *SelectSplitSide (bspbrush_t *brushes, node_t *node)
 		/* if we found a good plane, don't bother trying any */
 		/* other passes */
 		if (bestside) {
-			if (pass > 1) {
-				if (numthreads == 1)
-					c_nonvis++;
-			}
+			if (pass > 1)
+				c_nonvis++;
 			if (pass > 0)
 				node->detail_seperator = qtrue;	/* not needed for vis */
 			break;
@@ -969,19 +964,18 @@ static node_t *BuildTree_r (node_t *node, bspbrush_t *brushes)
 	int			i;
 	bspbrush_t	*children[2];
 
-	if (numthreads == 1)
-		c_nodes++;
+	c_nodes++;
 
-	if (drawflag)
-		DrawBrushList (brushes, node);
+	if (config.drawflag)
+		DrawBrushList(brushes, node);
 
 	/* find the best plane to use as a splitter */
-	bestside = SelectSplitSide (brushes, node);
+	bestside = SelectSplitSide(brushes, node);
 	if (!bestside) {
 		/* leaf node */
 		node->side = NULL;
 		node->planenum = -1;
-		LeafNode (node, brushes);
+		LeafNode(node, brushes);
 		return node;
 	}
 
@@ -989,8 +983,8 @@ static node_t *BuildTree_r (node_t *node, bspbrush_t *brushes)
 	node->side = bestside;
 	node->planenum = bestside->planenum & ~1;	/* always use front facing */
 
-	SplitBrushList (brushes, node, &children[0], &children[1]);
-	FreeBrushList (brushes);
+	SplitBrushList(brushes, node, &children[0], &children[1]);
+	FreeBrushList(brushes);
 
 	/* allocate children before recursing */
 	for (i = 0; i < 2; i++) {
@@ -999,12 +993,12 @@ static node_t *BuildTree_r (node_t *node, bspbrush_t *brushes)
 		node->children[i] = newnode;
 	}
 
-	SplitBrush (node->volume, node->planenum, &node->children[0]->volume,
+	SplitBrush(node->volume, node->planenum, &node->children[0]->volume,
 		&node->children[1]->volume);
 
 	/* recursively process children */
 	for (i = 0; i < 2; i++) {
-		node->children[i] = BuildTree_r (node->children[i], children[i]);
+		node->children[i] = BuildTree_r(node->children[i], children[i]);
 	}
 
 	return node;
@@ -1034,7 +1028,7 @@ extern tree_t *BrushBSP (bspbrush_t *brushlist, vec3_t mins, vec3_t maxs)
 		c_brushes++;
 
 		volume = BrushVolume(b);
-		if (volume < microvolume) {
+		if (volume < config.microvolume) {
 			Sys_Printf("WARNING: entity %i, brush %i: microbrush\n",
 				b->original->entitynum, b->original->brushnum);
 		}

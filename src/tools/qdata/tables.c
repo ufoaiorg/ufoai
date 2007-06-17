@@ -85,7 +85,7 @@ void Inverse16_BuildTable( void )
 	}
 }
 
-void Alphalight_Thread (unsigned int i)
+void Alphalight (unsigned int i)
 {
 	int		j;
 	float	r, g, b;
@@ -127,16 +127,16 @@ void Cmd_Alphalight (void)
 	GetToken (qfalse);
 
 	if (g_release) {
-		ReleaseFile (token);
+		ReleaseFile(token);
 		return;
 	}
 
-	sprintf (savename, "%s%s", gamedir, token);
-	printf ("Building alphalight table...\n");
+	sprintf(savename, "%s%s", gamedir, token);
+	printf("Building alphalight table...\n");
 
-	RunThreadsOnIndividual (32*32*32, qtrue, Alphalight_Thread);
+	Alphalight(32*32*32);
 
-	SaveFile (savename, (byte *)alphamap, sizeof(alphamap));
+	SaveFile(savename, (byte *)alphamap, sizeof(alphamap));
 }
 
 

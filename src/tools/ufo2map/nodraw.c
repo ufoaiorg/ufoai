@@ -27,7 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "qbsp.h"
 
 vec3_t draw_mins, draw_maxs;
-qboolean	drawflag;
 
 void Draw_ClearWindow (void)
 {

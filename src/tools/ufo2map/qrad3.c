@@ -41,34 +41,14 @@ char		inbase[32], outbase[32];
 
 int			fakeplanes;					/* created planes for origin offset */
 
-unsigned int	numbounce = 0;
-qboolean	extrasamples;
-
-float	subdiv = 64;
-qboolean	dumppatches;
-
 void BuildLightmaps(void);
 int TestLine(const vec3_t start, const vec3_t stop);
 
 int		junk;
 
-float	ambient_red = 0.1;
-float	ambient_green = 0.1;
-float	ambient_blue = 0.1;
-float	maxlight = 196;
-
-float	lightscale = 1.0;
-int		lightquant = 3;
-
-qboolean	glview;
-
-qboolean	nopvs;
 qboolean	noradiosity = qfalse;
 
 char		source[1024];
-
-float	direct_scale =	0.4;
-float	entity_scale =	1.0;
 
 /*
 ===================================================================
@@ -295,14 +275,12 @@ void FreeTransfers (void)
 {
 	unsigned int i;
 
-	for (i = 0; i<num_patches; i++) {
-		free(patches[i].transfers);
+	for (i = 0; i < num_patches; i++) {
+		if (patches[i].transfers)
+			free(patches[i].transfers);
 		patches[i].transfers = NULL;
 	}
 }
-
-
-/*=================================================================== */
 
 /**
  * @brief
@@ -336,16 +314,6 @@ void WriteWorld (char *name)
 /**
  * @brief
  */
-void WriteGlView (void)
-{
-}
-
-
-/*============================================================== */
-
-/**
- * @brief
- */
 static float CollectLight (void)
 {
 	unsigned int i, j;
@@ -370,7 +338,6 @@ static float CollectLight (void)
 
 /**
  * @brief Send light out to other patches
- * @note Run multi-threaded
  */
 static void ShootLight (unsigned int patchnum)
 {
@@ -414,12 +381,12 @@ void BounceLight (void)
 		}
 	}
 
-	for (i = 0; i < numbounce; i++) {
-		RunThreadsOnIndividual(num_patches, qfalse, ShootLight);
+	for (i = 0; i < config.numbounce; i++) {
+		ShootLight(num_patches);
 		added = CollectLight();
 
 		Sys_FPrintf(SYS_VRB, "bounce:%i added:%f\n", i, added);
-		if (dumppatches && (i == 0 || i == numbounce-1)) {
+		if (config.dumppatches && (i == 0 || i == config.numbounce - 1)) {
 			sprintf(name, "bounce%i.txt", i);
 			WriteWorld(name);
 		}
@@ -464,17 +431,17 @@ void RadWorld (void)
 	SubdividePatches();
 
 	/* calculate vertex normals for smooth lightning */
-	/*RunThreadsOnIndividual(numvertexes-1, qtrue, CalcVertexNormals);*/
+	/*CalcVertexNormals(numvertexes - 1);*/
 
 	/* create directlights out of patches and lights */
 	CreateDirectLights();
 
 	/* build initial facelights */
-	RunThreadsOnIndividual(numfaces, qtrue, BuildFacelights);
+	BuildFacelights(numfaces);
 
-	if (numbounce > 0) {
+	if (config.numbounce > 0) {
 		/* build transfer lists */
-		RunThreadsOnIndividual(num_patches, qtrue, MakeTransfers);
+		MakeTransfers(num_patches);
 		Sys_FPrintf(SYS_VRB, "transfer lists: %5.1f megs\n",
 			(float)total_transfer * sizeof(transfer_t) / (1024 * 1024));
 
@@ -486,17 +453,14 @@ void RadWorld (void)
 		CheckPatches();
 	}
 
-	if (glview)
-		WriteGlView();
-
 	/* blend bounced light into direct light and save */
 	PairEdges();
 	LinkPlaneFaces();
 
 	/* initialize light data */
-	dlightdata[0] = lightquant;
+	dlightdata[0] = config.lightquant;
 	lightdatasize = 1;
 
-	RunThreadsOnIndividual(numfaces, qtrue, FinalLightFace);
+	FinalLightFace(numfaces);
 /*	CloseTNodes();*/
 }

@@ -28,13 +28,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "common/scriplib.h"
 #include "common/mathlib.h"
 #include "common/polylib.h"
-#include "common/threads.h"
 #include "common/bspfile.h"
 
-#define	MAX_BRUSH_SIDES	128
 #define	CLIP_EPSILON	0.1
-
-#define	BOGUS_RANGE	8192
 
 #define	TEXINFO_NODE		-1		/* side is already on a node */
 
@@ -189,30 +185,16 @@ extern	vec3_t		map_mins, map_maxs;
 extern	int			nummapbrushsides;
 extern	side_t		brushsides[MAX_MAP_SIDES];
 
-extern	qboolean	noprune;
-extern	qboolean	nodetail;
-extern	qboolean	fulldetail;
-extern	qboolean	nomerge;
-extern	qboolean	nosubdiv;
-extern	qboolean	nowater;
-extern	qboolean	noweld;
-extern	qboolean	noshare;
-extern	qboolean	notjunc;
-extern	qboolean	nocsg;
-extern	qboolean	nobackclip;
 
-extern	int			block_xl, block_xh, block_yl, block_yh;
 extern	vec3_t		v_epsilon;
 extern	int			brush_start, brush_end;
-
-extern	vec_t		microvolume;
 
 extern	char		outbase[32];
 
 extern	char	source[1024];
 
-void 	LoadMapFile (char *filename);
-int		FindFloatPlane (vec3_t normal, vec_t dist);
+void LoadMapFile(const char *filename);
+int FindFloatPlane(vec3_t normal, vec_t dist);
 
 /*============================================================================= */
 
@@ -235,7 +217,6 @@ int TexinfoForBrushTexture(plane_t *plane, brush_texture_t *bt, vec3_t origin, q
 /* draw.c */
 
 extern vec3_t	draw_mins, draw_maxs;
-extern	qboolean	drawflag;
 
 void Draw_ClearWindow(void);
 void DrawWinding(winding_t *w);
@@ -270,10 +251,6 @@ void MarkVisibleSides (tree_t *tree, int start, int end);
 void FreePortal (portal_t *p);
 
 void MakeTreePortals (tree_t *tree);
-
-/* glfile.c */
-
-void WriteGLView (tree_t *tree, char *source);
 
 /*============================================================================= */
 
@@ -325,24 +302,6 @@ void PruneNodes(node_t *node);
 /* routing.c */
 
 void DoRouting(void);
-
-extern qboolean	noprune;
-extern qboolean	nodetail;
-extern qboolean	fulldetail;
-extern qboolean	onlyents;
-extern qboolean	nomerge;
-extern qboolean	nowater;
-extern qboolean	nofill;
-extern qboolean	nocsg;
-extern qboolean	noweld;
-extern qboolean	noshare;
-extern qboolean	nosubdiv;
-extern qboolean	notjunc;
-extern qboolean	noopt;
-extern qboolean	verboseentities;
-extern qboolean	norouting;
-extern qboolean	nobackclip;
-extern float subdivide_size;
 
 #define ROUTING_NOT_REACHABLE 0xFF
 

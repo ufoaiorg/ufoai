@@ -191,7 +191,7 @@ static int ConstructLevelNodes_r (int levelnum, vec3_t cmins, vec3_t cmaxs)
 		return BuildNodeChildren(bmins, bmaxs, nn);
 	}
 
-	if (!nocsg)
+	if (!config.nocsg)
 		list = ChopBrushes(list);
 
 	/* begin model creation now */
@@ -201,7 +201,7 @@ static int ConstructLevelNodes_r (int levelnum, vec3_t cmins, vec3_t cmaxs)
 	MakeFaces(tree->headnode);
 	FixTjuncs(tree->headnode);
 
-	if (!noprune)
+	if (!config.noprune)
 		PruneNodes(tree->headnode);
 
 	/* correct bounds */
@@ -237,12 +237,12 @@ extern void ProcessLevel (int levelnum)
 	dmodel_t	*dm;
 
 	/* get maxs */
-	mins[0] = (block_xl)*512+1;
-	mins[1] = (block_yl)*512+1;
+	mins[0] = (config.block_xl)*512+1;
+	mins[1] = (config.block_yl)*512+1;
 	mins[2] = -4096+1;
 
-	maxs[0] = (block_xh+1)*512-1;
-	maxs[1] = (block_yh+1)*512-1;
+	maxs[0] = (config.block_xh+1)*512-1;
+	maxs[1] = (config.block_yh+1)*512-1;
 	maxs[2] = 4096-1;
 
 	Sys_FPrintf(SYS_VRB, "Process levelnum %i (nummodels: %i)\n", levelnum, nummodels);

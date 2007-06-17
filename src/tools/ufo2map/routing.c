@@ -38,8 +38,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static const vec3_t dup_vec = {0, 0, PH-UH/2};
 static const vec3_t dwn_vec = {0, 0, -UH/2};
 
-const vec3_t move_vec[4] = { {US, 0, 0}, {-US, 0, 0}, {0, US, 0}, {0, -US, 0} };
-const vec3_t testvec[5] = { {-US/2+5,-US/2+5,0}, {US/2-5,US/2-5,0}, {-US/2+5,US/2-5,0}, {US/2-5,-US/2+5,0}, {0,0,0} };
+static const vec3_t move_vec[4] = { {US, 0, 0}, {-US, 0, 0}, {0, US, 0}, {0, -US, 0} };
+static const vec3_t testvec[5] = { {-US/2+5,-US/2+5,0}, {US/2-5,US/2-5,0}, {-US/2+5,US/2-5,0}, {US/2-5,-US/2+5,0}, {0,0,0} };
 
 /** routing data structures */
 byte	route[HEIGHT][WIDTH][WIDTH];
@@ -54,7 +54,7 @@ static ipos3_t wpMins, wpMaxs;
  * @brief
  * @sa DoRouting
  */
-static void CheckUnit_Thread (unsigned int unitnum)
+static void CheckUnit (unsigned int unitnum)
 {
 	int		x, y, z;
 	int		i;
@@ -87,8 +87,8 @@ static void CheckUnit_Thread (unsigned int unitnum)
 
 	/* prepare fall down check */
 	VectorCopy(end, start);
-	start[2] -= UH/2-4;
-	end[2]   -= UH/2+4;
+	start[2] -= UH / 2 - 4;
+	end[2]   -= UH / 2 + 4;
 
 	/* FIXME: Don't allow falling over more than 1 level (z-direction) */
 	/* test for fall down */
@@ -169,7 +169,7 @@ static void CheckUnit_Thread (unsigned int unitnum)
  * @brief
  * @sa DoRouting
  */
-static void CheckConnections_Thread (unsigned int unitnum)
+static void CheckConnections (unsigned int unitnum)
 {
 	int		x, y, z, sz;
 	int		i, h, sh;
@@ -238,8 +238,8 @@ static void CheckConnections_Thread (unsigned int unitnum)
 
 /**
  * @brief Calculates the routing of a map
- * @sa CheckUnit_Thread
- * @sa CheckConnections_Thread
+ * @sa CheckUnit
+ * @sa CheckConnections
  * @sa ProcessWorldModel
  */
 extern void DoRouting (void)
@@ -251,14 +251,14 @@ extern void DoRouting (void)
 	nummodels += 1;
 
 	/* process actorclip-level */
-	ProcessLevel(NUMMODELS-2);
+	ProcessLevel(NUMMODELS - 2);
 	/* process stepon-level */
 	ProcessLevel(NUMMODELS);
 
 	/* build tracing structure */
 /*	EmitBrushes(); */
 	EmitPlanes();
-	MakeTnodes(NUMMODELS+1);
+	MakeTnodes(NUMMODELS + 1);
 
 	PopInfo();
 	nummodels -= 1;
@@ -281,13 +281,13 @@ extern void DoRouting (void)
 			wpMaxs[i] = ROUTING_NOT_REACHABLE;
 	}
 
-/*	Sys_Printf( "(%i %i %i) (%i %i %i)\n", wpMins[0], wpMins[1], wpMins[2], wpMaxs[0], wpMaxs[1], wpMaxs[2] ); */
+/*	Sys_Printf("(%i %i %i) (%i %i %i)\n", wpMins[0], wpMins[1], wpMins[2], wpMaxs[0], wpMaxs[1], wpMaxs[2]); */
 
 	/* scan area heights */
-	RunThreadsOnIndividual(HEIGHT * WIDTH * WIDTH, !verbose, CheckUnit_Thread);
+	CheckUnit(HEIGHT * WIDTH * WIDTH);
 
 	/* scan connections */
-	RunThreadsOnIndividual(HEIGHT * WIDTH * WIDTH, !verbose, CheckConnections_Thread);
+	CheckConnections(HEIGHT * WIDTH * WIDTH);
 
 	/* store the data */
 	data = droutedata;

@@ -53,7 +53,7 @@ qboolean endofscript; /* extern - qdata */
  * @brief
  * @sa LoadScriptFile
  */
-static void AddScriptToStack (char *filename)
+static void AddScriptToStack (const char *filename)
 {
 	int size;
 
@@ -76,7 +76,7 @@ static void AddScriptToStack (char *filename)
 /**
  * @brief
  */
-extern void LoadScriptFile (char *filename)
+extern void LoadScriptFile (const char *filename)
 {
 	script = scriptstack;
 	AddScriptToStack(filename);

@@ -37,8 +37,7 @@ static portal_t *AllocPortal (void)
 {
 	portal_t	*p;
 
-	if (numthreads == 1)
-		c_active_portals++;
+	c_active_portals++;
 	if (c_active_portals > c_peak_portals)
 		c_peak_portals = c_active_portals;
 
@@ -55,9 +54,8 @@ extern void FreePortal (portal_t *p)
 {
 	if (p->winding)
 		FreeWinding(p->winding);
-	if (numthreads == 1)
-		c_active_portals--;
-	free (p);
+	c_active_portals--;
+	free(p);
 }
 
 /*============================================================== */

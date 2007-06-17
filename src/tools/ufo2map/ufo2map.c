@@ -36,119 +36,107 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 char source[1024];
 char name[1024];
 
-/**< convert function pointer */
-int (*convertFunc) (char *);
 
 /**< BSP2ASE Convert prototype */
 int ConvertBSPToASE (char *bspName);
 
 /**
  * @brief Check for bsping command line parameters
- * @note Some are also used for radiosity (e.g. threads)
+ * @note Some are also used for radiosity
  */
-static void Check_BSP_Parameter (int argc, char **argv)
+static void U2M_BSP_Parameter (int argc, char **argv)
 {
 	int i;
-#if defined(__linux__) || defined(__FreeBSD__) || defined(__NetBSD__)
-	int nice = 0;
-#endif
+
 	for (i = 1; i < argc; i++) {
-		if (!strcmp(argv[i],"-threads")) {
-			numthreads = atoi(argv[i+1]);
-			i++;
-		} else if (!strcmp(argv[i],"-glview"))
-			glview = qtrue;
-		else if (!strcmp(argv[i], "-v")) {
+		if (!strcmp(argv[i], "-v")) {
 			Sys_Printf("verbose = true\n");
-			verbose = qtrue;
+			config.verbose = qtrue;
 		} else if (!strcmp(argv[i], "-draw")) {
 			Sys_Printf("drawflag = true\n");
-			drawflag = qtrue;
+			config.drawflag = qtrue;
 		} else if (!strcmp(argv[i], "-convert")) {
 			Sys_Printf("convert bsp to ase = true\n");
-			convertFunc = ConvertBSPToASE;
+			config.convertFunc = ConvertBSPToASE;
 		} else if (!strcmp(argv[i], "-noweld")) {
 			/* make every point unique */
 			Sys_Printf("noweld = true\n");
-			noweld = qtrue;
+			config.noweld = qtrue;
 		} else if (!strcmp(argv[i], "-nocsg")) {
 			Sys_Printf("nocsg = true\n");
-			nocsg = qtrue;
+			config.nocsg = qtrue;
 		} else if (!strcmp(argv[i], "-noshare")) {
 			Sys_Printf("noshare = true\n");
-			noshare = qtrue;
+			config.noshare = qtrue;
 		} else if (!strcmp(argv[i], "-notjunc")) {
 			Sys_Printf("notjunc = true\n");
-			notjunc = qtrue;
+			config.notjunc = qtrue;
 		} else if (!strcmp(argv[i], "-nowater")) {
 			Sys_Printf("nowater = true\n");
-			nowater = qtrue;
+			config.nowater = qtrue;
 		} else if (!strcmp(argv[i], "-nice")) {
 #if defined(__linux__) || defined(__FreeBSD__) || defined(__NetBSD__)
-			nice = atoi(argv[i+1]);
-			Sys_Printf("nice = %i\n", nice);
-			if (setpriority(PRIO_PROCESS, 0, nice))
-				Sys_Printf("failed to set nice level of %i\n", nice);
+			config.nice = atoi(argv[i+1]);
+			Sys_Printf("nice = %i\n", config.nice);
+			if (setpriority(PRIO_PROCESS, 0, config.nice))
+				Sys_Printf("failed to set nice level of %i\n", config.nice);
 #else
 			Sys_Printf("nice not implemented for this arch\n");
 #endif
 			i++;
-		} else if (!strcmp(argv[i], "-noopt")) {
-			Sys_Printf("noopt = true\n");
-			noopt = qtrue;
 		} else if (!strcmp(argv[i], "-noprune")) {
 			Sys_Printf("noprune = true\n");
-			noprune = qtrue;
+			config.noprune = qtrue;
 		} else if (!strcmp(argv[i], "-nofill")) {
 			Sys_Printf("nofill = true\n");
-			nofill = qtrue;
+			config.nofill = qtrue;
 		} else if (!strcmp(argv[i], "-nomerge")) {
 			Sys_Printf("nomerge = true\n");
-			nomerge = qtrue;
+			config.nomerge = qtrue;
 		} else if (!strcmp(argv[i], "-nosubdiv")) {
 			Sys_Printf("nosubdiv = true\n");
-			nosubdiv = qtrue;
+			config.nosubdiv = qtrue;
 		} else if (!strcmp(argv[i], "-nodetail")) {
 			Sys_Printf("nodetail = true\n");
-			nodetail = qtrue;
+			config.nodetail = qtrue;
 		} else if (!strcmp(argv[i], "-fulldetail")) {
 			Sys_Printf("fulldetail = true\n");
-			fulldetail = qtrue;
+			config.fulldetail = qtrue;
 		} else if (!strcmp(argv[i], "-onlyents")) {
 			Sys_Printf("onlyents = true\n");
-			onlyents = qtrue;
+			config.onlyents = qtrue;
 		} else if (!strcmp(argv[i], "-micro")) {
-			microvolume = atof(argv[i+1]);
-			Sys_Printf("microvolume = %f\n", microvolume);
+			config.microvolume = atof(argv[i + 1]);
+			Sys_Printf("microvolume = %f\n", config.microvolume);
 			i++;
 		} else if (!strcmp(argv[i], "-verboseentities")) {
 			Sys_Printf("verboseentities = true\n");
-			verboseentities = qtrue;
+			config.verboseentities = qtrue;
 		} else if (!strcmp(argv[i], "-chop")) {
-			subdivide_size = atof(argv[i+1]);
-			Sys_Printf("subdivide_size = %f\n", subdivide_size);
+			config.subdivideSize = atof(argv[i + 1]);
+			Sys_Printf("subdivide_size = %f\n", config.subdivideSize);
 			i++;
 		} else if (!strcmp(argv[i], "-block")) {
-			block_xl = block_xh = atoi(argv[i+1]);
-			block_yl = block_yh = atoi(argv[i+2]);
-			Sys_Printf("block: %i,%i\n", block_xl, block_yl);
-			i+=2;
+			config.block_xl = config.block_xh = atoi(argv[i + 1]);
+			config.block_yl = config.block_yh = atoi(argv[i + 2]);
+			Sys_Printf("block: %i,%i\n", config.block_xl, config.block_yl);
+			i += 2;
 		} else if (!strcmp(argv[i], "-blocks")) {
-			block_xl = atoi(argv[i+1]);
-			block_yl = atoi(argv[i+2]);
-			block_xh = atoi(argv[i+3]);
-			block_yh = atoi(argv[i+4]);
+			config.block_xl = atoi(argv[i + 1]);
+			config.block_yl = atoi(argv[i + 2]);
+			config.block_xh = atoi(argv[i + 3]);
+			config.block_yh = atoi(argv[i + 4]);
 			Sys_Printf("blocks: %i,%i to %i,%i\n",
-				block_xl, block_yl, block_xh, block_yh);
-			i+=4;
+				config.block_xl, config.block_yl, config.block_xh, config.block_yh);
+			i += 4;
 		} else if (!strcmp (argv[i],"-tmpout"))
-			strcpy (outbase, "/tmp");
+			strcpy(outbase, "/tmp");
 		else if (!strcmp (argv[i],"-norouting")) {
 			Sys_Printf("norouting = true\n");
-			norouting = qtrue;
+			config.norouting = qtrue;
 		} else if (!strcmp(argv[i], "-nobackclip")) {
 			Sys_Printf("nobackclip = true\n");
-			nobackclip = qtrue;
+			config.nobackclip = qtrue;
 		}
 	}
 }
@@ -156,51 +144,70 @@ static void Check_BSP_Parameter (int argc, char **argv)
 /**
  * @brief Check for radiosity command line parameters
  */
-static void Check_RAD_Parameter (int argc, char** argv)
+static void U2M_RAD_Parameter (int argc, char** argv)
 {
 	int i;
 	for (i = 1; i < argc; i++) {
 		if (!strcmp(argv[i],"-dump"))
-			dumppatches = qtrue;
+			config.dumppatches = qtrue;
 		else if (!strcmp(argv[i],"-bounce")) {
-			numbounce = atoi (argv[i+1]);
-			Sys_Printf("light bounces = %i\n", numbounce);
+			config.numbounce = atoi(argv[i + 1]);
+			Sys_Printf("light bounces = %i\n", config.numbounce);
 			i++;
 		} else if (!strcmp(argv[i],"-extra")) {
-			extrasamples = qtrue;
+			config.extrasamples = qtrue;
 			Sys_Printf("extrasamples = true\n");
 		} else if (!strcmp(argv[i],"-chop")) {
-			subdiv = atoi (argv[i+1]);
+			config.subdiv = atoi(argv[i + 1]);
 			i++;
 		} else if (!strcmp(argv[i],"-quant")) {
-			lightquant = atoi (argv[i+1]);
-			if (lightquant < 1 || lightquant > 6) {
-				lightquant = 3;
+			config.lightquant = atoi(argv[i + 1]);
+			if (config.lightquant < 1 || config.lightquant > 6) {
+				config.lightquant = 3;
 				Sys_Printf("lightquant must be between 1 and 6\n");
 			}
 			i++;
 		} else if (!strcmp(argv[i],"-scale")) {
-			lightscale = atof (argv[i+1]);
+			config.lightscale = atof(argv[i + 1]);
 			i++;
 		} else if (!strcmp(argv[i],"-direct")) {
-			direct_scale *= atof(argv[i+1]);
-			Sys_Printf("direct light scaling at %f\n", direct_scale);
+			config.direct_scale *= atof(argv[i + 1]);
+			Sys_Printf("direct light scaling at %f\n", config.direct_scale);
 			i++;
 		} else if (!strcmp(argv[i],"-entity")) {
-			entity_scale *= atof(argv[i+1]);
-			Sys_Printf("entity light scaling at %f\n", entity_scale);
+			config.entity_scale *= atof(argv[i + 1]);
+			Sys_Printf("entity light scaling at %f\n", config.entity_scale);
 			i++;
-		} else if (!strcmp(argv[i],"-nopvs")) {
-			nopvs = qtrue;
-			Sys_Printf("nopvs = true\n");
 		} else if (!strcmp(argv[i],"-maxlight")) {
-			maxlight = atof (argv[i+1]) * 128;
+			config.maxlight = atof(argv[i + 1]) * 128;
 			i++;
 		} else if (!strcmp(argv[i], "-noradiosity")) {
 			Sys_Printf("noradiosity = true\n");
-			noradiosity = qtrue;
+			config.noradiosity = qtrue;
 		}
 	}
+}
+
+/**
+ * @brief Set default values
+ */
+static void U2M_SetDefaultConfigValues (void)
+{
+	config.subdivideSize = 240.0f;
+	config.block_xl = -8;
+	config.block_xh = 7;
+	config.block_yl = -8;
+	config.block_yh = 7;
+	config.microvolume = 1.0f;
+	config.subdiv = 64.0f;
+	config.ambient_red = 0.1;
+	config.ambient_green = 0.1;
+	config.ambient_blue = 0.1;
+	config.maxlight = 196;
+	config.lightscale = 1.0;
+	config.lightquant = 3;
+	config.direct_scale = 0.4f;
+	config.entity_scale = 1.0f;
 }
 
 /**
@@ -209,44 +216,36 @@ static void Check_RAD_Parameter (int argc, char** argv)
 int main (int argc, char **argv)
 {
 	double begin, start, end;
-	char path[1024];
 	char out[1024];
 
-	convertFunc = NULL;
+	memset(&config, 0, sizeof(config));
+	U2M_SetDefaultConfigValues();
 
 	Sys_Printf("---- ufo2map %s ----\n", VERSION);
 
-	Check_BSP_Parameter(argc, argv);
-	Check_RAD_Parameter(argc, argv);
+	U2M_BSP_Parameter(argc, argv);
+	U2M_RAD_Parameter(argc, argv);
 
 	if (argc < 2)
-		Error("usage: ufo2map [-threads num] [-convert] [-glview] [-nice prio] [-v] [-draw] [-noweld] [-nocsg] [-noshare] [-notjunc] [-nowater] [-noopt] [-noprune] [-nofill] [-nomerge] [-nosubdiv] [-nodetail] [-fulldetail] [-onlyents] [-micro float] [-verboseentities] [-chop] [-block num num] [-blocks num num num num] [-tmpout] [-norouting] [-nobackclip] [-extra] [-noradiosity] mapfile");
+		Error("usage: ufo2map [-convert] [-nice prio] [-v] [-draw] [-noweld] [-nocsg] [-noshare] [-notjunc] [-nowater] [-noprune] [-nofill] [-nomerge] [-nosubdiv] [-nodetail] [-fulldetail] [-onlyents] [-micro float] [-verboseentities] [-chop] [-block num num] [-blocks num num num num] [-tmpout] [-norouting] [-nobackclip] [-extra] [-noradiosity] mapfile");
 
 	start = I_FloatTime();
 
-	ThreadSetDefault();
-	numthreads = 1;		/* multiple threads aren't helping... */
-	Sys_Printf("path: '%s'\n", argv[argc-1]);
-	SetQdirFromPath(argv[argc-1]);
+	Sys_Printf("path: '%s'\n", argv[argc - 1]);
+	SetQdirFromPath(argv[argc - 1]);
 
-	strcpy(source, ExpandArg(argv[argc-1]));
+	strcpy(source, ExpandArg(argv[argc - 1]));
 	StripExtension(source);
 
-	/* delete portal and line files */
-	sprintf(path, "%s.prt", source);
-	remove(path);
-	sprintf(path, "%s.lin", source);
-	remove(path);
-
-	strcpy(name, ExpandArg(argv[argc-1]));
+	strcpy(name, ExpandArg(argv[argc - 1]));
 	DefaultExtension(name, ".map");
 
 	sprintf(out, "%s.bsp", source);
 
 	Sys_Printf("...map: '%s'\n...bsp: '%s'\n", name, out);
 
-	/* if onlyents, just grab the entites and resave */
-	if (onlyents) {
+	/* if onlyents just grab the entites and resave */
+	if (config.onlyents) {
 		LoadBSPFile(out);
 		num_entities = 0;
 
@@ -257,8 +256,8 @@ int main (int argc, char **argv)
 		UnparseEntities();
 
 		WriteBSPFile(out);
-	} else if (convertFunc) {
-		convertFunc(source);
+	} else if (config.convertFunc) {
+		config.convertFunc(source);
 	} else {
 		/* start from scratch */
 		LoadMapFile(name);
@@ -268,10 +267,10 @@ int main (int argc, char **argv)
 		ProcessModels();
 	}
 
-	end = I_FloatTime ();
+	end = I_FloatTime();
 	Sys_Printf("%5.0f seconds elapsed\n", end-start);
 
-	if (!convertFunc && !onlyents && !noradiosity) {
+	if (!config.convertFunc && !config.onlyents && !config.noradiosity) {
 		Sys_Printf("----- Radiosity ----\n");
 
 		begin = start;

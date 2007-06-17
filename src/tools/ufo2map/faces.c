@@ -233,7 +233,7 @@ static void EmitFaceVertexes (node_t *node, face_t *f)
 	w = f->w;
 	for (i = 0; i < w->numpoints; i++) {
 		/* make every point unique */
-		if (noweld) {
+		if (config.noweld) {
 			if (numvertexes == MAX_MAP_VERTS)
 				Error("MAX_MAP_VERTS (%i)", numvertexes);
 			superverts[i] = numvertexes;
@@ -242,12 +242,12 @@ static void EmitFaceVertexes (node_t *node, face_t *f)
 			c_uniqueverts++;
 			c_totalverts++;
 		} else
-			superverts[i] = GetVertexnum (w->p[i]);
+			superverts[i] = GetVertexnum(w->p[i]);
 	}
 	numsuperverts = w->numpoints;
 
 	/* this may fragment the face if > MAXEDGES */
-	FaceFromSuperverts (node, f, 0);
+	FaceFromSuperverts(node, f, 0);
 }
 
 /**
@@ -262,10 +262,10 @@ static void EmitVertexes_r (node_t *node)
 		return;
 
 	for (f = node->faces; f; f = f->next)
-		EmitFaceVertexes (node, f);
+		EmitFaceVertexes(node, f);
 
 	for (i = 0; i < 2; i++)
-		EmitVertexes_r (node->children[i]);
+		EmitVertexes_r(node->children[i]);
 }
 
 
@@ -307,11 +307,11 @@ static void FindEdgeVerts (vec3_t v1, vec3_t v2)
  */
 static void FindEdgeVerts (vec3_t v1, vec3_t v2)
 {
-	int		i;
+	int i;
 
-	num_edge_verts = numvertexes-1;
+	num_edge_verts = numvertexes - 1;
 	for (i = 0; i < num_edge_verts; i++)
-		edge_verts[i] = i+1;
+		edge_verts[i] = i + 1;
 }
 #endif
 
@@ -468,7 +468,7 @@ extern void FixTjuncs (node_t *headnode)
 	c_degenerate = 0;
 	c_facecollapse = 0;
 	c_tjunctions = 0;
-	if (!notjunc)
+	if (!config.notjunc)
 		FixEdges_r(headnode);
 	Sys_FPrintf(SYS_VRB, "%5i edges degenerated\n", c_degenerate);
 	Sys_FPrintf(SYS_VRB, "%5i faces degenerated\n", c_facecollapse);
@@ -535,7 +535,7 @@ extern int GetEdge2 (int v1, int v2,  face_t *f)
 
 	c_tryedges++;
 
-	if (!noshare) {
+	if (!config.noshare) {
 		for (i = firstmodeledge; i < numedges; i++) {
 			edge = &dedges[i];
 			if (v1 == edge->v[1] && v2 == edge->v[0]
@@ -771,9 +771,9 @@ static void SubdivideFace (node_t *node, face_t *f)
 			}
 			/* allow double high walls */
 			if (axis == 2) {
-				if (maxs - mins <= subdivide_size/* *2 */)
+				if (maxs - mins <= config.subdivideSize)
 					break;
-			} else if (maxs - mins <= subdivide_size)
+			} else if (maxs - mins <= config.subdivideSize)
 				break;
 
 			/* split it */
@@ -781,7 +781,7 @@ static void SubdivideFace (node_t *node, face_t *f)
 
 			v = VectorNormalize(temp, temp);
 
-			dist = (mins + subdivide_size - 16)/v;
+			dist = (mins + config.subdivideSize - 16) / v;
 
 			ClipWindingEpsilon(w, temp, dist, ON_EPSILON, &frontw, &backw);
 			if (!frontw || !backw)
@@ -845,7 +845,7 @@ static face_t *FaceFromPortal (portal_t *p, int pside)
 		return NULL;	/* don't show insides of windows */
 
 	/* do back-clipping */
-	if (!nobackclip && mapplanes[f->planenum].normal[2] < -0.9)
+	if (!config.nobackclip && mapplanes[f->planenum].normal[2] < -0.9)
 		return NULL;
 
 	if (texinfo[f->texinfo].flags & SURF_NODRAW)
@@ -880,9 +880,9 @@ static void MakeFaces_r (node_t *node)
 		MakeFaces_r(node->children[1]);
 
 		/* merge together all visible faces on the node */
-		if (!nomerge)
+		if (!config.nomerge)
 			MergeNodeFaces(node);
-		if (!nosubdiv)
+		if (!config.nosubdiv)
 			SubdivideNodeFaces(node);
 
 		return;
