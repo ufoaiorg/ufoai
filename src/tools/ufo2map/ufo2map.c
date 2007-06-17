@@ -227,7 +227,41 @@ int main (int argc, char **argv)
 	U2M_RAD_Parameter(argc, argv);
 
 	if (argc < 2)
-		Error("usage: ufo2map [-convert] [-nice prio] [-v] [-draw] [-noweld] [-nocsg] [-noshare] [-notjunc] [-nowater] [-noprune] [-nofill] [-nomerge] [-nosubdiv] [-nodetail] [-fulldetail] [-onlyents] [-micro float] [-verboseentities] [-chop] [-block num num] [-blocks num num num num] [-tmpout] [-norouting] [-nobackclip] [-extra] [-noradiosity] mapfile");
+		Error("Usage: ufo2map <parameter> [map]\n"
+		" -bounce <num>            : light bounces\n"
+		" -block num num           : \n"
+		" -blocks num num num num  : \n"
+		" -chop                    : \n"
+		" -convert                 : \n"
+		" -direct                  : \n"
+		" -draw                    : \n"
+		" -dump                    : \n"
+		" -extra                   : extra light samples\n"
+		" -entity                  : \n"
+		" -fulldetail              : don't treat details (and trans surfaces) as details\n"
+		" -maxlight                : \n"
+		" -micro <float>           : \n"
+		" -nice <prio>             : priority level\n"
+		" -nobackclip              : \n"
+		" -nocsg                   : \n"
+		" -nodetail                : \n"
+		" -nofill                  : \n"
+		" -nomerge                 : \n"
+		" -noprune                 : \n"
+		" -norouting               : \n"
+		" -nosubdiv                : \n"
+		" -noshare                 : \n"
+		" -notjunc                 : \n"
+		" -nowater                 : \n"
+		" -noweld                  : \n"
+		" -noradiosity             : don't perform the radiosity calculations\n"
+		" -onlyents                : \n"
+		" -quant                   : lightquant\n"
+		" -scale                   : lightscale\n"
+		" -tmpout                  : \n"
+		" -v                       : verbose output\n"
+		" -verboseentities         : also be verbose about submodels (entities)\n"
+	);
 
 	start = I_FloatTime();
 
