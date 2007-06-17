@@ -85,7 +85,7 @@ void Inverse16_BuildTable( void )
 	}
 }
 
-void Alphalight (unsigned int i)
+static void Alphalight (unsigned int i)
 {
 	int		j;
 	float	r, g, b;
@@ -122,7 +122,8 @@ void Alphalight (unsigned int i)
 
 void Cmd_Alphalight (void)
 {
-	char	savename[1024];
+	char savename[1024];
+	unsigned int i;
 
 	GetToken (qfalse);
 
@@ -134,7 +135,8 @@ void Cmd_Alphalight (void)
 	sprintf(savename, "%s%s", gamedir, token);
 	printf("Building alphalight table...\n");
 
-	Alphalight(32*32*32);
+	for (i = 0; i < 32 * 32 * 32; i++)
+		Alphalight(i);
 
 	SaveFile(savename, (byte *)alphamap, sizeof(alphamap));
 }

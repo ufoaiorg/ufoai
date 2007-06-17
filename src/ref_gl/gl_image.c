@@ -2280,7 +2280,7 @@ void GL_FreeUnusedImages (void)
 		if (image->type == it_pic || image->type == it_wrappic)
 			continue;			/* fix this! don't free pics */
 		/* free it */
-		qglDeleteTextures(1, (GLuint *) & image->texnum);
+		qglDeleteTextures(1, (GLuint *) &image->texnum);
 		memset(image, 0, sizeof(*image));
 	}
 }
