@@ -44,6 +44,7 @@ static void ProcessWorldModel (void)
 	brush_end = brush_start + e->numbrushes;
 
 	ClearBounds(worldMins, worldMaxs);
+	nummodels = NUMMODELS;
 
 	/* process levels */
 	U2M_ProgressBar(ProcessLevel, NUMMODELS, qtrue, "LEVEL");
