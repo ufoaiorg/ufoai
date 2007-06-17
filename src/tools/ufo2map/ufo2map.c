@@ -157,13 +157,13 @@ static void U2M_RAD_Parameter (int argc, char** argv)
 		} else if (!strcmp(argv[i],"-extra")) {
 			config.extrasamples = qtrue;
 			Sys_Printf("extrasamples = true\n");
-		} else if (!strcmp(argv[i],"-chop")) {
+		} else if (!strcmp(argv[i],"-radchop")) {
 			config.subdiv = atoi(argv[i + 1]);
 			i++;
 		} else if (!strcmp(argv[i],"-quant")) {
 			config.lightquant = (byte)atoi(argv[i + 1]);
 			if (config.lightquant < 1 || config.lightquant > 6) {
-				config.lightquant = 3;
+				config.lightquant = 4;
 				Sys_Printf("lightquant must be between 1 and 6\n");
 			}
 			i++;
@@ -205,7 +205,7 @@ static void U2M_SetDefaultConfigValues (void)
 	config.ambient_blue = 0.1;
 	config.maxlight = 196;
 	config.lightscale = 1.0;
-	config.lightquant = 3;
+	config.lightquant = 4;
 	config.direct_scale = 0.4f;
 	config.entity_scale = 1.0f;
 }
@@ -257,6 +257,7 @@ int main (int argc, char **argv)
 		" -noradiosity             : don't perform the radiosity calculations\n"
 		" -onlyents                : \n"
 		" -quant                   : lightquant\n"
+		" -radchop                 : \n"
 		" -scale                   : lightscale\n"
 		" -tmpout                  : \n"
 		" -v                       : verbose output\n"
