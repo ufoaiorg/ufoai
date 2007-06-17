@@ -193,7 +193,7 @@ static void U2M_RAD_Parameter (int argc, char** argv)
  */
 static void U2M_SetDefaultConfigValues (void)
 {
-	config.subdivideSize = 240.0f;
+	config.subdivideSize = 2048.0f;
 	config.block_xl = -8;
 	config.block_xh = 7;
 	config.block_yl = -8;

@@ -660,10 +660,10 @@ static void ParseBrush (entity_t *mapent)
 	/* create windings for sides and bounds for brush */
 	MakeBrushWindings (b);
 
-#if 0
+#if 1
 	/* brushes that will not be visible at all will never be */
 	/* used as bsp splitters */
-	if (b->contents & (CONTENTS_ACTORCLIP|CONTENTS_MONSTERCLIP)) {
+	if (b->contents & (CONTENTS_ACTORCLIP|CONTENTS_WEAPONCLIP)) {
 		c_clipbrushes++;
 		for (i = 0; i < b->numsides; i++)
 			b->original_sides[i].texinfo = TEXINFO_NODE;

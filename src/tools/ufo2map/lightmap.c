@@ -437,7 +437,7 @@ LIGHTMAP SAMPLE GENERATION
 */
 
 
-#define	SINGLEMAP	(256*256)
+#define	SINGLEMAP	(128 * 128 * 4)
 
 typedef struct {
 	vec_t	facedist;
