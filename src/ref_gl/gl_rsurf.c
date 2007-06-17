@@ -386,7 +386,7 @@ static void R_RenderBrushPoly (msurface_t * fa)
 			smax = (fa->extents[0] >> fa->lquant) + 1;
 			tmax = (fa->extents[1] >> fa->lquant) + 1;
 
-			R_BuildLightMap(fa, (void *) temp, smax * 4);
+			R_BuildLightMap(fa, (byte *) temp, smax * 4);
 			R_SetCacheState(fa);
 
 			GL_Bind(gl_state.lightmap_textures + fa->lightmaptexturenum);
@@ -508,7 +508,7 @@ static void GL_RenderLightmappedPoly (msurface_t * surf)
 			smax = (surf->extents[0] >> surf->lquant) + 1;
 			tmax = (surf->extents[1] >> surf->lquant) + 1;
 
-			R_BuildLightMap(surf, (void *) temp, smax * 4);
+			R_BuildLightMap(surf, (byte *) temp, smax * 4);
 			R_SetCacheState(surf);
 
 			GL_MBind(gl_texture1, gl_state.lightmap_textures + surf->lightmaptexturenum);
@@ -521,7 +521,7 @@ static void GL_RenderLightmappedPoly (msurface_t * surf)
 			smax = (surf->extents[0] >> surf->lquant) + 1;
 			tmax = (surf->extents[1] >> surf->lquant) + 1;
 
-			R_BuildLightMap(surf, (void *) temp, smax * 4);
+			R_BuildLightMap(surf, (byte *) temp, smax * 4);
 
 			GL_MBind(gl_texture1, gl_state.lightmap_textures + 0);
 
@@ -1026,6 +1026,7 @@ extern void GL_BuildPolygonFromSurface (msurface_t * fa, int shift[3])
 
 /**
  * @brief
+ * @sa Mod_LoadFaces
  */
 void GL_CreateSurfaceLightmap (msurface_t * surf)
 {
