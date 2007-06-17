@@ -211,9 +211,9 @@ extern void AIR_ListAircraft_f (void)
 				Com_Printf("%i ", aircraft->stats[k]);
 			Com_Printf("\n");
 			Com_Printf("...name %s\n", aircraft->id);
-			Com_Printf("...speed %i\n", aircraft->stats[AIR_STATS_SPEED]);
 			Com_Printf("...type %i\n", aircraft->type);
 			Com_Printf("...size %i\n", aircraft->size);
+			Com_Printf("...fuel %i\n", aircraft->fuel);
 			Com_Printf("...status %s\n", AIR_AircraftStatusToName(aircraft));
 			Com_Printf("...pos %.0f:%.0f\n", aircraft->pos[0], aircraft->pos[1]);
 			Com_Printf("...team: (%i/%i)\n", *aircraft->teamSize, aircraft->size);
