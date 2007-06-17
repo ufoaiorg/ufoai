@@ -92,7 +92,7 @@ typedef struct msurface_s {
 
 	int light_s, light_t;		/**< gl lightmap coordinates */
 	int dlight_s, dlight_t;		/**< gl lightmap coordinates for dynamic lightmaps */
-	int lquant;
+	byte lquant;
 
 	glpoly_t *polys;			/* multiple if warped */
 	struct msurface_s *texturechain;
@@ -227,7 +227,7 @@ typedef struct model_s {
 	int numnormals;			/**< number of normal vectors */
 	mnormals_t *normals;
 
-	int lightquant;
+	byte lightquant;
 	byte *lightdata;
 
 	/** for alias models and skins */

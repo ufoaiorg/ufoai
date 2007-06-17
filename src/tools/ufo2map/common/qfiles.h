@@ -63,7 +63,7 @@ typedef struct mapConfig_s {
 	float ambient_blue;
 	float maxlight;
 	float lightscale;
-	int lightquant;
+	byte lightquant;
 	float direct_scale;
 	float entity_scale;
 } mapConfig_t;

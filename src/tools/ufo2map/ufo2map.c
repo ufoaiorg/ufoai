@@ -161,7 +161,7 @@ static void U2M_RAD_Parameter (int argc, char** argv)
 			config.subdiv = atoi(argv[i + 1]);
 			i++;
 		} else if (!strcmp(argv[i],"-quant")) {
-			config.lightquant = atoi(argv[i + 1]);
+			config.lightquant = (byte)atoi(argv[i + 1]);
 			if (config.lightquant < 1 || config.lightquant > 6) {
 				config.lightquant = 3;
 				Sys_Printf("lightquant must be between 1 and 6\n");
