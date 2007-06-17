@@ -8,7 +8,7 @@ of the License, or (at your option) any later version.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 See the GNU General Public License for more details.
 
@@ -19,35 +19,35 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 #include "../../ref_gl/gl_local.h"
 
-void GLimp_BeginFrame( float camera_separation )
+void GLimp_BeginFrame (float camera_separation)
 {
 }
 
-void GLimp_EndFrame( void )
+void GLimp_EndFrame (void)
 {
 }
 
-int GLimp_Init( void *hinstance, void *hWnd )
+int GLimp_Init (void *hinstance, void *hWnd)
 {
 }
 
-void GLimp_Shutdown( void )
+void GLimp_Shutdown (void)
 {
 }
 
-int GLimp_SetMode( int *pwidth, int *pheight, int mode, qboolean fullscreen )
+int GLimp_SetMode (int *pwidth, int *pheight, int mode, qboolean fullscreen)
 {
 }
 
-void GLimp_AppActivate( qboolean active )
+void GLimp_AppActivate (qboolean active)
 {
 }
 
-void GLimp_EnableLogging( qboolean enable )
+void GLimp_EnableLogging (qboolean enable)
 {
 }
 
-void GLimp_LogNewFrame( void )
+void GLimp_LogNewFrame (void)
 {
 }
 

@@ -878,10 +878,6 @@ static void R_RenderView (refdef_t * fd)
 
 	/* apply 2d bloom effect */
 	GL_BloomBlend();
-
-	if (r_speeds->value) {
-		ri.Con_Printf(PRINT_ALL, "%4i wpoly %4i epoly %i tex %i lmaps\n", c_brush_polys, c_alias_polys, c_visible_textures, c_visible_lightmaps);
-	}
 }
 
 #if 0
@@ -927,11 +923,19 @@ static void R_SetGL2D (void)
 
 /**
  * @brief
+ * @sa R_BeginFrame
+ * @sa GLimp_EndFrame
+ * @sa GLimp_StartFrame
  */
 static void R_RenderFrame (refdef_t * fd)
 {
 	R_RenderView(fd);
 	R_SetGL2D();
+
+	if (r_speeds->integer) {
+		fd->c_brush_polys = c_brush_polys;
+		fd->c_alias_polys = c_alias_polys;
+	}
 }
 
 static const cmdList_t r_commands[] = {
@@ -1489,6 +1493,8 @@ static void R_Shutdown (void)
 
 /**
  * @brief
+ * @sa R_RenderFrame
+ * @sa GLimp_BeginFrame
  */
 static void R_BeginFrame (float camera_separation)
 {
@@ -1694,7 +1700,7 @@ void Com_Printf (const char *fmt, ...)
 /**
  * @brief
  */
-void Com_DPrintf(const char *fmt, ...)
+void Com_DPrintf (const char *fmt, ...)
 {
 	va_list argptr;
 	char text[1024];

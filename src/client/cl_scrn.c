@@ -55,6 +55,7 @@ static cvar_t *scr_debuggraph;
 static cvar_t *scr_graphheight;
 static cvar_t *scr_graphscale;
 static cvar_t *scr_graphshift;
+static cvar_t *scr_rspeed;
 
 static char cursor_pic[MAX_QPATH];
 
@@ -313,6 +314,7 @@ void SCR_Init (void)
 	scr_graphheight = Cvar_Get("graphheight", "32", 0, NULL);
 	scr_graphscale = Cvar_Get("graphscale", "1", 0, NULL);
 	scr_graphshift = Cvar_Get("graphshift", "0", 0, NULL);
+	scr_rspeed = Cvar_Get("r_speeds", "0", 0, NULL);
 
 	/* register our commands */
 	Cmd_AddCommand("timerefresh", SCR_TimeRefresh_f, NULL);
@@ -746,6 +748,8 @@ void SCR_UpdateScreen (void)
 
 		if (cl_fps->integer)
 			SCR_DrawString(viddef.width - 80, 4, va("fps: %3.1f", cls.framerate), qtrue);
+		if (cls.state == ca_active && scr_rspeed->integer)
+			SCR_DrawString(viddef.width - 240, 20, va("brushes: %6i alias: %6i\n", cl.refdef.c_brush_polys, cl.refdef.c_alias_polys), qtrue);
 
 		if (scr_timegraph->integer)
 			SCR_DebugGraph(cls.frametime * 300, 0);

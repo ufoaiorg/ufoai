@@ -626,11 +626,11 @@ void V_RenderView (float stereo_separation)
 
 	/* render the frame */
 	re.RenderFrame(&cl.refdef);
-	if (cl_stats->value)
+	if (cl_stats->integer)
 		Com_Printf("ent:%i  lt:%i\n", r_numentities, r_numdlights);
-	if (log_stats->value && (log_stats_file != 0))
+	if (log_stats->integer && (log_stats_file != 0))
 		fprintf(log_stats_file, "%i,%i,", r_numentities, r_numdlights);
-	if (cl_drawgrid->value)
+	if (cl_drawgrid->integer)
 		CL_DrawGrid();
 
 	if (cls.state == ca_sequence)
