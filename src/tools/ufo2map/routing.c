@@ -72,7 +72,7 @@ static void CheckUnit (unsigned int unitnum)
 	/* test bounds */
 	if (x > wpMaxs[0] || y > wpMaxs[1] || z > wpMaxs[2]
 			|| x < wpMins[0] || y < wpMins[1] || z < wpMins[2]) {
-		/* don't enter */
+		/* don't enter - outside world */
 		fall[y][x] |= 1 << z;
 		return;
 	}
@@ -251,7 +251,7 @@ extern void DoRouting (void)
 	nummodels += 1;
 
 	/* process actorclip-level */
-	ProcessLevel(NUMMODELS - 2);
+	ProcessLevel(NUMMODELS - 1);
 	/* process stepon-level */
 	ProcessLevel(NUMMODELS);
 

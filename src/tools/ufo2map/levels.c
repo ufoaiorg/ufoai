@@ -226,7 +226,8 @@ static int ConstructLevelNodes_r (int levelnum, vec3_t cmins, vec3_t cmaxs)
  * @brief process brushes with that level mask
  * @param[in] levelnum is the level mask
  * @note levelnum
- * 256: actorclip-level
+ * 256: weaponclip-level
+ * 257: actorclip-level
  * 258: stepon-level
  * 259: tracing structure
  * @sa ProcessWorldModel

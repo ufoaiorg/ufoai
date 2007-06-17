@@ -206,7 +206,7 @@ static void FaceFromSuperverts (node_t *node, face_t *f, int base)
 		node->faces = f;
 
 		remaining -= (MAXEDGES - 2);
-		base = (base+MAXEDGES - 1) % numsuperverts;
+		base = (base + MAXEDGES - 1) % numsuperverts;
 	}
 
 	/* copy the vertexes back to the face */

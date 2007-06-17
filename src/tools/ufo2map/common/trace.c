@@ -322,6 +322,14 @@ int TestLine (const vec3_t start, const vec3_t stop)
 
 /**
  * @brief
+ * @param[in] start
+ * @param[in] stop
+ * @param[in] levels don't check levels higher than 255 + levels
+ * @note levels:
+ * 256: weaponclip-level
+ * 257: actorclip-level
+ * 258: stepon-level
+ * 259: tracing structure
  */
 int TestLineMask (const vec3_t start, const vec3_t stop, int levels)
 {

@@ -164,7 +164,7 @@ static qboolean IsInLevel (int contents, int level)
 	/* special levels */
 
 	/* weaponclip */
-	if (level == NUMMODELS-2) {
+	if (level == NUMMODELS - 2) {
 		if (contents & CONTENTS_WEAPONCLIP)
 			return qtrue;
 		else
@@ -172,7 +172,7 @@ static qboolean IsInLevel (int contents, int level)
 	}
 
 	/* actorclip */
-	if (level == NUMMODELS-1) {
+	if (level == NUMMODELS - 1) {
 		if (contents & CONTENTS_ACTORCLIP)
 			return qtrue;
 		else
