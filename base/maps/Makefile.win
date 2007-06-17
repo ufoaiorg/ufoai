@@ -1,12 +1,22 @@
 MAPSDIR = .
 
+UFO2MAP = ufo2map.exe
+
 MAPSRCS = $(shell dir /S/B $(MAPSDIR)\*.map) # Windows version. TODO still needs the "tutorial*" and "prefab*" excluded.
 BSPS = $(MAPSRCS:%.map=%.bsp)
 
-QRAD3FLAGS = -bounce 0 -chop 32 -extra
+UFO2MAPFLAGS = -extra
+FAST_UFO2MAPFLAGS =
 
 all: $(BSPS)
 	echo $(MAPSRCS)
 
+fast:
+	$(MAKE) all UFO2MAPFLAGS="$(FAST_UFO2MAPFLAGS)"
+
+clean:
+	echo "Delete files in subdirs manually"
+	del *.bsp
+
 $(BSPS): %.bsp: %.map
-	ufo2map $(QRAD3FLAGS) "$<"
+	$(UFO2MAP) $(UFO2MAPFLAGS) "$<"

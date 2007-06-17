@@ -5,8 +5,8 @@ UFO2MAP = ../../ufo2map
 MAPSRCS = $(shell find $(MAPSDIR) -name '*.map' \! -name 'tutorial*' \! -name '*autosave*' \! -name 'prefab*' \! -name 'test*' )
 BSPS = $(MAPSRCS:.map=.bsp)
 
-UFO2MAPFLAGS = -nice 19 -extra -bounce 0
-FAST_UFO2MAPFLAGS = -nice 19 -bounce 0
+UFO2MAPFLAGS = -nice 19 -extra
+FAST_UFO2MAPFLAGS = -nice 19
 
 all: $(BSPS)
 
