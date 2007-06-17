@@ -2,7 +2,7 @@
 SRCDIR=src
 
 CFLAGS+=-DHAVE_CONFIG_H -Wall -pipe -Winline -Wcast-qual -Wcast-align -ansi \
-	-Wdeclaration-after-statement -Wunsafe-loop-optimizations
+	-Wdeclaration-after-statement
 #	-fstack-protector-all -Wstack-protector
 #	-Wfloat-equal -Wconversion -Wunreachable-code -Wbad-function-cast \
 #	-Wshadow -Wpointer-arith -Wmissing-prototypes -Wmissing-declarations \
