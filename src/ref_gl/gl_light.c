@@ -276,7 +276,7 @@ extern void R_BuildLightMap (msurface_t * surf, byte * dest, int stride)
 	tmax = (surf->extents[1] >> surf->lquant) + 1;
 	size = smax * tmax;
 	if (size > (sizeof(s_blocklights) >> surf->lquant))
-		ri.Sys_Error(ERR_DROP, "Bad s_blocklights size");
+		ri.Sys_Error(ERR_DROP, "Bad s_blocklights size (%i) - should be %i (lquant: %i)", size, (sizeof(s_blocklights) >> surf->lquant), surf->lquant);
 
 	/* set to full bright if no light data */
 	if (!surf->samples) {
