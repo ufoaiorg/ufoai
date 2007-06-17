@@ -84,9 +84,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\ufo2map\common\scriplib.h" />
-		<Unit filename="..\..\src\tools\ufo2map\common\threads.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\..\src\tools\ufo2map\common\trace.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -97,9 +94,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\ufo2map\faces.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\tools\ufo2map\glfile.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\tools\ufo2map\levels.c">

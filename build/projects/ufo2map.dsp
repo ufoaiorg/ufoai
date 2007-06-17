@@ -111,10 +111,6 @@ SOURCE=..\..\src\tools\ufo2map\faces.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\tools\ufo2map\glfile.c
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\src\qcommon\ioapi.c
 # End Source File
 # Begin Source File
@@ -172,10 +168,6 @@ SOURCE=..\..\src\tools\ufo2map\common\scriplib.c
 # Begin Source File
 
 SOURCE=..\..\src\tools\ufo2map\textures.c
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\tools\ufo2map\common\threads.c
 # End Source File
 # Begin Source File
 
@@ -240,10 +232,6 @@ SOURCE=..\..\src\tools\ufo2map\qrad.h
 # Begin Source File
 
 SOURCE=..\..\src\tools\ufo2map\common\scriplib.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\tools\ufo2map\common\threads.h
 # End Source File
 # Begin Source File
 

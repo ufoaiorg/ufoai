@@ -135,10 +135,6 @@ SOURCE=..\..\src\tools\qdata\tables.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\tools\ufo2map\common\threads.c
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\src\tools\qdata\common\trilib.c
 # End Source File
 # Begin Source File
@@ -184,10 +180,6 @@ SOURCE=..\..\src\tools\ufo2map\common\qfiles.h
 # Begin Source File
 
 SOURCE=..\..\src\tools\ufo2map\common\scriplib.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\tools\ufo2map\common\threads.h
 # End Source File
 # Begin Source File
 
