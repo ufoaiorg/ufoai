@@ -53,9 +53,6 @@ static vec3_t edge_start;
 static int num_edge_verts;
 static int edge_verts[MAX_MAP_VERTS];
 
-float subdivide_size = 240;
-
-
 static face_t *NewFaceFromFace (face_t *f);
 
 #define	HASH_SIZE	64
@@ -67,17 +64,17 @@ static int hashverts[HASH_SIZE*HASH_SIZE];	/* a vertex number, or 0 for no verts
 /**
  * @brief
  */
-unsigned HashVec (vec3_t vec)
+static unsigned HashVec (vec3_t vec)
 {
 	int			x, y;
 
-	x = (4096 + (int)(vec[0]+0.5)) >> 7;
-	y = (4096 + (int)(vec[1]+0.5)) >> 7;
+	x = (4096 + (int)(vec[0] + 0.5)) >> 7;
+	y = (4096 + (int)(vec[1] + 0.5)) >> 7;
 
 	if ( x < 0 || x >= HASH_SIZE || y < 0 || y >= HASH_SIZE )
-		Error ("HashVec: point outside valid range");
+		Error("HashVec: point outside valid range");
 
-	return y*HASH_SIZE + x;
+	return y * HASH_SIZE + x;
 }
 
 #ifdef USE_HASHING
@@ -102,7 +99,7 @@ static int GetVertexnum (vec3_t in)
 			vert[i] = in[i];
 	}
 
-	h = HashVec (vert);
+	h = HashVec(vert);
 
 	for (vnum = hashverts[h]; vnum; vnum = vertexchain[vnum]) {
 		p = dvertexes[vnum].point;
@@ -114,7 +111,7 @@ static int GetVertexnum (vec3_t in)
 
 	/* emit a vertex */
 	if (numvertexes == MAX_MAP_VERTS)
-		Error ("numvertexes == MAX_MAP_VERTS");
+		Error("numvertexes == MAX_MAP_VERTS");
 
 	dvertexes[numvertexes].point[0] = vert[0];
 	dvertexes[numvertexes].point[1] = vert[1];
@@ -143,10 +140,10 @@ static int GetVertexnum (vec3_t v)
 
 	/* make really close values exactly integral */
 	for (i = 0; i < 3; i++) {
-		if ( fabs(v[i] - (int)(v[i]+0.5)) < INTEGRAL_EPSILON )
-			v[i] = (int)(v[i]+0.5);
+		if (fabs(v[i] - (int)(v[i] + 0.5)) < INTEGRAL_EPSILON)
+			v[i] = (int)(v[i] + 0.5);
 		if (v[i] < -4096 || v[i] > 4096)
-			Error ("GetVertexnum: outside +/- 4096");
+			Error("GetVertexnum: outside +/- 4096");
 	}
 
 	/* search for an existing vertex match */
@@ -163,7 +160,7 @@ static int GetVertexnum (vec3_t v)
 	/* new point */
 	if (numvertexes == MAX_MAP_VERTS)
 		Error("MAX_MAP_VERTS (%i)", numvertexes);
-	VectorCopy (v, dv->point);
+	VectorCopy(v, dv->point);
 	numvertexes++;
 	c_uniqueverts++;
 
@@ -194,28 +191,28 @@ static void FaceFromSuperverts (node_t *node, face_t *f, int base)
 	while (remaining > MAXEDGES) {
 		c_faceoverflows++;
 
-		newf = f->split[0] = NewFaceFromFace (f);
+		newf = f->split[0] = NewFaceFromFace(f);
 		newf = f->split[0];
 		newf->next = node->faces;
 		node->faces = newf;
 
 		newf->numpoints = MAXEDGES;
 		for (i = 0; i < MAXEDGES; i++)
-			newf->vertexnums[i] = superverts[(i+base)%numsuperverts];
+			newf->vertexnums[i] = superverts[(i + base) % numsuperverts];
 
-		f->split[1] = NewFaceFromFace (f);
+		f->split[1] = NewFaceFromFace(f);
 		f = f->split[1];
 		f->next = node->faces;
 		node->faces = f;
 
-		remaining -= (MAXEDGES-2);
-		base = (base+MAXEDGES-1)%numsuperverts;
+		remaining -= (MAXEDGES - 2);
+		base = (base+MAXEDGES - 1) % numsuperverts;
 	}
 
 	/* copy the vertexes back to the face */
 	f->numpoints = remaining;
 	for (i = 0; i < remaining; i++)
-		f->vertexnums[i] = superverts[(i+base)%numsuperverts];
+		f->vertexnums[i] = superverts[(i + base) % numsuperverts];
 }
 
 
@@ -237,7 +234,7 @@ static void EmitFaceVertexes (node_t *node, face_t *f)
 			if (numvertexes == MAX_MAP_VERTS)
 				Error("MAX_MAP_VERTS (%i)", numvertexes);
 			superverts[i] = numvertexes;
-			VectorCopy (w->p[i], dvertexes[numvertexes].point);
+			VectorCopy(w->p[i], dvertexes[numvertexes].point);
 			numvertexes++;
 			c_uniqueverts++;
 			c_totalverts++;
@@ -279,10 +276,10 @@ static void FindEdgeVerts (vec3_t v1, vec3_t v2)
 	int		x, y;
 	int		vnum;
 
-	x1 = (4096 + (int)(v1[0]+0.5)) >> 7;
-	y1 = (4096 + (int)(v1[1]+0.5)) >> 7;
-	x2 = (4096 + (int)(v2[0]+0.5)) >> 7;
-	y2 = (4096 + (int)(v2[1]+0.5)) >> 7;
+	x1 = (4096 + (int)(v1[0] + 0.5)) >> 7;
+	y1 = (4096 + (int)(v1[1] + 0.5)) >> 7;
+	x2 = (4096 + (int)(v2[0] + 0.5)) >> 7;
+	y2 = (4096 + (int)(v2[1] + 0.5)) >> 7;
 
 	if (x1 > x2) {
 		t = x1;
@@ -297,7 +294,7 @@ static void FindEdgeVerts (vec3_t v1, vec3_t v2)
 	num_edge_verts = 0;
 	for (x = x1; x <= x2; x++)
 		for (y = y1; y <= y2; y++)
-			for (vnum = hashverts[y*HASH_SIZE+x]; vnum; vnum = vertexchain[vnum])
+			for (vnum = hashverts[y * HASH_SIZE + x]; vnum; vnum = vertexchain[vnum])
 				edge_verts[num_edge_verts++] = vnum;
 }
 
@@ -343,7 +340,7 @@ static void TestEdge (vec_t start, vec_t end, int p1, int p2, int startvert)
 
 		VectorSubtract(p, edge_start, delta);
 		dist = DotProduct(delta, edge_dir);
-		if (dist <=start || dist >= end)
+		if (dist <= start || dist >= end)
 			continue;		/* off an end */
 		VectorMA(edge_start, dist, edge_dir, exact);
 		VectorSubtract(p, exact, off);
@@ -354,8 +351,8 @@ static void TestEdge (vec_t start, vec_t end, int p1, int p2, int startvert)
 
 		/* break the edge */
 		c_tjunctions++;
-		TestEdge(start, dist, p1, j, k+1);
-		TestEdge(dist, end, j, p2, k+1);
+		TestEdge(start, dist, p1, j, k + 1);
+		TestEdge(dist, end, j, p2, k + 1);
 		return;
 	}
 
@@ -385,7 +382,7 @@ static void FixFaceEdges (node_t *node, face_t *f)
 
 	for (i = 0; i < f->numpoints; i++) {
 		p1 = f->vertexnums[i];
-		p2 = f->vertexnums[(i+1) % f->numpoints];
+		p2 = f->vertexnums[(i + 1) % f->numpoints];
 
 		VectorCopy(dvertexes[p1].point, edge_start);
 		VectorCopy(dvertexes[p2].point, e2);
@@ -459,7 +456,7 @@ extern void FixTjuncs (node_t *headnode)
 	c_totalverts = 0;
 	c_uniqueverts = 0;
 	c_faceoverflows = 0;
-	EmitVertexes_r (headnode);
+	EmitVertexes_r(headnode);
 	Sys_FPrintf(SYS_VRB, "%i unique from %i\n", c_uniqueverts, c_totalverts);
 
 	/* break edges on tjunctions */
@@ -555,7 +552,7 @@ extern int GetEdge2 (int v1, int v2,  face_t *f)
 	numedges++;
 	edge->v[0] = v1;
 	edge->v[1] = v2;
-	edgefaces[numedges-1][0] = f;
+	edgefaces[numedges - 1][0] = f;
 
 	return numedges-1;
 }
@@ -591,10 +588,10 @@ static winding_t *TryMergeWinding (winding_t *f1, winding_t *f2, vec3_t planenor
 
 	for (i = 0; i < f1->numpoints; i++) {
 		p1 = f1->p[i];
-		p2 = f1->p[(i+1) % f1->numpoints];
+		p2 = f1->p[(i + 1) % f1->numpoints];
 		for (j = 0; j < f2->numpoints; j++) {
 			p3 = f2->p[j];
-			p4 = f2->p[(j+1) % f2->numpoints];
+			p4 = f2->p[(j + 1) % f2->numpoints];
 			for (k = 0; k < 3; k++) {
 				if (fabs(p1[k] - p4[k]) > EQUAL_EPSILON)
 					break;
@@ -614,12 +611,12 @@ static winding_t *TryMergeWinding (winding_t *f1, winding_t *f2, vec3_t planenor
 
 	/* check slope of connected lines */
 	/* if the slopes are colinear, the point can be removed */
-	back = f1->p[(i+f1->numpoints-1) % f1->numpoints];
+	back = f1->p[(i + f1->numpoints - 1) % f1->numpoints];
 	VectorSubtract(p1, back, delta);
 	CrossProduct(planenormal, delta, normal);
 	VectorNormalize(normal, normal);
 
-	back = f2->p[(j+2) % f2->numpoints];
+	back = f2->p[(j + 2) % f2->numpoints];
 	VectorSubtract(back, p1, delta);
 	dot = DotProduct(delta, normal);
 	/* not a convex polygon */
@@ -627,7 +624,7 @@ static winding_t *TryMergeWinding (winding_t *f1, winding_t *f2, vec3_t planenor
 		return NULL;
 	keep1 = (qboolean)(dot < -CONTINUOUS_EPSILON);
 
-	back = f1->p[(i+2) % f1->numpoints];
+	back = f1->p[(i + 2) % f1->numpoints];
 	VectorSubtract(back, p2, delta);
 	CrossProduct(planenormal, delta, normal);
 	VectorNormalize(normal, normal);
@@ -644,8 +641,8 @@ static winding_t *TryMergeWinding (winding_t *f1, winding_t *f2, vec3_t planenor
 	newf = AllocWinding(f1->numpoints + f2->numpoints);
 
 	/* copy first polygon */
-	for (k = (i+1) % f1->numpoints; k != i; k = (k+1) % f1->numpoints) {
-		if (k == (i+1) % f1->numpoints && !keep2)
+	for (k = (i + 1) % f1->numpoints; k != i; k = (k + 1) % f1->numpoints) {
+		if (k == (i + 1) % f1->numpoints && !keep2)
 			continue;
 
 		VectorCopy(f1->p[k], newf->p[newf->numpoints]);
@@ -653,8 +650,8 @@ static winding_t *TryMergeWinding (winding_t *f1, winding_t *f2, vec3_t planenor
 	}
 
 	/* copy second polygon */
-	for (l = (j+1) % f2->numpoints; l != j; l = (l+1) % f2->numpoints) {
-		if (l == (j+1) % f2->numpoints && !keep1)
+	for (l = (j + 1) % f2->numpoints; l != j; l = (l + 1) % f2->numpoints) {
+		if (l == (j + 1) % f2->numpoints && !keep1)
 			continue;
 		VectorCopy(f2->p[l], newf->p[newf->numpoints]);
 		newf->numpoints++;
