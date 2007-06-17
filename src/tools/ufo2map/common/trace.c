@@ -31,8 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define	ON_EPSILON	0.1
 
-typedef struct tnode_s
-{
+typedef struct tnode_s {
 	int		type;
 	vec3_t	normal;
 	float	dist;
@@ -42,7 +41,7 @@ typedef struct tnode_s
 
 static tnode_t *tnodes, *tnode_p, *freeTnodes;
 
-static int numtheads;
+static int numtheads = 0;
 static int thead[260];
 static int theadlevel[260];
 
@@ -66,7 +65,7 @@ extern void MakeTnode (int nodenum)
 	plane = dplanes + node->planenum;
 
 	t->type = plane->type;
-	VectorCopy (plane->normal, t->normal);
+	VectorCopy(plane->normal, t->normal);
 	t->dist = plane->dist;
 
 	for (i = 0; i < 2; i++) {
@@ -90,6 +89,7 @@ extern void MakeTnode (int nodenum)
  */
 static void BuildTnode_r (int node)
 {
+	assert(node < numnodes);
 	if (dnodes[node].planenum == -1) {
 		dnode_t *n;
 		tnode_t *t;
@@ -162,6 +162,7 @@ extern void MakeTnodes (int levels)
 		thead[numtheads] = tnode_p - tnodes;
 		theadlevel[numtheads] = i;
 		numtheads++;
+		assert(numtheads < 260);
 		BuildTnode_r(dmodels[i].headnode);
 	}
 }
@@ -412,7 +413,7 @@ extern qboolean TestContents (vec3_t pos)
 
 	/* loop over all theads */
 	for (i = numtheads - 1; i >= 0; i--) {
-		if (theadlevel[i] != 258)
+		if (theadlevel[i] != 258) /* only check stepon here */
 			continue;
 
 		if (TestContents_r(thead[i], pos))

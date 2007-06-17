@@ -28,15 +28,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static int c_nofaces;
 static int c_facenodes;
 
-extern void U2M_ProgressBar (void (*func) (unsigned int cnt), unsigned int count, qboolean showProgress)
+extern void U2M_ProgressBar (void (*func) (unsigned int cnt), unsigned int count, qboolean showProgress, const char *id)
 {
-	int i;
+	unsigned int i;
 	int current, previous = 0;
 	int	start, end;
 
 	start = I_FloatTime();
 	if (showProgress)
-		fprintf(stdout, "%% ");
+		fprintf(stdout, "%11s %% ", id);
 	for (i = 0; i < count; i++) {
 		current = (10 * i / count);
 		if (showProgress && current != previous) {
@@ -50,7 +50,7 @@ extern void U2M_ProgressBar (void (*func) (unsigned int cnt), unsigned int count
 	}
 	end = I_FloatTime();
 	if (showProgress)
-		Sys_Printf(" (time: %i)\n", end - start);
+		Sys_Printf(" (time: %4is)\n", end - start);
 }
 
 

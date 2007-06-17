@@ -25,6 +25,7 @@
 #include <time.h>
 #include <stdarg.h>
 #include <stddef.h>
+#include <assert.h>
 
 #ifndef errno
 extern int errno;

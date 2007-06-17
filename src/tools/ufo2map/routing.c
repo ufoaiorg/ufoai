@@ -284,10 +284,10 @@ extern void DoRouting (void)
 /*	Sys_Printf("(%i %i %i) (%i %i %i)\n", wpMins[0], wpMins[1], wpMins[2], wpMaxs[0], wpMaxs[1], wpMaxs[2]); */
 
 	/* scan area heights */
-	U2M_ProgressBar(CheckUnit, HEIGHT * WIDTH * WIDTH, config.verbose);
+	U2M_ProgressBar(CheckUnit, HEIGHT * WIDTH * WIDTH, qtrue, "UNITCHECK");
 
 	/* scan connections */
-	U2M_ProgressBar(CheckConnections, HEIGHT * WIDTH * WIDTH, config.verbose);
+	U2M_ProgressBar(CheckConnections, HEIGHT * WIDTH * WIDTH, qtrue, "CONNCHECK");
 
 	/* store the data */
 	data = droutedata;

@@ -46,7 +46,7 @@ static void ProcessWorldModel (void)
 	ClearBounds(worldMins, worldMaxs);
 
 	/* process levels */
-	U2M_ProgressBar(ProcessLevel, NUMMODELS, qtrue);
+	U2M_ProgressBar(ProcessLevel, NUMMODELS, qtrue, "LEVEL");
 
 	/* calculate routing */
 	if (!config.norouting)

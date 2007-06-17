@@ -70,7 +70,7 @@ typedef struct mapConfig_s {
 
 mapConfig_t config;
 
-void U2M_ProgressBar(void (*func) (unsigned int cnt), unsigned int count, qboolean showProgress);
+void U2M_ProgressBar(void (*func) (unsigned int cnt), unsigned int count, qboolean showProgress, const char *id);
 
 /*
 ========================================================================
