@@ -44,11 +44,7 @@ int			fakeplanes;					/* created planes for origin offset */
 void BuildLightmaps(void);
 int TestLine(const vec3_t start, const vec3_t stop);
 
-int		junk;
-
 qboolean	noradiosity = qfalse;
-
-char		source[1024];
 
 /*
 ===================================================================
