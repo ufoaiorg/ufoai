@@ -174,6 +174,7 @@ typedef uint8_t byte;
 #define LEVEL_ACTORCLIP 257
 #define LEVEL_STEPON 258
 #define LEVEL_TRACING 259
+#define LEVEL_MAX 260
 
 #define NONE		0xFF
 #define NONE_AMMO	0

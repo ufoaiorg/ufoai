@@ -115,7 +115,7 @@ typedef struct {
 	/* line tracing */
 	tnode_t *tnodes;
 	int numtheads;
-	int thead[258];
+	int thead[LEVEL_MAX];
 
 	int numcheads;
 	chead_t cheads[MAX_MAP_NODES];
@@ -2258,6 +2258,7 @@ static void CM_MakeTnodes (void)
 
 		curTile->thead[curTile->numtheads] = tnode_p - curTile->tnodes;
 		curTile->numtheads++;
+		assert(curTile->numtheads < LEVEL_MAX);
 
 		BuildTnode_r(curTile->cmodels[i].headnode, i);
 /*		MakeTnode(map_models[i].headnode); */
