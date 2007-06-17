@@ -9,7 +9,7 @@ CppCompiler=
 Includes=D:\Programme\Dev-Cpp\include
 Linker=-lz -llibjpeg_@@_
 Libs=C:\Dev-Cpp\lib
-UnitCount=28
+UnitCount=26
 Folders=header,src
 ObjFiles=
 PrivateResource=
@@ -50,26 +50,16 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit14]
-FileName=..\..\src\tools\ufo2map\common\bspfile.c
-Folder=src
+FileName=..\..\src\tools\ufo2map\common\bspfile.h
+Folder=header
 Compile=1
-CompileCpp=0
+CompileCpp=1
 Link=1
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=$(CC) -c bspfile.c -o bspfile.o $(CFLAGS)
+BuildCmd=
 
 [Unit16]
-FileName=..\..\src\tools\ufo2map\common\cmdlib.c
-Folder=src
-Compile=1
-CompileCpp=0
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=$(CC) -c cmdlib.c -o cmdlib.o $(CFLAGS)
-
-[Unit17]
 FileName=..\..\src\tools\ufo2map\common\cmdlib.h
 Folder=header
 Compile=1
@@ -79,7 +69,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit18]
+[Unit17]
 FileName=..\..\src\tools\ufo2map\common\lbmlib.c
 Folder=src
 Compile=1
@@ -89,8 +79,8 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=$(CC) -c lbmlib.c -o lbmlib.o $(CFLAGS)
 
-[Unit21]
-FileName=..\..\src\tools\ufo2map\common\mathlib.h
+[Unit18]
+FileName=..\..\src\tools\ufo2map\common\lbmlib.h
 Folder=header
 Compile=1
 CompileCpp=1
@@ -99,7 +89,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit22]
+[Unit21]
 FileName=..\..\src\tools\ufo2map\common\scriplib.c
 Folder=src
 Compile=1
@@ -109,18 +99,8 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=$(CC) -c scriplib.c -o scriplib.o $(CFLAGS)
 
-[Unit25]
-FileName=..\..\src\qcommon\md4.c
-Folder=src
-Compile=1
-CompileCpp=0
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=$(CC) -c md4.c -o md4.o $(CFLAGS)
-
-[Unit26]
-FileName=..\..\src\qcommon\md4.h
+[Unit22]
+FileName=..\..\src\tools\ufo2map\common\scriplib.h
 Folder=header
 Compile=1
 CompileCpp=1
@@ -128,6 +108,26 @@ Link=1
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
+
+[Unit25]
+FileName=..\..\src\qcommon\ioapi.c
+Folder=src
+Compile=1
+CompileCpp=0
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=$(CC) -c ioapi.c -o ioapi.o $(CFLAGS)
+
+[Unit26]
+FileName=..\..\src\qcommon\unzip.c
+Folder=src
+Compile=1
+CompileCpp=0
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=$(CC) -c unzip.c -o unzip.o $(CFLAGS)
 
 [Unit27]
 FileName=..\..\src\qcommon\ioapi.c
@@ -398,44 +398,44 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit13]
-FileName=..\..\src\tools\ufo2map\common\threads.h
-CompileCpp=1
-Folder=header
+FileName=..\..\src\tools\ufo2map\common\bspfile.c
+CompileCpp=0
+Folder=src
 Compile=1
 Link=1
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=
+BuildCmd=$(CC) -c bspfile.c -o bspfile.o $(CFLAGS)
 
 [Unit15]
-FileName=..\..\src\tools\ufo2map\common\bspfile.h
-CompileCpp=1
-Folder=header
+FileName=..\..\src\tools\ufo2map\common\cmdlib.c
+CompileCpp=0
+Folder=src
 Compile=1
 Link=1
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=
+BuildCmd=$(CC) -c cmdlib.c -o cmdlib.o $(CFLAGS)
 
 [Unit19]
-FileName=..\..\src\tools\ufo2map\common\lbmlib.h
-CompileCpp=1
-Folder=header
+FileName=..\..\src\tools\ufo2map\common\mathlib.c
+CompileCpp=0
+Folder=src
 Compile=1
 Link=1
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=
+BuildCmd=$(CC) -c mathlib.c -o mathlib.o $(CFLAGS)
 
 [Unit23]
-FileName=..\..\src\tools\ufo2map\common\scriplib.h
-CompileCpp=1
-Folder=header
+FileName=..\..\src\qcommon\md4.c
+CompileCpp=0
+Folder=src
 Compile=1
 Link=1
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=
+BuildCmd=$(CC) -c md4.c -o md4.o $(CFLAGS)
 
 [Unit5]
 FileName=..\..\src\tools\qdata\qdata.h
@@ -458,22 +458,22 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit20]
-FileName=..\..\src\tools\ufo2map\common\mathlib.c
-CompileCpp=0
-Folder=src
+FileName=..\..\src\tools\ufo2map\common\mathlib.h
+CompileCpp=1
+Folder=header
 Compile=1
 Link=1
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=$(CC) -c mathlib.c -o mathlib.o $(CFLAGS)
+BuildCmd=
 
 [Unit24]
-FileName=..\..\src\tools\ufo2map\common\threads.c
-CompileCpp=0
-Folder=src
+FileName=..\..\src\qcommon\md4.h
+CompileCpp=1
+Folder=header
 Compile=1
 Link=1
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=$(CC) -c threads.c -o threads.o $(CFLAGS)
+BuildCmd=
 
