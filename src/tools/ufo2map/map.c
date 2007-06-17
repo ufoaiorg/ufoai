@@ -571,7 +571,7 @@ static void ParseBrush (entity_t *mapent)
 			side->contents |= CONTENTS_DETAIL;
 		if (config.fulldetail)
 			side->contents &= ~CONTENTS_DETAIL;
-		if (!(side->contents & (LAST_VISIBLE_CONTENTS-1) ) )
+		if (!(side->contents & (LAST_VISIBLE_CONTENTS - 1) ) )
 			side->contents |= CONTENTS_SOLID;
 
 		/* hints and skips are never detail, and have no content */

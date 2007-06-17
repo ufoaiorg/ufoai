@@ -35,8 +35,10 @@ extern void U2M_ProgressBar (void (*func) (unsigned int cnt), unsigned int count
 	int	start, end;
 
 	start = I_FloatTime();
-	if (showProgress)
+	if (showProgress) {
 		fprintf(stdout, "%11s %% ", id);
+		fflush(stdout);
+	}
 	for (i = 0; i < count; i++) {
 		current = (10 * i / count);
 		if (showProgress && current != previous) {
@@ -45,7 +47,6 @@ extern void U2M_ProgressBar (void (*func) (unsigned int cnt), unsigned int count
 			fflush(stdout);
 		}
 
-		/* process brushes with that level mask */
 		func(i);
 	}
 	end = I_FloatTime();

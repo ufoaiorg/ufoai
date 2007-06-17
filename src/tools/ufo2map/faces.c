@@ -760,7 +760,7 @@ static void SubdivideFace (node_t *node, face_t *f)
 			mins = 999999;
 			maxs = -999999;
 
-			VectorCopy (tex->vecs[axis], temp);
+			VectorCopy(tex->vecs[axis], temp);
 			w = f->w;
 			for (i = 0; i < w->numpoints; i++) {
 				v = DotProduct(w->p[i], temp);

@@ -223,7 +223,8 @@ static int ConstructLevelNodes_r (int levelnum, vec3_t cmins, vec3_t cmaxs)
 
 
 /**
- * @brief
+ * @brief process brushes with that level mask
+ * @param[in] levelnum is the level mask
  * @note levelnum
  * 256: actorclip-level
  * 258: stepon-level
@@ -237,13 +238,13 @@ extern void ProcessLevel (unsigned int levelnum)
 	dmodel_t	*dm;
 
 	/* get maxs */
-	mins[0] = (config.block_xl)*512+1;
-	mins[1] = (config.block_yl)*512+1;
-	mins[2] = -4096+1;
+	mins[0] = (config.block_xl) * 512.0 + 1.0;
+	mins[1] = (config.block_yl) * 512.0 + 1.0;
+	mins[2] = -4096.0 + 1.0;
 
-	maxs[0] = (config.block_xh+1)*512-1;
-	maxs[1] = (config.block_yh+1)*512-1;
-	maxs[2] = 4096-1;
+	maxs[0] = (config.block_xh + 1.0) * 512.0 - 1.0;
+	maxs[1] = (config.block_yh + 1.0) * 512.0 - 1.0f;
+	maxs[2] = 4096.0 - 1.0;
 
 	Sys_FPrintf(SYS_VRB, "Process levelnum %i (nummodels: %i)\n", levelnum, nummodels);
 

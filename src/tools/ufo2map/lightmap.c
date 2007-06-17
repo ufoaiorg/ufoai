@@ -90,16 +90,14 @@ POINT TRIANGULATION
 =================================================================
 */
 
-typedef struct triedge_s
-{
+typedef struct triedge_s {
 	int			p0, p1;
 	vec3_t		normal;
 	vec_t		dist;
 	struct triangle_s	*tri;
 } triedge_t;
 
-typedef struct triangle_s
-{
+typedef struct triangle_s {
 	triedge_t	*edges[3];
 } triangle_t;
 
@@ -107,8 +105,7 @@ typedef struct triangle_s
 #define	MAX_TRI_EDGES		(MAX_TRI_POINTS*6)
 #define	MAX_TRI_TRIS		(MAX_TRI_POINTS*2)
 
-typedef struct
-{
+typedef struct {
 	int			numpoints;
 	int			numedges;
 	int			numtris;
@@ -143,7 +140,7 @@ static triangulation_t *AllocTriangulation (dplane_t *plane)
  */
 static void FreeTriangulation (triangulation_t *tr)
 {
-	free (tr);
+	free(tr);
 }
 
 
@@ -160,19 +157,19 @@ static triedge_t *FindEdge (triangulation_t *trian, int p0, int p1)
 	if (trian->edgematrix[p0][p1])
 		return trian->edgematrix[p0][p1];
 
-	if (trian->numedges > MAX_TRI_EDGES-2)
-		Error ("trian->numedges > MAX_TRI_EDGES-2");
+	if (trian->numedges > MAX_TRI_EDGES - 2)
+		Error("trian->numedges > MAX_TRI_EDGES-2");
 
-	VectorSubtract (trian->points[p1]->origin, trian->points[p0]->origin, v1);
-	VectorNormalize (v1, v1);
-	CrossProduct (v1, trian->plane->normal, normal);
-	dist = DotProduct (trian->points[p0]->origin, normal);
+	VectorSubtract(trian->points[p1]->origin, trian->points[p0]->origin, v1);
+	VectorNormalize(v1, v1);
+	CrossProduct(v1, trian->plane->normal, normal);
+	dist = DotProduct(trian->points[p0]->origin, normal);
 
 	e = &trian->edges[trian->numedges];
 	e->p0 = p0;
 	e->p1 = p1;
 	e->tri = NULL;
-	VectorCopy (normal, e->normal);
+	VectorCopy(normal, e->normal);
 	e->dist = dist;
 	trian->numedges++;
 	trian->edgematrix[p0][p1] = e;
@@ -197,7 +194,7 @@ static triangle_t *AllocTriangle (triangulation_t *trian)
 	triangle_t	*t;
 
 	if (trian->numtris >= MAX_TRI_TRIS)
-		Error ("trian->numtris >= MAX_TRI_TRIS");
+		Error("trian->numtris >= MAX_TRI_TRIS");
 
 	t = &trian->tris[trian->numtris];
 	trian->numtris++;
@@ -330,13 +327,13 @@ static void LerpTriangle (triangulation_t *trian, triangle_t *t, vec3_t point, v
 	x2 = DotProduct(p3->origin, t->edges[0]->normal) - t->edges[0]->dist;
 	y2 = 0;
 
-	if (fabs(y1) < ON_EPSILON || fabs(x2)<ON_EPSILON) {
+	if (fabs(y1) < ON_EPSILON || fabs(x2) < ON_EPSILON) {
 		VectorCopy(base, color);
 		return;
 	}
 
-	VectorMA(base, x/x2, d2, color);
-	VectorMA(color, y/y1, d1, color);
+	VectorMA(base, x / x2, d2, color);
+	VectorMA(color, y / y1, d1, color);
 }
 
 /**
@@ -385,7 +382,7 @@ static void SampleTriangulation (vec3_t point, triangulation_t *trian, vec3_t co
 			continue;
 
 		/* this is it */
-		LerpTriangle (trian, t, point, color);
+		LerpTriangle(trian, t, point, color);
 		return;
 	}
 
@@ -442,8 +439,7 @@ LIGHTMAP SAMPLE GENERATION
 
 #define	SINGLEMAP	(256*256)
 
-typedef struct
-{
+typedef struct {
 	vec_t	facedist;
 	vec3_t	facenormal;
 
@@ -537,13 +533,10 @@ static void CalcFaceVectors (lightinfo_t *l)
 
 	/* calculate a normal to the texture axis.  points can be moved along this */
 	/* without changing their S/T */
-	texnormal[0] = tex->vecs[1][1]*tex->vecs[0][2]
-		- tex->vecs[1][2]*tex->vecs[0][1];
-	texnormal[1] = tex->vecs[1][2]*tex->vecs[0][0]
-		- tex->vecs[1][0]*tex->vecs[0][2];
-	texnormal[2] = tex->vecs[1][0]*tex->vecs[0][1]
-		- tex->vecs[1][1]*tex->vecs[0][0];
-	VectorNormalize (texnormal, texnormal);
+	texnormal[0] = tex->vecs[1][1] * tex->vecs[0][2] - tex->vecs[1][2]*tex->vecs[0][1];
+	texnormal[1] = tex->vecs[1][2] * tex->vecs[0][0] - tex->vecs[1][0]*tex->vecs[0][2];
+	texnormal[2] = tex->vecs[1][0] * tex->vecs[0][1] - tex->vecs[1][1]*tex->vecs[0][0];
+	VectorNormalize(texnormal, texnormal);
 
 	/* flip it towards plane normal */
 	distscale = DotProduct(texnormal, l->facenormal);
@@ -565,13 +558,13 @@ static void CalcFaceVectors (lightinfo_t *l)
 		dist = DotProduct(l->worldtotex[i], l->facenormal);
 		dist *= distscale;
 		VectorMA(l->worldtotex[i], -dist, texnormal, l->textoworld[i]);
-		VectorScale(l->textoworld[i], (1/len)*(1/len), l->textoworld[i]);
+		VectorScale(l->textoworld[i], (1 / len) * (1 / len), l->textoworld[i]);
 	}
 
 
 	/* calculate texorg on the texture plane */
 	for (i = 0; i < 3; i++)
-		l->texorg[i] = -tex->vecs[0][3]* l->textoworld[0][i] - tex->vecs[1][3] * l->textoworld[1][i];
+		l->texorg[i] = -tex->vecs[0][3] * l->textoworld[0][i] - tex->vecs[1][3] * l->textoworld[1][i];
 
 	/* project back to the face plane */
 	dist = DotProduct(l->texorg, l->facenormal) - l->facedist - 1;
@@ -582,8 +575,8 @@ static void CalcFaceVectors (lightinfo_t *l)
 	VectorAdd(l->texorg, l->modelorg, l->texorg);
 
 	/* total sample count */
-	h = l->texsize[1]+1;
-	w = l->texsize[0]+1;
+	h = l->texsize[1] + 1;
+	w = l->texsize[0] + 1;
 	l->numsurfpt = w * h;
 }
 
@@ -607,8 +600,8 @@ static void CalcPoints (lightinfo_t *l, float sofs, float tofs)
 	 * to help avoid edge cases just inside walls
 	 */
 	surf = l->surfpt[0];
-	mids = (l->exactmaxs[0] + l->exactmins[0])/2;
-	midt = (l->exactmaxs[1] + l->exactmins[1])/2;
+	mids = (l->exactmaxs[0] + l->exactmins[0]) / 2;
+	midt = (l->exactmaxs[1] + l->exactmins[1]) / 2;
 
 	for (j = 0; j < 3; j++)
 		facemid[j] = l->texorg[j] + l->textoworld[0][j] * mids + l->textoworld[1][j] * midt;
@@ -672,8 +665,7 @@ static void CalcPoints (lightinfo_t *l, float sofs, float tofs)
 
 
 #define	MAX_STYLES	32
-typedef struct
-{
+typedef struct {
 	int			numsamples;
 	float		*origins;
 	int			numstyles;
@@ -729,8 +721,7 @@ void CreateDirectLights (void)
 
 	/* surfaces */
 	for (i = 0, p = patches; i < num_patches; i++, p++) {
-		if (p->totallight[0] < DIRECT_LIGHT
-			&& p->totallight[1] < DIRECT_LIGHT
+		if (p->totallight[0] < DIRECT_LIGHT && p->totallight[1] < DIRECT_LIGHT
 			&& p->totallight[2] < DIRECT_LIGHT)
 			continue;
 
@@ -755,8 +746,8 @@ void CreateDirectLights (void)
 	/* entities */
 	for (i = 0; i < num_entities; i++) {
 		e = &entities[i];
-		name = ValueForKey (e, "classname");
-		if (strncmp (name, "light", 5))
+		name = ValueForKey(e, "classname");
+		if (strncmp(name, "light", 5))
 			continue;
 
 		numdlights++;
@@ -843,8 +834,8 @@ void CreateDirectLights (void)
 		angles = ValueForKey(e, "angles");
 		sscanf(angles, "%f %f", &sun_pitch, &sun_yaw);
 
-		sun_yaw *= M_PI/180.0f;
-		sun_pitch *= M_PI/180.0f;
+		sun_yaw *= M_PI / 180.0f;
+		sun_pitch *= M_PI / 180.0f;
 
 		sun_dir[0] = cos(sun_yaw) * sin(sun_pitch);
 		sun_dir[1] = sin(sun_yaw) * sin(sun_pitch);
@@ -1229,7 +1220,7 @@ void FinalLightFace (unsigned int facenum)
 				newmax = config.maxlight;
 
 			for (k = 0; k < 3; k++) {
-				*dest++ = lb[k] * newmax/max;
+				*dest++ = lb[k] * newmax / max;
 			}
 		}
 	}
