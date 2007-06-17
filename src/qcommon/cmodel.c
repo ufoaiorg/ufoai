@@ -2224,7 +2224,7 @@ void BuildTnode_r (int node, int level)
 		}
 	} else {
 		/* don't include weapon clip in standard tracing */
-		if (level <= 256) {
+		if (level <= LEVEL_WEAPONCLIP) {
 			curTile->cheads[curTile->numcheads].cnode = node;
 			curTile->cheads[curTile->numcheads].level = level;
 			curTile->numcheads++;
