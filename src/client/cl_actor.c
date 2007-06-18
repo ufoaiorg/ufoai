@@ -2118,6 +2118,11 @@ void CL_ActorStun (void)
 
 /**
  * @brief Toggles reaction fire between the states off/single/multi.
+ * @note RF mode will change as follows (Current mode -> resulting mode after click)
+ * 	off	-> single
+ * 	single	-> multi
+ * 	multi	-> off
+ * 	single	-> off (if no TUs for multi available)
  */
 extern void CL_ActorToggleReaction_f (void)
 {
@@ -2158,14 +2163,18 @@ extern void CL_ActorToggleReaction_f (void)
 		default:
 			return;
 		}
+		
+		/* Update RF list if it is visible. */
+		if (visible_firemode_list_left || visible_firemode_list_right)
+			CL_DisplayFiremodes_f();
 
-		/* send request to update actor's reaction state to the server */
+		/* Send request to update actor's reaction state to the server. */
 		MSG_Write_PA(PA_STATE, selActor->entnum, state);
 	} else {
-		/* Send the "turn rf off" message just in case */
+		/* Send the "turn rf off" message just in case. */
 		state = ~STATE_REACTION;
 		MSG_Write_PA(PA_STATE, selActor->entnum, state);
-		/* Set RF-mode info to undef */
+		/* Set RF-mode info to undef. */
 		CL_SetReactionFiremode(actor_idx, -1, -1, -1);
 	}
 }
