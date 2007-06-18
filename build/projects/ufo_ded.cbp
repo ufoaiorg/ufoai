@@ -98,6 +98,10 @@
 			<Option compilerVar="CC" />
 			<Option target="windows" />
 		</Unit>
+		<Unit filename="..\..\src\ports\win32\ufo.rc">
+			<Option compilerVar="WINDRES" />
+			<Option target="windows" />
+		</Unit>
 		<Unit filename="..\..\src\qcommon\cmd.c">
 			<Option compilerVar="CC" />
 		</Unit>
