@@ -199,7 +199,7 @@ static void U2M_SetDefaultConfigValues (void)
 	config.block_yl = -8;
 	config.block_yh = 7;
 	config.microvolume = 1.0f;
-	config.subdiv = 64.0f;
+	config.subdiv = 2048.0f;
 	config.ambient_red = 0.1;
 	config.ambient_green = 0.1;
 	config.ambient_blue = 0.1;
