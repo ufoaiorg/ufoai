@@ -1150,7 +1150,7 @@ static qboolean R_Init (HINSTANCE hinstance, WNDPROC wndproc)
 	renderer_buffer[sizeof(renderer_buffer)-1] = 0;
 	Q_strlwr(renderer_buffer);
 
-	Q_strncpyz( vendor_buffer, gl_config.vendor_string, sizeof(vendor_buffer));
+	Q_strncpyz(vendor_buffer, gl_config.vendor_string, sizeof(vendor_buffer));
 	vendor_buffer[sizeof(vendor_buffer)-1] = 0;
 	Q_strlwr(vendor_buffer);
 
@@ -1689,10 +1689,6 @@ void Sys_Error (const char *error, ...)
 {
 	va_list argptr;
 	char text[1024];
-
-#if defined DEBUG && defined _MSC_VER
-	__debugbreak();				/* break execution before game shutdown */
-#endif
 
 	va_start(argptr, error);
 	Q_vsnprintf(text, sizeof(text), error, argptr);
