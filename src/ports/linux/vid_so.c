@@ -217,6 +217,7 @@ qboolean VID_LoadRefresh (const char *name)
 	ri.Cvar_Get = Cvar_Get;
 	ri.Cvar_Set = Cvar_Set;
 	ri.Cvar_SetValue = Cvar_SetValue;
+	ri.Cvar_ForceSet = Cvar_ForceSet;
 	ri.Vid_GetModeInfo = VID_GetModeInfo;
 	ri.Vid_NewWindow = VID_NewWindow;
 	ri.CL_WriteAVIVideoFrame = CL_WriteAVIVideoFrame;

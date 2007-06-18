@@ -143,10 +143,6 @@ extern void GL_TexEnv (GLenum mode)
  */
 extern void GL_Bind (int texnum)
 {
-	extern image_t *draw_chars;
-
-	if (gl_nobind->value && draw_chars)	/* performance evaluation option */
-		texnum = draw_chars->texnum;
 	if (gl_state.currenttextures[gl_state.currenttmu] == texnum)
 		return;
 	gl_state.currenttextures[gl_state.currenttmu] = texnum;

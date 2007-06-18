@@ -114,6 +114,7 @@ void Sys_Vid_Init (void)
 	ri.Cvar_Get = Cvar_Get;
 	ri.Cvar_Set = Cvar_Set;
 	ri.Cvar_SetValue = Cvar_SetValue;
+	ri.Cvar_ForceSet = Cvar_ForceSet;
 	ri.Vid_GetModeInfo = VID_GetModeInfo;
 	ri.CL_WriteAVIVideoFrame = CL_WriteAVIVideoFrame;
 	ri.CL_GetFontData = CL_GetFontData;

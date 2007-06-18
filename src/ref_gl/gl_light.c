@@ -165,7 +165,7 @@ LIGHT SAMPLING
 =============================================================================
 */
 
-static float s_blocklights[128 * 128 * 3];
+static float s_blocklights[128 * 128 * 4];
 
 /**
  * @brief

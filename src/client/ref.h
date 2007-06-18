@@ -388,6 +388,7 @@ typedef struct {
 	cvar_t *(*Cvar_Get) (const char *name, const char *value, int flags, const char* desc);
 	cvar_t *(*Cvar_Set) (const char *name, const char *value);
 	void (*Cvar_SetValue) (const char *name, float value);
+	cvar_t *(*Cvar_ForceSet) (const char *name, const char *value);
 
 	qboolean(*Vid_GetModeInfo) (int *width, int *height, int mode);
 	void (*Vid_NewWindow) (int width, int height);
@@ -397,5 +398,7 @@ typedef struct {
 
 /* this is the only function actually exported at the linker level */
 typedef refexport_t (*GetRefAPI_t) (refimport_t );
+
+#define CONSOLE_CHAR_ALIGN 4
 
 #endif /* CLIENT_REF_H */

@@ -123,7 +123,6 @@ cvar_t *gl_mode;
 cvar_t *gl_dynamic;
 cvar_t *gl_monolightmap;
 cvar_t *gl_modulate;
-cvar_t *gl_nobind;
 cvar_t *gl_round_down;
 cvar_t *gl_picmip;
 cvar_t *gl_maxtexres;
@@ -145,6 +144,11 @@ cvar_t *vid_fullscreen;
 cvar_t *vid_gamma;
 cvar_t *vid_ref;
 cvar_t *vid_grabmouse;
+
+cvar_t *con_font;
+cvar_t *con_fontWidth;
+cvar_t *con_fontHeight;
+cvar_t *con_fontShift;
 
 /**
  * @brief Reset to initial state
@@ -991,7 +995,6 @@ static void R_Register (void)
 	gl_drawclouds = ri.Cvar_Get("gl_drawclouds", "0", CVAR_ARCHIVE, NULL);
 	gl_imagefilter = ri.Cvar_Get("gl_imagefilter", "1", CVAR_ARCHIVE, NULL);
 	gl_dynamic = ri.Cvar_Get("gl_dynamic", "1", 0, NULL);
-	gl_nobind = ri.Cvar_Get("gl_nobind", "0", 0, NULL);
 	gl_round_down = ri.Cvar_Get("gl_round_down", "1", 0, NULL);
 	gl_picmip = ri.Cvar_Get("gl_picmip", "0", 0, NULL);
 	gl_maxtexres = ri.Cvar_Get("gl_maxtexres", "2048", CVAR_ARCHIVE, NULL);
@@ -1042,6 +1045,11 @@ static void R_Register (void)
 #endif
 	vid_grabmouse = ri.Cvar_Get("vid_grabmouse", "1", CVAR_ARCHIVE, NULL);
 	vid_grabmouse->modified = qfalse;
+
+	con_font = ri.Cvar_Get("con_font", "0", CVAR_ARCHIVE, NULL);
+	con_fontWidth = ri.Cvar_Get("con_fontWidth", "16", CVAR_NOSET, NULL);
+	con_fontHeight = ri.Cvar_Get("con_fontHeight", "32", CVAR_NOSET, NULL);
+	con_fontShift = ri.Cvar_Get("con_fontShift", "4", CVAR_NOSET, NULL);
 
 	for (commands = r_commands; commands->name; commands++)
 		ri.Cmd_AddCommand(commands->name, commands->function, _(commands->description));
@@ -1518,6 +1526,21 @@ static void R_BeginFrame (float camera_separation)
 		}
 		/*GL_UpdateAnisotropy();*/
 		r_anisotropic->modified = qfalse;
+	}
+
+	if (con_font->modified) {
+		if (con_font->integer == 0) {
+			ri.Cvar_ForceSet("con_fontWidth", "16");
+			ri.Cvar_ForceSet("con_fontHeight", "32");
+			ri.Cvar_ForceSet("con_fontShift", "4");
+			con_font->modified = qfalse;
+		} else if (con_font->integer == 1 && draw_chars[1]) {
+			ri.Cvar_ForceSet("con_fontWidth", "8");
+			ri.Cvar_ForceSet("con_fontHeight", "8");
+			ri.Cvar_ForceSet("con_fontShift", "3");
+			con_font->modified = qfalse;
+		} else
+			ri.Cvar_ForceSet("con_font", "1");
 	}
 
 	if (gl_log->value)

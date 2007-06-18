@@ -173,9 +173,9 @@ static void SCR_DrawDebugGraph (void)
 		else
 			Com_sprintf(temp_map, sizeof(temp_map), "Map:  %i:%02i", mins, secs);
 
-		SCR_DrawString(x + 5, y + 5 * 0, va("FPS:  %3i", fps), qtrue);
-		SCR_DrawString(x + 5, y + 5 * 1.7, va(timebuf, time_clock), qtrue);
-		SCR_DrawString(x + 5, y + 5 * 3.4, va(temp_map, map_time), qtrue);
+		SCR_DrawString(x + 5, y + con_fontHeight->integer, va("FPS:  %3i", fps), qtrue);
+		SCR_DrawString(x + 5, y + con_fontHeight->integer * 2, va(timebuf, time_clock), qtrue);
+		SCR_DrawString(x + 5, y + con_fontHeight->integer * 3, va(temp_map, map_time), qtrue);
 	}
 }
 
@@ -675,7 +675,7 @@ static void SCR_DrawString (int x, int y, const char *string, qboolean bitmapFon
 	if (bitmapFont) {
 		while (*string) {
 			re.DrawChar(x, y, *string);
-			x += 8;
+			x += con_fontWidth->integer;
 			string++;
 		}
 	} else
@@ -747,9 +747,9 @@ void SCR_UpdateScreen (void)
 		SCR_CheckDrawCenterString();
 
 		if (cl_fps->integer)
-			SCR_DrawString(viddef.width - 80, 4, va("fps: %3.1f", cls.framerate), qtrue);
+			SCR_DrawString(viddef.width - con_fontWidth->integer * 10, 4, va("fps: %3.1f", cls.framerate), qtrue);
 		if (cls.state == ca_active && scr_rspeed->integer)
-			SCR_DrawString(viddef.width - 240, 20, va("brushes: %6i alias: %6i\n", cl.refdef.c_brush_polys, cl.refdef.c_alias_polys), qtrue);
+			SCR_DrawString(viddef.width - con_fontWidth->integer * 30, 20, va("brushes: %6i alias: %6i\n", cl.refdef.c_brush_polys, cl.refdef.c_alias_polys), qtrue);
 
 		if (scr_timegraph->integer)
 			SCR_DebugGraph(cls.frametime * 300, 0);

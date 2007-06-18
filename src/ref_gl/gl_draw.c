@@ -142,7 +142,7 @@ static void GL_InitGlobeChain (void)
 }
 
 /* console font */
-image_t *draw_chars;
+image_t *draw_chars[2];
 
 /**
  * @brief
@@ -155,10 +155,13 @@ void Draw_InitLocal (void)
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	/* load console characters (don't bilerp characters) */
-	draw_chars = GL_FindImage("pics/conchars", it_pic);
-	if (!draw_chars)
+
+	draw_chars[0] = GL_FindImage("pics/conchars", it_pic);
+	if (!draw_chars[0])
 		ri.Sys_Error(ERR_FATAL, "Could not find conchars image in game pics directory!\n");
-	GL_Bind(draw_chars->texnum);
+	draw_chars[1] = GL_FindImage("pics/conchars_small", it_pic);
+	if (!draw_chars[1])
+		ri.Con_Printf(PRINT_ALL, "Could not find conchars2 image in game pics directory!\n");
 
 	Font_Init();
 	GL_InitGlobeChain();
@@ -174,34 +177,35 @@ void Draw_InitLocal (void)
 void Draw_Char (int x, int y, int num)
 {
 	int row, col;
-	float frow, fcol, size;
+	float frow, fcol;
 
 	num &= 255;
 
 	if ((num & 127) == 32)		/* space */
 		return;
 
-	if (y <= -8)
+	if (y <= -con_fontHeight->integer)
 		return;					/* totally off screen */
 
 	row = num >> 4;
 	col = num & 15;
 
+	/* 0.0625 => 16 cols (conchars images) */
 	frow = row * 0.0625;
 	fcol = col * 0.0625;
-	size = 0.0625;				/* 16 cols (conchars.pcx) */
 
-	GL_Bind(draw_chars->texnum);
+	assert(con_font->integer < 2);
+	GL_Bind(draw_chars[con_font->integer]->texnum);
 
 	qglBegin(GL_QUADS);
 	qglTexCoord2f(fcol, frow);
 	qglVertex2f(x, y);
-	qglTexCoord2f(fcol + size, frow);
-	qglVertex2f(x + 8, y);
-	qglTexCoord2f(fcol + size, frow + size);
-	qglVertex2f(x + 8, y + 8);
-	qglTexCoord2f(fcol, frow + size);
-	qglVertex2f(x, y + 8);
+	qglTexCoord2f(fcol + 0.0625, frow);
+	qglVertex2f(x + con_fontWidth->integer, y);
+	qglTexCoord2f(fcol + 0.0625, frow + 0.0625);
+	qglVertex2f(x + con_fontWidth->integer, y + con_fontHeight->integer);
+	qglTexCoord2f(fcol, frow + 0.0625);
+	qglVertex2f(x, y + con_fontHeight->integer);
 	qglEnd();
 }
 

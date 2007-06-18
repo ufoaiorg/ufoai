@@ -2160,6 +2160,10 @@ static void CL_InitLocal (void)
 	mn_inputlength = Cvar_Get("mn_inputlength", "32", 0, "Limit the input length for messagemenu input");
 	mn_inputlength->modified = qfalse;
 
+	con_fontWidth = Cvar_Get("con_fontWidth", "16", CVAR_NOSET, NULL);
+	con_fontHeight = Cvar_Get("con_fontHeight", "32", CVAR_NOSET, NULL);
+	con_fontShift = Cvar_Get("con_fontShift", "4", CVAR_NOSET, NULL);
+
 	/* userinfo */
 	info_password = Cvar_Get("password", "", CVAR_USERINFO, NULL);
 	info_spectator = Cvar_Get("spectator", "0", CVAR_USERINFO, NULL);

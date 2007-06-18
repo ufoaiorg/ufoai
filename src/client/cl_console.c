@@ -32,6 +32,9 @@ console_t con;
 
 static cvar_t *con_notifytime;
 static cvar_t *con_history;
+cvar_t *con_fontHeight;
+cvar_t *con_fontWidth;
+cvar_t *con_fontShift;
 
 extern char key_lines[MAXKEYLINES][MAXCMDLINE];
 extern int edit_line;
@@ -44,7 +47,7 @@ static void DisplayString (int x, int y, char *s)
 {
 	while (*s) {
 		re.DrawChar(x, y, *s);
-		x += 8;
+		x += con_fontWidth->integer;
 		s++;
 	}
 }
@@ -518,7 +521,7 @@ static void Con_DrawInput (void)
 	}
 
 	/* fill out remainder with spaces */
-	for (i = y; i < con.linewidth; i++)
+	for (i = y; i < MAXCMDLINE; i++)
 		text[i] = ' ';
 
 	/* prestep if horizontally scrolling */
@@ -526,10 +529,10 @@ static void Con_DrawInput (void)
 		text += 1 + key_linepos - con.linewidth;
 
 	/* draw it */
-	y = con.vislines - 8;
+	y = con.vislines - con_fontHeight->integer;
 
 	for (i = 0; i < con.linewidth; i++)
-		re.DrawChar((i + 1) << 3, con.vislines - 22, text[i]);
+		re.DrawChar((i + 1) << con_fontShift->integer, con.vislines - con_fontHeight->integer - CONSOLE_CHAR_ALIGN, text[i]);
 }
 
 
@@ -561,12 +564,12 @@ void Con_DrawNotify (void)
 		for (x = 0; x < con.linewidth; x++) {
 			/* only draw chat or check for developer mode */
 			if (developer->integer || text[x] & COLORED_TEXT_MASK) {
-				re.DrawChar(l + (x << 3), v, text[x]);
+				re.DrawChar(l + (x << con_fontShift->integer), v, text[x]);
 				draw = qtrue;
 			}
 		}
 		if (draw)
-			v += 8;
+			v += con_fontHeight->integer;
 	}
 
 	if (cls.key_dest == key_message && (msg_mode == MSG_SAY_TEAM || msg_mode == MSG_SAY)) {
@@ -579,15 +582,15 @@ void Con_DrawNotify (void)
 		}
 
 		s = msg_buffer;
-		if (msg_bufferlen > (viddef.width >> 3) - (skip + 1))
-			s += msg_bufferlen - ((viddef.width >> 3) - (skip + 1));
+		if (msg_bufferlen > (viddef.width >> con_fontShift->integer) - (skip + 1))
+			s += msg_bufferlen - ((viddef.width >> con_fontShift->integer) - (skip + 1));
 		x = 0;
 		while (s[x]) {
-			re.DrawChar(l + ((x + skip) << 3), v, s[x]);
+			re.DrawChar(l + ((x + skip) << con_fontShift->integer), v, s[x]);
 			x++;
 		}
-		re.DrawChar(l + ((x + skip) << 3), v, 10 + ((cls.realtime >> 8) & 1));
-		v += 8;
+		re.DrawChar(l + ((x + skip) << con_fontShift->integer), v, 10 + ((cls.realtime >> 8) & 1));
+		v += con_fontHeight->integer;
 	}
 }
 
@@ -617,33 +620,27 @@ void Con_DrawConsole (float frac)
 	Com_sprintf(version, sizeof(version), "v%s", UFO_VERSION);
 	len = strlen(version);
 	for (x = 0; x < len; x++)
-		re.DrawChar(viddef.width - (len * 8) + x * 8, lines - 12, version[x] | COLORED_TEXT_MASK);
+		re.DrawChar(viddef.width - (len * con_fontWidth->integer) + x * con_fontWidth->integer - CONSOLE_CHAR_ALIGN, lines - (con_fontHeight->integer + CONSOLE_CHAR_ALIGN), version[x] | COLORED_TEXT_MASK);
 
 	/* draw the text */
 	con.vislines = lines;
 
-#if 0
-	rows = (lines - 8) >> 3;	/* rows of text to draw */
+	rows = (lines - con_fontHeight->integer * 2) >> con_fontShift->integer;	/* rows of text to draw */
 
-	y = lines - 24;
-#else
-	rows = (lines - 22) >> 3;	/* rows of text to draw */
-
-	y = lines - 30;
-#endif
+	y = lines - con_fontHeight->integer * 3;
 
 	/* draw from the bottom up */
 	if (con.display != con.current) {
 		/* draw arrows to show the buffer is backscrolled */
 		for (x = 0; x < con.linewidth; x += 4)
-			re.DrawChar((x + 1) << 3, y, '^');
+			re.DrawChar((x + 1) << con_fontShift->integer, y, '^');
 
-		y -= 8;
+		y -= con_fontHeight->integer;
 		rows--;
 	}
 
 	row = con.display;
-	for (i = 0; i < rows; i++, y -= 8, row--) {
+	for (i = 0; i < rows; i++, y -= con_fontHeight->integer, row--) {
 		if (row < 0)
 			break;
 		if (con.current - row >= con.totallines)
@@ -652,7 +649,7 @@ void Con_DrawConsole (float frac)
 		text = con.text + (row % con.totallines) * con.linewidth;
 
 		for (x = 0; x < con.linewidth; x++)
-			re.DrawChar((x + 1) << 3, y, text[x]);
+			re.DrawChar((x + 1) << con_fontShift->integer, y, text[x]);
 	}
 
 	/* draw the input prompt, user text, and cursor if desired */

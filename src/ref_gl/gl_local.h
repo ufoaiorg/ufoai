@@ -321,7 +321,6 @@ extern cvar_t *gl_stencil_two_side;
 
 extern cvar_t *gl_dynamic;
 extern cvar_t *gl_monolightmap;
-extern cvar_t *gl_nobind;
 extern cvar_t *gl_round_down;
 extern cvar_t *gl_picmip;
 extern cvar_t *gl_maxtexres;
@@ -340,12 +339,17 @@ extern cvar_t *gl_texturesolidmode;
 extern cvar_t *gl_saturatelighting;
 extern cvar_t *gl_wire;
 extern cvar_t *gl_fog;
+extern cvar_t *gl_intensity;
 
 extern cvar_t *vid_fullscreen;
 extern cvar_t *vid_gamma;
 extern cvar_t *vid_grabmouse;
 
-extern cvar_t *gl_intensity;
+extern cvar_t *con_font;
+extern cvar_t *con_fontWidth;
+extern cvar_t *con_fontHeight;
+extern cvar_t *con_fontShift;
+extern image_t *draw_chars[2];
 
 extern int gl_lightmap_format;
 extern int gl_solid_format;
