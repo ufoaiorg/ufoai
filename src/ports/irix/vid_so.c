@@ -151,7 +151,7 @@ void VID_FreeReflib (void)
 /**
  * @brief
  */
-qboolean VID_LoadRefresh (const char *name)
+static qboolean VID_LoadRefresh (const char *name)
 {
 	refimport_t	ri;
 #ifndef REF_HARD_LINKED
@@ -263,7 +263,7 @@ qboolean VID_LoadRefresh (const char *name)
 	}
 #endif
 
-	if (re.Init( 0, 0 ) == -1) {
+	if (re.Init( 0, 0 ) == qfalse) {
 		re.Shutdown();
 		VID_FreeReflib();
 		return qfalse;

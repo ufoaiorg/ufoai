@@ -385,7 +385,7 @@ void VID_FreeReflib (void)
 /**
  * @brief
  */
-qboolean VID_LoadRefresh (const char *name)
+static qboolean VID_LoadRefresh (const char *name)
 {
 	refimport_t	ri;
 	GetRefAPI_t	GetRefAPI;
@@ -439,7 +439,7 @@ qboolean VID_LoadRefresh (const char *name)
 		Com_Error(ERR_FATAL, "%s has incompatible api_version", name);
 	}
 
-	if (re.Init(global_hInstance, MainWndProc) == -1) {
+	if (re.Init(global_hInstance, MainWndProc) == qfalse) {
 		re.Shutdown();
 		VID_FreeReflib();
 		return qfalse;

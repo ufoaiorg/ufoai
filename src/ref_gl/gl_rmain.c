@@ -1467,7 +1467,7 @@ static qboolean R_Init (HINSTANCE hinstance, WNDPROC wndproc)
 
 	GL_CHECK_ERROR
 
-	return qfalse;
+	return qtrue;
 }
 
 /**

@@ -125,7 +125,7 @@ void Sys_Vid_Init (void)
 		Com_Error(ERR_FATAL, "Re has incompatible api_version");
 
 	/* call the init function */
-	if (re.Init(NULL, NULL) == -1)
+	if (re.Init(NULL, NULL) == qfalse)
 		Com_Error(ERR_FATAL, "Couldn't start refresh");
 
 	maxVidModes = VID_NUM_MODES;
