@@ -33,27 +33,25 @@ mapbrush_t	mapbrushes[MAX_MAP_BRUSHES];
 
 int			nummapbrushsides;
 side_t		brushsides[MAX_MAP_SIDES];
-brush_texture_t	side_brushtextures[MAX_MAP_SIDES];
+static brush_texture_t side_brushtextures[MAX_MAP_SIDES];
 
 int			nummapplanes;
 plane_t		mapplanes[MAX_MAP_PLANES];
 
 #define	PLANE_HASHES	1024
-plane_t		*planehash[PLANE_HASHES];
+static plane_t *planehash[PLANE_HASHES];
 
-vec3_t		map_mins, map_maxs;
+static vec3_t map_mins, map_maxs;
 
 /* undefine to make plane finding use linear sort */
 #define	USE_HASHING
 
-void TestExpandBrushes (void);
+void TestExpandBrushes(void);
 
-int		c_boxbevels;
-int		c_edgebevels;
-
-int		c_areaportals;
-
-int		c_clipbrushes;
+static int c_boxbevels = 0;
+static int c_edgebevels = 0;
+static int c_areaportals = 0;
+static int c_clipbrushes = 0;
 
 /*
 =============================================================================
@@ -658,17 +656,7 @@ static void ParseBrush (entity_t *mapent)
 		}
 
 	/* create windings for sides and bounds for brush */
-	MakeBrushWindings (b);
-
-#if 1
-	/* brushes that will not be visible at all will never be */
-	/* used as bsp splitters */
-	if (b->contents & (CONTENTS_ACTORCLIP|CONTENTS_WEAPONCLIP)) {
-		c_clipbrushes++;
-		for (i = 0; i < b->numsides; i++)
-			b->original_sides[i].texinfo = TEXINFO_NODE;
-	}
-#endif
+	MakeBrushWindings(b);
 
 	/* origin brushes are removed, but they set */
 	/* the rotation origin for the rest of the brushes */
