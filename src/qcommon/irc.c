@@ -72,6 +72,7 @@ static char irc_names_buffer[1024];
 static void Irc_Logic_RemoveChannelName(irc_channel_t *channel, const char *nick);
 static void Irc_Logic_AddChannelName(irc_channel_t *channel, irc_nick_prefix_t prefix, const char *nick);
 static void Irc_Client_Names_f(void);
+static void Irc_Logic_Disconnect(const char *reason);
 
 /*
 ===============================================================
@@ -147,7 +148,7 @@ static irc_bucket_t irc_bucket;
  * @brief
  * @sa Irc_Proto_Disconnect
  */
-qboolean Irc_Proto_Connect (const char *host, unsigned short port)
+static qboolean Irc_Proto_Connect (const char *host, unsigned short port)
 {
 	const qboolean status = Irc_Net_Connect(host, port);
 	if (!status) {
@@ -171,7 +172,7 @@ qboolean Irc_Proto_Connect (const char *host, unsigned short port)
  * @brief
  * @sa Irc_Proto_Connect
  */
-qboolean Irc_Proto_Disconnect (void)
+static qboolean Irc_Proto_Disconnect (void)
 {
 	const qboolean status = Irc_Net_Disconnect();
 	if (!status) {
@@ -194,7 +195,7 @@ qboolean Irc_Proto_Disconnect (void)
  * @brief
  * @sa Irc_Net_Send
  */
-qboolean Irc_Proto_Quit (const char *quitmsg)
+static qboolean Irc_Proto_Quit (const char *quitmsg)
 {
 	char msg[IRC_SEND_BUF_SIZE];
 	const int msg_len = snprintf(msg, sizeof(msg) - 1, "QUIT %s\r\n", quitmsg);
@@ -206,7 +207,7 @@ qboolean Irc_Proto_Quit (const char *quitmsg)
  * @brief
  * @sa Irc_Proto_Enqueue
  */
-qboolean Irc_Proto_Nick (const char *nick)
+static qboolean Irc_Proto_Nick (const char *nick)
 {
 	char msg[IRC_SEND_BUF_SIZE];
 	const int msg_len = snprintf(msg, sizeof(msg) - 1, "NICK %s\r\n", nick);
@@ -218,7 +219,7 @@ qboolean Irc_Proto_Nick (const char *nick)
  * @brief
  * @sa Irc_Proto_Enqueue
  */
-qboolean Irc_Proto_User (const char *user, qboolean invisible, const char *name)
+static qboolean Irc_Proto_User (const char *user, qboolean invisible, const char *name)
 {
 	char msg[IRC_SEND_BUF_SIZE];
 	const int msg_len = snprintf(msg, sizeof(msg) - 1, "USER %s %c * :%s\r\n", user, invisible ? '8' : '0', name);
@@ -230,7 +231,7 @@ qboolean Irc_Proto_User (const char *user, qboolean invisible, const char *name)
  * @brief
  * @sa Irc_Proto_Enqueue
  */
-qboolean Irc_Proto_Password (const char *password)
+static qboolean Irc_Proto_Password (const char *password)
 {
 	char msg[IRC_SEND_BUF_SIZE];
 	const int msg_len = snprintf(msg, sizeof(msg) - 1, "PASS %s\r\n", password);
@@ -242,7 +243,7 @@ qboolean Irc_Proto_Password (const char *password)
  * @brief
  * @sa Irc_Proto_Enqueue
  */
-qboolean Irc_Proto_Join (const char *channel, const char *password)
+static qboolean Irc_Proto_Join (const char *channel, const char *password)
 {
 	char msg[IRC_SEND_BUF_SIZE];
 	const int msg_len = password
@@ -264,7 +265,7 @@ qboolean Irc_Proto_Join (const char *channel, const char *password)
  * @brief
  * @sa Irc_Proto_Enqueue
  */
-qboolean Irc_Proto_Part (const char *channel)
+static qboolean Irc_Proto_Part (const char *channel)
 {
 	char msg[IRC_SEND_BUF_SIZE];
 	const int msg_len = snprintf(msg, sizeof(msg) - 1, "PART %s\r\n", channel);
@@ -276,7 +277,7 @@ qboolean Irc_Proto_Part (const char *channel)
  * @brief
  * @sa Irc_Proto_Enqueue
  */
-qboolean Irc_Proto_Mode (const char *target, const char *modes, const char *params)
+static qboolean Irc_Proto_Mode (const char *target, const char *modes, const char *params)
 {
 	char msg[IRC_SEND_BUF_SIZE];
 	const int msg_len = params
@@ -290,7 +291,7 @@ qboolean Irc_Proto_Mode (const char *target, const char *modes, const char *para
  * @brief
  * @sa Irc_Proto_Enqueue
  */
-qboolean Irc_Proto_Topic (const char *channel, const char *topic)
+static qboolean Irc_Proto_Topic (const char *channel, const char *topic)
 {
 	char msg[IRC_SEND_BUF_SIZE];
 	const int msg_len = topic
@@ -305,35 +306,39 @@ qboolean Irc_Proto_Topic (const char *channel, const char *topic)
  * @sa Irc_Proto_Enqueue
  * @return qtrue on failure
  */
-qboolean Irc_Proto_Msg (const char *target, const char *text)
+static qboolean Irc_Proto_Msg (const char *target, const char *text)
 {
 	char msg[IRC_SEND_BUF_SIZE];
 	const int msg_len = snprintf(msg, sizeof(msg) - 1, "PRIVMSG %s :%s\r\n", target, text);
 	if (*text == '/') {
 		Com_DPrintf("Don't send irc commands as PRIVMSG\n");
+		Cbuf_AddText(va("%s\n", &text[1]));
 		return qtrue;
 	}
 	msg[sizeof(msg) - 1] = '\0';
 	return Irc_Proto_Enqueue(msg, msg_len);
 }
 
+#if 0
 /**
  * @brief
  * @sa Irc_Proto_Enqueue
  */
-qboolean Irc_Proto_Notice (const char *target, const char *text)
+static qboolean Irc_Proto_Notice (const char *target, const char *text)
 {
 	char msg[IRC_SEND_BUF_SIZE];
 	const int msg_len = snprintf(msg, sizeof(msg) - 1, "NOTICE %s :%s\r\n", target, text);
 	msg[sizeof(msg) - 1] = '\0';
 	return Irc_Proto_Enqueue(msg, msg_len);
 }
+#endif
 
+#if 0
 /**
  * @brief
  * @sa Irc_Net_Send
  */
-qboolean Irc_Proto_Pong (const char *nick, const char *server, const char *cookie)
+static qboolean Irc_Proto_Pong (const char *nick, const char *server, const char *cookie)
 {
 	char msg[IRC_SEND_BUF_SIZE];
 	const int msg_len = cookie
@@ -342,12 +347,13 @@ qboolean Irc_Proto_Pong (const char *nick, const char *server, const char *cooki
 	msg[sizeof(msg) - 1] = '\0';
 	return Irc_Net_Send(msg, msg_len);	/* send immediately */
 }
+#endif
 
 /**
  * @brief
  * @sa Irc_Proto_Enqueue
  */
-qboolean Irc_Proto_Kick (const char *channel, const char *nick, const char *reason)
+static qboolean Irc_Proto_Kick (const char *channel, const char *nick, const char *reason)
 {
 	char msg[IRC_SEND_BUF_SIZE];
 	const int msg_len = reason
@@ -361,7 +367,7 @@ qboolean Irc_Proto_Kick (const char *channel, const char *nick, const char *reas
  * @brief
  * @sa Irc_Proto_Enqueue
  */
-qboolean Irc_Proto_Who (const char *nick)
+static qboolean Irc_Proto_Who (const char *nick)
 {
 	char msg[IRC_SEND_BUF_SIZE];
 	const int msg_len = snprintf(msg, sizeof(msg) - 1, "WHO %s\r\n", nick);
@@ -373,7 +379,7 @@ qboolean Irc_Proto_Who (const char *nick)
  * @brief
  * @sa Irc_Proto_Enqueue
  */
-qboolean Irc_Proto_Whois (const char *nick)
+static qboolean Irc_Proto_Whois (const char *nick)
 {
 	char msg[IRC_SEND_BUF_SIZE];
 	const int msg_len = snprintf(msg, sizeof(msg) - 1, "WHOIS %s\r\n", nick);
@@ -385,7 +391,7 @@ qboolean Irc_Proto_Whois (const char *nick)
  * @brief
  * @sa Irc_Proto_Enqueue
  */
-qboolean Irc_Proto_Whowas (const char *nick)
+static qboolean Irc_Proto_Whowas (const char *nick)
 {
 	char msg[IRC_SEND_BUF_SIZE];
 	const int msg_len = snprintf(msg, sizeof(msg) - 1, "WHOWAS %s\r\n", nick);
@@ -397,7 +403,7 @@ qboolean Irc_Proto_Whowas (const char *nick)
  * @brief
  * @sa Irc_Logic_ReadMessages
  */
-qboolean Irc_Proto_PollServerMsg (irc_server_msg_t *msg, qboolean *msg_complete)
+static qboolean Irc_Proto_PollServerMsg (irc_server_msg_t *msg, qboolean *msg_complete)
 {
 	static char buf[IRC_RECV_BUF_SIZE];
 	static char *last = buf;
@@ -855,7 +861,7 @@ static void Irc_Client_CmdRplEndofnames (const char *params, const char *trailin
  * @brief
  * @sa Irc_Logic_ReadMessages
  */
-qboolean Irc_Proto_ProcessServerMsg (const irc_server_msg_t *msg)
+static qboolean Irc_Proto_ProcessServerMsg (const irc_server_msg_t *msg)
 {
 	irc_command_t cmd;
 	const char *p = NULL;
@@ -1133,7 +1139,7 @@ static qboolean Irc_Proto_ParseServerMsg (const char *txt, size_t txt_len, irc_s
  * @sa Irc_Proto_Enqueue
  * @sa Irc_Proto_DrainBucket
  */
-qboolean Irc_Proto_Flush (void)
+static qboolean Irc_Proto_Flush (void)
 {
 	Irc_Proto_RefillBucket();		/* first refill token */
 	return Irc_Proto_DrainBucket();	/* then send messages (if allowed) */
@@ -1291,21 +1297,8 @@ static void Irc_Logic_ReadMessages (void)
 
 /**
  * @brief
- * @sa Irc_Logic_ReadMessages
- * @sa Irc_Logic_SendMessages
  */
-extern void Irc_Logic_Frame (int frame)
-{
-	if (irc_connected && frame > 0) {
-		Irc_Logic_SendMessages();
-		Irc_Logic_ReadMessages();
-	}
-}
-
-/**
- * @brief
- */
-void Irc_Logic_Connect (const char *server, unsigned short port)
+static void Irc_Logic_Connect (const char *server, unsigned short port)
 {
 	if (!Irc_Proto_Connect(server, port)) {
 		/* connected to server, send NICK and USER commands */
@@ -1322,7 +1315,7 @@ void Irc_Logic_Connect (const char *server, unsigned short port)
 /**
  * @brief
  */
-void Irc_Logic_Disconnect (const char *reason)
+static void Irc_Logic_Disconnect (const char *reason)
 {
 	if (irc_connected) {
 		Com_Printf("Irc_Disconnect: %s\n", reason);
@@ -1339,17 +1332,28 @@ void Irc_Logic_Disconnect (const char *reason)
 
 /**
  * @brief
+ * @sa Irc_Logic_ReadMessages
+ * @sa Irc_Logic_SendMessages
  */
-const char *Irc_Logic_GetChannelName (const irc_channel_t *channel)
+extern void Irc_Logic_Frame (int frame)
 {
-	assert(channel);
-	return channel->name;
+	if (irc_connected && frame > 0) {
+		if (irc_channel->modified) {
+			/* FIXME: do this without disconnect, connect */
+			Irc_Logic_Disconnect("Switched to another channel");
+			Irc_Logic_Connect(irc_server->string, irc_port->integer);
+			Cbuf_AddText(va("irc_join %s\n", irc_channel->string));
+		}
+		Irc_Logic_SendMessages();
+		Irc_Logic_ReadMessages();
+	}
+	irc_channel->modified = qfalse;
 }
 
 /**
  * @brief
  */
-const char *Irc_Logic_GetChannelTopic (const irc_channel_t *channel)
+static const char *Irc_Logic_GetChannelTopic (const irc_channel_t *channel)
 {
 	assert(channel);
 	return channel->topic;
@@ -1412,7 +1416,7 @@ Network functions
 /**
  * @brief
  */
-qboolean Irc_Net_Connect (const char *host, unsigned short port)
+static qboolean Irc_Net_Connect (const char *host, unsigned short port)
 {
 	int status;
 	qboolean failed = qtrue;
@@ -1473,7 +1477,7 @@ qboolean Irc_Net_Connect (const char *host, unsigned short port)
 /**
  * @brief
  */
-qboolean Irc_Net_Disconnect (void)
+static qboolean Irc_Net_Disconnect (void)
 {
 #ifdef _WIN32
 	return closesocket(irc_socket) < 0;
@@ -1485,7 +1489,7 @@ qboolean Irc_Net_Disconnect (void)
 /**
  * @brief
  */
-qboolean Irc_Net_Send (const char *msg, size_t msg_len)
+static qboolean Irc_Net_Send (const char *msg, size_t msg_len)
 {
 	int sent;
 	assert(msg);
@@ -1501,7 +1505,7 @@ qboolean Irc_Net_Send (const char *msg, size_t msg_len)
 /**
  * @brief
  */
-qboolean Irc_Net_Receive (char *buf, size_t buf_len, int *recvd)
+static qboolean Irc_Net_Receive (char *buf, size_t buf_len, int *recvd)
 {
 	assert(buf);
 	assert(recvd);
@@ -1812,6 +1816,7 @@ extern void Irc_Init (void)
 	/* cvars */
 	irc_server = Cvar_Get("irc_server", "irc.freenode.org", CVAR_ARCHIVE, "IRC server to connect to");
 	irc_channel = Cvar_Get("irc_channel", "#ufo:ai", CVAR_ARCHIVE, "IRC channel to join into");
+	irc_channel->modified = qfalse;
 	irc_port = Cvar_Get("irc_port", "6667", CVAR_ARCHIVE, "IRC port to connect to");
 	irc_user = Cvar_Get("irc_user", "UfoAIPlayer", CVAR_ARCHIVE, NULL);
 	irc_password = Cvar_Get("irc_password", "", CVAR_ARCHIVE, NULL);
