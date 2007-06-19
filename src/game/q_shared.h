@@ -577,8 +577,6 @@ COLLISION DETECTION
 
 /* remaining contents are non-visible, and don't eat brushes */
 
-#define CONTENTS_AREAPORTAL     0x8000
-
 #define CONTENTS_ACTORCLIP      0x10000
 #define CONTENTS_PASSABLE       0x20000
 
@@ -596,7 +594,6 @@ COLLISION DETECTION
 #define CONTENTS_DEADACTOR      0x4000000
 #define CONTENTS_DETAIL         0x8000000   /**< brushes to be added after vis leafs */
 #define CONTENTS_TRANSLUCENT    0x10000000  /**< auto set if any surface has trans */
-#define CONTENTS_LADDER         0x20000000
 #define CONTENTS_STEPON         0x40000000  /**< marks areas elevated passable areas */
 
 

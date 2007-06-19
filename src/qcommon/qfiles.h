@@ -26,60 +26,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#ifndef QFILES_H
+#define QFILES_H
+
 #include "unzip.h"
-
-/*========================================================================
-The .pak files are just a linear collapse of a directory tree
-========================================================================*/
-
-#ifdef _WIN32
-typedef long fs_offset_t; /* 32bit */
-/*typedef _int64 fs_offset_t;  *//* 64bit (lots of warnings, and lseek/read/write still don't take 64bit on win64) */
-#else
-typedef long long fs_offset_t;
-#endif
-
-#define FILE_BUFF_SIZE 2048
-typedef struct
-{
-	z_stream	zstream;
-	size_t		comp_length;			/**< length of the compressed file */
-	size_t		in_ind, in_len;			/**< input buffer current index and length */
-	size_t		in_position;			/**< position in the compressed file */
-	unsigned char		input [FILE_BUFF_SIZE];
-} ztoolkit_t;
-
-typedef struct qfile_s
-{
-	int				flags;
-	int				handle;					/**< file descriptor */
-	fs_offset_t		real_length;			/**< uncompressed file size (for files opened in "read" mode) */
-	fs_offset_t		position;				/**< current position in the file */
-	fs_offset_t		offset;					/**< offset into the package (0 if external file) */
-	int				ungetc;					/**< single stored character from ungetc, cleared to EOF when read */
-
-	/** Contents buffer */
-	fs_offset_t		buff_ind, buff_len;		/**< buffer current index and length */
-	unsigned char			buff [FILE_BUFF_SIZE];
-
-	/** For zipped files */
-	ztoolkit_t*		ztk;
-} qfile_t;
-
-/*==============================================================
-Pak3 support
-The .pk3 files are just zip files
-==============================================================*/
-
-/* Make sure we have this available */
-char **FS_ListFiles(const char *findname, int *numfiles, unsigned musthave, unsigned canthave);
-
-/**
- * @brief cleanup function
- */
-void FS_Shutdown(void);
-
-/* End .pk3 support */
 
 /*========================================================================
 PCX files are used for as many images as possible
@@ -245,79 +195,79 @@ typedef struct {
 typedef unsigned int index_t;
 
 typedef struct {
-	float			st[2];
+	float st[2];
 } dmd3coord_t;
 
 typedef struct {
-	short			point[3];
-	short			norm;
+	short point[3];
+	short norm;
 } dmd3vertex_t;
 
 typedef struct {
-	vec3_t			point;
-	vec3_t			normal;
+	vec3_t point;
+	vec3_t normal;
 } admd3vertex_t;
 
 typedef struct {
-	vec3_t			mins;
-	vec3_t			maxs;
-	vec3_t			translate;
-	float			radius;
-	char			creator[16];
+	vec3_t mins;
+	vec3_t maxs;
+	vec3_t translate;
+	float radius;
+	char creator[16];
 } dmd3frame_t;
 
 typedef struct {
-	vec3_t			origin;
-	float			axis[3][3];
+	vec3_t origin;
+	float axis[3][3];
 } dorientation_t;
 
 typedef struct {
-	char			name[MD3_MAX_PATH];		/**< tag name */
-	dorientation_t	orient;
+	char name[MD3_MAX_PATH];		/**< tag name */
+	dorientation_t orient;
 } dmd3tag_t;
 
 typedef struct {
-	char			name[MD3_MAX_PATH];
-	int				unused;					/**< shader */
+	char name[MD3_MAX_PATH];
+	int unused;					/**< shader */
 } dmd3skin_t;
 
 typedef struct {
-	char			id[4];
+	char id[4];
 
-	char			name[MD3_MAX_PATH];
+	char name[MD3_MAX_PATH];
 
-	int				flags;
+	int flags;
 
-	int				num_frames;
-	int				num_skins;
-	int				num_verts;
-	int				num_tris;
+	int num_frames;
+	int num_skins;
+	int num_verts;
+	int num_tris;
 
-	int				ofs_tris;
-	int				ofs_skins;
-	int				ofs_tcs;
-	int				ofs_verts;
+	int ofs_tris;
+	int ofs_skins;
+	int ofs_tcs;
+	int ofs_verts;
 
-	int				meshsize;
+	int meshsize;
 } dmd3mesh_t;
 
 typedef struct {
-	int				id;
-	int				version;
+	int id;
+	int version;
 
-	char			filename[MD3_MAX_PATH];
+	char filename[MD3_MAX_PATH];
 
-	int				flags;
+	int flags;
 
-	int				num_frames;
-	int				num_tags;
-	int				num_meshes;
-	int				num_skins;
+	int num_frames;
+	int num_tags;
+	int num_meshes;
+	int num_skins;
 
-	int				ofs_frames;
-	int				ofs_tags;
-	int				ofs_meshes;
-	int				ofs_end;
+	int ofs_frames;
+	int ofs_tags;
+	int ofs_meshes;
+	int ofs_end;
 } dmd3_t;
 
 /*========================================================================
@@ -373,56 +323,57 @@ typedef struct miptex_s {
  * leaffaces, leafbrushes, planes, and verts are still bounded by
  * 16 bit short limits
  */
-#define	MAX_MAP_MODELS		1024
-#define	MAX_MAP_BRUSHES		8192
-#define	MAX_MAP_ENTITIES	2048
-#define	MAX_MAP_ENTSTRING	0x40000
-#define	MAX_MAP_TEXINFO		8192
+#define MAX_MAP_MODELS		1024
+#define MAX_MAP_BRUSHES		8192
+#define MAX_MAP_ENTITIES	2048
+#define MAX_MAP_ENTSTRING	0x40000
+#define MAX_MAP_TEXINFO		8192
 
-#define	MAX_MAP_AREAS		256
-#define	MAX_MAP_AREAPORTALS	1024
-#define	MAX_MAP_PLANES		65536
-#define	MAX_MAP_NODES		65536
-#define	MAX_MAP_BRUSHSIDES	65536
-#define	MAX_MAP_LEAFS		65536
-#define	MAX_MAP_VERTS		65536
-#define	MAX_MAP_FACES		65536
-#define	MAX_MAP_LEAFFACES	65536
-#define	MAX_MAP_LEAFBRUSHES 65536
-#define	MAX_MAP_PORTALS		65536
-#define	MAX_MAP_EDGES		128000
-#define	MAX_MAP_SURFEDGES	256000
-#define	MAX_MAP_LIGHTING	0x1000000
-#define	MAX_MAP_ROUTING		0x40000
+#define MAX_MAP_AREAS		256
+#define MAX_MAP_AREAPORTALS	1024
+#define MAX_MAP_PLANES		65536
+#define MAX_MAP_NODES		65536
+#define MAX_MAP_BRUSHSIDES	65536
+#define MAX_MAP_LEAFS		65536
+#define MAX_MAP_VERTS		65536
+#define MAX_MAP_FACES		65536
+#define MAX_MAP_LEAFFACES	65536
+#define MAX_MAP_LEAFBRUSHES 65536
+#define MAX_MAP_PORTALS		65536
+#define MAX_MAP_EDGES		128000
+#define MAX_MAP_SURFEDGES	256000
+#define MAX_MAP_LIGHTING	0x1000000
+/* 256 * 256 * 4 */
+#define MAX_MAP_ROUTING		0x40000
 
 #define MAX_MAP_LIGHTS	1024
 
 /** key / value pair sizes */
 
-#define	MAX_KEY		32
-#define	MAX_VALUE	1024
+#define MAX_KEY		32
+#define MAX_VALUE	1024
 
 typedef struct {
 	int fileofs, filelen;
 } lump_t;
 
-#define	LUMP_ENTITIES		0
-#define	LUMP_PLANES			1
-#define	LUMP_VERTEXES		2
-#define	LUMP_ROUTING		3
-#define	LUMP_NODES			4
-#define	LUMP_TEXINFO		5
-#define	LUMP_FACES			6
-#define	LUMP_LIGHTING		7
-#define	LUMP_LEAFS			8
-#define	LUMP_LEAFFACES		9
-#define	LUMP_LEAFBRUSHES	10
-#define	LUMP_EDGES			11
-#define	LUMP_SURFEDGES		12
-#define	LUMP_MODELS			13
-#define	LUMP_BRUSHES		14
-#define	LUMP_BRUSHSIDES		15
-#define	HEADER_LUMPS		19
+#define LUMP_ENTITIES		0
+#define LUMP_PLANES			1
+#define LUMP_VERTEXES		2
+#define LUMP_ROUTING		3
+#define LUMP_NODES			4
+#define LUMP_TEXINFO		5
+#define LUMP_FACES			6
+#define LUMP_LIGHTING		7
+#define LUMP_LEAFS			8
+#define LUMP_LEAFFACES		9
+#define LUMP_LEAFBRUSHES	10
+#define LUMP_EDGES			11
+#define LUMP_SURFEDGES		12
+#define LUMP_MODELS			13
+#define LUMP_BRUSHES		14
+#define LUMP_BRUSHSIDES		15
+#define HEADER_LUMPS		19
 
 typedef struct {
 	int ident;
@@ -443,15 +394,14 @@ typedef struct {
 
 
 /** 0-2 are axial planes */
-#define	PLANE_X			0
-#define	PLANE_Y			1
-#define	PLANE_Z			2
+#define PLANE_X			0
+#define PLANE_Y			1
+#define PLANE_Z			2
 
 /** 3-5 are non-axial planes snapped to the nearest */
-#define	PLANE_ANYX		3
-#define	PLANE_ANYY		4
-#define	PLANE_ANYZ		5
-
+#define PLANE_ANYX		3
+#define PLANE_ANYY		4
+#define PLANE_ANYZ		5
 #define PLANE_NONE		6
 
 /** planes (x&~1) and (x&~1)+1 are always opposites */
@@ -459,9 +409,8 @@ typedef struct {
 typedef struct {
 	float normal[3];
 	float dist;
-	int type;					/**< PLANE_X - PLANE_ANYZ ?remove? trivial to regenerate */
+	int type;		/**< PLANE_X - PLANE_ANYZ ?remove? trivial to regenerate */
 } dplane_t;
-
 
 /**
  * @note contents flags are seperate bits
@@ -472,38 +421,38 @@ typedef struct {
 /** these definitions also need to be in q_shared.h! */
 
 /** lower bits are stronger, and will eat weaker brushes completely */
-#define	CONTENTS_SOLID			1	/**< an eye is never valid in a solid */
-#define	CONTENTS_WINDOW			2	/**< translucent, but not watery */
-#define	CONTENTS_AUX			4
-#define	CONTENTS_SMOKE			8
-#define	CONTENTS_SLIME			16
-#define	CONTENTS_WATER			32
-#define	CONTENTS_MIST			64
-#define	LAST_VISIBLE_CONTENTS	64
+#define CONTENTS_SOLID			1	/**< an eye is never valid in a solid */
+#define CONTENTS_WINDOW			2	/**< translucent, but not watery */
+#define CONTENTS_AUX			4
+#define CONTENTS_SMOKE			8
+#define CONTENTS_SLIME			16
+#define CONTENTS_WATER			32
+#define CONTENTS_MIST			64
+#define LAST_VISIBLE_CONTENTS	64
 
 /* remaining contents are non-visible, and don't eat brushes */
 
-#define	CONTENTS_AREAPORTAL		0x8000
+#define CONTENTS_ACTORCLIP		0x10000
+#define CONTENTS_PASSABLE		0x20000
 
-#define	CONTENTS_ACTORCLIP		0x10000
-#define	CONTENTS_PASSABLE		0x20000
+#define CONTENTS_ORIGIN			0x1000000	/**< removed before bsping an entity */
 
-#define	CONTENTS_ORIGIN			0x1000000	/**< removed before bsping an entity */
+#define CONTENTS_WEAPONCLIP		0x2000000
+#define CONTENTS_DEADMONSTER	0x4000000
+#define CONTENTS_DETAIL			0x8000000	/**< brushes to be added after vis leafs */
+#define CONTENTS_TRANSLUCENT	0x10000000	/**< auto set if any surface has trans */
+#define CONTENTS_STEPON         0x40000000  /**< marks areas elevated passable areas */
 
-#define	CONTENTS_WEAPONCLIP		0x2000000
-#define	CONTENTS_DEADMONSTER	0x4000000
-#define	CONTENTS_DETAIL			0x8000000	/**< brushes to be added after vis leafs */
-#define	CONTENTS_TRANSLUCENT	0x10000000	/**< auto set if any surface has trans */
-#define	CONTENTS_LADDER			0x20000000
-
-#define	SURF_LIGHT		0x1		/**< value will hold the light strength */
-#define	SURF_SLICK		0x2		/**< effects game physics */
-#define	SURF_WARP		0x8		/**< turbulent water warp */
-#define	SURF_TRANS33	0x10
-#define	SURF_TRANS66	0x20
-#define	SURF_FLOWING	0x40	/**< scroll towards angle */
-#define	SURF_NODRAW		0x80	/**< don't bother referencing the texture */
-
+#define SURF_LIGHT		0x1		/**< value will hold the light strength */
+#define SURF_SLICK		0x2		/**< effects game physics */
+#define SURF_WARP		0x8		/**< turbulent water warp */
+#define SURF_TRANS33	0x10
+#define SURF_TRANS66	0x20
+#define SURF_FLOWING	0x40	/**< scroll towards angle */
+#define SURF_NODRAW		0x80	/**< don't bother referencing the texture */
+#define SURF_HINT		0x100	/* make a primary bsp splitter */
+#define SURF_SKIP		0x200	/* completely ignore, allowing non-closed brushes */
+#define SURF_ALPHATEST	0x2000000	/* alpha test for transparent textures */
 
 typedef struct {
 	int planenum;
@@ -573,5 +522,7 @@ typedef struct {
 	int contents;
 } dbrush_t;
 
-#define	ANGLE_UP	-1
-#define	ANGLE_DOWN	-2
+#define ANGLE_UP	-1
+#define ANGLE_DOWN	-2
+
+#endif /* QFILES_H */

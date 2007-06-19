@@ -130,4 +130,12 @@ void FS_BuildFileList(char *files);
 char *FS_NextScriptHeader(const char *files, char **name, char **text);
 void FS_CreatePath(const char *path);
 
+/* Make sure we have this available */
+char **FS_ListFiles(const char *findname, int *numfiles, unsigned musthave, unsigned canthave);
+
+/**
+ * @brief cleanup function
+ */
+void FS_Shutdown(void);
+
 #endif /* QCOMMON_FILESYS_H */

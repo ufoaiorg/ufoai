@@ -852,7 +852,7 @@ void R_DrawLevelBrushes (void)
 	memset(&ent, 0, sizeof(ent));
 	currententity = &ent;
 
-	mask = 1 << (int) r_newrefdef.worldlevel;
+	mask = 1 << r_newrefdef.worldlevel;
 
 	for (tile = 0; tile < rNumTiles; tile++) {
 		currentmodel = rTiles[tile];

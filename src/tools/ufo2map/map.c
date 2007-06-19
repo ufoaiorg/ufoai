@@ -810,27 +810,6 @@ static qboolean ParseMapEntity (void)
 		return qtrue;
 	}
 
-#if 0
-	/* areaportal entities move their brushes, but don't eliminate */
-	/* the entity */
-	if (!strcmp("func_areaportal", ValueForKey(mapent, "classname"))) {
-		char str[128];
-
-		if (mapent->numbrushes != 1)
-			Error ("Entity %i: func_areaportal can only be a single brush", num_entities-1);
-
-		b = &mapbrushes[nummapbrushes-1];
-		b->contents = CONTENTS_AREAPORTAL;
-		c_areaportals++;
-		mapent->areaportalnum = c_areaportals;
-		/* set the portal number as "style" */
-		sprintf (str, "%i", c_areaportals);
-		SetKeyValue (mapent, "style", str);
-		MoveBrushesToWorld (mapent);
-		return qtrue;
-	}
-#endif
-
 	return qtrue;
 }
 

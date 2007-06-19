@@ -550,7 +550,7 @@ static void CL_DrawGrid (void)
 void V_UpdateRefDef (void)
 {
 	/* setup refdef */
-	cl.refdef.worldlevel = cl_worldlevel->value;
+	cl.refdef.worldlevel = cl_worldlevel->integer;
 	cl.refdef.num_entities = r_numentities;
 	cl.refdef.entities = r_entities;
 	cl.refdef.num_shaders = r_numshaders;
