@@ -972,7 +972,7 @@ void Key_Event (int key, qboolean down, unsigned time)
 	}
 
 	/* any key during the attract mode will bring up the menu */
-	if (cl.attractloop && !(key >= K_F1 && key <= K_F12))
+	if ((cls.state == ca_sequence || cl.attractloop) && !(key >= K_F1 && key <= K_F12))
 		key = K_ESCAPE;
 
 	/* menu key is hardcoded, so the user can never unbind it */
