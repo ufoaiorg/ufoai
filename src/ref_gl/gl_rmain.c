@@ -985,7 +985,7 @@ static void R_Register (void)
 	gl_modulate = ri.Cvar_Get("gl_modulate", "1", CVAR_ARCHIVE, NULL);
 	gl_log = ri.Cvar_Get("gl_log", "0", 0, NULL);
 	gl_bitdepth = ri.Cvar_Get("gl_bitdepth", "0", CVAR_ARCHIVE, NULL);
-	gl_mode = ri.Cvar_Get("gl_mode", "3", CVAR_ARCHIVE, NULL);
+	gl_mode = ri.Cvar_Get("gl_mode", "6", CVAR_ARCHIVE, "Display resolution");
 	gl_lightmap = ri.Cvar_Get("gl_lightmap", "0", 0, NULL);
 	gl_shadows = ri.Cvar_Get("gl_shadows", "1", CVAR_ARCHIVE, NULL);
 	gl_shadow_debug_volume = ri.Cvar_Get("gl_shadow_debug_volume", "0", CVAR_ARCHIVE, NULL);
