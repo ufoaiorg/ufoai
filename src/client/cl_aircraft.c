@@ -944,7 +944,7 @@ void CL_CampaignRunAircraft (int dt)
 {
 	aircraft_t *aircraft;
 	base_t *base;
-	int i, j;
+	int i, j, k;
 
 	for (j = 0, base = gd.bases; j < gd.numBases; j++, base++) {
 		if (!base->founded)
@@ -1023,9 +1023,9 @@ void CL_CampaignRunAircraft (int dt)
 
 				/* Update delay to launch next projectile */
 				if (aircraft->status >= AIR_IDLE) {
-					for (i = 0; i < aircraft->maxWeapons; i++) {
-						if (aircraft->weapons[i].delayNextShot > 0)
-							aircraft->weapons[i].delayNextShot -= dt;
+					for (k = 0; k < aircraft->maxWeapons; k++) {
+						if (aircraft->weapons[k].delayNextShot > 0)
+							aircraft->weapons[k].delayNextShot -= dt;
 					}
 				}
 			}
