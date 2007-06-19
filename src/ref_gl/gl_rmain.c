@@ -1047,9 +1047,9 @@ static void R_Register (void)
 	vid_grabmouse->modified = qfalse;
 
 	con_font = ri.Cvar_Get("con_font", "0", CVAR_ARCHIVE, NULL);
-	con_fontWidth = ri.Cvar_Get("con_fontWidth", "16", CVAR_NOSET, NULL);
-	con_fontHeight = ri.Cvar_Get("con_fontHeight", "32", CVAR_NOSET, NULL);
-	con_fontShift = ri.Cvar_Get("con_fontShift", "4", CVAR_NOSET, NULL);
+	con_fontWidth = ri.Cvar_Get("con_fontWidth", "8", CVAR_NOSET, NULL);
+	con_fontHeight = ri.Cvar_Get("con_fontHeight", "16", CVAR_NOSET, NULL);
+	con_fontShift = ri.Cvar_Get("con_fontShift", "3", CVAR_NOSET, NULL);
 
 	for (commands = r_commands; commands->name; commands++)
 		ri.Cmd_AddCommand(commands->name, commands->function, _(commands->description));
@@ -1530,9 +1530,9 @@ static void R_BeginFrame (float camera_separation)
 
 	if (con_font->modified) {
 		if (con_font->integer == 0) {
-			ri.Cvar_ForceSet("con_fontWidth", "16");
-			ri.Cvar_ForceSet("con_fontHeight", "32");
-			ri.Cvar_ForceSet("con_fontShift", "4");
+			ri.Cvar_ForceSet("con_fontWidth", "8");
+			ri.Cvar_ForceSet("con_fontHeight", "16");
+			ri.Cvar_ForceSet("con_fontShift", "3");
 			con_font->modified = qfalse;
 		} else if (con_font->integer == 1 && draw_chars[1]) {
 			ri.Cvar_ForceSet("con_fontWidth", "8");
