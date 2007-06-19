@@ -572,6 +572,11 @@ extern qboolean AIR_AircraftHasEnoughFuel (aircraft_t *aircraft, const vec2_t de
 	base = (base_t *) aircraft->homebase;
 	assert(base);
 
+	/* @todo: fix this workaround, on some cases speed is 0 for aircraft, and make it unable to move
+	 * I have no idea why, however: it works just fine on my computer -- Kracken 19/06/2007 */
+	if (aircraft->stats[AIR_STATS_SPEED] == 0)
+		return qtrue;
+
 	/* Calculate the line that the aircraft should follow to go to destination */
 	MAP_MapCalcLine(aircraft->pos, destination, &(line));
 	distance = line.distance * (line.numPoints - 1);
