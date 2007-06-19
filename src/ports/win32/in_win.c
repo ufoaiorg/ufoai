@@ -472,7 +472,7 @@ void IN_Frame (void)
 
 #if 0
 	/* @todo: NEEDED? */
-	if ( !cl.refresh_prepped || cls.key_dest == key_console) {
+	if (!cl.refresh_prepped || cls.key_dest == key_console) {
 		/* temporarily deactivate if in fullscreen */
 		if (!Cvar_VariableInteger("vid_fullscreen")) {
 			IN_DeactivateMouse ();

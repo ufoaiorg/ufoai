@@ -2904,7 +2904,7 @@ static menu_t* MN_PushMenuDelete (const char *name, qboolean delete)
 			if (menus[i].initNode)
 				MN_ExecuteActions(&menus[i], menus[i].initNode->click);
 
-			cls.key_dest = key_game;
+			Key_SetDest(key_game);
 			for (node = menus[i].firstNode; node; node = node->next) {
 				/* if there is a timeout value set, init the menu with current
 				 * client time */
@@ -3011,7 +3011,7 @@ void MN_PopMenu (qboolean all)
 		}
 	}
 
-	cls.key_dest = key_game;
+	Key_SetDest(key_game);
 }
 
 /**

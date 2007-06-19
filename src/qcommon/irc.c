@@ -69,10 +69,6 @@ static irc_channel_t *chan = NULL;
 static char irc_buffer[4048];
 static char irc_names_buffer[1024];
 
-#define IRC_MESSAGEMODE_BUFSIZE 256
-static char	irc_messagemode_buf[IRC_MESSAGEMODE_BUFSIZE];
-static int	irc_messagemode_buflen = 0;
-
 static void Irc_Logic_RemoveChannelName(irc_channel_t *channel, const char *nick);
 static void Irc_Logic_AddChannelName(irc_channel_t *channel, irc_nick_prefix_t prefix, const char *nick);
 static void Irc_Client_Names_f(void);
@@ -307,11 +303,16 @@ qboolean Irc_Proto_Topic (const char *channel, const char *topic)
 /**
  * @brief
  * @sa Irc_Proto_Enqueue
+ * @return qtrue on failure
  */
 qboolean Irc_Proto_Msg (const char *target, const char *text)
 {
 	char msg[IRC_SEND_BUF_SIZE];
 	const int msg_len = snprintf(msg, sizeof(msg) - 1, "PRIVMSG %s :%s\r\n", target, text);
+	if (*text == '/') {
+		Com_DPrintf("Don't send irc commands as PRIVMSG\n");
+		return qtrue;
+	}
 	msg[sizeof(msg) - 1] = '\0';
 	return Irc_Proto_Enqueue(msg, msg_len);
 }
@@ -1624,11 +1625,11 @@ static void Irc_Client_Msg_f (void)
 				cropped_msg[msg_len - 2] = '\0';
 				msg = cropped_msg;
 			}
-			Irc_Proto_Msg(irc_defaultChannel->string, msg);
-			/* local echo */
-			Irc_AppendToBuffer(va("<%s> %s", irc_nick->string, msg));
+			if (!Irc_Proto_Msg(irc_defaultChannel->string, msg)) {
+				/* local echo */
+				Irc_AppendToBuffer(va("<%s> %s", irc_nick->string, msg));
+			}
 			Cvar_ForceSet("irc_send_buffer", "");
-/*			Irc_Input_Activate();*/
 		} else
 			Com_Printf("Join a channel first.\n");
 	}
@@ -1843,10 +1844,11 @@ extern void Irc_Input_Activate (void)
 	menuText[TEXT_STANDARD] = irc_buffer;
 	menuText[TEXT_LIST] = irc_names_buffer;
 	if (irc_connected && *irc_defaultChannel->string) {
-		cls.key_dest = key_input;
+		Key_SetDest(key_input);
+		msg_mode = MSG_IRC;
 	} else
 		Com_DPrintf("Irc_Input_Activate: Warning - IRC not connected\n");
-	/* store this value to be able to reset if in Irc_Input_Deactivate */
+	/* store this value to be able to reset it in Irc_Input_Deactivate */
 	inputLengthBackup = Cvar_VariableValue("mn_inputlength");
 	Cvar_SetValue("mn_inputlength", 128);
 }
@@ -1857,53 +1859,16 @@ extern void Irc_Input_Activate (void)
  */
 extern void Irc_Input_Deactivate (void)
 {
-	if (cls.key_dest != key_input)
-		Com_DPrintf("Note: Not in irc input mode - thus we can not leave it\n");
-	cls.key_dest = key_game;
-	irc_messagemode_buflen = 0;
 	irc_send_buffer->modified = qfalse;
+
+	/* allow setting to other modes in next messagemode call */
+	msg_mode = MSG_MENU;
+
 	/* if this is set - the command is called after Irc_Input_Activate call */
 	if (inputLengthBackup) {
 		Cvar_SetValue("mn_inputlength", inputLengthBackup);
 		inputLengthBackup = 0;
 		menuText[TEXT_STANDARD] = NULL;
 		menuText[TEXT_LIST] = NULL;
-	}
-	Cbuf_ExecuteText(EXEC_NOW, "msgmenu ';");
-}
-
-/**
- * @brief
- * @sa Irc_Input_Activate
- * @sa Irc_Input_Deactivate
- */
-extern void Irc_Input_KeyEvent (int key)
-{
-	switch (key) {
-	case K_ENTER:
-	case K_KP_ENTER:
-		if (irc_messagemode_buflen > 0) {
-			Cbuf_AddText("irc_chanmsg \"");
-			Cbuf_AddText(irc_messagemode_buf);
-			Cbuf_AddText("\"\n");
-			irc_messagemode_buflen = 0;
-			irc_messagemode_buf[0] = '\0';
-		}
-		break;
-	case K_BACKSPACE:
-		if (irc_messagemode_buflen) {
-			--irc_messagemode_buflen;
-			irc_messagemode_buf[irc_messagemode_buflen] = '\0';
-		}
-		break;
-	case K_ESCAPE:
-		irc_messagemode_buflen = 0;
-		irc_messagemode_buf[0] = '\0';
-		/*Irc_Input_Deactivate();*/
-		break;
-	case 12:
-		irc_messagemode_buflen = 0;
-		irc_messagemode_buf[0] = '\0';
-		break;
 	}
 }

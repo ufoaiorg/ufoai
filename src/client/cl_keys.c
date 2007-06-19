@@ -509,6 +509,10 @@ static void Key_Message (int key)
 			else
 				send = qfalse;
 			break;
+		case MSG_IRC:
+			/* end the editing (don't cancel) */
+			Cbuf_AddText("irc_chanmsg \"");
+			break;
 		case MSG_SAY_TEAM:
 			if (msg_buffer[0])
 				Cbuf_AddText("say_team \"");
@@ -519,25 +523,40 @@ static void Key_Message (int key)
 			/* end the editing (don't cancel) */
 			Cbuf_AddText("msgmenu \":");
 			break;
+		default:
+			Com_Printf("Invalid msg_mode\n");
+			return;
 		}
 		if (send) {
+			Com_Printf("msg_buffer: %s\n", msg_buffer);
 			Cbuf_AddText(msg_buffer);
 			Cbuf_AddText("\"\n");
 		}
 
-		cls.key_dest = key_game;
+		if (msg_mode != MSG_IRC)
+			Key_SetDest(key_game);
+		else
+			Com_Printf("bla\n");
 		msg_bufferlen = 0;
 		msg_buffer[0] = 0;
 		return;
 	}
 
 	if (key == K_ESCAPE) {
-		cls.key_dest = key_game;
+		Key_SetDest(key_game);
 		msg_bufferlen = 0;
 		msg_buffer[0] = 0;
 		/* cancel the inline cvar editing */
-		if (msg_mode == MSG_MENU)
+		switch (msg_mode) {
+		case MSG_IRC:
+			Cbuf_AddText("mn_pop esc;");
+			/* fall through */
+			Irc_Input_Deactivate();
+		case MSG_MENU:
 			Cbuf_AddText("msgmenu !\n");
+			break;
+		}
+
 		return;
 	}
 
@@ -548,7 +567,7 @@ static void Key_Message (int key)
 		if (msg_bufferlen) {
 			msg_bufferlen--;
 			msg_buffer[msg_bufferlen] = 0;
-			if (msg_mode == MSG_MENU)
+			if (msg_mode == MSG_MENU || msg_mode == MSG_IRC)
 				Cbuf_AddText(va("msgmenu \"%s\"\n", msg_buffer));
 		}
 		return;
@@ -558,12 +577,15 @@ static void Key_Message (int key)
 		return;					/* all full */
 
 	/* limit the length for cvar inline editing */
-	if (msg_mode != MSG_MENU || msg_bufferlen < mn_inputlength->integer) {
-		msg_buffer[msg_bufferlen++] = key;
-		msg_buffer[msg_bufferlen] = 0;
+	if ((msg_mode == MSG_MENU || msg_mode == MSG_IRC) && msg_bufferlen >= mn_inputlength->integer) {
+		Com_Printf("Input buffer length exceeded\n");
+		return;
 	}
 
-	if (msg_mode == MSG_MENU)
+	msg_buffer[msg_bufferlen++] = key;
+	msg_buffer[msg_bufferlen] = 0;
+
+	if (msg_mode == MSG_MENU || msg_mode == MSG_IRC)
 		Cbuf_AddText(va("msgmenu \"%s\"\n", msg_buffer));
 }
 
@@ -931,6 +953,16 @@ void Key_Init (void)
 }
 
 /**
+ * @brief Sets the key_dest in cls
+ * @param[in] key_dest see keydest_t
+ */
+extern void Key_SetDest (int key_dest)
+{
+	cls.key_dest_old = cls.key_dest;
+	cls.key_dest = key_dest;
+}
+
+/**
  * @brief Called by the system between frames for both key up and key down events
  * @note Should NOT be called during an interrupt!
  * @sa Key_Message
@@ -965,13 +997,12 @@ void Key_Event (int key, qboolean down, unsigned time)
 
 	/* console key is hardcoded, so the user can never unbind it */
 	if (key == '`' || key == '~' || (key == K_ESCAPE && shift_down)) {
-		if (!down)
-			return;
-		Con_ToggleConsole_f();
+		if (down)
+			Con_ToggleConsole_f();
 		return;
 	}
 
-	/* any key during the attract mode will bring up the menu */
+	/* any key (except F1-F12) during the attract mode will bring up the menu */
 	if ((cls.state == ca_sequence || cl.attractloop) && !(key >= K_F1 && key <= K_F12))
 		key = K_ESCAPE;
 
@@ -1006,14 +1037,12 @@ void Key_Event (int key, qboolean down, unsigned time)
 		anykeydown--;
 		if (anykeydown < 0)
 			anykeydown = 0;
-	}
 
-	/* key up events only generate commands if the game key binding is */
-	/* a button command (leading + sign).  These will occur even in console mode, */
-	/* to keep the character from continuing an action started before a console */
-	/* switch.  Button commands include the kenum as a parameter, so multiple */
-	/* downs can be matched with ups */
-	if (!down) {
+		/* key up events only generate commands if the game key binding is */
+		/* a button command (leading + sign).  These will occur even in console mode, */
+		/* to keep the character from continuing an action started before a console */
+		/* switch.  Button commands include the kenum as a parameter, so multiple */
+		/* downs can be matched with ups */
 		kb = keybindings[key];
 		if (kb && kb[0] == '+') {
 			Com_sprintf(cmd, sizeof(cmd), "-%s %i %i\n", kb + 1, key, time);
@@ -1054,8 +1083,6 @@ void Key_Event (int key, qboolean down, unsigned time)
 
 	if (shift_down)
 		key = keyshift[key];
-
-	Irc_Input_KeyEvent(key);
 
 	switch (cls.key_dest) {
 	case key_input:

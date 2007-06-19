@@ -157,6 +157,7 @@ typedef enum {
 typedef enum {
 	MSG_SAY,
 	MSG_SAY_TEAM,
+	MSG_IRC,
 	MSG_MENU
 } msg_mode_t;
 
@@ -177,7 +178,7 @@ extern size_t msg_bufferlen;
 extern char key_lines[MAXKEYLINES][MAXCMDLINE];
 extern int history_line;
 
-
+void Key_SetDest(int key_dest);
 void Key_Event(int key, qboolean down, unsigned time);
 void Key_Init(void);
 void Key_WriteBindings(const char* path);

@@ -78,11 +78,11 @@ void Con_ToggleConsole_f (void)
 	Con_ClearNotify();
 
 	if (cls.key_dest == key_console) {
-		cls.key_dest = key_game;
+		Key_SetDest(key_game);
 		if (maxclients == 1 && Com_ServerState())  /* unpause */
 			Cvar_Set("paused", "0");
 	} else {
-		cls.key_dest = key_console;
+		Key_SetDest(key_console);
 		/* make sure that we end all input buffers when opening the console */
 		if (msg_mode == MSG_MENU)
 			Cbuf_AddText("msgmenu !\n");
@@ -100,9 +100,9 @@ static void Con_ToggleChat_f (void)
 
 	if (cls.key_dest == key_console) {
 		if (cls.state == ca_active)
-			cls.key_dest = key_game;
+			Key_SetDest(key_game);
 	} else
-		cls.key_dest = key_console;
+		Key_SetDest(key_console);
 
 	Con_ClearNotify();
 }
@@ -191,7 +191,7 @@ void Con_ClearNotify (void)
 void Con_MessageModeSay_f (void)
 {
 	msg_mode = MSG_SAY;
-	cls.key_dest = key_message;
+	Key_SetDest(key_message);
 }
 
 /**
@@ -200,7 +200,7 @@ void Con_MessageModeSay_f (void)
 static void Con_MessageModeSayTeam_f (void)
 {
 	msg_mode = MSG_SAY_TEAM;
-	cls.key_dest = key_message;
+	Key_SetDest(key_message);
 }
 
 /**
@@ -209,8 +209,9 @@ static void Con_MessageModeSayTeam_f (void)
  */
 static void Con_MessageModeMenu_f (void)
 {
-	msg_mode = MSG_MENU;
-	cls.key_dest = key_input;
+	if (msg_mode != MSG_IRC)
+		msg_mode = MSG_MENU;
+	Key_SetDest(key_input);
 }
 
 /**

@@ -178,7 +178,12 @@ typedef enum {
 	ca_active					/**< game views should be displayed */
 } connstate_t;
 
-typedef enum { key_game, key_input, key_console, key_message } keydest_t;
+typedef enum {
+	key_game,
+	key_input,
+	key_console,
+	key_message
+} keydest_t;
 
 /**
  * @brief Not cleared on levelchange (static data)
@@ -187,6 +192,7 @@ typedef enum { key_game, key_input, key_console, key_message } keydest_t;
 typedef struct client_static_s {
 	connstate_t state;
 	keydest_t key_dest;
+	keydest_t key_dest_old;
 
 	int framecount;
 	int realtime;				/**< always increasing, no clamping, etc */

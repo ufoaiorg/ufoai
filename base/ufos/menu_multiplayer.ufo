@@ -407,7 +407,7 @@ menu mp_team
 
 	func init
 	{
-		cmd	"set mn_slot 0;team_comments;set team human;"
+		cmd	"mn_escpop 5;set mn_slot 0;team_comments;set team human;"
 		teamslot0
 	}
 }
@@ -801,7 +801,7 @@ menu mp_serverbrowser
 	// ====================
 	func init
 	{
-		cmd	"pingservers;"
+		cmd	"mn_escpop 5;pingservers;"
 		cmd "mn_translate mn_serverlist mn_serverliststr 0:All,1:Free,2:Playing;"
 	}
 
@@ -911,6 +911,11 @@ menu mp_bookmarks
 
 	string adr15 { pos "510 680" string "*cvar adr15" size "300 12" click { cmd "bookmarks_click 15" } }
 	pic resetadr15 { if "adr15" pos "480 680" image menu/del click { cmd "del adr15" } tooltip "_Delete this bookmark" }
+
+	func init
+	{
+		cmd	"mn_escpop 5;"
+	}
 }
 
 
@@ -1362,6 +1367,7 @@ menu mp_create_server
 	// ===================
 	func init
 	{
+		cmd	"mn_escpop 5;"
 		cmd "killserver; set maxplayers 8; set sv_roundtimelimit 0"
 		cmd "gametype 2on2; gametype 1on1"
 		cmd "getmaps"
