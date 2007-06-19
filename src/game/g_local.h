@@ -265,13 +265,18 @@ void G_CompleteRecalcRouting(void);
 void G_RecalcRouting(edict_t * ent);
 
 /* g_client.c */
+/* the visibile changed - if it was visible - it's (the edict) now invisible */
 #define VIS_CHANGE	1
+/* actor visible? */
 #define VIS_YES		2
+/* stop the current action if actor appears */
 #define VIS_STOP	4
 
+/** check whether edict is still visible - it maybe is currently visible but this
+ * might have changed due to some action */
 #define VT_PERISH		1
+/** don't perform a frustom vis check via G_FrustumVis in G_Vis */
 #define VT_NOFRUSTUM	2
-#define VT_FULL			4
 
 /* Timeunits for the various actions. */
 #define TU_CROUCH		1
@@ -517,6 +522,9 @@ struct edict_s {
 	edict_t *reactionTarget;
 	float	reactionTUs;
 	qboolean reactionNoDraw;
+
+	/* only set this for the attacked edict - to know who's shooting */
+	edict_t *reactionAttacker;
 
 	/* here are the character values */
 	character_t chr;

@@ -876,15 +876,15 @@ static void CL_ActorAppear (sizebuf_t *sb)
 
 	if (cls.state == ca_active && !(le->state & STATE_DEAD)) {
 		/* center view (if wanted) */
-		if (cl_centerview->integer> 1 || (cl_centerview->integer == 1 && cl.actTeam != cls.team)) {
-			VectorCopy( le->origin, cl.cam.reforg);
+		if (cl_centerview->integer > 1 || (cl_centerview->integer == 1 && cl.actTeam != cls.team)) {
+			VectorCopy(le->origin, cl.cam.reforg);
 			Cvar_SetValue("cl_worldlevel", le->pos[2]);
 		}
 
 		/* draw line of sight */
 		if (le->team != cls.team) {
 			if (cl.actTeam == cls.team && lastMoving) {
-				ptl_t	*ptl;
+				ptl_t *ptl;
 				vec3_t eyes;
 				/* start is the last moving actor's origin */
 				VectorCopy(lastMoving->origin, eyes);

@@ -205,7 +205,12 @@ void G_SendInventory (int player_mask, edict_t * ent)
 
 
 /**
- * @brief
+ * @brief Send the appear or perish event the the affected clients
+ * @param[in] playermask These are the affected players or clients
+ * In case of e.g. teamplay there can be more than one client affected - thus
+ * this is a player mask
+ * @param[in] appear Is this event about an appearing actor (or an perishing one)?
+ * @param[in] check The edict we are talking about
  * @sa CL_ActorAppear
  */
 extern void G_AppearPerishEvent (int player_mask, int appear, edict_t * check)
@@ -446,6 +451,15 @@ float G_Vis (int team, edict_t * from, edict_t * check, int flags)
  * @brief test if check is visible by team (or if visibility changed?)
  * @sa G_CheckVisTeam
  * @sa AI_FighterCalcGuete
+ * @param[in] team the team the edict may become visible for or perish from
+ * their view
+ * @param[in] check the edict we are talking about - which may become visible
+ * or perish
+ * @param[in] flags if you wanna check whether the edict may also perish from
+ * other players view, you should use the VT_PERISH bits
+ * @note If the edict (check) is already visible and flags doesn't contain the
+ * bits of VT_PERISH, no further checks are performed - only the VIS_YES bits
+ * are returned
  */
 int G_TestVis (int team, edict_t * check, int flags)
 {
@@ -469,8 +483,23 @@ int G_TestVis (int team, edict_t * check, int flags)
 
 
 /**
- * @brief
+ * @brief Checks whether an edict appear/perishes for a specific team - also
+ * updates the visflags each edict carries
  * @sa G_TestVis
+ * @param[in] team Team to check the vis for
+ * @param[in] check The edict that you wanna check (and which maybe will appear
+ * or perish for the given team).
+ * If check is a NULL pointer - all edicts in g_edicts are checked
+ * @param[in] perish Also check whether the edict (the actor) is going to become
+ * invisible for the given team
+ * @return If an actor get visible who's no civilian VIS_STOP is added to the
+ * bit mask, VIS_YES means, he is visible, VIS_CHANGE means that the actor
+ * flipped its visibility (invisible to visible or vice versa), VIS_PERISH means
+ * that the actor (the edict) is getting invisible for the queried team
+ * @note the edict may not only be actors, but also items of course
+ * @sa G_TeamToPM
+ * @sa G_TestVis
+ * @sa G_AppearPerishEvent
  */
 int G_CheckVisTeam (int team, edict_t * check, qboolean perish)
 {
@@ -486,7 +515,6 @@ int G_CheckVisTeam (int team, edict_t * check, qboolean perish)
 	} else
 		end = 1;
 
-
 	/* check visibility */
 	for (i = 0; i < end; i++, check++)
 		if (check->inuse) {
@@ -499,7 +527,8 @@ int G_CheckVisTeam (int team, edict_t * check, qboolean perish)
 
 				if (vis & VIS_YES) {
 					status |= VIS_APPEAR;
-					if ((check->type == ET_ACTOR || check->type == ET_UGV) && !(check->state & STATE_DEAD) && check->team != TEAM_CIVILIAN)
+					if ((check->type == ET_ACTOR || check->type == ET_UGV)
+					 && !(check->state & STATE_DEAD) && check->team != TEAM_CIVILIAN)
 						status |= VIS_STOP;
 				} else
 					status |= VIS_PERISH;
@@ -511,7 +540,11 @@ int G_CheckVisTeam (int team, edict_t * check, qboolean perish)
 
 
 /**
- * @brief
+ * @brief Check if the edict appears/perishes for the other teams
+ * @sa G_CheckVisTeam
+ * @param[in] perish Also check for perishing events
+ * @param[in] check The edict we are talking about
+ * @return Bitmask of VIS_* values
  * @sa G_CheckVisTeam
  */
 int G_CheckVis (edict_t * check, qboolean perish)
@@ -529,7 +562,8 @@ int G_CheckVis (edict_t * check, qboolean perish)
 
 
 /**
- * @brief
+ * @brief Reset the visflags for all edict in the global list (g_edicts) for the
+ * given team - and only for the given team
  */
 void G_ClearVisFlags (int team)
 {
@@ -544,9 +578,13 @@ void G_ClearVisFlags (int team)
 
 
 /**
- * @brief
+ * @brief Turns an actor around
+ * @param[in] ent the actor (edict) we are talking about
+ * @param[in] toDV the direction to turn the edict into
+ * @return Bitmask of visible (VIS_*) values
+ * @sa G_CheckVisTeam
  */
-int G_DoTurn (edict_t * ent, byte toDV)
+static int G_DoTurn (edict_t * ent, byte toDV)
 {
 	float angleDiv;
 	const byte *rot;
@@ -584,13 +622,15 @@ int G_DoTurn (edict_t * ent, byte toDV)
 	/* do rotation and vis checks */
 	status = 0;
 
+	/* check every angle in the rotation whether something becomes visible */
 	for (i = 0; i < num; i++) {
 		ent->dir = rot[ent->dir];
-
 		status |= G_CheckVisTeam(ent->team, NULL, qfalse);
-/*		if ( stop && (status & VIS_STOP) ) */
-		/* stop turning if a new living player appears */
-/*			break; */
+#if 0
+		/* stop turning if a new living player (which is not in our team) appears */
+		if (stop && (status & VIS_STOP))
+			break;
+#endif
 	}
 
 	return status;
@@ -1268,7 +1308,7 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 				gi.WriteToSave(steps);
 
 				/* check if player appears/perishes, seen from other teams */
-				status = G_CheckVis(ent, qtrue);
+				G_CheckVis(ent, qtrue);
 
 				/* check for anything appearing, seen by "the moving one" */
 				status = G_CheckVisTeam(ent->team, NULL, qfalse);
@@ -1277,11 +1317,18 @@ void G_ClientMove (player_t * player, int visTeam, int num, pos3_t to, qboolean 
 				ent->TU = max(0, initTU - (int) tu);
 
 				/* check for reaction fire */
-				if (G_ReactToMove(ent, qtrue)){
+				if (G_ReactToMove(ent, qtrue)) {
 					if (G_ReactToMove(ent, qfalse))
 						status |= VIS_STOP;
 					steps = 0;
 					sentAppearPerishEvent = qfalse;
+					/* @todo Let the camera center on the attacker if he's visible
+					 * if he's invisible let the target turn in the shooting direction
+					 * of the attacker (G_Turn) - also let all team members now
+					 * about the situation. Otherwise they may move (e.g. in a
+					 * coop game) and trigger the reaction fire which may kill
+					 * the targetted actor
+					 */
 				}
 
 				/* Restore ent->TU because the movement code relies on it not being modified! */
