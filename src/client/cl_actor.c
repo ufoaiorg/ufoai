@@ -3218,9 +3218,8 @@ static void CL_TargetingStraight (pos3_t fromPos, pos3_t toPos)
 
 	Grid_PosToVec(&clMap, fromPos, start);
 	Grid_PosToVec(&clMap, toPos, end);
-	end[2] -= GROUND_DELTA;
 	if (mousePosTargettingAlign)
-		end[2] += mousePosTargettingAlign;
+		end[2] -= mousePosTargettingAlign;
 
 	/* calculate direction */
 	VectorSubtract(end, start, dir);
@@ -3306,7 +3305,7 @@ static void CL_TargetingGrenade (pos3_t fromPos, pos3_t toPos)
 	cross[2] -= 9;
 	at[2] -= GROUND_DELTA;
 	if (mousePosTargettingAlign)
-		at[2] += mousePosTargettingAlign;
+		at[2] -= mousePosTargettingAlign;
 
 	/* search for an actor at target */
 	for (i = 0, le = LEs; i < numLEs; i++, le++)
@@ -3480,9 +3479,9 @@ extern void CL_ActorTargetAlign_f (void)
 		mousePosTargettingAlign = 0;
 	} else {
 		if (selFD->gravity)
-			mousePosTargettingAlign = align;
-		else
 			mousePosTargettingAlign = -align;
+		else
+			mousePosTargettingAlign = align;
 	}
 }
 
