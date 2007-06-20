@@ -900,7 +900,7 @@ static void SV_SpawnServer (char *server, char *param, server_state_t serverstat
 		*sv.assembly = '\0';
 
 	/* leave slots at start for clients only */
-	for (i = 0; i < sv_maxclients->value; i++) {
+	for (i = 0; i < sv_maxclients->integer; i++) {
 		/* needs to reconnect */
 		if (svs.clients[i].state > cs_connected)
 			svs.clients[i].state = cs_connected;
@@ -1002,10 +1002,10 @@ static void SV_InitGame (void)
 /*	Cvar_FullSet ("maxclients", "8", CVAR_SERVERINFO | CVAR_LATCH); */
 
 	svs.spawncount = rand();
-	svs.clients = Mem_Alloc(sizeof(client_t) * sv_maxclients->value);
+	svs.clients = Mem_Alloc(sizeof(client_t) * sv_maxclients->integer);
 
 	/* init network stuff */
-	NET_Config((sv_maxclients->value > 1));
+	NET_Config((sv_maxclients->integer > 1));
 
 	/* heartbeats will always be sent to the ufo master */
 	svs.last_heartbeat = -99999;	/* send immediately */
@@ -1015,7 +1015,7 @@ static void SV_InitGame (void)
 	/* init game */
 	SV_InitGameProgs();
 
-	if (sv_maxclients->integer != 1 && (dedicated->value || public_server->value))
+	if (sv_maxclients->integer != 1 && (dedicated->integer || public_server->integer))
 		SV_SetMaster_f();
 }
 

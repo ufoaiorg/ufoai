@@ -36,7 +36,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
 extern void SV_SetMaster_f (void)
 {
-	if (sv_maxclients->value == 1.0f)
+	if (sv_maxclients->integer == 1)
 		return;
 
 	/* make sure the server is listed public */
@@ -78,7 +78,7 @@ static qboolean SV_SetPlayer (void)
 	/* numeric values are just slot numbers */
 	if (s[0] >= '0' && s[0] <= '9') {
 		idnum = atoi(Cmd_Argv(1));
-		if (idnum < 0 || idnum >= sv_maxclients->value) {
+		if (idnum < 0 || idnum >= sv_maxclients->integer) {
 			Com_Printf("Bad client slot: %i\n", idnum);
 			return qfalse;
 		}
@@ -93,7 +93,7 @@ static qboolean SV_SetPlayer (void)
 	}
 
 	/* check for a name match */
-	for (i = 0, cl = svs.clients; i < sv_maxclients->value; i++, cl++) {
+	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++) {
 		if (!cl->state)
 			continue;
 		if (!strcmp(cl->name, s)) {
@@ -230,7 +230,7 @@ static void SV_Status_f (void)
 
 	Com_Printf("num ping name            lastmsg address               qport\n");
 	Com_Printf("--- ---- --------------- ------- --------------------- ------\n");
-	for (i = 0, cl = svs.clients; i < sv_maxclients->value; i++, cl++) {
+	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++) {
 		if (!cl->state)
 			continue;
 		Com_Printf("%3i ", i);

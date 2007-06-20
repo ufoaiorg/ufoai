@@ -90,7 +90,7 @@ void SV_DropClient (client_t * drop)
 	if (abandon) {
 		int count = 0;
 		int i;
-		for (i = 0; i < sv_maxclients->value; i++)
+		for (i = 0; i < sv_maxclients->integer; i++)
 			if (svs.clients[i].state >= cs_connected)
 				count++;
 		if (count == 0)
@@ -142,7 +142,7 @@ static char *SV_StatusString (void)
 	Q_strcat(status, "\n", sizeof(status));
 	statusLength = strlen(status);
 
-	for (i = 0; i < sv_maxclients->value; i++) {
+	for (i = 0; i < sv_maxclients->integer; i++) {
 		cl = &svs.clients[i];
 		if (cl->state == cs_connected || cl->state == cs_spawning || cl->state == cs_spawned) {
 			Com_sprintf(player, sizeof(player), "%i %i \"%s\"\n", ge->ClientGetTeamNum(cl->player), cl->ping, cl->name);
@@ -179,7 +179,7 @@ static char* SV_TeamInfoString (void)
 	Q_strcat(teaminfo, "\n", sizeof(teaminfo));
 	Q_strcat(teaminfo, Cvar_VariableString("maxplayers"), sizeof(teaminfo));
 	Q_strcat(teaminfo, "\n", sizeof(teaminfo));
-	for (i = 0, cl = svs.clients; i < sv_maxclients->value; i++, cl++) {
+	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++) {
 		if (cl->state == cs_connected || cl->state == cs_spawned || cl->state == cs_spawning) {
 			Com_DPrintf("SV_TeamInfoString: connected client: %i %s\n", i, cl->name);
 			/* show players that already have a team with their teamnum */
@@ -242,7 +242,7 @@ static void SVC_Info (void)
 	int version;
 	char infostring[MAX_INFO_STRING];
 
-	if (sv_maxclients->value == 1) {
+	if (sv_maxclients->integer == 1) {
 		Com_DPrintf("Ignore info string in singleplayer mode\n");
 		return;	/* ignore in single player */
 	}
@@ -253,7 +253,7 @@ static void SVC_Info (void)
 		Com_sprintf(string, sizeof(string), "%s: wrong version (client: %i, host: %i)\n", hostname->string, version, PROTOCOL_VERSION);
 	else {
 		count = 0;
-		for (i = 0; i < sv_maxclients->value; i++)
+		for (i = 0; i < sv_maxclients->integer; i++)
 			if (svs.clients[i].state >= cs_spawning)
 				count++;
 
@@ -405,7 +405,7 @@ static void SVC_DirectConnect (void)
 	memset(newcl, 0, sizeof(client_t));
 
 	/* if there is already a slot for this ip, reuse it */
-	for (i = 0, cl = svs.clients; i < sv_maxclients->value; i++, cl++) {
+	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++) {
 		if (cl->state == cs_free)
 			continue;
 		if (NET_CompareBaseAdr(adr, cl->netchan.remote_address)
@@ -423,7 +423,7 @@ static void SVC_DirectConnect (void)
 
 	/* find a client slot */
 	newcl = NULL;
-	for (i = 0, cl = svs.clients; i < sv_maxclients->value; i++, cl++) {
+	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++) {
 		if (cl->state == cs_free) {
 			newcl = cl;
 			break;
@@ -591,7 +591,7 @@ void SV_CalcPings (void)
 	client_t *cl;
 	int total, count;
 
-	for (i = 0; i < sv_maxclients->value; i++) {
+	for (i = 0; i < sv_maxclients->integer; i++) {
 		cl = &svs.clients[i];
 		if (cl->state != cs_spawned)
 			continue;
@@ -638,7 +638,7 @@ void SV_GiveMsec (void)
 	if (sv.framenum & 15)
 		return;
 
-	for (i = 0; i < sv_maxclients->value; i++) {
+	for (i = 0; i < sv_maxclients->integer; i++) {
 		cl = &svs.clients[i];
 		if (cl->state == cs_free)
 			continue;
@@ -735,7 +735,7 @@ void SV_CheckTimeouts (void)
 	droppoint = svs.realtime - 1000 * timeout->value;
 	zombiepoint = svs.realtime - 1000 * zombietime->value;
 
-	for (i = 0, cl = svs.clients; i < sv_maxclients->value; i++, cl++) {
+	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++) {
 		/* message times may be wrong across a changelevel */
 		if (cl->lastmessage > svs.realtime)
 			cl->lastmessage = svs.realtime;
@@ -1203,11 +1203,11 @@ void SV_FinalMessage (const char *message, qboolean reconnect)
 	/* send it twice */
 	/* stagger the packets to crutch operating system limited buffers */
 
-	for (i = 0, cl = svs.clients; i < sv_maxclients->value; i++, cl++)
+	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++)
 		if (cl->state >= cs_connected)
 			Netchan_Transmit(&cl->netchan, net_message.cursize, net_message.data);
 
-	for (i = 0, cl = svs.clients; i < sv_maxclients->value; i++, cl++)
+	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++)
 		if (cl->state >= cs_connected)
 			Netchan_Transmit(&cl->netchan, net_message.cursize, net_message.data);
 }

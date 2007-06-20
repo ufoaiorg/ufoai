@@ -110,7 +110,7 @@ void SV_BroadcastPrintf (int level, const char *fmt, ...)
 		Com_Printf("%s", copy);
 	}
 
-	for (i = 0, cl = svs.clients; i < sv_maxclients->value; i++, cl++) {
+	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++) {
 		if (level < cl->messagelevel)
 			continue;
 		if (cl->state < cs_connected)
@@ -155,7 +155,7 @@ void SV_Multicast (int mask)
 	int j;
 
 	/* send the data to all relevant clients */
-	for (j = 0, c = svs.clients; j < sv_maxclients->value; j++, c++) {
+	for (j = 0, c = svs.clients; j < sv_maxclients->integer; j++, c++) {
 		if (c->state == cs_free || c->state == cs_zombie)
 			continue;
 		if (!(mask & (1 << j)))
@@ -195,7 +195,7 @@ void SV_SendClientMessages (void)
 	client_t *c;
 
 	/* send a message to each connected client */
-	for (i = 0, c = svs.clients; i < sv_maxclients->value; i++, c++) {
+	for (i = 0, c = svs.clients; i < sv_maxclients->integer; i++, c++) {
 		if (!c->state)
 			continue;
 		/* if the reliable message overflowed, */

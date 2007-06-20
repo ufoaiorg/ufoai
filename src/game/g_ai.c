@@ -741,11 +741,11 @@ player_t *AI_CreatePlayer (int team)
 			p->pers.team = team;
 			p->pers.ai = qtrue;
 			if (team == TEAM_CIVILIAN)
-				G_SpawnAIPlayer(p, ai_numcivilians->value);
-			else if (sv_maxclients->value == 1)
-				G_SpawnAIPlayer(p, ai_numaliens->value);
+				G_SpawnAIPlayer(p, ai_numcivilians->integer);
+			else if (sv_maxclients->integer == 1)
+				G_SpawnAIPlayer(p, ai_numaliens->integer);
 			else
-				G_SpawnAIPlayer(p, ai_numactors->value);
+				G_SpawnAIPlayer(p, ai_numactors->integer);
 			Com_Printf("Created AI player (team %i)\n", team);
 			return p;
 		}

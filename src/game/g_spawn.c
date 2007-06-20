@@ -862,7 +862,7 @@ static void SP_worldspawn (edict_t * ent)
 	gi.configstring(CS_MAXCLIENTS, va("%i", sv_maxclients->integer));
 
 	/* only used in multi player */
-	if (sv_maxclients->value >= 2) {
+	if (sv_maxclients->integer >= 2) {
 		gi.configstring(CS_MAXSOLDIERS, va("%i", maxsoldiers->integer));
 		gi.configstring(CS_MAXSOLDIERSPERPLAYER, va("%i", maxsoldiersperplayer->integer));
 		gi.configstring(CS_ENABLEMORALE, va("%i", sv_enablemorale->integer));
