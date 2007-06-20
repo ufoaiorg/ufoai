@@ -3721,7 +3721,7 @@ qboolean MN_ParseAction (menuNode_t * menuNode, menuAction_t * action, char **te
 				menuNode->timeOut = atoi(*token);
 			} else {
 				/* unknown token, print message and continue */
-				Com_Printf("MN_ParseAction: unknown token \"%s\" ignored (in event) (node: %s)\n", *token, menuNode->name);
+				Com_Printf("MN_ParseAction: unknown token \"%s\" ignored (in event) (node: %s, menu %s)\n", *token, menuNode->name, menuNode->menu->name);
 			}
 		}
 	} while (*text);
@@ -3961,7 +3961,6 @@ static qboolean MN_ParseMenuBody (menu_t * menu, char **text)
 
 	lastNode = NULL;
 
-	/* FIXME: why increasing numNodes here? */
 	/* if inheriting another menu, link in the super menu's nodes */
 	for (node = menu->firstNode; node; node = node->next) {
 		if (numNodes >= MAX_MENUNODES)
@@ -4015,6 +4014,7 @@ static qboolean MN_ParseMenuBody (menu_t * menu, char **text)
 							Sys_Error("MAX_MENUNODES exceeded\n");
 						node = &menuNodes[numNodes++];
 						memset(node, 0, sizeof(menuNode_t));
+						node->menu = menu;
 						Q_strncpyz(node->name, token, sizeof(node->name));
 
 						/* link it in */

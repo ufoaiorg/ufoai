@@ -149,6 +149,7 @@ typedef struct menuNode_s {
 	int excludeNum;				/**< how many exclude rects defined? */
 	menuDepends_t depends;
 	struct menuNode_s *next;
+	struct menu_s *menu;	/**< backlink */
 } menuNode_t;
 
 /** @brief menu with all it's nodes linked in */
