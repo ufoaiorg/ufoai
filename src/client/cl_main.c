@@ -121,6 +121,7 @@ static teamData_t teamData;
 static int precache_check;
 
 static void CL_SpawnSoldiers_f(void);
+static void CL_Disconnect(void);
 
 mouseRepeat_t mouseRepeat;
 
@@ -477,7 +478,7 @@ extern void CL_ClearState (void)
  * Sends a disconnect message to the server
  * This is also called on Com_Error, so it shouldn't cause any errors
  */
-void CL_Disconnect (void)
+static void CL_Disconnect (void)
 {
 	if (cls.state == ca_disconnected)
 		return;

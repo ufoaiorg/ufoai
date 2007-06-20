@@ -3611,7 +3611,7 @@ static const cmdList_t game_commands[] = {
 	{"game_go", CL_GameGo, NULL},
 	{"game_auto_check", CL_GameAutoCheck_f, NULL},
 	{"game_auto_go", CL_GameAutoGo_f, NULL},
-	{"game_abort", CL_GameAbort_f, NULL},
+	{"game_abort", CL_GameAbort_f, "Abort the game and let the aliens win"},
 	{"game_results", CL_GameResults_f, "Parses and shows the game results"},
 	{"game_timestop", CL_GameTimeStop, NULL},
 	{"game_timeslow", CL_GameTimeSlow, NULL},
@@ -3641,7 +3641,12 @@ extern void CL_GameExit (void)
 {
 	const cmdList_t *commands;
 
-	Cbuf_AddText("disconnect\n");
+#if 0
+	if (Com_ServerState())
+		SV_Shutdown(NULL, qfalse);
+	else
+#endif
+		Cmd_ExecuteString("disconnect\n");
 	Cvar_Set("mn_main", "main");
 	Cvar_Set("mn_active", "");
 	MN_ShutdownMessageSystem();

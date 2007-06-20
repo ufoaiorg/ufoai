@@ -439,7 +439,7 @@ static void Cmd_Alias_f (void)
 	}
 
 	/* if the alias already exists, reuse it */
-	hash = Com_HashKey (s, ALIAS_HASH_SIZE);
+	hash = Com_HashKey(s, ALIAS_HASH_SIZE);
 	for (a = cmd_alias_hash[hash]; a; a = a->hash_next) {
 		if (!Q_strncmp(s, a->name, MAX_ALIAS_NAME)) {
 			Mem_Free(a->value);

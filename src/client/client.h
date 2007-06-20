@@ -432,7 +432,6 @@ void CL_Init(void);
 void CL_ReadSinglePlayerData(void);
 void CL_RequestNextDownload(void);
 void CL_StartSingleplayer(qboolean singleplayer);
-void CL_Disconnect(void);
 void CL_GetChallengePacket(void);
 void CL_Snd_Restart_f(void);
 void S_ModifySndRef_f(void);
