@@ -1207,7 +1207,7 @@ static void MN_SelectboxClick (menu_t * menu, menuNode_t * node, int y)
 	/* the cvar string is stored in data[MN_DATA_MODEL_SKIN_OR_CVAR] */
 	/* no cvar given? */
 	if (!node->data[MN_DATA_MODEL_SKIN_OR_CVAR] || !*(char*)node->data[MN_DATA_MODEL_SKIN_OR_CVAR]) {
-		Com_Printf("MN_SelectboxClick: node '%s' doesn't have a valid cvar assigned\n", node->name);
+		Com_Printf("MN_SelectboxClick: node '%s' doesn't have a valid cvar assigned (menu %s)\n", node->name, node->menu->name);
 		return;
 	}
 
@@ -2200,7 +2200,7 @@ void MN_DrawMenus (void)
 						if (node->type != MN_SELECTBOX && node->type != MN_CHECKBOX) {
 							/* bad reference */
 							node->invis = qtrue;
-							Com_Printf("MN_DrawActiveMenus: node \"%s\" bad reference \"%s\"\n", node->name, (char*)node->data);
+							Com_Printf("MN_DrawActiveMenus: node \"%s\" bad reference \"%s\" (menu %s)\n", node->name, (char*)node->data, node->menu->name);
 							continue;
 						}
 					} else
@@ -2263,7 +2263,7 @@ void MN_DrawMenus (void)
 							image = "menu/selectbox";
 						ref = MN_GetReferenceString(menu, node->data[MN_DATA_MODEL_SKIN_OR_CVAR]);
 						if (!ref || !*ref) {
-							Com_Printf("MN_DrawMenus: skip node '%s' (MN_SELECTBOX) - no cvar given\n", node->name);
+							Com_Printf("MN_DrawMenus: skip node '%s' (MN_SELECTBOX) - no cvar given (menu %s)\n", node->name, node->menu->name);
 							node->invis = qtrue;
 							break;
 						}
@@ -3758,7 +3758,7 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, char **text, char **token)
 			if (!Cmd_Exists(node->name))
 				Cmd_AddCommand(node->name, MN_Command_f, "Confunc callback");
 			else
-				Com_DPrintf("MN_ParseNodeBody: skip confunc '%s' - already added\n", node->name);
+				Com_DPrintf("MN_ParseNodeBody: skip confunc '%s' - already added (menu %s)\n", node->name, node->menu->name);
 		}
 
 		return MN_ParseAction(node, *action, text, token);
@@ -3857,7 +3857,7 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, char **text, char **token)
 			if (!*text)
 				return qfalse;
 			if (**token != '{') {
-				Com_Printf("MN_ParseNodeBody: node with bad excluderect ignored (node \"%s\")\n", node->name);
+				Com_Printf("MN_ParseNodeBody: node with bad excluderect ignored (node \"%s\", menu %s)\n", node->name, node->menu->name);
 				continue;
 			}
 
@@ -3894,13 +3894,13 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, char **text, char **token)
 			if (!*text)
 				return qfalse;
 			if (**token != '{') {
-				Com_Printf("MN_ParseNodeBody: node with bad option definition ignored (node \"%s\")\n", node->name);
+				Com_Printf("MN_ParseNodeBody: node with bad option definition ignored (node \"%s\", menu %s)\n", node->name, node->menu->name);
 				continue;
 			}
 
 			if (numSelectBoxes >= MAX_SELECT_BOX_OPTIONS) {
 				FS_SkipBlock(text);
-				Com_Printf("MN_ParseNodeBody: Too many option entries for node %s\n", node->name);
+				Com_Printf("MN_ParseNodeBody: Too many option entries for node %s (menu %s)\n", node->name, node->menu->name);
 				return qfalse;
 			}
 
@@ -3940,7 +3940,7 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, char **text, char **token)
 			MN_AddSelectboxOption(node);
 		} else {
 			/* unknown token, print message and continue */
-			Com_Printf("MN_ParseNodeBody: unknown token \"%s\" ignored (node \"%s\")\n", *token, node->name);
+			Com_Printf("MN_ParseNodeBody: unknown token \"%s\" ignored (node \"%s\", menu %s)\n", *token, node->name, node->menu->name);
 		}
 	} while (*text);
 
