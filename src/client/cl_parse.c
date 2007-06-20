@@ -1060,7 +1060,7 @@ static void CL_PlaceItem (le_t *le)
 		Grid_PosToVec(&clMap, le->pos, le->origin);
 		VectorSubtract(le->origin, csi.ods[biggest].center, le->origin);
 		/* fall to ground */
-		le->origin[2] -= 28;
+		le->origin[2] -= GROUND_DELTA;
 		le->angles[ROLL] = 90;
 /*		le->angles[YAW] = 10*(int)(le->origin[0] + le->origin[1] + le->origin[2]) % 360; */
 	} else {

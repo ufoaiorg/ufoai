@@ -2198,6 +2198,7 @@ static void CL_InitLocal (void)
 	Cmd_AddCommand("saveconfig", CL_WriteConfiguration, "Save the configuration");
 
 	Cmd_AddCommand("showip", CL_ShowIP_f, "Command to show your ip");
+	Cmd_AddCommand("targetalign", CL_ActorTargetAlign_f, _("Target your shot to the ground"));
 
 	/* text id is servers in menu_multiplayer.ufo */
 	Cmd_AddCommand("server_info", CL_ServerInfo_f, NULL);

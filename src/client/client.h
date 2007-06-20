@@ -486,7 +486,6 @@ void CL_ParseInput(void);
 
 void CL_ClearState(void);
 
-float CL_KeyState(kbutton_t * key);
 char *Key_KeynumToString(int keynum);
 
 void CL_CameraModeChange(camera_mode_t newcameramode);
@@ -731,6 +730,7 @@ qboolean CL_AddActor(le_t * le, entity_t * ent);
 qboolean CL_AddUGV(le_t * le, entity_t * ent);
 
 void CL_AddTargeting(void);
+void CL_ActorTargetAlign_f(void);
 
 /* cl_team.c */
 #define MAX_ACTIVETEAM	8

@@ -552,7 +552,7 @@ void AI_ActorThink (player_t * player, edict_t * ent)
 		/* @todo: check whether shoot is needed or enemy died already;
 		   use the remaining TUs for reaction fire */
 		while (bestAia.shots) {
-			(void)G_ClientShoot(player, ent->number, bestAia.target->pos, bestAia.mode, 0, NULL, qtrue); /* 0 = first firemode */
+			(void)G_ClientShoot(player, ent->number, bestAia.target->pos, bestAia.mode, 0, NULL, qtrue, 0); /* 0 = first firemode */
 			bestAia.shots--;
 			if (bestAia.target->state & STATE_DEAD) {
 				bestAia = AI_PrepBestAction(player, ent);

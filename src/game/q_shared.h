@@ -236,6 +236,8 @@ typedef uint8_t byte;
 /* important units */
 #define UNIT_SIZE           32
 #define UNIT_HEIGHT         64
+/* substract this from the ent->pos[z] to get the ground position */
+#define GROUND_DELTA        28
 
 /* earth map data */
 /* values of sinus and cosinus of earth inclinaison (23,5 degrees) for faster day and night calculations */

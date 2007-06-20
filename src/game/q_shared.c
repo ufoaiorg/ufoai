@@ -59,7 +59,7 @@ const char *pa_format[] =
 	"b",				/* PA_TURN */
 	"g",				/* PA_MOVE */
 	"s",				/* PA_STATE */
-	"gbb",				/* PA_SHOOT */
+	"gbbl",				/* PA_SHOOT */
 	"bbbbbb",			/* PA_INVMOVE */
 	"ll"				/* PA_REACT_SELECT */
 };

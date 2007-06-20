@@ -31,6 +31,12 @@ static fireDef_t *selFD;
 static character_t *selChr;
 static int selToHit;
 static pos3_t mousePos;
+/**
+ * @brief If you want to change the z level of targetting and shooting,
+ * use this value. Negative and positiv offsets are possible
+ * @sa CL_ActorTargetAlign_f
+ */
+static int mousePosTargettingAlign = 0;
 
 int actorMoveLength;
 invList_t invList[MAX_INVLIST];
@@ -91,7 +97,6 @@ void MSG_Write_PA (player_action_t player_action, int num, ...)
 	MSG_V_WriteFormat(&cls.netchan.message, pa_format[player_action], ap);
 	va_end(ap);
 }
-
 
 /*
 ==============================================================
@@ -1886,7 +1891,7 @@ void CL_ActorShoot (le_t * le, pos3_t at)
 	type = IS_MODE_FIRE_RIGHT(cl.cmode)
 			? ST_RIGHT
 			: ST_LEFT;
-	MSG_Write_PA(PA_SHOOT, le->entnum, at, type, cl.cfiremode);
+	MSG_Write_PA(PA_SHOOT, le->entnum, at, type, cl.cfiremode, mousePosTargettingAlign);
 }
 
 
@@ -2163,7 +2168,7 @@ extern void CL_ActorToggleReaction_f (void)
 		default:
 			return;
 		}
-		
+
 		/* Update RF list if it is visible. */
 		if (visible_firemode_list_left || visible_firemode_list_right)
 			CL_DisplayFiremodes_f();
@@ -2545,6 +2550,7 @@ static void CL_ActorMoveMouse (void)
 		if (confirm_actions->integer) {
 			/* Set our mode to pending move. */
 			VectorCopy(mousePos, mousePendPos);
+
 			cl.cmode = M_PEND_MOVE;
 		} else {
 			/* Just move there. */
@@ -2829,8 +2835,8 @@ void CL_ActorMouseTrace (void)
 	if (restingLevel < 0 || restingLevel >= HEIGHT)
 		return;
 
-	Vector2Copy(testPos, mousePos);
-	mousePos[2] = restingLevel;
+	testPos[2] = restingLevel;
+	VectorCopy(testPos, mousePos);
 
 	/* search for an actor on this field */
 	mouseActor = NULL;
@@ -3212,6 +3218,9 @@ static void CL_TargetingStraight (pos3_t fromPos, pos3_t toPos)
 
 	Grid_PosToVec(&clMap, fromPos, start);
 	Grid_PosToVec(&clMap, toPos, end);
+	end[2] -= GROUND_DELTA;
+	if (mousePosTargettingAlign)
+		end[2] += mousePosTargettingAlign;
 
 	/* calculate direction */
 	VectorSubtract(end, start, dir);
@@ -3266,7 +3275,7 @@ static void CL_TargetingStraight (pos3_t fromPos, pos3_t toPos)
 /**
  * @brief Shows targetting for a grenade.
  * @param[in] fromPos The (grid-) position of the aiming actor.
- * @param[in] toPos The (grid-) position of the target.
+ * @param[in] toPos The (grid-) position of the target (mousePos or mousePendPos).
  * @todo Find out why the ceiling is not checked against the parabola when calculating obstacles.
  * i.e. the line is drawn green even if a ceiling prevents the shot.
  * https://sourceforge.net/tracker/index.php?func=detail&aid=1701263&group_id=157793&atid=805242
@@ -3293,9 +3302,11 @@ static void CL_TargetingGrenade (pos3_t fromPos, pos3_t toPos)
 	from[2] += selFD->shotOrg[1];
 
 	/* prefer to aim grenades at the ground */
-	VectorCopy(at,cross);
+	VectorCopy(at, cross);
 	cross[2] -= 9;
-	at[2] -= 28;
+	at[2] -= GROUND_DELTA;
+	if (mousePosTargettingAlign)
+		at[2] += mousePosTargettingAlign;
 
 	/* search for an actor at target */
 	for (i = 0, le = LEs; i < numLEs; i++, le++)
@@ -3332,6 +3343,7 @@ static void CL_TargetingGrenade (pos3_t fromPos, pos3_t toPos)
 		/* trace for obstacles */
 		tr = CL_Trace(from, next, vec3_origin, vec3_origin, selActor, target, MASK_SHOT);
 
+		/* something was hit */
 		if (tr.fraction < 1.0) {
 			obstructed = qtrue;
 		}
@@ -3444,10 +3456,38 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 	V_AddEntity(&ent);
 }
 
+/**
+ * @brief Targets to the ground when holding the assigned button
+ * @sa mousePosTargettingAlign
+ */
+extern void CL_ActorTargetAlign_f (void)
+{
+	int align = GROUND_DELTA;
 
+	/* no firedef selected */
+	if (!selFD)
+		return;
+	if (cl.cmode != M_FIRE_R && cl.cmode != M_FIRE_L
+	 && cl.cmode != M_PEND_FIRE_R && cl.cmode != M_PEND_FIRE_L)
+		return;
+
+	/* user defined height align */
+	if (Cmd_Argc() == 2) {
+		align = atoi(Cmd_Argv(1));
+	}
+
+	if (mousePosTargettingAlign != 0) {
+		mousePosTargettingAlign = 0;
+	} else {
+		if (selFD->gravity)
+			mousePosTargettingAlign = align;
+		else
+			mousePosTargettingAlign = -align;
+	}
+}
 
 /**
- * @brief Adds a target.
+ * @brief Adds a target cursor.
  * @sa CL_TargetingStraight
  * @sa CL_TargetingGrenade
  * @sa CL_AddTargetingBox

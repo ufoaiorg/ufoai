@@ -569,8 +569,10 @@ static void G_SplashDamage (edict_t * ent, fireDef_t * fd, vec3_t impact, shot_m
  * @param[in] mask
  * @param[in] weapon
  * @param[in] mock pseudo shooting - only for calculating mock values - NULL for real shots
+ * @param[in] z_align This value may change the target z height
  */
-static void G_ShootGrenade (player_t * player, edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at, int mask, item_t * weapon, shot_mock_t *mock)
+static void G_ShootGrenade (player_t * player, edict_t * ent, fireDef_t * fd,
+	vec3_t from, pos3_t at, int mask, item_t * weapon, shot_mock_t *mock, int z_align)
 {
 	vec3_t last, target, temp;
 	vec3_t startV, curV, oldPos, newPos;
@@ -585,9 +587,11 @@ static void G_ShootGrenade (player_t * player, edict_t * ent, fireDef_t * fd, ve
 	/* get positional data */
 	VectorCopy(from, last);
 	gi.GridPosToVec(gi.map, at, target);
+	/* first apply z_align value */
+	target[2] -= z_align;
 
 	/* prefer to aim grenades at the ground */
-	target[2] -= 28;
+	target[2] -= GROUND_DELTA;
 
 	/* calculate parabola */
 	dt = gi.GrenadeTarget(last, target, fd->range, fd->launched, fd->rolled, startV);
@@ -747,8 +751,10 @@ static void G_ShootGrenade (player_t * player, edict_t * ent, fireDef_t * fd, ve
  * @param[in] mask ?? @todo Visibility bit-mask of the others?
  * @param[in] weapon
  * @param[in] mock pseudo shooting - only for calculating mock values - NULL for real shots
+ * @param[in] z_align This value may change the target z height
  */
-static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at, int mask, item_t * weapon, shot_mock_t *mock)
+static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at,
+	int mask, item_t * weapon, shot_mock_t *mock, int z_align)
 {
 	vec3_t dir;	/* Direction from the location of the gun muzzle ("from") to the target ("at") */
 	vec3_t angles;	/* ?? @todo The random dir-modifier ?? */
@@ -769,6 +775,7 @@ static void G_ShootSingle (edict_t * ent, fireDef_t * fd, vec3_t from, pos3_t at
 
 	/* Calc direction of the shot. */
 	gi.GridPosToVec(gi.map, at, impact);	/* Get the position of the targetted grid-cell. ('impact' is used only temporary here)*/
+	impact[2] -= z_align;
 	VectorCopy(from, cur_loc);		/* Set current location of the projectile to the starting (muzzle) location. */
 	VectorSubtract(impact, cur_loc, dir);	/* Calculate the vector from current location to the target. */
 	VectorNormalize(dir);			/* Normalize the vector i.e. make length 1.0 */
@@ -1035,8 +1042,10 @@ static qboolean G_GetShotFromType (edict_t *ent, int type, int firemode, item_t 
  * @param[in] mock pseudo shooting - only for calculating mock values - NULL for real shots
  * @param[in] allowReaction Set to qtrue to check whether this has forced any reaction fire, otherwise qfalse.
  * @return qtrue if everthing went ok (i.e. the shot(s) where fired ok), otherwise qfalse.
+ * @param[in] z_align This value may change the target z height
  */
-extern qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type, int firemode, shot_mock_t *mock, qboolean allowReaction)
+extern qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
+	int firemode, shot_mock_t *mock, qboolean allowReaction, int z_align)
 {
 	fireDef_t *fd = NULL;
 	edict_t *ent;
@@ -1116,6 +1125,7 @@ extern qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type, 
 
 	/* calculate visibility */
 	gi.GridPosToVec(gi.map, at, target);
+	target[2] -= z_align;
 	VectorSubtract(target, ent->origin, dir);
 	VectorMA(ent->origin, 0.5, dir, center);
 	mask = 0;
@@ -1178,9 +1188,9 @@ extern qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type, 
 	/* fire all shots */
 	for (i = 0; i < shots; i++)
 		if (fd->gravity)
-			G_ShootGrenade(player, ent, fd, shotOrigin, at, mask, weapon, mock);
+			G_ShootGrenade(player, ent, fd, shotOrigin, at, mask, weapon, mock, z_align);
 		else
-			G_ShootSingle(ent, fd, shotOrigin, at, mask, weapon, mock);
+			G_ShootSingle(ent, fd, shotOrigin, at, mask, weapon, mock, z_align);
 
 	if (!mock) {
 		/* send TUs if ent still alive */
@@ -1237,14 +1247,14 @@ static qboolean G_FireWithJudgementCall (player_t * player, int num, pos3_t at, 
 
 	memset(&mock, 0, sizeof(mock));
 	for (i = 0; i < 100; i++)
-		G_ClientShoot(player, num, at, type, firemode, &mock, qfalse);
+		G_ClientShoot(player, num, at, type, firemode, &mock, qfalse, 0);
 
 	Com_DPrintf("G_FireWithJudgementCall: Hit: %d/%d FF+Civ: %d+%d=%d/%d Self: %d.\n",
 		mock.enemy, minhit, mock.friend, mock.civilian, mock.friend + mock.civilian, maxff, mock.self);
 
 	ff = mock.friend + (shooter->team == TEAM_ALIEN ? 0 : mock.civilian);
 	if (ff <= maxff && mock.enemy >= minhit)
-		return G_ClientShoot(player, num, at, type, firemode, NULL, qfalse);
+		return G_ClientShoot(player, num, at, type, firemode, NULL, qfalse, 0);
 	else
 		return qfalse;
 }

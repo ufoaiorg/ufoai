@@ -364,7 +364,7 @@ extern int turnTeam;
 
 /* g_combat.c */
 
-qboolean G_ClientShoot(player_t * player, int num, pos3_t at, int type, int firemode, shot_mock_t *mock, qboolean allowReaction);
+qboolean G_ClientShoot(player_t * player, int num, pos3_t at, int type, int firemode, shot_mock_t *mock, qboolean allowReaction, int z_align);
 void G_ResetReactionFire(int team);
 qboolean G_ReactToMove(edict_t *target, qboolean mock);
 void G_ReactToEndTurn(void);

@@ -1936,8 +1936,8 @@ void G_ClientAction (player_t * player)
 		break;
 
 	case PA_SHOOT:
-		gi.ReadFormat(pa_format[PA_SHOOT], &pos, &i, &firemode);
-		(void)G_ClientShoot(player, num, pos, i, firemode, NULL, qtrue);
+		gi.ReadFormat(pa_format[PA_SHOOT], &pos, &i, &firemode, &from);
+		(void)G_ClientShoot(player, num, pos, i, firemode, NULL, qtrue, from);
 		break;
 
 	case PA_INVMOVE:
