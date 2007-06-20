@@ -561,6 +561,7 @@ static void G_SplashDamage (edict_t * ent, fireDef_t * fd, vec3_t impact, shot_m
 /**
  * @brief
  * @sa G_ShootSingle
+ * @sa Com_GrenadeTarget
  * @param[in] player
  * @param[in] ent
  * @param[in] fd

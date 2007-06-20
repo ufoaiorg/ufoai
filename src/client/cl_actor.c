@@ -35,6 +35,9 @@ static pos3_t mousePos;
  * @brief If you want to change the z level of targetting and shooting,
  * use this value. Negative and positiv offsets are possible
  * @sa CL_ActorTargetAlign_f
+ * @sa G_ClientShoot
+ * @sa G_ShootGrenade
+ * @sa G_ShootSingle
  */
 static int mousePosTargettingAlign = 0;
 

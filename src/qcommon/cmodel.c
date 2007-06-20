@@ -2912,7 +2912,7 @@ TARGETING FUNCTIONS
  * --------------------------------------------------------------
  *
  * There are two possibilities when aiming: either we can reach the target at
- * maximum speed or we can't. If we can reach it would would like to reach it with
+ * maximum speed or we can't. If we can reach it we would like to reach it with
  * as flat a trajectory as possible. To do this we calculate the angle to hit the
  * target with the projectile traveling at the maximum allowed velocity.
  *
@@ -3032,8 +3032,8 @@ float Com_GrenadeTarget (vec3_t from, vec3_t at, float speed, qboolean launched,
 
 	/* precalculate some useful values */
 	g = GRAVITY;
-	gd2 = g*d*d;
-	len = sqrt(h*h + d*d);
+	gd2 = g * d * d;
+	len = sqrt(h * h + d * d);
 
 	/* are we rolling? */
 	if (rolled) {
@@ -3046,7 +3046,7 @@ float Com_GrenadeTarget (vec3_t from, vec3_t at, float speed, qboolean launched,
 	} else {
 		/* firstly try with the maximum speed possible */
 		v = speed;
-		k = (v*v*h + gd2) / (v*v*len);
+		k = (v * v * h + gd2) / (v * v * len);
 
 		/* check whether the shot's possible */
 		if (launched && k >= -1 && k <= 1) {
