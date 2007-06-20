@@ -305,49 +305,15 @@ void CL_CameraModeChange (camera_mode_t new_camera_mode)
 	}
 }
 
+#if 0
 /**
  * @brief Print the time long integer value
  */
-void CL_Time_f(void)
+void CL_Time_f (void)
 {
 	Com_Printf("time: %d\n", cl.time);
 }
-
-/**
- * @brief Returns the fraction of the frame that the key was down
- */
-float CL_KeyState(kbutton_t * key)
-{
-	float val;
-	int msec;
-
-	/* clear impulses */
-	key->state &= 1;
-
-	msec = key->msec;
-	key->msec = 0;
-
-	/* still down */
-	if (key->state) {
-		msec += sys_frame_time - key->downtime;
-		key->downtime = sys_frame_time;
-	}
-#if 0
-	if (msec)
-		Com_Printf("%i ", msec);
 #endif
-
-	val = (float) msec;
-	if (val < 0)
-		val = 0;
-	if (val > 1)
-		val = 1;
-
-	return val;
-}
-
-
-/*========================================================================== */
 
 const float MIN_ZOOM = 0.5;
 const float MAX_ZOOM = 32.0;
@@ -473,7 +439,7 @@ static void CL_ZoomOutQuant_f (void)
 /**
  * @brief returns the weapon the actor's left hand is touching
  */
-invList_t* CL_GetLeftHandWeapon (le_t *actor)
+static invList_t* CL_GetLeftHandWeapon (le_t *actor)
 {
 	invList_t *weapon = LEFT(selActor);
 
@@ -765,7 +731,7 @@ extern void CL_InitInput (void)
  * @brief
  * @note see SCROLL_BORDER define
  */
-float CL_GetKeyMouseState (int dir)
+static float CL_GetKeyMouseState (int dir)
 {
 	float value;
 
@@ -797,7 +763,7 @@ float CL_GetKeyMouseState (int dir)
 /**
  * @brief
  */
-void CL_CameraMoveFirstPerson (void)
+static void CL_CameraMoveFirstPerson (void)
 {
 	float rotation_speed;
 
@@ -865,7 +831,7 @@ void CL_CameraMoveFirstPerson (void)
  * @brief forces the camera to stay within the horizontal bounds of the
  * map plus some border
  */
-void CL_ClampCamToMap (float border)
+static void CL_ClampCamToMap (float border)
 {
 	if (cl.cam.reforg[0] < map_min[0] - border)
 		cl.cam.reforg[0] = map_min[0] - border;
@@ -882,7 +848,7 @@ void CL_ClampCamToMap (float border)
 /**
  * @brief
  */
-void CL_CameraMoveRemote (void)
+static void CL_CameraMoveRemote (void)
 {
 	float angle, frac;
 	static float sy, cy;
@@ -1032,7 +998,7 @@ void CL_CameraMoveRemote (void)
 /**
  * @brief
  */
-void CL_CameraMove (void)
+extern void CL_CameraMove (void)
 {
 	if (cls.state != ca_active)
 		return;
@@ -1049,7 +1015,7 @@ void CL_CameraMove (void)
 /**
  * @brief
  */
-void CL_CameraRoute (pos3_t from, pos3_t target)
+extern void CL_CameraRoute (pos3_t from, pos3_t target)
 {
 	/* initialize the camera route variables */
 	PosToVec(from, routeFrom);
@@ -1076,7 +1042,7 @@ void CL_CameraRoute (pos3_t from, pos3_t target)
  * @note The geoscape zooming code is in MN_MouseWheel too
  * @sa CL_Frame
  */
-void CL_ParseInput (void)
+extern void CL_ParseInput (void)
 {
 	int i, oldx, oldy;
 
@@ -1168,8 +1134,11 @@ void CL_ParseInput (void)
 			return;
 
 		CL_ActorMouseTrace();
+		/* set the mousespace to MS_WORLD because we are not in a menu
+		 * (MN_CursorOnMenu failed) and we have the cursor in the world
+		 */
 		if (cl.cmode > M_PEND_MOVE)
-			mouseSpace = MS_WORLD;	/* @todo: DEBUGME .. why is this needed? I just left it in because i do not know whe it's supposed to do */
+			mouseSpace = MS_WORLD;
 
 		return;
 	}

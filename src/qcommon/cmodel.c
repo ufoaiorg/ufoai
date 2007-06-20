@@ -2908,7 +2908,7 @@ TARGETING FUNCTIONS
 */
 
 /**
- * Grenade Aiming Maths
+ * @note Grenade Aiming Maths
  * --------------------------------------------------------------
  *
  * There are two possibilities when aiming: either we can reach the target at
@@ -3010,9 +3010,6 @@ TARGETING FUNCTIONS
  *        \/  \/ h  + d   - h
  *
  * as the minimum launch velocity for that angle.
- */
-
-/**
  * @brief
  */
 float Com_GrenadeTarget (vec3_t from, vec3_t at, float speed, qboolean launched, qboolean rolled, vec3_t v0)
