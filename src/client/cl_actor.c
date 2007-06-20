@@ -1195,6 +1195,7 @@ void CL_ActorUpdateCVars (void)
 	qboolean refresh;
 	char *name;
 	int time;
+	fireDef_t *old;
 
 	if (cls.state != ca_active)
 		return;
@@ -1272,12 +1273,16 @@ void CL_ActorUpdateCVars (void)
 					}
 				} else {
 					/* This item uses ammo, get the firedefs from ammo. */
-					selFD = GET_FIREDEF(
+					old = GET_FIREDEF(
 						selWeapon->item.m,
 						INV_FiredefsIDXForWeapon(
 							&csi.ods[selWeapon->item.m],
 							selWeapon->item.t),
 						cl.cfiremode);
+					/* reset the align if we switched the firemode */
+					if (old != selFD)
+						mousePosTargettingAlign = 0;
+					selFD = old;
 				}
 			}
 		}
@@ -1580,6 +1585,11 @@ extern qboolean CL_ActorSelect (le_t * le)
 	if (selActor)
 		selActor->selected = qfalse;
 	le->selected = qtrue;
+
+	/* reset the align if we switched the actor */
+	if (selActor != le)
+		mousePosTargettingAlign = 0;
+
 	selActor = le;
 	menuInventory = &selActor->i;
 	selActorReactionState = CL_GetReactionState(selActor);
@@ -3462,9 +3472,10 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
 extern void CL_ActorTargetAlign_f (void)
 {
 	int align = GROUND_DELTA;
+	static int currentPos = 0;
 
 	/* no firedef selected */
-	if (!selFD)
+	if (!selFD || !selActor)
 		return;
 	if (cl.cmode != M_FIRE_R && cl.cmode != M_FIRE_L
 	 && cl.cmode != M_PEND_FIRE_R && cl.cmode != M_PEND_FIRE_L)
@@ -3473,16 +3484,39 @@ extern void CL_ActorTargetAlign_f (void)
 	/* user defined height align */
 	if (Cmd_Argc() == 2) {
 		align = atoi(Cmd_Argv(1));
-	}
-
-	if (mousePosTargettingAlign != 0) {
-		mousePosTargettingAlign = 0;
 	} else {
-		if (selFD->gravity)
-			mousePosTargettingAlign = -align;
-		else
-			mousePosTargettingAlign = align;
+		switch (currentPos) {
+		case 0:
+			if (selFD->gravity)
+				align = -align;
+			currentPos = 1; /* next level */
+			break;
+		case 1:
+			/* only allow to align to lower z level if the actor is
+			 * standing at a higher z-level */
+			if (selFD->gravity)
+				align = -(2 * align);
+			else
+				align = -align;
+			currentPos = 2;
+			break;
+		case 2:
+			/* the static var is not reseted on weaponswitch or actorswitch */
+			if (selFD->gravity) {
+				align = 0;
+				currentPos = 0; /* next level */
+			} else {
+				align = -(2 * align);
+				currentPos = 3; /* next level */
+			}
+			break;
+		case 3:
+			align = 0;
+			currentPos = 0; /* back to start */
+			break;
+		}
 	}
+	mousePosTargettingAlign = align;
 }
 
 /**
