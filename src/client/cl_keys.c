@@ -528,7 +528,7 @@ static void Key_Message (int key)
 			return;
 		}
 		if (send) {
-			Com_Printf("msg_buffer: %s\n", msg_buffer);
+			Com_DPrintf("msg_buffer: %s\n", msg_buffer);
 			Cbuf_AddText(msg_buffer);
 			Cbuf_AddText("\"\n");
 		}
