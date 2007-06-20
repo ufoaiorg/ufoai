@@ -58,8 +58,8 @@ cvar_t *masterserver_port;
 
 void Master_Shutdown(void);
 
-qboolean abandon = qfalse;		/* shutdown server when all clients disconnect and don't accept new connections */
-qboolean killserver = qfalse;	/* will initiate shutdown once abandon is set */
+static qboolean abandon = qfalse;		/* shutdown server when all clients disconnect and don't accept new connections */
+static qboolean killserver = qfalse;	/* will initiate shutdown once abandon is set */
 
 mapcycle_t *mapcycleList;
 int mapcycleCount;
@@ -72,7 +72,7 @@ int mapcycleCount;
  * or unwillingly.  This is NOT called if the entire server is quiting
  * or crashing.
  */
-void SV_DropClient (client_t * drop)
+extern void SV_DropClient (client_t * drop)
 {
 	/* add the disconnect */
 	MSG_WriteByte(&drop->netchan.message, svc_disconnect);
@@ -504,7 +504,7 @@ static qboolean Rcon_Validate (void)
 /**
  * @brief A client issued an rcon command. Shift down the remaining args. Redirect all printfs
  */
-void SVC_RemoteCommand (void)
+static void SVC_RemoteCommand (void)
 {
 	int i;
 	qboolean valid;
@@ -544,7 +544,7 @@ void SVC_RemoteCommand (void)
  * Clients that are in the game can still send
  * connectionless packets.
  */
-void SV_ConnectionlessPacket (void)
+static void SV_ConnectionlessPacket (void)
 {
 	char *s;
 	char *c;
@@ -725,7 +725,7 @@ void SV_ReadPackets (void)
  * for a few seconds to make sure any final reliable message gets resent
  * if necessary
  */
-void SV_CheckTimeouts (void)
+static void SV_CheckTimeouts (void)
 {
 	int i;
 	client_t *cl;
@@ -1143,6 +1143,8 @@ void SV_UserinfoChanged (client_t * cl)
  */
 extern void SV_Init (void)
 {
+	memset(&svs, 0, sizeof(svs));
+
 	SV_InitOperatorCommands();
 
 	rcon_password = Cvar_Get("rcon_password", "", 0, NULL);
@@ -1185,7 +1187,7 @@ extern void SV_Init (void)
  * to totally exit after returning from this function.
  * @sa SV_Shutdown
 */
-void SV_FinalMessage (const char *message, qboolean reconnect)
+static void SV_FinalMessage (const char *message, qboolean reconnect)
 {
 	int i;
 	client_t *cl;

@@ -207,7 +207,6 @@ extern player_t *sv_player;
 /*=========================================================== */
 
 /* sv_main.c */
-void SV_FinalMessage(const char *message, qboolean reconnect);
 void SV_DropClient(client_t *drop);
 
 int SV_ModelIndex(const char *name);
