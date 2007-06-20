@@ -423,20 +423,13 @@ typedef struct {
 /** lower bits are stronger, and will eat weaker brushes completely */
 #define CONTENTS_SOLID			1	/**< an eye is never valid in a solid */
 #define CONTENTS_WINDOW			2	/**< translucent, but not watery */
-#define CONTENTS_AUX			4
-#define CONTENTS_SMOKE			8
-#define CONTENTS_SLIME			16
 #define CONTENTS_WATER			32
-#define CONTENTS_MIST			64
-#define LAST_VISIBLE_CONTENTS	64
+#define LAST_VISIBLE_CONTENTS	128
 
 /* remaining contents are non-visible, and don't eat brushes */
-
 #define CONTENTS_ACTORCLIP		0x10000
-#define CONTENTS_PASSABLE		0x20000
-
+#define CONTENTS_PASSABLE		0x20000		/**< only used in the compiler */
 #define CONTENTS_ORIGIN			0x1000000	/**< removed before bsping an entity */
-
 #define CONTENTS_WEAPONCLIP		0x2000000
 #define CONTENTS_DEADMONSTER	0x4000000
 #define CONTENTS_DETAIL			0x8000000	/**< brushes to be added after vis leafs */

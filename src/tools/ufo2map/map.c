@@ -627,7 +627,7 @@ static void ParseBrush (entity_t *mapent)
 	}
 
 	/* allow water brushes to be removed */
-	if (config.nowater && (b->contents & (CONTENTS_SLIME | CONTENTS_WATER))) {
+	if (config.nowater && (b->contents & CONTENTS_WATER)) {
 		b->numsides = 0;
 		return;
 	}

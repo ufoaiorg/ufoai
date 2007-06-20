@@ -892,7 +892,7 @@ void ClearBounds (vec3_t mins, vec3_t maxs)
  * @param[in] mins
  * @param[in] maxs
  */
-void AddPointToBounds (vec3_t v, vec3_t mins, vec3_t maxs)
+void AddPointToBounds (const vec3_t v, vec3_t mins, vec3_t maxs)
 {
 	int i;
 	vec_t val;
@@ -913,7 +913,7 @@ void AddPointToBounds (vec3_t v, vec3_t mins, vec3_t maxs)
  * @param[in] comp
  * @return qboolean
  */
-qboolean VectorNearer (vec3_t v1, vec3_t v2, vec3_t comp)
+qboolean VectorNearer (const vec3_t v1, const vec3_t v2, const vec3_t comp)
 {
 	int i;
 
@@ -957,7 +957,7 @@ vec_t VectorNormalize (vec3_t v)
  * @return vector length as vec_t
  * @sa CrossProduct
  */
-vec_t VectorNormalize2 (vec3_t v, vec3_t out)
+vec_t VectorNormalize2 (const vec3_t v, vec3_t out)
 {
 	float length, ilength;
 
@@ -981,7 +981,7 @@ vec_t VectorNormalize2 (vec3_t v, vec3_t out)
  * @param[in] vecb Movement direction
  * @param[out] vecc Target vector
  */
-void VectorMA (vec3_t veca, float scale, vec3_t vecb, vec3_t vecc)
+void VectorMA (const vec3_t veca, const float scale, const vec3_t vecb, vec3_t vecc)
 {
 	vecc[0] = veca[0] + scale * vecb[0];
 	vecc[1] = veca[1] + scale * vecb[1];
@@ -993,7 +993,7 @@ void VectorMA (vec3_t veca, float scale, vec3_t vecb, vec3_t vecc)
  * @param
  * @sa
  */
-void VectorClampMA (vec3_t veca, float scale, vec3_t vecb, vec3_t vecc)
+void VectorClampMA (vec3_t veca, float scale, const vec3_t vecb, vec3_t vecc)
 {
 	float test, newScale;
 	int i;
@@ -1054,7 +1054,7 @@ void MakeNormalVectors (vec3_t forward, vec3_t right, vec3_t up)
  * @param
  * @sa GLMatrixMultiply
  */
-void MatrixMultiply (vec3_t a[3], vec3_t b[3], vec3_t c[3])
+void MatrixMultiply (const vec3_t a[3], const vec3_t b[3], vec3_t c[3])
 {
 	c[0][0] = a[0][0] * b[0][0] + a[1][0] * b[0][1] + a[2][0] * b[0][2];
 	c[0][1] = a[0][1] * b[0][0] + a[1][1] * b[0][1] + a[2][1] * b[0][2];
@@ -1075,7 +1075,7 @@ void MatrixMultiply (vec3_t a[3], vec3_t b[3], vec3_t c[3])
  * @param
  * @sa MatrixMultiply
  */
-void GLMatrixMultiply (float a[16], float b[16], float c[16])
+void GLMatrixMultiply (const float a[16], const float b[16], float c[16])
 {
 	int i, j, k;
 
@@ -1092,7 +1092,7 @@ void GLMatrixMultiply (float a[16], float b[16], float c[16])
  * @param
  * @sa
  */
-void GLVectorTransform (float m[16], vec4_t in, vec4_t out)
+void GLVectorTransform (const float m[16], const vec4_t in, vec4_t out)
 {
 	int i;
 
@@ -1106,13 +1106,34 @@ void GLVectorTransform (float m[16], vec4_t in, vec4_t out)
  * @param
  * @sa
  */
-void VectorRotate (vec3_t m[3], vec3_t va, vec3_t vb)
+void VectorRotate (const vec3_t m[3], const vec3_t va, vec3_t vb)
 {
 	vb[0] = m[0][0] * va[0] + m[1][0] * va[1] + m[2][0] * va[2];
 	vb[1] = m[0][1] * va[0] + m[1][1] * va[1] + m[2][1] * va[2];
 	vb[2] = m[0][2] * va[0] + m[1][2] * va[1] + m[2][2] * va[2];
 }
 
+/**
+ * @brief Compare two vectors that may have an epsilon difference but still be
+ * the same vectors
+ * @param[in] v1 vector to compare with v2
+ * @param[in] v2 vector to compare with v1
+ * @param[in] epsilon The epsilon the vectors may differ to still be the same
+ */
+int VectorCompareEps (const vec3_t v1, const vec3_t v2, float epsilon)
+{
+	vec3_t d;
+
+	VectorSubtract(v1, v2, d);
+	d[0] = fabs(d[0]);
+	d[1] = fabs(d[1]);
+	d[2] = fabs(d[2]);
+
+	if (d[0] > epsilon || d[1] > epsilon || d[2] > epsilon)
+		return 0;
+
+	return 1;
+}
 
 /**
  * @brief binary operation which takes two vectors returns a scalar quantity
@@ -1122,7 +1143,7 @@ void VectorRotate (vec3_t m[3], vec3_t va, vec3_t vb)
  * @param[in] v2
  * @sa CrossProduct
  */
-vec_t _DotProduct (vec3_t v1, vec3_t v2)
+vec_t _DotProduct (const vec3_t v1, const vec3_t v2)
 {
 	return v1[0] * v2[0] + v1[1] * v2[1] + v1[2] * v2[2];
 }
@@ -1132,7 +1153,7 @@ vec_t _DotProduct (vec3_t v1, vec3_t v2)
  * @param
  * @sa _VectorAdd
  */
-void _VectorSubtract (vec3_t veca, vec3_t vecb, vec3_t out)
+void _VectorSubtract (const vec3_t veca, const vec3_t vecb, vec3_t out)
 {
 #ifdef UFO_MMX_ENABLED
 	/* raynorpat: msvc sse optimization */
@@ -1166,7 +1187,7 @@ void _VectorSubtract (vec3_t veca, vec3_t vecb, vec3_t out)
  * @param[out] out The sum of the two vectors
  * @sa _VectorSubtract
  */
-void _VectorAdd (vec3_t veca, vec3_t vecb, vec3_t out)
+void _VectorAdd (const vec3_t veca, const vec3_t vecb, vec3_t out)
 {
 #ifdef UFO_MMX_ENABLED
 	/* raynorpat: msvc sse optimization */
@@ -1198,7 +1219,7 @@ void _VectorAdd (vec3_t veca, vec3_t vecb, vec3_t out)
  * @param
  * @sa
  */
-void _VectorCopy (vec3_t in, vec3_t out)
+void _VectorCopy (const vec3_t in, vec3_t out)
 {
 #ifdef UFO_MMX_ENABLED
 	/* raynorpat: msvc sse optimization */
@@ -1236,7 +1257,7 @@ void _VectorCopy (vec3_t in, vec3_t out)
  * @sa DotProduct
  * @sa VectorNormalize2
  */
-void CrossProduct (vec3_t v1, vec3_t v2, vec3_t cross)
+void CrossProduct (const vec3_t v1, const vec3_t v2, vec3_t cross)
 {
 	cross[0] = v1[1] * v2[2] - v1[2] * v2[1];
 	cross[1] = v1[2] * v2[0] - v1[0] * v2[2];
@@ -1251,7 +1272,7 @@ double sqrt (double x);
  * @sa VectorNormalize
  * @return Vector length as vec_t
  */
-vec_t VectorLength (vec3_t v)
+vec_t VectorLength (const vec3_t v)
 {
 	int i;
 	float length;
@@ -1281,7 +1302,7 @@ void VectorInverse (vec3_t v)
  * @param
  * @sa
  */
-void VectorScale (vec3_t in, vec_t scale, vec3_t out)
+void VectorScale (const vec3_t in, const vec_t scale, vec3_t out)
 {
 #ifdef UFO_MMX_ENABLED
 	/* raynorpat: msvc sse optimization */

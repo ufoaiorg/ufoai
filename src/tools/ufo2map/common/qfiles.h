@@ -364,11 +364,7 @@ typedef struct {
 /** lower bits are stronger, and will eat weaker brushes completely */
 #define CONTENTS_SOLID			1	/**< an eye is never valid in a solid */
 #define CONTENTS_WINDOW			2	/**< translucent, but not watery */
-#define CONTENTS_AUX			4
-#define CONTENTS_SMOKE			8
-#define CONTENTS_SLIME			16
 #define CONTENTS_WATER			32
-#define CONTENTS_MIST			64
 #define LAST_VISIBLE_CONTENTS	128
 
 /** remaining contents are non-visible, and don't eat brushes */
@@ -382,13 +378,13 @@ typedef struct {
 #define CONTENTS_TRANSLUCENT	0x10000000	/**< auto set if any surface has trans */
 #define CONTENTS_STEPON			0x40000000
 
-#define MASK_CLIP		( CONTENTS_ACTORCLIP | CONTENTS_WEAPONCLIP | CONTENTS_STEPON )
+#define MASK_CLIP		(CONTENTS_ACTORCLIP | CONTENTS_WEAPONCLIP | CONTENTS_STEPON)
 
 #define SURF_LIGHT		0x1		/* value will hold the light strength */
 #define SURF_SLICK		0x2		/* effects game physics */
 #define SURF_WARP		0x8		/* turbulent water warp */
-#define SURF_TRANS33	0x10
-#define SURF_TRANS66	0x20
+#define SURF_TRANS33	0x10	/* 0.33 alpha blending */
+#define SURF_TRANS66	0x20	/* 0.66 alpha blending */
 #define SURF_FLOWING	0x40	/* scroll towards angle */
 #define SURF_NODRAW		0x80	/* don't bother referencing the texture */
 #define SURF_HINT		0x100	/* make a primary bsp splitter */

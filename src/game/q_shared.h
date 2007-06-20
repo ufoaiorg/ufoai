@@ -340,30 +340,30 @@ typedef union {
 #define PosAddDV(p,dv)          (p[0]+=dvecs[dv&(DIRECTIONS-1)][0], p[1]+=dvecs[dv&(DIRECTIONS-1)][1], p[2]=(dv>>3)&(DIRECTIONS-1))
 int AngleToDV(int angle);
 
-void VectorMA(vec3_t veca, float scale, vec3_t vecb, vec3_t vecc);
-void VectorClampMA(vec3_t veca, float scale, vec3_t vecb, vec3_t vecc);
+void VectorMA(const vec3_t veca, const float scale, const vec3_t vecb, vec3_t vecc);
+void VectorClampMA(vec3_t veca, float scale, const vec3_t vecb, vec3_t vecc);
 
-void MatrixMultiply(vec3_t a[3], vec3_t b[3], vec3_t c[3]);
-void GLMatrixMultiply(float a[16], float b[16], float c[16]);
-void GLVectorTransform(float m[16], vec4_t in, vec4_t out);
-void VectorRotate(vec3_t m[3], vec3_t va, vec3_t vb);
+void MatrixMultiply(const vec3_t a[3], const vec3_t b[3], vec3_t c[3]);
+void GLMatrixMultiply(const float a[16], const float b[16], float c[16]);
+void GLVectorTransform(const float m[16], const vec4_t in, vec4_t out);
+void VectorRotate(const vec3_t m[3], const vec3_t va, vec3_t vb);
 
 /* just in case you do't want to use the macros */
-vec_t _DotProduct(vec3_t v1, vec3_t v2);
-void _VectorSubtract(vec3_t veca, vec3_t vecb, vec3_t out);
-void _VectorAdd(vec3_t veca, vec3_t vecb, vec3_t out);
-void _VectorCopy(vec3_t in, vec3_t out);
+vec_t _DotProduct(const vec3_t v1, const vec3_t v2);
+void _VectorSubtract(const vec3_t veca, const vec3_t vecb, vec3_t out);
+void _VectorAdd(const vec3_t veca, const vec3_t vecb, vec3_t out);
+void _VectorCopy(const vec3_t in, vec3_t out);
 
 void ClearBounds(vec3_t mins, vec3_t maxs);
-void AddPointToBounds(vec3_t v, vec3_t mins, vec3_t maxs);
-int VectorCompareEps(vec3_t v1, vec3_t v2);
-qboolean VectorNearer(vec3_t v1, vec3_t v2, vec3_t comp);
-vec_t VectorLength(vec3_t v);
-void CrossProduct(vec3_t v1, vec3_t v2, vec3_t cross);
+void AddPointToBounds(const vec3_t v, vec3_t mins, vec3_t maxs);
+int VectorCompareEps(const vec3_t v1, const vec3_t v2, float epsilon);
+qboolean VectorNearer(const vec3_t v1, const vec3_t v2, const vec3_t comp);
+vec_t VectorLength(const vec3_t v);
+void CrossProduct(const vec3_t v1, const vec3_t v2, vec3_t cross);
 vec_t VectorNormalize(vec3_t v);    /* returns vector length */
-vec_t VectorNormalize2(vec3_t v, vec3_t out);
+vec_t VectorNormalize2(const vec3_t v, vec3_t out);
 void VectorInverse(vec3_t v);
-void VectorScale(vec3_t in, vec_t scale, vec3_t out);
+void VectorScale(const vec3_t in, const vec_t scale, vec3_t out);
 int Q_log2(int val);
 
 void VecToAngles(const vec3_t vec, vec3_t angles);
@@ -568,29 +568,16 @@ COLLISION DETECTION
 /* lower bits are stronger, and will eat weaker brushes completely */
 #define CONTENTS_SOLID          1   /**< an eye is never valid in a solid */
 #define CONTENTS_WINDOW         2   /**< translucent, but not watery */
-#define CONTENTS_AUX            4
-#define CONTENTS_SMOKE          8
-#define CONTENTS_SLIME          16
 #define CONTENTS_WATER          32
 #define CONTENTS_MIST           64
-#define LAST_VISIBLE_CONTENTS   64
 
 /* remaining contents are non-visible, and don't eat brushes */
 
 #define CONTENTS_ACTORCLIP      0x10000
 #define CONTENTS_PASSABLE       0x20000
-
-/* currents can be added to any other contents, and may be mixed */
-#define CONTENTS_CURRENT_0      0x40000
-#define CONTENTS_CURRENT_90     0x80000
-#define CONTENTS_CURRENT_180    0x100000
-#define CONTENTS_CURRENT_270    0x200000
-#define CONTENTS_CURRENT_UP     0x400000
-#define CONTENTS_CURRENT_DOWN   0x800000
-
+#define CONTENTS_ACTOR          0x40000   /**< should never be on a brush, only in game */
 #define CONTENTS_ORIGIN         0x1000000   /**< removed before bsping an entity */
-
-#define CONTENTS_ACTOR          0x2000000   /**< should never be on a brush, only in game */
+#define CONTENTS_WEAPONCLIP     0x2000000   /**< stop bullets */
 #define CONTENTS_DEADACTOR      0x4000000
 #define CONTENTS_DETAIL         0x8000000   /**< brushes to be added after vis leafs */
 #define CONTENTS_TRANSLUCENT    0x10000000  /**< auto set if any surface has trans */
@@ -600,23 +587,17 @@ COLLISION DETECTION
 #define SURF_LIGHT      0x1     /**< value will hold the light strength */
 #define SURF_SLICK      0x2     /**< effects game physics */
 #define SURF_WARP       0x8     /**< turbulent water warp */
-#define SURF_TRANS33    0x10
-#define SURF_TRANS66    0x20
+#define SURF_TRANS33	0x10	/* 0.33 alpha blending */
+#define SURF_TRANS66	0x20	/* 0.66 alpha blending */
 #define SURF_FLOWING    0x40    /**< scroll towards angle */
 #define SURF_NODRAW     0x80    /**< don't bother referencing the texture */
-
 #define SURF_ALPHATEST	0x2000000	/**< alpha test for transparent textures */
 
 /* content masks */
 #define MASK_ALL                (-1)
 #define MASK_SOLID              (CONTENTS_SOLID|CONTENTS_WINDOW)
-#define MASK_ACTORSOLID         (CONTENTS_SOLID|CONTENTS_ACTORCLIP|CONTENTS_WINDOW|CONTENTS_ACTOR)
-#define MASK_DEADSOLID          (CONTENTS_SOLID|CONTENTS_ACTORCLIP|CONTENTS_WINDOW)
-/*#define   MASK_MONSTERSOLID       (CONTENTS_SOLID|CONTENTS_ACTORCLIP|CONTENTS_WINDOW|CONTENTS_ACTOR) */
-#define MASK_WATER              (CONTENTS_WATER|CONTENTS_SLIME)
-#define MASK_OPAQUE             (CONTENTS_SOLID|CONTENTS_SLIME)
-#define MASK_SHOT               (CONTENTS_SOLID|CONTENTS_ACTOR|CONTENTS_WINDOW|CONTENTS_DEADACTOR)
-#define MASK_VISIBILILITY       (CONTENTS_SOLID|CONTENTS_WATER|CONTENTS_SLIME)
+#define MASK_SHOT               (CONTENTS_SOLID|CONTENTS_ACTOR|CONTENTS_WEAPONCLIP|CONTENTS_WINDOW|CONTENTS_DEADACTOR)
+#define MASK_VISIBILILITY       (CONTENTS_SOLID|CONTENTS_WATER)
 
 
 /* FIXME: eliminate AREA_ distinction? */

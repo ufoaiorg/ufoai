@@ -136,7 +136,7 @@ static void TextureAxisFromPlane (plane_t *pln, vec3_t xv, vec3_t yv, qboolean i
 /**
  * @brief
  */
-extern int TexinfoForBrushTexture (plane_t *plane, brush_texture_t *bt, vec3_t origin, qboolean isTerrain)
+extern int TexinfoForBrushTexture (plane_t *plane, brush_texture_t *bt, const vec3_t origin, qboolean isTerrain)
 {
 	vec3_t vecs[2];
 	int sv, tv;

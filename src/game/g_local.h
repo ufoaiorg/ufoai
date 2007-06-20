@@ -60,6 +60,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define EXTENSION(e)  (e->i.c[gi.csi->idExtension])
 #define FLOOR(e) (e->i.c[gi.csi->idFloor])
 
+/* Actor visiblitly constants */
+#define ACTOR_VIS_100	1.0
+#define ACTOR_VIS_50	0.5
+#define ACTOR_VIS_10	0.1
+#define ACTOR_VIS_0		0.0
+
 /* this structure is left intact through an entire game */
 /* it should be initialized at dll load time, and read/written to */
 /* the server.ssv file for savegames */

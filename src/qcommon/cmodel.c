@@ -2450,6 +2450,7 @@ int CM_TestLine (vec3_t start, vec3_t stop)
  * @param[in] end
  * @sa CM_TestLine
  * @sa CL_ActorMouseTrace
+ * @return 0 if no connection between start and stop - 1 otherwise
  */
 int CM_TestLineDM (vec3_t start, vec3_t stop, vec3_t end)
 {

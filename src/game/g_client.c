@@ -359,15 +359,15 @@ extern float G_ActorVis (vec3_t from, edict_t * check, qboolean full)
 			if (full)
 				n++;
 			else
-				return 1.0;
+				return ACTOR_VIS_100;
 		}
 
 		/* look further down or stop */
 		if (!delta) {
 			if (n > 0)
-				return 1.0;
+				return ACTOR_VIS_100;
 			else
-				return 0.0;
+				return ACTOR_VIS_0;
 		}
 		VectorMA(test, 7, dir, test);
 		test[2] -= delta;
@@ -376,13 +376,13 @@ extern float G_ActorVis (vec3_t from, edict_t * check, qboolean full)
 	/* return factor */
 	switch (n) {
 	case 0:
-		return 0.0;
+		return ACTOR_VIS_0;
 	case 1:
-		return 0.1;
+		return ACTOR_VIS_10;
 	case 2:
-		return 0.5;
+		return ACTOR_VIS_50;
 	default:
-		return 1.0;
+		return ACTOR_VIS_100;
 	}
 }
 
@@ -397,35 +397,35 @@ float G_Vis (int team, edict_t * from, edict_t * check, int flags)
 
 	/* if any of them isn't in use, then they're not visible */
 	if (!from->inuse || !check->inuse)
-		return 0.0;
+		return ACTOR_VIS_0;
 
 	/* only actors and ugvs can see anything */
 	if ((from->type != ET_ACTOR && from->type != ET_UGV) || (from->state & STATE_DEAD))
-		return 0.0;
+		return ACTOR_VIS_0;
 
 	/* living team members are always visible */
 	if (team >= 0 && check->team == team && !(check->state & STATE_DEAD))
-		return 1.0;
+		return ACTOR_VIS_100;
 
 	/* standard team rules */
 	if (team >= 0 && from->team != team)
-		return 0.0;
+		return ACTOR_VIS_0;
 
 	/* inverse team rules */
 	if (team < 0 && (from->team == -team || from->team == TEAM_CIVILIAN || check->team != -team))
-		return 0.0;
+		return ACTOR_VIS_0;
 
 	/* check for same pos */
 	if (VectorCompare(from->pos, check->pos))
-		return 1.0;
+		return ACTOR_VIS_100;
 
 	/* view distance check */
 	if (VectorDistSqr(from->origin, check->origin) > MAX_SPOT_DIST * MAX_SPOT_DIST)
-		return 0.0;
+		return ACTOR_VIS_0;
 
 	/* view frustum check */
 	if (!(flags & VT_NOFRUSTUM) && !G_FrustumVis(from, check->origin))
-		return 0.0;
+		return ACTOR_VIS_0;
 
 	/* get viewers eye height */
 	VectorCopy(from->origin, eye);
@@ -442,7 +442,7 @@ float G_Vis (int team, edict_t * from, edict_t * check, int flags)
 	case ET_ITEM:
 		return !G_LineVis(eye, check->origin);
 	default:
-		return 0.0;
+		return ACTOR_VIS_0;
 	}
 }
 
