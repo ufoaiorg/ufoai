@@ -793,8 +793,11 @@ static void Mod_LoadTags (model_t * mod, void *buffer)
 	int version;
 	int i, j, size;
 	float *inmat, *outmat;
+	int read;
+	mdl_md2_t *md2;
 
 	pintag = (dtag_t *) buffer;
+	md2 = (mdl_md2_t *) mod->extraData;
 
 	version = LittleLong(pintag->version);
 	if (version != TAG_VERSION)
@@ -832,7 +835,10 @@ static void Mod_LoadTags (model_t * mod, void *buffer)
 		*outmat++ = 1.0;
 	}
 
-/*	ri.Sys_Error( ERR_DROP, "TAGS: read: %i expected: %i ", (byte *)outmat - (byte *)pheader, pheader->ofs_extractend ); */
+	read = (byte *)outmat - (byte *)pheader;
+	if (read != size)
+		ri.Sys_Error(ERR_DROP, "TAGS: read: %i expected: %i - tags: %i, frames: %i (should be %i)",
+			read, size, pheader->num_tags, pheader->num_frames, md2->num_frames);
 }
 
 
@@ -979,6 +985,7 @@ static void Mod_LoadAliasModel (model_t * mod, void *buffer)
 		ri.Sys_Error(ERR_DROP, "%s has wrong version number (%i should be %i)", mod->name, version, ALIAS_VERSION);
 
 	pheader = ri.TagMalloc(ri.modelPool, LittleLong(pinmodel->ofs_end), 0);
+	mod->extraData = pheader;
 
 	/* byte swap the header fields and sanity check */
 	for (i = 0; i < (int)sizeof(mdl_md2_t) / 4; i++) /* FIXME */
@@ -1084,7 +1091,6 @@ static void Mod_LoadAliasModel (model_t * mod, void *buffer)
 	/* find neighbours */
 	mod->neighbors = ri.TagMalloc(ri.modelPool, pheader->num_tris * sizeof(neighbors_t), 0);
 	Mod_BuildTriangleNeighbors(mod->neighbors, pouttri, pheader->num_tris);
-	mod->extraData = pheader;
 }
 
 /*
