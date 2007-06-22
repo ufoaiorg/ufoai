@@ -801,7 +801,7 @@ static void Mod_LoadTags (model_t * mod, void *buffer)
 
 	version = LittleLong(pintag->version);
 	if (version != TAG_VERSION)
-		ri.Sys_Error(ERR_DROP, "%s has wrong version number (%i should be %i)", mod->tagname, version, TAG_VERSION);
+		ri.Sys_Error(ERR_DROP, "Mod_LoadTags: %s has wrong version number (%i should be %i)", mod->tagname, version, TAG_VERSION);
 
 	size = LittleLong(pintag->ofs_extractend);
 	mod->tagdata = ri.TagMalloc(ri.modelPool, size, 0);
@@ -812,10 +812,10 @@ static void Mod_LoadTags (model_t * mod, void *buffer)
 		((int *) pheader)[i] = LittleLong(((int *) buffer)[i]);
 
 	if (pheader->num_tags <= 0)
-		ri.Sys_Error(ERR_DROP, "tag file %s has no tags", mod->tagname);
+		ri.Sys_Error(ERR_DROP, "Mod_LoadTags: tag file %s has no tags", mod->tagname);
 
 	if (pheader->num_frames <= 0)
-		ri.Sys_Error(ERR_DROP, "tag file %s has no frames", mod->tagname);
+		ri.Sys_Error(ERR_DROP, "Mod_LoadTags: tag file %s has no frames", mod->tagname);
 
 	/* load tag names */
 	memcpy((char *) pheader + pheader->ofs_names, (char *) pintag + pheader->ofs_names, pheader->num_tags * MAX_SKINNAME);
@@ -835,9 +835,13 @@ static void Mod_LoadTags (model_t * mod, void *buffer)
 		*outmat++ = 1.0;
 	}
 
+	if (pheader->num_frames != md2->num_frames)
+		ri.Con_Printf(PRINT_ALL, "Mod_LoadTags: found %i frames in %s but model has %i frames\n",
+			pheader->num_frames, mod->tagname, md2->num_frames);
+
 	read = (byte *)outmat - (byte *)pheader;
 	if (read != size)
-		ri.Sys_Error(ERR_DROP, "TAGS: read: %i expected: %i - tags: %i, frames: %i (should be %i)",
+		ri.Sys_Error(ERR_DROP, "Mod_LoadTags: read: %i expected: %i - tags: %i, frames: %i (should be %i)",
 			read, size, pheader->num_tags, pheader->num_frames, md2->num_frames);
 }
 
@@ -850,6 +854,9 @@ static void Mod_LoadAnims (model_t * mod, void *buffer)
 	char *text, *token;
 	manim_t *anim;
 	int n;
+	mdl_md2_t *md2;
+
+	md2 = (mdl_md2_t *) mod->extraData;
 
 	for (n = 0, text = buffer; text; n++)
 		COM_Parse(&text);
@@ -874,12 +881,20 @@ static void Mod_LoadAnims (model_t * mod, void *buffer)
 		if (!text)
 			break;
 		anim->from = atoi(token);
+		if (anim->from < 0)
+			ri.Sys_Error(ERR_DROP, "Mod_LoadAnims: negative start frame for %s", mod->animname);
+		else if (anim->from > md2->num_frames)
+			ri.Sys_Error(ERR_DROP, "Mod_LoadAnims: start frame is higher than models frame count (%i) (model: %s)", md2->num_frames, mod->animname);
 
 		/* get the end */
 		token = COM_Parse(&text);
 		if (!text)
 			break;
 		anim->to = atoi(token);
+		if (anim->to < 0)
+			ri.Sys_Error(ERR_DROP, "Mod_LoadAnims: negative start frame for %s", mod->animname);
+		else if (anim->to > md2->num_frames)
+			ri.Sys_Error(ERR_DROP, "Mod_LoadAnims: end frame is higher than models frame count (%i) (model: %s)", md2->num_frames, mod->animname);
 
 		/* get the fps */
 		token = COM_Parse(&text);
