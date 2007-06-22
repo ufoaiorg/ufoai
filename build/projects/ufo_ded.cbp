@@ -128,6 +128,9 @@
 		<Unit filename="..\..\src\qcommon\md4.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\qcommon\mem.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\qcommon\msg.c">
 			<Option compilerVar="CC" />
 		</Unit>

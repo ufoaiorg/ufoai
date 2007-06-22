@@ -1,7 +1,7 @@
 [Project]
 FileName=ufo_ded.dev
 Name=ufoded
-UnitCount=28
+UnitCount=29
 Type=0
 Ver=1
 ObjFiles=
@@ -318,6 +318,16 @@ BuildCmd=
 
 [Unit28]
 FileName=..\..\src\qcommon\msg.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit29]
+FileName=..\..\src\qcommon\mem.c
 CompileCpp=0
 Folder=Source Files
 Compile=1

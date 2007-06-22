@@ -363,6 +363,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\qcommon\md4.h" />
+		<Unit filename="..\..\src\qcommon\mem.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\qcommon\mem.h" />
 		<Unit filename="..\..\src\qcommon\msg.c">
 			<Option compilerVar="CC" />

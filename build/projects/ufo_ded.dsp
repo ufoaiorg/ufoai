@@ -132,6 +132,10 @@ SOURCE=..\..\src\qcommon\md5.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\qcommon\mem.c
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\qcommon\msg.c
 # End Source File
 # Begin Source File
