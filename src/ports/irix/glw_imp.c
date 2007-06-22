@@ -786,7 +786,7 @@ static void RW_IN_MLookDown (void)
 static void RW_IN_MLookUp (void)
 {
 	mlooking = qfalse;
-	in_state->IN_CenterView_fp ();
+	in_state->IN_CenterView_fp();
 }
 
 /**

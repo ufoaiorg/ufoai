@@ -65,11 +65,11 @@ char* strlwr (char *s)
  */
 int Sys_Milliseconds (void)
 {
-	struct timeval	myTimeValue;
-	struct timezone	myTimeZone;
-	static int		myStartSeconds;
+	struct timeval myTimeValue;
+	struct timezone myTimeZone;
+	static int myStartSeconds;
 
-	gettimeofday (&myTimeValue, &myTimeZone);
+	gettimeofday(&myTimeValue, &myTimeZone);
 
 	if (!myStartSeconds) {
 		myStartSeconds = myTimeValue.tv_sec;
@@ -86,11 +86,11 @@ int Sys_Milliseconds (void)
  */
 void Sys_Mkdir (const char *thePath)
 {
-	if (mkdir (thePath, 0777) != -1)
+	if (mkdir(thePath, 0777) != -1)
 		return;
 
 	if (errno != EEXIST)
-		Sys_Error ("\"mkdir %s\" failed, reason: \"%s\".", thePath, strerror(errno));
+		Sys_Error("\"mkdir %s\" failed, reason: \"%s\".", thePath, strerror(errno));
 }
 
 /**
@@ -102,12 +102,12 @@ static qboolean Sys_CompareAttributes (char *thePath, char *theName, unsigned th
 	char 	myFileName[MAX_OSPATH];
 
 	/* . and .. never match */
-	if (Q_strcmp (theName, ".") == 0 || Q_strcmp (theName, "..") == 0)
+	if (Q_strcmp(theName, ".") == 0 || Q_strcmp (theName, "..") == 0)
 		return qfalse;
 
 	Com_sprintf(myFileName, MAX_OSPATH, "%s/%s", thePath, theName);
 
-	if (stat (myFileName, &myStat) == -1)
+	if (stat(myFileName, &myStat) == -1)
 		return (qfalse);
 
 	if ((myStat.st_mode & S_IFDIR) && (theCantHave & SFF_SUBDIR))
@@ -124,29 +124,29 @@ static qboolean Sys_CompareAttributes (char *thePath, char *theName, unsigned th
  */
 char* Sys_FindFirst (const char *thePath, unsigned theMustHave, unsigned theCantHave)
 {
-	struct dirent	*myDirEnt;
-	char		*myPointer;
+	struct dirent *myDirEnt;
+	char *myPointer;
 
 	if (gSysFindDir != NULL)
-		Sys_Error ("Sys_BeginFind without close");
+		Sys_Error("Sys_BeginFind without close");
 
-	Q_strncpyz (gSysFindBase, thePath, MAX_OSPATH);
+	Q_strncpyz(gSysFindBase, thePath, MAX_OSPATH);
 
-	if ((myPointer = strrchr (gSysFindBase, '/')) != NULL) {
+	if ((myPointer = strrchr(gSysFindBase, '/')) != NULL) {
 		*myPointer = 0;
-		Q_strncpyz (gSysFindPattern, myPointer + 1, MAX_OSPATH);
+		Q_strncpyz(gSysFindPattern, myPointer + 1, MAX_OSPATH);
 	} else
-		Q_strncpyz (gSysFindPattern, "*", MAX_OSPATH);
+		Q_strncpyz(gSysFindPattern, "*", MAX_OSPATH);
 
-	if (Q_strcmp (gSysFindPattern, "*.*") == 0)
-		Q_strncpyz (gSysFindPattern, "*", MAX_OSPATH);
+	if (Q_strcmp(gSysFindPattern, "*.*") == 0)
+		Q_strncpyz(gSysFindPattern, "*", MAX_OSPATH);
 
-	if ((gSysFindDir = opendir (gSysFindBase)) == NULL)
+	if ((gSysFindDir = opendir(gSysFindBase)) == NULL)
 		return (NULL);
 
-	while ((myDirEnt = readdir (gSysFindDir)) != NULL)
+	while ((myDirEnt = readdir(gSysFindDir)) != NULL)
 		if (!*gSysFindPattern || glob_match(gSysFindPattern, myDirEnt->d_name))
-			if (Sys_CompareAttributes (gSysFindBase, myDirEnt->d_name, theMustHave, theCantHave)) {
+			if (Sys_CompareAttributes(gSysFindBase, myDirEnt->d_name, theMustHave, theCantHave)) {
 				Com_sprintf(gSysFindPath, MAX_OSPATH, "%s/%s", gSysFindBase, myDirEnt->d_name);
 				return (gSysFindPath);
 			}
@@ -159,16 +159,16 @@ char* Sys_FindFirst (const char *thePath, unsigned theMustHave, unsigned theCant
  */
 char* Sys_FindNext (unsigned theMustHave, unsigned theCantHave)
 {
-	struct dirent 	*myDirEnt;
+	struct dirent *myDirEnt;
 
 	/* just security: */
 	if (gSysFindDir == NULL)
 		return (NULL);
 
 	/* find next... */
-	while ((myDirEnt = readdir (gSysFindDir)) != NULL)
-		if (!*gSysFindPattern || glob_match (gSysFindPattern, myDirEnt->d_name))
-			if (Sys_CompareAttributes (gSysFindBase, myDirEnt->d_name, theMustHave, theCantHave)) {
+	while ((myDirEnt = readdir(gSysFindDir)) != NULL)
+		if (!*gSysFindPattern || glob_match(gSysFindPattern, myDirEnt->d_name))
+			if (Sys_CompareAttributes(gSysFindBase, myDirEnt->d_name, theMustHave, theCantHave)) {
 				Com_sprintf(gSysFindPath, MAX_OSPATH, "%s/%s", gSysFindBase, myDirEnt->d_name);
 				return (gSysFindPath);
 			}
@@ -182,7 +182,7 @@ char* Sys_FindNext (unsigned theMustHave, unsigned theCantHave)
 void Sys_FindClose (void)
 {
 	if (gSysFindDir != NULL)
-		closedir (gSysFindDir);
+		closedir(gSysFindDir);
 	gSysFindDir = NULL;
 }
 

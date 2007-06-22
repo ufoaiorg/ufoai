@@ -94,7 +94,7 @@ void Cmd_Grab (void)
 	h = atoi(token);
 
 	if (xl < 0 || yl < 0 || w < 0 || h < 0 || xl + w > byteimagewidth || yl + h > byteimageheight)
-		Error ("GrabPic: Bad size: %i, %i, %i, %i",xl,yl,w,h);
+		Error("GrabPic: Bad size: %i, %i, %i, %i",xl,yl,w,h);
 
 	/* crop it to the proper size */
 	cropped = malloc(w*h);

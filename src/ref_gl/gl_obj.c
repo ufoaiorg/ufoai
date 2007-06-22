@@ -115,19 +115,19 @@ static int R_OBJ_FirstPass (model_t *mod, void* buffer)
 
 		case 'f': {
 			/* Face */
-			if (sscanf (buf + 2, "%d/%d/%d", &v, &n, &t) == 3) {
+			if (sscanf(buf + 2, "%d/%d/%d", &v, &n, &t) == 3) {
 				mod->num_faces++;
 				mod->has_texCoords = 1;
 				mod->has_normals = 1;
-			} else if (sscanf (buf + 2, "%d//%d", &v, &n) == 2) {
+			} else if (sscanf(buf + 2, "%d//%d", &v, &n) == 2) {
 				mod->num_faces++;
 				mod->has_texCoords = 0;
 				mod->has_normals = 1;
-			} else if (sscanf (buf + 2, "%d/%d", &v, &t) == 2) {
+			} else if (sscanf(buf + 2, "%d/%d", &v, &t) == 2) {
 				mod->num_faces++;
 				mod->has_texCoords = 1;
 				mod->has_normals = 0;
-			} else if (sscanf (buf + 2, "%d", &v) == 1) {
+			} else if (sscanf(buf + 2, "%d", &v) == 1) {
 				mod->num_faces++;
 				mod->has_texCoords = 0;
 				mod->has_normals = 0;
@@ -141,7 +141,7 @@ static int R_OBJ_FirstPass (model_t *mod, void* buffer)
 
 		case 'g': {
 			/* Group */
-			/*	fscanf (fp, "%s", buf); */
+			/*	fscanf(fp, "%s", buf); */
 			break;
 		}
 
@@ -193,16 +193,16 @@ static int R_OBJ_SecondPass (model_t *mod, void *buffer)
 
 	while (!feof (buffer)) {
 		/* Read whole line. */
-		fgets(buf, sizeof (buf), buffer);
+		fgets(buf, sizeof(buf), buffer);
 
 		switch (buf[0]) {
 		case 'v': {
 			if (buf[1] == ' ') {
 				/* Vertex */
-				if (sscanf (buf + 2, "%f %f %f %f",
+				if (sscanf(buf + 2, "%f %f %f %f",
 					&pvert->xyzw[0], &pvert->xyzw[1],
 					&pvert->xyzw[2], &pvert->xyzw[3]) != 4) {
-					if (sscanf (buf + 2, "%f %f %f",
+					if (sscanf(buf + 2, "%f %f %f",
 						&pvert->xyzw[0],
 						&pvert->xyzw[1], &pvert->xyzw[2] ) != 3) {
 						ri.Con_Printf(PRINT_ALL, "error reading vertex data!\n");
@@ -215,13 +215,13 @@ static int R_OBJ_SecondPass (model_t *mod, void *buffer)
 				pvert++;
 			} else if (buf[1] == 't') {
 				/* Texture coordinates */
-				if (sscanf (buf + 2, "%f %f %f",
+				if (sscanf(buf + 2, "%f %f %f",
 					&puvw->uvw[0],
 					&puvw->uvw[1], &puvw->uvw[2]) != 3) {
-					if (sscanf (buf + 2, "%f %f",
+					if (sscanf(buf + 2, "%f %f",
 						&puvw->uvw[0],
 						&puvw->uvw[1]) != 2) {
-						if (sscanf (buf + 2, "%f", &puvw->uvw[0]) != 1) {
+						if (sscanf(buf + 2, "%f", &puvw->uvw[0]) != 1) {
 							ri.Con_Printf(PRINT_ALL, "error reading texture coordinates!\n");
 							return 0;
 						} else {
@@ -235,7 +235,7 @@ static int R_OBJ_SecondPass (model_t *mod, void *buffer)
 				puvw++;
 			} else if (buf[1] == 'n') {
 				/* Normal vector */
-				if (sscanf (buf + 2, "%f %f %f",
+				if (sscanf(buf + 2, "%f %f %f",
 					&pnorm->ijk[0],
 					&pnorm->ijk[1],
 					&pnorm->ijk[2]) != 3) {
@@ -272,34 +272,34 @@ static int R_OBJ_SecondPass (model_t *mod, void *buffer)
 			}
 
 			/* Memory allocation for vertexes. */
-			pface->vert_indices = (int *)malloc (sizeof (int) * pface->num_elems);
+			pface->vert_indices = (int *)ri.TagMalloc(ri.modelPool, sizeof(int) * pface->num_elems, 0);
 
 			if (mod->has_texCoords)
-				pface->uvw_indices = (int *)malloc (sizeof (int) * pface->num_elems);
+				pface->uvw_indices = (int *)ri.TagMalloc(ri.modelPool, sizeof(int) * pface->num_elems, 0);
 
 			if (mod->has_normals)
-				pface->norm_indices = (int *)malloc (sizeof (int) * pface->num_elems);
+				pface->norm_indices = (int *)ri.TagMalloc(ri.modelPool, sizeof(int) * pface->num_elems, 0);
 
 			/* Read face data. */
 			pbuf = buf;
 			i = 0;
 
 			for (i = 0; i < pface->num_elems; ++i) {
-				pbuf = strchr (pbuf, ' ');
+				pbuf = strchr(pbuf, ' ');
 				pbuf++; /* Skip space. */
 
 				/* Try reading vertexes */
-				if (sscanf (pbuf, "%d/%d/%d",
+				if (sscanf(pbuf, "%d/%d/%d",
 					&pface->vert_indices[i],
 					&pface->uvw_indices[i],
 					&pface->norm_indices[i]) != 3) {
-					if (sscanf (pbuf, "%d//%d",
+					if (sscanf(pbuf, "%d//%d",
 						&pface->vert_indices[i],
 						&pface->norm_indices[i]) != 2) {
-						if (sscanf (pbuf, "%d/%d",
+						if (sscanf(pbuf, "%d/%d",
 							&pface->vert_indices[i],
 							&pface->uvw_indices[i]) != 2) {
-							sscanf (pbuf, "%d", &pface->vert_indices[i]);
+							sscanf(pbuf, "%d", &pface->vert_indices[i]);
 						}
 					}
 				}
@@ -364,15 +364,15 @@ static void R_OBJ_Render (model_t *mod)
 	int i, j;
 
 	for (i = 0; i < mod->num_faces; ++i) {
-		qglBegin (mod->faces[i].type);
+		qglBegin(mod->faces[i].type);
 		for (j = 0; j < mod->faces[i].num_elems; ++j) {
 			if (mod->has_texCoords)
-				qglTexCoord3fv (mod->texCoords[mod->faces[i].uvw_indices[j]].uvw);
+				qglTexCoord3fv(mod->texCoords[mod->faces[i].uvw_indices[j]].uvw);
 
 			if (mod->has_normals)
-				qglNormal3fv (mod->normals[mod->faces[i].norm_indices[j]].ijk);
+				qglNormal3fv(mod->normals[mod->faces[i].norm_indices[j]].ijk);
 
-			qglVertex4fv (mod->vertexes [mod->faces[i].vert_indices[j]].xyzw);
+			qglVertex4fv(mod->vertexes [mod->faces[i].vert_indices[j]].xyzw);
 		}
 		qglEnd();
 	}

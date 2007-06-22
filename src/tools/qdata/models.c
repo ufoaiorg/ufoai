@@ -476,9 +476,9 @@ void BuildGlCmds (void)
 		for (type = 0; type < 2; type++) {
 			for (startv = 0; startv < 3; startv++) {
 				if (type == 1)
-					len = StripLength (i, startv);
+					len = StripLength(i, startv);
 				else
-					len = FanLength (i, startv);
+					len = FanLength(i, startv);
 				if (len > bestlen) {
 					besttype = type;
 					bestlen = len;
@@ -621,7 +621,7 @@ void Cmd_Base (void)
 	int		time1;
 	char	file1[1024];
 
-	GetToken (qfalse);
+	GetToken(qfalse);
 
 	if (g_skipmodel || g_release || g_archive)
 		return;
@@ -630,13 +630,13 @@ void Cmd_Base (void)
 	sprintf(file1, "%s/%s.%s", cdarchive, token, trifileext);
 	printf("%s\n", file1);
 
-	ExpandPathAndArchive (file1);
+	ExpandPathAndArchive(file1);
 
 	sprintf(file1, "%s/%s.%s", cddir, token, trifileext);
 
-	time1 = FileTime (file1);
+	time1 = FileTime(file1);
 	if (time1 == -1)
-		Error ("%s doesn't exist", file1);
+		Error("%s doesn't exist", file1);
 
 	/* load the base triangles */
 	if (do3ds)
