@@ -787,7 +787,7 @@ ALIAS MODELS
 /**
  * @brief
  */
-static void Mod_LoadTags (model_t * mod, void *buffer)
+static void Mod_LoadTags (model_t * mod, void *buffer, int bufSize)
 {
 	dtag_t *pintag, *pheader;
 	int version;
@@ -824,6 +824,25 @@ static void Mod_LoadTags (model_t * mod, void *buffer)
 	inmat = (float *) ((byte *) pintag + pheader->ofs_tags);
 	outmat = (float *) ((byte *) pheader + pheader->ofs_tags);
 
+	if (bufSize != LittleLong(pheader->ofs_end))
+		ri.Sys_Error(ERR_DROP, "Mod_LoadTags: tagfile %s is broken - expected: %i, offsets tell us to read: %i\n",
+			mod->tagname, bufSize, LittleLong(pheader->ofs_end));
+
+	if (pheader->num_frames != md2->num_frames)
+		ri.Con_Printf(PRINT_ALL, "Mod_LoadTags: found %i frames in %s but model has %i frames\n",
+			pheader->num_frames, mod->tagname, md2->num_frames);
+
+	if (pheader->ofs_names != 32)
+		ri.Sys_Error(ERR_DROP, "Mod_LoadTags: invalid ofs_name for tagfile %s\n", mod->tagname);
+	if (pheader->ofs_tags != pheader->ofs_names + (pheader->num_tags * 64))
+		ri.Sys_Error(ERR_DROP, "Mod_LoadTags: invalid ofs_tags for tagfile %s\n", mod->tagname);
+	/* (4 * 3) * 4 bytes (int) */
+	if (pheader->ofs_end != pheader->ofs_tags + (pheader->num_tags * pheader->num_frames * 48))
+		ri.Sys_Error(ERR_DROP, "Mod_LoadTags: invalid ofs_end for tagfile %s\n", mod->tagname);
+	/* (4 * 4) * 4 bytes (int) */
+	if (pheader->ofs_extractend != pheader->ofs_tags + (pheader->num_tags * pheader->num_frames * 64))
+		ri.Sys_Error(ERR_DROP, "Mod_LoadTags: invalid ofs_extractend for tagfile %s\n", mod->tagname);
+
 	for (i = 0; i < pheader->num_tags * pheader->num_frames; i++) {
 		for (j = 0; j < 4; j++) {
 			*outmat++ = LittleFloat(*inmat++);
@@ -834,10 +853,6 @@ static void Mod_LoadTags (model_t * mod, void *buffer)
 		outmat--;
 		*outmat++ = 1.0;
 	}
-
-	if (pheader->num_frames != md2->num_frames)
-		ri.Con_Printf(PRINT_ALL, "Mod_LoadTags: found %i frames in %s but model has %i frames\n",
-			pheader->num_frames, mod->tagname, md2->num_frames);
 
 	read = (byte *)outmat - (byte *)pheader;
 	if (read != size)
@@ -989,7 +1004,7 @@ static void Mod_LoadAliasModel (model_t * mod, void *buffer)
 	dtriangle_t *pintri, *pouttri;
 	daliasframe_t *pinframe, *poutframe;
 	int *pincmd, *poutcmd;
-	int version;
+	int version, size;
 
 	byte *tagbuf = NULL, *animbuf = NULL;
 
@@ -1085,8 +1100,8 @@ static void Mod_LoadAliasModel (model_t * mod, void *buffer)
 	/* try to load the tag file */
 	if (ri.FS_CheckFile(mod->tagname) != -1) {
 		/* load the tags */
-		ri.FS_LoadFile(mod->tagname, (void **) &tagbuf);
-		Mod_LoadTags(mod, tagbuf);
+		size = ri.FS_LoadFile(mod->tagname, (void **) &tagbuf);
+		Mod_LoadTags(mod, tagbuf, size);
 		ri.FS_FreeFile(tagbuf);
 	}
 
