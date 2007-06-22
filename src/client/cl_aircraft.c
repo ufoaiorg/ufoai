@@ -1309,7 +1309,7 @@ void AIM_AircraftEquipmenuInit_f (void)
 		Com_sprintf(smallbuffer1, sizeof(smallbuffer1), _(gd.technologies[aircraftItems[slot->itemIdx].tech_idx].name));
 		Q_strcat(smallbuffer1, "\n", sizeof(smallbuffer1));
 		if (!slot->installationTime)
-			Q_strcat(smallbuffer1, "This item is functionnal\n", sizeof(smallbuffer1));
+			Q_strcat(smallbuffer1, _("This item is functional\n"), sizeof(smallbuffer1));
 		else if (slot->installationTime > 0)
 			Q_strcat(smallbuffer1, va(_("This item will be installed in %i hours\n"),slot->installationTime), sizeof(smallbuffer1));
 		else
