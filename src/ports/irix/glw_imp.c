@@ -737,7 +737,7 @@ Key_Event_fp_t Key_Event_fp;
  */
 void KBD_Init(Key_Event_fp_t fp)
 {
-	_windowed_mouse = ri.Cvar_Get ("_windowed_mouse", "0", CVAR_ARCHIVE);
+	_windowed_mouse = ri.Cvar_Get("_windowed_mouse", "0", CVAR_ARCHIVE, NULL);
 	Key_Event_fp = fp;
 }
 
@@ -792,7 +792,7 @@ static void RW_IN_MLookUp (void)
 /**
  * @brief
  */
-void RW_IN_Init(in_state_t *in_state_p)
+void RW_IN_Init (in_state_t *in_state_p)
 {
 	int mtype;
 	int i;
@@ -802,15 +802,15 @@ void RW_IN_Init(in_state_t *in_state_p)
 	in_state = in_state_p;
 
 	/* mouse variables */
-	_windowed_mouse = ri.Cvar_Get ("_windowed_mouse", "0", CVAR_ARCHIVE);
-	m_filter = ri.Cvar_Get ("m_filter", "0", 0);
-	in_mouse = ri.Cvar_Get ("in_mouse", "1", CVAR_ARCHIVE);
-	sensitivity = ri.Cvar_Get ("sensitivity", "2", 0);
+	_windowed_mouse = ri.Cvar_Get("_windowed_mouse", "0", CVAR_ARCHIVE, NULL);
+	m_filter = ri.Cvar_Get("m_filter", "0", 0, NULL);
+	in_mouse = ri.Cvar_Get("in_mouse", "1", CVAR_ARCHIVE, NULL);
+	sensitivity = ri.Cvar_Get("sensitivity", "2", 0, NULL);
 
-	ri.Cmd_AddCommand ("+mlook", RW_IN_MLookDown);
-	ri.Cmd_AddCommand ("-mlook", RW_IN_MLookUp);
+	ri.Cmd_AddCommand("+mlook", RW_IN_MLookDown, NULL);
+	ri.Cmd_AddCommand("-mlook", RW_IN_MLookUp, NULL);
 
-	ri.Cmd_AddCommand ("force_centerview", Force_CenterView_f);
+	ri.Cmd_AddCommand("force_centerview", Force_CenterView_f, NULL);
 
 	mouse_x = mouse_y = 0.0;
 	mouse_avail = qtrue;
@@ -819,13 +819,13 @@ void RW_IN_Init(in_state_t *in_state_p)
 /**
  * @brief
  */
-void RW_IN_Shutdown(void)
+void RW_IN_Shutdown (void)
 {
 	mouse_avail = qfalse;
 
-	ri.Cmd_RemoveCommand ("force_centerview");
-	ri.Cmd_RemoveCommand ("+mlook");
-	ri.Cmd_RemoveCommand ("-mlook");
+	ri.Cmd_RemoveCommand("force_centerview");
+	ri.Cmd_RemoveCommand("+mlook");
+	ri.Cmd_RemoveCommand("-mlook");
 }
 
 /**

@@ -292,7 +292,7 @@ static void CL_StartHTTPDownload (dlqueue_t *entry, dlhandle_t *dl)
 	curl_easy_setopt(dl->curl, CURLOPT_HEADERFUNCTION, CL_HTTP_Header);
 	curl_easy_setopt(dl->curl, CURLOPT_PROGRESSFUNCTION, CL_HTTP_Progress);
 	curl_easy_setopt(dl->curl, CURLOPT_PROGRESSDATA, dl);
-	curl_easy_setopt(dl->curl, CURLOPT_USERAGENT, Cvar_VariableString ("version"));
+	curl_easy_setopt(dl->curl, CURLOPT_USERAGENT, Cvar_VariableString("version"));
 	curl_easy_setopt(dl->curl, CURLOPT_REFERER, cls.downloadReferer);
 	curl_easy_setopt(dl->curl, CURLOPT_URL, dl->URL);
 

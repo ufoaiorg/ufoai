@@ -601,22 +601,22 @@ void CDAudio_Update (void)
  */
 int CDAudio_Init (void)
 {
-	int	i;
-	cvar_t	*cv;
+	int i;
+	cvar_t *cv;
 	extern uid_t saved_euid;
 
 	if (initialized)
 		return 0;
 
-	cv = Cvar_Get ("nocdaudio", "0", CVAR_NOSET, NULL);
-	if (cv->value)
+	cv = Cvar_Get("nocdaudio", "0", CVAR_NOSET, NULL);
+	if (cv->integer)
 		return -1;
 
-	cd_nocd = Cvar_Get ("cd_nocd", "0", CVAR_ARCHIVE, NULL);
-	if ( cd_nocd->value)
+	cd_nocd = Cvar_Get("cd_nocd", "0", CVAR_ARCHIVE, NULL);
+	if (cd_nocd->integer)
 		return -1;
 
-	cd_volume = Cvar_Get ("cd_volume", "1", CVAR_ARCHIVE, NULL);
+	cd_volume = Cvar_Get("cd_volume", "1", CVAR_ARCHIVE, NULL);
 
 	cd_dev = Cvar_Get("cd_dev", "/dev/cdrom", CVAR_ARCHIVE, NULL);
 
@@ -643,7 +643,7 @@ int CDAudio_Init (void)
 		cdValid = qfalse;
 	}
 
-	Cmd_AddCommand ("cd", CD_f, NULL);
+	Cmd_AddCommand("cd", CD_f, NULL);
 
 	Com_Printf("CD Audio Initialized\n");
 

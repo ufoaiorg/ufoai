@@ -872,9 +872,9 @@ void NET_Config (qboolean multiplayer)
 			}
 		}
 	} else {	/* open sockets */
-		if (!noudp->value)
+		if (!noudp->integer)
 			NET_OpenIP();
-		if (!noipx->value)
+		if (!noipx->integer)
 			NET_OpenIPX();
 	}
 }

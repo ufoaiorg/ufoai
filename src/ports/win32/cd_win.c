@@ -437,15 +437,15 @@ void CDAudio_Update(void)
  */
 int CDAudio_Init(void)
 {
-	DWORD	dwReturn;
-	MCI_OPEN_PARMS	mciOpenParms;
-	MCI_SET_PARMS	mciSetParms;
-	int				n;
+	DWORD dwReturn;
+	MCI_OPEN_PARMS mciOpenParms;
+	MCI_SET_PARMS mciSetParms;
+	int n;
 
-	cd_nocd = Cvar_Get ("cd_nocd", "0", CVAR_ARCHIVE, NULL);
-	cd_loopcount = Cvar_Get ("cd_loopcount", "4", 0, NULL);
-	cd_looptrack = Cvar_Get ("cd_looptrack", "11", 0, NULL);
-	if ( cd_nocd->value)
+	cd_nocd = Cvar_Get("cd_nocd", "0", CVAR_ARCHIVE, NULL);
+	cd_loopcount = Cvar_Get("cd_loopcount", "4", 0, NULL);
+	cd_looptrack = Cvar_Get("cd_looptrack", "11", 0, NULL);
+	if (cd_nocd->integer)
 		return -1;
 
 	mciOpenParms.lpstrDeviceType = "cdaudio";
@@ -474,7 +474,7 @@ int CDAudio_Init(void)
 		enabled = qfalse;
 	}
 
-	Cmd_AddCommand ("cd", CD_f, NULL);
+	Cmd_AddCommand("cd", CD_f, NULL);
 
 	Com_Printf("CD Audio Initialized\n");
 

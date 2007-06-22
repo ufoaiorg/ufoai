@@ -90,10 +90,6 @@ int NET_Socket(char *net_interface, int port);
 #endif
 /*============================================================================ */
 
-#define	OLD_AVG		0.99		/* total = oldtotal*OLD_AVG + new*(1-OLD_AVG) */
-
-#define	MAX_LATENT	32
-
 typedef struct {
 	qboolean fatal_error;
 
@@ -130,7 +126,6 @@ typedef struct {
 extern netadr_t net_from;
 extern sizebuf_t net_message;
 extern byte net_message_buffer[MAX_MSGLEN];
-
 
 void Netchan_Init(void);
 void Netchan_Setup(netsrc_t sock, netchan_t * chan, netadr_t adr, int qport);

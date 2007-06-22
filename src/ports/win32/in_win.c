@@ -280,7 +280,7 @@ void IN_ActivateMouse (void)
 
 	if (!mouseinitialized)
 		return;
-	if (!in_mouse->value) {
+	if (!in_mouse->integer) {
 		mouseactive = qfalse;
 		return;
 	}
@@ -290,32 +290,32 @@ void IN_ActivateMouse (void)
 	mouseactive = qtrue;
 
 	if (mouseparmsvalid)
-		restore_spi = SystemParametersInfo (SPI_SETMOUSE, 0, newmouseparms, 0);
+		restore_spi = SystemParametersInfo(SPI_SETMOUSE, 0, newmouseparms, 0);
 
-	width = GetSystemMetrics (SM_CXSCREEN);
-	height = GetSystemMetrics (SM_CYSCREEN);
+	width = GetSystemMetrics(SM_CXSCREEN);
+	height = GetSystemMetrics(SM_CYSCREEN);
 
-	GetWindowRect ( cl_hwnd, &window_rect);
+	GetWindowRect(cl_hwnd, &window_rect);
 	if (window_rect.left < 0)
 		window_rect.left = 0;
 	if (window_rect.top < 0)
 		window_rect.top = 0;
 	if (window_rect.right >= width)
-		window_rect.right = width-1;
-	if (window_rect.bottom >= height-1)
-		window_rect.bottom = height-1;
+		window_rect.right = width - 1;
+	if (window_rect.bottom >= height - 1)
+		window_rect.bottom = height - 1;
 
-	window_center_x = (window_rect.right + window_rect.left)/2;
-	window_center_y = (window_rect.top + window_rect.bottom)/2;
+	window_center_x = (window_rect.right + window_rect.left) / 2;
+	window_center_y = (window_rect.top + window_rect.bottom) / 2;
 
-	SetCursorPos (window_center_x, window_center_y);
+	SetCursorPos(window_center_x, window_center_y);
 
 	old_x = window_center_x;
 	old_y = window_center_y;
 
-	if (vid_grabmouse->value) {
-		SetCapture (cl_hwnd);
-		ClipCursor (&window_rect);
+	if (vid_grabmouse->integer) {
+		SetCapture(cl_hwnd);
+		ClipCursor(&window_rect);
 	}
 	while (ShowCursor (FALSE) >= 0);
 }
@@ -332,15 +332,15 @@ void IN_DeactivateMouse (void)
 		return;
 
 	if (restore_spi)
-		SystemParametersInfo (SPI_SETMOUSE, 0, originalmouseparms, 0);
+		SystemParametersInfo(SPI_SETMOUSE, 0, originalmouseparms, 0);
 
 	mouseactive = qfalse;
 
-	if (vid_grabmouse->value) {
-		ClipCursor (NULL);
-		ReleaseCapture ();
+	if (vid_grabmouse->integer) {
+		ClipCursor(NULL);
+		ReleaseCapture();
 	}
-	while (ShowCursor (TRUE) < 0);
+	while (ShowCursor(TRUE) < 0);
 }
 
 
@@ -349,14 +349,8 @@ void IN_DeactivateMouse (void)
  */
 void IN_StartupMouse (void)
 {
-	cvar_t		*cv;
-
-	cv = Cvar_Get ("in_initmouse", "1", CVAR_NOSET, NULL);
-	if ( !cv->value )
-		return;
-
 	mouseinitialized = qtrue;
-	mouseparmsvalid = SystemParametersInfo (SPI_GETMOUSE, 0, originalmouseparms, 0);
+	mouseparmsvalid = SystemParametersInfo(SPI_GETMOUSE, 0, originalmouseparms, 0);
 	mouse_buttons = 3;
 }
 
@@ -365,27 +359,27 @@ void IN_StartupMouse (void)
  */
 void IN_MouseEvent (int mstate)
 {
-	int		i;
+	int i;
 
 	if (!mouseinitialized)
 		return;
 
 	/* perform button actions */
 	for (i = 0; i < mouse_buttons; i++) {
-		if ( (mstate & (1<<i)) && !(mouse_oldbuttonstate & (1<<i)) )
-			Key_Event (K_MOUSE1 + i, qtrue, sys_msg_time);
+		if ((mstate & (1<<i)) && !(mouse_oldbuttonstate & (1 << i)))
+			Key_Event(K_MOUSE1 + i, qtrue, sys_msg_time);
 
-		if ( !(mstate & (1<<i)) && (mouse_oldbuttonstate & (1<<i)) )
-				Key_Event (K_MOUSE1 + i, qfalse, sys_msg_time);
+		if (!(mstate & (1<<i)) && (mouse_oldbuttonstate & (1 << i)))
+			Key_Event(K_MOUSE1 + i, qfalse, sys_msg_time);
 	}
 
 	if (vid_grabmouse->modified) {
-		if (!vid_grabmouse->value) {
-			ClipCursor (NULL);
-			ReleaseCapture ();
+		if (!vid_grabmouse->integer) {
+			ClipCursor(NULL);
+			ReleaseCapture();
 		} else {
-			SetCapture (cl_hwnd);
-			ClipCursor (&window_rect);
+			SetCapture(cl_hwnd);
+			ClipCursor(&window_rect);
 		}
 		vid_grabmouse->modified = qfalse;
 	}
@@ -399,12 +393,12 @@ void IN_MouseEvent (int mstate)
  */
 void IN_GetMousePos (int *mx, int *my)
 {
-	if (!mouseactive || !GetCursorPos(&current_pos) ) {
+	if (!mouseactive || !GetCursorPos(&current_pos)) {
 		*mx = VID_NORM_WIDTH/2;
 		*my = VID_NORM_HEIGHT/2;
 	} else {
 		*mx = VID_NORM_WIDTH * (current_pos.x - window_rect.left) / (window_rect.right - window_rect.left);
-		*my = VID_NORM_HEIGHT * (current_pos.y - window_rect.top)  / (window_rect.bottom - window_rect.top);
+		*my = VID_NORM_HEIGHT * (current_pos.y - window_rect.top) / (window_rect.bottom - window_rect.top);
 	}
 }
 
@@ -415,23 +409,16 @@ VIEW CENTERING
 =========================================================================
 */
 
-cvar_t	*v_centermove;
-cvar_t	*v_centerspeed;
-
 /**
  * @brief
  */
 void IN_Init (void)
 {
 	/* mouse variables */
-	m_filter = Cvar_Get ("m_filter", "0", 0, NULL);
-	in_mouse = Cvar_Get ("in_mouse", "1", CVAR_ARCHIVE, NULL);
+	m_filter = Cvar_Get("m_filter", "0", 0, NULL);
+	in_mouse = Cvar_Get("in_mouse", "1", CVAR_ARCHIVE, NULL);
 
-	/* centering */
-	v_centermove = Cvar_Get ("v_centermove", "0.15", 0, NULL);
-	v_centerspeed = Cvar_Get ("v_centerspeed", "500", 0, NULL);
-
-	IN_StartupMouse ();
+	IN_StartupMouse();
 #ifdef NEWKBCODE
 	kbLayout = GetKeyboardLayout(0);
 #endif /* NEWKBCODE */
@@ -442,7 +429,7 @@ void IN_Init (void)
  */
 void IN_Shutdown (void)
 {
-	IN_DeactivateMouse ();
+	IN_DeactivateMouse();
 }
 
 
@@ -466,7 +453,7 @@ void IN_Frame (void)
 		return;
 
 	if (!in_mouse || !in_appactive) {
-		IN_DeactivateMouse ();
+		IN_DeactivateMouse();
 		return;
 	}
 
@@ -475,13 +462,13 @@ void IN_Frame (void)
 	if (!cl.refresh_prepped || cls.key_dest == key_console) {
 		/* temporarily deactivate if in fullscreen */
 		if (!Cvar_VariableInteger("vid_fullscreen")) {
-			IN_DeactivateMouse ();
+			IN_DeactivateMouse();
 			return;
 		}
 	}
 #endif
 
-	IN_ActivateMouse ();
+	IN_ActivateMouse();
 }
 
 /**

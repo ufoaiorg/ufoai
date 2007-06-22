@@ -1212,13 +1212,13 @@ static void CL_PingServers_f (void)
 	/* send a broadcast packet */
 	Com_DPrintf("pinging broadcast...\n");
 
-	if (!noudp->value) {
+	if (!noudp->integer) {
 		adr.type = NA_BROADCAST;
 		adr.port = htons(PORT_SERVER);
 		Netchan_OutOfBandPrint(NS_CLIENT, adr, "info %i", PROTOCOL_VERSION);
 	}
 
-	if (!noipx->value) {
+	if (!noipx->integer) {
 		adr.type = NA_BROADCAST_IPX;
 		adr.port = htons(PORT_SERVER);
 		Netchan_OutOfBandPrint(NS_CLIENT, adr, "info %i", PROTOCOL_VERSION);
@@ -2213,7 +2213,7 @@ static void CL_InitLocal (void)
 
 #ifdef ACTIVATE_PACKET_COMMAND
 	/* this is dangerous to leave in */
-	Cmd_AddCommand ("packet", CL_Packet_f, "Dangerous debug function for network testing");
+	Cmd_AddCommand("packet", CL_Packet_f, "Dangerous debug function for network testing");
 #endif
 
 	Cmd_AddCommand("env", CL_Env_f, NULL);

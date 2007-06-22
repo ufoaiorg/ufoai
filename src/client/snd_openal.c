@@ -79,8 +79,8 @@ qboolean SND_OAL_Init (char* device)
 	/* clear error code */
 	qalGetError();
 
-	snd_openal_device = Cvar_Get ("snd_openal_device", "", CVAR_ARCHIVE, "Device for openAL");
-	snd_openal_volume = Cvar_Get ("snd_openal_volume", "", CVAR_ARCHIVE, "Volume for openAL");
+	snd_openal_device = Cvar_Get("snd_openal_device", "", CVAR_ARCHIVE, "Device for openAL");
+	snd_openal_volume = Cvar_Get("snd_openal_volume", "", CVAR_ARCHIVE, "Volume for openAL");
 
 	if (qalutInit(0, NULL))
 		openal_alut = qtrue;
