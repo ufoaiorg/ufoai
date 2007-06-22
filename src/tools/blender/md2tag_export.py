@@ -7,11 +7,11 @@ Group: 'Export'
 Tooltip: 'Export to Quake2 tag file format for UFO:AI (.tag).'
 """
 
-__author__ = 'Werner Höhrer'
+__author__ = 'Werner Hoehrer'
 __version__ = '0.0.4'
 __url__ = ["UFO: Aline Invasion, http://ufoai.sourceforge.net",
      "Support forum, http://ufoai.ninex.info/phpBB2/index.php", "blender", "elysiun"]
-__email__ = ["Werner Höhrer, bill_spam2:yahoo*de", "scripts"]
+__email__ = ["Werner Hoehrer, bill_spam2:yahoo*de", "scripts"]
 __bpydoc__ = """\
 This script Exports a Quake 2 tag file as used in UFO:AI (MD2 TAG).
 
@@ -22,7 +22,7 @@ This file format equals the _parts_ of the MD3 format used for animated tags, bu
 
 # ***** BEGIN GPL LICENSE BLOCK *****
 #
-# Script copyright (C): Werner Höhrer
+# Script copyright (C): Werner Hoehrer
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -113,7 +113,7 @@ def get_euler(loc, X,Y,Z):
 	axisX = Vector(1.0, 0.0, 0.0)
 	axisY = Vector(0.0, 1.0, 0.0)
 	axisZ = Vector(0.0, 0.0, 1.0)
-	
+
 	objX = (X-loc).normalize()
 	objY = (Y-loc).normalize()
 	objZ = (Z-loc).normalize()
@@ -145,8 +145,8 @@ def get_euler(loc, X,Y,Z):
 
 	euler=Mathutils.Euler(
 		math.radians(rotX),
-		math.radians(rotY), 
-		math.radians(rotZ) 
+		math.radians(rotY),
+		math.radians(rotZ)
 		)
 
 	return euler
@@ -572,6 +572,9 @@ def save_md2_tags(filename):
 	# Set EOF offest value.
 	temp_tag = md2_tag();
 	md2_tags.offset_end = md2_tags.offset_tags + (temp_tag.getSize() * md2_tags.num_frames * md2_tags.num_tags)
+	# FIXME:
+	#md2_tags.offset_end         = offset_tags + (md2_tags.num_tags * md2_tags.num_frames * 48)
+	#md2_tags.offset_extract_end = offset_tags + (md2_tags.num_tags * md2_tags.num_frames * 64)
 	md2_tags.offset_extract_end=md2_tags.offset_end
 
 	print ""
