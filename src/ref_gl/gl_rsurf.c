@@ -99,7 +99,7 @@ extern void R_DrawTriangleOutlines (void)
 	int i, j;
 	glpoly_t *p;
 
-	if (!gl_showtris->value)
+	if (!gl_showtris->integer)
 		return;
 
 	qglDisable(GL_TEXTURE_2D);
@@ -159,6 +159,7 @@ static void DrawGLPolyChain (const msurface_t *surf, const float scroll)
 	float *v;
 	glpoly_t *p;
 
+	assert(surf->polys);
 	for (p = surf->polys; p; p = p->chain) {
 		v = p->verts[0];
 		qglBegin(GL_POLYGON);
@@ -210,10 +211,10 @@ static void R_BlendLightmaps (void)
 	 ** set the appropriate blending mode unless we're only looking at the
 	 ** lightmaps.
 	 */
-	if (!gl_lightmap->value) {
+	if (!gl_lightmap->integer) {
 		GLSTATE_ENABLE_BLEND
 
-		if (gl_saturatelighting->value)
+		if (gl_saturatelighting->integer)
 			qglBlendFunc(GL_ONE, GL_ONE);
 		else {
 			if (gl_monolightmap->string[0] != '0') {
@@ -245,7 +246,7 @@ static void R_BlendLightmaps (void)
 				c_visible_lightmaps++;
 			GL_Bind(gl_state.lightmap_textures + i);
 
-			for (surf = gl_lms.lightmap_surfaces[i]; surf != 0; surf = surf->lightmapchain) {
+			for (surf = gl_lms.lightmap_surfaces[i]; surf; surf = surf->lightmapchain) {
 				if (surf->polys)
 					DrawGLPolyChainOffset(surf->polys, 0, 0);
 			}
@@ -253,7 +254,7 @@ static void R_BlendLightmaps (void)
 	}
 
 	/* render dynamic lightmaps */
-	if (gl_dynamic->value) {
+	if (gl_dynamic->integer) {
 		LM_InitBlock();
 
 		GL_Bind(gl_state.lightmap_textures + 0);
@@ -263,7 +264,7 @@ static void R_BlendLightmaps (void)
 
 		newdrawsurf = gl_lms.lightmap_surfaces[0];
 
-		for (surf = gl_lms.lightmap_surfaces[0]; surf != 0; surf = surf->lightmapchain) {
+		for (surf = gl_lms.lightmap_surfaces[0]; surf; surf = surf->lightmapchain) {
 			int smax, tmax;
 			byte *base;
 
@@ -977,7 +978,7 @@ extern void GL_BuildPolygonFromSurface (msurface_t * fa, int shift[3])
 	VectorClear(total);
 
 	/* draw texture */
-	poly = Hunk_Alloc(sizeof(glpoly_t) + (lnumverts - 4) * VERTEXSIZE * sizeof(float), "GL_BuildPolygonFromSurface");
+	poly = ri.TagMalloc(ri.modelPool, sizeof(glpoly_t) + (lnumverts - 4) * VERTEXSIZE * sizeof(float), 0);
 	poly->next = fa->polys;
 	fa->polys = poly;
 	poly->numverts = lnumverts;

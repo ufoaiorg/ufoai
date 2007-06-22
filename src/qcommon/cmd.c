@@ -39,10 +39,10 @@ void Cmd_ForwardToServer(void);
 #define	MAX_ALIAS_NAME	32
 
 typedef struct cmd_alias_s {
-	struct cmd_alias_s *next;
 	char name[MAX_ALIAS_NAME];
-	struct cmd_alias_s *hash_next;
 	char *value;
+	struct cmd_alias_s *hash_next;
+	struct cmd_alias_s *next;
 } cmd_alias_t;
 
 static cmd_alias_t *cmd_alias;
@@ -433,6 +433,9 @@ static void Cmd_Alias_f (void)
 
 	s = Cmd_Argv(1);
 	len = strlen(s);
+	if (len == 0)
+		return;
+
 	if (len >= MAX_ALIAS_NAME) {
 		Com_Printf("Alias name is too long\n");
 		return;
@@ -448,7 +451,7 @@ static void Cmd_Alias_f (void)
 	}
 
 	if (!a) {
-		a = Mem_Alloc(sizeof(cmd_alias_t));
+		a = Mem_PoolAlloc(sizeof(cmd_alias_t), com_aliasSysPool, 0);
 		a->next = cmd_alias;
 		/* cmd_alias_hash should be null on the first run */
 		a->hash_next = cmd_alias_hash[hash];
@@ -467,7 +470,7 @@ static void Cmd_Alias_f (void)
 	}
 	Q_strcat(cmd, "\n", sizeof(cmd));
 
-	a->value = CopyString(cmd);
+	a->value = Mem_PoolStrDup(cmd, com_aliasSysPool, 0);
 }
 
 /*
@@ -759,7 +762,7 @@ extern void Cmd_AddCommand (const char *cmd_name, xcommand_t function, const cha
 		}
 	}
 
-	cmd = Mem_Alloc(sizeof(cmd_function_t));
+	cmd = Mem_PoolAlloc(sizeof(cmd_function_t), com_cmdSysPool, 0);
 	cmd->name = cmd_name;
 	cmd->description = desc;
 	cmd->function = function;
@@ -1026,9 +1029,9 @@ static int Cmd_CompleteExecCommand (const char *partial, const char **match)
 				if ((dirnames = FS_ListFiles(findname, &ndirs, 0, SFF_HIDDEN | SFF_SYSTEM)) != 0) {
 					for (i = 0; i < ndirs - 1; i++) {
 						Com_Printf("%s\n", COM_SkipPath(dirnames[i]));
-						free(dirnames[i]);
+						Mem_Free(dirnames[i]);
 					}
-					free(dirnames);
+					Mem_Free(dirnames);
 				}
 			}
 		}

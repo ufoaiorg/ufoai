@@ -32,67 +32,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /*=============================================================================== */
 
-byte *membase;
-int maxhunksize;
-int curhunksize;
-
-void *Hunk_Begin (int maxsize)
-{
-	/* reserve a huge chunk of memory, but don't commit any yet */
-	maxhunksize = maxsize;
-	curhunksize = 0;
-	membase = malloc(maxhunksize);
-	if (membase == NULL)
-		Sys_Error(ERR_FATAL, "unable to allocate %d bytes", maxsize);
-
-	return membase;
-}
-
-void *Hunk_Alloc (int size, const char *name)
-{
-	byte *buf;
-
-	if (!size)
-		return NULL;
-
-	/* round to cacheline */
-	size = (size + 31) & ~31;
-
-	Com_DPrintf("Hunk_Alloc: Allocate %8i / %8i bytes (used: %8i bytes): %s\n",
-		size, maxhunksize, curhunksize, name);
-
-	if (curhunksize + size > maxhunksize)
-		Sys_Error(ERR_FATAL, "Hunk_Alloc overflow");
-	buf = membase + curhunksize;
-	curhunksize += size;
-	return buf;
-}
-
-int Hunk_End (void)
-{
-	byte *n;
-
-	n = realloc(membase, curhunksize);
-	if (n != membase)
-		Sys_Error(ERR_FATAL, "Hunk_End:  Could not remap virtual block (%d)", errno);
-
-	return curhunksize;
-}
-
-void Hunk_Free (void *base)
-{
-	if (base)
-		free(base);
-}
-
-/*=============================================================================== */
-
-
-/*
-================
-Sys_Milliseconds
-================
-*/
+/**
+ * @brief
+ */
 int curtime;
 int Sys_Milliseconds (void)
 {
@@ -112,6 +54,9 @@ int Sys_Milliseconds (void)
 	return curtime;
 }
 
+/**
+ * @brief
+ */
 void Sys_Mkdir (const char *path)
 {
 	mkdir(path, 0777);

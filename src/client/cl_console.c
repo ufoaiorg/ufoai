@@ -79,15 +79,11 @@ void Con_ToggleConsole_f (void)
 
 	if (cls.key_dest == key_console) {
 		Key_SetDest(key_game);
-		if (maxclients == 1 && Com_ServerState())  /* unpause */
-			Cvar_Set("paused", "0");
 	} else {
 		Key_SetDest(key_console);
 		/* make sure that we end all input buffers when opening the console */
 		if (msg_mode == MSG_MENU)
 			Cbuf_AddText("msgmenu !\n");
-		if (maxclients == 1 && Com_ServerState())
-			Cvar_Set("paused", "1");
 	}
 }
 

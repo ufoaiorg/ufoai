@@ -2064,7 +2064,6 @@ void MN_DrawMenus (void)
 	int y, x, i;
 	message_t *message;
 	menuModel_t *menuModel = NULL, *menuModelParent = NULL;
-	void *oldAnimState = NULL;
 	int width, height;
 	const char* cond;
 
@@ -2660,10 +2659,10 @@ void MN_DrawMenus (void)
 								VectorCopy(node->angles, mi.angles);
 
 								/* get the animation given by menu node properties */
-								if (node->data[MN_DATA_ANIM_OR_FONT] && *(char *) node->data[MN_DATA_ANIM_OR_FONT])
+								if (node->data[MN_DATA_ANIM_OR_FONT] && *(char *) node->data[MN_DATA_ANIM_OR_FONT]) {
 									ref = MN_GetReferenceString(menu, node->data[MN_DATA_ANIM_OR_FONT]);
 								/* otherwise use the standard animation from modelmenu defintion */
-								else
+								} else
 									ref = menuModel->anim;
 
 								/* only base models have animations */
@@ -2731,20 +2730,14 @@ void MN_DrawMenus (void)
 								/* needed if model changed - and that model doesn't have the old animstate */
 								if (!node->data[MN_DATA_MODEL_TAG] && Q_strncmp(oldSource, source, MAX_VAR)) {
 									Q_strncpyz(oldSource, source, MAX_VAR);
-									oldAnimState = node->data[MN_DATA_MODEL_ANIMATION_STATE];
-									node->data[MN_DATA_MODEL_ANIMATION_STATE] = NULL;
+									/* model has changed but mem is already reserved in pool */
+									if (node->data[MN_DATA_MODEL_ANIMATION_STATE]) {
+										Mem_Free(node->data[MN_DATA_MODEL_ANIMATION_STATE]);
+										node->data[MN_DATA_MODEL_ANIMATION_STATE] = NULL;
+									}
 								}
 								if (!node->data[MN_DATA_MODEL_ANIMATION_STATE]) {
-									/* model has changed but mem is already reserved in curadata */
-									if (!oldAnimState) {
-										/* new anim state */
-										as = (animState_t *) curadata;
-										curadata += sizeof(animState_t);
-									} else {
-										as = oldAnimState;
-										oldAnimState = NULL;
-									}
-									memset(as, 0, sizeof(animState_t));
+									as = (animState_t *) Mem_PoolAlloc(sizeof(animState_t), cl_genericPool, CL_TAG_NONE);
 									re.AnimChange(as, mi.model, ref);
 									node->data[MN_DATA_MODEL_ANIMATION_STATE] = as;
 								} else {
@@ -3501,8 +3494,8 @@ void MN_ResetMenus (void)
 		/* @todo: should not be needed - this function is only called once - check this */
 		memset(adata, 0, adataize);
 	else {
-		/* 256kb */
-		adata = (byte*)malloc(0x40000);
+		/* 256kb - FIXME: Get rid of adata, curadata and adataize */
+		adata = (byte*)Mem_PoolAlloc(0x40000, cl_genericPool, CL_TAG_MENU);
 		adataize = 0x40000;
 	}
 	curadata = adata;
@@ -3536,7 +3529,7 @@ void MN_ResetMenus (void)
 void MN_Shutdown (void)
 {
 	if (adataize)
-		free(adata);
+		Mem_Free(adata);
 	adata = NULL;
 	adataize = 0;
 	MN_ShutdownChatMessageSystem();
@@ -4463,7 +4456,7 @@ message_t *MN_AddNewMessage (const char *title, const char *text, qboolean popup
 	assert(type < MSG_MAX);
 
 	/* allocate memory for new message */
-	mess = (message_t *) malloc(sizeof(message_t));
+	mess = (message_t *) Mem_PoolAlloc(sizeof(message_t), cl_genericPool, CL_TAG_NONE);
 
 	/* push the new message at the beginning of the stack */
 	mess->next = messageStack;
@@ -4479,8 +4472,7 @@ message_t *MN_AddNewMessage (const char *title, const char *text, qboolean popup
 	mess->s = (ccs.date.sec % 3600) / 60 / 60;
 
 	Q_strncpyz(mess->title, title, sizeof(mess->title));
-	mess->text = (char*)malloc(strlen(text) + 1);
-	Q_strncpyz(mess->text, text, strlen(text) + 1);
+	mess->text = Mem_PoolStrDup(text, cl_genericPool, CL_TAG_NONE);
 
 	/* they need to be translated already */
 	if (popup)
@@ -4540,8 +4532,8 @@ extern void MN_ShutdownMessageSystem (void)
 	while (m) {
 		d = m;
 		m = m->next;
-		free(d->text);
-		free(d);
+		Mem_Free(d->text);
+		Mem_Free(d);
 	}
 	messageStack = NULL;
 }
@@ -4558,8 +4550,8 @@ void MN_RemoveMessage (char *title)
 		if (!Q_strncmp(m->title, title, MAX_VAR)) {
 			if (prev)
 				prev->next = m->next;
-			free(m->text);
-			free(m);
+			Mem_Free(m->text);
+			Mem_Free(m);
 			return;
 		}
 		prev = m;
@@ -4592,16 +4584,15 @@ static menuNode_t* chatBufferNode = NULL;
 void MN_AddChatMessage (const char *text)
 {
 	/* allocate memory for new chat message */
-	chatMessage_t *chat = (chatMessage_t *) malloc(sizeof(chatMessage_t));
+	chatMessage_t *chat = (chatMessage_t *) Mem_PoolAlloc(sizeof(chatMessage_t), cl_genericPool, CL_TAG_NONE);
 
 	/* push the new chat message at the beginning of the stack */
 	chat->next = chatMessageStack;
 	chatMessageStack = chat;
-	chat->text = (char*)malloc(strlen(text) + 1);
-	Q_strncpyz(chat->text, text, strlen(text) + 1);
+	chat->text = Mem_PoolStrDup(text, cl_genericPool, CL_TAG_NONE);
 
 	if (!chatBuffer) {
-		chatBuffer = (char*)malloc(sizeof(char) * MAX_MESSAGE_TEXT);
+		chatBuffer = (char*)Mem_PoolAlloc(sizeof(char) * MAX_MESSAGE_TEXT, cl_genericPool, CL_TAG_NONE);
 		if (!chatBuffer) {
 			Com_Printf("Could not allocate chat buffer\n");
 			return;
@@ -4652,12 +4643,12 @@ static void MN_ShutdownChatMessageSystem (void)
 	while (m) {
 		d = m;
 		m = m->next;
-		free(d->text);
-		free(d);
+		Mem_Free(d->text);
+		Mem_Free(d);
 	}
 	chatMessageStack = NULL;
 	if (chatBuffer)
-		free(chatBuffer);
+		Mem_Free(chatBuffer);
 }
 
 /**

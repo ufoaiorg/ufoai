@@ -174,7 +174,7 @@ extern void GL_ScreenShot_f (void)
 	}
 
 	/* Allocate room for a copy of the framebuffer */
-	buffer = malloc(vid.width * vid.height * 3);
+	buffer = ri.TagMalloc(ri.imagePool, vid.width * vid.height * 3, 0);
 	if (!buffer) {
 		ri.Con_Printf(PRINT_ALL, "GL_ScreenShot_f: Could not allocate %i bytes for screenshot!\n", vid.width * vid.height * 3);
 		fclose(f);
@@ -201,7 +201,7 @@ extern void GL_ScreenShot_f (void)
 
 	/* Finish */
 	fclose(f);
-	free(buffer);
+	ri.TagFree(buffer);
 
 	ri.Con_Printf(PRINT_ALL, "Wrote %s\n", checkName);
 }

@@ -826,7 +826,7 @@ static void Irc_Client_CmdRplNamreply (const char *params, const char *trailing)
 	if (!chan)
 		return;
 
-	parseBuf = malloc((len+1) * sizeof(char));
+	parseBuf = Mem_PoolAlloc((len + 1) * sizeof(char), cl_ircSysPool, 0);
 	if (!parseBuf)
 		return;
 
@@ -846,7 +846,7 @@ static void Irc_Client_CmdRplNamreply (const char *params, const char *trailing)
 			pos = space + 1;
 	} while (space && *pos);
 
-	free(parseBuf);
+	Mem_Free(parseBuf);
 }
 
 /**
@@ -1371,7 +1371,7 @@ static void Irc_Logic_AddChannelName (irc_channel_t *channel, irc_nick_prefix_t 
 		if (!Q_strncmp(&(user->key[1]), nick, MAX_VAR-1))
 			return;
 	}
-	user = malloc(sizeof(irc_user_t));
+	user = Mem_PoolAlloc(sizeof(irc_user_t), cl_ircSysPool, 0);
 	user->next = channel->user;
 	channel->user = user;
 
@@ -1398,7 +1398,7 @@ static void Irc_Logic_RemoveChannelName (irc_channel_t *channel, const char *nic
 			/* point to the descendant */
 			else
 				predecessor = user->next;
-			free(user);
+			Mem_Free(user);
 			chan->users--;
 			Irc_Client_Names_f();
 			return;

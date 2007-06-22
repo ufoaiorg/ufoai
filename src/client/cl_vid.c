@@ -118,6 +118,47 @@ void VID_Init (void)
 	Cmd_AddCommand("vid_restart", VID_Restart_f, "Restart the video subsystem");
 	Sys_Vid_Init();
 
+	/* memory pools */
+	vid_genericPool = Mem_CreatePool("Vid: Generic");
+	vid_imagePool = Mem_CreatePool("Vid: Image system");
+	vid_lightPool = Mem_CreatePool("Vid: Light system");
+	vid_modelPool = Mem_CreatePool("Vid: Model system");
+
 	/* Start the graphics mode and load refresh DLL */
 	VID_CheckChanges();
+}
+
+
+/**
+ * @brief
+ */
+extern void *VID_TagAlloc (struct memPool_s **pool, int size, int tagNum)
+{
+	if (tagNum < 0)
+		tagNum *= -1;
+
+	assert(pool);
+	return _Mem_Alloc(size, qtrue, *pool, tagNum, "VID DLL", 0);
+}
+
+/**
+ * @brief
+ */
+extern void VID_MemFree (void *ptr)
+{
+	_Mem_Free(ptr, "VID DLL", -1);
+}
+
+
+/**
+ * @brief
+ */
+extern void VID_FreeTags (struct memPool_s **pool, int tagNum)
+{
+	assert(pool);
+	if (tagNum < 0)
+		tagNum *= -1;
+
+	assert(pool);
+	_Mem_FreeTag(*pool, tagNum, "VID DLL", 0);
 }

@@ -157,7 +157,7 @@ extern sfxcache_t *S_LoadSound (sfx_t * s)
 	}
 
 	len = len * info.width * info.channels;
-	sc = s->cache = Mem_Alloc(len + sizeof(sfxcache_t));
+	sc = s->cache = Mem_PoolAlloc(len + sizeof (sfxcache_t), cl_soundSysPool, 0);
 	if (!sc) {
 		FS_FreeFile(data);
 		return NULL;

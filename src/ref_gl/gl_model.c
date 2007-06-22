@@ -52,9 +52,7 @@ void Mod_Modellist_f (void)
 {
 	int i;
 	model_t *mod;
-	int total;
 
-	total = 0;
 	ri.Con_Printf(PRINT_ALL, "Loaded models:\n");
 	for (i = 0, mod = mod_known; i < mod_numknown; i++, mod++) {
 		if (!mod->name[0])
@@ -76,10 +74,8 @@ void Mod_Modellist_f (void)
 			ri.Con_Printf(PRINT_ALL, "%3i", mod->type);
 			break;
 		}
-		ri.Con_Printf(PRINT_ALL, " %8i : %s\n", mod->extraDataSize, mod->name);
-		total += mod->extraDataSize;
+		ri.Con_Printf(PRINT_ALL, " %s\n", mod->name);
 	}
-	ri.Con_Printf(PRINT_ALL, "Total resident: %i\n", total);
 }
 
 
@@ -146,18 +142,15 @@ static model_t *Mod_ForName (const char *name, qboolean crash)
 	switch (LittleLong(*(unsigned *) buf)) {
 	case IDALIASHEADER:
 		/* MD2 header */
-		loadmodel->extraData = Hunk_Begin(0x400000);
 		Mod_LoadAliasModel(mod, buf);
 		break;
 
 	case IDMD3HEADER:
 		/* MD3 header */
-		loadmodel->extraData = Hunk_Begin(0x800000);
 		Mod_LoadAliasMD3Model(mod, buf);
 		break;
 
 	case IDSPRITEHEADER:
-		loadmodel->extraData = Hunk_Begin(0x10000);
 		Mod_LoadSpriteModel(mod, buf);
 		break;
 
@@ -166,13 +159,10 @@ static model_t *Mod_ForName (const char *name, qboolean crash)
 		break;
 
 	default:
-		loadmodel->extraData = Hunk_Begin(0x400000);
 		if (!Mod_LoadOBJModel(mod, buf))
 			ri.Sys_Error(ERR_DROP, "Mod_ForName: unknown fileid for %s", mod->name);
 		break;
 	}
-
-	loadmodel->extraDataSize = Hunk_End();
 
 	ri.FS_FreeFile(buf);
 
@@ -197,11 +187,10 @@ static void Mod_LoadLighting (lump_t * l)
 		loadmodel->lightdata = NULL;
 		return;
 	}
-	loadmodel->lightdata = Hunk_Alloc(l->filelen, "Mod_LoadLighting");
+	loadmodel->lightdata = ri.TagMalloc(ri.lightPool, l->filelen, 0);
 	loadmodel->lightquant = *(byte *) (mod_base + l->fileofs);
 	memcpy(loadmodel->lightdata, mod_base + l->fileofs, l->filelen);
 }
-
 
 /**
  * @brief
@@ -216,7 +205,7 @@ static void Mod_LoadVertexes (lump_t * l)
 	if (l->filelen % sizeof(*in))
 		ri.Sys_Error(ERR_DROP, "Mod_LoadVertexes: funny lump size in %s", loadmodel->name);
 	count = l->filelen / sizeof(*in);
-	out = Hunk_Alloc(count * sizeof(*out), "Mod_LoadVertexes");
+	out = ri.TagMalloc(ri.modelPool, count * sizeof(*out), 0);
 	Com_Printf("...verts: %i\n", count);
 
 	loadmodel->vertexes = out;
@@ -258,7 +247,7 @@ static void Mod_LoadSubmodels (lump_t * l)
 	if (l->filelen % sizeof(*in))
 		ri.Sys_Error(ERR_DROP, "Mod_LoadSubmodels: funny lump size in %s", loadmodel->name);
 	count = l->filelen / sizeof(*in);
-	out = Hunk_Alloc(count * sizeof(*out), "Mod_LoadSubmodels");
+	out = ri.TagMalloc(ri.modelPool, count * sizeof(*out), 0);
 	Com_Printf("...submodels: %i\n", count);
 
 	loadmodel->submodels = out;
@@ -291,7 +280,7 @@ static void Mod_LoadEdges (lump_t * l)
 	if (l->filelen % sizeof(*in))
 		ri.Sys_Error(ERR_DROP, "Mod_LoadEdges: funny lump size in %s", loadmodel->name);
 	count = l->filelen / sizeof(*in);
-	out = Hunk_Alloc((count + 1) * sizeof(*out), "Mod_LoadEdges");
+	out = ri.TagMalloc(ri.modelPool, (count + 1) * sizeof(*out), 0);
 	Com_Printf("...edges: %i\n", count);
 
 	loadmodel->edges = out;
@@ -318,7 +307,7 @@ static void Mod_LoadTexinfo (lump_t * l)
 	if (l->filelen % sizeof(*in))
 		ri.Sys_Error(ERR_DROP, "Mod_LoadTexinfo: funny lump size in %s", loadmodel->name);
 	count = l->filelen / sizeof(*in);
-	out = Hunk_Alloc(count * sizeof(*out), "Mod_LoadTexinfo");
+	out = ri.TagMalloc(ri.modelPool, count * sizeof(*out), 0);
 	Com_Printf("...texinfo: %i\n", count);
 
 	loadmodel->texinfo = out;
@@ -421,7 +410,7 @@ static void Mod_LoadFaces (lump_t * l)
 	if (l->filelen % sizeof(*in))
 		ri.Sys_Error(ERR_DROP, "Mod_LoadFaces: funny lump size in %s", loadmodel->name);
 	count = l->filelen / sizeof(*in);
-	out = Hunk_Alloc(count * sizeof(*out), "Mod_LoadFaces");
+	out = ri.TagMalloc(ri.modelPool, count * sizeof(*out), 0);
 	Com_Printf("...faces: %i\n", count);
 
 	loadmodel->surfaces = out;
@@ -505,7 +494,7 @@ static void Mod_LoadNodes (lump_t * l)
 	if (l->filelen % sizeof(*in))
 		ri.Sys_Error(ERR_DROP, "Mod_LoadNodes: funny lump size in %s", loadmodel->name);
 	count = l->filelen / sizeof(*in);
-	out = Hunk_Alloc(count * sizeof(*out), "Mod_LoadNodes");
+	out = ri.TagMalloc(ri.modelPool, count * sizeof(*out), 0);
 	Com_Printf("...nodes: %i\n", count);
 
 	loadmodel->nodes = out;
@@ -556,7 +545,7 @@ static void Mod_LoadLeafs (lump_t * l)
 	if (l->filelen % sizeof(*in))
 		ri.Sys_Error(ERR_DROP, "Mod_LoadLeafs: funny lump size in %s", loadmodel->name);
 	count = l->filelen / sizeof(*in);
-	out = Hunk_Alloc(count * sizeof(*out), "Mod_LoadLeafs");
+	out = ri.TagMalloc(ri.modelPool, count * sizeof(*out), 0);
 	Com_Printf("...leafs: %i\n", count);
 
 	loadmodel->leafs = out;
@@ -592,7 +581,7 @@ static void Mod_LoadMarksurfaces (lump_t * l)
 	if (l->filelen % sizeof(*in))
 		ri.Sys_Error(ERR_DROP, "Mod_LoadMarksurfaces: funny lump size in %s", loadmodel->name);
 	count = l->filelen / sizeof(*in);
-	out = Hunk_Alloc(count * sizeof(*out), "Mod_LoadMarksurfaces");
+	out = ri.TagMalloc(ri.modelPool, count * sizeof(*out), 0);
 	Com_Printf("...marksurfaces: %i\n", count);
 
 	loadmodel->marksurfaces = out;
@@ -621,7 +610,7 @@ static void Mod_LoadSurfedges (lump_t * l)
 	if (count < 1 || count >= MAX_MAP_SURFEDGES)
 		ri.Sys_Error(ERR_DROP, "Mod_LoadSurfedges: bad surfedges count in %s: %i", loadmodel->name, count);
 
-	out = Hunk_Alloc(count * sizeof(*out), "Mod_LoadSurfedges");
+	out = ri.TagMalloc(ri.modelPool, count * sizeof(*out), 0);
 	Com_Printf("...surface edges: %i\n", count);
 
 	loadmodel->surfedges = out;
@@ -647,7 +636,7 @@ static void Mod_LoadPlanes (lump_t * l)
 	if (l->filelen % sizeof(*in))
 		ri.Sys_Error(ERR_DROP, "Mod_LoadPlanes: funny lump size in %s", loadmodel->name);
 	count = l->filelen / sizeof(*in);
-	out = Hunk_Alloc(count * 2 * sizeof(*out), "Mod_LoadPlanes");
+	out = ri.TagMalloc(ri.modelPool, count * 2 * sizeof(*out), 0);
 	Com_Printf("...planes: %i\n", count);
 
 	loadmodel->planes = out;
@@ -727,7 +716,6 @@ static void R_AddMapTile (const char *name, int sX, int sY, int sZ)
 
 	/* init */
 	loadmodel->registration_sequence = registration_sequence;
-	loadmodel->extraData = Hunk_Begin(0x1500000);
 	loadmodel->type = mod_brush;
 
 	/* prepare shifting */
@@ -760,8 +748,6 @@ static void R_AddMapTile (const char *name, int sX, int sY, int sZ)
 	Mod_LoadSubmodels(&header->lumps[LUMP_MODELS]);
 	/* regular and alternate animation */
 	loadmodel->numframes = 2;
-
-	loadmodel->extraDataSize = Hunk_End();
 
 	/* set up the submodels, the first 255 submodels */
 	/* are the models of the different levels, don't */
@@ -815,7 +801,7 @@ static void Mod_LoadTags (model_t * mod, void *buffer)
 		ri.Sys_Error(ERR_DROP, "%s has wrong version number (%i should be %i)", mod->tagname, version, TAG_VERSION);
 
 	size = LittleLong(pintag->ofs_extractend);
-	mod->tagdata = Hunk_Alloc(size, "Mod_LoadTags");
+	mod->tagdata = ri.TagMalloc(ri.modelPool, size, 0);
 	pheader = mod->tagdata;
 
 	/* byte swap the header fields and sanity check */
@@ -865,7 +851,7 @@ static void Mod_LoadAnims (model_t * mod, void *buffer)
 	if (n > MAX_ANIMS)
 		n = MAX_ANIMS;
 
-	mod->animdata = Hunk_Alloc(n * sizeof(manim_t), "Mod_LoadAnims");
+	mod->animdata = (manim_t*) ri.TagMalloc(ri.modelPool, n * sizeof(manim_t), 0);
 	anim = mod->animdata;
 	text = buffer;
 	mod->numanims = 0;
@@ -899,8 +885,7 @@ static void Mod_LoadAnims (model_t * mod, void *buffer)
 		mod->numanims++;
 		anim++;
 	} while (mod->numanims < MAX_ANIMS);
-
-/*	ri.Con_Printf(PRINT_ALL, "anims: %i\n", mod->numanims); */
+/*	ri.Con_Printf(PRINT_ALL, "anims: %i for model %s\n", mod->numanims, mod->name); */
 }
 
 /**
@@ -978,25 +963,25 @@ static void Mod_LoadAliasModel (model_t * mod, void *buffer)
 {
 	int i, j;
 	size_t l;
-	dmdl_t *pinmodel, *pheader;
+	mdl_md2_t *pinmodel, *pheader;
 	dstvert_t *pinst, *poutst;
 	dtriangle_t *pintri, *pouttri;
 	daliasframe_t *pinframe, *poutframe;
 	int *pincmd, *poutcmd;
 	int version;
 
-	byte *tagbuf, *animbuf;
+	byte *tagbuf = NULL, *animbuf = NULL;
 
-	pinmodel = (dmdl_t *) buffer;
+	pinmodel = (mdl_md2_t *) buffer;
 
 	version = LittleLong(pinmodel->version);
 	if (version != ALIAS_VERSION)
 		ri.Sys_Error(ERR_DROP, "%s has wrong version number (%i should be %i)", mod->name, version, ALIAS_VERSION);
 
-	pheader = Hunk_Alloc(LittleLong(pinmodel->ofs_end), mod->name);
+	pheader = ri.TagMalloc(ri.modelPool, LittleLong(pinmodel->ofs_end), 0);
 
 	/* byte swap the header fields and sanity check */
-	for (i = 0; i < (int)sizeof(dmdl_t) / 4; i++)
+	for (i = 0; i < (int)sizeof(mdl_md2_t) / 4; i++) /* FIXME */
 		((int *) pheader)[i] = LittleLong(((int *) buffer)[i]);
 
 	if (pheader->skinheight > MAX_LBM_HEIGHT)
@@ -1062,12 +1047,12 @@ static void Mod_LoadAliasModel (model_t * mod, void *buffer)
 	/* copy skin names */
 	memcpy((char *) pheader + pheader->ofs_skins, (char *) pinmodel + pheader->ofs_skins, pheader->num_skins * MAX_SKINNAME);
 
-	mod->mins[0] = -32;
-	mod->mins[1] = -32;
-	mod->mins[2] = -32;
-	mod->maxs[0] = 32;
-	mod->maxs[1] = 32;
-	mod->maxs[2] = 32;
+	mod->mins[0] = -UNIT_SIZE;
+	mod->mins[1] = -UNIT_SIZE;
+	mod->mins[2] = -UNIT_SIZE;
+	mod->maxs[0] = UNIT_SIZE;
+	mod->maxs[1] = UNIT_SIZE;
+	mod->maxs[2] = UNIT_SIZE;
 
 	/* load the tags */
 	Q_strncpyz(mod->tagname, mod->name, sizeof(mod->tagname));
@@ -1097,8 +1082,9 @@ static void Mod_LoadAliasModel (model_t * mod, void *buffer)
 	}
 
 	/* find neighbours */
-	mod->neighbors = Hunk_Alloc(pheader->num_tris * sizeof(neighbors_t), "Model neighbors");
+	mod->neighbors = ri.TagMalloc(ri.modelPool, pheader->num_tris * sizeof(neighbors_t), 0);
 	Mod_BuildTriangleNeighbors(mod->neighbors, pouttri, pheader->num_tris);
+	mod->extraData = pheader;
 }
 
 /*
@@ -1140,7 +1126,7 @@ static void Mod_LoadAliasMD3Model (model_t *mod, void *buffer)
 				mod->name, version, MD3_ALIAS_VERSION);
 	}
 
-	poutmodel = Hunk_Alloc(sizeof(maliasmodel_t), mod->name);
+	poutmodel = ri.TagMalloc(ri.modelPool, sizeof(maliasmodel_t), 0);
 
 	/* byte swap the header fields and sanity check */
 	poutmodel->num_frames = LittleLong(pinmodel->num_frames);
@@ -1165,7 +1151,7 @@ static void Mod_LoadAliasMD3Model (model_t *mod, void *buffer)
 
 	/* load the frames */
 	pinframe = (dmd3frame_t *)((byte *)pinmodel + LittleLong(pinmodel->ofs_frames));
-	poutframe = poutmodel->frames = Hunk_Alloc(sizeof(maliasframe_t) * poutmodel->num_frames, "Model frames");
+	poutframe = poutmodel->frames = ri.TagMalloc(ri.modelPool, sizeof(maliasframe_t) * poutmodel->num_frames, 0);
 
 	mod->radius = 0;
 	ClearBounds(mod->mins, mod->maxs);
@@ -1187,7 +1173,7 @@ static void Mod_LoadAliasMD3Model (model_t *mod, void *buffer)
 
 	/* load the tags */
 	pintag = (dmd3tag_t *)((byte *)pinmodel + LittleLong(pinmodel->ofs_tags));
-	pouttag = poutmodel->tags = Hunk_Alloc(sizeof(maliastag_t) * poutmodel->num_frames * poutmodel->num_tags, "Model tags");
+	pouttag = poutmodel->tags = ri.TagMalloc(ri.modelPool, sizeof(maliastag_t) * poutmodel->num_frames * poutmodel->num_tags, 0);
 
 	for (i = 0; i < poutmodel->num_frames; i++) {
 		for (l = 0; l < poutmodel->num_tags; l++, pintag++, pouttag++) {
@@ -1204,7 +1190,7 @@ static void Mod_LoadAliasMD3Model (model_t *mod, void *buffer)
 
 	/* load the meshes */
 	pinmesh = (dmd3mesh_t *)((byte *)pinmodel + LittleLong(pinmodel->ofs_meshes));
-	poutmesh = poutmodel->meshes = Hunk_Alloc(sizeof(maliasmesh_t)*poutmodel->num_meshes, "Model meshes");
+	poutmesh = poutmodel->meshes = ri.TagMalloc(ri.modelPool, sizeof(maliasmesh_t) * poutmodel->num_meshes, 0);
 
 	for (i = 0; i < poutmodel->num_meshes; i++, poutmesh++) {
 		memcpy(poutmesh->name, pinmesh->name, MD3_MAX_PATH);
@@ -1235,7 +1221,7 @@ static void Mod_LoadAliasMD3Model (model_t *mod, void *buffer)
 
 		/* register all skins */
 		pinskin = (dmd3skin_t *)((byte *)pinmesh + LittleLong(pinmesh->ofs_skins));
-		poutskin = poutmesh->skins = Hunk_Alloc(sizeof(maliasskin_t) * poutmesh->num_skins, "Model skins");
+		poutskin = poutmesh->skins = ri.TagMalloc(ri.modelPool, sizeof(maliasskin_t) * poutmesh->num_skins, 0);
 
 		for (j = 0; j < poutmesh->num_skins; j++, pinskin++, poutskin++) {
 			memcpy(name, pinskin->name, MD3_MAX_PATH);
@@ -1250,7 +1236,7 @@ static void Mod_LoadAliasMD3Model (model_t *mod, void *buffer)
 
 		/* load the indexes */
 		pinindex = (index_t *)((byte *)pinmesh + LittleLong(pinmesh->ofs_tris));
-		poutindex = poutmesh->indexes = Hunk_Alloc(sizeof(index_t) * poutmesh->num_tris * 3, "Model tris");
+		poutindex = poutmesh->indexes = ri.TagMalloc(ri.modelPool, sizeof(index_t) * poutmesh->num_tris * 3, 0);
 
 		for (j = 0; j < poutmesh->num_tris; j++, pinindex += 3, poutindex += 3) {
 			poutindex[0] = (index_t)LittleLong(pinindex[0]);
@@ -1260,7 +1246,7 @@ static void Mod_LoadAliasMD3Model (model_t *mod, void *buffer)
 
 		/* load the texture coordinates */
 		pincoord = (dmd3coord_t *)((byte *)pinmesh + LittleLong (pinmesh->ofs_tcs));
-		poutcoord = poutmesh->stcoords = Hunk_Alloc(sizeof(maliascoord_t) * poutmesh->num_verts, "Model coords");
+		poutcoord = poutmesh->stcoords = ri.TagMalloc(ri.modelPool, sizeof(maliascoord_t) * poutmesh->num_verts, 0);
 
 		for (j = 0; j < poutmesh->num_verts; j++, pincoord++, poutcoord++) {
 			poutcoord->st[0] = LittleFloat(pincoord->st[0]);
@@ -1269,7 +1255,7 @@ static void Mod_LoadAliasMD3Model (model_t *mod, void *buffer)
 
 		/* load the vertexes and normals */
 		pinvert = (dmd3vertex_t *)((byte *)pinmesh + LittleLong(pinmesh->ofs_verts));
-		poutvert = poutmesh->vertexes = Hunk_Alloc(poutmodel->num_frames * poutmesh->num_verts * sizeof(maliasvertex_t), "Model verts");
+		poutvert = poutmesh->vertexes = ri.TagMalloc(ri.modelPool, poutmodel->num_frames * poutmesh->num_verts * sizeof(maliasvertex_t), 0);
 
 		for (l = 0; l < poutmodel->num_frames; l++) {
 			for (j = 0; j < poutmesh->num_verts; j++, pinvert++, poutvert++) {
@@ -1291,11 +1277,12 @@ static void Mod_LoadAliasMD3Model (model_t *mod, void *buffer)
 		pinmesh = (dmd3mesh_t *)((byte *)pinmesh + LittleLong(pinmesh->meshsize));
 
 		/* find neighbours */
-		poutmesh->trneighbors = Hunk_Alloc(sizeof(int) * poutmesh->num_tris * 3, "Model neighbors");
+		poutmesh->trneighbors = ri.TagMalloc(ri.modelPool, sizeof(int) * poutmesh->num_tris * 3, 0);
 		/* FIXME */
 		/*Mod_BuildTriangleNeighbors(poutmesh->trneighbors, poutmesh->indexes, poutmesh->num_tris);*/
 	}
 	mod->type = mod_alias_md3;
+	mod->extraData = poutmodel;
 }
 
 
@@ -1314,7 +1301,7 @@ static void Mod_LoadSpriteModel (model_t * mod, void *buffer)
 	int i;
 
 	sprin = (dsprite_t *) buffer;
-	sprout = Hunk_Alloc(modfilelen, mod->name);
+	sprout = ri.TagMalloc(ri.modelPool, modfilelen, 0);
 
 	sprout->ident = LittleLong(sprin->ident);
 	sprout->version = LittleLong(sprin->version);
@@ -1336,6 +1323,7 @@ static void Mod_LoadSpriteModel (model_t * mod, void *buffer)
 		mod->skins[i] = GL_FindImage(sprout->frames[i].name, it_sprite);
 	}
 
+	mod->extraData = sprout;
 	mod->type = mod_sprite;
 }
 
@@ -1414,7 +1402,7 @@ void GL_BeginLoading (char *tiles, char *pos)
 /**
  * @brief
  */
-static signed int Mod_GetTris (short p1, short p2, dtriangle_t * side1, dmdl_t * hdr)
+static signed int Mod_GetTris (short p1, short p2, dtriangle_t * side1, mdl_md2_t * hdr)
 {
 	dtriangle_t *tris = (dtriangle_t *) ((unsigned char *) hdr + hdr->ofs_tris);
 	int i;
@@ -1442,12 +1430,12 @@ static signed int Mod_GetTris (short p1, short p2, dtriangle_t * side1, dmdl_t *
  */
 static void Mod_FindSharedEdges (model_t * mod)
 {
-	dmdl_t *hdr;
+	mdl_md2_t *hdr;
 	dtriangle_t *tris;
 	int i, o;
 
 	assert(mod->type == mod_alias_md2);
-	hdr = (dmdl_t *) mod->extraData;
+	hdr = (mdl_md2_t *) mod->extraData;
 	tris = (dtriangle_t *) ((unsigned char *) hdr + hdr->ofs_tris);
 
 	mod->noshadow = qfalse;
@@ -1476,7 +1464,7 @@ struct model_s *R_RegisterModel (const char *name)
 	model_t *mod;
 	int i;
 	dsprite_t *sprout;
-	dmdl_t *pheader;
+	mdl_md2_t *pheader;
 	maliasmodel_t *pheader3;
 
 	mod = Mod_ForName(name, qfalse);
@@ -1493,7 +1481,7 @@ struct model_s *R_RegisterModel (const char *name)
 			char path[MAX_QPATH];
 			char *skin, *slash, *end;
 
-			pheader = (dmdl_t *) mod->extraData;
+			pheader = (mdl_md2_t *) mod->extraData;
 			for (i = 0; i < pheader->num_skins; i++) {
 				skin = (char *) pheader + pheader->ofs_skins + i * MAX_SKINNAME;
 				if (skin[0] != '.')
@@ -1587,8 +1575,8 @@ struct model_s *R_RegisterModelShort (const char *name)
  */
 static void Mod_Free (model_t * mod)
 {
-	if (mod->extraDataSize)
-		Hunk_Free(mod->extraData);
+	if (mod->extraData)
+		ri.TagFree(mod->extraData);
 
 	memset(mod, 0, sizeof(*mod));
 }
@@ -1619,12 +1607,7 @@ void GL_EndLoading (void)
  */
 void Mod_FreeAll (void)
 {
-	int i;
-
-	for (i = 0; i < mod_numknown; i++) {
-		if (mod_known[i].extraDataSize)
-			Mod_Free(&mod_known[i]);
-	}
+	GL_ShutdownModels();
 	mod_numknown = 0;
 }
 
@@ -1634,29 +1617,29 @@ void Mod_FreeAll (void)
  */
 void Mod_DrawModelBBox (vec4_t bbox[8], entity_t *e)
 {
-	if (!gl_showbox->value)
+	if (!gl_showbox->integer)
 		return;
 
-	qglDisable (GL_CULL_FACE);
-	qglPolygonMode (GL_FRONT_AND_BACK, GL_LINE);
+	qglDisable(GL_CULL_FACE);
+	qglPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	/* Draw top and sides */
 	qglBegin(GL_TRIANGLE_STRIP);
-	qglVertex3fv( bbox[2] );
-	qglVertex3fv( bbox[1] );
-	qglVertex3fv( bbox[0] );
-	qglVertex3fv( bbox[1] );
-	qglVertex3fv( bbox[4] );
-	qglVertex3fv( bbox[5] );
-	qglVertex3fv( bbox[1] );
-	qglVertex3fv( bbox[7] );
-	qglVertex3fv( bbox[3] );
-	qglVertex3fv( bbox[2] );
-	qglVertex3fv( bbox[7] );
-	qglVertex3fv( bbox[6] );
-	qglVertex3fv( bbox[2] );
-	qglVertex3fv( bbox[4] );
-	qglVertex3fv( bbox[0] );
+	qglVertex3fv(bbox[2] );
+	qglVertex3fv(bbox[1]);
+	qglVertex3fv(bbox[0]);
+	qglVertex3fv(bbox[1]);
+	qglVertex3fv(bbox[4]);
+	qglVertex3fv(bbox[5]);
+	qglVertex3fv(bbox[1]);
+	qglVertex3fv(bbox[7]);
+	qglVertex3fv(bbox[3]);
+	qglVertex3fv(bbox[2]);
+	qglVertex3fv(bbox[7]);
+	qglVertex3fv(bbox[6]);
+	qglVertex3fv(bbox[2]);
+	qglVertex3fv(bbox[4]);
+	qglVertex3fv(bbox[0]);
 	qglEnd();
 
   	/* Draw bottom */
@@ -1666,6 +1649,15 @@ void Mod_DrawModelBBox (vec4_t bbox[8], entity_t *e)
 	qglVertex3fv(bbox[7]);
 	qglEnd();
 
-	qglPolygonMode (GL_FRONT_AND_BACK, GL_FILL);
-	qglEnable (GL_CULL_FACE);
+	qglPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	qglEnable(GL_CULL_FACE);
+}
+
+/**
+ * @brief Frees the model pool
+ */
+extern void GL_ShutdownModels (void)
+{
+	ri.FreeTags(ri.modelPool, 0);
+	ri.FreeTags(ri.lightPool, 0);
 }

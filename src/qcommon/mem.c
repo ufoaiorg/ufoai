@@ -28,109 +28,596 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "qcommon.h"
 
-#define	Z_MAGIC		0x1d1d
+#define MEM_HEAD_SENTINEL_TOP	0xFEBDFAED
+#define MEM_HEAD_SENTINEL_BOT	0xD0BAF0FF
+#define MEM_FOOT_SENTINEL		0xF00DF00D
 
-typedef struct zhead_s {
-	struct zhead_s *prev, *next;
-	short magic;
-	short tag;					/* for group free */
-	size_t size;
-} zhead_t;
+typedef struct memBlockFoot_s {
+	uint32_t sentinel;				/**< For memory integrity checking */
+} memBlockFoot_t;
 
-zhead_t z_chain;
-int z_count, z_bytes;
+typedef struct memBlock_s {
+	struct memBlock_s *next;
 
-/**
- * @brief Frees a Mem_Alloc'ed pointer
- */
-extern void Mem_Free (void *ptr)
-{
-	zhead_t *z;
+	uint32_t topSentinel;			/**< For memory integrity checking */
 
-	if (!ptr)
-		return;
+	struct memPool_s *pool;			/**< Owner pool */
+	int tagNum;						/**< For group free */
+	size_t size;					/**< Size of allocation including this header */
 
-	z = ((zhead_t *) ptr) - 1;
+	const char *allocFile;			/**< File the memory was allocated in */
+	int allocLine;					/**< Line the memory was allocated at */
 
-	if (z->magic != Z_MAGIC)
-		Com_Error(ERR_FATAL, "Mem_Free: bad magic (%i)", z->magic);
+	void *memPointer;				/**< pointer to allocated memory */
+	size_t memSize;					/**< Size minus the header */
 
-	z->prev->next = z->next;
-	z->next->prev = z->prev;
+	memBlockFoot_t *footer;			/**< Allocated in the space AFTER the block to check for overflow */
 
-	z_count--;
-	z_bytes -= z->size;
-	free(z);
-}
+	uint32_t botSentinel;			/**< For memory integrity checking */
+} memBlock_t;
 
+#define MEM_MAX_POOLCOUNT	32
+#define MEM_MAX_POOLNAME	64
 
-/**
- * @brief Stats about the allocated bytes via Mem_Alloc
- */
-static void Mem_Stats_f (void)
-{
-	Com_Printf("%i bytes in %i blocks\n", z_bytes, z_count);
-}
+typedef struct memPool_s {
+	char name[MEM_MAX_POOLNAME];	/**< Name of pool */
+	qboolean inUse;					/**< Slot in use? */
 
-/**
- * @brief Frees a memory block with a given tag
- */
-extern void Mem_FreeTags (int tag)
-{
-	zhead_t *z, *next;
+	memBlock_t *blocks;				/**< Allocated blocks */
 
-	for (z = z_chain.next; z != &z_chain; z = next) {
-		next = z->next;
-		if (z->tag == tag)
-			Mem_Free((void *) (z + 1));
-	}
-}
+	uint32_t blockCount;			/**< Total allocated blocks */
+	uint32_t byteCount;				/**< Total allocated bytes */
 
-/**
- * @brief Allocates a memory block with a given tag
- *
- * and fills with 0
- */
-extern void *Mem_TagMalloc (size_t size, int tag)
-{
-	zhead_t *z;
+	const char *createFile;			/**< File this pool was created on */
+	int createLine;					/**< Line this pool was created on */
+} memPool_t;
 
-	size = size + sizeof(zhead_t);
-	z = malloc(size);
-	if (!z)
-		Com_Error(ERR_FATAL, "Mem_TagMalloc: failed on allocation of "UFO_SIZE_T" bytes", size);
-	memset(z, 0, size);
-	z_count++;
-	z_bytes += size;
-	z->magic = Z_MAGIC;
-	z->tag = tag;
-	z->size = size;
+static memPool_t m_poolList[MEM_MAX_POOLCOUNT];
+static uint32_t m_numPools;
 
-	z->next = z_chain.next;
-	z->prev = &z_chain;
-	z_chain.next->prev = z;
-	z_chain.next = z;
+memPool_t *m_genericPool;
 
-	return (void *) (z + 1);
-}
-
-/**
- * @brief Allocate a memory block with default tag
- *
- * and fills with 0
- */
-extern void *Mem_Alloc (size_t size)
-{
-	return Mem_TagMalloc(size, 0);
-}
+/*==============================================================================
+POOL MANAGEMENT
+==============================================================================*/
 
 /**
  * @brief
- * @sa Qcommon_Init
  */
-extern void Mem_RegisterCommands (void)
+static memPool_t *Mem_FindPool (const char *name)
 {
-	Cmd_AddCommand("mem_stats", Mem_Stats_f, "Stats about the allocated bytes via Mem_Alloc");
+	memPool_t *pool;
+	uint32_t i;
+
+	for (i = 0, pool = &m_poolList[0]; i < m_numPools; pool++, i++) {
+		if (!pool->inUse)
+			continue;
+		if (Q_strcmp(name, pool->name))
+			continue;
+
+		return pool;
+	}
+
+	return NULL;
+}
+
+
+/**
+ * @brief
+ */
+memPool_t *_Mem_CreatePool (const char *name, const char *fileName, const int fileLine)
+{
+	memPool_t *pool;
+	uint32_t i;
+
+	/* Check name */
+	if (!name || !name[0])
+		Com_Error(ERR_FATAL, "Mem_CreatePool: NULL name %s:#%i", fileName, fileLine);
+	if (strlen(name) + 1 >= MEM_MAX_POOLNAME)
+		Com_Printf("Mem_CreatePoole: name '%s' too long, truncating!\n", name);
+
+	/* See if it already exists */
+	pool = Mem_FindPool(name);
+	if (pool)
+		return pool;
+
+	/* Nope, create a slot */
+	for (i = 0, pool = &m_poolList[0]; i < m_numPools; pool++, i++) {
+		if (!pool->inUse)
+			break;
+	}
+	if (i == m_numPools) {
+		if (m_numPools + 1 >= MEM_MAX_POOLCOUNT)
+			Com_Error(ERR_FATAL, "Mem_CreatePool: MEM_MAX_POOLCOUNT");
+		pool = &m_poolList[m_numPools++];
+	}
+
+	/* Store values */
+	pool->blocks = NULL;
+	pool->blockCount = 0;
+	pool->byteCount = 0;
+	pool->createFile = fileName;
+	pool->createLine = fileLine;
+	pool->inUse = qtrue;
+	Q_strncpyz(pool->name, name, sizeof (pool->name));
+	return pool;
+}
+
+
+/**
+ * @brief
+ */
+uint32_t _Mem_DeletePool (struct memPool_s *pool, const char *fileName, const int fileLine)
+{
+	uint32_t size;
+
+	if (!pool)
+		return 0;
+
+	/* Release all allocated memory */
+	size = _Mem_FreePool(pool, fileName, fileLine);
+
+	/* Simple, yes? */
+	pool->inUse = qfalse;
+	pool->name[0] = '\0';
+
+	return size;
+}
+
+
+/*==============================================================================
+POOL AND TAG MEMORY ALLOCATION
+==============================================================================*/
+
+/**
+ * @brief
+ */
+uint32_t _Mem_Free (void *ptr, const char *fileName, const int fileLine)
+{
+	memBlock_t *mem;
+	memBlock_t *search;
+	memBlock_t **prev;
+	uint32_t size;
+
+	assert(ptr);
+	if (!ptr)
+		return 0;
+
+	/* Check sentinels */
+	mem = (memBlock_t *)((byte *)ptr - sizeof (memBlock_t));
+	if (mem->topSentinel != MEM_HEAD_SENTINEL_TOP) {
+		Com_Error(ERR_FATAL,
+			"Mem_Free: bad memory header top sentinel [buffer underflow]\n"
+			"free: %s:#%i",
+			fileName, fileLine);
+	} else if (mem->botSentinel != MEM_HEAD_SENTINEL_BOT) {
+		Com_Error(ERR_FATAL,
+			"Mem_Free: bad memory header bottom sentinel [buffer underflow]\n"
+			"free: %s:#%i",
+			fileName, fileLine);
+	} else if (!mem->footer) {
+		Com_Error(ERR_FATAL,
+			"Mem_Free: bad memory footer [buffer overflow]\n"
+			"pool: %s\n"
+			"alloc: %s:#%i\n"
+			"free: %s:#%i",
+			mem->pool ? mem->pool->name : "UNKNOWN", mem->allocFile, mem->allocLine, fileName, fileLine);
+	} else if (mem->footer->sentinel != MEM_FOOT_SENTINEL) {
+		Com_Error(ERR_FATAL,
+			"Mem_Free: bad memory footer sentinel [buffer overflow]\n"
+			"pool: %s\n"
+			"alloc: %s:#%i\n"
+			"free: %s:#%i",
+			mem->pool ? mem->pool->name : "UNKNOWN", mem->allocFile, mem->allocLine, fileName, fileLine);
+	}
+
+	/* Decrement counters */
+	mem->pool->blockCount--;
+	mem->pool->byteCount -= mem->size;
+	size = mem->size;
+
+	/* De-link it */
+	prev = &mem->pool->blocks;
+	for (;;) {
+		search = *prev;
+		if (!search)
+			break;
+
+		if (search == mem) {
+			*prev = search->next;
+			break;
+		}
+		prev = &search->next;
+	}
+
+	/* Free it */
+	free(mem);
+	return size;
+}
+
+/**
+ * @brief Free memory blocks assigned to a specified tag within a pool
+ */
+uint32_t _Mem_FreeTag (struct memPool_s *pool, const int tagNum, const char *fileName, const int fileLine)
+{
+	memBlock_t *mem, *next;
+	uint32_t size;
+
+	if (!pool)
+		return 0;
+
+	size = 0;
+	for (mem = pool->blocks; mem; mem = next) {
+		next = mem->next;
+		if (mem->tagNum == tagNum)
+			size += _Mem_Free(mem->memPointer, fileName, fileLine);
+	}
+
+	return size;
+}
+
+
+/**
+ * @brief Free all items within a pool
+ */
+uint32_t _Mem_FreePool (struct memPool_s *pool, const char *fileName, const int fileLine)
+{
+	memBlock_t *mem, *next;
+	uint32_t size;
+
+	if (!pool)
+		return 0;
+
+	size = 0;
+	for (mem = pool->blocks; mem; mem = next) {
+		next = mem->next;
+		size += _Mem_Free(mem->memPointer, fileName, fileLine);
+	}
+
+	assert(pool->blockCount == 0);
+	assert(pool->byteCount == 0);
+	return size;
+}
+
+
+/**
+ * @brief Optionally returns 0 filled memory allocated in a pool with a tag
+ */
+void *_Mem_Alloc (size_t size, qboolean zeroFill, struct memPool_s *pool, const int tagNum, const char *fileName, const int fileLine)
+{
+	memBlock_t *mem;
+
+	/* Check pool */
+	if (!pool) {
+		Com_Printf("Mem_Alloc: Error - no pool given\n" "alloc: %s:#%i\n", fileName, fileLine);
+		return NULL;
+	}
+
+	/* Check size */
+	if (size <= 0) {
+		Com_Printf("Mem_Alloc: Attempted allocation of '"UFO_SIZE_T"' memory ignored\n" "alloc: %s:#%i\n", size, fileName, fileLine);
+		return NULL;
+	}
+	if (size > 0x40000000)
+		Com_Error(ERR_FATAL, "Mem_Alloc: Attempted allocation of '"UFO_SIZE_T"' bytes!\n" "alloc: %s:#%i\n", size, fileName, fileLine);
+
+	/* Add header and round to cacheline */
+	size = (size + sizeof (memBlock_t) + sizeof (memBlockFoot_t) + 31) & ~31;
+	mem = malloc(size);
+	if (!mem)
+		Com_Error(ERR_FATAL, "Mem_Alloc: failed on allocation of '"UFO_SIZE_T"' bytes\n" "alloc: %s:#%i", size, fileName, fileLine);
+
+	/* Zero fill */
+	if (zeroFill)
+		memset(mem, 0, size);
+
+	/* For integrity checking and stats */
+	pool->blockCount++;
+	pool->byteCount += size;
+
+	/* Fill in the header */
+	mem->topSentinel = MEM_HEAD_SENTINEL_TOP;
+	mem->tagNum = tagNum;
+	mem->size = size;
+	mem->memPointer = (void *)(mem + 1);
+	mem->memSize = size - sizeof (memBlock_t) - sizeof (memBlockFoot_t);
+	mem->pool = pool;
+	mem->allocFile = fileName;
+	mem->allocLine = fileLine;
+	mem->footer = (memBlockFoot_t *)((byte *)mem->memPointer + mem->memSize);
+	mem->botSentinel = MEM_HEAD_SENTINEL_BOT;
+
+	/* Fill in the footer */
+	mem->footer->sentinel = MEM_FOOT_SENTINEL;
+
+	/* Link it in to the appropriate pool */
+	mem->next = pool->blocks;
+	pool->blocks = mem;
+
+	return mem->memPointer;
+}
+
+/*==============================================================================
+MISC FUNCTIONS
+==============================================================================*/
+
+/**
+ * @brief No need to null terminate the extra spot because Mem_Alloc returns zero-filled memory
+ */
+char *_Mem_PoolStrDup (const char *in, struct memPool_s *pool, const int tagNum, const char *fileName, const int fileLine)
+{
+	char *out;
+
+	out = _Mem_Alloc((size_t)(strlen (in) + 1), qtrue, pool, tagNum, fileName, fileLine);
+	strcpy(out, in);
+
+	return out;
+}
+
+
+/**
+ * @brief
+ */
+uint32_t _Mem_PoolSize (struct memPool_s *pool)
+{
+	if (!pool)
+		return 0;
+
+	return pool->byteCount;
+}
+
+
+/**
+ * @brief
+ */
+uint32_t _Mem_TagSize (struct memPool_s *pool, const int tagNum)
+{
+	memBlock_t *mem;
+	uint32_t size;
+
+	if (!pool)
+		return 0;
+
+	size = 0;
+	for (mem = pool->blocks; mem; mem = mem->next) {
+		if (mem->tagNum == tagNum)
+			size += mem->size;
+	}
+
+	return size;
+}
+
+
+/**
+ * @brief
+ */
+uint32_t _Mem_ChangeTag (struct memPool_s *pool, const int tagFrom, const int tagTo)
+{
+	memBlock_t *mem;
+	uint32_t numChanged;
+
+	if (!pool)
+		return 0;
+
+	numChanged = 0;
+	for (mem = pool->blocks; mem; mem = mem->next) {
+		if (mem->tagNum == tagFrom) {
+			mem->tagNum = tagTo;
+			numChanged++;
+		}
+	}
+
+	return numChanged;
+}
+
+
+/**
+ * @brief
+ */
+void _Mem_CheckPoolIntegrity (struct memPool_s *pool, const char *fileName, const int fileLine)
+{
+	memBlock_t *mem;
+	uint32_t blocks;
+	uint32_t size;
+
+	assert(pool);
+	if (!pool)
+		return;
+
+	/* Check sentinels */
+	for (mem = pool->blocks, blocks = 0, size = 0; mem; blocks++, mem = mem->next) {
+		size += mem->size;
+		if (mem->topSentinel != MEM_HEAD_SENTINEL_TOP) {
+			Com_Error(ERR_FATAL,
+				"Mem_CheckPoolIntegrity: bad memory head top sentinel [buffer underflow]\n"
+				"check: %s:#%i",
+				fileName, fileLine);
+		} else if (mem->botSentinel != MEM_HEAD_SENTINEL_BOT) {
+			Com_Error(ERR_FATAL,
+				"Mem_CheckPoolIntegrity: bad memory head bottom sentinel [buffer underflow]\n"
+				"check: %s:#%i",
+				fileName, fileLine);
+		} else if (!mem->footer) {
+			Com_Error(ERR_FATAL,
+				"Mem_CheckPoolIntegrity: bad memory footer [buffer overflow]\n"
+				"pool: %s\n"
+				"alloc: %s:#%i\n"
+				"check: %s:#%i",
+				mem->pool ? mem->pool->name : "UNKNOWN", mem->allocFile, mem->allocLine, fileName, fileLine);
+		} else if (mem->footer->sentinel != MEM_FOOT_SENTINEL) {
+			Com_Error(ERR_FATAL,
+				"Mem_CheckPoolIntegrity: bad memory foot sentinel [buffer overflow]\n"
+				"pool: %s\n"
+				"alloc: %s:#%i\n"
+				"check: %s:#%i",
+				mem->pool ? mem->pool->name : "UNKNOWN", mem->allocFile, mem->allocLine, fileName, fileLine);
+		}
+	}
+
+	/* Check block/byte counts */
+	if (pool->blockCount != blocks)
+		Com_Error(ERR_FATAL, "Mem_CheckPoolIntegrity: bad block count\n" "check: %s:#%i", fileName, fileLine);
+	if (pool->byteCount != size)
+		Com_Error(ERR_FATAL, "Mem_CheckPoolIntegrity: bad pool size\n" "check: %s:#%i", fileName, fileLine);
+}
+
+
+/**
+ * @brief
+ */
+void _Mem_CheckGlobalIntegrity (const char *fileName, const int fileLine)
+{
+	memPool_t *pool;
+	uint32_t startTime;
+	uint32_t i;
+
+	startTime = Sys_Milliseconds();
+
+	for (i = 0, pool = &m_poolList[0]; i < m_numPools; pool++, i++) {
+		if (pool->inUse)
+			_Mem_CheckPoolIntegrity(pool, fileName, fileLine);
+	}
+
+	Com_DPrintf("Mem_CheckGlobalIntegrity: %ims\n", Sys_Milliseconds() - startTime);
+}
+
+
+/**
+ * @brief
+ */
+void _Mem_TouchPool (struct memPool_s *pool, const char *fileName, const int fileLine)
+{
+	memBlock_t *mem;
+	uint32_t blocks;
+	uint32_t i;
+	int sum;
+	uint32_t startTime;
+
+	assert(pool);
+	if (!pool)
+		return;
+
+	sum = 0;
+	startTime = Sys_Milliseconds();
+
+	/* Cycle through the blocks */
+	for (mem = pool->blocks, blocks = 0; mem; blocks++, mem = mem->next) {
+		/* Touch each page */
+		for (i = 0; i < mem->memSize; i += 128) {
+			sum += ((byte *)mem->memPointer)[i];
+		}
+	}
+}
+
+
+/**
+ * @brief
+ */
+void _Mem_TouchGlobal (const char *fileName, const int fileLine)
+{
+	memPool_t *pool;
+	uint32_t startTime;
+	uint32_t i, num;
+
+	startTime = Sys_Milliseconds();
+
+	/* Touch every pool */
+	num = 0;
+	for (i = 0, pool = &m_poolList[0]; i < m_numPools; pool++, i++) {
+		if (pool->inUse) {
+			_Mem_TouchPool(pool, fileName, fileLine);
+			num++;
+		}
+	}
+
+	Com_DPrintf("Mem_TouchGlobal: %u pools touched in %ims\n", num, Sys_Milliseconds()-startTime);
+}
+
+/*==============================================================================
+CONSOLE COMMANDS
+==============================================================================*/
+
+/**
+ * @brief
+ */
+static void Mem_Check_f (void)
+{
+	Mem_CheckGlobalIntegrity();
+}
+
+
+/**
+ * @brief
+ */
+static void Mem_Stats_f (void)
+{
+	uint32_t totalBlocks, totalBytes;
+	memPool_t *pool;
+	uint32_t poolNum, i;
+
+	if (Cmd_Argc() > 1) {
+		memPool_t *best;
+		memBlock_t *mem;
+
+		best = NULL;
+		for (i = 0, pool = &m_poolList[0]; i < m_numPools; pool++, i++) {
+			if (!pool->inUse)
+				continue;
+			if (strstr(pool->name, Cmd_Args())) {
+				if (best) {
+					Com_Printf("Too many matches for '%s'...\n", Cmd_Args());
+					return;
+				}
+				best = pool;
+			}
+		}
+		if (!best) {
+			Com_Printf("No matches for '%s'...\n", Cmd_Args());
+			return;
+		}
+
+		Com_Printf("Pool stats for '%s':\n", best->name);
+		Com_Printf("block line  file                 size       \n");
+		Com_Printf("----- ----- -------------------- ---------- \n");
+
+		totalBytes = 0;
+		for (i = 0, mem = best->blocks; mem; mem = mem->next, i++) {
+			if (i & 1)
+				Com_Printf("%c", 1);
+
+			Com_Printf("%5i %5i %20s "UFO_SIZE_T"B\n", i + 1, mem->allocLine, mem->allocFile, mem->size);
+
+			totalBytes += mem->size;
+		}
+
+		Com_Printf("----------------------------------------\n");
+		Com_Printf("Total: %i blocks, %i bytes (%6.3fMB)\n", i, totalBytes, totalBytes/1048576.0f);
+		return;
+	}
+
+	Com_Printf("Memory stats:\n");
+	Com_Printf("    blocks size                  name\n");
+	Com_Printf("--- ------ ---------- ---------- --------\n");
+
+	totalBlocks = 0;
+	totalBytes = 0;
+	poolNum = 0;
+	for (i = 0, pool = &m_poolList[0]; i < m_numPools; pool++, i++) {
+		if (!pool->inUse)
+			continue;
+
+		poolNum++;
+		if (poolNum & 1)
+			Com_Printf("%c", 1);
+
+		Com_Printf("#%2i %6i %9iB (%6.3fMB) %s\n", poolNum, pool->blockCount, pool->byteCount, pool->byteCount/1048576.0f, pool->name);
+
+		totalBlocks += pool->blockCount;
+		totalBytes += pool->byteCount;
+	}
+
+	Com_Printf("----------------------------------------\n");
+	Com_Printf("Total: %i pools, %i blocks, %i bytes (%6.3fMB)\n", i, totalBlocks, totalBytes, totalBytes/1048576.0f);
 }
 
 /**
@@ -139,6 +626,6 @@ extern void Mem_RegisterCommands (void)
  */
 extern void Mem_Init (void)
 {
-	z_chain.next = z_chain.prev = &z_chain;
+	Cmd_AddCommand("mem_stats", Mem_Stats_f, "Prints out current internal memory statistics");
+	Cmd_AddCommand("mem_check", Mem_Check_f, "Checks global memory integrity");
 }
-

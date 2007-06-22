@@ -80,6 +80,12 @@ void VID_Init(void);
 void VID_Shutdown(void);
 void VID_CheckChanges(void);
 
+#include "../qcommon/qcommon.h"
+
+void *VID_TagAlloc(struct memPool_s **pool, int size, int tagNum);
+void VID_FreeTags(struct memPool_s **pool, int tagNum);
+void VID_MemFree(void *ptr);
+
 #define VID_NUM_MODES (sizeof(vid_modes) / sizeof(vidmode_t))
 
 #endif /* CLIENT_VID_H */

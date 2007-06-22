@@ -199,7 +199,7 @@ static size_t CL_HTTP_Recv (void *ptr, size_t size, size_t nmemb, void *stream)
 
 		tmp = dl->tempBuffer;
 
-		dl->tempBuffer = Mem_Alloc((int)(dl->fileSize*2));
+		dl->tempBuffer = Mem_Alloc((int)(dl->fileSize * 2));
 		memcpy(dl->tempBuffer, tmp, dl->fileSize);
 		Mem_Free(tmp);
 		dl->fileSize *= 2;
@@ -418,7 +418,7 @@ qboolean CL_QueueHTTPDownload (const char *ufoPath)
 
 	q->next = NULL;
 	q->state = DLQ_STATE_NOT_STARTED;
-	Q_strncpyz(q->ufoPath, ufoPath, sizeof(q->ufoPath)-1);
+	Q_strncpyz(q->ufoPath, ufoPath, sizeof(q->ufoPath) - 1);
 
 	if (needList) {
 		/* grab the filelist */

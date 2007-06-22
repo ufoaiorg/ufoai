@@ -457,9 +457,9 @@ static void LoadPCX (const char *filename, byte ** pic, byte ** palette, int *wi
 		return;
 	}
 
-	out = malloc((pcx->ymax + 1) * (pcx->xmax + 1));
+	out = ri.TagMalloc(ri.imagePool, (pcx->ymax + 1) * (pcx->xmax + 1), 0);
 	if (!out) {
-		ri.Sys_Error(ERR_FATAL, "malloc: failed on allocation of %i bytes", (pcx->ymax + 1) * (pcx->xmax + 1));
+		ri.Sys_Error(ERR_FATAL, "TagMalloc: failed on allocation of %i bytes", (pcx->ymax + 1) * (pcx->xmax + 1));
 		return;					/* never reached. need for code analyst. */
 	}
 
@@ -468,7 +468,7 @@ static void LoadPCX (const char *filename, byte ** pic, byte ** palette, int *wi
 	pix = out;
 
 	if (palette) {
-		*palette = malloc(768);
+		*palette = ri.TagMalloc(ri.imagePool, 768, 0);;
 		memcpy(*palette, (byte *) pcx + len - 768, 768);
 	}
 
@@ -494,8 +494,14 @@ static void LoadPCX (const char *filename, byte ** pic, byte ** palette, int *wi
 
 	if (raw - (byte *) pcx > len) {
 		ri.Con_Printf(PRINT_DEVELOPER, "PCX file %s was malformed", filename);
-		free(*pic);
-		*pic = NULL;
+		ri.TagFree(out);
+
+		if (pic)
+			*pic = NULL;
+		if (palette) {
+			ri.TagFree(palette);
+			*palette = NULL;
+		}
 	}
 
 	ri.FS_FreeFile(pcx);
@@ -544,45 +550,45 @@ static int LoadPNG (const char *name, byte **pic, int *width, int *height)
 		Sys_Error("possible mem leak in LoadPNG\n");
 
 	/* Load the file */
-	ri.FS_LoadFile (name, (void **)&PngFileBuffer.buffer);
+	ri.FS_LoadFile(name, (void **)&PngFileBuffer.buffer);
 	if (!PngFileBuffer.buffer)
 		return 0;
 
 	/* Parse the PNG file */
-	if ((png_check_sig (PngFileBuffer.buffer, 8)) == 0) {
+	if ((png_check_sig(PngFileBuffer.buffer, 8)) == 0) {
 		Com_Printf("LoadPNG: Not a PNG file: %s\n", name);
-		ri.FS_FreeFile (PngFileBuffer.buffer);
+		ri.FS_FreeFile(PngFileBuffer.buffer);
 		return 0;
 	}
 
 	PngFileBuffer.pos = 0;
 
-	png_ptr = png_create_read_struct (PNG_LIBPNG_VER_STRING, NULL,  NULL, NULL);
+	png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL,  NULL, NULL);
 	if (!png_ptr) {
 		Com_Printf("LoadPNG: Bad PNG file: %s\n", name);
-		ri.FS_FreeFile (PngFileBuffer.buffer);
+		ri.FS_FreeFile(PngFileBuffer.buffer);
 		return 0;
 	}
 
-	info_ptr = png_create_info_struct (png_ptr);
+	info_ptr = png_create_info_struct(png_ptr);
 	if (!info_ptr) {
-		png_destroy_read_struct (&png_ptr, (png_infopp)NULL, (png_infopp)NULL);
+		png_destroy_read_struct(&png_ptr, (png_infopp)NULL, (png_infopp)NULL);
 		Com_Printf("LoadPNG: Bad PNG file: %s\n", name);
-		ri.FS_FreeFile (PngFileBuffer.buffer);
+		ri.FS_FreeFile(PngFileBuffer.buffer);
 		return 0;
 	}
 
 	end_info = png_create_info_struct (png_ptr);
 	if (!end_info) {
-		png_destroy_read_struct (&png_ptr, &info_ptr, (png_infopp)NULL);
+		png_destroy_read_struct(&png_ptr, &info_ptr, (png_infopp)NULL);
 		Com_Printf("LoadPNG: Bad PNG file: %s\n", name);
-		ri.FS_FreeFile (PngFileBuffer.buffer);
+		ri.FS_FreeFile(PngFileBuffer.buffer);
 		return 0;
 	}
 
 	/* get some usefull information from header */
-	bit_depth = png_get_bit_depth (png_ptr, info_ptr);
-	color_type = png_get_color_type (png_ptr, info_ptr);
+	bit_depth = png_get_bit_depth(png_ptr, info_ptr);
+	color_type = png_get_color_type(png_ptr, info_ptr);
 
 	/**
 	 * we want to treat all images the same way
@@ -613,7 +619,8 @@ static int LoadPNG (const char *name, byte **pic, int *width, int *height)
 
 	rowptr = 0;
 
-	img = malloc (info_ptr->width * info_ptr->height * 4);
+
+	img = ri.TagMalloc(ri.imagePool, info_ptr->width * info_ptr->height * 4, 0);
 	if (pic)
 		*pic = img;
 
@@ -625,10 +632,10 @@ static int LoadPNG (const char *name, byte **pic, int *width, int *height)
 	} else {
 		uint32_t	j;
 
-		memset (img, 255, info_ptr->width * info_ptr->height * 4);
+		memset(img, 255, info_ptr->width * info_ptr->height * 4);
 		for (rowptr = 0, i = 0; i < info_ptr->height; i++) {
 			for (j = 0; j < info_ptr->rowbytes; j += info_ptr->channels) {
-				memcpy (img + rowptr, row_pointers[i] + j, info_ptr->channels);
+				memcpy(img + rowptr, row_pointers[i] + j, info_ptr->channels);
 				rowptr += 4;
 			}
 		}
@@ -640,9 +647,9 @@ static int LoadPNG (const char *name, byte **pic, int *width, int *height)
 		*height = info_ptr->height;
 	samples = info_ptr->channels;
 
-	png_destroy_read_struct (&png_ptr, &info_ptr, &end_info);
+	png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
 
-	ri.FS_FreeFile (PngFileBuffer.buffer);
+	ri.FS_FreeFile(PngFileBuffer.buffer);
 	return samples;
 }
 
@@ -683,16 +690,16 @@ extern void WritePNG (FILE *f, byte *buffer, int width, int height)
 
 	png_write_info (png_ptr, info_ptr);
 
-	row_pointers = malloc (height * sizeof (png_bytep));
+	row_pointers = ri.TagMalloc(ri.imagePool, height * sizeof(png_bytep), 0);
 	for (i = 0; i < height; i++)
 		row_pointers[i] = buffer + (height - 1 - i) * 3 * width;
 
-	png_write_image (png_ptr, row_pointers);
-	png_write_end (png_ptr, info_ptr);
+	png_write_image(png_ptr, row_pointers);
+	png_write_end(png_ptr, info_ptr);
 
-	png_destroy_write_struct (&png_ptr, &info_ptr);
+	png_destroy_write_struct(&png_ptr, &info_ptr);
 
-	free (row_pointers);
+	ri.TagFree(row_pointers);
 }
 
 /*
@@ -779,7 +786,7 @@ extern void LoadTGA (const char *name, byte ** pic, int *width, int *height)
 	if (height)
 		*height = rows;
 
-	targa_rgba = malloc(numPixels * 4);
+	targa_rgba = ri.TagMalloc(ri.imagePool, numPixels * 4, 0);
 	*pic = targa_rgba;
 
 	if (targa_header.id_length != 0)
@@ -794,7 +801,6 @@ extern void LoadTGA (const char *name, byte ** pic, int *width, int *height)
 				red = green = blue = alphabyte = 0;
 				switch (targa_header.pixel_size) {
 				case 24:
-
 					blue = *buf_p++;
 					green = *buf_p++;
 					red = *buf_p++;
@@ -918,7 +924,7 @@ extern void WriteTGA (FILE *f, byte *buffer, int width, int height)
 
 	/* Allocate an output buffer */
 	size = (width * height * 3) + 18;
-	out = malloc (size);
+	out = ri.TagMalloc(ri.imagePool, size, 0);
 
 	/* Fill in header */
 	out[2] = 2;		/* Uncompressed type */
@@ -929,19 +935,19 @@ extern void WriteTGA (FILE *f, byte *buffer, int width, int height)
 	out[16] = 24;	/* Pixel size */
 
 	/* Copy to temporary buffer */
-	memcpy (out + 18, buffer, width * height * 3);
+	memcpy(out + 18, buffer, width * height * 3);
 
 	/* Swap rgb to bgr */
 	for (i = 18; i < size; i += 3) {
 		temp = out[i];
 		out[i] = out[i+2];
-		out[i+2] = temp;
+		out[i + 2] = temp;
 	}
 
 	if (fwrite (out, 1, size, f) != size)
 		Com_Printf("Failed to write the tga file\n");
 
-	free (out);
+	ri.TagFree(out);
 }
 
 
@@ -1007,7 +1013,7 @@ static void LoadJPG (const char *filename, byte ** pic, int *width, int *height)
 	struct jpeg_decompress_struct cinfo;
 	struct jpeg_error_mgr jerr;
 	byte *rawdata, *rgbadata, *scanline, *p, *q;
-	int rawsize, i;
+	int rawsize, i, components;
 
 	if (*pic != NULL)
 		Sys_Error("possible mem leak in LoadJPG\n");
@@ -1038,6 +1044,14 @@ static void LoadJPG (const char *filename, byte ** pic, int *width, int *height)
 	/* Start Decompression */
 	jpeg_start_decompress(&cinfo);
 
+	components = cinfo.output_components;
+    if (components != 3 && components != 1) {
+		Com_DPrintf("R_LoadJPG: Bad jpeg components '%s' (%d)\n", filename, components);
+		jpeg_destroy_decompress(&cinfo);
+		ri.FS_FreeFile(rawdata);
+		return;
+	}
+
 	/* Check Colour Components */
 	if (cinfo.output_components != 3 && cinfo.output_components != 4) {
 		ri.Con_Printf(PRINT_ALL, "Invalid JPEG colour components\n");
@@ -1047,9 +1061,18 @@ static void LoadJPG (const char *filename, byte ** pic, int *width, int *height)
 	}
 
 	/* Allocate Memory for decompressed image */
-	rgbadata = malloc(cinfo.output_width * cinfo.output_height * 4);
+	rgbadata = ri.TagMalloc(ri.imagePool, cinfo.output_width * cinfo.output_height * 4, 0);
 	if (!rgbadata) {
 		ri.Con_Printf(PRINT_ALL, "Insufficient RAM for JPEG buffer\n");
+		jpeg_destroy_decompress(&cinfo);
+		ri.FS_FreeFile(rawdata);
+		return;
+	}
+	/* Allocate Scanline buffer */
+	scanline = ri.TagMalloc(ri.imagePool, cinfo.output_width * components, 0);
+	if (!scanline) {
+		ri.Con_Printf(PRINT_ALL, "Insufficient RAM for JPEG scanline buffer\n");
+		ri.TagFree(rgbadata);
 		jpeg_destroy_decompress(&cinfo);
 		ri.FS_FreeFile(rawdata);
 		return;
@@ -1059,35 +1082,27 @@ static void LoadJPG (const char *filename, byte ** pic, int *width, int *height)
 	*width = cinfo.output_width;
 	*height = cinfo.output_height;
 
-	/* Allocate Scanline buffer */
-	scanline = malloc(cinfo.output_width * 4);
-	if (!scanline) {
-		ri.Con_Printf(PRINT_ALL, "Insufficient RAM for JPEG scanline buffer\n");
-		free(rgbadata);
-		jpeg_destroy_decompress(&cinfo);
-		ri.FS_FreeFile(rawdata);
-		return;
-	}
-
 	/* Read Scanlines, and expand from RGB to RGBA */
 	q = rgbadata;
 	while (cinfo.output_scanline < cinfo.output_height) {
 		p = scanline;
 		jpeg_read_scanlines(&cinfo, &scanline, 1);
 
-		for (i = 0; i < cinfo.output_width; i++) {
-			q[0] = p[0];
-			q[1] = p[1];
-			q[2] = p[2];
-			q[3] = 255;
-
-			p += 3;
-			q += 4;
+		if (components == 1) {
+			for (i = 0; i < cinfo.output_width; i++, q += 4) {
+				q[0] = q[1] = q[2] = *p++;
+				q[3] = 255;
+			}
+		} else {
+			for (i = 0; i < cinfo.output_width; i++, q += 4, p += 3) {
+				q[0] = p[0], q[1] = p[1], q[2] = p[2];
+				q[3] = 255;
+			}
 		}
 	}
 
 	/* Free the scanline buffer */
-	free(scanline);
+	ri.TagFree(scanline);
 
 	/* Finish Decompression */
 	jpeg_finish_decompress(&cinfo);
@@ -1242,7 +1257,7 @@ void SaveJPG (const char *filename, int quality, int image_width, int image_heig
 	 * VERY IMPORTANT: use "b" option to fopen() if you are on a machine that
 	 * requires it in order to write binary files.
 	 */
-	out = (unsigned char *) malloc(image_width * image_height * RGB_PIXELSIZE);
+	out = (unsigned char *)ri.TagMalloc(ri.imagePool, image_width * image_height * RGB_PIXELSIZE, 0);
 	jpegDest(&cinfo, out, image_width * image_height * RGB_PIXELSIZE);
 
 	/* Step 3: set parameters for compression */
@@ -1295,7 +1310,7 @@ void SaveJPG (const char *filename, int quality, int image_width, int image_heig
 	/* After finish_compress, we can close the output file. */
 	ri.FS_WriteFile(filename, hackSize, (char *) out);
 
-	free(out);
+	ri.TagFree(out);
 
 	/* Step 7: release JPEG compression object */
 
@@ -1626,9 +1641,9 @@ static void R_FilterTexture (int filterindex, unsigned int *data, int width, int
 	size_t temp_size = width * height * 4;
 
 	/* allocate a temp buffer */
-	temp = malloc(temp_size);
+	temp = ri.TagMalloc(ri.imagePool, temp_size, 0);
 	if (!temp) {
-		ri.Sys_Error(ERR_FATAL, "malloc: failed on allocation of "UFO_SIZE_T" bytes", temp_size);
+		ri.Sys_Error(ERR_FATAL, "TagMalloc: failed on allocation of "UFO_SIZE_T" bytes", temp_size);
 		return;					/* never reached. need for code analyst. */
 	}
 
@@ -1727,7 +1742,7 @@ static void R_FilterTexture (int filterindex, unsigned int *data, int width, int
 	memcpy(data, temp, width * height * 4);
 #endif
 	/* release the temp buffer */
-	free(temp);
+	ri.TagFree(temp);
 }
 
 static int upload_width, upload_height;
@@ -1877,9 +1892,9 @@ static qboolean GL_Upload8 (byte * data, int width, int height, qboolean mipmap,
 	int i, p;
 	qboolean ret;
 
-	trans = malloc(trans_size);
+	trans = ri.TagMalloc(ri.imagePool, trans_size, 0);
 	if (!trans) {
-		ri.Sys_Error(ERR_FATAL, "malloc: failed on allocation of "UFO_SIZE_T" bytes", trans_size);
+		ri.Sys_Error(ERR_FATAL, "TagMalloc: failed on allocation of "UFO_SIZE_T" bytes", trans_size);
 		return qfalse;			/* never reached. need for code analyst. */
 	}
 
@@ -1912,7 +1927,7 @@ static qboolean GL_Upload8 (byte * data, int width, int height, qboolean mipmap,
 	}
 
 	ret = GL_Upload32(trans, width, height, mipmap, qtrue, type, image);
-	free(trans);
+	ri.TagFree(trans);
 
 	return ret;
 }
@@ -2239,9 +2254,9 @@ image_t *GL_FindImage (const char *pname, imagetype_t type)
 
   end:
 	if (pic)
-		free(pic);
+		ri.TagFree(pic);
 	if (palette)
-		free(palette);
+		ri.TagFree(palette);
 
 	return image;
 }
@@ -2311,8 +2326,8 @@ int Draw_GetPalette (void)
 
 	d_8to24table[255] &= LittleLong(0xffffff);	/* 255 is transparent */
 
-	free(pic);
-	free(pal);
+	ri.TagFree(pic);
+	ri.TagFree(pal);
 
 	return 0;
 }

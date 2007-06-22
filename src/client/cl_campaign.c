@@ -1752,7 +1752,7 @@ extern qboolean CP_Load (sizebuf_t *sb, void *data)
 	Cvar_ForceSet("difficulty", val);
 
 	if (maskPic) {
-		free(maskPic);
+		Mem_Free(maskPic);
 		maskPic = NULL;
 	}
 	re.LoadTGA(va("pics/menu/%s_mask.tga", curCampaign->map), &maskPic, &maskWidth, &maskHeight);
@@ -1760,7 +1760,7 @@ extern qboolean CP_Load (sizebuf_t *sb, void *data)
 		Sys_Error("Couldn't load map mask %s_mask.tga in pics/menu\n", curCampaign->map);
 
 	if (nationsPic) {
-		free(nationsPic);
+		Mem_Free(nationsPic);
 		nationsPic = NULL;
 	}
 	re.LoadTGA(va("pics/menu/%s_nations.tga", curCampaign->map), &nationsPic, &nationsWidth, &nationsHeight);
@@ -3755,10 +3755,13 @@ static void CL_GameNew_f (void)
 
 	memset(&gd, 0, sizeof(gd));
 	memset(&stats, 0, sizeof(stats));
-	/* FIXME: The client hunk isn't cleared here - so if a player restarts the campaign
-	 * a few times without restarting the game - the hunk may overflow
-	 * but we can't just call CL_ClientHunkClear because fonts, shaders and other stuff (not reparsed)
-	 * are stored, there, too */
+	/* FIXME: The client hunk isn't cleared in CL_ReadSinglePlayerData - so if a
+	* player restarts the campaign a few times without restarting the game - the
+	* hunk may overflow but we can't just call a clear function because fonts,
+	* shaders and other stuff (not reparsed) are stored, there, too
+	* we have to free the tags - and we have to introduce tags for different parseing
+	* stages
+	*/
 	CL_ReadSinglePlayerData();
 
 	Cvar_Set("team", curCampaign->team);
@@ -3773,7 +3776,7 @@ static void CL_GameNew_f (void)
 		Cvar_ForceSet("difficulty", "4");
 
 	if (maskPic) {
-		free(maskPic);
+		Mem_Free(maskPic);
 		maskPic = NULL;
 	}
 	re.LoadTGA(va("pics/menu/%s_mask.tga", curCampaign->map), &maskPic, &maskWidth, &maskHeight);
@@ -3781,7 +3784,7 @@ static void CL_GameNew_f (void)
 		Sys_Error("Couldn't load map mask %s_mask.tga in pics/menu\n", curCampaign->map);
 
 	if (nationsPic) {
-		free(nationsPic);
+		Mem_Free(nationsPic);
 		nationsPic = NULL;
 	}
 	re.LoadTGA(va("pics/menu/%s_nations.tga", curCampaign->map), &nationsPic, &nationsWidth, &nationsHeight);
@@ -3903,7 +3906,6 @@ static void CP_CampaignsClick_f (void)
 /**
  * @brief Will clear most of the parsed singleplayer data
  * @sa Com_InitInventory
- * @sa CL_ClientHunkClear
  * @sa CL_ReadSinglePlayerData
  */
 extern void CL_ResetSinglePlayerData (void)

@@ -27,9 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_CL_HUNK_H
 
 void *CL_ClientHunkUse(const void *token, size_t size);
-qboolean CL_ClientHunkClear(void);
-void CL_ClientHunkInit(void);
-void CL_ClientHunkShutdown(void);
 char *CL_ClientHunkStoreString(const char *string, char **dst);
 
 #endif /* CLIENT_CL_HUNK_H */

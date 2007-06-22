@@ -39,8 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #pragma mark =Variables=
 
-byte *membase;
-int maxhunksize, curhunksize, curtime;
+int curtime;
 
 static char	gSysFindBase[MAX_OSPATH], gSysFindPath[MAX_OSPATH], gSysFindPattern[MAX_OSPATH];
 static	DIR	*gSysFindDir;
@@ -59,66 +58,6 @@ char* strlwr (char *s)
 		s++;
 	}
 	return origs;
-}
-
-/**
- * @brief
- */
-void* Hunk_Begin (int theMaxSize)
-{
-	maxhunksize = theMaxSize + sizeof (int);
-	curhunksize = 0;
-	membase = malloc (maxhunksize);
-	if (membase == NULL)
-		Sys_Error ("unable to virtual allocate %d bytes", theMaxSize);
-
-	*((int *) membase) = curhunksize;
-
-	return (membase + sizeof(int));
-}
-
-/**
- * @brief
- */
-void* Hunk_Alloc (int size, const char *name)
-{
-	unsigned char	*myMemory;
-
-	if (!size)
-		return NULL;
-
-	size = (size + 31) & ~31;
-
-	Com_DPrintf("Hunk_Alloc: Allocate %8i / %8i bytes (used: %8i bytes): %s\n",
-		size, maxhunksize, curhunksize, name);
-
-	if (curhunksize + size > maxhunksize)
-		Sys_Error("Hunk_Alloc overflow");
-	myMemory = membase + sizeof(int) + curhunksize;
-	curhunksize += size;
-
-	return (myMemory);
-}
-
-/**
- * @brief
- */
-void Hunk_Free (void *theBuffer)
-{
-	unsigned char 	*myMemory;
-
-	if (theBuffer != NULL) {
-		myMemory = ((unsigned char *) theBuffer) - sizeof (int);
-		free (myMemory);
-	}
-}
-
-/**
- * @brief
- */
-int Hunk_End (void)
-{
-	return (curhunksize);
 }
 
 /**

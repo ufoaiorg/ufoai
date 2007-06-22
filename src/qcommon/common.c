@@ -66,6 +66,13 @@ int time_after_game;
 int time_before_ref;
 int time_after_ref;
 
+struct memPool_s *com_aliasSysPool;
+struct memPool_s *com_cmdSysPool;
+struct memPool_s *com_cmodelSysPool;
+struct memPool_s *com_cvarSysPool;
+struct memPool_s *com_fileSysPool;
+struct memPool_s *com_genericPool;
+
 /*
 ============================================================================
 CLIENT / SERVER interactions
@@ -478,21 +485,6 @@ int memsearch (byte * start, int count, int search)
 	return -1;
 }
 
-
-/**
- * @brief
- */
-char *CopyString (const char *in)
-{
-	char *out;
-	int l = strlen(in);
-
-	out = Mem_Alloc(l + 1);
-	Q_strncpyz(out, in, l + 1);
-	return out;
-}
-
-
 /**
  * @brief
  */
@@ -737,7 +729,12 @@ extern void Qcommon_Init (int argc, char **argv)
 #endif /* HAVE_GETTEXT */
 #endif /* DEDICATED_ONLY */
 
-	Mem_Init();
+	com_aliasSysPool = Mem_CreatePool("Common: Alias system");
+	com_cmdSysPool = Mem_CreatePool("Common: Command system");
+	com_cmodelSysPool = Mem_CreatePool("Common: Collision model");
+	com_cvarSysPool = Mem_CreatePool("Common: Cvar system");
+	com_fileSysPool = Mem_CreatePool("Common: File system");
+	com_genericPool = Mem_CreatePool("Generic");
 
 	if (setjmp(abortframe))
 		Sys_Error("Error during initialization");
@@ -806,7 +803,7 @@ extern void Qcommon_Init (int argc, char **argv)
 	if (dedicated->value)
 		Cmd_AddCommand("quit", Com_Quit, NULL);
 
-	Mem_RegisterCommands();
+	Mem_Init();
 	Sys_Init();
 
 	NET_Init();
@@ -861,6 +858,12 @@ extern void Qcommon_Init (int argc, char **argv)
 #else
 	Com_AddObjectLinks();	/* Add tech links + ammo<->weapon links to items.*/
 #endif
+
+	/* Check memory integrity */
+	Mem_CheckGlobalIntegrity();
+
+	/* Touch memory */
+	Mem_TouchGlobal();
 
 	Com_Printf("====== UFO Initialized ======\n\n");
 }

@@ -994,7 +994,7 @@ static void R_Register (void)
 	gl_stencil_two_side = ri.Cvar_Get("gl_stencil_two_side", "1", CVAR_ARCHIVE, NULL);
 	gl_drawclouds = ri.Cvar_Get("gl_drawclouds", "0", CVAR_ARCHIVE, NULL);
 	gl_imagefilter = ri.Cvar_Get("gl_imagefilter", "1", CVAR_ARCHIVE, NULL);
-	gl_dynamic = ri.Cvar_Get("gl_dynamic", "1", 0, NULL);
+	gl_dynamic = ri.Cvar_Get("gl_dynamic", "1", 0, "Render dynamic lightmaps");
 	gl_round_down = ri.Cvar_Get("gl_round_down", "1", 0, NULL);
 	gl_picmip = ri.Cvar_Get("gl_picmip", "0", 0, NULL);
 	gl_maxtexres = ri.Cvar_Get("gl_maxtexres", "2048", CVAR_ARCHIVE, NULL);
@@ -1012,7 +1012,7 @@ static void R_Register (void)
 	gl_texturemode = ri.Cvar_Get("gl_texturemode", "GL_LINEAR_MIPMAP_NEAREST", CVAR_ARCHIVE, NULL);
 	gl_texturealphamode = ri.Cvar_Get("gl_texturealphamode", "default", CVAR_ARCHIVE, NULL);
 	gl_texturesolidmode = ri.Cvar_Get("gl_texturesolidmode", "default", CVAR_ARCHIVE, NULL);
-	gl_wire = ri.Cvar_Get("gl_wire", "0", 0, "Draw the scene in wireframe mode");
+	gl_wire = ri.Cvar_Get("gl_wire", "0", CVAR_CHEAT, "Draw the scene in wireframe mode");
 	gl_fog = ri.Cvar_Get("gl_fog", "1", CVAR_ARCHIVE, NULL);
 	gl_showbox = ri.Cvar_Get("gl_showbox", "0", CVAR_ARCHIVE, "Shows model bounding box");
 	gl_vertex_arrays = ri.Cvar_Get("gl_vertex_arrays", "0", CVAR_ARCHIVE, NULL);
@@ -1108,8 +1108,6 @@ static qboolean R_Init (HINSTANCE hinstance, WNDPROC wndproc)
 		r_turbsin[j] *= 0.5;
 
 	ri.Con_Printf(PRINT_ALL, "ref_gl version: "REF_VERSION"\n");
-
-	Draw_GetPalette();
 
 	R_Register();
 
@@ -1484,8 +1482,7 @@ static void R_Shutdown (void)
 	qglDeleteLists(spherelist, 1);
 	spherelist = -1;
 
-	Mod_FreeAll();
-
+	GL_ShutdownModels();
 	GL_ShutdownImages();
 #ifdef HAVE_SHADERS
 	GL_ShutdownShaders();

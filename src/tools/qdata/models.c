@@ -51,7 +51,7 @@ typedef struct
 
 frame_t		g_frames[MAX_FRAMES];
 
-dmdl_t		model;
+mdl_md2_t		model;
 
 
 float		scale_up;			/* set by $scale */
@@ -133,7 +133,7 @@ void H_printf(const char *fmt, ...)
 void WriteModelFile (qFILE *modelouthandle)
 {
 	int				i;
-	dmdl_t			modeltemp;
+	mdl_md2_t		modeltemp;
 	int				j, k;
 	frame_t			*in;
 	daliasframe_t	*out;
@@ -145,7 +145,7 @@ void WriteModelFile (qFILE *modelouthandle)
 	model.version = ALIAS_VERSION;
 	model.framesize = (intptr_t)&((daliasframe_t *)0)->verts[model.num_xyz];
 	model.num_glcmds = numcommands;
-	model.ofs_skins = sizeof(dmdl_t);
+	model.ofs_skins = sizeof(mdl_md2_t);
 	model.ofs_st = model.ofs_skins + model.num_skins * MAX_SKINNAME;
 	model.ofs_tris = model.ofs_st + model.num_st*sizeof(dstvert_t);
 	model.ofs_frames = model.ofs_tris + model.num_tris*sizeof(dtriangle_t);
@@ -153,7 +153,7 @@ void WriteModelFile (qFILE *modelouthandle)
 	model.ofs_end = model.ofs_glcmds + model.num_glcmds*4;
 
 	/* write out the model header */
-	for (i = 0; i < sizeof(dmdl_t) / 4; i++)
+	for (i = 0; i < sizeof(mdl_md2_t) / 4; i++)
 		((int *)&modeltemp)[i] = LittleLong (((int *)&model)[i]);
 
 	SafeWrite(modelouthandle, &modeltemp, sizeof(modeltemp));

@@ -375,15 +375,13 @@ typedef struct {
 	void (*FS_CreatePath) (const char *name);
 	int (*FS_CheckFile) (const char *name);
 	char **(*FS_ListFiles) (const char *findname, int *numfiles, unsigned musthave, unsigned canthave);
+	/* gamedir will be the current directory that generated */
+	/* files should be stored to, ie: "f:\quake\id1" */
+	const char *(*FS_Gamedir) (void);
 
 	/* will return the size and the path for each font */
 	void (*CL_GetFontData) (const char *name, int *size, char *path);
 	qboolean (*RenderTrace) (vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end);
-
-	/* gamedir will be the current directory that generated */
-	/* files should be stored to, ie: "f:\quake\id1" */
-	const char *(*FS_Gamedir) (void);
-	const char *(*FS_NextPath) (const char *prevpath);
 
 	cvar_t *(*Cvar_Get) (const char *name, const char *value, int flags, const char* desc);
 	cvar_t *(*Cvar_Set) (const char *name, const char *value);
@@ -393,6 +391,16 @@ typedef struct {
 	qboolean(*Vid_GetModeInfo) (int *width, int *height, int mode);
 	void (*Vid_NewWindow) (int width, int height);
 	void (*CL_WriteAVIVideoFrame) (const byte * buffer, size_t size);
+
+	/* managed memory allocation */
+	void *(*TagMalloc) (struct memPool_s **pool, int size, int tag);
+	void (*TagFree) (void *block);
+	void (*FreeTags) (struct memPool_s **pool, int tag);
+
+	struct memPool_s **genericPool;
+	struct memPool_s **imagePool;
+	struct memPool_s **lightPool;
+	struct memPool_s **modelPool;
 } refimport_t;
 
 

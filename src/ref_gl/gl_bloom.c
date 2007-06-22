@@ -90,7 +90,7 @@ static void GL_Bloom_InitOriginalTexture (int width, int height)
 {
 	byte *data;
 
-	data = malloc(width * height * 4);
+	data = ri.TagMalloc(ri.imagePool, width * height * 4, 0);
 	memset(data, 0, width * height * 4);
 
 	original_tex_size = width;
@@ -98,7 +98,7 @@ static void GL_Bloom_InitOriginalTexture (int width, int height)
 	gl_bloomoriginaltexture = GL_LoadPic("***gl_bloomoriginaltexture***",
 			(byte *)data, width, height, it_pic, 32);
 
-	free(data);
+	ri.TagFree(data);
 }
 
 
@@ -132,11 +132,11 @@ static void GL_Bloom_InitEffectTexture (void)
 			bloom_size *= 2;
 	}
 
-	data = malloc(bloom_size * bloom_size * 4);
+	data = ri.TagMalloc(ri.imagePool, bloom_size * bloom_size * 4, 0);
 	memset(data, 0, bloom_size * bloom_size * 4);
 	gl_bloomeffecttexture = GL_LoadPic("***gl_bloomeffecttexture***",
 			(byte *)data, bloom_size, bloom_size, it_pic, 32);
-	free(data);
+	ri.TagFree(data);
 }
 
 
@@ -173,21 +173,21 @@ static void GL_Bloom_InitTextures (void)
 
 	/* init the screen texture */
 	size = screen_tex_width * screen_tex_height * 4;
-	data = malloc(size);
+	data = ri.TagMalloc(ri.imagePool, size, 0);
 	memset(data, 0, size);
 	gl_bloomscreentexture = GL_LoadPic("***gl_bloomscreentexture***",
 			(byte *)data, screen_tex_width, screen_tex_height, it_pic, 32);
-	free(data);
+	ri.TagFree(data);
 
 	/* validate bloom size and init the bloom effect texture */
 	GL_Bloom_InitEffectTexture();
 
 	/* init the downsample texture */
-	data = malloc(bloom_size * bloom_size * 4);
+	data = ri.TagMalloc(ri.imagePool, bloom_size * bloom_size * 4, 0);
 	memset(data, 0, bloom_size * bloom_size * 4);
 	gl_bloomdowntexture = GL_LoadPic("***gl_bloomdowntexture***",
 			(byte *)data, bloom_size, bloom_size, it_pic, 32);
-	free(data);
+	ri.TagFree(data);
 
 	/* init the screen original texture */
 	GL_Bloom_InitOriginalTexture(bloom_size, bloom_size);

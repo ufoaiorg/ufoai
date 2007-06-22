@@ -40,6 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #endif
 
 #include "../qcommon/ufotypes.h"
+#include "../qcommon/mem.h"
 
 #ifdef _MSC_VER
 /* unknown pragmas are SUPPOSED to be ignored, but.... */
@@ -449,7 +450,6 @@ void Q_strncpyzDebug(char *dest, const char *src, size_t destsize, char *file, i
 #endif
 void Q_strcat(char *dest, const char *src, size_t size) __attribute__((nonnull));
 char *Q_strlwr(char *str) __attribute__((nonnull));
-char *Q_strdup(const char *str) __attribute__((nonnull));
 int Q_putenv(const char *var, const char *value);
 char *Q_getcwd(char *dest, size_t size) __attribute__((nonnull));
 
@@ -490,12 +490,6 @@ int Sys_Milliseconds(void);
 void Sys_Mkdir(const char *path);
 char *strlwr(char *s);          /* this is non ansi and is defined for some OSs */
 
-/* large block stack allocation routines */
-void *Hunk_Begin(int maxsize);
-void *Hunk_Alloc(int size, const char *name);
-void Hunk_Free(void *buf) __attribute__((nonnull));
-int Hunk_End(void);
-
 /* directory searching */
 #define SFF_ARCH    0x01
 #define SFF_HIDDEN  0x02
@@ -531,6 +525,7 @@ CVARS (console variables)
 #define CVAR_NOSET      8       /**< don't allow change from console at all, but can be set from the command line */
 #define CVAR_LATCH      16      /**< save changes until server restart */
 #define CVAR_DEVELOPER  32      /**< set from commandline (not from within the game) and hide from console */
+#define CVAR_CHEAT      64      /**< clamp to the default value when cheats are off */
 
 /**
  * @brief This is a cvar defintion. Cvars can be user modified and used in our menus e.g.
@@ -540,6 +535,7 @@ typedef struct cvar_s {
 	char *name;				/**< cvar name */
 	char *string;			/**< value as string */
 	char *latched_string;	/**< for CVAR_LATCH vars */
+	char *default_string;	/**< default string set on first init - only set for CVAR_CHEAT */
 	char *old_string;		/**< value of the cvar before we changed it */
 	const char *description;		/**< cvar description */
 	int flags;				/**< cvar flags CVAR_ARCHIVE|CVAR_NOSET.... */

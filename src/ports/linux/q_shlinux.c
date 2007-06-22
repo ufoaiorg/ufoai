@@ -1,7 +1,6 @@
 /**
  * @file q_shlinux.c
  * @brief Shared linux functions
- * @note Hunk system and some file system functions
  */
 
 /*
@@ -35,114 +34,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #if defined(__FreeBSD__) || defined(__NetBSD__)
 #include <machine/param.h>
 #endif
-
-/*=============================================================================== */
-
-static byte *membase;
-static int maxhunksize;
-static int curhunksize;
-
-/**
- * @brief
- */
-void *Hunk_Begin (int maxsize)
-{
-	/* reserve a huge chunk of memory, but don't commit any yet */
-	maxhunksize = maxsize + sizeof(int);
-	curhunksize = 0;
-#if (defined __FreeBSD__) || (defined __NetBSD__)
-	membase = mmap(0, maxhunksize, PROT_READ|PROT_WRITE,
-		MAP_PRIVATE|MAP_ANON, -1, 0);
-#else
-	membase = mmap(0, maxhunksize, PROT_READ|PROT_WRITE,
-		MAP_PRIVATE|MAP_ANONYMOUS, -1, 0);
-#endif
-	if (membase == MAP_FAILED)
-		Sys_Error("unable to virtual allocate %d bytes", maxsize);
-
-	*((int *)membase) = curhunksize;
-
-	return membase + sizeof(int);
-}
-
-/**
- * @brief
- */
-void *Hunk_Alloc (int size, const char *name)
-{
-	byte *buf;
-
-	if (!size)
-		return NULL;
-
-	/* round to cacheline */
-	size = (size + 31) & ~31;
-
-	Com_DPrintf("Hunk_Alloc: Allocate %8i / %8i bytes (used: %8i bytes): %s\n",
-		size, maxhunksize, curhunksize, name);
-
-	if (curhunksize + size > maxhunksize)
-		Sys_Error("Hunk_Alloc overflow");
-	buf = membase + sizeof(int) + curhunksize;
-	curhunksize += size;
-	return buf;
-}
-
-/**
- * @brief
- */
-int Hunk_End (void)
-{
-#if defined(__FreeBSD__) || defined(__NetBSD__)
-	long pgsz, newsz, modsz;
-
-	pgsz = sysconf(_SC_PAGESIZE);
-	if (pgsz == -1)
-		Sys_Error("Hunk_End: Sysconf() failed: %s", strerror(errno));
-
-	newsz = curhunksize + sizeof(int);
-
-	if (newsz > maxhunksize)
-		Sys_Error("Hunk_End Overflow");
-	else if (newsz < maxhunksize) {
-		modsz = newsz % pgsz;
-		if (modsz)
-			newsz += pgsz - modsz;
-
-		if (munmap(membase + newsz, maxhunksize - newsz) == -1)
-			Sys_Error("Hunk_End: munmap() failed: %s", strerror(errno));
-	}
-#endif
-#if defined(__linux__)
-	byte *n = NULL;
-
-	n = mremap(membase, maxhunksize, curhunksize + sizeof(int), 0);
-
-	if (n != membase)
-		Sys_Error("Hunk_End:  Could not remap virtual block (%d)", errno);
-#endif
-
-	*((int *)membase) = curhunksize + sizeof(int);
-
-	return curhunksize;
-}
-
-/**
- * @brief
- */
-void Hunk_Free (void *base)
-{
-	byte *m;
-
-	if (base) {
-		m = ((byte *)base) - sizeof(int);
-		if (*((int *)m) && munmap(m, *((int *)m)))
-			Sys_Error("Hunk_Free: munmap failed (%d, %s, size: %i)", errno, strerror(errno), *((int *)m));
-	}
-}
-
-/*=============================================================================== */
-
 
 int curtime;
 

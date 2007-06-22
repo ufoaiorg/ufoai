@@ -113,7 +113,7 @@ static qboolean SAV_GameLoad (const char *filename, char **error)
 
 	/* read compressed data into cbuf buffer */
 	clen = FS_FileLength(&f);
-	cbuf = (byte *) malloc(sizeof(byte) * clen);
+	cbuf = (byte *) Mem_PoolAlloc(sizeof(byte) * clen, cl_genericPool, CL_TAG_NONE);
 	if (fread(cbuf, 1, clen, f.f) != clen)
 		Com_Printf("Warning: Could not read %i bytes from savefile\n", clen);
 	fclose(f.f);
@@ -127,16 +127,16 @@ static qboolean SAV_GameLoad (const char *filename, char **error)
 		"...game version: %s\n"
 		, header.version, header.gameVersion);
 
-	buf = (byte *) malloc(sizeof(byte) * MAX_GAMESAVESIZE);
+	buf = (byte *) Mem_PoolAlloc(sizeof(byte) * MAX_GAMESAVESIZE, cl_genericPool, CL_TAG_NONE);
 	SZ_Init(&sb, buf, MAX_GAMESAVESIZE);
 
 	if (header.compressed) {
 		/* uncompress data, skipping comment header */
 		res = uncompress(buf, &len, cbuf + sizeof(saveFileHeader_t), clen - sizeof(saveFileHeader_t));
-		free(cbuf);
+		Mem_Free(cbuf);
 
 		if (res != Z_OK) {
-			free(buf);
+			Mem_Free(buf);
 			*error = _("Error decompressing data");
 			Com_Printf("Error decompressing data in '%s'.\n", filename);
 			return qfalse;
@@ -145,14 +145,14 @@ static qboolean SAV_GameLoad (const char *filename, char **error)
 	} else {
 		memcpy(buf, cbuf + sizeof(saveFileHeader_t), clen - sizeof(saveFileHeader_t));
 		sb.cursize = clen - sizeof(saveFileHeader_t);
-		free(cbuf);
+		Mem_Free(cbuf);
 	}
 
 	/* check current version */
 	if (header.version > SAVE_FILE_VERSION) {
 		*error = _("The file is a more recent version than is supported");
 		Com_Printf("File '%s' is a more recent version (%d) than is supported.\n", filename, header.version);
-		free(buf);
+		Mem_Free(buf);
 		return qfalse;
 	} else if (header.version < SAVE_FILE_VERSION) {
 		Com_Printf("Savefileformat has changed ('%s' is version %d) - you may experience problems.\n", filename, header.version);
@@ -192,7 +192,7 @@ static qboolean SAV_GameLoad (const char *filename, char **error)
 	MN_PushMenu("map");
 
 	Com_Printf("File '%s' loaded.\n", filename);
-	free(buf);
+	Mem_Free(buf);
 
 	return qtrue;
 }
@@ -235,7 +235,7 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 	Com_sprintf(savegame, sizeof(savegame), "%s/save/%s.sav", FS_Gamedir(), filename);
 
 	/* step 2 - allocate the buffers */
-	buf = (byte *) malloc(sizeof(byte) * MAX_GAMESAVESIZE);
+	buf = (byte *) Mem_PoolAlloc(sizeof(byte) * MAX_GAMESAVESIZE, cl_genericPool, CL_TAG_NONE);
 	if (!buf) {
 		*error = _("Could not allocate enough memory to save this game");
 		Com_Printf("Error: Could not allocate enough memory to save this game\n");
@@ -257,7 +257,7 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 
 	/* compress data using zlib before writing */
 	bufLen = (uLongf) (24 + 1.02 * sb.cursize);
-	fbuf = (byte *) malloc(sizeof(byte) * bufLen + sizeof(saveFileHeader_t));
+	fbuf = (byte *) Mem_PoolAlloc(sizeof(byte) * bufLen + sizeof(saveFileHeader_t), cl_genericPool, CL_TAG_NONE);
 	/* write an uncompressed header */
 	memset(fbuf, 0, sizeof(saveFileHeader_t));
 
@@ -276,22 +276,22 @@ static qboolean SAV_GameSave (const char *filename, const char *comment, char **
 	/* step 5 - compress */
 	if (header.compressed) {
 		res = compress(fbuf + sizeof(saveFileHeader_t), &bufLen, buf, sb.cursize);
-		free(buf);
+		Mem_Free(buf);
 
 		if (res != Z_OK) {
-			free(fbuf);
+			Mem_Free(fbuf);
 			*error = _("Memory error compressing save-game data - set save_compressed cvar to 0");
 			Com_Printf("Memory error compressing save-game data (%s) (Error: %i)!\n", comment, res);
 			return qfalse;
 		}
 	} else {
 		memcpy(fbuf + sizeof(saveFileHeader_t), buf, sb.cursize);
-		free(buf);
+		Mem_Free(buf);
 	}
 
 	/* last step - write data */
 	res = FS_WriteFile(fbuf, bufLen + sizeof(saveFileHeader_t), savegame);
-	free(fbuf);
+	Mem_Free(fbuf);
 
 	if (res == bufLen + sizeof(saveFileHeader_t)) {
 		/* set mn_lastsave to let the continue function know which game to

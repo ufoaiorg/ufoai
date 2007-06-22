@@ -704,7 +704,7 @@ static void Key_SetBinding (int keynum, const char *binding, keyBindSpace_t spac
 	}
 
 	/* free old bindings */
-	if (keySpace) {
+	if (*keySpace) {
 		Mem_Free(*keySpace);
 		*keySpace = NULL;
 	}

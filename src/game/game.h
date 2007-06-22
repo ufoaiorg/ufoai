@@ -223,7 +223,7 @@ typedef struct {
 	int (*GetModelAndName) (const char *team, character_t *chr);
 
 	/* managed memory allocation */
-	void *(*TagMalloc) (size_t size, int tag);
+	void *(*TagMalloc) (int size, int tag);
 	void (*TagFree) (void *block);
 	void (*FreeTags) (int tag);
 

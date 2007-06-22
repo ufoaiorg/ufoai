@@ -281,9 +281,9 @@ static void S_RandomTrack_f (void)
 				if ((dirnames = FS_ListFiles(findname, &ndirs, 0, SFF_HIDDEN | SFF_SYSTEM)) != 0) {
 					for (i = 0; i < ndirs - 1; i++) {
 						musicTrackCount++;
-						free(dirnames[i]);
+						Mem_Free(dirnames[i]);
 					}
-					free(dirnames);
+					Mem_Free(dirnames);
 				}
 			}
 		}
@@ -320,9 +320,9 @@ static void S_RandomTrack_f (void)
 						Com_Printf("..playing next: '%s'\n", musicTrack);
 						Cvar_Set("music", musicTrack);
 					}
-					free(dirnames[i]);
+					Mem_Free(dirnames[i]);
 				}
-				free(dirnames);
+				Mem_Free(dirnames);
 			}
 		}
 	}
@@ -358,9 +358,9 @@ static void S_MusicList_f (void)
 			if ((dirnames = FS_ListFiles(findname, &ndirs, 0, SFF_HIDDEN | SFF_SYSTEM)) != 0) {
 				for (i = 0; i < ndirs - 1; i++) {
 					Com_Printf("...%s\n", dirnames[i]);
-					free(dirnames[i]);
+					Mem_Free(dirnames[i]);
 				}
-				free(dirnames);
+				Mem_Free(dirnames);
 			}
 		}
 	}
@@ -527,6 +527,9 @@ void S_Init (void)
 
 	S_StopAllSounds();
 
+	/* Check memory integrity */
+	Mem_CheckPoolIntegrity(cl_soundSysPool);
+
 	/* start music again */
 	if (*Cvar_VariableString("music"))
 		S_StartOGG();
@@ -547,6 +550,7 @@ Shutdown sound engine
 void S_Shutdown (void)
 {
 	int i;
+	uint32_t size;
 	sfx_t *sfx;
 	const cmdList_t *commands;
 
@@ -573,6 +577,11 @@ void S_Shutdown (void)
 			Mem_Free(sfx->cache);
 		memset(sfx, 0, sizeof(*sfx));
 	}
+
+	/* Free all memory */
+	size = Mem_PoolSize(cl_soundSysPool);
+	Com_Printf("...releasing %u bytes\n", size);
+	Mem_FreePool(cl_soundSysPool);
 
 	if (snd_ref_lib) {
 		SND_Init = NULL;
@@ -1068,7 +1077,7 @@ void S_StopAllSounds(void)
  * as the entities are sent to the client
  */
 #if 0
-void S_AddLoopSounds(void)
+void S_AddLoopSounds (void)
 {
 	int i, j;
 	int sounds[MAX_EDICTS];
@@ -1078,9 +1087,6 @@ void S_AddLoopSounds(void)
 	sfxcache_t *sc;
 	int num;
 	entity_state_t *ent;
-
-	if (cl_paused->value)
-		return;
 
 	if (cls.state != ca_active)
 		return;

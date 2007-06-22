@@ -131,7 +131,7 @@ void GL_ShutdownShaders (void)
  */
 unsigned int SH_LoadProgram_ARB_FP (const char *path)
 {
-	char *fbuf, *buf;
+	char *fbuf;
 	unsigned int size;
 
 	const unsigned char *errors;
@@ -151,14 +151,9 @@ unsigned int SH_LoadProgram_ARB_FP (const char *path)
 		return -1;
 	}
 
-	buf = (char *) malloc(size + 1);
-	memcpy(buf, fbuf, size);
-	buf[size] = 0;
-	ri.FS_FreeFile(fbuf);
-
 	qglGenProgramsARB(1, &fpid);
 	qglBindProgramARB(GL_FRAGMENT_PROGRAM_ARB, fpid);
-	qglProgramStringARB(GL_FRAGMENT_PROGRAM_ARB, GL_PROGRAM_FORMAT_ASCII_ARB, size, buf);
+	qglProgramStringARB(GL_FRAGMENT_PROGRAM_ARB, GL_PROGRAM_FORMAT_ASCII_ARB, size, fbuf);
 
 	errors = qglGetString(GL_PROGRAM_ERROR_STRING_ARB);
 
@@ -167,10 +162,10 @@ unsigned int SH_LoadProgram_ARB_FP (const char *path)
 		ri.Con_Printf(PRINT_ALL, "!! FP error at position %d in %s\n", error_pos, path);
 		ri.Con_Printf(PRINT_ALL, "!! Error: %s\n", errors);
 		qglDeleteProgramsARB(1, &fpid);
-		free(buf);
+		ri.FS_FreeFile(fbuf);
 		return 0;
 	}
-	free(buf);
+	ri.FS_FreeFile(fbuf);
 	ri.Con_Printf(PRINT_DEVELOPER, "...loaded fragment shader %s (pid: %i)\n", path, fpid);
 	return fpid;
 }
@@ -182,7 +177,7 @@ unsigned int SH_LoadProgram_ARB_FP (const char *path)
  */
 unsigned int SH_LoadProgram_ARB_VP (const char *path)
 {
-	char *fbuf, *buf;
+	char *fbuf;
 	unsigned int size, vpid;
 
 	size = ri.FS_LoadFile(path, (void **) &fbuf);
@@ -198,14 +193,9 @@ unsigned int SH_LoadProgram_ARB_VP (const char *path)
 		return -1;
 	}
 
-	buf = (char *) malloc(size + 1);
-	memcpy(buf, fbuf, size);
-	buf[size] = 0;
-	ri.FS_FreeFile(fbuf);
-
 	qglGenProgramsARB(1, &vpid);
 	qglBindProgramARB(GL_VERTEX_PROGRAM_ARB, vpid);
-	qglProgramStringARB(GL_VERTEX_PROGRAM_ARB, GL_PROGRAM_FORMAT_ASCII_ARB, size, buf);
+	qglProgramStringARB(GL_VERTEX_PROGRAM_ARB, GL_PROGRAM_FORMAT_ASCII_ARB, size, fbuf);
 
 	{
 		const unsigned char *errors = qglGetString(GL_PROGRAM_ERROR_STRING_ARB);
@@ -217,11 +207,11 @@ unsigned int SH_LoadProgram_ARB_VP (const char *path)
 			ri.Con_Printf(PRINT_ALL, "!! Error: %s\n", errors);
 
 			qglDeleteProgramsARB(1, &vpid);
-			free(buf);
+			ri.FS_FreeFile(fbuf);
 			return 0;
 		}
 	}
-	free(buf);
+	ri.FS_FreeFile(fbuf);
 	ri.Con_Printf(PRINT_DEVELOPER, "...loaded vertex shader %s (pid: %i)\n", path, vpid);
 	return vpid;
 }

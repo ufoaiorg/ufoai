@@ -486,15 +486,51 @@ static void PF_AddEvent (int mask, int eType)
 }
 
 /**
+ * @brief Makes sure the game DLL does not use client, or signed tags
+ */
+static void *GI_TagAlloc (int size, int tagNum)
+{
+	if (tagNum < 0)
+		tagNum *= -1;
+
+	return _Mem_Alloc(size, qtrue, sv_gameSysPool, tagNum, "GAME DLL", 0);
+}
+
+/**
+ * @brief
+ */
+static void GI_MemFree (void *ptr)
+{
+	_Mem_Free(ptr, "GAME DLL", -1);
+}
+
+
+/**
+ * @brief Makes sure the game DLL does not use client, or signed tags
+ */
+static void GI_FreeTags (int tagNum)
+{
+	if (tagNum < 0)
+		tagNum *= -1;
+
+	_Mem_FreeTag(sv_gameSysPool, tagNum, "GAME DLL", 0);
+}
+
+/**
  * @brief Called when either the entire server is being killed, or it is changing to a different game directory.
  * @sa ShutdownGame
  */
 void SV_ShutdownGameProgs (void)
 {
+	uint32_t size;
+
 	if (!ge)
 		return;
 	ge->Shutdown();
 	Sys_UnloadGame();
+	size = Mem_PoolSize(sv_gameSysPool);
+	if (size > 0)
+		Com_Printf("WARNING: Game memory leak (%u bytes)\n", size);
 	ge = NULL;
 }
 
@@ -583,9 +619,9 @@ void SV_InitGameProgs (void)
 
 	import.GetModelAndName = Com_GetModelAndName;
 
-	import.TagMalloc = Mem_TagMalloc;
-	import.TagFree = Mem_Free;
-	import.FreeTags = Mem_FreeTags;
+	import.TagMalloc = GI_TagAlloc;
+	import.TagFree = GI_MemFree;
+	import.FreeTags = GI_FreeTags;
 
 	import.cvar = Cvar_Get;
 	import.cvar_set = Cvar_Set;

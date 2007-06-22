@@ -64,7 +64,7 @@ void GL_LerpVerts(int nverts, dtrivertx_t * v, dtrivertx_t * ov, float *lerp, fl
  * @brief interpolates between two frames and origins
  * FIXME: batch lerp all vertexes
  */
-static void GL_DrawAliasFrameLerp (dmdl_t * paliashdr, float backlerp, int framenum, int oldframenum)
+static void GL_DrawAliasFrameLerp (mdl_md2_t * paliashdr, float backlerp, int framenum, int oldframenum)
 {
 	daliasframe_t *frame, *oldframe;
 	dtrivertx_t *v, *ov, *verts;
@@ -165,13 +165,13 @@ static qboolean R_CullAliasModel (vec4_t bbox[8], entity_t * e)
 {
 	int i, p, mask, f, aggregatemask = ~0;
 	vec3_t mins, maxs;
-	dmdl_t *paliashdr;
+	mdl_md2_t *paliashdr;
 	vec3_t thismins, oldmins, thismaxs, oldmaxs;
 	daliasframe_t *pframe, *poldframe;
 	float dp;
 
 	assert(currentmodel->type == mod_alias_md2);
-	paliashdr = (dmdl_t *) currentmodel->extraData;
+	paliashdr = (mdl_md2_t *) currentmodel->extraData;
 
 	pframe = (daliasframe_t *) ((byte *) paliashdr + paliashdr->ofs_frames + e->as.frame * paliashdr->framesize);
 
@@ -354,7 +354,7 @@ void R_DrawAliasModel (entity_t * e)
 {
 	qboolean lightfixed;
 	vec4_t bbox[8];
-	dmdl_t *paliashdr;
+	mdl_md2_t *paliashdr;
 	image_t *skin;
 
 	/* check if model is out of fov */
@@ -362,7 +362,7 @@ void R_DrawAliasModel (entity_t * e)
 		return;
 
 	assert(currentmodel->type == mod_alias_md2);
-	paliashdr = (dmdl_t *) currentmodel->extraData;
+	paliashdr = (mdl_md2_t *) currentmodel->extraData;
 
 	/* check animations */
 	if ((e->as.frame >= paliashdr->num_frames) || (e->as.frame < 0)) {
@@ -550,7 +550,7 @@ static void R_TransformModelDirect (modelInfo_t * mi)
 			qglTranslatef(-mi->center[0], -mi->center[1], -mi->center[2]);
 	} else if (mi->center) {
 		/* autoscale */
-		dmdl_t *paliashdr;
+		mdl_md2_t *paliashdr;
 		daliasframe_t *pframe;
 
 		float max, size;
@@ -559,7 +559,7 @@ static void R_TransformModelDirect (modelInfo_t * mi)
 
 		/* get model data */
 		assert(mi->model->type == mod_alias_md2);
-		paliashdr = (dmdl_t *) mi->model->extraData;
+		paliashdr = (mdl_md2_t *) mi->model->extraData;
 		pframe = (daliasframe_t *) ((byte *) paliashdr + paliashdr->ofs_frames);
 
 		/* get center and scale */
@@ -584,17 +584,19 @@ static void R_TransformModelDirect (modelInfo_t * mi)
 void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname)
 {
 	int i;
-	dmdl_t *paliashdr;
+	mdl_md2_t *paliashdr;
 	image_t *skin;
 
 	/* register the model */
 	mi->model = R_RegisterModelShort(mi->name);
 
 	/* check if the model exists */
-	if (!mi->model || mi->model->type != mod_alias_md2)
+	if (!mi->model || mi->model->type != mod_alias_md2) {
+		ri.Con_Printf(PRINT_ALL, "No model given or not in md2 format\n");
 		return;
+	}
 
-	paliashdr = (dmdl_t *) mi->model->extraData;
+	paliashdr = (mdl_md2_t *) mi->model->extraData;
 
 	/* check animations */
 	if ((mi->frame >= paliashdr->num_frames) || (mi->frame < 0)) {
@@ -707,14 +709,14 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
  */
 void R_DrawModelParticle (modelInfo_t * mi)
 {
-	dmdl_t *paliashdr;
+	mdl_md2_t *paliashdr;
 	image_t *skin;
 
 	/* check if the model exists */
 	if (!mi->model || mi->model->type != mod_alias_md2)
 		return;
 
-	paliashdr = (dmdl_t *) mi->model->extraData;
+	paliashdr = (mdl_md2_t *) mi->model->extraData;
 
 	/* check animations */
 	if ((mi->frame >= paliashdr->num_frames) || (mi->frame < 0)) {

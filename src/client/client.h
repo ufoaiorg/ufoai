@@ -245,6 +245,22 @@ typedef struct client_static_s {
 
 extern client_static_t cls;
 
+extern struct memPool_s *cl_genericPool;
+extern struct memPool_s *cl_ircSysPool;
+extern struct memPool_s *cl_soundSysPool;
+extern struct memPool_s *vid_genericPool;
+extern struct memPool_s *vid_imagePool;
+extern struct memPool_s *vid_lightPool;
+extern struct memPool_s *vid_modelPool;
+
+/* TODO: Made use of the tags */
+typedef enum {
+	CL_TAG_NONE,				/**< will be wiped on every new game */
+	CL_TAG_PARSE_ONCE,			/**< will not be wiped on a new game (shaders, fonts) */
+	CL_TAG_REPARSE_ON_NEW_GAME,	/**< reparse this stuff on a new game (techs, ...) */
+	CL_TAG_MENU					/**< never delete it */
+} clientMemoryTags_t;
+
 /*============================================================================= */
 
 /* cvars */
@@ -260,15 +276,11 @@ extern cvar_t *cl_http_max_connections;
 extern cvar_t *cl_isometric;
 extern cvar_t *cl_stereo_separation;
 extern cvar_t *cl_stereo;
-
 extern cvar_t *cl_aviForceDemo;
 extern cvar_t *cl_aviFrameRate;
 extern cvar_t *cl_aviMotionJpeg;
-
 extern cvar_t *cl_particleWeather;
-
 extern cvar_t *cl_markactors;
-
 extern cvar_t *cl_camrotspeed;
 extern cvar_t *cl_camrotaccel;
 extern cvar_t *cl_cammovespeed;
@@ -280,51 +292,34 @@ extern cvar_t *cl_campitchspeed;
 extern cvar_t *cl_camzoomquant;
 extern cvar_t *cl_camzoommax;
 extern cvar_t *cl_camzoommin;
-
 extern cvar_t *cl_mapzoommax;
 extern cvar_t *cl_mapzoommin;
-
 extern cvar_t *cl_anglespeedkey;
-
 extern cvar_t *cl_fps;
 extern cvar_t *cl_shownet;
 extern cvar_t *cl_show_tooltips;
 extern cvar_t *cl_show_cursor_tooltips;
-
 extern cvar_t *sensitivity;
-
 extern cvar_t *cl_logevents;
-
-extern cvar_t *cl_paused;
 extern cvar_t *cl_timedemo;
-
 extern cvar_t *cl_centerview;
-
 extern cvar_t *cl_worldlevel;
 extern cvar_t *cl_selected;
-
 extern cvar_t *cl_3dmap;
 extern cvar_t *gl_3dmapradius;
-
 extern cvar_t *cl_numnames;
-
 extern cvar_t *difficulty;
 extern cvar_t *cl_start_employees;
 extern cvar_t *cl_initial_equipment;
 extern cvar_t *cl_start_buildings;
-
 extern cvar_t *mn_serverlist;
-
 extern cvar_t *mn_active;
 extern cvar_t *mn_main;
 extern cvar_t *mn_sequence;
 extern cvar_t *mn_hud;
 extern cvar_t *mn_lastsave;
-
 extern cvar_t *snd_ref;
-
 extern cvar_t *confirm_actions;
-
 extern cvar_t *mn_inputlength;
 
 /** limit the input for cvar editing (base name, save slots and so on) */

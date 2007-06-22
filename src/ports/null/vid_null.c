@@ -109,7 +109,6 @@ void Sys_Vid_Init (void)
 	ri.FS_CheckFile = FS_CheckFile;
 	ri.FS_ListFiles = FS_ListFiles;
 	ri.FS_Gamedir = FS_Gamedir;
-	ri.FS_NextPath = FS_NextPath;
 	ri.Vid_NewWindow = VID_NewWindow;
 	ri.Cvar_Get = Cvar_Get;
 	ri.Cvar_Set = Cvar_Set;
@@ -118,6 +117,15 @@ void Sys_Vid_Init (void)
 	ri.Vid_GetModeInfo = VID_GetModeInfo;
 	ri.CL_WriteAVIVideoFrame = CL_WriteAVIVideoFrame;
 	ri.CL_GetFontData = CL_GetFontData;
+
+	ri.genericPool = &vid_genericPool;
+	ri.imagePool = &vid_imagePool;
+	ri.lightPool = &vid_lightPool;
+	ri.modelPool = &vid_modelPool;
+
+	ri.TagMalloc = VID_TagAlloc;
+	ri.TagFree = VID_MemFree;
+	ri.FreeTags = VID_FreeTags;
 
 	re = GetRefAPI(ri);
 

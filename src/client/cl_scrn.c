@@ -306,7 +306,8 @@ void SCR_Init (void)
 {
 	scr_conspeed = Cvar_Get("scr_conspeed", "3", 0, NULL);
 	scr_consize = Cvar_Get("scr_consize", "1.0", 0, NULL);
-	scr_showpause = Cvar_Get("scr_showpause", "1", 0, NULL);
+	scr_showpause = Cvar_Get("scr_showpause", "1", 0, "Show pause image when server is in paused mode"
+		" set to 0 to deactivate it, useful for screenshots");
 	scr_centertime = Cvar_Get("scr_centertime", "2.5", 0, NULL);
 	scr_netgraph = Cvar_Get("netgraph", "0", 0, "Draw the netgraph");
 	scr_timegraph = Cvar_Get("timegraph", "0", 0, NULL);
@@ -335,24 +336,6 @@ static void SCR_DrawNet (void)
 		return;
 
 	re.DrawPic(scr_vrect.x + 64, scr_vrect.y, "net");
-}
-
-/**
- * @brief
- */
-static void SCR_DrawPause (void)
-{
-	int w = 0, h = 0;
-
-	/* turn off for screenshots */
-	if (!scr_showpause->value)
-		return;
-
-	if (!cl_paused->value)
-		return;
-
-	re.DrawGetPicSize(&w, &h, "pause");
-	re.DrawPic((viddef.width - w) / 2, viddef.height / 2 + 8, "pause");
 }
 
 /**
@@ -756,8 +739,6 @@ void SCR_UpdateScreen (void)
 
 		if (scr_debuggraph->integer || scr_timegraph->integer || scr_netgraph->integer)
 			SCR_DrawDebugGraph();
-
-		SCR_DrawPause();
 
 		SCR_DrawConsole();
 

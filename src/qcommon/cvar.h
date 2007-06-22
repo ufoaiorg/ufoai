@@ -138,3 +138,8 @@ qboolean Cvar_AssertString(cvar_t * cvar, char **array, int arraySize);
  * @brief Sets the check functions for a cvar (e.g. Cvar_Assert)
  */
 qboolean Cvar_SetCheckFunction(char *var_name, qboolean (*check) (cvar_t* cvar));
+
+/**
+ * @brief Reset cheat cvar values to default
+ */
+void Cvar_FixCheatVars(void);

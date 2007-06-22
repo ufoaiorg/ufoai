@@ -51,7 +51,6 @@ cvar_t *cl_shownet;
 cvar_t *cl_show_tooltips;
 cvar_t *cl_show_cursor_tooltips;
 
-cvar_t *cl_paused;
 cvar_t *cl_timedemo;
 
 cvar_t *cl_aviForceDemo;
@@ -125,6 +124,13 @@ static void CL_Disconnect(void);
 
 mouseRepeat_t mouseRepeat;
 
+struct memPool_s *cl_genericPool;
+struct memPool_s *cl_ircSysPool;
+struct memPool_s *cl_soundSysPool;
+struct memPool_s *vid_genericPool;
+struct memPool_s *vid_imagePool;
+struct memPool_s *vid_lightPool;
+struct memPool_s *vid_modelPool;
 /*====================================================================== */
 
 /**
@@ -186,21 +192,6 @@ static void CL_ForwardToServer_f (void)
 		MSG_WriteByte(&cls.netchan.message, clc_stringcmd);
 		SZ_Print(&cls.netchan.message, Cmd_Args());
 	}
-}
-
-
-/**
- * @brief Allow server (singleplayer and multiplayer) to pause the game
- */
-static void CL_Pause_f (void)
-{
-	/* never pause in multiplayer (as client - server is allowed) */
-	if (!ccs.singleplayer || !Com_ServerState()) {
-		Cvar_SetValue("paused", 0);
-		return;
-	}
-
-	Cvar_SetValue("paused", !cl_paused->value);
 }
 
 /**
@@ -2123,7 +2114,6 @@ static void CL_InitLocal (void)
 	cl_fps = Cvar_Get("cl_fps", "0", CVAR_ARCHIVE, "Show frames per second");
 	cl_shownet = Cvar_Get("cl_shownet", "0", CVAR_ARCHIVE, NULL);
 	cl_timeout = Cvar_Get("cl_timeout", "120", 0, NULL);
-	cl_paused = Cvar_Get("paused", "0", 0, NULL);
 	cl_timedemo = Cvar_Get("timedemo", "0", 0, NULL);
 
 	rcon_client_password = Cvar_Get("rcon_password", "", 0, "Remote console password");
@@ -2191,7 +2181,6 @@ static void CL_InitLocal (void)
 
 	/* register our commands */
 	Cmd_AddCommand("cmd", CL_ForwardToServer_f, "Forward to server");
-	Cmd_AddCommand("pause", CL_Pause_f, _("Pause the current server (singleplayer and multiplayer when you are server)"));
 	Cmd_AddCommand("pingservers", CL_PingServers_f, "Ping all servers in local network to get the serverlist");
 
 	Cmd_AddCommand("check_cvars", CL_CheckCvars_f, "Check cvars like playername and so on");
@@ -2266,48 +2255,6 @@ static void CL_InitLocal (void)
 #endif
 }
 
-static cvarList_t cheatvars[] = {
-	{"timedemo", "0", NULL},
-	{"r_drawworld", "1", NULL},
-	{"fixedtime", "0", NULL},
-	{"gl_lightmap", "0", NULL},
-	{"gl_wire", "0", NULL},
-	{"gl_saturatelighting", "0", NULL},
-	{NULL, NULL, NULL}
-};
-
-static int numcheatvars = 0;
-
-/**
- * @brief
- * @sa CL_SendCommand
- */
-static void CL_FixCvarCheats (void)
-{
-	int i;
-	cvarList_t *var;
-
-	if (!Q_strncmp(cl.configstrings[CS_MAXCLIENTS], "1", MAX_TOKEN_CHARS)
-		|| !cl.configstrings[CS_MAXCLIENTS][0])
-		return;					/* single player can cheat */
-
-	/* find all the cvars if we haven't done it yet */
-	if (!numcheatvars) {
-		while (cheatvars[numcheatvars].name) {
-			cheatvars[numcheatvars].var = Cvar_Get(cheatvars[numcheatvars].name, cheatvars[numcheatvars].value, 0, NULL);
-			numcheatvars++;
-		}
-	}
-
-	/* make sure they are all set to the proper values */
-	for (i = 0, var = cheatvars; i < numcheatvars; i++, var++) {
-		if (Q_strcmp(var->var->string, var->value)) {
-			Com_DPrintf("...cheatcvar '%s': value from '%s' to '%s'\n", var->name, var->var->string, var->value);
-			Cvar_Set(var->name, var->value);
-		}
-	}
-}
-
 /**
  * @brief
  */
@@ -2346,7 +2293,7 @@ static void CL_SendCommand (void)
 	CL_SendCmd();
 
 	/* fix any cheating cvars */
-	CL_FixCvarCheats();
+	Cvar_FixCheatVars();
 
 	/* resend a connection request if necessary */
 	CL_CheckForResend();
@@ -2626,10 +2573,14 @@ extern void CL_Init (void)
 	if (dedicated->value)
 		return;					/* nothing running on the client */
 
-	CL_ClientHunkInit();
+	/* TODO: remove cl_hunk* and use this pool */
+	cl_genericPool = Mem_CreatePool("Client: Generic");
+	cl_soundSysPool = Mem_CreatePool("Client: Sound system");
+	cl_ircSysPool = Mem_CreatePool("Client: IRC system");
 
 	/* all archived variables will now be loaded */
 	Con_Init();
+
 #ifdef _WIN32
 	/* sound must be initialized after window is created */
 	VID_Init();
@@ -2666,6 +2617,9 @@ extern void CL_Init (void)
 #endif /* HAVE_CURL */
 
 	CL_InitParticles();
+
+	/* Touch memory */
+	Mem_TouchGlobal();
 }
 
 
@@ -2700,5 +2654,4 @@ extern void CL_Shutdown (void)
 	VID_Shutdown();
 	MN_Shutdown();
 	FS_Shutdown();
-	CL_ClientHunkShutdown();
 }

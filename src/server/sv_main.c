@@ -32,7 +32,6 @@ netadr_t master_adr;	/* address of group servers */
 
 client_t *sv_client;			/* current client */
 
-cvar_t *sv_paused;
 cvar_t *sv_timedemo;
 
 cvar_t *timeout;				/* seconds without any message */
@@ -63,6 +62,9 @@ static qboolean killserver = qfalse;	/* will initiate shutdown once abandon is s
 
 mapcycle_t *mapcycleList;
 int mapcycleCount;
+
+struct memPool_s *sv_gameSysPool;
+struct memPool_s *sv_genericPool;
 
 /*============================================================================ */
 
@@ -876,9 +878,9 @@ extern void SV_MapcycleClear (void)
 	for (i = 0; i < mapcycleCount; i++) {
 		oldMapcycle = mapcycle;
 		mapcycle = mapcycle->next;
-		free(oldMapcycle->type);
-		free(oldMapcycle->map);
-		free(oldMapcycle);
+		Mem_Free(oldMapcycle->type);
+		Mem_Free(oldMapcycle->map);
+		Mem_Free(oldMapcycle);
 	}
 	/* reset the mapcycle data */
 	mapcycleList = NULL;
@@ -895,20 +897,18 @@ extern void SV_MapcycleAdd (const char* mapName, const char* gameType)
 	mapcycle_t *mapcycle;
 
 	if (!mapcycleList) {
-		mapcycleList = malloc(sizeof(mapcycle_t));
+		mapcycleList = Mem_PoolAlloc(sizeof(mapcycle_t), sv_genericPool, 0);
 		mapcycle = mapcycleList; /* first one */
 	} else {
 		/* go the the last entry */
 		mapcycle = mapcycleList;
 		while (mapcycle->next)
 			mapcycle = mapcycle->next;
-		mapcycle->next = malloc(sizeof(mapcycle_t));
+		mapcycle->next = Mem_PoolAlloc(sizeof(mapcycle_t), sv_genericPool, 0);
 		mapcycle = mapcycle->next;
 	}
-	mapcycle->map = (char*)malloc(sizeof(char) * (strlen(mapName) + 1));
-	Q_strncpyz(mapcycle->map, mapName, strlen(mapName) + 1);
-	mapcycle->type = (char*)malloc(sizeof(char) * (strlen(gameType) + 1));
-	Q_strncpyz(mapcycle->type, gameType, strlen(gameType) + 1);
+	mapcycle->map = Mem_PoolStrDup(mapName, sv_genericPool, 0);
+	mapcycle->type = Mem_PoolStrDup(gameType, sv_genericPool, 0);
 	Com_DPrintf("mapcycle add: '%s' type '%s'\n", mapcycle->map, mapcycle->type);
 	mapcycle->next = NULL;
 	mapcycleCount++;
@@ -940,7 +940,7 @@ static void SV_ParseMapcycle (void)
 
 	if (length != -1) {
 		/* sizeof(char) is one by definition - but nevermind */
-		buffer = (char*)malloc(sizeof(char)*(length + 1));
+		buffer = (char*)Mem_PoolAlloc(sizeof(char) * (length + 1), sv_genericPool, 0);
 		buf = &buffer;
 		freeMe = buffer;
 		readsize = FS_Read(buffer, length, &file);
@@ -966,7 +966,7 @@ static void SV_ParseMapcycle (void)
 		Com_Printf("..added %i maps to the mapcycle\n", mapcycleCount);
 		/* now we can close that file */
 		FS_FCloseFile(&file);
-		free(freeMe);
+		Mem_Free(freeMe);
 	}
 }
 
@@ -1143,6 +1143,9 @@ void SV_UserinfoChanged (client_t * cl)
  */
 extern void SV_Init (void)
 {
+	sv_gameSysPool = Mem_CreatePool("Server: Game system");
+	sv_genericPool = Mem_CreatePool("Server: Generic");
+
 	memset(&svs, 0, sizeof(svs));
 
 	SV_InitOperatorCommands();
@@ -1161,7 +1164,6 @@ extern void SV_Init (void)
 	zombietime = Cvar_Get("zombietime", "2", 0, "Timeout for zombies (in sec)");
 	sv_showclamp = Cvar_Get("showclamp", "0", 0, NULL);
 	sv_downloadserver = Cvar_Get("sv_downloadserver", "", CVAR_ARCHIVE, "URL to a location where clients can download game content over HTTP");
-	sv_paused = Cvar_Get("paused", "0", 0, NULL);
 	sv_timedemo = Cvar_Get("timedemo", "0", 0, NULL);
 	sv_enablemorale = Cvar_Get("sv_enablemorale", "1", CVAR_ARCHIVE | CVAR_SERVERINFO | CVAR_LATCH, "Enable morale changes in multiplayer");
 	maxsoldiers = Cvar_Get("maxsoldiers", "4", CVAR_ARCHIVE | CVAR_SERVERINFO, "Max. amount of soldiers per team (see maxsoldiersperplayer and sv_teamplay)");
@@ -1170,7 +1172,7 @@ extern void SV_Init (void)
 	public_server = Cvar_Get("public", "1", 0, "Should heartbeats be send to the masterserver");
 	sv_reconnect_limit = Cvar_Get("sv_reconnect_limit", "3", CVAR_ARCHIVE, "Minimum seconds between connect messages");
 
-	if (dedicated->value)
+	if (dedicated->integer)
 		Cvar_Set("maxclients", "8");
 
 	sv_maxclients->modified = qfalse;

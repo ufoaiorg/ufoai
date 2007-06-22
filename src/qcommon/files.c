@@ -512,7 +512,10 @@ int FS_LoadFile (const char *path, void **buffer)
 		return len;
 	}
 
-	buf = Mem_Alloc(len + 1);
+	assert(com_fileSysPool);
+	buf = (byte*)_Mem_Alloc(len + 1, qtrue, com_fileSysPool, 0, path, 0);
+	if (!buf)
+		return -1;
 	*buffer = buf;
 
 	FS_Read(buf, len, &h);
@@ -528,7 +531,7 @@ int FS_LoadFile (const char *path, void **buffer)
  */
 void FS_FreeFile (void *buffer)
 {
-	Mem_Free(buffer);
+	_Mem_Free(buffer, "FS_FreeFile", 0);
 }
 
 /**
@@ -641,9 +644,9 @@ void FS_AddGameDirectory (const char *dir)
 					break;
 				}
 			}
-			free(dirnames[i]);
+			Mem_Free(dirnames[i]);
 		}
-		free(dirnames);
+		Mem_Free(dirnames);
 	}
 
 	Com_sprintf(pattern, sizeof(pattern), "%s/*.pk3", dir);
@@ -657,9 +660,9 @@ void FS_AddGameDirectory (const char *dir)
 					break;
 				}
 			}
-			free(dirnames[i]);
+			Mem_Free(dirnames[i]);
 		}
-		free(dirnames);
+		Mem_Free(dirnames);
 	}
 
 	/* Sort our list alphabetically */
@@ -670,7 +673,7 @@ void FS_AddGameDirectory (const char *dir)
 		if (!pak)
 			continue;
 
-		search = Mem_Alloc(sizeof(searchpath_t));
+		search = Mem_PoolAlloc(sizeof(searchpath_t), com_fileSysPool, 0);
 		search->pack = pak;
 		search->next = fs_searchpaths;
 		fs_searchpaths = search;
@@ -783,19 +786,19 @@ static void FS_Link_f (void)
 				Mem_Free(l);
 				return;
 			}
-			l->to = CopyString(Cmd_Argv(2));
+			l->to = Mem_PoolStrDup(Cmd_Argv(2), com_fileSysPool, 0);
 			return;
 		}
 		prev = &l->next;
 	}
 
 	/* create a new link */
-	l = Mem_Alloc(sizeof(*l));
+	l = Mem_PoolAlloc(sizeof(*l), com_fileSysPool, 0);
 	l->next = fs_links;
 	fs_links = l;
-	l->from = CopyString(Cmd_Argv(1));
+	l->from = Mem_PoolStrDup(Cmd_Argv(1), com_fileSysPool, 0);
 	l->fromlength = strlen(l->from);
-	l->to = CopyString(Cmd_Argv(2));
+	l->to = Mem_PoolStrDup(Cmd_Argv(2), com_fileSysPool, 0);
 }
 
 
@@ -829,8 +832,7 @@ char **FS_ListFiles (const char *findname, int *numfiles, unsigned musthave, uns
 	nfiles++; /* add space for a guard */
 	*numfiles = nfiles;
 
-	list = malloc(sizeof(char*)*nfiles);
-	memset(list, 0, sizeof(char*)*nfiles);
+	list = Mem_PoolAlloc(sizeof(char*) * nfiles, com_fileSysPool, 0);
 	memset(tempList, 0, sizeof(tempList));
 
 	s = Sys_FindFirst(findname, musthave, canthave);
@@ -849,7 +851,7 @@ char **FS_ListFiles (const char *findname, int *numfiles, unsigned musthave, uns
 
 	qsort(tempList, nfiles, MAX_OSPATH, Q_StringSort);
 	for (i = 0; i < nfiles; i++) {
-		list[i] = Q_strdup(tempList[i]);
+		list[i] = Mem_PoolStrDup(tempList[i], com_fileSysPool, 0);
 	}
 
 	return list;
@@ -885,12 +887,12 @@ static void FS_Dir_f (void)
 				else
 					Com_Printf("%s\n", dirnames[i]);
 
-				free(dirnames[i]);
+				Mem_Free(dirnames[i]);
 			}
-			free(dirnames);
+			Mem_Free(dirnames);
 		}
 		Com_Printf("\n");
-	};
+	}
 }
 
 /**
@@ -1148,9 +1150,9 @@ void FS_BuildFileList (char *fileList)
 			if ((filenames = FS_ListFiles(findname, &nfiles, 0, SFF_HIDDEN | SFF_SYSTEM)) != 0) {
 				for (i = 0; i < nfiles - 1; i++) {
 					_AddToListBlock(&fl, block, tblock, filenames[i]);
-					free(filenames[i]);
+					Mem_Free(filenames[i]);
 				}
-				free(filenames);
+				Mem_Free(filenames);
 			}
 		}
 	}
@@ -1306,7 +1308,7 @@ void FS_GetMaps (qboolean reset)
 	else if (mapsInstalledInit) {
 		Com_DPrintf("Free old list with %i entries\n", numInstalledMaps);
 		for (i = 0; i < numInstalledMaps; i++)
-			free(maps[i]);
+			Mem_Free(maps[i]);
 	}
 
 	mapInstalledIndex = 0;
@@ -1337,8 +1339,8 @@ void FS_GetMaps (qboolean reset)
 						Com_Printf("FS_GetMaps: Max maps limit hit\n");
 						break;
 					}
-					maps[numInstalledMaps+1] = (char *) malloc(MAX_QPATH * sizeof(char));
-					if (maps[numInstalledMaps+1] == NULL) {
+					maps[numInstalledMaps + 1] = (char *)Mem_PoolAlloc(MAX_QPATH * sizeof(char), com_fileSysPool, 0);
+					if (maps[numInstalledMaps + 1] == NULL) {
 						Com_Printf("Could not allocate memory in FS_GetMaps\n");
 						continue;
 					}
@@ -1356,7 +1358,7 @@ void FS_GetMaps (qboolean reset)
 
 			if ((dirnames = FS_ListFiles(findname, &ndirs, 0, SFF_HIDDEN | SFF_SYSTEM)) != 0) {
 				for (i = 0; i < ndirs - 1; i++) {
-					Com_DPrintf("... found map: '%s' (pos %i out of %i)\n", dirnames[i], i+1, ndirs);
+					Com_DPrintf("... found map: '%s' (pos %i out of %i)\n", dirnames[i], i + 1, ndirs);
 					baseMapName = COM_SkipPath(dirnames[i]);
 					COM_StripExtension(baseMapName, filename);
 					status = CheckBSPFile(filename);
@@ -1365,19 +1367,19 @@ void FS_GetMaps (qboolean reset)
 							Com_Printf("FS_GetMaps: Max maps limit hit\n");
 							break;
 						}
-						maps[numInstalledMaps+1] = (char *) malloc(MAX_QPATH * sizeof(char));
+						maps[numInstalledMaps+1] = (char *) Mem_PoolAlloc(MAX_QPATH * sizeof(char), com_fileSysPool, 0);
 						if (maps[numInstalledMaps+1] == NULL) {
 							Com_Printf("Could not allocate memory in FS_GetMaps\n");
-							free(dirnames[i]);
+							Mem_Free(dirnames[i]);
 							continue;
 						}
 						Q_strncpyz(maps[numInstalledMaps+1], filename, MAX_QPATH);
 						numInstalledMaps++;
 					} else
 						Com_Printf("invalid mapstatus: %i (%s)\n", status, dirnames[i]);
-					free(dirnames[i]);
+					Mem_Free(dirnames[i]);
 				}
-				free(dirnames);
+				Mem_Free(dirnames);
 			}
 		}
 	}
@@ -1503,7 +1505,7 @@ void FS_Shutdown (void)
 	/* free malloc'ed space for maplist */
 	if (mapsInstalledInit) {
 		for (i = 0; i <= numInstalledMaps; i++)
-			free(maps[i]);
+			Mem_Free(maps[i]);
 	}
 
 	/* free everything */
@@ -1569,7 +1571,7 @@ extern void FS_CopyFile (const char *fromOSPath, const char *toOSPath)
 	len = ftell(f);
 	fseek(f, 0, SEEK_SET);
 
-	buf = malloc(len);
+	buf = Mem_PoolAlloc(len, com_fileSysPool, 0);
 	if (fread(buf, 1, len, f) != len)
 		Com_Error(ERR_FATAL, "Short read in FS_CopyFile()\n" );
 	fclose(f);
@@ -1584,7 +1586,7 @@ extern void FS_CopyFile (const char *fromOSPath, const char *toOSPath)
 		Com_Error(ERR_FATAL, "Short write in FS_CopyFile()\n");
 
 	fclose(f);
-	free(buf);
+	Mem_Free(buf);
 }
 
 /**

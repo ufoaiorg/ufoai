@@ -4,38 +4,32 @@
  * -Harven
  */
 
-typedef struct maliascoord_s
-{
+typedef struct maliascoord_s {
 	vec2_t			st;
 } maliascoord_t;
 
-typedef struct maliasvertex_s
-{
+typedef struct maliasvertex_s {
 	vec3_t			point;
 	vec3_t			normal;
 } maliasvertex_t;
 
-typedef struct
-{
+typedef struct {
     vec3_t			mins, maxs;
     vec3_t			translate;
     float			radius;
 } maliasframe_t;
 
-typedef struct
-{
+typedef struct {
 	char			name[MD3_MAX_PATH];
 	dorientation_t	orient;
 } maliastag_t;
 
-typedef struct 
-{
+typedef struct {
 	char			name[MD3_MAX_PATH];
 	int				shader;
 } maliasskin_t;
 
-typedef struct
-{
+typedef struct {
     int				num_verts;
 	char			name[MD3_MAX_PATH];
 	maliasvertex_t	*vertexes;
@@ -49,8 +43,7 @@ typedef struct
 	maliasskin_t	*skins;
 } maliasmesh_t;
 
-typedef struct maliasmodel_s
-{
+typedef struct maliasmodel_s {
     int				num_frames;
 	maliasframe_t	*frames;
 
@@ -64,4 +57,4 @@ typedef struct maliasmodel_s
 	maliasskin_t	*skins;
 } maliasmodel_t;
 
-void R_DrawAliasMD3Model (entity_t *e);
+void R_DrawAliasMD3Model(entity_t *e);

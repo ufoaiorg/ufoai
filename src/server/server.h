@@ -31,6 +31,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../qcommon/qcommon.h"
 
+extern struct memPool_s *sv_gameSysPool;
+extern struct memPool_s *sv_genericPool;
+
 /*============================================================================= */
 
 typedef enum {
@@ -192,8 +195,6 @@ extern netadr_t master_adr;	/**< address of the master server */
 
 extern server_static_t svs;		/**< persistant server info */
 extern server_t sv;				/**< local server */
-
-extern cvar_t *sv_paused;
 
 extern cvar_t *public_server;			/**< should heartbeats be sent */
 extern cvar_t *masterserver_ip;

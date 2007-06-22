@@ -79,7 +79,6 @@ typedef struct {
 	char name[MAX_QPATH];
 
 	void *extraData;
-	int extraDataSize;
 
 	int numbrushsides;
 	cbrushside_t *brushsides;
@@ -217,7 +216,7 @@ static void CMod_LoadSubmodels (lump_t * l)
 	if (count > MAX_MAP_MODELS)
 		Com_Error(ERR_DROP, "Map has too many models");
 
-	out = Hunk_Alloc((count + 6)* sizeof(cmodel_t), "CMod_LoadSubmodels");
+	out = Mem_PoolAlloc((count + 6) * sizeof(*out), com_cmodelSysPool, 0);
 	curTile->cmodels = out;
 	curTile->numcmodels = count;
 
@@ -264,7 +263,7 @@ static void CMod_LoadSurfaces (lump_t * l)
 	if (count > MAX_MAP_TEXINFO)
 		Com_Error(ERR_DROP, "Map has too many surfaces");
 
-	out = Hunk_Alloc(count * sizeof(mapsurface_t), "CMod_LoadSurfaces");
+	out = Mem_PoolAlloc(count * sizeof(*out), com_cmodelSysPool, 0);
 
 	curTile->surfaces = out;
 	curTile->numtexinfo = count;
@@ -305,7 +304,7 @@ static void CMod_LoadNodes (lump_t * l)
 		Com_Error(ERR_DROP, "Map has too many nodes");
 
 	/* add some for the box */
-	out = Hunk_Alloc((count + 6) * sizeof(cnode_t), "CMod_LoadNodes");
+	out = Mem_PoolAlloc((count + 6) * sizeof(*out), com_cmodelSysPool, 0);
 
 	curTile->numnodes = count;
 	curTile->nodes = out;
@@ -350,7 +349,7 @@ static void CMod_LoadBrushes (lump_t * l)
 		Com_Error(ERR_DROP, "Map has too many brushes");
 
 	/* add some for the box */
-	out = Hunk_Alloc((count + 1) * sizeof(cbrush_t), "CMod_LoadBrushes");
+	out = Mem_PoolAlloc((count + 1) * sizeof(*out), com_cmodelSysPool, 0);
 
 	curTile->numbrushes = count;
 	curTile->brushes = out;
@@ -390,7 +389,7 @@ static void CMod_LoadLeafs (lump_t * l)
 		Com_Error(ERR_DROP, "Map has too many planes");
 
 	/* add some for the box */
-	out = Hunk_Alloc((count + 1) * sizeof(cleaf_t), "CMod_LoadLeafs");
+	out = Mem_PoolAlloc((count + 1) * sizeof(*out), com_cmodelSysPool, 0);
 
 	curTile->numleafs = count;
 	curTile->leafs = out;
@@ -444,7 +443,7 @@ static void CMod_LoadPlanes (lump_t * l)
 		Com_Error(ERR_DROP, "Map has too many planes");
 
 	/* add some for the box */
-	out = Hunk_Alloc((count + 12) * sizeof(cplane_t), "CMod_LoadPlanes");
+	out = Mem_PoolAlloc((count + 12) * sizeof(*out), com_cmodelSysPool, 0);
 
 	curTile->numplanes = count;
 	curTile->planes = out;
@@ -489,7 +488,7 @@ static void CMod_LoadLeafBrushes (lump_t * l)
 	Com_Printf("%c...leafbrushes: %i\n", 1, count);
 
 	/* add some for the box */
-	out = Hunk_Alloc((count + 1) * sizeof(unsigned short), "CMod_LoadLeafBrushes");
+	out = Mem_PoolAlloc((count + 1) * sizeof(*out), com_cmodelSysPool, 0);
 
 	if (count < 1)
 		Com_Error(ERR_DROP, "Map with no planes");
@@ -531,7 +530,7 @@ static void CMod_LoadBrushSides (lump_t * l)
 		Com_Error(ERR_DROP, "Map has too many brushsides");
 
 	/* add some for the box */
-	out = Hunk_Alloc((count + 6) * sizeof(cbrushside_t), "CMod_LoadBrushSides");
+	out = Mem_PoolAlloc((count + 6) * sizeof(*out), com_cmodelSysPool, 0);
 
 	curTile->numbrushsides = count;
 	curTile->brushsides = out;
@@ -1091,25 +1090,6 @@ static void CMod_LoadEntityString (lump_t * l)
 }
 
 
-
-/**
- * @brief Frees a map tile
- * @param[in] tile
- */
-static void CM_FreeTile (mapTile_t * tile)
-{
-	if (!tile) {
-		Com_DPrintf("CM_FreeTile: no tile given\n");
-		return;
-	}
-
-	if (tile->extraData) {
-		Hunk_Free(tile->extraData);
-		tile->extraData = NULL;
-	}
-}
-
-
 /**
  * @brief Adds in a single map tile
  * @param[in] name The (file-)name of the tile to add.
@@ -1166,7 +1146,6 @@ static unsigned CM_AddMapTile (char *name, int sX, int sY, int sZ)
 
 	curTile = &mapTiles[numTiles++];
 	memset(curTile, 0, sizeof(mapTile_t));
-	curTile->extraData = Hunk_Begin(0x400000);
 	Q_strncpyz(curTile->name, name, sizeof(curTile->name));
 
 	VectorSet(shift, sX * UNIT_SIZE, sY * UNIT_SIZE, sZ * UNIT_SIZE);
@@ -1192,8 +1171,6 @@ static unsigned CM_AddMapTile (char *name, int sX, int sY, int sZ)
 
 	numInline += curTile->numcmodels - LEVEL_STEPON;
 
-	curTile->extraDataSize = Hunk_End();
-
 	return checksum;
 }
 
@@ -1210,9 +1187,7 @@ extern void CM_LoadMap (char *tiles, char *pos, unsigned *mapchecksum)
 	int sh[3];
 	int i;
 
-	/* free old stuff */
-	for (i = 0; i < numTiles; i++)
-		CM_FreeTile(&mapTiles[i]);
+	Mem_FreePool(com_cmodelSysPool);
 
 	/* init */
 	c_pointcontents = c_traces = c_brush_traces = numInline = numTiles = 0;
@@ -2244,9 +2219,7 @@ static void CM_MakeTnodes (void)
 {
 	int i;
 
-	/* 32 byte align the structs */
-	curTile->tnodes = Hunk_Alloc((curTile->numnodes + 1) * sizeof(tnode_t), "CM_MakeTnodes");
-/*	curTile->tnodes = (tnode_t *) (((ptrdiff_t)curTile->tnodes + 31) & ~31);*/
+	curTile->tnodes = Mem_PoolAlloc((curTile->numnodes + 1) * sizeof(tnode_t), com_cmodelSysPool, 0);
 	tnode_p = curTile->tnodes;
 
 	curTile->numtheads = 0;
@@ -2261,7 +2234,6 @@ static void CM_MakeTnodes (void)
 		assert(curTile->numtheads < LEVEL_MAX);
 
 		BuildTnode_r(curTile->cmodels[i].headnode, i);
-/*		MakeTnode(map_models[i].headnode); */
 	}
 }
 

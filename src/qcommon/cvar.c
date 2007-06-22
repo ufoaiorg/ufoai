@@ -293,8 +293,10 @@ extern cvar_t *Cvar_Get (const char *var_name, const char *var_value, int flags,
 		}
 
 	hash = Com_HashKey(var_name, CVAR_HASH_SIZE);
-	for (var = cvar_vars_hash[hash]; var;  var = var->hash_next)
+	for (var = cvar_vars_hash[hash]; var; var = var->hash_next)
 		if (!Q_stricmp(var_name, var->name)) {
+			if (var->flags & CVAR_CHEAT)
+				var->default_string = Mem_PoolStrDup(var_value, com_cvarSysPool, 0);
 			var->flags |= flags;
 			if (desc)
 				var->description = desc;
@@ -311,8 +313,8 @@ extern cvar_t *Cvar_Get (const char *var_name, const char *var_value, int flags,
 		}
 
 	var = Mem_Alloc(sizeof(*var));
-	var->name = CopyString(var_name);
-	var->string = CopyString(var_value);
+	var->name = Mem_PoolStrDup(var_name, com_cvarSysPool, 0);
+	var->string = Mem_PoolStrDup(var_value, com_cvarSysPool, 0);
 	var->old_string = NULL;
 	var->modified = qtrue;
 	var->value = atof(var->string);
@@ -332,6 +334,8 @@ extern cvar_t *Cvar_Get (const char *var_name, const char *var_value, int flags,
 	cvar_vars = var;
 
 	var->flags = flags;
+	if (var->flags & CVAR_CHEAT)
+		var->default_string = Mem_PoolStrDup(var_value, com_cvarSysPool, 0);
 
 	return var;
 }
@@ -392,10 +396,10 @@ static cvar_t *Cvar_Set2 (const char *var_name, const char *value, qboolean forc
 			/* if we are running a server */
 			if (Com_ServerState()) {
 				Com_Printf("%s will be changed for next game.\n", var_name);
-				var->latched_string = CopyString(value);
+				var->latched_string = Mem_PoolStrDup(value, com_cvarSysPool, 0);
 			} else {
-				var->old_string = CopyString(var->string);
-				var->string = CopyString(value);
+				var->old_string = Mem_PoolStrDup(var->string, com_cvarSysPool, 0);
+				var->string = Mem_PoolStrDup(value, com_cvarSysPool, 0);
 				var->value = atof(var->string);
 				var->integer = atoi(var->string);
 				if (!Q_strncmp(var->name, "fs_gamedir", MAX_VAR)) {
@@ -415,7 +419,7 @@ static cvar_t *Cvar_Set2 (const char *var_name, const char *value, qboolean forc
 	if (!Q_strcmp(value, var->string))
 		return var;				/* not changed */
 
-	var->old_string = CopyString(var->string);
+	var->old_string = Mem_PoolStrDup(var->string, com_cvarSysPool, 0);
 	var->modified = qtrue;
 
 	if (var->flags & CVAR_USERINFO)
@@ -423,7 +427,7 @@ static cvar_t *Cvar_Set2 (const char *var_name, const char *value, qboolean forc
 
 	Mem_Free(var->string);		/* free the old value string */
 
-	var->string = CopyString(value);
+	var->string = Mem_PoolStrDup(value, com_cvarSysPool, 0);
 	var->value = atof(var->string);
 	var->integer = atoi(var->string);
 
@@ -484,7 +488,7 @@ extern cvar_t *Cvar_FullSet (const char *var_name, const char *value, int flags)
 	/* free the old value string */
 	Mem_Free(var->string);
 
-	var->string = CopyString(value);
+	var->string = Mem_PoolStrDup(value, com_cvarSysPool, 0);
 	var->value = atof(var->string);
 	var->integer = atoi(var->string);
 	var->flags = flags;
@@ -778,6 +782,32 @@ static void Cvar_Del_f (void)
 	}
 
 	Cbuf_ExecuteText(EXEC_NOW, va("set %s \"\"", Cmd_Argv(1)));
+}
+
+/**
+ * @brief Reset cheat cvar values to default
+ * @sa CL_SendCommand
+ */
+extern void Cvar_FixCheatVars (void)
+{
+	cvar_t *var;
+
+	if (!(Com_ServerState() && !Cvar_VariableInteger("cheats")))
+		return;
+
+	for (var = cvar_vars; var; var = var->next) {
+		if (!(var->flags & CVAR_CHEAT))
+			continue;
+
+		if (!var->default_string) {
+			Com_Printf("Cheat cvars: Cvar %s has no default value\n", var->name);
+			continue;
+		}
+		Mem_Free(var->string);
+		var->string = Mem_PoolStrDup(var->default_string, com_cvarSysPool, 0);
+		var->value = atof(var->string);
+		var->integer = atoi(var->string);
+	}
 }
 
 /**

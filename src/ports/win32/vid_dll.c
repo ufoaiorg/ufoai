@@ -418,7 +418,6 @@ static qboolean VID_LoadRefresh (const char *name)
 	ri.FS_CheckFile = FS_CheckFile;
 	ri.FS_ListFiles = FS_ListFiles;
 	ri.FS_Gamedir = FS_Gamedir;
-	ri.FS_NextPath = FS_NextPath;
 	ri.Cvar_Get = Cvar_Get;
 	ri.Cvar_Set = Cvar_Set;
 	ri.Cvar_SetValue = Cvar_SetValue;
@@ -428,6 +427,15 @@ static qboolean VID_LoadRefresh (const char *name)
 	ri.CL_WriteAVIVideoFrame = CL_WriteAVIVideoFrame;
 	ri.CL_GetFontData = CL_GetFontData;
 	ri.RenderTrace = SV_RenderTrace;
+
+	ri.genericPool = &vid_genericPool;
+	ri.imagePool = &vid_imagePool;
+	ri.lightPool = &vid_lightPool;
+	ri.modelPool = &vid_modelPool;
+
+	ri.TagMalloc = VID_TagAlloc;
+	ri.TagFree = VID_MemFree;
+	ri.FreeTags = VID_FreeTags;
 
 	if ((GetRefAPI = (GetRefAPI_t) GetProcAddress(reflib_library, "GetRefAPI")) == 0)
 		Com_Error(ERR_FATAL, "GetProcAddress failed on %s", name);

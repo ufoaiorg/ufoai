@@ -1876,22 +1876,6 @@ char *Q_strlwr (char *str)
 }
 
 /**
- * @brief Duplicates a string
- * @param[in] str String to duplicate
- * @note Don't forget to free it afterwards
- */
-char *Q_strdup (const char *str)
-{
-	if (!str)
-		return NULL;
-#ifdef _MSC_VER
-	return _strdup(str);
-#else
-	return strdup(str);
-#endif
-}
-
-/**
  * @brief
  * @param
  * @sa

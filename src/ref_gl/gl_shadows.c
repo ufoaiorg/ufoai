@@ -136,7 +136,7 @@ static int model_dlights_num;
 /**
  * @brief
  */
-static void GL_DrawAliasShadow (entity_t * e, dmdl_t * paliashdr, int posenum)
+static void GL_DrawAliasShadow (entity_t * e, mdl_md2_t * paliashdr, int posenum)
 {
 	dtrivertx_t *verts;
 	int *order;
@@ -215,7 +215,7 @@ static void GL_DrawAliasShadow (entity_t * e, dmdl_t * paliashdr, int posenum)
  * @brief
  * @sa GL_RenderVolumes
  */
-static void BuildShadowVolume (dmdl_t * hdr, vec3_t light, float projectdistance)
+static void BuildShadowVolume (mdl_md2_t * hdr, vec3_t light, float projectdistance)
 {
 	dtriangle_t *ot, *tris;
 	neighbors_t	*neighbors;
@@ -329,7 +329,7 @@ static void BuildShadowVolume (dmdl_t * hdr, vec3_t light, float projectdistance
  * @sa GL_DrawAliasShadowVolume
  * @sa BuildShadowVolume
  */
-static void GL_RenderVolumes (dmdl_t * paliashdr, vec3_t lightdir, int projdist)
+static void GL_RenderVolumes (mdl_md2_t * paliashdr, vec3_t lightdir, int projdist)
 {
 	int incr = gl_state.stencil_wrap ? GL_INCR_WRAP_EXT : GL_INCR;
 	int decr = gl_state.stencil_wrap ? GL_DECR_WRAP_EXT : GL_DECR;
@@ -367,7 +367,7 @@ static void GL_RenderVolumes (dmdl_t * paliashdr, vec3_t lightdir, int projdist)
  * @brief
  * @sa R_DrawShadowVolume
  */
-static void GL_DrawAliasShadowVolume (dmdl_t * paliashdr, int posenumm)
+static void GL_DrawAliasShadowVolume (mdl_md2_t * paliashdr, int posenumm)
 {
 	int *order, i, o, dist;
 	vec3_t light, temp;
@@ -486,7 +486,7 @@ static void GL_DrawAliasShadowVolume (dmdl_t * paliashdr, int posenumm)
  */
 void R_DrawShadow (entity_t * e)
 {
-	dmdl_t *paliashdr;
+	mdl_md2_t *paliashdr;
 
 	daliasframe_t *frame, *oldframe;
 	dtrivertx_t *v, *ov, *verts;
@@ -500,7 +500,7 @@ void R_DrawShadow (entity_t * e)
 		return;
 
 	assert(currentmodel->type == mod_alias_md2);
-	paliashdr = (dmdl_t *) currentmodel->extraData;
+	paliashdr = (mdl_md2_t *) currentmodel->extraData;
 
 	frame = (daliasframe_t *) ((byte *) paliashdr + paliashdr->ofs_frames + currententity->as.frame * paliashdr->framesize);
 	verts = v = frame->verts;
@@ -562,7 +562,7 @@ void R_DrawShadow (entity_t * e)
  */
 void R_DrawShadowVolume (entity_t * e)
 {
-	dmdl_t *paliashdr;
+	mdl_md2_t *paliashdr;
 
 	daliasframe_t *frame, *oldframe;
 	dtrivertx_t *v, *ov, *verts;
@@ -576,7 +576,7 @@ void R_DrawShadowVolume (entity_t * e)
 		return;
 
 	assert(currentmodel->type == mod_alias_md2);
-	paliashdr = (dmdl_t *) currentmodel->extraData;
+	paliashdr = (mdl_md2_t *) currentmodel->extraData;
 
 	frame = (daliasframe_t *) ((byte *) paliashdr + paliashdr->ofs_frames + currententity->as.frame * paliashdr->framesize);
 	verts = v = frame->verts;

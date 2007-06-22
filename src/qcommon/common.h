@@ -26,6 +26,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define min(a,b) ((a)<(b) ? (a):(b))
 #endif
 
+extern struct memPool_s *com_aliasSysPool;
+extern struct memPool_s *com_cmdSysPool;
+extern struct memPool_s *com_cmodelSysPool;
+extern struct memPool_s *com_cvarSysPool;
+extern struct memPool_s *com_fileSysPool;
+extern struct memPool_s *com_genericPool;
+
 /*============================================================================ */
 
 typedef struct sizebuf_s {
@@ -108,7 +115,6 @@ extern float LittleFloat(float l);
 
 /*============================================================================ */
 
-
 int COM_Argc(void);
 char *COM_Argv(int arg);		/* range and null checked */
 void COM_ClearArgv(int arg);
@@ -118,9 +124,3 @@ void COM_AddParm(char *parm);
 
 void COM_Init(void);
 void COM_InitArgv(int argc, char **argv);
-
-char *CopyString(const char *in);
-
-/*============================================================================ */
-
-
