@@ -295,7 +295,7 @@ extern cvar_t *Cvar_Get (const char *var_name, const char *var_value, int flags,
 	hash = Com_HashKey(var_name, CVAR_HASH_SIZE);
 	for (var = cvar_vars_hash[hash]; var; var = var->hash_next)
 		if (!Q_stricmp(var_name, var->name)) {
-			if (var->flags & CVAR_CHEAT)
+			if (!var->default_string && flags & CVAR_CHEAT)
 				var->default_string = Mem_PoolStrDup(var_value, com_cvarSysPool, 0);
 			var->flags |= flags;
 			if (desc)
