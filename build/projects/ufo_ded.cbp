@@ -31,6 +31,7 @@
 			<Target title="linux">
 				<Option platforms="Unix;" />
 				<Option output="../../ufo_ded" prefix_auto="1" extension_auto="1" />
+				<Option object_output=".objs/ufo_ded" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Linker>
@@ -41,6 +42,7 @@
 			<Target title="macosx">
 				<Option platforms="Mac;" />
 				<Option output="../../ufo_ded" prefix_auto="1" extension_auto="1" />
+				<Option object_output=".objs/ufo_ded" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
