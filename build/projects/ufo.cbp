@@ -129,10 +129,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\client\cl_http.h" />
-		<Unit filename="..\..\src\client\cl_hunk.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="..\..\src\client\cl_hunk.h" />
 		<Unit filename="..\..\src\client\cl_input.c">
 			<Option compilerVar="CC" />
 		</Unit>
