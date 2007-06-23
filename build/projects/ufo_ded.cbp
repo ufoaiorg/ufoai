@@ -49,7 +49,7 @@
 				<Linker>
 					<Add library="z" />
 					<Add library="dl" />
-					<Add directory="/sw/libs" />
+					<Add directory="/sw/lib" />
 				</Linker>
 			</Target>
 		</Build>

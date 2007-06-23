@@ -82,7 +82,7 @@
 					<Add library="SDL" />
 					<Add library="SDL_ttf" />
 					<Add library="z" />
-					<Add directory="/sw/libs" />
+					<Add directory="/sw/lib" />
 				</Linker>
 			</Target>
 		</Build>
