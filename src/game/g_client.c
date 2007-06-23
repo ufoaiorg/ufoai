@@ -2125,7 +2125,9 @@ void G_ClientTeamAssign (player_t * player)
 				if (p->pers.team == level.activeTeam) {
 					Q_strcat(buffer, p->pers.netname, sizeof(buffer));
 					Q_strcat(buffer, " ", sizeof(buffer));
-				}
+				} else
+					/* all the others are set to waiting */
+					p->ready = qtrue;
 			}
 			G_PrintStats(va("Team %i: %s", p->pers.team, p->pers.netname));
 		}
