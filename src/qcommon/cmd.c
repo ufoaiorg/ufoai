@@ -757,7 +757,7 @@ extern void Cmd_AddCommand (const char *cmd_name, xcommand_t function, const cha
 	hash = Com_HashKey(cmd_name, CMD_HASH_SIZE);
 	for (cmd = cmd_functions_hash[hash]; cmd; cmd = cmd->hash_next) {
 		if (!Q_strcmp(cmd_name, cmd->name)) {
-			Com_Printf("Cmd_AddCommand: %s already defined\n", cmd_name);
+			Com_DPrintf("Cmd_AddCommand: %s already defined\n", cmd_name);
 			return;
 		}
 	}

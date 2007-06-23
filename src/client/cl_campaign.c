@@ -3658,8 +3658,7 @@ extern void CL_GameExit (void)
 		Cmd_ExecuteString("disconnect\n");
 	Cvar_Set("mn_main", "main");
 	Cvar_Set("mn_active", "");
-	MN_ShutdownMessageSystem();
-	CL_InitMessageSystem();
+
 	/* singleplayer commands are no longer available */
 	if (curCampaign) {
 		Com_DPrintf("Remove game commands\n");
@@ -3744,10 +3743,6 @@ static void CL_GameNew_f (void)
 	/* exit running game */
 	if (curCampaign)
 		CL_GameExit();
-
-	/* clear any old pending messages */
-	MN_ShutdownMessageSystem();
-	CL_InitMessageSystem();
 
 	/* get campaign - they are already parsed here */
 	curCampaign = CL_GetCampaign(Cvar_VariableString("campaign"));
@@ -3926,6 +3921,7 @@ extern void CL_ResetSinglePlayerData (void)
 	memset(stageSets, 0, sizeof(stageSet_t) * MAX_STAGESETS);
 	memset(stages, 0, sizeof(stage_t) * MAX_STAGES);
 	memset(&invList, 0, sizeof(invList));
+	messageStack = NULL;
 
 	Mem_FreePool(cl_localPool);
 

@@ -26,6 +26,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 #include "cl_global.h"
 
+#define MENU_HUNK_SIZE 0x40000
+
 message_t *messageStack;
 
 /** @brief Stores all chat messages from a multiplayer game */
@@ -36,7 +38,6 @@ typedef struct chatMessage_s {
 
 static chatMessage_t *chatMessageStack = NULL;
 
-static void MN_ShutdownChatMessageSystem(void);
 static void CL_ShowChatMessagesOnStack_f(void);
 
 static const vec4_t tooltipBG = { 0.0f, 0.0f, 0.0f, 0.7f };
@@ -3326,6 +3327,7 @@ static void MN_ReloadMenus_f (void)
 		return;
 
 	assert(adataize);
+	Mem_FreePool(cl_menuSysPool);
 
 	/* pre-stage parsing */
 	FS_BuildFileList("ufos/*.ufo");
@@ -3338,9 +3340,8 @@ static void MN_ReloadMenus_f (void)
 	numMenus = 0;
 	numMenuModels = 0;
 
-	/* get action data memory */
-	memset(adata, 0, adataize);
-
+	adata = (byte*)Mem_PoolAlloc(MENU_HUNK_SIZE, cl_menuSysPool, CL_TAG_MENU);
+	adataize = MENU_HUNK_SIZE;
 	curadata = adata;
 
 	while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != 0 )
@@ -3446,6 +3447,8 @@ void MN_ResetMenus (void)
 	numTutorials = 0;
 	numSelectBoxes = 0;
 
+	messageStack = NULL;
+
 	/* add commands */
 	mn_escpop = Cvar_Get("mn_escpop", "1", 0, NULL);
 	mn_debugmenu = Cvar_Get("mn_debugmenu", "0", 0, "Prints node names for debugging purposes");
@@ -3489,15 +3492,9 @@ void MN_ResetMenus (void)
 	Cmd_AddCommand("debug_menureload", MN_ReloadMenus_f, "Reloads the menus to show updates without the need to restart");
 #endif
 	Cmd_AddCommand("hidehud", MN_PushNoHud_f, _("Hide the HUD (press ESC to reactivate HUD)"));
-	/* get action data memory */
-	if (adataize)
-		/* @todo: should not be needed - this function is only called once - check this */
-		memset(adata, 0, adataize);
-	else {
-		/* 256kb - FIXME: Get rid of adata, curadata and adataize */
-		adata = (byte*)Mem_PoolAlloc(0x40000, cl_genericPool, CL_TAG_MENU);
-		adataize = 0x40000;
-	}
+	/* 256kb - FIXME: Get rid of adata, curadata and adataize */
+	adata = (byte*)Mem_PoolAlloc(MENU_HUNK_SIZE, cl_menuSysPool, CL_TAG_MENU);
+	adataize = MENU_HUNK_SIZE;
 	curadata = adata;
 
 	/* reset menu texts */
@@ -3523,8 +3520,6 @@ void MN_ResetMenus (void)
  * before CL_InitLocal (and thus MN_ResetMenus) was called
  * @sa CL_Shutdown
  * @sa MN_ResetMenus
- * @sa MN_ShutdownChatMessageSystem
- * @sa MN_ShutdownMessageSystem
  */
 void MN_Shutdown (void)
 {
@@ -3532,8 +3527,6 @@ void MN_Shutdown (void)
 		Mem_Free(adata);
 	adata = NULL;
 	adataize = 0;
-	MN_ShutdownChatMessageSystem();
-	MN_ShutdownMessageSystem();
 }
 
 /*
@@ -4185,7 +4178,7 @@ void MN_ParseMenuModel (const char *name, char **text)
 
 	Vector4Set(menuModel->color, 0.5, 0.5, 0.5, 1.0);
 
-	menuModel->id = Mem_PoolStrDup(name, cl_menuSysPool, CL_TAG_NONE);
+	menuModel->id = Mem_PoolStrDup(name, cl_menuSysPool, CL_TAG_MENU);
 	Com_DPrintf("Found menu model %s (%i)\n", menuModel->id, numMenuModels);
 
 	/* get it's body */
@@ -4216,7 +4209,7 @@ void MN_ParseMenuModel (const char *name, char **text)
 					menuModel->next = MN_GetMenuModel(token);
 					if (!menuModel->next)
 						Com_Printf("Could not find menumodel %s", token);
-					menuModel->need = Mem_PoolStrDup(token, cl_menuSysPool, CL_TAG_NONE);
+					menuModel->need = Mem_PoolStrDup(token, cl_menuSysPool, CL_TAG_MENU);
 				} else if (!Q_strncmp(v->string, "menuscale", 9)) {
 					token = COM_EParse(text, errhead, name);
 					if (!*text)
@@ -4231,7 +4224,7 @@ void MN_ParseMenuModel (const char *name, char **text)
 							return;
 						if (*token == '}')
 							break;
-						menuModel->menuScale[menuModel->menuScaleCnt] = Mem_PoolStrDup(token, cl_menuSysPool, CL_TAG_NONE);
+						menuModel->menuScale[menuModel->menuScaleCnt] = Mem_PoolStrDup(token, cl_menuSysPool, CL_TAG_MENU);
 						token = COM_EParse(text, errhead, name);
 						if (!*text)
 							return;
@@ -4249,7 +4242,7 @@ void MN_ParseMenuModel (const char *name, char **text)
 
 					switch (v->type) {
 					case V_CLIENT_HUNK_STRING:
-						Mem_PoolStrDupTo(token, (char**) ((char*)menuModel + (int)v->ofs), cl_menuSysPool, CL_TAG_NONE);
+						Mem_PoolStrDupTo(token, (char**) ((char*)menuModel + (int)v->ofs), cl_menuSysPool, CL_TAG_MENU);
 						break;
 					default:
 						Com_ParseValue(menuModel, token, v->type, v->ofs, v->size);
@@ -4457,8 +4450,8 @@ message_t *MN_AddNewMessage (const char *title, const char *text, qboolean popup
 
 	assert(type < MSG_MAX);
 
-	/* allocate memory for new message */
-	mess = (message_t *) Mem_PoolAlloc(sizeof(message_t), cl_genericPool, CL_TAG_NONE);
+	/* allocate memory for new message - delete this with every new game */
+	mess = (message_t *) Mem_PoolAlloc(sizeof(message_t), cl_localPool, CL_TAG_NONE);
 
 	/* push the new message at the beginning of the stack */
 	mess->next = messageStack;
@@ -4474,7 +4467,7 @@ message_t *MN_AddNewMessage (const char *title, const char *text, qboolean popup
 	mess->s = (ccs.date.sec % 3600) / 60 / 60;
 
 	Q_strncpyz(mess->title, title, sizeof(mess->title));
-	mess->text = Mem_PoolStrDup(text, cl_genericPool, CL_TAG_NONE);
+	mess->text = Mem_PoolStrDup(text, cl_localPool, CL_TAG_NONE);
 
 	/* they need to be translated already */
 	if (popup)
@@ -4526,23 +4519,6 @@ static void MN_TimestampedText (char *text, message_t *message, size_t textsize)
 /**
  * @brief
  */
-extern void MN_ShutdownMessageSystem (void)
-{
-	message_t *m = messageStack;
-	message_t *d;
-
-	while (m) {
-		d = m;
-		m = m->next;
-		Mem_Free(d->text);
-		Mem_Free(d);
-	}
-	messageStack = NULL;
-}
-
-/**
- * @brief
- */
 void MN_RemoveMessage (char *title)
 {
 	message_t *m = messageStack;
@@ -4562,26 +4538,12 @@ void MN_RemoveMessage (char *title)
 	Com_Printf("Could not remove message from stack - %s was not found\n", title);
 }
 
-/**
- * @brief Inits the message system with no messages
- */
-void CL_InitMessageSystem (void)
-{
-	/* no messages on stack */
-	messageStack = NULL;
-
-	/* we will use the messages on the stack in this textfield */
-	/* so be sure that this is null - don't change this */
-	menuText[TEXT_MESSAGESYSTEM] = NULL;
-}
-
 /**< @brief buffer that hold all printed chat messages for menu display */
 static char *chatBuffer = NULL;
 static menuNode_t* chatBufferNode = NULL;
 
 /**
  * @brief Displays a chat on the hud and add it to the chat buffer
- * @sa MN_ShutdownChatMessageSystem
  */
 void MN_AddChatMessage (const char *text)
 {
@@ -4631,26 +4593,6 @@ static void CL_ShowChatMessagesOnStack_f (void)
 		Com_Printf("%s", m->text);
 		m = m->next;
 	}
-}
-
-/**
- * @brief
- * @sa MN_AddChatMessage
- */
-static void MN_ShutdownChatMessageSystem (void)
-{
-	chatMessage_t *m = chatMessageStack;
-	chatMessage_t *d;
-
-	while (m) {
-		d = m;
-		m = m->next;
-		Mem_Free(d->text);
-		Mem_Free(d);
-	}
-	chatMessageStack = NULL;
-	if (chatBuffer)
-		Mem_Free(chatBuffer);
 }
 
 /**
@@ -4727,7 +4669,7 @@ void CL_ParseFont (const char *name, char **text)
 	font = &fonts[numFonts];
 	memset(font, 0, sizeof(font_t));
 
-	font->name = Mem_PoolStrDup(name, cl_menuSysPool, CL_TAG_NONE);
+	font->name = Mem_PoolStrDup(name, cl_menuSysPool, CL_TAG_MENU);
 
 	if (!Q_strcmp(font->name, "f_small"))
 		fontSmall = font;
@@ -4765,7 +4707,7 @@ void CL_ParseFont (const char *name, char **text)
 				case V_TRANSLATION2_STRING:
 					token++;
 				case V_CLIENT_HUNK_STRING:
-					Mem_PoolStrDupTo(token, (char**) ((char*)font + (int)v->ofs), cl_menuSysPool, CL_TAG_NONE);
+					Mem_PoolStrDupTo(token, (char**) ((char*)font + (int)v->ofs), cl_menuSysPool, CL_TAG_MENU);
 					break;
 				default:
 					Com_ParseValue(font, token, v->type, v->ofs, v->size);
@@ -4851,7 +4793,7 @@ extern void MN_ParseTutorials (const char *name, char **text)
 
 				switch (v->type) {
 				case V_CLIENT_HUNK_STRING:
-					Mem_PoolStrDupTo(token, (char**) ((char*)t + (int)v->ofs), cl_menuSysPool, CL_TAG_NONE);
+					Mem_PoolStrDupTo(token, (char**) ((char*)t + (int)v->ofs), cl_menuSysPool, CL_TAG_MENU);
 					break;
 				default:
 					Com_ParseValue(t, token, v->type, v->ofs, v->size);
@@ -4924,8 +4866,6 @@ extern qboolean MS_Load (sizebuf_t* sb, void* data)
 	int i, mtype, idx;
 	char title[MAX_VAR], text[MAX_MESSAGE_TEXT];
 	message_t *mess;
-
-	MN_ShutdownMessageSystem();
 
 	/* how many message items */
 	i = MSG_ReadLong(sb);

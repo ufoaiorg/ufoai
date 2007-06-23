@@ -2097,7 +2097,6 @@ static void CL_InitLocal (void)
 	Com_InitInventory(invList);
 	Con_CheckResize();
 	CL_InitInput();
-	CL_InitMessageSystem();
 
 	SAV_Init();
 	MN_ResetMenus();

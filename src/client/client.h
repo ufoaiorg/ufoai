@@ -891,7 +891,6 @@ extern message_t *messageStack;
 
 message_t *MN_AddNewMessage(const char *title, const char *text, qboolean popup, messagetype_t type, technology_t * pedia);
 void MN_RemoveMessage(char *title);
-void CL_InitMessageSystem(void);
 
 void MN_AddChatMessage(const char *text);
 

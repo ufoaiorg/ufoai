@@ -242,7 +242,6 @@ void MN_SetViewRect(const menu_t* menu);
 extern void MN_ResetoldSource_f(void);
 void MN_DrawMenus(void);
 void MN_DrawItem(vec3_t org, item_t item, int sx, int sy, int x, int y, vec3_t scale, vec4_t color);
-void MN_ShutdownMessageSystem(void);
 void MN_UnHideNode(menuNode_t* node);
 void MN_HideNode(menuNode_t* node);
 menuNode_t* MN_GetNodeFromCurrentMenu(const char *name);
