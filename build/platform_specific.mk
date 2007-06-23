@@ -24,8 +24,8 @@ endif
 
 # Linux like
 ifeq ($(TARGET_OS),linux-gnu)
-	CFLAGS +=-D_GNU_SOURCE -D_BSD_SOURCE -D_XOPEN_SOURCE -std=c89 \
-	-Wunsafe-loop-optimizations
+	CFLAGS +=-D_GNU_SOURCE -D_BSD_SOURCE -D_XOPEN_SOURCE -std=c89
+#	-Wunsafe-loop-optimizations
 endif
 
 # FreeBSD like
