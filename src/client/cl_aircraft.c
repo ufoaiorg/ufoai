@@ -33,7 +33,6 @@ aircraft_t aircraft_samples[MAX_AIRCRAFT];		/**< Available aircraft types. */
 int numAircraft_samples = 0; /* @todo: should be reset to 0 each time scripts are read anew; also aircraft_samples memory should be freed at that time, or old memory used for new records */
 static int airequipID = -1;				/**< FIXME: document me. */
 static qboolean noparams = qfalse;			/**< FIXME: document me. */
-int numAircraftItems = 0;			/**< number of available aircrafts items in game. */
 aircraftItem_t aircraftItems[MAX_AIRCRAFTITEMS];	/**< Available aicraft items. */
 static int airequipSelectedZone = 0;		/**< Selected zone in equip menu */
 static int airequipSelectedSlot = 0;			/**< Selected slot in equip menu */
@@ -273,6 +272,7 @@ void AIM_AircraftStart_f (void)
 
 /**
  * @brief Assigns the tech pointers, homebase and teamsize pointers to all aircraft.
+ * @sa CL_GameInit
  */
 void AIR_AircraftInit (void)
 {
@@ -291,10 +291,11 @@ void AIR_AircraftInit (void)
 	}
 
 	/* Link technologies for craftitems. */
-	for (i = 0; i < numAircraftItems; i++) {
+	for (i = 0; i < gd.numAircraftItems; i++) {
 		aircraftitem = &aircraftItems[i];
 		aircraftitem->tech_idx = -1; /* Default is -1 so it can be checked. */
 		if (aircraftitem) {
+			assert(aircraftitem->tech);
 			tech = RS_GetTechByID(aircraftitem->tech);
 			if (tech)
 				aircraftitem->tech_idx = tech->idx;
@@ -1051,7 +1052,7 @@ static technology_t **AII_GetCraftitemTechsByType (int type, qboolean usetypedef
 	aircraftItem_t *aircraftitem = NULL;
 	int i, j = 0;
 
-	for (i = 0; i < numAircraftItems; i++) {
+	for (i = 0; i < gd.numAircraftItems; i++) {
 		aircraftitem = &aircraftItems[i];
 		if (usetypedef) {
 			if (aircraftitem->type == type) {
@@ -1114,7 +1115,7 @@ extern int AII_GetAircraftItemByID (const char *id)
 	}
 #endif
 
-	for (i = 0; i < numAircraftItems; i++) {	/* i = item index */
+	for (i = 0; i < gd.numAircraftItems; i++) {	/* i = item index */
 		aircraftItem = &aircraftItems[i];
 		if (!Q_strncmp(id, aircraftItem->id, MAX_VAR)) {
 			return i;
@@ -1718,7 +1719,8 @@ static const value_t aircraftitems_vals[] = {
 
 /**
  * @brief Parses all aircraft items that are defined in our UFO-scripts.
- * @sa CL_ParseClientData
+ * @sa CL_ParseScriptFirst
+ * @note write into cl_localPool - free on every game restart and reparse
  */
 extern void AII_ParseAircraftItem (const char *name, char **text)
 {
@@ -1728,33 +1730,33 @@ extern void AII_ParseAircraftItem (const char *name, char **text)
 	char *token;
 	int i;
 
-	for (i = 0; i < numAircraftItems; i++) {
+	for (i = 0; i < gd.numAircraftItems; i++) {
 		if (!Q_strcmp(aircraftItems[i].id, name)) {
 			Com_Printf("AII_ParseAircraftItem: Second airitem with same name found (%s) - second ignored\n", name);
 			return;
 		}
 	}
 
-	if (numAircraftItems >= MAX_AIRCRAFTITEMS) {
+	if (gd.numAircraftItems >= MAX_AIRCRAFTITEMS) {
 		Com_Printf("AII_ParseAircraftItem: too many craftitem definitions; def \"%s\" ignored\n", name);
 		return;
 	}
 
 	/* initialize the menu */
-	airItem = &aircraftItems[numAircraftItems];
+	airItem = &aircraftItems[gd.numAircraftItems];
 	memset(airItem, 0, sizeof(aircraftItem_t));
 
 	Com_DPrintf("...found craftitem %s\n", name);
-	airItem->idx = numAircraftItems;
-	numAircraftItems++;
-	CL_ClientHunkStoreString(name, &airItem->id);
+	airItem->idx = gd.numAircraftItems;
+	gd.numAircraftItems++;
+	airItem->id = Mem_PoolStrDup(name, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 
 	/* get it's body */
 	token = COM_Parse(text);
 
 	if (!*text || *token != '{') {
 		Com_Printf("AII_ParseAircraftItem: craftitem def \"%s\" without body ignored\n", name);
-		numAircraftItems--;
+		gd.numAircraftItems--;
 		return;
 	}
 
@@ -1808,7 +1810,7 @@ extern void AII_ParseAircraftItem (const char *name, char **text)
 					case V_TRANSLATION2_STRING:
 						token++;
 					case V_CLIENT_HUNK_STRING:
-						CL_ClientHunkStoreString(token, (char**) ((char*)airItem + (int)vp->ofs));
+						Mem_PoolStrDupTo(token, (char**) ((char*)airItem + (int)vp->ofs), cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 						break;
 					default:
 						Com_ParseValue(airItem, token, vp->type, vp->ofs, vp->size);
@@ -1905,7 +1907,11 @@ static const value_t aircraft_vals[] = {
 /**
  * @brief Parses all aircraft that are defined in our UFO-scripts.
  * @sa CL_ParseClientData
+ * @sa CL_ParseScriptSecond
  * @note parses the aircraft into our aircraft_sample array to use as reference
+ * @note This parsing function writes into two different memory pools
+ * one is the cl_localPool which is cleared on every new game, the other is
+ * cl_genericPool which is existant until you close the game
  */
 extern void AIR_ParseAircraft (const char *name, char **text, qboolean assignAircraftItems)
 {
@@ -1938,7 +1944,7 @@ extern void AIR_ParseAircraft (const char *name, char **text, qboolean assignAir
 		Com_DPrintf("...found aircraft %s\n", name);
 		air_samp->idx = gd.numAircraft;
 		air_samp->idx_sample = numAircraft_samples;
-		CL_ClientHunkStoreString(name, &air_samp->id);
+		air_samp->id = Mem_PoolStrDup(name, cl_genericPool, CL_TAG_NONE);
 		air_samp->status = AIR_HOME;
 		AII_InitialiseAircraftSlots(air_samp);
 
@@ -1979,6 +1985,7 @@ extern void AIR_ParseAircraft (const char *name, char **text, qboolean assignAir
 			break;
 
 		if (assignAircraftItems) {
+			/* write into cl_localPool - this data is reparsed on every new game */
 			/* blocks like param { [..] } - otherwise we would leave the loop too early */
 			if (*token == '{') {
 				FS_SkipBlock(text);
@@ -2013,7 +2020,7 @@ extern void AIR_ParseAircraft (const char *name, char **text, qboolean assignAir
 							case V_TRANSLATION2_STRING:
 								token++;
 							case V_CLIENT_HUNK_STRING:
-								CL_ClientHunkStoreString(token, (char**) ((char*)air_samp + (int)vp->ofs));
+								Mem_PoolStrDupTo(token, (char**) ((char*)air_samp + (int)vp->ofs), cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 								break;
 							default:
 								Com_ParseValue(air_samp, token, vp->type, vp->ofs, vp->size);
@@ -2116,6 +2123,7 @@ extern void AIR_ParseAircraft (const char *name, char **text, qboolean assignAir
 				} while (*text); /* dummy condition */
 			}
 		} else {
+			/* write into cl_genericPool - this data is only parsed once */
 			ignoreForNow = qfalse;
 			/* these values are parsed in a later stage and ignored for now */
 			for (vp = aircraft_standard_vals; vp->string; vp++)
@@ -2140,7 +2148,7 @@ extern void AIR_ParseAircraft (const char *name, char **text, qboolean assignAir
 					case V_TRANSLATION2_STRING:
 						token++;
 					case V_CLIENT_HUNK_STRING:
-						CL_ClientHunkStoreString(token, (char**) ((char*)air_samp + (int)vp->ofs));
+						Mem_PoolStrDupTo(token, (char**) ((char*)air_samp + (int)vp->ofs), cl_genericPool, CL_TAG_NONE);
 						break;
 					default:
 						Com_ParseValue(air_samp, token, vp->type, vp->ofs, vp->size);
@@ -2196,7 +2204,7 @@ extern void AIR_ParseAircraft (const char *name, char **text, qboolean assignAir
 							case V_TRANSLATION2_STRING:
 								token++;
 							case V_CLIENT_HUNK_STRING:
-								CL_ClientHunkStoreString(token, (char**) ((char*)air_samp + (int)vp->ofs));
+								Mem_PoolStrDupTo(token, (char**) ((char*)air_samp + (int)vp->ofs), cl_genericPool, CL_TAG_NONE);
 								break;
 							default:
 								Com_ParseValue(air_samp, token, vp->type, vp->ofs, vp->size);

@@ -1165,6 +1165,8 @@ static void B_BuildingClick_f (void)
  * @param[in] id Unique test-id of a building_t. This is parsed from "building xxx" -> id=xxx.
  * @param[in] text @todo: document this ... It appears to be the whole following text that is part of the "building" item definition in .ufo.
  * @param[in] link Bool value that decides whether to link the tech pointer in or not
+ * @sa CL_ParseScriptFirst (link is false here)
+ * @sa CL_ParseScriptSecond (link it true here)
  */
 extern void B_ParseBuildings (const char *name, char **text, qboolean link)
 {
@@ -1204,7 +1206,7 @@ extern void B_ParseBuildings (const char *name, char **text, qboolean link)
 		/* new entry */
 		building = &gd.buildingTypes[gd.numBuildingTypes];
 		memset(building, 0, sizeof(building_t));
-		CL_ClientHunkStoreString(name, &building->id);
+		building->id = Mem_PoolStrDup(name, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 
 		Com_DPrintf("...found building %s\n", building->id);
 
@@ -1290,7 +1292,7 @@ extern void B_ParseBuildings (const char *name, char **text, qboolean link)
 						case V_TRANSLATION2_STRING:
 							token++;
 						case V_CLIENT_HUNK_STRING:
-							CL_ClientHunkStoreString(token, (char**) ((char*)building + (int)vp->ofs));
+							Mem_PoolStrDupTo(token, (char**) ((char*)building + (int)vp->ofs), cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 							break;
 						default:
 							Com_ParseValue(building, token, vp->type, vp->ofs, vp->size);
@@ -1464,6 +1466,7 @@ extern void B_ClearBase (base_t *const base)
 /**
  * @brief Reads information about bases.
  * @sa CL_ParseScriptFirst
+ * @note write into cl_localPool - free on every game restart and reparse
  */
 extern void B_ParseBases (const char *name, char **text)
 {

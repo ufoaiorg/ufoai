@@ -2778,6 +2778,8 @@ extern mission_t *CL_AddMission (const char *name)
 
 /**
  * @brief
+ * @sa CL_ParseScriptFirst
+ * @note write into cl_localPool - free on every game restart and reparse
  */
 extern void CL_ParseMission (const char *name, char **text)
 {
@@ -2836,7 +2838,7 @@ extern void CL_ParseMission (const char *name, char **text)
 				else {
 					if (*token == '_')
 						token++;
-					ms->text = CL_ClientHunkUse(_(token), 128); /* FIXME */
+					ms->missionText = Mem_PoolStrDup(token, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 				}
 				break;
 			}
@@ -2896,7 +2898,7 @@ extern void CL_ParseResearchedCampaignItems (const char *name, char **text)
 			if (!Q_strncmp(token, gd.technologies[i].id, MAX_VAR)) {
 				gd.technologies[i].mailSent = MAILSENT_FINISHED;
 				gd.technologies[i].markResearched.markOnly[gd.technologies[i].markResearched.numDefinitions] = qtrue;
-				gd.technologies[i].markResearched.campaign[gd.technologies[i].markResearched.numDefinitions] = CL_ClientHunkUse(name, strlen(name) + 1);
+				gd.technologies[i].markResearched.campaign[gd.technologies[i].markResearched.numDefinitions] = Mem_PoolStrDup(name, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 				gd.technologies[i].markResearched.numDefinitions++;
 				Com_DPrintf("...tech %s\n", gd.technologies[i].id);
 				break;
@@ -2911,6 +2913,7 @@ extern void CL_ParseResearchedCampaignItems (const char *name, char **text)
 /**
  * @brief This function parses a list of items that should be set to researchable = true after campaign start
  * @param researchable Mark them researchable or not researchable
+ * @sa CL_ParseScriptFirst
  */
 extern void CL_ParseResearchableCampaignStates (const char *name, char **text, qboolean researchable)
 {
@@ -2979,6 +2982,8 @@ static const value_t stageset_vals[] = {
 
 /**
  * @brief
+ * @sa CL_ParseScriptSecond
+ * @sa CL_ParseStage
  */
 static void CL_ParseStageSet (const char *name, char **text)
 {
@@ -3070,6 +3075,7 @@ static void CL_ParseStageSet (const char *name, char **text)
 /**
  * @brief
  * @sa CL_ParseStageSet
+ * @sa CL_ParseScriptSecond
  */
 extern void CL_ParseStage (const char *name, char **text)
 {
@@ -3299,6 +3305,7 @@ static const value_t campaign_vals[] = {
 
 /**
  * @brief
+ * @sa CL_ParseClientData
  */
 extern void CL_ParseCampaign (const char *name, char **text)
 {
@@ -3420,6 +3427,8 @@ static const value_t nation_vals[] = {
  * @param[in] name Name or ID of the found nation
  * @param[in] text The text of the nation node
  * @sa nation_vals
+ * @sa CL_ParseScriptFirst
+ * @note write into cl_localPool - free on every game restart and reparse
  */
 extern void CL_ParseNations (const char *name, char **text)
 {
@@ -3438,7 +3447,7 @@ extern void CL_ParseNations (const char *name, char **text)
 	memset(nation, 0, sizeof(nation_t));
 
 	Com_DPrintf("...found nation %s\n", name);
-	CL_ClientHunkStoreString(name, &nation->id);
+	nation->id = Mem_PoolStrDup(name, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 
 	/* get it's body */
 	token = COM_Parse(text);
@@ -3497,7 +3506,7 @@ extern void CL_ParseNations (const char *name, char **text)
 					case V_TRANSLATION2_STRING:
 						token++;
 					case V_CLIENT_HUNK_STRING:
-						CL_ClientHunkStoreString(token, (char**) ((char*)nation + (int)vp->ofs));
+						Mem_PoolStrDupTo(token, (char**) ((char*)nation + (int)vp->ofs), cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 						break;
 					default:
 						if (Com_ParseValue(nation, token, vp->type, vp->ofs, vp->size) == -1)
@@ -3917,6 +3926,9 @@ extern void CL_ResetSinglePlayerData (void)
 	memset(stageSets, 0, sizeof(stageSet_t) * MAX_STAGESETS);
 	memset(stages, 0, sizeof(stage_t) * MAX_STAGES);
 	memset(&invList, 0, sizeof(invList));
+
+	Mem_FreePool(cl_localPool);
+
 	/* called to flood the hash list - because the parse tech function
 	 * was maybe already called */
 	RS_ResetHash();

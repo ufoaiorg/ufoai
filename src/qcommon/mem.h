@@ -38,6 +38,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define Mem_PoolAllocExt(size,zeroFill,pool,tagNum)		_Mem_Alloc((size),(zeroFill),(pool),(tagNum),__FILE__,__LINE__)
 
 #define Mem_StrDup(in)									_Mem_PoolStrDup((in),com_genericPool,0,__FILE__,__LINE__)
+#define Mem_PoolStrDupTo(in,out,pool,tagNum)			_Mem_PoolStrDupTo((in),(out),(pool),(tagNum),__FILE__,__LINE__)
 #define Mem_PoolStrDup(in,pool,tagNum)					_Mem_PoolStrDup((in),(pool),(tagNum),__FILE__,__LINE__)
 #define Mem_PoolSize(pool)								_Mem_PoolSize((pool))
 #define Mem_TagSize(pool,tagNum)						_Mem_TagSize((pool),(tagNum))
@@ -58,6 +59,7 @@ uint32_t _Mem_FreeTag(struct memPool_s *pool, const int tagNum, const char *file
 uint32_t _Mem_FreePool(struct memPool_s *pool, const char *fileName, const int fileLine);
 void* _Mem_Alloc(size_t size, qboolean zeroFill, struct memPool_s *pool, const int tagNum, const char *fileName, const int fileLine);
 
+char* _Mem_PoolStrDupTo(const char *in, char **out, struct memPool_s *pool, const int tagNum, const char *fileName, const int fileLine);
 char* _Mem_PoolStrDup(const char *in, struct memPool_s *pool, const int tagNum, const char *fileName, const int fileLine);
 uint32_t _Mem_PoolSize(struct memPool_s *pool);
 uint32_t _Mem_TagSize(struct memPool_s *pool, const int tagNum);

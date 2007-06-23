@@ -524,18 +524,18 @@ void RS_InitTree (void)
 				if (!Q_strncmp(tech->provides, item->id, MAX_VAR)) {
 					found = qtrue;
 					if (!tech->name)
-						CL_ClientHunkStoreString(item->name, &tech->name);
+						tech->name = Mem_PoolStrDup(item->name, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 					if (!tech->mdl_top)
-						CL_ClientHunkStoreString(item->model, &tech->mdl_top);
+						tech->mdl_top = Mem_PoolStrDup(item->model, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 					if (!tech->image_top)
-						CL_ClientHunkStoreString(item->image, &tech->image_top);
+						tech->image_top = Mem_PoolStrDup(item->image, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 					/* Should return to CASE RS_xxx. */
 					break;
 				}
 			}
 			/* No id found in csi.ods */
 			if (!found) {
-				CL_ClientHunkStoreString(tech->id, &tech->name);
+				tech->name = Mem_PoolStrDup(tech->id, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 				Com_Printf("RS_InitTree: \"%s\" - Linked weapon or armor (provided=\"%s\") not found. Tech-id used as name.\n", tech->id, tech->provides);
 			}
 			break;
@@ -547,16 +547,16 @@ void RS_InitTree (void)
 				if (!Q_strncmp(tech->provides, building->id, MAX_VAR)) {
 					found = qtrue;
 					if (!tech->name)
-						CL_ClientHunkStoreString(building->name, &tech->name);
+						tech->name = Mem_PoolStrDup(building->name, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 					if (!tech->image_top)
-						CL_ClientHunkStoreString(building->image, &tech->image_top);
+						tech->image_top = Mem_PoolStrDup(building->image, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 
 					/* Should return to CASE RS_xxx. */
 					break;
 				}
 			}
 			if (!found) {
-				CL_ClientHunkStoreString(tech->id, &tech->name);
+				tech->name = Mem_PoolStrDup(tech->id, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 				Com_DPrintf("RS_InitTree: \"%s\" - Linked building (provided=\"%s\") not found. Tech-id used as name.\n", tech->id, tech->provides);
 			}
 			break;
@@ -568,9 +568,9 @@ void RS_InitTree (void)
 				if (!Q_strncmp(tech->provides, air_samp->id, MAX_VAR)) {
 					found = qtrue;
 					if (!tech->name)
-						CL_ClientHunkStoreString(air_samp->name, &tech->name);
+						tech->name = Mem_PoolStrDup(air_samp->name, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 					if (!tech->mdl_top) {	/* DEBUG testing */
-						CL_ClientHunkStoreString(air_samp->model, &tech->mdl_top);
+						tech->mdl_top = Mem_PoolStrDup(air_samp->model, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 						Com_DPrintf("RS_InitTree: aircraft model \"%s\" \n", air_samp->model);
 					}
 					/* Should return to CASE RS_xxx. */
@@ -1545,6 +1545,9 @@ static const value_t valid_techmail_vars[] = {
  * @brief Parses one "tech" entry in the research.ufo file and writes it into the next free entry in technologies (technology_t).
  * @param[in] id Unique id of a technology_t. This is parsed from "tech xxx" -> id=xxx
  * @param[in] text the whole following text that is part of the "tech" item definition in research.ufo.
+ * @sa CL_ParseScriptFirst
+ * @sa CL_StartSingleplayer
+ * @note write into cl_localPool - free on every game restart and reparse
  */
 extern void RS_ParseTechnologies (const char *name, char **text)
 {
@@ -1588,7 +1591,7 @@ extern void RS_ParseTechnologies (const char *name, char **text)
 	 * Set standard values
 	 */
 	tech->idx = gd.numTechnologies - 1;
-	CL_ClientHunkStoreString(name, &tech->id);
+	tech->id = Mem_PoolStrDup(name, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 	hash = Com_HashKey(tech->id, TECH_HASH_SIZE);
 
 	/* Set the default string for descriptions (available even if numDescriptions is 0) */
@@ -1684,7 +1687,7 @@ extern void RS_ParseTechnologies (const char *name, char **text)
 
 					if (desc_temp->numDescriptions < MAX_DESCRIPTIONS) {
 						/* Copy tech string into entry. */
-						desc_temp->tech[desc_temp->numDescriptions] = CL_ClientHunkUse(token, strlen(token) + 1);
+						desc_temp->tech[desc_temp->numDescriptions] = Mem_PoolStrDup(token, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 
 						/* Copy description text into the entry. */
 						token = COM_EParse(text, errhead, name);
@@ -1693,7 +1696,7 @@ extern void RS_ParseTechnologies (const char *name, char **text)
 						else
 							Sys_Error("RS_ParseTechnologies: '%s' No gettext string for description '%s'. Abort.\n", name, desc_temp->tech[desc_temp->numDescriptions]);
 
-						desc_temp->text[desc_temp->numDescriptions] = CL_ClientHunkUse(token, strlen(token) + 1);
+						desc_temp->text[desc_temp->numDescriptions] = Mem_PoolStrDup(token, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 						desc_temp->numDescriptions++;
 					}
 				} while (*text);
@@ -1732,7 +1735,7 @@ extern void RS_ParseTechnologies (const char *name, char **text)
 
 							/* Set requirement-name (id). */
 							token = COM_Parse(text);
-							required_temp->id[required_temp->numLinks] = CL_ClientHunkUse(token, strlen(token) + 1);
+							required_temp->id[required_temp->numLinks] = Mem_PoolStrDup(token, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 
 							Com_DPrintf("RS_ParseTechnologies: require-tech - %s\n", required_temp->id[required_temp->numLinks]);
 
@@ -1747,7 +1750,7 @@ extern void RS_ParseTechnologies (const char *name, char **text)
 							required_temp->type[required_temp->numLinks] = RS_LINK_ITEM;
 							/* Set requirement-name (id). */
 							token = COM_Parse(text);
-							required_temp->id[required_temp->numLinks] = CL_ClientHunkUse(token, strlen(token) + 1);
+							required_temp->id[required_temp->numLinks] = Mem_PoolStrDup(token, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 							/* Set requirement-amount of item. */
 							token = COM_Parse(text);
 							required_temp->amount[required_temp->numLinks] = atoi(token);
@@ -1788,7 +1791,7 @@ extern void RS_ParseTechnologies (const char *name, char **text)
 							}
 							/* Set requirement-name (id). */
 							token = COM_Parse(text);
-							required_temp->id[required_temp->numLinks] = CL_ClientHunkUse(token, strlen(token) + 1);
+							required_temp->id[required_temp->numLinks] = Mem_PoolStrDup(token, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 							/* Set requirement-amount of item. */
 							token = COM_Parse(text);
 							required_temp->amount[required_temp->numLinks] = atoi(token);
@@ -1866,7 +1869,7 @@ extern void RS_ParseTechnologies (const char *name, char **text)
 							case V_TRANSLATION2_STRING:
 								token++;	/**< Remove first char (i.e. we assume it's the "_") */
 							case V_CLIENT_HUNK_STRING:
-								CL_ClientHunkStoreString(token, (char**) ((char*)mail + (int)vp->ofs));
+								Mem_PoolStrDupTo(token, (char**) ((char*)mail + (int)vp->ofs), cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 								break;
 							case V_NULL:
 								Com_Printf("RS_ParseTechnologies Error: - no buffer for technologies - V_NULL not allowed (token: '%s') entry: '%s'\n", token, name);
@@ -1895,7 +1898,7 @@ extern void RS_ParseTechnologies (const char *name, char **text)
 						case V_TRANSLATION2_STRING:
 							token++;
 						case V_CLIENT_HUNK_STRING:
-							CL_ClientHunkStoreString(token, (char**) ((char*)tech + (int)vp->ofs));
+							Mem_PoolStrDupTo(token, (char**) ((char*)tech + (int)vp->ofs), cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 							break;
 						case V_NULL:
 							Com_Printf("RS_ParseTechnologies Error: - no buffer for technologies - V_NULL not allowed (token: '%s') entry: '%s'\n", token, name);

@@ -342,6 +342,21 @@ MISC FUNCTIONS
 ==============================================================================*/
 
 /**
+ * @brief Saves a string to client hunk
+ * @sa CL_ClientHunkUse
+ * @param[in] string String to store on hunk
+ * @param[in] dst The offset or char pointer that points to the hunk space that
+ * was used to store the string
+ */
+extern char *_Mem_PoolStrDupTo (const char *in, char **out, struct memPool_s *pool, const int tagNum, const char *fileName, const int fileLine)
+{
+	if (!out)
+		return NULL;
+	*out = _Mem_PoolStrDup(in, pool, tagNum, fileName, fileLine);
+	return *out;
+}
+
+/**
  * @brief No need to null terminate the extra spot because Mem_Alloc returns zero-filled memory
  */
 char *_Mem_PoolStrDup (const char *in, struct memPool_s *pool, const int tagNum, const char *fileName, const int fileLine)

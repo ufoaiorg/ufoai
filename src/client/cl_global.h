@@ -68,6 +68,8 @@ typedef struct globalData_s
 	base_t bases[MAX_BASES];
 	/* used for unique aircraft ids */
 	int numAircraft;
+	/* number of available aircrafts items in game. */
+	int numAircraftItems;
 	/* Total number of parsed base-names. */
 	int numBaseNames;
 	/* Total number of built bases (how many are enabled). */

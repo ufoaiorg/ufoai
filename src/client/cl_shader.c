@@ -62,8 +62,8 @@ static const value_t shader_values[] = {
 
 /**
  * @brief Parses all shader script from ufo script files
- * @note Called from CL_ParseScriptSecond
- * @sa CL_ParseScriptSecond
+ * @note Called from CL_ParseClientData
+ * @sa CL_ParseClientData
  */
 void CL_ParseShaders (const char *name, char **text)
 {
@@ -99,7 +99,7 @@ void CL_ParseShaders (const char *name, char **text)
 	/* default value */
 	entry->glMode = BLEND_FILTER;
 
-	CL_ClientHunkStoreString(name, &entry->name);
+	entry->name = Mem_PoolStrDup(token, cl_genericPool, CL_TAG_NONE);
 	do {
 		/* get the name type */
 		token = COM_EParse(text, errhead, name);
@@ -120,7 +120,7 @@ void CL_ParseShaders (const char *name, char **text)
 				case V_NULL:
 					break;
 				case V_CLIENT_HUNK_STRING:
-					CL_ClientHunkStoreString(token, (char**) ((char*)entry + (int)v->ofs));
+					Mem_PoolStrDupTo(token, (char**) ((char*)entry + (int)v->ofs), cl_genericPool, CL_TAG_NONE);
 					break;
 				default:
 					Com_ParseValue(entry, token, v->type, v->ofs, v->size);

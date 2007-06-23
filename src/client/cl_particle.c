@@ -1413,6 +1413,7 @@ int CL_GetParticleIndex (const char *name)
  * @param[in] name particle name/id
  * @param[in] text pointer to the buffer to parse from
  * @return the position of the particle in ptlDef array
+ * @sa CL_ParseClientData
  */
 extern int CL_ParseParticle (const char *name, char **text)
 {

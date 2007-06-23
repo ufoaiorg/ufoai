@@ -706,6 +706,7 @@ int SEQ_Command (const char *name, char *data)
 
 /**
  * @brief Reads the sequence values from given text-pointer
+ * @sa CL_ParseClientData
  */
 void CL_ParseSequence (const char *name, char **text)
 {

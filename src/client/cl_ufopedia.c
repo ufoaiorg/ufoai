@@ -1460,7 +1460,7 @@ extern void UP_ParseUpChapters (const char *name, char **text)
 			return;
 		}
 		memset(&gd.upChapters[gd.numChapters], 0, sizeof(pediaChapter_t));
-		CL_ClientHunkStoreString(token, &gd.upChapters[gd.numChapters].id);
+		gd.upChapters[gd.numChapters].id = Mem_PoolStrDup(token, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 		gd.upChapters[gd.numChapters].idx = gd.numChapters;	/* set self-link */
 
 		/* get the name */
@@ -1473,7 +1473,7 @@ extern void UP_ParseUpChapters (const char *name, char **text)
 			token++;
 		if (!*token)
 			continue;
-		CL_ClientHunkStoreString(token, &gd.upChapters[gd.numChapters].name);
+		gd.upChapters[gd.numChapters].name = Mem_PoolStrDup(token, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 
 		gd.numChapters++;
 	} while (*text);

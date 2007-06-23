@@ -1386,7 +1386,7 @@ extern void MAP_DrawMap (const menuNode_t* node, qboolean map3D)
 	if (selMis) {
 		if (!selMis->def)
 			Sys_Error("the selected mission has no def pointer set\n");
-		menuText[TEXT_STANDARD] = va(_("Location: %s\nType: %s\nObjective: %s\n"), selMis->def->location, selMis->def->type, selMis->def->text);
+		menuText[TEXT_STANDARD] = va(_("Location: %s\nType: %s\nObjective: %s\n"), selMis->def->location, selMis->def->type, _(selMis->def->missionText));
 	} else if (selectedAircraft) {
 		if (selectedAircraft->status <= AIR_HOME)
 			MAP_ResetAction();

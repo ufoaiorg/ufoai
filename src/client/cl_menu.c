@@ -4157,6 +4157,7 @@ extern void MN_PrecacheModels (void)
 
 /**
  * @brief parses the models.ufo and all files where menu_models are defined
+ * @sa CL_ParseClientData
  */
 void MN_ParseMenuModel (const char *name, char **text)
 {
@@ -4184,7 +4185,7 @@ void MN_ParseMenuModel (const char *name, char **text)
 
 	Vector4Set(menuModel->color, 0.5, 0.5, 0.5, 1.0);
 
-	CL_ClientHunkStoreString(name, &menuModel->id);
+	menuModel->id = Mem_PoolStrDup(name, cl_menuSysPool, CL_TAG_NONE);
 	Com_DPrintf("Found menu model %s (%i)\n", menuModel->id, numMenuModels);
 
 	/* get it's body */
@@ -4215,7 +4216,7 @@ void MN_ParseMenuModel (const char *name, char **text)
 					menuModel->next = MN_GetMenuModel(token);
 					if (!menuModel->next)
 						Com_Printf("Could not find menumodel %s", token);
-					CL_ClientHunkStoreString(token, &menuModel->need);
+					menuModel->need = Mem_PoolStrDup(token, cl_menuSysPool, CL_TAG_NONE);
 				} else if (!Q_strncmp(v->string, "menuscale", 9)) {
 					token = COM_EParse(text, errhead, name);
 					if (!*text)
@@ -4230,7 +4231,7 @@ void MN_ParseMenuModel (const char *name, char **text)
 							return;
 						if (*token == '}')
 							break;
-						CL_ClientHunkStoreString(token, &menuModel->menuScale[menuModel->menuScaleCnt]);
+						menuModel->menuScale[menuModel->menuScaleCnt] = Mem_PoolStrDup(token, cl_menuSysPool, CL_TAG_NONE);
 						token = COM_EParse(text, errhead, name);
 						if (!*text)
 							return;
@@ -4248,7 +4249,7 @@ void MN_ParseMenuModel (const char *name, char **text)
 
 					switch (v->type) {
 					case V_CLIENT_HUNK_STRING:
-						CL_ClientHunkStoreString(token, (char**) ((char*)menuModel + (int)v->ofs));
+						Mem_PoolStrDupTo(token, (char**) ((char*)menuModel + (int)v->ofs), cl_menuSysPool, CL_TAG_NONE);
 						break;
 					default:
 						Com_ParseValue(menuModel, token, v->type, v->ofs, v->size);
@@ -4265,6 +4266,7 @@ void MN_ParseMenuModel (const char *name, char **text)
 
 /**
  * @brief
+ * @sa CL_ParseClientData
  */
 void MN_ParseMenu (const char *name, char **text)
 {
@@ -4699,6 +4701,7 @@ void CL_GetFontData (const char *name, int *size, char *path)
 
 /**
  * @brief
+ * @sa CL_ParseClientData
  */
 void CL_ParseFont (const char *name, char **text)
 {
@@ -4724,7 +4727,7 @@ void CL_ParseFont (const char *name, char **text)
 	font = &fonts[numFonts];
 	memset(font, 0, sizeof(font_t));
 
-	CL_ClientHunkStoreString(name, &font->name);
+	font->name = Mem_PoolStrDup(name, cl_menuSysPool, CL_TAG_NONE);
 
 	if (!Q_strcmp(font->name, "f_small"))
 		fontSmall = font;
@@ -4762,7 +4765,7 @@ void CL_ParseFont (const char *name, char **text)
 				case V_TRANSLATION2_STRING:
 					token++;
 				case V_CLIENT_HUNK_STRING:
-					CL_ClientHunkStoreString(token, (char**) ((char*)font + (int)v->ofs));
+					Mem_PoolStrDupTo(token, (char**) ((char*)font + (int)v->ofs), cl_menuSysPool, CL_TAG_NONE);
 					break;
 				default:
 					Com_ParseValue(font, token, v->type, v->ofs, v->size);
@@ -4806,6 +4809,7 @@ static const value_t tutValues[] = {
 
 /**
  * @brief
+ * @sa CL_ParseClientData
  */
 extern void MN_ParseTutorials (const char *name, char **text)
 {
@@ -4847,7 +4851,7 @@ extern void MN_ParseTutorials (const char *name, char **text)
 
 				switch (v->type) {
 				case V_CLIENT_HUNK_STRING:
-					CL_ClientHunkStoreString(token, (char**) ((char*)t + (int)v->ofs));
+					Mem_PoolStrDupTo(token, (char**) ((char*)t + (int)v->ofs), cl_menuSysPool, CL_TAG_NONE);
 					break;
 				default:
 					Com_ParseValue(t, token, v->type, v->ofs, v->size);

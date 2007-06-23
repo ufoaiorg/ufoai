@@ -55,6 +55,8 @@ static const value_t eventMail_vals[] = {
 
 /**
  * @brief
+ * @sa CL_ParseScriptFirst
+ * @note write into cl_localPool - free on every game restart and reparse
  */
 extern void CL_ParseEventMails (const char *name, char **text)
 {
@@ -73,7 +75,7 @@ extern void CL_ParseEventMails (const char *name, char **text)
 	memset(eventMail, 0, sizeof(eventMail_t));
 
 	Com_DPrintf("...found eventMail %s\n", name);
-	CL_ClientHunkStoreString(name, &eventMail->id);
+	eventMail->id = Mem_PoolStrDup(name, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 
 	/* get it's body */
 	token = COM_Parse(text);
@@ -103,7 +105,7 @@ extern void CL_ParseEventMails (const char *name, char **text)
 				case V_TRANSLATION2_STRING:
 					token++;
 				case V_CLIENT_HUNK_STRING:
-					CL_ClientHunkStoreString(token, (char**) ((char*)eventMail + (int)vp->ofs));
+					Mem_PoolStrDupTo(token, (char**) ((char*)eventMail + (int)vp->ofs), cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 					break;
 				default:
 					Com_ParseValue(eventMail, token, vp->type, vp->ofs, vp->size);

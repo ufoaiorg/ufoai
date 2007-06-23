@@ -419,6 +419,8 @@ static cvar_t *Cvar_Set2 (const char *var_name, const char *value, qboolean forc
 	if (!Q_strcmp(value, var->string))
 		return var;				/* not changed */
 
+	if (var->old_string)
+		Mem_Free(var->old_string);		/* free the old value string */
 	var->old_string = Mem_PoolStrDup(var->string, com_cvarSysPool, 0);
 	var->modified = qtrue;
 

@@ -124,13 +124,15 @@ static void CL_Disconnect(void);
 
 mouseRepeat_t mouseRepeat;
 
-struct memPool_s *cl_genericPool;
-struct memPool_s *cl_ircSysPool;
+struct memPool_s *cl_localPool;		/**< reset on every game restart */
+struct memPool_s *cl_genericPool;	/**< permanent client data - menu, fonts */
+struct memPool_s *cl_ircSysPool;	/**< irc pool */
 struct memPool_s *cl_soundSysPool;
+struct memPool_s *cl_menuSysPool;
 struct memPool_s *vid_genericPool;
 struct memPool_s *vid_imagePool;
-struct memPool_s *vid_lightPool;
-struct memPool_s *vid_modelPool;
+struct memPool_s *vid_lightPool;	/**< lightmap - wiped with every new map */
+struct memPool_s *vid_modelPool;	/**< modeldata - wiped with every new map */
 /*====================================================================== */
 
 /**
@@ -208,6 +210,7 @@ static void CL_Quit_f (void)
  */
 extern void CL_StartSingleplayer (qboolean singleplayer)
 {
+	char *type, *name, *text;
 	if (singleplayer) {
 		ccs.singleplayer = qtrue;
 		if (Qcommon_ServerActive()) {
@@ -242,6 +245,36 @@ extern void CL_StartSingleplayer (qboolean singleplayer)
 			Cvar_Set("maxsoldiersperplayer", max_spp);
 
 		ccs.singleplayer = qfalse;
+		curCampaign = NULL;
+		selMis = NULL;
+		baseCurrent = &gd.bases[0];
+		B_ClearBase(&gd.bases[0]);
+		RS_ResetHash();
+		gd.numBases = 1;
+		gd.numAircraft = 0;
+
+		/* now add a dropship where we can place our soldiers in */
+		AIR_NewAircraft(baseCurrent, "craft_drop_firebird");
+
+		Com_Printf("Changing to Multiplayer\n");
+		/* no campaign equipment but for multiplayer */
+		Cvar_Set("map_dropship", "craft_drop_firebird");
+		/* disconnect already running session */
+		if (cls.state >= ca_connecting)
+			CL_Disconnect();
+
+		/* pre-stage parsing */
+		FS_BuildFileList("ufos/*.ufo");
+		FS_NextScriptHeader(NULL, NULL, NULL);
+		text = NULL;
+
+		while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != 0)
+			if (!Q_strncmp(type, "tech", 4))
+				RS_ParseTechnologies(name, &text);
+
+		/* fill in IDXs for required research techs */
+		RS_RequiredIdxAssign();
+		Com_AddObjectLinks();	/* Add tech links + ammo<->weapon links to items.*/
 	}
 }
 
@@ -1774,6 +1807,8 @@ extern void CL_InitAfter (void)
  * entities that are parsed in Com_ParseScripts (because maybe items are not parsed
  * but e.g. techs would need those parsed items - thus we have to parse e.g. techs
  * at a later stage)
+ * @note This data should not go into cl_localPool memory pool - this data is
+ * persistent until you shutdown the game
  */
 extern void CL_ParseClientData (const char *type, const char *name, char **text)
 {
@@ -1808,7 +1843,7 @@ extern void CL_ParseClientData (const char *type, const char *name, char **text)
  * @sa CL_ReadSinglePlayerData
  * @sa Com_ParseScripts
  * @sa CL_ParseScriptSecond
- * @note make sure that the client hunk was cleared - otherwise it may overflow
+ * @note write into cl_localPool - free on every game restart and reparse
  */
 static void CL_ParseScriptFirst (const char *type, char *name, char **text)
 {
@@ -1856,6 +1891,7 @@ static void CL_ParseScriptFirst (const char *type, char *name, char **text)
  * @sa Com_ParseScripts
  * @sa CL_ParseScriptFirst
  * @note make sure that the client hunk was cleared - otherwise it may overflow
+ * @note write into cl_localPool - free on every game restart and reparse
  */
 static void CL_ParseScriptSecond (const char *type, char *name, char **text)
 {
@@ -2036,7 +2072,7 @@ static void CL_DumpGlobalDataToFile_f (void)
 	memset(&f, 0, sizeof(qFILE));
 	FS_FOpenFileWrite(va("%s/gd.dump", FS_Gamedir()), &f);
 	if (!f.f) {
-		Com_Printf("CL_ClientHunkDumpToFile_f: Error opening dump file for writing");
+		Com_Printf("CL_DumpGlobalDataToFile_f: Error opening dump file for writing");
 		return;
 	}
 
@@ -2391,41 +2427,11 @@ extern void CL_Frame (int msec)
 {
 	static int extratime = 0;
 	static int lasttimecalled = 0;
-	char *type, *name, *text;
 
 	if (sv_maxclients->modified) {
 		if (sv_maxclients->integer > 1 && ccs.singleplayer) {
 			CL_StartSingleplayer(qfalse);
-			curCampaign = NULL;
-			selMis = NULL;
-			baseCurrent = &gd.bases[0];
-			B_ClearBase(&gd.bases[0]);
-			RS_ResetHash();
-			gd.numBases = 1;
-			gd.numAircraft = 0;
-
-			/* now add a dropship where we can place our soldiers in */
-			AIR_NewAircraft(baseCurrent, "craft_drop_firebird");
-
 			Com_Printf("Changing to Multiplayer\n");
-			/* no campaign equipment but for multiplayer */
-			Cvar_Set("map_dropship", "craft_drop_firebird");
-			/* disconnect already running session */
-			if (cls.state >= ca_connecting)
-				CL_Disconnect();
-
-			/* pre-stage parsing */
-			FS_BuildFileList("ufos/*.ufo");
-			FS_NextScriptHeader(NULL, NULL, NULL);
-			text = NULL;
-
-			while ((type = FS_NextScriptHeader("ufos/*.ufo", &name, &text)) != 0)
-				if (!Q_strncmp(type, "tech", 4))
-					RS_ParseTechnologies(name, &text);
-
-			/* fill in IDXs for required research techs */
-			RS_RequiredIdxAssign();
-			Com_AddObjectLinks();	/* Add tech links + ammo<->weapon links to items.*/
 		} else if (sv_maxclients->integer == 1) {
 			CL_StartSingleplayer(qtrue);
 			Com_Printf("Changing to Singleplayer\n");
@@ -2573,8 +2579,9 @@ extern void CL_Init (void)
 	if (dedicated->value)
 		return;					/* nothing running on the client */
 
-	/* TODO: remove cl_hunk* and use this pool */
+	cl_localPool = Mem_CreatePool("Client: Local (per game)");
 	cl_genericPool = Mem_CreatePool("Client: Generic");
+	cl_menuSysPool = Mem_CreatePool("Client: Menu");
 	cl_soundSysPool = Mem_CreatePool("Client: Sound system");
 	cl_ircSysPool = Mem_CreatePool("Client: IRC system");
 

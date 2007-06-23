@@ -2109,6 +2109,8 @@ static const value_t rankValues[] =
 
 /**
  * @brief Parse medals and ranks defined in the medals.ufo file.
+ * @sa CL_ParseScriptFirst
+ * @note write into cl_localPool - free on every game restart and reparse
  */
 extern void CL_ParseMedalsAndRanks (const char *name, char **text, byte parserank)
 {
@@ -2135,7 +2137,7 @@ extern void CL_ParseMedalsAndRanks (const char *name, char **text, byte parseran
 
 		rank = &gd.ranks[gd.numRanks++];
 		memset(rank, 0, sizeof(rank_t));
-		CL_ClientHunkStoreString(name, &rank->id);
+		rank->id = Mem_PoolStrDup(name, cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 
 		do {
 			/* get the name type */
@@ -2154,7 +2156,7 @@ extern void CL_ParseMedalsAndRanks (const char *name, char **text, byte parseran
 					case V_TRANSLATION2_STRING:
 						token++;
 					case V_CLIENT_HUNK_STRING:
-						CL_ClientHunkStoreString(token, (char**) ((char*)rank + (int)v->ofs));
+						Mem_PoolStrDupTo(token, (char**) ((char*)rank + (int)v->ofs), cl_localPool, CL_TAG_REPARSE_ON_NEW_GAME);
 						break;
 					default:
 						Com_ParseValue(rank, token, v->type, v->ofs, v->size);
@@ -2188,6 +2190,7 @@ static const value_t ugvValues[] = {
 
 /**
  * @brief Parse UGVs
+ * @sa CL_ParseClientData
  */
 extern void CL_ParseUGVs (const char *name, char **text)
 {
@@ -2207,7 +2210,6 @@ extern void CL_ParseUGVs (const char *name, char **text)
 	/* parse ugv */
 	if (gd.numUGV >= MAX_UGV) {
 		Com_Printf("Too many UGV descriptions, '%s' ignored.\n", name);
-		gd.numUGV = MAX_UGV;
 		return;
 	}
 

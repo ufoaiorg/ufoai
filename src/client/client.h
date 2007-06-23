@@ -245,8 +245,10 @@ typedef struct client_static_s {
 
 extern client_static_t cls;
 
+extern struct memPool_s *cl_localPool;
 extern struct memPool_s *cl_genericPool;
 extern struct memPool_s *cl_ircSysPool;
+extern struct memPool_s *cl_menuSysPool;
 extern struct memPool_s *cl_soundSysPool;
 extern struct memPool_s *vid_genericPool;
 extern struct memPool_s *vid_imagePool;
@@ -773,9 +775,6 @@ void CDAudio_Stop(void);
 void CDAudio_Update(void);
 void CDAudio_Activate (qboolean active);
 void CDAudio_RandomPlay(void);
-
-/* cl_hunk.c */
-#include "cl_hunk.h"
 
 /* cl_research.c */
 #include "cl_research.h"

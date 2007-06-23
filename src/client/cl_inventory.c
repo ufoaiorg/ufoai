@@ -425,6 +425,7 @@ extern void INV_InitialEquipment (base_t *base)
  * @brief Parses one "components" entry in a .ufo file and writes it into the next free entry in xxxxxxxx (components_t).
  * @param[in] name The unique id of a components_t array entry.
  * @param[in] text the whole following text after the "components" definition.
+ * @sa CL_ParseScriptFirst
  */
 extern void INV_ParseComponents (const char *name, char **text)
 {
