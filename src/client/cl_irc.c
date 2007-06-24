@@ -25,9 +25,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "../client/client.h"
-#include "qcommon.h"
-#include "irc.h"
+#include "client.h"
+#include "../qcommon/qcommon.h"
+#include "cl_irc.h"
 
 #ifdef _WIN32
 #	include <winerror.h>
