@@ -637,7 +637,7 @@ NAME AND TEAM DEFINITION INTERPRETER
  * @param[in] category country strings like: spanish_italian, german, russian and so on
  * @sa Com_GetModelAndName
  */
-char *Com_GiveName (int gender, char *category)
+char *Com_GiveName (int gender, const char *category)
 {
 	static char returnName[MAX_VAR];
 	nameCategory_t *nc;
@@ -676,61 +676,6 @@ char *Com_GiveName (int gender, char *category)
 	return NULL;
 }
 
-/* FIXME: a mess - but i don't want to make the variables non static */
-#ifndef DEDICATED_ONLY
-#include "../client/client.h"
-/**
- * @brief Precache all menu models for faster access
- * @sa CL_PrecacheModels
- */
-extern void Com_PrecacheCharacterModels (void)
-{
-	nameCategory_t *nc;
-	int i, j, num;
-	char *str;
-	char model[MAX_QPATH];
-	const char *path;
-	float loading = cls.loadingPercent;
-
-	/* search the name */
-	for (i = 0, nc = nameCat; i < numNameCats; i++, nc++)
-		for (j = NAME_NEUTRAL; j < NAME_LAST; j++) {
-			/* no models for this gender */
-			if (!nc->numModels[j])
-				continue;
-			/* search one of the model definitions */
-			str = nc->models[j];
-			for (num = 0; num < nc->numModels[j]; num++) {
-				path = str; /* model base path */
-				str += strlen(str) + 1;
-				/* register body */
-				Com_sprintf(model, sizeof(model), "%s/%s", path, str);
-				if (!re.RegisterModel(model))
-					Com_Printf("Com_PrecacheCharacterModels: Could not register model %s\n", model);
-#ifdef DEBUG
-				_Mem_CheckPoolIntegrity(vid_modelPool, model, __LINE__);
-#endif
-				str += strlen(str) + 1;
-				/* register head */
-				Com_sprintf(model, sizeof(model), "%s/%s", path, str);
-				if (!re.RegisterModel(model))
-					Com_Printf("Com_PrecacheCharacterModels: Could not register model %s\n", model);
-#ifdef DEBUG
-				_Mem_CheckPoolIntegrity(vid_modelPool, model, __LINE__);
-#endif
-				/* skip skin */
-				str += strlen(str) + 1;
-				/* new path */
-				str += strlen(str) + 1;
-				cls.loadingPercent += 20.0f / (nc->numModels[j] * numNameCats * NAME_LAST);
-				SCR_DrawPrecacheScreen(qtrue);
-			}
-		}
-	/* some genders may not have models - ensure that we do a 20 percent step */
-	cls.loadingPercent = loading + 20.0f;
-}
-#endif
-
 /**
  * @brief
  * @param[in] type MODEL_PATH, MODEL_BODY, MODEL_HEAD, MODEL_SKIN (path, body, head, skin - see team_*.ufo)
@@ -738,7 +683,7 @@ extern void Com_PrecacheCharacterModels (void)
  * @param[in] category country strings like: spanish_italian, german, russian and so on
  * @sa Com_GetModelAndName
  */
-char *Com_GiveModel (int type, int gender, char *category)
+char *Com_GiveModel (int type, int gender, const char *category)
 {
 	nameCategory_t *nc;
 	char *str;
@@ -1628,3 +1573,58 @@ extern void Com_ParseScripts (void)
 
 	Com_Printf("Shared Client/Server Info loaded\n");
 }
+
+/* FIXME: a mess - but i don't want to make the variables non static */
+#ifndef DEDICATED_ONLY
+#include "../client/client.h"
+/**
+ * @brief Precache all menu models for faster access
+ * @sa CL_PrecacheModels
+ */
+extern void Com_PrecacheCharacterModels (void)
+{
+	nameCategory_t *nc;
+	int i, j, num;
+	char *str;
+	char model[MAX_QPATH];
+	const char *path;
+	float loading = cls.loadingPercent;
+
+	/* search the name */
+	for (i = 0, nc = nameCat; i < numNameCats; i++, nc++)
+		for (j = NAME_NEUTRAL; j < NAME_LAST; j++) {
+			/* no models for this gender */
+			if (!nc->numModels[j])
+				continue;
+			/* search one of the model definitions */
+			str = nc->models[j];
+			for (num = 0; num < nc->numModels[j]; num++) {
+				path = str; /* model base path */
+				str += strlen(str) + 1;
+				/* register body */
+				Com_sprintf(model, sizeof(model), "%s/%s", path, str);
+				if (!re.RegisterModel(model))
+					Com_Printf("Com_PrecacheCharacterModels: Could not register model %s\n", model);
+#ifdef DEBUG
+				_Mem_CheckPoolIntegrity(vid_modelPool, model, __LINE__);
+#endif
+				str += strlen(str) + 1;
+				/* register head */
+				Com_sprintf(model, sizeof(model), "%s/%s", path, str);
+				if (!re.RegisterModel(model))
+					Com_Printf("Com_PrecacheCharacterModels: Could not register model %s\n", model);
+#ifdef DEBUG
+				_Mem_CheckPoolIntegrity(vid_modelPool, model, __LINE__);
+#endif
+				/* skip skin */
+				str += strlen(str) + 1;
+				/* new path */
+				str += strlen(str) + 1;
+				cls.loadingPercent += 20.0f / (nc->numModels[j] * numNameCats * NAME_LAST);
+				SCR_DrawPrecacheScreen(qtrue);
+			}
+		}
+	/* some genders may not have models - ensure that we do a 20 percent step */
+	cls.loadingPercent = loading + 20.0f;
+}
+#endif
