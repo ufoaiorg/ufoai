@@ -211,7 +211,7 @@ SOURCE=..\..\src\client\cl_save.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\client\cl_scrn.c
+SOURCE=..\..\src\client\cl_screen.c
 # End Source File
 # Begin Source File
 
@@ -587,7 +587,7 @@ SOURCE=..\..\src\client\ref.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\client\screen.h
+SOURCE=..\..\src\client\cl_screen.h
 # End Source File
 # Begin Source File
 
@@ -607,7 +607,7 @@ SOURCE=..\..\src\client\snd_openal.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\client\sound.h
+SOURCE=..\..\src\client\cl_sound.h
 # End Source File
 # Begin Source File
 

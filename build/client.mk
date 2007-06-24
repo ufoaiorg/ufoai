@@ -30,7 +30,7 @@ CLIENT_SRCS = \
 	client/cl_research.c \
 	client/cl_save.c \
 	client/cl_shader.c \
-	client/cl_scrn.c \
+	client/cl_screen.c \
 	client/cl_sequence.c \
 	client/cl_team.c \
 	client/cl_transfer.c \

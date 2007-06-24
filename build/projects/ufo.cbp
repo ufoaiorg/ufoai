@@ -188,7 +188,7 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/client/cl_save.h" />
-		<Unit filename="../../src/client/cl_scrn.c">
+		<Unit filename="../../src/client/cl_screen.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/client/cl_sequence.c">
@@ -220,7 +220,7 @@
 		<Unit filename="../../src/client/console.h" />
 		<Unit filename="../../src/client/os_types.h" />
 		<Unit filename="../../src/client/ref.h" />
-		<Unit filename="../../src/client/screen.h" />
+		<Unit filename="../../src/client/cl_screen.h" />
 		<Unit filename="../../src/client/snd_loc.h" />
 		<Unit filename="../../src/client/snd_mem.c">
 			<Option compilerVar="CC" />
@@ -231,7 +231,7 @@
 		<Unit filename="../../src/client/snd_ref.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/client/sound.h" />
+		<Unit filename="../../src/client/cl_sound.h" />
 		<Unit filename="../../src/client/vid.h" />
 		<Unit filename="../../src/client/x86.c">
 			<Option compilerVar="CC" />

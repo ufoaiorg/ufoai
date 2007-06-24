@@ -150,7 +150,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit13]
-FileName=..\..\src\client\cl_scrn.c
+FileName=..\..\src\client\cl_screen.c
 Folder=Source Files
 Compile=1
 CompileCpp=0
@@ -630,7 +630,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit61]
-FileName=..\..\src\client\screen.h
+FileName=..\..\src\client\cl_screen.h
 Folder=Header Files
 Compile=1
 CompileCpp=1
@@ -660,7 +660,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit64]
-FileName=..\..\src\client\sound.h
+FileName=..\..\src\client\cl_sound.h
 Folder=Header Files
 Compile=1
 CompileCpp=1

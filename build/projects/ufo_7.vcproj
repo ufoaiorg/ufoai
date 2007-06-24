@@ -385,7 +385,7 @@
 				RelativePath="client\cl_research.c">
 			</File>
 			<File
-				RelativePath="client\cl_scrn.c">
+				RelativePath="client\cl_screen.c">
 			</File>
 			<File
 				RelativePath="client\cl_sequence.c">
@@ -545,7 +545,7 @@
 				RelativePath="client\ref.h">
 			</File>
 			<File
-				RelativePath="client\screen.h">
+				RelativePath="client\cl_screen.h">
 			</File>
 			<File
 				RelativePath="server\server.h">
@@ -554,7 +554,7 @@
 				RelativePath="client\snd_loc.h">
 			</File>
 			<File
-				RelativePath="client\sound.h">
+				RelativePath="client\cl_sound.h">
 			</File>
 			<File
 				RelativePath="client\vid.h">

@@ -608,7 +608,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\client\cl_scrn.c"
+				RelativePath="..\..\src\client\cl_screen.c"
 				>
 			</File>
 			<File
@@ -861,7 +861,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\client\screen.h"
+				RelativePath="..\..\src\client\cl_screen.h"
 				>
 			</File>
 			<File
@@ -873,7 +873,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\client\sound.h"
+				RelativePath="..\..\src\client\cl_sound.h"
 				>
 			</File>
 			<File

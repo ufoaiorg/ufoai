@@ -356,7 +356,7 @@ SOURCE=..\..\src\client\ref.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\client\screen.h
+SOURCE=..\..\src\client\cl_screen.h
 # End Source File
 # Begin Source File
 
@@ -372,7 +372,7 @@ SOURCE=..\..\src\client\snd_loc.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\client\sound.h
+SOURCE=..\..\src\client\cl_sound.h
 # End Source File
 # Begin Source File
 
