@@ -2218,7 +2218,7 @@ void G_ClientTeamInfo (player_t * player)
 				int nr = gi.ReadShort() / 6;
 
 				for (; nr-- > 0;) {
-					G_ReadItem (&item, &container, &x, &y);
+					G_ReadItem(&item, &container, &x, &y);
 					/* gi.dprintf("G_ClientTeamInfo: t=%i:a=%i:m=%i (x=%i:y=%i)\n", item.t, item.a, item.m, x, y); */
 
 					Com_AddToInventory(&ent->i, item, container, x, y);
@@ -2249,6 +2249,8 @@ void G_ClientTeamInfo (player_t * player)
 			gi.ReadByte(); /* skin */
 			gi.ReadShort(); /* HP */
 			gi.ReadShort(); /* maxHP */
+			gi.ReadByte(); /* category */
+			gi.ReadByte(); /* gender */
 			gi.ReadByte(); /* STUN */
 			gi.ReadByte(); /* AP */
 			gi.ReadByte(); /* morale */
