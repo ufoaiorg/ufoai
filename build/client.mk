@@ -15,6 +15,7 @@ CLIENT_SRCS = \
 	client/cl_http.c \
 	client/cl_inventory.c \
 	client/cl_input.c \
+	client/cl_irc.c \
 	client/cl_keys.c \
 	client/cl_le.c \
 	client/cl_main.c \
@@ -47,7 +48,6 @@ CLIENT_SRCS = \
 	qcommon/cmodel.c \
 	qcommon/common.c \
 	qcommon/cvar.c \
-	qcommon/irc.c \
 	qcommon/files.c \
 	qcommon/md4.c \
 	qcommon/md5.c \
