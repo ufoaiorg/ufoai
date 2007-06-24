@@ -361,7 +361,6 @@ void CL_ParseEntitystring (char *es)
 	}
 }
 
-
 /**
  * @brief Call before entering a new level, or after changing dlls
  */
@@ -389,6 +388,8 @@ void CL_PrepRefresh (void)
 
 	/* register models, pics, and skins */
 	Com_Printf("Map: %s\n", cl.configstrings[CS_NAME]);
+	if (!ccs.singleplayer)
+		SCR_SetLoadingBackground(cl.configstrings[CS_NAME]);
 	SCR_UpdateScreen();
 	re.BeginLoading(cl.configstrings[CS_TILES], cl.configstrings[CS_POSITIONS]);
 	CL_ParseEntitystring(map_entitystring);

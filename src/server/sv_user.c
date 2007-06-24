@@ -377,6 +377,7 @@ static void SV_ExecuteUserCommand (char *s)
 void SV_ExecuteClientMessage (client_t * cl)
 {
 	int c = -2;
+	int action = -1;
 	char *s;
 
 	/* only allow one move command */
@@ -387,7 +388,7 @@ void SV_ExecuteClientMessage (client_t * cl)
 
 	while (1) {
 		if (net_message.readcount > net_message.cursize) {
-			Com_Printf("SV_ExecuteClientMessage: badread, %d > %d (player: %s - last action: %i)\n", net_message.readcount, net_message.cursize, ge->ClientGetName(sv_player->num), c);
+			Com_Printf("SV_ExecuteClientMessage: badread, %d > %d (player: %s - last action: %i [%i]\n", net_message.readcount, net_message.cursize, ge->ClientGetName(sv_player->num), c, action);
 			/*SV_DropClient(cl);*/ /* @todo mattn: check this */
 			return;
 		}
@@ -423,7 +424,7 @@ void SV_ExecuteClientMessage (client_t * cl)
 
 		case clc_action:
 			/* client actions are handled by the game module */
-			ge->ClientAction(sv_player);
+			action = ge->ClientAction(sv_player);
 			break;
 
 		case clc_endround:

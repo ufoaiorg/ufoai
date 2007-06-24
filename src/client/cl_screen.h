@@ -1,5 +1,5 @@
 /**
- * @file screen.h
+ * @file cl_screen.h
  * @brief Header for certain screen operations.
  */
 
@@ -30,23 +30,17 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define CLIENT_SCREEN_H
 
 void SCR_Init(void);
-
 void SCR_UpdateScreen(void);
-
 void SCR_CenterPrint(const char *str);
 void SCR_BeginLoadingPlaque(void);
 void SCR_EndLoadingPlaque(void);
-
+void SCR_SetLoadingBackground(const char *mapString);
 void SCR_DebugGraph(float value, int color);
-
 void SCR_TouchPics(void);
-
 void SCR_RunConsole(void);
 
 extern int sb_lines;
-
 extern cvar_t *cursor;
-
 extern vrect_t scr_vrect;		/* position of render window */
 
 #endif /* CLIENT_SCREEN_H */

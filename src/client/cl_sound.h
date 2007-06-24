@@ -1,5 +1,5 @@
 /**
- * @file sound.h
+ * @file cl_sound.h
  * @brief Specifies sound API?
  */
 

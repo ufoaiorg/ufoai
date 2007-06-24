@@ -1902,7 +1902,7 @@ void G_KillTeam (void)
  * @brief The client sent us a message that he did something. We now execute the related fucntion(s) adn notify him if neccessary.
  * @param[in] player The player that sent us the message (@todo: is this correct?)
  */
-void G_ClientAction (player_t * player)
+int G_ClientAction (player_t * player)
 {
 	int action;
 	int num;
@@ -1959,6 +1959,7 @@ void G_ClientAction (player_t * player)
 		gi.error("G_ClientAction: Unknown action!\n");
 		break;
 	}
+	return action;
 }
 
 

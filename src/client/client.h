@@ -31,8 +31,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "ref.h"
 #include "vid.h"
-#include "screen.h"
-#include "sound.h"
+#include "cl_sound.h"
+#include "cl_screen.h"
 #include "cl_input.h"
 #include "cl_keys.h"
 #include "cl_console.h"

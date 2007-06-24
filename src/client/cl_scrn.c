@@ -376,6 +376,34 @@ extern void SCR_DrawPrecacheScreen (qboolean string)
 }
 
 /**
+ * @brief Updates needed cvar for loading screens
+ */
+extern void SCR_SetLoadingBackground (const char *mapString)
+{
+	char loadingPic[MAX_QPATH];
+	char tmpPicName[MAX_VAR];
+	const char *mapname;
+
+	if (!mapString)
+		mapname = Cvar_VariableString("mapname");
+	else
+		mapname = mapString;
+
+	if (*mapname != '+') {
+		Q_strncpyz(tmpPicName, mapname, sizeof(tmpPicName));
+		tmpPicName[strlen(tmpPicName)-1] = '\0';
+		if (FS_CheckFile(va("maps/loading/%s.jpg", tmpPicName)))
+			Com_sprintf(loadingPic, sizeof(loadingPic), "maps/loading/%s.jpg", tmpPicName);
+		else
+			Q_strncpyz(loadingPic, "maps/loading/default.jpg", sizeof(loadingPic));
+		Cvar_Set("mn_mappicbig", loadingPic);
+	} else {
+		Q_strncpyz(loadingPic, "maps/loading/default.jpg", sizeof(loadingPic));
+		Cvar_Set("mn_mappicbig", loadingPic);
+	}
+}
+
+/**
  * @brief Draws the current loading pic of the map from base/pics/maps/loading
  * @sa SCR_DrawLoadingBar
  */
