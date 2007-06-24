@@ -359,10 +359,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/qcommon/ioapi.h" />
-		<Unit filename="../../src/qcommon/irc.c">
+		<Unit filename="../../src/client/cl_irc.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/qcommon/irc.h" />
+		<Unit filename="../../src/client/cl_irc.h" />
 		<Unit filename="../../src/qcommon/md4.c">
 			<Option compilerVar="CC" />
 		</Unit>

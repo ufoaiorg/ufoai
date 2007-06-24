@@ -676,7 +676,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\qcommon\irc.c"
+				RelativePath="..\..\src\client\cl_irc.c"
 				>
 			</File>
 			<File

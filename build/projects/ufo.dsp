@@ -279,7 +279,7 @@ SOURCE=..\..\src\qcommon\ioapi.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\qcommon\irc.c
+SOURCE=..\..\src\client\cl_irc.c
 # End Source File
 # Begin Source File
 
@@ -539,7 +539,7 @@ SOURCE=..\..\src\qcommon\ioapi.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\qcommon\irc.h
+SOURCE=..\..\src\client\cl_irc.h
 # End Source File
 # Begin Source File
 

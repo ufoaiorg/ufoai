@@ -1028,7 +1028,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit98]
-FileName=..\..\src\qcommon\irc.c
+FileName=..\..\src\client\cl_irc.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
@@ -1038,7 +1038,7 @@ OverrideBuildCmd=0
 BuildCmd=$(CC) -c irc.c -o irc.o $(CFLAGS)
 
 [Unit99]
-FileName=..\..\src\qcommon\irc.h
+FileName=..\..\src\client\cl_irc.h
 CompileCpp=1
 Folder=Header Files
 Compile=1
