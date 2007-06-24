@@ -28,28 +28,25 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /*================================================================= */
 
-typedef struct
-{
+typedef struct {
 	int		numnormals;
 	vec3_t	normalsum;
 } vertexnormals_t;
 
-typedef struct
-{
+typedef struct {
 	vec3_t		v;
 	int			lightnormalindex;
 } trivert_t;
 
-typedef struct
-{
+typedef struct {
 	vec3_t		mins, maxs;
 	char		name[16];
-	trivert_t	v[MAX_VERTS];
+	trivert_t	v[MD2_MAX_VERTS];
 } frame_t;
 
 /*================================================================ */
 
-frame_t		g_frames[MAX_FRAMES];
+frame_t		g_frames[MD2_MAX_FRAMES];
 
 mdl_md2_t		model;
 
@@ -60,20 +57,20 @@ int			g_fixedwidth, g_fixedheight;	/* set by $skinsize */
 
 
 /* base frame info */
-vec3_t		base_xyz[MAX_VERTS];
-dstvert_t	base_st[MAX_VERTS];
-dtriangle_t	triangles[MAX_TRIANGLES];
+vec3_t		base_xyz[MD2_MAX_VERTS];
+dstvert_t	base_st[MD2_MAX_VERTS];
+dtriangle_t	triangles[MD2_MAX_TRIANGLES];
 
-int			triangle_st[MAX_TRIANGLES][3][2];
+int			triangle_st[MD2_MAX_TRIANGLES][3][2];
 
 /* the command list holds counts, s/t values, and xyz indexes */
 /* that are valid for every frame */
 int			commands[16384];
 int			numcommands;
 int			numglverts;
-int			used[MAX_TRIANGLES];
+int			used[MD2_MAX_TRIANGLES];
 
-char		g_skins[MAX_MD2SKINS][64];
+char		g_skins[MD2_MAX_SKINS][64];
 
 char		cdarchive[1024];
 char		cdpartial[1024];
@@ -137,7 +134,7 @@ void WriteModelFile (qFILE *modelouthandle)
 	int				j, k;
 	frame_t			*in;
 	daliasframe_t	*out;
-	byte			buffer[MAX_VERTS*4+128];
+	byte			buffer[MD2_MAX_VERTS*4+128];
 	float			v;
 	int				c_on, c_off;
 
@@ -146,7 +143,7 @@ void WriteModelFile (qFILE *modelouthandle)
 	model.framesize = (intptr_t)&((daliasframe_t *)0)->verts[model.num_xyz];
 	model.num_glcmds = numcommands;
 	model.ofs_skins = sizeof(mdl_md2_t);
-	model.ofs_st = model.ofs_skins + model.num_skins * MAX_SKINNAME;
+	model.ofs_st = model.ofs_skins + model.num_skins * MD2_MAX_SKINNAME;
 	model.ofs_tris = model.ofs_st + model.num_st*sizeof(dstvert_t);
 	model.ofs_frames = model.ofs_tris + model.num_tris*sizeof(dtriangle_t);
 	model.ofs_glcmds = model.ofs_frames + model.num_frames*model.framesize;
@@ -159,7 +156,7 @@ void WriteModelFile (qFILE *modelouthandle)
 	SafeWrite(modelouthandle, &modeltemp, sizeof(modeltemp));
 
 	/* write out the skin names */
-	SafeWrite(modelouthandle, g_skins, model.num_skins * MAX_SKINNAME);
+	SafeWrite(modelouthandle, g_skins, model.num_skins * MD2_MAX_SKINNAME);
 
 	/* write out the texture coordinates */
 	c_on = c_off = 0;
@@ -740,7 +737,7 @@ void GrabFrame (char *frame)
 	int			num_tris;
 	char		file1[1024];
 	frame_t		*fr;
-	vertexnormals_t	vnorms[MAX_VERTS];
+	vertexnormals_t	vnorms[MD2_MAX_VERTS];
 	int		index_xyz;
 	char	*framefile;
 
@@ -756,8 +753,8 @@ void GrabFrame (char *frame)
 
 	printf("grabbing %s\n", file1);
 
-	if (model.num_frames >= MAX_FRAMES)
-		Error("model.num_frames >= MAX_FRAMES");
+	if (model.num_frames >= MD2_MAX_FRAMES)
+		Error("model.num_frames >= MD2_MAX_FRAMES");
 	fr = &g_frames[model.num_frames];
 	model.num_frames++;
 
@@ -887,8 +884,8 @@ void Cmd_Skin (void)
 
 	GetToken (qfalse);
 
-	if (model.num_skins == MAX_MD2SKINS)
-		Error("model.num_skins == MAX_MD2SKINS");
+	if (model.num_skins == MD2_MAX_SKINS)
+		Error("model.num_skins == MD2_MAX_SKINS");
 
 	if (g_skipmodel)
 		return;

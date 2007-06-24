@@ -336,7 +336,7 @@ static int R_OBJ_SecondPass (model_t *mod, void *buffer)
 /**
  * @brief
  */
-int Mod_LoadOBJModel (model_t* mod, void* buffer)
+int Mod_LoadOBJModel (model_t* mod, void* buffer, int bufSize)
 {
 	void *tmp = buffer;
 

@@ -29,9 +29,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 model_t *loadmodel;
 static int modfilelen;
 
-static void Mod_LoadSpriteModel(model_t * mod, void *buffer);
-static void Mod_LoadAliasModel(model_t * mod, void *buffer);	/* Load MD2 Model. */
-static void Mod_LoadAliasMD3Model(model_t *mod, void *buffer);	/* Load MD3 Model. */
+static void Mod_LoadSpriteModel(model_t * mod, void *buffer, int bufSize);
+static void Mod_LoadAliasMD2Model(model_t * mod, void *buffer, int bufSize);	/* Load MD2 Model. */
+static void Mod_LoadAliasMD3Model(model_t *mod, void *buffer, int bufSize);	/* Load MD3 Model. */
 
 model_t mod_known[MAX_MOD_KNOWN];
 static int mod_numknown;
@@ -142,16 +142,16 @@ static model_t *Mod_ForName (const char *name, qboolean crash)
 	switch (LittleLong(*(unsigned *) buf)) {
 	case IDALIASHEADER:
 		/* MD2 header */
-		Mod_LoadAliasModel(mod, buf);
+		Mod_LoadAliasMD2Model(mod, buf, modfilelen);
 		break;
 
 	case IDMD3HEADER:
 		/* MD3 header */
-		Mod_LoadAliasMD3Model(mod, buf);
+		Mod_LoadAliasMD3Model(mod, buf, modfilelen);
 		break;
 
 	case IDSPRITEHEADER:
-		Mod_LoadSpriteModel(mod, buf);
+		Mod_LoadSpriteModel(mod, buf, modfilelen);
 		break;
 
 	case IDBSPHEADER:
@@ -159,7 +159,7 @@ static model_t *Mod_ForName (const char *name, qboolean crash)
 		break;
 
 	default:
-		if (!Mod_LoadOBJModel(mod, buf))
+		if (!Mod_LoadOBJModel(mod, buf, modfilelen))
 			ri.Sys_Error(ERR_DROP, "Mod_ForName: unknown fileid for %s", mod->name);
 		break;
 	}
@@ -818,7 +818,7 @@ static void Mod_LoadTags (model_t * mod, void *buffer, int bufSize)
 		ri.Sys_Error(ERR_DROP, "Mod_LoadTags: tag file %s has no frames", mod->tagname);
 
 	/* load tag names */
-	memcpy((char *) pheader + pheader->ofs_names, (char *) pintag + pheader->ofs_names, pheader->num_tags * MAX_SKINNAME);
+	memcpy((char *) pheader + pheader->ofs_names, (char *) pintag + pheader->ofs_names, pheader->num_tags * MD2_MAX_SKINNAME);
 
 	/* load tag matrices */
 	inmat = (float *) ((byte *) pintag + pheader->ofs_tags);
@@ -995,7 +995,7 @@ MD2 ALIAS MODELS
 /**
  * @brief Load MD2 models from file.
  */
-static void Mod_LoadAliasModel (model_t * mod, void *buffer)
+static void Mod_LoadAliasMD2Model (model_t * mod, void *buffer, int bufSize)
 {
 	int i, j;
 	size_t l;
@@ -1021,13 +1021,17 @@ static void Mod_LoadAliasModel (model_t * mod, void *buffer)
 	for (i = 0; i < (int)sizeof(mdl_md2_t) / 4; i++) /* FIXME */
 		((int *) pheader)[i] = LittleLong(((int *) buffer)[i]);
 
+	if (bufSize != pheader->ofs_end)
+		ri.Sys_Error(ERR_DROP, "model %s broken offset values", mod->name);
+
 	if (pheader->skinheight > MAX_LBM_HEIGHT)
 		ri.Sys_Error(ERR_DROP, "model %s has a skin taller than %d", mod->name, MAX_LBM_HEIGHT);
+	else if (pheader->skinheight <= 0 || pheader->skinwidth <= 0)
+		ri.Sys_Error(ERR_DROP, "model %s has invalid skin dimensions '%d x %d'", mod->name, pheader->skinheight, pheader->skinwidth);
 
 	if (pheader->num_xyz <= 0)
 		ri.Sys_Error(ERR_DROP, "model %s has no vertices", mod->name);
-
-	if (pheader->num_xyz > MAX_VERTS)
+	else if (pheader->num_xyz > MD2_MAX_VERTS)
 		ri.Sys_Error(ERR_DROP, "model %s has too many vertices", mod->name);
 
 	if (pheader->num_st <= 0)
@@ -1035,9 +1039,13 @@ static void Mod_LoadAliasModel (model_t * mod, void *buffer)
 
 	if (pheader->num_tris <= 0)
 		ri.Sys_Error(ERR_DROP, "model %s has no triangles", mod->name);
+	else if (pheader->num_tris > MD2_MAX_TRIANGLES)
+		ri.Sys_Error(ERR_DROP, "model %s has too many triangles", mod->name);
 
 	if (pheader->num_frames <= 0)
 		ri.Sys_Error(ERR_DROP, "model %s has no frames", mod->name);
+	else if (pheader->num_frames > MD2_MAX_FRAMES)
+		ri.Sys_Error(ERR_DROP, "model %s has too many frames", mod->name);
 
 	/* load base s and t vertices (not used in gl version) */
 	pinst = (dstvert_t *) ((byte *) pinmodel + pheader->ofs_st);
@@ -1082,7 +1090,7 @@ static void Mod_LoadAliasModel (model_t * mod, void *buffer)
 		poutcmd[i] = LittleLong(pincmd[i]);
 
 	/* copy skin names */
-	memcpy((char *) pheader + pheader->ofs_skins, (char *) pinmodel + pheader->ofs_skins, pheader->num_skins * MAX_SKINNAME);
+	memcpy((char *) pheader + pheader->ofs_skins, (char *) pinmodel + pheader->ofs_skins, pheader->num_skins * MD2_MAX_SKINNAME);
 
 	mod->mins[0] = -UNIT_SIZE;
 	mod->mins[1] = -UNIT_SIZE;
@@ -1133,7 +1141,7 @@ MD3 ALIAS MODELS
  * @brief Load MD3 models from file.
  * @note Some Vic code here not fully used
  */
-static void Mod_LoadAliasMD3Model (model_t *mod, void *buffer)
+static void Mod_LoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 {
 	int					version, i, j, l;
 	dmd3_t				*pinmodel;
@@ -1331,7 +1339,7 @@ SPRITE MODELS
 /**
  * @brief
  */
-static void Mod_LoadSpriteModel (model_t * mod, void *buffer)
+static void Mod_LoadSpriteModel (model_t * mod, void *buffer, int bufSize)
 {
 	dsprite_t *sprin, *sprout;
 	int i;
@@ -1346,8 +1354,8 @@ static void Mod_LoadSpriteModel (model_t * mod, void *buffer)
 	if (sprout->version != SPRITE_VERSION)
 		ri.Sys_Error(ERR_DROP, "%s has wrong version number (%i should be %i)", mod->name, sprout->version, SPRITE_VERSION);
 
-	if (sprout->numframes > MAX_MD2SKINS)
-		ri.Sys_Error(ERR_DROP, "%s has too many frames (%i > %i)", mod->name, sprout->numframes, MAX_MD2SKINS);
+	if (sprout->numframes > SPRITE_MAX_FRAMES)
+		ri.Sys_Error(ERR_DROP, "%s has too many frames (%i > %i)", mod->name, sprout->numframes, SPRITE_MAX_FRAMES);
 
 	/* byte swap everything */
 	for (i = 0; i < sprout->numframes; i++) {
@@ -1355,7 +1363,7 @@ static void Mod_LoadSpriteModel (model_t * mod, void *buffer)
 		sprout->frames[i].height = LittleLong(sprin->frames[i].height);
 		sprout->frames[i].origin_x = LittleLong(sprin->frames[i].origin_x);
 		sprout->frames[i].origin_y = LittleLong(sprin->frames[i].origin_y);
-		memcpy(sprout->frames[i].name, sprin->frames[i].name, MAX_SKINNAME);
+		memcpy(sprout->frames[i].name, sprin->frames[i].name, SPRITE_MAX_SKINNAME);
 		mod->skins[i] = GL_FindImage(sprout->frames[i].name, it_sprite);
 	}
 
@@ -1519,7 +1527,7 @@ struct model_s *R_RegisterModel (const char *name)
 
 			pheader = (mdl_md2_t *) mod->extraData;
 			for (i = 0; i < pheader->num_skins; i++) {
-				skin = (char *) pheader + pheader->ofs_skins + i * MAX_SKINNAME;
+				skin = (char *) pheader + pheader->ofs_skins + i * MD2_MAX_SKINNAME;
 				if (skin[0] != '.')
 					mod->skins[i] = GL_FindImage(skin, it_skin);
 				else {

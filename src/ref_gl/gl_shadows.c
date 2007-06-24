@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "gl_local.h"
 
-vec4_t s_lerped[MAX_VERTS];
+vec4_t s_lerped[MD2_MAX_VERTS];
 static vec3_t shadevector;
 float shadelight[3];
 
@@ -194,7 +194,7 @@ static void GL_DrawAliasShadow (entity_t * e, mdl_md2_t * paliashdr, int posenum
 			qglBegin(GL_TRIANGLE_STRIP);
 
 		do {
-			assert(order[2] < MAX_VERTS);
+			assert(order[2] < MD2_MAX_VERTS);
 			/* normals and vertexes come from the frame list */
 			memcpy(point, s_lerped[order[2]], sizeof(point));
 			point[0] -= shadevector[0] * (point[2] + lheight);
@@ -220,7 +220,7 @@ static void BuildShadowVolume (mdl_md2_t * hdr, vec3_t light, float projectdista
 	dtriangle_t *ot, *tris;
 	neighbors_t	*neighbors;
 	int i, j;
-	qboolean trianglefacinglight[MAX_TRIANGLES];
+	qboolean trianglefacinglight[MD2_MAX_TRIANGLES];
 	vec3_t v0, v1, v2, v3;
 	daliasframe_t *frame;
 	dtrivertx_t *verts;

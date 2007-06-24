@@ -61,12 +61,12 @@ typedef struct {
 #define ALIAS_VERSION	8
 #define TAG_VERSION		1
 
-#define	MAX_TRIANGLES	4096
-#define MAX_VERTS		2048
-#define MAX_FRAMES		512
-#define MAX_MD2SKINS	32
-#define	MAX_SKINNAME	64
-#define MAX_TAGNAME		64
+#define MD2_MAX_TRIANGLES	4096
+#define MD2_MAX_VERTS		2048
+#define MD2_MAX_FRAMES		512
+#define MD2_MAX_SKINS	32
+#define MD2_MAX_SKINNAME	64
+#define MD2_MAX_TAGNAME		64
 
 /**
  * @brief These two shorts are used to map a vertex onto a skin
@@ -144,7 +144,7 @@ typedef struct {
 	int num_glcmds;				/**< dwords in strip/fan command list */
 	int num_frames;				/**< number of frames for this model */
 
-	int ofs_skins;				/**< each skin is a MAX_SKINNAME string */
+	int ofs_skins;				/**< each skin is a MD2_MAX_SKINNAME string */
 	int ofs_st;					/**< byte offset from start for stverts */
 	int ofs_tris;				/**< offset for dtriangles */
 	int ofs_frames;				/**< offset for first frame */
@@ -277,11 +277,13 @@ typedef struct {
 /** little-endian "IDS2" */
 #define IDSPRITEHEADER	(('2'<<24)+('S'<<16)+('D'<<8)+'I')
 #define SPRITE_VERSION	2
+#define SPRITE_MAX_SKINNAME	64
+#define SPRITE_MAX_FRAMES	MD2_MAX_SKINS
 
 typedef struct {
 	int width, height;
 	int origin_x, origin_y;		/**< raster coordinates inside pic */
-	char name[MAX_SKINNAME];	/**< name of pcx file */
+	char name[SPRITE_MAX_SKINNAME];	/**< name of pcx file */
 } dsprframe_t;
 
 typedef struct {

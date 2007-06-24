@@ -707,11 +707,17 @@ extern void Com_PrecacheCharacterModels (void)
 				Com_sprintf(model, sizeof(model), "%s/%s", path, str);
 				if (!re.RegisterModel(model))
 					Com_Printf("Com_PrecacheCharacterModels: Could not register model %s\n", model);
+#ifdef DEBUG
+				_Mem_CheckPoolIntegrity(vid_modelPool, model, __LINE__);
+#endif
 				str += strlen(str) + 1;
 				/* register head */
 				Com_sprintf(model, sizeof(model), "%s/%s", path, str);
 				if (!re.RegisterModel(model))
 					Com_Printf("Com_PrecacheCharacterModels: Could not register model %s\n", model);
+#ifdef DEBUG
+				_Mem_CheckPoolIntegrity(vid_modelPool, model, __LINE__);
+#endif
 				/* skip skin */
 				str += strlen(str) + 1;
 				/* new path */

@@ -449,7 +449,7 @@ static float *R_CalcTransform(entity_t * e)
 
 			/* find the right tag */
 			name = (char *) taghdr + taghdr->ofs_names;
-			for (i = 0; i < taghdr->num_tags; i++, name += MAX_TAGNAME)
+			for (i = 0; i < taghdr->num_tags; i++, name += MD2_MAX_TAGNAME)
 				if (!strcmp(name, e->tagname)) {
 					/* found the tag (matrix) */
 					tag = (float *) ((byte *) taghdr + taghdr->ofs_tags);

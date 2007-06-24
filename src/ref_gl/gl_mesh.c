@@ -37,8 +37,8 @@ float r_avertexnormals[NUMVERTEXNORMALS][3] = {
 #include "anorms.h"
 };
 
-static vec4_t s_lerped[MAX_VERTS];
-static float normalArray[MAX_VERTS * 3];
+static vec4_t s_lerped[MD2_MAX_VERTS];
+static float normalArray[MD2_MAX_VERTS * 3];
 
 /* precalculated dot products for quantized angles */
 #define SHADEDOT_QUANT 16
@@ -381,7 +381,7 @@ void R_DrawAliasModel (entity_t * e)
 	if (e->skin)
 		skin = e->skin;			/* custom player skin */
 	else {
-		if (e->skinnum >= MAX_MD2SKINS)
+		if (e->skinnum >= MD2_MAX_SKINS)
 			skin = currentmodel->skins[0];
 		else {
 			skin = currentmodel->skins[e->skinnum];
@@ -651,7 +651,7 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 
 			/* find the right tag */
 			name = (char *) taghdr + taghdr->ofs_names;
-			for (i = 0; i < taghdr->num_tags; i++, name += MAX_TAGNAME)
+			for (i = 0; i < taghdr->num_tags; i++, name += MD2_MAX_TAGNAME)
 				if (!Q_strcmp(name, tagname)) {
 					/* found the tag (matrix) */
 					tag = (float *) ((byte *) taghdr + taghdr->ofs_tags);

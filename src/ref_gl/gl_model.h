@@ -231,7 +231,7 @@ typedef struct model_s {
 	byte *lightdata;
 
 	/** for alias models and skins */
-	image_t *skins[MAX_MD2SKINS];
+	image_t *skins[MD2_MAX_SKINS];
 
 	void *extraData;
 
@@ -239,7 +239,7 @@ typedef struct model_s {
 	char tagname[MAX_QPATH];
 	void *tagdata;
 
-	signed int edge_tri[MAX_TRIANGLES][3];
+	signed int edge_tri[MD2_MAX_TRIANGLES][3];
 	qboolean noshadow;
 	/** animation data */
 	char animname[MAX_QPATH];

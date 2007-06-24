@@ -25,10 +25,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "qdata.h"
 
-#define MAX_SPRFRAMES			MAX_MD2SKINS
+#define SPRITE_MAX_FRAMES			MD2_MAX_SKINS
 
 static dsprite_t sprite;
-static dsprframe_t frames[MAX_SPRFRAMES];
+static dsprframe_t frames[SPRITE_MAX_FRAMES];
 
 byte *byteimage, *lbmpalette;
 int byteimagewidth, byteimageheight;
@@ -153,28 +153,28 @@ void Cmd_SpriteFrame (void)
 	}
 
 	if ((xl & 0x07) || (yl & 0x07) || (w & 0x07) || (h & 0x07))
-		Error ("Sprite dimensions not multiples of 8\n");
+		Error("Sprite dimensions not multiples of 8\n");
 
 	if ((w > 256) || (h > 256))
-		Error ("Sprite has a dimension longer than 256");
+		Error("Sprite has a dimension longer than 256");
 
 	xh = xl+w;
 	yh = yl+h;
 
-	if (sprite.numframes >= MAX_SPRFRAMES)
-		Error ("Too many frames; increase MAX_SPRFRAMES\n");
+	if (sprite.numframes >= SPRITE_MAX_FRAMES)
+		Error("Too many frames; increase SPRITE_MAX_FRAMES\n");
 
 	pframe = &frames[sprite.numframes];
 	pframe->width = w;
 	pframe->height = h;
 	pframe->origin_x = ox;
 	pframe->origin_y = oy;
-	sprintf (pframe->name, "%s_%i.pcx", spritename, sprite.numframes);
-	sprintf (savename, "%s%s_%i.pcx", gamedir, spritename, sprite.numframes);
+	sprintf(pframe->name, "%s_%i.pcx", spritename, sprite.numframes);
+	sprintf(savename, "%s%s_%i.pcx", gamedir, spritename, sprite.numframes);
 	sprite.numframes++;
 
 	if (g_release) {
-		ReleaseFile (pframe->name);
+		ReleaseFile(pframe->name);
 		return;
 	}
 
