@@ -9,11 +9,11 @@ Tooltip: 'Export to Quake2 tag file format for UFO:AI (.tag).'
 
 __author__ = 'Werner Hoehrer'
 __version__ = '0.0.4'
-__url__ = ["UFO: Aline Invasion, http://ufoai.sourceforge.net",
+__url__ = ["UFO: Alien Invasion, http://ufoai.sourceforge.net",
      "Support forum, http://ufoai.ninex.info/phpBB2/index.php", "blender", "elysiun"]
 __email__ = ["Werner Hoehrer, bill_spam2:yahoo*de", "scripts"]
 __bpydoc__ = """\
-This script Exports a Quake 2 tag file as used in UFO:AI (MD2 TAG).
+This script exports a Quake 2 tag file as used in UFO:AI (MD2 TAG).
 
 This file format equals the _parts_ of the MD3 format used for animated tags, but nothing more. i.e tagnames+positions
 
@@ -571,11 +571,8 @@ def save_md2_tags(filename):
 
 	# Set EOF offest value.
 	temp_tag = md2_tag();
-	md2_tags.offset_end = md2_tags.offset_tags + (temp_tag.getSize() * md2_tags.num_frames * md2_tags.num_tags)
-	# FIXME:
-	#md2_tags.offset_end         = offset_tags + (md2_tags.num_tags * md2_tags.num_frames * 48)
-	#md2_tags.offset_extract_end = offset_tags + (md2_tags.num_tags * md2_tags.num_frames * 64)
-	md2_tags.offset_extract_end=md2_tags.offset_end
+	md2_tags.offset_end = md2_tags.offset_tags + (48 * md2_tags.num_frames * md2_tags.num_tags)
+	md2_tags.offset_extract_end = md2_tags.offset_tags + (64 * md2_tags.num_frames * md2_tags.num_tags)
 
 	print ""
 	md2_tags.dump()
