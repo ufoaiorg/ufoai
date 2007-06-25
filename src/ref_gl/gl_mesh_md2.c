@@ -250,9 +250,9 @@ static qboolean R_CullAliasMD2Model (vec4_t bbox[8], entity_t * e)
 
 /**
  * @brief
- * @sa R_DrawAliasMD3Model
+ * @sa R_DrawAliasMD2Model
  */
-void R_DrawAliasMD2FrameLerp (entity_t * e)
+void R_DrawAliasMD2Model (entity_t * e)
 {
 	qboolean lightfixed;
 	vec4_t bbox[8];
