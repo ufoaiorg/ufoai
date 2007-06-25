@@ -1,3 +1,6 @@
 /game.so
+/game.dll
+/game.dylib
 /*.pk3
 /i18n
+/*.tmp
