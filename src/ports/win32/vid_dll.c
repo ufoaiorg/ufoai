@@ -134,13 +134,13 @@ void AppActivate (BOOL fActive, BOOL minimize)
 		CDAudio_Activate(qfalse);
 		S_Activate(qfalse);
 
-		if (win_noalttab->value)
+		if (win_noalttab->integer)
 			WIN_EnableAltTab();
 	} else {
 		IN_Activate(qtrue);
 		CDAudio_Activate(qtrue);
 		S_Activate(qtrue);
-		if (win_noalttab->value)
+		if (win_noalttab->integer)
 			WIN_DisableAltTab();
 	}
 }
@@ -160,7 +160,7 @@ LRESULT WINAPI MainWndProc (HWND hWnd, UINT uMsg, WPARAM  wParam, LPARAM lParam)
 			Key_Event(K_MWHEELDOWN, qtrue, sys_msg_time);
 			Key_Event(K_MWHEELDOWN, qfalse, sys_msg_time);
 		}
-		return DefWindowProc (hWnd, uMsg, wParam, lParam);
+		return DefWindowProc(hWnd, uMsg, wParam, lParam);
 	}
 
 	switch (uMsg) {
@@ -203,12 +203,12 @@ LRESULT WINAPI MainWndProc (HWND hWnd, UINT uMsg, WPARAM  wParam, LPARAM lParam)
 			fActive = LOWORD(wParam);
 			fMinimized = (BOOL) HIWORD(wParam);
 
-			AppActivate( fActive != WA_INACTIVE, fMinimized);
+			AppActivate(fActive != WA_INACTIVE, fMinimized);
 
-			if ( reflib_active )
-				re.AppActivate( !( fActive == WA_INACTIVE ) );
+			if (reflib_active)
+				re.AppActivate(!(fActive == WA_INACTIVE));
 		}
-		return DefWindowProc (hWnd, uMsg, wParam, lParam);
+		return DefWindowProc(hWnd, uMsg, wParam, lParam);
 
 	case WM_MOVE:
 		{
@@ -216,7 +216,7 @@ LRESULT WINAPI MainWndProc (HWND hWnd, UINT uMsg, WPARAM  wParam, LPARAM lParam)
 			RECT r;
 			int		style;
 
-			if (!vid_fullscreen->value) {
+			if (!vid_fullscreen->integer) {
 				xPos = (short) LOWORD(lParam);    /* horizontal position */
 				yPos = (short) HIWORD(lParam);    /* vertical position */
 
@@ -233,10 +233,10 @@ LRESULT WINAPI MainWndProc (HWND hWnd, UINT uMsg, WPARAM  wParam, LPARAM lParam)
 				vid_xpos->modified = qfalse;
 				vid_ypos->modified = qfalse;
 				if (ActiveApp)
-					IN_Activate (qtrue);
+					IN_Activate(qtrue);
 			}
 		}
-		return DefWindowProc (hWnd, uMsg, wParam, lParam);
+		return DefWindowProc(hWnd, uMsg, wParam, lParam);
 
 	/* this is complicated because Win32 seems to pack multiple mouse events into */
 	/* one update sometimes, so we always check all states and look for events */
@@ -288,11 +288,11 @@ LRESULT WINAPI MainWndProc (HWND hWnd, UINT uMsg, WPARAM  wParam, LPARAM lParam)
 		break;
 
 	default:	/* pass all unhandled messages to DefWindowProc */
-		return DefWindowProc (hWnd, uMsg, wParam, lParam);
+		return DefWindowProc(hWnd, uMsg, wParam, lParam);
     }
 
 	/* return 0 if handled message, 1 if not */
-	return DefWindowProc( hWnd, uMsg, wParam, lParam );
+	return DefWindowProc(hWnd, uMsg, wParam, lParam);
 }
 
 /**

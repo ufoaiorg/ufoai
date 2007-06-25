@@ -1100,7 +1100,7 @@ static qboolean R_Init (HINSTANCE hinstance, WNDPROC wndproc)
 {
 	char renderer_buffer[1000];
 	char vendor_buffer[1000];
-	int		j;
+	int j;
 	extern float r_turbsin[256];
 	int aniso_level, max_aniso;
 
