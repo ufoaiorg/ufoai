@@ -3314,13 +3314,10 @@ static void CL_TargetingGrenade (pos3_t fromPos, pos3_t toPos)
 	from[2] += selFD->shotOrg[1];
 
 	/* prefer to aim grenades at the ground */
-	VectorCopy(at, cross);
-	cross[2] -= GROUND_DELTA;
 	at[2] -= GROUND_DELTA;
-	if (mousePosTargettingAlign) {
+	if (mousePosTargettingAlign)
 		at[2] -= mousePosTargettingAlign;
-		cross[2] -= mousePosTargettingAlign;
-	}
+	VectorCopy(at, cross);
 
 	/* search for an actor at target */
 	for (i = 0, le = LEs; i < numLEs; i++, le++)
