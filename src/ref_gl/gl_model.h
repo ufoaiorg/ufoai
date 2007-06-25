@@ -125,8 +125,6 @@ typedef struct mnode_s {
 	unsigned short numsurfaces;
 } mnode_t;
 
-
-
 typedef struct mleaf_s {
 	/* common with node */
 	int contents;				/**< will be a negative contents number */
@@ -250,7 +248,22 @@ typedef struct model_s {
 
 /*============================================================================ */
 
+#define MAX_MOD_KNOWN   512
+
 void Mod_ClearAll(void);
 void Mod_Modellist_f(void);
 void Mod_FreeAll(void);
 void Mod_DrawModelBBox(vec4_t bbox[8], entity_t *e);
+
+#include "gl_model_alias.h"
+#include "gl_model_brush.h"
+#include "gl_model_md2.h"
+#include "gl_model_md3.h"
+#include "gl_model_sp2.h"
+
+extern model_t mod_known[MAX_MOD_KNOWN];
+extern int mod_numknown;
+
+extern model_t mod_inline[MAX_MOD_KNOWN];
+extern int numInline;
+

@@ -231,8 +231,6 @@ typedef struct {
 
 #define BACKFACE_EPSILON    0.01
 
-#define MAX_MOD_KNOWN   512
-
 /* entity transform */
 typedef struct {
 	qboolean done;
