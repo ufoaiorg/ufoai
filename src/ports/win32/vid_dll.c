@@ -503,8 +503,8 @@ void VID_CheckChanges (void)
 
 	/* update our window position */
 	if (vid_xpos->modified || vid_ypos->modified) {
-		if (!vid_fullscreen->value)
-			VID_UpdateWindowPosAndSize(vid_xpos->value, vid_ypos->value);
+		if (!vid_fullscreen->integer)
+			VID_UpdateWindowPosAndSize(vid_xpos->integer, vid_ypos->integer);
 
 		vid_xpos->modified = qfalse;
 		vid_ypos->modified = qfalse;
