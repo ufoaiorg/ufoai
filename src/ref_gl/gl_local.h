@@ -392,7 +392,6 @@ void GL_ScreenShot_f(void);
 void R_InterpolateTransform(animState_t * as, int numframes, float *tag, float *interpolated);
 void R_DrawModelDirect(modelInfo_t * mi, modelInfo_t * pmi, const char *tag);
 void R_DrawModelParticle(modelInfo_t * mi);
-void R_DrawAliasModel(entity_t * e);
 void R_DrawBrushModel(entity_t * e);
 void R_DrawBox(entity_t * e);
 void R_DrawLevelBrushes(void);

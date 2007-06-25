@@ -77,5 +77,4 @@ typedef	struct	maliasmodel_s {
 } maliasmodel_t;
 
 void R_DrawAliasMD3Model(entity_t *e);
-
 void Mod_LoadAliasMD3Model(model_t *mod, void *buffer, int bufSize);

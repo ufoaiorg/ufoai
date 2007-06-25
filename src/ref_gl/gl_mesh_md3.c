@@ -1,6 +1,6 @@
 /**
- * @file gl_drawmd3.c
- * @brief MD3 Model code
+ * @file gl_mesh_md3.c
+ * @brief MD3 Model drawing code
  */
 
 /*
@@ -26,12 +26,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "gl_local.h"
-#include "gl_md3.h"
 
 /**
  * @brief
  */
-static void GL_DrawAliasMD3FrameLerp (maliasmodel_t *paliashdr, maliasmesh_t mesh, float backlerp)
+static void R_DrawAliasMD3FrameLerp (maliasmodel_t *paliashdr, maliasmesh_t mesh, float backlerp)
 {
 	int i,j;
 	/*int k;*/
@@ -103,7 +102,7 @@ static void GL_DrawAliasMD3FrameLerp (maliasmodel_t *paliashdr, maliasmesh_t mes
 
 /**
  * @brief
- * @sa R_DrawAliasModel
+ * @sa R_DrawAliasMD2Model
  */
 void R_DrawAliasMD3Model (entity_t *e)
 {
@@ -144,7 +143,7 @@ void R_DrawAliasMD3Model (entity_t *e)
 	}
 
 	if ((e->oldframe >= paliashdr->num_frames) || (e->oldframe < 0)) {
-		ri.Con_Printf(PRINT_ALL, "R_DrawAliasModel %s: no such oldframe %d\n",
+		ri.Con_Printf(PRINT_ALL, "R_DrawAliasMD3Model %s: no such oldframe %d\n",
 			currentmodel->name, e->oldframe);
 		e->frame = 0;
 		e->oldframe = 0;
@@ -190,7 +189,7 @@ void R_DrawAliasMD3Model (entity_t *e)
 		GL_Bind(skin->texnum);
 		/* locate the proper data */
 		c_alias_polys += paliashdr->meshes[i].num_tris;
-		GL_DrawAliasMD3FrameLerp(paliashdr, paliashdr->meshes[i], e->backlerp);
+		R_DrawAliasMD3FrameLerp(paliashdr, paliashdr->meshes[i], e->backlerp);
 	}
 
 	qglDisableClientState(GL_COLOR_ARRAY);

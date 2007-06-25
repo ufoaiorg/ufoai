@@ -24,7 +24,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 #include "gl_local.h"
-#include "gl_md3.h"
 
 #if defined DEBUG && defined _MSC_VER
 #include <intrin.h>
@@ -552,7 +551,7 @@ static void R_DrawEntitiesOnList (void)
 			switch (currentmodel->type) {
 			case mod_alias_md2:
 				/* MD2 model */
-				R_DrawAliasModel(currententity);
+				R_DrawAliasMD2Model(currententity);
 				break;
 			case mod_alias_md3:
 				/* MD3 model */
@@ -595,11 +594,11 @@ static void R_DrawEntitiesOnList (void)
 			switch (currentmodel->type) {
 			case mod_alias_md2:
 				/* MD2 model */
-				R_DrawAliasModel(currententity);
+				R_DrawAliasMD2Model(currententity);
 				break;
 			case mod_alias_md3:
 				/* MD3 model */
-				R_DrawAliasMD3Model (currententity);
+				R_DrawAliasMD3Model(currententity);
 				break;
 			case mod_brush:
 				R_DrawBrushModel(currententity);

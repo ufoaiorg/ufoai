@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /*
 ==============================================================================
-ALIAS MODELS
+MD2 ALIAS MODELS
 ==============================================================================
 */
 
@@ -106,76 +106,6 @@ static void Mod_LoadTags (model_t * mod, void *buffer, int bufSize)
 		ri.Sys_Error(ERR_DROP, "Mod_LoadTags: read: %i expected: %i - tags: %i, frames: %i (should be %i)",
 			read, size, pheader->num_tags, pheader->num_frames, md2->num_frames);
 }
-
-
-/**
- * @brief
- */
-static void Mod_LoadAnims (model_t * mod, void *buffer)
-{
-	char *text, *token;
-	manim_t *anim;
-	int n;
-	mdl_md2_t *md2;
-
-	md2 = (mdl_md2_t *) mod->extraData;
-
-	for (n = 0, text = buffer; text; n++)
-		COM_Parse(&text);
-	n /= 4;
-	if (n > MAX_ANIMS)
-		n = MAX_ANIMS;
-
-	mod->animdata = (manim_t*) ri.TagMalloc(ri.modelPool, n * sizeof(manim_t), 0);
-	anim = mod->animdata;
-	text = buffer;
-	mod->numanims = 0;
-
-	do {
-		/* get the name */
-		token = COM_Parse(&text);
-		if (!text)
-			break;
-		Q_strncpyz(anim->name, token, MAX_ANIMNAME);
-
-		/* get the start */
-		token = COM_Parse(&text);
-		if (!text)
-			break;
-		anim->from = atoi(token);
-		if (anim->from < 0)
-			ri.Sys_Error(ERR_DROP, "Mod_LoadAnims: negative start frame for %s", mod->animname);
-		else if (anim->from > md2->num_frames)
-			ri.Sys_Error(ERR_DROP, "Mod_LoadAnims: start frame is higher than models frame count (%i) (model: %s)", md2->num_frames, mod->animname);
-
-		/* get the end */
-		token = COM_Parse(&text);
-		if (!text)
-			break;
-		anim->to = atoi(token);
-		if (anim->to < 0)
-			ri.Sys_Error(ERR_DROP, "Mod_LoadAnims: negative start frame for %s", mod->animname);
-		else if (anim->to > md2->num_frames)
-			ri.Sys_Error(ERR_DROP, "Mod_LoadAnims: end frame is higher than models frame count (%i) (model: %s)", md2->num_frames, mod->animname);
-
-		/* get the fps */
-		token = COM_Parse(&text);
-		if (!text)
-			break;
-		anim->time = (atof(token) > 0.01) ? (1000.0 / atof(token)) : (1000.0 / 0.01);
-
-		/* add it */
-		mod->numanims++;
-		anim++;
-	} while (mod->numanims < MAX_ANIMS);
-/*	ri.Con_Printf(PRINT_ALL, "anims: %i for model %s\n", mod->numanims, mod->name); */
-}
-
-/*
-==============================================================================
-MD2 ALIAS MODELS
-==============================================================================
-*/
 
 /**
  * @brief Load MD2 models from file.

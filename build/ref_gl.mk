@@ -6,6 +6,8 @@ REF_GL_SRCS = \
 	ref_gl/gl_image.c \
 	ref_gl/gl_light.c \
 	ref_gl/gl_mesh.c \
+	ref_gl/gl_mesh_md2.c \
+	ref_gl/gl_mesh_md3.c \
 	ref_gl/gl_model.c \
 	ref_gl/gl_model_alias.c \
 	ref_gl/gl_model_brush.c \
@@ -13,7 +15,6 @@ REF_GL_SRCS = \
 	ref_gl/gl_model_md3.c \
 	ref_gl/gl_model_sp2.c \
 	ref_gl/gl_obj.c \
-	ref_gl/gl_drawmd3.c \
 	ref_gl/gl_rmain.c \
 	ref_gl/gl_rmisc.c \
 	ref_gl/gl_rsurf.c \

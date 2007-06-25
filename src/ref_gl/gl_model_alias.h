@@ -25,3 +25,4 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 void Mod_BuildTriangleNeighbors(neighbors_t *neighbors, dtriangle_t *tris, int numtris);
 int Mod_FindTriangleWithEdge(neighbors_t *neighbors, dtriangle_t *tris, int numtris, int triIndex, int edgeIndex);
+void Mod_LoadAnims(model_t * mod, void *buffer);

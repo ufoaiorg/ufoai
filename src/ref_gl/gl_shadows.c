@@ -136,7 +136,7 @@ static int model_dlights_num;
 /**
  * @brief
  */
-static void GL_DrawAliasShadow (entity_t * e, mdl_md2_t * paliashdr, int posenum)
+static void R_DrawAliasShadow (entity_t * e, mdl_md2_t * paliashdr, int posenum)
 {
 	dtrivertx_t *verts;
 	int *order;
@@ -326,7 +326,7 @@ static void BuildShadowVolume (mdl_md2_t * hdr, vec3_t light, float projectdista
 
 /**
  * @brief
- * @sa GL_DrawAliasShadowVolume
+ * @sa R_DrawAliasShadowVolume
  * @sa BuildShadowVolume
  */
 static void GL_RenderVolumes (mdl_md2_t * paliashdr, vec3_t lightdir, int projdist)
@@ -367,7 +367,7 @@ static void GL_RenderVolumes (mdl_md2_t * paliashdr, vec3_t lightdir, int projdi
  * @brief
  * @sa R_DrawShadowVolume
  */
-static void GL_DrawAliasShadowVolume (mdl_md2_t * paliashdr, int posenumm)
+static void R_DrawAliasShadowVolume (mdl_md2_t * paliashdr, int posenumm)
 {
 	int *order, i, o, dist;
 	vec3_t light, temp;
@@ -545,7 +545,7 @@ void R_DrawShadow (entity_t * e)
 			VectorSet(end, currententity->origin[0], currententity->origin[1], currententity->origin[2] - 2048);
 			RecursiveLightPoint(rTiles[0]->nodes, currententity->origin, end);
 			R_ShadowLight(currententity->origin, shadevector);
-			GL_DrawAliasShadow(e, paliashdr, currententity->as.frame);
+			R_DrawAliasShadow(e, paliashdr, currententity->as.frame);
 			qglDepthMask(GL_TRUE);
 		}
 		qglEnable(GL_TEXTURE_2D);
@@ -556,7 +556,7 @@ void R_DrawShadow (entity_t * e)
 
 /**
  * @brief
- * @sa R_DrawAliasModel
+ * @sa R_DrawAliasMD2Model
  * @sa R_DrawAliasMD3Model
  * @sa R_CastShadow
  */
@@ -612,7 +612,7 @@ void R_DrawShadowVolume (entity_t * e)
 		qglDisable(GL_TEXTURE_2D);
 		qglTranslatef(e->origin[0], e->origin[1], e->origin[2]);
 		qglRotatef(e->angles[1], 0, 0, 1);
-		GL_DrawAliasShadowVolume(paliashdr, currententity->as.frame);
+		R_DrawAliasShadowVolume(paliashdr, currententity->as.frame);
 		qglEnable(GL_TEXTURE_2D);
 		qglPopMatrix();
 	}
