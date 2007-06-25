@@ -8,8 +8,8 @@
 		<Build>
 			<Target title="windows">
 				<Option platforms="Windows;" />
-				<Option output="../../ref_gl.so" prefix_auto="1" extension_auto="1" />
-				<Option object_output=".objs/ref_gl" />
+				<Option output="..\..\ref_gl.dll" prefix_auto="1" extension_auto="1" />
+				<Option object_output=".objs\ref_gl" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option createDefFile="1" />
@@ -37,12 +37,12 @@
 			</Target>
 			<Target title="linux">
 				<Option platforms="Unix;" />
-				<Option output="ref_gl.so" prefix_auto="1" extension_auto="1" />
-				<Option object_output=".objs/ref_gl" />
+				<Option output="ref_gl.dll" prefix_auto="1" extension_auto="1" />
+				<Option object_output=".objs\ref_gl" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add directory="/usr/include/SDL" />
+					<Add directory="\usr\include\SDL" />
 				</Compiler>
 				<Linker>
 					<Add library="jpeg" />
@@ -56,8 +56,8 @@
 			</Target>
 			<Target title="macosx">
 				<Option platforms="Mac;" />
-				<Option output="ref_gl.so" prefix_auto="1" extension_auto="1" />
-				<Option object_output=".objs/ref_gl" />
+				<Option output="ref_gl.dll" prefix_auto="1" extension_auto="1" />
+				<Option object_output=".objs\ref_gl" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Linker>
@@ -72,115 +72,139 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="../../src/client/ref.h" />
-		<Unit filename="../../src/game/q_shared.c">
+		<Unit filename="..\..\src\client\ref.h" />
+		<Unit filename="..\..\src\game\q_shared.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/game/q_shared.h" />
-		<Unit filename="../../src/ports/linux/gl_glx.c">
-			<Option compilerVar="CC" />
-			<Option target="linux" />
-		</Unit>
-		<Unit filename="../../src/ports/linux/q_shlinux.c">
+		<Unit filename="..\..\src\game\q_shared.h" />
+		<Unit filename="..\..\src\ports\linux\gl_glx.c">
 			<Option compilerVar="CC" />
 			<Option target="linux" />
 		</Unit>
-		<Unit filename="../../src/ports/linux/qgl_linux.c">
+		<Unit filename="..\..\src\ports\linux\q_shlinux.c">
 			<Option compilerVar="CC" />
 			<Option target="linux" />
 		</Unit>
-		<Unit filename="../../src/ports/unix/glob.c">
+		<Unit filename="..\..\src\ports\linux\qgl_linux.c">
 			<Option compilerVar="CC" />
 			<Option target="linux" />
-			<Option target="macosx" />
 		</Unit>
-		<Unit filename="../../src/ports/unix/glob.h">
+		<Unit filename="..\..\src\ports\unix\glob.c">
+			<Option compilerVar="CC" />
 			<Option target="linux" />
 			<Option target="macosx" />
 		</Unit>
-		<Unit filename="../../src/ports/win32/glw_imp.c">
+		<Unit filename="..\..\src\ports\unix\glob.h">
+			<Option target="linux" />
+			<Option target="macosx" />
+		</Unit>
+		<Unit filename="..\..\src\ports\win32\glw_imp.c">
 			<Option compilerVar="CC" />
 			<Option target="windows" />
 		</Unit>
-		<Unit filename="../../src/ports/win32/glw_win.h">
+		<Unit filename="..\..\src\ports\win32\glw_win.h">
 			<Option target="windows" />
 		</Unit>
-		<Unit filename="../../src/ports/win32/q_shwin.c">
-			<Option compilerVar="CC" />
-			<Option target="windows" />
-		</Unit>
-		<Unit filename="../../src/ports/win32/qgl_win.c">
+		<Unit filename="..\..\src\ports\win32\q_shwin.c">
 			<Option compilerVar="CC" />
 			<Option target="windows" />
 		</Unit>
-		<Unit filename="../../src/ports/win32/winquake.h">
+		<Unit filename="..\..\src\ports\win32\qgl_win.c">
+			<Option compilerVar="CC" />
 			<Option target="windows" />
 		</Unit>
-		<Unit filename="../../src/qcommon/qcommon.h" />
-		<Unit filename="../../src/qcommon/qfiles.h" />
-		<Unit filename="../../src/ref_gl/anorms.h" />
-		<Unit filename="../../src/ref_gl/anormtab.h" />
-		<Unit filename="../../src/ref_gl/gl_anim.c">
+		<Unit filename="..\..\src\ports\win32\winquake.h">
+			<Option target="windows" />
+		</Unit>
+		<Unit filename="..\..\src\qcommon\qcommon.h" />
+		<Unit filename="..\..\src\qcommon\qfiles.h" />
+		<Unit filename="..\..\src\ref_gl\anorms.h" />
+		<Unit filename="..\..\src\ref_gl\anormtab.h" />
+		<Unit filename="..\..\src\ref_gl\gl_anim.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/ref_gl/gl_arb_shader.c">
+		<Unit filename="..\..\src\ref_gl\gl_arb_shader.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/ref_gl/gl_bloom.c">
+		<Unit filename="..\..\src\ref_gl\gl_arb_shader.h" />
+		<Unit filename="..\..\src\ref_gl\gl_bloom.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/ref_gl/gl_draw.c">
+		<Unit filename="..\..\src\ref_gl\gl_draw.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/ref_gl/gl_drawmd3.c">
+		<Unit filename="..\..\src\ref_gl\gl_font.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/ref_gl/gl_font.c">
+		<Unit filename="..\..\src\ref_gl\gl_font.h" />
+		<Unit filename="..\..\src\ref_gl\gl_image.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/ref_gl/gl_font.h" />
-		<Unit filename="../../src/ref_gl/gl_image.c">
+		<Unit filename="..\..\src\ref_gl\gl_light.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/ref_gl/gl_light.c">
+		<Unit filename="..\..\src\ref_gl\gl_local.h" />
+		<Unit filename="..\..\src\ref_gl\gl_mesh.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/ref_gl/gl_local.h" />
-		<Unit filename="../../src/ref_gl/gl_md3.h" />
-		<Unit filename="../../src/ref_gl/gl_mesh.c">
+		<Unit filename="..\..\src\ref_gl\gl_mesh_md2.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/ref_gl/gl_model.c">
+		<Unit filename="..\..\src\ref_gl\gl_mesh_md3.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/ref_gl/gl_model.h" />
-		<Unit filename="../../src/ref_gl/gl_obj.c">
+		<Unit filename="..\..\src\ref_gl\gl_model.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/ref_gl/gl_particle.c">
+		<Unit filename="..\..\src\ref_gl\gl_model.h" />
+		<Unit filename="..\..\src\ref_gl\gl_model_alias.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/ref_gl/gl_rmain.c">
+		<Unit filename="..\..\src\ref_gl\gl_model_alias.h" />
+		<Unit filename="..\..\src\ref_gl\gl_model_brush.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/ref_gl/gl_rmisc.c">
+		<Unit filename="..\..\src\ref_gl\gl_model_brush.h" />
+		<Unit filename="..\..\src\ref_gl\gl_model_md2.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/ref_gl/gl_rsurf.c">
+		<Unit filename="..\..\src\ref_gl\gl_model_md2.h" />
+		<Unit filename="..\..\src\ref_gl\gl_model_md3.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/ref_gl/gl_shadows.c">
+		<Unit filename="..\..\src\ref_gl\gl_model_md3.h" />
+		<Unit filename="..\..\src\ref_gl\gl_model_sp2.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/ref_gl/gl_warp.c">
+		<Unit filename="..\..\src\ref_gl\gl_model_sp2.h" />
+		<Unit filename="..\..\src\ref_gl\gl_obj.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/ref_gl/qgl.c">
+		<Unit filename="..\..\src\ref_gl\gl_particle.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/ref_gl/qgl.h" />
-		<Unit filename="../../src/ref_gl/ref_gl.def" />
-		<Unit filename="../../src/ref_gl/warpsin.h" />
+		<Unit filename="..\..\src\ref_gl\gl_rmain.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\ref_gl\gl_rmisc.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\ref_gl\gl_rsurf.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\ref_gl\gl_shadows.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\ref_gl\gl_warp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\ref_gl\glext.h" />
+		<Unit filename="..\..\src\ref_gl\qgl.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="..\..\src\ref_gl\qgl.h" />
+		<Unit filename="..\..\src\ref_gl\ref_gl.def" />
+		<Unit filename="..\..\src\ref_gl\warpsin.h" />
 		<Extensions>
 			<code_completion />
 		</Extensions>
