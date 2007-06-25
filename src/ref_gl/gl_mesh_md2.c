@@ -39,7 +39,7 @@ static float normalArray[MD2_MAX_VERTS * 3];
 /**
  * @brief
  */
-void GL_LerpVerts(int nverts, dtrivertx_t * v, dtrivertx_t * ov, float *lerp, float move[3], float frontv[3], float backv[3])
+void GL_LerpVerts (int nverts, dtrivertx_t * v, dtrivertx_t * ov, float *lerp, float move[3], float frontv[3], float backv[3])
 {
 	int i;
 
