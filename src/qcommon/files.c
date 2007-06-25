@@ -1329,10 +1329,8 @@ void FS_GetMaps (qboolean reset)
 					/* ugly hack - only show the maps in base/maps - not in base/maps/b and so on */
 					if (baseMapName)
 						continue;
-				} else {
-					Com_Printf("map is not in maps/ folder '%s'\n", pak->files[i].name);
+				} else
 					continue;
-				}
 
 				if (strstr(pak->files[i].name, ".bsp")) {
 					if (numInstalledMaps+1 >= MAX_MAPS) {
