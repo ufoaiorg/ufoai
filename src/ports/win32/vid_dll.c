@@ -55,8 +55,6 @@ static UINT MSH_MOUSEWHEEL;
 extern cvar_t *vid_xpos;			/* X coordinate of window position */
 extern cvar_t *vid_ypos;			/* Y coordinate of window position */
 extern cvar_t *vid_fullscreen;
-extern cvar_t *vid_grabmouse;
-extern cvar_t *vid_gamma;
 extern cvar_t *vid_ref;			/* Name of Refresh DLL loaded */
 
 /* Global variables used internally by this module */
@@ -66,7 +64,7 @@ qboolean	reflib_active = qfalse;
 
 LRESULT WINAPI MainWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
-static qboolean s_alttab_disabled;
+static qboolean s_alttab_disabled = qfalse;
 
 extern uint32_t sys_msg_time;
 
