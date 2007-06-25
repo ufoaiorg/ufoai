@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_project_file>
-	<FileVersion major="1" minor="6" />
+	<FileVersion major="1" minor="5" />
 	<Project>
 		<Option title="ufo_ded" />
 		<Option pch_mode="2" />
+		<Option default_target="" />
 		<Option compiler="gcc" />
+		<Option virtualFolders="" />
 		<Build>
 			<Target title="windows">
-				<Option platforms="Windows;" />
 				<Option output="../../ufo_ded" prefix_auto="1" extension_auto="1" />
 				<Option object_output=".objs/ufo_ded" />
 				<Option type="1" />
@@ -29,7 +30,6 @@
 				</Linker>
 			</Target>
 			<Target title="linux">
-				<Option platforms="Unix;" />
 				<Option output="../../ufo_ded" prefix_auto="1" extension_auto="1" />
 				<Option object_output=".objs/ufo_ded" />
 				<Option type="1" />
@@ -40,7 +40,6 @@
 				</Linker>
 			</Target>
 			<Target title="macosx">
-				<Option platforms="Mac;" />
 				<Option output="../../ufo_ded" prefix_auto="1" extension_auto="1" />
 				<Option object_output=".objs/ufo_ded" />
 				<Option type="1" />
@@ -63,6 +62,7 @@
 			<Add directory="C:/Dev-Cpp/lib" />
 		</Linker>
 		<Unit filename="ufo_ded.ico">
+			<Option compilerVar="CPP" />
 			<Option target="windows" />
 		</Unit>
 		<Unit filename="../../src/game/q_shared.c">
@@ -81,6 +81,7 @@
 			<Option target="macosx" />
 		</Unit>
 		<Unit filename="../../src/ports/macosx/sys_osx.m">
+			<Option compilerVar="CPP" />
 			<Option target="macosx" />
 		</Unit>
 		<Unit filename="../../src/ports/null/cd_null.c">
@@ -95,6 +96,9 @@
 			<Option target="macosx" />
 		</Unit>
 		<Unit filename="../../src/ports/unix/glob.h">
+			<Option compilerVar="CPP" />
+			<Option compile="0" />
+			<Option link="0" />
 			<Option target="linux" />
 			<Option target="macosx" />
 		</Unit>
@@ -131,31 +135,42 @@
 		</Unit>
 		<Unit filename="../../src/ports/win32/ufo.rc">
 			<Option compilerVar="WINDRES" />
+			<Option objectName="src/ports/win32/ufo.res" />
 			<Option target="windows" />
 		</Unit>
 		<Unit filename="../../src/qcommon/cmd.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/qcommon/cmd.h" />
+		<Unit filename="../../src/qcommon/cmd.h">
+			<Option compilerVar="CPP" />
+		</Unit>
 		<Unit filename="../../src/qcommon/cmodel.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/qcommon/cmodel.h" />
+		<Unit filename="../../src/qcommon/cmodel.h">
+			<Option compilerVar="CPP" />
+		</Unit>
 		<Unit filename="../../src/qcommon/common.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/qcommon/common.h" />
+		<Unit filename="../../src/qcommon/common.h">
+			<Option compilerVar="CPP" />
+		</Unit>
 		<Unit filename="../../src/qcommon/cvar.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/qcommon/cvar.h" />
+		<Unit filename="../../src/qcommon/cvar.h">
+			<Option compilerVar="CPP" />
+		</Unit>
 		<Unit filename="../../src/qcommon/files.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/qcommon/ioapi.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/qcommon/ioapi.h" />
+		<Unit filename="../../src/qcommon/ioapi.h">
+			<Option compilerVar="CPP" />
+		</Unit>
 		<Unit filename="../../src/qcommon/md4.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -168,14 +183,18 @@
 		<Unit filename="../../src/qcommon/net_chan.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/qcommon/net_chan.h" />
+		<Unit filename="../../src/qcommon/net_chan.h">
+			<Option compilerVar="CPP" />
+		</Unit>
 		<Unit filename="../../src/qcommon/scripts.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/qcommon/unzip.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="../../src/qcommon/unzip.h" />
+		<Unit filename="../../src/qcommon/unzip.h">
+			<Option compilerVar="CPP" />
+		</Unit>
 		<Unit filename="../../src/server/sv_ccmds.c">
 			<Option compilerVar="CC" />
 		</Unit>
