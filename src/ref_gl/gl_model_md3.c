@@ -102,7 +102,7 @@ extern void Mod_LoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 		}
 
 		/* @todo:
-		poutframe->radius = LittleFloat ( pinframe->radius );
+		poutframe->radius = LittleFloat(pinframe->radius);
 		*/
 		mod->radius = max(mod->radius, poutframe->radius);
 		AddPointToBounds(poutframe->mins, mod->mins, mod->maxs);
