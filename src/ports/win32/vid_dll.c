@@ -37,9 +37,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 LONG CDAudio_MessageHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 /* Structure containing functions exported from refresh DLL */
-refexport_t	re;
+refexport_t re;
 
-cvar_t *win_noalttab;
+static cvar_t *win_noalttab;
 
 #ifndef WM_MOUSEWHEEL
 #define WM_MOUSEWHEEL (WM_MOUSELAST+1)  /* message that will be supported by the OS */
@@ -64,7 +64,7 @@ extern viddef_t viddef;				/* global video state; used by other modules */
 HINSTANCE	reflib_library;		/* Handle to refresh DLL */
 qboolean	reflib_active = qfalse;
 
-LRESULT WINAPI MainWndProc( HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam );
+LRESULT WINAPI MainWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 static qboolean s_alttab_disabled;
 
@@ -335,7 +335,7 @@ const vidmode_t vid_modes[] =
 };
 
 /**
- * @brief
+ * @brief Moves the window to the given location
  */
 static void VID_UpdateWindowPosAndSize (int x, int y)
 {
@@ -522,7 +522,7 @@ void Sys_Vid_Init (void)
 	win_noalttab = Cvar_Get("win_noalttab", "0", CVAR_ARCHIVE, NULL);
 
 	/* Add some console commands that we want to handle */
-	Cmd_AddCommand("vid_front", VID_Front_f, NULL);
+	Cmd_AddCommand("vid_front", VID_Front_f, "Set UFO:AI window to front");
 
 	maxVidModes = VID_NUM_MODES;
 }
