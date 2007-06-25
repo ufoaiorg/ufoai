@@ -281,6 +281,7 @@ extern void CL_StartSingleplayer (qboolean singleplayer)
 /**
  * @brief
  * @note Called after an ERR_DROP was thrown
+ * @sa CL_Disconnect
  */
 void CL_Drop (void)
 {
@@ -497,6 +498,7 @@ extern void CL_ClearState (void)
  * @brief Sets the cls.state to ca_disconnected and informs the server
  * @sa CL_Disconnect_f
  * @sa CL_CloseAVI
+ * @sa CL_Drop
  * @note Goes from a connected state to full screen console state
  * Sends a disconnect message to the server
  * This is also called on Com_Error, so it shouldn't cause any errors
@@ -508,7 +510,7 @@ static void CL_Disconnect (void)
 	if (cls.state == ca_disconnected)
 		return;
 
-	if (cl_timedemo && cl_timedemo->value) {
+	if (cl_timedemo && cl_timedemo->integer) {
 		int time;
 
 		time = Sys_Milliseconds() - cl.timedemo_start;
