@@ -9,7 +9,7 @@ CppCompiler=
 Includes=
 Linker=-lkernel32 _@@_-luser32 _@@_-lgdi32 _@@_-lwinmm _@@_-llibjpeg_@@_-lpng_@@_-lSDL_ttf_@@_-lSDL_@@_../../src/ports/win32/intl.lib_@@_-def ../../src/ref_gl/ref_gl.def_@@_
 Libs=
-UnitCount=37
+UnitCount=47
 Folders="Header Files","Resource Files","Source Files"
 ObjFiles=
 PrivateResource=
@@ -387,37 +387,27 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=$(CC) -c qgl.c -o qgl.o $(CFLAGS)
 
-[Unit34]
-FileName=..\..\src\ref_gl\gl_md3.h
-CompileCpp=1
-Folder=Header Files
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit35]
-FileName=..\..\src\ref_gl\gl_drawmd3.c
-CompileCpp=0
-Folder=Source Files
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=$(CC) -c gl_drawmd3.c -o gl_drawmd3.o $(CFLAGS)
-
 [Unit36]
-FileName=..\..\src\ref_gl\gl_obj.c
+FileName=..\..\src\ref_gl\gl_mesh_md2.c
 CompileCpp=0
 Folder=Source Files
 Compile=1
 Link=1
 Priority=1000
 OverrideBuildCmd=0
-BuildCmd=$(CC) -c gl_obj.c -o gl_obj.o $(CFLAGS)
+BuildCmd=$(CC) -c gl_mesh_md2.c -o ref_gl/gl_mesh_md2.o $(CFLAGS)
 
 [Unit37]
+FileName=..\..\src\ref_gl\gl_mesh_md3.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=$(CC) -c gl_mesh_md3.c -o ref_gl/gl_mesh_md3.o $(CFLAGS)
+
+[Unit34]
 FileName=..\..\src\ref_gl\gl_bloom.c
 CompileCpp=0
 Folder=Source Files
@@ -426,4 +416,114 @@ Link=1
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=$(CC) -c gl_bloom.c -o ref_gl/gl_bloom.o $(CFLAGS)
+
+[Unit35]
+FileName=..\..\src\ref_gl\gl_model_sp2.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=$(CC) -c gl_model_sp2.c -o ref_gl/gl_model_sp2.o $(CFLAGS)
+
+[Unit38]
+FileName=..\..\src\ref_gl\gl_model_alias.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=$(CC) -c gl_model_alias.c -o ref_gl/gl_model_alias.o $(CFLAGS)
+
+[Unit39]
+FileName=..\..\src\ref_gl\gl_model_brush.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=$(CC) -c gl_model_brush.c -o ref_gl/gl_model_brush.o $(CFLAGS)
+
+[Unit40]
+FileName=..\..\src\ref_gl\gl_model_md2.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=$(CC) -c gl_model_md2.c -o ref_gl/gl_model_md2.o $(CFLAGS)
+
+[Unit41]
+FileName=..\..\src\ref_gl\gl_model_md3.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=$(CC) -c gl_model_md3.c -o ref_gl/gl_model_md3.o $(CFLAGS)
+
+[Unit42]
+FileName=..\..\src\ref_gl\gl_model_sp2.h
+CompileCpp=1
+Folder=Header Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit43]
+FileName=..\..\src\ref_gl\gl_model_alias.h
+CompileCpp=1
+Folder=Header Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit44]
+FileName=..\..\src\ref_gl\gl_model_brush.h
+CompileCpp=1
+Folder=Header Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit45]
+FileName=..\..\src\ref_gl\gl_model_md2.h
+CompileCpp=1
+Folder=Header Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit46]
+FileName=..\..\src\ref_gl\gl_model_md3.h
+CompileCpp=1
+Folder=Header Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit47]
+FileName=..\..\src\ref_gl\gl_model_obj.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=$(CC) -c gl_model_obj.c -o ref_gl/gl_model_obj.o $(CFLAGS)
 

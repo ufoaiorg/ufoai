@@ -173,13 +173,13 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\ref_gl\gl_model_md3.h" />
+		<Unit filename="..\..\src\ref_gl\gl_model_obj.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\ref_gl\gl_model_sp2.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="..\..\src\ref_gl\gl_model_sp2.h" />
-		<Unit filename="..\..\src\ref_gl\gl_obj.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="..\..\src\ref_gl\gl_particle.c">
 			<Option compilerVar="CC" />
 		</Unit>

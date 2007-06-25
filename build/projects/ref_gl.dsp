@@ -110,10 +110,6 @@ SOURCE=..\..\src\ref_gl\gl_draw.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\ref_gl\gl_drawmd3.c
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\src\ref_gl\gl_font.c
 # End Source File
 # Begin Source File
@@ -130,11 +126,35 @@ SOURCE=..\..\src\ref_gl\gl_mesh.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\ref_gl\gl_mesh_md2.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\ref_gl\gl_mesh_md3.c
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\ref_gl\gl_model.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\ref_gl\gl_obj.c
+SOURCE=..\..\src\ref_gl\gl_model_alias.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\ref_gl\gl_model_brush.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\ref_gl\gl_model_md2.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\ref_gl\gl_model_md3.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\ref_gl\gl_model_obj.c
 # End Source File
 # Begin Source File
 
