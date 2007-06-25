@@ -1545,12 +1545,25 @@ struct model_s *R_RegisterModel (const char *name)
 		case mod_alias_md3:
 			{
 			int	k;
+			char path[MAX_QPATH];
+			char *skin, *slash, *end;
 
 			pheader3 = (maliasmodel_t *)mod->extraData;
 
 			for (i = 0; i < pheader3->num_meshes; i++) {
-				for (k = 0; k < pheader3->meshes[i].num_skins; k++)
-					mod->skins[i] = GL_FindImage(pheader3->meshes[i].skins[k].name, it_skin);
+				for (k = 0; k < pheader3->meshes[i].num_skins; k++) {
+					skin = pheader3->meshes[i].skins[k].name;
+					if (pheader3->meshes[i].skins[k].name[0] != '.')
+						mod->skins[i] = GL_FindImage(skin, it_skin);
+					else {
+						Q_strncpyz(path, mod->name, sizeof(path));
+						end = path;
+						while ((slash = strchr(end, '/')) != 0)
+							end = slash + 1;
+						strcpy(end, skin + 1);
+						mod->skins[i] = GL_FindImage(path, it_skin);
+					}
+				}
 			}
 			mod->numframes = pheader3->num_frames;
 			break;
