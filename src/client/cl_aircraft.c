@@ -573,13 +573,6 @@ extern qboolean AIR_AircraftHasEnoughFuel (aircraft_t *aircraft, const vec2_t de
 	base = (base_t *) aircraft->homebase;
 	assert(base);
 
-	/* @todo: fix this workaround, on some cases speed is 0 for aircraft, and make it unable to move
-	 * I have no idea why, however: it works just fine on my computer -- Kracken 19/06/2007 */
-	if (aircraft->stats[AIR_STATS_SPEED] == 0) {
-		aircraft->stats[AIR_STATS_SPEED] = 10;
-		return qtrue;
-	}
-
 	/* Calculate the line that the aircraft should follow to go to destination */
 	MAP_MapCalcLine(aircraft->pos, destination, &(line));
 	distance = line.distance * (line.numPoints - 1);
@@ -2332,10 +2325,14 @@ extern void AII_UpdateAircraftStats (aircraft_t *aircraft)
 			if (aircraft->electronics[i].installationTime != 0)
 				continue;
 			item = &aircraftItems[aircraft->electronics[i].itemIdx];
+			if (currentStat == AIR_STATS_SPEED)
+				Com_Printf("%i and %f gives ", aircraft->stats[AIR_STATS_SPEED], item->stats[currentStat]);
 			if (fabs(item->stats[currentStat]) > 2.0f)
 				aircraft->stats[currentStat] += (int) item->stats[currentStat];
-			else if (item->stats[currentStat] > 0.0f)
+			else if (item->stats[currentStat] > 0.00001f)
 				aircraft->stats[currentStat] *= item->stats[currentStat];
+			if (currentStat == AIR_STATS_SPEED)
+				Com_Printf("%i\n", aircraft->stats[AIR_STATS_SPEED]);
 		}
 
 		/* modify by weapons (do nothing if the value of stat is 0) */
@@ -2347,7 +2344,7 @@ extern void AII_UpdateAircraftStats (aircraft_t *aircraft)
 			item = &aircraftItems[aircraft->weapons[i].itemIdx];
 			if (fabs(item->stats[currentStat]) > 2.0f)
 				aircraft->stats[currentStat] += item->stats[currentStat];
-			else if (item->stats[currentStat] > 0.0f)
+			else if (item->stats[currentStat] > 0.00001f)
 				aircraft->stats[currentStat] *= item->stats[currentStat];
 		}
 
@@ -2357,7 +2354,7 @@ extern void AII_UpdateAircraftStats (aircraft_t *aircraft)
 			item = &aircraftItems[aircraft->shield.itemIdx];
 			if (fabs(item->stats[currentStat]) > 2.0f)
 				aircraft->stats[currentStat] += item->stats[currentStat];
-			else if (item->stats[currentStat] > 0.0f)
+			else if (item->stats[currentStat] > 0.00001f)
 				aircraft->stats[currentStat] *= item->stats[currentStat];
 		}
 	}
