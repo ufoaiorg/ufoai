@@ -58,7 +58,7 @@ static void Mod_LoadLighting (lump_t * l)
 static void Mod_LoadVertexes (lump_t * l)
 {
 	dvertex_t *in;
-	mvertex_t *out;
+	mBspVertex_t *out;
 	int i, count;
 
 	in = (void *) (mod_base + l->fileofs);
@@ -100,7 +100,7 @@ static float RadiusFromBounds (vec3_t mins, vec3_t maxs)
 static void Mod_LoadSubmodels (lump_t * l)
 {
 	dmodel_t *in;
-	mmodel_t *out;
+	mBspHeader_t *out;
 	int i, j, count;
 
 	in = (void *) (mod_base + l->fileofs);
@@ -133,7 +133,7 @@ static void Mod_LoadSubmodels (lump_t * l)
 static void Mod_LoadEdges (lump_t * l)
 {
 	dedge_t *in;
-	medge_t *out;
+	mBspEdge_t *out;
 	int i, count;
 
 	in = (void *) (mod_base + l->fileofs);
@@ -158,7 +158,7 @@ static void Mod_LoadEdges (lump_t * l)
 static void Mod_LoadTexinfo (lump_t * l)
 {
 	texinfo_t *in;
-	mtexinfo_t *out, *step;
+	mBspTexInfo_t *out, *step;
 	int i, j, count;
 	char name[MAX_QPATH];
 	int next;
@@ -210,14 +210,14 @@ static void Mod_LoadTexinfo (lump_t * l)
 /**
  * @brief Fills in s->texturemins[] and s->extents[]
  */
-static void CalcSurfaceExtents (msurface_t * s)
+static void CalcSurfaceExtents (mBspSurface_t * s)
 {
 	float mins[2], maxs[2], val;
 
 /* 	vec3_t	pos; */
 	int i, j, e;
-	mvertex_t *v;
-	mtexinfo_t *tex;
+	mBspVertex_t *v;
+	mBspTexInfo_t *tex;
 	int bmins[2], bmaxs[2];
 
 	mins[0] = mins[1] = 999999;
@@ -252,8 +252,8 @@ static void CalcSurfaceExtents (msurface_t * s)
 }
 
 
-void GL_BuildPolygonFromSurface(msurface_t * fa, int shift[3]);
-void GL_CreateSurfaceLightmap(msurface_t * surf);
+void GL_BuildPolygonFromSurface(mBspSurface_t * fa, int shift[3]);
+void GL_CreateSurfaceLightmap(mBspSurface_t * surf);
 
 /**
  * @brief
@@ -261,7 +261,7 @@ void GL_CreateSurfaceLightmap(msurface_t * surf);
 static void Mod_LoadFaces (lump_t * l)
 {
 	dface_t *in;
-	msurface_t *out;
+	mBspSurface_t *out;
 	int i, count, surfnum;
 	int planenum, side;
 	int ti;
@@ -332,7 +332,7 @@ static void Mod_LoadFaces (lump_t * l)
 /**
  * @brief
  */
-static void Mod_SetParent (mnode_t * node, mnode_t * parent)
+static void Mod_SetParent (mBspNode_t * node, mBspNode_t * parent)
 {
 	node->parent = parent;
 	if (node->contents != -1)
@@ -348,7 +348,7 @@ static void Mod_LoadNodes (lump_t * l)
 {
 	int i, j, count, p;
 	dnode_t *in;
-	mnode_t *out;
+	mBspNode_t *out;
 
 	in = (void *) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
@@ -382,7 +382,7 @@ static void Mod_LoadNodes (lump_t * l)
 			if (p >= 0)
 				out->children[j] = loadmodel->nodes + p;
 			else
-				out->children[j] = (mnode_t *) (loadmodel->leafs + (-1 - p));
+				out->children[j] = (mBspNode_t *) (loadmodel->leafs + (-1 - p));
 		}
 	}
 
@@ -396,10 +396,10 @@ static void Mod_LoadNodes (lump_t * l)
 static void Mod_LoadLeafs (lump_t * l)
 {
 	dleaf_t *in;
-	mleaf_t *out;
+	mBspLeaf_t *out;
 	int i, j, count, p;
 
-/*	glpoly_t	*poly; */
+/*	mBspPoly_t	*poly; */
 
 	in = (void *) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
@@ -435,7 +435,7 @@ static void Mod_LoadMarksurfaces (lump_t * l)
 {
 	int i, j, count;
 	short *in;
-	msurface_t **out;
+	mBspSurface_t **out;
 
 	in = (void *) (mod_base + l->fileofs);
 	if (l->filelen % sizeof(*in))
@@ -522,7 +522,7 @@ static void Mod_LoadPlanes (lump_t * l)
  */
 static void Mod_ShiftTile (void)
 {
-	mvertex_t *vert;
+	mBspVertex_t *vert;
 	cplane_t *plane;
 	int i, j;
 
@@ -548,7 +548,7 @@ static void R_AddMapTile (const char *name, int sX, int sY, int sZ)
 	int i;
 	unsigned *buffer;
 	dheader_t *header;
-	mmodel_t *bm;
+	mBspHeader_t *bm;
 
 	/* get new model */
 	if ((mod_numknown < 0) || (mod_numknown >= MAX_MOD_KNOWN)) {

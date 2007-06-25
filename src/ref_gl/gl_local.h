@@ -160,7 +160,7 @@ typedef struct image_s {
 	int width, height;          /* source image dimensions */
 	int upload_width, upload_height;    /* dimensions after power of two and picmip */
 	int registration_sequence;  /* 0 = free */
-	struct msurface_s *texturechain;    /* for sort-by-texture world drawing */
+	struct mBspSurface_s *texturechain;    /* for sort-by-texture world drawing */
 	GLuint texnum;                 /* gl texture binding */
 	qboolean has_alpha;
 	shader_t *shader;           /* pointer to shader from refdef_t */
@@ -170,8 +170,8 @@ typedef struct image_s {
 #define TEXNUM_SCRAPS       1280
 #define TEXNUM_IMAGES       1281
 
-#define     MAX_GLERRORTEX  4096
-#define     MAX_GLTEXTURES  1024
+#define MAX_GLERRORTEX      4096
+#define MAX_GLTEXTURES      1024
 
 /* starting offset for font texture numbers (used in font-cache) */
 #define TEXNUM_FONTS        TEXNUM_IMAGES + MAX_GLTEXTURES
@@ -210,7 +210,7 @@ typedef enum {
 #include "gl_model.h"
 
 #define MAX_MODEL_DLIGHTS 3
-int RecursiveLightPoint(mnode_t * node, vec3_t start, vec3_t end);
+int RecursiveLightPoint(mBspNode_t * node, vec3_t start, vec3_t end);
 
 void GL_BeginRendering(int *x, int *y, int *width, int *height);
 void GL_EndRendering(void);
@@ -401,13 +401,13 @@ void R_RenderDlights(void);
 void R_DrawAlphaSurfaces(void);
 void R_InitParticleTexture(void);
 void Draw_InitLocal(void);
-void GL_SubdivideSurface(msurface_t * fa);
+void GL_SubdivideSurface(mBspSurface_t * fa);
 qboolean R_CullBox(vec3_t mins, vec3_t maxs);
 void R_RotateForEntity(entity_t * e);
 
-void EmitWaterPolys(msurface_t * fa);
+void EmitWaterPolys(mBspSurface_t * fa);
 void R_DrawTriangleOutlines(void);
-void R_MarkLights(dlight_t * light, int bit, mnode_t * node);
+void R_MarkLights(dlight_t * light, int bit, mBspNode_t * node);
 void R_EnableLights(qboolean fixed, float *matrix, float *lightparam, float *lightambient);
 
 #include "gl_font.h"

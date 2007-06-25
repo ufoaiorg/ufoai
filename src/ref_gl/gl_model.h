@@ -33,18 +33,18 @@ BRUSH MODELS
 
 
 /** in memory representation */
-typedef struct {
+typedef struct mBspVertex_s {
 	vec3_t position;
-} mvertex_t;
+} mBspVertex_t;
 
-typedef struct {
+typedef struct mBspHeader_s {
 	vec3_t mins, maxs;
 	vec3_t origin;				/**< for sounds or lights */
 	float radius;
 	int headnode;
 	int visleafs;				/**< not including the solid leaf 0 */
 	int firstface, numfaces;
-} mmodel_t;
+} mBspHeader_t;
 
 
 #define	SIDE_FRONT	0
@@ -58,29 +58,29 @@ typedef struct {
 #define SURF_UNDERWATER		0x80
 
 /* !!! if this is changed, it must be changed in asm_draw.h too !!! */
-typedef struct {
+typedef struct mBspEdge_s {
 	unsigned short v[2];
 	unsigned int cachededgeoffset;
-} medge_t;
+} mBspEdge_t;
 
-typedef struct mtexinfo_s {
+typedef struct mBspTexInfo_s {
 	float vecs[2][4];
 	int flags;
 	int numframes;
-	struct mtexinfo_s *next;	/**< animation chain */
+	struct mBspTexInfo_s *next;	/**< animation chain */
 	image_t *image;
-} mtexinfo_t;
+} mBspTexInfo_t;
 
 #define	VERTEXSIZE	7
 
-typedef struct glpoly_s {
-	struct glpoly_s *next;
-	struct glpoly_s *chain;
+typedef struct mBspPoly_s {
+	struct mBspPoly_s *next;
+	struct mBspPoly_s *chain;
 	int numverts;
 	float verts[4][VERTEXSIZE];	/**< variable sized (xyz s1t1 s2t2) */
-} glpoly_t;
+} mBspPoly_t;
 
-typedef struct msurface_s {
+typedef struct mBspSurface_s {
 	cplane_t *plane;
 	int flags;
 
@@ -94,11 +94,11 @@ typedef struct msurface_s {
 	int dlight_s, dlight_t;		/**< gl lightmap coordinates for dynamic lightmaps */
 	byte lquant;
 
-	glpoly_t *polys;			/* multiple if warped */
-	struct msurface_s *texturechain;
-	struct msurface_s *lightmapchain;
+	mBspPoly_t *polys;			/* multiple if warped */
+	struct mBspSurface_s *texturechain;
+	struct mBspSurface_s *lightmapchain;
 
-	mtexinfo_t *texinfo;
+	mBspTexInfo_t *texinfo;
 
 	/* lighting info */
 	int dlightframe;
@@ -108,24 +108,24 @@ typedef struct msurface_s {
 	byte styles[MAXLIGHTMAPS];
 	float cached_light[MAXLIGHTMAPS];	/**< values currently used in lightmap */
 	byte *samples;				/**< [numstyles*surfsize] */
-} msurface_t;
+} mBspSurface_t;
 
-typedef struct mnode_s {
+typedef struct mBspNode_s {
 	/* common with leaf */
 	int contents;				/**< -1, to differentiate from leafs */
 	float minmaxs[6];			/**< for bounding box culling */
 
-	struct mnode_s *parent;
+	struct mBspNode_s *parent;
 
 	/* node specific */
 	cplane_t *plane;
-	struct mnode_s *children[2];
+	struct mBspNode_s *children[2];
 
 	unsigned short firstsurface;
 	unsigned short numsurfaces;
-} mnode_t;
+} mBspNode_t;
 
-typedef struct mleaf_s {
+typedef struct mBspLeaf_s {
 	/* common with node */
 	int contents;				/**< will be a negative contents number */
 
@@ -137,9 +137,9 @@ typedef struct mleaf_s {
 	int cluster;
 	int area;
 
-	msurface_t **firstmarksurface;
+	mBspSurface_t **firstmarksurface;
 	int nummarksurfaces;
-} mleaf_t;
+} mBspLeaf_t;
 
 typedef struct mnormals_s {
 	vec3_t ijk;
@@ -192,35 +192,35 @@ typedef struct model_s {
 	int lightmap;				/**< only for submodels */
 
 	int numsubmodels;
-	mmodel_t *submodels;
+	mBspHeader_t *submodels;
 
 	int numplanes;
 	cplane_t *planes;
 
 	int numleafs;				/**< number of visible leafs, not counting 0 */
-	mleaf_t *leafs;
+	mBspLeaf_t *leafs;
 
 	int numvertexes;
-	mvertex_t *vertexes;
+	mBspVertex_t *vertexes;
 
 	int numedges;
-	medge_t *edges;
+	mBspEdge_t *edges;
 
 	int numnodes;
 	int firstnode;
-	mnode_t *nodes;
+	mBspNode_t *nodes;
 
 	int numtexinfo;
-	mtexinfo_t *texinfo;
+	mBspTexInfo_t *texinfo;
 
 	int numsurfaces;
-	msurface_t *surfaces;
+	mBspSurface_t *surfaces;
 
 	int numsurfedges;
 	int *surfedges;
 
 	int nummarksurfaces;
-	msurface_t **marksurfaces;
+	mBspSurface_t **marksurfaces;
 
 	int numnormals;			/**< number of normal vectors */
 	mnormals_t *normals;

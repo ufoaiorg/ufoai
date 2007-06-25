@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 static vec3_t modelorg;			/* relative to viewpoint */
 
-static msurface_t *r_alpha_surfaces;
+static mBspSurface_t *r_alpha_surfaces;
 
 #define DYNAMIC_LIGHT_WIDTH  256
 #define DYNAMIC_LIGHT_HEIGHT 256
@@ -47,7 +47,7 @@ typedef struct {
 	int internal_format;
 	int current_lightmap_texture;
 
-	msurface_t *lightmap_surfaces[MAX_LIGHTMAPS];
+	mBspSurface_t *lightmap_surfaces[MAX_LIGHTMAPS];
 
 	int allocated[BLOCK_WIDTH];
 
@@ -63,8 +63,8 @@ static void LM_InitBlock(void);
 static void LM_UploadBlock(qboolean dynamic);
 static qboolean LM_AllocBlock(int w, int h, int *x, int *y);
 
-extern void R_SetCacheState(msurface_t * surf);
-extern void R_BuildLightMap(msurface_t * surf, byte * dest, int stride);
+extern void R_SetCacheState(mBspSurface_t * surf);
+extern void R_BuildLightMap(mBspSurface_t * surf, byte * dest, int stride);
 
 /*
 =============================================================
@@ -75,7 +75,7 @@ BRUSH MODELS
 /**
  * @brief Returns the proper texture for a given time and base texture
  */
-static image_t *R_TextureAnimation (mtexinfo_t * tex)
+static image_t *R_TextureAnimation (mBspTexInfo_t * tex)
 {
 	int c;
 
@@ -97,7 +97,7 @@ static image_t *R_TextureAnimation (mtexinfo_t * tex)
 extern void R_DrawTriangleOutlines (void)
 {
 	int i, j;
-	glpoly_t *p;
+	mBspPoly_t *p;
 
 	if (!gl_showtris->integer)
 		return;
@@ -107,7 +107,7 @@ extern void R_DrawTriangleOutlines (void)
 	qglColor4f(1, 1, 1, 1);
 
 	for (i = 0; i < MAX_LIGHTMAPS; i++) {
-		msurface_t *surf;
+		mBspSurface_t *surf;
 
 		for (surf = gl_lms.lightmap_surfaces[i]; surf != 0; surf = surf->lightmapchain) {
 			p = surf->polys;
@@ -132,11 +132,11 @@ extern void R_DrawTriangleOutlines (void)
  * @brief
  * @param[in] scroll != 0 for SURF_FLOWING
  */
-static void DrawGLPoly (const msurface_t * fa, const float scroll)
+static void DrawGLPoly (const mBspSurface_t * fa, const float scroll)
 {
 	int i;
 	float *v;
-	glpoly_t *p = fa->polys;
+	mBspPoly_t *p = fa->polys;
 
 	qglBegin(GL_POLYGON);
 	v = p->verts[0];
@@ -153,11 +153,11 @@ static void DrawGLPoly (const msurface_t * fa, const float scroll)
  * @sa GL_RenderLightmappedPoly
  * @sa DrawGLPolyChainOffset
  */
-static void DrawGLPolyChain (const msurface_t *surf, const float scroll)
+static void DrawGLPolyChain (const mBspSurface_t *surf, const float scroll)
 {
 	int i, nv = surf->polys->numverts;
 	float *v;
-	glpoly_t *p;
+	mBspPoly_t *p;
 
 	assert(surf->polys);
 	for (p = surf->polys; p; p = p->chain) {
@@ -176,7 +176,7 @@ static void DrawGLPolyChain (const msurface_t *surf, const float scroll)
  * @brief
  * @sa DrawGLPolyChain
  */
-static void DrawGLPolyChainOffset (const glpoly_t * p, const float soffset, const float toffset)
+static void DrawGLPolyChainOffset (const mBspPoly_t * p, const float soffset, const float toffset)
 {
 	for (; p != 0; p = p->chain) {
 		const float *v;
@@ -199,7 +199,7 @@ static void DrawGLPolyChainOffset (const glpoly_t * p, const float soffset, cons
 static void R_BlendLightmaps (void)
 {
 	int i;
-	msurface_t *surf, *newdrawsurf = 0;
+	mBspSurface_t *surf, *newdrawsurf = 0;
 
 	if (!rTiles[0]->lightdata)
 		return;
@@ -277,7 +277,7 @@ static void R_BlendLightmaps (void)
 
 				R_BuildLightMap(surf, base, BLOCK_WIDTH * LIGHTMAP_BYTES);
 			} else {
-				msurface_t *drawsurf;
+				mBspSurface_t *drawsurf;
 
 				/* upload what we have so far */
 				LM_UploadBlock(qtrue);
@@ -325,7 +325,7 @@ static void R_BlendLightmaps (void)
 /**
  * @brief
  */
-static void R_RenderBrushPoly (msurface_t * fa)
+static void R_RenderBrushPoly (mBspSurface_t * fa)
 {
 	int maps;
 	image_t *image;
@@ -418,7 +418,7 @@ static void R_RenderBrushPoly (msurface_t * fa)
  */
 void R_DrawAlphaSurfaces (void)
 {
-	msurface_t *s;
+	mBspSurface_t *s;
 	float intens;
 
 	/* go back to the world matrix */
@@ -476,7 +476,7 @@ void R_DrawAlphaSurfaces (void)
  * @brief
  * @note only called when qglMTexCoord2fSGIS is not null
  */
-static void GL_RenderLightmappedPoly (msurface_t * surf)
+static void GL_RenderLightmappedPoly (mBspSurface_t * surf)
 {
 	int map;
 	image_t *image = R_TextureAnimation(surf->texinfo);
@@ -559,7 +559,7 @@ static void R_DrawInlineBModel (void)
 	int i, k;
 	cplane_t *pplane;
 	float dot;
-	msurface_t *psurf, *s;
+	mBspSurface_t *psurf, *s;
 	dlight_t *lt;
 	qboolean duplicate = qfalse;
 	/* calculate dynamic lighting for bmodel */
@@ -705,11 +705,11 @@ WORLD MODEL
  * @brief
  * @sa R_DrawWorld
  */
-static void R_RecursiveWorldNode (mnode_t * node)
+static void R_RecursiveWorldNode (mBspNode_t * node)
 {
 	int c, side, sidebit;
 	cplane_t *plane;
-	msurface_t *surf;
+	mBspSurface_t *surf;
 
 	float dot;
 	image_t *image;
@@ -780,7 +780,7 @@ static void R_RecursiveWorldNode (mnode_t * node)
  * @sa R_RecursiveWorldNode
  * @sa R_DrawLevelBrushes
  */
-static void R_DrawWorld (mnode_t * nodes)
+static void R_DrawWorld (mBspNode_t * nodes)
 {
 	entity_t ent;
 
@@ -823,7 +823,7 @@ static void R_DrawWorld (mnode_t * nodes)
  * @brief
  * @sa R_DrawLevelBrushes
  */
-static void R_FindModelNodes_r (mnode_t * node)
+static void R_FindModelNodes_r (mBspNode_t * node)
 {
 	if (!node->plane) {
 		R_FindModelNodes_r(node->children[0]);
@@ -960,14 +960,14 @@ static qboolean LM_AllocBlock (int w, int h, int *x, int *y)
 /**
  * @brief
  */
-extern void GL_BuildPolygonFromSurface (msurface_t * fa, int shift[3])
+extern void GL_BuildPolygonFromSurface (mBspSurface_t * fa, int shift[3])
 {
 	int i, lindex, lnumverts;
-	medge_t *pedges, *r_pedge;
+	mBspEdge_t *pedges, *r_pedge;
 	int vertpage;
 	float *vec;
 	float s, t;
-	glpoly_t *poly;
+	mBspPoly_t *poly;
 	vec3_t total;
 
 	/* reconstruct the polygon */
@@ -978,7 +978,7 @@ extern void GL_BuildPolygonFromSurface (msurface_t * fa, int shift[3])
 	VectorClear(total);
 
 	/* draw texture */
-	poly = ri.TagMalloc(ri.modelPool, sizeof(glpoly_t) + (lnumverts - 4) * VERTEXSIZE * sizeof(float), 0);
+	poly = ri.TagMalloc(ri.modelPool, sizeof(mBspPoly_t) + (lnumverts - 4) * VERTEXSIZE * sizeof(float), 0);
 	poly->next = fa->polys;
 	fa->polys = poly;
 	poly->numverts = lnumverts;
@@ -1028,7 +1028,7 @@ extern void GL_BuildPolygonFromSurface (msurface_t * fa, int shift[3])
  * @brief
  * @sa Mod_LoadFaces
  */
-void GL_CreateSurfaceLightmap (msurface_t * surf)
+void GL_CreateSurfaceLightmap (mBspSurface_t * surf)
 {
 	int smax, tmax;
 	byte *base;

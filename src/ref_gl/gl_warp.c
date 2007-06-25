@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "gl_local.h"
 
-static msurface_t *warpface;
+static mBspSurface_t *warpface;
 
 #define	SUBDIVIDE_SIZE	64
 /*#define	SUBDIVIDE_SIZE	1024 */
@@ -63,7 +63,7 @@ static void SubdividePolygon (int numverts, float *verts)
 	int f, b;
 	float dist[64];
 	float frac;
-	glpoly_t *poly;
+	mBspPoly_t *poly;
 	float s, t;
 	vec3_t total;
 	float total_s, total_t;
@@ -120,7 +120,7 @@ static void SubdividePolygon (int numverts, float *verts)
 	}
 
 	/* add a point in the center to help keep warp valid */
-	poly = ri.TagMalloc(ri.modelPool, sizeof(glpoly_t) + ((numverts - 4) + 2) * VERTEXSIZE * sizeof(float), 0);
+	poly = ri.TagMalloc(ri.modelPool, sizeof(mBspPoly_t) + ((numverts - 4) + 2) * VERTEXSIZE * sizeof(float), 0);
 	poly->next = warpface->polys;
 	warpface->polys = poly;
 	poly->numverts = numverts + 2;
@@ -152,7 +152,7 @@ static void SubdividePolygon (int numverts, float *verts)
  * @brief Breaks a polygon up along axial 64 unit boundaries so that turbulent
  * can be done reasonably.
  */
-void GL_SubdivideSurface(msurface_t * fa)
+void GL_SubdivideSurface (mBspSurface_t * fa)
 {
 	vec3_t verts[64];
 	int numverts;
@@ -188,11 +188,11 @@ float r_turbsin[] = {
 #define TURBSCALE (256.0 / (2 * M_PI))
 
 /**
- * @brief Does a water warp on the pre-fragmented glpoly_t chain
+ * @brief Does a water warp on the pre-fragmented mBspPoly_t chain
  */
-void EmitWaterPolys (msurface_t * fa)
+void EmitWaterPolys (mBspSurface_t * fa)
 {
-	glpoly_t *p, *bp;
+	mBspPoly_t *p, *bp;
 	float *v;
 	int i;
 	float s, t, os, ot;
