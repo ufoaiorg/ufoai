@@ -9,7 +9,7 @@ CppCompiler=
 Includes=
 Linker=-lvorbisfile_@@_-lvorbis_@@_-logg_@@_-lwinmm _@@_-lwsock32 _@@_-lkernel32 _@@_-luser32 _@@_-lgdi32 _@@_-lgmon_@@_../../src/ports/win32/intl.lib _@@_-lSDL_@@_-lSDL_ttf_@@_../../src/ports/win32/libjpeg.lib_@@_-lz_@@_
 Libs=C:\Dev-Cpp\lib
-UnitCount=123
+UnitCount=121
 Folders="Header Files","Resource Files","Source Files"
 ObjFiles=
 PrivateResource=ufo_private.rc
@@ -1188,26 +1188,6 @@ OverrideBuildCmd=0
 BuildCmd=$(CC) -c cl_inventory.c -o ufo/cl_inventory.o $(CFLAGS)
 
 [Unit115]
-FileName=..\..\src\client\cl_hunk.c
-CompileCpp=0
-Folder=Source Files
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=$(CC) -c cl_hunk.c -o ufo/cl_hunk.o $(CFLAGS)
-
-[Unit116]
-FileName=..\..\src\client\cl_hunk.h
-CompileCpp=1
-Folder=Header Files
-Compile=1
-Link=1
-Priority=1000
-OverrideBuildCmd=0
-BuildCmd=
-
-[Unit117]
 FileName=..\..\src\client\cl_console.h
 CompileCpp=1
 Folder=Header Files
@@ -1217,7 +1197,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit118]
+[Unit116]
 FileName=..\..\src\qcommon\msg.c
 CompileCpp=0
 Folder=Source Files
@@ -1227,7 +1207,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=$(CC) -c msg.c -o ufo/msg.o $(CFLAGS)
 
-[Unit119]
+[Unit117]
 FileName=..\..\src\client\cl_http.h
 CompileCpp=1
 Folder=Header Files
@@ -1237,7 +1217,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit120]
+[Unit118]
 FileName=..\..\src\client\cl_http.c
 CompileCpp=0
 Folder=Source Files
@@ -1247,7 +1227,7 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=$(CC) -c cl_http.c -o ufo/cl_http.o $(CFLAGS)
 
-[Unit121]
+[Unit119]
 FileName=..\..\src\client\cl_vid.c
 CompileCpp=0
 Folder=Source Files
@@ -1256,6 +1236,26 @@ Link=1
 Priority=1000
 OverrideBuildCmd=0
 BuildCmd=$(CC) -c cl_vid.c -o ufo/cl_vid.o $(CFLAGS)
+
+[Unit120]
+FileName=..\..\src\client\cl_airfight.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=$(CC) -c cl_airfight.c -o ufo/cl_airfight.o $(CFLAGS)
+
+[Unit121]
+FileName=..\..\src\qcommon\mem.c
+CompileCpp=0
+Folder=Source Files
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=$(CC) -c mem.c -o ufo/mem.o $(CFLAGS)
 
 [Unit122]
 FileName=..\..\src\client\cl_airfight.c
