@@ -288,6 +288,7 @@ void CL_Drop (void)
 	if (cls.disable_servercount != -1)
 		SCR_EndLoadingPlaque();	/* get rid of loading plaque */
 
+	Com_Printf("CL_Drop: cls.state: %i\n", cls.state);
 	if (cls.state == ca_uninitialized)
 		return;
 	if (cls.state == ca_disconnected)
