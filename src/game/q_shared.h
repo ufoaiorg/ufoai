@@ -285,7 +285,7 @@ typedef pos_t pos3_t[3];
 #define M_TWOPI	6.28318530717958647692
 #endif
 
-struct cplane_s;
+struct cBspPlane_s;
 
 extern vec3_t vec3_origin;
 extern vec4_t vec4_origin;
@@ -381,7 +381,7 @@ void R_ConcatRotations(float in1[3][3], float in2[3][3], float out[3][3]);
 void R_ConcatTransforms(float in1[3][4], float in2[3][4], float out[3][4]);
 
 void AngleVectors(vec3_t angles, vec3_t forward, vec3_t right, vec3_t up);
-int BoxOnPlaneSide(vec3_t emins, vec3_t emaxs, struct cplane_s *plane);
+int BoxOnPlaneSide(vec3_t emins, vec3_t emaxs, struct cBspPlane_s *plane);
 float AngleNormalize360(float angle);
 float AngleNormalize180(float angle);
 
@@ -605,29 +605,29 @@ COLLISION DETECTION
  * @brief plane_t structure
  * @note !!! if this is changed, it must be changed in asm code too !!!
  */
-typedef struct cplane_s {
+typedef struct cBspPlane_s {
 	vec3_t normal;
 	float dist;
 	byte type;                  /**< for fast side tests */
 	byte signbits;              /**< signx + (signy<<1) + (signz<<1) */
 	byte pad[2];
-} cplane_t;
+} cBspPlane_t;
 
-typedef struct cmodel_s {
+typedef struct cBspModel_s {
 	vec3_t mins, maxs;
 	vec3_t origin;				/**< for sounds or lights */
 	int tile;					/**< which tile in assembly */
 	int headnode;
-} cmodel_t;
+} cBspModel_t;
 
-typedef struct csurface_s {
+typedef struct cBspSurface_s {
 	char name[16];	/**< not used except in loading CMod_LoadSurfaces */
 	int flags;	/**< not used except in loading CMod_LoadSurfaces */
 	int value;	/**< not used except in loading CMod_LoadSurfaces */
-} csurface_t;
+} cBspSurface_t;
 
 typedef struct mapsurface_s {   /* used internally due to name len probs //ZOID */
-	csurface_t c;
+	cBspSurface_t c;
 	char rname[32];
 } mapsurface_t;
 
@@ -637,8 +637,8 @@ typedef struct {
 	qboolean startsolid;	/**< if true, the initial point was in a solid area */
 	float fraction;			/**< time completed, 1.0 = didn't hit anything */
 	vec3_t endpos;			/**< final position */
-	cplane_t plane;			/**< surface normal at impact */
-	csurface_t *surface;	/**< surface hit */
+	cBspPlane_t plane;			/**< surface normal at impact */
+	cBspSurface_t *surface;	/**< surface hit */
 	int contents;			/**< contents on other side of surface hit */
 	struct le_s *le;		/**< not set by CM_*() functions */
 	struct edict_s *ent;	/**< not set by CM_*() functions */

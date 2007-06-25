@@ -229,7 +229,7 @@ void LM_Explode (sizebuf_t * sb)
 		Com_Error(ERR_DROP, "LM_Explode: Could not find le");
 
 	if (lm->particle[0]) {
-		cmodel_t *mod;
+		cBspModel_t *mod;
 		vec3_t center;
 
 		/* create particles */
@@ -801,7 +801,7 @@ static void CL_ClipMoveToLEs (moveclip_t * clip)
 	le_t *le;
 	trace_t trace;
 	int headnode;
-	cmodel_t *cmodel;
+	cBspModel_t *cmodel;
 	float *angles;
 	vec3_t origin;
 

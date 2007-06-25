@@ -487,7 +487,7 @@ static void Mod_LoadSurfedges (lump_t * l)
 static void Mod_LoadPlanes (lump_t * l)
 {
 	int i, j;
-	cplane_t *out;
+	cBspPlane_t *out;
 	dplane_t *in;
 	int count;
 	int bits;
@@ -523,7 +523,7 @@ static void Mod_LoadPlanes (lump_t * l)
 static void Mod_ShiftTile (void)
 {
 	mBspVertex_t *vert;
-	cplane_t *plane;
+	cBspPlane_t *plane;
 	int i, j;
 
 	/* we can't do this instantly, because of rounding errors on extents calculation */

@@ -157,7 +157,7 @@ typedef struct client_state_s {
 
 	/** locally derived information from server state */
 	struct model_s *model_draw[MAX_MODELS];
-	struct cmodel_s *model_clip[MAX_MODELS];
+	struct cBspModel_s *model_clip[MAX_MODELS];
 	struct model_s *model_weapons[MAX_OBJDEFS];
 
 	struct sfx_s *sound_precache[MAX_SOUNDS];

@@ -39,28 +39,28 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	DIST_EPSILON	(0.03125)
 
 typedef struct {
-	cplane_t *plane;
+	cBspPlane_t *plane;
 	vec3_t mins, maxs;
 	int children[2];			/**< negative numbers are leafs */
-} cnode_t;
+} cBspNode_t;
 
 typedef struct {
-	cplane_t *plane;
+	cBspPlane_t *plane;
 	mapsurface_t *surface;
-} cbrushside_t;
+} cBspBrushSide_t;
 
 typedef struct {
 	int contents;
 	unsigned short firstleafbrush;
 	unsigned short numleafbrushes;
-} cleaf_t;
+} cBspLeaf_t;
 
 typedef struct {
 	int contents;
 	int numsides;
 	int firstbrushside;
 	int checkcount;				/**< to avoid repeated testings */
-} cbrush_t;
+} cBspBrush_t;
 
 typedef struct tnode_s {
 	int type;
@@ -73,7 +73,7 @@ typedef struct tnode_s {
 typedef struct chead_s {
 	int cnode;
 	int level;
-} chead_t;
+} cBspHead_t;
 
 typedef struct {
 	char name[MAX_QPATH];
@@ -81,35 +81,35 @@ typedef struct {
 	void *extraData;
 
 	int numbrushsides;
-	cbrushside_t *brushsides;
+	cBspBrushSide_t *brushsides;
 
 	int numtexinfo;
 	mapsurface_t *surfaces;
 
 	int numplanes;
-	cplane_t *planes; /* numplanes + 12 for box hull */
+	cBspPlane_t *planes; /* numplanes + 12 for box hull */
 
 	int numnodes;
-	cnode_t *nodes; /* numnodes + 6 for box hull */
+	cBspNode_t *nodes; /* numnodes + 6 for box hull */
 
 	int numleafs;
-	cleaf_t *leafs;
+	cBspLeaf_t *leafs;
 	int emptyleaf, solidleaf;
 
 	int numleafbrushes;
 	unsigned short *leafbrushes;
 
 	int numcmodels;
-	cmodel_t *cmodels;
+	cBspModel_t *cmodels;
 
 	int numbrushes;
-	cbrush_t *brushes;
+	cBspBrush_t *brushes;
 
 	/* tracing box */
-	cplane_t *box_planes;
+	cBspPlane_t *box_planes;
 	int box_headnode;
-	cbrush_t *box_brush;
-	cleaf_t *box_leaf;
+	cBspBrush_t *box_brush;
+	cBspLeaf_t *box_leaf;
 
 	/* line tracing */
 	tnode_t *tnodes;
@@ -117,7 +117,7 @@ typedef struct {
 	int thead[LEVEL_MAX];
 
 	int numcheads;
-	chead_t cheads[MAX_MAP_NODES];
+	cBspHead_t cheads[MAX_MAP_NODES];
 } mapTile_t;
 
 /** @brief Pathfinding routing structure */
@@ -199,7 +199,7 @@ MAP LOADING
 static void CMod_LoadSubmodels (lump_t * l)
 {
 	dmodel_t *in;
-	cmodel_t *out;
+	cBspModel_t *out;
 	int i, j, count;
 
 	if (!l)
@@ -286,7 +286,7 @@ static void CMod_LoadNodes (lump_t * l)
 {
 	dnode_t *in;
 	int child;
-	cnode_t *out;
+	cBspNode_t *out;
 	int i, j, count;
 
 	if (!l)
@@ -333,7 +333,7 @@ static void CMod_LoadNodes (lump_t * l)
 static void CMod_LoadBrushes (lump_t * l)
 {
 	dbrush_t *in;
-	cbrush_t *out;
+	cBspBrush_t *out;
 	int i, count;
 
 	if (!l)
@@ -369,7 +369,7 @@ static void CMod_LoadBrushes (lump_t * l)
 static void CMod_LoadLeafs (lump_t * l)
 {
 	int i;
-	cleaf_t *out;
+	cBspLeaf_t *out;
 	dleaf_t *in;
 	int count;
 
@@ -422,7 +422,7 @@ static void CMod_LoadLeafs (lump_t * l)
 static void CMod_LoadPlanes (lump_t * l)
 {
 	int i, j;
-	cplane_t *out;
+	cBspPlane_t *out;
 	dplane_t *in;
 	int count;
 	int bits;
@@ -511,7 +511,7 @@ static void CMod_LoadLeafBrushes (lump_t * l)
 static void CMod_LoadBrushSides (lump_t * l)
 {
 	int i, j;
-	cbrushside_t *out;
+	cBspBrushSide_t *out;
 	dbrushside_t *in;
 	int count;
 	int num;
@@ -633,7 +633,7 @@ extern int CheckBSPFile (const char *filename)
 static int CM_EntTestLine (vec3_t start, vec3_t stop)
 {
 	trace_t trace;
-	cmodel_t *model;
+	cBspModel_t *model;
 	char **name;
 
 	/* trace against world first */
@@ -675,7 +675,7 @@ static int CM_EntTestLine (vec3_t start, vec3_t stop)
 static int CM_EntTestLineDM (vec3_t start, vec3_t stop, vec3_t end)
 {
 	trace_t trace;
-	cmodel_t *model;
+	cBspModel_t *model;
 	char **name;
 	int blocked;
 
@@ -1240,11 +1240,11 @@ extern void CM_LoadMap (char *tiles, char *pos, unsigned *mapchecksum)
 }
 
 /**
- * @brief Searches all inline models and return the cmodel_t pointer for the
+ * @brief Searches all inline models and return the cBspModel_t pointer for the
  * given modelnumber or -name
  * @param[in] name The modelnumber (e.g. "*2") or the modelname
  */
-extern cmodel_t *CM_InlineModel (const char *name)
+extern cBspModel_t *CM_InlineModel (const char *name)
 {
 	int i, num;
 
@@ -1309,9 +1309,9 @@ static void CM_InitBoxHull (void)
 {
 	int i;
 	int side;
-	cnode_t *c;
-	cplane_t *p;
-	cbrushside_t *s;
+	cBspNode_t *c;
+	cBspPlane_t *p;
+	cBspBrushSide_t *s;
 
 	curTile->box_headnode = curTile->numnodes;
 	curTile->box_planes = &curTile->planes[curTile->numplanes];
@@ -1404,8 +1404,8 @@ extern int CM_HeadnodeForBox (int tile, vec3_t mins, vec3_t maxs)
 static int CM_PointLeafnum_r (vec3_t p, int num)
 {
 	float d;
-	cnode_t *node;
-	cplane_t *plane;
+	cBspNode_t *node;
+	cBspPlane_t *plane;
 
 	while (num >= 0) {
 		node = curTile->nodes + num;
@@ -1448,8 +1448,8 @@ static int CM_PointLeafnum (vec3_t p)
  */
 static void CM_BoxLeafnums_r (int nodenum)
 {
-	cplane_t *plane;
-	cnode_t *node;
+	cBspPlane_t *plane;
+	cBspNode_t *node;
 	int s;
 
 	while (1) {
@@ -1580,17 +1580,17 @@ static int CM_TransformedPointContents (vec3_t p, int headnode, vec3_t origin, v
  * @param[in] p1 Endpoint
  * @sa
  */
-static void CM_ClipBoxToBrush (vec3_t mins, vec3_t maxs, vec3_t p1, vec3_t p2, trace_t * trace, cbrush_t * brush)
+static void CM_ClipBoxToBrush (vec3_t mins, vec3_t maxs, vec3_t p1, vec3_t p2, trace_t * trace, cBspBrush_t * brush)
 {
 	int i, j;
-	cplane_t *plane, *clipplane;
+	cBspPlane_t *plane, *clipplane;
 	float dist;
 	float enterfrac, leavefrac;
 	vec3_t ofs;
 	float d1, d2;
 	qboolean getout, startout;
 	float f;
-	cbrushside_t *side, *leadside;
+	cBspBrushSide_t *side, *leadside;
 
 	enterfrac = -1;
 	leavefrac = 1;
@@ -1681,14 +1681,14 @@ static void CM_ClipBoxToBrush (vec3_t mins, vec3_t maxs, vec3_t p1, vec3_t p2, t
  * @param
  * @sa CM_TraceToLeaf
  */
-static void CM_TestBoxInBrush (vec3_t mins, vec3_t maxs, vec3_t p1, trace_t * trace, cbrush_t * brush)
+static void CM_TestBoxInBrush (vec3_t mins, vec3_t maxs, vec3_t p1, trace_t * trace, cBspBrush_t * brush)
 {
 	int i, j;
-	cplane_t *plane;
+	cBspPlane_t *plane;
 	float dist;
 	vec3_t ofs;
 	float d1;
-	cbrushside_t *side;
+	cBspBrushSide_t *side;
 
 	if (!brush || !brush->numsides)
 		return;
@@ -1737,8 +1737,8 @@ static void CM_TraceToLeaf (int leafnum)
 {
 	int k;
 	int brushnum;
-	cleaf_t *leaf;
-	cbrush_t *b;
+	cBspLeaf_t *leaf;
+	cBspBrush_t *b;
 
 	assert(leafnum >= 0);
 
@@ -1772,8 +1772,8 @@ void CM_TestInLeaf (int leafnum)
 {
 	int k;
 	int brushnum;
-	cleaf_t *leaf;
-	cbrush_t *b;
+	cBspLeaf_t *leaf;
+	cBspBrush_t *b;
 
 	assert(leafnum >= 0);
 
@@ -1809,8 +1809,8 @@ void CM_TestInLeaf (int leafnum)
  */
 static void CM_RecursiveHullCheck (int num, float p1f, float p2f, vec3_t p1, vec3_t p2)
 {
-	cnode_t *node;
-	cplane_t *plane;
+	cBspNode_t *node;
+	cBspPlane_t *plane;
 	float t1, t2, offset;
 	float frac, frac2;
 	float idist;
@@ -2083,7 +2083,7 @@ trace_t CM_CompleteBoxTrace (vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs,
 {
 	trace_t newtr, tr;
 	int tile, i;
-	chead_t *h;
+	cBspHead_t *h;
 
 	memset(&tr, 0, sizeof(trace_t));
 	tr.fraction = 2.0f;
@@ -2117,9 +2117,9 @@ trace_t CM_CompleteBoxTrace (vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs,
 void MakeTnode (int nodenum)
 {
 	tnode_t *t;
-	cplane_t *plane;
+	cBspPlane_t *plane;
 	int i;
-	cnode_t *node;
+	cBspNode_t *node;
 
 	t = tnode_p++;
 
@@ -2154,7 +2154,7 @@ void BuildTnode_r (int node, int level)
 	assert(node < curTile->numnodes + 6); /* +6 => bbox */
 
 	if (!curTile->nodes[node].plane) {
-		cnode_t *n;
+		cBspNode_t *n;
 		tnode_t *t;
 		vec3_t c0maxs, c1mins;
 		int i;
@@ -2819,7 +2819,7 @@ void Grid_PosToVec (struct routing_s *map, pos3_t pos, vec3_t vec)
  */
 void Grid_RecalcRouting (struct routing_s *map, char *name, char **list)
 {
-	cmodel_t *model;
+	cBspModel_t *model;
 	pos3_t min, max;
 	int x, y, z;
 	unsigned int i;

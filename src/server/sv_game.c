@@ -159,7 +159,7 @@ static void PF_error (const char *fmt, ...)
  */
 static void PF_SetModel (edict_t * ent, const char *name)
 {
-	cmodel_t *mod;
+	cBspModel_t *mod;
 
 	if (!name)
 		Com_Error(ERR_DROP, "PF_setmodel: NULL");

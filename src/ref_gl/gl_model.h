@@ -81,7 +81,7 @@ typedef struct mBspPoly_s {
 } mBspPoly_t;
 
 typedef struct mBspSurface_s {
-	cplane_t *plane;
+	cBspPlane_t *plane;
 	int flags;
 
 	int firstedge;				/**< look up in model->surfedges[], negative numbers */
@@ -118,7 +118,7 @@ typedef struct mBspNode_s {
 	struct mBspNode_s *parent;
 
 	/* node specific */
-	cplane_t *plane;
+	cBspPlane_t *plane;
 	struct mBspNode_s *children[2];
 
 	unsigned short firstsurface;
@@ -195,7 +195,7 @@ typedef struct model_s {
 	mBspHeader_t *submodels;
 
 	int numplanes;
-	cplane_t *planes;
+	cBspPlane_t *planes;
 
 	int numleafs;				/**< number of visible leafs, not counting 0 */
 	mBspLeaf_t *leafs;

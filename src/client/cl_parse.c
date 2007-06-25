@@ -746,7 +746,7 @@ static void CL_EntEdict (sizebuf_t *sb)
 	le_t *le;
 	int entnum, modelnum1, type;
 	char *inline_model_name;
-	cmodel_t *model;
+	cBspModel_t *model;
 
 	MSG_ReadFormat(sb, ev_format[EV_ENT_EDICT], &type, &entnum, &modelnum1);
 

@@ -551,7 +551,7 @@ float AngleNormalize180 (float angle)
  * @return 1, 2, or 1 + 2
  */
 /* this is the slow, general version */
-int BoxOnPlaneSide2 (vec3_t emins, vec3_t emaxs, struct cplane_s *p)
+int BoxOnPlaneSide2 (vec3_t emins, vec3_t emaxs, struct cBspPlane_s *p)
 {
 	int i;
 	float dist1, dist2;
@@ -579,7 +579,7 @@ int BoxOnPlaneSide2 (vec3_t emins, vec3_t emaxs, struct cplane_s *p)
 }
 
 #if !USE_X86_ASM || defined __linux__ || __MINGW32__ || defined __FreeBSD__ || defined __NetBSD__|| defined __sun || defined __sgi
-int BoxOnPlaneSide (vec3_t emins, vec3_t emaxs, struct cplane_s *p)
+int BoxOnPlaneSide (vec3_t emins, vec3_t emaxs, struct cBspPlane_s *p)
 {
 	float dist1, dist2;
 	int sides;
@@ -647,7 +647,7 @@ int BoxOnPlaneSide (vec3_t emins, vec3_t emaxs, struct cplane_s *p)
 #pragma warning( disable: 4035 )
 
 __declspec(naked)
-int BoxOnPlaneSide (vec3_t emins, vec3_t emaxs, struct cplane_s *p)
+int BoxOnPlaneSide (vec3_t emins, vec3_t emaxs, struct cBspPlane_s *p)
 {
 	static int bops_initialized;
 	static int Ljmptab[8];

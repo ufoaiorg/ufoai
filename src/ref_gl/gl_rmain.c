@@ -47,7 +47,7 @@ image_t *r_particletexture;		/* little dot for particles */
 entity_t *currententity;
 model_t *currentmodel;
 
-cplane_t frustum[4];
+cBspPlane_t frustum[4];
 
 int r_framecount;				/* used for dlight push checking */
 
@@ -618,7 +618,7 @@ static void R_DrawEntitiesOnList (void)
 /**
  * @brief
  */
-static int SignbitsForPlane (cplane_t * out)
+static int SignbitsForPlane (cBspPlane_t * out)
 {
 	int bits, j;
 

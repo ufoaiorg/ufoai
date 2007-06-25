@@ -557,7 +557,7 @@ static void GL_RenderLightmappedPoly (mBspSurface_t * surf)
 static void R_DrawInlineBModel (void)
 {
 	int i, k;
-	cplane_t *pplane;
+	cBspPlane_t *pplane;
 	float dot;
 	mBspSurface_t *psurf, *s;
 	dlight_t *lt;
@@ -708,7 +708,7 @@ WORLD MODEL
 static void R_RecursiveWorldNode (mBspNode_t * node)
 {
 	int c, side, sidebit;
-	cplane_t *plane;
+	cBspPlane_t *plane;
 	mBspSurface_t *surf;
 
 	float dot;

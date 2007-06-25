@@ -114,7 +114,7 @@ DYNAMIC LIGHTS
  */
 void R_MarkLights (dlight_t * light, int bit, mBspNode_t * node)
 {
-	cplane_t *splitplane;
+	cBspPlane_t *splitplane;
 	float dist;
 	mBspSurface_t *surf;
 	int i, sidebit;
@@ -497,7 +497,7 @@ extern void R_BuildLightMap (mBspSurface_t * surf, byte * dest, int stride)
 }
 
 static vec3_t pointcolor;
-static cplane_t *lightplane;			/* used as shadow plane */
+static cBspPlane_t *lightplane;			/* used as shadow plane */
 static vec3_t lightspot;
 
 /**
@@ -507,7 +507,7 @@ extern int RecursiveLightPoint (mBspNode_t * node, vec3_t start, vec3_t end)
 {
 	float front, back, frac;
 	int side;
-	cplane_t *plane;
+	cBspPlane_t *plane;
 	vec3_t mid;
 	mBspSurface_t *surf;
 	int s, t, ds, dt;
