@@ -291,8 +291,6 @@ void CL_Drop (void)
 	Com_Printf("CL_Drop: cls.state: %i\n", cls.state);
 	if (cls.state == ca_uninitialized)
 		return;
-	if (cls.state == ca_disconnected)
-		return;
 
 	CL_Disconnect();
 }
@@ -505,6 +503,8 @@ extern void CL_ClearState (void)
  */
 static void CL_Disconnect (void)
 {
+	byte disconnect[32];
+
 	if (cls.state == ca_disconnected)
 		return;
 
@@ -521,8 +521,9 @@ static void CL_Disconnect (void)
 	cls.connect_time = 0;
 
 	/* send a disconnect message to the server */
-	MSG_WriteByte(&cls.netchan.message, clc_stringcmd);
-	MSG_WriteString(&cls.netchan.message, "disconnect");
+	disconnect[0] = clc_stringcmd;
+	Q_strncpyz((char*)disconnect + 1, "disconnect", sizeof(disconnect));
+	Netchan_Transmit(&cls.netchan, strlen((char*)disconnect), disconnect);
 
 	CL_ClearState();
 
@@ -1653,24 +1654,24 @@ void CL_RequestNextDownload (void)
 		if (!*cl.configstrings[CS_VERSION] || !*cl.configstrings[CS_MAPCHECKSUM] || !*cl.configstrings[CS_UFOCHECKSUM]) {
 			Com_sprintf(popupText, sizeof(popupText), _("Local game version (%s) differs from the servers"), UFO_VERSION);
 			MN_Popup(_("Error"), popupText);
-			Com_Error(ERR_DROP, "Local game version (%s) differs from the servers", UFO_VERSION);
+			Com_Error(ERR_DISCONNECT, "Local game version (%s) differs from the servers", UFO_VERSION);
 			return;
 		/* checksum doesn't match with the one the server gave us via configstring */
 		} else if (map_checksum != atoi(cl.configstrings[CS_MAPCHECKSUM])) {
 			MN_Popup(_("Error"), _("Local map version differs from server"));
-			Com_Error(ERR_DROP, "Local map version differs from server: %u != '%s'\n",
+			Com_Error(ERR_DISCONNECT, "Local map version differs from server: %u != '%s'\n",
 				map_checksum, cl.configstrings[CS_MAPCHECKSUM]);
 			return;
 		/* checksum doesn't match with the one the server gave us via configstring */
 		} else if (atoi(cl.configstrings[CS_UFOCHECKSUM]) && ufoScript_checksum != atoi(cl.configstrings[CS_UFOCHECKSUM])) {
 			MN_Popup(_("Error"), _("You are using modified ufo script files - you won't be able to connect to the server"));
-			Com_Error(ERR_DROP, "You are using modified ufo script files - you won't be able to connect to the server: %u != '%s'\n",
+			Com_Error(ERR_DISCONNECT, "You are using modified ufo script files - you won't be able to connect to the server: %u != '%s'\n",
 				ufoScript_checksum, cl.configstrings[CS_UFOCHECKSUM]);
 			return;
 		} else if (Q_strncmp(UFO_VERSION, cl.configstrings[CS_VERSION], sizeof(UFO_VERSION))) {
 			Com_sprintf(popupText, sizeof(popupText), _("Local game version (%s) differs from the servers (%s)"), UFO_VERSION, cl.configstrings[CS_VERSION]);
 			MN_Popup(_("Error"), popupText);
-			Com_Error(ERR_DROP, "Local game version (%s) differs from the servers (%s)", UFO_VERSION, cl.configstrings[CS_VERSION]);
+			Com_Error(ERR_DISCONNECT, "Local game version (%s) differs from the servers (%s)", UFO_VERSION, cl.configstrings[CS_VERSION]);
 			return;
 		}
 	}
