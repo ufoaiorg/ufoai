@@ -386,12 +386,14 @@ extern void SCR_SetLoadingBackground (const char *mapString)
 
 	if (!mapString)
 		mapname = Cvar_VariableString("mapname");
-	else
+	else {
 		mapname = mapString;
+		Cvar_Set("mapname", mapString);
+	}
 
 	if (*mapname != '+') {
 		Q_strncpyz(tmpPicName, mapname, sizeof(tmpPicName));
-		tmpPicName[strlen(tmpPicName)-1] = '\0';
+		tmpPicName[strlen(tmpPicName)-1] = '\0'; /* strip of the day and night letter */
 		if (FS_CheckFile(va("maps/loading/%s.jpg", tmpPicName)))
 			Com_sprintf(loadingPic, sizeof(loadingPic), "maps/loading/%s.jpg", tmpPicName);
 		else
