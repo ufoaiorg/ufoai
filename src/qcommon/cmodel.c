@@ -26,9 +26,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "qcommon.h"
 #define	ON_EPSILON	0.1
-/* player height - 12 to be able to walk trough doors
- * UNIT_HEIGHT is the height of one level */
-#define PH		(UNIT_HEIGHT-12)
 #define QUANT	4
 #define GRENADE_ALPHAFAC	0.7
 #define GRENADE_MINALPHA	M_PI/6
