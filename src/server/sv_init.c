@@ -999,7 +999,7 @@ static void SV_InitGame (void)
 
 	svs.initialized = qtrue;
 
-/*	Cvar_FullSet ("maxclients", "8", CVAR_SERVERINFO | CVAR_LATCH); */
+/*	Cvar_FullSet("maxclients", "8", CVAR_SERVERINFO | CVAR_LATCH); */
 
 	svs.spawncount = rand();
 	svs.clients = Mem_PoolAlloc(sizeof(client_t) * sv_maxclients->integer, sv_genericPool, 0);

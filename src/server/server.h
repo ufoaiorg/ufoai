@@ -73,11 +73,11 @@ typedef struct {
 	qboolean timedemo;			/**< don't time sync */
 } server_t;
 
-#define EDICT_NUM(n) ((edict_t *)((byte *)ge->edicts + ge->edict_size*(n)))
-#define NUM_FOR_EDICT(e) ( ((byte *)(e)-(byte *)ge->edicts ) / ge->edict_size)
+#define EDICT_NUM(n) ((edict_t *)((byte *)ge->edicts + ge->edict_size * (n)))
+#define NUM_FOR_EDICT(e) (((byte *)(e) - (byte *)ge->edicts) / ge->edict_size)
 
-#define PLAYER_NUM(n) ((player_t *)((byte *)ge->players + ge->player_size*(n)))
-#define NUM_FOR_PLAYER(e) ( ((byte *)(e)-(byte *)ge->players ) / ge->player_size)
+#define PLAYER_NUM(n) ((player_t *)((byte *)ge->players + ge->player_size * (n)))
+#define NUM_FOR_PLAYER(e) (((byte *)(e) - (byte *)ge->players) / ge->player_size)
 
 typedef enum {
 	cs_free,					/**< can be reused for a new connection */

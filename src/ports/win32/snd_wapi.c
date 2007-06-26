@@ -34,15 +34,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	WAV_MASK				0x3F
 #define	WAV_BUFFER_SIZE			0x0400
 
-static qboolean	wav_init;
-static qboolean	snd_firsttime = qtrue, snd_iswave;
+static qboolean wav_init;
+static qboolean snd_firsttime = qtrue, snd_iswave;
 
 static struct sndinfo *si;
 
 /* starts at 0 for disabled */
-static int	snd_buffer_count = 0;
-static int	sample16 = 0;
-static int	snd_sent = 0, snd_completed = 0;
+static int snd_buffer_count = 0;
+static int sample16 = 0;
+static int snd_sent = 0, snd_completed = 0;
 
 /*
  * Global variables. Must be visible to window-procedure function
@@ -69,8 +69,8 @@ static void FreeSound (void)
 
 	si->Com_Printf("Shutting down win api sound system\n");
 
-	if ( hWaveOut ) {
-		waveOutReset (hWaveOut);
+	if (hWaveOut) {
+		waveOutReset(hWaveOut);
 
 		if (lpWaveHdr) {
 			for (i = 0; i < WAV_BUFFERS; i++)
@@ -125,7 +125,7 @@ static qboolean SND_InitWav (void)
 	else
 		si->dma->speed = 11025;
 
-	memset (&format, 0, sizeof(format));
+	memset(&format, 0, sizeof(format));
 	format.wFormatTag = WAVE_FORMAT_PCM;
 	format.nChannels = si->dma->channels;
 	format.wBitsPerSample = si->dma->samplebits;
@@ -137,20 +137,19 @@ static qboolean SND_InitWav (void)
 	*format.nBlockAlign;
 
 	/* Open a waveform device for output using window callback. */
-	si->Com_DPrintf ("...opening waveform device: ");
+	si->Com_DPrintf("...opening waveform device: ");
 	while ((hr = waveOutOpen((LPHWAVEOUT)&hWaveOut, WAVE_MAPPER, &format,
 			0, 0L, CALLBACK_NULL)) != MMSYSERR_NOERROR) {
 		if (hr != MMSYSERR_ALLOCATED) {
-			si->Com_DPrintf ("failed\n");
+			si->Com_DPrintf("failed\n");
 			return qfalse;
 		}
 
-		if (MessageBox (NULL,
-				(LPCTSTR)"The sound hardware is in use by another app.\n\n"
+		if (MessageBox (NULL, (LPCTSTR)"The sound hardware is in use by another app.\n\n"
 				"Select Retry to try to start sound again or Cancel to run UFO with no sound.",
 				(LPCTSTR)"Sound not available",
 				MB_RETRYCANCEL | MB_SETFOREGROUND | MB_ICONEXCLAMATION) != IDRETRY) {
-			si->Com_DPrintf ("hw in use\n" );
+			si->Com_DPrintf("hw in use\n" );
 			return qfalse;
 		}
 	}
@@ -161,12 +160,12 @@ static qboolean SND_InitWav (void)
 	 * for waveform data must be globally allocated with
 	 * GMEM_MOVEABLE and GMEM_SHARE flags.
 	*/
-	si->Com_DPrintf ("...allocating waveform buffer: ");
+	si->Com_DPrintf("...allocating waveform buffer: ");
 	gSndBufSize = WAV_BUFFERS*WAV_BUFFER_SIZE;
 	hData = GlobalAlloc(GMEM_MOVEABLE | GMEM_SHARE, gSndBufSize);
 	if (!hData) {
 		si->Com_DPrintf(" failed\n");
-		FreeSound ();
+		FreeSound();
 		return qfalse;
 	}
 	si->Com_DPrintf("ok\n");
@@ -175,7 +174,7 @@ static qboolean SND_InitWav (void)
 	lpData = GlobalLock(hData);
 	if (!lpData) {
 		si->Com_DPrintf(" failed\n");
-		FreeSound ();
+		FreeSound();
 		return qfalse;
 	}
 	memset(lpData, 0, gSndBufSize);
@@ -186,26 +185,26 @@ static qboolean SND_InitWav (void)
 	 * also be globally allocated with GMEM_MOVEABLE and
 	 * GMEM_SHARE flags.
 	 */
-	si->Com_DPrintf ("...allocating waveform header: ");
+	si->Com_DPrintf("...allocating waveform header: ");
 	hWaveHdr = GlobalAlloc(GMEM_MOVEABLE | GMEM_SHARE,
 		(DWORD) sizeof(WAVEHDR) * WAV_BUFFERS);
 
 	if (hWaveHdr == NULL) {
 		si->Com_DPrintf("failed\n");
-		FreeSound ();
+		FreeSound();
 		return qfalse;
 	}
 	si->Com_DPrintf("ok\n");
 
-	si->Com_DPrintf ("...locking waveform header: ");
+	si->Com_DPrintf("...locking waveform header: ");
 	lpWaveHdr = (LPWAVEHDR) GlobalLock(hWaveHdr);
 
 	if (lpWaveHdr == NULL) {
 		si->Com_DPrintf("failed\n");
-		FreeSound ();
+		FreeSound();
 		return qfalse;
 	}
-	memset (lpWaveHdr, 0, sizeof(WAVEHDR) * WAV_BUFFERS);
+	memset(lpWaveHdr, 0, sizeof(WAVEHDR) * WAV_BUFFERS);
 	si->Com_DPrintf("ok\n");
 
 	/* After allocation, set up and prepare headers. */
@@ -223,11 +222,11 @@ static qboolean SND_InitWav (void)
 	}
 	si->Com_DPrintf("ok\n");
 
-	si->dma->samples = gSndBufSize/(si->dma->samplebits/8);
+	si->dma->samples = gSndBufSize / (si->dma->samplebits / 8);
 	si->dma->samplepos = 0;
 	si->dma->submission_chunk = 512;
 	si->dma->buffer = (unsigned char *) lpData;
-	sample16 = (si->dma->samplebits/8) - 1;
+	sample16 = (si->dma->samplebits / 8) - 1;
 
 	wav_init = qtrue;
 
@@ -250,9 +249,9 @@ qboolean SND_Init (struct sndinfo *s)
 
 		if (snd_iswave) {
 			if (snd_firsttime)
-				si->Com_DPrintf ("Wave sound init succeeded\n");
+				si->Com_DPrintf("Wave sound init succeeded\n");
 		} else {
-			si->Com_DPrintf ("Wave sound init failed\n");
+			si->Com_DPrintf("Wave sound init failed\n");
 		}
 	}
 
@@ -262,7 +261,7 @@ qboolean SND_Init (struct sndinfo *s)
 
 	if (!wav_init) {
 		if (snd_firsttime)
-			si->Com_DPrintf ("*** No sound device initialized ***\n");
+			si->Com_DPrintf("*** No sound device initialized ***\n");
 
 		return qfalse;
 	}
@@ -284,7 +283,7 @@ int SND_GetDMAPos (void)
 
 	s >>= sample16;
 
-	s &= (si->dma->samples-1);
+	s &= (si->dma->samples - 1);
 
 	return s;
 }
@@ -312,12 +311,12 @@ void SND_Submit (void)
 
 	/* find which sound blocks have completed */
 	while (1) {
-		if ( snd_completed == snd_sent ) {
-			si->Com_DPrintf ("Sound overrun\n");
+		if (snd_completed == snd_sent) {
+			si->Com_DPrintf("Sound overrun\n");
 			break;
 		}
 
-		if ( ! (lpWaveHdr[ snd_completed & WAV_MASK].dwFlags & WHDR_DONE) )
+		if (!(lpWaveHdr[ snd_completed & WAV_MASK].dwFlags & WHDR_DONE) )
 			break;
 
 		snd_completed++;	/* this buffer has been played */
@@ -325,8 +324,8 @@ void SND_Submit (void)
 
 	/* submit a few new sound blocks */
 	while (((snd_sent - snd_completed) >> sample16) < 8) {
-		h = lpWaveHdr + ( snd_sent&WAV_MASK );
-		if (*(si->paintedtime)/256 <= snd_sent)
+		h = lpWaveHdr + (snd_sent&WAV_MASK);
+		if (*(si->paintedtime) / 256 <= snd_sent)
 			break;
 		snd_sent++;
 		/*
@@ -337,8 +336,8 @@ void SND_Submit (void)
 		wResult = waveOutWrite(hWaveOut, h, sizeof(WAVEHDR));
 
 		if (wResult != MMSYSERR_NOERROR) {
-			si->Com_DPrintf ("Failed to write block to device\n");
-			FreeSound ();
+			si->Com_DPrintf("Failed to write block to device\n");
+			FreeSound();
 			return;
 		}
 	}
@@ -350,7 +349,7 @@ void SND_Submit (void)
  */
 void SND_Shutdown (void)
 {
-	FreeSound ();
+	FreeSound();
 }
 
 /**
