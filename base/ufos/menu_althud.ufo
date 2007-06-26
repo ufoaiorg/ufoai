@@ -1433,6 +1433,7 @@ menu althud
 		mousefx	false
 		invis true
 		click	{ cmd "sel_reactmode l 0;" }
+		blend 1
 	}
 
 	pic bt_left_cb1
@@ -1445,6 +1446,7 @@ menu althud
 		mousefx	false
 		invis true
 		click	{ cmd "sel_reactmode l 1;" }
+		blend 1
 	}
 
 	pic bt_left_cb2
@@ -1457,6 +1459,7 @@ menu althud
 		mousefx	false
 		invis true
 		click	{ cmd "sel_reactmode l 2;" }
+		blend 1
 	}
 
 	pic bt_left_cb3
@@ -1469,6 +1472,7 @@ menu althud
 		mousefx	false
 		invis true
 		click	{ cmd "sel_reactmode l 3;" }
+		blend 1
 	}
 
 	pic bt_left_cb4
@@ -1481,6 +1485,7 @@ menu althud
 		mousefx	false
 		invis true
 		click	{ cmd "sel_reactmode l 4;" }
+		blend 1
 	}
 
 	pic bt_left_cb5
@@ -1493,6 +1498,7 @@ menu althud
 		mousefx	false
 		invis true
 		click	{ cmd "sel_reactmode l 5;" }
+		blend 1
 	}
 
 	pic bt_left_cb6
@@ -1505,6 +1511,7 @@ menu althud
 		mousefx	false
 		invis true
 		click	{ cmd "sel_reactmode l 6;" }
+		blend 1
 	}
 
 	pic bt_left_cb7
@@ -1517,6 +1524,7 @@ menu althud
 		mousefx	false
 		invis true
 		click	{ cmd "sel_reactmode l 7;" }
+		blend 1
 	}
 
 	pic bt_right_cb0
@@ -1529,6 +1537,7 @@ menu althud
 		mousefx	false
 		invis true
 		click	{ cmd "sel_reactmode r 0;" }
+		blend 1
 	}
 
 	pic bt_right_cb1
@@ -1541,6 +1550,7 @@ menu althud
 		mousefx	false
 		invis true
 		click	{ cmd "sel_reactmode r 1;" }
+		blend 1
 	}
 
 	pic bt_right_cb2
@@ -1553,6 +1563,7 @@ menu althud
 		mousefx	false
 		invis true
 		click	{ cmd "sel_reactmode r 2;" }
+		blend 1
 	}
 
 	pic bt_right_cb3
@@ -1565,6 +1576,7 @@ menu althud
 		mousefx	false
 		invis true
 		click	{ cmd "sel_reactmode r 3;" }
+		blend 1
 	}
 
 	pic bt_right_cb4
@@ -1577,6 +1589,7 @@ menu althud
 		mousefx	false
 		invis true
 		click	{ cmd "sel_reactmode r 4;" }
+		blend 1
 	}
 
 	pic bt_right_cb5
@@ -1589,6 +1602,7 @@ menu althud
 		mousefx	false
 		invis true
 		click	{ cmd "sel_reactmode r 5;" }
+		blend 1
 	}
 
 	pic bt_right_cb6
@@ -1601,6 +1615,7 @@ menu althud
 		mousefx	false
 		invis true
 		click	{ cmd "sel_reactmode r 6;" }
+		blend 1
 	}
 
 	pic bt_right_cb7
@@ -1613,6 +1628,7 @@ menu althud
 		mousefx	false
 		invis true
 		click	{ cmd "sel_reactmode r 7;" }
+		blend 1
 	}
 
 	/* Firemode text ===================================*/
