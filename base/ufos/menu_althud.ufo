@@ -1233,6 +1233,7 @@ menu althud
 		mousefx	false
 		invis true
 		click	{ cmd "fireweap l 0;" }
+		blend 1
 	}
 
 	pic bt_left_fm1
@@ -1244,6 +1245,7 @@ menu althud
 		mousefx	false
 		invis true
 		click	{ cmd "fireweap l 1;" }
+		blend 1
 	}
 
 	pic bt_left_fm2
@@ -1255,6 +1257,7 @@ menu althud
 		mousefx	false
 		invis true
 		click	{ cmd "fireweap l 2;" }
+		blend 1
 	}
 
 	pic bt_left_fm3
@@ -1266,6 +1269,7 @@ menu althud
 		mousefx	false
 		invis true
 		click	{ cmd "fireweap l 3;" }
+		blend 1
 	}
 
 	pic bt_left_fm4
@@ -1277,6 +1281,7 @@ menu althud
 		mousefx	false
 		invis true
 		click	{ cmd "fireweap l 4;" }
+		blend 1
 	}
 
 	pic bt_left_fm5
@@ -1288,6 +1293,7 @@ menu althud
 		mousefx	false
 		invis true
 		click	{ cmd "fireweap l 5;" }
+		blend 1
 	}
 
 	pic bt_left_fm6
@@ -1299,6 +1305,7 @@ menu althud
 		mousefx	false
 		invis true
 		click	{ cmd "fireweap l 6;" }
+		blend 1
 	}
 
 	pic bt_left_fm7
@@ -1310,6 +1317,7 @@ menu althud
 		mousefx	false
 		invis true
 		click	{ cmd "fireweap l 7;" }
+		blend 1
 	}
 
 	pic bt_right_fm0
@@ -1321,6 +1329,7 @@ menu althud
 		mousefx	false
 		invis true
 		click	{ cmd "fireweap r 0;" }
+		blend 1
 	}
 
 	pic bt_right_fm1
@@ -1332,6 +1341,7 @@ menu althud
 		mousefx	false
 		invis true
 		click	{ cmd "fireweap r 1;" }
+		blend 1
 	}
 
 	pic bt_right_fm2
@@ -1343,6 +1353,7 @@ menu althud
 		mousefx	false
 		invis true
 		click	{ cmd "fireweap r 2;" }
+		blend 1
 	}
 
 	pic bt_right_fm3
@@ -1354,6 +1365,7 @@ menu althud
 		mousefx	false
 		invis true
 		click	{ cmd "fireweap r 3;" }
+		blend 1
 	}
 
 	pic bt_right_fm4
@@ -1365,6 +1377,7 @@ menu althud
 		mousefx	false
 		invis true
 		click	{ cmd "fireweap r 4;" }
+		blend 1
 	}
 
 	pic bt_right_fm5
@@ -1376,6 +1389,7 @@ menu althud
 		mousefx	false
 		invis true
 		click	{ cmd "fireweap r 5;" }
+		blend 1
 	}
 
 	pic bt_right_fm6
@@ -1387,6 +1401,7 @@ menu althud
 		mousefx	false
 		invis true
 		click	{ cmd "fireweap r 6;" }
+		blend 1
 	}
 
 	pic bt_right_fm7
@@ -1398,6 +1413,7 @@ menu althud
 		mousefx	false
 		invis true
 		click	{ cmd "fireweap r 7;" }
+		blend 1
 	}
 
 	/* Firemode checkbox images ===================================*/
