@@ -30,6 +30,7 @@ item medikit
 			shots	1
 			time	20
 			damage	"-40 20"
+			reaction	false
 		}
 		firedef
 		{
@@ -47,6 +48,7 @@ item medikit
 			time	10
 			damage	"1 1"
 			dmgtype normal
+			reaction	false
 		}
 	}
 }
