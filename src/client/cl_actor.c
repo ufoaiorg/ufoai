@@ -3027,12 +3027,12 @@ TARGETING GRAPHICS
  * @brief table for lookup_erf
  * lookup[]= {erf(0), erf(0.1), ...}
  */
-	static const float lookup[31]= {
-	0.0f, 0.1125f, 0.2227f, 0.3286f, 0.4284f, 0.5205f, 0.6039f,
+static const float lookup[30]= {
+	0.0f,    0.1125f, 0.2227f, 0.3286f, 0.4284f, 0.5205f, 0.6039f,
 	0.6778f, 0.7421f, 0.7969f, 0.8427f, 0.8802f, 0.9103f, 0.9340f,
 	0.9523f, 0.9661f, 0.9763f, 0.9838f, 0.9891f, 0.9928f, 0.9953f,
 	0.9970f, 0.9981f, 0.9989f, 0.9993f, 0.9996f, 0.9998f, 0.9999f,
-	0.9999f, 1.0000f, 1.0000f
+	0.9999f, 1.0000f
 };
 
 /**
@@ -3063,9 +3063,9 @@ static float lookup_erf (float z)
 
 	/* erf(-z)=-erf(z), but erf of -ve number should never be used here
 	 * so return 0 here */
-	if (z < 0.0f)
+	if (z < 0.0001f)
 		return 0.0f;
-	if (z > 2.9f)
+	if (z > 2.8f)
 		return 1.0f;
 	ifloat = floor(z * 10.0f);
 	iint = (int)ifloat;
