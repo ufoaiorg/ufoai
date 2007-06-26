@@ -943,8 +943,8 @@ static qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 		}
 	}
 
-	/* containers */
-	if (node->type == MN_CONTAINER) {
+	switch (node->type) {
+	case MN_CONTAINER:
 		if (node->mousefx == C_UNDEFINED)
 			MN_FindContainer(node);
 		if (node->mousefx == NONE)
@@ -956,10 +956,11 @@ static qboolean MN_CheckNodeZone (menuNode_t* const node, int x, int y)
 
 		/* found a container */
 		return qtrue;
-	}
-
 	/* checkboxes don't need action nodes */
-	if (node->type != MN_CHECKBOX && node->type != MN_SELECTBOX) {
+	case MN_CHECKBOX:
+	case MN_SELECTBOX:
+		break;
+	default:
 		/* check for click action */
 		if (node->invis || (!node->click && !node->rclick && !node->mclick && !node->wheel && !node->mouseIn && !node->mouseOut && !node->wheelUp && !node->wheelDown))
 			return qfalse;
