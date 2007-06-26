@@ -316,7 +316,7 @@ void SND_Submit (void)
 			break;
 		}
 
-		if (!(lpWaveHdr[ snd_completed & WAV_MASK].dwFlags & WHDR_DONE) )
+		if (!(lpWaveHdr[snd_completed & WAV_MASK].dwFlags & WHDR_DONE))
 			break;
 
 		snd_completed++;	/* this buffer has been played */

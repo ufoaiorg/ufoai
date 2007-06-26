@@ -38,7 +38,7 @@ HRESULT (WINAPI *pDirectSoundCreate)(GUID FAR *, LPDIRECTSOUND FAR *, IUnknown F
 
 typedef enum {SIS_SUCCESS, SIS_FAILURE, SIS_NOTAVAIL} sndinitstat;
 
-cvar_t *s_primary;
+static cvar_t *s_primary;
 
 static qboolean	dsound_init;
 static qboolean	snd_firsttime = qtrue;
@@ -81,7 +81,7 @@ static struct sndinfo *si;
  */
 static const char *DSoundError (int error)
 {
-	switch ( error ) {
+	switch (error) {
 	case DSERR_BUFFERLOST:
 		return "DSERR_BUFFERLOST";
 	case DSERR_INVALIDCALL:
@@ -100,24 +100,24 @@ static const char *DSoundError (int error)
  */
 static qboolean DS_CreateBuffers (void)
 {
-	DSBUFFERDESC	dsbuf;
-	DSBCAPS			dsbcaps;
-	WAVEFORMATEX	pformat, format;
-	DWORD			dwWrite;
+	DSBUFFERDESC dsbuf;
+	DSBCAPS dsbcaps;
+	WAVEFORMATEX pformat, format;
+	DWORD dwWrite;
 
-	memset (&format, 0, sizeof(format));
+	memset(&format, 0, sizeof(format));
 	format.wFormatTag = WAVE_FORMAT_PCM;
 	format.nChannels = si->dma->channels;
 	format.wBitsPerSample = si->dma->samplebits;
 	format.nSamplesPerSec = si->dma->speed;
 	format.nBlockAlign = format.nChannels * format.wBitsPerSample / 8;
 	format.cbSize = 0;
-	format.nAvgBytesPerSec = format.nSamplesPerSec*format.nBlockAlign;
+	format.nAvgBytesPerSec = format.nSamplesPerSec * format.nBlockAlign;
 
 	si->Com_DPrintf("Creating DS buffers\n");
 
 	si->Com_DPrintf("...setting EXCLUSIVE coop level: " );
-	if ( DS_OK != pDS->lpVtbl->SetCooperativeLevel( pDS, si->cl_hwnd, DSSCL_EXCLUSIVE ) ) {
+	if (DS_OK != pDS->lpVtbl->SetCooperativeLevel(pDS, si->cl_hwnd, DSSCL_EXCLUSIVE)) {
 		si->Com_DPrintf("failed\n");
 		FreeSound();
 		return qfalse;
@@ -125,7 +125,7 @@ static qboolean DS_CreateBuffers (void)
 
 	/* get access to the primary buffer, if possible, so we can set the */
 	/* sound hardware format */
-	memset (&dsbuf, 0, sizeof(dsbuf));
+	memset(&dsbuf, 0, sizeof(dsbuf));
 	dsbuf.dwSize = sizeof(DSBUFFERDESC);
 	dsbuf.dwFlags = DSBCAPS_PRIMARYBUFFER;
 	dsbuf.dwBufferBytes = 0;
@@ -173,7 +173,7 @@ static qboolean DS_CreateBuffers (void)
 		si->dma->samplebits = format.wBitsPerSample;
 		si->dma->speed = format.nSamplesPerSec;
 
-		if (DS_OK != pDSBuf->lpVtbl->GetCaps (pDSBuf, &dsbcaps)) {
+		if (DS_OK != pDSBuf->lpVtbl->GetCaps(pDSBuf, &dsbcaps)) {
 			si->Com_DPrintf("*** GetCaps failed ***\n");
 			FreeSound();
 			return qfalse;
@@ -184,7 +184,7 @@ static qboolean DS_CreateBuffers (void)
 		si->Com_DPrintf("...using primary buffer\n");
 
 		si->Com_DPrintf("...setting WRITEPRIMARY coop level: ");
-		if (DS_OK != pDS->lpVtbl->SetCooperativeLevel (pDS, si->cl_hwnd, DSSCL_WRITEPRIMARY)) {
+		if (DS_OK != pDS->lpVtbl->SetCooperativeLevel(pDS, si->cl_hwnd, DSSCL_WRITEPRIMARY)) {
 			si->Com_DPrintf("failed\n");
 			FreeSound();
 			return qfalse;
@@ -213,11 +213,11 @@ static qboolean DS_CreateBuffers (void)
 	pDSBuf->lpVtbl->GetCurrentPosition(pDSBuf, &mmstarttime.u.sample, &dwWrite);
 	pDSBuf->lpVtbl->Play(pDSBuf, 0, 0, DSBPLAY_LOOPING);
 
-	si->dma->samples = gSndBufSize/(si->dma->samplebits/8);
+	si->dma->samples = gSndBufSize / (si->dma->samplebits / 8);
 	si->dma->samplepos = 0;
 	si->dma->submission_chunk = 1;
 	si->dma->buffer = (unsigned char *) lpData;
-	sample16 = (si->dma->samplebits/8) - 1;
+	sample16 = (si->dma->samplebits / 8) - 1;
 
 	return qtrue;
 }
@@ -267,7 +267,7 @@ static void FreeSound (void)
 
 		if (lpWaveHdr) {
 			for (i = 0; i < WAV_BUFFERS; i++)
-				waveOutUnprepareHeader(hWaveOut, lpWaveHdr+i, sizeof(WAVEHDR));
+				waveOutUnprepareHeader(hWaveOut, lpWaveHdr + i, sizeof(WAVEHDR));
 		}
 
 		waveOutClose(hWaveOut);
@@ -333,7 +333,7 @@ static sndinitstat SND_InitDirect (void)
 			return SIS_FAILURE;
 		}
 
-		pDirectSoundCreate = ( HRESULT (WINAPI *)(GUID FAR *, LPDIRECTSOUND FAR *, IUnknown FAR *) )GetProcAddress(hInstDS,"DirectSoundCreate");
+		pDirectSoundCreate = (HRESULT (WINAPI *)(GUID FAR *, LPDIRECTSOUND FAR *, IUnknown FAR *) )GetProcAddress(hInstDS,"DirectSoundCreate");
 
 		if (!pDirectSoundCreate) {
 			si->Com_Printf("*** couldn't get DS proc addr ***\n");
@@ -348,12 +348,11 @@ static sndinitstat SND_InitDirect (void)
 			return SIS_FAILURE;
 		}
 
-		if (MessageBox(NULL,
-						"The sound hardware is in use by another app.\n\n"
-						"Select Retry to try to start sound again or Cancel to run Quake with no sound.",
+		if (MessageBox(NULL, "The sound hardware is in use by another app.\n\n"
+						"Select Retry to try to start sound again or Cancel to run UFO with no sound.",
 						"Sound not available",
 						MB_RETRYCANCEL | MB_SETFOREGROUND | MB_ICONEXCLAMATION) != IDRETRY) {
-			si->Com_DPrintf ("failed, hardware already in use\n" );
+			si->Com_DPrintf("failed, hardware already in use\n" );
 			return SIS_NOTAVAIL;
 		}
 	}
