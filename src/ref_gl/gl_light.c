@@ -81,7 +81,7 @@ void R_RenderDlights (void)
 	int i;
 	dlight_t *l;
 
-	if (!gl_flashblend->value)
+	if (!gl_flashblend->integer)
 		return;
 
 	r_dlightframecount = r_framecount + 1;	/* because the count hasn't */

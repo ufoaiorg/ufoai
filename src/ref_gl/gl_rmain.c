@@ -167,7 +167,7 @@ static void GL_Strings_f (void)
 	ri.Con_Printf(PRINT_ALL, "GL_VENDOR: %s\n", gl_config.vendor_string);
 	ri.Con_Printf(PRINT_ALL, "GL_RENDERER: %s\n", gl_config.renderer_string);
 	ri.Con_Printf(PRINT_ALL, "GL_VERSION: %s\n", gl_config.version_string);
-	ri.Con_Printf(PRINT_ALL, "MODE: %.0f, %d x %d FULLSCREEN: %.0f\n", gl_mode->value, vid.width, vid.height, vid_fullscreen->value);
+	ri.Con_Printf(PRINT_ALL, "MODE: %i, %d x %d FULLSCREEN: %i\n", gl_mode->integer, vid.width, vid.height, vid_fullscreen->integer);
 	ri.Con_Printf(PRINT_ALL, "GL_EXTENSIONS: %s\n", gl_config.extensions_string);
 	ri.Con_Printf(PRINT_ALL, "GL_MAX_TEXTURE_SIZE: %d\n", gl_config.maxTextureSize);
 }
@@ -207,7 +207,7 @@ qboolean R_CullBox (vec3_t mins, vec3_t maxs)
 {
 	int i;
 
-	if (r_nocull->value)
+	if (r_nocull->integer)
 		return qfalse;
 
 	for (i = 0; i < 4; i++)
@@ -505,7 +505,7 @@ static void R_TransformEntitiesOnList(void)
 {
 	int i;
 
-	if (!r_drawentities->value)
+	if (!r_drawentities->integer)
 		return;
 
 	/* clear flags */
@@ -528,7 +528,7 @@ static void R_DrawEntitiesOnList (void)
 {
 	int i;
 
-	if (!r_drawentities->value)
+	if (!r_drawentities->integer)
 		return;
 
 	/* draw non-transparent first */
@@ -638,7 +638,7 @@ static void R_SetFrustum (void)
 {
 	int i;
 
-	if (r_isometric->value) {
+	if (r_isometric->integer) {
 		/* 4 planes of a cube */
 		VectorScale(vright, +1, frustum[0].normal);
 		VectorScale(vright, -1, frustum[1].normal);
@@ -708,7 +708,7 @@ static void MYgluPerspective(GLdouble zNear, GLdouble zFar)
 {
 	GLdouble xmin, xmax, ymin, ymax, yaspect = (double) r_newrefdef.height / r_newrefdef.width;
 
-	if (r_isometric->value) {
+	if (r_isometric->integer) {
 		/* @todo: someone with stereo glasses should try to figure out what the correct stereo separation multiplier is for ortho mode */
 		qglOrtho((-10 - 2 * gl_state.camera_separation) * r_newrefdef.fov_x, (10 - 2 * gl_state.camera_separation) * r_newrefdef.fov_x, -10 * r_newrefdef.fov_x * yaspect, 10 * r_newrefdef.fov_x * yaspect, -zFar, zFar);
 	} else {
@@ -775,7 +775,7 @@ static void R_SetupGL (void)
 	qglHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_DONT_CARE);
 #endif
 
-	if (gl_fog->value && r_newrefdef.fog && gl_state.fog_coord) {
+	if (gl_fog->integer && r_newrefdef.fog && gl_state.fog_coord) {
 		qglEnable(GL_FOG);
 		qglFogi(GL_FOG_MODE, GL_EXP2);
 		qglFogf(GL_FOG_START, 0.1 * r_newrefdef.fog);
@@ -819,7 +819,7 @@ static void R_Flash (void)
  */
 static void R_SetRefreshDefinition (refdef_t * fd)
 {
-	if (r_norefresh->value)
+	if (r_norefresh->integer)
 		return;
 
 	r_newrefdef = *fd;
@@ -830,7 +830,7 @@ static void R_SetRefreshDefinition (refdef_t * fd)
  */
 static void R_RenderView (refdef_t * fd)
 {
-	if (r_norefresh->value)
+	if (r_norefresh->integer)
 		return;
 
 	r_newrefdef = *fd;
@@ -838,12 +838,12 @@ static void R_RenderView (refdef_t * fd)
 /*	if (!r_worldmodel && !(r_newrefdef.rdflags & RDF_NOWORLDMODEL)) */
 /*		ri.Sys_Error(ERR_DROP, "R_RenderView: NULL worldmodel"); */
 
-	if (r_speeds->value) {
+	if (r_speeds->integer) {
 		c_brush_polys = 0;
 		c_alias_polys = 0;
 	}
 
-	if (gl_finish->value)
+	if (gl_finish->integer)
 		qglFinish();
 
 	R_SetupFrame();
@@ -852,7 +852,7 @@ static void R_RenderView (refdef_t * fd)
 
 	R_SetupGL();
 
-	if (gl_wire->value)
+	if (gl_wire->integer)
 		qglPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	/* draw brushes on current worldlevel */
@@ -1069,7 +1069,7 @@ static qboolean R_SetMode (void)
 	gl_ext_texture_compression->modified = qfalse;
 
 	if ((err = GLimp_SetMode(&vid.width, &vid.height, gl_mode->integer, fullscreen)) == rserr_ok)
-		gl_state.prev_mode = gl_mode->value;
+		gl_state.prev_mode = gl_mode->integer;
 	else {
 		if (err == rserr_invalid_fullscreen) {
 			ri.Cvar_SetValue("vid_fullscreen", 0);
@@ -1191,7 +1191,7 @@ static qboolean R_Init (HINSTANCE hinstance, WNDPROC wndproc)
 
 	/* grab extensions */
 	if (strstr(gl_config.extensions_string, "GL_EXT_compiled_vertex_array") || strstr(gl_config.extensions_string, "GL_SGI_compiled_vertex_array")) {
-		if (gl_ext_lockarrays->value) {
+		if (gl_ext_lockarrays->integer) {
 			ri.Con_Printf(PRINT_ALL, "...enabling GL_EXT_LockArrays\n");
 			qglLockArraysEXT = (void (APIENTRY *) (int, int)) qwglGetProcAddress("glLockArraysEXT");
 			qglUnlockArraysEXT = (void (APIENTRY *) (void)) qwglGetProcAddress("glUnlockArraysEXT");
@@ -1209,7 +1209,7 @@ static qboolean R_Init (HINSTANCE hinstance, WNDPROC wndproc)
 #endif
 
 	if (strstr(gl_config.extensions_string, "GL_EXT_point_parameters")) {
-		if (gl_ext_pointparameters->value) {
+		if (gl_ext_pointparameters->integer) {
 			qglPointParameterfEXT = (void (APIENTRY *) (GLenum, GLfloat)) qwglGetProcAddress("glPointParameterfEXT");
 			qglPointParameterfvEXT = (void (APIENTRY *) (GLenum, const GLfloat *)) qwglGetProcAddress("glPointParameterfvEXT");
 			ri.Con_Printf(PRINT_ALL, "...using GL_EXT_point_parameters\n");
@@ -1219,7 +1219,7 @@ static qboolean R_Init (HINSTANCE hinstance, WNDPROC wndproc)
 		ri.Con_Printf(PRINT_ALL, "...GL_EXT_point_parameters not found\n");
 
 	if (strstr(gl_config.extensions_string, "GL_ARB_multitexture")) {
-		if (gl_ext_multitexture->value) {
+		if (gl_ext_multitexture->integer) {
 			ri.Con_Printf(PRINT_ALL, "...using GL_ARB_multitexture\n");
 			qglMTexCoord2fSGIS = (void (APIENTRY *) (GLenum, GLfloat, GLfloat)) qwglGetProcAddress("glMultiTexCoord2fARB");
 			qglActiveTextureARB = (void (APIENTRY *) (GLenum)) qwglGetProcAddress("glActiveTextureARB");
@@ -1234,7 +1234,7 @@ static qboolean R_Init (HINSTANCE hinstance, WNDPROC wndproc)
 		ri.Con_Printf(PRINT_ALL, "...GL_ARB_multitexture not found\n");
 
 	if (strstr(gl_config.extensions_string, "GL_EXT_texture_env_combine") || strstr(gl_config.extensions_string, "GL_ARB_texture_env_combine")) {
-		if (gl_ext_combine->value) {
+		if (gl_ext_combine->integer) {
 			ri.Con_Printf(PRINT_ALL, "...using GL_EXT_texture_env_combine\n");
 			gl_combine = GL_COMBINE_EXT;
 		} else {
@@ -1249,7 +1249,7 @@ static qboolean R_Init (HINSTANCE hinstance, WNDPROC wndproc)
 	if (strstr(gl_config.extensions_string, "GL_SGIS_multitexture")) {
 		if (qglActiveTextureARB)
 			ri.Con_Printf(PRINT_ALL, "...GL_SGIS_multitexture deprecated in favor of ARB_multitexture\n");
-		else if (gl_ext_multitexture->value) {
+		else if (gl_ext_multitexture->integer) {
 			ri.Con_Printf(PRINT_ALL, "...using GL_SGIS_multitexture\n");
 			qglMTexCoord2fSGIS = (void (APIENTRY *) (GLenum, GLfloat, GLfloat)) qwglGetProcAddress("glMTexCoord2fSGIS");
 			qglSelectTextureSGIS = (void (APIENTRY *) (GLenum)) qwglGetProcAddress("glSelectTextureSGIS");
@@ -1263,9 +1263,9 @@ static qboolean R_Init (HINSTANCE hinstance, WNDPROC wndproc)
 		ri.Con_Printf(PRINT_ALL, "...GL_SGIS_multitexture not found\n");
 
 	if (strstr(gl_config.extensions_string, "GL_ARB_texture_compression")) {
-		if (gl_ext_texture_compression->value) {
+		if (gl_ext_texture_compression->integer) {
 			ri.Con_Printf(PRINT_ALL, "...using GL_ARB_texture_compression\n");
-			if (gl_ext_s3tc_compression->value && strstr(gl_config.extensions_string, "GL_EXT_texture_compression_s3tc")) {
+			if (gl_ext_s3tc_compression->integer && strstr(gl_config.extensions_string, "GL_EXT_texture_compression_s3tc")) {
 /*				ri.Con_Printf(PRINT_ALL, "   with s3tc compression\n"); */
 				gl_compressed_solid_format = GL_COMPRESSED_RGB_S3TC_DXT1_EXT;
 				gl_compressed_alpha_format = GL_COMPRESSED_RGBA_S3TC_DXT5_EXT;
@@ -1290,12 +1290,12 @@ static qboolean R_Init (HINSTANCE hinstance, WNDPROC wndproc)
 
 	qglGetIntegerv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &max_aniso);
 	ri.Cvar_SetValue("r_ext_max_anisotropy", max_aniso);
-	if (r_anisotropic->value > r_ext_max_anisotropy->value) {
+	if (r_anisotropic->integer > r_ext_max_anisotropy->integer) {
 		ri.Con_Printf(PRINT_ALL, "...max GL_EXT_texture_filter_anisotropic value is %i\n", max_aniso);
-		ri.Cvar_SetValue("r_anisotropic", r_ext_max_anisotropy->value);
+		ri.Cvar_SetValue("r_anisotropic", r_ext_max_anisotropy->integer);
 	}
 
-	aniso_level = r_anisotropic->value;
+	aniso_level = r_anisotropic->integer;
 	if (strstr(gl_config.extensions_string, "GL_EXT_texture_filter_anisotropic")) {
 		if (!r_anisotropic->integer)
 			ri.Con_Printf(PRINT_ALL, "...ignoring GL_EXT_texture_filter_anisotropic\n");
@@ -1398,7 +1398,7 @@ static qboolean R_Init (HINSTANCE hinstance, WNDPROC wndproc)
 
 	gl_state.ati_separate_stencil = qfalse;
 	if (strstr(gl_config.extensions_string, "GL_ATI_separate_stencil")) {
-		if (!gl_ati_separate_stencil->value) {
+		if (!gl_ati_separate_stencil->integer) {
 			ri.Con_Printf(PRINT_ALL, "...ignoring GL_ATI_separate_stencil\n");
 			gl_state.ati_separate_stencil = qfalse;
 		} else {
@@ -1415,7 +1415,7 @@ static qboolean R_Init (HINSTANCE hinstance, WNDPROC wndproc)
 
 	gl_state.stencil_two_side = qfalse;
 	if (strstr(gl_config.extensions_string, "GL_EXT_stencil_two_side")) {
-		if (!gl_stencil_two_side->value) {
+		if (!gl_stencil_two_side->integer) {
 			ri.Con_Printf(PRINT_ALL, "...ignoring GL_EXT_stencil_two_side\n");
 			gl_state.stencil_two_side = qfalse;
 		} else {
@@ -1446,11 +1446,11 @@ static qboolean R_Init (HINSTANCE hinstance, WNDPROC wndproc)
 			ri.Con_Printf(PRINT_ALL, "......cannot detect !\n");
 		} else {
 			ri.Con_Printf(PRINT_ALL, "......detected %d\n", size);
-			if (gl_maxtexres->value > size) {
-				ri.Con_Printf(PRINT_ALL, "......downgrading from %.0f\n", gl_maxtexres->value);
+			if (gl_maxtexres->integer > size) {
+				ri.Con_Printf(PRINT_ALL, "......downgrading from %i\n", gl_maxtexres->integer);
 				ri.Cvar_SetValue("gl_maxtexres", size);
-			} else if (gl_maxtexres->value < size) {
-				ri.Con_Printf(PRINT_ALL, "......but using %.0f as requested\n", gl_maxtexres->value);
+			} else if (gl_maxtexres->integer < size) {
+				ri.Con_Printf(PRINT_ALL, "......but using %i as requested\n", gl_maxtexres->integer);
 			}
 		}
 	}
@@ -1511,7 +1511,7 @@ static void R_BeginFrame (float camera_separation)
 	}
 
 	if (gl_log->modified) {
-		GLimp_EnableLogging(gl_log->value);
+		GLimp_EnableLogging(gl_log->integer);
 		gl_log->modified = qfalse;
 	}
 
@@ -1539,7 +1539,7 @@ static void R_BeginFrame (float camera_separation)
 			ri.Cvar_ForceSet("con_font", "1");
 	}
 
-	if (gl_log->value)
+	if (gl_log->integer)
 		GLimp_LogNewFrame();
 
 	if (vid_gamma->modified) {

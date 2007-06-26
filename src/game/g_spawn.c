@@ -331,13 +331,13 @@ void SpawnEntities (const char *mapname, char *entities)
 		Com_Printf("No civilian spawn points in this map or civilians deactivated\n");
 #endif
 
-	if ((sv_maxclients->integer == 1 || ai_numactors->value) && level.num_spawnpoints[TEAM_ALIEN]) {
+	if ((sv_maxclients->integer == 1 || ai_numactors->integer) && level.num_spawnpoints[TEAM_ALIEN]) {
 		if (AI_CreatePlayer(TEAM_ALIEN) == NULL)
 			Com_Printf("Could not create alien\n");
 #ifdef DEBUG
 	} else {
 		Com_Printf("No alien spawn points in this map or aliens are deactivated for multiplayer\n");
-		Com_Printf("(sv_maxclients %.0f, ai_numactors: %.0f, alien spawnpoints: %i)\n", sv_maxclients->value, ai_numactors->value, level.num_spawnpoints[TEAM_ALIEN]);
+		Com_Printf("(sv_maxclients %i, ai_numactors: %i, alien spawnpoints: %i)\n", sv_maxclients->integer, ai_numactors->integer, level.num_spawnpoints[TEAM_ALIEN]);
 #endif
 	}
 }

@@ -156,13 +156,13 @@ static void install_grabs (void)
 	/* inviso cursor */
 	XDefineCursor(dpy, win, CreateNullCursor(dpy, win));
 
-	if (vid_grabmouse->value && ! vid_fullscreen->value)
+	if (vid_grabmouse->integer && ! vid_fullscreen->integer)
 		XGrabPointer(dpy, win, True, 0, GrabModeAsync, GrabModeAsync, win, None, CurrentTime);
 
-	if (!in_dgamouse->value && (!vid_grabmouse->value || vid_fullscreen->value)) {
+	if (!in_dgamouse->integer && (!vid_grabmouse->integer || vid_fullscreen->integer)) {
 		XWarpPointer(dpy, None, win, 0, 0, 0, 0, vid.width / 2, vid.height / 2);
-		sensitivity->value = 1;
-	} else if (in_dgamouse->value) {
+		Cvar_Set("sensitivity", "1");
+	} else if (in_dgamouse->integer) {
 #ifdef HAVE_XF86_DGA
 		int MajorVersion, MinorVersion;
 
@@ -184,7 +184,7 @@ static void install_grabs (void)
 	} else
 		XWarpPointer(dpy, None, win, 0, 0, 0, 0, vid.width / 2, vid.height / 2);
 
-	if (vid_grabmouse->value || vid_fullscreen->value)
+	if (vid_grabmouse->integer || vid_fullscreen->integer)
 		XGrabKeyboard(dpy, win, False, GrabModeAsync, GrabModeAsync, CurrentTime);
 
 	mouse_active = qtrue;
@@ -581,14 +581,14 @@ static void HandleEvents (void)
 				b = 1;
 				break;
 			case 4:
-				in_state->Key_Event_fp (K_MWHEELUP, qfalse);
+				in_state->Key_Event_fp(K_MWHEELUP, qfalse);
 				break;
 			case 5:
-				in_state->Key_Event_fp (K_MWHEELDOWN, qfalse);
+				in_state->Key_Event_fp(K_MWHEELDOWN, qfalse);
 				break;
 			}
 			if (b >= 0 && in_state && in_state->Key_Event_fp)
-				in_state->Key_Event_fp (K_MOUSE1 + b, qfalse);
+				in_state->Key_Event_fp(K_MOUSE1 + b, qfalse);
 			break;
 
 		case CreateNotify :
@@ -607,14 +607,14 @@ static void HandleEvents (void)
 			break;
 
 		case MapNotify:
-			if (vid_grabmouse->value) {
+			if (vid_grabmouse->integer) {
 				XGrabPointer(dpy, win, True, 0, GrabModeAsync,
 					GrabModeAsync, win, None, CurrentTime);
 			}
 			break;
 
 		case UnmapNotify:
-			if (vid_grabmouse->value)
+			if (vid_grabmouse->integer)
 				XUngrabPointer(dpy, CurrentTime);
 			break;
 
@@ -626,7 +626,7 @@ static void HandleEvents (void)
 
 	if (vid_grabmouse->modified) {
 		vid_grabmouse->modified = qfalse;
-		if (!vid_grabmouse->value) {
+		if (!vid_grabmouse->integer) {
 			XUngrabPointer(dpy, CurrentTime);
 			ri.Con_Printf(PRINT_ALL, "Ungrab mouse\n");
 		} else {
@@ -635,9 +635,9 @@ static void HandleEvents (void)
 		}
 	}
 
-	if (dowarp && vid_grabmouse->value)
+	if (dowarp && vid_grabmouse->integer)
 		/* move the mouse to the window center again */
-		XWarpPointer(dpy,None,win,0,0,0,0, vid.width/2,vid.height/2);
+		XWarpPointer(dpy, None, win, 0, 0, 0, 0, vid.width / 2,vid.height / 2);
 }
 
 Key_Event_fp_t Key_Event_fp;

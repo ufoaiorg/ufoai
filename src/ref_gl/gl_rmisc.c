@@ -304,7 +304,7 @@ void R_DrawBox (entity_t * e)
 	GLSTATE_ENABLE_BLEND
 	qglDisable(GL_CULL_FACE);
 	qglDisable(GL_TEXTURE_2D);
-	if (!gl_wire->value)
+	if (!gl_wire->integer)
 		qglPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	qglEnable(GL_LINE_SMOOTH);
 
@@ -341,7 +341,7 @@ void R_DrawBox (entity_t * e)
 	qglEnd();
 
 	qglDisable(GL_LINE_SMOOTH);
-	if (!gl_wire->value)
+	if (!gl_wire->integer)
 		qglPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	qglEnable(GL_TEXTURE_2D);
 	qglEnable(GL_CULL_FACE);

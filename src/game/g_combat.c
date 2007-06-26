@@ -438,7 +438,7 @@ static void G_Damage (edict_t * ent, fireDef_t *fd, int damage, edict_t * attack
 		G_UpdateCharacterScore(attacker, fd, ent);
 
 	} else {
-		if (damage > 0 && mor_panic->value) {
+		if (damage > 0 && mor_panic->integer) {
 			G_Morale(ML_WOUND, ent, attacker, damage);
 		} else { /* medikit, etc. */
 			if (ent->HP > GET_HP(ent->chr.skills[ABILITY_POWER]))

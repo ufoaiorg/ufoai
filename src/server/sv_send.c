@@ -100,7 +100,7 @@ void SV_BroadcastPrintf (int level, const char *fmt, ...)
 	string[sizeof(string)-1] = 0;
 
 	/* echo to console */
-	if (dedicated->value) {
+	if (dedicated->integer) {
 		char copy[1024];
 
 		/* mask off high bits */

@@ -330,7 +330,7 @@ qboolean Netchan_Process (netchan_t * chan, sizebuf_t * msg)
 	/* dropped packets don't keep the message from being used */
 	chan->dropped = sequence - (chan->incoming_sequence + 1);
 	if (chan->dropped > 0) {
-		if (net_showdrop->value)
+		if (net_showdrop->integer)
 			Com_Printf("%s:Dropped %i packets at %i\n", NET_AdrToString(chan->remote_address),
 					chan->dropped, sequence);
 	}

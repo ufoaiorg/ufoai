@@ -252,7 +252,7 @@ extern void MAP_MapClick (const menuNode_t* node, int x, int y, qboolean globe)
 	} else {
 		MAP_ScreenToMap(node, x, y, pos);
 	}
-	if (cl_showCoords->value) {
+	if (cl_showCoords->integer) {
 		Com_sprintf(clickBuffer, sizeof(clickBuffer), "Long: %.1f Lat: %.1f", pos[0], pos[1]);
 		MN_AddNewMessage("Click"	, clickBuffer, qfalse, MSG_DEBUG, NULL);
 		Com_Printf("Clicked at %.1f %.1f\n", pos[0], pos[1]);
@@ -974,7 +974,7 @@ extern void MAP_CenterOnPoint (void)
 
 	centerOnEventIdx++;
 
-	if (cl_3dmap->value) {
+	if (cl_3dmap->integer) {
 		/* case 3D geoscape */
 		MAP_GetGeoscapeAngle(finalGlobeAngle, qtrue);
 		finalGlobeAngle[1] += GLOBE_ROTATE;
@@ -1334,7 +1334,7 @@ extern void MAP_DrawMap (const menuNode_t* node, qboolean map3D)
 	Vector2Copy(node->size, ccs.mapSize);
 
 	/* Draw the map and markers */
-	if (map3D || cl_3dmap->value) {
+	if (map3D || cl_3dmap->integer) {
 		if (!geobackground)
 			geobackground = MN_GetNodeFromCurrentMenu("geobackground");
 		/* @todo change texh, texl of geobackground with zoomlevel */

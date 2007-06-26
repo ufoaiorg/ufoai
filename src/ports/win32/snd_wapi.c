@@ -116,11 +116,11 @@ static qboolean SND_InitWav (void)
 	si->dma->channels = 2;
 	si->dma->samplebits = 16;
 
-	if (si->khz->value == 48)
+	if (si->khz->integer == 48)
 		si->dma->speed = 48000;
-	else if (si->khz->value == 44)
+	else if (si->khz->integer == 44)
 		si->dma->speed = 44100;
-	else if (si->khz->value == 22)
+	else if (si->khz->integer == 22)
 		si->dma->speed = 22050;
 	else
 		si->dma->speed = 11025;

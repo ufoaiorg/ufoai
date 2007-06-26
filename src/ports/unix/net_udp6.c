@@ -759,10 +759,10 @@ void NET_OpenIP (void)
 
 	/* if there is no IPv6 server socket, open one */
 	if (!ip6_sockets[NS_SERVER])
-		ip6_sockets[NS_SERVER] = NET_Socket(ip->string, port->value, NS_SERVER, AF_INET6);
+		ip6_sockets[NS_SERVER] = NET_Socket(ip->string, port->integer, NS_SERVER, AF_INET6);
 	/* if there is no IPv4 server socket, open one */
 	if (!ip_sockets[NS_SERVER])
-		ip_sockets[NS_SERVER] = NET_Socket(ip->string, port->value, NS_SERVER, AF_INET);
+		ip_sockets[NS_SERVER] = NET_Socket(ip->string, port->integer, NS_SERVER, AF_INET);
 
 	/* lookup the client port from cvar "clientport",
 	 * if it isn't set, just use PORT_CLIENT */
@@ -985,7 +985,7 @@ void NET_Sleep(int msec)
 	extern cvar_t *dedicated;
 	extern qboolean stdin_active;
 
-	if ( (!ip_sockets[NS_SERVER] && !ip6_sockets[NS_SERVER]) || (dedicated && !dedicated->value))
+	if ((!ip_sockets[NS_SERVER] && !ip6_sockets[NS_SERVER]) || (dedicated && !dedicated->integer))
 		return; /* we're not a server, just run full speed */
 
 	FD_ZERO(&fdset);

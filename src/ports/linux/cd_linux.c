@@ -549,13 +549,13 @@ void CDAudio_Update (void)
 
 	if (cd_volume && cd_volume->value != cdvolume) {
 		if (cdvolume) {
-			Cvar_SetValue ("cd_volume", 0.0);
+			Cvar_SetValue("cd_volume", 0.0);
 			cdvolume = cd_volume->value;
-			CDAudio_Pause ();
+			CDAudio_Pause();
 		} else {
-			Cvar_SetValue ("cd_volume", 1.0);
+			Cvar_SetValue("cd_volume", 1.0);
 			cdvolume = cd_volume->value;
-			CDAudio_Resume ();
+			CDAudio_Resume();
 		}
 	}
 

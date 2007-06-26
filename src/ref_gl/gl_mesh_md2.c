@@ -374,7 +374,7 @@ void R_DrawAliasMD2Model (entity_t * e)
 		R_DrawShadowVolume(e);
 	}
 
-	if (gl_fog->value && r_newrefdef.fog)
+	if (gl_fog->integer && r_newrefdef.fog)
 		qglDisable(GL_FOG);
 
 	qglDisable(GL_CULL_FACE);
@@ -427,7 +427,7 @@ void R_DrawAliasMD2Model (entity_t * e)
 	/* show model bounding box */
 	Mod_DrawModelBBox(bbox, e);
 
-	if (gl_fog->value && r_newrefdef.fog)
+	if (gl_fog->integer && r_newrefdef.fog)
 		qglEnable(GL_FOG);
 
 	qglColor4f(1, 1, 1, 1);
@@ -511,7 +511,7 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 		mi->oldframe = 0;
 	}
 
-	if (!r_lerpmodels->value)
+	if (!r_lerpmodels->integer)
 		mi->backlerp = 0;
 
 	/* select skin */
@@ -631,7 +631,7 @@ void R_DrawModelParticle (modelInfo_t * mi)
 		mi->oldframe = 0;
 	}
 
-	if (!r_lerpmodels->value)
+	if (!r_lerpmodels->integer)
 		mi->backlerp = 0;
 
 	/* select skin */

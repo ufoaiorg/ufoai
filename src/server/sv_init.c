@@ -1002,7 +1002,7 @@ static void SV_InitGame (void)
 /*	Cvar_FullSet ("maxclients", "8", CVAR_SERVERINFO | CVAR_LATCH); */
 
 	svs.spawncount = rand();
-	svs.clients = Mem_PoolAlloc(sizeof (client_t) * sv_maxclients->integer, sv_genericPool, 0);
+	svs.clients = Mem_PoolAlloc(sizeof(client_t) * sv_maxclients->integer, sv_genericPool, 0);
 
 	/* init network stuff */
 	NET_Config((sv_maxclients->integer > 1));

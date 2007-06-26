@@ -455,7 +455,7 @@ static void SCR_DrawCursor (void)
 	int icon_offset_y = 16;	/* Offset of the first icon on the y-axis. */
 	int icon_spacing = 2;	/* the space between different icons. */
 
-	if (!cursor->value)
+	if (!cursor->integer)
 		return;
 
 	if (cursor->modified) {
@@ -589,7 +589,7 @@ void SCR_BeginLoadingPlaque (void)
 	S_StopAllSounds();
 	cl.sound_prepped = qfalse;	/* don't play ambients */
 	CDAudio_Stop();
-	if (developer->value)
+	if (developer->integer)
 		return;
 
 	scr_draw_loading = 1;

@@ -270,7 +270,7 @@ extern void R_DrawPtls (void)
 	ptl_t *p;
 	int i;
 
-	if (gl_fog->value && r_newrefdef.fog)
+	if (gl_fog->integer && r_newrefdef.fog)
 		qglDisable(GL_FOG);
 	/* no z buffering */
 	qglDepthMask(GL_FALSE);
@@ -310,6 +310,6 @@ extern void R_DrawPtls (void)
 	qglBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	qglEnable(GL_CULL_FACE);
 	qglDepthMask(GL_TRUE);
-	if (gl_fog->value && r_newrefdef.fog)
+	if (gl_fog->integer && r_newrefdef.fog)
 		qglEnable(GL_FOG);
 }

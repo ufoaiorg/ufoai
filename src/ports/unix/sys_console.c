@@ -367,7 +367,7 @@ char *Sys_ConsoleInput (void)
 	fd_set fdset;
 	struct timeval timeout;
 
-	if (!dedicated || !dedicated->value)
+	if (!dedicated || !dedicated->integer)
 		return NULL;
 
 	if (!stdin_active)

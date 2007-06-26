@@ -715,7 +715,7 @@ void GetEvent (void)
 	if (old_windowed_mouse != _windowed_mouse->value) {
 		old_windowed_mouse = _windowed_mouse->value;
 
-		if (!_windowed_mouse->value) {
+		if (!_windowed_mouse->integer) {
 			/* ungrab the pointer */
 			XUngrabPointer(x_disp,CurrentTime);
 		} else {

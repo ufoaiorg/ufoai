@@ -2439,7 +2439,7 @@ void G_ClientEndRound (player_t * player, qboolean quiet)
 
 	/* apply morale behaviour, reset reaction fire */
 	G_ResetReactionFire(level.activeTeam);
-	if (mor_panic->value)
+	if (mor_panic->integer)
 		G_MoraleBehaviour(level.activeTeam, quiet);
 
 	/* start ai */

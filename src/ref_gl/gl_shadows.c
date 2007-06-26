@@ -150,7 +150,7 @@ static void R_DrawAliasShadow (entity_t * e, mdl_md2_t * paliashdr, int posenum)
 		return;
 
 	/*calculate model lighting and setup shadow transparenty */
-/*	if(r_shading->value)
+/*	if(r_shading->integer)
 		R_LightPointDynamics (currententity->origin, shadelight, model_dlights, &model_dlights_num, 3);
 	else*/
 		R_LightPoint(currententity->origin, shadelight);
@@ -404,7 +404,7 @@ static void R_DrawAliasShadowVolume (mdl_md2_t * paliashdr, int posenumm)
 
 	qglPushAttrib(GL_STENCIL_BUFFER_BIT); /* save stencil buffer */
 
-	if (gl_shadow_debug_volume->value)
+	if (gl_shadow_debug_volume->integer)
 		qglColor3f(1, 0, 0);
 	else
 		qglColorMask(0, 0, 0, 0);
@@ -467,7 +467,7 @@ static void R_DrawAliasShadowVolume (mdl_md2_t * paliashdr, int posenumm)
 
 /* 	if (clamp) qglDisable(GL_DEPTH_CLAMP_NV); */
 
-	if (gl_shadow_debug_volume->value)
+	if (gl_shadow_debug_volume->integer)
 		qglColor3f(1, 1, 1);
 	else
 		qglColorMask(1, 1, 1, 1);

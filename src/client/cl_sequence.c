@@ -182,7 +182,7 @@ static void CL_SequenceCamera (void)
 	VectorMA(cl.cam.reforg, -seqCamera.dist, cl.cam.axis[0], cl.cam.camorg);
 	cl.cam.zoom = max(seqCamera.zoom, MIN_ZOOM);
 	/* fudge to get isometric and perspective modes looking similar */
-	if (cl_isometric->value)
+	if (cl_isometric->integer)
 		cl.cam.zoom /= 1.35;
 	CalcFovX();
 }
@@ -1172,14 +1172,14 @@ qboolean CL_OpenAVIForWriting (const char *fileName)
 
 	Com_sprintf(afd.fileName, MAX_QPATH, fileName);
 
-	afd.frameRate = cl_aviFrameRate->value;
+	afd.frameRate = cl_aviFrameRate->integer;
 	afd.framePeriod = (int) (1000000.0f / afd.frameRate);
 	afd.width = viddef.width;
 	afd.height = viddef.height;
 
 	Com_Printf("Capturing avi with resolution %i:%i\n", afd.width, afd.height );
 
-	if (cl_aviMotionJpeg->value) {
+	if (cl_aviMotionJpeg->integer) {
 		Com_Printf("...MotionJPEG codec\n");
 		afd.motionJpeg = qtrue;
 	} else {

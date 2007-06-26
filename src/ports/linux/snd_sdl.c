@@ -87,17 +87,17 @@ qboolean SND_Init (struct sndinfo *s)
 	memset(&desired, '\0', sizeof (desired));
 	memset(&obtained, '\0', sizeof (obtained));
 
-	desired_bits = si->bits->value;
+	desired_bits = si->bits->integer;
 
 	/* Set up the desired format */
 	/* set buffer based on rate */
-	if (si->khz->value == 48) {
+	if (si->khz->integer == 48) {
 		desired.freq = 48000;
 		desired.samples = 4096;
-	} else if (si->khz->value == 44) {
+	} else if (si->khz->integer == 44) {
 		desired.freq = 44100;
 		desired.samples = 4096;
-	} else if (si->khz->value == 22) {
+	} else if (si->khz->integer == 22) {
 		desired.freq = 22050;
 		desired.samples = 2048;
 	} else {
@@ -107,7 +107,7 @@ qboolean SND_Init (struct sndinfo *s)
 
 	desired.callback = paint_audio;
 
-	desired_bits = si->bits->value;
+	desired_bits = si->bits->integer;
 	switch(desired_bits){
 	case 8:
 		desired.format = AUDIO_U8;
@@ -123,20 +123,20 @@ qboolean SND_Init (struct sndinfo *s)
 		return qfalse;
 	}
 
-	desired.channels = si->channels->value;
+	desired.channels = si->channels->integer;
 	if(desired.channels < 1)
 		desired.channels = 1;
 	else if(desired.channels > 2)
 		desired.channels = 2;
 
-	si->Com_Printf("Bits: %i\n", desired_bits );
-	si->Com_Printf("Frequency: %i\n", desired.freq );
-	si->Com_Printf("Samples: %i\n", desired.samples );
-	si->Com_Printf("Channels: %i\n", desired.channels );
+	si->Com_Printf("Bits: %i\n", desired_bits);
+	si->Com_Printf("Frequency: %i\n", desired.freq);
+	si->Com_Printf("Samples: %i\n", desired.samples);
+	si->Com_Printf("Channels: %i\n", desired.channels);
 
 	/* Open the audio device */
 	if (SDL_OpenAudio (&desired, &obtained) == -1) {
-		si->Com_Printf("Couldn't open SDL audio: %s\n", SDL_GetError ());
+		si->Com_Printf("Couldn't open SDL audio: %s\n", SDL_GetError());
 		SDL_QuitSubSystem(SDL_INIT_AUDIO);
 		return qfalse;
 	}
@@ -156,9 +156,9 @@ qboolean SND_Init (struct sndinfo *s)
 		/* Unsupported, fall through */
 	default:
 		/* Not supported -- force SDL to do our bidding */
-		SDL_CloseAudio ();
-		if (SDL_OpenAudio (&desired, NULL) == -1) {
-			si->Com_Printf("Couldn't open SDL audio (format): %s\n", SDL_GetError ());
+		SDL_CloseAudio();
+		if (SDL_OpenAudio(&desired, NULL) == -1) {
+			si->Com_Printf("Couldn't open SDL audio (format): %s\n", SDL_GetError());
 			return qfalse;
 		}
 		memcpy (&obtained, &desired, sizeof (desired));
@@ -174,7 +174,7 @@ qboolean SND_Init (struct sndinfo *s)
 	si->dma->submission_chunk = 1;
 	si->dma->buffer = NULL;
 
-	SDL_PauseAudio (0);
+	SDL_PauseAudio(0);
 	snd_inited = 1;
 	return qtrue;
 }
@@ -194,7 +194,7 @@ void SND_Shutdown (void)
 {
 	if (snd_inited) {
 		SDL_PauseAudio(1);
-		SDL_CloseAudio ();
+		SDL_CloseAudio();
 		snd_inited = 0;
 		si->dma->buffer = NULL;
 		si->dma->samplepos = 0;

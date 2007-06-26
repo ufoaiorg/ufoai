@@ -583,7 +583,7 @@ extern void B_SetUpBase (base_t* base)
 		if (gd.buildingTypes[i].autobuild
 			|| (gd.numBases == 1
 				&& gd.buildingTypes[i].firstbase
-				&& cl_start_buildings->value)) {
+				&& cl_start_buildings->integer)) {
 			/* @todo: implement check for moreThanOne */
 			building = &gd.buildings[base->idx][gd.numBuildings[base->idx]];
 			memcpy(building, &gd.buildingTypes[i], sizeof(building_t));
@@ -624,12 +624,12 @@ extern void B_SetUpBase (base_t* base)
 			/* update the building-list */
 			B_BuildingInit();
 
-			if (cl_start_employees->value)
+			if (cl_start_employees->integer)
 				B_HireForBuilding(base, building, -1);
 		}
 	}
 	/* if no autobuild, set up zero build time for the first base */
-	if (gd.numBases == 1 && !cl_start_buildings->value)
+	if (gd.numBases == 1 && !cl_start_buildings->integer)
 		gd.instant_build = 1;
 	/* Set up default buy/sell factors for this base. */
 	base->sellfactor = 5;

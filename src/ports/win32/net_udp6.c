@@ -639,7 +639,7 @@ int NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_message)
 				continue;
 			}
 
-			if (dedicated->value)	/* let dedicated servers continue after errors */
+			if (dedicated->integer)	/* let dedicated servers continue after errors */
 				Com_Printf("NET_GetPacket: %s from %s\n", NET_ErrorString(),
 					NET_AdrToString(*net_from));
 			else
@@ -788,7 +788,7 @@ void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 		if ((err == WSAEADDRNOTAVAIL) && ((to.type == NA_BROADCAST) || (to.type == NA_BROADCAST_IPX)))
 			return;
 
-		if (dedicated->value) {
+		if (dedicated->integer) {
 			/* let dedicated servers continue after errors */
 			Com_Printf("NET_SendPacket Warning: %s to %s\n", NET_ErrorString(),
 				NET_AdrToString(to));
@@ -1003,10 +1003,10 @@ void NET_OpenIP (void)
 	if (!ip_sockets[NS_CLIENT]) {
 		/* lookup the client port from cvar "ip_clientport",
 		 * if it isn't set, use 0 */
-		port = Cvar_Get("ip_clientport", "0", CVAR_NOSET, NULL)->value;
+		port = Cvar_Get("ip_clientport", "0", CVAR_NOSET, NULL)->integer;
 		if (!port) {
 			/* if that wasn't valid, try cvar "clientport" or PORT_CLIENT */
-			port = Cvar_Get("clientport", va("%i", PORT_CLIENT), CVAR_NOSET, NULL)->value;
+			port = Cvar_Get("clientport", va("%i", PORT_CLIENT), CVAR_NOSET, NULL)->integer;
 			/* if we can't find a valid port in the settings, use any available */
 			if (!port)
 				port = PORT_ANY;
@@ -1114,10 +1114,10 @@ void NET_OpenIPX (void)
 	if (!ipx_sockets[NS_CLIENT]) {
 		/* lookup the client port from cvar "ipx_clientport",
 		 * if it isn't set, use 0 */
-		port = Cvar_Get("ipx_clientport", "0", CVAR_NOSET, NULL)->value;
+		port = Cvar_Get("ipx_clientport", "0", CVAR_NOSET, NULL)->integer;
 		if (!port) {
 			/* if that was invalid try cvar "clientport", followed by PORT_CLIENT */
-			port = Cvar_Get("clientport", va("%i", PORT_CLIENT), CVAR_NOSET, NULL)->value;
+			port = Cvar_Get("clientport", va("%i", PORT_CLIENT), CVAR_NOSET, NULL)->integer;
 			/* if we can't find a valid port in the settings, use any available */
 			if (!port)
 				port = PORT_ANY;
@@ -1186,7 +1186,7 @@ void NET_Sleep(int msec)
 	extern cvar_t *dedicated;
 	int i;
 
-	if (!dedicated || !dedicated->value)
+	if (!dedicated || !dedicated->integer)
 		return; /* we're not a server, just run full speed */
 
 	FD_ZERO(&fdset);
@@ -1204,11 +1204,11 @@ void NET_Sleep(int msec)
 		if (ipx_sockets[NS_SERVER] > i)
 			i = ipx_sockets[NS_SERVER];
 	}
-	timeout.tv_sec = msec/1000;
-	timeout.tv_usec = (msec%1000)*1000;
+	timeout.tv_sec = msec / 1000;
+	timeout.tv_usec = (msec % 1000) * 1000;
 	i = max(ip_sockets[NS_SERVER],ip6_sockets[NS_SERVER]);
 	i = max(i,ipx_sockets[NS_SERVER]);
-	select(i+1, &fdset, NULL, NULL, &timeout);
+	select(i + 1, &fdset, NULL, NULL, &timeout);
 }
 
 //===================================================================

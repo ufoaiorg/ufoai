@@ -577,7 +577,7 @@ void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
 		if ((err == WSAEADDRNOTAVAIL || Q_strcmp(NET_ErrorString(), "NO ERROR")) && ((to.type == NA_BROADCAST) || (to.type == NA_BROADCAST_IPX)))
 			return;
 
-		if (dedicated->value) { /* let dedicated servers continue after errors */
+		if (dedicated->integer) { /* let dedicated servers continue after errors */
 			/* this error is "normal" in Win2k TCP/IP stack */
 			if (err != WSAECONNRESET)
 				Com_Printf("NET_SendPacket Warning: %s to %s\n", NET_ErrorString(),
@@ -800,13 +800,13 @@ void NET_OpenIPX (void)
 	if (!ipx_sockets[NS_SERVER]) {
 		/* lookup the server port from cvar "ipx_hostport",
 		 * if it isn't set, use 0 */
-		port = Cvar_Get("ipx_hostport", "0", CVAR_NOSET, NULL)->value;
+		port = Cvar_Get("ipx_hostport", "0", CVAR_NOSET, NULL)->integer;
 		if (!port) {
 			/* if that was invalid try cvar "hostport" */
-			port = Cvar_Get("hostport", "0", CVAR_NOSET, NULL)->value;
+			port = Cvar_Get("hostport", "0", CVAR_NOSET, NULL)->integer;
 			if (!port) {
 				/* finally try cvar "port" followed by PORT_SERVER */
-				port = Cvar_Get("port", va("%i", PORT_SERVER), CVAR_NOSET, NULL)->value;
+				port = Cvar_Get("port", va("%i", PORT_SERVER), CVAR_NOSET, NULL)->integer;
 			}
 		}
 		/* attempt to open the server socket with the best settings found */
@@ -824,10 +824,10 @@ void NET_OpenIPX (void)
 	if (!ipx_sockets[NS_CLIENT]) {
 		/* lookup the client port from cvar "ipx_clientport",
 		 * if it isn't set, use 0 */
-		port = Cvar_Get("ipx_clientport", "0", CVAR_NOSET, NULL)->value;
+		port = Cvar_Get("ipx_clientport", "0", CVAR_NOSET, NULL)->integer;
 		if (!port) {
 			/* if that was invalid try cvar "clientport", followed by PORT_CLIENT */
-			port = Cvar_Get("clientport", va("%i", PORT_CLIENT), CVAR_NOSET, NULL)->value;
+			port = Cvar_Get("clientport", va("%i", PORT_CLIENT), CVAR_NOSET, NULL)->integer;
 			/* if we can't find a valid port in the settings, use a random one */
 			if (!port)
 				port = PORT_ANY;
@@ -889,7 +889,7 @@ void NET_Sleep(int msec)
 	extern cvar_t *dedicated;
 	int i;
 
-	if (!dedicated || !dedicated->value)
+	if (!dedicated || !dedicated->integer)
 		return; /* we're not a server, just run full speed */
 
 	FD_ZERO(&fdset);

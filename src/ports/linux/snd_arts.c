@@ -54,11 +54,11 @@ qboolean SND_Init (struct sndinfo *s)
 		return qfalse;
 	}
 
-	si->dma->samplebits = (si->Cvar_Get("snd_bits", "16", CVAR_ARCHIVE, NULL))->value;
+	si->dma->samplebits = (si->Cvar_Get("snd_bits", "16", CVAR_ARCHIVE, NULL))->integer;
 
 	si->Com_Printf("Initializing aRts\n");
 
-	si->dma->speed = (si->Cvar_Get("snd_khz", "44", CVAR_ARCHIVE, NULL))->value;
+	si->dma->speed = (si->Cvar_Get("snd_khz", "44", CVAR_ARCHIVE, NULL))->integer;
 
 	if (si->dma->speed >= 48)
 		si->dma->speed = 48000;

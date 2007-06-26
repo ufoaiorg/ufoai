@@ -238,7 +238,7 @@ void CDAudio_Update (void)
 		return;
 	}
 
-	if (cd_nocd->value) {
+	if (cd_nocd->integer) {
 		CDAudio_Stop();
 		return;
 	}
@@ -261,11 +261,11 @@ int CDAudio_Init (void)
 		return 0;
 
 	cv = Cvar_Get("nocdaudio", "0", CVAR_NOSET, NULL);
-	if (cv->value)
+	if (cv->integer)
 		return -1;
 
 	cd_nocd = Cvar_Get("cd_nocd", "0", CVAR_ARCHIVE, NULL);
-	if (cd_nocd->value)
+	if (cd_nocd->integer)
 		return -1;
 
 	cd_volume = Cvar_Get("cd_volume", "1", CVAR_ARCHIVE, NULL);

@@ -609,7 +609,7 @@ static void MN_StartServer_f (void)
 		return;
 	}
 
-	if (dedicated->value > 0)
+	if (dedicated->integer > 0)
 		Com_DPrintf("Dedicated server needs no team\n");
 	/* FIXME: Spectator */
 	else if (!B_GetNumOnTeam()) {
@@ -1423,7 +1423,7 @@ void MN_Click (int x, int y)
 				MN_BaseMapClick(node, x, y);
 				break;
 			case MN_MAP:
-				MAP_MapClick(node, x, y, cl_3dmap->value);
+				MAP_MapClick(node, x, y, cl_3dmap->integer);
 				break;
 			case MN_CHECKBOX:
 				MN_CheckboxClick(node);
@@ -1670,7 +1670,7 @@ void MN_RightClick (int x, int y)
 				break;
 			case MN_MAP:
 				MAP_ResetAction();
-				if (!cl_3dmap->value)
+				if (!cl_3dmap->integer)
 					mouseSpace = MS_SHIFTMAP;
 				else
 					mouseSpace = MS_SHIFT3DMAP;
@@ -1777,7 +1777,7 @@ void MN_MouseWheel (qboolean down, int x, int y)
 				else if (ccs.zoom > cl_mapzoommax->value)
 					ccs.zoom = cl_mapzoommax->value;
 
-				if (!cl_3dmap->value) {
+				if (!cl_3dmap->integer) {
 					if (ccs.center[1] < 0.5 / ccs.zoom)
 						ccs.center[1] = 0.5 / ccs.zoom;
 					if (ccs.center[1] > 1.0 - 0.5 / ccs.zoom)
@@ -2824,14 +2824,14 @@ void MN_DrawMenus (void)
 				if (node->state == qtrue)
 					menu->hoverNode = node;
 
-				if (mn_debugmenu->value) {
+				if (mn_debugmenu->integer) {
 					MN_DrawTooltip("f_small", node->name, node->pos[0], node->pos[1], node->size[1]);
 /*					re.FontDrawString("f_verysmall", ALIGN_UL, node->pos[0], node->pos[1], node->pos[0], node->pos[1], node->size[0], 0, node->texh[0], node->name, 0, 0, NULL, qfalse);*/
 				}
 			}	/* if */
 
 		}	/* for */
-		if (sp == menuStackPos && menu->hoverNode && cl_show_tooltips->value) {
+		if (sp == menuStackPos && menu->hoverNode && cl_show_tooltips->integer) {
 			MN_Tooltip(menu, menu->hoverNode, mx, my);
 			menu->hoverNode = NULL;
 		}

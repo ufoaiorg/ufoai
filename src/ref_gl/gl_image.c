@@ -1475,9 +1475,9 @@ static void GL_ResampleTexture (unsigned *in, int inwidth, int inheight, unsigne
 		}
 	}
 
-	if (r_anisotropic->value && gl_state.anisotropic)
+	if (r_anisotropic->integer && gl_state.anisotropic)
 		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, r_anisotropic->value);
-	if (r_texture_lod->value && gl_state.lod_bias)
+	if (r_texture_lod->integer && gl_state.lod_bias)
 		qglTexEnvf(GL_TEXTURE_FILTER_CONTROL_EXT, GL_TEXTURE_LOD_BIAS_EXT, r_texture_lod->value);
 }
 
@@ -1762,10 +1762,10 @@ static qboolean GL_Upload32 (unsigned *data, int width, int height, qboolean mip
 	byte *scan;
 
 	for (scaled_width = 1; scaled_width < width; scaled_width <<= 1);
-	if (gl_round_down->value && scaled_width > width && mipmap)
+	if (gl_round_down->integer && scaled_width > width && mipmap)
 		scaled_width >>= 1;
 	for (scaled_height = 1; scaled_height < height; scaled_height <<= 1);
-	if (gl_round_down->value && scaled_height > height && mipmap)
+	if (gl_round_down->integer && scaled_height > height && mipmap)
 		scaled_height >>= 1;
 
 	/* let people sample down the world textures for speed */
@@ -1805,7 +1805,7 @@ static qboolean GL_Upload32 (unsigned *data, int width, int height, qboolean mip
 	}
 
 	/* emboss filter */
-	if (gl_imagefilter->value && image && image->shader) {
+	if (gl_imagefilter->integer && image && image->shader) {
 		Com_DPrintf("Using image filter %s\n", image->shader->name);
 		if (image->shader->emboss)
 			R_FilterTexture(EMBOSS_FILTER, data, width, height, 1, 128, qtrue, image->shader->glMode);
@@ -1872,9 +1872,9 @@ static qboolean GL_Upload32 (unsigned *data, int width, int height, qboolean mip
 		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 	}
 
-	if (r_anisotropic->value && gl_state.anisotropic)
+	if (r_anisotropic->integer && gl_state.anisotropic)
 		qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, r_anisotropic->value);
-	if (r_texture_lod->value && gl_state.lod_bias)
+	if (r_texture_lod->integer && gl_state.lod_bias)
 		qglTexEnvf(GL_TEXTURE_FILTER_CONTROL_EXT, GL_TEXTURE_LOD_BIAS_EXT, r_texture_lod->value);
 
 	return (samples == gl_alpha_format || samples == gl_compressed_alpha_format);

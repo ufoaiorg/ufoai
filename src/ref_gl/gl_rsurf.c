@@ -372,7 +372,7 @@ static void R_RenderBrushPoly (mBspSurface_t * fa)
 	/* dynamic this frame or dynamic previously */
 	if ((fa->dlightframe == r_framecount)) {
 	  dynamic:
-		if (gl_dynamic->value) {
+		if (gl_dynamic->integer) {
 			if (!(fa->texinfo->flags & (SURF_TRANS33 | SURF_TRANS66 | SURF_WARP)))
 				is_dynamic = qtrue;
 		}
@@ -494,7 +494,7 @@ static void GL_RenderLightmappedPoly (mBspSurface_t * surf)
 	/* dynamic this frame or dynamic previously */
 	if ((surf->dlightframe == r_framecount)) {
 	  dynamic:
-		if (gl_dynamic->value) {
+		if (gl_dynamic->integer) {
 			if (!(surf->texinfo->flags & (SURF_TRANS33 | SURF_TRANS66 | SURF_WARP)))
 				is_dynamic = qtrue;
 		}
@@ -563,7 +563,7 @@ static void R_DrawInlineBModel (void)
 	dlight_t *lt;
 	qboolean duplicate = qfalse;
 	/* calculate dynamic lighting for bmodel */
-	if (!gl_flashblend->value) {
+	if (!gl_flashblend->integer) {
 		lt = r_newrefdef.dlights;
 		for (k = 0; k < r_newrefdef.num_dlights; k++, lt++)
 			R_MarkLights(lt, 1 << k, currentmodel->nodes + currentmodel->firstnode);
@@ -586,7 +586,7 @@ static void R_DrawInlineBModel (void)
 		/* find which side of the node we are on */
 		pplane = psurf->plane;
 
-		if (r_isometric->value)
+		if (r_isometric->integer)
 			dot = -DotProduct(vpn, pplane->normal);
 		else
 			dot = DotProduct(modelorg, pplane->normal) - pplane->dist;
@@ -728,7 +728,7 @@ static void R_RecursiveWorldNode (mBspNode_t * node)
 	/* find which side of the node we are on */
 	plane = node->plane;
 
-	if (r_isometric->value) {
+	if (r_isometric->integer) {
 		dot = -DotProduct(vpn, plane->normal);
 	} else if (plane->type >= 3) {
 		dot = DotProduct(modelorg, plane->normal) - plane->dist;

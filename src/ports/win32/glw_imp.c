@@ -155,8 +155,8 @@ qboolean VID_CreateWindow (int width, int height, qboolean fullscreen)
 	else {
 		vid_xpos = ri.Cvar_Get("vid_xpos", "0", 0, NULL);
 		vid_ypos = ri.Cvar_Get("vid_ypos", "0", 0, NULL);
-		x = vid_xpos->value;
-		y = vid_ypos->value;
+		x = vid_xpos->integer;
+		y = vid_ypos->integer;
 	}
 
 	glw_state.hWnd = CreateWindowEx(
@@ -235,7 +235,7 @@ rserr_t GLimp_SetMode (unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 		dm.dmPelsHeight = height;
 		dm.dmFields     = DM_PELSWIDTH | DM_PELSHEIGHT;
 
-		if (r_displayrefresh->value != 0) {
+		if (r_displayrefresh->integer) {
 			gl_state.displayrefresh = r_displayrefresh->integer;
 			dm.dmDisplayFrequency = r_displayrefresh->integer;
 			dm.dmFields |= DM_DISPLAYFREQUENCY;
@@ -248,8 +248,8 @@ rserr_t GLimp_SetMode (unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 			ri.Con_Printf(PRINT_ALL, "...using desktop frequency: %d hz\n", displayref);
 		}
 
-		if (gl_bitdepth->value != 0) {
-			dm.dmBitsPerPel = gl_bitdepth->value;
+		if (gl_bitdepth->integer) {
+			dm.dmBitsPerPel = gl_bitdepth->integer;
 			dm.dmFields |= DM_BITSPERPEL;
 			ri.Con_Printf(PRINT_ALL, "...using gl_bitdepth of %d\n", gl_bitdepth->integer);
 		} else {
@@ -285,7 +285,7 @@ rserr_t GLimp_SetMode (unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 			dm.dmFields = DM_PELSWIDTH | DM_PELSHEIGHT;
 
 			if (gl_bitdepth->integer != 0) {
-				dm.dmBitsPerPel = gl_bitdepth->value;
+				dm.dmBitsPerPel = gl_bitdepth->integer;
 				dm.dmFields |= DM_BITSPERPEL;
 			}
 
@@ -493,7 +493,7 @@ qboolean GLimp_InitGL (void)
 	}
 
 	/* report if stereo is desired but unavailable */
-	if (!(pfd.dwFlags & PFD_STEREO) && (stereo->value != 0)) {
+	if (!(pfd.dwFlags & PFD_STEREO) && stereo->integer) {
 		ri.Con_Printf(PRINT_ALL, "...failed to select stereo pixel format\n");
 		ri.Cvar_SetValue("cl_stereo", 0);
 		gl_state.stereo_enabled = qfalse;
@@ -539,7 +539,7 @@ fail:
 void GLimp_BeginFrame (float camera_separation)
 {
 	if (gl_bitdepth->modified) {
-		if (gl_bitdepth->value != 0 && !glw_state.allowdisplaydepthchange) {
+		if (gl_bitdepth->integer && !glw_state.allowdisplaydepthchange) {
 			ri.Cvar_SetValue("gl_bitdepth", 0);
 			ri.Con_Printf(PRINT_ALL, "gl_bitdepth requires Win95 OSR2.x or WinNT 4.x\n");
 		}
@@ -587,7 +587,7 @@ void GLimp_AppActivate (qboolean active)
 		SetForegroundWindow(glw_state.hWnd);
 		ShowWindow(glw_state.hWnd, SW_RESTORE);
 	} else {
-		if (vid_fullscreen->value)
+		if (vid_fullscreen->integer)
 			ShowWindow(glw_state.hWnd, SW_MINIMIZE);
 	}
 }

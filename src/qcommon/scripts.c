@@ -1545,7 +1545,7 @@ extern void Com_ParseScripts (void)
 			Com_ParseActorSounds(name, &text);
 		else if (!Q_strncmp(type, "actors", 6))
 			Com_ParseActors(name, &text);
-		else if (!dedicated->value)
+		else if (!dedicated->integer)
 			CL_ParseClientData(type, name, &text);
 	}
 

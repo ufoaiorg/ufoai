@@ -420,13 +420,13 @@ LONG CDAudio_MessageHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
  */
 void CDAudio_Update(void)
 {
-	if (cd_nocd->value != !enabled) {
-		if (cd_nocd->value) {
+	if (cd_nocd->integer != !enabled) {
+		if (cd_nocd->integer) {
 			CDAudio_Stop();
 			enabled = qfalse;
 		} else {
 			enabled = qtrue;
-			CDAudio_Resume ();
+			CDAudio_Resume();
 		}
 	}
 }

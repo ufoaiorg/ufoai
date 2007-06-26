@@ -1241,7 +1241,7 @@ static void CL_LogEvent (int num)
 {
 	FILE *logfile;
 
-	if (!cl_logevents->value)
+	if (!cl_logevents->integer)
 		return;
 
 	logfile = fopen(va("%s/events.log", FS_Gamedir()), "a");
@@ -1521,7 +1521,7 @@ extern void CL_InitEvents (void)
  */
 static void CL_ShowNet (const char *s)
 {
-	if (cl_shownet->value >= 2)
+	if (cl_shownet->integer >= 2)
 		Com_Printf("%3i:%s\n", net_message.readcount-1, s);
 }
 
@@ -1536,9 +1536,9 @@ void CL_ParseServerMessage (void)
 	int			i;
 
 	/* if recording demos, copy the message out */
-	if (cl_shownet->value == 1)
+	if (cl_shownet->integer == 1)
 		Com_Printf("%i ",net_message.cursize);
-	else if (cl_shownet->value >= 2)
+	else if (cl_shownet->integer >= 2)
 		Com_Printf("------------------\n");
 
 	/* parse the message */
@@ -1555,7 +1555,7 @@ void CL_ParseServerMessage (void)
 			break;
 		}
 
-		if (cl_shownet->value >= 2) {
+		if (cl_shownet->integer >= 2) {
 			if (!svc_strings[cmd])
 				Com_Printf("%3i:BAD CMD %i\n", net_message.readcount-1,cmd);
 			else

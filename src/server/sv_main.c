@@ -734,8 +734,8 @@ static void SV_CheckTimeouts (void)
 	int droppoint;
 	int zombiepoint;
 
-	droppoint = svs.realtime - 1000 * timeout->value;
-	zombiepoint = svs.realtime - 1000 * zombietime->value;
+	droppoint = svs.realtime - 1000 * timeout->integer;
+	zombiepoint = svs.realtime - 1000 * zombietime->integer;
 
 	for (i = 0, cl = svs.clients; i < sv_maxclients->integer; i++, cl++) {
 		/* message times may be wrong across a changelevel */
@@ -978,7 +978,7 @@ static void SV_ParseMapcycle (void)
 qboolean SV_RunGameFrame (void)
 {
 	qboolean gameEnd = qfalse;
-	if (host_speeds->value)
+	if (host_speeds->integer)
 		time_before_game = Sys_Milliseconds();
 
 	/* we always need to bump framenum, even if we */
@@ -990,7 +990,7 @@ qboolean SV_RunGameFrame (void)
 
 	gameEnd = ge->RunFrame();
 
-	if (host_speeds->value)
+	if (host_speeds->integer)
 		time_after_game = Sys_Milliseconds();
 
 	/* next map in the cycle */
@@ -1024,10 +1024,10 @@ void SV_Frame (int msec)
 	SV_ReadPackets();
 
 	/* move autonomous things around if enough time has passed */
-	if (!sv_timedemo->value && svs.realtime < sv.time) {
+	if (!sv_timedemo->integer && svs.realtime < sv.time) {
 		/* never let the time get too far off */
 		if (sv.time - svs.realtime > 100) {
-			if (sv_showclamp->value)
+			if (sv_showclamp->integer)
 				Com_Printf("sv lowclamp\n");
 			svs.realtime = sv.time - 100;
 		}
@@ -1068,10 +1068,10 @@ void Master_Heartbeat (void)
 {
 	char *string;
 
-	if (!dedicated || !dedicated->value)
+	if (!dedicated || !dedicated->integer)
 		return;		/* only dedicated servers send heartbeats */
 
-	if (!public_server || !public_server->value)
+	if (!public_server || !public_server->integer)
 		return;		/* a private dedicated game */
 
 	/* check for time wraparound */
@@ -1099,11 +1099,11 @@ void Master_Heartbeat (void)
 void Master_Shutdown (void)
 {
 	/* pgm post3.19 change, cvar pointer not validated before dereferencing */
-	if (!dedicated || !dedicated->value)
+	if (!dedicated || !dedicated->integer)
 		return;					/* only dedicated servers send heartbeats */
 
 	/* pgm post3.19 change, cvar pointer not validated before dereferencing */
-	if (!public_server || !public_server->value)
+	if (!public_server || !public_server->integer)
 		return;					/* a private dedicated game */
 
 	/* send to master */
@@ -1158,6 +1158,7 @@ extern void SV_Init (void)
 	Cvar_Get("protocol", va("%i", PROTOCOL_VERSION), CVAR_SERVERINFO | CVAR_NOSET, NULL);
 	masterserver_ip = Cvar_Get("masterserver_ip", "195.136.48.62", CVAR_ARCHIVE, "IP address of UFO:AI masterserver (Sponsored by NineX)");
 	masterserver_port = Cvar_Get("masterserver_port", "27900", CVAR_ARCHIVE, "Port of UFO:AI masterserver");
+	/* this cvar will become a latched cvar when you start the server */
 	sv_maxclients = Cvar_Get("maxclients", "1", CVAR_SERVERINFO, "Max. connected clients");
 	hostname = Cvar_Get("hostname", _("noname"), CVAR_SERVERINFO | CVAR_ARCHIVE, "The name of the server that is displayed in the serverlist");
 	timeout = Cvar_Get("timeout", "125", 0, "Timeout in seconds");

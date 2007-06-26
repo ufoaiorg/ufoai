@@ -179,7 +179,7 @@ void R_DrawAliasMD3Model (entity_t *e)
 		R_DrawShadowVolume(e);
 	}
 
-	if (gl_fog->value && r_newrefdef.fog)
+	if (gl_fog->integer && r_newrefdef.fog)
 		qglDisable(GL_FOG);
 
 	for (i = 0; i < paliashdr->num_meshes; i++) {
@@ -199,7 +199,7 @@ void R_DrawAliasMD3Model (entity_t *e)
 
 	qglPopMatrix();
 
-	if (gl_fog->value && r_newrefdef.fog)
+	if (gl_fog->integer && r_newrefdef.fog)
 		qglEnable(GL_FOG);
 
 	qglColor4f(1,1,1,1);

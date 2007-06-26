@@ -1008,7 +1008,7 @@ extern void CL_ResetTeamInBase (void)
 	AIR_ResetAircraftTeam(B_GetAircraftFromBaseByIndex(baseCurrent,0));
 
 	E_ResetEmployees();
-	while (gd.numEmployees[EMPL_SOLDIER] < cl_numnames->value) {
+	while (gd.numEmployees[EMPL_SOLDIER] < cl_numnames->integer) {
 		employee = E_CreateEmployee(EMPL_SOLDIER);
 		employee->hired = qtrue;
 		employee->baseIDHired = baseCurrent->idx;

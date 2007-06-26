@@ -149,19 +149,19 @@ void Com_Printf (const char *fmt, ...)
 	Sys_ConsoleOutput(msg);
 
 	/* logfile */
-	if (logfile_active && logfile_active->value) {
+	if (logfile_active && logfile_active->integer) {
 		char name[MAX_OSPATH];
 
 		if (!logfile) {
 			Com_sprintf(name, sizeof(name), "%s/ufoconsole.log", FS_Gamedir());
-			if (logfile_active->value > 2)
+			if (logfile_active->integer > 2)
 				logfile = fopen(name, "a");
 			else
 				logfile = fopen(name, "w");
 		}
 		if (logfile)
 			fprintf(logfile, "%s", msg);
-		if (logfile_active->value > 1)
+		if (logfile_active->integer > 1)
 			fflush(logfile);	/* force it to save every time */
 	}
 }
@@ -178,7 +178,7 @@ void Com_DPrintf (const char *fmt, ...)
 	char msg[MAXPRINTMSG];
 
 	/* don't confuse non-developers with techie stuff... */
-	if (!developer || !developer->value)
+	if (!developer || !developer->integer)
 		return;
 
 	va_start(argptr, fmt);
@@ -608,11 +608,11 @@ extern void Com_SetGameType (void)
 	for (i = 0; i < numGTs; i++) {
 		gt = &gts[i];
 		if (!Q_strncmp(gt->id, gametype->string, MAX_VAR)) {
-			if (dedicated->value)
+			if (dedicated->integer)
 				Com_Printf("set gametype to: %s\n", gt->id);
 			for (j = 0, list = gt->cvars; j < gt->num_cvars; j++, list++) {
 				Cvar_Set(list->name, list->value);
-				if (dedicated->value)
+				if (dedicated->integer)
 					Com_Printf("  %s = %s\n", list->name, list->value);
 			}
 			/*Com_Printf("Make sure to restart the map if you switched during a game\n");*/
@@ -800,7 +800,7 @@ extern void Qcommon_Init (int argc, char **argv)
 	Cvar_Get("version", s, CVAR_NOSET, "Full version string");
 	Cvar_Get("ver", UFO_VERSION, CVAR_SERVERINFO | CVAR_NOSET, "Version number");
 
-	if (dedicated->value)
+	if (dedicated->integer)
 		Cmd_AddCommand("quit", Com_Quit, NULL);
 
 	Mem_Init();
@@ -839,7 +839,7 @@ extern void Qcommon_Init (int argc, char **argv)
 
 	Com_ParseScripts();
 
-	if (!dedicated->value)
+	if (!dedicated->integer)
 		Cbuf_AddText("init\n");
 	else
 		Cbuf_AddText("dedicated_start\n");
@@ -904,7 +904,7 @@ float Qcommon_Frame (int msec)
 	else if (timescale->value < 0.2)
 		Cvar_SetValue("timescale", 0.2);
 
-	if (dedicated->value) {
+	if (dedicated->integer) {
 		cl_timer = 0;
 		wait = -sv_timer;
 	} else if (!sv.active) {
@@ -914,7 +914,7 @@ float Qcommon_Frame (int msec)
 		wait = -max(cl_timer, sv_timer);
 	wait = min(wait, 100);
 
-	if (wait >= 1 && s_sleep->value) {
+	if (wait >= 1 && s_sleep->integer) {
 		if (COM_CheckParm("-paranoid"))
 			Com_DPrintf("Sys_Sleep for %i ms\n", wait);
 		Sys_Sleep(wait);
@@ -928,7 +928,7 @@ float Qcommon_Frame (int msec)
 
 	if (log_stats->modified) {
 		log_stats->modified = qfalse;
-		if (log_stats->value) {
+		if (log_stats->integer) {
 			if (log_stats_file) {
 				fclose(log_stats_file);
 				log_stats_file = NULL;
@@ -944,7 +944,7 @@ float Qcommon_Frame (int msec)
 		}
 	}
 
-	if (showtrace->value) {
+	if (showtrace->integer) {
 		extern int c_traces, c_brush_traces;
 		extern int c_pointcontents;
 
@@ -962,7 +962,7 @@ float Qcommon_Frame (int msec)
 			Cbuf_AddText(va("%s\n", s));
 	} while (s);
 
-	if (host_speeds->value)
+	if (host_speeds->integer)
 		time_before = Sys_Milliseconds();
 
 	/* run a server frame every 100ms (10fps) */
@@ -977,14 +977,14 @@ float Qcommon_Frame (int msec)
 #ifndef DEDICATED_ONLY
 	if (dedicated->modified) {
 		dedicated->modified = qfalse;
-		if (dedicated->value) {
+		if (dedicated->integer) {
 			CL_Shutdown();
 		}
 	}
 #endif
 #endif
 
-	if (host_speeds->value)
+	if (host_speeds->integer)
 		time_between = Sys_Milliseconds();
 
 	/* run client frames according to cl_maxfps */
@@ -998,7 +998,7 @@ float Qcommon_Frame (int msec)
 		CL_Frame(frametime);
 	}
 
-	if (host_speeds->value) {
+	if (host_speeds->integer) {
 		int all, sv, gm, cl, rf;
 
 		time_after = Sys_Milliseconds();

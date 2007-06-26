@@ -471,7 +471,7 @@ void VID_CheckChanges (void)
 	char name[MAX_VAR];
 
 	if (win_noalttab->modified) {
-		if (win_noalttab->value)
+		if (win_noalttab->integer)
 			WIN_DisableAltTab();
 		else
 			WIN_EnableAltTab();

@@ -311,7 +311,7 @@ static int SDLateKey (SDL_keysym *keysym, int *key)
 		if (buf == '~')
 			*key = '~'; /* console HACK */
 	}
-	if (sdl_debug->value)
+	if (sdl_debug->integer)
 		Com_Printf("unicode: %hx keycode: %i key: %hx\n", keysym->unicode, *key, *key);
 
 	return buf;
@@ -740,7 +740,7 @@ void KBD_Update (void)
 		if (vid_grabmouse->modified) {
 			vid_grabmouse->modified = qfalse;
 
-			if (!vid_grabmouse->value) {
+			if (!vid_grabmouse->integer) {
 				/* ungrab the pointer */
 				SDL_WM_GrabInput(SDL_GRAB_OFF);
 			} else {

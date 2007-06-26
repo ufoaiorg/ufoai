@@ -66,7 +66,7 @@ static qboolean G_CheckFlood (player_t *player)
 {
 	int		i;
 
-	if (flood_msgs->value) {
+	if (flood_msgs->integer) {
 		if (level.time < player->pers.flood_locktill) {
 			gi.cprintf(player, PRINT_HIGH, "You can't talk for %d more seconds\n",
 					   (int)(player->pers.flood_locktill - level.time));
@@ -128,7 +128,7 @@ static void Cmd_Say_f (player_t *player, qboolean arg0, qboolean team)
 	if (G_CheckFlood(player))
 		return;
 
-	if (dedicated->value)
+	if (dedicated->integer)
 		gi.cprintf(NULL, PRINT_CHAT, "%s", text);
 
 	for (j = 0; j < game.maxplayers; j++) {

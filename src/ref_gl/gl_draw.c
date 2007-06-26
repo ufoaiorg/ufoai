@@ -623,7 +623,7 @@ void Draw_DayAndNight (int x, int y, int w, int h, float p, float q, float cx, f
 	GL_SelectTexture(gl_texture0);
 
 	GLSTATE_DISABLE_BLEND
-	if (gl_drawclouds->value)
+	if (gl_drawclouds->integer)
 		Draw_Clouds(x, y, w, h, p, q, cx, cy, iz, map);
 }
 
@@ -907,7 +907,7 @@ void Draw_3DGlobe (int x, int y, int w, int h, float p, vec3_t rotate, float zoo
 	/* turn on fogging. fog looks good on the skies - it gives them a more */
 	/* "airy" far-away look, and has the knock-on effect of preventing the */
 	/* old "texture distortion at the poles" problem. */
-	if (gl_fog->value) {
+	if (gl_fog->integer) {
 		qglFogi(GL_FOG_MODE, GL_LINEAR);
 		qglFogfv(GL_FOG_COLOR, globe_fog);
 		qglFogf(GL_FOG_START, 5.0);
@@ -976,7 +976,7 @@ void Draw_3DGlobe (int x, int y, int w, int h, float p, vec3_t rotate, float zoo
 	/* revert the cullface mode */
 	qglCullFace(GL_FRONT);
 
-	if (gl_fog->value) {
+	if (gl_fog->integer) {
 		/* turn off fog */
 		qglDisable(GL_FOG);
 	}

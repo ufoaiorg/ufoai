@@ -151,9 +151,9 @@ static qboolean DS_CreateBuffers (void)
 	} else
 		si->Com_DPrintf("failed\n");
 
-	if ( !primary_format_set || !s_primary->value) {
+	if (!primary_format_set || !s_primary->integer) {
 		/* create the secondary buffer we'll actually work with */
-		memset (&dsbuf, 0, sizeof(dsbuf));
+		memset(&dsbuf, 0, sizeof(dsbuf));
 		dsbuf.dwSize = sizeof(DSBUFFERDESC);
 		dsbuf.dwFlags = DSBCAPS_CTRLFREQUENCY | DSBCAPS_LOCSOFTWARE;
 		dsbuf.dwBufferBytes = SECONDARY_BUFFER_SIZE;
@@ -314,11 +314,11 @@ static sndinitstat SND_InitDirect (void)
 	si->dma->channels = 2;
 	si->dma->samplebits = 16;
 
-	if (si->khz->value == 48)
+	if (si->khz->integer == 48)
 		si->dma->speed = 48000;
-	else if (si->khz->value == 44)
+	else if (si->khz->integer == 44)
 		si->dma->speed = 44100;
-	else if (si->khz->value == 22)
+	else if (si->khz->integer == 22)
 		si->dma->speed = 22050;
 	else
 		si->dma->speed = 11025;

@@ -340,7 +340,7 @@ void Com_DPrintf (const char *msg, ...)
 	va_list argptr;
 	char text[1024];
 
-	if (!developer->value)
+	if (!developer->integer)
 		return;
 	va_start(argptr, msg);
 	Q_vsnprintf(text, sizeof(text), msg, argptr);

@@ -983,14 +983,14 @@ static void CL_CameraMoveRemote (void)
 	/* calc new camera reference and new camera real origin */
 	VectorMA(cl.cam.reforg, cls.frametime, cl.cam.speed, cl.cam.reforg);
 	cl.cam.reforg[2] = 0.;
-	if (cl_isometric->value) {
+	if (cl_isometric->integer) {
 		CL_ClampCamToMap(72.);
 		VectorMA(cl.cam.reforg, -CAMERA_START_DIST + cl.cam.lerplevel * CAMERA_LEVEL_HEIGHT, cl.cam.axis[0], cl.cam.camorg);
 		cl.cam.camorg[2] += CAMERA_START_HEIGHT + cl.cam.lerplevel * CAMERA_LEVEL_HEIGHT;
 	} else {
-		CL_ClampCamToMap(min(144.*(cl.cam.zoom - cl_camzoommin->value - 0.4)/cl_camzoommax->value, 86));
-		VectorMA(cl.cam.reforg, -CAMERA_START_DIST/cl.cam.zoom , cl.cam.axis[0], cl.cam.camorg);
-		cl.cam.camorg[2] += CAMERA_START_HEIGHT/cl.cam.zoom + cl.cam.lerplevel * CAMERA_LEVEL_HEIGHT;
+		CL_ClampCamToMap(min(144.*(cl.cam.zoom - cl_camzoommin->value - 0.4) / cl_camzoommax->value, 86));
+		VectorMA(cl.cam.reforg, -CAMERA_START_DIST / cl.cam.zoom , cl.cam.axis[0], cl.cam.camorg);
+		cl.cam.camorg[2] += CAMERA_START_HEIGHT / cl.cam.zoom + cl.cam.lerplevel * CAMERA_LEVEL_HEIGHT;
 	}
 
 }

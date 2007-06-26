@@ -513,7 +513,7 @@ void Sys_Init (void)
 
 	Cvar_Get("sys_os", "win", CVAR_SERVERINFO, NULL);
 
-	if (dedicated->value) {
+	if (dedicated->integer) {
 		oldconsole = Cvar_VariableInteger("oldconsole");
 		if (oldconsole) {
 			if (!AllocConsole()) {
@@ -569,7 +569,7 @@ char *Sys_ConsoleInput (void)
 	int		ch;
     DWORD	numread, numevents, dummy;
 
-	if (!dedicated || !dedicated->value || !oldconsole)
+	if (!dedicated || !dedicated->integer || !oldconsole)
 		return NULL;
 
 	for (;;) {
@@ -672,7 +672,7 @@ void Sys_ConsoleOutput (const char *string)
 	const char *p;
 	char *s;
 
-	if (!dedicated || !dedicated->value)
+	if (!dedicated || !dedicated->integer)
 		return;
 
 	if (oldconsole) {
