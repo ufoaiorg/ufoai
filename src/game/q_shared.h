@@ -241,7 +241,7 @@ typedef uint8_t byte;
 #define GROUND_DELTA        28
 /* player height - 12 to be able to walk trough doors
  * UNIT_HEIGHT is the height of one level */
-#define PH		(UNIT_HEIGHT-12)
+#define PLAYER_HEIGHT		(UNIT_HEIGHT-12)
 
 /* earth map data */
 /* values of sinus and cosinus of earth inclinaison (23,5 degrees) for faster day and night calculations */

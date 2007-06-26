@@ -37,8 +37,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #define UNIT_SIZE			32
 #define UNIT_HEIGHT			64
-#define US					UNIT_SIZE
-#define UH					UNIT_HEIGHT
 
 typedef byte pos_t;
 typedef pos_t pos3_t[3];
@@ -46,8 +44,8 @@ typedef pos_t pos3_t[3];
 typedef int ipos_t;
 typedef ipos_t ipos3_t[3];
 
-#define VecToPos(v,p)		(p[0]=(((int)v[0]+4096)/US), p[1]=(((int)v[1]+4096)/US), p[2]=((int)v[2]/UH))
-#define PosToVec(p,v)		(v[0]=((int)p[0]-128)*US+US/2, v[1]=((int)p[1]-128)*US+US/2, v[2]=(int)p[2]*UH+UH/2)
+#define VecToPos(v,p)		(p[0]=(((int)v[0]+4096)/UNIT_SIZE), p[1]=(((int)v[1]+4096)/UNIT_SIZE), p[2]=((int)v[2]/UNIT_HEIGHT))
+#define PosToVec(p,v)		(v[0]=((int)p[0]-128)*UNIT_SIZE+UNIT_SIZE/2, v[1]=((int)p[1]-128)*UNIT_SIZE+UNIT_SIZE/2, v[2]=(int)p[2]*UNIT_HEIGHT+UNIT_HEIGHT/2)
 
 
 typedef struct plane_s {

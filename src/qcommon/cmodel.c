@@ -155,7 +155,7 @@ static byte *cmod_base;
 static vec3_t shift; /**< use for random map assembly for shifting origins and so on */
 static byte filled[256][256];
 
-static const vec3_t v_dup = { 0, 0, PH - UNIT_HEIGHT / 2 };
+static const vec3_t v_dup = { 0, 0, PLAYER_HEIGHT - UNIT_HEIGHT / 2 };
 static const vec3_t v_dwn = { 0, 0, -UNIT_HEIGHT / 2 };
 static const vec3_t testvec[5] = { {-UNIT_SIZE / 2 + 5, -UNIT_SIZE / 2 + 5, 0}, {UNIT_SIZE / 2 - 5, UNIT_SIZE / 2 - 5, 0}, {-UNIT_SIZE / 2 + 5, UNIT_SIZE / 2 - 5, 0}, {UNIT_SIZE / 2 - 5, -UNIT_SIZE / 2 + 5, 0}, {0, 0, 0} };
 
@@ -830,7 +830,7 @@ static void CM_CheckUnit (routing_t * map, int x, int y, int z)
 
 		if (i == 5 && !VectorCompare(start, tend)) {
 			/* found a possibly valid ground */
-			height = PH - (start[2] - tend[2]);
+			height = PLAYER_HEIGHT - (start[2] - tend[2]);
 			end[2] = start[2] + height;
 
 			if (!CM_EntTestLineDM(start, end, tend))
@@ -840,7 +840,7 @@ static void CM_CheckUnit (routing_t * map, int x, int y, int z)
 		} else {
 			/* elevated a lot */
 			end[2] = start[2];
-			start[2] += UNIT_HEIGHT - PH;
+			start[2] += UNIT_HEIGHT - PLAYER_HEIGHT;
 			height = 0;
 
 			/* test for ground with a "middled" height */
@@ -858,7 +858,7 @@ static void CM_CheckUnit (routing_t * map, int x, int y, int z)
 				filled[y][x] |= 1 << z;	/* don't enter */
 			} else {
 				/* found a possibly valid elevated ground */
-				end[2] = start[2] + PH - (start[2] - tend[2]);
+				end[2] = start[2] + PLAYER_HEIGHT - (start[2] - tend[2]);
 				height = UNIT_HEIGHT - (start[2] - tend[2]);
 
 /*				printf("%i %i\n", (int)height, (int)(start[2]-tend[2])); */

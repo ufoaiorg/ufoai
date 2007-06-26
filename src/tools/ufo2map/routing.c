@@ -31,15 +31,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define HEIGHT	8
 
 #define QUANT	4
-#define PH		(UH-16)
+#define PLAYER_HEIGHT		(UNIT_HEIGHT - 16)
 #define SH_BIG	9
 #define SH_LOW	2
 
-static const vec3_t dup_vec = {0, 0, PH-UH/2};
-static const vec3_t dwn_vec = {0, 0, -UH/2};
+static const vec3_t dup_vec = {0, 0, PLAYER_HEIGHT-UNIT_HEIGHT/2};
+static const vec3_t dwn_vec = {0, 0, -UNIT_HEIGHT/2};
 
-static const vec3_t move_vec[4] = { {US, 0, 0}, {-US, 0, 0}, {0, US, 0}, {0, -US, 0} };
-static const vec3_t testvec[5] = { {-US/2+5,-US/2+5,0}, {US/2-5,US/2-5,0}, {-US/2+5,US/2-5,0}, {US/2-5,-US/2+5,0}, {0,0,0} };
+static const vec3_t move_vec[4] = { {UNIT_SIZE, 0, 0}, {-UNIT_SIZE, 0, 0}, {0, UNIT_SIZE, 0}, {0, -UNIT_SIZE, 0} };
+static const vec3_t testvec[5] = { {-UNIT_SIZE/2+5,-UNIT_SIZE/2+5,0}, {UNIT_SIZE/2-5,UNIT_SIZE/2-5,0}, {-UNIT_SIZE/2+5,UNIT_SIZE/2-5,0}, {UNIT_SIZE/2-5,-UNIT_SIZE/2+5,0}, {0,0,0} };
 
 /** routing data structures */
 byte	route[HEIGHT][WIDTH][WIDTH];
@@ -87,8 +87,8 @@ static void CheckUnit (unsigned int unitnum)
 
 	/* prepare fall down check */
 	VectorCopy(end, start);
-	start[2] -= UH / 2 - 4;
-	end[2]   -= UH / 2 + 4;
+	start[2] -= UNIT_HEIGHT / 2 - 4;
+	end[2]   -= UNIT_HEIGHT / 2 + 4;
 
 	/* FIXME: Don't allow falling over more than 1 level (z-direction) */
 	/* test for fall down */
@@ -117,7 +117,7 @@ static void CheckUnit (unsigned int unitnum)
 
 		if (i == 5 && !VectorCompare(start, tr_end)) {
 			/* found a possibly valid ground */
-			height = PH - (start[2]-tr_end[2]);
+			height = PLAYER_HEIGHT - (start[2]-tr_end[2]);
 			end[2] = start[2] + height;
 
 			if (!TestLineDM(start, end, tr_end, 2))
@@ -128,7 +128,7 @@ static void CheckUnit (unsigned int unitnum)
 /*			Sys_Printf( "." ); */
 			/* elevated a lot */
 			end[2] = start[2];
-			start[2] += UH-PH;
+			start[2] += UNIT_HEIGHT - PLAYER_HEIGHT;
 			height = 0;
 
 			/* test for ground with a "middled" height */
@@ -146,8 +146,8 @@ static void CheckUnit (unsigned int unitnum)
 				filled[y][x] |= 1 << z; /* don't enter */
 			} else {
 				/* found a possibly valid elevated ground */
-				end[2] = start[2] + PH - (start[2]-tr_end[2]);
-				height = UH - (start[2]-tr_end[2]);
+				end[2] = start[2] + PLAYER_HEIGHT - (start[2]-tr_end[2]);
+				height = UNIT_HEIGHT - (start[2]-tr_end[2]);
 
 /*				Sys_Printf( "%i %i\n", (int)height, (int)(start[2]-tr_end[2]) ); */
 
@@ -227,7 +227,7 @@ static void CheckConnections (unsigned int unitnum)
 			continue;
 
 		/* lower check */
-		ts[2] = te[2] -= UH / 2 - sh * QUANT - 2;
+		ts[2] = te[2] -= UNIT_HEIGHT / 2 - sh * QUANT - 2;
 		if (TestLineMask(ts, te, 2))
 			continue;
 
