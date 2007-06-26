@@ -168,7 +168,7 @@ menu_model drop_firebird
 // ============== Stingray Interceptor ======================
 menu_model inter_stingray
 {
-	model	"models/aircraft/inter_stingray/stingray_landed.md2"
+	model	"models/aircraft/inter_stingray/stingray_landed.md3"
 }
 
 // ============== UFO Carrier ======================
