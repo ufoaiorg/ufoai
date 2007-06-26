@@ -366,6 +366,30 @@ static void S_MusicList_f (void)
 	}
 }
 
+/**
+ * @brief Make sure that all pointers are set to null
+ * @note Call this in case of failed initialization - otherwise S_Activate
+ * might produce a segfault
+ */
+static void S_FreeLibs (void)
+{
+	SND_Init = NULL;
+	SND_Shutdown = NULL;
+	SND_Submit = NULL;
+	SND_GetDMAPos = NULL;
+	SND_BeginPainting = NULL;
+	SND_Activate = NULL;
+#ifdef _WIN32
+	FreeLibrary(snd_ref_lib);
+#else
+	dlclose(snd_ref_lib);
+#endif
+	memset(&si, 0, sizeof(struct sndinfo));
+	snd_ref_lib = NULL;
+	snd_ref_active = qfalse;
+	memset(&dma, 0, sizeof(dma_t));
+}
+
 /** @brief sound renderer commands */
 static const cmdList_t r_commands[] = {
 	{"musiclist", S_MusicList_f, "List all available music files"},
@@ -489,12 +513,7 @@ void S_Init (void)
 
 	if (!SND_Init(&si)) {
 		Com_Printf("SND_Init failed\n");
-#ifdef _WIN32
-		FreeLibrary(snd_ref_lib);
-#else
-		dlclose(snd_ref_lib);
-#endif
-		snd_ref_lib = NULL;
+		S_FreeLibs();
 		sound_started = 0;
 		return;
 	}
@@ -583,23 +602,8 @@ void S_Shutdown (void)
 	Com_Printf("...releasing %u bytes\n", size);
 	Mem_FreePool(cl_soundSysPool);
 
-	if (snd_ref_lib) {
-		SND_Init = NULL;
-		SND_Shutdown = NULL;
-		SND_Submit = NULL;
-		SND_GetDMAPos = NULL;
-		SND_BeginPainting = NULL;
-		SND_Activate = NULL;
-#ifdef _WIN32
-		FreeLibrary(snd_ref_lib);
-#else
-		dlclose(snd_ref_lib);
-#endif
-		memset(&si, 0, sizeof(struct sndinfo));
-		snd_ref_lib = NULL;
-		snd_ref_active = qfalse;
-		memset(&dma, 0, sizeof(dma_t));
-	}
+	if (snd_ref_lib)
+		S_FreeLibs();
 
 	num_sfx = 0;
 }
@@ -671,7 +675,7 @@ static sfx_t *S_FindName (const char *name, qboolean create)
 /**
  * @brief
  */
-void S_BeginRegistration(void)
+void S_BeginRegistration (void)
 {
 	s_registration_sequence++;
 	s_registering = qtrue;
@@ -1040,7 +1044,7 @@ extern void S_ClearBuffer (void)
 /**
  * @brief
  */
-void S_StopAllSounds(void)
+void S_StopAllSounds (void)
 {
 	int i;
 
