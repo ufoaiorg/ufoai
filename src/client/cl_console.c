@@ -66,13 +66,10 @@ static void Key_ClearTyping (void)
  */
 void Con_ToggleConsole_f (void)
 {
-	int maxclients;
-
 	if (cl.attractloop) {
 		Cbuf_AddText("killserver\n");
 		return;
 	}
-	maxclients = Cvar_VariableInteger("maxclients");
 
 	Key_ClearTyping();
 	Con_ClearNotify();
