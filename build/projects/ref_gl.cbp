@@ -35,6 +35,39 @@
 					<Add library="png" />
 				</Linker>
 			</Target>
+			<Target title="windows_debug">
+				<Option platforms="Windows;" />
+				<Option output="..\..\ref_gl.dll" prefix_auto="1" extension_auto="1" />
+				<Option object_output=".objs\ref_gl" />
+				<Option type="3" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+				<Option createStaticLib="1" />
+				<Compiler>
+					<Add option="-pg" />
+					<Add option="-g" />
+					<Add option="-D__GNUWIN32__" />
+					<Add option="-D_M_IX86=500" />
+					<Add option="-DDEVCPP" />
+					<Add option="-DC_ONLY" />
+					<Add option="-DHAVE_SHADERS" />
+					<Add option="-DDONT_TYPEDEF_INT32" />
+					<Add option="-DDEBUG" />
+				</Compiler>
+				<Linker>
+					<Add option="-pg -lgmon" />
+					<Add option="../../src/ports/win32/intl.lib" />
+					<Add option="-def ../../src/ref_gl/ref_gl.def" />
+					<Add library="kernel32" />
+					<Add library="user32" />
+					<Add library="gdi32" />
+					<Add library="winmm" />
+					<Add library="libjpeg" />
+					<Add library="SDL_ttf" />
+					<Add library="SDL" />
+					<Add library="png" />
+				</Linker>
+			</Target>
 			<Target title="linux">
 				<Option platforms="Unix;" />
 				<Option output="ref_gl.dll" prefix_auto="1" extension_auto="1" />
@@ -101,20 +134,25 @@
 		<Unit filename="..\..\src\ports\win32\glw_imp.c">
 			<Option compilerVar="CC" />
 			<Option target="windows" />
+			<Option target="windows_debug" />
 		</Unit>
 		<Unit filename="..\..\src\ports\win32\glw_win.h">
 			<Option target="windows" />
+			<Option target="windows_debug" />
 		</Unit>
 		<Unit filename="..\..\src\ports\win32\q_shwin.c">
 			<Option compilerVar="CC" />
 			<Option target="windows" />
+			<Option target="windows_debug" />
 		</Unit>
 		<Unit filename="..\..\src\ports\win32\qgl_win.c">
 			<Option compilerVar="CC" />
 			<Option target="windows" />
+			<Option target="windows_debug" />
 		</Unit>
 		<Unit filename="..\..\src\ports\win32\winquake.h">
 			<Option target="windows" />
+			<Option target="windows_debug" />
 		</Unit>
 		<Unit filename="..\..\src\qcommon\qcommon.h" />
 		<Unit filename="..\..\src\qcommon\qfiles.h" />
