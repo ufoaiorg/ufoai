@@ -815,6 +815,7 @@ static void CL_ParseStatusMessage (void)
  */
 static void CL_WaitInit_f (void)
 {
+	static qboolean reconnect = qfalse;
 	netadr_t adr;
 	char buf[32];
 
@@ -835,9 +836,15 @@ static void CL_WaitInit_f (void)
 	Com_sprintf(buf, sizeof(buf), "%s/%s", cl.configstrings[CS_PLAYERCOUNT], cl.configstrings[CS_MAXTEAMS]);
 	Cvar_Set("mp_wait_init_players", buf);
 	if (!*cl.configstrings[CS_NAME]) {
-		Cbuf_ExecuteText(EXEC_NOW, "disconnect\nmn_pop\n");
-		MN_Popup(_("Error"), _("Server needs restarting - something went wrong"));
-	}
+		if (!reconnect) {
+			reconnect = qtrue;
+			Cbuf_ExecuteText(EXEC_NOW, "reconnect\nmn_pop\n");
+		} else {
+			Cbuf_ExecuteText(EXEC_NOW, "disconnect\nmn_pop\n");
+			MN_Popup(_("Error"), _("Server needs restarting - something went wrong"));
+		}
+	} else
+		reconnect = qfalse;
 }
 
 /**
