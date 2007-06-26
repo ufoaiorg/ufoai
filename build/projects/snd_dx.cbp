@@ -9,8 +9,8 @@
 		<Build>
 			<Target title="windows">
 				<Option platforms="Windows;" />
-				<Option output="..\..\snd_dx.dll" prefix_auto="1" extension_auto="1" />
-				<Option object_output=".objs\snd_dx" />
+				<Option output="../../snd_dx.dylib" prefix_auto="1" extension_auto="1" />
+				<Option object_output=".objs/snd_dx" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option createDefFile="1" />
@@ -18,8 +18,8 @@
 			</Target>
 			<Target title="windows_debug">
 				<Option platforms="Windows;" />
-				<Option output="..\..\snd_dx.dll" prefix_auto="1" extension_auto="1" />
-				<Option object_output=".objs\snd_dx" />
+				<Option output="../../snd_dx.dylib" prefix_auto="1" extension_auto="1" />
+				<Option object_output=".objs/snd_dx" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option createDefFile="1" />
@@ -35,22 +35,23 @@
 			</Target>
 		</Build>
 		<Compiler>
-			<Add directory='&quot;C:\Program Files (x86)\Microsoft DirectX SDK (February 2006)\Include&quot;' />
-			<Add directory='&quot;C:\Programme\Microsoft DirectX SDK (June 2006)\Include&quot;' />
+			<Add directory='&quot;C:/Program Files (x86)/Microsoft DirectX SDK (February 2006)/Include&quot;' />
+			<Add directory='&quot;C:/Programme/Microsoft DirectX SDK (June 2006)/Include&quot;' />
 		</Compiler>
 		<Linker>
 			<Add option="--export-all-symbols" />
 			<Add library="kernel32" />
 			<Add library="user32" />
 			<Add library="winmm" />
-			<Add directory='&quot;C:\Program Files (x86)\Microsoft DirectX SDK (February 2006)\Lib\x86&quot;' />
-			<Add directory='&quot;C:\Programme\Microsoft DirectX SDK (June 2006)\Lib\x86&quot;' />
+			<Add directory='&quot;C:/Program Files (x86)/Microsoft DirectX SDK (February 2006)/Lib/x86&quot;' />
+			<Add directory='&quot;C:/Programme/Microsoft DirectX SDK (June 2006)/Lib/x86&quot;' />
 		</Linker>
-		<Unit filename="..\..\src\ports\win32\snd_dx.c">
+		<Unit filename="../../src/ports/win32/snd_dx.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Extensions>
 			<code_completion />
+			<envvars />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

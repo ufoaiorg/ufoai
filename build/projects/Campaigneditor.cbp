@@ -7,8 +7,8 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="default">
-				<Option output="..\..\campaigneditor.exe" prefix_auto="1" extension_auto="1" />
-				<Option object_output=".objs\campaigneditor" />
+				<Option output="../../campaigneditor" prefix_auto="1" extension_auto="1" />
+				<Option object_output=".objs/campaigneditor" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 			</Target>
@@ -16,12 +16,12 @@
 		<Compiler>
 			<Add option='-DPACKAGE_DATA_DIR=&quot;.&quot;' />
 			<Add option='-DPACKAGE=&quot;campaign_editor&quot;' />
-			<Add directory="C:\Dev-Cpp\include\gtk-2.0" />
-			<Add directory="C:\Dev-Cpp\include\glib-2.0" />
-			<Add directory="C:\Dev-Cpp\lib\glib-2.0\include" />
-			<Add directory="C:\Dev-Cpp\lib\gtk-2.0\include" />
-			<Add directory="C:\Dev-Cpp\include\pango-1.0" />
-			<Add directory="C:\Dev-Cpp\include\atk-1.0" />
+			<Add directory="C:/Dev-Cpp/include/gtk-2.0" />
+			<Add directory="C:/Dev-Cpp/include/glib-2.0" />
+			<Add directory="C:/Dev-Cpp/lib/glib-2.0/include" />
+			<Add directory="C:/Dev-Cpp/lib/gtk-2.0/include" />
+			<Add directory="C:/Dev-Cpp/include/pango-1.0" />
+			<Add directory="C:/Dev-Cpp/include/atk-1.0" />
 		</Compiler>
 		<Linker>
 			<Add library="atk-1.0" />
@@ -33,50 +33,51 @@
 			<Add library="glib-2.0" />
 			<Add library="gdk-win32-2.0" />
 			<Add library="gtk-win32-2.0" />
-			<Add directory="C:\Dev-Cpp\lib\glib-2.0" />
-			<Add directory="C:\Dev-Cpp\lib\gtk-2.0" />
+			<Add directory="C:/Dev-Cpp/lib/glib-2.0" />
+			<Add directory="C:/Dev-Cpp/lib/gtk-2.0" />
 		</Linker>
-		<Unit filename="..\..\src\tools\campaign_editor\src\callbacks.c">
+		<Unit filename="../../src/tools/campaign_editor/src/callbacks.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\campaign_editor\src\callbacks.h">
+		<Unit filename="../../src/tools/campaign_editor/src/callbacks.h">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\campaign_editor\src\campaign.c">
+		<Unit filename="../../src/tools/campaign_editor/src/campaign.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\campaign_editor\src\campaign.h" />
-		<Unit filename="..\..\src\tools\campaign_editor\src\interface.c">
+		<Unit filename="../../src/tools/campaign_editor/src/campaign.h" />
+		<Unit filename="../../src/tools/campaign_editor/src/interface.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\campaign_editor\src\interface.h">
+		<Unit filename="../../src/tools/campaign_editor/src/interface.h">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\campaign_editor\src\main.c">
+		<Unit filename="../../src/tools/campaign_editor/src/main.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\campaign_editor\src\particle.c">
+		<Unit filename="../../src/tools/campaign_editor/src/particle.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\campaign_editor\src\particle.h" />
-		<Unit filename="..\..\src\tools\campaign_editor\src\scripts.c">
+		<Unit filename="../../src/tools/campaign_editor/src/particle.h" />
+		<Unit filename="../../src/tools/campaign_editor/src/scripts.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\campaign_editor\src\scripts.h">
+		<Unit filename="../../src/tools/campaign_editor/src/scripts.h">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\campaign_editor\src\support.c">
+		<Unit filename="../../src/tools/campaign_editor/src/support.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\campaign_editor\src\support.h">
+		<Unit filename="../../src/tools/campaign_editor/src/support.h">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\campaign_editor\src\weapon.c">
+		<Unit filename="../../src/tools/campaign_editor/src/weapon.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="..\..\src\tools\campaign_editor\src\weapon.h" />
+		<Unit filename="../../src/tools/campaign_editor/src/weapon.h" />
 		<Extensions>
 			<code_completion />
+			<envvars />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>
