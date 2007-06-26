@@ -134,7 +134,7 @@ extern qboolean Cvar_AssertValue (cvar_t * cvar, float minVal, float maxVal, qbo
 		Com_Printf("WARNING: cvar '%s' out of range (%f < %f)\n", cvar->name, cvar->value, minVal);
 		Cvar_Set(cvar->name, va("%f", minVal));
 		return qtrue;
-	} else if(cvar->value > maxVal) {
+	} else if (cvar->value > maxVal) {
 		Com_Printf("WARNING: cvar '%s' out of range (%f > %f)\n", cvar->name, cvar->value, maxVal);
 		Cvar_Set(cvar->name, va("%f", maxVal));
 		return qtrue;

@@ -161,7 +161,7 @@ static void install_grabs (void)
 
 	if (!in_dgamouse->integer && (!vid_grabmouse->integer || vid_fullscreen->integer)) {
 		XWarpPointer(dpy, None, win, 0, 0, 0, 0, vid.width / 2, vid.height / 2);
-		Cvar_Set("sensitivity", "1");
+		ri.Cvar_Set("sensitivity", "1");
 	} else if (in_dgamouse->integer) {
 #ifdef HAVE_XF86_DGA
 		int MajorVersion, MinorVersion;
