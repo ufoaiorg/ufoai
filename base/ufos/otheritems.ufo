@@ -67,9 +67,9 @@ item craft_ufo_carrier
 	weapon false
 }
 
-item craft_ufo_big
+item craft_ufo_supply
 {
 	buytype dummy
-	name	"_UFO - Big"
+	name	"_UFO - Supply"
 	weapon false
 }

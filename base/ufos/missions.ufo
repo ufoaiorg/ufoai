@@ -686,7 +686,7 @@ mission qatar
 }
 
 // Switzerland
-//FIXME: artifact: craft_ufo_big (name needed)
+//FIXME: artifact: craft_ufo_supply (name needed)
 mission terrain
 {
 	location	"_Altdorf"

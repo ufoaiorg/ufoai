@@ -293,7 +293,7 @@ aircraft craft_ufo_carrier
 }
 
 // FIXME
-aircraft craft_ufo_big
+aircraft craft_ufo_supply
 {
 	param {
 		speed		25
@@ -305,11 +305,11 @@ aircraft craft_ufo_big
 		accuracy	0
 		fuelsize	100000
 	}
-	name		"_UFO - Big"
-	shortname	"_Big U"
+	name		"_UFO - Supply"
+	shortname	"_Supply U"
 	type		ufo
 	ufotype		ufobig // FIXME
-	model		"ufo_big"
+	model		"ufo_supply"
 	size		4
 	weight		3
 	building	building_big_ufo_hangar
