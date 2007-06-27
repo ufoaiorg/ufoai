@@ -55,6 +55,8 @@ extern void Mod_LoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 	maliasmodel_t		*poutmodel;
 	char				name[MAX_QPATH];
 	float				lat, lng;
+	char path[MAX_QPATH];
+	char *slash, *end;
 
 	pinmodel = (dmd3_t *)buffer;
 	version = LittleLong(pinmodel->version);
@@ -169,7 +171,16 @@ extern void Mod_LoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 				name[0] = 'p';
 			/* FIXME: support the . feature for model textures like for md2 */
 			memcpy(poutskin->name, name, MD3_MAX_PATH);
-			mod->skins[i] = GL_FindImage(name, it_skin);
+			if (name[0] != '.')
+				mod->skins[i] = GL_FindImage(name, it_skin);
+			else {
+				Q_strncpyz(path, mod->name, sizeof(path));
+				end = path;
+				while ((slash = strchr(end, '/')) != 0)
+					end = slash + 1;
+				strcpy(end, name + 1);
+				mod->skins[i] = GL_FindImage(path, it_skin);
+			}
 		}
 
 		/* load the indexes */
