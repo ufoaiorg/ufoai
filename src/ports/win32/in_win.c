@@ -62,7 +62,7 @@ extern int IN_MapKey (int wParam, int lParam)
 		K_F6,		K_F7,		K_F8,		K_F9,		K_F10,		K_PAUSE,	0,			K_HOME,
 		K_UPARROW,	K_PGUP,		K_KP_MINUS,	K_LEFTARROW,K_KP_5,		K_RIGHTARROW,K_KP_PLUS,	K_END,	// 4
 		K_DOWNARROW,K_PGDN,		K_INS,		K_DEL,		0,			0,			0,			K_F11,
-		K_F12,		0,			0,			0,			0,			0,			0,			0,		// 5
+		K_F12,		0,			0,			0,			0,			K_APPS,		0,			0,		// 5
 		0,			0,			0,			0,			0,			0,			0,			0,
 		0,			0,			0,			0,			0,			0,			0,			0,		// 6
 		0,			0,			0,			0,			0,			0,			0,			0,
@@ -152,6 +152,10 @@ extern int IN_MapKey (int wParam, int lParam)
 	case VK_END:
 		return K_END;
 
+	case VK_RWIN:
+	case VK_LWIN:
+		return K_SUPER;
+
 	case VK_NUMPAD7:
 		return K_KP_HOME;
 	case VK_NUMPAD8:
@@ -230,12 +234,12 @@ extern int IN_MapKey (int wParam, int lParam)
 
 #ifdef NEWKBCODE
 	/* get the VK_ keyboard state */
-	if (!GetKeyboardState (kbState))
+	if (!GetKeyboardState(kbState))
 		return modified;
 
 	/* convert ascii */
 	scanCode = (lParam >> 16) & 255;
-	if (ToAsciiEx (wParam, scanCode, kbState, (uint16_t *)result, 0, kbLayout) < 1)
+	if (ToAsciiEx(wParam, scanCode, kbState, (uint16_t *)result, 0, kbLayout) < 1)
 		return modified;
 
 	return result[0];

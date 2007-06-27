@@ -77,6 +77,8 @@ typedef enum {
 	K_F14,
 	K_F15,
 
+	K_APPS,
+
 	K_KP_HOME,
 	K_KP_UPARROW,
 	K_KP_PGUP,

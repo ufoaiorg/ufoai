@@ -132,6 +132,8 @@ static const keyname_t keynames[] = {
 	{"AUX31", K_AUX31},
 	{"AUX32", K_AUX32},
 
+	{"APPS", K_APPS},
+
 	{"KP_HOME", K_KP_HOME},
 	{"KP_UPARROW", K_KP_UPARROW},
 	{"KP_PGUP", K_KP_PGUP},
@@ -543,6 +545,15 @@ static void Key_Message (int key)
 	}
 
 	if (key == K_ESCAPE) {
+		if (cls.state != ca_active){
+			/* If connecting or loading a level, disconnect */
+			if (cls.state != ca_disconnected)
+				Com_Error(ERR_DROP, "Disconnected from server");
+		}
+
+		/* If playing a cinematic, stop it */
+		CIN_StopCinematic();
+
 		Key_SetDest(key_game);
 		msg_bufferlen = 0;
 		msg_buffer[0] = 0;
