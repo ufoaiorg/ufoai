@@ -169,7 +169,7 @@
 			<Option target="windows" />
 			<Option target="windows_debug" />
 		</Unit>
-		<Unit filename="../../src/ports/win32/winquake.h">
+		<Unit filename="../../src/ports/win32/win_local.h">
 			<Option target="windows" />
 			<Option target="windows_debug" />
 		</Unit>

@@ -326,12 +326,9 @@ SOURCE=..\..\src\ref_gl\warpsin.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\ports\win32\winquake.h
+SOURCE=..\..\src\ports\win32\win_local.h
 # End Source File
-# Begin Source File
 
-SOURCE=..\..\src\win32\winquake.h
-# End Source File
 # End Group
 # Begin Group "Resource Files"
 

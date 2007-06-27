@@ -560,7 +560,7 @@
 				RelativePath="client\vid.h">
 			</File>
 			<File
-				RelativePath="ports\win32\winquake.h">
+				RelativePath="ports\win32\win_local.h">
 			</File>
 		</Filter>
 		<Filter

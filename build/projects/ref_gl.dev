@@ -260,7 +260,7 @@ OverrideBuildCmd=0
 BuildCmd=
 
 [Unit26]
-FileName=..\..\src\ports\win32\winquake.h
+FileName=..\..\src\ports\win32\win_local.h
 Folder=Header Files
 Compile=1
 CompileCpp=1
