@@ -69,6 +69,7 @@ void Con_CenteredPrint(const char *text);
 void Con_DrawNotify(void);
 void Con_ClearNotify(void);
 void Con_ToggleConsole_f(void);
+void Con_Close(void);
 
 void Con_SaveConsoleHistory(const char* path);
 void Con_LoadConsoleHistory(const char* path);

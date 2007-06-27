@@ -50,7 +50,7 @@ static const byte gridtexture[8][8] = {
 /**
  * @brief
  */
-void R_InitParticleTexture (void)
+void R_InitMiscTexture (void)
 {
 	int x, y;
 	byte data[8][8][4];
@@ -76,6 +76,9 @@ void R_InitParticleTexture (void)
 		}
 	}
 	r_notexture = GL_LoadPic("***r_notexture***", (byte *) data, 8, 8, it_wall, 32);
+
+	/* empty pic in the texture chain for cinematic frames */
+	GL_LoadPic("***cinematic***", NULL, VID_NORM_WIDTH, VID_NORM_HEIGHT, it_pic, 32);
 }
 
 

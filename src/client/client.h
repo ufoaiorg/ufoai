@@ -231,6 +231,8 @@ typedef struct client_static_s {
 	qboolean loadingMessage;
 	char loadingMessages[96];
 
+	qboolean playingCinematic;	/**< Set to true when playing a cinematic */
+
 #ifdef HAVE_CURL
 	char downloadName[MAX_OSPATH];
 	size_t downloadPosition;
@@ -359,11 +361,9 @@ extern shader_t r_shaders[MAX_SHADERS];
 /* ================================================= */
 
 void CL_ClearEffects(void);
-
 void CL_SetLightstyle(int i);
 void CL_RunLightStyles(void);
 void CL_AddLightStyles(void);
-
 void CL_AddEntities(void);
 
 /*================================================= */
@@ -421,10 +421,19 @@ qboolean CL_VideoRecording(void);
 void CL_StopVideo_f(void);
 void CL_Video_f(void);
 
+/* cl_cinematic.c */
+void CIN_StopCinematic(void);
+void CIN_PlayCinematic(const char *name);
+void CIN_Shutdown(void);
+void CIN_Init(void);
+void CIN_DrawCinematic(void);
+void CIN_RunCinematic(void);
+
 /* cl_main.c */
 /* interface to refresh lib */
 extern refexport_t re;
 
+void CL_Disconnect(void);
 void CL_Init(void);
 void CL_ReadSinglePlayerData(void);
 void CL_RequestNextDownload(void);

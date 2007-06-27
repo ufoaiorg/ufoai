@@ -399,7 +399,7 @@ void R_DrawOBJModel(entity_t *e);
 int Mod_LoadOBJModel(model_t* mod, void* buffer, int bufSize);
 void R_RenderDlights(void);
 void R_DrawAlphaSurfaces(void);
-void R_InitParticleTexture(void);
+void R_InitMiscTexture(void);
 void Draw_InitLocal(void);
 void GL_SubdivideSurface(mBspSurface_t * fa);
 qboolean R_CullBox(vec3_t mins, vec3_t maxs);
@@ -442,6 +442,8 @@ void Anim_Run(animState_t * as, model_t * mod, int msec);
 char *Anim_GetName(animState_t * as, model_t * mod);
 
 struct image_s *R_RegisterSkin(const char *name);
+
+void GL_DrawImagePixelData(const char *name, byte *frame, int width, int height);
 
 image_t *GL_LoadPic(const char *name, byte * pic, int width, int height, imagetype_t type, int bits);
 #ifdef DEBUG

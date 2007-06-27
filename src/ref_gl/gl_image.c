@@ -2068,14 +2068,16 @@ image_t *GL_LoadPic (const char *name, byte * pic, int width, int height, imaget
 	} else {
 	  nonscrap:
 		image->texnum = TEXNUM_IMAGES + (image - gltextures);
-		GL_Bind(image->texnum);
-		if (bits == 8)
-			image->has_alpha = GL_Upload8(pic, width, height, (image->type != it_pic), image->type, image);
-		else
-			image->has_alpha = GL_Upload32((unsigned *) pic, width, height,
-										   (image->type != it_pic), image->type == it_pic, image->type, image);
-		image->upload_width = upload_width;	/* after power of 2 and scales */
-		image->upload_height = upload_height;
+		if (pic) {
+			GL_Bind(image->texnum);
+			if (bits == 8)
+				image->has_alpha = GL_Upload8(pic, width, height, (image->type != it_pic), image->type, image);
+			else
+				image->has_alpha = GL_Upload32((unsigned *) pic, width, height,
+										(image->type != it_pic), image->type == it_pic, image->type, image);
+			image->upload_width = upload_width;	/* after power of 2 and scales */
+			image->upload_height = upload_height;
+		}
 	}
 	return image;
 }

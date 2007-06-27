@@ -120,7 +120,6 @@ static teamData_t teamData;
 static int precache_check;
 
 static void CL_SpawnSoldiers_f(void);
-static void CL_Disconnect(void);
 
 mouseRepeat_t mouseRepeat;
 
@@ -503,9 +502,12 @@ extern void CL_ClearState (void)
  * Sends a disconnect message to the server
  * This is also called on Com_Error, so it shouldn't cause any errors
  */
-static void CL_Disconnect (void)
+extern void CL_Disconnect (void)
 {
 	byte disconnect[32];
+
+	/* If playing a cinematic, stop it */
+	CIN_StopCinematic();
 
 	if (cls.state == ca_disconnected)
 		return;
@@ -2551,6 +2553,9 @@ extern void CL_Frame (int msec)
 	CL_RunLightStyles();
 	SCR_RunConsole();
 
+	/* advance cinematic and console for next frame */
+	CIN_RunCinematic();
+
 	/* repeat the mouse button */
 	if (mouseSpace == MS_LHOLD) {
 		int now = Sys_Milliseconds();
@@ -2597,6 +2602,8 @@ extern void CL_Init (void)
 
 	/* all archived variables will now be loaded */
 	Con_Init();
+
+	CIN_Init();
 
 #ifdef _WIN32
 	/* sound must be initialized after window is created */
@@ -2670,5 +2677,6 @@ extern void CL_Shutdown (void)
 	IN_Shutdown();
 	VID_Shutdown();
 	MN_Shutdown();
+	CIN_Shutdown();
 	FS_Shutdown();
 }

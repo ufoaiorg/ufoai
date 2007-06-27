@@ -490,6 +490,14 @@ DRAWING
 ==============================================================================
 */
 
+/**
+ * @brief Hide the gameconsole if active
+ */
+extern void Con_Close (void)
+{
+	if (cls.key_dest == key_console)
+		Key_SetDest(key_game);
+}
 
 /**
  * @brief The input line scrolls horizontally if typing goes beyond the right edge

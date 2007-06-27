@@ -210,6 +210,43 @@ void Draw_Char (int x, int y, int num)
 }
 
 /**
+ * @brief
+ */
+extern void GL_DrawImagePixelData (const char *name, byte *frame, int width, int height)
+{
+	image_t *img;
+
+	img = GL_FindImage(name, it_pic);
+	if (!img)
+		ri.Sys_Error(ERR_FATAL, "Could not find the searched image: %s\n", name);
+
+	GL_Bind(img->texnum);
+
+	if (img->width == width && img->height == height)
+		qglTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, img->width, img->height, GL_RGBA, GL_UNSIGNED_BYTE, frame);
+	else {
+		/* Reallocate the texture */
+		img->width = width;
+		img->height = height;
+		qglTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, frame);
+	}
+	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	qglColor4ub(255, 255, 255, 255);
+	qglBegin(GL_QUADS);
+	qglTexCoord2f(0, 0);
+	qglVertex2f(0, 0);
+	qglTexCoord2f(1, 0);
+	qglVertex2f(vid.width, 0);
+	qglTexCoord2f(1, 1);
+	qglVertex2f(vid.width, vid.height);
+	qglTexCoord2f(0, 1);
+	qglVertex2f(0, vid.height);
+	qglEnd();
+}
+
+/**
  * @brief Change the color to given value
  * @param[in] rgba A pointer to a vec4_t with rgba color value
  * @note To reset the color let rgba be NULL
@@ -240,10 +277,13 @@ image_t *Draw_FindPic (const char *name)
 	image_t *gl;
 	char fullname[MAX_QPATH];
 
-	if (name[0] != '/' && name[0] != '\\')
-		Com_sprintf(fullname, sizeof(fullname), "pics/%s", name);
-	else
-		Q_strncpyz(fullname, name + 1, MAX_QPATH);
+	if (name[0] != '*' && name[1] != '*') {
+		if (name[0] != '/' && name[0] != '\\')
+			Com_sprintf(fullname, sizeof(fullname), "pics/%s", name);
+		else
+			Q_strncpyz(fullname, name + 1, MAX_QPATH);
+	} else
+		Q_strncpyz(fullname, name, MAX_QPATH);
 
 	gl = GL_FindImage(fullname, it_pic);
 	return gl;

@@ -7,6 +7,7 @@ CLIENT_SRCS = \
 	client/cl_airfight.c \
 	client/cl_basemanagement.c \
 	client/cl_campaign.c \
+	client/cl_cinematic.c \
 	client/cl_console.c \
 	client/cl_event.c \
 	client/cl_employee.c \

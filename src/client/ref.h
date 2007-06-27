@@ -337,6 +337,7 @@ typedef struct {
 	void (*DrawCircle) (vec3_t mid, float radius, const vec4_t color, int thickness);
 	void (*Draw3DGlobe) (int x, int y, int w, int h, float p, vec3_t rotate, float zoom, const char *map);
 	void (*Draw3DMapMarkers) (vec3_t angles, float zoom, vec3_t position, const char *image);
+	void (*DrawImagePixelData) (const char *name, byte *frame, int width, int height);
 
 	void (*AnimAppend) (animState_t * as, struct model_s * mod, const char *name);
 	void (*AnimChange) (animState_t * as, struct model_s * mod, const char *name);

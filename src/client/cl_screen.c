@@ -455,7 +455,7 @@ static void SCR_DrawCursor (void)
 	int icon_offset_y = 16;	/* Offset of the first icon on the y-axis. */
 	int icon_spacing = 2;	/* the space between different icons. */
 
-	if (!cursor->integer)
+	if (!cursor->integer || cls.playingCinematic)
 		return;
 
 	if (cursor->modified) {
@@ -750,14 +750,18 @@ void SCR_UpdateScreen (void)
 
 		MN_SetViewRect(MN_ActiveMenu());
 
-		/* draw scene */
-		V_RenderView(separation[i]);
+		if (cls.playingCinematic) {
+			CIN_DrawCinematic();
+		} else {
+			/* draw scene */
+			V_RenderView(separation[i]);
 
-		/* draw the menus on top of the render view (for hud and so on) */
-		MN_DrawMenus();
+			/* draw the menus on top of the render view (for hud and so on) */
+			MN_DrawMenus();
 
-		SCR_DrawNet();
-		SCR_CheckDrawCenterString();
+			SCR_DrawNet();
+			SCR_CheckDrawCenterString();
+		}
 
 		if (cl_fps->integer)
 			SCR_DrawString(viddef.width - con_fontWidth->integer * 10, 4, va("fps: %3.1f", cls.framerate), qtrue);

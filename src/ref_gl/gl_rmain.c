@@ -1458,7 +1458,7 @@ static qboolean R_Init (HINSTANCE hinstance, WNDPROC wndproc)
 	GL_SetDefaultState();
 
 	GL_InitImages();
-	R_InitParticleTexture();
+	R_InitMiscTexture();
 	Draw_InitLocal();
 	GL_InitBloom();
 
@@ -1654,7 +1654,7 @@ refexport_t GetRefAPI (refimport_t rimp)
 	re.DrawCircle = Draw_Circle;
 	re.Draw3DGlobe = Draw_3DGlobe;
 	re.Draw3DMapMarkers = Draw_3DMapMarkers;
-
+	re.DrawImagePixelData = GL_DrawImagePixelData;
 	re.AnimAppend = Anim_Append;
 	re.AnimChange = Anim_Change;
 	re.AnimRun = Anim_Run;

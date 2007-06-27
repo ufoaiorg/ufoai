@@ -472,8 +472,15 @@ void VecToAngles (const vec3_t value1, vec3_t angles)
 }
 
 
-/*============================================================================ */
+/**
+ * @brief Checks whether i is power of two value
+ */
+qboolean Q_IsPowerOfTwo (int i)
+{
+	return (i > 0 && !(i & (i - 1)));
+}
 
+/*============================================================================ */
 
 /**
  * @brief If the number is < 0, return -1 * number - otherwise return the number

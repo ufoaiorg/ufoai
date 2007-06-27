@@ -297,6 +297,8 @@ extern vec4_t vec4_origin;
 
 #define IS_NAN(x) (((*(int *)&x)&nanmask)==nanmask)
 
+qboolean Q_IsPowerOfTwo(int i);
+
 /* microsoft's fabs seems to be ungodly slow... */
 /*float Q_fabs (float f); */
 /*#define   fabs(f) Q_fabs(f) */
@@ -422,7 +424,6 @@ const char *COM_SkipPath(char *pathname);
 void COM_StripExtension(const char *in, char *out);
 void COM_FileBase(const char *in, char *out);
 void COM_FilePath(const char *in, char *out);
-void COM_DefaultExtension(char *path, char *extension);
 
 char *COM_Parse(char **data_p);
 
