@@ -308,7 +308,7 @@ aircraft craft_ufo_supply
 	name		"_UFO - Supply"
 	shortname	"_Supply U"
 	type		ufo
-	ufotype		ufobig // FIXME
+	ufotype		supply
 	model		"ufo_supply"
 	size		4
 	weight		3

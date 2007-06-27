@@ -2221,8 +2221,8 @@ extern void AIR_ParseAircraft (const char *name, char **text, qboolean assignAir
 					air_samp->ufotype = UFO_CONDOR;
 				else if (!Q_strncmp(token, "carrier", 7))
 					air_samp->ufotype = UFO_CARRIER;
-				else if (!Q_strncmp(token, "ufobig", 6))
-					air_samp->ufotype = UFO_BIG;	/* @todo: fixme when you add proper name to script */
+				else if (!Q_strncmp(token, "supply", 6))
+					air_samp->ufotype = UFO_SUPPLY;
 			} else if (!vp->string) {
 				Com_Printf("AIR_ParseAircraft: unknown token \"%s\" ignored (aircraft %s)\n", token, name);
 				COM_EParse(text, errhead, name);
