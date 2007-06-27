@@ -551,9 +551,6 @@ static void Key_Message (int key)
 				Com_Error(ERR_DROP, "Disconnected from server");
 		}
 
-		/* If playing a cinematic, stop it */
-		CIN_StopCinematic();
-
 		Key_SetDest(key_game);
 		msg_bufferlen = 0;
 		msg_buffer[0] = 0;
