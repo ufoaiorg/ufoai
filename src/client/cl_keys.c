@@ -1019,6 +1019,9 @@ void Key_Event (int key, qboolean down, unsigned time)
 		if (!down)
 			return;
 
+		if (cls.playingCinematic)
+			CIN_StopCinematic();
+
 		switch (cls.key_dest) {
 		case key_input:
 		case key_message:
