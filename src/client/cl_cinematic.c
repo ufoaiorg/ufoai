@@ -348,7 +348,7 @@ static void CIN_DecodeVideo (const byte *data)
 				if (!vqFlagPos) {
 					vqFlagPos = 7;
 					vqFlag = data[index + 0] | (data[index + 1] << 8);
-					vqFlag = LittleShort(vqFlg);
+					vqFlag = LittleShort(vqFlag);
 					index += 2;
 				} else
 					vqFlagPos--;
@@ -373,7 +373,7 @@ static void CIN_DecodeVideo (const byte *data)
 						if (!vqFlagPos) {
 							vqFlagPos = 7;
 							vqFlag = data[index+0] | (data[index+1] << 8);
-							vqFlag = LittleShort(vqFlg);
+							vqFlag = LittleShort(vqFlag);
 
 							index += 2;
 						} else
