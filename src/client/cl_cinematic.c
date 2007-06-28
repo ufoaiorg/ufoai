@@ -244,6 +244,9 @@ static void CIN_DecodeInfo (const byte *data)
 	cin.frameWidth = data[0] | (data[1] << 8);
 	cin.frameHeight = data[2] | (data[3] << 8);
 
+	cin.frameWidth = LittleShort(cin.frameWidth);
+	cin.frameHeight = LittleShort(cin.frameHeight);
+
 	if (!Q_IsPowerOfTwo(cin.frameWidth) || !Q_IsPowerOfTwo(cin.frameHeight))
 		Com_Error(ERR_DROP, "CIN_DecodeInfo: size is not a power of two (%i x %i)", cin.frameWidth, cin.frameHeight);
 
@@ -345,7 +348,7 @@ static void CIN_DecodeVideo (const byte *data)
 				if (!vqFlagPos) {
 					vqFlagPos = 7;
 					vqFlag = data[index + 0] | (data[index + 1] << 8);
-
+					vqFlag = LittleShort(vqFlg);
 					index += 2;
 				} else
 					vqFlagPos--;
@@ -370,6 +373,7 @@ static void CIN_DecodeVideo (const byte *data)
 						if (!vqFlagPos) {
 							vqFlagPos = 7;
 							vqFlag = data[index+0] | (data[index+1] << 8);
+							vqFlag = LittleShort(vqFlg);
 
 							index += 2;
 						} else
@@ -480,6 +484,10 @@ static qboolean CIN_DecodeChunk (void)
 	cin.chunk.id = cin.header[0] | (cin.header[1] << 8);
 	cin.chunk.size = cin.header[2] | (cin.header[3] << 8) | (cin.header[4] << 16) | (cin.header[5] << 24);
 	cin.chunk.flags = cin.header[6] | (cin.header[7] << 8);
+
+	cin.chunk.id = LittleShort(cin.chunk.id);
+	cin.chunk.size = LittleLong(cin.chunk.size);
+	cin.chunk.flags = LittleShort(cin.chunk.flags);
 
 	if (cin.chunk.id == ROQ_IDENT || cin.chunk.size > ROQ_MAX_CHUNK_SIZE) {
 		Com_Printf("Invalid chunk\n");
