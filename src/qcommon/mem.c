@@ -1,6 +1,6 @@
 /**
- * @file q_shared.c
- * @brief Zone memory allocation
+ * @file memory.c
+ * @brief Memory handling with sentinel checking and pools with tags for grouped free'ing
  */
 
 /*
