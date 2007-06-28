@@ -987,15 +987,19 @@ float Qcommon_Frame (int msec)
 	if (host_speeds->integer)
 		time_between = Sys_Milliseconds();
 
+#ifndef DEDICATED_ONLY
+	/* advance cinematic and console for next frame */
+	CIN_RunCinematic();
+#endif
+
 	/* run client frames according to cl_maxfps */
 	if (cl_timer > 0) {
-		int frametime = max(cl_timer, 1000/cl_maxfps->integer);
+		int frametime = max(cl_timer, 1000 / cl_maxfps->integer);
 		frametime = min(frametime, 1000);
 #ifndef DEDICATED_ONLY
 		Irc_Logic_Frame(cl_timer);
 #endif
-		cl_timer -= frametime;
-		CL_Frame(frametime);
+		cl_timer -= CL_Frame(frametime);
 	}
 
 	if (host_speeds->integer) {

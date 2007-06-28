@@ -2435,7 +2435,7 @@ static void CL_CvarCheck (void)
  * @brief
  * @sa Qcommon_Frame
  */
-extern void CL_Frame (int msec)
+extern int CL_Frame (int msec)
 {
 	static int extratime = 0;
 	static int lasttimecalled = 0;
@@ -2460,10 +2460,10 @@ extern void CL_Frame (int msec)
 	if (!cl_timedemo->value) {
 		/* don't flood packets out while connecting */
 		if (cls.state == ca_connected && extratime < 100)
-			return;
+			return msec;
 		/* framerate is too high */
 		if (extratime < ceil(1000.0 / cl_maxfps->value))
-			return;
+			return msec;
 	}
 
 	/* decide the simulation time */
@@ -2477,13 +2477,13 @@ extern void CL_Frame (int msec)
 	IN_Frame();
 
 	/* if recording an avi, lock to a fixed fps */
-	if (CL_VideoRecording() && cl_aviFrameRate->value && msec) {
+	if (CL_VideoRecording() && cl_aviFrameRate->integer && msec) {
 		/* save the current screen */
-		if (cls.state == ca_active || cl_aviForceDemo->value) {
+		if (cls.state == ca_active || cl_aviForceDemo->integer) {
 			CL_TakeVideoFrame();
 
 			/* fixed time for next frame' */
-			msec = (int) ceil((1000.0f / cl_aviFrameRate->value));
+			msec = 1000 / cl_aviFrameRate->integer;
 			if (msec == 0)
 				msec = 1;
 		}
@@ -2582,6 +2582,10 @@ extern void CL_Frame (int msec)
 			}
 		}
 	}
+
+	if (cls.playingCinematic)
+		return 1;
+	return msec;
 }
 
 /**

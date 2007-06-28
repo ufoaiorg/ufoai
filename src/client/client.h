@@ -126,8 +126,8 @@ typedef struct client_state_s {
 
 	int parse_entities;			/**< index (not anded off) into cl_parse_entities[] */
 
-	int time;					/**< this is the time value that the client */
-	/** is rendering at.  always <= cls.realtime */
+	int time;					/**< this is the time value that the client
+								 * is rendering at.  always <= cls.realtime */
 	int eventTime;				/**< similar to time, but not counting if blockEvents is set */
 
 	camera_t cam;
