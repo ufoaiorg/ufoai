@@ -123,6 +123,10 @@ SOURCE=..\..\src\client\cl_campaign.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\client\cl_cinematic.c
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\client\cl_console.c
 # End Source File
 # Begin Source File
@@ -156,6 +160,10 @@ SOURCE=..\..\src\client\cl_input.c
 # Begin Source File
 
 SOURCE=..\..\src\client\cl_inventory.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\cl_irc.c
 # End Source File
 # Begin Source File
 
@@ -276,10 +284,6 @@ SOURCE=..\..\src\ports\win32\in_win.c
 # Begin Source File
 
 SOURCE=..\..\src\qcommon\ioapi.c
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\client\cl_irc.c
 # End Source File
 # Begin Source File
 
@@ -463,6 +467,10 @@ SOURCE=..\..\src\client\cl_inventory.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\client\cl_irc.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\client\cl_keys.h
 # End Source File
 # Begin Source File
@@ -484,6 +492,14 @@ SOURCE=..\..\src\client\cl_research.h
 # Begin Source File
 
 SOURCE=..\..\src\client\cl_save.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\cl_screen.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\src\client\cl_sound.h
 # End Source File
 # Begin Source File
 
@@ -539,10 +555,6 @@ SOURCE=..\..\src\qcommon\ioapi.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\client\cl_irc.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\src\qcommon\md4.h
 # End Source File
 # Begin Source File
@@ -587,10 +599,6 @@ SOURCE=..\..\src\client\ref.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\src\client\cl_screen.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\src\qcommon\scripts.h
 # End Source File
 # Begin Source File
@@ -604,10 +612,6 @@ SOURCE=..\..\src\client\snd_loc.h
 # Begin Source File
 
 SOURCE=..\..\src\client\snd_openal.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\src\client\cl_sound.h
 # End Source File
 # Begin Source File
 
