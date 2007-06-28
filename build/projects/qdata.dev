@@ -2,7 +2,7 @@
 FileName=qdata.dev
 Name=qdata
 Ver=1
-IsCpp=1
+IsCpp=0
 Type=1
 Compiler=-D__GNUWIN32__ _@@_-D_M_IX86=500 _@@_-Wall_@@_-DWIN_ERROR_@@_-DDEBUG_@@_-DDEVCPP_@@_-DC_ONLY_@@__@@_
 CppCompiler=
