@@ -538,7 +538,7 @@ menu serverinfo
 		texl	"0 0"
 		texh	"64 37"
 		click	{
-			cmd "mn_pop;"
+			cmd "mn_pop;pingservers;"
 		}
 	}
 
