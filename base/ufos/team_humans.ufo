@@ -1700,7 +1700,7 @@ actors ugv_triax
 {
 	neutral
 	{
-		soldiers/ugv_triax triax triax 0
+		soldiers/ugv_triax triax_hover triax 0
 	}
 }
 
