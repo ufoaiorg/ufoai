@@ -513,7 +513,7 @@ def fill_md2_tags(md2_tags, object):
 	frame_counter = 0
 	# Fill in each tag with its positions per frame
 	for current_frame in range(Blender.Get('staframe') , Blender.Get('endframe')):
-		print current_frame + "(" + frame_counter + ")"
+		#print current_frame + "(" + frame_counter + ")" # DEBUG
 		progress+=progressIncrement
 		Blender.Window.DrawProgressBar(progress, "Calculating Frame: " + str(frame_counter))
 
