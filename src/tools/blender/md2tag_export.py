@@ -8,7 +8,7 @@ Tooltip: 'Export to Quake2 tag file format for UFO:AI (.tag).'
 """
 
 __author__ = 'Werner Hoehrer'
-__version__ = '0.0.4'
+__version__ = '0.0.5'
 __url__ = ["UFO: Alien Invasion, http://ufoai.sourceforge.net",
      "Support forum, http://ufoai.ninex.info/phpBB2/index.php", "blender", "elysiun"]
 __email__ = ["Werner Hoehrer, bill_spam2:yahoo*de", "scripts"]
@@ -162,10 +162,9 @@ def get_euler(loc, X,Y,Z):
 ######################################################
 
 # Export globals
-g_filename=Create("default.tag") # default value is set here.
-g_filename_search=Create("")
-g_scale=Create(1.0)		# default value is set here.
-g_frames=Create(1)		# default value is set here.
+g_filename		= Create("default.tag") # default value is set here.
+g_filename_search	= Create("")
+g_scale			= Create(1.0)		# default value is set here.
 
 # Events
 EVENT_NOEVENT=1
@@ -189,7 +188,6 @@ def filename_callback(input_filename):
 
 def draw_gui():
 	global g_scale
-	global g_frames
 	global g_filename
 	global EVENT_NOEVENT,EVENT_SAVE_MD2TAGS,EVENT_CHOOSE_FILENAME,EVENT_EXIT, EVENT_LOAD_MD2TAGS
 
@@ -200,17 +198,29 @@ def draw_gui():
 
 	######### Parameters GUI Buttons
 	######### MD2 Filename text entry
-	g_filename = String("MD2 TAGs file: ", EVENT_NOEVENT, 10, 95, 210, 18,
+	left = 10
+	width = 200
+	g_filename = String("File: ", EVENT_NOEVENT, left, 95, width-left, 18,
 			g_filename.val, 255, "MD2 TAGs file to load/save (Import/Export).")
 	########## MD2 TAGs File Search Button
-	Button("Search",EVENT_CHOOSE_FILENAME,220,95,80,18)
+	Button("Search",EVENT_CHOOSE_FILENAME, width, 95, 50, 18)
 
 	########## Scale slider-default is 1/8 which is a good scale for md2->blender
-	g_scale= Slider("Scale Factor: ", EVENT_NOEVENT, 10, 75, 210, 18,
-			g_scale.val, 0.001, 20.0, 0, "Scale factor for MD2 TAGs (Import/Export)");
+	g_scale= Slider("Scale: ", EVENT_NOEVENT,
+			left, 75, width-left, 18,
+			g_scale.val, 0.001, 100.0, 0, "Scale factor for MD2 TAGs (Import/Export)");
 
-	g_frames= Slider("NumFrames: ", EVENT_NOEVENT, 10, 55, 210, 18,
-			g_frames.val, 1, MD2_MAX_FRAMES, 0, "Number of exported frames (Export)");
+	g_frames_info = Label('Frames: ' + str(1 + Blender.Get('endframe') - Blender.Get('staframe')),
+			left, 55, width-left, 20)
+
+	number_of_tags = num_tags()
+	if (number_of_tags > 0):
+		objects_info = 'Tags: ' + str(number_of_tags)
+	else:
+		objects_info = 'No tags (Empties) selected!'
+
+	g_objects_info = Label(objects_info,
+			left, 35, width-left, 20)
 
 	######### Draw and Exit Buttons
 	Button("Export",EVENT_SAVE_MD2TAGS , 10, 10, 80, 18)
@@ -426,7 +436,7 @@ class md2_tags_obj:
 			print "Saving tag: ", tag_count
 
 			for tag in tag_frames:
-				frame_count+=1
+				frame_count += 1
 				tag.save(file)
 			print "  Frames saved: ", frame_count
 	def load(self, file):
@@ -497,16 +507,21 @@ def fill_md2_tags(md2_tags, object):
 	progress=0.5
 	progressIncrement=0.25 / md2_tags.num_frames
 
+	# Store currently set frame
+	previous_curframe = Blender.Get("curframe")
+
+	frame_counter = 0
 	# Fill in each tag with its positions per frame
-	for frame_counter in range(0,md2_tags.num_frames):
+	for current_frame in range(Blender.Get('staframe') , Blender.Get('endframe')):
+		print current_frame + "(" + frame_counter + ")"
 		progress+=progressIncrement
-		Blender.Window.DrawProgressBar(progress, "Calculating Frame: "+str(frame_counter))
+		Blender.Window.DrawProgressBar(progress, "Calculating Frame: " + str(frame_counter))
 
 		#add a frame
 		tag_frames.append(md2_tag())
 
 		#set blender to the correct frame (so the objects have their new positions)
-		Blender.Set("curframe", frame_counter+1)
+		Blender.Set("curframe", current_frame)
 
 		# Set first coordiantes to the location of the empty.
 		tag_frames[frame_counter].Row1 = object.getLocation()
@@ -517,16 +532,29 @@ def fill_md2_tags(md2_tags, object):
 		tag_frames[frame_counter].Row2 = apply_transform((1.0,0.0,0.0), matrix) #calculate point (loc + local-X * 1 )
 		tag_frames[frame_counter].Row3 = apply_transform((0.0,1.0,0.0), matrix) #calculate point (loc + local-Y * 1 )
 		tag_frames[frame_counter].Row4 = apply_transform((0.0,0.0,1.0), matrix) #calculate point (loc + local-Z * 1 )
+		frame_counter += 1
 
-	Blender.Set("curframe", 1)
+	# Restore curframe from before the calculation.
+	Blender.Set("curframe", previous_curframe)
+
 	md2_tags.tags.append(tag_frames)
+
+######################################################
+# Count the available tags
+######################################################
+def num_tags():
+	mesh_objs = Blender.Object.GetSelected()
+	num_tags = 0
+	for object in mesh_objs:
+		if object.getType()=="Empty":
+			num_tags += 1
+			
+	return num_tags
 
 ######################################################
 # Save MD2 TAGs Format
 ######################################################
 def save_md2_tags(filename):
-	global g_frames
-
 	print ""
 	print "***********************************"
 	print "MD2 TAG Export"
@@ -548,7 +576,8 @@ def save_md2_tags(filename):
 		return
 
 	# Set frame number.
-	md2_tags.num_frames=g_frames.val
+	md2_tags.num_frames = 1 + Blender.Get('endframe') - Blender.Get('staframe')
+
 	print "Frames to export: ",md2_tags.num_frames
 	print ""
 
@@ -592,8 +621,6 @@ def save_md2_tags(filename):
 # Load&animate MD2 TAGs Format
 ######################################################
 def load_md2_tags(filename):
-	global g_frames
-
 	print ""
 	print "***********************************"
 	print "MD2 TAG Import"
@@ -622,6 +649,9 @@ def load_md2_tags(filename):
 	progress=0.3
 	progressIncrement=0.6 / (md2_tags.num_frames * md2_tags.num_tags)
 
+	# Store currently set frame
+	previous_curframe = Blender.Get("curframe")
+	
 	for tag in range(0,md2_tags.num_tags):
 		# Get name & frame-data of current tag.
 		tag_name = md2_tags.names[tag]
@@ -660,7 +690,10 @@ def load_md2_tags(filename):
 			object.insertIpoKey(LOCROTSIZE)
 
 	Blender.Window.DrawProgressBar(1.0, "MD2 TAG Import")
-	Blender.Set("curframe", 1)
+	
+	# Restore curframe from before the calculation.
+	Blender.Set("curframe", previous_curframe)
+
 	Blender.Window.RedrawAll()
 
 ################
