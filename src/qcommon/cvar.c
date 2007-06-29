@@ -116,6 +116,10 @@ extern qboolean Cvar_SetCheckFunction (char *var_name, qboolean (*check) (cvar_t
 /**
  * @brief Checks cvar values
  * @return true if assert
+ * @param[in] cvar Cvar to check
+ * @param[in] minVal The minimal value the cvar should have
+ * @param[in] maxVal The maximal value the cvar should have
+ * @param[in] shouldBeIntegral No floats for this cvar please
  * @sa Cvar_AssertString
  */
 extern qboolean Cvar_AssertValue (cvar_t * cvar, float minVal, float maxVal, qboolean shouldBeIntegral)
@@ -123,7 +127,7 @@ extern qboolean Cvar_AssertValue (cvar_t * cvar, float minVal, float maxVal, qbo
 	assert(cvar);
 
 	if (shouldBeIntegral) {
-		if((int)cvar->value != cvar->integer) {
+		if ((int)cvar->value != cvar->integer) {
 			Com_Printf("WARNING: cvar '%s' must be integral (%f)\n", cvar->name, cvar->value);
 			Cvar_Set(cvar->name, va("%d", cvar->integer));
 			return qtrue;
@@ -148,6 +152,9 @@ extern qboolean Cvar_AssertValue (cvar_t * cvar, float minVal, float maxVal, qbo
  * @brief Checks cvar values
  * @return true if assert
  * @sa Cvar_AssertValue
+ * @param[in] cvar Cvar to check
+ * @param[in] array Array of valid cvar value strings
+ * @param[in] arraySize Number of entries in the string array
  */
 extern qboolean Cvar_AssertString (cvar_t * cvar, char **array, int arraySize)
 {
