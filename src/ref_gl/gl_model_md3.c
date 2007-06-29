@@ -112,19 +112,21 @@ extern void Mod_LoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 	}
 
 	/* load the tags */
-	pintag = (dmd3tag_t *)((byte *)pinmodel + LittleLong(pinmodel->ofs_tags));
-	pouttag = poutmodel->tags = ri.TagMalloc(ri.modelPool, sizeof(maliastag_t) * poutmodel->num_frames * poutmodel->num_tags, 0);
+	if (poutmodel->num_tags) {
+		pintag = (dmd3tag_t *)((byte *)pinmodel + LittleLong(pinmodel->ofs_tags));
+		pouttag = poutmodel->tags = ri.TagMalloc(ri.modelPool, sizeof(maliastag_t) * poutmodel->num_frames * poutmodel->num_tags, 0);
 
-	for (i = 0; i < poutmodel->num_frames; i++) {
-		for (l = 0; l < poutmodel->num_tags; l++, pintag++, pouttag++) {
-			memcpy(pouttag->name, pintag->name, MD3_MAX_PATH);
-			for (j = 0; j < 3; j++) {
-				pouttag->orient.origin[j] = LittleFloat(pintag->orient.origin[j] );
-				pouttag->orient.axis[0][j] = LittleFloat(pintag->orient.axis[0][j] );
-				pouttag->orient.axis[1][j] = LittleFloat(pintag->orient.axis[1][j] );
-				pouttag->orient.axis[2][j] = LittleFloat(pintag->orient.axis[2][j] );
+		for (i = 0; i < poutmodel->num_frames; i++) {
+			for (l = 0; l < poutmodel->num_tags; l++, pintag++, pouttag++) {
+				memcpy(pouttag->name, pintag->name, MD3_MAX_PATH);
+				for (j = 0; j < 3; j++) {
+					pouttag->orient.origin[j] = LittleFloat(pintag->orient.origin[j] );
+					pouttag->orient.axis[0][j] = LittleFloat(pintag->orient.axis[0][j] );
+					pouttag->orient.axis[1][j] = LittleFloat(pintag->orient.axis[1][j] );
+					pouttag->orient.axis[2][j] = LittleFloat(pintag->orient.axis[2][j] );
+				}
+				ri.Con_Printf(PRINT_ALL, "X: (%f %f %f) Y: (%f %f %f) Z: (%f %f %f)\n", pouttag->orient.axis[0][0], pouttag->orient.axis[0][1], pouttag->orient.axis[0][2], pouttag->orient.axis[1][0], pouttag->orient.axis[1][1], pouttag->orient.axis[1][2], pouttag->orient.axis[2][0], pouttag->orient.axis[2][1], pouttag->orient.axis[2][2]);
 			}
-			ri.Con_Printf(PRINT_ALL, "X: (%f %f %f) Y: (%f %f %f) Z: (%f %f %f)\n", pouttag->orient.axis[0][0], pouttag->orient.axis[0][1], pouttag->orient.axis[0][2], pouttag->orient.axis[1][0], pouttag->orient.axis[1][1], pouttag->orient.axis[1][2], pouttag->orient.axis[2][0], pouttag->orient.axis[2][1], pouttag->orient.axis[2][2]);
 		}
 	}
 
