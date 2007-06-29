@@ -3121,7 +3121,8 @@ static float CL_TargetingToHit (pos3_t toPos)
 	stdevupdown = (selFD->spread[0] + acc * (1 + selFD->modif)) * commonfactor;
 	stdevleftright = (selFD->spread[1] + acc * (1 + selFD->modif)) * commonfactor;
 
-	hitchance = lookup_erf(height * 0.3536f / stdevupdown) * lookup_erf(width * 0.3536f / stdevleftright);
+	hitchance = (stdevupdown > 0.0f ? lookup_erf(height * 0.3536f / stdevupdown) : 1.0f)
+			  * (stdevleftright > 0.0f ? lookup_erf(width * 0.3536f / stdevleftright) : 1.0f);
 	/* 0.3536=sqrt(2)/4 */
 
 	/* Calculate cover: */
