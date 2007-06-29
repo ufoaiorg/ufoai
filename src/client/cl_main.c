@@ -121,8 +121,6 @@ static int precache_check;
 
 static void CL_SpawnSoldiers_f(void);
 
-mouseRepeat_t mouseRepeat;
-
 struct memPool_s *cl_localPool;		/**< reset on every game restart */
 struct memPool_s *cl_genericPool;	/**< permanent client data - menu, fonts */
 struct memPool_s *cl_ircSysPool;	/**< irc pool */
@@ -2437,8 +2435,11 @@ static void CL_CvarCheck (void)
  */
 extern int CL_Frame (int msec)
 {
-	static int extratime = 0;
+	static int refreshDelta = 0;
 	static int lasttimecalled = 0;
+	static int miscDelta = 1000;
+	qboolean miscFrame = qtrue;
+	qboolean refreshFrame = qtrue;
 
 	if (sv_maxclients->modified) {
 		if (sv_maxclients->integer > 1 && ccs.singleplayer) {
@@ -2451,52 +2452,22 @@ extern int CL_Frame (int msec)
 		sv_maxclients->modified = qfalse;
 	}
 
-	extratime += msec;
-
-	/* don't allow setting maxfps too low (or game could stop responding) */
-	if (cl_maxfps->integer < 10)
-		Cvar_SetValue("cl_maxfps", 10);
-
-	if (!cl_timedemo->value) {
-		/* don't flood packets out while connecting */
-		if (cls.state == ca_connected && extratime < 100)
-			return msec;
-		/* framerate is too high */
-		if (extratime < ceil(1000.0 / cl_maxfps->value))
-			return msec;
-	}
+	refreshDelta += msec;
+	miscDelta += msec;
 
 	/* decide the simulation time */
-	cls.frametime = extratime / 1000.0;
+	cls.frametime = refreshDelta / 1000.0;
 	cls.realtime = curtime;
-	cl.time += extratime;
+	cl.time += refreshDelta;
 	if (!blockEvents)
-		cl.eventTime += extratime;
-
-	/* let the mouse activate or deactivate */
-	IN_Frame();
-
-	/* if recording an avi, lock to a fixed fps */
-	if (CL_VideoRecording() && cl_aviFrameRate->integer && msec) {
-		/* save the current screen */
-		if (cls.state == ca_active || cl_aviForceDemo->integer) {
-			CL_TakeVideoFrame();
-
-			/* fixed time for next frame' */
-			msec = 1000 / cl_aviFrameRate->integer;
-			if (msec == 0)
-				msec = 1;
-		}
-	}
+		cl.eventTime += refreshDelta;
 
 	/* frame rate calculation */
 	if (!(cls.framecount % NUM_DELTA_FRAMES)) {
-		cls.framerate = NUM_DELTA_FRAMES * 1000.0 / (cls.framedelta + extratime);
+		cls.framerate = NUM_DELTA_FRAMES * 1000.0 / (cls.framedelta + refreshDelta);
 		cls.framedelta = 0;
 	} else
-		cls.framedelta += extratime;
-
-	extratime = 0;
+		cls.framedelta += refreshDelta;
 
 	/* don't extrapolate too far ahead */
 	if (cls.frametime > (1.0 / 5))
@@ -2506,64 +2477,90 @@ extern int CL_Frame (int msec)
 	if (msec > 5000)
 		cls.netchan.last_received = Sys_Milliseconds();
 
-	if (cls.state == ca_connected) {
+	if (!cl_timedemo->integer && !cls.playingCinematic) {
+		/* don't flood packets out while connecting */
+		if (cls.state == ca_connected && refreshDelta < 100)
+			return msec;
+		/* framerate is too high */
+		if (refreshDelta < 1000.0 / cl_maxfps->value)
+			refreshFrame = qfalse;
+		/* stuff we don't have to do every frame (10FPS) */
+		if (miscDelta < 100)
+			miscFrame = qfalse;
+	}
+
 #ifdef HAVE_CURL
+	if (cls.state == ca_connected) {
 		/* we run full speed when connecting */
 		CL_RunHTTPDownloads();
-#endif /* HAVE_CURL */
 	}
+#endif /* HAVE_CURL */
 
 	/* fetch results from server */
 	CL_ReadPackets();
 
+	CL_SendCommand();
+
+	CL_ParseInput();
+	/* update camera position */
+	CL_CameraMove();
+
+	if (refreshFrame) {
+		refreshDelta = 0;
+		if (miscFrame) {
+			miscDelta = 0;
+			/* let the mouse activate or deactivate */
+			IN_Frame();
+
+			CL_CvarCheck();
+
+			/* allow rendering DLL change */
+			VID_CheckChanges();
+			if (!cl.refresh_prepped && cls.state == ca_active)
+				CL_PrepRefresh();
+
+			CL_ActorUpdateCVars();
+		}
+
+		/* if recording an avi, lock to a fixed fps */
+		if (CL_VideoRecording() && refreshDelta < 1000.0 / cl_aviFrameRate->value) {
+			/* save the current screen */
+			if (cls.state == ca_active || cl_aviForceDemo->integer)
+				CL_TakeVideoFrame();
+		}
+		/* end the rounds when no soldier is alive */
+		CL_RunMapParticles();
+		CL_ParticleRun();
+
+		/* update the screen */
+		if (host_speeds->value)
+			time_before_ref = Sys_Milliseconds();
+		SCR_UpdateScreen();
+		if (host_speeds->value)
+			time_after_ref = Sys_Milliseconds();
+
+		/* update audio */
+		S_Update(cl.refdef.vieworg, cl.cam.axis[0], cl.cam.axis[1], cl.cam.axis[2]);
+
+		CDAudio_Update();
+
+		/* advance local effects for next frame */
+		CL_RunLightStyles();
+		SCR_RunConsole();
+
+		/* advance cinematic and console for next frame */
+		if (cls.playingCinematic) {
+			CIN_RunCinematic();
+			msec = 0;
+		}
+	}
+
 	/* event and LE updates */
-	CL_CvarCheck();
 	CL_Events();
 	LE_Think();
-	/* end the rounds when no soldier is alive */
-	CL_RunMapParticles();
-	CL_ParticleRun();
 
 	/* send a new command message to the server */
 	CL_SendCommand();
-
-	/* update camera position */
-	CL_CameraMove();
-	CL_ParseInput();
-	CL_ActorUpdateCVars();
-
-	/* allow rendering DLL change */
-	VID_CheckChanges();
-	if (!cl.refresh_prepped && cls.state == ca_active)
-		CL_PrepRefresh();
-
-	/* update the screen */
-	if (host_speeds->value)
-		time_before_ref = Sys_Milliseconds();
-	SCR_UpdateScreen();
-	if (host_speeds->value)
-		time_after_ref = Sys_Milliseconds();
-
-	/* update audio */
-	S_Update(cl.refdef.vieworg, cl.cam.axis[0], cl.cam.axis[1], cl.cam.axis[2]);
-
-	CDAudio_Update();
-
-	/* advance local effects for next frame */
-	CL_RunLightStyles();
-	SCR_RunConsole();
-
-	/* advance cinematic and console for next frame */
-	CIN_RunCinematic();
-
-	/* repeat the mouse button */
-	if (mouseSpace == MS_LHOLD) {
-		int now = Sys_Milliseconds();
-		if (now >= mouseRepeat.nexttime) {
-			MN_ExecuteActions(mouseRepeat.menu, mouseRepeat.action);
-			mouseRepeat.nexttime = now + 100;	/* next "event" after 0.1 sec */
-		}
-	}
 
 	cls.framecount++;
 
@@ -2583,8 +2580,6 @@ extern int CL_Frame (int msec)
 		}
 	}
 
-	if (cls.playingCinematic)
-		return 1;
 	return msec;
 }
 

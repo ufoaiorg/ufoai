@@ -705,6 +705,15 @@ static void Com_DebugHelp_f (void)
 #endif
 
 /**
+ * @brief Watches that the cvar cl_maxfps is never getting lower than 10
+ */
+static qboolean Com_CvarCheckMaxFPS (cvar_t *cvar)
+{
+	/* don't allow setting maxfps too low (or game could stop responding) */
+	return Cvar_AssertValue(cvar, 10, 1000, qtrue);
+}
+
+/**
  * @brief Init function
  *
  * @param[in] argc int
@@ -794,6 +803,7 @@ extern void Qcommon_Init (int argc, char **argv)
 	gametype->modified = qfalse;
 #endif
 	cl_maxfps = Cvar_Get("cl_maxfps", "90", 0, NULL);
+	Cvar_SetCheckFunction("cl_maxfps", Com_CvarCheckMaxFPS);
 	teamnum = Cvar_Get("teamnum", "1", CVAR_ARCHIVE, "Multiplayer team num");
 
 	s = va("UFO: Alien Invasion %s %s %s %s", UFO_VERSION, CPUSTRING, __DATE__, BUILDSTRING);
@@ -986,11 +996,6 @@ float Qcommon_Frame (int msec)
 
 	if (host_speeds->integer)
 		time_between = Sys_Milliseconds();
-
-#ifndef DEDICATED_ONLY
-	/* advance cinematic and console for next frame */
-	CIN_RunCinematic();
-#endif
 
 	/* run client frames according to cl_maxfps */
 	if (cl_timer > 0) {

@@ -359,12 +359,6 @@ static cvar_t *Cvar_Set2 (const char *var_name, const char *value, qboolean forc
 	if (!var)
 		return Cvar_Get(var_name, value, 0, NULL);
 
-	if (var->check)
-		if (!var->check(var)) {
-			Com_Printf("Invalid value for cvar %s\n", var_name);
-			return var;
-		}
-
 	if (var->flags & (CVAR_USERINFO | CVAR_SERVERINFO))
 		if (!Cvar_InfoValidate(value)) {
 			Com_Printf("invalid info cvar value\n");
@@ -432,6 +426,12 @@ static cvar_t *Cvar_Set2 (const char *var_name, const char *value, qboolean forc
 	var->string = Mem_PoolStrDup(value, com_cvarSysPool, 0);
 	var->value = atof(var->string);
 	var->integer = atoi(var->string);
+
+	if (var->check)
+		if (var->check(var)) {
+			Com_Printf("Invalid value for cvar %s\n", var_name);
+			return var;
+		}
 
 	return var;
 }

@@ -473,15 +473,6 @@ extern int mx, my;
 extern int dragFrom, dragFromX, dragFromY;
 extern item_t dragItem;
 extern float *rotateAngles;
-
-typedef struct {
-	menu_t *menu;				/**< mouse autorepeat - where */
-	menuAction_t *action;		/**< mouse autorepeat - what */
-	unsigned nexttime;			/**< mouse autorepeat - when */
-} mouseRepeat_t;
-
-extern mouseRepeat_t mouseRepeat;
-
 extern const float MIN_ZOOM, MAX_ZOOM;
 
 void CL_InitInput(void);

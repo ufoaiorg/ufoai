@@ -47,6 +47,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 extern unsigned sys_frame_time;
 extern pos3_t mousePendPos;
+extern mouseRepeat_t mouseRepeat;
 
 int mouseSpace;
 int mx, my;
@@ -1114,10 +1115,19 @@ extern void CL_ParseInput (void)
 		return;
 
 	case MS_DRAG:
-	case MS_LHOLD:
 		/* do nothing */
 		return;
 
+	/* repeat the mouse button */
+	case MS_LHOLD:
+	{
+		int now = Sys_Milliseconds();
+		if (now >= mouseRepeat.nexttime) {
+			MN_ExecuteActions(mouseRepeat.menu, mouseRepeat.action);
+			mouseRepeat.nexttime = now + 100;	/* next "event" after 0.1 sec */
+		}
+		return;
+	}
 	default:
 		/* standard menu and world mouse handling */
 		if (MN_CursorOnMenu(mx, my)) {

@@ -288,6 +288,8 @@ static int MN_DrawTooltip(const char *font, const char *string, int x, int y, in
 static void CL_ShowMessagesOnStack_f(void);
 static void MN_TimestampedText(char *text, message_t *message, size_t textsize);
 
+mouseRepeat_t mouseRepeat;
+
 /**
  * @brief Just translate the bool value to translateable yes or no strings
  */
