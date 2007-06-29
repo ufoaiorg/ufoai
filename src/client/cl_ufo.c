@@ -49,8 +49,11 @@ extern const char* UFO_TypeToShortName (ufoType_t type)
 		return "ufo_condor";
 	case UFO_CARRIER:
 		return "ufo_carrier";
+	case UFO_SUPPLY:
+		return "ufo_supply";
 	default:
 		Sys_Error("UFO_TypeToShortName(): Unknown UFO type %i\n", type);
+		break;
 	}
 	return NULL; /* never reached */
 }
@@ -66,19 +69,16 @@ extern const char* UFO_TypeToName (ufoType_t type)
 	switch(type) {
 	case UFO_SCOUT:
 		return _("UFO - Scout");
-		break;
 	case UFO_FIGHTER:
 		return _("UFO - Fighter");
-		break;
 	case UFO_HARVESTER:
 		return _("UFO - Harvester");
-		break;
 	case UFO_CONDOR:
 		return _("UFO - Condor");
-		break;
 	case UFO_CARRIER:
 		return _("UFO - Carrier");
-		break;
+	case UFO_SUPPLY:
+		return _("UFO - Supply");
 	default:
 		Sys_Error("UFO_TypeToName(): Unknown UFO type %i\n", type);
 		break;

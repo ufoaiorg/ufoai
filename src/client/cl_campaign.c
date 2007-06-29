@@ -1516,6 +1516,7 @@ typedef struct gameLapse_s {
 
 #define NUM_TIMELAPSE 6
 
+/** @brief The possible geoscape time intervalls */
 static const gameLapse_t lapse[NUM_TIMELAPSE] = {
 	{"5 sec", 5},
 	{"5 mins", 5 * 60},
