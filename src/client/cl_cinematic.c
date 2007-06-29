@@ -27,6 +27,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 
 #include "client.h"
+#include "snd_loc.h"
+
 #include <assert.h>
 
 #define ROQ_IDENT					0x1084
@@ -575,6 +577,8 @@ extern void CIN_PlayCinematic (const char *name)
 
 	/* Make sure sounds aren't playing */
 	S_StopAllSounds();
+	/* also stop the background music */
+	OGG_Stop();
 
 	/* If already playing a cinematic, stop it */
 	CIN_StopCinematic();
