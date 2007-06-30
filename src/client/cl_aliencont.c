@@ -1029,3 +1029,17 @@ extern qboolean AC_Load (sizebuf_t* sb, void* data)
 {
 	return qtrue;
 }
+
+/**
+ * @brief Returns true if the current base is able to handle captured aliens
+ * @sa B_BaseInit_f
+ */
+extern qboolean AC_ContainmentAllowed (void)
+{
+	if (baseCurrent->baseStatus != BASE_UNDER_ATTACK
+	 && B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, B_ALIEN_CONTAINMENT) > 0) {
+		return qtrue;
+	} else {
+		return qfalse;
+	}
+}

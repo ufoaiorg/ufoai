@@ -211,6 +211,7 @@ technology_t *RS_GetTechByProvided(const char *id_provided);
 technology_t* RS_GetTechByIDX(int tech_idx);
 technology_t *RS_GetTechWithMostScientists(int base_idx);
 int RS_GetTechIdxByName(const char *name);
+extern qboolean RS_ResearchAllowed(void);
 
 /* ufopedia function - but needs technology_t */
 void UP_Article(technology_t* tech);

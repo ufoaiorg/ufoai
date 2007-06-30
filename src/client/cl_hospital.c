@@ -665,3 +665,16 @@ extern qboolean HOS_Load (sizebuf_t *sb, void* data)
 	return qtrue;
 }
 
+/**
+ * @brief Returns true if you can buy or sell equipment
+ * @sa B_BaseInit_f
+ */
+extern qboolean HOS_HospitalAllowed (void)
+{
+	if (baseCurrent->baseStatus != BASE_UNDER_ATTACK
+	 && B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, B_HOSPITAL) > 0) {
+		return qtrue;
+	} else {
+		return qfalse;
+	}
+}

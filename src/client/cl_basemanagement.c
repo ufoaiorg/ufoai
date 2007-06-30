@@ -224,6 +224,72 @@ extern void B_SetSensor_f (void)
 }
 
 /**
+ * @brief Initialises base.
+ */
+static void B_BaseInit_f (void)
+{
+	int baseID = Cvar_VariableInteger("mn_base_id");
+
+	baseCurrent = &gd.bases[baseID];
+
+	Cvar_SetValue("mn_medics_in_base", E_CountHired(baseCurrent, EMPL_MEDIC));
+	Cvar_SetValue("mn_soldiers_in_base", E_CountHired(baseCurrent, EMPL_SOLDIER));
+	Cvar_SetValue("mn_scientists_in_base", E_CountHired(baseCurrent, EMPL_SCIENTIST));
+
+	Cvar_Set("mn_credits", va(_("%i c"), ccs.credits));
+
+	/* activate or deactivate the aircraft button */
+	if (AIR_AircraftAllowed()) {
+		Cvar_SetValue("mn_base_num_aircraft", baseCurrent->numAircraftInBase);
+		Cbuf_ExecuteText(EXEC_NOW, "set_aircraft_enabled");
+	} else {
+		Cvar_SetValue("mn_base_num_aircraft", -1);
+		Cbuf_ExecuteText(EXEC_NOW, "set_aircraft_disabled");
+	}
+	if (BS_BuySellAllowed()) {
+		Cvar_SetValue("mn_base_buysell_allowed", qtrue);
+		Cbuf_ExecuteText(EXEC_NOW, "set_buysell_enabled");
+	} else {
+		Cvar_SetValue("mn_base_buysell_allowed", qfalse);
+		Cbuf_ExecuteText(EXEC_NOW, "set_buysell_disabled");
+	}
+	if (gd.numBases > 1) {
+		Cbuf_AddText("set_transfer_enabled;");
+	} else {
+		Cbuf_AddText("set_transfer_disabled;");
+	}
+	if (RS_ResearchAllowed()) {
+		Cvar_SetValue("mn_base_research_allowed", qtrue);
+		Cbuf_ExecuteText(EXEC_NOW, "set_research_enabled");
+	} else {
+		Cvar_SetValue("mn_base_research_allowed", qfalse);
+		Cbuf_ExecuteText(EXEC_NOW, "set_research_disabled");
+	}
+	Cvar_SetValue("mn_base_prod_allowed", PR_ProductionAllowed());
+	if (E_HireAllowed()) {
+		Cvar_SetValue("mn_base_hire_allowed", qtrue);
+		Cbuf_ExecuteText(EXEC_NOW, "set_hire_enabled");
+	} else {
+		Cvar_SetValue("mn_base_hire_allowed", qfalse);
+		Cbuf_ExecuteText(EXEC_NOW, "set_hire_disabled");
+	}
+	if (AC_ContainmentAllowed()) {
+		Cvar_SetValue("mn_base_containment_allowed", qtrue);
+		Cbuf_ExecuteText(EXEC_NOW, "set_containment_enabled");
+	} else {
+		Cvar_SetValue("mn_base_containment_allowed", qfalse);
+		Cbuf_ExecuteText(EXEC_NOW, "set_containment_disabled");
+	}
+	if (HOS_HospitalAllowed()) {
+		Cvar_SetValue("mn_base_hospital_allowed", qtrue);
+		Cbuf_ExecuteText(EXEC_NOW, "set_hospital_enabled");
+	} else {
+		Cvar_SetValue("mn_base_hospital_allowed", qfalse);
+		Cbuf_ExecuteText(EXEC_NOW, "set_hospital_disabled");
+	}
+}
+
+/**
  * @brief We are doing the real destroy of a buliding here
  * @sa B_BuildingDestroy
  * @sa B_NewBuilding
@@ -346,6 +412,7 @@ static void B_BuildingDestroy_f (void)
 
 	B_ResetBuildingCurrent();
 	B_BuildingStatus();
+	B_BaseInit_f();
 
 	/* Update capacities - but don't update all */
 	if (cap != MAX_CAP)
@@ -716,6 +783,7 @@ static qboolean B_ConstructBuilding (void)
 	}
 
 	CL_UpdateCredits(ccs.credits - baseCurrent->buildingCurrent->fixCosts);
+	B_BaseInit_f();
 	return qtrue;
 }
 
@@ -1642,22 +1710,6 @@ extern void B_DrawBase (menuNode_t * node)
 }
 
 /**
- * @brief Initialises base.
- */
-static void B_BaseInit_f (void)
-{
-	int baseID = Cvar_VariableInteger("mn_base_id");
-
-	baseCurrent = &gd.bases[baseID];
-
-	Cvar_SetValue("mn_medics_in_base", E_CountHired(baseCurrent, EMPL_MEDIC));
-	Cvar_SetValue("mn_soldiers_in_base", E_CountHired(baseCurrent, EMPL_SOLDIER));
-	Cvar_SetValue("mn_scientists_in_base", E_CountHired(baseCurrent, EMPL_SCIENTIST));
-
-	Cvar_Set("mn_credits", va(_("%i c"), ccs.credits));
-}
-
-/**
  * @brief Renames a base.
  */
 static void B_RenameBase_f (void)
@@ -1778,23 +1830,10 @@ static void B_SelectBase_f (void)
 	 * in our base view port
 	 */
 	if (gd.mapAction != MA_NEWBASE) {
-		/* activate or deactivate the aircraft button */
-		if (baseCurrent->numAircraftInBase <= 0)
-			Cbuf_ExecuteText(EXEC_NOW, "set_base_no_aircraft");
-		else
-			Cbuf_ExecuteText(EXEC_NOW, "set_base_aircraft");
-
-		Cvar_SetValue("mn_base_status_id", baseCurrent->baseStatus);
-		Cvar_SetValue("mn_base_prod_allowed", PR_ProductionAllowed());
-		Cvar_SetValue("mn_base_num_aircraft", baseCurrent->numAircraftInBase);
 		Cvar_SetValue("mn_base_id", baseCurrent->idx);
-		Cvar_SetValue("mn_numbases", gd.numBases);
-		if (gd.numBases > 1) {
-			Cbuf_AddText("set_base_transfer;");
-		} else {
-			Cbuf_AddText("set_base_no_transfer;");
-		}
 		Cvar_Set("mn_base_title", baseCurrent->name);
+		Cvar_SetValue("mn_numbases", gd.numBases);
+		Cvar_SetValue("mn_base_status_id", baseCurrent->baseStatus);
 	}
 }
 
@@ -2414,6 +2453,9 @@ static void B_BuildingOpen_f (void)
 					else
 						MN_Popup(_("Note"), _("No aircraft in this base - You first have to purchase an aircraft\n"));
 				}
+				break;
+			case B_STORAGE:
+				MN_PushMenu("buy");
 				break;
 			default:
 				UP_OpenWith(baseCurrent->buildingCurrent->pedia);

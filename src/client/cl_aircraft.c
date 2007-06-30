@@ -2777,3 +2777,19 @@ extern qboolean AIR_Load (sizebuf_t* sb, void* data)
 	}
 	return qtrue;
 }
+
+/**
+ * @brief Returns true if the current base is able to handle aircrafts
+ * @sa B_BaseInit_f
+ * TODO : if base is under attack, if there is no command center, if there is no power ?
+ */
+extern qboolean AIR_AircraftAllowed (void)
+{
+	if (baseCurrent->baseStatus != BASE_UNDER_ATTACK
+	 && (B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, B_HANGAR) > 0
+		|| B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, B_SMALL_HANGAR) > 0)) {
+		return qtrue;
+	} else {
+		return qfalse;
+	}
+}

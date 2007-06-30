@@ -120,10 +120,10 @@ menu bases
 		out		{ *txt_aircraft color "0 0.8 0 1" *aircraft texl "0 0" *aircraft texh "230 64" }
 		in		{ *txt_aircraft color "1 1 1 1" *aircraft texl "230 0" *aircraft texh "460 64" }
 	}
-	pic aircraft_na
+	pic aircraft_buy
 	{
-		// only if base has at least one aircraft
-		if "mn_base_num_aircraft <= 0"
+		// only if base has no aircraft but can handle them
+		if "mn_base_num_aircraft == 0"
 		tooltip	"_Buy a new aircraft"
 		image	menu/button
 		pos	"755 180"
@@ -137,6 +137,16 @@ menu bases
 		out		{ *txt_aircraft color "0 0.8 0 1" *aircraft_na texl "0 0" *aircraft_na texh "230 64" }
 		in		{ *txt_aircraft color "1 1 1 1" *aircraft_na texl "230 0" *aircraft_na texh "460 64" }
 	}
+	pic aircraft_na
+	{
+		// only if base can't handle aircraft
+		if "mn_base_aircraft_allowed == -1"
+		tooltip	"_Build at least one Hangar"
+		image	menu/button
+		pos	"755 180"
+		texl	"0 64"
+		texh	"230 128"
+	}
 	string txt_aircraft
 	{
 		string	"_Aircraft"
@@ -148,8 +158,8 @@ menu bases
 
 	pic buysell
 	{
-		// only if base is not under attack
-		if "mn_base_status_id != 1"
+		// only if base is not under attack and has a storage
+		if "mn_base_buysell_allowed == 1"
 		tooltip	"_Buy/Sell equipment"
 		image	menu/button
 		pos	"755 240"
@@ -165,9 +175,9 @@ menu bases
 	}
 	pic buysell_na
 	{
-		// only if base is not under attack
-		if "mn_base_status_id == 1"
-		tooltip	"_Build base facilities"
+		// only if base is under attack don't have a storage
+		if "mn_base_buysell_allowed != 1"
+		tooltip	"_Build at least one Storage"
 		image	menu/button
 		pos	"755 240"
 		texl	"0 64"
@@ -220,7 +230,7 @@ menu bases
 	pic research
 	{
 		// only if base is not under attack
-		if "mn_base_status_id != 1"
+		if "mn_base_research_allowed == 1"
 		tooltip	"_Research new technology"
 		image	menu/button
 		pos	"755 360"
@@ -237,8 +247,8 @@ menu bases
 	pic research_na
 	{
 		// only if base is not under attack
-		if "mn_base_status_id == 1"
-		tooltip	"_Build base facilities"
+		if "mn_base_research_allowed != 1"
+		tooltip	"_Build at least one Laboratory"
 		image	menu/button
 		pos	"755 360"
 		texl	"0 64"
@@ -293,7 +303,7 @@ menu bases
 	pic hire
 	{
 		// only if base is not under attack
-		if "mn_base_status_id != 1"
+		if "mn_base_hire_allowed == 1"
 		tooltip	"_Hire employees"
 		image	menu/button
 		pos	"755 480"
@@ -310,8 +320,8 @@ menu bases
 	pic hire_na
 	{
 		// only if base is not under attack
-		if "mn_base_status_id == 1"
-		tooltip	"_Build base facilities"
+		if "mn_base_hire_allowed != 1"
+		tooltip	"_Build at least one Living Quarter"
 		image	menu/button
 		pos	"755 480"
 		texl	"0 64"
@@ -328,8 +338,7 @@ menu bases
 
 	pic containment
 	{
-		// only if base is not under attack
-		if "mn_base_status_id != 1"
+		if "mn_base_containment_allowed == 1"
 		tooltip	"_Deal with Aliens in Alien Containment"
 		image	menu/button
 		pos	"755 540"
@@ -343,7 +352,15 @@ menu bases
 		out		{ *txt_containment color "0 0.8 0 1" *containment texl "0 0" *containment texh "230 64" }
 		in		{ *txt_containment color "1 1 1 1" *containment texl "230 0" *containment texh "460 64" }
 	}
-
+	pic containment_na
+	{
+		if "mn_base_containment_allowed != 1"
+		tooltip	"_Build at least one Alien Containment"
+		image	menu/button
+		pos	"755 540"
+		texl	"0 64"
+		texh	"230 128"
+	}
 	string txt_containment
 	{
 		string	"_Containment"
@@ -355,8 +372,7 @@ menu bases
 
 	pic hospital
 	{
-		// only if base is not under attack
-		if "mn_base_status_id != 1"
+		if "mn_base_hospital_allowed == 1"
 		tooltip	"_Medical and Surgery operations"
 		image	menu/button
 		pos	"755 600"
@@ -370,18 +386,15 @@ menu bases
 		out		{ *txt_hospital color "0 0.8 0 1" *hospital texl "0 0" *hospital texh "230 64" }
 		in		{ *txt_hospital color "1 1 1 1" *hospital texl "230 0" *hospital texh "460 64" }
 	}
-
 	pic hospital_na
 	{
-		// FIXME: if no hospital in this base
-		if "mn_base_status_id == 1"
-		tooltip	"_Medical and Surgery operations"
+		if "mn_base_hospital_allowed != 1"
+		tooltip	"_Build at least one Hospital"
 		image	menu/button
 		pos	"755 600"
 		texl	"0 64"
 		texh	"230 128"
 	}
-
 	string txt_hospital
 	{
 		string	"_Hospital"
@@ -476,51 +489,98 @@ menu bases
 	confunc set_base_under_attack
 	{
 		*base_status color "1 0 0 1"
-		*txt_hire color "0.5 0.5 0.5 1"
-		*txt_research color "0.5 0.5 0.5 1"
 		*txt_building color "0.5 0.5 0.5 1"
+		*txt_aircraft color "0.5 0.5 0.5 1"
 		*txt_buysell color "0.5 0.5 0.5 1"
+		*txt_transfer color "0.5 0.5 0.5 1"
+		*txt_research color "0.5 0.5 0.5 1"
 		*txt_production color "0.5 0.5 0.5 1"
+		*txt_hire color "0.5 0.5 0.5 1"
+		*txt_hospital color "0.5 0.5 0.5 1"
 	}
-
 	confunc set_base_to_normal
 	{
 		*base_status color "1 1 1 1"
-		*txt_hire color "0 0.8 0 1"
-		*txt_research color "0 0.8 0 1"
 		*txt_building color "0 0.8 0 1"
+		*txt_aircraft color "0 0.8 0 1"
 		*txt_buysell color "0 0.8 0 1"
+		*txt_transfer color "0 0.8 0 1"
+		*txt_research color "0 0.8 0 1"
 		*txt_production color "0 0.8 0 1"
+		*txt_hire color "0 0.8 0 1"
+		*txt_hospital color "0 0.8 0 1"
 	}
 
-	confunc set_base_no_aircraft
+	confunc set_aircraft_disabled
 	{
-//		*txt_aircraft color "0.5 0.5 0.5 1"
+		*txt_aircraft color "0.5 0.5 0.5 1"
 	}
-
-	confunc set_base_aircraft
+	confunc set_aircraft_enabled
 	{
-//		*txt_aircraft color "0 0.8 0 1"
+		*txt_aircraft color "0 0.8 0 1"
 	}
 
-	confunc set_base_no_transfer
+	confunc set_buysell_disabled
+	{
+		*txt_buysell color "0.5 0.5 0.5 1"
+	}
+	confunc set_buysell_enabled
+	{
+		*txt_buysell color "0 0.8 0 1"
+	}
+
+	confunc set_transfer_disabled
 	{
 		*txt_transfer color "0.5 0.5 0.5 1"
 	}
-
-	confunc set_base_transfer
+	confunc set_transfer_enabled
 	{
 		*txt_transfer color "0 0.8 0 1"
+	}
+
+	confunc set_research_disabled
+	{
+		*txt_research color "0.5 0.5 0.5 1"
+	}
+	confunc set_research_enabled
+	{
+		*txt_research color "0 0.8 0 1"
 	}
 
 	confunc set_prod_disabled
 	{
 		*txt_production color "0.5 0.5 0.5 1"
 	}
-
 	confunc set_prod_enabled
 	{
 		*txt_production color "0 0.8 0 1"
+	}
+
+	confunc set_hire_disabled
+	{
+		*txt_hire color "0.5 0.5 0.5 1"
+	}
+	confunc set_hire_enabled
+	{
+		*txt_hire color "0 0.8 0 1"
+	}
+
+	confunc set_containment_disabled
+	{
+		*txt_containment color "0.5 0.5 0.5 1"
+	}
+	confunc set_containment_enabled
+	{
+		*txt_containment color "0 0.8 0 1"
+	}
+
+	confunc set_hospital_disabled
+	{
+		*txt_hospital color "0.5 0.5 0.5 1"
+	}
+	confunc set_hospital_enabled
+	{
+		*txt_hospital color "0 0.8 0 1"
 	}
 
 	func init
@@ -601,4 +661,3 @@ menu building_destroy
 		align	cc
 	}
 }
-

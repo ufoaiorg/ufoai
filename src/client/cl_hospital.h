@@ -34,3 +34,4 @@ extern void HOS_ReaddEmployeesInHospital(aircraft_t *aircraft);
 void HOS_RemoveDeadEmployeeFromLists (employee_t *employee);
 extern qboolean HOS_Save(sizebuf_t *sb, void* data);
 extern qboolean HOS_Load(sizebuf_t *sb, void* data);
+extern qboolean HOS_HospitalAllowed(void);

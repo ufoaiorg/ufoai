@@ -1130,3 +1130,17 @@ extern qboolean E_Load (sizebuf_t* sb, void* data)
 
 	return qtrue;
 }
+
+/**
+ * @brief Returns true if the current base is able to handle employees
+ * @sa B_BaseInit_f
+ */
+extern qboolean E_HireAllowed (void)
+{
+	if (baseCurrent->baseStatus != BASE_UNDER_ATTACK
+	 && B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, B_QUARTERS) > 0) {
+		return qtrue;
+	} else {
+		return qfalse;
+	}
+}

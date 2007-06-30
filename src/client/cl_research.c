@@ -2287,3 +2287,16 @@ extern qboolean RS_Load (sizebuf_t* sb, void* data)
 	return qtrue;
 }
 
+/**
+ * @brief Returns true if the current base is able to handle research
+ * @sa B_BaseInit_f
+ */
+extern qboolean RS_ResearchAllowed (void)
+{
+	if (baseCurrent->baseStatus != BASE_UNDER_ATTACK
+	 && B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, B_LAB) > 0) {
+		return qtrue;
+	} else {
+		return qfalse;
+	}
+}

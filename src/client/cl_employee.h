@@ -81,5 +81,6 @@ void E_UnhireAllEmployees(base_t* base, employeeType_t type);
 void E_DeleteAllEmployees(base_t* base);
 extern qboolean E_IsInBase(employee_t* empl, const base_t* const base);
 void E_Init(void);
+extern qboolean E_HireAllowed(void);
 
 #endif /* CLIENT_CL_EMPLOYEE */
