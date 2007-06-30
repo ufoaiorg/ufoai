@@ -2378,6 +2378,10 @@ elif test `echo $target_os | sed "s/\(mingw32\).*/\1/"` = "mingw32"
 then
 	TARGET_OS=mingw32
 
+elif test `echo $target_os | sed "s/\(solaris\).*/\1/"` = "solaris"
+then
+	TARGET_OS=solaris
+
 elif test `echo $target_os | sed "s/\(darwin\).*/\1/"` = "darwin"
 then
 	TARGET_OS=darwin

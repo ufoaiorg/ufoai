@@ -203,6 +203,9 @@ then
 elif test `echo $target_os | sed "s/\(mingw32\).*/\1/"` = "mingw32"
 then
 	AC_SUBST([TARGET_OS],[mingw32])
+elif test `echo $target_os | sed "s/\(solaris\).*/\1/"` = "solaris"
+then
+	AC_SUBST([TARGET_OS],[solaris])
 elif test `echo $target_os | sed "s/\(darwin\).*/\1/"` = "darwin"
 then
 	AC_SUBST([TARGET_OS],[darwin])

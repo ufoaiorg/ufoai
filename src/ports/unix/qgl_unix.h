@@ -17,14 +17,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
-#ifndef __linux__
-#ifndef __FreeBSD__
-#ifndef __NetBSD__
-#ifndef __APPLE__
-#error You shouldnt be including this file on non-Linux platforms
-#endif
-#endif
-#endif
+
+#if !(defined __linux__ || defined __FreeBSD__ || defined __sun || defined __APPLE__ || defined __NetBSD__)
+#error You should include this file only on Linux/FreeBSD/NetBSD/Solaris/Apple platforms
 #endif
 
 #ifndef __GLW_LINUX_H__
