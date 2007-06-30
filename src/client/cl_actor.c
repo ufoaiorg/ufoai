@@ -3023,6 +3023,8 @@ TARGETING GRAPHICS
 ==============================================================
 */
 
+#define LOOKUP_EPSILON 0.0001f
+
 /**
  * @brief table for lookup_erf
  * lookup[]= {erf(0), erf(0.1), ...}
@@ -3063,7 +3065,7 @@ static float lookup_erf (float z)
 
 	/* erf(-z)=-erf(z), but erf of -ve number should never be used here
 	 * so return 0 here */
-	if (z < 0.0001f)
+	if (z < LOOKUP_EPSILON)
 		return 0.0f;
 	if (z > 2.8f)
 		return 1.0f;
@@ -3121,8 +3123,8 @@ static float CL_TargetingToHit (pos3_t toPos)
 	stdevupdown = (selFD->spread[0] + acc * (1 + selFD->modif)) * commonfactor;
 	stdevleftright = (selFD->spread[1] + acc * (1 + selFD->modif)) * commonfactor;
 
-	hitchance = (stdevupdown > 0.0f ? lookup_erf(height * 0.3536f / stdevupdown) : 1.0f)
-			  * (stdevleftright > 0.0f ? lookup_erf(width * 0.3536f / stdevleftright) : 1.0f);
+	hitchance = (stdevupdown > LOOKUP_EPSILON ? lookup_erf(height * 0.3536f / stdevupdown) : 1.0f)
+			  * (stdevleftright > LOOKUP_EPSILON ? lookup_erf(width * 0.3536f / stdevleftright) : 1.0f);
 	/* 0.3536=sqrt(2)/4 */
 
 	/* Calculate cover: */
