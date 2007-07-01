@@ -921,7 +921,7 @@ void CL_StopVideo_f (void)
 /**
  * @brief
  */
-static __inline__ void SafeFS_Write (const void *buffer, int len, qFILE * f)
+static inline void SafeFS_Write (const void *buffer, int len, qFILE * f)
 {
 	int write = FS_Write(buffer, len, f);
 
