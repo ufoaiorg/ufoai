@@ -24,17 +24,17 @@ endif
 
 # Linux like
 ifeq ($(TARGET_OS),linux-gnu)
-	CFLAGS +=-D_GNU_SOURCE -D_BSD_SOURCE -D_XOPEN_SOURCE -std=c89
+	CFLAGS +=-D_GNU_SOURCE -D_BSD_SOURCE -D_XOPEN_SOURCE
 #	-Wunsafe-loop-optimizations
 endif
 
 # FreeBSD like
 ifeq ($(TARGET_OS),freebsd)
-	CFLAGS +=-D_BSD_SOURCE -D_XOPEN_SOURCE -std=c89
+	CFLAGS +=-D_BSD_SOURCE -D_XOPEN_SOURCE
 endif
 
 ifeq ($(TARGET_OS),netbsd)
-	CFLAGS +=-I/usr/X11R6/include -D_BSD_SOURCE -D_NETBSD_SOURCE -std=c89
+	CFLAGS +=-I/usr/X11R6/include -D_BSD_SOURCE -D_NETBSD_SOURCE
 endif
 
 # Darwin
