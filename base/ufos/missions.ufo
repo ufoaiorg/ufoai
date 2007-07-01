@@ -355,13 +355,13 @@ mission gasstation
 	text		"_Protect inhabitants"
 	map		gasstation05
 	music		AlexFightmare
-	pos		"-111 21"
+	pos		"68 -16"
 	aliens		4
 	alienteam	taman
 	alienequip	stage2_soldiers
 	civilians	6
-	civteam		european
-	nation		"latin"		//FIXME: wrong nation for given position
+	civteam		americans
+	nation		"latin"
 	onlose		""
 	onwin		""
 	storyrelated	true
@@ -736,7 +736,7 @@ mission baseattack
 
 //
 // CLEANUP CURRENTLY FINISHED HERE - DON'T MESS (20070325 Zenerka)
-// BELOW ONLY MISSIONS UNFINISHED AND COMMENTED OUT 
+// BELOW ONLY MISSIONS UNFINISHED AND COMMENTED OUT
 // OR MISSIONS WITH RANDOM MAP ASSEMBLING, NOT CHECKED YET
 //
 
