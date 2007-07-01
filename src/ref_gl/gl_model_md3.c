@@ -45,7 +45,7 @@ extern void Mod_LoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 	dmd3skin_t			*pinskin;
 	dmd3coord_t			*pincoord;
 	dmd3vertex_t		*pinvert;
-	index_t				*pinindex, *poutindex;
+	unsigned int		*pinindex, *poutindex;
 	maliasvertex_t		*poutvert;
 	maliascoord_t		*poutcoord;
 	maliasskin_t		*poutskin;
@@ -186,17 +186,17 @@ extern void Mod_LoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 		}
 
 		/* load the indexes */
-		pinindex = (index_t *)((byte *)pinmesh + LittleLong(pinmesh->ofs_tris));
-		poutindex = poutmesh->indexes = ri.TagMalloc(ri.modelPool, sizeof(index_t) * poutmesh->num_tris * 3, 0);
+		pinindex = (unsigned int *)((byte *)pinmesh + LittleLong(pinmesh->ofs_tris));
+		poutindex = poutmesh->indexes = ri.TagMalloc(ri.modelPool, sizeof(unsigned int) * poutmesh->num_tris * 3, 0);
 
 		for (j = 0; j < poutmesh->num_tris; j++, pinindex += 3, poutindex += 3) {
-			poutindex[0] = (index_t)LittleLong(pinindex[0]);
-			poutindex[1] = (index_t)LittleLong(pinindex[1]);
-			poutindex[2] = (index_t)LittleLong(pinindex[2]);
+			poutindex[0] = (unsigned int)LittleLong(pinindex[0]);
+			poutindex[1] = (unsigned int)LittleLong(pinindex[1]);
+			poutindex[2] = (unsigned int)LittleLong(pinindex[2]);
 		}
 
 		/* load the texture coordinates */
-		pincoord = (dmd3coord_t *)((byte *)pinmesh + LittleLong (pinmesh->ofs_tcs));
+		pincoord = (dmd3coord_t *)((byte *)pinmesh + LittleLong(pinmesh->ofs_tcs));
 		poutcoord = poutmesh->stcoords = ri.TagMalloc(ri.modelPool, sizeof(maliascoord_t) * poutmesh->num_verts, 0);
 
 		for (j = 0; j < poutmesh->num_verts; j++, pincoord++, poutcoord++) {

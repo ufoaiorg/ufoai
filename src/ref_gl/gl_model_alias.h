@@ -62,7 +62,7 @@ typedef	struct {
 	maliascoord_t	*stcoords;
 
 	int	num_tris;
-	index_t	*indexes;
+	unsigned int	*indexes;
 	int	*trneighbors;
 
 	int		num_skins;

@@ -192,8 +192,6 @@ typedef struct {
 /** vertex scales */
 #define	MD3_XYZ_SCALE		(1.0/64)
 
-typedef unsigned int index_t;
-
 typedef struct {
 	float st[2];
 } dmd3coord_t;
