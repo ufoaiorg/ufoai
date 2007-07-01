@@ -1011,7 +1011,7 @@ void Sys_FreeLibrary (void *libHandle)
 {
 	if (!libHandle)
 		Com_Error(ERR_DROP, "Sys_FreeLibrary: No valid handle given\n");
-	if (!FreeLibrary(libHandle))
+	if (!FreeLibrary((HMODULE)libHandle))
 		Com_Error(ERR_DROP, "Sys_FreeLibrary: dlclose() failed\n");
 }
 
@@ -1023,5 +1023,5 @@ void *Sys_GetProcAddress (void *libHandle, const char *procName)
 {
 	if (!libHandle)
 		Com_Error(ERR_DROP, "Sys_GetProcAddress: No valid libHandle given\n");
-	return GetProcAddress(libHandle, procName);
+	return GetProcAddress((HMODULE)libHandle, procName);
 }

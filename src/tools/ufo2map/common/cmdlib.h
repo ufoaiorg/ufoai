@@ -8,14 +8,15 @@
 #  define  __attribute__(x)  /*NOTHING*/
 #endif
 
-#ifdef _MSC_VER
-#pragma warning(disable : 4244)     /* MIPS */
-#pragma warning(disable : 4136)     /* X86 */
-#pragma warning(disable : 4051)     /* ALPHA */
 
-#pragma warning(disable : 4018)     /* signed/unsigned mismatch */
-#pragma warning(disable : 4305)     /* truncate from double to float */
-#endif
+#ifdef _MSC_VER
+#  define inline __inline
+#  pragma warning(disable : 4244)     /* MIPS */
+#  pragma warning(disable : 4136)     /* X86 */
+#  pragma warning(disable : 4051)     /* ALPHA */
+#  pragma warning(disable : 4018)     /* signed/unsigned mismatch */
+#  pragma warning(disable : 4305)     /* truncate from double to float */
+#endif	/* _MSC_VER */
 
 #include <stdio.h>
 #include <string.h>
