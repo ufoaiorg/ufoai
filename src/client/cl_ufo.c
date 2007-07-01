@@ -33,9 +33,10 @@ extern void UFO_CampaignCheckEvents(void);
 extern void UFO_Reset(void);
 
 typedef struct ufoTypeList_s {
-	const char *id;
-	const char *name;
-	int ufoType;
+	const char *id;		/**< script id string */
+	const char *name;	/**< these values are already taken from script file
+						 * so we have to use gettext markers here */
+	int ufoType;		/**< ufoType_t values */
 } ufoTypeList_t;
 
 /**
