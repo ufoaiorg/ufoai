@@ -4322,11 +4322,14 @@ static void CP_UFOCrashed_f (void)
 		return;
 	}
 
-	if ((atoi(Cmd_Argv(2)) >= 0) && (atoi(Cmd_Argv(2)) < UFO_MAX)) {
+	if ((atoi(Cmd_Argv(1)) >= 0) && (atoi(Cmd_Argv(1)) < UFO_MAX)) {
 		UFOtype = atoi(Cmd_Argv(1));
 	} else {
-		Com_Printf("CP_UFOCrashed_f()... UFOType: %i does not exist!\n", atoi(Cmd_Argv(1)));
-		return;
+		UFOtype = UFO_ShortNameToID(Cmd_Argv(1));
+		if (UFOtype == UFO_MAX) {
+			Com_Printf("CP_UFOCrashed_f()... UFOType: %i does not exist!\n", atoi(Cmd_Argv(1)));
+			return;
+		}
 	}
 
 	/* Find ufo sample of given ufotype. */

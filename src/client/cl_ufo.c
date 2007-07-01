@@ -35,6 +35,31 @@ extern void UFO_Reset(void);
 /**
  * @brief Translate UFO type to short name.
  * @sa UFO_TypeToName
+ * @sa UFO_TypeToShortName
+ */
+extern ufoType_t UFO_ShortNameToID (const char *token)
+{
+	if (!Q_strncmp(token, "scout", 5))
+		return UFO_SCOUT;
+	else if (!Q_strncmp(token, "fighter", 7))
+		return UFO_FIGHTER;
+	else if (!Q_strncmp(token, "harvester", 9))
+		return UFO_HARVESTER;
+	else if (!Q_strncmp(token, "condor", 6))
+		return UFO_CONDOR;
+	else if (!Q_strncmp(token, "carrier", 7))
+		return UFO_CARRIER;
+	else if (!Q_strncmp(token, "supply", 6))
+		return UFO_SUPPLY;
+	else
+		Com_Printf("UFO_ShortNameToID: Unknown ufo-type: %s\n", token);
+	return UFO_MAX;
+}
+
+/**
+ * @brief Translate UFO type to short name.
+ * @sa UFO_TypeToName
+ * @sa UFO_ShortNameToID
  */
 extern const char* UFO_TypeToShortName (ufoType_t type)
 {
@@ -63,6 +88,7 @@ extern const char* UFO_TypeToShortName (ufoType_t type)
  * @param[in] type UFO type in ufoType_t.
  * @return Translated UFO name.
  * @sa UFO_TypeToShortName
+ * @sa UFO_ShortNameToID
  */
 extern const char* UFO_TypeToName (ufoType_t type)
 {

@@ -2211,18 +2211,9 @@ extern void AIR_ParseAircraft (const char *name, char **text, qboolean assignAir
 				token = COM_EParse(text, errhead, name);
 				if (!*text)
 					return;
-				if (!Q_strncmp(token, "scout", 5))
-					air_samp->ufotype = UFO_SCOUT;
-				else if (!Q_strncmp(token, "fighter", 7))
-					air_samp->ufotype = UFO_FIGHTER;
-				else if (!Q_strncmp(token, "harvester", 9))
-					air_samp->ufotype = UFO_HARVESTER;
-				else if (!Q_strncmp(token, "condor", 6))
-					air_samp->ufotype = UFO_CONDOR;
-				else if (!Q_strncmp(token, "carrier", 7))
-					air_samp->ufotype = UFO_CARRIER;
-				else if (!Q_strncmp(token, "supply", 6))
-					air_samp->ufotype = UFO_SUPPLY;
+				air_samp->ufotype = UFO_ShortNameToID(token);
+				if (air_samp->ufotype == UFO_MAX)
+					Sys_Error("AIR_ParseAircraft: Unknown ufotype %s\n", token);
 			} else if (!vp->string) {
 				Com_Printf("AIR_ParseAircraft: unknown token \"%s\" ignored (aircraft %s)\n", token, name);
 				COM_EParse(text, errhead, name);
