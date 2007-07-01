@@ -994,8 +994,8 @@ void Draw_3DGlobe (int x, int y, int w, int h, float p, vec3_t rotate, float zoo
 	qglCullFace(GL_BACK);
 
 	/* add the light */
-	lightPos[0] = cos (p);
-	lightPos[1] = sin (p);
+	lightPos[0] = cos(p);
+	lightPos[1] = -sin(p);
 	qglLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 	qglLightfv(GL_LIGHT0, GL_DIFFUSE, lightColor);
 	qglLightfv(GL_LIGHT0, GL_AMBIENT, lightColor);
