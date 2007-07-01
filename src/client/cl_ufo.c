@@ -32,6 +32,26 @@ static void UFO_RemoveUfoFromGeoscape_f(void);
 extern void UFO_CampaignCheckEvents(void);
 extern void UFO_Reset(void);
 
+typedef struct ufoTypeList_s {
+	const char *id;
+	const char *name;
+	int ufoType;
+} ufoTypeList_t;
+
+/**
+ * @brief Valid ufo types
+ */
+static const ufoTypeList_t ufoTypeList[] = {
+	{"ufo_scout", "UFO - Scout", UFO_SCOUT},
+	{"ufo_fighter", "UFO - Fighter", UFO_FIGHTER},
+	{"ufo_harvester", "UFO - Harvester", UFO_HARVESTER},
+	{"ufo_condor", "UFO - Condor", UFO_CONDOR},
+	{"ufo_carrier", "UFO - Carrier", UFO_CARRIER},
+	{"ufo_supply", "UFO - Supply", UFO_SUPPLY},
+
+	{NULL, NULL, 0}
+};
+
 /**
  * @brief Translate UFO type to short name.
  * @sa UFO_TypeToName
@@ -39,20 +59,14 @@ extern void UFO_Reset(void);
  */
 extern ufoType_t UFO_ShortNameToID (const char *token)
 {
-	if (!Q_strncmp(token, "scout", 5))
-		return UFO_SCOUT;
-	else if (!Q_strncmp(token, "fighter", 7))
-		return UFO_FIGHTER;
-	else if (!Q_strncmp(token, "harvester", 9))
-		return UFO_HARVESTER;
-	else if (!Q_strncmp(token, "condor", 6))
-		return UFO_CONDOR;
-	else if (!Q_strncmp(token, "carrier", 7))
-		return UFO_CARRIER;
-	else if (!Q_strncmp(token, "supply", 6))
-		return UFO_SUPPLY;
-	else
-		Com_Printf("UFO_ShortNameToID: Unknown ufo-type: %s\n", token);
+	const ufoTypeList_t *list = ufoTypeList;
+
+	while (list->id) {
+		if (!Q_strcmp(list->id, token))
+			return list->ufoType;
+		list++;
+	}
+	Com_Printf("UFO_ShortNameToID: Unknown ufo-type: %s\n", token);
 	return UFO_MAX;
 }
 
@@ -63,23 +77,14 @@ extern ufoType_t UFO_ShortNameToID (const char *token)
  */
 extern const char* UFO_TypeToShortName (ufoType_t type)
 {
-	switch(type) {
-	case UFO_SCOUT:
-		return "ufo_scout";
-	case UFO_FIGHTER:
-		return "ufo_fighter";
-	case UFO_HARVESTER:
-		return "ufo_harvester";
-	case UFO_CONDOR:
-		return "ufo_condor";
-	case UFO_CARRIER:
-		return "ufo_carrier";
-	case UFO_SUPPLY:
-		return "ufo_supply";
-	default:
-		Sys_Error("UFO_TypeToShortName(): Unknown UFO type %i\n", type);
-		break;
+	const ufoTypeList_t *list = ufoTypeList;
+
+	while (list->id) {
+		if (list->ufoType == type)
+			return list->id;
+		list++;
 	}
+	Sys_Error("UFO_TypeToShortName(): Unknown UFO type %i\n", type);
 	return NULL; /* never reached */
 }
 
@@ -92,23 +97,14 @@ extern const char* UFO_TypeToShortName (ufoType_t type)
  */
 extern const char* UFO_TypeToName (ufoType_t type)
 {
-	switch(type) {
-	case UFO_SCOUT:
-		return _("UFO - Scout");
-	case UFO_FIGHTER:
-		return _("UFO - Fighter");
-	case UFO_HARVESTER:
-		return _("UFO - Harvester");
-	case UFO_CONDOR:
-		return _("UFO - Condor");
-	case UFO_CARRIER:
-		return _("UFO - Carrier");
-	case UFO_SUPPLY:
-		return _("UFO - Supply");
-	default:
-		Sys_Error("UFO_TypeToName(): Unknown UFO type %i\n", type);
-		break;
+	const ufoTypeList_t *list = ufoTypeList;
+
+	while (list->id) {
+		if (list->ufoType == type)
+			return _(list->name);
+		list++;
 	}
+	Sys_Error("UFO_TypeToName(): Unknown UFO type %i\n", type);
 	return NULL; /* never reached */
 }
 

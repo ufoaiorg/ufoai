@@ -246,7 +246,7 @@ aircraft craft_ufo_harvester
 	name		"_UFO - Harvester"
 	shortname	"_Harvester U"
 	type		ufo
-	ufotype		harvester
+	ufotype		ufo_harvester
 	model		"ufo_harvester"
 	size		4
 	weight		3
@@ -279,7 +279,7 @@ aircraft craft_ufo_carrier
 	name		"_UFO - Carrier"
 	shortname	"Carrier U"
 	type		ufo
-	ufotype		carrier
+	ufotype		ufo_carrier
 	model		"ufo_carrier"
 	size		4
 	weight		3
@@ -308,7 +308,7 @@ aircraft craft_ufo_supply
 	name		"_UFO - Supply"
 	shortname	"_Supply U"
 	type		ufo
-	ufotype		supply
+	ufotype		ufo_supply
 	model		"ufo_supply"
 	size		4
 	weight		3
@@ -337,7 +337,7 @@ aircraft craft_ufo_condor
 	name		"_UFO - Condor"
 	shortname	"_Condor U"
 	type		ufo
-	ufotype		condor
+	ufotype		ufo_condor
 	model		"ufo_condor"
 	size		4
 	weight		3
@@ -365,7 +365,7 @@ aircraft craft_ufo_scout
 	name		"_UFO - Scout"
 	shortname	"_Scout U"
 	type		ufo
-	ufotype		scout
+	ufotype		ufo_scout
 	model		"ufo_scout"
 	size		4
 	weight		3
@@ -393,7 +393,7 @@ aircraft craft_ufo_fighter
 	name		"_UFO - Fighter"
 	shortname	"_Fighter U"
 	type		ufo
-	ufotype		fighter
+	ufotype		ufo_fighter
 	model		"ufo_fighter"
 	size		8
 	weight		4

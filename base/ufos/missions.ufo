@@ -468,7 +468,7 @@ mission mine_crash
 	civteam		european
 	nation		"africa"
 	onlose		""
-	onwin		"cp_ufocrashed fighter;"
+	onwin		"cp_ufocrashed ufo_fighter;"
 	storyrelated	true
 }
 
@@ -493,7 +493,7 @@ mission bridge
 	civteam		european
 	nation		"europa"
 	onlose		""
-	onwin		"cp_ufocrashed fighter;"
+	onwin		"cp_ufocrashed ufo_fighter;"
 	storyrelated	true
 }
 
@@ -641,7 +641,7 @@ mission harvestercrash
 	civteam		european
 	nation		"latin"
 	onlose		""
-	onwin		"cp_ufocrashed harvester;"
+	onwin		"cp_ufocrashed ufo_harvester;"
 	storyrelated	true
 }
 
