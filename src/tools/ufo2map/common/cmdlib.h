@@ -18,6 +18,11 @@
 #  pragma warning(disable : 4305)     /* truncate from double to float */
 #endif	/* _MSC_VER */
 
+#ifndef inline
+/* if we are using ansi - the compiler doesn't know about inline */
+#define inline __inline__
+#endif
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>

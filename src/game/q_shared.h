@@ -85,6 +85,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifdef _WIN32
 # include <direct.h>
 # include <io.h>
+# ifndef snprintf
+#  define snprintf _snprintf
+# endif
 #else
 # ifndef SHARED_EXT
 #  define SHARED_EXT "so"
@@ -96,10 +99,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # include <dirent.h>
 #endif
 
-#if defined(_WIN32)
-# ifndef snprintf
-#  define snprintf _snprintf
-# endif
+#ifndef inline
+/* if we are using ansi - the compiler doesn't know about inline */
+#define inline __inline__
 #endif
 
 #ifdef NO_GETTEXT
@@ -381,9 +383,6 @@ void Print3Vector(const vec3_t v);
 
 void VecToPolar(const vec3_t v, vec2_t a);
 void PolarToVec(const vec2_t a, vec3_t v);
-
-void R_ConcatRotations(float in1[3][3], float in2[3][3], float out[3][3]);
-void R_ConcatTransforms(float in1[3][4], float in2[3][4], float out[3][4]);
 
 void AngleVectors(vec3_t angles, vec3_t forward, vec3_t right, vec3_t up);
 int BoxOnPlaneSide(vec3_t emins, vec3_t emaxs, struct cBspPlane_s *plane);

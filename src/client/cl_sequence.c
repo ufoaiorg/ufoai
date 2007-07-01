@@ -921,7 +921,7 @@ void CL_StopVideo_f (void)
 /**
  * @brief
  */
-static void SafeFS_Write (const void *buffer, int len, qFILE * f)
+static __inline__ void SafeFS_Write (const void *buffer, int len, qFILE * f)
 {
 	int write = FS_Write(buffer, len, f);
 
@@ -932,7 +932,7 @@ static void SafeFS_Write (const void *buffer, int len, qFILE * f)
 /**
  * @brief
  */
-static void WRITE_STRING (const char *s)
+static inline void WRITE_STRING (const char *s)
 {
 	memcpy(&buffer[bufIndex], s, strlen(s));
 	bufIndex += strlen(s);
@@ -941,7 +941,7 @@ static void WRITE_STRING (const char *s)
 /**
  * @brief
  */
-static void WRITE_4BYTES (int x)
+static inline void WRITE_4BYTES (int x)
 {
 	buffer[bufIndex + 0] = (byte) ((x >> 0) & 0xFF);
 	buffer[bufIndex + 1] = (byte) ((x >> 8) & 0xFF);
@@ -953,7 +953,7 @@ static void WRITE_4BYTES (int x)
 /**
  * @brief
  */
-static void WRITE_2BYTES (int x)
+static inline void WRITE_2BYTES (int x)
 {
 	buffer[bufIndex + 0] = (byte) ((x >> 0) & 0xFF);
 	buffer[bufIndex + 1] = (byte) ((x >> 8) & 0xFF);
@@ -964,7 +964,7 @@ static void WRITE_2BYTES (int x)
 /**
  * @brief
  */
-static void WRITE_1BYTES (int x)
+static inline void WRITE_1BYTES (int x)
 {
 	buffer[bufIndex] = x;
 	bufIndex += 1;
@@ -974,7 +974,7 @@ static void WRITE_1BYTES (int x)
 /**
  * @brief
  */
-static void START_CHUNK (const char *s)
+static inline void START_CHUNK (const char *s)
 {
 	if (afd.chunkStackTop == MAX_RIFF_CHUNKS)
 		Sys_Error("ERROR: Top of chunkstack breached\n");
@@ -988,7 +988,7 @@ static void START_CHUNK (const char *s)
 /**
  * @brief
  */
-static void END_CHUNK (void)
+static inline void END_CHUNK (void)
 {
 	int endIndex = bufIndex;
 

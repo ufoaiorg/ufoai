@@ -75,7 +75,7 @@ qboolean VectorNearer (const vec3_t v1, const vec3_t v2, const vec3_t comp)
 /**
  * @brief
  */
-vec_t Q_rint (const vec_t in)
+inline vec_t Q_rint (const vec_t in)
 {
 	return floor(in + 0.5);
 }
@@ -83,7 +83,7 @@ vec_t Q_rint (const vec_t in)
 /**
  * @brief Sets vector_out (vc) to vevtor1 (va) + scale * vector2 (vb)
  */
-void VectorMA (const vec3_t va, const vec_t scale, const vec3_t vb, vec3_t vc)
+inline void VectorMA (const vec3_t va, const vec_t scale, const vec3_t vb, vec3_t vc)
 {
 	vc[0] = va[0] + scale * vb[0];
 	vc[1] = va[1] + scale * vb[1];
@@ -93,7 +93,7 @@ void VectorMA (const vec3_t va, const vec_t scale, const vec3_t vb, vec3_t vc)
 /**
  * @brief Cross prodcut of v1 and v2 saved in cross
  */
-void CrossProduct (const vec3_t v1, const vec3_t v2, vec3_t cross)
+inline void CrossProduct (const vec3_t v1, const vec3_t v2, vec3_t cross)
 {
 	cross[0] = v1[1] * v2[2] - v1[2] * v2[1];
 	cross[1] = v1[2] * v2[0] - v1[0] * v2[2];
@@ -103,7 +103,7 @@ void CrossProduct (const vec3_t v1, const vec3_t v2, vec3_t cross)
 /**
  * @brief Dot product of v1 and v2
  */
-vec_t _DotProduct (const vec3_t v1, vec3_t v2)
+inline vec_t _DotProduct (const vec3_t v1, vec3_t v2)
 {
 	return v1[0] * v2[0] + v1[1] * v2[1] + v1[2] * v2[2];
 }
@@ -111,7 +111,7 @@ vec_t _DotProduct (const vec3_t v1, vec3_t v2)
 /**
  * @brief
  */
-void _VectorSubtract (const vec3_t va, const vec3_t vb, vec3_t out)
+inline void _VectorSubtract (const vec3_t va, const vec3_t vb, vec3_t out)
 {
 	out[0] = va[0]-vb[0];
 	out[1] = va[1]-vb[1];
@@ -121,7 +121,7 @@ void _VectorSubtract (const vec3_t va, const vec3_t vb, vec3_t out)
 /**
  * @brief
  */
-void _VectorAdd (const vec3_t va, const vec3_t vb, vec3_t out)
+inline void _VectorAdd (const vec3_t va, const vec3_t vb, vec3_t out)
 {
 	out[0] = va[0] + vb[0];
 	out[1] = va[1] + vb[1];
@@ -131,7 +131,7 @@ void _VectorAdd (const vec3_t va, const vec3_t vb, vec3_t out)
 /**
  * @brief
  */
-void _VectorCopy (const vec3_t in, vec3_t out)
+inline void _VectorCopy (const vec3_t in, vec3_t out)
 {
 	out[0] = in[0];
 	out[1] = in[1];
@@ -141,7 +141,7 @@ void _VectorCopy (const vec3_t in, vec3_t out)
 /**
  * @brief Sets out to scale * v
  */
-void _VectorScale (const vec3_t v, const vec_t scale, vec3_t out)
+inline void _VectorScale (const vec3_t v, const vec_t scale, vec3_t out)
 {
 	out[0] = v[0] * scale;
 	out[1] = v[1] * scale;
@@ -152,7 +152,7 @@ void _VectorScale (const vec3_t v, const vec_t scale, vec3_t out)
  * @brief Returns a vector in the same direction as the given vector but only
  * one unit long
  */
-vec_t VectorNormalize (const vec3_t in, vec3_t out)
+inline vec_t VectorNormalize (const vec3_t in, vec3_t out)
 {
 	vec_t	length, ilength;
 
@@ -173,7 +173,7 @@ vec_t VectorNormalize (const vec3_t in, vec3_t out)
 /**
  * @brief
  */
-vec_t ColorNormalize (const vec3_t in, vec3_t out)
+inline vec_t ColorNormalize (const vec3_t in, vec3_t out)
 {
 	float	max, scale;
 
@@ -196,7 +196,7 @@ vec_t ColorNormalize (const vec3_t in, vec3_t out)
 /**
  * @brief Sets vector to -1 * v
  */
-void VectorInverse (vec3_t v)
+inline void VectorInverse (vec3_t v)
 {
 	v[0] = -v[0];
 	v[1] = -v[1];
@@ -207,7 +207,7 @@ void VectorInverse (vec3_t v)
  * @brief Sets mins and maxs to their starting points before using AddPointToBounds
  * @sa AddPointToBounds
  */
-void ClearBounds (vec3_t mins, vec3_t maxs)
+inline void ClearBounds (vec3_t mins, vec3_t maxs)
 {
 	mins[0] = mins[1] = mins[2] = 99999;
 	maxs[0] = maxs[1] = maxs[2] = -99999;

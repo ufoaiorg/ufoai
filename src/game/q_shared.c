@@ -168,6 +168,176 @@ int AngleToDV (int angle)
 
 /*============================================================================ */
 
+/**
+ * @brief Rotate a point around static (idle ?) frame {0, 1, 0}, {0, 0, 1} ,{1, 0, 0}
+ * @param[in] angles Contains the three angles of rotation around idle frame ({0, 1, 0}, {0, 0, 1} ,{1, 0, 0}) (in this order)
+ * @param[out] forward result of previous rotation for point {1, 0, 0} (can be NULL if not needed)
+ * @param[out] right result of previous rotation for point {0, -1, 0} (!) (can be NULL if not needed)
+ * @param[out] up result of previous rotation for point {0, 0, 1} (can be NULL if not needed)
+ */
+void AngleVectors (vec3_t angles, vec3_t forward, vec3_t right, vec3_t up)
+{
+	float angle;
+	static float sr, sp, sy, cr, cp, cy;
+
+	/* static to help MS compiler fp bugs */
+
+	angle = angles[YAW] * (M_PI * 2 / 360);
+	sy = sin(angle);
+	cy = cos(angle);
+	angle = angles[PITCH] * (M_PI * 2 / 360);
+	sp = sin(angle);
+	cp = cos(angle);
+	angle = angles[ROLL] * (M_PI * 2 / 360);
+	sr = sin(angle);
+	cr = cos(angle);
+
+	if (forward) {
+		forward[0] = cp * cy;
+		forward[1] = cp * sy;
+		forward[2] = -sp;
+	}
+	if (right) {
+		right[0] = (-1 * sr * sp * cy + -1 * cr * -sy);
+		right[1] = (-1 * sr * sp * sy + -1 * cr * cy);
+		right[2] = -1 * sr * cp;
+	}
+	if (up) {
+		up[0] = (cr * sp * cy + -sr * -sy);
+		up[1] = (cr * sp * sy + -sr * cy);
+		up[2] = cr * cp;
+	}
+}
+
+/**
+ * @brief Projects a point on a plane passing through the origin
+ * @param[in] point Coordinates of the point to project
+ * @param[in] normal The normal vector of the plane
+ * @param[out] dst Coordinates of the projection on the plane
+ * @pre @c Non-null pointers and a normalized normal vector.
+ */
+inline void ProjectPointOnPlane (vec3_t dst, const vec3_t point, const vec3_t normal)
+{
+	float distance; /**< closest distance from the point to the plane */
+
+#if 0
+	vec3_t n;
+	float inv_denom;
+	/* I added a sqrt there, otherwise this function does not work for unnormalized vector (13052007 Kracken) */
+	/* old line was inv_denom = 1.0F / DotProduct(normal, normal); */
+	inv_denom = 1.0F / sqrt(DotProduct(normal, normal));
+#endif
+
+	distance = DotProduct(normal, point);
+#if 0
+	n[0] = normal[0] * inv_denom;
+	n[1] = normal[1] * inv_denom;
+	n[2] = normal[2] * inv_denom;
+#endif
+
+	dst[0] = point[0] - distance * normal[0];
+	dst[1] = point[1] - distance * normal[1];
+	dst[2] = point[2] - distance * normal[2];
+}
+
+/**
+ * @brief Calculated the normal vector for a given vec3_t
+ * @param[in] v Vector to normalize
+ * @sa VectorNormalize2
+ * @return vector length as vec_t
+ */
+inline vec_t VectorNormalize (vec3_t v)
+{
+	float length, ilength;
+
+	length = v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
+	length = sqrt(length);		/* FIXME */
+
+	if (length) {
+		ilength = 1 / length;
+		v[0] *= ilength;
+		v[1] *= ilength;
+		v[2] *= ilength;
+	}
+
+	return length;
+}
+
+/**
+ * @brief Finds a vector perpendicular to the source vector
+ * @param[in] src The source vector
+ * @param[out] dst A vector perpendicular to @c src
+ * @note @c dst is a perpendicular vector to @c src such that it is the closest
+ * to one of the three axis: {1,0,0}, {0,1,0} and {0,0,1} (chosen in that order
+ * in case of equality)
+ * @pre non-NULL pointers and @c src is normalized
+ * @sa ProjectPointOnPlane
+ */
+void PerpendicularVector (vec3_t dst, const vec3_t src)
+{
+	int pos;
+	int i;
+	float minelem = 1.0F;
+	vec3_t tempvec;
+
+	/* find the smallest magnitude axially aligned vector */
+	for (pos = 0, i = 0; i < 3; i++) {
+		if (fabs(src[i]) < minelem) {
+			pos = i;
+			minelem = fabs(src[i]);
+		}
+	}
+	tempvec[0] = tempvec[1] = tempvec[2] = 0.0F;
+	tempvec[pos] = 1.0F;
+
+	/* project the point onto the plane defined by src */
+	ProjectPointOnPlane(dst, tempvec, src);
+
+	/* normalize the result */
+	VectorNormalize(dst);
+}
+
+/**
+ * @brief binary operation on vectors in a three-dimensional space
+ * @note also known as the vector product or outer product
+ * @note It differs from the dot product in that it results in a vector
+ * rather than in a scalar
+ * @note Its main use lies in the fact that the cross product of two vectors
+ * is orthogonal to both of them.
+ * @param[in] v1 directional vector
+ * @param[in] v2 directional vector
+ * @param[in] cross output
+ * @example
+ * you have the right and forward values of an axis, their cross product will
+ * be a properly oriented "up" direction
+ * @sa _DotProduct
+ * @sa DotProduct
+ * @sa VectorNormalize2
+ */
+inline void CrossProduct (const vec3_t v1, const vec3_t v2, vec3_t cross)
+{
+	cross[0] = v1[1] * v2[2] - v1[2] * v2[1];
+	cross[1] = v1[2] * v2[0] - v1[0] * v2[2];
+	cross[2] = v1[0] * v2[1] - v1[1] * v2[0];
+}
+
+/**
+ * @brief
+ * @param
+ */
+static inline void R_ConcatRotations (float in1[3][3], float in2[3][3], float out[3][3])
+{
+	out[0][0] = in1[0][0] * in2[0][0] + in1[0][1] * in2[1][0] + in1[0][2] * in2[2][0];
+	out[0][1] = in1[0][0] * in2[0][1] + in1[0][1] * in2[1][1] + in1[0][2] * in2[2][1];
+	out[0][2] = in1[0][0] * in2[0][2] + in1[0][1] * in2[1][2] + in1[0][2] * in2[2][2];
+	out[1][0] = in1[1][0] * in2[0][0] + in1[1][1] * in2[1][0] + in1[1][2] * in2[2][0];
+	out[1][1] = in1[1][0] * in2[0][1] + in1[1][1] * in2[1][1] + in1[1][2] * in2[2][1];
+	out[1][2] = in1[1][0] * in2[0][2] + in1[1][1] * in2[1][2] + in1[1][2] * in2[2][2];
+	out[2][0] = in1[2][0] * in2[0][0] + in1[2][1] * in2[1][0] + in1[2][2] * in2[2][0];
+	out[2][1] = in1[2][0] * in2[0][1] + in1[2][1] * in2[1][1] + in1[2][2] * in2[2][1];
+	out[2][2] = in1[2][0] * in2[0][2] + in1[2][1] * in2[1][2] + in1[2][2] * in2[2][2];
+}
+
 #ifdef _MSC_VER
 #pragma optimize( "", off )
 #endif
@@ -238,152 +408,6 @@ void RotatePointAroundVector (vec3_t dst, const vec3_t dir, const vec3_t point, 
 #ifdef _MSC_VER
 #pragma optimize( "", on )
 #endif
-
-/**
- * @brief Rotate a point around static (idle ?) frame {0, 1, 0}, {0, 0, 1} ,{1, 0, 0}
- * @param[in] angles Contains the three angles of rotation around idle frame ({0, 1, 0}, {0, 0, 1} ,{1, 0, 0}) (in this order)
- * @param[out] forward result of previous rotation for point {1, 0, 0} (can be NULL if not needed)
- * @param[out] right result of previous rotation for point {0, -1, 0} (!) (can be NULL if not needed)
- * @param[out] up result of previous rotation for point {0, 0, 1} (can be NULL if not needed)
- */
-void AngleVectors (vec3_t angles, vec3_t forward, vec3_t right, vec3_t up)
-{
-	float angle;
-	static float sr, sp, sy, cr, cp, cy;
-
-	/* static to help MS compiler fp bugs */
-
-	angle = angles[YAW] * (M_PI * 2 / 360);
-	sy = sin(angle);
-	cy = cos(angle);
-	angle = angles[PITCH] * (M_PI * 2 / 360);
-	sp = sin(angle);
-	cp = cos(angle);
-	angle = angles[ROLL] * (M_PI * 2 / 360);
-	sr = sin(angle);
-	cr = cos(angle);
-
-	if (forward) {
-		forward[0] = cp * cy;
-		forward[1] = cp * sy;
-		forward[2] = -sp;
-	}
-	if (right) {
-		right[0] = (-1 * sr * sp * cy + -1 * cr * -sy);
-		right[1] = (-1 * sr * sp * sy + -1 * cr * cy);
-		right[2] = -1 * sr * cp;
-	}
-	if (up) {
-		up[0] = (cr * sp * cy + -sr * -sy);
-		up[1] = (cr * sp * sy + -sr * cy);
-		up[2] = cr * cp;
-	}
-}
-
-/**
- * @brief Projects a point on a plane passing through the origin
- * @param[in] point Coordinates of the point to project
- * @param[in] normal The normal vector of the plane
- * @param[out] dst Coordinates of the projection on the plane
- * @pre @c Non-null pointers and a normalized normal vector.
- */
-void ProjectPointOnPlane (vec3_t dst, const vec3_t point, const vec3_t normal)
-{
-	float distance; /**< closest distance from the point to the plane */
-
-#if 0
-	vec3_t n;
-	float inv_denom;
-	/* I added a sqrt there, otherwise this function does not work for unnormalized vector (13052007 Kracken) */
-	/* old line was inv_denom = 1.0F / DotProduct(normal, normal); */
-	inv_denom = 1.0F / sqrt(DotProduct(normal, normal));
-#endif
-
-	distance = DotProduct(normal, point);
-#if 0
-	n[0] = normal[0] * inv_denom;
-	n[1] = normal[1] * inv_denom;
-	n[2] = normal[2] * inv_denom;
-#endif
-
-	dst[0] = point[0] - distance * normal[0];
-	dst[1] = point[1] - distance * normal[1];
-	dst[2] = point[2] - distance * normal[2];
-}
-
-/**
- * @brief Finds a vector perpendicular to the source vector
- * @param[in] src The source vector
- * @param[out] dst A vector perpendicular to @c src
- * @note @c dst is a perpendicular vector to @c src such that it is the closest
- * to one of the three axis: {1,0,0}, {0,1,0} and {0,0,1} (chosen in that order
- * in case of equality)
- * @pre non-NULL pointers and @c src is normalized
- * @sa ProjectPointOnPlane
- */
-void PerpendicularVector (vec3_t dst, const vec3_t src)
-{
-	int pos;
-	int i;
-	float minelem = 1.0F;
-	vec3_t tempvec;
-
-	/* find the smallest magnitude axially aligned vector */
-	for (pos = 0, i = 0; i < 3; i++) {
-		if (fabs(src[i]) < minelem) {
-			pos = i;
-			minelem = fabs(src[i]);
-		}
-	}
-	tempvec[0] = tempvec[1] = tempvec[2] = 0.0F;
-	tempvec[pos] = 1.0F;
-
-	/* project the point onto the plane defined by src */
-	ProjectPointOnPlane(dst, tempvec, src);
-
-	/* normalize the result */
-	VectorNormalize(dst);
-}
-
-
-/**
- * @brief
- * @param
- */
-void R_ConcatRotations (float in1[3][3], float in2[3][3], float out[3][3])
-{
-	out[0][0] = in1[0][0] * in2[0][0] + in1[0][1] * in2[1][0] + in1[0][2] * in2[2][0];
-	out[0][1] = in1[0][0] * in2[0][1] + in1[0][1] * in2[1][1] + in1[0][2] * in2[2][1];
-	out[0][2] = in1[0][0] * in2[0][2] + in1[0][1] * in2[1][2] + in1[0][2] * in2[2][2];
-	out[1][0] = in1[1][0] * in2[0][0] + in1[1][1] * in2[1][0] + in1[1][2] * in2[2][0];
-	out[1][1] = in1[1][0] * in2[0][1] + in1[1][1] * in2[1][1] + in1[1][2] * in2[2][1];
-	out[1][2] = in1[1][0] * in2[0][2] + in1[1][1] * in2[1][2] + in1[1][2] * in2[2][2];
-	out[2][0] = in1[2][0] * in2[0][0] + in1[2][1] * in2[1][0] + in1[2][2] * in2[2][0];
-	out[2][1] = in1[2][0] * in2[0][1] + in1[2][1] * in2[1][1] + in1[2][2] * in2[2][1];
-	out[2][2] = in1[2][0] * in2[0][2] + in1[2][1] * in2[1][2] + in1[2][2] * in2[2][2];
-}
-
-
-/**
- * @brief
- * @param
- * @sa
- */
-void R_ConcatTransforms (float in1[3][4], float in2[3][4], float out[3][4])
-{
-	out[0][0] = in1[0][0] * in2[0][0] + in1[0][1] * in2[1][0] + in1[0][2] * in2[2][0];
-	out[0][1] = in1[0][0] * in2[0][1] + in1[0][1] * in2[1][1] + in1[0][2] * in2[2][1];
-	out[0][2] = in1[0][0] * in2[0][2] + in1[0][1] * in2[1][2] + in1[0][2] * in2[2][2];
-	out[0][3] = in1[0][0] * in2[0][3] + in1[0][1] * in2[1][3] + in1[0][2] * in2[2][3] + in1[0][3];
-	out[1][0] = in1[1][0] * in2[0][0] + in1[1][1] * in2[1][0] + in1[1][2] * in2[2][0];
-	out[1][1] = in1[1][0] * in2[0][1] + in1[1][1] * in2[1][1] + in1[1][2] * in2[2][1];
-	out[1][2] = in1[1][0] * in2[0][2] + in1[1][1] * in2[1][2] + in1[1][2] * in2[2][2];
-	out[1][3] = in1[1][0] * in2[0][3] + in1[1][1] * in2[1][3] + in1[1][2] * in2[2][3] + in1[1][3];
-	out[2][0] = in1[2][0] * in2[0][0] + in1[2][1] * in2[1][0] + in1[2][2] * in2[2][0];
-	out[2][1] = in1[2][0] * in2[0][1] + in1[2][1] * in2[1][1] + in1[2][2] * in2[2][1];
-	out[2][2] = in1[2][0] * in2[0][2] + in1[2][1] * in2[1][2] + in1[2][2] * in2[2][2];
-	out[2][3] = in1[2][0] * in2[0][3] + in1[2][1] * in2[1][3] + in1[2][2] * in2[2][3] + in1[2][3];
-}
 
 /**
  * @brief Print a 3D vector
@@ -887,7 +911,7 @@ Lerror:
  * @param[in] mins
  * @param[in] maxs
  */
-void ClearBounds (vec3_t mins, vec3_t maxs)
+inline void ClearBounds (vec3_t mins, vec3_t maxs)
 {
 	mins[0] = mins[1] = mins[2] = 99999;
 	maxs[0] = maxs[1] = maxs[2] = -99999;
@@ -920,7 +944,7 @@ void AddPointToBounds (const vec3_t v, vec3_t mins, vec3_t maxs)
  * @param[in] comp
  * @return qboolean
  */
-qboolean VectorNearer (const vec3_t v1, const vec3_t v2, const vec3_t comp)
+inline qboolean VectorNearer (const vec3_t v1, const vec3_t v2, const vec3_t comp)
 {
 	int i;
 
@@ -931,31 +955,6 @@ qboolean VectorNearer (const vec3_t v1, const vec3_t v2, const vec3_t comp)
 	return qfalse;
 }
 
-
-/**
- * @brief Calculated the normal vector for a given vec3_t
- * @param[in] v Vector to normalize
- * @sa VectorNormalize2
- * @return vector length as vec_t
- */
-vec_t VectorNormalize (vec3_t v)
-{
-	float length, ilength;
-
-	length = v[0] * v[0] + v[1] * v[1] + v[2] * v[2];
-	length = sqrt(length);		/* FIXME */
-
-	if (length) {
-		ilength = 1 / length;
-		v[0] *= ilength;
-		v[1] *= ilength;
-		v[2] *= ilength;
-	}
-
-	return length;
-}
-
-
 /**
  * @brief Calculated the normal vector for a given vec3_t
  * @param[in] v Vector to normalize
@@ -964,7 +963,7 @@ vec_t VectorNormalize (vec3_t v)
  * @return vector length as vec_t
  * @sa CrossProduct
  */
-vec_t VectorNormalize2 (const vec3_t v, vec3_t out)
+inline vec_t VectorNormalize2 (const vec3_t v, vec3_t out)
 {
 	float length, ilength;
 
@@ -988,7 +987,7 @@ vec_t VectorNormalize2 (const vec3_t v, vec3_t out)
  * @param[in] vecb Movement direction
  * @param[out] vecc Target vector
  */
-void VectorMA (const vec3_t veca, const float scale, const vec3_t vecb, vec3_t vecc)
+inline void VectorMA (const vec3_t veca, const float scale, const vec3_t vecb, vec3_t vecc)
 {
 	vecc[0] = veca[0] + scale * vecb[0];
 	vecc[1] = veca[1] + scale * vecb[1];
@@ -1061,7 +1060,7 @@ void MakeNormalVectors (vec3_t forward, vec3_t right, vec3_t up)
  * @param
  * @sa GLMatrixMultiply
  */
-void MatrixMultiply (const vec3_t a[3], const vec3_t b[3], vec3_t c[3])
+inline void MatrixMultiply (const vec3_t a[3], const vec3_t b[3], vec3_t c[3])
 {
 	c[0][0] = a[0][0] * b[0][0] + a[1][0] * b[0][1] + a[2][0] * b[0][2];
 	c[0][1] = a[0][1] * b[0][0] + a[1][1] * b[0][1] + a[2][1] * b[0][2];
@@ -1113,7 +1112,7 @@ void GLVectorTransform (const float m[16], const vec4_t in, vec4_t out)
  * @param
  * @sa
  */
-void VectorRotate (const vec3_t m[3], const vec3_t va, vec3_t vb)
+inline void VectorRotate (const vec3_t m[3], const vec3_t va, vec3_t vb)
 {
 	vb[0] = m[0][0] * va[0] + m[1][0] * va[1] + m[2][0] * va[2];
 	vb[1] = m[0][1] * va[0] + m[1][1] * va[1] + m[2][1] * va[2];
@@ -1150,7 +1149,7 @@ int VectorCompareEps (const vec3_t v1, const vec3_t v2, float epsilon)
  * @param[in] v2
  * @sa CrossProduct
  */
-vec_t _DotProduct (const vec3_t v1, const vec3_t v2)
+inline vec_t _DotProduct (const vec3_t v1, const vec3_t v2)
 {
 	return v1[0] * v2[0] + v1[1] * v2[1] + v1[2] * v2[2];
 }
@@ -1160,7 +1159,7 @@ vec_t _DotProduct (const vec3_t v1, const vec3_t v2)
  * @param
  * @sa _VectorAdd
  */
-void _VectorSubtract (const vec3_t veca, const vec3_t vecb, vec3_t out)
+inline void _VectorSubtract (const vec3_t veca, const vec3_t vecb, vec3_t out)
 {
 #ifdef UFO_MMX_ENABLED
 	/* raynorpat: msvc sse optimization */
@@ -1194,7 +1193,7 @@ void _VectorSubtract (const vec3_t veca, const vec3_t vecb, vec3_t out)
  * @param[out] out The sum of the two vectors
  * @sa _VectorSubtract
  */
-void _VectorAdd (const vec3_t veca, const vec3_t vecb, vec3_t out)
+inline void _VectorAdd (const vec3_t veca, const vec3_t vecb, vec3_t out)
 {
 #ifdef UFO_MMX_ENABLED
 	/* raynorpat: msvc sse optimization */
@@ -1226,7 +1225,7 @@ void _VectorAdd (const vec3_t veca, const vec3_t vecb, vec3_t out)
  * @param
  * @sa
  */
-void _VectorCopy (const vec3_t in, vec3_t out)
+inline void _VectorCopy (const vec3_t in, vec3_t out)
 {
 #ifdef UFO_MMX_ENABLED
 	/* raynorpat: msvc sse optimization */
@@ -1247,30 +1246,6 @@ void _VectorCopy (const vec3_t in, vec3_t out)
 #endif
 }
 
-/**
- * @brief binary operation on vectors in a three-dimensional space
- * @note also known as the vector product or outer product
- * @note It differs from the dot product in that it results in a vector
- * rather than in a scalar
- * @note Its main use lies in the fact that the cross product of two vectors
- * is orthogonal to both of them.
- * @param[in] v1 directional vector
- * @param[in] v2 directional vector
- * @param[in] cross output
- * @example
- * you have the right and forward values of an axis, their cross product will
- * be a properly oriented "up" direction
- * @sa _DotProduct
- * @sa DotProduct
- * @sa VectorNormalize2
- */
-void CrossProduct (const vec3_t v1, const vec3_t v2, vec3_t cross)
-{
-	cross[0] = v1[1] * v2[2] - v1[2] * v2[1];
-	cross[1] = v1[2] * v2[0] - v1[0] * v2[2];
-	cross[2] = v1[0] * v2[1] - v1[1] * v2[0];
-}
-
 double sqrt (double x);
 
 /**
@@ -1279,7 +1254,7 @@ double sqrt (double x);
  * @sa VectorNormalize
  * @return Vector length as vec_t
  */
-vec_t VectorLength (const vec3_t v)
+inline vec_t VectorLength (const vec3_t v)
 {
 	int i;
 	float length;
@@ -1297,7 +1272,7 @@ vec_t VectorLength (const vec3_t v)
  * @param
  * @sa
  */
-void VectorInverse (vec3_t v)
+inline void VectorInverse (vec3_t v)
 {
 	v[0] = -v[0];
 	v[1] = -v[1];
@@ -1309,7 +1284,7 @@ void VectorInverse (vec3_t v)
  * @param
  * @sa
  */
-void VectorScale (const vec3_t in, const vec_t scale, vec3_t out)
+inline void VectorScale (const vec3_t in, const vec_t scale, vec3_t out)
 {
 #ifdef UFO_MMX_ENABLED
 	/* raynorpat: msvc sse optimization */
@@ -1342,7 +1317,7 @@ void VectorScale (const vec3_t in, const vec_t scale, vec3_t out)
  * @param
  * @sa
  */
-int Q_log2 (int val)
+inline int Q_log2 (int val)
 {
 	int answer = 0;
 
@@ -1354,7 +1329,7 @@ int Q_log2 (int val)
 /**
   * @brief Return random values between 0 and 1
   */
-float frand (void)
+inline float frand (void)
 {
 	return (rand() & 32767) * (1.0 / 32767);
 }
@@ -1363,7 +1338,7 @@ float frand (void)
 /**
   * @brief Return random values between -1 and 1
   */
-float crand (void)
+inline float crand (void)
 {
 	return (rand() & 32767) * (2.0 / 32767) - 1;
 }
@@ -1372,7 +1347,7 @@ float crand (void)
  * @brief generate two gaussian distributed random numbers with median at 0 and stdev of 1
  * @param pointers to two floats that need to be set. both have to be provided.
  */
-void gaussrand (float *gauss1, float *gauss2)
+inline void gaussrand (float *gauss1, float *gauss2)
 {
 	float x1,x2,w,tmp;
 

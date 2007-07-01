@@ -511,7 +511,7 @@ CLIENT_LIBS="$CLIENT_LIBS $LIBS"
 #---------------------------------------------------------------------------------------------
 
 LIBS=
-	AC_SEARCH_LIBS([ogg_stream_init],[ogg])
+AC_SEARCH_LIBS([ogg_stream_init],[ogg])
 if test "$ac_cv_search_ogg_stream_init" = "no"
 then
 	if test "$enable_client" = "yes"
