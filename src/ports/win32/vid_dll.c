@@ -397,7 +397,7 @@ static qboolean VID_LoadRefresh (const char *name)
 
 	Com_Printf("------- Loading %s -------\n", name);
 
-	if ((reflib_library = LoadLibrary(name)) == 0) {
+	if ((reflib_library = Sys_LoadLibrary(name)) == 0) {
 		Com_Printf("LoadLibrary(\"%s\") failed\n", name);
 		return qfalse;
 	}
@@ -435,7 +435,7 @@ static qboolean VID_LoadRefresh (const char *name)
 	ri.TagFree = VID_MemFree;
 	ri.FreeTags = VID_FreeTags;
 
-	if ((GetRefAPI = (GetRefAPI_t) GetProcAddress(reflib_library, "GetRefAPI")) == 0)
+	if ((GetRefAPI = (GetRefAPI_t)Sys_GetProcAddress(reflib_library, "GetRefAPI")) == 0)
 		Com_Error(ERR_FATAL, "GetProcAddress failed on %s", name);
 
 	re = GetRefAPI(ri);
@@ -491,7 +491,7 @@ void VID_CheckChanges (void)
 		cls.disable_screen = qtrue;
 
 		/* try generic refresh lib first */
-		Com_sprintf(name, sizeof(name), "ref_%s.dll", vid_ref->string);
+		Com_sprintf(name, sizeof(name), "ref_%s", vid_ref->string);
 		if (!VID_LoadRefresh(name)) {
 			Cmd_ExecuteString("condump gl_debug");
 			Com_Error(ERR_FATAL, "Couldn't initialize OpenGL renderer!\nConsult gl_debug.txt for further information.");

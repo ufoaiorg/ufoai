@@ -130,7 +130,7 @@ void VID_FreeReflib (void)
 		if (RW_IN_Shutdown_fp)
 			RW_IN_Shutdown_fp();
 #ifndef REF_HARD_LINKED
-		dlclose(reflib_library);
+		Sys_FreeLibrary(reflib_library);
 #endif
 	}
 
@@ -191,7 +191,7 @@ static qboolean VID_LoadRefresh (const char *name)
 		sprintf(fn, "%s/%s/%s", curpath, path, name);
 		Com_Printf("Trying to load library (%s)\n", fn);
 
-		reflib_library = dlopen( fn, RTLD_NOW );
+		reflib_library = dlopen(fn, RTLD_NOW);
 		if (reflib_library) {
 			Com_DPrintf("LoadLibrary (%s)\n",name);
 			break;
@@ -329,7 +329,7 @@ void VID_CheckChanges (void)
 		vid_fullscreen->modified = qtrue;
 		cl.refresh_prepped = qfalse;
 		cls.disable_screen = qtrue;
-		Com_sprintf(name, sizeof(name), "ref_%s.%s", vid_ref->string, SHARED_EXT);
+		Com_sprintf(name, sizeof(name), "ref_%s", vid_ref->string);
 		if (!VID_LoadRefresh(name)) {
 			Cmd_ExecuteString("condump gl_debug");
 			Com_Error(ERR_FATAL, "Couldn't initialize OpenGL renderer!\nConsult gl_debug.txt for further information.");

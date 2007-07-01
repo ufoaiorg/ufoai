@@ -34,83 +34,69 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define	BASEDIRNAME	"base"
 
 #ifdef _WIN32
+#  ifdef DEBUG
+#    define BUILDSTRING "Win32 DEBUG"
+#  else
+#    define BUILDSTRING "Win32 RELEASE"
+#  endif
+#  ifdef _M_IX86
+#    define CPUSTRING "x86"
+#  elif defined _M_ALPHA
+#    define CPUSTRING	"AXP"
+#  else
+#    define CPUSTRING	"Unknown"
+#  endif
 
-#ifdef DEBUG
-#define BUILDSTRING "Win32 DEBUG"
-#else							/* DEBUG */
-#define BUILDSTRING "Win32 RELEASE"
-#endif							/* DEBUG */
+#elif defined __linux__
+#  ifdef DEBUG
+#    define BUILDSTRING "Linux DEBUG"
+#  else
+#    define BUILDSTRING "Linux RELEASE"
+#  endif
+#  ifdef __i386__
+#    define CPUSTRING "i386"
+#  elif __x86_x64__
+#    define CPUSTRING "x86_64"
+#  elif defined __alpha__
+#    define CPUSTRING "axp"
+#  else
+#    define CPUSTRING "Unknown"
+#  endif
 
-#ifdef _M_IX86
-#define	CPUSTRING	"x86"
-#elif defined _M_ALPHA			/* _M_IX86 */
-#define	CPUSTRING	"AXP"
-#else							/* _M_IX86 */
-#define	CPUSTRING	"Unknown"
-#endif							/* _M_IX86 */
+#elif defined __FreeBSD__ || defined __NetBSD__
+#  define BUILDSTRING "FreeBSD"
+#  ifdef __i386__
+#    define CPUSTRING "i386"
+#  elif __x86_x64__
+#    define CPUSTRING "x86_64"
+#  elif defined __alpha__
+#    define CPUSTRING "axp"
+#  else
+#    define CPUSTRING "Unknown"
+#  endif
 
-#elif defined __linux__			/* _WIN32 */
+#elif defined __sun
+#  define BUILDSTRING "Solaris"
+#  ifdef __i386__
+#    define CPUSTRING "i386"
+#  else
+#    define CPUSTRING "sparc"
+#  endif
 
-#define BUILDSTRING "Linux"
+#elif defined (__APPLE__) || defined (MACOSX)
+#  define BUILDSTRING "MacOSX"
+#  ifdef __i386__
+#    define CPUSTRING "i386"
+#  elif defined __powerpc__
+#    define CPUSTRING "ppc"
+#  else
+#    define CPUSTRING "sparc"
+#  endif
 
-#ifdef __i386__
-#define CPUSTRING "i386"
-#elif defined __alpha__			/* __i386__ */
-#define CPUSTRING "axp"
-#else							/* __i386__ */
-#define CPUSTRING "Unknown"
-#endif							/* __i386__ */
-
-#elif defined __FreeBSD__			/* _WIN32 */
-
-#define BUILDSTRING "FreeBSD"
-
-#ifdef __i386__
-#define CPUSTRING "i386"
-#elif defined __alpha__			/* __i386__ */
-#define CPUSTRING "axp"
-#else							/* __i386__ */
-#define CPUSTRING "Unknown"
-#endif							/* __i386__ */
-
-#elif defined __NetBSD__			/* _WIN32 */
-
-#define BUILDSTRING "NetBSD"
-
-#ifdef __i386__
-#define CPUSTRING "i386"
-#elif defined __alpha__			/* __i386__ */
-#define CPUSTRING "axp"
-#else							/* __i386__ */
-#define CPUSTRING "Unknown"
-#endif							/* __i386__ */
-
-#elif defined __sun__			/* _WIN32 */
-
-#define BUILDSTRING "Solaris"
-
-#ifdef __i386__
-#define CPUSTRING "i386"
-#else							/* __i386__ */
-#define CPUSTRING "sparc"
-#endif							/* __i386__ */
-
-#elif defined (__APPLE__) || defined (MACOSX)			/* _WIN32 */
-
-#define BUILDSTRING "MacOSX"
-
-#ifdef __i386__
-#define CPUSTRING "i386"
-#else							/* __i386__ */
-#define CPUSTRING "sparc"
-#endif							/* __i386__ */
-
-#else							/* !_WIN32 */
-
-#define BUILDSTRING "NON-WIN32"
-#define	CPUSTRING	"NON-WIN32"
-
-#endif							/* _WIN32 */
+#else
+#  define BUILDSTRING "NON-WIN32"
+#  define CPUSTRING	"NON-WIN32"
+#endif
 
 #ifndef DEFAULT_BASEDIR
 # define DEFAULT_BASEDIR BASEDIRNAME
@@ -341,6 +327,10 @@ void Sys_Error(const char *error, ...) __attribute__((noreturn, format(printf, 1
 void Sys_Quit(void);
 char *Sys_GetClipboardData(void);
 char *Sys_GetHomeDirectory(void);
+
+void *Sys_LoadLibrary(const char *name, int flags);
+void Sys_FreeLibrary(void *libHandle);
+void *Sys_GetProcAddress(void *libHandle, const char *procName);
 
 void Sys_Minimize(void);
 void Sys_DisableTray(void);

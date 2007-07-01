@@ -159,7 +159,7 @@ void Sys_AppActivate (void)
 void Sys_UnloadGame (void)
 {
 	if (game_library)
-		dlclose(game_library);
+		Sys_FreeLibrary(game_library);
 	game_library = NULL;
 }
 
@@ -206,4 +206,82 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 	}
 
 	return GetGameAPI(parms);
+}
+
+/**
+ * @brief
+ * @sa Sys_FreeLibrary
+ * @sa Sys_GetProcAddress
+ */
+void *Sys_LoadLibrary (const char *name, int flags)
+{
+	void *lib;
+	cvar_t *s_libdir;
+	char libName[MAX_OSPATH];
+	char libDir[MAX_OSPATH];
+
+	s_libdir = Cvar_Get("s_libdir", "", CVAR_ARCHIVE, "Library dir for graphic, sound and game libraries");
+
+	/* try path given via cvar */
+	if (*s_libdir->string) {
+		Com_Printf("...also try library search path: '%s'\n", s_libdir->string);
+		Q_strncpyz(libDir, s_libdir->string, sizeof(libDir));
+	} else {
+		Q_strncpyz(libDir, ".", sizeof(libDir));
+	}
+
+	/* first try system wide */
+	Com_sprintf(libName, sizeof(libName), "%s_"CPUSTRING"."SHARED_EXT, name);
+	Com_DPrintf("Sys_LoadLibrary: try %s\n", libName);
+	lib = dlopen(libName, flags|RTLD_LAZY|RTLD_GLOBAL);
+	if (lib)
+		return lib;
+
+	/* then use s_libdir cvar or current dir */
+	Com_sprintf(libName, sizeof(libName), "%s/%s_"CPUSTRING"."SHARED_EXT, libDir, name);
+	Com_DPrintf("Sys_LoadLibrary: try %s\n", libName);
+	lib = dlopen(libName, flags|RTLD_LAZY);
+	if (lib)
+		return lib;
+
+	/* and not both again but without CPUSTRING */
+	/* system wide */
+	Com_sprintf(libName, sizeof(libName), "%s.%s", name, SHARED_EXT);
+	Com_DPrintf("Sys_LoadLibrary: try %s\n", libName);
+	lib = dlopen(libName, flags|RTLD_LAZY|RTLD_GLOBAL);
+	if (lib)
+		return lib;
+
+	/* then use s_libdir cvar or current dir */
+	Com_sprintf(libName, sizeof(libName), "%s/%s."SHARED_EXT, libDir, name);
+	Com_DPrintf("Sys_LoadLibrary: try %s\n", libName);
+	lib = dlopen(libName, flags|RTLD_LAZY);
+	if (lib)
+		return lib;
+
+	Com_Printf("Could not load %s.so and %s_"CPUSTRING"."SHARED_EXT"\n", name, name);
+	return NULL;
+}
+
+/**
+ * @brief
+ * @sa Sys_LoadLibrary
+ */
+void Sys_FreeLibrary (void *libHandle)
+{
+	if (!libHandle)
+		Com_Error(ERR_DROP, "Sys_FreeLibrary: No valid handle given\n");
+	if (dlclose(libHandle) != 0)
+		Com_Error(ERR_DROP, "Sys_FreeLibrary: dlclose() failed - %s\n", dlerror());
+}
+
+/**
+ * @brief
+ * @sa Sys_LoadLibrary
+ */
+void *Sys_GetProcAddress (void *libHandle, const char *procName)
+{
+	if (!libHandle)
+		Com_Error(ERR_DROP, "Sys_GetProcAddress: No valid libHandle given\n");
+	return dlsym(libHandle, procName);
 }

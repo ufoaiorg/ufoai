@@ -91,7 +91,7 @@ SYSTEM IO
  */
 void Sys_EnableTray (void)
 {
-	memset (&pNdata, 0, sizeof(pNdata));
+	memset(&pNdata, 0, sizeof(pNdata));
 
 	pNdata.cbSize = sizeof(NOTIFYICONDATA);
 #ifdef DEDICATED_ONLY
@@ -105,7 +105,7 @@ void Sys_EnableTray (void)
 	pNdata.hIcon = LoadIcon(global_hInstance, MAKEINTRESOURCE(IDI_ICON2));
 	pNdata.uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP;
 
-	hSh32 = LoadLibrary ("shell32.dll");
+	hSh32 = LoadLibrary("shell32.dll");
 	procShell_NotifyIcon = GetProcAddress(hSh32, "Shell_NotifyIcon");
 
 	procShell_NotifyIcon(NIM_ADD, &pNdata);
@@ -127,7 +127,7 @@ void Sys_DisableTray (void)
 	procShell_NotifyIcon(NIM_DELETE, &pNdata);
 
 	if (hSh32)
-		FreeLibrary (hSh32);
+		FreeLibrary(hSh32);
 
 	procShell_NotifyIcon = NULL;
 
@@ -890,277 +890,6 @@ static void FixWorkingDirectory (void)
 	SetCurrentDirectory(curDir);
 }
 
-#if 0
-/**
- * @brief
- */
-static DWORD UFOAIExceptionHandler (DWORD exceptionCode, LPEXCEPTION_POINTERS exceptionInfo)
-{
-	HMODULE	hDbgHelp, hVersion;
-
-	MINIDUMP_EXCEPTION_INFORMATION miniInfo;
-	STACKFRAME64	frame = {0};
-	CONTEXT			context = *exceptionInfo->ContextRecord;
-	SYMBOL_INFO		*symInfo;
-	DWORD64			fnOffset;
-	CHAR			tempPath[MAX_PATH];
-	CHAR			dumpPath[MAX_PATH];
-	OSVERSIONINFOEX	osInfo;
-	SYSTEMTIME		timeInfo;
-
-	ENUMERATELOADEDMODULES64	fnEnumerateLoadedModules64;
-	SYMSETOPTIONS				fnSymSetOptions;
-	SYMINITIALIZE				fnSymInitialize;
-	STACKWALK64					fnStackWalk64;
-	SYMFUNCTIONTABLEACCESS64	fnSymFunctionTableAccess64;
-	SYMGETMODULEBASE64			fnSymGetModuleBase64;
-	SYMFROMADDR					fnSymFromAddr;
-	SYMCLEANUP					fnSymCleanup;
-	MINIDUMPWRITEDUMP			fnMiniDumpWriteDump;
-
-	DWORD						ret, i;
-	DWORD64						InstructionPtr;
-
-	BOOL						wantUpload = TRUE;
-
-	CHAR						searchPath[MAX_PATH], *p;
-
-	if (win_disableexceptionhandler->intvalue == 2)
-		return EXCEPTION_EXECUTE_HANDLER;
-	else if (win_disableexceptionhandler->intvalue)
-		return EXCEPTION_CONTINUE_SEARCH;
-
-#ifndef DEDICATED_ONLY
-	ShowCursor (TRUE);
-	if (cl_hwnd)
-		DestroyWindow (cl_hwnd);
-#else
-	if (cl_hwnd)
-		EnableWindow (cl_hwnd, FALSE);
-#endif
-
-#ifdef DEBUG
-	ret = MessageBox (NULL, "EXCEPTION_CONTINUE_SEARCH?", "Unhandled Exception", MB_ICONERROR | MB_YESNO);
-	if (ret == IDYES)
-		return EXCEPTION_CONTINUE_SEARCH;
-#endif
-
-#ifndef DEBUG
-	if (IsDebuggerPresent ())
-		return EXCEPTION_CONTINUE_SEARCH;
-#endif
-
-	hDbgHelp = LoadLibrary ("DBGHELP");
-	hVersion = LoadLibrary ("VERSION");
-
-	if (!hDbgHelp) {
-		if (!win_silentexceptionhandler->intvalue)
-			MessageBox (NULL, PRODUCTNAME " has encountered an unhandled exception and must be terminated. No crash report could be generated since R1Q2 failed to load DBGHELP.DLL. Please obtain DBGHELP.DLL and place it in your R1Q2 directory to enable crash dump generation.", "Unhandled Exception", MB_OK | MB_ICONEXCLAMATION);
-		return EXCEPTION_CONTINUE_SEARCH;
-	}
-
-	if (hVersion) {
-		fnVerQueryValue = (VERQUERYVALUE)GetProcAddress (hVersion, "VerQueryValueA");
-		fnGetFileVersionInfo = (GETFILEVERSIONINFO)GetProcAddress (hVersion, "GetFileVersionInfoA");
-		fnGetFileVersionInfoSize = (GETFILEVERSIONINFOSIZE)GetProcAddress (hVersion, "GetFileVersionInfoSizeA");
-	}
-
-	fnEnumerateLoadedModules64 = (ENUMERATELOADEDMODULES64)GetProcAddress (hDbgHelp, "EnumerateLoadedModules64");
-	fnSymSetOptions = (SYMSETOPTIONS)GetProcAddress (hDbgHelp, "SymSetOptions");
-	fnSymInitialize = (SYMINITIALIZE)GetProcAddress (hDbgHelp, "SymInitialize");
-	fnSymFunctionTableAccess64 = (SYMFUNCTIONTABLEACCESS64)GetProcAddress (hDbgHelp, "SymFunctionTableAccess64");
-	fnSymGetModuleBase64 = (SYMGETMODULEBASE64)GetProcAddress (hDbgHelp, "SymGetModuleBase64");
-	fnStackWalk64 = (STACKWALK64)GetProcAddress (hDbgHelp, "StackWalk64");
-	fnSymFromAddr = (SYMFROMADDR)GetProcAddress (hDbgHelp, "SymFromAddr");
-	fnSymCleanup = (SYMCLEANUP)GetProcAddress (hDbgHelp, "SymCleanup");
-	fnSymGetModuleInfo64 = (SYMGETMODULEINFO64)GetProcAddress (hDbgHelp, "SymGetModuleInfo64");
-	fnMiniDumpWriteDump = (MINIDUMPWRITEDUMP)GetProcAddress (hDbgHelp, "MiniDumpWriteDump");
-
-	if (!fnEnumerateLoadedModules64 || !fnSymSetOptions || !fnSymInitialize || !fnSymFunctionTableAccess64 ||
-		!fnSymGetModuleBase64 || !fnStackWalk64 || !fnSymFromAddr || !fnSymCleanup || !fnSymGetModuleInfo64)) {
-		FreeLibrary (hDbgHelp);
-		if (hVersion)
-			FreeLibrary (hVersion);
-		MessageBox (NULL, PRODUCTNAME " has encountered an unhandled exception and must be terminated. No crash report could be generated since the version of DBGHELP.DLL in use is too old. Please obtain an up-to-date DBGHELP.DLL and place it in your R1Q2 directory to enable crash dump generation.", "Unhandled Exception", MB_OK | MB_ICONEXCLAMATION);
-		return EXCEPTION_CONTINUE_SEARCH;
-	}
-
-	if (!win_silentexceptionhandler->intvalue)
-		ret = MessageBox (NULL, PRODUCTNAME " has encountered an unhandled exception and must be terminated. Would you like to generate a crash report?", "Unhandled Exception", MB_ICONEXCLAMATION | MB_YESNO);
-	else
-		ret = IDYES;
-
-	if (ret == IDNO) {
-		FreeLibrary (hDbgHelp);
-		if (hVersion)
-			FreeLibrary (hVersion);
-		return EXCEPTION_CONTINUE_SEARCH;
-	}
-
-	hProcess = GetCurrentProcess();
-
-	fnSymSetOptions (SYMOPT_UNDNAME | SYMOPT_FAIL_CRITICAL_ERRORS | SYMOPT_LOAD_ANYTHING);
-
-	GetModuleFileName (NULL, searchPath, sizeof(searchPath));
-	p = strrchr (searchPath, '\\');
-	if (p) p[0] = 0;
-
-	GetSystemTime (&timeInfo);
-
-	i = 1;
-
-	for (;;) {
-		snprintf (tempPath, sizeof(tempPath)-1, "%s\\UFOCrashLog%.4d-%.2d-%.2d%_%d.txt", searchPath, timeInfo.wYear, timeInfo.wMonth, timeInfo.wDay, i);
-		if (Sys_FileLength (tempPath) == -1)
-			break;
-		i++;
-	}
-
-	fhReport = fopen (tempPath, "wb");
-
-	if (!fhReport) {
-		FreeLibrary (hDbgHelp);
-		if (hVersion)
-			FreeLibrary (hVersion);
-		return EXCEPTION_CONTINUE_SEARCH;
-	}
-
-	fnSymInitialize (hProcess, searchPath, TRUE);
-
-#ifdef DEBUG
-	GetModuleFileName (NULL, searchPath, sizeof(searchPath));
-	p = strrchr (searchPath, '\\');
-	if (p) p[0] = 0;
-#endif
-
-
-#ifdef _M_AMD64
-	InstructionPtr = context.Rip;
-	frame.AddrPC.Offset = InstructionPtr;
-	frame.AddrFrame.Offset = context.Rbp;
-	frame.AddrPC.Offset = context.Rsp;
-#else
-	InstructionPtr = context.Eip;
-	frame.AddrPC.Offset = InstructionPtr;
-	frame.AddrFrame.Offset = context.Ebp;
-	frame.AddrStack.Offset = context.Esp;
-#endif
-
-	frame.AddrFrame.Mode = AddrModeFlat;
-	frame.AddrPC.Mode = AddrModeFlat;
-	frame.AddrStack.Mode = AddrModeFlat;
-
-	symInfo = LocalAlloc (LPTR, sizeof(*symInfo) + 128);
-	symInfo->SizeOfStruct = sizeof(SYMBOL_INFO);
-	symInfo->MaxNameLen = 128;
-	fnOffset = 0;
-
-	memset (&osInfo, 0, sizeof(osInfo));
-	osInfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
-
-	if (!GetVersionEx ((OSVERSIONINFO *)&osInfo)) {
-		osInfo.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
-		GetVersionEx ((OSVERSIONINFO *)&osInfo);
-	}
-
-	strcpy (szModuleName, "<unknown>");
-	fnEnumerateLoadedModules64 (hProcess, (PENUMLOADED_MODULES_CALLBACK64)EnumerateLoadedModulesProcInfo, (VOID *)InstructionPtr);
-
-	strlwr (szModuleName);
-
-	fprintf (fhReport,
-		PRODUCTNAME " encountered an unhandled exception and has terminated. If you are able to\r\n"
-		"reproduce this crash, please submit the crash report on the UFO:AI forums at\r\n"
-		"include this .txt file and the .dmp file (if available)\r\n"
-		"\r\n"
-		"This crash appears to have occured in the '%s' module.\r\n\r\n", szModuleName);
-
-	fprintf (fhReport, "**** UNHANDLED EXCEPTION: %x\r\nFault address: %I64p (%s)\r\n", exceptionCode, InstructionPtr, szModuleName);
-
-	fprintf (fhReport, PRODUCTNAME " module: %s(%s) (Version: %s)\r\n", binary_name, R1BINARY, R1Q2_VERSION_STRING);
-	fprintf (fhReport, "Windows version: %d.%d (Build %d) %s\r\n\r\n", osInfo.dwMajorVersion, osInfo.dwMinorVersion, osInfo.dwBuildNumber, osInfo.szCSDVersion);
-
-	fprintf (fhReport, "Symbol information:\r\n");
-	fnEnumerateLoadedModules64 (hProcess, (PENUMLOADED_MODULES_CALLBACK64)EnumerateLoadedModulesProcSymInfo, (VOID *)fhReport);
-
-	fprintf (fhReport, "\r\nEnumerate loaded modules:\r\n");
-	fnEnumerateLoadedModules64 (hProcess, (PENUMLOADED_MODULES_CALLBACK64)EnumerateLoadedModulesProcDump, (VOID *)fhReport);
-
-	fprintf (fhReport, "\r\nStack trace:\r\n");
-	fprintf (fhReport, "Stack    EIP      Arg0     Arg1     Arg2     Arg3     Address\r\n");
-	while (fnStackWalk64 (IMAGE_FILE_MACHINE_I386, hProcess, GetCurrentThread(), &frame, &context, NULL, (PFUNCTION_TABLE_ACCESS_ROUTINE64)fnSymFunctionTableAccess64, (PGET_MODULE_BASE_ROUTINE64)fnSymGetModuleBase64, NULL)) {
-		strcpy (szModuleName, "<unknown>");
-		fnEnumerateLoadedModules64 (hProcess, (PENUMLOADED_MODULES_CALLBACK64)EnumerateLoadedModulesProcInfo, (VOID *)(DWORD)frame.AddrPC.Offset);
-
-		p = strrchr (szModuleName, '\\');
-		if (p) {
-			p++;
-		} else {
-			p = szModuleName;
-		}
-
-		if (fnSymFromAddr (hProcess, frame.AddrPC.Offset, &fnOffset, symInfo) && !(symInfo->Flags & SYMFLAG_EXPORT)) {
-			fprintf (fhReport, "%I64p %I64p %p %p %p %p %s!%s+0x%I64x\r\n", frame.AddrStack.Offset, frame.AddrPC.Offset, (DWORD)frame.Params[0], (DWORD)frame.Params[1], (DWORD)frame.Params[2], (DWORD)frame.Params[3], p, symInfo->Name, fnOffset, symInfo->Tag);
-		} else {
-			fprintf (fhReport, "%I64p %I64p %p %p %p %p %s!0x%I64p\r\n", frame.AddrStack.Offset, frame.AddrPC.Offset, (DWORD)frame.Params[0], (DWORD)frame.Params[1], (DWORD)frame.Params[2], (DWORD)frame.Params[3], p, frame.AddrPC.Offset);
-		}
-	}
-
-	if (fnMiniDumpWriteDump) {
-		HANDLE	hFile;
-
-		GetTempPath (sizeof(dumpPath)-16, dumpPath);
-		strcat (dumpPath, "R1Q2CrashDump.dmp");
-
-		hFile = CreateFile (dumpPath, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
-		if (hFile != INVALID_HANDLE_VALUE) {
-			miniInfo.ClientPointers = TRUE;
-			miniInfo.ExceptionPointers = exceptionInfo;
-			miniInfo.ThreadId = GetCurrentThreadId ();
-			if (fnMiniDumpWriteDump (hProcess, GetCurrentProcessId(), hFile, MiniDumpWithIndirectlyReferencedMemory|MiniDumpWithDataSegs, &miniInfo, NULL, NULL)) {
-				CHAR	zPath[MAX_PATH];
-
-				CloseHandle (hFile);
-				snprintf (zPath, sizeof(zPath)-1, "%s\\UFOCrashLog%.4d-%.2d-%.2d_%d.dmp", searchPath, timeInfo.wYear, timeInfo.wMonth, timeInfo.wDay, i);
-				CopyFile (dumpPath, zPath, FALSE);
-				DeleteFile (dumpPath);
-				strcpy (dumpPath, zPath);
-				fprintf (fhReport, "\r\nA minidump was saved to %s.\r\nPlease include this file when posting a crash report.\r\n", dumpPath);
-			} else {
-				CloseHandle (hFile);
-				DeleteFile (dumpPath);
-			}
-		}
-	} else  {
-		fprintf (fhReport, "\r\nA minidump could not be created. Minidumps are only available on Windows XP or later.\r\n");
-	}
-
-	fclose (fhReport);
-
-	LocalFree (symInfo);
-
-	fnSymCleanup (hProcess);
-
-	if (!win_silentexceptionhandler->intvalue) {
-		HMODULE shell;
-		shell = LoadLibrary ("SHELL32");
-		if (shell) {
-			SHELLEXECUTEA fncOpen = (SHELLEXECUTEA)GetProcAddress (shell, "ShellExecuteA");
-			if (fncOpen)
-                fncOpen (NULL, NULL, tempPath, NULL, searchPath, SW_SHOWDEFAULT);
-
-			FreeLibrary (shell);
-		}
-	}
-
-	FreeLibrary (hDbgHelp);
-	if (hVersion)
-		FreeLibrary (hVersion);
-
-	return EXCEPTION_EXECUTE_HANDLER;
-}
-#endif
-
 /**
  * @brief Switch to one processor usage for windows system with more than
  * one processor
@@ -1179,7 +908,6 @@ static void Sys_SetAffinity (void)
 	}
 	CloseHandle(proc);
 }
-
 
 /**
  * @brief
@@ -1201,50 +929,40 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	/* always change to the current working dir */
 	FixWorkingDirectory();
 
-#if 0
-	__try
-	{
-#endif
-		Qcommon_Init(argc, argv);
-		timescale = 1.0;
-		oldtime = Sys_Milliseconds();
+	Qcommon_Init(argc, argv);
+	timescale = 1.0;
+	oldtime = Sys_Milliseconds();
 
-		Sys_SetAffinity();	/* only use one processor */
+	Sys_SetAffinity();	/* only use one processor */
 
-		srand(oldtime);
+	srand(oldtime);
 
-		/* main window message loop */
-		while (1) {
-			/* if at a full screen console, don't update unless needed */
-			if (Minimized)
-				Sys_Sleep(1);
+	/* main window message loop */
+	while (1) {
+		/* if at a full screen console, don't update unless needed */
+		if (Minimized)
+			Sys_Sleep(1);
 
-			while (PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE)) {
-				if (!GetMessage(&msg, NULL, 0, 0))
-					Com_Quit();
-				sys_msg_time = msg.time;
-				TranslateMessage(&msg);
-				DispatchMessage(&msg);
-			}
+		while (PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE)) {
+			if (!GetMessage(&msg, NULL, 0, 0))
+				Com_Quit();
+			sys_msg_time = msg.time;
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
 
-			do {
-				newtime = Sys_Milliseconds();
-				time = timescale * (newtime - oldtime);
-			} while (time < 1);
+		do {
+			newtime = Sys_Milliseconds();
+			time = timescale * (newtime - oldtime);
+		} while (time < 1);
 
 #ifndef __MINGW32__
-			_controlfp(_PC_24, _MCW_PC);
+		_controlfp(_PC_24, _MCW_PC);
 #endif
-			timescale = Qcommon_Frame(time);
-			oldtime = newtime;
-		}
-#if 0
+		timescale = Qcommon_Frame(time);
+		oldtime = newtime;
 	}
-	__except (UFOAIExceptionHandler(GetExceptionCode(), GetExceptionInformation()))
-	{
-		return TRUE;
-	}
-#endif
+
 	/* never gets here */
 	return FALSE;
 }
@@ -1257,4 +975,44 @@ void Sys_Sleep (int milliseconds)
 	if (milliseconds < 1)
 		milliseconds = 1;
 	Sleep(milliseconds);
+}
+
+/**
+ * @brief
+ * @sa Sys_FreeLibrary
+ * @sa Sys_GetProcAddress
+ */
+void *Sys_LoadLibrary (const char *name, int flags)
+{
+	char path[MAX_OSPATH];
+	HMODULE lib;
+
+	Com_sprintf(path, sizeof(path), "%s_"CPUSTRING".dll", name);
+	lib = LoadLibrary(path);
+	if (!lib)
+		Com_Printf("Could not load %s\n", name);
+	return lib;
+}
+
+/**
+ * @brief
+ * @sa Sys_LoadLibrary
+ */
+void Sys_FreeLibrary (void *libHandle)
+{
+	if (!libHandle)
+		Com_Error(ERR_DROP, "Sys_FreeLibrary: No valid handle given\n");
+	if (!FreeLibrary(libHandle))
+		Com_Error(ERR_DROP, "Sys_FreeLibrary: dlclose() failed\n");
+}
+
+/**
+ * @brief
+ * @sa Sys_LoadLibrary
+ */
+void *Sys_GetProcAddress (void *libHandle, const char *procName)
+{
+	if (!libHandle)
+		Com_Error(ERR_DROP, "Sys_GetProcAddress: No valid libHandle given\n");
+	return GetProcAddress(libHandle, procName);
 }

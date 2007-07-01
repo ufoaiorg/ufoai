@@ -125,7 +125,7 @@ static void *game_library;
 void Sys_UnloadGame (void)
 {
 	if (game_library)
-		dlclose(game_library);
+		Sys_FreeLibrary(game_library);
 	game_library = NULL;
 }
 

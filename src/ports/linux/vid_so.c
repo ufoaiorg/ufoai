@@ -131,7 +131,7 @@ void VID_FreeReflib (void)
 			KBD_Close_fp();
 		if (RW_IN_Shutdown_fp)
 			RW_IN_Shutdown_fp();
-		dlclose(reflib_library);
+		Sys_FreeLibrary(reflib_library);
 	}
 
 	KBD_Init_fp = NULL;
@@ -157,10 +157,7 @@ static qboolean VID_LoadRefresh (const char *name)
 	refimport_t ri;
 	GetRefAPI_t GetRefAPI;
 	qboolean restart = qfalse;
-	struct stat st;
 	extern uid_t saved_euid;
-	char libPath[MAX_OSPATH] = "";
-	cvar_t* s_libdir = Cvar_Get("s_libdir", "", CVAR_ARCHIVE, "lib dir for graphic and sound renderer - no game libs");
 
 	if (reflib_active) {
 #if 0
@@ -181,23 +178,10 @@ static qboolean VID_LoadRefresh (const char *name)
 	/*regain root */
 	seteuid(saved_euid);
 
-	/* try path given via cvar */
-	if (strlen(s_libdir->string))
-		Com_sprintf(libPath, sizeof(libPath), "%s/%s", s_libdir->string, name);
-	else
-		Com_sprintf(libPath, sizeof(libPath), "./%s", name);
-
-	if (stat(libPath, &st) == -1) {
-		Com_Printf("LoadLibrary (\"%s\") failed: %s\n", libPath, strerror(errno));
+	if ((reflib_library = Sys_LoadLibrary(name, 0)) == 0)
 		return qfalse;
-	}
 
-	if ((reflib_library = dlopen(libPath, RTLD_LAZY|RTLD_GLOBAL|RTLD_NODELETE)) == 0) {
-		Com_Printf("LoadLibrary (\"%s\") failed: %s\n", libPath , dlerror());
-		return qfalse;
-	}
-
-	Com_Printf("LoadLibrary (\"%s\")\n", libPath);
+	Com_Printf("Sys_LoadLibrary (\"%s\")\n", name);
 
 	ri.Cmd_AddCommand = Cmd_AddCommand;
 	ri.Cmd_RemoveCommand = Cmd_RemoveCommand;
@@ -314,7 +298,7 @@ void VID_CheckChanges (void)
 		vid_fullscreen->modified = qtrue;
 		cl.refresh_prepped = qfalse;
 		cls.disable_screen = qtrue;
-		Com_sprintf(name, sizeof(name), "ref_%s.%s", vid_ref->string, SHARED_EXT);
+		Com_sprintf(name, sizeof(name), "ref_%s", vid_ref->string);
 
 		if (!VID_LoadRefresh(name)) {
 			Cmd_ExecuteString("condump gl_debug");

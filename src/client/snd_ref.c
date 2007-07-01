@@ -379,11 +379,8 @@ static void S_FreeLibs (void)
 	SND_GetDMAPos = NULL;
 	SND_BeginPainting = NULL;
 	SND_Activate = NULL;
-#ifdef _WIN32
-	FreeLibrary(snd_ref_lib);
-#else
-	dlclose(snd_ref_lib);
-#endif
+	Sys_FreeLibrary(snd_ref_lib);
+
 	memset(&si, 0, sizeof(struct sndinfo));
 	snd_ref_lib = NULL;
 	snd_ref_active = qfalse;
@@ -414,9 +411,6 @@ static const cmdList_t r_commands[] = {
  */
 void S_Init (void)
 {
-#ifndef _WIN32
-	cvar_t *s_libdir;
-#endif
 	const cmdList_t *commands;
 
 	Com_Printf("\n------- sound initialization -------\n");
@@ -440,10 +434,8 @@ void S_Init (void)
 	snd_fadingenable = Cvar_Get("snd_fadingenable", "1", 0, "Music fading enabled");
 
 	{
-		char libPath[MAX_OSPATH];
-#ifndef _WIN32
-		char libName[MAX_QPATH];
-#endif
+		char lib[MAX_OSPATH];
+
 		/* @todo: make openal the default when it is working (i.e. change 0 below to a 1) */
 		snd_openal = Cvar_Get("snd_openal", "0", CVAR_ARCHIVE, "use OpenAL");
 		snd_ref = Cvar_Get("snd_ref", "sdl", CVAR_ARCHIVE, "Sound renderer libary name - default is sdl");
@@ -451,47 +443,25 @@ void S_Init (void)
 		snd_ref->modified = qfalse;
 
 		Com_Printf("Loading snd_%s sound driver\n", snd_ref->string);
-#ifdef _WIN32
-		Com_sprintf(libPath, sizeof(libPath), "snd_%s.dll", snd_ref->string);
-		if ((snd_ref_lib = LoadLibrary(libPath)) == 0) {
-			Com_Printf("Load library (%s) failed - no sound available\n", libPath);
+		Com_sprintf(lib, sizeof(lib), "snd_%s", snd_ref->string);
+		snd_ref_lib = Sys_LoadLibrary(lib, 0);
+		if (snd_ref_lib == NULL) {
+			Com_Printf("Load library (%s) failed - no sound available\n", lib);
 			return;
 		}
-#else /* WIN32 */
-		s_libdir = Cvar_Get("s_libdir", "", CVAR_ARCHIVE, "lib dir for graphic and sound renderer - no game libs");
 
-			/* try path given via cvar */
-		if (strlen(s_libdir->string))
-			Q_strncpyz(libPath, s_libdir->string, sizeof(libPath));
-		else
-			strcpy(libPath, ".");
-
-		Com_Printf("...library search path: '%s'\n", libPath);
-
-		/* first try system wide */
-		Com_sprintf(libName, sizeof(libName), "snd_%s.%s", snd_ref->string, SHARED_EXT);
-		if ((snd_ref_lib = dlopen(libName, RTLD_LAZY|RTLD_GLOBAL)) == 0) {
-			/* then use s_libdir cvar */
-			Com_sprintf(libPath, sizeof(libPath), "%s/%s", libPath, libName);
-			if ((snd_ref_lib = dlopen(libPath, RTLD_LAZY)) == 0) {
-				Com_Printf("Load library failed: %s\n", dlerror());
-				return;
-			}
-		}
-#endif /* WIN32 */
-
-		if ((SND_Init = (SND_Init_t) dlladdr(snd_ref_lib, "SND_Init")) == 0)
-			Com_Error(ERR_FATAL, "dladdr failed loading SND_Init\n");
-		if ((SND_Shutdown = (SND_Shutdown_t) dlladdr(snd_ref_lib, "SND_Shutdown")) == 0)
-			Com_Error(ERR_FATAL, "dladdr failed loading SND_Shutdown\n");
-		if ((SND_GetDMAPos = (SND_GetDMAPos_t) dlladdr(snd_ref_lib, "SND_GetDMAPos")) == 0)
-			Com_Error(ERR_FATAL, "dladdr failed loading SND_GetDMAPos\n");
-		if ((SND_BeginPainting = (SND_BeginPainting_t) dlladdr(snd_ref_lib, "SND_BeginPainting")) == 0)
-			Com_Error(ERR_FATAL, "dladdr failed loading SND_BeginPainting\n");
-		if ((SND_Submit = (SND_Submit_t) dlladdr(snd_ref_lib, "SND_Submit")) == 0)
-			Com_Error(ERR_FATAL, "dladdr failed loading SND_Submit\n");
-		if ((SND_Activate = (SND_Activate_t) dlladdr(snd_ref_lib, "SND_Activate")) == 0)
-			Com_Error(ERR_FATAL, "dladdr failed loading SND_Activate\n");
+		if ((SND_Init = (SND_Init_t) Sys_GetProcAddress(snd_ref_lib, "SND_Init")) == 0)
+			Com_Error(ERR_FATAL, "Sys_GetProcAddress failed loading SND_Init\n");
+		if ((SND_Shutdown = (SND_Shutdown_t) Sys_GetProcAddress(snd_ref_lib, "SND_Shutdown")) == 0)
+			Com_Error(ERR_FATAL, "Sys_GetProcAddress failed loading SND_Shutdown\n");
+		if ((SND_GetDMAPos = (SND_GetDMAPos_t) Sys_GetProcAddress(snd_ref_lib, "SND_GetDMAPos")) == 0)
+			Com_Error(ERR_FATAL, "Sys_GetProcAddress failed loading SND_GetDMAPos\n");
+		if ((SND_BeginPainting = (SND_BeginPainting_t) Sys_GetProcAddress(snd_ref_lib, "SND_BeginPainting")) == 0)
+			Com_Error(ERR_FATAL, "Sys_GetProcAddress failed loading SND_BeginPainting\n");
+		if ((SND_Submit = (SND_Submit_t) Sys_GetProcAddress(snd_ref_lib, "SND_Submit")) == 0)
+			Com_Error(ERR_FATAL, "Sys_GetProcAddress failed loading SND_Submit\n");
+		if ((SND_Activate = (SND_Activate_t) Sys_GetProcAddress(snd_ref_lib, "SND_Activate")) == 0)
+			Com_Error(ERR_FATAL, "Sys_GetProcAddress failed loading SND_Activate\n");
 
 		snd_ref_active = qtrue;
 	}
