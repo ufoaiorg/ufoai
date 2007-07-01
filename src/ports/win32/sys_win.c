@@ -987,11 +987,20 @@ void *Sys_LoadLibrary (const char *name, int flags)
 	char path[MAX_OSPATH];
 	HMODULE lib;
 
+	/* first try cpu string */
 	Com_sprintf(path, sizeof(path), "%s_"CPUSTRING".dll", name);
 	lib = LoadLibrary(path);
-	if (!lib)
-		Com_Printf("Could not load %s\n", name);
-	return lib;
+	if (lib)
+		return lib;
+
+	/* now the general lib */
+	Com_sprintf(path, sizeof(path), "%s.dll", name);
+	lib = LoadLibrary(path);
+	if (lib)
+		return lib;
+
+	Com_Printf("Could not load %s\n", name);
+	return NULL;
 }
 
 /**

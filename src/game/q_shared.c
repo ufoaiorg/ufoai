@@ -1648,7 +1648,6 @@ float FloatSwap (float f)
 		byte b[4];
 	} dat1, dat2;
 
-
 	dat1.f = f;
 	dat2.b[0] = dat1.b[3];
 	dat2.b[1] = dat1.b[2];
