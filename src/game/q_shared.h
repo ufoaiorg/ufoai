@@ -57,7 +57,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #if defined _M_AMD64
 # pragma warning(disable : 4267) /* conversion from 'size_t' to whatever, possible loss of data */
 #endif
-#define inline __inline
 #endif /* _MSC_VER */
 
 #ifdef LCC_WIN32
@@ -99,9 +98,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 # include <dirent.h>
 #endif
 
-#ifndef inline
+#if defined __STDC_VERSION__
+#  if __STDC_VERSION__ < 199901L
+#    if defined __GNUC__
 /* if we are using ansi - the compiler doesn't know about inline */
-#define inline __inline__
+#      define inline __inline__
+#    elif defined _MSVC
+#      define inline __inline
+#    else
+#      define inline
+#    endif
+#  endif
+#else
+#  define inline
 #endif
 
 #ifdef NO_GETTEXT

@@ -41,10 +41,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #  endif
 #  ifdef _M_IX86
 #    define CPUSTRING "x86"
+#  elif defined _M_AMD64
+#    define CPUSTRING "x86_64"
+#  elif defined _M_IA64
+#    define CPUSTRING "x86_64"
 #  elif defined _M_ALPHA
-#    define CPUSTRING	"AXP"
+#    define CPUSTRING "AXP"
 #  else
-#    define CPUSTRING	"Unknown"
+#    define CPUSTRING "Unknown"
 #  endif
 
 #elif defined __linux__
