@@ -397,7 +397,7 @@ static qboolean VID_LoadRefresh (const char *name)
 
 	Com_Printf("------- Loading %s -------\n", name);
 
-	if ((reflib_library = Sys_LoadLibrary(name)) == 0) {
+	if ((reflib_library = Sys_LoadLibrary(name, 0)) == 0) {
 		Com_Printf("LoadLibrary(\"%s\") failed\n", name);
 		return qfalse;
 	}
