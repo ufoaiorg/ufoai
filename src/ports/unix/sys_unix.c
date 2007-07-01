@@ -187,13 +187,18 @@ game_export_t *Sys_GetGameAPI (game_import_t *parms)
 		path = FS_NextPath(path);
 		if (!path)
 			return NULL;		/* couldn't find one anywhere */
-		Com_sprintf(name, sizeof(name), "%s/game.%s", path, SHARED_EXT);
-
+		Com_sprintf(name, sizeof(name), "%s/game_"CPUSTRING".%s", path, SHARED_EXT);
 		game_library = dlopen(name, RTLD_LAZY);
 		if (game_library) {
 			Com_Printf("LoadLibrary (%s)\n", name);
 			break;
 		} else {
+			Com_sprintf(name, sizeof(name), "%s/game.%s", path, SHARED_EXT);
+			game_library = dlopen(name, RTLD_LAZY);
+			if (game_library) {
+				Com_Printf("LoadLibrary (%s)\n", name);
+				break;
+			}
 			Com_Printf("LoadLibrary failed (%s)\n", name);
 			Com_Printf("%s\n", dlerror());
 		}
