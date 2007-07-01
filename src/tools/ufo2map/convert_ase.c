@@ -55,19 +55,19 @@ static void ConvertSurface (FILE *f, entity_t* e, int entity_num, int surfaceNum
 
 	/* print object header for each dsurf */
 	sprintf(name, "mat%dmodel%dsurf%d", surfaceNum, entity_num, surfaceNum );
-	fprintf(f, "*GEOMOBJECT\t{\r\n" );
+	fprintf(f, "*GEOMOBJECT\t{\r\n");
 	fprintf(f, "\t*NODE_NAME\t\"%s\"\r\n", name );
-	fprintf(f, "\t*NODE_TM\t{\r\n" );
+	fprintf(f, "\t*NODE_TM\t{\r\n");
 	fprintf(f, "\t\t*NODE_NAME\t\"%s\"\r\n", name );
-	fprintf(f, "\t\t*INHERIT_POS\t0\t0\t0\r\n" );
-	fprintf(f, "\t\t*INHERIT_ROT\t0\t0\t0\r\n" );
-	fprintf(f, "\t\t*INHERIT_SCL\t0\t0\t0\r\n" );
-	fprintf(f, "\t\t*TM_ROW0\t1.0\t0\t0\r\n" );
-	fprintf(f, "\t\t*TM_ROW1\t0\t1.0\t0\r\n" );
-	fprintf(f, "\t\t*TM_ROW2\t0\t0\t1.0\r\n" );
-	fprintf(f, "\t\t*TM_ROW3\t0\t0\t0\r\n" );
+	fprintf(f, "\t\t*INHERIT_POS\t0\t0\t0\r\n");
+	fprintf(f, "\t\t*INHERIT_ROT\t0\t0\t0\r\n");
+	fprintf(f, "\t\t*INHERIT_SCL\t0\t0\t0\r\n");
+	fprintf(f, "\t\t*TM_ROW0\t1.0\t0\t0\r\n");
+	fprintf(f, "\t\t*TM_ROW1\t0\t1.0\t0\r\n");
+	fprintf(f, "\t\t*TM_ROW2\t0\t0\t1.0\r\n");
+	fprintf(f, "\t\t*TM_ROW3\t0\t0\t0\r\n");
 	fprintf(f, "\t\t*TM_POS\t%f\t%f\t%f\r\n", origin[0], origin[1], origin[2]);
-	fprintf(f, "\t}\r\n" );
+	fprintf(f, "\t}\r\n");
 	/* print mesh header */
 	fprintf(f, "\t*MESH\t{\r\n");
 	fprintf(f, "\t\t*TIMEVALUE\t0\r\n");
@@ -108,36 +108,36 @@ static void ConvertSurface (FILE *f, entity_t* e, int entity_num, int surfaceNum
 		dv = &bspDrawVerts[ v ];
 		fprintf(f, "\t\t\t*MESH_VERTEXNORMAL\t%d\t%f\t%f\t%f\r\n", i, dv->normal[ 0 ], dv->normal[ 1 ], dv->normal[ 2 ] );
 	}
-	fprintf(f, "\t\t}\r\n" );
+	fprintf(f, "\t\t}\r\n");
 #endif
 
 	/* export faces */
-	fprintf(f, "\t\t*MESH_FACE_LIST\t{\r\n" );
+	fprintf(f, "\t\t*MESH_FACE_LIST\t{\r\n");
 	for (i = 0; i < numfaces; i += 3) {
 		face = (i / 3);
 		a = dedges[dfaces[i].firstedge].v[0];
 		c = dedges[dfaces[i].firstedge].v[1];
 		b = dedges[dfaces[i].firstedge].v[2];
-		fprintf( f, "\t\t\t*MESH_FACE\t%d\tA:\t%d\tB:\t%d\tC:\t%d\tAB:\t1\tBC:\t1\tCA:\t1\t*MESH_SMOOTHING\t0\t*MESH_MTLID\t0\r\n",
+		fprintf(f, "\t\t\t*MESH_FACE\t%d\tA:\t%d\tB:\t%d\tC:\t%d\tAB:\t1\tBC:\t1\tCA:\t1\t*MESH_SMOOTHING\t0\t*MESH_MTLID\t0\r\n",
 			face, a, b, c );
 	}
-	fprintf( f, "\t\t}\r\n" );
+	fprintf(f, "\t\t}\r\n");
 
 #if 0
 	/* export vertex st */
 	fprintf(f, "\t\t*MESH_NUMTVERTEX\t%d\r\n", numvertexes );
-	fprintf(f, "\t\t*MESH_TVERTLIST\t{\r\n" );
+	fprintf(f, "\t\t*MESH_TVERTLIST\t{\r\n");
 	for ( i = 0; i < numvertexes; i++ ) {
 		v = i + ds->firstVert;
 		dv = &bspDrawVerts[ v ];
 		fprintf(f, "\t\t\t*MESH_TVERT\t%d\t%f\t%f\t%f\r\n", i, dv->st[ 0 ], (1.0 - dv->st[ 1 ]), 1.0f );
 	}
-	fprintf(f, "\t\t}\r\n" );
+	fprintf(f, "\t\t}\r\n");
 #endif
 
 	/* export texture faces */
 	fprintf(f, "\t\t*MESH_NUMTVFACES\t%d\r\n", numfaces / 3 );
-	fprintf(f, "\t\t*MESH_TFACELIST\t{\r\n" );
+	fprintf(f, "\t\t*MESH_TFACELIST\t{\r\n");
 	for (i = 0; i < numfaces; i += 3) {
 		face = (i / 3);
 		a = dedges[dfaces[i].firstedge].v[0];
@@ -155,7 +155,7 @@ static void ConvertSurface (FILE *f, entity_t* e, int entity_num, int surfaceNum
 	fprintf(f, "\t*PROP_CASTSHADOW\t1\r\n");
 	fprintf(f, "\t*PROP_RECVSHADOW\t1\r\n");
 	fprintf(f, "\t*MATERIAL_REF\t%d\r\n", surfaceNum);
-	fprintf(f, "}\r\n" );
+	fprintf(f, "}\r\n");
 }
 
 
@@ -237,20 +237,20 @@ static void ConvertShader( FILE *f, char* image, int imagenum )
 #if 0
 	fprintf(f, "\t\t*MATERIAL_DIFFUSE\t%f\t%f\t%f\r\n", si->color[0], si->color[1], si->color[2]);
 #endif
-	fprintf(f, "\t\t*MATERIAL_SHADING Phong\r\n" );
+	fprintf(f, "\t\t*MATERIAL_SHADING Phong\r\n");
 
 	/* print map info */
-	fprintf(f, "\t\t*MAP_DIFFUSE\t{\r\n" );
+	fprintf(f, "\t\t*MAP_DIFFUSE\t{\r\n");
 	fprintf(f, "\t\t\t*MAP_NAME\t\"%s\"\r\n", image );
 	fprintf(f, "\t\t\t*MAP_CLASS\t\"Bitmap\"\r\n");
-	fprintf(f, "\t\t\t*MAP_SUBNO\t1\r\n" );
-	fprintf(f, "\t\t\t*MAP_AMOUNT\t1.0\r\n" );
-	fprintf(f, "\t\t\t*MAP_TYPE\tScreen\r\n" );
+	fprintf(f, "\t\t\t*MAP_SUBNO\t1\r\n");
+	fprintf(f, "\t\t\t*MAP_AMOUNT\t1.0\r\n");
+	fprintf(f, "\t\t\t*MAP_TYPE\tScreen\r\n");
 	fprintf(f, "\t\t\t*BITMAP\t\"..\\%s\"\r\n", filename );
-	fprintf(f, "\t\t\t*BITMAP_FILTER\tPyramidal\r\n" );
-	fprintf(f, "\t\t}\r\n" );
+	fprintf(f, "\t\t\t*BITMAP_FILTER\tPyramidal\r\n");
+	fprintf(f, "\t\t}\r\n");
 
-	fprintf(f, "\t}\r\n" );
+	fprintf(f, "\t}\r\n");
 }
 #endif
 
@@ -267,46 +267,46 @@ int ConvertBSPToASE( char *bspName )
 	char name[1024], base[1024];
 
 	/* note it */
-	Sys_Printf( "--- Convert BSP to ASE ---\n" );
+	Sys_Printf("--- Convert BSP to ASE ---\n");
 
 	/* create the ase filename from the bsp name */
 	strcpy(name, bspName);
 
 	StripExtension(name);
 	strcat(name, ".bsp");
-	LoadBSPFile (name);
+	LoadBSPFile(name);
 	ParseEntities();
 	Sys_Printf("converting '%s'\n", name);
 
-	StripExtension( name );
+	StripExtension(name);
 	strcat(name, ".ase");
 	Sys_Printf("writing '%s'\n", name);
 
 	ExtractFileBase( bspName, base );
-	strcat( base, ".bsp" );
+	strcat(base, ".bsp");
 
 	/* open it */
-	f = fopen( name, "wb" );
+	f = fopen(name, "wb");
 	if (f == NULL)
-		Error( "Open failed on %s\n", name );
+		Error("Open failed on %s\n", name);
 
 	/* print header */
-	fprintf( f, "*3DSMAX_ASCIIEXPORT\t200\r\n" );
-	fprintf( f, "*COMMENT\t\"Generated by ufo2map\"\r\n" );
-	fprintf( f, "*SCENE\t{\r\n" );
-	fprintf( f, "\t*SCENE_FILENAME\t\"%s\"\r\n", base );
-	fprintf( f, "\t*SCENE_FIRSTFRAME\t0\r\n" );
-	fprintf( f, "\t*SCENE_LASTFRAME\t100\r\n" );
-	fprintf( f, "\t*SCENE_FRAMESPEED\t30\r\n" );
-	fprintf( f, "\t*SCENE_TICKSPERFRAME\t160\r\n" );
-	fprintf( f, "\t*SCENE_BACKGROUND_STATIC\t0.0000\t0.0000\t0.0000\r\n" );
-	fprintf( f, "\t*SCENE_AMBIENT_STATIC\t0.0000\t0.0000\t0.0000\r\n" );
-	fprintf( f, "}\r\n" );
+	fprintf(f, "*3DSMAX_ASCIIEXPORT\t200\r\n");
+	fprintf(f, "*COMMENT\t\"Generated by ufo2map\"\r\n");
+	fprintf(f, "*SCENE\t{\r\n");
+	fprintf(f, "\t*SCENE_FILENAME\t\"%s\"\r\n", base);
+	fprintf(f, "\t*SCENE_FIRSTFRAME\t0\r\n");
+	fprintf(f, "\t*SCENE_LASTFRAME\t100\r\n");
+	fprintf(f, "\t*SCENE_FRAMESPEED\t30\r\n");
+	fprintf(f, "\t*SCENE_TICKSPERFRAME\t160\r\n");
+	fprintf(f, "\t*SCENE_BACKGROUND_STATIC\t0.0000\t0.0000\t0.0000\r\n");
+	fprintf(f, "\t*SCENE_AMBIENT_STATIC\t0.0000\t0.0000\t0.0000\r\n");
+	fprintf(f, "}\r\n");
 
 	/* print materials */
-	fprintf( f, "*MATERIAL_LIST\t{\r\n" );
-	fprintf( f, "\t*MATERIAL_COUNT\t%d\r\n", numtexinfo );
-	Sys_Printf ("...exporting %i materials\n", numtexinfo);
+	fprintf(f, "*MATERIAL_LIST\t{\r\n");
+	fprintf(f, "\t*MATERIAL_COUNT\t%d\r\n", numtexinfo);
+	Sys_Printf("...exporting %i materials\n", numtexinfo);
 	for (i = 0; i < numtexinfo; i++) {
 #if 0
 		shader = &bspShaders[i];
@@ -315,7 +315,7 @@ int ConvertBSPToASE( char *bspName )
 	}
 	fprintf(f, "}\r\n");
 
-	Sys_Printf ("...exporting %i entities\n", num_entities);
+	Sys_Printf("...exporting %i entities\n", num_entities);
 	/* walk entity list */
 	for (i = 0; i < num_entities; i++) {
 		/* get entity and model */
@@ -334,7 +334,7 @@ int ConvertBSPToASE( char *bspName )
 	}
 
 	/* close the file and return */
-	fclose( f );
+	fclose(f);
 
 	/* return to sender */
 	return 0;

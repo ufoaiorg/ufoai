@@ -200,7 +200,7 @@ static void GL_Bloom_InitTextures (void)
  */
 extern void GL_InitBloom (void)
 {
-	gl_bloom = ri.Cvar_Get( "gl_bloom", "0", CVAR_ARCHIVE, "Activate light blooms");
+	gl_bloom = ri.Cvar_Get("gl_bloom", "0", CVAR_ARCHIVE, "Activate light blooms");
 	gl_bloomalpha = ri.Cvar_Get("gl_bloomalpha", "0.4", CVAR_ARCHIVE, NULL);
 	gl_bloomintensity = ri.Cvar_Get("gl_bloomintensity", "0.2", CVAR_ARCHIVE, NULL);
 	gl_bloomsize = ri.Cvar_Get("gl_bloomsize", "256", CVAR_ARCHIVE, NULL);

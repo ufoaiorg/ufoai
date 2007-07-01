@@ -149,7 +149,7 @@ static qboolean SND_InitWav (void)
 				"Select Retry to try to start sound again or Cancel to run UFO with no sound.",
 				(LPCTSTR)"Sound not available",
 				MB_RETRYCANCEL | MB_SETFOREGROUND | MB_ICONEXCLAMATION) != IDRETRY) {
-			si->Com_DPrintf("hw in use\n" );
+			si->Com_DPrintf("hw in use\n");
 			return qfalse;
 		}
 	}

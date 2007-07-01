@@ -112,7 +112,7 @@ qboolean SND_Init (struct sndinfo *s)
 
 	sgisnd_aport = alOpenPort("UFO", "w", ac);
 	if (!sgisnd_aport)
-		printf( "failed to open audio port!\n" );
+		printf("failed to open audio port!\n");
 
 	/* set desired sample rate */
 	pvbuf[0].param = AL_MASTER_CLOCK;
@@ -147,12 +147,12 @@ int SND_GetDMAPos (void)
 	long long ustFuture, ustNow;
 	if (!sgisnd_aport)
 		return 0;
-	alGetFrameTime( sgisnd_aport, &sgisnd_startframe, &ustFuture );
-	dmGetUST( (unsigned long long *)&ustNow );
+	alGetFrameTime(sgisnd_aport, &sgisnd_startframe, &ustFuture);
+	dmGetUST((unsigned long long *)&ustNow);
 	sgisnd_startframe -= (long long)((ustFuture - ustNow) * sgisnd_frames_per_ns);
 	sgisnd_startframe += 100;
-	/*printf( "frame %ld pos %d\n", frame, UST_TO_BUFFPOS( sgisnd_startframe ) ); */
-	return( UST_TO_BUFFPOS( sgisnd_startframe ) );
+	/*printf("frame %ld pos %d\n", frame, UST_TO_BUFFPOS(sgisnd_startframe)); */
+	return(UST_TO_BUFFPOS( sgisnd_startframe));
 }
 
 /**

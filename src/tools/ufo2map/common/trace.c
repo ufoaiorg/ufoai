@@ -107,7 +107,7 @@ static void BuildTnode_r (int node)
 		VectorCopy(dnodes[n->children[0]].maxs, c0maxs);
 		VectorCopy(dnodes[n->children[1]].mins, c1mins);
 
-		/*	Sys_Printf( "(%i %i : %i %i) (%i %i : %i %i)\n", */
+		/*	Sys_Printf("(%i %i : %i %i) (%i %i : %i %i)\n", */
 		/*		(int)dnodes[n->children[0]].mins[0], (int)dnodes[n->children[0]].mins[1], (int)dnodes[n->children[0]].maxs[0], (int)dnodes[n->children[0]].maxs[1], */
 		/*		(int)dnodes[n->children[1]].mins[0], (int)dnodes[n->children[1]].mins[1], (int)dnodes[n->children[1]].maxs[0], (int)dnodes[n->children[1]].maxs[1] ); */
 

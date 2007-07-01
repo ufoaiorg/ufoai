@@ -269,7 +269,7 @@ int FS_Seek (qFILE * f, long offset, int origin)
 
 		if (offset < 0 || origin == FS_SEEK_END) {
 			Com_Error(ERR_FATAL, "Negative offsets and FS_SEEK_END not implemented "
-					"for FS_Seek on pk3 file contents\n" );
+					"for FS_Seek on pk3 file contents\n");
 			return -1;
 		}
 
@@ -288,7 +288,7 @@ int FS_Seek (qFILE * f, long offset, int origin)
 			break;
 
 		default:
-			Com_Error( ERR_FATAL, "Bad origin in FS_Seek\n" );
+			Com_Error( ERR_FATAL, "Bad origin in FS_Seek\n");
 			return -1;
 			break;
 		}
@@ -1571,7 +1571,7 @@ extern void FS_CopyFile (const char *fromOSPath, const char *toOSPath)
 
 	buf = Mem_PoolAlloc(len, com_fileSysPool, 0);
 	if (fread(buf, 1, len, f) != len)
-		Com_Error(ERR_FATAL, "Short read in FS_CopyFile()\n" );
+		Com_Error(ERR_FATAL, "Short read in FS_CopyFile()\n");
 	fclose(f);
 
 	FS_CreatePath(toOSPath);

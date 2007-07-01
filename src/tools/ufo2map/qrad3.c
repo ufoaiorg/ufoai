@@ -62,7 +62,7 @@ static void MakeBackplanes (void)
 
 	for (i = 0; i < numplanes; i++) {
 		backplanes[i].dist = -dplanes[i].dist;
-		VectorSubtract (vec3_origin, dplanes[i].normal, backplanes[i].normal);
+		VectorSubtract(vec3_origin, dplanes[i].normal, backplanes[i].normal);
 	}
 }
 
@@ -70,7 +70,7 @@ static void MakeBackplanes (void)
 /**
  * @brief
  */
-void CalcVertexNormals ( unsigned int vnum )
+void CalcVertexNormals (unsigned int vnum)
 {
 	qboolean	found;
 	int		i, k;
@@ -82,8 +82,8 @@ void CalcVertexNormals ( unsigned int vnum )
 
 	/* clear normal and successively add plane normal vectors */
 	vnum++;
-	VectorCopy( dvertexes[vnum].point, vert );
-	VectorClear( normal );
+	VectorCopy(dvertexes[vnum].point, vert);
+	VectorClear(normal);
 	found = qfalse;
 
 	for (i = 0, face = dfaces; i < numfaces; i++, face++)
@@ -105,14 +105,14 @@ void CalcVertexNormals ( unsigned int vnum )
 /*	normal[0] = (float)(rand()%256);
 	normal[1] = (float)(rand()%256);
 	normal[2] = (float)(rand()%256);
-	VectorCopy( normal, lastNormal );*/
+	VectorCopy(normal, lastNormal);*/
 
-	if ( found && !VectorCompare( normal, vec3_origin ) )
-		VectorNormalize( normal, vnormals[vnum] );
+	if (found && !VectorCompare( normal, vec3_origin))
+		VectorNormalize(normal, vnormals[vnum]);
 	else
-		VectorClear( vnormals[vnum] );
+		VectorClear(vnormals[vnum]);
 
-/*	printf( "(%1.4f %1.4f %1.4f)\n", (vnormals[vnum])[0], (vnormals[vnum])[1], (vnormals[vnum])[2] ); */
+/*	printf("(%1.4f %1.4f %1.4f)\n", (vnormals[vnum])[0], (vnormals[vnum])[1], (vnormals[vnum])[2]); */
 }
 #endif
 

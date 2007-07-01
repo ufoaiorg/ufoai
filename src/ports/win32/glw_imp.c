@@ -353,7 +353,7 @@ void GLimp_Shutdown (void)
 	}
 	if (glw_state.hDC) {
 		if (!ReleaseDC(glw_state.hWnd, glw_state.hDC))
-			ri.Con_Printf(PRINT_ALL, "ref_gl::R_Shutdown() - ReleaseDC failed\n" );
+			ri.Con_Printf(PRINT_ALL, "ref_gl::R_Shutdown() - ReleaseDC failed\n");
 		glw_state.hDC = NULL;
 	}
 	if (glw_state.hWnd) {

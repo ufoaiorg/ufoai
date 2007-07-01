@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define QGL
 #include "../../ref_gl/gl_local.h"
 
-#define SIG( x ) fprintf( log_fp, x "\n" )
+#define SIG( x ) fprintf(log_fp, x "\n")
 
 /*
 ** QGL_Shutdown

@@ -1177,7 +1177,7 @@ qboolean CL_OpenAVIForWriting (const char *fileName)
 	afd.width = viddef.width;
 	afd.height = viddef.height;
 
-	Com_Printf("Capturing avi with resolution %i:%i\n", afd.width, afd.height );
+	Com_Printf("Capturing avi with resolution %i:%i\n", afd.width, afd.height);
 
 	if (cl_aviMotionJpeg->integer) {
 		Com_Printf("...MotionJPEG codec\n");

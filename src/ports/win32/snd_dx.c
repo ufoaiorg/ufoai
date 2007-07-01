@@ -116,7 +116,7 @@ static qboolean DS_CreateBuffers (void)
 
 	si->Com_DPrintf("Creating DS buffers\n");
 
-	si->Com_DPrintf("...setting EXCLUSIVE coop level: " );
+	si->Com_DPrintf("...setting EXCLUSIVE coop level: ");
 	if (DS_OK != pDS->lpVtbl->SetCooperativeLevel(pDS, si->cl_hwnd, DSSCL_EXCLUSIVE)) {
 		si->Com_DPrintf("failed\n");
 		FreeSound();
@@ -352,7 +352,7 @@ static sndinitstat SND_InitDirect (void)
 						"Select Retry to try to start sound again or Cancel to run UFO with no sound.",
 						"Sound not available",
 						MB_RETRYCANCEL | MB_SETFOREGROUND | MB_ICONEXCLAMATION) != IDRETRY) {
-			si->Com_DPrintf("failed, hardware already in use\n" );
+			si->Com_DPrintf("failed, hardware already in use\n");
 			return SIS_NOTAVAIL;
 		}
 	}

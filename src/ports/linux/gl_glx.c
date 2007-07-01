@@ -168,17 +168,17 @@ static void install_grabs (void)
 
 		if (!XF86DGAQueryVersion(dpy, &MajorVersion, &MinorVersion)) {
 			/* unable to query, probalby not supported */
-			ri.Con_Printf(PRINT_ALL, "Failed to detect XF86DGA Mouse\n" );
-			ri.Cvar_Set("in_dgamouse", "0" );
+			ri.Con_Printf(PRINT_ALL, "Failed to detect XF86DGA Mouse\n");
+			ri.Cvar_Set("in_dgamouse", "0");
 		} else {
 			dgamouse = qtrue;
-			ri.Con_Printf(PRINT_DEVELOPER, "...using XF86DGA Mouse\n" );
+			ri.Con_Printf(PRINT_DEVELOPER, "...using XF86DGA Mouse\n");
 			XF86DGADirectVideo(dpy, DefaultScreen(dpy), XF86DGADirectMouse);
 			XWarpPointer(dpy, None, win, 0, 0, 0, 0, 0, 0);
 		}
 #else
-		ri.Con_Printf(PRINT_ALL, "...XF86DGA is not compiled in\n" );
-		ri.Cvar_Set("in_dgamouse", "0" );
+		ri.Con_Printf(PRINT_ALL, "...XF86DGA is not compiled in\n");
+		ri.Cvar_Set("in_dgamouse", "0");
 		XWarpPointer(dpy, None, win, 0, 0, 0, 0, vid.width / 2, vid.height / 2);
 #endif /* HAVE_XF86_DGA */
 	} else
@@ -716,7 +716,7 @@ rserr_t GLimp_SetMode (unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 		ri.Con_Printf(PRINT_ALL, "...setting mode %d:", mode);
 
 	if (!ri.Vid_GetModeInfo(&width, &height, mode)) {
-		ri.Con_Printf(PRINT_ALL, " invalid mode\n" );
+		ri.Con_Printf(PRINT_ALL, " invalid mode\n");
 		return rserr_invalid_mode;
 	}
 

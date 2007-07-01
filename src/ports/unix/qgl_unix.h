@@ -27,10 +27,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include <dlfcn.h>
 
-typedef struct
-{
-	void *OpenGLLib; /* instance of OpenGL library */
-
+typedef struct {
+	void *OpenGLLib; /**< instance of OpenGL library */
 	FILE *log_fp;
 } glwstate_t;
 
@@ -39,10 +37,10 @@ extern glwstate_t glw_state;
 void InitSig(void);
 
 #ifndef __APPLE__
-#define GPA( a ) dlsym( glw_state.OpenGLLib, a )
+#define GPA( a ) dlsym(glw_state.OpenGLLib, a)
 #endif
 
-#define SIG( x ) fprintf( glw_state.log_fp, x "\n" )
+#define SIG( x ) fprintf(glw_state.log_fp, x "\n")
 
 #ifdef __APPLE__
 #define GPA qwglGetProcAddress
