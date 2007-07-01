@@ -528,6 +528,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\client\cl_cinematic.c"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\client\cl_console.c"
 				>
 			</File>
@@ -548,11 +552,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\client\cl_hunk.c"
+				RelativePath="..\..\src\client\cl_input.c"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\client\cl_input.c"
+				RelativePath="..\..\src\client\cl_irc.c"
 				>
 			</File>
 			<File
@@ -676,15 +680,15 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\client\cl_irc.c"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\qcommon\md4.c"
 				>
 			</File>
 			<File
 				RelativePath="..\..\src\qcommon\md5.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\qcommon\mem.c"
 				>
 			</File>
 			<File
@@ -801,10 +805,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\client\cl_hunk.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\client\cl_input.h"
 				>
 			</File>
@@ -818,6 +818,14 @@
 			</File>
 			<File
 				RelativePath="..\..\src\client\cl_save.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\client\cl_screen.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\client\cl_sound.h"
 				>
 			</File>
 			<File
@@ -845,6 +853,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\qcommon\mem.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\game\q_shared.h"
 				>
 			</File>
@@ -861,19 +873,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\client\cl_screen.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\server\server.h"
 				>
 			</File>
 			<File
 				RelativePath="..\..\src\client\snd_loc.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\client\cl_sound.h"
 				>
 			</File>
 			<File

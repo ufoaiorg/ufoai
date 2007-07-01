@@ -523,10 +523,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\ref_gl\gl_drawmd3.c"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\ref_gl\gl_font.c"
 				>
 			</File>
@@ -543,11 +539,39 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\ref_gl\gl_mesh_md2.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\ref_gl\gl_mesh_md3.c"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\ref_gl\gl_model.c"
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\ref_gl\gl_obj.c"
+				RelativePath="..\..\src\ref_gl\gl_model_alias.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\ref_gl\gl_model_brush.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\ref_gl\gl_model_md2.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\ref_gl\gl_model_md3.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\ref_gl\gl_model_obj.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\ref_gl\gl_model_sp2.c"
 				>
 			</File>
 			<File
