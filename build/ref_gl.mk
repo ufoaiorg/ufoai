@@ -26,6 +26,16 @@ REF_GL_SRCS = \
 	\
 	game/q_shared.c
 
+ifneq ($(findstring $(TARGET_OS), netbsd freebsd linux-gnu),)
+	REF_GL_SRCS += \
+			ports/linux/qgl_linux.c \
+			ports/linux/q_shlinux.c \
+			ports/unix/glob.c
+	REF_SDL_SRCS = ports/unix/gl_sdl.c
+	REF_SDL_TARGET=ref_sdl.$(SHARED_EXT)
+	REF_GLX_SRCS = ports/linux/gl_glx.c
+endif
+
 ifeq ($(TARGET_OS),mingw32)
 	REF_GL_SRCS += \
 		ports/win32/qgl_win.c \
@@ -33,26 +43,24 @@ ifeq ($(TARGET_OS),mingw32)
 		ports/win32/q_shwin.c
 	REF_SDL_SRCS =
 	REF_SDL_TARGET=ref_gl.$(SHARED_EXT)
-else
-	ifeq ($(TARGET_OS),darwin)
-		REF_GL_SRCS += \
-				ports/macosx/qgl_osx.c \
-				ports/macosx/q_shosx.c \
-				ports/unix/glob.c
-		REF_SDL_SRCS = ports/unix/gl_sdl.c
-		REF_SDL_TARGET=ref_sdl.$(SHARED_EXT)
-	else
-		REF_GL_SRCS += \
-				ports/linux/qgl_linux.c \
-				ports/linux/q_shlinux.c \
-				ports/unix/glob.c
-		REF_SDL_SRCS = ports/unix/gl_sdl.c
-		REF_SDL_TARGET=ref_sdl.$(SHARED_EXT)
-	endif
 endif
-ifneq ($(TARGET_OS),darwin)
-REF_GLX_SRCS = ports/linux/gl_glx.c
+
+ifeq ($(TARGET_OS),darwin)
+	REF_GL_SRCS += \
+			ports/macosx/qgl_osx.c \
+			ports/macosx/q_shosx.c \
+			ports/unix/glob.c
+	REF_SDL_SRCS = ports/unix/gl_sdl.c
+	REF_SDL_TARGET=ref_sdl.$(SHARED_EXT)
 endif
+
+ifeq ($(TARGET_OS),solaris)
+	#TODO
+	REF_GL_SRCS +=
+	REF_SDL_SRCS = ports/unix/gl_sdl.c
+	REF_SDL_TARGET=ref_sdl.$(SHARED_EXT)
+endif
+
 #---------------------------------------------------------------------------------------------------------------------
 
 REF_GL_OBJS=$(REF_GL_SRCS:%.c=$(BUILDDIR)/ref_gl/%.o)

@@ -80,7 +80,7 @@ ifeq ($(HAVE_OPENAL),1)
 		client/qal.c
 endif
 
-ifeq ($(TARGET_OS),linux-gnu)
+ifneq ($(findstring $(TARGET_OS), netbsd freebsd linux-gnu),)
 	CLIENT_SRCS+= \
 		ports/linux/q_shlinux.c \
 		ports/linux/vid_so.c \
@@ -92,39 +92,6 @@ ifeq ($(TARGET_OS),linux-gnu)
 
 	ifeq ($(HAVE_OPENAL),1)
 		CLIENT_SRCS+= \
-			ports/linux/qal_linux.c
-	endif
-	CLIENT_CD=ports/linux/cd_linux.c
-endif
-
-ifeq ($(TARGET_OS),freebsd)
-	CLIENT_SRCS+= \
-		ports/linux/q_shlinux.c \
-		ports/linux/vid_so.c \
-		ports/linux/sys_linux.c \
-		ports/unix/sys_console.c \
-		ports/unix/sys_unix.c \
-		ports/unix/glob.c \
-		ports/unix/$(NET_UDP).c
-	ifeq ($(HAVE_OPENAL),1)
-		CLIENT_SRCS+=\
-			ports/linux/qal_linux.c
-	endif
-	CLIENT_CD=ports/linux/cd_linux.c
-endif
-
-# Exactly the same as freebsd.  Is there a better way to do this?
-ifeq ($(TARGET_OS),netbsd)
-	CLIENT_SRCS+= \
-		ports/linux/q_shlinux.c \
-		ports/linux/vid_so.c \
-		ports/linux/sys_linux.c \
-		ports/unix/sys_console.c \
-		ports/unix/sys_unix.c \
-		ports/unix/glob.c \
-		ports/unix/$(NET_UDP).c
-	ifeq ($(HAVE_OPENAL),1)
-		CLIENT_SRCS+=\
 			ports/linux/qal_linux.c
 	endif
 	CLIENT_CD=ports/linux/cd_linux.c
@@ -165,6 +132,22 @@ ifeq ($(TARGET_OS),darwin)
 #	FIXME: cd_sdl.c is used below - remove cd_osx.m
 #	(at least it is used if HAVE_SDL is true - which should be the case)
 	CLIENT_CD+=ports/macosx/cd_osx.m
+endif
+
+ifeq ($(TARGET_OS),solaris)
+	CLIENT_SRCS+= \
+		ports/solaris/q_shsolaris.c \
+		ports/linux/vid_so.c \
+		ports/solaris/sys_solaris.c \
+		ports/unix/sys_console.c \
+		ports/unix/sys_unix.c \
+		ports/unix/glob.c \
+		ports/unix/$(NET_UDP).c
+	ifeq ($(HAVE_OPENAL),1)
+		CLIENT_SRCS+=\
+			ports/linux/qal_linux.c
+	endif
+	CLIENT_CD=ports/linux/cd_linux.c
 endif
 
 ifeq ($(HAVE_CURL),1)

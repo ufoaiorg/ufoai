@@ -36,27 +36,7 @@ else
 	NET_UDP=net_udp
 endif
 
-ifeq ($(TARGET_OS),linux-gnu)
-	SERVER_SRCS += \
-		ports/linux/q_shlinux.c \
-		ports/linux/sys_linux.c \
-		ports/unix/sys_console.c \
-		ports/unix/sys_unix.c \
-		ports/unix/glob.c \
-		ports/unix/$(NET_UDP).c
-endif
-
-ifeq ($(TARGET_OS),freebsd)
-	SERVER_SRCS += \
-		ports/linux/q_shlinux.c \
-		ports/linux/sys_linux.c \
-		ports/unix/sys_console.c \
-		ports/unix/sys_unix.c \
-		ports/unix/glob.c \
-		ports/unix/$(NET_UDP).c
-endif
-
-ifeq ($(TARGET_OS),netbsd)
+ifneq ($(findstring $(TARGET_OS), netbsd freebsd linux-gnu),)
 	SERVER_SRCS += \
 		ports/linux/q_shlinux.c \
 		ports/linux/sys_linux.c \
@@ -83,6 +63,16 @@ ifeq ($(TARGET_OS),darwin)
 		ports/unix/sys_unix.c \
 		ports/unix/$(NET_UDP).c \
 		ports/macosx/q_shosx.c
+endif
+
+ifeq ($(TARGET_OS),solaris)
+	SERVER_SRCS += \
+		ports/solaris/q_shsolaris.c \
+		ports/solaris/sys_solaris.c \
+		ports/unix/sys_console.c \
+		ports/unix/sys_unix.c \
+		ports/unix/glob.c \
+		ports/unix/$(NET_UDP).c
 endif
 
 SERVER_OBJS= \
