@@ -93,6 +93,7 @@
 				<Option object_output=".objs/ref_gl" />
 				<Option type="3" />
 				<Option compiler="gcc" />
+				<Option createStaticLib="1" />
 				<Compiler>
 					<Add directory="/sw/include" />
 					<Add directory="/Library/Frameworks/SDL_ttf.framework/Versions/A/Headers" />
@@ -103,9 +104,11 @@
 					<Add option="-framework SDL" />
 					<Add option="-framework OpenGL" />
 					<Add option="-framework SDL_ttf" />
+					<Add option="-dylib" />
 					<Add library="jpeg" />
 					<Add library="png" />
 					<Add directory="/sw/lib" />
+					<Add directory="/Developer/SDKs/MacOSX10.4u.sdk/usr/lib" />
 				</Linker>
 			</Target>
 		</Build>
