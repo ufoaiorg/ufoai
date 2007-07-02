@@ -73,6 +73,7 @@ Willem "sitters"
   city/statues/(dragon, woman, statue), gascylinder, city/trafficsign,
   city/fountain, construct/container, construct/generator, construct/mixer
   boat/canoe, furniture/campbed, city/trafficlights, construct/excavator
+  hovercraft
 * textures: tex_nature/flower.tga
 * animal models: animals/rat, animals/dog
 
