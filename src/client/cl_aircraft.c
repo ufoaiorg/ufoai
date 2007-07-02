@@ -743,7 +743,7 @@ extern aircraft_t *AIR_GetAircraft (const char *name)
 			return &aircraft_samples[i];
 	}
 
-	Com_Printf("Aircraft %s not found (%i).\n", name, numAircraft_samples);
+	Com_Printf("Aircraft '%s' not found (%i).\n", name, numAircraft_samples);
 	return NULL;
 }
 
@@ -2697,11 +2697,9 @@ extern qboolean AIR_Load (sizebuf_t* sb, void* data)
 		s = MSG_ReadString(sb);
 		ufo = AIR_GetAircraft(s);
 		if (!ufo) {
-			Com_Printf("Could not find ufo '%s'\n", s);
 			MSG_ReadByte(sb); 			/* visible */
 			MSG_ReadPos(sb, tmp_vec3t);		/* pos */
 			MSG_ReadByte(sb);			/* status */
-			MSG_ReadFloat(sb);			/* speed */
 			MSG_ReadLong(sb);			/* fuel */
 			MSG_ReadShort(sb);			/* time */
 			MSG_ReadShort(sb);			/* point */
@@ -2718,7 +2716,6 @@ extern qboolean AIR_Load (sizebuf_t* sb, void* data)
 			ufo->visible = MSG_ReadByte(sb);
 			MSG_ReadPos(sb, ufo->pos);
 			ufo->status = MSG_ReadByte(sb);
-			ufo->stats[AIR_STATS_SPEED] = MSG_ReadFloat(sb);
 			ufo->fuel = MSG_ReadLong(sb);
 			ufo->time = MSG_ReadShort(sb);
 			ufo->point = MSG_ReadShort(sb);

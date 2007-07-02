@@ -223,10 +223,13 @@ static void AIRFIGHT_RemoveProjectileAimingAircraft (aircraft_t * aircraft)
  * @brief Actions to execute when a fight is done.
  * @param[in] aircraft The aircraft which was destroyed (alien or phalanx).
  * @param[in] battleStatus qtrue if PHALANX won, qfalse if UFO won.
+ * @note Some of these mission values are redone (and not reloaded) in CP_Load
+ * @sa CP_Load
  */
 extern void AIRFIGHT_ActionsAfterAirfight (aircraft_t* aircraft, qboolean phalanxWon)
 {
 	mission_t* ms = NULL;
+	actMis_t* mis = NULL;
 	byte *color;
 	const char *zoneType = NULL;
 	char missionName[MAX_VAR];
@@ -249,7 +252,7 @@ extern void AIRFIGHT_ActionsAfterAirfight (aircraft_t* aircraft, qboolean phalan
 				MN_AddNewMessage(_("Interception"), _("UFO interception succesful -- UFO lost."), qfalse, MSG_CRASHSITE, NULL);
 				return;
 			}
-			ms->missionType = MIS_INTERCEPT;
+			ms->missionType = MIS_CRASHSITE;
 			/* the size if somewhat random, because not all map tiles would have
 			 * alien spawn points */
 			ms->aliens = aircraft->size;
@@ -257,8 +260,10 @@ extern void AIRFIGHT_ActionsAfterAirfight (aircraft_t* aircraft, qboolean phalan
 			ms->civilians = (frand() * 10);
 			ms->civilians %= 4;
 			ms->civilians += 1;
+
+			/* realPos is set below */
 			Vector2Set(ms->pos, aircraft->pos[0], aircraft->pos[1]);
-			Com_Printf("%.0f:%.0f\n", ms->pos[0], ms->pos[1]);
+
 			nation = MAP_GetNation(ms->pos);
 			Com_sprintf(ms->type, sizeof(ms->type), _("UFO crash site"));
 			if (nation) {
@@ -276,10 +281,15 @@ extern void AIRFIGHT_ActionsAfterAirfight (aircraft_t* aircraft, qboolean phalan
 			/* use ufocrash.ump as random tile assembly */
 			Com_sprintf(ms->map, sizeof(ms->map), "+ufocrash");
 			Com_sprintf(ms->param, sizeof(ms->param), "%s-%s", UFO_TypeToShortName(aircraft->ufotype), MAP_GetZoneType(color));
-			if (CL_CampaignAddGroundMission(ms))
+			mis = CL_CampaignAddGroundMission(ms);
+			if (mis) {
+				Vector2Set(mis->realPos, ms->pos[0], ms->pos[1]);
 				MN_AddNewMessage(_("Interception"), _("UFO interception successful -- New mission available."), qfalse, MSG_CRASHSITE, NULL);
-			else
+			} else {
+				/* no active stage - to decrement the mission counter */
+				CL_RemoveLastMission();
 				MN_AddNewMessage(_("Interception"), _("UFO interception succesful -- UFO lost."), qfalse, MSG_CRASHSITE, NULL);
+			}
 		} else {
 			Com_Printf("zone: %s (%i:%i:%i)\n", MAP_GetZoneType(color), color[0], color[1], color[2]);
 			MN_AddNewMessage(_("Interception"), _("UFO interception successful -- UFO lost to sea."), qfalse, MSG_STANDARD, NULL);

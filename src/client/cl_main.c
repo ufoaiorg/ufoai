@@ -286,11 +286,20 @@ void CL_Drop (void)
 	if (cls.disable_servercount != -1)
 		SCR_EndLoadingPlaque();	/* get rid of loading plaque */
 
-	Com_Printf("CL_Drop: cls.state: %i\n", cls.state);
 	if (cls.state == ca_uninitialized)
 		return;
 
 	CL_Disconnect();
+
+	/* make sure that we are in the correct menus in singleplayer after
+	 * dropping the game due to a failure */
+	if (ccs.singleplayer) {
+		Cvar_Set("mn_main", "singleplayerInGame");
+		Cvar_Set("mn_active", "map");
+	} else {
+		Cvar_Set("mn_main", "main");
+		Cvar_Set("mn_active", "");
+	}
 }
 
 

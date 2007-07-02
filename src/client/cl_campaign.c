@@ -699,18 +699,19 @@ static void CP_MissionList_f (void)
  * @note This mission must already be defined completly
  * @sa CL_AddMission
  * @sa CL_CampaignAddMission
+ * @return NULL if failed - actMis_t pointer (to ccs.mission array) if successful
  */
-extern qboolean CL_CampaignAddGroundMission (mission_t* mission)
+extern actMis_t* CL_CampaignAddGroundMission (mission_t* mission)
 {
 	stageState_t *stage = NULL;
 	setState_t *set = NULL;
 	actMis_t *mis = NULL;
-	int i, j;
+	int i, j, activeCnt = 0;
 
 	/* add mission */
 	if (ccs.numMissions >= MAX_ACTMISSIONS) {
 		Com_DPrintf("CL_CampaignAddGroundMission: Too many active missions!\n");
-		return qfalse;
+		return NULL;
 	}
 	mis = &ccs.mission[ccs.numMissions++];
 	memset(mis, 0, sizeof(actMis_t));
@@ -720,15 +721,21 @@ extern qboolean CL_CampaignAddGroundMission (mission_t* mission)
 
 	/* check campaign events */
 	for (i = 0, stage = ccs.stage; i < numStages; i++, stage++)
-		if (stage->active)
+		if (stage->active) {
 			for (j = 0, set = &ccs.set[stage->def->first]; j < stage->def->num; j++, set++)
+				/* don't increase numMissions here - missions that are added
+				 * with this function don't belong to the campaign definition
+				 * but are dynamic missions - so chosing them as a random popup
+				 * geoscape mission wouldn't be good */
 				if (set->active && set->def->numMissions) {
 					mis->cause = set;
-					return qtrue;
+					return mis;
 				}
-	Com_Printf("Could not add ground mission '%s'\n", mission->name);
+			activeCnt++;
+		}
+	Com_Printf("Could not add ground mission '%s' (active stages: %i)\n", mission->name, activeCnt);
 	ccs.numMissions--;
-	return qfalse;
+	return NULL;
 }
 
 #define DIST_MIN_BASE_MISSION 4
@@ -1724,6 +1731,7 @@ extern qboolean CP_Load (sizebuf_t *sb, void *data)
 	setState_t dummy;
 	const char *name;
 	int i, j, num;
+	int misType;
 	char val[32];
 	base_t *base;
 	int selectedMission;
@@ -1843,13 +1851,28 @@ extern qboolean CP_Load (sizebuf_t *sb, void *data)
 		name = MSG_ReadString(sb);
 		mis->def = NULL;
 		mis->cause = NULL;
+		misType = MSG_ReadByte(sb);
 		for (j = 0; j < numMissions; j++)
 			if (!Q_strncmp(name, missions[j].name, MAX_VAR)) {
 				mis->def = &missions[j];
 				break;
 			}
-		if (j >= numMissions)
-			Com_Printf("......warning: Mission '%s' not found\n", name);
+		if (j >= numMissions) {
+			switch (misType) {
+			case MIS_BASEATTACK:
+				break;
+			case MIS_CRASHSITE:
+				/* create a new mission - this mission is not in the campaign definition */
+				mis->def = CL_AddMission(name);
+				break;
+			case MIS_INTERCEPT:
+				Com_Printf("......warning: Mission '%s' not found\n", name);
+				break;
+			case MIS_MAX:
+				Com_Printf("......warning: Unknown mission type\n");
+				return qfalse;
+			}
+		}
 
 		/* ignore incomplete info */
 		if (!mis->def) {
@@ -1858,7 +1881,7 @@ extern qboolean CP_Load (sizebuf_t *sb, void *data)
 		}
 
 		/* get mission type and location */
-		mis->def->missionType = MSG_ReadByte(sb);
+		mis->def->missionType = misType;
 		mis->def->storyRelated = MSG_ReadByte(sb);
 		Q_strncpyz(mis->def->location, MSG_ReadString(sb), sizeof(mis->def->location));
 
@@ -1887,7 +1910,9 @@ extern qboolean CP_Load (sizebuf_t *sb, void *data)
 
 		mis->def->onGeoscape = qtrue;
 		/* manually set mission data for a base-attack */
-		if (mis->def->missionType == MIS_BASEATTACK) {
+		switch (mis->def->missionType) {
+		case MIS_BASEATTACK:
+		{
 			/* Load IDX of base under attack */
 			int baseidx = (int)MSG_ReadByte(sb);
 			base = &gd.bases[baseidx];
@@ -1896,6 +1921,33 @@ extern qboolean CP_Load (sizebuf_t *sb, void *data)
 			else
 				Com_Printf("......warning: base %i (%s) is supposedly under attack but base status or mission location (%s) doesn't match!\n", j, base->name, selMis->def->location);
 			mis->def->data = (void*)base;
+			break;
+		}
+		case MIS_INTERCEPT:
+			break;
+		case MIS_CRASHSITE:
+		{
+			const nation_t *nation = NULL;
+			mis->def->aliens = MSG_ReadByte(sb);
+			mis->def->civilians = MSG_ReadByte(sb);
+			Q_strncpyz(mis->def->loadingscreen, MSG_ReadString(sb), sizeof(mis->def->loadingscreen));
+			Q_strncpyz(mis->def->onwin, MSG_ReadString(sb), sizeof(mis->def->onwin));
+			Q_strncpyz(mis->def->map, MSG_ReadString(sb), sizeof(mis->def->map));
+			Q_strncpyz(mis->def->param, MSG_ReadString(sb), sizeof(mis->def->param));
+			/** @sa AIRFIGHT_ActionsAfterAirfight */
+			nation = MAP_GetNation(mis->realPos);
+			Com_sprintf(mis->def->type, sizeof(mis->def->type), _("UFO crash site"));
+			if (nation) {
+				Com_sprintf(mis->def->location, sizeof(mis->def->location), _(nation->name));
+			} else {
+				Com_sprintf(mis->def->location, sizeof(mis->def->location), _("No nation"));
+			}
+			CL_GetNationTeamName(nation, mis->def->civTeam, sizeof(mis->def->civTeam));
+			break;
+		}
+		case MIS_MAX:
+			Com_Printf("......warning: Unknown mission type\n");
+			return qfalse;
 		}
 	}
 
@@ -1999,10 +2051,25 @@ extern qboolean CP_Save (sizebuf_t *sb, void *data)
 		MSG_WriteFloat(sb, mis->realPos[1]);
 		MSG_WriteLong(sb, mis->expire.day);
 		MSG_WriteLong(sb, mis->expire.sec);
-		/* save IDX of base under attack if required */
-		if (mis->def->missionType == MIS_BASEATTACK) {
+		switch (mis->def->missionType) {
+		case MIS_BASEATTACK:
+			/* save IDX of base under attack if required */
 			base = (base_t*)mis->def->data;
 			MSG_WriteByte(sb, base->idx);
+			break;
+		case MIS_INTERCEPT:
+			break;
+		case MIS_CRASHSITE:
+			MSG_WriteByte(sb, mis->def->aliens);
+			MSG_WriteByte(sb, mis->def->civilians);
+			MSG_WriteString(sb, mis->def->loadingscreen);
+			MSG_WriteString(sb, mis->def->onwin);
+			MSG_WriteString(sb, mis->def->map);
+			MSG_WriteString(sb, mis->def->param);
+			break;
+		case MIS_MAX:
+			Com_Printf("CP_Load: Error - unknown mission type: %i\n", mis->def->missionType);
+			return qfalse;
 		}
 	}
 
@@ -2745,6 +2812,17 @@ static const value_t mission_vals[] = {
 };
 
 /**
+ * @brief If e.g. CL_CampaignAddGroundMission failed after creating the new mission
+ * with CL_AddMission we have to decrease the mission pointer, too
+ * @sa CL_AddMission
+ * @sa CL_CampaignAddGroundMission
+ */
+extern void CL_RemoveLastMission (void)
+{
+	numMissions--;
+}
+
+/**
  * @brief Adds a mission to current stageSet
  * @note the returned mission_t pointer has to be filled - this function only fills the name
  * @param[in] name valid mission name
@@ -2788,28 +2866,8 @@ extern void CL_ParseMission (const char *name, char **text)
 	mission_t *ms;
 	const value_t *vp;
 	char *token;
-	int i;
 
-	/* search for missions with same name */
-	for (i = 0; i < numMissions; i++)
-		if (!Q_strncmp(name, missions[i].name, MAX_VAR))
-			break;
-
-	if (i < numMissions) {
-		Com_Printf("CL_ParseMission: mission def \"%s\" with same name found, second ignored\n", name);
-		return;
-	}
-
-	if (numMissions >= MAX_MISSIONS) {
-		Com_Printf("CL_ParseMission: Max missions reached\n");
-		return;
-	}
-
-	/* initialize the mission */
-	ms = &missions[numMissions++];
-	memset(ms, 0, sizeof(mission_t));
-
-	Q_strncpyz(ms->name, name, sizeof(ms->name));
+	ms = CL_AddMission(name);
 
 	/* get it's body */
 	token = COM_Parse(text);

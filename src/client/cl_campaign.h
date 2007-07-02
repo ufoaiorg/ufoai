@@ -59,6 +59,7 @@ typedef enum mapType_s {
 typedef enum missionType_s {
 	MIS_INTERCEPT, /* default */
 	MIS_BASEATTACK,
+	MIS_CRASHSITE,
 
 	MIS_MAX
 } missionType_t;
@@ -335,6 +336,7 @@ extern byte *CL_GetMapColor(const vec2_t pos, mapType_t type);
 extern qboolean CL_NewBase(base_t* base, vec2_t pos);
 void CL_ParseMission(const char *name, char **text);
 mission_t* CL_AddMission(const char *name);
+void CL_RemoveLastMission(void);
 void CL_ParseStage(const char *name, char **text);
 void CL_ParseCampaign(const char *name, char **text);
 void CL_ParseNations(const char *name, char **text);
@@ -346,7 +348,7 @@ void AIR_NewAircraft(base_t * base, const char *name);
 void CL_ParseResearchedCampaignItems(const char *name, char **text);
 void CL_ParseResearchableCampaignStates(const char *name, char **text, qboolean researchable);
 extern void CP_ExecuteMissionTrigger(mission_t * m, int won, base_t* base);
-extern qboolean CL_CampaignAddGroundMission(mission_t* mis);
+extern actMis_t* CL_CampaignAddGroundMission(mission_t* mis);
 const char* CL_GetNationTeamName(const nation_t* nation, char *teamname, size_t size);
 
 campaign_t* CL_GetCampaign(const char* name);
