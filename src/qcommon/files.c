@@ -538,7 +538,7 @@ void FS_FreeFile (void *buffer)
  * @brief Takes an explicit (not game tree related) path to a pak file.
  * Adding the files at the beginning of the list so they override previous pack files.
  */
-pack_t *FS_LoadPackFile (const char *packfile)
+static pack_t *FS_LoadPackFile (const char *packfile)
 {
 	unsigned int i, len, err;
 	packfile_t *newfiles;
@@ -615,7 +615,7 @@ pack_t *FS_LoadPackFile (const char *packfile)
  * @brief Adds the directory to the head of the search path
  * @note No ending slash here
  */
-void FS_AddGameDirectory (const char *dir)
+static void FS_AddGameDirectory (const char *dir)
 {
 	searchpath_t *search;
 	pack_t *pak;
@@ -685,7 +685,7 @@ void FS_AddGameDirectory (const char *dir)
  * @note e.g. *nix: Use ~/.ufoai/dir as gamedir
  * @sa Sys_GetHomeDirectory
  */
-void FS_AddHomeAsGameDirectory (const char *dir)
+static void FS_AddHomeAsGameDirectory (const char *dir)
 {
 	char gdir[MAX_OSPATH];
 	char *homedir = Sys_GetHomeDirectory();
