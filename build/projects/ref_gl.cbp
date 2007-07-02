@@ -104,7 +104,9 @@
 					<Add option="-framework SDL" />
 					<Add option="-framework OpenGL" />
 					<Add option="-framework SDL_ttf" />
-					<Add option="-dylib" />
+					<Add option="-dynamiclib" />
+					<Add option="-single_module" />
+					<Add option="-compatibility_version 1" />
 					<Add library="jpeg" />
 					<Add library="png" />
 					<Add directory="/sw/lib" />

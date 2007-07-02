@@ -55,6 +55,11 @@
 				<Option compiler="gcc" />
 				<Option createDefFile="1" />
 				<Option createStaticLib="1" />
+				<Linker>
+					<Add option="-dynamiclib" />
+					<Add option="-single_module" />
+					<Add option="-compatibility_version 1" />
+				</Linker>
 			</Target>
 		</Build>
 		<Unit filename="../../src/game/g_ai.c">
