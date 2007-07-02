@@ -2690,6 +2690,8 @@ extern qboolean AIR_Load (sizebuf_t* sb, void* data)
 	vec2_t tmp_vec2t;
 	int tmp_int;
 
+	/* load the amount of ufos on geoscape */
+	gd.numUfos = presaveArray[PRE_NUMUFO];
 	/* load the ufos on geoscape */
 	for (i = 0; i < presaveArray[PRE_NUMUFO]; i++) {
 		s = MSG_ReadString(sb);
@@ -2727,6 +2729,7 @@ extern qboolean AIR_Load (sizebuf_t* sb, void* data)
 		}
 		/* @todo more? */
 	}
+
 	/* Load recoveries. */
 	for (i = 0; i < presaveArray[PRE_MAXREC]; i++) {
 		gd.recoveries[i].active = MSG_ReadByte(sb);

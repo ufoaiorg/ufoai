@@ -128,7 +128,7 @@ typedef struct globalData_s
 	/* == Aircraft == */
 	/* UFOs on geoscape: @todo update their inner pointers if needed */
 	aircraft_t ufos[MAX_UFOONGEOSCAPE];
-	int numUfos;
+	int numUfos;	/**< the current amount of ufos on the geoscape */
 
 	/* Projectiles on geoscape (during fights) */
 	aircraftProjectile_t projectiles[MAX_PROJECTILESONGEOSCAPE];
