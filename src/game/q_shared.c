@@ -4335,7 +4335,7 @@ int Com_GetDefaultReactionFire (objDef_t *ammo, int weapon_fds_idx)
 			return fd_idx;
 	}
 
-	return 0; /* 0 = The first firemode. Default for objects without a reaction-firemode */
+	return -1; /* -1 = undef firemode. Default for objects without a reaction-firemode */
 }
 
 /**

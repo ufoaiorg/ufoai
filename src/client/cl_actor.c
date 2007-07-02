@@ -618,15 +618,22 @@ static void CL_UpdateReactionFiremodes (char hand, int actor_idx, int active_fir
 		return;
 	}
 
+	if (actor_idx < 0)
+		return;
+
 	if (active_firemode < 0) {
 		/* Set default reaction firemode. */
 		i = Com_GetDefaultReactionFire(ammo, weap_fd_idx);
-		CL_SetReactionFiremode(actor_idx, handidx, ammo->weap_idx[weap_fd_idx], i);
+		if (i >= 0) {
+			CL_SetReactionFiremode(actor_idx, handidx, ammo->weap_idx[weap_fd_idx], i);
+		} else {
+			/* Send the "turn rf off" message just in case. */
+			MSG_Write_PA(PA_STATE, cl.teamList[actor_idx]->entnum, ~STATE_REACTION);
+			/* Set RF-mode info to undef. */
+			CL_SetReactionFiremode(actor_idx, -1, -1, -1);
+		}
 		return;
 	}
-
-	if (actor_idx < 0)
-		return;
 
 	Com_DPrintf("CL_UpdateReactionFiremodes: act%i handidx%i weapfdidx%i\n", actor_idx, handidx, weap_fd_idx);
 	if (reactionFiremode[actor_idx][RF_WPIDX] == ammo->weap_idx[weap_fd_idx]
