@@ -2918,7 +2918,7 @@ tech rs_craft_ufo_fighter
 	time	2500
 
 	// TODO should come from craft-definition:
-	mdl_top		ufo1
+	mdl_top		ufo_fighter
 }
 
 tech rs_craft_ufo_supply
@@ -2958,7 +2958,7 @@ tech rs_craft_ufo_supply
 	time	2500
 
 	// TODO should come from craft-definition:
-	mdl_top		"aircraft/ufo_supply/ufo_supply"
+	mdl_top		ufo_supply
 }
 
 tech rs_craft_ufo_carrier
@@ -2998,7 +2998,7 @@ tech rs_craft_ufo_carrier
 	time	2500
 
 	// TODO should come from craft-definition:
-	mdl_top		"aircraft/ufo_carrier/ufo_carrier"
+	mdl_top		ufo_carrier
 }
 
 tech rs_craft_ufo_condor
@@ -3038,7 +3038,7 @@ tech rs_craft_ufo_condor
 	time	2500
 
 	// TODO should come from craft-definition:
-	mdl_top		"aircraft/ufo_condor/ufo_condor"
+	mdl_top		ufo_condor
 }
 
 tech rs_craft_ufo_harvester
@@ -3078,7 +3078,7 @@ tech rs_craft_ufo_harvester
 	time	2500
 
 	// TODO should come from craft-definition:
-	mdl_top		"aircraft/ufo_harvester/ufo_harvester"
+	mdl_top		ufo_harvester
 }
 
 //========================
