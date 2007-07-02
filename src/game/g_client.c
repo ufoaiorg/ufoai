@@ -2116,8 +2116,7 @@ void G_ClientTeamAssign (player_t * player)
 	Com_DPrintf("G_ClientTeamAssign: Players in game: %i, Unique teams in game: %i\n", playerCount, teamCount);
 
 	/* if all teams/players have joined the game, randomly assign which team gets the first turn */
-	if ((!sv_teamplay->integer && teamCount >= sv_maxteams->integer) ||
-		(sv_teamplay->integer && playerCount >= sv_maxclients->integer)) {
+	if ((sv_teamplay->integer && teamCount >= sv_maxteams->integer) || playerCount >= sv_maxclients->integer) {
 		char buffer[MAX_VAR] = "";
 		G_PrintStats(va("Starting new game: %s", level.mapname));
 		level.activeTeam = knownTeams[(int)(frand() * (teamCount - 1) + 0.5)];
