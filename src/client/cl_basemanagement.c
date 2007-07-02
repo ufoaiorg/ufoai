@@ -1070,7 +1070,7 @@ static buildingStatus_t B_GetMaximumBuildingStatus (int base_idx, buildingType_t
 	int i;
 	buildingStatus_t status = B_STATUS_NOT_SET;
 
-	if (base_idx < 0) {
+	if (base_idx < 0 || base_idx >= gd.numBases) {
 		Com_Printf("B_GetMaximumBuildingStatus: Bad base-index given: %i (numbases %i)\n", base_idx, gd.numBases);
 		return -1;
 	}
