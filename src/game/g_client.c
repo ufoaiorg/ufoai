@@ -1152,7 +1152,8 @@ void G_BuildForbiddenList (int team)
 	for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++) {
 		if (!ent->inuse)
 			continue;
-		if ((ent->type == ET_ACTOR || ent->type == ET_UGV) && !(ent->state & STATE_DEAD) && (ent->visflags & vis_mask))
+		/* dead ugv will stop walking, too */
+		if (((ent->type == ET_ACTOR && !(ent->state & STATE_DEAD)) || ent->type == ET_UGV) && (ent->visflags & vis_mask))
 			fb_list[fb_length++] = ent->pos;
 	}
 

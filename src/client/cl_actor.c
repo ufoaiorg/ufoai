@@ -1729,7 +1729,8 @@ static void CL_BuildForbiddenList (void)
 	for (i = 0, le = LEs; i < numLEs; i++, le++) {
 		if (!le->inuse || le->invis)
 			continue;
-		if (!(le->state & STATE_DEAD) && (le->type == ET_ACTOR || le->type == ET_UGV))
+		/* dead ugv will stop walking, too */
+		if ((!(le->state & STATE_DEAD) && le->type == ET_ACTOR) || le->type == ET_UGV)
 			fb_list[fb_length++] = le->pos;
 	}
 
