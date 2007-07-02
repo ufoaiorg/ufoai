@@ -842,7 +842,7 @@ static void CL_WaitInit_f (void)
 	} else {
 		Cvar_Set("mp_wait_init_show_force", "1");
 	}
-	Com_sprintf(buf, sizeof(buf), "%s/%s", cl.configstrings[CS_PLAYERCOUNT], cl.configstrings[CS_MAXTEAMS]);
+	Com_sprintf(buf, sizeof(buf), "%s/%s", cl.configstrings[CS_PLAYERCOUNT], cl.configstrings[CS_MAXCLIENTS]);
 	Cvar_Set("mp_wait_init_players", buf);
 	if (!*cl.configstrings[CS_NAME]) {
 		if (!reconnect) {
