@@ -2633,7 +2633,6 @@ extern qboolean AIR_IsInAircraftTeam (aircraft_t *aircraft, int employee_idx)
 
 /**
  * @brief Save callback for savegames
- * @note Nothing to save here at the moment
  * @sa AIR_Load
  * @sa B_Save
  * @sa SAV_GameSave
@@ -2674,7 +2673,6 @@ extern qboolean AIR_Save (sizebuf_t* sb, void* data)
 
 /**
  * @brief Load callback for savegames
- * @note Nothing to load here at the moment
  * @note employees and bases must have been loaded already
  * @sa AIR_Save
  * @sa B_Load
