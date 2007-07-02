@@ -661,7 +661,7 @@ static void CL_UpdateReactionFiremodes (char hand, int actor_idx, int active_fir
 }
 
 /**
- * @brief Sets the reaction-firemdoe of an actor/soldier to it's default value on client- and server-side.
+ * @brief Sets the reaction-firemode of an actor/soldier to it's default value on client- and server-side.
  * @param[in] actor_idx Index of the actor to set the firemdoe for.
  * @param[in] hand Which weapon(-hand) to try first for reaction-firemdoe (r|l).
  */
@@ -1986,15 +1986,20 @@ void CL_ActorReload (int hand)
 }
 
 /**
- * @brief The client changed something in his hand-containers. This fucntion updates the reactionfire info.
+ * @brief The client changed something in his hand-containers. This function updates the reactionfire info.
  * @param[in] sb
  */
 void CL_InvCheckHands (sizebuf_t * sb)
 {
 	int entnum;
-	le_t *le;
+	le_t *le, *temp;
 	int actor_idx = -1;
-	int hand = -1;	/**< 0=right, 1=left */
+	int hand = -1;		/**< 0=right, 1=left -1=undef*/
+	int firemode_idx = -1;
+
+	objDef_t *weapon = NULL;
+	objDef_t *ammo = NULL;
+	int weap_fd_idx = -1;
 
 	MSG_ReadFormat(sb, ev_format[EV_INV_HANDS_CHANGED], &entnum, &hand);
 
@@ -2010,6 +2015,22 @@ void CL_InvCheckHands (sizebuf_t * sb)
 
 	actor_idx = CL_GetActorNumber(le);
 
+	/* Check if current RF-selection is sane (and in hte other hand) ... */
+	if (SANE_REACTION(actor_idx) && (reactionFiremode[actor_idx][RF_HAND] != hand)) {
+		temp = selActor;
+		selActor = le;	/* CL_GetWeaponAndAmmo uses selActor */
+		CL_GetWeaponAndAmmo(reactionFiremode[actor_idx][RF_HAND], &weapon, &ammo, &weap_fd_idx); /* get info about other hand */
+		selActor = temp;
+
+		/* Break if the currently selected RF mode is ok. */
+		if (weapon && (weap_fd_idx >= 0)) {
+			firemode_idx = reactionFiremode[actor_idx][RF_FM];
+			if (ammo->fd[weap_fd_idx][firemode_idx].reaction)
+				return;
+		}
+	}
+
+	/* ... ELSE  (not sane and/or not useable) */
 	/* Update the changed hand with default firemode. */
 	if (hand == 0)
 		CL_UpdateReactionFiremodes('r', actor_idx, -1);
