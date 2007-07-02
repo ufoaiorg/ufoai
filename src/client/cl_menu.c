@@ -616,7 +616,7 @@ static void MN_StartServer_f (void)
 	/* FIXME: Spectator */
 	else if (!B_GetNumOnTeam()) {
 		Com_Printf("MN_StartServer_f: Multiplayer team not loaded, please choose your team now.\n");
-		Cbuf_ExecuteText(EXEC_NOW, "assign_initial 1\n");
+		Cbuf_ExecuteText(EXEC_NOW, "assign_initial 1");
 		return;
 	} else
 		Com_DPrintf("There are %i members on team\n", B_GetNumOnTeam());
@@ -631,7 +631,7 @@ static void MN_StartServer_f (void)
 /*	RS_MarkResearchedAll(); */
 	Cvar_Set("mn_main", "multiplayerInGame");
 
-	Cbuf_ExecuteText(EXEC_NOW, va("map %s\n", Cmd_Argv(1)));
+	Cbuf_ExecuteText(EXEC_NOW, va("map %s", Cmd_Argv(1)));
 }
 
 /**
@@ -1296,7 +1296,7 @@ static void MN_BaseMapClick (menuNode_t * node, int x, int y)
 
 				if (*entry->onClick) {
 					baseCurrent->buildingCurrent = entry;
-					Cbuf_ExecuteText(EXEC_NOW, va("%s %i;", entry->onClick, baseCurrent->idx));
+					Cbuf_ExecuteText(EXEC_NOW, va("%s %i", entry->onClick, baseCurrent->idx));
 					baseCurrent->buildingCurrent = NULL;
 					gd.baseAction = BA_NONE;
 				}

@@ -926,7 +926,7 @@ extern void Cmd_ExecuteString (char *text)
 	str = cmd_argv[0];
 
 	/* check functions */
-	hash = Com_HashKey (str, CMD_HASH_SIZE);
+	hash = Com_HashKey(str, CMD_HASH_SIZE);
 	for (cmd = cmd_functions_hash[hash]; cmd; cmd=cmd->hash_next) {
 		if (!Q_strcasecmp(str, cmd->name)) {
 			if (!cmd->function) {	/* forward to server command */
@@ -938,7 +938,7 @@ extern void Cmd_ExecuteString (char *text)
 	}
 
 	/* check alias */
-	hash = Com_HashKey (str, ALIAS_HASH_SIZE);
+	hash = Com_HashKey(str, ALIAS_HASH_SIZE);
 	for (a = cmd_alias_hash[hash]; a; a = a->hash_next) {
 		if (!Q_strcasecmp(cmd_argv[0], a->name)) {
 			if (++alias_count == ALIAS_LOOP_COUNT) {

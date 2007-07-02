@@ -1029,7 +1029,7 @@ float Qcommon_Frame (int msec)
  */
 void Qcommon_Shutdown (void)
 {
-	Cbuf_ExecuteText(EXEC_NOW, "shutdown_alias\n");
+	Cbuf_ExecuteText(EXEC_NOW, "shutdown_alias");
 }
 
 /**

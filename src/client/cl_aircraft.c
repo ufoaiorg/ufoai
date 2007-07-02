@@ -1016,7 +1016,7 @@ void CL_CampaignRunAircraft (int dt)
 					ufo = gd.ufos + aircraft->ufo;
 #if 0
 					/* Display airfight sequence */
-					Cbuf_ExecuteText(EXEC_NOW, "seq_start airfight;");
+					Cbuf_ExecuteText(EXEC_NOW, "seq_start airfight");
 #endif
 					/* Solve the fight */
 					AIRFIGHT_ExecuteActions(aircraft, ufo);
