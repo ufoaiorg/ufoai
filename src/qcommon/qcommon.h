@@ -39,13 +39,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #  else
 #    define BUILDSTRING "Win32 RELEASE"
 #  endif
-#  ifdef _M_IX86
+#  ifndef SHARED_EXT
+#    define SHARED_EXT "dll"
+#  endif
+#  if defined _M_IX86 || defined __i386__
 #    define CPUSTRING "x86"
-#  elif defined _M_AMD64
+#  elif defined _M_AMD64 || define _M_X64 || defined __x86_x64__
 #    define CPUSTRING "x86_64"
-#  elif defined _M_IA64
+#  elif defined _M_IA64 || defined __ia64__
 #    define CPUSTRING "x86_64"
-#  elif defined _M_ALPHA
+#  elif defined _M_ALPHA || defined __alpha__
 #    define CPUSTRING "AXP"
 #  else
 #    define CPUSTRING "Unknown"
@@ -57,9 +60,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #  else
 #    define BUILDSTRING "Linux RELEASE"
 #  endif
-#  ifdef __i386__
+#  ifndef SHARED_EXT
+#    define SHARED_EXT "so"
+#  endif
+#  if defined  __i386__
 #    define CPUSTRING "i386"
-#  elif __x86_x64__
+#  elif defined __x86_x64__
 #    define CPUSTRING "x86_64"
 #  elif defined __alpha__
 #    define CPUSTRING "axp"
@@ -69,9 +75,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #elif defined __FreeBSD__ || defined __NetBSD__
 #  define BUILDSTRING "FreeBSD"
-#  ifdef __i386__
+#  ifndef SHARED_EXT
+#    define SHARED_EXT "so"
+#  endif
+#  if defined  __i386__
 #    define CPUSTRING "i386"
-#  elif __x86_x64__
+#  elif defined __x86_x64__
 #    define CPUSTRING "x86_64"
 #  elif defined __alpha__
 #    define CPUSTRING "axp"
@@ -81,7 +90,10 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #elif defined __sun
 #  define BUILDSTRING "Solaris"
-#  ifdef __i386__
+#  ifndef SHARED_EXT
+#    define SHARED_EXT "so"
+#  endif
+#  if defined __i386__
 #    define CPUSTRING "i386"
 #  else
 #    define CPUSTRING "sparc"
@@ -89,12 +101,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #elif defined (__APPLE__) || defined (MACOSX)
 #  define BUILDSTRING "MacOSX"
-#  ifdef __i386__
+#  ifndef SHARED_EXT
+#    define SHARED_EXT "dylib"
+#  endif
+#  if defined __i386__
 #    define CPUSTRING "i386"
 #  elif defined __powerpc__
 #    define CPUSTRING "ppc"
 #  else
-#    define CPUSTRING "sparc"
+#    define CPUSTRING "Unknown"
 #  endif
 
 #else

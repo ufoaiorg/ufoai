@@ -88,9 +88,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #  define snprintf _snprintf
 # endif
 #else
-# ifndef SHARED_EXT
-#  define SHARED_EXT "so"
-# endif
 # ifndef stricmp
 #  define stricmp strcasecmp
 # endif

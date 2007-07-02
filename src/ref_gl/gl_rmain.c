@@ -704,7 +704,7 @@ static void R_SetupFrame (void)
 /**
  * @brief
  */
-static void MYgluPerspective(GLdouble zNear, GLdouble zFar)
+static void MYgluPerspective (GLdouble zNear, GLdouble zFar)
 {
 	GLdouble xmin, xmax, ymin, ymax, yaspect = (double) r_newrefdef.height / r_newrefdef.width;
 
