@@ -118,12 +118,11 @@ typedef struct menuNode_s {
 	void *data[6];				/**< needs to be first */
 	char name[MAX_VAR];
 	char key[MAX_VAR];
+	char oldRefValue[MAX_VAR];	/**< used for storing old reference values */
 	int type;
 	vec3_t origin, scale, angles, center;
 	vec2_t pos, size, texh, texl;
 	menuModel_t *menuModel;		/**< pointer to menumodel definition from models.ufo */
-	qboolean noMenuModel;		/**< if this is a model name and no menumodel definition we don't have
-								 * to query this again and again */
 	byte state;
 	byte align;
 	int border;					/**< border for this node - thickness in pixel - default 0 - also see bgcolor */
@@ -244,7 +243,6 @@ void MN_RightClick(int x, int y);
 void MN_MiddleClick(int x, int y);
 void MN_MouseWheel(qboolean down, int x, int y);
 void MN_SetViewRect(const menu_t* menu);
-extern void MN_ResetoldSource_f(void);
 void MN_DrawMenus(void);
 void MN_DrawItem(vec3_t org, item_t item, int sx, int sy, int x, int y, vec3_t scale, vec4_t color);
 void MN_UnHideNode(menuNode_t* node);

@@ -43,9 +43,6 @@ static void CL_ShowChatMessagesOnStack_f(void);
 static const vec4_t tooltipBG = { 0.0f, 0.0f, 0.0f, 0.7f };
 static const vec4_t tooltipColor = { 0.0f, 0.8f, 0.0f, 1.0f };
 
-/* oldSource used in MN_DrawMenus to draw faster */
-static char oldSource[MAX_VAR] = "";
-
 /* =========================================================== */
 
 typedef enum ea_s {
@@ -2037,15 +2034,6 @@ const char *MN_GetFont (const menu_t *m, const menuNode_t *const n)
 }
 
 /**
- * @brief Reset the value of oldsource
- * @note use this function when you want to force a model to be drawn again
- */
-extern void MN_ResetoldSource_f (void)
-{
-	*oldSource = '\0';
-}
-
-/**
  * @brief Draws the menu stack
  * @sa SCR_UpdateScreen
  */
@@ -2568,26 +2556,17 @@ void MN_DrawMenus (void)
 					break;
 
 				case MN_MODEL:
+				{
+					/* if true we have to reset the anim state and make sure the correct model is shown */
+					qboolean updateModel = qfalse;
 					/* set model properties */
 					if (!*source)
 						break;
-					/* maybe it's the first run - or noMenuModel is true
-					 * the later case means, we don't have to search for a
-					 * definition again */
-					if (!node->menuModel && !node->noMenuModel) {
-						node->menuModel = MN_GetMenuModel(source);
-						Q_strncpyz(oldSource, source, MAX_VAR);
-					} else {
-						/* check whether the cvar value changed */
-						if (Q_strncmp(oldSource, source, MAX_VAR)) {
-							node->menuModel = MN_GetMenuModel(source);
-						}
-					}
+					node->menuModel = MN_GetMenuModel(source);
 
 					/* direct model name - no menumodel definition */
 					if (!node->menuModel) {
 						/* prevent the searching for a menumodel def in the next frame */
-						node->noMenuModel = qtrue;
 						menuModel = NULL;
 						mi.model = re.RegisterModel(source);
 						mi.name = source;
@@ -2595,12 +2574,13 @@ void MN_DrawMenus (void)
 							Com_Printf("Could not find '%s'\n", source);
 							break;
 						}
-					} else {
+					} else
 						menuModel = node->menuModel;
-						/* check whether the cvar value changed */
-						if (Q_strncmp(oldSource, source, MAX_VAR))
-							Q_strncpyz(oldSource, source, MAX_VAR);
-						node->noMenuModel = qfalse;
+
+					/* check whether the cvar value changed */
+					if (Q_strncmp(node->oldRefValue, source, sizeof(node->oldRefValue))) {
+						Q_strncpyz(node->oldRefValue, source, sizeof(node->oldRefValue));
+						updateModel = qtrue;
 					}
 
 					mi.origin = node->origin;
@@ -2731,9 +2711,7 @@ void MN_DrawMenus (void)
 							/* do animations */
 							if (node->data[MN_DATA_ANIM_OR_FONT] && *(char *) node->data[MN_DATA_ANIM_OR_FONT]) {
 								ref = MN_GetReferenceString(menu, node->data[MN_DATA_ANIM_OR_FONT]);
-								/* needed if model changed - and that model doesn't have the old animstate */
-								if (!node->data[MN_DATA_MODEL_TAG] && Q_strncmp(oldSource, source, MAX_VAR)) {
-									Q_strncpyz(oldSource, source, MAX_VAR);
+								if (updateModel) {
 									/* model has changed but mem is already reserved in pool */
 									if (node->data[MN_DATA_MODEL_ANIMATION_STATE]) {
 										Mem_Free(node->data[MN_DATA_MODEL_ANIMATION_STATE]);
@@ -2744,6 +2722,7 @@ void MN_DrawMenus (void)
 									as = (animState_t *) Mem_PoolAlloc(sizeof(animState_t), cl_genericPool, CL_TAG_NONE);
 									re.AnimChange(as, mi.model, ref);
 									node->data[MN_DATA_MODEL_ANIMATION_STATE] = as;
+									Com_Printf("anim\n");
 								} else {
 									/* change anim if needed */
 									as = node->data[MN_DATA_MODEL_ANIMATION_STATE];
@@ -2810,6 +2789,7 @@ void MN_DrawMenus (void)
 					 * ran once */
 					} while (menuModel != NULL);
 					break;
+				}
 
 				case MN_MAP:
 					if (curCampaign) {
