@@ -2722,7 +2722,6 @@ void MN_DrawMenus (void)
 									as = (animState_t *) Mem_PoolAlloc(sizeof(animState_t), cl_genericPool, CL_TAG_NONE);
 									re.AnimChange(as, mi.model, ref);
 									node->data[MN_DATA_MODEL_ANIMATION_STATE] = as;
-									Com_Printf("anim\n");
 								} else {
 									/* change anim if needed */
 									as = node->data[MN_DATA_MODEL_ANIMATION_STATE];
