@@ -943,7 +943,7 @@ static void CL_Select_f (void)
 	/* now set the cl_selected cvar to the new actor id */
 	Cvar_ForceSet("cl_selected", va("%i", num));
 
-	Com_Printf("CL_Select_f: Command: '%s' - num: %i\n", command, num);
+	Com_DPrintf("CL_Select_f: Command: '%s' - num: %i\n", command, num);
 
 	/* set info cvars */
 	/* FIXME: This isn't true ACTOR_SIZE_NORMAL has nothing to do with ugvs anymore - old code */
