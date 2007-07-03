@@ -2316,14 +2316,10 @@ extern void AII_UpdateAircraftStats (aircraft_t *aircraft)
 			if (aircraft->electronics[i].installationTime != 0)
 				continue;
 			item = &aircraftItems[aircraft->electronics[i].itemIdx];
-			if (currentStat == AIR_STATS_SPEED)
-				Com_Printf("%i and %f gives ", aircraft->stats[AIR_STATS_SPEED], item->stats[currentStat]);
 			if (fabs(item->stats[currentStat]) > 2.0f)
 				aircraft->stats[currentStat] += (int) item->stats[currentStat];
 			else if (item->stats[currentStat] > 0.00001f)
 				aircraft->stats[currentStat] *= item->stats[currentStat];
-			if (currentStat == AIR_STATS_SPEED)
-				Com_Printf("%i\n", aircraft->stats[AIR_STATS_SPEED]);
 		}
 
 		/* modify by weapons (do nothing if the value of stat is 0) */
