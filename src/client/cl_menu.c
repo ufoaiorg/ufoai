@@ -1512,6 +1512,7 @@ static void CL_MessageMenu_f (void)
 		/* cancel */
 		Cvar_ForceSet(cvarName, nameBackup);
 		/* hack for actor renaming */
+		/* FIXME: this will produce a lot of cvars */
 		Cvar_ForceSet(va("%s%i", cvarName, cl_selected->integer), nameBackup);
 		/* call trigger function */
 		Cbuf_AddText(va("%s_changed\n", cvarName));
@@ -1523,7 +1524,8 @@ static void CL_MessageMenu_f (void)
 			break;
 		/* end */
 		Cvar_ForceSet(cvarName, msg + 1);
-		/* employee name */
+		/* hack for employee name */
+		/* FIXME: this will produce a lot of cvars */
 		Cvar_ForceSet(va("%s%i", cvarName, cl_selected->integer), msg + 1);
 		/* call trigger function */
 		Cbuf_AddText(va("%s_changed\n", cvarName));
