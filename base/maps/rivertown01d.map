@@ -20389,10 +20389,12 @@
 "classname" "misc_model"
 "origin" "-832 -640 0"
 "model" "models/objects/vegi/plant/plant2.md2"
+"spawnflags" "255"
 }
 // entity 262
 {
 "classname" "misc_model"
 "origin" "-896 -128 0"
 "model" "models/objects/vegi/plant/plant.md2"
+"spawnflags" "255"
 }
