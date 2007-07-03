@@ -275,6 +275,11 @@ void CL_CameraModeChange (camera_mode_t new_camera_mode)
 	/* no camera change if this is not our round */
 	if (cls.team != cl.actTeam)
 		return;
+	/* no camera change in isometric mode */
+	if (cl_isometric->integer) {
+		Com_Printf("You can't change to first person mode in isometric mode\n");
+		return;
+	}
 
 	/* save remote camera position, angles, zoom */
 	if (camera_mode == CAMERA_MODE_REMOTE) {
