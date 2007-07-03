@@ -1634,12 +1634,16 @@ extern qboolean CL_ActorSelect (le_t * le)
 				CL_UGVCvars(selChr);
 			}
 
+			/* Forcing the hud-display to refresh it's dsiplayed stuff */
+			Cvar_SetValue("hud_refresh", 1);
+			CL_ActorUpdateCVars();
+
 			CL_ConditionalMoveCalc(&clMap, le, MAX_ROUTE);
 
 			/* move first person camera to new actor */
 			if (camera_mode == CAMERA_MODE_FIRSTPERSON)
 				CL_CameraModeChange(CAMERA_MODE_FIRSTPERSON);
-			
+
 			/* Change to move-mode and hide firemodes.
 			 * Only if it's a different actor - if it's the same we keep the current mode etc... */
 			if (!same_actor) {
