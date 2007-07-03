@@ -623,33 +623,35 @@ menu althud
 
 	confunc startreactionmanya
 	{
-		*bt_reaction image althud/buttons_althud1b
-		*bt_reaction tooltip "_Multiple-shot reaction fire"
+		*bt_reaction_a image althud/buttons_althud1b
+		*bt_reaction_a tooltip "_Multiple-shot reaction fire"
 	}
 	confunc startreactionmanya_impos
 	{
-		*bt_reaction image althud/buttons_althud1br
-		*bt_reaction tooltip "_Multiple-shot reaction fire (not possible)"
+		*bt_reaction_a image althud/buttons_althud1br
+		*bt_reaction_a tooltip "_Multiple-shot reaction fire (not possible)"
 	}
 	confunc startreactiononcea
 	{
-		*bt_reaction image althud/buttons_althud1a
-		*bt_reaction tooltip "_One-shot reaction fire"
+		*bt_reaction_a image althud/buttons_althud1a
+		*bt_reaction_a tooltip "_One-shot reaction fire"
 	}
 	confunc startreactiononcea_impos
 	{
-		*bt_reaction image althud/buttons_althud1ar
-		*bt_reaction tooltip "_One-shot reaction fire (not possible)"
+		*bt_reaction_a image althud/buttons_althud1ar
+		*bt_reaction_a tooltip "_One-shot reaction fire (not possible)"
 	}
 	
 	confunc deselreactiona
 	{
-		*bt_reaction image althud/buttons_althud1
-		*bt_reaction tooltip "_No reaction fire"
+		*bt_reaction_a image althud/buttons_althud1
+		*bt_reaction_a tooltip "_No reaction fire"
 	}
-	confunc disreactiona { *bt_reaction image althud/buttons_althud1g }
+	confunc disreactiona {
+		*bt_reaction_a image althud/buttons_althud1g
+	}
 
-	pic bt_reaction
+	pic bt_reaction_a
 	{
 		key "*binding togglereaction"
 		image	althud/buttons_althud1

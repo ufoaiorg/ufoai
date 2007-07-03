@@ -522,45 +522,40 @@ menu hud
 
 	confunc startreactionmanys
 	{
-		*bt_reaction texl	"96 0"
-		*bt_reaction texh	"127 63"
-		// *bt_reaction image hud/button_guardb
-		*bt_reaction tooltip "_Multiple-shot reaction fire"
+		*bt_reaction_s texl	"96 0"
+		*bt_reaction_s texh	"127 63"
+		*bt_reaction_s tooltip "_Multiple-shot reaction fire"
 	}
 	confunc startreactionmanys_impos
 	{
-		*bt_reaction texl	"96 64"
-		*bt_reaction texh	"127 127"
-		// *bt_reaction image hud/button_guardb
-		*bt_reaction tooltip "_Multiple-shot reaction fire (Not possible)"
+		*bt_reaction_s texl	"96 64"
+		*bt_reaction_s texh	"127 127"
+		*bt_reaction_s tooltip "_Multiple-shot reaction fire (Not possible)"
 	}
 	confunc startreactiononces
 	{
-		*bt_reaction texl	"64 0"
-		*bt_reaction texh	"95 63"
-		// *bt_reaction image hud/button_guarda
-		*bt_reaction tooltip "_One-shot reaction fire"
+		*bt_reaction_s texl	"64 0"
+		*bt_reaction_s texh	"95 63"
+		*bt_reaction_s tooltip "_One-shot reaction fire"
 	}
 	confunc startreactiononces_impos
 	{
-		*bt_reaction texl	"64 64"
-		*bt_reaction texh	"95 127"
-		*bt_reaction tooltip "_One-shot reaction fire (Not possible)"
+		*bt_reaction_s texl	"64 64"
+		*bt_reaction_s texh	"95 127"
+		*bt_reaction_s tooltip "_One-shot reaction fire (Not possible)"
 	}
 	confunc deselreactions
 	{
-		*bt_reaction texl	"32 0"
-		*bt_reaction texh	"63 63"
-		// *bt_reaction image hud/button_guard
-		*bt_reaction tooltip "_No reaction fire"
+		*bt_reaction_s texl	"32 0"
+		*bt_reaction_s texh	"63 63"
+		*bt_reaction_s tooltip "_No reaction fire"
 	}
 	confunc disreactions {
-		*bt_reaction texl	"0 0"
-		*bt_reaction texh	"31 63"
-		// *bt_reaction image hud/button_guardg
+		*bt_reaction_s texl	"0 0"
+		*bt_reaction_s texh	"31 63"
 	}
 
-	pic bt_reaction
+	pic bt_reaction_s
 	{
 		image hud/button_guard
 		key "*binding togglereaction"
