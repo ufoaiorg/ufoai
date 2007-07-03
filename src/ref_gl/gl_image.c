@@ -716,6 +716,13 @@ typedef struct _TargaHeader {
 	unsigned char pixel_size, attributes;
 } TargaHeader;
 
+/*
+#define TGA_COLMAP_UNCOMP		1
+#define TGA_COLMAP_COMP			9
+*/
+#define TGA_UNMAP_UNCOMP		2
+#define TGA_UNMAP_COMP			10
+
 /**
  * @brief
  * @sa LoadPCX
@@ -771,8 +778,15 @@ extern void LoadTGA (const char *name, byte ** pic, int *width, int *height)
 	targa_header.pixel_size = *buf_p++;
 	targa_header.attributes = *buf_p++;
 
-	if (targa_header.image_type != 2 && targa_header.image_type != 10)
-		ri.Sys_Error(ERR_DROP, "LoadTGA: Only type 2 and 10 targa RGB images supported (%s) (type: %i)\n", name, targa_header.image_type);
+	switch (targa_header.image_type) {
+	case TGA_UNMAP_UNCOMP:
+	case TGA_UNMAP_COMP:
+		break;
+	default:
+		ri.Con_Printf(PRINT_ALL, "LoadTGA: Only type 2 and 10 targa RGB images supported (%s) (type: %i)\n", name, targa_header.image_type);
+		ri.FS_FreeFile(buffer);
+		return;
+	}
 
 	if (targa_header.colormap_type != 0 || (targa_header.pixel_size != 32 && targa_header.pixel_size != 24))
 		ri.Sys_Error(ERR_DROP, "LoadTGA: Only 32 or 24 bit images supported (no colormaps) (%s) (pixel_size: %i)\n", name, targa_header.pixel_size);
@@ -792,7 +806,8 @@ extern void LoadTGA (const char *name, byte ** pic, int *width, int *height)
 	if (targa_header.id_length != 0)
 		buf_p += targa_header.id_length;	/* skip TARGA image comment */
 
-	if (targa_header.image_type == 2) {	/* Uncompressed, RGB images */
+	switch (targa_header.image_type) {
+	case TGA_UNMAP_UNCOMP:	/* Uncompressed, RGB images */
 		for (row = rows - 1; row >= 0; row--) {
 			pixbuf = targa_rgba + row * columns * 4;
 			for (column = 0; column < columns; column++) {
@@ -824,7 +839,9 @@ extern void LoadTGA (const char *name, byte ** pic, int *width, int *height)
 				}
 			}
 		}
-	} else if (targa_header.image_type == 10) {	/* Runlength encoded RGB images */
+		break;
+	case TGA_UNMAP_COMP:	/* Runlength encoded RGB images */
+		{
 		unsigned char red, green, blue, alphabyte, packetHeader, packetSize, j;
 
 		red = green = blue = alphabyte = 0;
@@ -906,7 +923,8 @@ extern void LoadTGA (const char *name, byte ** pic, int *width, int *height)
 			}
 		  breakOut:;
 		}
-	}
+		}
+	} /* switch */
 
 	ri.FS_FreeFile(buffer);
 }
