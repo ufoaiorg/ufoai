@@ -841,6 +841,12 @@ static void CL_EquipType_f (void)
 	}
 }
 
+typedef enum {
+	SELECT_MODE_SOLDIER,
+	SELECT_MODE_EQUIP,
+	SELECT_MODE_TEAM
+} selectSoldierModes_t;
+
 /**
  * @brief
  * @note This function has various console commands:
@@ -852,6 +858,7 @@ static void CL_Select_f (void)
 	char command[MAX_VAR];
 	character_t *chr;
 	int num;
+	selectSoldierModes_t mode;
 
 	/* check syntax */
 	if (Cmd_Argc() < 2) {
@@ -860,6 +867,9 @@ static void CL_Select_f (void)
 	}
 
 	num = atoi(Cmd_Argv(1));
+	/* don't select the same actor twice */
+/*	if (num == cl_selected->integer)
+		return;*/
 
 	/* change highlights */
 	arg = Cmd_Argv(0);
@@ -867,66 +877,80 @@ static void CL_Select_f (void)
 	*strchr(arg, '_') = 0;
 	Q_strncpyz(command, arg, sizeof(command));
 
-	if (!Q_strncmp(command, "soldier", 7)) {
+	if (!Q_strcmp(command, "soldier"))
+		mode = SELECT_MODE_SOLDIER;
+	else if (!Q_strcmp(command, "equip"))
+		mode = SELECT_MODE_EQUIP;
+	else if (!Q_strcmp(command, "team"))
+		mode = SELECT_MODE_TEAM;
+
+	switch (mode) {
+	case SELECT_MODE_SOLDIER:
 		/* check whether we are connected (tactical mission) */
 		if (CL_OnBattlescape()) {
 			CL_ActorSelectList(num);
 			return;
-		/* we are still in the menu */
-		} else
-			Q_strncpyz(command, "equip", sizeof(command));
-	}
-
-	if (!Q_strncmp(command, "equip", 5)) {
+		}
+		/* we are still in the menu - so fall through */
+	case SELECT_MODE_EQUIP:
+		/* no base or no aircraft selected */
 		if (!baseCurrent || baseCurrent->aircraftCurrent < 0)
 			return;
+		/* no soldiers in the current aircraft */
 		if (baseCurrent->teamNum[baseCurrent->aircraftCurrent] <= 0) {
+			/* multiplayer - load a team first */
 			if (!ccs.singleplayer)
 				Cbuf_AddText("mn_pop;mn_push mp_team;");
 			return;
-		}
-		if (num >= baseCurrent->teamNum[baseCurrent->aircraftCurrent])
+		/* not that many soldiers in the aircraft */
+		} else if (num >= baseCurrent->teamNum[baseCurrent->aircraftCurrent])
 			return;
+
+		/* update menu inventory */
 		if (menuInventory && menuInventory != baseCurrent->curTeam[num]->inv) {
 			baseCurrent->curTeam[num]->inv->c[csi.idEquip] = menuInventory->c[csi.idEquip];
 			/* set 'old' idEquip to NULL */
 			menuInventory->c[csi.idEquip] = NULL;
 		}
 		menuInventory = baseCurrent->curTeam[num]->inv;
-	} else if (!Q_strncmp(command, "team", 4)) {
+		chr = baseCurrent->curTeam[num];
+		break;
+	case SELECT_MODE_TEAM:
 		if (!baseCurrent || num >= E_CountHired(baseCurrent, EMPL_SOLDIER)) {
 			/*Com_Printf("num: %i / max: %i\n", num, E_CountHired(baseCurrent, EMPL_SOLDIER));*/
 			return;
 		}
-	}
-
-	/* console commands */
-	Cbuf_AddText(va("%sdeselect%i\n", command, cl_selected->integer));
-	Cbuf_AddText(va("%sselect%i\n", command, num));
-	Cvar_ForceSet("cl_selected", va("%i", num));
-
-	Com_DPrintf("CL_Select_f: Command: '%s' - num: %i\n", command, num);
-
-	if (!Q_strncmp(command, "team", 4)) {
-		num++;
-		chr = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, -num);
+		chr = E_GetHiredCharacter(baseCurrent, EMPL_SOLDIER, -(num + 1));
 		if (!chr)
 			Sys_Error("CL_Select_f: No hired character at pos %i (base: %i)\n", num, baseCurrent->idx);
-		/* set info cvars */
-		/* FIXME: This isn't true ACTOR_SIZE_NORMAL has nothing to do with ugvs anymore - old code */
-		if (chr->fieldSize == ACTOR_SIZE_NORMAL)
-			CL_CharacterCvars(chr);
-		else
-			CL_UGVCvars(chr);
-	} else {
-		/* set info cvars */
-		/* FIXME: This isn't true ACTOR_SIZE_NORMAL has nothing to do with ugvs anymore - old code */
-		chr = baseCurrent->curTeam[num];
-		if (chr->fieldSize == ACTOR_SIZE_NORMAL)
-			CL_CharacterCvars(baseCurrent->curTeam[num]);
-		else
-			CL_UGVCvars(baseCurrent->curTeam[num]);
+		break;
+	default:
+		Sys_Error("Unknown select mode %i\n", mode);
 	}
+
+	if (mode == SELECT_MODE_SOLDIER) {
+		/* HACK */
+		/* deselect current selected soldier and select the new one - these are confuncs */
+		Cbuf_ExecuteText(EXEC_NOW, va("teamdeselect%i", cl_selected->integer));
+		Cbuf_ExecuteText(EXEC_NOW, va("teamselect%i", num));
+		Cbuf_ExecuteText(EXEC_NOW, va("equipdeselect%i", cl_selected->integer));
+		Cbuf_ExecuteText(EXEC_NOW, va("equipselect%i", num));
+	} else {
+		/* deselect current selected soldier and select the new one - these are confuncs */
+		Cbuf_ExecuteText(EXEC_NOW, va("%sdeselect%i", command, cl_selected->integer));
+		Cbuf_ExecuteText(EXEC_NOW, va("%sselect%i", command, num));
+	}
+	/* now set the cl_selected cvar to the new actor id */
+	Cvar_ForceSet("cl_selected", va("%i", num));
+
+	Com_Printf("CL_Select_f: Command: '%s' - num: %i\n", command, num);
+
+	/* set info cvars */
+	/* FIXME: This isn't true ACTOR_SIZE_NORMAL has nothing to do with ugvs anymore - old code */
+	if (chr->fieldSize == ACTOR_SIZE_NORMAL)
+		CL_CharacterCvars(chr);
+	else
+		CL_UGVCvars(chr);
 }
 
 /**

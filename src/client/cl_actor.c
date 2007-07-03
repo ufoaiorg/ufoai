@@ -1490,6 +1490,8 @@ void CL_ActorUpdateCVars (void)
 			if (!cl.teamList[i] || cl.teamList[i]->state & STATE_DEAD) {
 				Cbuf_AddText(va("huddisable%i\n", i));
 			} else if (i == cl_selected->integer) {
+				/* stored in menu_nohud.ufo - confunc that calls all the different
+				 * hud select confuncs */
 				Cbuf_AddText(va("hudselect%i\n", i));
 			} else {
 				Cbuf_AddText(va("huddeselect%i\n", i));
