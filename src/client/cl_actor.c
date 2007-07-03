@@ -1507,7 +1507,7 @@ ACTOR SELECTION AND TEAM LIST
 
 /**
  * @brief Adds the actor the the team list.
- *
+ * @sa CL_ActorAppear
  * @sa CL_RemoveActorFromTeamList
  * @param le Pointer to local entity struct
  */
@@ -1530,7 +1530,7 @@ void CL_AddActorToTeamList (le_t * le)
 	if (i == -1) {
 		i = cl.numTeamList;
 		cl.teamList[cl.numTeamList++] = le;
-		Cbuf_AddText(va("numonteam%i\n", cl.numTeamList));
+		Cbuf_AddText(va("numonteam%i\n", cl.numTeamList)); /* althud */
 		Cbuf_AddText(va("huddeselect%i\n", i));
 		if (cl.numTeamList == 1)
 			CL_ActorSelectList(0);
@@ -1547,7 +1547,7 @@ void CL_AddActorToTeamList (le_t * le)
 
 /**
  * @brief Removes an actor from the team list.
- *
+ * @sa CL_ActorStateChange
  * @sa CL_AddActorToTeamList
  * @param le Pointer to local entity struct
  */
