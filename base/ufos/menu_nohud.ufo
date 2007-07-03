@@ -52,7 +52,9 @@ menu nohud
 	confunc discrouch { cmd discrouchs;discroucha; }
 
 	confunc startreactionmany { cmd startreactionmanys;startreactionmanya; }
+	confunc startreactionmany_impos { cmd startreactionmanys_impos;startreactionmanya_impos; }
 	confunc startreactiononce { cmd startreactiononces;startreactiononcea; }
+	confunc startreactiononce_impos { cmd startreactiononces_impos;startreactiononcea_impos; }
 	confunc deselreaction { cmd deselreactions;deselreactiona; }
 	confunc disreaction { cmd disreactions;disreactiona; }
 

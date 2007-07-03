@@ -626,11 +626,22 @@ menu althud
 		*bt_reaction image althud/buttons_althud1b
 		*bt_reaction tooltip "_Multiple-shot reaction fire"
 	}
+	confunc startreactionmanya_impos
+	{
+		*bt_reaction image althud/buttons_althud1br
+		*bt_reaction tooltip "_Multiple-shot reaction fire (not possible)"
+	}
 	confunc startreactiononcea
 	{
 		*bt_reaction image althud/buttons_althud1a
 		*bt_reaction tooltip "_One-shot reaction fire"
 	}
+	confunc startreactiononcea_impos
+	{
+		*bt_reaction image althud/buttons_althud1ar
+		*bt_reaction tooltip "_One-shot reaction fire (not possible)"
+	}
+	
 	confunc deselreactiona
 	{
 		*bt_reaction image althud/buttons_althud1
