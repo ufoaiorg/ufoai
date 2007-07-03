@@ -361,9 +361,11 @@ static int CL_CalcReloadTime (int weapon_id)
 
 /**
  * @brief
+ * @sa HighlightWeaponButton
  */
 static void ClearHighlights (void)
 {
+#if 0
 	int i;
 
 	for (i = 0; i < BT_NUM_TYPES; i++)
@@ -371,11 +373,13 @@ static void ClearHighlights (void)
 			weaponButtonState[i] = -1;
 			return;
 		}
+#endif
 }
 
 #if 0
 /**
  * @brief
+ * @sa ClearHighlights
  */
 static void HighlightWeaponButton (int button)
 {
@@ -406,6 +410,8 @@ static void SetWeaponButton (int button, int state)
 {
 	char cbufText[MAX_VAR];
 	int currentState = weaponButtonState[button];
+
+	assert(button < BT_NUM_TYPES);
 
 	/* don't reset it already in current state or if highlighted,
 	 * as HighlightWeaponButton deals with the highlighted state */
