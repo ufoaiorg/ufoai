@@ -522,37 +522,37 @@ menu hud
 
 	confunc startreactionmanys
 	{
-		*bt_reaction_s texl	"96 0"
-		*bt_reaction_s texh	"127 63"
+		*bt_reaction_s texl	"0 96"
+		*bt_reaction_s texh	"63 127"
 		*bt_reaction_s tooltip "_Multiple-shot reaction fire"
 	}
 	confunc startreactionmanys_impos
 	{
-		*bt_reaction_s texl	"96 64"
+		*bt_reaction_s texl	"64 96"
 		*bt_reaction_s texh	"127 127"
 		*bt_reaction_s tooltip "_Multiple-shot reaction fire (Not possible)"
 	}
 	confunc startreactiononces
 	{
-		*bt_reaction_s texl	"64 0"
-		*bt_reaction_s texh	"95 63"
+		*bt_reaction_s texl	"0 64"
+		*bt_reaction_s texh	"63 95"
 		*bt_reaction_s tooltip "_One-shot reaction fire"
 	}
 	confunc startreactiononces_impos
 	{
 		*bt_reaction_s texl	"64 64"
-		*bt_reaction_s texh	"95 127"
+		*bt_reaction_s texh	"127 95"
 		*bt_reaction_s tooltip "_One-shot reaction fire (Not possible)"
 	}
 	confunc deselreactions
 	{
-		*bt_reaction_s texl	"32 0"
+		*bt_reaction_s texl	"0 32"
 		*bt_reaction_s texh	"63 63"
 		*bt_reaction_s tooltip "_No reaction fire"
 	}
 	confunc disreactions {
 		*bt_reaction_s texl	"0 0"
-		*bt_reaction_s texh	"31 63"
+		*bt_reaction_s texh	"63 31"
 	}
 
 	pic bt_reaction_s
