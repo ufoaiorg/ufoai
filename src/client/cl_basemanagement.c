@@ -646,6 +646,9 @@ extern void B_SetUpBase (base_t* base)
 	/* this cvar is used for disabling the base build button on geoscape if MAX_BASES (8) was reached */
 	Cvar_SetValue("mn_base_count", mn_base_count->value + 1.0f);
 
+	/* this cvar is needed by B_SetBuildingByClick below*/
+	Cvar_SetValue("mn_base_id", base->idx);
+
 	for (i = 0; i < gd.numBuildingTypes; i++) {
 		if (gd.buildingTypes[i].autobuild
 			|| (gd.numBases == 1
