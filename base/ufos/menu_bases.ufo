@@ -86,7 +86,7 @@ menu bases
 	}
 	pic buildings_na
 	{
-		// only if base is not under attack
+		// only if base is under attack
 		if "mn_base_status_id == 1"
 		tooltip	"_Build base facilities"
 		image	menu/button
@@ -134,13 +134,13 @@ menu bases
 		{
 			cmd "mn_push buyaircraft;"
 		}
-		out		{ *txt_aircraft color "0 0.8 0 1" *aircraft_na texl "0 0" *aircraft_na texh "230 64" }
-		in		{ *txt_aircraft color "1 1 1 1" *aircraft_na texl "230 0" *aircraft_na texh "460 64" }
+		out		{ *txt_aircraft color "0 0.8 0 1" *aircraft_buy texl "0 0" *aircraft_buy texh "230 64" }
+		in		{ *txt_aircraft color "1 1 1 1" *aircraft_buy texl "230 0" *aircraft_buy texh "460 64" }
 	}
 	pic aircraft_na
 	{
 		// only if base can't handle aircraft
-		if "mn_base_aircraft_allowed == -1"
+		if "mn_base_num_aircraft == -1"
 		tooltip	"_Build at least one Hangar"
 		image	menu/button
 		pos	"755 180"
