@@ -198,7 +198,7 @@ item pbeamrifle_ammo
 	{
 		firedef 
 		{
-			name	"_Snap Shot"
+			name	"_Aimed Shot"
 			skill	sniper
 			projtl	pbeamBeam
 			impact	pbeamImpact
@@ -206,11 +206,31 @@ item pbeamrifle_ammo
 			firesnd	weapons/pbeamrifle.wav
 			speed	0
 			spread	"0 0.2"
+			modif	0.4
 			crouch	0.6
 			range	150
 			shots	1
 			ammo	2
-			time	12
+			time	15
+			damage	"95 10"
+			dmgtype particlebeam
+			reaction	true
+		}
+		firedef 
+		{
+			name	"_Snap Shot"
+			skill	close
+			projtl	pbeamBeam
+			impact	pbeamImpact
+			hitbody pbeamImpact
+			firesnd	weapons/pbeamrifle.wav
+			speed	0
+			spread	"0.4 0.8"
+			crouch	0.8
+			range	150
+			shots	1
+			ammo	2
+			time	11
 			damage	"95 10"
 			dmgtype particlebeam
 			reaction	true
