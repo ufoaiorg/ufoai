@@ -431,6 +431,9 @@ static void SetWeaponButton (int button, int state)
 static int CL_GetActorNumber (le_t * le)
 {
 	int actor_idx;
+
+	assert(le);
+
 	for (actor_idx = 0; actor_idx < cl.numTeamList; actor_idx++) {
 		if (cl.teamList[actor_idx] == le)
 			return actor_idx;
@@ -775,6 +778,8 @@ void CL_DisplayFiremodes_f (void)
 
 	actor_idx = CL_GetActorNumber(selActor);
 	Com_DPrintf("CL_DisplayFiremodes_f: actor index: %i\n", actor_idx);
+	if (actor_idx == -1)
+		Com_Error(ERR_DROP, "Could not get current selected actor's id\n");
 
 	/* Set default firemode if the currenttly seleced one is not sane or for another weapon. */
 	if (!SANE_REACTION(actor_idx)) {	/* No sane firemode selected. */
@@ -858,6 +863,8 @@ void CL_SelectReactionFiremode_f (void)
 		return;
 
 	actor_idx = CL_GetActorNumber(selActor);
+	if (actor_idx == -1)
+		Com_Error(ERR_DROP, "Could not get current selected actor's id\n");
 
 	firemode = atoi(Cmd_Argv(2));
 
@@ -2014,8 +2021,10 @@ void CL_InvCheckHands (sizebuf_t * sb)
 	}
 
 	actor_idx = CL_GetActorNumber(le);
+	if (actor_idx == -1)
+		Com_Error(ERR_DROP, "Could not get local entitie's actor id\n");
 
-	/* Check if current RF-selection is sane (and in hte other hand) ... */
+	/* Check if current RF-selection is sane (and in the other hand) ... */
 	if (SANE_REACTION(actor_idx) && (reactionFiremode[actor_idx][RF_HAND] != hand)) {
 		temp = selActor;
 		selActor = le;	/* CL_GetWeaponAndAmmo uses selActor */
@@ -2176,10 +2185,12 @@ extern void CL_ActorToggleReaction_f (void)
 	int state = 0;
 	int actor_idx = -1;
 
-	if (!CL_CheckAction())
+	if (!CL_CheckAction() || !selActor)
 		return;
 
 	actor_idx = CL_GetActorNumber(selActor);
+	if (actor_idx == -1)
+		Com_Error(ERR_DROP, "Could not get current selected actor's id\n");
 
 	/* Check all hands for reaction-enabled ammo-firemodes. */
 	if (CL_WeaponWithReaction('r') || CL_WeaponWithReaction('l')) {
