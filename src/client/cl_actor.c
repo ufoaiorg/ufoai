@@ -1597,6 +1597,7 @@ void CL_RemoveActorFromTeamList (le_t * le)
 extern qboolean CL_ActorSelect (le_t * le)
 {
 	int i;
+	qboolean same_actor = qfalse;
 
 	/* test team */
 	if (!le || le->team != cls.team ||
@@ -1614,6 +1615,8 @@ extern qboolean CL_ActorSelect (le_t * le)
 	/* reset the align if we switched the actor */
 	if (selActor != le)
 		mousePosTargettingAlign = 0;
+	else
+		same_actor = qtrue;
 
 	selActor = le;
 	menuInventory = &selActor->i;
@@ -1621,7 +1624,6 @@ extern qboolean CL_ActorSelect (le_t * le)
 
 	for (i = 0; i < cl.numTeamList; i++) {
 		if (cl.teamList[i] == le) {
-			HideFiremodes();
 			/* console commands, update cvars */
 			Cvar_ForceSet("cl_selected", va("%i", i));
 			if (le->fieldSize == ACTOR_SIZE_NORMAL) {
@@ -1637,8 +1639,14 @@ extern qboolean CL_ActorSelect (le_t * le)
 			/* move first person camera to new actor */
 			if (camera_mode == CAMERA_MODE_FIRSTPERSON)
 				CL_CameraModeChange(CAMERA_MODE_FIRSTPERSON);
-
-			cl.cmode = M_MOVE;
+			
+			/* Change to move-mode and hide firemodes.
+			 * Only if it's a different actor - if it's the same we keep the current mode etc... */
+			if (!same_actor) {
+				HideFiremodes();
+				cl.cmode = M_MOVE;
+			}
+			
 			return qtrue;
 		}
 	}
