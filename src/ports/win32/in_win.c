@@ -397,7 +397,10 @@ void IN_MouseEvent (int mstate)
  */
 void IN_GetMousePos (int *mx, int *my)
 {
-	if (!mouseactive || !GetCursorPos(&current_pos)) {
+	if (!mouseactive
+	||  !GetCursorPos(&current_pos)
+	||  (window_rect.right == window_rect.left)
+	||  (window_rect.bottom == window_rect.top)) {
 		*mx = VID_NORM_WIDTH/2;
 		*my = VID_NORM_HEIGHT/2;
 	} else {
