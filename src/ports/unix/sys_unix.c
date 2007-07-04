@@ -265,7 +265,7 @@ void *Sys_LoadLibrary (const char *name, int flags)
 	if (lib)
 		return lib;
 
-	Com_Printf("Could not load %s.so and %s_"CPUSTRING"."SHARED_EXT"\n", name, name);
+	Com_Printf("Could not load %s."SHARED_EXT" and %s_"CPUSTRING"."SHARED_EXT"\n", name, name);
 	return NULL;
 }
 
