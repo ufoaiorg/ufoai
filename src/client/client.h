@@ -429,6 +429,11 @@ void CIN_Init(void);
 void CIN_DrawCinematic(void);
 void CIN_RunCinematic(void);
 
+/* cl_tip.c */
+void CL_TipOfTheDayInit(void);
+void CL_ParseTipsOfTheDay(const char *name, char **text);
+extern cvar_t* cl_showTipOfTheDay;	/**< tip of the day can be deactivated */
+
 /* cl_main.c */
 /* interface to refresh lib */
 extern refexport_t re;

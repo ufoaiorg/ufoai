@@ -1852,6 +1852,8 @@ extern void CL_ParseClientData (const char *type, const char *name, char **text)
 		CL_ParseCampaign(name, text);
 	else if (!Q_strncmp(type, "ugv", 3))
 		CL_ParseUGVs(name, text);
+	else if (!Q_strncmp(type, "tips", 4))
+		CL_ParseTipsOfTheDay(name, text);
 }
 
 /**
@@ -2125,6 +2127,8 @@ static void CL_InitLocal (void)
 	BS_ResetMarket();
 	CL_ResetSequences();
 	CL_ResetTeams();
+
+	CL_TipOfTheDayInit();
 
 	for (i = 0; i < 16; i++)
 		Cvar_Get(va("adr%i", i), "", CVAR_ARCHIVE, "Bookmark for network ip");

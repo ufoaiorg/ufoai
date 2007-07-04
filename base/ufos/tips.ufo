@@ -1,0 +1,7 @@
+// tip of the day tips
+// just put new tips in "" and mark them with _ to be translated
+
+tips {
+	"_Tip of the day 1"
+	"_Tip of the day 2"
+}
