@@ -623,7 +623,7 @@ menu mp_serverbrowser
 	pic button_serverbrowser
 	{
 		image	menu/multi_buttons3a
-		texh	"256 64"
+		texh	"180 64"
 		texl	"0 32"
 		pos	"500 70"
 	}
@@ -647,7 +647,7 @@ menu mp_serverbrowser
 			cmd "mn_push mp_bookmarks;"
 			cmd "mn_escpop 3;"
 		}
-		texh	"256 64"
+		texh	"180 64"
 		texl	"0 32"
 		pos	"726 70"
 		out	{ *string_bookmarks color "0 0.5 0 1" *button_bookmarks image menu/multi_buttons3 }
@@ -824,7 +824,7 @@ menu mp_bookmarks
 	pic button_serverbrowser
 	{
 		image	menu/multi_buttons3
-		texh	"256 64"
+		texh	"180 64"
 		texl	"0 32"
 		pos	"500 70"
 		out	{ *string_serverbrowser color "0 0.5 0 1" *button_serverbrowser image menu/multi_buttons3 }
@@ -834,7 +834,7 @@ menu mp_bookmarks
 	pic button_bookmarks
 	{
 		image	menu/multi_buttons3a
-		texh	"256 64"
+		texh	"180 64"
 		texl	"0 32"
 		pos	"726 70"
 	}
