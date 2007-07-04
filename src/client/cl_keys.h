@@ -153,7 +153,8 @@ typedef enum {
 	K_EURO,
 	K_UNDO,
 
-	K_LAST_KEY
+	K_LAST_KEY,
+	K_KEY_SIZE = 256
 } keyNum_t;
 
 typedef enum {

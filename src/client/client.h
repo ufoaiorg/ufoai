@@ -1010,7 +1010,7 @@ extern void CL_DisplayPopupAircraft(const aircraft_t* aircraft);
 extern void CL_DisplayPopupIntercept(struct actMis_s* mission, aircraft_t* ufo);
 
 /* cl_keys.c */
-extern char *keybindings[K_LAST_KEY];
+extern char *keybindings[K_KEY_SIZE];
 
 /* cl_vid.c */
 void VID_Error(int err_level, const char *fmt, ...) __attribute__((noreturn));

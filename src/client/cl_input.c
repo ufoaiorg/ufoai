@@ -275,11 +275,6 @@ void CL_CameraModeChange (camera_mode_t new_camera_mode)
 	/* no camera change if this is not our round */
 	if (cls.team != cl.actTeam)
 		return;
-	/* no camera change in isometric mode */
-	if (cl_isometric->integer) {
-		Com_Printf("You can't change to first person mode in isometric mode\n");
-		return;
-	}
 
 	/* save remote camera position, angles, zoom */
 	if (camera_mode == CAMERA_MODE_REMOTE) {
@@ -298,7 +293,7 @@ void CL_CameraModeChange (camera_mode_t new_camera_mode)
 		cl.cam.zoom = save_camzoom;
 		CalcFovX();
 		Cvar_SetValue("cl_worldlevel", save_level);
-	} else {
+	} else if (!cl_isometric->integer) {
 		Com_Printf("Changed camera mode to first-person.\n");
 		camera_mode = CAMERA_MODE_FIRSTPERSON;
 		VectorCopy(selActor->origin, cl.cam.camorg);
@@ -308,6 +303,8 @@ void CL_CameraModeChange (camera_mode_t new_camera_mode)
 		cl.cam.zoom = 1.0;
 		wasCrouched = selActor->state & STATE_CROUCHED;
 		crouchHt = 0.;
+	} else {
+		Com_Printf("You can't change to first person mode in isometric mode\n");
 	}
 }
 

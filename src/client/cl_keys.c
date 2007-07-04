@@ -46,12 +46,12 @@ char msg_buffer[MAXCMDLINE];
 size_t msg_bufferlen = 0;
 
 static int key_waiting;
-char *keybindings[K_LAST_KEY];
-static char *menukeybindings[K_LAST_KEY];
-static qboolean consolekeys[K_LAST_KEY];		/* if true, can't be rebound while in console */
-static int keyshift[K_LAST_KEY];				/* key to map to if shift held down in console */
-static int key_repeats[K_LAST_KEY];			/* if > 1, it is autorepeating */
-qboolean keydown[K_LAST_KEY];
+char *keybindings[K_KEY_SIZE];
+static char *menukeybindings[K_KEY_SIZE];
+static qboolean consolekeys[K_KEY_SIZE];		/* if true, can't be rebound while in console */
+static int keyshift[K_KEY_SIZE];				/* key to map to if shift held down in console */
+static int key_repeats[K_KEY_SIZE];			/* if > 1, it is autorepeating */
+qboolean keydown[K_KEY_SIZE];
 
 typedef struct {
 	char *name;
@@ -691,10 +691,8 @@ static void Key_SetBinding (int keynum, const char *binding, keyBindSpace_t spac
 	char **keySpace = NULL;
 	int l;
 
-	if (keynum == -1)
+	if (keynum == -1 || keynum >= K_KEY_SIZE)
 		return;
-
-	assert(keynum < K_LAST_KEY);
 
 	Com_DPrintf("Binding for '%s' for space ", binding);
 	switch (space) {
@@ -986,6 +984,10 @@ void Key_Event (int key, qboolean down, unsigned time)
 			key_waiting = key;
 		return;
 	}
+
+	/* unbindable key */
+	if (key >= K_KEY_SIZE)
+		return;
 
 	/* update auto-repeat status */
 	if (down) {
