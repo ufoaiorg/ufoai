@@ -77,13 +77,15 @@ static int BS_CalculateHangarStorage (int aircraftID, int base_idx)
 	/* If the aircraft size is less than 8, we will check space in small hangar. */
 	if (aircraftSize < 8) {
 		freespace = base->capacities[CAP_AIRCRAFTS_SMALL].max - base->capacities[CAP_AIRCRAFTS_SMALL].cur;
-		Com_DPrintf("BS_CalculateHangarStorage()... freespace: %i aircraft weight: %i\n", freespace, aircraftSize);
+		Com_DPrintf("BS_CalculateHangarStorage()... freespace (small): %i aircraft weight: %i (max: %i, cur: %i)\n", freespace, aircraftSize,
+			base->capacities[CAP_AIRCRAFTS_SMALL].max, base->capacities[CAP_AIRCRAFTS_SMALL].cur);
 		if (aircraftSize <= freespace) {
 			return freespace;
 		} else {
 			/* Small aircrafts (size < 8) can be stored in big hangars as well. */
 			freespace = base->capacities[CAP_AIRCRAFTS_BIG].max - base->capacities[CAP_AIRCRAFTS_BIG].cur;
-			Com_DPrintf("BS_CalculateHangarStorage()... freespace: %i aircraft weight: %i\n", freespace, aircraftSize);
+			Com_DPrintf("BS_CalculateHangarStorage()... freespace (small in big): %i aircraft weight: %i (max: %i, cur: %i)\n", freespace, aircraftSize,
+				base->capacities[CAP_AIRCRAFTS_BIG].max, base->capacities[CAP_AIRCRAFTS_BIG].cur);
 			if (aircraftSize <= freespace) {
 				return freespace;
 			} else {
@@ -94,6 +96,8 @@ static int BS_CalculateHangarStorage (int aircraftID, int base_idx)
 	} else {
 		/* If the aircraft size is more or equal to 8, we will check space in big hangar. */
 		freespace = base->capacities[CAP_AIRCRAFTS_BIG].max - base->capacities[CAP_AIRCRAFTS_BIG].cur;
+		Com_DPrintf("BS_CalculateHangarStorage()... freespace (big): %i aircraft weight: %i (max: %i, cur: %i)\n", freespace, aircraftSize,
+			base->capacities[CAP_AIRCRAFTS_BIG].max, base->capacities[CAP_AIRCRAFTS_BIG].cur);
 		if (aircraftSize <= freespace) {
 			return freespace;
 		} else {
@@ -612,7 +616,7 @@ static void BS_DecreaseFactor_f (void)
  */
 static void BS_BuyAircraft_f (void)
 {
-	int num, aircraftID;
+	int num, aircraftID, freeSpace;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: mn_buy_aircraft <num>\n");
@@ -627,16 +631,17 @@ static void BS_BuyAircraft_f (void)
 		return;
 
 	aircraftID = buyList[num];
+	freeSpace = BS_CalculateHangarStorage(aircraftID, baseCurrent->idx);
 
 	/* Check free space in hangars. */
-	if (BS_CalculateHangarStorage(aircraftID, baseCurrent->idx) < 0) {
+	if (freeSpace < 0) {
 #ifdef DEBUG
 		Com_Printf("BS_BuyAircraft_f()... something bad happened, BS_CalculateHangarStorage returned -1!\n");
 #endif
 		return;
 	}
 
-	if (aircraft_samples[aircraftID].weight > BS_CalculateHangarStorage(aircraftID, baseCurrent->idx)) {
+	if (aircraft_samples[aircraftID].weight > freeSpace) {
 		MN_Popup(_("Notice"), _("You cannot buy this aircraft.\nNot enough space in hangars.\n"));
 		return;
 	} else {

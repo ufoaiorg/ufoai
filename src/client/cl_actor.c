@@ -57,8 +57,8 @@ typedef enum {
 
 static int reactionFiremode[MAX_EDICTS][RF_MAX]; /** < Per actor: Stores the firemode to be used for reaction fire (if the fireDef allows that) See also reaction_firemode_type_t */
 
-#define THIS_REACTION( actoridx, hand, fd_idx )	( reactionFiremode[actoridx][RF_HAND] == hand && reactionFiremode[actoridx][RF_FM] == fd_idx )
-#define SANE_REACTION( actoridx )	(( (reactionFiremode[actoridx ][RF_HAND] >= 0) && (reactionFiremode[actoridx ][RF_FM] >=0 && reactionFiremode[actoridx ][RF_FM] < MAX_FIREDEFS_PER_WEAPON) && (reactionFiremode[actoridx ][RF_FM] >= 0) ))
+#define THIS_REACTION(actoridx, hand, fd_idx)	(reactionFiremode[actoridx][RF_HAND] == hand && reactionFiremode[actoridx][RF_FM] == fd_idx)
+#define SANE_REACTION(actoridx)	(((reactionFiremode[actoridx][RF_HAND] >= 0) && (reactionFiremode[actoridx][RF_FM] >=0 && reactionFiremode[actoridx][RF_FM] < MAX_FIREDEFS_PER_WEAPON) && (reactionFiremode[actoridx][RF_FM] >= 0)))
 
 static le_t *mouseActor;
 static pos3_t mouseLastPos;
