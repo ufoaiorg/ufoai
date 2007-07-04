@@ -33,17 +33,17 @@ BINARIES = \
 	$(ROOTDIR)base/game.so
 
 BINARIES_64 = \
-	$(ROOTDIR)x86_64/ufo \
-	$(ROOTDIR)x86_64/ufoded \
-	$(ROOTDIR)x86_64/ufo2map \
-	$(ROOTDIR)x86_64/ref_glx.so \
-	$(ROOTDIR)x86_64/ref_sdl.so \
-#	$(ROOTDIR)x86_64/snd_arts.so \
-#	$(ROOTDIR)x86_64/snd_jack.so \
-	$(ROOTDIR)x86_64/snd_alsa.so \
-	$(ROOTDIR)x86_64/snd_oss.so \
-	$(ROOTDIR)x86_64/snd_sdl.so \
-	$(ROOTDIR)x86_64/base/game.so
+	$(ROOTDIR)ufo.x86_64 \
+	$(ROOTDIR)ufoded.x86_64 \
+	$(ROOTDIR)ufo2map.x86_64 \
+	$(ROOTDIR)ref_glx_x86_64.so \
+	$(ROOTDIR)ref_sdl_x86_64.so \
+#	$(ROOTDIR)snd_arts_x86_64.so \
+#	$(ROOTDIR)snd_jack_x86_64.so \
+	$(ROOTDIR)snd_alsa_x86_64.so \
+	$(ROOTDIR)snd_oss_x86_64.so \
+	$(ROOTDIR)snd_sdl_x86_64.so \
+	$(ROOTDIR)base/game_x86_64.so
 
 packdata:
 	@mkdir -p $(TEMPDIR)/base
