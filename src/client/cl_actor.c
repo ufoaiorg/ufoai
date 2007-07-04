@@ -2043,6 +2043,7 @@ void CL_InvCheckHands (sizebuf_t * sb)
 	actor_idx = CL_GetActorNumber(le);
 	if (actor_idx == -1) {
 		Com_DPrintf("CL_InvCheckHands: Could not get local entity actor id via CL_GetActorNumber\n");
+		Com_Printf("CL_InvCheckHands: DEBUG actor info: team=%i(%s) type=%i inuse=%i\n", le->team, teamDesc[le->teamDesc].name, le->type, le->inuse);
 		return;
 	}
 
