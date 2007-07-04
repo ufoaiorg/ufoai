@@ -286,7 +286,7 @@ void CL_Drop (void)
 	if (cls.disable_servercount != -1)
 		SCR_EndLoadingPlaque();	/* get rid of loading plaque */
 
-	if (cls.state == ca_uninitialized)
+	if (cls.state == ca_uninitialized || cls.state == ca_disconnected)
 		return;
 
 	CL_Disconnect();
