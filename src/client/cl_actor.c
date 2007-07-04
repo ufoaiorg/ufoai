@@ -1650,7 +1650,7 @@ extern qboolean CL_ActorSelect (le_t * le)
 				HideFiremodes();
 				cl.cmode = M_MOVE;
 			}
-			
+
 			return qtrue;
 		}
 	}
@@ -2041,8 +2041,10 @@ void CL_InvCheckHands (sizebuf_t * sb)
 	}
 
 	actor_idx = CL_GetActorNumber(le);
-	if (actor_idx == -1)
-		Com_Error(ERR_DROP, "Could not get local entitie's actor id\n");
+	if (actor_idx == -1) {
+		Com_DPrintf("CL_InvCheckHands: Could not get local entity actor id via CL_GetActorNumber\n");
+		return;
+	}
 
 	/* Check if current RF-selection is sane (and in the other hand) ... */
 	if (SANE_REACTION(actor_idx) && (reactionFiremode[actor_idx][RF_HAND] != hand)) {
