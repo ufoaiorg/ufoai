@@ -235,6 +235,10 @@ SOURCE=..\..\src\client\cl_team.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\client\cl_tip.c
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\client\cl_transfer.c
 # End Source File
 # Begin Source File

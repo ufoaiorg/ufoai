@@ -254,6 +254,9 @@
 		<Unit filename="..\..\src\client\cl_team.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="..\..\src\client\cl_tip.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="..\..\src\client\cl_transfer.c">
 			<Option compilerVar="CC" />
 		</Unit>

@@ -628,6 +628,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\client\cl_tip.c"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\client\cl_transfer.c"
 				>
 			</File>
