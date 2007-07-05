@@ -1056,7 +1056,10 @@ void Key_Event (int key, qboolean down, unsigned time)
 		/* to keep the character from continuing an action started before a console */
 		/* switch.  Button commands include the kenum as a parameter, so multiple */
 		/* downs can be matched with ups */
-		kb = keybindings[key];
+		if (mouseSpace != MS_WORLD)
+			kb = menukeybindings[key];
+		if (!kb)
+			kb = keybindings[key];
 		if (kb && kb[0] == '+') {
 			Com_sprintf(cmd, sizeof(cmd), "-%s %i %i\n", kb + 1, key, time);
 			Cbuf_AddText(cmd);

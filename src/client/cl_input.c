@@ -521,8 +521,6 @@ static void CL_SelectDown_f (void)
  */
 static void CL_SelectUp_f (void)
 {
-	if (mouseSpace == MS_DRAG)
-		MN_Click(mx, my);
 	mouseSpace = MS_NULL;
 }
 
@@ -534,9 +532,6 @@ static void CL_ActionDown_f (void)
 	switch (mouseSpace) {
 	case MS_WORLD:
 		CL_ActorActionMouse();
-		break;
-	case MS_MENU:
-		MN_RightClick(mx, my);
 		break;
 	}
 }
@@ -556,8 +551,6 @@ static void CL_TurnDown_f (void)
 {
 	if (mouseSpace == MS_WORLD)
 		CL_ActorTurnMouse();
-	else if (mouseSpace == MS_MENU)
-		MN_MiddleClick(mx, my);
 }
 
 /**
