@@ -529,11 +529,9 @@ static void CL_SelectUp_f (void)
  */
 static void CL_ActionDown_f (void)
 {
-	switch (mouseSpace) {
-	case MS_WORLD:
-		CL_ActorActionMouse();
-		break;
-	}
+	if (mouseSpace != MS_WORLD)
+		return;
+	CL_ActorActionMouse();
 }
 
 /**
@@ -737,9 +735,9 @@ extern void CL_InitInput (void)
 
 	Cmd_AddCommand("+leftmouse", CL_LeftClickDown_f, _("Left mouse button click (menu)"));
 	Cmd_AddCommand("-leftmouse", CL_LeftClickUp_f, NULL);
-	Cmd_AddCommand("+middlemouse", CL_MiddleClickDown_f, _("Left mouse button click (menu)"));
+	Cmd_AddCommand("+middlemouse", CL_MiddleClickDown_f, _("Middle mouse button click (menu)"));
 	Cmd_AddCommand("-middlemouse", CL_MiddleClickUp_f, NULL);
-	Cmd_AddCommand("+rightmouse", CL_RightClickDown_f, _("Left mouse button click (menu)"));
+	Cmd_AddCommand("+rightmouse", CL_RightClickDown_f, _("Right mouse button click (menu)"));
 	Cmd_AddCommand("-rightmouse", CL_RightClickUp_f, NULL);
 	Cmd_AddCommand("+select", CL_SelectDown_f, _("Select objects/Walk to a square/In fire mode, fire etc"));
 	Cmd_AddCommand("-select", CL_SelectUp_f, NULL);
