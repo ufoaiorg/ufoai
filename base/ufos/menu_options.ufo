@@ -278,24 +278,24 @@ menu options_video
 	string multitex_str
 	{
 		string	"_Multitexturing:"
-		pos		"500 375"
+		pos		"500 365"
 	}
 	checkbox multitex
 	{
 		cvar	"*cvar gl_ext_multitexture"
-		pos		"840 375"
+		pos		"840 365"
 		align	ur
 	}
 
 	string ptlweather_str
 	{
 		string	"_Weather effects:"
-		pos		"500 400"
+		pos		"500 390"
 	}
 	checkbox ptlweather
 	{
 		cvar	"*cvar cl_particleweather"
-		pos		"840 400"
+		pos		"840 390"
 		align	ur
 	}
 
