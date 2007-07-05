@@ -825,6 +825,20 @@ sequence credits
 		color	".7 .7 .7 1"
 		speed	"0 -80"
 	}
+	2dobj exp
+	{
+		text	"_NineX"
+		pos		"512 960"		align	uc
+		color	"1 1 1 1"
+		speed	"0 -80"
+	}
+	2dobj host
+	{
+		text	"_Our Host"
+		pos		"512 985"		align	uc
+		color	".7 .7 .7 1"
+		speed	"0 -80"
+	}
 
 	2dobj additional_thx
 	{
@@ -865,6 +879,7 @@ sequence credits
 
 	rem special_thx
 	rem id		rem engine
+	rem exp		rem host
 	rem additional_thx
 	rem sacrusha
 	rem mattn
