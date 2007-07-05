@@ -71,9 +71,9 @@ static void Mod_LoadTags (model_t * mod, void *buffer, int bufSize)
 	inmat = (float *) ((byte *) pintag + pheader->ofs_tags);
 	outmat = (float *) ((byte *) pheader + pheader->ofs_tags);
 
-	if (bufSize != LittleLong(pheader->ofs_end))
+	if (bufSize != pheader->ofs_end)
 		ri.Sys_Error(ERR_DROP, "Mod_LoadTags: tagfile %s is broken - expected: %i, offsets tell us to read: %i\n",
-			mod->tagname, bufSize, LittleLong(pheader->ofs_end));
+			mod->tagname, bufSize, pheader->ofs_end);
 
 	if (pheader->num_frames != md2->num_frames)
 		ri.Con_Printf(PRINT_ALL, "Mod_LoadTags: found %i frames in %s but model has %i frames\n",
