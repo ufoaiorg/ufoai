@@ -133,7 +133,7 @@ sequence credits
 	}
 	2dobj mattn_name
 	{
-		text	"Martin Gerhardy (mattn/tlh2000)"	pos		"974 75"
+		text	"_Martin Gerhardy (mattn/tlh2000)"	pos		"974 75"
 		align	ur	color	"1 1 1 0"	fade	"0 0 0 1"
 	}
 	wait 2
@@ -300,7 +300,7 @@ sequence credits
 	}
 	2dobj herby_name
 	{
-		text	"Herby"
+		text	"_Herby"
 		pos		"974 75"		align	ur
 		color	"1 1 1 0"		fade	"0 0 0 1"
 	}
