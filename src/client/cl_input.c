@@ -557,6 +557,8 @@ static void CL_TurnDown_f (void)
 static void CL_TurnUp_f (void)
 {
 	mouseSpace = MS_NULL;
+	/* leave the fire mode when turning around - not everybody has a mmb mouse */
+	cl.cmode = M_MOVE;
 }
 
 
