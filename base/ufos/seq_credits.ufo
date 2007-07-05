@@ -1,23 +1,23 @@
 sequence credits
 {
 	cmd "music ufo1;music_start;"
-	cmd "seq_animspeed 730;"
+	cmd "seq_animspeed 1000;"
 
 	precache models
 	{
-		models/civilians/male/body01.md2
-		models/soldiers/male/body.md2
-		models/soldiers/malelight/body.md2
-		models/soldiers/male/head04a.md2
-		models/soldiers/male/head05a.md2
-		models/soldiers/malemedium/body.md2
-		models/soldiers/malemedium/head01a.md2
-		models/aliens/ortnok/body01.md2
-		models/aliens/ortnok/head02.md2
 		models/aircraft/ufo_fighter/ufo_fighter_hull.md2
 		models/aircraft/ufo_fighter/ufo_fighter_engines_1.md2
 		models/aircraft/ufo_fighter/ufo_fighter_engines_2.md2
 		models/aircraft/ufo_fighter/ufo_fighter_wings.md2
+		models/soldiers/male/body.md2
+		models/soldiers/male/head01b.md2
+		models/soldiers/male/head03a.md2
+		models/soldiers/malelight/body.md2
+		models/soldiers/malelight/head01a.md2
+		models/soldiers/malelight/head02a.md2
+		models/soldiers/malemedium/body.md2
+		models/soldiers/malemedium/head02b.md2
+		models/soldiers/malemedium/head03a.md2
 	}
 	precache pics
 	{
@@ -26,498 +26,249 @@ sequence credits
 	camera cam1
 	{
 		zoom	6.0
-		angles	"30 215 0"
+		angles	"15 180 0"
 		dist	100
 	}
 
-	model mattn_body
+	// ================================
+	// Models
+	// ================================
+	model body1
 	{
-		model	models/civilians/male/body01.md2
+		model	models/soldiers/malelight/body.md2
 		skin	2
-		anim	walk0
-		origin	"-277.5 0 0"
-		speed	"60 0 0"
+		anim	cstand0
+		origin	"0 -15 0"
 	}
-	model mattn_head
+	model head1
 	{
-		model	models/civilians/male/head01.md2
-		parent	mattn_body
+		model	models/soldiers/malelight/head01a.md2
+		parent	body1
 		tag		tag_head
 	}
-	wait 3.625
+	model body2
+	{
+		model	models/soldiers/malemedium/body.md2
+		anim	cstand0
+		origin	"0 15 0"
+	}
+	model head2
+	{
+		model	models/soldiers/malemedium/head02b.md2
+		parent	body2
+		tag		tag_head
+	}
+	model body3
+	{
+		model	models/soldiers/male/body.md2
+		anim	stand0
+		skin	2
+		origin	"-10 0 5"
+	}
+	model head3
+	{
+		model	models/soldiers/male/head03a.md2
+		parent	body3
+		tag		tag_head
+	}
+	model body4
+	{
+		model	models/soldiers/malelight/body.md2
+		anim	stand1
+		origin	"-10 30 5"
+	}
+	model head4
+	{
+		model	models/soldiers/malelight/head02a.md2
+		parent	body4
+		tag		tag_head
+	}
+	model body5
+	{
+		model	models/soldiers/malemedium/body.md2
+		anim	stand0
+		origin	"-10 -30 5"
+	}
+	model head5
+	{
+		model	models/soldiers/malemedium/head03a.md2
+		parent	body5
+		tag		tag_head
+	}
+	model body6
+	{
+		model	models/soldiers/male/body.md2
+		skin	1
+		anim	stand0
+		origin	"-30 -15 10"
+	}
+	model head6
+	{
+		model	models/soldiers/male/head01b.md2
+		parent	body6
+		tag		tag_head
+	}
+	model body7
+	{
+		model	models/soldiers/male/body.md2
+		skin	3
+		anim	stand1
+		origin	"-30 15 10"
+	}
+	model head7
+	{
+		model	models/soldiers/male/head03a.md2
+		parent	body7
+		tag		tag_head
+	}
+	wait 4
 
-	model mattn_head { omega "-25 40 0" }
-	wait 1.0
-
+	// =====================================
+	// Mattn
+	// =====================================
 	2dobj mattn_text
 	{
-		text	"_Project leader"
-		pos		"974 50"		align	ur
-		color	"0 1 0 0"		fade	"0 0 0 1"
+		text	"_Project leader"	pos		"974 50"
+		align	ur	color	"0 1 0 0"	fade	"0 0 0 1"
 	}
 	2dobj mattn_name
 	{
-		text	"Martin Gerhardy (Mattn/tlh2000)"
-		pos		"974 75"		align	ur
-		color	"1 1 1 0"		fade	"0 0 0 1"
+		text	"Martin Gerhardy (mattn/tlh2000)"	pos		"974 75"
+		align	ur	color	"1 1 1 0"	fade	"0 0 0 1"
 	}
-	model mattn_body { anim stand_still speed "0 0 0" }
-	model mattn_head { omega "0 0 0" }
-	wait 0.2
-
-	model mattn_body { anim stand0 speed "0 0 0" }
-	wait 1.8
-
-	model hoehrer_body
-	{
-		model	models/soldiers/male/body.md2
-		anim	walk0
-		origin	"0 -270 0"
-		speed	"0 60 0"
-		angles	"0 90 0"
-	}
-	model hoehrer_head
-	{
-		model	models/soldiers/male/head03a.md2
-		parent	hoehrer_body
-		tag		tag_head
-	}
-	wait 2.0
-
+	wait 2
+	// now fade out the font
 	2dobj mattn_text { fade "0 0 0 -1" speed "0 60" }
 	2dobj mattn_name { fade "0 0 0 -1" speed "0 100" }
+	wait 2
+	rem mattn_text
+	rem mattn_name
 
-	model mattn_body { anim walk0 speed "50 0 0" }
-	model mattn_head { omega "25 -40 0" }
-	wait 1.5
-
-	model hoehrer_head { omega "-20 -30 0" }
-	model mattn_head { omega "0 0 0" }
-	wait 1.0
-
+	// =====================================
+	// Hoehrer
+	// =====================================
 	2dobj hoehrer_text
 	{
-		text	"_Project leader"
-		pos		"50 50"		align	ul
+		text	"_Project leader"	pos		"50 50"		align	ul
 		color	"0 1 0 0"	fade	"0 0 0 1"
 	}
 	2dobj hoehrer_name
 	{
-		text	"_Werner Hoehrer (hoehrer)"
-		pos		"50 75"		align	ul
-		color	"1 1 1 0"	fade	"0 0 0 1"
-
+		text	"_Werner Hoehrer (hoehrer)"	pos		"50 75"
+		align	ul	color	"1 1 1 0"	fade	"0 0 0 1"
 	}
-	model hoehrer_body { anim stand_still speed "0 0 0" }
-	model hoehrer_head { omega "0 0 0" }
-	wait 0.2
-
-	model hoehrer_body { anim stand0 speed "0 0 0" }
-	wait 1.8
-
-	rem mattn_body
-	rem mattn_head
-	rem mattn_text
-	rem mattn_name
-
-	model winter_body
-	{
-		model	models/soldiers/male/body.md2
-		anim	walk0
-		origin	"0 -270 0"
-		speed	"0 60 0"
-		angles	"0 90 0"
-	}
-	model winter_head
-	{
-		model	models/soldiers/male/head03a.md2
-		parent	winter_body
-		tag		tag_head
-	}
-	wait 2.0
-
+	wait 2
+	// now fade out the font
 	2dobj hoehrer_text { fade "0 0 0 -1" speed "0 60" }
 	2dobj hoehrer_name { fade "0 0 0 -1" speed "0 100" }
-
-	model hoehrer_body { anim walk2 speed "0 50 0" }
-	model hoehrer_head { omega "20 30 0" }
-	wait 1.5
-
-	model winter_head { omega "-20 -30 0" }
-	model hoehrer_head { omega "0 0 0" }
-	wait 1.0
-
-	rem hoehrer_body
-	rem hoehrer_head
+	wait 2
 	rem hoehrer_text
 	rem hoehrer_name
 
+	// =====================================
+	// Winter
+	// =====================================
 	2dobj winter_text
 	{
-		text	"_Lead Story Developer"
-		pos		"50 50"		align	ul
-		color	"0 1 0 0"	fade	"0 0 0 1"
+		text	"_Lead Story Developer"	pos		"974 50"
+		align	ur	color	"0 1 0 0"	fade	"0 0 0 1"
 	}
 	2dobj winter_name
 	{
-		text	"_Ryan A. Span. (Winter)"
-		pos		"50 75"		align	ul
-		color	"1 1 1 0"	fade	"0 0 0 1"
-
+		text	"_Ryan A. Span. (Winter)"	pos		"974 75"
+		align	ur	color	"1 1 1 0"	fade	"0 0 0 1"
 	}
-	model winter_body { anim stand_still speed "0 0 0" }
-	model winter_head { omega "0 0 0" }
-	wait 0.2
-
-	model winter_body { anim stand0 speed "0 0 0" }
-	wait 1.8
-
-	model btaxis_body
-	{
-		model	models/soldiers/male/body.md2
-		anim	walk0
-		origin	"0 -270 0"
-		speed	"0 60 0"
-		angles	"0 90 0"
-	}
-	model btaxis_head
-	{
-		model	models/soldiers/male/head03a.md2
-		parent	btaxis_body
-		tag		tag_head
-	}
-	wait 2.0
-
+	wait 2
+	// now fade out the font
 	2dobj winter_text { fade "0 0 0 -1" speed "0 60" }
 	2dobj winter_name { fade "0 0 0 -1" speed "0 100" }
-
-	model winter_body { anim walk2 speed "0 50 0" }
-	model winter_head { omega "20 30 0" }
-	wait 1.5
-
-	model btaxis_head { omega "-20 -30 0" }
-	model winter_head { omega "0 0 0" }
-	wait 1.0
-
-	rem winter_body
-	rem winter_head
+	wait 2
 	rem winter_text
 	rem winter_name
 
+	// =====================================
+	// BTAxis
+	// =====================================
 	2dobj btaxis_text
 	{
-		text	"_Story Developer"
-		pos		"50 50"		align	ul
+		text	"_Story Developer"		pos		"50 50"		align	ul
 		color	"0 1 0 0"	fade	"0 0 0 1"
 	}
 	2dobj btaxis_name
 	{
-		text	"_Bas Fournier (BTAxis)"
-		pos		"50 75"		align	ul
+		text	"_Bas Fournier (BTAxis)"	pos		"50 75"		align	ul
 		color	"1 1 1 0"	fade	"0 0 0 1"
-
 	}
-	model btaxis_body { anim stand_still speed "0 0 0" }
-	model btaxis_head { omega "0 0 0" }
-	wait 0.2
-
-	model btaxis_body { anim stand0 speed "0 0 0" }
-	wait 1.8
-
-	model lordhavoc_body
-	{
-		model	models/soldiers/male/body.md2
-		anim	walk0
-		origin	"0 -270 0"
-		speed	"0 60 0"
-		angles	"0 90 0"
-	}
-	model lordhavoc_head
-	{
-		model	models/soldiers/male/head03a.md2
-		parent	lordhavoc_body
-		tag		tag_head
-	}
-	wait 2.0
-
+	wait 2
+	// now fade out the font
 	2dobj btaxis_text { fade "0 0 0 -1" speed "0 60" }
 	2dobj btaxis_name { fade "0 0 0 -1" speed "0 100" }
-
-	model btaxis_body { anim walk2 speed "0 50 0" }
-	model btaxis_head { omega "20 30 0" }
-	wait 1.5
-
-	model lordhavoc_head { omega "-20 -30 0" }
-	model btaxis_head { omega "0 0 0" }
-	wait 1.0
-
-	rem btaxis_body
-	rem btaxis_head
+	wait 2
 	rem btaxis_text
 	rem btaxis_name
 
+	// =====================================
+	// Zenerka
+	// =====================================
+	2dobj zenerka_text
+	{
+		text	"_Contributing Developer"	pos		"974 50"		align	ur
+		color	"0 1 0 0"	fade	"0 0 0 1"
+	}
+	2dobj zenerka_name
+	{
+		text	"_Maciej Wierzbicki (Zenerka/Voovoos)"	pos		"974 75"		align	ur
+		color	"1 1 1 0"	fade	"0 0 0 1"
+	}
+	wait 2
+	// now fade out the font
+	2dobj zenerka_text { fade "0 0 0 -1" speed "0 60" }
+	2dobj zenerka_name { fade "0 0 0 -1" speed "0 100" }
+	wait 2
+	rem zenerka_text
+	rem zenerka_name
+
+	// =====================================
+	// LordHavoc
+	// =====================================
 	2dobj lordhavoc_text
 	{
-		text	"_Technology Consultant"
-		pos		"50 50"		align	ul
+		text	"_Technology Consultant"	pos		"50 50"		align	ul
 		color	"0 1 0 0"	fade	"0 0 0 1"
 	}
 	2dobj lordhavoc_name
 	{
-		text	"_Forest Hale (LordHavoc)"
-		pos		"50 75"		align	ul
+		text	"_Forest Hale (LordHavoc)"	pos		"50 75"		align	ul
 		color	"1 1 1 0"	fade	"0 0 0 1"
-
 	}
-	model lordhavoc_body { anim stand_still speed "0 0 0" }
-	model lordhavoc_head { omega "0 0 0" }
-	wait 0.2
-
-	model lordhavoc_body { anim stand0 speed "0 0 0" }
-	wait 1.8
-
-	model sheldonh_body
-	{
-		model	models/soldiers/male/body.md2
-		anim	walk0
-		origin	"0 -270 0"
-		speed	"0 60 0"
-		angles	"0 90 0"
-	}
-	model sheldonh_head
-	{
-		model	models/soldiers/male/head03a.md2
-		parent	sheldonh_body
-		tag		tag_head
-	}
-	wait 2.0
-
+	wait 2
+	// now fade out the font
 	2dobj lordhavoc_text { fade "0 0 0 -1" speed "0 60" }
 	2dobj lordhavoc_name { fade "0 0 0 -1" speed "0 100" }
-
-	model lordhavoc_body { anim walk2 speed "0 50 0" }
-	model lordhavoc_head { omega "20 30 0" }
-	wait 1.5
-
-	model sheldonh_head { omega "-20 -30 0" }
-	model lordhavoc_head { omega "0 0 0" }
-	wait 1.0
-
-	rem lordhavoc_body
-	rem lordhavoc_head
+	wait 2
 	rem lordhavoc_text
 	rem lordhavoc_name
 
-	2dobj sheldonh_text
-	{
-		text	"_Contributing Programmer"
-		pos		"50 50"		align	ul
-		color	"0 1 0 0"	fade	"0 0 0 1"
-	}
-	2dobj sheldonh_name
-	{
-		text	"_Sheldon Hearn (sheldonh)"
-		pos		"50 75"		align	ul
-		color	"1 1 1 0"	fade	"0 0 0 1"
-
-	}
-	model sheldonh_body { anim stand_still speed "0 0 0" }
-	model sheldonh_head { omega "0 0 0" }
-	wait 0.2
-
-	model sheldonh_body { anim stand0 speed "0 0 0" }
-	wait 1.8
-
-	model ubequitz_body
-	{
-		model	models/soldiers/male/body.md2
-		anim	walk0
-		origin	"0 -270 0"
-		speed	"0 60 0"
-		angles	"0 90 0"
-	}
-	model ubequitz_head
-	{
-		model	models/soldiers/male/head03a.md2
-		parent	ubequitz_body
-		tag		tag_head
-	}
-	wait 2.0
-
-	2dobj sheldonh_text { fade "0 0 0 -1" speed "0 60" }
-	2dobj sheldonh_name { fade "0 0 0 -1" speed "0 100" }
-
-	model sheldonh_body { anim walk2 speed "0 50 0" }
-	model sheldonh_head { omega "20 30 0" }
-	wait 1.5
-
-	model ubequitz_head { omega "-20 -30 0" }
-	model sheldonh_head { omega "0 0 0" }
-	wait 1.0
-
-	rem sheldonh_body
-	rem sheldonh_head
-	rem sheldonh_text
-	rem sheldonh_name
-
+	// =====================================
+	// Ubequitz
+	// =====================================
 	2dobj ubequitz_text
 	{
-		text	"_Contributing Programmer"
-		pos		"50 50"		align	ul
+		text	"_Contributing Programmer"	pos		"974 50"		align	ur
 		color	"0 1 0 0"	fade	"0 0 0 1"
 	}
 	2dobj ubequitz_name
 	{
-		text	"_Ivor Blockley (ubequitz/cassiterite)"
-		pos		"50 75"		align	ul
+		text	"_Ivor Blockley (ubequitz/cassiterite)"		pos		"974 75"		align	ur
 		color	"1 1 1 0"	fade	"0 0 0 1"
 	}
-	model ubequitz_body { anim stand_still speed "0 0 0" }
-	model ubequitz_head { omega "0 0 0" }
-	wait 0.2
-
-	model ubequitz_body { anim stand0 speed "0 0 0" }
-	wait 1.8
-
-	model tomshackell_body
-	{
-		model	models/soldiers/male/body.md2
-		anim	walk0
-		origin	"0 -270 0"
-		speed	"0 60 0"
-		angles	"0 90 0"
-	}
-	model tomshackell_head
-	{
-		model	models/soldiers/male/head03a.md2
-		parent	tomshackell_body
-		tag		tag_head
-	}
-	wait 2.0
-
+	wait 2
+	// now fade out the font
 	2dobj ubequitz_text { fade "0 0 0 -1" speed "0 60" }
 	2dobj ubequitz_name { fade "0 0 0 -1" speed "0 100" }
-
-	model ubequitz_body { anim walk2 speed "0 50 0" }
-	model ubequitz_head { omega "20 30 0" }
-	wait 1.5
-
-	model tomshackell_head { omega "-20 -30 0" }
-	model ubequitz_head { omega "0 0 0" }
-	wait 1.0
-
-	rem ubequitz_body
-	rem ubequitz_head
+	wait 2
 	rem ubequitz_text
 	rem ubequitz_name
-
-	2dobj tomshackell_text
-	{
-		text	"_Contributing Programmer"
-		pos		"50 50"		align	ul
-		color	"0 1 0 0"	fade	"0 0 0 1"
-	}
-	2dobj tomshackell_name
-	{
-		text	"_Tom Shackell (archmoo/tomshackell)"
-		pos		"50 75"		align	ul
-		color	"1 1 1 0"	fade	"0 0 0 1"
-
-	}
-	model tomshackell_body { anim stand_still speed "0 0 0" }
-	model tomshackell_head { omega "0 0 0" }
-	wait 0.2
-
-	model tomshackell_body { anim stand0 speed "0 0 0" }
-	wait 1.8
-
-	model kaeau_body
-	{
-		model	models/soldiers/male/body.md2
-		anim	walk0
-		origin	"0 -270 0"
-		speed	"0 60 0"
-		angles	"0 90 0"
-	}
-	model kaeau_head
-	{
-		model	models/soldiers/male/head03a.md2
-		parent	kaeau_body
-		tag		tag_head
-	}
-	wait 2.0
-
-	2dobj tomshackell_text { fade "0 0 0 -1" speed "0 60" }
-	2dobj tomshackell_name { fade "0 0 0 -1" speed "0 100" }
-
-	model tomshackell_body { anim walk2 speed "0 50 0" }
-	model tomshackell_head { omega "20 30 0" }
-	wait 1.5
-
-	model kaeau_head { omega "-20 -30 0" }
-	model tomshackell_head { omega "0 0 0" }
-	wait 1.0
-
-	rem tomshackell_body
-	rem tomshackell_head
-	rem tomshackell_text
-	rem tomshackell_name
-
-	// to add additional credits, duplicate this section (including the 4 rems
-	// at the end) and place it above this comment, then search/replace the
-	// relevant names and uncomment the new person's name ("nicknamegoeshere")
-	// in that copy.
-	2dobj kaeau_text
-	{
-		text	"_Contributing Artist and Modeller"
-		pos		"50 50"		align	ul
-		color	"0 1 0 0"	fade	"0 0 0 1"
-	}
-	2dobj kaeau_name
-	{
-		text	"_Philipp Hummer (kaeau) - Nathan : INC :: www.ninc.at"
-		pos		"50 75"		align	ul
-		color	"1 1 1 0"	fade	"0 0 0 1"
-	}
-	model kaeau_body { anim stand_still speed "0 0 0" }
-	model kaeau_head { omega "0 0 0" }
-	wait 0.2
-
-	model kaeau_body { anim stand0 speed "0 0 0" }
-	wait 1.8
-
-	//model nicknamegoeshere_body
-	//{
-	//	model	models/soldiers/male/body.md2
-	//	anim	walk0
-	//	origin	"0 -270 0"
-	//	speed	"0 60 0"
-	//	angles	"0 90 0"
-	//}
-	//model nicknamegoeshere_head
-	//{
-	//	model	models/soldiers/male/head03a.md2
-	//	parent	nicknamegoeshere_body
-	//	tag		tag_head
-	//}
-	//wait 2.0
-
-
-	2dobj kaeau_text { fade "0 0 0 -1" speed "0 60" }
-	2dobj kaeau_name { fade "0 0 0 -1" speed "0 100" }
-
-	model kaeau_body { anim walk2 speed "0 50 0" }
-	model kaeau_head { omega "20 30 0" }
-	wait 1.5
-
-	//model nicknamegoeshere_head { omega "-20 -30 0" }
-	model kaeau_head { omega "0 0 0" }
-	wait 1.0
-
-	rem kaeau_body
-	rem kaeau_head
-	rem kaeau_text
-	rem kaeau_name
 
 	// now begin the original dev team credits
 	2dobj community_driven
@@ -541,25 +292,6 @@ sequence credits
 	rem original_team
 	rem community_driven
 
-	model herby_body
-	{
-		model	models/civilians/male/body01.md2
-		skin	2
-		anim	walk0
-		origin	"-277.5 0 0"
-		speed	"60 0 0"
-	}
-	model herby_head
-	{
-		model	models/civilians/male/head01.md2
-		parent	herby_body
-		tag		tag_head
-	}
-	wait 3.625
-
-	model herby_head { omega "-25 40 0" }
-	wait 1.0
-
 	2dobj herby_text
 	{
 		text	"_Code, Visual Effects"
@@ -572,42 +304,10 @@ sequence credits
 		pos		"974 75"		align	ur
 		color	"1 1 1 0"		fade	"0 0 0 1"
 	}
-	model herby_body { anim stand_still speed "0 0 0" }
-	model herby_head { omega "0 0 0" }
-	wait 0.2
-
-	model herby_body { anim stand0 speed "0 0 0" }
-	wait 1.8
-
-	model sparx_body
-	{
-		model	models/soldiers/male/body.md2
-		anim	walk0
-		origin	"0 -270 0"
-		speed	"0 60 0"
-		angles	"0 90 0"
-	}
-	model sparx_head
-	{
-		model	models/soldiers/male/head03a.md2
-		parent	sparx_body
-		tag		tag_head
-	}
-	wait 2.0
-
+	wait 4
+	// now fade out the font
 	2dobj herby_text { fade "0 0 0 -1" speed "0 60" }
 	2dobj herby_name { fade "0 0 0 -1" speed "0 100" }
-
-	model herby_body { anim walk0 speed "50 0 0" }
-	model herby_head { omega "25 -40 0" }
-	wait 1.5
-
-	model sparx_head { omega "-20 -30 0" }
-	model herby_head { omega "0 0 0" }
-	wait 1.0
-
-	rem herby_body
-	rem herby_head
 	rem herby_text
 	rem herby_name
 
@@ -622,45 +322,11 @@ sequence credits
 		text	"_SparX"
 		pos		"50 75"		align	ul
 		color	"1 1 1 0"	fade	"0 0 0 1"
-
 	}
-	model sparx_body { anim stand_still speed "0 0 0" }
-	model sparx_head { omega "0 0 0" }
-	wait 0.2
-
-	model sparx_body { anim stand0 speed "0 0 0" }
-	wait 1.8
-
-	model rasta_body
-	{
-		model	models/soldiers/malemedium/body.md2
-		skin	3
-		anim	walk2
-		origin	"-270 0 0"
-		speed	"60 0 0"
-	}
-	model rasta_head
-	{
-		model	models/soldiers/malemedium/head01a.md2
-		skin	3
-		parent	rasta_body
-		tag		tag_head
-	}
-	wait 2.0
-
+	wait 4
+	// now fade out the font
 	2dobj sparx_text { fade "0 0 0 -1" speed "0 60" }
 	2dobj sparx_name { fade "0 0 0 -1" speed "0 100" }
-
-	model sparx_body { anim walk2 speed "0 50 0" }
-	model sparx_head { omega "20 30 0" }
-	wait 1.5
-
-	model rasta_head { omega "-20 30 0" }
-	model sparx_head { omega "0 0 0" }
-	wait 1.0
-
-	rem sparx_body
-	rem sparx_head
 	rem sparx_text
 	rem sparx_name
 
@@ -676,43 +342,10 @@ sequence credits
 		pos		"974 75"	align	ur
 		color	"1 1 1 0"	fade	"0 0 0 1"
 	}
-	model rasta_body { anim stand_still speed "0 0 0" }
-	model rasta_head { omega "0 0 0" }
-	wait 0.2
-
-	model rasta_body { anim stand0 speed "0 0 0" }
-	wait 1.8
-
-	model vanethian_body
-	{
-		model	models/aliens/ortnok/body01.md2
-		skin	1
-		anim	walk2
-		origin	"0 -270 0"
-		angles	"0 90 0"
-		speed	"0 60 0"
-	}
-	model vanethian_head
-	{
-		model	models/aliens/ortnok/head02.md2
-		parent	vanethian_body
-		tag		tag_head
-	}
-	wait 2.0
-
+	wait 4
+	// now fade out the font
 	2dobj rasta_text { fade "0 0 0 -1" speed "0 60" }
 	2dobj rasta_name { fade "0 0 0 -1" speed "0 100" }
-
-	model rasta_body { anim walk2 speed "50 0 0" }
-	model rasta_head { omega "20 -30 0" }
-	wait 1.5
-
-	model vanethian_head { omega "0 -30 0" }
-	model rasta_head { omega "0 0 0" }
-	wait 1.0
-
-	rem rasta_body
-	rem rasta_head
 	rem rasta_text
 	rem rasta_name
 
@@ -728,41 +361,10 @@ sequence credits
 		pos		"50 75"		align	ul
 		color	"1 1 1 0"	fade	"0 0 0 1"
 	}
-	model vanethian_body { anim stand_still speed "0 0 0" }
-	model vanethian_head { omega "0 0 0" }
-	wait 0.2
-
-	model vanethian_body { anim stand0 speed "0 0 0" }
-	wait 1.8
-
-	model ww3_body
-	{
-		model	models/soldiers/malelight/body.md2
-		skin	2
-		anim	walk2
-		origin	"-270 0 0"
-		speed	"60 0 0"
-	}
-	model ww3_head
-	{
-		model	models/soldiers/male/head02a.md2
-		parent	ww3_body
-		tag		tag_head
-	}
-	wait 2.0
-
+	wait 4
+	// now fade out the font
 	2dobj vanethian_text { fade "0 0 0 -1" speed "0 60" }
 	2dobj vanethian_name { fade "0 0 0 -1" speed "0 100" }
-
-	model vanethian_body { anim walk2 speed "0 50 0" }
-	model vanethian_head { omega "0 30 0" }
-	wait 1.5
-
-	model ww3_head { omega "-20 30 0" }
-	wait 1.0
-
-	rem vanethian_body
-	rem vanethian_head
 	rem vanethian_text
 	rem vanethian_name
 
@@ -778,25 +380,10 @@ sequence credits
 		pos		"974 75"	align	ur
 		color	"1 1 1 0"	fade	"0 0 0 1"
 	}
-	model ww3_body { anim stand_still speed "0 0 0" }
-	model ww3_head { omega "0 0 0" }
-	wait 0.2
-
-	model ww3_body { anim stand0 speed "0 0 0" }
-	wait 3.8
-
+	wait 4
+	// now fade out the font
 	2dobj ww3_text { fade "0 0 0 -1" speed "0 60" }
 	2dobj ww3_name { fade "0 0 0 -1" speed "0 100" }
-
-	model ww3_body { anim walk2 speed "50 0 0" }
-	model ww3_head { omega "20 -30 0" }
-	wait 1.0
-
-	model ww3_head { omega "0 0 0" }
-	wait 2.5
-
-	rem ww3_body
-	rem ww3_head
 	rem ww3_text
 	rem ww3_name
 
@@ -825,7 +412,7 @@ sequence credits
 		color	".7 .7 .7 1"
 		speed	"0 -80"
 	}
-	2dobj exp
+	2dobj ninex
 	{
 		text	"_NineX"
 		pos		"512 960"		align	uc
@@ -861,17 +448,24 @@ sequence credits
 		color	"1 1 1 1"
 		speed	"0 -80"
 	}
+	2dobj sitters
+	{
+		text	"_Sitters"
+		pos		"512 1400"		align	uc
+		color	"1 1 1 1"
+		speed	"0 -80"
+	}
 	2dobj community
 	{
 		text	"_The Community"
-		pos		"512 1400"		align	uc
+		pos		"512 1430"		align	uc
 		color	"1 1 1 1"
 		speed	"0 -80"
 	}
 	2dobj everyone
 	{
 		text	"_Everyone who supported us"
-		pos		"512 1430"		align	uc
+		pos		"512 1460"		align	uc
 		color	"1 1 1 1"
 		speed	"0 -80"
 	}
@@ -879,12 +473,28 @@ sequence credits
 
 	rem special_thx
 	rem id		rem engine
-	rem exp		rem host
+	rem ninex	rem host
 	rem additional_thx
 	rem sacrusha
 	rem mattn
 	rem community
 	rem everyone
+
+	// remove the models
+	rem body1
+	rem head1
+	rem body2
+	rem head2
+	rem body3
+	rem head3
+	rem body4
+	rem head4
+	rem body5
+	rem head5
+	rem body6
+	rem head6
+	rem body7
+	rem head7
 
 	// ============================
 	// Finish
