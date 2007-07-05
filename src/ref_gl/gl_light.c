@@ -165,7 +165,7 @@ LIGHT SAMPLING
 =============================================================================
 */
 
-static float s_blocklights[128 * 128 * 4];
+static float s_blocklights[256 * 256 * 4];
 
 /**
  * @brief
@@ -262,6 +262,7 @@ extern void R_BuildLightMap (mBspSurface_t * surf, byte * dest, int stride)
 	float *bl;
 	lightstyle_t *style;
 	int monolightmap;
+	int maps;
 
 	/* no rad processing - for map testing */
 	if (!surf->lquant) {
@@ -275,15 +276,14 @@ extern void R_BuildLightMap (mBspSurface_t * surf, byte * dest, int stride)
 	smax = (surf->extents[0] >> surf->lquant) + 1;
 	tmax = (surf->extents[1] >> surf->lquant) + 1;
 	size = smax * tmax;
-	if (size > (sizeof(s_blocklights) >> surf->lquant))
-		ri.Sys_Error(ERR_DROP, "Bad s_blocklights size (%i) - should be "UFO_SIZE_T" (lquant: %i)", size, (sizeof(s_blocklights) >> surf->lquant), surf->lquant);
+	if (size > (sizeof(s_blocklights) >> surf->lquant)) {
+		ri.Sys_Error(ERR_DROP, "Bad s_blocklights size (%i) - should be "UFO_SIZE_T" (lquant: %i) (smax: %i, extents[0]: %i, tmax: %i, extents[1]: %i)\n",
+			size, (sizeof(s_blocklights) >> surf->lquant), surf->lquant, smax, surf->extents[0], tmax, surf->extents[1]);
+	}
 
 	/* set to full bright if no light data */
 	if (!surf->samples) {
-		int maps;
-
-		for (i = 0; i < size * 3; i++)
-			s_blocklights[i] = 255;
+		memset(s_blocklights, 255, sizeof(s_blocklights));
 		for (maps = 0; maps < MAXLIGHTMAPS && surf->styles[maps] != 255; maps++)
 			style = &r_newrefdef.lightstyles[surf->styles[maps]];
 
@@ -295,57 +295,30 @@ extern void R_BuildLightMap (mBspSurface_t * surf, byte * dest, int stride)
 
 	lightmap = surf->samples;
 
-	/* add all the lightmaps */
-	if (nummaps == 1) {
-		int maps;
-
-		for (maps = 0; maps < MAXLIGHTMAPS && surf->styles[maps] != 255; maps++) {
-			bl = s_blocklights;
-
-			for (i = 0; i < 3; i++)
-				scale[i] = gl_modulate->value * r_newrefdef.lightstyles[surf->styles[maps]].rgb[i];
-
-			if (scale[0] == 1.0F && scale[1] == 1.0F && scale[2] == 1.0F) {
-				for (i = 0; i < size; i++, bl += 3) {
-					bl[0] = lightmap[i * 3 + 0];
-					bl[1] = lightmap[i * 3 + 1];
-					bl[2] = lightmap[i * 3 + 2];
-				}
-			} else {
-				for (i = 0; i < size; i++, bl += 3) {
-					bl[0] = lightmap[i * 3 + 0] * scale[0];
-					bl[1] = lightmap[i * 3 + 1] * scale[1];
-					bl[2] = lightmap[i * 3 + 2] * scale[2];
-				}
-			}
-			lightmap += size * 3;	/* skip to next lightmap */
-		}
-	} else {
-		int maps;
-
+	/* only add one lightmap */
+	if (nummaps != 1)
 		memset(s_blocklights, 0, sizeof(s_blocklights[0]) * size * 3);
 
-		for (maps = 0; maps < MAXLIGHTMAPS && surf->styles[maps] != 255; maps++) {
-			bl = s_blocklights;
+	for (maps = 0; maps < MAXLIGHTMAPS && surf->styles[maps] != 255; maps++) {
+		bl = s_blocklights;
 
-			for (i = 0; i < 3; i++)
-				scale[i] = gl_modulate->value * r_newrefdef.lightstyles[surf->styles[maps]].rgb[i];
+		for (i = 0; i < 3; i++)
+			scale[i] = gl_modulate->value * r_newrefdef.lightstyles[surf->styles[maps]].rgb[i];
 
-			if (scale[0] == 1.0F && scale[1] == 1.0F && scale[2] == 1.0F) {
-				for (i = 0; i < size; i++, bl += 3) {
-					bl[0] += lightmap[i * 3 + 0];
-					bl[1] += lightmap[i * 3 + 1];
-					bl[2] += lightmap[i * 3 + 2];
-				}
-			} else {
-				for (i = 0; i < size; i++, bl += 3) {
-					bl[0] += lightmap[i * 3 + 0] * scale[0];
-					bl[1] += lightmap[i * 3 + 1] * scale[1];
-					bl[2] += lightmap[i * 3 + 2] * scale[2];
-				}
+		if (scale[0] == 1.0F && scale[1] == 1.0F && scale[2] == 1.0F) {
+			for (i = 0; i < size; i++, bl += 3) {
+				bl[0] = lightmap[i * 3 + 0];
+				bl[1] = lightmap[i * 3 + 1];
+				bl[2] = lightmap[i * 3 + 2];
 			}
-			lightmap += size * 3;	/* skip to next lightmap */
+		} else {
+			for (i = 0; i < size; i++, bl += 3) {
+				bl[0] = lightmap[i * 3 + 0] * scale[0];
+				bl[1] = lightmap[i * 3 + 1] * scale[1];
+				bl[2] = lightmap[i * 3 + 2] * scale[2];
+			}
 		}
+		lightmap += size * 3;	/* skip to next lightmap */
 	}
 
 	/* add all the dynamic lights */

@@ -18,6 +18,13 @@
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\ufo.exe"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"
+!define SF_SELECTED   1
+!define SF_SECGRP     2
+!define SF_SECGRPEND  4
+!define SF_BOLD       8
+!define SF_RO         16
+!define SF_EXPAND     32
+!define SF_PSELECTED  64
 
 ;SetCompressor bzip2
 SetCompressor lzma
@@ -79,109 +86,122 @@ Function .onInit
   !insertmacro MUI_LANGDLL_DISPLAY
 FunctionEnd
 
-Section "Game" SEC01
-  SetOverwrite ifnewer
-  SetOutPath "$INSTDIR"
-  File /nonfatal "..\..\..\src\docs\tex\*.pdf"
-  File "..\..\..\contrib\*.dll"
-  File "..\..\..\*.dll"
-  File "..\..\..\*.exe"
-  File "..\..\..\.gamedir"
-  SetOutPath "$INSTDIR\base"
-  File "..\..\..\base\*.dll"
-;  File "..\..\..\base\*.zip"
-  File "..\..\..\base\*.pk3"
-  SetOutPath "$INSTDIR\base\i18n"
-  SetOutPath "$INSTDIR\base\i18n\cs\LC_MESSAGES"
-  File "..\..\..\base\i18n\cs\LC_MESSAGES\*.mo"
-  SetOutPath "$INSTDIR\base\i18n\da\LC_MESSAGES"
-  File "..\..\..\base\i18n\da\LC_MESSAGES\*.mo"
-  SetOutPath "$INSTDIR\base\i18n\de\LC_MESSAGES"
-  File "..\..\..\base\i18n\de\LC_MESSAGES\*.mo"
-  SetOutPath "$INSTDIR\base\i18n\en\LC_MESSAGES"
-  File "..\..\..\base\i18n\en\LC_MESSAGES\*.mo"
-  SetOutPath "$INSTDIR\base\i18n\es\LC_MESSAGES"
-  File "..\..\..\base\i18n\es\LC_MESSAGES\*.mo"
-  SetOutPath "$INSTDIR\base\i18n\es_ES\LC_MESSAGES"
-  File "..\..\..\base\i18n\es_ES\LC_MESSAGES\*.mo"
-  SetOutPath "$INSTDIR\base\i18n\est\LC_MESSAGES"
-  File "..\..\..\base\i18n\est\LC_MESSAGES\*.mo"
-  SetOutPath "$INSTDIR\base\i18n\fi\LC_MESSAGES"
-  File "..\..\..\base\i18n\fi\LC_MESSAGES\*.mo"
-  SetOutPath "$INSTDIR\base\i18n\fr\LC_MESSAGES"
-  File "..\..\..\base\i18n\fr\LC_MESSAGES\*.mo"
-  SetOutPath "$INSTDIR\base\i18n\it\LC_MESSAGES"
-  File "..\..\..\base\i18n\it\LC_MESSAGES\*.mo"
-  SetOutPath "$INSTDIR\base\i18n\pl\LC_MESSAGES"
-  File "..\..\..\base\i18n\pl\LC_MESSAGES\*.mo"
-  SetOutPath "$INSTDIR\base\i18n\pt_BR\LC_MESSAGES"
-  File "..\..\..\base\i18n\pt_BR\LC_MESSAGES\*.mo"
-  SetOutPath "$INSTDIR\base\i18n\ru\LC_MESSAGES"
-  File "..\..\..\base\i18n\ru\LC_MESSAGES\*.mo"
-  SetOutPath "$INSTDIR\base\i18n\sv\LC_MESSAGES"
-  File "..\..\..\base\i18n\sv\LC_MESSAGES\*.mo"
-  SetOutPath "$INSTDIR\base\i18n\slo\LC_MESSAGES"
-  File "..\..\..\base\i18n\slo\LC_MESSAGES\*.mo"
+SectionGroup /e "Game" SECGROUP01
+  Section "Game Files" SEC01
+    SetOverwrite ifnewer
+    SetOutPath "$INSTDIR"
+    File /nonfatal "..\..\..\src\docs\tex\*.pdf"
+    File "..\..\..\contrib\*.dll"
+    File "..\..\..\*.dll"
+    File "..\..\..\*.exe"
+    File "..\..\..\.gamedir"
+    SetOutPath "$INSTDIR\base"
+    File "..\..\..\base\*.dll"
+  ;  File "..\..\..\base\*.zip"
+    File "..\..\..\base\*.pk3"
+    SetOutPath "$INSTDIR\base\i18n"
+    SetOutPath "$INSTDIR\base\i18n\cs\LC_MESSAGES"
+    File "..\..\..\base\i18n\cs\LC_MESSAGES\*.mo"
+    SetOutPath "$INSTDIR\base\i18n\da\LC_MESSAGES"
+    File "..\..\..\base\i18n\da\LC_MESSAGES\*.mo"
+    SetOutPath "$INSTDIR\base\i18n\de\LC_MESSAGES"
+    File "..\..\..\base\i18n\de\LC_MESSAGES\*.mo"
+    SetOutPath "$INSTDIR\base\i18n\en\LC_MESSAGES"
+    File "..\..\..\base\i18n\en\LC_MESSAGES\*.mo"
+    SetOutPath "$INSTDIR\base\i18n\es\LC_MESSAGES"
+    File "..\..\..\base\i18n\es\LC_MESSAGES\*.mo"
+    SetOutPath "$INSTDIR\base\i18n\es_ES\LC_MESSAGES"
+    File "..\..\..\base\i18n\es_ES\LC_MESSAGES\*.mo"
+    SetOutPath "$INSTDIR\base\i18n\est\LC_MESSAGES"
+    File "..\..\..\base\i18n\est\LC_MESSAGES\*.mo"
+    SetOutPath "$INSTDIR\base\i18n\fi\LC_MESSAGES"
+    File "..\..\..\base\i18n\fi\LC_MESSAGES\*.mo"
+    SetOutPath "$INSTDIR\base\i18n\fr\LC_MESSAGES"
+    File "..\..\..\base\i18n\fr\LC_MESSAGES\*.mo"
+    SetOutPath "$INSTDIR\base\i18n\it\LC_MESSAGES"
+    File "..\..\..\base\i18n\it\LC_MESSAGES\*.mo"
+    SetOutPath "$INSTDIR\base\i18n\pl\LC_MESSAGES"
+    File "..\..\..\base\i18n\pl\LC_MESSAGES\*.mo"
+    SetOutPath "$INSTDIR\base\i18n\pt_BR\LC_MESSAGES"
+    File "..\..\..\base\i18n\pt_BR\LC_MESSAGES\*.mo"
+    SetOutPath "$INSTDIR\base\i18n\ru\LC_MESSAGES"
+    File "..\..\..\base\i18n\ru\LC_MESSAGES\*.mo"
+    SetOutPath "$INSTDIR\base\i18n\sv\LC_MESSAGES"
+    File "..\..\..\base\i18n\sv\LC_MESSAGES\*.mo"
+    SetOutPath "$INSTDIR\base\i18n\slo\LC_MESSAGES"
+    File "..\..\..\base\i18n\slo\LC_MESSAGES\*.mo"
+  
+  ;======================================================================
+  ; to let the game start up
+  ;======================================================================
+    SetOutPath "$INSTDIR"
+  
+  SectionEnd
+  
+  Section "Game Shortcuts" SEC01B
+    CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}\"
+    CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\${PRODUCT_NAME}.lnk" "$INSTDIR\ufo.exe" "+set vid_fullscreen 1 + set snd_init 1" "$INSTDIR\ufo.exe" 0
+    CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\${PRODUCT_NAME} (safe-mode).lnk" "$INSTDIR\ufo.exe" "+set vid_fullscreen 1 +set gl_mode 6 +set snd_init 0" "$INSTDIR\ufo.exe" 0
+    CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\${PRODUCT_NAME} (safe-mode windowed).lnk" "$INSTDIR\ufo.exe" "+set vid_fullscreen 0 +set gl_mode 6 +set snd_init 0" "$INSTDIR\ufo.exe" 0
+    CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\${PRODUCT_NAME_DEDICATED}.lnk" "$INSTDIR\ufo_ded.exe" "" "$INSTDIR\ufo.exe_ded" 0
+    CreateShortCut "$DESKTOP\${PRODUCT_NAME}.lnk" "$INSTDIR\ufo.exe"
+    CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Website.lnk" "$INSTDIR\${PRODUCT_NAME}.url"
+    CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Uninstall.lnk" "$INSTDIR\uninst.exe"
+  SectionEnd
+SectionGroupEnd
 
-;======================================================================
-; to let the game start up
-;======================================================================
-  SetOutPath "$INSTDIR"
+SectionGroup /e "Mapping" SECGROUP02
+  Section "Mapping Tools" SEC02
+    SetOutPath "$INSTDIR\base\maps"
+    File "..\..\..\base\maps\*.map"
+    File "..\..\..\base\maps\Makefile"
+    File "..\..\..\base\maps\Makefile.win"
+    File "..\..\..\base\maps\compile.p*"
+    SetOutPath "$INSTDIR\base\maps\b"
+    File "..\..\..\base\maps\b\*.map"
+    SetOutPath "$INSTDIR\base\maps\countryd"
+    File "..\..\..\base\maps\countryd\*.map"
+    SetOutPath "$INSTDIR\base\maps\countryn"
+    File "..\..\..\base\maps\countryn\*.map"
+    SetOutPath "$INSTDIR\base\maps\frozend"
+    File "..\..\..\base\maps\frozend\*.map"
+    SetOutPath "$INSTDIR\base\maps\frozenn"
+    File "..\..\..\base\maps\frozenn\*.map"
+    SetOutPath "$INSTDIR\base\maps\icen"
+    File "..\..\..\base\maps\icen\*.map"
+    SetOutPath "$INSTDIR\base\maps\iced"
+    File "..\..\..\base\maps\iced\*.map"
+    SetOutPath "$INSTDIR\base\maps\orientald"
+    File "..\..\..\base\maps\orientald\*.map"
+    SetOutPath "$INSTDIR\base\maps\orientaln"
+    File "..\..\..\base\maps\orientaln\*.map"
+    SetOutPath "$INSTDIR\base\maps\tropicd"
+    File "..\..\..\base\maps\tropicd\*.map"
+    SetOutPath "$INSTDIR\base\maps\tropicn"
+    File "..\..\..\base\maps\tropicn\*.map"
+    SetOutPath "$INSTDIR\base\maps\villaged"
+    File "..\..\..\base\maps\villaged\*.map"
+    SetOutPath "$INSTDIR\base\maps\villagen"
+    File "..\..\..\base\maps\villagen\*.map"
+    SetOutPath "$INSTDIR\base\pics"
+    File "..\..\..\base\pics\colormap.pcx"
+    SetOutPath "$INSTDIR\tools"
+    File "..\..\tools\*.ms"
+    File "..\..\tools\*.qe4"
+    File "..\..\tools\*.def"
+    ; EULA
+    File "..\..\..\contrib\*.doc"
+    File "..\..\..\contrib\*.exe"
+    File "..\..\..\ufo2map.exe"
+  SectionEnd
 
-  CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}\"
-  CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\${PRODUCT_NAME}.lnk" "$INSTDIR\ufo.exe" "+set vid_fullscreen 1 + set snd_init 1" "$INSTDIR\ufo.exe" 0
-  CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\${PRODUCT_NAME} (safe-mode).lnk" "$INSTDIR\ufo.exe" "+set vid_fullscreen 1 +set gl_mode 6 +set snd_init 0" "$INSTDIR\ufo.exe" 0
-  CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\${PRODUCT_NAME} (safe-mode windowed).lnk" "$INSTDIR\ufo.exe" "+set vid_fullscreen 0 +set gl_mode 6 +set snd_init 0" "$INSTDIR\ufo.exe" 0
-  CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\${PRODUCT_NAME_DEDICATED}.lnk" "$INSTDIR\ufo_ded.exe" "" "$INSTDIR\ufo.exe_ded" 0
-  CreateShortCut "$DESKTOP\${PRODUCT_NAME}.lnk" "$INSTDIR\ufo.exe"
-SectionEnd
+  Section "Mapping Tools Shortcuts" SEC02B
+    CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}\"
+    CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\MAP-Editor.lnk" "$INSTDIR\tools\q3radiant.exe" "" "$INSTDIR\tools\q3radiant.exe" 0
+  SectionEnd
+SectionGroupEnd
 
-Section "MappingTools" SEC02
-  SetOutPath "$INSTDIR\base\maps"
-  File "..\..\..\base\maps\*.map"
-  File "..\..\..\base\maps\Makefile"
-  File "..\..\..\base\maps\Makefile.win"
-  File "..\..\..\base\maps\compile.p*"
-  SetOutPath "$INSTDIR\base\maps\b"
-  File "..\..\..\base\maps\b\*.map"
-  SetOutPath "$INSTDIR\base\maps\countryd"
-  File "..\..\..\base\maps\countryd\*.map"
-  SetOutPath "$INSTDIR\base\maps\countryn"
-  File "..\..\..\base\maps\countryn\*.map"
-  SetOutPath "$INSTDIR\base\maps\frozend"
-  File "..\..\..\base\maps\frozend\*.map"
-  SetOutPath "$INSTDIR\base\maps\frozenn"
-  File "..\..\..\base\maps\frozenn\*.map"
-  SetOutPath "$INSTDIR\base\maps\icen"
-  File "..\..\..\base\maps\icen\*.map"
-  SetOutPath "$INSTDIR\base\maps\iced"
-  File "..\..\..\base\maps\iced\*.map"
-  SetOutPath "$INSTDIR\base\maps\orientald"
-  File "..\..\..\base\maps\orientald\*.map"
-  SetOutPath "$INSTDIR\base\maps\orientaln"
-  File "..\..\..\base\maps\orientaln\*.map"
-  SetOutPath "$INSTDIR\base\maps\tropicd"
-  File "..\..\..\base\maps\tropicd\*.map"
-  SetOutPath "$INSTDIR\base\maps\tropicn"
-  File "..\..\..\base\maps\tropicn\*.map"
-  SetOutPath "$INSTDIR\base\maps\villaged"
-  File "..\..\..\base\maps\villaged\*.map"
-  SetOutPath "$INSTDIR\base\maps\villagen"
-  File "..\..\..\base\maps\villagen\*.map"
-  SetOutPath "$INSTDIR\base\pics"
-  File "..\..\..\base\pics\colormap.pcx"
-  SetOutPath "$INSTDIR\tools"
-  File "..\..\tools\*.ms"
-  File "..\..\tools\*.qe4"
-  File "..\..\tools\*.def"
-  ; EULA
-  File "..\..\..\contrib\*.doc"
-  File "..\..\..\contrib\*.exe"
-  File "..\..\..\ufo2map.exe"
-  CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\MAP-Editor.lnk" "$INSTDIR\tools\q3radiant.exe" "" "$INSTDIR\tools\q3radiant.exe" 0
-SectionEnd
-
-Section "SourceCode" SEC03
+Section "Source Code" SEC03
   SetOverwrite ifnewer
   SetOutPath "$INSTDIR\build"
   File "..\..\..\build\*.bmp"
@@ -301,8 +321,6 @@ SectionEnd
 
 Section -AdditionalIcons
   WriteIniStr "$INSTDIR\${PRODUCT_NAME}.url" "InternetShortcut" "URL" "${PRODUCT_WEB_SITE}"
-  CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Website.lnk" "$INSTDIR\${PRODUCT_NAME}.url"
-  CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Uninstall.lnk" "$INSTDIR\uninst.exe"
 SectionEnd
 
 Section -Post
@@ -318,11 +336,40 @@ SectionEnd
 
 ; Section descriptions
 !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
-  !insertmacro MUI_DESCRIPTION_TEXT ${SEC01} "The game and its data"
-  !insertmacro MUI_DESCRIPTION_TEXT ${SEC02} "Mapping (and modelling) tools and map source files"
-  !insertmacro MUI_DESCRIPTION_TEXT ${SEC03} "C-Source code for UFO:Alien Invasion"
+  !insertmacro MUI_DESCRIPTION_TEXT ${SEC01}  "The game and its data. You need this to play."
+  !insertmacro MUI_DESCRIPTION_TEXT ${SEC01B} "Shortcuts for the game."
+  !insertmacro MUI_DESCRIPTION_TEXT ${SEC02}  "Mapping (and modelling) tools and map source files."
+  !insertmacro MUI_DESCRIPTION_TEXT ${SEC02B} "Shortcuts for the mapping tools."
+  !insertmacro MUI_DESCRIPTION_TEXT ${SEC03}  "C-Source code for UFO:Alien Invasion."
 !insertmacro MUI_FUNCTION_DESCRIPTION_END
 
+Function .onSelChange
+  Var /GLOBAL GAMEFLAGS
+  Var /GLOBAL MAPFLAGS
+  Var /GLOBAL GAMETEST
+  Var /GLOBAL MAPTEST
+  Var /GLOBAL GAMEICONFLAGS
+  Var /GLOBAL MAPICONFLAGS
+
+  ; This will ensure that you can't install the shortcuts without installing the target files
+  SectionGetFlags ${SEC01} $GAMEFLAGS
+  SectionGetFlags ${SEC02} $MAPFLAGS
+  IntOP $GAMETEST $GAMEFLAGS & ${SF_SELECTED}
+  IntOP $MAPTEST $MAPFLAGS & ${SF_SELECTED}
+
+  IntCmp $GAMETEST 1 GameSelected
+    SectionGetFlags ${SEC01B} $GAMEICONFLAGS
+    IntOp $GAMEICONFLAGS $GAMEICONFLAGS & 510 ; 111111110
+    SectionSetFlags ${SEC01B} $GAMEICONFLAGS
+
+  GameSelected:
+  IntCmp $MAPTEST 1 done
+    SectionGetFlags ${SEC02B} $MAPICONFLAGS
+    IntOp $MAPICONFLAGS $MAPICONFLAGS & 510 ; 111111110
+    SectionSetFlags ${SEC02B} $MAPICONFLAGS
+
+  done:
+FunctionEnd
 
 Function un.onUninstSuccess
   HideWindow
