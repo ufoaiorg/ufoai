@@ -18,20 +18,13 @@
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\ufo.exe"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"
-!define SF_SELECTED   1
-!define SF_SECGRP     2
-!define SF_SECGRPEND  4
-!define SF_BOLD       8
-!define SF_RO         16
-!define SF_EXPAND     32
-!define SF_PSELECTED  64
 
 ;SetCompressor bzip2
 SetCompressor lzma
 
 ; MUI 1.67 compatible ------
 !include "MUI.nsh"
-
+!include "LogicLib.nsh"
 
 ShowInstDetails "nevershow"
 ShowUninstDetails "nevershow"
@@ -48,6 +41,57 @@ ShowUninstDetails "nevershow"
 
 !define MUI_WELCOMEFINISHPAGE_BITMAP "..\..\..\build\installer.bmp"
 
+!macro MUI_PAGE_DIRECTORY_CUSTOM
+
+  !verbose push
+  !verbose ${MUI_VERBOSE}
+
+  !insertmacro MUI_PAGE_INIT
+
+  !insertmacro MUI_SET MUI_${MUI_PAGE_UNINSTALLER_PREFIX}DIRECTORYPAGE
+
+  !insertmacro MUI_DEFAULT MUI_DIRECTORYPAGE_TEXT_TOP ""
+  !insertmacro MUI_DEFAULT MUI_DIRECTORYPAGE_TEXT_DESTINATION ""
+
+  PageEx ${MUI_PAGE_UNINSTALLER_FUNCPREFIX}directory
+
+    PageCallbacks ${MUI_PAGE_UNINSTALLER_FUNCPREFIX}mui.DirectoryPre_${MUI_UNIQUEID} ${MUI_PAGE_UNINSTALLER_FUNCPREFIX}mui.DirectoryShow_${MUI_UNIQUEID} ${MUI_PAGE_UNINSTALLER_FUNCPREFIX}mui.DirectoryLeave_${MUI_UNIQUEID}
+
+    Caption " "
+
+    DirText "${MUI_DIRECTORYPAGE_TEXT_TOP}" "${MUI_DIRECTORYPAGE_TEXT_DESTINATION}"
+
+    !ifdef MUI_DIRECTORYPAGE_VARIABLE
+      DirVar "${MUI_DIRECTORYPAGE_VARIABLE}"
+    !endif
+
+    !ifdef MUI_DIRECTORYPAGE_VERIFYONLEAVE
+      DirVerify leave
+      PageCallbacks "" "" dirLeave
+    !endif
+
+  PageExEnd
+
+  !insertmacro MUI_FUNCTION_DIRECTORYPAGE ${MUI_PAGE_UNINSTALLER_FUNCPREFIX}mui.DirectoryPre_${MUI_UNIQUEID} ${MUI_PAGE_UNINSTALLER_FUNCPREFIX}mui.DirectoryShow_${MUI_UNIQUEID} ${MUI_PAGE_UNINSTALLER_FUNCPREFIX}mui.DirectoryLeave_${MUI_UNIQUEID}
+
+  !undef MUI_DIRECTORYPAGE_TEXT_TOP
+  !undef MUI_DIRECTORYPAGE_TEXT_DESTINATION
+  !insertmacro MUI_UNSET MUI_DIRECTORYPAGE_BGCOLOR
+  !insertmacro MUI_UNSET MUI_DIRECTORYPAGE_VARIABLE
+  !insertmacro MUI_UNSET MUI_DIRECTORYPAGE_VERIFYONLEAVE
+
+  !verbose pop
+
+!macroend
+
+Var GAMEFLAGS
+Var MAPFLAGS
+Var GAMETEST
+Var MAPTEST
+Var GAMEICONFLAGS
+Var MAPICONFLAGS
+Var NONEMPTY
+
 ; Welcome page
 !insertmacro MUI_PAGE_WELCOME
 ; License page
@@ -56,7 +100,8 @@ ShowUninstDetails "nevershow"
 !define MUI_COMPONENTSPAGE_SMALLDESC
 !insertmacro MUI_PAGE_COMPONENTS
 ; Directory page
-!insertmacro MUI_PAGE_DIRECTORY
+!define MUI_DIRECTORYPAGE_VERIFYONLEAVE
+!insertmacro MUI_PAGE_DIRECTORY_CUSTOM
 ; Instfiles page
 !insertmacro MUI_PAGE_INSTFILES
 ; Finish page
@@ -342,14 +387,44 @@ SectionEnd
   !insertmacro MUI_DESCRIPTION_TEXT ${SEC03}  "C-Source code for UFO:Alien Invasion."
 !insertmacro MUI_FUNCTION_DESCRIPTION_END
 
-Function .onSelChange
-  Var /GLOBAL GAMEFLAGS
-  Var /GLOBAL MAPFLAGS
-  Var /GLOBAL GAMETEST
-  Var /GLOBAL MAPTEST
-  Var /GLOBAL GAMEICONFLAGS
-  Var /GLOBAL MAPICONFLAGS
+Function .onVerifyInstDir
+  IfFileExists $INSTDIR\*.* Invalid Valid
+  Invalid:
+  StrCmp $INSTDIR "C:" Break
+  StrCmp $INSTDIR "C:\" Break
+  StrCmp $INSTDIR $PROGRAMFILES Break
+  StrCmp $INSTDIR $PROGRAMFILES Break
+  StrCpy $NONEMPTY 1
+  Goto End
+  Valid:
+  StrCpy $NONEMPTY 0
+  Goto End
+  Break:
+  Abort
+  End:
+FunctionEnd
 
+Function dirLeave
+  GetInstDirError $0
+  ${Switch} $0
+    ${Case} 0
+      ${Break}
+    ${Case} 1
+      MessageBox MB_OK "$INSTDIR is not a valid installation path!"
+      Abort
+      ${Break}
+    ${Case} 2
+      MessageBox MB_OK "Not enough free space!"
+      Abort
+      ${Break}
+  ${EndSwitch}
+  ${If} $NONEMPTY == 1
+    MessageBox MB_ICONEXCLAMATION|MB_YESNO|MB_DEFBUTTON2 "The destination folder already exists!$\r$\nAre you sure you want to install into that directory?" IDYES +2
+    Abort
+  ${EndIf}
+FunctionEnd
+
+Function .onSelChange
   ; This will ensure that you can't install the shortcuts without installing the target files
   SectionGetFlags ${SEC01} $GAMEFLAGS
   SectionGetFlags ${SEC02} $MAPFLAGS
