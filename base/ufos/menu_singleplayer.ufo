@@ -878,7 +878,6 @@ menu popup_tipoftheday
 		size	"444 120"
 		format	"20 150"
 		num	7
-		mousefx	true
 		click	{ }
 		wheel
 		height	6
