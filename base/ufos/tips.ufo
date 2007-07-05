@@ -2,6 +2,9 @@
 // just put new tips in "" and mark them with _ to be translated
 
 tips {
-	"_Tip of the day 1"
-	"_Tip of the day 2"
+	"_Use the SHIFT key to align your targeting height - useful to shoot a rocketlauncher in front of an alien group, for example."
+	"_Assemble and save different teams for multiplayer matches - 4 player teams, 8 player team and so on. This way you can quickly load the right one for a fast match."
+	"_Make sure your best soldiers are at the top of the team list. When the soldier limit is lower than the amount of soldiers in your team, the soldiers at the top of the list will be used for the game."
+	"_Always make sure that you have enough TUs left to hide after you shoot."
+	"_When using Reaction Fire, remember that you can set which fire mode to use by enabling the corresponding check box on the fire mode panel."
 }
