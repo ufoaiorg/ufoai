@@ -506,27 +506,14 @@ static void CL_ReloadRight_f (void)
 static void CL_SelectDown_f (void)
 {
 	menu_t* menu;
-	switch (mouseSpace) {
-	case MS_WORLD:
-		CL_ActorSelectMouse();
-		/* get the current menu */
-		menu = MN_GetMenu(NULL);
-		if (menu && menu->leaveNode)
-			MN_ExecuteActions(menu, menu->leaveNode->click);
-		break;
-	case MS_MENU:
-		MN_Click(mx, my);
-		break;
-	default:
-		/* we clicked outside the world but not onto a menu */
-		if (cls.state == ca_active) {
-			/* get the current menu */
-			menu = MN_GetMenu(NULL);
-			if (menu && menu->leaveNode)
-				MN_ExecuteActions(menu, menu->leaveNode->click);
-		}
-		break;
-	}
+	if (mouseSpace != MS_WORLD)
+		return;
+	CL_ActorSelectMouse();
+	/* we clicked outside the world but not onto a menu */
+	/* get the current menu */
+	menu = MN_GetMenu(NULL);
+	if (menu && menu->leaveNode)
+		MN_ExecuteActions(menu, menu->leaveNode->click);
 }
 
 /**
@@ -563,7 +550,7 @@ static void CL_ActionUp_f (void)
 }
 
 /**
- * @brief Turn button is hit - middle mouse button
+ * @brief Turn button is hit
  */
 static void CL_TurnDown_f (void)
 {
@@ -581,6 +568,73 @@ static void CL_TurnUp_f (void)
 	mouseSpace = MS_NULL;
 }
 
+
+/**
+ * @brief Mouse click
+ */
+static void CL_RightClickDown_f (void)
+{
+	if (mouseSpace != MS_MENU)
+		return;
+	MN_RightClick(mx, my);
+}
+
+/**
+ * @brief
+ */
+static void CL_RightClickUp_f (void)
+{
+	mouseSpace = MS_NULL;
+}
+
+/**
+ * @brief Turn button is hit
+ */
+static void CL_MiddleClickDown_f (void)
+{
+	if (mouseSpace == MS_MENU)
+		MN_MiddleClick(mx, my);
+}
+
+/**
+ * @brief
+ */
+static void CL_MiddleClickUp_f (void)
+{
+	mouseSpace = MS_NULL;
+}
+
+/**
+ * @brief
+ */
+static void CL_LeftClickDown_f (void)
+{
+	menu_t* menu;
+	switch (mouseSpace) {
+	case MS_MENU:
+		MN_Click(mx, my);
+		break;
+	default:
+		/* we clicked outside the world but not onto a menu */
+		if (cls.state == ca_active) {
+			/* get the current menu */
+			menu = MN_GetMenu(NULL);
+			if (menu && menu->leaveNode)
+				MN_ExecuteActions(menu, menu->leaveNode->click);
+		}
+		break;
+	}
+}
+
+/**
+ * @brief
+ */
+static void CL_LeftClickUp_f (void)
+{
+	if (mouseSpace == MS_DRAG)
+		MN_Click(mx, my);
+	mouseSpace = MS_NULL;
+}
 
 /**
  * @brief Cycles between visible aliens
@@ -688,6 +742,12 @@ extern void CL_InitInput (void)
 	Cmd_AddCommand("+zoomout", IN_ZoomOutDown_f, _("Zoom out"));
 	Cmd_AddCommand("-zoomout", IN_ZoomOutUp_f, NULL);
 
+	Cmd_AddCommand("+leftmouse", CL_LeftClickDown_f, _("Left mouse button click (menu)"));
+	Cmd_AddCommand("-leftmouse", CL_LeftClickUp_f, NULL);
+	Cmd_AddCommand("+middlemouse", CL_MiddleClickDown_f, _("Left mouse button click (menu)"));
+	Cmd_AddCommand("-middlemouse", CL_MiddleClickUp_f, NULL);
+	Cmd_AddCommand("+rightmouse", CL_RightClickDown_f, _("Left mouse button click (menu)"));
+	Cmd_AddCommand("-rightmouse", CL_RightClickUp_f, NULL);
 	Cmd_AddCommand("+select", CL_SelectDown_f, _("Select objects/Walk to a square/In fire mode, fire etc"));
 	Cmd_AddCommand("-select", CL_SelectUp_f, NULL);
 	Cmd_AddCommand("+action", CL_ActionDown_f, _("Walk to a square/In fire mode, cancel action"));
