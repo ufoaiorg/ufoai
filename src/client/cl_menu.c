@@ -2959,7 +2959,7 @@ static void MN_PushCopyMenu_f (void)
 void MN_PopMenu (qboolean all)
 {
 	/* make sure that we end all input buffers */
-	if (msg_mode == MSG_MENU)
+	if (msg_mode == MSG_MENU || msg_mode == MSG_IRC)
 		Cbuf_AddText("msgmenu !\n");
 
 	if (all)

@@ -1845,13 +1845,18 @@ extern void Irc_Shutdown (void)
  */
 extern void Irc_Input_Activate (void)
 {
-	menuText[TEXT_STANDARD] = irc_buffer;
-	menuText[TEXT_LIST] = irc_names_buffer;
+	/* in case of a failure we need this in MN_PopMenu */
+	msg_mode = MSG_IRC;
 	if (irc_connected && *irc_defaultChannel->string) {
+		menuText[TEXT_STANDARD] = irc_buffer;
+		menuText[TEXT_LIST] = irc_names_buffer;
 		Key_SetDest(key_input);
-		msg_mode = MSG_IRC;
-	} else
+	} else {
 		Com_DPrintf("Irc_Input_Activate: Warning - IRC not connected\n");
+		Cbuf_AddText("mn_pop;");
+		/* cancel any active editing */
+		return;
+	}
 	/* store this value to be able to reset it in Irc_Input_Deactivate */
 	inputLengthBackup = Cvar_VariableValue("mn_inputlength");
 	Cvar_SetValue("mn_inputlength", 128);
