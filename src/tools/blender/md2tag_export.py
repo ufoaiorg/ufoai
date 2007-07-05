@@ -438,7 +438,7 @@ class md2_tags_obj:
 			for tag in tag_frames:
 				frame_count += 1
 				tag.save(file)
-			print "  Frames saved: ", frame_count
+			print "  Frames saved: ", frame_count, "(",self.num_frames, ")"
 	def load(self, file):
 		temp_data = file.read(self.getSize())
 		data=struct.unpack(self.binary_format, temp_data)
@@ -512,8 +512,10 @@ def fill_md2_tags(md2_tags, object):
 
 	frame_counter = 0
 	# Fill in each tag with its positions per frame
-	for current_frame in range(Blender.Get('staframe') , Blender.Get('endframe')):
-		#print current_frame + "(" + frame_counter + ")" # DEBUG
+	print "Blender startframe:", Blender.Get('staframe')
+	print "Blender endframe:", Blender.Get('endframe')
+	for current_frame in range(Blender.Get('staframe') , Blender.Get('endframe') + 1):
+		#print current_frame, "(", frame_counter, ")" # DEBUG
 		progress+=progressIncrement
 		Blender.Window.DrawProgressBar(progress, "Calculating Frame: " + str(frame_counter))
 
