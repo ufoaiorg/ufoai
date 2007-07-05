@@ -97,7 +97,6 @@ SectionGroup /e "Game" SECGROUP01
     File "..\..\..\.gamedir"
     SetOutPath "$INSTDIR\base"
     File "..\..\..\base\*.dll"
-  ;  File "..\..\..\base\*.zip"
     File "..\..\..\base\*.pk3"
     SetOutPath "$INSTDIR\base\i18n"
     SetOutPath "$INSTDIR\base\i18n\cs\LC_MESSAGES"
@@ -354,18 +353,18 @@ Function .onSelChange
   ; This will ensure that you can't install the shortcuts without installing the target files
   SectionGetFlags ${SEC01} $GAMEFLAGS
   SectionGetFlags ${SEC02} $MAPFLAGS
-  IntOP $GAMETEST $GAMEFLAGS & ${SF_SELECTED}
-  IntOP $MAPTEST $MAPFLAGS & ${SF_SELECTED}
+  IntOP $GAMETEST $GAMEFLAGS & ${SF_SELECTED} ; tests the activation bit
+  IntOP $MAPTEST $MAPFLAGS & ${SF_SELECTED} ; tests the activation bit
 
   IntCmp $GAMETEST 1 GameSelected
     SectionGetFlags ${SEC01B} $GAMEICONFLAGS
-    IntOp $GAMEICONFLAGS $GAMEICONFLAGS & 510 ; 111111110
+    IntOp $GAMEICONFLAGS $GAMEICONFLAGS & 510 ; Forces to zero the activation bit
     SectionSetFlags ${SEC01B} $GAMEICONFLAGS
 
   GameSelected:
   IntCmp $MAPTEST 1 done
     SectionGetFlags ${SEC02B} $MAPICONFLAGS
-    IntOp $MAPICONFLAGS $MAPICONFLAGS & 510 ; 111111110
+    IntOp $MAPICONFLAGS $MAPICONFLAGS & 510 ; Forces to zero the activation bit
     SectionSetFlags ${SEC02B} $MAPICONFLAGS
 
   done:
@@ -380,8 +379,11 @@ Function un.onInit
 !insertmacro MUI_UNGETLANGUAGE
   MessageBox MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 "Are you sure that you want to remove $(^Name) and all its data?" IDYES +2
   Abort
+  MessageBox MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 "Do you also want to delete your configuration Files and saved games?" IDNO +2
+  RMDIR /r "$APPDATA\UFOAI"
 FunctionEnd
 
+; This uninstaller is unsafe - if a user installs this in the root of C: for example, the uninstall will wipe the entire partition.
 Section Uninstall
   RMDIR /r $INSTDIR
   RMDIR $INSTDIR
