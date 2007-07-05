@@ -29,4 +29,8 @@ tips {
 	"_Plasma grenades do the most damage, but frag can be useful, as they can be thrown slightly further."
 	"_Use [x] to cycle through the Reaction Fire settings: none, one shot, multiple shot."
 	"_Keep soldiers close, so that they can support each other (heal each other, shoot when one runs out of TU). Keep a wall between them at the end of your round, so that they can't be killed with one grenade."
+	"_Always have a disposable soldier or two, so you don't have to put your primary units into very risky situations."
+	"_Reaction Fire (RF) can drain your TUs to 0. If you turn off RF on a character, you cannot turn it back on without enough Time Units (TU). You can, however, leave it on. Try not to adjust 0'd units until you're sure."
+	"_Air Burst from the Grenade Launcher lets you explode those grenades in a specific place. Very useful when targetting something near the edge of the map, or on a ledge."
+	"_When throwing grenades, try to avoid straight throws along the grid. With at least a little bit of an angle, the chances of bouncing it back at yourself becomes much less on a 'missed' throw."
 }
