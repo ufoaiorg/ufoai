@@ -641,7 +641,7 @@ menu althud
 		*bt_reaction_a image althud/buttons_althud1ar
 		*bt_reaction_a tooltip "_One-shot reaction fire (not possible)"
 	}
-	
+
 	confunc deselreactiona
 	{
 		*bt_reaction_a image althud/buttons_althud1
@@ -1091,9 +1091,9 @@ menu althud
 
 	text infoscreen
 	{
-		pos		"20 722"
-		size	"260 40"
-		format	"18 0"
+		pos		"5 722"
+		size	"275 50"
+		format	"20 100"
 		color	"0 1 0 1"
 	}
 

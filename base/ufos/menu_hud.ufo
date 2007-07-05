@@ -825,8 +825,8 @@ menu hud
 
 	text infoscreen
 	{
-		pos		"425 702"
-		size	"260 50"
+		pos		"410 702"
+		size	"290 50"
 		format	"20 100"
 	}
 
