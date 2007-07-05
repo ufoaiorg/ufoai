@@ -354,3 +354,74 @@ menu sequence
 		cmd		seq_end;
 	}
 }
+
+// ==================
+// TIP OF THE DAY
+// ==================
+menu popup_tipoftheday
+{
+	pic back
+	{
+		image	menu/popup_alpha
+		pos		"30 450"
+		blend	true
+	}
+
+	string title
+	{
+		string	"_Tip of the day"
+		pos		"286 474"
+		font	f_big
+		align uc
+	}
+
+	checkbox activate
+	{
+		cvar	"*cvar cl_showTipOfTheDay"
+		pos	"74 650"
+		align	ul
+	}
+	string activate_string
+	{
+		string	"_Show tip of the day"
+		pos		"96 650"
+		font	f_small
+		align ul
+	}
+
+	text popup_tipoftheday_text
+	{
+		pos		"64 514"
+		size	"444 120"
+		format	"20 150"
+		num	7
+		click	{ }
+		wheel
+		height	6
+	}
+
+	pic bt_next
+	{
+		tooltip	"_Next"
+		image	menu/multi_buttons3
+		texh	"180 64"
+		texl	"0 32"
+		pos		"304 644"
+		out		{ *string_next color "0 0.5 0 1" *bt_next image menu/multi_buttons3 }
+		in		{ *string_next color "1 1 1 1" *bt_next image menu/multi_buttons3a }
+		click	{ cmd "tipoftheday;" }
+	}
+	string string_next
+	{
+		font	f_menu
+		color	"0 0.5 0 1"
+		string	"_Next"
+		pos		"390 660"
+		align	cc
+	}
+
+	func init
+	{
+		cmd "tipoftheday random;"
+	}
+}
