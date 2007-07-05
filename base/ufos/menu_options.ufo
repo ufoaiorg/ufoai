@@ -166,141 +166,28 @@ menu options_video
 		}
 	}
 
-	string full_str
-	{
-		string	"_Fullscreen:"
-		pos		"500 170"
-	}
-	string full_value
-	{
-		string	"*cvar mn_fullscreen"
-		pos		"840 170"
-		align	ur
-	}
-	pic full_dec
-	{
-		image	menu/buttons_small
-		pos		"868 174"
-		texl	"0 0"
-		texh	"16 16"
-		mousefx	true
-		click
-		{
-			cmd "mn_modifywrap vid_fullscreen -1 0 1;"
-			cmd "mn_translate vid_fullscreen mn_fullscreen 0:No,1:Yes;"
-		}
-	}
-	pic full_inc
-	{
-		image	menu/buttons_small
-		pos		"884 174"
-		texl	"16 0"
-		texh	"32 16"
-		mousefx	true
-		click
-		{
-			cmd "mn_modifywrap vid_fullscreen +1 0 1;"
-			cmd "mn_translate vid_fullscreen mn_fullscreen 0:No,1:Yes;"
-		}
-	}
-
-	string compression_str
-	{
-		string	"_Texture compression:"
-		pos		"500 200"
-	}
-	string compression_value
-	{
-		string	"*cvar mn_compression"
-		pos		"840 200"
-		align	ur
-	}
-	pic compression_dec
-	{
-		image	menu/buttons_small
-		pos		"868 204"
-		texl	"0 0"
-		texh	"16 16"
-		mousefx	true
-		click
-		{
-			cmd "mn_modifywrap gl_ext_texture_compression -1 0 1;"
-			cmd "mn_translate gl_ext_texture_compression mn_compression 0:No,1:Yes;"
-		}
-	}
-	pic compression_inc
-	{
-		image	menu/buttons_small
-		pos		"884 204"
-		texl	"16 0"
-		texh	"32 16"
-		mousefx	true
-		click
-		{
-			cmd "mn_modifywrap gl_ext_texture_compression +1 0 1;"
-			cmd "mn_translate gl_ext_texture_compression mn_compression 0:No,1:Yes;"
-		}
-	}
-
 	string texres_str
 	{
 		string	"_Texture resolution cap:"
-		pos		"500 230"
+		pos		"500 165"
 	}
-
-	string fps_str
-	{
-		string	"_Show FPS:"
-		pos		"500 260"
-	}
-	string fps_value
-	{
-		string	"*cvar mn_fps"
-		pos		"840 260"
-		align	ur
-	}
-	pic fps_dec
-	{
-		image	menu/buttons_small
-		pos		"868 264"
-		texl	"0 0"
-		texh	"16 16"
-		mousefx	true
-		click
-		{
-			cmd "mn_modifywrap cl_fps -1 0 1;"
-			cmd "mn_translate cl_fps mn_fps 0:No,1:Yes;"
-		}
-	}
-	pic fps_inc
-	{
-		image	menu/buttons_small
-		pos		"884 264"
-		texl	"16 0"
-		texh	"32 16"
-		mousefx	true
-		click
-		{
-			cmd "mn_modifywrap cl_fps +1 0 1;"
-			cmd "mn_translate cl_fps mn_fps 0:No,1:Yes;"
-		}
-	}
+	// select box is defined at the bottom - due to shine through on hovering
 
 	string aniso_str
 	{
 		string	"_Texture anisotropy level:"
-		pos		"500 290"
+		pos		"500 190"
 	}
 	string aniso_value
 	{
 		string	"*cvar r_anisotropic"
-		pos		"840 290"
+		pos		"840 190"
 		align	ur
 	}
 	pic aniso_dec
 	{
 		image	menu/buttons_small
-		pos		"868 294"
+		pos		"868 194"
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
@@ -309,201 +196,107 @@ menu options_video
 	pic aniso_inc
 	{
 		image	menu/buttons_small
-		pos		"884 294"
+		pos		"884 194"
 		texl	"16 0"
 		texh	"32 16"
 		mousefx	true
 		click	{ cmd "mn_modify r_anisotropic +1 0 16;" }
 	}
 
+	string fullscreen_str
+	{
+		string	"_Fullscreen:"
+		pos		"500 215"
+	}
+	checkbox fullscreen
+	{
+		cvar	"*cvar vid_fullscreen"
+		pos		"840 215"
+		align	ur
+	}
+
+	string compression_str
+	{
+		string	"_Texture compression:"
+		pos		"500 240"
+	}
+	checkbox compression
+	{
+		cvar	"*cvar gl_ext_texture_compression"
+		pos		"840 240"
+		align	ur
+	}
+
+	string fps_str
+	{
+		string	"_Show FPS:"
+		pos		"500 265"
+	}
+	checkbox fps
+	{
+		cvar	"*cvar cl_fps"
+		pos		"840 265"
+		align	ur
+	}
+
 	string lod_str
 	{
 		string	"_Texture Lod:"
-		pos		"500 320"
+		pos		"500 290"
 	}
-	string lod_value
+	checkbox lod
 	{
-		string	"*cvar mn_lod"
-		pos		"840 320"
+		cvar	"*cvar r_texture_lod"
+		pos		"840 290"
 		align	ur
-	}
-	pic lod_dec
-	{
-		image	menu/buttons_small
-		pos		"868 324"
-		texl	"0 0"
-		texh	"16 16"
-		mousefx	true
-		click
-		{
-			cmd "mn_modify r_texture_lod -1 0 1;"
-			cmd "mn_translate r_texture_lod mn_lod 0:No,1:Yes;"
-		}
-	}
-	pic lod_inc
-	{
-		image	menu/buttons_small
-		pos		"884 324"
-		texl	"16 0"
-		texh	"32 16"
-		mousefx	true
-		click
-		{
-			cmd "mn_modify r_texture_lod +1 0 1;"
-			cmd "mn_translate r_texture_lod mn_lod 0:No,1:Yes;"
-		}
 	}
 
 	string imagefilter_str
 	{
 		string	"_Image Filter:"
-		pos		"500 350"
+		pos		"500 315"
 	}
-	string imagefilter_value
+	checkbox imagefilter
 	{
-		string	"*cvar mn_imagefilter"
-		pos		"840 350"
+		cvar	"*cvar gl_imagefilter"
+		pos		"840 315"
 		align	ur
-	}
-	pic imagefilter_dec
-	{
-		image	menu/buttons_small
-		pos		"868 354"
-		texl	"0 0"
-		texh	"16 16"
-		mousefx	true
-		click
-		{
-			cmd "mn_modify gl_imagefilter -1 0 1;"
-			cmd "mn_translate gl_imagefilter mn_imagefilter 0:No,1:Yes;"
-		}
-	}
-	pic imagefilter_inc
-	{
-		image	menu/buttons_small
-		pos		"884 354"
-		texl	"16 0"
-		texh	"32 16"
-		mousefx	true
-		click
-		{
-			cmd "mn_modify gl_imagefilter +1 0 1;"
-			cmd "mn_translate gl_imagefilter mn_imagefilter 0:No,1:Yes;"
-		}
 	}
 
 	string isomode_str
 	{
 		string	"_Isometric Mode:"
-		pos		"500 380"
+		pos		"500 340"
 	}
-	string isomode_value
+	checkbox isomode
 	{
-		string	"*cvar mn_isomode"
-		pos		"840 380"
+		cvar	"*cvar r_isometric"
+		pos		"840 340"
 		align	ur
-	}
-	pic isomode_dec
-	{
-		image	menu/buttons_small
-		pos		"868 384"
-		texl	"0 0"
-		texh	"16 16"
-		mousefx	true
-		click
-		{
-			cmd "mn_modify r_isometric -1 0 1;"
-			cmd "mn_translate r_isometric mn_isomode 0:No,1:Yes;"
-		}
-	}
-	pic isomode_inc
-	{
-		image	menu/buttons_small
-		pos		"884 384"
-		texl	"16 0"
-		texh	"32 16"
-		mousefx	true
-		click
-		{
-			cmd "mn_modify r_isometric +1 0 1;"
-			cmd "mn_translate r_isometric mn_isomode 0:No,1:Yes;"
-		}
 	}
 
 	string multitex_str
 	{
 		string	"_Multitexturing:"
-		pos		"500 410"
+		pos		"500 375"
 	}
-	string multitex_value
+	checkbox multitex
 	{
-		string	"*cvar mn_ext_multitexture"
-		pos		"840 410"
+		cvar	"*cvar gl_ext_multitexture"
+		pos		"840 375"
 		align	ur
-	}
-	pic multitex_dec
-	{
-		image	menu/buttons_small
-		pos		"868 414"
-		texl	"0 0"
-		texh	"16 16"
-		mousefx	true
-		click
-		{
-			cmd "mn_modify gl_ext_multitexture -1 0 1;"
-			cmd "mn_translate gl_ext_multitexture mn_ext_multitexture 0:No,1:Yes;"
-		}
-	}
-	pic multitex_inc
-	{
-		image	menu/buttons_small
-		pos		"884 414"
-		texl	"16 0"
-		texh	"32 16"
-		mousefx	true
-		click
-		{
-			cmd "mn_modify gl_ext_multitexture +1 0 1;"
-			cmd "mn_translate gl_ext_multitexture mn_ext_multitexture 0:No,1:Yes;"
-		}
 	}
 
 	string ptlweather_str
 	{
 		string	"_Weather effects:"
-		pos		"500 440"
+		pos		"500 400"
 	}
-	string ptlweather_value
+	checkbox ptlweather
 	{
-		string	"*cvar mn_particleweather"
-		pos		"840 440"
+		cvar	"*cvar cl_particleweather"
+		pos		"840 400"
 		align	ur
-	}
-	pic ptlweather_dec
-	{
-		image	menu/buttons_small
-		pos		"868 444"
-		texl	"0 0"
-		texh	"16 16"
-		mousefx	true
-		click
-		{
-			cmd "mn_modify cl_particleweather -1 0 1;"
-			cmd "mn_translate cl_particleweather mn_particleweather 0:No,1:Yes;"
-		}
-	}
-	pic ptlweather_inc
-	{
-		image	menu/buttons_small
-		pos		"884 444"
-		texl	"16 0"
-		texh	"32 16"
-		mousefx	true
-		click
-		{
-			cmd "mn_modify cl_particleweather +1 0 1;"
-			cmd "mn_translate cl_particleweather mn_particleweather 0:No,1:Yes;"
-		}
 	}
 
 	string gamma_str
@@ -532,7 +325,7 @@ menu options_video
 	selectbox texres_box
 	{
 		image	"menu/selectbox_green"
-		pos	"774 232"
+		pos	"774 167"
 		size	"100 20"
 		color	"0.6 0.6 0.6 0.3"
 		cvar	"*cvar gl_maxtexres"
@@ -581,14 +374,6 @@ menu options_video
 	func init
 	{
 		cmd "copy mn_glmode gl_mode;"
-		cmd "mn_translate cl_particleweather mn_particleweather 0:No,1:Yes;"
-		cmd "mn_translate vid_fullscreen mn_fullscreen 0:No,1:Yes;"
-		cmd "mn_translate cl_fps mn_fps 0:No,1:Yes;"
-		cmd "mn_translate gl_imagefilter mn_imagefilter 0:No,1:Yes;"
-		cmd "mn_translate r_texture_lod mn_lod 0:No,1:Yes;"
-		cmd "mn_translate r_isometric mn_isomode 0:No,1:Yes;"
-		cmd "mn_translate gl_ext_texture_compression mn_compression 0:No,1:Yes;"
-		cmd "mn_translate gl_ext_multitexture mn_ext_multitexture 0:No,1:Yes;"
 	}
 	func close
 	{
@@ -913,8 +698,8 @@ menu options_game
 		tooltip	"_No confirmation before walking and shooting"
 		click
 		{
-			cmd "mn_modify confirm_actions -1 0 1;"
-			cmd "mn_translate confirm_actions mn_confirm_actions 0:No,1:Yes,2:Only moving;"
+			cmd "mn_modify confirm_actions -1 0 2;"
+			cmd "mn_translate confirm_actions mn_confirm_actions 0:No,1:Yes,2:Moving;"
 		}
 	}
 	pic confirm_inc
@@ -927,51 +712,8 @@ menu options_game
 		tooltip	"_Confirmation needed before walking and shooting"
 		click
 		{
-			cmd "mn_modify confirm_actions +1 0 1;"
-			cmd "mn_translate confirm_actions mn_confirm_actions 0:No,1:Yes,2:Only moving;"
-		}
-	}
-
-	// ===================
-	// PRECACHE
-	// ===================
-	string precache_str
-	{
-		string	"_Precache images and models:"
-		pos		"500 180"
-	}
-	string precache_value
-	{
-		string	"*cvar mn_precache"
-		pos		"840 180"
-		align	ur
-	}
-	pic precache_dec
-	{
-		image	menu/buttons_small
-		pos		"868 184"
-		texl	"0 0"
-		texh	"16 16"
-		mousefx	true
-		tooltip	"_Don't precache - images and models are loaded on the fly"
-		click
-		{
-			cmd "mn_modify cl_precache -1 0 1;"
-			cmd "mn_translate cl_precache mn_precache 0:No,1:Yes;"
-		}
-	}
-	pic precache_inc
-	{
-		image	menu/buttons_small
-		pos		"884 184"
-		texl	"16 0"
-		texh	"32 16"
-		mousefx	true
-		tooltip	"_Precache images and models (faster menus)"
-		click
-		{
-			cmd "mn_modify cl_precache +1 0 1;"
-			cmd "mn_translate cl_precache mn_precache 0:No,1:Yes;"
+			cmd "mn_modify confirm_actions +1 0 2;"
+			cmd "mn_translate confirm_actions mn_confirm_actions 0:No,1:Yes,2:Moving;"
 		}
 	}
 
@@ -981,18 +723,18 @@ menu options_game
 	string hud_str
 	{
 		string	"_HUD Design:"
-		pos		"500 205"
+		pos		"500 180"
 	}
 	string hud_value
 	{
 		string	"*cvar mn_hud"
-		pos		"840 205"
+		pos		"840 180"
 		align	ur
 	}
 	pic hud_dec
 	{
 		image	menu/buttons_small
-		pos		"868 209"
+		pos		"868 184"
 		texl	"0 0"
 		texh	"16 16"
 		mousefx	true
@@ -1002,12 +744,28 @@ menu options_game
 	pic hud_inc
 	{
 		image	menu/buttons_small
-		pos		"884 209"
+		pos		"884 184"
 		texl	"16 0"
 		texh	"32 16"
 		mousefx	true
 		tooltip	"_Choose another hud"
 		click	{ cmd "mn_modifystring mn_hud +1 hud:althud;" }
+	}
+
+	// ===================
+	// PRECACHE
+	// ===================
+	string precache_str
+	{
+		string	"_Precache images and models:"
+		pos		"500 205"
+	}
+	checkbox precache
+	{
+		cvar	"*cvar cl_precache"
+		pos		"840 205"
+		align	ur
+		tooltip	"_Precache images and models (faster menus)"
 	}
 
 	// ===================
@@ -1018,39 +776,12 @@ menu options_game
 		string	"_Tooltips:"
 		pos		"500 230"
 	}
-	string tooltip_value
+	checkbox tooltip
 	{
-		string	"*cvar mn_show_tooltips"
+		cvar	"*cvar cl_show_tooltips"
 		pos		"840 230"
 		align	ur
-	}
-	pic tooltip_dec
-	{
-		image	menu/buttons_small
-		pos		"868 234"
-		texl	"0 0"
-		texh	"16 16"
-		mousefx	true
-		tooltip	"_Deactivates tooltips"
-		click
-		{
-			cmd "mn_modify cl_show_tooltips -1 0 1;"
-			cmd "mn_translate cl_show_tooltips mn_show_tooltips 0:No,1:Yes;"
-		}
-	}
-	pic tooltip_inc
-	{
-		image	menu/buttons_small
-		pos		"884 234"
-		texl	"16 0"
-		texh	"32 16"
-		mousefx	true
 		tooltip	"_Activates tooltips"
-		click
-		{
-			cmd "mn_modify cl_show_tooltips +1 0 1;"
-			cmd "mn_translate cl_show_tooltips mn_show_tooltips 0:No,1:Yes;"
-		}
 	}
 
 	// ===================
@@ -1061,39 +792,12 @@ menu options_game
 		string	"_Centre view:"
 		pos		"500 255"
 	}
-	string centerview_value
+	checkbox centerview_value
 	{
-		string	"*cvar mn_centerview"
+		cvar	"*cvar cl_centerview"
 		pos		"840 255"
 		align	ur
-	}
-	pic centerview_dec
-	{
-		image	menu/buttons_small
-		pos		"868 259"
-		texl	"0 0"
-		texh	"16 16"
-		mousefx	true
-		tooltip	"_No centring at soldier selecting, shooting and appearing"
-		click
-		{
-			cmd "mn_modify cl_centerview -1 0 1;"
-			cmd "mn_translate cl_centerview mn_centerview 0:No,1:Yes;"
-		}
-	}
-	pic centerview_inc
-	{
-		image	menu/buttons_small
-		pos		"884 259"
-		texl	"16 0"
-		texh	"32 16"
-		mousefx	true
 		tooltip	"_Centring at soldier selecting, shooting and appearing"
-		click
-		{
-			cmd "mn_modify cl_centerview +1 0 1;"
-			cmd "mn_translate cl_centerview mn_centerview 0:No,1:Yes;"
-		}
 	}
 
 	// ===================
@@ -1104,39 +808,12 @@ menu options_game
 		string	"_Cursor tooltips:"
 		pos		"500 280"
 	}
-	string c_tooltip_value
+	checkbox c_tooltip
 	{
-		string	"*cvar mn_show_cursor_tooltips"
+		cvar	"*cvar cl_show_cursor_tooltips"
 		pos		"840 280"
 		align	ur
-	}
-	pic c_tooltip_dec
-	{
-		image	menu/buttons_small
-		pos		"868 284"
-		texl	"0 0"
-		texh	"16 16"
-		mousefx	true
-		tooltip	"_Deactivates cursor tooltips"
-		click
-		{
-			cmd "mn_modify cl_show_cursor_tooltips -1 0 1;"
-			cmd "mn_translate cl_show_cursor_tooltips mn_show_cursor_tooltips 0:No,1:Yes;"
-		}
-	}
-	pic c_tooltip_inc
-	{
-		image	menu/buttons_small
-		pos		"884 284"
-		texl	"16 0"
-		texh	"32 16"
-		mousefx	true
 		tooltip	"_Activates cursor tooltips"
-		click
-		{
-			cmd "mn_modify cl_show_cursor_tooltips +1 0 1;"
-			cmd "mn_translate cl_show_cursor_tooltips mn_show_cursor_tooltips 0:No,1:Yes;"
-		}
 	}
 
 	// =====================
@@ -1147,57 +824,79 @@ menu options_game
 		string	"_3D Geoscape:"
 		pos		"500 305"
 	}
-	string 3dmap_value
+	checkbox 3dmap
 	{
-		string	"*cvar mn_3dmap"
+		cvar	"*cvar cl_3dmap"
 		pos		"840 305"
 		align	ur
-	}
-	pic 3dmap_dec
-	{
-		image	menu/buttons_small
-		pos		"868 309"
-		texl	"0 0"
-		texh	"16 16"
-		mousefx	true
-		tooltip	"_Use 2D geoscape"
-		click
-		{
-			cmd "mn_modify cl_3dmap -1 0 1;"
-			cmd "mn_translate cl_3dmap mn_3dmap 0:No,1:Yes;"
-		}
-	}
-	pic 3dmap_inc
-	{
-		image	menu/buttons_small
-		pos		"884 309"
-		texl	"16 0"
-		texh	"32 16"
-		mousefx	true
 		tooltip	"_Use 3D geoscape"
-		click
-		{
-			cmd "mn_modify cl_3dmap +1 0 1;"
-			cmd "mn_translate cl_3dmap mn_3dmap 0:No,1:Yes;"
-		}
+	}
+
+	// =====================
+	// TIP OF THE DAY
+	// =====================
+	string tipoftheday_string
+	{
+		string	"_Show tip of the day"
+		pos		"500 330"
+		font	f_small
+		align ul
+	}
+	checkbox tipoftheday
+	{
+		cvar	"*cvar cl_showTipOfTheDay"
+		pos	"840 330"
+		align	ur
+	}
+
+	// =====================
+	// START WITH EMPLOYEES
+	// =====================
+	string start_employees_str
+	{
+		string	"_Start with employees:"
+		pos		"500 355"
+	}
+	checkbox start_employees
+	{
+		cvar	"*cvar cl_start_employees"
+		pos		"840 355"
+		align	ur
+		tooltip	"_Employees already hired at campaign start"
+	}
+
+	// =====================
+	// START WITH BUILDINGS
+	// =====================
+	string start_buildings_str
+	{
+		string	"_Start with buildings:"
+		pos		"500 380"
+	}
+	checkbox start_building
+	{
+		cvar	"*cvar cl_start_buildings"
+		pos		"840 380"
+		align	ur
+		tooltip	"_Buildings already built in the initial base"
 	}
 
 	// ===================
-	// CAMERA
+	// CAMERA SPEED
 	// ===================
 	string camspeed_str
 	{
 		string	"_Camera Scroll:"
-		pos		"500 330"
+		pos		"500 405"
 	}
 	pic camspeed_rahmen
 	{
 		image	menu/bar_rahmen
-		pos		"659 335"
+		pos		"659 410"
 	}
 	bar camspeed_bar
 	{
-		pos		"668 340"
+		pos		"668 415"
 		size	"245 6"
 		color	"0 .8 0 1"
 		current	"*cvar cl_cammovespeed"
@@ -1207,19 +906,23 @@ menu options_game
 		mousefx	true
 		click	{ }
 	}
+
+	// ===================
+	// CAMERA ROTATION
+	// ===================
 	string camrot_str
 	{
 		string	"_Camera Rotation:"
-		pos		"500 350"
+		pos		"500 430"
 	}
 	pic camrot_rahmen
 	{
 		image	menu/bar_rahmen
-		pos		"659 355"
+		pos		"659 435"
 	}
 	bar camrot_bar
 	{
-		pos		"668 360"
+		pos		"668 440"
 		size	"245 6"
 		color	"0 .8 0 1"
 		current	"*cvar cl_camrotspeed"
@@ -1228,92 +931,6 @@ menu options_game
 		align	ul
 		mousefx	true
 		click	{ }
-	}
-
-	// =====================
-	// START WITH EMPLOYEES
-	// =====================
-	string start_employees_str
-	{
-		string	"_Start with employees:"
-		pos		"500 375"
-	}
-	string start_employees_value
-	{
-		string	"*cvar mn_start_employees"
-		pos		"840 375"
-		align	ur
-	}
-	pic start_employees_dec
-	{
-		image	menu/buttons_small
-		pos		"868 379"
-		texl	"0 0"
-		texh	"16 16"
-		mousefx	true
-		tooltip	"_No employees hired at campaign start"
-		click
-		{
-			cmd "mn_modify cl_start_employees -1 0 1;"
-			cmd "mn_translate cl_start_employees mn_start_employees 0:No,1:Yes;"
-		}
-	}
-	pic start_employees_inc
-	{
-		image	menu/buttons_small
-		pos		"884 379"
-		texl	"16 0"
-		texh	"32 16"
-		mousefx	true
-		tooltip	"_Employees already hired at campaign start"
-		click
-		{
-			cmd "mn_modify cl_start_employees +1 0 1;"
-			cmd "mn_translate cl_start_employees mn_start_employees 0:No,1:Yes;"
-		}
-	}
-
-	// =====================
-	// START WITH BUILDINGS
-	// =====================
-	string start_buildings_str
-	{
-		string	"_Start with buildings:"
-		pos		"500 400"
-	}
-	string start_buildings_value
-	{
-		string	"*cvar mn_start_buildings"
-		pos		"840 400"
-		align	ur
-	}
-	pic start_buildings_dec
-	{
-		image	menu/buttons_small
-		pos		"868 404"
-		texl	"0 0"
-		texh	"16 16"
-		mousefx	true
-		tooltip	"_No buildings in the initial base"
-		click
-		{
-			cmd "mn_modify cl_start_buildings -1 0 1;"
-			cmd "mn_translate cl_start_buildings mn_start_buildings 0:No,1:Yes;"
-		}
-	}
-	pic start_buildings_inc
-	{
-		image	menu/buttons_small
-		pos		"884 404"
-		texl	"16 0"
-		texh	"32 16"
-		mousefx	true
-		tooltip	"_Buildings already built in the initial base"
-		click
-		{
-			cmd "mn_modify cl_start_buildings +1 0 1;"
-			cmd "mn_translate cl_start_buildings mn_start_buildings 0:No,1:Yes;"
-		}
 	}
 
 	// ===================
@@ -1361,13 +978,6 @@ menu options_game
 
 	func init
 	{
-		cmd "mn_translate cl_precache mn_precache 0:No,1:Yes;"
-		cmd "mn_translate cl_3dmap mn_3dmap 0:No,1:Yes;"
-		cmd "mn_translate cl_start_employees mn_start_employees 0:No,1:Yes;"
-		cmd "mn_translate cl_start_buildings mn_start_buildings 0:No,1:Yes;"
-		cmd "mn_translate cl_centerview mn_centerview 0:No,1:Yes;"
-		cmd "mn_translate cl_show_tooltips mn_show_tooltips 0:No,1:Yes;"
-		cmd "mn_translate cl_show_cursor_tooltips mn_show_cursor_tooltips 0:No,1:Yes;"
-		cmd "mn_translate confirm_actions mn_confirm_actions 0:No,1:Yes;"
+		cmd "mn_translate confirm_actions mn_confirm_actions 0:No,1:Yes,2:Moving;"
 	}
 }
