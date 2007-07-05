@@ -46,6 +46,7 @@ cvar_t* cl_showTipOfTheDay;	/**< tip of the day can be deactivated */
  */
 static void CL_GetTipOfTheDay_f (void)
 {
+	static int lastOne = 0;
 	int rnd;
 	tipOfTheDay_t* tip;
 
@@ -61,9 +62,15 @@ static void CL_GetTipOfTheDay_f (void)
 		return;
 	}
 
-	rnd = rand() % tipCount;
-	tip = tipList;
+	if (Cmd_Argc() == 2) {
+		rnd = rand() % tipCount;
+		lastOne = rnd;
+	} else {
+		lastOne = (lastOne + 1) % tipCount;
+		rnd = lastOne;
+	}
 
+	tip = tipList;
 	while (rnd) {
 		tip = tip->next;
 		rnd--;

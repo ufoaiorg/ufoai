@@ -133,9 +133,9 @@ static int numSeqCmds;
 static sequence_t sequences[MAX_SEQUENCES];
 static int numSequences;
 
-static int seqTime;
-static qboolean seqLocked = qfalse; /* if a click event is triggered this is true */
-static qboolean seqEndClickLoop = qfalse; /* if the menu node the sequence is rendered in fetches a click this is true */
+static int seqTime;	/**< miliseconds the sequence is already running */
+static qboolean seqLocked = qfalse; /**< if a click event is triggered this is true */
+static qboolean seqEndClickLoop = qfalse; /**< if the menu node the sequence is rendered in fetches a click this is true */
 static int seqCmd, seqEndCmd;
 
 static seqCamera_t seqCamera;
@@ -234,7 +234,7 @@ static seq2D_t *CL_SequenceFind2D (const char *name)
  * @sa MN_PopMenu
  * @sa CL_SequenceFindEnt
  */
-void CL_SequenceRender (void)
+extern void CL_SequenceRender (void)
 {
 	entity_t ent;
 	seqCmd_t *sc;
