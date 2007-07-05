@@ -563,7 +563,7 @@ static void CL_TurnUp_f (void)
 
 
 /**
- * @brief Mouse click
+ * @brief Right mouse button is hit in menu
  */
 static void CL_RightClickDown_f (void)
 {
@@ -573,7 +573,7 @@ static void CL_RightClickDown_f (void)
 }
 
 /**
- * @brief
+ * @brief Right mouse button is freed in menu
  */
 static void CL_RightClickUp_f (void)
 {
@@ -581,7 +581,7 @@ static void CL_RightClickUp_f (void)
 }
 
 /**
- * @brief Turn button is hit
+ * @brief Middle mouse button is hit in menu
  */
 static void CL_MiddleClickDown_f (void)
 {
@@ -590,7 +590,7 @@ static void CL_MiddleClickDown_f (void)
 }
 
 /**
- * @brief
+ * @brief Middle mouse button is freed in menu
  */
 static void CL_MiddleClickUp_f (void)
 {
@@ -598,7 +598,7 @@ static void CL_MiddleClickUp_f (void)
 }
 
 /**
- * @brief
+ * @brief Left mouse button is hit in menu
  */
 static void CL_LeftClickDown_f (void)
 {
@@ -620,7 +620,7 @@ static void CL_LeftClickDown_f (void)
 }
 
 /**
- * @brief
+ * @brief Left mouse button is freed in menu
  */
 static void CL_LeftClickUp_f (void)
 {
