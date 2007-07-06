@@ -251,7 +251,7 @@ aircraft craft_ufo_harvester
 	size		4
 	weight		3
 	building	building_big_ufo_hangar
-	price		-1 // not buyable (implemented already?)
+	price		3000000
 	image		air_ufo
 	angles		"170 -30 -100"
 	scale		"1.1 0.9 1.0"
@@ -284,7 +284,7 @@ aircraft craft_ufo_carrier
 	size		4
 	weight		3
 	building	building_small_ufo_hangar
-	price		-1 // not buyable (implemented already?)
+	price		3000000
 	image		air_ufo
 	angles		"170 -30 -100"
 	scale		"1.1 0.9 1.0"
@@ -313,7 +313,7 @@ aircraft craft_ufo_supply
 	size		4
 	weight		3
 	building	building_big_ufo_hangar
-	price		-1 // not buyable (implemented already?)
+	price		3000000
 	image		air_ufo
 	angles		"170 -30 -100"
 	scale		"1.1 0.9 1.0"
@@ -342,7 +342,7 @@ aircraft craft_ufo_condor
 	size		4
 	weight		3
 	building	building_big_ufo_hangar
-	price		-1 // not buyable (implemented already?)
+	price		3000000
 	image		air_ufo
 	angles		"170 -30 -100"
 	scale		"1.1 0.9 1.0"
@@ -407,9 +407,9 @@ aircraft craft_ufo_fighter
 	scale_equip	"1.1 1.1 1.1"
 }
 
-//
-// EQUIPEMENT
-//
+// *********************************
+// EQUIPMENT
+// *********************************
 
 craftitem craft_weapon_shiva
 {

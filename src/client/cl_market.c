@@ -345,6 +345,8 @@ static void BS_BuyType_f (void)
 			return;
 		}
 		for (i = 0, j = 0, air_samp = aircraft_samples; i < numAircraft_samples; i++, air_samp++) {
+			if (air_samp->type == AIRCRAFT_UFO || air_samp->price == -1)
+				continue;
 			tech = RS_GetTechByProvided(air_samp->id);
 			assert(tech);
 			if (RS_Collected_(tech) || RS_IsResearched_ptr(tech)) {
