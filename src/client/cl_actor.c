@@ -3134,6 +3134,7 @@ static float lookup_erf (float z)
 		return 1.0f;
 	ifloat = floor(z * 10.0f);
 	iint = (int)ifloat;
+	assert(iint < 30);
 	return lookup[iint] + (z - ifloat / 10.0f) * lookupdiff[iint];
 }
 
