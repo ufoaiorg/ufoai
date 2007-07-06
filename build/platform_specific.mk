@@ -69,7 +69,7 @@ ifeq ($(TARGET_OS),solaris)
 	#TODO
 	CFLAGS +=
 	CLIENT_LIBS+=-lsocket -lnsl
-	SERVER_LIBS+=-lsocket
+	SERVER_LIBS+=-lsocket -lnsl
 endif
 
 #########################################################################################################################
