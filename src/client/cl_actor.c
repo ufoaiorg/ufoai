@@ -736,24 +736,24 @@ static void CL_UpdateReactionFiremodes (char hand, int actor_idx, int active_fir
 		i = Com_GetDefaultReactionFire(ammo, weap_fd_idx);
 
 		if (i >= 0) {
-			Com_Printf("CL_UpdateReactionFiremodes: DEBUG i>=0\n");
+			Com_DPrintf("CL_UpdateReactionFiremodes: DEBUG i>=0\n");
 			/* Found useable firemode for the weapon in this hand */
 			CL_SetReactionFiremode(actor_idx, handidx, ammo->weap_idx[weap_fd_idx], i);
 
 			/* Display 'useable" (blue) reaction buttons */
 			CL_DisplayPossibleReaction(cl.teamList[actor_idx]);
 		} else {
-			Com_Printf("CL_UpdateReactionFiremodes: DEBUG else (i>=0)\n");
+			Com_DPrintf("CL_UpdateReactionFiremodes: DEBUG else (i>=0)\n");
 			/* weapon in hand not RF-capable. */
 			if (CL_WeaponWithReaction(cl.teamList[actor_idx], (hand == 'r') ? 'l' : 'r')) {
 				/* The other hand has useable firemodes for RF, use it instead. */
 				CL_UpdateReactionFiremodes((hand == 'r') ? 'l' : 'r', actor_idx, -1);
 
-				Com_Printf("CL_UpdateReactionFiremodes: DEBUG inverse hand\n");
+				Com_DPrintf("CL_UpdateReactionFiremodes: DEBUG inverse hand\n");
 				/* Display 'useable" (blue) reaction buttons */
 				CL_DisplayPossibleReaction(cl.teamList[actor_idx]);
 			} else {
-				Com_Printf("CL_UpdateReactionFiremodes: DEBUG no rf-items in hands\n");
+				Com_DPrintf("CL_UpdateReactionFiremodes: DEBUG no rf-items in hands\n");
 				/* No RF-capable item in either hand. */
 
 				/* Display "impossible" (red) reaction button or disable button. */
@@ -2152,10 +2152,10 @@ void CL_InvCheckHands (sizebuf_t * sb)
 	/* ... ELSE  (not sane and/or not useable) */
 	/* Update the changed hand with default firemode. */
 	if (hand == 0) {
-		Com_Printf("CL_InvCheckHands: DEBUG right\n");
+		Com_DPrintf("CL_InvCheckHands: DEBUG right\n");
 		CL_UpdateReactionFiremodes('r', actor_idx, -1);
 	} else {
-		Com_Printf("CL_InvCheckHands: DEBUG left\n");
+		Com_DPrintf("CL_InvCheckHands: DEBUG left\n");
 		CL_UpdateReactionFiremodes('l', actor_idx, -1);
 	}
 	HideFiremodes();
