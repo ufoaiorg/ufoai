@@ -46,20 +46,6 @@ static	DIR	*gSysFindDir;
 
 #pragma mark -
 
-
-/**
- * @brief
- */
-char* strlwr (char *s)
-{
-	char* origs = s;
-	while (*s) {
-		*s = tolower(*s);
-		s++;
-	}
-	return origs;
-}
-
 /**
  * @brief
  */

@@ -66,19 +66,6 @@ void Sys_Mkdir (const char *path)
 	mkdir(path, 0777);
 }
 
-/**
- * @brief Lowers a given string
- */
-char *strlwr (char *s)
-{
-	char* origs = s;
-	while (*s) {
-		*s = (char)tolower(*s);
-		s++;
-	}
-	return origs;
-}
-
 /*============================================ */
 
 static	char	findbase[MAX_OSPATH];

@@ -497,7 +497,6 @@ extern int curtime;             /* time returned by last Sys_Milliseconds */
 
 int Sys_Milliseconds(void);
 void Sys_Mkdir(const char *path);
-char *strlwr(char *s);          /* this is non ansi and is defined for some OSs */
 
 /* directory searching */
 #define SFF_ARCH    0x01
