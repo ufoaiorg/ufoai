@@ -3285,3 +3285,33 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 
 	return qtrue;
 }
+
+/**
+ * @brief Update the storage amount and the capacities for the storages in the base
+ * @param[in] base The base which storage and capacity should be updated
+ * @param[in] objIDX The idx in csi.ods
+ * @param[in] amount Amount to be added to removed
+ * @param[in] reset Set this to true (amount is not needed) if you want to reset the
+ * storage amount and capacities (e.g. in case of a base ransack)
+ * @sa CL_BaseRansacked
+ */
+extern qboolean B_UpdateStorageAndCapacity (base_t* base, int objIDX, int amount, qboolean reset)
+{
+	assert(base);
+	if (reset) {
+		base->storage.num[objIDX] = 0;
+		base->storage.num_loose[objIDX] = 0; /* FIXME: needed? */
+		base->capacities[CAP_ITEMS].cur = 0;
+	} else {
+		if (base->capacities[CAP_ITEMS].max - base->capacities[CAP_ITEMS].cur >= csi.ods[objIDX].size) {
+			base->storage.num[objIDX] += amount;
+			/* Items not researched cannot be thrown out even if not enough space in storage. */
+			base->capacities[CAP_ITEMS].cur += (amount * csi.ods[objIDX].size);
+		} else {
+			Com_DPrintf("B_UpdateStorageAndCapacity: Not enough storage space (item: %i, amount: %i)\n", objIDX, amount);
+			return qfalse;
+		}
+	}
+
+	return qtrue;
+}

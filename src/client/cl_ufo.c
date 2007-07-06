@@ -378,6 +378,7 @@ extern void UFO_Recovery (void)
 			od = &csi.ods[item];
 			assert(od);
 			/* Process UFO recovery. */
+			/* FIXME: call B_UpdateStorageAndCapacity here, too? */
 			base->storage.num[item]++;	/* Add dummy UFO item to enable research topic. */
 			RS_MarkCollected(od->tech);	/* Enable research topic. */
 			/* Reset this recovery. */

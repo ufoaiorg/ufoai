@@ -1049,10 +1049,9 @@ static void CL_BaseRansacked (base_t *base)
 	E_DeleteAllEmployees(base);
 
 	/* Destroy all items in storage */
-	for (item = 0; item < csi.numODs; item++) {
-		base->storage.num[item] = 0;
-		base->storage.num_loose[item] = 0;
-	}
+	for (item = 0; item < csi.numODs; item++)
+		/* reset storage and capacity */
+		B_UpdateStorageAndCapacity(base, item, 0, qtrue);
 
 	/* Remove all aircrafts from the base. */
 	for (ac = base->numAircraftInBase-1; ac >= 0; ac--)
@@ -2597,12 +2596,13 @@ static void CL_DebugAllItems_f (void)
 	for (i = 0; i < csi.numODs; i++) {
 		if (!csi.ods[i].weapon && !csi.ods[i].numWeapons)
 			continue;
-		tech = csi.ods[i].tech;
-		if (!tech)
-			Sys_Error("CL_DebugAllItems_f: No tech for %s / %s\n", csi.ods[i].id, csi.ods[i].name);
-		base->storage.num[i]++;
-		if (base->storage.num[i] > 0)
+		B_UpdateStorageAndCapacity(base, i, 1, qfalse);
+		if (base->storage.num[i] > 0) {
+			tech = csi.ods[i].tech;
+			if (!tech)
+				Sys_Error("CL_DebugAllItems_f: No tech for %s / %s\n", csi.ods[i].id, csi.ods[i].name);
 			RS_MarkCollected(tech);
+		}
 	}
 }
 

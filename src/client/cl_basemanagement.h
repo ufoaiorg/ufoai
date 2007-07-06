@@ -300,6 +300,7 @@ qboolean B_CheckBuildingTypeStatus(const base_t* const base, buildingType_t type
 void B_BuildingDestroy(building_t* building, base_t* base);
 void CL_DropshipReturned(base_t* base, aircraft_t* aircraft);
 
-void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base);
+void B_UpdateBaseCapacities(baseCapacities_t cap, base_t *base);
+qboolean B_UpdateStorageAndCapacity(base_t* base, int objIDX, int amount, qboolean reset);
 
 #endif /* CLIENT_CL_BASEMANGEMENT_H */

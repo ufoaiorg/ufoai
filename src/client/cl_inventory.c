@@ -286,9 +286,8 @@ void INV_SellOrAddItems (aircraft_t *aircraft)
 			Sys_Error("INV_SellOrAddItems: No tech for %s / %s\n", csi.ods[cargo[i].idx].id, csi.ods[cargo[i].idx].name);
 		/* If the related technology is NOT researched, don't sell items. */
 		if (!RS_IsResearched_ptr(tech)) {
-			base->storage.num[cargo[i].idx] += cargo[i].amount;
 			/* Items not researched cannot be thrown out even if not enough space in storage. */
-			base->capacities[CAP_ITEMS].cur += (cargo[i].amount * csi.ods[cargo[i].idx].size);
+			B_UpdateStorageAndCapacity(base, cargo[i].idx, cargo[i].amount, qfalse);
 			if (cargo[i].amount > 0)
 				RS_MarkCollected(tech);
 			continue;
@@ -303,11 +302,7 @@ void INV_SellOrAddItems (aircraft_t *aircraft)
 				/* Check whether there is enough space for adding this item. */
 				/* If yes - add. If not - sell. */
 				for (j = 0; j < cargo[i].amount; j++) {
-					if (base->capacities[CAP_ITEMS].max - base->capacities[CAP_ITEMS].cur >= csi.ods[cargo[i].idx].size) {
-						/* There is a space, add to base storage and increase capacity. */
-						base->storage.num[cargo[i].idx]++;
-						base->capacities[CAP_ITEMS].cur += csi.ods[cargo[i].idx].size;
-					} else {
+					if (!B_UpdateStorageAndCapacity(base, cargo[i].idx, 1, qfalse)) {
 						/* Not enough space, sell item. */
 						notenoughspace = qtrue;
 						sold++;
@@ -397,7 +392,7 @@ extern void INV_InitialEquipment (base_t *base)
 		base->storage = *ed;
 
 	/* Initial soldiers and their equipment. */
-	if (cl_start_employees->value) {
+	if (cl_start_employees->integer) {
 		Cbuf_AddText("assign_initial;");
 	} else {
 		for (i = 0, ed = csi.eds; i < csi.numEDs; i++, ed++) {
@@ -408,15 +403,14 @@ extern void INV_InitialEquipment (base_t *base)
 			Com_DPrintf("B_BuildBase_f: Initial Phalanx equipment %s not found.\n", eqname);
 		} else {
 			for (i = 0; i < csi.numODs; i++)
-				base->storage.num[i] += ed->num[i] / 5;
+				B_UpdateStorageAndCapacity(base, i, ed->num[i] / 5, qfalse);
 		}
 	}
 
 	/* Pay for the initial equipment as well as update storage capacity. */
-	for (i = 0; i < csi.numODs; i++) {
+	for (i = 0; i < csi.numODs; i++)
 		price += base->storage.num[i] * csi.ods[i].price;
-		base->capacities[CAP_ITEMS].cur += base->storage.num[i] * csi.ods[i].size;
-	}
+
 	/* Finally update credits. */
 	CL_UpdateCredits(ccs.credits - price);
 }
@@ -545,6 +539,7 @@ extern int INV_DisassemblyItem (base_t *base, components_t *comp, qboolean calcu
 		size += compod->size * comp->item_amount[i];
 		/* Add to base storage only if this is real disassembling, not calculation of size. */
 		if (!calculate) {
+			/* FIXME: call B_UpdateStorageAndCapacity(base, j, comp->item_amount[i], qfalse); */
 			base->storage.num[j] += comp->item_amount[i];
 			Com_DPrintf("INV_DisassemblyItem()... added %i amounts of %s\n", comp->item_amount[i], compod->id);
 		}
