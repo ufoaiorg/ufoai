@@ -559,22 +559,23 @@ static void CL_DisplayFiremodeEntry (fireDef_t *fd, char hand, qboolean status)
 
 /**
  * @brief Returns the weapon its ammo and the firemodes-index inside the ammo for a given hand.
+ * @param[in] actor The pointer to the actor we want to get the data from.
  * @param[in] hand Which weapon(-hand) to use [l|r].
  * @param[out] weapon The weapon in the hand.
  * @param[out] ammo The ammo used in the weapon (is the same as weapon for grenades and similar).
  * @param[out] weap_fd_idx weapon_mod index in the ammo for the weapon (objDef.fd[x][])
  */
-static void CL_GetWeaponAndAmmo (char hand, objDef_t **weapon, objDef_t **ammo, int *weap_fd_idx)
+static void CL_GetWeaponAndAmmo (le_t *actor, char hand, objDef_t **weapon, objDef_t **ammo, int *weap_fd_idx)
 {
 	invList_t *invlist_weapon = NULL;
 
-	if (!selActor)
+	if (!actor)
 		return;
 
 	if (hand == 'r')
-		invlist_weapon = RIGHT(selActor);
+		invlist_weapon = RIGHT(actor);
 	else
-		invlist_weapon = LEFT(selActor);
+		invlist_weapon = LEFT(actor);
 
 	if (!invlist_weapon || invlist_weapon->item.t == NONE)
 		return;
@@ -593,6 +594,99 @@ static void CL_GetWeaponAndAmmo (char hand, objDef_t **weapon, objDef_t **ammo, 
 }
 
 /**
+ * @brief Checks if a there is a weapon in the hand that can be used for reaction fire.
+ * @param[in] actor What actor to check.
+ * @param[in] hand Which hand to check: 'l' for left hand, 'r' for right hand.
+ */
+static qboolean CL_WeaponWithReaction (le_t *actor, char hand)
+{
+	objDef_t *ammo = NULL;
+	objDef_t *weapon = NULL;
+	int weap_fd_idx = -1;
+	int i;
+
+	/* Get ammo and weapon-index in ammo. */
+	CL_GetWeaponAndAmmo(actor, hand, &weapon, &ammo, &weap_fd_idx);
+
+	if (weap_fd_idx == -1) {
+		Com_DPrintf("CL_WeaponWithReaction: No weapondefinition in ammo found\n");
+		return qfalse;
+	}
+
+	if (!weapon || !ammo)
+		return qfalse;
+
+	/* check ammo for reaction-enabled firemodes */
+	for (i = 0; i < ammo->numFiredefs[weap_fd_idx]; i++) {
+		if (ammo->fd[weap_fd_idx][i].reaction) {
+			return qtrue;
+		}
+	}
+
+	return qfalse;
+}
+
+/**
+ * @brief Display 'useable" (blue) reaction buttons.
+ * @param[in] actor the actor to check for his reaction state.
+ */
+static void CL_DisplayPossibleReaction (le_t *actor)
+{
+	if (!actor)
+		return;
+	
+	if (actor != selActor) {
+		Com_DPrintf("CL_DisplayPossibleReaction: Something went wront, given actor does not equal the currently selectd actor!\n");
+		return;
+	}
+
+	/* Display 'useable" (blue) reaction buttons
+	 * Code also used in CL_ActorToggleReaction_f */
+	switch (CL_GetReactionState(actor)) {
+	case R_FIRE_ONCE:
+		Cbuf_AddText("startreactiononce\n");
+		break;
+	case R_FIRE_MANY:
+		Cbuf_AddText("startreactionmany\n");
+		break;
+	default:
+		break;
+	}
+}
+
+/**
+ * @brief Display 'impossible" (red) reaction buttons.
+ * @param[in] actor the actor to check for his reaction state.
+ * @return qtrue if "turn rf off" message was sent otherwise qfalse.
+ */
+static qboolean CL_DisplayImpossibleReaction (le_t *actor)
+{
+	if (!actor)
+		return qfalse;
+	
+	if (actor != selActor) {
+		Com_DPrintf("CL_DisplayImpossibleReaction: Something went wront, given actor does not equal the currently selectd actor!\n");
+		return qfalse;
+	}
+
+	/* Display 'impossible" (red) reaction buttons */
+	switch (CL_GetReactionState(actor)) {
+	case R_FIRE_ONCE:
+		Cbuf_AddText("startreactiononce_impos\n");
+		break;
+	case R_FIRE_MANY:
+		Cbuf_AddText("startreactionmany_impos\n");
+		break;
+	default:
+		/* Send the "turn rf off" message just in case. */
+		MSG_Write_PA(PA_STATE, actor->entnum,  ~STATE_REACTION);
+		return qtrue;
+	}
+
+	return qfalse;
+}
+
+/**
  * @brief Updates the information in reactionFiremode for the selected actor with the given data from the parameters.
  * @param[in] hand Which weapon(-hand) to use (l|r).
  * @param[in] active_firemode Set this to the firemode index you want to activate or set it to -1 if the default one (currently the first one found) should be used.
@@ -602,15 +696,25 @@ static void CL_UpdateReactionFiremodes (char hand, int actor_idx, int active_fir
 	objDef_t *weapon = NULL;
 	objDef_t *ammo = NULL;
 	int weap_fd_idx = -1;
-	int i;
+	int i = -1;
 
 	int handidx = (hand == 'r') ? 0 : 1;
 
-	CL_GetWeaponAndAmmo(hand, &weapon, &ammo, &weap_fd_idx);
-	if (weap_fd_idx == -1)
+	if (actor_idx < 0) {
+		Com_DPrintf("CL_UpdateReactionFiremodes: Invalid (negative) actor index given!\n");
 		return;
+	}
+
+	CL_GetWeaponAndAmmo(cl.teamList[actor_idx], hand, &weapon, &ammo, &weap_fd_idx);
+	
+	if (weap_fd_idx == -1) {
+		CL_DisplayImpossibleReaction(cl.teamList[actor_idx]);
+		Com_DPrintf("CL_UpdateReactionFiremodes: No weap_fd_idx found for %c hand.\n", hand);
+		return;
+	}
 
 	if (!weapon) {
+		CL_DisplayImpossibleReaction(cl.teamList[actor_idx]);
 		Com_DPrintf("CL_UpdateReactionFiremodes: No weapon found for %c hand.\n", hand);
 		return;
 	}
@@ -627,20 +731,38 @@ static void CL_UpdateReactionFiremodes (char hand, int actor_idx, int active_fir
 		return;
 	}
 
-	if (actor_idx < 0)
-		return;
-
 	if (active_firemode < 0) {
-		/* Set default reaction firemode. */
+		/* Set default reaction firemode for this hand (active_firemode=-1) */
 		i = Com_GetDefaultReactionFire(ammo, weap_fd_idx);
+
 		if (i >= 0) {
+			Com_Printf("CL_UpdateReactionFiremodes: DEBUG i>=0\n");
+			/* Found useable firemode for the weapon in this hand */
 			CL_SetReactionFiremode(actor_idx, handidx, ammo->weap_idx[weap_fd_idx], i);
+
+			/* Display 'useable" (blue) reaction buttons */
+			CL_DisplayPossibleReaction(cl.teamList[actor_idx]);
 		} else {
-			/* Send the "turn rf off" message just in case. */
-			MSG_Write_PA(PA_STATE, cl.teamList[actor_idx]->entnum, ~STATE_REACTION);
-			/* Set RF-mode info to undef. */
-			CL_SetReactionFiremode(actor_idx, -1, -1, -1);
+			Com_Printf("CL_UpdateReactionFiremodes: DEBUG else (i>=0)\n");
+			/* weapon in hand not RF-capable. */
+			if (CL_WeaponWithReaction(cl.teamList[actor_idx], (hand == 'r') ? 'l' : 'r')) {
+				/* The other hand has useable firemodes for RF, use it instead. */
+				CL_UpdateReactionFiremodes((hand == 'r') ? 'l' : 'r', actor_idx, -1);
+
+				Com_Printf("CL_UpdateReactionFiremodes: DEBUG inverse hand\n");
+				/* Display 'useable" (blue) reaction buttons */
+				CL_DisplayPossibleReaction(cl.teamList[actor_idx]);
+			} else {
+				Com_Printf("CL_UpdateReactionFiremodes: DEBUG no rf-items in hands\n");
+				/* No RF-capable item in either hand. */
+
+				/* Display "impossible" (red) reaction button or disable button. */
+				CL_DisplayImpossibleReaction(cl.teamList[actor_idx]);
+				/* Set RF-mode info to undef. */
+				CL_SetReactionFiremode(actor_idx, -1, -1, -1);
+			}
 		}
+		/* The rest of this function assumes that active_firemode is bigger than -1 ->  finish. */
 		return;
 	}
 
@@ -671,8 +793,8 @@ static void CL_UpdateReactionFiremodes (char hand, int actor_idx, int active_fir
 
 /**
  * @brief Sets the reaction-firemode of an actor/soldier to it's default value on client- and server-side.
- * @param[in] actor_idx Index of the actor to set the firemdoe for.
- * @param[in] hand Which weapon(-hand) to try first for reaction-firemdoe (r|l).
+ * @param[in] actor_idx Index of the actor to set the firemode for.
+ * @param[in] hand Which weapon(-hand) to try first for reaction-firemode (r|l).
  */
 void CL_SetDefaultReactionFiremode (int actor_idx, char hand)
 {
@@ -745,7 +867,7 @@ void CL_DisplayFiremodes_f (void)
 		return;
 	}
 
-	CL_GetWeaponAndAmmo(hand[0], &weapon, &ammo, &weap_fd_idx);
+	CL_GetWeaponAndAmmo(selActor, hand[0], &weapon, &ammo, &weap_fd_idx);
 	if (weap_fd_idx == -1)
 		return;
 
@@ -923,7 +1045,7 @@ void CL_FireWeapon_f (void)
 		return;
 	}
 
-	CL_GetWeaponAndAmmo(hand[0], &weapon, &ammo, &weap_fd_idx);
+	CL_GetWeaponAndAmmo(selActor, hand[0], &weapon, &ammo, &weap_fd_idx);
 	if (weap_fd_idx == -1)
 		return;
 
@@ -952,38 +1074,6 @@ void CL_FireWeapon_f (void)
 		Com_DPrintf("CL_FireWeapon_f: Firemode not available (%s, %s).\n", hand, ammo->fd[weap_fd_idx][firemode].name);
 		return;
 	}
-}
-
-/**
- * @brief Checks if a there is a weapon in hte hand that can be used for reaction fire.
- * @param[in] hand Which hand to check: 'l' for left hand, 'r' for right hand.
- */
-static qboolean CL_WeaponWithReaction (char hand)
-{
-	objDef_t *ammo = NULL;
-	objDef_t *weapon = NULL;
-	int weap_fd_idx = -1;
-	int i;
-
-	/* Get ammo and weapon-index in ammo. */
-	CL_GetWeaponAndAmmo(hand, &weapon, &ammo, &weap_fd_idx);
-
-	if (weap_fd_idx == -1) {
-		Com_DPrintf("CL_WeaponWithReaction: No weapondefinition in ammo found\n");
-		return qfalse;
-	}
-
-	if (!weapon || !ammo)
-		return qfalse;
-
-	/* check ammo for reaction-enabled firemodes */
-	for (i = 0; i < ammo->numFiredefs[weap_fd_idx]; i++) {
-		if (ammo->fd[weap_fd_idx][i].reaction) {
-			return qtrue;
-		}
-	}
-
-	return qfalse;
 }
 
 /**
@@ -1026,7 +1116,7 @@ static void CL_RefreshWeaponButtons (int time)
 	/* reaction-fire button */
 	if (CL_GetReactionState(selActor) == R_FIRE_OFF) {
 		if ((time >= TU_REACTION_SINGLE)
-		&& (CL_WeaponWithReaction('r') || CL_WeaponWithReaction('l')))
+		&& (CL_WeaponWithReaction(selActor, 'r') || CL_WeaponWithReaction(selActor, 'l')))
 			SetWeaponButton(BT_RIGHT_PRIMARY_REACTION, qtrue);
 		else
 			SetWeaponButton(BT_RIGHT_PRIMARY_REACTION, qfalse);
@@ -2019,7 +2109,7 @@ void CL_ActorReload (int hand)
 void CL_InvCheckHands (sizebuf_t * sb)
 {
 	int entnum;
-	le_t *le, *temp;
+	le_t *le;
 	int actor_idx = -1;
 	int hand = -1;		/**< 0=right, 1=left -1=undef*/
 	int firemode_idx = -1;
@@ -2049,10 +2139,7 @@ void CL_InvCheckHands (sizebuf_t * sb)
 
 	/* Check if current RF-selection is sane (and in the other hand) ... */
 	if (SANE_REACTION(actor_idx) && (reactionFiremode[actor_idx][RF_HAND] != hand)) {
-		temp = selActor;
-		selActor = le;	/* CL_GetWeaponAndAmmo uses selActor */
-		CL_GetWeaponAndAmmo(reactionFiremode[actor_idx][RF_HAND], &weapon, &ammo, &weap_fd_idx); /* get info about other hand */
-		selActor = temp;
+		CL_GetWeaponAndAmmo(le, reactionFiremode[actor_idx][RF_HAND], &weapon, &ammo, &weap_fd_idx); /* get info about other hand */
 
 		/* Break if the currently selected RF mode is ok. */
 		if (weapon && (weap_fd_idx >= 0)) {
@@ -2064,10 +2151,13 @@ void CL_InvCheckHands (sizebuf_t * sb)
 
 	/* ... ELSE  (not sane and/or not useable) */
 	/* Update the changed hand with default firemode. */
-	if (hand == 0)
+	if (hand == 0) {
+		Com_Printf("CL_InvCheckHands: DEBUG right\n");
 		CL_UpdateReactionFiremodes('r', actor_idx, -1);
-	else
+	} else {
+		Com_Printf("CL_InvCheckHands: DEBUG left\n");
 		CL_UpdateReactionFiremodes('l', actor_idx, -1);
+	}
 	HideFiremodes();
 }
 
@@ -2216,7 +2306,7 @@ extern void CL_ActorToggleReaction_f (void)
 		Com_Error(ERR_DROP, "Could not get current selected actor's id\n");
 
 	/* Check all hands for reaction-enabled ammo-firemodes. */
-	if (CL_WeaponWithReaction('r') || CL_WeaponWithReaction('l')) {
+	if (CL_WeaponWithReaction(selActor, 'r') || CL_WeaponWithReaction(selActor, 'l')) {
 		selActorReactionState++;
 		if (selActorReactionState > R_FIRE_MANY)
 			selActorReactionState = R_FIRE_OFF;
@@ -2252,9 +2342,9 @@ extern void CL_ActorToggleReaction_f (void)
 		/* Send request to update actor's reaction state to the server. */
 		MSG_Write_PA(PA_STATE, selActor->entnum, state);
 	} else {
-		/* Send the "turn rf off" message just in case. */
-		state = ~STATE_REACTION;
-		MSG_Write_PA(PA_STATE, selActor->entnum, state);
+		/* Display "impossible" reaction button or disable button */
+		if (CL_DisplayImpossibleReaction(selActor))
+			return;
 		/* Set RF-mode info to undef. */
 		CL_SetReactionFiremode(actor_idx, -1, -1, -1);
 	}
