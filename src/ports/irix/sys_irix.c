@@ -92,94 +92,10 @@ void Sys_Error (const char *error, ...)
 
 /**
  * @brief
- * @returns -1 if not present
- */
-int	Sys_FileTime (char *path)
-{
-	struct	stat	buf;
-
-	if (stat (path,&buf) == -1)
-		return -1;
-
-	return buf.st_mtime;
-}
-
-/**
- * @brief
  */
 void floating_point_exception_handler (int whatever)
 {
 	signal(SIGFPE, floating_point_exception_handler);
-}
-
-/*****************************************************************************/
-
-static void *game_library;
-
-/**
- * @brief
- */
-void Sys_UnloadGame (void)
-{
-	if (game_library)
-		Sys_FreeLibrary(game_library);
-	game_library = NULL;
-}
-
-/**
- * @brief Loads the game dll
- */
-game_export_t *Sys_GetGameAPI (game_import_t *parms)
-{
-#ifndef REF_HARD_LINKED
-	void	*(*GetGameAPI) (void *);
-
-	char	name[MAX_OSPATH];
-	char	curpath[MAX_OSPATH];
-	const char	*path;
-
-	setreuid(getuid(), getuid());
-	setegid(getgid());
-
-	if (game_library)
-		Com_Error(ERR_FATAL, "Sys_GetGameAPI without Sys_UnloadingGame");
-
-	getcwd(curpath, sizeof(curpath));
-
-	Com_Printf("------- Loading game.so -------");
-
-	/* now run through the search paths */
-	path = NULL;
-	while (1) {
-		path = FS_NextPath(path);
-		if (!path)
-			return NULL;		/* couldn't find one anywhere */
-		Com_sprintf(name, sizeof(name), "%s/game.so", path);
-		Com_Printf("Trying to load library (%s)\n",name);
-		game_library = dlopen(name, RTLD_NOW );
-		if (game_library) {
-			Com_DPrintf("LoadLibrary (%s)\n",name);
-			break;
-		}
-	}
-
-	GetGameAPI = (void *)dlsym(game_library, "GetGameAPI");
-	if (!GetGameAPI) {
-		Sys_UnloadGame();
-		return NULL;
-	}
-
-	return GetGameAPI(parms);
-#else
-	return (void *)GetGameAPI (parms);
-#endif
-}
-
-/**
- * @brief
- */
-void Sys_AppActivate (void)
-{
 }
 
 /**
@@ -192,47 +108,6 @@ void Sys_SendKeyEvents (void)
 
 	/* grab frame time */
 	sys_frame_time = Sys_Milliseconds();
-}
-
-/**
- * @brief
- */
-char *Sys_GetCurrentUser (void)
-{
-	struct passwd *p;
-
-	if ((p = getpwuid(getuid())) == NULL) {
-		return "player";
-	}
-	return p->pw_name;
-}
-
-/**
- * @brief
- */
-char *Sys_Cwd (void)
-{
-	static char cwd[MAX_OSPATH];
-
-	if (getcwd(cwd, sizeof(cwd) - 1) == NULL)
-		return NULL;
-	cwd[MAX_OSPATH-1] = 0;
-
-	return cwd;
-}
-
-/**
- * @brief
- */
-void Sys_NormPath (char* path)
-{
-}
-
-/**
- * @brief
- */
-void Sys_OSPath (char* path)
-{
 }
 
 /**
