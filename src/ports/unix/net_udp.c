@@ -41,7 +41,11 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <arpa/inet.h>
 
 #ifdef NeXT
-#include <libc.h>
+#  include <libc.h>
+#endif
+
+#ifdef __sun
+#  include <sys/filio.h>
 #endif
 
 static netadr_t net_local_adr;
