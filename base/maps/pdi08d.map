@@ -29097,35 +29097,35 @@
 // entity 306
 {
 "classname" "info_player_start"
-"origin" "848 -1104 228"
+"origin" "1200 -528 92"
 "team" "1"
 "angle" "-90"
 }
 // entity 307
 {
 "classname" "info_player_start"
-"origin" "816 -1008 228"
+"origin" "1168 -432 92"
 "team" "1"
-"angle" "-180"
+"angle" "180"
 }
 // entity 308
 {
 "classname" "info_player_start"
-"origin" "944 -880 228"
+"origin" "1136 -912 92"
 "team" "1"
 "angle" "180"
 }
 // entity 309
 {
 "classname" "info_player_start"
-"origin" "1040 -816 228"
+"origin" "1232 -848 92"
 "team" "1"
 "angle" "180"
 }
 // entity 310
 {
 "classname" "info_player_start"
-"origin" "1040 -944 228"
+"origin" "1232 -976 92"
 "team" "1"
 "angle" "180"
 }
