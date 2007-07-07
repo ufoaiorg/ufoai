@@ -56,7 +56,10 @@ endif
 
 ifeq ($(TARGET_OS),solaris)
 	#TODO
-	REF_GL_SRCS +=
+	REF_GL_SRCS += \
+			ports/solaris/qgl_osx.c \
+			ports/solaris/q_shsolaris.c \
+			ports/unix/glob.c
 	REF_SDL_SRCS = ports/unix/gl_sdl.c
 	REF_SDL_TARGET=ref_sdl.$(SHARED_EXT)
 endif
