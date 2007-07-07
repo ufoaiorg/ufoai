@@ -215,8 +215,8 @@ item machinegun
 	holdtwohanded	false
 	firetwohanded	true
 	shape		"0 0 5 2"
-	center		"3 0 2"
-	scale		1.25
+	center		"5.9 0 2"
+	scale		1.1
 	ammo		30
 	reload		12
 	price		8400
