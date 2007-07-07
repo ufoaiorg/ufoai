@@ -207,13 +207,13 @@ qboolean SND_Init (struct sndinfo *s)
 	mmaplen = (mmaplen + sz - 1) & ~(sz - 1);
 	if (!si->dma->buffer)
 		si->dma->buffer = (unsigned char *) mmap(NULL, mmaplen,
-			PROT_READ|PROT_WRITE, MAP_FILE|MAP_SHARED, audio_fd, 0);
+			PROT_READ|PROT_WRITE, MAP_SHARED, audio_fd, 0);
 
 	if (si->dma->buffer == MAP_FAILED) {
 		si->Com_Printf("Could not mmap dma buffer PROT_WRITE|PROT_READ\n");
 		si->Com_Printf("trying mmap PROT_WRITE (with associated better compatibility / less performance code)\n");
 		si->dma->buffer = (unsigned char *) mmap(NULL, mmaplen
-			* info.fragsize, PROT_WRITE, MAP_FILE|MAP_SHARED, audio_fd, 0);
+			* info.fragsize, PROT_WRITE, MAP_SHARED, audio_fd, 0);
 	}
 
 	if (!si->dma->buffer || si->dma->buffer == MAP_FAILED) {
