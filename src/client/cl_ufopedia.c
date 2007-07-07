@@ -519,9 +519,9 @@ extern void UP_AircraftItemDescription (int idx)
 			else if (item->stats[i] < -2.0f)
 				Q_strcat(itemText, va("%s:\t%i\n", CL_AircraftStatToName(i), (int) item->stats[i]),  sizeof(itemText));
 			else if (item->stats[i] > 1.0f)
-				Q_strcat(itemText, va("%s:\t+%i %\n", CL_AircraftStatToName(i), (int) (item->stats[i] * 100) - 100),  sizeof(itemText));
+				Q_strcat(itemText, va(_("%s:\t+%i percent\n"), CL_AircraftStatToName(i), (int) (item->stats[i] * 100) - 100),  sizeof(itemText));
 			else if (item->stats[i] > 0.00001f)
-				Q_strcat(itemText, va("%s:\t%i %\n", CL_AircraftStatToName(i), (int) (item->stats[i] * 100) - 100),  sizeof(itemText));
+				Q_strcat(itemText, va(_("%s:\t%i percent\n"), CL_AircraftStatToName(i), (int) (item->stats[i] * 100) - 100),  sizeof(itemText));
 		}
 	}
 
