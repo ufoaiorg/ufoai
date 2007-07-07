@@ -1107,7 +1107,7 @@ static void MN_Drag (const menuNode_t* const node, int x, int y)
 			dragFrom = node->mousefx;
 			dragFromX = ic->x;
 			dragFromY = ic->y;
-			CL_ItemDescription(ic->item.t);
+			UP_ItemDescription(ic->item.t);
 /*			MN_DrawTooltip("f_verysmall", _(csi.ods[dragItem.t].name), px, py, 0);*/
 		}
 	} else {

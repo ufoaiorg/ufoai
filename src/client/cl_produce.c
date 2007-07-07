@@ -492,7 +492,7 @@ static void PR_ProductionInfo (qboolean disassembly)
 					sizeof(productionInfo) );
 				Q_strcat(productionInfo, va(_("Item size\t%i\n"), od->size),
 					sizeof(productionInfo) );
-				CL_ItemDescription(objID);
+				UP_ItemDescription(objID);
 			}
 		} else {
 			Com_sprintf(productionInfo, sizeof(productionInfo), _("No item selected"));
@@ -535,7 +535,7 @@ static void PR_ProductionInfo (qboolean disassembly)
 				Q_strcat(productionInfo, "\n", sizeof(productionInfo));
 				Q_strcat(productionInfo, va(_("Disassembly time\t%ih\n"), time),
 					sizeof(productionInfo) );
-				CL_ItemDescription(objID);
+				UP_ItemDescription(objID);
 			}
 		}
 	}

@@ -203,7 +203,7 @@ static void BS_MarketClick_f (void)
 	if (buyCategory == BUY_AIRCRAFT)
 		BS_MarketAircraftDescription(buyList[num]);
 	else if (buyCategory != -1) {
-		CL_ItemDescription(buyList[num]);
+		UP_ItemDescription(buyList[num]);
 		Cvar_SetValue("mn_bs_current", buyList[num]);
 	}
 }
@@ -384,9 +384,9 @@ static void BS_BuyType_f (void)
 		else if (buyCategory != -1) {
 			/* Select current item or first one. */
 			if (Cvar_VariableInteger("mn_bs_current") > 0)
-				CL_ItemDescription(Cvar_VariableInteger("mn_bs_current"));
+				UP_ItemDescription(Cvar_VariableInteger("mn_bs_current"));
 			else
-				CL_ItemDescription(buyList[0]);
+				UP_ItemDescription(buyList[0]);
 		}
 	} else {
 		/* reset description */
@@ -425,7 +425,7 @@ static void BS_BuyItem_f (void)
 
 	item = buyList[num + buyListScrollPos];
 	Cvar_SetValue("mn_bs_current", item);
-	CL_ItemDescription(item);
+	UP_ItemDescription(item);
 	Com_DPrintf("BS_BuyItem_f: item %i\n", item);
 	for (i = 0; i < baseCurrent->buyfactor; i++) {
 		if (ccs.credits >= ccs.eMarket.ask[item] && ccs.eMarket.num[item]) {
@@ -475,7 +475,7 @@ static void BS_SellItem_f (void)
 
 	item = buyList[num + buyListScrollPos];
 	Cvar_SetValue("mn_bs_current", item);
-	CL_ItemDescription(item);
+	UP_ItemDescription(item);
 	for (i = 0; i < baseCurrent->sellfactor; i++) {
 		if (baseCurrent->storage.num[item]) {
 			/* reinit the menu */

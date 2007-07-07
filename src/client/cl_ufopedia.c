@@ -210,7 +210,7 @@ static void UP_DisplayTechTree (technology_t* t)
  * weapon and ammo stats
  * @todo Do we need to add checks for (od->type == "dummy") here somewhere?
  */
-extern void CL_ItemDescription (int item)
+extern void UP_ItemDescription (int item)
 {
 	static char itemText[MAX_SMALLMENUTEXTLEN];
 	objDef_t *od;
@@ -620,7 +620,7 @@ extern void UP_Article (technology_t* tech)
 			case RS_WEAPON:
 				for (i = 0; i < csi.numODs; i++) {
 					if (!Q_strncmp(tech->provides, csi.ods[i].id, MAX_VAR)) {
-						CL_ItemDescription(i);
+						UP_ItemDescription(i);
 						UP_DisplayTechTree(tech);
 						break;
 					}
@@ -690,7 +690,7 @@ static void UP_DrawAssociatedAmmo (technology_t* tech)
  * @sa UP_BuildingDescription
  * @sa UP_TechDescription
  * @sa UP_ArmorDescription
- * @sa CL_ItemDescription
+ * @sa UP_ItemDescription
  */
 static void UP_DrawEntry (technology_t* tech)
 {
@@ -1248,7 +1248,7 @@ static void UP_OpenMail_f (void)
 
 /**
  * @brief Increases the number of the weapon to display (for ammo) or the ammo to display (for weapon)
- * @sa CL_ItemDescription
+ * @sa UP_ItemDescription
  */
 static void UP_IncreaseWeapon_f (void)
 {
@@ -1277,7 +1277,7 @@ static void UP_IncreaseWeapon_f (void)
 
 		if (up_researchedlink_temp < csi.ods[i].numWeapons) {
 			up_researchedlink = up_researchedlink_temp;
-			CL_ItemDescription(i);
+			UP_ItemDescription(i);
 		}
 	} else if (up_researchedlink < csi.ods[i].numAmmos-1) {
 		/* this is a weapon */
@@ -1290,14 +1290,14 @@ static void UP_IncreaseWeapon_f (void)
 		if (up_researchedlink_temp < csi.ods[i].numAmmos) {
 			up_researchedlink = up_researchedlink_temp;
 			UP_DrawAssociatedAmmo(t);
-			CL_ItemDescription(i);
+			UP_ItemDescription(i);
 		}
 	}
 }
 
 /**
  * @brief Decreases the number of the firemode to display (for ammo) or the ammo to display (for weapon)
- * @sa CL_ItemDescription
+ * @sa UP_ItemDescription
  */
 static void UP_DecreaseWeapon_f (void)
 {
@@ -1326,7 +1326,7 @@ static void UP_DecreaseWeapon_f (void)
 
 		if (up_researchedlink_temp >= 0) {
 			up_researchedlink = up_researchedlink_temp;
-			CL_ItemDescription(i);
+			UP_ItemDescription(i);
 		}
 	} else if (up_researchedlink > 0 && csi.ods[i].numAmmos > 0) {
 		/* this is a weapon */
@@ -1339,14 +1339,14 @@ static void UP_DecreaseWeapon_f (void)
 		if (up_researchedlink_temp >= 0) {
 			up_researchedlink = up_researchedlink_temp;
 			UP_DrawAssociatedAmmo(t);
-			CL_ItemDescription(i);
+			UP_ItemDescription(i);
 		}
 	}
 }
 
 /**
  * @brief Increases the number of the firemode to display
- * @sa CL_ItemDescription
+ * @sa UP_ItemDescription
  */
 static void UP_IncreaseFiremode_f (void)
 {
@@ -1362,12 +1362,12 @@ static void UP_IncreaseFiremode_f (void)
 
 	i = Com_GetItemByID(t->provides);
 	if (i > -1)
-		CL_ItemDescription(i);
+		UP_ItemDescription(i);
 }
 
 /**
  * @brief Decreases the number of the firemode to display
- * @sa CL_ItemDescription
+ * @sa UP_ItemDescription
  */
 static void UP_DecreaseFiremode_f (void)
 {
@@ -1383,7 +1383,7 @@ static void UP_DecreaseFiremode_f (void)
 
 	i = Com_GetItemByID(t->provides);
 	if (i > -1)
-		CL_ItemDescription(i);
+		UP_ItemDescription(i);
 }
 
 /**
