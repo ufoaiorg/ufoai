@@ -288,15 +288,21 @@ static production_t *PR_QueueNew (production_queue_t *queue, signed int objID, s
 
 /**
  * @brief Delete the selected entry from the queue.
+ * @param[in] *queue Pointer to the queue.
+ * @param[in] index Selected index in queue.
+ * @param[in] baseidx Index of base in gd.bases[], where the queue is.
  */
-static void PR_QueueDelete (production_queue_t *queue, int index)
+static void PR_QueueDelete (production_queue_t *queue, int index, int baseidx)
 {
 	int i;
 	objDef_t *od = NULL;
 	technology_t *tech = NULL;
 	production_t *prod = NULL;
+	base_t *base = &gd.bases[baseidx];
 
 	prod = &queue->items[index];
+
+	assert (base);
 
 	if (prod->items_cached) {
 		/* Get technology of the item in the selected queue-entry. */
@@ -310,6 +316,10 @@ static void PR_QueueDelete (production_queue_t *queue, int index)
 		}
 		prod->items_cached = qfalse;
 	}
+
+	/* Readd disassembly to base storage. */
+	if (!prod->production)
+		base->storage.num[prod->objID] += prod->amount;
 
 	queue->numItems--;
 	if (queue->numItems < 0)
@@ -360,7 +370,7 @@ static void PR_QueueNext (int base)
 {
 	production_queue_t *queue = &gd.productions[base];
 
-	PR_QueueDelete(queue, 0);
+	PR_QueueDelete(queue, 0, base);
 	if (queue->numItems == 0) {
 		selectedQueueItem = qfalse;
 		selectedIndex = -1;
@@ -1038,22 +1048,22 @@ static void PR_ProductionStop_f (void)
 	if (!queue->items[selectedIndex].production)
 		disassembling = qtrue;	
 
-	PR_QueueDelete(queue, selectedIndex);
+	PR_QueueDelete(queue, selectedIndex, baseCurrent->idx);
 
 	if (queue->numItems == 0) {
 		selectedQueueItem = qfalse;
 		selectedIndex = -1;
+		PR_ProductionInfo(qfalse);
 	} else if (selectedIndex >= queue->numItems) {
 		selectedIndex = queue->numItems - 1;
+		if (!queue->items[selectedIndex].production)
+			PR_ProductionInfo(qtrue);
+		else
+			PR_ProductionInfo(qfalse);
 	}
 
-	if (disassembling) {
-		PR_ProductionInfo(qtrue);
-		PR_UpdateDisassemblingList_f();
-	} else {
-		PR_ProductionInfo(qfalse);
-		PR_UpdateProductionList();
-	}
+	PR_UpdateDisassemblingList_f();
+	PR_UpdateProductionList();
 }
 
 /**

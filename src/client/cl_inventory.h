@@ -53,6 +53,7 @@ void INV_EnableAutosell(technology_t *tech);
 void INV_InitialEquipment(base_t *base);
 components_t *INV_GetComponentsByItemIdx(int itemIdx);
 int INV_DisassemblyItem(base_t *base, components_t *comp, qboolean calculate);
+void INV_ManageAntimatter(base_t *base, int amount, qboolean add);
 
 #endif /* CLIENT_CL_INVENTORY_H */
 

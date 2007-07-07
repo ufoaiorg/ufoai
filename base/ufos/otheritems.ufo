@@ -3,11 +3,11 @@
 // ===========
 item antimatter
 {
+	// Note that antimatter does not have size on purpose.
 	name		"_Antimatter"
 	type		dummy
 	buytype		dummy
 	weapon		false
-	size		10 //stored in Antimatter Storage Facility
 }
 
 item brapparatus

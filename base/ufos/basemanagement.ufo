@@ -354,10 +354,11 @@ building building_amstorage
 	depends		building_powerplant 
 	build_time	20
 	varcosts	10000
+	type		amstorage
 	map_name	"amstorage"
 	pedia		rs_building_antimatter
+	capacity	10000
 }
-
 
 base main
 {

@@ -309,7 +309,7 @@ static void BS_BuyType_f (void)
 	menuText[TEXT_MARKET_PRICES] = bsMarketPrices;
 
 	/* 'normal' items */
-	if (buyCategory < BUY_AIRCRAFT) {
+	if (buyCategory < BUY_AIRCRAFT || buyCategory == BUY_DUMMY) {
 		/* Add autosell button for every entry. */
 		for (j = 0; j < MAX_MARKET_MENU_ENTRIES; j++)
 			Cbuf_AddText(va("buy_autoselld%i\n", j));

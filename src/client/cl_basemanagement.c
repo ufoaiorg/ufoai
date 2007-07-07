@@ -397,6 +397,11 @@ static void B_BuildingDestroy_f (void)
 		if (!B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, b1->buildingType))
 			baseCurrent->hasCommand = qfalse;
 		break;
+	case B_ANTIMATTER:
+		cap = CAP_ANTIMATTER;
+		if (!B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, b1->buildingType))
+			baseCurrent->hasAmStorage = qfalse;
+		break;
 	case B_MISC:
 		break;
 	default:
@@ -616,6 +621,10 @@ static void B_UpdateBaseBuildingStatus (building_t* building, base_t* base, buil
 	case B_COMMAND:
 		if ((building->buildingStatus == B_STATUS_WORKING) && (base->hasPower))
 			base->hasCommand = qtrue;
+		break;
+	case B_ANTIMATTER:
+		if ((building->buildingStatus == B_STATUS_WORKING) && (base->hasPower))
+			base->hasAmStorage = qtrue;
 		break;
 	default:
 		break;
@@ -1330,6 +1339,8 @@ extern void B_ParseBuildings (const char *name, char **text, qboolean link)
 					building->buildingType = B_POWER;
 				} else if (!Q_strncmp(token, "command", MAX_VAR)) {
 					building->buildingType = B_COMMAND;
+				} else if (!Q_strncmp(token, "amstorage", MAX_VAR)) {
+					building->buildingType = B_ANTIMATTER;
 				}
 /*			} else if (!Q_strncmp(token, "max_employees", MAX_VAR)) {
 				token = COM_EParse(text, errhead, name);
@@ -2458,6 +2469,7 @@ static void B_BuildingOpen_f (void)
 				}
 				break;
 			case B_STORAGE:
+			case B_ANTIMATTER:
 				MN_PushMenu("buy");
 				break;
 			default:
@@ -2508,6 +2520,8 @@ static buildingType_t B_GetBuildingTypeByCapacity (baseCapacities_t cap)
 		return B_HOSPITAL;
 	case CAP_UFOHANGARS:
 		return B_UFO_HANGAR;	/* Note, that CAP_UFOHANGARS also uses B_SMALL_UFO_HANGAR. */
+	case CAP_ANTIMATTER:
+		return B_ANTIMATTER;
 	default:
 		return B_MISC;
 	}
@@ -2795,6 +2809,7 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
 	case CAP_ITEMS:			/**< Update items capacity in base. */
 	case CAP_AIRCRAFTS_SMALL:	/**< Update aircrafts capacity in base. */
 	case CAP_AIRCRAFTS_BIG:		/**< Update aircrafts capacity in base. */
+	case CAP_ANTIMATTER:		/**< Update antimatter capacity in base. */
 		/* Reset given capacity in current base. */
 		base->capacities[cap].max = 0;
 		/* Get building capacity. */
@@ -2899,6 +2914,7 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
 		MSG_WriteByte(sb, b->hasUFOHangarSmall);
 		MSG_WriteByte(sb, b->hasPower);
 		MSG_WriteByte(sb, b->hasCommand);
+		MSG_WriteByte(sb, b->hasAmStorage);
 		for (k = 0; k < presaveArray[PRE_BASESI]; k++)
 			for (l = 0; l < presaveArray[PRE_BASESI]; l++) {
 				MSG_WriteShort(sb, b->map[k][l]);
@@ -3077,6 +3093,7 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
 		b->hasUFOHangarSmall = MSG_ReadByte(sb);
 		b->hasPower = MSG_ReadByte(sb);
 		b->hasCommand = MSG_ReadByte(sb);
+		b->hasAmStorage = MSG_ReadByte(sb);
 		for (k = 0; k < presaveArray[PRE_BASESI]; k++)
 			for (l = 0; l < presaveArray[PRE_BASESI]; l++) {
 				b->map[k][l] = MSG_ReadShort(sb);
@@ -3305,8 +3322,9 @@ extern qboolean B_UpdateStorageAndCapacity (base_t* base, int objIDX, int amount
 	} else {
 		if (base->capacities[CAP_ITEMS].max - base->capacities[CAP_ITEMS].cur >= csi.ods[objIDX].size) {
 			base->storage.num[objIDX] += amount;
-			/* Items not researched cannot be thrown out even if not enough space in storage. */
-			base->capacities[CAP_ITEMS].cur += (amount * csi.ods[objIDX].size);
+			/* @todo: Items not researched cannot be thrown out even if not enough space in storage. */
+			if (csi.ods[objIDX].size > 0)
+				base->capacities[CAP_ITEMS].cur += (amount * csi.ods[objIDX].size);
 		} else {
 			Com_DPrintf("B_UpdateStorageAndCapacity: Not enough storage space (item: %i, amount: %i)\n", objIDX, amount);
 			return qfalse;

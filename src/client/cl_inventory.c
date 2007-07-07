@@ -31,8 +31,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * Collecting items functions.
  */
 
-static equipDef_t eTempEq;	/**< Used to count ammo in magazines. */
-static int eTempCredits;	/**< Used to count temporary credits for item selling. */
+static equipDef_t eTempEq;		/**< Used to count ammo in magazines. */
+static int eTempCredits;		/**< Used to count temporary credits for item selling. */
+static int ANTIMATTER_SIZE = 10;	/**< Size of one Antimatter unit. */
 
 /**
  * @brief Count and collect ammo from gun magazine.
@@ -539,12 +540,59 @@ extern int INV_DisassemblyItem (base_t *base, components_t *comp, qboolean calcu
 		size += compod->size * comp->item_amount[i];
 		/* Add to base storage only if this is real disassembling, not calculation of size. */
 		if (!calculate) {
-			/* FIXME: call B_UpdateStorageAndCapacity(base, j, comp->item_amount[i], qfalse); */
-			base->storage.num[j] += comp->item_amount[i];
+			if (!Q_strncmp(compod->id, "antimatter", 10))
+				INV_ManageAntimatter(base, comp->item_amount[i], qtrue);
+			else
+				B_UpdateStorageAndCapacity(base, j, comp->item_amount[i], qfalse);
 			Com_DPrintf("INV_DisassemblyItem()... added %i amounts of %s\n", comp->item_amount[i], compod->id);
 		}
 	}
 	return size;
 }
 
+/**
+ * @brief Manages Antimatter (adding, removing) through Antimatter Storage Facility.
+ * @param[in] *base Pointer to the base.
+ * @param[in] add True if we are adding antimatter, false when removing.
+ * @note This function should be called whenever we add or remove antimatter from Antimatter Storage Facility.
+ */
+void INV_ManageAntimatter (base_t *base, int amount, qboolean add)
+{
+	int i, j;
+	objDef_t *od;
+
+	assert (base);
+
+	if (!base->hasAmStorage && add) {
+		Com_sprintf(messageBuffer, sizeof(messageBuffer),
+		_("Base %s does not have Antimatter Storage Facility. %i units of Antimatter got removed."),
+		base->name, amount);
+		MN_AddNewMessage(_("Notice"), messageBuffer, qfalse, MSG_STANDARD, NULL);
+		return;
+	}
+
+	for (i = 0, od = csi.ods; i < csi.numODs; i++, od++) {
+		if (!Q_strncmp(od->id, "antimatter", 10))
+			break;
+	}
+	assert (od);
+
+	if (add) {	/* Adding. */
+		if (base->capacities[CAP_ANTIMATTER].cur + (amount * ANTIMATTER_SIZE) <= base->capacities[CAP_ANTIMATTER].max) {
+			base->storage.num[i] += amount;
+			base->capacities[CAP_ANTIMATTER].cur += (amount * ANTIMATTER_SIZE);
+		} else {
+			for (j = 0; j < amount; j++) {
+				if (base->capacities[CAP_ANTIMATTER].cur + ANTIMATTER_SIZE <= base->capacities[CAP_ANTIMATTER].max) {
+					base->storage.num[i]++;
+					base->capacities[CAP_ANTIMATTER].cur += ANTIMATTER_SIZE;
+				} else
+					break;
+			}
+		}
+	} else {	/* Removing. */
+		base->capacities[CAP_ANTIMATTER].cur -= amount * ANTIMATTER_SIZE;
+		base->storage.num[i] -= amount;
+	}
+}
 
