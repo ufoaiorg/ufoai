@@ -33,8 +33,8 @@ shoot_melee			34	55	22
 death1				56	83	22
 dead1				83	83	1
 
-death2				83	94	22
-dead2				94	94	1
+death2				84	95	22
+dead2				95	95	1
 
-death3				56	83	22
-dead3				83	83	1
+death1				56	83	22
+dead1				83	83	1
