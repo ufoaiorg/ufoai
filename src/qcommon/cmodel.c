@@ -2012,8 +2012,6 @@ trace_t CM_TransformedBoxTrace (vec3_t start, vec3_t end, vec3_t mins, vec3_t ma
 	vec3_t temp;
 	qboolean rotated;
 
-	assert(headnode < curTile->numnodes + 6); /* +6 => bbox */
-
 	if (tile >= MAX_MAPTILES) {
 		Com_Printf("CM_TransformedBoxTrace: too many tiles loaded\n");
 		tile = 0;
@@ -2044,6 +2042,11 @@ trace_t CM_TransformedBoxTrace (vec3_t start, vec3_t end, vec3_t mins, vec3_t ma
 		end_l[0] = DotProduct(temp, forward);
 		end_l[1] = -DotProduct(temp, right);
 		end_l[2] = DotProduct(temp, up);
+	}
+
+	if (headnode >= curTile->numnodes + 6) {/* +6 => bbox */
+		Com_Printf("CM_TransformedBoxTrace: headnode: %i, curTile->numnodes: %i\n", headnode, curTile->numnodes + 6);
+		headnode = 0;
 	}
 
 	/* sweep the box through the model */
