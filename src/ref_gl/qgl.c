@@ -25,7 +25,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "gl_local.h"
 
-#if defined (__linux__) || defined (__FreeBSD__) || defined (__NetBSD__) || defined (__APPLE__)
+#if defined (__linux__) || defined (__FreeBSD__) || defined (__NetBSD__) || defined (__APPLE__) || defined (__sun)
 #include "../ports/unix/qgl_unix.h"
 #elif defined _WIN32
 #include "../ports/win32/glw_win.h"
