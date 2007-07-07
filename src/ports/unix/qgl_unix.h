@@ -22,8 +22,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #error You should include this file only on Linux/FreeBSD/NetBSD/Solaris/Apple platforms
 #endif
 
-#ifndef __GLW_LINUX_H__
-#define __GLW_LINUX_H__
+#ifndef __GLW_UNIX_H__
+#define __GLW_UNIX_H__
 
 #include <dlfcn.h>
 
@@ -46,4 +46,4 @@ void InitSig(void);
 #define GPA qwglGetProcAddress
 #endif
 
-#endif
+#endif /* __GLW_UNIX_H__ */

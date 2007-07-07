@@ -1,5 +1,5 @@
 /**
- * @file qgl_linux.c
+ * @file qgl_solaris.c
  * @brief  This file implements the operating system binding of GL to QGL function pointers
  * @note When doing a port of Quake2 you must implement the following two functions:
  ** QGL_Init() - loads libraries, assigns function pointers, etc.
