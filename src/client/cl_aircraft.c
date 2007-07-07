@@ -1535,7 +1535,6 @@ void AIM_AircraftEquipmenuClick_f (void)
 {
 	aircraft_t *aircraft;
 	int num;
-	static char desc[512];
 	technology_t **list;
 
 	if (baseCurrent->aircraftCurrent < 0 || airequipID == -1)
@@ -1563,18 +1562,16 @@ void AIM_AircraftEquipmenuClick_f (void)
 			/* found it */
 			if (num <= 0) {
 				airequipSelectedTechnology = *list;
-				Com_sprintf(desc, sizeof(desc), _((*list)->name));
 				AIR_AircraftSelect(aircraft);
 				noparams = qtrue; /* used for AIM_AircraftEquipmenuMenuInit_f */
 				AIM_AircraftEquipmenuInit_f();
+				UP_AircraftItemDescription(AII_GetAircraftItemByID(airequipSelectedTechnology->provides));
 				break;
 			}
 			/* next item in the tech pointer list */
 			list++;
 		}
 	}
-
-	menuText[TEXT_STANDARD] = desc;
 }
 
 /**

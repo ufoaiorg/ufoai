@@ -729,12 +729,8 @@ extern void UP_Article (technology_t* tech)
 				UP_AircraftDescription(tech);
 				break;
 			case RS_CRAFTITEM:
-				for (i = 0; i < csi.numODs; i++) {
-					if (!Q_strncmp(tech->provides, aircraftItems[i].id, MAX_VAR)) {
-						UP_AircraftItemDescription(i);
-						break;
-					}
-				}
+				i = AII_GetAircraftItemByID(tech->provides);
+				UP_AircraftItemDescription(i);
 				break;
 			case RS_BUILDING:
 				UP_BuildingDescription(tech);

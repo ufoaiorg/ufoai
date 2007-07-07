@@ -430,10 +430,17 @@ menu aircraft_equip
 
 	text airequip_selected_description
 	{
-		pos	"474 480"
+		pos	"474 600"
 		size	"530 150"
 		format	"20 0"
 //		bgcolor	"1 1 1 0.5"
+	}
+
+	string airequip_item_name
+	{
+		string	"*cvar mn_itemname"
+		pos		"594 475"
+		align	uc
 	}
 
 	string airequip_description
