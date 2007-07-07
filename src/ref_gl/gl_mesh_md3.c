@@ -152,13 +152,16 @@ void R_DrawAliasMD3Model (entity_t *e)
 	if (!r_lerpmodels->integer)
 		e->backlerp = 0;
 
-	if (gl_shadows->integer == 1 && (e->flags & RF_SHADOW)) {
+	if (gl_shadows->integer == 1 && (e->flags & (RF_SHADOW | RF_BLOOD))) {
 		if (!(e->flags & RF_TRANSLUCENT))
 			qglDepthMask(GL_FALSE);
 		GLSTATE_ENABLE_BLEND
 
 		qglColor4f(1, 1, 1, 1);
-		GL_Bind(shadow->texnum);
+		if (e->flags & RF_SHADOW)
+			GL_Bind(shadow->texnum);
+		else
+			GL_Bind(blood->texnum);
 		qglBegin(GL_QUADS);
 
 		qglTexCoord2f(0.0, 1.0);
@@ -175,7 +178,7 @@ void R_DrawAliasMD3Model (entity_t *e)
 		GLSTATE_DISABLE_BLEND
 		if (!(e->flags & RF_TRANSLUCENT))
 			qglDepthMask(GL_TRUE);
-	} else if (gl_shadows->integer == 2 && (e->flags & RF_SHADOW)) {
+	} else if (gl_shadows->integer == 2 && (e->flags & (RF_SHADOW | RF_BLOOD))) {
 		R_DrawShadowVolume(e);
 	}
 

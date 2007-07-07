@@ -29,6 +29,7 @@ extern cvar_t *gl_drawclouds;
 extern qboolean scrap_dirty;
 void Scrap_Upload(void);
 image_t *shadow;
+image_t *blood;
 
 static float globe_fog[4];
 int spherelist;
@@ -151,6 +152,9 @@ void Draw_InitLocal (void)
 {
 	shadow = GL_FindImage("pics/sfx/shadow", it_pic);
 	if (!shadow)
+		ri.Con_Printf(PRINT_ALL, "Could not find shadow image in game pics/sfx directory!\n");
+	blood = GL_FindImage("pics/sfx/blood", it_pic);
+	if (!blood)
 		ri.Con_Printf(PRINT_ALL, "Could not find shadow image in game pics/sfx directory!\n");
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	qglTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);

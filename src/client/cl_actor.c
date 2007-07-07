@@ -634,7 +634,7 @@ static void CL_DisplayPossibleReaction (le_t *actor)
 {
 	if (!actor)
 		return;
-	
+
 	if (actor != selActor) {
 		Com_DPrintf("CL_DisplayPossibleReaction: Something went wront, given actor does not equal the currently selectd actor!\n");
 		return;
@@ -663,7 +663,7 @@ static qboolean CL_DisplayImpossibleReaction (le_t *actor)
 {
 	if (!actor)
 		return qfalse;
-	
+
 	if (actor != selActor) {
 		Com_DPrintf("CL_DisplayImpossibleReaction: Something went wront, given actor does not equal the currently selectd actor!\n");
 		return qfalse;
@@ -706,7 +706,7 @@ static void CL_UpdateReactionFiremodes (char hand, int actor_idx, int active_fir
 	}
 
 	CL_GetWeaponAndAmmo(cl.teamList[actor_idx], hand, &weapon, &ammo, &weap_fd_idx);
-	
+
 	if (weap_fd_idx == -1) {
 		CL_DisplayImpossibleReaction(cl.teamList[actor_idx]);
 		Com_DPrintf("CL_UpdateReactionFiremodes: No weap_fd_idx found for %c hand.\n", hand);
@@ -3083,7 +3083,10 @@ qboolean CL_AddActor (le_t * le, entity_t * ent)
 	V_AddEntity(&add);
 
 	/* add actor special effects */
-	ent->flags |= RF_SHADOW;
+	if (le->state & STATE_DEAD)
+		ent->flags |= RF_BLOOD;
+	else
+		ent->flags |= RF_SHADOW;
 
 	if (!(le->state & STATE_DEAD)) {
 		if (le->selected)

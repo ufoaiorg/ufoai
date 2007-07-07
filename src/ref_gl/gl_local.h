@@ -231,7 +231,7 @@ typedef struct {
 
 #define BACKFACE_EPSILON    0.01
 
-/* entity transform */
+/** @brief entity transform */
 typedef struct {
 	qboolean done;
 	qboolean processing;
@@ -242,9 +242,10 @@ extern transform_t trafo[MAX_ENTITIES];
 
 /*==================================================== */
 
-extern int spherelist;	/* the gl list of the 3d globe */
+extern int spherelist;	/**< the gl list of the 3d globe */
 
-extern image_t *shadow;
+extern image_t *shadow;	/**< draw this when actor is alive */
+extern image_t *blood; /**< draw this when actor is dead */
 
 extern image_t *r_notexture;
 extern image_t *r_particletexture;
