@@ -167,6 +167,45 @@ static char* CL_WeaponSkillToName (int weaponSkill)
 }
 
 /**
+ * @brief Translate a aircraft stat int to a translated string
+ *
+ * The aircraft stats were defined in cl_aircraft.h
+ * @sa aircraftParams_t
+ */
+static char* CL_AircraftStatToName (int stat)
+{
+	switch (stat) {
+	case AIR_STATS_RANGE:
+		return _("Range");
+		break;
+	case AIR_STATS_SPEED:
+		return _("Speed");
+		break;
+	case AIR_STATS_SHIELD:
+		return _("Shield");
+		break;
+	case AIR_STATS_ECM:
+		return _("ECM");
+		break;
+	case AIR_STATS_DAMAGE:
+		return _("Aircraft damage");
+		break;
+	case AIR_STATS_ACCURACY:
+		return _("Accuracy");
+		break;
+	case AIR_STATS_FUELSIZE:
+		return _("Fuel size");
+		break;
+	case AIR_STATS_WRANGE:
+		return _("Weapon range");
+		break;
+	default:
+		return _("Unknown weapon skill");
+		break;
+	}
+}
+
+/**
  * @brief Diplays the tech tree dependencies in the ufopedia
  * @sa UP_DrawEntry
  */
@@ -432,6 +471,63 @@ static void UP_BuildingDescription (technology_t* t)
 }
 
 /**
+ * @brief Prints the (ufopedia and other) description for aircraft items
+ * @param item Index in object definition array ods for the item
+ * @sa UP_DrawEntry
+ * Not only called from Ufopedia but also from other places to display
+ */
+extern void UP_AircraftItemDescription (int idx)
+{
+	static char itemText[MAX_SMALLMENUTEXTLEN];
+	aircraftItem_t *item;
+	int i;
+
+	/* select item */
+	item = &aircraftItems[idx];
+	Cvar_Set("mn_itemname", _(gd.technologies[item->tech_idx].name));
+	Cvar_Set("mn_item", item->id);
+	Cvar_Set("mn_displayweapon", "0"); /* use strings here - no int */
+	Cvar_Set("mn_changeweapon", "0"); /* use strings here - no int */
+	Cvar_Set("mn_researchedlinkname", "");
+	Cvar_Set("mn_upresearchedlinknametooltip", "");
+
+#ifdef DEBUG
+	if (item->tech_idx < 0 && ccs.singleplayer) {
+		Com_sprintf(itemText, sizeof(itemText), "Error - no tech assigned\n");
+		menuText[TEXT_STANDARD] = itemText;
+	} else
+#endif
+	/* set description text */
+	if (RS_IsResearched_idx(item->tech_idx)) {
+		*itemText = '\0';
+
+		if (item->type == AC_ITEM_AMMO) {
+			/* We display the characteristics of this ammo */
+			Q_strcat(itemText, va(_("Ammo:\t%i\n"), item->ammo), sizeof(itemText));
+			if (item->damage > 0.00001f)
+				Q_strcat(itemText, va(_("Damage:\t%i\n"), (int) item->damage), sizeof(itemText));
+			Q_strcat(itemText, va(_("Reloading time:\t%i\n"),  (int) item->weaponDelay),  sizeof(itemText));
+		}
+		/* We write the range of the weapon */
+		if ( item->stats[AIR_STATS_MAX - 1] > 0.00001f)
+		Q_strcat(itemText, va("%s:\t%i\n", CL_AircraftStatToName(AIR_STATS_MAX - 1), (int) item->stats[AIR_STATS_MAX - 1]), sizeof(itemText));
+
+		/* we scan all stats except last one which is range */
+		for (i = 0 ; i < AIR_STATS_MAX - 1 ; i++) {
+			if (item->stats[i] > 2.0f)
+				Q_strcat(itemText, va("%s:\t+%i\n", CL_AircraftStatToName(i), (int) item->stats[i]), sizeof(itemText));
+			else if (item->stats[i] < -2.0f)
+				Q_strcat(itemText, va("%s:\t%i\n", CL_AircraftStatToName(i), (int) item->stats[i]),  sizeof(itemText));
+			else if (item->stats[i] > 1.0f)
+				Q_strcat(itemText, va("%s:\t+%i %\n", CL_AircraftStatToName(i), (int) (item->stats[i] * 100) - 100),  sizeof(itemText));
+			else if (item->stats[i] > 0.00001f)
+				Q_strcat(itemText, va("%s:\t%i %\n", CL_AircraftStatToName(i), (int) (item->stats[i] * 100) - 100),  sizeof(itemText));
+		}
+	}
+
+	menuText[TEXT_STANDARD] = itemText;
+}
+/**
  * @brief Prints the ufopedia description for aircraft
  * @note Also checks whether the aircraft tech is already researched or collected
  *
@@ -631,6 +727,14 @@ extern void UP_Article (technology_t* tech)
 				break;
 			case RS_CRAFT:
 				UP_AircraftDescription(tech);
+				break;
+			case RS_CRAFTITEM:
+				for (i = 0; i < csi.numODs; i++) {
+					if (!Q_strncmp(tech->provides, aircraftItems[i].id, MAX_VAR)) {
+						UP_AircraftItemDescription(i);
+						break;
+					}
+				}
 				break;
 			case RS_BUILDING:
 				UP_BuildingDescription(tech);

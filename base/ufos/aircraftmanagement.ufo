@@ -40,7 +40,7 @@
 //	wspeed - the speed of the ammo on geoscape once it's been shot
 //	wrange - the range of the weapon, which tells the minimum distance of opening fire
 //	delay - the delay between 2 shots of this ammunition
-//	damage - for ammos, it's the parameter which tells how much damage such weapon can do (this one is not V_RELABS)
+//	wdamage - for ammos, it's the parameter which tells how much damage such weapon can do (this one is not V_RELABS)
 
 // don't forget to add mini-models to base/models/geoscape, too
 // also read the notes about ufos
@@ -428,7 +428,7 @@ craftitem craft_ammo_shiva_API
 	price		100
 
 	ammo		20
-	damage		15
+	wdamage		15
 	accuracy	0.3
 	wrange		20
 	wspeed		500
@@ -443,7 +443,7 @@ craftitem craft_ammo_shiva_HEI
 	price		100
 
 	ammo		20
-	damage		22
+	wdamage		22
 	accuracy	0.2
 	wrange		25
 	wspeed		500
@@ -479,7 +479,7 @@ craftitem craft_ammo_sparrowhawk
 	price		250
 
 	ammo		8
-	damage		20
+	wdamage		20
 	accuracy	0.5
 	wrange		50
 	wspeed		200
@@ -505,7 +505,7 @@ craftitem craft_ammo_tr20
 	price		310
 
 	ammo		12
-	damage		28
+	wdamage		28
 	accuracy	0.4
 	wrange		20
 	wspeed		20
@@ -520,7 +520,7 @@ craftitem craft_weapon_particle_beam
 	installationTime	2
 	price		25252
 
-	damage		35
+	wdamage		35
 	speed		0.75
 	wrange		70
 }
@@ -554,6 +554,7 @@ craftitem craft_shield_polymer
 	price		16000
 
 	shield		1.25
+	speed		0.95
 }
 
 craftitem craft_shield_plating
@@ -564,6 +565,7 @@ craftitem craft_shield_plating
 	price		24000
 
 	shield		1.80
+	speed		0.8
 }
 
 

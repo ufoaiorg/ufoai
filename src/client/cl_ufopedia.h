@@ -41,6 +41,7 @@ void UP_ParseUpChapters(const char *name, char **text);
 void UP_OpenWith(const char *name);
 void UP_OpenCopyWith(const char *name);
 void UP_ItemDescription(int item);
+void UP_AircraftItemDescription(int item);
 int UP_GetUnreadMails(void);
 
 #endif /* CLIENT_CL_UFOPEDIA_H */
