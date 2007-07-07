@@ -190,7 +190,7 @@ qboolean SND_Init (struct sndinfo *s)
 	si->Com_Printf("OSS: channels %i\n", si->dma->channels);
 	si->Com_Printf("OSS: bits %i\n", si->dma->samplebits);
 
-	if ( ioctl(audio_fd, SNDCTL_DSP_GETOSPACE, &info) == -1 ) {
+	if (ioctl(audio_fd, SNDCTL_DSP_GETOSPACE, &info) == -1) {
 /* 		perror("GETOSPACE"); */
 		si->Com_Printf("SND_Init: GETOSPACE ioctl failed. %s\n", strerror(errno));
 /* 		close(audio_fd); */
@@ -202,7 +202,7 @@ qboolean SND_Init (struct sndinfo *s)
 	si->dma->submission_chunk = 1;
 
 	/* memory map the dma buffer */
-	sz = sysconf (_SC_PAGESIZE);
+	sz = sysconf(_SC_PAGESIZE);
 	mmaplen = info.fragstotal * info.fragsize;
 	mmaplen = (mmaplen + sz - 1) & ~(sz - 1);
 	if (!si->dma->buffer)
@@ -226,13 +226,13 @@ qboolean SND_Init (struct sndinfo *s)
 
 	/* toggle the trigger & start her up */
 	tmp = 0;
-	rc  = ioctl(audio_fd, SNDCTL_DSP_SETTRIGGER, &tmp);
+	rc = ioctl(audio_fd, SNDCTL_DSP_SETTRIGGER, &tmp);
 	if (rc < 0) {
 		perror(si->device->string);
 		si->Com_Printf("SND_Init: Could not toggle. (1)\n");
 		close(audio_fd);
 		audio_fd = -1;
-		munmap (si->dma->buffer, mmaplen);
+		munmap(si->dma->buffer, mmaplen);
 		return qfalse;
 	}
 	tmp = PCM_ENABLE_OUTPUT;
@@ -242,7 +242,7 @@ qboolean SND_Init (struct sndinfo *s)
 		si->Com_Printf("SND_Init: Could not toggle. (2)\n");
 		close(audio_fd);
 		audio_fd = -1;
-		munmap (si->dma->buffer, mmaplen);
+		munmap(si->dma->buffer, mmaplen);
 		return qfalse;
 	}
 
@@ -259,7 +259,7 @@ int SND_GetDMAPos (void)
 	if (!snd_inited)
 		return 0;
 
-	if (ioctl(audio_fd, SNDCTL_DSP_GETOPTR, &count)==-1) {
+	if (ioctl(audio_fd, SNDCTL_DSP_GETOPTR, &count) == -1) {
 /* 		perror(si->device->string); */
 		si->Com_Printf("SND_GetDMAPos: GETOPTR failed.\n");
 		close(audio_fd);
