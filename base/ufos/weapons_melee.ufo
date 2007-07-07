@@ -145,8 +145,8 @@ item stunrod
 	type		melee
 	category	2
 	shape	"0 0 5 2"
-	center	"3.2 0 2"
-	scale		1.22
+	center	"3.2 0 -2"
+	scale		1.05
 	price		2400
 	size		15
 	buytype	weap_sec
