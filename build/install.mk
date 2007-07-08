@@ -4,16 +4,26 @@ installer: win32installer linuxinstaller sourcearchive
 
 mappack:
 	tar -cvjp --exclude-from=src/ports/linux/tar.ex -f ufoai-$(VERSION)-mappack.tar.bz2 ./base/maps
+	scp ufoai-$(VERSION)-mappack.tar.bz2 ufo:~/public_html/download
 
 win32installer:
+	$(MAKE) lang
+	$(MAKE) maps
 	cd base; ./archives.sh
 	makensis src/ports/win32/installer.nsi
+	md5sum src/ports/win32/ufoai-$(VERSION)-win32.exe > src/ports/win32/ufoai-$(VERSION)-win32.md5
+	scp src/ports/win32/ufoai-$(VERSION)-win32.exe src/ports/win32/ufoai-$(VERSION)-win32.md5 ufo:~/public_html/download
+	scp src/ports/win32/ufoai-$(VERSION)-win32.exe src/ports/win32/ufoai-$(VERSION)-win32.md5 mirror:~/public_html
 
 linuxarchive:
 	tar -cvjp --exclude-from=src/ports/linux/tar.ex -f ufoai-$(VERSION)-linux.tar.bz2 ./
 
 linuxinstaller:
+	$(MAKE) lang
+	$(MAKE) maps
+	cd base; ./archives.sh
 	$(MAKE) -f src/ports/linux/installer/Makefile
+	scp src/ports/linux/installer/ufoai-$(VERSION)-linux.run ufo:~/public_html/download
 
 #
 # Generate a tar archive of the sources.
