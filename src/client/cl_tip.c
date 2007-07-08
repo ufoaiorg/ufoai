@@ -93,8 +93,6 @@ extern void CL_ParseTipsOfTheDay (const char *name, char **text)
 		return;
 	}
 
-	Com_Printf("Parse tips\n");
-
 	do {
 		/* get the name type */
 		token = COM_EParse(text, errhead, name);
