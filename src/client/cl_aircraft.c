@@ -1080,7 +1080,7 @@ static technology_t **AII_GetCraftitemTechsByType (int type, qboolean usetypedef
 				break;
 			}
 		}
-		/* j+1 because last item have to be NULL */
+		/* j+1 because last item has to be NULL */
 		if (j + 1 >= MAX_TECHNOLOGIES) {
 			Com_Printf("AII_GetCraftitemTechsByType: MAX_TECHNOLOGIES limit hit.\n");
 			break;
