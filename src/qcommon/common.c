@@ -554,9 +554,9 @@ static void Com_Error_f (void)
  * defining HAVE_GETTEXT
  * Under Linux see Makefile options for this
  *
- * @sa Qcommon_LocaleInit
+ * @sa Qcommon_Init
  */
-extern void Qcommon_LocaleInit (void)
+extern qboolean Qcommon_LocaleSet (void)
 {
 	char *locale;
 
@@ -586,13 +586,14 @@ extern void Qcommon_LocaleInit (void)
 		locale = setlocale(LC_MESSAGES, "");
 		if (!locale) {
 			Com_Printf("...could not set to system language\n");
-			return;
+			return qfalse;
 		}
 	} else {
 		Com_Printf("...using language: %s\n", locale);
 		Cvar_Set("s_language", locale);
 		s_language->modified = qfalse;
 	}
+	return qtrue;
 }
 #endif /* HAVE_GETTEXT */
 
@@ -721,7 +722,7 @@ static qboolean Com_CvarCheckMaxFPS (cvar_t *cvar)
  * @sa Com_ParseScripts
  * @sa Sys_Init
  * @sa CL_Init
- * @sa Qcommon_LocaleInit
+ * @sa Qcommon_LocaleSet
  *
  * To compile language support into UFO:AI you need to activate the preprocessor variable
  * HAVE_GETTEXT (for linux have a look at the makefile)
@@ -838,7 +839,7 @@ extern void Qcommon_Init (int argc, char **argv)
 	/* load language file */
 	textdomain(TEXT_DOMAIN);
 
-	Qcommon_LocaleInit();
+	Qcommon_LocaleSet();
 #else /* HAVE_GETTEXT */
 	Com_Printf("..no gettext compiled into this binary\n");
 #endif /* HAVE_GETTEXT */

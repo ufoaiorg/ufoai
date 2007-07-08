@@ -310,7 +310,7 @@ extern int numGTs;
 
 #include "mem.h"
 
-void Qcommon_LocaleInit(void);
+qboolean Qcommon_LocaleSet(void);
 void Qcommon_Init(int argc, char **argv);
 float Qcommon_Frame(int msec);
 void Qcommon_Shutdown(void);

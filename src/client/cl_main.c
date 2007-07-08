@@ -2423,7 +2423,7 @@ static void CL_CvarCheck (void)
 #ifdef HAVE_GETTEXT
 	/* language */
 	if (s_language->modified)
-		Qcommon_LocaleInit();
+		CL_LanguageTryToSet(s_language->string);
 #endif
 
 	if (mn_inputlength->modified) {

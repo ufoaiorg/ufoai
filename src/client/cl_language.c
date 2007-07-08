@@ -29,13 +29,21 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "client.h"
 
 /**
+ * @brief List of all mappings for a locale
+ */
+typedef struct localeMapping_s {
+	char *localeMapping;	/**< string that contains e.g. en_US.UTF-8 */
+	struct localeMapping_s *next;	/**< next entry in the linked list */
+} localeMapping_t;
+
+/**
  * @brief Struct that reflects parsed language definitions
  * from our script files
  */
 typedef struct language_s {
 	char *localeID;			/**< short locale id */
 	char *localeString;		/**< translateable locale string to show in menus */
-	char *localeMapping;	/**< mapping to real locale string for setlocale */
+	localeMapping_t *localeMapping;	/**< mapping to real locale string for setlocale */
 	struct language_s *next;	/**< next language in this list */
 } language_t;
 
@@ -50,6 +58,7 @@ extern void CL_ParseLanguages (const char *name, char **text)
 	const char *errhead = "CL_ParseLanguages: unexpected end of file (language ";
 	char	*token;
 	language_t *language = NULL;
+	localeMapping_t *mapping = NULL;
 
 	if (!*text) {
 		Com_Printf("CL_ParseLanguages: language without body ignored (%s)\n", name);
@@ -74,15 +83,16 @@ extern void CL_ParseLanguages (const char *name, char **text)
 				return;
 			}
 			do {
-				/* get the name type */
+				/* get the locale mappings now type */
 				token = COM_EParse(text, errhead, name);
+				/* end of locale mappings reached */
 				if (!*text || *token == '}')
 					break;
-				/* FIXME: currently only one locale is supported */
-				if (!language->localeMapping)
-					language->localeMapping = Mem_PoolStrDup(token, cl_genericPool, CL_TAG_NONE);
-				else
-					Com_Printf("CL_ParseLanguages: language: '%s' has more than one mapping\n", name);
+				mapping = Mem_PoolAlloc(sizeof(localeMapping_t), cl_genericPool, CL_TAG_NONE);
+				mapping->localeMapping = Mem_PoolStrDup(token, cl_genericPool, CL_TAG_NONE);
+				/* link it in */
+				mapping->next = language->localeMapping;
+				language->localeMapping = mapping;
 			} while (*text);
 			language = NULL;
 		} else {
@@ -124,6 +134,43 @@ extern void CL_LanguageInit (void)
 		if (!selectBoxOption)
 			return;
 		Com_sprintf(selectBoxOption->label, sizeof(selectBoxOption->label), language->localeString);
-		Com_sprintf(selectBoxOption->value, sizeof(selectBoxOption->value), language->localeMapping);
+		Com_sprintf(selectBoxOption->value, sizeof(selectBoxOption->value), language->localeID);
 	}
+}
+
+/**
+ * @brief Cycle through all parsed locale mappings and try to set one after another
+ * @param[in] localeID the locale id parsed from scriptfiles
+ * @sa Qcommon_LocaleSet
+ */
+extern qboolean CL_LanguageTryToSet (const char *localeID)
+{
+	int i;
+	language_t* language;
+	localeMapping_t* mapping;
+
+	assert(localeID);
+
+	for (i = 0, language = languageList; i < languageCount; language = language->next, i++) {
+		if (!Q_strcmp(localeID, language->localeID))
+			break;
+	}
+
+	if (i == languageCount) {
+		Com_Printf("Could not find locale with id '%s'\n", localeID);
+		return qfalse;
+	}
+
+	mapping = language->localeMapping;
+	if (!mapping) {
+		Com_Printf("No locale mappings for locale with id '%s'\n", localeID);
+		return qfalse;
+	}
+	do {
+		Cvar_Set("s_language", mapping->localeMapping);
+		if (Qcommon_LocaleSet())
+			return qtrue;
+		mapping = mapping->next;
+	} while (mapping);
+	return qfalse;
 }
