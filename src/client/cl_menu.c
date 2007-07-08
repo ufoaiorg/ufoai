@@ -2254,12 +2254,12 @@ void MN_DrawMenus (void)
 						const char *image = ref;
 						if (!image)
 							image = "menu/selectbox";
-						ref = MN_GetReferenceString(menu, node->data[MN_DATA_MODEL_SKIN_OR_CVAR]);
-						if (!ref || !*ref) {
+						if (!node->data[MN_DATA_MODEL_SKIN_OR_CVAR]) {
 							Com_Printf("MN_DrawMenus: skip node '%s' (MN_SELECTBOX) - no cvar given (menu %s)\n", node->name, node->menu->name);
 							node->invis = qtrue;
 							break;
 						}
+						ref = MN_GetReferenceString(menu, node->data[MN_DATA_MODEL_SKIN_OR_CVAR]);
 
 						font = MN_GetFont(menu, node);
 						selBoxX = node->pos[0] + SELECTBOX_SIDE_WIDTH;
