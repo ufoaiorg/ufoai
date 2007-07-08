@@ -1,6 +1,8 @@
 language en {
 	"_English"
 	{
+		en_CA.UTF-8
+		en_AU.UTF-8
 		en_US.UTF-8
 		en_GB.UTF-8
 	}
@@ -11,5 +13,107 @@ language de {
 	{
 		de_DE.UTF-8
 		de_AT.UTF-8
+		de_CH.UTF-8
+	}
+}
+
+language pl {
+	"_Polish"
+	{
+		pl.UTF-8
+		pl_PL.UTF-8
+	}
+}
+
+language es {
+	"_Spanish"
+	{
+		es.UTF-8
+		es_AR.UTF-8
+		es_CO.UTF-8
+		es_CR.UTF-8
+		es_ES.UTF-8	/* FIXME: This should go in a seperate column */
+		es_MX.UTF-8
+		es_PR.UTF-8
+	}
+}
+
+language cs {
+	"_Czech"
+	{
+		cs.UTF-8
+		cs.CZ.UTF-8
+	}
+}
+
+language da {
+	"_Danish"
+	{
+		da.UTF-8
+	}
+}
+
+language est {
+	"_Estonia"
+	{
+		est.UTF-8
+	}
+}
+
+language fi {
+	"_Finnish"
+	{
+		fi.UTF-8
+		fi_FI.UTF-8
+	}
+}
+
+language fr {
+	"_French"
+	{
+		fr.UTF-8
+		fr_CH.UTF-8
+		fr_FR.UTF-8
+	}
+}
+
+language it {
+	"_Italien"
+	{
+		it.UTF-8
+		it_CH.UTF-8
+		it_IT.UTF-8
+	}
+}
+
+language pt_BR {
+	"_Portuguese"
+	{
+		pt.UTF-8
+		pt_BR.UTF-8
+		pt_PT.UTF-8
+	}
+}
+
+language ru {
+	"_Russian"
+	{
+		ru.UTF-8
+	}
+}
+
+language sl {
+	"_Slovenian"
+	{
+		sl.UTF-8
+		sl_SI.UTF-8
+	}
+}
+
+language sv {
+	"_Swedish"
+	{
+		sv.UTF-8
+		sv_SE.UTF-8
 	}
 }
