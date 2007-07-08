@@ -434,6 +434,10 @@ void CL_TipOfTheDayInit(void);
 void CL_ParseTipsOfTheDay(const char *name, char **text);
 extern cvar_t* cl_showTipOfTheDay;	/**< tip of the day can be deactivated */
 
+/* cl_language.c */
+void CL_ParseLanguages(const char *name, char **text);
+void CL_LanguageInit(void);
+
 /* cl_main.c */
 /* interface to refresh lib */
 extern refexport_t re;

@@ -1,0 +1,13 @@
+language en {
+	"_English"
+	{
+		en_US.UTF-8
+	}
+}
+
+language de {
+	"_German"
+	{
+		de_DE.UTF-8
+	}
+}

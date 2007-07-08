@@ -887,16 +887,16 @@ menu options_game
 	string camspeed_str
 	{
 		string	"_Camera Scroll:"
-		pos		"500 405"
+		pos		"500 455"
 	}
 	pic camspeed_rahmen
 	{
 		image	menu/bar_rahmen
-		pos		"659 410"
+		pos		"659 460"
 	}
 	bar camspeed_bar
 	{
-		pos		"668 415"
+		pos		"668 465"
 		size	"245 6"
 		color	"0 .8 0 1"
 		current	"*cvar cl_cammovespeed"
@@ -913,16 +913,16 @@ menu options_game
 	string camrot_str
 	{
 		string	"_Camera Rotation:"
-		pos		"500 430"
+		pos		"500 480"
 	}
 	pic camrot_rahmen
 	{
 		image	menu/bar_rahmen
-		pos		"659 435"
+		pos		"659 485"
 	}
 	bar camrot_bar
 	{
-		pos		"668 440"
+		pos		"668 490"
 		size	"245 6"
 		color	"0 .8 0 1"
 		current	"*cvar cl_camrotspeed"
@@ -974,6 +974,25 @@ menu options_game
 		string	"_Keys"
 		pos	"708 652"
 		align	cc
+	}
+
+	// ===================
+	// LANGUAGE
+	// selectbox must be last one
+	// ===================
+	string language_str
+	{
+		string "_Language"
+		pos     "500 405"
+	}
+	selectbox select_language
+	{
+		pos		"774 405"
+		cvar	"*cvar s_language"
+		image	"menu/selectbox_green"
+		size	"100 20"
+		color	"0.6 0.6 0.6 0.3"
+		// will be filled in CL_LanguageInit
 	}
 
 	func init

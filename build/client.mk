@@ -18,6 +18,7 @@ CLIENT_SRCS = \
 	client/cl_input.c \
 	client/cl_irc.c \
 	client/cl_keys.c \
+	client/cl_language.c \
 	client/cl_le.c \
 	client/cl_main.c \
 	client/cl_menu.c \

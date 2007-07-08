@@ -1814,6 +1814,8 @@ extern void CL_InitAfter (void)
 		Com_sprintf(selectBoxOption->label, sizeof(selectBoxOption->label), "%i:%i", vid_modes[i].width, vid_modes[i].height);
 		Com_sprintf(selectBoxOption->value, sizeof(selectBoxOption->value), "%i", vid_modes[i].mode);
 	}
+
+	CL_LanguageInit();
 }
 
 /**
@@ -1854,6 +1856,8 @@ extern void CL_ParseClientData (const char *type, const char *name, char **text)
 		CL_ParseUGVs(name, text);
 	else if (!Q_strncmp(type, "tips", 4))
 		CL_ParseTipsOfTheDay(name, text);
+	else if (!Q_strncmp(type, "language", 8))
+		CL_ParseLanguages(name, text);
 }
 
 /**
