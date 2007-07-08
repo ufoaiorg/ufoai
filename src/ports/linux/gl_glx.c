@@ -536,24 +536,14 @@ static void HandleEvents (void)
 				} else
 #endif /* HAVE_XF86_DGA */
 				{
-					int xoffset = event.xmotion.x - middlex;
-					int yoffset = event.xmotion.y - middley;
-
-					if (xoffset != 0 || yoffset != 0) {
-						mx += xoffset;
-						my += yoffset;
-
-						XSelectInput(dpy, win, X_MASK & ~PointerMotionMask);
-						XWarpPointer(dpy, None, win, 0, 0, 0, 0, middlex, middley);
-						XSelectInput(dpy, win, X_MASK);
-					}
+					mx = event.xmotion.x;
+					my = event.xmotion.y;
 				}
 			}
 			break;
 
-
 		case ButtonPress:
-			b=-1;
+			b = -1;
 			if (event.xbutton.button == 1)
 				b = 0;
 			else if (event.xbutton.button == 2)
@@ -569,7 +559,7 @@ static void HandleEvents (void)
 			break;
 
 		case ButtonRelease:
-			b=-1;
+			b = -1;
 			switch (event.xbutton.button) {
 			case 1:
 				b = 0;
