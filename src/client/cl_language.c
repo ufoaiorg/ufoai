@@ -136,6 +136,20 @@ extern void CL_LanguageInit (void)
 		Com_sprintf(selectBoxOption->label, sizeof(selectBoxOption->label), language->localeString);
 		Com_sprintf(selectBoxOption->value, sizeof(selectBoxOption->value), language->localeID);
 	}
+
+	menu = MN_GetMenu("checkcvars");
+	if (!menu)
+		Sys_Error("Could not find menu checkcvars\n");
+	languageOptions = MN_GetNode(menu, "select_language");
+	if (!languageOptions)
+		Sys_Error("Could not find node select_language in menu checkcvars\n");
+	for (i = 0, language = languageList; i < languageCount; language = language->next, i++) {
+		selectBoxOption = MN_AddSelectboxOption(languageOptions);
+		if (!selectBoxOption)
+			return;
+		Com_sprintf(selectBoxOption->label, sizeof(selectBoxOption->label), language->localeString);
+		Com_sprintf(selectBoxOption->value, sizeof(selectBoxOption->value), language->localeID);
+	}
 }
 
 /**

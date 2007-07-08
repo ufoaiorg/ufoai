@@ -320,6 +320,31 @@ menu checkcvars
 		color	"1 1 1 0.5"
 	}
 
+	// ===================
+	// LANGUAGE
+	// selectbox must be last one
+	// ===================
+	string language_str
+	{
+		string	"_Language"
+		pos		"150 450"
+		font	"f_normal"
+	}
+	string language_str2
+	{
+		string	"_Language:"
+		pos		"165 480"
+	}
+	selectbox select_language
+	{
+		pos		"320 480"
+		cvar	"*cvar s_language"
+		image	"menu/selectbox_green"
+		size	"100 20"
+		color	"0.6 0.6 0.6 0.3"
+		// will be filled in CL_LanguageInit
+	}
+
 	// check again - maybe the user has forgotton something
 	func close
 	{
