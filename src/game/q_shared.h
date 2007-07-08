@@ -176,6 +176,8 @@ typedef uint8_t byte;
 #define logf(x) ((float)log((double)(x)))
 #endif
 
+#define UFO_EPSILON 0.00001f
+
 #define DEFAULT_TEAMNUM 1
 
 #define LEVEL_LASTVISIBLE 255

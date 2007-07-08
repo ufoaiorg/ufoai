@@ -511,12 +511,12 @@ extern void UP_AircraftItemDescription (int idx)
 		if (item->type == AC_ITEM_AMMO) {
 			/* We display the characteristics of this ammo */
 			Q_strcat(itemText, va(_("Ammo:\t%i\n"), item->ammo), sizeof(itemText));
-			if (item->damage > 0.00001f)
+			if (item->damage > UFO_EPSILON)
 				Q_strcat(itemText, va(_("Damage:\t%i\n"), (int) item->damage), sizeof(itemText));
 			Q_strcat(itemText, va(_("Reloading time:\t%i\n"),  (int) item->weaponDelay),  sizeof(itemText));
 		}
 		/* We write the range of the weapon */
-		if ( item->stats[AIR_STATS_MAX - 1] > 0.00001f)
+		if (item->stats[AIR_STATS_MAX - 1] > UFO_EPSILON)
 		Q_strcat(itemText, va("%s:\t%i\n", CL_AircraftStatToName(AIR_STATS_MAX - 1), (int) item->stats[AIR_STATS_MAX - 1]), sizeof(itemText));
 
 		/* we scan all stats except last one which is range */
@@ -527,7 +527,7 @@ extern void UP_AircraftItemDescription (int idx)
 				Q_strcat(itemText, va("%s:\t%i\n", CL_AircraftStatToName(i), (int) item->stats[i]),  sizeof(itemText));
 			else if (item->stats[i] > 1.0f)
 				Q_strcat(itemText, va(_("%s:\t+%i percent\n"), CL_AircraftStatToName(i), (int) (item->stats[i] * 100) - 100),  sizeof(itemText));
-			else if (item->stats[i] > 0.00001f)
+			else if (item->stats[i] > UFO_EPSILON)
 				Q_strcat(itemText, va(_("%s:\t%i percent\n"), CL_AircraftStatToName(i), (int) (item->stats[i] * 100) - 100),  sizeof(itemText));
 		}
 	}
