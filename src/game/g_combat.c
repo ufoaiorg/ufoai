@@ -415,7 +415,7 @@ static void G_Damage (edict_t * ent, fireDef_t *fd, int damage, edict_t * attack
 			G_PrintActorStats(ent, attacker, fd);
 		}
 
-		G_ActorDie(ent, ent->HP == 0 ? STATE_DEAD : STATE_STUN);
+		G_ActorDie(ent, ent->HP == 0 ? STATE_DEAD : STATE_STUN, attacker);
 
 		/* apply morale changes */
 		if (mor_panic->value)
@@ -470,7 +470,7 @@ extern void G_StunTeam (void)
 				continue;
 
 			/* die */
-			G_ActorDie(ent, STATE_STUN);
+			G_ActorDie(ent, STATE_STUN, NULL);
 
 			if (teamToKill == TEAM_ALIEN)
 				level.num_stuns[1][TEAM_ALIEN]++;

@@ -300,7 +300,7 @@ int G_CheckVisTeam(int team, edict_t * check, qboolean perish);
 
 void G_ForceEndRound(void);
 
-void G_ActorDie(edict_t * ent, int state);
+void G_ActorDie(edict_t * ent, int state, edict_t *attacker);
 int G_ClientAction(player_t * player);
 void G_ClientEndRound(player_t * player, qboolean quiet);
 void G_ClientTeamInfo(player_t * player);

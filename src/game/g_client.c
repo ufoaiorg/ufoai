@@ -1835,7 +1835,7 @@ void G_ClientGetWeaponFromInventory (player_t *player, int entnum, qboolean quie
 /**
  * @brief Report and handle death of an actor
  */
-void G_ActorDie (edict_t * ent, int state)
+void G_ActorDie (edict_t * ent, int state, edict_t *attacker)
 {
 	assert(ent);
 #ifdef DEBUG
@@ -1870,6 +1870,10 @@ void G_ActorDie (edict_t * ent, int state)
 	/* check if the player appears/perishes, seen from other teams */
 	G_CheckVis(ent, qtrue);
 
+	/* check if the attacker appears/perishes, seen from other teams */
+	if (attacker)
+		G_CheckVis(attacker, qtrue);
+
 	/* calc new vis for this player */
 	G_CheckVisTeam(ent->team, NULL, qfalse);
 }
@@ -1897,7 +1901,7 @@ void G_KillTeam (void)
 				continue;
 
 			/* die */
-			G_ActorDie(ent, STATE_DEAD);
+			G_ActorDie(ent, STATE_DEAD, NULL);
 		}
 
 	/* check for win conditions */
