@@ -39,7 +39,7 @@ typedef struct tnode_s {
 	int		pad;
 } tnode_t;
 
-static tnode_t *tnodes, *tnode_p, *freeTnodes;
+static tnode_t *tnodes, *tnode_p;
 
 static int numtheads = 0;
 static int thead[260];
@@ -147,11 +147,13 @@ static void BuildTnode_r (int node)
 extern void MakeTnodes (int levels)
 {
 	int i;
+	size_t size;
 
+	size = (numnodes + 1) * sizeof(tnode_t);
 	/* 32 byte align the structs */
-	tnodes = malloc((numnodes + 1) * sizeof(tnode_t));
-	freeTnodes = tnodes;
-	tnodes = (tnode_t *)(((ptrdiff_t)tnodes + 31) &~ 31);
+	size = (size + 31) &~ 31;
+
+	tnodes = malloc(size);
 	tnode_p = tnodes;
 	numtheads = 0;
 
@@ -437,7 +439,7 @@ extern qboolean TestContents (vec3_t pos)
  */
 void CloseTNodes (void)
 {
-	if (freeTnodes)
-		free(freeTnodes);
-	freeTnodes = NULL;
+	if (tnodes)
+		free(tnodes);
+	tnodes = NULL;
 }
