@@ -564,6 +564,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\client\cl_language.c"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\client\cl_le.c"
 				>
 			</File>
