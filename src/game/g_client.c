@@ -1403,15 +1403,18 @@ static void G_ClientTurn (player_t * player, int num, int dv)
  * @param[in,out] player @todo Writeme
  * @param[in] num @todo Writeme
  * @param[in] reqState The bit-map of the requested state change
+ * @param[in] checkaction only activate the events - network stuff is handled in the calling function
+ * don't even use the G_ActionCheck function
+ * @note Use checkaction true only for e.g. spawning values
  */
-static void G_ClientStateChange (player_t * player, int num, int reqState)
+static void G_ClientStateChange (player_t * player, int num, int reqState, qboolean checkaction)
 {
 	edict_t *ent;
 
 	ent = g_edicts + num;
 
 	/* Check if any action is possible. */
-	if (!G_ActionCheck(player, ent, 0, NOISY))
+	if (checkaction && !G_ActionCheck(player, ent, 0, NOISY))
 		return;
 
 	if (!reqState)
@@ -1420,7 +1423,7 @@ static void G_ClientStateChange (player_t * player, int num, int reqState)
 	switch (reqState) {
 	case STATE_CROUCHED: /* toggle between crouch/stand */
 		/* Check if player has enough TUs (TU_CROUCH TUs for crouch/uncrouch). */
-		if (G_ActionCheck(player, ent, TU_CROUCH, NOISY)) {
+		if (!checkaction || G_ActionCheck(player, ent, TU_CROUCH, NOISY)) {
 			ent->state ^= STATE_CROUCHED;
 			ent->TU -= TU_CROUCH;
 			/* Link it. */
@@ -1478,11 +1481,11 @@ static void G_ClientStateChange (player_t * player, int num, int reqState)
 			so the only sane action if the button is clicked is to disable everything in order to make it work at all.
 			@todo: dsiplay correct "disable" button and directly call this function with "disable rf" parameters
 			*/
-			G_ClientStateChange (player, num, ~STATE_REACTION); /**< Turn off RF */
+			G_ClientStateChange (player, num, ~STATE_REACTION, qtrue); /**< Turn off RF */
 		}
 		break;
 	case STATE_REACTION_ONCE: /* request to turn on single-reaction fire mode */
-		if (G_ActionCheck(player, ent, TU_REACTION_SINGLE, NOISY)) {
+		if (!checkaction || G_ActionCheck(player, ent, TU_REACTION_SINGLE, NOISY)) {
 			/* Turn on reaction fire and save the used TUs to the list. */
 			ent->state |= STATE_REACTION_ONCE;
 
@@ -1511,6 +1514,10 @@ static void G_ClientStateChange (player_t * player, int num, int reqState)
 		Com_Printf("G_ClientStateChange: unknown request %i, ignoring\n", reqState);
 		return;
 	}
+
+	/* only activate the events - network stuff is handled in the calling function */
+	if (!checkaction)
+		return;
 
 	/* Send the state change. */
 	G_SendState(G_VisToPM(ent->visflags), ent);
@@ -1933,7 +1940,7 @@ int G_ClientAction (player_t * player)
 
 	case PA_STATE:
 		gi.ReadFormat(pa_format[PA_STATE], &i);
-		G_ClientStateChange(player, num, i);
+		G_ClientStateChange(player, num, i, qtrue);
 		break;
 
 	case PA_SHOOT:
@@ -2129,8 +2136,8 @@ void G_ClientTeamAssign (player_t * player)
 				} else
 					/* all the others are set to waiting */
 					p->ready = qtrue;
+				G_PrintStats(va("Team %i: %s", p->pers.team, p->pers.netname));
 			}
-			G_PrintStats(va("Team %i: %s", p->pers.team, p->pers.netname));
 		}
 		G_PrintStats(va("Team %i got the first round", turnTeam));
 		gi.bprintf(PRINT_HIGH, _("Team %i (%s) will get the first turn.\n"), turnTeam, buffer);
@@ -2531,6 +2538,9 @@ void G_ClientBegin (player_t* player)
  */
 qboolean G_ClientSpawn (player_t * player)
 {
+	edict_t *ent;
+	int i;
+
 	/* @todo: Check player->pers.team here */
 	if (level.activeTeam == -1) {
 		/* activate round if in single-player */
@@ -2553,6 +2563,13 @@ qboolean G_ClientSpawn (player_t * player)
 	/* show visible actors and submit stats */
 	G_ClearVisFlags(player->pers.team);
 	G_CheckVis(NULL, qfalse);
+
+	/* set initial state to reaction fire activated for the other team */
+	if (sv_maxclients->integer > 1 && level.activeTeam != player->pers.team)
+		for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
+			if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV) && ent->team == player->pers.team)
+				G_ClientStateChange(player, i, STATE_REACTION, qfalse);
+
 	G_SendPlayerStats(player);
 
 	/* send things like doors and breakables */
