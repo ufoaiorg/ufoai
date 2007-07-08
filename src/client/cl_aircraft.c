@@ -2316,7 +2316,7 @@ extern void AII_UpdateAircraftStats (aircraft_t *aircraft)
 			item = &aircraftItems[aircraft->electronics[i].itemIdx];
 			if (fabs(item->stats[currentStat]) > 2.0f)
 				aircraft->stats[currentStat] += (int) item->stats[currentStat];
-			else if (item->stats[currentStat] > 0.00001f)
+			else if (item->stats[currentStat] > UFO_EPSILON)
 				aircraft->stats[currentStat] *= item->stats[currentStat];
 		}
 
@@ -2329,7 +2329,7 @@ extern void AII_UpdateAircraftStats (aircraft_t *aircraft)
 			item = &aircraftItems[aircraft->weapons[i].itemIdx];
 			if (fabs(item->stats[currentStat]) > 2.0f)
 				aircraft->stats[currentStat] += item->stats[currentStat];
-			else if (item->stats[currentStat] > 0.00001f)
+			else if (item->stats[currentStat] > UFO_EPSILON)
 				aircraft->stats[currentStat] *= item->stats[currentStat];
 		}
 
@@ -2339,7 +2339,7 @@ extern void AII_UpdateAircraftStats (aircraft_t *aircraft)
 			item = &aircraftItems[aircraft->shield.itemIdx];
 			if (fabs(item->stats[currentStat]) > 2.0f)
 				aircraft->stats[currentStat] += item->stats[currentStat];
-			else if (item->stats[currentStat] > 0.00001f)
+			else if (item->stats[currentStat] > UFO_EPSILON)
 				aircraft->stats[currentStat] *= item->stats[currentStat];
 		}
 	}
