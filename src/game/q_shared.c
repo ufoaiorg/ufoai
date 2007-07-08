@@ -53,6 +53,7 @@ const byte dvleft[DIRECTIONS] = { 4, 5, 6, 7, 2, 3, 1, 0 };
 
 /*===========================================================================*/
 
+/** @brief Player action format strings for netchannel transfer */
 const char *pa_format[] =
 {
 	"",					/* PA_NULL */
