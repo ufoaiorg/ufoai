@@ -171,6 +171,10 @@ SOURCE=..\..\src\client\cl_keys.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\src\client\cl_language.c
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\src\client\cl_le.c
 # End Source File
 # Begin Source File
