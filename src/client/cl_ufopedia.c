@@ -482,6 +482,13 @@ extern void UP_AircraftItemDescription (int idx)
 	aircraftItem_t *item;
 	int i;
 
+	/* no valid item id given */
+	if (idx == -1) {
+		/* set menu text node content to null */
+		menuText[TEXT_STANDARD] = NULL;
+		return;
+	}
+
 	/* select item */
 	item = &aircraftItems[idx];
 	Cvar_Set("mn_itemname", _(gd.technologies[item->tech_idx].name));
