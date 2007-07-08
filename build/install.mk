@@ -3,6 +3,7 @@ VERSION=$(shell grep UFO_VERSION src/qcommon/qcommon.h | sed -e 's/.*UFO_VERSION
 installer: win32installer linuxinstaller sourcearchive
 
 mappack:
+	$(MAKE) maps
 	tar -cvjp --exclude-from=src/ports/linux/tar.ex -f ufoai-$(VERSION)-mappack.tar.bz2 ./base/maps
 	scp ufoai-$(VERSION)-mappack.tar.bz2 ufo:~/public_html/download
 
