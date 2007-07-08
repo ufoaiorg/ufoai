@@ -1017,7 +1017,6 @@ static qboolean G_GetShotFromType (edict_t *ent, int type, int firemode, item_t 
 			gi.dprintf("weapon_fd_idx: %i (%s), firemode: %i\n", weapon_fd_idx, gi.csi->ods[(*weapon)->t].name, firemode);
 			assert(weapon_fd_idx >= 0);
 			/* fd = od[weapon_fd_idx][firemodeidx] */
-			assert(*fd);
 			*fd = &gi.csi->ods[(*weapon)->t].fd[weapon_fd_idx][firemode];
 		} else {
 			*weapon = NULL;
