@@ -151,6 +151,9 @@ extern qboolean CL_LanguageTryToSet (const char *localeID)
 
 	assert(localeID);
 
+	/* in case of an error we really don't want a flooded console */
+	s_language->modified = qfalse;
+
 	for (i = 0, language = languageList; i < languageCount; language = language->next, i++) {
 		if (!Q_strcmp(localeID, language->localeID))
 			break;
