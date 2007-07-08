@@ -246,9 +246,9 @@ static node_t *AllocNode (void)
 extern bspbrush_t *AllocBrush (int numsides)
 {
 	bspbrush_t *bb;
-	ptrdiff_t c;
+	size_t c;
 
-	c = (ptrdiff_t)&(((bspbrush_t *)0)->sides[numsides]);
+	c = (size_t)&(((bspbrush_t *)0)->sides[numsides]);
 	bb = malloc(c);
 	memset(bb, 0, c);
 	c_active_brushes++;
