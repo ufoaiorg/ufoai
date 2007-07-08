@@ -1481,7 +1481,7 @@ static void G_ClientStateChange (player_t * player, int num, int reqState, qbool
 			so the only sane action if the button is clicked is to disable everything in order to make it work at all.
 			@todo: dsiplay correct "disable" button and directly call this function with "disable rf" parameters
 			*/
-			G_ClientStateChange (player, num, ~STATE_REACTION, qtrue); /**< Turn off RF */
+			G_ClientStateChange(player, num, ~STATE_REACTION, qtrue); /**< Turn off RF */
 		}
 		break;
 	case STATE_REACTION_ONCE: /* request to turn on single-reaction fire mode */
@@ -2136,7 +2136,8 @@ void G_ClientTeamAssign (player_t * player)
 				} else
 					/* all the others are set to waiting */
 					p->ready = qtrue;
-				G_PrintStats(va("Team %i: %s", p->pers.team, p->pers.netname));
+				if (p->pers.team)
+					G_PrintStats(va("Team %i: %s", p->pers.team, p->pers.netname));
 			}
 		}
 		G_PrintStats(va("Team %i got the first round", turnTeam));
@@ -2567,8 +2568,8 @@ qboolean G_ClientSpawn (player_t * player)
 	/* set initial state to reaction fire activated for the other team */
 	if (sv_maxclients->integer > 1 && level.activeTeam != player->pers.team)
 		for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
-			if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV) && ent->team == player->pers.team)
-				G_ClientStateChange(player, i, STATE_REACTION, qfalse);
+			if (ent->inuse && (ent->type == ET_ACTOR || ent->type == ET_UGV))
+				G_ClientStateChange(player, i, STATE_REACTION_ONCE, qfalse);
 
 	G_SendPlayerStats(player);
 
@@ -2580,6 +2581,14 @@ qboolean G_ClientSpawn (player_t * player)
 
 	/* send events */
 	gi.EndEvents();
+
+	if (sv_maxclients->integer > 1 && level.activeTeam != player->pers.team)
+		for (i = 0, ent = g_edicts; i < globals.num_edicts; i++, ent++)
+			if (ent->inuse && ent->team == player->pers.team && (ent->type == ET_ACTOR || ent->type == ET_UGV)) {
+				gi.AddEvent(player->pers.team, EV_ACTOR_STATECHANGE);
+				gi.WriteShort(ent->number);
+				gi.WriteShort(ent->state);
+			}
 
 	/* inform all clients */
 	gi.bprintf(PRINT_HIGH, "%s has taken control over team %i.\n", player->pers.netname, player->pers.team);
