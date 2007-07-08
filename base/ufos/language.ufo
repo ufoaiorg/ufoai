@@ -42,7 +42,7 @@ language cs {
 	"_Czech"
 	{
 		cs.UTF-8
-		cs.CZ.UTF-8
+		cs_CZ.UTF-8
 	}
 }
 
@@ -50,6 +50,7 @@ language da {
 	"_Danish"
 	{
 		da.UTF-8
+		da_DK.UTF-8
 	}
 }
 
@@ -57,6 +58,7 @@ language est {
 	"_Estonia"
 	{
 		est.UTF-8
+		et_EE.UTF-8
 	}
 }
 
