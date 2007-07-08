@@ -582,10 +582,10 @@ extern qboolean Qcommon_LocaleSet (void)
 	setlocale(LC_ALL, "C");
 	locale = setlocale(LC_MESSAGES, s_language->string);
 	if (!locale) {
-		Com_Printf("...could not set to language: %s\n", s_language->string);
+		Com_DPrintf("...could not set to language: %s\n", s_language->string);
 		locale = setlocale(LC_MESSAGES, "");
 		if (!locale) {
-			Com_Printf("...could not set to system language\n");
+			Com_DPrintf("...could not set to system language\n");
 			return qfalse;
 		}
 	} else {

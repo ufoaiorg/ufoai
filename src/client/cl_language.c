@@ -185,8 +185,11 @@ extern qboolean CL_LanguageTryToSet (const char *localeID)
 	}
 	do {
 		Cvar_Set("s_language", mapping->localeMapping);
-		if (Qcommon_LocaleSet())
+		if (Qcommon_LocaleSet()) {
+			Cvar_Set("s_language", language->localeID);
+			s_language->modified = qfalse;
 			return qtrue;
+		}
 		mapping = mapping->next;
 	} while (mapping);
 	return qfalse;
