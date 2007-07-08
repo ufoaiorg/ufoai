@@ -1144,7 +1144,7 @@ static void AIM_CheckairequipSelectedSlot (aircraft_t *aircraft)
 
 /**
  * @brief Draw only slots existing for this aircraft, and emphases selected one
- * @sa aircraft Pointer to the aircraft
+ * @return[out] aircraft Pointer to the aircraft
  */
 static void AIM_DrawAircraftSlots (aircraft_t *aircraft)
 {
@@ -1158,6 +1158,7 @@ static void AIM_DrawAircraftSlots (aircraft_t *aircraft)
 			node->invis = qtrue;
 			/* Draw available slots */
 			switch (airequipID) {
+			case AC_ITEM_AMMO:
 			case AC_ITEM_WEAPON:
 				for (j = 0; j < aircraft->maxWeapons; j++) {
 					/* check if one of the aircraft slots is at this position */
@@ -1197,17 +1198,65 @@ static void AIM_DrawAircraftSlots (aircraft_t *aircraft)
 }
 
 /**
+ * @brief Check if an aircraft item should or not be displayed in airequip menu
+ * @param[in] tech Pointer to the technology to test
+ * @return qtrue if the aircraft item should be displayed, qfalse else 
+ */
+static qboolean AIM_SelectableAircraftItem (technology_t *tech)
+{
+	int idx;
+	aircraft_t *aircraft;
+
+	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
+	
+	assert(aircraft);
+
+	if (!RS_IsResearched_ptr(tech))
+		return qfalse;
+
+	if (airequipID == AC_ITEM_AMMO) {
+		idx = aircraft->weapons[airequipSelectedSlot].itemIdx;
+			if (Q_strncmp(aircraftItems[AII_GetAircraftItemByID(tech->provides)].weapon, aircraftItems[idx].id, MAX_VAR))
+				return qfalse;
+	}
+	return qtrue;
+}
+
+/**
+ * @brief Update the list of item you can choose
+ */
+static void AIM_UpdateAircraftItemList (void)
+{
+	static char buffer[1024];
+	technology_t **list;
+
+	/* Delete list */
+	buffer[0] = '\0';
+
+	/* Add all items corresponding to airequipID to list */
+	list = AII_GetCraftitemTechsByType(airequipID, qtrue);	
+
+	/* Copy only those which are researched to buffer */
+	while (*list) {
+		if (AIM_SelectableAircraftItem (*list))
+			Q_strcat(buffer, va("%s\n", _((*list)->name)), sizeof(buffer));
+		list++;
+	}
+
+	/* copy buffer to menuText to display it on screen */
+	menuText[TEXT_LIST] = buffer;
+}
+
+/**
  * @brief Fills the weapon and shield list of the aircraft equip menu
  * @sa CL_AircraftEquipmenuMenuWeaponsClick_f
  * @sa CL_AircraftEquipmenuMenuShieldsClick_f
  */
 void AIM_AircraftEquipmenuInit_f (void)
 {
-	static char buffer[1024];
 	static char smallbuffer1[128];
 	static char smallbuffer2[128];
 	static char smallbuffer3[128];
-	technology_t **list;
 	int type;
 	menuNode_t *node;
 	aircraft_t *aircraft;
@@ -1217,23 +1266,27 @@ void AIM_AircraftEquipmenuInit_f (void)
 		if (airequipID == -1) {
 			Com_Printf("Usage: airequip_init <num>\n");
 			return;
-		} else {
-			switch (airequipID) {
-			case AC_ITEM_SHIELD:
-				/* shield/armour */
-				type = 1;
-				break;
-			case AC_ITEM_ELECTRONICS:
-				/* items */
-				type = 2;
-				break;
-			default:
-				type = 0;
-				break;
-			}
 		}
 	} else {
 		type = atoi(Cmd_Argv(1));
+		switch (type) {
+		case 1:
+			/* shield/armour */
+			airequipID = AC_ITEM_SHIELD;
+			break;
+		case 2:
+			/* items */
+			airequipID = AC_ITEM_ELECTRONICS;
+			break;
+		case 3:
+			/* ammo - only available from weapons */
+			if (airequipID == AC_ITEM_WEAPON)
+				airequipID = AC_ITEM_AMMO;
+			break;
+		default:
+			airequipID = AC_ITEM_WEAPON;
+			break;
+		}
 	}
 
 	node = MN_GetNodeFromCurrentMenu("aircraftequip");
@@ -1255,27 +1308,17 @@ void AIM_AircraftEquipmenuInit_f (void)
 	VectorCopy(aircraft->anglesEquip, node->angles);
 	rotateAngles = aircraft->angles;
 
-	Com_sprintf(buffer, sizeof(buffer), _("None\n"));
-
-	switch (type) {
-	case 1: /* armour */
-		list = AII_GetCraftitemTechsByType(type, qfalse);
+	switch (airequipID) {
+	case AC_ITEM_SHIELD: /* armour */
 		slot = &aircraft->shield;
-		airequipID = AC_ITEM_SHIELD;
 		break;
-	case 2:	/* items */
-		list = AII_GetCraftitemTechsByType(type, qfalse);
-		airequipID = AC_ITEM_ELECTRONICS;
+	case AC_ITEM_ELECTRONICS:	/* items */
 		slot = aircraft->electronics + airequipSelectedSlot;
 		break;
-	case 3:	/* ammos */
-		list = AII_GetCraftitemTechsByType(type, qfalse);
-		airequipID = AC_ITEM_AMMO;
+	case AC_ITEM_AMMO:	/* ammos */
 		slot = aircraft->weapons + airequipSelectedSlot;
 		break;
 	default:
-		list = AII_GetCraftitemTechsByType(type, qfalse);
-		airequipID = AC_ITEM_WEAPON;
 		slot = aircraft->weapons + airequipSelectedSlot;
 		break;
 	}
@@ -1283,13 +1326,8 @@ void AIM_AircraftEquipmenuInit_f (void)
 	/* Check that airequipSelectedSlot corresponds to an existing slot for this aircraft */
 	AIM_CheckairequipSelectedSlot(aircraft);
 
-	while (*list) {
-		/*Com_Printf("%s\n", (*list)->id);*/
-		if (RS_IsResearched_ptr(*list))
-			Q_strcat(buffer, va("%s\n", _((*list)->name)), sizeof(buffer));
-		list++;
-	}
-	menuText[TEXT_LIST] = buffer;
+	/* Fill the list of item you can equip your aircraft with */
+	AIM_UpdateAircraftItemList();
 
 	/* shield / weapon description */
 	menuText[TEXT_STANDARD] = NULL;
@@ -1394,12 +1432,30 @@ extern void AIM_AircraftEquipSlotSelect_f (void)
  */
 extern void AIM_AircraftEquipzoneSelect_f (void)
 {
+	int num;
+
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: airequip_zone_select <arg>\n");
 		return;
 	}
 
-	airequipSelectedZone = atoi(Cmd_Argv(1));
+	num = atoi(Cmd_Argv(1));
+
+	/* ammos are only available for weapons */
+	if (airequipID == AC_ITEM_WEAPON) {
+		if (num == 3)
+			airequipID = AC_ITEM_AMMO;
+	} else if (airequipID == AC_ITEM_AMMO) {
+		if (num != 3)
+			airequipID = AC_ITEM_WEAPON;
+	} else {
+		if (num == 3)
+			return;
+	}
+	airequipSelectedZone = num;
+
+	/* Fill the list of item you can equip your aircraft with */
+	AIM_UpdateAircraftItemList();
 }
 
 /**
@@ -1449,17 +1505,15 @@ extern void AIM_AircraftEquipAddItem_f (void)
 	if (num == 2 && slot->itemIdx < 0)
 		return;
 
-	/* ammos are only available for weapons */
-	if (num == 3 && airequipID != AC_ITEM_WEAPON)
-		return;
-
 	/* select the slot we are changing */
 	/* update the new item to slot */
-	if (num == 1)
+	if (num == 1) {
 		AII_AddItemToSlot(airequipSelectedTechnology, slot);
+		slot->ammoIdx = -1;
+	}
 	else if (num == 2)
 		slot->nextItemIdx = AII_GetAircraftItemByID(airequipSelectedTechnology->provides);
-	else if (airequipID == AC_ITEM_WEAPON)
+	else if (airequipID == AC_ITEM_AMMO)
 		slot->ammoIdx = AII_GetAircraftItemByID(airequipSelectedTechnology->provides);
 
 	/* Update the values of aircraft stats (just in case an item has an installationTime of 0) */
@@ -1513,9 +1567,13 @@ extern void AIM_AircraftEquipDeleteItem_f (void)
 
 	/* select the slot we are changing */
 	/* update the new item to slot */
-	if (num == 1)
-		slot->installationTime = -aircraftItems[slot->itemIdx].installationTime;
-	else if (num == 2)
+	if (num == 1) {
+		/* if the item has been installed since less than 1 hour, you don't time to remove it */
+		if (slot->installationTime < aircraftItems[slot->itemIdx].installationTime)
+			slot->installationTime = -aircraftItems[slot->itemIdx].installationTime;
+		else
+			slot->itemIdx = -1;
+	} else if (num == 2)
 		slot->nextItemIdx = -1;
 	else if (airequipID == AC_ITEM_WEAPON)
 		slot->ammoIdx = -1;
@@ -1549,28 +1607,25 @@ void AIM_AircraftEquipmenuClick_f (void)
 	num = atoi(Cmd_Argv(1));
 
 	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
-	if (num < 1) {
-		airequipSelectedTechnology = NULL;
-		AIR_AircraftSelect(aircraft);
-	} else {
-		/* build the list of all aircraft items of type airequipID - null terminated */
-		list = AII_GetCraftitemTechsByType(airequipID, qtrue);
-		/* to prevent overflows we go through the list instead of address it directly */
-		while (*list) {
-			if (RS_IsResearched_ptr(*list))
-				num--;
+
+	/* build the list of all aircraft items of type airequipID - null terminated */
+	list = AII_GetCraftitemTechsByType(airequipID, qtrue);
+	/* to prevent overflows we go through the list instead of address it directly */
+	while (*list) {
+		if (AIM_SelectableAircraftItem(*list)) {
 			/* found it */
 			if (num <= 0) {
 				airequipSelectedTechnology = *list;
-				AIR_AircraftSelect(aircraft);
-				noparams = qtrue; /* used for AIM_AircraftEquipmenuMenuInit_f */
-				AIM_AircraftEquipmenuInit_f();
+				/*AIR_AircraftSelect(aircraft);*/
+				/* noparams = qtrue; */ /* used for AIM_AircraftEquipmenuMenuInit_f */
+				/* AIM_AircraftEquipmenuInit_f(); */
 				UP_AircraftItemDescription(AII_GetAircraftItemByID(airequipSelectedTechnology->provides));
 				break;
 			}
-			/* next item in the tech pointer list */
-			list++;
+			num--;
 		}
+		/* next item in the tech pointer list */
+		list++;
 	}
 }
 
