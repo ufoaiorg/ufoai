@@ -975,9 +975,4 @@ menu options_game
 			action	""
 		}
 	}
-
-	func init
-	{
-		cmd "mn_translate confirm_actions mn_confirm_actions 0:No,1:Yes,2:Moving;"
-	}
 }
