@@ -981,8 +981,10 @@ extern void CL_UpdateHireVar (aircraft_t *aircraft)
 
 	Cvar_Set("mn_hired", va(_("%i of %i"), base->teamNum[aircraft->idxInBase], aircraft->size));
 	hired_in_base = E_CountHired(base, EMPL_SOLDIER);
-	/* Leave this Com_Printf here for better output in case of problems for a moment. */
-	Com_Printf("CL_UpdateHireVar()... aircraft idx: %i, homebase: %s\n", aircraft->idx, base->name);
+
+	/* Uncomment this Com_Printf here for better output in case of problems. */
+	/* Com_Printf("CL_UpdateHireVar()... aircraft idx: %i, homebase: %s\n", aircraft->idx, base->name); */
+
 	/* update curTeam list */
 	for (i = 0, p = 0; i < hired_in_base; i++) {
 		employee = E_GetHiredEmployee(base, EMPL_SOLDIER, -(i+1));
