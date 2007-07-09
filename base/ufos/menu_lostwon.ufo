@@ -65,7 +65,7 @@ menu won
 	}
 
 	confunc disufostore 	{ *bt_storeufo image "menu/button_gray" *bt_storeufo tooltip "_No UFO hangars or UFO recovery process finished" }
-	confunc disufosell	{ *bt_sellufo image "menu/button_gray" *bt_sellufo tooltip "_No nation with accepted level of alien infiltration or UFO recovery process finished" }
+	confunc disufosell	{ *bt_sellufo image "menu/button_gray" *bt_sellufo tooltip "_No nation with accepted level of alien infiltration" }
 	confunc disufodestroy	{ *bt_destroyufo image "menu/button_gray" *bt_destroyufo tooltip "_UFO recovery process finished"}
 
 	pic bt_storeufo
