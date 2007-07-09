@@ -41,56 +41,12 @@ ShowUninstDetails "nevershow"
 
 !define MUI_WELCOMEFINISHPAGE_BITMAP "..\..\..\build\installer.bmp"
 
-!macro MUI_PAGE_DIRECTORY_CUSTOM
-
-  !verbose push
-  !verbose ${MUI_VERBOSE}
-
-  !insertmacro MUI_PAGE_INIT
-
-  !insertmacro MUI_SET MUI_${MUI_PAGE_UNINSTALLER_PREFIX}DIRECTORYPAGE
-
-  !insertmacro MUI_DEFAULT MUI_DIRECTORYPAGE_TEXT_TOP ""
-  !insertmacro MUI_DEFAULT MUI_DIRECTORYPAGE_TEXT_DESTINATION ""
-
-  PageEx ${MUI_PAGE_UNINSTALLER_FUNCPREFIX}directory
-
-    PageCallbacks ${MUI_PAGE_UNINSTALLER_FUNCPREFIX}mui.DirectoryPre_${MUI_UNIQUEID} ${MUI_PAGE_UNINSTALLER_FUNCPREFIX}mui.DirectoryShow_${MUI_UNIQUEID} ${MUI_PAGE_UNINSTALLER_FUNCPREFIX}mui.DirectoryLeave_${MUI_UNIQUEID}
-
-    Caption " "
-
-    DirText "${MUI_DIRECTORYPAGE_TEXT_TOP}" "${MUI_DIRECTORYPAGE_TEXT_DESTINATION}"
-
-    !ifdef MUI_DIRECTORYPAGE_VARIABLE
-      DirVar "${MUI_DIRECTORYPAGE_VARIABLE}"
-    !endif
-
-    !ifdef MUI_DIRECTORYPAGE_VERIFYONLEAVE
-      DirVerify leave
-      PageCallbacks "" "" dirLeave
-    !endif
-
-  PageExEnd
-
-  !insertmacro MUI_FUNCTION_DIRECTORYPAGE ${MUI_PAGE_UNINSTALLER_FUNCPREFIX}mui.DirectoryPre_${MUI_UNIQUEID} ${MUI_PAGE_UNINSTALLER_FUNCPREFIX}mui.DirectoryShow_${MUI_UNIQUEID} ${MUI_PAGE_UNINSTALLER_FUNCPREFIX}mui.DirectoryLeave_${MUI_UNIQUEID}
-
-  !undef MUI_DIRECTORYPAGE_TEXT_TOP
-  !undef MUI_DIRECTORYPAGE_TEXT_DESTINATION
-  !insertmacro MUI_UNSET MUI_DIRECTORYPAGE_BGCOLOR
-  !insertmacro MUI_UNSET MUI_DIRECTORYPAGE_VARIABLE
-  !insertmacro MUI_UNSET MUI_DIRECTORYPAGE_VERIFYONLEAVE
-
-  !verbose pop
-
-!macroend
-
 Var GAMEFLAGS
 Var MAPFLAGS
 Var GAMETEST
 Var MAPTEST
 Var GAMEICONFLAGS
 Var MAPICONFLAGS
-Var NONEMPTY
 
 ; Welcome page
 !insertmacro MUI_PAGE_WELCOME
@@ -101,7 +57,8 @@ Var NONEMPTY
 !insertmacro MUI_PAGE_COMPONENTS
 ; Directory page
 !define MUI_DIRECTORYPAGE_VERIFYONLEAVE
-!insertmacro MUI_PAGE_DIRECTORY_CUSTOM
+!define MUI_PAGE_CUSTOMFUNCTION_LEAVE dirLeave
+!insertmacro MUI_PAGE_DIRECTORY
 ; Instfiles page
 !insertmacro MUI_PAGE_INSTFILES
 ; Finish page
@@ -390,18 +347,13 @@ SectionEnd
 Function .onVerifyInstDir
   IfFileExists $INSTDIR\*.* Invalid Valid
   Invalid:
-  StrCmp $INSTDIR "C:" Break
-  StrCmp $INSTDIR "C:\" Break
-  StrCmp $INSTDIR $PROGRAMFILES Break
-  StrCmp $INSTDIR $PROGRAMFILES Break
-  StrCpy $NONEMPTY 1
-  Goto End
-  Valid:
-  StrCpy $NONEMPTY 0
-  Goto End
+  StrCmp $INSTDIR "C:" Break ; Ugly hard-coded constraint, but it should help in most cases.
+  StrCmp $INSTDIR "C:\" Break ; "
+;  StrCmp $INSTDIR $PROGRAMFILES Break ; Doesn't work.
+  Goto Valid
   Break:
   Abort
-  End:
+  Valid:
 FunctionEnd
 
 Function dirLeave
@@ -418,10 +370,11 @@ Function dirLeave
       Abort
       ${Break}
   ${EndSwitch}
-  ${If} $NONEMPTY == 1
+  IfFileExists $INSTDIR\*.* Exists NonExists
+  Exists:
     MessageBox MB_ICONEXCLAMATION|MB_YESNO|MB_DEFBUTTON2 "The destination folder already exists!$\r$\nAre you sure you want to install into that directory?" IDYES +2
     Abort
-  ${EndIf}
+  NonExists:
 FunctionEnd
 
 Function .onSelChange
@@ -454,11 +407,11 @@ Function un.onInit
 !insertmacro MUI_UNGETLANGUAGE
   MessageBox MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 "Are you sure that you want to remove $(^Name) and all its data?" IDYES +2
   Abort
-  MessageBox MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 "Do you also want to delete your configuration Files and saved games?" IDNO +2
+  MessageBox MB_ICONQUESTION|MB_YESNO|MB_DEFBUTTON2 "Do you also want to delete your configuration files and saved games?" IDNO +2
   RMDIR /r "$APPDATA\UFOAI"
 FunctionEnd
 
-; This uninstaller is unsafe - if a user installs this in the root of C: for example, the uninstall will wipe the entire partition.
+; This uninstaller is unsafe - if a user installs this in the root of a partition, for example, the uninstall will wipe that entire partition.
 Section Uninstall
   RMDIR /r $INSTDIR
   RMDIR $INSTDIR
