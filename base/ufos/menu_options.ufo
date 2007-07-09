@@ -675,228 +675,21 @@ menu options_game
 	}
 
 	// ===================
-	// CONFIRM ACTIONS
-	// ===================
-	string confirm_str
-	{
-		string	"_Confirm Actions:"
-		pos		"500 155"
-	}
-	string confirm_value
-	{
-		string	"*cvar mn_confirm_actions"
-		pos		"840 155"
-		align	ur
-	}
-	pic confirm_dec
-	{
-		image	menu/buttons_small
-		pos		"868 159"
-		texl	"0 0"
-		texh	"16 16"
-		mousefx	true
-		tooltip	"_No confirmation before walking and shooting"
-		click
-		{
-			cmd "mn_modify confirm_actions -1 0 2;"
-			cmd "mn_translate confirm_actions mn_confirm_actions 0:No,1:Yes,2:Moving;"
-		}
-	}
-	pic confirm_inc
-	{
-		image	menu/buttons_small
-		pos		"884 159"
-		texl	"16 0"
-		texh	"32 16"
-		mousefx	true
-		tooltip	"_Confirmation needed before walking and shooting"
-		click
-		{
-			cmd "mn_modify confirm_actions +1 0 2;"
-			cmd "mn_translate confirm_actions mn_confirm_actions 0:No,1:Yes,2:Moving;"
-		}
-	}
-
-	// ===================
-	// HUD
-	// ===================
-	string hud_str
-	{
-		string	"_HUD Design:"
-		pos		"500 180"
-	}
-	string hud_value
-	{
-		string	"*cvar mn_hud"
-		pos		"840 180"
-		align	ur
-	}
-	pic hud_dec
-	{
-		image	menu/buttons_small
-		pos		"868 184"
-		texl	"0 0"
-		texh	"16 16"
-		mousefx	true
-		tooltip	"_Choose another hud"
-		click	{ cmd "mn_modifystring mn_hud -1 hud:althud;" }
-	}
-	pic hud_inc
-	{
-		image	menu/buttons_small
-		pos		"884 184"
-		texl	"16 0"
-		texh	"32 16"
-		mousefx	true
-		tooltip	"_Choose another hud"
-		click	{ cmd "mn_modifystring mn_hud +1 hud:althud;" }
-	}
-
-	// ===================
-	// PRECACHE
-	// ===================
-	string precache_str
-	{
-		string	"_Precache images and models:"
-		pos		"500 205"
-	}
-	checkbox precache
-	{
-		cvar	"*cvar cl_precache"
-		pos		"840 205"
-		align	ur
-		tooltip	"_Precache images and models (faster menus)"
-	}
-
-	// ===================
-	// TOOLTIPS
-	// ===================
-	string tooltip_str
-	{
-		string	"_Tooltips:"
-		pos		"500 230"
-	}
-	checkbox tooltip
-	{
-		cvar	"*cvar cl_show_tooltips"
-		pos		"840 230"
-		align	ur
-		tooltip	"_Activates tooltips"
-	}
-
-	// ===================
-	// CENTER VIEW
-	// ===================
-	string centerview_str
-	{
-		string	"_Centre view:"
-		pos		"500 255"
-	}
-	checkbox centerview_value
-	{
-		cvar	"*cvar cl_centerview"
-		pos		"840 255"
-		align	ur
-		tooltip	"_Centring at soldier selecting, shooting and appearing"
-	}
-
-	// ===================
-	// CURSOR TOOLTIPS
-	// ===================
-	string c_tooltip_str
-	{
-		string	"_Cursor tooltips:"
-		pos		"500 280"
-	}
-	checkbox c_tooltip
-	{
-		cvar	"*cvar cl_show_cursor_tooltips"
-		pos		"840 280"
-		align	ur
-		tooltip	"_Activates cursor tooltips"
-	}
-
-	// =====================
-	// 3DMAP
-	// =====================
-	string 3dmap_str
-	{
-		string	"_3D Geoscape:"
-		pos		"500 305"
-	}
-	checkbox 3dmap
-	{
-		cvar	"*cvar cl_3dmap"
-		pos		"840 305"
-		align	ur
-		tooltip	"_Use 3D geoscape"
-	}
-
-	// =====================
-	// TIP OF THE DAY
-	// =====================
-	string tipoftheday_string
-	{
-		string	"_Show tip of the day"
-		pos		"500 330"
-		font	f_small
-		align ul
-	}
-	checkbox tipoftheday
-	{
-		cvar	"*cvar cl_showTipOfTheDay"
-		pos	"840 330"
-		align	ur
-	}
-
-	// =====================
-	// START WITH EMPLOYEES
-	// =====================
-	string start_employees_str
-	{
-		string	"_Start with employees:"
-		pos		"500 355"
-	}
-	checkbox start_employees
-	{
-		cvar	"*cvar cl_start_employees"
-		pos		"840 355"
-		align	ur
-		tooltip	"_Employees already hired at campaign start"
-	}
-
-	// =====================
-	// START WITH BUILDINGS
-	// =====================
-	string start_buildings_str
-	{
-		string	"_Start with buildings:"
-		pos		"500 380"
-	}
-	checkbox start_building
-	{
-		cvar	"*cvar cl_start_buildings"
-		pos		"840 380"
-		align	ur
-		tooltip	"_Buildings already built in the initial base"
-	}
-
-	// ===================
 	// CAMERA SPEED
 	// ===================
 	string camspeed_str
 	{
 		string	"_Camera Scroll:"
-		pos		"500 455"
+		pos		"500 155"
 	}
 	pic camspeed_rahmen
 	{
 		image	menu/bar_rahmen
-		pos		"659 460"
+		pos		"659 160"
 	}
 	bar camspeed_bar
 	{
-		pos		"668 465"
+		pos		"668 165"
 		size	"245 6"
 		color	"0 .8 0 1"
 		current	"*cvar cl_cammovespeed"
@@ -913,16 +706,16 @@ menu options_game
 	string camrot_str
 	{
 		string	"_Camera Rotation:"
-		pos		"500 480"
+		pos		"500 180"
 	}
 	pic camrot_rahmen
 	{
 		image	menu/bar_rahmen
-		pos		"659 485"
+		pos		"659 185"
 	}
 	bar camrot_bar
 	{
-		pos		"668 490"
+		pos		"668 190"
 		size	"245 6"
 		color	"0 .8 0 1"
 		current	"*cvar cl_camrotspeed"
@@ -934,31 +727,160 @@ menu options_game
 	}
 
 	// ===================
+	// PRECACHE
+	// ===================
+	string precache_str
+	{
+		string	"_Precache images and models:"
+		pos		"500 455"
+	}
+	checkbox precache
+	{
+		cvar	"*cvar cl_precache"
+		pos		"840 455"
+		align	ur
+		tooltip	"_Precache images and models (faster menus)"
+	}
+
+	// ===================
+	// TOOLTIPS
+	// ===================
+	string tooltip_str
+	{
+		string	"_Tooltips:"
+		pos		"500 280"
+	}
+	checkbox tooltip
+	{
+		cvar	"*cvar cl_show_tooltips"
+		pos		"840 280"
+		align	ur
+		tooltip	"_Activates tooltips"
+	}
+
+	// ===================
+	// CENTER VIEW
+	// ===================
+	string centerview_str
+	{
+		string	"_Centre view:"
+		pos		"500 305"
+	}
+	checkbox centerview_value
+	{
+		cvar	"*cvar cl_centerview"
+		pos		"840 305"
+		align	ur
+		tooltip	"_Centring at soldier selecting, shooting and appearing"
+	}
+
+	// ===================
+	// CURSOR TOOLTIPS
+	// ===================
+	string c_tooltip_str
+	{
+		string	"_Cursor tooltips:"
+		pos		"500 330"
+	}
+	checkbox c_tooltip
+	{
+		cvar	"*cvar cl_show_cursor_tooltips"
+		pos		"840 330"
+		align	ur
+		tooltip	"_Activates cursor tooltips"
+	}
+
+	// =====================
+	// 3DMAP
+	// =====================
+	string 3dmap_str
+	{
+		string	"_3D Geoscape:"
+		pos		"500 355"
+	}
+	checkbox 3dmap
+	{
+		cvar	"*cvar cl_3dmap"
+		pos		"840 355"
+		align	ur
+		tooltip	"_Use 3D geoscape"
+	}
+
+	// =====================
+	// TIP OF THE DAY
+	// =====================
+	string tipoftheday_string
+	{
+		string	"_Show tip of the day"
+		pos		"500 380"
+		font	f_small
+		align ul
+	}
+	checkbox tipoftheday
+	{
+		cvar	"*cvar cl_showTipOfTheDay"
+		pos	"840 380"
+		align	ur
+	}
+
+	// =====================
+	// START WITH EMPLOYEES
+	// =====================
+	string start_employees_str
+	{
+		string	"_Start with employees:"
+		pos		"500 405"
+	}
+	checkbox start_employees
+	{
+		cvar	"*cvar cl_start_employees"
+		pos		"840 405"
+		align	ur
+		tooltip	"_Employees already hired at campaign start"
+	}
+
+	// =====================
+	// START WITH BUILDINGS
+	// =====================
+	string start_buildings_str
+	{
+		string	"_Start with buildings:"
+		pos		"500 430"
+	}
+	checkbox start_building
+	{
+		cvar	"*cvar cl_start_buildings"
+		pos		"840 430"
+		align	ur
+		tooltip	"_Buildings already built in the initial base"
+	}
+
+	// ===================
 	// NAME
 	// ===================
 	string current_name
 	{
 		string  "_Name:"
-		pos     "500 520"
+		pos     "500 480"
 	}
 	pic slot_name
 	{
 		image   menu/save_slot
-		pos     "500 540"
+		pos     "500 500"
 		mousefx true
 		click   { cmd "msgmenu ?name" *txt_name color "1 1 1 1" *txt_name mousefx true }
 	}
 	string txt_name
 	{
 		string "*cvar name"
-		pos "510 545"
+		pos "510 505"
 		color "0 .78 0 1"
 	}
 	confunc name_changed { *txt_name color "0 .78 0 1" *txt_name mousefx false }
 
 	pic button_keys
 	{
-		pos	"580 620"
+		pos	"500 620"
 		click	{ cmd "mn_pop;mn_push options_keys;" }
 		image	menu/button_big
 		texl	"0 0"
@@ -972,7 +894,7 @@ menu options_game
 		font	f_menubig
 		color	"0 0.5 0 1"
 		string	"_Keys"
-		pos	"708 652"
+		pos	"628 652"
 		align	cc
 	}
 
@@ -983,16 +905,75 @@ menu options_game
 	string language_str
 	{
 		string "_Language"
-		pos     "500 405"
+		pos     "500 255"
 	}
 	selectbox select_language
 	{
-		pos		"774 405"
+		pos		"758 255"
 		cvar	"*cvar s_language"
 		image	"menu/selectbox_green"
-		size	"100 20"
+		size	"130 20"
 		color	"0.6 0.6 0.6 0.3"
 		// will be filled in CL_LanguageInit
+	}
+
+	// ===================
+	// HUD
+	// ===================
+	string hud_str
+	{
+		string	"_HUD Design:"
+		pos		"500 230"
+	}
+	selectbox select_hud
+	{
+		image	"menu/selectbox_green"
+		pos		"758 230"
+		size	"130 20"
+		color	"0.6 0.6 0.6 0.3"
+		cvar	"*cvar mn_hud"
+		option hud_value {
+			label	"_Original HUD"
+			value	"hud"
+			action	""
+		}
+		option althud_value {
+			label	"_Alternative HUD"
+			value	"althud"
+			action	""
+		}
+	}
+
+	// ===================
+	// CONFIRM ACTIONS
+	// ===================
+	string confirm_str
+	{
+		string	"_Confirm Actions:"
+		pos		"500 205"
+	}
+	selectbox select_confirmactions
+	{
+		image	"menu/selectbox_green"
+		pos		"758 205"
+		size	"130 20"
+		color	"0.6 0.6 0.6 0.3"
+		cvar	"*cvar confirm_actions"
+		option confirm_value {
+			label	"_Yes"
+			value	"1"
+			action	""
+		}
+		option noconfirm_value {
+			label	"_No"
+			value	"0"
+			action	""
+		}
+		option moveconfirm_value {
+			label	"_Only for moving"
+			value	"2"
+			action	""
+		}
 	}
 
 	func init
