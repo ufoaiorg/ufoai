@@ -421,7 +421,7 @@ then
 	then
 		AC_MSG_ERROR([could find neither stricmp nor strcasecmp!])
 	else
-		AC_DEFINE([stricmp],[strcasecmp])
+		AC_DEFINE([stricmp],[strcasecmp],[stricmp function to use])
 	fi
 fi
 CLIENT_LIBS="$CLIENT_LIBS $LIBS"
@@ -623,7 +623,7 @@ then
 		fi
 	else
 		SDL_HEADER="SDL/SDL.h"
-		AC_DEFINE([USE_SDL_FRAMEWORK])
+		AC_DEFINE([USE_SDL_FRAMEWORK],[1],[Use SDL framework])
 	fi
 else
 	SDL_HEADER="SDL.h"
@@ -666,7 +666,7 @@ then
 			AC_MSG_ERROR([You must have the SDL_ttf development headers])
 		fi
 	else
-		AC_DEFINE([USE_SDL_TTF_FRAMEWORK])
+		AC_DEFINE([USE_SDL_TTF_FRAMEWORK],[1],[Use SDL TTF framework])
 	fi
 fi
 CFLAGS=$OLD_CFLAGS
@@ -789,7 +789,7 @@ then
 			AC_MSG_ERROR([Couldn't find OpenGL development headers!])
 		fi
 	else
-		AC_DEFINE([GL_H_WITHOUT_GL_DIR],1)
+		AC_DEFINE([GL_H_WITHOUT_GL_DIR],[1],[OpenGL header path])
 	fi
 fi
 
@@ -823,7 +823,7 @@ then
 		then
 			AC_MSG_RESULT([yes])
 			AC_SUBST([HAVE_SHADERS],1)
-			AC_DEFINE([HAVE_SHADERS],1)
+			AC_DEFINE([HAVE_SHADERS],[1],[Enable shader support])
 			shaders_enabled=yes
 		else
 			AC_MSG_RESULT([no])
@@ -903,7 +903,7 @@ then
 		AC_CHECK_HEADERS([sys/soundcard.h])
 		if test "$ac_cv_header_sys_soundcard_h" = "yes"
 		then
-			AC_DEFINE([OSS_HEADER_SYS],[1])
+			AC_DEFINE([OSS_HEADER_SYS],[1],[OSS headers in sys])
 		fi
 	fi
 	if test "$ac_cv_header_linux_soundcard_h" = "yes" || \
@@ -1003,14 +1003,14 @@ then
 		if test "$ac_cv_header_X11_extensions_xf86dga_h" = "yes"
 		then
 			AC_SUBST([HAVE_DGA], 1)
-			AC_DEFINE([HAVE_DGA],1)
+			AC_DEFINE([HAVE_DGA],[1],[Have DGA library])
 		elif test "$with_vid_dga" = "yes"
 		then
 			AC_MSG_ERROR([--with-vid-dga specified but couldn't find X11/extensions/xf86dga.h])
 		fi
 	else
 		AC_SUBST([HAVE_DGA1], 1)
-		AC_DEFINE([HAVE_DGA1],1)
+		AC_DEFINE([HAVE_DGA1],[1],[Have DGA1 library])
 	fi
 else
 	AC_MSG_NOTICE([Without DGA])
@@ -1039,7 +1039,7 @@ then
 		if test "$ac_cv_search_XF86VidModeQueryVersion" != "no"
 		then
 			AC_SUBST([HAVE_VID_VIDMODE], 1)
-			AC_DEFINE([HAVE_VIDMODE],1)
+			AC_DEFINE([HAVE_VIDMODE],[1],[Have xf86vmode support])
 		elif test "$with_vid_vidmode" = "yes"
 		then
 			AC_MSG_ERROR([--with-vid-vidmode specified but couldn't find XF86VidModeQueryVersion])
@@ -1064,7 +1064,7 @@ then
 	if test "$ac_cv_search_newwin" != "no"
 	then
 		AC_SUBST([HAVE_CURSES],1)
-		AC_DEFINE([HAVE_CURSES],1)
+		AC_DEFINE([HAVE_CURSES],[1],[Have curses library])
 	elif test "$with_curses" = "yes"
 	then
 		AC_MSG_ERROR([--with-curses specified but couldn't find newwin])
@@ -1085,7 +1085,7 @@ then
 	if test "$ac_cv_search_curl_easy_init" != "no"
 	then
 		AC_SUBST([HAVE_CURL],1)
-		AC_DEFINE([HAVE_CURL],1)
+		AC_DEFINE([HAVE_CURL],[1],[Have curl library])
 	elif test "$with_curl" = "yes"
 	then
 		AC_MSG_ERROR([--with-curl specified but couldn't find ])
@@ -1104,7 +1104,7 @@ if test "$with_ipv6" = "yes"
 then
 	AC_MSG_NOTICE([Enabling ipv6 support])
 	AC_SUBST([HAVE_IPV6],1)
-	AC_DEFINE([HAVE_IPV6],1)
+	AC_DEFINE([HAVE_IPV6],[1],[Enable ipv6 support])
 else
 	AC_MSG_NOTICE([Without IPv6])
 fi
@@ -1171,7 +1171,7 @@ fi
 if test "$enable_gettext" = "yes"
 then
 	AC_MSG_NOTICE([Enabling multilanguage support])
-	AC_DEFINE([HAVE_GETTEXT],1)
+	AC_DEFINE([HAVE_GETTEXT],[1],[Enable gettext support])
 fi
 
 #---------------------------------------------------------------------------------------------
