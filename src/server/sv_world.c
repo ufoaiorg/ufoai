@@ -442,7 +442,7 @@ trace_t SV_Trace (vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end, edict_t * 
 
 	/* clip to world */
 	clip.trace = CM_CompleteBoxTrace(start, end, mins, maxs, 0x1FF, contentmask);
-	clip.trace.ent = ge->edicts;
+	clip.trace.ent = ge->edicts; /* g_edicts[0] is the world */
 	if (clip.trace.fraction == 0)
 		return clip.trace;		/* blocked by the world */
 
