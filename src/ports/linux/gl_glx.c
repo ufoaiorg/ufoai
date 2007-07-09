@@ -156,7 +156,7 @@ static void install_grabs (void)
 	/* inviso cursor */
 	XDefineCursor(dpy, win, CreateNullCursor(dpy, win));
 
-	if (vid_grabmouse->integer && ! vid_fullscreen->integer)
+	if (vid_grabmouse->integer)
 		XGrabPointer(dpy, win, True, 0, GrabModeAsync, GrabModeAsync, win, None, CurrentTime);
 
 	if (!in_dgamouse->integer && (!vid_grabmouse->integer || vid_fullscreen->integer)) {

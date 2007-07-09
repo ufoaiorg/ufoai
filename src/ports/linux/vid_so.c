@@ -349,7 +349,7 @@ void VID_Shutdown (void)
 /**
  * @brief
  */
-void IN_Init ( void )
+void IN_Init (void)
 {
 }
 
