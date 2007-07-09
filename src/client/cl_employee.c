@@ -534,7 +534,7 @@ extern qboolean E_UnhireEmployee (base_t* base, employeeType_t type, int idx)
 		case EMPL_SOLDIER:
 			/* Remove soldier from aircraft/team if he was assigned to one. */
 			if (CL_SoldierInAircraft(employee->idx, -1)) {
-				CL_RemoveSoldierFromAircraft(employee->idx, -1);
+				CL_RemoveSoldierFromAircraft(employee->idx, -1, base->idx);
 			}
 			break;
 		case EMPL_WORKER:
