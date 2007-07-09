@@ -55,7 +55,7 @@ language da {
 }
 
 language est {
-	"_Estonia"
+	"_Estonian"
 	{
 		est.UTF-8
 		et_EE.UTF-8
