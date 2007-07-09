@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #define GAME_G_LOCAL_H
 
 #include "q_shared.h"
+#include "inv_shared.h"
 
 /* define GAME_INCLUDE so that game.h does not define the */
 /* short, server-visible player_t and edict_t structures, */

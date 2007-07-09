@@ -680,7 +680,6 @@ static void MN_DrawDisabled (menuNode_t* node)
 static void MN_DrawFree (int container, menuNode_t * node, int posx, int posy, int sizex, int sizey, qboolean showTUs)
 {
 	static vec4_t color = { 0.0f, 1.0f, 0.0f, 0.7f };
-
 	invDef_t* inv = &csi.ids[container];
 
 	re.DrawFill(posx, posy, sizex, sizey, ALIGN_UL, color);

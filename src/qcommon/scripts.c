@@ -22,6 +22,7 @@
 
 
 #include "qcommon.h"
+#include "../game/inv_shared.h"
 #include "../client/cl_research.h"
 
 /*
