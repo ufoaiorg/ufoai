@@ -36,21 +36,24 @@ item craft_ufo_scout
 {
 	buytype dummy
 	name	"_UFO - Scout"
-	weapon false
+	weapon	false
+	model	objects/alien/disassembled/ufo_scout
 }
 
 item craft_ufo_fighter
 {
 	buytype dummy
 	name	"_UFO - Fighter"
-	weapon false
+	weapon	false
+	model	objects/alien/disassembled/ufo_fighter
 }
 
 item craft_ufo_harvester
 {
 	buytype dummy
 	name	"_UFO - Harvester"
-	weapon false
+	weapon	false
+	model	objects/alien/disassembled/ufo_harvester
 }
 
 item craft_ufo_condor
