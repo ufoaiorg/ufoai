@@ -532,7 +532,7 @@ typedef struct _TargaHeader {
 /**
  * @brief
  */
-extern void LoadTGA (const char *name, byte ** pic, int *width, int *height)
+void LoadTGA (const char *name, byte ** pic, int *width, int *height)
 {
 	int columns, rows, numPixels;
 	byte *pixbuf;
@@ -813,7 +813,7 @@ static void jpeg_mem_src (j_decompress_ptr cinfo, byte * mem, int len)
  * @sa LoadPNG
  * @sa GL_FindImage
  */
-extern void LoadJPG (const char *filename, byte ** pic, int *width, int *height)
+void LoadJPG (const char *filename, byte ** pic, int *width, int *height)
 {
 	struct jpeg_decompress_struct cinfo;
 	struct jpeg_error_mgr jerr;

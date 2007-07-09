@@ -718,7 +718,7 @@ void FreeFile (void *buffer)
  * @sa SaveFile
  * @sa SafeRead
  */
-extern int LoadFile (const char *filename, void **bufferptr)
+int LoadFile (const char *filename, void **bufferptr)
 {
 	qFILE f;
 	int length;

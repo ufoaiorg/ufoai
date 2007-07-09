@@ -357,7 +357,7 @@ int FS_FOpenFileRead (const char *filename, qFILE * f)
  * @brief
  * @returns file size or -1 on error
  */
-extern int FS_FOpenFileAppend (qFILE *f)
+int FS_FOpenFileAppend (qFILE *f)
 {
 	char path[MAX_OSPATH];
 
@@ -1165,7 +1165,7 @@ void FS_BuildFileList (char *fileList)
 /**
  * @brief
  */
-extern void FS_SkipBlock (char **text)
+void FS_SkipBlock (char **text)
 {
 	char *token;
 	int depth;
@@ -1531,7 +1531,7 @@ void FS_Shutdown (void)
  * @sa FS_Shutdown
  * @sa FS_InitFilesystem
  */
-extern void FS_RestartFilesystem (void)
+void FS_RestartFilesystem (void)
 {
 	/* free anything we currently have loaded */
 	FS_Shutdown();
@@ -1552,7 +1552,7 @@ extern void FS_RestartFilesystem (void)
 /**
  * @brief Copy a fully specified file from one place to another
  */
-extern void FS_CopyFile (const char *fromOSPath, const char *toOSPath)
+void FS_CopyFile (const char *fromOSPath, const char *toOSPath)
 {
 	FILE *f;
 	int len;
@@ -1591,7 +1591,7 @@ extern void FS_CopyFile (const char *fromOSPath, const char *toOSPath)
  * @brief
  * @sa FS_CopyFile
  */
-extern void FS_Remove (const char *osPath)
+void FS_Remove (const char *osPath)
 {
 	Com_Printf("FS_Remove: remove %s\n", osPath);
 	remove(osPath);
@@ -1602,7 +1602,7 @@ extern void FS_Remove (const char *osPath)
  * @sa FS_Remove
  * @sa FS_CopyFile
  */
-extern qboolean FS_Rename (const char *from, const char *to, qboolean relative)
+qboolean FS_Rename (const char *from, const char *to, qboolean relative)
 {
 	const char *from_ospath, *to_ospath;
 	char from_buf[MAX_OSPATH];

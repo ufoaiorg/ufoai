@@ -101,7 +101,7 @@ static void ProcessSubModel (void)
  * @sa ProcessWorldModel
  * @sa ProcessSubModel
  */
-extern void ProcessModels (void)
+void ProcessModels (void)
 {
 	BeginBSPFile();
 

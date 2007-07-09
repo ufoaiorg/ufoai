@@ -237,7 +237,7 @@ static void MAP_MultiSelectNotifyUfoDisappeared (const aircraft_t* ufo)
 /**
  * @brief Click on the map/geoscape
  */
-extern void MAP_MapClick (const menuNode_t* node, int x, int y, qboolean globe)
+void MAP_MapClick (const menuNode_t* node, int x, int y, qboolean globe)
 {
 	aircraft_t *aircraft = NULL;
 	actMis_t *ms;
@@ -371,7 +371,7 @@ static qboolean MAP_IsMapPositionSelected (const menuNode_t* node, vec2_t pos, i
  * @return qtrue if the point is visible, qfalse else (if it's outside the node or on the wrong side of earth).
  * @note In the function, we do the opposite of MAP3D_ScreenToMap
  */
-extern qboolean MAP_3DMapToScreen (const menuNode_t* node, const vec2_t pos, int *x, int *y, int *z)
+qboolean MAP_3DMapToScreen (const menuNode_t* node, const vec2_t pos, int *x, int *y, int *z)
 {
 	vec2_t mid;
 	vec3_t v, v1, rotationAxis;
@@ -418,7 +418,7 @@ extern qboolean MAP_3DMapToScreen (const menuNode_t* node, const vec2_t pos, int
  * @param[in] model The name of the model of the marker.
  * @param[in] globe qtrue if the 3D marker is to be drawn on 3D geoscape, qfalse else.
  */
-extern qboolean MAP_Draw3DMarkerIfVisible (const menuNode_t* node, const vec2_t pos, float theta, const char *model, qboolean globe)
+qboolean MAP_Draw3DMarkerIfVisible (const menuNode_t* node, const vec2_t pos, float theta, const char *model, qboolean globe)
 {
 	int x, y, z;
 	vec3_t screenPos, angles, v;
@@ -475,7 +475,7 @@ extern qboolean MAP_Draw3DMarkerIfVisible (const menuNode_t* node, const vec2_t 
  * node. Otherwise returns qfalse.
  * @sa MAP_3DMapToScreen
  */
-extern qboolean MAP_MapToScreen (const menuNode_t* node, const vec2_t pos,
+qboolean MAP_MapToScreen (const menuNode_t* node, const vec2_t pos,
 		int *x, int *y)
 {
 	float sx;
@@ -580,7 +580,7 @@ static void MAP3D_ScreenToMap (const menuNode_t* node, int x, int y, vec2_t pos)
  * @param[out] line Contains the shortest path to go from start to end
  * @sa MAP_MapDrawLine
  */
-extern void MAP_MapCalcLine (const vec2_t start, const vec2_t end, mapline_t* line)
+void MAP_MapCalcLine (const vec2_t start, const vec2_t end, mapline_t* line)
 {
 	vec3_t s, e, v;
 	vec3_t normal;
@@ -737,7 +737,7 @@ static void MAP_3DMapDrawLine (const menuNode_t* node, const mapline_t* line)
  * @param[in] globe qtrue is this is 3D geoscape, qfalse if this is 2D geoscape
  * @sa RADAR_DrawCoverage
  */
-extern void MAP_MapDrawEquidistantPoints (const menuNode_t* node, vec2_t center, const float angle, const vec4_t color, qboolean globe)
+void MAP_MapDrawEquidistantPoints (const menuNode_t* node, vec2_t center, const float angle, const vec4_t color, qboolean globe)
 {
 	int i, xCircle, yCircle, zCircle;
 	int pts[CIRCLE_DRAW_POINTS * 2 + 2];
@@ -803,7 +803,7 @@ extern void MAP_MapDrawEquidistantPoints (const menuNode_t* node, vec2_t center,
  * @param[in] globe qtrue if this is 3D geoscape, qfalse else.
  * @return Angle (degrees) of rotation around the axis perpendicular to the screen for a model in @c start going toward @c end.
  */
-extern float MAP_AngleOfPath (const vec3_t start, const vec2_t end, vec3_t direction, vec3_t ortVector, qboolean globe)
+float MAP_AngleOfPath (const vec3_t start, const vec2_t end, vec3_t direction, vec3_t ortVector, qboolean globe)
 {
 	float angle = 0.0f;
 	vec3_t start3D, end3D, tangentVector, v, rotationAxis;
@@ -963,7 +963,7 @@ static void MAP_GetGeoscapeAngle (float *Vector, qboolean globe)
  * @sa MAP3D_SmoothRotate
  * @sa MAP_SmoothTranslate
  */
-extern void MAP_CenterOnPoint (void)
+void MAP_CenterOnPoint (void)
 {
 	menu_t *activeMenu = NULL;
 
@@ -1324,7 +1324,7 @@ static menuNode_t* geobackground = NULL;
  * @sa MAP_DrawMapMarkers
  * @sa MAP_Draw3DMapMarkers
  */
-extern void MAP_DrawMap (const menuNode_t* node, qboolean map3D)
+void MAP_DrawMap (const menuNode_t* node, qboolean map3D)
 {
 	float q;
 	base_t* base;
@@ -1404,7 +1404,7 @@ extern void MAP_DrawMap (const menuNode_t* node, qboolean map3D)
 /**
  * @brief No more special action in geoscape
  */
-extern void MAP_ResetAction (void)
+void MAP_ResetAction (void)
 {
 	/* don't allow a reset when no base is set up */
 	if (gd.numBases)
@@ -1424,7 +1424,7 @@ extern void MAP_ResetAction (void)
 /**
  * @brief Select the specified aircraft in geoscape
  */
-extern void MAP_SelectAircraft (aircraft_t* aircraft)
+void MAP_SelectAircraft (aircraft_t* aircraft)
 {
 	MAP_ResetAction();
 	selectedAircraft = aircraft;
@@ -1433,7 +1433,7 @@ extern void MAP_SelectAircraft (aircraft_t* aircraft)
 /**
  * @brief Selected the specified mission
  */
-extern void MAP_SelectMission (actMis_t* mission)
+void MAP_SelectMission (actMis_t* mission)
 {
 	if (! mission || mission == selMis)
 		return;
@@ -1446,7 +1446,7 @@ extern void MAP_SelectMission (actMis_t* mission)
  * @brief Notify that a mission has been removed
  * @todo: Destroy base after removing a baseattack mission??
  */
-extern void MAP_NotifyMissionRemoved (const actMis_t* mission)
+void MAP_NotifyMissionRemoved (const actMis_t* mission)
 {
 	/* Unselect the current selected mission if its the same */
 	if (selMis == mission && (gd.mapAction == MA_BASEATTACK || gd.mapAction == MA_INTERCEPT))
@@ -1461,7 +1461,7 @@ extern void MAP_NotifyMissionRemoved (const actMis_t* mission)
 /**
  * @brief Notify that an ufo has been removed
  */
-extern void MAP_NotifyUfoRemoved (const aircraft_t* ufo)
+void MAP_NotifyUfoRemoved (const aircraft_t* ufo)
 {
 	/* Unselect the current selected ufo if its the same */
 	if (selectedUfo == ufo)
@@ -1481,7 +1481,7 @@ extern void MAP_NotifyUfoRemoved (const aircraft_t* ufo)
  * @return NULL if no nation with the given color value was found
  * @note The coodinates already have to be transfored to map coordinates via MAP_ScreenToMap
  */
-extern nation_t* MAP_GetNation (const vec2_t pos)
+nation_t* MAP_GetNation (const vec2_t pos)
 {
 	int i;
 	nation_t* nation;
@@ -1507,7 +1507,7 @@ extern nation_t* MAP_GetNation (const vec2_t pos)
  * @note never may return a null pointer or an empty string
  * @note Make sure, that there are textures with the same name in base/textures/tex_bases
  */
-extern const char* MAP_GetZoneType (byte* color)
+const char* MAP_GetZoneType (byte* color)
 {
 	if (MapIsDesert(color))
 		return "desert";
@@ -1522,7 +1522,7 @@ extern const char* MAP_GetZoneType (byte* color)
 /**
  * @brief Notify that an ufo disappears on radars
  */
-extern void MAP_NotifyUfoDisappear (const aircraft_t* ufo)
+void MAP_NotifyUfoDisappear (const aircraft_t* ufo)
 {
 	/* Unselect the current selected ufo if its the same */
 	if (selectedUfo == ufo)
@@ -1535,7 +1535,7 @@ extern void MAP_NotifyUfoDisappear (const aircraft_t* ufo)
 /**
  * @brief Initialise MAP/Geoscape
  */
-extern void MAP_GameInit (void)
+void MAP_GameInit (void)
 {
 	cl_showCoords = Cvar_Get("cl_showcoords", "0", CVAR_ARCHIVE, NULL);
 	Cmd_AddCommand("multi_select_click", MAP_MultiSelectExecuteAction_f, NULL);

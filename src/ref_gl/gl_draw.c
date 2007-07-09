@@ -216,7 +216,7 @@ void Draw_Char (int x, int y, int num)
 /**
  * @brief
  */
-extern void GL_DrawImagePixelData (const char *name, byte *frame, int width, int height)
+void GL_DrawImagePixelData (const char *name, byte *frame, int width, int height)
 {
 	image_t *img;
 

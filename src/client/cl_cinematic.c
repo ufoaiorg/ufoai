@@ -528,7 +528,7 @@ static qboolean CIN_DecodeChunk (void)
  * @brief
  * @sa CL_Frame
  */
-extern void CIN_RunCinematic (void)
+void CIN_RunCinematic (void)
 {
 	int frame;
 
@@ -569,7 +569,7 @@ void CIN_DrawCinematic (void)
  * @brief
  * @sa CIN_StopCinematic
  */
-extern void CIN_PlayCinematic (const char *name)
+void CIN_PlayCinematic (const char *name)
 {
 	roqChunk_t chunk;
 	int size;
@@ -643,7 +643,7 @@ extern void CIN_PlayCinematic (const char *name)
  * @brief
  * @sa CIN_PlayCinematic
  */
-extern void CIN_StopCinematic (void)
+void CIN_StopCinematic (void)
 {
 	if (!cls.playingCinematic)
 		return;			/* Not playing */
@@ -697,7 +697,7 @@ static void CIN_CinematicStop_f (void)
 /**
  * @brief
  */
-extern void CIN_Init (void)
+void CIN_Init (void)
 {
 	float f;
 	short s;
@@ -737,7 +737,7 @@ extern void CIN_Init (void)
 /**
  * @brief
  */
-extern void CIN_Shutdown (void)
+void CIN_Shutdown (void)
 {
 	/* Unregister our commands */
 	Cmd_RemoveCommand("cinematic");

@@ -242,7 +242,7 @@ static void CheckConnections (unsigned int unitnum)
  * @sa CheckConnections
  * @sa ProcessWorldModel
  */
-extern void DoRouting (void)
+void DoRouting (void)
 {
 	int		i;
 	byte	*data;

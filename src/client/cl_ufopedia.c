@@ -249,7 +249,7 @@ static void UP_DisplayTechTree (technology_t* t)
  * weapon and ammo stats
  * @todo Do we need to add checks for (od->type == "dummy") here somewhere?
  */
-extern void UP_ItemDescription (int item)
+void UP_ItemDescription (int item)
 {
 	static char itemText[MAX_SMALLMENUTEXTLEN];
 	objDef_t *od;
@@ -476,7 +476,7 @@ static void UP_BuildingDescription (technology_t* t)
  * @sa UP_DrawEntry
  * Not only called from Ufopedia but also from other places to display
  */
-extern void UP_AircraftItemDescription (int idx)
+void UP_AircraftItemDescription (int idx)
 {
 	static char itemText[MAX_SMALLMENUTEXTLEN];
 	aircraftItem_t *item;
@@ -540,7 +540,7 @@ extern void UP_AircraftItemDescription (int idx)
  *
  * @sa UP_DrawEntry
  */
-extern void UP_AircraftDescription (technology_t* t)
+void UP_AircraftDescription (technology_t* t)
 {
 	aircraft_t* aircraft;
 	int idx;
@@ -579,7 +579,7 @@ extern void UP_AircraftDescription (technology_t* t)
  * just set it to -1 before calling this function
  * @sa CL_CampaignRun
  */
-extern int UP_GetUnreadMails (void)
+int UP_GetUnreadMails (void)
 {
 	message_t *m = messageStack;
 
@@ -688,7 +688,7 @@ static void UP_SetMailHeader (technology_t* tech, techMailType_t type)
  * @param[in] tech The technology_t pointer to print the ufopedia article for
  * @sa UP_DrawEntry
  */
-extern void UP_Article (technology_t* tech)
+void UP_Article (technology_t* tech)
 {
 	int i;
 
@@ -831,7 +831,7 @@ static void UP_DrawEntry (technology_t* tech)
  * @param name Ufopedia entry id
  * @sa UP_FindEntry_f
  */
-extern void UP_OpenWith (const char *name)
+void UP_OpenWith (const char *name)
 {
 	if (!name)
 		return;
@@ -845,7 +845,7 @@ extern void UP_OpenWith (const char *name)
  * @param name Ufopedia entry id
  * @sa UP_FindEntry_f
  */
-extern void UP_OpenCopyWith (const char *name)
+void UP_OpenCopyWith (const char *name)
 {
 	Cbuf_AddText("mn_push_copy ufopedia\n");
 	Cbuf_Execute();
@@ -1497,7 +1497,7 @@ static void UP_DecreaseFiremode_f (void)
  * @brief
  * @sa CL_ResetMenus
  */
-extern void UP_ResetUfopedia (void)
+void UP_ResetUfopedia (void)
 {
 	/* reset menu structures */
 	gd.numChapters = 0;
@@ -1540,7 +1540,7 @@ extern void UP_ResetUfopedia (void)
  * @param text Text for chapter ID
  * @sa CL_ParseFirstScript
  */
-extern void UP_ParseUpChapters (const char *name, char **text)
+void UP_ParseUpChapters (const char *name, char **text)
 {
 	const char *errhead = "UP_ParseUpChapters: unexpected end of file (names ";
 	char *token;

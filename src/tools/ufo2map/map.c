@@ -194,7 +194,7 @@ static void SnapPlane (vec3_t normal, vec_t *dist)
  * @brief
  */
 #ifndef USE_HASHING
-extern int FindFloatPlane (vec3_t normal, vec_t dist)
+int FindFloatPlane (vec3_t normal, vec_t dist)
 {
 	int		i;
 	plane_t	*p;
@@ -208,7 +208,7 @@ extern int FindFloatPlane (vec3_t normal, vec_t dist)
 	return CreateNewFloatPlane(normal, dist);
 }
 #else
-extern int FindFloatPlane (vec3_t normal, vec_t dist)
+int FindFloatPlane (vec3_t normal, vec_t dist)
 {
 	int		i;
 	plane_t	*p;
@@ -866,7 +866,7 @@ static void TestExpandBrushes (void)
 /**
  * @brief
  */
-extern void LoadMapFile (const char *filename)
+void LoadMapFile (const char *filename)
 {
 	int i;
 

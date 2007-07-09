@@ -34,7 +34,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Specify a list of master servers
  * @sa SV_InitGame
  */
-extern void SV_SetMaster_f (void)
+void SV_SetMaster_f (void)
 {
 	if (sv_maxclients->integer == 1)
 		return;
@@ -714,7 +714,7 @@ static int SV_CompleteServerCommand (const char *partial, const char **match)
 /**
  * @brief
  */
-extern void SV_InitOperatorCommands (void)
+void SV_InitOperatorCommands (void)
 {
 	Cmd_AddCommand("heartbeat", SV_Heartbeat_f, "Sends a heartbeat to the masterserver");
 	Cmd_AddCommand("kick", SV_Kick_f, "Kick a user from the server");

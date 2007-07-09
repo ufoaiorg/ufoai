@@ -213,7 +213,7 @@ void G_SendInventory (int player_mask, edict_t * ent)
  * @param[in] check The edict we are talking about
  * @sa CL_ActorAppear
  */
-extern void G_AppearPerishEvent (int player_mask, int appear, edict_t * check)
+void G_AppearPerishEvent (int player_mask, int appear, edict_t * check)
 {
 	int maxMorale;
 
@@ -285,7 +285,7 @@ extern void G_AppearPerishEvent (int player_mask, int appear, edict_t * check)
 /**
  * @brief Checks whether a point is "visible" from the edicts position
  */
-extern qboolean G_FrustumVis (edict_t * from, vec3_t point)
+qboolean G_FrustumVis (edict_t * from, vec3_t point)
 {
 	/* view frustum check */
 	vec3_t delta;
@@ -326,7 +326,7 @@ static qboolean G_LineVis (vec3_t from, vec3_t to)
 /**
  * @brief calculate how much check is "visible" from from
  */
-extern float G_ActorVis (vec3_t from, edict_t * check, qboolean full)
+float G_ActorVis (vec3_t from, edict_t * check, qboolean full)
 {
 	vec3_t test, dir;
 	float delta;

@@ -205,7 +205,7 @@ static void CL_Quit_f (void)
 /**
  * @brief Disconnects a multiplayer game if singleplayer is true and set ccs.singleplayer to true
  */
-extern void CL_StartSingleplayer (qboolean singleplayer)
+void CL_StartSingleplayer (qboolean singleplayer)
 {
 	char *type, *name, *text;
 	if (singleplayer) {
@@ -477,7 +477,7 @@ static void CL_Rcon_f (void)
  * @sa CL_ParseServerData
  * @sa CL_Disconnect
  */
-extern void CL_ClearState (void)
+void CL_ClearState (void)
 {
 	const char *mapZone;
 
@@ -509,7 +509,7 @@ extern void CL_ClearState (void)
  * Sends a disconnect message to the server
  * This is also called on Com_Error, so it shouldn't cause any errors
  */
-extern void CL_Disconnect (void)
+void CL_Disconnect (void)
 {
 	byte disconnect[32];
 
@@ -1511,7 +1511,7 @@ static void CL_Userinfo_f (void)
  * @sa S_Init
  * @sa CL_RegisterSounds
  */
-extern void CL_Snd_Restart_f (void)
+void CL_Snd_Restart_f (void)
 {
 	S_Shutdown();
 	S_Init();
@@ -1761,7 +1761,7 @@ static void CL_PrecacheModels (void)
  * @brief Init function for clients - called after menu was inited and ufo-scripts were parsed
  * @sa Qcommon_Init
  */
-extern void CL_InitAfter (void)
+void CL_InitAfter (void)
 {
 	int i;
 	menu_t* menu;
@@ -1832,7 +1832,7 @@ extern void CL_InitAfter (void)
  * @note This data should not go into cl_localPool memory pool - this data is
  * persistent until you shutdown the game
  */
-extern void CL_ParseClientData (const char *type, const char *name, char **text)
+void CL_ParseClientData (const char *type, const char *name, char **text)
 {
 	if (!Q_strncmp(type, "shader", 6))
 		CL_ParseShaders(name, text);
@@ -1936,7 +1936,7 @@ static void CL_ParseScriptSecond (const char *type, char *name, char **text)
  * @sa CL_GameNew_f
  * @sa CL_ResetSinglePlayerData
  */
-extern void CL_ReadSinglePlayerData (void)
+void CL_ReadSinglePlayerData (void)
 {
 	char *type, *name, *text;
 
@@ -2366,7 +2366,7 @@ static void CL_SendCommand (void)
  * @brief Translate the difficulty int to a translated string
  * @param difficulty the difficulty integer value
  */
-extern char* CL_ToDifficultyName (int difficulty)
+char* CL_ToDifficultyName (int difficulty)
 {
 	switch (difficulty) {
 	case -4:
@@ -2450,7 +2450,7 @@ static void CL_CvarCheck (void)
  * @brief
  * @sa Qcommon_Frame
  */
-extern int CL_Frame (int msec)
+int CL_Frame (int msec)
 {
 	static int refreshDelta = 0;
 	static int lasttimecalled = 0;
@@ -2605,7 +2605,7 @@ extern int CL_Frame (int msec)
  * @sa CL_Shutdown
  * @sa CL_InitAfter
  */
-extern void CL_Init (void)
+void CL_Init (void)
 {
 	if (dedicated->value)
 		return;					/* nothing running on the client */
@@ -2670,7 +2670,7 @@ extern void CL_Init (void)
  * @sa Sys_Quit
  * @sa CL_Init
  */
-extern void CL_Shutdown (void)
+void CL_Shutdown (void)
 {
 	static qboolean isdown = qfalse;
 

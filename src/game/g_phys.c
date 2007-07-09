@@ -53,7 +53,7 @@ static qboolean G_PhysicsThink (edict_t *ent)
  * they might send data over the netchannel - but without EV_RESET the event timer
  * will overflow and game
  */
-extern void G_PhysicsRun (void)
+void G_PhysicsRun (void)
 {
 	int i;
 	edict_t *ent;

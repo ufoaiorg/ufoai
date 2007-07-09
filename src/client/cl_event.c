@@ -58,7 +58,7 @@ static const value_t eventMail_vals[] = {
  * @sa CL_ParseScriptFirst
  * @note write into cl_localPool - free on every game restart and reparse
  */
-extern void CL_ParseEventMails (const char *name, char **text)
+void CL_ParseEventMails (const char *name, char **text)
 {
 	const char *errhead = "CL_ParseEventMails: unexpected end of file (mail ";
 	eventMail_t *eventMail;
@@ -124,7 +124,7 @@ extern void CL_ParseEventMails (const char *name, char **text)
 /**
  * @brief
  */
-extern void CL_EventAddMail_f (void)
+void CL_EventAddMail_f (void)
 {
 	const char *eventMailId;
 	eventMail_t* eventMail;

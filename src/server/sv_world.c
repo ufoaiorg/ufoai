@@ -135,7 +135,7 @@ static areanode_t *SV_CreateAreaNode (int depth, vec3_t mins, vec3_t maxs)
  * @sa SV_SpawnServer
  * @sa SV_CreateAreaNode
  */
-extern void SV_ClearWorld (void)
+void SV_ClearWorld (void)
 {
 	memset(sv_areanodes, 0, sizeof(sv_areanodes));
 	sv_numareanodes = 0;
@@ -146,7 +146,7 @@ extern void SV_ClearWorld (void)
 /**
  * @brief call before removing an entity, and before trying to move one, so it doesn't clip against itself
  */
-extern void SV_UnlinkEdict (edict_t * ent)
+void SV_UnlinkEdict (edict_t * ent)
 {
 	if (!ent->area.prev)
 		return;					/* not linked in anywhere */
@@ -158,7 +158,7 @@ extern void SV_UnlinkEdict (edict_t * ent)
  * @brief Needs to be called any time an entity changes origin, mins, maxs,
  * or solid. Automatically unlinks if needed. Sets ent->absmin and ent->absmax
  */
-extern void SV_LinkEdict (edict_t * ent)
+void SV_LinkEdict (edict_t * ent)
 {
 	areanode_t *node;
 

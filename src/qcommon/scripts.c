@@ -1445,7 +1445,7 @@ MAIN SCRIPT PARSING FUNCTION
 /**
  * @brief Creates links to the technology entries in the pedia and to other items (i.e. ammo<->weapons)
  */
-extern void Com_AddObjectLinks (void)
+void Com_AddObjectLinks (void)
 {
 	objDef_t *od = NULL;
 	int i, n, m;
@@ -1499,7 +1499,7 @@ extern void Com_AddObjectLinks (void)
  * @sa CL_ParseScriptSecond
  * @sa Qcommon_Init
  */
-extern void Com_ParseScripts (void)
+void Com_ParseScripts (void)
 {
 	char *type, *name, *text;
 	ptrdiff_t infoSize = 0;
@@ -1582,7 +1582,7 @@ extern void Com_ParseScripts (void)
  * @brief Precache all menu models for faster access
  * @sa CL_PrecacheModels
  */
-extern void Com_PrecacheCharacterModels (void)
+void Com_PrecacheCharacterModels (void)
 {
 	nameCategory_t *nc;
 	int i, j, num;

@@ -452,7 +452,7 @@ static void SAV_GameContinue_f (void)
  * @note The order matters - don't change it or all previous savegames will be broken
  * @sa SAV_Init
  */
-extern qboolean SAV_AddSubsystem (saveSubsystems_t *subsystem)
+qboolean SAV_AddSubsystem (saveSubsystems_t *subsystem)
 {
 	if (saveSubsystemsAmount >= MAX_SAVESUBSYSTEMS)
 		return qfalse;
@@ -507,7 +507,7 @@ static void SAV_GameSaveNameCleanup_f (void)
  * @sa SAV_GameSave
  * @sa SAV_GameLoad
  */
-extern void SAV_Init (void)
+void SAV_Init (void)
 {
 	static saveSubsystems_t pre_subsystem = {"size", SAV_PresaveArraySave, SAV_PresaveArrayLoad, 0xFF};
 	static saveSubsystems_t b_subsystem = {"base", B_Save, B_Load, 0x0};

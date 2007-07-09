@@ -322,7 +322,7 @@ void TR_EmptyTransferCargo (aircraft_t *aircraft)
  * @brief Shows potential targets for aircraft on transfer mission.
  * @param[in] *aircraft Pointer to aircraft used in transfer.
  */
-extern void TR_TransferAircraftMenu (aircraft_t* aircraft)
+void TR_TransferAircraftMenu (aircraft_t* aircraft)
 {
 	int i;
 	static char transferBaseSelectPopup[512];
@@ -343,7 +343,7 @@ extern void TR_TransferAircraftMenu (aircraft_t* aircraft)
  * @brief Ends the transfer and let the aircraft return to homebase (if it was cargo transfer).
  * @param[in] *aircraft Pointer to aircraft used in transfer.
  */
-extern void TR_TransferEnd (aircraft_t* aircraft)
+void TR_TransferEnd (aircraft_t* aircraft)
 {
 	base_t* destination = NULL;
 	transferlist_t *transferidx = NULL;
@@ -859,7 +859,7 @@ static void TR_Init_f (void)
  * @brief Defines commands and cvars for the Transfer menu(s).
  * @sa MN_ResetMenus
  */
-extern void TR_Reset (void)
+void TR_Reset (void)
 {
 	/* add commands */
 	Cmd_AddCommand("trans_init", TR_Init_f, "Init function for Transfer menu");

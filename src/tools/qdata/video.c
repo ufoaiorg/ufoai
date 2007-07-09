@@ -921,7 +921,7 @@ static cblock_t LoadFrame (char *base, int frame, int digits, byte **palette)
 /**
  * @brief video <directory> <framedigits>
  */
-extern void Cmd_Video (void)
+void Cmd_Video (void)
 {
 	char	savename[1024];
 	char	name[1024];

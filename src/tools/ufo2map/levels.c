@@ -36,7 +36,7 @@ static int oldleafs, oldleaffaces, oldleafbrushes, oldplanes, oldvertexes, oldno
 /**
  * @brief
  */
-extern void PushInfo (void)
+void PushInfo (void)
 {
 	oldleafs = numleafs;
 	oldleaffaces = numleaffaces;
@@ -53,7 +53,7 @@ extern void PushInfo (void)
 /**
  * @brief
  */
-extern void PopInfo (void)
+void PopInfo (void)
 {
 	numleafs = oldleafs;
 	numleaffaces = oldleaffaces;
@@ -233,7 +233,7 @@ static int ConstructLevelNodes_r (int levelnum, vec3_t cmins, vec3_t cmaxs)
  * @sa ProcessWorldModel
  * @sa ConstructLevelNodes_r
  */
-extern void ProcessLevel (unsigned int levelnum)
+void ProcessLevel (unsigned int levelnum)
 {
 	vec3_t		mins, maxs;
 	dmodel_t	*dm;

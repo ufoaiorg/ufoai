@@ -569,7 +569,7 @@ void AI_ActorThink (player_t * player, edict_t * ent)
  * @brief Every server frame one single actor is handled - always in the same order
  * @sa G_RunFrame
  */
-extern void AI_Run (void)
+void AI_Run (void)
 {
 	player_t *player;
 	edict_t *ent;

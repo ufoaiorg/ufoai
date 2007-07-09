@@ -36,7 +36,7 @@ TEXTURE LIGHT VALUES
 /**
  *	@brief
  */
-extern void CalcTextureReflectivity (void)
+void CalcTextureReflectivity (void)
 {
 	int i, j, k, texels, texel;
 
@@ -302,7 +302,7 @@ static entity_t *EntityForModel (int modnum)
 /**
  *	@brief
  */
-extern void MakePatches (void)
+void MakePatches (void)
 {
 	int		i, j, k;
 	dface_t	*f;
@@ -488,7 +488,7 @@ static void DicePatch (patch_t *patch)
 /**
  *	@brief
  */
-extern void SubdividePatches (void)
+void SubdividePatches (void)
 {
 	int i, num;
 

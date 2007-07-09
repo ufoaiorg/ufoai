@@ -265,7 +265,7 @@ static void GL_SetBlendMode (int mode)
  * @note the r_newrefdef.ptls is the ptl array from cl_particle.c
  * @sa V_UpdateRefDef
  */
-extern void R_DrawPtls (void)
+void R_DrawPtls (void)
 {
 	ptl_t *p;
 	int i;

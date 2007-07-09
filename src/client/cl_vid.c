@@ -132,7 +132,7 @@ void VID_Init (void)
 /**
  * @brief
  */
-extern void *VID_TagAlloc (struct memPool_s **pool, int size, int tagNum)
+void *VID_TagAlloc (struct memPool_s **pool, int size, int tagNum)
 {
 	if (tagNum < 0)
 		tagNum *= -1;
@@ -144,7 +144,7 @@ extern void *VID_TagAlloc (struct memPool_s **pool, int size, int tagNum)
 /**
  * @brief
  */
-extern void VID_MemFree (void *ptr)
+void VID_MemFree (void *ptr)
 {
 	_Mem_Free(ptr, "VID DLL", -1);
 }
@@ -153,7 +153,7 @@ extern void VID_MemFree (void *ptr)
 /**
  * @brief
  */
-extern void VID_FreeTags (struct memPool_s **pool, int tagNum)
+void VID_FreeTags (struct memPool_s **pool, int tagNum)
 {
 	assert(pool);
 	if (tagNum < 0)

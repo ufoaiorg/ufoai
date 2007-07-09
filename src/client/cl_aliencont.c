@@ -989,7 +989,7 @@ static void AC_AlienListClick_f (void)
  * @brief Defines commands and cvars for the alien containment menu(s).
  * @sa MN_ResetMenus
  */
-extern void AC_Reset (void)
+void AC_Reset (void)
 {
 	/* add commands */
 	Cmd_AddCommand("aliencont_init", AC_Init, "Init function for alien containment menu");
@@ -1012,7 +1012,7 @@ extern void AC_Reset (void)
  * @sa B_Save
  * @sa SAV_GameSave
  */
-extern qboolean AC_Save (sizebuf_t* sb, void* data)
+qboolean AC_Save (sizebuf_t* sb, void* data)
 {
 	return qtrue;
 }
@@ -1023,7 +1023,7 @@ extern qboolean AC_Save (sizebuf_t* sb, void* data)
  * @sa B_Load
  * @sa SAV_GameLoad
  */
-extern qboolean AC_Load (sizebuf_t* sb, void* data)
+qboolean AC_Load (sizebuf_t* sb, void* data)
 {
 	return qtrue;
 }
@@ -1032,7 +1032,7 @@ extern qboolean AC_Load (sizebuf_t* sb, void* data)
  * @brief Returns true if the current base is able to handle captured aliens
  * @sa B_BaseInit_f
  */
-extern qboolean AC_ContainmentAllowed (void)
+qboolean AC_ContainmentAllowed (void)
 {
 	if (baseCurrent->baseStatus != BASE_UNDER_ATTACK
 	 && B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, B_ALIEN_CONTAINMENT) > 0) {

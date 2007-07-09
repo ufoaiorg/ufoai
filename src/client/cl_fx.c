@@ -41,7 +41,7 @@ static int lastofs;
  * @brief
  * @sa CL_Frame
  */
-extern void CL_RunLightStyles (void)
+void CL_RunLightStyles (void)
 {
 	int		ofs;
 	int		i;
@@ -72,7 +72,7 @@ extern void CL_RunLightStyles (void)
  * @note Bounds for i are already checked
  * @sa CL_ParseConfigString
  */
-extern void CL_SetLightstyle (int i)
+void CL_SetLightstyle (int i)
 {
 	const char *s;
 	int j, k;

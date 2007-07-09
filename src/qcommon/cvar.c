@@ -86,7 +86,7 @@ static cvar_t *Cvar_FindVar (const char *var_name)
  * @sa Cvar_VariableInteger
  * @return 0 if not defined
  */
-extern float Cvar_VariableValue (const char *var_name)
+float Cvar_VariableValue (const char *var_name)
 {
 	cvar_t *var;
 
@@ -102,7 +102,7 @@ extern float Cvar_VariableValue (const char *var_name)
  * @sa Cvar_FindVar
  * @return true if set
  */
-extern qboolean Cvar_SetCheckFunction (char *var_name, qboolean (*check) (cvar_t* cvar) )
+qboolean Cvar_SetCheckFunction (char *var_name, qboolean (*check) (cvar_t* cvar) )
 {
 	cvar_t *var;
 
@@ -122,7 +122,7 @@ extern qboolean Cvar_SetCheckFunction (char *var_name, qboolean (*check) (cvar_t
  * @param[in] shouldBeIntegral No floats for this cvar please
  * @sa Cvar_AssertString
  */
-extern qboolean Cvar_AssertValue (cvar_t * cvar, float minVal, float maxVal, qboolean shouldBeIntegral)
+qboolean Cvar_AssertValue (cvar_t * cvar, float minVal, float maxVal, qboolean shouldBeIntegral)
 {
 	assert(cvar);
 
@@ -156,7 +156,7 @@ extern qboolean Cvar_AssertValue (cvar_t * cvar, float minVal, float maxVal, qbo
  * @param[in] array Array of valid cvar value strings
  * @param[in] arraySize Number of entries in the string array
  */
-extern qboolean Cvar_AssertString (cvar_t * cvar, char **array, int arraySize)
+qboolean Cvar_AssertString (cvar_t * cvar, char **array, int arraySize)
 {
 	int i;
 	char *string;
@@ -187,7 +187,7 @@ extern qboolean Cvar_AssertString (cvar_t * cvar, char **array, int arraySize)
  * @sa Cvar_FindVar
  * @return 0 if not defined
  */
-extern int Cvar_VariableInteger (const char *var_name)
+int Cvar_VariableInteger (const char *var_name)
 {
 	cvar_t *var;
 
@@ -205,7 +205,7 @@ extern int Cvar_VariableInteger (const char *var_name)
  * Even if the cvar does not exist this function will not return a null pointer
  * but an empty string
  */
-extern char *Cvar_VariableString (const char *var_name)
+char *Cvar_VariableString (const char *var_name)
 {
 	cvar_t *var;
 
@@ -223,7 +223,7 @@ extern char *Cvar_VariableString (const char *var_name)
  * Even if the cvar does not exist this function will not return a null pointer
  * but an empty string
  */
-extern char *Cvar_VariableStringOld (const char *var_name)
+char *Cvar_VariableStringOld (const char *var_name)
 {
 	cvar_t *var;
 
@@ -242,7 +242,7 @@ extern char *Cvar_VariableStringOld (const char *var_name)
  * @sa Cmd_CompleteCommand
  * @sa Key_CompleteCommand
  */
-extern int Cvar_CompleteVariable (const char *partial, const char **match)
+int Cvar_CompleteVariable (const char *partial, const char **match)
 {
 	cvar_t *cvar;
 	const char *localMatch = NULL;
@@ -288,7 +288,7 @@ extern int Cvar_CompleteVariable (const char *partial, const char **match)
  * If the variable already exists, the value will not be set
  * The flags will be or'ed in if the variable exists.
  */
-extern cvar_t *Cvar_Get (const char *var_name, const char *var_value, int flags, const char* desc)
+cvar_t *Cvar_Get (const char *var_name, const char *var_value, int flags, const char* desc)
 {
 	unsigned hash;
 	cvar_t *var;
@@ -446,7 +446,7 @@ static cvar_t *Cvar_Set2 (const char *var_name, const char *value, qboolean forc
 /**
  * @brief Will set the variable even if NOSET or LATCH
  */
-extern cvar_t *Cvar_ForceSet (const char *var_name, const char *value)
+cvar_t *Cvar_ForceSet (const char *var_name, const char *value)
 {
 	return Cvar_Set2(var_name, value, qtrue);
 }
@@ -457,7 +457,7 @@ extern cvar_t *Cvar_ForceSet (const char *var_name, const char *value)
  * @param value Which value should the cvar get
  * @note Look after the CVAR_LATCH stuff and check for write protected cvars
  */
-extern cvar_t *Cvar_Set (const char *var_name, const char *value)
+cvar_t *Cvar_Set (const char *var_name, const char *value)
 {
 	return Cvar_Set2(var_name, value, qfalse);
 }
@@ -476,7 +476,7 @@ extern cvar_t *Cvar_Set (const char *var_name, const char *value)
  * @param flags which flags
  * @sa Cvar_Set_f
  */
-extern cvar_t *Cvar_FullSet (const char *var_name, const char *value, int flags)
+cvar_t *Cvar_FullSet (const char *var_name, const char *value, int flags)
 {
 	cvar_t *var;
 
@@ -508,7 +508,7 @@ extern cvar_t *Cvar_FullSet (const char *var_name, const char *value, int flags)
 /**
  * @brief Expands value to a string and calls Cvar_Set
  */
-extern void Cvar_SetValue (const char *var_name, float value)
+void Cvar_SetValue (const char *var_name, float value)
 {
 	char val[32];
 
@@ -524,7 +524,7 @@ extern void Cvar_SetValue (const char *var_name, float value)
  * @brief Any variables with latched values will now be updated
  * @note CVAR_LATCH cvars are not updated during a game (tactical mission)
  */
-extern void Cvar_GetLatchedVars (void)
+void Cvar_GetLatchedVars (void)
 {
 	cvar_t *var;
 
@@ -555,7 +555,7 @@ extern void Cvar_GetLatchedVars (void)
  * @sa Cvar_SetValue
  * @sa Cvar_Set
  */
-extern qboolean Cvar_Command (void)
+qboolean Cvar_Command (void)
 {
 	cvar_t *v;
 
@@ -649,7 +649,7 @@ static void Cvar_Copy_f (void)
  * @brief Stores the archive cvars
  * @param path Config file where we will save all cvars with the archive flag set
  */
-extern void Cvar_WriteVariables (const char *path)
+void Cvar_WriteVariables (const char *path)
 {
 	cvar_t *var;
 	char buffer[256];
@@ -762,7 +762,7 @@ static char *Cvar_BitInfo (int bit)
 /**
  * @brief Returns an info string containing all the CVAR_USERINFO cvars
  */
-extern char *Cvar_Userinfo (void)
+char *Cvar_Userinfo (void)
 {
 	return Cvar_BitInfo(CVAR_USERINFO);
 }
@@ -771,7 +771,7 @@ extern char *Cvar_Userinfo (void)
  * @brief Returns an info string containing all the CVAR_SERVERINFO cvars
  * @sa SV_StatusString
  */
-extern char *Cvar_Serverinfo (void)
+char *Cvar_Serverinfo (void)
 {
 	return Cvar_BitInfo(CVAR_SERVERINFO);
 }
@@ -797,7 +797,7 @@ static void Cvar_Del_f (void)
  * @brief Reset cheat cvar values to default
  * @sa CL_SendCommand
  */
-extern void Cvar_FixCheatVars (void)
+void Cvar_FixCheatVars (void)
 {
 	cvar_t *var;
 
@@ -823,7 +823,7 @@ extern void Cvar_FixCheatVars (void)
  * @brief Reads in all archived cvars
  * @sa Qcommon_Init
  */
-extern void Cvar_Init (void)
+void Cvar_Init (void)
 {
 	Cmd_AddCommand("setold", Cvar_SetOld_f, "Restore the cvar old value");
 	Cmd_AddCommand("del", Cvar_Del_f, "Delete a cvar");

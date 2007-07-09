@@ -166,7 +166,7 @@ static float AIRFIGHT_ProbabilityToHit (aircraft_t *shooter, aircraft_t *target)
  * @param[in] ufo The ufo we are going to attack.
  * @todo Implement me and display an attack popup.
  */
-extern void AIRFIGHT_ExecuteActions (aircraft_t* air, aircraft_t* ufo)
+void AIRFIGHT_ExecuteActions (aircraft_t* air, aircraft_t* ufo)
 {
 	int idx;
 
@@ -226,7 +226,7 @@ static void AIRFIGHT_RemoveProjectileAimingAircraft (aircraft_t * aircraft)
  * @note Some of these mission values are redone (and not reloaded) in CP_Load
  * @sa CP_Load
  */
-extern void AIRFIGHT_ActionsAfterAirfight (aircraft_t* aircraft, qboolean phalanxWon)
+void AIRFIGHT_ActionsAfterAirfight (aircraft_t* aircraft, qboolean phalanxWon)
 {
 	mission_t* ms = NULL;
 	actMis_t* mis = NULL;
@@ -363,7 +363,7 @@ static void AIRFIGHT_ProjectileHits (aircraftProjectile_t *projectile)
  * @brief Update values of projectiles.
  * @param[in] dt Time elapsed since last call of this function.
  */
-extern void AIRFIGHT_CampaignRunProjectiles (int dt)
+void AIRFIGHT_CampaignRunProjectiles (int dt)
 {
 	aircraftProjectile_t *projectile;
 	int idx;

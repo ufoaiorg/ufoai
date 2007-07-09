@@ -358,7 +358,7 @@ void Mod_DrawModelBBox (vec4_t bbox[8], entity_t *e)
 /**
  * @brief Frees the model pool
  */
-extern void GL_ShutdownModels (void)
+void GL_ShutdownModels (void)
 {
 	ri.FreeTags(ri.modelPool, 0);
 	ri.FreeTags(ri.lightPool, 0);

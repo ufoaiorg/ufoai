@@ -189,7 +189,7 @@ static void S_SoundInfo_f (void)
  * @brief Lists all sound renderers for options menu - and cycles between them
  * @note Sound renderer differers from os to os
  */
-extern void S_ModifySndRef_f (void)
+void S_ModifySndRef_f (void)
 {
 	if (!Q_strcmp(snd_ref->string, "sdl")) {
 #ifdef _WIN32
@@ -654,7 +654,7 @@ void S_BeginRegistration (void)
 /**
  * @brief
  */
-extern sfx_t *S_RegisterSound (const char *name)
+sfx_t *S_RegisterSound (const char *name)
 {
 	sfx_t *sfx;
 
@@ -676,7 +676,7 @@ extern sfx_t *S_RegisterSound (const char *name)
 /**
  * @brief
  */
-extern void S_EndRegistration (void)
+void S_EndRegistration (void)
 {
 	int i;
 	sfx_t *sfx;
@@ -860,7 +860,7 @@ static void S_FreePlaysound (playsound_t * ps)
  * This is never called directly by S_Play*, but only
  * by the update loop.
  */
-extern void S_IssuePlaysound (playsound_t * ps)
+void S_IssuePlaysound (playsound_t * ps)
 {
 	channel_t *ch;
 	sfxcache_t *sc = NULL;
@@ -905,7 +905,7 @@ Start a sound effect
  * if pos is NULL, the sound will be dynamically sourced from the entity
  * Entchannel 0 will never override a playing sound
  */
-extern void S_StartSound (vec3_t origin, int entnum, int entchannel, sfx_t * sfx, float fvol, float attenuation, float timeofs)
+void S_StartSound (vec3_t origin, int entnum, int entchannel, sfx_t * sfx, float fvol, float attenuation, float timeofs)
 {
 	sfxcache_t *sc;
 	int vol;
@@ -970,7 +970,7 @@ extern void S_StartSound (vec3_t origin, int entnum, int entchannel, sfx_t * sfx
 /**
  * @brief
  */
-extern void S_StartLocalSound (const char *sound)
+void S_StartLocalSound (const char *sound)
 {
 	sfx_t *sfx;
 
@@ -991,7 +991,7 @@ extern void S_StartLocalSound (const char *sound)
 /**
  * @brief
  */
-extern void S_ClearBuffer (void)
+void S_ClearBuffer (void)
 {
 	int clear;
 

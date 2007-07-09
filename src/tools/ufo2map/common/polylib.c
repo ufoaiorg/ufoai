@@ -39,7 +39,7 @@ int	c_winding_points;
  * @brief
  * @sa FreeWinding
  */
-extern winding_t *AllocWinding (int points)
+winding_t *AllocWinding (int points)
 {
 	winding_t *w;
 	size_t s;
@@ -63,7 +63,7 @@ extern winding_t *AllocWinding (int points)
  * @brief
  * @sa AllocWinding
  */
-extern void FreeWinding (winding_t *w)
+void FreeWinding (winding_t *w)
 {
 	if (*(unsigned *)w == 0xdeaddead)
 		Error("FreeWinding: freed a freed winding");
@@ -78,7 +78,7 @@ static int c_removed;
 /**
  * @brief
  */
-extern void RemoveColinearPoints (winding_t *w)
+void RemoveColinearPoints (winding_t *w)
 {
 	int		i, j, k;
 	vec3_t	v1, v2;
@@ -126,7 +126,7 @@ static void WindingPlane (winding_t *w, vec3_t normal, vec_t *dist)
 /**
  * @brief
  */
-extern vec_t WindingArea (winding_t *w)
+vec_t WindingArea (winding_t *w)
 {
 	int		i;
 	vec3_t	d1, d2, cross;
@@ -145,7 +145,7 @@ extern vec_t WindingArea (winding_t *w)
 /**
  * @brief
  */
-extern void WindingBounds (winding_t *w, vec3_t mins, vec3_t maxs)
+void WindingBounds (winding_t *w, vec3_t mins, vec3_t maxs)
 {
 	vec_t	v;
 	int		i,j;
@@ -167,7 +167,7 @@ extern void WindingBounds (winding_t *w, vec3_t mins, vec3_t maxs)
 /**
  * @brief
  */
-extern void WindingCenter (winding_t *w, vec3_t center)
+void WindingCenter (winding_t *w, vec3_t center)
 {
 	int		i;
 	float	scale;
@@ -183,7 +183,7 @@ extern void WindingCenter (winding_t *w, vec3_t center)
 /**
  * @brief
  */
-extern winding_t *BaseWindingForPlane (vec3_t normal, vec_t dist)
+winding_t *BaseWindingForPlane (vec3_t normal, vec_t dist)
 {
 	int		i, x;
 	vec_t	max, v;
@@ -250,7 +250,7 @@ extern winding_t *BaseWindingForPlane (vec3_t normal, vec_t dist)
 /**
  * @brief
  */
-extern winding_t *CopyWinding (winding_t *w)
+winding_t *CopyWinding (winding_t *w)
 {
 	ptrdiff_t	size;
 	winding_t	*c;
@@ -264,7 +264,7 @@ extern winding_t *CopyWinding (winding_t *w)
 /**
  * @brief
  */
-extern winding_t *ReverseWinding (winding_t *w)
+winding_t *ReverseWinding (winding_t *w)
 {
 	int			i;
 	winding_t	*c;
@@ -280,7 +280,7 @@ extern winding_t *ReverseWinding (winding_t *w)
 /**
  * @brief
  */
-extern void ClipWindingEpsilon (winding_t *in, vec3_t normal, vec_t dist,
+void ClipWindingEpsilon (winding_t *in, vec3_t normal, vec_t dist,
 		vec_t epsilon, winding_t **front, winding_t **back)
 {
 	vec_t dists[MAX_POINTS_ON_WINDING+4];
@@ -382,7 +382,7 @@ extern void ClipWindingEpsilon (winding_t *in, vec3_t normal, vec_t dist,
 /**
  * @brief
  */
-extern void ChopWindingInPlace (winding_t **inout, vec3_t normal, vec_t dist, vec_t epsilon)
+void ChopWindingInPlace (winding_t **inout, vec3_t normal, vec_t dist, vec_t epsilon)
 {
 	winding_t *in;
 	vec_t dists[MAX_POINTS_ON_WINDING+4];
@@ -481,7 +481,7 @@ extern void ChopWindingInPlace (winding_t **inout, vec3_t normal, vec_t dist, ve
  * @return the fragment of in that is on the front side of the cliping plane.
  * @note The original is freed.
  */
-extern winding_t *ChopWinding (winding_t *in, vec3_t normal, vec_t dist)
+winding_t *ChopWinding (winding_t *in, vec3_t normal, vec_t dist)
 {
 	winding_t	*f, *b;
 

@@ -556,7 +556,7 @@ static void Com_Error_f (void)
  *
  * @sa Qcommon_Init
  */
-extern qboolean Qcommon_LocaleSet (void)
+qboolean Qcommon_LocaleSet (void)
 {
 	char *locale;
 
@@ -600,7 +600,7 @@ extern qboolean Qcommon_LocaleSet (void)
 /**
  * @brief
  */
-extern void Com_SetGameType (void)
+void Com_SetGameType (void)
 {
 	int i, j;
 	gametype_t* gt;
@@ -727,7 +727,7 @@ static qboolean Com_CvarCheckMaxFPS (cvar_t *cvar)
  * To compile language support into UFO:AI you need to activate the preprocessor variable
  * HAVE_GETTEXT (for linux have a look at the makefile)
  */
-extern void Qcommon_Init (int argc, char **argv)
+void Qcommon_Init (int argc, char **argv)
 {
 	char *s;
 

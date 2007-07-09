@@ -111,7 +111,7 @@ static qboolean StringToFilter (const char *s, ipfilter_t * f)
 /**
  * @brief
  */
-extern qboolean SV_FilterPacket (const char *from)
+qboolean SV_FilterPacket (const char *from)
 {
 	int i;
 	unsigned in;
@@ -373,7 +373,7 @@ static void SVCmd_StartGame_f (void)
  * of the parameters
  * @sa serverCommandList
  */
-extern void ServerCommand (void)
+void ServerCommand (void)
 {
 	const char *cmd;
 

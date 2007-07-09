@@ -211,7 +211,7 @@ static void CL_ParticleRun2 (ptl_t *p);
 /**
  * @brief
  */
-extern void CL_AddMapParticle (char *ptl, vec3_t origin, vec2_t wait, char *info, int levelflags)
+void CL_AddMapParticle (char *ptl, vec3_t origin, vec2_t wait, char *info, int levelflags)
 {
 	mp_t *mp;
 
@@ -350,7 +350,7 @@ static void PE_SetCamera (void)
 /**
  * @brief
  */
-extern void PE_RenderParticles (void)
+void PE_RenderParticles (void)
 {
 	PE_SetCamera();
 }
@@ -525,7 +525,7 @@ static void CL_ParticleEditor_f (void)
  * @brief
  * @sa CL_InitLocal
  */
-extern void CL_ResetParticles (void)
+void CL_ResetParticles (void)
 {
 	numPtls = 0;
 	numPtlCmds = 0;
@@ -1415,7 +1415,7 @@ int CL_GetParticleIndex (const char *name)
  * @return the position of the particle in ptlDef array
  * @sa CL_ParseClientData
  */
-extern int CL_ParseParticle (const char *name, char **text)
+int CL_ParseParticle (const char *name, char **text)
 {
 	const char *errhead = "CL_ParseParticle: unexpected end of file (particle ";
 	ptlDef_t *pd;
@@ -1494,7 +1494,7 @@ extern int CL_ParseParticle (const char *name, char **text)
  * @brief Inits some fixed particles that are not in our script files
  * @note fixed particles start with a * in their name
  */
-extern void CL_InitParticles (void)
+void CL_InitParticles (void)
 {
 	ptlDef_t *pd;
 

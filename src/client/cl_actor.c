@@ -157,7 +157,7 @@ static const char *CL_GetSkillString (const int skill)
  * @sa CL_UGVCvars
  * @sa CL_ActorSelect
  */
-extern void CL_CharacterCvars (character_t *chr)
+void CL_CharacterCvars (character_t *chr)
 {
 	assert(chr);
 
@@ -220,7 +220,7 @@ extern void CL_CharacterCvars (character_t *chr)
  * @sa CL_CharacterCvars
  * @sa CL_ActorSelect
  */
-extern void CL_UGVCvars (character_t *chr)
+void CL_UGVCvars (character_t *chr)
 {
 	assert(chr);
 
@@ -1237,7 +1237,7 @@ static void CL_RefreshWeaponButtons (int time)
  * @sa CL_ReloadRight_f
  * @todo Check for ammo in hand and give correct feedback in all cases.
  */
-extern qboolean CL_CheckMenuAction (int time, invList_t *weapon, int mode)
+qboolean CL_CheckMenuAction (int time, invList_t *weapon, int mode)
 {
 	/* No item in hand. */
 	/* @todo: ignore this condition when ammo in hand */
@@ -1684,7 +1684,7 @@ void CL_RemoveActorFromTeamList (le_t * le)
  * @sa CL_UGVCvars
  * @sa CL_CharacterCvars
  */
-extern qboolean CL_ActorSelect (le_t * le)
+qboolean CL_ActorSelect (le_t * le)
 {
 	int i;
 	qboolean same_actor = qfalse;
@@ -1760,7 +1760,7 @@ extern qboolean CL_ActorSelect (le_t * le)
  * @sa CL_ActorSelect
  * @return qtrue if selection was possible otherwise qfalse
  */
-extern qboolean CL_ActorSelectList (int num)
+qboolean CL_ActorSelectList (int num)
 {
 	le_t *le;
 
@@ -1785,7 +1785,7 @@ extern qboolean CL_ActorSelectList (int num)
 /**
  * @brief selects the next actor
  */
-extern qboolean CL_ActorSelectNext (void)
+qboolean CL_ActorSelectNext (void)
 {
 	le_t* le;
 	int selIndex = -1;
@@ -1873,7 +1873,7 @@ static void CL_BuildForbiddenList (void)
  * @sa CL_BuildForbiddenList
  * @sa cl_input:CL_InitInput <-- console command init.
  */
-extern void CL_DisplayBlockedPaths_f (void)
+void CL_DisplayBlockedPaths_f (void)
 {
 	le_t *le;
 	int i;
@@ -1905,7 +1905,7 @@ extern void CL_DisplayBlockedPaths_f (void)
  * @param[in] le Calculate the move for this actor (if he's the selected actor)
  * @param[in] distance
  */
-extern void CL_ConditionalMoveCalc (struct routing_s *map, le_t *le, int distance)
+void CL_ConditionalMoveCalc (struct routing_s *map, le_t *le, int distance)
 {
 	if (selActor && selActor == le) {
 		CL_BuildForbiddenList();
@@ -1981,7 +1981,7 @@ static qboolean CL_TraceMove (pos3_t to)
  * @sa CL_ActorActionMouse
  * @sa CL_ActorSelectMouse
  */
-extern void CL_ActorStartMove (le_t * le, pos3_t to)
+void CL_ActorStartMove (le_t * le, pos3_t to)
 {
 	int length;
 
@@ -2265,7 +2265,7 @@ void CL_ActorDoTurn (sizebuf_t *sb)
 /**
  * @brief Stands or crouches actor.
  */
-extern void CL_ActorStandCrouch_f (void)
+void CL_ActorStandCrouch_f (void)
 {
 	if (!CL_CheckAction())
 		return;
@@ -2305,7 +2305,7 @@ void CL_ActorStun (void)
  * 	multi	-> off
  * 	single	-> off (if no TUs for multi available)
  */
-extern void CL_ActorToggleReaction_f (void)
+void CL_ActorToggleReaction_f (void)
 {
 	int state = 0;
 	int actor_idx = -1;
@@ -2822,7 +2822,7 @@ ROUND MANAGEMENT
 /**
  * @brief Finishes the current round of the player in battlescape and starts the round for the next team.
  */
-extern void CL_NextRound_f (void)
+void CL_NextRound_f (void)
 {
 	/* can't end round if we are not in battlescape */
 	if (!CL_OnBattlescape())
@@ -3643,7 +3643,7 @@ static void CL_AddTargetingBox (pos3_t pos, qboolean pendBox)
  * @brief Targets to the ground when holding the assigned button
  * @sa mousePosTargettingAlign
  */
-extern void CL_ActorTargetAlign_f (void)
+void CL_ActorTargetAlign_f (void)
 {
 	int align = GROUND_DELTA;
 	static int currentPos = 0;
@@ -3701,7 +3701,7 @@ extern void CL_ActorTargetAlign_f (void)
  * @sa CL_TraceMove
  * Draws the tracer (red, yellow, green box) on the grid
  */
-extern void CL_AddTargeting (void)
+void CL_AddTargeting (void)
 {
 	if (mouseSpace != MS_WORLD)
 		return;

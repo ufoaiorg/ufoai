@@ -82,7 +82,7 @@ static void CL_GetTipOfTheDay_f (void)
 /**
  * @brief Parse all tip definitions from the script files
  */
-extern void CL_ParseTipsOfTheDay (const char *name, char **text)
+void CL_ParseTipsOfTheDay (const char *name, char **text)
 {
 	const char *errhead = "CL_ParseTipsOfTheDay: unexpected end of file (tips ";
 	char	*token;
@@ -115,7 +115,7 @@ extern void CL_ParseTipsOfTheDay (const char *name, char **text)
 /**
  * @brief Init function for cvars and console command bindings
  */
-extern void CL_TipOfTheDayInit (void)
+void CL_TipOfTheDayInit (void)
 {
 	cl_showTipOfTheDay = Cvar_Get("cl_showTipOfTheDay", "1", CVAR_ARCHIVE, "Show the tip of the day for singleplayer campaigns");
 

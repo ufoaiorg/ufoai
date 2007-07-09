@@ -283,7 +283,7 @@ qboolean CL_CheckOrDownloadFile (const char *filename)
 /**
  * @brief
  */
-extern void CL_RegisterSounds (void)
+void CL_RegisterSounds (void)
 {
 	int i, j, k;
 
@@ -781,7 +781,7 @@ static le_t	*lastMoving;
  * @brief Set the lastMoving entity (set to the actor who last
  * walked, turned, crouched or stood up).
  */
-extern void CL_SetLastMoving (le_t *le)
+void CL_SetLastMoving (le_t *le)
 {
 	lastMoving = le;
 }
@@ -1475,7 +1475,7 @@ static void CL_ParseEvent (void)
  * @sa CL_Frame
  * @sa CL_LogEvent
  */
-extern void CL_Events (void)
+void CL_Events (void)
 {
 	evTimes_t	*last;
 	int		eType;
@@ -1509,7 +1509,7 @@ extern void CL_Events (void)
 /**
  * @brief
  */
-extern void CL_InitEvents (void)
+void CL_InitEvents (void)
 {
 	SZ_Init(&evStorage, evBuf, EV_STORAGE_SIZE);
 	evStorage.cursize = EV_STORAGE_SIZE;

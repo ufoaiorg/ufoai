@@ -113,7 +113,7 @@ const char* G_GetPlayerName (int pnum)
  * @brief Prints stats to game console and stats log file
  * @sa G_PrintActorStats
  */
-extern void G_PrintStats (const char *buffer)
+void G_PrintStats (const char *buffer)
 {
 	struct tm *t;
 	char tbuf[32];
@@ -133,7 +133,7 @@ extern void G_PrintStats (const char *buffer)
  * @sa G_Damage
  * @sa G_PrintStats
  */
-extern void G_PrintActorStats (edict_t* victim, edict_t* attacker, fireDef_t* fd)
+void G_PrintActorStats (edict_t* victim, edict_t* attacker, fireDef_t* fd)
 {
 	const char *victimName = NULL, *attackerName = NULL;
 	char buffer[512];

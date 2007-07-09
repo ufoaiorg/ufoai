@@ -131,7 +131,7 @@ static void INV_CarriedItems (le_t *soldier)
  * @sa INV_CarriedItems
  * @todo remove baseCurrent from this function - replace with aircraft->homebase
  */
-extern void INV_CollectingItems (int won)
+void INV_CollectingItems (int won)
 {
 	int i, j;
 	le_t *le;
@@ -376,7 +376,7 @@ void INV_EnableAutosell (technology_t *tech)
  * @todo Make sure all equipment including soldiers equipment is added to capacity.cur.
  * @todo Remove curCampaign pointer usage here. Send campaign idx as param[in] instead.
  */
-extern void INV_InitialEquipment (base_t *base)
+void INV_InitialEquipment (base_t *base)
 {
 	int i, price = 0;
 	equipDef_t *ed;
@@ -422,7 +422,7 @@ extern void INV_InitialEquipment (base_t *base)
  * @param[in] text the whole following text after the "components" definition.
  * @sa CL_ParseScriptFirst
  */
-extern void INV_ParseComponents (const char *name, char **text)
+void INV_ParseComponents (const char *name, char **text)
 {
 	int i;
 	objDef_t *od = NULL;
@@ -501,7 +501,7 @@ extern void INV_ParseComponents (const char *name, char **text)
  * @param[in] itemIdx Global item index in csi.ods[].
  * @return *comp Pointer to components_t definition.
  */
-extern components_t *INV_GetComponentsByItemIdx (int itemIdx)
+components_t *INV_GetComponentsByItemIdx (int itemIdx)
 {
 	int i;
 	components_t *comp = NULL;
@@ -522,7 +522,7 @@ extern components_t *INV_GetComponentsByItemIdx (int itemIdx)
  * @param[in] calculate True if this is only calculation of item size, false if this is real disassembling.
  * @return Size of all components in this disassembling.
  */
-extern int INV_DisassemblyItem (base_t *base, components_t *comp, qboolean calculate)
+int INV_DisassemblyItem (base_t *base, components_t *comp, qboolean calculate)
 {
 	int i, j, size = 0;
 	objDef_t *compod;

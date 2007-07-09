@@ -53,7 +53,7 @@ static int languageCount; /**< how many languages do we have */
 /**
  * @brief Parse all language definitions from the script files
  */
-extern void CL_ParseLanguages (const char *name, char **text)
+void CL_ParseLanguages (const char *name, char **text)
 {
 	const char *errhead = "CL_ParseLanguages: unexpected end of file (language ";
 	char	*token;
@@ -115,7 +115,7 @@ extern void CL_ParseLanguages (const char *name, char **text)
  * @brief Fills the options language menu node with the parsed language mappings
  * @sa CL_InitAfter
  */
-extern void CL_LanguageInit (void)
+void CL_LanguageInit (void)
 {
 	int i;
 	menu_t* menu;
@@ -157,7 +157,7 @@ extern void CL_LanguageInit (void)
  * @param[in] localeID the locale id parsed from scriptfiles
  * @sa Qcommon_LocaleSet
  */
-extern qboolean CL_LanguageTryToSet (const char *localeID)
+qboolean CL_LanguageTryToSet (const char *localeID)
 {
 	int i;
 	language_t* language;

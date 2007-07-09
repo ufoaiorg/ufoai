@@ -1033,7 +1033,7 @@ static void SV_InitGame (void)
  * @sa SV_Map_f
  * @sa SV_Demo_f
  */
-extern void SV_Map (qboolean attractloop, char *levelstring, char *assembly)
+void SV_Map (qboolean attractloop, char *levelstring, char *assembly)
 {
 	char level[MAX_QPATH];
 	char *ch;

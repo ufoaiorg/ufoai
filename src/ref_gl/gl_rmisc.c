@@ -105,7 +105,7 @@ enum {
 /**
  * @brief
  */
-extern void GL_ScreenShot_f (void)
+void GL_ScreenShot_f (void)
 {
 	char	checkName[MAX_OSPATH];
 	int		type, shotNum, quality = 100;

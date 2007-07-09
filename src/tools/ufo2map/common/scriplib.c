@@ -33,8 +33,7 @@ PARSING STUFF
 =============================================================================
 */
 
-typedef struct
-{
+typedef struct {
 	char	filename[1024];
 	char    *buffer,*script_p,*end_p;
 	int     line;
@@ -76,7 +75,7 @@ static void AddScriptToStack (const char *filename)
 /**
  * @brief
  */
-extern void LoadScriptFile (const char *filename)
+void LoadScriptFile (const char *filename)
 {
 	script = scriptstack;
 	AddScriptToStack(filename);
@@ -88,7 +87,7 @@ extern void LoadScriptFile (const char *filename)
 /**
  * @brief
  */
-extern void ParseFromMemory (char *buffer, int size)
+void ParseFromMemory (char *buffer, int size)
 {
 	script = scriptstack;
 	script++;
@@ -131,7 +130,7 @@ static qboolean EndOfScript (qboolean crossline)
 /**
  * @brief
  */
-extern qboolean GetToken (qboolean crossline)
+qboolean GetToken (qboolean crossline)
 {
 	char *token_p;
 
@@ -216,7 +215,7 @@ skipspace:
 /**
  * @brief Returns true if there is another token on the line
  */
-extern qboolean TokenAvailable (void)
+qboolean TokenAvailable (void)
 {
 	char *search_p;
 

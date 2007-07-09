@@ -48,7 +48,7 @@ HKL		kbLayout;
 /**
  * @brief Map from windows to ufo keynums
  */
-extern int IN_MapKey (int wParam, int lParam)
+int IN_MapKey (int wParam, int lParam)
 {
 	static const byte scanToKey[128] = {
 		0,			K_ESCAPE,	'1',		'2',		'3',		'4',		'5',		'6',

@@ -448,7 +448,7 @@ static void FixEdges_r (node_t *node)
  * @sa ProcessSubModel
  * @sa ConstructLevelNodes_r
  */
-extern void FixTjuncs (node_t *headnode)
+void FixTjuncs (node_t *headnode)
 {
 	/* snap and merge all vertexes */
 	Sys_FPrintf(SYS_VRB, "---- snap verts ----\n");
@@ -511,7 +511,7 @@ static face_t *NewFaceFromFace (face_t *f)
 /**
  * @brief
  */
-extern void FreeFace (face_t *f)
+void FreeFace (face_t *f)
 {
 	if (f->w)
 		FreeWinding(f->w);
@@ -525,7 +525,7 @@ extern void FreeFace (face_t *f)
  * @note Called by writebsp.
  * @note Don't allow four way edges
  */
-extern int GetEdge2 (int v1, int v2,  face_t *f)
+int GetEdge2 (int v1, int v2,  face_t *f)
 {
 	dedge_t	*edge;
 	int		i;
@@ -905,7 +905,7 @@ static void MakeFaces_r (node_t *node)
 /**
  * @brief
  */
-extern void MakeFaces (node_t *node)
+void MakeFaces (node_t *node)
 {
 	Sys_FPrintf(SYS_VRB, "--- MakeFaces ---\n");
 	c_merge = 0;

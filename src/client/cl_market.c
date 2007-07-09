@@ -726,7 +726,7 @@ static void BS_SellAircraft_f (void)
 /**
  * @brief Activates commands for Market Menu.
  */
-extern void BS_ResetMarket (void)
+void BS_ResetMarket (void)
 {
 	Cmd_AddCommand("buy_type", BS_BuyType_f, NULL);
 	Cmd_AddCommand("market_click", BS_MarketClick_f, "Click function for buy menu text node");
@@ -747,7 +747,7 @@ extern void BS_ResetMarket (void)
  * @sa BS_Load
  * @sa SAV_GameSave
  */
-extern qboolean BS_Save (sizebuf_t* sb, void* data)
+qboolean BS_Save (sizebuf_t* sb, void* data)
 {
 	int i;
 
@@ -769,7 +769,7 @@ extern qboolean BS_Save (sizebuf_t* sb, void* data)
  * @sa BS_Save
  * @sa SAV_GameLoad
  */
-extern qboolean BS_Load (sizebuf_t* sb, void* data)
+qboolean BS_Load (sizebuf_t* sb, void* data)
 {
 	int i, j;
 	const char *s;
@@ -801,7 +801,7 @@ extern qboolean BS_Load (sizebuf_t* sb, void* data)
  * @brief Returns true if you can buy or sell equipment
  * @sa B_BaseInit_f
  */
-extern qboolean BS_BuySellAllowed (void)
+qboolean BS_BuySellAllowed (void)
 {
 	if (baseCurrent->baseStatus != BASE_UNDER_ATTACK
 	 && B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, B_STORAGE) > 0) {

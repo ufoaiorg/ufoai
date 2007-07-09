@@ -210,7 +210,7 @@ static void Con_MessageModeMenu_f (void)
 /**
  * @brief If the line width has changed, reformat the buffer.
  */
-extern void Con_CheckResize (void)
+void Con_CheckResize (void)
 {
 	int i, j, width, oldwidth, oldtotallines, numlines, numchars;
 	char tbuf[CON_TEXTSIZE];
@@ -352,7 +352,7 @@ void Con_SaveConsoleHistory (const char *path)
 /**
  * @brief
  */
-extern void Con_Init (void)
+void Con_Init (void)
 {
 	con.linewidth = -1;
 
@@ -493,7 +493,7 @@ DRAWING
 /**
  * @brief Hide the gameconsole if active
  */
-extern void Con_Close (void)
+void Con_Close (void)
 {
 	if (cls.key_dest == key_console)
 		Key_SetDest(key_game);

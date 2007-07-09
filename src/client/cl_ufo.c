@@ -58,7 +58,7 @@ static const ufoTypeList_t ufoTypeList[] = {
  * @sa UFO_TypeToName
  * @sa UFO_TypeToShortName
  */
-extern ufoType_t UFO_ShortNameToID (const char *token)
+ufoType_t UFO_ShortNameToID (const char *token)
 {
 	const ufoTypeList_t *list = ufoTypeList;
 
@@ -76,7 +76,7 @@ extern ufoType_t UFO_ShortNameToID (const char *token)
  * @sa UFO_TypeToName
  * @sa UFO_ShortNameToID
  */
-extern const char* UFO_TypeToShortName (ufoType_t type)
+const char* UFO_TypeToShortName (ufoType_t type)
 {
 	const ufoTypeList_t *list = ufoTypeList;
 
@@ -96,7 +96,7 @@ extern const char* UFO_TypeToShortName (ufoType_t type)
  * @sa UFO_TypeToShortName
  * @sa UFO_ShortNameToID
  */
-extern const char* UFO_TypeToName (ufoType_t type)
+const char* UFO_TypeToName (ufoType_t type)
 {
 	const ufoTypeList_t *list = ufoTypeList;
 
@@ -126,7 +126,7 @@ static void UFO_SetUfoRandomDest (aircraft_t* ufo)
 /**
  * @brief Make the UFOs run
  */
-extern void UFO_CampaignRunUfos (int dt)
+void UFO_CampaignRunUfos (int dt)
 {
 	aircraft_t*	ufo;
 
@@ -215,7 +215,7 @@ static void UFO_NewUfoOnGeoscape_f (void)
  * @brief Remove the specified ufo from geoscape
  * @sa UFO_NewUfoOnGeoscape_f
  */
-extern void UFO_RemoveUfoFromGeoscape (aircraft_t* ufo)
+void UFO_RemoveUfoFromGeoscape (aircraft_t* ufo)
 {
 	int num;
 	base_t* base;
@@ -257,7 +257,7 @@ static void UFO_RemoveUfoFromGeoscape_f (void)
 /**
  * @brief Check events for ufos : appears or disappears on radars
  */
-extern void UFO_CampaignCheckEvents (void)
+void UFO_CampaignCheckEvents (void)
 {
 	qboolean visible;
 	aircraft_t *ufo, *aircraft;
@@ -299,7 +299,7 @@ extern void UFO_CampaignCheckEvents (void)
  * @brief Prepares UFO recovery in global recoveries array.
  * @param[in] *base Pointer to the base, where the UFO recovery will be made.
  */
-extern void UFO_PrepareRecovery (base_t *base)
+void UFO_PrepareRecovery (base_t *base)
 {
 	int i;
 	ufoRecoveries_t *recovery = NULL;
@@ -350,7 +350,7 @@ extern void UFO_PrepareRecovery (base_t *base)
 /**
  * @brief Function to process active recoveries.
  */
-extern void UFO_Recovery (void)
+void UFO_Recovery (void)
 {
 	int i, item;
 	objDef_t *od;
@@ -415,7 +415,7 @@ static void UFO_DestroyAllUFOsOnGeoscape_f (void)
  * @brief
  * @sa MN_ResetMenus
  */
-extern void UFO_Reset (void)
+void UFO_Reset (void)
 {
 	Cmd_AddCommand("addufo", UFO_NewUfoOnGeoscape_f, "Add a new ufo to geoscape");
 	Cmd_AddCommand("removeufo", UFO_RemoveUfoFromGeoscape_f, "Remove an ufo from geoscape");

@@ -34,7 +34,7 @@ ALIAS MODELS
 /**
  * @brief
  */
-extern void Mod_LoadAnims (mAliasModel_t * mod, void *buffer)
+void Mod_LoadAnims (mAliasModel_t * mod, void *buffer)
 {
 	char *text, *token;
 	mAliasAnim_t *anim;
@@ -97,7 +97,7 @@ extern void Mod_LoadAnims (mAliasModel_t * mod, void *buffer)
 /**
  * @brief
  */
-extern int Mod_FindTriangleWithEdge (mAliasNeighbors_t *neighbors, dtriangle_t *tris, int numtris, int triIndex, int edgeIndex)
+int Mod_FindTriangleWithEdge (mAliasNeighbors_t *neighbors, dtriangle_t *tris, int numtris, int triIndex, int edgeIndex)
 {
 	int			i, j, found = -1, foundj = 0;
 	dtriangle_t	*current = &tris[triIndex];
@@ -135,7 +135,7 @@ extern int Mod_FindTriangleWithEdge (mAliasNeighbors_t *neighbors, dtriangle_t *
 /**
  * @brief
  */
-extern void Mod_BuildTriangleNeighbors (mAliasNeighbors_t *neighbors, dtriangle_t *tris, int numtris)
+void Mod_BuildTriangleNeighbors (mAliasNeighbors_t *neighbors, dtriangle_t *tris, int numtris)
 {
 	int		i, j;
 

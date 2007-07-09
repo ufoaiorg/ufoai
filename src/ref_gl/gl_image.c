@@ -56,7 +56,7 @@ int gl_filter_max = GL_LINEAR;
  * @note not used atm
  * @sa GL_ResampleTexture
  */
-extern void GL_UpdateAnisotropy (void)
+void GL_UpdateAnisotropy (void)
 {
 	int		i;
 	image_t	*glt;
@@ -79,7 +79,7 @@ extern void GL_UpdateAnisotropy (void)
 /**
  * @brief
  */
-extern void GL_EnableMultitexture (qboolean enable)
+void GL_EnableMultitexture (qboolean enable)
 {
 	if (!qglSelectTextureSGIS && !qglActiveTextureARB)
 		return;
@@ -100,7 +100,7 @@ extern void GL_EnableMultitexture (qboolean enable)
 /**
  * @brief
  */
-extern void GL_SelectTexture (GLenum texture)
+void GL_SelectTexture (GLenum texture)
 {
 	int tmu;
 
@@ -128,7 +128,7 @@ extern void GL_SelectTexture (GLenum texture)
 /**
  * @brief
  */
-extern void GL_TexEnv (GLenum mode)
+void GL_TexEnv (GLenum mode)
 {
 	static GLenum lastmodes[2] = { (GLenum) - 1, (GLenum) - 1 };
 
@@ -141,7 +141,7 @@ extern void GL_TexEnv (GLenum mode)
 /**
  * @brief
  */
-extern void GL_Bind (int texnum)
+void GL_Bind (int texnum)
 {
 	if (gl_state.currenttextures[gl_state.currenttmu] == texnum)
 		return;
@@ -152,7 +152,7 @@ extern void GL_Bind (int texnum)
 /**
  * @brief
  */
-extern void GL_MBind (GLenum target, int texnum)
+void GL_MBind (GLenum target, int texnum)
 {
 	GL_SelectTexture(target);
 	if (target == gl_texture0) {
@@ -214,7 +214,7 @@ static const gltmode_t gl_solid_modes[] = {
 /**
  * @brief
  */
-extern void GL_TextureMode (const char *string)
+void GL_TextureMode (const char *string)
 {
 	int i;
 	image_t *glt;
@@ -245,7 +245,7 @@ extern void GL_TextureMode (const char *string)
 /**
  * @brief
  */
-extern void GL_TextureAlphaMode (const char *string)
+void GL_TextureAlphaMode (const char *string)
 {
 	int i;
 
@@ -265,7 +265,7 @@ extern void GL_TextureAlphaMode (const char *string)
 /**
  * @brief
  */
-extern void GL_TextureSolidMode (const char *string)
+void GL_TextureSolidMode (const char *string)
 {
 	int i;
 
@@ -285,7 +285,7 @@ extern void GL_TextureSolidMode (const char *string)
 /**
  * @brief Shows all loaded images
  */
-extern void GL_ImageList_f (void)
+void GL_ImageList_f (void)
 {
 	int i;
 	image_t *image;
@@ -388,7 +388,7 @@ static int scrap_uploads = 0;
 /**
  * @brief
  */
-extern void Scrap_Upload (void)
+void Scrap_Upload (void)
 {
 	scrap_uploads++;
 	GL_Bind(TEXNUM_SCRAPS);
@@ -660,7 +660,7 @@ static int LoadPNG (const char *name, byte **pic, int *width, int *height)
  * @sa LoadPCX
  * @sa GL_FindImage
  */
-extern void WritePNG (FILE *f, byte *buffer, int width, int height)
+void WritePNG (FILE *f, byte *buffer, int width, int height)
 {
 	int			i;
 	png_structp	png_ptr;
@@ -730,7 +730,7 @@ typedef struct _TargaHeader {
  * @sa LoadPNG
  * @sa GL_FindImage
  */
-extern void LoadTGA (const char *name, byte ** pic, int *width, int *height)
+void LoadTGA (const char *name, byte ** pic, int *width, int *height)
 {
 	int columns, rows, numPixels;
 	byte *pixbuf;
@@ -934,7 +934,7 @@ extern void LoadTGA (const char *name, byte ** pic, int *width, int *height)
  * @brief
  * @sa LoadTGA
  */
-extern void WriteTGA (FILE *f, byte *buffer, int width, int height)
+void WriteTGA (FILE *f, byte *buffer, int width, int height)
 {
 	int		i, temp;
 	byte	*out;
@@ -1343,7 +1343,7 @@ void SaveJPG (const char *filename, int quality, int image_width, int image_heig
  * @sa SaveJPG
  * @sa LoadJPG
  */
-extern size_t SaveJPGToBuffer (byte * buffer, int quality, int image_width, int image_height, byte * image_buffer)
+size_t SaveJPGToBuffer (byte * buffer, int quality, int image_width, int image_height, byte * image_buffer)
 {
 	struct jpeg_compress_struct cinfo;
 	struct jpeg_error_mgr jerr;

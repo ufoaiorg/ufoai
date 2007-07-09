@@ -348,7 +348,7 @@ MISC FUNCTIONS
  * @param[in] dst The offset or char pointer that points to the hunk space that
  * was used to store the string
  */
-extern char *_Mem_PoolStrDupTo (const char *in, char **out, struct memPool_s *pool, const int tagNum, const char *fileName, const int fileLine)
+char *_Mem_PoolStrDupTo (const char *in, char **out, struct memPool_s *pool, const int tagNum, const char *fileName, const int fileLine)
 {
 	if (!out)
 		return NULL;
@@ -639,7 +639,7 @@ static void Mem_Stats_f (void)
  * @brief
  * @sa Qcommon_Init
  */
-extern void Mem_Init (void)
+void Mem_Init (void)
 {
 	Cmd_AddCommand("mem_stats", Mem_Stats_f, "Prints out current internal memory statistics");
 	Cmd_AddCommand("mem_check", Mem_Check_f, "Checks global memory integrity");

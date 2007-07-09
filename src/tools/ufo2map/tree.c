@@ -88,7 +88,7 @@ static void FreeTree_r (node_t *node)
 /**
  * @brief
  */
-extern void FreeTree (tree_t *tree)
+void FreeTree (tree_t *tree)
 {
 	FreeTreePortals_r(tree->headnode);
 	FreeTree_r(tree->headnode);
@@ -176,7 +176,7 @@ void PruneNodes_r (node_t *node)
  * @brief
  * @sa PruneNodes_r
  */
-extern void PruneNodes (node_t *node)
+void PruneNodes (node_t *node)
 {
 	Sys_FPrintf(SYS_VRB, "--- PruneNodes ---\n");
 	c_pruned = 0;

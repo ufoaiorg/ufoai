@@ -52,7 +52,7 @@ static vec3_t tr_end;
 /**
  * @brief Converts the disk node structure into the efficient tracing structure
  */
-extern void MakeTnode (int nodenum)
+void MakeTnode (int nodenum)
 {
 	tnode_t *t;
 	dplane_t *plane;
@@ -144,7 +144,7 @@ static void BuildTnode_r (int node)
  * @brief Loads the node structure out of a .bsp file to be used for light occlusion
  * @sa CloseTNodes
  */
-extern void MakeTnodes (int levels)
+void MakeTnodes (int levels)
 {
 	int i;
 	size_t size;
@@ -417,7 +417,7 @@ static int TestContents_r (int node, vec3_t pos)
  * @brief Step height check
  * @sa TestContents_r
  */
-extern qboolean TestContents (vec3_t pos)
+qboolean TestContents (vec3_t pos)
 {
 	int i;
 

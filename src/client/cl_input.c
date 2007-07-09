@@ -712,7 +712,7 @@ static void CL_MakeBaseMapShot_f (void)
  * @brief Init some bindable commands
  * @sa CL_InitLocal
  */
-extern void CL_InitInput (void)
+void CL_InitInput (void)
 {
 	Cmd_AddCommand("+turnleft", IN_TurnLeftDown_f, _("Rotate battlescape camera anti-clockwise"));
 	Cmd_AddCommand("-turnleft", IN_TurnLeftUp_f, NULL);
@@ -1054,7 +1054,7 @@ static void CL_CameraMoveRemote (void)
 /**
  * @brief
  */
-extern void CL_CameraMove (void)
+void CL_CameraMove (void)
 {
 	if (cls.state != ca_active)
 		return;
@@ -1071,7 +1071,7 @@ extern void CL_CameraMove (void)
 /**
  * @brief
  */
-extern void CL_CameraRoute (pos3_t from, pos3_t target)
+void CL_CameraRoute (pos3_t from, pos3_t target)
 {
 	/* initialize the camera route variables */
 	PosToVec(from, routeFrom);
@@ -1098,7 +1098,7 @@ extern void CL_CameraRoute (pos3_t from, pos3_t target)
  * @note The geoscape zooming code is in MN_MouseWheel too
  * @sa CL_Frame
  */
-extern void CL_ParseInput (void)
+void CL_ParseInput (void)
 {
 	int i, oldx, oldy;
 

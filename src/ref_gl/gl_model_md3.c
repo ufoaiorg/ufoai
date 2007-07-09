@@ -35,7 +35,7 @@ MD3 ALIAS MODELS
  * @brief Load MD3 models from file.
  * @note Some Vic code here not fully used
  */
-extern void Mod_LoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
+void Mod_LoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 {
 	int					version, i, j, l;
 	dmd3_t				*pinmodel;

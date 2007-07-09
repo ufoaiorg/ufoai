@@ -42,7 +42,7 @@ vec3_t vnormals[MAX_MAP_VERTS];
 /**
  * @brief
  */
-extern void LinkPlaneFaces (void)
+void LinkPlaneFaces (void)
 {
 	int i;
 	dface_t *f;
@@ -57,7 +57,7 @@ extern void LinkPlaneFaces (void)
 /**
  * @brief
  */
-extern void PairEdges (void)
+void PairEdges (void)
 {
 	int i, j, k;
 	dface_t *f;

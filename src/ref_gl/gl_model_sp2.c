@@ -34,7 +34,7 @@ SPRITE MODELS
 /**
  * @brief
  */
-extern void Mod_LoadSpriteModel (model_t * mod, void *buffer, int bufSize)
+void Mod_LoadSpriteModel (model_t * mod, void *buffer, int bufSize)
 {
 	dsprite_t *sprin, *sprout;
 	int i;

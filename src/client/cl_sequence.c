@@ -234,7 +234,7 @@ static seq2D_t *CL_SequenceFind2D (const char *name)
  * @sa MN_PopMenu
  * @sa CL_SequenceFindEnt
  */
-extern void CL_SequenceRender (void)
+void CL_SequenceRender (void)
 {
 	entity_t ent;
 	seqCmd_t *sc;

@@ -110,7 +110,7 @@ static void Mod_LoadTags (model_t * mod, void *buffer, int bufSize)
 /**
  * @brief Load MD2 models from file.
  */
-extern void Mod_LoadAliasMD2Model (model_t * mod, void *buffer, int bufSize)
+void Mod_LoadAliasMD2Model (model_t * mod, void *buffer, int bufSize)
 {
 	int i, j;
 	size_t l;

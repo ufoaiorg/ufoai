@@ -42,7 +42,7 @@ static void B_BuildingInit(void);
 /**
  * @brief Count all employees (hired) in the given base
  */
-extern int B_GetEmployeeCount (const base_t* const base)
+int B_GetEmployeeCount (const base_t* const base)
 {
 	int cnt = 0;
 	employeeType_t type;
@@ -67,7 +67,7 @@ extern int B_GetEmployeeCount (const base_t* const base)
  * building types but should speed things up a lot
  * @return true if building with status was found
  */
-extern qboolean B_CheckBuildingTypeStatus (const base_t* const base, buildingType_t type, buildingStatus_t status, int *cnt)
+qboolean B_CheckBuildingTypeStatus (const base_t* const base, buildingType_t type, buildingStatus_t status, int *cnt)
 {
 	int cntlocal = 0, i;
 
@@ -93,7 +93,7 @@ extern qboolean B_CheckBuildingTypeStatus (const base_t* const base, buildingTyp
  * @param[in] base The base to count the free space in.
  * @return int The total number of space in quarters.
  */
-extern int B_GetAvailableQuarterSpace (const base_t* const base)
+int B_GetAvailableQuarterSpace (const base_t* const base)
 {
 	int cnt = 0, i;
 
@@ -117,7 +117,7 @@ extern int B_GetAvailableQuarterSpace (const base_t* const base)
 /*
 @10042007 Zenerka - not needed/used anymore.
 */
-extern int B_GetAvailableLabSpace (const base_t* const base)
+int B_GetAvailableLabSpace (const base_t* const base)
 {
 	int cnt = 0, i;
 
@@ -198,7 +198,7 @@ static const value_t valid_building_vars[] = {
  * inc_sensor and dec_sensor are script commands that increase the amount
  * of the radar width for a given base
  */
-extern void B_SetSensor_f (void)
+void B_SetSensor_f (void)
 {
 	int i = 0;
 	int amount = 0;
@@ -433,7 +433,7 @@ static void B_BuildingDestroy_f (void)
  * @brief Mark a building for destruction - you only have to confirm it now
  * @note Also calls the ondestroy trigger
  */
-extern void B_BuildingDestroy (building_t* building, base_t* base)
+void B_BuildingDestroy (building_t* building, base_t* base)
 {
 	assert(base);
 	assert(building);
@@ -450,7 +450,7 @@ extern void B_BuildingDestroy (building_t* building, base_t* base)
  * the building status
  * @note also script command function binding for 'building_status'
  */
-extern void B_BuildingStatus (void)
+void B_BuildingStatus (void)
 {
 	int daysLeft;
 	int NumberOfBuildings = 0;
@@ -637,7 +637,7 @@ static void B_UpdateBaseBuildingStatus (building_t* building, base_t* base, buil
  * @brief Setup new base
  * @sa CL_NewBase
  */
-extern void B_SetUpBase (base_t* base)
+void B_SetUpBase (base_t* base)
 {
 	int i;
 	building_t *building = NULL;
@@ -722,7 +722,7 @@ extern void B_SetUpBase (base_t* base)
  *
  * @return building_t If a building was found it is returned, if no id was give the current building is returned, otherwise->NULL.
  */
-extern building_t *B_GetBuildingType (const char *buildingName)
+building_t *B_GetBuildingType (const char *buildingName)
 {
 	int i = 0;
 
@@ -824,7 +824,7 @@ static void B_NewBuilding (void)
  * @param[in] row Set building (baseCurrent->buildingCurrent) to row
  * @param[in] col Set building (baseCurrent->buildingCurrent) to col
  */
-extern void B_SetBuildingByClick (int row, int col)
+void B_SetBuildingByClick (int row, int col)
 {
 	int j;
 	qboolean freeSlot = qfalse;
@@ -1023,7 +1023,7 @@ static void B_BuildingAddToList (building_t * building)
  * @param[in] type_idx Which buildingtype
  * @sa B_GetNumberOfBuildingsInBaseByType
  */
-extern int B_GetNumberOfBuildingsInBaseByTypeIDX (int base_idx, int type_idx)
+int B_GetNumberOfBuildingsInBaseByTypeIDX (int base_idx, int type_idx)
 {
 	int i;
 	int NumberOfBuildings = 0;
@@ -1049,7 +1049,7 @@ extern int B_GetNumberOfBuildingsInBaseByTypeIDX (int base_idx, int type_idx)
  * @param[in] type Building type value
  * @sa B_GetNumberOfBuildingsInBaseByTypeIDX
  */
-extern int B_GetNumberOfBuildingsInBaseByType (int base_idx, buildingType_t type)
+int B_GetNumberOfBuildingsInBaseByType (int base_idx, buildingType_t type)
 {
 	int i;
 	int NumberOfBuildings = 0;
@@ -1155,7 +1155,7 @@ static void B_BuildingInit (void)
  * @param[in] idx The index of the building in gd.buildings[]
  * @return buildings_t pointer to gd.buildings[idx]
  */
-extern building_t *B_GetBuildingByIdx (base_t* base, int idx)
+building_t *B_GetBuildingByIdx (base_t* base, int idx)
 {
 	if (base)
 		return &gd.buildings[base->idx][idx];
@@ -1248,7 +1248,7 @@ static void B_BuildingClick_f (void)
  * @sa CL_ParseScriptFirst (link is false here)
  * @sa CL_ParseScriptSecond (link it true here)
  */
-extern void B_ParseBuildings (const char *name, char **text, qboolean link)
+void B_ParseBuildings (const char *name, char **text, qboolean link)
 {
 	building_t *building = NULL;
 	building_t *dependsBuilding = NULL;
@@ -1490,7 +1490,7 @@ static building_t *B_GetFreeBuildingType (buildingType_t type)
  *
  * @return The lab or NULL if base has no lab
  */
-extern building_t *B_GetLab (int base_idx)
+building_t *B_GetLab (int base_idx)
 {
 	int i;
 	building_t *building = NULL;
@@ -1508,7 +1508,7 @@ extern building_t *B_GetLab (int base_idx)
  * @sa CL_ResetCharacters
  * @sa CL_GenerateCharacter
  */
-extern void B_ClearBase (base_t *const base)
+void B_ClearBase (base_t *const base)
 {
 	int row, col, i;
 
@@ -1550,7 +1550,7 @@ extern void B_ClearBase (base_t *const base)
  * @sa CL_ParseScriptFirst
  * @note write into cl_localPool - free on every game restart and reparse
  */
-extern void B_ParseBases (const char *name, char **text)
+void B_ParseBases (const char *name, char **text)
 {
 	const char *errhead = "B_ParseBases: unexpected end of file (names ";
 	char *token;
@@ -1606,7 +1606,7 @@ extern void B_ParseBases (const char *name, char **text)
  * @brief Draws a base.
  * @sa MN_DrawMenus
  */
-extern void B_DrawBase (menuNode_t * node)
+void B_DrawBase (menuNode_t * node)
 {
 	int x, y, xHover = -1, yHover = -1, widthHover = 1;
 	int mouseX, mouseY, width, height, row, col, time, colSecond;
@@ -2140,7 +2140,7 @@ static void B_BuildBase_f (void)
  * @param[in] base Which base should be resetted?
  * @sa CL_CampaignRemoveMission
  */
-extern void B_BaseResetStatus (base_t* const base)
+void B_BaseResetStatus (base_t* const base)
 {
 	assert(base);
 	base->baseStatus = BASE_NOT_USED;
@@ -2154,7 +2154,7 @@ extern void B_BaseResetStatus (base_t* const base)
  * @sa CL_CampaignAddMission
  * @param[in] base Which base is under attack?
  */
-extern void B_BaseAttack (base_t* const base)
+void B_BaseAttack (base_t* const base)
 {
 	assert(base);
 	base->baseStatus = BASE_UNDER_ATTACK;
@@ -2287,7 +2287,7 @@ static void B_AssembleMap_f (void)
  * @brief Cleans all bases but restart the base names
  * @sa CL_GameNew
  */
-extern void B_NewBases (void)
+void B_NewBases (void)
 {
 	/* reset bases */
 	int i;
@@ -2568,7 +2568,7 @@ static void B_PrintCapacities_f (void)
  * @brief Resets console commands.
  * @sa MN_ResetMenus
  */
-extern void B_ResetBaseManagement (void)
+void B_ResetBaseManagement (void)
 {
 	Com_DPrintf("Reset basemanagement\n");
 
@@ -2888,7 +2888,7 @@ void B_UpdateBaseCapacities (baseCapacities_t cap, base_t *base)
  * @sa B_Load
  * @sa SAV_GameSave
  */
-extern qboolean B_Save (sizebuf_t* sb, void* data)
+qboolean B_Save (sizebuf_t* sb, void* data)
 {
 	int i, k, l, cnt;
 	base_t *b, *transferBase;
@@ -3059,7 +3059,7 @@ extern qboolean B_Save (sizebuf_t* sb, void* data)
  * @sa B_Save
  * @sa SAV_GameLoad
  */
-extern qboolean B_Load (sizebuf_t* sb, void* data)
+qboolean B_Load (sizebuf_t* sb, void* data)
 {
 	int i, bases, k, l, m, amount;
 	base_t *b;
@@ -3312,7 +3312,7 @@ extern qboolean B_Load (sizebuf_t* sb, void* data)
  * storage amount and capacities (e.g. in case of a base ransack)
  * @sa CL_BaseRansacked
  */
-extern qboolean B_UpdateStorageAndCapacity (base_t* base, int objIDX, int amount, qboolean reset)
+qboolean B_UpdateStorageAndCapacity (base_t* base, int objIDX, int amount, qboolean reset)
 {
 	assert(base);
 	if (reset) {

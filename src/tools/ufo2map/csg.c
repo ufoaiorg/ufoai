@@ -210,7 +210,7 @@ static qboolean IsInLevel (int contents, int level)
 /**
  * @brief
  */
-extern int MapBrushesBounds (int startbrush, int endbrush, int level, vec3_t clipmins, vec3_t clipmaxs, vec3_t mins, vec3_t maxs)
+int MapBrushesBounds (int startbrush, int endbrush, int level, vec3_t clipmins, vec3_t clipmaxs, vec3_t mins, vec3_t maxs)
 {
 	mapbrush_t	*b;
 	int		i, j, num;
@@ -248,7 +248,7 @@ extern int MapBrushesBounds (int startbrush, int endbrush, int level, vec3_t cli
 /**
  * @brief
  */
-extern bspbrush_t *MakeBspBrushList (int startbrush, int endbrush, int level, vec3_t clipmins, vec3_t clipmaxs)
+bspbrush_t *MakeBspBrushList (int startbrush, int endbrush, int level, vec3_t clipmins, vec3_t clipmaxs)
 {
 	mapbrush_t	*mb;
 	bspbrush_t	*brushlist, *newbrush;
@@ -385,7 +385,7 @@ static qboolean BrushGE (bspbrush_t *b1, bspbrush_t *b2)
 /**
  * @brief Carves any intersecting solid brushes into the minimum number of non-intersecting brushes.
  */
-extern bspbrush_t *ChopBrushes (bspbrush_t *head)
+bspbrush_t *ChopBrushes (bspbrush_t *head)
 {
 	bspbrush_t	*b1, *b2, *next;
 	bspbrush_t	*tail;

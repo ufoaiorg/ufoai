@@ -30,7 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @brief Show Radar coverage
  * @sa MAP_MapDrawEquidistantPoints
  */
-extern void RADAR_DrawCoverage (const menuNode_t* node, const radar_t* radar, vec2_t pos, qboolean globe)
+void RADAR_DrawCoverage (const menuNode_t* node, const radar_t* radar, vec2_t pos, qboolean globe)
 {
 	float rangeTracking;
 
@@ -47,7 +47,7 @@ extern void RADAR_DrawCoverage (const menuNode_t* node, const radar_t* radar, ve
 /**
  * @brief Display radar in geoscape
  */
-extern void RADAR_DrawInMap (const menuNode_t* node, const radar_t* radar, vec2_t pos, qboolean globe)
+void RADAR_DrawInMap (const menuNode_t* node, const radar_t* radar, vec2_t pos, qboolean globe)
 {
 	int x, y;
 	int i, z;
@@ -111,7 +111,7 @@ static int RADAR_IsUfoSensored (const radar_t* radar, int numUfo)
 /**
  * @brief Ufo will no more be referenced by radar
  */
-extern void RADAR_RemoveUfo (radar_t* radar, const aircraft_t* ufo)
+void RADAR_RemoveUfo (radar_t* radar, const aircraft_t* ufo)
 {
 	int i, numUfo = ufo - gd.ufos;
 
@@ -126,7 +126,7 @@ extern void RADAR_RemoveUfo (radar_t* radar, const aircraft_t* ufo)
 /**
  * @brief Notify that the specified ufo has been removed from geoscape
  **/
-extern void Radar_NotifyUfoRemoved (radar_t* radar, const aircraft_t* ufo)
+void Radar_NotifyUfoRemoved (radar_t* radar, const aircraft_t* ufo)
 {
 	int i, numUfo = ufo - gd.ufos;
 
@@ -142,7 +142,7 @@ extern void Radar_NotifyUfoRemoved (radar_t* radar, const aircraft_t* ufo)
 /**
  * @brief Change to radar range
  */
-extern void RADAR_ChangeRange (radar_t* radar, int change)
+void RADAR_ChangeRange (radar_t* radar, int change)
 {
 	radar->range += change;
 	if (radar->range < 0)
@@ -152,7 +152,7 @@ extern void RADAR_ChangeRange (radar_t* radar, int change)
 /**
  * @brief Initialise radar
  */
-extern void Radar_Initialise (radar_t* radar, int range)
+void Radar_Initialise (radar_t* radar, int range)
 {
 	radar->range = range;
 	radar->numUfos = 0;
@@ -162,7 +162,7 @@ extern void Radar_Initialise (radar_t* radar, int range)
  * @brief Check if the specified ufo is inside the sensor range of base
  * Return true if the aircraft is inside sensor
  */
-extern qboolean RADAR_CheckUfoSensored (radar_t* radar, vec2_t posRadar,
+qboolean RADAR_CheckUfoSensored (radar_t* radar, vec2_t posRadar,
 	const aircraft_t* ufo, qboolean wasUfoSensored)
 {
 	int dist;

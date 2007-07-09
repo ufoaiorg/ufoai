@@ -87,7 +87,7 @@ static void BeginPak (const char *outname)
  * @brief Filename should be gamedir relative.
  * Either copies the file to the release dir, or adds it to the pak file.
  */
-extern void ReleaseFile (const char *filename)
+void ReleaseFile (const char *filename)
 {
 	int		len;
 	byte	*buf;

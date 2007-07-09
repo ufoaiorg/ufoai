@@ -54,7 +54,7 @@ void GL_LerpVerts (int nverts, dtrivertx_t * v, dtrivertx_t * ov, float *lerp, f
  * @brief interpolates between two frames and origins
  * FIXME: batch lerp all vertexes
  */
-extern void R_DrawAliasFrameLerp (mdl_md2_t * paliashdr, float backlerp, int framenum, int oldframenum)
+void R_DrawAliasFrameLerp (mdl_md2_t * paliashdr, float backlerp, int framenum, int oldframenum)
 {
 	dAliasFrame_t *frame, *oldframe;
 	dtrivertx_t *v, *ov, *verts;

@@ -962,7 +962,7 @@ void Key_Init (void)
  * @brief Sets the key_dest in cls
  * @param[in] key_dest see keydest_t
  */
-extern void Key_SetDest (int key_dest)
+void Key_SetDest (int key_dest)
 {
 	cls.key_dest_old = cls.key_dest;
 	cls.key_dest = key_dest;

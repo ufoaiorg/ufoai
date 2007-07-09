@@ -198,7 +198,7 @@ static void GL_Bloom_InitTextures (void)
  * @brief
  * @sa GL_Bloom_InitTextures
  */
-extern void GL_InitBloom (void)
+void GL_InitBloom (void)
 {
 	gl_bloom = ri.Cvar_Get("gl_bloom", "0", CVAR_ARCHIVE, "Activate light blooms");
 	gl_bloomalpha = ri.Cvar_Get("gl_bloomalpha", "0.4", CVAR_ARCHIVE, NULL);
@@ -338,7 +338,7 @@ extern void GL_SetupGL(void);
 /**
  * @brief
  */
-extern void GL_BloomBlend (void)
+void GL_BloomBlend (void)
 {
 	/* if params have changed, update texture sizes */
 	if (gl_bloom->modified || gl_bloomsize->modified) {

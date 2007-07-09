@@ -82,7 +82,7 @@ dbrushside_t dbrushsides[MAX_MAP_BRUSHSIDES];
  * @brief Compress the routing data of a map
  * @sa DeCompressRouting
  */
-extern byte *CompressRouting (byte *dataStart, byte *destStart, int l)
+byte *CompressRouting (byte *dataStart, byte *destStart, int l)
 {
 	int c;
 	byte val;
@@ -131,7 +131,7 @@ extern byte *CompressRouting (byte *dataStart, byte *destStart, int l)
  * @sa CompressRouting
  * @note unused
  */
-extern int DeCompressRouting (byte **source, byte *dataStart)
+int DeCompressRouting (byte **source, byte *dataStart)
 {
 	int	i, c;
 	byte	*data_p;
@@ -305,7 +305,7 @@ static int CopyLump (int lump, void *dest, int size)
 /**
  * @brief
  */
-extern void LoadBSPFile (const char *filename)
+void LoadBSPFile (const char *filename)
 {
 	int i;
 
@@ -349,7 +349,7 @@ extern void LoadBSPFile (const char *filename)
 /**
  * @brief Only loads the texinfo lump, so qdata can scan for textures
  */
-extern void LoadBSPFileTexinfo (const char *filename)
+void LoadBSPFileTexinfo (const char *filename)
 {
 	int i, length, ofs;
 	qFILE f;
@@ -413,7 +413,7 @@ static void AddLump (int lumpnum, void *data, int len)
 /**
  * @brief Swaps the bsp file in place, so it should not be referenced again
  */
-extern void WriteBSPFile (const char *filename)
+void WriteBSPFile (const char *filename)
 {
 	header = &outheader;
 	memset(header, 0, sizeof(dheader_t));
@@ -475,7 +475,7 @@ extern void WriteBSPFile (const char *filename)
  * @brief Dumps info about current file
  * @note Used in bspinfo3
  */
-extern void PrintBSPFileSizes (void)
+void PrintBSPFileSizes (void)
 {
 	if (!num_entities)
 		ParseEntities();
@@ -537,7 +537,7 @@ static void StripTrailing (char *e)
  * @sa ParseEntity
  * @sa ParseMapEntity
  */
-extern epair_t *ParseEpair (void)
+epair_t *ParseEpair (void)
 {
 	epair_t	*e;
 
@@ -599,7 +599,7 @@ static qboolean ParseEntity (void)
  * @sa UnparseEntities
  * @sa ParseEntity
  */
-extern void ParseEntities (void)
+void ParseEntities (void)
 {
 	num_entities = 0;
 	ParseFromMemory(dentdata, entdatasize);
@@ -613,7 +613,7 @@ extern void ParseEntities (void)
  * @brief Generates the dentdata string from all the entities
  * @sa ParseEntities
  */
-extern void UnparseEntities (void)
+void UnparseEntities (void)
 {
 	char	*buf, *end;
 	epair_t	*ep;
@@ -669,7 +669,7 @@ static void PrintEntity (entity_t *ent)
 /**
  * @brief
  */
-extern void SetKeyValue (entity_t *ent, char *key, char *value)
+void SetKeyValue (entity_t *ent, char *key, char *value)
 {
 	epair_t *ep;
 
@@ -689,7 +689,7 @@ extern void SetKeyValue (entity_t *ent, char *key, char *value)
 /**
  * @brief
  */
-extern char *ValueForKey (entity_t *ent, char *key)
+char *ValueForKey (entity_t *ent, char *key)
 {
 	epair_t *ep;
 
@@ -702,7 +702,7 @@ extern char *ValueForKey (entity_t *ent, char *key)
 /**
  * @brief
  */
-extern vec_t FloatForKey (entity_t *ent, char *key)
+vec_t FloatForKey (entity_t *ent, char *key)
 {
 	char *k;
 
@@ -713,7 +713,7 @@ extern vec_t FloatForKey (entity_t *ent, char *key)
 /**
  * @brief
  */
-extern void GetVectorForKey (entity_t *ent, char *key, vec3_t vec)
+void GetVectorForKey (entity_t *ent, char *key, vec3_t vec)
 {
 	char *k;
 	double v1, v2, v3;

@@ -94,7 +94,7 @@ static image_t *R_TextureAnimation (mBspTexInfo_t * tex)
 /**
  * @brief
  */
-extern void R_DrawTriangleOutlines (void)
+void R_DrawTriangleOutlines (void)
 {
 	int i, j;
 	mBspPoly_t *p;
@@ -960,7 +960,7 @@ static qboolean LM_AllocBlock (int w, int h, int *x, int *y)
 /**
  * @brief
  */
-extern void GL_BuildPolygonFromSurface (mBspSurface_t * fa, int shift[3])
+void GL_BuildPolygonFromSurface (mBspSurface_t * fa, int shift[3])
 {
 	int i, lindex, lnumverts;
 	mBspEdge_t *pedges, *r_pedge;

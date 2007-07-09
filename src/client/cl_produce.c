@@ -418,7 +418,7 @@ void PR_ProductionRun (void)
 			if (gd.bases[i].capacities[CAP_ITEMS].max - gd.bases[i].capacities[CAP_ITEMS].cur < od->size)
 				continue;
 		} else {		/* This is disassembling. */
-			if (gd.bases[i].capacities[CAP_ITEMS].max - gd.bases[i].capacities[CAP_ITEMS].cur < 
+			if (gd.bases[i].capacities[CAP_ITEMS].max - gd.bases[i].capacities[CAP_ITEMS].cur <
 			INV_DisassemblyItem(NULL, INV_GetComponentsByItemIdx(prod->objID), qtrue))
 				continue;
 		}
@@ -911,7 +911,7 @@ void PR_ProductionInit (void)
  * @brief
  * @sa CL_InitAfter
  */
-extern void PR_Init (void)
+void PR_Init (void)
 {
 	menu_t* menu = MN_GetMenu("production");
 	if (!menu)
@@ -1046,7 +1046,7 @@ static void PR_ProductionStop_f (void)
 
 	queue = &gd.productions[baseCurrent->idx];
 	if (!queue->items[selectedIndex].production)
-		disassembling = qtrue;	
+		disassembling = qtrue;
 
 	PR_QueueDelete(queue, selectedIndex, baseCurrent->idx);
 
@@ -1090,7 +1090,7 @@ static void PR_ProductionDecrease_f (void)
 		amount_temp = prod->amount;
 
 	prod->amount -= amount_temp;
-	/* We need to readd items being disassembled to base storage. */	
+	/* We need to readd items being disassembled to base storage. */
 	if (!prod->production)
 		baseCurrent->storage.num[prod->objID] += amount_temp;
 
@@ -1153,7 +1153,7 @@ static void PR_ProductionDown_f (void)
  * Bind some of the functions in this file to console-commands that you can call ingame.
  * Called from MN_ResetMenus resp. CL_InitLocal
  */
-extern void PR_ResetProduction (void)
+void PR_ResetProduction (void)
 {
 	/* add commands */
 	Cmd_AddCommand("prod_init", PR_ProductionList_f, NULL);
@@ -1174,7 +1174,7 @@ extern void PR_ResetProduction (void)
  * @sa PR_Load
  * @sa SAV_GameSave
  */
-extern qboolean PR_Save (sizebuf_t* sb, void* data)
+qboolean PR_Save (sizebuf_t* sb, void* data)
 {
 	int i, j;
 	production_queue_t *pq;
@@ -1199,7 +1199,7 @@ extern qboolean PR_Save (sizebuf_t* sb, void* data)
  * @sa PR_Save
  * @sa SAV_GameLoad
  */
-extern qboolean PR_Load (sizebuf_t* sb, void* data)
+qboolean PR_Load (sizebuf_t* sb, void* data)
 {
 	int i, j, k;
 	const char *s;

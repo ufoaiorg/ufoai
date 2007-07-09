@@ -261,7 +261,7 @@ Done:
 /**
  * @brief
  */
-extern void Load3DSTriangleList (char *filename, triangle_t **pptri, int *numtriangles)
+void Load3DSTriangleList (char *filename, triangle_t **pptri, int *numtriangles)
 {
 	FILE *input;
 	short int tshort;

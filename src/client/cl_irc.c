@@ -1334,7 +1334,7 @@ static void Irc_Logic_Disconnect (const char *reason)
  * @sa Irc_Logic_ReadMessages
  * @sa Irc_Logic_SendMessages
  */
-extern void Irc_Logic_Frame (int frame)
+void Irc_Logic_Frame (int frame)
 {
 	if (irc_connected && frame > 0) {
 		if (irc_channel->modified) {
@@ -1792,7 +1792,7 @@ Init and Shutdown functions
 /**
  * @brief
  */
-extern void Irc_Init (void)
+void Irc_Init (void)
 {
 	/* commands */
 	Cmd_AddCommand("irc_join", Irc_Client_Join_f, "Join an irc channel");
@@ -1833,7 +1833,7 @@ extern void Irc_Init (void)
 /**
  * @brief
  */
-extern void Irc_Shutdown (void)
+void Irc_Shutdown (void)
 {
 	if (irc_connected)
 		Irc_Logic_Disconnect("shutdown");
@@ -1843,7 +1843,7 @@ extern void Irc_Shutdown (void)
  * @brief
  * @sa Irc_Input_Deactivate
  */
-extern void Irc_Input_Activate (void)
+void Irc_Input_Activate (void)
 {
 	/* in case of a failure we need this in MN_PopMenu */
 	msg_mode = MSG_IRC;
@@ -1866,7 +1866,7 @@ extern void Irc_Input_Activate (void)
  * @brief
  * @sa Irc_Input_Activate
  */
-extern void Irc_Input_Deactivate (void)
+void Irc_Input_Deactivate (void)
 {
 	irc_send_buffer->modified = qfalse;
 

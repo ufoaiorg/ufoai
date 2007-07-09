@@ -1479,7 +1479,7 @@ static void RS_DependenciesClick_f (void)
  * Bind some of the functions in this file to console-commands that you can call ingame.
  * Called from MN_ResetMenus resp. CL_InitLocal
  */
-extern void RS_ResetResearch (void)
+void RS_ResetResearch (void)
 {
 	researchListLength = 0;
 	/* add commands and cvars */
@@ -1504,7 +1504,7 @@ extern void RS_ResetResearch (void)
 /**
  * @brief This i called everytime RS_ParseTechnologies i called - to prevent cyclic hash tables
  */
-extern void RS_ResetHash (void)
+void RS_ResetHash (void)
 {
 	/* they are static - but i'm paranoid - this is called before the techs were parsed */
 	memset(tech_hash, 0, sizeof(tech_hash));
@@ -1549,7 +1549,7 @@ static const value_t valid_techmail_vars[] = {
  * @sa CL_StartSingleplayer
  * @note write into cl_localPool - free on every game restart and reparse
  */
-extern void RS_ParseTechnologies (const char *name, char **text)
+void RS_ParseTechnologies (const char *name, char **text)
 {
 	const value_t *vp = NULL;
 	technology_t *tech = NULL;
@@ -2199,7 +2199,7 @@ int RS_GetTechIdxByName (const char *name)
 /**
  * @brief
  */
-extern qboolean RS_Save (sizebuf_t* sb, void* data)
+qboolean RS_Save (sizebuf_t* sb, void* data)
 {
 	int i, j;
 	technology_t *t;
@@ -2233,7 +2233,7 @@ extern qboolean RS_Save (sizebuf_t* sb, void* data)
 /**
  * @brief
  */
-extern qboolean RS_Load (sizebuf_t* sb, void* data)
+qboolean RS_Load (sizebuf_t* sb, void* data)
 {
 	int i, j;
 	technology_t *t;
@@ -2291,7 +2291,7 @@ extern qboolean RS_Load (sizebuf_t* sb, void* data)
  * @brief Returns true if the current base is able to handle research
  * @sa B_BaseInit_f
  */
-extern qboolean RS_ResearchAllowed (void)
+qboolean RS_ResearchAllowed (void)
 {
 	if (baseCurrent->baseStatus != BASE_UNDER_ATTACK
 	 && B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, B_LAB) > 0) {

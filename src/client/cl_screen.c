@@ -362,7 +362,7 @@ void SCR_DrawLoadingBar (int x, int y, int w, int h, int percent)
  * @param[in] string Draw the loading string - if the scripts are not parsed, this is
  * not possible, so use qfalse for very early calls
  */
-extern void SCR_DrawPrecacheScreen (qboolean string)
+void SCR_DrawPrecacheScreen (qboolean string)
 {
 	re.BeginFrame(0);
 	re.DrawNormPic(0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, 0, 0, 0, 0, ALIGN_UL, qfalse, "loading");
@@ -378,7 +378,7 @@ extern void SCR_DrawPrecacheScreen (qboolean string)
 /**
  * @brief Updates needed cvar for loading screens
  */
-extern void SCR_SetLoadingBackground (const char *mapString)
+void SCR_SetLoadingBackground (const char *mapString)
 {
 	char loadingPic[MAX_QPATH];
 	char tmpPicName[MAX_VAR];

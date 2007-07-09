@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static int c_nofaces;
 static int c_facenodes;
 
-extern void U2M_ProgressBar (void (*func) (unsigned int cnt), unsigned int count, qboolean showProgress, const char *id)
+void U2M_ProgressBar (void (*func) (unsigned int cnt), unsigned int count, qboolean showProgress, const char *id)
 {
 	unsigned int i;
 	int current, previous = 0;
@@ -67,7 +67,7 @@ static int planeused[MAX_MAP_PLANES];
  * @brief There is no oportunity to discard planes, because all of the original
  * brushes will be saved in the map.
  */
-extern void EmitPlanes (void)
+void EmitPlanes (void)
 {
 	int			i;
 	dplane_t	*dp;
@@ -288,7 +288,7 @@ static int EmitDrawNode_r (node_t *node)
 /**
  * @brief
  */
-extern void WriteBSP (node_t *headnode)
+void WriteBSP (node_t *headnode)
 {
 	int		oldfaces;
 
@@ -308,7 +308,7 @@ extern void WriteBSP (node_t *headnode)
 /**
  * @brief
  */
-extern void SetModelNumbers (void)
+void SetModelNumbers (void)
 {
 	int		i;
 	int		models;
@@ -329,7 +329,7 @@ extern void SetModelNumbers (void)
 /**
  * @brief
  */
-extern void SetLightStyles (void)
+void SetLightStyles (void)
 {
 	int		stylenum;
 	char	*t;
@@ -433,7 +433,7 @@ static void EmitBrushes (void)
  * @brief
  * @sa EndBSPFile
  */
-extern void BeginBSPFile (void)
+void BeginBSPFile (void)
 {
 	/* these values may actually be initialized */
 	/* if the file existed when loaded, so clear them explicitly */
@@ -462,7 +462,7 @@ extern void BeginBSPFile (void)
  * @brief
  * @sa BeginBSPFile
  */
-extern void EndBSPFile (void)
+void EndBSPFile (void)
 {
 	char	path[1024];
 
@@ -484,7 +484,7 @@ extern int firstmodelface;
  * @brief
  * @sa EndModel
  */
-extern void BeginModel (void)
+void BeginModel (void)
 {
 	dmodel_t	*mod;
 	int			start, end;
@@ -527,7 +527,7 @@ extern void BeginModel (void)
  * @brief
  * @sa BeginModel
  */
-extern void EndModel (void)
+void EndModel (void)
 {
 	dmodel_t	*mod;
 

@@ -74,7 +74,7 @@ struct memPool_s *sv_genericPool;
  * or unwillingly.  This is NOT called if the entire server is quiting
  * or crashing.
  */
-extern void SV_DropClient (client_t * drop)
+void SV_DropClient (client_t * drop)
 {
 	/* add the disconnect */
 	MSG_WriteByte(&drop->netchan.message, svc_disconnect);
@@ -758,7 +758,7 @@ static void SV_CheckTimeouts (void)
 /**
  * @brief Start the next map in the cycle
  */
-extern void SV_NextMapcycle (void)
+void SV_NextMapcycle (void)
 {
 	int i;
 	const char *map = NULL, *gameType = NULL;
@@ -870,7 +870,7 @@ extern void SV_NextMapcycle (void)
  * @brief Empty the mapcycle list
  * @sa SV_MapcycleAdd
  */
-extern void SV_MapcycleClear (void)
+void SV_MapcycleClear (void)
 {
 	int i;
 	mapcycle_t *mapcycle, *oldMapcycle;
@@ -892,7 +892,7 @@ extern void SV_MapcycleClear (void)
  * @todo check for maps and valid gametypes here
  * @sa SV_MapcycleClear
  */
-extern void SV_MapcycleAdd (const char* mapName, const char* gameType)
+void SV_MapcycleAdd (const char* mapName, const char* gameType)
 {
 	mapcycle_t *mapcycle;
 
@@ -1141,7 +1141,7 @@ void SV_UserinfoChanged (client_t * cl)
 /**
  * @brief Only called at ufo.exe startup, not for each game
  */
-extern void SV_Init (void)
+void SV_Init (void)
 {
 	sv_gameSysPool = Mem_CreatePool("Server: Game system");
 	sv_genericPool = Mem_CreatePool("Server: Generic");
@@ -1270,7 +1270,7 @@ void SV_ShutdownWhenEmpty (void)
 /**
  * @brief
  */
-extern qboolean SV_RenderTrace (vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end)
+qboolean SV_RenderTrace (vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end)
 {
 	trace_t	trace;
 

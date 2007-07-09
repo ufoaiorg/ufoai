@@ -202,7 +202,7 @@ static vec_t BrushVolume (bspbrush_t *brush)
 /**
  * @brief
  */
-extern int CountBrushList (bspbrush_t *brushes)
+int CountBrushList (bspbrush_t *brushes)
 {
 	int	c;
 
@@ -243,7 +243,7 @@ static node_t *AllocNode (void)
 /**
  * @brief
  */
-extern bspbrush_t *AllocBrush (int numsides)
+bspbrush_t *AllocBrush (int numsides)
 {
 	bspbrush_t *bb;
 	size_t c;
@@ -258,7 +258,7 @@ extern bspbrush_t *AllocBrush (int numsides)
 /**
  * @brief
  */
-extern void FreeBrush (bspbrush_t *brushes)
+void FreeBrush (bspbrush_t *brushes)
 {
 	int i;
 
@@ -273,7 +273,7 @@ extern void FreeBrush (bspbrush_t *brushes)
 /**
  * @brief
  */
-extern void FreeBrushList (bspbrush_t *brushes)
+void FreeBrushList (bspbrush_t *brushes)
 {
 	bspbrush_t *next;
 
@@ -286,7 +286,7 @@ extern void FreeBrushList (bspbrush_t *brushes)
 /**
  * @brief Duplicates the brush, the sides, and the windings
  */
-extern bspbrush_t *CopyBrush (bspbrush_t *brush)
+bspbrush_t *CopyBrush (bspbrush_t *brush)
 {
 	bspbrush_t *newbrush;
 	ptrdiff_t size;
@@ -464,7 +464,7 @@ static int TestBrushToPlanenum (bspbrush_t *brush, int planenum,
 /**
  * @brief Returns true if the winding would be crunched out of existance by the vertex snapping.
  */
-extern qboolean WindingIsTiny (winding_t *w)
+qboolean WindingIsTiny (winding_t *w)
 {
 #if 0
 	if (WindingArea (w) < 1)
@@ -738,7 +738,7 @@ static int BrushMostlyOnSide (bspbrush_t *brush, plane_t *plane)
 /**
  * @brief Generates two new brushes, leaving the original unchanged
  */
-extern void SplitBrush (bspbrush_t *brush, int planenum, bspbrush_t **front, bspbrush_t **back)
+void SplitBrush (bspbrush_t *brush, int planenum, bspbrush_t **front, bspbrush_t **back)
 {
 	bspbrush_t	*b[2];
 	int			i, j;
@@ -1007,7 +1007,7 @@ static node_t *BuildTree_r (node_t *node, bspbrush_t *brushes)
 /**
  * @brief The incoming list will be freed before exiting
  */
-extern tree_t *BrushBSP (bspbrush_t *brushlist, vec3_t mins, vec3_t maxs)
+tree_t *BrushBSP (bspbrush_t *brushlist, vec3_t mins, vec3_t maxs)
 {
 	node_t		*node;
 	bspbrush_t	*b;

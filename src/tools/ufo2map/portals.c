@@ -50,7 +50,7 @@ static portal_t *AllocPortal (void)
 /**
  * @brief
  */
-extern void FreePortal (portal_t *p)
+void FreePortal (portal_t *p)
 {
 	if (p->winding)
 		FreeWinding(p->winding);
@@ -63,7 +63,7 @@ extern void FreePortal (portal_t *p)
 /**
  * @brief Returns the single content bit of the strongest visible content present
  */
-extern int VisibleContents (int contents)
+int VisibleContents (int contents)
 {
 	int i;
 
@@ -122,7 +122,7 @@ static void AddPortalToNodes (portal_t *p, node_t *front, node_t *back)
 /**
  * @brief
  */
-extern void RemovePortalFromNode (portal_t *portal, node_t *l)
+void RemovePortalFromNode (portal_t *portal, node_t *l)
 {
 	portal_t	**pp, *t;
 
@@ -435,7 +435,7 @@ static void MakeTreePortals_r (node_t *node)
 /**
  * @brief
  */
-extern void MakeTreePortals (tree_t *tree)
+void MakeTreePortals (tree_t *tree)
 {
 	MakeHeadnodePortals(tree);
 	MakeTreePortals_r(tree->headnode);
@@ -541,7 +541,7 @@ static void MarkVisibleSides_r (node_t *node)
 /**
  * @brief
  */
-extern void MarkVisibleSides (tree_t *tree, int startbrush, int endbrush)
+void MarkVisibleSides (tree_t *tree, int startbrush, int endbrush)
 {
 	int		i, j;
 	mapbrush_t	*mb;

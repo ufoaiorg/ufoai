@@ -240,7 +240,7 @@ static void R_AddDynamicLights (mBspSurface_t * surf)
 /**
  * @brief
  */
-extern void R_SetCacheState (mBspSurface_t * surf)
+void R_SetCacheState (mBspSurface_t * surf)
 {
 	int maps;
 
@@ -251,7 +251,7 @@ extern void R_SetCacheState (mBspSurface_t * surf)
 /**
  * @brief Combine and scale multiple lightmaps into the floating format in blocklights
  */
-extern void R_BuildLightMap (mBspSurface_t * surf, byte * dest, int stride)
+void R_BuildLightMap (mBspSurface_t * surf, byte * dest, int stride)
 {
 	unsigned int smax, tmax;
 	int r, g, b, a, max;
@@ -476,7 +476,7 @@ static vec3_t lightspot;
 /**
  * @brief
  */
-extern int RecursiveLightPoint (mBspNode_t * node, vec3_t start, vec3_t end)
+int RecursiveLightPoint (mBspNode_t * node, vec3_t start, vec3_t end)
 {
 	float front, back, frac;
 	int side;
@@ -575,7 +575,7 @@ extern int RecursiveLightPoint (mBspNode_t * node, vec3_t start, vec3_t end)
 /**
  * @brief
  */
-extern void R_LightPoint (vec3_t p, vec3_t color)
+void R_LightPoint (vec3_t p, vec3_t color)
 {
 	vec3_t end;
 	float r;

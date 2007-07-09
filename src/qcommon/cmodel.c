@@ -587,7 +587,7 @@ static int Cmod_DeCompressRouting (byte ** source, byte * dataStart)
  * @return 2 if magic number is bad
  * @return 3 if version of bsp-file is bad
  */
-extern int CheckBSPFile (const char *filename)
+int CheckBSPFile (const char *filename)
 {
 	int i;
 	int header[2];
@@ -1176,7 +1176,7 @@ static unsigned CM_AddMapTile (char *name, int sX, int sY, int sZ)
  * @brief Loads in the map and all submodels
  * @sa CM_AddMapTile
  */
-extern void CM_LoadMap (char *tiles, char *pos, unsigned *mapchecksum)
+void CM_LoadMap (char *tiles, char *pos, unsigned *mapchecksum)
 {
 	char *token;
 	char name[MAX_VAR];
@@ -1241,7 +1241,7 @@ extern void CM_LoadMap (char *tiles, char *pos, unsigned *mapchecksum)
  * given modelnumber or -name
  * @param[in] name The modelnumber (e.g. "*2") or the modelname
  */
-extern cBspModel_t *CM_InlineModel (const char *name)
+cBspModel_t *CM_InlineModel (const char *name)
 {
 	int i, num;
 
@@ -1266,7 +1266,7 @@ extern cBspModel_t *CM_InlineModel (const char *name)
 /**
  * @brief
  */
-extern int CM_NumInlineModels (void)
+int CM_NumInlineModels (void)
 {
 	return numInline;
 }
@@ -1274,7 +1274,7 @@ extern int CM_NumInlineModels (void)
 /**
  * @brief
  */
-extern char *CM_EntityString (void)
+char *CM_EntityString (void)
 {
 	return map_entitystring;
 }
@@ -1370,7 +1370,7 @@ static void CM_InitBoxHull (void)
  * @brief To keep everything totally uniform, bounding boxes are turned into small
  * BSP trees instead of being compared directly.
  */
-extern int CM_HeadnodeForBox (int tile, vec3_t mins, vec3_t maxs)
+int CM_HeadnodeForBox (int tile, vec3_t mins, vec3_t maxs)
 {
 	assert((tile < numTiles) && (tile >= 0));
 	curTile = &mapTiles[tile];

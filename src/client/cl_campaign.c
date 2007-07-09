@@ -243,7 +243,7 @@ static qboolean CheckBEP (char *expr, qboolean(*varFuncParam) (char *var))
  * @return Distance from pos1 to pos2.
  * @note distance is an angle! This is the angle (in degrees) between the 2 vectors starting at earth's center and ending at start or end.
  */
-extern float CP_GetDistance (const vec2_t pos1, const vec2_t pos2)
+float CP_GetDistance (const vec2_t pos1, const vec2_t pos2)
 {
 	float distance;
 	vec3_t start, end;
@@ -262,7 +262,7 @@ extern float CP_GetDistance (const vec2_t pos1, const vec2_t pos2)
  * @param[in] pos Given position.
  * @return True if given position is Night.
  */
-extern qboolean CL_MapIsNight (vec2_t pos)
+qboolean CL_MapIsNight (vec2_t pos)
 {
 	float p, q, a, root, x;
 
@@ -360,7 +360,7 @@ static date_t Date_Random_Middle (date_t frame)
  * @brief Returns the current campaign index in global campaign array
  * @sa Com_CharGenAbilitySkills
  */
-extern int CL_GetCampaignID (void)
+int CL_GetCampaignID (void)
 {
 	if (curCampaign)
 		return curCampaign->idx;
@@ -418,7 +418,7 @@ static qboolean CL_MapMaskFind (byte * color, vec2_t polar)
  * @note maskPic is a pointer to an rgba image in memory
  * @sa MAP_GetZoneType
  */
-extern byte *CL_GetMapColor (const vec2_t pos, mapType_t type)
+byte *CL_GetMapColor (const vec2_t pos, mapType_t type)
 {
 	int x, y;
 	int width, height;
@@ -460,7 +460,7 @@ extern byte *CL_GetMapColor (const vec2_t pos, mapType_t type)
  * @return True if the base has been build.
  * @sa B_BuildBase
  */
-extern qboolean CL_NewBase (base_t* base, vec2_t pos)
+qboolean CL_NewBase (base_t* base, vec2_t pos)
 {
 	byte *color;
 
@@ -701,7 +701,7 @@ static void CP_MissionList_f (void)
  * @sa CL_CampaignAddMission
  * @return NULL if failed - actMis_t pointer (to ccs.mission array) if successful
  */
-extern actMis_t* CL_CampaignAddGroundMission (mission_t* mission)
+actMis_t* CL_CampaignAddGroundMission (mission_t* mission)
 {
 	stageState_t *stage = NULL;
 	setState_t *set = NULL;
@@ -928,7 +928,7 @@ static void CL_AircraftList_f (void)
  * @param[in] size Size of the the target buffer teamname
  * @return Also returns the teamname
  */
-extern const char* CL_GetNationTeamName (const nation_t* nation, char *teamname, size_t size)
+const char* CL_GetNationTeamName (const nation_t* nation, char *teamname, size_t size)
 {
 	int i = 0, randTeamString;
 	char *string, *string2;
@@ -1142,7 +1142,7 @@ static const int monthLength[MONTHS_PER_YEAR] = { 31, 28, 31, 30, 31, 30, 31, 31
  * @param[out] month The month.
  * @param[out] day The day in the month above.
  */
-extern void CL_DateConvert (date_t * date, int *day, int *month)
+void CL_DateConvert (date_t * date, int *day, int *month)
 {
 	int i, d;
 
@@ -1163,7 +1163,7 @@ extern void CL_DateConvert (date_t * date, int *day, int *month)
  * @param[in] month The month index - starts at 0 - ends at 11
  * @return month name as char*
  */
-extern const char *CL_DateGetMonthName (int month)
+const char *CL_DateGetMonthName (int month)
 {
 	switch (month) {
 	case 0:
@@ -1456,7 +1456,7 @@ static void CL_CampaignRunMarket (void)
  * @sa CL_CampaignRunAircraft
  * @sa CL_CampaignCheckEvents
  */
-extern void CL_CampaignRun (void)
+void CL_CampaignRun (void)
 {
 	/* advance time */
 	ccs.timer += cls.frametime * gd.gameTimeScale;
@@ -1537,7 +1537,7 @@ static int gameLapse;
 /**
  * @brief Stop game time speed
  */
-extern void CL_GameTimeStop (void)
+void CL_GameTimeStop (void)
 {
 	/* don't allow time scale in tactical mode */
 	if (!CL_OnBattlescape()) {
@@ -1553,7 +1553,7 @@ extern void CL_GameTimeStop (void)
  *
  * Decrease game time speed - only works when there is already a base available
  */
-extern void CL_GameTimeSlow (void)
+void CL_GameTimeSlow (void)
 {
 	/* don't allow time scale in tactical mode */
 	if (!CL_OnBattlescape()) {
@@ -1574,7 +1574,7 @@ extern void CL_GameTimeSlow (void)
  *
  * Increase game time speed - only works when there is already a base available
  */
-extern void CL_GameTimeFast (void)
+void CL_GameTimeFast (void)
 {
 	/* don't allow time scale in tactical mode */
 	if (!CL_OnBattlescape()) {
@@ -1596,7 +1596,7 @@ extern void CL_GameTimeFast (void)
  *
  * Checks whether credits are bigger than MAX_CREDITS
  */
-extern void CL_UpdateCredits (int credits)
+void CL_UpdateCredits (int credits)
 {
 	/* credits */
 	if (credits > MAX_CREDITS)
@@ -1722,7 +1722,7 @@ static void CL_StatsUpdate_f (void)
  * @sa CP_Save
  * @sa SAV_GameSave
  */
-extern qboolean CP_Load (sizebuf_t *sb, void *data)
+qboolean CP_Load (sizebuf_t *sb, void *data)
 {
 	actMis_t *mis;
 	stageState_t *state;
@@ -1982,7 +1982,7 @@ extern qboolean CP_Load (sizebuf_t *sb, void *data)
  * @sa CP_Load
  * @sa SAV_GameSave
  */
-extern qboolean CP_Save (sizebuf_t *sb, void *data)
+qboolean CP_Save (sizebuf_t *sb, void *data)
 {
 	stageState_t *state;
 	actMis_t *mis;
@@ -2085,7 +2085,7 @@ extern qboolean CP_Save (sizebuf_t *sb, void *data)
 /**
  * @brief
  */
-extern qboolean STATS_Save (sizebuf_t* sb, void* data)
+qboolean STATS_Save (sizebuf_t* sb, void* data)
 {
 	MSG_WriteShort(sb, stats.missionsWon);
 	MSG_WriteShort(sb, stats.missionsLost);
@@ -2107,7 +2107,7 @@ extern qboolean STATS_Save (sizebuf_t* sb, void* data)
 /**
  * @brief
  */
-extern qboolean STATS_Load (sizebuf_t* sb, void* data)
+qboolean STATS_Load (sizebuf_t* sb, void* data)
 {
 	stats.missionsWon = MSG_ReadShort(sb);
 	stats.missionsLost = MSG_ReadShort(sb);
@@ -2129,7 +2129,7 @@ extern qboolean STATS_Load (sizebuf_t* sb, void* data)
 /**
  * @brief Nation saving callback
  */
-extern qboolean NA_Save (sizebuf_t* sb, void* data)
+qboolean NA_Save (sizebuf_t* sb, void* data)
 {
 	int i;
 	for (i = 0; i < presaveArray[PRE_NATION]; i++) {
@@ -2141,7 +2141,7 @@ extern qboolean NA_Save (sizebuf_t* sb, void* data)
 /**
  * @brief Nation loading callback
  */
-extern qboolean NA_Load (sizebuf_t* sb, void* data)
+qboolean NA_Load (sizebuf_t* sb, void* data)
 {
 	int i;
 
@@ -2380,7 +2380,7 @@ static void CP_MissionTriggerFunctions (qboolean add)
  * Can execute console commands (triggers) on win and lose
  * This can be used for story dependent missions
  */
-extern void CP_ExecuteMissionTrigger (mission_t * m, int won, base_t* base)
+void CP_ExecuteMissionTrigger (mission_t * m, int won, base_t* base)
 {
 	/* we add them only here - and remove them afterwards to prevent cheating */
 	CP_MissionTriggerFunctions(qtrue);
@@ -2817,7 +2817,7 @@ static const value_t mission_vals[] = {
  * @sa CL_AddMission
  * @sa CL_CampaignAddGroundMission
  */
-extern void CL_RemoveLastMission (void)
+void CL_RemoveLastMission (void)
 {
 	numMissions--;
 }
@@ -2830,7 +2830,7 @@ extern void CL_RemoveLastMission (void)
  * @sa CL_CampaignAddMission
  * @sa CL_CampaignAddGroundMission
  */
-extern mission_t *CL_AddMission (const char *name)
+mission_t *CL_AddMission (const char *name)
 {
 	int i;
 	mission_t *ms;
@@ -2860,7 +2860,7 @@ extern mission_t *CL_AddMission (const char *name)
  * @sa CL_ParseScriptFirst
  * @note write into cl_localPool - free on every game restart and reparse
  */
-extern void CL_ParseMission (const char *name, char **text)
+void CL_ParseMission (const char *name, char **text)
 {
 	const char *errhead = "CL_ParseMission: unexpected end of file (mission ";
 	mission_t *ms;
@@ -2923,7 +2923,7 @@ extern void CL_ParseMission (const char *name, char **text)
  * @brief This function parses a list of items that should be set to researched = true after campaign start
  * @todo: Implement the use of this function
  */
-extern void CL_ParseResearchedCampaignItems (const char *name, char **text)
+void CL_ParseResearchedCampaignItems (const char *name, char **text)
 {
 	const char *errhead = "CL_ParseResearchedCampaignItems: unexpected end of file (equipment ";
 	char *token;
@@ -2974,7 +2974,7 @@ extern void CL_ParseResearchedCampaignItems (const char *name, char **text)
  * @param researchable Mark them researchable or not researchable
  * @sa CL_ParseScriptFirst
  */
-extern void CL_ParseResearchableCampaignStates (const char *name, char **text, qboolean researchable)
+void CL_ParseResearchableCampaignStates (const char *name, char **text, qboolean researchable)
 {
 	const char *errhead = "CL_ParseResearchableCampaignStates: unexpected end of file (equipment ";
 	char *token;
@@ -3136,7 +3136,7 @@ static void CL_ParseStageSet (const char *name, char **text)
  * @sa CL_ParseStageSet
  * @sa CL_ParseScriptSecond
  */
-extern void CL_ParseStage (const char *name, char **text)
+void CL_ParseStage (const char *name, char **text)
 {
 	const char *errhead = "CL_ParseStage: unexpected end of file (stage ";
 	stage_t *sp;
@@ -3366,7 +3366,7 @@ static const value_t campaign_vals[] = {
  * @brief
  * @sa CL_ParseClientData
  */
-extern void CL_ParseCampaign (const char *name, char **text)
+void CL_ParseCampaign (const char *name, char **text)
 {
 	const char *errhead = "CL_ParseCampaign: unexpected end of file (campaign ";
 	campaign_t *cp;
@@ -3489,7 +3489,7 @@ static const value_t nation_vals[] = {
  * @sa CL_ParseScriptFirst
  * @note write into cl_localPool - free on every game restart and reparse
  */
-extern void CL_ParseNations (const char *name, char **text)
+void CL_ParseNations (const char *name, char **text)
 {
 	const char *errhead = "CL_ParseNations: unexpected end of file (nation ";
 	nation_t *nation;
@@ -3590,7 +3590,7 @@ extern void CL_ParseNations (const char *name, char **text)
  * @return true when we are not in battlefield
  * @todo: Check cvar mn_main for value
  */
-extern qboolean CL_OnBattlescape (void)
+qboolean CL_OnBattlescape (void)
 {
 	/* sv.state is set to zero on every battlefield shutdown */
 	if (Com_ServerState() > 0)
@@ -3704,7 +3704,7 @@ static const cmdList_t game_commands[] = {
  * @sa CL_GameNew_f
  * @sa SAV_GameLoad
  */
-extern void CL_GameExit (void)
+void CL_GameExit (void)
 {
 	const cmdList_t *commands;
 
@@ -3963,7 +3963,7 @@ static void CP_CampaignsClick_f (void)
  * @sa Com_InitInventory
  * @sa CL_ReadSinglePlayerData
  */
-extern void CL_ResetSinglePlayerData (void)
+void CL_ResetSinglePlayerData (void)
 {
 	int i;
 
@@ -4441,7 +4441,7 @@ static void CP_TryAgain_f (void)
 /**
  * @brief
  */
-extern void CL_ResetCampaign (void)
+void CL_ResetCampaign (void)
 {
 	/* reset some vars */
 	curCampaign = NULL;

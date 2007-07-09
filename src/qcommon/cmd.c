@@ -503,7 +503,7 @@ static cmd_function_t *cmd_functions_hash[CMD_HASH_SIZE];
  * @return the number of arguments
  * @sa Cmd_Argv
  */
-extern int Cmd_Argc (void)
+int Cmd_Argc (void)
 {
 	return cmd_argc;
 }
@@ -514,7 +514,7 @@ extern int Cmd_Argc (void)
  * @return the argument from cmd_argv
  * @sa Cmd_Argc
  */
-extern char *Cmd_Argv (int arg)
+char *Cmd_Argv (int arg)
 {
 	if (arg >= cmd_argc)
 		return cmd_null_string;
@@ -524,7 +524,7 @@ extern char *Cmd_Argv (int arg)
 /**
  * @brief Returns a single string containing argv(1) to argv(argc()-1)
  */
-extern char *Cmd_Args (void)
+char *Cmd_Args (void)
 {
 	return cmd_args;
 }
@@ -598,7 +598,7 @@ static char *Cmd_MacroExpandString (char *text)
  * @brief Clears the argv vector and set argc to zero
  * @sa Cmd_TokenizeString
  */
-extern void Cmd_BufClear (void)
+void Cmd_BufClear (void)
 {
 	int i;
 
@@ -615,7 +615,7 @@ extern void Cmd_BufClear (void)
  * @note $Cvars will be expanded unless they are in a quoted token
  * @sa Cmd_MacroExpandString
  */
-extern void Cmd_TokenizeString (char *text, qboolean macroExpand)
+void Cmd_TokenizeString (char *text, qboolean macroExpand)
 {
 	char *com_token;
 
@@ -681,7 +681,7 @@ extern void Cmd_TokenizeString (char *text, qboolean macroExpand)
  * @note never returns a NULL pointer
  * @todo - search alias, too
  */
-extern const char* Cmd_GetCommandDesc (const char* cmd_name)
+const char* Cmd_GetCommandDesc (const char* cmd_name)
 {
 	cmd_function_t *cmd;
 	char *sep = NULL;
@@ -714,7 +714,7 @@ extern const char* Cmd_GetCommandDesc (const char* cmd_name)
  * @sa Cmd_AddCommand
  * @sa Cmd_CompleteCommandParameters
  */
-extern void Cmd_AddParamCompleteFunction (const char *cmd_name, int (*function)(const char *partial, const char **match))
+void Cmd_AddParamCompleteFunction (const char *cmd_name, int (*function)(const char *partial, const char **match))
 {
 	cmd_function_t *cmd;
 	unsigned int hash;
@@ -739,7 +739,7 @@ extern void Cmd_AddParamCompleteFunction (const char *cmd_name, int (*function)(
  * @param[in] function The function pointer
  * @sa Cmd_RemoveCommand
  */
-extern void Cmd_AddCommand (const char *cmd_name, xcommand_t function, const char *desc)
+void Cmd_AddCommand (const char *cmd_name, xcommand_t function, const char *desc)
 {
 	cmd_function_t *cmd;
 	unsigned int hash;
@@ -779,7 +779,7 @@ extern void Cmd_AddCommand (const char *cmd_name, xcommand_t function, const cha
  * @param[in] cmd_name The script interface function name to remove
  * @sa Cmd_AddCommand
  */
-extern void Cmd_RemoveCommand (const char *cmd_name)
+void Cmd_RemoveCommand (const char *cmd_name)
 {
 	cmd_function_t *cmd, **back;
 	unsigned int hash;
@@ -819,7 +819,7 @@ extern void Cmd_RemoveCommand (const char *cmd_name)
  * @brief Checks whether a function exists already
  * @param[in] cmd_name The script interface function name to search for
  */
-extern qboolean Cmd_Exists (const char *cmd_name)
+qboolean Cmd_Exists (const char *cmd_name)
 {
 	cmd_function_t *cmd;
 	unsigned int hash;
@@ -840,7 +840,7 @@ extern qboolean Cmd_Exists (const char *cmd_name)
  * @sa Cvar_CompleteVariable
  * @sa Key_CompleteCommand
  */
-extern int Cmd_CompleteCommandParameters (const char *command, const char *partial, const char **match)
+int Cmd_CompleteCommandParameters (const char *command, const char *partial, const char **match)
 {
 	cmd_function_t *cmd;
 	unsigned int hash;
@@ -863,7 +863,7 @@ extern int Cmd_CompleteCommandParameters (const char *command, const char *parti
  * @sa Cvar_CompleteVariable
  * @sa Key_CompleteCommand
  */
-extern int Cmd_CompleteCommand (const char *partial, const char **match)
+int Cmd_CompleteCommand (const char *partial, const char **match)
 {
 	cmd_function_t *cmd;
 	cmd_alias_t *a;
@@ -905,7 +905,7 @@ extern int Cmd_CompleteCommand (const char *partial, const char **match)
  * @brief A complete command line has been parsed, so try to execute it
  * FIXME: lookupnoadd the token to speed search?
  */
-extern void Cmd_ExecuteString (char *text)
+void Cmd_ExecuteString (char *text)
 {
 	cmd_function_t *cmd;
 	cmd_alias_t *a;
@@ -1043,7 +1043,7 @@ static int Cmd_CompleteExecCommand (const char *partial, const char **match)
 /**
  * @brief
  */
-extern void Cmd_Init (void)
+void Cmd_Init (void)
 {
 	/* register our commands */
 	Cmd_AddCommand("cmdlist", Cmd_List_f, "List all commands to game console");

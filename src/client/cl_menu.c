@@ -290,7 +290,7 @@ mouseRepeat_t mouseRepeat;
 /**
  * @brief Just translate the bool value to translateable yes or no strings
  */
-extern const char* MN_TranslateBool (qboolean value)
+const char* MN_TranslateBool (qboolean value)
 {
 	if (value)
 		return _("yes");
@@ -306,7 +306,7 @@ extern const char* MN_TranslateBool (qboolean value)
  * the option
  * @note You have to add the values manually to the option pointer
  */
-extern selectBoxOptions_t* MN_AddSelectboxOption (menuNode_t *node)
+selectBoxOptions_t* MN_AddSelectboxOption (menuNode_t *node)
 {
 	selectBoxOptions_t *selectBoxOption;
 
@@ -763,7 +763,7 @@ void MN_Popup (const char *title, const char *text)
 /**
  * @brief
  */
-extern void MN_ExecuteActions (const menu_t* const menu, menuAction_t* const first)
+void MN_ExecuteActions (const menu_t* const menu, menuAction_t* const first)
 {
 	menuAction_t *action;
 	byte *data;
@@ -1977,7 +1977,7 @@ static void MN_Tooltip (menu_t *menu, menuNode_t *node, int x, int y)
  * @todo Rename and move this function and preload all character models and
  * the models from models.ufo, too
  */
-extern void MN_PrecacheMenus (void)
+void MN_PrecacheMenus (void)
 {
 	int i;
 	menu_t *menu;
@@ -4093,7 +4093,7 @@ static qboolean MN_ParseMenuBody (menu_t * menu, char **text)
  * @brief Add a menu link to menumodel definition for faster access
  * @note Called after all menus are parsed of course
  */
-extern void MN_LinkMenuModels (void)
+void MN_LinkMenuModels (void)
 {
 	int i, j;
 	for (i = 0; i < numMenuModels; i++) {
@@ -4109,7 +4109,7 @@ extern void MN_LinkMenuModels (void)
  * @brief Precache all menu models for faster access
  * @sa CL_PrecacheModels
  */
-extern void MN_PrecacheModels (void)
+void MN_PrecacheModels (void)
 {
 	int i;
 	menuModel_t *menuModel;
@@ -4736,7 +4736,7 @@ static const value_t tutValues[] = {
  * @brief
  * @sa CL_ParseClientData
  */
-extern void MN_ParseTutorials (const char *name, char **text)
+void MN_ParseTutorials (const char *name, char **text)
 {
 	tutorial_t *t = NULL;
 	const char *errhead = "MN_ParseTutorials: unexpected end of file (tutorial ";
@@ -4825,7 +4825,7 @@ static void MS_MessageSave (sizebuf_t * sb, message_t * message)
 /**
  * @brief
  */
-extern qboolean MS_Save (sizebuf_t* sb, void* data)
+qboolean MS_Save (sizebuf_t* sb, void* data)
 {
 	int i = 0;
 	message_t* message;
@@ -4844,7 +4844,7 @@ extern qboolean MS_Save (sizebuf_t* sb, void* data)
 /**
  * @brief
  */
-extern qboolean MS_Load (sizebuf_t* sb, void* data)
+qboolean MS_Load (sizebuf_t* sb, void* data)
 {
 	int i, mtype, idx;
 	char title[MAX_VAR], text[MAX_MESSAGE_TEXT];

@@ -153,7 +153,7 @@ static void G_Morale (int type, edict_t * victim, edict_t * attacker, int param)
  * @sa G_ClientStateChange
  * @param[in] team Index of team to loop through.
  */
-extern void G_ResetReactionFire (int team)
+void G_ResetReactionFire (int team)
 {
 	edict_t *ent;
 	int i;
@@ -452,7 +452,7 @@ static void G_Damage (edict_t * ent, fireDef_t *fd, int damage, edict_t * attack
 /**
  * @brief Stun all members of a giben team.
  */
-extern void G_StunTeam (void)
+void G_StunTeam (void)
 {
 	/* default is to kill all teams */
 	int teamToKill = -1, i;
@@ -1045,7 +1045,7 @@ static qboolean G_GetShotFromType (edict_t *ent, int type, int firemode, item_t 
  * @return qtrue if everthing went ok (i.e. the shot(s) where fired ok), otherwise qfalse.
  * @param[in] z_align This value may change the target z height
  */
-extern qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
+qboolean G_ClientShoot (player_t * player, int num, pos3_t at, int type,
 	int firemode, shot_mock_t *mock, qboolean allowReaction, int z_align)
 {
 	fireDef_t *fd = NULL;
@@ -1618,7 +1618,7 @@ static qboolean G_CheckRFResolution (edict_t *target, qboolean mock)
  * @returns true If any shots were (or would be) taken
  * @sa G_ClientMove
  */
-extern qboolean G_ReactToMove (edict_t *target, qboolean mock)
+qboolean G_ReactToMove (edict_t *target, qboolean mock)
 {
 	qboolean fired;
 
@@ -1696,7 +1696,7 @@ static void G_ReactToPostFire (edict_t *target)
  * @brief Called at the end of turn, all outstanding reaction fire is resolved
  * @sa G_ClientEndRound
  */
-extern void G_ReactToEndTurn (void)
+void G_ReactToEndTurn (void)
 {
 	edict_t *ent;
 	int i;

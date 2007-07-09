@@ -143,7 +143,7 @@ void AIR_UpdateHangarCapForAll (int base_idx)
  * @brief Debug function which lists all aircrafts in all bases.
  * @note Use with baseID as a parameter to display aircrafts in given base.
  */
-extern void AIR_ListAircraft_f (void)
+void AIR_ListAircraft_f (void)
 {
 	int i, j, k, baseid = -1;
 	base_t *base;
@@ -387,7 +387,7 @@ int CL_EquipSoldierState (aircraft_t * aircraft)
  * @brief Calls AIR_NewAircraft for given base with given aircraft type.
  * @sa AIR_NewAircraft
  */
-extern void AIR_NewAircraft_f (void)
+void AIR_NewAircraft_f (void)
 {
 	int i = -1;
 	base_t *b = NULL;
@@ -417,7 +417,7 @@ extern void AIR_NewAircraft_f (void)
  * @brief Restores aircraft cvars after going back from aircraft buy menu.
  * @sa BS_MarketAircraftDescription()
  */
-extern void AIM_ResetAircraftCvars_f (void)
+void AIM_ResetAircraftCvars_f (void)
 {
 	Cvar_Set("mn_aircraftname", Cvar_VariableString("mn_aircraftname_before"));
 }
@@ -426,7 +426,7 @@ extern void AIM_ResetAircraftCvars_f (void)
  * @brief Switch to next aircraft in base.
  * @sa AIR_AircraftSelect
  */
-extern void AIM_NextAircraft_f (void)
+void AIM_NextAircraft_f (void)
 {
 	int aircraftID;
 
@@ -458,7 +458,7 @@ extern void AIM_NextAircraft_f (void)
  * @brief Switch to previous aircraft in base.
  * @sa AIR_AircraftSelect
  */
-extern void AIM_PrevAircraft_f (void)
+void AIM_PrevAircraft_f (void)
 {
 	int aircraftID;
 
@@ -527,8 +527,7 @@ static void AII_UpdateOneInstallationDelay (aircraft_t *aircraft, aircraftSlot_t
 * @sa CL_CampaignRun
 * @param[in] aircraft Pointer to the aircraft
 */
-
-extern void AII_UpdateInstallationDelay (void)
+void AII_UpdateInstallationDelay (void)
 {
 	int i, j;
 	base_t *base;
@@ -563,7 +562,7 @@ extern void AII_UpdateInstallationDelay (void)
  * @sa MAP_MapCalcLine
  * @return qtrue if the aircraft can go to the position, qfalse else
  */
-extern qboolean AIR_AircraftHasEnoughFuel (aircraft_t *aircraft, const vec2_t destination)
+qboolean AIR_AircraftHasEnoughFuel (aircraft_t *aircraft, const vec2_t destination)
 {
 	base_t *base;
 	float distance = 0;
@@ -600,7 +599,7 @@ extern qboolean AIR_AircraftHasEnoughFuel (aircraft_t *aircraft, const vec2_t de
  * @param[in] *aircraft Pointer to aircraft, which should return to base.
  * @note Command to call this: "aircraft_return".
  */
-extern void AIR_AircraftReturnToBase (aircraft_t *aircraft)
+void AIR_AircraftReturnToBase (aircraft_t *aircraft)
 {
 	base_t *base;
 
@@ -622,7 +621,7 @@ extern void AIR_AircraftReturnToBase (aircraft_t *aircraft)
  * @sa CL_GameAutoGo_f
  * @sa CL_GameResults_f
  */
-extern void AIR_AircraftReturnToBase_f (void)
+void AIR_AircraftReturnToBase_f (void)
 {
 	aircraft_t *aircraft;
 
@@ -640,7 +639,7 @@ extern void AIR_AircraftReturnToBase_f (void)
  * @note If either pointer is NULL or no aircraft in mn_aircraft_idx, it takes
  * @note first aircraft in base (if there is any).
  */
-extern void AIR_AircraftSelect (aircraft_t* aircraft)
+void AIR_AircraftSelect (aircraft_t* aircraft)
 {
 	menuNode_t *node = NULL;
 	int aircraftID = Cvar_VariableInteger("mn_aircraft_idx");
@@ -714,7 +713,7 @@ extern void AIR_AircraftSelect (aircraft_t* aircraft)
 /**
  * @brief Console command binding for AIR_AircraftSelect().
  */
-extern void AIR_AircraftSelect_f (void)
+void AIR_AircraftSelect_f (void)
 {
 	/* calling from console? with no baseCurrent? */
 	if (!baseCurrent || !baseCurrent->numAircraftInBase || (!baseCurrent->hasHangar && !baseCurrent->hasHangarSmall)) {
@@ -733,7 +732,7 @@ extern void AIR_AircraftSelect_f (void)
  * @param[in] *name Aircraft id.
  * @return aircraft_t pointer or NULL if not found.
  */
-extern aircraft_t *AIR_GetAircraft (const char *name)
+aircraft_t *AIR_GetAircraft (const char *name)
 {
 	int i;
 
@@ -753,7 +752,7 @@ extern aircraft_t *AIR_GetAircraft (const char *name)
  * @param[in] name Type of the aircraft to add.
  * @sa B_Load
  */
-extern void AIR_NewAircraft (base_t *base, const char *name)
+void AIR_NewAircraft (base_t *base, const char *name)
 {
 	aircraft_t *aircraft;
 
@@ -810,7 +809,7 @@ extern void AIR_NewAircraft (base_t *base, const char *name)
  * @note If you want to do something different (kill, fire, etc...) do it before calling this function.
  * @todo Return status of deletion for better error handling.
  */
-extern void AIR_DeleteAircraft (aircraft_t *aircraft)
+void AIR_DeleteAircraft (aircraft_t *aircraft)
 {
 	int i = 0;
 	base_t *base = NULL;
@@ -899,7 +898,7 @@ extern void AIR_DeleteAircraft (aircraft_t *aircraft)
  * @note Used to place UFOs on geoscape
  * @todo move this to cl_ufo.c - only ufos will get "random position"
  */
-extern void CP_GetRandomPosForAircraft (float *pos)
+void CP_GetRandomPosForAircraft (float *pos)
 {
 	pos[0] = (rand() % 180) - (rand() % 180);
 	pos[1] = (rand() % 90) - (rand() % 90);
@@ -911,7 +910,7 @@ extern void CP_GetRandomPosForAircraft (float *pos)
  * @param[in] *aircraft Pointer to aircraft on its way.
  * @return true if the aircraft reached its destination.
  */
-extern qboolean AIR_AircraftMakeMove (int dt, aircraft_t* aircraft)
+qboolean AIR_AircraftMakeMove (int dt, aircraft_t* aircraft)
 {
 	float dist, frac;
 	int p;
@@ -1096,7 +1095,7 @@ static technology_t **AII_GetCraftitemTechsByType (int type, qboolean usetypedef
  * @note id may not be null or empty
  * @param[in] id the item id in our aircraftItems array
  */
-extern int AII_GetAircraftItemByID (const char *id)
+int AII_GetAircraftItemByID (const char *id)
 {
 	int i;
 	aircraftItem_t *aircraftItem = NULL;
@@ -1200,7 +1199,7 @@ static void AIM_DrawAircraftSlots (aircraft_t *aircraft)
 /**
  * @brief Check if an aircraft item should or not be displayed in airequip menu
  * @param[in] tech Pointer to the technology to test
- * @return qtrue if the aircraft item should be displayed, qfalse else 
+ * @return qtrue if the aircraft item should be displayed, qfalse else
  */
 static qboolean AIM_SelectableAircraftItem (technology_t *tech)
 {
@@ -1208,7 +1207,7 @@ static qboolean AIM_SelectableAircraftItem (technology_t *tech)
 	aircraft_t *aircraft;
 
 	aircraft = &baseCurrent->aircraft[baseCurrent->aircraftCurrent];
-	
+
 	assert(aircraft);
 
 	if (!RS_IsResearched_ptr(tech))
@@ -1234,7 +1233,7 @@ static void AIM_UpdateAircraftItemList (void)
 	buffer[0] = '\0';
 
 	/* Add all items corresponding to airequipID to list */
-	list = AII_GetCraftitemTechsByType(airequipID, qtrue);	
+	list = AII_GetCraftitemTechsByType(airequipID, qtrue);
 
 	/* Copy only those which are researched to buffer */
 	while (*list) {
@@ -1379,7 +1378,7 @@ void AIM_AircraftEquipmenuInit_f (void)
 /**
  * @brief Select the current slot you want to assign the item to.
  */
-extern void AIM_AircraftEquipSlotSelect_f (void)
+void AIM_AircraftEquipSlotSelect_f (void)
 {
 	int i, pos;
 	aircraft_t *aircraft;
@@ -1430,7 +1429,7 @@ extern void AIM_AircraftEquipSlotSelect_f (void)
 /**
  * @brief Select the current zone you want to assign the item to.
  */
-extern void AIM_AircraftEquipzoneSelect_f (void)
+void AIM_AircraftEquipzoneSelect_f (void)
 {
 	int num;
 
@@ -1461,7 +1460,7 @@ extern void AIM_AircraftEquipzoneSelect_f (void)
 /**
  * @brief Add selected item to current zone.
  */
-extern void AIM_AircraftEquipAddItem_f (void)
+void AIM_AircraftEquipAddItem_f (void)
 {
 	int num;
 	aircraftSlot_t *slot;
@@ -1526,7 +1525,7 @@ extern void AIM_AircraftEquipAddItem_f (void)
 /**
  * @brief Delete an object from a zone.
  */
-extern void AIM_AircraftEquipDeleteItem_f (void)
+void AIM_AircraftEquipDeleteItem_f (void)
 {
 	int num;
 	aircraftSlot_t *slot;
@@ -1634,7 +1633,7 @@ void AIM_AircraftEquipmenuClick_f (void)
  * @param[in] idx Global aircraft index.
  * @return An aircraft pointer (to a struct in a base) that has the given index or NULL if no aircraft found.
  */
-extern aircraft_t* AIR_AircraftGetFromIdx (int idx)
+aircraft_t* AIR_AircraftGetFromIdx (int idx)
 {
 	base_t*		base;
 	aircraft_t*	aircraft;
@@ -1668,7 +1667,7 @@ extern aircraft_t* AIR_AircraftGetFromIdx (int idx)
  * @param[in] *mission Pointer to given mission.
  * @return qtrue if sending an aircraft to specified mission is possible.
  */
-extern qboolean AIR_SendAircraftToMission (aircraft_t* aircraft, actMis_t* mission)
+qboolean AIR_SendAircraftToMission (aircraft_t* aircraft, actMis_t* mission)
 {
 	if (!aircraft || !mission)
 		return qfalse;
@@ -1768,7 +1767,7 @@ static const value_t aircraftitems_vals[] = {
  * @sa CL_ParseScriptFirst
  * @note write into cl_localPool - free on every game restart and reparse
  */
-extern void AII_ParseAircraftItem (const char *name, char **text)
+void AII_ParseAircraftItem (const char *name, char **text)
 {
 	const char *errhead = "AII_ParseAircraftItem: unexpected end of file (aircraft ";
 	aircraftItem_t *airItem;
@@ -1959,7 +1958,7 @@ static const value_t aircraft_vals[] = {
  * one is the cl_localPool which is cleared on every new game, the other is
  * cl_genericPool which is existant until you close the game
  */
-extern void AIR_ParseAircraft (const char *name, char **text, qboolean assignAircraftItems)
+void AIR_ParseAircraft (const char *name, char **text, qboolean assignAircraftItems)
 {
 	const char *errhead = "AIR_ParseAircraft: unexpected end of file (aircraft ";
 	aircraft_t *air_samp = NULL;
@@ -2279,7 +2278,7 @@ extern void AIR_ParseAircraft (const char *name, char **text, qboolean assignAir
 /**
  * @brief Debug function that prints aircraft to game console
  */
-extern void AIR_ListAircraftSamples_f (void)
+void AIR_ListAircraftSamples_f (void)
 {
 	int i = 0, max = numAircraft_samples;
 	const value_t *vp;
@@ -2313,7 +2312,7 @@ extern void AIR_ListAircraftSamples_f (void)
  * @param[in] aircraft Pointer to the aircraft to reload
  * @todo check if there is still ammo in storage, and remove them from it
  */
-extern void AII_ReloadWeapon (aircraft_t *aircraft)
+void AII_ReloadWeapon (aircraft_t *aircraft)
 {
 	int idx;
 	int i;
@@ -2333,7 +2332,7 @@ extern void AII_ReloadWeapon (aircraft_t *aircraft)
  * @brief Add an item to an aircraft slot
  * @todo Check that the item has a weight small enough to fit the slot.
  */
-extern qboolean AII_AddItemToSlot (technology_t *tech, aircraftSlot_t *slot)
+qboolean AII_AddItemToSlot (technology_t *tech, aircraftSlot_t *slot)
 {
 	assert(slot);
 	assert(tech);
@@ -2348,7 +2347,7 @@ extern qboolean AII_AddItemToSlot (technology_t *tech, aircraftSlot_t *slot)
 * @brief Update the value of stats array of an aircraft.
 * @param[in] aircraft Pointer to the aircraft
 */
-extern void AII_UpdateAircraftStats (aircraft_t *aircraft)
+void AII_UpdateAircraftStats (aircraft_t *aircraft)
 {
 	int i, currentStat;
 	const aircraft_t *source;
@@ -2425,7 +2424,7 @@ extern void AII_UpdateAircraftStats (aircraft_t *aircraft)
 * @param[in] aircraft The aircraft to count the items for (may not be NULL)
 * @return The amount of assigned items for the given slot
 */
-extern int AII_GetSlotItems (aircraftItemType_t type, aircraft_t *aircraft)
+int AII_GetSlotItems (aircraftItemType_t type, aircraft_t *aircraft)
 {
 	int i, max, cnt = 0;
 	aircraftSlot_t *slot;
@@ -2467,7 +2466,7 @@ Aircraft functions related to UFOs or missions.
  * @brief Notify that a mission has been removed.
  * @param[in] *mission Pointer to the mission that has been removed.
  */
-extern void AIR_AircraftsNotifyMissionRemoved (const actMis_t *const mission)
+void AIR_AircraftsNotifyMissionRemoved (const actMis_t *const mission)
 {
 	base_t*		base;
 	aircraft_t*	aircraft;
@@ -2492,7 +2491,7 @@ extern void AIR_AircraftsNotifyMissionRemoved (const actMis_t *const mission)
  * @brief Notify that an UFO has been removed.
  * @param[in] *ufo Pointer to UFO that has been removed.
  */
-extern void AIR_AircraftsNotifyUfoRemoved (const aircraft_t *const ufo)
+void AIR_AircraftsNotifyUfoRemoved (const aircraft_t *const ufo)
 {
 	base_t*		base;
 	aircraft_t*	aircraft;
@@ -2513,7 +2512,7 @@ extern void AIR_AircraftsNotifyUfoRemoved (const aircraft_t *const ufo)
  * @brief Notify that an ufo disappear from radars.
  * @param[in] *ufo Pointer to an UFO that has disappeared.
  */
-extern void AIR_AircraftsUfoDisappear (const aircraft_t *const ufo)
+void AIR_AircraftsUfoDisappear (const aircraft_t *const ufo)
 {
 	base_t*		base;
 	aircraft_t*	aircraft;
@@ -2532,7 +2531,7 @@ extern void AIR_AircraftsUfoDisappear (const aircraft_t *const ufo)
  * @param[in] *aircraft Pointer to an aircraft which will hunt for an UFO.
  * @param[in] *ufo Pointer to an UFO.
  */
-extern void AIR_SendAircraftPurchasingUfo (aircraft_t* aircraft, aircraft_t* ufo)
+void AIR_SendAircraftPurchasingUfo (aircraft_t* aircraft, aircraft_t* ufo)
 {
 	int num = ufo - gd.ufos;
 
@@ -2578,7 +2577,7 @@ void AIR_ResetAircraftTeam (aircraft_t *aircraft)
  * @param[in] employee_idx Index of an employee in global array (?)
  * FIXME: is this responsible for adding soldiers to a team in dropship?
  */
-extern void AIR_AddToAircraftTeam (aircraft_t *aircraft, int employee_idx)
+void AIR_AddToAircraftTeam (aircraft_t *aircraft, int employee_idx)
 {
 	int i;
 
@@ -2630,7 +2629,7 @@ void AIR_RemoveFromAircraftTeam (aircraft_t *aircraft, int employee_idx)
  * @param[in] employee_idx deleted employee idx
  * @sa E_DeleteEmployee
  */
-extern void AIR_DecreaseAircraftTeamIdxGreaterThan (aircraft_t *aircraft, int employee_idx)
+void AIR_DecreaseAircraftTeamIdxGreaterThan (aircraft_t *aircraft, int employee_idx)
 {
 	int i;
 
@@ -2650,7 +2649,7 @@ extern void AIR_DecreaseAircraftTeamIdxGreaterThan (aircraft_t *aircraft, int em
  * @param[in] employee_idx Employee index in global array.
  * @return qtrue if an employee with given index is assigned to given aircraft.
  */
-extern qboolean AIR_IsInAircraftTeam (aircraft_t *aircraft, int employee_idx)
+qboolean AIR_IsInAircraftTeam (aircraft_t *aircraft, int employee_idx)
 {
 	int i;
 #if defined (DEBUG) || defined (PARANOID)
@@ -2686,7 +2685,7 @@ extern qboolean AIR_IsInAircraftTeam (aircraft_t *aircraft, int employee_idx)
  * @sa B_Save
  * @sa SAV_GameSave
  */
-extern qboolean AIR_Save (sizebuf_t* sb, void* data)
+qboolean AIR_Save (sizebuf_t* sb, void* data)
 {
 	int i, j;
 
@@ -2727,7 +2726,7 @@ extern qboolean AIR_Save (sizebuf_t* sb, void* data)
  * @sa B_Load
  * @sa SAV_GameLoad
  */
-extern qboolean AIR_Load (sizebuf_t* sb, void* data)
+qboolean AIR_Load (sizebuf_t* sb, void* data)
 {
 	base_t *base;
 	aircraft_t *ufo, *aircraft;
@@ -2821,7 +2820,7 @@ extern qboolean AIR_Load (sizebuf_t* sb, void* data)
  * @sa B_BaseInit_f
  * TODO : if base is under attack, if there is no command center, if there is no power ?
  */
-extern qboolean AIR_AircraftAllowed (void)
+qboolean AIR_AircraftAllowed (void)
 {
 	if (baseCurrent->baseStatus != BASE_UNDER_ATTACK
 	 && (B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, B_HANGAR) > 0

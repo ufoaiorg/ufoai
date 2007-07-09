@@ -42,7 +42,7 @@ static int HOSPITAL_LIST_LENGHT;
  * @param[in] *base Pointer to the base where the employee is hired.
  * @return qtrue if the removal is OK, qfalse if it is not
  */
-extern qboolean HOS_RemoveFromList (employee_t *employee, base_t *base)
+qboolean HOS_RemoveFromList (employee_t *employee, base_t *base)
 {
 	int i = 0, j = 0;
 	qboolean test = qfalse;
@@ -187,7 +187,7 @@ qboolean HOS_AddToInMissionEmployeeList (employee_t* employee, base_t *base)
  * @sa HOS_HealEmployee
  * @return true if soldiers becomes healed - false otherwise
  */
-extern qboolean HOS_HealCharacter (character_t* chr, qboolean hospital)
+qboolean HOS_HealCharacter (character_t* chr, qboolean hospital)
 {
 	int healing = 1;
 
@@ -209,7 +209,7 @@ extern qboolean HOS_HealCharacter (character_t* chr, qboolean hospital)
  * @sa CL_CampaignRun
  * @note Called every day.
  */
-extern void HOS_HospitalRun (void)
+void HOS_HospitalRun (void)
 {
 	int type, i, j, k;
 	employee_t *employee;
@@ -247,7 +247,7 @@ extern void HOS_HospitalRun (void)
  * @sa HOS_HealCharacter
  * @sa HOS_HealAll
  */
-extern qboolean HOS_HealEmployee (employee_t* employee)
+qboolean HOS_HealEmployee (employee_t* employee)
 {
 	assert(employee);
 	return HOS_HealCharacter(&employee->chr, qtrue);
@@ -258,7 +258,7 @@ extern qboolean HOS_HealEmployee (employee_t* employee)
  * @param[in] base The base the employees should become healed
  * @sa HOS_HealEmployee
  */
-extern void HOS_HealAll (const base_t* const base)
+void HOS_HealAll (const base_t* const base)
 {
 	int i, type;
 
@@ -510,7 +510,7 @@ static void HOS_StartHealing_f (void)
  * @sa AIR_SendAircraftToMission
  * @todo Soldiers should also be removed from base->hospitalList during transfers
  */
-extern void HOS_RemoveEmployeesInHospital (aircraft_t *aircraft)
+void HOS_RemoveEmployeesInHospital (aircraft_t *aircraft)
 {
 	int i;
 	int j;
@@ -550,7 +550,7 @@ extern void HOS_RemoveEmployeesInHospital (aircraft_t *aircraft)
  * @brief Moves soldiers returning from a mission between hospital arrays in base_t.
  * @sa CL_DropshipReturned
  */
-extern void HOS_ReaddEmployeesInHospital (aircraft_t *aircraft)
+void HOS_ReaddEmployeesInHospital (aircraft_t *aircraft)
 {
 	int i;
 	int j;
@@ -631,7 +631,7 @@ void HOS_RemoveDeadEmployeeFromLists (employee_t *employee)
  * Bind some of the functions in this file to console-commands that you can call ingame.
  * Called from MN_ResetMenus resp. CL_InitLocal
  */
-extern void HOS_Reset (void)
+void HOS_Reset (void)
 {
 	/* add commands */
 	Cmd_AddCommand("hosp_empl_init", HOS_EmployeeInit_f, "Init function for hospital employee menu");
@@ -649,7 +649,7 @@ extern void HOS_Reset (void)
  * @sa HOS_Load
  * @sa SAV_GameSave
  */
-extern qboolean HOS_Save (sizebuf_t *sb, void* data)
+qboolean HOS_Save (sizebuf_t *sb, void* data)
 {
 	/* nothing to save here - all saved in cl_basemanagement.c */
 	return qtrue;
@@ -660,7 +660,7 @@ extern qboolean HOS_Save (sizebuf_t *sb, void* data)
  * @sa HOS_Save
  * @sa SAV_GameLoad
  */
-extern qboolean HOS_Load (sizebuf_t *sb, void* data)
+qboolean HOS_Load (sizebuf_t *sb, void* data)
 {
 	return qtrue;
 }
@@ -669,7 +669,7 @@ extern qboolean HOS_Load (sizebuf_t *sb, void* data)
  * @brief Returns true if you can buy or sell equipment
  * @sa B_BaseInit_f
  */
-extern qboolean HOS_HospitalAllowed (void)
+qboolean HOS_HospitalAllowed (void)
 {
 	if (baseCurrent->baseStatus != BASE_UNDER_ATTACK
 	 && B_GetNumberOfBuildingsInBaseByType(baseCurrent->idx, B_HOSPITAL) > 0) {

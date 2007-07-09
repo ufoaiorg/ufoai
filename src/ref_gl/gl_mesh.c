@@ -31,7 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @sa R_DrawAliasMD3Model
  * @param[in] lightambient May not be null for fixed lightning
  */
-extern void R_EnableLights (qboolean fixed, float *matrix, float *lightparam, float *lightambient)
+void R_EnableLights (qboolean fixed, float *matrix, float *lightparam, float *lightambient)
 {
 	dlight_t *light;
 	vec3_t delta;

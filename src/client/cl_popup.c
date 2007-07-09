@@ -104,7 +104,7 @@ static void CL_PopupInterceptNotifyUfoDisappeared(const aircraft_t* ufo);
 /**
  * @brief Initialise popups
  */
-extern void CL_PopupInit (void)
+void CL_PopupInit (void)
 {
 	/* popup_aircraft commands */
 	Cmd_AddCommand("popup_aircraft_action_click", CL_PopupAircraftClick_f, NULL);
@@ -126,7 +126,7 @@ extern void CL_PopupInit (void)
 /**
  * @brief Notify that a mission has been removed
  */
-extern void CL_PopupNotifyMissionRemoved (const actMis_t* mission)
+void CL_PopupNotifyMissionRemoved (const actMis_t* mission)
 {
 	/* Notify all popups */
 	CL_PopupAircraftNotifyMissionRemoved(mission);
@@ -136,7 +136,7 @@ extern void CL_PopupNotifyMissionRemoved (const actMis_t* mission)
 /**
  * @brief Notify that an ufo has been removed
  */
-extern void CL_PopupNotifyUfoRemoved (const aircraft_t* ufo)
+void CL_PopupNotifyUfoRemoved (const aircraft_t* ufo)
 {
 	/* Notify all popups */
 	CL_PopupInterceptNotifyUfoRemoved(ufo);
@@ -145,7 +145,7 @@ extern void CL_PopupNotifyUfoRemoved (const aircraft_t* ufo)
 /**
  * @brief Notify popups that an ufo has disappeared on radars
  */
-extern void CL_PopupNotifyUfoDisappeared (const aircraft_t* ufo)
+void CL_PopupNotifyUfoDisappeared (const aircraft_t* ufo)
 {
 	/* Notify all popups */
 	CL_PopupInterceptNotifyUfoDisappeared(ufo);
@@ -171,7 +171,7 @@ popup_interception_ready_t popupInterceptionReady;	/**< Data about popup_interce
 /**
  * @brief Display the popup_interception_ready
  */
-extern void CL_DisplayPopupInterceptionReady (aircraft_t* aircraft, actMis_t* mission)
+void CL_DisplayPopupInterceptionReady (aircraft_t* aircraft, actMis_t* mission)
 {
 	if (!popupInterceptionReady.aircraft || ! popupInterceptionReady.mission)
 		return;
@@ -227,7 +227,7 @@ POPUP_AIRCRAFT
 /**
  * @brief Display the popup_aircraft
  */
-extern void CL_DisplayPopupAircraft (const aircraft_t* aircraft)
+void CL_DisplayPopupAircraft (const aircraft_t* aircraft)
 {
 	int i;
 
@@ -328,7 +328,7 @@ POPUP_INTERCEPT
 /**
  * @brief Display the popup_intercept
  */
-extern void CL_DisplayPopupIntercept (actMis_t* mission, aircraft_t* ufo)
+void CL_DisplayPopupIntercept (actMis_t* mission, aircraft_t* ufo)
 {
 	static char aircraftListText[1024];
 	char *s;
