@@ -70,6 +70,7 @@ ifeq ($(TARGET_OS),solaris)
 	CFLAGS +=
 	CLIENT_LIBS+=-lsocket -lnsl
 	SERVER_LIBS+=-lsocket -lnsl
+	MASTER_LIBS+=-lsocket -lnsl
 endif
 
 #########################################################################################################################

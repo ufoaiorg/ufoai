@@ -473,6 +473,7 @@ static void MS_ParseResponse (struct sockaddr_in *from, char *data, int dglen)
 	}
 }
 
+
 #ifndef _WIN32
 /**
  * @brief Signal handler function that calls the shutdown function
@@ -495,7 +496,7 @@ static void MS_PrintHelp (void)
 		"    -h                  : show this screen\n"
 		"    -p <port number>    : show this screen\n"
 		"    -l <address>        : only listen to this address\n"
-#ifndef _WIN32
+#if !defined(WIN32) && !defined(__sun)
 		"    -d                  : daemonize the masterserver\n"
 #endif
 );
@@ -530,7 +531,7 @@ static void MS_ParseCommandLine (int argc, const char **argv)
 		case 'h':
 			MS_PrintHelp();
 			exit(0);
-#ifndef _WIN32
+#if !defined(WIN32) && !defined(__sun)
 		case 'd':
 			if (daemon(0, 0)) {
 				printf("[W] Daemonization failed\n");

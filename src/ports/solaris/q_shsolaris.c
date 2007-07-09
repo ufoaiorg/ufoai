@@ -98,7 +98,7 @@ char *Sys_FindFirst (const char *path, unsigned musthave, unsigned canhave)
 	char *p;
 
 	if (fdir)
-		Sys_Error ("Sys_BeginFind without close");
+		Sys_Error("Sys_BeginFind without close");
 
 /*	COM_FilePath (path, findbase); */
 	strcpy(findbase, path);
@@ -112,14 +112,14 @@ char *Sys_FindFirst (const char *path, unsigned musthave, unsigned canhave)
 	if (strcmp(findpattern, "*.*") == 0)
 		strcpy(findpattern, "*");
 
-	if ((fdir = opendir(path)) == NULL)
+	if ((fdir = opendir(findbase)) == NULL)
 		return NULL;
 	while ((d = readdir(fdir)) != NULL) {
 		if (!*findpattern || glob_match(findpattern, d->d_name)) {
 /*			if (*findpattern) */
 /*				printf("%s matched %s\n", findpattern, d->d_name); */
 			if (CompareAttributes(findbase, d->d_name, musthave, canhave)) {
-				sprintf (findpath, "%s/%s", findbase, d->d_name);
+				sprintf(findpath, "%s/%s", findbase, d->d_name);
 				return findpath;
 			}
 		}
@@ -138,7 +138,7 @@ char *Sys_FindNext (unsigned musthave, unsigned canhave)
 /*			if (*findpattern) */
 /*				printf("%s matched %s\n", findpattern, d->d_name); */
 			if (CompareAttributes(findbase, d->d_name, musthave, canhave)) {
-				sprintf (findpath, "%s/%s", findbase, d->d_name);
+				sprintf(findpath, "%s/%s", findbase, d->d_name);
 				return findpath;
 			}
 		}
@@ -162,6 +162,3 @@ void Sys_DebugBreak (void)
 	__asm ("int $3");
 #endif
 }
-
-/*============================================ */
-
