@@ -40,6 +40,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <dlfcn.h>
 
 #include "../../qcommon/qcommon.h"
+#include "../linux/rw_linux.h"
 
 extern cvar_t *nostdout;
 
@@ -107,6 +108,10 @@ void floating_point_exception_handler (int whatever)
  */
 void Sys_SendKeyEvents (void)
 {
+#ifndef DEDICATED_ONLY
+	if (KBD_Update_fp)
+		KBD_Update_fp();
+#endif
 	/* grab frame time */
 	sys_frame_time = Sys_Milliseconds();
 }
