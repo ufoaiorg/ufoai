@@ -8,7 +8,8 @@ GAME_SRCS=\
 	game/g_main.c \
 	game/g_spawn.c \
 	game/g_svcmds.c \
-	game/g_utils.c
+	game/g_utils.c \
+	game/inv_shared.c
 
 GAME_OBJS=$(GAME_SRCS:%.c=$(_BUILDDIR)/game/%.o)
 GAME_DEPS=$(GAME_OBJS:%.o=%.d)

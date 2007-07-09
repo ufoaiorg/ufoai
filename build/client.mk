@@ -67,7 +67,8 @@ CLIENT_SRCS = \
 	server/sv_user.c \
 	server/sv_world.c \
 	\
-	game/q_shared.c
+	game/q_shared.c \
+	game/inv_shared.c
 
 ifeq ($(HAVE_IPV6),1)
 	# FIXME: flags!
