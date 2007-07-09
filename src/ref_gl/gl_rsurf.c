@@ -201,7 +201,7 @@ static void R_BlendLightmaps (void)
 	int i;
 	mBspSurface_t *surf, *newdrawsurf = 0;
 
-	if (!rTiles[0]->lightdata)
+	if (!rTiles[0]->bsp.lightdata)
 		return;
 
 	/* don't bother writing Z */
@@ -566,10 +566,10 @@ static void R_DrawInlineBModel (void)
 	if (!gl_flashblend->integer) {
 		lt = r_newrefdef.dlights;
 		for (k = 0; k < r_newrefdef.num_dlights; k++, lt++)
-			R_MarkLights(lt, 1 << k, currentmodel->nodes + currentmodel->firstnode);
+			R_MarkLights(lt, 1 << k, currentmodel->bsp.nodes + currentmodel->bsp.firstnode);
 	}
 
-	psurf = &currentmodel->surfaces[currentmodel->firstmodelsurface];
+	psurf = &currentmodel->bsp.surfaces[currentmodel->bsp.firstmodelsurface];
 
 	if (currententity->flags & RF_TRANSLUCENT) {
 		GLSTATE_ENABLE_BLEND
@@ -582,7 +582,7 @@ static void R_DrawInlineBModel (void)
 	/*r_alpha_surfaces = NULL;*/
 
 	/* draw texture */
-	for (i = 0; i < currentmodel->nummodelsurfaces; i++, psurf++) {
+	for (i = 0; i < currentmodel->bsp.nummodelsurfaces; i++, psurf++) {
 		/* find which side of the node we are on */
 		pplane = psurf->plane;
 
@@ -639,7 +639,7 @@ void R_DrawBrushModel (entity_t * e)
 
 /*	Com_Printf("Brush model %i!\n", currentmodel->nummodelsurfaces); */
 
-	if (currentmodel->nummodelsurfaces == 0)
+	if (currentmodel->bsp.nummodelsurfaces == 0)
 		return;
 
 	currententity = e;
@@ -748,7 +748,7 @@ static void R_RecursiveWorldNode (mBspNode_t * node)
 	R_RecursiveWorldNode(node->children[side]);
 
 	/* draw stuff */
-	for (c = node->numsurfaces, surf = currentmodel->surfaces + node->firstsurface; c; c--, surf++) {
+	for (c = node->numsurfaces, surf = currentmodel->bsp.surfaces + node->firstsurface; c; c--, surf++) {
 		if ((surf->flags & SURF_PLANEBACK) != sidebit)
 			continue;			/* wrong side */
 
@@ -865,10 +865,10 @@ void R_DrawLevelBrushes (void)
 			if (i && !(i & mask))
 				continue;
 
-			if (!currentmodel->submodels[i].numfaces)
+			if (!currentmodel->bsp.submodels[i].numfaces)
 				continue;
 
-			R_FindModelNodes_r(currentmodel->nodes + currentmodel->submodels[i].headnode);
+			R_FindModelNodes_r(currentmodel->bsp.nodes + currentmodel->bsp.submodels[i].headnode);
 		}
 	}
 }
@@ -971,7 +971,7 @@ extern void GL_BuildPolygonFromSurface (mBspSurface_t * fa, int shift[3])
 	vec3_t total;
 
 	/* reconstruct the polygon */
-	pedges = currentmodel->edges;
+	pedges = currentmodel->bsp.edges;
 	lnumverts = fa->numedges;
 	vertpage = 0;
 
@@ -984,14 +984,14 @@ extern void GL_BuildPolygonFromSurface (mBspSurface_t * fa, int shift[3])
 	poly->numverts = lnumverts;
 
 	for (i = 0; i < lnumverts; i++) {
-		lindex = currentmodel->surfedges[fa->firstedge + i];
+		lindex = currentmodel->bsp.surfedges[fa->firstedge + i];
 
 		if (lindex > 0) {
 			r_pedge = &pedges[lindex];
-			vec = currentmodel->vertexes[r_pedge->v[0]].position;
+			vec = currentmodel->bsp.vertexes[r_pedge->v[0]].position;
 		} else {
 			r_pedge = &pedges[-lindex];
-			vec = currentmodel->vertexes[r_pedge->v[1]].position;
+			vec = currentmodel->bsp.vertexes[r_pedge->v[1]].position;
 		}
 		s = DotProduct(vec, fa->texinfo->vecs[0]) + fa->texinfo->vecs[0][3];
 		s /= fa->texinfo->image->width;

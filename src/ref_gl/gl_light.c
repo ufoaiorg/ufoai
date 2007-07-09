@@ -136,7 +136,7 @@ void R_MarkLights (dlight_t * light, int bit, mBspNode_t * node)
 
 	/* mark the polygons */
 	/* FIXME: Go through other rTiles, too */
-	surf = rTiles[0]->surfaces + node->firstsurface;
+	surf = rTiles[0]->bsp.surfaces + node->firstsurface;
 	for (i = 0; i < node->numsurfaces; i++, surf++) {
 		/*Discoloda */
 		dist = DotProduct(light->origin, surf->plane->normal) - surf->plane->dist;
@@ -521,7 +521,7 @@ extern int RecursiveLightPoint (mBspNode_t * node, vec3_t start, vec3_t end)
 	lightplane = plane;
 
 	/* FIXME: Go through other rTiles, too */
-	surf = rTiles[0]->surfaces + node->firstsurface;
+	surf = rTiles[0]->bsp.surfaces + node->firstsurface;
 
 	for (i = 0; i < node->numsurfaces; i++, surf++) {
 		if (surf->flags & SURF_DRAWTURB)
@@ -586,7 +586,7 @@ extern void R_LightPoint (vec3_t p, vec3_t color)
 	float add;
 
 	/* FIXME: Go through other rTiles, too */
-	if (!rTiles[0]->lightdata) {
+	if (!rTiles[0]->bsp.lightdata) {
 		color[0] = color[1] = color[2] = 1.0;
 		return;
 	}
@@ -596,7 +596,7 @@ extern void R_LightPoint (vec3_t p, vec3_t color)
 	end[2] = p[2] - 2048;
 
 	/* FIXME: Go through other rTiles, too */
-	r = RecursiveLightPoint(rTiles[0]->nodes, p, end);
+	r = RecursiveLightPoint(rTiles[0]->bsp.nodes, p, end);
 
 	if (r == -1)
 		VectorCopy(vec3_origin, color);

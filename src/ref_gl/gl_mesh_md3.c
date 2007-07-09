@@ -30,13 +30,13 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /**
  * @brief
  */
-static void R_DrawAliasMD3FrameLerp (maliasmodel_t *paliashdr, maliasmesh_t mesh, float backlerp)
+static void R_DrawAliasMD3FrameLerp (mAliasModel_t *paliashdr, mAliasMesh_t mesh, float backlerp)
 {
 	int i,j;
 	/*int k;*/
-	maliasframe_t	*frame, *oldframe;
+	mAliasFrame_t	*frame, *oldframe;
 	vec3_t	move, delta, vectors[3];
-	maliasvertex_t	*v, *ov;
+	mAliasVertex_t	*v, *ov;
 	vec3_t	tempVertexArray[4096];
 	vec3_t	tempNormalsArray[4096];
 	vec3_t	color1,color2,color3;
@@ -106,14 +106,14 @@ static void R_DrawAliasMD3FrameLerp (maliasmodel_t *paliashdr, maliasmesh_t mesh
  */
 void R_DrawAliasMD3Model (entity_t *e)
 {
-	maliasmodel_t	*paliashdr;
+	mAliasModel_t	*paliashdr;
 	image_t		*skin;
 	int	i;
 	qboolean lightfixed;
 
 	assert(currentmodel->type == mod_alias_md3);
 
-	paliashdr = (maliasmodel_t *)currentmodel->extraData;
+	paliashdr = (mAliasModel_t *)currentmodel->alias.extraData;
 
 	/* set-up lighting */
 	lightfixed = e->flags & RF_LIGHTFIXED ? qtrue : qfalse;
@@ -186,7 +186,7 @@ void R_DrawAliasMD3Model (entity_t *e)
 		qglDisable(GL_FOG);
 
 	for (i = 0; i < paliashdr->num_meshes; i++) {
-		skin = currentmodel->skins[e->skinnum];
+		skin = currentmodel->alias.skins_img[e->skinnum];
 		if (!skin)
 			skin = r_notexture;
 		GL_Bind(skin->texnum);

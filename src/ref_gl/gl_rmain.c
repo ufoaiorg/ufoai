@@ -251,7 +251,7 @@ static void R_DrawSpriteModel (entity_t * e)
 	/* don't even bother culling, because it's just a single */
 	/* polygon without a surface cache */
 	assert(currentmodel->type == mod_sprite);
-	psprite = (dsprite_t *) currentmodel->extraData;
+	psprite = (dsprite_t *) currentmodel->alias.extraData;
 
 #if 0
 	if (e->frame < 0 || e->frame >= psprite->numframes) {
@@ -285,7 +285,7 @@ static void R_DrawSpriteModel (entity_t * e)
 
 	qglColor4f(1, 1, 1, alpha);
 
-	GL_Bind(currentmodel->skins[e->as.frame]->texnum);
+	GL_Bind(currentmodel->alias.skins_img[e->as.frame]->texnum);
 
 	GL_TexEnv(GL_MODULATE);
 
@@ -438,13 +438,13 @@ static float *R_CalcTransform(entity_t * e)
 		mp = R_CalcTransform(e->tagent);
 
 		/* tag trafo */
-		if (e->tagent->model && e->tagent->model->tagdata) {
+		if (e->tagent->model && e->tagent->model->alias.tagdata) {
 			dtag_t *taghdr;
 			char *name;
 			float *tag;
 			float interpolated[16];
 
-			taghdr = (dtag_t *) e->tagent->model->tagdata;
+			taghdr = (dtag_t *) e->tagent->model->alias.tagdata;
 
 			/* find the right tag */
 			name = (char *) taghdr + taghdr->ofs_names;

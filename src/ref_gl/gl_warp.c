@@ -165,12 +165,12 @@ void GL_SubdivideSurface (mBspSurface_t * fa)
 	/* convert edges back to a normal polygon */
 	numverts = 0;
 	for (i = 0; i < fa->numedges; i++) {
-		lindex = loadmodel->surfedges[fa->firstedge + i];
+		lindex = loadmodel->bsp.surfedges[fa->firstedge + i];
 
 		if (lindex > 0)
-			vec = loadmodel->vertexes[loadmodel->edges[lindex].v[0]].position;
+			vec = loadmodel->bsp.vertexes[loadmodel->bsp.edges[lindex].v[0]].position;
 		else
-			vec = loadmodel->vertexes[loadmodel->edges[-lindex].v[1]].position;
+			vec = loadmodel->bsp.vertexes[loadmodel->bsp.edges[-lindex].v[1]].position;
 		VectorCopy(vec, verts[numverts]);
 		numverts++;
 	}

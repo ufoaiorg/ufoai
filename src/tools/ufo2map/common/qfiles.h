@@ -115,7 +115,7 @@ typedef struct {
 ========================================================================*/
 
 #define IDALIASHEADER	(('2'<<24)+('P'<<16)+('D'<<8)+'I')
-#define ALIAS_VERSION	8
+#define MD2_ALIAS_VERSION	8
 
 #define MD2_MAX_TRIANGLES	4096
 #define MD2_MAX_VERTS		2048
@@ -138,12 +138,12 @@ typedef struct {
 	byte lightnormalindex;
 } dtrivertx_t;
 
-typedef struct {
+typedef struct dAliasFrame_s {
 	float scale[3];	/**< multiply byte verts by this */
 	float translate[3];	/**< then add this */
 	char name[16];	/**< frame name from grabbing */
 	dtrivertx_t verts[1];	/**< variable sized */
-} daliasframe_t;
+} dAliasFrame_t;
 
 
 /**

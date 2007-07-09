@@ -133,14 +133,14 @@ void WriteModelFile (qFILE *modelouthandle)
 	mdl_md2_t		modeltemp;
 	int				j, k;
 	frame_t			*in;
-	daliasframe_t	*out;
+	dAliasFrame_t	*out;
 	byte			buffer[MD2_MAX_VERTS*4+128];
 	float			v;
 	int				c_on, c_off;
 
 	model.ident = IDALIASHEADER;
-	model.version = ALIAS_VERSION;
-	model.framesize = (intptr_t)&((daliasframe_t *)0)->verts[model.num_xyz];
+	model.version = MD2_ALIAS_VERSION;
+	model.framesize = (size_t)&((dAliasFrame_t *)0)->verts[model.num_xyz];
 	model.num_glcmds = numcommands;
 	model.ofs_skins = sizeof(mdl_md2_t);
 	model.ofs_st = model.ofs_skins + model.num_skins * MD2_MAX_SKINNAME;
@@ -182,7 +182,7 @@ void WriteModelFile (qFILE *modelouthandle)
 	/* write out the frames */
 	for (i = 0; i < model.num_frames; i++) {
 		in = &g_frames[i];
-		out = (daliasframe_t *)buffer;
+		out = (dAliasFrame_t *)buffer;
 
 		strcpy(out->name, in->name);
 		for (j = 0; j < 3; j++) {

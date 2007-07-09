@@ -174,34 +174,34 @@ struct model_s *R_RegisterModel (const char *name)
 	int i;
 	dsprite_t *sprout;
 	mdl_md2_t *pheader;
-	maliasmodel_t *pheader3;
+	mAliasModel_t *pheader3;
 
 	mod = Mod_ForName(name, qfalse);
 	if (mod) {
 		/* register any images used by the models */
 		switch (mod->type) {
 		case mod_sprite:
-			sprout = (dsprite_t *) mod->extraData;
+			sprout = (dsprite_t *) mod->alias.extraData;
 			for (i = 0; i < sprout->numframes; i++)
-				mod->skins[i] = GL_FindImage(sprout->frames[i].name, it_sprite);
+				mod->alias.skins_img[i] = GL_FindImage(sprout->frames[i].name, it_sprite);
 			break;
 		case mod_alias_md2:
 			{
 			char path[MAX_QPATH];
 			char *skin, *slash, *end;
 
-			pheader = (mdl_md2_t *) mod->extraData;
+			pheader = (mdl_md2_t *) mod->alias.extraData;
 			for (i = 0; i < pheader->num_skins; i++) {
 				skin = (char *) pheader + pheader->ofs_skins + i * MD2_MAX_SKINNAME;
 				if (skin[0] != '.')
-					mod->skins[i] = GL_FindImage(skin, it_skin);
+					mod->alias.skins_img[i] = GL_FindImage(skin, it_skin);
 				else {
 					Q_strncpyz(path, mod->name, sizeof(path));
 					end = path;
 					while ((slash = strchr(end, '/')) != 0)
 						end = slash + 1;
 					strcpy(end, skin + 1);
-					mod->skins[i] = GL_FindImage(path, it_skin);
+					mod->alias.skins_img[i] = GL_FindImage(path, it_skin);
 				}
 			}
 			mod->numframes = pheader->num_frames;
@@ -209,13 +209,13 @@ struct model_s *R_RegisterModel (const char *name)
 			}
 		case mod_alias_md3:
 			{
-			pheader3 = (maliasmodel_t *)mod->extraData;
+			pheader3 = (mAliasModel_t *)mod->alias.extraData;
 			mod->numframes = pheader3->num_frames;
 			break;
 			}
 		case mod_brush:
-			for (i = 0; i < mod->numtexinfo; i++)
-				mod->texinfo[i].image->registration_sequence = registration_sequence;
+			for (i = 0; i < mod->bsp.numtexinfo; i++)
+				mod->bsp.texinfo[i].image->registration_sequence = registration_sequence;
 			break;
 		case mod_obj:
 			/* @todo: */
@@ -277,8 +277,8 @@ struct model_s *R_RegisterModelShort (const char *name)
  */
 static void Mod_Free (model_t * mod)
 {
-	if (mod->extraData)
-		ri.TagFree(mod->extraData);
+	if (mod->alias.extraData)
+		ri.TagFree(mod->alias.extraData);
 
 	memset(mod, 0, sizeof(*mod));
 }

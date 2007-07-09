@@ -33,15 +33,15 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  * @sa Anim_Run
  * @sa Anim_GetName
  */
-static manim_t *Anim_Get (model_t * mod, const char *name)
+static mAliasAnim_t *Anim_Get (model_t * mod, const char *name)
 {
-	manim_t *anim;
+	mAliasAnim_t *anim;
 	int i;
 
 	if (!mod || mod->type != mod_alias_md2)
 		return NULL;
 
-	for (i = 0, anim = mod->animdata; i < mod->numanims; i++, anim++)
+	for (i = 0, anim = mod->alias.animdata; i < mod->alias.numanims; i++, anim++)
 		if (!Q_strncmp(name, anim->name, MAX_ANIMNAME))
 			return anim;
 
@@ -59,7 +59,7 @@ static manim_t *Anim_Get (model_t * mod, const char *name)
  */
 void Anim_Append (animState_t * as, model_t * mod, const char *name)
 {
-	manim_t *anim;
+	mAliasAnim_t *anim;
 
 	assert(as->ladd < MAX_ANIMLIST);
 #ifdef DEBUG
@@ -87,10 +87,10 @@ void Anim_Append (animState_t * as, model_t * mod, const char *name)
 		as->time = anim->time;
 		as->dt = 0;
 
-		as->list[as->ladd] = anim - mod->animdata;
+		as->list[as->ladd] = anim - mod->alias.animdata;
 	} else {
 		/* next animation */
-		as->list[as->ladd] = anim - mod->animdata;
+		as->list[as->ladd] = anim - mod->alias.animdata;
 	}
 
 	/* advance in list (no overflow protection!) */
@@ -110,7 +110,7 @@ void Anim_Append (animState_t * as, model_t * mod, const char *name)
  */
 void Anim_Change (animState_t * as, model_t * mod, const char *name)
 {
-	manim_t *anim;
+	mAliasAnim_t *anim;
 
 	assert(as->ladd < MAX_ANIMLIST);
 #ifdef DEBUG
@@ -142,7 +142,7 @@ void Anim_Change (animState_t * as, model_t * mod, const char *name)
 		as->time = anim->time;
 		as->dt = 0;
 
-		as->list[as->ladd] = anim - mod->animdata;
+		as->list[as->ladd] = anim - mod->alias.animdata;
 	} else {
 		/* don't change to same animation */
 /*		if ( anim == mod->animdata + as->list[as->lcur] ) */
@@ -150,7 +150,7 @@ void Anim_Change (animState_t * as, model_t * mod, const char *name)
 
 		/* next animation */
 		as->ladd = LNEXT(as->lcur);
-		as->list[as->ladd] = anim - mod->animdata;
+		as->list[as->ladd] = anim - mod->alias.animdata;
 
 		if (anim->time < as->time)
 			as->time = anim->time;
@@ -171,7 +171,7 @@ void Anim_Change (animState_t * as, model_t * mod, const char *name)
  */
 void Anim_Run (animState_t * as, model_t * mod, int msec)
 {
-	manim_t *anim;
+	mAliasAnim_t *anim;
 
 	assert(as->lcur < MAX_ANIMLIST);
 #ifdef DEBUG
@@ -189,14 +189,14 @@ void Anim_Run (animState_t * as, model_t * mod, int msec)
 
 	while (as->dt > as->time) {
 		as->dt -= as->time;
-		anim = mod->animdata + as->list[as->lcur];
+		anim = mod->alias.animdata + as->list[as->lcur];
 
 		if (as->change || as->frame >= anim->to) {
 			/* go to next animation if it isn't the last one */
 			if (LNEXT(as->lcur) != as->ladd)
 				as->lcur = LNEXT(as->lcur);
 
-			anim = mod->animdata + as->list[as->lcur];
+			anim = mod->alias.animdata + as->list[as->lcur];
 
 			/* prepare next frame */
 			as->dt = 0;
@@ -225,7 +225,7 @@ void Anim_Run (animState_t * as, model_t * mod, int msec)
  */
 char *Anim_GetName (animState_t * as, model_t * mod)
 {
-	manim_t *anim;
+	mAliasAnim_t *anim;
 
 	assert(as->lcur < MAX_ANIMLIST);
 #ifdef DEBUG
@@ -239,6 +239,6 @@ char *Anim_GetName (animState_t * as, model_t * mod)
 	if (as->lcur == as->ladd)
 		return NULL;
 
-	anim = mod->animdata + as->list[as->lcur];
+	anim = mod->alias.animdata + as->list[as->lcur];
 	return anim->name;
 }

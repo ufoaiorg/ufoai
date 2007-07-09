@@ -46,13 +46,13 @@ extern void Mod_LoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 	dmd3coord_t			*pincoord;
 	dmd3vertex_t		*pinvert;
 	unsigned int		*pinindex, *poutindex;
-	maliasvertex_t		*poutvert;
-	maliascoord_t		*poutcoord;
-	maliasskin_t		*poutskin;
-	maliasmesh_t		*poutmesh;
-	maliastag_t			*pouttag;
-	maliasframe_t		*poutframe;
-	maliasmodel_t		*poutmodel;
+	mAliasVertex_t		*poutvert;
+	mAliasCoord_t		*poutcoord;
+	mAliasSkin_t		*poutskin;
+	mAliasMesh_t		*poutmesh;
+	mAliasTag_t			*pouttag;
+	mAliasFrame_t		*poutframe;
+	mAliasModel_t		*poutmodel;
 	char				name[MAX_QPATH];
 	float				lat, lng;
 	char path[MAX_QPATH];
@@ -66,7 +66,7 @@ extern void Mod_LoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 				mod->name, version, MD3_ALIAS_VERSION);
 	}
 
-	poutmodel = ri.TagMalloc(ri.modelPool, sizeof(maliasmodel_t), 0);
+	poutmodel = ri.TagMalloc(ri.modelPool, sizeof(mAliasModel_t), 0);
 
 	/* byte swap the header fields and sanity check */
 	poutmodel->num_frames = LittleLong(pinmodel->num_frames);
@@ -91,7 +91,7 @@ extern void Mod_LoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 
 	/* load the frames */
 	pinframe = (dmd3frame_t *)((byte *)pinmodel + LittleLong(pinmodel->ofs_frames));
-	poutframe = poutmodel->frames = ri.TagMalloc(ri.modelPool, sizeof(maliasframe_t) * poutmodel->num_frames, 0);
+	poutframe = poutmodel->frames = ri.TagMalloc(ri.modelPool, sizeof(mAliasFrame_t) * poutmodel->num_frames, 0);
 
 	mod->radius = 0;
 	ClearBounds(mod->mins, mod->maxs);
@@ -114,7 +114,7 @@ extern void Mod_LoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 	/* load the tags */
 	if (poutmodel->num_tags) {
 		pintag = (dmd3tag_t *)((byte *)pinmodel + LittleLong(pinmodel->ofs_tags));
-		pouttag = poutmodel->tags = ri.TagMalloc(ri.modelPool, sizeof(maliastag_t) * poutmodel->num_frames * poutmodel->num_tags, 0);
+		pouttag = poutmodel->tags = ri.TagMalloc(ri.modelPool, sizeof(mAliasTag_t) * poutmodel->num_frames * poutmodel->num_tags, 0);
 
 		for (i = 0; i < poutmodel->num_frames; i++) {
 			for (l = 0; l < poutmodel->num_tags; l++, pintag++, pouttag++) {
@@ -132,7 +132,7 @@ extern void Mod_LoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 
 	/* load the meshes */
 	pinmesh = (dmd3mesh_t *)((byte *)pinmodel + LittleLong(pinmodel->ofs_meshes));
-	poutmesh = poutmodel->meshes = ri.TagMalloc(ri.modelPool, sizeof(maliasmesh_t) * poutmodel->num_meshes, 0);
+	poutmesh = poutmodel->meshes = ri.TagMalloc(ri.modelPool, sizeof(mAliasMesh_t) * poutmodel->num_meshes, 0);
 
 	for (i = 0; i < poutmodel->num_meshes; i++, poutmesh++) {
 		memcpy(poutmesh->name, pinmesh->name, MD3_MAX_PATH);
@@ -163,7 +163,7 @@ extern void Mod_LoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 
 		/* register all skins */
 		pinskin = (dmd3skin_t *)((byte *)pinmesh + LittleLong(pinmesh->ofs_skins));
-		poutskin = poutmesh->skins = ri.TagMalloc(ri.modelPool, sizeof(maliasskin_t) * poutmesh->num_skins, 0);
+		poutskin = poutmesh->skins = ri.TagMalloc(ri.modelPool, sizeof(mAliasSkin_t) * poutmesh->num_skins, 0);
 
 		for (j = 0; j < poutmesh->num_skins; j++, pinskin++, poutskin++) {
 			memcpy(name, pinskin->name, MD3_MAX_PATH);
@@ -174,14 +174,14 @@ extern void Mod_LoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 			/* FIXME: support the . feature for model textures like for md2 */
 			memcpy(poutskin->name, name, MD3_MAX_PATH);
 			if (name[0] != '.')
-				mod->skins[i] = GL_FindImage(name, it_skin);
+				mod->alias.skins_img[i] = GL_FindImage(name, it_skin);
 			else {
 				Q_strncpyz(path, mod->name, sizeof(path));
 				end = path;
 				while ((slash = strchr(end, '/')) != 0)
 					end = slash + 1;
 				strcpy(end, name + 1);
-				mod->skins[i] = GL_FindImage(path, it_skin);
+				mod->alias.skins_img[i] = GL_FindImage(path, it_skin);
 			}
 		}
 
@@ -197,7 +197,7 @@ extern void Mod_LoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 
 		/* load the texture coordinates */
 		pincoord = (dmd3coord_t *)((byte *)pinmesh + LittleLong(pinmesh->ofs_tcs));
-		poutcoord = poutmesh->stcoords = ri.TagMalloc(ri.modelPool, sizeof(maliascoord_t) * poutmesh->num_verts, 0);
+		poutcoord = poutmesh->stcoords = ri.TagMalloc(ri.modelPool, sizeof(mAliasCoord_t) * poutmesh->num_verts, 0);
 
 		for (j = 0; j < poutmesh->num_verts; j++, pincoord++, poutcoord++) {
 			poutcoord->st[0] = LittleFloat(pincoord->st[0]);
@@ -206,7 +206,7 @@ extern void Mod_LoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 
 		/* load the vertexes and normals */
 		pinvert = (dmd3vertex_t *)((byte *)pinmesh + LittleLong(pinmesh->ofs_verts));
-		poutvert = poutmesh->vertexes = ri.TagMalloc(ri.modelPool, poutmodel->num_frames * poutmesh->num_verts * sizeof(maliasvertex_t), 0);
+		poutvert = poutmesh->vertexes = ri.TagMalloc(ri.modelPool, poutmodel->num_frames * poutmesh->num_verts * sizeof(mAliasVertex_t), 0);
 
 		for (l = 0; l < poutmodel->num_frames; l++) {
 			for (j = 0; j < poutmesh->num_verts; j++, pinvert++, poutvert++) {
@@ -233,5 +233,5 @@ extern void Mod_LoadAliasMD3Model (model_t *mod, void *buffer, int bufSize)
 		/*Mod_BuildTriangleNeighbors(poutmesh->trneighbors, poutmesh->indexes, poutmesh->num_tris);*/
 	}
 	mod->type = mod_alias_md3;
-	mod->extraData = poutmodel;
+	mod->alias.extraData = poutmodel;
 }

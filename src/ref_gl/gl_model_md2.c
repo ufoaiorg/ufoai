@@ -44,25 +44,25 @@ static void Mod_LoadTags (model_t * mod, void *buffer, int bufSize)
 	mdl_md2_t *md2;
 
 	pintag = (dtag_t *) buffer;
-	md2 = (mdl_md2_t *) mod->extraData;
+	md2 = (mdl_md2_t *) mod->alias.extraData;
 
 	version = LittleLong(pintag->version);
 	if (version != TAG_VERSION)
-		ri.Sys_Error(ERR_DROP, "Mod_LoadTags: %s has wrong version number (%i should be %i)", mod->tagname, version, TAG_VERSION);
+		ri.Sys_Error(ERR_DROP, "Mod_LoadTags: %s has wrong version number (%i should be %i)", mod->alias.tagname, version, TAG_VERSION);
 
 	size = LittleLong(pintag->ofs_extractend);
-	mod->tagdata = ri.TagMalloc(ri.modelPool, size, 0);
-	pheader = mod->tagdata;
+	mod->alias.tagdata = ri.TagMalloc(ri.modelPool, size, 0);
+	pheader = mod->alias.tagdata;
 
 	/* byte swap the header fields and sanity check */
 	for (i = 0; i < (int)sizeof(dtag_t) / 4; i++)
 		((int *) pheader)[i] = LittleLong(((int *) buffer)[i]);
 
 	if (pheader->num_tags <= 0)
-		ri.Sys_Error(ERR_DROP, "Mod_LoadTags: tag file %s has no tags", mod->tagname);
+		ri.Sys_Error(ERR_DROP, "Mod_LoadTags: tag file %s has no tags", mod->alias.tagname);
 
 	if (pheader->num_frames <= 0)
-		ri.Sys_Error(ERR_DROP, "Mod_LoadTags: tag file %s has no frames", mod->tagname);
+		ri.Sys_Error(ERR_DROP, "Mod_LoadTags: tag file %s has no frames", mod->alias.tagname);
 
 	/* load tag names */
 	memcpy((char *) pheader + pheader->ofs_names, (char *) pintag + pheader->ofs_names, pheader->num_tags * MD2_MAX_SKINNAME);
@@ -73,22 +73,22 @@ static void Mod_LoadTags (model_t * mod, void *buffer, int bufSize)
 
 	if (bufSize != pheader->ofs_end)
 		ri.Sys_Error(ERR_DROP, "Mod_LoadTags: tagfile %s is broken - expected: %i, offsets tell us to read: %i\n",
-			mod->tagname, bufSize, pheader->ofs_end);
+			mod->alias.tagname, bufSize, pheader->ofs_end);
 
 	if (pheader->num_frames != md2->num_frames)
 		ri.Con_Printf(PRINT_ALL, "Mod_LoadTags: found %i frames in %s but model has %i frames\n",
-			pheader->num_frames, mod->tagname, md2->num_frames);
+			pheader->num_frames, mod->alias.tagname, md2->num_frames);
 
 	if (pheader->ofs_names != 32)
-		ri.Sys_Error(ERR_DROP, "Mod_LoadTags: invalid ofs_name for tagfile %s\n", mod->tagname);
+		ri.Sys_Error(ERR_DROP, "Mod_LoadTags: invalid ofs_name for tagfile %s\n", mod->alias.tagname);
 	if (pheader->ofs_tags != pheader->ofs_names + (pheader->num_tags * 64))
-		ri.Sys_Error(ERR_DROP, "Mod_LoadTags: invalid ofs_tags for tagfile %s\n", mod->tagname);
+		ri.Sys_Error(ERR_DROP, "Mod_LoadTags: invalid ofs_tags for tagfile %s\n", mod->alias.tagname);
 	/* (4 * 3) * 4 bytes (int) */
 	if (pheader->ofs_end != pheader->ofs_tags + (pheader->num_tags * pheader->num_frames * 48))
-		ri.Sys_Error(ERR_DROP, "Mod_LoadTags: invalid ofs_end for tagfile %s\n", mod->tagname);
+		ri.Sys_Error(ERR_DROP, "Mod_LoadTags: invalid ofs_end for tagfile %s\n", mod->alias.tagname);
 	/* (4 * 4) * 4 bytes (int) */
 	if (pheader->ofs_extractend != pheader->ofs_tags + (pheader->num_tags * pheader->num_frames * 64))
-		ri.Sys_Error(ERR_DROP, "Mod_LoadTags: invalid ofs_extractend for tagfile %s\n", mod->tagname);
+		ri.Sys_Error(ERR_DROP, "Mod_LoadTags: invalid ofs_extractend for tagfile %s\n", mod->alias.tagname);
 
 	for (i = 0; i < pheader->num_tags * pheader->num_frames; i++) {
 		for (j = 0; j < 4; j++) {
@@ -117,7 +117,7 @@ extern void Mod_LoadAliasMD2Model (model_t * mod, void *buffer, int bufSize)
 	mdl_md2_t *pinmodel, *pheader;
 	dstvert_t *pinst, *poutst;
 	dtriangle_t *pintri, *pouttri;
-	daliasframe_t *pinframe, *poutframe;
+	dAliasFrame_t *pinframe, *poutframe;
 	int *pincmd, *poutcmd;
 	int version, size;
 
@@ -126,11 +126,11 @@ extern void Mod_LoadAliasMD2Model (model_t * mod, void *buffer, int bufSize)
 	pinmodel = (mdl_md2_t *) buffer;
 
 	version = LittleLong(pinmodel->version);
-	if (version != ALIAS_VERSION)
-		ri.Sys_Error(ERR_DROP, "%s has wrong version number (%i should be %i)", mod->name, version, ALIAS_VERSION);
+	if (version != MD2_ALIAS_VERSION)
+		ri.Sys_Error(ERR_DROP, "%s has wrong version number (%i should be %i)", mod->name, version, MD2_ALIAS_VERSION);
 
 	pheader = ri.TagMalloc(ri.modelPool, LittleLong(pinmodel->ofs_end), 0);
-	mod->extraData = pheader;
+	mod->alias.extraData = pheader;
 
 	/* byte swap the header fields and sanity check */
 	for (i = 0; i < (int)sizeof(mdl_md2_t) / 4; i++) /* FIXME */
@@ -184,8 +184,8 @@ extern void Mod_LoadAliasMD2Model (model_t * mod, void *buffer, int bufSize)
 
 	/* load the frames */
 	for (i = 0; i < pheader->num_frames; i++) {
-		pinframe = (daliasframe_t *) ((byte *) pinmodel + pheader->ofs_frames + i * pheader->framesize);
-		poutframe = (daliasframe_t *) ((byte *) pheader + pheader->ofs_frames + i * pheader->framesize);
+		pinframe = (dAliasFrame_t *) ((byte *) pinmodel + pheader->ofs_frames + i * pheader->framesize);
+		poutframe = (dAliasFrame_t *) ((byte *) pheader + pheader->ofs_frames + i * pheader->framesize);
 
 		memcpy(poutframe->name, pinframe->name, sizeof(poutframe->name));
 		for (j = 0; j < 3; j++) {
@@ -215,33 +215,33 @@ extern void Mod_LoadAliasMD2Model (model_t * mod, void *buffer, int bufSize)
 	mod->maxs[2] = UNIT_SIZE;
 
 	/* load the tags */
-	Q_strncpyz(mod->tagname, mod->name, sizeof(mod->tagname));
+	Q_strncpyz(mod->alias.tagname, mod->name, sizeof(mod->alias.tagname));
 	/* strip model extension and set the extension to tag */
-	l = strlen(mod->tagname) - 4;
-	strcpy(&(mod->tagname[l]), ".tag");
+	l = strlen(mod->alias.tagname) - 4;
+	strcpy(&(mod->alias.tagname[l]), ".tag");
 
 	/* try to load the tag file */
-	if (ri.FS_CheckFile(mod->tagname) != -1) {
+	if (ri.FS_CheckFile(mod->alias.tagname) != -1) {
 		/* load the tags */
-		size = ri.FS_LoadFile(mod->tagname, (void **) &tagbuf);
+		size = ri.FS_LoadFile(mod->alias.tagname, (void **) &tagbuf);
 		Mod_LoadTags(mod, tagbuf, size);
 		ri.FS_FreeFile(tagbuf);
 	}
 
 	/* load the animations */
-	Q_strncpyz(mod->animname, mod->name, sizeof(mod->animname));
-	l = strlen(mod->animname) - 4;
-	strcpy(&(mod->animname[l]), ".anm");
+	Q_strncpyz(mod->alias.animname, mod->name, sizeof(mod->alias.animname));
+	l = strlen(mod->alias.animname) - 4;
+	strcpy(&(mod->alias.animname[l]), ".anm");
 
 	/* try to load the animation file */
-	if (ri.FS_CheckFile(mod->animname) != -1) {
+	if (ri.FS_CheckFile(mod->alias.animname) != -1) {
 		/* load the tags */
-		ri.FS_LoadFile(mod->animname, (void **) &animbuf);
-		Mod_LoadAnims(mod, animbuf);
+		ri.FS_LoadFile(mod->alias.animname, (void **) &animbuf);
+		Mod_LoadAnims(&mod->alias, animbuf);
 		ri.FS_FreeFile(animbuf);
 	}
 
 	/* find neighbours */
-	mod->neighbors = ri.TagMalloc(ri.modelPool, pheader->num_tris * sizeof(neighbors_t), 0);
-	Mod_BuildTriangleNeighbors(mod->neighbors, pouttri, pheader->num_tris);
+	mod->alias.neighbors = ri.TagMalloc(ri.modelPool, pheader->num_tris * sizeof(mAliasNeighbors_t), 0);
+	Mod_BuildTriangleNeighbors(mod->alias.neighbors, pouttri, pheader->num_tris);
 }

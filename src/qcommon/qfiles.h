@@ -58,7 +58,7 @@ typedef struct {
 
 #define IDALIASHEADER	(('2'<<24)+('P'<<16)+('D'<<8)+'I')
 #define IDTAGHEADER		(('2'<<24)+('P'<<16)+('D'<<8)+'J')
-#define ALIAS_VERSION	8
+#define MD2_ALIAS_VERSION	8
 #define TAG_VERSION		1
 
 #define MD2_MAX_TRIANGLES	4096
@@ -94,8 +94,8 @@ typedef struct {
 								 * This is not the "real" vertex coordinate. This is a scaled version of the
 								 * coordinate, scaled so that each of the three numbers fit within one byte.
 								 * To scale the vertex back to the "real" coordinate, you need to first
-								 * multiply each of the bytes by their respective float scale in the daliasframe_t
-								 * structure, and then add the respective float translation, also in the daliasframe_t
+								 * multiply each of the bytes by their respective float scale in the dAliasFrame_t
+								 * structure, and then add the respective float translation, also in the dAliasFrame_t
 								 * structure. This will give you the vertex coordinate relative to the model's
 								 * origin, which is at the origin, (0, 0, 0)
 								 */
@@ -106,12 +106,12 @@ typedef struct {
  * @brief is a variable sized structure, however all frame_t structures within the same file will
  * have the same size (numVertices in the header)
  */
-typedef struct {
+typedef struct dAliasFrame_s {
 	float scale[3];				/**< multiply byte verts by this */
 	float translate[3];			/**< then add this */
 	char name[16];				/**< frame name from grabbing */
 	dtrivertx_t verts[1];		/**< variable sized - an array of num_xyz dtrivertx_t structures.*/
-} daliasframe_t;
+} dAliasFrame_t;
 
 
 /**

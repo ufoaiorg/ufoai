@@ -56,7 +56,7 @@ void GL_LerpVerts (int nverts, dtrivertx_t * v, dtrivertx_t * ov, float *lerp, f
  */
 extern void R_DrawAliasFrameLerp (mdl_md2_t * paliashdr, float backlerp, int framenum, int oldframenum)
 {
-	daliasframe_t *frame, *oldframe;
+	dAliasFrame_t *frame, *oldframe;
 	dtrivertx_t *v, *ov, *verts;
 	int *order;
 	int count;
@@ -68,10 +68,10 @@ extern void R_DrawAliasFrameLerp (mdl_md2_t * paliashdr, float backlerp, int fra
 	float *na;
 	float *oldNormal, *newNormal;
 
-	frame = (daliasframe_t *) ((byte *) paliashdr + paliashdr->ofs_frames + framenum * paliashdr->framesize);
+	frame = (dAliasFrame_t *) ((byte *) paliashdr + paliashdr->ofs_frames + framenum * paliashdr->framesize);
 	verts = v = frame->verts;
 
-	oldframe = (daliasframe_t *) ((byte *) paliashdr + paliashdr->ofs_frames + oldframenum * paliashdr->framesize);
+	oldframe = (dAliasFrame_t *) ((byte *) paliashdr + paliashdr->ofs_frames + oldframenum * paliashdr->framesize);
 	ov = oldframe->verts;
 
 	order = (int *) ((byte *) paliashdr + paliashdr->ofs_glcmds);
@@ -157,15 +157,15 @@ static qboolean R_CullAliasMD2Model (vec4_t bbox[8], entity_t * e)
 	vec3_t mins, maxs;
 	mdl_md2_t *paliashdr;
 	vec3_t thismins, oldmins, thismaxs, oldmaxs;
-	daliasframe_t *pframe, *poldframe;
+	dAliasFrame_t *pframe, *poldframe;
 	float dp;
 
 	assert(currentmodel->type == mod_alias_md2);
-	paliashdr = (mdl_md2_t *) currentmodel->extraData;
+	paliashdr = (mdl_md2_t *) currentmodel->alias.extraData;
 
-	pframe = (daliasframe_t *) ((byte *) paliashdr + paliashdr->ofs_frames + e->as.frame * paliashdr->framesize);
+	pframe = (dAliasFrame_t *) ((byte *) paliashdr + paliashdr->ofs_frames + e->as.frame * paliashdr->framesize);
 
-	poldframe = (daliasframe_t *) ((byte *) paliashdr + paliashdr->ofs_frames + e->as.oldframe * paliashdr->framesize);
+	poldframe = (dAliasFrame_t *) ((byte *) paliashdr + paliashdr->ofs_frames + e->as.oldframe * paliashdr->framesize);
 
 	/*
 	 ** compute axially aligned mins and maxs
@@ -264,7 +264,7 @@ void R_DrawAliasMD2Model (entity_t * e)
 		return;
 
 	assert(currentmodel->type == mod_alias_md2);
-	paliashdr = (mdl_md2_t *) currentmodel->extraData;
+	paliashdr = (mdl_md2_t *) currentmodel->alias.extraData;
 
 	/* check animations */
 	if ((e->as.frame >= paliashdr->num_frames) || (e->as.frame < 0)) {
@@ -284,11 +284,11 @@ void R_DrawAliasMD2Model (entity_t * e)
 		skin = e->skin;			/* custom player skin */
 	else {
 		if (e->skinnum >= MD2_MAX_SKINS)
-			skin = currentmodel->skins[0];
+			skin = currentmodel->alias.skins_img[0];
 		else {
-			skin = currentmodel->skins[e->skinnum];
+			skin = currentmodel->alias.skins_img[e->skinnum];
 			if (!skin)
-				skin = currentmodel->skins[0];
+				skin = currentmodel->alias.skins_img[0];
 		}
 	}
 	if (!skin)
@@ -456,7 +456,7 @@ static void R_TransformModelDirect (modelInfo_t * mi)
 	} else if (mi->center) {
 		/* autoscale */
 		mdl_md2_t *paliashdr;
-		daliasframe_t *pframe;
+		dAliasFrame_t *pframe;
 
 		float max, size;
 		vec3_t mins, maxs, center;
@@ -464,8 +464,8 @@ static void R_TransformModelDirect (modelInfo_t * mi)
 
 		/* get model data */
 		assert(mi->model->type == mod_alias_md2);
-		paliashdr = (mdl_md2_t *) mi->model->extraData;
-		pframe = (daliasframe_t *) ((byte *) paliashdr + paliashdr->ofs_frames);
+		paliashdr = (mdl_md2_t *) mi->model->alias.extraData;
+		pframe = (dAliasFrame_t *) ((byte *) paliashdr + paliashdr->ofs_frames);
 
 		/* get center and scale */
 		for (max = 1.0, i = 0; i < 3; i++) {
@@ -502,7 +502,7 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 		return;
 	}
 
-	paliashdr = (mdl_md2_t *) mi->model->extraData;
+	paliashdr = (mdl_md2_t *) mi->model->alias.extraData;
 
 	/* check animations */
 	if ((mi->frame >= paliashdr->num_frames) || (mi->frame < 0)) {
@@ -519,9 +519,9 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 
 	/* select skin */
 	if (mi->skin >= 0 && mi->skin < paliashdr->num_skins)
-		skin = mi->model->skins[mi->skin];
+		skin = mi->model->alias.skins_img[mi->skin];
 	else
-		skin = mi->model->skins[0];
+		skin = mi->model->alias.skins_img[0];
 
 	if (!skin)
 		skin = r_notexture;		/* fallback... */
@@ -546,14 +546,14 @@ void R_DrawModelDirect (modelInfo_t * mi, modelInfo_t * pmi, const char *tagname
 		R_TransformModelDirect(pmi);
 
 		/* tag trafo */
-		if (tagname && pmi->model && pmi->model->tagdata) {
+		if (tagname && pmi->model && pmi->model->alias.tagdata) {
 			animState_t as;
 			dtag_t *taghdr;
 			char *name;
 			float *tag;
 			float interpolated[16];
 
-			taghdr = (dtag_t *) pmi->model->tagdata;
+			taghdr = (dtag_t *) pmi->model->alias.tagdata;
 
 			/* find the right tag */
 			name = (char *) taghdr + taghdr->ofs_names;
@@ -622,7 +622,7 @@ void R_DrawModelParticle (modelInfo_t * mi)
 	if (!mi->model || mi->model->type != mod_alias_md2)
 		return;
 
-	paliashdr = (mdl_md2_t *) mi->model->extraData;
+	paliashdr = (mdl_md2_t *) mi->model->alias.extraData;
 
 	/* check animations */
 	if ((mi->frame >= paliashdr->num_frames) || (mi->frame < 0)) {
@@ -643,7 +643,7 @@ void R_DrawModelParticle (modelInfo_t * mi)
 			mi->model->name, mi->skin, paliashdr->num_skins);
 		mi->skin = 0;
 	}
-	skin = mi->model->skins[mi->skin];
+	skin = mi->model->alias.skins_img[mi->skin];
 	if (!skin)
 		skin = r_notexture;		/* fallback... */
 

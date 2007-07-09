@@ -59,9 +59,9 @@ extern void Mod_LoadSpriteModel (model_t * mod, void *buffer, int bufSize)
 		sprout->frames[i].origin_x = LittleLong(sprin->frames[i].origin_x);
 		sprout->frames[i].origin_y = LittleLong(sprin->frames[i].origin_y);
 		memcpy(sprout->frames[i].name, sprin->frames[i].name, SPRITE_MAX_SKINNAME);
-		mod->skins[i] = GL_FindImage(sprout->frames[i].name, it_sprite);
+		mod->alias.skins_img[i] = GL_FindImage(sprout->frames[i].name, it_sprite);
 	}
 
-	mod->extraData = sprout;
+	mod->alias.extraData = sprout;
 	mod->type = mod_sprite;
 }

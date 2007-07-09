@@ -23,6 +23,4 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
-#include "gl_local.h"
-
-void Mod_LoadSpriteModel(model_t * mod, void *buffer, int bufSize);
+void Mod_LoadSpriteModel(struct model_s *mod, void *buffer, int bufSize);

@@ -24,4 +24,4 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
 void R_DrawAliasMD3Model(entity_t *e);
-void Mod_LoadAliasMD3Model(model_t *mod, void *buffer, int bufSize);
+void Mod_LoadAliasMD3Model(struct model_s *mod, void *buffer, int bufSize);

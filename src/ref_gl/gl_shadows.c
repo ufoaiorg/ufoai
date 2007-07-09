@@ -144,7 +144,7 @@ static void R_DrawAliasShadow (entity_t * e, mdl_md2_t * paliashdr, int posenum)
 	float height, lheight, alpha;
 	int count;
 
-	daliasframe_t *frame;
+	dAliasFrame_t *frame;
 
 	if (r_newrefdef.rdflags & RDF_NOWORLDMODEL)
 		return;
@@ -162,7 +162,7 @@ static void R_DrawAliasShadow (entity_t * e, mdl_md2_t * paliashdr, int posenum)
 
 	lheight = currententity->origin[2];
 
-	frame = (daliasframe_t *) ((byte *) paliashdr + paliashdr->ofs_frames + currententity->as.frame * paliashdr->framesize);
+	frame = (dAliasFrame_t *) ((byte *) paliashdr + paliashdr->ofs_frames + currententity->as.frame * paliashdr->framesize);
 
 	verts = frame->verts;
 	height = 0;
@@ -218,14 +218,14 @@ static void R_DrawAliasShadow (entity_t * e, mdl_md2_t * paliashdr, int posenum)
 static void BuildShadowVolume (mdl_md2_t * hdr, vec3_t light, float projectdistance)
 {
 	dtriangle_t *ot, *tris;
-	neighbors_t	*neighbors;
+	mAliasNeighbors_t	*neighbors;
 	int i, j;
 	qboolean trianglefacinglight[MD2_MAX_TRIANGLES];
 	vec3_t v0, v1, v2, v3;
-	daliasframe_t *frame;
+	dAliasFrame_t *frame;
 	dtrivertx_t *verts;
 
-	frame = (daliasframe_t *) ((byte *) hdr + hdr->ofs_frames + currententity->as.frame * hdr->framesize);
+	frame = (dAliasFrame_t *) ((byte *) hdr + hdr->ofs_frames + currententity->as.frame * hdr->framesize);
 	verts = frame->verts;
 
 	ot = tris = (dtriangle_t *) ((unsigned char *) hdr + hdr->ofs_tris);
@@ -243,7 +243,7 @@ static void BuildShadowVolume (mdl_md2_t * hdr, vec3_t light, float projectdista
 	}
 
 	qglBegin(GL_QUADS);
-	for (i = 0, tris = ot, neighbors = currentmodel->neighbors; i < hdr->num_tris; i++, tris++, neighbors++) {
+	for (i = 0, tris = ot, neighbors = currentmodel->alias.neighbors; i < hdr->num_tris; i++, tris++, neighbors++) {
 		if (!trianglefacinglight[i])
 			continue;
 
@@ -374,7 +374,7 @@ static void R_DrawAliasShadowVolume (mdl_md2_t * paliashdr, int posenumm)
 	dtriangle_t *t, *tris;
 	int worldlight = 0;
 
-	daliasframe_t *frame, *oldframe;
+	dAliasFrame_t *frame, *oldframe;
 	dtrivertx_t *ov, *verts;
 	dlight_t *l;
 	float cost, sint, is, it;
@@ -385,15 +385,15 @@ static void R_DrawAliasShadowVolume (mdl_md2_t * paliashdr, int posenumm)
 
 	if (r_newrefdef.rdflags & RDF_NOWORLDMODEL)
 		return;
-	if (currentmodel->noshadow)
+	if (currentmodel->alias.noshadow)
 		return;
 
 	t = tris = (dtriangle_t *) ((unsigned char *) paliashdr + paliashdr->ofs_tris);
 
-	frame = (daliasframe_t *) ((byte *) paliashdr + paliashdr->ofs_frames + currententity->as.frame * paliashdr->framesize);
+	frame = (dAliasFrame_t *) ((byte *) paliashdr + paliashdr->ofs_frames + currententity->as.frame * paliashdr->framesize);
 	verts = frame->verts;
 
-	oldframe = (daliasframe_t *) ((byte *) paliashdr + paliashdr->ofs_frames + currententity->as.oldframe * paliashdr->framesize);
+	oldframe = (dAliasFrame_t *) ((byte *) paliashdr + paliashdr->ofs_frames + currententity->as.oldframe * paliashdr->framesize);
 	ov = oldframe->verts;
 
 	order = (int *) ((byte *) paliashdr + paliashdr->ofs_glcmds);
@@ -488,7 +488,7 @@ void R_DrawShadow (entity_t * e)
 {
 	mdl_md2_t *paliashdr;
 
-	daliasframe_t *frame, *oldframe;
+	dAliasFrame_t *frame, *oldframe;
 	dtrivertx_t *v, *ov, *verts;
 	int *order;
 	float frontlerp;
@@ -500,12 +500,12 @@ void R_DrawShadow (entity_t * e)
 		return;
 
 	assert(currentmodel->type == mod_alias_md2);
-	paliashdr = (mdl_md2_t *) currentmodel->extraData;
+	paliashdr = (mdl_md2_t *) currentmodel->alias.extraData;
 
-	frame = (daliasframe_t *) ((byte *) paliashdr + paliashdr->ofs_frames + currententity->as.frame * paliashdr->framesize);
+	frame = (dAliasFrame_t *) ((byte *) paliashdr + paliashdr->ofs_frames + currententity->as.frame * paliashdr->framesize);
 	verts = v = frame->verts;
 
-	oldframe = (daliasframe_t *) ((byte *) paliashdr + paliashdr->ofs_frames + currententity->as.oldframe * paliashdr->framesize);
+	oldframe = (dAliasFrame_t *) ((byte *) paliashdr + paliashdr->ofs_frames + currententity->as.oldframe * paliashdr->framesize);
 	ov = oldframe->verts;
 
 	order = (int *) ((byte *) paliashdr + paliashdr->ofs_glcmds);
@@ -543,7 +543,7 @@ void R_DrawShadow (entity_t * e)
 			qglTranslatef(e->origin[0], e->origin[1], e->origin[2]);
 			qglRotatef(e->angles[1], 0, 0, 1);
 			VectorSet(end, currententity->origin[0], currententity->origin[1], currententity->origin[2] - 2048);
-			RecursiveLightPoint(rTiles[0]->nodes, currententity->origin, end);
+			RecursiveLightPoint(rTiles[0]->bsp.nodes, currententity->origin, end);
 			R_ShadowLight(currententity->origin, shadevector);
 			R_DrawAliasShadow(e, paliashdr, currententity->as.frame);
 			qglDepthMask(GL_TRUE);
@@ -563,8 +563,7 @@ void R_DrawShadow (entity_t * e)
 void R_DrawShadowVolume (entity_t * e)
 {
 	mdl_md2_t *paliashdr;
-
-	daliasframe_t *frame, *oldframe;
+	dAliasFrame_t *frame, *oldframe;
 	dtrivertx_t *v, *ov, *verts;
 	float frontlerp;
 	vec3_t move, delta, vectors[3];
@@ -576,12 +575,12 @@ void R_DrawShadowVolume (entity_t * e)
 		return;
 
 	assert(currentmodel->type == mod_alias_md2);
-	paliashdr = (mdl_md2_t *) currentmodel->extraData;
+	paliashdr = (mdl_md2_t *) currentmodel->alias.extraData;
 
-	frame = (daliasframe_t *) ((byte *) paliashdr + paliashdr->ofs_frames + currententity->as.frame * paliashdr->framesize);
+	frame = (dAliasFrame_t *) ((byte *) paliashdr + paliashdr->ofs_frames + currententity->as.frame * paliashdr->framesize);
 	verts = v = frame->verts;
 
-	oldframe = (daliasframe_t *) ((byte *) paliashdr + paliashdr->ofs_frames + currententity->as.oldframe * paliashdr->framesize);
+	oldframe = (dAliasFrame_t *) ((byte *) paliashdr + paliashdr->ofs_frames + currententity->as.oldframe * paliashdr->framesize);
 	ov = oldframe->verts;
 
 	order = (int *) ((byte *) paliashdr + paliashdr->ofs_glcmds);

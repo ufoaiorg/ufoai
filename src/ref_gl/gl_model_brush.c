@@ -44,12 +44,12 @@ model_t *loadmodel;
 static void Mod_LoadLighting (lump_t * l)
 {
 	if (!l->filelen) {
-		loadmodel->lightdata = NULL;
+		loadmodel->bsp.lightdata = NULL;
 		return;
 	}
-	loadmodel->lightdata = ri.TagMalloc(ri.lightPool, l->filelen, 0);
-	loadmodel->lightquant = *(byte *) (mod_base + l->fileofs);
-	memcpy(loadmodel->lightdata, mod_base + l->fileofs, l->filelen);
+	loadmodel->bsp.lightdata = ri.TagMalloc(ri.lightPool, l->filelen, 0);
+	loadmodel->bsp.lightquant = *(byte *) (mod_base + l->fileofs);
+	memcpy(loadmodel->bsp.lightdata, mod_base + l->fileofs, l->filelen);
 }
 
 /**
@@ -68,8 +68,8 @@ static void Mod_LoadVertexes (lump_t * l)
 	out = ri.TagMalloc(ri.modelPool, count * sizeof(*out), 0);
 	Com_Printf("...verts: %i\n", count);
 
-	loadmodel->vertexes = out;
-	loadmodel->numvertexes = count;
+	loadmodel->bsp.vertexes = out;
+	loadmodel->bsp.numvertexes = count;
 
 	for (i = 0; i < count; i++, in++, out++) {
 		out->position[0] = LittleFloat(in->point[0]);
@@ -110,8 +110,8 @@ static void Mod_LoadSubmodels (lump_t * l)
 	out = ri.TagMalloc(ri.modelPool, count * sizeof(*out), 0);
 	Com_Printf("...submodels: %i\n", count);
 
-	loadmodel->submodels = out;
-	loadmodel->numsubmodels = count;
+	loadmodel->bsp.submodels = out;
+	loadmodel->bsp.numsubmodels = count;
 
 	for (i = 0; i < count; i++, in++, out++) {
 		/* spread the mins / maxs by a pixel */
@@ -143,8 +143,8 @@ static void Mod_LoadEdges (lump_t * l)
 	out = ri.TagMalloc(ri.modelPool, (count + 1) * sizeof(*out), 0);
 	Com_Printf("...edges: %i\n", count);
 
-	loadmodel->edges = out;
-	loadmodel->numedges = count;
+	loadmodel->bsp.edges = out;
+	loadmodel->bsp.numedges = count;
 
 	for (i = 0; i < count; i++, in++, out++) {
 		out->v[0] = (unsigned short) LittleShort(in->v[0]);
@@ -170,8 +170,8 @@ static void Mod_LoadTexinfo (lump_t * l)
 	out = ri.TagMalloc(ri.modelPool, count * sizeof(*out), 0);
 	Com_Printf("...texinfo: %i\n", count);
 
-	loadmodel->texinfo = out;
-	loadmodel->numtexinfo = count;
+	loadmodel->bsp.texinfo = out;
+	loadmodel->bsp.numtexinfo = count;
 
 	for (i = 0; i < count; i++, in++, out++) {
 		for (j = 0; j < 4; j++) {
@@ -182,7 +182,7 @@ static void Mod_LoadTexinfo (lump_t * l)
 		out->flags = LittleLong(in->flags);
 		next = LittleLong(in->nexttexinfo);
 		if (next > 0)
-			out->next = loadmodel->texinfo + next;
+			out->next = loadmodel->bsp.texinfo + next;
 		else
 			out->next = NULL;
 		/* exchange the textures with the ones that are needed for base assembly */
@@ -200,7 +200,7 @@ static void Mod_LoadTexinfo (lump_t * l)
 
 	/* count animation frames */
 	for (i = 0; i < count; i++) {
-		out = &loadmodel->texinfo[i];
+		out = &loadmodel->bsp.texinfo[i];
 		out->numframes = 1;
 		for (step = out->next; step && step != out; step = step->next)
 			out->numframes++;
@@ -226,11 +226,11 @@ static void CalcSurfaceExtents (mBspSurface_t * s)
 	tex = s->texinfo;
 
 	for (i = 0; i < s->numedges; i++) {
-		e = loadmodel->surfedges[s->firstedge + i];
+		e = loadmodel->bsp.surfedges[s->firstedge + i];
 		if (e >= 0)
-			v = &loadmodel->vertexes[loadmodel->edges[e].v[0]];
+			v = &loadmodel->bsp.vertexes[loadmodel->bsp.edges[e].v[0]];
 		else
-			v = &loadmodel->vertexes[loadmodel->edges[-e].v[1]];
+			v = &loadmodel->bsp.vertexes[loadmodel->bsp.edges[-e].v[1]];
 
 		for (j = 0; j < 2; j++) {
 			val = v->position[0] * tex->vecs[j][0] + v->position[1] * tex->vecs[j][1] + v->position[2] * tex->vecs[j][2] + tex->vecs[j][3];
@@ -273,8 +273,8 @@ static void Mod_LoadFaces (lump_t * l)
 	out = ri.TagMalloc(ri.modelPool, count * sizeof(*out), 0);
 	Com_Printf("...faces: %i\n", count);
 
-	loadmodel->surfaces = out;
-	loadmodel->numsurfaces = count;
+	loadmodel->bsp.surfaces = out;
+	loadmodel->bsp.numsurfaces = count;
 
 	currentmodel = loadmodel;
 
@@ -289,14 +289,14 @@ static void Mod_LoadFaces (lump_t * l)
 		if (side)
 			out->flags |= SURF_PLANEBACK;
 
-		out->plane = loadmodel->planes + planenum;
+		out->plane = loadmodel->bsp.planes + planenum;
 
 		ti = LittleShort(in->texinfo);
-		if (ti < 0 || ti >= loadmodel->numtexinfo)
+		if (ti < 0 || ti >= loadmodel->bsp.numtexinfo)
 			ri.Sys_Error(ERR_DROP, "Mod_LoadFaces: bad texinfo number");
-		out->texinfo = loadmodel->texinfo + ti;
+		out->texinfo = loadmodel->bsp.texinfo + ti;
 
-		out->lquant = loadmodel->lightquant;
+		out->lquant = loadmodel->bsp.lightquant;
 		CalcSurfaceExtents(out);
 
 		/* lighting info */
@@ -306,7 +306,7 @@ static void Mod_LoadFaces (lump_t * l)
 		if (i == -1)
 			out->samples = NULL;
 		else
-			out->samples = loadmodel->lightdata + i;
+			out->samples = loadmodel->bsp.lightdata + i;
 
 		/* set the drawing flags */
 		if (out->texinfo->flags & SURF_WARP) {
@@ -357,8 +357,8 @@ static void Mod_LoadNodes (lump_t * l)
 	out = ri.TagMalloc(ri.modelPool, count * sizeof(*out), 0);
 	Com_Printf("...nodes: %i\n", count);
 
-	loadmodel->nodes = out;
-	loadmodel->numnodes = count;
+	loadmodel->bsp.nodes = out;
+	loadmodel->bsp.numnodes = count;
 
 	for (i = 0; i < count; i++, in++, out++) {
 		for (j = 0; j < 3; j++) {
@@ -370,7 +370,7 @@ static void Mod_LoadNodes (lump_t * l)
 		if (in->planenum == -1)
 			out->plane = NULL;
 		else
-			out->plane = loadmodel->planes + p;
+			out->plane = loadmodel->bsp.planes + p;
 
 		out->firstsurface = LittleShort(in->firstface);
 		out->numsurfaces = LittleShort(in->numfaces);
@@ -380,14 +380,14 @@ static void Mod_LoadNodes (lump_t * l)
 		for (j = 0; j < 2; j++) {
 			p = LittleLong(in->children[j]);
 			if (p >= 0)
-				out->children[j] = loadmodel->nodes + p;
+				out->children[j] = loadmodel->bsp.nodes + p;
 			else
-				out->children[j] = (mBspNode_t *) (loadmodel->leafs + (-1 - p));
+				out->children[j] = (mBspNode_t *) (loadmodel->bsp.leafs + (-1 - p));
 		}
 	}
 
 	/* sets nodes and leafs */
-	Mod_SetParent(loadmodel->nodes, NULL);
+	Mod_SetParent(loadmodel->bsp.nodes, NULL);
 }
 
 /**
@@ -408,8 +408,8 @@ static void Mod_LoadLeafs (lump_t * l)
 	out = ri.TagMalloc(ri.modelPool, count * sizeof(*out), 0);
 	Com_Printf("...leafs: %i\n", count);
 
-	loadmodel->leafs = out;
-	loadmodel->numleafs = count;
+	loadmodel->bsp.leafs = out;
+	loadmodel->bsp.numleafs = count;
 
 	for (i = 0; i < count; i++, in++, out++) {
 		for (j = 0; j < 3; j++) {
@@ -423,7 +423,7 @@ static void Mod_LoadLeafs (lump_t * l)
 		out->cluster = LittleShort(in->cluster);
 		out->area = LittleShort(in->area);
 
-		out->firstmarksurface = loadmodel->marksurfaces + LittleShort(in->firstleafface);
+		out->firstmarksurface = loadmodel->bsp.marksurfaces + LittleShort(in->firstleafface);
 		out->nummarksurfaces = LittleShort(in->numleaffaces);
 	}
 }
@@ -444,14 +444,14 @@ static void Mod_LoadMarksurfaces (lump_t * l)
 	out = ri.TagMalloc(ri.modelPool, count * sizeof(*out), 0);
 	Com_Printf("...marksurfaces: %i\n", count);
 
-	loadmodel->marksurfaces = out;
-	loadmodel->nummarksurfaces = count;
+	loadmodel->bsp.marksurfaces = out;
+	loadmodel->bsp.nummarksurfaces = count;
 
 	for (i = 0; i < count; i++) {
 		j = LittleShort(in[i]);
-		if (j < 0 || j >= loadmodel->numsurfaces)
+		if (j < 0 || j >= loadmodel->bsp.numsurfaces)
 			ri.Sys_Error(ERR_DROP, "Mod_ParseMarksurfaces: bad surface number");
-		out[i] = loadmodel->surfaces + j;
+		out[i] = loadmodel->bsp.surfaces + j;
 	}
 }
 
@@ -473,8 +473,8 @@ static void Mod_LoadSurfedges (lump_t * l)
 	out = ri.TagMalloc(ri.modelPool, count * sizeof(*out), 0);
 	Com_Printf("...surface edges: %i\n", count);
 
-	loadmodel->surfedges = out;
-	loadmodel->numsurfedges = count;
+	loadmodel->bsp.surfedges = out;
+	loadmodel->bsp.numsurfedges = count;
 
 	for (i = 0; i < count; i++)
 		out[i] = LittleLong(in[i]);
@@ -499,8 +499,8 @@ static void Mod_LoadPlanes (lump_t * l)
 	out = ri.TagMalloc(ri.modelPool, count * 2 * sizeof(*out), 0);
 	Com_Printf("...planes: %i\n", count);
 
-	loadmodel->planes = out;
-	loadmodel->numplanes = count;
+	loadmodel->bsp.planes = out;
+	loadmodel->bsp.numplanes = count;
 
 	for (i = 0; i < count; i++, in++, out++) {
 		bits = 0;
@@ -528,12 +528,12 @@ static void Mod_ShiftTile (void)
 
 	/* we can't do this instantly, because of rounding errors on extents calculation */
 	/* shift vertexes */
-	for (i = 0, vert = loadmodel->vertexes; i < loadmodel->numvertexes; i++, vert++)
+	for (i = 0, vert = loadmodel->bsp.vertexes; i < loadmodel->bsp.numvertexes; i++, vert++)
 		for (j = 0; j < 3; j++)
 			vert->position[j] += shift[j];
 
 	/* shift planes */
-	for (i = 0, plane = loadmodel->planes; i < loadmodel->numplanes; i++, plane++)
+	for (i = 0, plane = loadmodel->bsp.planes; i < loadmodel->bsp.numplanes; i++, plane++)
 		for (j = 0; j < 3; j++)
 			plane->dist += plane->normal[j] * shift[j];
 }
@@ -612,18 +612,18 @@ static void R_AddMapTile (const char *name, int sX, int sY, int sZ)
 	/* set up the submodels, the first 255 submodels */
 	/* are the models of the different levels, don't */
 	/* care about them */
-	for (i = LEVEL_TRACING - 1; i < loadmodel->numsubmodels; i++) {
+	for (i = LEVEL_TRACING - 1; i < loadmodel->bsp.numsubmodels; i++) {
 		model_t *starmod;
 
-		bm = &loadmodel->submodels[i];
+		bm = &loadmodel->bsp.submodels[i];
 		starmod = &mod_inline[numInline++];
 
 		*starmod = *loadmodel;
 
-		starmod->firstmodelsurface = bm->firstface;
-		starmod->nummodelsurfaces = bm->numfaces;
-		starmod->firstnode = bm->headnode;
-		if (starmod->firstnode >= loadmodel->numnodes)
+		starmod->bsp.firstmodelsurface = bm->firstface;
+		starmod->bsp.nummodelsurfaces = bm->numfaces;
+		starmod->bsp.firstnode = bm->headnode;
+		if (starmod->bsp.firstnode >= loadmodel->bsp.numnodes)
 			ri.Sys_Error(ERR_DROP, "Inline model %i has bad firstnode", i);
 
 		FastVectorCopy(bm->maxs, starmod->maxs);
@@ -633,7 +633,7 @@ static void R_AddMapTile (const char *name, int sX, int sY, int sZ)
 		if (i == 0)
 			*loadmodel = *starmod;
 
-		starmod->numleafs = bm->visleafs;
+		starmod->bsp.numleafs = bm->visleafs;
 	}
 	ri.FS_FreeFile(buffer);
 }

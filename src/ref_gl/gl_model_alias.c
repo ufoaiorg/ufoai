@@ -34,10 +34,10 @@ ALIAS MODELS
 /**
  * @brief
  */
-extern void Mod_LoadAnims (model_t * mod, void *buffer)
+extern void Mod_LoadAnims (mAliasModel_t * mod, void *buffer)
 {
 	char *text, *token;
-	manim_t *anim;
+	mAliasAnim_t *anim;
 	int n;
 	mdl_md2_t *md2;
 
@@ -49,7 +49,7 @@ extern void Mod_LoadAnims (model_t * mod, void *buffer)
 	if (n > MAX_ANIMS)
 		n = MAX_ANIMS;
 
-	mod->animdata = (manim_t*) ri.TagMalloc(ri.modelPool, n * sizeof(manim_t), 0);
+	mod->animdata = (mAliasAnim_t *) ri.TagMalloc(ri.modelPool, n * sizeof(mAliasAnim_t), 0);
 	anim = mod->animdata;
 	text = buffer;
 	mod->numanims = 0;
@@ -97,7 +97,7 @@ extern void Mod_LoadAnims (model_t * mod, void *buffer)
 /**
  * @brief
  */
-extern int Mod_FindTriangleWithEdge (neighbors_t *neighbors, dtriangle_t *tris, int numtris, int triIndex, int edgeIndex)
+extern int Mod_FindTriangleWithEdge (mAliasNeighbors_t *neighbors, dtriangle_t *tris, int numtris, int triIndex, int edgeIndex)
 {
 	int			i, j, found = -1, foundj = 0;
 	dtriangle_t	*current = &tris[triIndex];
@@ -135,7 +135,7 @@ extern int Mod_FindTriangleWithEdge (neighbors_t *neighbors, dtriangle_t *tris, 
 /**
  * @brief
  */
-extern void Mod_BuildTriangleNeighbors (neighbors_t *neighbors, dtriangle_t *tris, int numtris)
+extern void Mod_BuildTriangleNeighbors (mAliasNeighbors_t *neighbors, dtriangle_t *tris, int numtris)
 {
 	int		i, j;
 
