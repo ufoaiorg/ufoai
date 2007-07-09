@@ -2213,6 +2213,18 @@ void CL_ActorTurnMouse (void)
 	if (!CL_CheckAction())
 		return;
 
+	/* check for fire-modes, and cancel them */
+	switch (cl.cmode) {
+	case M_FIRE_R:
+	case M_FIRE_L:
+	case M_PEND_FIRE_R:
+	case M_PEND_FIRE_L:
+		cl.cmode = M_MOVE;
+		return; /* and return without turning */
+	default:
+		break;
+	}
+
 	/* calculate dv */
 	VectorSubtract(mousePos, selActor->pos, div);
 	dv = AngleToDV((int) (atan2(div[1], div[0]) * todeg));
