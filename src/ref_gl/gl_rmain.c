@@ -1006,7 +1006,7 @@ static void R_Register (void)
 #elif defined (__APPLE__) || defined (MACOSX)
 	gl_driver = ri.Cvar_Get("gl_driver", "/System/Library/Frameworks/OpenGL.framework/Libraries/libGL.dylib", CVAR_ARCHIVE, NULL);
 #else
-	gl_driver = ri.Cvar_Get("gl_driver", "libGL.so.1", CVAR_ARCHIVE, NULL);
+	gl_driver = ri.Cvar_Get("gl_driver", "libGL.so", CVAR_ARCHIVE, NULL);
 #endif
 	gl_texturemode = ri.Cvar_Get("gl_texturemode", "GL_LINEAR_MIPMAP_NEAREST", CVAR_ARCHIVE, NULL);
 	gl_texturealphamode = ri.Cvar_Get("gl_texturealphamode", "default", CVAR_ARCHIVE, NULL);
