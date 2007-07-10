@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Trans.Estonia\n"
 "Report-Msgid-Bugs-To: ufoai-developer@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-07-09 19:31+0200\n"
+"POT-Creation-Date: 2007-07-10 13:44+0200\n"
 "PO-Revision-Date: 2006-11-13 05:27+0200\n"
 "Last-Translator: Northen Wolf <semukas@hot.ee>\n"
 "Language-Team: Northen Wolf <semukas@hot.ee>\n"
@@ -1471,7 +1471,7 @@ msgstr "Uus baas"
 
 #: ../base/ufos/menu_geoscape.ufo:520 ../base/ufos/menu_geoscape.ufo:614
 #: ../base/ufos/menu_geoscape.ufo:771 ../base/ufos/menu_main.ufo:244
-#: ../base/ufos/menu_multiplayer.ufo:691 ../base/ufos/menu_options.ufo:941
+#: ../base/ufos/menu_multiplayer.ufo:691 ../base/ufos/menu_options.ufo:863
 msgid "Name:"
 msgstr "Nimi:"
 
@@ -1969,7 +1969,7 @@ msgstr "Muusika:"
 msgid "You have to set the playername and hit the 'OK' button:"
 msgstr ""
 
-#: ../base/ufos/menu_main.ufo:329 ../base/ufos/menu_options.ufo:985
+#: ../base/ufos/menu_main.ufo:329 ../base/ufos/menu_options.ufo:907
 #, fuzzy
 msgid "Language"
 msgstr "Laen...."
@@ -1982,7 +1982,7 @@ msgstr ""
 msgid "Tip of the day"
 msgstr ""
 
-#: ../base/ufos/menu_main.ufo:411 ../base/ufos/menu_options.ufo:840
+#: ../base/ufos/menu_main.ufo:411 ../base/ufos/menu_options.ufo:814
 msgid "Show tip of the day"
 msgstr ""
 
@@ -2379,7 +2379,7 @@ msgid "Medium"
 msgstr "Meedik"
 
 #: ../base/ufos/menu_options.ufo:343 ../base/ufos/menu_ptleditor.ufo:74
-#: client/cl_main.c:2380
+#: client/cl_main.c:2377
 msgid "Normal"
 msgstr "Tavaline"
 
@@ -2434,96 +2434,105 @@ msgid "Game settings"
 msgstr "Mängu valikud:"
 
 #: ../base/ufos/menu_options.ufo:682
-msgid "Confirm Actions:"
-msgstr "Kinnita tegevust:"
+msgid "Camera Scroll:"
+msgstr "Kaamera liikumine:"
 
-#: ../base/ufos/menu_options.ufo:698
-msgid "No confirmation before walking and shooting"
-msgstr "Pole vaja ülekontrollida kõndimise ja tulistamise käske"
+#: ../base/ufos/menu_options.ufo:708
+msgid "Camera Rotation:"
+msgstr "Kaamera pööramine"
 
-#: ../base/ufos/menu_options.ufo:712
-msgid "Confirmation needed before walking and shooting"
-msgstr "On vaja ülekontrollida kõndimise ja tulistamise käske"
-
-#: ../base/ufos/menu_options.ufo:725
-msgid "HUD Design:"
-msgstr "HUD kujundus:"
-
-#: ../base/ufos/menu_options.ufo:741 ../base/ufos/menu_options.ufo:751
-msgid "Choose another hud"
-msgstr "Vali teine vaade"
-
-#: ../base/ufos/menu_options.ufo:760
+#: ../base/ufos/menu_options.ufo:734
 msgid "Precache images and models:"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:768
+#: ../base/ufos/menu_options.ufo:742
 msgid "Precache images and models (faster menus)"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:776
+#: ../base/ufos/menu_options.ufo:750
 msgid "Tooltips:"
 msgstr "Abi:"
 
-#: ../base/ufos/menu_options.ufo:784
+#: ../base/ufos/menu_options.ufo:758
 msgid "Activates tooltips"
 msgstr "Käivita abi"
 
-#: ../base/ufos/menu_options.ufo:792
+#: ../base/ufos/menu_options.ufo:766
 #, fuzzy
 msgid "Centre view:"
 msgstr "Keskele vaade:"
 
-#: ../base/ufos/menu_options.ufo:800
+#: ../base/ufos/menu_options.ufo:774
 #, fuzzy
 msgid "Centring at soldier selecting, shooting and appearing"
 msgstr "Jälgi sõdurit kes on valitud, tulistab või ilmub vaatevälja"
 
-#: ../base/ufos/menu_options.ufo:808
+#: ../base/ufos/menu_options.ufo:782
 #, fuzzy
 msgid "Cursor tooltips:"
 msgstr "Abi:"
 
-#: ../base/ufos/menu_options.ufo:816
+#: ../base/ufos/menu_options.ufo:790
 #, fuzzy
 msgid "Activates cursor tooltips"
 msgstr "Käivita abi"
 
-#: ../base/ufos/menu_options.ufo:824
+#: ../base/ufos/menu_options.ufo:798
 msgid "3D Geoscape:"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:832
+#: ../base/ufos/menu_options.ufo:806
 msgid "Use 3D geoscape"
 msgstr ""
 
-#: ../base/ufos/menu_options.ufo:857
+#: ../base/ufos/menu_options.ufo:831
 msgid "Start with employees:"
 msgstr "Alusta töötajatega:"
 
-#: ../base/ufos/menu_options.ufo:865
+#: ../base/ufos/menu_options.ufo:839
 msgid "Employees already hired at campaign start"
 msgstr "Töölised on juba palgatud kampaania algul"
 
-#: ../base/ufos/menu_options.ufo:873
+#: ../base/ufos/menu_options.ufo:847
 msgid "Start with buildings:"
 msgstr "Alusta ehitistega:"
 
-#: ../base/ufos/menu_options.ufo:881
+#: ../base/ufos/menu_options.ufo:855
 msgid "Buildings already built in the initial base"
 msgstr "Ehitised juba ehitaut baasis"
 
-#: ../base/ufos/menu_options.ufo:889
-msgid "Camera Scroll:"
-msgstr "Kaamera liikumine:"
-
-#: ../base/ufos/menu_options.ufo:915
-msgid "Camera Rotation:"
-msgstr "Kaamera pööramine"
-
-#: ../base/ufos/menu_options.ufo:974
+#: ../base/ufos/menu_options.ufo:896
 msgid "Keys"
 msgstr "Nupud"
+
+#: ../base/ufos/menu_options.ufo:925
+msgid "HUD Design:"
+msgstr "HUD kujundus:"
+
+#: ../base/ufos/menu_options.ufo:936
+msgid "Original HUD"
+msgstr ""
+
+#: ../base/ufos/menu_options.ufo:941
+msgid "Alternative HUD"
+msgstr ""
+
+#: ../base/ufos/menu_options.ufo:952
+msgid "Confirm Actions:"
+msgstr "Kinnita tegevust:"
+
+#: ../base/ufos/menu_options.ufo:963 client/cl_aliencont.c:891
+#: po/OTHER_STRINGS:4
+msgid "Yes"
+msgstr "Jah"
+
+#: ../base/ufos/menu_options.ufo:968 po/OTHER_STRINGS:5
+msgid "No"
+msgstr "Ei"
+
+#: ../base/ufos/menu_options.ufo:973
+msgid "Only for moving"
+msgstr ""
 
 #: ../base/ufos/menu_production.ufo:69
 #, fuzzy
@@ -2855,7 +2864,7 @@ msgstr "Näita ainult kehakaitseid"
 msgid "Show only aliens"
 msgstr "Näita ainult kehakaitseid"
 
-#: ../base/ufos/menu_transfer.ufo:285 client/cl_campaign.c:3949
+#: ../base/ufos/menu_transfer.ufo:285 client/cl_campaign.c:3936
 #, fuzzy
 msgid "Aliens"
 msgstr "Tulnukas"
@@ -3153,7 +3162,7 @@ msgstr ""
 msgid "Altdorf"
 msgstr "Altdorf"
 
-#: ../base/ufos/missions.ufo:721 client/cl_campaign.c:830
+#: ../base/ufos/missions.ufo:721 client/cl_campaign.c:816
 msgid "Base Attack"
 msgstr "Baasi rünnak"
 
@@ -9753,23 +9762,23 @@ msgid ""
 "Aircrafts cannot start.\n"
 msgstr ""
 
-#: client/cl_aircraft.c:251 client/cl_aircraft.c:264 client/cl_aircraft.c:591
-#: client/cl_aircraft.c:790 client/cl_aircraft.c:1008
-#: client/cl_aircraft.c:1677 client/cl_aliencont.c:209
+#: client/cl_aircraft.c:251 client/cl_aircraft.c:264 client/cl_aircraft.c:590
+#: client/cl_aircraft.c:789 client/cl_aircraft.c:1007
+#: client/cl_aircraft.c:1676 client/cl_aliencont.c:209
 #: client/cl_aliencont.c:237 client/cl_aliencont.c:250
 #: client/cl_aliencont.c:263 client/cl_basemanagement.c:841
-#: client/cl_basemanagement.c:2414 client/cl_campaign.c:481
-#: client/cl_campaign.c:1066 client/cl_campaign.c:1122
-#: client/cl_campaign.c:1287 client/cl_campaign.c:1298
-#: client/cl_campaign.c:1308 client/cl_campaign.c:1318
-#: client/cl_campaign.c:1328 client/cl_campaign.c:1339
-#: client/cl_campaign.c:1352 client/cl_campaign.c:1362
-#: client/cl_campaign.c:1369 client/cl_campaign.c:1377
-#: client/cl_campaign.c:2453 client/cl_campaign.c:2490
-#: client/cl_campaign.c:2492 client/cl_campaign.c:2776
+#: client/cl_basemanagement.c:2414 client/cl_campaign.c:467
+#: client/cl_campaign.c:1052 client/cl_campaign.c:1108
+#: client/cl_campaign.c:1273 client/cl_campaign.c:1284
+#: client/cl_campaign.c:1294 client/cl_campaign.c:1304
+#: client/cl_campaign.c:1314 client/cl_campaign.c:1325
+#: client/cl_campaign.c:1338 client/cl_campaign.c:1348
+#: client/cl_campaign.c:1355 client/cl_campaign.c:1363
+#: client/cl_campaign.c:2439 client/cl_campaign.c:2476
+#: client/cl_campaign.c:2478 client/cl_campaign.c:2762
 #: client/cl_inventory.c:324 client/cl_inventory.c:330
 #: client/cl_inventory.c:570 client/cl_main.c:1123 client/cl_map.c:273
-#: client/cl_market.c:647 client/cl_market.c:651 client/cl_popup.c:423
+#: client/cl_market.c:645 client/cl_market.c:649 client/cl_popup.c:423
 #: client/cl_research.c:943 client/cl_research.c:961 client/cl_research.c:967
 #: client/cl_research.c:1005 client/cl_research.c:1036
 #: client/cl_research.c:1189 client/cl_research.c:1192
@@ -9831,82 +9840,82 @@ msgstr "Transpordi mission"
 msgid "Back to base"
 msgstr "Tagasi baasi"
 
-#: client/cl_aircraft.c:591
+#: client/cl_aircraft.c:590
 msgid ""
 "Your aircraft doesn't have enough fuel to go there and then come back to its "
 "home base"
 msgstr ""
 
-#: client/cl_aircraft.c:703 client/cl_map.c:1396 client/cl_ufopedia.c:553
+#: client/cl_aircraft.c:702 client/cl_map.c:1396 client/cl_ufopedia.c:553
 #, fuzzy, c-format
 msgid "Speed:\t%i\n"
 msgstr "Kiirus:\t%0f\n"
 
-#: client/cl_aircraft.c:704 client/cl_map.c:1397
+#: client/cl_aircraft.c:703 client/cl_map.c:1397
 #, c-format
 msgid "Fuel:\t%i/%i\n"
 msgstr "Kütus:\t%i/%i\n"
 
-#: client/cl_aircraft.c:706 client/cl_aircraft.c:708 client/cl_aircraft.c:710
+#: client/cl_aircraft.c:705 client/cl_aircraft.c:707 client/cl_aircraft.c:709
 #: client/cl_transfer.c:837 client/cl_transfer.c:838 client/cl_ufopedia.c:464
 #: client/cl_ufopedia.c:557 client/cl_ufopedia.c:559 client/cl_ufopedia.c:561
 msgid "None"
 msgstr "Puudub"
 
-#: client/cl_aircraft.c:706 client/cl_ufopedia.c:557
+#: client/cl_aircraft.c:705 client/cl_ufopedia.c:557
 #, c-format
 msgid "Weapon:\t%s\n"
 msgstr "Relv(ad):\t%s\n"
 
-#: client/cl_aircraft.c:708 client/cl_ufopedia.c:559
+#: client/cl_aircraft.c:707 client/cl_ufopedia.c:559
 #, c-format
 msgid "Shield:\t%s\n"
 msgstr "Kilp:\t%s\n"
 
-#: client/cl_aircraft.c:710
+#: client/cl_aircraft.c:709
 #, fuzzy, c-format
 msgid "Equipment:\t%s"
 msgstr "Relvasta"
 
-#: client/cl_aircraft.c:789
+#: client/cl_aircraft.c:788
 #, c-format
 msgid "You've got a new aircraft (a %s) in base %s"
 msgstr "Sul on valmis uus lennuk (a %s) baasis %s"
 
-#: client/cl_aircraft.c:1008
+#: client/cl_aircraft.c:1007
 #, fuzzy
 msgid "Your dropship is low on fuel and returns to base"
 msgstr "Sinu transpordilaeval on vähe kütust ja see pöördub tagasi baasi"
 
-#: client/cl_aircraft.c:1339 client/cl_aircraft.c:1355
+#: client/cl_aircraft.c:1338 client/cl_aircraft.c:1354
 #, fuzzy
 msgid "No item assigned"
 msgstr "Pole ühtegi kilpi"
 
-#: client/cl_aircraft.c:1344
+#: client/cl_aircraft.c:1343
 msgid "This item is functional\n"
 msgstr ""
 
-#: client/cl_aircraft.c:1346
+#: client/cl_aircraft.c:1345
 #, c-format
 msgid "This item will be installed in %i hours\n"
 msgstr ""
 
-#: client/cl_aircraft.c:1348
+#: client/cl_aircraft.c:1347
 #, c-format
 msgid "This item will be removed in %i hours\n"
 msgstr ""
 
-#: client/cl_aircraft.c:1359
+#: client/cl_aircraft.c:1358
 #, c-format
 msgid "This item will be operational in %i hours\n"
 msgstr ""
 
-#: client/cl_aircraft.c:1368
+#: client/cl_aircraft.c:1367
 msgid "No ammo assigned to this weapon"
 msgstr ""
 
-#: client/cl_aircraft.c:1677
+#: client/cl_aircraft.c:1676
 msgid "Assign a team to aircraft"
 msgstr "Paiguta tiim lennumasinale"
 
@@ -9920,12 +9929,12 @@ msgstr "Hävitaja F-48"
 msgid "UFO interception succesful -- UFO lost."
 msgstr ""
 
-#: client/cl_airfight.c:268 client/cl_campaign.c:1938
+#: client/cl_airfight.c:268 client/cl_campaign.c:1924
 #, fuzzy
 msgid "UFO crash site"
 msgstr "Allakukkumise koht"
 
-#: client/cl_airfight.c:272 client/cl_campaign.c:1942
+#: client/cl_airfight.c:272 client/cl_campaign.c:1928
 #, fuzzy
 msgid "No nation"
 msgstr "Riigid"
@@ -9938,7 +9947,7 @@ msgstr ""
 msgid "UFO interception successful -- UFO lost to sea."
 msgstr ""
 
-#: client/cl_airfight.c:312 client/cl_campaign.c:2492
+#: client/cl_airfight.c:312 client/cl_campaign.c:2478
 msgid "You've lost the battle"
 msgstr "Sa KAOTASID lahingu"
 
@@ -9964,11 +9973,7 @@ msgstr ""
 msgid "Needs autopsy!"
 msgstr ""
 
-#: client/cl_aliencont.c:891 po/OTHER_STRINGS:4
-msgid "Yes"
-msgstr "Jah"
-
-#: client/cl_basemanagement.c:239 client/cl_campaign.c:1605
+#: client/cl_basemanagement.c:239 client/cl_campaign.c:1591
 #, c-format
 msgid "%i c"
 msgstr ""
@@ -10059,7 +10064,7 @@ msgid ""
 msgstr ""
 
 #: client/cl_basemanagement.c:2466 client/cl_basemanagement.c:2468
-#: client/cl_campaign.c:2279 client/cl_market.c:344 client/cl_market.c:720
+#: client/cl_campaign.c:2265 client/cl_market.c:342 client/cl_market.c:718
 #: client/cl_save.c:347 client/cl_team.c:1461
 msgid "Note"
 msgstr "Teade"
@@ -10077,25 +10082,25 @@ msgstr "%s ehitamine on lõpetatud baas %s"
 msgid "Building finished"
 msgstr "Ehitis lõpetatud"
 
-#: client/cl_campaign.c:481 client/cl_map.c:273
+#: client/cl_campaign.c:467 client/cl_map.c:273
 msgid "Could not set up your base at this location"
 msgstr "Ei suutnud luua baasi sellesse kohta"
 
-#: client/cl_campaign.c:829
+#: client/cl_campaign.c:815
 #, c-format
 msgid "Your base %s is under attack."
 msgstr "Sinu baasi %s rünnatakse."
 
-#: client/cl_campaign.c:848
+#: client/cl_campaign.c:834
 #, c-format
 msgid "Alien activity has been reported: '%s'"
 msgstr "Tulnukate tegevusest on teatatud '%s'"
 
-#: client/cl_campaign.c:849
+#: client/cl_campaign.c:835
 msgid "Alien activity"
 msgstr "Tulnukate tegevus"
 
-#: client/cl_campaign.c:1065
+#: client/cl_campaign.c:1051
 #, c-format
 msgid ""
 "Your base: %s has been ransacked! All employees killed and all equipment "
@@ -10104,203 +10109,203 @@ msgstr ""
 "Sinu baas: %s on rünnatud tulnukate poolt., Ühtegi ellujäänut ega varustust "
 "ei õnnestunud päästa."
 
-#: client/cl_campaign.c:1121
+#: client/cl_campaign.c:1107
 #, fuzzy, c-format
 msgid "The mission expired and %i civilian died."
 msgid_plural "The mission expired and %i civilians died."
 msgstr[0] "Missioon on aegunud ja %i elanikest suri."
 msgstr[1] "Missioon on aegunud ja %i elanikest suri."
 
-#: client/cl_campaign.c:1170
+#: client/cl_campaign.c:1156
 msgid "Jan"
 msgstr "Jan"
 
-#: client/cl_campaign.c:1172
+#: client/cl_campaign.c:1158
 msgid "Feb"
 msgstr "Veb"
 
-#: client/cl_campaign.c:1174
+#: client/cl_campaign.c:1160
 msgid "Mar"
 msgstr "Mär"
 
-#: client/cl_campaign.c:1176
+#: client/cl_campaign.c:1162
 msgid "Apr"
 msgstr "Apr"
 
-#: client/cl_campaign.c:1178
+#: client/cl_campaign.c:1164
 msgid "May"
 msgstr "Mai"
 
-#: client/cl_campaign.c:1180
+#: client/cl_campaign.c:1166
 msgid "Jun"
 msgstr "Jun"
 
-#: client/cl_campaign.c:1182
+#: client/cl_campaign.c:1168
 msgid "Jul"
 msgstr "Jul"
 
-#: client/cl_campaign.c:1184
+#: client/cl_campaign.c:1170
 msgid "Aug"
 msgstr "Aug"
 
-#: client/cl_campaign.c:1186
+#: client/cl_campaign.c:1172
 msgid "Sep"
 msgstr "Sep"
 
-#: client/cl_campaign.c:1188
+#: client/cl_campaign.c:1174
 msgid "Oct"
 msgstr "Oct"
 
-#: client/cl_campaign.c:1190
+#: client/cl_campaign.c:1176
 msgid "Nov"
 msgstr "Nov"
 
-#: client/cl_campaign.c:1192
+#: client/cl_campaign.c:1178
 msgid "Dec"
 msgstr "Det"
 
-#: client/cl_campaign.c:1206
+#: client/cl_campaign.c:1192
 msgid "Giving up"
 msgstr "Anna alla"
 
-#: client/cl_campaign.c:1208
+#: client/cl_campaign.c:1194
 msgid "Furious"
 msgstr "Maru vihane"
 
-#: client/cl_campaign.c:1210
+#: client/cl_campaign.c:1196
 msgid "Angry"
 msgstr "Vihane"
 
-#: client/cl_campaign.c:1212
+#: client/cl_campaign.c:1198
 msgid "Mad"
 msgstr "Vihane"
 
-#: client/cl_campaign.c:1214
+#: client/cl_campaign.c:1200
 msgid "Upset"
 msgstr "Ärritunud"
 
-#: client/cl_campaign.c:1216
+#: client/cl_campaign.c:1202
 msgid "Tolerant"
 msgstr "Tolerantne"
 
-#: client/cl_campaign.c:1218
+#: client/cl_campaign.c:1204
 msgid "Neutral"
 msgstr "Neutraalne"
 
-#: client/cl_campaign.c:1220
+#: client/cl_campaign.c:1206
 msgid "Content"
 msgstr "Enam-vähem rahul"
 
-#: client/cl_campaign.c:1222
+#: client/cl_campaign.c:1208
 msgid "Pleased"
 msgstr "Rahul"
 
-#: client/cl_campaign.c:1224
+#: client/cl_campaign.c:1210
 msgid "Happy"
 msgstr "Rõõmus"
 
-#: client/cl_campaign.c:1226
+#: client/cl_campaign.c:1212
 msgid "Exuberant"
 msgstr "<TODO>"
 
-#: client/cl_campaign.c:1280
+#: client/cl_campaign.c:1266
 #, fuzzy, c-format
 msgid "Gained %i %s, %i %s, %i %s, %i %s, and %i %s from nation %s (%s)"
 msgstr ""
 "Said: %i raha, %i teadlasi, %i meedikuid, %i  sõdureid ja %i töölisi  %s (%s)"
 
-#: client/cl_campaign.c:1281
+#: client/cl_campaign.c:1267
 #, fuzzy
 msgid "credit"
 msgid_plural "credits"
 msgstr[0] "Autorid ja abilised"
 msgstr[1] "Autorid ja abilised"
 
-#: client/cl_campaign.c:1282 client/cl_campaign.c:3954
+#: client/cl_campaign.c:1268 client/cl_campaign.c:3941
 #, fuzzy
 msgid "scientist"
 msgid_plural "scientists"
 msgstr[0] "teadlane(sed)"
 msgstr[1] "teadlane(sed)"
 
-#: client/cl_campaign.c:1283 client/cl_campaign.c:3956
+#: client/cl_campaign.c:1269 client/cl_campaign.c:3943
 #, fuzzy
 msgid "medic"
 msgid_plural "medics"
 msgstr[0] "Meedik"
 msgstr[1] "Meedik"
 
-#: client/cl_campaign.c:1284 client/cl_campaign.c:3953
+#: client/cl_campaign.c:1270 client/cl_campaign.c:3940
 #, fuzzy
 msgid "soldier"
 msgid_plural "soldiers"
 msgstr[0] "Sõdur"
 msgstr[1] "Sõdur"
 
-#: client/cl_campaign.c:1285 client/cl_campaign.c:3955
+#: client/cl_campaign.c:1271 client/cl_campaign.c:3942
 #, fuzzy
 msgid "worker"
 msgid_plural "workers"
 msgstr[0] "Tööline"
 msgstr[1] "Tööline"
 
-#: client/cl_campaign.c:1296
+#: client/cl_campaign.c:1282
 #, c-format
 msgid "Paid %i credits to soldiers"
 msgstr "Maksid %i rahaühikut sõduritele"
 
-#: client/cl_campaign.c:1306
+#: client/cl_campaign.c:1292
 #, c-format
 msgid "Paid %i credits to workers"
 msgstr "Said %i rahaühikut töölistelt"
 
-#: client/cl_campaign.c:1316
+#: client/cl_campaign.c:1302
 #, c-format
 msgid "Paid %i credits to scientists"
 msgstr "Maksid %i rahaühikut teadlastele"
 
-#: client/cl_campaign.c:1326
+#: client/cl_campaign.c:1312
 #, c-format
 msgid "Paid %i credits to medics"
 msgstr "Maksid %i rahaühikut meedikutele "
 
-#: client/cl_campaign.c:1337
+#: client/cl_campaign.c:1323
 #, c-format
 msgid "Paid %i credits for robots"
 msgstr "Maksid %i rahaühikut robotitele"
 
-#: client/cl_campaign.c:1350
+#: client/cl_campaign.c:1336
 #, c-format
 msgid "Paid %i credits for aircraft"
 msgstr "Maksid %i rahaühikut lennukmasinate hooltajatele"
 
-#: client/cl_campaign.c:1361
+#: client/cl_campaign.c:1347
 #, c-format
 msgid "Paid %i credits for upkeep of base %s"
 msgstr "Maksid %i rahaühikut baasi eest %s"
 
-#: client/cl_campaign.c:1367
+#: client/cl_campaign.c:1353
 #, c-format
 msgid "Paid %i credits for administrative overhead."
 msgstr "Maksid %i rahaühikut peajuhile."
 
-#: client/cl_campaign.c:1375
+#: client/cl_campaign.c:1361
 #, c-format
 msgid "Paid %i credits in interest on your debt."
 msgstr "Maksid %i raha intressina oma võla eest."
 
-#: client/cl_campaign.c:1508 client/cl_save.c:271 client/cl_ufopedia.c:636
+#: client/cl_campaign.c:1494 client/cl_save.c:271 client/cl_ufopedia.c:636
 #: client/cl_ufopedia.c:642
 #, fuzzy, c-format
 msgid "%i %s %02i"
 msgstr "%i  %i"
 
-#: client/cl_campaign.c:1510
+#: client/cl_campaign.c:1496
 #, c-format
 msgid "%02i:%02i"
 msgstr "%02i:%02i"
 
-#: client/cl_campaign.c:1628
+#: client/cl_campaign.c:1614
 #, c-format
 msgid ""
 "Won:\t%i\n"
@@ -10311,7 +10316,7 @@ msgstr ""
 "Kaotasid:\t%i\n"
 "\n"
 
-#: client/cl_campaign.c:1633
+#: client/cl_campaign.c:1619
 #, fuzzy, c-format
 msgid ""
 "Built:\t%i\n"
@@ -10322,42 +10327,42 @@ msgstr ""
 "Aktiivne::\t%i\n"
 "Rünnati::\t%i\n"
 
-#: client/cl_campaign.c:1640
+#: client/cl_campaign.c:1626
 #, c-format
 msgid "%s\t%s\n"
 msgstr "%s\t%s\n"
 
-#: client/cl_campaign.c:1679
+#: client/cl_campaign.c:1665
 #, c-format
 msgid "%s\t%i\n"
 msgstr "%s\t%i\n"
 
-#: client/cl_campaign.c:1685
+#: client/cl_campaign.c:1671
 #, c-format
 msgid "Employees:\t%i c\n"
 msgstr "Töölisi:\t%i c\n"
 
-#: client/cl_campaign.c:1694
+#: client/cl_campaign.c:1680
 #, c-format
 msgid "Aircrafts:\t%i c\n"
 msgstr "Lennumasinad:\t%i c\n"
 
-#: client/cl_campaign.c:1702
+#: client/cl_campaign.c:1688
 #, c-format
 msgid "Base (%s):\t%i c\n"
 msgstr "Baas (%s):\t%i c\n"
 
-#: client/cl_campaign.c:1707
+#: client/cl_campaign.c:1693
 #, fuzzy, c-format
 msgid "Administrative costs:\t%i c\n"
 msgstr "Jooksvad kulud:\t%i c\n"
 
-#: client/cl_campaign.c:1714
+#: client/cl_campaign.c:1700
 #, c-format
 msgid "Debt:\t%i c\n"
 msgstr "Võlg:\t%i c\n"
 
-#: client/cl_campaign.c:1717
+#: client/cl_campaign.c:1703
 #, c-format
 msgid ""
 "\n"
@@ -10368,45 +10373,45 @@ msgstr ""
 "\t-------\n"
 "Sum:\t%i c\n"
 
-#: client/cl_campaign.c:2279
+#: client/cl_campaign.c:2265
 msgid "Assemble or load a team"
 msgstr "Kogu või lae tiim"
 
-#: client/cl_campaign.c:2453
+#: client/cl_campaign.c:2439
 msgid "Your dropship is not near the landing zone"
 msgstr "Sinu transpordilaev ei ole maadumispaiga lähedal "
 
-#: client/cl_campaign.c:2490
+#: client/cl_campaign.c:2476
 msgid "You've won the battle"
 msgstr "Sa VÕITSID lahingu"
 
-#: client/cl_campaign.c:2558
+#: client/cl_campaign.c:2544
 #, c-format
 msgid "%s has been promoted to %s.\n"
 msgstr "%s on ülendatud %s.\n"
 
-#: client/cl_campaign.c:2560
+#: client/cl_campaign.c:2546
 #, c-format
 msgid ""
 "%s has been awarded the posthumous rank of %s\\for inspirational gallantry "
 "in the face of overwhelming odds.\n"
 msgstr ""
 
-#: client/cl_campaign.c:2561
+#: client/cl_campaign.c:2547
 msgid "Soldier promoted"
 msgstr "Sõdur sai ametikõrgendust"
 
-#: client/cl_campaign.c:2775
+#: client/cl_campaign.c:2761
 #, c-format
 msgid "Defense of base: %s successful!"
 msgstr "Baasi kaitse: %s edukas"
 
-#: client/cl_campaign.c:3949
+#: client/cl_campaign.c:3936
 #, fuzzy
 msgid "Human"
 msgstr "Busan"
 
-#: client/cl_campaign.c:3951
+#: client/cl_campaign.c:3938
 #, fuzzy, c-format
 msgid ""
 "Race: %s\n"
@@ -10421,24 +10426,24 @@ msgstr ""
 "Raskusaste: %s\n"
 "%s\n"
 
-#: client/cl_campaign.c:4188
+#: client/cl_campaign.c:4175
 #, c-format
 msgid "Recovered %s from the battlefield. UFO is being transported to base %s."
 msgstr ""
 
-#: client/cl_campaign.c:4190 client/cl_campaign.c:4283
-#: client/cl_campaign.c:4350
+#: client/cl_campaign.c:4177 client/cl_campaign.c:4270
+#: client/cl_campaign.c:4337
 msgid "UFO Recovery"
 msgstr ""
 
-#: client/cl_campaign.c:4281
+#: client/cl_campaign.c:4268
 #, c-format
 msgid ""
 "Recovered UFO of type %s from the battlefield. UFO sold to nation %s, gained "
 "%i credits."
 msgstr ""
 
-#: client/cl_campaign.c:4348
+#: client/cl_campaign.c:4335
 #, c-format
 msgid "Secured UFO of type %s was destroyed."
 msgstr ""
@@ -10503,107 +10508,107 @@ msgstr ""
 msgid "Not enough hospital space"
 msgstr ""
 
-#: client/cl_input.c:717
+#: client/cl_input.c:715
 msgid "Rotate battlescape camera anti-clockwise"
 msgstr ""
 
-#: client/cl_input.c:719
+#: client/cl_input.c:717
 msgid "Rotate battlescape camera clockwise"
 msgstr ""
 
-#: client/cl_input.c:721
+#: client/cl_input.c:719
 msgid "Tilt battlescape camera up"
 msgstr ""
 
-#: client/cl_input.c:723
+#: client/cl_input.c:721
 msgid "Tilt battlescape camera down"
 msgstr ""
 
-#: client/cl_input.c:725
+#: client/cl_input.c:723
 msgid "Move battlescape camera left"
 msgstr ""
 
-#: client/cl_input.c:727
+#: client/cl_input.c:725
 msgid "Move battlescape camera right"
 msgstr ""
 
-#: client/cl_input.c:729
+#: client/cl_input.c:727
 msgid "Move battlescape camera forward"
 msgstr ""
 
-#: client/cl_input.c:731
+#: client/cl_input.c:729
 msgid "Move battlescape camera backward"
 msgstr ""
 
-#: client/cl_input.c:733 client/cl_input.c:763
+#: client/cl_input.c:731 client/cl_input.c:761
 msgid "Zoom in"
 msgstr ""
 
-#: client/cl_input.c:735 client/cl_input.c:764
+#: client/cl_input.c:733 client/cl_input.c:762
 msgid "Zoom out"
 msgstr ""
 
-#: client/cl_input.c:738
+#: client/cl_input.c:736
 msgid "Left mouse button click (menu)"
 msgstr ""
 
-#: client/cl_input.c:740
+#: client/cl_input.c:738
 msgid "Middle mouse button click (menu)"
 msgstr ""
 
-#: client/cl_input.c:742
+#: client/cl_input.c:740
 msgid "Right mouse button click (menu)"
 msgstr ""
 
-#: client/cl_input.c:744
+#: client/cl_input.c:742
 msgid "Select objects/Walk to a square/In fire mode, fire etc"
 msgstr ""
 
-#: client/cl_input.c:746
+#: client/cl_input.c:744
 msgid "Walk to a square/In fire mode, cancel action"
 msgstr ""
 
-#: client/cl_input.c:748
+#: client/cl_input.c:746
 msgid "Turn soldier toward mouse pointer"
 msgstr ""
 
-#: client/cl_input.c:750
+#: client/cl_input.c:748
 msgid "Toggle stand/crounch"
 msgstr "Seisa/kükita"
 
-#: client/cl_input.c:751
+#: client/cl_input.c:749
 msgid "Toggle reaction fire"
 msgstr "Reaktsioon tulistamine Sees/väljas"
 
-#: client/cl_input.c:752
+#: client/cl_input.c:750
 msgid "Toogle to next alien"
 msgstr "Järgmine tulnukas"
 
-#: client/cl_input.c:758
+#: client/cl_input.c:756
 msgid "Reload the weapon in the soldiers left hand"
 msgstr ""
 
-#: client/cl_input.c:759
+#: client/cl_input.c:757
 msgid "Reload the weapon in the soldiers right hand"
 msgstr ""
 
-#: client/cl_input.c:760
+#: client/cl_input.c:758
 msgid "Ends current round"
 msgstr "Lõpeta praegune round"
 
-#: client/cl_input.c:761
+#: client/cl_input.c:759
 msgid "Slice through terrain at a higher level"
 msgstr ""
 
-#: client/cl_input.c:762
+#: client/cl_input.c:760
 msgid "Slice through terrain at a lower level"
 msgstr ""
 
-#: client/cl_input.c:765
+#: client/cl_input.c:763
 msgid "Confirm the current action"
 msgstr "Kinnita tegevust"
 
-#: client/cl_input.c:774
+#: client/cl_input.c:772
 msgid "Toggle first-person/third-person camera mode"
 msgstr ""
 
@@ -10643,25 +10648,25 @@ msgid ""
 "got removed."
 msgstr ""
 
-#: client/cl_main.c:385 client/cl_main.c:1074
+#: client/cl_main.c:384 client/cl_main.c:1074
 msgid "Assemble a team first"
 msgstr "Kogu tiim enne"
 
-#: client/cl_main.c:385 client/cl_main.c:853 client/cl_main.c:1074
+#: client/cl_main.c:384 client/cl_main.c:852 client/cl_main.c:1074
 #: client/cl_main.c:1674 client/cl_main.c:1679 client/cl_main.c:1685
 #: client/cl_main.c:1691 client/cl_save.c:414 client/cl_save.c:440
 msgid "Error"
 msgstr "VIGA"
 
-#: client/cl_main.c:853
+#: client/cl_main.c:852
 msgid "Server needs restarting - something went wrong"
 msgstr ""
 
-#: client/cl_main.c:926
+#: client/cl_main.c:925
 msgid "No player connected\n"
 msgstr ""
 
-#: client/cl_main.c:974
+#: client/cl_main.c:971
 #, c-format
 msgid ""
 "IP\t%s\n"
@@ -10670,7 +10675,7 @@ msgstr ""
 "IP\t%s\n"
 "\n"
 
-#: client/cl_main.c:977
+#: client/cl_main.c:974
 #, c-format
 msgid "Map:\t%s\n"
 msgstr "Kaart:\t%s\n"
@@ -10803,35 +10808,35 @@ msgstr ""
 msgid "Local game version (%s) differs from the servers (%s)"
 msgstr ""
 
-#: client/cl_main.c:2254
+#: client/cl_main.c:2251
 msgid "Target your shot to the ground"
 msgstr ""
 
-#: client/cl_main.c:2373
+#: client/cl_main.c:2370
 msgid "Chicken-hearted"
 msgstr "Kartlik"
 
-#: client/cl_main.c:2375
+#: client/cl_main.c:2372
 msgid "Very Easy"
 msgstr "Väga kerge"
 
-#: client/cl_main.c:2378
+#: client/cl_main.c:2375
 msgid "Easy"
 msgstr "Kerge"
 
-#: client/cl_main.c:2383
+#: client/cl_main.c:2380
 msgid "Hard"
 msgstr "Raske"
 
-#: client/cl_main.c:2385
+#: client/cl_main.c:2382
 msgid "Very Hard"
 msgstr "Väga Raske"
 
-#: client/cl_main.c:2387
+#: client/cl_main.c:2384
 msgid "Insane"
 msgstr "Hullumeelne"
 
-#: client/cl_main.c:2444
+#: client/cl_main.c:2441
 #, fuzzy
 msgid "Custom"
 msgstr "Sihtimata Valang"
@@ -10891,36 +10896,36 @@ msgstr "Nimii:\t%s (%i/%i)\n"
 msgid "Status:\t%s\n"
 msgstr "Seisund:\t%s\n"
 
-#: client/cl_market.c:344
+#: client/cl_market.c:342
 #, fuzzy
 msgid "Build a hangar first"
 msgstr "Ehita labor enne"
 
-#: client/cl_market.c:441
+#: client/cl_market.c:439
 #, fuzzy
 msgid "Not enough storage space"
 msgstr "Peata uurimine"
 
-#: client/cl_market.c:441
+#: client/cl_market.c:439
 msgid ""
 "You cannot buy this item.\n"
 "Not enough space in storage.\n"
 "Build more storage facilities."
 msgstr ""
 
-#: client/cl_market.c:647
+#: client/cl_market.c:645
 msgid ""
 "You cannot buy this aircraft.\n"
 "Not enough space in hangars.\n"
 msgstr ""
 
-#: client/cl_market.c:651
+#: client/cl_market.c:649
 msgid ""
 "You cannot buy this aircraft.\n"
 "Not enough credits.\n"
 msgstr ""
 
-#: client/cl_market.c:720
+#: client/cl_market.c:718
 msgid "You can't sell an aircraft if it still has a team assigned"
 msgstr ""
 
@@ -10933,20 +10938,20 @@ msgstr "Jah"
 msgid "no"
 msgstr ""
 
-#: client/cl_menu.c:623
+#: client/cl_menu.c:621
 msgid "Set playersoldiers lower than teamsoldiers"
 msgstr "Pane mängitavadid sõdureid vähemaks kui tiimi sõdureid"
 
-#: client/cl_menu.c:623
+#: client/cl_menu.c:621
 msgid "Settings doesn't make sense"
 msgstr "Seadistused ei ole õiged"
 
-#: client/cl_menu.c:693
+#: client/cl_menu.c:691
 #, c-format
 msgid "In: %i Out: %i"
 msgstr ""
 
-#: client/cl_menu.c:1970
+#: client/cl_menu.c:1968
 #, c-format
 msgid "Key: %s"
 msgstr "Nupp %s"
@@ -10977,7 +10982,7 @@ msgstr "Vastast on märgatudl\n"
 msgid "Civilian spotted!\n"
 msgstr "Inimest on märgatud!\n"
 
-#: client/cl_particle.c:496
+#: client/cl_particle.c:501
 msgid "No particle loaded"
 msgstr ""
 
@@ -11975,18 +11980,18 @@ msgstr "%s\t%s\n"
 msgid "%s (%s)\n"
 msgstr "%s\t%s\n"
 
-#: client/cl_view.c:384 client/cl_view.c:419 client/cl_view.c:449
-#: client/cl_view.c:461
+#: client/cl_view.c:383 client/cl_view.c:418 client/cl_view.c:448
+#: client/cl_view.c:460
 #, fuzzy, c-format
 msgid "loading %s"
 msgstr "Ehitised"
 
-#: client/cl_view.c:398
+#: client/cl_view.c:397
 #, fuzzy
 msgid "loading models..."
 msgstr "Laen...."
 
-#: client/cl_view.c:474
+#: client/cl_view.c:473
 msgid "Awaiting game start"
 msgstr ""
 
@@ -12096,10 +12101,6 @@ msgstr "Busan"
 msgid "alien"
 msgstr "Tulnukas"
 
-#: po/OTHER_STRINGS:5
-msgid "No"
-msgstr "Ei"
-
 #: po/OTHER_STRINGS:6
 msgid "5 sec"
 msgstr ""
@@ -12132,6 +12133,15 @@ msgstr ""
 #, fuzzy
 msgid "Moving"
 msgstr "Kuulipilduja"
+
+#~ msgid "No confirmation before walking and shooting"
+#~ msgstr "Pole vaja ülekontrollida kõndimise ja tulistamise käske"
+
+#~ msgid "Confirmation needed before walking and shooting"
+#~ msgstr "On vaja ülekontrollida kõndimise ja tulistamise käske"
+
+#~ msgid "Choose another hud"
+#~ msgstr "Vali teine vaade"
 
 #~ msgid "Sheldon Hearn (sheldonh)"
 #~ msgstr "Sheldon Hearn (sheldonh)"
