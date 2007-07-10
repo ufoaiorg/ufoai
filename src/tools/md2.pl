@@ -137,7 +137,8 @@ if ( $#ARGV < 0 ) {
 	$param_action = $ARGV[0];
 	unless (
 		($param_action eq 'skinedit') ||
-		($param_action eq 'skinnum')
+		($param_action eq 'skinnum') ||
+		($param_action eq 'skinsize')
 		) {
 		print "Unknown action: '", $param_action, "'\n";
 		die "Usage:\tmd2.pl [skinedit|skinnum] [options...]\n";
@@ -317,6 +318,71 @@ if ($param_action eq 'skinedit') {
 
 	# save as another .md2 file
 	md2_save($md2_file, $MD2OUT);
+} elsif ($param_action eq 'skinsize') {
+	# parse commandline parameters (md2-filenames)
+	if ( $#ARGV < 1 || $#ARGV > 2) {
+		die "Usage:\tmd2.pl skinsize [in.md2 [out.md2]]\n";
+	} elsif ( $#ARGV == 1 ) {
+		$MD2IN = $MD2OUT = $ARGV[1];
+		print "IN=OUT= \"$MD2IN\"\n";
+	} elsif  ( $#ARGV == 2 ) {
+		$MD2IN	= $ARGV[1];
+		$MD2OUT	= $ARGV[2];
+		if ($MD2OUT eq '-') {
+			$MD2OUT = $MD2IN;
+		}
+		print "IN = \"$MD2IN\"\n";
+		print "OUT= \"$MD2OUT\"\n";
+	}
+	
+	my $md2_file = md2_read($MD2IN);
+
+	print "Changing skin sizes ...\n";
+	print "Current size: ", $md2_file->SkinWidth, "w x ", $md2_file->SkinHeight, "h\n";
+	
+	# Ask for new skin width
+	use Term::ReadKey;
+	my $SkinWidth_new = $md2_file->SkinWidth;
+	my $SkinHeight_new = $md2_file->SkinHeight;
+	do { # TODO: as until we get a sane number (integer)
+		print "Enter new width in pixel (",$md2_file->SkinWidth,"):";
+
+		my $key = '';
+		$SkinWidth_new = '';
+		do {
+			$key = ReadKey(0);
+			$SkinWidth_new .= $key;
+		} while ($key ne "\n");
+
+		chomp($SkinWidth_new);
+	} while (($SkinWidth_new == $md2_file->SkinWidth) || ($SkinWidth_new <= 0) || ($SkinWidth_new eq ''));
+	
+	# Ask for new skin height
+	do { # TODO: as until we get a sane number (integer)
+		print "Enter new height in pixel (",$md2_file->SkinHeight ,"):";
+
+		my $key = '';
+		$SkinHeight_new = '';
+		do {
+			$key = ReadKey(0);
+			$SkinHeight_new .= $key;
+		} while ($key ne "\n");
+
+		chomp($SkinHeight_new);
+	} while (($SkinHeight_new == $md2_file->SkinHeight) || ($SkinHeight_new <= 0) || ($SkinHeight_new eq ''));
+	
+	
+	if (($SkinHeight_new == $md2_file->SkinHeight)
+	&& ($SkinWidth_new == $md2_file->SkinWidth)) {
+		print "No change in skin size.\n";
+		return;
+	}
+	
+	$md2_file->struct->{SkinWidth} = $SkinWidth_new;
+	$md2_file->struct->{SkinHeight} = $SkinHeight_new;
+	
+	md2_save($md2_file, $MD2OUT);
+	
 } else {
 	print "Unknown action: '", $param_action, "'\n";
 }
