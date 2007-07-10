@@ -108,7 +108,7 @@ static const char *pc_strings[PC_NUM_PTLCMDS] = {
 
 #define F(x)		(1<<x)
 #define	V_VECS		(F(V_FLOAT) | F(V_POS) | F(V_VECTOR) | F(V_COLOR))
-#define ONLY		(1<<31)
+#define PTL_ONLY_ONE_TYPE		(1<<31)
 
 /** @brief particle commands parameter and types */
 static const int pc_types[PC_NUM_PTLCMDS] = {
@@ -117,12 +117,12 @@ static const int pc_types[PC_NUM_PTLCMDS] = {
 	V_UNTYPED, V_UNTYPED, V_UNTYPED,
 	V_VECS, V_VECS,
 	V_VECS, V_VECS,
-	ONLY | V_FLOAT, ONLY | V_FLOAT, ONLY | V_FLOAT,
+	PTL_ONLY_ONE_TYPE | V_FLOAT, PTL_ONLY_ONE_TYPE | V_FLOAT, PTL_ONLY_ONE_TYPE | V_FLOAT,
 	V_VECS, V_VECS,
 	0, 0, 0,
 
 	0,
-	ONLY | V_STRING, ONLY | V_STRING, ONLY | V_STRING
+	PTL_ONLY_ONE_TYPE | V_STRING, PTL_ONLY_ONE_TYPE | V_STRING, PTL_ONLY_ONE_TYPE | V_STRING
 };
 
 /** @brief particle script values */
@@ -1304,7 +1304,7 @@ static void CL_ParsePtlCmds (const char *name, const char **text)
 						break;
 					}
 
-					if (((pc_types[i] & ONLY) && (pc_types[i] & ~ONLY) != pp->type) || (!(pc_types[i] & ONLY) && !((1 << pp->type) & pc_types[i]))) {
+					if (((pc_types[i] & PTL_ONLY_ONE_TYPE) && (pc_types[i] & ~PTL_ONLY_ONE_TYPE) != pp->type) || (!(pc_types[i] & PTL_ONLY_ONE_TYPE) && !((1 << pp->type) & pc_types[i]))) {
 						Com_Printf("CL_ParsePtlCmds: bad type in var \"%s\" specified (particle %s) (ptl type: %i, string: %s)\n", token, name, pp->type, pc_strings[i]);
 						numPtlCmds--;
 						break;
@@ -1327,8 +1327,8 @@ static void CL_ParsePtlCmds (const char *name, const char **text)
 				}
 
 				/* get the type */
-				if (pc_types[i] & ONLY)
-					j = pc_types[i] & ~ONLY;
+				if (pc_types[i] & PTL_ONLY_ONE_TYPE)
+					j = pc_types[i] & ~PTL_ONLY_ONE_TYPE;
 				else {
 					for (j = 0; j < V_NUM_TYPES; j++)
 						if (!Q_strcmp(token, vt_names[j]))
