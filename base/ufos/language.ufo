@@ -119,3 +119,10 @@ language sv {
 		sv_SE.UTF-8
 	}
 }
+
+language none {
+	"_No language"
+	{
+		C
+	}
+}

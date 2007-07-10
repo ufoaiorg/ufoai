@@ -130,11 +130,19 @@ void CL_LanguageInit (void)
 	if (!languageOptions)
 		Sys_Error("Could not find node select_language in menu options_game\n");
 	for (i = 0, language = languageList; i < languageCount; language = language->next, i++) {
-		selectBoxOption = MN_AddSelectboxOption(languageOptions);
-		if (!selectBoxOption)
-			return;
-		Com_sprintf(selectBoxOption->label, sizeof(selectBoxOption->label), language->localeString);
-		Com_sprintf(selectBoxOption->value, sizeof(selectBoxOption->value), language->localeID);
+		if (CL_LanguageTryToSet(language->localeID)) {
+			/* No language option available only for DEBUG. */
+			if (Q_strncmp(language->localeID, "none", 4) == 0) {
+#ifndef DEBUG
+				continue;
+#endif
+			}
+			selectBoxOption = MN_AddSelectboxOption(languageOptions);
+			if (!selectBoxOption)
+				return;
+			Com_sprintf(selectBoxOption->label, sizeof(selectBoxOption->label), language->localeString);
+			Com_sprintf(selectBoxOption->value, sizeof(selectBoxOption->value), language->localeID);
+		}
 	}
 
 	menu = MN_GetMenu("checkcvars");
@@ -150,6 +158,8 @@ void CL_LanguageInit (void)
 		Com_sprintf(selectBoxOption->label, sizeof(selectBoxOption->label), language->localeString);
 		Com_sprintf(selectBoxOption->value, sizeof(selectBoxOption->value), language->localeID);
 	}
+	/* Set to the system language. */
+	CL_LanguageTryToSet(s_language->string);
 }
 
 /**
