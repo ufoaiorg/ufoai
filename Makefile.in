@@ -124,7 +124,6 @@ echo_info:
 	@echo "Gettext"
 	@echo "-----------------------"
 	@echo "Type '$(MAKE) lang' to compile the gettext translation files."
-	@echo "Type '$(MAKE) update-po' to update with newest strings"
 	@echo
 	@echo "Maps"
 	@echo "-----------------------"
