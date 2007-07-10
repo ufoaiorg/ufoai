@@ -23,6 +23,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 */
 
+#include "../../qcommon/qcommon.h"
+
 #ifndef __linux__
 #undef HAVE_CURSES
 #endif
@@ -34,20 +36,19 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 /*#define CURSES_COLOR*/
 
-#include "../../qcommon/qcommon.h"
 #ifdef HAVE_CURSES
 #include <ncurses.h>
 #define MAXKEYLINES 32
 static WINDOW *win_log, *win_cmd;
-int history_line = 0;
-int edit_line = 0;
+static int history_line = 0;
+static int edit_line = 0;
 
 #define BUF_LEN 256
 static char cmdbuf[MAXKEYLINES][BUF_LEN];
 static int cmdbuf_pos = 0;
 #define COLOR_MAX 7
 #define COLOR_DEFAULT 7
-#endif
+#endif /* HAVE_CURSES */
 
 qboolean stdin_active = qtrue;
 cvar_t *nostdout;
