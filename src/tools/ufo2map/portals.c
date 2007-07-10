@@ -249,8 +249,6 @@ static winding_t *BaseWindingForNode (node_t *node)
 
 /*============================================================ */
 
-qboolean WindingIsTiny(winding_t *w);
-
 /**
  * @brief Create the new portal by taking the full plane winding for the cutting plane
  * and clipping it by all of parents of this node

@@ -83,9 +83,9 @@ void* qglGetProcAddress (const char *theName, enum qglGetAdrMode theMode)
 /**
  * @brief
  */
-void* qwglGetProcAddress (char *theSymbol)
+void* qwglGetProcAddress (const char *theSymbol)
 {
-	return (qglGetProcAddress (theSymbol, QGL_LAZY_SYMBOL));
+	return (qglGetProcAddress(theSymbol, QGL_LAZY_SYMBOL));
 }
 
 /**

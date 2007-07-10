@@ -63,9 +63,6 @@ static void LM_InitBlock(void);
 static void LM_UploadBlock(qboolean dynamic);
 static qboolean LM_AllocBlock(int w, int h, int *x, int *y);
 
-extern void R_SetCacheState(mBspSurface_t * surf);
-extern void R_BuildLightMap(mBspSurface_t * surf, byte * dest, int stride);
-
 /*
 =============================================================
 BRUSH MODELS

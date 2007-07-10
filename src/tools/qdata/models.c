@@ -91,7 +91,7 @@ qFILE	headerouthandle;
 /**
  * @brief
  */
-void ClearModel (void)
+static void ClearModel (void)
 {
 	memset (&model, 0, sizeof(model));
 
@@ -106,7 +106,7 @@ void ClearModel (void)
 /**
  * @brief
  */
-void H_printf(const char *fmt, ...)
+static void H_printf(const char *fmt, ...)
 {
 	va_list argptr;
 	char	name[1024];
@@ -127,7 +127,7 @@ void H_printf(const char *fmt, ...)
 /**
  * @brief
  */
-void WriteModelFile (qFILE *modelouthandle)
+static void WriteModelFile (qFILE *modelouthandle)
 {
 	int				i;
 	mdl_md2_t		modeltemp;
@@ -296,7 +296,7 @@ int		stripcount;
 /**
  * @brief
  */
-int	StripLength (int starttri, int startv)
+static int	StripLength (int starttri, int startv)
 {
 	int			m1, m2;
 	int			st1, st2;
@@ -374,7 +374,7 @@ done:
 /**
  * @brief
  */
-int	FanLength (int starttri, int startv)
+static int	FanLength (int starttri, int startv)
 {
 	int		m1, m2;
 	int		st1, st2;
@@ -449,7 +449,7 @@ done:
 /**
  * @brief Generate a list of trifans or strips for the model, which holds for all frames
  */
-void BuildGlCmds (void)
+static void BuildGlCmds (void)
 {
 	int		i, j, k;
 	int		startv;
@@ -531,7 +531,7 @@ BASE FRAME SETUP
  * @brief Builds the triangle_st array for the base frame and model.skinwidth / model.skinheight
  * FIXME: allow this to be loaded from a file for arbitrary mappings
  */
-void BuildST (triangle_t *ptri, int numtri)
+static void BuildST (triangle_t *ptri, int numtri)
 {
 	int			i, j;
 	int			width, height, iwidth, iheight, swidth;
@@ -684,14 +684,14 @@ void Cmd_Base (void)
 /**
  * @brief
  */
-char *FindFrameFile (char *frame)
+static const char *FindFrameFile (const char *frame)
 {
 	int time1;
 	char file1[1024];
 	static char retname[1024];
 	char base[32];
 	char suffix[32];
-	char *s;
+	const char *s;
 
 	if (strstr(frame, "."))
 		return frame;		/* allready in dot format */
@@ -729,7 +729,7 @@ char *FindFrameFile (char *frame)
 /**
  * @brief
  */
-void GrabFrame (char *frame)
+static void GrabFrame (const char *frame)
 {
 	triangle_t	*ptri;
 	int			i, j;
@@ -739,12 +739,12 @@ void GrabFrame (char *frame)
 	frame_t		*fr;
 	vertexnormals_t	vnorms[MD2_MAX_VERTS];
 	int		index_xyz;
-	char	*framefile;
+	const char	*framefile;
 
 	/* the frame 'run1' will be looked for as either */
 	/* run.1 or run1.tri, so the new alias sequence save */
 	/* feature an be used */
-	framefile = FindFrameFile (frame);
+	framefile = FindFrameFile(frame);
 
 	sprintf(file1, "%s/%s", cdarchive, framefile);
 	ExpandPathAndArchive(file1);

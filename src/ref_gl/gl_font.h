@@ -26,7 +26,7 @@ typedef struct fontCache_s {
 } fontCache_t;
 
 typedef struct {
-	char *name;
+	const char *name;
 	int renderStyle;
 } fontRenderStyle_t;
 

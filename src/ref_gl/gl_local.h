@@ -448,7 +448,7 @@ void GL_DrawImagePixelData(const char *name, byte *frame, int width, int height)
 
 image_t *GL_LoadPic(const char *name, byte * pic, int width, int height, imagetype_t type, int bits);
 #ifdef DEBUG
-image_t *GL_FindImageDebug(const char *pname, imagetype_t type, char *file, int line);
+image_t *GL_FindImageDebug(const char *pname, imagetype_t type, const char *file, int line);
 #define GL_FindImage(pname,type) GL_FindImageDebug(pname, type, __FILE__, __LINE__ )
 #else
 image_t *GL_FindImage(const char *pname, imagetype_t type);
@@ -609,5 +609,9 @@ extern qboolean update_viewdef;
 void GL_InitBloom(void);
 void GL_BloomBlend(void);
 
+void R_SetCacheState(mBspSurface_t * surf);
+void R_BuildLightMap(mBspSurface_t * surf, byte * dest, int stride);
+
+void Scrap_Upload(void);
 
 #endif                          /* GL_LOCAL_H */

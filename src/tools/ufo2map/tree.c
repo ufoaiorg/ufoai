@@ -27,8 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 extern int c_nodes;
 
-void RemovePortalFromNode (portal_t *portal, node_t *l);
-
 /**
  * @brief
  */
@@ -135,7 +133,7 @@ int	c_pruned;
  * @brief
  * @sa PruneNodes
  */
-void PruneNodes_r (node_t *node)
+static void PruneNodes_r (node_t *node)
 {
 	bspbrush_t *b, *next;
 

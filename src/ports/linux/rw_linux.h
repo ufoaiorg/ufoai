@@ -40,3 +40,13 @@ typedef struct in_state {
 
 void InitSig(void);
 
+void RW_IN_Init(in_state_t *in_state_p);
+void RW_IN_Shutdown(void);
+void RW_IN_Commands(void);
+void RW_IN_GetMousePos(int *x, int *y);
+void RW_IN_Activate(qboolean active);
+void RW_IN_Frame(void);
+
+void KBD_Update(void);
+void KBD_Init(Key_Event_fp_t fp);
+void KBD_Close(void);

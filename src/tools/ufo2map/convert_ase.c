@@ -257,7 +257,7 @@ static void ConvertShader( FILE *f, char* image, int imagenum )
 /**
  * @brief exports an 3d studio ase file from the bsp
  */
-int ConvertBSPToASE( char *bspName )
+int ConvertBSPToASE (const char *bspName)
 {
 	int i;
 	FILE *f;

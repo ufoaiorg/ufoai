@@ -27,7 +27,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 extern cvar_t *gl_drawclouds;
 extern qboolean scrap_dirty;
-void Scrap_Upload(void);
 image_t *shadow;
 image_t *blood;
 

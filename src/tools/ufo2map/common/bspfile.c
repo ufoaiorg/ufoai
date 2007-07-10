@@ -669,7 +669,7 @@ static void PrintEntity (entity_t *ent)
 /**
  * @brief
  */
-void SetKeyValue (entity_t *ent, char *key, char *value)
+void SetKeyValue (entity_t *ent, const char *key, const char *value)
 {
 	epair_t *ep;
 
@@ -689,7 +689,7 @@ void SetKeyValue (entity_t *ent, char *key, char *value)
 /**
  * @brief
  */
-char *ValueForKey (entity_t *ent, char *key)
+const char *ValueForKey (entity_t *ent, const char *key)
 {
 	epair_t *ep;
 
@@ -702,9 +702,9 @@ char *ValueForKey (entity_t *ent, char *key)
 /**
  * @brief
  */
-vec_t FloatForKey (entity_t *ent, char *key)
+vec_t FloatForKey (entity_t *ent, const char *key)
 {
-	char *k;
+	const char *k;
 
 	k = ValueForKey(ent, key);
 	return atof(k);
@@ -713,9 +713,9 @@ vec_t FloatForKey (entity_t *ent, char *key)
 /**
  * @brief
  */
-void GetVectorForKey (entity_t *ent, char *key, vec3_t vec)
+void GetVectorForKey (entity_t *ent, const char *key, vec3_t vec)
 {
-	char *k;
+	const char *k;
 	double v1, v2, v3;
 
 	k = ValueForKey(ent, key);

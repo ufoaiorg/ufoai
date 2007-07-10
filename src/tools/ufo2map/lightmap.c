@@ -688,7 +688,7 @@ static vec3_t sun_dir;
 static entity_t *FindTargetEntity (const char *target)
 {
 	int		i;
-	char	*n;
+	const char	*n;
 
 	for (i = 0; i < num_entities; i++) {
 		n = ValueForKey(&entities[i], "targetname");
@@ -712,11 +712,11 @@ void CreateDirectLights (void)
 	directlight_t	*dl;
 	dleaf_t	*leaf;
 	entity_t	*e, *e2;
-	char	*name;
-	char	*target;
+	const char	*name;
+	const char	*target;
 	float	angle;
 	vec3_t	dest;
-	char	*_color;
+	const char	*_color;
 	float	intensity;
 
 	/* surfaces */
@@ -820,7 +820,7 @@ void CreateDirectLights (void)
 	sun_intensity = FloatForKey(e, "light");
 	if (sun_intensity) {
 		/* there is a sun */
-		char *angles;
+		const char *angles;
 
 		/* get color */
 		_color = ValueForKey(e, "_color");

@@ -164,7 +164,7 @@ static int total_transfer;
 /**
  * @brief
  */
-void MakeTransfers (unsigned int i)
+static void MakeTransfers (unsigned int i)
 {
 	unsigned int			j;
 	vec3_t		delta;
@@ -267,7 +267,7 @@ void MakeTransfers (unsigned int i)
 /**
  * @brief
  */
-void FreeTransfers (void)
+static void FreeTransfers (void)
 {
 	unsigned int i;
 
@@ -281,7 +281,7 @@ void FreeTransfers (void)
 /**
  * @brief
  */
-void WriteWorld (char *name)
+static void WriteWorld (const char *name)
 {
 	unsigned int j;
 	int i;
@@ -362,7 +362,7 @@ static void ShootLight (unsigned int patchnum)
 /**
  * @brief
  */
-void BounceLight (void)
+static void BounceLight (void)
 {
 	unsigned int i, j;
 	float	added;
@@ -396,7 +396,7 @@ void BounceLight (void)
 /**
  * @brief
  */
-void CheckPatches (void)
+static void CheckPatches (void)
 {
 	unsigned int i;
 	patch_t *patch;

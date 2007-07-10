@@ -86,7 +86,7 @@ static void *GPA2 (char* symbol)
 /**
  * @brief
  */
-void *qwglGetProcAddress (char *symbol)
+void *qwglGetProcAddress (const char *symbol)
 {
 	if (glw_state.OpenGLLib)
 #ifdef DEBUG

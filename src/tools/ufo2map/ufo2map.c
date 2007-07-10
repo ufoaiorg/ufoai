@@ -36,10 +36,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 char source[1024];
 char name[1024];
 
-
-/**< BSP2ASE Convert prototype */
-int ConvertBSPToASE (char *bspName);
-
 /**
  * @brief Check for bsping command line parameters
  * @note Some are also used for radiosity

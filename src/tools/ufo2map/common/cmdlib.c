@@ -792,7 +792,7 @@ void SaveFile (const char *filename, void *buffer, int count)
 /**
  * @brief
  */
-void DefaultExtension (char *path, char *extension)
+void DefaultExtension (char *path, const char *extension)
 {
 	char    *src;
 	/* if path doesnt have a .EXT, append extension */

@@ -109,7 +109,7 @@ int TryLoadFile(const char *filename, void **bufferptr);
 void SaveFile(const char *filename, void *buffer, int count);
 qboolean FileExists(const char *filename);
 
-void DefaultExtension(char *path, char *extension);
+void DefaultExtension(char *path, const char *extension);
 void DefaultPath(char *path, char *basepath);
 void StripFilename(char *path);
 void StripExtension(char *path);

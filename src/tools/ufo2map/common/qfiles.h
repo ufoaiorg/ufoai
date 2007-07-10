@@ -33,7 +33,7 @@ typedef struct mapConfig_s {
 	float subdivideSize;
 	int nice;
 	/**< convert function pointer */
-	int (*convertFunc) (char *);
+	int (*convertFunc) (const char *);
 	qboolean verbose;
 	qboolean noprune;
 	qboolean nodetail;

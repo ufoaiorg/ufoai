@@ -487,7 +487,7 @@ extern BOOL(WINAPI * qwglSetDeviceGammaRampEXT) (const unsigned char *pRed, cons
 
 #if defined (__linux__) || defined (__FreeBSD__) || defined (__NetBSD__)
 /* local function in dll */
-extern void *qwglGetProcAddress(char *symbol);
+extern void *qwglGetProcAddress(const char *symbol);
 /*GLX Functions */
 extern XVisualInfo *(*qglXChooseVisual) (Display * dpy, int screen, int *attribList);
 extern GLXContext(*qglXCreateContext) (Display * dpy, XVisualInfo * vis, GLXContext shareList, Bool direct);

@@ -223,56 +223,54 @@ void GLS_EndScene(void);
 
 /* csg */
 
-int MapBrushesBounds( int startbrush, int endbrush, int level, vec3_t clipmins, vec3_t clipmaxs, vec3_t mins, vec3_t maxs );
-bspbrush_t *MakeBspBrushList (int startbrush, int endbrush, int level, vec3_t clipmins, vec3_t clipmaxs);
-bspbrush_t *ChopBrushes (bspbrush_t *head);
+int MapBrushesBounds(int startbrush, int endbrush, int level, vec3_t clipmins, vec3_t clipmaxs, vec3_t mins, vec3_t maxs);
+bspbrush_t *MakeBspBrushList(int startbrush, int endbrush, int level, vec3_t clipmins, vec3_t clipmaxs);
+bspbrush_t *ChopBrushes(bspbrush_t *head);
 
 /* brushbsp */
 
-bspbrush_t *CopyBrush (bspbrush_t *brush);
-void SplitBrush (bspbrush_t *brush, int planenum, bspbrush_t **front, bspbrush_t **back);
-bspbrush_t *AllocBrush (int numsides);
-int	CountBrushList (bspbrush_t *brushes);
-void FreeBrush (bspbrush_t *brushes);
-
-void FreeBrushList (bspbrush_t *brushes);
-
-tree_t *BrushBSP (bspbrush_t *brushlist, vec3_t mins, vec3_t maxs);
+bspbrush_t *CopyBrush(bspbrush_t *brush);
+void SplitBrush(bspbrush_t *brush, int planenum, bspbrush_t **front, bspbrush_t **back);
+bspbrush_t *AllocBrush(int numsides);
+int	CountBrushList(bspbrush_t *brushes);
+void FreeBrush(bspbrush_t *brushes);
+void FreeBrushList(bspbrush_t *brushes);
+qboolean WindingIsTiny(winding_t *w);
+tree_t *BrushBSP(bspbrush_t *brushlist, vec3_t mins, vec3_t maxs);
 
 /* portals.c */
 
-int VisibleContents (int contents);
-
-void MarkVisibleSides (tree_t *tree, int start, int end);
-void FreePortal (portal_t *p);
-
-void MakeTreePortals (tree_t *tree);
+int VisibleContents(int contents);
+void MarkVisibleSides(tree_t *tree, int start, int end);
+void FreePortal(portal_t *p);
+void MakeTreePortals(tree_t *tree);
+void RemovePortalFromNode(portal_t *portal, node_t *l);
 
 /*============================================================================= */
 
 /* writebsp.c */
 
-void SetModelNumbers (void);
-void SetLightStyles (void);
+void SetModelNumbers(void);
+void SetLightStyles(void);
 
-void BeginBSPFile (void);
-void WriteBSP (node_t *headnode);
-void EndBSPFile (void);
-void BeginModel (void);
-void EndModel (void);
-/*void EmitBrushes (void);*/
-void EmitPlanes (void);
+void BeginBSPFile(void);
+void WriteBSP(node_t *headnode);
+void EndBSPFile(void);
+void BeginModel(void);
+void EndModel(void);
+/*void EmitBrushes(void);*/
+void EmitPlanes(void);
 
 /* faces.c */
 
-void MakeFaces (node_t *headnode);
-void FixTjuncs (node_t *headnode);
-int GetEdge2 (int v1, int v2,  face_t *f);
-void FreeFace (face_t *f);
+void MakeFaces(node_t *headnode);
+void FixTjuncs(node_t *headnode);
+int GetEdge2(int v1, int v2,  face_t *f);
+void FreeFace(face_t *f);
 
 /* tree.c */
 
-void FreeTree (tree_t *tree);
+void FreeTree(tree_t *tree);
 
 /* trace.c */
 
@@ -303,5 +301,8 @@ void DoRouting(void);
 
 /* qbsp3.c */
 
-void ProcessModels (void);
-void RadWorld (void);
+void ProcessModels(void);
+
+/* conver_ase.c */
+
+int ConvertBSPToASE(const char *bspName);

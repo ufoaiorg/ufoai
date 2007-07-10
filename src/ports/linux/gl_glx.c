@@ -717,9 +717,9 @@ rserr_t GLimp_SetMode (unsigned *pwidth, unsigned *pheight, int mode, qboolean f
 
 	/* Mesa VooDoo hacks */
 	if (fullscreen)
-		putenv("MESA_GLX_FX=fullscreen");
+		putenv((char*)"MESA_GLX_FX=fullscreen");
 	else
-		putenv("MESA_GLX_FX=window");
+		putenv((char*)"MESA_GLX_FX=window");
 
 	if (!(dpy = XOpenDisplay(NULL))) {
 		fprintf(stderr, "Error couldn't open the X display\n");
