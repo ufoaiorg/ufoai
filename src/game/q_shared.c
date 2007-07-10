@@ -947,13 +947,12 @@ void AddPointToBounds (const vec3_t v, vec3_t mins, vec3_t maxs)
  */
 inline qboolean VectorNearer (const vec3_t v1, const vec3_t v2, const vec3_t comp)
 {
-	int i;
+	vec3_t d1, d2;
 
-	for (i = 0; i < 3; i++)
-		if (fabs(v1[i] - comp[i]) < fabs(v2[i] - comp[i]))
-			return qtrue;
+	VectorSubtract(comp, v1, d1);
+	VectorSubtract(comp, v2, d2);
 
-	return qfalse;
+	return VectorLength(d1) < VectorLength(d2);
 }
 
 /**
