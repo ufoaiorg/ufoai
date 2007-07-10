@@ -19,3 +19,11 @@
 
 #include "../../client/client.h"
 #include "../../client/snd_loc.h"
+
+/* driver prototypes */
+void SND_Activate(qboolean active);
+void SND_BeginPainting(void);
+void SND_Submit(void);
+void SND_Shutdown(void);
+int SND_GetDMAPos(void);
+qboolean SND_Init(struct sndinfo *s);

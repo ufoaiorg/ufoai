@@ -32,6 +32,9 @@ static struct sndinfo *si;
 static int tryrates[] = { 22050, 11025, 44100, 48000, 8000 };
 static unsigned long mmaplen;
 
+/**
+ * @brief
+ */
 qboolean SND_Init (struct sndinfo *s)
 {
 	int rc, fmt, tmp, i, caps;
@@ -43,26 +46,26 @@ qboolean SND_Init (struct sndinfo *s)
 	if (snd_inited)
 		return qtrue;
 
-	si =s;
+	si = s;
 
 	snd_inited = 0;
 
 	si->Com_Printf("Soundsystem: OSS.\n");
 
 	/*alsa => oss */
-	if ( !strcmp (si->device->string, "default") )
+	if (!strcmp (si->device->string, "default"))
 		si->Cvar_Set("snd_device", "/dev/dsp");
 
 	/* open /dev/dsp, confirm capability to mmap, and get size of dma buffer */
 	if (audio_fd == -1) {
-		seteuid (saved_euid);
+		seteuid(saved_euid);
 
 		audio_fd = open(si->device->string, O_RDWR);
 
 		if (audio_fd == -1) {
 			tmp = 3;
-			while ( (audio_fd < 0) && tmp-- &&
-				((errno == EAGAIN) || (errno == EBUSY)) ) {
+			while ((audio_fd < 0) && tmp-- &&
+				((errno == EAGAIN) || (errno == EBUSY))) {
 				sleep(1);
 				/* maybe O_RDWR failed - try the original way */
 				/* see https://www.redhat.com/archives/sound-list/1999-September/msg00012.html for reason */
@@ -75,11 +78,11 @@ qboolean SND_Init (struct sndinfo *s)
 				return qfalse;
 			}
 		}
-		seteuid( getuid() );
+		seteuid(getuid());
 	}
 
-	rc = ioctl( audio_fd, SNDCTL_DSP_RESET, 0 );
-	if ( rc == -1 ) {
+	rc = ioctl(audio_fd, SNDCTL_DSP_RESET, 0);
+	if (rc == -1) {
 		perror(si->device->string);
 		si->Com_Printf("SND_Init: Could not reset %s. %s\n", si->device->string, strerror(errno));
 		close(audio_fd);

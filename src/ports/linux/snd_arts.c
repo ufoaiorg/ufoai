@@ -28,6 +28,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../../client/client.h"
 #include "../../client/snd_loc.h"
 
+/* driver prototypes */
+void SND_Activate(qboolean active);
+void SND_BeginPainting(void);
+void SND_Submit(void);
+void SND_Shutdown(void);
+int SND_GetDMAPos(void);
+qboolean SND_Init(struct sndinfo *s);
+
 #define snd_buf (si->dma->samples * 2)
 
 static arts_stream_t stream;
