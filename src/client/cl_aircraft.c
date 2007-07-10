@@ -529,7 +529,7 @@ static void AII_UpdateOneInstallationDelay (aircraft_t *aircraft, aircraftSlot_t
 */
 void AII_UpdateInstallationDelay (void)
 {
-	int i, j;
+	int i, j, k;
 	base_t *base;
 	aircraft_t *aircraft;
 
@@ -541,12 +541,12 @@ void AII_UpdateInstallationDelay (void)
 			if (aircraft->homebase) {
 				if (AIR_IsAircraftInBase(aircraft)) {
 					/* Update electronics delay */
-					for (i = 0; i < aircraft->maxElectronics; i++)
-						AII_UpdateOneInstallationDelay(aircraft, aircraft->electronics + i);
+					for (k = 0; k < aircraft->maxElectronics; k++)
+						AII_UpdateOneInstallationDelay(aircraft, aircraft->electronics + k);
 
 					/* Update weapons delay */
-					for (i = 0; i < aircraft->maxWeapons; i++)
-						AII_UpdateOneInstallationDelay(aircraft, aircraft->weapons + i);
+					for (k = 0; k < aircraft->maxWeapons; k++)
+						AII_UpdateOneInstallationDelay(aircraft, aircraft->weapons + k);
 
 					/* Update shield delay */
 					AII_UpdateOneInstallationDelay(aircraft, &aircraft->shield);
