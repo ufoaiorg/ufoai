@@ -33,8 +33,6 @@ BRUSHMODEL LOADING
 
 static byte *mod_base;
 static int shift[3];
-void GL_EndBuildingLightmaps(void);
-void GL_BeginBuildingLightmaps(void);
 typedef model_t *model_p;
 model_t *loadmodel;
 
@@ -250,10 +248,6 @@ static void CalcSurfaceExtents (mBspSurface_t * s)
 		s->extents[i] = (bmaxs[i] - bmins[i]) << s->lquant;
 	}
 }
-
-
-void GL_BuildPolygonFromSurface(mBspSurface_t * fa, int shift[3]);
-void GL_CreateSurfaceLightmap(mBspSurface_t * surf);
 
 /**
  * @brief

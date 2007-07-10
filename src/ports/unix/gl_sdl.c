@@ -79,13 +79,6 @@ int mx, my, mouse_buttonstate;
 /**
  * @brief
  */
-void RW_IN_PlatformInit (void)
-{
-}
-
-/**
- * @brief
- */
 void RW_IN_Activate (qboolean active)
 {
 	mouse_active = qtrue;
@@ -336,7 +329,7 @@ static void printkey (const SDL_Event* event, int down)
 /**
  * @brief
  */
-void GetEvent (SDL_Event *event)
+static void GetEvent (SDL_Event *event)
 {
 	int key;
 	int p = 0;
@@ -713,7 +706,6 @@ Key_Event_fp_t Key_Event_fp;
 void KBD_Init (Key_Event_fp_t fp)
 {
 	Key_Event_fp = fp;
-	RW_IN_PlatformInit();
 }
 
 /**

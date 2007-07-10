@@ -117,9 +117,6 @@ cvar_t *flood_waitdelay;
 
 cvar_t *difficulty;
 
-extern void SpawnEntities(char *mapname, char *entities);
-extern qboolean G_RunFrame(void);
-
 invList_t invChain[MAX_INVLIST];
 
 
@@ -130,7 +127,7 @@ invList_t invChain[MAX_INVLIST];
  * @brief This will be called when the dll is first loaded
  * @note only happens when a new game is started or a save game is loaded.
  */
-void InitGame (void)
+static void InitGame (void)
 {
 	gi.dprintf("==== InitGame ====\n");
 
@@ -256,7 +253,7 @@ void InitGame (void)
  * @brief Free the tags TAG_LEVEL and TAG_GAME
  * @sa Mem_FreeTags
  */
-void ShutdownGame (void)
+static void ShutdownGame (void)
 {
 	gi.dprintf("==== ShutdownGame ====\n");
 
@@ -358,7 +355,7 @@ void Com_DPrintf (const char *msg, ...)
 /**
  * @brief If password or spectator_password has changed, update needpass as needed
  */
-void CheckNeedPass (void)
+static void CheckNeedPass (void)
 {
 	int need;
 

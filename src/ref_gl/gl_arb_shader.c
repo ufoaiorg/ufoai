@@ -265,7 +265,7 @@ unsigned int SH_LoadProgram_GLSL (shader_t* s)
  * @param[in] fpid the shader id
  * @sa SH_LoadProgram_ARB_FP
  */
-void SH_UseProgram_ARB_FP (unsigned int fpid)
+static void SH_UseProgram_ARB_FP (unsigned int fpid)
 {
 	if (fpid > 0) {
 		qglEnable(GL_FRAGMENT_PROGRAM_ARB);
@@ -280,7 +280,7 @@ void SH_UseProgram_ARB_FP (unsigned int fpid)
  * @param[in] vpid the shader id
  * @sa SH_LoadProgram_ARB_VP
  */
-void SH_UseProgram_ARB_VP (unsigned int vpid)
+static void SH_UseProgram_ARB_VP (unsigned int vpid)
 {
 	if (vpid > 0) {
 		qglEnable(GL_VERTEX_PROGRAM_ARB);

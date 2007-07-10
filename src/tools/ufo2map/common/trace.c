@@ -26,6 +26,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "cmdlib.h"
 #include "mathlib.h"
+#include "../qbsp.h"
 #include "bspfile.h"
 #include <stddef.h>
 
@@ -52,7 +53,7 @@ static vec3_t tr_end;
 /**
  * @brief Converts the disk node structure into the efficient tracing structure
  */
-void MakeTnode (int nodenum)
+static void MakeTnode (int nodenum)
 {
 	tnode_t *t;
 	dplane_t *plane;
@@ -375,7 +376,7 @@ int TestLineDM (const vec3_t start, const vec3_t stop, vec3_t end, int levels)
 /**
  * @brief
  */
-static int TestContents_r (int node, vec3_t pos)
+static int TestContents_r (int node, const vec3_t pos)
 {
 	tnode_t	*tnode;
 	float	front;
@@ -417,7 +418,7 @@ static int TestContents_r (int node, vec3_t pos)
  * @brief Step height check
  * @sa TestContents_r
  */
-qboolean TestContents (vec3_t pos)
+qboolean TestContents (const vec3_t pos)
 {
 	int i;
 

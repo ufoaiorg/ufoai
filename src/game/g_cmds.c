@@ -94,7 +94,7 @@ static qboolean G_CheckFlood (player_t *player)
 static void Cmd_Say_f (player_t *player, qboolean arg0, qboolean team)
 {
 	int j;
-	char *p;
+	const char *p;
 	char text[2048];
 
 	if (gi.argc() < 2 && !arg0)
@@ -112,11 +112,12 @@ static void Cmd_Say_f (player_t *player, qboolean arg0, qboolean team)
 	} else {
 		p = gi.args();
 
-		if (*p == '"') {
+		if (*p == '"')
 			p++;
-			p[strlen(p) - 1] = 0;
-		}
+
 		Q_strcat(text, p, sizeof(text));
+		if (text[strlen(text)] == '"')
+			text[strlen(text)] = 0;
 	}
 
 	/* don't let text be too long for malicious reasons */
@@ -170,9 +171,6 @@ static void Cmd_PlayerList_f (player_t * player)
 }
 
 #ifdef DEBUG
-void G_KillTeam(void);
-void G_StunTeam(void);
-
 /**
  * @brief Debug function to print a player's inventory
  */
@@ -195,7 +193,7 @@ void Cmd_InvList (player_t *player)
  */
 void G_ClientCommand (player_t * player)
 {
-	char *cmd;
+	const char *cmd;
 
 	if (!player->inuse)
 		return;					/* not fully in game yet */

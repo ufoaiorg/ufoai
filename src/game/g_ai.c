@@ -34,7 +34,7 @@ typedef struct {
 /**
  * @brief
  */
-qboolean AI_CheckFF (edict_t * ent, vec3_t target, float spread)
+static qboolean AI_CheckFF (edict_t * ent, vec3_t target, float spread)
 {
 	edict_t *check;
 	vec3_t dtarget, dcheck, back;

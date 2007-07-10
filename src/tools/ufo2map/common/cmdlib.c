@@ -916,7 +916,7 @@ void ExtractFileExtension (const char *path, char *dest)
 /**
  * @brief
  */
-int ParseHex (char *hex)
+static int ParseHex (char *hex)
 {
 	char    *str;
 	int    num;
@@ -946,10 +946,10 @@ int ParseHex (char *hex)
 int ParseNum (char *str)
 {
 	if (str[0] == '$')
-		return ParseHex (str+1);
+		return ParseHex(str + 1);
 	if (str[0] == '0' && str[1] == 'x')
-		return ParseHex (str+2);
-	return atol (str);
+		return ParseHex(str + 2);
+	return atol(str);
 }
 
 

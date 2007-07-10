@@ -100,7 +100,7 @@ void G_SendStats (edict_t * ent)
  * @sa CL_ReceiveItem
  * @sa CL_SendItem
  */
-void G_WriteItem (item_t item, int container, int x, int y)
+static void G_WriteItem (item_t item, int container, int x, int y)
 {
 	assert(item.t != NONE);
 	gi.WriteFormat("bbbbbb", item.t, item.a, item.m, container, x, y);
@@ -111,7 +111,7 @@ void G_WriteItem (item_t item, int container, int x, int y)
  * @sa CL_ReceiveItem
  * @sa CL_SendItem
  */
-void G_ReadItem (item_t * item, int * container, int * x, int * y)
+static void G_ReadItem (item_t * item, int * container, int * x, int * y)
 {
 	gi.ReadFormat("bbbbbb", &item->t, &item->a, &item->m, container, x, y);
 }
@@ -121,7 +121,7 @@ void G_ReadItem (item_t * item, int * container, int * x, int * y)
  * @brief Write player stats to network buffer
  * @sa G_SendStats
  */
-void G_SendPlayerStats (player_t * player)
+static void G_SendPlayerStats (player_t * player)
 {
 	edict_t *ent;
 	int i;
@@ -153,7 +153,7 @@ void G_GiveTimeUnits (int team)
 /**
  * @brief
  */
-void G_SendState (int player_mask, edict_t * ent)
+static void G_SendState (int player_mask, edict_t * ent)
 {
 	gi.AddEvent(player_mask & G_TeamToPM(ent->team), EV_ACTOR_STATECHANGE);
 	gi.WriteShort(ent->number);
@@ -391,7 +391,7 @@ float G_ActorVis (vec3_t from, edict_t * check, qboolean full)
  * @brief test if check is visible by from
  * from is from team team
  */
-float G_Vis (int team, edict_t * from, edict_t * check, int flags)
+static float G_Vis (int team, edict_t * from, edict_t * check, int flags)
 {
 	vec3_t eye;
 
@@ -717,7 +717,7 @@ edict_t *G_SpawnFloor (pos3_t pos)
  * @brief
  * @sa G_GetFloorItems
  */
-edict_t *G_GetFloorItemsFromPos (pos3_t pos)
+static edict_t *G_GetFloorItemsFromPos (pos3_t pos)
 {
 	edict_t *floor;
 
@@ -739,7 +739,7 @@ edict_t *G_GetFloorItemsFromPos (pos3_t pos)
  * @return pointer to edict_t being a floor (with items).
  * @note This function is somehow broken - it returns NULL in some cases of items on the floor.
  */
-edict_t *G_GetFloorItems (edict_t * ent)
+static edict_t *G_GetFloorItems (edict_t * ent)
 {
 	edict_t *floor = G_GetFloorItemsFromPos(ent->pos);
 	/* found items */
@@ -993,7 +993,7 @@ void G_ClientInvMove (player_t * player, int num, int from, int fx, int fy, int 
  * @param[in] *ent Pointer to an edict_t being an actor.
  * @sa G_ActorDie
  */
-void G_InventoryToFloor (edict_t * ent)
+static void G_InventoryToFloor (edict_t * ent)
 {
 	invList_t *ic, *next;
 	int k;
@@ -1135,7 +1135,7 @@ int fb_length;
  * @sa G_MoveCalc
  * @sa cl_actor.c:CL_BuildForbiddenList <- shares quite some code
  */
-void G_BuildForbiddenList (int team)
+static void G_BuildForbiddenList (int team)
 {
 	edict_t *ent = NULL;
 	int vis_mask;
@@ -1980,7 +1980,7 @@ int G_ClientAction (player_t * player)
  * @param[in] player Pointer to connected player
  * @todo: Check whether there are enough free spawnpoints in all cases
  */
-void G_GetTeam (player_t * player)
+static void G_GetTeam (player_t * player)
 {
 	player_t *p;
 	int i, j;
@@ -2099,7 +2099,7 @@ int G_ClientGetTeamNumPref (player_t * player)
  * randomly assigns the first turn to a team.
  * @sa SVCmd_StartGame_f
  */
-void G_ClientTeamAssign (player_t * player)
+static void G_ClientTeamAssign (player_t * player)
 {
 	int i, j, teamCount = 1;
 	int playerCount = 0;
@@ -2606,7 +2606,7 @@ qboolean G_ClientSpawn (player_t * player)
  */
 void G_ClientUserinfoChanged (player_t * player, char *userinfo)
 {
-	char *s;
+	const char *s;
 
 	/* check for malformed or illegal info strings */
 	if (!Info_Validate(userinfo))
@@ -2635,7 +2635,7 @@ void G_ClientUserinfoChanged (player_t * player, char *userinfo)
  */
 qboolean G_ClientConnect (player_t * player, char *userinfo)
 {
-	char *value;
+	const char *value;
 
 	/* check to see if they are on the banned IP list */
 	value = Info_ValueForKey(userinfo, "ip");

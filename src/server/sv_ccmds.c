@@ -285,9 +285,8 @@ static void SV_ConSay_f (void)
 	Q_strncpyz(text, "serverconsole: ", sizeof(text));
 	p = Cmd_Args();
 
-	if (*p == '"') {
+	if (*p == '"')
 		p++;
-	}
 
 	Q_strcat(text, p, sizeof(text));
 	if (text[strlen(text)] == '"')

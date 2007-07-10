@@ -334,8 +334,16 @@ int G_VisToPM(int vis_mask);
 void G_SendInventory(int player_mask, edict_t * ent);
 int G_TeamToPM(int team);
 
+void SpawnEntities(const char *mapname, const char *entities);
+qboolean G_RunFrame(void);
+
+void GL_EndBuildingLightmaps(void);
+void GL_BeginBuildingLightmaps(void);
+
 #ifdef DEBUG
 void Cmd_InvList(player_t *player);
+void G_KillTeam(void);
+void G_StunTeam(void);
 #endif
 
 typedef enum {
@@ -497,7 +505,7 @@ struct edict_s {
 	/*================================ */
 
 	int mapNum;
-	char *model;
+	const char *model;
 	float freetime;				/* sv.time when the object was freed */
 
 	/* only used locally in game, not by server */
@@ -540,17 +548,17 @@ struct edict_s {
 	inventory_t i;
 
 	int spawnflags;	/* set via mapeditor */
-	char *classname;
+	const char *classname;
 
 	float angle;	/* entity yaw - set via mapeditor - -1=up; -2=down */
 
 	float speed;	/* speed of entities - e.g. doors */
 	float accel;	/* acceleration of plattforms/doors */
 	float decel;	/* deceleration of plattforms/doors */
-	char *target;	/* name of the entity to trigger or move towards */
-	char *targetname;	/* name pointed to by target */
-	char *message;	/* message when entity is activated - set via mapeditor */
-	char *particle;
+	const char *target;	/* name of the entity to trigger or move towards */
+	const char *targetname;	/* name pointed to by target */
+	const char *message;	/* message when entity is activated - set via mapeditor */
+	const char *particle;
 	float wait;		/* time to wait before platform moves to the next point on its path */
 	float delay;	/* time between triggering switch and effect activating */
 	float random;	/* used to add a bit of time variation of func_timer */

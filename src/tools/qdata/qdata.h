@@ -59,4 +59,7 @@ extern	qboolean	do3ds;
 extern	char		g_only[256];		/* if set, only grab this cd */
 extern	qboolean	g_skipmodel;		/* set true when a cd is not g_only */
 
-extern	char		*trifileext;
+extern	const char		*trifileext;
+
+byte BestColor(int r, int g, int b, int start, int stop);
+cblock_t Huffman(cblock_t in);

@@ -930,18 +930,18 @@ static void SV_ParseMapcycle (void)
 	mapcycleList = NULL;
 
 	length = FS_LoadFile("mapcycle.txt", (void **) &buffer);
-	if (length == -1)
+	if (length == -1 || !buffer)
 		return;
 
 	if (length != -1) {
 		buf = buffer;
 		do {
 			token = COM_Parse(&buf);
-			if (!*buf)
+			if (!buf)
 				break;
 			Q_strncpyz(map, token, sizeof(map));
 			token = COM_Parse(&buf);
-			if (!*buf)
+			if (!buf)
 				break;
 			Q_strncpyz(gameType, token, sizeof(gameType));
 			SV_MapcycleAdd(map, gameType);

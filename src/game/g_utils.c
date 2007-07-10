@@ -288,13 +288,6 @@ edict_t *G_PickTarget (char *targetname)
 #endif
 
 /**
- * @brief
- */
-void Think_Delay(edict_t * ent)
-{
-}
-
-/**
  * @brief This is just a convenience function for making temporary vectors for function calls
  */
 float *tv (float x, float y, float z)
@@ -337,7 +330,7 @@ char *vtos (vec3_t v)
 /**
  * @brief
  */
-void Move_Final (edict_t *ent)
+static void Move_Final (edict_t *ent)
 {
 	if (ent->moveinfo.remaining_distance == 0) {
 		VectorClear (ent->moveinfo.velocity);
@@ -351,7 +344,7 @@ void Move_Final (edict_t *ent)
 /**
  * @brief
  */
-void Move_Begin (edict_t *ent)
+static void Move_Begin (edict_t *ent)
 {
 	float	frames;
 
@@ -476,7 +469,7 @@ edict_t *G_Spawn (void)
 
 
 #define ENTLIST_LENGTH 256
-static char *entList[ENTLIST_LENGTH];
+static const char *entList[ENTLIST_LENGTH];
 
 /**
  * @brief

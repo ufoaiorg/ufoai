@@ -53,7 +53,7 @@ qboolean SND_Init (struct sndinfo *s)
 {
 	int i, err, dir = 0;
 	unsigned int r;
-	char *device;
+	const char *device;
 
 	si = s;
 	device = si->device->string;

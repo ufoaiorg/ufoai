@@ -73,7 +73,7 @@ void QGL_Shutdown (void)
 /**
  * @brief Debug function for library symbol loading
  */
-static void *GPA2 (char* symbol)
+static void *GPA2 (const char* symbol)
 {
 	void *sym = NULL;
 	sym = GPA(symbol);

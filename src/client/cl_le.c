@@ -37,7 +37,7 @@ int numLEs;
  LM handling
 =========================================================================== */
 
-static char *lmList[MAX_LOCALMODELS + 1];
+static const char *lmList[MAX_LOCALMODELS + 1];
 
 
 /**

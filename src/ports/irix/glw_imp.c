@@ -628,7 +628,7 @@ int XLateKey (XKeyEvent *ev)
 /**
  * @brief
  */
-void GetEvent (void)
+static void GetEvent (void)
 {
 	XEvent x_event;
 	int b;

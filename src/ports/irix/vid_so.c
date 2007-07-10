@@ -34,10 +34,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 /* Structure containing functions exported from refresh DLL */
 refexport_t	re;
 
-#ifdef REF_HARD_LINKED
-refexport_t GetRefAPI (refimport_t rimp);
-#endif
-
 /* Console variables that we need to access from this module */
 extern cvar_t *vid_xpos;			/* X coordinate of window position */
 extern cvar_t *vid_ypos;			/* Y coordinate of window position */
@@ -143,7 +139,7 @@ static void VID_FreeReflib (void)
 	RW_IN_Commands_fp = NULL;
 	RW_IN_Frame_fp = NULL;
 
-	memset (&re, 0, sizeof(re));
+	memset(&re, 0, sizeof(re));
 	reflib_library = NULL;
 	reflib_active  = qfalse;
 }
@@ -173,7 +169,7 @@ static qboolean VID_LoadRefresh (const char *name)
 		KBD_Close_fp = NULL;
 		RW_IN_Shutdown_fp = NULL;
 		re.Shutdown();
-		VID_FreeReflib ();
+		VID_FreeReflib();
 		restart = qtrue;
 	}
 

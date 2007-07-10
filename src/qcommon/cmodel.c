@@ -149,7 +149,7 @@ static int checkcount;
 static int numInline;
 static byte sh_low;
 static byte sh_big;
-static char **inlineList; /**< a list with all local models (like func_breakable) */
+static const char **inlineList; /**< a list with all local models (like func_breakable) */
 static vec3_t tr_end;
 static byte *cmod_base;
 static vec3_t shift; /**< use for random map assembly for shifting origins and so on */
@@ -631,7 +631,7 @@ static int CM_EntTestLine (vec3_t start, vec3_t stop)
 {
 	trace_t trace;
 	cBspModel_t *model;
-	char **name;
+	const char **name;
 
 	/* trace against world first */
 	if (CM_TestLine(start, stop))
@@ -673,7 +673,7 @@ static int CM_EntTestLineDM (vec3_t start, vec3_t stop, vec3_t end)
 {
 	trace_t trace;
 	cBspModel_t *model;
-	char **name;
+	const char **name;
 	int blocked;
 
 	/* trace against world first */
@@ -2817,7 +2817,7 @@ void Grid_PosToVec (struct routing_s *map, pos3_t pos, vec3_t vec)
  * @sa CMod_LoadSubmodels
  * @param[in] list The local models list
  */
-void Grid_RecalcRouting (struct routing_s *map, char *name, char **list)
+void Grid_RecalcRouting (struct routing_s *map, const char *name, const char **list)
 {
 	cBspModel_t *model;
 	pos3_t min, max;

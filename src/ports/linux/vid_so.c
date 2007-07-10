@@ -131,7 +131,9 @@ static void VID_FreeReflib (void)
 			KBD_Close_fp();
 		if (RW_IN_Shutdown_fp)
 			RW_IN_Shutdown_fp();
+#ifndef REF_HARD_LINKED
 		Sys_FreeLibrary(reflib_library);
+#endif
 	}
 
 	KBD_Init_fp = NULL;

@@ -1728,5 +1728,4 @@ void Com_DPrintf (const char *fmt, ...)
 
 	ri.Con_Printf(PRINT_DEVELOPER, "%s", text);
 }
-
-#endif
+#endif /* REF_HARD_LINKED */

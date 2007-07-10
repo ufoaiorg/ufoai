@@ -972,7 +972,7 @@ void GLimp_Shutdown (void)
  * but those don't seem to be fatal .. so the default would be to just ignore them
  * our implementation mimics the default handler behaviour (not completely cause I'm lazy)
  */
-int qXErrorHandler (Display *display, XErrorEvent *ev)
+static int qXErrorHandler (Display *display, XErrorEvent *ev)
 {
 	static char buf[1024];
 	XGetErrorText(display, ev->error_code, buf, 1024);

@@ -36,7 +36,7 @@ ALIAS MODELS
  */
 void Mod_LoadAnims (mAliasModel_t * mod, void *buffer)
 {
-	char *text, *token;
+	const char *text, *token;
 	mAliasAnim_t *anim;
 	int n;
 	mdl_md2_t *md2;

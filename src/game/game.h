@@ -164,7 +164,7 @@ typedef struct {
 	int (*GridHeight) (struct routing_s * map, pos3_t pos);
 	int (*GridFall) (struct routing_s * map, pos3_t pos);
 	void (*GridPosToVec) (struct routing_s * map, pos3_t pos, vec3_t vec);
-	void (*GridRecalcRouting) (struct routing_s * map, char *name, char **list);
+	void (*GridRecalcRouting) (struct routing_s * map, const char *name, const char **list);
 
 	/* filesystem functions */
 	const char *(*FS_Gamedir) (void);
@@ -175,13 +175,13 @@ typedef struct {
 	void (*WriteChar) (int c);
 
 #ifdef DEBUG
-	void (*WriteByte) (int c, char* file, int line);
+	void (*WriteByte) (int c, const char* file, int line);
 #else
 	void (*WriteByte) (int c);
 #endif
 
 #ifdef DEBUG
-	void (*WriteShort) (int c, char* file, int line);
+	void (*WriteShort) (int c, const char* file, int line);
 #else
 	void (*WriteShort) (int c);
 #endif
@@ -255,7 +255,7 @@ typedef struct {
 	void (*Shutdown) (void);
 
 	/* each new level entered will cause a call to SpawnEntities */
-	void (*SpawnEntities) (char *mapname, char *entstring);
+	void (*SpawnEntities) (const char *mapname, const char *entstring);
 
 	qboolean(*ClientConnect) (player_t * client, char *userinfo);
 	void (*ClientBegin) (player_t * client);

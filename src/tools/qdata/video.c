@@ -87,10 +87,10 @@ static int GetLittleLong(void)
 /**
  * @brief
  */
-static void FindNextChunk(char *name)
+static void FindNextChunk (const char *name)
 {
 	while (1) {
-		data_p=last_chunk;
+		data_p = last_chunk;
 
 		if (data_p >= iff_end) {
 			/* didn't find the chunk */
@@ -116,17 +116,17 @@ static void FindNextChunk(char *name)
 /**
  * @brief
  */
-static void FindChunk(char *name)
+static void FindChunk (const char *name)
 {
 	last_chunk = iff_data;
-	FindNextChunk (name);
+	FindNextChunk(name);
 }
 
 #ifdef DUMPCHUNKS
 /**
  * @brief
  */
-static void DumpChunks(void)
+static void DumpChunks (void)
 {
 	char	str[5];
 
@@ -234,7 +234,7 @@ static wavinfo_t GetWavinfo (char *name, byte *wav, int wavlength)
 /**
  * @brief
  */
-void LoadSoundtrack (void)
+static void LoadSoundtrack (void)
 {
 	char	name[1024];
 	qFILE	f;
@@ -276,7 +276,7 @@ void LoadSoundtrack (void)
 /**
  * @brief
  */
-void WriteSound (FILE *output, int frame)
+static void WriteSound (FILE *output, int frame)
 {
 	int		start, end;
 	int		count;
@@ -303,124 +303,7 @@ void WriteSound (FILE *output, int frame)
 	}
 }
 
-/**
- * @brief
- */
-cblock_t MTF (cblock_t in)
-{
-	int			i, j, b, code;
-	byte		*out_p;
-	int			index[256];
-	cblock_t	out;
-
-	out_p = out.data = malloc(in.count + 4);
-
-	/* write count */
-	*out_p++ = in.count&255;
-	*out_p++ = (in.count>>8)&255;
-	*out_p++ = (in.count>>16)&255;
-	*out_p++ = (in.count>>24)&255;
-
-	for (i = 0; i < 256; i++)
-		index[i] = i;
-
-	for (i = 0; i < in.count; i++) {
-		b = in.data[i];
-		code = index[b];
-		*out_p++ = code;
-
-		/* shuffle b indexes to 0 */
-		for (j = 0; j < 256; j++)
-			if (index[j] < code)
-				index[j]++;
-		index[b] = 0;
-	}
-
-	out.count = out_p - out.data;
-
-	return out;
-}
-
-
-int		bwt_size;
-byte	*bwt_data;
-
-/**
- * @brief qsort function
- */
-static int bwtCompare (const void *elem1, const void *elem2)
-{
-	int		i;
-	int		i1, i2;
-	int		b1, b2;
-
-	i1 = *(const int *)elem1;
-	i2 = *(const int *)elem2;
-
-	for (i = 0; i < bwt_size; i++) {
-		b1 = bwt_data[i1];
-		b2 = bwt_data[i2];
-		if (b1 < b2)
-			return -1;
-		if (b1 > b2)
-			return 1;
-		if (++i1 == bwt_size)
-			i1 = 0;
-		if (++i2 == bwt_size)
-			i2 = 0;
-	}
-
-	return 0;
-}
-
-/**
- * @brief
- */
-cblock_t BWT (cblock_t in)
-{
-	int		*sorted;
-	int		i;
-	byte	*out_p;
-	cblock_t	out;
-
-	bwt_size = in.count;
-	bwt_data = in.data;
-
-	sorted = malloc(in.count*sizeof(*sorted));
-	for (i = 0; i < in.count; i++)
-		sorted[i] = i;
-	qsort (sorted, in.count, sizeof(*sorted), bwtCompare);
-
-	out_p = out.data = malloc(in.count + 8);
-
-	/* write count */
-	*out_p++ = in.count&255;
-	*out_p++ = (in.count>>8)&255;
-	*out_p++ = (in.count>>16)&255;
-	*out_p++ = (in.count>>24)&255;
-
-	/* write head index */
-	for (i = 0; i < in.count; i++)
-		if (sorted[i] == 0)
-			break;
-	*out_p++ = i&255;
-	*out_p++ = (i>>8)&255;
-	*out_p++ = (i>>16)&255;
-	*out_p++ = (i>>24)&255;
-
-	/* write the L column */
-	for (i = 0; i < in.count; i++)
-		*out_p++ = in.data[(sorted[i]+in.count-1)%in.count];
-
-	free (sorted);
-
-	out.count = out_p - out.data;
-
-	return out;
-}
-
-typedef struct hnode_s
-{
+typedef struct hnode_s {
 	int			count;
 	qboolean	used;
 	int			children[2];

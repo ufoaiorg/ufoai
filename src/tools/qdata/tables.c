@@ -65,23 +65,21 @@ static int FindNearestColor( unsigned int color )
 }
 #endif
 
-extern byte BestColor( int, int, int, int, int );
-
-void Inverse16_BuildTable( void )
+static void Inverse16_BuildTable (void)
 {
 	int i;
 
 	/* create the 16-to-8 table */
-	for ( i = 0; i < 65536; i++ ) {
+	for (i = 0; i < 65536; i++) {
 		int r = i & 31;
-		int g = ( i >> 5 ) & 63;
-		int b = ( i >> 11 ) & 31;
+		int g = (i >> 5) & 63;
+		int b = (i >> 11) & 31;
 
 		r <<= 3;
 		g <<= 2;
 		b <<= 3;
 
-		inverse16to8table[i] = BestColor( r, g, b, 0, 255 );
+		inverse16to8table[i] = BestColor(r, g, b, 0, 255);
 	}
 }
 

@@ -109,7 +109,7 @@ void GL_ScreenShot_f (void)
 {
 	char	checkName[MAX_OSPATH];
 	int		type, shotNum, quality = 100;
-	char	*ext;
+	const char	*ext;
 	byte	*buffer;
 	FILE	*f;
 

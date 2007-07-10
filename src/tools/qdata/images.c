@@ -300,7 +300,7 @@ qboolean	palmap_built;
 /**
  * @brief
  */
-int FindColor (int r, int g, int b)
+static int FindColor (int r, int g, int b)
 {
 	int		bestcolor;
 
@@ -329,7 +329,7 @@ int FindColor (int r, int g, int b)
 /**
  * @brief
  */
-void BuildPalmap (void)
+static void BuildPalmap (void)
 {
 #ifdef TABLECOLORS
 	int		r, g, b;
@@ -357,7 +357,7 @@ void BuildPalmap (void)
 /**
  * @brief
  */
-byte AveragePixels (int count)
+static byte AveragePixels (int count)
 {
 	int		r,g,b;
 	int		i;
@@ -411,7 +411,7 @@ typedef enum
 
 typedef struct
 {
-	char	*name;
+	const char	*name;
 	int		flags;
 	parmtype_t	type;
 } mipparm_t;
@@ -632,7 +632,7 @@ also copies the tga files for GL rendering.
 */
 
 /* 3dstudio environment map suffixes */
-char *suf[6] = {"rt", "ft", "lf", "bk", "up", "dn"};
+static const char *suf[6] = {"rt", "ft", "lf", "bk", "up", "dn"};
 
 /**
  * @brief

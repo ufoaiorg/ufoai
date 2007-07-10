@@ -35,9 +35,9 @@ qboolean	do3ds;
 char		g_only[256];		/* if set, only grab this cd */
 qboolean	g_skipmodel;		/* set true when a cd is not g_only */
 
-static char *ext_3ds = "3ds";
-static char *ext_tri= "tri";
-char *trifileext;
+static const char *ext_3ds = "3ds";
+static const char *ext_tri= "tri";
+const char *trifileext;
 
 /*
 =======================================================
@@ -115,7 +115,6 @@ void ReleaseFile (const char *filename)
 
 	if (g_compress_pak && len < 4096 * 1024 ) {
 		cblock_t	in, out;
-		cblock_t Huffman(cblock_t in);
 
 		in.count = len;
 		in.data = buf;
@@ -310,7 +309,7 @@ static void ReleaseTexture (char *name)
  * Releases the .bsp files for the maps, and scans all of the files to
  * build a list of all textures used, which are then released.
  */
-void Cmd_Maps (void)
+static void Cmd_Maps (void)
 {
 	char	map[1024];
 	int		i;

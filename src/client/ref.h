@@ -404,9 +404,12 @@ typedef struct {
 	struct memPool_s **modelPool;
 } refimport_t;
 
-
+#ifndef REF_HARD_LINKED
 /* this is the only function actually exported at the linker level */
-typedef refexport_t (*GetRefAPI_t) (refimport_t );
+typedef refexport_t (*GetRefAPI_t)(refimport_t );
+#else
+refexport_t GetRefAPI(refimport_t rimp);
+#endif
 
 #define CONSOLE_CHAR_ALIGN 4
 

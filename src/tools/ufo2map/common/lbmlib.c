@@ -81,10 +81,10 @@ static bmhd_t bmhd;						/* will be in native byte order */
 /**
  * @brief
  */
-int Align (int l)
+static int Align (int l)
 {
-	if (l&1)
-		return l+1;
+	if (l & 1)
+		return l + 1;
 	return l;
 }
 

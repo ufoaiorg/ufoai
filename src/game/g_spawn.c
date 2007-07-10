@@ -82,7 +82,7 @@ typedef enum {
 } fieldtype_t;
 
 typedef struct {
-	char *name;
+	const char *name;
 	size_t ofs;
 	fieldtype_t type;
 	int flags;
@@ -114,7 +114,7 @@ static const field_t fields[] = {
 	{"angles", offsetof(edict_t, angles), F_VECTOR, 0},
 	{"angle", offsetof(edict_t, angle), F_FLOAT, 0},
 
-	/*need for item field in edict struct, FFL_SPAWNTEMP item will be skipped on saves */
+	/* need for item field in edict struct, FFL_SPAWNTEMP item will be skipped on saves */
 	{"gravity", offsetof(spawn_temp_t, gravity), F_LSTRING, FFL_SPAWNTEMP},
 	{"minyaw", offsetof(spawn_temp_t, minyaw), F_FLOAT, FFL_SPAWNTEMP},
 	{"maxyaw", offsetof(spawn_temp_t, maxyaw), F_FLOAT, FFL_SPAWNTEMP},
@@ -234,11 +234,11 @@ static void ED_ParseField (const char *key, const char *value, edict_t * ent)
  * @brief Parses an edict out of the given string, returning the new position
  * @param[in] ent should be a properly initialized empty edict.
  */
-static char *ED_ParseEdict (char *data, edict_t * ent)
+static const char *ED_ParseEdict (const char *data, edict_t * ent)
 {
 	qboolean init;
 	char keyname[256];
-	char *com_token;
+	const char *com_token;
 
 	init = qfalse;
 	memset(&st, 0, sizeof(st));
@@ -282,11 +282,11 @@ static char *ED_ParseEdict (char *data, edict_t * ent)
  * @brief Creates a server's entity / program execution context
  * by parsing textual entity definitions out of an ent file.
  */
-void SpawnEntities (const char *mapname, char *entities)
+void SpawnEntities (const char *mapname, const char *entities)
 {
 	edict_t *ent;
 	int entnum;
-	char *com_token;
+	const char *com_token;
 
 	gi.FreeTags(TAG_LEVEL);
 
@@ -732,7 +732,7 @@ static void Think_CalcMoveSpeed (edict_t *self)
  * @brief Spawns a door trigger around the func_door
  * @sa Think_CalcMoveSpeed
  */
-void Think_SpawnDoorTrigger (edict_t *self)
+static void Think_SpawnDoorTrigger (edict_t *self)
 {
 	edict_t		*other;
 	vec3_t		mins, maxs;

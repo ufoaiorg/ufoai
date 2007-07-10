@@ -224,7 +224,7 @@ static void PF_WriteChar (int c)
  * @brief
  */
 #ifdef DEBUG
-static void PF_WriteByte (int c, char* file, int line)
+static void PF_WriteByte (int c, const char* file, int line)
 {
 	MSG_WriteByteDebug(&sv.multicast, c, file, line);
 }
@@ -239,7 +239,7 @@ static void PF_WriteByte (int c)
  * @brief
  */
 #ifdef DEBUG
-static void PF_WriteShort (int c, char* file, int line)
+static void PF_WriteShort (int c, const char* file, int line)
 {
 	MSG_WriteShortDebug(&sv.multicast, c, file, line);
 }

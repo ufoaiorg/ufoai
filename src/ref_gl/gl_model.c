@@ -168,7 +168,7 @@ static model_t *Mod_ForName (const char *name, qboolean crash)
  * @sa R_RegisterModelShort
  * @sa Mod_ForName
  */
-struct model_s *R_RegisterModel (const char *name)
+static model_t *R_RegisterModel (const char *name)
 {
 	model_t *mod;
 	int i;
@@ -248,7 +248,7 @@ static const char *mod_extensions[] = {
  * @return NULL if no model could be found with the given name, model_t otherwise
  * @sa R_RegisterModel
  */
-struct model_s *R_RegisterModelShort (const char *name)
+model_t *R_RegisterModelShort (const char *name)
 {
 	model_t *mod;
 	int i = 0;
