@@ -25,6 +25,7 @@ SERVER_SRCS += \
 	server/sv_world.c \
 	\
 	game/q_shared.c \
+	game/inv_shared.c \
 	\
 	ports/null/cl_null.c \
 	ports/null/cd_null.c
