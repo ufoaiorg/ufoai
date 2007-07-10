@@ -75,25 +75,25 @@ const char *pa_format[] =
  */
 int Q_StringSort (const void *string1, const void *string2)
 {
- 	const char *s1, *s2;
- 	s1 = string1;
- 	s2 = string2;
- 	if (*s1 < *s2)
- 	 	return -1;
- 	else if (*s1 == *s2) {
- 		while (*s1) {
- 		s1++;
- 	 		s2++;
- 	 		if (*s1 < *s2)
- 	 			return -1;
- 			else if (*s1 == *s2) {
- 	 			;
- 	 		} else
- 	 			return 1;
- 	 	}
- 		return 0;
- 	} else
- 		return 1;
+	const char *s1, *s2;
+	s1 = string1;
+	s2 = string2;
+	if (*s1 < *s2)
+		return -1;
+	else if (*s1 == *s2) {
+		while (*s1) {
+		s1++;
+			s2++;
+			if (*s1 < *s2)
+				return -1;
+			else if (*s1 == *s2) {
+				;
+			} else
+				return 1;
+		}
+		return 0;
+	} else
+		return 1;
 }
 
 /**
