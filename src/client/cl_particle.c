@@ -1305,7 +1305,7 @@ static void CL_ParsePtlCmds (const char *name, const char **text)
 					}
 
 					if (((pc_types[i] & ONLY) && (pc_types[i] & ~ONLY) != pp->type) || (!(pc_types[i] & ONLY) && !((1 << pp->type) & pc_types[i]))) {
-						Com_Printf("CL_ParsePtlCmds: bad type in var \"%s\" specified (particle %s)\n", token, name);
+						Com_Printf("CL_ParsePtlCmds: bad type in var \"%s\" specified (particle %s) (ptl type: %i, string: %s)\n", token, name, pp->type, pc_strings[i]);
 						numPtlCmds--;
 						break;
 					}
