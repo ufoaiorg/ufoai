@@ -54,8 +54,9 @@ static qboolean AIRFIGHT_RemoveProjectile (int idx)
  * @param[in] idx of the ammo to add in array aircraftItems[]
  * @param[in] attacker Pointer to the attacking aircraft
  * @param[in] target Pointer to the target aircraft
+ * @note we already checked in AIRFIGHT_ChooseWeapon that the weapon has still ammo
  */
-static qboolean AIRFIGHT_AddProjectile (int idx, aircraft_t *attacker, aircraft_t *target)
+static qboolean AIRFIGHT_AddProjectile (int idx, aircraft_t *attacker, aircraft_t *target, int slotIdx)
 {
 	aircraftProjectile_t *projectile;
 
@@ -67,11 +68,6 @@ static qboolean AIRFIGHT_AddProjectile (int idx, aircraft_t *attacker, aircraft_
 		return qfalse;
 	}
 
-	/* no more ammo */
-	if (attacker->weapons[0].ammoLeft <= 0) {
-		Com_Printf("No more ammo\n");
-		return qfalse;
-	}
 	assert(target);
 
 	projectile = &gd.projectiles[gd.numProjectiles];
@@ -84,14 +80,14 @@ static qboolean AIRFIGHT_AddProjectile (int idx, aircraft_t *attacker, aircraft_
 	projectile->time = 0;
 	projectile->angle = 0.0f;
 
-	attacker->weapons[0].ammoLeft -= 1;
+	attacker->weapons[slotIdx].ammoLeft -= 1;
 	gd.numProjectiles++;
 
 	return qtrue;
 }
 
 /**
- * brief Change destination of projectile to an idle point of the map, close to its former target.
+ * @brief Change destination of projectile to an idle point of the map, close to its former target.
  * @param[in] idx idx of the projectile to update in gd.projectiles[].
  */
 static void AIRFIGHT_MissTarget (int idx)
@@ -110,28 +106,73 @@ static void AIRFIGHT_MissTarget (int idx)
 }
 
 /**
- * brief Calculate the probability to hit the ennemy.
+ * @brief Choose the weapon an attacking aircraft will use to fire on a target.
+ * @param[in] shooter Pointer to the attacking aircraft.
+ * @param[in] target Pointer to the aimed aircraft.
+ * @return indice of the slot to use (in array weapons[]), -1 if no weapon to use atm, -2 if no weapon to use at all (no ammo left).
+ */
+static int AIRFIGHT_ChooseWeapon (aircraft_t *shooter, aircraft_t *target)
+{
+	int slotIdx = -2;
+	int i, ammoIdx;
+	float distance0, distance=99999.9f;
+
+	distance0 = distance;
+
+	/* We choose the usable weapon with the smaller range */
+	for (i = 0; i < MAX_AIRCRAFTSLOT; i++) {
+		/* check if there is a functional weapon in this slot */
+		if (shooter->weapons[i].itemIdx < 0 || shooter->weapons[i].installationTime != 0)
+			continue;
+
+		/* check if there is still ammo in this weapon */
+		if (shooter->weapons[slotIdx].ammoIdx < 0 || shooter->weapons[i].ammoLeft <= 0)
+			continue;
+		
+		if (slotIdx == -2)
+			slotIdx = -1;
+
+		ammoIdx = shooter->weapons[i].ammoIdx;
+		/* check if the target is within range of this weapon */
+		distance = CP_GetDistance(shooter->pos, target->pos);
+		if (distance > aircraftItems[ammoIdx].stats[AIR_STATS_WRANGE])
+			continue;
+		
+		/* check if weapon is reloaded */
+		if (shooter->weapons[i].delayNextShot > 0)
+			continue;
+
+		if (distance < distance0) {
+			slotIdx = i;
+			distance0 = distance;
+		}
+	}
+	return slotIdx;
+}
+
+/**
+ * @brief Calculate the probability to hit the ennemy.
  * @param[in] shooter Pointer to the attacking aircraft.
  * @param[in] target Pointer to the aimed aircraft.
  * @return Probability to hit the target (0 when you don't have a chance, 1 (or more) when you're sure to hit).
  * @sa AIRFIGHT_ExecuteActions
  * @todo This probability should also depend on the pilot skills, when they will be implemented.
  */
-static float AIRFIGHT_ProbabilityToHit (aircraft_t *shooter, aircraft_t *target)
+static float AIRFIGHT_ProbabilityToHit (aircraft_t *shooter, aircraft_t *target, int slotIdx)
 {
 	int idx;
 	float probability = 0.0f;
 	float factor;
 
 #ifdef DEBUG
-	idx = shooter->weapons[0].itemIdx;
+	idx = shooter->weapons[slotIdx].itemIdx;
 	if (idx < 0) {
 		Com_Printf("AIRFIGHT_ProbabilityToHit: no weapon assigned to attacking aircraft\n");
 		return probability;
 	}
 #endif
 
-	idx = shooter->weapons[0].ammoIdx;
+	idx = shooter->weapons[slotIdx].ammoIdx;
 	if (idx < 0) {
 		Com_Printf("AIRFIGHT_ProbabilityToHit: no ammo in weapon of attacking aircraft\n");
 		return probability;
@@ -162,41 +203,40 @@ static float AIRFIGHT_ProbabilityToHit (aircraft_t *shooter, aircraft_t *target)
 
 /**
  * @brief Decide what an attacking aircraft can do.
- * @param[in] aircraft The aircraft we attack with.
- * @param[in] ufo The ufo we are going to attack.
+ * @param[in] shooter The aircraft we attack with.
+ * @param[in] target The ufo we are going to attack.
  * @todo Implement me and display an attack popup.
  */
-void AIRFIGHT_ExecuteActions (aircraft_t* air, aircraft_t* ufo)
+void AIRFIGHT_ExecuteActions (aircraft_t* shooter, aircraft_t* target)
 {
-	int idx;
+	int ammoIdx, slotIdx;
+	float probability;
 
 	/* some asserts */
-	assert(air);
-	assert(ufo);
+	assert(shooter);
+	assert(target);
 
-	idx = air->weapons[0].ammoIdx;
+	/* Check if the attacking aircraft can shoot */
+	slotIdx = AIRFIGHT_ChooseWeapon(shooter, target);
 
-	if (idx > -1) {
-		/* aircraft has ammunitions */
+	if (slotIdx > -1) {
+		ammoIdx = shooter->weapons[slotIdx].ammoIdx;
 
-		/* if we can shoot, shoot */
-		if (CP_GetDistance(ufo->pos, air->pos) < aircraftItems[idx].stats[AIR_STATS_WRANGE] && air->weapons[0].delayNextShot <= 0) {
-			float probability;
-
-			if (AIRFIGHT_AddProjectile(idx, air, ufo)) {
-				air->weapons[0].delayNextShot = aircraftItems[idx].weaponDelay;
-				/* will we miss the target ? */
-				probability = frand();
-				if (probability > AIRFIGHT_ProbabilityToHit(air, ufo))
-					AIRFIGHT_MissTarget(gd.numProjectiles - 1);
-			}
-		} else
-			/* otherwise, pursue target */
-			AIR_SendAircraftPurchasingUfo(air, ufo);
+		/* shoot */
+		if (AIRFIGHT_AddProjectile(ammoIdx, shooter, target, slotIdx)) {
+			shooter->weapons[slotIdx].delayNextShot = aircraftItems[ammoIdx].weaponDelay;
+			/* will we miss the target ? */
+			probability = frand();
+			if (probability > AIRFIGHT_ProbabilityToHit(shooter, target, slotIdx))
+				AIRFIGHT_MissTarget(gd.numProjectiles - 1);
+		}
+	} else if (slotIdx > -2) {
+		/* no ammo to fire atm (too far or reloading), pursue target */
+		AIR_SendAircraftPurchasingUfo(shooter, target);
 	} else {
-		/* no weapon, you should flee ! */
-		AIR_AircraftReturnToBase(air);
-	}
+		/* no ammo left, or no weapon, you should flee ! */
+		AIR_AircraftReturnToBase(shooter);
+	} 
 }
 
 /**
