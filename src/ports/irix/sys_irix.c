@@ -44,6 +44,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "../linux/rw_linux.h"
 
 extern cvar_t *nostdout;
+void Sys_ConsoleInputInit(void);
 
 unsigned	sys_frame_time;
 
@@ -52,14 +53,6 @@ uid_t saved_euid;
 /* ======================================================================= */
 /* General routines */
 /* ======================================================================= */
-
-void Sys_Quit (void)
-{
-	CL_Shutdown ();
-	Qcommon_Shutdown ();
-	fcntl (0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
-	exit(0);
-}
 
 void Sys_Init (void)
 {
@@ -93,7 +86,7 @@ void Sys_Error (const char *error, ...)
 /**
  * @brief
  */
-void floating_point_exception_handler (int whatever)
+static void floating_point_exception_handler (int whatever)
 {
 	signal(SIGFPE, floating_point_exception_handler);
 }
@@ -121,7 +114,7 @@ char *Sys_GetClipboardData (void)
 /**
  * @brief
  */
-int main (int argc, char **argv)
+int main (int argc, const char **argv)
 {
 	int time, oldtime, newtime;
 	float timescale = 1.0;

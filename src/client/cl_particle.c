@@ -209,9 +209,14 @@ static void CL_ParticleRun2 (ptl_t *p);
 
 
 /**
- * @brief
+ * @brief Spawns the map particle
+ * @param[in] ptl Particle name
+ * @param[in] origin The position in the world
+ * @param[in] wait
+ * @param[in] info
+ * @param[in] levelflags The levelflag mask to show the particle on
  */
-void CL_AddMapParticle (char *ptl, vec3_t origin, vec2_t wait, char *info, int levelflags)
+void CL_AddMapParticle (const char *ptl, vec3_t origin, vec2_t wait, const char *info, int levelflags)
 {
 	mp_t *mp;
 
@@ -264,7 +269,7 @@ void CL_ParticleRegisterArt (void)
  * @note searches the global particle art list and checks whether the pic or model was already loaded
  * @return index of global art array
  */
-static int CL_ParticleGetArt (char *name, int frame, char type)
+static int CL_ParticleGetArt (const char *name, int frame, char type)
 {
 	ptlArt_t *a;
 	int i;
@@ -360,7 +365,7 @@ void PE_RenderParticles (void)
  */
 static void PE_UpdateMenu (ptlDef_t* p)
 {
-	char *type, *name, *text;
+	const char *type, *name, *text;
 	static char ptlList[1024];
 
 	FS_BuildFileList("ufos/*.ufo");
@@ -937,7 +942,7 @@ void CL_ParticleSpawnFromSizeBuf (sizebuf_t* sb)
 /**
  * @brief
  */
-void CL_Fading (vec4_t color, byte fade, float frac, qboolean onlyAlpha)
+static void CL_Fading (vec4_t color, byte fade, float frac, qboolean onlyAlpha)
 {
 	int i;
 
@@ -1128,10 +1133,11 @@ void CL_ParticleRun (void)
 /**
  * @brief
  */
-void CL_ParseMapParticle (ptl_t * ptl, char *es, qboolean afterwards)
+static void CL_ParseMapParticle (ptl_t * ptl, const char *es, qboolean afterwards)
 {
 	char keyname[MAX_QPATH];
-	char *key, *token;
+	const char *token;
+	char *key;
 	const value_t *pp;
 
 	key = keyname + 1;
@@ -1219,13 +1225,14 @@ void CL_RunMapParticles (void)
 /**
  * @brief
  */
-void CL_ParsePtlCmds (const char *name, char **text)
+static void CL_ParsePtlCmds (const char *name, const char **text)
 {
 	ptlCmd_t *pc;
 	const value_t *pp;
 	const char *errhead = "CL_ParsePtlCmds: unexpected end of file";
-	char *token;
+	const char *token;
 	int i, j;
+	qboolean singleComponent;
 
 	/* get it's body */
 	token = COM_Parse(text);
@@ -1280,13 +1287,15 @@ void CL_ParsePtlCmds (const char *name, char **text)
 
 					/* check for component specifier */
 					len = strlen(token);
-					if (token[len - 2] == '.')
-						token[len - 2] = 0;
-					else
-						len = 0;
+					if (token[len - 2] == '.') {
+						len -= 2;
+						singleComponent = qtrue;
+					} else {
+						singleComponent = qfalse;
+					}
 
 					for (pp = pps; pp->string; pp++)
-						if (!Q_strcmp(token, pp->string))
+						if (!Q_strncmp(token, pp->string, len))
 							break;
 
 					if (!pp->string) {
@@ -1301,11 +1310,11 @@ void CL_ParsePtlCmds (const char *name, char **text)
 						break;
 					}
 
-					if (len) {
+					if (singleComponent) {
 						/* get single component */
 						if ((1 << pp->type) & V_VECS) {
 							pc->type = V_FLOAT;
-							pc->ref = -((int)pp->ofs) - (token[len - 1] - '1') * sizeof(float);
+							pc->ref = -((int)pp->ofs) - (token[len + 2] - '1') * sizeof(float);
 							break;
 						} else
 							Com_Printf("CL_ParsePtlCmds: can't get components of a non-vector type (particle %s)\n", name);
@@ -1415,11 +1424,11 @@ int CL_GetParticleIndex (const char *name)
  * @return the position of the particle in ptlDef array
  * @sa CL_ParseClientData
  */
-int CL_ParseParticle (const char *name, char **text)
+int CL_ParseParticle (const char *name, const char **text)
 {
 	const char *errhead = "CL_ParseParticle: unexpected end of file (particle ";
 	ptlDef_t *pd;
-	char *token;
+	const char *token;
 	int i, pos;
 
 	/* search for particles with same name */

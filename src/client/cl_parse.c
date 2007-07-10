@@ -469,7 +469,7 @@ static void CL_ParseStartBreakSoundPacket (void)
 	float 	attenuation;
 	int		flags;
 	float	ofs;
-	char	*sound;
+	const char	*sound;
 	sfx_t *sfx;
 
 	flags = MSG_ReadByte(&net_message);

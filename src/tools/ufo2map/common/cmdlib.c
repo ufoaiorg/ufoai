@@ -365,7 +365,7 @@ int	FileTime (const char *path)
 /**
  * @brief Parse a token out of a string
  */
-char *COM_Parse (char *data)
+const char *COM_Parse (const char *data)
 {
 	int c, len;
 

@@ -121,7 +121,7 @@ char *Sys_GetHomeDirectory (void)
 	return NULL;
 }
 
-char *Sys_GetCurrentUser (void)
+const char *Sys_GetCurrentUser (void)
 {
 	return NULL;
 }
@@ -132,7 +132,7 @@ void Sys_DebugBreak (void)
 
 /*============================================================================= */
 
-void main (int argc, char **argv)
+void main (int argc, const char **argv)
 {
 	Qcommon_Init(argc, argv);
 

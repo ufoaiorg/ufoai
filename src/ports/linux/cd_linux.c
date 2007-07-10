@@ -61,7 +61,7 @@ cvar_t	*cd_volume;
 cvar_t	*cd_nocd;
 cvar_t	*cd_dev;
 
-void CDAudio_Pause(void);
+static void CDAudio_Pause(void);
 
 /**
  * @brief
@@ -378,7 +378,7 @@ void CDAudio_Stop (void)
 /**
  * @brief
  */
-void CDAudio_Pause (void)
+static void CDAudio_Pause (void)
 {
 	if (cdfile == -1 || !enabled)
 		return;
@@ -402,7 +402,7 @@ void CDAudio_Pause (void)
 /**
  * @brief
  */
-void CDAudio_Resume (void)
+static void CDAudio_Resume (void)
 {
 	if (cdfile == -1 || !enabled)
 		return;
@@ -429,14 +429,14 @@ void CDAudio_Resume (void)
  */
 static void CD_f (void)
 {
-	char	*command;
+	const char	*command;
 	int		ret;
 	int		n;
 
 	if (Cmd_Argc() < 2)
 		return;
 
-	command = Cmd_Argv (1);
+	command = Cmd_Argv(1);
 
 	if (Q_strcasecmp(command, "on") == 0) {
 		enabled = qtrue;

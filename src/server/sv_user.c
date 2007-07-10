@@ -41,7 +41,7 @@ sv_client and sv_player will be valid.
 /**
  * @brief
  */
-void SV_BeginDemoserver (void)
+static void SV_BeginDemoserver (void)
 {
 	char name[MAX_OSPATH];
 
@@ -58,7 +58,7 @@ void SV_BeginDemoserver (void)
  */
 static void SV_New_f (void)
 {
-	char *gamedir;
+	const char *gamedir;
 	int playernum;
 
 /*	edict_t		*ent; */
@@ -217,7 +217,7 @@ static void SV_Begin_f (void)
  * @brief Spawns all connected clients if they are not already spawned
  * @sa CL_SpawnSoldiers_f
  */
-void SV_SpawnAllPending (void)
+static void SV_SpawnAllPending (void)
 {
 	int i;
 	client_t *cl;
@@ -287,7 +287,7 @@ static void SV_ShowServerinfo_f (void)
  */
 static void SV_Nextserver (void)
 {
-	char *v;
+	const char *v;
 
 	/* can't nextserver while playing a normal game */
 	if (sv.state == ss_game)
@@ -320,7 +320,7 @@ static void SV_Nextserver_f (void)
 }
 
 typedef struct {
-	char *name;
+	const char *name;
 	void (*func) (void);
 } ucmd_t;
 

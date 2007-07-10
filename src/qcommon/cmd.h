@@ -53,7 +53,7 @@ void Cbuf_InsertText(const char *text);
 
 /**
  * @brief this can be used in place of either Cbuf_AddText or Cbuf_InsertText */
-void Cbuf_ExecuteText(int exec_when, char *text);
+void Cbuf_ExecuteText(int exec_when, const char *text);
 
 /**
  * @brief adds all the +set commands from the command line */
@@ -126,20 +126,20 @@ int Cmd_CompleteCommand(const char *partial, const char **match);
  * if arg > argc, so string operations are always safe.
  */
 int Cmd_Argc(void);
-char *Cmd_Argv(int arg);
-char *Cmd_Args(void);
+const char *Cmd_Argv(int arg);
+const char *Cmd_Args(void);
 
 /**
  * @brief Takes a null terminated string.  Does not need to be /n terminated.
  * breaks the string up into arg tokens.
  */
-void Cmd_TokenizeString(char *text, qboolean macroExpand);
+void Cmd_TokenizeString(const char *text, qboolean macroExpand);
 
 /**
  * @brief Parses a single line of text into arguments and tries to execute it
  * as if it was typed at the console
  */
-void Cmd_ExecuteString(char *text);
+void Cmd_ExecuteString(const char *text);
 
 /**
  * @brief adds the current command line as a clc_stringcmd to the client message.

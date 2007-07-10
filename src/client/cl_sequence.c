@@ -374,7 +374,7 @@ void CL_SequenceClick_f (void)
 void CL_SequenceStart_f (void)
 {
 	sequence_t *sp;
-	char *name, *menuName;
+	const char *name, *menuName;
 	int i;
 	menu_t* menu;
 
@@ -708,12 +708,13 @@ int SEQ_Command (const char *name, char *data)
  * @brief Reads the sequence values from given text-pointer
  * @sa CL_ParseClientData
  */
-void CL_ParseSequence (const char *name, char **text)
+void CL_ParseSequence (const char *name, const char **text)
 {
 	const char *errhead = "CL_ParseSequence: unexpected end of file (sequence ";
 	sequence_t *sp;
 	seqCmd_t *sc;
-	char *token, *data;
+	const char *token;
+	char *data;
 	int i, depth, maxLength;
 
 	/* search for sequences with same name */
@@ -1006,7 +1007,7 @@ static inline void END_CHUNK (void)
 /**
  * @brief
  */
-void CL_WriteAVIHeader (void)
+static void CL_WriteAVIHeader (void)
 {
 	bufIndex = 0;
 	afd.chunkStackTop = 0;

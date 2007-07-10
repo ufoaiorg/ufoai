@@ -45,5 +45,7 @@ struct mdfour {
 	uint32 totalN;
 };
 
+unsigned Com_BlockChecksum(void *buffer, int length);
+
 #endif	/* _MDFOUR_H */
 

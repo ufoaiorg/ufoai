@@ -192,7 +192,7 @@ void CDAudio_Stop (void)
 /**
  * @brief
  */
-void CDAudio_Pause (void)
+static void CDAudio_Pause (void)
 {
 	if (!cd_id || !enabled)
 		return;
@@ -206,7 +206,7 @@ void CDAudio_Pause (void)
 /**
  * @brief
  */
-void CDAudio_Resume (void)
+static void CDAudio_Resume (void)
 {
 	if (!cd_id || !enabled)
 		return;
@@ -331,7 +331,7 @@ void CDAudio_Shutdown (void)
  */
 static void CD_f (void)
 {
-	char	*command;
+	const char	*command;
 	int	cdstate;
 	if (Cmd_Argc() < 2)
 		return;

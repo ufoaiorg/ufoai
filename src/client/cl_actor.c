@@ -844,7 +844,7 @@ void CL_DisplayFiremodes_f (void)
 	objDef_t *ammo = NULL;
 	int weap_fd_idx = -1;
 	int i;
-	char *hand;
+	const char *hand;
 
 	if (!selActor)
 		return;
@@ -971,7 +971,7 @@ void CL_DisplayFiremodes_f (void)
  */
 void CL_SelectReactionFiremode_f (void)
 {
-	char *hand;
+	const char *hand;
 	int firemode;
 	int actor_idx = -1;
 
@@ -1016,7 +1016,7 @@ void CL_SelectReactionFiremode_f (void)
  */
 void CL_FireWeapon_f (void)
 {
-	char *hand;
+	const char *hand;
 	int firemode;
 
 	objDef_t *weapon = NULL;

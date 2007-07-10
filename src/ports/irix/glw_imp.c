@@ -317,19 +317,6 @@ qboolean GLimp_InitGraphics( qboolean fullscreen )
 	/* check for command-line window size */
 	template_mask = 0;
 
-#if 0
-	/* specify a visual id */
-	if ((pnum=COM_CheckParm("-visualid")))
-	{
-		if (pnum >= com_argc-1)
-			Sys_Error("VID: -visualid <id#>\n");
-		template.visualid = Q_atoi(com_argv[pnum+1]);
-		template_mask = VisualIDMask;
-	}
-
-	/* If not specified, use default visual */
-	else
-#endif
 	{
 		int screen;
 		screen = XDefaultScreen(x_disp);

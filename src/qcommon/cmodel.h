@@ -32,7 +32,7 @@ CMODEL
 
 extern vec3_t map_min, map_max;
 
-void CM_LoadMap(char *tiles, char *pos, unsigned *checksum);
+void CM_LoadMap(const char *tiles, const char *pos, unsigned *checksum);
 int CheckBSPFile(const char *filename);
 cBspModel_t *CM_InlineModel(const char *name);	/* *0, *1, *2, etc */
 

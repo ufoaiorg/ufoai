@@ -643,7 +643,7 @@ static void R_AddMapTile (const char *name, int sX, int sY, int sZ)
  */
 void GL_BeginLoading (char *tiles, char *pos)
 {
-	char *token;
+	const char *token;
 	char name[MAX_VAR];
 	char base[MAX_QPATH];
 	int sh[3];

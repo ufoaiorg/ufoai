@@ -128,7 +128,7 @@ float BigFloat(float l);
 float LittleFloat(float l);
 
 
-char *COM_Parse(char *data);
+const char *COM_Parse(const char *data);
 
 char *copystring(const char *s);
 

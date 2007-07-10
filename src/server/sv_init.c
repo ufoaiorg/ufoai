@@ -224,10 +224,11 @@ static byte tileChar (const char chr)
  * @sa SV_ParseAssembly
  * @sa SV_AssembleMap
  */
-static void SV_ParseMapTile (const char *filename, char **text)
+static void SV_ParseMapTile (const char *filename, const char **text)
 {
 	const char *errhead = "SV_ParseMapTile: Unexpected end of file (";
-	char *token, *chr;
+	const char *token;
+	char *chr;
 	mTile_t *t;
 	int x, y, i;
 
@@ -303,10 +304,10 @@ static void SV_ParseMapTile (const char *filename, char **text)
  * @note: format of fix: "fix [tilename] x y"
  * @note: format of tile: "[tilename] min max"
  */
-static void SV_ParseAssembly (const char *filename, char **text)
+static void SV_ParseAssembly (const char *filename, const char **text)
 {
 	const char *errhead = "SV_ParseAssembly: Unexpected end of file (";
-	char *token, *cvarName, *cvarValue;
+	const char *token, *cvarName, *cvarValue;
 	mAssembly_t *a;
 	int i, x, y;
 
@@ -678,7 +679,7 @@ static qboolean SV_AddMandatoryParts (byte map[32][32][MAX_TILEALTS], byte * num
  * @sa SV_ParseAssembly
  * @sa SV_ParseMapTile
  */
-static void SV_AssembleMap (const char *name, const char *assembly, char **map, char **pos)
+static void SV_AssembleMap (const char *name, const char *assembly, const char **map, const char **pos)
 {
 	mPlaced_t *pl;
 	byte curMap[32][32][MAX_TILEALTS];
@@ -688,7 +689,7 @@ static void SV_AssembleMap (const char *name, const char *assembly, char **map, 
 	char filename[MAX_QPATH];
 	char basePath[MAX_QPATH];
 	char *buf;
-	char *text, *token;
+	const char *text, *token;
 	int i, tries;
 	int regNumX, regNumY;
 	float regFracX, regFracY;
@@ -863,11 +864,11 @@ static const char* SV_GetMapTitle (const char* const mapname)
  * @sa CM_LoadMap
  * @sa Com_SetServerState
  */
-static void SV_SpawnServer (char *server, char *param, server_state_t serverstate, qboolean attractloop)
+static void SV_SpawnServer (const char *server, const char *param, server_state_t serverstate, qboolean attractloop)
 {
 	int i;
 	unsigned checksum = 0;
-	char *map, *pos;
+	const char *map, *pos;
 
 	if (attractloop)
 		Cvar_Set("paused", "0");
@@ -1033,7 +1034,7 @@ static void SV_InitGame (void)
  * @sa SV_Map_f
  * @sa SV_Demo_f
  */
-void SV_Map (qboolean attractloop, char *levelstring, char *assembly)
+void SV_Map (qboolean attractloop, const char *levelstring, const char *assembly)
 {
 	char level[MAX_QPATH];
 	char *ch;

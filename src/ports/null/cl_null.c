@@ -27,7 +27,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "../../qcommon/qcommon.h"
 
-void Key_Bind_Null_f(void)
+static void Key_Bind_Null_f (void)
 {
 }
 
@@ -48,7 +48,7 @@ int CL_Frame (int msec)
 	return msec;
 }
 
-void CL_ParseClientData (const char *type, const char *name, char **text)
+void CL_ParseClientData (const char *type, const char *name, const char **text)
 {
 }
 
@@ -58,7 +58,7 @@ void Con_Print (const char *text)
 
 void Cmd_ForwardToServer (void)
 {
-	char *cmd;
+	const char *cmd;
 
 	cmd = Cmd_Argv(0);
 	Com_Printf("Unknown command \"%s\"\n", cmd);

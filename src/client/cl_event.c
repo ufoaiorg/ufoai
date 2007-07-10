@@ -58,12 +58,12 @@ static const value_t eventMail_vals[] = {
  * @sa CL_ParseScriptFirst
  * @note write into cl_localPool - free on every game restart and reparse
  */
-void CL_ParseEventMails (const char *name, char **text)
+void CL_ParseEventMails (const char *name, const char **text)
 {
 	const char *errhead = "CL_ParseEventMails: unexpected end of file (mail ";
 	eventMail_t *eventMail;
 	const value_t *vp;
-	char *token;
+	const char *token;
 
 	if (gd.numEventMails >= MAX_EVENTMAILS) {
 		Com_Printf("CL_ParseEventMails: mail def \"%s\" with same name found, second ignored\n", name);

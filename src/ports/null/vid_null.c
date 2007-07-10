@@ -43,7 +43,7 @@ DIRECT LINK GLUE
 /**
  * @brief
  */
-void VID_NewWindow (int width, int height)
+static void VID_NewWindow (int width, int height)
 {
 	viddef.width = width;
 	viddef.height = height;

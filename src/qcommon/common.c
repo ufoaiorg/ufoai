@@ -36,8 +36,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 csi_t csi;
 
-int com_argc;
-char *com_argv[MAX_NUM_ARGVS + 1];
+static int com_argc;
+static const char *com_argv[MAX_NUM_ARGVS + 1];
 
 jmp_buf abortframe;				/* an ERR_DROP occured, exit the entire frame */
 
@@ -394,7 +394,7 @@ unsigned int Com_HashKey (const char *name, int hashsize)
  * where the given parameter apears, or 0 if not present
  * @sa COM_InitArgv
  */
-int COM_CheckParm (char *parm)
+int COM_CheckParm (const char *parm)
 {
 	int i;
 
@@ -419,7 +419,7 @@ int COM_Argc (void)
 /**
  * @brief Returns an argument of script commandline
  */
-char *COM_Argv (int arg)
+const char *COM_Argv (int arg)
 {
 	if (arg < 0 || arg >= com_argc || !com_argv[arg])
 		return "";
@@ -445,7 +445,7 @@ void COM_ClearArgv (int arg)
  * @brief
  * @sa COM_CheckParm
  */
-void COM_InitArgv (int argc, char **argv)
+void COM_InitArgv (int argc, const char **argv)
 {
 	int i;
 
@@ -464,25 +464,11 @@ void COM_InitArgv (int argc, char **argv)
  * @brief Adds the given string at the end of the current argument list
  * @sa COM_InitArgv
  */
-void COM_AddParm (char *parm)
+void COM_AddParm (const char *parm)
 {
 	if (com_argc == MAX_NUM_ARGVS)
 		Com_Error(ERR_FATAL, "COM_AddParm: MAX_NUM)ARGS");
 	com_argv[com_argc++] = parm;
-}
-
-/**
- * @brief
- * @note just for debugging
- */
-int memsearch (byte * start, int count, int search)
-{
-	int i;
-
-	for (i = 0; i < count; i++)
-		if (start[i] == search)
-			return i;
-	return -1;
 }
 
 /**
@@ -528,9 +514,6 @@ void Info_Print (char *s)
 }
 
 /*======================================================== */
-
-void Key_Init(void);
-void SCR_EndLoadingPlaque(void);
 
 /**
  * @brief Just throw a fatal error to test error shutdown procedures
@@ -727,7 +710,7 @@ static qboolean Com_CvarCheckMaxFPS (cvar_t *cvar)
  * To compile language support into UFO:AI you need to activate the preprocessor variable
  * HAVE_GETTEXT (for linux have a look at the makefile)
  */
-void Qcommon_Init (int argc, char **argv)
+void Qcommon_Init (int argc, const char **argv)
 {
 	char *s;
 

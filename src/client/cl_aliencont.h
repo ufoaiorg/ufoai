@@ -75,7 +75,7 @@ typedef struct aliensTmp_s {
  */
 
 void AL_FillInContainment(int baseidx);
-char *AL_AlienTypeToName(int teamDescIdx);
+const char *AL_AlienTypeToName(int teamDescIdx);
 void AL_CollectingAliens(void);
 void AL_AddAliens(int baseidx, int airidx);
 void AL_RemoveAliens(const char *name, int amount, alienCalcType_t action);

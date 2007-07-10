@@ -47,12 +47,12 @@ UINT	wDeviceID;
 int		loopcounter;
 
 
-void CDAudio_Pause(void);
+static void CDAudio_Pause(void);
 
 /**
  * @brief
  */
-static void CDAudio_Eject(void)
+static void CDAudio_Eject (void)
 {
 	DWORD	dwReturn;
 
@@ -64,7 +64,7 @@ static void CDAudio_Eject(void)
 /**
  * @brief
  */
-static void CDAudio_CloseDoor(void)
+static void CDAudio_CloseDoor (void)
 {
 	DWORD	dwReturn;
 
@@ -76,7 +76,7 @@ static void CDAudio_CloseDoor(void)
 /**
  * @brief
  */
-static int CDAudio_GetAudioDiskInfo(void)
+static int CDAudio_GetAudioDiskInfo (void)
 {
 	DWORD				dwReturn;
 	MCI_STATUS_PARMS	mciStatusParms;
@@ -115,7 +115,7 @@ static int CDAudio_GetAudioDiskInfo(void)
 /**
  * @brief
  */
-void CDAudio_Play2(int track, qboolean looping)
+void CDAudio_Play2 (int track, qboolean looping)
 {
 	DWORD				dwReturn;
 	MCI_PLAY_PARMS		mciPlayParms;
@@ -186,7 +186,7 @@ void CDAudio_Play2(int track, qboolean looping)
 /**
  * @brief
  */
-void CDAudio_Play(int track, qboolean looping)
+void CDAudio_Play (int track, qboolean looping)
 {
 	/* set a loop counter so that this track will change to the */
 	/* looptrack later */
@@ -197,7 +197,7 @@ void CDAudio_Play(int track, qboolean looping)
 /**
  * @brief
  */
-void CDAudio_Stop(void)
+void CDAudio_Stop (void)
 {
 	DWORD	dwReturn;
 
@@ -218,7 +218,7 @@ void CDAudio_Stop(void)
 /**
  * @brief
  */
-void CDAudio_Pause(void)
+static void CDAudio_Pause (void)
 {
 	DWORD				dwReturn;
 	MCI_GENERIC_PARMS	mciGenericParms;
@@ -241,7 +241,7 @@ void CDAudio_Pause(void)
 /**
  * @brief
  */
-void CDAudio_Resume(void)
+static void CDAudio_Resume (void)
 {
 	DWORD			dwReturn;
 	MCI_PLAY_PARMS	mciPlayParms;
@@ -272,14 +272,14 @@ void CDAudio_Resume(void)
  */
 static void CD_f (void)
 {
-	char	*command;
+	const char	*command;
 	int		ret;
 	int		n;
 
 	if (Cmd_Argc() < 2)
 		return;
 
-	command = Cmd_Argv (1);
+	command = Cmd_Argv(1);
 
 	if (Q_strcasecmp(command, "on") == 0) {
 		enabled = qtrue;
@@ -376,7 +376,7 @@ static void CD_f (void)
 /**
  * @brief
  */
-LONG CDAudio_MessageHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+LONG CDAudio_MessageHandler (HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	if (lParam != wDeviceID)
 		return 1;
@@ -418,7 +418,7 @@ LONG CDAudio_MessageHandler(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 /**
  * @brief
  */
-void CDAudio_Update(void)
+void CDAudio_Update (void)
 {
 	if (cd_nocd->integer != !enabled) {
 		if (cd_nocd->integer) {
@@ -435,7 +435,7 @@ void CDAudio_Update(void)
 /**
  * @brief
  */
-int CDAudio_Init(void)
+int CDAudio_Init (void)
 {
 	DWORD dwReturn;
 	MCI_OPEN_PARMS mciOpenParms;
@@ -485,7 +485,7 @@ int CDAudio_Init(void)
 /**
  * @brief
  */
-void CDAudio_Shutdown(void)
+void CDAudio_Shutdown (void)
 {
 	if (!initialized)
 		return;

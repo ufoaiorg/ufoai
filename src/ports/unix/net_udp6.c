@@ -55,19 +55,19 @@ netadr_t	net_local_adr;
 #define UFOAIMCAST "ff12::666"
 #include <net/if.h>
 
-typedef struct
-{
+typedef struct {
 	byte	data[MAX_MSGLEN];
 	int		datalen;
 } loopmsg_t;
 
-typedef struct
-{
+typedef struct {
 	loopmsg_t	msgs[MAX_LOOPBACK];
 	int			get, send;
 } loopback_t;
 
-loopback_t	loopbacks[2];
+#ifndef DEDICATED_ONLY
+loopback_t loopbacks[2];
+#endif
 int			ip_sockets[2];
 int                     ip6_sockets[2];
 int			ipx_sockets[2];
@@ -117,7 +117,7 @@ void Sys_ShowIP(void)
  * @param[out] s Pointer to where the socket address will be written to
  * @sa SockadrToNetadr
  */
-void NetadrToSockadr (netadr_t *a, struct sockaddr_storage *s)
+static void NetadrToSockadr (netadr_t *a, struct sockaddr_storage *s)
 {
 	struct sockaddr_in6 *s6;
 
@@ -196,7 +196,7 @@ void NetadrToSockadr (netadr_t *a, struct sockaddr_storage *s)
  * @param[out] a Pointer to where the network address will be written to
  * @sa NetadrToSockadr
  */
-void SockadrToNetadr (struct sockaddr_storage *s, netadr_t *a)
+static void SockadrToNetadr (struct sockaddr_storage *s, netadr_t *a)
 {
 	struct sockaddr_in6 *s6;
 
@@ -230,7 +230,7 @@ void SockadrToNetadr (struct sockaddr_storage *s, netadr_t *a)
  * @post the returned pointer is not null
  * @sa SockadrToNetadr
  */
-char *NET_SocketToString (void *s_ptr)
+const char *NET_SocketToString (void *s_ptr)
 {
 	netadr_t addr;
 	struct sockaddr_storage *s = (struct sockaddr_storage*)s_ptr;
@@ -316,7 +316,7 @@ qboolean NET_CompareBaseAdr (netadr_t a, netadr_t b)
  * @postcond the returned pointer is not null
  * @sa *NET_AdrToString
  */
-char *NET_BaseAdrToString (netadr_t a)
+static char *NET_BaseAdrToString (netadr_t a)
 {
 	static	char	s[64], tmp[64];
 	struct sockaddr_storage ss;
@@ -422,7 +422,7 @@ char *NET_AdrToString (netadr_t a)
  * 192.246.40.70
  * 192.246.40.70:28000
  */
-qboolean NET_StringToSockaddr (char *s, struct sockaddr_storage *sadr)
+static qboolean NET_StringToSockaddr (const char *s, struct sockaddr_storage *sadr)
 {
 	char	copy[128];
 	char	*addrs, *space;
@@ -493,7 +493,7 @@ qboolean NET_StringToSockaddr (char *s, struct sockaddr_storage *sadr)
  * 192.246.40.70
  * 192.246.40.70:28000
  */
-qboolean NET_StringToAdr (char *s, netadr_t *a)
+qboolean NET_StringToAdr (const char *s, netadr_t *a)
 {
 	struct sockaddr_storage sadr;
 
@@ -528,10 +528,11 @@ LOOPBACK BUFFERS FOR LOCAL PLAYER
 =============================================================================
 */
 
+#ifndef DEDICATED_ONLY
 /**
  * @brief
  */
-qboolean NET_GetLoopPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_message)
+static qboolean NET_GetLoopPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_message)
 {
 	int		i;
 	loopback_t	*loop;
@@ -554,11 +555,10 @@ qboolean NET_GetLoopPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_me
 
 }
 
-
 /**
  * @brief
  */
-void NET_SendLoopPacket (netsrc_t sock, int length, void *data, netadr_t to)
+static void NET_SendLoopPacket (netsrc_t sock, int length, void *data, netadr_t to)
 {
 	int		i;
 	loopback_t	*loop;
@@ -571,6 +571,7 @@ void NET_SendLoopPacket (netsrc_t sock, int length, void *data, netadr_t to)
 	memcpy(loop->msgs[i].data, data, length);
 	loop->msgs[i].datalen = length;
 }
+#endif
 
 /**
  * @brief
@@ -584,8 +585,10 @@ int NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_message)
 	int		protocol;
 	int		err;
 
+#ifndef DEDICATED_ONLY
 	if (NET_GetLoopPacket(sock, net_from, net_message))
 		return 1;
+#endif
 
 	for (protocol = 0; protocol < 3; protocol++) {
 		if (protocol == 0)
@@ -746,7 +749,7 @@ void NET_SendPacket (netsrc_t sock, int length, void *data, netadr_t to)
  * @sa NET_OpenIPX
  * @todo: should return a value to indicate success/failure
  */
-void NET_OpenIP (void)
+static void NET_OpenIP (void)
 {
 	cvar_t	*port, *ip;
 
@@ -789,7 +792,7 @@ void NET_OpenIP (void)
  * @sa NET_OpenIP
  * @todo: should return a value to indicate success/failure
  */
-void NET_OpenIPX (void)
+static void NET_OpenIPX (void)
 {
 }
 

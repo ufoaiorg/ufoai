@@ -229,7 +229,7 @@ void SV_MapcycleClear(void);
 void SV_MapcycleAdd(const char* mapName, const char* gameType);
 
 /* sv_init.c */
-void SV_Map(qboolean attractloop, char *levelstring, char *assembly);
+void SV_Map(qboolean attractloop, const char *levelstring, const char *assembly);
 
 /* sv_send.c */
 typedef enum { RD_NONE, RD_CLIENT, RD_PACKET } redirect_t;

@@ -72,12 +72,12 @@ float Cvar_VariableValue(const char *var_name);
 /**
  * @brief returns an empty string if not defined
  */
-char *Cvar_VariableString(const char *var_name);
+const char *Cvar_VariableString(const char *var_name);
 
 /**
  * @brief returns an empty string if not defined
  */
-char *Cvar_VariableStringOld(const char *var_name);
+const char *Cvar_VariableStringOld(const char *var_name);
 
 /**
  * @brief attempts to match a partial variable name for command line completion
@@ -137,7 +137,7 @@ qboolean Cvar_AssertString(cvar_t * cvar, char **array, int arraySize);
 /**
  * @brief Sets the check functions for a cvar (e.g. Cvar_Assert)
  */
-qboolean Cvar_SetCheckFunction(char *var_name, qboolean (*check) (cvar_t* cvar));
+qboolean Cvar_SetCheckFunction(const char *var_name, qboolean (*check) (cvar_t* cvar));
 
 /**
  * @brief Reset cheat cvar values to default

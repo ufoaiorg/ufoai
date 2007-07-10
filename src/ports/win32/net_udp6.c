@@ -53,7 +53,9 @@ cvar_t *net_shownet;
 static cvar_t *noudp;
 static cvar_t *noipx;
 
+#ifndef DEDICATED_ONLY
 loopback_t loopbacks[2];
+#endif
 int ip_sockets[2];
 int ip6_sockets[2];
 int ipx_sockets[2];
@@ -83,7 +85,7 @@ void Sys_ShowIP(void)
  * @param[out] s Pointer to where the socket address will be written to
  * @sa SockadrToNetadr
  */
-void NetadrToSockadr (netadr_t *a, struct sockaddr_storage *s)
+static void NetadrToSockadr (netadr_t *a, struct sockaddr_storage *s)
 {
 	struct sockaddr_in6 *s6;
 	struct addrinfo hints;
@@ -169,7 +171,7 @@ void NetadrToSockadr (netadr_t *a, struct sockaddr_storage *s)
  * @param[out] a Pointer to where the network address will be written to
  * @sa NetadrToSockadr
  */
-void SockadrToNetadr (struct sockaddr_storage *s, netadr_t *a)
+static void SockadrToNetadr (struct sockaddr_storage *s, netadr_t *a)
 {
 	struct sockaddr_in6 *s6;
 
@@ -277,7 +279,7 @@ qboolean NET_CompareBaseAdr (netadr_t a, netadr_t b)
  * @post the returned pointer is not null
  * @sa *NET_BaseAdrToString
  */
-char *NET_BaseAdrToString (netadr_t a)
+static char *NET_BaseAdrToString (netadr_t a)
 {
 	static	char	s[64], tmp[64];
 	struct sockaddr_storage ss;
@@ -405,7 +407,7 @@ char *NET_AdrToString (netadr_t a)
  * 192.246.40.70
  * 192.246.40.70:28000
  */
-qboolean NET_StringToSockaddr (char *s, struct sockaddr_storage *sadr)
+static qboolean NET_StringToSockaddr (const char *s, struct sockaddr_storage *sadr)
 {
 	char	copy[128];
 	char	*addrs, *space;
@@ -497,7 +499,7 @@ qboolean NET_StringToSockaddr (char *s, struct sockaddr_storage *sadr)
  * 192.246.40.70
  * 192.246.40.70:28000
  */
-qboolean NET_StringToAdr (char *s, netadr_t *a)
+qboolean NET_StringToAdr (const char *s, netadr_t *a)
 {
 	struct sockaddr_storage sadr;
 
@@ -522,7 +524,7 @@ qboolean NET_StringToAdr (char *s, netadr_t *a)
  * @post the returned pointer is not null
  * @sa SockadrToNetadr
  */
-char *NET_SocketToString (void *s_ptr)
+const char *NET_SocketToString (void *s_ptr)
 {
 	netadr_t addr;
 	struct sockaddr_storage *s = (struct sockaddr_storage*)s_ptr;
@@ -550,10 +552,11 @@ LOOPBACK BUFFERS FOR LOCAL PLAYER
 =============================================================================
 */
 
+#ifndef DEDICATED_ONLY
 /**
  * @brief
  */
-qboolean NET_GetLoopPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_message)
+static qboolean NET_GetLoopPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_message)
 {
 	int		i;
 	loopback_t	*loop;
@@ -576,11 +579,10 @@ qboolean NET_GetLoopPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_me
 	return qtrue;
 }
 
-
 /**
  * @brief
  */
-void NET_SendLoopPacket (netsrc_t sock, int length, void *data, netadr_t to)
+static void NET_SendLoopPacket (netsrc_t sock, int length, void *data, netadr_t to)
 {
 	int		i;
 	loopback_t	*loop;
@@ -593,6 +595,7 @@ void NET_SendLoopPacket (netsrc_t sock, int length, void *data, netadr_t to)
 	memcpy(loop->msgs[i].data, data, length);
 	loop->msgs[i].datalen = length;
 }
+#endif
 
 /**
  * @brief
@@ -606,8 +609,10 @@ int NET_GetPacket (netsrc_t sock, netadr_t *net_from, sizebuf_t *net_message)
 	int		protocol;
 	int		err;
 
+#ifndef DEDICATED_ONLY
 	if (NET_GetLoopPacket(sock, net_from, net_message))
 		return 1;
+#endif
 
 	for (protocol = 0; protocol < 3; protocol++) {
 		if (protocol == 0)
@@ -959,7 +964,7 @@ int NET_IPSocket (char *net_interface, int port, netsrc_t type, int family)
  * @sa NET_OpenIPX
  * @todo: should return a value to indicate success/failure
  */
-void NET_OpenIP (void)
+static void NET_OpenIP (void)
 {
 	cvar_t	*ip;
 	int		port;
@@ -1082,7 +1087,7 @@ int NET_IPXSocket (int port)
  * @sa NET_OpenIP
  * @todo: should return a value to indicate success/failure
  */
-void NET_OpenIPX (void)
+static void NET_OpenIPX (void)
 {
 	int		port;
 	int		dedicated;

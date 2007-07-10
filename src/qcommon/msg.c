@@ -51,7 +51,7 @@ void MSG_WriteChar (sizebuf_t * sb, int c)
  * @brief
  */
 #ifdef DEBUG
-void MSG_WriteByteDebug (sizebuf_t * sb, int c, char *file, int line)
+void MSG_WriteByteDebug (sizebuf_t * sb, int c, const char *file, int line)
 #else
 void MSG_WriteByte (sizebuf_t * sb, int c)
 #endif
@@ -72,7 +72,7 @@ void MSG_WriteByte (sizebuf_t * sb, int c)
  * @brief
  */
 #ifdef DEBUG
-void MSG_WriteShortDebug (sizebuf_t * sb, int c, char* file, int line)
+void MSG_WriteShortDebug (sizebuf_t * sb, int c, const char* file, int line)
 #else
 void MSG_WriteShort (sizebuf_t * sb, int c)
 #endif

@@ -82,10 +82,10 @@ static void CL_GetTipOfTheDay_f (void)
 /**
  * @brief Parse all tip definitions from the script files
  */
-void CL_ParseTipsOfTheDay (const char *name, char **text)
+void CL_ParseTipsOfTheDay (const char *name, const char **text)
 {
 	const char *errhead = "CL_ParseTipsOfTheDay: unexpected end of file (tips ";
-	char	*token;
+	const char	*token;
 	tipOfTheDay_t *tip;
 
 	if (!*text || *name != '{') {

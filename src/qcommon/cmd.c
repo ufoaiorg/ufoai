@@ -194,7 +194,7 @@ void Cbuf_InsertFromDefer (void)
  * @sa EXEC_INSERT
  * @sa EXEC_APPEND
  */
-void Cbuf_ExecuteText (int exec_when, char *text)
+void Cbuf_ExecuteText (int exec_when, const char *text)
 {
 	switch (exec_when) {
 	case EXEC_NOW:
@@ -285,7 +285,7 @@ void Cbuf_Execute (void)
 void Cbuf_AddEarlyCommands (qboolean clear)
 {
 	int i;
-	char *s;
+	const char *s;
 
 	for (i = 0; i < COM_Argc(); i++) {
 		s = COM_Argv(i);
@@ -422,7 +422,7 @@ static void Cmd_Alias_f (void)
 	size_t len;
 	unsigned int hash;
 	int i, c;
-	char *s;
+	const char *s;
 
 	if (Cmd_Argc() == 1) {
 		Com_Printf("Current alias commands:\n");
@@ -492,7 +492,7 @@ typedef struct cmd_function_s {
 
 static int cmd_argc;
 static char *cmd_argv[MAX_STRING_TOKENS];
-static char *cmd_null_string = "";
+static const char *cmd_null_string = "";
 static char cmd_args[MAX_STRING_CHARS];
 
 static cmd_function_t *cmd_functions;	/* possible commands to execute */
@@ -514,7 +514,7 @@ int Cmd_Argc (void)
  * @return the argument from cmd_argv
  * @sa Cmd_Argc
  */
-char *Cmd_Argv (int arg)
+const char *Cmd_Argv (int arg)
 {
 	if (arg >= cmd_argc)
 		return cmd_null_string;
@@ -524,7 +524,7 @@ char *Cmd_Argv (int arg)
 /**
  * @brief Returns a single string containing argv(1) to argv(argc()-1)
  */
-char *Cmd_Args (void)
+const char *Cmd_Args (void)
 {
 	return cmd_args;
 }
@@ -534,13 +534,13 @@ char *Cmd_Args (void)
  * @brief
  * @sa Cmd_TokenizeString
  */
-static char *Cmd_MacroExpandString (char *text)
+static const char *Cmd_MacroExpandString (const char *text)
 {
 	int i, j, count, len;
 	qboolean inquote;
-	char *scan;
+	const char *scan;
 	static char expanded[MAX_STRING_CHARS];
-	char *token, *start;
+	const char *token, *start;
 
 	inquote = qfalse;
 	scan = text;
@@ -615,9 +615,9 @@ void Cmd_BufClear (void)
  * @note $Cvars will be expanded unless they are in a quoted token
  * @sa Cmd_MacroExpandString
  */
-void Cmd_TokenizeString (char *text, qboolean macroExpand)
+void Cmd_TokenizeString (const char *text, qboolean macroExpand)
 {
-	char *com_token;
+	const char *com_token;
 
 	Cmd_BufClear();
 
@@ -905,7 +905,7 @@ int Cmd_CompleteCommand (const char *partial, const char **match)
  * @brief A complete command line has been parsed, so try to execute it
  * FIXME: lookupnoadd the token to speed search?
  */
-void Cmd_ExecuteString (char *text)
+void Cmd_ExecuteString (const char *text)
 {
 	cmd_function_t *cmd;
 	cmd_alias_t *a;
@@ -966,7 +966,7 @@ static void Cmd_List_f (void)
 	cmd_function_t *cmd;
 	cmd_alias_t *alias;
 	int i = 0, j = 0, c, l = 0;
-	char *token = NULL;
+	const char *token = NULL;
 
 	c = Cmd_Argc();
 

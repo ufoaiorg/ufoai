@@ -30,6 +30,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include <sys/types.h>
 #include <pwd.h>
 #include <dlfcn.h>
+#include <fcntl.h>
 
 #include "../../qcommon/qcommon.h"
 
@@ -38,7 +39,7 @@ static void *game_library;
 /**
  * @brief
  */
-char *Sys_GetCurrentUser (void)
+const char *Sys_GetCurrentUser (void)
 {
 	struct passwd *p;
 
@@ -61,6 +62,19 @@ char *Sys_Cwd (void)
 	cwd[MAX_OSPATH-1] = 0;
 
 	return cwd;
+}
+
+/**
+ * @brief
+ */
+void Sys_Quit (void)
+{
+	CL_Shutdown();
+	Qcommon_Shutdown();
+	Sys_ConsoleInputShutdown();
+
+	fcntl(0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
+	exit(0);
 }
 
 /**
@@ -103,33 +117,6 @@ void Sys_Minimize (void)
 char *Sys_GetHomeDirectory (void)
 {
 	return getenv("HOME");
-}
-
-/**
- * @brief
- */
-int Sys_FileLength (const char *path)
-{
-	struct stat st;
-
-	if (stat (path, &st) || (st.st_mode & S_IFDIR))
-		return -1;
-
-	return st.st_size;
-}
-
-/**
- * @brief
- * @return -1 if not present
- */
-int Sys_FileTime (const char *path)
-{
-	struct	stat	buf;
-
-	if (stat (path,&buf) == -1)
-		return -1;
-
-	return buf.st_mtime;
 }
 
 /**

@@ -68,7 +68,7 @@ static qboolean SV_SetPlayer (void)
 	client_t *cl;
 	int i;
 	int idnum;
-	char *s;
+	const char *s;
 
 	if (Cmd_Argc() < 2)
 		return qfalse;
@@ -153,7 +153,7 @@ static qboolean SV_CheckMap (const char *map, const char *assembly)
  */
 static void SV_Map_f (void)
 {
-	char	*map, *assembly = NULL;
+	const char *map, *assembly = NULL;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: %s <mapname>\n", Cmd_Argv(0));
@@ -271,7 +271,7 @@ static void SV_Status_f (void)
  */
 static void SV_ConSay_f (void)
 {
-	char *p;
+	const char *p;
 	char text[1024];
 
 	if (Cmd_Argc() < 2)
@@ -287,10 +287,11 @@ static void SV_ConSay_f (void)
 
 	if (*p == '"') {
 		p++;
-		p[strlen(p) - 1] = 0;
 	}
 
 	Q_strcat(text, p, sizeof(text));
+	if (text[strlen(text)] == '"')
+		text[strlen(text)] = 0;
 	SV_BroadcastPrintf(PRINT_CHAT, "%s\n", text);
 }
 #endif

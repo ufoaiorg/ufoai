@@ -422,13 +422,13 @@ void INV_InitialEquipment (base_t *base)
  * @param[in] text the whole following text after the "components" definition.
  * @sa CL_ParseScriptFirst
  */
-void INV_ParseComponents (const char *name, char **text)
+void INV_ParseComponents (const char *name, const char **text)
 {
 	int i;
 	objDef_t *od = NULL;
 	components_t *comp = NULL;
 	const char *errhead = "INV_ParseComponents: unexpected end of file.";
-	char *token = NULL;
+	const char *token = NULL;
 
 	/* get body */
 	token = COM_Parse(text);

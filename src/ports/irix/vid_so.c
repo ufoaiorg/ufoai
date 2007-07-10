@@ -110,7 +110,7 @@ const vidmode_t vid_modes[] =
 /**
  * @brief
  */
-void VID_NewWindow (int width, int height)
+static void VID_NewWindow (int width, int height)
 {
 	viddef.width  = width;
 	viddef.height = height;
@@ -122,7 +122,7 @@ void VID_NewWindow (int width, int height)
 /**
  * @brief
  */
-void VID_FreeReflib (void)
+static void VID_FreeReflib (void)
 {
 	if (reflib_library) {
 		if (KBD_Close_fp)

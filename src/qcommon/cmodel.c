@@ -1010,8 +1010,8 @@ static void CMod_LoadRouting (lump_t * l, int sX, int sY, int sZ)
  */
 static void CMod_LoadEntityString (lump_t * l)
 {
-	char *com_token;
-	char *es;
+	const char *com_token;
+	const char *es;
 	char keyname[256];
 	vec3_t v;
 	int num;
@@ -1176,9 +1176,9 @@ static unsigned CM_AddMapTile (char *name, int sX, int sY, int sZ)
  * @brief Loads in the map and all submodels
  * @sa CM_AddMapTile
  */
-void CM_LoadMap (char *tiles, char *pos, unsigned *mapchecksum)
+void CM_LoadMap (const char *tiles, const char *pos, unsigned *mapchecksum)
 {
-	char *token;
+	const char *token;
 	char name[MAX_VAR];
 	char base[MAX_QPATH];
 	int sh[3];
@@ -1765,7 +1765,7 @@ static void CM_TraceToLeaf (int leafnum)
  * @param[in] leafnum
  * @sa CM_TestBoxInBrush
  */
-void CM_TestInLeaf (int leafnum)
+static void CM_TestInLeaf (int leafnum)
 {
 	int k;
 	int brushnum;
@@ -2114,7 +2114,7 @@ trace_t CM_CompleteBoxTrace (vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs,
 /**
  * @brief Converts the disk node structure into the efficient tracing structure
  */
-void MakeTnode (int nodenum)
+static void MakeTnode (int nodenum)
 {
 	tnode_t *t;
 	cBspPlane_t *plane;
@@ -2149,7 +2149,7 @@ void MakeTnode (int nodenum)
  * @param
  * @sa
  */
-void BuildTnode_r (int node, int level)
+static void BuildTnode_r (int node, int level)
 {
 	assert(node < curTile->numnodes + 6); /* +6 => bbox */
 
@@ -2248,7 +2248,7 @@ static void CM_MakeTnodes (void)
  * @sa TestLineDist_r
  * @sa CM_TestLine
  */
-int TestLine_r (int node, vec3_t start, vec3_t stop)
+static int TestLine_r (int node, vec3_t start, vec3_t stop)
 {
 	tnode_t *tnode;
 	float front, back;
@@ -2315,7 +2315,7 @@ int TestLine_r (int node, vec3_t start, vec3_t stop)
  * @sa TestLine_r
  * @sa CM_TestLineDM
  */
-int TestLineDist_r (int node, vec3_t start, vec3_t stop)
+static int TestLineDist_r (int node, vec3_t start, vec3_t stop)
 {
 	tnode_t *tnode;
 	float front, back;
@@ -2460,7 +2460,7 @@ int CM_TestLineDM (vec3_t start, vec3_t stop, vec3_t end)
  * @sa Grid_MoveMark
  * @return true if the field is in the forbidden list and one can't walk there
  */
-qboolean Grid_CheckForbidden (struct routing_s * map, int x, int y, int z)
+static qboolean Grid_CheckForbidden (struct routing_s * map, int x, int y, int z)
 {
 	byte **p;
 	int i;
@@ -2477,7 +2477,7 @@ qboolean Grid_CheckForbidden (struct routing_s * map, int x, int y, int z)
  * @param
  * @sa Grid_CheckForbidden
  */
-void Grid_MoveMark (struct routing_s *map, int x, int y, int z, int dv, int h, int ol)
+static void Grid_MoveMark (struct routing_s *map, int x, int y, int z, int dv, int h, int ol)
 {
 	int nx, ny, sh, l;
 	int dx, dy;
@@ -2650,7 +2650,7 @@ int Grid_MoveLength (struct routing_s *map, pos3_t to, qboolean stored)
  * @param[in] l
  * @sa Grid_MoveNext
  */
-int Grid_MoveCheck (struct routing_s *map, pos3_t pos, int sz, int l)
+static int Grid_MoveCheck (struct routing_s *map, pos3_t pos, int sz, int l)
 {
 	int x, y, sh;
 	int dv, dx, dy;

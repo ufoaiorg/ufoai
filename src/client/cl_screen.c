@@ -342,7 +342,7 @@ static void SCR_DrawNet (void)
  * @brief
  * @sa SCR_DrawLoading
  */
-void SCR_DrawLoadingBar (int x, int y, int w, int h, int percent)
+static void SCR_DrawLoadingBar (int x, int y, int w, int h, int percent)
 {
 	static vec4_t color = {0.3f, 0.3f, 0.3f, 0.7f};
 	static vec4_t color_bar = {0.8f, 0.8f, 0.8f, 0.7f};

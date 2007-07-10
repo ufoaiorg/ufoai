@@ -548,8 +548,7 @@ static void SVC_RemoteCommand (void)
  */
 static void SV_ConnectionlessPacket (void)
 {
-	char *s;
-	char *c;
+	const char *s, *c;
 
 	MSG_BeginReading(&net_message);
 	MSG_ReadLong(&net_message);	/* skip the -1 marker */
@@ -587,7 +586,7 @@ static void SV_ConnectionlessPacket (void)
 /**
  * @brief Updates the cl->ping variables
  */
-void SV_CalcPings (void)
+static void SV_CalcPings (void)
 {
 	int i, j;
 	client_t *cl;
@@ -632,7 +631,7 @@ void SV_CalcPings (void)
  * @brief Every few frames, gives all clients an allotment of milliseconds
  * for their command moves.  If they exceed it, assume cheating.
  */
-void SV_GiveMsec (void)
+static void SV_GiveMsec (void)
 {
 	int i;
 	client_t *cl;
@@ -653,7 +652,7 @@ void SV_GiveMsec (void)
 /**
  * @brief
  */
-void SV_ReadPackets (void)
+static void SV_ReadPackets (void)
 {
 	int i, j;
 	client_t *cl;
@@ -921,53 +920,36 @@ void SV_MapcycleAdd (const char* mapName, const char* gameType)
  */
 static void SV_ParseMapcycle (void)
 {
-	qFILE file;
 	int length = 0;
-	char *buffer, *tokenMap, *tokenGameType, *freeMe;
-	char **buf;
+	char *buffer = NULL;
+	const char *token;
+	const char *buf;
 	char map[MAX_VAR], gameType[MAX_VAR];
-	int readsize;
 
 	mapcycleCount = 0;
 	mapcycleList = NULL;
 
-	length = FS_FOpenFile("mapcycle.txt", &file);
-	if (!file.f && !file.z)
+	length = FS_LoadFile("mapcycle.txt", (void **) &buffer);
+	if (length == -1)
 		return;
 
-	if (file.z)
-		Com_Printf("Using mapcycle from pakfile\n");
-
 	if (length != -1) {
-		/* sizeof(char) is one by definition - but nevermind */
-		buffer = (char*)Mem_PoolAlloc(sizeof(char) * (length + 1), sv_genericPool, 0);
-		buf = &buffer;
-		freeMe = buffer;
-		readsize = FS_Read(buffer, length, &file);
-		/* @todo: check that readsize = length */
-
-		/* COM_Parse expects a null-terminated string.
-		 * Since FS_Read doesn't do that we null-terminate
-		 * the string ourselves: */
-		buffer[readsize] = '\0';
-
+		buf = buffer;
 		do {
-			tokenMap = COM_Parse(buf);
+			token = COM_Parse(&buf);
 			if (!*buf)
 				break;
-			Q_strncpyz(map, tokenMap, sizeof(map));
-			tokenGameType = COM_Parse(buf);
+			Q_strncpyz(map, token, sizeof(map));
+			token = COM_Parse(&buf);
 			if (!*buf)
 				break;
-			Q_strncpyz(gameType, tokenGameType, sizeof(gameType));
+			Q_strncpyz(gameType, token, sizeof(gameType));
 			SV_MapcycleAdd(map, gameType);
 		} while (buf);
 
 		Com_Printf("..added %i maps to the mapcycle\n", mapcycleCount);
-		/* now we can close that file */
-		FS_FCloseFile(&file);
-		Mem_Free(freeMe);
 	}
+	FS_FreeFile(buffer);
 }
 
 /**
@@ -975,7 +957,7 @@ static void SV_ParseMapcycle (void)
  * @sa G_RunFrame
  * @sa SV_Frame
  */
-qboolean SV_RunGameFrame (void)
+static qboolean SV_RunGameFrame (void)
 {
 	qboolean gameEnd = qfalse;
 	if (host_speeds->integer)
@@ -1120,7 +1102,7 @@ void Master_Shutdown (void)
  */
 void SV_UserinfoChanged (client_t * cl)
 {
-	char *val;
+	const char *val;
 	unsigned int i;
 
 	/* call prog code to allow overrides */

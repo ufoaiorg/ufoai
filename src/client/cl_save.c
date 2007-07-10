@@ -452,7 +452,7 @@ static void SAV_GameContinue_f (void)
  * @note The order matters - don't change it or all previous savegames will be broken
  * @sa SAV_Init
  */
-qboolean SAV_AddSubsystem (saveSubsystems_t *subsystem)
+static qboolean SAV_AddSubsystem (saveSubsystems_t *subsystem)
 {
 	if (saveSubsystemsAmount >= MAX_SAVESUBSYSTEMS)
 		return qfalse;

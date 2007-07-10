@@ -505,26 +505,6 @@ qboolean Q_IsPowerOfTwo (int i)
 	return (i > 0 && !(i & (i - 1)));
 }
 
-/*============================================================================ */
-
-/**
- * @brief If the number is < 0, return -1 * number - otherwise return the number
- * @param[in] f
- */
-float Q_fabs (float f)
-{
-#if 0
-	if (f >= 0)
-		return f;
-	return -f;
-#else
-	int tmp = *(int *) &f;
-
-	tmp &= 0x7FFFFFFF;
-	return *(float *) &tmp;
-#endif
-}
-
 #if defined _M_IX86 && !defined C_ONLY
 #pragma warning (disable:4035)
 __declspec(naked)
@@ -574,40 +554,6 @@ float AngleNormalize180 (float angle)
 	if (angle > 180.0)
 		angle -= 360.0;
 	return angle;
-}
-
-/**
- * @brief
- * @param
- * @sa
- * @return 1, 2, or 1 + 2
- */
-/* this is the slow, general version */
-int BoxOnPlaneSide2 (vec3_t emins, vec3_t emaxs, struct cBspPlane_s *p)
-{
-	int i;
-	float dist1, dist2;
-	int sides;
-	vec3_t corners[2];
-
-	for (i = 0; i < 3; i++) {
-		if (p->normal[i] < 0) {
-			corners[0][i] = emins[i];
-			corners[1][i] = emaxs[i];
-		} else {
-			corners[1][i] = emins[i];
-			corners[0][i] = emaxs[i];
-		}
-	}
-	dist1 = DotProduct(p->normal, corners[0]) - p->dist;
-	dist2 = DotProduct(p->normal, corners[1]) - p->dist;
-	sides = 0;
-	if (dist1 >= 0)
-		sides = 1;
-	if (dist2 < 0)
-		sides |= 2;
-
-	return sides;
 }
 
 #if !USE_X86_ASM || defined __linux__ || __MINGW32__ || defined __FreeBSD__ || defined __NetBSD__|| defined __sun || defined __sgi
@@ -1035,29 +981,6 @@ void VectorClampMA (vec3_t veca, float scale, const vec3_t vecb, vec3_t vecc)
 /**
  * @brief
  * @param
- * @sa VectorNormalize
- * @sa CrossProduct
- */
-void MakeNormalVectors (vec3_t forward, vec3_t right, vec3_t up)
-{
-	float		d;
-
-	/* this rotate and negat guarantees a vector */
-	/* not colinear with the original */
-	right[1] = -forward[0];
-	right[2] = forward[1];
-	right[0] = forward[2];
-
-	d = DotProduct(right, forward);
-	VectorMA(right, -d, forward, right);
-	VectorNormalize(right);
-	CrossProduct(right, forward, up);
-}
-
-
-/**
- * @brief
- * @param
  * @sa GLMatrixMultiply
  */
 inline void MatrixMultiply (const vec3_t a[3], const vec3_t b[3], vec3_t c[3])
@@ -1364,67 +1287,6 @@ inline void gaussrand (float *gauss1, float *gauss2)
 }
 
 /**
- * @brief
- * @param
- * @sa Com_SkipTokens
- */
-static qboolean Com_CharIsOneOfCharset (char c, char *set)
-{
-	unsigned int i;
-
-	for (i = 0; i < strlen(set); i++) {
-		if (set[i] == c)
-			return qtrue;
-	}
-
-	return qfalse;
-}
-
-/**
- * @brief
- * @param
- * @sa Com_CharIsOneOfCharset
- */
-char *Com_SkipCharset (char *s, char *sep)
-{
-	char *p = s;
-
-	while (p) {
-		if (Com_CharIsOneOfCharset(*p, sep))
-			p++;
-		else
-			break;
-	}
-
-	return p;
-}
-
-/**
- * @brief
- * @param
- * @sa Com_CharIsOneOfCharset
- */
-char *Com_SkipTokens (char *s, int numTokens, char *sep)
-{
-	int sepCount = 0;
-	char *p = s;
-
-	while (sepCount < numTokens) {
-		if (Com_CharIsOneOfCharset(*p++, sep)) {
-			sepCount++;
-			while (Com_CharIsOneOfCharset(*p, sep))
-				p++;
-		} else if (*p == '\0')
-			break;
-	}
-
-	if (sepCount == numTokens)
-		return p;
-	else
-		return s;
-}
-
-/**
  * @brief Returns just the filename from a given path
  * @param
  * @sa COM_StripExtension
@@ -1452,27 +1314,6 @@ void COM_StripExtension (const char *in, char *out)
 	while (*in && *in != '.')
 		*out++ = *in++;
 	*out = 0;
-}
-
-/**
- * @brief Return the file extension from the first .
- * @param
- * @sa
- */
-char *COM_FileExtension (const char *in)
-{
-	static char exten[8];
-	int i;
-
-	while (*in && *in != '.')
-		in++;
-	if (!*in)
-		return "";
-	in++;
-	for (i = 0; i < 7 && *in; i++, in++)
-		exten[i] = *in;
-	exten[i] = 0;
-	return exten;
 }
 
 /**
@@ -1564,7 +1405,7 @@ float LittleFloat (float l)
  * @param[in] l
  * @sa ShortNoSwap
  */
-short ShortSwap (short l)
+static short ShortSwap (short l)
 {
 	byte b1, b2;
 
@@ -1579,7 +1420,7 @@ short ShortSwap (short l)
  * @param[in] l
  * @sa ShortSwap
  */
-short ShortNoSwap (short l)
+static short ShortNoSwap (short l)
 {
 	return l;
 }
@@ -1589,7 +1430,7 @@ short ShortNoSwap (short l)
  * @param[in] l
  * @sa LongNoSwap
  */
-int LongSwap (int l)
+static int LongSwap (int l)
 {
 	byte b1, b2, b3, b4;
 
@@ -1606,7 +1447,7 @@ int LongSwap (int l)
  * @param[in] l
  * @sa LongSwap
  */
-int LongNoSwap (int l)
+static int LongNoSwap (int l)
 {
 	return l;
 }
@@ -1616,7 +1457,7 @@ int LongNoSwap (int l)
  * @param[in] l
  * @sa FloatNoSwap
  */
-float FloatSwap (float f)
+static float FloatSwap (float f)
 {
 	union float_u {
 		float f;
@@ -1636,7 +1477,7 @@ float FloatSwap (float f)
  * @param[in] l
  * @sa FloatSwap
  */
-float FloatNoSwap (float f)
+static float FloatNoSwap (float f)
 {
 	return f;
 }
@@ -1676,7 +1517,7 @@ void Swap_Init (void)
  * @brief does a varargs printf into a temp buffer, so I don't need to have
  * varargs versions of all text functions.
  */
-char *va (char *format, ...)
+char *va (const char *format, ...)
 {
 	va_list argptr;
 	/* in case va is called by nested functions */
@@ -1704,12 +1545,12 @@ char *va (char *format, ...)
  * @return The string result of parsing in a string.
  * @sa COM_EParse
  */
-char *COM_Parse (char *data_p[])
+const char *COM_Parse (const char *data_p[])
 {
 	static char com_token[4096];
 	int c;
 	size_t len;
-	char *data;
+	const char *data;
 
 	data = *data_p;
 	len = 0;
@@ -1736,8 +1577,6 @@ skipwhite:
 		while (!((data[clen] && data[clen] == '*') && (data[clen+1] && data[clen+1] == '/'))) {
 			clen++;
 		}
-		data[clen] = 0;
-		Com_DPrintf("Com_Parse: multiline comment: %s\n", data);
 		data += clen + 2; /* skip end of multiline comment */
 		goto skipwhite;
 	}
@@ -1794,9 +1633,9 @@ skipwhite:
  * @param
  * @sa Com_Parse
  */
-char *COM_EParse (char **text, const char *errhead, const char *errinfo)
+const char *COM_EParse (const char **text, const char *errhead, const char *errinfo)
 {
-	char *token;
+	const char *token;
 
 	token = COM_Parse(text);
 	if (!*text) {
@@ -1971,7 +1810,7 @@ int Q_strncasecmp (const char *s1, const char *s2, size_t n)
  * @param destsize Size of destination buffer (this should be a sizeof size due to portability)
  */
 #ifdef DEBUG
-void Q_strncpyzDebug (char *dest, const char *src, size_t destsize, char *file, int line)
+void Q_strncpyzDebug (char *dest, const char *src, size_t destsize, const char *file, int line)
 #else
 void Q_strncpyz (char *dest, const char *src, size_t destsize)
 #endif
@@ -2080,7 +1919,7 @@ INFO STRINGS
  * @sa Info_SetValueForKey
  * @return The value or empty string - never NULL
  */
-char *Info_ValueForKey (char *s, const char *key)
+const char *Info_ValueForKey (const char *s, const char *key)
 {
 	char pkey[512];
 	/* use two buffers so compares */
@@ -2907,7 +2746,7 @@ CHARACTER GENERATION AND HANDLING
  * @todo Move to INV_shared.c
  * @sa INV_LoadableInWeapon
  */
-int Com_PackAmmoAndWeapon (inventory_t* const inv, const int weapon, const int equip[MAX_OBJDEFS], int missed_primary, const char *name)
+static int Com_PackAmmoAndWeapon (inventory_t* const inv, const int weapon, const int equip[MAX_OBJDEFS], int missed_primary, const char *name)
 {
 	int ammo = -1; /* this variable is never used before being set */
 	item_t item = {NONE_AMMO, NONE, NONE};
@@ -3235,7 +3074,7 @@ void Com_EquipActor (inventory_t* const inv, const int equip[MAX_OBJDEFS], const
  * @sa TEAM_ALIEN, TEAM_CIVILIAN, TEAM_PHALANX
  * @param[in] teamString
  */
-int Com_StringToTeamNum (char* teamString)
+int Com_StringToTeamNum (const char* teamString)
 {
 	if (!Q_strncmp(teamString, "TEAM_PHALANX", MAX_VAR))
 		return TEAM_PHALANX;
@@ -3260,7 +3099,7 @@ int abilityValues[MAX_CAMPAIGNS][MAX_TEAMS][MAX_EMPL][2];
  * @param[in] maxAbility Pointer to maxAbility int value to use for this character
  * @sa Com_CharGenAbilitySkills
  */
-void Com_GetAbility (character_t *chr, int team, int *minAbility, int *maxAbility, int campaignID)
+static void Com_GetAbility (character_t *chr, int team, int *minAbility, int *maxAbility, int campaignID)
 {
 	*minAbility = *maxAbility = 0;
 	/* some default values */
@@ -3313,7 +3152,7 @@ void Com_GetAbility (character_t *chr, int team, int *minAbility, int *maxAbilit
  * @param[in] maxSkill Pointer to maxSkill int value to use for this character
  * @sa Com_CharGenAbilitySkills
  */
-void Com_GetSkill (character_t *chr, int team, int *minSkill, int *maxSkill, int campaignID)
+static void Com_GetSkill (character_t *chr, int team, int *minSkill, int *maxSkill, int campaignID)
 {
 	*minSkill = *maxSkill = 0;
 	/* some default values */
@@ -3568,7 +3407,6 @@ const char *vt_names[V_NUM_TYPES] = {
 	"translation_string",
 	"translation2_string",
 	"longstring",
-	"pointer",
 	"align",
 	"blend",
 	"style",
@@ -3645,7 +3483,6 @@ static const size_t vt_sizes[V_NUM_TYPES] = {
 	0,	/* V_TRANSLATION_STRING */
 	0,	/* V_TRANSLATION2_STRING */
 	0,	/* V_LONGSTRING */
-	sizeof(void*),	/* V_POINTER */
 	sizeof(byte),	/* V_ALIGN */
 	sizeof(byte),	/* V_BLEND */
 	sizeof(byte),	/* V_STYLE */
@@ -3670,9 +3507,9 @@ static const size_t vt_sizes[V_NUM_TYPES] = {
  * @endcode
  */
 #ifdef DEBUG
-int Com_ParseValueDebug (void *base, char *token, valueTypes_t type, int ofs, size_t size, const char *file, int line)
+int Com_ParseValueDebug (void *base, const char *token, valueTypes_t type, int ofs, size_t size, const char *file, int line)
 #else
-int Com_ParseValue (void *base, char *token, valueTypes_t type, int ofs, size_t size)
+int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, size_t size)
 #endif
 {
 	byte *b;
@@ -3786,10 +3623,6 @@ int Com_ParseValue (void *base, char *token, valueTypes_t type, int ofs, size_t 
 		strcpy((char *) b, token);
 		w = (int)strlen(token) + 1;
 		return ALIGN(w);
-
-	case V_POINTER:
-		*(void **) b = (void *) token;
-		return ALIGN((int)sizeof(void *));
 
 	case V_ALIGN:
 		for (w = 0; w < ALIGN_LAST; w++)
@@ -3914,9 +3747,9 @@ int Com_ParseValue (void *base, char *token, valueTypes_t type, int ofs, size_t 
  * @note The offset is most likely given by the offsetof macro
  */
 #ifdef DEBUG
-int Com_SetValueDebug (void *base, void *set, valueTypes_t type, int ofs, size_t size, const char *file, int line)
+int Com_SetValueDebug (void *base, const void *set, valueTypes_t type, int ofs, size_t size, const char *file, int line)
 #else
-int Com_SetValue (void *base, void *set, valueTypes_t type, int ofs, size_t size)
+int Com_SetValue (void *base, const void *set, valueTypes_t type, int ofs, size_t size)
 #endif
 {
 	byte *b;
@@ -3948,75 +3781,75 @@ int Com_SetValue (void *base, void *set, valueTypes_t type, int ofs, size_t size
 		return ALIGN(0);
 
 	case V_BOOL:
-		if (*(byte *) set)
-			*b = qtrue;
+		if (*(const qboolean *) set)
+			*(qboolean *)b = qtrue;
 		else
-			*b = qfalse;
-		return ALIGN(sizeof(byte));
+			*(qboolean *)b = qfalse;
+		return ALIGN(sizeof(qboolean));
 
 	case V_CHAR:
-		*(char *) b = *(char *) set;
+		*(char *) b = *(const char *) set;
 		return ALIGN(sizeof(char));
 
 	case V_INT:
-		*(int *) b = *(int *) set;
+		*(int *) b = *(const int *) set;
 		return ALIGN(sizeof(int));
 
 	case V_INT2:
-		((int *) b)[0] = ((int *) set)[0];
-		((int *) b)[1] = ((int *) set)[1];
+		((int *) b)[0] = ((const int *) set)[0];
+		((int *) b)[1] = ((const int *) set)[1];
 		return ALIGN(2 * sizeof(int));
 
 	case V_FLOAT:
-		*(float *) b = *(float *) set;
+		*(float *) b = *(const float *) set;
 		return ALIGN(sizeof(float));
 
 	case V_POS:
-		((float *) b)[0] = ((float *) set)[0];
-		((float *) b)[1] = ((float *) set)[1];
+		((float *) b)[0] = ((const float *) set)[0];
+		((float *) b)[1] = ((const float *) set)[1];
 		return ALIGN(2 * sizeof(float));
 
 	case V_VECTOR:
-		((float *) b)[0] = ((float *) set)[0];
-		((float *) b)[1] = ((float *) set)[1];
-		((float *) b)[2] = ((float *) set)[2];
+		((float *) b)[0] = ((const float *) set)[0];
+		((float *) b)[1] = ((const float *) set)[1];
+		((float *) b)[2] = ((const float *) set)[2];
 		return ALIGN(3 * sizeof(float));
 
 	case V_COLOR:
-		((float *) b)[0] = ((float *) set)[0];
-		((float *) b)[1] = ((float *) set)[1];
-		((float *) b)[2] = ((float *) set)[2];
-		((float *) b)[3] = ((float *) set)[3];
+		((float *) b)[0] = ((const float *) set)[0];
+		((float *) b)[1] = ((const float *) set)[1];
+		((float *) b)[2] = ((const float *) set)[2];
+		((float *) b)[3] = ((const float *) set)[3];
 		return ALIGN(4 * sizeof(float));
 
 	case V_RGBA:
-		((byte *) b)[0] = ((byte *) set)[0];
-		((byte *) b)[1] = ((byte *) set)[1];
-		((byte *) b)[2] = ((byte *) set)[2];
-		((byte *) b)[3] = ((byte *) set)[3];
+		((byte *) b)[0] = ((const byte *) set)[0];
+		((byte *) b)[1] = ((const byte *) set)[1];
+		((byte *) b)[2] = ((const byte *) set)[2];
+		((byte *) b)[3] = ((const byte *) set)[3];
 		return ALIGN(4 * sizeof(int));
 
 	case V_STRING:
-		Q_strncpyz((char *) b, (char *) set, MAX_VAR);
-		len = (int)strlen((char *) set) + 1;
+		Q_strncpyz((char *) b, (const char *) set, MAX_VAR);
+		len = (int)strlen((const char *) set) + 1;
 		if (len > MAX_VAR)
 			len = MAX_VAR;
 		return len;
 
 	case V_LONGSTRING:
-		strcpy((char *) b, (char *) set);
-		len = (int)strlen((char *) set) + 1;
+		strcpy((char *) b, (const char *) set);
+		len = (int)strlen((const char *) set) + 1;
 		return len;
 
 	case V_ALIGN:
 	case V_BLEND:
 	case V_STYLE:
 	case V_FADE:
-		*b = *(byte *) set;
+		*b = *(const byte *) set;
 		return ALIGN(1);
 
 	case V_SHAPE_SMALL:
-		*(int *) b = *(int *) set;
+		*(int *) b = *(const int *) set;
 		return ALIGN(4);
 
 	case V_SHAPE_BIG:
@@ -4024,7 +3857,7 @@ int Com_SetValue (void *base, void *set, valueTypes_t type, int ofs, size_t size
 		return ALIGN(64);
 
 	case V_DMGTYPE:
-		*b = *(byte *) set;
+		*b = *(const byte *) set;
 		return ALIGN(1);
 
 	case V_DATE:
@@ -4045,7 +3878,7 @@ int Com_SetValue (void *base, void *set, valueTypes_t type, int ofs, size_t size
  * @sa Com_SetValue
  * @return char pointer with translated data type value
  */
-char *Com_ValueToStr (void *base, valueTypes_t type, int ofs)
+const char *Com_ValueToStr (void *base, valueTypes_t type, int ofs)
 {
 	static char valuestr[MAX_VAR];
 	byte *b;

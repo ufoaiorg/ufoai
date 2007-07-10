@@ -130,11 +130,11 @@ static const value_t fdps[] = {
 /**
  * @brief
  */
-static void Com_ParseFire (const char *name, char **text, fireDef_t * fd)
+static void Com_ParseFire (const char *name, const char **text, fireDef_t * fd)
 {
 	const value_t *fdp;
 	const char *errhead = "Com_ParseFire: unexpected end of file";
-	char *token;
+	const char *token;
 
 	/* get its body */
 	token = COM_Parse(text);
@@ -198,10 +198,10 @@ static void Com_ParseFire (const char *name, char **text, fireDef_t * fd)
  * @brief
  * @sa Com_ParseItem
  */
-static void Com_ParseArmor (const char *name, char **text, short *ad)
+static void Com_ParseArmor (const char *name, const char **text, short *ad)
 {
 	const char *errhead = "Com_ParseArmor: unexpected end of file";
-	char *token;
+	const char *token;
 	int i;
 
 	/* get its body */
@@ -238,12 +238,12 @@ static void Com_ParseArmor (const char *name, char **text, short *ad)
 /**
  * @brief
  */
-static void Com_ParseItem (const char *name, char **text)
+static void Com_ParseItem (const char *name, const char **text)
 {
 	const char *errhead = "Com_ParseItem: unexpected end of file (weapon ";
 	const value_t *val;
 	objDef_t *od;
-	char *token;
+	const char *token;
 	int i,j;
 	int weap_fds_idx, fd_idx;
 
@@ -421,12 +421,12 @@ static const value_t idps[] = {
 /**
  * @brief
  */
-static void Com_ParseInventory (const char *name, char **text)
+static void Com_ParseInventory (const char *name, const char **text)
 {
 	const char *errhead = "Com_ParseInventory: unexpected end of file (inventory ";
 	invDef_t *id;
 	const value_t *idp;
-	char *token;
+	const char *token;
 	int i;
 
 	/* search for containers with same name */
@@ -566,11 +566,11 @@ const char *name_strings[NAME_NUM_TYPES] = {
 /**
  * @brief
  */
-static void Com_ParseEquipment (const char *name, char **text)
+static void Com_ParseEquipment (const char *name, const char **text)
 {
 	const char *errhead = "Com_ParseEquipment: unexpected end of file (equipment ";
 	equipDef_t *ed;
-	char *token;
+	const char *token;
 	int i, n;
 
 	/* search for equipments with same name */
@@ -853,11 +853,11 @@ int Com_GetModelAndName (const char *team, character_t * chr)
  * @note searches whether the actor id is already somewhere in the nameCat array
  * if not, it generates a new nameCat entry
  */
-static void Com_ParseNames (const char *name, char **text)
+static void Com_ParseNames (const char *name, const char **text)
 {
 	nameCategory_t *nc;
 	const char *errhead = "Com_ParseNames: unexpected end of file (names ";
-	char *token;
+	const char *token;
 	int i;
 
 	/* check for additions to existing name categories */
@@ -950,11 +950,11 @@ static void Com_ParseNames (const char *name, char **text)
  * @note searches whether the actor id is already somewhere in the nameCat array
  * if not, it generates a new nameCat entry
  */
-static void Com_ParseActors (const char *name, char **text)
+static void Com_ParseActors (const char *name, const char **text)
 {
 	nameCategory_t *nc;
 	const char *errhead = "Com_ParseActors: unexpected end of file (actors ";
-	char *token;
+	const char *token;
 	int i, j;
 
 	/* check for additions to existing name categories */
@@ -1041,11 +1041,11 @@ static void Com_ParseActors (const char *name, char **text)
  * @sa Com_ParseNames
  * @sa Com_ParseScripts
  */
-static void Com_ParseActorSounds (const char *name, char **text)
+static void Com_ParseActorSounds (const char *name, const char **text)
 {
 	nameCategory_t *nc;
 	const char *errhead = "Com_ParseActorSounds: unexpected end of file (actorsounds ";
-	char *token;
+	const char *token;
 	int i;
 
 	/* check for additions to existing name categories */
@@ -1136,11 +1136,11 @@ static const value_t teamDescValues[] = {
 /**
  * @brief Parse the team descriptions (teamdesc) in the teams*.ufo files.
  */
-static void Com_ParseTeamDesc (const char *name, char **text)
+static void Com_ParseTeamDesc (const char *name, const char **text)
 {
 	teamDesc_t *td;
 	const char *errhead = "Com_ParseTeamDesc: unexpected end of file (teamdesc ";
-	char *token;
+	const char *token;
 	int i;
 	const value_t *v;
 
@@ -1202,12 +1202,12 @@ static void Com_ParseTeamDesc (const char *name, char **text)
 /**
  * @brief
  */
-static void Com_ParseTeam (const char *name, char **text)
+static void Com_ParseTeam (const char *name, const char **text)
 {
 	nameCategory_t *nc;
 	teamDef_t *td;
 	const char *errhead = "Com_ParseTeam: unexpected end of file (team ";
-	char *token;
+	const char *token;
 	int i;
 
 	/* check for additions to existing name categories */
@@ -1286,10 +1286,10 @@ static const value_t gameTypeValues[] = {
 	{NULL, 0, 0, 0}
 };
 
-static void Com_ParseGameTypes (const char *name, char **text)
+static void Com_ParseGameTypes (const char *name, const char **text)
 {
 	const char *errhead = "Com_ParseGameTypes: unexpected end of file (gametype ";
-	char *token;
+	const char *token;
 	int i;
 	const value_t *v;
 	gametype_t* gt;
@@ -1373,10 +1373,10 @@ DAMAGE TYPES INTERPRETER
 /**
  * @brief
  */
-static void Com_ParseDamageTypes (const char *name, char **text)
+static void Com_ParseDamageTypes (const char *name, const char **text)
 {
 	const char *errhead = "Com_ParseDamageTypes: unexpected end of file (damagetype ";
-	char *token;
+	const char *token;
 	int i;
 
 	/* get it's body */
@@ -1501,7 +1501,7 @@ void Com_AddObjectLinks (void)
  */
 void Com_ParseScripts (void)
 {
-	char *type, *name, *text;
+	const char *type, *name, *text;
 	ptrdiff_t infoSize = 0;
 
 	/* reset csi basic info */

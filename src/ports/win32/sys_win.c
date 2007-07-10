@@ -75,7 +75,7 @@ static HANDLE		qwclsemaphore;
 
 #define	MAX_NUM_ARGVS	128
 int			argc;
-char		*argv[MAX_NUM_ARGVS];
+const char		*argv[MAX_NUM_ARGVS];
 
 int SV_CountPlayers(void);
 
@@ -340,7 +340,7 @@ static LRESULT CALLBACK ServerWindowProc (HWND hwnd, UINT message, WPARAM wParam
 /**
  * @brief Get current user
  */
-char *Sys_GetCurrentUser (void)
+const char *Sys_GetCurrentUser (void)
 {
 #if _MSC_VER >= 1300 /* >= MSVC 7.0 */
 	static char s_userName[1024];
@@ -449,19 +449,6 @@ char *Sys_GetHomeDirectory (void)
 		}
 	}
 	return path;
-}
-
-/**
- * @brief
- */
-int Sys_FileLength (const char *path)
-{
-	WIN32_FILE_ATTRIBUTE_DATA	fileData;
-
-	if (GetFileAttributesEx (path, GetFileExInfoStandard, &fileData))
-		return fileData.nFileSizeLow;
-	else
-		return -1;
 }
 
 /**

@@ -417,14 +417,13 @@ void MN_SetNewNodePos (menuNode_t* node, int x, int y)
 /**
  * @brief
  */
-static char *MN_GetReferenceString (const menu_t* const menu, char *ref)
+static const char *MN_GetReferenceString (const menu_t* const menu, char *ref)
 {
 	if (!ref)
 		return NULL;
 	if (*ref == '*') {
 		char ident[MAX_VAR];
-		char *text;
-		char *token;
+		const char *text, *token;
 		char command[MAX_VAR];
 		char param[MAX_VAR];
 
@@ -448,7 +447,7 @@ static char *MN_GetReferenceString (const menu_t* const menu, char *ref)
 				Q_strncpyz(command, token, MAX_VAR);
 				token = COM_Parse(&text);
 				Q_strncpyz(param, token, MAX_VAR);
-				Com_sprintf(token, MAX_VAR, "%s %s", command, param);
+				/*Com_sprintf(token, MAX_VAR, "%s %s", command, param);*/
 			}
 			return Key_GetBinding(token, (cls.state != ca_active ? KEYSPACE_MENU : KEYSPACE_GAME));
 		} else if (!Q_strncmp(ident, "cmd", 3)) {
@@ -497,8 +496,7 @@ static float MN_GetReferenceFloat (const menu_t* const menu, void *ref)
 		return 0.0;
 	if (*(char *) ref == '*') {
 		char ident[MAX_VAR];
-		char *text;
-		char *token;
+		const char *token, *text;
 
 		/* get the reference and the name */
 		text = (char *) ref + 1;
@@ -823,7 +821,7 @@ void MN_ExecuteActions (const menu_t* const menu, menuAction_t* const first)
 static void MN_Command_f (void)
 {
 	menuNode_t *node;
-	char *name;
+	const char *name;
 	int i;
 
 	name = Cmd_Argv(0);
@@ -1482,7 +1480,7 @@ static void CL_MessageMenu_f (void)
 {
 	static char nameBackup[MAX_CVAR_EDITING_LENGTH];
 	static char cvarName[MAX_VAR];
-	char *msg;
+	const char *msg;
 
 	if (Cmd_Argc() < 2) {
 		Com_Printf("Usage: msgmenu <msg>\n");
@@ -3060,7 +3058,8 @@ static void MN_ModifyWrap_f (void)
 static void MN_ModifyString_f (void)
 {
 	qboolean next;
-	char *current, *list, *tp;
+	const char *current, *list;
+	char *tp;
 	char token[MAX_VAR], last[MAX_VAR], first[MAX_VAR];
 	int add;
 
@@ -3122,7 +3121,8 @@ static void MN_ModifyString_f (void)
 static void MN_Translate_f (void)
 {
 	qboolean next;
-	char *current, *list, *orig, *trans;
+	const char *current, *list;
+	char *orig, *trans;
 	char original[MAX_VAR], translation[MAX_VAR];
 
 	if (Cmd_Argc() < 4)
@@ -3222,7 +3222,7 @@ static void MN_ListMenuModels_f (void)
 /**
  * @brief Prints a list of tab and newline seperated string to keylist char array that hold the key and the command desc
  */
-void MN_InitKeyList_f (void)
+static void MN_InitKeyList_f (void)
 {
 	static char keylist[2048];
 	int i;
@@ -3249,7 +3249,7 @@ static void MN_EditMenuNode_f (void)
 	menuNode_t *node;
 	const value_t *val;
 	menu_t *current;
-	char *nodeID, *var, *value;
+	const char *nodeID, *var, *value;
 	int np = -1, cnt = 0;
 
 	/* not initialized yet - commandline? */
@@ -3303,7 +3303,7 @@ static void MN_EditMenuNode_f (void)
  */
 static void MN_ReloadMenus_f (void)
 {
-	char *type, *name, *text;
+	const char *type, *name, *text;
 
 	/* not initialized yet - commandline? */
 	if (menuStackPos <= 0)
@@ -3521,7 +3521,7 @@ MENU PARSING
 /**
  * @brief
  */
-qboolean MN_ParseAction (menuNode_t * menuNode, menuAction_t * action, char **text, char **token)
+static qboolean MN_ParseAction (menuNode_t * menuNode, menuAction_t * action, const char **text, const const char **token)
 {
 	const char *errhead = "MN_ParseAction: unexpected end of file (in event)";
 	menuAction_t *lastAction;
@@ -3702,7 +3702,7 @@ qboolean MN_ParseAction (menuNode_t * menuNode, menuAction_t * action, char **te
  * @brief
  * @sa MN_ParseMenuBody
  */
-static qboolean MN_ParseNodeBody (menuNode_t * node, char **text, char **token)
+static qboolean MN_ParseNodeBody (menuNode_t * node, const char **text, const char **token)
 {
 	const char *errhead = "MN_ParseNodeBody: unexpected end of file (node";
 	qboolean found;
@@ -3920,10 +3920,10 @@ static qboolean MN_ParseNodeBody (menuNode_t * node, char **text, char **token)
  * @brief
  * @sa MN_ParseNodeBody
  */
-static qboolean MN_ParseMenuBody (menu_t * menu, char **text)
+static qboolean MN_ParseMenuBody (menu_t * menu, const char **text)
 {
 	const char *errhead = "MN_ParseMenuBody: unexpected end of file (menu";
-	char *token;
+	const char *token;
 	qboolean found;
 	menuNode_t *node, *lastNode, *iNode;
 	int i;
@@ -4135,10 +4135,10 @@ void MN_PrecacheModels (void)
  * @brief parses the models.ufo and all files where menu_models are defined
  * @sa CL_ParseClientData
  */
-void MN_ParseMenuModel (const char *name, char **text)
+void MN_ParseMenuModel (const char *name, const char **text)
 {
 	menuModel_t *menuModel;
-	char *token;
+	const char *token;
 	int i;
 	const value_t *v = NULL;
 	const char *errhead = "MN_ParseMenuModel: unexpected end of file (names ";
@@ -4244,11 +4244,11 @@ void MN_ParseMenuModel (const char *name, char **text)
  * @brief
  * @sa CL_ParseClientData
  */
-void MN_ParseMenu (const char *name, char **text)
+void MN_ParseMenu (const char *name, const char **text)
 {
 	menu_t *menu;
 	menuNode_t *node;
-	char *token;
+	const char *token;
 	int i;
 
 	/* search for menus with same name */
@@ -4610,7 +4610,7 @@ static const value_t fontValues[] = {
 /**
  * @brief
  */
-void CL_GetFontData (const char *name, int *size, char *path)
+void CL_GetFontData (const char *name, int *size, const char *path)
 {
 	int i;
 
@@ -4628,11 +4628,11 @@ void CL_GetFontData (const char *name, int *size, char *path)
  * @brief
  * @sa CL_ParseClientData
  */
-void CL_ParseFont (const char *name, char **text)
+void CL_ParseFont (const char *name, const char **text)
 {
 	font_t *font;
 	const char *errhead = "CL_ParseFont: unexpected end of file (font";
-	char *token;
+	const char *token;
 	int i;
 	const value_t *v = NULL;
 
@@ -4736,11 +4736,11 @@ static const value_t tutValues[] = {
  * @brief
  * @sa CL_ParseClientData
  */
-void MN_ParseTutorials (const char *name, char **text)
+void MN_ParseTutorials (const char *name, const char **text)
 {
 	tutorial_t *t = NULL;
 	const char *errhead = "MN_ParseTutorials: unexpected end of file (tutorial ";
-	char *token;
+	const char *token;
 	const value_t *v;
 
 	/* get name list body body */

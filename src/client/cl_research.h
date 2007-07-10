@@ -188,7 +188,7 @@ void RS_ResetResearch(void);
 void RS_ResetHash(void);
 void CL_CheckResearchStatus(void);
 void RS_UpdateData(void);
-void RS_ParseTechnologies(const char *name, char **text);
+void RS_ParseTechnologies(const char *name, const char **text);
 qboolean RS_ItemIsResearched(const char *id_provided);
 qboolean RS_TechIsResearched(int tech_idx);
 qboolean RS_TechIsResearchable(technology_t *tech);
@@ -215,5 +215,6 @@ extern qboolean RS_ResearchAllowed(void);
 
 /* ufopedia function - but needs technology_t */
 void UP_Article(technology_t* tech);
+void UP_AircraftDescription(technology_t* t);
 
 #endif /* CLIENT_CL_RESEARCH_H */

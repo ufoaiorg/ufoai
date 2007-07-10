@@ -123,7 +123,7 @@ static void Netchan_OutOfBand (int net_socket, netadr_t adr, int length, byte * 
 /**
  * @brief Sends a text message in an out-of-band datagram
  */
-void Netchan_OutOfBandPrint (int net_socket, netadr_t adr, char *format, ...)
+void Netchan_OutOfBandPrint (int net_socket, netadr_t adr, const char *format, ...)
 {
 	va_list argptr;
 	static char string[MAX_MSGLEN - 4];

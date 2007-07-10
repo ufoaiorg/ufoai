@@ -311,7 +311,7 @@ extern int numGTs;
 #include "mem.h"
 
 qboolean Qcommon_LocaleSet(void);
-void Qcommon_Init(int argc, char **argv);
+void Qcommon_Init(int argc, const char **argv);
 float Qcommon_Frame(int msec);
 void Qcommon_Shutdown(void);
 qboolean Qcommon_ServerActive(void);
@@ -334,6 +334,7 @@ void Sys_NormPath(char *path);
 void Sys_OSPath(char* path);
 void Sys_Sleep(int milliseconds);
 void Sys_AppActivate(void);
+const char *Sys_GetCurrentUser(void);
 
 void Sys_UnloadGame(void);
 /** loads the game dll and calls the api init function */
@@ -346,6 +347,9 @@ void Sys_Error(const char *error, ...) __attribute__((noreturn, format(printf, 1
 void Sys_Quit(void);
 char *Sys_GetClipboardData(void);
 char *Sys_GetHomeDirectory(void);
+
+void Sys_ConsoleInputShutdown(void);
+void Sys_ConsoleInputInit(void);
 
 void *Sys_LoadLibrary(const char *name, int flags);
 void Sys_FreeLibrary(void *libHandle);
@@ -367,7 +371,7 @@ void CL_Init(void);
 void CL_Drop(void);
 void CL_Shutdown(void);
 int CL_Frame(int msec);
-void CL_ParseClientData(const char *type, const char *name, char **text);
+void CL_ParseClientData(const char *type, const char *name, const char **text);
 void Con_Print(const char *text);
 void SCR_BeginLoadingPlaque(void);
 void MN_PrecacheMenus(void);

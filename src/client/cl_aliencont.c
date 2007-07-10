@@ -82,7 +82,7 @@ void AL_FillInContainment (int baseidx)
  * @param[in] type
  * @return name
  */
-char *AL_AlienTypeToName (int teamDescIdx)
+const char *AL_AlienTypeToName (int teamDescIdx)
 {
 	if (teamDescIdx < 0 || teamDescIdx >= numTeamDesc)
 		return "";

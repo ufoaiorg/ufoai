@@ -70,7 +70,7 @@ qboolean HOS_RemoveFromList (employee_t *employee, base_t *base)
  * @param[in] *employee Pointer to the employee to remove.
  * @param[in] *base Pointer to the base where the employee is hired.
  */
-qboolean HOS_RemoveFromMissionList (employee_t *employee, base_t *base)
+static qboolean HOS_RemoveFromMissionList (employee_t *employee, base_t *base)
 {
 	int i = 0, j = 0;
 	qboolean test = qfalse;
@@ -96,7 +96,7 @@ qboolean HOS_RemoveFromMissionList (employee_t *employee, base_t *base)
  * @brief Checks whether an employee should be removed from Hospital healing list.
  * @param[in] *employee Pointer to the employee to check.
  */
-void HOS_CheckRemovalFromEmployeeList (employee_t *employee)
+static void HOS_CheckRemovalFromEmployeeList (employee_t *employee)
 {
 	base_t *base;
 
@@ -130,7 +130,7 @@ void HOS_CheckRemovalFromEmployeeList (employee_t *employee)
  * @param[in] *base Pointer to the base with hospital, where the given employee will be healed.
  * @param[in] *employee Pointer to the employee being added to hospital.
  */
-qboolean HOS_AddToEmployeeList (employee_t* employee, base_t *base)
+static qboolean HOS_AddToEmployeeList (employee_t* employee, base_t *base)
 {
 	int i;
 	/* Already in our list? */
@@ -155,7 +155,7 @@ qboolean HOS_AddToEmployeeList (employee_t* employee, base_t *base)
  * @param[in] *employee Pointer to the employee to add.
  * @param[in] *base Pointer to the base where we will add given employee.
  */
-qboolean HOS_AddToInMissionEmployeeList (employee_t* employee, base_t *base)
+static qboolean HOS_AddToInMissionEmployeeList (employee_t* employee, base_t *base)
 {
 	int i;
 

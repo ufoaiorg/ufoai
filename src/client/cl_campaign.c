@@ -62,9 +62,6 @@ static salary_t salaries[MAX_CAMPAIGNS];
 /* extern in client.h */
 stats_t stats;					/**< Document me. */
 
-extern qboolean AIR_SendAircraftToMission(aircraft_t * aircraft, actMis_t * mission);
-extern void AIR_AircraftsNotifyMissionRemoved(const actMis_t * mission);
-
 /*
 ============================================================================
 Boolean expression parser
@@ -354,17 +351,6 @@ static date_t Date_Random_Middle (date_t frame)
 	frame.day = frame.sec / (3600 * 24);
 	frame.sec = frame.sec % (3600 * 24);
 	return frame;
-}
-
-/**
- * @brief Returns the current campaign index in global campaign array
- * @sa Com_CharGenAbilitySkills
- */
-int CL_GetCampaignID (void)
-{
-	if (curCampaign)
-		return curCampaign->idx;
-	return -1;
 }
 
 /**
@@ -2860,12 +2846,12 @@ mission_t *CL_AddMission (const char *name)
  * @sa CL_ParseScriptFirst
  * @note write into cl_localPool - free on every game restart and reparse
  */
-void CL_ParseMission (const char *name, char **text)
+void CL_ParseMission (const char *name, const char **text)
 {
 	const char *errhead = "CL_ParseMission: unexpected end of file (mission ";
 	mission_t *ms;
 	const value_t *vp;
-	char *token;
+	const char *token;
 
 	ms = CL_AddMission(name);
 
@@ -2923,10 +2909,10 @@ void CL_ParseMission (const char *name, char **text)
  * @brief This function parses a list of items that should be set to researched = true after campaign start
  * @todo: Implement the use of this function
  */
-void CL_ParseResearchedCampaignItems (const char *name, char **text)
+void CL_ParseResearchedCampaignItems (const char *name, const char **text)
 {
 	const char *errhead = "CL_ParseResearchedCampaignItems: unexpected end of file (equipment ";
-	char *token;
+	const char *token;
 	int i;
 	campaign_t* campaign = NULL;
 
@@ -2974,10 +2960,10 @@ void CL_ParseResearchedCampaignItems (const char *name, char **text)
  * @param researchable Mark them researchable or not researchable
  * @sa CL_ParseScriptFirst
  */
-void CL_ParseResearchableCampaignStates (const char *name, char **text, qboolean researchable)
+void CL_ParseResearchableCampaignStates (const char *name, const char **text, qboolean researchable)
 {
 	const char *errhead = "CL_ParseResearchableCampaignStates: unexpected end of file (equipment ";
-	char *token;
+	const char *token;
 	int i;
 	campaign_t* campaign = NULL;
 
@@ -3044,13 +3030,14 @@ static const value_t stageset_vals[] = {
  * @sa CL_ParseScriptSecond
  * @sa CL_ParseStage
  */
-static void CL_ParseStageSet (const char *name, char **text)
+static void CL_ParseStageSet (const char *name, const char **text)
 {
 	const char *errhead = "CL_ParseStageSet: unexpected end of file (stageset ";
 	stageSet_t *sp;
 	const value_t *vp;
 	char missionstr[256];
-	char *token, *misp;
+	const char *token;
+	const char *misp;
 	int j;
 
 	if (numStageSets >= MAX_STAGESETS) {
@@ -3136,11 +3123,11 @@ static void CL_ParseStageSet (const char *name, char **text)
  * @sa CL_ParseStageSet
  * @sa CL_ParseScriptSecond
  */
-void CL_ParseStage (const char *name, char **text)
+void CL_ParseStage (const char *name, const char **text)
 {
 	const char *errhead = "CL_ParseStage: unexpected end of file (stage ";
 	stage_t *sp;
-	char *token;
+	const char *token;
 	int i;
 
 	/* search for campaigns with same name */
@@ -3224,12 +3211,12 @@ static const value_t salary_vals[] = {
  *  soldier_base 3000
  * }</code>
  */
-static void CL_ParseSalary (const char *name, char **text, int campaignID)
+static void CL_ParseSalary (const char *name, const char **text, int campaignID)
 {
 	const char *errhead = "CL_ParseSalary: unexpected end of file ";
 	salary_t *s;
 	const value_t *vp;
-	char *token;
+	const char *token;
 
 	/* initialize the campaign */
 	s = &salaries[campaignID];
@@ -3280,10 +3267,10 @@ static void CL_ParseSalary (const char *name, char **text, int campaignID)
  *  TEAM_ALIEN ability 15 95
  * }</code>
  */
-static void CL_ParseCharacterValues (const char *name, char **text, int campaignID)
+static void CL_ParseCharacterValues (const char *name, const char **text, int campaignID)
 {
 	const char *errhead = "CL_ParseCharacterValues: unexpected end of file (character_data ";
-	char *token;
+	const char *token;
 	int team = 0, i, empl_type = 0;
 
 	Com_DPrintf("...found character value %s\n", name);
@@ -3366,12 +3353,12 @@ static const value_t campaign_vals[] = {
  * @brief
  * @sa CL_ParseClientData
  */
-void CL_ParseCampaign (const char *name, char **text)
+void CL_ParseCampaign (const char *name, const char **text)
 {
 	const char *errhead = "CL_ParseCampaign: unexpected end of file (campaign ";
 	campaign_t *cp;
 	const value_t *vp;
-	char *token;
+	const char *token;
 	int i;
 	salary_t *s;
 
@@ -3489,12 +3476,12 @@ static const value_t nation_vals[] = {
  * @sa CL_ParseScriptFirst
  * @note write into cl_localPool - free on every game restart and reparse
  */
-void CL_ParseNations (const char *name, char **text)
+void CL_ParseNations (const char *name, const char **text)
 {
 	const char *errhead = "CL_ParseNations: unexpected end of file (nation ";
 	nation_t *nation;
 	const value_t *vp;
-	char *token;
+	const char *token;
 
 	if (gd.numNations >= MAX_NATIONS) {
 		Com_Printf("CL_ParseNations: nation def \"%s\" with same name found, second ignored\n", name);

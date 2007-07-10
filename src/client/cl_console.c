@@ -43,7 +43,7 @@ extern int key_linepos;
 /**
  * @brief
  */
-static void DisplayString (int x, int y, char *s)
+static void DisplayString (int x, int y, const char *s)
 {
 	while (*s) {
 		re.DrawChar(x, y, *s);
@@ -181,7 +181,7 @@ void Con_ClearNotify (void)
 /**
  * @brief
  */
-void Con_MessageModeSay_f (void)
+static void Con_MessageModeSay_f (void)
 {
 	msg_mode = MSG_SAY;
 	Key_SetDest(key_message);

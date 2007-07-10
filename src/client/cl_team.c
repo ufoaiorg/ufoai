@@ -854,7 +854,7 @@ typedef enum {
  */
 static void CL_Select_f (void)
 {
-	char *arg;
+	const char *arg;
 	char command[MAX_VAR];
 	character_t *chr;
 	int num;
@@ -1044,7 +1044,7 @@ void CL_ResetTeamInBase (void)
 	/* reset the multiplayer inventory; stored in baseCurrent->storage */
 	{
 		equipDef_t *ed;
-		char *name;
+		const char *name;
 		int i;
 
 		/* search equipment definition */
@@ -1398,7 +1398,7 @@ static qboolean CL_SaveTeamMultiplayer (const char *filename)
 {
 	sizebuf_t sb;
 	byte buf[MAX_TEAMDATASIZE];
-	char *name;
+	const char *name;
 	aircraft_t *aircraft;
 	int i, res;
 
@@ -2143,11 +2143,11 @@ static const value_t rankValues[] =
  * @sa CL_ParseScriptFirst
  * @note write into cl_localPool - free on every game restart and reparse
  */
-void CL_ParseMedalsAndRanks (const char *name, char **text, byte parserank)
+void CL_ParseMedalsAndRanks (const char *name, const char **text, byte parserank)
 {
 	rank_t *rank = NULL;
 	const char *errhead = "Com_ParseMedalsAndRanks: unexpected end of file (medal/rank ";
-	char *token;
+	const char *token;
 	const value_t	*v;
 
 	/* get name list body body */
@@ -2223,10 +2223,10 @@ static const value_t ugvValues[] = {
  * @brief Parse UGVs
  * @sa CL_ParseClientData
  */
-void CL_ParseUGVs (const char *name, char **text)
+void CL_ParseUGVs (const char *name, const char **text)
 {
 	const char *errhead = "Com_ParseUGVs: unexpected end of file (ugv ";
-	char	*token;
+	const char	*token;
 	const value_t	*v;
 	ugv_t*	ugv;
 

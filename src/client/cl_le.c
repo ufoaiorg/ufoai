@@ -274,7 +274,7 @@ void CL_RegisterLocalModels (void)
  * @brief
  * @sa CL_ParseEntitystring
  */
-lm_t *CL_AddLocalModel (char *model, char *particle, vec3_t origin, vec3_t angles, int num, int levelflags)
+lm_t *CL_AddLocalModel (const char *model, const char *particle, vec3_t origin, vec3_t angles, int num, int levelflags)
 {
 	lm_t *lm;
 
@@ -336,11 +336,12 @@ static char retAnim[MAX_VAR];
  * have a 'c' in front of their animation definitions (see *.anm files for
  * characters)
  */
-char *LE_GetAnim (const char *anim, int right, int left, int state)
+const char *LE_GetAnim (const char *anim, int right, int left, int state)
 {
 	char *mod;
 	qboolean akimbo;
-	char category, *type;
+	char category;
+	const char *type;
 
 	if (!anim)
 		return "";

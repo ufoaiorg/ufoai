@@ -48,7 +48,7 @@ searchpath_t *fs_base_searchpaths;	/* without gamedirs */
 /**
  * @brief
  */
-qboolean strwildcomp (const char *string, const char *pattern)
+static qboolean strwildcomp (const char *string, const char *pattern)
 {
 	const char *s = 0;
 	char c = '\0';
@@ -338,43 +338,6 @@ int FS_FOpenFile (const char *filename, qFILE * file)
 /**
  * @brief
  */
-int FS_FOpenFileRead (const char *filename, qFILE * f)
-{
-	char *ospath = NULL;
-	int l;
-
-	if ((l = FS_CheckFile(filename)) > 0) {
-		/* don't let sound stutter */
-/* 		S_ClearBuffer(); */
-		f->f = fopen(ospath, "rb");
-	} else
-		f->f = NULL;
-
-	return l;
-}
-
-/**
- * @brief
- * @returns file size or -1 on error
- */
-int FS_FOpenFileAppend (qFILE *f)
-{
-	char path[MAX_OSPATH];
-
-	FS_CreatePath(f->name);
-
-	Com_sprintf(path, sizeof(path), "%s/%s", FS_Gamedir(), f->name);
-
-	f->f = fopen(path, "ab");
-	if (f->f)
-		return FS_FileLength(f);
-
-	return -1;
-}
-
-/**
- * @brief
- */
 void FS_FOpenFileWrite (const char *filename, qFILE * f)
 {
 	if (f->z)
@@ -420,7 +383,7 @@ void CDAudio_Stop (void);
  * @sa FS_FOpenFile
  */
 #ifdef DEBUG
-int FS_ReadDebug (void *buffer, int len, qFILE * f, char* file, int line)
+int FS_ReadDebug (void *buffer, int len, qFILE * f, const char* file, int line)
 #else
 int FS_Read (void *buffer, int len, qFILE * f)
 #endif
@@ -710,7 +673,7 @@ static void FS_AddHomeAsGameDirectory (const char *dir)
  */
 void FS_ExecAutoexec (void)
 {
-	char *dir;
+	const char *dir;
 	char name[MAX_QPATH];
 
 	dir = Cvar_VariableString("fs_gamedir");
@@ -1073,7 +1036,7 @@ static void _AddToListBlock (char** fl, listBlock_t* block, listBlock_t* tblock,
  * @brief Build a filelist
  * @param[in] fileList e.g. ufos\*.ufo to get all ufo files in the gamedir/ufos dir
  */
-void FS_BuildFileList (char *fileList)
+void FS_BuildFileList (const char *fileList)
 {
 	listBlock_t *block, *tblock;
 	searchpath_t *search;
@@ -1165,9 +1128,9 @@ void FS_BuildFileList (char *fileList)
 /**
  * @brief
  */
-void FS_SkipBlock (char **text)
+void FS_SkipBlock (const char **text)
 {
-	char *token;
+	const char *token;
 	int depth;
 
 	depth = 1;
@@ -1195,10 +1158,10 @@ static char headerName[32];
 /**
  * @brief
  */
-char *FS_NextScriptHeader (const char *files, char **name, char **text)
+char *FS_NextScriptHeader (const char *files, const char **name, const char **text)
 {
 	listBlock_t *block;
-	char *token;
+	const char *token;
 
 	if (!text) {
 		*lastList = 0;
@@ -1462,7 +1425,7 @@ int FS_WriteFile (const void *buffer, size_t len, const char *filename)
 /**
  * @brief Return current working dir
  */
-char *FS_GetCwd (void)
+const char *FS_GetCwd (void)
 {
 	static char buf[MAX_QPATH];
 	char *path = Q_getcwd(buf, sizeof(buf));

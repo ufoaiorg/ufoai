@@ -132,7 +132,7 @@ static void Sys_ConsoleRefresh (void)
 /**
  * @brief
  */
-void Sys_ConsoleAddHistory (int line)
+static void Sys_ConsoleAddHistory (int line)
 {
 	Sys_ConsoleInputReset();
 	Q_strncpyz(cmdbuf[edit_line], cmdbuf[history_line], BUF_LEN);

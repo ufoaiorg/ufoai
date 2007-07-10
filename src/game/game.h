@@ -231,12 +231,12 @@ typedef struct {
 	cvar_t *(*cvar) (const char *var_name, const char *value, int flags, const char* desc);
 	cvar_t *(*cvar_set) (const char *var_name, const char *value);
 	cvar_t *(*cvar_forceset) (const char *var_name, const char *value);
-	char *(*cvar_string) (const char *var_name);
+	const char *(*cvar_string) (const char *var_name);
 
 	/* ClientCommand and ServerCommand parameter access */
 	int (*argc) (void);
-	char *(*argv) (int n);
-	char *(*args) (void);		/* concatenation of all argv >= 1 */
+	const char *(*argv) (int n);
+	const char *(*args) (void);		/* concatenation of all argv >= 1 */
 
 	/* add commands to the server console as if they were typed in */
 	/* for map changing, etc */

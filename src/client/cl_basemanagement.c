@@ -1248,14 +1248,14 @@ static void B_BuildingClick_f (void)
  * @sa CL_ParseScriptFirst (link is false here)
  * @sa CL_ParseScriptSecond (link it true here)
  */
-void B_ParseBuildings (const char *name, char **text, qboolean link)
+void B_ParseBuildings (const char *name, const char **text, qboolean link)
 {
 	building_t *building = NULL;
 	building_t *dependsBuilding = NULL;
 	technology_t *tech_link = NULL;
 	const value_t *vp = NULL;
 	const char *errhead = "B_ParseBuildings: unexpected end of file (names ";
-	char *token = NULL;
+	const char *token = NULL;
 	int i;
 #if 0
 	char *split = NULL;
@@ -1550,10 +1550,10 @@ void B_ClearBase (base_t *const base)
  * @sa CL_ParseScriptFirst
  * @note write into cl_localPool - free on every game restart and reparse
  */
-void B_ParseBases (const char *name, char **text)
+void B_ParseBases (const char *name, const char **text)
 {
 	const char *errhead = "B_ParseBases: unexpected end of file (names ";
-	char *token;
+	const char *token;
 	base_t *base;
 
 	gd.numBaseNames = 0;

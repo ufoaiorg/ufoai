@@ -310,8 +310,6 @@ extern vec4_t vec4_origin;
 qboolean Q_IsPowerOfTwo(int i);
 
 /* microsoft's fabs seems to be ungodly slow... */
-/*float Q_fabs (float f); */
-/*#define   fabs(f) Q_fabs(f) */
 #if defined _M_IX86 && !defined C_ONLY
 extern long Q_ftol(float f);
 #else
@@ -432,10 +430,10 @@ void COM_StripExtension(const char *in, char *out);
 void COM_FileBase(const char *in, char *out);
 void COM_FilePath(const char *in, char *out);
 
-char *COM_Parse(char **data_p);
+const char *COM_Parse(const char **data_p);
 
 /* data is an in/out parm, returns a parsed out token */
-char *COM_EParse(char **text, const char *errhead, const char *errinfo);
+const char *COM_EParse(const char **text, const char *errhead, const char *errinfo);
 
 qboolean Com_sprintf(char *dest, size_t size, const char *fmt, ...) __attribute__((format(printf, 3, 4)));
 
@@ -457,7 +455,7 @@ int Q_StringSort(const void *string1, const void *string2) __attribute__((nonnul
 #ifndef DEBUG
 void Q_strncpyz(char *dest, const char *src, size_t destsize) __attribute__((nonnull));
 #else
-void Q_strncpyzDebug(char *dest, const char *src, size_t destsize, char *file, int line) __attribute__((nonnull));
+void Q_strncpyzDebug(char *dest, const char *src, size_t destsize, const char *file, int line) __attribute__((nonnull));
 #endif
 void Q_strcat(char *dest, const char *src, size_t size) __attribute__((nonnull));
 char *Q_strlwr(char *str) __attribute__((nonnull));
@@ -474,7 +472,7 @@ float BigFloat(float l);
 float LittleFloat(float l);
 
 void Swap_Init(void);
-char *va(char *format, ...) __attribute__((format(printf, 1, 2)));
+char *va(const char *format, ...) __attribute__((format(printf, 1, 2)));
 
 /*============================================= */
 
@@ -483,7 +481,7 @@ char *va(char *format, ...) __attribute__((format(printf, 1, 2)));
 #define MAX_INFO_VALUE      64
 #define MAX_INFO_STRING     512
 
-char *Info_ValueForKey(char *s, const char *key);
+const char *Info_ValueForKey(const char *s, const char *key);
 void Info_RemoveKey(char *s, const char *key);
 void Info_SetValueForKey(char *s, const char *key, const char *value);
 
@@ -759,19 +757,18 @@ typedef enum {
 	V_TRANSLATION_STRING,	/**< translate via gettext */
 	V_TRANSLATION2_STRING,		/**< remove _ but don't translate */
 	V_LONGSTRING,
-	V_POINTER,
-	V_ALIGN = 15,
-	V_BLEND,
+	V_ALIGN,
+	V_BLEND = 15,
 	V_STYLE,
 	V_FADE,
 	V_SHAPE_SMALL,
-	V_SHAPE_BIG = 20,
-	V_DMGTYPE,
+	V_SHAPE_BIG,
+	V_DMGTYPE = 20,
 	V_DATE,
 	V_IF,
 	V_RELABS,					/**< relative (e.g. 1.50) and absolute (e.g. +15) values */
 	V_CLIENT_HUNK,				/**< only for client side data - not handled in Com_ParseValue */
-	V_CLIENT_HUNK_STRING,		/**< same as for V_CLIENT_HUNK */
+	V_CLIENT_HUNK_STRING = 25,	/**< same as for V_CLIENT_HUNK */
 
 	V_NUM_TYPES
 } valueTypes_t;
@@ -847,13 +844,13 @@ typedef struct value_s {
 } value_t;
 
 #ifdef DEBUG
-int Com_ParseValueDebug(void *base, char *token, valueTypes_t type, int ofs, size_t size, const char* file, int line);
-int Com_SetValueDebug(void *base, void *set, valueTypes_t type, int ofs, size_t size, const char* file, int line);
+int Com_ParseValueDebug(void *base, const char *token, valueTypes_t type, int ofs, size_t size, const char* file, int line);
+int Com_SetValueDebug(void *base, const void *set, valueTypes_t type, int ofs, size_t size, const char* file, int line);
 #else
-int Com_ParseValue(void *base, char *token, valueTypes_t type, int ofs, size_t size);
-int Com_SetValue(void *base, void *set, valueTypes_t type, int ofs, size_t size);
+int Com_ParseValue(void *base, const char *token, valueTypes_t type, int ofs, size_t size);
+int Com_SetValue(void *base, const void *set, valueTypes_t type, int ofs, size_t size);
 #endif
-char *Com_ValueToStr(void *base, valueTypes_t type, int ofs);
+const char *Com_ValueToStr(void *base, valueTypes_t type, int ofs);
 
 /*
 ==========================================================
@@ -1302,7 +1299,7 @@ extern int skillValues[MAX_CAMPAIGNS][MAX_TEAMS][MAX_EMPL][2];
 extern int abilityValues[MAX_CAMPAIGNS][MAX_TEAMS][MAX_EMPL][2];
 
 void Com_SetGlobalCampaignID (int campaignID);
-int Com_StringToTeamNum(char* teamString) __attribute__((nonnull));
+int Com_StringToTeamNum(const char* teamString) __attribute__((nonnull));
 void Com_CharGenAbilitySkills(character_t * chr, int team) __attribute__((nonnull));
 char *Com_CharGetBody(character_t* const chr) __attribute__((nonnull));
 char *Com_CharGetHead(character_t* const chr) __attribute__((nonnull));

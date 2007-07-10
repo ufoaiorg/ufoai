@@ -60,8 +60,8 @@ void MSG_WriteChar(sizebuf_t * sb, int c);
 #ifdef DEBUG
 #define MSG_WriteByte(buffer, char) MSG_WriteByteDebug( buffer, char, __FILE__, __LINE__ )
 #define MSG_WriteShort(buffer, char) MSG_WriteShortDebug( buffer, char, __FILE__, __LINE__ )
-void MSG_WriteByteDebug(sizebuf_t * sb, int c, char *file, int line);
-void MSG_WriteShortDebug(sizebuf_t * sb, int c, char* file, int line);
+void MSG_WriteByteDebug(sizebuf_t * sb, int c, const char *file, int line);
+void MSG_WriteShortDebug(sizebuf_t * sb, int c, const char* file, int line);
 #else
 void MSG_WriteByte(sizebuf_t * sb, int c);
 void MSG_WriteShort(sizebuf_t * sb, int c);
@@ -116,11 +116,14 @@ extern float LittleFloat(float l);
 /*============================================================================ */
 
 int COM_Argc(void);
-char *COM_Argv(int arg);		/* range and null checked */
+const char *COM_Argv(int arg);		/* range and null checked */
 void COM_ClearArgv(int arg);
 unsigned int Com_HashKey(const char *name, int hashsize);
-int COM_CheckParm(char *parm);
-void COM_AddParm(char *parm);
+int COM_CheckParm(const char *parm);
+void COM_AddParm(const char *parm);
 
 void COM_Init(void);
-void COM_InitArgv(int argc, char **argv);
+void COM_InitArgv(int argc, const char **argv);
+
+void Key_Init(void);
+void SCR_EndLoadingPlaque(void);

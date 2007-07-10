@@ -39,6 +39,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #include "cl_market.h"
 #include "cl_event.h"
 #include "cl_menu.h"
+#include "cl_save.h"
 #ifdef HAVE_OPENAL
 	#ifndef DEDICATED_ONLY
 		#include "qal.h"
@@ -355,7 +356,7 @@ shader stuff
 */
 
 void CL_ShaderList_f(void);
-void CL_ParseShaders(const char *name, char **text);
+void CL_ParseShaders(const char *name, const char **text);
 extern int r_numshaders;
 extern shader_t r_shaders[MAX_SHADERS];
 
@@ -432,11 +433,11 @@ void CIN_RunCinematic(void);
 
 /* cl_tip.c */
 void CL_TipOfTheDayInit(void);
-void CL_ParseTipsOfTheDay(const char *name, char **text);
+void CL_ParseTipsOfTheDay(const char *name, const char **text);
 extern cvar_t* cl_showTipOfTheDay;	/**< tip of the day can be deactivated */
 
 /* cl_language.c */
-void CL_ParseLanguages(const char *name, char **text);
+void CL_ParseLanguages(const char *name, const char **text);
 void CL_LanguageInit(void);
 qboolean CL_LanguageTryToSet(const char *localeID);
 
@@ -452,8 +453,8 @@ void CL_StartSingleplayer(qboolean singleplayer);
 void CL_GetChallengePacket(void);
 void CL_Snd_Restart_f(void);
 void S_ModifySndRef_f(void);
-void CL_ParseMedalsAndRanks(const char *name, char **text, byte parserank);
-void CL_ParseUGVs(const char *name, char **text);
+void CL_ParseMedalsAndRanks(const char *name, const char **text, byte parserank);
+void CL_ParseUGVs(const char *name, const char **text);
 void CL_UpdateCharacterSkills(character_t *chr);	/* cl_team.c */
 char* CL_ToDifficultyName(int difficulty);
 
@@ -493,7 +494,7 @@ void CL_ParseInput(void);
 
 void CL_ClearState(void);
 
-char *Key_KeynumToString(int keynum);
+const char *Key_KeynumToString(int keynum);
 
 void CL_CameraModeChange(camera_mode_t newcameramode);
 
@@ -594,7 +595,7 @@ typedef struct lm_s {
 /** @brief map particles */
 typedef struct mp_s {
 	char ptl[MAX_QPATH];
-	char *info;
+	const char *info;
 	vec3_t origin;
 	vec2_t wait;
 	int nextTime;
@@ -614,7 +615,7 @@ static const vec3_t player_maxs = { PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_STAND };
 static const vec3_t player_dead_maxs = { PLAYER_WIDTH, PLAYER_WIDTH, PLAYER_DEAD };
 
 void LE_Think(void);
-char *LE_GetAnim(const char *anim, int right, int left, int state);
+const char *LE_GetAnim(const char *anim, int right, int left, int state);
 
 void LE_AddProjectile(fireDef_t * fd, int flags, vec3_t muzzle, vec3_t impact, int normal);
 void LE_AddGrenade(fireDef_t * fd, int flags, vec3_t muzzle, vec3_t v0, int dt);
@@ -636,8 +637,8 @@ le_t *LE_Find(int type, pos3_t pos);
 void LE_Cleanup(void);
 trace_t CL_Trace(vec3_t start, vec3_t end, vec3_t mins, vec3_t maxs, le_t * passle, le_t * passle2, int contentmask);
 
-lm_t *CL_AddLocalModel(char *model, char *particle, vec3_t origin, vec3_t angles, int num, int levelflags);
-void CL_AddMapParticle(char *particle, vec3_t origin, vec2_t wait, char *info, int levelflags);
+lm_t *CL_AddLocalModel(const char *model, const char *particle, vec3_t origin, vec3_t angles, int num, int levelflags);
+void CL_AddMapParticle(const char *particle, vec3_t origin, vec2_t wait, const char *info, int levelflags);
 void CL_ParticleCheckRounds(void);
 void CL_ParticleSpawnFromSizeBuf (sizebuf_t* sb);
 void CL_ParticleFree(ptl_t *p);
@@ -919,7 +920,7 @@ void CL_ParticleRegisterArt(void);
 void CL_ResetParticles(void);
 void CL_ParticleRun(void);
 void CL_RunMapParticles(void);
-int CL_ParseParticle(const char *name, char **text);
+int CL_ParseParticle(const char *name, const char **text);
 void CL_InitParticles(void);
 ptl_t *CL_ParticleSpawn(const char *name, int levelFlags, const vec3_t s, const vec3_t v, const vec3_t a);
 void PE_RenderParticles(void);
@@ -965,7 +966,7 @@ void CL_SequenceClick_f(void);
 void CL_SequenceStart_f(void);
 void CL_SequenceEnd_f(void);
 void CL_ResetSequences(void);
-void CL_ParseSequence(const char *name, char **text);
+void CL_ParseSequence(const char *name, const char **text);
 
 /* cl_fx.c */
 cdlight_t *CL_AllocDlight(int key);

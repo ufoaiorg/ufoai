@@ -83,9 +83,8 @@ static kbutton_t in_turnup, in_turndown;
 static void KeyDown (kbutton_t * b)
 {
 	int k;
-	char *c;
+	const char *c = Cmd_Argv(1);
 
-	c = Cmd_Argv(1);
 	if (c[0])
 		k = atoi(c);
 	else
@@ -122,13 +121,12 @@ static void KeyDown (kbutton_t * b)
 /**
  * @brief
  */
-void KeyUp (kbutton_t * b)
+static void KeyUp (kbutton_t * b)
 {
 	int k;
-	char *c;
 	unsigned uptime;
+	const char *c = Cmd_Argv(1);
 
-	c = Cmd_Argv(1);
 	if (c[0])
 		k = atoi(c);
 	/* typed manually at the console, assume for unsticking, so clear all */

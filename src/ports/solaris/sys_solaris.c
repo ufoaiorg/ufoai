@@ -55,17 +55,6 @@ uid_t saved_euid;
 /**
  * @brief
  */
-void Sys_Quit (void)
-{
-	CL_Shutdown();
-	Qcommon_Shutdown();
-	fcntl(0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
-	exit(0);
-}
-
-/**
- * @brief
- */
 void Sys_Init (void)
 {
 	Cvar_Get("sys_os", "solaris", CVAR_SERVERINFO, NULL);
@@ -97,7 +86,7 @@ void Sys_Error (const char *error, ...)
 	exit (0);
 }
 
-void floating_point_exception_handler (int whatever)
+static void floating_point_exception_handler (int whatever)
 {
 /*	Sys_Warn("floating point exception\n"); */
 	signal(SIGFPE, floating_point_exception_handler);

@@ -102,7 +102,7 @@ float Cvar_VariableValue (const char *var_name)
  * @sa Cvar_FindVar
  * @return true if set
  */
-qboolean Cvar_SetCheckFunction (char *var_name, qboolean (*check) (cvar_t* cvar) )
+qboolean Cvar_SetCheckFunction (const char *var_name, qboolean (*check) (cvar_t* cvar) )
 {
 	cvar_t *var;
 
@@ -205,7 +205,7 @@ int Cvar_VariableInteger (const char *var_name)
  * Even if the cvar does not exist this function will not return a null pointer
  * but an empty string
  */
-char *Cvar_VariableString (const char *var_name)
+const char *Cvar_VariableString (const char *var_name)
 {
 	cvar_t *var;
 
@@ -223,7 +223,7 @@ char *Cvar_VariableString (const char *var_name)
  * Even if the cvar does not exist this function will not return a null pointer
  * but an empty string
  */
-char *Cvar_VariableStringOld (const char *var_name)
+const char *Cvar_VariableStringOld (const char *var_name)
 {
 	cvar_t *var;
 
@@ -680,7 +680,7 @@ static void Cvar_List_f (void)
 {
 	cvar_t *var;
 	int i, c, l = 0;
-	char *token = NULL;
+	const char *token = NULL;
 
 	c = Cmd_Argc();
 

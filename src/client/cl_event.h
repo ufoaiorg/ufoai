@@ -48,6 +48,6 @@ typedef struct eventMail_s {
 } eventMail_t;
 
 extern void CL_EventAddMail_f(void);
-extern void CL_ParseEventMails(const char *name, char **text);
+extern void CL_ParseEventMails(const char *name, const char **text);
 
 #endif /* CLIENT_CL_EVENT */

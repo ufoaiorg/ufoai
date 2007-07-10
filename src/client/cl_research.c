@@ -64,7 +64,7 @@ static void RS_PushNewsWhenResearched (technology_t* tech)
  * @brief Sets a technology status to researched and updates the date.
  * @param[in] tech The technology that was researched.
  */
-void RS_ResearchFinish (technology_t* tech)
+static void RS_ResearchFinish (technology_t* tech)
 {
 	tech->statusResearch = RS_FINISH;
 	CL_DateConvert(&ccs.date, &tech->researchedDateDay, &tech->researchedDateMonth);
@@ -268,7 +268,7 @@ void RS_MarkCollected (technology_t* tech)
  * @return Returns qtrue if there are is ANYTHING collected for each entry otherwise qfalse.
  * @todo Get rid (or improve) this statusCollected stuff.
  */
-qboolean RS_CheckCollected (requirements_t *required)
+static qboolean RS_CheckCollected (requirements_t *required)
 {
 	int i;
 	int amount;
@@ -416,7 +416,7 @@ void RS_MarkResearchable (qboolean init)
  * @brief Assign required tech/item/etc... IDXs for a single requirements list.
  * @note A function with the same behaviour was formerly also known as RS_InitRequirementList
  */
-void RS_AssignTechIdxs (requirements_t *req)
+static void RS_AssignTechIdxs (requirements_t *req)
 {
 	int i;
 
@@ -1290,7 +1290,7 @@ void CL_CheckResearchStatus (void)
  * @brief Returns a list of technologies for the given type
  * @note this list is terminated by a NULL pointer
  */
-static char *RS_TechTypeToName (researchType_t type)
+static const char *RS_TechTypeToName (researchType_t type)
 {
 	switch(type) {
 	case RS_TECH:
@@ -1549,14 +1549,14 @@ static const value_t valid_techmail_vars[] = {
  * @sa CL_StartSingleplayer
  * @note write into cl_localPool - free on every game restart and reparse
  */
-void RS_ParseTechnologies (const char *name, char **text)
+void RS_ParseTechnologies (const char *name, const char **text)
 {
 	const value_t *vp = NULL;
 	technology_t *tech = NULL;
 	unsigned hash;
 	int tech_old;
 	const char *errhead = "RS_ParseTechnologies: unexpected end of file.";
-	char *token = NULL;
+	const char *token = NULL;
 	requirements_t *required_temp = NULL;
 	descriptions_t *desc_temp = NULL;
 

@@ -65,12 +65,12 @@ static const value_t shader_values[] = {
  * @note Called from CL_ParseClientData
  * @sa CL_ParseClientData
  */
-void CL_ParseShaders (const char *name, char **text)
+void CL_ParseShaders (const char *name, const char **text)
 {
 	shader_t *entry;
 	const value_t *v;
 	const char *errhead = "CL_ParseShaders: unexpected end of file (names ";
-	char *token;
+	const char *token;
 	int i;
 
 	for (i = 0; i < r_numshaders; i++) {

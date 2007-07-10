@@ -220,11 +220,3 @@ unsigned Com_BlockChecksum (void *buffer, int length)
 	return val;
 }
 
-/**
- * @brief
- */
-void Com_BlockFullChecksum (void *buffer, int len, unsigned char *outbuf)
-{
-	mdfour(outbuf, (unsigned char *) buffer, len);
-}
-

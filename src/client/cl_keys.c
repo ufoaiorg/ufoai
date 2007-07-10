@@ -54,7 +54,7 @@ static int key_repeats[K_KEY_SIZE];			/* if > 1, it is autorepeating */
 qboolean keydown[K_KEY_SIZE];
 
 typedef struct {
-	char *name;
+	const char *name;
 	int keynum;
 } keyname_t;
 
@@ -627,7 +627,7 @@ static int Key_StringToKeynum (const char *str)
  * @return a string (either a single ascii char, or a K_* name) for the given keynum.
  * FIXME: handle quote special (general escape sequence?)
  */
-char *Key_KeynumToString (int keynum)
+const char *Key_KeynumToString (int keynum)
 {
 	const keyname_t *kn;
 	static char tinystr[2];
@@ -653,7 +653,7 @@ char *Key_KeynumToString (int keynum)
  * @sa Key_SetBinding
  * @return the binded key or empty string if not found
  */
-char* Key_GetBinding (const char *binding, keyBindSpace_t space)
+const char* Key_GetBinding (const char *binding, keyBindSpace_t space)
 {
 	int i;
 	char **keySpace = NULL;

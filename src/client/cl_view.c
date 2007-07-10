@@ -59,7 +59,7 @@ static vec4_t map_fogColor;
  * @brief
  * @sa V_RenderView
  */
-void V_ClearScene (void)
+static void V_ClearScene (void)
 {
 	r_numdlights = 0;
 	r_numentities = 0;
@@ -134,10 +134,9 @@ void V_AddLightStyle (int style, float r, float g, float b)
  * @param
  * @sa
  */
-void CL_ParseEntitystring (char *es)
+static void CL_ParseEntitystring (const char *es)
 {
-	char *strstart;
-	char *entity_token;
+	const char *strstart, *entity_token;
 	char keyname[256];
 
 	char classname[MAX_VAR];
@@ -510,7 +509,7 @@ static void CalcFovY (float width, float height)
  * @param
  * @sa
  */
-void CL_CalcRefdef (void)
+static void CL_CalcRefdef (void)
 {
 	VectorCopy(cl.cam.camorg, cl.refdef.vieworg);
 	VectorCopy(cl.cam.angles, cl.refdef.viewangles);
@@ -644,7 +643,7 @@ void V_RenderView (float stereo_separation)
  * @param pos
  * @sa
  */
-void V_CenterView(pos3_t pos)
+void V_CenterView (pos3_t pos)
 {
 	vec3_t vec;
 
@@ -657,7 +656,7 @@ void V_CenterView(pos3_t pos)
 /**
  * @brief Just prints the vieworg vector to console
  */
-void V_Viewpos_f(void)
+static void V_Viewpos_f (void)
 {
 	Com_Printf("(%i %i %i) : %i\n", (int) cl.refdef.vieworg[0], (int) cl.refdef.vieworg[1], (int) cl.refdef.vieworg[2], (int) cl.refdef.viewangles[YAW]);
 }
@@ -667,7 +666,7 @@ void V_Viewpos_f(void)
  * @param
  * @sa CL_Init
  */
-void V_Init(void)
+void V_Init (void)
 {
 	Cmd_AddCommand("viewpos", V_Viewpos_f, NULL);
 	Cmd_AddCommand("shaderlist", CL_ShaderList_f, NULL);

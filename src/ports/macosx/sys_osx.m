@@ -58,60 +58,9 @@ unsigned	sys_frame_time;
 
 uid_t saved_euid;	/* extern in vid_so */
 
-/**
- * @brief This resolves any symlinks to the binary. It's disabled for debug
- * builds because there are situations where you are likely to want
- * to symlink to binaries and /not/ have the links resolved.
- * This way you can make a link in /usr/bin and the data-files are still
- * found in e.g. /usr/local/games/ufoai
- */
-char *Sys_BinName (const char *arg0)
-{
-#ifndef DEBUG
-	int	n;
-	char	src[MAX_OSPATH];
-	char	dir[MAX_OSPATH];
-	qboolean	links = qfalse;
-#endif
-
-	static char	dst[MAX_OSPATH];
-	Com_sprintf(dst, MAX_OSPATH, (char*)arg0);
-
-#ifndef DEBUG
-	while((n = readlink(dst, src, MAX_OSPATH)) >= 0) {
-		src[n] = '\0';
-		Com_sprintf(dir, MAX_OSPATH, dirname(dst));
-		Com_sprintf(dst, MAX_OSPATH, dir);
-		Q_strcat(dst, "/", MAX_OSPATH);
-		Q_strcat(dst, src, MAX_OSPATH);
-		links = qtrue;
-	}
-
-	if (links) {
-		Com_sprintf(dst, MAX_OSPATH, Sys_Cwd());
-		Q_strcat(dst, "/", MAX_OSPATH);
-		Q_strcat(dst, dir, MAX_OSPATH);
-		Q_strcat(dst, "/", MAX_OSPATH);
-		Q_strcat(dst, src, MAX_OSPATH);
-	}
-#endif
-	return dst;
-}
-
 /* ======================================================================= */
 /* General routines */
 /* ======================================================================= */
-
-/**
- * @brief
- */
-void Sys_Quit (void)
-{
-	CL_Shutdown();
-	Qcommon_Shutdown();
-	fcntl(0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
-	exit(0);
-}
 
 /**
  * @brief
@@ -153,7 +102,7 @@ void Sys_Error (const char *error, ...)
 /**
  * @brief
  */
-void floating_point_exception_handler (int whatever)
+static void floating_point_exception_handler (int whatever)
 {
 	signal(SIGFPE, floating_point_exception_handler);
 }

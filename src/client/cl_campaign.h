@@ -334,24 +334,27 @@ void CL_GameTimeFast(void);
 void CL_GameTimeSlow(void);
 extern byte *CL_GetMapColor(const vec2_t pos, mapType_t type);
 extern qboolean CL_NewBase(base_t* base, vec2_t pos);
-void CL_ParseMission(const char *name, char **text);
+void CL_ParseMission(const char *name, const char **text);
 mission_t* CL_AddMission(const char *name);
 void CL_RemoveLastMission(void);
-void CL_ParseStage(const char *name, char **text);
-void CL_ParseCampaign(const char *name, char **text);
-void CL_ParseNations(const char *name, char **text);
+void CL_ParseStage(const char *name, const char **text);
+void CL_ParseCampaign(const char *name, const char **text);
+void CL_ParseNations(const char *name, const char **text);
 void CL_UpdateCredits(int credits);
 qboolean CL_OnBattlescape(void);
 void CL_GameInit (void);
 extern float CP_GetDistance(const vec2_t pos1, const vec2_t pos2);
 void AIR_NewAircraft(base_t * base, const char *name);
-void CL_ParseResearchedCampaignItems(const char *name, char **text);
-void CL_ParseResearchableCampaignStates(const char *name, char **text, qboolean researchable);
+void CL_ParseResearchedCampaignItems(const char *name, const char **text);
+void CL_ParseResearchableCampaignStates(const char *name, const char **text, qboolean researchable);
 extern void CP_ExecuteMissionTrigger(mission_t * m, int won, base_t* base);
 extern actMis_t* CL_CampaignAddGroundMission(mission_t* mis);
 const char* CL_GetNationTeamName(const nation_t* nation, char *teamname, size_t size);
 
 campaign_t* CL_GetCampaign(const char* name);
 void CL_GameExit(void);
+
+extern qboolean AIR_SendAircraftToMission(aircraft_t * aircraft, actMis_t * mission);
+extern void AIR_AircraftsNotifyMissionRemoved(const actMis_t * mission);
 
 #endif /* CLIENT_CL_CAMPAIGN_H */

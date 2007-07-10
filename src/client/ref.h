@@ -94,7 +94,7 @@ typedef struct entity_s {
 	 ** tag positioning
 	 */
 	struct entity_s *tagent;	/**< pointer to the parent entity */
-	char *tagname;				/**< name of the tag */
+	const char *tagname;				/**< name of the tag */
 
 	/*
 	 ** misc
@@ -360,8 +360,8 @@ typedef struct {
 	void (*Cmd_AddCommand) (const char *name, void (*cmd) (void), const char *desc);
 	void (*Cmd_RemoveCommand) (const char *name);
 	int (*Cmd_Argc) (void);
-	char *(*Cmd_Argv) (int i);
-	void (*Cmd_ExecuteText) (int exec_when, char *text);
+	const char *(*Cmd_Argv) (int i);
+	void (*Cmd_ExecuteText) (int exec_when, const char *text);
 
 	void (*Con_Printf) (int print_level, const char *str, ...) __attribute__((format(printf, 2, 3)));
 
@@ -381,7 +381,7 @@ typedef struct {
 	const char *(*FS_Gamedir) (void);
 
 	/* will return the size and the path for each font */
-	void (*CL_GetFontData) (const char *name, int *size, char *path);
+	void (*CL_GetFontData) (const char *name, int *size, const char *path);
 	qboolean (*RenderTrace) (vec3_t start, vec3_t mins, vec3_t maxs, vec3_t end);
 
 	cvar_t *(*Cvar_Get) (const char *name, const char *value, int flags, const char* desc);

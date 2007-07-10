@@ -1293,7 +1293,7 @@ void S_Update (vec3_t origin, vec3_t forward, vec3_t right, vec3_t up)
 /**
  * @brief
  */
-void GetSoundtime (void)
+static void GetSoundtime (void)
 {
 	int samplepos;
 	static int buffers;
@@ -1695,9 +1695,7 @@ void S_PlayOGG (void)
  */
 void S_StartOGG (void)
 {
-	char *str;
-
-	str = Cvar_VariableString("music");
+	const char *str = Cvar_VariableString("music");
 	if (str[0])
 		OGG_Open(str);
 }

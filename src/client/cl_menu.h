@@ -212,7 +212,7 @@ extern const char *menuText[MAX_MENUTEXTS];
 extern char popupText[MAX_SMALLMENUTEXTLEN];
 
 /* this is the function where all the sdl_ttf fonts are parsed */
-void CL_ParseFont(const char *name, char **text);
+void CL_ParseFont(const char *name, const char **text);
 
 /* here they get reinit after a vid_restart */
 void CL_InitFonts(void);
@@ -228,7 +228,7 @@ extern font_t *fontSmall;
 extern font_t *fontBig;
 
 /* will return the size and the path for each font */
-void CL_GetFontData(const char *name, int *size, char *path);
+void CL_GetFontData(const char *name, int *size, const char *path);
 
 typedef struct {
 	menu_t *menu;				/**< mouse autorepeat - where */
@@ -259,13 +259,13 @@ void MN_PrecacheModels(void);
 
 void MN_ResetMenus(void);
 void MN_Shutdown(void);
-void MN_ParseMenu(const char *name, char **text);
-void MN_ParseMenuModel(const char *name, char **text);
+void MN_ParseMenu(const char *name, const char **text);
+void MN_ParseMenuModel(const char *name, const char **text);
 menu_t* MN_PushMenu(const char *name);
 void MN_PopMenu(qboolean all);
 menu_t* MN_ActiveMenu(void);
 void MN_Popup(const char *title, const char *text);
-void MN_ParseTutorials(const char *title, char **text);
+void MN_ParseTutorials(const char *title, const char **text);
 
 selectBoxOptions_t* MN_AddSelectboxOption(menuNode_t *node);
 

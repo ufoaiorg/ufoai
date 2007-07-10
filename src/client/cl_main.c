@@ -139,9 +139,8 @@ struct memPool_s *vid_modelPool;	/**< modeldata - wiped with every new map */
  */
 void Cmd_ForwardToServer (void)
 {
-	char *cmd;
+	const char *cmd = Cmd_Argv(0);
 
-	cmd = Cmd_Argv(0);
 	if (cls.state <= ca_connected || *cmd == '-' || *cmd == '+') {
 		Com_Printf("Unknown command \"%s\"\n", cmd);
 		return;
@@ -207,7 +206,7 @@ static void CL_Quit_f (void)
  */
 void CL_StartSingleplayer (qboolean singleplayer)
 {
-	char *type, *name, *text;
+	const char *type, *name, *text;
 	if (singleplayer) {
 		ccs.singleplayer = qtrue;
 		if (Qcommon_ServerActive()) {
@@ -231,7 +230,7 @@ void CL_StartSingleplayer (qboolean singleplayer)
 		   the right thing while we are on geoscape */
 		sv_maxclients->modified = qtrue;
 	} else {
-		char *max_s, *max_spp;
+		const char *max_s, *max_spp;
 		max_s = Cvar_VariableStringOld("maxsoldiers");
 		max_spp = Cvar_VariableStringOld("maxsoldiersperplayer");
 
@@ -306,7 +305,7 @@ void CL_Drop (void)
 /**
  * @brief We have gotten a challenge from the server, so try and connect.
  */
-void CL_SendConnectPacket (void)
+static void CL_SendConnectPacket (void)
 {
 	netadr_t adr;
 	int port;
@@ -330,7 +329,7 @@ void CL_SendConnectPacket (void)
 /**
  * @brief Resend a connect message if the last one has timed out
  */
-void CL_CheckForResend (void)
+static void CL_CheckForResend (void)
 {
 	netadr_t adr;
 
@@ -374,7 +373,7 @@ void CL_CheckForResend (void)
  */
 static void CL_Connect_f (void)
 {
-	char *server;
+	const char *server;
 
 	if (Cmd_Argc() != 2) {
 		Com_Printf("usage: connect <server>\n");
@@ -947,10 +946,10 @@ static char userInfoText[MAX_MESSAGE_TEXT];
 static void CL_ParseServerInfoMessage (void)
 {
 	char *s = MSG_ReadString(&net_message);
-	char *value = NULL;
-	char *users;
+	const char *value = NULL;
+	const char *users;
 	int team;
-	char *token;
+	const char *token;
 
 	if (!s)
 		return;
@@ -965,8 +964,6 @@ static void CL_ParseServerInfoMessage (void)
 			Com_Printf("%c%s\n", 1, s);
 			return;
 		}
-		/* split the strings */
-		*users++ = '\0';
 
 		Cvar_Set("mn_mappic", "maps/shots/na.jpg");
 		Cvar_Set("mn_server_need_password", "0"); /* string */
@@ -978,9 +975,12 @@ static void CL_ParseServerInfoMessage (void)
 		if (FS_CheckFile(va("pics/maps/shots/%s.jpg", value)) != -1)
 			Cvar_Set("mn_mappic", va("maps/shots/%s.jpg", value));
 		else {
-			value[strlen(value)-1] = '\0';	/* cut day and night char */
-			if (FS_CheckFile(va("pics/maps/shots/%s.jpg", value)) != -1)
-				Cvar_Set("mn_mappic", va("maps/shots/%s.jpg", value));
+			char filename[MAX_QPATH];
+			Q_strncpyz(filename, "pics/maps/shots/", sizeof(filename));
+			/* strip off the day or night char */
+			Q_strncpyz(&filename[strlen(filename)], value, strlen(value) - 1);
+			if (FS_CheckFile(filename) != -1)
+				Cvar_Set("mn_mappic", filename);
 		}
 		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Servername:\t%s\n"), Info_ValueForKey(s, "hostname"));
 		Com_sprintf(serverInfoText + strlen(serverInfoText), sizeof(serverInfoText) - strlen(serverInfoText), _("Moralestates:\t%s\n"), Info_ValueForKey(s, "sv_enablemorale"));
@@ -1067,7 +1067,7 @@ static void CL_ParseMasterServerResponse (void)
  */
 static void CL_ServerConnect_f (void)
 {
-	char *ip = Cvar_VariableString("mn_server_ip");
+	const char *ip = Cvar_VariableString("mn_server_ip");
 
 	/* @todo: if we are in multiplayer auto generate a team */
 	if (!B_GetNumOnTeam()) {
@@ -1094,8 +1094,8 @@ static void CL_ServerConnect_f (void)
 static void CL_BookmarkAdd_f (void)
 {
 	int i;
-	char *bookmark = NULL;
-	char *newBookmark = NULL;
+	const char *bookmark = NULL;
+	const char *newBookmark = NULL;
 	netadr_t adr;
 
 	if (Cmd_Argc() < 2) {
@@ -1127,10 +1127,10 @@ static void CL_BookmarkAdd_f (void)
  * @brief
  * @sa CL_ParseServerInfoMessage
  */
-void CL_BookmarkListClick_f (void)
+static void CL_BookmarkListClick_f (void)
 {
 	int num;
-	char *bookmark = NULL;
+	const char *bookmark = NULL;
 	netadr_t adr;
 
 	if (Cmd_Argc() < 2) {
@@ -1245,7 +1245,7 @@ static void CL_PingServers_f (void)
 	netadr_t adr;
 	int i;
 	char name[6];
-	char *adrstring;
+	const char *adrstring;
 
 	/* refresh the list */
 	if (Cmd_Argc() == 2) {
@@ -1326,7 +1326,7 @@ static void CL_PingServers_f (void)
 static void CL_ConnectionlessPacket (void)
 {
 	char *s;
-	char *c;
+	const char *c;
 	int i;
 
 	MSG_BeginReading(&net_message);
@@ -1342,7 +1342,7 @@ static void CL_ConnectionlessPacket (void)
 
 	/* server connection */
 	if (!Q_strncmp(c, "client_connect", 13)) {
-		char *p, *buff;
+		const char *p, *buff;
 		buff = NET_AdrToString(cls.netchan.remote_address);
 		for (i = 1; i < Cmd_Argc(); i++) {
 			p = Cmd_Argv(i);
@@ -1726,9 +1726,6 @@ static void CL_Precache_f (void)
 	CL_RequestNextDownload();
 }
 
-/** @brief Header from scripts.c */
-void Com_PrecacheCharacterModels(void);
-
 /**
  * @brief Precaches all models at game startup - for faster access
  * @note only called when cl_precache was set to 1
@@ -1832,7 +1829,7 @@ void CL_InitAfter (void)
  * @note This data should not go into cl_localPool memory pool - this data is
  * persistent until you shutdown the game
  */
-void CL_ParseClientData (const char *type, const char *name, char **text)
+void CL_ParseClientData (const char *type, const char *name, const char **text)
 {
 	if (!Q_strncmp(type, "shader", 6))
 		CL_ParseShaders(name, text);
@@ -1871,7 +1868,7 @@ void CL_ParseClientData (const char *type, const char *name, char **text)
  * @sa CL_ParseScriptSecond
  * @note write into cl_localPool - free on every game restart and reparse
  */
-static void CL_ParseScriptFirst (const char *type, char *name, char **text)
+static void CL_ParseScriptFirst (const char *type, const char *name, const char **text)
 {
 	/* check for client interpretable scripts */
 	if (!Q_strncmp(type, "mission", 7))
@@ -1919,7 +1916,7 @@ static void CL_ParseScriptFirst (const char *type, char *name, char **text)
  * @note make sure that the client hunk was cleared - otherwise it may overflow
  * @note write into cl_localPool - free on every game restart and reparse
  */
-static void CL_ParseScriptSecond (const char *type, char *name, char **text)
+static void CL_ParseScriptSecond (const char *type, const char *name, const char **text)
 {
 	/* check for client interpretable scripts */
 	if (!Q_strncmp(type, "stage", 5))
@@ -1938,7 +1935,7 @@ static void CL_ParseScriptSecond (const char *type, char *name, char **text)
  */
 void CL_ReadSinglePlayerData (void)
 {
-	char *type, *name, *text;
+	const char *type, *name, *text;
 
 	/* pre-stage parsing */
 	FS_BuildFileList("ufos/*.ufo");

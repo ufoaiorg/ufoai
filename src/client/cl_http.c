@@ -39,7 +39,7 @@ static int		abortDownloads = HTTPDL_ABORT_NONE;
 static qboolean	downloading_pak = qfalse;
 static qboolean	httpDown = qfalse;
 
-void StripHighBits (char *string)
+static void StripHighBits (char *string)
 {
 	byte c;
 	char *p;
@@ -56,7 +56,7 @@ void StripHighBits (char *string)
 	p[0] = '\0';
 }
 
-qboolean isvalidchar (int c)
+static qboolean isvalidchar (int c)
 {
 	if (!isalnum(c) && c != '_' && c != '-')
 		return qfalse;
@@ -212,10 +212,11 @@ static size_t CL_HTTP_Recv (void *ptr, size_t size, size_t nmemb, void *stream)
 	return bytes;
 }
 
+#if 0
 /**
  * @brief
  */
-int CL_CURL_Debug (CURL *c, curl_infotype type, char *data, size_t size, void * ptr)
+static int CL_CURL_Debug (CURL *c, curl_infotype type, char *data, size_t size, void * ptr)
 {
 	if (type == CURLINFO_TEXT) {
 		char buff[4096];
@@ -227,6 +228,7 @@ int CL_CURL_Debug (CURL *c, curl_infotype type, char *data, size_t size, void * 
 
 	return 0;
 }
+#endif
 
 /**
  * @brief Actually starts a download by adding it to the curl multi handle.
@@ -275,8 +277,10 @@ static void CL_StartHTTPDownload (dlqueue_t *entry, dlhandle_t *dl)
 	Com_sprintf(dl->URL, sizeof(dl->URL), "%s%s", cls.downloadServer, escapedFilePath);
 
 	curl_easy_setopt(dl->curl, CURLOPT_ENCODING, "");
-	/* curl_easy_setopt(dl->curl, CURLOPT_DEBUGFUNCTION, CL_CURL_Debug); */
-	/* curl_easy_setopt(dl->curl, CURLOPT_VERBOSE, 1); */
+#if 0
+	curl_easy_setopt(dl->curl, CURLOPT_DEBUGFUNCTION, CL_CURL_Debug);
+	curl_easy_setopt(dl->curl, CURLOPT_VERBOSE, 1);
+#endif
 	curl_easy_setopt(dl->curl, CURLOPT_NOPROGRESS, 0);
 	if (dl->file) {
 		curl_easy_setopt(dl->curl, CURLOPT_WRITEDATA, dl->file);

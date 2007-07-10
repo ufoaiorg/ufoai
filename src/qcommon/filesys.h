@@ -93,10 +93,10 @@ void FS_SetGamedir(const char *dir);
 const char *FS_Gamedir(void);
 const char *FS_NextPath(const char *prevpath);
 void FS_ExecAutoexec(void);
-char *FS_GetCwd(void);
+const char *FS_GetCwd(void);
 void FS_NormPath(char *path);
 qboolean FS_FileExists(const char *filename);
-void FS_SkipBlock(char **text);
+void FS_SkipBlock(const char **text);
 
 void FS_GetMaps(qboolean reset);
 
@@ -116,7 +116,7 @@ int FS_LoadFile(const char *path, void **buffer);
 
 #ifdef DEBUG
 #define FS_Read(buffer, len, f) FS_ReadDebug(buffer, len, f, __FILE__, __LINE__)
-int FS_ReadDebug(void *buffer, int len, qFILE * f, char* file, int line);
+int FS_ReadDebug(void *buffer, int len, qFILE * f, const char* file, int line);
 #else
 int FS_Read(void *buffer, int len, qFILE * f);
 #endif
@@ -126,8 +126,8 @@ void FS_FreeFile(void *buffer);
 
 int FS_CheckFile(const char *path);
 
-void FS_BuildFileList(char *files);
-char *FS_NextScriptHeader(const char *files, char **name, char **text);
+void FS_BuildFileList(const char *files);
+char *FS_NextScriptHeader(const char *files, const char **name, const char **text);
 void FS_CreatePath(const char *path);
 
 /* Make sure we have this available */

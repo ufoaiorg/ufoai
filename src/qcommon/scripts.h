@@ -27,6 +27,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 SCRIPT PARSING
 ==============================================================*/
 
+#ifndef SCRIPTS_H
+#define SCRIPTS_H
+
 #define MAX_TEAMDEFS	128
 
 #define LASTNAME	3
@@ -62,3 +65,6 @@ const char* Com_GetActorSound(int category, int gender, actorSound_t soundType);
 
 void Com_AddObjectLinks(void);
 void Com_ParseScripts(void);
+void Com_PrecacheCharacterModels(void);
+
+#endif /* SCRIPTS_H */

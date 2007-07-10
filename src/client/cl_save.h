@@ -54,7 +54,7 @@ typedef struct saveFileHeader_s {
 } saveFileHeader_t;
 
 typedef struct saveSubsystems_s {
-	char *name;
+	const char *name;
 	qboolean (*save) (sizebuf_t *sb, void *data);	/**< return false if saving failed */
 	qboolean (*load) (sizebuf_t *sb, void *data);	/**< return false if loading failed */
 	int check;

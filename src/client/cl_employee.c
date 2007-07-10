@@ -205,7 +205,7 @@ const char* E_GetEmployeeString (employeeType_t type)
  * @param type Pointer to employee type string
  * @return employeeType_t
  */
-employeeType_t E_GetEmployeeType (char* type)
+employeeType_t E_GetEmployeeType (const char* type)
 {
 	assert(type);
 	if (!Q_strncmp(type, "EMPL_SCIENTIST", 14))
@@ -878,7 +878,7 @@ int E_CountUnassigned (const base_t* const base, employeeType_t type)
 static void E_EmployeeHire_f (void)
 {
 	int num, minus = 0, plus = 0;
-	char *arg;
+	const char *arg;
 
 	if (!baseCurrent)
 		return;

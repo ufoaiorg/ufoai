@@ -42,8 +42,6 @@ static const int MAX_AIRCRAFT_SUPPLY = 8;
 /** @brief Max values for Buy/Sell factors (base->buyfactor, base->sellfactor). */
 static const int MAX_BS_FACTORS = 10;
 
-void UP_AircraftDescription(technology_t* t);
-
 /**
  * @brief Calculates free space in hangars in given base.
  * @param[in] aircraftID aircraftID Index of aircraft type in aircraft_samples.

@@ -53,10 +53,10 @@ static int languageCount; /**< how many languages do we have */
 /**
  * @brief Parse all language definitions from the script files
  */
-void CL_ParseLanguages (const char *name, char **text)
+void CL_ParseLanguages (const char *name, const char **text)
 {
 	const char *errhead = "CL_ParseLanguages: unexpected end of file (language ";
-	char	*token;
+	const char	*token;
 	language_t *language = NULL;
 	localeMapping_t *mapping = NULL;
 

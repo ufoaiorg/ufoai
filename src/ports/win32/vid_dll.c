@@ -358,7 +358,7 @@ static void VID_UpdateWindowPosAndSize (int x, int y)
 /**
  * @brief
  */
-void VID_NewWindow (int width, int height)
+static void VID_NewWindow (int width, int height)
 {
 	viddef.width  = width;
 	viddef.height = height;
@@ -371,7 +371,7 @@ void VID_NewWindow (int width, int height)
 /**
  * @brief
  */
-void VID_FreeReflib (void)
+static void VID_FreeReflib (void)
 {
 	if (reflib_library && !FreeLibrary(reflib_library))
 		Com_Error(ERR_FATAL, "Reflib FreeLibrary failed");

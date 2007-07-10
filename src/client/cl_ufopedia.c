@@ -1540,10 +1540,10 @@ void UP_ResetUfopedia (void)
  * @param text Text for chapter ID
  * @sa CL_ParseFirstScript
  */
-void UP_ParseUpChapters (const char *name, char **text)
+void UP_ParseUpChapters (const char *name, const char **text)
 {
 	const char *errhead = "UP_ParseUpChapters: unexpected end of file (names ";
-	char *token;
+	const char *token;
 
 	/* get name list body body */
 	token = COM_Parse(text);

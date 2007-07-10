@@ -60,8 +60,8 @@ BOOL WriteText (LPCTSTR szText);
 int CharToCode (char c);
 BOOL SetConsoleCXCY(HANDLE hStdout, int cx, int cy);
 
-int		ccom_argc;
-char	**ccom_argv;
+static int		ccom_argc;
+static char	**ccom_argv;
 
 /**
  * @brief Returns the position (1 to argc-1) in the program's argument list

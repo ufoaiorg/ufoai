@@ -371,7 +371,7 @@ qboolean AIR_IsAircraftInBase (aircraft_t * aircraft)
  * returns 1 if no aircraft in base else 2 if no soldiers
  * available otherwise 3
  */
-int CL_EquipSoldierState (aircraft_t * aircraft)
+static int CL_EquipSoldierState (aircraft_t * aircraft)
 {
 	if (!AIR_IsAircraftInBase(aircraft)) {
 		return 1;
@@ -1767,12 +1767,12 @@ static const value_t aircraftitems_vals[] = {
  * @sa CL_ParseScriptFirst
  * @note write into cl_localPool - free on every game restart and reparse
  */
-void AII_ParseAircraftItem (const char *name, char **text)
+void AII_ParseAircraftItem (const char *name, const char **text)
 {
 	const char *errhead = "AII_ParseAircraftItem: unexpected end of file (aircraft ";
 	aircraftItem_t *airItem;
 	const value_t *vp;
-	char *token;
+	const char *token;
 	int i;
 
 	for (i = 0; i < gd.numAircraftItems; i++) {
@@ -1958,12 +1958,12 @@ static const value_t aircraft_vals[] = {
  * one is the cl_localPool which is cleared on every new game, the other is
  * cl_genericPool which is existant until you close the game
  */
-void AIR_ParseAircraft (const char *name, char **text, qboolean assignAircraftItems)
+void AIR_ParseAircraft (const char *name, const char **text, qboolean assignAircraftItems)
 {
 	const char *errhead = "AIR_ParseAircraft: unexpected end of file (aircraft ";
 	aircraft_t *air_samp = NULL;
 	const value_t *vp;
-	char *token;
+	const char *token;
 	int i;
 	qboolean ignoreForNow = qfalse;
 	technology_t *tech;

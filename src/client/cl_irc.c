@@ -91,7 +91,7 @@ static qboolean Irc_IsChannel (const char *target)
 /**
  * @brief
  */
-void Irc_ParseName (const char *mask, char *nick, irc_nick_prefix_t *prefix)
+static void Irc_ParseName (const char *mask, char *nick, irc_nick_prefix_t *prefix)
 {
 	const char *emph;
 	if (*mask == IRC_NICK_PREFIX_OP || *mask == IRC_NICK_PREFIX_VOICE) {
@@ -1579,8 +1579,8 @@ static void Irc_Client_Join_f (void)
 {
 	const int argc = Cmd_Argc();
 	if (argc >= 2 && argc <= 3) {
-		char * const channel = Cmd_Argv(1);
-		char * const channel_pass = argc == 3	/* password is optional */
+		const char * const channel = Cmd_Argv(1);
+		const char * const channel_pass = argc == 3	/* password is optional */
 			? Cmd_Argv(2)
 			: NULL;
 		if (!Irc_IsChannel(channel)) {
@@ -1600,7 +1600,7 @@ static void Irc_Client_Part_f (void)
 {
 	const int argc = Cmd_Argc();
 	if (argc == 2) {
-		char * const channel = Cmd_Argv(1);
+		const char * const channel = Cmd_Argv(1);
 		Irc_Proto_Part(channel);
 	} else
 		Com_Printf("usage: irc_part <channel>\n");
@@ -1682,7 +1682,7 @@ static void Irc_Client_Topic_f (void)
 {
 	const int argc = Cmd_Argc();
 	if (argc >= 2) {
-		char * const channel = Cmd_Argv(1);
+		const char * const channel = Cmd_Argv(1);
 		if (chan) {
 			if (argc >= 3) {
 				char buf[1024];
@@ -1734,7 +1734,7 @@ static void Irc_Client_Kick_f (void)
 {
 	const int argc = Cmd_Argc();
 	if (argc >= 3) {
-		char *channel = Cmd_Argv(1);
+		const char *channel = Cmd_Argv(1);
 		if (chan) {
 			const char * const nick = Cmd_Argv(2);
 			const char *reason;

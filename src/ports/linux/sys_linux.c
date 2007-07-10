@@ -71,11 +71,9 @@ unsigned	sys_frame_time;
 
 uid_t saved_euid;
 
-extern void Sys_ConsoleInputInit(void);
-extern void Sys_ConsoleInputShutdown(void);
-
 extern cvar_t *nostdout;
 
+#if 0
 /**
  * @brief This resolves any symlinks to the binary. It's disabled for debug
  * builds because there are situations where you are likely to want
@@ -115,6 +113,7 @@ char *Sys_BinName (const char *arg0)
 #endif
 	return dst;
 }
+#endif
 
 #ifdef __linux__
 
@@ -156,9 +155,9 @@ static int dlcallback (struct dl_phdr_info *info, size_t size, void *data)
  * @note Adapted from http://www.delorie.com/gnu/docs/glibc/libc_665.html
  */
 #if defined(__x86_64__) || defined(__powerpc__)
-void Sys_Backtrace (int sig)
+static void Sys_Backtrace (int sig)
 #else
-void Sys_Backtrace (int sig, siginfo_t *siginfo, void *secret)
+static void Sys_Backtrace (int sig, siginfo_t *siginfo, void *secret)
 #endif
 {
 	void		*array[32];
@@ -226,19 +225,6 @@ void Sys_Backtrace (int sig, siginfo_t *siginfo, void *secret)
 /**
  * @brief
  */
-void Sys_Quit (void)
-{
-	CL_Shutdown();
-	Qcommon_Shutdown();
-	Sys_ConsoleInputShutdown();
-
-	fcntl(0, F_SETFL, fcntl (0, F_GETFL, 0) & ~FNDELAY);
-	exit(0);
-}
-
-/**
- * @brief
- */
 void Sys_Init (void)
 {
 #if USE_X86_ASM
@@ -299,7 +285,7 @@ void Sys_Error (const char *error, ...)
 /**
  * @brief
  */
-void floating_point_exception_handler (int whatever)
+static void floating_point_exception_handler (int whatever)
 {
 	signal(SIGFPE, floating_point_exception_handler);
 }
@@ -366,7 +352,7 @@ char *Sys_GetClipboardData (void)
  * FIXME: While this works, infinite loops are bad; one should not rely on exit() call; the program should be designed to fall through the bottom.
  * FIXME: Why is there a sleep statement?
  */
-int main (int argc, char **argv)
+int main (int argc, const char **argv)
 {
 	int time, oldtime, newtime;
 	float timescale = 1.0;
