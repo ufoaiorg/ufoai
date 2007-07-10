@@ -377,16 +377,9 @@ menu aircraft_equip
 	confunc airequip_shields	{ cmd "airequip_init 1;" airequip_reset *airequip_button_shields_str	color "1 1 1 1" }
 	confunc airequip_items		{ cmd "airequip_init 2;" airequip_reset *airequip_button_items_str color "1 1 1 1" }
 
-	confunc airequip_zone_reset
-	{
-		*airequip_zone_select1 invis false
-		*airequip_zone_select2 invis false
-		*airequip_zone_select3 invis false
-	}
-	confunc	airequip_zone1	{ cmd "airequip_init;" cmd "airequip_zone_select 1;" airequip_zone_reset *airequip_zone_select1 invis true }
-	confunc	airequip_zone2	{ cmd "airequip_init;" cmd "airequip_zone_select 2;" airequip_zone_reset *airequip_zone_select2 invis true }
-	confunc	airequip_zone3	{ cmd "airequip_init 3;" cmd "airequip_zone_select 3;" airequip_zone_reset *airequip_zone_select3 invis true }
-
+	confunc	airequip_zone1	{ cmd "airequip_zone_select 1;airequip_init;" }
+	confunc	airequip_zone2	{ cmd "airequip_zone_select 2;airequip_init;" }
+	confunc	airequip_zone3	{ cmd "airequip_zone_select 3;airequip_init 3;" }
 
 	model aircraftequip
 	{
