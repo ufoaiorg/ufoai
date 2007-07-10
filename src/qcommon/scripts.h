@@ -88,8 +88,6 @@ typedef enum {
 	V_NUM_TYPES
 } valueTypes_t;
 
-#define V_UNTYPED   0x7FFF
-
 extern const char *vt_names[V_NUM_TYPES];
 
 /** possible alien values - see also align_names */

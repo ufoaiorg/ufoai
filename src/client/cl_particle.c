@@ -30,6 +30,11 @@ int numMPs;
 
 #define RADR(x)		((x < 0) ? (byte*)p-x : (byte*)pcmdData+x)
 #define RSTACK		-0xFFF0
+#define F(x)		(1<<x)
+/* 15 */
+#define	V_VECS		(F(V_FLOAT) | F(V_POS) | F(V_VECTOR) | F(V_COLOR))
+#define PTL_ONLY_ONE_TYPE		(1<<31)
+#define V_UNTYPED   0x7FFF
 
 typedef struct ptlCmd_s {
 	byte cmd;
@@ -105,10 +110,6 @@ static const char *pc_strings[PC_NUM_PTLCMDS] = {
 	"kill",
 	"spawn", "nspawn", "child"
 };
-
-#define F(x)		(1<<x)
-#define	V_VECS		(F(V_FLOAT) | F(V_POS) | F(V_VECTOR) | F(V_COLOR))
-#define PTL_ONLY_ONE_TYPE		(1<<31)
 
 /** @brief particle commands parameter and types */
 static const int pc_types[PC_NUM_PTLCMDS] = {
@@ -1232,7 +1233,6 @@ static void CL_ParsePtlCmds (const char *name, const char **text)
 	const char *errhead = "CL_ParsePtlCmds: unexpected end of file";
 	const char *token;
 	int i, j;
-	qboolean singleComponent;
 
 	/* get it's body */
 	token = COM_Parse(text);
@@ -1281,21 +1281,25 @@ static void CL_ParsePtlCmds (const char *name, const char **text)
 
 				if (token[0] == '*') {
 					int len;
+					char baseComponentToken[MAX_VAR];
 
 					/* it's a variable reference */
 					token++;
 
+					/* we maybe have to modify it */
+					Q_strncpyz(baseComponentToken, token, sizeof(baseComponentToken));
+
 					/* check for component specifier */
-					len = strlen(token);
-					if (token[len - 2] == '.') {
-						len -= 2;
-						singleComponent = qtrue;
-					} else {
-						singleComponent = qfalse;
-					}
+					len = strlen(baseComponentToken);
+					/* it's possible to change only the second value of e.g. a vector
+					 * just defined e.g. 'size.2' to modify the second value of size */
+					if (len >= 2 && baseComponentToken[len - 2] == '.') {
+						baseComponentToken[len - 2] = 0;
+					} else
+						len = 0;
 
 					for (pp = pps; pp->string; pp++)
-						if (!Q_strncmp(token, pp->string, len))
+						if (!Q_strcmp(baseComponentToken, pp->string))
 							break;
 
 					if (!pp->string) {
@@ -1304,20 +1308,37 @@ static void CL_ParsePtlCmds (const char *name, const char **text)
 						break;
 					}
 
-					if (((pc_types[i] & PTL_ONLY_ONE_TYPE) && (pc_types[i] & ~PTL_ONLY_ONE_TYPE) != pp->type) || (!(pc_types[i] & PTL_ONLY_ONE_TYPE) && !((1 << pp->type) & pc_types[i]))) {
-						Com_Printf("CL_ParsePtlCmds: bad type in var \"%s\" specified (particle %s) (ptl type: %i, string: %s)\n", token, name, pp->type, pc_strings[i]);
+					if ((pc_types[i] & PTL_ONLY_ONE_TYPE)) {
+						if ((pc_types[i] & ~PTL_ONLY_ONE_TYPE) != pp->type) {
+							Com_Printf("CL_ParsePtlCmds: bad type in var \"%s\" (PTL_ONLY_ONE_TYPE) specified (particle %s) (ptl type: %i (pc_type: %i), string: %s)\n", token, name, pp->type, pc_types[i], pc_strings[i]);
+							numPtlCmds--;
+							break;
+						}
+					} else if (pp->type >= V_NUM_TYPES || !((1 << pp->type) & pc_types[i])) {
+						Com_Printf("CL_ParsePtlCmds: bad type in var \"%s\" specified (particle %s) (ptl type: %i (pc_type: %i), string: %s)\n", token, name, pp->type, pc_types[i], pc_strings[i]);
 						numPtlCmds--;
 						break;
 					}
 
-					if (singleComponent) {
+					if (len) {
 						/* get single component */
 						if ((1 << pp->type) & V_VECS) {
+							int component = (baseComponentToken[len + 2] - '1');
+							/* get the component we want to modify */
+							if (component > 3) {
+								Com_Printf("CL_ParsePtlCmds: bad component value - it's bigger than 3: %i (particle %s)\n", component, name);
+								numPtlCmds--;
+								break;
+							}
 							pc->type = V_FLOAT;
-							pc->ref = -((int)pp->ofs) - (token[len + 2] - '1') * sizeof(float);
+							/* go to component offset */
+							pc->ref = -((int)pp->ofs) - component * sizeof(float);
 							break;
-						} else
+						} else {
 							Com_Printf("CL_ParsePtlCmds: can't get components of a non-vector type (particle %s)\n", name);
+							numPtlCmds--;
+							break;
+						}
 					}
 
 					/* set the values */
@@ -1328,6 +1349,7 @@ static void CL_ParsePtlCmds (const char *name, const char **text)
 
 				/* get the type */
 				if (pc_types[i] & PTL_ONLY_ONE_TYPE)
+					/* extract the real type */
 					j = pc_types[i] & ~PTL_ONLY_ONE_TYPE;
 				else {
 					for (j = 0; j < V_NUM_TYPES; j++)
