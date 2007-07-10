@@ -326,7 +326,7 @@ void AIR_LoadAircraft(sizebuf_t * sb, base_t * base, int version);
 extern qboolean CL_MapIsNight(vec2_t pos);
 void CL_ResetCampaign(void);
 void CL_ResetSinglePlayerData(void);
-void CL_DateConvert(date_t * date, int *day, int *month);
+void CL_DateConvert(const date_t * date, int *day, int *month);
 const char *CL_DateGetMonthName(int month);
 void CL_CampaignRun(void);
 void CL_GameTimeStop(void);

@@ -550,9 +550,9 @@ qboolean Qcommon_LocaleSet (void)
 	Q_putenv("LANG", s_language->string);
 	Q_putenv("LANGUAGE", s_language->string);
 #else /* _WIN32 */
-# ifndef SOLARIS
+# ifndef __sun
 	unsetenv("LANGUAGE");
-# endif /* SOLARIS */
+# endif /* __sun */
 # ifdef __APPLE__
 	if (*s_language->string && Q_putenv("LANGUAGE", s_language->string) == -1)
 		Com_Printf("...setenv for LANGUAGE failed: %s\n", s_language->string);

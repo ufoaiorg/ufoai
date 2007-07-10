@@ -1128,7 +1128,7 @@ static const int monthLength[MONTHS_PER_YEAR] = { 31, 28, 31, 30, 31, 30, 31, 31
  * @param[out] month The month.
  * @param[out] day The day in the month above.
  */
-void CL_DateConvert (date_t * date, int *day, int *month)
+void CL_DateConvert (const date_t * date, int *day, int *month)
 {
 	int i, d;
 
