@@ -307,7 +307,7 @@ typedef struct {
 	/* are flood filled to eliminate mip map edge errors, and pics have */
 	/* an implicit "pics/" prepended to the name. (a pic name that starts with a */
 	/* slash will not use the "pics/" prefix or the ".pcx" postfix) */
-	void (*BeginLoading) (char *tiles, char *pos);
+	void (*BeginLoading) (const char *tiles, const char *pos);
 	struct model_s *(*RegisterModel) (const char *name);
 	struct image_s *(*RegisterSkin) (const char *name);
 

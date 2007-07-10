@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "ref.h"
 #include "vid.h"
+#include "../game/inv_shared.h"
 #include "cl_sound.h"
 #include "cl_screen.h"
 #include "cl_input.h"
@@ -46,7 +47,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 		#include "snd_openal.h"
 	#endif
 #endif
-#include "../game/inv_shared.h"
 
 #ifndef _MSC_VER
 #include <zlib.h>

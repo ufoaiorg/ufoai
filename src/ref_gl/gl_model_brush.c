@@ -635,7 +635,7 @@ static void R_AddMapTile (const char *name, int sX, int sY, int sZ)
 /**
  * @brief Specifies the model that will be used as the world
  */
-void GL_BeginLoading (char *tiles, char *pos)
+void GL_BeginLoading (const char *tiles, const char *pos)
 {
 	const char *token;
 	char name[MAX_VAR];

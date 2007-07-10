@@ -184,5 +184,7 @@ typedef struct mBspModel_s {
 
 void GL_BuildPolygonFromSurface(mBspSurface_t * fa, int shift[3]);
 void GL_CreateSurfaceLightmap(mBspSurface_t * surf);
+void GL_EndBuildingLightmaps(void);
+void GL_BeginBuildingLightmaps(void);
 
 #endif /* GL_MODEL_BRUSH_H */

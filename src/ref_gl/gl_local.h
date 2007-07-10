@@ -432,7 +432,7 @@ void R_SwapBuffers(int);
 
 int Draw_GetPalette(void);
 
-void GL_BeginLoading(char *tiles, char *pos);
+void GL_BeginLoading(const char *tiles, const char *pos);
 void GL_EndLoading(void);
 struct image_s *Draw_FindPic(const char *name);
 void LoadTGA(const char *name, byte ** pic, int *width, int *height);

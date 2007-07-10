@@ -25,6 +25,615 @@
 #include "../game/inv_shared.h"
 #include "../client/cl_research.h"
 
+/**
+ * @brief possible values for parsing functions
+ * @sa valueTypes_t
+ */
+const char *vt_names[V_NUM_TYPES] = {
+	"",
+	"bool",
+	"char",
+	"int",
+	"int2",
+	"float",
+	"pos",
+	"vector",
+	"color",
+	"rgba",
+	"string",
+	"translation_string",
+	"translation2_string",
+	"longstring",
+	"align",
+	"blend",
+	"style",
+	"fade",
+	"shapes",
+	"shapeb",
+	"dmgtype",
+	"date",
+	"if",
+	"relabs",
+	"client_hunk",
+	"client_hunk_string"
+};
+
+const char *align_names[ALIGN_LAST] = {
+	"ul", "uc", "ur", "cl", "cc", "cr", "ll", "lc", "lr"
+};
+
+const char *blend_names[BLEND_LAST] = {
+	"replace", "blend", "add", "filter", "invfilter"
+};
+
+const char *style_names[STYLE_LAST] = {
+	"facing", "rotated", "beam", "line", "axis"
+};
+
+const char *fade_names[FADE_LAST] = {
+	"none", "in", "out", "sin", "saw", "blend"
+};
+
+const static char *if_strings[IF_SIZE] = {
+	""
+	"==",
+	"<=",
+	">=",
+	">",
+	"<",
+	"!=",
+	""
+};
+
+/**
+ * @brief Translate the condition string to menuIfCondition_t enum value
+ * @param[in] conditionString The string from scriptfiles (see if_strings)
+ * @return menuIfCondition_t value
+ * @return enum value for condition string
+ * @note Produces a Sys_Error if conditionString was not found in if_strings array
+ */
+static int Com_ParseConditionType (const char* conditionString, const char *token)
+{
+	int i = IF_SIZE;
+	for (; i--;) {
+		if (!Q_strncmp(if_strings[i], conditionString, 2)) {
+			return i;
+		}
+	}
+	Sys_Error("Invalid if statement with condition '%s' token: '%s'\n", conditionString, token);
+	return -1;
+}
+
+/** @brief target sizes for buffer */
+static const size_t vt_sizes[V_NUM_TYPES] = {
+	0,	/* V_NULL */
+	sizeof(qboolean),	/* V_BOOL */
+	sizeof(char),	/* V_CHAR */
+	sizeof(int),	/* V_INT */
+	2 * sizeof(int),	/* V_INT2 */
+	sizeof(float),	/* V_FLOAT */
+	sizeof(vec2_t),	/* V_POS */
+	sizeof(vec3_t),	/* V_VECTOR */
+	sizeof(vec4_t),	/* V_COLOR */
+	sizeof(vec4_t),	/* V_RGBA */
+	0,	/* V_STRING */
+	0,	/* V_TRANSLATION_STRING */
+	0,	/* V_TRANSLATION2_STRING */
+	0,	/* V_LONGSTRING */
+	sizeof(byte),	/* V_ALIGN */
+	sizeof(byte),	/* V_BLEND */
+	sizeof(byte),	/* V_STYLE */
+	sizeof(byte),	/* V_FADE */
+	sizeof(int),	/* V_SHAPE_SMALL */
+	0,	/* V_SHAPE_BIG */
+	sizeof(byte),	/* V_DMGTYPE */
+	0,	/* V_DATE */
+	0,	/* V_IF */
+	sizeof(float),	/* V_RELABS */
+	0,	/* V_CLIENT_HUNK */
+	0	/* V_CLIENT_HUNK_STRING */
+};
+
+/**
+ * @brief
+ * @note translateable string are marked with _ at the beginning
+ * @code menu exampleName
+ * {
+ *   string "_this is translatable"
+ * }
+ * @endcode
+ */
+#ifdef DEBUG
+int Com_ParseValueDebug (void *base, const char *token, valueTypes_t type, int ofs, size_t size, const char *file, int line)
+#else
+int Com_ParseValue (void *base, const char *token, valueTypes_t type, int ofs, size_t size)
+#endif
+{
+	byte *b;
+	char string[MAX_VAR];
+	char string2[MAX_VAR];
+	char condition[MAX_VAR];
+	int x, y, w, h;
+
+	b = (byte *) base + ofs;
+
+	if (size) {
+#ifdef DEBUG
+		if (size > vt_sizes[type]) {
+			Com_Printf("Warning: Size mismatch: given size: "UFO_SIZE_T", should be: "UFO_SIZE_T". File: '%s', line: %i (type: %i)\n", size, vt_sizes[type], file, line, type);
+		}
+		if (size < vt_sizes[type]) {
+			/* disable this sys error to return -1 and print the value_t->string that is wrong in the parsing function */
+			Sys_Error("Size mismatch: given size: "UFO_SIZE_T", should be: "UFO_SIZE_T". File: '%s', line: %i (type: %i)\n", size, vt_sizes[type], file, line, type);
+			return -1;	/* don't delete this please */
+		}
+#else
+		if (size < vt_sizes[type]) {
+			/* disable this sys error to return -1 and print the value_t->string that is wrong in the parsing function */
+			Sys_Error("Size mismatch: given size: "UFO_SIZE_T", should be: "UFO_SIZE_T". (type: %i)\n", size, vt_sizes[type], type);
+			return -1;	/* don't delete this please */
+		}
+#endif
+	}
+
+	switch (type) {
+	case V_CLIENT_HUNK_STRING:
+	case V_CLIENT_HUNK:
+		Sys_Error("Com_ParseValue: V_CLIENT_HUNK and V_CLIENT_HUNK_STRING are not parsed here\n");
+
+	case V_NULL:
+		return ALIGN(0);
+
+	case V_BOOL:
+		if (!Q_strncmp(token, "true", 4) || *token == '1')
+			*b = qtrue;
+		else
+			*b = qfalse;
+		return ALIGN(sizeof(qboolean));
+
+	case V_CHAR:
+		*(char *) b = *token;
+		return ALIGN(sizeof(char));
+
+	case V_INT:
+		*(int *) b = atoi(token);
+		return ALIGN(sizeof(int));
+
+	case V_INT2:
+		if (strstr(token, " ") == NULL)
+			Sys_Error("Com_ParseValue: Illegal int2 statement '%s'\n", token);
+		sscanf(token, "%i %i", &((int *) b)[0], &((int *) b)[1]);
+		return ALIGN(2 * sizeof(int));
+
+	case V_FLOAT:
+		*(float *) b = atof(token);
+		return ALIGN(sizeof(float));
+
+	case V_POS:
+		if (strstr(token, " ") == NULL)
+			Sys_Error("Com_ParseValue: Illegal pos statement '%s'\n", token);
+		sscanf(token, "%f %f", &((float *) b)[0], &((float *) b)[1]);
+		return ALIGN(2 * sizeof(float));
+
+	case V_VECTOR:
+		if (strstr(token, " ") == NULL || strstr(strstr(token, " "), " ") == NULL)
+			Sys_Error("Com_ParseValue: Illegal vector statement '%s'\n", token);
+		sscanf(token, "%f %f %f", &((float *) b)[0], &((float *) b)[1], &((float *) b)[2]);
+		return ALIGN(3 * sizeof(float));
+
+	case V_COLOR:
+		if (strstr(strstr(strstr(token, " "), " "), " ") == NULL)
+			Sys_Error("Com_ParseValue: Illegal color statement '%s'\n", token);
+		sscanf(token, "%f %f %f %f", &((float *) b)[0], &((float *) b)[1], &((float *) b)[2], &((float *) b)[3]);
+		return ALIGN(4 * sizeof(float));
+
+	case V_RGBA:
+		if (strstr(strstr(strstr(token, " "), " "), " ") == NULL)
+			Sys_Error("Com_ParseValue: Illegal rgba statement '%s'\n", token);
+		sscanf(token, "%i %i %i %i", &((int *) b)[0], &((int *) b)[1], &((int *) b)[2], &((int *) b)[3]);
+		return ALIGN(4 * sizeof(int));
+
+	case V_STRING:
+		Q_strncpyz((char *) b, token, MAX_VAR);
+		w = (int)strlen(token) + 1;
+		if (w > MAX_VAR)
+			w = MAX_VAR;
+		return ALIGN(w);
+
+	case V_TRANSLATION_STRING:
+		if (*token == '_')
+			token++;
+
+		Q_strncpyz((char *) b, _(token), MAX_VAR);
+		return ALIGN((int)strlen((char *) b) + 1);
+
+	/* just remove the _ but don't translate */
+	case V_TRANSLATION2_STRING:
+		if (*token == '_')
+			token++;
+
+		Q_strncpyz((char *) b, token, MAX_VAR);
+		w = (int)strlen((char *) b) + 1;
+		return ALIGN(w);
+
+	case V_LONGSTRING:
+		strcpy((char *) b, token);
+		w = (int)strlen(token) + 1;
+		return ALIGN(w);
+
+	case V_ALIGN:
+		for (w = 0; w < ALIGN_LAST; w++)
+			if (!Q_strcmp(token, align_names[w]))
+				break;
+		if (w == ALIGN_LAST)
+			*b = (byte)0;
+		else
+			*b = (byte)w;
+		return ALIGN(1);
+
+	case V_BLEND:
+		for (w = 0; w < BLEND_LAST; w++)
+			if (!Q_strcmp(token, blend_names[w]))
+				break;
+		if (w == BLEND_LAST)
+			*b = (byte)0;
+		else
+			*b = (byte)w;
+		return ALIGN(1);
+
+	case V_STYLE:
+		for (w = 0; w < STYLE_LAST; w++)
+			if (!Q_strcmp(token, style_names[w]))
+				break;
+		if (w == STYLE_LAST)
+			*b = (byte)0;
+		else
+			*b = (byte)w;
+		return ALIGN(1);
+
+	case V_FADE:
+		for (w = 0; w < FADE_LAST; w++)
+			if (!Q_strcmp(token, fade_names[w]))
+				break;
+		if (w == FADE_LAST)
+			*b = (byte)0;
+		else
+			*b = (byte)w;
+		return ALIGN(1);
+
+	case V_SHAPE_SMALL:
+		if (strstr(strstr(strstr(token, " "), " "), " ") == NULL)
+			Sys_Error("Com_ParseValue: Illegal shape small statement '%s'\n", token);
+		sscanf(token, "%i %i %i %i", &x, &y, &w, &h);
+		for (h += y; y < h; y++)
+			*(int *) b |= ((1 << w) - 1) << x << (y * 8);
+		return ALIGN(4);
+
+	case V_SHAPE_BIG:
+		if (strstr(strstr(strstr(token, " "), " "), " ") == NULL)
+			Sys_Error("Com_ParseValue: Illegal shape big statement '%s'\n", token);
+		sscanf(token, "%i %i %i %i", &x, &y, &w, &h);
+		w = ((1 << w) - 1) << x;
+		for (h += y; y < h; y++)
+			((int *) b)[y] |= w;
+		return ALIGN(64);
+
+	case V_DMGTYPE:
+		for (w = 0; w < csi.numDTs; w++)
+			if (!Q_strcmp(token, csi.dts[w]))
+				break;
+		if (w == csi.numDTs)
+			*b = (byte)0;
+		else
+			*b = (byte)w;
+		return ALIGN(1);
+
+	case V_DATE:
+		if (strstr(strstr(token, " "), " ") == NULL)
+			Sys_Error("Com_ParseValue: Illegal if statement '%s'\n", token);
+		sscanf(token, "%i %i %i", &x, &y, &w);
+		((date_t *) b)->day = 365 * x + y;
+		((date_t *) b)->sec = 3600 * w;
+		return ALIGN(sizeof(date_t));
+
+	case V_IF:
+		if (!strstr(token, " ")) {
+			/* cvar exists? (not null) */
+			Q_strncpyz(((menuDepends_t *) b)->var, token, MAX_VAR);
+			((menuDepends_t *) b)->cond = IF_EXISTS;
+		} else if (strstr(strstr(token, " "), " ")) {
+			sscanf(token, "%s %s %s", string, condition, string2);
+
+			Q_strncpyz(((menuDepends_t *) b)->var, string, MAX_VAR);
+			Q_strncpyz(((menuDepends_t *) b)->value, string2, MAX_VAR);
+			((menuDepends_t *) b)->cond = Com_ParseConditionType(condition, token);
+		} else
+			Sys_Error("Com_ParseValue: Illegal if statement '%s'\n", token);
+
+		return ALIGN(sizeof(menuDepends_t));
+
+	case V_RELABS:
+		if (token[0] == '-' || token[0] == '+') {
+			if (fabs(atof(token + 1)) <= 2.0f)
+				Com_Printf("Com_ParseValue: a V_RELABS (absolute) value should always be bigger than +/-2.0\n");
+			if (token[0] == '-')
+				*(float *) b = atof(token+1) * (-1);
+			else
+				*(float *) b = atof(token+1);
+		} else {
+			if (fabs(atof(token)) > 2.0f)
+				Com_Printf("Com_ParseValue: a V_RELABS (relative) value should only be between 0.00..1 and 2.0\n");
+			*(float *) b = atof(token);
+		}
+		return ALIGN(sizeof(float));
+
+	default:
+		Sys_Error("Com_ParseValue: unknown value type '%s'\n", token);
+		return -1;
+	}
+}
+
+
+/**
+ * @brief
+ * @param[in] base The start pointer to a given data type (typedef, struct)
+ * @param[in] set The data which should be parsed
+ * @param[in] type The data type that should be parsed
+ * @param[in] ofs The offset for the value
+ * @sa Com_ValueToStr
+ * @note The offset is most likely given by the offsetof macro
+ */
+#ifdef DEBUG
+int Com_SetValueDebug (void *base, const void *set, valueTypes_t type, int ofs, size_t size, const char *file, int line)
+#else
+int Com_SetValue (void *base, const void *set, valueTypes_t type, int ofs, size_t size)
+#endif
+{
+	byte *b;
+	int len;
+
+	b = (byte *) base + ofs;
+
+	if (size) {
+#ifdef DEBUG
+		if (size > vt_sizes[type]) {
+			Com_Printf("Warning: Size mismatch: given size: "UFO_SIZE_T", should be: "UFO_SIZE_T". File: '%s', line: %i (type: %i)\n", size, vt_sizes[type], file, line, type);
+		}
+		if (size < vt_sizes[type]) {
+			/* disable this sys error to return -1 and print the value_t->string that is wrong in the parsing function */
+			Sys_Error("Size mismatch: given size: "UFO_SIZE_T", should be: "UFO_SIZE_T". File: '%s', line: %i (type: %i)\n", size, vt_sizes[type], file, line, type);
+			return -1;	/* don't delete this please */
+		}
+#else
+		if (size < vt_sizes[type]) {
+			/* disable this sys error to return -1 and print the value_t->string that is wrong in the parsing function */
+			Sys_Error("Size mismatch: given size: "UFO_SIZE_T", should be: "UFO_SIZE_T". (type: %i)\n", size, vt_sizes[type], type);
+			return -1;	/* don't delete this please */
+		}
+#endif
+	}
+
+	switch (type) {
+	case V_NULL:
+		return ALIGN(0);
+
+	case V_BOOL:
+		if (*(const qboolean *) set)
+			*(qboolean *)b = qtrue;
+		else
+			*(qboolean *)b = qfalse;
+		return ALIGN(sizeof(qboolean));
+
+	case V_CHAR:
+		*(char *) b = *(const char *) set;
+		return ALIGN(sizeof(char));
+
+	case V_INT:
+		*(int *) b = *(const int *) set;
+		return ALIGN(sizeof(int));
+
+	case V_INT2:
+		((int *) b)[0] = ((const int *) set)[0];
+		((int *) b)[1] = ((const int *) set)[1];
+		return ALIGN(2 * sizeof(int));
+
+	case V_FLOAT:
+		*(float *) b = *(const float *) set;
+		return ALIGN(sizeof(float));
+
+	case V_POS:
+		((float *) b)[0] = ((const float *) set)[0];
+		((float *) b)[1] = ((const float *) set)[1];
+		return ALIGN(2 * sizeof(float));
+
+	case V_VECTOR:
+		((float *) b)[0] = ((const float *) set)[0];
+		((float *) b)[1] = ((const float *) set)[1];
+		((float *) b)[2] = ((const float *) set)[2];
+		return ALIGN(3 * sizeof(float));
+
+	case V_COLOR:
+		((float *) b)[0] = ((const float *) set)[0];
+		((float *) b)[1] = ((const float *) set)[1];
+		((float *) b)[2] = ((const float *) set)[2];
+		((float *) b)[3] = ((const float *) set)[3];
+		return ALIGN(4 * sizeof(float));
+
+	case V_RGBA:
+		((byte *) b)[0] = ((const byte *) set)[0];
+		((byte *) b)[1] = ((const byte *) set)[1];
+		((byte *) b)[2] = ((const byte *) set)[2];
+		((byte *) b)[3] = ((const byte *) set)[3];
+		return ALIGN(4 * sizeof(int));
+
+	case V_STRING:
+		Q_strncpyz((char *) b, (const char *) set, MAX_VAR);
+		len = (int)strlen((const char *) set) + 1;
+		if (len > MAX_VAR)
+			len = MAX_VAR;
+		return len;
+
+	case V_LONGSTRING:
+		strcpy((char *) b, (const char *) set);
+		len = (int)strlen((const char *) set) + 1;
+		return len;
+
+	case V_ALIGN:
+	case V_BLEND:
+	case V_STYLE:
+	case V_FADE:
+		*b = *(const byte *) set;
+		return ALIGN(1);
+
+	case V_SHAPE_SMALL:
+		*(int *) b = *(const int *) set;
+		return ALIGN(4);
+
+	case V_SHAPE_BIG:
+		memcpy(b, set, 64);
+		return ALIGN(64);
+
+	case V_DMGTYPE:
+		*b = *(const byte *) set;
+		return ALIGN(1);
+
+	case V_DATE:
+		memcpy(b, set, sizeof(date_t));
+		return sizeof(date_t);
+
+	default:
+		Sys_Error("Com_SetValue: unknown value type\n");
+		return -1;
+	}
+}
+
+/**
+ * @brief
+ * @param[in] base The start pointer to a given data type (typedef, struct)
+ * @param[in] type The data type that should be parsed
+ * @param[in] ofs The offset for the value
+ * @sa Com_SetValue
+ * @return char pointer with translated data type value
+ */
+const char *Com_ValueToStr (void *base, valueTypes_t type, int ofs)
+{
+	static char valuestr[MAX_VAR];
+	byte *b;
+
+	b = (byte *) base + ofs;
+
+	switch (type) {
+	case V_NULL:
+		return 0;
+
+	case V_CLIENT_HUNK:
+	case V_CLIENT_HUNK_STRING:
+		if (b == NULL)
+			return "(null)";
+		else
+			return (char*)b;
+
+	case V_BOOL:
+		if (*b)
+			return "true";
+		else
+			return "false";
+
+	case V_CHAR:
+		return (char *) b;
+		break;
+
+	case V_INT:
+		Com_sprintf(valuestr, sizeof(valuestr), "%i", *(int *) b);
+		return valuestr;
+
+	case V_INT2:
+		Com_sprintf(valuestr, sizeof(valuestr), "%i %i", ((int *) b)[0], ((int *) b)[1]);
+		return valuestr;
+
+	case V_FLOAT:
+		Com_sprintf(valuestr, sizeof(valuestr), "%.2f", *(float *) b);
+		return valuestr;
+
+	case V_POS:
+		Com_sprintf(valuestr, sizeof(valuestr), "%.2f %.2f", ((float *) b)[0], ((float *) b)[1]);
+		return valuestr;
+
+	case V_VECTOR:
+		Com_sprintf(valuestr, sizeof(valuestr), "%.2f %.2f %.2f", ((float *) b)[0], ((float *) b)[1], ((float *) b)[2]);
+		return valuestr;
+
+	case V_COLOR:
+		Com_sprintf(valuestr, sizeof(valuestr), "%.2f %.2f %.2f %.2f", ((float *) b)[0], ((float *) b)[1], ((float *) b)[2], ((float *) b)[3]);
+		return valuestr;
+
+	case V_RGBA:
+		Com_sprintf(valuestr, sizeof(valuestr), "%3i %3i %3i %3i", ((byte *) b)[0], ((byte *) b)[1], ((byte *) b)[2], ((byte *) b)[3]);
+		return valuestr;
+
+	case V_TRANSLATION_STRING:
+	case V_TRANSLATION2_STRING:
+	case V_STRING:
+	case V_LONGSTRING:
+		if (b == NULL)
+			return "(null)";
+		else
+			return (char *) b;
+
+	case V_ALIGN:
+		assert(*(int *)b < ALIGN_LAST);
+		Q_strncpyz(valuestr, align_names[*(align_t *)b], sizeof(valuestr));
+		return valuestr;
+
+	case V_BLEND:
+		assert(*(blend_t *)b < BLEND_LAST);
+		Q_strncpyz(valuestr, blend_names[*(blend_t *)b], sizeof(valuestr));
+		return valuestr;
+
+	case V_STYLE:
+		assert(*(style_t *)b < STYLE_LAST);
+		Q_strncpyz(valuestr, style_names[*(style_t *)b], sizeof(valuestr));
+		return valuestr;
+
+	case V_FADE:
+		assert(*(fade_t *)b < FADE_LAST);
+		Q_strncpyz(valuestr, fade_names[*(fade_t *)b], sizeof(valuestr));
+		return valuestr;
+
+	case V_SHAPE_SMALL:
+	case V_SHAPE_BIG:
+		return "";
+
+	case V_DMGTYPE:
+		assert(*(int *)b < MAX_DAMAGETYPES);
+		return csi.dts[*(int *)b];
+
+	case V_DATE:
+		Com_sprintf(valuestr, sizeof(valuestr), "%i %i %i", ((date_t *) b)->day / 365, ((date_t *) b)->day % 365, ((date_t *) b)->sec);
+		return valuestr;
+
+	case V_IF:
+		return "";
+
+	case V_RELABS:
+		/* absolute value */
+		if (*(float *) b > 2.0)
+			Com_sprintf(valuestr, sizeof(valuestr), "+%.2f", *(float *) b);
+		/* absolute value */
+		else if (*(float *) b < 2.0)
+			Com_sprintf(valuestr, sizeof(valuestr), "-%.2f", *(float *) b);
+		/* relative value */
+		else
+			Com_sprintf(valuestr, sizeof(valuestr), "%.2f", *(float *) b);
+		return valuestr;
+
+	default:
+		Sys_Error("Com_ParseValue: unknown value type %i\n", type);
+		return NULL;
+	}
+}
+
+
 /*
 ==============================================================================
 OBJECT DEFINITION INTERPRETER

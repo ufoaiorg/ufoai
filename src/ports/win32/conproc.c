@@ -85,7 +85,7 @@ int CCheckParm (char *parm)
 /**
  * @brief
  */
-void InitConProc (int argc, char **argv)
+void InitConProc (int argc, const char **argv)
 {
 	unsigned	threadAddr;
 	HANDLE		hFile = 0;

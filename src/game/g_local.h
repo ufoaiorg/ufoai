@@ -337,9 +337,6 @@ int G_TeamToPM(int team);
 void SpawnEntities(const char *mapname, const char *entities);
 qboolean G_RunFrame(void);
 
-void GL_EndBuildingLightmaps(void);
-void GL_BeginBuildingLightmaps(void);
-
 #ifdef DEBUG
 void Cmd_InvList(player_t *player);
 void G_KillTeam(void);
