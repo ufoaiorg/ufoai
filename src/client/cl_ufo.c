@@ -129,7 +129,19 @@ static void UFO_SetUfoRandomDest (aircraft_t* ufo)
  */
 extern void UFO_FleePhalanxAircraft (aircraft_t *ufo, vec2_t v)
 {
-	UFO_SetUfoRandomDest(ufo);
+	vec2_t pos;
+	vec3_t initialVector, rotationAxis, dest;
+
+	PolarToVec(ufo->pos, initialVector);
+	PolarToVec(v, dest);
+
+	CrossProduct (initialVector, dest, rotationAxis);
+	VectorNormalize(rotationAxis);
+	RotatePointAroundVector(dest, rotationAxis, initialVector, -15.0f);
+
+	VecToPolar(dest, pos);
+
+	MAP_MapCalcLine(ufo->pos, pos, &(ufo->route));
 	ufo->target = NULL;
 	ufo->status = AIR_FLEEING;
 }

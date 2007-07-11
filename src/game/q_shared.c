@@ -305,7 +305,7 @@ void PerpendicularVector (vec3_t dst, const vec3_t src)
  * is orthogonal to both of them.
  * @param[in] v1 directional vector
  * @param[in] v2 directional vector
- * @param[in] cross output
+ * @param[out] cross output
  * @example
  * you have the right and forward values of an axis, their cross product will
  * be a properly oriented "up" direction
