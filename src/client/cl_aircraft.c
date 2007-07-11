@@ -891,6 +891,32 @@ void AIR_DeleteAircraft (aircraft_t *aircraft)
 }
 
 /**
+ * @brief Removes an aircraft from its base and the game.
+ * @param[in] aircraft Pointer to aircraft that should be removed.
+ * @note The assigned soldiers (if any) are removed from game.
+ * @note If you want to do something different (kill, fire, etc...) do it before calling this function.
+ * @todo Return status of deletion for better error handling.
+ */
+void AIR_DestroyAircraft (aircraft_t *aircraft)
+{
+	int i;
+	employee_t *employee;
+
+	for (i = 0; i < aircraft->size; i++) {
+		if (aircraft->teamIdxs[i] > -1) {
+			employee = &(gd.employees[EMPL_SOLDIER][aircraft->teamIdxs[i]]);
+			assert(employee);
+			E_DeleteEmployee(employee, EMPL_SOLDIER);
+			aircraft->teamIdxs[i] = -1;
+		}
+	}
+
+	aircraft->status = AIR_HOME;
+
+	AIR_DeleteAircraft(aircraft);
+}
+
+/**
  * @brief Set pos to a random position on geoscape
  * @param[in] pos Pointer to vec2_t for aircraft position
  * @note Used to place UFOs on geoscape

@@ -345,8 +345,8 @@ void AIRFIGHT_ActionsAfterAirfight (aircraft_t* aircraft, qboolean phalanxWon)
 		/* and send our aircraft back to base */
 		AIR_AircraftReturnToBase(aircraft);
 	} else {
-		/* @todo: kill the employees aboard as well */
-		AIR_DeleteAircraft(aircraft);
+		/* Destroy the aircraft and everything onboard */
+		AIR_DestroyAircraft(aircraft);
 
 		/* change destination of other projectiles aiming aircraft */
 		AIRFIGHT_RemoveProjectileAimingAircraft(aircraft);
