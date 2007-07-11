@@ -1201,21 +1201,21 @@ static void AIM_DrawSelectedZone (aircraft_t *aircraft)
 
 	node = MN_GetNodeFromCurrentMenu("airequip_zone_select1");
 	if (airequipSelectedZone == 1)
-		node->invis = qtrue;
+		MN_HideNode(node);
 	else
-		node->invis = qfalse;
+		MN_UnHideNode(node);
 
 	node = MN_GetNodeFromCurrentMenu("airequip_zone_select2");
 	if (airequipSelectedZone == 2)
-		node->invis = qtrue;
+		MN_HideNode(node);
 	else
-		node->invis = qfalse;
+		MN_UnHideNode(node);
 
 	node = MN_GetNodeFromCurrentMenu("airequip_zone_select3");
 	if (airequipSelectedZone == 3)
-		node->invis = qtrue;
+		MN_HideNode(node);
 	else
-		node->invis = qfalse;
+		MN_UnHideNode(node);
 }
 
 /**
