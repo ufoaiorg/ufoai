@@ -221,12 +221,13 @@ void CL_AddMapParticle (const char *ptl, vec3_t origin, vec2_t wait, const char 
 {
 	mp_t *mp;
 
-	mp = &MPs[numMPs++];
+	mp = &MPs[numMPs];
 
 	if (numMPs >= MAX_MAPPARTICLES) {
-		Sys_Error("Too many map particles\n");
+		Com_Printf("Too many map particles (don't add %s) - exceeded %i\n", ptl, MAX_MAPPARTICLES);
 		return;
 	}
+	numMPs++;
 
 	Q_strncpyz(mp->ptl, ptl, MAX_QPATH);
 	VectorCopy(origin, mp->origin);
@@ -860,7 +861,7 @@ ptl_t *CL_ParticleSpawn (const char *name, int levelFlags, const vec3_t s, const
 		if (numPtls < MAX_PTLS)
 			numPtls++;
 		else {
-			Com_Printf("Too many particles...\n");
+			Com_Printf("Too many particles (don't add %s) - exceeded %i\n", name, MAX_PTLS);
 			return NULL;
 		}
 	}
