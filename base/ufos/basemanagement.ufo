@@ -349,13 +349,13 @@ building building_hospital
 building building_amstorage
 {
 	name		"_Antimatter Storage"
-	image		base/amstorage
+	image		base/antimatter
 	fixcosts	70000
-	depends		building_powerplant 
+	depends		building_powerplant
 	build_time	20
 	varcosts	10000
 	type		amstorage
-	map_name	"amstorage"
+	map_name	"antimatter"
 	pedia		rs_building_antimatter
 	capacity	10000
 }
