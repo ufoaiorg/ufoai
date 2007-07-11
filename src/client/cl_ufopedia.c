@@ -511,8 +511,8 @@ void UP_AircraftItemDescription (int idx)
 		if (item->type == AC_ITEM_AMMO) {
 			/* We display the characteristics of this ammo */
 			Q_strcat(itemText, va(_("Ammo:\t%i\n"), item->ammo), sizeof(itemText));
-			if (item->damage > UFO_EPSILON)
-				Q_strcat(itemText, va(_("Damage:\t%i\n"), (int) item->damage), sizeof(itemText));
+			if (item->weaponDamage > UFO_EPSILON)
+				Q_strcat(itemText, va(_("Damage:\t%i\n"), (int) item->weaponDamage), sizeof(itemText));
 			Q_strcat(itemText, va(_("Reloading time:\t%i\n"),  (int) item->weaponDelay),  sizeof(itemText));
 		}
 		/* We write the range of the weapon */

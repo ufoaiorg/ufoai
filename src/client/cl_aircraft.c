@@ -1806,7 +1806,7 @@ static const value_t aircraftitems_vals[] = {
 	{"fuelsize", V_RELABS, offsetof(aircraftItem_t, stats[AIR_STATS_FUELSIZE]), MEMBER_SIZEOF(aircraftItem_t, stats[AIR_STATS_FUELSIZE])},
 	{"price", V_INT, offsetof(aircraftItem_t, price), MEMBER_SIZEOF(aircraftItem_t, price)},
 	{"installationTime", V_INT, offsetof(aircraftItem_t, installationTime), MEMBER_SIZEOF(aircraftItem_t, installationTime)},
-	{"wdamage", V_FLOAT, offsetof(aircraftItem_t, damage), MEMBER_SIZEOF(aircraftItem_t, damage)},
+	{"wdamage", V_FLOAT, offsetof(aircraftItem_t, weaponDamage), MEMBER_SIZEOF(aircraftItem_t, weaponDamage)},
 	{"shield", V_RELABS, offsetof(aircraftItem_t, stats[AIR_STATS_SHIELD]), MEMBER_SIZEOF(aircraftItem_t,  stats[AIR_STATS_SHIELD])},
 	{"wrange", V_FLOAT, offsetof(aircraftItem_t, stats[AIR_STATS_WRANGE]), MEMBER_SIZEOF(aircraftItem_t, stats[AIR_STATS_WRANGE])},
 	{"wspeed", V_FLOAT, offsetof(aircraftItem_t, weaponSpeed), MEMBER_SIZEOF(aircraftItem_t, weaponSpeed)},

@@ -66,7 +66,7 @@ typedef enum {
 	AIR_STATS_SPEED,	/**< Aircraft speed. */
 	AIR_STATS_SHIELD,	/**< Aircraft shield. */
 	AIR_STATS_ECM,		/**< Aircraft electronic warfare level. */
-	AIR_STATS_DAMAGE,	/**< Aircraft damage points. */
+	AIR_STATS_DAMAGE,	/**< Aircraft damage points (= hit points of the aircraft). */
 	AIR_STATS_ACCURACY,	/**< Aircraft accuracy - base accuracy (without weapon). */
 	AIR_STATS_FUELSIZE,	/**< Aircraft fuel capacity. */
 	AIR_STATS_WRANGE,	/**< Aircraft weapon range - the maximum distance aircraft can open fire. */
@@ -95,7 +95,7 @@ typedef struct aircraftItem_s {
 	char *weapon;		/**< if this is ammo there must be a weapon */
 	float stats[AIR_STATS_MAX];	/**< All coefficient that can affect aircraft->stats */
 	itemWeight_t itemWeight;	/**< The weight of the item (which must be smaller that slot size) */
-	float damage;
+	float weaponDamage;			/**< The base damage inflicted by an ammo */	
 	float weaponSpeed;			/**< The speed of the projectile on geoscape */
 	float weaponDelay;			/**< The minimum delay between 2 shots */
 	int ammo;					/**< The total number of ammo that can be fired */

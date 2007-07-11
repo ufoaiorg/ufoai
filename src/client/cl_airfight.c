@@ -383,14 +383,29 @@ static qboolean AIRFIGHT_ProjectileReachedTarget (aircraftProjectile_t *projecti
 /**
  * @brief Solve the result of one projectile hitting an aircraft.
  * @param[in] projectile Pointer to the projectile.
- * @todo Implement me (decrease shield).
+ * @note the target loose (base damage - shield of target) hit points
  */
 static void AIRFIGHT_ProjectileHits (aircraftProjectile_t *projectile)
 {
-	assert(projectile);
+	aircraft_t *target;
+	int damage = 0;
 
-	/* atm, one projectile is enough to destroy it's target */
-	AIRFIGHT_ActionsAfterAirfight(projectile->aimedAircraft, qtrue);
+	assert(projectile);
+	target = projectile->aimedAircraft;
+	assert(target);
+
+	/* base damage is given by the ammo */
+	damage = aircraftItems[projectile->aircraftItemsIdx].weaponDamage;
+
+	/* reduce damages with shield target */
+	damage -= target->stats[AIR_STATS_SHIELD];
+
+	/* apply resulting damages */
+	if (damage > 0) {
+		target->stats[AIR_STATS_DAMAGE] -= damage;
+		if (target->stats[AIR_STATS_DAMAGE] <= 0)
+			AIRFIGHT_ActionsAfterAirfight(projectile->aimedAircraft, qtrue);
+	}
 }
 
 /**
