@@ -1305,15 +1305,26 @@ static void AIM_DrawAircraftSlots (aircraft_t *aircraft)
 static qboolean AIM_SelectableAircraftItem (aircraft_t *aircraft, technology_t *tech)
 {
 	int idx;
+	aircraftSlot_t *slot;
 
+	/* Initialise slot */
+	slot = AII_InitialiseAircraftSlot(aircraft);
+
+	/* item is researched */
 	if (!RS_IsResearched_ptr(tech))
 		return qfalse;
 
+	/* you can choose an ammo only if it fits the weapons installed in this slot */
 	if (airequipID == AC_ITEM_AMMO) {
-		idx = aircraft->weapons[airequipSelectedSlot].itemIdx;
-			if (Q_strncmp(aircraftItems[AII_GetAircraftItemByID(tech->provides)].weapon, aircraftItems[idx].id, MAX_VAR))
-				return qfalse;
+		idx = slot->itemIdx;
+		if (Q_strncmp(aircraftItems[AII_GetAircraftItemByID(tech->provides)].weapon, aircraftItems[idx].id, MAX_VAR))
+			return qfalse;
 	}
+
+	/* you can install an item only if its weight is small enough for the slot */
+	if (aircraftItems[AII_GetAircraftItemByID(tech->provides)].itemWeight > slot->size)
+		return qfalse;
+
 	return qtrue;
 }
 
