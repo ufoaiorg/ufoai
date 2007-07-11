@@ -155,14 +155,17 @@ static int AIRFIGHT_ChooseWeapon (aircraft_t *shooter, aircraft_t *target)
  * @param[in] shooter Pointer to the attacking aircraft.
  * @param[in] target Pointer to the aimed aircraft.
  * @return Probability to hit the target (0 when you don't have a chance, 1 (or more) when you're sure to hit).
+ * @note that modifiers due to electronics, weapons, and shield are already taken into account in AII_UpdateAircraftStats
+ * @sa AII_UpdateAircraftStats
  * @sa AIRFIGHT_ExecuteActions
+ * @sa AIRFIGHT_ChooseWeapon
+ * @pre slotIdx must have a weapon installed, with ammo available (see AIRFIGHT_ChooseWeapon)
  * @todo This probability should also depend on the pilot skills, when they will be implemented.
  */
 static float AIRFIGHT_ProbabilityToHit (aircraft_t *shooter, aircraft_t *target, int slotIdx)
 {
 	int idx;
 	float probability = 0.0f;
-	float factor;
 
 #ifdef DEBUG
 	idx = shooter->weapons[slotIdx].itemIdx;
@@ -170,32 +173,23 @@ static float AIRFIGHT_ProbabilityToHit (aircraft_t *shooter, aircraft_t *target,
 		Com_Printf("AIRFIGHT_ProbabilityToHit: no weapon assigned to attacking aircraft\n");
 		return probability;
 	}
-#endif
 
 	idx = shooter->weapons[slotIdx].ammoIdx;
 	if (idx < 0) {
 		Com_Printf("AIRFIGHT_ProbabilityToHit: no ammo in weapon of attacking aircraft\n");
 		return probability;
 	}
+#endif
 
 	/* Take Base probability from the ammo of the attacking aircraft */
 	probability = aircraftItems[idx].stats[AIR_STATS_ACCURACY];
+	Com_DPrintf("Base probablity: %f\n", probability);
 
-	/* Check if the attacking aircraft has an item to improve its accuracy */
-	idx = shooter->electronics[0].itemIdx;
-	if (idx > -1) {
-		factor = aircraftItems[idx].stats[AIR_STATS_ACCURACY];
-		if (factor)
-			probability *= factor;
-	}
+	/* Modify this probability by items of the attacking aircraft (stats is in percent) */
+	probability *= shooter->stats[AIR_STATS_ACCURACY] / 100.0f;
 
-	/* Check if the target aircraft has an item to decrease accuracy of attacking aircraft */
-	idx = target->electronics[0].itemIdx;
-	if (idx > -1) {
-		factor = aircraftItems[idx].stats[AIR_STATS_ECM];
-		if (factor)
-			probability /= factor;
-	}
+	/* Modify this probability by items of the aimed aircraft (stats is in percent) */
+	probability /= shooter->stats[AIR_STATS_ECM] / 100.0f;
 
 	Com_DPrintf("Probability to hit: %f\n", probability);
 	return probability;

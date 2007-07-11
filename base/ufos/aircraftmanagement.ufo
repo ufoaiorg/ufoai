@@ -13,9 +13,9 @@
 //	range - the range of the aircraft, which tells how far aircraft can fly
 //	speed - the speed of the aircraft, which tells how fast the aircraft is
 //	shield - the parameter of aircraft shield, which tells aircraft's protection
-//	ecm - the parameter of electronic level at aircraft, the bigger, the lower possibility to hit by enemy
+//	ecm - the parameter of electronic level at aircraft, the bigger, the lower possibility to hit by enemy  (in percent)
 //	damage - the parameter of aircraft hit points, which tells how much damage aircraft can suffer
-//	accuracy - the parameter of accuracy, the bigger, the bigger possibility to hit an enemy
+//	accuracy - the parameter of accuracy, the bigger, the bigger possibility to hit an enemy (in percent)
 //	fuelsize - maximum capacity of fuel tank
 //	wrange - not defined here for aircrafts (see aircraft items below)
 //
@@ -59,9 +59,9 @@ aircraft craft_drop_firebird
 		speed		10
 		range		0
 		shield		0
-		ecm			0
+		ecm			100
 		damage		0
-		accuracy	0
+		accuracy	70
 		fuelsize	100000
 	}
 	name		"_Firebird-class Dropship"
@@ -103,9 +103,9 @@ aircraft craft_inter_stiletto
 		range		0
 		wrange		0
 		shield		0
-		ecm		0
+		ecm		100
 		damage		0
-		accuracy	0
+		accuracy	100
 		fuelsize	60000
 	}
 	name		"_Stiletto-class Interceptor"
@@ -157,9 +157,9 @@ aircraft craft_inter_saracen
 		range		0
 		wrange		0
 		shield		0
-		ecm		0
+		ecm		100
 		damage		0
-		accuracy	0
+		accuracy	100
 		fuelsize	60000
 	}
 	name		"_Saracen-class Interceptor"
@@ -204,9 +204,9 @@ aircraft craft_inter_stingray
 		range		0
 		wrange		0
 		shield		0
-		ecm		0
+		ecm		100
 		damage		0
-		accuracy	0
+		accuracy	110
 		fuelsize	60000
 	}
 	name		"_Stingray Interceptor"
@@ -238,9 +238,9 @@ aircraft craft_ufo_harvester
 		range		0
 		wrange		0
 		shield		0
-		ecm		0
+		ecm		100
 		damage		0
-		accuracy	0
+		accuracy	80
 		fuelsize	100000
 	}
 	name		"_UFO - Harvester"
@@ -271,9 +271,9 @@ aircraft craft_ufo_carrier
 		range		0
 		wrange		0
 		shield		0
-		ecm		0
+		ecm		100
 		damage		0
-		accuracy	0
+		accuracy	50
 		fuelsize	100000
 	}
 	name		"_UFO - Carrier"
@@ -300,9 +300,9 @@ aircraft craft_ufo_supply
 		range		0
 		wrange		0
 		shield		0
-		ecm		0
+		ecm		100
 		damage		0
-		accuracy	0
+		accuracy	70
 		fuelsize	100000
 	}
 	name		"_UFO - Supply"
@@ -329,9 +329,9 @@ aircraft craft_ufo_condor
 		range		0
 		wrange		0
 		shield		0
-		ecm			0
+		ecm			100
 		damage		0
-		accuracy	0
+		accuracy	100
 		fuelsize	100000
 	}
 	name		"_UFO - Condor"
@@ -357,9 +357,9 @@ aircraft craft_ufo_scout
 		range		0
 		wrange		0
 		shield		0
-		ecm		0
+		ecm		100
 		damage		0
-		accuracy	0
+		accuracy	100
 		fuelsize	100000
 	}
 	name		"_UFO - Scout"
@@ -385,9 +385,9 @@ aircraft craft_ufo_fighter
 		range		0
 		wrange		0
 		shield		0
-		ecm		0
+		ecm		100
 		damage		0
-		accuracy	0
+		accuracy	120
 		fuelsize	1000000
 	}
 	name		"_UFO - Fighter"
