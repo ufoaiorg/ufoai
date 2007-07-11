@@ -31,7 +31,6 @@ int numMPs;
 #define RADR(x)		((x < 0) ? (byte*)p-x : (byte*)pcmdData+x)
 #define RSTACK		-0xFFF0
 #define F(x)		(1<<x)
-/* 15 */
 #define	V_VECS		(F(V_FLOAT) | F(V_POS) | F(V_VECTOR) | F(V_COLOR))
 #define PTL_ONLY_ONE_TYPE		(1<<31)
 #define V_UNTYPED   0x7FFF
