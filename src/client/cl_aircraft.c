@@ -1231,7 +1231,7 @@ static void AIM_DrawAircraftSlots (aircraft_t *aircraft)
 	for (i = 0; node && i < AIR_POSITIONS_MAX; node = node->next) {
 		if (!Q_strncmp(node->name, "airequip_slot", 13)) {
 			/* Default value */
-			node->invis = qtrue;
+			MN_HideNode(node);
 			/* Draw available slots */
 			switch (airequipID) {
 			case AC_ITEM_AMMO:
@@ -1239,7 +1239,7 @@ static void AIM_DrawAircraftSlots (aircraft_t *aircraft)
 				for (j = 0; j < aircraft->maxWeapons; j++) {
 					/* check if one of the aircraft slots is at this position */
 					if (aircraft->weapons[j].pos == i) {
-						node->invis = qfalse;
+						MN_UnHideNode(node);
 						/* draw in white if this is the selected slot */
 						if (j == airequipSelectedSlot) {
 							Vector2Set(node->texl, 64, 0);
@@ -1254,7 +1254,7 @@ static void AIM_DrawAircraftSlots (aircraft_t *aircraft)
 			case AC_ITEM_ELECTRONICS:
 				for (j = 0; j < aircraft->maxElectronics; j++) {
 					if (aircraft->electronics[j].pos == i) {
-						node->invis = qfalse;
+						MN_UnHideNode(node);
 						/* draw in white if this is the selected slot */
 						if (j == airequipSelectedSlot) {
 							Vector2Set(node->texl, 64, 0);
