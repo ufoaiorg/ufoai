@@ -119,6 +119,11 @@ static int AIRFIGHT_ChooseWeapon (aircraft_t *shooter, aircraft_t *target)
 
 	distance0 = distance;
 
+	distance = CP_GetDistance(shooter->pos, target->pos);
+	/* if no weapon is in range, proceed */
+	if (distance > shooter->stats[AIR_STATS_WRANGE])
+		return -1;
+
 	/* We choose the usable weapon with the smaller range */
 	for (i = 0; i < MAX_AIRCRAFTSLOT; i++) {
 		/* check if there is a functional weapon in this slot */
@@ -134,7 +139,6 @@ static int AIRFIGHT_ChooseWeapon (aircraft_t *shooter, aircraft_t *target)
 
 		ammoIdx = shooter->weapons[i].ammoIdx;
 		/* check if the target is within range of this weapon */
-		distance = CP_GetDistance(shooter->pos, target->pos);
 		if (distance > aircraftItems[ammoIdx].stats[AIR_STATS_WRANGE])
 			continue;
 		
