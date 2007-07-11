@@ -312,7 +312,8 @@ typedef enum aircraftStatus_s {
 	AIR_DROP,					/**< ready to drop down */
 	AIR_INTERCEPT,				/**< ready to intercept */
 	AIR_TRANSPORT,				/**< transporting from one base to another */
-	AIR_RETURNING				/**< returning to homebase */
+	AIR_RETURNING,				/**< returning to homebase */
+	AIR_FLEEING					/**< fleeing other aircrafts */
 } aircraftStatus_t;
 
 extern actMis_t *selMis;

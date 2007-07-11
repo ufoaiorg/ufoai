@@ -1006,6 +1006,7 @@ extern const char* MAP_GetZoneType(byte* color);
 extern ufoType_t UFO_ShortNameToID(const char *token);
 extern const char* UFO_TypeToShortName(ufoType_t type);
 extern const char* UFO_TypeToName(ufoType_t type);
+extern void UFO_FleePhalanxAircraft(aircraft_t *ufo, vec2_t v);
 extern void UFO_CampaignRunUfos(int dt);
 extern void UFO_CampaignCheckEvents(void);
 extern void UFO_Reset(void);

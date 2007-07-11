@@ -2617,6 +2617,23 @@ void AIR_SendAircraftPurchasingUfo (aircraft_t* aircraft, aircraft_t* ufo)
 	aircraft->ufo = num;
 }
 
+/**
+ * @brief Make the specified UFO purchasing a phalanx aircraft.
+ * @param[in] *ufo Pointer to the UFO.
+ * @param[in] *aircraft Pointer to the target aircraft.
+ */
+void AIR_SendUfoPurchasingAircraft (aircraft_t* ufo, aircraft_t* aircraft)
+{
+	assert(ufo);
+	assert(aircraft);
+
+	MAP_MapCalcLine(ufo->pos, aircraft->pos, &(ufo->route));
+	ufo->status = AIR_UFO;
+	ufo->time = 0;
+	ufo->point = 0;
+	ufo->target = aircraft;
+}
+
 /*============================================
 Aircraft functions related to team handling.
 ============================================*/

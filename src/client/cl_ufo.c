@@ -124,11 +124,25 @@ static void UFO_SetUfoRandomDest (aircraft_t* ufo)
 }
 
 /**
+ * @brief Set new route to UFO so that it can flee
+ * @todo Make aircraft flee in the direction opposite of v rather than choosing a random direction
+ */
+extern void UFO_FleePhalanxAircraft (aircraft_t *ufo, vec2_t v)
+{
+	UFO_SetUfoRandomDest(ufo);
+	ufo->target = NULL;
+	ufo->status = AIR_FLEEING;
+}
+
+/**
  * @brief Make the UFOs run
  */
 void UFO_CampaignRunUfos (int dt)
 {
 	aircraft_t*	ufo;
+	base_t* base;
+	aircraft_t* phalanxAircraft;
+	int k;
 
 	/* now the ufos are flying around, too */
 	for (ufo = gd.ufos + gd.numUfos - 1; ufo >= gd.ufos; ufo--) {
@@ -138,6 +152,28 @@ void UFO_CampaignRunUfos (int dt)
 		/* @todo: Crash */
 		if (ufo->fuel <= 0)
 			ufo->fuel = ufo->stats[AIR_STATS_FUELSIZE];
+
+		/* check if the UFO can fight a PHALANX aircraft */
+		if (ufo->visible && ufo->status != AIR_FLEEING) {
+			if (ufo->target && ufo->target->status > AIR_HOME) {
+				AIRFIGHT_ExecuteActions(ufo, ufo->target);
+			} else {
+				ufo->target = NULL;
+				ufo->status = AIR_TRANSIT;
+				for (base = gd.bases + gd.numBases - 1; base >= gd.bases; base--)
+					for (phalanxAircraft = base->aircraft + base->numAircraftInBase - 1; phalanxAircraft >= base->aircraft; phalanxAircraft--) {
+						/* check that aircraft is flying */
+						if (phalanxAircraft->status > AIR_HOME)
+							AIR_SendUfoPurchasingAircraft(ufo, phalanxAircraft);
+					}
+			}
+		}
+
+		/* Update delay to launch next projectile */
+		for (k = 0; k < ufo->maxWeapons; k++) {
+			if (ufo->weapons[k].delayNextShot > 0)
+				ufo->weapons[k].delayNextShot -= dt;
+		}
 	}
 }
 
@@ -151,10 +187,26 @@ void UFO_CampaignRunUfos (int dt)
 static void UFO_ListUfosOnGeoscape_f (void)
 {
 	aircraft_t* ufo;
+	int k;
 
 	Com_Printf("There are %i ufos on geoscape\n", gd.numUfos);
-	for (ufo = gd.ufos + gd.numUfos - 1; ufo >= gd.ufos; ufo--)
+	for (ufo = gd.ufos + gd.numUfos - 1; ufo >= gd.ufos; ufo--) {
 		Com_Printf("..%s (%s) - status: %i - pos: %.0f:%0.f\n", ufo->name, ufo->id, ufo->status, ufo->pos[0], ufo->pos[1]);
+		Com_Printf("...%i weapon slots: ", ufo->maxWeapons);
+		for (k = 0; k < ufo->maxWeapons; k++) {
+				if (ufo->weapons[k].itemIdx > -1) {
+					Com_Printf("%s", aircraftItems[ufo->weapons[k].itemIdx].id);
+					if (ufo->weapons[k].ammoIdx > -1 && ufo->weapons[k].ammoLeft > 0)
+						Com_Printf(" (loaded)");
+					else
+						Com_Printf(" (unloaded)");
+				}
+				else
+					Com_Printf("empty");
+				Com_Printf(" / ");
+			}
+		Com_Printf("\n");
+	}
 }
 #endif
 
@@ -206,6 +258,7 @@ static void UFO_NewUfoOnGeoscape_f (void)
 	gd.numUfos++;
 
 	/* Initialise ufo data */
+	AII_ReloadWeapon(ufo);					/* Load its weapons */
 	ufo->visible = qfalse;					/* No visible in radars (just for now) */
 	CP_GetRandomPosForAircraft(ufo->pos);	/* Random position */
 	UFO_SetUfoRandomDest(ufo);				/* Random destination */

@@ -119,10 +119,10 @@ static int AIRFIGHT_ChooseWeapon (aircraft_t *shooter, aircraft_t *target)
 
 	distance0 = distance;
 
+	assert(shooter);
+	assert(target);	
+
 	distance = CP_GetDistance(shooter->pos, target->pos);
-	/* if no weapon is in range, proceed */
-	if (distance > shooter->stats[AIR_STATS_WRANGE])
-		return -1;
 
 	/* We choose the usable weapon with the smaller range */
 	for (i = 0; i < MAX_AIRCRAFTSLOT; i++) {
@@ -230,11 +230,17 @@ void AIRFIGHT_ExecuteActions (aircraft_t* shooter, aircraft_t* target)
 		}
 	} else if (slotIdx > -2) {
 		/* no ammo to fire atm (too far or reloading), pursue target */
-		AIR_SendAircraftPurchasingUfo(shooter, target);
+		if (shooter->type == AIRCRAFT_UFO)
+			AIR_SendUfoPurchasingAircraft(shooter, target);
+		else
+			AIR_SendAircraftPurchasingUfo(shooter, target);
 	} else {
 		/* no ammo left, or no weapon, you should flee ! */
-		AIR_AircraftReturnToBase(shooter);
-	} 
+		if (shooter->type == AIRCRAFT_UFO)
+			UFO_FleePhalanxAircraft(shooter, target->pos);
+		else
+			AIR_AircraftReturnToBase(shooter);
+	}
 }
 
 /**
@@ -339,10 +345,8 @@ void AIRFIGHT_ActionsAfterAirfight (aircraft_t* aircraft, qboolean phalanxWon)
 		/* and send our aircraft back to base */
 		AIR_AircraftReturnToBase(aircraft);
 	} else {
-		/* @todo: destroy the aircraft and all soldiers in it */
-		/* @todo: maybe rescue some of the soldiers */
-		/* FIXME: remove this */
-		AIR_AircraftReturnToBase(aircraft);
+		/* @todo: kill the employees aboard as well */
+		AIR_DeleteAircraft(aircraft);
 
 		/* change destination of other projectiles aiming aircraft */
 		AIRFIGHT_RemoveProjectileAimingAircraft(aircraft);
@@ -408,7 +412,7 @@ static void AIRFIGHT_ProjectileHits (aircraftProjectile_t *projectile)
 	if (damage > 0) {
 		target->stats[AIR_STATS_DAMAGE] -= damage;
 		if (target->stats[AIR_STATS_DAMAGE] <= 0)
-			AIRFIGHT_ActionsAfterAirfight(projectile->aimedAircraft, qtrue);
+			AIRFIGHT_ActionsAfterAirfight(projectile->aimedAircraft, target->type == AIRCRAFT_UFO);
 	}
 }
 
