@@ -472,11 +472,12 @@ void RS_RequiredIdxAssign (void)
  * @brief Gets all needed names/file-paths/etc... for each technology entry.
  * Should be executed after the parsing of _all_ the ufo files and e.g. the
  * research tree/inventory/etc... are initialised.
+ * @param[in] load qtrue if we are loading a game, qfalse otherwise
  * @todo Add a function to reset ALL research-stati to RS_NONE; -> to be called after start of a new game.
  * @todo Enhance ammo model display (see comment in code).
  * @sa CL_GameInit
  */
-void RS_InitTree (void)
+void RS_InitTree (qboolean load)
 {
 	int i, j;
 	technology_t *tech = NULL;
@@ -593,7 +594,8 @@ void RS_InitTree (void)
 		} /* switch */
 	}
 
-	RS_MarkResearchable(qtrue);
+	if (!load)
+		RS_MarkResearchable(qtrue);
 
 	memset(&curRequiredList, 0, sizeof(stringlist_t));
 

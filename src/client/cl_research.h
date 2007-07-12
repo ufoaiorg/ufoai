@@ -199,7 +199,7 @@ void RS_CheckAllCollected(void);
 
 void RS_AddObjectTechs(void);
 void RS_RequiredIdxAssign(void);
-void RS_InitTree(void);
+void RS_InitTree(qboolean load);
 char *RS_GetDescription(descriptions_t *desc);
 void RS_MarkCollected(technology_t *tech) __attribute__((nonnull));
 void RS_MarkResearchable(qboolean init);

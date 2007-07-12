@@ -343,7 +343,7 @@ void CL_ParseCampaign(const char *name, const char **text);
 void CL_ParseNations(const char *name, const char **text);
 void CL_UpdateCredits(int credits);
 qboolean CL_OnBattlescape(void);
-void CL_GameInit (void);
+void CL_GameInit(qboolean load);
 extern float CP_GetDistance(const vec2_t pos1, const vec2_t pos2);
 void AIR_NewAircraft(base_t * base, const char *name);
 void CL_ParseResearchedCampaignItems(const char *name, const char **text);

@@ -1734,10 +1734,7 @@ qboolean CP_Load (sizebuf_t *sb, void *data)
 		return qfalse;
 	}
 
-	/* ensure research correctly initialised */
-	RS_UpdateData();
-
-	CL_GameInit();
+	CL_GameInit(qtrue);
 
 	/* character creation needs the campaign id */
 	Com_SetGlobalCampaignID(curCampaign->idx);
@@ -3717,10 +3714,11 @@ void CL_GameExit (void)
 
 /**
  * @brief Called at new game and load game
+ * @param[in] load qtrue if we are loading game, qfalse otherwise
  * @sa SAV_GameLoad
  * @sa CL_GameNew_f
  */
-void CL_GameInit (void)
+void CL_GameInit (qboolean load)
 {
 	const cmdList_t *commands;
 
@@ -3735,7 +3733,7 @@ void CL_GameInit (void)
 	CL_GameTimeStop();
 
 	Com_AddObjectLinks();	/* Add tech links + ammo<->weapon links to items.*/
-	RS_InitTree();		/* Initialise all data in the research tree. */
+	RS_InitTree(load);	/* Initialise all data in the research tree. */
 
 	/* After inited the techtree we can assign the weapons
 	 * and shields to aircrafts. */
@@ -3875,7 +3873,7 @@ static void CL_GameNew_f (void)
 	for (i = 0; i < 7; i++)
 		CL_CampaignRunMarket();
 
-	CL_GameInit();
+	CL_GameInit(qfalse);
 }
 
 #define MAXCAMPAIGNTEXT 4096
