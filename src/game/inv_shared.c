@@ -1390,14 +1390,14 @@ void Com_InventoryList_f (void)
  * @note previously known as RS_GetItem
  * @param[in] id the item id in our object definition array (csi.ods)
  */
-int Com_GetItemByID (const char *id)
+int INVSH_GetItemByID (const char *id)
 {
 	int i;
 	objDef_t *item = NULL;
 
 #ifdef DEBUG
 	if (!id || !*id) {
-		Com_Printf("Com_GetItemByID: Called with empty id\n");
+		Com_Printf("INVSH_GetItemByID: Called with empty id\n");
 		return -1;
 	}
 #endif
@@ -1409,7 +1409,7 @@ int Com_GetItemByID (const char *id)
 		}
 	}
 
-	Com_Printf("Com_GetItemByID: Item \"%s\" not found.\n", id);
+	Com_Printf("INVSH_GetItemByID: Item \"%s\" not found.\n", id);
 	return -1;
 }
 

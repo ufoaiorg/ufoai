@@ -775,7 +775,7 @@ qboolean BS_Load (sizebuf_t* sb, void* data)
 	/* read market */
 	for (i = 0; i < presaveArray[PRE_NUMODS]; i++) {
 		s = MSG_ReadString(sb);
-		j = Com_GetItemByID(s);
+		j = INVSH_GetItemByID(s);
 		if (j == -1 || j >= MAX_OBJDEFS) {
 			Com_Printf("BS_Load: Could not find item '%s'\n", s);
 			MSG_ReadLong(sb);

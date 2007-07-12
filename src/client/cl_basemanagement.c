@@ -3183,7 +3183,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 				/* itemcargo */
 				for (l = 0; l < aircraft->itemtypes; l++) {
 					s = MSG_ReadString(sb);
-					m = Com_GetItemByID(s);
+					m = INVSH_GetItemByID(s);
 					if (m == -1 || m >= MAX_OBJDEFS) {
 						Com_Printf("B_Load: Could not find item '%s'\n", s);
 						MSG_ReadShort(sb);
@@ -3233,7 +3233,7 @@ qboolean B_Load (sizebuf_t* sb, void* data)
 		/* read equipment */
 		for (k = 0; k < presaveArray[PRE_NUMODS]; k++) {
 			s = MSG_ReadString(sb);
-			l = Com_GetItemByID(s);
+			l = INVSH_GetItemByID(s);
 			if (l == -1 || l >= MAX_OBJDEFS) {
 				Com_Printf("B_Load: Could not find item '%s'\n", s);
 				MSG_ReadShort(sb);

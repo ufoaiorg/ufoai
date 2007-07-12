@@ -2076,7 +2076,7 @@ void Com_AddObjectLinks (void)
 
 		/* Add links to weapons. */
 		for (j = 0; j < od->numWeapons; j++ ) {
-			od->weap_idx[j] = Com_GetItemByID(od->weap_id[j]);
+			od->weap_idx[j] = INVSH_GetItemByID(od->weap_id[j]);
 			assert(od->weap_idx[j] != -1);
 			/* Back-link the obj-idx inside the fds */
 			for (k = 0; k < od->numFiredefs[j]; k++ ) {

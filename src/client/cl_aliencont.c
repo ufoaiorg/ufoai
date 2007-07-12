@@ -215,7 +215,7 @@ void AL_AddAliens (int baseidx, int airidx)
 	cargo = aircraft->aliencargo;
 
 	alienBreathing = RS_IsResearched_idx(RS_GetTechIdxByName("rs_alien_breathing"));
-	albridx = Com_GetItemByID("brapparatus");
+	albridx = INVSH_GetItemByID("brapparatus");
 
 	for (i = 0; i < aircraft->alientypes; i++) {
 		for (j = 0; j < numTeamDesc; j++) {

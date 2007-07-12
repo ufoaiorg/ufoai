@@ -4390,7 +4390,7 @@ static void CP_UFOCrashed_f (void)
 	cargo = aircraft->itemcargo;
 
 	/* Find components definition. */
-	comp = INV_GetComponentsByItemIdx(Com_GetItemByID(ufocraft->id));
+	comp = INV_GetComponentsByItemIdx(INVSH_GetItemByID(ufocraft->id));
 	assert (comp);
 
 	/* Add components of crashed UFO to dropship. */

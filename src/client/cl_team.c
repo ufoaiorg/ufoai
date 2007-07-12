@@ -115,10 +115,10 @@ void CL_ReceiveItem (sizebuf_t *buf, item_t *item, int *container, int *x, int *
 	if (save) {
 		MSG_ReadFormat(buf, "bbbb", &item->a, container, x, y);
 		itemID = MSG_ReadString(buf);
-		item->t = Com_GetItemByID(itemID);
+		item->t = INVSH_GetItemByID(itemID);
 		if (item->a > NONE_AMMO) {
 			itemID = MSG_ReadString(buf);
-			item->m = Com_GetItemByID(itemID);
+			item->m = INVSH_GetItemByID(itemID);
 		}
 	} else
 		/* network */
@@ -1574,7 +1574,7 @@ static void CL_LoadTeamMultiplayer (const char *filename)
 	/* read equipment */
 	p = MSG_ReadShort(&sb);
 	for (i = 0; i < p; i++) {
-		num = Com_GetItemByID(MSG_ReadString(&sb));
+		num = INVSH_GetItemByID(MSG_ReadString(&sb));
 		if (num == -1) {
 			MSG_ReadLong(&sb);
 			MSG_ReadByte(&sb);

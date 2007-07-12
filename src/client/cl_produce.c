@@ -1210,7 +1210,7 @@ qboolean PR_Load (sizebuf_t* sb, void* data)
 		pq->numItems = MSG_ReadByte(sb);
 		for (j = 0; j < pq->numItems; j++) {
 			s = MSG_ReadString(sb);
-			k = Com_GetItemByID(s);
+			k = INVSH_GetItemByID(s);
 			if (k == -1 || k >= MAX_OBJDEFS) {
 				Com_Printf("PR_Load: Could not find item '%s'\n", s);
 				MSG_ReadLong(sb);

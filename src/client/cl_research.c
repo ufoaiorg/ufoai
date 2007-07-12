@@ -428,7 +428,7 @@ static void RS_AssignTechIdxs (requirements_t *req)
 			break;
 		case RS_LINK_ITEM:
 			/* Get index in item-list. */
-			req->idx[i] = Com_GetItemByID(req->id[i]);
+			req->idx[i] = INVSH_GetItemByID(req->id[i]);
 			break;
 		case RS_LINK_EVENT:
 			/* @todo: Get index of event in event-list. */
