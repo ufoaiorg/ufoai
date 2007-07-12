@@ -103,7 +103,7 @@ static qboolean SND_OAL_LoadFile (char* filename, ALboolean loop)
 
 	fullpath = filename;
 
-	if (OGG_Open(filename)) {
+	if (S_OGG_Open(filename)) {
 		qalGenBuffers(1, &buffer);
 		qalBufferData(buffer, music.format, music.ovBuf, sizeof(music.ovBuf), music.rate);
 		qalSourceQueueBuffers(alSource, 1, &buffer);

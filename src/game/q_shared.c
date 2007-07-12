@@ -1362,7 +1362,7 @@ BYTE ORDER FUNCTIONS
 ============================================================================
 */
 
-static qboolean bigendien;
+static qboolean bigendien = qfalse;
 
 /* can't just use function pointers, or dll linkage can */
 /* mess up when qcommon is included in multiple places */
@@ -1508,6 +1508,15 @@ void Swap_Init (void)
 		_LittleFloat = FloatSwap;
 	}
 
+}
+
+/**
+ * @brief Returns true if this is a big endian machine
+ * @sa Swap_Init
+ */
+qboolean Q_IsBigEndian (void)
+{
+	return bigendien;
 }
 
 #define VA_BUFSIZE 4096

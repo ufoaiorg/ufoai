@@ -1,12 +1,12 @@
 /**
- * @file snd_mem.c
- * @brief Sound caching.
+ * @file snd_wave.c
+ * @brief WAVE sound code
  */
 
 /*
 All original materal Copyright (C) 2002-2007 UFO: Alien Invasion team.
 
-Original file from Quake 2 v3.21: quake2-2.31/client/snd_cache.c
+Original file from Quake 2 v3.21: quake2-2.31/client/snd_dma.c
 Copyright (C) 1997-2001 Id Software, Inc.
 
 This program is free software; you can redistribute it and/or
@@ -28,155 +28,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 #include "client.h"
 #include "snd_loc.h"
-
-/* #define DUMPCHUNKS */
-
-static wavinfo_t GetWavinfo(char *name, byte * wav, int wavlength);
-
-/**
- * @brief
- */
-static void ResampleSfx (sfx_t * sfx, int inrate, int inwidth, byte * data)
-{
-	int outcount;
-	int srcsample;
-	float stepscale;
-	int i;
-	int sample, samplefrac, fracstep;
-	sfxcache_t *sc;
-
-	sc = sfx->cache;
-	if (!sc)
-		return;
-
-	stepscale = (float) inrate / dma.speed;	/* this is usually 0.5, 1, or 2 */
-
-	outcount = (int)(sc->length / stepscale);
-	if (outcount == 0) {
-		Com_Printf("ResampleSfx: Invalid sound file '%s' (zero length)\n", sfx->name);
-		/* free at next opportunity */
-		Mem_Free(sfx->cache);
-		sfx->cache = NULL;
-		return;
-	}
-
-	sc->length = outcount;
-
-	if (sc->loopstart != -1)
-		sc->loopstart = (int)(sc->loopstart / stepscale);
-
-	sc->speed = dma.speed;
-	if (snd_loadas8bit->value)
-		sc->width = 1;
-	else
-		sc->width = inwidth;
-	sc->stereo = 0;
-
-	/* resample / decimate to the current source rate */
-	if (stepscale == 1 && inwidth == 1 && sc->width == 1) {
-		/* fast special case */
-		for (i = 0; i < outcount; i++)
-			((signed char *) sc->data)[i]
-				= (int) ((unsigned char) (data[i]) - 128);
-	} else {
-		/* general case */
-		samplefrac = 0;
-		fracstep = stepscale * 256;
-		for (i = 0; i < outcount; i++) {
-			srcsample = samplefrac >> 8;
-			samplefrac += fracstep;
-			if (inwidth == 2)
-				sample = LittleShort(((short *) data)[srcsample]);
-			else
-				sample = (int) ((unsigned char) (data[srcsample]) - 128) << 8;
-			if (sc->width == 2)
-				((short *) sc->data)[i] = sample;
-			else
-				((signed char *) sc->data)[i] = sample >> 8;
-		}
-	}
-}
-
-/**
- * @brief
- */
-extern sfxcache_t *S_LoadSound (sfx_t * s)
-{
-	char namebuffer[MAX_QPATH];
-	byte *data;
-	wavinfo_t info;
-	int len;
-	float stepscale;
-	sfxcache_t *sc;
-	int size;
-	char *name;
-
-	if (s->name[0] == '*')
-		return NULL;
-
-	/* see if still in memory */
-	sc = s->cache;
-	if (sc)
-		return sc;
-
-	/*Com_Printf("S_LoadSound: %x\n", (int)stackbuf); */
-	/* load it in */
-	if (s->truename)
-		name = s->truename;
-	else
-		name = s->name;
-
-	if (name[0] == '#')
-		Q_strncpyz(namebuffer, &name[1], sizeof(namebuffer));
-	else
-		Com_sprintf(namebuffer, sizeof(namebuffer), "sound/%s", name);
-
-/*	Com_Printf("loading %s\n",namebuffer); */
-
-	size = FS_LoadFile(namebuffer, (void **) (char *) &data);
-	if (!data) {
-		s->cache = NULL;
-		Com_Printf("Couldn't load %s\n", namebuffer);
-		return NULL;
-	}
-
-	info = GetWavinfo(s->name, data, size);
-	if (info.channels != 1) {
-		Com_Printf("%s is a stereo sample\n", s->name);
-		FS_FreeFile(data);
-		return NULL;
-	}
-
-	stepscale = (float) info.rate / dma.speed;
-	len = (int)(info.samples / stepscale);
-
-	if (info.samples == 0) {
-		Com_Printf("WARNING: Zero length sound encountered: %s\n", s->name);
-		FS_FreeFile(data);
-		return NULL;
-	}
-
-	len = len * info.width * info.channels;
-	sc = s->cache = Mem_PoolAlloc(len + sizeof (sfxcache_t), cl_soundSysPool, 0);
-	if (!sc) {
-		FS_FreeFile(data);
-		return NULL;
-	}
-
-	sc->length = info.samples;
-	sc->loopstart = -1;			/*info.loopstart; */
-	sc->speed = info.rate;
-	sc->width = info.width;
-	sc->stereo = info.channels;
-
-	ResampleSfx(s, sc->speed, sc->width, data + info.dataofs);
-
-	FS_FreeFile(data);
-
-	return sc;
-}
-
-
 
 /*
 ===============================================================================
@@ -374,4 +225,76 @@ static wavinfo_t GetWavinfo (char *name, byte * wav, int wavlength)
 	info.dataofs = (int)(data_p - wav);
 
 	return info;
+}
+
+/**
+ * @brief
+ * @sa S_OGG_LoadSFX
+ */
+sfxcache_t *S_Wave_LoadSFX (sfx_t * s)
+{
+	char namebuffer[MAX_QPATH];
+	byte *data;
+	wavinfo_t info;
+	int len;
+	float stepscale;
+	sfxcache_t *sc;
+	int size;
+	char *name;
+
+	/*Com_Printf("S_Wave_LoadSFX: %x\n", (int)stackbuf); */
+	/* load it in */
+	if (s->truename)
+		name = s->truename;
+	else
+		name = s->name;
+
+	if (name[0] == '#')
+		Q_strncpyz(namebuffer, &name[1], sizeof(namebuffer));
+	else
+		Com_sprintf(namebuffer, sizeof(namebuffer), "sound/%s.wav", name);
+
+	/*Com_Printf("loading %s\n", namebuffer);*/
+
+	size = FS_LoadFile(namebuffer, (void **) (char *) &data);
+	if (!data) {
+		s->cache = NULL;
+		Com_Printf("Couldn't load %s\n", namebuffer);
+		return NULL;
+	}
+
+	info = GetWavinfo(s->name, data, size);
+	if (info.channels != 1) {
+		Com_Printf("%s is a stereo sample\n", s->name);
+		FS_FreeFile(data);
+		return NULL;
+	}
+
+	stepscale = (float) info.rate / dma.speed;
+	len = (int)(info.samples / stepscale);
+
+	if (info.samples == 0) {
+		Com_Printf("WARNING: Zero length sound encountered: %s\n", s->name);
+		FS_FreeFile(data);
+		return NULL;
+	}
+
+	len = len * info.width * info.channels;
+	sc = s->cache = Mem_PoolAlloc(len + sizeof(sfxcache_t), cl_soundSysPool, 0);
+	if (!sc) {
+		FS_FreeFile(data);
+		return NULL;
+	}
+
+	sc->length = info.samples;
+	sc->loopstart = -1;			/*info.loopstart; */
+	sc->speed = info.rate;
+	sc->width = info.width;
+	sc->stereo = info.channels;
+
+	S_ResampleSfx(s, sc->speed, sc->width, data + info.dataofs);
+
+	FS_FreeFile(data);
+
+	return sc;
 }

@@ -41,9 +41,10 @@ CLIENT_SRCS = \
 	client/cl_ufopedia.c \
 	client/cl_vid.c \
 	client/cl_view.c \
+	client/snd_ogg.c \
 	client/snd_ref.c \
-	client/snd_mem.c \
 	client/snd_mix.c \
+	client/snd_wave.c \
 	\
 	qcommon/cmd.c \
 	qcommon/ioapi.c \

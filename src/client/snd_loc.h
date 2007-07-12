@@ -29,12 +29,6 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_SND_LOC_H
 #define CLIENT_SND_LOC_H
 
-#if defined (__linux__) || defined (__FreeBSD__) || defined(__NetBSD__)
-#include <vorbis/vorbisfile.h>
-#else
-#include "../ports/win32/vorbisfile.h"
-#endif
-
 /* !!! if this is changed, the asm code must change !!! */
 typedef struct {
 	int left;
@@ -54,6 +48,7 @@ typedef struct sfx_s {
 	char name[MAX_QPATH];
 	int registration_sequence;
 	sfxcache_t *cache;
+	snd_stream_t *stream;
 	char *truename;
 
 	qboolean			loaded;
@@ -108,19 +103,6 @@ typedef struct {
 	qboolean autosound;			/**< from an entity->sound, cleared each frame */
 } channel_t;
 
-typedef struct music_s {
-	OggVorbis_File ovFile; /**< currently playing ogg vorbis file */
-	char newFilename[MAX_QPATH]; /**< after fading out ovFile play newFilename */
-	char ovBuf[4096]; /**< ogg vorbis buffer */
-	int ovSection; /**< number of the current logical bitstream */
-	float fading; /**< current volumn - if le zero play newFilename */
-	char ovPlaying[MAX_QPATH]; /**< currently playing ogg tracks basename */
-	int rate;
-	unsigned format;
-} music_t;
-
-extern music_t music;
-
 typedef struct {
 	int rate;
 	int width;
@@ -155,12 +137,6 @@ SYSTEM SPECIFIC FUNCTIONS
 ====================================================================
 */
 
-qboolean OGG_Open(const char *filename);
-void OGG_Stop(void);
-int OGG_Read(void);
-
-/*==================================================================== */
-
 #define	MAX_CHANNELS			32
 extern channel_t channels[MAX_CHANNELS];
 
@@ -179,17 +155,15 @@ extern cvar_t *snd_khz;
 extern cvar_t *snd_show;
 extern cvar_t *snd_mixahead;
 extern cvar_t *snd_testsound;
-extern cvar_t *snd_music_volume;
-extern cvar_t *snd_music_loop;
 
 void S_InitScaletable(void);
-
 sfxcache_t *S_LoadSound(sfx_t * s);
-
 void S_IssuePlaysound(playsound_t * ps);
-
 void S_PaintChannels(int endtime);
-
 void S_ClearBuffer(void);
+void S_ResampleSfx(sfx_t * sfx, int inrate, int inwidth, byte * data);
+
+#include "snd_ogg.h"
+#include "snd_wave.h"
 
 #endif /* CLIENT_SND_LOC_H */

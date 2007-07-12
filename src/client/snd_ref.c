@@ -43,12 +43,7 @@ static void S_SoundList_f(void);
 void S_Update_(void);
 void S_StopAllSounds(void);
 
-void S_PlayOGG(void);
-void S_StartOGG(void);
-
 channel_t* s_streamingChannel;
-
-static snd_stream_t* stream = NULL;
 
 /*
 =======================================================================
@@ -102,17 +97,8 @@ cvar_t *snd_khz;
 cvar_t *snd_show;
 cvar_t *snd_mixahead;
 
-cvar_t *snd_music_volume;
-cvar_t *snd_music_loop;
-
 cvar_t *snd_ref;
 cvar_t *snd_openal;
-
-/**< fading speed for music - see OGG_Read */
-static cvar_t* snd_fadingspeed;
-
-/**< should music fading be activated */
-static cvar_t* snd_fadingenable;
 
 static qboolean snd_ref_active;
 
@@ -155,9 +141,6 @@ SND_Activate_t SND_Activate;
  */
 static void S_SoundInfo_f (void)
 {
-	vorbis_info *vi;
-	int i;
-
 	if (!sound_started) {
 		Com_Printf("sound system not started\n");
 		return;
@@ -170,19 +153,7 @@ static void S_SoundInfo_f (void)
 	Com_Printf("%5d submission_chunk\n", dma.submission_chunk);
 	Com_Printf("%5d speed\n", dma.speed);
 	Com_Printf("0x%p dma buffer\n", dma.buffer);
-	if (music.ovPlaying[0]) {
-		Com_Printf("\nogg infos:\n");
-		Com_Printf("...currently playing: %s\n", music.ovPlaying);
-		for (i = 0; i < ov_streams(&music.ovFile); i++) {
-			vi = ov_info(&music.ovFile,i);
-			Com_Printf("...logical bitstream section %d information:\n", i + 1);
-			Com_Printf("......%ldHz %d channels bitrate %ldkbps serial number=%ld\n",
-				vi->rate, vi->channels, ov_bitrate(&music.ovFile,i)/1000, ov_serialnumber(&music.ovFile, i));
-			Com_Printf("......compressed length: %ld bytes\n", (long)(ov_raw_total(&music.ovFile, i)));
-			Com_Printf("...play time: %.0f s\n", ov_time_total(&music.ovFile, i));
-			Com_Printf("...compressed length: %ld bytes\n", (long)(ov_raw_total(&music.ovFile, i)));
-		}
-	}
+	S_OGG_Info();
 }
 
 /**
@@ -247,125 +218,6 @@ static void S_ModifyKhz_f (void)
 		Cbuf_AddText("snd_restart\n");
 }
 
-static int musicTrackCount = 0;
-
-/**
- * @brief Sets the music cvar to a random track
- * @note You have to start the music track afterwards
- */
-static void S_RandomTrack_f (void)
-{
-	char findname[MAX_OSPATH];
-	int i, randomID;
-	char **dirnames;
-	const char *musicTrack;
-	int ndirs;
-	searchpath_t *search;
-	pack_t *pak;
-	int count = 0;
-
-	if (musicTrackCount == 0) {
-		/* search through the path, one element at a time */
-		for (search = fs_searchpaths; search; search = search->next) {
-			/* is the element a pak file? */
-			if (search->pack) {
-				/* look through all the pak file elements */
-				pak = search->pack;
-				for (i = 0; i < pak->numfiles; i++)
-					if (strstr(pak->files[i].name, ".ogg"))
-						musicTrackCount++;
-			} else {
-				Com_sprintf(findname, sizeof(findname), "%s/music/*.ogg", search->filename);
-				FS_NormPath(findname);
-
-				if ((dirnames = FS_ListFiles(findname, &ndirs, 0, SFF_HIDDEN | SFF_SYSTEM)) != 0) {
-					for (i = 0; i < ndirs - 1; i++) {
-						musicTrackCount++;
-						Mem_Free(dirnames[i]);
-					}
-					Mem_Free(dirnames);
-				}
-			}
-		}
-	}
-
-	randomID = rand() & musicTrackCount;
-	Com_DPrintf("S_RandomTrack_f: random track id: %i/%i\n", randomID, musicTrackCount);
-
-	/* search through the path, one element at a time */
-	for (search = fs_searchpaths; search; search = search->next) {
-		/* is the element a pak file? */
-		if (search->pack) {
-			/* look through all the pak file elements */
-			pak = search->pack;
-			for (i = 0; i < pak->numfiles; i++)
-				if (strstr(pak->files[i].name, ".ogg")) {
-					count++;
-					if (randomID == count) {
-						Com_sprintf(findname, sizeof(findname), "%s", pak->files[i].name);
-						musicTrack = COM_SkipPath(findname);
-						Com_Printf("..playing next: '%s'\n", musicTrack);
-						Cvar_Set("music", musicTrack);
-					}
-				}
-		} else {
-			Com_sprintf(findname, sizeof(findname), "%s/music/*.ogg", search->filename);
-			FS_NormPath(findname);
-
-			if ((dirnames = FS_ListFiles(findname, &ndirs, 0, SFF_HIDDEN | SFF_SYSTEM)) != 0) {
-				for (i = 0; i < ndirs - 1; i++) {
-					count++;
-					if (randomID == count) {
-						musicTrack = COM_SkipPath(dirnames[i]);
-						Com_Printf("..playing next: '%s'\n", musicTrack);
-						Cvar_Set("music", musicTrack);
-					}
-					Mem_Free(dirnames[i]);
-				}
-				Mem_Free(dirnames);
-			}
-		}
-	}
-}
-
-/**
- * @brief List all available music tracks
- */
-static void S_MusicList_f (void)
-{
-	char findname[MAX_OSPATH];
-	int i;
-	char **dirnames;
-	int ndirs;
-	searchpath_t *search;
-	pack_t *pak;
-
-	Com_Printf("music tracks\n");
-	/* search through the path, one element at a time */
-	for (search = fs_searchpaths; search; search = search->next) {
-		Com_Printf("..searchpath: %s\n", search->filename);
-		/* is the element a pak file? */
-		if (search->pack) {
-			/* look through all the pak file elements */
-			pak = search->pack;
-			for (i = 0; i < pak->numfiles; i++)
-				if (strstr(pak->files[i].name, ".ogg"))
-					Com_Printf("...%s\n", pak->files[i].name);
-		} else {
-			Com_sprintf(findname, sizeof(findname), "%s/music/*.ogg", search->filename);
-			FS_NormPath(findname);
-
-			if ((dirnames = FS_ListFiles(findname, &ndirs, 0, SFF_HIDDEN | SFF_SYSTEM)) != 0) {
-				for (i = 0; i < ndirs - 1; i++) {
-					Com_Printf("...%s\n", dirnames[i]);
-					Mem_Free(dirnames[i]);
-				}
-				Mem_Free(dirnames);
-			}
-		}
-	}
-}
-
 /**
  * @brief Make sure that all pointers are set to null
  * @note Call this in case of failed initialization - otherwise S_Activate
@@ -389,15 +241,15 @@ static void S_FreeLibs (void)
 
 /** @brief sound renderer commands */
 static const cmdList_t r_commands[] = {
-	{"musiclist", S_MusicList_f, "List all available music files"},
+	{"musiclist", S_OGG_List_f, "List all available music files"},
 	{"snd_play", S_Play_f, NULL},
 	{"snd_stop", S_StopAllSounds, "Stop all sounds"},
 	{"snd_list", S_SoundList_f, "List of loaded sounds"},
 	{"snd_info", S_SoundInfo_f, NULL},
-	{"music_randomtrack", S_RandomTrack_f, "Play random music track"},
-	{"music_play", S_PlayOGG, "Play an ogg sound track"},
-	{"music_start", S_StartOGG, "Start the ogg music track from cvar music"},
-	{"music_stop", OGG_Stop, "Stop currently playing music tracks"},
+	{"music_randomtrack", S_OGG_RandomTrack_f, "Play random music track"},
+	{"music_play", S_OGG_Play, "Play an ogg sound track"},
+	{"music_start", S_OGG_Start, "Start the ogg music track from cvar music"},
+	{"music_stop", S_OGG_Stop, "Stop currently playing music tracks"},
 	{"snd_modifykhz", S_ModifyKhz_f, "Modify khz for sound renderer - use + or - as paramaters"},
 
 	{NULL, NULL, NULL}
@@ -428,10 +280,8 @@ void S_Init (void)
 	snd_mixahead = Cvar_Get("snd_mixahead", "0.2", CVAR_ARCHIVE, NULL);
 	snd_show = Cvar_Get("snd_show", "0", 0, NULL);
 	snd_testsound = Cvar_Get("snd_testsound", "0", 0, NULL);
-	snd_music_volume = Cvar_Get("snd_music_volume", "0.5", CVAR_ARCHIVE, "Music volume");
-	snd_music_loop = Cvar_Get("snd_music_loop", "1", 0, "Music loop");
-	snd_fadingspeed = Cvar_Get("snd_fadingspeed", "0.01", 0, "Music fading speed");
-	snd_fadingenable = Cvar_Get("snd_fadingenable", "1", 0, "Music fading enabled");
+
+	S_OGG_Init();
 
 	{
 		char lib[MAX_OSPATH];
@@ -521,7 +371,7 @@ void S_Init (void)
 
 	/* start music again */
 	if (*Cvar_VariableString("music"))
-		S_StartOGG();
+		S_OGG_Start();
 }
 
 
@@ -547,11 +397,8 @@ void S_Shutdown (void)
 		return;
 
 	SND_Shutdown();
-	OGG_Stop();
-	if (stream) {
-		Mem_Free(stream);
-		stream = NULL;
-	}
+	S_OGG_Stop();
+	S_OGG_Shutdown();
 
 	sound_started = 0;
 
@@ -618,6 +465,13 @@ static sfx_t *S_FindName (const char *name, qboolean create)
 		if (!Q_strncmp(known_sfx[i].name, lname, sizeof(known_sfx[i].name))) {
 			return &known_sfx[i];
 		}
+	strcpy(ename, ".ogg");
+	/* see if already loaded */
+	for (i = 0; i < num_sfx; i++)
+		if (!Q_strncmp(known_sfx[i].name, lname, sizeof(known_sfx[i].name))) {
+			return &known_sfx[i];
+		}
+	*ename = '\0';
 
 	if (!create)
 		return NULL;
@@ -1037,12 +891,12 @@ void S_StopAllSounds (void)
 	memset(channels, 0, sizeof(channels));
 
 	/* stop music, if playing */
-	OGG_Stop();
+	S_OGG_Stop();
 
 	S_ClearBuffer();
 
 	/* restart music */
-	S_StartOGG();
+	S_OGG_Start();
 }
 
 /**
@@ -1287,7 +1141,7 @@ void S_Update (vec3_t origin, vec3_t forward, vec3_t right, vec3_t up)
 	S_Update_();
 
 	while (music.ovPlaying[0] && paintedtime + MAX_RAW_SAMPLES - 2048 > s_rawend)
-		OGG_Read();
+		S_OGG_Read();
 }
 
 /**
@@ -1362,345 +1216,6 @@ void S_Update_ (void)
 }
 
 /*
-==========================================================
-OGG Vorbis decoding
-==========================================================
-*/
-
-/**
- * @brief fread() replacement
- */
-static size_t S_OGG_Callback_read (void *ptr, size_t size, size_t nmemb, void *datasource)
-{
-	snd_stream_t *stream;
-	int byteSize = 0;
-	int bytesRead = 0;
-	size_t nMembRead = 0;
-
-	/* check if input is valid */
-	if (!ptr) {
-		errno = EFAULT;
-		return 0;
-	}
-
-	if (!(size && nmemb)) {
-		/* It's not an error, caller just wants zero bytes! */
-		errno = 0;
-		return 0;
-	}
-
-	if (!datasource) {
-		errno = EBADF;
-		return 0;
-	}
-
-	/* we use a snd_stream_t in the generic pointer to pass around */
-	stream = (snd_stream_t *) datasource;
-
-	/* FS_Read does not support multi-byte elements */
-	byteSize = nmemb * size;
-
-	/* read it with the UFO function FS_Read() */
-	bytesRead = FS_Read(ptr, byteSize, &stream->file);
-
-	/* update the file position */
-	stream->pos += bytesRead;
-
-	/* this function returns the number of elements read not the number of bytes */
-	nMembRead = bytesRead / size;
-
-	/* even if the last member is only read partially */
-	/* it is counted as a whole in the return value */
-	if (bytesRead % size)
-		nMembRead++;
-
-	return nMembRead;
-}
-
-/**
- * @brief fseek() replacement
- */
-static int S_OGG_Callback_seek (void *datasource, ogg_int64_t offset, int whence)
-{
-	snd_stream_t *stream;
-	int retVal = 0;
-
-	/* check if input is valid */
-	if (!datasource) {
-		errno = EBADF;
-		return -1;
-	}
-
-	/* snd_stream_t in the generic pointer */
-	stream = (snd_stream_t *) datasource;
-
-	/* we must map the whence to its UFO counterpart */
-	switch (whence) {
-		case SEEK_SET :
-		{
-			/* set the file position in the actual file with the Q3 function */
-			retVal = FS_Seek(&stream->file, (long) offset, FS_SEEK_SET);
-
-			/* something has gone wrong, so we return here */
-			if (retVal < 0)
-				return retVal;
-
-			/* keep track of file position */
-			stream->pos = (int) offset;
-			break;
-		}
-
-		case SEEK_CUR :
-		{
-			/* set the file position in the actual file with the Q3 function */
-			retVal = FS_Seek(&stream->file, (long) offset, FS_SEEK_CUR);
-
-			/* something has gone wrong, so we return here */
-			if (retVal < 0)
-				return retVal;
-
-			/* keep track of file position */
-			stream->pos += (int) offset;
-			break;
-		}
-
-		case SEEK_END :
-		{
-			/* UFO seems to have trouble with FS_SEEK_END */
-			/* so we use the file length and FS_SEEK_SET */
-
-			/* set the file position in the actual file with the Q3 function */
-			retVal = FS_Seek(&stream->file, (long)stream->length + (long) offset, FS_SEEK_SET);
-
-			/* something has gone wrong, so we return here */
-			if (retVal < 0)
-				return retVal;
-
-			/* keep track of file position */
-			stream->pos = stream->length + (int) offset;
-			break;
-		}
-
-		default :
-		{
-			/* unknown whence, so we return an error */
-			errno = EINVAL;
-			return -1;
-		}
-	}
-
-	/* stream->pos shouldn't be smaller than zero or bigger than the filesize */
-	stream->pos = (stream->pos < 0) ? 0 : stream->pos;
-	stream->pos = (stream->pos > stream->length) ? stream->length : stream->pos;
-
-	return 0;
-}
-
-/**
- * @brief fclose() replacement
- */
-static int S_OGG_Callback_close (void *datasource)
-{
-	/* we do nothing here and close all things manually in S_OGG_CodecCloseStream() */
-	return 0;
-}
-
-/**
- * @brief ftell() replacement
- */
-static long S_OGG_Callback_tell (void *datasource)
-{
-	/* check if input is valid */
-	if (!datasource) {
-		errno = EBADF;
-		return -1;
-	}
-
-	/* we keep track of the file position in stream->pos */
-	return (long)(((snd_stream_t *)datasource)->pos);
-}
-
-/* the callback structure */
-static const ov_callbacks S_OGG_Callbacks = {
-	&S_OGG_Callback_read,
-	&S_OGG_Callback_seek,
-	&S_OGG_Callback_close,
-	&S_OGG_Callback_tell
-};
-
-
-/**
- * @brief Opens the given ogg file
- * @sa OGG_Stop
- */
-qboolean OGG_Open (const char *filename)
-{
-	int length;
-	vorbis_info *vi;
-	char *checkFilename = NULL;
-
-	assert(filename);
-
-	if (snd_music_volume->value <= 0)
-		return qfalse;
-
-	if (!stream) {
-		/* Allocate a stream */
-		stream = Mem_Alloc(sizeof(snd_stream_t));
-		if (!stream)
-			return qfalse;
-	}
-
-	/* strip extension */
-	checkFilename = strstr(filename, ".ogg");
-	if (checkFilename)
-		*checkFilename = '\0';
-
-	/* FIXME */
-	music.rate = 44100;
-#ifdef HAVE_OPENAL
-	music.format = AL_FORMAT_STEREO16;
-#endif
-	/* check running music */
-	if (music.ovPlaying[0]) {
-		if (!Q_strcmp(music.ovPlaying, filename)) {
-			Com_DPrintf("OGG_Open: Already playing %s\n", filename);
-			return qtrue;
-		} else {
-			if (snd_fadingenable->value) {
-				Q_strncpyz(music.newFilename, filename, sizeof(music.newFilename));
-				return qtrue;
-			} else
-				OGG_Stop();
-		}
-	}
-
-	music.fading = snd_music_volume->value;
-
-	/* find file */
-	length = FS_FOpenFile(va("music/%s.ogg", filename), &stream->file);
-	if (!stream->file.f && !stream->file.z) {
-		Com_Printf("Couldn't open 'music/%s.ogg'\n", filename);
-		return qfalse;
-	}
-
-	stream->length = length;
-
-	/* open ogg vorbis file */
-	if (ov_open_callbacks(stream, &music.ovFile, NULL, 0, S_OGG_Callbacks) != 0) {
-		Com_Printf("'music/%s.ogg' isn't a valid ogg vorbis file (error %i)\n", filename, errno);
-		FS_FCloseFile(&stream->file);
-		return qfalse;
-	}
-
-	vi = ov_info(&music.ovFile, -1);
-	if ((vi->channels != 1) && (vi->channels != 2)) {
-		Com_Printf("%s has an unsupported number of channels: %i\n", filename, vi->channels);
-		FS_FCloseFile(&stream->file);
-		return qfalse;
-	}
-
-/*	Com_Printf("Playing '%s'\n", filename); */
-	Q_strncpyz(music.ovPlaying, filename, sizeof(music.ovPlaying));
-	music.ovSection = 0;
-	return qtrue;
-}
-
-/**
- * @brief Clears the music.ovPlaying string and stop the currently playing ogg file (music.ovFile)
- * @sa OGG_Open
- * @sa S_StartOGG
- * @sa S_PlayOGG
- */
-void OGG_Stop (void)
-{
-	if (!stream)
-		return;
-
-	music.ovPlaying[0] = 0;
-	music.fading = snd_music_volume->value;
-	ov_clear(&music.ovFile);
-
-	FS_FCloseFile(&stream->file);
-}
-
-/**
- * @brief
- * @sa OGG_Stop
- * @sa S_RawSamples
- */
-int OGG_Read (void)
-{
-	int res;
-
-	if (!stream)
-		Sys_Error("No stream allocated\n");
-
-	/* music faded out - so stop is and open the new track */
-	if (music.fading <= 0.0) {
-		OGG_Stop();
-		OGG_Open(music.newFilename);
-		music.newFilename[0] = '\0';
-		return 0;
-	}
-
-	/* read and resample */
-	/* this read function will use our callbacks to be even able to read from zip files */
-	res = ov_read(&music.ovFile, music.ovBuf, sizeof(music.ovBuf), 0, 2, 1, &music.ovSection);
-	if (res == OV_HOLE) {
-		Com_Printf("OGG_Read: interruption in the data (one of: garbage between pages, loss of sync followed by recapture, or a corrupt page)\n");
-		res = 0;
-	} else if (res == OV_EBADLINK) {
-		Com_Printf("OGG_Read: invalid stream section was supplied to libvorbisfile, or the requested link is corrupt\n");
-		res = 0;
-	}
-	S_RawSamples(res >> 2, music.rate, 2, 2, (byte *) music.ovBuf, music.fading);
-	if (*music.newFilename)
-		music.fading -= snd_fadingspeed->value;
-
-#ifdef HAVE_OPENAL
-	SND_OAL_Stream(music.ovPlaying);
-#endif
-
-	/* end of file? */
-	if (!res) {
-		if (snd_music_loop->integer)
-			ov_raw_seek(&music.ovFile, 0);
-		else
-			OGG_Stop();
-	}
-	return res;
-}
-
-/**
- * @brief Script command that plays the music track given via parameter
- * @sa OGG_Open
- * @sa S_StartOGG
- * @sa OGG_Stop
- */
-void S_PlayOGG (void)
-{
-	if (Cmd_Argc() < 2) {
-		Com_Printf("Usage: music_play <filename>\n");
-		return;
-	}
-	OGG_Open(Cmd_Argv(1));
-}
-
-/**
- * @brief Script command that plays the music track stored in cvar music
- * @sa OGG_Open
- * @sa S_PlayOGG
- * @sa OGG_Stop
- */
-void S_StartOGG (void)
-{
-	const char *str = Cvar_VariableString("music");
-	if (str[0])
-		OGG_Open(str);
-}
-
-/*
 ===============================================================================
 console functions
 ===============================================================================
@@ -1768,4 +1283,113 @@ void S_Activate (qboolean active)
 {
 	if (SND_Activate)
 		SND_Activate(active);
+}
+
+/**
+ * @brief
+ */
+void S_ResampleSfx (sfx_t * sfx, int inrate, int inwidth, byte * data)
+{
+	int outcount;
+	int srcsample;
+	float stepscale;
+	int i;
+	int sample, samplefrac, fracstep;
+	sfxcache_t *sc;
+
+	sc = sfx->cache;
+	if (!sc)
+		return;
+
+	stepscale = (float) inrate / dma.speed;	/* this is usually 0.5, 1, or 2 */
+
+	outcount = (int)(sc->length / stepscale);
+	if (outcount == 0) {
+		Com_Printf("ResampleSfx: Invalid sound file '%s' (zero length)\n", sfx->name);
+		/* free at next opportunity */
+		Mem_Free(sfx->cache);
+		sfx->cache = NULL;
+		return;
+	}
+
+	sc->length = outcount;
+
+	if (sc->loopstart != -1)
+		sc->loopstart = (int)(sc->loopstart / stepscale);
+
+	sc->speed = dma.speed;
+	if (snd_loadas8bit->value)
+		sc->width = 1;
+	else
+		sc->width = inwidth;
+	sc->stereo = 0;
+
+	/* resample / decimate to the current source rate */
+	if (stepscale == 1 && inwidth == 1 && sc->width == 1) {
+		/* fast special case */
+		for (i = 0; i < outcount; i++)
+			((signed char *) sc->data)[i]
+				= (int) ((unsigned char) (data[i]) - 128);
+	} else {
+		/* general case */
+		samplefrac = 0;
+		fracstep = stepscale * 256;
+		for (i = 0; i < outcount; i++) {
+			srcsample = samplefrac >> 8;
+			samplefrac += fracstep;
+			if (inwidth == 2)
+				sample = LittleShort(((short *) data)[srcsample]);
+			else
+				sample = (int) ((unsigned char) (data[srcsample]) - 128) << 8;
+			if (sc->width == 2)
+				((short *) sc->data)[i] = sample;
+			else
+				((signed char *) sc->data)[i] = sample >> 8;
+		}
+	}
+}
+
+/**
+ * @brief
+ * @sa S_L
+ */
+sfxcache_t *S_LoadSound (sfx_t *s)
+{
+	char name[MAX_QPATH];
+	size_t len;
+	int status;
+	sfxcache_t *sc;
+	char *extension;
+
+	if (!s->name[0])
+		return NULL;
+
+	if (s->name[0] == '*')
+		return NULL;
+
+	/* see if still in memory */
+	sc = s->cache;
+	if (sc)
+		return sc;
+
+	Q_strncpyz(name, s->name, sizeof(name));
+	len = strlen(name);
+	if (len + 4 >= MAX_QPATH) {
+		Com_Printf("S_LoadSound: MAX_QPATH exceeded: %i\n", len + 4);
+		return NULL;
+	}
+	extension = &name[len];
+
+	/* load it in */
+	strcpy(extension, ".ogg");
+	status = FS_CheckFile(va("sound/%s", name));
+	if (status >= 0)
+		return S_OGG_LoadSFX(s);
+	strcpy(extension, ".wav");
+	status = FS_CheckFile(va("sound/%s", name));
+	if (status >= 0)
+		return S_Wave_LoadSFX(s);
+	Com_Printf("Could not load sound 'sound/%s'\n", s->name);
+
+	return NULL;
 }

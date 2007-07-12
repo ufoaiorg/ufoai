@@ -472,6 +472,8 @@ float BigFloat(float l);
 float LittleFloat(float l);
 
 void Swap_Init(void);
+qboolean Q_IsBigEndian(void);
+
 char *va(const char *format, ...) __attribute__((format(printf, 1, 2)));
 
 /*============================================= */
