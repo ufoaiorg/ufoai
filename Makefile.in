@@ -96,6 +96,8 @@ all: all2
 # include the make files for each module
 -include $(patsubst %, build/%.mk, $(MODULES))
 
+ALL_DEPS = $(patsubst %.o, %.d, $(ALL_OBJS))
+
 all2: Makefile $(TARGETS) echo_info
 
 # check that the makefile is up to date

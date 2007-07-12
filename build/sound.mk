@@ -4,13 +4,11 @@
 
 SND_SDL_SRCS=ports/linux/snd_sdl.c
 SND_SDL_OBJS=$(SND_SDL_SRCS:%.c=$(BUILDDIR)/snd-sdl/%.o)
-SND_SDL_DEPS=$(SND_SDL_OBJS:%.o=%.d)
 SND_SDL_TARGET=snd_sdl.$(SHARED_EXT)
 
 ifeq ($(BUILD_CLIENT), 1)
 ifeq ($(HAVE_SND_SDL),1)
 	TARGETS += $(SND_SDL_TARGET)
-	ALL_DEPS += $(SND_SDL_DEPS)
 	ALL_OBJS += $(SND_SDL_OBJS)
 endif
 endif
@@ -23,11 +21,7 @@ $(SND_SDL_TARGET) : $(SND_SDL_OBJS) $(BUILDDIR)/.dirs
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/snd-sdl/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 	@echo " * [SDL] $<"; \
-		$(CC) $(CFLAGS) $(SHARED_CFLAGS) $(SDL_CFLAGS) -o $@ -c $<
-
-# Say how to build the dependencies
-$(BUILDDIR)/snd-sdl/%.d: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
-	@echo " * [DEP] $<"; $(DEP)
+		$(CC) $(CFLAGS) $(SHARED_CFLAGS) $(SDL_CFLAGS) -o $@ -c $< -MD -MT $@ -MP
 
 ###################################################################################################
 # ALSA
@@ -35,13 +29,11 @@ $(BUILDDIR)/snd-sdl/%.d: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 
 SND_ALSA_SRCS=ports/linux/snd_alsa.c
 SND_ALSA_OBJS=$(SND_ALSA_SRCS:%.c=$(BUILDDIR)/snd-alsa/%.o)
-SND_ALSA_DEPS=$(SND_ALSA_OBJS:%.o=%.d)
 SND_ALSA_TARGET=snd_alsa.$(SHARED_EXT)
 
 ifeq ($(BUILD_CLIENT), 1)
 ifeq ($(HAVE_SND_ALSA),1)
 	TARGETS += $(SND_ALSA_TARGET)
-	ALL_DEPS += $(SND_ALSA_DEPS)
 	ALL_OBJS += $(SND_ALSA_OBJS)
 endif
 endif
@@ -54,11 +46,7 @@ $(SND_ALSA_TARGET) : $(SND_ALSA_OBJS) $(BUILDDIR)/.dirs
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/snd-alsa/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 	@echo " * [ALSA] $<"; \
-		$(CC) $(CFLAGS) $(SHARED_CFLAGS) -o $@ -c $<
-
-# Say how to build the dependencies
-$(BUILDDIR)/snd-alsa/%.d: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
-	@echo " * [DEP] $<"; $(DEP)
+		$(CC) $(CFLAGS) $(SHARED_CFLAGS) -o $@ -c $< -MD -MT $@ -MP
 
 ###################################################################################################
 # JACK
@@ -66,13 +54,11 @@ $(BUILDDIR)/snd-alsa/%.d: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 
 SND_JACK_SRCS=ports/linux/snd_jack.c
 SND_JACK_OBJS=$(SND_JACK_SRCS:%.c=$(BUILDDIR)/snd-jack/%.o)
-SND_JACK_DEPS=$(SND_JACK_OBJS:%.o=%.d)
 SND_JACK_TARGET=snd_jack.$(SHARED_EXT)
 
 ifeq ($(BUILD_CLIENT), 1)
 ifeq ($(HAVE_SND_JACK),1)
 	TARGETS += $(SND_JACK_TARGET)
-	ALL_DEPS += $(SND_JACK_DEPS)
 	ALL_OBJS += $(SND_JACK_OBJS)
 endif
 endif
@@ -85,11 +71,7 @@ $(SND_JACK_TARGET) : $(SND_JACK_OBJS) $(BUILDDIR)/.dirs
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/snd-jack/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 	@echo " * [JACK] $<"; \
-		$(CC) $(CFLAGS) $(SHARED_CFLAGS) -o $@ -c $<
-
-# Say how to build the dependencies
-$(BUILDDIR)/snd-jack/%.d: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
-	@echo " * [DEP] $<"; $(DEP)
+		$(CC) $(CFLAGS) $(SHARED_CFLAGS) -o $@ -c $< -MD -MT $@ -MP
 
 ###################################################################################################
 # OSS
@@ -97,13 +79,11 @@ $(BUILDDIR)/snd-jack/%.d: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 
 SND_OSS_SRCS=ports/linux/snd_oss.c
 SND_OSS_OBJS=$(SND_OSS_SRCS:%.c=$(BUILDDIR)/snd-oss/%.o)
-SND_OSS_DEPS=$(SND_OSS_OBJS:%.o=%.d)
 SND_OSS_TARGET=snd_oss.$(SHARED_EXT)
 
 ifeq ($(BUILD_CLIENT), 1)
 ifeq ($(HAVE_SND_OSS),1)
 	TARGETS += $(SND_OSS_TARGET)
-	ALL_DEPS += $(SND_OSS_DEPS)
 	ALL_OBJS += $(SND_OSS_OBJS)
 endif
 endif
@@ -116,11 +96,7 @@ $(SND_OSS_TARGET) : $(SND_OSS_OBJS) $(BUILDDIR)/.dirs
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/snd-oss/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 	@echo " * [OSS] $<"; \
-		$(CC) $(CFLAGS) $(SHARED_CFLAGS) -o $@ -c $<
-
-# Say how to build the dependencies
-$(BUILDDIR)/snd-oss/%.d: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
-	@echo " * [DEP] $<"; $(DEP) $(SHARED_CFLAGS)
+		$(CC) $(CFLAGS) $(SHARED_CFLAGS) -o $@ -c $< -MD -MT $@ -MP
 
 ###################################################################################################
 # ARTS
@@ -128,13 +104,11 @@ $(BUILDDIR)/snd-oss/%.d: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 
 SND_ARTS_SRCS=ports/linux/snd_arts.c
 SND_ARTS_OBJS=$(SND_ARTS_SRCS:%.c=$(BUILDDIR)/snd-arts/%.o)
-SND_ARTS_DEPS=$(SND_ARTS_OBJS:%.o=%.d)
 SND_ARTS_TARGET=snd_arts.$(SHARED_EXT)
 
 ifeq ($(BUILD_CLIENT), 1)
 ifeq ($(HAVE_SND_ARTS),1)
 	TARGETS += $(SND_ARTS_TARGET)
-	ALL_DEPS += $(SND_ARTS_DEPS)
 	ALL_OBJS += $(SND_ARTS_OBJS)
 endif
 endif
@@ -147,12 +121,7 @@ $(SND_ARTS_TARGET) : $(SND_ARTS_OBJS) $(BUILDDIR)/.dirs
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/snd-arts/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 	@echo " * [ARTS] $<"; \
-		$(CC) $(CFLAGS) $(SHARED_CFLAGS) $(SND_ARTS_CFLAGS) -o $@ -c $<
-
-# Say how to build the dependencies
-$(BUILDDIR)/snd-arts/%.d: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
-	@echo " * [DEP] $<"; $(DEP) $(SHARED_CFLAGS) $(SND_ARTS_CFLAGS)
-
+		$(CC) $(CFLAGS) $(SHARED_CFLAGS) $(SND_ARTS_CFLAGS) -o $@ -c $< -MD -MT $@ -MP
 
 ###################################################################################################
 # WAPI
@@ -161,13 +130,11 @@ $(BUILDDIR)/snd-arts/%.d: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 ifeq ($(TARGET_OS),mingw32)
 	SND_WAPI_SRCS=ports/win32/snd_wapi.c
 	SND_WAPI_OBJS=$(SND_WAPI_SRCS:%.c=$(BUILDDIR)/snd-wapi/%.o)
-	SND_WAPI_DEPS=$(SND_WAPI_OBJS:%.o=%.d)
 	SND_WAPI_TARGET=snd_wapi.$(SHARED_EXT)
 
 	ifeq ($(BUILD_CLIENT), 1)
 	ifeq ($(HAVE_SND_WAPI),1)
 		TARGETS += $(SND_WAPI_TARGET)
-		ALL_DEPS += $(SND_WAPI_DEPS)
 		ALL_OBJS += $(SND_WAPI_OBJS)
 	endif
 	endif
@@ -180,11 +147,8 @@ ifeq ($(TARGET_OS),mingw32)
 	# Say how to build .o files from .c files for this module
 	$(BUILDDIR)/snd-wapi/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 		@echo " * [WAPI] $<"; \
-			$(CC) $(CFLAGS) $(SHARED_CFLAGS) -o $@ -c $<
+			$(CC) $(CFLAGS) $(SHARED_CFLAGS) -o $@ -c $< -MD -MT $@ -MP
 
-	# Say how to build the dependencies
-	$(BUILDDIR)/snd-wapi/%.d: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
-		@echo " * [DEP] $<"; $(DEP) $(SHARED_CFLAGS)
 endif
 
 ###################################################################################################
@@ -194,13 +158,11 @@ endif
 ifeq ($(TARGET_OS),mingw32)
 	SND_DX_SRCS=ports/win32/snd_dx.c
 	SND_DX_OBJS=$(SND_DX_SRCS:%.c=$(BUILDDIR)/snd-dx/%.o)
-	SND_DX_DEPS=$(SND_DX_OBJS:%.o=%.d)
 	SND_DX_TARGET=snd_dx.$(SHARED_EXT)
 
 	ifeq ($(BUILD_CLIENT), 1)
 	ifeq ($(HAVE_SND_DX),1)
 		TARGETS += $(SND_DX_TARGET)
-		ALL_DEPS += $(SND_DX_DEPS)
 		ALL_OBJS += $(SND_DX_OBJS)
 	endif
 	endif
@@ -213,11 +175,8 @@ ifeq ($(TARGET_OS),mingw32)
 	# Say how to build .o files from .c files for this module
 	$(BUILDDIR)/snd-dx/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 		@echo " * [DX] $<"; \
-			$(CC) $(CFLAGS) $(SHARED_CFLAGS) -o $@ -c $<
+			$(CC) $(CFLAGS) $(SHARED_CFLAGS) -o $@ -c $< -MD -MT $@ -MP
 
-	# Say how to build the dependencies
-	$(BUILDDIR)/snd-dx/%.d: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
-		@echo " * [DEP] $<"; $(DEP) $(SHARED_CFLAGS)
 endif
 
 ###################################################################################################
@@ -226,13 +185,11 @@ endif
 ifeq ($(TARGET_OS),darwin)
 	SND_OSX_SRCS=ports/macosx/snd_osx.c
 	SND_OSX_OBJS=$(SND_OSX_SRCS:%.c=$(BUILDDIR)/snd-osx/%.o)
-	SND_OSX_DEPS=$(SND_OSX_OBJS:%.o=%.d)
 	SND_OSX_TARGET=snd_osx.$(SHARED_EXT)
 
 	ifeq ($(BUILD_CLIENT), 1)
 	ifeq ($(HAVE_SND_OSX),1)
 		TARGETS += $(SND_OSX_TARGET)
-		ALL_DEPS += $(SND_OSX_DEPS)
 		ALL_OBJS += $(SND_OSX_OBJS)
 	endif
 	endif
@@ -245,9 +202,6 @@ ifeq ($(TARGET_OS),darwin)
 	# Say how to build .o files from .c files for this module
 	$(BUILDDIR)/snd-osx/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 		@echo " * [OSX] $<"; \
-			$(CC) $(CFLAGS) $(SHARED_CFLAGS) -o $@ -c $<
+			$(CC) $(CFLAGS) $(SHARED_CFLAGS) -o $@ -c $< -MD -MT $@ -MP
 
-	# Say how to build the dependencies
-	$(BUILDDIR)/snd-osx/%.d: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
-		@echo " * [DEP] $<"; $(DEP) $(SHARED_CFLAGS)
 endif

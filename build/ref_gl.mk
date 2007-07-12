@@ -67,17 +67,14 @@ endif
 #---------------------------------------------------------------------------------------------------------------------
 
 REF_GL_OBJS=$(REF_GL_SRCS:%.c=$(BUILDDIR)/ref_gl/%.o)
-REF_GL_DEPS=$(REF_GL_OBJS:%.o=%.d)
 
 REF_GLX_OBJS=$(REF_GLX_SRCS:%.c=$(BUILDDIR)/ref_gl/%.o)
-REF_GLX_DEPS=$(REF_GLX_OBJS:%.o=%.d)
 REF_GLX_TARGET=ref_glx.$(SHARED_EXT)
 
 ifeq ($(BUILD_CLIENT), 1)
 ifeq ($(HAVE_VID_GLX), 1)
 	TARGETS += $(REF_GLX_TARGET)
 	ALL_OBJS += $(REF_GL_OBJS) $(REF_GLX_OBJS)
-	ALL_DEPS += $(REF_GL_DEPS) $(REF_GLX_DEPS)
 endif
 endif
 
@@ -89,13 +86,11 @@ $(REF_GLX_TARGET) : $(REF_GLX_OBJS) $(REF_GL_OBJS) $(BUILDDIR)/.dirs
 #---------------------------------------------------------------------------------------------------------------------
 
 REF_SDL_OBJS=$(REF_SDL_SRCS:%.c=$(BUILDDIR)/ref_gl/%.o)
-REF_SDL_DEPS=$(REF_SDL_OBJS:%.o=%.d)
 
 ifeq ($(BUILD_CLIENT), 1)
 ifeq ($(HAVE_SDL), 1)
 	TARGETS += $(REF_SDL_TARGET)
 	ALL_OBJS += $(REF_GL_OBJS) $(REF_SDL_OBJS)
-	ALL_DEPS += $(REF_GL_DEPS) $(REF_SDL_DEPS)
 endif
 endif
 
@@ -109,8 +104,4 @@ $(REF_SDL_TARGET) : $(REF_SDL_OBJS) $(REF_GL_OBJS) $(BUILDDIR)/.dirs
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/ref_gl/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 	@echo " * [RGL] $<"; \
-		$(CC) $(CFLAGS) $(SHARED_CFLAGS) $(SDL_CFLAGS) $(JPEG_CFLAGS) $(REF_GLX_CFLAGS) -o $@ -c $<
-
-# Say how to build the dependencies
-$(BUILDDIR)/ref_gl/%.d: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
-	@echo " * [DEP] $<"; $(DEP) $(SDL_CFLAGS)
+		$(CC) $(CFLAGS) $(SHARED_CFLAGS) $(SDL_CFLAGS) $(JPEG_CFLAGS) $(REF_GLX_CFLAGS) -o $@ -c $< -MD -MT $@ -MP

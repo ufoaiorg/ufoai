@@ -173,12 +173,10 @@ CLIENT_OBJS= \
 	$(patsubst %.m, $(BUILDDIR)/client/%.o, $(filter %.m, $(CLIENT_SRCS))) \
 	$(patsubst %.rc, $(BUILDDIR)/client/%.o, $(filter %.rc, $(CLIENT_SRCS)))
 
-CLIENT_DEPS=$(CLIENT_OBJS:%.o=%.d)
 CLIENT_TARGET=ufo$(EXE_EXT)
 
 ifeq ($(BUILD_CLIENT),1)
 	ALL_OBJS+=$(CLIENT_OBJS)
-	ALL_DEPS+=$(CLIENT_DEPS)
 	TARGETS+=$(CLIENT_TARGET)
 endif
 
@@ -190,12 +188,12 @@ $(CLIENT_TARGET): $(CLIENT_OBJS) $(BUILDDIR)/.dirs
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/client/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 	@echo " * [UFO] $<"; \
-		$(CC) $(CFLAGS) $(CLIENT_CFLAGS) -o $@ -c $<
+		$(CC) $(CFLAGS) $(CLIENT_CFLAGS) -o $@ -c $< -MD -MT $@ -MP
 
 # Say how to build .o files from .m files for this module
 $(BUILDDIR)/client/%.o: $(SRCDIR)/%.m $(BUILDDIR)/.dirs
 	@echo " * [UFO] $<"; \
-		$(CC) $(CFLAGS) -DHAVE_GETTEXT -o $@ -c $<
+		$(CC) $(CFLAGS) -DHAVE_GETTEXT -o $@ -c $< -MD -MT $@ -MP
 
 ifeq ($(TARGET_OS),mingw32)
 # Say how to build .o files from .rc files for this module
@@ -203,22 +201,3 @@ $(BUILDDIR)/client/%.o: $(SRCDIR)/%.rc $(BUILDDIR)/.dirs
 	@echo " * [RC ] $<"; \
 		$(WINDRES) -DCROSSBUILD -i $< -o $@
 endif
-
-# Say how to build the dependencies
-ifdef BUILDDIR
-$(BUILDDIR)/client/%.d: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
-	@echo " * [DEP] $<"; $(DEP)
-
-ifeq ($(TARGET_OS),mingw32)
-$(BUILDDIR)/client/%.d: $(SRCDIR)/%.rc $(BUILDDIR)/.dirs
-	@echo " * [DEP] $<"; touch $@
-endif
-
-$(BUILDDIR)/client/%.d: $(SRCDIR)/%.m $(BUILDDIR)/.dirs
-	@echo " * [DEP] $<"; $(DEP)
-endif
-
-
-
-
-

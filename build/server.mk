@@ -81,12 +81,10 @@ SERVER_OBJS= \
 	$(patsubst %.m, $(BUILDDIR)/server/%.o, $(filter %.m, $(SERVER_SRCS))) \
 	$(patsubst %.rc, $(BUILDDIR)/server/%.o, $(filter %.rc, $(SERVER_SRCS)))
 
-SERVER_DEPS=$(SERVER_OBJS:%.o=%.d)
 SERVER_TARGET=ufoded$(EXE_EXT)
 
 ifeq ($(BUILD_DEDICATED),1)
 	ALL_OBJS+=$(SERVER_OBJS)
-	ALL_DEPS+=$(SERVER_DEPS)
 	TARGETS+=$(SERVER_TARGET)
 endif
 
@@ -104,7 +102,7 @@ $(SERVER_TARGET): $(SERVER_OBJS) $(BUILDDIR)/.dirs
 # Say how to build .o files from .c files for this module
 $(BUILDDIR)/server/%.o: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
 	@echo " * [DED] $<"; \
-		$(CC) $(CFLAGS) $(DEDICATED_CFLAGS) -o $@ -c $<
+		$(CC) $(CFLAGS) $(DEDICATED_CFLAGS) -o $@ -c $< -MD -MT $@ -MP
 
 ifeq ($(TARGET_OS),mingw32)
 # Say how to build .o files from .rc files for this module
@@ -116,25 +114,4 @@ endif
 # Say how to build .o files from .m files for this module
 $(BUILDDIR)/server/%.o: $(SRCDIR)/%.m $(BUILDDIR)/.dirs
 	@echo " * [DED] $<"; \
-		$(CC) $(CFLAGS) $(DEDICATED_CFLAGS) -o $@ -c $<
-
-# Say how to build the dependencies
-ifdef BUILDDIR
-$(BUILDDIR)/server/%.d: $(SRCDIR)/%.c $(BUILDDIR)/.dirs
-	@echo " * [DEP] $<"; \
-		$(DEP) $(DEDICATED_CFLAGS)
-
-ifeq ($(TARGET_OS),mingw32)
-$(BUILDDIR)/server/%.d: $(SRCDIR)/%.rc $(BUILDDIR)/.dirs
-	@echo " * [DEP] $<"; touch $@
-endif
-
-$(BUILDDIR)/server/%.d: $(SRCDIR)/%.m $(BUILDDIR)/.dirs
-	@echo " * [DEP] $<"; \
-		$(DEP) $(DEDICATED_CFLAGS)
-endif
-
-
-
-
-
+		$(CC) $(CFLAGS) $(DEDICATED_CFLAGS) -o $@ -c $< -MD -MT $@ -MP
