@@ -347,7 +347,7 @@ static void PE_SetCamera (void)
 	cl.cam.zoom = MIN_ZOOM;
 
 	/* fudge to get isometric and perspective modes looking similar */
-	if (cl_isometric->value)
+	if (cl_isometric->integer)
 		cl.cam.zoom /= 1.35;
 
 	CalcFovX();
