@@ -321,9 +321,7 @@ int FS_Seek (qFILE * f, long offset, int origin)
  */
 int FS_FOpenFile (const char *filename, qFILE * file)
 {
-	int result, len;
-
-	len = strlen(filename);
+	int result;
 
 	/* open file */
 	result = FS_FOpenFileSingle(filename, file);
@@ -1309,7 +1307,7 @@ void FS_GetMaps (qboolean reset)
 					FS_NormPath(findname);
 					baseMapName = COM_SkipPath(findname);
 					COM_StripExtension(baseMapName, filename);
-					Q_strncpyz(maps[numInstalledMaps+1], filename, MAX_QPATH);
+					Q_strncpyz(maps[numInstalledMaps + 1], filename, MAX_QPATH);
 					numInstalledMaps++;
 				}
 			}
@@ -1329,7 +1327,7 @@ void FS_GetMaps (qboolean reset)
 							break;
 						}
 						maps[numInstalledMaps+1] = (char *) Mem_PoolAlloc(MAX_QPATH * sizeof(char), com_fileSysPool, 0);
-						if (maps[numInstalledMaps+1] == NULL) {
+						if (maps[numInstalledMaps + 1] == NULL) {
 							Com_Printf("Could not allocate memory in FS_GetMaps\n");
 							Mem_Free(dirnames[i]);
 							continue;
