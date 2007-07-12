@@ -404,13 +404,15 @@ void INV_InitialEquipment (base_t *base)
 			Com_DPrintf("B_BuildBase_f: Initial Phalanx equipment %s not found.\n", eqname);
 		} else {
 			for (i = 0; i < csi.numODs; i++)
-				B_UpdateStorageAndCapacity(base, i, ed->num[i] / 5, qfalse);
+				base->storage.num[i] += ed->num[i] / 5;
 		}
 	}
 
 	/* Pay for the initial equipment as well as update storage capacity. */
-	for (i = 0; i < csi.numODs; i++)
+	for (i = 0; i < csi.numODs; i++) {
 		price += base->storage.num[i] * csi.ods[i].price;
+		base->capacities[CAP_ITEMS].cur += base->storage.num[i] * csi.ods[i].size;
+	}
 
 	/* Finally update credits. */
 	CL_UpdateCredits(ccs.credits - price);
