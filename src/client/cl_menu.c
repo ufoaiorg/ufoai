@@ -1352,7 +1352,10 @@ static void MN_ModelClick (menuNode_t * node)
  */
 static void MN_TextClick (menuNode_t * node, int mouseOver)
 {
-	Cbuf_AddText(va("%s_click %i\n", node->name, mouseOver - 1));
+	char cmd[MAX_VAR];
+	Com_sprintf(cmd, sizeof(cmd), "%s_click", node->name);
+	if (Cmd_Exists(cmd))
+		Cbuf_AddText(va("%s %i\n", cmd, mouseOver - 1));
 }
 
 /**
@@ -1362,7 +1365,10 @@ static void MN_TextClick (menuNode_t * node, int mouseOver)
  */
 static void MN_TextRightClick (menuNode_t * node, int mouseOver)
 {
-	Cbuf_AddText(va("%s_rclick %i\n", node->name, mouseOver - 1));
+	char cmd[MAX_VAR];
+	Com_sprintf(cmd, sizeof(cmd), "%s_rclick", node->name);
+	if (Cmd_Exists(cmd))
+		Cbuf_AddText(va("%s %i\n", cmd, mouseOver - 1));
 }
 
 /**
