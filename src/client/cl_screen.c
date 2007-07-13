@@ -383,6 +383,7 @@ void SCR_SetLoadingBackground (const char *mapString)
 	char loadingPic[MAX_QPATH];
 	char tmpPicName[MAX_VAR];
 	const char *mapname;
+	size_t len;
 
 	if (!mapString)
 		mapname = Cvar_VariableString("mapname");
@@ -393,7 +394,10 @@ void SCR_SetLoadingBackground (const char *mapString)
 
 	if (*mapname != '+') {
 		Q_strncpyz(tmpPicName, mapname, sizeof(tmpPicName));
-		tmpPicName[strlen(tmpPicName)-1] = '\0'; /* strip of the day and night letter */
+		len = strlen(tmpPicName);
+		/* strip of the day and night letter */
+		if (tmpPicName[len - 1] == 'n' || tmpPicName[len - 1] == 'd')
+			tmpPicName[len - 1] = '\0';
 		if (FS_CheckFile(va("pics/maps/loading/%s.jpg", tmpPicName)))
 			Com_sprintf(loadingPic, sizeof(loadingPic), "maps/loading/%s.jpg", tmpPicName);
 		else
@@ -411,20 +415,18 @@ void SCR_SetLoadingBackground (const char *mapString)
  */
 static void SCR_DrawLoading (void)
 {
-	char loadingPic[MAX_QPATH];
+	static const char *loadingPic;
 	const vec4_t color = {0.0, 0.7, 0.0, 0.8};
 	char *mapmsg;
 
-	if (!scr_draw_loading)
+	if (!scr_draw_loading) {
+		loadingPic = NULL;
 		return;
+	}
 
-	if (!ccs.singleplayer || !selMis) {
-		Com_sprintf(loadingPic, MAX_QPATH, "maps/loading/default.jpg");
-	} else {
-		if (FS_CheckFile(va("pics/maps/loading/%s.jpg", selMis->def->map)))
-			Com_sprintf(loadingPic, MAX_QPATH, "maps/loading/%s.jpg", selMis->def->map);
-		else
-			Com_sprintf(loadingPic, MAX_QPATH, "maps/loading/default.jpg");
+	if (!loadingPic) {
+		SCR_SetLoadingBackground(selMis ? selMis->def->map : cl.configstrings[CS_MAPTITLE]);
+		loadingPic = Cvar_VariableString("mn_mappicbig");
 	}
 	re.DrawNormPic(0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, 0, 0, 0, 0, ALIGN_UL, qfalse, loadingPic);
 	re.DrawColor(color);
@@ -748,38 +750,40 @@ void SCR_UpdateScreen (void)
 		if (cls.state == ca_disconnected && !scr_draw_loading)
 			SCR_EndLoadingPlaque();
 
-		MN_SetViewRect(MN_ActiveMenu());
+		if (scr_draw_loading)
+			SCR_DrawLoading();
+		else {
+			MN_SetViewRect(MN_ActiveMenu());
 
-		if (cls.playingCinematic) {
-			CIN_DrawCinematic();
-		} else {
-			/* draw scene */
-			V_RenderView(separation[i]);
+			if (cls.playingCinematic) {
+				CIN_DrawCinematic();
+			} else {
+				/* draw scene */
+				V_RenderView(separation[i]);
 
-			/* draw the menus on top of the render view (for hud and so on) */
-			MN_DrawMenus();
+				/* draw the menus on top of the render view (for hud and so on) */
+				MN_DrawMenus();
 
-			SCR_DrawNet();
-			SCR_CheckDrawCenterString();
+				SCR_DrawNet();
+				SCR_CheckDrawCenterString();
+			}
+
+			if (cl_fps->integer)
+				SCR_DrawString(viddef.width - con_fontWidth->integer * 10, 4, va("fps: %3.1f", cls.framerate), qtrue);
+			if (cls.state == ca_active && scr_rspeed->integer)
+				SCR_DrawString(viddef.width - con_fontWidth->integer * 30, 20, va("brushes: %6i alias: %6i\n", cl.refdef.c_brush_polys, cl.refdef.c_alias_polys), qtrue);
+
+			if (scr_timegraph->integer)
+				SCR_DebugGraph(cls.frametime * 300, 0);
+
+			if (scr_debuggraph->integer || scr_timegraph->integer || scr_netgraph->integer)
+				SCR_DrawDebugGraph();
+
+			SCR_DrawConsole();
+
+			if (cls.state != ca_sequence)
+				SCR_DrawCursor();
 		}
-
-		if (cl_fps->integer)
-			SCR_DrawString(viddef.width - con_fontWidth->integer * 10, 4, va("fps: %3.1f", cls.framerate), qtrue);
-		if (cls.state == ca_active && scr_rspeed->integer)
-			SCR_DrawString(viddef.width - con_fontWidth->integer * 30, 20, va("brushes: %6i alias: %6i\n", cl.refdef.c_brush_polys, cl.refdef.c_alias_polys), qtrue);
-
-		if (scr_timegraph->integer)
-			SCR_DebugGraph(cls.frametime * 300, 0);
-
-		if (scr_debuggraph->integer || scr_timegraph->integer || scr_netgraph->integer)
-			SCR_DrawDebugGraph();
-
-		SCR_DrawConsole();
-
-		if (cls.state != ca_sequence)
-			SCR_DrawCursor();
-
-		SCR_DrawLoading();
 	}
 
 	re.EndFrame();

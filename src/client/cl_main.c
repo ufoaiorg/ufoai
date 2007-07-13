@@ -2578,7 +2578,7 @@ int CL_Frame (int msec)
 
 	cls.framecount++;
 
-	if (log_stats->value) {
+	if (log_stats->integer) {
 		if (cls.state == ca_active) {
 			if (!lasttimecalled) {
 				lasttimecalled = Sys_Milliseconds();

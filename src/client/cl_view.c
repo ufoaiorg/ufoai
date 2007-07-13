@@ -415,7 +415,7 @@ void CL_PrepRefresh (void)
 		if (name[0] != '*') {
 			Com_Printf("%s\r", name);
 			Com_sprintf(cls.loadingMessages, sizeof(cls.loadingMessages),
-				_("loading %s"), (strlen(name) > 40)? &name[strlen(name)-40]: name);
+				_("loading %s"), (strlen(name) > 40) ? &name[strlen(name) - 40] : name);
 		}
 		SCR_UpdateScreen();
 		Sys_SendKeyEvents();	/* pump message loop */
@@ -427,7 +427,7 @@ void CL_PrepRefresh (void)
 		if (name[0] != '*')
 			Com_Printf("                                     \r");
 
-		cls.loadingPercent += 80.0f/(float)max;
+		cls.loadingPercent += 80.0f / (float)max;
 	}
 
 	/* update le model references */
@@ -445,8 +445,8 @@ void CL_PrepRefresh (void)
 		SCR_UpdateScreen();
 		cl.model_weapons[i] = re.RegisterModel(str);
 		Com_sprintf(cls.loadingMessages, sizeof(cls.loadingMessages),
-			_("loading %s"), (strlen(str) > 40)? &str[strlen(str)-40]: str);
-		cls.loadingPercent += 80.0f/(float)max;
+			_("loading %s"), (strlen(str) > 40) ? &str[strlen(str) - 40] : str);
+		cls.loadingPercent += 80.0f / (float)max;
 	}
 
 	/* images */
@@ -457,11 +457,11 @@ void CL_PrepRefresh (void)
 	for (i = 1; i < MAX_IMAGES && cl.configstrings[CS_IMAGES + i][0]; i++) {
 		str = cl.configstrings[CS_IMAGES + i];
 		Com_sprintf(cls.loadingMessages, sizeof(cls.loadingMessages),
-			_("loading %s"), (strlen(str) > 40)? &str[strlen(str)-40]: str);
+			_("loading %s"), (strlen(str) > 40) ? &str[strlen(str) - 40] : str);
 		SCR_UpdateScreen();
 		cl.image_precache[i] = re.RegisterPic(str);
 		Sys_SendKeyEvents();	/* pump message loop */
-		cls.loadingPercent += 10.0f/(float)max;
+		cls.loadingPercent += 10.0f / (float)max;
 	}
 
 	cls.loadingPercent = 100.0f;
