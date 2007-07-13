@@ -29,6 +29,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_SND_LOC_H
 #define CLIENT_SND_LOC_H
 
+#include "cl_sound.h"
+
 /* !!! if this is changed, the asm code must change !!! */
 typedef struct {
 	int left;
