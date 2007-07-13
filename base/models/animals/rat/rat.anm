@@ -6,7 +6,9 @@
 //mampf1			7	17	10
 //mampf2			17	7	10
 //muhen				18	27	10
-//idle				28	43	5
+
+idle				28	64	20
+idle1				65	101	20
 
 //critter
 stand_still			0	0	1
