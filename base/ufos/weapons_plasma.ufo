@@ -13,7 +13,7 @@ item plaspistol
 	shape		"0 0 3 2"
 	center		"1 0 0.3"
 	scale		1.5
-	ammo		6
+	ammo		8
 	reload		12
 	price		34000
 	size		20
@@ -47,11 +47,31 @@ item plaspistol_ammo
 			spread	"0 3"
 			crouch	0.8
 			range	15
-			shots	5
+			shots	1
 			ammo	1
 			rof		6
-			time	7
-			damage	"11 5"
+			time	6
+			damage	"16 6"
+			dmgtype plasma
+			reaction	true
+		}
+		firedef 
+		{
+			name	"_Burst"
+			skill 	close
+			projtl	plasmaMiniPulse
+			impact	plasmaImpactCharged
+			hitbody	plasmaImpactCharged
+			firesnd	weapons/plasma_s.wav
+			speed	1800
+			spread	"0 3"
+			crouch	0.8
+			range	15
+			shots	4
+			ammo	4
+			rof		6
+			time	15
+			damage	"16 6"
 			dmgtype plasma
 			reaction	true
 		}
@@ -94,7 +114,7 @@ item plasrifle
 	shape		"0 0 5 2"
 	center		"9.3 0 1.5"
 	scale		1.25
-	ammo		9
+	ammo		10
 	reload		14
 	price		40000
 	size		40
@@ -128,11 +148,31 @@ item plasrifle_ammo
 			spread	"0 2"
 			crouch	0.7
 			range	22
-			shots	5
+			shots	1
 			ammo	1
 			rof		5
 			time	9
-			damage	"14 5"
+			damage	"20 5"
+			dmgtype plasma
+			reaction	true
+		}
+		firedef 
+		{
+			name	"_Burst"
+			skill 	assault
+			projtl	plasmaPulse
+			impact	plasmaImpactCharged
+			hitbody	plasmaImpactCharged
+			firesnd	weapons/plasma_s.wav
+			speed	1700
+			spread	"0 2"
+			crouch	0.7
+			range	22
+			shots	5
+			ammo	5
+			rof		5
+			time	14
+			damage	"20 5"
 			dmgtype plasma
 			reaction	true
 		}
