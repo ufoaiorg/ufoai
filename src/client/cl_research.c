@@ -1052,7 +1052,7 @@ void RS_UpdateData (void)
 	technology_t *tech = NULL;
 
 	/* Make everything the same (predefined in the ufo-file) color. */
-	Cbuf_AddText("research_clear\n");
+	Cbuf_ExecuteText(EXEC_NOW, "research_clear\n");
 
 	for (i = 0; i < gd.numBases; i++) {
 		available[i] = E_CountUnassigned(&gd.bases[i], EMPL_SCIENTIST);
@@ -1071,13 +1071,13 @@ void RS_UpdateData (void)
 		/* @todo: add check for collected items */
 
 		/* Make icons vivible for this entry */
-		Cbuf_AddText(va("research_show%i\n", j));
+		Cbuf_ExecuteText(EXEC_NOW, va("research_show%i\n", j));
 
 		if (tech->statusCollected && !tech->statusResearchable && (tech->statusResearch != RS_FINISH)) {
 			/* An unresearched collected item that cannot yet be researched. */
 			Q_strcat(name, _(" [not yet researchable]"), sizeof(name));
 			/* Color the item 'unresearchable' */
-			Cbuf_AddText(va("researchunresearchable%i\n", j));
+			Cbuf_ExecuteText(EXEC_NOW, va("researchunresearchable%i\n", j));
 			/* Display the concated text in the correct list-entry. */
 			Cvar_Set(va("mn_researchitem%i", j), name);
 
@@ -1107,11 +1107,11 @@ void RS_UpdateData (void)
 			switch (tech->statusResearch) {
 			case RS_RUNNING:
 				/* Color the item with 'research running'-color. */
-				Cbuf_AddText(va("researchrunning%i\n", j));
+				Cbuf_ExecuteText(EXEC_NOW, va("researchrunning%i\n", j));
 				break;
 			case RS_PAUSED:
 				/* Color the item with 'research paused'-color. */
-				Cbuf_AddText(va("researchpaused%i\n", j));
+				Cbuf_ExecuteText(EXEC_NOW, va("researchpaused%i\n", j));
 				break;
 			case RS_NONE:
 				/* The color is defined in menu research.ufo by  "confunc research_clear". See also above. */
@@ -1148,16 +1148,16 @@ void RS_UpdateData (void)
 		Cvar_Set(va("mn_researchmax%i", j), "");
 
 		/* Hide the icons for this entry */
-		Cbuf_AddText(va("research_hide%i\n", j));
+		Cbuf_ExecuteText(EXEC_NOW, va("research_hide%i\n", j));
 	}
 
 	/* Select last selected item if possible or the very first one if not. */
 	if (researchListLength) {
 		Com_DPrintf("RS_UpdateData: Pos%i Len%i\n", researchListPos, researchListLength);
 		if ((researchListPos < researchListLength) && (researchListLength < MAX_RESEARCHDISPLAY)) {
-			Cbuf_AddText(va("researchselect%i\n", researchListPos));
+			Cbuf_ExecuteText(EXEC_NOW, va("researchselect%i\n", researchListPos));
 		} else {
-			Cbuf_AddText("researchselect0\n");
+			Cbuf_ExecuteText(EXEC_NOW, "researchselect0\n");
 		}
 	} else {
 		/* No display list available (zero items) - > Reset description. */
