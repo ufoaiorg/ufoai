@@ -421,7 +421,7 @@ static void SCR_DrawLoading (void)
 	if (!ccs.singleplayer || !selMis) {
 		Com_sprintf(loadingPic, MAX_QPATH, "maps/loading/default.jpg");
 	} else {
-		if (FS_CheckFile(va("maps/loading/%s.jpg", selMis->def->map)))
+		if (FS_CheckFile(va("pics/maps/loading/%s.jpg", selMis->def->map)))
 			Com_sprintf(loadingPic, MAX_QPATH, "maps/loading/%s.jpg", selMis->def->map);
 		else
 			Com_sprintf(loadingPic, MAX_QPATH, "maps/loading/default.jpg");
