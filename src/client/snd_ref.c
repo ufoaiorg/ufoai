@@ -1375,7 +1375,7 @@ sfxcache_t *S_LoadSound (sfx_t *s)
 	Q_strncpyz(name, s->name, sizeof(name));
 	len = strlen(name);
 	if (len + 4 >= MAX_QPATH) {
-		Com_Printf("S_LoadSound: MAX_QPATH exceeded: %i\n", len + 4);
+		Com_Printf("S_LoadSound: MAX_QPATH exceeded: "UFO_SIZE_T"\n", len + 4);
 		return NULL;
 	}
 	extension = &name[len];
