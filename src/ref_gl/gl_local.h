@@ -278,17 +278,13 @@ extern cvar_t *r_ext_max_anisotropy;
 extern cvar_t *r_texture_lod;   /* lod_bias */
 extern cvar_t *r_displayrefresh;
 
-extern cvar_t *gl_vertex_arrays;
-
 extern cvar_t *gl_screenshot;
 extern cvar_t *gl_screenshot_jpeg_quality;
 
 extern cvar_t *gl_ext_swapinterval;
 extern cvar_t *gl_ext_multitexture;
 extern cvar_t *gl_ext_combine;
-extern cvar_t *gl_ext_pointparameters;
 extern cvar_t *gl_ext_lockarrays;
-extern cvar_t *gl_ext_compiled_vertex_array;
 extern cvar_t *gl_ext_texture_compression;
 extern cvar_t *gl_ext_s3tc_compression;
 

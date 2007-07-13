@@ -87,8 +87,6 @@ cvar_t *r_texture_lod;			/* lod_bias */
 cvar_t *gl_screenshot;
 cvar_t *gl_screenshot_jpeg_quality;
 
-cvar_t *gl_vertex_arrays;
-
 cvar_t *gl_particle_min_size;
 cvar_t *gl_particle_max_size;
 cvar_t *gl_particle_size;
@@ -99,9 +97,7 @@ cvar_t *gl_particle_att_c;
 cvar_t *gl_ext_swapinterval;
 cvar_t *gl_ext_multitexture;
 cvar_t *gl_ext_combine;
-cvar_t *gl_ext_pointparameters;
 cvar_t *gl_ext_lockarrays;
-cvar_t *gl_ext_compiled_vertex_array;
 cvar_t *gl_ext_texture_compression;
 cvar_t *gl_ext_s3tc_compression;
 
@@ -1014,14 +1010,11 @@ static void R_Register (void)
 	gl_wire = ri.Cvar_Get("gl_wire", "0", CVAR_CHEAT, "Draw the scene in wireframe mode");
 	gl_fog = ri.Cvar_Get("gl_fog", "1", CVAR_ARCHIVE, NULL);
 	gl_showbox = ri.Cvar_Get("gl_showbox", "0", CVAR_ARCHIVE, "Shows model bounding box");
-	gl_vertex_arrays = ri.Cvar_Get("gl_vertex_arrays", "0", CVAR_ARCHIVE, NULL);
 
 	gl_ext_swapinterval = ri.Cvar_Get("gl_ext_swapinterval", "1", CVAR_ARCHIVE, NULL);
 	gl_ext_multitexture = ri.Cvar_Get("gl_ext_multitexture", "1", CVAR_ARCHIVE, NULL);
 	gl_ext_combine = ri.Cvar_Get("gl_ext_combine", "1", CVAR_ARCHIVE, NULL);
 	gl_ext_lockarrays = ri.Cvar_Get("gl_ext_lockarrays", "0", CVAR_ARCHIVE, NULL);
-	gl_ext_pointparameters = ri.Cvar_Get("gl_ext_pointparameters", "1", CVAR_ARCHIVE, NULL);
-	gl_ext_compiled_vertex_array = ri.Cvar_Get("gl_ext_compiled_vertex_array", "1", CVAR_ARCHIVE, NULL);
 	gl_ext_texture_compression = ri.Cvar_Get("gl_ext_texture_compression", "0", CVAR_ARCHIVE, NULL);
 	gl_ext_s3tc_compression = ri.Cvar_Get("gl_ext_s3tc_compression", "1", CVAR_ARCHIVE, NULL);
 
@@ -1207,16 +1200,6 @@ static qboolean R_Init (HINSTANCE hinstance, WNDPROC wndproc)
 	} else
 		ri.Con_Printf(PRINT_ALL, "...WGL_EXT_swap_control not found\n");
 #endif
-
-	if (strstr(gl_config.extensions_string, "GL_EXT_point_parameters")) {
-		if (gl_ext_pointparameters->integer) {
-			qglPointParameterfEXT = (void (APIENTRY *) (GLenum, GLfloat)) qwglGetProcAddress("glPointParameterfEXT");
-			qglPointParameterfvEXT = (void (APIENTRY *) (GLenum, const GLfloat *)) qwglGetProcAddress("glPointParameterfvEXT");
-			ri.Con_Printf(PRINT_ALL, "...using GL_EXT_point_parameters\n");
-		} else
-			ri.Con_Printf(PRINT_ALL, "...ignoring GL_EXT_point_parameters\n");
-	} else
-		ri.Con_Printf(PRINT_ALL, "...GL_EXT_point_parameters not found\n");
 
 	if (strstr(gl_config.extensions_string, "GL_ARB_multitexture")) {
 		if (gl_ext_multitexture->integer) {
