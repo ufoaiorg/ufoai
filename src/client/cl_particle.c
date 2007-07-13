@@ -1323,7 +1323,7 @@ static void CL_ParsePtlCmds (const char *name, const char **text)
 					if (len) {
 						/* get single component */
 						if ((1 << pp->type) & V_VECS) {
-							int component = (baseComponentToken[len + 2] - '1');
+							int component = (baseComponentToken[len - 1] - '1');
 							/* get the component we want to modify */
 							if (component > 3) {
 								Com_Printf("CL_ParsePtlCmds: bad component value - it's bigger than 3: %i (particle %s)\n", component, name);
