@@ -378,7 +378,7 @@ void SCR_DrawPrecacheScreen (qboolean string)
 /**
  * @brief Updates needed cvar for loading screens
  */
-void SCR_SetLoadingBackground (const char *mapString)
+const char* SCR_SetLoadingBackground (const char *mapString)
 {
 	char loadingPic[MAX_QPATH];
 	char tmpPicName[MAX_VAR];
@@ -392,7 +392,9 @@ void SCR_SetLoadingBackground (const char *mapString)
 		Cvar_Set("mapname", mapString);
 	}
 
-	if (*mapname != '+') {
+	if (!*mapname)
+		return NULL;
+	else if (*mapname != '+') {
 		Q_strncpyz(tmpPicName, mapname, sizeof(tmpPicName));
 		len = strlen(tmpPicName);
 		/* strip of the day and night letter */
@@ -407,6 +409,7 @@ void SCR_SetLoadingBackground (const char *mapString)
 		Q_strncpyz(loadingPic, "maps/loading/default.jpg", sizeof(loadingPic));
 		Cvar_Set("mn_mappicbig", loadingPic);
 	}
+	return Cvar_VariableString("mn_mappicbig");
 }
 
 /**
@@ -424,10 +427,10 @@ static void SCR_DrawLoading (void)
 		return;
 	}
 
-	if (!loadingPic) {
-		SCR_SetLoadingBackground(selMis ? selMis->def->map : cl.configstrings[CS_MAPTITLE]);
-		loadingPic = Cvar_VariableString("mn_mappicbig");
-	}
+	if (!loadingPic)
+		loadingPic = SCR_SetLoadingBackground(selMis ? selMis->def->map : cl.configstrings[CS_MAPTITLE]);
+	if (!loadingPic)
+		return;
 	re.DrawNormPic(0, 0, VID_NORM_WIDTH, VID_NORM_HEIGHT, 0, 0, 0, 0, ALIGN_UL, qfalse, loadingPic);
 	re.DrawColor(color);
 

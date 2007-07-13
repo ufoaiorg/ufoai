@@ -34,7 +34,7 @@ void SCR_UpdateScreen(void);
 void SCR_CenterPrint(const char *str);
 void SCR_BeginLoadingPlaque(void);
 void SCR_EndLoadingPlaque(void);
-void SCR_SetLoadingBackground(const char *mapString);
+const char* SCR_SetLoadingBackground(const char *mapString);
 void SCR_DebugGraph(float value, int color);
 void SCR_TouchPics(void);
 void SCR_RunConsole(void);
