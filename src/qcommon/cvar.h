@@ -143,3 +143,8 @@ qboolean Cvar_SetCheckFunction(const char *var_name, qboolean (*check) (cvar_t* 
  * @brief Reset cheat cvar values to default
  */
 void Cvar_FixCheatVars(void);
+
+/**
+ * @brief Function to remove the cvar and free the space
+ */
+qboolean Cvar_Delete(const char *var_name);

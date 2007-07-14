@@ -72,7 +72,7 @@ static cvar_t *Cvar_FindVar (const char *var_name)
 	cvar_t *var;
 
 	hash = Com_HashKey(var_name, CVAR_HASH_SIZE);
-	for (var = cvar_vars_hash[hash]; var; var = var->next)
+	for (var = cvar_vars_hash[hash]; var; var = var->hash_next)
 		if (!Q_strcmp(var_name, var->name))
 			return var;
 
@@ -273,6 +273,53 @@ int Cvar_CompleteVariable (const char *partial, const char **match)
 }
 
 /**
+ * @brief Function to remove the cvar and free the space
+ */
+qboolean Cvar_Delete (const char *var_name)
+{
+	unsigned hash;
+	cvar_t *var, *previousVar = NULL;
+
+	hash = Com_HashKey(var_name, CVAR_HASH_SIZE);
+	for (var = cvar_vars_hash[hash]; var; var = var->hash_next) {
+		if (!Q_stricmp(var_name, var->name)) {
+			if (var->flags & (CVAR_USERINFO | CVAR_SERVERINFO | CVAR_NOSET | CVAR_LATCH)) {
+				Com_Printf("Can't delete the cvar '%s' - it's a special cvar\n", var_name);
+				return qfalse;
+			}
+			if (var->prev) {
+				assert(var->prev->next == var);
+				var->prev->next = var->next;
+			} else
+				cvar_vars = var->next;
+			if (var->next) {
+				assert(var->next->prev == var);
+				var->next->prev = var->prev;
+			}
+			if (previousVar) {
+				assert(previousVar->hash_next == var);
+				previousVar->hash_next = var->hash_next;
+			} else {
+				cvar_vars_hash[hash] = var->hash_next;
+			}
+			Mem_Free(var->name);
+			Mem_Free(var->string);
+			if (var->old_string)
+				Mem_Free(var->old_string);
+			if (var->default_string)
+				Mem_Free(var->default_string);
+			/* lateched cvars should not be deleteable */
+			assert(var->latched_string == NULL);
+			Mem_Free(var);
+			return qtrue;
+		}
+		previousVar = var;
+	}
+	Com_Printf("Cvar '%s' wasn't found\n", var_name);
+	return qfalse;
+}
+
+/**
  * @brief Init or return a cvar
  * @param[in] var_name The cvar name
  * @param[in] var_value The standard cvar value (will be set if the cvar doesn't exist)
@@ -319,7 +366,7 @@ cvar_t *Cvar_Get (const char *var_name, const char *var_value, int flags, const 
 			return NULL;
 		}
 
-	var = Mem_Alloc(sizeof(*var));
+	var = Mem_PoolAlloc(sizeof(*var), com_cvarSysPool, 0);
 	var->name = Mem_PoolStrDup(var_name, com_cvarSysPool, 0);
 	var->string = Mem_PoolStrDup(var_value, com_cvarSysPool, 0);
 	var->old_string = NULL;
@@ -333,12 +380,14 @@ cvar_t *Cvar_Get (const char *var_name, const char *var_value, int flags, const 
 	var->hash_next = cvar_vars_hash[hash];
 	/* set the cvar_vars_hash pointer to the current cvar */
 	/* if there were already others in cvar_vars_hash at position hash, they are
-	 * now accessable via var->next - loop until var->next is null (the first
+	 * now accessable via var->hash_next - loop until var->hash_next is null (the first
 	 * cvar at that position)
 	 */
 	cvar_vars_hash[hash] = var;
 	var->next = cvar_vars;
 	cvar_vars = var;
+	if (var->next)
+		var->next->prev = var;
 
 	var->flags = flags;
 	if (var->flags & CVAR_CHEAT)
@@ -389,6 +438,7 @@ static cvar_t *Cvar_Set2 (const char *var_name, const char *value, qboolean forc
 				if (!Q_strcmp(value, var->latched_string))
 					return var;
 				Mem_Free(var->latched_string);
+				var->latched_string = NULL;
 			} else {
 				if (!Q_strcmp(value, var->string))
 					return var;
@@ -399,7 +449,9 @@ static cvar_t *Cvar_Set2 (const char *var_name, const char *value, qboolean forc
 				Com_Printf("%s will be changed for next game.\n", var_name);
 				var->latched_string = Mem_PoolStrDup(value, com_cvarSysPool, 0);
 			} else {
-				var->old_string = Mem_PoolStrDup(var->string, com_cvarSysPool, 0);
+				if (var->old_string)
+					Mem_Free(var->old_string);
+				var->old_string = var->string;
 				var->string = Mem_PoolStrDup(value, com_cvarSysPool, 0);
 				var->value = atof(var->string);
 				var->integer = atoi(var->string);
@@ -422,13 +474,11 @@ static cvar_t *Cvar_Set2 (const char *var_name, const char *value, qboolean forc
 
 	if (var->old_string)
 		Mem_Free(var->old_string);		/* free the old value string */
-	var->old_string = Mem_PoolStrDup(var->string, com_cvarSysPool, 0);
+	var->old_string = var->string;
 	var->modified = qtrue;
 
 	if (var->flags & CVAR_USERINFO)
 		userinfo_modified = qtrue;	/* transmit at next oportunity */
-
-	Mem_Free(var->string);		/* free the old value string */
 
 	var->string = Mem_PoolStrDup(value, com_cvarSysPool, 0);
 	var->value = atof(var->string);
@@ -494,8 +544,9 @@ cvar_t *Cvar_FullSet (const char *var_name, const char *value, int flags)
 	if (var->flags & CVAR_USERINFO)
 		userinfo_modified = qtrue;
 
-	/* free the old value string */
-	Mem_Free(var->string);
+	if (var->old_string)
+		Mem_Free(var->old_string);		/* free the old value string */
+	var->old_string = var->string;
 
 	var->string = Mem_PoolStrDup(value, com_cvarSysPool, 0);
 	var->value = atof(var->string);
@@ -790,7 +841,7 @@ static void Cvar_Del_f (void)
 		return;
 	}
 
-	Cbuf_ExecuteText(EXEC_NOW, va("set %s \"\"", Cmd_Argv(1)));
+	Cvar_Delete(Cmd_Argv(1));
 }
 
 /**
@@ -811,6 +862,11 @@ void Cvar_FixCheatVars (void)
 		if (!var->default_string) {
 			Com_Printf("Cheat cvars: Cvar %s has no default value\n", var->name);
 			continue;
+		}
+		/* also remove the old_string value here */
+		if (var->old_string) {
+			Mem_Free(var->old_string);
+			var->old_string = NULL;
 		}
 		Mem_Free(var->string);
 		var->string = Mem_PoolStrDup(var->default_string, com_cvarSysPool, 0);

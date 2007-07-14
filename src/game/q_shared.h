@@ -554,6 +554,7 @@ typedef struct cvar_s {
 	int integer;			/**< value as integer */
 	qboolean (*check) (struct cvar_s* cvar);	/**< cvar check function */
 	struct cvar_s *next;
+	struct cvar_s *prev;
 	struct cvar_s *hash_next;
 } cvar_t;
 
