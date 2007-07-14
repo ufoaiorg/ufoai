@@ -469,5 +469,9 @@ menu aliencont
 	{
 		cmd aliencont_init;
 	}
-
+	func close
+	{
+		cmd "del mn_al_globalamount;del mn_al_localamount;del mn_al_base;del mn_al_alientype;"
+		cmd "del mn_al_alienmodel;del mn_al_killed;del mn_al_alive;del mn_al_capacity;"
+	}
 }

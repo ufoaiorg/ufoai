@@ -448,4 +448,17 @@ menu basesummary
 	{
 		cmd basesummary_init;
 	}
+	func close
+	{
+		cmd "del mn_basesummary_name;del mn_basesummary_interceptorcount;del mn_basesummary_transportercount;"
+		cmd "del mn_basesummary_soldiercount;del mn_basesummary_scientistcount;del mn_basesummary_workercount;"
+		cmd "del mn_basesummary_mediccount;del mn_basesummary_robotcount;del mn_basesummary_capacity_aliens;"
+		cmd "del mn_basesummary_capacity_hangarsmall;del mn_basesummary_capacity_hangarlarge;del mn_basesummary_capacity_hangarufo;"
+		cmd "del mn_basesummary_capacity_hospital;del mn_basesummary_capacity_labs;del mn_basesummary_capacity_quarters;"
+		cmd "del mn_basesummary_capacity_storage;del mn_basesummary_capacity_workshops;del mn_basesummary_construction0;"
+		cmd "del mn_basesummary_construction1;del mn_basesummary_construction2;del mn_basesummary_productioncurrent;"
+		cmd "del mn_basesummary_researchcurrent0;del mn_basesummary_researchcurrent1;del mn_basesummary_researchcurrent2;"
+		cmd "del mn_basesummary_researchcurrent3; del mn_basesummary_researchcurrent4; del mn_basesummary_totals_basecount;"
+		cmd "del mn_basesummary_totals_personnel;del mn_basesummary_totals_aircraft;"
+	}
 }
