@@ -767,7 +767,8 @@ static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 
 		case PC_SPAWN:
 #if 1
-			CL_ParticleSpawn((char *) radr, p->levelFlags, p->s, p->v, p->a);
+			if (CL_ParticleSpawn((char *) radr, p->levelFlags, p->s, p->v, p->a) == NULL)
+				Com_Printf("PC_SPAWN: Could not spawn child particle for '%s'\n", p->ctrl->name);
 #else
 			pnew = CL_ParticleSpawn((char *) radr, p->levelFlags, p->s, p->v, p->a);
 			if (pnew) {
@@ -791,7 +792,8 @@ static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 
 			for (i = 0; i < n; i++) {
 #if 1
-				CL_ParticleSpawn((char *) radr, p->levelFlags, p->s, p->v, p->a);
+				if (CL_ParticleSpawn((char *) radr, p->levelFlags, p->s, p->v, p->a) == NULL)
+					Com_Printf("PC_NSPAWN: Could not spawn child particle for '%s'\n", p->ctrl->name);
 #else
 				pnew = CL_ParticleSpawn((char *) radr, p->levelFlags, p->s, p->v, p->a);
 				if (pnew) {
@@ -808,6 +810,8 @@ static void CL_ParticleFunction (ptl_t * p, ptlCmd_t * cmd)
 				pnew->next = p->children;
 				pnew->parent = p;
 				p->children = pnew;
+			} else {
+				Com_Printf("PC_CHILD: Could not spawn child particle for '%s'\n", p->ctrl->name);
 			}
 			break;
 

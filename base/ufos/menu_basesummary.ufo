@@ -1,0 +1,451 @@
+// ======================
+// BASE STATISTICS MENU
+// ======================
+menu basesummary
+{
+	// ==================
+	// don't render
+	// ==================
+
+	zone render
+	{
+		invis false
+	}
+
+	// ==================
+	// background
+	// ==================
+
+	pic back_ul
+	{
+		image	menu/basesummary_ul
+		pos		"0 0"
+	}
+
+	pic back_ur
+	{
+		image	menu/basesummary_ur
+		pos		"512 0"
+	}
+
+	pic back_ll
+	{
+		image	menu/basesummary_ll
+		pos		"0 512"
+	}
+
+	pic back_lr
+	{
+		image	menu/basesummary_lr
+		pos		"512 512"
+	}
+
+	// ==================
+	// General info
+	// ==================
+	string txt_credits_caption
+	{
+		string	"_CREDIT"
+		pos	"650 70"
+		font	f_big
+		align	ul
+	}
+
+	string txt_credits
+	{
+		font	"f_big"
+		string	"*cvar mn_credits"
+		pos	"944 70"
+		align	ur
+	}
+
+	// ==================
+	// buttons
+	// ==================
+	pic bt_continue
+	{
+		tooltip	"_Back to baseview"
+		image	hud/buttons2
+		mousefx	true
+		pos	"920 630"
+		texl	"0 0"
+		texh	"64 37"
+		click	{ cmd mn_pop }
+	}
+
+	confunc basesummary_prevbb { *bt_basesummary_prevbase image menu/button_aliencont1 }
+	confunc basesummary_prevbg { *bt_basesummary_prevbase image menu/button_aliencont2 }
+
+	pic bt_basesummary_prevbase
+	{
+		tooltip	"_Previous Base"
+		mousefx	true
+		pos	"730 692"
+		texl	"0 0"
+		texh	"32 64"
+		click	{ cmd basesummary_prevbase }
+	}
+
+	confunc basesummary_nextbb { *bt_basesummary_nextbase image menu/button_aliencont1 }
+	confunc basesummary_nextbg { *bt_basesummary_nextbase image menu/button_aliencont2 }
+
+	pic bt_basesummary_nextbase
+	{
+		tooltip	"_Next Base"
+		mousefx	true
+		pos	"770 692"
+		texl	"32 0"
+		texh	"64 64"
+		click	{ cmd basesummary_nextbase }
+	}
+
+	// ==================
+	// main window
+	// ==================
+
+	string txt_basesummary_currentbase
+	{
+		string "_Name:"
+		pos "30 40"
+		//color "0 .78 0 1"
+	}
+
+	string txt_basesummary_currentbase_v
+	{
+		string "*cvar mn_basesummary_name"
+		pos "100 40"
+		color "0 .78 0 1"
+	}
+
+	string txt_basesummary_aircraft
+	{
+		string "_Aircraft:"
+		pos "30 70"
+		//color "0 .78 0 1"
+	}
+
+	string txt_basesummary_aircraft_interceptors
+	{
+		string "_Interceptors:"
+		pos "50 85"
+		color "0 .78 0 1"
+	}
+
+	string txt_basesummary_aircraft_interceptors_v
+	{
+		string "*cvar mn_basesummary_interceptorcount"
+		pos "150 85"
+		color "0 .78 0 1"
+	}
+
+	string txt_basesummary_aircraft_transporters
+	{
+		string "_Transporters:"
+		pos "50 100"
+		color "0 .78 0 1"
+	}
+
+	string txt_basesummary_aircraft_transporters_v
+	{
+		string "*cvar mn_basesummary_transportercount"
+		pos "150 100"
+		color "0 .78 0 1"
+	}
+
+	string txt_basesummary_personnel
+	{
+		string "_Personnel"
+		pos "30 140"
+	}
+
+	string txt_basesummary_personnel_soldiers
+	{
+		string "_Soldiers:"
+		pos "50 155"
+		color "0 .78 0 1"
+	}
+
+	string txt_basesummary_personnel_solders_v
+	{
+		string "*cvar mn_basesummary_soldiercount"
+		pos "150 155"
+		color "0 .78 0 1"
+	}
+
+	string txt_basesummary_personnel_scientists
+	{
+		string "_Scientists:"
+		pos "50 170"
+		color "0 .78 0 1"
+	}
+
+	string txt_basesummary_personnel_scientists_v
+	{
+		string "*cvar mn_basesummary_scientistcount"
+		pos "150 170"
+		color "0 .78 0 1"
+	}
+
+	string txt_basesummary_personnel_workers
+	{
+		string "_Workers:"
+		pos "50 185"
+		color "0 .78 0 1"
+	}
+
+	string txt_basesummary_personnel_workers_v
+	{
+		string "*cvar mn_basesummary_workercount"
+		pos "150 185"
+		color "0 .78 0 1"
+	}
+
+	string txt_basesummary_personnel_medics
+	{
+		string "_Medics:"
+		pos "50 200"
+		color "0 .78 0 1"
+	}
+
+	string txt_basesummary_personnel_medics_v
+	{
+		string "*cvar mn_basesummary_mediccount"
+		pos "150 200"
+		color "0 .78 0 1"
+	}
+
+	string txt_basesummary_personnel_robots
+	{
+		string "_Robots:"
+		pos "50 215"
+		color "0 .78 0 1"
+	}
+
+	string txt_basesummary_personnel_robots_v
+	{
+		string "*cvar mn_basesummary_robotcount"
+		pos "150 215"
+		color "0 .78 0 1"
+	}
+
+
+	string txt_basesummary_capacity_facilities
+	{
+		string "_Facilities  (used/available)"
+		pos "30 250"
+		//color "0 .78 0 1"
+		//size "275 16"
+	}
+
+	string txt_basesummary_capacity_aliens
+	{
+		string "*cvar mn_basesummary_capacity_aliens"
+		pos "50 265"
+		color "0 .78 0 1"
+	}
+
+	string txt_basesummary_capacity_hanger
+	{
+		string "Hangars:"
+		pos "50 280"
+		color "0 .78 0 1"
+	}
+
+	string txt_basesummary_capacity_hangarsmall
+	{
+		string "*cvar mn_basesummary_capacity_hangarsmall"
+		pos "70 295"
+		color "0 .78 0 1"
+	}
+
+	string txt_basesummary_capacity_hangarlarge
+	{
+		string "*cvar mn_basesummary_capacity_hangarlarge"
+		pos "70 310"
+		color "0 .78 0 1"
+	}
+
+	string txt_basesummary_capacity_hangarufo
+	{
+		string "*cvar mn_basesummary_capacity_hangarufo"
+		pos "70 325"
+		color "0 .78 0 1"
+	}
+
+	string txt_basesummary_capacity_hospital
+	{
+		string "*cvar mn_basesummary_capacity_hospital"
+		pos "50 340"
+		color "0 .78 0 1"
+	}
+
+	string txt_basesummary_capacity_labs
+	{
+		string "*cvar mn_basesummary_capacity_labs"
+		pos "50 355"
+		color "0 .78 0 1"
+	}
+
+	string txt_basesummary_capacity_quarters
+	{
+		string "*cvar mn_basesummary_capacity_quarters"
+		pos "50 370"
+		color "0 .78 0 1"
+	}
+
+	string txt_basesummary_capacity_storage
+	{
+		string "*cvar mn_basesummary_capacity_storage"
+		pos "50 385"
+		color "0 .78 0 1"
+	}
+
+	string txt_basesummary_capacity_workshops
+	{
+		string "*cvar mn_basesummary_capacity_workshops"
+		pos "50 400"
+		color "0 .78 0 1"
+	}
+
+	string txt_basesummary_construction
+	{
+		string "_Construction"
+		pos "30 425"
+	}
+
+	string txt_basesummary_construction0
+	{
+		string "*cvar mn_basesummary_construction0"
+		pos "50 440"
+		color "0 .78 0 1"
+	}
+
+	string txt_basesummary_construction1
+	{
+		string "*cvar mn_basesummary_construction1"
+		pos "50 455"
+		color "0 .78 0 1"
+	}
+
+	string txt_basesummary_construction2
+	{
+		string "*cvar mn_basesummary_construction2"
+		pos "50 470"
+		color "0 .78 0 1"
+	}
+
+	string txt_basesummary_production
+	{
+		string "_Production"
+		pos "30 495"
+		//color "0 .78 0 1"
+		//size "275 16"
+	}
+
+	string txt_basesummary_productioncurrent
+	{
+		string "*cvar mn_basesummary_productioncurrent"
+		pos "50 510"
+		color "0 .78 0 1"
+	}
+
+	string txt_basesummary_research
+	{
+		string "_Research"
+		pos "30 535"
+		//color "0 .78 0 1"
+		//size "275 16"
+	}
+
+	string txt_basesummary_researchcurrent0
+	{
+		string "*cvar mn_basesummary_researchcurrent0"
+		pos "50 550"
+		color "0 .78 0 1"
+	}
+
+	string txt_basesummary_researchcurrent1
+	{
+		string "*cvar mn_basesummary_researchcurrent1"
+		pos "50 565
+		color "0 .78 0 1"
+	}
+
+	string txt_basesummary_researchcurrent2
+	{
+		string "*cvar mn_basesummary_researchcurrent2"
+		pos "50 580"
+		color "0 .78 0 1"
+	}
+
+	string txt_basesummary_researchcurrent3
+	{
+		string "*cvar mn_basesummary_researchcurrent3"
+		pos "50 595"
+		color "0 .78 0 1"
+	}
+
+	string txt_basesummary_researchcurrent4
+	{
+		string "*cvar mn_basesummary_researchcurrent4"
+		pos "50 610"
+		color "0 .78 0 1"
+	}
+
+	// ==================
+	// info window (totals)
+	// ==================
+
+	string txt_totals
+	{
+		string "_Totals"
+		pos "615 200"
+	}
+
+	string txt_totals_bases
+	{
+		string "_Bases:"
+		pos "615 225"
+	}
+
+	string txt_totals_bases_v
+	{
+		string "*cvar mn_basesummary_totals_basecount"
+		pos "705 225"
+		color "0 .78 0 1"
+	}
+
+	string txt_totals_personnel
+	{
+		string "_Personnel:"
+		pos "615 240"
+	}
+
+	string txt_totals_personnel_v
+	{
+		string "*cvar mn_basesummary_totals_personnel"
+		pos "705 240"
+		color "0 .78 0 1"
+	}
+
+	string txt_totals_aircraft
+	{
+		string "_Aircraft:"
+		pos "615 255"
+	}
+
+	string txt_totals_aircraft_v
+	{
+		string "*cvar mn_basesummary_totals_aircraft"
+		pos "705 255"
+		color "0 .78 0 1"
+	}
+
+	// ==================
+	// init
+	// ==================
+	func init
+	{
+		cmd basesummary_init;
+	}
+}

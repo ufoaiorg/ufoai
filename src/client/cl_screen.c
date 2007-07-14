@@ -612,6 +612,7 @@ void SCR_EndLoadingPlaque (void)
 {
 	cls.disable_screen = 0;
 	scr_draw_loading = 0;
+	SCR_DrawLoading(); /* reset the loadingPic pointer */
 	/* clear any lines of console text */
 	Con_ClearNotify();
 }

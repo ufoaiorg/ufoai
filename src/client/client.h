@@ -823,6 +823,9 @@ void CDAudio_RandomPlay(void);
 /* cl_transfer.c */
 #include "cl_transfer.h"
 
+/* cl_basesummary.c */
+#include "cl_basesummary.h"
+
 /* MISC */
 /* @todo: needs to be sorted (e.g what file is it defined?) */
 #define MAX_TEAMDATASIZE	32768

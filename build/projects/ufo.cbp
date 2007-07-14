@@ -157,6 +157,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../../src/client/cl_basemanagement.h" />
+		<Unit filename="../../src/client/cl_basesummary.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../src/client/cl_basesummary.h" />
 		<Unit filename="../../src/client/cl_campaign.c">
 			<Option compilerVar="CC" />
 		</Unit>

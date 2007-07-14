@@ -403,6 +403,30 @@ menu bases
 		align	cc
 	}
 
+	pic summary
+	{
+		tooltip	"_Base Information"
+		image	menu/button
+		pos	"755 660"
+		texl	"0 0"
+		texh	"230 64"
+		mousefx true
+		click
+		{
+			cmd "mn_push basesummary;"
+		}
+		out		{ *txt_summary color "0 0.8 0 1" *summary texl "0 0" *summary texh "230 64" }
+		in		{ *txt_summary color "1 1 1 1" *summary texl "230 0" *summary texh "460 64" }
+	}
+
+	string txt_summary
+	{
+		string	"_Base Summary"
+		color	"0 0.8 0 1"
+		pos	"874 693"
+		font	f_menu
+		align	cc
+	}
 
 	// ==================
 	// text and info
