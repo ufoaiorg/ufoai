@@ -55,8 +55,8 @@ static void R_DrawAliasMD3FrameLerp (mAliasModel_t *paliashdr, mAliasMesh_t mesh
 	else
 		alpha = 1.0;
 
-	frame = paliashdr->frames + currententity->frame;
-	oldframe = paliashdr->frames + currententity->oldframe;
+	frame = paliashdr->frames + currententity->as.frame;
+	oldframe = paliashdr->frames + currententity->as.oldframe;
 
 	VectorSubtract(currententity->oldorigin, currententity->origin, delta);
 	VectorCopy(currententity->angles, tempangle);
@@ -73,8 +73,8 @@ static void R_DrawAliasMD3FrameLerp (mAliasModel_t *paliashdr, mAliasMesh_t mesh
 		move[i] = backlerp * move[i] + frontlerp * frame->translate[i];
 	}
 
-	v = mesh.vertexes + currententity->frame * mesh.num_verts;
-	ov = mesh.vertexes + currententity->oldframe * mesh.num_verts;
+	v = mesh.vertexes + currententity->as.frame * mesh.num_verts;
+	ov = mesh.vertexes + currententity->as.oldframe * mesh.num_verts;
 	for (i = 0; i < mesh.num_verts; i++, v++, ov++) {
 		VectorSet(tempNormalsArray[i],
 				v->normal[0] + (ov->normal[0] - v->normal[0]) * backlerp,
@@ -136,21 +136,21 @@ void R_DrawAliasMD3Model (entity_t *e)
 	if (e->flags & RF_TRANSLUCENT)
 		GLSTATE_ENABLE_BLEND
 
-	if ((e->frame >= paliashdr->num_frames) || (e->frame < 0)) {
-		ri.Con_Printf(PRINT_ALL, "R_DrawAliasMD3Model %s: no such frame %d\n", currentmodel->name, e->frame);
-		e->frame = 0;
-		e->oldframe = 0;
+	if ((e->as.frame >= paliashdr->num_frames) || (e->as.frame < 0)) {
+		ri.Con_Printf(PRINT_ALL, "R_DrawAliasMD3Model %s: no such frame %d\n", currentmodel->name, e->as.frame);
+		e->as.frame = 0;
+		e->as.oldframe = 0;
 	}
 
-	if ((e->oldframe >= paliashdr->num_frames) || (e->oldframe < 0)) {
+	if ((e->as.oldframe >= paliashdr->num_frames) || (e->as.oldframe < 0)) {
 		ri.Con_Printf(PRINT_ALL, "R_DrawAliasMD3Model %s: no such oldframe %d\n",
-			currentmodel->name, e->oldframe);
-		e->frame = 0;
-		e->oldframe = 0;
+			currentmodel->name, e->as.oldframe);
+		e->as.frame = 0;
+		e->as.oldframe = 0;
 	}
 
 	if (!r_lerpmodels->integer)
-		e->backlerp = 0;
+		e->as.backlerp = 0;
 
 	if (gl_shadows->integer == 1 && (e->flags & (RF_SHADOW | RF_BLOOD))) {
 		if (!(e->flags & RF_TRANSLUCENT))
@@ -192,7 +192,7 @@ void R_DrawAliasMD3Model (entity_t *e)
 		GL_Bind(skin->texnum);
 		/* locate the proper data */
 		c_alias_polys += paliashdr->meshes[i].num_tris;
-		R_DrawAliasMD3FrameLerp(paliashdr, paliashdr->meshes[i], e->backlerp);
+		R_DrawAliasMD3FrameLerp(paliashdr, paliashdr->meshes[i], e->as.backlerp);
 	}
 
 	qglDisableClientState(GL_COLOR_ARRAY);

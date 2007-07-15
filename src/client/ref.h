@@ -112,15 +112,6 @@ typedef struct entity_s {
 	int flags;
 
 	animState_t as;
-
-	/*
-	 ** wanted by MD3
-	 ** FIXME: Put this into the animState_t, too
-	 */
-
-	int frame;
-	int oldframe;
-	int backlerp;
 } entity_t;
 
 #define ENTITY_FLAGS  68
