@@ -26,6 +26,8 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #ifndef CLIENT_CL_TRANSFER_H
 #define CLIENT_CL_TRANSFER_H
 
+#define MAX_TRANSFERS	16
+
 /** @brief Determine transfer type. */
 typedef enum {
 	TR_STUFF,			/**< Cargo transfer, items, aliens or personel. */
@@ -40,6 +42,8 @@ typedef struct transferlist_s {
 	int alienBodyAmount[MAX_CARGO];	/**< Alien body amount of given alien [aliensCont_t->idx]. */
 	int employees[MAX_EMPLOYEES];	/**< Employee index. */
 	int destBase;			/**< Index of destination base. */
+	date_t event;			/**< When the transfer finish process should start. */
+	qboolean active;		/**< True if this transfer is under processing. */
 } transferlist_t;
 
 /** @brief Array of current cargo onboard. */
@@ -49,8 +53,9 @@ typedef struct transferCargo_s {
 } transferCargo_t;
 
 void TR_TransferAircraftMenu(aircraft_t* aircraft);
-void TR_TransferEnd(aircraft_t* aircraft);
-void TR_EmptyTransferCargo (aircraft_t *aircraft);
+void TR_TransferEnd(transferlist_t *transfer);
+void TR_EmptyTransferCargo(transferlist_t *transfer);
+void TR_TransferCheck(void);
 
 void TR_Reset(void);
 

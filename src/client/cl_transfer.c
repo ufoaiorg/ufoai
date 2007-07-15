@@ -31,6 +31,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static base_t *transferBase = NULL;
 
 /** @brief Current selected aircraft. */
+/* @todo REMOVE ME */
 static aircraft_t *transferAircraft = NULL;
 
 /** @brief Current transfer type (item, employee, alien, aircraft). */
@@ -39,8 +40,12 @@ static int transferType = -1;
 /** @brief Current cargo onboard. */
 static transferCargo_t cargo[MAX_CARGO];
 
+/** @brief Current item cargo. */
+static int trItemsTmp[MAX_OBJDEFS];
+
 /**
  * @brief Display cargo list.
+ * @todo FIXME transferAircraft
  */
 static void TR_CargoList (void)
 {
@@ -111,6 +116,7 @@ static void TR_CargoList (void)
  * @note Filling the transfer list with proper stuff (items/employees/aliens/aircrafts) is being done here.
  * @sa TR_TransferStart_f
  * @sa TR_TransferInit_f
+ * @todo: FIXME, transferidx, transferAircraft
  */
 static void TR_TransferSelect_f (void)
 {
@@ -222,17 +228,20 @@ static void TR_TransferSelect_f (void)
  * @brief Unload everything from aircraft storage back to base storage.
  * @note This is being taken as a normal transfer mission, but we are
  * @note just unloading the cargo in homebase, without doing anything.
+ * @todo FIXME transferidx, transferAircraft
  */
 static void TR_TransferEmptyAircraftStorage_f (void)
 {
+#if 0
 	transferlist_t *transferidx = NULL;
+#endif
 
 	if (!transferAircraft)
 		return;
 
 	if (!baseCurrent)
 		return;
-
+#if 0
 	transferidx = &gd.alltransfers[transferAircraft->idx];
 
 	/* We can't unload if we are not in our homebase. */
@@ -254,27 +263,25 @@ static void TR_TransferEmptyAircraftStorage_f (void)
 	 * paramaters */
 	Cmd_BufClear(); /* That should not be necessary - we are emptying gd.alltransfers[idx] in TR_EmptyTransferCargo */
 	TR_TransferSelect_f();
+#endif
 }
 
 /**
  * @brief Unload transfer cargo when finishing the transfer.
- * @param[in] *aircraft Pointer to aircraft used in transfer.
+ * @param[in] *transfer Pointer to transfer in gd.alltransfers.
  * @note This should be called only for unloading stuff, not TR_AIRCRAFT.
  * @sa TR_TransferEnd
  */
-void TR_EmptyTransferCargo (aircraft_t *aircraft)
+void TR_EmptyTransferCargo (transferlist_t *transfer)
 {
 	int i;
 	base_t *destination = NULL;
-	transferlist_t *transferidx = NULL;
 
-	if (aircraft)
-		transferidx = &gd.alltransfers[aircraft->idx];
+	assert (transfer);
+	destination = &gd.bases[transfer->destBase];
+	assert (destination);
 
-	if (transferidx)
-		destination = &gd.bases[transferidx->destBase];
-
-	if (transferidx->type != TR_STUFF) {
+	if (transfer->type != TR_STUFF) {
 #ifdef DEBUG
 		/* should never happen */
 		Com_Printf("TR_EmptyTransferCargo()... called with transferidx->type != TR_STUFF\n");
@@ -286,9 +293,9 @@ void TR_EmptyTransferCargo (aircraft_t *aircraft)
 	if (!destination->hasStorage) {
 		/* @todo: destroy items in transfercargo and inform an user. */
 	} else {
-		for (i = 0; i < MAX_OBJDEFS; i++) {
-			if (transferidx->itemAmount[i] > 0)
-				destination->storage.num[i] += transferidx->itemAmount[i];
+		for (i = 0; i < csi.numODs; i++) {
+			if (transfer->itemAmount[i] > 0)
+				B_UpdateStorageAndCapacity(destination, i, transfer->itemAmount[i], qfalse);
 		}
 	}
 	/* Unload personel. @todo: check building status and limits. */
@@ -310,17 +317,18 @@ void TR_EmptyTransferCargo (aircraft_t *aircraft)
 		/* @todo: destroy aliens in transfercargo and inform an user. */
 	} else {
 		for (i = 0; i < numTeamDesc; i++) {
-			if (transferidx->alienLiveAmount[i] > 0)
-				destination->alienscont[i].amount_alive += transferidx->alienLiveAmount[i];
-			if (transferidx->alienBodyAmount[i] > 0)
-				destination->alienscont[i].amount_dead += transferidx->alienBodyAmount[i];
+			if (transfer->alienLiveAmount[i] > 0)
+				destination->alienscont[i].amount_alive += transfer->alienLiveAmount[i];
+			if (transfer->alienBodyAmount[i] > 0)
+				destination->alienscont[i].amount_dead += transfer->alienBodyAmount[i];
 		}
 	}
 }
 
 /**
- * @brief Shows potential targets for aircraft on transfer mission.
+ * @brief Shows available bases in transfer menu.
  * @param[in] *aircraft Pointer to aircraft used in transfer.
+ * @todo FIXME, transferAircraft
  */
 void TR_TransferAircraftMenu (aircraft_t* aircraft)
 {
@@ -340,38 +348,20 @@ void TR_TransferAircraftMenu (aircraft_t* aircraft)
 }
 
 /**
- * @brief Ends the transfer and let the aircraft return to homebase (if it was cargo transfer).
- * @param[in] *aircraft Pointer to aircraft used in transfer.
+ * @brief Ends the transfer.
+ * @param[in] *transfer Pointer to transfer in gd.alltransfers
  */
-void TR_TransferEnd (aircraft_t* aircraft)
+void TR_TransferEnd (transferlist_t *transfer)
 {
 	base_t* destination = NULL;
-	transferlist_t *transferidx = NULL;
 
-	if (aircraft)
-		transferidx = &gd.alltransfers[aircraft->idx];
-
-	if (transferidx)
-		destination = &gd.bases[transferidx->destBase];
-
-	if (aircraft->status != AIR_TRANSPORT)
-		return;
-
+	assert (transfer);
+	destination = &gd.bases[transfer->destBase];
 	assert(destination);
 
-	/* Maybe it was invaded in the meantime. */
-	if (!destination->founded) {
-		MN_Popup(_("Notice"), _("The base does not exist anymore."));
-		return;
-	}
-
 	/* If we are transfering stuff - unload it here. */
-	if (transferidx->type == TR_STUFF) {
-		TR_EmptyTransferCargo (aircraft);
-		if (transferidx->destBase != baseCurrent->idx)
-			MN_AddNewMessage(_("Transport mission"),
-			_("Transport mission ended, returning to homebase now."), qfalse, MSG_TRANSFERFINISHED, NULL);
-		AIR_AircraftReturnToBase(aircraft);
+	if (transfer->type == TR_STUFF) {
+		TR_EmptyTransferCargo (transfer);
 	} else {
 		/* Otherwise this is an aircraft transfer. */
 		/* @todo: check hangar status and limits. */
@@ -385,54 +375,62 @@ void TR_TransferEnd (aircraft_t* aircraft)
 			_("Transport mission ended, aircraft assigned to new base."), qfalse, MSG_TRANSFERFINISHED, NULL);
 		}
 	}
-
-	/* Clear this transferidx. */
-	/* @todo: clear only if it was TR_STUFF, or if TR_AIRCRAFT had succed. */
-	memset(&gd.alltransfers[aircraft->idx], 0, sizeof(transferlist_t));
 }
 
 /**
- * @brief Start the transfer.
+ * @brief Starts the transfer.
  * @sa TR_TransferSelect_f
  * @sa TR_TransferInit_f
  */
 static void TR_TransferStart_f (void)
 {
-	base_t* destination = NULL;
-	transferlist_t *transferidx = NULL;
+	int i;
+	transferlist_t *transfer;
 
-	if (!transferAircraft) {
-		Com_Printf("TR_TransferStart_f: No aircraft selected\n");
-		return;
-	}
+	if (transferType < 0) {
+		Com_Printf("TR_TransferStart_f: transferType is wrong!\n");
+ 		return;
+ 	}
 
 	if (!transferBase) {
-		Com_Printf("TR_TransferStart_f: No base selected\n");
+		Com_Printf("TR_TransferStart_f: No base selected!\n");
 		return;
 	}
 
-	transferidx = &gd.alltransfers[transferAircraft->idx];
+	/* Find free transfer slot. */
+	for (i = 0; i < MAX_TRANSFERS; i++) {
+		if (!gd.alltransfers[i].active) {
+			/* Make sure it is empty here. */
+			memset(&gd.alltransfers[i], 0, sizeof(gd.alltransfers[i]));
+			transfer = &gd.alltransfers[i];
+			break;
+		}
+ 	}
 
-	if (transferidx)
-		destination = &gd.bases[transferidx->destBase];
-
-	if (transferAircraft->status != AIR_HOME) {
-		MN_Popup(_("Notice"), _("Can't start a transport mission while not at base"));
-		return;
+	/* Initialize transfer. */
+	transfer->event.day = ccs.date.day + 1;	/* @todo: instead of +1 day calculate distance */
+	transfer->event.sec = ccs.date.sec;
+	transfer->destBase = transferBase->idx; /* Destination base index. */
+	transfer->type = transferType; /* Type of transfer. */
+	transfer->active = qtrue;
+	for (i = 0; i < csi.numODs; i++) {
+		if (trItemsTmp[i] > 0)
+			transfer->itemAmount[i] = trItemsTmp[i];
 	}
 
-	transferAircraft->status = AIR_TRANSPORT;
-
-	MAP_MapCalcLine(transferAircraft->pos, destination->pos, &transferAircraft->route);
-	/* leave to geoscape */
-	MN_PopMenu(qfalse);
-	MN_PopMenu(qfalse);
+	/* @todo, only if transfering items */
+	for (i = 0; i < MAX_OBJDEFS; i++) {
+		if (transfer->itemAmount[i] > 0)
+			Com_DPrintf("TR_TransferStart_f()... amount %i of %s\n", transfer->itemAmount[i], csi.ods[i].id);
+	}
+	/* @todo MN_AddNewMessage() and push the menu here */
 }
 
 /**
- * @brief Adds a thing to aircraft for transfer by left mouseclick.
+ * @brief Adds a thing to transfercargo by left mouseclick.
  * @sa TR_TransferSelect_f
  * @sa TR_TransferInit_f
+ * @todo FIXME, transferidx
  */
 static void TR_TransferListSelect_f (void)
 {
@@ -479,6 +477,7 @@ static void TR_TransferListSelect_f (void)
 				if (cnt == num) {
 					/* @todo: Check space in transportship. */
 					transferidx->itemAmount[i]++;
+					trItemsTmp[i]++;	/* only this is used in new way */
 					/* Remove it from base storage. */
 					baseCurrent->storage.num[i]--;
 					break;
@@ -554,6 +553,7 @@ static void TR_TransferListSelect_f (void)
 /**
  * @brief Display current selected aircraft info in transfer menu
  * @sa TR_TransferAircraftListClick_f
+ * @todo REMOVEME
  */
 static void TR_TransferDisplayAircraftInfo (void)
 {
@@ -565,6 +565,7 @@ static void TR_TransferDisplayAircraftInfo (void)
 
 /**
  * @brief Callback for aircraft list click.
+ * @todo REMOVEME
  */
 static void TR_TransferAircraftListClick_f (void)
 {
@@ -634,7 +635,7 @@ static void TR_TransferBaseSelectPopup_f (void)
 
 /**
  * @brief Callback for base list click.
- * @note transferBase variable is being set here.
+ * @note transferBase is being set here.
  */
 static void TR_TransferBaseSelect_f (void)
 {
@@ -703,6 +704,7 @@ static void TR_TransferBaseSelect_f (void)
 
 /**
  * @brief Removes single item from cargolist by click.
+ * @todo FIXME, transferidx, transferAircraft
  */
 static void TR_CargoListSelect_f (void)
 {
@@ -785,9 +787,37 @@ static void TR_CargoListSelect_f (void)
 }
 
 /**
+ * @brief Checks whether given transfer should be processed.
+ * @sa CL_CampaignRun
+ */
+void TR_TransferCheck (void)
+{
+	int i;
+	base_t *base;
+	transferlist_t *transfer;
+
+	for (i = 0; i < MAX_TRANSFERS; i++) {
+		transfer = &gd.alltransfers[i];
+		if (transfer->event.day == ccs.date.day) {	/* @todo make it checking hour also, not only day */
+			base = &gd.bases[transfer->destBase];
+			if (!base->founded) {
+				/* Destination base was destroyed meanwhile. */
+				/* Transfer is lost, send proper message to the user.*/
+				/* @todo: prepare MN_AddNewMessage() here */
+			} else {
+				TR_TransferEnd(transfer);
+			}
+			/* Reset this transfer. */
+			memset(&gd.alltransfers[i], 0, sizeof(gd.alltransfers[i]));
+		}
+	}
+}
+
+/**
  * @brief Transfer menu init function.
  * @note Command to call this: trans_init
  * @note Should be called whenever the Transfer menu gets active.
+ * @todo FIXME, transferAircraft
  */
 static void TR_Init_f (void)
 {

@@ -1007,7 +1007,7 @@ void CL_CampaignRunAircraft (int dt)
 							aircraft->status = AIR_REFUEL;
 							break;
 						case AIR_TRANSPORT:
-							TR_TransferEnd(aircraft);
+							/* @todo REMOVEME */
 							break;
 						default:
 							aircraft->status = AIR_IDLE;

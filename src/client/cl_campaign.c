@@ -1464,6 +1464,7 @@ void CL_CampaignRun (void)
 			CL_CampaignRunMarket();
 			UFO_Recovery();
 			AII_UpdateInstallationDelay();
+			TR_TransferCheck();
 		}
 
 		/* daily events */
