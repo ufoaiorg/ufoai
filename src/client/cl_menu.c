@@ -1857,7 +1857,7 @@ MENU DRAWING
  * @param[in] y Position in container
  * @param[in] scale
  * @param[in] color
- *
+ * @sa SCR_DrawCursor
  * Used to draw an item to the equipment containers. First look whether the objDef_t
  * includes an image - if there is none then draw the model
  */
@@ -1907,6 +1907,7 @@ void MN_DrawItem (vec3_t org, item_t item, int sx, int sy, int x, int y, vec3_t 
 		mi.skin = 0;
 
 		Vector4Copy(color, col);
+		/* no ammo in this weapon - hightlight this item */
 		if (od->weapon && od->reload && !item.a) {
 			col[1] *= 0.5;
 			col[2] *= 0.5;
@@ -2547,7 +2548,7 @@ void MN_DrawMenus (void)
 					if (node->mousefx == C_UNDEFINED)
 						MN_FindContainer(node);
 					if (node->mousefx == NONE) {
-						Com_Printf("no container...\n");
+						Com_Printf("no container for drawing this item (%s)...\n", ref);
 						break;
 					}
 
